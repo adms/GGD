@@ -58,8 +58,20 @@ const GEOMETRY = [
  *
  * ⭐ 反駁它的方法：哪天這一族每一支的 `path` 都等於模板預設（＝再也沒有人覆寫
  * 它），這一格就該從豁免表拿掉，而拿掉之後這條守衛會立刻指名那六支。
+ *
+ * ⭐ **第二格豁免：`modelKey`（GH#693）**，理由是「它根本不是幾何」——
+ * `modelFxStagingContract.test.ts` ⑤ 的原話逐字：「`modelKey` 是**身分**不是幾何：
+ * 它有預設值是為了讓稀疏文件載得起來，⛔ 不是為了讓四支不同英雄的招式長成同一具
+ * 模型」。而**同一份檔案的 ④ 第二條斷言反過來要求**：兩支以上共用同一張模板時，
+ * 每一支都要寫出自己的 `modelKey`（否則就是「把兩支技能收斂成同一具模型」）。
+ * ⇒ 兩條規矩對同一格說相反的話，而身分那一條贏：一格「碰巧等於模板 exemplar 的」
+ * `modelKey` ⛔ 不是抄了一個算得出來的值，它是「這一支就是要用這具模型」。
+ * （量到的：`tpl-locust-line` 的兩支採用者都是 `w3x.stock.flamestrike1` ——
+ *  那是原作 h006 的模型，⛔ 不是模板挑的。）
+ * ⭐ 反駁它的方法：哪天 `modelKey` 真的變成模板擁有的幾何（＝技能不再宣告自己的
+ * 模型），這一格就該從豁免表拿掉，而 ④ 那條會立刻接手指名。
  */
-const DUP_EXEMPT = new Set<string>(["path"]);
+const DUP_EXEMPT = new Set<string>(["path", "modelKey"]);
 
 type Node = Record<string, unknown>;
 /** 一份文件裡的每一個 `spawnModelFx`（任意深度：onTouch / onArrive / delayed / hooks）。 */
@@ -140,7 +152,15 @@ describe("動畫特效模板 —— 引用它的每一支技能", () => {
           bad.push(`${id}: preset "${String(m["preset"])}" 指到一份不存在的模板`);
           continue;
         }
-        const need = ["modelKey", "path", "speed", "distance"];
+        // ⭐ 「哪幾格非有不可」是 **`path` 的函數**（GH#693），⛔ 不是一張固定名單：
+        //    `static` **不位移** —— `speed`/`distance` 在它底下是死欄位（`tpl-beam-roll`
+        //    的那兩格自己標著 `inert:「static ⇒ 不位移,speed 讀不到」`）。硬要求它們
+        //    等於逼每一張定點模板都宣告兩個沒有人讀的數字，而那正是第一·五守則
+        //    在擋的形狀。定點那一族真正的終止條件是 `lifeSec`，所以改要求它。
+        const need =
+          m["path"] === "static"
+            ? ["modelKey", "path", "lifeSec"]
+            : ["modelKey", "path", "speed", "distance"];
         if (m["onTouch"] !== undefined) need.push("touchRadius");
         if (m["path"] === "radial" || m["path"] === "orbit") need.push("count");
         for (const k of need) if (m[k] === undefined) bad.push(`${id}: ${t.id} 補不出 ${k}`);

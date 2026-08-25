@@ -209,10 +209,38 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-24",
     why: "`world` 是 `yawFrom` 的**預設值的顯式拼法** —— 欄位省略即 world（文件自己的 yawDeg 直接用），所以永遠不會有內容需要明寫它；它留在 enum 是讓「不跟瞄準轉」可以被**明說**（GH#641 的 aim 是第一個非預設採用者）。⭐ 可反駁：哪天預設改成 aim，這一列就該刪、world 就該有採用者。",
   },
-  "field:abilities.effects[]#spawnModelFx.anchor": {
+  // ⚠️ `field:abilities.effects[]#spawnModelFx.anchor` 的 landing 豁免 2026-08-25
+  //    **兌現了而且過期了**（HEAD 上已有 20 份 ability 文件填它）—— 這條守衛的
+  //    STALE 斷言逐字點名它「now adopted by 22 doc(s)」並說「DELETE the listed
+  //    entries; that is the entire fix」。⇒ 照規矩刪掉，⛔ 不是留著一句謊話。
+  // ═══ GH#693 蝗蟲群模板化 2026-08-25 ═══════════════════════════════════════
+  "field:abilities.effects[]#spawnModelFx.alpha": {
     status: "landing",
-    since: "2026-08-24",
-    why: "`path:\"static\"` 的錨點（self / point / target）—— 與那一格 enum 同一批、同一個理由：機制先行，60 支的內容批在 GH#649 第 2 批。⚠️ 它**只有** static 路徑讀得到（schema refine 綁著），所以它的採用率必然等於那一格 enum 的採用率 —— 一起紅、一起解。",
+    since: "2026-08-25",
+    why:
+      "**節點級**（per-cast）透明度 —— 與 `field:models.fxAlpha`（模型級那一半）同一批、" +
+      "同一個理由：原作的 alpha **只存在 runtime**（w3u `ucua` 全檔 0 次），它住在 " +
+      "war3map.j 的 **57 個 `SetUnitVertexColorBJ` 呼叫點**上。機制與模板欄位這一批落地" +
+      "（`tpl-locust-*` 四份都有這一格），採用者要等那 57 個呼叫點的逐技能接線批" +
+      "（GH#688 Phase 6）把「哪一發要染多透明」從 JASS 撈出來 —— " +
+      "⛔ 不要為了讓它變綠自己挑一支技能調透明（那是一個引用不到 owner 原話的出貨數值）。\n" +
+      "⭐ 可反駁：`docs/蝗蟲群對應表.md` §五 的 alpha 欄已經逐隻列出建議值，" +
+      "第一支回填的技能出現那天這一列就會 stale 而紅。",
+  },
+  "field:abilities.effects[]#spawnModelFx.spacing": {
+    status: "default-live",
+    why:
+      "⭐ **值住模板，⛔ 不住技能** —— 這一格 2026-08-25 之前唯一的兩個字面採用者" +
+      "（09-04 龜派氣功的火柱 ×2）在 GH#693 改成引用 `tpl-locust-line` 了，而" +
+      "`spacing:2`（原作 h006 `loop i=1..6 × 200` ÷100）現在住那份模板的 " +
+      "`params.spacing.default`。⇒ 這份普查讀的是**磁碟原文**（⛔ 不是 " +
+      "`resolveModelFxPreset` 之後的節點），所以一格「被正確地收進共用表」的欄位" +
+      "在這裡必然掉到 0 —— 那正是第〇·四守則要的結果，⛔ 不是 S8。\n" +
+      "⚠️ 這條豁免說的是「今天 0 筆是對的」，⛔ 不是「這個機制沒有人守」：" +
+      "`templates/locustTemplates.test.ts` ② 逐格斷言補完之後的節點真的帶著 " +
+      "`spacing: 2`，`sim/effects/spawnModelFx` 的 static 沿線測試斷言它真的被讀。\n" +
+      "⭐ 可反駁：哪天有一支技能要**覆寫**間距（原作 59-04 是 150 ⇒ 1.5，" +
+      "與模板預設 2 不同），它就會在自己的節點上寫出這一格，這一列就 stale 而紅。",
   },
   "field:abilities.effects[]#spawnVfx.attach": {
     status: "landing",

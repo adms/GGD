@@ -572,6 +572,64 @@ function renderMd() {
     );
   }
   L.push("");
+  L.push(`## 五、模板建議表（GH#693 · ${c.tplVisible} 隻可見 dummy → 4 個 \`tpl-locust-*\` 家族）`);
+  L.push("");
+  L.push(
+    "> owner 2026-08-25（逐字）：「[重要]記得**所有這些球體、蝗蟲群特效 都要變成模板，" +
+      "可以被編輯器複用、成為JSON設定模板標籤**」",
+  );
+  L.push("");
+  L.push(
+    "⭐ **分群是推導的，⛔ 不是手挑的四個名字**：兩根軸都取「引擎今天表達得出來」的東西 —— " +
+      "①**位移**（生成點有沒有 `SetUnitPosition`）②**多具**（生成點在不在 `loop` 裡）。" +
+      `2×2 ⇒ **static-single ${c.tplStaticSingle} · static-line ${c.tplStaticLine} · ` +
+      `travel-single ${c.tplTravelSingle} · travel-line ${c.tplTravelLine}**。`,
+  );
+  L.push("");
+  L.push(
+    "⛔ **隱形／承襲模型的 dummy 不在這張表上**（原作就看不見，引擎對應物是 proxyCast，" +
+      "零視覺移植工作）。⛔ **刻意不拿 `timedLife` 與 `anim`/`timeScale` 當第三、第四根軸**：" +
+      "前者在 GGD 這一側與 sleep-清場**是同一格 `lifeSec`**（拆開＝一支技能一個模板），" +
+      "後者的引擎機制（glb 剪輯播放）**還沒落地** ⇒ 現在替它分一群就是產一張" +
+      "「表單填得下、遊戲不會發生」的建議表（第一·五守則）。",
+  );
+  L.push("");
+  L.push("| 形狀 | 模板 | 幾隻 | 引擎怎麼表達 |");
+  L.push("|---|---|--:|---|");
+  L.push(
+    `| static-single | \`tpl-locust-orb\` | ${c.tplStaticSingle} | \`path:"orbit"\` + \`count:1\` + \`distance:0.1\`（＝定點，出貨六支球體的既有編碼） |`,
+  );
+  L.push(
+    `| static-line | \`tpl-locust-line\` | ${c.tplStaticLine} | \`path:"static"\` + \`count\` × \`spacing\`（一次擺出整條線） |`,
+  );
+  L.push(
+    `| travel-single | \`tpl-locust-travel\` | ${c.tplTravelSingle} | \`path:"forward"\` + \`speed\`/\`distance\` |`,
+  );
+  L.push(
+    `| travel-line | \`tpl-locust-swarm\` | ${c.tplTravelLine} | \`path:"radial"\` + \`count\` 等分各自推進 |`,
+  );
+  L.push("");
+  L.push(
+    "**參數欄的讀法**：空白 ＝ **原作沒有這個值 ⇒ 那一格不要填**（模板預設接手）。" +
+      "`scale` 是 w3u 的 `usca`（已經是倍率）；`tint` 是解析後 rgb255 **÷255**（`model@1.fxTint` / " +
+      "`spawnModelFx.tint` 的線性 0…1）；`alpha` 是 runtime `SetUnitVertexColorBJ` 的 " +
+      "`(100−透明度%)÷100`；`lifeSec` 取 `UnitApplyTimedLife`，沒有才退回同視窗的 " +
+      "`TriggerSleepAction`。`count`/`spacing` 只有 loop 生成的那兩群有，而**間距量不到**" +
+      "（loop 步長住 JASS 的算式裡，⛔ 這支掃描器不解算式）⇒ 逐支對 `jass-sites` 讀。",
+  );
+  L.push("");
+  L.push("| rawcode | name | model | 模板 | scale | tint (0–1) | alpha | lifeSec | 生成點 | 觸發器 |");
+  L.push("|---|---|---|---|--:|---|--:|--:|--:|---|");
+  for (const r of templateRows) {
+    const p = r.params;
+    const trig = r.triggers.slice(0, 4).join(", ") + (r.triggers.length > 4 ? " …" : "");
+    L.push(
+      `| \`${r.rawcode}\` | ${r.name ?? ""} | \`${basename(r.model)}\` | \`${r.template}\` | ` +
+        `${p.scale ?? ""} | ${p.tint ? p.tint.join(", ") : ""} | ${p.alpha ?? ""} | ` +
+        `${p.lifeSec ?? ""} | ${r.sites} | ${trig} |`,
+    );
+  }
+  L.push("");
   return L.join("\n") + "\n";
 }
 

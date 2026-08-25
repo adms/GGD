@@ -1,0 +1,83 @@
+{
+  "id": "tpl-locust-line",
+  "schema": "template@1",
+  "name": "沿線 N 具（蝗蟲群·一次擺出整條線）",
+  "description": "⭐【原作的光束/火柱是一條線，⛔ 不是一團】`A03S`（09-04 龜派氣功）的 h006 火柱逐行是 `loop i=1..6 × 200`、`A05J`（59-04）的 e003 是 `i=1..10 × 150` —— **一次擺好 N 具、隔一個固定步長、然後 `TriggerSleepAction` 清場**。這一份就是那個形狀：`path:\"static\"` ＋ `count` 具 ＋ `spacing` 步長。\n\n本家族的分群是 `pnpm locust:build` 從 **236 隻 dummy × 644 個 JASS 生成點**推導出來的，⛔ 不是手挑：對每一個 rawcode 算兩根**引擎表達得出來**的軸 —— ①有沒有 `SetUnitPosition`（位移）②生成點在不在 `loop` 裡（多具）。2×2 ⇒ 四群，量到的分佈是 **static-single 165 · static-line 15 · travel-single 12 · travel-line 4**（另 40 隻是隱形／承襲模型 ⇒ ⛔ 不進模板，那是 proxyCast 的活）。建議表（哪一支技能該用哪一個模板＋哪些參數）住 `docs/蝗蟲群對應表.md` §五。\n\n⚠️ `spacing` 的單位是**世界單位**（原作 200 wc3u ÷100 ＝ 2.0）；第 0 具在錨點上，第 k 具在沿開火方向的 `spacing×k` 處。⛔ 只有 `path:\"static\"` 且 `count≥2` 讀得到它 ——缺了它整條線退化成 1 具，而那在畫面上跟「沒寫 count」一模一樣（失敗形態②）。\n\n⚠️ 時序是 `lifeSec`：`static` 沒有「走完」可言，它是唯一的終止條件。預設 2 秒 ＝ 原作那個 `TriggerSleepAction(2)`。\n\n⭐【五欄】census 的每一隻 dummy 只有五種可調的東西 —— **modelKey（身分）· scale（大小）· tint（顏色）· alpha（透明度）· 時序**，而這份模板的 params 逐格對得上它們：身分逐支寫在節點上（`modelKey`，⛔ 模板的預設只是為了讓稀疏文件載得起來）；大小是 `scale`；顏色與透明度是 `tint`／`alpha`（節點級，GH#693 新增的 `spawnModelFx.tint`／`.alpha`）；時序見各自那一格。\n\n⚠️ **`tint`／`alpha` 刻意沒有預設值**，而那不是漏填：census 量到 236 隻裡 **133 隻非白**，而且**每一具的顏色都不一樣**（`UNIT_TINTS.json` 逐隻解析的繼承鏈）—— 家族層根本沒有一個共同的值。給它一個預設就是替每一支引用它的技能挑一個顏色（第一守則：出貨數值要引用得到 owner 的一句原話）。⇒ 兩格留空，逐支從 `docs/蝗蟲群對應表.md` §五 的建議表填。換算：w3u 的 0–255 ÷255；alpha ＝ `SetUnitVertexColorBJ` 第 4 參數 t% ⇒ `(100−t)÷100`。\n\n⛔【這一族不含傷害】`tpl-beam-roll` 檔頭立過的規矩逐字適用：「⛔ 不自動塞傷害 —— 那會替每一支引用它的技能各加一份沒有人裁決過的傷害」。所以這裡**一格 `touchDamageTier` 都沒有**，`expand()` 也就不會生出 `onTouch`（那一段由「模板有沒有宣告 `touchDamageTier`」決定，⛔ 不是家族名）。要沿路掃傷害的技能自己寫 `onTouch`，或再疊一張帶傷害的卡。\n\n⭐【一鍵 rollback】改**這一份**的 `params[*].default`，整族一起變；⛔ 不必動任何一支技能的 JSON。引用它的節點只寫 `preset` ＋ 自己的 `modelKey`（身分），其餘全部留白 —— 那是這一份成為「唯一住處」的方式（第〇·四守則）。",
+  "family": "locust-line",
+  "status": "enabled",
+  "params": {
+    "modelKey": {
+      "type": "docRef",
+      "default": "w3x.stock.flamestrike1"
+    },
+    "path": {
+      "type": "enum",
+      "values": [
+        "forward",
+        "toTarget",
+        "orbit",
+        "radial",
+        "static"
+      ],
+      "default": "static"
+    },
+    "count": {
+      "type": "number",
+      "default": 6,
+      "min": 1,
+      "max": 12
+    },
+    "spacing": {
+      "type": "number",
+      "default": 2,
+      "min": 0.5,
+      "max": 48
+    },
+    "lifeSec": {
+      "type": "number",
+      "default": 2,
+      "min": 0.1,
+      "max": 10,
+      "unit": "s"
+    },
+    "scale": {
+      "type": "number",
+      "min": 0.1,
+      "max": 20,
+      "optional": true
+    },
+    "spinDegPerSec": {
+      "type": "number",
+      "min": -3600,
+      "max": 3600,
+      "optional": true
+    },
+    "tint": {
+      "type": "rgb",
+      "optional": true
+    },
+    "alpha": {
+      "type": "number",
+      "min": 0,
+      "max": 1,
+      "unit": "ratio",
+      "optional": true
+    },
+    "soundKey": {
+      "type": "docRef",
+      "optional": true
+    },
+    "arriveSoundKey": {
+      "type": "docRef",
+      "optional": true
+    }
+  },
+  "requires": [
+    "modelFx"
+  ],
+  "gapScore": 8,
+  "exemplar": {
+    "skill": "09-04 龜派氣功 沿線火柱（h006 FlameStrike1，census static-line）",
+    "jass": "A03S"
+  }
+}

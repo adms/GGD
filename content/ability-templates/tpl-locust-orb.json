@@ -1,0 +1,89 @@
+{
+  "id": "tpl-locust-orb",
+  "schema": "template@1",
+  "name": "球體定點（蝗蟲群·不動的那一群）",
+  "description": "⭐【最大的一群：165/196 隻可見 dummy 站著不動】原作的 locust dummy 有八成九是「`CreateUnit` → `AddSpecialEffect` → `UnitApplyTimedLife`」—— ⛔ 一次 `SetUnitPosition` 都沒有。這一份就是那一群的模板：一具（或環上 `count` 具）擺在原地，活 `lifeSec` 就收。\n\n本家族的分群是 `pnpm locust:build` 從 **236 隻 dummy × 644 個 JASS 生成點**推導出來的，⛔ 不是手挑：對每一個 rawcode 算兩根**引擎表達得出來**的軸 —— ①有沒有 `SetUnitPosition`（位移）②生成點在不在 `loop` 裡（多具）。2×2 ⇒ 四群，量到的分佈是 **static-single 165 · static-line 15 · travel-single 12 · travel-line 4**（另 40 隻是隱形／承襲模型 ⇒ ⛔ 不進模板，那是 proxyCast 的活）。建議表（哪一支技能該用哪一個模板＋哪些參數）住 `docs/蝗蟲群對應表.md` §五。\n\n⚠️ ⭐ `path` 的預設是 **`orbit` 而不是 `static`**，而那是**量出來的**，⛔ 不是偏好：出貨的球體演出（77-01 百烈櫻華斬 · 14-01 東風繪扇南風末廣 · 79-03 月牙天衝 · 11-04 三千世界 · 04-04 神滅斬 ×2）逐支寫的是 `orbit + count:1 + distance:0.1 + speed:1`，那是「定點」在這個引擎裡**既有的**編碼（環半徑 0.1 ⇒ 線路上 `dx=dz=0`，與 `static` 同族）。改成 `static` 會動到那六支的線路酬載 ⇒ ⛔ 那不是逐位元等價的 retrofit，而「順手改對」正是這一批要避免的事。⭐ 想要真正的 `static`（帶 `anchor` 與沿線 `spacing`）就挑 `tpl-locust-line`，或把這一格改成 `static` —— 它是一格下拉。\n\n⚠️ `distance` 在 `orbit` 底下是**環半徑**（模型繞著施法者跑的那個圈多大），⛔ 不是「走多遠」；`count≥2` 就變成一圈等分的球體陣（護盾型）。時序只有一格：`lifeSec` —— 繞圈沒有終點，它是唯一的終止條件（`zSpawnModelFx` 的 refine 在載入時擋）。\n\n⭐【五欄】census 的每一隻 dummy 只有五種可調的東西 —— **modelKey（身分）· scale（大小）· tint（顏色）· alpha（透明度）· 時序**，而這份模板的 params 逐格對得上它們：身分逐支寫在節點上（`modelKey`，⛔ 模板的預設只是為了讓稀疏文件載得起來）；大小是 `scale`；顏色與透明度是 `tint`／`alpha`（節點級，GH#693 新增的 `spawnModelFx.tint`／`.alpha`）；時序見各自那一格。\n\n⚠️ **`tint`／`alpha` 刻意沒有預設值**，而那不是漏填：census 量到 236 隻裡 **133 隻非白**，而且**每一具的顏色都不一樣**（`UNIT_TINTS.json` 逐隻解析的繼承鏈）—— 家族層根本沒有一個共同的值。給它一個預設就是替每一支引用它的技能挑一個顏色（第一守則：出貨數值要引用得到 owner 的一句原話）。⇒ 兩格留空，逐支從 `docs/蝗蟲群對應表.md` §五 的建議表填。換算：w3u 的 0–255 ÷255；alpha ＝ `SetUnitVertexColorBJ` 第 4 參數 t% ⇒ `(100−t)÷100`。\n\n⛔【這一族不含傷害】`tpl-beam-roll` 檔頭立過的規矩逐字適用：「⛔ 不自動塞傷害 —— 那會替每一支引用它的技能各加一份沒有人裁決過的傷害」。所以這裡**一格 `touchDamageTier` 都沒有**，`expand()` 也就不會生出 `onTouch`（那一段由「模板有沒有宣告 `touchDamageTier`」決定，⛔ 不是家族名）。要沿路掃傷害的技能自己寫 `onTouch`，或再疊一張帶傷害的卡。\n\n⭐【一鍵 rollback】改**這一份**的 `params[*].default`，整族一起變；⛔ 不必動任何一支技能的 JSON。引用它的節點只寫 `preset` ＋ 自己的 `modelKey`（身分），其餘全部留白 —— 那是這一份成為「唯一住處」的方式（第〇·四守則）。",
+  "family": "locust-orb",
+  "status": "enabled",
+  "params": {
+    "modelKey": {
+      "type": "docRef",
+      "default": "imported.heromusashimiyamoto"
+    },
+    "path": {
+      "type": "enum",
+      "values": [
+        "forward",
+        "toTarget",
+        "orbit",
+        "radial",
+        "static"
+      ],
+      "default": "orbit"
+    },
+    "count": {
+      "type": "number",
+      "default": 1,
+      "min": 1,
+      "max": 12
+    },
+    "distance": {
+      "type": "number",
+      "default": 0.1,
+      "min": 0.1,
+      "max": 48
+    },
+    "speed": {
+      "type": "number",
+      "default": 1,
+      "min": 1,
+      "max": 200
+    },
+    "lifeSec": {
+      "type": "number",
+      "default": 2.5,
+      "min": 0.1,
+      "max": 10,
+      "unit": "s"
+    },
+    "scale": {
+      "type": "number",
+      "min": 0.1,
+      "max": 20,
+      "optional": true
+    },
+    "spinDegPerSec": {
+      "type": "number",
+      "min": -3600,
+      "max": 3600,
+      "optional": true
+    },
+    "tint": {
+      "type": "rgb",
+      "optional": true
+    },
+    "alpha": {
+      "type": "number",
+      "min": 0,
+      "max": 1,
+      "unit": "ratio",
+      "optional": true
+    },
+    "soundKey": {
+      "type": "docRef",
+      "optional": true
+    },
+    "arriveSoundKey": {
+      "type": "docRef",
+      "optional": true
+    }
+  },
+  "requires": [
+    "modelFx"
+  ],
+  "gapScore": 8,
+  "exemplar": {
+    "skill": "11-04 三千世界（o018 HeroMusashiMiyamoto，census static-single）",
+    "jass": "o018"
+  }
+}

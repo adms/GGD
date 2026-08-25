@@ -25,8 +25,14 @@
    "vertexColorCalls": 57,
    "alphaResolved": 26,
    "alphaEventUnit": 25,
-   "alphaUnresolved": 6
-  }
+   "alphaUnresolved": 6,
+   "tplVisible": 196,
+   "tplStaticSingle": 165,
+   "tplStaticLine": 15,
+   "tplTravelSingle": 12,
+   "tplTravelLine": 4
+  },
+  "templates": "模板分群 = 2×2（位移＝生成點有 SetUnitPosition · 多具＝生成點在 loop 裡），⛔ 隱形/承襲模型的 dummy 不進表（原作就看不見，引擎對應物是 proxyCast）。⛔ 刻意不用 timedLife 與 anim/timeScale 當軸：前者在 GGD 是同一格 lifeSec，後者的引擎機制還沒落地（理由逐字寫在 gen.mjs 的分群段）"
  },
  "units": [
   {
@@ -26473,6 +26479,3790 @@
    ],
    "alphaPct": 100,
    "rgba255": null
+  }
+ ],
+ "templateSuggestions": [
+  {
+   "rawcode": "e003",
+   "name": "特效",
+   "model": "Abilities\\Weapons\\RedDragonBreath\\RedDragonMissile.mdl",
+   "shape": "travel-line",
+   "template": "tpl-locust-swarm",
+   "sites": 2,
+   "triggers": [
+    "ABanX",
+    "DraBom"
+   ],
+   "params": {
+    "scale": 4,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 1,
+    "count": null,
+    "spacing": null
+   }
+  },
+  {
+   "rawcode": "e004",
+   "name": "隕石特效",
+   "model": "Units\\Demon\\Infernal\\InfernalBirth.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "e00G",
+   "name": "Chain Ball Effect",
+   "model": "Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 2.7,
+    "tint": [
+     0,
+     1,
+     1
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "e00H",
+   "name": "Chain Bolt",
+   "model": "Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 2,
+    "tint": [
+     0,
+     1,
+     1
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "e00Y",
+   "name": "雷電風暴",
+   "model": "Abilities\\Spells\\Other\\Tornado\\TornadoElemental.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "LiteningWind"
+   ],
+   "params": {
+    "scale": 3,
+    "tint": [
+     0.5882,
+     0.5882,
+     1
+    ],
+    "alpha": null,
+    "lifeSec": 2
+   }
+  },
+  {
+   "rawcode": "e013",
+   "name": "畫龍點睛",
+   "model": "Abilities\\Spells\\Other\\Tornado\\TornadoElemental.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "Toro"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": [
+     0.5882,
+     0.5882,
+     1
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "e016",
+   "name": "雷電風暴-千之雷",
+   "model": "Abilities\\Spells\\Other\\Tornado\\TornadoElemental.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "ThTh"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": [
+     1,
+     0,
+     1
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "e017",
+   "name": "30變態紳士",
+   "model": "units\\orc\\HeroShadowHunter\\HeroShadowHunter.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h000",
+   "name": "龍氣",
+   "model": "Abilities\\Spells\\Other\\Parasite\\ParasiteMissile.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "DragonExp"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 6
+   }
+  },
+  {
+   "rawcode": "h002",
+   "name": "幻影",
+   "model": "HeroCloudStrife.mdl",
+   "shape": "travel-single",
+   "template": "tpl-locust-travel",
+   "sites": 1,
+   "triggers": [
+    "SuperFF7"
+   ],
+   "params": {
+    "scale": 1.3,
+    "tint": null,
+    "alpha": 0.6,
+    "lifeSec": 0.2
+   }
+  },
+  {
+   "rawcode": "h006",
+   "name": "龜派氣功",
+   "model": "Abilities\\Spells\\Human\\FlameStrike\\FlameStrike1.mdl",
+   "shape": "static-line",
+   "template": "tpl-locust-line",
+   "sites": 2,
+   "triggers": [
+    "Allbullet",
+    "Turtle Power"
+   ],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 2,
+    "count": null,
+    "spacing": null
+   }
+  },
+  {
+   "rawcode": "h007",
+   "name": "特效龜派",
+   "model": "Abilities\\Spells\\Human\\ReviveHuman\\ReviveHuman.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 3,
+   "triggers": [
+    "Allbullet",
+    "SunFire",
+    "Turtle Power"
+   ],
+   "params": {
+    "scale": 1.25,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 2
+   }
+  },
+  {
+   "rawcode": "h008",
+   "name": "特效三號",
+   "model": "Abilities\\Weapons\\FragDriller\\FragDriller.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 3,
+   "triggers": [
+    "Excalibur",
+    "ExcaliburMAX",
+    "Turtle Power"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 0.2
+   }
+  },
+  {
+   "rawcode": "h009",
+   "name": "手裡劍",
+   "model": "Abilities\\Weapons\\GlaiveMissile\\GlaiveMissile.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 2,
+   "triggers": [
+    "Initiate Fan Toss"
+   ],
+   "params": {
+    "scale": 0.8,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h00C",
+   "name": "Pikeman",
+   "model": "units\\creeps\\BanditSpearThrower\\BanditSpearThrower.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 1.3,
+    "tint": [
+     1,
+     0.7843,
+     0.7843
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h00E",
+   "name": "Horseman",
+   "model": "units\\human\\Knight\\Knight.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h00H",
+   "name": "仙氣",
+   "model": "Abilities\\Weapons\\Mortar\\MortarMissile.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 2.5,
+    "tint": [
+     0.3922,
+     0.3922,
+     1
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h00I",
+   "name": "幻影",
+   "model": "SD2.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 1.3,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h00J",
+   "name": "靈魂衝擊",
+   "model": "Abilities\\Spells\\Human\\Resurrect\\ResurrectCaster.mdl",
+   "shape": "travel-line",
+   "template": "tpl-locust-swarm",
+   "sites": 2,
+   "triggers": [
+    "GDD",
+    "Soul Shock"
+   ],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 0.5,
+    "count": null,
+    "spacing": null
+   }
+  },
+  {
+   "rawcode": "h00K",
+   "name": "Holy Strike Missile",
+   "model": "Abilities\\Spells\\Orc\\Shockwave\\ShockwaveMissile.mdl",
+   "shape": "travel-line",
+   "template": "tpl-locust-swarm",
+   "sites": 2,
+   "triggers": [
+    "GDD",
+    "Soul Shock"
+   ],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null,
+    "count": null,
+    "spacing": null
+   }
+  },
+  {
+   "rawcode": "h00M",
+   "name": "特效加農炮",
+   "model": "Abilities\\Spells\\Other\\Awaken\\Awaken.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 1.25,
+    "tint": [
+     0.5882,
+     0.5882,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h00N",
+   "name": "特效全彈",
+   "model": "Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "Allbullet"
+   ],
+   "params": {
+    "scale": 1.25,
+    "tint": [
+     0.5882,
+     0.5882,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h00O",
+   "name": "特效集氣",
+   "model": "Abilities\\Spells\\Human\\MassTeleport\\MassTeleportTarget.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "Allbullet"
+   ],
+   "params": {
+    "scale": 1.25,
+    "tint": [
+     0.5882,
+     0.5882,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h00P",
+   "name": "迴旋標",
+   "model": "Abilities\\Weapons\\BloodElfSpellThiefMISSILE\\BloodElfSpellThiefMISSILE.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "Initiate Fan Toss 2"
+   ],
+   "params": {
+    "scale": 1.8,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h00Q",
+   "name": "雷斬刀",
+   "model": "Abilities\\Spells\\Other\\Monsoon\\MonsoonBoltTarget.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 10,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h00R",
+   "name": "神鳴",
+   "model": "LightningTornado.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h00S",
+   "name": "勝利劍",
+   "model": "Abilities\\Spells\\Human\\ReviveHuman\\ReviveHuman.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 3,
+   "triggers": [
+    "Excalibur",
+    "ExcaliburMAX",
+    "Open Skill of Saber"
+   ],
+   "params": {
+    "scale": 0.2,
+    "tint": [
+     1,
+     0.3922,
+     0.3922
+    ],
+    "alpha": null,
+    "lifeSec": 0.5
+   }
+  },
+  {
+   "rawcode": "h00T",
+   "name": "Rider幻影",
+   "model": "HeroRider.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 1.4,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h00U",
+   "name": "Frostsphere",
+   "model": "Abilities\\Spells\\Items\\AIfb\\AIfbTarget.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 5,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h00V",
+   "name": "Frostsphere",
+   "model": "Objects\\Spawnmodels\\Other\\FlameThrower\\FlameThrowerSpawnObj.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h00X",
+   "name": "勝利劍 黑化",
+   "model": "NetherStrike.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 2,
+   "triggers": [
+    "Excalibur",
+    "Open Skill of DarkSaber"
+   ],
+   "params": {
+    "scale": 0.2,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 0.5
+   }
+  },
+  {
+   "rawcode": "h00Y",
+   "name": "老二",
+   "model": "buildings\\naga\\TidalGuardian\\TidalGuardian.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 2,
+    "tint": [
+     0,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h00Z",
+   "name": "九頭龍閃",
+   "model": "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "NineSlashEffect"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": [
+     1,
+     0.3922,
+     0.3922
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h013",
+   "name": "新龍破斬2",
+   "model": "Abilities\\Spells\\Human\\MarkOfChaos\\MarkOfChaosTarget.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "DragonSlaveSet"
+   ],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h014",
+   "name": "新龍破斬1",
+   "model": "FireBlast.mdl",
+   "shape": "travel-single",
+   "template": "tpl-locust-travel",
+   "sites": 1,
+   "triggers": [
+    "DragonSlaveMove"
+   ],
+   "params": {
+    "scale": 4.5,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 0.5
+   }
+  },
+  {
+   "rawcode": "h015",
+   "name": "騎英之守綱",
+   "model": "AWING.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "Initate Crazy"
+   ],
+   "params": {
+    "scale": 3,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 3
+   }
+  },
+  {
+   "rawcode": "h016",
+   "name": "飛鼠先生殘影",
+   "model": "units\\undead\\HeroDeathKnight\\HeroDeathKnight.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "MoriyaShadow"
+   ],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": 0.5,
+    "lifeSec": 1
+   }
+  },
+  {
+   "rawcode": "h017",
+   "name": "安云殘影",
+   "model": "HeroKunoichi.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h018",
+   "name": "賽飛殘影",
+   "model": "HeroSephiroth.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h019",
+   "name": "金鋼狼",
+   "model": "Units\\Demon\\ChaosOrcRange\\ChaosOrcRange.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "WolfStrike"
+   ],
+   "params": {
+    "scale": 1.6,
+    "tint": [
+     1,
+     1,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h01C",
+   "name": "魯夫殘影兼隱藏施法",
+   "model": "Luffe.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "ButtyAfraid"
+   ],
+   "params": {
+    "scale": 1.3,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h01F",
+   "name": "皮卡",
+   "model": "HeroPika.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "AKT start"
+   ],
+   "params": {
+    "scale": 0.4,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 0.5
+   }
+  },
+  {
+   "rawcode": "h01G",
+   "name": "和香",
+   "model": "units\\critters\\VillagerWoman\\VillagerWoman.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "AKT start"
+   ],
+   "params": {
+    "scale": 1,
+    "tint": [
+     1,
+     0.3922,
+     0.3922
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h01H",
+   "name": "夏娜",
+   "model": "HeroShana.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "AKT start"
+   ],
+   "params": {
+    "scale": 1.25,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h01I",
+   "name": "涼宮",
+   "model": "units\\human\\Sorceress\\Sorceress_V1.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "AKT start"
+   ],
+   "params": {
+    "scale": 1,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h01P",
+   "name": "野戰電子砲",
+   "model": "Abilities\\Spells\\Other\\Awaken\\Awaken.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "ElecPower"
+   ],
+   "params": {
+    "scale": null,
+    "tint": [
+     0.3922,
+     0.3922,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 1
+   }
+  },
+  {
+   "rawcode": "h01R",
+   "name": "光牙",
+   "model": "Units\\NightElf\\Owl\\Owl.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h01S",
+   "name": "三千世界特效單位(龍捲風)",
+   "model": "Abilities\\Spells\\Other\\Tornado\\TornadoElemental.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "ThworldStart"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": [
+     0.3922,
+     0.5882,
+     1
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h01T",
+   "name": "三千世界特效單位(索隆)",
+   "model": "HeroMusashiMiyamoto.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "ThworldStart"
+   ],
+   "params": {
+    "scale": 1.5,
+    "tint": [
+     0.3922,
+     0.5882,
+     1
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h01V",
+   "name": "81-03天神烈破",
+   "model": "Abilities\\Spells\\Human\\ReviveHuman\\ReviveHuman.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "DivineBusterEx"
+   ],
+   "params": {
+    "scale": 3,
+    "tint": [
+     1,
+     0.1961,
+     0.3922
+    ],
+    "alpha": null,
+    "lifeSec": 0.5
+   }
+  },
+  {
+   "rawcode": "h01Y",
+   "name": "奈葉魔法陣",
+   "model": "MidchilderNanohaAura.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 2,
+   "triggers": [
+    "DivineBusterEx",
+    "StarlightBreakerPlus"
+   ],
+   "params": {
+    "scale": null,
+    "tint": [
+     1,
+     0.3922,
+     0.3922
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h01Z",
+   "name": "奈葉魔法陣（放大）",
+   "model": "MidchilderNanohaAura.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 2,
+   "triggers": [
+    "DivineBusterEx",
+    "StarlightBreakerPlus"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": [
+     1,
+     0.3922,
+     0.3922
+    ],
+    "alpha": null,
+    "lifeSec": 0.3
+   }
+  },
+  {
+   "rawcode": "h023",
+   "name": "熊熊幻影",
+   "model": "units\\creeps\\PolarBear\\PolarBear.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "GiveMeHoney"
+   ],
+   "params": {
+    "scale": null,
+    "tint": [
+     1,
+     0.7843,
+     0
+    ],
+    "alpha": 0.5,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h024",
+   "name": "騎英之守綱",
+   "model": "Abilities\\Spells\\Undead\\AbsorbMana\\AbsorbManaBirthMissile.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "RiderSprint"
+   ],
+   "params": {
+    "scale": 15,
+    "tint": [
+     1,
+     0,
+     1
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h025",
+   "name": "騎英之守綱(特效)",
+   "model": "Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 2,
+   "triggers": [
+    "RidermovelineDam",
+    "Riderspell"
+   ],
+   "params": {
+    "scale": 4,
+    "tint": [
+     1,
+     0,
+     1
+    ],
+    "alpha": null,
+    "lifeSec": 2
+   }
+  },
+  {
+   "rawcode": "h026",
+   "name": "三檔拳頭",
+   "model": "Luffe punch.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "Luf Three Effect"
+   ],
+   "params": {
+    "scale": 10,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h027",
+   "name": "三檔旋風",
+   "model": "Abilities\\Spells\\Other\\Tornado\\TornadoElemental.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "Luf Three Effect"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": null,
+    "alpha": 0,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h02C",
+   "name": "絕對屏障",
+   "model": "Abilities\\Spells\\Undead\\AnimateDead\\AnimateDeadTarget.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "AbsoluteDefence"
+   ],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 5
+   }
+  },
+  {
+   "rawcode": "h02D",
+   "name": "騎英魔法陣",
+   "model": "MidchilderNanohaAura.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "Initate Crazy"
+   ],
+   "params": {
+    "scale": 1.5,
+    "tint": [
+     1,
+     0.3922,
+     0.3922
+    ],
+    "alpha": null,
+    "lifeSec": 3
+   }
+  },
+  {
+   "rawcode": "h02E",
+   "name": "黑龍身體",
+   "model": "BlackHole.mdl",
+   "shape": "travel-single",
+   "template": "tpl-locust-travel",
+   "sites": 6,
+   "triggers": [
+    "DarkDragonEXMove",
+    "newlzfs"
+   ],
+   "params": {
+    "scale": 0.1,
+    "tint": [
+     0,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 1.5
+   }
+  },
+  {
+   "rawcode": "h02F",
+   "name": "黑龍頭",
+   "model": "Darkraor.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 3,
+   "triggers": [
+    "DarkDragonEX"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": [
+     0,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 2
+   }
+  },
+  {
+   "rawcode": "h02G",
+   "name": "Saber殘影",
+   "model": "HeroSaber.mdl",
+   "shape": "static-line",
+   "template": "tpl-locust-line",
+   "sites": 1,
+   "triggers": [
+    "ExcaliburMAX"
+   ],
+   "params": {
+    "scale": 1.1,
+    "tint": null,
+    "alpha": 0.5,
+    "lifeSec": null,
+    "count": null,
+    "spacing": null
+   }
+  },
+  {
+   "rawcode": "h02H",
+   "name": "騎英之守綱(特效2)",
+   "model": "Abilities\\Spells\\Orc\\Shockwave\\ShockwaveMissile.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "Initate Crazy"
+   ],
+   "params": {
+    "scale": 3,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 3
+   }
+  },
+  {
+   "rawcode": "h02I",
+   "name": "騎英之守綱(特效3)",
+   "model": "Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "Initate Crazy"
+   ],
+   "params": {
+    "scale": 5,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 3
+   }
+  },
+  {
+   "rawcode": "h02T",
+   "name": "馬頭",
+   "model": "horsehead.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h02W",
+   "name": "81-01彗星灼烈",
+   "model": "Abilities\\Spells\\Orc\\StasisTrap\\StasisTotemTarget.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "BarrelShot"
+   ],
+   "params": {
+    "scale": 5,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 1.6
+   }
+  },
+  {
+   "rawcode": "h02X",
+   "name": "太陽光束",
+   "model": "Abilities\\Spells\\Other\\Parasite\\ParasiteMissile.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "SunFire pre"
+   ],
+   "params": {
+    "scale": 7,
+    "tint": [
+     1,
+     0.5882,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 1
+   }
+  },
+  {
+   "rawcode": "h030",
+   "name": "佐助萬花筒效果",
+   "model": "NetherStrike.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "ImbaEye"
+   ],
+   "params": {
+    "scale": 4,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "h032",
+   "name": "龍氣2 GodEye",
+   "model": "AquaSpikeVersion2.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 2,
+   "triggers": [
+    "FinalShotting",
+    "HudGhosts"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 1
+   }
+  },
+  {
+   "rawcode": "hpea",
+   "name": null,
+   "model": "Abilities\\Spells\\Undead\\DeathCoil\\DeathCoilMissile.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "n009",
+   "name": "火焰彈",
+   "model": "Meteor.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 1.6,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "n00L",
+   "name": "流星雨",
+   "model": "Meteor.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "n00M",
+   "name": "賽飛天使",
+   "model": "Abilities\\Spells\\Demon\\ReviveDemon\\ReviveDemon.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 2,
+    "tint": [
+     1,
+     0.5882,
+     0.5882
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "n00N",
+   "name": "閃電",
+   "model": "Abilities\\Spells\\Other\\Monsoon\\MonsoonBoltTarget.mdl",
+   "shape": "static-line",
+   "template": "tpl-locust-line",
+   "sites": 2,
+   "triggers": [
+    "BlueDragonWave",
+    "LightCut"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 1,
+    "count": null,
+    "spacing": null
+   }
+  },
+  {
+   "rawcode": "n00R",
+   "name": "最終流星雨",
+   "model": "Meteor.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 5,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "n00S",
+   "name": "屍暴",
+   "model": "Objects\\Spawnmodels\\Orc\\OrcSmallDeathExplode\\OrcSmallDeathExplode.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 5,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "n00V",
+   "name": "星光炸裂 delete",
+   "model": "Abilities\\Spells\\Human\\ReviveHuman\\ReviveHuman.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 2,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "n015",
+   "name": "死之王",
+   "model": "Abilities\\Spells\\Human\\MarkOfChaos\\MarkOfChaosTarget.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "n01D",
+   "name": "聖夜",
+   "model": "Abilities\\Spells\\Items\\AIil\\AIilTarget.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "n01F",
+   "name": "隕石擊",
+   "model": "Meteor.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 0.8,
+    "tint": [
+     0.7843,
+     0.5882,
+     0.5882
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "n01I",
+   "name": "星光爆裂",
+   "model": "LasercannonfinalRED.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o000",
+   "name": "復仇之袍",
+   "model": "Abilities\\Spells\\other\\ANsa\\ANsaTarget.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o001",
+   "name": "北斗神拳",
+   "model": "Units\\Undead\\Abomination\\AbominationExplosion.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 2,
+   "triggers": [
+    "Oran",
+    "YouDie"
+   ],
+   "params": {
+    "scale": null,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 0.8
+   }
+  },
+  {
+   "rawcode": "o002",
+   "name": "死亡筆記本",
+   "model": "Abilities\\Spells\\other\\ANsa\\ANsaTarget.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 3,
+   "triggers": [
+    "DeathHeart",
+    "DeathTrain"
+   ],
+   "params": {
+    "scale": null,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 1
+   }
+  },
+  {
+   "rawcode": "o004",
+   "name": "火山爆炸石",
+   "model": "Abilities\\Spells\\Other\\Volcano\\VolcanoDeath.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 5,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o006",
+   "name": "雷切",
+   "model": "Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 2,
+   "triggers": [
+    "HolySword",
+    "LightCutRun"
+   ],
+   "params": {
+    "scale": 3.5,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 1
+   }
+  },
+  {
+   "rawcode": "o007",
+   "name": "武神",
+   "model": "cloud.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 0.8,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o00A",
+   "name": "魔界植物",
+   "model": "Abilities\\Spells\\NightElf\\EntangleMine\\Roots.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 3,
+   "triggers": [
+    "EvilFox",
+    "SuperOldTree",
+    "plant"
+   ],
+   "params": {
+    "scale": null,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 1
+   }
+  },
+  {
+   "rawcode": "o00B",
+   "name": "天地魔鬥",
+   "model": "Abilities\\Spells\\other\\ANsa\\ANsaTarget.mdl",
+   "shape": "static-line",
+   "template": "tpl-locust-line",
+   "sites": 1,
+   "triggers": [
+    "HolyShit"
+   ],
+   "params": {
+    "scale": null,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 10,
+    "count": null,
+    "spacing": null
+   }
+  },
+  {
+   "rawcode": "o00E",
+   "name": "打雷",
+   "model": "Abilities\\Spells\\Other\\Monsoon\\MonsoonBoltTarget.mdl",
+   "shape": "travel-single",
+   "template": "tpl-locust-travel",
+   "sites": 10,
+   "triggers": [
+    "ChangeDNA",
+    "Fifty Sky Effect",
+    "KniSkillEffect",
+    "LightAttack",
+    "LightningSpread",
+    "Open Skill of Pikachu",
+    "Open Skill of Pikachu Copy",
+    "PIKACHU",
+    "ThuBird"
+   ],
+   "params": {
+    "scale": 10,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 1
+   }
+  },
+  {
+   "rawcode": "o00G",
+   "name": "avalon",
+   "model": "Abilities\\Spells\\Other\\Monsoon\\MonsoonBoltTarget.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 4,
+   "triggers": [
+    "Open Skill of Saber",
+    "avalonStart",
+    "saber",
+    "stupidStart"
+   ],
+   "params": {
+    "scale": 6,
+    "tint": [
+     0.3922,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 0.5
+   }
+  },
+  {
+   "rawcode": "o00H",
+   "name": "磁力球",
+   "model": "units\\nightelf\\Wisp\\Wisp.mdl",
+   "shape": "static-line",
+   "template": "tpl-locust-line",
+   "sites": 1,
+   "triggers": [
+    "closeMe"
+   ],
+   "params": {
+    "scale": null,
+    "tint": [
+     0,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 2,
+    "count": null,
+    "spacing": null
+   }
+  },
+  {
+   "rawcode": "o00I",
+   "name": "竹蜻蜓",
+   "model": "Abilities\\Spells\\Undead\\DeathPact\\DeathPactTarget.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "CutUHead effect"
+   ],
+   "params": {
+    "scale": 3,
+    "tint": [
+     0,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 6
+   }
+  },
+  {
+   "rawcode": "o00M",
+   "name": "獸王爆裂陣",
+   "model": "Boomnl.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "AnKiMagic Effect"
+   ],
+   "params": {
+    "scale": 1,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 2
+   }
+  },
+  {
+   "rawcode": "o00N",
+   "name": "獸王結界",
+   "model": "Abilities\\Spells\\Undead\\VampiricAura\\VampiricAura.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 0.5,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o00O",
+   "name": "狂戰士",
+   "model": "Objects\\Spawnmodels\\Human\\HCancelDeath\\HCancelDeath.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 3,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o00P",
+   "name": "寒冰",
+   "model": "Abilities\\Spells\\Undead\\FrostNova\\FrostNovaTarget.mdl",
+   "shape": "travel-single",
+   "template": "tpl-locust-travel",
+   "sites": 1,
+   "triggers": [
+    "Run Effect"
+   ],
+   "params": {
+    "scale": 1.8,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 1
+   }
+  },
+  {
+   "rawcode": "o00Q",
+   "name": "魔法膨脹",
+   "model": "Objects\\Spawnmodels\\Undead\\UCancelDeath\\UCancelDeath.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 2,
+   "triggers": [
+    "MagicUp",
+    "NewTrdHorse"
+   ],
+   "params": {
+    "scale": 4,
+    "tint": [
+     0,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 0.5
+   }
+  },
+  {
+   "rawcode": "o00R",
+   "name": "王者之笛",
+   "model": "Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "HeroCome"
+   ],
+   "params": {
+    "scale": 6,
+    "tint": [
+     0,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 1
+   }
+  },
+  {
+   "rawcode": "o00S",
+   "name": "黑洞",
+   "model": "Abilities\\Spells\\Undead\\Possession\\PossessionCaster.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "InSpace"
+   ],
+   "params": {
+    "scale": 10,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 6
+   }
+  },
+  {
+   "rawcode": "o00T",
+   "name": "固有結界",
+   "model": "DeathWave.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o00U",
+   "name": "真夜幻影",
+   "model": "HeroGirl.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o00V",
+   "name": "蒼月道術特效2",
+   "model": "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 1.5,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o00W",
+   "name": "蒼月道術特效",
+   "model": "Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",
+   "shape": "travel-single",
+   "template": "tpl-locust-travel",
+   "sites": 1,
+   "triggers": [
+    "MoonKnock"
+   ],
+   "params": {
+    "scale": 3,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 1
+   }
+  },
+  {
+   "rawcode": "o00Y",
+   "name": "白木束縛",
+   "model": "Abilities\\Spells\\Orc\\EtherealForm\\SpiritWalkerChange.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "whiterOldTree"
+   ],
+   "params": {
+    "scale": 4,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 2
+   }
+  },
+  {
+   "rawcode": "o00Z",
+   "name": "黑龍波",
+   "model": "Abilities\\Spells\\Human\\FlameStrike\\FlameStrikeTarget.mdl",
+   "shape": "static-line",
+   "template": "tpl-locust-line",
+   "sites": 3,
+   "triggers": [
+    "DarkDragonEX",
+    "EatDragon",
+    "Open Skill of Hehi"
+   ],
+   "params": {
+    "scale": null,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 3,
+    "count": null,
+    "spacing": null
+   }
+  },
+  {
+   "rawcode": "o010",
+   "name": "黑龍波龍形",
+   "model": "units\\critters\\DuneWorm\\DuneWorm.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "Open Skill of Hehi"
+   ],
+   "params": {
+    "scale": null,
+    "tint": [
+     0,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o011",
+   "name": "大地之怒",
+   "model": "Doodads\\Terrain\\RockChunks\\RockChunks0.mdl",
+   "shape": "travel-line",
+   "template": "tpl-locust-swarm",
+   "sites": 5,
+   "triggers": [
+    "GaiaAngre",
+    "GroundAttack",
+    "fastStepGo"
+   ],
+   "params": {
+    "scale": 2.2,
+    "tint": [
+     0.3922,
+     0.3922,
+     0.3922
+    ],
+    "alpha": null,
+    "lifeSec": 3,
+    "count": null,
+    "spacing": null
+   }
+  },
+  {
+   "rawcode": "o012",
+   "name": "安云迴切",
+   "model": "Bladestorm_SwordEffect.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "FitCutExecute"
+   ],
+   "params": {
+    "scale": 0.85,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 2
+   }
+  },
+  {
+   "rawcode": "o013",
+   "name": "剎那",
+   "model": "mfls.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "Cloud ready"
+   ],
+   "params": {
+    "scale": 1.2,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o014",
+   "name": "獸王牙操彈",
+   "model": "Abilities\\Weapons\\IllidanMissile\\IllidanMissile.mdl",
+   "shape": "static-line",
+   "template": "tpl-locust-line",
+   "sites": 1,
+   "triggers": [
+    "KaoLight"
+   ],
+   "params": {
+    "scale": 3,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 0.05,
+    "count": null,
+    "spacing": null
+   }
+  },
+  {
+   "rawcode": "o015",
+   "name": "夏娜封絕",
+   "model": "GrandOrcAura.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 2,
+   "triggers": [
+    "AKT 1",
+    "CloseDest"
+   ],
+   "params": {
+    "scale": 0.1,
+    "tint": [
+     0.3922,
+     0.3922,
+     0.3922
+    ],
+    "alpha": null,
+    "lifeSec": 2
+   }
+  },
+  {
+   "rawcode": "o016",
+   "name": "拳頭集氣",
+   "model": "Abilities\\Spells\\NightElf\\Barkskin\\BarkSkinTarget.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "XHunterStone pre"
+   ],
+   "params": {
+    "scale": 7,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 1
+   }
+  },
+  {
+   "rawcode": "o017",
+   "name": "九刀流特效",
+   "model": "Abilities\\Spells\\Demon\\DarkPortal\\DarkPortalTarget.mdl",
+   "shape": "travel-single",
+   "template": "tpl-locust-travel",
+   "sites": 1,
+   "triggers": [
+    "Romove"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 0.5
+   }
+  },
+  {
+   "rawcode": "o018",
+   "name": "索龍分身",
+   "model": "HeroMusashiMiyamoto.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 6,
+   "triggers": [
+    "Roaction"
+   ],
+   "params": {
+    "scale": null,
+    "tint": [
+     0.1961,
+     0,
+     0
+    ],
+    "alpha": 0.5,
+    "lifeSec": 0.01
+   }
+  },
+  {
+   "rawcode": "o019",
+   "name": "動地剁",
+   "model": "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl",
+   "shape": "static-line",
+   "template": "tpl-locust-line",
+   "sites": 1,
+   "triggers": [
+    "DragonTigerReady"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 0.05,
+    "count": null,
+    "spacing": null
+   }
+  },
+  {
+   "rawcode": "o01A",
+   "name": "閃電",
+   "model": "Abilities\\Spells\\Items\\AIlb\\AIlbSpecialArt.mdl",
+   "shape": "travel-single",
+   "template": "tpl-locust-travel",
+   "sites": 4,
+   "triggers": [
+    "DragonTigerReady"
+   ],
+   "params": {
+    "scale": 2.5,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 0.05
+   }
+  },
+  {
+   "rawcode": "o01B",
+   "name": "龍虎-昇龍拳",
+   "model": "Abilities\\Spells\\NightElf\\BattleRoar\\RoarCaster.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "DragonTigerReady"
+   ],
+   "params": {
+    "scale": 2.5,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 0.05
+   }
+  },
+  {
+   "rawcode": "o01C",
+   "name": "殺生丸幻影",
+   "model": "Sesshomaru.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "lzfsEffect"
+   ],
+   "params": {
+    "scale": null,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": 0.6,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o01D",
+   "name": "百烈櫻華斬",
+   "model": "EarthTornado2.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 2,
+   "triggers": [
+    "Flow",
+    "SaKuSpaNew"
+   ],
+   "params": {
+    "scale": 1.5,
+    "tint": [
+     1,
+     0.3922,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 1
+   }
+  },
+  {
+   "rawcode": "o01E",
+   "name": "雷光劍",
+   "model": "Abilities\\Spells\\NightElf\\Blink\\BlinkTarget.mdl",
+   "shape": "travel-single",
+   "template": "tpl-locust-travel",
+   "sites": 2,
+   "triggers": [
+    "Light Fight",
+    "Move Effect"
+   ],
+   "params": {
+    "scale": 5,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": 0.5,
+    "lifeSec": 1
+   }
+  },
+  {
+   "rawcode": "o01F",
+   "name": "雷光劍(落雷)",
+   "model": "Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "Light Fight"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o01G",
+   "name": "東風檜扇南風末廣",
+   "model": "OblivionAura.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 2,
+   "triggers": [
+    "Wind Effect"
+   ],
+   "params": {
+    "scale": null,
+    "tint": [
+     0.3922,
+     0.3922,
+     0.3922
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o01H",
+   "name": "螺旋劍",
+   "model": "Abilities\\Spells\\Other\\Tornado\\TornadoElemental.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "spiralAttack"
+   ],
+   "params": {
+    "scale": 4,
+    "tint": [
+     0.4706,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 3
+   }
+  },
+  {
+   "rawcode": "o01J",
+   "name": "強吻",
+   "model": "LOVE2.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 6,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o01L",
+   "name": "召喚顯示特效",
+   "model": "OblivionAura.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "AKT Effect"
+   ],
+   "params": {
+    "scale": 5,
+    "tint": [
+     0.3922,
+     0.3922,
+     0.3922
+    ],
+    "alpha": 1,
+    "lifeSec": 10
+   }
+  },
+  {
+   "rawcode": "o01M",
+   "name": "火焰爆炸",
+   "model": "Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 2,
+   "triggers": [
+    "AKT 2",
+    "BR Law"
+   ],
+   "params": {
+    "scale": 8,
+    "tint": [
+     0.3922,
+     0.3922,
+     0.3922
+    ],
+    "alpha": null,
+    "lifeSec": 0.5
+   }
+  },
+  {
+   "rawcode": "o01N",
+   "name": "重力之球",
+   "model": "BlackHole1.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 3,
+   "triggers": [
+    "AKT 3",
+    "GravityBall",
+    "newlzfsmove"
+   ],
+   "params": {
+    "scale": 2.5,
+    "tint": [
+     0.3922,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 6
+   }
+  },
+  {
+   "rawcode": "o01O",
+   "name": "嗜血邪書",
+   "model": "Doodads\\Cityscape\\Props\\MagicRunes\\MagicRunes0.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 7,
+    "tint": [
+     1,
+     0,
+     0.7843
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o01P",
+   "name": "天翔龍閃",
+   "model": "Abilities\\Spells\\Other\\Tornado\\TornadoElemental.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 3,
+   "triggers": [
+    "HoLuKen",
+    "SkySlash",
+    "init Die"
+   ],
+   "params": {
+    "scale": 3,
+    "tint": [
+     0.7843,
+     0.3922,
+     0.3922
+    ],
+    "alpha": null,
+    "lifeSec": 5
+   }
+  },
+  {
+   "rawcode": "o01Q",
+   "name": "月牙天衝",
+   "model": "Abilities\\Spells\\Items\\WandOfNeutralization\\NeutralizationMissile.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "Bleach Moon"
+   ],
+   "params": {
+    "scale": 10,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o01R",
+   "name": "月牙天衝(虛化)",
+   "model": "DeathWave.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "Bleach Moon"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o01S",
+   "name": "卍解",
+   "model": "Abilities\\Spells\\Human\\MarkOfChaos\\MarkOfChaosTarget.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 5,
+    "tint": [
+     1,
+     0.3922,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o01T",
+   "name": "接技特效兼隱藏施法",
+   "model": "Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 3,
+   "triggers": [
+    "Hell Rock Move",
+    "Hell Timer2",
+    "Hell Timer4"
+   ],
+   "params": {
+    "scale": 3.5,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o01U",
+   "name": "接技特效(動地跺)",
+   "model": "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "Hell Timer8"
+   ],
+   "params": {
+    "scale": 5,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o01V",
+   "name": "黑龍波龍形2",
+   "model": "units\\critters\\DuneWorm\\DuneWorm.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 2,
+   "triggers": [
+    "EatDragon",
+    "Open Skill of Hehi"
+   ],
+   "params": {
+    "scale": 5,
+    "tint": [
+     0,
+     0,
+     0
+    ],
+    "alpha": 0.8,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o01W",
+   "name": "呂布斷光",
+   "model": "Abilities\\Spells\\Items\\WandOfNeutralization\\NeutralizationMissile.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 6,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o01Y",
+   "name": "龍拳",
+   "model": "units\\creeps\\BronzeDragon\\BronzeDragon.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 4,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o020",
+   "name": "豪火龍之術",
+   "model": "Darkraor.mdl",
+   "shape": "static-line",
+   "template": "tpl-locust-line",
+   "sites": 1,
+   "triggers": [
+    "ChoChuFireDro"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": [
+     0.3922,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null,
+    "count": null,
+    "spacing": null
+   }
+  },
+  {
+   "rawcode": "o021",
+   "name": "豪火龍之術-末日",
+   "model": "Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "ChoChuFireDro"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 0.3
+   }
+  },
+  {
+   "rawcode": "o022",
+   "name": "千鳥流閃電",
+   "model": "Abilities\\Spells\\Orc\\Purge\\PurgeBuffTarget.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 3,
+    "tint": [
+     0.3922,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o023",
+   "name": "Accel Shooter",
+   "model": "Abilities\\Weapons\\PhoenixMissile\\Phoenix_Missile_mini.mdl",
+   "shape": "static-line",
+   "template": "tpl-locust-line",
+   "sites": 1,
+   "triggers": [
+    "AcxelShooter"
+   ],
+   "params": {
+    "scale": 1,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 0.05,
+    "count": null,
+    "spacing": null
+   }
+  },
+  {
+   "rawcode": "o024",
+   "name": "81爆裂",
+   "model": "Abilities\\Spells\\Other\\Volcano\\VolcanoDeath.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 3,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o025",
+   "name": "81衝刺",
+   "model": "Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 3,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o026",
+   "name": "23魔法陣",
+   "model": "Abilities\\Spells\\Undead\\UnholyAura\\UnholyAura.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "LightLancer"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 2
+   }
+  },
+  {
+   "rawcode": "o027",
+   "name": "23魔法陣2",
+   "model": "Abilities\\Spells\\Undead\\UnholyAura\\UnholyAura.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "HolySword"
+   ],
+   "params": {
+    "scale": 3,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 2
+   }
+  },
+  {
+   "rawcode": "o029",
+   "name": "毀滅彈",
+   "model": "Abilities\\Spells\\Undead\\Possession\\PossessionCaster.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "EarthBoom"
+   ],
+   "params": {
+    "scale": 10,
+    "tint": [
+     1,
+     0.3922,
+     0.3922
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o02J",
+   "name": "涅吉雷之投擲",
+   "model": "Abilities\\Weapons\\Banditmissile\\Banditmissile.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "ThunderCreate"
+   ],
+   "params": {
+    "scale": 4,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": 0.5,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o02K",
+   "name": "戰鬥涅吉巨神殺",
+   "model": "Abilities\\Weapons\\Banditmissile\\Banditmissile.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "fist"
+   ],
+   "params": {
+    "scale": 8,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": 0.5,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o02M",
+   "name": "疾風怒雷",
+   "model": "Abilities\\Spells\\Other\\Monsoon\\MonsoonBoltTarget.mdl",
+   "shape": "static-line",
+   "template": "tpl-locust-line",
+   "sites": 1,
+   "triggers": [
+    "LigtingHamm"
+   ],
+   "params": {
+    "scale": 6,
+    "tint": [
+     0.3922,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 3,
+    "count": null,
+    "spacing": null
+   }
+  },
+  {
+   "rawcode": "o02T",
+   "name": "B叔殘影",
+   "model": "units\\demon\\FelgaurdBlue\\FelgaurdBlue.mdl",
+   "shape": "travel-single",
+   "template": "tpl-locust-travel",
+   "sites": 2,
+   "triggers": [
+    "Nine Lives Hits"
+   ],
+   "params": {
+    "scale": 1.3,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": 0.5,
+    "lifeSec": 1
+   }
+  },
+  {
+   "rawcode": "o02U",
+   "name": "雷光投射",
+   "model": "LightningTornado.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "Light sword"
+   ],
+   "params": {
+    "scale": 0.5,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o02X",
+   "name": "96-04x 獨孤九劍殘影",
+   "model": "hzyn.mdl",
+   "shape": "static-line",
+   "template": "tpl-locust-line",
+   "sites": 1,
+   "triggers": [
+    "NineSwords"
+   ],
+   "params": {
+    "scale": 1,
+    "tint": [
+     0,
+     0,
+     0
+    ],
+    "alpha": 0.4,
+    "lifeSec": 10,
+    "count": null,
+    "spacing": null
+   }
+  },
+  {
+   "rawcode": "o02Y",
+   "name": "涅吉風花武裝解除",
+   "model": "AquaSpikeVersion2.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "WindFlowerStart"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "o031",
+   "name": "安云加速",
+   "model": "Units\\Demon\\ChaosOrcRange\\ChaosOrcRange.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 1.4,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "oshm",
+   "name": null,
+   "model": "Units\\Demon\\ChaosOrcRange\\ChaosOrcRange.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 5,
+   "triggers": [
+    "KillPower",
+    "KillPowerEX",
+    "Saber in pandaDie",
+    "Saber in pandaJizz",
+    "TwoPowerEX"
+   ],
+   "params": {
+    "scale": 1.4,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 0.5
+   }
+  },
+  {
+   "rawcode": "osp1",
+   "name": "教室",
+   "model": "BlackHole1.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "quiz"
+   ],
+   "params": {
+    "scale": 3,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 5
+   }
+  },
+  {
+   "rawcode": "u00A",
+   "name": "蒸汽球",
+   "model": "Abilities\\Spells\\Other\\Tornado\\TornadoElemental.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u00I",
+   "name": null,
+   "model": "units\\orc\\SpiritWyvern\\SpiritWyvern.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 0.4,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u00P",
+   "name": "式神",
+   "model": "Abilities\\Spells\\Undead\\AbsorbMana\\AbsorbManaBirthMissile.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 3,
+    "tint": [
+     1,
+     0.5882,
+     1
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u00Q",
+   "name": "式神",
+   "model": "units\\creeps\\BansheeGhost\\BansheeGhost.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 1.2,
+    "tint": [
+     0.3922,
+     0.0392,
+     0.0392
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u00R",
+   "name": "災難之牆",
+   "model": "Doodads\\Cinematic\\TownBurningFireEmitter\\TownBurningFireEmitter.mdl",
+   "shape": "static-line",
+   "template": "tpl-locust-line",
+   "sites": 1,
+   "triggers": [
+    "DestWall"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 2,
+    "count": null,
+    "spacing": null
+   }
+  },
+  {
+   "rawcode": "u00T",
+   "name": "白鵠",
+   "model": "Abilities\\Weapons\\SorceressMissile\\SorceressMissile.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "ComOne"
+   ],
+   "params": {
+    "scale": 10,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u00U",
+   "name": "Rider衝刺",
+   "model": "Abilities\\Spells\\Undead\\OrbOfDeath\\OrbOfDeathMissile.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 2,
+   "triggers": [
+    "Bleach Moon Effect",
+    "Crazy Movement"
+   ],
+   "params": {
+    "scale": 7,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 0.3
+   }
+  },
+  {
+   "rawcode": "u00W",
+   "name": "鬼眼衝刺",
+   "model": "Abilities\\Spells\\Undead\\Unsummon\\UnsummonTarget.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "ShanWindDragon"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 0.1
+   }
+  },
+  {
+   "rawcode": "u00X",
+   "name": "胖虎搖滾",
+   "model": "Abilities\\Spells\\Undead\\OrbOfDeath\\OrbOfDeathMissile.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "Hell Timer9"
+   ],
+   "params": {
+    "scale": 10,
+    "tint": [
+     1,
+     0.5882,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 2
+   }
+  },
+  {
+   "rawcode": "u00Z",
+   "name": "starbreaker",
+   "model": "Abilities\\Spells\\Other\\Tornado\\TornadoElemental.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 2,
+    "tint": [
+     1,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u013",
+   "name": "世界終結",
+   "model": "Abilities\\Spells\\Undead\\FrostNova\\FrostNovaTarget.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 2,
+   "triggers": [
+    "The End ofWorldCasting",
+    "The End ofWorldCasting EX"
+   ],
+   "params": {
+    "scale": 3,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 1
+   }
+  },
+  {
+   "rawcode": "u014",
+   "name": "光箭",
+   "model": "FireFly.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "LightArrow"
+   ],
+   "params": {
+    "scale": 3,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u017",
+   "name": "大紅蓮斬",
+   "model": "crescent.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 2,
+    "tint": [
+     1,
+     0.1176,
+     0.1176
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u018",
+   "name": "安云衝刺",
+   "model": "Abilities\\Spells\\Demon\\DarkPortal\\DarkPortalTarget.mdl",
+   "shape": "static-line",
+   "template": "tpl-locust-line",
+   "sites": 4,
+   "triggers": [
+    "AzumiShadow",
+    "Empty",
+    "ExcaliburMAX",
+    "HundredKillEffect"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": null,
+    "alpha": 0.5,
+    "lifeSec": 1,
+    "count": null,
+    "spacing": null
+   }
+  },
+  {
+   "rawcode": "u01A",
+   "name": "假死之王",
+   "model": "units\\demon\\EredarWarlock\\EredarWarlock.mdl",
+   "shape": "travel-single",
+   "template": "tpl-locust-travel",
+   "sites": 1,
+   "triggers": [
+    "DeathMeteo"
+   ],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 0.3
+   }
+  },
+  {
+   "rawcode": "u01L",
+   "name": "大紅蓮斬",
+   "model": "crescent.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 2,
+    "tint": [
+     1,
+     0.1176,
+     0.1176
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u01M",
+   "name": "大紅蓮斬",
+   "model": "crescent.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 2,
+    "tint": [
+     1,
+     0.1176,
+     0.1176
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u01N",
+   "name": "大紅蓮斬",
+   "model": "crescent.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 2,
+    "tint": [
+     1,
+     0.1176,
+     0.1176
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u01O",
+   "name": "大紅蓮斬",
+   "model": "crescent.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 2,
+    "tint": [
+     1,
+     0.1176,
+     0.1176
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u01P",
+   "name": "死亡老二映像",
+   "model": "buildings\\naga\\TidalGuardian\\TidalGuardian.mdl",
+   "shape": "travel-single",
+   "template": "tpl-locust-travel",
+   "sites": 1,
+   "triggers": [
+    "DMC Dead"
+   ],
+   "params": {
+    "scale": 1.5,
+    "tint": [
+     0.1961,
+     0.1961,
+     0.1961
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u01R",
+   "name": "Rider鎖鏈",
+   "model": "Abilities\\Weapons\\WardenMissile\\WardenMissile.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "linkmove"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u01W",
+   "name": "鳥人",
+   "model": "units\\creeps\\HarpyWitch\\HarpyWitch.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 1.2,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u025",
+   "name": "熊貓",
+   "model": "units\\creeps\\FurbolgPanda\\FurbolgPanda.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u027",
+   "name": "蜘蛛",
+   "model": "units\\creeps\\Spider\\Spider.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u028",
+   "name": "冥龍",
+   "model": "units\\creeps\\NetherDragon\\NetherDragon.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 0.8,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u02C",
+   "name": "烏龜",
+   "model": "Units\\Creeps\\GiantSeaTurtleRange\\GiantSeaTurtleRange.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 0.6,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u02D",
+   "name": "狼",
+   "model": "units\\creeps\\WhiteWolf\\WhiteWolf.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": [
+     0.5882,
+     0.5882,
+     0.5882
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u02H",
+   "name": "鳳凰",
+   "model": "units\\human\\phoenix\\phoenix.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 0.9,
+    "tint": [
+     0.7059,
+     0.3137,
+     0.3137
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u02I",
+   "name": "老鷹",
+   "model": "units\\creeps\\WarEagle\\WarEagle.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u02M",
+   "name": "黏液獸",
+   "model": "units\\other\\DalaranReject\\DalaranReject.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 1.3,
+    "tint": [
+     1,
+     0,
+     0.3922
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u02R",
+   "name": "黃色魔法陣",
+   "model": "Abilities\\Spells\\Undead\\UnholyAura\\UnholyAura.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "LigtingExp"
+   ],
+   "params": {
+    "scale": 3,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 0.01
+   }
+  },
+  {
+   "rawcode": "u02S",
+   "name": "黑洞聖杯泥",
+   "model": "Units\\Creeps\\ForgottenOne\\ForgottenOneTent.mdl",
+   "shape": "static-line",
+   "template": "tpl-locust-line",
+   "sites": 1,
+   "triggers": [
+    "InSpace"
+   ],
+   "params": {
+    "scale": 2,
+    "tint": [
+     0.1176,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": 8,
+    "count": null,
+    "spacing": null
+   }
+  },
+  {
+   "rawcode": "u02V",
+   "name": "聖杯黑泥",
+   "model": "Units\\Creeps\\ForgottenOne\\ForgottenOneTent.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 1.5,
+    "tint": [
+     0.1176,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u02W",
+   "name": "聖杯黑泥",
+   "model": "Units\\Creeps\\ForgottenOne\\ForgottenOneTent.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 2,
+    "tint": [
+     0.1176,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u02X",
+   "name": "聖杯黑泥",
+   "model": "Units\\Creeps\\ForgottenOne\\ForgottenOneTent.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 1.75,
+    "tint": [
+     0.1176,
+     0,
+     0
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u02Y",
+   "name": "旗子",
+   "model": "Objects\\InventoryItems\\OrcCaptureFlag\\OrcCaptureFlag.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 10,
+   "triggers": [],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u02Z",
+   "name": "毒液殘留",
+   "model": "Doodads\\LordaeronSummer\\Props\\SmokeSmudge\\SmokeSmudge2.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 0,
+   "triggers": [],
+   "params": {
+    "scale": 5,
+    "tint": [
+     0.1961,
+     0.3922,
+     0.1961
+    ],
+    "alpha": null,
+    "lifeSec": null
+   }
+  },
+  {
+   "rawcode": "u030",
+   "name": "惡夢天線",
+   "model": "txbbb.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "GigaSlave"
+   ],
+   "params": {
+    "scale": 6,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 1
+   }
+  },
+  {
+   "rawcode": "u032",
+   "name": null,
+   "model": "Units\\Undead\\PlagueCloud\\PlagueCloudtarget.mdl",
+   "shape": "static-single",
+   "template": "tpl-locust-orb",
+   "sites": 1,
+   "triggers": [
+    "PlagueStrike"
+   ],
+   "params": {
+    "scale": null,
+    "tint": null,
+    "alpha": null,
+    "lifeSec": 1
+   }
   }
  ]
 }
