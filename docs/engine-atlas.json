@@ -1,11 +1,11 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "c1eebd4f",
+  "capabilityFingerprint": "c6d619f8",
   "counts": {
     "effectKinds": 46,
     "hookEvents": 33,
     "conditionLeafKinds": 5,
-    "templateFamilies": 24,
+    "templateFamilies": 25,
     "effectFields": 251,
     "stats": 23,
     "combatEnvKeys": 39
@@ -586,6 +586,7 @@
       "lock-combo",
       "locust-line",
       "locust-orb",
+      "locust-strike",
       "locust-swarm",
       "locust-travel",
       "mark-stacks",

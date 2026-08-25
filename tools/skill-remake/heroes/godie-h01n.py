@@ -77,7 +77,11 @@ A("79-03", "79-03 月牙天衝", "ground", [55, 55, 55, 55], [250, 350, 450, 550
   # ⚠️ 第二個括號「(卍解變身狀態下傷害額外追加 120% AP)」這一版仍然沒寫（已知殘留）。
   # ⭐ GH#691/#698 —— 變身態 `godie-h01o.e` 已綁 MonsoonBoltTarget,本體要**一起動**
   #    （同編號＝同一支技能；只動一邊 ⇒ 玩家卍解之後用的是舊的那一份）。
-  model_fx=[static_model("w3x.stock.monsoonbolttarget", "point", 1.0, scale=8.0, clip="idle")],
+  # ⚠️ 2026-08-25 更正：這裡一度填 monsoonbolttarget（為了讓 abilityCodeParityForms 綠）,
+  #    ⛔ 而那是**新的**漂移 —— 變身態 79-03 早就綁著 `imported.deathwave`（E2 聲音批,
+  #    commit a34e87c8）。同編號＝同一支技能 ⇒ 本體要鏡射**既有的那一份**,
+  #    ⛔ 不是把我挑的模型塞進來再逼另一邊跟上。
+  model_fx=[static_model("imported.deathwave", "point", 1.0, preset="tpl-locust-orb", soundKey="wc3.crushingwavecaster1")],
   effects=[line("magic", length=11, width=2.0, per=[450, 600, 750, 900],
                 onhit=[dict(dmg("magic", ap=0.6),
                             condition={"kind": "status", "subject": "target",

@@ -827,6 +827,39 @@
       "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
     },
     {
+      "id": "imported.heromusashimiyamoto",
+      "kind": "model",
+      "hash": "743f857a2a14bf9a29e09985603428bcf84ec05c",
+      "risk": 7,
+      "reasons": [
+        "5 支上架技能引用（R/EX ×2 加權後 risk 7）",
+        "未審"
+      ],
+      "refs": [
+        "godie-e00x.q",
+        "godie-etyr.q",
+        "godie-h01o.e",
+        "godie-u01u.r",
+        "godie-udre.r"
+      ]
+    },
+    {
+      "id": "wc3.orcdissipate1",
+      "kind": "sfx",
+      "hash": "96604a767627f751be19849ee67641633ee08672",
+      "risk": 7,
+      "reasons": [
+        "2 支上架技能引用（R/EX ×2 加權後 risk 4）",
+        "抱怨族「dissipate 施法殘留」+3",
+        "未審"
+      ],
+      "refs": [
+        "godie-u01u.r",
+        "godie-udre.r"
+      ],
+      "spec": "施法淡出粒子 ≤0.5 秒（#569），天空不可以有殘留"
+    },
+    {
       "id": "wc3.taunt",
       "kind": "sfx",
       "hash": "895af1e4a74e3800e2381007c46f0e837a8fd637",
@@ -1012,6 +1045,22 @@
       ]
     },
     {
+      "id": "fx.prim.wind.nova",
+      "kind": "vfx",
+      "hash": "f9d49a514f6babe7c5e61da3253f4773cf0ef5d0",
+      "risk": 6,
+      "reasons": [
+        "4 支上架技能引用（R/EX ×2 加權後 risk 6）",
+        "未審"
+      ],
+      "refs": [
+        "godie-etyr.q",
+        "godie-nsjs.q",
+        "godie-u01u.r",
+        "godie-udre.r"
+      ]
+    },
+    {
       "id": "fx.w3x.locust.boomnl.p01",
       "kind": "vfx",
       "hash": "b2de8312a981cd967c2e516b54b029cee78a7c67",
@@ -1134,6 +1183,22 @@
         "godie-u010.ex",
         "godie-uvng.e",
         "godie-uvng.ex"
+      ]
+    },
+    {
+      "id": "wc3.blademasterwhirlwind",
+      "kind": "sfx",
+      "hash": "73e94d8bc5baee8a33e0d025d9850bf1f5acb487",
+      "risk": 6,
+      "reasons": [
+        "4 支上架技能引用（R/EX ×2 加權後 risk 6）",
+        "未審"
+      ],
+      "refs": [
+        "godie-e00x.q",
+        "godie-etyr.q",
+        "godie-u01u.r",
+        "godie-udre.r"
       ]
     },
     {
@@ -1412,22 +1477,6 @@
       "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
     },
     {
-      "id": "imported.heromusashimiyamoto",
-      "kind": "model",
-      "hash": "743f857a2a14bf9a29e09985603428bcf84ec05c",
-      "risk": 5,
-      "reasons": [
-        "4 支上架技能引用（R/EX ×2 加權後 risk 5）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e00x.q",
-        "godie-etyr.q",
-        "godie-h01o.e",
-        "godie-u01u.r"
-      ]
-    },
-    {
       "id": "wc3.dragonyes2",
       "kind": "sfx",
       "hash": "c9733baea30a90e7fae1b1ec537e2f741b30d057",
@@ -1472,21 +1521,6 @@
         "godie-u00l.r",
         "godie-umal.r"
       ]
-    },
-    {
-      "id": "wc3.orcdissipate1",
-      "kind": "sfx",
-      "hash": "96604a767627f751be19849ee67641633ee08672",
-      "risk": 5,
-      "reasons": [
-        "1 支上架技能引用（R/EX ×2 加權後 risk 2）",
-        "抱怨族「dissipate 施法殘留」+3",
-        "未審"
-      ],
-      "refs": [
-        "godie-u01u.r"
-      ],
-      "spec": "施法淡出粒子 ≤0.5 秒（#569），天空不可以有殘留"
     },
     {
       "id": "attach.ex.midchilder-aura",
@@ -1816,21 +1850,6 @@
         "godie-osam.e",
         "godie-u00k.q",
         "godie-ubal.e"
-      ]
-    },
-    {
-      "id": "fx.prim.wind.nova",
-      "kind": "vfx",
-      "hash": "f9d49a514f6babe7c5e61da3253f4773cf0ef5d0",
-      "risk": 4,
-      "reasons": [
-        "3 支上架技能引用（R/EX ×2 加權後 risk 4）",
-        "未審"
-      ],
-      "refs": [
-        "godie-etyr.q",
-        "godie-nsjs.q",
-        "godie-u01u.r"
       ]
     },
     {
@@ -2702,21 +2721,6 @@
       ],
       "refs": [],
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
-    },
-    {
-      "id": "wc3.blademasterwhirlwind",
-      "kind": "sfx",
-      "hash": "73e94d8bc5baee8a33e0d025d9850bf1f5acb487",
-      "risk": 4,
-      "reasons": [
-        "3 支上架技能引用（R/EX ×2 加權後 risk 4）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e00x.q",
-        "godie-etyr.q",
-        "godie-u01u.r"
-      ]
     },
     {
       "id": "wc3.darksummoninglaunch1",

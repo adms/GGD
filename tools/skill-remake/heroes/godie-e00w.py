@@ -23,7 +23,11 @@ A("77-01", "77-01 百烈櫻華斬", "self", [40, 40, 40, 40], [75, 110, 145, 180
   # ⭐ GH#691/#698 —— 變身態 `godie-e00x.q` 已綁 MonsoonBoltTarget,本體要**一起動**
   #    （abilityCodeParityForms:同編號＝同一支技能;只動一邊 ⇒ 玩家變身之後用舊的那份）。
   #    ⛔ 手寫進出貨 JSON 會被下一次 skillremake:json 打回來 ⇒ 走表格出口。
-  model_fx=[static_model("w3x.stock.monsoonbolttarget", "point", 1.0, scale=8.0, clip="idle")],
+  # ⚠️ 2026-08-25 更正：這裡一度填 monsoonbolttarget（為了讓 abilityCodeParityForms 綠）,
+  #    ⛔ 而那是**新的**漂移 —— 變身態 77-01 早就綁著 `imported.earthtornado2`（E2 聲音批,
+  #    commit a34e87c8）。同編號＝同一支技能 ⇒ 本體要鏡射**既有的那一份**,
+  #    ⛔ 不是把我挑的模型塞進來再逼另一邊跟上。
+  model_fx=[static_model("imported.earthtornado2", "point", 1.0, preset="tpl-locust-orb", soundKey="wc3.blademasterwhirlwind")],
   effects=[area("physical", tier="中", per=[200, 300, 400, 500], ad=0.5),
            {"kind": "knockback", "distance": 3.0, "speed": 15.0, "from": "caster"}])
 
