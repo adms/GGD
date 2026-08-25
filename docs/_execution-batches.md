@@ -1717,3 +1717,11 @@ watchdog 後代 CPU 修復。
 - 🎫 #711（WHITE_RGB_MIN 用被推翻的前提、誤丟兩支 emitter）
 - ✅ DEPLOY12=0 · BUILD_STAMP v0.28.1 · 煙霧 `cv_bfce09a95249`（內容未變＝正確）· 帳號 204→204
 - ➡️ 進行中：#711 重量（WHITE lane）· #708/#710 管線誠實度（PIPE lane）
+
+## v0.28.2（2026-08-26 凌晨四）—— 三張技術債＋74-002 退步修復
+
+- ⚠️ **74-002 超新星**：v0.27.6 把隕石綁在被動的頂層 effects ⇒ 「按得下去而場上一個數字都沒動」；移進 supernova hook 修好（只有 castabilitySweep 抓得到）
+- #711 兩支誤丟的 emitter 找回（δ=0.189，48× 門檻）⭐ **但窗沒換**（換了 281→0，modulate 只會變暗）—— 美術取捨留給 owner
+- #708 真因是 loader 政策靜默移除（⛔ 不是 catch{continue}）；對帳分母改用磁碟索引筆數
+- #710 `sync:converge` 不動點（skills:sync 一位元沒動）；⚠️ 判準第一版漏了 bundle 已補
+- ✅ DEPLOY13=0 · BUILD_STAMP v0.28.2 · 煙霧 `cv_e5636e2289ff` · 帳號 204→204 · shared 4,057 全綠
