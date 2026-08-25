@@ -287,6 +287,33 @@
       "verdictHash": null,
       "reason": "",
       "verdictAt": null
+    },
+    "crescent_visual-proof_20260825-2130": {
+      "title": "蝗蟲群/彎月刃：crescent 沿面向飛出（w3a missile 證據 → 3 落點）",
+      "family": "locust-travel",
+      "issues": [
+        688,
+        669
+      ],
+      "abilities": [
+        "godie-h01u.w",
+        "godie-n01c.r",
+        "godie-nbbc.r"
+      ],
+      "commit": "de5ad2b7",
+      "sequenceDir": "docs/_reports/crescent_visual-proof_20260825-2130",
+      "rollback": {
+        "configId": "tpl-locust-travel",
+        "field": "params.alpha.default",
+        "liveValue": 1,
+        "rollbackValue": 0,
+        "note": "1.0 與缺席逐位元同義（modelFxRig 對 alpha>=1 跳過乘法）⇒ 出貨畫面不變；翻 0 ⇒ travel 整族沒寫自己 alpha 的節點（含本批 3 落點的彎月刃與既有 blackhole 層）一起隱形，寫了自己 alpha 的節點不受影響。TORNADO orb 開關同款形狀"
+      },
+      "registeredAt": "2026-08-25T13:58:10.548Z",
+      "verdict": null,
+      "verdictHash": null,
+      "reason": "",
+      "verdictAt": null
     }
   }
 }

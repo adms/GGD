@@ -59,6 +59,20 @@ A("80-02", "80-02 弒鬼神", "self", [60, 60, 60, 60], [90, 180, 270, 360], 0,
   #           而沿用回來的 `imported.wave.physical` 是往 `t.facing` 直線飛出去的
   #           （castType self ⇒ 沒有落點）。改掛 spawnVfx{at:"self"}。
   cosmetic_projectile="imported.wave.physical",
+  # ⭐ GH#688 Phase 6（CRESCENT lane）—— 原作 w3a：A0MY base **AOsh（衝擊波）**的
+  #    Art-Missile 被覆寫成 `crescent.mdx`（vfx-census realArt 逐列，provenance
+  #    w3a-override）⇒ 原作施放時**真的有一道彎月刃沿面向飛出去**。
+  #    ⛔ 這不是 dummy 對照：五隻「大紅蓮斬」dummy（u017/u01L–u01O）sites=0
+  #    （war3map.j 零生成點、OBJECTS.json 零引用），名字對到的 87-01 大紅蓮斬
+  #    住在 content/_legacy（曹操未出貨）—— 見 CRESCENT lane 報告。
+  #    參數：distance 4.5 ＝ 本技能自己的 damageArea radius（第〇·六守則第 1 層
+  #    —— 新版是[周圍]，視覺走到傷害圈邊緣為止）；scale 2 ＝ census 這一族唯一
+  #    量到的 usca；⛔ 不帶 tint（w3a missile 未染色 —— 紅 tint 屬於那五隻沒接線
+  #    的 dummy）；soundKey 缺席是 modelFxStagingContract ④ 的規矩（travel 家族
+  #    SOUNDLESS —— crescent.mdx 的烘焙音效 wc3.wandofneutralization 列 owner 裁決項）。
+  model_fx=[{"kind": "spawnModelFx", "shape": "single", "preset": "tpl-locust-travel",
+             "modelKey": "imported.crescent", "clip": "idle",
+             "scale": 2.0, "distance": 4.5}],
   # ⭐【破甲】的**數值**那一半（形狀逐字比照 79-01 / 92-02 的【破魔】）。
   #    `armor-break` 在引擎裡是**純標記**：`status-effect@1` 只有 name/description/
   #    iconKey/polarity/tags，**沒有 modifiers**，而 `content/status-effects/

@@ -21,6 +21,15 @@
   "manaCostTier": "中",
   "effects": [
     {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-travel",
+      "modelKey": "imported.crescent",
+      "clip": "idle",
+      "scale": 2.0,
+      "distance": 12.0
+    },
+    {
       "kind": "blink",
       "shape": "single",
       "to": "targetUnit",

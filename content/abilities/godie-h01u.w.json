@@ -63,6 +63,15 @@
       "kind": "spawnVfx",
       "vfxId": "fx.prim.physical.bolt",
       "at": "self"
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-travel",
+      "modelKey": "imported.crescent",
+      "clip": "idle",
+      "scale": 2.0,
+      "distance": 4.5
     }
   ],
   "icon": "assets/icons/abilities/godie-h01u.w.webp",

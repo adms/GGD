@@ -2,9 +2,9 @@
   "schema": "review-queue@1",
   "counts": {
     "assets": 1121,
-    "tier0": 798,
+    "tier0": 797,
     "reviewed": 0,
-    "pending": 323
+    "pending": 324
   },
   "items": [
     {
@@ -426,6 +426,25 @@
         "godie-nbbc.e",
         "godie-o00x.r",
         "godie-ogrh.r"
+      ]
+    },
+    {
+      "id": "imported.blackhole",
+      "kind": "model",
+      "hash": "7b80ef5f2a53decd551048a5edd4654b09ff30f4",
+      "risk": 11,
+      "reasons": [
+        "7 支上架技能引用（R/EX ×2 加權後 risk 11）",
+        "未審"
+      ],
+      "refs": [
+        "godie-h01u.w",
+        "godie-n01c.r",
+        "godie-nbbc.r",
+        "godie-u010.e",
+        "godie-u010.ex",
+        "godie-uvng.e",
+        "godie-uvng.ex"
       ]
     },
     {
@@ -1167,22 +1186,6 @@
       ]
     },
     {
-      "id": "imported.blackhole",
-      "kind": "model",
-      "hash": "7b80ef5f2a53decd551048a5edd4654b09ff30f4",
-      "risk": 6,
-      "reasons": [
-        "4 支上架技能引用（R/EX ×2 加權後 risk 6）",
-        "未審"
-      ],
-      "refs": [
-        "godie-u010.e",
-        "godie-u010.ex",
-        "godie-uvng.e",
-        "godie-uvng.ex"
-      ]
-    },
-    {
       "id": "imported.darkraor",
       "kind": "model",
       "hash": "d6b427284d4a147fb0ce999956c359d4d5925353",
@@ -1488,6 +1491,21 @@
         "godie-n00b.q"
       ],
       "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
+    },
+    {
+      "id": "imported.crescent",
+      "kind": "model",
+      "hash": "661496d1c039ba6e98c947883312085616c21cd4",
+      "risk": 5,
+      "reasons": [
+        "3 支上架技能引用（R/EX ×2 加權後 risk 5）",
+        "未審"
+      ],
+      "refs": [
+        "godie-h01u.w",
+        "godie-n01c.r",
+        "godie-nbbc.r"
+      ]
     },
     {
       "id": "wc3.dragonyes2",
