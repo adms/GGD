@@ -5,7 +5,7 @@
 ⛔ 這一份只有**這一位英雄的資料**。共用的機制（`amt` / `dmg` / `area` /
    `buff` / 級距 / 各種閘）在 `common.py`；匯總與產生在 `batch1.py`。
 """
-from common import A, M, amt, area, buff, dmg, line, status
+from common import A, M, amt, area, buff, dmg, line, status, static_model
 
 
 # ⭐ S1 涅吉三支形態技的**共用模板**（第零守則⑨：N 個同型 = K 個模板 + 一張表）
@@ -106,6 +106,10 @@ A("15-03", "15-03 獄炎煉我", "self", [55, 55, 55, 55], [180, 260, 340, 420],
   #    ③⚠️ 兩條追打搬進 12 秒 buff —— 在此之前它們掛在**常駐 passive**，所以
   #    **不按 E 也永遠生效**，而按了 E 只換來移速減半的**純負面**（玩家一定看得出來）
   #    ④互斥組由 form_buff() 填。⛔ passive 整塊刪掉。
+  # ⭐ GH#691（#688 Phase 6-1）—— 原作的 `AddSpecialEffect` dummy（`MonsoonBoltTarget.mdl`）。
+  #    census 逐列：`provenance jass:effectTargetUnit（A052）—— 同上,無 dummy`。⛔ 手寫進出貨 JSON 會被下一次 skillremake:json 打回來
+  #    （`carry_mechanisms` 只沿用 invulnerable / spawnProjectile），所以它走表格出口。
+  model_fx=[static_model("w3x.stock.monsoonbolttarget", "self", 1.0, scale=4.0)],
   effects=[form_buff([M("ms", "pctMult", -0.5)],
                      hooks=[{"on": "onBasicAttack", "target": "event",
                              "effects": [dmg("magic", per=[60, 90, 120, 150], ap=0.4)]},
@@ -161,6 +165,10 @@ A("15-04", "15-04 雷天大壯。貳式", "self", [60, 60, 60], [200, 400, 600],
   #      每一發 onAbilityCast 都掛一份**新的** source（selfId 帶 tick），額度跟著它走。
   #    ⚠️ 武裝標記是**獨立的一顆限時 buff**（`EMFR_ARM_SEC`）——
   #      它**不隨形態結束消失**、也**不受 exclusiveGroup 管**。誠實記著。
+  # ⭐ GH#691（#688 Phase 6-1）—— 原作的 `AddSpecialEffect` dummy（`MonsoonBoltTarget.mdl`）。
+  #    census 逐列：`provenance jass:effectTargetUnit（A053）—— 同上,無 dummy`。⛔ 手寫進出貨 JSON 會被下一次 skillremake:json 打回來
+  #    （`carry_mechanisms` 只沿用 invulnerable / spawnProjectile），所以它走表格出口。
+  model_fx=[static_model("w3x.stock.monsoonbolttarget", "self", 1.0, scale=4.0)],
   effects=[form_buff([M("ms", "pctMult", 1.0), M("as", "pctAdd", 1.0),
                       M("as", "capRaise", 10.0)],
                      hooks=[{"on": "onAbilityCast", "target": "self",

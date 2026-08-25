@@ -94,12 +94,8 @@
         {
           "kind": "spawnModelFx",
           "shape": "single",
+          "preset": "tpl-locust-orb",
           "modelKey": "imported.earthtornado2",
-          "path": "orbit",
-          "count": 1,
-          "distance": 0.1,
-          "speed": 1.0,
-          "lifeSec": 2.5,
           "soundKey": "wc3.blademasterwhirlwind"
         }
       ],
@@ -254,6 +250,15 @@
           "kind": "spawnVfx",
           "vfxId": "godie-lightningtornado-p0",
           "at": "target"
+        },
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "path": "static",
+          "anchor": "target",
+          "modelKey": "w3x.stock.monsoonbolttarget",
+          "scale": 4.0,
+          "lifeSec": 1.0
         }
       ],
       "vfxKey": "fx.prim.lightning.beam-lg",

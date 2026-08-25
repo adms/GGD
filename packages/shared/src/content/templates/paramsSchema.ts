@@ -51,6 +51,16 @@ function slotSchema(slot: ParamSlot): z.ZodTypeAny {
       // 的 `docRef` 說明與 schema/mark.ts 檔頭①)。所以是純文字輸入 + 格式驗證,
       // 和 `expand.ts` 的 `docRef()` 讀取器用的是同一個 `zId`。
       return zId;
+    case "rgb":
+      // ⭐ GH#693 —— 一組線性 RGB，形狀與 `model@1.fxTint` / `spawnModelFx.tint`
+      //    **逐位元相同**（三個 0…1）。⛔ 不在這裡另外定義上下界:三處分岔的話,
+      //    表單收得下的顏色會被 schema 拒絕,而那正是這個模組存在的理由。
+      //    `walkZod` 認得 ZodTuple（`kind:"tuple"`），所以編輯器渲染得出來。
+      return z.tuple([
+        z.number().gte(0).lte(1),
+        z.number().gte(0).lte(1),
+        z.number().gte(0).lte(1),
+      ]);
     case "condition":
       // The SAME schema `zHookDef.condition` uses, so a gate the Forge accepts
       // is a gate the ability doc accepts — there is no second validation of a

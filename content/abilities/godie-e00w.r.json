@@ -36,6 +36,15 @@
       "radius": 3.0,
       "radiusTier": "極小",
       "includeOrigin": true
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "path": "static",
+      "anchor": "point",
+      "modelKey": "w3x.stock.monsoonbolttarget",
+      "scale": 4.0,
+      "lifeSec": 1.0
     }
   ],
   "icon": "assets/icons/abilities/godie-e00w.r.webp",

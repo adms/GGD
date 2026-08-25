@@ -1,0 +1,148 @@
+{
+ "name": "monsoonbolttarget",
+ "archive": "War3x.mpq",
+ "mdxBytes": 12142,
+ "path": "Abilities\\Spells\\Other\\Monsoon\\MonsoonBoltTarget.mdl",
+ "textures": [
+  {
+   "texture": "abilities\\Spells\\Other\\Monsoon\\Lightning2b.blp",
+   "size": [
+    64,
+    128
+   ],
+   "lumMean": 37.7,
+   "lumStd": 53.2,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "abilities\\Spells\\Other\\Monsoon\\Lightning1b.blp",
+   "size": [
+    64,
+    128
+   ],
+   "lumMean": 14.8,
+   "lumStd": 42.4,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "abilities\\Spells\\Other\\Monsoon\\HitBase.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 69.9,
+   "lumStd": 78.3,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "abilities\\Spells\\Other\\Monsoon\\Lightning4b.blp",
+   "size": [
+    64,
+    128
+   ],
+   "lumMean": 62.2,
+   "lumStd": 70.7,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "abilities\\Spells\\Other\\Monsoon\\lensflare1A.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 5.0,
+   "lumStd": 9.3,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Clouds8x8.blp",
+   "size": [
+    256,
+    256
+   ],
+   "lumMean": 63.2,
+   "lumStd": 78.8,
+   "alphaMean": 44.7,
+   "alphaStd": 63.4,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\star6.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 56.1,
+   "lumStd": 75.7,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Blue_Glow2.blp",
+   "size": [
+    32,
+    32
+   ],
+   "lumMean": 12.2,
+   "lumStd": 20.2,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [
+  {
+   "emitter": "BlizParticle01",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle02",
+   "segmentAlpha": [
+    0,
+    255,
+    0
+   ],
+   "birth": 0,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 70400,
+ "rawHeight": 1606.69,
+ "scaleFactor": 0.02778,
+ "height": 44.63,
+ "visiblePrims": "8/8",
+ "animations": [
+  "Stand"
+ ],
+ "clipMap": {
+  "idle": "Stand",
+  "run": "Stand",
+  "attack": "Stand",
+  "cast": "Stand",
+  "hurt": "Stand",
+  "death": "Stand"
+ },
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/monsoonbolttarget.glb"
+}

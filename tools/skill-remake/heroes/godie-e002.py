@@ -5,7 +5,7 @@
 ⛔ 這一份只有**這一位英雄的資料**。共用的機制（`amt` / `dmg` / `area` /
    `buff` / 級距 / 各種閘）在 `common.py`；匯總與產生在 `batch1.py`。
 """
-from common import A, M, area, buff, dmg, line
+from common import A, M, area, buff, dmg, line, static_model
 
 
 A("20-00", "20-00 銀色甲胄", "self", [0], [0], 0,
@@ -142,6 +142,11 @@ A("20-04", "20-04 Avalon-永恆的理想鄉", "self", [60, 60, 60], [150, 250, 3
   maxRank=3,
   # ⭐ B3-A —— 反彈第一次真的發得出來。⛔ 原本只有一個 moon-combo 空殼
   #    （那是蒼月潮 07-03 的 1 秒連段窗口，跟反彈完全無關）。
+  # ⭐ GH#691（#688 Phase 6-1）—— 原作的 `o00G` dummy（`MonsoonBoltTarget.mdl`）。
+  #    census 逐列：`usca 6 · tint [100,0,0] · avalonStart timedLife 2s（war3map.j:32435）`。⛔ 手寫進出貨 JSON 會被下一次 skillremake:json 打回來
+  #    （`carry_mechanisms` 只沿用 invulnerable / spawnProjectile），所以它走表格出口。
+  model_fx=[static_model("w3x.stock.monsoonbolttarget", "self", 2.0, scale=6.0,
+                         tint=[0.3922, 0.0, 0.0])],
   effects=[buff([], 2.0, hooks=[
       {"on": "onDamageTaken", "target": "event", "damageType": "magic",
        "effects": [dmg("magic", flat=0, ap=3.0,

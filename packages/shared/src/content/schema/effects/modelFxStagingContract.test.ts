@@ -159,7 +159,25 @@ function presetNodes(doc: Record<string, unknown>): Record<string, unknown>[] {
  * （`tpl-radial-burst` ⛔ 不在這張表上：42-04 世界終結那兩份文件**自己的節點**
  *   已經帶了聲音鍵，所以它從第一條斷言的角度看已經是好的。）
  */
-const SOUNDLESS_TEMPLATES = new Set(["tpl-line-blast"]);
+/**
+ * ⭐ 三張 `tpl-locust-*`（GH#693）也在這張表上，而**理由不是「還沒排到」**：
+ * ⑤ 那條的普查（`VFX_SOUND_JOIN.modelBoundSoundsets`）逐字量到它們的採用者用的原作
+ * `.mdx` **本來就沒有** `SNDX` 音效事件 —— `blackhole` 就在 ⑤ 檔頭點名的「沒有事件」
+ * 名單裡，而 `w3x.stock.flamestrike1` 是 stock MPQ 抽出來的，那份普查連掃都沒掃到它
+ * （它只產得出 `imported.<stem>` 的鍵）。⇒ 給它們聲音是**設計**不是還原，
+ * ⛔ 不由這條守衛替 owner 決定（與 ⑤ 檔頭逐字同一句）。
+ * ⭐ 反駁法：模板長出 `soundKey` 預設、或任何一支採用者自己填了聲音的那一天，
+ * 上面那條 `stale` 斷言會紅並指名該把這一列刪掉。
+ * ⚠️ `tpl-locust-orb` ⛔ **不在**這張表上，而那是量出來的：它的四支採用者
+ * （77-01 / 14-01 / 79-03 / 11-04）**每一支自己的節點都帶著聲音鍵** ——
+ * 所以從第一條斷言的角度看它已經是好的（與 `tpl-radial-burst` 逐字同一個處境）。
+ */
+const SOUNDLESS_TEMPLATES = new Set([
+  "tpl-line-blast",
+  "tpl-locust-line",
+  "tpl-locust-travel",
+  "tpl-locust-swarm",
+]);
 
 /**
  * ⛔ `tpl-beam-roll` 的 `modelKey` 預設（模板 exemplar 是 20-03 約束與勝利之劍的

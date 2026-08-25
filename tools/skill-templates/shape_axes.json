@@ -184,6 +184,12 @@
   ],
   "jumpRange": [
    "路徑"
+  ],
+  "tint": [
+   "續效特效"
+  ],
+  "alpha": [
+   "續效特效"
   ]
  },
  "_conditionalWhy": "⭐ 有一族欄位**填了不等於有那個機制** —— `count: 1` 的 delayed 逐字等於「純延遲」（它自己的 schema 檔頭就這麼寫），把它算成迴圈就是憑欄位存在報一個不存在的機制（失敗形態⑦：掃屬性代替掃行為）。",
@@ -247,7 +253,8 @@
   ],
   "spawnModelFx.clipTimeScale": [
    "續效特效"
-  ]
+  ],
+  "spawnModelFx.anchor": []
  },
  "_topLevelWhy": "技能文件**自己**的欄位（⛔ 不在 effects 樹裡），同樣要被分類 —— 一支 `castTimeSec: 3` 的技能有一段三秒的等待，而它一格 effect 都不必有。",
  "topLevel": {

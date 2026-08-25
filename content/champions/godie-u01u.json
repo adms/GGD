@@ -239,12 +239,8 @@
         {
           "kind": "spawnModelFx",
           "shape": "single",
+          "preset": "tpl-locust-orb",
           "modelKey": "imported.heromusashimiyamoto",
-          "path": "orbit",
-          "count": 1,
-          "distance": 0.1,
-          "speed": 1.0,
-          "lifeSec": 2.5,
           "soundKey": "wc3.blademasterwhirlwind",
           "arriveSoundKey": "wc3.orcdissipate1",
           "onArrive": [

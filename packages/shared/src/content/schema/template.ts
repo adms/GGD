@@ -51,6 +51,14 @@ export const zParamUnit = z.enum(["wc3u", "wc3h", "s", "count", "ratio"]);
  * 所以它驗**格式**不驗**存在**: 打錯大小寫或塞進一個句子會被擋下, 指到一份還
  * 沒寫的文件則放行(標記的機制不依賴那份文件, 只有顯示依賴它)。
  * ⚠️ 多 collection 的 ref 哪天做出來了, 這一格就該換過去。
+ *
+ * ⭐ `rgb`（GH#693 蝗蟲群模板化）是**一組線性 RGB**（三個 0…1 的數字），形狀與
+ * `model@1.fxTint` 逐位元相同 —— 刻意共用同一個形狀，因為它們是同一件知識的兩個
+ * 住處（模型級 vs 節點級，見 `schema/effects/spawnModelFx.ts` 的 `tint`）。
+ * ⛔ 不用三個 `number` 槽（`tintR`/`tintG`/`tintB`）：那會把「一個顏色」拆成三個
+ * 各自可以漂的數字，而且編輯器會渲染成三格互不相干的數字輸入。
+ * ⚠️ 它**不是** `number`，所以 `paramsSchema.test` 的「每一個數字格都要 MOVES」
+ * 探針掃不到它 —— 對應的守衛是 `locustTemplates.test.ts`（顏色有沒有到達展開結果）。
  */
 export const zParamType = z.enum([
   "number",
@@ -59,6 +67,7 @@ export const zParamType = z.enum([
   "statModifiers",
   "condition",
   "docRef",
+  "rgb",
 ]);
 
 /**

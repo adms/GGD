@@ -240,10 +240,7 @@
         {
           "kind": "spawnModelFx",
           "shape": "single",
-          "path": "static",
-          "count": 6,
-          "spacing": 2,
-          "lifeSec": 2,
+          "preset": "tpl-locust-line",
           "modelKey": "w3x.stock.flamestrike1"
         }
       ],

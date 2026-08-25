@@ -37,7 +37,12 @@ const KAMEHAMEHA: AbilityId = "godie-ogrh.r" as AbilityId;
  * pilot 的兩份新 model doc 還不在產物 `models/_index.json` 裡 ⇒ 先在索引上補列。
  * ⭐ **自我過期**：id 已在索引時不補 —— `content:build` 落地後這一段是 no-op。
  */
-const PILOT_MODEL_DOCS = ["w3x.stock.revivehuman", "w3x.stock.flamestrike1"];
+const PILOT_MODEL_DOCS = [
+  "w3x.stock.revivehuman",
+  "w3x.stock.flamestrike1",
+  // GH#691 蝗蟲群視覺第一批（`o00E` 那一族的 17 個生成點共用這一份）
+  "w3x.stock.monsoonbolttarget",
+];
 
 function workingTreeSource(): ContentSource {
   const inner = new HttpContentSource({
@@ -132,19 +137,24 @@ function spawnFighter(
 
 export async function buildBeamAuditionWorld(
   enemyOffsets: readonly { x: number; z: number }[],
+  /**
+   * ⭐ GH#691 —— 要驗收的是**哪一支**技能。省略 ⇒ 09-04（今天的行為逐位元不變）。
+   * ⛔ 這一格存在的理由不是彈性：蝗蟲群移植是**一批一批**的，而每一批都要一組
+   * 終端像素證據（CLAUDE.md 👁 節）。沒有它，第二批就得複製整個台子 ——
+   * 那是第零守則⑨的反面標記。
+   */
+  abilityId: AbilityId = KAMEHAMEHA,
 ): Promise<BeamAuditionWorld> {
   await ensureContentLoaded({ source: workingTreeSource(), disableOverlay: true });
-  if (!Abilities.tryGet(KAMEHAMEHA)) {
-    throw new Error(
-      `出貨內容裡找不到 ${KAMEHAMEHA}（09-04 龜派氣功）—— 內容沒載起來，⛔ 這一頁的結論不算數`,
-    );
+  if (!Abilities.tryGet(abilityId)) {
+    throw new Error(`出貨內容裡找不到 ${abilityId} —— 內容沒載起來，⛔ 這一頁的結論不算數`);
   }
 
   const w = new SimWorld(SKELETON_ARENA, 7);
   w.combatActive = true;
   const c = SKELETON_ARENA.zones[0]!.center;
 
-  const casterId = spawnFighter(w, 0, 0, { x: c.x, z: c.z }, KAMEHAMEHA);
+  const casterId = spawnFighter(w, 0, 0, { x: c.x, z: c.z }, abilityId);
   const enemyIds = enemyOffsets.map((p, i) =>
     spawnFighter(w, i + 1, 1, { x: c.x + p.x, z: c.z + p.z }, null),
   );
@@ -167,9 +177,20 @@ export async function buildBeamAuditionWorld(
       if (ab) (ab.slots as { R: { cooldownRemainingTicks: number } }).R.cooldownRemainingTicks = 0;
       const hp = w.health.get(casterId);
       if (hp) hp.mana = hp.maxMana;
-      const verdict = castAbility(w, casterId, "R", { type: "dir", dir: { x: 1, z: 0 } });
+      // ⭐ 目標型別由**出貨文件自己的 `castType`** 推導，⛔ 不是台子挑一個 ——
+      //    挑錯會被 `abilitySystem` 當場拒絕（bad-target），而那個紅是台子造的。
+      const castType = Abilities.get(abilityId).castType;
+      const target =
+        castType === "self"
+          ? ({ type: "self" } as const)
+          : castType === "targeted"
+            ? ({ type: "entity", entityId: enemyIds[0]! } as const)
+            : castType === "ground"
+              ? ({ type: "point", point: { x: c.x + 4, z: c.z } } as const)
+              : ({ type: "dir", dir: { x: 1, z: 0 } } as const);
+      const verdict = castAbility(w, casterId, "R", target);
       if (verdict !== "ok") {
-        throw new Error(`castAbility 拒絕了 09-04：${String(verdict)} —— ⛔ 這一頁的結論不算數`);
+        throw new Error(`castAbility 拒絕了 ${abilityId}：${String(verdict)} —— ⛔ 這一頁的結論不算數`);
       }
     },
   };

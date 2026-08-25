@@ -98,6 +98,20 @@
           "target": "event"
         }
       ]
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "path": "static",
+      "anchor": "self",
+      "modelKey": "w3x.stock.monsoonbolttarget",
+      "scale": 6.0,
+      "lifeSec": 2.0,
+      "tint": [
+        0.3922,
+        0.0,
+        0.0
+      ]
     }
   ],
   "icon": "assets/icons/abilities/godie-e002.r.webp",

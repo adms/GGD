@@ -505,6 +505,31 @@ _BUFF_FIELDS = frozenset({
 })
 
 
+def static_model(model_key, anchor, life, scale=None, tint=None, **kw):
+    """⭐ GH#691 —— 原作那一具**定點的蝗蟲群 dummy**（`model_fx=` 的一列）。
+
+    原作的形狀逐字是 `CreateUnit` → `AddSpecialEffect` → `UnitApplyTimedLife`，
+    一次施放擺一具**不位移**的模型然後到期回收 —— 那正是
+    `spawnModelFx` 的 `path:"static"`（#649 類④）。
+
+    ⚠️ 三個參數都是**量到的**，⛔ 不是挑的：
+      · `anchor` ← 技能的 castType（self→self / ground→point / targeted→target）
+      · `scale`  ← 那一具 dummy 的 w3u `usca`（`tools/locust-census/census.json`）
+      · `tint`   ← `UNIT_TINTS.json` 的 `tint`（w3u → 基底 → UnitUI.slk 解出來的）
+        —— 中性（白）的一律**不填**，`model@1.fxTint` 那條「tint 有來源」的閘
+        只驗有填的，而填一個 [1,1,1] 是一格乘 1 的空宣稱（第一·五守則）。
+    ⚠️ `lifeSec` 是 `static` 唯一的終止條件（schema refine 必填）。
+    """
+    n = {"kind": "spawnModelFx", "shape": "single", "path": "static",
+         "anchor": anchor, "modelKey": model_key, "lifeSec": life}
+    if scale is not None:
+        n["scale"] = scale
+    if tint is not None:
+        n["tint"] = tint
+    n.update(kw)
+    return n
+
+
 def buff(mods, dur=None, hooks=None, **kw):
     """⭐ B2-F/G —— `applyBuff` 的其餘欄位有出口了。
 
@@ -1377,6 +1402,21 @@ def build(e):
     #    沒填則沿用舊文件的（vfxKey / sfxKey 那一族美術綁定的既定規矩）。
     if e.get("persistent_vfx"):
         doc["persistentVfx"] = e["persistent_vfx"]
+    # ── 蝗蟲群 dummy 的 3D 模型（`model_fx=`）—— 原作那一具「特效單位」──────────
+    # ⭐ GH#691（#688 Phase 6）：原作把大多數技能演出做成 **locust dummy 單位**
+    #    （`CreateUnit` + `AddSpecialEffect` + `UnitApplyTimedLife`），而 GGD 的
+    #    對應機制 `spawnModelFx`（#551 / #649 的 `path:"static"`）早就在線上。
+    #    缺的只是**表格出口**：這 90 支重製稿在此之前沒有任何一格寫得出
+    #    「在這裡擺一具 3D 模型」—— 於是把節點手寫進出貨 JSON 的人會發現它
+    #    在下一次 `skillremake:json` 就被打回來（`carry_mechanisms` 只沿用
+    #    `invulnerable` / `spawnProjectile` 兩種非酬載機制）。
+    # ⛔ 同 vfx_key / persistent_vfx：一格**表格欄位**，⛔ 不是「if 這支技能」
+    #    （第〇·五守則）。值是完整的 `spawnModelFx` 節點（modelKey / path /
+    #    anchor / scale / tint / lifeSec），由 schema 在載入時驗。
+    # ⚠️ **附加**在 effects 末端，⛔ 不取代 —— 它是演出，不是酬載；A-5 的閘讀
+    #    最終 doc，所以這一步再動 effects 也逃不掉。
+    if e.get("model_fx"):
+        doc["effects"] = list(doc["effects"]) + [dict(x) for x in e["model_fx"]]
     # ── A-6：denylist —— 規格沒有重新定義的欄位，一律原樣保留 ──────────────
     for k, v in prev.items():
         if k in SPEC_OWNED:

@@ -24,6 +24,20 @@
       "kind": "championForm",
       "to": "alternate",
       "durationSec": 8
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "path": "static",
+      "anchor": "self",
+      "modelKey": "w3x.stock.monsoonbolttarget",
+      "scale": 10.0,
+      "lifeSec": 1.0,
+      "tint": [
+        1.0,
+        0.0,
+        0.0
+      ]
     }
   ],
   "vfxKey": "fx.prim.lightning.pulse-lg",

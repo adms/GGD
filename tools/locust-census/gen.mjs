@@ -347,6 +347,67 @@ for (let i = 0; i < jass.length; i++) {
   }
 }
 
+/* ─────────── 模板分群（GH#693）—— ⭐ 從 census **推導**,⛔ 不是手挑四個名字 ───────────
+ *
+ * owner 2026-08-25（逐字）：
+ * 「[重要]記得**所有這些球體、蝗蟲群特效 都要變成模板，可以被編輯器複用、
+ *   成為JSON設定模板標籤**」
+ *
+ * 兩根軸，⭐ 都是「**引擎今天表達得出來**」的東西（⛔ 不是「census 量得到」的東西）：
+ *   ① 位移 —— 這個 rawcode 的生成點有沒有 `SetUnitPosition`（`calls.moves`）
+ *              ⇒ GGD 的 `path: forward/radial` vs `static/orbit`
+ *   ② 多具 —— 生成點在不在 `loop` 裡（`inLoop`）⇒ GGD 的 `count`(+`spacing`)
+ * 2×2 ⇒ 四個家族，⛔ 沒有第五個。
+ *
+ * ⚠️ **⛔ 刻意不用**的第三、第四根軸，理由寫在這裡而不是留給下一個人自己發現：
+ *   · `timedLife` vs sleep-清場 —— 在 GGD 這一側**是同一格** `lifeSec`
+ *     ⇒ 拆開就是「一支技能一個模板」（#693 的 ≤6 上限正是在擋這個）。
+ *   · `anim` / `timeScale` —— 引擎的 glb 剪輯播放**還沒落地**（Phase 4-③）
+ *     ⇒ 現在替它分一群，等於產一張「表單填得下、遊戲不會發生」的建議表
+ *       （CLAUDE.md 第一·五守則）。它落地的那天這裡才會有第五群。
+ *
+ * ⛔ 隱形／承襲模型的 dummy **不進表**：原作就看不見（synthesis §2 逐字量到
+ * `hfoo`+`ogru`+`hkni` 共 65 支技能是隱藏施法），引擎對應物是 proxyCast。
+ */
+const TEMPLATE_OF = {
+  "static-single": "tpl-locust-orb",
+  "static-line": "tpl-locust-line",
+  "travel-single": "tpl-locust-travel",
+  "travel-line": "tpl-locust-swarm",
+};
+
+const templateRows = [];
+for (const u of units) {
+  if (u.modelKind !== "model") continue;
+  const ss = sites.filter((s) => s.rawcode === u.id);
+  const moves = ss.reduce((n, s) => n + s.calls.moves, 0);
+  const inLoop = ss.some((s) => s.inLoop);
+  const shape = `${moves > 0 ? "travel" : "static"}-${inLoop ? "line" : "single"}`;
+  // 時序建議：原作真的量到的秒數（timedLife 優先於 sleep —— 前者是這一具自己的
+  // 壽命，後者是整段演出的清場點）。⛔ 量不到就留空,⛔ 不套一個好看的預設。
+  const timed = [...new Set(ss.flatMap((s) => s.timedLifeSecs))].sort((a, b) => a - b);
+  const slept = [...new Set(ss.flatMap((s) => s.sleepSecs))].sort((a, b) => a - b);
+  const lifeSec = timed[0] ?? slept.find((v) => v > 0) ?? null;
+  templateRows.push({
+    rawcode: u.id,
+    name: u.name,
+    model: u.model,
+    shape,
+    template: TEMPLATE_OF[shape],
+    sites: ss.length,
+    triggers: [...new Set(ss.map((s) => s.trigger).filter(Boolean))].sort(),
+    params: {
+      // ⭐ 五欄逐格。⛔ null = 原作沒有這個值 ⇒ 那一格**不要填**（模板預設接手）。
+      scale: u.scale ?? null,
+      tint: u.tint ? u.tint.map((c) => round4(c / 255)) : null,
+      alpha: u.runtimeAlphaPct ? round2(u.runtimeAlphaPct[0] / 100) : null,
+      lifeSec,
+      ...(inLoop ? { count: null, spacing: null } : {}),
+    },
+  });
+}
+templateRows.sort((a, b) => (a.rawcode < b.rawcode ? -1 : a.rawcode > b.rawcode ? 1 : 0));
+
 /* ───────────────────── 產物 ───────────────────── */
 const meta = {
   sources: [
@@ -379,7 +440,17 @@ const meta = {
     alphaResolved: runtimeAlpha.filter((e) => e.rawcode).length,
     alphaEventUnit: runtimeAlpha.filter((e) => e.source.startsWith("event-unit")).length,
     alphaUnresolved: runtimeAlpha.filter((e) => e.source === "unresolved").length,
+    tplVisible: templateRows.length,
+    tplStaticSingle: templateRows.filter((r) => r.shape === "static-single").length,
+    tplStaticLine: templateRows.filter((r) => r.shape === "static-line").length,
+    tplTravelSingle: templateRows.filter((r) => r.shape === "travel-single").length,
+    tplTravelLine: templateRows.filter((r) => r.shape === "travel-line").length,
   },
+  templates:
+    "模板分群 = 2×2（位移＝生成點有 SetUnitPosition · 多具＝生成點在 loop 裡），" +
+    "⛔ 隱形/承襲模型的 dummy 不進表（原作就看不見，引擎對應物是 proxyCast）。" +
+    "⛔ 刻意不用 timedLife 與 anim/timeScale 當軸：前者在 GGD 是同一格 lifeSec，" +
+    "後者的引擎機制還沒落地（理由逐字寫在 gen.mjs 的分群段）",
 };
 
 const census = {
@@ -399,6 +470,7 @@ const census = {
     timedLifeSecs,
   })),
   runtimeAlpha,
+  templateSuggestions: templateRows,
 };
 
 /* ───────────────────── md render ───────────────────── */

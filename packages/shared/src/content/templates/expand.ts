@@ -380,6 +380,34 @@ function docRef(t: TemplateDoc, params: Record<string, unknown>, name: string): 
   return parsed.data;
 }
 
+/**
+ * ⭐ 一個 `rgb` 槽（GH#693）—— 一組線性 RGB，三個 0…1。
+ *
+ * ⚠️ 範圍在這裡**再驗一次**而不是只信 schema：模板文件的 `default` 是
+ * `z.unknown()`（`zParamSlot` 刻意扁平，見 `schema/template.ts` 檔頭），所以一份
+ * 手寫的模板可以塞 `[255,100,100]` 進去而 Zod 不會擋 —— 而那在畫面上是「乘 255」
+ * ＝一具過曝到全白的模型，⛔ 不會有任何錯誤訊息（失敗形態①）。
+ */
+function rgb(
+  t: TemplateDoc,
+  params: Record<string, unknown>,
+  name: string,
+): [number, number, number] {
+  const v = raw(t, params, name);
+  if (!Array.isArray(v) || v.length !== 3) {
+    throw new ExpandError(`template ${t.id}: param "${name}" must be [r,g,b]`);
+  }
+  const out = v.map((c) => {
+    if (typeof c !== "number" || !Number.isFinite(c) || c < 0 || c > 1) {
+      throw new ExpandError(
+        `template ${t.id}: param "${name}" 的每一格都要是 0…1 的線性色（原作的 0–255 要先 ÷255）`,
+      );
+    }
+    return c;
+  });
+  return [out[0]!, out[1]!, out[2]!];
+}
+
 function damageType(t: TemplateDoc, params: Record<string, unknown>, name: string): DamageType {
   const v = str(t, params, name);
   if (v !== "physical" && v !== "magic" && v !== "true") {
@@ -589,12 +617,30 @@ const modelFxFamily: Family = (t, p) => {
               // ⭐ GH#688 機制①：沿線 N 具的間距（count 在下面那行,兩者成對）。
               ...(has(t, p, "spacing") ? { spacing: num(t, p, "spacing") } : {}),
             }
-          : { speed: num(t, p, "speed"), distance: num(t, p, "distance") }),
+          : {
+              speed: num(t, p, "speed"),
+              distance: num(t, p, "distance"),
+              // ⭐ GH#693 —— `lifeSec` **不是 static 專屬**：`orbit` 的 schema 明文
+              //    「繞圈沒有終點，缺了它這一具模型當場就消失」。在此之前它只在
+              //    static 分支發出，於是一份宣告了 lifeSec 的 orbit 模板展開出來的
+              //    節點會被 refine 擋下 —— 而「球體定點」正是 census 最大的一群
+              //    （static-single 165 隻），出貨的六支球體用的就是 orbit 編碼。
+              //    ⚠️ 三份既有模板（beam-roll static／radial-burst／line-blast）
+              //    逐位元不變:後兩者根本沒宣告 lifeSec。
+              ...(has(t, p, "lifeSec") ? { lifeSec: num(t, p, "lifeSec") } : {}),
+            }),
         // ⚠️ `count` 是**傷害次數的乘數**，⛔ 不是一個純視覺的數字：十二具各掃
         //    一次 = 42-04 卡面承諾的「隨機12次區域傷害」。調小它總輸出跟著掉。
         ...(has(t, p, "count") ? { count: num(t, p, "count") } : {}),
         ...(has(t, p, "spinDegPerSec") ? { spinDegPerSec: num(t, p, "spinDegPerSec") } : {}),
         ...(has(t, p, "scale") ? { scale: num(t, p, "scale") } : {}),
+        // ⭐ GH#693【外觀那兩格】—— 顏色與透明度是**逐支技能**的參數,⛔ 不是
+        //    「換一份已經染好色的模型」。census 量到 133/236 隻 dummy 非白,而且
+        //    每一具都不同 ⇒ 沒有這兩格,一個家族的每一種顏色都要多開一份
+        //    `model@1` 文件(第〇·四守則說的第二個住處)。
+        //    ⚠️ 三份既有模板一格都沒宣告 ⇒ 展開結果逐位元不變。
+        ...(has(t, p, "tint") ? { tint: rgb(t, p, "tint") } : {}),
+        ...(has(t, p, "alpha") ? { alpha: num(t, p, "alpha") } : {}),
         // ⭐ 聲音跟著模板走（`content/modelFxPreset.ts` 的 SOUND_FIELDS 是同一件
         //    事的另一半）。⛔ 漏掉這兩行 = 表單上有一格 soundKey、展開出來的技能
         //    卻是啞的 —— 那正是這一批要修的那個病，只是換到編輯器那條路上。
@@ -604,14 +650,27 @@ const modelFxFamily: Family = (t, p) => {
           : {}),
         // ⭐「沿路掃到人」才是這一族與一發直線傷害的差別 —— 傷害走**級距**
         //    （damageTier），⛔ 這裡不算出數字（第〇·四守則）。
-        onTouch: [
-          damageEffect(damageType(t, p, "damageType"), {
-            damageTier: str(t, p, "touchDamageTier"),
-          } as unknown as Scaling),
-        ],
-        touchRadius: num(t, p, "touchRadius"),
-        ...(has(t, p, "touchSide")
-          ? { touchSide: str(t, p, "touchSide") as "enemies" | "allies" }
+        // ⭐⭐ GH#693 —— 這一整段由「**模板有沒有宣告 `touchDamageTier`**」決定,
+        //    ⛔ 不是家族名（與上面 `blast` 那一格逐字同一個推導）。
+        //    ⚠️ 它不是潔癖:`tpl-locust-*` 那四份是**純演出**模板（owner 逐字
+        //    「球體、蝗蟲群特效都要變成模板」），而 `tpl-beam-roll` 的檔頭已經
+        //    立過這條規矩 ——「⛔ 不自動塞傷害:那會替每一支引用它的技能各加一份
+        //    沒有人裁決過的傷害」（第一守則:出貨數值要引用得到 owner 的原話）。
+        //    在此之前這一段是**無條件**的,於是一份不宣告傷害的模板連展開都會炸
+        //    （`str()` 對缺席的槽擲 ExpandError）。
+        //    三份既有模板全部宣告了 `touchDamageTier` ⇒ 逐位元不變。
+        ...(has(t, p, "touchDamageTier")
+          ? {
+              onTouch: [
+                damageEffect(damageType(t, p, "damageType"), {
+                  damageTier: str(t, p, "touchDamageTier"),
+                } as unknown as Scaling),
+              ],
+              touchRadius: num(t, p, "touchRadius"),
+              ...(has(t, p, "touchSide")
+                ? { touchSide: str(t, p, "touchSide") as "enemies" | "allies" }
+                : {}),
+            }
           : {}),
         // ⭐ 到點爆發 —— 與 `onTouch` 是**兩串班表**而不是一串：合成一串的話，
         //    路上已經被掃到的人會被「一人一次」的過濾器擋在爆炸外面。
@@ -1585,6 +1644,64 @@ const FAMILIES: Readonly<Record<string, Family>> = {
   // ⚠️ `onArrive` 與 `onTouch` 是**兩串**班表：合成一串的話，路上已經被掃到的人
   //    會被「一人一次」的過濾器擋在爆炸外面 —— 而卡面承諾的是兩段。
   "line-blast": modelFxFamily,
+
+  // ── ⭐⭐ 21–24. 蝗蟲群／球體特效四族（GH#693）────────────────────────────────
+  //
+  // owner 2026-08-25（逐字）：
+  // > 「[重要]記得**所有這些球體、蝗蟲群特效 都要變成模板，可以被編輯器複用、
+  // >  成為JSON設定模板標籤**」
+  //
+  // ⭐【分群是**推導**出來的，⛔ 不是我挑的四個名字】`tools/locust-census/gen.mjs`
+  //    掃 236 隻 dummy × 644 個 JASS 生成點，對每一隻算兩根**引擎表達得出來**的軸：
+  //      · 位移 —— 那個 rawcode 的生成點有沒有 `SetUnitPosition`（census `calls.moves`）
+  //      · 多具 —— 生成點在不在 `loop` 裡（census `inLoop`）
+  //    2×2 ⇒ 四群，而量到的分佈是
+  //    **static-single 165 · static-line 15 · travel-single 12 · travel-line 4**
+  //    （另 40 隻 `modelKind` 是隱形/承襲 ⇒ ⛔ 不進模板：那是 proxyCast 的活，
+  //     零視覺移植工作，synthesis §2 逐字）。
+  //
+  // ⚠️ **⛔ 沒有第五、第六個家族**，而那是刻意的取捨，⛔ 不是還沒做完：
+  //    census 還量得到「有 timedLife」「有 anim/timeScale」兩根軸，但
+  //      · `timedLife` 與 sleep-清場在 GGD 這一側是**同一格** `lifeSec`
+  //        ⇒ 分開就是「一支技能一個模板」（票上的 ≤6 上限正是在擋這個）；
+  //      · `anim`/`timeScale` 的引擎機制（glb 剪輯播放）**還沒落地**（Phase 4-③）
+  //        ⇒ 現在替它開一個家族，就是一格「表單填得下、遊戲不會發生」
+  //        （第一·五守則）。它落地的那天這裡才會有第五個鍵。
+  //
+  // ⭐【與 beam-roll／radial-burst／line-blast 的分界線是**傷害**，⛔ 不是形狀】
+  //    四族共用**同一支** `modelFxFamily`（⛔ 零行新程式），差別只有模板宣告了哪幾格：
+  //    既有三族宣告 `touchDamageTier` ⇒ 展開出 `onTouch` 傷害（它們是**行為**模板）；
+  //    這四族一格都不宣告 ⇒ **純演出**（`tpl-beam-roll` 檔頭立的那條規矩逐字：
+  //    「⛔ 不自動塞傷害 —— 那會替每一支引用它的技能各加一份沒有人裁決過的傷害」）。
+  //    ⇒ 要沿路掃傷害的技能自己寫 `onTouch`，或疊一張帶傷害的卡。
+  //
+  // ⚠️ 新增一份 fx 模板要**三件事一起做**：模板文件 · 這裡的家族鍵 ·
+  //    `editorCapabilities.ts` 的 `FAMILY_PROBE_LIST`。漏第三件 → 那條守衛紅。
+
+  // 21. 球體定點（census static-single，**165 隻，最大的一群**）——
+  //     一具（或環上 N 具）擺在原地播完 `lifeSec` 就收。
+  //     ⚠️ `path` 預設是 **`orbit`** 而不是 `static`，而那是**量出來的**，⛔ 不是
+  //     偏好：出貨的六支球體（`godie-e00x.q` / `etyr.q` / `h01o.e` / `h020.r` /
+  //     `hjai.r` / `u01u.r`）逐支寫的是 `orbit + count:1 + distance:0.1`，
+  //     那是「定點」在這個引擎裡**既有的**編碼（`dx=dz=0`，與 static 同族線路）。
+  //     改成 `static` 會動到那六支的線路酬載 ⇒ ⛔ 不是逐位元等價的 retrofit。
+  "locust-orb": modelFxFamily,
+
+  // 22. 沿線 N 具（census static-line，15 隻）—— `static + count × spacing`，
+  //     原作「一次擺出整條線」（09-04 h006 `loop i=1..6 × 200`）。
+  //     出貨採用者：`godie-ogrh.r` / `godie-o00x.r` 的火柱層。
+  "locust-line": modelFxFamily,
+
+  // 23. 推進單具（census travel-single，12 隻）—— 一具沿面向推出去。
+  //     出貨採用者：`godie-u010.e` / `godie-uvng.e` 的黑洞層。
+  "locust-travel": modelFxFamily,
+
+  // 24. 推進多具（census travel-line，4 隻）—— `radial + count` 等分散開各自推進。
+  //     出貨採用者：`godie-u010.ex` / `godie-uvng.ex` 的黑洞層。
+  //     ⚠️ 它與 `radial-burst` 的**形狀**確實相同 —— 差別在上面那條分界線：
+  //     radial-burst 宣告 `touchDamageTier`（一次施放 = 12 次區域傷害，卡面承諾），
+  //     這一族一格傷害都沒有。⇒ 兩份**資料**，⛔ 零份重複的程式。
+  "locust-swarm": modelFxFamily,
 
   "mark-stacks": (t, p) => {
     const lethalOn = str(t, p, "lethalMode") === "save";

@@ -52,13 +52,8 @@
     {
       "kind": "spawnModelFx",
       "shape": "single",
-      "modelKey": "imported.blackhole",
-      "path": "radial",
-      "count": 3,
-      "distance": 8.0,
-      "speed": 7.7,
-      "spinDegPerSec": 720.0,
-      "scale": 0.6
+      "preset": "tpl-locust-swarm",
+      "modelKey": "imported.blackhole"
     },
     {
       "kind": "spawnModelFx",

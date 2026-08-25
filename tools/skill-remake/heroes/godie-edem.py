@@ -5,7 +5,7 @@
 ⛔ 這一份只有**這一位英雄的資料**。共用的機制（`amt` / `dmg` / `area` /
    `buff` / 級距 / 各種閘）在 `common.py`；匯總與產生在 `batch1.py`。
 """
-from common import A, M, amt, area, buff, dmg, line, status
+from common import A, M, amt, area, buff, dmg, line, status, static_model
 
 
 A("45-00", "45-00 寫輪眼", "self", [0], [0], 0,
@@ -87,6 +87,10 @@ A("45-03", "45-03 千鳥", "ground", [45, 45, 45, 45], [120, 185, 250, 315], 12.
   # ⚠️ 已知取捨：`damageLine` **沒有** `radiusTier` 這一格（schema 是 `.strict()`），
   #    所以 12.0 這個寬度不再受 `config.aoe-tiers@1` 調整。要補是引擎側加一格
   #    寬度級距，⛔ 不是在這裡自己發明一個欄位。
+  # ⭐ GH#691（#688 Phase 6-1）—— 原作的 `AddSpecialEffect` dummy（`MonsoonBoltTarget.mdl`）。
+  #    census 逐列：`orb-timed（war3map.j:41892 LightCutRun）—— 同上,無 dummy`。⛔ 手寫進出貨 JSON 會被下一次 skillremake:json 打回來
+  #    （`carry_mechanisms` 只沿用 invulnerable / spawnProjectile），所以它走表格出口。
+  model_fx=[static_model("w3x.stock.monsoonbolttarget", "point", 1.0, scale=4.0)],
   effects=[{"kind": "dash", "mode": "toPoint", "speed": 16, "maxDistance": 12.83},
            line("magic", length=12.83, width=12.0, aim="facing",
                 per=[400, 500, 600, 700], ap=1.0)])

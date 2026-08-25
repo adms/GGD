@@ -63,7 +63,10 @@ window.addEventListener("unhandledrejection", (e) => showErr(e.reason));
 
 try {
   const { startBeamAudition } = await import("/src/vfx/beamAudition.ts");
-  const h = await startBeamAudition(document.getElementById("view"));
+  // ⭐ GH#691:`?ability=<id>` 換一支來驗收(省略 = 09-04,今天的行為不變)。
+  const ability = new URLSearchParams(location.search).get("ability") || undefined;
+  const h = await startBeamAudition(document.getElementById("view"), ability);
+  if (ability) document.querySelector("#panel h1 span").textContent = ability;
   window.__beam = h; // 截圖自動化接縫
 
   const readout = document.getElementById("readout");

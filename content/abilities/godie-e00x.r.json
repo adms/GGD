@@ -37,6 +37,15 @@
       "kind": "spawnVfx",
       "vfxId": "godie-lightningtornado-p0",
       "at": "target"
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "path": "static",
+      "anchor": "target",
+      "modelKey": "w3x.stock.monsoonbolttarget",
+      "scale": 4.0,
+      "lifeSec": 1.0
     }
   ],
   "vfxKey": "fx.prim.lightning.beam-lg",

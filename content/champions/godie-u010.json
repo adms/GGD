@@ -244,12 +244,8 @@
         {
           "kind": "spawnModelFx",
           "shape": "single",
-          "modelKey": "imported.blackhole",
-          "path": "forward",
-          "speed": 30.0,
-          "distance": 14.0,
-          "spinDegPerSec": 720.0,
-          "scale": 0.6
+          "preset": "tpl-locust-travel",
+          "modelKey": "imported.blackhole"
         },
         {
           "kind": "spawnModelFx",

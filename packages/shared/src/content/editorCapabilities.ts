@@ -2177,6 +2177,13 @@ const FAMILY_PROBE_LIST: readonly string[] = [
   //    `editorCapabilities.test.ts`「被出貨內容真的引用的家族」那一條會逐份比對
   //    ⇒ 漏列一個，外部編輯器就看不到它。
   "radial-burst", "line-blast",
+  // ⭐【蝗蟲群／球體特效四族】GH#693。owner 2026-08-25 逐字：「所有這些球體、
+  //    蝗蟲群特效 都要變成模板，可以被編輯器複用、成為JSON設定模板標籤」。
+  // ⚠️ 分群是 `tools/locust-census/gen.mjs` 從 236 隻 dummy × 644 生成點**推導**
+  //    的 2×2（位移 × 多具），⛔ 不是手挑的四個名字 —— 完整推導寫在 `expand.ts`
+  //    的 21–24 那一段。四份 `tpl-locust-*.json` 同時是 `spawnModelFx.preset` 的
+  //    共用表，所以漏列一個 = 外部編輯器看不到它 ⇒ 照著做的內容上線就是死的。
+  "locust-orb", "locust-line", "locust-travel", "locust-swarm",
   "random-barrage", "range-gamble", "resource-ops", "single-strike", "strip-transform",
   "summon-agent", "team-synergy", "teleport", "traveling-wave",
 ];

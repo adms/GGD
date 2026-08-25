@@ -51,7 +51,12 @@ const ENEMY_LINE: readonly { x: number; z: number }[] = [
  * 主體＝原作 h007 的 ReviveHuman（節點自己的 `modelKey`，模板 count 6 沿線）、
  * 火柱＝原作 h006 的 FlameStrike1（沿線 ×6 的第二個 spawnModelFx 節點）。
  */
-const BEAM_MODEL_KEYS = ["w3x.stock.revivehuman", "w3x.stock.flamestrike1"];
+const BEAM_MODEL_KEYS = [
+  "w3x.stock.revivehuman",
+  "w3x.stock.flamestrike1",
+  /** GH#691 蝗蟲群視覺第一批 —— `o00E` 那一族（17 個生成點）共用的那一份。 */
+  "w3x.stock.monsoonbolttarget",
+];
 
 export interface BeamMeshStat {
   name: string;
@@ -89,7 +94,11 @@ export interface BeamAuditionHandle {
   dispose(): void;
 }
 
-export async function startBeamAudition(canvas: HTMLCanvasElement): Promise<BeamAuditionHandle> {
+export async function startBeamAudition(
+  canvas: HTMLCanvasElement,
+  /** ⭐ GH#691 —— 驗收哪一支技能。省略 ⇒ 09-04（今天的行為逐位元不變）。 */
+  abilityId?: string,
+): Promise<BeamAuditionHandle> {
   // ⚠️ 坑①：canvas 背後緩衝預設 300×150，CSS 只是放大 —— 不 resize 就是在
   // 300×150 下算圖，「看不見」會是台子造成的，⛔ 不是遊戲。
   const fit = (): void => {
@@ -144,7 +153,10 @@ export async function startBeamAudition(canvas: HTMLCanvasElement): Promise<Beam
       import("../render/modelFxRig"),
     ]);
 
-  const { world, castOnce, casterId, casterPos, enemyPos } = await buildBeamAuditionWorld(ENEMY_LINE);
+  const { world, castOnce, casterId, casterPos, enemyPos } = await buildBeamAuditionWorld(
+    ENEMY_LINE,
+    abilityId as never,
+  );
 
   // ⚠️ 座標用 sim 的那一套（zone 中心 x≈-37，⛔ 不是原點）。
   mkBody(casterPos.x, casterPos.z, true);

@@ -5,7 +5,7 @@
 ⛔ 這一份只有**這一位英雄的資料**。共用的機制（`amt` / `dmg` / `area` /
    `buff` / 級距 / 各種閘）在 `common.py`；匯總與產生在 `batch1.py`。
 """
-from common import A, M, area, buff, dmg, status
+from common import A, M, area, buff, dmg, status, static_model
 
 
 A("77-00", "77-00 浮雲-旋一閃", "self", [30], [0], 0,
@@ -52,6 +52,10 @@ A("77-03", "77-03 GLADIARIA ALAT", "self", [120, 120, 120, 120], [90, 180, 270, 
 A("77-04", "77-04 真-雷光劍", "ground", [70, 70, 70], [150, 225, 300], 11,
   "[主動][範圍][AD加成]\n{{cd}}秒冷卻，施展時間2秒\n消耗MP{{mp}}\n施法距離：{{range}}\n\n「神鳴。雷光」\n神鳴流決戰奧義，聚集大量雷電於劍上予以斬擊，給予[小範圍]敵人600/800/1000+60% [AD]傷害。",
   maxRank=3, cast_time=2.0, radiusTier="極小",
+  # ⭐ GH#691（#688 Phase 6-1）—— 原作的 `AddSpecialEffect` dummy（`MonsoonBoltTarget.mdl`）。
+  #    census 逐列：`loc-oneshot（war3map.j:49906 Move_Effect）—— ⛔ 沒有 dummy 單位,所以原作沒有記下 usca/tint;scale 4.0 見 docs/_reports/V6_temp_20260825.md 的對照表`。⛔ 手寫進出貨 JSON 會被下一次 skillremake:json 打回來
+  #    （`carry_mechanisms` 只沿用 invulnerable / spawnProjectile），所以它走表格出口。
+  model_fx=[static_model("w3x.stock.monsoonbolttarget", "point", 1.0, scale=4.0)],
   effects=[area("physical", tier="極小", per=[600, 800, 1000], ad=0.6)])
 
 A("77-002", "77-002 御雷劍", "self", [0], [0], 0,
