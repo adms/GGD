@@ -840,6 +840,11 @@ export class VfxSystem {
   }
 
   /** ⭐ 相機震動的出口安裝（出貨接 `CameraRig.addShake`）。 */
+  /** 🔥 GH#703 —— 把出貨內容的 modelKey 名單餵給 modelFx 容器快取（進場預熱）。 */
+  warmModelFx(keys: readonly string[]): void {
+    this.modelFx?.warm(keys);
+  }
+
   installShakeSink(fn: (amplitude: number, durationMs: number) => void): void {
     this.screenFx.setShakeSink(fn);
   }

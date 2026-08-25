@@ -8,6 +8,7 @@
  * Babylon lives behind render/* and vfx/*.
  */
 import { TICK_MS } from "@ggd/shared/constants";
+import { spawnModelFxKeysInUse } from "@ggd/shared/content/modelFxWarmKeys";
 import { SKELETON_ARENA, arenaDefFromDoc, type ArenaDef } from "@ggd/shared/sim/world/ArenaDef";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import {
@@ -967,6 +968,12 @@ export class GameApp {
     //    ⚠️ 這一條是**全螢幕那一層**的出口（單人/沒安裝逐格路由時才會響）——
     //    分割畫面走 `installScreenCues()` 建的逐格 sink，見那裡。
     this.vfx.installShakeSink((amp, ms) => this.queueAuthoredShake(0, amp, ms));
+    // 🔥 GH#703 —— 冷快取預熱：出貨技能會用到的每一顆 spawnModelFx modelKey，
+    //    進場就開載。⛔ 不做的話「第一次施放 0 頂點」（短命演出死在 389KB 下載
+    //    完成之前），而熱快取重放一切正常 —— 玩家最會注意的那一次正好是壞的那次。
+    //    名單從已註冊技能推導（模板展開後），⛔ 不是手寫清單。
+    this.vfx.warmModelFx(spawnModelFxKeysInUse());
+
     // 🖥️🖥️ GH#612 —— 逐格螢幕演出。⛔ 必須在 `this.vfx` 之後（它要同一份上界）。
     this.installScreenCues(playerCount);
     this.ambient = roundFx.ambient;

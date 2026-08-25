@@ -292,7 +292,7 @@ const DEFAULT_MAX_POOLED_PER_MODEL = 12;
  * 記下來的教訓（`VfxSystem.resetForRound` 的註解）：
  * 「**per-key 上限只有在 key 的數量有上界時才構成上界**」。
  * 而 modelKey 的數量在一場比賽裡是**一直增加**的：英雄升級解鎖 R/EX、第 3 回合起
- * 殭屍加入、每回合換地圖（#145）。實測（`modelFxRoundGrowth.test.ts` 的前身探針，
+ * 殭屍加入、每回合換地圖（#145）。實測（`modelFxRig.test.ts` 的前身探針，
  * 每回合 3 個新 modelKey、8 個回合）：場景裡的 `modelfx-*` TransformNode 是
  * **72 → 144 → 216 → … → 576**，逐回合 +72，而且回合邊界一個都沒還回去。
  */
@@ -585,6 +585,20 @@ export class ModelFxRig {
     //    那根長軸 —— 翻滾光束會沿著自己滾,⛔ 不是每滾一圈甩離航線一次。
     item.root.rotation.set(0, pose.yawRad, pose.rollRad);
     return pose;
+  }
+
+  /**
+   * 🔥 GH#703 —— 進場預熱：把出貨內容會用到的 modelKey 先載進容器快取。
+   * ⛔ 少了這一步，「第一次施放」會死在 glb 下載完成之前（0.1–2 秒的演出 vs
+   * 389KB 的下載）—— 回填醒來時場上已經沒有活著的實例，玩家第一次看到這支
+   * 技能時模型不存在，而之後每一次都好好的。
+   * fire-and-forget：`loadContainer` 本來就是非同步的，⛔ 不擋首次繪製。
+   */
+  warm(keys: readonly string[]): void {
+    for (const key of keys) {
+      const doc = this.opts.resolveModel(key);
+      if (doc) this.ensureContainer(key, doc.glbPath);
+    }
   }
 
   private ensureContainer(modelKey: string, glbPath: string): void {
