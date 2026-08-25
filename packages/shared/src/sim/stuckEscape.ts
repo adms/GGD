@@ -170,8 +170,16 @@ export function stuckEscapeTick(world: SimWorld, id: EntityId, verdict: WalkStal
 
 /**
  * 放行的可見回饋 —— 頭上冒「脫困」。走 `floatingText` 這條**既有**的事件路
- * （typed payload + fanout 已放行 + 客戶端 `FloatingTextFx` 真的在畫），
- * ⛔ 不開新協定欄位。與 `hitstopHold.ts` 的「掙脫」同一個形狀。
+ * （typed payload + fanout 已放行），⛔ 不開新協定欄位。
+ * 與 `hitstopHold.ts` 的「掙脫」同一個形狀。
+ *
+ * ⚠️ **這一段在 2026-08-25 之前寫著「客戶端 `FloatingTextFx` 真的在畫」，而那是假的**
+ * （第三守則：註解會說謊）。S7 lane 量到：sim 發了、`VfxSystem` 收了、池子裡是
+ * active 的 —— 而**截圖上一個像素都沒有**，因為 `floatingTextEntries` 的消費端
+ * 全 repo 只有一個**測試**。GH#701 補上了渲染那一半
+ * （`apps/client/src/ui/WorldAnchorLayer.tsx` 的「技能浮字」段）。
+ * ⛔ 這裡不要再替客戶端作證 —— 要問「畫得出來嗎」就去看那條守衛
+ * （`ui/floatingTextRenders.test.ts`）。
  */
 function emitStuckEscape(world: SimWorld, id: EntityId): void {
   const t = world.transform.get(id);

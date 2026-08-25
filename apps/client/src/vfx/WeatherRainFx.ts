@@ -35,9 +35,23 @@
  * ═══════════════════════════════════════════════════════════════════════════
  * GH#654 逐字：「GPU 粒子（⛔ 不要 CPU 粒子 —— 一場雨是幾千顆）」。
  * `GPUParticleSystem.IsSupported` 為真時走 GPU；⚠️ 它需要 WebGL2 的 transform
- * feedback，而 **NullEngine 沒有** ⇒ 測試量到的是 CPU 那條路。兩條路共用同一個
- * `IParticleSystem` 介面與同一份 {@link rainPlan}，所以「走哪一條」是一行，
+ * feedback，而 **NullEngine 沒有** ⇒ 測試**預設**量到的是 CPU 那條路。兩條路共用
+ * 同一個 `IParticleSystem` 介面與同一份 {@link rainPlan}，所以「走哪一條」是一行，
  * ⛔ 不是兩份會各自腐爛的設定。
+ *
+ * ⛔⛔ **GH#700（T0，2026-08-25）**：上面那一行「NullEngine 走 CPU」在此之前只是
+ * 一句**檔頭散文**，而它正是這個缺陷能出貨的原因 —— 出貨的真瀏覽器是 WebGL2 ⇒
+ * `IsSupported` 為 **true** ⇒ 走 `new GPUParticleSystem(...)`，而 Babylon 的
+ * GPU 粒子把平台實作放在**另一個模組**裡（`gpuParticleSystem.js:739` 用
+ * `GetClass("BABYLON.WebGL2ParticleSystem")` 查註冊表，查不到就**擲例外**）。
+ * ⇒ 少了下面那一行 side-effect import，出貨路徑**每一次下雨都擲**
+ * `The WebGL2ParticleSystem class is not available!`，而 vitest 全綠
+ * （NullEngine 的 `IsSupported` 是 false ⇒ 那條路一次都沒被走過）。
+ * ⭐ 守衛 `render/weatherRainGpuPath.test.ts` **把 caps 打開**逼它走 GPU 那條路，
+ * ⛔ 不再是「測試環境剛好走另一條」。
+ * ⚠️ 客戶端只建 WebGL `Engine`（⛔ 沒有 WebGPU）⇒ 只需要註冊 WebGL2 那一個平台；
+ * 哪天真的接了 WebGPU，`supportComputeShaders` 會要 `ComputeShaderParticleSystem`
+ * —— 那條路今天由 `ArenaScene` 的 fail-open 接住（並且會喊）。
  *
  * ⚠️ 雨是**常駐**特效（整回合都在）⇒ 建立當下就 `markVfxPersistent()`，
  * 否則 GH#570 的兜底掃描（出貨 scope `"scene"`）會在 5 秒後把整場雨收掉，
@@ -49,6 +63,10 @@ import type { IParticleSystem } from "@babylonjs/core/Particles/IParticleSystem"
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { ParticleSystem } from "@babylonjs/core/Particles/particleSystem";
 import { GPUParticleSystem } from "@babylonjs/core/Particles/gpuParticleSystem";
+// ⛔⛔ GH#700 —— **這一行沒有匯出任何東西，⛔ 不要當成沒用的 import 刪掉。**
+// 它是 `GPUParticleSystem` 在 WebGL2 上的平台實作，靠 `RegisterClass` 把自己登記到
+// Babylon 的全域註冊表；少了它，出貨路徑上的 `new GPUParticleSystem(...)` 直接擲。
+import "@babylonjs/core/Particles/webgl2ParticleSystem";
 import { Texture } from "@babylonjs/core/Materials/Textures/texture";
 import { Color4 } from "@babylonjs/core/Maths/math.color";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";

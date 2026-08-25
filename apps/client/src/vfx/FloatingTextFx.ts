@@ -115,6 +115,29 @@ const clampInt = (v: number | undefined, lo: number, hi: number, fallback: numbe
   return Math.min(hi, Math.max(lo, Math.round(v)));
 };
 
+/**
+ * ⛔⛔ **GH#701 —— 這一格是「誰在畫」的答案，⛔ 不是一個方便的全域變數。**
+ *
+ * 在此之前這個檔的檔頭寫著「渲染只有一個地方（世界錨點層）在做」，而
+ * `VfxSystem.floatingTextEntries` 的註解寫著「由 `ui/WorldAnchorLayer` 每幀讀」
+ * —— **兩句都是假的**（第三守則）：`grep` 全 repo，那個 getter 的消費端只有測試，
+ * 出貨路徑 **0 個** ⇒ sim 發了、池子裡是 active 的、而**畫面上一個像素都沒有**
+ * （失敗形態⑧：消費端存在，但它消費不到 —— 這裡連消費端都不存在）。
+ *
+ * ⭐ 為什麼是一份**登錄表**而不是 `VfxSystem` 上的一格：
+ * HUD 是 React、特效是 Babylon，兩邊的生命週期**沒有共同的父**（`GameApp` 建
+ * `VfxSystem`，`HudRoot` 掛 `WorldAnchorLayer`，兩者互不知道對方存在）。
+ * 要嘛在 `GameApp` 加一行接線（⛔ 第〇·六守則點名的「一行接線」病，而且那個檔正是
+ * lane 互撞的重災區），要嘛讓**這一層自己報到**。⇒ 建構＝報到、`dispose()`＝離開。
+ *
+ * ⚠️ 出貨永遠只有**一個**（`VfxSystem` 建的那個）；測試會有好幾個，所以渲染端
+ * 一律**逐層走**，⛔ 不假設 size === 1。
+ */
+const liveLayers = new Set<FloatingTextFx>();
+
+/** 目前活著的浮字層 —— 渲染端（`ui/WorldAnchorLayer`）每幀逐層走這一份。 */
+export const floatingTextLayers: ReadonlySet<FloatingTextFx> = liveLayers;
+
 export class FloatingTextFx {
   private disposed = false;
   /** 全域字級倍率（⛔ 不夾成 0：0 = 看不見的字 = 一段沒有人讀得到的話）。 */
@@ -150,6 +173,9 @@ export class FloatingTextFx {
         delayMs: 0,
       }),
     );
+    // ⭐ GH#701 —— 報到。⛔ 少了這一行，渲染端逐幀走的是一個**空的**集合，
+    //    而 sim / VfxSystem / 這個池子每一層都完全正常（＝這個缺陷原本的樣子）。
+    liveLayers.add(this);
   }
 
   /** 渲染端逐幀掃這一份（⛔ 不要複製它 —— 它是穩定的、零配置的）。 */
@@ -240,6 +266,7 @@ export class FloatingTextFx {
   /** 收攤。⛔ 與 `resetForRound` 不同:那是回合邊界,這是整個 VfxSystem 被丟掉。 */
   dispose(): void {
     this.disposed = true;
+    liveLayers.delete(this); // ⛔ 不留一個對著死掉的世界報座標的層
     this.resetForRound();
   }
 

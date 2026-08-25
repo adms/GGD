@@ -26,7 +26,9 @@
 import { useEffect, useRef } from "react";
 import { frameBus, pushEvadeText } from "../frameBus";
 import { drainEvadeSightings } from "../net/RoomConnection";
+import { floatingTextLayers } from "../vfx/FloatingTextFx";
 import {
+  COMBAT_TEXT_FONT,
   MAX_COMBAT_TEXT,
   chromeAlphaMult,
   combatTextAlpha,
@@ -36,6 +38,7 @@ import {
   combatTextLane,
   combatTextLift,
   combatTextScale,
+  combatTextShadow,
   combatTextStyle,
   combatTextStyleKey,
   combatTextWidthPx,
@@ -46,6 +49,36 @@ import {
 import { teamCss } from "./theme";
 
 const BAR_W = 64;
+
+/**
+ * 技能浮字的**基準字級**（`sizeScale` 乘在它上面；後台的 `floatingTextScale`
+ * 已經在 `FloatingTextFx` 那一層乘進 `sizeScale` 了 —— 一個值一個住處）。
+ * ⛔ 不是一格後台：它只有「讀得到」與「擋住畫面」兩種值，跟 {@link BAR_W} 同一族。
+ */
+const FLOATING_TEXT_BASE_PX = 20;
+
+const byte = (n: number): number => Math.max(0, Math.min(255, Math.round(n) || 0));
+
+/**
+ * 一段技能浮字的完整 inline style（PURE —— 給守衛逐格讀得到）。
+ *
+ * ⭐ 刻意與傷害數字**共用同一支字體與同一份外框配方**（`COMBAT_TEXT_FONT` /
+ * `combatTextShadow`）：它們是同一塊畫布上的兩種字，字體不一樣會讀成兩套 HUD。
+ * ⛔ 但它**不走** `combatTextCss` —— 那一支的每一格（類別色、band、halo、暴擊斜體）
+ * 都綁在「誰打誰、打多少」上，而浮字沒有類別也沒有數字（見 `vfx/FloatingTextFx`
+ * 檔頭：硬塞進去要在 `CombatTextCategory` 上開一個「其他」分支）。
+ */
+export function floatingTextCss(r: number, g: number, b: number, fontSizePx: number): string {
+  // 外框要跟著字長大，⛔ 否則大字讀起來像沒有描邊（同 `combatTextStyle` 的那一行）
+  const outlinePx = fontSizePx >= 24 ? 2 : 1.5;
+  return (
+    "position:absolute;left:0;top:0;pointer-events:none;white-space:nowrap;" +
+    "will-change:transform,opacity;transform-origin:50% 50%;" +
+    `font-family:${COMBAT_TEXT_FONT};font-weight:700;letter-spacing:0.02em;` +
+    `font-size:${fontSizePx}px;color:rgb(${byte(r)},${byte(g)},${byte(b)});` +
+    `text-shadow:${combatTextShadow(outlinePx, outlinePx * 2)};`
+  );
+}
 
 /** 一顆有樣式（可選 `data-role`）的 `<div>`。⛔ 這裡是全檔唯一建節點的地方。 */
 function barDiv(cssText: string, role?: string): HTMLDivElement {
@@ -229,6 +262,14 @@ export function WorldAnchorLayer(): React.JSX.Element {
       root.appendChild(n);
     }
 
+    // ---- 技能浮字的節點池（GH#701）----
+    // ⚠️ 這一池**按需長出來**（⛔ 不像 combat text 一開始配滿）：`FloatingTextFx`
+    //    的池子大小是後台可調的（1..200），而絕大多數比賽同時只有兩三段字 ——
+    //    預配 200 顆 `<div>` 是為了一個永遠不會到的上界付錢。長出來之後**永不回收**，
+    //    所以穩態一樣是零配置（同 combat text 的紀律）。
+    const ftNodes: HTMLDivElement[] = [];
+    const ftKeys: string[] = [];
+
     // Reserved HUD chrome rects (task #42's registry). Recomputed only when the
     // viewport changes — the registry is a declaration, not a DOM measurement.
     let chromeRects: HudRect[] = [];
@@ -376,6 +417,56 @@ export function WorldAnchorLayer(): React.JSX.Element {
         }
         node.style.opacity = alpha.toFixed(3);
       }
+
+      // ---- 技能浮字（GH#701） ----
+      // ⛔⛔ 在這一段出現之前，`floatingText` 這條事件路**沒有任何渲染消費端**：
+      //    sim 發、`VfxSystem` 收、`FloatingTextFx` 池裡是 active 的，而畫面上
+      //    **一個像素都沒有**（克勞德的「1Hit…7Hit」那一族從來沒出現過）。
+      // ⭐ 它與傷害數字**共用這一層**（同一個 rAF、同一顆容器、同一套 pooled node
+      //    紀律），⛔ 不是第二套浮字系統 —— 那正是 GH#701 明文的 known risk。
+      // ⚠️ 座標是**這一發出生時的世界快照 + 目前抬升**（原作的字也不跟著單位走），
+      //    投影用的是渲染層每幀註冊的同一支 `frameBus.project`。
+      const project = frameBus.project;
+      let ftUsed = 0;
+      if (project) {
+        for (const layer of floatingTextLayers) {
+          for (const e of layer.entries) {
+            // alpha 0 = 還在錯開的等待中（`delayMs`）或已經淡完 ⇒ 不佔節點
+            if (!e.active || e.alpha <= 0) continue;
+            const pose = project(e.x, e.y + e.lift, e.z);
+            if (!pose.visible) continue;
+            let node = ftNodes[ftUsed];
+            if (!node) {
+              node = document.createElement("div");
+              node.style.cssText = "display:none;";
+              // 給守衛（與 audition 的取樣）一個**指名**這一層的方式，⛔ 不是靠
+              // 「容器裡第幾顆 div」——那種選擇器下一次有人加一層就靜默失準。
+              node.setAttribute("data-role", "floating-text");
+              root.appendChild(node);
+              ftNodes.push(node);
+              ftKeys.push("");
+            }
+            const fontSize = Math.max(1, Math.round(FLOATING_TEXT_BASE_PX * e.sizeScale));
+            // 一個節點會被不同的字輪流用 ⇒ key 帶 `slot:gen`，換人才重寫樣式與文字
+            const key = `${e.slot}:${e.gen}:${fontSize}:${e.r},${e.g},${e.b}`;
+            if (ftKeys[ftUsed] !== key) {
+              node.style.cssText = floatingTextCss(e.r, e.g, e.b, fontSize);
+              node.textContent = e.text;
+              ftKeys[ftUsed] = key;
+            }
+            node.style.display = "block";
+            node.style.transform =
+              `translate(${(pose.sx + combatTextLane(e.lane)).toFixed(1)}px, ${pose.sy.toFixed(1)}px)` +
+              " translate(-50%, -50%)";
+            node.style.opacity = e.alpha.toFixed(3);
+            ftUsed++;
+          }
+        }
+      }
+      for (let i = ftUsed; i < ftNodes.length; i++) {
+        const n = ftNodes[i]!;
+        if (n.style.display !== "none") n.style.display = "none";
+      }
     };
     raf = requestAnimationFrame(frame);
 
@@ -383,6 +474,7 @@ export function WorldAnchorLayer(): React.JSX.Element {
       cancelAnimationFrame(raf);
       for (const n of champNodes.values()) n.remove();
       for (const n of ctNodes) n.remove();
+      for (const n of ftNodes) n.remove();
     };
   }, []);
 

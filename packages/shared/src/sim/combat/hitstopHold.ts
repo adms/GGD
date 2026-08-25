@@ -395,8 +395,12 @@ export function stuckGuardTick(world: SimWorld, id: EntityId, wantsMove: boolean
 
 /**
  * 釋放的可見回饋 —— 頭上冒「掙脫」。走 `floatingText` 這條**既有**的事件路
- * （typed payload + fanout 已放行 + 客戶端 `FloatingTextFx` 真的在畫），
- * ⛔ 不開新協定欄位。
+ * （typed payload + fanout 已放行），⛔ 不開新協定欄位。
+ *
+ * ⚠️ **這一段在 2026-08-25 之前寫著「客戶端 `FloatingTextFx` 真的在畫」，而那是假的**
+ * （第三守則）：那條事件路當時**沒有任何渲染消費端** —— 池子裡是 active 的，
+ * 畫面上零像素。渲染那一半在 GH#701 才補上（`ui/WorldAnchorLayer.tsx`）。
+ * ⛔ sim 這一側不替客戶端作證：閘在 `apps/client/src/ui/floatingTextRenders.test.ts`。
  */
 function emitStuckRelease(world: SimWorld, id: EntityId): void {
   const t = world.transform.get(id);

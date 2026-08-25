@@ -456,9 +456,44 @@ export function buildArena(
   // ⚠️ GH#676：下不下 = 每場開賽的決定性擲骰（`rainChance` × matchSeed，室外才擲）。
   // ⚠️ 不用回傳值：它的生命週期綁在自己那顆看不見的 emitter mesh 上，而那顆是
   //    `root` 的子節點 ⇒ `disposeArena()` 收 root 的那一刻雨就停了。
-  buildRain(scene, root, arena.id, arena.zones, weather);
+  // ⛔⛔ GH#700 —— **天氣是裝飾，⛔ 它不可以弄壞一場比賽。** 在此之前這裡是裸呼叫，
+  //    而 `GPUParticleSystem` 的建構在缺平台模組時**會擲**（見 `WeatherRainFx` 檔頭）
+  //    ⇒ 擲中雨的那一場（出貨 `rainChance 0.3`）**整個 `buildArena` 拋出**，
+  //    玩家看到的不是「沒有雨」而是**整張地圖建不起來**。
+  buildRainSafely(scene, root, arena, weather);
 
   return handles;
+}
+
+/**
+ * 🌧️ 建雨，⛔ 但**絕不**把例外傳出去（GH#700）。
+ *
+ * ⚠️ CLAUDE.md：**fail-open 沒錯，靜默才是缺陷。** 所以這裡兩件事一起做：
+ *  · **fail-open** —— 吞掉例外，地圖照建（雨是裝飾，⛔ 不是玩法）；
+ *  · **fail-loud** —— `console.error` 一行**指名**是天氣降水掛了，⛔ 不是一句
+ *    沒有人讀得懂的 warn；而且 **latch 起來不再重試** —— 一場比賽每回合換一張圖，
+ *    重試只會把同一則例外印上幾十次，⛔ 而第一則才是有用的那一則。
+ *
+ * ⭐ 這一格是**閂**不是開關：它沒有後台，因為「粒子平台載不起來」是一個**環境事實**，
+ * ⛔ 不是一個 owner 會想調的決策 —— 而它一旦成立，這一整個 session 都不會再變。
+ */
+let rainPlatformFailed = false;
+function buildRainSafely(
+  scene: Scene,
+  root: TransformNode,
+  arena: ArenaDef,
+  weather: WeatherGroundInput,
+): void {
+  if (rainPlatformFailed) return;
+  try {
+    buildRain(scene, root, arena.id, arena.zones, weather);
+  } catch (err) {
+    rainPlatformFailed = true;
+    console.error(
+      "[arena] 天氣降水建立失敗 —— 這一場（以及之後）不下雨，地圖照常建起來 (GH#700)",
+      err,
+    );
+  }
 }
 
 /**
