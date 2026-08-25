@@ -23,11 +23,11 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 1264 個檔案**，分佈在 2 個隔離區。
+**目前共 1367 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
-| [`docs/legacy/`](legacy-index.md#docslegacy) | 824 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
+| [`docs/legacy/`](legacy-index.md#docslegacy) | 927 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
 | [`content/_legacy/`](legacy-index.md#contentlegacy) | 440 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
@@ -35,7 +35,7 @@ owner 2026-08-13：
 
 ---
 
-## `docs/legacy/` —— 824 檔
+## `docs/legacy/` —— 927 檔
 
 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）
 
@@ -829,6 +829,109 @@ owner 2026-08-13：
 | `_overwrites/overwrite_temp_20260825-015650/packages/shared/src/content/fieldAdoption.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260825-015920/packages/shared/src/sim/effects/spawnModelFx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260825-015937/packages/shared/src/sim/effects/spawnModelFx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-112923/tools/review/features.mjs` | （.mjs 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113014/tools/review/middleware.mjs` | （.mjs 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113033/tools/review/check.mjs` | （.mjs 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113044/tools/review/check.mjs` | （.mjs 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113112/tools/review/features.mjs` | （.mjs 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113332/packages/shared/src/sim/effects/spawnModelFx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113413/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113417/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113419/tools/review/features.mjs` | （.mjs 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113421/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113431/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113436/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113442/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113449/docs/_review/feature-verdicts.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113517/packages/shared/src/content/schema/template.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113527/packages/shared/src/content/schema/effects/spawnModelFx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113531/packages/shared/src/content/schema/effects/spawnModelFx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113534/packages/shared/src/content/schema/effects/spawnModelFx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113543/packages/shared/src/content/schema/effects/spawnModelFx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113547/packages/shared/src/content/templates/expand.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113552/packages/shared/src/sim/effects/variants/spawnModelFx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113559/packages/shared/src/sim/effects/spawnModelFx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113603/packages/shared/src/content/templates/expand.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113608/packages/shared/src/sim/effects/spawnModelFx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113615/packages/shared/src/content/templates/expand.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113616/packages/shared/src/content/modelFxPreset.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113623/apps/client/src/review/featureReviewApp.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113654/packages/shared/src/content/templates/expand.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113738/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113747/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113757/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113808/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113814/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113824/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113846/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113852/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113856/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113859/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-113904/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-114127/apps/client/src/render/animProbe_temp_20260825.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-114127/tools/skill-remake/common.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-114258/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-114311/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-114331/packages/shared/src/content/locustMonsoonBolt.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-114338/packages/shared/src/content/locustMonsoonBolt.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-114343/packages/shared/src/content/locustMonsoonBolt.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-114344/content/champions/godie-e00x.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-114617/tools/skill-templates/shape_axes.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-114725/tools/locust-census/gen.mjs` | （.mjs 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-114735/tools/locust-census/gen.mjs` | （.mjs 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-114738/tools/locust-census/gen.mjs` | （.mjs 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-114943/packages/shared/src/content/schema/effects/animationFxTemplate.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-114952/packages/shared/src/content/schema/effects/animationFxTemplate.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-115326/packages/shared/src/content/templates/expand.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-115543/content/abilities/godie-u00l.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-115614/docs/_reports/o00e_visual-proof_20260825-1200/probe.txt` | （.txt 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-120347/apps/client/public/feature-proof-audition.html` | （.html 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-120356/apps/client/src/vfx/featureProofAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-120448/apps/client/src/vfx/featureProofAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-120538/apps/client/src/vfx/featureProofAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-120545/apps/client/src/vfx/featureProofAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-120559/apps/client/src/vfx/featureProofAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-120609/apps/client/src/vfx/featureProofAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-120613/apps/client/src/vfx/featureProofAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-120617/apps/client/src/vfx/featureProofAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-120746/apps/client/src/vfx/featureProofAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-120750/apps/client/src/vfx/featureProofAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-120759/apps/client/src/vfx/featureProofAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-120808/apps/client/src/vfx/featureProofAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-120811/apps/client/src/vfx/featureProofAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-120936/apps/client/src/vfx/featureProofAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-120941/apps/client/src/vfx/featureProofAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-120952/apps/client/public/feature-proof-audition.html` | （.html 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-121114/apps/client/src/render/modelFxRig.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-121155/apps/client/src/vfx/featureProofAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-121209/apps/client/src/vfx/featureProofAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-121217/apps/client/src/vfx/featureProofAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-121224/apps/client/src/vfx/featureProofAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-121243/apps/client/src/render/modelFxRig.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-121248/apps/client/src/render/modelFxRig.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-121343/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-121356/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-121623/apps/client/src/render/fxTintAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-123054/docs/_reports/fxtint_visual-proof_20260825/tick24_left-plain_right-tint100.png` | （.png 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-123910/apps/client/src/vfx/WeatherRainFx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-124108/apps/client/src/vfx/FloatingTextFx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-124112/apps/client/src/vfx/FloatingTextFx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-124225/apps/client/src/ui/WorldAnchorLayer.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-124234/apps/client/src/ui/WorldAnchorLayer.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-124237/apps/client/src/ui/WorldAnchorLayer.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-124427/apps/client/src/ui/WorldAnchorLayer.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-124430/apps/client/src/ui/floatingTextRenders.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-124436/apps/client/src/render/weatherRainGpuPath.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-124504/apps/client/src/vfx/WeatherRainFx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-124507/apps/client/src/ui/WorldAnchorLayer.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-124546/apps/client/src/vfx/WeatherRainFx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-124549/apps/client/src/ui/WorldAnchorLayer.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-124602/apps/client/src/render/weatherRainGpuPath.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-124606/apps/client/src/render/weatherRainGpuPath.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-124619/apps/client/src/render/weatherRainGpuPath.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-124622/apps/client/src/vfx/WeatherRainFx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-124638/apps/client/src/vfx/WeatherRainFx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-125945/packages/shared/src/content/abilityCodeParityForms.baseline.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/04.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/06.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/08.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |

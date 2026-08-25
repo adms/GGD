@@ -20,6 +20,10 @@ A("77-00", "77-00 浮雲-旋一閃", "self", [30], [0], 0,
 A("77-01", "77-01 百烈櫻華斬", "self", [40, 40, 40, 40], [75, 110, 145, 180], 0,
   "[主動][範圍][擊退][AD加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n有效半徑：{{radius}}\n\n「我的劍，成為了守護之風」\n用劍捲起一陣由內往外的旋風，給予[周圍]敵人200/300/400/500+50% [AD]點傷害，並[擊退]一段距離。",
   radiusTier="中",
+  # ⭐ GH#691/#698 —— 變身態 `godie-e00x.q` 已綁 MonsoonBoltTarget,本體要**一起動**
+  #    （abilityCodeParityForms:同編號＝同一支技能;只動一邊 ⇒ 玩家變身之後用舊的那份）。
+  #    ⛔ 手寫進出貨 JSON 會被下一次 skillremake:json 打回來 ⇒ 走表格出口。
+  model_fx=[static_model("w3x.stock.monsoonbolttarget", "point", 1.0, scale=8.0, clip="idle")],
   effects=[area("physical", tier="中", per=[200, 300, 400, 500], ad=0.5),
            {"kind": "knockback", "distance": 3.0, "speed": 15.0, "from": "caster"}])
 
