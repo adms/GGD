@@ -1693,3 +1693,11 @@ watchdog 後代 CPU 修復。
 - 🛡️ #706 三閘落地（configFacadeSurface/statNormalizationShipped/reviveShipped）
 - ✅ DEPLOY9=0 · BUILD_STAMP v0.27.6 · 煙霧 `cv_b6dedf9782c2` · 帳號 204→204
 - 📊 Phase 6 累計 30 支技能有原作特效；餘量 ForgottenOneTent×4 → ThunderClap×3 → MarkOfChaos×3（等 #699）→ ChaosOrcRange×3
+
+## v0.27.7（2026-08-26 凌晨）—— Phase 6 PENTA 三族
+
+- 🌑 聖杯黑泥 ×2（zombiex，我挑的綁定＋rollback）· 雷切→45-03 千鳥 · ChaosOrcRange 全族誠實除名
+- 🔬 差分尺抓到「近黑特效藏在英雄體內」（distance 0.1→1.5，0→735px）
+- 🛠️ 收斂順修三件：contract:numbers 寫入點自解鎖 · **prose 閘自己說謊已修**（步驟名來源）· deriveCastTimes 靜默跳過開 #708
+- ✅ DEPLOY10=0 · BUILD_STAMP v0.27.7 · 煙霧 `cv_902d016a7c34` · 帳號 204→204
+- 📊 Phase 6 累計 33 支；餘量 MarkOfChaos ×3（等 #699）＋長尾
