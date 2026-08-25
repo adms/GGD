@@ -74,3 +74,11 @@ Beam 光束砲系列技能完美驗收 （包含球體、蝗蟲純）跟天譴�
 我發現遺漏我們最近對話說要開的票，請你整理近三天對話開票進 GGD戰情版(md) 跟 GGD平行批次盤 issue 及 技能模板群組 issue 以上都做完並註解 github issues close 才 push note deploy 沒做完以前別問我了自己判斷但是留後台開關可以簡易 rollback
 盡量平行多工作流最有效率、最短時間完成、不要做多餘或過小範圍的測試
 [一頁批次後台驗收] 代表先上線成果，但是在後台可以一鍵否決還原，追加原因的HITL，但預設是直接上線
+
+## 15:06
+
+backup context now, I will reboot soon
+
+## 16:12
+
+we're back, go on
