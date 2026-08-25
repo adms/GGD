@@ -18,7 +18,7 @@
  */
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, readFileSync, writeFileSync } from "node:fs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -36,7 +36,26 @@ import type { AbilityDef } from "../src/sim/content/defs";
 const CONTENT_DIR = process.env.GGD_CONTENT_DIR ?? join(__dirname, "../../../content");
 const WRITE = process.argv.includes("--write");
 
-const result = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load();
+// ⛔⛔ GH#708 —— **一定要 `fail-closed`**，理由與 `buildIndexes.ts` 逐字相同：
+//    出貨政策是 `quarantine`（執行期少一份設定好過整站退回骨架），⛔ 但這裡是
+//    **產出期，沒有玩家在等**。`load()` 不帶政策時，任何一份 schema 壞掉／id 對
+//    不上／硬參照斷掉的**英雄卡會被安靜地從 store 拿掉** ⇒ 它不在
+//    `Champions.all()` 裡 ⇒ 這支腳本連看都沒看過它 ⇒ 它的內嵌 `castTimeSec`
+//    永遠不會被寫，而**它的 standalone 技能檔照樣寫對了**（那幾份自己是好的）。
+//    2026-08-25 量到的正是這個形狀：14/42 變 13/39，`godie-edem` 的 Q/W/E 整格消失，
+//    而唯一叫出來的是 `abilityMirror.test.ts` —— 一句不指向這支腳本的訊息。
+// ⭐ loader 自己的檔頭寫著「呼叫端**必須**把非空的 quarantined 送到一個看得見的
+//    地方，⛔ 一行 console.warn 不算」——`fail-closed` 就是這支腳本的那個地方：
+//    它直接擲 `ContentLoadError`，訊息裡帶著是哪一份、哪一個欄位。
+const result = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load({
+  policy: "fail-closed",
+});
+// 防禦性：政策日後被改回 quarantine 時，這一格也不可以是靜默的。
+if (result.quarantined.length > 0) {
+  console.error(`⛔ 載入時隔離了 ${result.quarantined.length} 份文件 —— 它們不會被寫到：`);
+  for (const q of result.quarantined) console.error(`   · ${q.collection}/${q.id} (${q.reason}) ${q.detail}`);
+  process.exit(1);
+}
 registerAll(result.store);
 const all = Abilities.all();
 
@@ -240,14 +259,37 @@ function slotRange(text: string, slot: string): [number, number] | null {
   return [open, close + 6];
 }
 
+/**
+ * 🔒 產物隔離區（owner 2026-08-24）：這支腳本寫的 `content/{abilities,champions}/*.json`
+ * 有一大半是**別支產生器**的產物（444）。`genrun.sh skillremake:json` 只解鎖
+ * skillremake 自己那 126 份 ⇒ 其餘的寫下去會吃 EACCES。
+ * ⭐ 隔離區的設計要求**寫入點自解鎖**（前例 `tools/editor-contract/gen_contract_numbers.py`
+ * 的 `doc.chmod(0o644)` 三行），⛔ 不是叫人手動 chmod。
+ */
+function writeProduct(p: string, text: string): void {
+  try {
+    chmodSync(p, 0o644);
+  } catch {
+    /* 唯讀檔案系統／別人的檔 —— 讓下面的 write 用它自己的錯誤說話 */
+  }
+  writeFileSync(p, text);
+}
+
+/** ⭐ 每一次「這一份跳過了」都要留下**英雄/技能 id ＋ 原因**（fail-open 沒錯，靜默才是缺陷）。 */
+const skips: { what: string; why: string; fatal: boolean }[] = [];
+
 let abilityFiles = 0;
 for (const d of all) {
   const p = join(CONTENT_DIR, "abilities", `${d.id}.json`);
   let raw: string;
   try {
     raw = readFileSync(p, "utf8");
-  } catch {
-    continue; // TS-skeleton-only ability with no standalone doc
+  } catch (e) {
+    // ENOENT 是合法的：champion 卡裡內嵌、沒有 standalone 檔的技能。
+    // ⛔ 其餘的錯誤碼（EACCES/EISDIR…）**不合法** —— 它們是「寫不進去」而不是「沒有這一份」。
+    const code = (e as NodeJS.ErrnoException).code ?? "?";
+    skips.push({ what: `abilities/${d.id}.json`, why: `讀不到 (${code})`, fatal: code !== "ENOENT" });
+    continue;
   }
   const want = derived.get(d.id)!.castTimeSec;
   let next = patchKey(raw, 2, "castTimeSec", want);
@@ -261,25 +303,43 @@ for (const d of all) {
     next = patchKey(next, 6, "castTimeSec", want ?? 0);
   }
   if (next !== raw) {
-    writeFileSync(p, next);
+    writeProduct(p, next);
     abilityFiles++;
   }
 }
 
 let champFiles = 0;
 let embedded = 0;
+let champsVisited = 0;
 for (const c of Champions.all()) {
   const p = join(CONTENT_DIR, "champions", `${c.id}.json`);
   let raw: string;
   try {
     raw = readFileSync(p, "utf8");
-  } catch {
+  } catch (e) {
+    // ⛔ 這裡的 ENOENT **不是**合法情況：`Champions.all()` 的每一位都是從
+    //    `content/champions/<id>.json` 載進來的。讀不到 ⇒ 檔名與 id 對不上、
+    //    或有人在我們跑的時候換掉了它 ⇒ **回非零**，⛔ 不是 `continue`。
+    skips.push({
+      what: `champions/${c.id}.json`,
+      why: `讀不到 (${(e as NodeJS.ErrnoException).code ?? "?"}) @ ${p}`,
+      fatal: true,
+    });
     continue;
   }
+  champsVisited++;
   let text = raw;
   for (const s of ["Q", "W", "E", "R"] as const) {
     const r = derived.get(c.abilities[s].id);
-    if (!r) continue;
+    if (!r) {
+      // 註冊表裡沒有這支技能 ⇒ 這一格永遠不會被寫。⛔ 安靜跳過就是 GH#708 的另一半。
+      skips.push({
+        what: `champions/${c.id}.json abilities.${s}`,
+        why: `技能 ${c.abilities[s].id} 不在註冊表裡（derived 沒有它）`,
+        fatal: true,
+      });
+      continue;
+    }
     const range = slotRange(text, s);
     if (!range) throw new Error(`${c.id}: cannot locate abilities.${s}`);
     const block = text.slice(range[0], range[1]);
@@ -297,9 +357,69 @@ for (const c of Champions.all()) {
     }
   }
   if (text !== raw) {
-    writeFileSync(p, text);
+    writeProduct(p, text);
     champFiles++;
   }
 }
 console.log(`\nWROTE ${abilityFiles} ability docs, ${champFiles} champion docs (${embedded} embedded copies).`);
+
+// ── 9. ⭐ 對帳：**終端狀態**，⛔ 不是中間節點（GH#708）─────────────────────
+// 「跑完了」≠「每一格都寫到了」。上面每一個 `continue` 都已經留了名字，但**沒被
+// 想到的**那一種漏寫不會出現在 `skips` 裡 —— 所以最後再把檔案讀回來量一次：
+// 每一位英雄的每一格，standalone 與內嵌都必須等於 `derived`。
+// ⚠️ `castTimeSec === undefined` 的正解是**那一行不存在**（instant），⛔ 不是 0。
+const drift: string[] = [];
+for (const c of Champions.all()) {
+  let doc: { abilities?: Record<string, { castTimeSec?: number } | undefined> };
+  try {
+    doc = JSON.parse(readFileSync(join(CONTENT_DIR, "champions", `${c.id}.json`), "utf8")) as typeof doc;
+  } catch (e) {
+    drift.push(`${c.id}: 對帳時讀不回來 (${(e as NodeJS.ErrnoException).code ?? String(e)})`);
+    continue;
+  }
+  for (const s of ["Q", "W", "E", "R"] as const) {
+    const want = derived.get(c.abilities[s].id)?.castTimeSec;
+    const got = doc.abilities?.[s]?.castTimeSec;
+    if (got !== want) drift.push(`${c.id}.${s} (${c.abilities[s].id}): 內嵌 ${String(got)} ≠ 公式 ${String(want)}`);
+  }
+}
+
+// ⭐ 分母也要對帳 —— ⛔ `Champions.all().length` 自己就是被隔離**之後**的數字，
+//    拿它當分母，「安靜地掉了一位」永遠是 71/71。⇒ 真正的分母是**磁碟上的索引**。
+//    （配對式後置條件：驗的是「索引」與「註冊表」兩個名詞之間的關係。）
+let indexed = -1;
+try {
+  const idx = JSON.parse(readFileSync(join(CONTENT_DIR, "champions", "_index.json"), "utf8")) as {
+    entries?: unknown[];
+  };
+  if (Array.isArray(idx.entries)) indexed = idx.entries.length;
+} catch {
+  /* 索引讀不到就不對帳這一項（下面會說它是 -1） */
+}
+if (indexed >= 0 && indexed !== Champions.all().length) {
+  drift.push(
+    `英雄索引 ${indexed} 份，註冊表只有 ${Champions.all().length} 位 —— ` +
+      `有人在載入時被丟掉了（schema／id／硬參照），⇒ 他的內嵌 castTimeSec 不會被寫。`,
+  );
+}
+
+const fatal = skips.filter((s) => s.fatal);
+if (skips.length) {
+  console.log(`\n⚠️ 跳過 ${skips.length} 項（合法的 ${skips.length - fatal.length} · ⛔ 不合法的 ${fatal.length}）：`);
+  for (const s of skips.slice(0, 40)) console.log(`   ${s.fatal ? "⛔" : "·"} ${s.what} —— ${s.why}`);
+  if (skips.length > 40) console.log(`   …還有 ${skips.length - 40} 項`);
+}
+console.log(
+  `\n對帳：走過 ${champsVisited}/${Champions.all().length} 位英雄 · 內嵌 castTimeSec 不符 ${drift.length} 格`,
+);
+if (champsVisited !== Champions.all().length || fatal.length || drift.length) {
+  console.error(
+    `\n⛔ deriveCastTimes **沒有寫完** —— ⛔ 不要 commit，也⛔ 不要當成 abilityMirror 的錯：\n` +
+      `   · 走過 ${champsVisited} 位，註冊表裡有 ${Champions.all().length} 位\n` +
+      `   · 不合法的跳過 ${fatal.length} 項 · 對帳不符 ${drift.length} 格`,
+  );
+  for (const d of drift.slice(0, 40)) console.error(`     ✗ ${d}`);
+  if (drift.length > 40) console.error(`     …還有 ${drift.length - 40} 格`);
+  process.exit(1);
+}
 console.log("Now run: pnpm content:build && pnpm content:validate");

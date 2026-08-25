@@ -8,19 +8,22 @@
  *      歸零 ⇒ 顏色與尺寸全都漂亮，而**一顆粒子都不會生出來**。
  *      （PRE2 的 `emissionRate` 常常是 0、真正的量住在 KP2E 軌上，
  *        `build_p2_doc` 的峰值回退斷掉就是這個形狀。）
- *   ② **modulate 疊全白**：`additive 疊全黑` 的鏡像病。Babylon 的 MULTIPLY 是
- *      `(DST_COLOR, ONE_MINUS_SRC_ALPHA)` ⇒ `out = dst·(tex.rgb·color.rgb + 1 − tex.a)`，
- *      而出貨的替代精靈圖 RGB 逐位追著自己的 alpha（實測調色盤 (50,50,50)@a=26、
- *      (218,218,218)@a=202）⇒ `tex.rgb ≈ tex.a = t`，配上白色 doc 顏色就是
- *      `dst·(t + 1 − t) = dst` —— **逐像素恆等**，⛔ 不是「比較淡」。
+ * ⛔⛔ **第②條原本寫在這裡，而它是錯的**（GH#711 移除）：它宣稱「modulate 疊全白
+ * ＝逐像素恆等」，靠的是 `MULTIPLY = (DST_COLOR, ONE_MINUS_SRC_ALPHA)` 與
+ * `tex.rgb ≈ tex.a` 兩個前提 —— **兩個都不成立**（實測比值中位數 1.273）。
+ * ⇒ 白色 doc 顏色**不足以**恆等，貼圖自己也要是白的。
+ * ⭐ 恆等這一題現在**只有一個住處**：`./modulateIdentity`（判準⑤），
+ *   由 `vfxDocsBirthVisibility.test.ts` 掃出貨態、由 `modulate_oracle.ts` 服務抽取器。
+ * ⛔ 不要在這裡放第二份 —— 這個檔曾經是那份錯判準的**第三個**住處，
+ *   而它讓兩支真的會變暗背景的 emitter（δ=0.189 ≈ 48× 門檻）被當成零。
  *
  * ⚠️ 判的是「生命內 peak」，⛔ 不是字面的「出生那一刻」：WarStompCaster 的
  * segmentAlpha 逐字就是 `[0, 200, 0]`（出生透明、中段 peak），那是**原作的作法**，
  * 把它判成缺陷會逼人去改一個忠實的數字。
  *
- * ⭐ 量尺自驗在下面第一條：四份必死的 sentinel，檢查器全部要抓得到。
- * 承重那一行在來源側 —— `tools/w3x-import/extract_stock_vfx.py::invisibility_reasons`
- * 的 modulate 分支；拿掉它 ⇒ MarkOfChaosTarget 的 white02/white03 會被抽出來 ⇒ 這裡紅。
+ * ⭐ 量尺自驗在下面第一條：三份必死的 sentinel，檢查器全部要抓得到。
+ * 承重那一行在來源側 —— `build_p2_doc` 的 KP2E 峰值回退；拿掉它 ⇒ 出貨的
+ * stock 文件 `rate`/`burstCount` 歸零 ⇒ 這裡紅。
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync, readdirSync } from "node:fs";
@@ -29,7 +32,6 @@ import { fileURLToPath } from "node:url";
 
 const VFX_DIR = join(dirname(fileURLToPath(import.meta.url)), "../../../../content/vfx");
 const STOCK_PREFIX = "fx.w3x.stock.";
-const WHITE_RGB_MIN = 0.98; // == extract_stock_vfx.py
 
 type Rgba = readonly [number, number, number, number];
 interface Doc {
@@ -52,17 +54,18 @@ export function stockEmitDefects(d: Doc): string[] {
   const emitted = d.mode === "burst" ? (d.burstCount ?? 0) : (d.rate ?? 0);
   if (!(emitted > 0)) bad.push(`${d.mode} 的發射量 ${emitted} —— 一顆粒子都不會生出來`);
   const cols = stops(d);
-  const peakLit = Math.max(...cols.map((c) => Math.max(c[0], c[1], c[2]) * c[3]));
-  if (!(peakLit > 0)) bad.push(`生命內 peak(亮度×alpha)=${peakLit} —— 整條生命都不發光`);
-  if (d.blendMode === "modulate") {
-    const floor = Math.min(...cols.map((c) => Math.min(c[0], c[1], c[2])));
-    if (floor >= WHITE_RGB_MIN) bad.push(`modulate 疊全白（min(R,G,B)=${floor}）—— MULTIPLY 恆等`);
+  // ⚠️ GH#711：`modulate` 是**變暗**的混色 —— 拿「發不發光」去問它是問錯問題
+  // （白色 × alpha 1 在這把尺上滿分，而它畫出來的是暗煙）。它歸判準⑤ 管。
+  if (d.blendMode !== "modulate") {
+    const peakLit = Math.max(...cols.map((c) => Math.max(c[0], c[1], c[2]) * c[3]));
+    if (!(peakLit > 0)) bad.push(`生命內 peak(亮度×alpha)=${peakLit} —— 整條生命都不發光`);
   }
+  // ⛔ modulate 恆等**不在這裡判**（見檔頭）：它要貼圖像素，住 `./modulateIdentity`。
   return bad;
 }
 
 describe("👁 fx.w3x.stock.* —— 抽出來的 PRE2 要發得出粒子且亮得起來", () => {
-  it("⭐ 量尺自驗：四份必死的 sentinel 全部抓得到，一份正常的不誤抓", () => {
+  it("⭐ 量尺自驗：三份必死的 sentinel 全部抓得到，一份正常的不誤抓", () => {
     const base = { id: "s", schema: "vfx@1", color: { start: [1, 1, 1, 1], end: [1, 1, 1, 1] } } as Doc;
     expect(stockEmitDefects({ ...base, mode: "burst", burstCount: 0 }).join()).toMatch(/發射量/);
     expect(stockEmitDefects({ ...base, mode: "continuous", rate: 0 }).join()).toMatch(/發射量/);
@@ -74,9 +77,8 @@ describe("👁 fx.w3x.stock.* —— 抽出來的 PRE2 要發得出粒子且亮�
         color: { start: [1, 1, 1, 0], end: [0, 0, 0, 1] },
       }).join(),
     ).toMatch(/不發光/);
-    expect(
-      stockEmitDefects({ ...base, mode: "burst", burstCount: 20, blendMode: "modulate" }).join(),
-    ).toMatch(/恆等/);
+    // ⛔ 這裡刻意**沒有** modulate sentinel：恆等歸判準⑤（`./modulateIdentity`），
+    // 而 GH#711 之前這裡放的那一條，判的是一個算錯的東西。
     // 對照組：WarStomp 那種「出生 alpha 0、中段 peak」是忠實的，⛔ 不可以被誤抓
     expect(
       stockEmitDefects({

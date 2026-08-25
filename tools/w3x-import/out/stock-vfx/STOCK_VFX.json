@@ -71,7 +71,9 @@
         "fx.w3x.stock.markofchaostarget.p00",
         "fx.w3x.stock.markofchaostarget.p01",
         "fx.w3x.stock.markofchaostarget.p02",
-        "fx.w3x.stock.markofchaostarget.p03"
+        "fx.w3x.stock.markofchaostarget.p03",
+        "fx.w3x.stock.markofchaostarget.p04",
+        "fx.w3x.stock.markofchaostarget.p05"
       ],
       "emitterMap": [
         {
@@ -94,27 +96,26 @@
         },
         {
           "id": "fx.w3x.stock.markofchaostarget.p03",
+          "pre2Index": 1,
+          "emitter": "BlizParticle05white03",
+          "weight": 0.2628,
+          "modulateDelta": 0.18923
+        },
+        {
+          "id": "fx.w3x.stock.markofchaostarget.p04",
+          "pre2Index": 0,
+          "emitter": "BlizParticle05white02",
+          "weight": 0.2102,
+          "modulateDelta": 0.18923
+        },
+        {
+          "id": "fx.w3x.stock.markofchaostarget.p05",
           "pre2Index": 3,
           "emitter": "BlastFlareStreamers",
           "weight": 0.0557
         }
       ],
-      "droppedEmitters": [
-        {
-          "pre2Index": 0,
-          "emitter": "BlizParticle05white02",
-          "reasons": [
-            "modulate stacked all-white (min(R,G,B) 1.0 >= 0.98) \u2014 MULTIPLY by 1 is the identity on every pixel (see WHITE_RGB_MIN)"
-          ]
-        },
-        {
-          "pre2Index": 1,
-          "emitter": "BlizParticle05white03",
-          "reasons": [
-            "modulate stacked all-white (min(R,G,B) 1.0 >= 0.98) \u2014 MULTIPLY by 1 is the identity on every pixel (see WHITE_RGB_MIN)"
-          ]
-        }
-      ]
+      "droppedEmitters": []
     }
   ],
   "notes": [
@@ -128,8 +129,6 @@
     "fx.w3x.stock.markofchaostarget.pre2#0: dropped 8x8 spriteSheet (substituted single-frame texture)",
     "fx.w3x.stock.markofchaostarget.pre2#1: emissionRate 0, used KP2E peak 50.0",
     "fx.w3x.stock.markofchaostarget.pre2#1: dropped 8x8 spriteSheet (substituted single-frame texture)",
-    "fx.w3x.stock.markofchaostarget.pre2#3: emissionRate 0, used KP2E peak 26.3",
-    "markofchaostarget PRE2#0 (BlizParticle05white02): dropped \u2014 modulate stacked all-white (min(R,G,B) 1.0 >= 0.98) \u2014 MULTIPLY by 1 is the identity on every pixel (see WHITE_RGB_MIN)",
-    "markofchaostarget PRE2#1 (BlizParticle05white03): dropped \u2014 modulate stacked all-white (min(R,G,B) 1.0 >= 0.98) \u2014 MULTIPLY by 1 is the identity on every pixel (see WHITE_RGB_MIN)"
+    "fx.w3x.stock.markofchaostarget.pre2#3: emissionRate 0, used KP2E peak 26.3"
   ]
 }

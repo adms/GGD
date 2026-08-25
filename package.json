@@ -135,6 +135,7 @@
     "beam:write": "python3 tools/beam-orient/scan.py --write",
     "sync:plan": "node tools/parallel-gates/syncPlan.mjs",
     "sync:since": "node tools/parallel-gates/sync.mjs --since",
+    "sync:converge": "node tools/parallel-gates/converge.mjs",
     "quarantine:unlock": "bash scripts/product-quarantine.sh unlock",
     "quarantine:lock": "bash scripts/product-quarantine.sh lock",
     "locust:build": "node tools/locust-census/gen.mjs",

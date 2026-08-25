@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "86297ec19a54",
+  "hash": "f815779bb604",
   "entries": [
     {
       "id": "attach.ex.midchilder-aura",
@@ -2195,7 +2195,19 @@
     {
       "id": "fx.w3x.stock.markofchaostarget.p03",
       "path": "vfx/fx.w3x.stock.markofchaostarget.p03.json",
-      "hash": "bd1645e82b2c",
+      "hash": "4f344ab9d034",
+      "size": 1001
+    },
+    {
+      "id": "fx.w3x.stock.markofchaostarget.p04",
+      "path": "vfx/fx.w3x.stock.markofchaostarget.p04.json",
+      "hash": "98f6def3f017",
+      "size": 1004
+    },
+    {
+      "id": "fx.w3x.stock.markofchaostarget.p05",
+      "path": "vfx/fx.w3x.stock.markofchaostarget.p05.json",
+      "hash": "21983afb0eeb",
       "size": 1033
     },
     {

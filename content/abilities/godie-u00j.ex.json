@@ -15,17 +15,7 @@
   ],
   "range": 0.0,
   "targetsEnemies": false,
-  "effects": [
-    {
-      "kind": "spawnModelFx",
-      "shape": "single",
-      "preset": "tpl-locust-orb",
-      "modelKey": "imported.meteor",
-      "clip": "idle",
-      "soundKey": "wc3.infernalbirth1",
-      "scale": 5.0
-    }
-  ],
+  "effects": [],
   "passive": {
     "name": "74-002 超新星",
     "ranks": [
@@ -57,6 +47,15 @@
             },
             "effects": [
               {
+                "kind": "spawnModelFx",
+                "shape": "single",
+                "preset": "tpl-locust-orb",
+                "modelKey": "imported.meteor",
+                "clip": "idle",
+                "soundKey": "wc3.infernalbirth1",
+                "scale": 5.0
+              },
+              {
                 "kind": "damageArea",
                 "damageType": "magic",
                 "amount": {
@@ -87,6 +86,5 @@
       "w3xScale": 1.435
     }
   ],
-  "schema": "ability@1",
-  "castTimeSec": 1.033
+  "schema": "ability@1"
 }

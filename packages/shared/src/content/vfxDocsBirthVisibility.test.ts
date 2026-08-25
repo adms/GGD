@@ -33,7 +33,16 @@
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync, readdirSync, existsSync } from "node:fs";
-import { inflateSync, deflateSync } from "node:zlib";
+import { deflateSync } from "node:zlib";
+import {
+  MODULATE_IDENTITY_DELTA,
+  decodePng,
+  modulateIdentityReason,
+  modulateMaxDelta,
+  texStatsFromRgba,
+  type Rgba,
+  type TexStats,
+} from "./modulateIdentity";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -46,158 +55,18 @@ const PEAK_ALPHA_MIN = 0.05;
 const BLACK_RGB_MAX = 0.02;
 
 /**
- * ⑤ modulate 恆等的門檻 = **1/255**。
+ * ⑤ **modulate 逐像素恆等** —— ⭐ 判準本體**不住這裡**（GH#711）。
  *
- * ⭐ 代數（⛔ 不是判斷）—— 出貨路徑逐行引用得到：
- * `blendModeFor("modulate") → ParticleSystem.BLENDMODE_MULTIPLY`
- * （apps/client/src/vfx/particleFactory.ts）走 Babylon 的兩段：
- *
- *   1. particles.fragment `#ifdef BLENDMULTIPLYMODE`（thinParticleSystem 只在
- *      BLENDMODE_MULTIPLY 時 push 這個 define）：
- *        baseColor.rgb = (tex.rgb·col.rgb)·a + 1·(1 − a),  a = tex.a·col.a
- *   2. `engine.setAlphaMode(4)` = ALPHA_MULTIPLY = `(DST_COLOR, ZERO)`
- *      （Engines/Extensions/engine.alpha.js case 4）：out = src.rgb·dst.rgb
- *
- *   ⇒ out = dst·[ 1 − a·(1 − tex.rgb·col.rgb) ]     令 δ = a·(1 − tex.rgb·col.rgb)
- *   ⇒ |out − dst| = dst·δ ≤ δ
- *
- * δ < 1/255 ⇒ **每一個像素都四捨五入回原值** ——「畫不出一個像素」的算術定義。
- *
- * ⚠️⚠️ 這一格是 GH#709 的**更正**：票與 `docs/_reports/PRE2_temp_20260826-0000.md`
- * §2.2 寫的是 `MULTIPLY = (DST_COLOR, ONE_MINUS_SRC_ALPHA)` 且 `tex.rgb ≈ tex.a`，
- * 由此得到「modulate 疊全白 ⇒ 逐像素恆等」。**兩個前提都不成立**（見上面的引用；
- * 實測 `smoke_09` / `light_03` 的 `tex.rgb / tex.a ≈ 1.36`）⇒
- * ⭐ **`col.rgb` 是白色不足以恆等，還要貼圖自己是白的。**
- * 所以這條判準**只**能從貼圖的實際像素算，⛔ 不可以退化成「min(R,G,B) ≥ 0.98」。
+ * 它與代數、PNG 解碼器、`TexStats` 一起搬到 `./modulateIdentity`，因為**來源側**
+ * （`tools/w3x-import/extract_stock_vfx.py`，經 `tools/w3x-import/modulate_oracle.ts`）
+ * 需要**同一個答案** —— 而它在 GH#711 之前用的是一份只看文件不看貼圖的近似
+ * （`WHITE_RGB_MIN = 0.98`），那份近似丟掉了兩支真的會變暗背景的 emitter。
+ * ⇒ ⛔ 判準不可以有第二份實作；這一支現在是它的**消費端**，
+ *    下面第二條測試（量尺自驗⑤）仍然逐條驗它。
  *
  * ⛔ 只涵蓋 vfx@1 粒子。ribbon@1 的 modulate 走 StandardMaterial + `toWhite`
  * 手工淡出（apps/client/src/vfx/ribbonMath.ts），是另一條合成式 —— ⛔ 不套這條。
  */
-const MODULATE_IDENTITY_DELTA = 1 / 255;
-
-type Rgba = readonly [number, number, number, number];
-
-/**
- * 一張貼圖的**恆等判定摘要**：`maxAlphaAtLevel[ch][L]` =
- * 「該通道值恰為 L(0..255) 的 texel 裡最大的 alpha」，−1 = 沒有這種 texel。
- *
- * ⭐ 為什麼是這個形狀：δ = a·(1 − (L/255)·col.rgb[ch]) 對固定的 col 是
- * **a 遞增、L 遞減**，所以逐 (ch, L) 只需要留最大的 a —— 256×3 個數就**精確**
- * 復原 max δ（8-bit 貼圖沒有第 257 個值），⛔ 不是抽樣近似。
- */
-export interface TexStats {
-  readonly maxAlphaAtLevel: readonly (readonly number[])[];
-}
-
-/** PNG → RGBA8。⛔ 只收 8-bit / 非交錯（出貨的 98 張粒子貼圖全部是 ct=3 8bit）。 */
-function decodePng(buf: Buffer): { w: number; h: number; rgba: Uint8Array } {
-  let w = 0;
-  let h = 0;
-  let ct = 0;
-  let plte: Buffer | null = null;
-  let trns: Buffer | null = null;
-  const idat: Buffer[] = [];
-  for (let p = 8; p + 8 <= buf.length;) {
-    const len = buf.readUInt32BE(p);
-    const type = buf.toString("ascii", p + 4, p + 8);
-    const data = buf.subarray(p + 8, p + 8 + len);
-    if (type === "IHDR") {
-      w = data.readUInt32BE(0);
-      h = data.readUInt32BE(4);
-      const bitDepth = data[8]!;
-      ct = data[9]!;
-      const interlace = data[12]!;
-      if (bitDepth !== 8 || interlace !== 0) {
-        throw new Error(`PNG 不在支援範圍（bitDepth=${bitDepth} interlace=${interlace}）`);
-      }
-    } else if (type === "PLTE") plte = Buffer.from(data);
-    else if (type === "tRNS") trns = Buffer.from(data);
-    else if (type === "IDAT") idat.push(Buffer.from(data));
-    else if (type === "IEND") break;
-    p += 12 + len;
-  }
-  const chans = ct === 0 ? 1 : ct === 2 ? 3 : ct === 3 ? 1 : ct === 4 ? 2 : 4;
-  const raw = inflateSync(Buffer.concat(idat));
-  const stride = w * chans;
-  const out = Buffer.alloc(h * stride);
-  for (let y = 0; y < h; y++) {
-    const filter = raw[y * (stride + 1)]!;
-    const line = raw.subarray(y * (stride + 1) + 1, y * (stride + 1) + 1 + stride);
-    for (let i = 0; i < stride; i++) {
-      const a = i >= chans ? out[y * stride + i - chans]! : 0;
-      const b = y > 0 ? out[(y - 1) * stride + i]! : 0;
-      const c = i >= chans && y > 0 ? out[(y - 1) * stride + i - chans]! : 0;
-      let v = line[i]!;
-      if (filter === 1) v += a;
-      else if (filter === 2) v += b;
-      else if (filter === 3) v += (a + b) >> 1;
-      else if (filter === 4) {
-        const pa = Math.abs(b - c);
-        const pb = Math.abs(a - c);
-        const pc = Math.abs(a + b - 2 * c);
-        v += pa <= pb && pa <= pc ? a : pb <= pc ? b : c;
-      }
-      out[y * stride + i] = v & 0xff;
-    }
-  }
-  const rgba = new Uint8Array(w * h * 4);
-  for (let i = 0; i < w * h; i++) {
-    if (ct === 3) {
-      const idx = out[i]!;
-      rgba[i * 4] = plte![idx * 3]!;
-      rgba[i * 4 + 1] = plte![idx * 3 + 1]!;
-      rgba[i * 4 + 2] = plte![idx * 3 + 2]!;
-      rgba[i * 4 + 3] = trns && idx < trns.length ? trns[idx]! : 255;
-    } else if (ct === 0 || ct === 4) {
-      const g = out[i * chans]!;
-      rgba[i * 4] = rgba[i * 4 + 1] = rgba[i * 4 + 2] = g;
-      rgba[i * 4 + 3] = ct === 4 ? out[i * chans + 1]! : 255;
-    } else {
-      rgba[i * 4] = out[i * chans]!;
-      rgba[i * 4 + 1] = out[i * chans + 1]!;
-      rgba[i * 4 + 2] = out[i * chans + 2]!;
-      rgba[i * 4 + 3] = ct === 6 ? out[i * chans + 3]! : 255;
-    }
-  }
-  return { w, h, rgba };
-}
-
-/** RGBA8 → `TexStats`（見上面為什麼 256×3 個數就夠）。 */
-export function texStatsFromRgba(rgba: Uint8Array): TexStats {
-  const table = [
-    new Array<number>(256).fill(-1),
-    new Array<number>(256).fill(-1),
-    new Array<number>(256).fill(-1),
-  ];
-  for (let i = 0; i < rgba.length; i += 4) {
-    const a = rgba[i + 3]! / 255;
-    for (let ch = 0; ch < 3; ch++) {
-      const L = rgba[i + ch]!;
-      if (a > table[ch]![L]!) table[ch]![L] = a;
-    }
-  }
-  return { maxAlphaAtLevel: table };
-}
-
-/**
- * 這份文件在 modulate 下**最大**的 δ（= 對背景最強的一次改變）。
- * 0 ⇒ 逐像素恆等；⛔ 它量的是「會不會動到畫面」，⛔ 不是「好不好看」。
- */
-export function modulateMaxDelta(colors: readonly Rgba[], tex: TexStats): number {
-  let worst = 0;
-  for (const col of colors) {
-    for (let ch = 0; ch < 3; ch++) {
-      const table = tex.maxAlphaAtLevel[ch]!;
-      for (let L = 0; L < 256; L++) {
-        const a = table[L]!;
-        if (a < 0) continue;
-        const d = a * col[3] * (1 - (L / 255) * col[ch]!);
-        if (d > worst) worst = d;
-      }
-    }
-  }
-  return worst;
-}
 
 interface Vfxish {
   id: string;
@@ -249,13 +118,8 @@ export function birthVisibilityDefects(doc: Vfxish, tex?: TexStats | null): stri
     }
     // ⑤ modulate 逐像素恆等 —— 只有拿到**貼圖的實際像素**才判得動（見 MODULATE_IDENTITY_DELTA）
     if (doc.blendMode === "modulate" && tex) {
-      const delta = modulateMaxDelta(colors, tex);
-      if (delta < MODULATE_IDENTITY_DELTA) {
-        reasons.push(
-          `modulate 逐像素恆等（max δ=${delta.toFixed(5)} < ${MODULATE_IDENTITY_DELTA.toFixed(5)}）` +
-            ` —— out = dst·(1−δ)，在 8-bit 幀緩衝上每個像素都四捨五入回原值`,
-        );
-      }
+      const reason = modulateIdentityReason(colors, tex);
+      if (reason) reasons.push(reason);
     }
   } else if (doc.schema === "ribbon@1") {
     const width = (doc.widthAbove ?? 0) + (doc.widthBelow ?? 0);

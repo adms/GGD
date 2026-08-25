@@ -38,6 +38,7 @@ import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
+import { Texture } from "@babylonjs/core/Materials/Textures/texture";
 
 /** 敵人沿施放方向（+x）排成一直線的偏移。 */
 const ENEMY_LINE: readonly { x: number; z: number }[] = [
@@ -70,6 +71,23 @@ export interface BeamMeshStat {
   yawDeg: number;
 }
 
+/** 一份 `vfx@1` 文件在一種背景下的差分讀數（見 `BeamAuditionHandle.probeDocs`）。 */
+export interface DocProbeReading {
+  id: string;
+  backdrop: "void" | "lit";
+  /** 對照幀（沒有粒子）→ 有粒子，**任一通道差 ≥ 1** 的像素數。⭐ 混色模式中立。 */
+  changed: number;
+  /** Σ|Δ|（三通道合計）—— 「動了多少」，⛔ 不是「亮了多少」。 */
+  sumAbsDelta: number;
+  /** 既有的亮度尺，留著是為了跟 GH#699 的舊讀數對得上。 */
+  lit: number;
+  bright: number;
+  /** 對照幀自己的亮度（背景基線）。 */
+  baseLit: number;
+  /** 這一份文件峰值時場上活著的粒子數 —— 0 = 它根本沒生出來。 */
+  particles: number;
+}
+
 export interface BeamAuditionHandle {
   /** 施放一次 09-04（重置冷卻與魔力 —— 只有這一頁這樣做）。 */
   cast(): Promise<void>;
@@ -86,6 +104,27 @@ export interface BeamAuditionHandle {
   measure(): Promise<{ w: number; h: number; bright: number; lit: number }>;
   /** ⭐ 量尺校準（同 chainLightningAudition —— 量不到已知亮的 control ⇒ 一切作廢）。 */
   calibrate(): Promise<number>;
+  /**
+   * 🎚 **逐份 `vfx@1` 文件的差分讀數**（GH#711）。⛔ 不是「數亮像素」。
+   *
+   * ⚠️⚠️ 為什麼非要多一把尺：`bright/lit` 只問「畫面**變亮**了嗎」，而
+   * `blendMode: "modulate"` 在算術上**只會變暗**（`out = dst·(1−δ)`）⇒ 一支
+   * 完全正常的 modulate emitter 在這台**近黑**背景上永遠讀 0，
+   * 而那個 0 是**台子的**性質，⛔ 不是那份文件的性質（CLAUDE.md 👁 節洞 d：
+   * 量尺自己會說謊 —— GH#711 的缺陷本人就是被同一種「白＝沒東西」的直覺造出來的）。
+   *
+   * ⇒ 這一支量的是**差分**：先拍一張沒有粒子的對照幀，再拍有粒子的，
+   * 數「有幾個像素跟對照幀不一樣」與「總共差了幾個 code value」。
+   * 加法與乘法在這把尺上**可比**，因為兩者都是「對每個像素的改變量」。
+   *
+   * `backdrop`：`"void"` = 台子原本的近黑背景；`"lit"` = 相機正前方一面
+   * 中灰（dst≈128）幕布 —— **modulate 只有在有東西可以乘的時候才存在**，
+   * 而真的一場比賽裡粒子畫在地板與單位上，⛔ 不是畫在虛空裡。
+   */
+  probeDocs(
+    docIds: readonly string[],
+    opts?: { backdrop?: "void" | "lit"; frames?: number },
+  ): Promise<DocProbeReading[]>;
   /** 存一張 PNG（base64，⛔ 不含 `data:` 前綴）。走 `CreateScreenshotAsync`。 */
   snapshot(): Promise<string>;
   /** 診斷：事件型別直方圖 ＋ 施法者狀態。 */
@@ -309,9 +348,149 @@ export async function startBeamAudition(
     }
   };
 
+  /**
+   * render ×2 → **同步** GL readback（坑②：不 render 兩次會讀到上一幀）。
+   *
+   * ⚠️ ⛔ 刻意**不用** `engine.readPixels()`：那一支是非同步的，它的 fence 在
+   * 一個**隱藏的**分頁裡靠被節流到 1 秒的 timer 輪詢 ⇒ 實測**每次讀回要 ~1 秒**，
+   * 一組 A/B 就要跑掉好幾分鐘。`preserveDrawingBuffer: true` 讓預設 framebuffer
+   * 讀得到，所以同步讀是安全的（⛔ 這是台子的權宜，⛔ 不是出貨路徑）。
+   */
+  const readRaw = (): { w: number; h: number; buf: Uint8Array } => {
+    scene.render();
+    scene.render();
+    const gl = (engine as unknown as { _gl: WebGL2RenderingContext })._gl;
+    const w = engine.getRenderWidth();
+    const h = engine.getRenderHeight();
+    const buf = new Uint8Array(w * h * 4);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    gl.readPixels(0, 0, w, h, gl.RGBA, gl.UNSIGNED_BYTE, buf);
+    return { w, h, buf };
+  };
+
+  let probeSerial = 0;
+  const probeDocs = async (
+    docIds: readonly string[],
+    opts?: { backdrop?: "void" | "lit"; frames?: number },
+  ): Promise<DocProbeReading[]> => {
+    const backdrop = opts?.backdrop ?? "void";
+    const frames = opts?.frames ?? 24;
+    const { toParticleSystem, burstNow } = await import("./particleFactory");
+    const prevConstDelta = scene.useConstantAnimationDeltaTime;
+    scene.useConstantAnimationDeltaTime = true;
+    let curtain: ReturnType<typeof MeshBuilder.CreatePlane> | null = null;
+    let curtainMat: StandardMaterial | null = null;
+    if (backdrop === "lit") {
+      // ⭐ 中灰幕布：modulate 是**乘**上去的，沒有 dst 就沒有效果可量。
+      curtain = MeshBuilder.CreatePlane("probe-curtain", { size: 400 }, scene);
+      curtainMat = new StandardMaterial("probe-curtain-mat", scene);
+      curtainMat.emissiveColor = new Color3(0.5, 0.5, 0.5);
+      curtainMat.disableLighting = true;
+      curtain.material = curtainMat;
+      curtain.parent = camera;
+      curtain.position.set(0, 0, 40);
+      await curtainMat.forceCompilationAsync(curtain);
+    }
+    const target = camera.getTarget().clone();
+    const out: DocProbeReading[] = [];
+    try {
+      const base = readRaw();
+      const baseCounts = countBright(base.buf);
+      for (const id of docIds) {
+        const doc = (await (await fetch(`/content/vfx/${id}.json`)).json()) as never;
+        const ps = toParticleSystem(doc, scene, {
+          name: `probe-${id}`,
+          position: { x: target.x, y: target.y, z: target.z },
+          // ⭐⭐ 每一份文件用**自己**的 Texture 實例（快取破壞 query）。
+          // ⚠️ 量到的（2026-08-26）：兩份文件共用同一張貼圖時，**後量的那一份
+          // 永遠讀 0 個粒子、0 個像素** —— 前一個 ParticleSystem 被 dispose 之後，
+          // 走同一個貼圖快取項的下一個系統就 `isReady()` 永遠 false。
+          // ⇒ p02 / p03 都指向 `smoke_09`，於是排在後面的那一份被判成「看不見」。
+          // ⛔ 那是台子的 0，⛔ 不是文件的 0（洞 d：量尺自己會說謊）。
+          createTexture: (url, sc) => new Texture(`${url}?probe=${probeSerial++}`, sc),
+        });
+        ps.emitter = target.clone();
+        // ⭐⭐ 等貼圖真的 ready 再開始量。⚠️ Babylon 的 ParticleSystem 在貼圖
+        // 還沒解碼完之前**一顆都不畫**，而那個「0 個像素」與「這份文件是空的」
+        // 長得一模一樣（CLAUDE.md 👁 節洞 d）。⛔ 用事件等，⛔ 不用 timer ——
+        // 隱藏分頁的 setTimeout 被夾到 1 秒。
+        const ptex = ps.particleTexture as Texture | null;
+        if (ptex && !ptex.isReady()) {
+          await new Promise<void>((res) => {
+            ptex.onLoadObservable.addOnce(() => res());
+          });
+        }
+        ps.start();
+        // ⭐⭐ `mode:"burst"` 的文件 **`start()` 之後一顆都不會生** —— 出貨路徑
+        // 逐字是 `W3xEmitterRig.ts:489` 的 `if (em.doc.mode === "burst") burstNow(...)`。
+        // ⚠️ 第一版漏了這一行，於是 p02/p03/p05 三份 burst 文件全部量到「0 顆粒子、
+        // 0 個像素」——⛔ 那是台子的洞，⛔ 不是文件的性質（洞 d 本人，這次是我）。
+        burstNow(ps, doc as never, 1);
+        let best: DocProbeReading = {
+          id,
+          backdrop,
+          changed: -1,
+          sumAbsDelta: 0,
+          lit: 0,
+          bright: 0,
+          baseLit: baseCounts.lit,
+          particles: 0,
+        };
+        for (let f = 0; f < frames; f++) {
+          // ⭐ `useConstantAnimationDeltaTime`（下面設的）讓每一次 `render()`
+          // 固定推進 16ms ⇒ 取樣是**確定性**的，⛔ 不靠 wall-clock、⛔ 不靠分頁
+          // 有沒有被瀏覽器節流（背景分頁的 setTimeout 被夾到 1 秒，量到過）。
+          scene.render();
+          scene.render();
+          const cur = readRaw();
+          let changed = 0;
+          let sum = 0;
+          for (let i = 0; i + 2 < cur.buf.length; i += 4) {
+            const d =
+              Math.abs(cur.buf[i]! - base.buf[i]!) +
+              Math.abs(cur.buf[i + 1]! - base.buf[i + 1]!) +
+              Math.abs(cur.buf[i + 2]! - base.buf[i + 2]!);
+            if (d > 0) changed++;
+            sum += d;
+          }
+          if (changed > best.changed) {
+            const c = countBright(cur.buf);
+            best = {
+              id,
+              backdrop,
+              changed,
+              sumAbsDelta: sum,
+              lit: c.lit,
+              bright: c.bright,
+              baseLit: baseCounts.lit,
+              particles: ps.getActiveCount(),
+            };
+          }
+        }
+        out.push(best);
+        ps.stop();
+        // ⭐⭐ `dispose()` **預設連貼圖一起 dispose**（`disposeTexture = true`），
+        // 而 Babylon 的貼圖快取之後會把**同一個已死的實例**發還給下一個系統
+        // ⇒ 它 `isReady()` 回 true、GL 資源卻沒了 ⇒ 那一份文件量到 0 個像素。
+        // ⚠️ 量到的（2026-08-26）：p02 與 p03 共用 `smoke_09`，先量的那一份正常、
+        // 後量的那一份**永遠是 0** —— 又一個「台子的 0」冒充「文件的 0」。
+        ps.dispose(false);
+        // 讓上一份的殘留粒子走完，⛔ 不讓它汙染下一份的差分
+        for (let k = 0; k < 8; k++) scene.render();
+      }
+    } finally {
+      curtain?.dispose();
+      curtainMat?.dispose();
+      scene.useConstantAnimationDeltaTime = prevConstDelta;
+      scene.render();
+    }
+    return out;
+  };
+
   const handle: BeamAuditionHandle = {
     calibrate,
     measure,
+    probeDocs,
     async cast(): Promise<void> {
       castOnce();
     },

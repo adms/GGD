@@ -262,7 +262,16 @@ const FORKS_PER_SUITE = Math.max(
 //    開頭那一支跑在 `tiers:apply`／`skillremake:json` **之前**,它讀到的是**還沒被重寫**
 //    的 `content/abilities/**` ⇒ `bundle.json` 會停在舊的那一天而每一支自己都說 OK
 //    （＝2026-08-01 事故的形狀）。⭐ 原本的 `skills:sync` 本來就會跑它兩次,這裡逐字保留。
-const SERIAL = syncTrim.steps ? ["content:build", ...syncTrim.steps] : ["content:build", "skills:sync"];
+// ⭐⭐ GH#710 —— 一次完整鏈**收斂不了**：`sync-io.json` 量到 3 支產生器
+//    （`jasscombo:build` 28 · `vfxbind:build` 29 · `sfxbind:build` 30）排在
+//    `content:build`（11）**後面**，而它們寫的檔正是 `content:build` 自己會讀的
+//    ⇒ 它們一改輸出，`bundle.json`／`contract:numbers` 就落後一步。
+//    2026-08-26 實測要跑**兩次**完整鏈才綠。
+//    ⇒ 走 `sync:converge`（跑到不動點，上限 3 輪），⛔ 不動那條鏈的拓撲序
+//      —— `sync-io.json` 的 chain 字串是**身分**，改一個字就要重量整張圖。
+// 🔙 rollback：`GGD_SYNC_CONVERGE=0` 退回舊行為（單跑一次 `skills:sync`）。
+const SYNC_STEP = process.env.GGD_SYNC_CONVERGE === "0" ? "skills:sync" : "sync:converge";
+const SERIAL = syncTrim.steps ? ["content:build", ...syncTrim.steps] : ["content:build", SYNC_STEP];
 
 /**
  * 並行段。⭐ 每一格是「一件會回非零的事」,⛔ 不是「一個資料夾」。

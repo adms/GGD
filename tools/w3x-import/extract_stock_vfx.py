@@ -70,6 +70,7 @@ from __future__ import annotations
 import json
 import os
 import shutil
+import subprocess
 import sys
 import tempfile
 
@@ -125,26 +126,30 @@ ARCHIVES = ("war3.mpq", "War3x.mpq", "War3xLocal.mpq", "War3Patch.mpq")
 PEAK_ALPHA_MIN = 0.05     # peak alpha at or below this = transparent all life
 BLACK_RGB_MAX = 0.02      # additive/modulate with no colour = adding zero
 #
-# ⭐ THE FOURTH RULE, WHICH THE SHIPPED-TREE GUARD DOES NOT HAVE YET: modulate
-# stacked all-WHITE is the exact mirror of additive stacked all-black, and it is
-# provable rather than a judgement call. Babylon's `BLENDMODE_MULTIPLY` is
-# `(DST_COLOR, ONE_MINUS_SRC_ALPHA)`:
+# ⛔⛔ THE FOURTH RULE USED TO LIVE HERE AS `WHITE_RGB_MIN = 0.98`, AND IT WAS
+# WRONG (GH#711). It said: "modulate with an all-white doc colour is the exact
+# mirror of additive stacked all-black", resting on two premises —
+#   · `BLENDMODE_MULTIPLY == (DST_COLOR, ONE_MINUS_SRC_ALPHA)`  ⛔ it is
+#     `(DST_COLOR, ZERO)`, after a shader pass that premultiplies toward white;
+#   · `tex.rgb ≈ tex.a` for every substituted sprite                ⛔ measured
+#     ratio has median **1.273**.
+# ⇒ a white doc colour is NOT enough to be the identity; the TEXTURE has to be
+#   white too. The rule therefore cannot be decided from the doc alone, and this
+#   file decided it from the doc alone — which is how `MarkOfChaosTarget` lost
+#   `BlizParticle05white02` / `white03`, two emitters whose real δ is **0.189**
+#   (≈ 48× the identity threshold: visible dark smoke, ⛔ not "byte-for-byte
+#   nothing"). Their loss shifted the shipped `p00..p03` numbering under a
+#   FIXED 3-wide runtime window, i.e. it changed what the player sees.
 #
-#     out = src.rgb·dst.rgb + dst.rgb·(1 − src.a)
-#         = dst.rgb·( tex.rgb·colour.rgb + 1 − tex.a )
-#
-# Every substituted particle sprite in `content/assets/textures/particles/` is a
-# greyscale-plus-alpha PNG whose RGB TRACKS ITS ALPHA (measured: palette entries
-# run (50,50,50)@a=26, (218,218,218)@a=202 …), i.e. tex.rgb ≈ tex.a = t. With a
-# white doc colour that collapses to
-#
-#     out = dst.rgb·( t + 1 − t ) = dst.rgb          ← identity, every pixel
-#
-# so the emitter is not "subtle", it is byte-for-byte nothing. WC3 got away with
-# it because `Clouds8x8Mod.blp` carries its shape in ALPHA and modulate there
-# darkens through it; our substitution cannot reproduce that, and inventing a
-# tint to make it visible would be authoring, not extraction.
-WHITE_RGB_MIN = 0.98
+# ⭐ So the criterion now has exactly ONE home and this file is a CALLER:
+#   `packages/shared/src/content/modulateIdentity.ts`  (判準⑤)
+#     ├─ `vfxDocsBirthVisibility.test.ts`     imports it  (shipped-tree guard)
+#     └─ `tools/w3x-import/modulate_oracle.ts` imports it (this file, via CLI)
+# ⛔ Do NOT re-add a python threshold here. A second implementation of the same
+# criterion drifts, and the drifted half does not go red — that is this exact
+# bug, and `stockModulateCriterionSameSource.test.ts` now fails if it comes back.
+TSX_BIN = os.path.join(REPO, "node_modules", ".bin", "tsx")
+MODULATE_ORACLE = os.path.join(HERE, "modulate_oracle.ts")
 
 
 def _stops(doc: dict) -> list:
@@ -161,10 +166,67 @@ def _sizes(doc: dict) -> list:
     return [doc["size"]["start"], doc["size"]["end"]]
 
 
-def invisibility_reasons(doc: dict) -> list[str]:
+def texture_path(rel: str, roots: list[str]) -> str | None:
+    """Doc-relative texture -> the first root that actually has the file."""
+    for r in roots:
+        p = os.path.join(r, *rel.split("/"))
+        if os.path.exists(p):
+            return p
+    return None
+
+
+def modulate_verdicts(docs: list[dict], roots: list[str]) -> list[dict | None]:
+    """判準⑤'s verdict per doc, aligned with `docs`. `None` = not a modulate doc.
+
+    Each entry is `{"delta": float, "reason": str | None}`; `reason is None`
+    means the emitter really does move pixels (and `delta` says how hard).
+
+    ⭐ THIS FUNCTION CONTAINS NO CRITERION. It marshals a batch of
+    (texture, colour-stops) into `modulate_oracle.ts`, which imports the one
+    implementation (`packages/shared/src/content/modulateIdentity.ts`) the
+    shipped-tree guard also imports. The δ and the sentence both come back from
+    there, so the two sides cannot disagree — see the block above `TSX_BIN`.
+
+    ⭐ fail-loud on every failure mode (missing tsx / missing texture / non-zero
+    oracle): a silently skipped criterion and a passed criterion look identical
+    in the output, and that is the failure this whole ticket is about."""
+    idx = [i for i, d in enumerate(docs) if d.get("blendMode") == "modulate"]
+    out: list[dict | None] = [None] * len(docs)
+    if not idx:
+        return out
+    if not os.path.exists(TSX_BIN):
+        raise SystemExit(
+            f"判準⑤ 問不到（{TSX_BIN} 不存在）—— 先 `pnpm install`。"
+            "⛔ 這裡不退回一個近似判準：那正是 GH#711 的缺陷本人。"
+        )
+    queries = []
+    for i in idx:
+        rel = docs[i].get("texture")
+        p = texture_path(rel, roots) if rel else None
+        if p is None:
+            raise SystemExit(
+                f"{docs[i]['id']}: modulate 但貼圖 {rel!r} 在 {roots} 都找不到 —— "
+                "判準⑤ 對它是瞎的（⛔ 而『瞎』與『過』長得一樣）"
+            )
+        queries.append({"texturePath": p, "colors": _stops(docs[i])})
+    proc = subprocess.run(
+        [TSX_BIN, MODULATE_ORACLE],
+        input=json.dumps({"queries": queries}),
+        capture_output=True, text=True, cwd=REPO,
+    )
+    if proc.returncode != 0:
+        raise SystemExit(f"modulate_oracle 非零離開（{proc.returncode}）: {proc.stderr.strip()}")
+    for i, v in zip(idx, json.loads(proc.stdout)["verdicts"]):
+        out[i] = {"delta": v["delta"], "reason": v["reason"]}
+    return out
+
+
+def invisibility_reasons(doc: dict, modulate_reason: str | None = None) -> list[str]:
     """Why this `vfx@1` doc can NEVER draw a pixel. Empty = it has a chance.
 
-    ⛔ Conservative on purpose: it answers "impossible", never "ugly"."""
+    ⛔ Conservative on purpose: it answers "impossible", never "ugly".
+    `modulate_reason` is 判準⑤'s answer for this doc (from `modulate_reasons`),
+    ⛔ NOT something this function is allowed to work out for itself."""
     colors, sizes = _stops(doc), _sizes(doc)
     out: list[str] = []
     peak_a = max(c[3] for c in colors)
@@ -178,24 +240,37 @@ def invisibility_reasons(doc: dict) -> list[str]:
         peak_rgb = max(max(c[0], c[1], c[2]) for c in colors)
         if peak_rgb < BLACK_RGB_MAX:
             out.append(f"{blend} stacked all-black (peak max(R,G,B) {peak_rgb}) — adding zero")
-    if blend == "modulate":
-        floor_rgb = min(min(c[0], c[1], c[2]) for c in colors)
-        if floor_rgb >= WHITE_RGB_MIN:
-            out.append(
-                f"modulate stacked all-white (min(R,G,B) {floor_rgb} >= {WHITE_RGB_MIN}) — "
-                "MULTIPLY by 1 is the identity on every pixel (see WHITE_RGB_MIN)"
-            )
+    if modulate_reason:
+        out.append(modulate_reason)
     return out
 
 
-def visual_weight(doc: dict) -> float:
+def visual_weight(doc: dict, modulate_delta: float | None = None) -> float:
     """Ordering key for the runtime's fixed `p00..p02` window. Bigger = louder.
 
-    ⚠️ `peak alpha × peak size` and nothing else. It is a COARSE ordering key,
+    ⭐ `peak PER-PIXEL EFFECT × peak size`. It is a COARSE ordering key,
     ⛔ not a fidelity claim and ⛔ not a budget number — its only job is to stop
     the window landing on a haze while a 7-unit shockwave ring sits at p04.
-    Ties keep file order, so the key is total and the output deterministic."""
-    return max(c[3] for c in _stops(doc)) * max(_sizes(doc))
+    Ties keep file order, so the key is total and the output deterministic.
+
+    ⚠️⚠️ GH#711 — "peak effect" is **not** peak alpha for every blend mode:
+      · additive / alpha : the frame gains roughly `col.a` per pixel  → peak α
+      · **modulate**     : the frame is MULTIPLIED, `out = dst·(1−δ)` → **δ**
+    Before GH#711 this key used peak α for both, which is not a unit at all —
+    a white modulate emitter reads α=1.0 while its real per-pixel effect is
+    δ=0.189, i.e. the key over-rated it by **5.3×**. That is only harmless while
+    no modulate emitter is in the running, and GH#711 is exactly the ticket that
+    puts two of them in the running.
+    ⭐ δ comes from 判準⑤ (`modulate_verdicts`), ⛔ it is not computed here —
+    same number, same one implementation.
+
+    ⚠️ `modulate_delta=None` on a modulate doc ⇒ falls back to peak α. That is
+    the `--emitter-order=file` rollback path, where the weight is informational
+    and nothing is reordered by it."""
+    peak_effect = max(c[3] for c in _stops(doc))
+    if doc.get("blendMode") == "modulate" and modulate_delta is not None:
+        peak_effect = modulate_delta
+    return peak_effect * max(_sizes(doc))
 
 
 def owner_named_stems() -> dict:
@@ -281,7 +356,8 @@ def read_model(root: str, wc3_path: str) -> tuple[bytes, str]:
 
 
 def build_docs(row: dict, blob: bytes, tex: "ep.TextureResolver", notes: list[str],
-               order: str = "visual") -> tuple[list[dict], list[dict], list[dict]]:
+               order: str = "visual",
+               roots: list[str] | None = None) -> tuple[list[dict], list[dict], list[dict]]:
     """-> (docs, mapping, dropped). One `vfx@1` doc per SHIPPABLE PRE2.
 
     `order="file"` is the pre-GH#699 behaviour verbatim: every emitter, file
@@ -318,23 +394,34 @@ def build_docs(row: dict, blob: bytes, tex: "ep.TextureResolver", notes: list[st
                             "weight": round(visual_weight(doc), 4)})
         return docs, mapping, []
 
-    keep: list[tuple[int, str, dict]] = []
+    # ⭐ ONE batched call to 判準⑤ per model (⛔ not one node start per emitter).
+    # ⚠️ It sits AFTER the `order == "file"` return on purpose: `file` is the
+    # verbatim rollback, and a rollback that needs a toolchain is not a rollback.
+    verdicts = modulate_verdicts([d for _, _, d in built], roots or [os.path.join(REPO, "content")])
+    keep: list[tuple[int, str, dict, float | None]] = []
     dropped: list[dict] = []
-    for i, name, doc in built:
-        reasons = invisibility_reasons(doc)
+    for k, (i, name, doc) in enumerate(built):
+        v = verdicts[k]
+        delta = v["delta"] if v else None
+        reasons = invisibility_reasons(doc, v["reason"] if v else None)
         if reasons:
             dropped.append({"pre2Index": i, "emitter": name, "reasons": reasons})
             notes.append(f"{row['stem']} PRE2#{i} ({name}): dropped — {'; '.join(reasons)}")
         else:
-            keep.append((i, name, doc))
+            keep.append((i, name, doc, delta))
     # descending weight, ties keep file order -> total order -> deterministic
-    keep.sort(key=lambda t: (-visual_weight(t[2]), t[0]))
+    keep.sort(key=lambda t: (-visual_weight(t[2], t[3]), t[0]))
     docs, mapping = [], []
-    for slot, (i, name, doc) in enumerate(keep):
+    for slot, (i, name, doc, delta) in enumerate(keep):
         doc["id"] = f"{ID_PREFIX}.{row['stem']}.p{slot:02d}"
         docs.append(doc)
-        mapping.append({"id": doc["id"], "pre2Index": i, "emitter": name,
-                        "weight": round(visual_weight(doc), 4)})
+        row_map = {"id": doc["id"], "pre2Index": i, "emitter": name,
+                   "weight": round(visual_weight(doc, delta), 4)}
+        # ⭐ provenance for the weight itself: a modulate emitter is ranked by δ,
+        # ⛔ not by its (always-1.0-looking) alpha — say so in the side-car.
+        if delta is not None:
+            row_map["modulateDelta"] = round(delta, 5)
+        mapping.append(row_map)
     return docs, mapping, dropped
 
 
@@ -368,7 +455,10 @@ def run(out_root: str, min_refs: int, dry_run: bool, order: str = "visual") -> d
         except KeyError:
             notes.append(f"{row['stem']}: not found in any retail archive — skipped")
             continue
-        docs, mapping, dropped = build_docs(row, blob, tex, notes, order)
+        docs, mapping, dropped = build_docs(
+            row, blob, tex, notes, order,
+            roots=[out_root, os.path.join(REPO, "content")],
+        )
         if not docs:
             # A mesh-only stock model (no PRE2) has nothing this tool can port.
             # Recorded, not hidden: silence here would read as "extracted fine".
