@@ -1701,3 +1701,10 @@ watchdog 後代 CPU 修復。
 - 🛠️ 收斂順修三件：contract:numbers 寫入點自解鎖 · **prose 閘自己說謊已修**（步驟名來源）· deriveCastTimes 靜默跳過開 #708
 - ✅ DEPLOY10=0 · BUILD_STAMP v0.27.7 · 煙霧 `cv_902d016a7c34` · 帳號 204→204
 - 📊 Phase 6 累計 33 支；餘量 MarkOfChaos ×3（等 #699）＋長尾
+
+## v0.27.8（2026-08-26 凌晨二）—— #699 PRE2 第一階段＋Phase 6 長尾五族
+
+- 🎆 MarkOfChaos PRE2×6→4 份（modulate 疊全白＝逐像素恆等，丟棄 2 份）—— 🚦 鏈路已接上**未驗收**
+- 🌊 長尾五族 7 落點（零新轉檔）；差分尺抓到 tint×貼圖≈全黑（200 倍差）與佔位 scale
+- 🎫 新票：#709（7 份恆等出貨文件）· #710（sync 一次收斂不了）· #708（deriveCastTimes 靜默跳過）
+- 📊 Phase 6 累計 40 支
