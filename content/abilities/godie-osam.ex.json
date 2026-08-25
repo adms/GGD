@@ -15,7 +15,23 @@
     576.0
   ],
   "manaCostTier": "大",
-  "effects": [],
+  "effects": [
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "imported.blackhole1",
+      "clip": "idle",
+      "soundKey": "wc3.darksummoninglaunch1",
+      "scale": 2.5,
+      "tint": [
+        0.3922,
+        0.0,
+        0.0
+      ],
+      "lifeSec": 7.0
+    }
+  ],
   "template": {
     "ref": "tpl-instant-blast",
     "params": {

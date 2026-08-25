@@ -1,26 +1,29 @@
 {
   "schema": "review-queue@1",
   "counts": {
-    "assets": 1124,
-    "tier0": 796,
+    "assets": 1128,
+    "tier0": 793,
     "reviewed": 0,
-    "pending": 328
+    "pending": 335
   },
   "items": [
     {
       "id": "imported.heromusashimiyamoto",
       "kind": "model",
       "hash": "743f857a2a14bf9a29e09985603428bcf84ec05c",
-      "risk": 31,
+      "risk": 43,
       "reasons": [
-        "21 支上架技能引用（R/EX ×2 加權後 risk 31）",
+        "27 支上架技能引用（R/EX ×2 加權後 risk 43）",
         "未審"
       ],
       "refs": [
+        "godie-e008.r",
         "godie-e00w.q",
         "godie-e00x.q",
         "godie-edem.e",
+        "godie-edem.ex",
         "godie-emfr.e",
+        "godie-emfr.ex",
         "godie-emfr.r",
         "godie-etyr.q",
         "godie-h01n.e",
@@ -31,6 +34,9 @@
         "godie-hgam.r",
         "godie-hvsh.passive",
         "godie-hvsh.r",
+        "godie-hvwd.ex",
+        "godie-hvwd.r",
+        "godie-osam.ex",
         "godie-u00j.ex",
         "godie-u00j.r",
         "godie-u00v.e",
@@ -178,6 +184,28 @@
       "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
     },
     {
+      "id": "imported.netherstrike",
+      "kind": "model",
+      "hash": "e46fdaa513fe8717bd7d45dcc4c4e16b5cedc266",
+      "risk": 16,
+      "reasons": [
+        "8 支上架技能引用（R/EX ×2 加權後 risk 12）",
+        "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
+        "未審"
+      ],
+      "refs": [
+        "godie-e002.e",
+        "godie-e00l.e",
+        "godie-e00r.r",
+        "godie-edem.ex",
+        "godie-n01c.e",
+        "godie-nbbc.e",
+        "godie-o00x.r",
+        "godie-ogrh.r"
+      ],
+      "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
+    },
+    {
       "id": "fx.prim.blood.pulse-lg",
       "kind": "vfx",
       "hash": "e85a0074439f32fda6afc6829785f996e207700d",
@@ -260,27 +288,6 @@
         "godie-u00n.ex",
         "godie-zombiex.r"
       ]
-    },
-    {
-      "id": "imported.netherstrike",
-      "kind": "model",
-      "hash": "e46fdaa513fe8717bd7d45dcc4c4e16b5cedc266",
-      "risk": 14,
-      "reasons": [
-        "7 支上架技能引用（R/EX ×2 加權後 risk 10）",
-        "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
-        "未審"
-      ],
-      "refs": [
-        "godie-e002.e",
-        "godie-e00l.e",
-        "godie-e00r.r",
-        "godie-n01c.e",
-        "godie-nbbc.e",
-        "godie-o00x.r",
-        "godie-ogrh.r"
-      ],
-      "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
     },
     {
       "id": "fx.prim.lightning.beam",
@@ -1215,6 +1222,21 @@
       ]
     },
     {
+      "id": "imported.aquaspikeversion2",
+      "kind": "model",
+      "hash": "e84f55893e66327cf39c94195b2cd980fbf57c92",
+      "risk": 6,
+      "reasons": [
+        "3 支上架技能引用（R/EX ×2 加權後 risk 6）",
+        "未審"
+      ],
+      "refs": [
+        "godie-emfr.ex",
+        "godie-hvwd.ex",
+        "godie-hvwd.r"
+      ]
+    },
+    {
       "id": "imported.darkraor",
       "kind": "model",
       "hash": "d6b427284d4a147fb0ce999956c359d4d5925353",
@@ -1244,6 +1266,38 @@
         "godie-u010.ex",
         "godie-uvng.e",
         "godie-uvng.ex"
+      ]
+    },
+    {
+      "id": "wc3.darksummoninglaunch1",
+      "kind": "sfx",
+      "hash": "f0420d6783d01b622f19998cf65916e8f45b9499",
+      "risk": 6,
+      "reasons": [
+        "5 支上架技能引用（R/EX ×2 加權後 risk 6）",
+        "未審"
+      ],
+      "refs": [
+        "godie-e00w.q",
+        "godie-e00x.q",
+        "godie-osam.ex",
+        "godie-u010.q",
+        "godie-uvng.q"
+      ]
+    },
+    {
+      "id": "wc3.nagabuildingcancel",
+      "kind": "sfx",
+      "hash": "68e9cd6c83353b1f7ab81f52f2e0021d43973906",
+      "risk": 6,
+      "reasons": [
+        "3 支上架技能引用（R/EX ×2 加權後 risk 6）",
+        "未審"
+      ],
+      "refs": [
+        "godie-emfr.ex",
+        "godie-hvwd.ex",
+        "godie-hvwd.r"
       ]
     },
     {
@@ -2824,22 +2878,6 @@
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
     {
-      "id": "wc3.darksummoninglaunch1",
-      "kind": "sfx",
-      "hash": "f0420d6783d01b622f19998cf65916e8f45b9499",
-      "risk": 4,
-      "reasons": [
-        "4 支上架技能引用（R/EX ×2 加權後 risk 4）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e00w.q",
-        "godie-e00x.q",
-        "godie-u010.q",
-        "godie-uvng.q"
-      ]
-    },
-    {
       "id": "wc3.dragonroostwhat1",
       "kind": "sfx",
       "hash": "834c1474b33f6bfe4762bca1bef1286784223dfe",
@@ -3850,6 +3888,19 @@
       ]
     },
     {
+      "id": "imported.blackhole1",
+      "kind": "model",
+      "hash": "d82cdd0255c9a43f8af1d62260daa70f084c961f",
+      "risk": 2,
+      "reasons": [
+        "1 支上架技能引用（R/EX ×2 加權後 risk 2）",
+        "未審"
+      ],
+      "refs": [
+        "godie-osam.ex"
+      ]
+    },
+    {
       "id": "imported.deathwave",
       "kind": "model",
       "hash": "f9cbafcd813dbafb2892997efc6faa92b85569ce",
@@ -3892,6 +3943,19 @@
       ]
     },
     {
+      "id": "imported.grandorcaura",
+      "kind": "model",
+      "hash": "22b5147ff4f469e4be60e7f004fe3409a200b981",
+      "risk": 2,
+      "reasons": [
+        "1 支上架技能引用（R/EX ×2 加權後 risk 2）",
+        "未審"
+      ],
+      "refs": [
+        "godie-e008.r"
+      ]
+    },
+    {
       "id": "imported.herocloudstrife",
       "kind": "model",
       "hash": "39259363a7adcd6bc0c578072a9ebbec413aecf5",
@@ -3902,6 +3966,19 @@
       ],
       "refs": [
         "godie-hart.r"
+      ]
+    },
+    {
+      "id": "imported.midchildernanohaaura",
+      "kind": "model",
+      "hash": "57dd83f3f1502e52b4328b9fd941e60596706a97",
+      "risk": 2,
+      "reasons": [
+        "1 支上架技能引用（R/EX ×2 加權後 risk 2）",
+        "未審"
+      ],
+      "refs": [
+        "godie-hvsh.r"
       ]
     },
     {
@@ -3943,6 +4020,32 @@
       "refs": [
         "godie-u00n.e",
         "godie-u00o.e"
+      ]
+    },
+    {
+      "id": "wc3.flamestrikebirth1",
+      "kind": "sfx",
+      "hash": "7893eefb931f169cc88f75379e5a513e6bac17d8",
+      "risk": 2,
+      "reasons": [
+        "1 支上架技能引用（R/EX ×2 加權後 risk 2）",
+        "未審"
+      ],
+      "refs": [
+        "godie-edem.ex"
+      ]
+    },
+    {
+      "id": "wc3.flaretarget1",
+      "kind": "sfx",
+      "hash": "aeb4c261b0d0e36ef8d7ed5af8b8ec478ff3bb3e",
+      "risk": 2,
+      "reasons": [
+        "1 支上架技能引用（R/EX ×2 加權後 risk 2）",
+        "未審"
+      ],
+      "refs": [
+        "godie-e008.r"
       ]
     },
     {

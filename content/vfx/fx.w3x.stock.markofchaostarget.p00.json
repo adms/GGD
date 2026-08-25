@@ -1,0 +1,82 @@
+{
+  "id": "fx.w3x.stock.markofchaostarget.p00",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.001,
+    "angleDeg": 1.0
+  },
+  "mode": "continuous",
+  "rate": 30.0,
+  "lifetimeSec": {
+    "min": 1.0,
+    "max": 1.0
+  },
+  "size": {
+    "start": 1.847,
+    "end": 7.386
+  },
+  "color": {
+    "start": [
+      1.0,
+      0.957,
+      0.494,
+      1.0
+    ],
+    "end": [
+      0.839,
+      0.141,
+      0.09,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        0.957,
+        0.494,
+        1.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.592
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.839,
+        0.141,
+        0.09,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      1.847
+    ],
+    [
+      0.5,
+      3.564
+    ],
+    [
+      1,
+      7.386
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/circle_04.png",
+  "speed": {
+    "min": 1.3889,
+    "max": 4.1667
+  }
+}

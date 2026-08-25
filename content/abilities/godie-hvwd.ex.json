@@ -34,6 +34,17 @@
       "statusId": "slow40",
       "duration": 3.0,
       "moveSpeedMult": 0.6
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "imported.aquaspikeversion2",
+      "clip": "idle",
+      "soundKey": "wc3.nagabuildingcancel",
+      "scale": 8.0,
+      "distance": 1.6,
+      "lifeSec": 1.0
     }
   ],
   "vfxKey": "fx.prim.holy.pulse-lg",

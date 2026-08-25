@@ -62,6 +62,16 @@
           "stacking": "refresh"
         }
       ]
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "imported.netherstrike",
+      "clip": "idle",
+      "soundKey": "wc3.flamestrikebirth1",
+      "scale": 4.0,
+      "lifeSec": 2.0
     }
   ],
   "icon": "assets/icons/abilities/godie-edem.ex.webp",

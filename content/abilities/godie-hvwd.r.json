@@ -37,6 +37,17 @@
       "kind": "spawnVfx",
       "vfxId": "godie-aquaspikeversion2-p0",
       "at": "self"
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "imported.aquaspikeversion2",
+      "clip": "idle",
+      "soundKey": "wc3.nagabuildingcancel",
+      "scale": 3.0,
+      "distance": 0.8,
+      "lifeSec": 6.0
     }
   ],
   "vfxKey": "fx.prim.void.swarm-lg",

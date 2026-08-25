@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "d4dea98c7202",
+  "hash": "86297ec19a54",
   "entries": [
     {
       "id": "attach.ex.midchilder-aura",
@@ -2173,6 +2173,30 @@
       "path": "vfx/fx.w3x.particle.supershinythingy.p02.json",
       "hash": "fef0e9e36a6b",
       "size": 1017
+    },
+    {
+      "id": "fx.w3x.stock.markofchaostarget.p00",
+      "path": "vfx/fx.w3x.stock.markofchaostarget.p00.json",
+      "hash": "2ab5a503b566",
+      "size": 1024
+    },
+    {
+      "id": "fx.w3x.stock.markofchaostarget.p01",
+      "path": "vfx/fx.w3x.stock.markofchaostarget.p01.json",
+      "hash": "e4738f07a0bf",
+      "size": 1037
+    },
+    {
+      "id": "fx.w3x.stock.markofchaostarget.p02",
+      "path": "vfx/fx.w3x.stock.markofchaostarget.p02.json",
+      "hash": "08031fab8673",
+      "size": 1062
+    },
+    {
+      "id": "fx.w3x.stock.markofchaostarget.p03",
+      "path": "vfx/fx.w3x.stock.markofchaostarget.p03.json",
+      "hash": "bd1645e82b2c",
+      "size": 1033
     },
     {
       "id": "fx.w3x.stock.thunderclapcaster.p00",

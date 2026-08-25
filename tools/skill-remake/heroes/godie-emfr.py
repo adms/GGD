@@ -225,6 +225,33 @@ A("15-002", "15-002 敵彈吸收陣。太陰道", "self", [60], [0], 0,
   # ⭐ B3-A —— 有了反彈，下面那條 onReflectSuccess（轉魔力）才第一次收得到事件。
   # ⚠️ 規格第三句「將該傷害短暫加成至 [AP]([可累加])」**仍然沒實作**（engine-gap：
   #    需要「把事件數值換算成暫時屬性」的機制），兩筆豁免因此保持有效。
+  # ⭐ GH#688 Phase 6（TAIL lane）—— 原作那一具蝗蟲群 dummy：`o02Y 涅吉風花武裝解除`
+  #    （`AquaSpikeVersion2.mdl`）。生成點 war3map.j:34816（`Trig_WindFlowerStart_Actions`），
+  #    觸發條件 j:34808 `GetSpellAbilityId() == 'A0ZU'`，而 OBJECTS.json 的
+  #    `abilities.A0ZU` 逐字是「**15-002** 風花-武裝解除」、擁有者 `heroes:Emfr 魔法老師`
+  #    ⇒ **編號 15-002 就是這一支**（編號是 JASS join key；GGD 這一側已改名為
+  #    「敵彈吸收陣。太陰道」—— 改名不是缺陷，編號才是）。
+  #    參數逐格：`scale 2` ＝ w3u `usca`（census u/o02Y）· `lifeSec 3` ＝ j:34817
+  #    `RemoveUnitSP(u, 3, 1)` 的 Life_Time（helper 簽章
+  #    `RemoveUnitSP(unit, Life_Time, Die_Time)`，⛔ 不是 census 讀得到的
+  #    `UnitApplyTimedLife`／`sleep` —— 這一支兩者都沒有）。
+  #    `soundKey wc3.nagabuildingcancel` ＝ **這顆模型自己烘在動畫軌上的音效事件**
+  #    （`VFX_SOUND_JOIN.modelBoundSoundsets.byModel.aquaspikeversion2`＝
+  #    `SNDXDNBL → Sound\Buildings\Naga\NagaBuildingCancel.wav`），⛔ 不是我挑的聲音。
+  # ⛔⛔ **census 的 `tint [1,0,0]` 刻意不搬**（第一·五守則：說了但不會發生）——
+  #    audition A/B 差分尺實測：`aquaspikeversion2.glb` 只有一張**青藍色**貼圖，
+  #    紅 tint 逐通道相乘之後 ≈ 全黑 ⇒ 移出施法者體外之後差分只有 **3 px**；
+  #    同一幀把 albedo 改回白色立刻變 **621 px**（200 倍）。⇒ 填了那一格＝擺一個
+  #    玩家看不見的節點。tint 留白 ⇒ 吃模型自己的顏色（同族 02-002／02-04 兩支
+  #    census tint 本來就是 null，那兩支量到 9,152／1,197 px）。
+  # ⭐ `distance 1.0` 是我挑的（原作 `GetSpellTargetLoc()` 擺在**目標點**、⛔ 不在
+  #    施法者體內；GGD 的 15-002 是 self ⇒ 環半徑吃模板預設 0.1 時實測差分 **0 px**
+  #    —— bounding box 逐格比對，整支水刺 100% 包在施法者方塊裡）。
+  #    一鍵 rollback＝把這一格改回 0.1（或整族的 `tpl-locust-orb.params.alpha`）。
+  model_fx=[{"kind": "spawnModelFx", "shape": "single", "preset": "tpl-locust-orb",
+             "modelKey": "imported.aquaspikeversion2", "clip": "idle",
+             "soundKey": "wc3.nagabuildingcancel",
+             "scale": 2.0, "distance": 1.0, "lifeSec": 3.0}],
   effects=[buff([], 5.0, hooks=[
       {"on": "onDamageTaken", "target": "event", "damageType": "magic",
        "effects": [dmg("magic", flat=0, inc_pct={"perRank": [1.0]})]}])],

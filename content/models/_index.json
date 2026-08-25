@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "f606bf72fbd6",
+  "hash": "26570af4d14c",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -63,6 +63,12 @@
       "size": 298
     },
     {
+      "id": "imported.aquaspikeversion2",
+      "path": "models/imported.aquaspikeversion2.json",
+      "hash": "b9051ea31bcb",
+      "size": 318
+    },
+    {
       "id": "imported.awing",
       "path": "models/imported.awing.json",
       "hash": "0f361fb95431",
@@ -95,7 +101,7 @@
     {
       "id": "imported.blackhole1",
       "path": "models/imported.blackhole1.json",
-      "hash": "e62fe1508bc1",
+      "hash": "7db2c9f907e2",
       "size": 323
     },
     {
@@ -239,8 +245,8 @@
     {
       "id": "imported.grandorcaura",
       "path": "models/imported.grandorcaura.json",
-      "hash": "c99078bf1773",
-      "size": 304
+      "hash": "75db523be2e4",
+      "size": 307
     },
     {
       "id": "imported.grandundeadaura",

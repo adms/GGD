@@ -1,10 +1,16 @@
 {
   "schema": "ggd-stock-vfx@1",
-  "task": "GH#439",
+  "task": "GH#439 + GH#699",
   "generatedBy": "tools/w3x-import/extract_stock_vfx.py",
   "minRefs": 100,
+  "emitterOrder": "visual",
   "textureSubstitutions": {
-    "Textures\\Zap1_Red.blp": "spark_07"
+    "Textures\\Zap1_Red.blp": "spark_07",
+    "Textures\\Clouds8x8Mod.blp": "smoke_09",
+    "Textures\\star6.blp": "star_01",
+    "Textures\\CartoonCloud.blp": "smoke_06",
+    "Textures\\Shockwave1.blp": "circle_04",
+    "Textures\\GenericGlowFaded.blp": "light_02"
   },
   "models": [
     {
@@ -13,10 +19,21 @@
       "wc3Path": "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl",
       "archive": "war3.mpq",
       "refCount": 150,
+      "admittedBy": "min-refs",
       "mdxBytes": 11053,
+      "pre2Count": 1,
       "docs": [
         "fx.w3x.stock.warstompcaster.p00"
-      ]
+      ],
+      "emitterMap": [
+        {
+          "id": "fx.w3x.stock.warstompcaster.p00",
+          "pre2Index": 0,
+          "emitter": "BlizParticle01pulse",
+          "weight": 0.6209
+        }
+      ],
+      "droppedEmitters": []
     },
     {
       "stem": "thunderclapcaster",
@@ -24,14 +41,95 @@
       "wc3Path": "Abilities\\Spells\\Human\\ThunderClap\\ThunderClapCaster.mdl",
       "archive": "war3.mpq",
       "refCount": 123,
+      "admittedBy": "min-refs",
       "mdxBytes": 40937,
+      "pre2Count": 1,
       "docs": [
         "fx.w3x.stock.thunderclapcaster.p00"
+      ],
+      "emitterMap": [
+        {
+          "id": "fx.w3x.stock.thunderclapcaster.p00",
+          "pre2Index": 0,
+          "emitter": "BlizParticle01",
+          "weight": 0.653
+        }
+      ],
+      "droppedEmitters": []
+    },
+    {
+      "stem": "markofchaostarget",
+      "family": "mark",
+      "wc3Path": "Abilities\\Spells\\Human\\MarkOfChaos\\MarkOfChaosTarget.mdl",
+      "archive": "War3x.mpq",
+      "refCount": 24,
+      "admittedBy": "owner-named",
+      "ownerReason": "owner MDL \u6383\u63cf #7\uff0c\u4e03\u652f\u88e1\u6700\u91cd\uff08PRE2\u00d76 + RIBB\u00d78\uff09\u3002\u2b50 \u9019\u689d\u5165\u53e3\u5c31\u662f\u70ba\u5b83\u958b\u7684\uff1a\u5b83\u662f Phase 6 \u6700\u5f8c\u4e00\u65cf\u7684\u9396\uff0c\u800c\u5b83\u5361\u4f4f\u7684\u539f\u56e0**\u53ea\u6709** refCount \u4f4e\u65bc floor \u9019\u4e00\u4ef6\u4e8b\u3002",
+      "mdxBytes": 25418,
+      "pre2Count": 6,
+      "docs": [
+        "fx.w3x.stock.markofchaostarget.p00",
+        "fx.w3x.stock.markofchaostarget.p01",
+        "fx.w3x.stock.markofchaostarget.p02",
+        "fx.w3x.stock.markofchaostarget.p03"
+      ],
+      "emitterMap": [
+        {
+          "id": "fx.w3x.stock.markofchaostarget.p00",
+          "pre2Index": 4,
+          "emitter": "BlizParticle08shockwaves02",
+          "weight": 7.386
+        },
+        {
+          "id": "fx.w3x.stock.markofchaostarget.p01",
+          "pre2Index": 5,
+          "emitter": "BlizParticle08shockwavesYellow",
+          "weight": 2.0234
+        },
+        {
+          "id": "fx.w3x.stock.markofchaostarget.p02",
+          "pre2Index": 2,
+          "emitter": "BlizParticle022222",
+          "weight": 0.686
+        },
+        {
+          "id": "fx.w3x.stock.markofchaostarget.p03",
+          "pre2Index": 3,
+          "emitter": "BlastFlareStreamers",
+          "weight": 0.0557
+        }
+      ],
+      "droppedEmitters": [
+        {
+          "pre2Index": 0,
+          "emitter": "BlizParticle05white02",
+          "reasons": [
+            "modulate stacked all-white (min(R,G,B) 1.0 >= 0.98) \u2014 MULTIPLY by 1 is the identity on every pixel (see WHITE_RGB_MIN)"
+          ]
+        },
+        {
+          "pre2Index": 1,
+          "emitter": "BlizParticle05white03",
+          "reasons": [
+            "modulate stacked all-white (min(R,G,B) 1.0 >= 0.98) \u2014 MULTIPLY by 1 is the identity on every pixel (see WHITE_RGB_MIN)"
+          ]
+        }
       ]
     }
   ],
   "notes": [
-    "fx.w3x.stock.warstompcaster.p00: emissionRate 0, used KP2E peak 109.2",
-    "fx.w3x.stock.thunderclapcaster.p00: emissionRate 0, used KP2E peak 109.2"
+    "awaken: owner-named but no family claims it \u2014 no doc id can reach it (give it a family in w3xArtFamilies.ts first)",
+    "earthquaketarget: owner-named but no family claims it \u2014 no doc id can reach it (give it a family in w3xArtFamilies.ts first)",
+    "fragdriller: owner-named but no family claims it \u2014 no doc id can reach it (give it a family in w3xArtFamilies.ts first)",
+    "revivehuman: owner-named but no family claims it \u2014 no doc id can reach it (give it a family in w3xArtFamilies.ts first)",
+    "fx.w3x.stock.warstompcaster.pre2#0: emissionRate 0, used KP2E peak 109.2",
+    "fx.w3x.stock.thunderclapcaster.pre2#0: emissionRate 0, used KP2E peak 109.2",
+    "fx.w3x.stock.markofchaostarget.pre2#0: emissionRate 0, used KP2E peak 40.0",
+    "fx.w3x.stock.markofchaostarget.pre2#0: dropped 8x8 spriteSheet (substituted single-frame texture)",
+    "fx.w3x.stock.markofchaostarget.pre2#1: emissionRate 0, used KP2E peak 50.0",
+    "fx.w3x.stock.markofchaostarget.pre2#1: dropped 8x8 spriteSheet (substituted single-frame texture)",
+    "fx.w3x.stock.markofchaostarget.pre2#3: emissionRate 0, used KP2E peak 26.3",
+    "markofchaostarget PRE2#0 (BlizParticle05white02): dropped \u2014 modulate stacked all-white (min(R,G,B) 1.0 >= 0.98) \u2014 MULTIPLY by 1 is the identity on every pixel (see WHITE_RGB_MIN)",
+    "markofchaostarget PRE2#1 (BlizParticle05white03): dropped \u2014 modulate stacked all-white (min(R,G,B) 1.0 >= 0.98) \u2014 MULTIPLY by 1 is the identity on every pixel (see WHITE_RGB_MIN)"
   ]
 }

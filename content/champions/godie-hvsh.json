@@ -307,6 +307,22 @@
           "soundKey": "wc3.thunderclapcaster",
           "scale": 5.0,
           "lifeSec": 3.0
+        },
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "preset": "tpl-locust-orb",
+          "modelKey": "imported.midchildernanohaaura",
+          "clip": "idle",
+          "soundKey": "wc3.thunderclapcaster",
+          "scale": 1.5,
+          "tint": [
+            1.0,
+            0.3922,
+            0.3922
+          ],
+          "distance": 1.0,
+          "lifeSec": 3.0
         }
       ],
       "template": {

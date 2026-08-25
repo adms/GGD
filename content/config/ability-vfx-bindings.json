@@ -770,6 +770,22 @@
     {
       "vfxKey": "fx.w3x.particle.sonicbreathstream.p02",
       "why": "閘3 可渲染性 —— 3 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.markofchaostarget.p00",
+      "why": "零售 MPQ 抽出來的 `markofchaostarget`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 6 支在**身上**的通道點名它(godie-h01n.ex:art:caster, godie-h01o.ex:art:caster, godie-n003.ex:art:missile, godie-n01c.ex:art:missile, godie-n01g.ex:art:missile, godie-nbbc.ex:art:missile);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.markofchaostarget.p01",
+      "why": "零售 MPQ 抽出來的 `markofchaostarget`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 6 支在**身上**的通道點名它(godie-h01n.ex:art:caster, godie-h01o.ex:art:caster, godie-n003.ex:art:missile, godie-n01c.ex:art:missile, godie-n01g.ex:art:missile, godie-nbbc.ex:art:missile);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.markofchaostarget.p02",
+      "why": "零售 MPQ 抽出來的 `markofchaostarget`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 6 支在**身上**的通道點名它(godie-h01n.ex:art:caster, godie-h01o.ex:art:caster, godie-n003.ex:art:missile, godie-n01c.ex:art:missile, godie-n01g.ex:art:missile, godie-nbbc.ex:art:missile);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.markofchaostarget.p03",
+      "why": "零售 MPQ 抽出來的 `markofchaostarget`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 6 支在**身上**的通道點名它(godie-h01n.ex:art:caster, godie-h01o.ex:art:caster, godie-n003.ex:art:missile, godie-n01c.ex:art:missile, godie-n01g.ex:art:missile, godie-nbbc.ex:art:missile);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
     }
   ]
 }

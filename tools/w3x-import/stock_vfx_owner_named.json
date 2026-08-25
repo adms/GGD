@@ -1,0 +1,38 @@
+{
+  "schema": "ggd-stock-vfx-owner-named@1",
+  "task": "GH#699",
+  "why": "extract_stock_vfx.py 的 --min-refs 是一道 BLAST-RADIUS 閘（見那支檔的 DEFAULT_MIN_REFS 註解）：把它調低會讓**每一個**低於舊門檻的家族一起拿到原作 emitter，實測 40 就讓 burst 家族每次施放多 3 支。這份清單是**另一條**入口：owner 逐支點名掃描過的 stock 模型，即使 refCount 低於 floor 也允許抽取。",
+  "stillGated": "⛔ 這條入口**不放寬 family 那一道門**。一個沒有家族宣告它的模型，`w3xAbilityArt.stockEmitterIds()` 永遠產不出它的 doc id ⇒ 抽出來是沒有任何東西播得到的死內容。哪一支現在有沒有 family 是 census 的事（MODEL_USAGE.json），⛔ 不抄在這裡——抄了就是第二個住處，而它會漂。",
+  "source": "docs/_reports/locust_scan/mdl-params.md —— owner 點名的 7 支 stock 模型，PRE2/RIBB 參數逐支讀自 MPQ 的 .mdx 二進位",
+  "notAnExemption": "每一列都要寫得出**為什麼 owner 點到它**（一個能被反駁的理由），⛔ 不是「想加就加」。加一列的實際成本是：宣告它的那一族從此播它的原作 emitter。",
+  "models": [
+    {
+      "stem": "warstompcaster",
+      "reason": "owner MDL 掃描 #1 —— 全 repo 引用第一名的效果模型（衝擊波環的原型本人）。"
+    },
+    {
+      "stem": "earthquaketarget",
+      "reason": "owner MDL 掃描 #2 —— 地震：塵團 + 拋物噴岩，是「持續地面災害」唯一的原作樣本。"
+    },
+    {
+      "stem": "thunderclapcaster",
+      "reason": "owner MDL 掃描 #3 —— 與 #1 同族（衝擊波環），兩支一起才看得出家族的參數範圍。"
+    },
+    {
+      "stem": "revivehuman",
+      "reason": "owner MDL 掃描 #4 —— 復活家族的金色版：雙螺旋星屑 + 上升星柱。"
+    },
+    {
+      "stem": "awaken",
+      "reason": "owner MDL 掃描 #5 —— 復活家族的紫色版，與 #4 同結構不同配色，是「同一個原型改色」最乾淨的證據。"
+    },
+    {
+      "stem": "fragdriller",
+      "reason": "owner MDL 掃描 #6 —— 飛彈命中瞬間的碎焰（death 段才噴），飛彈家族唯一的原作爆焰樣本。"
+    },
+    {
+      "stem": "markofchaostarget",
+      "reason": "owner MDL 掃描 #7，七支裡最重（PRE2×6 + RIBB×8）。⭐ 這條入口就是為它開的：它是 Phase 6 最後一族的鎖，而它卡住的原因**只有** refCount 低於 floor 這一件事。"
+    }
+  ]
+}

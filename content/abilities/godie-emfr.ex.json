@@ -42,6 +42,17 @@
           "damageType": "magic"
         }
       ]
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "imported.aquaspikeversion2",
+      "clip": "idle",
+      "soundKey": "wc3.nagabuildingcancel",
+      "scale": 2.0,
+      "distance": 1.0,
+      "lifeSec": 3.0
     }
   ],
   "passive": {

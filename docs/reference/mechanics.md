@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_902d016a7c34`
+contentVersion `cv_bfce09a95249`
 
 ---
 
@@ -54,7 +54,7 @@ contentVersion `cv_902d016a7c34`
 | `screenShake` | 畫面震動 | 15 | `godie-e002.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e00l.e`、`godie-e00l.ex`、`godie-e00l.r`、`godie-h020.e`、`godie-hart.r`、`godie-hjai.e`、`godie-n003.r`、`godie-n01g.r`、`godie-u010.e` …（共 15） |
 | `shield` | 吸收（護盾） | 10 | `godie-e00l.passive`、`godie-e00r.e`、`godie-h00l.ex`、`godie-o00l.e`、`sela.w`、`thorne.w`、`grail-c-17`、`grail-a-16`、`aegis-surge`、`guardian-ward` |
 | `shieldBreak` | 破盾 | 2 | `grail-c-09`、`grail-ex-14` |
-| `spawnModelFx` | 模型特效（帶模型的單位沿路徑移動 —— 光束／砲擊／衝擊波） | 49 | `godie-e002.e`、`godie-e002.r`、`godie-e00l.e`、`godie-e00l.r`、`godie-e00r.r`、`godie-e00w.q`、`godie-e00w.r`、`godie-e00x.q`、`godie-e00x.r`、`godie-edem.e`、`godie-emfr.e`、`godie-emfr.r` …（共 49） |
+| `spawnModelFx` | 模型特效（帶模型的單位沿路徑移動 —— 光束／砲擊／衝擊波） | 55 | `godie-e002.e`、`godie-e002.r`、`godie-e008.r`、`godie-e00l.e`、`godie-e00l.r`、`godie-e00r.r`、`godie-e00w.q`、`godie-e00w.r`、`godie-e00x.q`、`godie-e00x.r`、`godie-edem.e`、`godie-edem.ex` …（共 55） |
 | `spawnProjectile` | 投射物 | 25 | `godie-e008.e`、`godie-e010.q`、`godie-h02r.r`、`godie-n003.e`、`godie-n003.r`、`godie-n00p.w`、`godie-n01c.e`、`godie-n01g.e`、`godie-n01g.r`、`godie-nbbc.e`、`godie-nsjs.w`、`godie-o00l.q` …（共 25） |
 | `spawnVfx` | 純演出（特效／音效） | 50 | `godie-e002.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e00l.e`、`godie-e00l.ex`、`godie-e00l.r`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.r`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00x.r` …（共 50） |
 | `spendMana` | 燒魔 | 4 | `godie-e00l.w`、`godie-emfr.passive`、`godie-u00k.passive`、`godie-udea.r` |
@@ -224,7 +224,7 @@ contentVersion `cv_902d016a7c34`
 | `witch-form` | `witch-form` |
 | `wound` | `grievous-wounds`、`no-heal` |
 
-## 特效（vfx）—— 646 份
+## 特效（vfx）—— 650 份
 
 由 `spawnVfx.vfxId`、技能的 `vfxKey`、彈道的 `vfxKey` 引用。
 
@@ -318,7 +318,8 @@ contentVersion `cv_902d016a7c34`
 - `fx.w3x.particle.oblivionaura.p00` · `fx.w3x.particle.sephboom.p00` · `fx.w3x.particle.sephboom.p01` · `fx.w3x.particle.sephboom.p02`
 - `fx.w3x.particle.sephboom.p03` · `fx.w3x.particle.sephboom.p04` · `fx.w3x.particle.sephboom.p05` · `fx.w3x.particle.sephboom.p06`
 - `fx.w3x.particle.sonicbreathstream.p00` · `fx.w3x.particle.sonicbreathstream.p01` · `fx.w3x.particle.sonicbreathstream.p02` · `fx.w3x.particle.supershinythingy.p00`
-- `fx.w3x.particle.supershinythingy.p01` · `fx.w3x.particle.supershinythingy.p02` · `fx.w3x.stock.thunderclapcaster.p00` · `fx.w3x.stock.warstompcaster.p00`
+- `fx.w3x.particle.supershinythingy.p01` · `fx.w3x.particle.supershinythingy.p02` · `fx.w3x.stock.markofchaostarget.p00` · `fx.w3x.stock.markofchaostarget.p01`
+- `fx.w3x.stock.markofchaostarget.p02` · `fx.w3x.stock.markofchaostarget.p03` · `fx.w3x.stock.thunderclapcaster.p00` · `fx.w3x.stock.warstompcaster.p00`
 - `godie-1hswd-01-p0` · `godie-1hswd-01-p1` · `godie-1hswd-01-p2` · `godie-aquaspikeversion2-p0`
 - `godie-aquaspikeversion2-p1` · `godie-aquaspikeversion2-p10` · `godie-aquaspikeversion2-p11` · `godie-aquaspikeversion2-p2`
 - `godie-aquaspikeversion2-p3` · `godie-aquaspikeversion2-p4` · `godie-aquaspikeversion2-p5` · `godie-aquaspikeversion2-p6`

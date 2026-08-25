@@ -411,6 +411,37 @@
       "verdictHash": null,
       "reason": "",
       "verdictAt": null
+    },
+    "tail_visual-proof_20260826-0000": {
+      "title": "蝗蟲群長尾五族：水刺/重力球/魔法陣/黑焰/封絕結界",
+      "family": "locust-orb",
+      "issues": [
+        688,
+        693
+      ],
+      "abilities": [
+        "godie-hvwd.ex",
+        "godie-hvwd.r",
+        "godie-emfr.ex",
+        "godie-osam.ex",
+        "godie-edem.ex",
+        "godie-hvsh.r",
+        "godie-e008.r"
+      ],
+      "commit": null,
+      "sequenceDir": "docs/_reports/tail_visual-proof_20260826-0000",
+      "rollback": {
+        "configId": "tpl-locust-orb",
+        "field": "params.alpha.default",
+        "liveValue": 1,
+        "rollbackValue": 0,
+        "note": "orb 家族一鍵透明化（與 TORNADO/QUAD/PENTA 三批共用同一格）；本批 7 個節點一起消失，⛔ 不必動任何一支技能的 JSON"
+      },
+      "registeredAt": "2026-08-25T16:39:37.436Z",
+      "verdict": null,
+      "verdictHash": null,
+      "reason": "",
+      "verdictAt": null
     }
   }
 }

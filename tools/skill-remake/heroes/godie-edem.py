@@ -138,6 +138,24 @@ A("45-002", "45-002 天照", "self", [120], [650], 0,
   radiusTier="中",
   # ⭐「同時[沉默]且[攻擊力降低]40%」—— 沉默有了，AD −40% **整段沒寫**。
   #    ⛔ 兄弟節點會落在施法者自己身上（理由同 45-02），所以走 area 的 onhit=。
+  # ⭐ GH#688 Phase 6（TAIL lane）—— 原作那一具蝗蟲群 dummy：`h030 佐助萬花筒效果`
+  #    （`NetherStrike.mdl`）。生成點 war3map.j:42213（`Trig_ImbaEye_Actions`），
+  #    觸發條件 j:42187 `GetSpellAbilityId() == 'A102'`，而 OBJECTS.json 的
+  #    `abilities.A102` 逐字是「**45-002** 天照」、擁有者 `heroes:Edem 寫輪眼復仇者`
+  #    ⇒ 這一支就是它的落點。位置 `udg_ZZ_ImbaEyePoint = GetUnitLoc(GetTriggerUnit())`
+  #    ＝**施法者腳下** ⇒ orb 環半徑留預設（0.1 ＝ 定點）。
+  #    參數逐格：`scale 4` ＝ w3u `usca`（census h030；⛔ 這一支沒有
+  #    `SetUnitScalePercent`）· tint 缺（census 解析後是白）⇒ **那一格不寫** ·
+  #    `lifeSec 2` ＝ j:42214 `RemoveUnitSP(u, 2, 1)` 的 Life_Time。
+  #    `soundKey wc3.flamestrikebirth1` ＝ **這顆模型自己烘在動畫軌上的音效事件**
+  #    （`VFX_SOUND_JOIN.modelBoundSoundsets.byModel.netherstrike`＝
+  #    `SNDXAHFS → …\FlameStrike\FlameStrikeBirth1.wav`），⛔ 不是我挑的聲音。
+  #    ⚠️ 同一個 Actions 裡的第二具是 `hfoo`（共用隱藏施法單位）＋ `ShowUnitHide`
+  #    ⇒ 原作刻意隱形的 soulburn 代理，⛔ 不綁（oshm 同款裁定）。
+  model_fx=[{"kind": "spawnModelFx", "shape": "single", "preset": "tpl-locust-orb",
+             "modelKey": "imported.netherstrike", "clip": "idle",
+             "soundKey": "wc3.flamestrikebirth1",
+             "scale": 4.0, "lifeSec": 2.0}],
   effects=[area("magic", tier="中", flat=1,
                 onhit=[buff([M("ad", "pctAdd", -0.4)], 10.0,
                             polarity="debuff", dispellable=True)]),
