@@ -67,7 +67,16 @@ describe("slowNN 標籤必須等於 moveSpeedMult 換算出來的減速", () => 
     const bad = collectHits()
       .filter((h) => Number(SLOW_ID.exec(h.statusId)![1]) !== Math.round((1 - h.mult) * 100))
       .map((h) => `${h.file}${h.path}: ${h.statusId} 但 moveSpeedMult ${h.mult} = 減 ${Math.round((1 - h.mult) * 100)}%`);
-    expect(bad, `標籤與倍率脫鉤（改 statusId，⛔ 不要改 moveSpeedMult）:\n${bad.join("\n")}`).toEqual([]);
+    expect(
+      bad,
+      `標籤與倍率脫鉤（改 statusId，⛔ 不要改 moveSpeedMult）:\n${bad.join("\n")}\n` +
+        `⚠️⚠️ **改之前先查那一份是誰寫的**：bash scripts/genguard.sh content/<上面那個檔>\n` +
+        `   · content/abilities/*.json（422 份）與 content/champions/*.json（72 份）**整份都是產物**\n` +
+        `     （skillremake:json / tiers:apply / apconv:build 就地重寫，content:build 最後打包）。\n` +
+        `     ⇒ 改**來源**（tools/skill-remake/heroes/*.py）再 bash scripts/genrun.sh <step>。\n` +
+        `     ⛔ 直接改出貨 JSON 會被下一次 sync 打回來，而那個「又紅了」看起來像**新的**錯。\n` +
+        `   · items/augments/status-effects 混著手編檔與產物 —— 逐檔查，⛔ 不要照目錄一概而論。`,
+    ).toEqual([]);
   });
 
   it("指到的 slowNN 文件真的存在（否則狀態列畫不出名字）", () => {

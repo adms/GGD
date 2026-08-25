@@ -353,8 +353,16 @@ describe("⛔ 卡片上不可以有「說了但不會發生」的字（owner 202
       "",
       "兩條出路：",
       "  1. 換成做得到的等效機制（多數情況的正解）",
-      "  2. 如果你真的要那條屬性可以被解鎖 → 去 content/config/stat-caps.json",
-      "     把它的 unlocked 抬高（那是一個**平衡決定**，屬於 owner）",
+      "  2. 如果你真的要那條屬性可以被解鎖 → 把 unlocked 抬高",
+      "     （那是一個**平衡決定**，屬於 owner）",
+      "",
+      "⚠️⚠️ **抬高之前先查那一格是誰寫的**：bash scripts/genguard.sh content/config/stat-caps.json",
+      "  · content/config/stat-caps.json 是 **statcaps:build 的產物**（隔離區 chmod 444）。",
+      "  · maxHealth/maxMana/healthRegen/manaRegen/ad/armor/mr 這 7 格在 DERIVED_CAP_STATS 裡 ——",
+      "    base/unlocked 每次重生成都被 gen_stat_caps.ts 的 capAt[STAT_CAP_ANCHOR_LEVEL] 覆寫。",
+      "    ⇒ 手改必被 statcaps:check 逐位元組判 stale。改**來源**：tools/stat-caps/gen_stat_caps.ts。",
+      "  · as/ap/lifesteal/cdr/range/ms 這 6 格不在那張表裡，值會留下來 —— ⛔ 但仍然要走",
+      "    bash scripts/genrun.sh statcaps:build，⛔ 不要 chmod +w 直接改產物。",
       "",
     ].join("\n");
     expect(claims, message).toEqual([]);

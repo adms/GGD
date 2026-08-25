@@ -26,6 +26,14 @@
  * ⛔ 不要放寬它 —— 綠燈要靠 content lane 把 `flat` 拿掉並補上
  * `content/config/damage-tier-exemptions.json`。
  *
+ * ⚠️⚠️ **拿掉 `flat` 之前先查那一格是誰寫的**：`bash scripts/genguard.sh <那個檔>`。
+ * 訊息印出來的 `n.file` 幾乎全部落在 `content/abilities/*.json` ——
+ * 那 422 份**整份都是產物**（`skillremake:json` 91 · `tiers:apply` 331 · `apconv:build` 56
+ * 就地重寫，`content:build` 最後打包），`content/champions/*.json` 72 份同理。
+ * ⇒ 改**來源**（`tools/skill-remake/heroes/*.py` 的 `dmg=` 那一格）再
+ * `bash scripts/genrun.sh <step>`。⛔ 直接改出貨 JSON 會被下一次 sync 打回來，
+ * 而那個「又紅了」看起來像**新的**錯。
+ *
  * 突變紀錄（整批一條，挑最承重的線 —— 拿掉它整個 per-hit rider 分類就消失）：
  *   · `damageTiers.ts::scanScalingNodes` 的 `perTrigger` 傳遞改成恆 `false`
  *     → 用候選豁免表實測：未豁免節點 **8 → 81**，且 `per-hit-rider` 規則變成
