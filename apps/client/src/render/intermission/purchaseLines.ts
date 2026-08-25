@@ -7,7 +7,9 @@
  * IN-CHARACTER — a short in-character thought — so it reads as HIM reacting to
  * his new gear, not a mute attack pose. A sibling phase authored three distinct
  * personality lines per champion; they ship as the plain static asset
- * `content/config/purchase-lines.json` and are shown by ui/HeroReactionBubble.
+ * `content/config/_purchase-lines.json` (leading underscore is deliberate —
+ * fsStore skips `_` files, keeping it out of the content bundle) and are shown
+ * by ui/HeroReactionBubble.
  *
  * This is the pure, node-testable half: the tolerant parse of that doc, the
  * per-champion lookup, and the "random, never an immediate repeat" pick (the

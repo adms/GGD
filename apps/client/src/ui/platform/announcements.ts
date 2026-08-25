@@ -13,9 +13,11 @@
  * So the owner wrote release notes, ticked 「Active (shown to players)」, and his
  * family saw nothing: the only surface those words ever reached was a GitHub
  * release page they do not read. That is failure shape **S6** in
- * docs/_false-completions.md — "後端做完、前端沒有入口" — and the permanent guard
- * for it is ./publicFeedReaders.test.ts, which derives every public route from
- * the Go source and fails when one has no client/admin reader.
+ * docs/_false-completions.md — "後端做完、前端沒有入口". ⚠️ An all-route
+ * reader-reconciliation guard does NOT exist yet (the once-named
+ * publicFeedReaders.test.ts never landed — GH#706); today's only guards are
+ * the two in ./announcements.test.ts (the URL really gets requested, and the
+ * real LobbyScreen renders the text).
  *
  * ---- THE CONTRACT, AS READ OUT OF THE GO SOURCE (not assumed) --------------
  *   GET /api/v1/announcements                (no Authorization header needed —

@@ -26,8 +26,9 @@ champion 文件在、六支技能在、`_index` 有註冊、EX 對照有、日�
 | 首發開放名單 | `apps/platform/internal/curation/starter.go` `starterChampions` | ✅ 版控 | 新安裝 seed 的名單；所有測試（castability sweep、telegraph coverage、game-server whitelist）都從這裡解析 |
 | 營運白名單 | `data/curation/whitelist.json` | ❌ gitignore | **正在跑的那台機器**唯一會讀的東西 |
 
-**「在 `content/_index.json` 裡」不等於開放。** 那兩份 index 是整棵內容樹的 hash manifest
-（114 隻英雄 / 668 支技能，`pnpm content:build` 產生的），它不 gate 任何東西。
+**「在 `content/champions/_index.json` / `content/abilities/_index.json` 裡」不等於開放。**
+那兩份 index 是整棵內容樹的 hash manifest（英雄數／技能數以 `_index.json` 實數為準，
+`pnpm content:build` 產生的），它不 gate 任何東西。
 
 這就是為什麼下面第 12–16 列存在，也是為什麼這份 SOP 附了一支腳本 —
 純文字清單會被用完全一樣的方式讀過去、勾過去。
@@ -43,7 +44,7 @@ champion 文件在、六支技能在、`_index` 有註冊、EX 對照有、日�
 | 1 | champion 文件 | `content/champions/<id>.json`（`schema: champion@1`） | 載入器直接找不到英雄 |
 | 2 | 六支技能文件 | `content/abilities/<id>.{passive,q,w,e,r,ex}.json` | 缺 `.ex` = 熱鍵 F 是死的（白名單唯一真的 gate 的技能） |
 | 3 | **mirror 同步** | champion 文件內嵌的 `abilities.Q/W/E/R` 必須等於各自的 standalone 文件（只差一個 `schema` key） | 兩份數值各說各話；`abilityMirror` 測試變紅 |
-| 4 | 重建索引 | `pnpm content:build` → `_index.json` ×2 + `bundle.json` + `manifest.json` | `bundle.test.ts` 變紅 |
+| 4 | 重建索引 | `pnpm content:build` → `_index.json` ×2 + `bundle.json` + `manifest.json` | `shippedBundleIsCurrent.test.ts` 變紅（`bundle.test.ts` 刻意在 temp 樹重建，抓不到出貨那一份過期）|
 | 5 | 英雄編號規約（#11） | 六支技能共用同一個 2–3 位編號，尾碼恰好是 `{00,01,02,03,04,002}` | `TestStarterSetMatchesContentTree` R2 變紅 |
 
 > **編號規約的細節**：規則是「同一個英雄編號 + 尾碼集合」，**不是**「Q 一定是 01」。

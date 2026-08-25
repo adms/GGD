@@ -48,7 +48,7 @@ import { Texture } from "@babylonjs/core/Materials/Textures/texture";
 import { Engine } from "@babylonjs/core/Engines/engine";
 import type { VoxelLook, VoxelProps } from "./voxelLook";
 
-/** Palette texture edge — must match `tools/voxel-gen/boxman.ts` TEX_EDGE. */
+/** Palette texture edge — must match `packages/shared/src/voxel/boxman.ts` TEX_EDGE. */
 export const VOXEL_TEX_EDGE = 16;
 
 /**
@@ -87,7 +87,7 @@ export function voxelLookAppliesToGlb(glbPath: string | null | undefined): boole
 
 /**
  * Prop group → the joints that carry it. Mirrors `PROP_JOINTS` in
- * `tools/voxel-gen/boxman.ts`; each prop has its OWN joint precisely so that
+ * `packages/shared/src/voxel/boxman.ts`; each prop has its OWN joint precisely so that
  * zeroing it cannot delete a body part.
  */
 export const PROP_JOINTS: Readonly<Record<keyof VoxelProps, readonly string[]>> = {

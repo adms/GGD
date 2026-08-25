@@ -20,8 +20,8 @@
  * `bakeLook()` is the only emitter. `bakeArchetype()` is a one-line wrapper
  * over `lookFromArchetype()`, which is what makes the owner's 「不要 fork 第二個
  * 產生器」 mechanical: the studio edits a `VoxelLook`, the CLI bakes a
- * `VoxelLook`, and `bake.test.ts` asserts the two produce identical bytes for
- * all five archetypes. A divergence cannot hide in a code path nobody runs,
+ * `VoxelLook`, and `tools/voxel-gen/gen.test.ts` asserts the two produce
+ * identical bytes for every archetype. A divergence cannot hide in a code path nobody runs,
  * because there is only one code path.
  *
  * ── BUDGET IS AN OUTPUT, NOT A FOOTNOTE ─────────────────────────────────────

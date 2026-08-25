@@ -216,7 +216,7 @@ export const zChampionDef = z
      * attribute term carries the w3x-faithful part of the curve, `growth`
      * carries the tuning laid on top, so a hero's progression is not locked to
      * his three attributes (owner ruling on #248 —「growth 區塊就是重複來源
-     * => 本來就可以重複沒有衝突」). `championGrowthLayers.test.ts` pins the
+     * => 本來就可以重複沒有衝突」). `content/championAttributes.test.ts` pins the
      * three-layer sum so a reader cannot silently apply only two of the three.
      *
      * `growth.mr` is simply the row where the attribute term is zero: Warcraft

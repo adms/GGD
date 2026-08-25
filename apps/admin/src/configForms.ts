@@ -3885,11 +3885,11 @@ const MAP_SPEC_SPEC: ConfigDocSpec = {
   intro: [
     "**所有動漫場地共用的一套規格**（GH#324，owner 2026-08-14）。⛔ 不要讓每張圖各自發明玩法 —— 七張圖只是套四個 layout template 之一。",
     "⭐ owner 的黃金鐵則：**「一張圖如果很壯觀但記不住，就簡化它；拿掉一個房間不影響玩法，就拿掉；垂直感能做成背景，就做成背景。玩家該跟玩家打，不是跟地圖打。」**",
-    "⚠️ 這一頁調的是**產生器的驗收標準**，⛔ 不是任何一張已經產生出來的地圖 —— 改完要重跑 `pnpm map:gen` 才會影響輸出。",
+    "⚠️ 這一頁調的是**產生器的驗收標準**，⛔ 不是任何一張已經產生出來的地圖 —— 改完要重跑 `pnpm --dir tools/anime-arena-map map:gen` 才會影響輸出（root 打 `pnpm map:gen` 會 ERR_PNPM_NO_SCRIPT）。",
     "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/map-spec.json`**。",
   ],
   consumer: "packages/shared/src/map/spec.ts（界與硬檢查清單；產生器與驗證器都從它 import）",
-  effect: "**改完要重跑 `pnpm map:gen`**。⛔ 它不會回頭改已經產生的場地 —— 那些要重新產生。",
+  effect: "**改完要重跑 `pnpm --dir tools/anime-arena-map map:gen`**。⛔ 它不會回頭改已經產生的場地 —— 那些要重新產生。",
   fields: [
     { path: "grid.colsMin", zh: "地圖最小寬（格）", note: "可玩區域的寬度下界。⚠️ 這是**規格窗**不是硬界 —— 產生器會擋下窗外的地圖，但 Zod 的硬界更寬（那是誤讀保險絲，不是設計意見）。" },
     { path: "grid.colsMax", zh: "地圖最大寬（格）", note: "可玩區域的寬度上界。⚠️ 調大它 = 允許更大的圖 = 玩家更難記住地圖，那正是 owner 的黃金鐵則在防的事。" },

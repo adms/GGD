@@ -1,5 +1,10 @@
 # 交接：2026-08-08
 
+> ⚠️⚠️ **這是 2026-08-08 的快照，已過期**：現況以 `docs/_execution-batches.md` 尾節與
+> `git tag` 為準（2026-08-25 時線上是 v0.27.3，⛔ 不是本檔寫的 v0.10.1；英雄數也早已不同）。
+> 本檔「owner 正在手動重製全部英雄技能／勿動 `content/abilities/`」一節已被
+> `skillremake:json`（91 份 ability＋16 份 champion 產物）＋產物隔離區（genguard）取代。
+>
 > **下次說「重新開始」時先讀這一份。** 它記的是**線上現在是什麼、還欠什麼帳、
 > 下一輪從哪裡接**。已完成的東西在 git log 與 GitHub release note 裡，這裡不重複。
 >
@@ -116,9 +121,12 @@
    ⭐ 守衛塔那格同時是 GH#263（拆塔即勝）的掛載點。
 4. B6（M，5）→ C5 → D2 → C3 → C6 → D3 → D5 → D6 → E2（⛔ 必須排最後，單向門）
 
-### owner 正在手動重製全部英雄技能
+### ~~owner 正在手動重製全部英雄技能~~（⚠️ 已過期，2026-08-25 註記）
 
-⛔ **不要動 `content/abilities/`**，等他做完。
+這一節是 2026-08-08 的狀態。重製早已改走 **`skillremake:json`** 出貨（91 份 ability JSON＋
+16 份 champion JSON **每一個欄位都是產物**）；現行規則是 **genguard＋產物隔離區** ——
+改技能改**產生器來源**（`tools/skill-remake/`）再重生成，⛔ 不是「等 owner 做完」、
+⛔ 也不是手改 `content/abilities/` 的 JSON（`bash scripts/genguard.sh <path>` 會擋）。
 
 兩個已知的內容事實（他重製時會撞到）：
 

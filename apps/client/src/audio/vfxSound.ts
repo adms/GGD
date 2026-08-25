@@ -185,7 +185,7 @@ export class VfxSoundLayer {
    */
   cue(abilityId: string | undefined, which: VfxSoundCue): VfxSoundHit | null {
     // ⭐ GH#568 —— 層數上限（owner 2026-08-23「疊超過又不是白名單⋯**也不會播出來
-    // 超過的音效**」）。⛔ 夾在**這裡**而不是在內容裡：`content/vfx-families.json`
+    // 超過的音效**」）。⛔ 夾在**這裡**而不是在內容裡：`content/config/vfx-families.json`
     // 一個位元組都沒動，所以白名單／上限一改，聲音逐位元回來。
     if (!this.layersOf(abilityId).has(VFX_CUE_LAYER[which])) return null;
     return this.resolveCue(abilityId, which);

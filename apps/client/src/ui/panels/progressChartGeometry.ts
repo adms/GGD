@@ -6,7 +6,7 @@
  * defect is 「畫在螢幕外／地板下」 — a thing that is computed correctly and then
  * drawn where nobody can see it. Geometry that lives in a .tsx file can only be
  * checked by eyeballing a screenshot. Geometry in a pure module can be asserted:
- * `progressChartGeometry.test.ts` proves every plotted point lands INSIDE the
+ * `progressChartRender.test.ts` proves every plotted point lands INSIDE the
  * viewBox for degenerate inputs too (one round, all-equal values, a flat zero
  * series), which is exactly where a naive scale divides by zero and throws the
  * line to ±Infinity — off-canvas, invisible, and silent.

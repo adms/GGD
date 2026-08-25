@@ -145,7 +145,7 @@ export type ConfigBossIntroDoc = z.infer<typeof zConfigBossIntroDoc>;
  * 描述（描述來自 champion doc，不需要這份文件）。
  *
  * 純量那幾格必須和 `content/config/boss-intro.json` 一字不差 ——
- * `apps/client/src/ui/hud/bossIntroShipped.test.ts` 的 drift 斷言在守。
+ * `apps/client/src/ui/hud/bossIntro.test.ts` 的 drift 斷言在守。
  */
 export const DEFAULT_BOSS_INTRO: ConfigBossIntroDoc = {
   id: "boss-intro",

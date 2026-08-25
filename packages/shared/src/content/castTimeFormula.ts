@@ -129,7 +129,8 @@ export const DAMAGE_SATURATION = DEFAULT_DAMAGE_TIERS.damage[DAMAGE_TIER_NAMES[4
  *
  * CANARY: this MUST equal content/config/combat-env.json `multipliers.cooldown`.
  * castTimeCoverage.test asserts it; when the owner retunes the cooldown mult,
- * re-run `scripts/deriveCastTimes.ts --write` and update this in the same commit.
+ * re-run `pnpm --filter @ggd/shared exec tsx scripts/deriveCastTimes.ts --write`
+ * and update this in the same commit.
  */
 export const SHIPPED_COOLDOWN_MULT = 0.2;
 

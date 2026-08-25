@@ -2341,7 +2341,7 @@ export function mergeExpansion(
     ? (out["effects"] as unknown[]).filter(isSpawnModelFx)
     : [];
   // ⚠️ `castTimeSec` 是**推導**欄位，不是作者的行為選擇：它由
-  //    `scripts/deriveCastTimes.ts` 從 `castTimeFormula` 蓋進每一份文件。
+  //    `packages/shared/scripts/deriveCastTimes.ts` 從 `castTimeFormula` 蓋進每一份文件。
   //    而 `castTimeSec` 在模板裡是一格 `optional` 參數 —— 文件沒填時
   //    `has()` 回 false，展開結果就沒有它。
   // ⛔ 於是下面的「先全刪、只放回展開有產出的」會把文件層那一格**無聲抹掉**，

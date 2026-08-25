@@ -59,7 +59,7 @@
  *      is evaluated even after one is false, every child of an `any` even after
  *      one is true. It has to, or the cursor and the draw order would disagree.
  *
- * The invariant this buys, and the one `conditionRng.test.ts` pins:
+ * The invariant this buys, and the one `condition.test.ts` pins:
  *
  *     the number of rng draws a condition consumes is a pure function of the
  *     CONDITION TREE'S SHAPE — never of the world, the target, or the outcome.
@@ -1068,7 +1068,7 @@ function subjectOf(ctx: ConditionContext, s: ConditionSubject): EntityId | undef
  * PHASE 1 — the ONLY rng in this file. Draws one `chance` per `chance` leaf, in
  * a fixed pre-order, regardless of what any other leaf will answer.
  *
- * Exported for the guard: `conditionRng.test.ts` calls it directly to assert the
+ * Exported for the guard: `condition.test.ts` calls it directly to assert the
  * draw COUNT is a function of the tree alone.
  */
 export function drawChances(

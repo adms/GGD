@@ -4,7 +4,7 @@
  * ⚠️ 這支函式存在的理由是「守衛得到」。它原本是 `GameApp.poseFor` 裡的一個
  * inline 分支，而 `GameApp` 要一整套 Babylon + Colyseus 才起得來，所以那個分支
  * 可以整段刪掉而全套測試照樣全綠（CLAUDE.md 失敗形態 ③）。拆成純函式之後
- * `localRenderPose.test.ts` 直接對它做行為斷言。
+ * `predictionAttackFacing.test.ts` 直接 import 它做行為斷言。
  *
  * 決定：
  *   · **位置永遠來自預測**。三個模式都一樣 —— 把位置交回權威會把 #43 修掉的

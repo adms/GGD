@@ -3,7 +3,7 @@
 > **一句話**：讀 3 份**必給**，其餘照需要。⛔ 權威是**端點**不是文件；
 > 而定價規則目前**還只是散文**（端點沒做）—— 那一格下面明講。
 
-最後更新：**2026-08-18** · 引擎能力指紋 **`9a5fed3e`**
+最後更新：**2026-08-18** · 引擎能力指紋：**以 `docs/editor-contract/ggd-runtime-capabilities.md` 檔頭為準**（該行有守衛，⛔ 本頁不再貼字面值 —— 貼了必過期）
 
 > ⚠️ **這一頁本身也會過期，所以它現在有守衛。**
 > `packages/shared/src/ops/codexHandoffFresh.test.ts` 逐一檢查下面每一個檔案路徑
@@ -12,7 +12,7 @@
 
 ### ⭐ 2026-08-18 這一版變了什麼（GH#354 / #356，九個缺口）
 
-指紋走了兩步：`c8deb8d8` → `5f1cd23e` → `9a5fed3e`。**交付前一定要重講的四件事**：
+指紋在那一版走了兩步（`c8deb8d8` → `5f1cd23e` → 當時的 `9a5fed3e`；**現值以 `docs/editor-contract/ggd-runtime-capabilities.md` 檔頭為準**）。**交付前一定要重講的四件事**：
 
 | 變的是 | 一句話 | 合約文件哪一節 |
 |---|---|---|
@@ -184,7 +184,7 @@ GET  <content-api prefix>/health
 | `planned`（逐筆 supported / partial / unsupported） | 28 | **28** |
 | `knownBroken` | 1 | **1**（仍然是 `hook:onDeath` 的小怪那一半，GH#296）|
 
-⭐ 它有 `fingerprint`（現在是 `9a5fed3e`）—— 拿它 pin base，引擎一變你就知道。
+⭐ 它有 `fingerprint`（現值以 `docs/editor-contract/ggd-runtime-capabilities.md` 檔頭為準，該行有守衛）—— 拿它 pin base，引擎一變你就知道。
 
 > ⚠️ **但別忘了文件裡那一份是快照。** 2026-08-14 實測：引擎已經走到 `c8deb8d8`，
 > 合約文件卻還貼著 `7f2a3d75`，而**四個數字（37/19/5/17）當時全部還是對的** ——
@@ -244,7 +244,7 @@ python3 tools/skill-remake/refresh_docs.py --check  # 過期就回非零
 
 41 位英雄（235 支技能）從 `content/` 搬進 **`content/_legacy/`**。對編輯器的影響：
 
-- **出貨英雄 78 位 / 技能 461 支**（`content/` 底下），⛔ 不是舊文件裡的 119 / 696
+- **出貨英雄／技能數以 `content/champions/_index.json` 與 `content/abilities/_index.json` 實數為準**，⛔ 不是舊文件裡的 119 / 696，⛔ 也不要抄本頁任何快照數字當常數
 - 引用一支技能的 id 之前，先確認它在 `content/abilities/` 而不是 `content/_legacy/abilities/`
 - ⚠️ 退場**不是刪除**：`_legacy/` 裡的文件留著是刻意的（將來可能復活），
   所以「這個 id 存在」不等於「這個 id 出貨」

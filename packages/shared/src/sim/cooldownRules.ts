@@ -82,7 +82,7 @@ export interface CooldownRules {
  * 出貨值。owner 2026-08-10 指定 0.1 秒。
  *
  * ⚠️ 這裡的 0.1 與 `content/config/cooldown-rules.json` 必須一致，
- * `configDrift.test.ts` 那一族在守（第一守則的三個住處）。
+ * `cooldownFloor.test.ts` 在守（第一守則的三個住處）。
  */
 export const DEFAULT_COOLDOWN_RULES: CooldownRules = Object.freeze({
   enabled: true,

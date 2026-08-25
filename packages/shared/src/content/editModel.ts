@@ -12,10 +12,13 @@
  *
  * THE MIRROR RULE — the trap this file exists to close. Every Q/W/E/R ability
  * is stored TWICE: standalone at `content/abilities/<id>.json` AND embedded in
- * its champion under `abilities[<slot>]`. The SIM reads the EMBEDDED copy
- * (sim/content/registry.ts registers `def.abilities[slot]`), so an editor that
- * saved only the standalone doc would look like it worked and change nothing
- * in game. `writePlan()` turns one ability edit into the pair of writes that
+ * its champion under `abilities[<slot>]`. Runtime treats the STANDALONE doc as
+ * authoritative (registries.ts STRICT model: standalone abilities register
+ * BEFORE champions and registerChampion will not overwrite; the embedded copy
+ * is ignored unless the standalone omits that slot). The double write still
+ * matters because raw-doc consumers (codex browser, admin content page, editor
+ * preview) read the un-registered champion doc — see registries.ts
+ * auditAbilityMirrorDrift. `writePlan()` turns one ability edit into the pair of writes that
  * keeps the two copies identical. (An EX ability is referenced by `exAbility`
  * and has no embedded twin, so it mirrors nowhere — also handled here.)
  *

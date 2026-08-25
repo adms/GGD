@@ -892,7 +892,7 @@ export function App(): React.JSX.Element {
 }
 
 /**
- * ⚠️ `export` 是給守衛用的（同 `NavRail` 的理由）：`shellLayout.test.ts` 要
+ * ⚠️ `export` 是給守衛用的（同 `NavRail` 的理由）：`shellScroll.test.ts` 要
  * `renderToString` **出貨在用的那一棵**渲染樹來讀 `<main>` 的樣式，⛔ 而不是掃
  * 原始碼字串 —— 少了它，把外框樣式換回會截斷內容的那一版照樣全綠（失敗形態⑤）。
  */

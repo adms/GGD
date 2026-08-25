@@ -71,8 +71,9 @@ export interface AoeTiers {
 }
 
 /**
- * 出貨值。⚠️ 這五個數字與 `content/config/aoe-tiers.json` 必須一致，
- * `configDrift.test.ts` 那一族在守（第一守則的三個住處）。
+ * 出貨值。⚠️ 這五個數字與 `content/config/aoe-tiers.json` 必須一致 ——
+ * ⚠️ 但這條 JSON↔DEFAULT drift 目前**尚無守衛**（GH#706；
+ * skillTiersDocFresh.test.ts 只驗產生器 freshness，aoeTiers.test.ts 不讀出貨 JSON）。
  *
  * ⭐ **從梯子推導，⛔ 不抄字面值**（GH#414）：AoE 取橫木 [1..5]，
  * 於是 3 / 4.5 / 6 / 8 逐位元等於改制前的出貨值，第五格「極大」= R/2 = 12。

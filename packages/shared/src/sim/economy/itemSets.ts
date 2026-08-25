@@ -165,7 +165,7 @@ function countHeld(bonus: ItemSetBonus, held: readonly (ItemId | null)[]): numbe
  * a registry, because a complete set always includes every declaring piece. For
  * a PARTIAL set (`requiredPieces` < `pieces.length`) it means the declaration
  * must be repeated on every piece, or a completion made of the pieces that do
- * not declare it goes unnoticed — `content/legendaryItemSets.test.ts` asserts
+ * not declare it goes unnoticed — `sim/economy/itemSets.test.ts` asserts
  * the shipped tree does repeat it on all of them, and `item@1` refuses a
  * declaration whose `pieces` omits its own document.
  *

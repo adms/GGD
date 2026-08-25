@@ -6,7 +6,7 @@
  *
  *   1. `content/config/map-spec.json`                —— 出貨值
  *   2. 這個檔（Zod + `DEFAULT_MAP_SPEC` + `resolveMapSpec`）
- *   3. `apps/admin/src/mapSpec.ts`（`SHIPPED_MAP_SPEC` + 欄位 union + 標籤）
+ *   3. `apps/admin/src/configForms.ts` 的 `MAP_SPEC_SPEC`（欄位 union + 標籤）
  *
  * ⚠️ **界**（每一格的合法範圍）從 `../../map/spec` import，⛔ 不抄字面值 ——
  * 產生器與驗證器要用同一組界，抄一份就是第四個住處（第零守則）。
@@ -199,7 +199,7 @@ export const zConfigMapSpecDoc = z
      * ⭐ **出生點怎麼擺**（GH#364 第二半，owner 2026-08-18「fix all」）。
      *
      * ⚠️ 這一格調的是**產生器挑座位的規則**，⛔ 不是任何一張已經產生出來的圖 ——
-     * 改完要重跑 `pnpm map:gen`。
+     * 改完要重跑 `pnpm --filter @ggd/anime-arena-map map:gen`。
      *
      * ⛔ 為什麼是**兩把尺**而不是一格「內縮 N 格」：owner 提的是 2–3 格，但
      * 「格」是一個後台欄位（`grid.tileSize`），同一個數字在兩張圖上是兩個距離。

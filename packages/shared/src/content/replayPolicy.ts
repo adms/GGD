@@ -54,7 +54,7 @@ export function retainIsUnlimited(v: number): boolean {
 
 /**
  * 出貨預設。**這不是「出貨的那一份」** —— 出貨的那一份是
- * `content/config/replay.json`，而 `shippedReplayPolicy.test.ts` 比對兩者，
+ * `content/config/replay.json`，而 `replayPolicyShipped.test.ts` 比對兩者，
  * 所以任何一邊改了另一邊沒改就會紅（失敗形態 ⑤：被測的不是出貨的那個）。
  *
  * ── GH#498：出貨從「30 天 / 200 份就刪」改成**兩條都不刪** ────────────────

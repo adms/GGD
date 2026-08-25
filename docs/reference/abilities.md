@@ -2,7 +2,7 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_46addb46c5b6`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 產生自 contentVersion **`cv_a6eed9666137`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
 > 資料列：**421**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-08-20T16:58:56.072938Z`）
 
 `content/abilities/*.json` 共 **421** 份，每個英雄每個 slot 一份：天生 PASSIVE 69　·　Q 71　·　W 71　·　E 71　·　R 71　·　EX 68。
@@ -50,7 +50,7 @@
 | `godie-e00l.q` | 20-02 感知能力 | Q | 被動 | 20-02 | `godie-e00l` Saber | — | 受到物理攻擊時有7%機率可迴避物理攻擊。 |
 | `godie-e00l.w` | 20-01 風王結界 | W | 被動 | 20-01 | `godie-e00l` Saber | — | [切換] 開關型 · 冷卻 30 秒 · 開關本身不花半點法力 |
 | `godie-e00l.e` | 20-03 約束與勝利之劍 | E | 主動 | 20-03 | `godie-e00l` Saber | — | [主動][指向][範圍][AP加成] |
-| `godie-e00l.r` | 20-04 Avalon-永恆的理想鄉 | R | 輔助 | 20-04 | `godie-e00l` Saber | — | Saber手中握著的石中劍的劍鞘，可以發動傳說中EX級寶具Avalon－永恆的理想鄉，是個可以將任何魔法反彈的最強寶具，使… |
+| `godie-e00l.r` | 20-04 Avalon-永恆的理想鄉 | R | 主動 | 20-04 | `godie-e00l` Saber | — | [主動][輔助][反彈][AP加成] |
 | `godie-e00l.ex` | 20-002 解放.約束勝利劍MAX | EX | 被動 | 20-002 | `godie-e00l` Saber | — | [被動][指向][範圍][反彈][反彈成功時][AP加成] |
 | `godie-e00n.passive` | 22-00 嗚鎖打! | PASSIVE | 天生·主動 | 22-00 | `godie-e00n` 龍宮禮奈 | — | [輔助][範圍] |
 | `godie-e00n.q` | 22-01 鬼隱之擊 | Q | 輔助 | 22-01 | `godie-e00n` 龍宮禮奈 | — | 隱形並在一定的時間內提昇50%速度以暗殺目標，當攻擊時隱形術即告失效，但是會造成額外100點的背刺傷害，持續12秒。 |

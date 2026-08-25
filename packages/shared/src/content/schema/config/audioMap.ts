@@ -43,7 +43,8 @@ export const zAudioSfxEntry = z
  * owner 逐字：「**設定上限**但同時也**讓我知道哪些碰到上限**，我可以**額外審查白名單**，
  * 但**疊超過又不是白名單雖然不會砍但也不會播出來超過的音效**」。
  *
- * ⛔ 「不會砍」是這一格的重點：`content/vfx-families.json` 與逐支覆寫**一個位元組都不動**，
+ * ⛔ 「不會砍」是這一格的重點：`content/config/vfx-families.json`（`pitch:build` 的產物）
+ * 與逐支覆寫**一個位元組都不動**，
  * 夾住只發生在**播放的那一刻**（`apps/client/src/audio/sfxLayerCap.ts`）。所以把 `enabled`
  * 關掉、或把一支技能放進 `whitelist`，聲音**原封回來**，⛔ 不必重建任何內容。
  *
@@ -62,7 +63,8 @@ export const zAudioCastLayerCap = z
      *
      * ⭐ 出貨值是 **5 ＝今天一層都不夾**（⛔ 我沒有替 owner 挑一個會當場砍掉聲音的
      * 數字）。要真的變安靜就往下調：4 夾掉那 15 支的消散音、3 再夾掉循環音。
-     * 每一次調整都**只影響播放**，`content/vfx-families.json` ⛔ 一個位元組都不會動。
+     * 每一次調整都**只影響播放**，`content/config/vfx-families.json`（`pitch:build` 的產物）
+     * ⛔ 一個位元組都不會動。
      */
     maxLayers: z.number().int().min(1).max(8),
     /**

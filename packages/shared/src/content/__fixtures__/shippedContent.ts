@@ -56,7 +56,7 @@
  *
  * ⚠️ 這與 CLAUDE.md 罵的那種 fail-open **不同型**：那一種退回的是**別的語意**
  * （骨架英雄 / 沒錄到影），這一種退回的是**同一份資料的另一條讀法**。
- * 唯一會漂的東西是 wall-clock，而 `shippedContentFixture.test.ts` 逐份比對
+ * 唯一會漂的東西是 wall-clock，而 `shippedContent.test.ts` 逐份比對
  * 兩條路的輸出，所以「同一份資料」不是一句散文。
  *
  * ─────────────────────────────────────────────────────────────────────────────
@@ -164,7 +164,7 @@ let freshCache: boolean | null = null;
 /**
  * 這個行程要走 bundle 還是檔案樹？（memoized —— 一個行程只掃一次）
  *
- * 匯出是給 `shippedContentFixture.test.ts` 用的：它要能問「現在走的是哪一條」。
+ * 匯出是給 `shippedContent.test.ts` 用的：它要能問「現在走的是哪一條」。
  */
 export function shippedBundleIsFresh(): boolean {
   if (freshCache === null) freshCache = bundleMatchesSources();
@@ -327,7 +327,7 @@ export function shippedContentSource(rootDir: string = SHIPPED_CONTENT_DIR): Con
   return sourceCache;
 }
 
-/** 測試專用：把這個行程的記憶忘掉（`shippedContentFixture.test.ts` 要比對兩條路）。 */
+/** 測試專用：把這個行程的記憶忘掉（`shippedContent.test.ts` 要比對兩條路）。 */
 export function __resetShippedContentCache(): void {
   freshCache = null;
   bundleCache = null;

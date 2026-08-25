@@ -115,17 +115,6 @@
       "pctOfMedianHp30": 0.6
     },
     {
-      "abilityId": "godie-e00l.r",
-      "abilityName": "20-04 Avalon-永恆的理想鄉",
-      "apPct": 130,
-      "conditionalPct": [],
-      "beforeLv30": 50.3,
-      "afterLv30": 141.7,
-      "growth": 2.82,
-      "overBiggestTier": false,
-      "pctOfMedianHp30": 0.5
-    },
-    {
       "abilityId": "godie-e007.r",
       "abilityName": "12-04 龍氣爆發",
       "apPct": 130,
@@ -602,44 +591,6 @@
       "attrDamageLv99": 120.0,
       "apDamageLv99": 210.6,
       "deltaLv99": 90.6
-    },
-    {
-      "abilityId": "godie-e00l.r",
-      "abilityName": "20-04 Avalon-永恆的理想鄉",
-      "championId": "godie-e00l",
-      "inPopulation": true,
-      "owner": "json",
-      "generatorFile": null,
-      "attr": "str",
-      "coeff": 5.0,
-      "stacking": "base",
-      "claimIndex": 0,
-      "damageSlots": 1,
-      "payload": "damage",
-      "damageTypes": [
-        "physical"
-      ],
-      "rawPct": 125.0,
-      "apPct": 130,
-      "apCoeff": 1.3,
-      "currentRatios": [
-        {
-          "stat": "ad",
-          "coeff": 0.6
-        }
-      ],
-      "currentHasAd": true,
-      "currentHasAp": false,
-      "currentHasNone": false,
-      "attrDamageLv30": 115.0,
-      "apDamageLv30": 141.7,
-      "deltaLv30": 26.7,
-      "attrDamageLv50": 115.0,
-      "apDamageLv50": 167.7,
-      "deltaLv50": 52.7,
-      "attrDamageLv99": 115.0,
-      "apDamageLv99": 231.4,
-      "deltaLv99": 116.4
     },
     {
       "abilityId": "godie-e00s.q",

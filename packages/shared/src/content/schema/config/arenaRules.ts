@@ -922,10 +922,11 @@ export const zConfigArenaRulesDoc = z
      * 任務小飾品沒有任何回合排它＝拿不到。排回去還是退場? **=> 退場**」).
      *
      * ── 為什麼「退場」是一個欄位，而不是刪掉那張表 ─────────────────────────
-     * 刪表是最大破壞的做法：`content/loot-tables/quest-rewards.json` 同時是
+     * 刪表是最大破壞的做法：`content/_legacy/loot-tables/quest-rewards.json`
+     * （2026-08-18 起整個 loot-tables 移進 `_legacy/`，見 starter.go）同時是
      * `starter.go` 的 DRAFT 白名單面 (`starterDraftItems`)、Go 側
      * `TestStarterDraftIsQuestSet` 的兩個方向、`arenaItemModel.test.ts` 的
-     * DRAFT∩LEGENDARY 對照，以及後台 三選一抽獎池 分頁的一個可編輯文件。
+     * DRAFT∩LEGENDARY 對照（退場前也曾是後台三選一抽獎池分頁的可編輯文件）。
      * 刪掉它會讓那 13 支道具從白名單消失（＝從圖鑑與後台一起消失），而 owner
      * 的裁決只說「不要再發給玩家」，沒有說「這些道具下架」。
      *

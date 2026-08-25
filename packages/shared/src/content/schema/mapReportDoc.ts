@@ -1,7 +1,9 @@
 /**
  * `config.map-report@1` —— 地圖驗證報告（GH#324 Phase 4）。
  *
- * ⚙️ **這份是 `pnpm map:gen` 產生的，⛔ 不要手改**（`map:check` 會紅並指名它）。
+ * ⚙️ **這份是 `pnpm --filter @ggd/anime-arena-map map:gen` 產生的，⛔ 不要手改**
+ * （`pnpm --filter @ggd/anime-arena-map map:check` 會紅並指名它；
+ * ⚠️ 這兩支 script 住在 tools/anime-arena-map/，從 repo 根裸打 `pnpm map:gen` 找不到）。
  *
  * ## 為什麼是一份 config 文件而不是後台即時算
  *

@@ -15,7 +15,7 @@
  * ② **極小 / 極大 = 例外槽，同時也是硬上下限。** ⛔ 它們**沒有人數目標** ——
  *    個案 0 是正常狀態，不是缺陷。⛔ 不要用「極大佔比太高」評價任何東西。
  * ③ **佔用例外槽要付代價**：任一屬性落在極大 ⇒ 至少有一項落在極小。
- *    這是一條**不變量**（`statNormalizationInvariant.test.ts` 在守），不是一份觀察清單。
+ *    這是一條**不變量**（`statNormalization.test.ts` 的例外槽那條在守），不是一份觀察清單。
  *
  * ---------------------------------------------------------------------------
  * ⭐ 第三種來源：由**角色定位**推導（owner 2026-08-12）
@@ -492,8 +492,9 @@ export interface StatNormalization {
  *   移速：遠距離＝中 · 近距離＝快 · 坦克＝中或慢（取慢）· 法師＝中或慢，慢為主（取慢）
  *   魔抗：遠距離及法師＝弱 · 近距離＝中 · 坦克＝高
  *
- * ⚠️ 這裡的數字與 `content/config/stat-normalization.json` 必須一致，
- * `configDrift.test.ts` 那一族在守（第一守則的三個住處）。
+ * ⚠️ 這裡的數字與 `content/config/stat-normalization.json` 必須一致 ——
+ * ⚠️ 但這條 JSON↔DEFAULT drift 目前**尚無守衛**（GH#706；
+ * statNormalization.test.ts 只用 DEFAULT_ 推導，不讀出貨 JSON）。
  */
 export const DEFAULT_STAT_NORMALIZATION: StatNormalization = Object.freeze({
   mode: "normalized",

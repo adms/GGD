@@ -595,8 +595,9 @@ schema 收得下、後台存得起來、卡片上印著那句話、`content:buil
 2. **把描述改成只講真的會發生的事** —— 當「做不到的那一半」本來就不影響任何一場比賽時，
    這就是正解（例：`ad` 的上限是 21200 的防 mis-parse 柵欄，玩家一輩子碰不到，
    所以「解鎖 ad 上限」即使生效也是空的）
-3. **升級成 owner 的決定** —— 需要改平衡資料（`config/stat-caps.json` 的 `unlocked`）
-   或需要新機制時，⛔ 不要自己挑數字，列出來給他
+3. **升級成 owner 的決定** —— 需要改平衡資料（`tools/stat-caps/gen_stat_caps.ts` 的
+   capAt 表 —— `content/config/stat-caps.json` 是 `statcaps:build` 的產物，手改必被
+   `statcaps:check` 判 stale）或需要新機制時，⛔ 不要自己挑數字，列出來給他
 
 ⚠️ **修的當下最容易犯同一個錯**：2026-08-18 我把 `odm-gear` 的描述改寫時，
 順手寫了一句「[回收] 位移技能命中後回復魔力」—— **那張卡根本沒有那個 effect**。
@@ -1471,7 +1472,7 @@ hosted 頁面**可以累積成歷史紀錄**，同一份計畫改版時重發同
   文件（GH#285）。守衛：`packages/shared/src/protocol/formFlags.test.ts` 的
   「CLAUDE.md's ENTITY_FLAG sentence agrees with ENTITY_FLAG_FREE_BITS」——
   它真的讀這一行**而且比對格數**，這一行再說謊就會紅。
-- 每一次 `content/` 編輯都要跑 `pnpm content:build`，**而且要把產物一起 commit**：
+- ⚠️ 先 `bash scripts/genguard.sh <path>` —— `content/` 底下 621 份是產物，這一條只適用**手編檔**；每一次 `content/` 編輯都要跑 `pnpm content:build`，**而且要把產物一起 commit**：
   `bundle.json` / `manifest.json` / 各集合的 `_index.json`。
   ⚠️ **「否則 `bundle.test.ts` 紅」這句話曾經寫在這裡，而它是假的**（第三守則）——
   `bundle.test.ts` 每一條都在 `cpSync` 出來的 temp 樹上重建再驗，它的檔頭甚至把

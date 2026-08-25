@@ -8,8 +8,9 @@
  * ## 用法
  *
  * ```
- *   pnpm map:gen        產生 content/arenas/arena.*.json（會覆寫）
- *   pnpm map:check      只比對，不寫檔；有差異就非零離開
+ *   pnpm --dir tools/anime-arena-map map:gen    產生 content/arenas/arena.*.json（會覆寫）
+ *   pnpm --dir tools/anime-arena-map map:check  只比對，不寫檔；有差異就非零離開
+ *   （⛔ 這兩支只住在本子套件的 package.json —— 在 repo root 打 `pnpm map:gen` 是 ERR_PNPM_NO_SCRIPT）
  * ```
  *
  * ## ⛔ 產出的檔禁止手改
@@ -149,7 +150,7 @@ function main(): void {
     if (CHECK) {
       if (prev !== text) {
         console.error(`⛔ ${out} 與產生器現在的輸出不一致。`);
-        console.error("   要改地圖請改 content/maps/*.json 然後跑：pnpm map:gen");
+        console.error("   要改地圖請改 content/maps/*.json 然後跑：pnpm --dir tools/anime-arena-map map:gen");
         drift++;
       }
       continue;
@@ -191,7 +192,7 @@ function main(): void {
     writeFileSync(
       REPORT,
       "# 地圖驗證報告\n\n" +
-        "> ⚙️ **這份是 `pnpm map:gen` 產生的，⛔ 不要手改。**\n" +
+        "> ⚙️ **這份是 `pnpm --dir tools/anime-arena-map map:gen` 產生的，⛔ 不要手改。**\n" +
         "> 要改地圖請改 `content/maps/*.json`。\n\n" +
         reportLines.join("\n"),
     );
@@ -202,7 +203,7 @@ function main(): void {
       stable({
         id: "map-report",
         schema: "config.map-report@1",
-        note: "⚙️ 這份是 `pnpm map:gen` 產生的，⛔ 不要手改。要改地圖請改 content/maps/*.json。",
+        note: "⚙️ 這份是 `pnpm --dir tools/anime-arena-map map:gen` 產生的，⛔ 不要手改。要改地圖請改 content/maps/*.json。",
         maps: reportRows,
       }),
     );

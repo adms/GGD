@@ -103,7 +103,7 @@ const CHAMPION_GROUPS: readonly FieldGroup[] = [
     // ⛔ GH#474 —— 「推薦出裝」（`buildPriority`）那一格**拔掉了**。owner 2026-08-20：
     //    「**拔乾淨**，現在 bot 都是**半價購買隨機寶具**」。欄位本身仍在 `champion@1`
     //    的 schema 裡（骨架註冊表用得到），但出貨內容一律 `[]`，而
-    //    `botBuildPriorityRetired.test.ts` 會在任何一份重新長出非空梯子時變紅。
+    //    `apps/game-server/src/ai/buildPath.test.ts` 會在任何一份重新長出非空梯子時變紅。
     //    ⇒ 這裡留一個輸入框 = 邀請下一個人再填一條沒有人會走的梯子。
     //    退場的 12 條梯子逐字存在 `docs/legacy/_bot-build-priority-retired-20260820.md`。
     title: "技能與出裝",

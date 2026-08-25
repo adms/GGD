@@ -8,7 +8,7 @@
  *     同一個 `[焚身]` 在四個畫面上不可能是四個顏色。
  *   · **seam**:沒有 `applyItemCardDoc` 這一行,`content/config/item-card.json`
  *     就是一份沒人讀的檔案 —— owner 改了分類、玩家看到的還是舊的
- *     (失敗形態 ②「算出來了但從沒送到」)。`itemCardWiring.test.ts` 斷言的是
+ *     (失敗形態 ②「算出來了但從沒送到」)。`itemCardSurfaces.test.ts` 斷言的是
  *     那一行**呼叫**,不是那個檔案存在。
  *   · **逐格防禦**:durable overlay 的寫入路徑今天不跑 Zod(#283),所以一個
  *     手滑的 `"紅色"` 會原封不動走到這裡。一格壞掉不該賠掉另外三格。

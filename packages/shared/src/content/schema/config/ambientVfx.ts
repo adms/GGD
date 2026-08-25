@@ -19,7 +19,7 @@ import { zId } from "../common";
  * ⭐ 這一格逐字等於 `sim/intents.ts` 的 `CASTABLE_SLOTS`，而它**刻意不 import 它**：
  * `content/schema/` 是文件層、`sim/` 是規則層，理由與 `protocol/schema.ts` 的
  * `TOGGLE_MASK_SLOTS` 一字不差。取而代之的是一條**對帳斷言**
- * （`apps/client/src/vfx/ambientToggleGate.test.ts` 的第一條）真的把兩張表比在一起
+ * （`apps/client/src/ui/abilityToggleWiring.test.ts` 的 TOGGLE_MASK_SLOTS 那條）真的把兩張表比在一起
  * —— 有人加第七個槽位時它會紅，⛔ 而不是讓那一格永遠讀成「關著」。
  */
 export const AMBIENT_TOGGLE_SLOTS = ["Q", "W", "E", "R", "EX", "PASSIVE"] as const;
@@ -110,7 +110,8 @@ export const zArenaFire = z
  * （由 `content/maps/*.json` 編譯出來）。這一格只有三個**決策點**：
  * 要不要開、手機上畫幾層、整體要多透明。
  *
- * ⭐ 為什麼分開：一張圖的背景改了要重跑 `pnpm map:gen`（產生器擁有那份輸出），
+ * ⭐ 為什麼分開：一張圖的背景改了要重跑 `pnpm --filter @ggd/anime-arena-map map:gen`
+ * （產生器擁有那份輸出），
  * 而「手機掉幀 → 少畫兩層」必須是**後台存檔就生效**。
  * 把兩者混在一起 = 調一個效能旋鈕要重新產生七張地圖（第一守則的反面）。
  */

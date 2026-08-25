@@ -268,7 +268,7 @@ export interface ViewContentHooks {
    * ⚠️ THE RING IS NOT A HITBOX AND NOTHING HERE CAN MAKE IT ONE. It is a torus
    * on the client; the server never reads it and no client-side query does
    * either. That is the structural half of owner's 「圈圈比較大但不影響無碰撞」 —
-   * see the guard in sim/mobBossRing.test.ts, which fails if a ring number ever
+   * see the guard in sim/mobBossNoClip.test.ts, which fails if a ring number ever
    * reaches `MobRules.radius` / `boss.radius`.
    */
   groundRingDiameterFor?(e: EntityViewState): number | null | undefined;

@@ -349,7 +349,8 @@ export const zMobWavesConfig = z
          * next to `tintStrength` and is consumed only by the renderer's team
          * ring. So there is no path by which widening the ring could widen what
          * the king collides with — see `mobGroundRingDiameter` in sim/mobs.ts
-         * and its guard in sim/mobRingIndependence.test.ts.
+         * and its guards in sim/mobBossNoClip.test.ts and
+         * apps/client/src/render/views/mobGroundRing.test.ts.
          *
          * Lives on `mob` and not on `boss` for the same reason `tintStrength`
          * does: it applies to all three kinds, and the wire table is match-wide.

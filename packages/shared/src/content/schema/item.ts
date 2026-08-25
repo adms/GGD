@@ -420,7 +420,7 @@ export const zItemDef = z
      * The whole array must be REPEATED, identically, on every id in `pieces` —
      * `zItemDef`'s refine below rejects a block that forgets to list its own
      * document, and `sim/economy/itemSets.auditItemSets` (guarded by
-     * `content/legendaryItemSets.test.ts`) catches the pieces that forget to
+     * `sim/economy/itemSets.test.ts`) catches the pieces that forget to
      * repeat it.
      */
     sets: z.array(zItemSetBonus).min(1).optional(),
@@ -570,7 +570,7 @@ export const zItemDef = z
      *
      * ⚠️ 它**取代**了那一行原本的兩條 modifier(`critChance` + `critDamage`)。
      * 兩者不可並存:一起寫等於 12% 的暴擊率,而其中一半還是舊語意(所有暴擊都
-     * 10 倍)。`content/legendaryCritStrike.test.ts` 逐件釘死這一點。
+     * 10 倍)。`sim/economy/legendaryClaims.test.ts` 逐件釘死這一點。
      */
     critStrike: zItemCritStrike.optional(),
     /**

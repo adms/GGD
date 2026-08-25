@@ -9,7 +9,7 @@
  * also the arena guardian). Its clips are Idle / Idle_Combat / Walking_D /
  * Spellcast_* / Hit_A / Hit_B / Taunt / Death_C / Skeletons_Awaken. There is no
  * dance in there and none may be added, so the dance is generated — the same
- * answer the project already gives elsewhere (`tools/voxel-gen/boxman.ts`'s
+ * answer the project already gives elsewhere (`packages/shared/src/voxel/boxman.ts`'s
  * hand-authored joint hierarchy, the procedural login scene, the voxel figure).
  *
  * ---------------------------------------------------------------------------
@@ -51,7 +51,7 @@
  *
  * The body is sampled at real joints rather than at the root, because the root
  * is a point and a dance is a silhouette. The joint proportions mirror
- * `tools/voxel-gen/boxman.ts` (PX = 1.8/32; hips at 12px, head at 24px, hands at
+ * `packages/shared/src/voxel/boxman.ts` (PX = 1.8/32; hips at 12px, head at 24px, hands at
  * ±6px, feet at ±2px), normalised to fractions of body height so any champion
  * scale can be measured.
  */
@@ -94,7 +94,7 @@ export interface DanceJoint {
 }
 
 /**
- * Boxman's hierarchy, normalised. `jointGlobals()` in tools/voxel-gen/boxman.ts
+ * Boxman's hierarchy, normalised. `jointGlobals()` in packages/shared/src/voxel/boxman.ts
  * puts hips at 12px, head at 24px, hands at (±6, 24), feet at (±2, 12) on a
  * 32px figure — divide by 32 and you get these.
  */

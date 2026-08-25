@@ -1295,7 +1295,7 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
       "packages/shared/src/content/schema/vfx.ts（`VFX_SOUND_CUES` / `resolveVfxSound`）+ " +
       "apps/client/src/audio/vfxSound.ts + apps/client/src/audio/vfxSoundWired.test.ts + " +
       "content/config/vfx-families.json（21 個家族原型 + 72 支原作 JASS 音效的逐支覆寫，" +
-      "由 tools/w3x-import/build_vfx_sound_bindings.py 產生）",
+      "由 `bash scripts/genrun.sh pitch:build` 產生）",
     nearestExisting:
       "⚠️ `ability@1.sfxKey` 長得很像但**不是同一件事**：那是「這一支技能的身分音」" +
       "（一顆 `abilityCast` 一發），而這一列是「這一招的**特效**自己帶的那幾發」。" +

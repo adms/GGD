@@ -5,7 +5,7 @@
  *
  * ```
  *   content/maps/map.*.json   ✍️ 人（owner／編輯器）—— 版面的唯一來源
- *            │  pnpm map:gen
+ *            │  pnpm --filter @ggd/anime-arena-map map:gen
  *            ▼
  *   content/arenas/arena.*.json  ⚙️ 產生器擁有，⛔ 禁止手改
  *            │

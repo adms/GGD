@@ -98,7 +98,7 @@
  * 迴圈第一行就走完了。少一個旗標就少一種「功能做好了但沒有人 arm」的故障
  * （`MatchController.ts` 自己的註解記錄過那一次：radius 都建好了而
  * `nightPactRules` 是 null，整支天生技在真的比賽裡什麼都沒做，
- * 而 `nightPact.test.ts` 全綠）。
+ * 而 `nightPact.test.ts`（現名 `deathWard.test.ts`）全綠）。
  *
  * DETERMINISM。沒有 rng（PASS 3 走 hook 之後，這支檔案**一次都不抽**）、
  * 沒有時鐘、沒有三角函式、沒有 `**`。事件照 emit 順序走，發射體與旗子一律

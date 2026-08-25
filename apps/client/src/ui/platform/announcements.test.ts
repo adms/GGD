@@ -29,8 +29,8 @@
  * reload, and a SECOND, different announcement pops again.
  *
  * The generalisation of failure (1) — a public server route with no client
- * reader at all — is guarded for every route, not just this one, by
- * ./publicFeedReaders.test.ts.
+ * reader at all — has NO guard yet: the once-named ./publicFeedReaders.test.ts
+ * never landed (GH#706). Only this route is covered, by this file's two tests.
  *
  * ---- HOW THE LOBBY IS RENDERED WITHOUT A DOM ------------------------------
  * The client's vitest env is `node`; the repo's convention is

@@ -444,7 +444,7 @@ export interface MobRules {
    * NO sim system reads either of these. They exist on `MobRules` solely so
    * `mobVisualJson` can put them on the wire — the collision body stays `radius`
    * / `boss.radius`, which is what makes owner's 「圈圈比較大但不影響無碰撞」 true
-   * by construction rather than by care. Guarded in sim/mobBossRing.test.ts.
+   * by construction rather than by care. Guarded in sim/mobBossNoClip.test.ts.
    *
    * ⚠️ OPTIONAL, and ABSENT MEANS the shipped default — the same 「缺席 = 今天的
    * 行為」 rule `MobBossRules.heroDerive` states. A `MobRules` built by hand (the

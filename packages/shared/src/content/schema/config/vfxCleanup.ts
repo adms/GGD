@@ -478,7 +478,7 @@ export const DEFAULT_VFX_CLEANUP: ConfigVfxCleanupDoc = {
   purgeSharedPoolsOnRoundEnd: true,
   maxPooledRings: 24,
   // GH#270 —— 出貨值必須和 `content/config/vfx-cleanup.json` 一字不差；
-  // `vfxCleanupPolicy.test.ts` 的 drift 斷言在守。
+  // `content/vfxCleanupConfig.test.ts` 的 drift 斷言在守。
   maxOneShotEmitters: 96,
   emitterSweepSec: 2,
   purgeImpactPoolOnRoundEnd: true,

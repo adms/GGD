@@ -92,7 +92,8 @@ export const DRAFT_TIER_LABEL: Record<string, string> = {
   // ⚠️ 這兩行是**顯示**用的第二份文字（權威那一份是 `config.arena-rules@1`
   // 的 `weaponTiers[].label`）。刻意如此：那一份要跟著網路過來，而卡片在快照
   // 到達之前就要畫。⛔ 但 id 對不上時這裡會靜靜退回「WEAPON:XXX AUGMENT」，
-  // 所以 operator 新增一階的當天要補一行 —— `weaponTierLabels.test.ts` 在守。
+  // 所以 operator 新增一階的當天要補一行 —— ⚠️ 這條覆蓋目前**尚無守衛**
+  // （GH#706；draftCardStyle.test.ts 只釘既有階級的字面值，不從 config 推導）。
   "weapon:ex-release": "寶具 · EX解放",
   "weapon:ex-origin": "寶具 · EX∅ 根源",
   [ATTR_OFFER_TIER]: "能力屬性強化 · 力／敏／智",

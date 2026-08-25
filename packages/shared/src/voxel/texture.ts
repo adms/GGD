@@ -15,8 +15,8 @@
  * two body parts into each other. It costs 1 KB.
  *
  * `Uint8Array`, not `Buffer`: this module has to run in the admin's browser
- * bundle as well as in the node bake. `tools/voxel-gen/png.ts` wraps the result
- * (`Buffer.from(rgba)`) rather than owning the pixel decision — that keeps the
+ * bundle as well as in the node bake. `packages/shared/src/voxel/pngWrite.ts`
+ * encodes the result rather than owning the pixel decision — that keeps the
  * bake and the studio looking at literally the same bytes, and gives task #231
  * (體素角色貼圖自動生成) exactly one place to plug into.
  */

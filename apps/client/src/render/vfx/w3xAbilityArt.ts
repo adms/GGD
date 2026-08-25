@@ -194,7 +194,7 @@ let promotedCache: Readonly<Record<string, W3xAbilityArt>> | null = null;
  * the rig (rung 1) → pooled docs (rung 2) → the `fx.prim.*` fallback (rung 3) →
  * a spark (rung 4). A family row needs none of those rungs changed. If this
  * function stopped answering, 258 casts would silently drop back to their name
- * classification — which is why `familyArtIntegration.test.ts` asserts against
+ * classification — which is why `familyArtCoverage.test.ts` asserts against
  * `w3xArtFor` itself rather than against the table.
  *
  * The family row carries NO `extra`: a prototype is one emitter by

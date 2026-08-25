@@ -1,6 +1,6 @@
 # 地圖驗證報告
 
-> ⚙️ **這份是 `pnpm map:gen` 產生的，⛔ 不要手改。**
+> ⚙️ **這份是 `pnpm --dir tools/anime-arena-map map:gen` 產生的，⛔ 不要手改。**
 > 要改地圖請改 `content/maps/*.json`。
 
 ## map.frieren.json

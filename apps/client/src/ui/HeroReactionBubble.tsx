@@ -12,7 +12,9 @@
  * DISPLAY-ONLY (`pointerEvents: none`), pops on a completed purchase, and fades
  * after ~3.4 s.
  *
- * The lines come from `content/config/purchase-lines.json` (a plain static
+ * The lines come from `content/config/_purchase-lines.json` — the leading
+ * underscore is deliberate: fsStore skips `_` files, so it never enters the
+ * content bundle — (a plain static
  * asset fetched ONCE, single-flight, 404-tolerant — NOT routed through the
  * content manifest). The parse, the per-champion lookup and the "random, never
  * an immediate repeat" pick are the pure, node-tested

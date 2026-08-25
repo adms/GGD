@@ -520,7 +520,7 @@ export function VoxelBarcodePage(): React.JSX.Element {
 /**
  * One band of the preview.
  *
- * The `style` here IS the assertion surface: `voxelBarcodeRender.test.ts` reads
+ * The `style` here IS the assertion surface: `voxelBarcodeSave.test.ts` reads
  * `backgroundColor` and `height` off this node and additionally refuses
  * `display:none` / `opacity:0` / `height:0`. Nothing about the colour is carried
  * on a `data-*` attribute, because an attribute is not a pixel.
