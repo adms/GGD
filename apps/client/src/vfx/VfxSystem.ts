@@ -567,6 +567,37 @@ interface PendingLayer {
  */
 const MAX_PENDING_LAYERS = 144;
 
+/**
+ * ⭐ GH#702 —— **一份宣告 `gore: true` 的文件現在能不能播。**
+ *
+ * ⛔ 在這一行之前 `config.gore@1.style` 只閘得到 `bloodSpray()`（`hitImpact`
+ * 那條血路）。而**文件驅動**的血 —— 幻之匕首 `godie-i039` 的 `spawnVfx →
+ * fx.prim.blood.spray-back` —— 走的是另一條路，於是選了「無血」的玩家
+ * **照樣看得到一蓬紅血往受害者背後噴**：一格登記在驗收帳本上的 rollback 開關，
+ * 而它是假的（GH#696 的 `rollback-note` 逐字記著這件事）。
+ *
+ * ⚠️ **為什麼閘在 `play()` 而不是閘在 `vfxSpawn` 那個 case**：一份 vfx 文件
+ * 有七個地方會被播（施法階梯、層堆疊、`pendingLayers`、一次性…）。閘在事件
+ * 入口只關掉**今天**那一條路，下一支把血指到施法階梯的技能會安靜地繞過它 ——
+ * 而「它有在噴，只是那格開關沒反應」是最難看出來的一種錯。`play()` 是所有
+ * 粒子文件變成粒子的**同一個門**，所以閘只有一道。
+ *
+ * ⚠️ **為什麼 championId 是 null**：`vfxSpawn` 的酬載帶的是 **caster**，
+ * ⛔ 不是受害者，而 `championStyles` 的語意是「**這具身體**不流紅血」
+ * （機械/不死）。拿施法者去查會narrow錯人 ⇒ 這裡只吃**全域**那一層。
+ *
+ * ⚠️ **`stylized` 也關**：`stylized` 的契約是「同一下、但**沒有紅**」，
+ * 而一份 `vfx@1` 的顏色是**烘在文件裡**的 —— 播下去就是紅的。
+ * 「玩家的選擇是地板，不是建議」（`goreConfig.ts` 檔頭）⇒ 播不出無紅的版本
+ * 就不播。⛔ 命中仍然讀得出來：task #33 的 impact kit 與傷害數字都不在這道閘裡。
+ *
+ * 出貨預設 `style: "blood"` ⇒ **預設路徑一位元不差**。
+ */
+export function goreDocPlayable(doc: { gore?: boolean } | null | undefined): boolean {
+  if (!doc?.gore) return true; // 不是血 ⇒ 這道閘不管它
+  return resolveGore(goreConfig(), null).style === "blood";
+}
+
 export class VfxSystem {
   /**
    * Un-owned one-shot rings (guardianMark's pre-land punish warning), which
@@ -940,6 +971,9 @@ export class VfxSystem {
     boost = 1,
   ): ParticleSystem | null {
     if (!rawDoc) return null;
+    // ⭐ GH#702 —— 玩家選了無血 ⇒ 宣告 `gore` 的文件**一顆粒子都不生**
+    // （⛔ 連池子都不開）。判準住文件身上，⛔ 不是一張 id 名單。
+    if (!goreDocPlayable(rawDoc)) return null;
     // FIX #131: never place a pooled system at a non-finite world position.
     if (!Number.isFinite(x) || !Number.isFinite(z) || !Number.isFinite(y)) return null;
     const doc = this.shapeOf(rawDoc);

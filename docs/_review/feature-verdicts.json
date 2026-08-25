@@ -103,7 +103,7 @@
         "field": "style",
         "liveValue": "blood",
         "rollbackValue": "off",
-        "note": "⚠️ 這一格現在**還關不掉它**：resolveGore 只閘 hitImpact 那條血路，⛔ 不閘 spawnVfx（VfxSystem.ts:1396）。真正一鍵關的是 content/items/godie-i039.json passive[0].effects 的 spawnVfx entry（刪即關），⛔ 但登記閘的 SWITCH_DIRS 只認 content/config 與 content/ability-templates。正解＝vfx@1 加一格 gore:true（GH#685 候選票）。"
+        "note": "⭐ GH#702 已修（2026-08-25）：`vfx@1` 多一格 `gore: true`，血花文件 `content/vfx/fx.prim.blood.spray-back.json` 標上了，而 `VfxSystem.play()`（所有粒子文件變成粒子的同一個門）在播之前問 `goreDocPlayable()` ⇒ 這一格現在**真的關得掉它**：`style: \"off\"`（或 `\"stylized\"`）⇒ 匕首觸發時血花**零粒子、零粒子系統**（連 HitSpark 退路都不補）。守衛 `apps/client/src/vfx/VfxSystem.goreGate.test.ts`（出貨道具文件 → 真 SimWorld → 真事件 → 真 VfxSystem，A/B 量活粒子；突變：拿掉 play() 那道閘 ⇒ 紅）。⚠️ **生效條件**：`content/bundle.json` 要由主 session 重跑 `pnpm content:build` 才會帶上 `gore` 那一格。⛔ 舊註記（已失效，留著說明為什麼會有這一格）：resolveGore 當時只閘 hitImpact 那條血路，⛔ 不閘 spawnVfx。"
       },
       "registeredAt": "2026-08-25T04:22:22.031Z",
       "verdict": null,

@@ -181,6 +181,22 @@ const zVfxDocBase = z
     anchorBone: z.string().min(1).optional(),
     /** true = lives while the entity lives (ambient channel, not a one-shot) */
     ambient: z.boolean().optional(),
+    /**
+     * ⭐ GH#702 —— 「**這一份文件就是血**」。玩家的 `config.gore@1.style`
+     * 靠它認得出誰該被關掉。
+     *
+     * ⛔ **⛔ 不是一張血花 id 名單**：名單沒有寫入端 ⇒ 下一份血花文件永遠不會
+     * 被加進去，而那時它已經是一句過期的散文。值住**文件自己身上**
+     * （第〇·四守則：同一份知識只有一個住處）。
+     *
+     * ⚠️ **只標「純粹的血」** —— 那種拿掉之後這一下仍然讀得出來的裝飾層
+     * （命中噴血、地上的血漬）。一支技能**自己的美術**（血魔法的 nova／
+     * 吸血斬的 slash）⛔ 不要標：標上去等於「玩家選無血 ⇒ 那支技能整個看不見」，
+     * 那是**可讀性**的損失，⛔ 不是 gore 分級（分級是另一件事，⛔ 不在這一格）。
+     *
+     * 省略 = false = 這道閘不管它（升級前的行為，一位元不差）。
+     */
+    gore: z.boolean().optional(),
     /** 發射器的方位/旋轉基底 (#366)。省略 = 直立、不旋轉 = 升級前的行為 */
     orient: zVfxOrient.optional(),
   })

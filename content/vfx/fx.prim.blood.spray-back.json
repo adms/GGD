@@ -1,6 +1,7 @@
 {
   "id": "fx.prim.blood.spray-back",
   "schema": "vfx@1",
+  "gore": true,
   "emitter": {
     "shape": "cone",
     "radius": 0.2,
