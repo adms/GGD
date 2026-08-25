@@ -2,15 +2,20 @@
 /**
  * `pnpm review:check` —— HITL 驗收佇列的閘（GH#664）。唯讀。
  *
- * 兩件事，兩種嚴格度：
+ * 三件事，兩種嚴格度：
  *   ① queue.json 新鮮度 —— 逐位元組比對，過期 ⇒ exit 1（機器修得好：pnpm review:build）。
  *   ② pending 數 —— **預設不擋**：⛔ 部署不可以被「人不在」卡死。
  *      要擋就設 GGD_REVIEW_PENDING_MAX=<n>，pending 超過才 exit 1。
+ *   ③ GH#669 功能級帳本 —— ⭐ **登記閘**：帳本裡任何一批的 rollback 開關解析不到
+ *      ⇒ exit 1。⚠️ 這一條硬擋是刻意的，而且它與②不衝突：②擋的是「人還沒看」
+ *      （不該擋部署），③擋的是「這一批沒有回頭的路」（那是結構錯，跟①同一類）。
+ *      功能級的 pending／未登記數只進**警示行**，⛔ 不擋。
  */
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { existsSync, readFileSync } from "node:fs";
 import { queueText, QUEUE_REL } from "./triage.mjs";
+import { buildFeatureQueue, FEATURE_LEDGER_REL } from "./features.mjs";
 
 if (process.argv.includes("--help") || process.argv.includes("-h")) {
   console.log(`review:check —— HITL 驗收佇列的閘（唯讀）
@@ -18,8 +23,12 @@ if (process.argv.includes("--help") || process.argv.includes("-h")) {
   · docs/_review/queue.json 過期（與現算不逐位元組相等）⇒ exit 1；修法：pnpm review:build
   · pending 數**預設不擋**（exit 0）—— 部署不可以被「人不在」卡死。
     要擋：GGD_REVIEW_PENDING_MAX=<n> pnpm review:check ⇒ pending > n 才 exit 1
-  · 審查頁：pnpm dev 起 client 後 http://localhost:5173/__review/
-    （queue API：GET /__review/queue · 裁決：POST /__review/verdict）`);
+  · GH#669 功能級帳本 docs/_review/feature-verdicts.json：**登記閘**——
+    任何一批的 rollback 開關解析不到 ⇒ exit 1（修法：pnpm review:register 重登記）。
+    功能級 pending／未登記數只進警示行，⛔ 不擋部署。
+  · 審查頁：pnpm dev 起 client 後
+      資產（#664）  http://localhost:5173/asset-review.html
+      功能（#669）  http://localhost:5173/feature-review.html`);
   process.exit(0);
 }
 
@@ -38,7 +47,31 @@ console.log(`[review:check] pending ${pending} / 資產 ${assets}（Tier0 ${tier
 for (const it of q.items.slice(0, 5)) {
   console.log(`  · [risk ${it.risk}] ${it.kind}:${it.id} —— ${it.reasons.join("；")}`);
 }
-console.log("  審查頁：http://localhost:5173/__review/（pnpm dev 起 client 後）");
+console.log("  審查頁：http://localhost:5173/asset-review.html（pnpm dev 起 client 後）");
+
+// ── ③ GH#669 功能級：連續圖片批核的帳本 ────────────────────────────────
+const fq = buildFeatureQueue(repoRoot);
+const fc = fq.counts;
+console.log(
+  `[review:check] 功能批 ${fc.total}（待批核 ${fc.pending} · 已確認 ${fc.confirmed} · ` +
+    `已否決 ${fc.vetoed} · 未登記 ${fc.unregistered}）—— ⛔ 預設不擋部署`,
+);
+for (const b of fq.batches) {
+  if (b.blockers.length === 0) continue;
+  console.log(`  · ${b.status} ${b.id} —— ${b.blockers.join("；")}`);
+}
+console.log("  功能審查頁：http://localhost:5173/feature-review.html");
+
+// ⭐ 登記閘（硬擋）：登記進帳本卻寫不出可用的 rollback 開關 ⇒ 那一批沒有回頭的路。
+const invalid = fq.batches.filter((b) => b.registered && b.rollbackOk !== true);
+if (invalid.length > 0) {
+  console.error(
+    `[review:check] ${FEATURE_LEDGER_REL} 有 ${invalid.length} 批的 rollback 開關解析不到 ⇒ exit 1\n` +
+      invalid.map((b) => `  · ${b.id}：${b.blockers.join("；")}`).join("\n") +
+      `\n  修法：pnpm review:register --id <批次> --rollback-config <config id> --rollback-field <欄位> --rollback-to <還原值>`,
+  );
+  process.exit(1);
+}
 
 const max = process.env.GGD_REVIEW_PENDING_MAX;
 if (max !== undefined && max !== "" && pending > Number(max)) {

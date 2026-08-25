@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>功能批次批核 — 一頁式連續圖片（#669）</title>
+<style>
+  :root { --bg:#07080c; --panel:#12161f; --line:#2a3145; --fg:#e8ecf6; --dim:#98a2bd;
+          --accent:#7dd3fc; --gold:#f0c674; --warn:#f0a674; --bad:#e07272; --ok:#8fd694; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; min-height:100%; }
+  body { background:var(--bg); color:var(--fg); padding:96px 16px 60px;
+         font:14px/1.55 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans TC",sans-serif; }
+  .hud { background:rgba(14,18,28,.92); border:1px solid var(--line);
+         border-radius:10px; padding:12px 14px; backdrop-filter:blur(6px); }
+  #topbar { position:fixed; top:0; left:0; right:0; z-index:5; border-radius:0;
+            border-width:0 0 1px; display:flex; gap:14px; align-items:baseline; flex-wrap:wrap; }
+  #topbar h1 { margin:0; font-size:16px; letter-spacing:.02em; }
+  #topbar .meta { color:var(--dim); font-size:12px; }
+  #topbar .keys { margin-left:auto; color:var(--dim); font-size:11.5px; }
+  #topbar a { color:var(--accent); font-size:12px; }
+  #err { display:none; max-width:760px; margin:20px auto; border-color:#7f2d2d; background:#2a1212; }
+  code { background:#0009; padding:1px 5px; border-radius:4px; }
+
+  #rows { max-width:1440px; margin:0 auto; display:flex; flex-direction:column; gap:14px; }
+  .row { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:12px 14px; }
+  .row.selected { border-color:var(--accent); box-shadow:0 0 0 1px var(--accent); }
+  .row.s-pending    { border-left:4px solid var(--ok); }
+  .row.s-confirmed  { border-left:4px solid var(--accent); }
+  .row.s-vetoed     { border-left:4px solid var(--bad); }
+  .row.s-unregistered { border-left:4px solid var(--warn); }
+  .row .head { display:flex; gap:10px; align-items:baseline; flex-wrap:wrap; }
+  .row .head .badge { font-size:11.5px; padding:1px 8px; border-radius:5px;
+                      background:#1d2334; color:var(--fg); white-space:nowrap; }
+  .row .head .title { font-weight:700; }
+  .row .head .fam { color:var(--gold); font-size:12px; }
+  .row .head .issue { margin-left:2px; }
+  .row .meta { color:var(--dim); font-size:12px; margin-top:4px; }
+  .row .rollback { margin-top:6px; font-size:12.5px; padding:5px 10px; border-radius:6px;
+                   border-left:3px solid var(--accent); background:#0d1520; color:#cfe6f5; }
+  .row .rollback.bad { border-left-color:var(--bad); background:#2a1212; color:#ffb3b3; }
+  .row .blocker { margin-top:5px; font-size:12px; color:var(--warn);
+                  border-left:2px solid var(--warn); padding-left:9px; }
+
+  /* ⭐ 連續圖片：橫向一排（施放→演出→到期），⛔ 不是單張 */
+  .row .strip { margin-top:10px; display:flex; gap:8px; overflow-x:auto; padding-bottom:8px;
+                scrollbar-color:var(--line) transparent; }
+  .row .frame { margin:0; flex:0 0 auto; width:184px; }
+  .row .frame img { display:block; width:184px; height:104px; object-fit:cover; cursor:zoom-in;
+                    border:1px solid var(--line); border-radius:6px; background:#0a0c12; }
+  .row .frame figcaption { display:flex; flex-direction:column; gap:1px; margin-top:3px; }
+  .row .frame .fname { font-size:10.5px; color:var(--dim); overflow:hidden;
+                       text-overflow:ellipsis; white-space:nowrap; }
+  .row .frame .px { font-size:11px; font-variant-numeric:tabular-nums; }
+  .row .frame .px.lit  { color:var(--ok); }
+  .row .frame .px.dark { color:var(--dim); }
+  .row .frame .px.none { color:var(--warn); }
+
+  .row .verdicts { display:flex; gap:8px; align-items:center; margin-top:10px; flex-wrap:wrap; }
+  .row .verdicts button { font:inherit; font-size:12.5px; color:var(--fg); background:#1d2334;
+                          border:1px solid var(--line); border-radius:7px; padding:5px 12px; cursor:pointer; }
+  .row .verdicts button:hover:not(:disabled) { border-color:var(--accent); }
+  .row .verdicts button:disabled { opacity:.4; cursor:not-allowed; }
+  .row .verdicts button.on-keep { border-color:var(--ok); color:var(--ok); background:#12220f; }
+  .row .verdicts button.on-veto { border-color:var(--bad); color:var(--bad); background:#2a1212; }
+  .row .verdicts input.reason { flex:1 1 240px; min-width:180px; font:inherit; font-size:12.5px;
+                                color:var(--fg); background:#0d1017; border:1px solid var(--line);
+                                border-radius:7px; padding:5px 9px; }
+  .row .verdicts .state { font-size:12px; color:var(--dim); }
+  .row .verdicts .state.warn { color:var(--warn); }
+  .row .verdicts .state.bad { color:var(--bad); font-weight:700; }
+
+  #modal { display:none; position:fixed; inset:0; z-index:9; background:rgba(0,0,0,.82); }
+  #modal.open { display:flex; align-items:center; justify-content:center; }
+  #modal .box { background:var(--panel); border:1px solid var(--line); border-radius:10px;
+                padding:12px; max-width:calc(100vw - 40px); max-height:calc(100vh - 40px); }
+  #modal .box .bar { display:flex; gap:10px; align-items:baseline; margin-bottom:8px; }
+  #modal .box .bar .t { font-weight:700; }
+  #modal .box .bar button { margin-left:auto; font:inherit; color:var(--fg); background:#1d2334;
+                            border:1px solid var(--line); border-radius:7px; padding:3px 10px; cursor:pointer; }
+  #modal img { display:block; max-width:calc(100vw - 80px); max-height:calc(100vh - 120px);
+               border-radius:6px; background:#0a0c12; }
+</style>
+</head>
+<body>
+
+<div id="topbar" class="hud">
+  <h1>功能批次批核 <span style="color:var(--dim);font-size:12px">#669 · 一頁式連續圖片</span></h1>
+  <span class="meta" id="counts">載入中…</span>
+  <a href="/asset-review.html">→ 資產審查（#664）</a>
+  <span class="keys">j / k 換列 · y 確認保留 · n 否決還原（必填原因） · 點圖放大 · Esc 關閉</span>
+</div>
+
+<div id="err" class="hud">
+  <h1>載入失敗</h1>
+  <p id="errmsg" style="white-space:pre-wrap"></p>
+  <p>這頁只在 <code>vite dev</code> 下可用（直接載入 <code>/src/review/*.ts</code>，
+     並需要 dev server 掛上 <code>tools/review/middleware.mjs</code> 供應
+     <code>/__review/features</code>、<code>/__review/frame</code> 與
+     <code>/__review/feature-verdict</code>）。</p>
+  <p>沒有任何一列可判定時，多半是還沒登記：
+     <code>pnpm review:register --id &lt;證據目錄&gt; --rollback-config &lt;config id&gt;
+     --rollback-field &lt;欄位&gt; --rollback-to &lt;還原值&gt;</code></p>
+</div>
+
+<div id="rows"></div>
+
+<div id="modal">
+  <div class="box">
+    <div class="bar"><span class="t" id="modaltitle">—</span><button id="modalclose">✕ 關閉 (Esc)</button></div>
+    <img id="modalimg" alt="">
+  </div>
+</div>
+
+<script type="module">
+const errBox = document.getElementById("err");
+const showErr = (m) => {
+  document.getElementById("errmsg").textContent = String(m);
+  errBox.style.display = "block";
+};
+window.addEventListener("error", (e) => showErr(e.message));
+window.addEventListener("unhandledrejection", (e) => showErr(e.reason?.message ?? e.reason));
+
+try {
+  const { startFeatureReview } = await import("/src/review/featureReviewApp.ts");
+  await startFeatureReview({
+    rows: document.getElementById("rows"),
+    counts: document.getElementById("counts"),
+    modal: document.getElementById("modal"),
+    modalTitle: document.getElementById("modaltitle"),
+    modalImg: document.getElementById("modalimg"),
+    modalClose: document.getElementById("modalclose"),
+  });
+} catch (err) {
+  showErr(err instanceof Error ? err.message : err);
+}
+</script>
+</body>
+</html>

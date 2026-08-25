@@ -7,8 +7,17 @@
  *   POST /__review/verdict  → body { id, kind?, verdict: "pass"|"fail"|"unsure", hash, note? }
  *     ⭐ 寫入前驗 hash 還一致 —— 內容在頁面開著的期間變了就回 409 帶說明，
  *       ⛔ 不可以把一個對舊內容做的裁決記在新內容頭上。
+ *
+ * GH#669 —— **功能級**一頁式連續圖片批核（同一個通道，⛔ 不造第二套）：
+ *   GET  /__review/features        → { counts, batches: [...] }（每列帶逐幀序列與亮像素）
+ *   GET  /__review/frame?p=<rel>   → 一張 PNG（**只**從 docs/_reports/ 底下取）
+ *   POST /__review/feature-verdict → body { id, hash, verdict: "keep"|"veto", reason? }
+ *     ⭐ 預設是 live（已上線）；veto＝事後否決 ⇒ **必填 reason**（400 擋空的）。
  */
 import { buildInventory, buildQueue, saveVerdict } from "./triage.mjs";
+import { buildFeatureQueue, saveFeatureVerdict, SEQUENCE_ROOT_REL } from "./features.mjs";
+import { existsSync, readFileSync, statSync } from "node:fs";
+import { join, normalize } from "node:path";
 
 const VERDICTS = new Set(["pass", "fail", "unsure"]);
 
@@ -57,6 +66,64 @@ export function createReviewMiddleware(repoRoot) {
           sendJson(res, 200, { ok: true, key: `${asset.kind}:${id}` });
         } catch (err) {
           sendJson(res, 500, { error: String(err) });
+        }
+      });
+      return;
+    }
+
+    // ── GH#669 功能級：連續圖片批核 ──────────────────────────────────────
+    if (req.method === "GET" && url === "/__review/features") {
+      try {
+        sendJson(res, 200, buildFeatureQueue(repoRoot));
+      } catch (err) {
+        sendJson(res, 500, { error: String(err) });
+      }
+      return;
+    }
+    if (req.method === "GET" && url === "/__review/frame") {
+      // ⚠️ 柵欄：**只**供應 docs/_reports/ 底下的 .png。normalize 之後仍要逐字檢查
+      //    前綴，⛔ 不是「有沒有 ..」——後者擋不住 symlink 之外的每一種寫法。
+      const rel = normalize(new URL(req.url ?? "", "http://x").searchParams.get("p") ?? "");
+      if (!rel.startsWith(`${SEQUENCE_ROOT_REL}/`) || !rel.toLowerCase().endsWith(".png"))
+        return sendJson(res, 400, { error: `只供應 ${SEQUENCE_ROOT_REL}/**/*.png，收到：${rel}` });
+      const abs = join(repoRoot, rel);
+      if (!existsSync(abs) || !statSync(abs).isFile()) return sendJson(res, 404, { error: `找不到 ${rel}` });
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "image/png");
+      res.setHeader("Cache-Control", "no-store");
+      res.end(readFileSync(abs));
+      return;
+    }
+    if (req.method === "POST" && url === "/__review/feature-verdict") {
+      let raw = "";
+      req.on("data", (c) => (raw += c));
+      req.on("end", () => {
+        try {
+          const { id, hash, verdict, reason } = JSON.parse(raw || "{}");
+          if (typeof id !== "string" || typeof hash !== "string")
+            return sendJson(res, 400, { error: "需要 { id, hash, verdict: keep|veto, reason? }" });
+          const batch = buildFeatureQueue(repoRoot).batches.find((b) => b.id === id);
+          if (batch === undefined) return sendJson(res, 404, { error: `未知批次 id：${id}` });
+          if (!batch.registered || batch.rollbackOk !== true)
+            return sendJson(res, 409, {
+              error: `「${id}」沒有可用的 rollback 開關 ⇒ 不可判定`,
+              blockers: batch.blockers,
+            });
+          if (batch.hash !== hash)
+            return sendJson(res, 409, {
+              error: "序列已重渲染 —— 你看的那一份已經不是現在的那一份。重新整理再判定。",
+              currentHash: batch.hash,
+              submittedHash: hash,
+            });
+          const entry = saveFeatureVerdict(repoRoot, { id, hash, verdict, reason });
+          sendJson(res, 200, {
+            ok: true,
+            id,
+            status: entry.verdict === "veto" ? "vetoed" : "live",
+            rollback: entry.rollback,
+          });
+        } catch (err) {
+          sendJson(res, 400, { error: err instanceof Error ? err.message : String(err) });
         }
       });
       return;
