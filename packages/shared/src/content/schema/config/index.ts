@@ -146,7 +146,7 @@ import { zConfigRangeGuideDoc } from "./rangeGuide";
 
 // ── 公開面 ────────────────────────────────────────────────────────────────
 // ⭐ 拆檔前 `export * from "./config"` 拿得到的每一個名字，拆檔後**一個不少**
-//    地從這裡出去（⚠️ 這個 count 閘**尚未存在** —— GH#706）。⛔ `_shared.ts` 不在
+//    地從這裡出去（閘：`configFacadeSurface.test.ts`，基準線 256 個名字）。⛔ `_shared.ts` 不在
 //    這張表上：它裡面的兩個名字拆檔前是**檔案私有**的。
 export * from "./adminFriend";
 export * from "./ambientVfx";

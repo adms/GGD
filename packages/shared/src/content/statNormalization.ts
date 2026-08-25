@@ -493,7 +493,7 @@ export interface StatNormalization {
  *   魔抗：遠距離及法師＝弱 · 近距離＝中 · 坦克＝高
  *
  * ⚠️ 這裡的數字與 `content/config/stat-normalization.json` 必須一致 ——
- * ⚠️ 但這條 JSON↔DEFAULT drift 目前**尚無守衛**（GH#706；
+ * 閘：`statNormalizationShipped.test.ts`（讀出貨檔過 fromDoc 與 DEFAULT 逐位元比對；
  * statNormalization.test.ts 只用 DEFAULT_ 推導，不讀出貨 JSON）。
  */
 export const DEFAULT_STAT_NORMALIZATION: StatNormalization = Object.freeze({

@@ -69,8 +69,8 @@ import { reviveChampionAt } from "../revive";
  * switched the circles off). Deliberately EQUAL to the shipped
  * `content/config/arena-rules.json` numbers, so the fallback and the live path
  * agree on every normal match and the constant is not a second balance opinion.
- * ⚠️ This fallback↔arena-rules drift has NO guard yet (GH#706) — the two
- * test files once named here never landed.
+ * Guard: `reviveShipped.test.ts` (reads the SHIPPED arena-rules.json; mutation
+ * verified 2026-08-25 — the two test files once named here never landed).
  */
 export const REVIVE_EFFECT_FALLBACK_HP_PCT = 0.5;
 export const REVIVE_EFFECT_FALLBACK_MANA_PCT = 0.5;
