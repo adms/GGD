@@ -255,6 +255,38 @@
       "verdictHash": null,
       "reason": "",
       "verdictAt": null
+    },
+    "tornado_visual-proof_20260825-2100": {
+      "title": "蝗蟲群視覺：TornadoElemental ×9（tpl-locust-orb 龍捲風）",
+      "family": "locust-orb",
+      "issues": [
+        688,
+        693,
+        669
+      ],
+      "abilities": [
+        "godie-emfr.e",
+        "godie-emfr.r",
+        "godie-hart.e",
+        "godie-udre.r",
+        "godie-u01u.r",
+        "godie-u00v.e",
+        "godie-i01v"
+      ],
+      "commit": null,
+      "sequenceDir": "docs/_reports/tornado_visual-proof_20260825-2100",
+      "rollback": {
+        "configId": "tpl-locust-orb",
+        "field": "params.alpha.default",
+        "liveValue": 1,
+        "rollbackValue": 0,
+        "note": "翻成 0 ⇒ 整個 tpl-locust-orb 家族沒寫自己 alpha 的節點一起隱形（本批 6 個龍捲風節點全滅；寫了 alpha 的——三千世界 musashi 0.5——不受影響）。live=1.0 與缺席逐位元同義（modelFxRig 對 alpha≥1 跳過乘法）⇒ 出貨畫面不變。⚠️ emfr 兩支的節點在 tools/skill-remake/heroes/godie-emfr.py，等主 session 跑 skillremake:json 落地"
+      },
+      "registeredAt": "2026-08-25T13:19:46.481Z",
+      "verdict": null,
+      "verdictHash": null,
+      "reason": "",
+      "verdictAt": null
     }
   }
 }

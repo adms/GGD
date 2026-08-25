@@ -3,18 +3,18 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_a6eed9666137",
+    "contentVersion": "cv_7bfa219b05cb",
     "collections": {
       "champions": {
-        "hash": "4aefdb4c66a7",
+        "hash": "450bfe9624cc",
         "count": 71
       },
       "abilities": {
-        "hash": "3de90053c728",
+        "hash": "16a603b7f4d8",
         "count": 421
       },
       "items": {
-        "hash": "5c42ba5bc191",
+        "hash": "cb1f0f93754b",
         "count": 142
       },
       "augments": {
@@ -46,8 +46,8 @@
         "count": 87
       },
       "models": {
-        "hash": "75da32945cf2",
-        "count": 127
+        "hash": "68320c24cd73",
+        "count": 128
       },
       "vfx": {
         "hash": "d4dea98c7202",
@@ -58,7 +58,7 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "b1d5a090da1f",
+        "hash": "c0a6e56fc015",
         "count": 46
       }
     },
@@ -2592,7 +2592,8 @@
               "min": 0,
               "max": 1,
               "unit": "ratio",
-              "optional": true
+              "optional": true,
+              "default": 1
             },
             "soundKey": {
               "type": "docRef",
@@ -4907,5 +4908,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "ee8571fe23a9"
+  "profileDigest": "b5d33208a196"
 }

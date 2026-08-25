@@ -1,8 +1,8 @@
 {
   "schema": "review-queue@1",
   "counts": {
-    "assets": 1120,
-    "tier0": 797,
+    "assets": 1121,
+    "tier0": 798,
     "reviewed": 0,
     "pending": 323
   },
@@ -229,6 +229,29 @@
       ]
     },
     {
+      "id": "imported.heromusashimiyamoto",
+      "kind": "model",
+      "hash": "743f857a2a14bf9a29e09985603428bcf84ec05c",
+      "risk": 14,
+      "reasons": [
+        "11 支上架技能引用（R/EX ×2 加權後 risk 14）",
+        "未審"
+      ],
+      "refs": [
+        "godie-e00w.q",
+        "godie-e00x.q",
+        "godie-emfr.e",
+        "godie-emfr.r",
+        "godie-etyr.q",
+        "godie-h01n.e",
+        "godie-h01o.e",
+        "godie-hart.e",
+        "godie-u00v.e",
+        "godie-u01u.r",
+        "godie-udre.r"
+      ]
+    },
+    {
       "id": "imported.netherstrike",
       "kind": "model",
       "hash": "e46fdaa513fe8717bd7d45dcc4c4e16b5cedc266",
@@ -364,6 +387,27 @@
       ]
     },
     {
+      "id": "wc3.blademasterwhirlwind",
+      "kind": "sfx",
+      "hash": "73e94d8bc5baee8a33e0d025d9850bf1f5acb487",
+      "risk": 12,
+      "reasons": [
+        "9 支上架技能引用（R/EX ×2 加權後 risk 12）",
+        "未審"
+      ],
+      "refs": [
+        "godie-e00w.q",
+        "godie-e00x.q",
+        "godie-emfr.e",
+        "godie-emfr.r",
+        "godie-etyr.q",
+        "godie-hart.e",
+        "godie-u00v.e",
+        "godie-u01u.r",
+        "godie-udre.r"
+      ]
+    },
+    {
       "id": "wc3.crushingwavecaster1",
       "kind": "sfx",
       "hash": "f665c768305fff16d2811c80069ae57e571f3e03",
@@ -491,25 +535,6 @@
         "godie-ofar.q"
       ],
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
-    },
-    {
-      "id": "imported.heromusashimiyamoto",
-      "kind": "model",
-      "hash": "743f857a2a14bf9a29e09985603428bcf84ec05c",
-      "risk": 9,
-      "reasons": [
-        "7 支上架技能引用（R/EX ×2 加權後 risk 9）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e00w.q",
-        "godie-e00x.q",
-        "godie-etyr.q",
-        "godie-h01n.e",
-        "godie-h01o.e",
-        "godie-u01u.r",
-        "godie-udre.r"
-      ]
     },
     {
       "id": "fx.avalon.reflect-burst",
@@ -861,23 +886,6 @@
         "godie-e00r.passive"
       ],
       "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
-    },
-    {
-      "id": "wc3.blademasterwhirlwind",
-      "kind": "sfx",
-      "hash": "73e94d8bc5baee8a33e0d025d9850bf1f5acb487",
-      "risk": 7,
-      "reasons": [
-        "5 支上架技能引用（R/EX ×2 加權後 risk 7）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e00w.q",
-        "godie-e00x.q",
-        "godie-etyr.q",
-        "godie-u01u.r",
-        "godie-udre.r"
-      ]
     },
     {
       "id": "wc3.orcdissipate1",

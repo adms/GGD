@@ -88,6 +88,21 @@
       "preset": "tpl-locust-strike",
       "modelKey": "w3x.stock.monsoonbolttarget",
       "anchor": "self"
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "w3x.stock.tornadoelemental",
+      "clip": "idle",
+      "soundKey": "wc3.blademasterwhirlwind",
+      "scale": 3.0,
+      "tint": [
+        0.5882,
+        0.5882,
+        1.0
+      ],
+      "lifeSec": 2.0
     }
   ],
   "vfxKey": "fx.prim.fire.nova",

@@ -64,9 +64,24 @@
           "fromCaster": true,
           "maxTargets": 5,
           "includeOrigin": false
+        },
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "preset": "tpl-locust-orb",
+          "modelKey": "w3x.stock.tornadoelemental",
+          "clip": "idle",
+          "soundKey": "wc3.blademasterwhirlwind",
+          "scale": 4.0,
+          "tint": [
+            0.4706,
+            0.0,
+            0.0
+          ],
+          "lifeSec": 3.0
         }
       ]
     }
   ],
-  "authoringNote": "⭐ 2026-08-18 雙向稽核（第一·五守則）：卡面 3 句 → **3 句都對得上、0 句無效**；反向看 JSON 沒有卡面沒講的效果，資料一個位元未改。\n⚠️ 唯一要記一筆的是「魔力」的讀法：卡面兩處（傷害係數 5% 與消耗 1%）都**沒有寫「現存」還是「最大」**，兩處都取 `maxMana`，⭐ 重點是**兩處取同一個**（同一句話裡的同一個詞不可以一半讀最大一半讀現存）。⚠️ 對照組：光魔杖 godie-i027 的卡面**明寫「現存 MP」**，所以那一件 2026-08-18 改用 `pctCurrentMana` —— 兩件的差別來自文案的差別，⛔ 不是實作不一致。要把這一件也改成現存制是 owner 的裁決（差異：滿魔時相同，半魔時扣款與傷害都減半）。\n\n[普通攻擊時]「每次普通攻擊皆會施展螺旋擊，直線範圍造成魔力5%傷害(On-Hit)，同時消耗1%魔力」= passive[0]。\n· 「直線範圍」= damageLine（sim/effects/damageLine.ts）。出貨前例是 18-00 薔薇荊棘之刃（content/abilities/godie-nsjs.passive.json）：同樣是 onBasicAttack 拉一條「我 → 被打的那個人」方向的走廊。\n· 「消耗1%魔力」= spendMana pctMaxMana 0.01，而且**先扣再打**（effects 陣列的順序就是執行順序）。hook 的 condition「自身法力 ≥ 1%」是照 20-01 風王結界 的模型寫的：spendMana 自己不做門檻判斷（sim/effects/spendMana.ts 的檔頭講了三個理由），所以少了這個 condition，空魔的英雄會**免費**拿到螺旋擊。\n· 「魔力5%傷害」= ratios maxMana 0.05。⚠️ zScaling 讀的是施法者的**最終屬性表**，也就是 maxMana（最大魔力），不是現存魔力 —— 文案只寫「魔力」沒有寫「現存」，所以這裡取讀得到的那一個並寫在這裡，不是無聲的解讀。\n· length 3.6 / width 1.2 / maxTargets 5 / includeOrigin false 是**文案沒有給的**，四個都直接沿用薔薇荊棘之刃的房規（3 個身位長 × 1 個身位寬；被普攻打中的那個人不再吃一次，因為他已經領過普攻本身了）。四個都是欄位。"
+  "authoringNote": "⭐ 2026-08-18 雙向稽核（第一·五守則）：卡面 3 句 → **3 句都對得上、0 句無效**；反向看 JSON 沒有卡面沒講的效果，資料一個位元未改。\n⚠️ 唯一要記一筆的是「魔力」的讀法：卡面兩處（傷害係數 5% 與消耗 1%）都**沒有寫「現存」還是「最大」**，兩處都取 `maxMana`，⭐ 重點是**兩處取同一個**（同一句話裡的同一個詞不可以一半讀最大一半讀現存）。⚠️ 對照組：光魔杖 godie-i027 的卡面**明寫「現存 MP」**，所以那一件 2026-08-18 改用 `pctCurrentMana` —— 兩件的差別來自文案的差別，⛔ 不是實作不一致。要把這一件也改成現存制是 owner 的裁決（差異：滿魔時相同，半魔時扣款與傷害都減半）。\n\n[普通攻擊時]「每次普通攻擊皆會施展螺旋擊，直線範圍造成魔力5%傷害(On-Hit)，同時消耗1%魔力」= passive[0]。\n· 「直線範圍」= damageLine（sim/effects/damageLine.ts）。出貨前例是 18-00 薔薇荊棘之刃（content/abilities/godie-nsjs.passive.json）：同樣是 onBasicAttack 拉一條「我 → 被打的那個人」方向的走廊。\n· 「消耗1%魔力」= spendMana pctMaxMana 0.01，而且**先扣再打**（effects 陣列的順序就是執行順序）。hook 的 condition「自身法力 ≥ 1%」是照 20-01 風王結界 的模型寫的：spendMana 自己不做門檻判斷（sim/effects/spendMana.ts 的檔頭講了三個理由），所以少了這個 condition，空魔的英雄會**免費**拿到螺旋擊。\n· 「魔力5%傷害」= ratios maxMana 0.05。⚠️ zScaling 讀的是施法者的**最終屬性表**，也就是 maxMana（最大魔力），不是現存魔力 —— 文案只寫「魔力」沒有寫「現存」，所以這裡取讀得到的那一個並寫在這裡，不是無聲的解讀。\n· length 3.6 / width 1.2 / maxTargets 5 / includeOrigin false 是**文案沒有給的**，四個都直接沿用薔薇荊棘之刃的房規（3 個身位長 × 1 個身位寬；被普攻打中的那個人不再吃一次，因為他已經領過普攻本身了）。四個都是欄位。\n\n⭐ 2026-08-25（GH#688 Phase 6 · TORNADO lane）：追加一顆**純演出**節點 spawnModelFx（w3x.stock.tornadoelemental，tpl-locust-orb，scale 4 · tint 0.4706,0,0 · lifeSec 3）—— 原作 JASS trigger spiralAttack（A0JP，item I01V）每次施展在持有者腳下擺一具 TornadoElemental dummy（o01H）3 秒。⛔ 不改數值，卡面「螺旋擊」的演出對應它。"
 }

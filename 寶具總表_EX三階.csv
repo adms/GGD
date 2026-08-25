@@ -235,7 +235,7 @@ EX解放,pale-moon-requiem-crown,蒼月葬送・千年彼方花冠,1,1+,15%,cham
 [千年花園] 集滿八朵時展開 8 秒「千年花園」：我方全體的治療與護盾輸出 ×1.40，並各自獲得 200 + AP×0.8 的護盾（每 30 秒最多展開一次）",0｜數值型,applyBuff shield status onOverheal flat,"legendary,support,shield",,
 EX解放,godie-i01v,螺旋劍,1,1+,15%,champion 限 1,"[普通攻擊時] 每次普通攻擊皆會施展螺旋擊，直線範圍造成魔力5%傷害，同時消耗1%魔力
 攻擊速度+100%
-移動速度+2",0｜數值型,damageLine spendMana stat onBasicAttack >= flat pctAdd,wc3-import,,
+移動速度+2",0｜數值型,damageLine spawnModelFx spendMana stat onBasicAttack >= flat pctAdd,wc3-import,,
 EX解放,mystery-scrap-of-paper,謎之紙片,1,1+,15%,champion 限 1,"[不可壞] 單次受到超過最大生命 20% 的傷害時，該傷害最多只能造成 20% 最大生命
 [不可壞] 每受到一次傷害（每 8 秒最多一次），最大生命 ×1.05，最多 3 層，整場保留",0｜數值型,applyBuff onDamageTaken flat pctMult,"legendary,tank,survivability",,
 EX解放,bulwark-charge-greaves,近擊的巨人鎧,1,1+,15%,champion 限 1,"裝甲+100

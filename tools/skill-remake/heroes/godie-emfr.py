@@ -109,7 +109,16 @@ A("15-03", "15-03 獄炎煉我", "self", [55, 55, 55, 55], [180, 260, 340, 420],
   # ⭐ GH#691（#688 Phase 6-1）—— 原作的 `AddSpecialEffect` dummy（`MonsoonBoltTarget.mdl`）。
   #    census 逐列：`provenance jass:effectTargetUnit（A052）—— 同上,無 dummy`。⛔ 手寫進出貨 JSON 會被下一次 skillremake:json 打回來
   #    （`carry_mechanisms` 只沿用 invulnerable / spawnProjectile），所以它走表格出口。
-  model_fx=[static_model("w3x.stock.monsoonbolttarget", "self", 1.0, scale=8.0, clip="idle")],
+  # ⭐ GH#688 Phase 6（TORNADO lane）—— 第二具 dummy：`e00Y 雷電風暴`
+  #    （trigger `LiteningWind`，`GetSpellAbilityId()=='A052'`，TornadoElemental.mdl）。
+  #    census templateSuggestions 逐列：scale 3 · tint [0.5882,0.5882,1]（w3u 150,150,255）
+  #    · lifeSec 2（sleepSecs）。⚠️ 原作落在 GetSpellTargetLoc()，但新版 15-03 是
+  #    self 變身技 ⇒ orb（繞施法者、環半徑 0.1 ＝ 定點）是第〇·六守則第 1 層贏的錨。
+  model_fx=[static_model("w3x.stock.monsoonbolttarget", "self", 1.0, scale=8.0, clip="idle"),
+            {"kind": "spawnModelFx", "shape": "single", "preset": "tpl-locust-orb",
+             "modelKey": "w3x.stock.tornadoelemental", "clip": "idle",
+             "soundKey": "wc3.blademasterwhirlwind",
+             "scale": 3.0, "tint": [0.5882, 0.5882, 1.0], "lifeSec": 2.0}],
   effects=[form_buff([M("ms", "pctMult", -0.5)],
                      hooks=[{"on": "onBasicAttack", "target": "event",
                              "effects": [dmg("magic", per=[60, 90, 120, 150], ap=0.4)]},
@@ -168,7 +177,15 @@ A("15-04", "15-04 雷天大壯。貳式", "self", [60, 60, 60], [200, 400, 600],
   # ⭐ GH#691（#688 Phase 6-1）—— 原作的 `AddSpecialEffect` dummy（`MonsoonBoltTarget.mdl`）。
   #    census 逐列：`provenance jass:effectTargetUnit（A053）—— 同上,無 dummy`。⛔ 手寫進出貨 JSON 會被下一次 skillremake:json 打回來
   #    （`carry_mechanisms` 只沿用 invulnerable / spawnProjectile），所以它走表格出口。
-  model_fx=[static_model("w3x.stock.monsoonbolttarget", "self", 1.0, scale=8.0, clip="idle")],
+  # ⭐ GH#688 Phase 6（TORNADO lane）—— 第二具 dummy：`e016 雷電風暴-千之雷`
+  #    （trigger `ThTh`，`GetSpellAbilityId()=='A053'`，TornadoElemental.mdl）。
+  #    census templateSuggestions 逐列：scale 2 · tint [1,0,1]（w3u 255,0,255）·
+  #    lifeSec null ⇒ 不寫（吃 tpl-locust-orb 的預設 2.5）。
+  model_fx=[static_model("w3x.stock.monsoonbolttarget", "self", 1.0, scale=8.0, clip="idle"),
+            {"kind": "spawnModelFx", "shape": "single", "preset": "tpl-locust-orb",
+             "modelKey": "w3x.stock.tornadoelemental", "clip": "idle",
+             "soundKey": "wc3.blademasterwhirlwind",
+             "scale": 2.0, "tint": [1.0, 0.0, 1.0]}],
   effects=[form_buff([M("ms", "pctMult", 1.0), M("as", "pctAdd", 1.0),
                       M("as", "capRaise", 10.0)],
                      hooks=[{"on": "onAbilityCast", "target": "self",

@@ -42,6 +42,8 @@ const PILOT_MODEL_DOCS = [
   "w3x.stock.flamestrike1",
   // GH#691 蝗蟲群視覺第一批（`o00E` 那一族的 17 個生成點共用這一份）
   "w3x.stock.monsoonbolttarget",
+  // GH#688 Phase 6 TORNADO lane（9 隻 TornadoElemental dummy 共用這一份）
+  "w3x.stock.tornadoelemental",
 ];
 
 function workingTreeSource(): ContentSource {

@@ -22,7 +22,23 @@
   ],
   "manaCostTier": "小",
   "range": 0,
-  "effects": [],
+  "effects": [
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "w3x.stock.tornadoelemental",
+      "clip": "idle",
+      "soundKey": "wc3.blademasterwhirlwind",
+      "scale": 3.0,
+      "tint": [
+        0.7843,
+        0.3922,
+        0.3922
+      ],
+      "lifeSec": 5.0
+    }
+  ],
   "template": {
     "ref": "tpl-proxy-cast",
     "params": {

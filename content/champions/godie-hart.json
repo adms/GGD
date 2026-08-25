@@ -263,6 +263,20 @@
               "duration": 5.0
             }
           ]
+        },
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "preset": "tpl-locust-orb",
+          "modelKey": "w3x.stock.tornadoelemental",
+          "clip": "idle",
+          "soundKey": "wc3.blademasterwhirlwind",
+          "scale": 2.0,
+          "tint": [
+            0.5882,
+            0.5882,
+            1.0
+          ]
         }
       ],
       "vfxKey": "fx.prim.physical.beam",

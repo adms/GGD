@@ -75,6 +75,10 @@ STOCK_MODELS: dict[str, str] = {
     # produced them is reproducible instead of living in a scratchpad.
     "revivehuman": "Objects\\Spawnmodels\\Human\\HumanBloodExplosion\\ReviveHuman.mdl",
     "flamestrike1": "Abilities\\Spells\\Other\\Doom\\FlameStrike1.mdl",
+    # GH#688 Phase 6 · TORNADO lane — the census's single largest suggestion
+    # family: 9 dummies (e00Y/e013/e016/h01S/h027/o01H/o01P/u00A/u00Z) all wear
+    # this one stock model, tinted per-skill at spawn time.
+    "tornadoelemental": "Abilities\\Spells\\Other\\Tornado\\TornadoElemental.mdl",
 }
 
 

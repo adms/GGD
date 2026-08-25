@@ -1,0 +1,123 @@
+{
+ "name": "tornadoelemental",
+ "archive": "War3x.mpq",
+ "mdxBytes": 56557,
+ "path": "Abilities\\Spells\\Other\\Tornado\\TornadoElemental.mdl",
+ "textures": [
+  {
+   "texture": "abilities\\Spells\\Other\\Tornado\\ShadowWalk1.blp",
+   "size": [
+    256,
+    256
+   ],
+   "lumMean": 164.8,
+   "lumStd": 74.7,
+   "alphaMean": 224.7,
+   "alphaStd": 60.4,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\GenericGlow2c.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 17.1,
+   "lumStd": 25.3,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "abilities\\Spells\\Other\\Tornado\\wind.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 198.4,
+   "lumStd": 25.9,
+   "alphaMean": 74.1,
+   "alphaStd": 97.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Clouds8x8.blp",
+   "size": [
+    256,
+    256
+   ],
+   "lumMean": 63.2,
+   "lumStd": 78.8,
+   "alphaMean": 44.7,
+   "alphaStd": 63.4,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [
+  {
+   "emitter": "BlizParticle03tubespinner",
+   "segmentAlpha": [
+    68,
+    100,
+    0
+   ],
+   "birth": 68,
+   "peak": 100,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle04",
+   "segmentAlpha": [
+    80,
+    60,
+    0
+   ],
+   "birth": 80,
+   "peak": 80,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle08",
+   "segmentAlpha": [
+    80,
+    60,
+    0
+   ],
+   "birth": 80,
+   "peak": 80,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle06",
+   "segmentAlpha": [
+    80,
+    60,
+    0
+   ],
+   "birth": 80,
+   "peak": 80,
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 212512,
+ "rawHeight": 429.13,
+ "scaleFactor": 0.02778,
+ "height": 11.92,
+ "visiblePrims": "3/3",
+ "animations": [
+  "Birth",
+  "Stand Walk",
+  "Death"
+ ],
+ "clipMap": {
+  "idle": "Stand Walk",
+  "run": "Stand Walk",
+  "attack": "Stand Walk",
+  "cast": "Stand Walk",
+  "hurt": "Stand Walk",
+  "death": "Death"
+ },
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "verdict": "ok"
+}

@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "75da32945cf2",
+  "hash": "68320c24cd73",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -763,6 +763,12 @@
       "path": "models/w3x.stock.revivehuman.json",
       "hash": "59fce0d3bc56",
       "size": 352
+    },
+    {
+      "id": "w3x.stock.tornadoelemental",
+      "path": "models/w3x.stock.tornadoelemental.json",
+      "hash": "4c5184aa5cdd",
+      "size": 342
     }
   ]
 }

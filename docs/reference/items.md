@@ -2,7 +2,7 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_a6eed9666137`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 產生自 contentVersion **`cv_7bfa219b05cb`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
 > 資料列：**142**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-08-20T16:58:56.072938Z`）
 
 `content/items/*.json` 共 **142** 份，依 `content/items/<id>.json` 的 **`craftRole`** 標記分類（來源：source-map triggers，見 `tools/w3x-import/extract_item_roles.py`）。實際能在商店買到的只有 **38** 件最終合成武器（`craftRole:final` 且有效果）＋ **2** 項服務；三選一 draft 抽 **6** 件任務道具，傳說寶玉抽 **84** 件傳說。其餘（16 組件、0 代幣、24 無角色、4 無 payload 的 final）是配方半成品或 w3x 殘件，不會單獨出現在任何商店或抽卡。
@@ -45,7 +45,7 @@
 | `godie-i01i` | 雷神之鎚 | 最終合成 final | — | T2 | ✅ | ✅ | 護甲 +20 · 法強 +130 | onBasicAttack→damageArea · onDamageTaken→applyBuff |
 | `godie-i01j` | 靈魂魔石 | 最終合成 final | 1200g | T2 | — | ✅ | 生命 +217 · 魔力 +136 | — |
 | `godie-i01o` | 死神裝束 | 最終合成 final | 1200g | T2 | — | ✅ | 攻速 +33.3% · 生命 +55 · 攻擊力 +2.8 · 魔力 +33 · 移速 +0.33 | — |
-| `godie-i01v` | 螺旋劍 | 最終合成 final | — | T2 | ✅ | ✅ | 攻速 +100% · 移速 +2 | onBasicAttack→spendMana/damageLine |
+| `godie-i01v` | 螺旋劍 | 最終合成 final | — | T2 | ✅ | ✅ | 攻速 +100% · 移速 +2 | onBasicAttack→spendMana/damageLine/spawnModelFx |
 | `godie-i01w` | 祕銀鎖子甲 | 最終合成 final | — | T1 | ✅ | ✅ | 護甲 +40 · 魔抗 +66.7 | onDamageTaken→applyBuff |
 | `godie-i020` | 瑪那魔杖 | 最終合成 final | — | T2 | ✅ | ✅ | 法強 +78 · 魔力 +520 · 回魔 +12 | onBasicAttack→damage |
 | `godie-i027` | 光魔杖 | 最終合成 final | — | T2 | ✅ | ✅ | 法強 +目前魔力的 5% · 回魔 +18 | onBasicAttack→spendMana/damage |
@@ -128,7 +128,7 @@
 | `godie-i01i` | 雷神之鎚 | 最終合成 final | — | T2 | ✅ | ✅ | 護甲 +20 · 法強 +130 | onBasicAttack→damageArea · onDamageTaken→applyBuff |
 | `godie-i01n` | 天堂之劍 | 任務獎勵 quest | — | T2 | ✅ | ✅ | 生命 -50% | — |
 | `godie-i01s` | 仙后座 | 任務獎勵 quest | — | T1 | ✅ | ✅ | 迴避 +0.25 · 魔力 +100% · 回魔 +25 · 冷卻縮減 +0.5 | onEvade→dash · onInterval→dispel |
-| `godie-i01v` | 螺旋劍 | 最終合成 final | — | T2 | ✅ | ✅ | 攻速 +100% · 移速 +2 | onBasicAttack→spendMana/damageLine |
+| `godie-i01v` | 螺旋劍 | 最終合成 final | — | T2 | ✅ | ✅ | 攻速 +100% · 移速 +2 | onBasicAttack→spendMana/damageLine/spawnModelFx |
 | `godie-i01w` | 祕銀鎖子甲 | 最終合成 final | — | T1 | ✅ | ✅ | 護甲 +40 · 魔抗 +66.7 | onDamageTaken→applyBuff |
 | `godie-i020` | 瑪那魔杖 | 最終合成 final | — | T2 | ✅ | ✅ | 法強 +78 · 魔力 +520 · 回魔 +12 | onBasicAttack→damage |
 | `godie-i027` | 光魔杖 | 最終合成 final | — | T2 | ✅ | ✅ | 法強 +目前魔力的 5% · 回魔 +18 | onBasicAttack→spendMana/damage |
