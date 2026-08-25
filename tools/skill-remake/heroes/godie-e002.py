@@ -146,7 +146,7 @@ A("20-04", "20-04 Avalon-永恆的理想鄉", "self", [60, 60, 60], [150, 250, 3
   #    census 逐列：`usca 6 · tint [100,0,0] · avalonStart timedLife 2s（war3map.j:32435）`。⛔ 手寫進出貨 JSON 會被下一次 skillremake:json 打回來
   #    （`carry_mechanisms` 只沿用 invulnerable / spawnProjectile），所以它走表格出口。
   model_fx=[static_model("w3x.stock.monsoonbolttarget", "self", 2.0, scale=6.0,
-                         tint=[0.3922, 0.0, 0.0])],
+                         tint=[0.3922, 0.0, 0.0], clip="idle")],
   effects=[buff([], 2.0, hooks=[
       {"on": "onDamageTaken", "target": "event", "damageType": "magic",
        "effects": [dmg("magic", flat=0, ap=3.0,

@@ -505,7 +505,7 @@ _BUFF_FIELDS = frozenset({
 })
 
 
-def static_model(model_key, anchor, life, scale=None, tint=None, **kw):
+def static_model(model_key, anchor, life, scale=None, tint=None, clip=None, **kw):
     """⭐ GH#691 —— 原作那一具**定點的蝗蟲群 dummy**（`model_fx=` 的一列）。
 
     原作的形狀逐字是 `CreateUnit` → `AddSpecialEffect` → `UnitApplyTimedLife`，
@@ -526,6 +526,11 @@ def static_model(model_key, anchor, life, scale=None, tint=None, **kw):
         n["scale"] = scale
     if tint is not None:
         n["tint"] = tint
+    # ⭐ `clip` 走 `model@1.clipMap` 解名（GH#689 已落地：`modelFxRig` 真的會播）。
+    #    ⛔ 不填 = 這一具是**靜止**的一格畫面 —— stock 特效模型的視覺有一半住在
+    #    它自己的 stand 序列裡（雷柱的閃爍、火焰的翻騰）。
+    if clip is not None:
+        n["clip"] = clip
     n.update(kw)
     return n
 

@@ -312,7 +312,8 @@
           "anchor": "point",
           "modelKey": "w3x.stock.monsoonbolttarget",
           "scale": 8.0,
-          "lifeSec": 1.0
+          "lifeSec": 1.0,
+          "clip": "idle"
         }
       ],
       "icon": "assets/icons/abilities/godie-e00w.r.webp",

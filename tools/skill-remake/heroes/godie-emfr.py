@@ -109,7 +109,7 @@ A("15-03", "15-03 獄炎煉我", "self", [55, 55, 55, 55], [180, 260, 340, 420],
   # ⭐ GH#691（#688 Phase 6-1）—— 原作的 `AddSpecialEffect` dummy（`MonsoonBoltTarget.mdl`）。
   #    census 逐列：`provenance jass:effectTargetUnit（A052）—— 同上,無 dummy`。⛔ 手寫進出貨 JSON 會被下一次 skillremake:json 打回來
   #    （`carry_mechanisms` 只沿用 invulnerable / spawnProjectile），所以它走表格出口。
-  model_fx=[static_model("w3x.stock.monsoonbolttarget", "self", 1.0, scale=8.0)],
+  model_fx=[static_model("w3x.stock.monsoonbolttarget", "self", 1.0, scale=8.0, clip="idle")],
   effects=[form_buff([M("ms", "pctMult", -0.5)],
                      hooks=[{"on": "onBasicAttack", "target": "event",
                              "effects": [dmg("magic", per=[60, 90, 120, 150], ap=0.4)]},
@@ -168,7 +168,7 @@ A("15-04", "15-04 雷天大壯。貳式", "self", [60, 60, 60], [200, 400, 600],
   # ⭐ GH#691（#688 Phase 6-1）—— 原作的 `AddSpecialEffect` dummy（`MonsoonBoltTarget.mdl`）。
   #    census 逐列：`provenance jass:effectTargetUnit（A053）—— 同上,無 dummy`。⛔ 手寫進出貨 JSON 會被下一次 skillremake:json 打回來
   #    （`carry_mechanisms` 只沿用 invulnerable / spawnProjectile），所以它走表格出口。
-  model_fx=[static_model("w3x.stock.monsoonbolttarget", "self", 1.0, scale=8.0)],
+  model_fx=[static_model("w3x.stock.monsoonbolttarget", "self", 1.0, scale=8.0, clip="idle")],
   effects=[form_buff([M("ms", "pctMult", 1.0), M("as", "pctAdd", 1.0),
                       M("as", "capRaise", 10.0)],
                      hooks=[{"on": "onAbilityCast", "target": "self",

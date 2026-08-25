@@ -55,7 +55,7 @@ A("77-04", "77-04 真-雷光劍", "ground", [70, 70, 70], [150, 225, 300], 11,
   # ⭐ GH#691（#688 Phase 6-1）—— 原作的 `AddSpecialEffect` dummy（`MonsoonBoltTarget.mdl`）。
   #    census 逐列：`loc-oneshot（war3map.j:49906 Move_Effect）—— ⛔ 沒有 dummy 單位,所以原作沒有記下 usca/tint;scale 4.0 見 docs/_reports/V6_temp_20260825.md 的對照表`。⛔ 手寫進出貨 JSON 會被下一次 skillremake:json 打回來
   #    （`carry_mechanisms` 只沿用 invulnerable / spawnProjectile），所以它走表格出口。
-  model_fx=[static_model("w3x.stock.monsoonbolttarget", "point", 1.0, scale=8.0)],
+  model_fx=[static_model("w3x.stock.monsoonbolttarget", "point", 1.0, scale=8.0, clip="idle")],
   effects=[area("physical", tier="極小", per=[600, 800, 1000], ad=0.6)])
 
 A("77-002", "77-002 御雷劍", "self", [0], [0], 0,

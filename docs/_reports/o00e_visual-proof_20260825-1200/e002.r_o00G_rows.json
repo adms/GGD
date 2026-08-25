@@ -1,0 +1,63 @@
+[
+ {
+  "label": "shot0_baseline_precast",
+  "tick": 0,
+  "bright": 0,
+  "lit": 0,
+  "spawns": 0,
+  "beams": [],
+  "anims": []
+ },
+ {
+  "label": "shot1_birth",
+  "tick": 30,
+  "bright": 0,
+  "lit": 0,
+  "spawns": 1,
+  "beams": [
+   "on v44 @(-40.0,0.0,0.0)"
+  ],
+  "anims": [
+   "modelfx-1-Stand playing=true"
+  ]
+ },
+ {
+  "label": "shot2_glb_loaded",
+  "tick": 42,
+  "bright": 42,
+  "lit": 101,
+  "spawns": 1,
+  "beams": [
+   "on v44 @(-40.0,0.0,0.0)"
+  ],
+  "anims": [
+   "modelfx-1-Stand playing=true"
+  ]
+ },
+ {
+  "label": "shot3_midlife",
+  "tick": 67,
+  "bright": 42,
+  "lit": 101,
+  "spawns": 1,
+  "beams": [
+   "on v44 @(-40.0,0.0,0.0)"
+  ],
+  "anims": [
+   "modelfx-1-Stand playing=true"
+  ]
+ },
+ {
+  "label": "shot4_expired",
+  "tick": 127,
+  "bright": 0,
+  "lit": 0,
+  "spawns": 1,
+  "beams": [
+   "off v44 @(-40.0,0.0,0.0)"
+  ],
+  "anims": [
+   "modelfx-1-Stand playing=false"
+  ]
+ }
+]

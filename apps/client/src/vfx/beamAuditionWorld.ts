@@ -16,7 +16,7 @@ import { ensureContentLoaded } from "../content/bootContent";
 import { HttpContentSource, type ContentSource } from "@ggd/shared/content";
 import { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
-import { Abilities } from "@ggd/shared/sim/content/registry";
+import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
 import { castAbility } from "@ggd/shared/sim/abilities/abilitySystem";
 import { asSeatId, asTeamId, type AbilityId, type ChampionId, type EntityId } from "@ggd/shared/ids";
 import { Stat, zeroStats } from "@ggd/shared/sim/stats/statTypes";
@@ -83,6 +83,14 @@ function spawnFighter(
   team: number,
   pos: { x: number; z: number },
   abilityId: AbilityId | null,
+  /**
+   * ⭐ GH#691 —— 用**真的**英雄 id，⛔ 不是字面值 `"audition"`。
+   * `statRecomputeSystem` 在任何一格 `dirty` 時會 `Champions.get(championId)`，
+   * 而假 id 讓它擲「content not registered: audition」—— 於是**所有會給自己上
+   * 增益的技能**（20-04 反彈、15-03/04 變身、65-002…）在這一頁根本跑不完一次施放。
+   * 缺席 ⇒ 退回 `"audition"`（09-04 那條路今天逐位元不變：它不動 stats）。
+   */
+  championId: ChampionId = "audition" as ChampionId,
 ): EntityId {
   const id = w.spawn();
   w.transform.set(id, {
@@ -107,7 +115,7 @@ function spawnFighter(
   final[Stat.AttackRange] = 1.6;
   final[Stat.AttackSpeed] = 0.0001;
   final[Stat.AttackDamage] = 1;
-  w.stats.set(id, { championId: "audition" as ChampionId, final, dirty: false, sources: [] });
+  w.stats.set(id, { championId, final, dirty: false, sources: [] });
   const slot = (a: AbilityId | null) => ({
     abilityId: (a ?? ("audition.none" as AbilityId)) as AbilityId,
     rank: a ? 3 : 0,
@@ -120,7 +128,7 @@ function spawnFighter(
     unspentPoints: 0,
   });
   w.champion.set(id, {
-    championId: "audition" as ChampionId,
+    championId,
     level: 9,
     xp: 0,
     gold: 0,
@@ -154,7 +162,13 @@ export async function buildBeamAuditionWorld(
   w.combatActive = true;
   const c = SKELETON_ARENA.zones[0]!.center;
 
-  const casterId = spawnFighter(w, 0, 0, { x: c.x, z: c.z }, abilityId);
+  // 技能 id 的前綴**就是**它的英雄 doc id（`godie-e002.r` → `godie-e002`）。
+  const owner = abilityId.slice(0, abilityId.lastIndexOf(".")) as ChampionId;
+  const championId = Champions.tryGet(owner) ? owner : ("audition" as ChampionId);
+  const casterId = spawnFighter(w, 0, 0, { x: c.x, z: c.z }, abilityId, championId);
+  // ⚠️ 敵人**留在假 id 上**（它們不施法 ⇒ stats 永遠不 dirty ⇒ 不會撞註冊表），
+  //    因為真英雄的 stats 會把 `MoveSpeed = 0` 這個「站著不動」的設定覆蓋掉，
+  //    而這一頁要看的是光束落在哪，⛔ 不是三個人走去打架。
   const enemyIds = enemyOffsets.map((p, i) =>
     spawnFighter(w, i + 1, 1, { x: c.x + p.x, z: c.z + p.z }, null),
   );

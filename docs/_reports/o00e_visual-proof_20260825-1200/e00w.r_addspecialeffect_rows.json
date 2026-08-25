@@ -1,0 +1,59 @@
+[
+ {
+  "label": "shot0_baseline_precast",
+  "tick": 0,
+  "bright": 0,
+  "lit": 0,
+  "spawns": 0,
+  "beams": [],
+  "anims": []
+ },
+ {
+  "label": "shot1_birth",
+  "tick": 58,
+  "bright": 0,
+  "lit": 0,
+  "spawns": 0,
+  "beams": [],
+  "anims": []
+ },
+ {
+  "label": "shot2_glb_loaded",
+  "tick": 62,
+  "bright": 16,
+  "lit": 392,
+  "spawns": 1,
+  "beams": [
+   "on v44 @(-36.0,0.0,0.0)"
+  ],
+  "anims": [
+   "modelfx-1-Stand playing=true"
+  ]
+ },
+ {
+  "label": "shot3_midlife",
+  "tick": 72,
+  "bright": 164,
+  "lit": 330,
+  "spawns": 1,
+  "beams": [
+   "on v44 @(-36.0,0.0,0.0)"
+  ],
+  "anims": [
+   "modelfx-1-Stand playing=true"
+  ]
+ },
+ {
+  "label": "shot4_expired",
+  "tick": 117,
+  "bright": 42,
+  "lit": 131,
+  "spawns": 1,
+  "beams": [
+   "off v44 @(-36.0,0.0,0.0)"
+  ],
+  "anims": [
+   "modelfx-1-Stand playing=false"
+  ]
+ }
+]

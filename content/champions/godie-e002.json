@@ -584,6 +584,7 @@
           "modelKey": "w3x.stock.monsoonbolttarget",
           "scale": 6.0,
           "lifeSec": 2.0,
+          "clip": "idle",
           "tint": [
             0.3922,
             0.0,
