@@ -349,8 +349,11 @@ owner 點名的最後兩個詞是**併行安全**，⛔ 不是程式碼整潔：
 | 類 | 動作 |
 |---|---|
 | **程式**（`.ts` / `.tsx` / `.py` / `.go`，⛔ 不含測試檔） | ⭐ 吃兩個觸發器 |
-| **人在編的設定檔**（`content/config/*.json` —— **owner 自己也會編**） | ⭐ 吃兩個觸發器 |
+| **人在編的設定檔**（`content/config/*.json` 裡**不是產物**的那些 —— owner 自己也會編） | ⭐ 吃兩個觸發器 |
 | **產生的**（產生器的產物、資料傾印、快照） | ⛔ **進白名單**，理由是「它有唯一的寫入者，而那是一支程式」 |
+
+⚠️ **上面那兩列的分界線不是目錄** —— `content/config/` 底下**兩類都有**（7 份是產物）。
+⛔ 不要用路徑判斷「這是不是人在編的」，用 `bash scripts/genguard.sh <path>`。
 | **其餘**（文件、素材、legacy 備份…） | ⛔ **本來就排除在外**，⛔ 不必進白名單也不必列 |
 
 ⚠️ 判準是「**誰在編它**」，⛔ 不是副檔名。
@@ -1350,14 +1353,34 @@ owner 2026-08-21：
 |---|---|---|
 | ① **一次撈全部** | 三個閘（`skills:check` · `--dir packages/shared` · `--dir apps`）**同一個指令**跑完寫進三個 log，然後一次讀完 | 跑 `skills:check`，讀第一行，去修 |
 | ② **歸因到根因** | 問「這 N 個紅**是不是同一個**？」—— 產生器鏈上一支動了，下游全部會紅 | 把 N 個紅當成 N 件事修 N 輪 |
-| ③ **改在來源，一次驗** | 產生器的**來源檔**（`tools/*/claims.json`、`content/config/`），⛔ 不是它的產物 | 改產物 → 下一次 sync 寫回去 → 以為是新的錯 |
+| ③ **改在來源，一次驗** | ⭐ **先問「這個檔是誰寫的」**：`bash scripts/genguard.sh <path>` ＋ `grep -rl "<basename>" tools/` | 改產物 → 下一次 sync 寫回去 → 以為是新的錯 |
+
+⚠️⚠️ **這一格在 2026-08-25 之前寫的是「來源檔（`tools/*/claims.json`、`content/config/`）」——
+而那是誤導源第一名**：`content/config/` 底下**有 7 份是產物**（`_index.json` ·
+`ability-vfx-bindings.json` · `ap-damage-scaling.json` · `combo-strikes.json` ·
+`damage-tiers.json` · `stat-caps.json` · `vfx-families.json`）。
+⭐ **專門為了阻止這個錯而寫的那一行，自己把一個裝著產物的目錄標成「來源」**，
+而它就在「紅了之後的正確順序」裡 —— 也就是我每次撞紅燈都會回去讀的那一格。
+⇒ ⛔ **不要記路徑，要問工具**（稽核：`docs/_reports/product-edit-misinfo_20260825.md`）。
 
 ⭐ **判準：如果我要打的指令跟上一次一模一樣，我就做錯了。** 重跑同一個閘只有一種
 合法情況：**改完全部之後的那一次確認**。
 
-⛔ **改產物等於沒改。** 產生器擁有的檔案（`content/abilities/*.json` 的說明欄、
-`docs/` 底下所有產生的文件）改了會被下一次 `skills:sync` 寫回去，而那個「又紅了」
-看起來像一個**新的**錯誤 —— 這正是上面那 14 輪裡至少 4 輪的內容。
+⛔ **改產物等於沒改。** 產生器擁有的檔案改了會被下一次 `skills:sync` 寫回去，
+而那個「又紅了」看起來像一個**新的**錯誤 —— 這正是上面那 14 輪裡至少 4 輪的內容。
+
+⚠️⚠️ **這一段在 2026-08-25 之前寫的是「`content/abilities/*.json` 的**說明欄**」——
+而那是誤導源第二名**：`skillremake:json` 擁有的是 **91 份完整的 ability JSON ＋ 16 份
+完整的 champion JSON**，**每一個欄位**都是產物（`effects` / `vfxKey` / `flat` / `statusId` 全部），
+⛔ 不是只有說明欄。那一句讓我合理地相信「只要不碰 description 就可以手改」，
+而那正是 2026-08-22/23 在 `godie-e002.e/.r/.ex` 上連中三次、2026-08-25 又中一次的形狀。
+
+⭐ **量到的底數**（`sync-io.json` 的 `steps[].writes`，⛔ 不是印象）：
+**621 份產物** · 其中 `content/abilities` **331** · `content/champions` **56** ·
+`content/config` **7** · 隔離區實際鎖住 621 份。
+⇒ ⛔ **`content/` 不是「我編的目錄」** —— 它是**混的**，而肉眼分不出來。
+唯一可靠的問法是 `bash scripts/genguard.sh <path>`（⚠️ 它說「不擋你」也**不代表**
+沒有上游來源 —— 再 `grep -rl "<basename>" tools/` 問一次）。
 ⭐ 先 `grep -rln "<那句話>" tools/` 找來源，⛔ 不要直接 `Edit` 出貨檔。
 
 ### ⛔⛔ 不要「排版次」—— 直接開幹，**同一天做完**

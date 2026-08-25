@@ -194,9 +194,15 @@ describe("champion↔ability mirror (real content)", () => {
       `${conflicts.length} embedded field(s) contradict their standalone twin ` +
       `across ${pairs.size} pairs ` +
       `[${[...byField].map(([f, n]) => `${f}×${n}`).join(", ")}]. ` +
-      `The standalone doc is authoritative — copy ITS value into ` +
-      `content/champions/<cid>.json abilities[<slot>], never the reverse, then rerun ` +
-      `\`pnpm content:build\`.\n` +
+      `The standalone doc is authoritative — the embedded copy must follow it, never the reverse.\n` +
+      `⚠️⚠️ 但**先問這兩份是誰寫的**：bash scripts/genguard.sh content/champions/<cid>.json\n` +
+      `   · 產生器的產物（skillremake:json 擁有 16 份 champion ＋ 91 份 ability 的**每一個欄位**）\n` +
+      `     ⇒ 改**來源** tools/skill-remake/heroes/<hero>.py，再 bash scripts/genrun.sh skillremake:json。\n` +
+      `     ⛔ 手抄進 content/champions/ 會被下一次 skills:sync 逐位元組打回來。\n` +
+      `   · 兩份都不是產物 ⇒ 才手動把 standalone 的值抄進 abilities[<slot>]。\n` +
+      `⛔ **不要跑 \`pnpm content:build\` 當修法** —— 它只重建索引與 bundle，\n` +
+      `   **不做 standalone→embedded 同步**（這一句在 2026-08-25 之前寫在這裡，是錯的：\n` +
+      `   照做＝改產物＋跑一支不相干的產生器，下一次 sync 全部打回來）。\n` +
       conflicts.map(describeDrift).join("\n");
 
     expect(conflicts.map(describeDrift), summary).toEqual([]);
