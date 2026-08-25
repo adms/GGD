@@ -366,7 +366,15 @@ A("59-04", "59-04 野戰型陽電子砲", "ground", [90, 90, 90], [350, 500, 650
            #    而這個節點沒有落點畫面 ⇒ 聲音說爆炸、螢幕上什麼都沒有。
            #    ki 系（初號機的陽電子砲同族）⇒ 用既有的 `fx.prim.ki.explosion-lg`,
            #    ⛔ 零新資產。
+           # ⭐ GH#692 —— 原作是**一具**光束,⛔ 不是龜派那排六具:
+           #    war3map.j:47757 `CreateNUnitsAtLoc( 1, 'h01P', … )`(生成數字面值 1),
+           #    隨後 SetUnitScalePercent 120+30×lvl%(150–210%)把那一具放大。
+           #    ⇒ 逐支覆寫 `count:1`(模板預設 6 是 09-04 的量值,⛔ 不動模板);
+           #    `spacing` 在 count=1 時天然無效,不必覆寫。
+           #    scale 沿用模板預設 —— h01P 的 dummy 基準尺寸沒有換算到 GGD 單位的
+           #    量值,自己編一個數字就是第一守則要防的猜測;rollback = 刪這一格。
            {"kind": "spawnModelFx", "shape": "single", "preset": "tpl-beam-roll",
+            "count": 1,
             "onArrive": [{"kind": "spawnVfx", "vfxId": "fx.prim.ki.explosion-lg",
                           "at": "point"}]}])
 
