@@ -1,13 +1,11 @@
 /**
  * ⭐ GH#702 —— **gore 開關真的關得掉那蓬血**（A/B，量活粒子）。
  *
- * ⛔ 在這之前 `config.gore@1.style` 只閘 `hitImpact` 那條血路，⛔ 不閘
- * `spawnVfx` ⇒ 幻之匕首選「無血」照樣噴 —— 而 GH#696 的驗收帳本裡**登記了
- * 那格開關當 rollback**，於是帳本寫著一個假的 rollback（第一·五守則）。
+ * ⛔ 在這之前 `config.gore@1.style` 只閘 `hitImpact` 那條血路，⛔ 不閘 `spawnVfx`
+ * ⇒ 幻之匕首選「無血」照樣噴 —— 而 GH#696 的驗收帳本**登記了那格開關當 rollback**。
  *
- * ⛔ 這裡沒有任何手捏的 payload（失敗形態⑤）：效果來自**出貨的道具文件**、
- * 事件來自**真的 SimWorld/effectRunner**、文件是**出貨的那一份**、
- * 設定是**出貨的 `content/config/gore.json`**（只翻 `style` 那一格）。
+ * ⛔ 零手捏 payload（失敗形態⑤）：效果取自**出貨的道具文件**、事件由**真的
+ * SimWorld/effectRunner** 發、文件走**真的 Zod**、設定讀**出貨的 gore.json**。
  */
 import { describe, it, expect, beforeAll, afterAll, beforeEach, vi } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
@@ -34,12 +32,11 @@ const shipped = (p: string): unknown =>
   JSON.parse(readFileSync(fileURLToPath(new URL(`../../../../${p}`, import.meta.url)), "utf8"));
 
 /** 出貨的幻之匕首：3% 觸發的被動裡那條 `spawnVfx`（⛔ 不是我寫的效果）。 */
-const ITEM = shipped("content/items/godie-i039.json") as {
+const SPAWN = (shipped("content/items/godie-i039.json") as {
   passive: { effects: { kind: string; vfxId?: string }[] }[];
-};
-const SPAWN = ITEM.passive[0]!.effects.find((e) => e.kind === "spawnVfx")!;
+}).passive[0]!.effects.find((e) => e.kind === "spawnVfx")!;
 const VFX_ID = SPAWN.vfxId!;
-/** 出貨的血花文件，走**真的 Zod** ⇒ 「`gore` 這一格 schema 收得下」也被驗到。 */
+/** 出貨的血花文件，走**真的 Zod** ⇒ 「`gore` 這格 schema 收得下」也被驗到。 */
 const DOC = zVfxDoc.parse(shipped(`content/vfx/${VFX_ID}.json`)) as VfxDoc;
 const GORE_CFG = shipped("content/config/gore.json") as Record<string, unknown>;
 
@@ -59,17 +56,10 @@ beforeEach(() => resetGoreConfig());
 /** 真的 Zod → 真的 SimWorld → 真的 effectRunner ⇒ 一場真比賽收到的那一則。 */
 function shippedEvent(): EventMessage {
   const world = new SimWorld(SKELETON_ARENA, 42);
-  const caster = world.spawn();
-  const victim = world.spawn();
-  for (const [id, x] of [[caster, 2], [victim, 6]] as const) {
-    world.transform.set(id, {
-      pos: { x, z: 4 },
-      vel: { x: 0, z: 0 },
-      facing: { x: 1, z: 0 },
-      radius: 0.5,
-      zone: 0,
-    });
-  }
+  const [caster, victim] = [world.spawn(), world.spawn()];
+  const at = { vel: { x: 0, z: 0 }, facing: { x: 1, z: 0 }, radius: 0.5, zone: 0 };
+  world.transform.set(caster, { pos: { x: 2, z: 4 }, ...at });
+  world.transform.set(victim, { pos: { x: 6, z: 4 }, ...at });
   runEffects([zEffectDef.parse(SPAWN) as EffectDef], {
     world,
     caster,
@@ -85,9 +75,9 @@ function shippedEvent(): EventMessage {
 }
 
 /** 這一則事件在指定 gore 風格下**生出幾顆粒子**（⛔ 不是「有沒有跑到某一行」）。 */
-function liveParticles(style: GoreStyle): { born: number; systems: number } {
+function liveParticles(style: GoreStyle, doc: VfxDoc = DOC): { born: number; systems: number } {
   applyGoreDoc({ ...GORE_CFG, style });
-  const ctx: VfxContext = { entityPos: () => null, vfxDoc: (k) => (k === VFX_ID ? DOC : null) };
+  const ctx: VfxContext = { entityPos: () => null, vfxDoc: () => doc };
   const sys = new VfxSystem(scene, ctx);
   const before = new Set(scene.particleSystems);
   sys.handleEvent(shippedEvent(), 1_000);
@@ -96,27 +86,16 @@ function liveParticles(style: GoreStyle): { born: number; systems: number } {
 }
 
 describe("GH#702 gore 開關閘得到 spawnVfx 的血", () => {
-  it("出貨的血花文件宣告 gore（否則這道閘無事可管）", () => {
-    expect(DOC.gore).toBe(true);
-  });
-
-  it('style="blood" 照舊噴；style="off" ⇒ **零粒子、零系統**', () => {
-    const blood = liveParticles("blood");
-    expect(blood.born).toBeGreaterThan(0);
-
-    const off = liveParticles("off");
-    // ⛔ 連 HitSpark 退路都不可以補上 ——「無血」就是**畫面上什麼都沒多**
-    expect(off).toEqual({ born: 0, systems: 0 });
-  });
-
-  it('style="stylized" 也關（一份 vfx@1 的紅是烘在文件裡的，播不出無紅版）', () => {
+  it('blood 照舊噴；off / stylized ⇒ **零粒子、零系統**', () => {
+    expect(liveParticles("blood").born).toBeGreaterThan(0);
+    // ⛔ 連 HitSpark 退路都不可以補上 ——「無血」＝畫面上**什麼都沒多**
+    expect(liveParticles("off")).toEqual({ born: 0, systems: 0 });
+    // stylized 的契約是「沒有紅」，而 vfx@1 的紅烘在文件裡 ⇒ 播不出來就不播
     expect(liveParticles("stylized")).toEqual({ born: 0, systems: 0 });
   });
 
   it("沒宣告 gore 的文件不受影響（這道閘⛔ 不是全域靜音）", () => {
     const plain = { ...DOC, id: `${DOC.id}.notgore`, gore: undefined } as VfxDoc;
-    applyGoreDoc({ ...GORE_CFG, style: "off" });
-    const sys = new VfxSystem(scene, { entityPos: () => null, vfxDoc: () => plain });
-    expect(sys.play(plain, 1, 1, 1_000)).not.toBeNull();
+    expect(liveParticles("off", plain).born).toBeGreaterThan(0);
   });
 });
