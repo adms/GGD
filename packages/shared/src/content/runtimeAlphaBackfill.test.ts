@@ -20,6 +20,18 @@
  * ⛔ **這一批只回填 α，⛔ 不回填 tint**：tint 的來源是 w3u 的 `uclr/uclg/uclb`
  * （`UNIT_TINTS.json`），⛔ 不是這 57 個呼叫點 —— 混在一起就是把兩個來源的帳算成一本。
  *
+ * ── ⚠️ 這一條紅了要改哪裡 ────────────────────────────────────────────────
+ * ⛔ **不要直接編 `content/abilities/*.json`** —— 這一族被 `apconv:build` 與
+ * `tiers:apply` 就地改欄位，其中幾份還是 `skillremake:json` 的**完整產物**。
+ * ⇒ 動手前先問：`bash scripts/genguard.sh content/abilities/<id>.json`
+ *   · 產生器的產物 ⇒ 改**來源**（`tools/skill-remake/heroes/*.py` 的 `model_fx=`
+ *     表格出口）再 `bash scripts/genrun.sh <step>`（⭐ 看它**最後一行**，
+ *     ⛔ 不要只看 `$?` —— 管道會吃掉離開碼）
+ *   · 兩個正規化器都只覆寫**自己那幾格**（α 不在其中）⇒ 手改的 `alpha` 會留下來，
+ *     ⛔ 但那不代表這個檔是手編的（先 grep 一次 `tools/`）
+ * ⚠️ 同一支技能在內容樹裡有**兩份**：standalone ＋ `content/champions/<hero>.json`
+ *   的內嵌鏡射 —— **兩份都要動**，否則 `abilityCodeParityForms` 會紅。
+ *
  * ── 突變紀錄（一批一條，挑最承重的線）───────────────────────────────────────
  *  · `content/abilities/godie-u01u.r.json` 的 `alpha` 0.5 → 0.4
  *    → ① 紅：「11-04 三千世界…alpha 與 census 不符：內容 0.4 · census 50% ⇒ 0.5」。
