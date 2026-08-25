@@ -33,5 +33,6 @@
   "lifecycleGrowthMinDelta": 8,
   "lifecycleMaxAgeSec": 180,
   "groundTextureCacheMax": 8,
-  "groundTextureCacheMaxMobile": 4
+  "groundTextureCacheMaxMobile": 4,
+  "fxTintEmissiveFloor": 0.05
 }

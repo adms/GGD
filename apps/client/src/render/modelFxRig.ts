@@ -135,7 +135,23 @@ export function fxClipTargets<T extends { name: string }>(
  * 之前的行為，逐位元不變。（⚠️ 它還 ⛔ 不是後台欄位 —— `content/config/**` 與
  * admin 都不在本 lane 的柵欄裡，見 `docs/_reports/C7_temp_20260825.md`。）
  */
+/**
+ * @deprecated 2026-08-25 起這是**後台一格**（`config.vfx-cleanup@1.fxTintEmissiveFloor`）——
+ * 這個常數只留作 config 讀不到時的退路（三個住處:content json + Zod DEFAULT + admin）。
+ */
 export const FX_TINT_EMISSIVE_FLOOR = 0.05;
+
+/**
+ * 生效中的染色下限。⭐ 由 `ContentDb.load()` 設定（與 `setOneShotMaxLifeSec` /
+ * `setFamilyTuning` **同一條路**）——⛔ 不在這裡 import 設定模組:那條 import 會
+ * 造成迴圈（實測:四條守衛同時說「tint 沒有到達畫面」而不是報錯,失敗形態最難查的那種）。
+ */
+let emissiveFloor = FX_TINT_EMISSIVE_FLOOR;
+
+/** 後台那一格（`config.vfx-cleanup@1.fxTintEmissiveFloor`）⇒ 這裡。`undefined` = 回出貨預設。 */
+export function setFxTintEmissiveFloor(v: number | undefined): void {
+  emissiveFloor = typeof v === "number" && Number.isFinite(v) ? v : FX_TINT_EMISSIVE_FLOOR;
+}
 
 /**
  * 把 `fxTint` 乘進這一棵子樹上每一份素材**看得見的那一格顏色**。
@@ -180,7 +196,7 @@ export function applyFxTint(
   // ⭐ 這一發的 tint 有沒有「讓任何一個通道透過來」。⛔ 用 max ⛔ 不用亮度：
   //    `[0.1176,0,0]` 的亮度只有 0.025，用亮度會把一格**飽和的暗紅**誤判成近黑。
   const letsLightThrough =
-    Math.max(tint[0], tint[1], tint[2]) > FX_TINT_EMISSIVE_FLOOR;
+    Math.max(tint[0], tint[1], tint[2]) > emissiveFloor;
   let painted = 0;
   for (const mesh of root.getChildMeshes(false)) {
     const mat = (mesh as { material?: unknown }).material as

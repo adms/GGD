@@ -45,6 +45,8 @@ export const VFX_FADE_OUT_MAX_SEC_BOUNDS = { min: 0.05, max: 3 } as const;
  * ⛔ 不是建議值。下界 0.05＝三幀，和上面那格同一個理由。
  */
 export const VFX_DISSIPATE_MAX_SEC_BOUNDS = { min: 0.05, max: 8 } as const;
+/** 染色下限的界（GH#697）：0＝連純黑都染（黑剪影會消失）· 1.1＝完全不染（止血閥）。 */
+export const FX_TINT_EMISSIVE_FLOOR_BOUNDS = { min: 0, max: 1.1 } as const;
 
 /**
  * ⏳ **終極**壽命上限的上下界（GH#570）。⭐ 同上，這是**唯一**的住處。
@@ -265,6 +267,21 @@ export const zConfigVfxCleanupDoc = z
       .optional(),
 
     /**
+     * 🎨 **染色下限**（GH#697）：`tint` 的最大分量低於它時,**不碰自發光那一格**。
+     *
+     * ⚠️ 這條退路不是假設 —— 出貨的 `imported.blackhole`（5/5 材質全 glow）與
+     * `imported.darkraor` 的 `fxTint` 都是 `[0,0,0]`（原作的黑色剪影）,天真地乘 0
+     * 會讓黑龍波**整具消失**。門檻 0.05 量自 `UNIT_TINTS` 的 72 種色：0.0 / 0.0392
+     * / 0.1176 之間那道**三倍空隙**（用 max 不用亮度 —— 純紅 [1,0,0] 的亮度只有 0.21）。
+     * ⭐ 調到 **1.1** ＝ 自發光那一格完全不染 ＝ 回到 2026-08-25 之前的畫面（**止血閥**）。
+     */
+    fxTintEmissiveFloor: z
+      .number()
+      .min(FX_TINT_EMISSIVE_FLOOR_BOUNDS.min)
+      .max(FX_TINT_EMISSIVE_FLOOR_BOUNDS.max)
+      .optional(),
+
+    /**
      * 施法光柱腳邊那圈**往上飄的餘燼**，只在施法窗口的前幾成生成（0–1）。
      *
      * owner 2026-08-23（GH#569）：
@@ -475,6 +492,7 @@ export const DEFAULT_VFX_CLEANUP: ConfigVfxCleanupDoc = {
   // 💨 owner 2026-08-24 GH#660 —— 「淡出時間可以縮短 我不喜歡天空有殘留特效」。
   // 出貨值沿用他在 GH#569 立的那條常設規定的秒數（0.5），⛔ 不是我另外挑的數字。
   vfxDissipateMaxSec: 0.5,
+  fxTintEmissiveFloor: 0.05,
   // owner 2026-08-23 GH#569 —— 「紅色粒子飄上天時間都要減半以上」＝生成窗口減半。
   castMoteEmitShare: 0.5,
   // ⏳ owner 2026-08-23 GH#570 —— 「產生後生命週期最多維持三秒，三秒後一律強制

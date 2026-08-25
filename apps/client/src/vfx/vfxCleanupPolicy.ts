@@ -22,6 +22,7 @@ import {
   DEFAULT_VFX_CLEANUP,
   GROUND_TEX_CACHE_BOUNDS,
   VFX_DISSIPATE_MAX_SEC_BOUNDS,
+  FX_TINT_EMISSIVE_FLOOR_BOUNDS,
   VFX_FADE_OUT_MAX_SEC_BOUNDS,
   VFX_HARD_CAP_SCOPES,
   VFX_HARD_MAX_LIFE_SEC_BOUNDS,
@@ -166,6 +167,20 @@ export function vfxFadeOutMaxSec(policy: ConfigVfxCleanupDoc = vfxCleanupPolicy(
  * 界外的數字（寬鬆路徑 `Configs.tryGet` 收得下）在這裡夾回上下界，⛔ 不是在
  * 消費端 —— 消費端是 `toParticleSystem()`，而它是唯一的解析入口。
  */
+/**
+ * 🎨 染色下限（GH#697）：`tint` 最大分量低於它 ⇒ 不碰自發光那一格（黑剪影退路）。
+ * ⭐ 調到 1.1 ＝ 完全不染自發光 ＝ 回到 2026-08-25 之前的畫面（止血閥）。
+ */
+export function fxTintEmissiveFloor(policy: ConfigVfxCleanupDoc = vfxCleanupPolicy()): number {
+  const v = policy.fxTintEmissiveFloor;
+  const fallback = DEFAULT_VFX_CLEANUP.fxTintEmissiveFloor ?? 0.05;
+  if (typeof v !== "number" || !Number.isFinite(v)) return fallback;
+  return Math.min(
+    FX_TINT_EMISSIVE_FLOOR_BOUNDS.max,
+    Math.max(FX_TINT_EMISSIVE_FLOOR_BOUNDS.min, v),
+  );
+}
+
 export function vfxDissipateMaxSec(policy: ConfigVfxCleanupDoc = vfxCleanupPolicy()): number {
   const v = policy.vfxDissipateMaxSec;
   const fallback = DEFAULT_VFX_CLEANUP.vfxDissipateMaxSec ?? 0.5;

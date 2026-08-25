@@ -85,6 +85,7 @@ import { vfxSoundLayer } from "../audio/vfxSound";
 import { resolveFamilyArt } from "../render/vfx/familyTuning";
 import { setMaxAbilityVfxLayers } from "../render/vfx/abilityLayers";
 import { setOneShotMaxLifeSec } from "../vfx/oneShotLife";
+import { setFxTintEmissiveFloor } from "../render/modelFxRig";
 import { setCastArcsEnabled } from "../vfx/arcBolt";
 import { setImpactRingScale, setImpactRingTiers } from "../vfx/vfxPresets";
 import { damageTiersFromDoc } from "@ggd/shared/content/damageTiers";
@@ -390,6 +391,11 @@ export class ContentDb {
     // 同樣是第②號故障的位置:少了這一行,後台把 0.6 調成 2.0 之後 schema 收下了、
     // 頁面顯示 2.0、而 `VfxSystem` 仍然照 0.6 夾。傳 undefined = 出貨的 0.6。
     setOneShotMaxLifeSec(vfxFamiliesDoc?.oneShotMaxLifeSec);
+    // 🎨 GH#697 —— 染色下限（黑剪影退路）。同一條路:後台存檔 ⇒ 下一次載入生效。
+    setFxTintEmissiveFloor(
+      (Configs.tryGet("vfx-cleanup") as { fxTintEmissiveFloor?: number } | undefined)
+        ?.fxTintEmissiveFloor,
+    );
     // ⚡ GH#571 —— 施法電弧的總開關（同一份文件、同一條路）。
     setCastArcsEnabled(vfxFamiliesDoc?.castArcs);
     // 🔵 GH#617 —— 衝擊波環的亮度/大小（同一份文件、同一條路）。
