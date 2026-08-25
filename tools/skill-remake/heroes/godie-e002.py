@@ -132,6 +132,13 @@ A("20-03", "20-03 約束與勝利之劍", "ground", [60, 60, 60, 60], [250, 350,
        #    ⇒ 聲音說爆炸、畫面什麼都沒有（第一·五守則:說了但不會發生）。
        # ⚠️ 這一發要與變身態雙胞胎 `godie-e00l.e` **一模一樣** —— 編號 20-03 是
        #    JASS 對照的 join key,兩份不同就會被 abilityCodeParity 棘輪擋下。
+       # ⭐ GH#688 Phase 6 · QUAD —— 接上自己的原作模型（staging 契約④的
+       #    SHARED_MODEL_FENCED_OUT 點名「20-03＝h00S（ReviveHuman 紅）」）。
+       #    census h00S：`Excalibur/ExcaliburMAX/Open Skill of Saber 三生成點 ·
+       #    tint [255,100,100] · usca 0.2 · timedLife 0.5`。tint 照 census 忠實搬；
+       #    scale/life 不覆寫 —— 光束的幾何住 tpl-beam-roll 的共用表（第〇·四守則），
+       #    0.2/0.5s 是原作**逐段小劍氣**的參數，套在單具滾動光束上是張冠李戴。
+       "modelKey": "w3x.stock.revivehuman", "tint": [1.0, 0.3922, 0.3922],
        "onArrive": [{"kind": "spawnVfx", "vfxId": "fx.prim.holy.explosion", "at": "point"},
                     {"kind": "screenShake", "shape": "single", "amplitude": 0.6,
                      "durationSec": 0.8, "applyTo": "all"}]},

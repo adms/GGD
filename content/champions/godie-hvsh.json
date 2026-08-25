@@ -282,7 +282,33 @@
         288.0,
         288.0
       ],
-      "effects": [],
+      "effects": [
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "preset": "tpl-locust-orb",
+          "modelKey": "w3x.stock.tomeofretrainingcaster",
+          "clip": "idle",
+          "soundKey": "wc3.thunderclapcaster",
+          "scale": 4.0,
+          "tint": [
+            1.0,
+            0.0,
+            1.0
+          ],
+          "lifeSec": 2.0
+        },
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "preset": "tpl-locust-orb",
+          "modelKey": "w3x.stock.tomeofretrainingcaster",
+          "clip": "idle",
+          "soundKey": "wc3.thunderclapcaster",
+          "scale": 5.0,
+          "lifeSec": 3.0
+        }
+      ],
       "template": {
         "ref": "tpl-single-strike",
         "params": {

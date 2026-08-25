@@ -44,6 +44,9 @@ const PILOT_MODEL_DOCS = [
   "w3x.stock.monsoonbolttarget",
   // GH#688 Phase 6 TORNADO lane（9 隻 TornadoElemental dummy 共用這一份）
   "w3x.stock.tornadoelemental",
+  // GH#688 Phase 6 QUAD lane（h025/h02I 騎英之守綱 ＋ n01F/n00R 隕石/流星雨）
+  "w3x.stock.tomeofretrainingcaster",
+  "imported.meteor",
 ];
 
 function workingTreeSource(): ContentSource {

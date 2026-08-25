@@ -79,6 +79,13 @@ STOCK_MODELS: dict[str, str] = {
     # family: 9 dummies (e00Y/e013/e016/h01S/h027/o01H/o01P/u00A/u00Z) all wear
     # this one stock model, tinted per-skill at spawn time.
     "tornadoelemental": "Abilities\\Spells\\Other\\Tornado\\TornadoElemental.mdl",
+    # GH#688 Phase 6 · QUAD lane — TomeOfRetrainingCaster family: 4 dummies in
+    # the census (h00N/h025/h02I/o00R) wear this flash; the two shipped landing
+    # spots are godie-hvsh (48-00 via Riderspell, 48-04 via RidermovelineDam +
+    # EX-mode Initate Crazy).  h00N (Gundam) and o00R (英雄之笛 item) have no
+    # shipped owner — see the QUAD report's no-landing table.
+    "tomeofretrainingcaster":
+        "Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl",
 }
 
 

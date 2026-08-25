@@ -230,6 +230,16 @@
               }
             }
           ]
+        },
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "preset": "tpl-locust-orb",
+          "modelKey": "w3x.stock.revivehuman",
+          "clip": "idle",
+          "soundKey": "wc3.shockwave",
+          "scale": 1.25,
+          "lifeSec": 2.0
         }
       ],
       "vfxKey": "fx.w3x.particle.supershinythingy.p00",

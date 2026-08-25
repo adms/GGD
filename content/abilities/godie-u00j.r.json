@@ -19,7 +19,17 @@
     288.0
   ],
   "manaCostTier": "中",
-  "effects": [],
+  "effects": [
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "imported.meteor",
+      "clip": "idle",
+      "soundKey": "wc3.infernalbirth1",
+      "scale": 5.0
+    }
+  ],
   "template": {
     "ref": "tpl-single-strike",
     "params": {

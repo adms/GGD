@@ -239,19 +239,9 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // ⚠️ 下面三列與上面的 `spacing` 是**逐字同一件事**：值被收進 `tpl-locust-strike`
   //    的 `params[*].default`，而這份普查讀的是磁碟原文 ⇒ 必然掉到 0。
   //    ⛔ 它們**不是**新機制沒人用，是舊機制**不再有第二個住處**。
-  "field:abilities.effects[]#spawnModelFx.clip": {
-    status: "default-live",
-    why:
-      "⭐ **值住模板，⛔ 不住技能** —— 這一格 2026-08-25 之前的 13 個字面採用者" +
-      "（o00E「打雷」那一族，每一支都寫 `clip:\"idle\"`）在 GH#698 改成引用 " +
-      "`tpl-locust-strike` 了，而 `idle` 現在住那份模板的 `params.clip.default`。" +
-      "⇒ 與 `spacing` 逐字同一個形狀：一格「被正確地收進共用表」的欄位在這份" +
-      "**讀磁碟原文**的普查裡必然是 0，那是第〇·四守則要的結果，⛔ 不是 S8。\n" +
-      "⚠️ 守它的不是這一列：`templates/locustTemplates.test.ts` ② 逐格斷言補完之後的" +
-      "節點真的帶著 `clip:\"idle\"`（8 個 golden，其中 7 個是 `git show HEAD:` 撈出來的原文）。\n" +
-      "⭐ 可反駁：哪天有一支要播別的剪輯（h008 FragDriller 的 `death` × 0.15 凍播就是），" +
-      "它會在自己的節點上寫出這一格，這一列就 stale 而紅。",
-  },
+  // ⭐ 2026-08-25（QUAD lane）：`spawnModelFx.clip` 的豁免列照它自己寫的反駁條件
+  //    刪掉了 —— GH#688 Phase 6 的 orb 批（TORNADO 9 節點＋QUAD 9 節點）在自己的
+  //    節點上寫出了 `clip:"idle"`，普查量到 29 個採用者 ⇒ 那一列已經是謊話。
   "enum:abilities.effects[]#spawnModelFx.path=static": {
     status: "default-live",
     why:

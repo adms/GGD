@@ -15,7 +15,17 @@
   ],
   "range": 0.0,
   "targetsEnemies": false,
-  "effects": [],
+  "effects": [
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "imported.meteor",
+      "clip": "idle",
+      "soundKey": "wc3.infernalbirth1",
+      "scale": 5.0
+    }
+  ],
   "passive": {
     "name": "74-002 超新星",
     "ranks": [

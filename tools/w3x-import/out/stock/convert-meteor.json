@@ -1,0 +1,74 @@
+{
+ "note": "GH#688 Phase 6 QUAD lane — Meteor.mdl (map-embedded, raw/Meteor.mdx) re-converted with the current pipeline. The 2026-07-22 bulk-import glb had 6/7 primitives soft-deleted (baseColorFactor [x,x,x,0]) and an 8x8 placeholder texture on the survivor; this re-conversion yields 4/4 visible prims (rock body + 3 luma-keyed additive glow layers) with real textures.",
+ "installed": "content/assets/models/imported/meteor.glb",
+ "report": [
+  {
+   "source": "Meteor.mdx",
+   "kind": "animated-prop",
+   "sequences": [
+    "Birth"
+   ],
+   "raw_height": 981.31,
+   "scale_factor": 0.02778,
+   "name": "meteor",
+   "glb": "meteor.glb",
+   "glb_size": 141960,
+   "height": 27.259,
+   "anim_names": [
+    "Birth"
+   ],
+   "team_color_materials": [],
+   "dropped_glow_materials": [],
+   "attach_points": {
+    "Origin": {
+     "x": -0.0197,
+     "y": 0.1409,
+     "z": 0.0014
+    },
+    "OverHead": {
+     "x": -0.0197,
+     "y": 6.8126,
+     "z": 0.0014
+    },
+    "Hand Right": {
+     "x": 0.1323,
+     "y": -3.3963,
+     "z": 2.596
+    },
+    "Hand Left": {
+     "x": -0.0018,
+     "y": -3.5983,
+     "z": -2.3176
+    },
+    "Head": {
+     "x": 0.2391,
+     "y": -0.0022,
+     "z": -0.1107
+    },
+    "Chest": {
+     "x": 0.1572,
+     "y": -1.6248,
+     "z": -0.0417
+    },
+    "Foot Right": {
+     "x": 0.1107,
+     "y": -5.6741,
+     "z": 1.1627
+    },
+    "Foot Left": {
+     "x": 0.1107,
+     "y": -5.6741,
+     "z": -1.3334
+    }
+   },
+   "notes": [
+    "mat1: additive glow w/o alpha → luma-keyed",
+    "mat2: additive glow w/o alpha → luma-keyed",
+    "mat3: additive glow w/o alpha → luma-keyed",
+    "skipped MDX chunks: EVTS,GEOA,GLBS,LITE,PRE2,PREM,TXAN",
+    "dropped stray effect geosets: #4(64v), #5(32v), #6(8v)"
+   ],
+   "status": "ok"
+  }
+ ]
+}

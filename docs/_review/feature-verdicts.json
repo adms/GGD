@@ -314,6 +314,76 @@
       "verdictHash": null,
       "reason": "",
       "verdictAt": null
+    },
+    "o00e_visual-proof_20260825-1200": {
+      "title": "蝗蟲群視覺:MonsoonBoltTarget o00E 族(tpl-locust-strike 落雷,v0.27.0 已上線補登)",
+      "family": "locust-strike",
+      "issues": [
+        688,
+        691,
+        669
+      ],
+      "abilities": [
+        "godie-e002.r",
+        "godie-e00l.r",
+        "godie-e00w.r",
+        "godie-e00x.r",
+        "godie-edem.e",
+        "godie-emfr.e",
+        "godie-emfr.r",
+        "godie-h020.e",
+        "godie-hjai.e",
+        "godie-u00l.r",
+        "godie-udea.ex",
+        "godie-umal.r"
+      ],
+      "commit": null,
+      "sequenceDir": "docs/_reports/o00e_visual-proof_20260825-1200",
+      "rollback": {
+        "configId": "tpl-locust-strike",
+        "field": "params.alpha.default",
+        "liveValue": 1,
+        "rollbackValue": 0,
+        "note": "1.0 與缺席逐位元同義(modelFxRig.ts:236 對 alpha>=1 跳過乘法,單一 rig 全 preset 共用)。翻 0 => strike 整族沒寫自己 alpha 的節點一起隱形 = 一鍵否決 o00E 批的落雷演出。"
+      },
+      "registeredAt": "2026-08-25T14:41:10.454Z",
+      "verdict": null,
+      "verdictHash": null,
+      "reason": "",
+      "verdictAt": null
+    },
+    "quad_visual-proof_20260825-2200": {
+      "title": "蝗蟲群視覺:QUAD 四小族(ReviveHuman 殘餘/Tome 騎英/Meteor 流星,7 技能 10 節點)",
+      "family": "locust-orb",
+      "issues": [
+        688,
+        669
+      ],
+      "abilities": [
+        "godie-h02r.r",
+        "godie-hgam.r",
+        "godie-e002.e",
+        "godie-e00l.e",
+        "godie-hvsh.passive",
+        "godie-hvsh.r",
+        "godie-hart.w",
+        "godie-u00j.r",
+        "godie-u00j.ex"
+      ],
+      "commit": null,
+      "sequenceDir": "docs/_reports/quad_visual-proof_20260825-2200",
+      "rollback": {
+        "configId": "tpl-locust-orb",
+        "field": "params.alpha.default",
+        "liveValue": 1,
+        "rollbackValue": 0,
+        "note": "orb 家族級開關(與 TORNADO 批共用同一格):翻 0 => 整族沒寫自己 alpha 的 orb 節點(含本批 muzzle/守綱/流星 8 節點)一起隱形。20-03 的 beam-roll 兩節點另隨 tpl-beam-roll 家族開關。"
+      },
+      "registeredAt": "2026-08-25T14:41:49.619Z",
+      "verdict": null,
+      "verdictHash": null,
+      "reason": "",
+      "verdictAt": null
     }
   }
 }

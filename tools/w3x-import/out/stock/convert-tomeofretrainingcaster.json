@@ -1,0 +1,93 @@
+{
+ "name": "tomeofretrainingcaster",
+ "archive": "War3x.mpq",
+ "mdxBytes": 13290,
+ "path": "Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl",
+ "textures": [
+  {
+   "texture": "Textures\\grad2b.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 113.9,
+   "lumStd": 75.7,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\GenericGlow64.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 64.3,
+   "lumStd": 72.2,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Star8c.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 35.5,
+   "lumStd": 54.2,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\GenericGlowFaded.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 53.5,
+   "lumStd": 55.2,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [
+  {
+   "emitter": "BlizParticle03",
+   "segmentAlpha": [
+    0,
+    255,
+    0
+   ],
+   "birth": 0,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle04x",
+   "segmentAlpha": [
+    255,
+    199,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 30524,
+ "rawHeight": 438.32,
+ "scaleFactor": 0.02778,
+ "height": 12.175,
+ "visiblePrims": "3/3",
+ "animations": [
+  "Birth"
+ ],
+ "clipMap": null,
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/tomeofretrainingcaster.glb"
+}

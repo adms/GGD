@@ -221,7 +221,10 @@ const SOUNDLESS_TEMPLATES = new Set([
  * （ReviveHuman 紅/NetherStrike）、59-04＝h000、08-03＝h01P（Awaken）—— Phase 6。
  */
 const SHARED_MODEL_FENCED_OUT = new Set([
-  "20-03 約束與勝利之劍",
+  // ⭐ 2026-08-25（GH#688 Phase 6 · QUAD lane）：20-03 也接上了自己的原作模型
+  //    `w3x.stock.revivehuman` ＋ census h00S 的紅 tint（來源在
+  //    `tools/skill-remake/heroes/godie-e002.py`，鏡射 `godie-e00l.e`），
+  //    照規矩把那一列刪掉。剩下兩支照原作對應：59-04＝h000、08-03＝h01P（Awaken）。
   "59-04 野戰型陽電子砲",
   "08-03 龍鬥氣砲咒文",
 ]);

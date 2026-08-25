@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "68320c24cd73",
+  "hash": "23388040d88b",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -567,6 +567,12 @@
       "size": 309
     },
     {
+      "id": "imported.meteor",
+      "path": "models/imported.meteor.json",
+      "hash": "0ee98e54c0fd",
+      "size": 296
+    },
+    {
       "id": "imported.mfls",
       "path": "models/imported.mfls.json",
       "hash": "6270082059a4",
@@ -763,6 +769,12 @@
       "path": "models/w3x.stock.revivehuman.json",
       "hash": "59fce0d3bc56",
       "size": 352
+    },
+    {
+      "id": "w3x.stock.tomeofretrainingcaster",
+      "path": "models/w3x.stock.tomeofretrainingcaster.json",
+      "hash": "06e7bfdae4cc",
+      "size": 329
     },
     {
       "id": "w3x.stock.tornadoelemental",

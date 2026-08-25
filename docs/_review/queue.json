@@ -1,10 +1,10 @@
 {
   "schema": "review-queue@1",
   "counts": {
-    "assets": 1121,
-    "tier0": 797,
+    "assets": 1122,
+    "tier0": 795,
     "reviewed": 0,
-    "pending": 324
+    "pending": 327
   },
   "items": [
     {
@@ -32,6 +32,36 @@
         "godie-ubal.ex",
         "godie-uvng.e",
         "godie-uvng.ex"
+      ]
+    },
+    {
+      "id": "imported.heromusashimiyamoto",
+      "kind": "model",
+      "hash": "743f857a2a14bf9a29e09985603428bcf84ec05c",
+      "risk": 26,
+      "reasons": [
+        "18 支上架技能引用（R/EX ×2 加權後 risk 26）",
+        "未審"
+      ],
+      "refs": [
+        "godie-e00w.q",
+        "godie-e00x.q",
+        "godie-emfr.e",
+        "godie-emfr.r",
+        "godie-etyr.q",
+        "godie-h01n.e",
+        "godie-h01o.e",
+        "godie-h02r.r",
+        "godie-hart.e",
+        "godie-hart.w",
+        "godie-hgam.r",
+        "godie-hvsh.passive",
+        "godie-hvsh.r",
+        "godie-u00j.ex",
+        "godie-u00j.r",
+        "godie-u00v.e",
+        "godie-u01u.r",
+        "godie-udre.r"
       ]
     },
     {
@@ -226,29 +256,6 @@
         "godie-u00k.r",
         "godie-u00n.ex",
         "godie-zombiex.r"
-      ]
-    },
-    {
-      "id": "imported.heromusashimiyamoto",
-      "kind": "model",
-      "hash": "743f857a2a14bf9a29e09985603428bcf84ec05c",
-      "risk": 14,
-      "reasons": [
-        "11 支上架技能引用（R/EX ×2 加權後 risk 14）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e00w.q",
-        "godie-e00x.q",
-        "godie-emfr.e",
-        "godie-emfr.r",
-        "godie-etyr.q",
-        "godie-h01n.e",
-        "godie-h01o.e",
-        "godie-hart.e",
-        "godie-u00v.e",
-        "godie-u01u.r",
-        "godie-udre.r"
       ]
     },
     {
@@ -552,6 +559,24 @@
         "godie-o00k.q",
         "godie-o02l.q",
         "godie-ofar.q"
+      ],
+      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
+    },
+    {
+      "id": "wc3.thunderclapcaster",
+      "kind": "sfx",
+      "hash": "784d25d60774b9d1c3196bae98b001b4a8bcc289",
+      "risk": 9,
+      "reasons": [
+        "4 支上架技能引用（R/EX ×2 加權後 risk 5）",
+        "抱怨族「閃電/雷電」+4",
+        "未審"
+      ],
+      "refs": [
+        "godie-hvsh.passive",
+        "godie-hvsh.r",
+        "godie-n01c.e",
+        "godie-nbbc.e"
       ],
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
@@ -1233,22 +1258,6 @@
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
     {
-      "id": "wc3.thunderclapcaster",
-      "kind": "sfx",
-      "hash": "784d25d60774b9d1c3196bae98b001b4a8bcc289",
-      "risk": 6,
-      "reasons": [
-        "2 支上架技能引用（R/EX ×2 加權後 risk 2）",
-        "抱怨族「閃電/雷電」+4",
-        "未審"
-      ],
-      "refs": [
-        "godie-n01c.e",
-        "godie-nbbc.e"
-      ],
-      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
-    },
-    {
       "id": "fx.ember-bolt-cast",
       "kind": "vfx",
       "hash": "fceecf57184ab544dca288507efa76a09485b969",
@@ -1508,6 +1517,21 @@
       ]
     },
     {
+      "id": "imported.meteor",
+      "kind": "model",
+      "hash": "5356098dc7be1fbf8242700f0e9fdb6069234101",
+      "risk": 5,
+      "reasons": [
+        "3 支上架技能引用（R/EX ×2 加權後 risk 5）",
+        "未審"
+      ],
+      "refs": [
+        "godie-hart.w",
+        "godie-u00j.ex",
+        "godie-u00j.r"
+      ]
+    },
+    {
       "id": "wc3.dragonyes2",
       "kind": "sfx",
       "hash": "c9733baea30a90e7fae1b1ec537e2f741b30d057",
@@ -1536,6 +1560,21 @@
         "godie-n003.r",
         "godie-n01g.r",
         "godie-u00v.w"
+      ]
+    },
+    {
+      "id": "wc3.infernalbirth1",
+      "kind": "sfx",
+      "hash": "cd71f8f3434ad52e0dc6c99e6027f10cc47ee6ba",
+      "risk": 5,
+      "reasons": [
+        "3 支上架技能引用（R/EX ×2 加權後 risk 5）",
+        "未審"
+      ],
+      "refs": [
+        "godie-hart.w",
+        "godie-u00j.ex",
+        "godie-u00j.r"
       ]
     },
     {
@@ -2794,6 +2833,20 @@
       ],
       "refs": [],
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
+    },
+    {
+      "id": "wc3.shockwave",
+      "kind": "sfx",
+      "hash": "d12e2fb798fd1339c614fe3dddd2ec3ee2f5ec09",
+      "risk": 4,
+      "reasons": [
+        "2 支上架技能引用（R/EX ×2 加權後 risk 4）",
+        "未審"
+      ],
+      "refs": [
+        "godie-h02r.r",
+        "godie-hgam.r"
+      ]
     },
     {
       "id": "fx.fam.dissipate.physical.s125",

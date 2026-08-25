@@ -163,6 +163,20 @@
               "moveSpeedMult": 0.6
             }
           ]
+        },
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "preset": "tpl-locust-orb",
+          "modelKey": "imported.meteor",
+          "clip": "idle",
+          "soundKey": "wc3.infernalbirth1",
+          "scale": 0.8,
+          "tint": [
+            0.7843,
+            0.5882,
+            0.5882
+          ]
         }
       ],
       "vfxKey": "fx.prim.fire.explosion",
