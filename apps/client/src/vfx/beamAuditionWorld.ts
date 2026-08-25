@@ -195,6 +195,34 @@ export async function buildBeamAuditionWorld(
       //    是出貨的詠唱條。
       // ⭐ audition 頁要能重播：把 R 的冷卻歸零再放（⛔ 只有這一頁這樣做，
       //    出貨路徑一格都沒動 —— 冷卻是 60 秒，不歸零就只能看一次）。
+      //
+      // ⛔⛔ GH#699 MARK lane 量到的**台子盲區**（⛔ 不是遊戲的缺陷）：
+      // `SimWorld.step()` 的**第一行**是 `this.events.length = 0`，而這個方法是
+      // 由頁面在**兩個 step 之間**同步呼叫的 ⇒ `castAbility()` 當場發的
+      // `abilityCast`（⭐ **家族藝術/`vfxKey`/`sfxKey` 唯一的載體**，
+      // `abilitySystem.ts` 的 `world.emit("abilityCast", …)`）**在任何人讀到它
+      // 之前就被下一個 step 清掉了**。
+      // ⇒ 台子只看得到 tick **內部**發的事件（`modelFxSpawn` / `buffApply` /
+      //   `castEnd`），於是 `VfxSystem` 的 `case "abilityCast"` ——
+      //   也就是 `playCastVfx()` ＋ `w3xAbilityArt.extra`（原作 stock emitter）
+      //   那一整條路 —— 在這一頁上**逐位元組等於不存在**（失敗形態⑧：
+      //   消費端存在，但它消費不到）。實測：施放後 `scene.particleSystems.length === 0`。
+      // ⇒ 修法是**讓施法發生在 tick 內**（那正是出貨路徑的位置：`castAbility`
+      //   由 tick 裡的意圖處理呼叫），⛔ 不是自己造一份 payload 餵進消費端
+      //   （那是失敗形態⑤ —— 量一條虛構通道）。一次性包住下一個 `step`：
+      //   先跑完那個 tick（它清空 events），**然後**才施法 ⇒ 真的
+      //   `abilityCast` 留在 `events` 裡，頁面緊接著的 drain 就讀得到它。
+      const runCast = (): void => doCast();
+      const orig = w.step.bind(w);
+      (w as unknown as { step: SimWorld["step"] }).step = (intents): void => {
+        (w as unknown as { step: SimWorld["step"] }).step = orig; // 一次性
+        orig(intents);
+        runCast();
+      };
+    },
+  };
+
+  function doCast(): void {
       const ab = w.abilities.get(casterId);
       if (ab) (ab.slots as { R: { cooldownRemainingTicks: number } }).R.cooldownRemainingTicks = 0;
       const hp = w.health.get(casterId);
@@ -214,6 +242,5 @@ export async function buildBeamAuditionWorld(
       if (verdict !== "ok") {
         throw new Error(`castAbility 拒絕了 ${abilityId}：${String(verdict)} —— ⛔ 這一頁的結論不算數`);
       }
-    },
-  };
+  }
 }

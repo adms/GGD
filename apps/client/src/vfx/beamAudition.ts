@@ -144,7 +144,13 @@ export async function startBeamAudition(
   };
 
   // ── 真的 sim ＋ 真的客戶端消費端（動態 import：只在 vite dev 下跑）────────
-  const [{ buildBeamAuditionWorld }, { VfxSystem }, { Models }, { AssetManager }, { modelFxDocFor }] =
+  const [
+    { buildBeamAuditionWorld },
+    { VfxSystem },
+    { Models, VfxDefs },
+    { AssetManager },
+    { modelFxDocFor },
+  ] =
     await Promise.all([
       import("./beamAuditionWorld"),
       import("./VfxSystem"),
@@ -157,6 +163,29 @@ export async function startBeamAudition(
     ENEMY_LINE,
     abilityId as never,
   );
+
+  // ⛔⛔ GH#699 MARK lane 的**第二個台子盲區**：出貨的組合根 `ContentDb.load()`
+  // 在載完內容之後**安裝兩份設定**（`setAbilityVfxBindings` ⊕ `setFamilyTuning`，
+  // `ContentDb.ts:369/379`，順序是它逐字要求的），而這一頁只跑 `ensureContentLoaded()`
+  // ⇒ 那兩格從來沒被安裝 ⇒ `w3xArtFor()` 對**每一支**技能都回 undefined ⇒
+  // `playCastVfx` 的第 1／2 級（原作 emitter 整組交給 `W3xEmitterRig`）
+  // **一次都沒有走過**，每一次讀數都掉進第 4 級的 `fx.prim.*` 退路。
+  // ⇒ 實測（2026-08-26）：`godie-n01g.ex`（`mark` 家族）在這兩行之前場上
+  //   **0 個** `w3xfx-*` 粒子系統；補上之後 **3 個**
+  //   （`markofchaostarget.p00/p01/p02`）＋家族主 emitter，峰值 96,988 亮像素。
+  // ⇒ ⭐ 也就是說：在這兩行之前，這一頁**從來沒有量到過任何一支技能的原作藝術**。
+  const [{ setAbilityVfxBindings }, { setFamilyTuning }, { setAbilityArtBindings }, { Configs }] =
+    await Promise.all([
+      import("../render/vfx/abilityLayers"),
+      import("../render/vfx/w3xAbilityArt"),
+      import("../render/vfx/abilityArtContent"),
+      import("@ggd/shared/content/registries"),
+    ]);
+  // ⛔ 順序逐字照抄 `ContentDb.load()`：晉升表 → 綁定表 → `setFamilyTuning`
+  //    （檔頭寫著順序反了會鑄出一份空的家族文件）。
+  setAbilityArtBindings((Configs.tryGet("vfx-ability-art") ?? null) as never);
+  setAbilityVfxBindings((Configs.tryGet("ability-vfx-bindings") ?? null) as never);
+  setFamilyTuning((Configs.tryGet("vfx-families") ?? null) as never);
 
   // ⚠️ 座標用 sim 的那一套（zone 中心 x≈-37，⛔ 不是原點）。
   mkBody(casterPos.x, casterPos.z, true);
@@ -177,6 +206,19 @@ export async function startBeamAudition(
     //    重演的話，這一頁量到的就會跟玩家看到的一樣 —— 那正是要量的東西。
     modelDocFor: (k: string) => modelFxDocFor(Models.tryGet(k) ?? null),
     loadModelContainer: (p: string) => assets.load(p),
+    // ⛔⛔ GH#699 MARK lane 量到的**第三個台子盲區**（⛔ 不是遊戲的缺陷）：
+    // 出貨的組合根（`GameApp.ts:890`）逐字是 `vfxDoc: (key) => this.contentDb.vfxFor(key)`，
+    // 而這一頁**從來沒有這一格** ⇒ `VfxSystem.doc()` 的 `this.ctx.vfxDoc?.(key)`
+    // 永遠 `undefined` ⇒ **每一份 `vfx@1` 粒子文件在這一頁上都查不到**，
+    // 於是每一次讀數都靜靜地掉進 `HitSpark`／`vfx-preset-*` 的退路階梯。
+    // ⇒ 量到的（2026-08-26）：`godie-hart.r` 真的發了 **2 則 `vfxSpawn`**
+    //   （`fx.w3x.stock.thunderclapcaster.p00` ＋ `…warstompcaster.p00`），
+    //   而場上的粒子系統名字裡**一個 `w3x` 都沒有** —— 全是 preset 退路。
+    // ⇒ ⭐ 也就是說：在這一行之前，`beam-audition.html` 的**每一份視覺證據**
+    //   只涵蓋 `spawnModelFx`（glb rig）＋ preset 退路，⛔ **從來沒有任何一份
+    //   `vfx@1` 粒子文件被這一頁證明過**（量尺自己會說謊，CLAUDE.md 👁 節洞 d）。
+    // ⛔ 這裡**不自己組 doc**（#607 手挑欄位的教訓）：走出貨的同一份登錄表。
+    vfxDoc: (key: string) => VfxDefs.tryGet(key) ?? null,
   } as never);
 
   /** 場上的 beam 根節點（`modelfx-<modelKey>-<serial>`，⛔ 不含 axis 子節點與 glb 複製節點）。 */

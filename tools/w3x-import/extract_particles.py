@@ -155,6 +155,38 @@ def luma_key_alpha(rgb) -> float:
 
 
 # ---------------------------------------------------------------------------
+# What `modulate` ACTUALLY composites downstream (GH#709) — read before you
+# "optimise away" a modulate emitter for looking like a no-op.
+# ---------------------------------------------------------------------------
+#
+# blendModeFor("modulate") -> ParticleSystem.BLENDMODE_MULTIPLY, which is TWO
+# stages, not one:
+#   1. particles.fragment `#ifdef BLENDMULTIPLYMODE` (pushed by
+#      thinParticleSystem ONLY for BLENDMODE_MULTIPLY):
+#          src.rgb = (tex.rgb * col.rgb) * a + 1 * (1 - a),   a = tex.a * col.a
+#   2. engine.setAlphaMode(4) = ALPHA_MULTIPLY = (DST_COLOR, ZERO):
+#          out = src.rgb * dst.rgb
+#   => out = dst * [ 1 - a*(1 - tex.rgb*col.rgb) ]      delta = a*(1 - tex.rgb*col.rgb)
+#
+# CONSEQUENCE, and the reason this block exists: a WHITE doc colour is NOT the
+# identity. delta collapses to 0 only when the TEXTURE is white too. Measured on
+# the shipped substitute sprites (palette+tRNS PNGs), tex.rgb / tex.a ~= 1.36,
+# so the seven shipped all-white modulate docs sit at delta 0.17-0.19 — a real,
+# visible ~19% darkening, NOT "identical to the background".
+#
+# GH#709's premise ("modulate stacked all-white => per-pixel identity", also in
+# extract_stock_vfx.py's WHITE_RGB_MIN and PRE2_temp_20260826-0000.md 2.2) came
+# from reading MULTIPLY as (DST_COLOR, ONE_MINUS_SRC_ALPHA) and assuming
+# tex.rgb == tex.a. Both premises are false; see the citations above.
+#
+# The LUMA-KEY above is what keeps modulate emitters OUT of the true identity
+# case (all-zero alpha => a = 0 => delta = 0 => the frame buffer never moves).
+# The shipping-state counterpart of that rule is criterion (5) in
+# packages/shared/src/content/vfxDocsBirthVisibility.test.ts, which derives the
+# verdict from the texture's real pixels — never from a hard-coded list.
+
+
+# ---------------------------------------------------------------------------
 # PRE2 geometry: the ONE reading of `width`/`length` this repo is allowed to have
 # ---------------------------------------------------------------------------
 

@@ -442,6 +442,39 @@
       "verdictHash": null,
       "reason": "",
       "verdictAt": null
+    },
+    "mark_visual-proof_20260826-0100": {
+      "title": "印記家族(MarkOfChaosTarget PRE2×3)：施法時在身上炸開一圈符印光",
+      "family": "mark 印記",
+      "issues": [
+        699,
+        688
+      ],
+      "abilities": [
+        "godie-h01n.ex",
+        "godie-h01o.ex",
+        "godie-n003.ex",
+        "godie-n01c.ex",
+        "godie-n01g.ex",
+        "godie-nbbc.ex",
+        "godie-orkn.ex",
+        "godie-u01u.ex",
+        "godie-udre.ex"
+      ],
+      "commit": null,
+      "sequenceDir": "docs/_reports/mark_visual-proof_20260826-0100",
+      "rollback": {
+        "configId": "vfx-families",
+        "field": "families.mark.enabled",
+        "liveValue": true,
+        "rollbackValue": false,
+        "note": "⭐ 量過的開關,⛔ 不是宣稱:翻 false ⇒ godie-n01g.ex 場上的 w3xfx-* 粒子系統 4 → 0(markofchaostarget.p00/p01/p02 ＋ 家族主 emitter 全滅),峰值亮像素 101,910 → 16,799、bright 89,341 → 6,117,技能掉回自己的 fx.prim.arcane.pulse-lg。⛔ 不必動任何一支技能的 JSON。⚠️ 這一格是家族級的:9 支 mark 家族技能一起翻。證據 docs/_reports/mark_visual-proof_20260826-0100/"
+      },
+      "registeredAt": "2026-08-25T17:33:20.617Z",
+      "verdict": null,
+      "verdictHash": null,
+      "reason": "",
+      "verdictAt": null
     }
   }
 }
