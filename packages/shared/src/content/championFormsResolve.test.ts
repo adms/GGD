@@ -133,7 +133,16 @@ describe("every 變身 form id resolves in the live registry", () => {
     cover("transform-forms-schema");
     // Reported separately so a schema break is not mis-read as "a form id is
     // missing" — the `continue` above is what would otherwise hide it.
-    expect(schemaErrors, `${schemaErrors.length} champion doc(s) fail zChampionDoc`).toEqual([]);
+    expect(
+      schemaErrors,
+      `${schemaErrors.length} champion doc(s) fail zChampionDoc。\n` +
+        `⚠️⚠️ 上面印的是 content/champions/<檔名> —— 那 72 份**整個目錄都是產生器的產物**` +
+        `(隔離區 chmod 444)。查誰寫它:bash scripts/genguard.sh content/champions/<那個檔>\n` +
+        `  · batch1.py 從 tools/skill-remake/heroes/<英雄>.py **整份重建** ⇒ 改 .py 再 ` +
+        `bash scripts/genrun.sh skillremake:json;\n` +
+        `  · tiers:apply 另外把技能的五級距欄位**單向**鏡射進卡片內嵌副本 ⇒ 改內嵌副本一定被 standalone 蓋掉。\n` +
+        `  ⛔ 直接改出貨 JSON 會被下一次 sync 打回來,而那個「又紅了」看起來像**新的**錯。`,
+    ).toEqual([]);
   });
 
   it("both halves of every SHIPPED pair are registered champions (transform-forms-registry-resolve)", () => {

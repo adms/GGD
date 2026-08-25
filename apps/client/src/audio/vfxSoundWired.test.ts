@@ -16,6 +16,17 @@
  * 突變紀錄：
  *   · `VfxSoundLayer.cue()` 的第一行 `resolveVfxSound(...)` 改成 `null`
  *     → 「一支帶音效的技能施放時，音訊層真的被要求播放」紅（0 sounds delivered）✅
+ *
+ * ⚠️⚠️ **這一支點名的 content/ 檔是產生器的產物,⛔ 不是可以直接編的東西。**
+ * 改之前先查它是誰的:`bash scripts/genguard.sh content/config/vfx-families.json`
+ *   · `content/config/vfx-families.json` 是 **pitch:build** 的產物,而且住在**產物隔離區**
+ *     (chmod 444 —— 用檔案 API 直寫會吃 PermissionError,⛔ 不是靜默成功)。
+ *   · 要動它:改**來源**再 `bash scripts/genrun.sh pitch:build`。⛔ 手改出貨 JSON 會被下一次
+ *     sync 打回來,而那個「又紅了」看起來像**新的**錯(owner 2026-08-24:「發生上百次」)。
+ *   · ⭐ **精確範圍**(逐支讀過那支產生器,⛔ 不是照抄稽核的一句話):
+ *     build_pitch.py **只覆寫每一列的 pitchDeg 一格**(來源:動畫量測 + w3a 推導);
+ *     同一列的 family/tint/anchor/alpha ⛔ **不是它寫的** —— 那幾格手改會留下來,
+ *     但檔案仍在隔離區 ⇒ 改法是 bash scripts/product-quarantine.sh unlock --step pitch:build。
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";

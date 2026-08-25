@@ -16,6 +16,15 @@
  * 突變紀錄：
  *   · 把 combo-strikes.json 裡 `superff7` 的第一段 0.2 改成 0.12 → 紅（--check 回 1，
  *     訊息指名 content/config/combo-strikes.json）
+ *
+ * ⚠️⚠️ **這一支點名的 content/ 檔是產生器的產物,⛔ 不是可以直接編的東西。**
+ * 改之前先查它是誰的:`bash scripts/genguard.sh content/config/combo-strikes.json`
+ *   · `content/config/combo-strikes.json` 是 **jasscombo:build** 的產物,而且住在**產物隔離區**
+ *     (chmod 444 —— 用檔案 API 直寫會吃 PermissionError,⛔ 不是靜默成功)。
+ *   · 要動它:改**來源**再 `bash scripts/genrun.sh jasscombo:build`。⛔ 手改出貨 JSON 會被下一次
+ *     sync 打回來,而那個「又紅了」看起來像**新的**錯(owner 2026-08-24:「發生上百次」)。
+ *   · ⭐ **精確範圍**(逐支讀過那支產生器,⛔ 不是照抄稽核的一句話):
+ *     tools/jass-combo/extract.py 從 JASS 重建**整份** ⇒ 手改必被 jasscombo:check 判 stale。
  */
 import { describe, it, expect } from "vitest";
 import { execFileSync } from "node:child_process";
@@ -44,9 +53,12 @@ describe("JASS 連段對照表", () => {
     }
     expect(
       code,
-      `連段表與 war3map.j 不同步了。⛔ 不要改這條測試 —— 跑：\n` +
-        `    python3 tools/jass-combo/extract.py\n` +
-        `再把 content/config/combo-strikes.json 與 docs/_reference/jass-combo-29.md ` +
+      `連段表與 war3map.j 不同步了。⛔ 不要改這條測試,⛔ 也不要手改那兩份產物 —— 跑：\n` +
+        `    bash scripts/genrun.sh jasscombo:build\n` +
+        `⚠️ content/config/combo-strikes.json 是 **jasscombo:build 的產物**(隔離區 chmod 444,` +
+        `直寫吃 PermissionError);extract.py 從 JASS 重建**整份**,⇒ 手改必被 --check 判 stale。\n` +
+        `查誰寫它:bash scripts/genguard.sh content/config/combo-strikes.json\n` +
+        `重生成之後把 content/config/combo-strikes.json 與 docs/_reference/jass-combo-29.md ` +
         `一起 commit。\n腳本說：${out.trim()}`,
     ).toBe(0);
   });

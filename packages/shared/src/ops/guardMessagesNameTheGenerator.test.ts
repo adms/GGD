@@ -28,12 +28,24 @@
  *
  * ⚠️ 已知的漏（誠實列出，⛔ 不要把「綠」讀成「掃乾淨了」）：
  *   · 訊息用 `${n.file}` **動態**印路徑的掃不到（`tierFlatExclusive` 與
- *     `slowLabelMatchesMultiplier` 原本就是這一種，這一批是**手動**補的）。
+ *     `slowLabelMatchesMultiplier` 原本就是這一種，那一批是**手動**補的）。
+ *     ⭐ 2026-08-25 把這一類**整個掃過一次**（走訪 `content/{abilities,champions}` 的
+ *     測試 × 訊息裡有插值）：40 支候選裡只有 **3 支真的把「檔名」印進失敗訊息**
+ *     （`blinkNotDash` · `rangeTierAdoption` · `championFormsResolve`），其餘印的是
+ *     **英雄／技能 id**，⛔ 不是「去改這一份檔」。那 3 支已手動補上。
  *   · `content/{items,augments,status-effects}/` 混著手編檔與產物 ⇒ 這一版不掃。
- *   · 已經在 PENDING 上的檔再加一則新的誤導訊息，只要路徑集合不變就不會紅。
+ *   · 已經在 PENDING 上的檔再加一則新的誤導訊息，只要路徑集合不變就不會紅
+ *     —— ⭐ 2026-08-25 之後 PENDING 是**空的**，所以這一條暫時沒有母體。
  *
- * ⭐ 棘輪：豁免表 `tools/parallel-gates/guard-message-pending.json` **只准變短**。
- * 表裡的檔案清單是寫死的 ⇒ **多一個違規檔就紅**，⛔ 不准往表裡加列。
+ * ⭐ 棘輪：豁免表 `tools/parallel-gates/guard-message-pending.json` **只准變短**，
+ * 而 2026-08-25 它已經**抽乾**（39 → 0）⇒ 現在的語意是「零豁免」。
+ * ⛔ 不准往表裡加列 —— 新的違規檔會直接紅。
+ *
+ * ⭐ 第三條（2026-08-25 新增）：**補上去的那句話自己也要是真的。**
+ * 39 支的修法是在訊息裡寫「改來源再 `bash scripts/genrun.sh <某一支>`」——
+ * 而那個步驟名是**第二個住處**（第〇·四守則）：sync-io 的擁有權一改，39 句就同時
+ * 變成謊話，⛔ 而且沒有任何東西會紅。⇒ 這一條逐則比對：訊息裡具名的 genrun 步驟
+ * 必須**真的寫得到**同一支測試點名的那些產物（`<…>` 佔位跳過）。
  *
  * 突變紀錄（一條，最承重）：把 `abilityCodeParityForms.test.ts` 訊息裡
  * `bash scripts/genguard.sh …` 那四行拿掉 → 這一條紅並**指名那一支**。改回來。
@@ -147,7 +159,19 @@ function productOwners(raw: string): string[] | null {
   return [...owners];
 }
 
-type Hit = { file: string; named: boolean; where: string[]; product: string; owner: string };
+/** sync-io 認得的步驟名（⭐ 同一個住處，⛔ 不抄第二份）。 */
+const STEP_NAMES = new Set([...OWNERS.values()].flat());
+/** 訊息裡具名的 `bash scripts/genrun.sh <step>`。`<…>` 佔位不算（那是刻意的通用寫法）。 */
+const GENRUN_RE = /genrun\.sh\s+([A-Za-z][\w.-]*:[\w.-]+)/g;
+
+type Hit = {
+  file: string;
+  named: boolean;
+  where: string[];
+  product: string;
+  owner: string;
+  steps: string[];
+};
 function scan(): { hits: Hit[]; scanned: number } {
   const hits: Hit[] = [];
   const files = testFiles(REPO).sort();
@@ -172,12 +196,15 @@ function scan(): { hits: Hit[]; scanned: number } {
       }
     }
     if (paths.length === 0) continue;
+    const steps = new Set<string>();
+    for (const m of msgs) for (const g of m.text.matchAll(GENRUN_RE)) steps.add(g[1]!);
     hits.push({
       file: rel,
       named: MARKERS.some((k) => msgs.some((m) => m.text.includes(k))),
       where,
       product: paths.join(" · "),
       owner: [...owners].join(" · "),
+      steps: [...steps],
     });
   }
   return { hits, scanned: files.length };
@@ -207,6 +234,28 @@ describe("守衛訊息必須指名產生器（誤導源稽核 ③）", () => {
       `⛔ ${unlisted.length} 則守衛訊息叫人去改一個**產生器的產物**，而訊息裡沒有一個字說那是誰寫的。\n` +
         `照著它做 = 改產物 ⇒ 下一次 sync 打回來 ⇒ 那個「又紅了」看起來像新的錯（owner 2026-08-24：「發生上百次」）。` +
         HOWTO,
+    ).toBe("");
+  });
+
+  it("⭐ 訊息裡具名的 genrun 步驟必須真的寫得到那個檔（⛔ 補上去的那句話不可以說謊）", () => {
+    // ⚠️ 這一條是 2026-08-25「把 39 列抽乾」的**必要配套**：修法是在 39 支訊息裡寫下
+    // 「改來源再 bash scripts/genrun.sh <某一支>」，而那個步驟名是 sync-io 的**第二個住處**。
+    // 沒有這一條，擁有權一改就是 39 句同時過期而**零紅燈**（第三守則：註解會說謊）。
+    const wrong: string[] = [];
+    for (const h of hits) {
+      for (const s of h.steps) {
+        if (!STEP_NAMES.has(s)) wrong.push(`${h.file} 叫人跑 genrun.sh ${s} —— sync-io.json 裡沒有這個步驟`);
+        else if (!h.owner.split(" · ").includes(s))
+          wrong.push(
+            `${h.file} 叫人跑 genrun.sh ${s}，但它寫的不是這支點名的產物（${h.product} 的主人是 ${h.owner}）`,
+          );
+      }
+    }
+    expect(
+      wrong.join("\n"),
+      "⛔ 守衛訊息指錯了產生器 —— 照著跑會得到「產生器說 OK 但檔案沒動」，\n" +
+        "   而那比不說更糟（它看起來像已經修好了）。\n" +
+        "⭐ 步驟名只有一個住處：tools/parallel-gates/sync-io.json 的 steps[].writes。",
     ).toBe("");
   });
 

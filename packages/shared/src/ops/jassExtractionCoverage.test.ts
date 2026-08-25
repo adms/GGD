@@ -22,6 +22,16 @@
  *   · 把 `group_families()` 的 `fn.startswith("Trig_" + b + "_")` 拿掉
  *     （＝退回「只認直接寫著 rawcode 的那個函式」的舊行為）→ 紅，
  *     訊息列出掉出來的 rawcode。
+ *
+ * ⚠️⚠️ **這一支點名的 content/ 檔是產生器的產物,⛔ 不是可以直接編的東西。**
+ * 改之前先查它是誰的:`bash scripts/genguard.sh content/champions/`
+ *   · `content/champions/**` 是 **skillremake:json · content:build · tiers:apply** 的產物,而且住在**產物隔離區**
+ *     (chmod 444 —— 用檔案 API 直寫會吃 PermissionError,⛔ 不是靜默成功)。
+ *   · 要動它:改**來源**再 `bash scripts/genrun.sh <那一支>`。⛔ 手改出貨 JSON 會被下一次
+ *     sync 打回來,而那個「又紅了」看起來像**新的**錯(owner 2026-08-24:「發生上百次」)。
+ *   · ⭐ **精確範圍**(逐支讀過那支產生器,⛔ 不是照抄稽核的一句話):
+ *     content/champions/ 這 72 份**整個目錄都是產物**:batch1.py 整份重建、tiers:apply 把技能的
+ *     五級距欄位單向鏡射進內嵌副本、content:build 最後打包 ⇒ 逐支用 genguard 查是哪一支。
  */
 import { describe, it, expect } from "vitest";
 import { execFileSync } from "node:child_process";

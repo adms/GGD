@@ -9,6 +9,17 @@
  *
  * 夾具走**出貨的內容檔**（`content/champions/godie-h020.json` 與它的 EX 文件），
  * ⛔ 不是一個手寫的、長得像的物件（失敗形態⑤：被測的不是出貨的那個）。
+ *
+ * ⚠️⚠️ **這一支點名的 content/ 檔是產生器的產物,⛔ 不是可以直接編的東西。**
+ * 改之前先查它是誰的:`bash scripts/genguard.sh content/champions/godie-h020.json`
+ *   · `content/champions/godie-h020.json` 是 **tiers:apply** 的產物,而且住在**產物隔離區**
+ *     (chmod 444 —— 用檔案 API 直寫會吃 PermissionError,⛔ 不是靜默成功)。
+ *   · 要動它:改**來源**再 `bash scripts/genrun.sh tiers:apply`。⛔ 手改出貨 JSON 會被下一次
+ *     sync 打回來,而那個「又紅了」看起來像**新的**錯(owner 2026-08-24:「發生上百次」)。
+ *   · ⭐ **精確範圍**(逐支讀過那支產生器,⛔ 不是照抄稽核的一句話):
+ *     apply_tiers.py 只重算**五級距那幾格**(damageTier/flat · cooldownTier · manaCostTier ·
+ *     radiusTier · rangeTier),並把 MIRRORED 欄位**單向**鏡射進 content/champions/ 的內嵌副本;
+ *     其餘欄位是**原封寫回** ⇒ 那些手改會留下來 —— ⛔ 但那是繞過隔離區的手改,仍然要走 genrun。
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";

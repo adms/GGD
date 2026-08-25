@@ -49,6 +49,15 @@
  * `innateKind: "active"` doc, which 紮根 must be to stay pressable. So there is
  * no surface, today, on which a modifier or an aura can be made conditional on
  * the form. See the final test for the exact tripwire.
+ *
+ * ⚠️⚠️ **這一支點名的 content/ 檔是產生器的產物,⛔ 不是可以直接編的東西。**
+ * 改之前先查它是誰的:`bash scripts/genguard.sh content/abilities/godie-e00s.passive.json`
+ *   · `content/abilities/godie-e00s.passive.json` 是 **skillremake:json** 的產物,而且住在**產物隔離區**
+ *     (chmod 444 —— 用檔案 API 直寫會吃 PermissionError,⛔ 不是靜默成功)。
+ *   · 要動它:改**來源**再 `bash scripts/genrun.sh skillremake:json`。⛔ 手改出貨 JSON 會被下一次
+ *     sync 打回來,而那個「又紅了」看起來像**新的**錯(owner 2026-08-24:「發生上百次」)。
+ *   · ⭐ **精確範圍**(逐支讀過那支產生器,⛔ 不是照抄稽核的一句話):
+ *     batch1.py 從 tools/skill-remake/heroes/<英雄>.py **整份重建** ⇒ 任何欄位手改都會消失。
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { readdirSync, readFileSync } from "node:fs";

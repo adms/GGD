@@ -41,7 +41,12 @@ describe("施法距離級距的採用率（GH#414）", () => {
     expect(
       untiered.length,
       `這些技能有射程卻沒有 rangeTier，而級距表整套早就做完了：\n  ${untiered.join("\n  ")}\n` +
-        `⛔ 不要調高 UNTIERED_CEILING（現在 ${UNTIERED_CEILING}）—— 那是把棘輪拆掉。`,
+        `⛔ 不要調高 UNTIERED_CEILING（現在 ${UNTIERED_CEILING}）—— 那是把棘輪拆掉。\n` +
+        `⚠️⚠️ 上面印的是 content/abilities/<檔名> —— 那 422 份**整個目錄都是產生器的產物**` +
+        `(隔離區 chmod 444)。查誰寫它:bash scripts/genguard.sh content/abilities/<那個檔>\n` +
+        `  · rangeTier 本身是 tiers:apply(tools/skill-remake/apply_tiers.py 的 tierize)算出來的 ⇒\n` +
+        `    正解是 bash scripts/genrun.sh tiers:apply,⛔ 不是手寫一格 rangeTier 進出貨 JSON。\n` +
+        `  · 產生器擁有的那 91 支要改 tools/skill-remake/heroes/*.py 再 bash scripts/genrun.sh skillremake:json。`,
     ).toBeLessThanOrEqual(UNTIERED_CEILING);
   });
 });

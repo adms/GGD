@@ -59,6 +59,18 @@
  * 「位置永遠是原點」照樣會過（原點離 (3,-4) 只有 5）—— 第④號故障。
  * 現在的寫法是 **A/B 位移**：同一支技能在兩個位置各施一次，
  * emitter 必須剛好移動 (Δx,Δz)，這樣才對壞掉的實作有鑑別力。
+ *
+ * ⚠️⚠️ **這一支點名的 content/ 檔是產生器的產物,⛔ 不是可以直接編的東西。**
+ * 改之前先查它是誰的:`bash scripts/genguard.sh content/config/vfx-families.json`
+ *   · `content/config/vfx-families.json` · `content/abilities/*.json` 都是 **pitch:build · skillremake:json · content:build · tiers:apply · apconv:build** 的產物,而且住在**產物隔離區**
+ *     (chmod 444 —— 用檔案 API 直寫會吃 PermissionError,⛔ 不是靜默成功)。
+ *   · 要動它:改**來源**再 `bash scripts/genrun.sh <那一支>`。⛔ 手改出貨 JSON 會被下一次
+ *     sync 打回來,而那個「又紅了」看起來像**新的**錯(owner 2026-08-24:「發生上百次」)。
+ *   · ⭐ **精確範圍**(逐支讀過那支產生器,⛔ 不是照抄稽核的一句話):
+ *     content/config/vfx-families.json:build_pitch.py **只覆寫每一列的 pitchDeg 一格**,
+ *     同一列的 family/tint/anchor ⛔ 不是它寫的。content/abilities/ 這 422 份整個目錄都是產物,
+ *     ⛔ 但擁有者逐支不同(batch1.py 整份重建 91 份 · tiers:apply 只重算五級距 · apconv:build 只重算
+ *     description 與 ratios) ⇒ 逐支用 genguard 查,⛔ 不要照目錄一概而論。
  */
 import { describe, it, expect, beforeAll, afterAll, afterEach, vi } from "vitest";
 // GH#384 —— 逐技能特效綁定住在 content/；⛔ 少了這一行從 repo 根跑單檔會看到空的綁定。

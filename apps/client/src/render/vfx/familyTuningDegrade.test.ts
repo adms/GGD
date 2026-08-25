@@ -43,6 +43,17 @@
  * everything green — the shipped config overrides that field, so the runtime is
  * unaffected. The code↔config drift on the KEY-bearing fields is caught instead
  * by 「bakedFamilyKeys() IS the real directory listing」.
+ *
+ * ⚠️⚠️ **這一支點名的 content/ 檔是產生器的產物,⛔ 不是可以直接編的東西。**
+ * 改之前先查它是誰的:`bash scripts/genguard.sh content/config/vfx-families.json`
+ *   · `content/config/vfx-families.json` 是 **pitch:build** 的產物,而且住在**產物隔離區**
+ *     (chmod 444 —— 用檔案 API 直寫會吃 PermissionError,⛔ 不是靜默成功)。
+ *   · 要動它:改**來源**再 `bash scripts/genrun.sh pitch:build`。⛔ 手改出貨 JSON 會被下一次
+ *     sync 打回來,而那個「又紅了」看起來像**新的**錯(owner 2026-08-24:「發生上百次」)。
+ *   · ⭐ **精確範圍**(逐支讀過那支產生器,⛔ 不是照抄稽核的一句話):
+ *     build_pitch.py **只覆寫每一列的 pitchDeg 一格**(來源:動畫量測 + w3a 推導);
+ *     同一列的 family/tint/anchor/alpha ⛔ **不是它寫的** —— 那幾格手改會留下來,
+ *     但檔案仍在隔離區 ⇒ 改法是 bash scripts/product-quarantine.sh unlock --step pitch:build。
  */
 import { describe, it, expect, beforeAll, afterAll, afterEach, vi } from "vitest";
 // GH#384 —— 逐技能特效綁定住在 content/；⛔ 少了這一行從 repo 根跑單檔會看到空的綁定。

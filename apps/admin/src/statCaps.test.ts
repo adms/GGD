@@ -8,6 +8,18 @@
  *      存在但按不到的頁面。所以用 renderToString 真的畫一次,而不是掃字串。
  *   3. 存檔送的是**整張表** —— 只送被改的那一列,會讓其他屬性從此不能被解鎖,
  *      而且畫面上完全看不出來。
+ *
+ * ⚠️⚠️ **這一支點名的 content/ 檔是產生器的產物,⛔ 不是可以直接編的東西。**
+ * 改之前先查它是誰的:`bash scripts/genguard.sh content/config/stat-caps.json`
+ *   · `content/config/stat-caps.json` 是 **statcaps:build** 的產物,而且住在**產物隔離區**
+ *     (chmod 444 —— 用檔案 API 直寫會吃 PermissionError,⛔ 不是靜默成功)。
+ *   · 要動它:改**來源**再 `bash scripts/genrun.sh statcaps:build`。⛔ 手改出貨 JSON 會被下一次
+ *     sync 打回來,而那個「又紅了」看起來像**新的**錯(owner 2026-08-24:「發生上百次」)。
+ *   · ⭐ **精確範圍**(逐支讀過那支產生器,⛔ 不是照抄稽核的一句話):
+ *     gen_stat_caps.ts::capsJson() **只覆寫 DERIVED_CAP_STATS 那 7 格**
+ *     (maxHealth/maxMana/healthRegen/manaRegen/ad/armor/mr)的 base/unlocked;
+ *     as/ap/lifesteal/cdr/range/ms 這 6 格是**讀舊值原封寫回** ⇒ 值會留下來,
+ *     ⛔ 但仍然要走 genrun,⛔ 不要 chmod +w 直接改產物。
  */
 import { describe, it, expect } from "vitest";
 import { createElement } from "react";
@@ -126,7 +138,13 @@ describe("屬性上限 後台頁 (adminui-stat-caps)", () => {
       expect(
         capFor(fromDoc, stat),
         `${stat}: content/config/stat-caps.json 與 DEFAULT_STAT_CAPS 對不上 —— ` +
-          `載得到內容檔的機器和載不到的機器會夾在不同的地方`,
+          `載得到內容檔的機器和載不到的機器會夾在不同的地方。\n` +
+          `⚠️⚠️ 改之前先查那一份是誰的:bash scripts/genguard.sh content/config/stat-caps.json\n` +
+          `  · 它是 **statcaps:build 的產物**(隔離區 chmod 444) ⇒ 走 bash scripts/genrun.sh statcaps:build,\n` +
+          `    ⛔ 不要 chmod +w 直接改產物 —— 手改會被下一次 sync 打回來。\n` +
+          `  · ⭐ 精確範圍:gen_stat_caps.ts 只覆寫 DERIVED_CAP_STATS 那 7 格\n` +
+          `    (maxHealth/maxMana/healthRegen/manaRegen/ad/armor/mr);as/ap/lifesteal/cdr/range/ms\n` +
+          `    這 6 格是讀舊值原封寫回,值會留下來 —— ⛔ 但仍然要走 genrun。`,
       ).toEqual(capFor(DEFAULT_STAT_CAPS, stat));
     }
     // 而且真的比到了不只一條(空的 CAPPABLE_STATS 會讓上面的迴圈變成空話)。

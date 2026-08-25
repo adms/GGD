@@ -73,7 +73,12 @@ describe("瞬移／位移的 point 相依性（GH#442）", () => {
       broken.map((b) => `${b.file}（castType:${b.castType}）${b.what}`),
       "這些 effect 需要 `ctx.point`，而它們的 castType **兩端都不供應** ⇒ " +
         "dash 永遠走 fallback 方向、blink 直接整格跳過（失敗形態②）。\n" +
-        "修法：castType 改成 `ground`，或把 mode 改成誠實的 `forward`。⛔ 不要放寬這條守衛。\n  ",
+        "修法：castType 改成 `ground`，或把 mode 改成誠實的 `forward`。⛔ 不要放寬這條守衛。\n" +
+        "⚠️⚠️ 上面印的是 content/abilities/<檔名> —— 那 422 份**整個目錄都是產生器的產物**" +
+        "(隔離區 chmod 444)。改之前先查是誰的:bash scripts/genguard.sh content/abilities/<那個檔>\n" +
+        "  · 91 份由 batch1.py 從 tools/skill-remake/heroes/*.py **整份重建** ⇒ 改 .py;\n" +
+        "  · 其餘由 tiers:apply / apconv:build 就地改寫 ⇒ 改來源再 bash scripts/genrun.sh <那一支>。\n" +
+        "  ⛔ 直接改出貨 JSON 會被下一次 sync 打回來,而那個「又紅了」看起來像**新的**錯。\n  ",
     ).toEqual([]);
   });
 });

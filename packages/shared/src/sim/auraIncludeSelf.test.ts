@@ -37,6 +37,17 @@
  * The assertions read the FINISHED stat (`stats.final[healthRegen]`) rather
  * than the presence of a source, because a source that recomputeStats ignores
  * would pass a source-shaped assertion and change nothing a player can see.
+ *
+ * ⚠️⚠️ **這一支點名的 content/ 檔是產生器的產物,⛔ 不是可以直接編的東西。**
+ * 改之前先查它是誰的:`bash scripts/genguard.sh content/abilities/godie-e010.passive.json`
+ *   · `content/abilities/godie-e010.passive.json` 是 **tiers:apply** 的產物,而且住在**產物隔離區**
+ *     (chmod 444 —— 用檔案 API 直寫會吃 PermissionError,⛔ 不是靜默成功)。
+ *   · 要動它:改**來源**再 `bash scripts/genrun.sh tiers:apply`。⛔ 手改出貨 JSON 會被下一次
+ *     sync 打回來,而那個「又紅了」看起來像**新的**錯(owner 2026-08-24:「發生上百次」)。
+ *   · ⭐ **精確範圍**(逐支讀過那支產生器,⛔ 不是照抄稽核的一句話):
+ *     apply_tiers.py 只重算**五級距那幾格**(damageTier/flat · cooldownTier · manaCostTier ·
+ *     radiusTier · rangeTier),並把 MIRRORED 欄位**單向**鏡射進 content/champions/ 的內嵌副本;
+ *     其餘欄位是**原封寫回** ⇒ 那些手改會留下來 —— ⛔ 但那是繞過隔離區的手改,仍然要走 genrun。
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { readdirSync, readFileSync } from "node:fs";
@@ -119,7 +130,14 @@ describe("70-00 芬多精 — allies only, never 白木 itself (w3a A0GM ← Aoa
     const aura = Abilities.get(ROOTED_INNATE).passive?.ranks[0]?.auras?.[0];
     expect(aura, "70-00 芬多精's aura block").toBeDefined();
     expect(aura!.affects).toBe("ally");
-    expect(aura!.includeSelf, "content/abilities/godie-e010.passive.json").toBe(false);
+    expect(
+      aura!.includeSelf,
+      // ⚠️ 上一行註解寫「this one names the file to edit」—— 而**那個檔是產物**。
+      // 指名一條出貨路徑就結束 = 誤導源(owner 2026-08-24:「發生上百次」)。
+      "content/abilities/godie-e010.passive.json —— ⚠️ 那是 **tiers:apply** 的產物(隔離區 chmod 444)。" +
+        "查誰寫它:bash scripts/genguard.sh content/abilities/godie-e010.passive.json;" +
+        "要動它改**來源**再 bash scripts/genrun.sh tiers:apply,⛔ 手改會被下一次 sync 打回來。",
+    ).toBe(false);
   });
 
   it("紮根: the ally inside the radius gains +5 %, 白木 itself gains NOTHING", () => {

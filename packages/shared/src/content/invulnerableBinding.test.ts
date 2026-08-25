@@ -44,6 +44,17 @@
  *  N4 `invulnerable.ts:163` `world.tick + …` → `…`(窗從回合 0 起算)
  *     → RED (免疫期間 HP 不掉)
  *  逐條輸出:/private/tmp/invuln-lane/mutations.log
+ *
+ * ⚠️⚠️ **這一支點名的 content/ 檔是產生器的產物,⛔ 不是可以直接編的東西。**
+ * 改之前先查它是誰的:`bash scripts/genguard.sh content/abilities/godie-hart.r.json`
+ *   · `content/abilities/godie-hart.r.json` 是 **apconv:build · tiers:apply** 的產物,而且住在**產物隔離區**
+ *     (chmod 444 —— 用檔案 API 直寫會吃 PermissionError,⛔ 不是靜默成功)。
+ *   · 要動它:改**來源**再 `bash scripts/genrun.sh <那一支>`。⛔ 手改出貨 JSON 會被下一次
+ *     sync 打回來,而那個「又紅了」看起來像**新的**錯(owner 2026-08-24:「發生上百次」)。
+ *   · ⭐ **精確範圍**(逐支讀過那支產生器,⛔ 不是照抄稽核的一句話):
+ *     apconv:build 每次都從 tools/ap-conversion/claims.json 的快照**倒回換算前再重算**,覆寫
+ *     description 與傷害酬載的 ratios/attrRatios(來源 = claims.json + knobs.json);tiers:apply 只重算
+ *     五級距那幾格並鏡射進英雄卡。其餘欄位原封寫回 ⇒ 手改留得住,⛔ 但仍然要走 genrun。
  */
 import { describe, it, expect } from "vitest";
 import { dirname, join } from "node:path";

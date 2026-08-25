@@ -7,6 +7,17 @@
  *
  * ⚠️ 兩個呼叫端都驗：`castAbility`（cast-BEGIN，瞬發）與 `CastResolveSystem`
  * （吟唱結束的重新查詢）。只修一邊 = 有吟唱的與沒吟唱的行為不同，看起來像隨機故障。
+ *
+ * ⚠️⚠️ **這一支點名的 content/ 檔是產生器的產物,⛔ 不是可以直接編的東西。**
+ * 改之前先查它是誰的:`bash scripts/genguard.sh content/abilities/godie-o00l.e.json`
+ *   · `content/abilities/godie-o00l.e.json` 是 **tiers:apply** 的產物,而且住在**產物隔離區**
+ *     (chmod 444 —— 用檔案 API 直寫會吃 PermissionError,⛔ 不是靜默成功)。
+ *   · 要動它:改**來源**再 `bash scripts/genrun.sh tiers:apply`。⛔ 手改出貨 JSON 會被下一次
+ *     sync 打回來,而那個「又紅了」看起來像**新的**錯(owner 2026-08-24:「發生上百次」)。
+ *   · ⭐ **精確範圍**(逐支讀過那支產生器,⛔ 不是照抄稽核的一句話):
+ *     apply_tiers.py 只重算**五級距那幾格**(damageTier/flat · cooldownTier · manaCostTier ·
+ *     radiusTier · rangeTier),並把 MIRRORED 欄位**單向**鏡射進 content/champions/ 的內嵌副本;
+ *     其餘欄位是**原封寫回** ⇒ 那些手改會留下來 —— ⛔ 但那是繞過隔離區的手改,仍然要走 genrun。
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { SimWorld } from "./SimWorld";
