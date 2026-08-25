@@ -1672,3 +1672,10 @@ watchdog 後代 CPU 修復。
 ③ genguard 的**查詢腳本與 hook 對齊**（同一個檔 hook 放行而腳本說擋 ＝ 防呆工具自己在說謊）。
 
 **下一批**：#649 第 2 批（103 支內容 + 替代表）· #648（43 支迴圈）· #650 · #653 · #629（1000 隻殭屍的資料結構）· #626（第〇·七稽核）。
+
+## v0.27.4（2026-08-25 晚）—— 誤導源重掃＋經典技能四票
+
+- 🧭 誤導源：流量三閘（normalizerListIsReal / referencedCommandsExist / guardProseNamesTheGenerator，皆突變紅過）＋ guardMessages 擴域＋ prose:build EACCES 拆彈；存量修 53 筆（TSCAN29/DSCAN9/MSCAN15）；開 #706 #707
+- ⚔️ #704 超究武神霸斬 3.5s 原作時間軸（jass-combo 產生器）· #705 Saber 20-04 鏡射 Avalon（含 claims.json 舊條目移除）· #692 陽電子砲 count:1 · #703 冷快取預熱＋@visual-proof
+- ✅ 部署：DEPLOY7=0 六項後置條件綠 · BUILD_STAMP v0.27.4 · 煙霧測試 `content loaded: 71 champions (cv_a6eed9666137)` · 帳號 204→204
+- ➡️ 下一批：#688 Phase 6 TornadoElemental ×9（tpl-locust-orb 一族＋九列參數）· #699 PRE2 · #670/#672 驗收批
