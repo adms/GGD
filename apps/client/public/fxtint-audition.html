@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>tint 驗收 — GH#697 luma-keyed stock 特效模型逐通道比對</title>
+<style>
+  :root { --bg:#05060a; --panel:#12161f; --line:#2a3145; --fg:#e8ecf6; --dim:#98a2bd; --gold:#f0c674; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; }
+  body { background:var(--bg); color:var(--fg); overflow:hidden;
+         font:14px/1.55 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans TC",sans-serif; }
+  #view { position:fixed; inset:0; width:100%; height:100%; display:block; }
+  .hud { position:fixed; z-index:2; background:rgba(14,18,28,.9); border:1px solid var(--line);
+         border-radius:10px; padding:12px 14px; }
+  #panel { top:14px; left:14px; max-width:470px; }
+  #panel h1 { margin:0 0 4px; font-size:16px; }
+  #panel p { margin:6px 0 0; color:var(--dim); font-size:12.5px; }
+  #stats { bottom:14px; left:14px; right:14px; font-variant-numeric:tabular-nums;
+           color:var(--gold); font-size:13px; white-space:pre; overflow:auto; max-height:34vh; }
+  code { background:#0009; padding:1px 5px; border-radius:4px; }
+</style>
+</head>
+<body>
+<canvas id="view"></canvas>
+
+<div id="panel" class="hud">
+  <h1>tint 驗收 <span style="color:var(--dim);font-size:12px">GH#697</span></h1>
+  <p><b>左 = 不著色</b>（對照組）、<b>右 = <code>tint:[1,0,0]</code></b>，同一份出貨
+     <code>monsoonbolttarget.glb</code>。⭐ 驗收看的是<b>逐通道的 R/B 比值</b>，
+     ⛔ 不是亮像素數 —— 缺陷在的時候兩邊<b>一模一樣</b>（都是藍的）。</p>
+  <p>量尺先自證：純紅／純藍底各渲一幀再讀回來，通道錯了就整頁作廢。</p>
+</div>
+
+<div id="stats" class="hud"><span id="readout">跑起來中…</span></div>
+
+<script type="module">
+const out = document.getElementById("readout");
+try {
+  const { runFxTintAudition } = await import("/src/render/fxTintAudition.ts");
+  const res = await runFxTintAudition(document.getElementById("view"));
+  window.__fxtint = res;
+  const c = res.calibration;
+  const line = (t, k, h) => `  ${t} ${k.padEnd(7)} lit=${String(h.lit).padStart(6)}  R=${String(h.r).padStart(5)} G=${String(h.g).padStart(5)} B=${String(h.b).padStart(5)}  R/B=${h.rOverB}`;
+  out.textContent =
+    `量尺自證: ${c.ok ? "✅ 通過" : "⛔ 失敗 —— 底下的數字不可信"}` +
+    `  (純紅底 R/B=${c.red.rOverB} · 純藍底 R/B=${c.blue.rOverB})\n` +
+    res.rows.map((r) => `tick ${String(r.tick).padStart(3)}\n${line("", "左·原色", r.plain)}\n${line("", "右·染紅", r.tinted)}`).join("\n") +
+    (res.notes.length ? "\n" + res.notes.join("\n") : "");
+} catch (e) {
+  out.textContent = "載入失敗（這頁只在 vite dev 下可用）：" + (e && e.message ? e.message : e);
+  window.__fxtintError = String(e && e.stack ? e.stack : e);
+}
+</script>
+</body>
+</html>

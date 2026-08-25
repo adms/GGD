@@ -15,6 +15,10 @@ import { AssetContainer } from "@babylonjs/core/assetContainer";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
+// GH#697 —— 分流守衛跑**真的**出貨 .glb：真的 glTF 載入器 → 真的 PBRMaterial。
+import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
+import { LoadAssetContainerAsync } from "@babylonjs/core/Loading/sceneLoader";
+import "@babylonjs/loaders/glTF/2.0";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 // GH#689 —— 剪輯守衛用**真的** Babylon 動畫物件（⛔ 不 mock）。
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
@@ -369,5 +373,122 @@ describe("model fx clip playback (@visual-proof)", () => {
     ).toBeCloseTo(0.15, 2);
     rig.dispose();
     expect(scene.animationGroups.filter((g) => g.name.startsWith("modelfx-"))).toHaveLength(0);
+  });
+});
+
+/**
+ * ⭐【GH#697 —— tint 走得到「看得見的那一格」】**@visual-proof**
+ *
+ * V6 lane 2026-08-25 現場量到：出貨節點寫 `tint:[1,0,0]`，**畫面上的閃電是藍的**。
+ * 而在這一族守衛出現之前，`model fx tint ①` 是**綠的** —— 它讀的是
+ * `diffuseColor`，而 stock 特效模型的顏色**不住在那裡**（失敗形態⑧：消費端存在，
+ * 但它讀的是一格不影響畫面的欄位）。
+ *
+ * ## 量到的分佈（404 份出貨 glb，`docs/_reports/C7_temp_20260825.md` §1）
+ *
+ * | 材質形狀 | 份數 | 顏色住哪 |
+ * |---|---:|---|
+ * | `emissiveTexture` + `emissiveFactor[1,1,1]` + BLEND（`gltf.py` 的 glow 分支） | **152** | `emissiveColor` |
+ * | `emissiveFactor` 亮著、無貼圖（兩份都逐字叫 `Glow`） | 4 | `emissiveColor` |
+ * | `emissiveColor` 全黑（不透明 body / MASK / 一般 BLEND） | 684 | `albedoColor` |
+ *
+ * ⭐ 三條斷言讀的都是**出貨那一份 .glb 自己宣告的材質**（從 glb 的 JSON chunk 解出來
+ * 再建成真的 `PBRMaterial`），⛔ 不是我手寫的夾具（失敗形態⑤：2026-08-23 抓到三份
+ * 夾具，其中一份的欄位全 repo 不存在）。
+ * 真的像素證據（`readPixels` 前後 R/B 翻轉）在
+ * `docs/_reports/fxtint_visual-proof_20260825/` ＋ `public/fxtint-audition.html`。
+ *
+ * ── 突變紀錄（一批一條，挑最承重的那一行）────────────────────────────────
+ *  · `modelFxRig.ts::applyFxTint()` 拿掉自發光那一段分流（`if (letsLightThrough) …`）
+ *    → ① 紅：「tint 沒有到達**看得見的那一格**：B 通道還是 1」。
+ *    ⇒ 沒有它，locust 計畫「fxTint 回填 133 隻非白 dummy」整條線逐位元是空的。
+ */
+describe("model fx tint 分流：顏色住哪就乘哪 (@visual-proof)", () => {
+  const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
+  type Rgb = [number, number, number];
+  const rgb = (c: { r: number; g: number; b: number }): Rgb => [c.r, c.g, c.b];
+  /** clone 的名字 → 它是從哪一份出貨素材複製出來的。 */
+  const srcName = (m: PBRMaterial): string => m.name.replace(/-fxtint$/, "");
+
+  /**
+   * 跑**出貨那條路**：真的 .glb 位元組 → 真的 glTF 載入器 → 真的 `ModelFxRig.spawn`
+   * → 真的 `fillGeometry` → 真的 `applyFxTint`。回 `before`（容器裡那份原始素材，
+   * `applyFxTint` 保證不就地改它）與 `after`（場景樹上那份 clone）。
+   */
+  async function paint(
+    file: string,
+    tint: Rgb,
+  ): Promise<{ before: PBRMaterial[]; after: PBRMaterial[] }> {
+    const scene = new Scene(new NullEngine());
+    const bytes = readFileSync(join(REPO, "content/assets/models/imported", file));
+    const container = await LoadAssetContainerAsync(
+      `data:base64,${bytes.toString("base64")}`,
+      scene,
+      { pluginExtension: ".glb" },
+    );
+    container.removeAllFromScene();
+    const before = container.materials.filter((m): m is PBRMaterial => m instanceof PBRMaterial);
+    const rig = new ModelFxRig(scene, {
+      resolveModel: () => ({ glbPath: `assets/models/imported/${file}`, scale: 1, fxTint: tint }),
+      loadContainer: () => Promise.resolve(container),
+    });
+    rig.spawn({ ...WIRE, instances: [WIRE.instances[0]!] });
+    await new Promise((r) => setTimeout(r, 0));
+    const after = scene.meshes
+      .map((m) => m.material)
+      .filter((m): m is PBRMaterial => m instanceof PBRMaterial && m.name.endsWith("-fxtint"));
+    return { before, after };
+  }
+
+  it("① luma-keyed stock 特效：tint [1,0,0] 把 B 通道消掉（藍→紅）", async () => {
+    // 這一族的貼圖本身是藍的（可見像素均值 R32 G91 B134，最亮的核心 254/255/255），
+    // 而出貨那支 shader 是 `finalEmissive = vEmissiveColor × emissiveTex × …`
+    // ⇒ B 通道歸零 ＝ 螢幕上剩下的只有紅（⛔ 不是「亮像素多了幾個」）。
+    const { before, after } = await paint("monsoonbolttarget.glb", [1, 0, 0]);
+    // ⚠️ 逐**網格** clone（8 個圖元共用 7 份素材）⇒ 比對的是**名字的集合**，⛔ 不是長度。
+    expect(new Set(after.map(srcName)), "有素材沒有被著色（或多了不該有的）").toEqual(
+      new Set(before.map((m) => m.name)),
+    );
+    for (const m of before) {
+      expect(m.emissiveTexture, "前提不成立：這份出貨素材的顏色不住自發光").toBeTruthy();
+      expect(Math.max(...rgb(m.emissiveColor)), "前提不成立：自發光是全黑的").toBeGreaterThan(0);
+    }
+    for (const m of after) {
+      // ⭐ 量尺自證：albedo 那一半**本來就會動** —— 它沒動代表這一頁量錯了，
+      //    下面「B 歸零」的結論一律作廢（第二守則 d：量尺自己會說謊）。
+      expect(m.albedoColor.b, "量尺壞了：連舊的 albedo 那一半都沒有被乘到").toBe(0);
+      expect(
+        m.emissiveColor.b,
+        "tint 沒有到達**看得見的那一格** —— 節點寫 [1,0,0] 而畫面上還是藍的",
+      ).toBe(0);
+      expect(m.emissiveColor.r, "紅通道被一起消掉了 ⇒ 整具會變黑").toBeGreaterThan(0);
+    }
+    // ⛔ 原始素材是整個容器共用的，一格都不可以被就地改掉。
+    for (const m of before) expect(m.emissiveColor.b).toBeGreaterThan(0);
+  });
+
+  it("② sentinel —— 不透明 body（英雄 glb）的自發光逐位元不變", async () => {
+    const { before, after } = await paint("herosephiroth.glb", [1, 0, 0]); // 3 份、全 OPAQUE
+    const src = new Map(before.map((m) => [m.name, rgb(m.emissiveColor)] as const));
+    expect([...src.values()].every((e) => Math.max(...e) === 0), "前提不成立：這具 body 有自發光").toBe(true);
+    expect(after.length, "一份著色過的素材都沒有進場景樹").toBeGreaterThan(0);
+    for (const m of after) {
+      expect(rgb(m.emissiveColor), "分流塗到了不該塗的 body 材質").toEqual(src.get(srcName(m)));
+      expect(m.albedoColor.b, "body 的 albedo 才是它該走的那一格").toBe(0);
+    }
+  });
+
+  it("③ 近黑退路 —— 全 glow 的 blackhole 染 [0,0,0] 不會整具消失", async () => {
+    // ⛔ 出貨的 `imported.blackhole` 五份材質**全部**是 glow；乘 0 進加法層 = 消失。
+    const { before, after } = await paint("blackhole.glb", [0, 0, 0]);
+    const src = new Map(before.map((m) => [m.name, rgb(m.emissiveColor)] as const));
+    expect(after.length, "一份著色過的素材都沒有進場景樹").toBeGreaterThan(0);
+    for (const m of after) {
+      expect(
+        rgb(m.emissiveColor),
+        "近黑 tint 把加法層乘成 0 —— 38-002 黑龍波整具從畫面上不見",
+      ).toEqual(src.get(srcName(m)));
+      expect(m.albedoColor.r, "黑剪影那一半仍然要發生").toBe(0);
+    }
   });
 });

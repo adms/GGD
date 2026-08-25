@@ -1,0 +1,30 @@
+{
+  "ticket": "GH#697",
+  "date": "2026-08-25",
+  "page": "apps/client/public/fxtint-audition.html  (client-beam :39673)",
+  "chain": "content/models/w3x.stock.monsoonbolttarget.json -> content/assets/models/imported/monsoonbolttarget.glb -> Babylon glTF loader -> ModelFxRig.spawn() -> applyFxTint -> WebGL frame -> getImageData",
+  "layout": "left half = no tint (control) · right half = spawnModelFx.tint [1,0,0]",
+  "litThreshold": "max(R,G,B) > 48",
+  "calibration": {
+    "ok": true,
+    "redBackground": { "lit": 93312, "r": 204, "g": 0, "b": 0 },
+    "blueBackground": { "lit": 93312, "r": 0, "g": 0, "b": 204 },
+    "note": "known clear colours read back on the correct channels in both directions; without this every 'it did not change' below is worthless"
+  },
+  "diag": {
+    "canvas": "486x384",
+    "bbox": "-6.47,-2.55,-0.42 … 6.45,7.49,2.26",
+    "camera": "0.0,2.5,-22.8 (derived from the real bbox, not hard-coded)",
+    "geoMeshes": 16,
+    "materialsReady": 16,
+    "vertices": 88,
+    "tintedMaterials": ["mat0-fxtint:1,0,0", "mat0-fxtint:1,0,0", "mat1-fxtint:1,0,0", "mat2-fxtint:1,0,0", "mat3-fxtint:1,0,0", "mat4-fxtint:1,0,0", "mat5-fxtint:1,0,0", "mat6-fxtint:1,0,0"]
+  },
+  "rows": [
+    { "tick": 0,  "plain": { "lit": 0,   "r": 0,    "g": 0,     "b": 0,     "rOverB": 0     }, "tinted": { "lit": 0,   "r": 0,     "g": 0,    "b": 0,    "rOverB": 0     }, "note": "shader still compiling (KHR_parallel_shader_compile) — zero pixels on BOTH halves" },
+    { "tick": 8,  "plain": { "lit": 455, "r": 97.6, "g": 131.9, "b": 169.5, "rOverB": 0.576 }, "tinted": { "lit": 291, "r": 134.9, "g": 15.6, "b": 15.6, "rOverB": 8.648 } },
+    { "tick": 16, "plain": { "lit": 455, "r": 97.6, "g": 131.9, "b": 169.5, "rOverB": 0.576 }, "tinted": { "lit": 291, "r": 134.9, "g": 15.6, "b": 15.6, "rOverB": 8.648 } },
+    { "tick": 24, "plain": { "lit": 455, "r": 97.6, "g": 132.0, "b": 169.6, "rOverB": 0.576 }, "tinted": { "lit": 290, "r": 135.1, "g": 15.6, "b": 15.6, "rOverB": 8.655 } }
+  ],
+  "verdict": "R/B flips 0.576 (blue-dominant) -> 8.648 (red-dominant) = 15x. Mean R rises 97.6 -> 134.9; mean B collapses 169.5 -> 15.6. Before the fix both halves were byte-identical (V6 lane measured the shipped node writing [1,0,0] and the bolt rendering blue)."
+}

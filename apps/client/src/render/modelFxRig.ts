@@ -124,17 +124,50 @@ export function fxClipTargets<T extends { name: string }>(
 }
 
 /**
- * 把 `fxTint` 乘進這一棵子樹上每一份素材的**漫反射/反照率**。
+ * ⭐ 近黑 tint 的**退路門檻**（GH#697）—— `max(r,g,b)` 低於它就 ⛔ 不碰自發光。
+ *
+ * ⚠️ 它是**量出來的**，⛔ 不是挑一個好看的數：`UNIT_TINTS.json` 588 隻單位解出
+ * 72 種相異頂點色，由低到高排是 **0.0（20 隻）· 0.0392（`nntg` 的 10/255）·
+ * 0.1176 · 0.1961 · …** —— 0.0392 與 0.1176 之間那道**三倍寬的空隙**就是
+ * 「作者要它幾乎不見」與「作者要它暗一點」的分界。0.05 落在空隙裡。
+ *
+ * ⭐ 一鍵 rollback：把它調成 `1.1` ⇒ 每一格 tint 都走不到自發光 ＝ 2026-08-25
+ * 之前的行為，逐位元不變。（⚠️ 它還 ⛔ 不是後台欄位 —— `content/config/**` 與
+ * admin 都不在本 lane 的柵欄裡，見 `docs/_reports/C7_temp_20260825.md`。）
+ */
+export const FX_TINT_EMISSIVE_FLOOR = 0.05;
+
+/**
+ * 把 `fxTint` 乘進這一棵子樹上每一份素材**看得見的那一格顏色**。
  *
  * ⚠️ ⭐ **一定要先 clone 素材。** `instantiateModelsToScene({doNotInstantiate:true})`
  * 複製的是節點，⛔ 不是素材 —— 同一個 `AssetContainer` 出來的每一具共用同一個
  * `Material` 物件。⛔ 就地改它 = 這個 modelKey 的**每一具**（含未來別的技能引用它時）
  * 一起變色，而且 `dispose()` 之後那份污染還留在容器裡。
  *
- * ⚠️ ⭐ **⛔ 不動自發光（emissive）與 alpha。** 原作的 `SetUnitVertexColor` 在
- * 純黑（`[0,0,0]`）時畫出來的是**黑色剪影**，⛔ 不是「消失」。把 0 乘進加法混合的
- * 自發光層會讓整具模型從畫面上不見 —— 那是失敗形態①（算出來了但畫在看不見的地方），
- * 而且它與「顏色正確」在測試上長得一模一樣。
+ * ── ⭐【GH#697】「看得見的那一格」**不是同一格** —— 依材質分流 ─────────────
+ * 2026-08-25 V6 lane 現場量到：出貨節點寫 `tint:[1,0,0]`，**畫面上的閃電是藍的**。
+ * 根因是 stock 特效模型走 `w3xlib/gltf.py` 的 **additive glow** 分支
+ * （`fm>=3 且無不透明底層`）：它把貼圖掛成 `emissiveTexture`、`emissiveFactor`
+ * 設 `[1,1,1]`、`KHR_materials_emissive_strength=2.0`。而 PBR 的最終色是
+ * `finalEmissive = vEmissiveColor × emissiveTex × …`（量的是出貨那支
+ * `pbrBlockFinalUnlitComponents`）⇒ ⭐ **顏色住 `emissiveColor`**，
+ * 而 `albedoColor` 在那一族**沒有 baseColorFactor**（載入器給 1,1,1）、
+ * 只在有光照時貢獻一點點 ⇒ 乘它逐位元等於沒發生（第一·五守則）。
+ *
+ * ⭐ 判準**從材質自己推導**，⛔ 不是一張模型名單：`emissiveColor` 亮著（非全黑）
+ * ⇒ 這份材質的顏色住自發光 ⇒ 乘它。全 repo 404 份 glb 量到的分佈：
+ * **152 個 emissive-textured/BLEND（全部是 glow 分支）· 4 個 emissive-factor-only
+ * （兩者都逐字叫 `Glow`）· 其餘 684 個 emissiveColor 全黑** ——
+ * ⇒ 不透明 body **一格都不會被碰到**（乘 0 是恆等，而這裡連乘都不乘）。
+ *
+ * ⚠️ ⭐ **黑色剪影那條退路保留著**（{@link FX_TINT_EMISSIVE_FLOOR}）。原作的
+ * `SetUnitVertexColor` 在純黑（`[0,0,0]`）時對**不透明**幾何畫出來的是黑色剪影，
+ * ⛔ 不是「消失」；而把 0 乘進加法層會讓一具**全 glow** 的模型整個不見
+ * ——那是失敗形態①，而且它與「顏色正確」在測試上長得一模一樣。
+ * ⛔ 這不是假設：出貨的 `imported.blackhole`（5/5 材質全 glow）與
+ * `imported.darkraor`（3 份材質裡 1 份 glow）**兩份文件的 `fxTint` 都是 `[0,0,0]`**。
+ * ⇒ 近黑 tint 走舊路（只乘 albedo）：body 仍是黑剪影、glow 仍在，逐位元不變。
  *
  * ⚠️ 斷言要讀**最終**物件：這裡把 clone 指回 `mesh.material`，所以任何對**原始**
  * 素材物件寫的斷言，不管有沒有生效都會過（見 `views/mobTint.test.ts` 的檔頭）。
@@ -144,6 +177,10 @@ export function applyFxTint(
   tint: readonly [number, number, number],
   alpha?: number,
 ): number {
+  // ⭐ 這一發的 tint 有沒有「讓任何一個通道透過來」。⛔ 用 max ⛔ 不用亮度：
+  //    `[0.1176,0,0]` 的亮度只有 0.025，用亮度會把一格**飽和的暗紅**誤判成近黑。
+  const letsLightThrough =
+    Math.max(tint[0], tint[1], tint[2]) > FX_TINT_EMISSIVE_FLOOR;
   let painted = 0;
   for (const mesh of root.getChildMeshes(false)) {
     const mat = (mesh as { material?: unknown }).material as
@@ -155,14 +192,24 @@ export function applyFxTint(
       | (Record<string, unknown> & { name?: string })
       | null;
     if (!copy) continue;
-    // ⭐ 兩種素材各自的漫反射欄位名（StandardMaterial / PBRMaterial）。⛔ 不碰
-    //    `emissiveColor` 與（無 fxAlpha 時的）`alpha` —— 見上面的註解。
+    // ⭐ 兩種素材各自的漫反射欄位名（StandardMaterial / PBRMaterial）。
     for (const key of ["diffuseColor", "albedoColor"] as const) {
       const c = copy[key] as { r: number; g: number; b: number } | undefined;
       if (!c) continue;
       c.r *= tint[0];
       c.g *= tint[1];
       c.b *= tint[2];
+    }
+    // ⭐【GH#697 分流】自發光亮著 = 這份材質的顏色住在這裡（luma-key 過的 stock
+    //    特效、`Glow` 材質）⇒ 乘它。全黑 ⇒ ⛔ 一格都不碰（不透明 body 走這條）。
+    //    ⚠️ 近黑 tint 也 ⛔ 不碰 —— 見 `FX_TINT_EMISSIVE_FLOOR` 的黑剪影退路。
+    if (letsLightThrough) {
+      const e = copy["emissiveColor"] as { r: number; g: number; b: number } | undefined;
+      if (e && (e.r > 0 || e.g > 0 || e.b > 0)) {
+        e.r *= tint[0];
+        e.g *= tint[1];
+        e.b *= tint[2];
+      }
     }
     // ⭐【模型級透明度】`model@1.fxAlpha`（GH#688 Phase 4 機制②）——
     //    **材質 alpha 乘法**，⛔ 不是 visibility 開關：0.5 的幻影要看得到後面的
