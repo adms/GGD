@@ -86,3 +86,39 @@ we're back, go on
 ## 17:41
 
 go on
+
+## 19:36
+
+ssh-agent 重開後空了 => ok 了嗎?
+
+為什麼你老是會忍不住直接去改產生器的產物，你是被什麼訊息誤導了嗎？請找到全部資訊誤導的根源處 
+=> 你把根源會令人誤會的地方都改完，並且自動化script了嗎
+
+## 19:37
+
+我執行拉 但我不知道要輸入什麼 Enter passphrase for /Users/Takuro/.ssh/github_rs 從哪裡來
+
+## 19:38
+
+ok 了
+
+## 19:45
+
+context 95%
+
+## 19:51
+
+誤導源：存量改完了，流量有閘擋著，但還有三塊沒掃
+已完成	
+稽核	34 處全部找出、分類、量化（docs/_reports/product-edit-misinfo_20260825.md）
+修法	CLAUDE.md 三處 · abilityMirror 兩重錯 · genguard.sh 兩句 · 兩則長期記憶 · 棘輪 39 → 0（每一句逐支讀產生器原始碼寫的精確範圍）
+自動化	guardMessagesNameTheGenerator.test.ts（AST 讀訊息 → sync-io.json 判產物 → 沒提產生器就紅）· 棘輪只能變短 · 第 4 條驗 genrun.sh <step> 真的寫得到那個產物 · genrun.sh 最後一行自己喊成敗
+證明它活著	上線後第一次紅，抓到的是這一輪剛寫的守衛
+
+⚠️ ⛔ 但還沒掃到的三塊（lane 誠實列在報告 §6，我不掩蓋）：
+閘只掃 *.test.ts —— tools/** 的 docstring 沒掃（稽核第 ③ 類點名過）
+content/{items,augments,status-effects}/ 混著手編檔與產物 ⇒ 這一版不掃
+稽核的另外兩條：normalizerListIsReal（半條閘）· prose:apply 是個不存在的步驟名躺在裁決清單裡（package.json 裡真名是 prose:build/prose:check）—— 一個永遠對不上的名字，而且沒有任何測試會紅
+
+
+=> 不只這三塊，請你重新檢查跟掃描一次，並且修正，盡量變成自動化 script

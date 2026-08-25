@@ -501,6 +501,7 @@
           "kind": "spawnModelFx",
           "shape": "single",
           "preset": "tpl-beam-roll",
+          "count": 1,
           "onArrive": [
             {
               "kind": "spawnVfx",

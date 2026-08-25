@@ -1034,7 +1034,7 @@
       "plan": "GH#390 特效自帶的音效一個都沒移植",
       "state": "supported",
       "caveat": "⭐ 四個時機（發射 / 命中 / 循環 / 消散）填的是 **`config.audio-map@1.sfx` 的 key**，⛔ 不是檔名也不是 URL —— 音量 / 冷卻 / 同時發聲數住在 audio-map 那一份，播放走 `AudioSystem.playSfx` ⇒ 玩家的總音量與 SFX 開關自動適用。⚠️ 兩層逐格覆寫：`abilities[<id>].soundX` 蓋 `families[<fam>].soundX`，⛔ 不是「填一格就整組換掉」。⚠️ **循環音是重播不是真 loop**：每 `soundLoopMs` 重放一次，並在 `soundLoopMaxMs` 絕對到期時自動回收並改播消散音（⛔ 沒有「一直響到有人叫停」）。⚠️ 填一個 audio-map 沒有的 key = 這個時機安靜（⛔ 不是報錯）；填 `wc3.*` 那一族要注意它們住在只有 full-asset build 才掛得上的 Blizzard overlay，正式站上會**退回家族那一格**。",
-      "evidence": "packages/shared/src/content/schema/vfx.ts（`VFX_SOUND_CUES` / `resolveVfxSound`）+ apps/client/src/audio/vfxSound.ts + apps/client/src/audio/vfxSoundWired.test.ts + content/config/vfx-families.json（21 個家族原型 + 72 支原作 JASS 音效的逐支覆寫，由 tools/w3x-import/build_vfx_sound_bindings.py 產生）",
+      "evidence": "packages/shared/src/content/schema/vfx.ts（`VFX_SOUND_CUES` / `resolveVfxSound`）+ apps/client/src/audio/vfxSound.ts + apps/client/src/audio/vfxSoundWired.test.ts + content/config/vfx-families.json（21 個家族原型 + 72 支原作 JASS 音效的逐支覆寫，由 `bash scripts/genrun.sh pitch:build` 產生）",
       "nearestExisting": "⚠️ `ability@1.sfxKey` 長得很像但**不是同一件事**：那是「這一支技能的身分音」（一顆 `abilityCast` 一發），而這一列是「這一招的**特效**自己帶的那幾發」。同一次施法兩邊都會響，這正是原作的樣子。"
     },
     {

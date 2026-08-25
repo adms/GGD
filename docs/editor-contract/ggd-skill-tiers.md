@@ -33,9 +33,9 @@ owner 2026-08-19（GH#438，這一份要涵蓋的**全部**軸）：
 | 軸 | JSON 欄位 | 出貨 config | 幾支技能填了 | 開關 |
 |---|---|---|---:|---|
 | 施法距離 | `rangeTier` | `range-tiers.json` | 192 (45.6%) | `enabled: true` |
-| 施法範圍 | `radiusTier` | `aoe-tiers.json` | 93 (22.1%) | `enabled: true` |
+| 施法範圍 | `radiusTier` | `aoe-tiers.json` | 92 (21.9%) | `enabled: true` |
 | 位移 | `distanceTier` | `displacement-tiers.json` | 2 (0.5%) | `enabled: true` |
-| **傷害** | `damageTier` | `damage-tiers.json` | 204 (48.5%) | `enabled: true` |
+| **傷害** | `damageTier` | `damage-tiers.json` | 203 (48.2%) | `enabled: true` |
 | **耗魔** | `manaCostTier` | `mana-tiers.json` | 203 (48.2%) | `enabled: true` |
 | **冷卻** | `cooldownTier` (+`cooldownShape`) | `cooldown-tiers.json` | 346 (82.2%) | `enabled: true` |
 
@@ -180,7 +180,7 @@ owner 2026-08-19：「**JASS 的部分優先權大於 w3x 技能設定**，因�
 |---|---:|---|
 | **JASS**（第 3 層） | 26 | JASS 明確寫了 `AoE <數字>`，用它 |
 | **w3a**（第 5 層） | 137 | JASS 沒寫幾何，退回 w3a 的 `area` / `cast_range` 欄位 |
-| — | 73 | 對不到原作（GGD 原創、EX、或編號不在 w3x 裡） |
+| — | 72 | 對不到原作（GGD 原創、EX、或編號不在 w3x 裡） |
 
 ⚠️ 「w3a」那一列**不代表已經驗證過** —— 它代表**沒有人去 JASS 確認過**。
 `JASS_BEHAVIOR.json` 的 `geometry` 是稽核欄，只有 35 支寫了明確的 AoE 數字。
@@ -227,7 +227,7 @@ owner 2026-08-19：「**JASS 的部分優先權大於 w3x 技能設定**，因�
 
 ---
 
-## 五 · 逐支對照（全部 236 支）
+## 五 · 逐支對照（全部 235 支）
 
 `原作` = 依上面的優先序取到的 WC3 值。`引擎` = 真的跑過 `registerAll()` 之後註冊表裡的數字。
 `→級` = 用出貨級距表就近收之後會落在哪一級（⛔ 尚未寫回技能 JSON）。
@@ -245,7 +245,6 @@ owner 2026-08-19：「**JASS 的部分優先權大於 w3x 技能設定**，因�
 | 21-03 赤焰爆發 | `godie-e008.e` | — | — | — | — | — | 12 | 極大 |
 | 21-02 拔焰刀 | `godie-e008.q` | w3a | — | — | — | 250 | 4.5 | 小 |
 | 20-03 約束與勝利之劍 | `godie-e00l.e` | w3a | 200 | — | — | 900 | 12 | 極大 |
-| 20-04 Avalon-永恆的理想鄉 | `godie-e00l.r` | — | — | 3 | 極小 | — | — | — |
 | 22-03 五吋釘 | `godie-e00n.e` | w3a | — | — | — | 450 | 8 | 大 |
 | 22-00 嗚鎖打! | `godie-e00n.passive` | — | — | 6 | 中 | — | — | — |
 | 59-04 野戰型陽電子砲 | `godie-e00r.r` | w3a | 220 | — | — | 450 | 8 | 大 |

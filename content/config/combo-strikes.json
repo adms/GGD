@@ -618,13 +618,13 @@
       "rhythm": "loop-expr",
       "steps": [
         0.0,
-        0.5,
-        0.6,
-        0.7,
-        0.8,
-        0.9
+        0.9,
+        1.1,
+        1.3,
+        1.5,
+        1.7
       ],
-      "finisherDelaySec": 0.1,
+      "finisherDelaySec": 1.8,
       "seq": [
         "W0.2",
         "W0.6",

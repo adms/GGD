@@ -23,11 +23,11 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 1425 個檔案**，分佈在 2 個隔離區。
+**目前共 1457 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
-| [`docs/legacy/`](legacy-index.md#docslegacy) | 985 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
+| [`docs/legacy/`](legacy-index.md#docslegacy) | 1017 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
 | [`content/_legacy/`](legacy-index.md#contentlegacy) | 440 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
@@ -35,7 +35,7 @@ owner 2026-08-13：
 
 ---
 
-## `docs/legacy/` —— 985 檔
+## `docs/legacy/` —— 1017 檔
 
 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）
 
@@ -990,6 +990,38 @@ owner 2026-08-13：
 | `_overwrites/overwrite_temp_20260825-180731/apps/client/src/vfx/featureProofAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260825-180858/apps/client/src/vfx/featureProofAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260825-181113/docs/_reports/classic_omnislash_visual-proof_20260825/o4_combo_late.png` | （.png 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-195724/scripts/genguard.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-195745/scripts/genguard.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-195751/packages/shared/src/ops/normalizerListIsReal.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-195756/packages/shared/src/ops/normalizerListIsReal.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-195759/packages/shared/src/ops/normalizerListIsReal.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-195802/packages/shared/src/ops/normalizerListIsReal.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-200217/CLAUDE.md` | GGD — 開發守則 —— 這一份是**規則**，不是說明書。架構與現況看 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-200232/packages/shared/src/ops/guardMessagesNameTheGenerator.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-200234/packages/shared/src/ops/guardMessagesNameTheGenerator.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-200523/packages/shared/src/ops/guardProseNamesTheGenerator.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-200525/packages/shared/src/ops/guardProseNamesTheGenerator.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-200533/tools/parallel-gates/guard-prose-pending.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-200606/tools/w3x-import/mesh_audit_report.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-201727/packages/shared/src/content/statNormalization.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-201740/docs/新英雄上架SOP.md` | 新英雄上架 SOP — task #214 —— 這份清單是從 **實際開放 godie-efur（揍敵客桀諾 #13）與 godie-hblm（賈修貝爾 #05）所需要的每一個檔案** 反推出來的， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-201752/docs/_新場地計畫.md` | 新場地計畫 —— AnimeArenaMapGenerator —— GH#324** · 2026-08-14 · 架構決策簡報（Phase 0，**本輪未寫任何程式碼**） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-201803/tools/anime-arena-map/gen.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-201806/tools/anime-arena-map/gen.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-201807/tools/anime-arena-map/gen.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-201817/docs/_codex-handoff.md` | 交付給 Codex 技能編輯器 —— 從這裡開始 —— 一句話**：讀 3 份**必給**，其餘照需要。⛔ 權威是**端點**不是文件； | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-201819/docs/_codex-handoff.md` | 交付給 Codex 技能編輯器 —— 從這裡開始 —— 一句話**：讀 3 份**必給**，其餘照需要。⛔ 權威是**端點**不是文件； | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-201822/docs/_codex-handoff.md` | 交付給 Codex 技能編輯器 —— 從這裡開始 —— 一句話**：讀 3 份**必給**，其餘照需要。⛔ 權威是**端點**不是文件； | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-201838/docs/_session-handover.md` | 交接：2026-08-08 —— ⚠️⚠️ **這是 2026-08-08 的快照，已過期**：現況以 `docs/_execution-batches.md` 尾節與 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-201839/CLAUDE.md` | GGD — 開發守則 —— 這一份是**規則**，不是說明書。架構與現況看 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-201934/packages/shared/src/content/schema/item.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-202027/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-202146/packages/shared/src/content/schema/config/audioMap.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-202157/apps/client/src/render/views/voxelSkin.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-202217/packages/shared/src/content/schema/mapSpecDoc.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-202219/packages/shared/src/content/schema/config/ambientVfx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-202228/apps/client/src/render/beatDance.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260825-202230/apps/client/src/render/beatDance.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/04.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/06.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/08.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |

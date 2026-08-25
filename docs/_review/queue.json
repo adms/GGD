@@ -512,6 +512,22 @@
       ]
     },
     {
+      "id": "fx.avalon.reflect-burst",
+      "kind": "vfx",
+      "hash": "ede2bc583a25afec13bb0c476649cb7891374cf0",
+      "risk": 8,
+      "reasons": [
+        "4 支上架技能引用（R/EX ×2 加權後 risk 8）",
+        "未審"
+      ],
+      "refs": [
+        "godie-e002.ex",
+        "godie-e002.r",
+        "godie-e00l.ex",
+        "godie-e00l.r"
+      ]
+    },
+    {
       "id": "fx.avalon.reflect-spark",
       "kind": "vfx",
       "hash": "a584a7fa463adf6a33aa194e6561ff7c4f50f3f4",
@@ -894,21 +910,6 @@
         "godie-o00l.r",
         "godie-u00k.r",
         "godie-udea.e"
-      ]
-    },
-    {
-      "id": "fx.avalon.reflect-burst",
-      "kind": "vfx",
-      "hash": "ede2bc583a25afec13bb0c476649cb7891374cf0",
-      "risk": 6,
-      "reasons": [
-        "3 支上架技能引用（R/EX ×2 加權後 risk 6）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e002.ex",
-        "godie-e002.r",
-        "godie-e00l.ex"
       ]
     },
     {

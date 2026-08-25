@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_46addb46c5b6",
+    "contentVersion": "cv_a6eed9666137",
     "collections": {
       "champions": {
-        "hash": "c0337af90259",
+        "hash": "4aefdb4c66a7",
         "count": 71
       },
       "abilities": {
-        "hash": "b9eb7c11987d",
+        "hash": "3de90053c728",
         "count": 421
       },
       "items": {
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "abff548895f1",
+        "hash": "9b1bbbf5e93d",
         "count": 87
       },
       "models": {
@@ -1123,7 +1123,7 @@
         "plan": "GH#390 特效自帶的音效一個都沒移植",
         "state": "supported",
         "caveat": "⭐ 四個時機（發射 / 命中 / 循環 / 消散）填的是 **`config.audio-map@1.sfx` 的 key**，⛔ 不是檔名也不是 URL —— 音量 / 冷卻 / 同時發聲數住在 audio-map 那一份，播放走 `AudioSystem.playSfx` ⇒ 玩家的總音量與 SFX 開關自動適用。⚠️ 兩層逐格覆寫：`abilities[<id>].soundX` 蓋 `families[<fam>].soundX`，⛔ 不是「填一格就整組換掉」。⚠️ **循環音是重播不是真 loop**：每 `soundLoopMs` 重放一次，並在 `soundLoopMaxMs` 絕對到期時自動回收並改播消散音（⛔ 沒有「一直響到有人叫停」）。⚠️ 填一個 audio-map 沒有的 key = 這個時機安靜（⛔ 不是報錯）；填 `wc3.*` 那一族要注意它們住在只有 full-asset build 才掛得上的 Blizzard overlay，正式站上會**退回家族那一格**。",
-        "evidence": "packages/shared/src/content/schema/vfx.ts（`VFX_SOUND_CUES` / `resolveVfxSound`）+ apps/client/src/audio/vfxSound.ts + apps/client/src/audio/vfxSoundWired.test.ts + content/config/vfx-families.json（21 個家族原型 + 72 支原作 JASS 音效的逐支覆寫，由 tools/w3x-import/build_vfx_sound_bindings.py 產生）",
+        "evidence": "packages/shared/src/content/schema/vfx.ts（`VFX_SOUND_CUES` / `resolveVfxSound`）+ apps/client/src/audio/vfxSound.ts + apps/client/src/audio/vfxSoundWired.test.ts + content/config/vfx-families.json（21 個家族原型 + 72 支原作 JASS 音效的逐支覆寫，由 `bash scripts/genrun.sh pitch:build` 產生）",
         "nearestExisting": "⚠️ `ability@1.sfxKey` 長得很像但**不是同一件事**：那是「這一支技能的身分音」（一顆 `abilityCast` 一發），而這一列是「這一招的**特效**自己帶的那幾發」。同一次施法兩邊都會響，這正是原作的樣子。"
       },
       {
@@ -4907,5 +4907,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "49bbb41855ce"
+  "profileDigest": "ee8571fe23a9"
 }
