@@ -341,9 +341,18 @@ ok "白名單: $WL 隻英雄啟用"
 # 這一項讀的是 game shard **自己的登錄表**：那是「映像裡的 Zod」真的跑過
 # 「bind-mount 上的內容」之後得到的東西。靜態檔案伺服器會很樂意把一份
 # 客戶端解析不了的 bundle 送出去；登錄表不會。
-CONTENT_JSON=$(curl -fsS -m 15 "http://127.0.0.1:2567/healthz" 2>/dev/null || true)
+# ⏳ 2026-08-25：**要等它起來**。容器 `Started` 之後還要幾秒才 listen,而這一項
+#    在 21 秒時打過去 ⇒ 空回應 ⇒ die。⚠️ 那個紅燈說的是「我來早了」,⛔ 不是
+#    「映像解析不了內容」—— 一個會謊報的後置條件比沒有後置條件更糟（它會讓人
+#    在下一次真的壞掉時忽略它）。⇒ 重試到 60 秒,逾時才是真的紅。
+CONTENT_JSON=""
+for _ in $(seq 1 20); do
+  CONTENT_JSON=$(curl -fsS -m 5 "http://127.0.0.1:2567/healthz" 2>/dev/null || true)
+  [ -n "$CONTENT_JSON" ] && break
+  sleep 3
+done
 if [ -z "$CONTENT_JSON" ]; then
-  die "讀不到 game shard 的 /healthz —— 無法確認映像解析得了內容"
+  die "讀不到 game shard 的 /healthz（等了 60 秒）—— 無法確認映像解析得了內容"
 fi
 CONTENT_OK=$(printf '%s' "$CONTENT_JSON" \
   | python3 -c 'import json,sys; d=json.load(sys.stdin).get("content") or {}; print("1" if d.get("ok") else "0")' \

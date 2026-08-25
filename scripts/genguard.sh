@@ -39,10 +39,17 @@ if (hit.length) {
     echo "   ⇒ 改它的**來源**(tools/ 或 content/ 的上游),然後跑該產生器重生成。"
     RC=1
   elif [ "$KIND" = "NORMALIZER" ]; then
-    echo "⚠️ $p 會被**正規化器** $NAME 就地改欄位,⛔ 但它不是那支的產物 ⇒ **可以手改**。"
-    echo "   ⚠️ 改完請跑一次 \`pnpm $NAME\`,讓級距/換算欄位跟著新內容重算。"
+    echo "⚠️ $p 會被**正規化器** $NAME 就地改欄位,⛔ 但它不是那支的產物 ⇒ 這一支不擋你。"
+    echo "   ⚠️⚠️ **「不擋」≠「這個檔是手編的」** —— 它可能是**別的**產生器的產物,"
+    echo "      也可能有一份**上游來源**(例:content/abilities/*.json 有些來自"
+    echo "      tools/skill-remake/heroes/*.py 的 model_fx= 表格出口)。"
+    echo "      ⇒ 改之前再問一次: grep -rl \"\$(basename \"$p\" .json)\" tools/ | head"
+    echo "      找得到來源就改來源＋genrun,⛔ 不要直接編這一份。"
+    echo "   ⚠️ 真的手改了,請跑一次 \`pnpm $NAME\`,讓級距/換算欄位跟著新內容重算。"
   else
-    echo "✓ $p 沒有產生器擁有者,可以手改。"
+    echo "✓ $p 沒有**產生器**擁有者。"
+    echo "   ⚠️ 這只表示 sync-io 的 writes 沒有它 —— **上游來源**仍然可能存在"
+    echo "      (grep -rl 到 tools/ 就是)。⛔ 「沒有擁有者」≠「隨便改」。"
   fi
 done
 exit $RC

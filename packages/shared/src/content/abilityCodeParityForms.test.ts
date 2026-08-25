@@ -104,6 +104,12 @@ describe("變身對子的技能同步", () => {
       `⛔ ${oneSided.length} 支技能只動了一邊。有變身的英雄在內容樹裡是**兩份文件**，` +
         `本體改了、變身態沒改 ⇒ 玩家變身之後用的是舊的那一份（全套測試會全綠）。\n` +
         `⭐ 照訊息去把另一邊補上（補上之後兩邊一起動，下一次跑會自動變成新基準）。\n` +
+        `⚠️⚠️ **補之前先查那一邊是誰的**：bash scripts/genguard.sh content/abilities/<id>.json\n` +
+        `   · 產生器的產物 ⇒ 改**來源**（tools/skill-remake/heroes/*.py 的 model_fx= 那類表格出口）\n` +
+        `     再 bash scripts/genrun.sh <step>。⛔ 直接改出貨 JSON 會被下一次 sync 打回來，\n` +
+        `     而那個「又紅了」看起來像**新的**錯（2026-08-25 我在這一條上就繞了一整圈）。\n` +
+        `   · ⚠️ 同一支技能在內容樹裡有**兩份**：standalone content/abilities/ ＋\n` +
+        `     內嵌 content/champions/<hero>.json 的 abilities.<SLOT> —— **兩份都要動**。\n` +
         `確認過是**刻意的單邊形態差異**才手動重生成：\n` +
         `   GGD_FORM_PAIR_DUMP=1 npx vitest run packages/shared/src/content/abilityCodeParityForms.test.ts`,
     ).toBe("");
