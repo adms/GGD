@@ -225,7 +225,26 @@ def build() -> tuple[str, str]:
                 #    而卡面寫的是 N —— 那就是第一·五守則要防的那種多出來的一刀。
                 offsets = _cumulative(fam.loop_gaps)
                 steps = offsets[:-1]
-                finisher = round(offsets[-1] - offsets[-2], 4) if len(offsets) >= 2 else 0.0
+                # ⭐ 收尾**不是**「第 N 刀貼著第 N−1 刀」—— 01-04 的 JASS 裡,
+                #    真傷害(UnitDamageTarget×2, war3map.j:33915/33921)在第 7 刀的
+                #    視覺之後還要:①睡完那一圈自己的兩個運算式 sleep(`loop_gaps[-1]`)
+                #    ②再吃**傷害前的字面等待** 0.2+0.6+0.4+0.2(蓄力停頓,`seq` 裡
+                #    第一個 D 之前的 W 全部)。⇒ 收尾 = 三段接起來。
+                # ⛔ 2026-08-25 之前只有第一段 ⇒ 決勝的蓄力戲劇性整段蒸發(GH#704)。
+                # ⚠️ 可反駁的假設:loop 形的字面等待住在**收尾分支**(跑一次),
+                #    ⛔ 不是每圈都跑 —— 今天唯一的 loop-expr 族(superff7)逐字如此
+                #    (那幾個 W 在 `if SupI≥7` 裡)。第二族出現時要回來驗這一格。
+                pre_dmg = 0.0
+                for tok in fam.seq:
+                    if tok == "D":
+                        break
+                    if tok.startswith("W"):
+                        pre_dmg += float(tok[1:])
+                finisher = (
+                    round((offsets[-1] - offsets[-2]) + fam.loop_gaps[-1] + pre_dmg, 4)
+                    if len(offsets) >= 2
+                    else 0.0
+                )
                 rhythm = "loop-expr"
             else:
                 steps = None

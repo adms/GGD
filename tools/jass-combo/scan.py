@@ -44,15 +44,24 @@ _LINEAR_RE = re.compile(
 def loop_gap_series(sleep_src: str, count: int) -> list[float]:
     """迴圈內的**運算式**等待 → 逐圈秒數。
 
-    ⭐ 今天只解一種形狀:`a - i*b`（克勞德 01-04 的 `1.00 - I2R(SupI)*0.50`）。
+    ⭐ 解 `a - i*b`（克勞德 01-04 的 `1.00 - I2R(SupI)*0.50`），而且是**全部**：
+    一圈裡有幾個運算式 sleep 就加總幾個（01-04 的迴圈裡有**兩個** ——
+    `1−0.5i` 與 `1−0.6i`，war3map.j:33844/33866）。
+    ⛔ 2026-08-25 之前只收 `search` 的第一個 ⇒ 每圈少睡一次，
+    七連斬 3.5 秒被壓成 1.0 秒（GH#704）。
     ⛔ 解不出來就回空陣列 —— 讓下游看得見「這一族的節奏抓不到」,
     ⛔ 而不是拿迴圈**外面**那幾個字面 sleep 冒充它（那正是 2026-08-22 抓到的錯）。
     """
-    m = _LINEAR_RE.search(sleep_src)
-    if not m or count <= 0:
+    if count <= 0:
         return []
-    a, b = float(m.group(1)), float(m.group(2))
-    return [max(JASS_SLEEP_FLOOR_SEC, a - i * b) for i in range(1, count + 1)]
+    gaps = [0.0] * count
+    found = False
+    for m in _LINEAR_RE.finditer(sleep_src):
+        found = True
+        a, b = float(m.group(1)), float(m.group(2))
+        for idx in range(count):
+            gaps[idx] += max(JASS_SLEEP_FLOOR_SEC, a - (idx + 1) * b)
+    return gaps if found else []
 
 
 @dataclass
@@ -141,11 +150,12 @@ def scan(jass_text: str) -> list[Family]:
                             loop_count = int(m.group(1))
                     if "TriggerSleepAction" in t or "PolledWait" in t:
                         loop_has_wait = True
-                        # ⛔ 只收**第一個解得出來的**運算式等待 —— 迴圈裡兩種都有
-                        # (克勞德 01-04 的迴圈同時有 `1.00 - i*0.50` 與幾個字面 sleep),
-                        # 後者會把前者蓋掉,而蓋掉之後這一族的節奏就抓不到了。
-                        if not loop_sleep_src and _LINEAR_RE.search(t):
-                            loop_sleep_src = t
+                        # ⭐ 收**每一個**解得出來的運算式等待（用換行接起來,
+                        # `loop_gap_series` 逐個 finditer 加總）—— 01-04 的迴圈裡
+                        # 有兩個運算式 sleep,只收第一個 = 每圈少睡一次(GH#704)。
+                        # 字面 sleep 不進來(它們照舊走 `waits`/`seq`)。
+                        if _LINEAR_RE.search(t):
+                            loop_sleep_src = loop_sleep_src + "\n" + t if loop_sleep_src else t
         if loop:
             shape = "loop"
         elif n_dmg >= 2 and seq[0].startswith("W"):
