@@ -62,6 +62,22 @@ const PRESET_FIELDS = [
   "spacing",
   "spinDegPerSec",
   "scale",
+  // ⭐ GH#689 —— 剪輯與它的播放速率。與 `spinDegPerSec` 同一個理由住這張表：
+  //    「這一族的模型要播哪一條動畫、播多慢」是**家族**的性質（一整族 locust
+  //    dummy 都播 `stand`、一整族爆殼都是 `death` × 0.15），⛔ 不是逐支技能的
+  //    選擇 —— 不在這張表上的話，模板寫了它也**從未到達出貨節點**（GH#673-②
+  //    的 `lifeSec` 就是那樣安靜地掉了）。
+  "clip",
+  "clipTimeScale",
+  // ⭐ GH#693 —— 外觀那兩格（節點級頂點色／透明度）。與 `count`/`spacing` 同一個
+  //    理由住這張表：一個 `tpl-locust-*` 家族的顏色是**逐支**填的參數，而模板是它
+  //    的唯一預設住處 —— 少了這兩行，模板表單上有一格 tint、展開出來的技能卻是
+  //    素材原色（第一·五守則：說了但不會發生）。
+  //    ⚠️ 出貨的四份 locust 模板**刻意不給** tint/alpha 預設（census 量到 133/236
+  //    非白而且每一具都不同 ⇒ 家族層沒有一個共同的值）⇒ `slotDefault` 回
+  //    undefined ⇒ 既有節點逐位元不變。
+  "tint",
+  "alpha",
   // ⭐ GH#673-② —— static/orbit 的**唯一終止條件**。2026-08-24 之前不在這張表:
   //    模板寫了 lifeSec:2 而它**從未到達出貨節點** ⇒ 光束靠 vfxHardMaxLifeSec=5
   //    兜底活 4.97 秒、落點爆炸在施放瞬間就響(arriveDelaySec 用 travel=0 算成 0)。

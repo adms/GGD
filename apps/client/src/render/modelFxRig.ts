@@ -68,6 +68,59 @@ export interface ModelFxModelDoc {
    * 這一格是**模型級恆定半透明**那一半（GH#688 Phase 4 機制②）。
    */
   fxAlpha?: number;
+  /**
+   * ⭐ 這一份 .glb 的**邏輯狀態 → 軌名**對照（`model@1.clipMap`）。
+   *
+   * ⚠️ 它**本來就存在**（英雄動畫走的就是它），所以 `spawnModelFx.clip` ⛔ 不開
+   * 第二份對照表（第〇·四守則）：`clip:"death"` 在 `flamestrike1` 解成 `death`、
+   * 在 `darkraor` 解成 `Death` —— 大小寫與命名慣例是**這份 .glb 的**性質，
+   * ⛔ 不是引用它的技能該知道的事。
+   */
+  clipMap?: ModelDoc["clipMap"];
+}
+
+/**
+ * ⭐ 這個 rig 對一條 `AnimationGroup` 需要的**四格**（GH#689）。
+ *
+ * ⚠️ 刻意是結構型別而 ⛔ 不 import `AnimationGroup`：這個檔對 Babylon 的具體依賴
+ * 只有 `TransformNode`（其餘全是 `import type`），而守衛餵進來的是**真的**
+ * Babylon 物件 —— 結構型別讓「真物件」與「量測探針」共用同一條路，
+ * ⛔ 不是讓測試可以塞一份假的（那是失敗形態⑤）。
+ */
+export interface ModelFxAnimGroup {
+  name: string;
+  speedRatio: number;
+  play(loop?: boolean): unknown;
+  stop(): unknown;
+  dispose(): unknown;
+}
+
+/**
+ * ⭐【剪輯解名】`spawnModelFx.clip` → 這一具實例上**要播的那幾條軌**（GH#689）。
+ *
+ * 兩段，順序有意義：
+ *  ① **先查 `clipMap`** —— 那是「這份 .glb 把 idle/death 叫做什麼」的唯一住處。
+ *  ② 查不到才把 `clip` 當**軌名逐字**（WC3 的 `birth` 這種不在六格裡的一次性序列）。
+ *
+ * ⚠️ ⭐ **比對必須容忍前綴**（量到的，⛔ 不是推測）：`instantiateModelsToScene`
+ * 把每一條軌 clone 成 `nameFunction(原名)`，所以場上那條叫
+ * `modelfx-7-death`，⛔ 不叫 `death` —— 逐字比對一條都不會中，而那會是
+ * 「填了 clip、畫面上沒動、沒有任何錯誤」的失敗形態②（`ChampionView` 的掛件
+ * 動畫踩過同一個坑，GH#392）。⇒ 完全相同 → 不分大小寫的字尾，兩段。
+ *
+ * ⛔ 名字對不上就**一條都不播** —— 不猜一條給它（與 `attachment@1.anim` 同規矩）。
+ */
+export function fxClipTargets<T extends { name: string }>(
+  groups: readonly T[],
+  clip: string,
+  clipMap?: ModelDoc["clipMap"],
+): T[] {
+  const mapped = (clipMap as Record<string, string | undefined> | undefined)?.[clip];
+  const want = mapped ?? clip;
+  const exact = groups.filter((g) => g.name === want);
+  if (exact.length > 0) return exact;
+  const lower = want.toLowerCase();
+  return groups.filter((g) => g.name.toLowerCase().endsWith(lower));
 }
 
 /**
@@ -198,14 +251,49 @@ interface ModelFxNodes {
   axis: TransformNode;
 }
 
+/**
+ * ⭐【這一發的外觀】節點級 `tint`／`alpha` 蓋過 `model@1` 的 `fxTint`／`fxAlpha`
+ * （GH#693）。⛔ **不相乘** —— 原作的 `SetUnitVertexColor` 是覆寫語意，相乘會讓
+ * 「把一具紅 dummy 染成藍」得到黑。
+ */
+interface ModelFxAppearance {
+  tint?: readonly [number, number, number];
+  alpha?: number;
+}
+
+/**
+ * free-list 的 key。⚠️ ⭐ **外觀要進 key**，⛔ 不可以只用 `modelKey`：
+ * 著色是在 `fillGeometry` 把材質 **clone 之後烘進去**的，所以一個染成紅色的節點
+ * 回到池子裡之後，下一發（可能是同一份 glb 的**白色**版本）撈到它就會拿到紅的
+ * —— 而畫面上那是「顏色偶爾不對」，⛔ 沒有任何錯誤訊息（失敗形態①）。
+ * ⛔ 也不可以「重用時再套一次」：`applyFxTint` 是**乘進現有材質**，重套會複利。
+ */
+function poolKeyOf(modelKey: string, look: ModelFxAppearance): string {
+  if (look.tint === undefined && look.alpha === undefined) return modelKey;
+  return `${modelKey}|${look.tint ? look.tint.join(",") : ""}|${look.alpha ?? ""}`;
+}
+
 interface LiveModelFx {
   root: TransformNode;
   axis: TransformNode;
   modelKey: string;
+  /** ⭐ 回收要放回**同一個外觀**的 free-list（見 {@link poolKeyOf}）。 */
+  poolKey: string;
+  /** ⭐ 容器晚到時的回填要用同一份外觀，⛔ 不是模型文件的預設色。 */
+  look: ModelFxAppearance;
   /** ⭐ sim 解算完的**這一具**（⛔ 不是整發的 spec —— 客戶端不再自己算路徑，GH#606） */
   inst: ModelFxSpawnInstance;
   y: number;
   spinDegPerSec?: number;
+  /**
+   * ⭐ 這一發要播的剪輯與速率（GH#689）。⚠️ 它必須存在**這裡**而不是只在
+   * `spawn()` 的區域變數裡：容器晚到時的回填（`ensureContainer` 的①c）是在
+   * 幾百毫秒之後才拿到 `AnimationGroup` 的，那一刻只剩下 `live` 這一份資料
+   * —— 少了它，**每一支技能的第一次施放**都會有模型但不播動畫（而第二次以後
+   * 正常，所以它看起來像「偶爾沒動」，⛔ 不像缺陷）。
+   */
+  clip?: string;
+  clipTimeScale?: number;
   ageSec: number;
   lifeSec: number;
 }
@@ -215,6 +303,18 @@ export class ModelFxRig {
   private readonly pool = new Map<string, ModelFxNodes[]>();
   /** 這個 rig 造過的**每一個**節點（dispose 走這一份，⛔ 不是走 live） */
   private readonly born: TransformNode[] = [];
+  /**
+   * ⭐ 每一具實例（以它的 `axis` 節點為身分）從容器 clone 出來的 AnimationGroup。
+   *
+   * ⚠️ ⭐ **AnimationGroup 不是節點** —— `instantiateModelsToScene` 把容器的整份
+   * 動畫清單 clone 進 `scene.animationGroups`（量到：2 → 4），而
+   * `root.dispose(false, true)` **一條都不會收**。⇒ 少了這一份登錄表，每一次
+   * `retire()` 都在場景的每幀動畫清單上多留一條孤兒軌（`ChampionView` 的
+   * `formAttachGroups`／`ClipAnimator` 逐字同一個理由，#223 / GH#288）。
+   * ⛔ 它也不能塞進 `ModelFxNodes`：那個結構同時被別的 lane 在改，而這一份
+   * 只有這四個地方讀得到（fill / start / release / retire）。
+   */
+  private readonly clipGroups = new Map<TransformNode, ModelFxAnimGroup[]>();
   private readonly live: LiveModelFx[] = [];
   private readonly containers = new Map<string, AssetContainer | null>();
   private readonly loading = new Set<string>();
@@ -278,11 +378,20 @@ export class ModelFxRig {
     // ⚠️ 它掛在**內**層,所以 `spinDegPerSec` 的翻滾繞的是已經橫放好的那根長軸。
     const axisEuler = modelFxAxisCorrection(doc.fxLongAxis);
 
+    // ⭐ GH#693 —— 這一發的外觀：節點級 `tint`/`alpha` **取代** `model@1` 的那兩格。
+    //    ⛔ 不相乘（`SetUnitVertexColor` 是覆寫語意），⛔ 也不是「有 tint 就連 alpha
+    //    一起換掉」—— 兩格各自獨立退回模型的預設。
+    const look: ModelFxAppearance = {
+      ...(ev.tint !== undefined ? { tint: ev.tint } : {}),
+      ...(ev.alpha !== undefined ? { alpha: ev.alpha } : {}),
+    };
+    const poolKey = poolKeyOf(ev.modelKey, look);
+
     let made = 0;
     for (let i = 0; i < n; i++) {
       const inst = ev.instances[i];
       if (!inst) break;
-      const nodes = this.acquire(ev.modelKey, doc);
+      const nodes = this.acquire(ev.modelKey, doc, poolKey, look);
       if (!nodes) break;
       const { root, axis } = nodes;
       root.scaling.setAll((doc.scale ?? 1) * (ev.scale ?? 1));
@@ -292,6 +401,8 @@ export class ModelFxRig {
         root,
         axis,
         modelKey: ev.modelKey,
+        poolKey,
+        look,
         inst,
         // ⭐ GH#673-③ —— 離地**跟施放縮放連動**,⛔ 不是絕對值:埋掉的量 ∝ 渲染尺寸。
         //    Peer session 量到的兩個點就在同一條比例線上（ev.scale 2.5 ⇒ 半高 2.62 要
@@ -300,10 +411,21 @@ export class ModelFxRig {
         //    證明 netherstrike 是**第一個**採用者,沒有別的消費端要遷移。
         y: (doc.fxSpawnHeight ?? 0) * (ev.scale ?? 1),
         ...(ev.spinDegPerSec !== undefined ? { spinDegPerSec: ev.spinDegPerSec } : {}),
+        // ⭐ GH#689 —— 剪輯那兩格。⚠️ `clip` 缺席時**整段不存在** ⇒ 一條軌都不
+        //    碰 ＝ 2026-08-25 之前的行為，逐位元不變（rollback：內容清空這一格）。
+        ...(ev.clip !== undefined
+          ? {
+              clip: ev.clip,
+              ...(ev.clipTimeScale !== undefined ? { clipTimeScale: ev.clipTimeScale } : {}),
+            }
+          : {}),
         ageSec: 0,
         lifeSec,
       };
       this.applyPose(item);
+      // ⭐ 幾何已經在（重用／容器早就載好）⇒ 現在就起播；還沒到的那幾具由
+      //    `ensureContainer` 的回填在容器落地的當下補播（同一支 `startClip`）。
+      this.startClip(item, doc);
       this.live.push(item);
       made++;
     }
@@ -360,7 +482,11 @@ export class ModelFxRig {
   trimPoolTo(cap: number): void {
     if (this.disposed || Number.isNaN(cap)) return;
     for (const [key, free] of [...this.pool]) {
-      while (this.pooledCount > cap && free.length > 0) this.retire(free.pop()!.root);
+      while (this.pooledCount > cap && free.length > 0) {
+        const nodes = free.pop()!;
+        this.disposeClipGroups(nodes.axis); // ⭐ 軌不是節點,`retire` 收不到它們
+        this.retire(nodes.root);
+      }
       // ⛔ 空的 free-list 也要除名:`pool` 的 key 數本身就是那個無界的東西。
       if (free.length === 0) this.pool.delete(key);
     }
@@ -372,6 +498,10 @@ export class ModelFxRig {
     this.disposed = true;
     this.live.length = 0;
     this.pool.clear();
+    // ⭐ GH#689 —— 軌**先**收（趁它們的目標還活著），與 `ChampionView.dispose()`
+    //    對 `clipAnimator` / `formAttachGroups` 的順序逐字相同。
+    for (const groups of this.clipGroups.values()) for (const g of groups) g.dispose();
+    this.clipGroups.clear();
     for (const root of this.born) root.dispose(false, true);
     this.born.length = 0;
     for (const c of this.containers.values()) c?.dispose();
@@ -413,7 +543,14 @@ export class ModelFxRig {
           for (const item of this.live) {
             if (item.modelKey !== modelKey || item.axis.getChildren().length > 0) continue;
             const doc = this.opts.resolveModel(modelKey);
-            if (doc) this.fillGeometry(modelKey, item.axis, doc);
+            // ⭐ GH#693 —— 回填要用**這一發**的外觀（`item.look`），⛔ 不是模型的預設色:
+            //    首發那幾具正是玩家最會注意的那一次，用錯色比晚幾幀更明顯。
+            if (doc) {
+              this.fillGeometry(modelKey, item.axis, doc, item.look);
+              // ⭐ GH#689 —— 幾何是**現在**才到的，所以剪輯也要**現在**才起播：
+              //    `spawn()` 那一次呼叫 `startClip` 時這一具身上一條軌都還沒有。
+              this.startClip(item, doc);
+            }
           }
         }
       })
@@ -441,7 +578,12 @@ export class ModelFxRig {
    *      程式碼做補這件事(第三守則)。
    *   c. 容器**載完的當下**回填還活著的空實例 —— 首發那一具就是在這裡補的。
    */
-  private fillGeometry(modelKey: string, axis: TransformNode, doc: ModelFxModelDoc): boolean {
+  private fillGeometry(
+    modelKey: string,
+    axis: TransformNode,
+    doc: ModelFxModelDoc,
+    look: ModelFxAppearance = {},
+  ): boolean {
     const container = this.containers.get(modelKey);
     if (!container) return false;
     const serial = this.serial++;
@@ -451,19 +593,90 @@ export class ModelFxRig {
       { doNotInstantiate: true },
     );
     for (const node of inst.rootNodes) node.parent = axis;
+    // ⭐ GH#689 —— 剪輯：`instantiateModelsToScene` **會**把容器的 AnimationGroup
+    //    一起 clone（量到，`doNotInstantiate:true` 下也一樣），而且軌的目標已經
+    //    重新指到這一具的 clone 節點上 ⇒ ⛔ 不必自己 clone group。
+    // ⚠️ 但它們**不在** `axis` 底下（不是節點），所以要自己記帳 —— 見 `clipGroups`。
+    const groups = inst.animationGroups as unknown as ModelFxAnimGroup[];
+    if (groups.length > 0) {
+      // 空 glb（rootNodes 0 個）會讓 `getChildren().length === 0` 永遠成立 ⇒ 這一支
+      // 可能被同一個 axis 呼叫第二次。⛔ 前一批不收就是孤兒軌。
+      const prev = this.clipGroups.get(axis);
+      if (prev) for (const g of prev) g.dispose();
+      this.clipGroups.set(axis, groups);
+    }
     // ⭐ fxTint／fxAlpha 共用同一個入口（clone-材質那一套規矩只寫一份）：
     //    只有 fxAlpha 時 tint 用 [1,1,1]（乘 1 ＝ 不著色）。
-    if (doc.fxTint || doc.fxAlpha !== undefined)
-      applyFxTint(axis, doc.fxTint ?? [1, 1, 1], doc.fxAlpha);
+    // ⭐ GH#693 —— **這一發**的 tint／alpha 取代模型文件的那兩格（⛔ 不相乘）。
+    const tint = look.tint ?? doc.fxTint;
+    const alpha = look.alpha ?? doc.fxAlpha;
+    if (tint || alpha !== undefined) applyFxTint(axis, tint ?? [1, 1, 1], alpha);
     return true;
   }
 
-  private acquire(modelKey: string, doc: ModelFxModelDoc): ModelFxNodes | null {
-    const free = this.pool.get(modelKey);
+  /**
+   * ⭐【播剪輯】GH#689 —— 把這一具的 `clip` 起播，回傳真的動起來的軌數。
+   *
+   * ── 三件被量出來、⛔ 不是推測的事 ────────────────────────────────────────
+   * ① `speedRatio` 要在 `play()` **之前**設：setter 會把值推進每一個 animatable，
+   *    而 `play()` 內部用的正是 `this._speedRatio`。
+   * ② ⛔ **不可以用 `start()`** —— Babylon 的 `start()` 在群組已經 started 時
+   *    **整支 early-return**（量到：`start(true, 0.9)` 之後 speedRatio 仍是 0.5）。
+   *    池子重用時那正好是「第二發起，動畫停在上一發結束的那一幀」。
+   *    `play()` 走 `stop() → start()` / `restart()`，兩條路都對。
+   * ③ 沒被指名的軌**從來不起播**（clone 出來是 stopped 的），所以「只播一條」
+   *    不需要先把別的停掉。
+   *
+   * `clip` 缺席 ⇒ 立刻回 0，⛔ 一條軌都不碰（今天的行為，逐位元不變）。
+   */
+  private startClip(item: LiveModelFx, doc: ModelFxModelDoc): number {
+    if (item.clip === undefined) return 0;
+    const groups = this.clipGroups.get(item.axis);
+    if (groups === undefined || groups.length === 0) return 0;
+    const targets = fxClipTargets(groups, item.clip, doc.clipMap);
+    // ⭐ 原作的 dummy 序列是**循環**的（`birth`→`stand` 一直播到單位被移除），
+    //    而凍播那一族（0.15×）在 dummy 的壽命內根本走不到剪輯結尾 ⇒ 循環與否
+    //    對它沒有差別。⛔ 所以這裡不開第三格 `clipLoop`（沒有內容需要它）。
+    for (const g of targets) {
+      g.speedRatio = item.clipTimeScale ?? 1;
+      g.play(true);
+    }
+    return targets.length;
+  }
+
+  /**
+   * 回收前把這一具的軌**停掉**（GH#689）。
+   *
+   * ⚠️ ⛔ 少了它，池子重用會拿到一條**還在跑**的軌：`play()` 對已經在跑的群組是
+   * `restart()`（沒事），但 `clip` 缺席的下一發**完全不呼叫** `startClip`
+   * ⇒ 那一具會播著上一支技能的動畫（而它看起來只是「特效怪怪的」）。
+   */
+  private stopClip(axis: TransformNode): void {
+    const groups = this.clipGroups.get(axis);
+    if (groups === undefined) return;
+    for (const g of groups) g.stop();
+  }
+
+  /** 真的收掉這一具的軌（⛔ 不是節點 —— `root.dispose()` 收不到它們）。 */
+  private disposeClipGroups(axis: TransformNode): void {
+    const groups = this.clipGroups.get(axis);
+    if (groups === undefined) return;
+    for (const g of groups) g.dispose();
+    this.clipGroups.delete(axis);
+  }
+
+  private acquire(
+    modelKey: string,
+    doc: ModelFxModelDoc,
+    poolKey: string = modelKey,
+    look: ModelFxAppearance = {},
+  ): ModelFxNodes | null {
+    const free = this.pool.get(poolKey);
     const reused = free?.pop();
     if (reused) {
       // ⭐ GH#673-①b —— 池子裡的可能是首發留下的空殼:現在容器到了就補。
-      if (reused.axis.getChildren().length === 0) this.fillGeometry(modelKey, reused.axis, doc);
+      if (reused.axis.getChildren().length === 0)
+        this.fillGeometry(modelKey, reused.axis, doc, look);
       return reused;
     }
 
@@ -478,16 +691,20 @@ export class ModelFxRig {
     axis.parent = root;
     // 容器還在串流時 fillGeometry 回 false —— 空節點照樣回去(特效準時出現在
     // 正確位置),⭐ 但幾何**真的**會晚幾幀補進來:容器載完的 callback 會回填(①c)。
-    this.fillGeometry(modelKey, axis, doc);
+    this.fillGeometry(modelKey, axis, doc, look);
     return { root, axis };
   }
 
   private release(item: LiveModelFx): void {
     item.root.setEnabled(false);
-    let free = this.pool.get(item.modelKey);
+    // ⭐ GH#689 —— 回收＝停播。⚠️ 一條沒停的軌在 free-list 裡**還在每幀被推進**
+    //    （`setEnabled(false)` 只關渲染，⛔ 不關動畫），而下一次重用會看到它停在
+    //    一個沒有人選過的幀上。
+    this.stopClip(item.axis);
+    let free = this.pool.get(item.poolKey);
     if (!free) {
       free = [];
-      this.pool.set(item.modelKey, free);
+      this.pool.set(item.poolKey, free);
     }
     // ⭐ 上界:free-list 滿了就**真的收掉**這一個,並且從 `born` 裡除名。
     // ⛔ 不可以只是「不放回池子」—— 那個節點會變成沒有人指得到的孤兒,
@@ -498,6 +715,7 @@ export class ModelFxRig {
       free.push({ root: item.root, axis: item.axis });
       return;
     }
+    this.disposeClipGroups(item.axis);
     this.retire(item.root);
   }
 

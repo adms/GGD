@@ -16,6 +16,12 @@ import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
+// GH#689 —— 剪輯守衛用**真的** Babylon 動畫物件（⛔ 不 mock）。
+import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
+import { Animation } from "@babylonjs/core/Animations/animation";
+import { AnimationGroup } from "@babylonjs/core/Animations/animationGroup";
+import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
+import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { readFileSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -253,5 +259,115 @@ describe("GH#673-① 首發空殼回填（⛔ 不是永遠空殼循環）", () =
       "重用的池中空殼沒有補幾何 —— 第二發（glb 已載好幾秒）照樣整發看不見",
     ).toBe(true);
     rig.dispose();
+  });
+});
+
+/**
+ * ⭐【glb 動畫剪輯播放 · 含凍播】GH#689 —— **@visual-proof**
+ *
+ * 這條通道在 2026-08-25 之前**全檔 0 個 Animation**：轉出來的 glb 明明帶著剪輯
+ * （`flamestrike1`: birth/stand/death），而唯一會動的東西是 `spinDegPerSec`。
+ * ⇒ 原作 14 個 `SetUnitAnimation` 呼叫點／12 具可見 dummy 的視覺**整層不存在**
+ * ——火柱不播 `stand` 就沒有火焰翻騰，h008 FragDriller 不播 `death` × **15%**
+ * 就沒有那顆慢動作展開的爆殼。⚠️ 而畫面上它看起來只是「特效有點呆」（失敗形態②）。
+ *
+ * ── 為什麼這一條讀的是**頂點的世界座標**，⛔ 不是「有沒有呼叫 play」───────────
+ * 「play 被呼叫過」是屬性不是行為（失敗形態⑦），而 `speedRatio` 沒傳到的那個
+ * 缺陷**恰好**會讓 play 照樣被呼叫。⇒ 這裡渲染真的幀，然後用
+ * `getVerticesData` 把**同一顆網格的第一個頂點**變換到世界空間量它走了多遠：
+ * 凍播那一具在同樣的幀數裡只能走原速的 15%。
+ * ⚠️ 量尺先自證（第二守則 d.「量尺自己會說謊」）：原速那一具**必須**真的動，
+ * 否則兩邊都是 0 而「比值 0.15」永遠成立。
+ *
+ * ── 突變紀錄（一批一條，挑最承重的那一行）────────────────────────────────
+ *  · `modelFxRig.ts::startClip()` 拿掉 `g.speedRatio = item.clipTimeScale ?? 1;`
+ *    → 紅：「clipTimeScale 沒有到達 Babylon 的 AnimationGroup」＋ 比值變成 1.0。
+ *    ⇒ 沒有它，h008 那一族的爆殼會以**原速**閃過去（＝看不見）。
+ */
+describe("model fx clip playback (@visual-proof)", () => {
+  const CLIP_MAP = {
+    idle: "stand",
+    run: "stand",
+    attack: "stand",
+    cast: "stand",
+    hurt: "stand",
+    death: "death",
+  } as const;
+  const ONE: ModelFxSpawnEvent = { ...WIRE, instances: [WIRE.instances[0]!] };
+
+  /** 一份帶兩條**真的** `AnimationGroup` 的容器 —— ⛔ 不是 stub（失敗形態⑤）。 */
+  function containerWithClips(scene: Scene): AssetContainer {
+    const bone = new TransformNode("bone", scene);
+    const mesh = MeshBuilder.CreateBox("geo", { size: 1 }, scene);
+    mesh.parent = bone;
+    const container = new AssetContainer(scene);
+    container.transformNodes.push(bone);
+    container.meshes.push(mesh);
+    container.rootNodes.push(bone);
+    for (const name of ["stand", "death"]) {
+      const track = new Animation(`${name}-track`, "position.y", 60, Animation.ANIMATIONTYPE_FLOAT);
+      track.setKeys([
+        { frame: 0, value: 0 },
+        { frame: 600, value: 600 },
+      ]);
+      const g = new AnimationGroup(name, scene);
+      g.addTargetedAnimation(track, bone);
+      g.normalize(0, 600);
+      container.animationGroups.push(g);
+    }
+    return container;
+  }
+
+  /** 這一具**網格第一個頂點**現在的世界座標 Y（⛔ 不是節點上的欄位）。 */
+  function vertexWorldY(g: { targetedAnimations: { target: unknown }[] }): number {
+    const host = g.targetedAnimations[0]!.target as TransformNode;
+    const mesh = host.getChildMeshes(false)[0]!;
+    mesh.computeWorldMatrix(true);
+    const p = mesh.getVerticesData("position")!;
+    return Vector3.TransformCoordinates(
+      new Vector3(p[0]!, p[1]!, p[2]!),
+      mesh.getWorldMatrix(),
+    ).y;
+  }
+
+  it("指名的剪輯真的在播,而且凍播那一具的頂點只走 15%", async () => {
+    const scene = new Scene(new NullEngine());
+    // ⚠️ 固定動畫步長 ⇒ 兩具走過**同樣的幀數**,比值才有意義（⛔ 不吃 wall-clock）。
+    scene.useConstantAnimationDeltaTime = true;
+    new FreeCamera("cam", new Vector3(0, 0, -10), scene);
+    const container = containerWithClips(scene);
+    const rig = new ModelFxRig(scene, {
+      resolveModel: () => ({ glbPath: "assets/models/x.glb", scale: 1, clipMap: CLIP_MAP }),
+      loadContainer: () => Promise.resolve(container),
+    });
+
+    rig.spawn({ ...ONE, clip: "death", clipTimeScale: 0.15 }); // 容器晚到 ⇒ 走回填那條路
+    await new Promise((r) => setTimeout(r, 0));
+    rig.spawn({ ...ONE, clip: "death" }); // 對照組:原速（clipTimeScale 缺席 = 1）
+
+    const mine = scene.animationGroups.filter((g) => g.name.startsWith("modelfx-"));
+    const playing = mine.filter((g) => g.isPlaying);
+    expect(playing.length, "指名的剪輯沒有起播 —— 模型是一具定格的雕像").toBe(2);
+    // ⛔ 沒被指名的那一條一格都不許動（`clip` 解錯名就會變成「播了別條」）。
+    expect(mine.filter((g) => g.name.endsWith("stand") && g.isPlaying)).toHaveLength(0);
+    const slow = playing.find((g) => g.speedRatio === 0.15);
+    const fast = playing.find((g) => g.speedRatio === 1);
+    expect(slow, "clipTimeScale 沒有到達 Babylon 的 AnimationGroup").toBeDefined();
+    expect(fast, "缺席的 clipTimeScale 應該是原速 1").toBeDefined();
+
+    const y0 = { slow: vertexWorldY(slow!), fast: vertexWorldY(fast!) };
+    for (let i = 0; i < 20; i++) scene.render();
+    const moved = {
+      slow: vertexWorldY(slow!) - y0.slow,
+      fast: vertexWorldY(fast!) - y0.fast,
+    };
+    // ⭐ 量尺自證:原速那一具**必須**真的走 —— 否則 0/0 讓下面那條永遠成立。
+    expect(moved.fast, "量尺壞了:原速那一具的頂點一格都沒動").toBeGreaterThan(1);
+    expect(
+      moved.slow / moved.fast,
+      "凍播沒有生效 —— 爆殼會以原速閃過去（＝玩家看不到）",
+    ).toBeCloseTo(0.15, 2);
+    rig.dispose();
+    expect(scene.animationGroups.filter((g) => g.name.startsWith("modelfx-"))).toHaveLength(0);
   });
 });

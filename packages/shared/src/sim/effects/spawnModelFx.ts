@@ -126,6 +126,24 @@ export interface ModelFxSpawnEvent {
   scale?: number;
   spinDegPerSec?: number;
   /**
+   * ⭐【播 .glb 自己的動畫剪輯】要播哪一條（GH#689）。缺席 ⇒ 客戶端 ⛔ 一條都
+   * 不播（＝2026-08-25 之前的行為，逐位元不變）。
+   * ⚠️ 解名字的規則住客戶端（`modelFxRig.fxClipTargets`）：先查
+   * `model@1.clipMap` 的邏輯狀態名，查不到才當軌名逐字 —— sim ⛔ 不知道也不該
+   * 知道一份 .glb 裡有哪些軌。
+   */
+  clip?: string;
+  /** ⭐【凍播】剪輯播放速率倍率（原作 `SetUnitTimeScalePercent` ÷ 100）。缺席 ⇒ 1。 */
+  clipTimeScale?: number;
+  /**
+   * ⭐【這一次施放的顏色】節點級頂點著色（線性 RGB 各 0…1）。缺席 ⇒ 客戶端用
+   * `model@1.fxTint`。⚠️ 節點**取代**模型（⛔ 不相乘）—— 原作的
+   * `SetUnitVertexColor` 是覆寫語意，相乘會讓「紅 dummy 染成藍」變成黑。
+   */
+  tint?: readonly [number, number, number];
+  /** ⭐【這一次施放的透明度】0…1。缺席 ⇒ 客戶端用 `model@1.fxAlpha`；兩邊都缺 ⇒ 1。 */
+  alpha?: number;
+  /**
    * ⭐ **已經解算完的每一具實例。** 客戶端照抄就好 ——
    * ⛔ 它不需要（也不可以）自己再算一次路徑：`sim` 這一份才是傷害真的發生的地方，
    * 客戶端算第二份就是「畫面說在這裡、傷害在那裡」（而且它會是第二個住處）。
@@ -333,6 +351,21 @@ export const spawnModelFxEffect: EffectKindSpec<"spawnModelFx"> = {
         : {}),
       ...(e.scale !== undefined ? { scale: e.scale } : {}),
       ...(e.spinDegPerSec !== undefined ? { spinDegPerSec: e.spinDegPerSec } : {}),
+      // ⭐ GH#689 —— 剪輯那兩格。⛔ sim 不解名字（它不知道 .glb 裡有哪些軌），
+      //    只把作者填的送過去；`clipTimeScale` 沒有 `clip` 時**不送**（schema
+      //    refine 已經擋了，這裡是同一個意思的第二道：一個沒有人讀得到的數字
+      //    ⛔ 不該出現在線路上）。
+      ...(e.clip !== undefined
+        ? {
+            clip: e.clip,
+            ...(e.clipTimeScale !== undefined ? { clipTimeScale: e.clipTimeScale } : {}),
+          }
+        : {}),
+      // ⭐ GH#693 —— 外觀那兩格（顏色／透明度）。⛔ sim 這裡不決定「畫成什麼樣」
+      //    （那是客戶端材質的事），只負責把作者填的值送過去。缺席 ⇒ 逐位元不變，
+      //    客戶端照舊退回 `model@1` 的 fxTint／fxAlpha。
+      ...(e.tint !== undefined ? { tint: e.tint } : {}),
+      ...(e.alpha !== undefined ? { alpha: e.alpha } : {}),
       instances: wire.map((w) => ({
         x: w.i.origin.x,
         z: w.i.origin.z,

@@ -97,8 +97,34 @@ export interface SpawnModelFxVariant {
   spacing?: number;
   /** ⭐「翻滾」：模型繞自己的軸轉，度/秒。純視覺，⛔ sim 不讀它。 */
   spinDegPerSec?: number;
+  /**
+   * ⭐【播 .glb 自己的動畫剪輯】要播哪一條（GH#689）。純視覺，⛔ sim 不讀它，
+   * 只轉發到 `modelFxSpawn`。缺席 ⇒ ⛔ 一條都不播（＝2026-08-25 之前的行為）。
+   * 名字先查 `model@1.clipMap` 的邏輯狀態名，查不到才當軌名逐字（理由與比對
+   * 規則寫在 `content/schema/effects/spawnModelFx.ts`）。
+   */
+  clip?: string;
+  /**
+   * ⭐【凍播】剪輯播放速率倍率（原作 `SetUnitTimeScalePercent` ÷ 100）。
+   * 缺席 ⇒ 1 ＝ 原速。h008 FragDriller 的爆殼是 **0.15**。
+   * ⛔ 沒有 `clip` 就沒有人讀它（schema refine 在載入時擋）。
+   */
+  clipTimeScale?: number;
   /** 模型縮放。純視覺，⛔ sim 不讀它。 */
   scale?: number;
+  /**
+   * ⭐【這一次施放的顏色】節點級頂點著色（線性 RGB 各 0…1）—— GH#693。
+   * 純視覺，⛔ sim 不讀它，只轉發到 `modelFxSpawn`。
+   * 缺席 ⇒ 客戶端用 `model@1.fxTint`；⚠️ 節點**取代**模型（⛔ 不相乘），
+   * 因為原作的 `SetUnitVertexColor` 是覆寫語意。
+   */
+  tint?: readonly [number, number, number];
+  /**
+   * ⭐【這一次施放的透明度】0…1（1＝不透明）—— GH#693。純視覺，⛔ sim 不讀它。
+   * 缺席 ⇒ 客戶端用 `model@1.fxAlpha`；兩邊都缺 ⇒ 1。
+   * 原作只存在 runtime：`SetUnitVertexColorBJ` 第 4 參數 t% ⇒ `(100−t)÷100`。
+   */
+  alpha?: number;
   /**
    * 活多久。`orbit` / `static` 必填（那是它們唯一的終止條件）；
    * 直線路徑省略 = 走完 `distance`。兩者都給時取**先到的那一個**。

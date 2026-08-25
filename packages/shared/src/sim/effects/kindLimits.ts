@@ -464,6 +464,23 @@ export const MODEL_FX_MAX_TOUCH_RADIUS = 12;
  */
 export const MODEL_FX_MAX_TOUCH_SAMPLES = DELAYED_MAX_COUNT;
 
+/**
+ * ⭐【剪輯播放速率】`clipTimeScale` 的下界／上界（GH#689）。
+ *
+ * 原作那一格是 `SetUnitTimeScalePercent`（**百分比**）—— 招牌用法是 h008
+ * FragDriller 的 `SetUnitTimeScalePercent(u, 15)` ＋ 立即 `KillUnit`：
+ * 死亡動畫以 **15%** 速度播 ＝ 一顆慢動作展開的爆殼。⇒ GGD 這一側是**倍率**
+ * （15% ⇒ `0.15`），因為 Babylon 的 `AnimationGroup.speedRatio` 就是倍率。
+ *
+ * ⚠️ 下界刻意是 0.01 而 ⛔ **不是 0**：`speedRatio === 0` 在畫面上與「這個剪輯
+ * 根本沒有播」**一模一樣**（失敗形態②），而它會讓「凍播壞掉」變成一個沒有人
+ * 看得出來的缺陷。真的要接近定格，寫一個很小的倍率 —— 它仍然在動。
+ * 上界 10（十倍速）與 {@link MODEL_FX_MAX_SPIN_DEG_PER_SEC} 同一個理由：
+ * 再快在畫面上就是一團糊，這一格是防打錯數字的柵欄。
+ */
+export const MODEL_FX_MIN_CLIP_TIME_SCALE = 0.01;
+export const MODEL_FX_MAX_CLIP_TIME_SCALE = 10;
+
 // ══ 螢幕回饋 / 特效文字（#543 · #549）═══════════════════════════════════════
 //
 // owner 2026-08-22:「畫面閃爍及震動 不然都不知道發生什麼事情」「別忘了還有特效文字」。

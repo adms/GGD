@@ -388,6 +388,30 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "機制先行；採用者要等 57 個呼叫點的逐技能接線批（GH#688 Phase 6 的 alpha 掃描）" +
       "把「哪幾具 dummy 是恆定半透明」從 JASS 撈出來 —— ⛔ 不要為了讓它變綠自己挑一具調透明。",
   },
+  // ═══ GH#689 glb 動畫剪輯播放（含凍播）2026-08-25 ═══════════════════════════
+  "field:abilities.effects[]#spawnModelFx.clip": {
+    status: "landing",
+    since: "2026-08-25",
+    why:
+      "`modelFxRig` 在這一批之前**全檔 0 個 Animation** —— 這條通道唯一的動作是 " +
+      "`spinDegPerSec`（繞軸自轉），而轉出來的 glb 明明帶著剪輯（flamestrike1: " +
+      "birth/stand/death）。census 量到 **14 個 `SetUnitAnimation` 呼叫點／12 具可見 " +
+      "dummy** 在等這一格。⭐ 機制先行是刻意的：採用者要逐支回去讀 JASS 才知道那一具 " +
+      "dummy 原作播的是哪一條（h008 是 death、火柱是 stand），而**猜錯比不播更糟** —— " +
+      "一具播錯剪輯的模型看起來像「特效壞了」，⛔ 不像「還沒接」。\n" +
+      "⛔ **不要為了讓它變綠去替某一支技能挑一條剪輯** —— 那會改變畫面上看得到的東西。\n" +
+      "⭐ 可反駁：GH#688 Phase 6 的逐技能接線批把 h008 外層爆殼填上去，這一列就 stale 而紅。",
+  },
+  "field:abilities.effects[]#spawnModelFx.clipTimeScale": {
+    status: "landing",
+    since: "2026-08-25",
+    why:
+      "凍播那一格（原作 `SetUnitTimeScalePercent` ÷ 100；h008 FragDriller 是 **15%** ＋ " +
+      "立即 `KillUnit` ＝ 慢動作展開的爆殼，悟空 Excalibur／ExcaliburMAX／Turtle Power " +
+      "三支共用）。⚠️ schema refine 把它與 `clip` 綁成**成對**（沒有 clip 就沒有人讀它）" +
+      "⇒ 它的採用率必然等於 `clip` 的採用率 —— 一起紅、一起解。census 量到 8–9 個 " +
+      "`SetUnitTimeScalePercent` 呼叫點在等它。",
+  },
   // ═══ 週期領域機制落地 2026-08-23 ══════════════════════════════════════════
   "field:abilities.effects[]#delayed.anchor": {
     status: "landing",

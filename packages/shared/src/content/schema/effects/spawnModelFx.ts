@@ -3,11 +3,13 @@ import type { EffectDef } from "../../../sim/effects/effect";
 import {
   MODEL_FX_MAX_DISTANCE,
   MODEL_FX_MAX_INSTANCES,
+  MODEL_FX_MAX_CLIP_TIME_SCALE,
   MODEL_FX_MAX_LIFE_SEC,
   MODEL_FX_MAX_SCALE,
   MODEL_FX_MAX_SPEED,
   MODEL_FX_MAX_SPIN_DEG_PER_SEC,
   MODEL_FX_MAX_TOUCH_RADIUS,
+  MODEL_FX_MIN_CLIP_TIME_SCALE,
   PULL_MAX_RADIUS,
 } from "../../../sim/effects/kindLimits";
 import { EFFECT_COMMON_SHAPE, refineDispelShape, zEffectDef } from "./_shared";
@@ -125,7 +127,100 @@ export const zSpawnModelFx = z
       .max(MODEL_FX_MAX_SPIN_DEG_PER_SEC)
       .optional()
       .describe("⭐「翻滾」：模型繞自己的軸轉，度／秒（負值 = 反向）。純視覺。"),
+    /**
+     * ⭐【播 .glb 自己的動畫剪輯】要播哪一條（GH#689）。
+     * **缺席 ⇒ ⛔ 一條都不播 ＝ 今天的行為，逐位元不變。**
+     *
+     * ── 為什麼這一格存在 ──────────────────────────────────────────────────
+     * `modelFxRig` 在 2026-08-25 之前**全檔 0 個 Animation** —— 這條通道唯一的
+     * 動作是 `spinDegPerSec`（繞軸自轉）。而原作的 dummy 有一大半的視覺**住在
+     * 剪輯裡**：火柱不播 `stand` 就沒有火焰翻騰、`FragDriller` 不播 `death`
+     * 就沒有爆殼。census 量到 **14 個 `SetUnitAnimation` 呼叫點／12 具可見
+     * dummy**，⇒ 那一半在 GGD 這一側從第一天起就不存在（失敗形態②：模型畫出
+     * 來了、位置也對，只是它是一具定格的雕像）。
+     *
+     * ── ⭐ 名字怎麼解（⛔ 不開第二份對照表）─────────────────────────────────
+     * 先當成 `model@1.clipMap` 的**邏輯狀態名**（`idle`/`run`/`attack`/`cast`/
+     * `hurt`/`death`）查一次 —— 那張表已經是「這一份 .glb 把 X 叫做什麼」的
+     * **唯一住處**（第〇·四守則），所以 `clip:"death"` 在 `flamestrike1`
+     * 解成 `death`、在 `darkraor` 解成 `Death`，⛔ 技能不必知道大小寫。
+     * 查不到才當成**軌名逐字**（WC3 的 `birth` 這種不在六格裡的一次性序列）。
+     * 比對走「完全相同 → 字尾」兩段（實例化會把軌名前綴成
+     * `modelfx-<serial>-<軌名>`），⛔ 名字對不上就一條都不播 —— 不猜一條給它
+     * （與 `attachment@1.anim` 逐字同一條規矩）。
+     */
+    clip: z
+      .string()
+      .min(1)
+      .max(64)
+      .optional()
+      .describe(
+        "要播這份 .glb 的哪一條動畫剪輯：先查 `model@1.clipMap` 的邏輯狀態名（idle／death…），查不到才當軌名逐字。留白 = 不播任何剪輯（今天的行為）。",
+      ),
+    /**
+     * ⭐【凍播】剪輯的播放速率倍率（GH#689）。**缺席 ⇒ 1 ＝ 原速。**
+     *
+     * 原作是 `SetUnitTimeScalePercent`（百分比）—— 招牌用法是 h008 FragDriller
+     * 的 **15%** ＋ 立即 `KillUnit`＝一顆慢動作展開的爆殼（悟空 Excalibur／
+     * ExcaliburMAX／Turtle Power 三支的外層都是它）。⇒ 這裡是倍率：15% ⇒ `0.15`。
+     *
+     * ⚠️ ⛔ **沒有 clip 就沒有人讀它**（refine 在載入時擋）—— 一格看起來有設、
+     * 其實沒有人讀的數字，正是這張 refine 表整篇在擋的形狀。
+     */
+    clipTimeScale: z
+      .number()
+      .min(MODEL_FX_MIN_CLIP_TIME_SCALE)
+      .max(MODEL_FX_MAX_CLIP_TIME_SCALE)
+      .optional()
+      .describe(
+        "剪輯的播放速率倍率（原作 SetUnitTimeScalePercent ÷ 100；h008 的凍播＝0.15）。省略 = 1 = 原速。⛔ 只有填了 clip 才讀得到。",
+      ),
     scale: z.number().positive().max(MODEL_FX_MAX_SCALE).optional(),
+    /**
+     * ⭐【這一次施放的顏色】節點級頂點著色（線性 RGB 各 0…1）。缺席 ⇒ 用
+     * `model@1.fxTint`；兩邊都缺 ⇒ ⛔ 不著色。
+     *
+     * ── 為什麼它與 `model@1.fxTint` **並存**而不是二選一（GH#693）───────────
+     * 兩格回答的是**兩個不同的問題**，而原作也把它們存在兩個地方：
+     * | | 原作 | GGD | 語意 |
+     * |---|---|---|---|
+     * | 模型級 | w3u `uclr/uclg/uclb`（**單位型別**的欄位） | `model@1.fxTint` | 「這一具 dummy 天生是紅的」 |
+     * | 節點級 | `SetUnitVertexColor`（**runtime 呼叫**，57 個呼叫點） | 這一格 | 「這一次施放把它染成紅的」 |
+     *
+     * ⚠️ 在它之前只有模型級那一半，於是「同一份 glb 兩種顏色」只能**另開一份
+     * `model@1` 文件**（`w3x.stock.revivehuman` vs `…-red`）。那對**恆定**異色是
+     * 對的設計（顏色是模型的性質），⛔ 但對**模板**是錯的：一個 `tpl-locust-*`
+     * 家族的 tint 是**逐支技能**填的參數（census 量到 133/236 非白，而且每一具
+     * 都不同），⛔ 不是家族共有的值 —— 沒有這一格，模板就只剩「挑一份已經染好色
+     * 的模型」，而那正是第〇·四守則說的第二個住處（每多一個顏色多一份文件）。
+     *
+     * ⭐ 節點贏過模型：`tint` 有值時**整格取代** `fxTint`（⛔ 不是相乘）——
+     * 相乘會讓「把一具紅 dummy 染成藍」得到黑，而原作的 `SetUnitVertexColor`
+     * 是覆寫語意。
+     */
+    tint: z
+      .tuple([z.number().gte(0).lte(1), z.number().gte(0).lte(1), z.number().gte(0).lte(1)])
+      .optional()
+      .describe(
+        "這一次施放的頂點著色（線性 RGB 各 0…1）。缺席 = 用 `model@1.fxTint`；兩邊都缺 = 不著色。",
+      ),
+    /**
+     * ⭐【這一次施放的透明度】0…1（1＝不透明）。缺席 ⇒ 用 `model@1.fxAlpha`；
+     * 兩邊都缺 ⇒ 1 ＝ 今天的行為。
+     *
+     * ⚠️ 原作的 alpha **只存在 runtime**（w3u `ucua` 全檔 0 次，57 個
+     * `SetUnitVertexColorBJ` 呼叫點的第 4 參數）—— 所以「per-cast」才是它的原生
+     * 住處，`model@1.fxAlpha` 那一格反而是為「恆定半透明的幻影族」補的近似。
+     * 換算：`alpha = (100 − 透明度%) ÷ 100`。
+     */
+    alpha: z
+      .number()
+      .gte(0)
+      .lte(1)
+      .optional()
+      .describe(
+        "這一次施放的透明度（0…1，1=不透明）。缺席 = 用 `model@1.fxAlpha`；兩邊都缺 = 不透明。",
+      ),
     lifeSec: z
       .number()
       .positive()
@@ -293,6 +388,17 @@ export const refine = (
         });
       }
     }
+  }
+  // ⭐【凍播】GH#689 —— `clipTimeScale` 是**剪輯的**速率，沒有剪輯就沒有人讀它。
+  // ⚠️ 帶 `preset` 的節點 `clip` 可能要等模板才補上（只覆寫速率是合法的寫法）
+  //    ⇒ 這一條對它們 ⛔ 不判（同這張表其他 `fromPreset` 的條目）。
+  if (!fromPreset && e.clipTimeScale !== undefined && e.clip === undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["clipTimeScale"],
+      message:
+        "沒有 clip 就沒有人讀 clipTimeScale —— 這一格現在是一個看起來有設、其實沒有人讀的數字（凍播要先指名一條剪輯）",
+    });
   }
   if (e.anchor !== undefined && e.path !== "static") {
     ctx.addIssue({
