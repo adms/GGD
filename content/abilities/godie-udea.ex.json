@@ -15,23 +15,7 @@
     0.0
   ],
   "range": 0.0,
-  "effects": [
-    {
-      "kind": "spawnModelFx",
-      "shape": "single",
-      "path": "static",
-      "anchor": "self",
-      "modelKey": "w3x.stock.monsoonbolttarget",
-      "scale": 6.0,
-      "lifeSec": 2.0,
-      "clip": "idle",
-      "tint": [
-        0.3922,
-        0.0,
-        0.0
-      ]
-    }
-  ],
+  "effects": [],
   "template": {
     "ref": "tpl-buff-self",
     "params": {

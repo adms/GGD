@@ -47,7 +47,11 @@ VISUAL_RE='^apps/client/src/(vfx|render)/'
 # 就是第三守則抓的那種宣稱：「已驗證」四個字掛在一支什麼都沒驗的檔上。
 # 判準：檔內至少要出現一個可見性斷言詞彙。⭐ 掃的是**全部**畫面層測試檔
 # （含未追蹤的）,⛔ 不只這次改到的 —— 說謊的標記不因為「今天沒動它」就不是謊。
-VOCAB_RE='readPixels|opacityTexture|getVerticesData|emissive|alpha|isEnabled|bright'
+# ⭐ 2026-08-25 追加 `emitRate|isStarted`：粒子系統「有沒有真的在噴」是可見性,
+#    而且它抓到過一個 readPixels 抓不到的形狀 —— GH#700 的第一版守衛是綠的,
+#    因為 `scene.particleSystems.push(this)` 在平台檢查**之前**,一顆建構失敗的
+#    **殘骸**同名躺在場上;量 isStarted()/emitRate 才分得出來。
+VOCAB_RE='readPixels|opacityTexture|getVerticesData|emissive|alpha|isEnabled|bright|emitRate|isStarted'
 LIARS=""
 while IFS= read -r f; do
   [ -f "$f" ] || continue

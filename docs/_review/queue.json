@@ -1,10 +1,10 @@
 {
   "schema": "review-queue@1",
   "counts": {
-    "assets": 1119,
+    "assets": 1120,
     "tier0": 797,
     "reviewed": 0,
-    "pending": 322
+    "pending": 323
   },
   "items": [
     {
@@ -1412,6 +1412,22 @@
       "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
     },
     {
+      "id": "imported.heromusashimiyamoto",
+      "kind": "model",
+      "hash": "743f857a2a14bf9a29e09985603428bcf84ec05c",
+      "risk": 5,
+      "reasons": [
+        "4 支上架技能引用（R/EX ×2 加權後 risk 5）",
+        "未審"
+      ],
+      "refs": [
+        "godie-e00x.q",
+        "godie-etyr.q",
+        "godie-h01o.e",
+        "godie-u01u.r"
+      ]
+    },
+    {
       "id": "wc3.dragonyes2",
       "kind": "sfx",
       "hash": "c9733baea30a90e7fae1b1ec537e2f741b30d057",
@@ -2626,6 +2642,18 @@
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
     {
+      "id": "imported.monsoonbolttarget",
+      "kind": "model",
+      "hash": "ba4ec16c4c318820fa394c3e683a5b9fcb8f28d2",
+      "risk": 4,
+      "reasons": [
+        "抱怨族「閃電/雷電」+4",
+        "未審"
+      ],
+      "refs": [],
+      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
+    },
+    {
       "id": "imported.sonicbreathstream",
       "kind": "model",
       "hash": "8ce7dd329f59f5306fccea5ec0afe7ec1f604eb9",
@@ -3727,19 +3755,6 @@
       ],
       "refs": [
         "godie-hart.r"
-      ]
-    },
-    {
-      "id": "imported.heromusashimiyamoto",
-      "kind": "model",
-      "hash": "743f857a2a14bf9a29e09985603428bcf84ec05c",
-      "risk": 2,
-      "reasons": [
-        "1 支上架技能引用（R/EX ×2 加權後 risk 2）",
-        "未審"
-      ],
-      "refs": [
-        "godie-u01u.r"
       ]
     },
     {

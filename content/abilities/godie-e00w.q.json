@@ -46,6 +46,13 @@
           "from": "caster"
         }
       ]
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "imported.earthtornado2",
+      "soundKey": "wc3.blademasterwhirlwind"
     }
   ],
   "icon": "assets/icons/abilities/godie-e00w.q.webp",
