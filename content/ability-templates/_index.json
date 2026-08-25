@@ -1,6 +1,6 @@
 {
   "collection": "ability-templates",
-  "hash": "3b44fd52ed4a",
+  "hash": "6403dcdbce98",
   "entries": [
     {
       "id": "tpl-barrier-domain",
@@ -133,6 +133,30 @@
       "path": "ability-templates/tpl-lock-combo.json",
       "hash": "e4284bb72d79",
       "size": 2639
+    },
+    {
+      "id": "tpl-locust-line",
+      "path": "ability-templates/tpl-locust-line.json",
+      "hash": "d3f6347692d9",
+      "size": 4854
+    },
+    {
+      "id": "tpl-locust-orb",
+      "path": "ability-templates/tpl-locust-orb.json",
+      "hash": "b93eb0211c20",
+      "size": 5504
+    },
+    {
+      "id": "tpl-locust-swarm",
+      "path": "ability-templates/tpl-locust-swarm.json",
+      "hash": "5b9b68390f19",
+      "size": 5118
+    },
+    {
+      "id": "tpl-locust-travel",
+      "path": "ability-templates/tpl-locust-travel.json",
+      "hash": "9c8ae121c833",
+      "size": 4927
     },
     {
       "id": "tpl-mark-stacks",

@@ -1,0 +1,15 @@
+{
+  "id": "w3x.stock.monsoonbolttarget",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/monsoonbolttarget.glb",
+  "scale": 0.0225,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Stand",
+    "attack": "Stand",
+    "cast": "Stand",
+    "hurt": "Stand",
+    "death": "Stand"
+  }
+}

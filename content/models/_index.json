@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "bf2836c20c85",
+  "hash": "75da32945cf2",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -751,6 +751,12 @@
       "path": "models/w3x.stock.flamestrike1.json",
       "hash": "146e4cbb9484",
       "size": 308
+    },
+    {
+      "id": "w3x.stock.monsoonbolttarget",
+      "path": "models/w3x.stock.monsoonbolttarget.json",
+      "hash": "a58012fd42bc",
+      "size": 319
     },
     {
       "id": "w3x.stock.revivehuman",

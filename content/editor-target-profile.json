@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_84fd4c3b96e1",
+    "contentVersion": "cv_ef66ee665829",
     "collections": {
       "champions": {
-        "hash": "9fc69bc0b85e",
+        "hash": "fdedc4b2f30b",
         "count": 71
       },
       "abilities": {
-        "hash": "7e19c7aea3cc",
+        "hash": "ef209a56a098",
         "count": 421
       },
       "items": {
@@ -46,8 +46,8 @@
         "count": 87
       },
       "models": {
-        "hash": "bf2836c20c85",
-        "count": 126
+        "hash": "75da32945cf2",
+        "count": 127
       },
       "vfx": {
         "hash": "89201362fc0c",
@@ -58,8 +58,8 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "3b44fd52ed4a",
-        "count": 41
+        "hash": "6403dcdbce98",
+        "count": 45
       }
     },
     "collectionCount": 14
@@ -89,7 +89,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "fd6d35b6",
+    "fingerprint": "c1eebd4f",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -224,6 +224,7 @@
       "addSec",
       "advance",
       "aim",
+      "alpha",
       "amount",
       "amountPerTick",
       "amplitude",
@@ -260,6 +261,8 @@
       "championId",
       "chance",
       "clampMin",
+      "clip",
+      "clipTimeScale",
       "colorRgb",
       "comboBonus",
       "condition",
@@ -452,6 +455,7 @@
       "throughShields",
       "throwDistance",
       "tickOnApply",
+      "tint",
       "to",
       "touchOncePerTarget",
       "touchRadius",
@@ -813,6 +817,10 @@
       "line-blast",
       "line-sweep",
       "lock-combo",
+      "locust-line",
+      "locust-orb",
+      "locust-swarm",
+      "locust-travel",
       "mark-stacks",
       "on-attack",
       "on-hit-react",
@@ -2445,6 +2453,306 @@
           }
         },
         {
+          "id": "tpl-locust-line",
+          "family": "locust-line",
+          "status": "enabled",
+          "params": {
+            "modelKey": {
+              "type": "docRef",
+              "default": "w3x.stock.flamestrike1"
+            },
+            "path": {
+              "type": "enum",
+              "values": [
+                "forward",
+                "toTarget",
+                "orbit",
+                "radial",
+                "static"
+              ],
+              "default": "static"
+            },
+            "count": {
+              "type": "number",
+              "default": 6,
+              "min": 1,
+              "max": 12
+            },
+            "spacing": {
+              "type": "number",
+              "default": 2,
+              "min": 0.5,
+              "max": 48
+            },
+            "lifeSec": {
+              "type": "number",
+              "default": 2,
+              "min": 0.1,
+              "max": 10,
+              "unit": "s"
+            },
+            "scale": {
+              "type": "number",
+              "min": 0.1,
+              "max": 20,
+              "optional": true
+            },
+            "spinDegPerSec": {
+              "type": "number",
+              "min": -3600,
+              "max": 3600,
+              "optional": true
+            },
+            "tint": {
+              "type": "rgb",
+              "optional": true
+            },
+            "alpha": {
+              "type": "number",
+              "min": 0,
+              "max": 1,
+              "unit": "ratio",
+              "optional": true
+            },
+            "soundKey": {
+              "type": "docRef",
+              "optional": true
+            },
+            "arriveSoundKey": {
+              "type": "docRef",
+              "optional": true
+            }
+          }
+        },
+        {
+          "id": "tpl-locust-orb",
+          "family": "locust-orb",
+          "status": "enabled",
+          "params": {
+            "modelKey": {
+              "type": "docRef",
+              "default": "imported.heromusashimiyamoto"
+            },
+            "path": {
+              "type": "enum",
+              "values": [
+                "forward",
+                "toTarget",
+                "orbit",
+                "radial",
+                "static"
+              ],
+              "default": "orbit"
+            },
+            "count": {
+              "type": "number",
+              "default": 1,
+              "min": 1,
+              "max": 12
+            },
+            "distance": {
+              "type": "number",
+              "default": 0.1,
+              "min": 0.1,
+              "max": 48
+            },
+            "speed": {
+              "type": "number",
+              "default": 1,
+              "min": 1,
+              "max": 200
+            },
+            "lifeSec": {
+              "type": "number",
+              "default": 2.5,
+              "min": 0.1,
+              "max": 10,
+              "unit": "s"
+            },
+            "scale": {
+              "type": "number",
+              "min": 0.1,
+              "max": 20,
+              "optional": true
+            },
+            "spinDegPerSec": {
+              "type": "number",
+              "min": -3600,
+              "max": 3600,
+              "optional": true
+            },
+            "tint": {
+              "type": "rgb",
+              "optional": true
+            },
+            "alpha": {
+              "type": "number",
+              "min": 0,
+              "max": 1,
+              "unit": "ratio",
+              "optional": true
+            },
+            "soundKey": {
+              "type": "docRef",
+              "optional": true
+            },
+            "arriveSoundKey": {
+              "type": "docRef",
+              "optional": true
+            }
+          }
+        },
+        {
+          "id": "tpl-locust-swarm",
+          "family": "locust-swarm",
+          "status": "enabled",
+          "params": {
+            "modelKey": {
+              "type": "docRef",
+              "default": "imported.blackhole"
+            },
+            "path": {
+              "type": "enum",
+              "values": [
+                "forward",
+                "toTarget",
+                "orbit",
+                "radial",
+                "static"
+              ],
+              "default": "radial"
+            },
+            "count": {
+              "type": "number",
+              "default": 3,
+              "min": 1,
+              "max": 12
+            },
+            "speed": {
+              "type": "number",
+              "default": 7.7,
+              "min": 1,
+              "max": 200
+            },
+            "distance": {
+              "type": "number",
+              "default": 8,
+              "min": 0.1,
+              "max": 48
+            },
+            "spinDegPerSec": {
+              "type": "number",
+              "default": 720,
+              "min": -3600,
+              "max": 3600
+            },
+            "scale": {
+              "type": "number",
+              "default": 0.6,
+              "min": 0.1,
+              "max": 20
+            },
+            "lifeSec": {
+              "type": "number",
+              "min": 0.1,
+              "max": 10,
+              "unit": "s",
+              "optional": true
+            },
+            "tint": {
+              "type": "rgb",
+              "optional": true
+            },
+            "alpha": {
+              "type": "number",
+              "min": 0,
+              "max": 1,
+              "unit": "ratio",
+              "optional": true
+            },
+            "soundKey": {
+              "type": "docRef",
+              "optional": true
+            },
+            "arriveSoundKey": {
+              "type": "docRef",
+              "optional": true
+            }
+          }
+        },
+        {
+          "id": "tpl-locust-travel",
+          "family": "locust-travel",
+          "status": "enabled",
+          "params": {
+            "modelKey": {
+              "type": "docRef",
+              "default": "imported.blackhole"
+            },
+            "path": {
+              "type": "enum",
+              "values": [
+                "forward",
+                "toTarget",
+                "orbit",
+                "radial",
+                "static"
+              ],
+              "default": "forward"
+            },
+            "speed": {
+              "type": "number",
+              "default": 30,
+              "min": 1,
+              "max": 200
+            },
+            "distance": {
+              "type": "number",
+              "default": 14,
+              "min": 0.1,
+              "max": 48
+            },
+            "spinDegPerSec": {
+              "type": "number",
+              "default": 720,
+              "min": -3600,
+              "max": 3600
+            },
+            "scale": {
+              "type": "number",
+              "default": 0.6,
+              "min": 0.1,
+              "max": 20
+            },
+            "lifeSec": {
+              "type": "number",
+              "min": 0.1,
+              "max": 10,
+              "unit": "s",
+              "optional": true
+            },
+            "tint": {
+              "type": "rgb",
+              "optional": true
+            },
+            "alpha": {
+              "type": "number",
+              "min": 0,
+              "max": 1,
+              "unit": "ratio",
+              "optional": true
+            },
+            "soundKey": {
+              "type": "docRef",
+              "optional": true
+            },
+            "arriveSoundKey": {
+              "type": "docRef",
+              "optional": true
+            }
+          }
+        },
+        {
           "id": "tpl-mark-stacks",
           "family": "mark-stacks",
           "status": "enabled",
@@ -3388,7 +3696,7 @@
       ],
       "templateStatus": {
         "draft": 21,
-        "enabled": 20
+        "enabled": 24
       },
       "innateKinds": [
         "active",
@@ -3722,12 +4030,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "fd6d35b6",
+    "engineFingerprint": "c1eebd4f",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 fd6d35b6 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 c1eebd4f —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -4516,5 +4824,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "5da3092afe3c"
+  "profileDigest": "fef2a669d06c"
 }
