@@ -1686,3 +1686,10 @@ watchdog 後代 CPU 修復。
 - #669 已登記（預設 LIVE；rollback＝tpl-locust-orb.params.alpha.default）
 - ✅ 部署 DEPLOY8=0 · BUILD_STAMP v0.27.5 · 煙霧 `cv_7bfa219b05cb` · 帳號 204→204
 - ➡️ 下一族：crescent ×5（lane 已派）· 之後 ReviveHuman 殘餘 ×4 / TomeOfRetrainingCaster ×4 / WarStompCaster ×4 / Meteor ×4 · 隊列另有 #699 PRE2 · #670/#672
+
+## v0.27.6（2026-08-25 深夜二）—— Phase 6 三批合併＋#706 三閘
+
+- 🌙 crescent 真落點（travel）＋四族 9 綁定＋Meteor 重轉（舊 glb 6/7 軟刪除）＋20-03 紅刃＋o00E rollback 補登
+- 🛡️ #706 三閘落地（configFacadeSurface/statNormalizationShipped/reviveShipped）
+- ✅ DEPLOY9=0 · BUILD_STAMP v0.27.6 · 煙霧 `cv_b6dedf9782c2` · 帳號 204→204
+- 📊 Phase 6 累計 30 支技能有原作特效；餘量 ForgottenOneTent×4 → ThunderClap×3 → MarkOfChaos×3（等 #699）→ ChaosOrcRange×3
