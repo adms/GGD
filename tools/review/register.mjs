@@ -77,13 +77,27 @@ try {
       `  帳本現況：共 ${q.counts.total} 批（pending ${q.counts.pending} · 已確認 ${q.counts.confirmed} · ` +
       `已否決 ${q.counts.vetoed} · 未登記 ${q.counts.unregistered}）`,
   );
+  // 📅 GH#795 —— **一份過期的證據比沒有證據更危險**。
+  // 量到的：#721/#767 的報告比它要驗的重建早 89 分鐘，而那件事只寫在檔名裡。
+  // ⇒ 登記的當下就把這兩種情況喊出來（⛔ 不是等到有人去讀那一頁才發現）。
+  const me = q.batches.find((b) => b.id === args.get("id"));
+  for (const note of me?.blockers ?? []) {
+    if (note.startsWith("⚠️⚠️") || note.startsWith("ℹ️")) console.warn(`  ${note}`);
+  }
+  if (me?.evidenceHead == null) {
+    console.warn(
+      "  ⭐ 修法是一行：在報告的 .md/README 開頭寫上它**在哪一個 HEAD 上拍的**，例如\n" +
+        "       > 台子：… （HEAD=abc1234）\n" +
+        "     沒有這一行，「這份證據驗的是不是修好之後的東西」就永遠判不出來。",
+    );
+  }
 } catch (err) {
   console.error(`[review:register] ${err instanceof Error ? err.message : String(err)}`);
   process.exit(1);
 }
 
 function readUsage() {
-  return `review:register —— 把一批已上線的成果登記進 docs/_review/feature-verdicts.json（GH#669）
+  return `review:register —— 把一批已上線的成果登記進 docs/_review/material/batches.json（GH#669 · 分署見 #794）
 
   必填：--id <證據目錄名> --rollback-config <config id> --rollback-field <欄位路徑> --rollback-to <還原值>
   選填：--title --family --issues 673,649 --commit <sha> --abilities a,b --live <現值> --rollback-note

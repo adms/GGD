@@ -22,6 +22,7 @@
  *    同一個事實不可以有第二個住處）。要看狀態就讀 buildFeatureQueue() 的輸出。
  */
 import { createHash } from "node:crypto";
+import { execFileSync, spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
 import { canonical } from "./triage.mjs";
@@ -208,6 +209,7 @@ export function scanSequences(repoRoot) {
       id: name,
       dir: `${SEQUENCE_ROOT_REL}/${name}`,
       title,
+      evidenceHead: evidenceHeadOf(mdText),
       notes: mdName === undefined ? null : `${SEQUENCE_ROOT_REL}/${name}/${mdName}`,
       frames,
       // hash＝序列的位元組身分。⭐ 重渲染一次 ⇒ hash 變 ⇒ 舊裁決過期 ⇒ 自動回佇列。
@@ -215,6 +217,46 @@ export function scanSequences(repoRoot) {
     });
   }
   return out;
+}
+
+
+// ─────────────── 📅 證據的時間身分（GH#795）───────────────
+/**
+ * ⭐ **一份過期的證據比沒有證據更危險**：沒有證據時我會說「未驗收」，
+ *   有一份格式完美但**比修復更早**的證據時，我會說「已修」。
+ * 量到的（2026-08-27 稽核 lane）：#721 / #767 的 `*_visual-proof_*` 報告
+ *   驗收 12:00 → 重建 13:29 → additive 修正 20:57 —— 報告比它要驗的東西早 89 分鐘，
+ *   而**這件事只寫在檔名裡**，⛔ 沒有任何東西會紅。
+ *
+ * ⇒ 這一支從報告正文撈它自報的 HEAD（`HEAD=<sha>` / `HEAD 是 <sha>` / `commit <sha>`），
+ *   再問 git：**那個 sha 是不是登記的修復 commit 的祖先**？是 ⇒ 證據在修復之前拍的。
+ * ⚠️ 撈不到就回 null（⛔ 不猜）—— 「沒寫」與「寫了但過期」是兩件事，不可以混。
+ */
+export function evidenceHeadOf(mdText) {
+  const m =
+    /HEAD\s*[=＝:：]\s*`?([0-9a-f]{7,40})/i.exec(mdText) ??
+    /\bcommit\s+`?([0-9a-f]{7,40})/i.exec(mdText);
+  return m === null ? null : m[1];
+}
+
+/**
+ * 證據拍攝點 vs 修復 commit 的關係。⛔ 回的是**三態**，不是布林：
+ *   "after"（含同一個）／"before"（⚠️ 證據過期）／null（判不了：撈不到、或 git 答不出來）
+ * ⭐ 判不了要**說出來**，⛔ 不可以退回「看起來沒問題」。
+ */
+export function evidenceOrder(repoRoot, evidenceSha, fixSha) {
+  if (!evidenceSha || !fixSha) return null;
+  try {
+    const same = execFileSync("git", ["rev-parse", `${evidenceSha}^{commit}`], { cwd: repoRoot, encoding: "utf8" }).trim();
+    const fix = execFileSync("git", ["rev-parse", `${fixSha}^{commit}`], { cwd: repoRoot, encoding: "utf8" }).trim();
+    if (same === fix) return "after";
+    // evidence 是 fix 的祖先 ⇒ 證據拍的時候 fix 還沒進去。
+    const r = spawnSync("git", ["merge-base", "--is-ancestor", same, fix], { cwd: repoRoot });
+    if (r.status === 0) return "before";
+    return "after";
+  } catch {
+    return null;
+  }
 }
 
 // ────────────────────────────── 佇列 ──────────────────────────────
@@ -254,6 +296,15 @@ export function buildFeatureQueue(repoRoot) {
     else if (rb.drifted)
       notes.push(`⚠️ 開關現值 ${JSON.stringify(rb.current)} ≠ 登記的 liveValue ${JSON.stringify(reg.rollback.liveValue)}`);
     if (reg.verdict != null && !fresh) notes.push("⚠️ 序列已重渲染（hash 漂）—— 先前的裁決過期，請重看");
+    // 📅 GH#795：證據**比它要驗的修復更早** ⇒ 那份報告驗的是舊的東西。
+    const order = evidenceOrder(repoRoot, seq.evidenceHead, reg.commit);
+    if (order === "before")
+      notes.push(
+        `⚠️⚠️ **證據比修復早**：報告在 ${seq.evidenceHead} 拍的，而登記的修復是 ${reg.commit} —— ` +
+          "這份連續圖片驗的是**修復之前**的東西。⛔ 不可以拿它當「已修」的證據，請重拍。",
+      );
+    else if (seq.evidenceHead === null && reg.commit)
+      notes.push("ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）");
     batches.push({
       ...seq,
       registered: true,

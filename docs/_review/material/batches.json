@@ -517,20 +517,20 @@
       "registeredAt": "2026-08-26T07:25:48.083Z"
     },
     "dragonslave_visual-proof_20260827-0030": {
-      "title": "🐉 龍破斬 04-03：光束→抵達爆炸的連續影格（量尺自證 462,400）",
+      "title": "🐉 龍破斬 04-03：光束→抵達爆炸連續影格（量尺自證 462,400）⚠️ 拍於 cdd8fe54",
       "family": "vfx-additive",
       "issues": [
         779
       ],
       "abilities": [],
-      "commit": "8bab9aa1",
+      "commit": "cdd8fe54",
       "sequenceDir": "docs/_reports/dragonslave_visual-proof_20260827-0030",
       "rollback": {
         "configId": "vfx-cleanup",
         "field": "stockGlowAdditive",
         "liveValue": true,
         "rollbackValue": false,
-        "note": "整族 stock 光暈回到非疊加（＝修復前的畫法）。⛔ 不必動任何一支技能的 JSON"
+        "note": "整族 stock 光暈回到非疊加。⚠️ 這份證據拍於 cdd8fe54（beam-audition lane 的工作樹），⛔ 不是 additive 修正的證據"
       },
       "registeredAt": "2026-08-26T20:06:20.765Z"
     },
