@@ -2,7 +2,7 @@ import { z } from "zod";
 import { zId } from "../common";
 // 吟唱規則（owner 2026-08-13 的三句：0.06~4.00、倍率可調、上下限可調）——
 // 同一條規矩：數字與語意住在 sim/castTimeRules.ts，schema 只是把它搬上 Zod。
-import { CAST_CAP_MAX, CAST_CAP_MIN, CAST_FLOOR_MAX, CAST_FLOOR_MIN, CAST_MULTIPLIER_MAX, CAST_MULTIPLIER_MIN, CAST_TIME_RULES_DOC_ID, DEFAULT_CAST_TIME_RULES } from "../../../sim/castTimeRules";
+import { CAST_CAP_MAX, CAST_CAP_MIN, CAST_FLOOR_MAX, CAST_FLOOR_MIN, CAST_MULTIPLIER_MAX, CAST_MULTIPLIER_MIN, CAST_TIME_MAX_SEC_MAX, CAST_TIME_MAX_SEC_MIN, CAST_TIME_RULES_DOC_ID, DEFAULT_CAST_TIME_RULES } from "../../../sim/castTimeRules";
 
 /**
  * config.cast-time@1 — 吟唱規則（owner 2026-08-13）。
@@ -35,6 +35,16 @@ export const zConfigCastTimeDoc = z
     floorSec: z.number().min(CAST_FLOOR_MIN).max(CAST_FLOOR_MAX),
     /** 吟唱**最長**幾秒。出貨 4.00 —— 作者寫「吟唱 10 秒」時被夾住的地方。 */
     capSec: z.number().min(CAST_CAP_MIN).max(CAST_CAP_MAX),
+    /**
+     * ⏳ owner 夾（#787）。owner 2026-08-27：「把所有詠唱超過一秒的都調整至一秒
+     * 但是在後台留下記錄」。規格值進算式前先 min 到這一格；出貨 1.0。
+     * 止血閥：拉到 8（≥ capSec）＝一支都夾不到。
+     *
+     * ⚠️ `.optional()` 是刻意的：線上的耐久覆蓋層（data/）可能已經存過一份
+     * **沒有這一格**的文件 —— 缺格時 `castTimeRulesFromDoc` 回出貨值 1.0，
+     * ⛔ 不是讓整份 config 驗證失敗（2026-08-02 事故的形狀）。
+     */
+    castTimeMaxSec: z.number().min(CAST_TIME_MAX_SEC_MIN).max(CAST_TIME_MAX_SEC_MAX).optional(),
   })
   .strict();
 
@@ -45,4 +55,5 @@ export const DEFAULT_CAST_TIME_DOC = {
   multiplier: DEFAULT_CAST_TIME_RULES.multiplier,
   floorSec: DEFAULT_CAST_TIME_RULES.floorSec,
   capSec: DEFAULT_CAST_TIME_RULES.capSec,
+  castTimeMaxSec: DEFAULT_CAST_TIME_RULES.castTimeMaxSec,
 } as const;

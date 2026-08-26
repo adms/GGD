@@ -29,7 +29,12 @@ import { registerSkeletonContent } from "./content/skeleton";
 import { spawnChampion } from "./spawnChampion";
 import { asSeatId, asTeamId, type ChampionId } from "../ids";
 import { castAbility } from "./abilities/abilitySystem";
-import { DEFAULT_CAST_TIME_RULES, castTimeRulesFromDoc, type CastTimeRules } from "./castTimeRules";
+import {
+  DEFAULT_CAST_TIME_RULES,
+  applyCastTimeRules,
+  castTimeRulesFromDoc,
+  type CastTimeRules,
+} from "./castTimeRules";
 
 beforeAll(() => registerSkeletonContent());
 const ZONE = SKELETON_ARENA.zones[0]!;
@@ -71,6 +76,32 @@ describe("吟唱三格是後台可調的（倍率 / 下限 / 上限）", () => {
     // 倍率 0.1 但下限 0.5 秒 ⇒ 被下限接住，而且**永遠 ≥ 1 tick**：
     // 0 tick 代表 sim 當它瞬發，而客戶端照樣畫吟唱條（owner「讓 tick 一定可以處理」）。
     expect(castTicks({ multiplier: 0.1, floorSec: 0.5 })).toBeGreaterThanOrEqual(1);
+  });
+
+  it("⏳ #787 owner 夾（castTimeMaxSec）：超過的夾到它、不足的不動、拉高＝止血閥", () => {
+    cover("cast-time-rules-owner-clamp");
+    // ── 解析層（ticket 的驗收句）：原值 > 上限 ⇒ 夾到上限；≤ 上限 ⇒ 不動。
+    //    1.0 = 30 tick，tick 對齊後正好 1；⛔ 不抄出貨值進斷言 —— 這裡的 1 是
+    //    測試自己指定的極端值，恰好與出貨相同純屬 owner 的數字就是整數。
+    const rules = { ...DEFAULT_CAST_TIME_RULES, castTimeMaxSec: 1 };
+    expect(applyCastTimeRules(rules, 2.4)).toBe(1);
+    expect(applyCastTimeRules(rules, 0.6)).toBeCloseTo(0.6, 3);
+    // 止血閥：拉到 8（≥ capSec）⇒ 一支都夾不到 ＝ 回舊行為。
+    expect(applyCastTimeRules({ ...rules, castTimeMaxSec: 8 }, 2.4)).toBeCloseTo(2.4, 3);
+    // ── 真施法路徑吃得到這一格（失敗形態②：schema 有、後台有、施法路徑沒讀）：
+    //    夾到一個 tick ⇒ 實際吟唱貼回地板，嚴格短於不夾的那一場。
+    const base = castTicks({});
+    expect(castTicks({ castTimeMaxSec: 1 / 30 })).toBeLessThan(base);
+    // ── 缺這一格的舊覆蓋層文件 ⇒ 回出貨值（owner 的裁決是全域的，⛔ 不因
+    //    某台主機存過舊覆蓋而豁免）。
+    const legacy = castTimeRulesFromDoc({
+      schema: "config.cast-time@1",
+      enabled: true,
+      multiplier: 1,
+      floorSec: 0.06,
+      capSec: 4,
+    });
+    expect(legacy.castTimeMaxSec).toBe(DEFAULT_CAST_TIME_RULES.castTimeMaxSec);
   });
 
   it("⛔ 上限被設得比下限低時，下限贏（區間不可以是空的）", () => {

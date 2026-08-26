@@ -79,7 +79,14 @@ function SourceNote(): React.JSX.Element {
   );
 }
 
-/** 📜 詠唱 >1 秒的技能（GH#682）。 */
+/**
+ * 📜 詠唱 >1 秒的技能（GH#682）＋ ⏳ owner 夾的記錄（GH#787）。
+ *
+ * owner 2026-08-27（逐字）：
+ * > 「把所有詠唱超過一秒的都調整至一秒 但是在後台留下記錄」
+ * ⇒ 這一頁就是那個「記錄」：原值／夾後／差三欄，被夾的標 ⏳。
+ * 夾子本身住在「吟唱規則」頁的 castTimeMaxSec（出貨 1.0；拉到 8 = 不夾）。
+ */
 export function CastTimeListPage(): React.JSX.Element {
   const [q, setQ] = useState("");
   const rows = useMemo(() => {
@@ -89,26 +96,36 @@ export function CastTimeListPage(): React.JSX.Element {
       `${r.id} ${r.name} ${r.championName}`.toLowerCase().includes(needle),
     );
   }, [q]);
+  const clampedCount = useMemo(() => lists.cast.filter((r) => r.clamped).length, []);
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14, maxWidth: 1180 }}>
-      <Panel title={`📜 詠唱超過 ${lists.castThresholdSec} 秒的技能（共 ${lists.cast.length} 支）`}>
+      <Panel
+        title={
+          `📜 詠唱超過 ${lists.castThresholdSec} 秒的技能` +
+          `（共 ${lists.cast.length} 支，⏳ 被夾 ${clampedCount} 支）`
+        }
+      >
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           <SourceNote />
           <div style={{ fontSize: 12, color: TEXT_DIM }}>
-            「卡面」＝技能文件（含鑄技工坊模板補完）的 castTimeSec；「實際」＝套完出貨
-            config.cast-time@1（倍率／上下限／tick 對齊）後玩家等的秒數。
+            ⏳ owner 2026-08-27（#787）：「把所有詠唱超過一秒的都調整至一秒
+            但是在後台留下記錄」—— 這一頁就是那個記錄。「原值」＝技能文件（含鑄技工坊模板補完）的
+            castTimeSec（⛔ 一份都沒改）；「夾後」＝套完出貨 config.cast-time@1（castTimeMaxSec=
+            {lists.castTimeMaxSec}／倍率／上下限／tick 對齊）後玩家實際等的秒數；「差」＝原值−夾後，
+            被夾的標 ⏳。夾子在「吟唱規則」頁的「詠唱調整上限」；拉到 8 ＝ 不夾（止血閥）。
           </div>
           <TextInput value={q} onChange={setQ} placeholder="過濾：技能 id / 名 / 英雄…" />
           <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 760 }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 820 }}>
               <thead>
                 <tr>
                   <Th>技能 id</Th>
                   <Th>技能名</Th>
                   <Th>英雄</Th>
                   <Th>格</Th>
-                  <Th align="right">詠唱（卡面）</Th>
-                  <Th align="right">詠唱（實際）</Th>
+                  <Th align="right">詠唱（原值）</Th>
+                  <Th align="right">詠唱（夾後）</Th>
+                  <Th align="right">差</Th>
                   <Th>castType</Th>
                   <Th>可否被打斷</Th>
                 </tr>
@@ -120,11 +137,14 @@ export function CastTimeListPage(): React.JSX.Element {
                     <Td>{r.name}</Td>
                     <Td color={TEXT_DIM}>{r.championName}</Td>
                     <Td mono>{r.slot}</Td>
-                    <Td align="right" mono color={GOLD}>
+                    <Td align="right" mono color={TEXT_DIM}>
                       {r.castTimeSec}
                     </Td>
-                    <Td align="right" mono>
+                    <Td align="right" mono color={GOLD}>
                       {r.effectiveSec}
+                    </Td>
+                    <Td align="right" mono color={r.clamped ? WARN : TEXT_DIM}>
+                      {r.clamped ? `⏳ ${r.deltaSec}` : r.deltaSec}
                     </Td>
                     <Td mono color={TEXT_DIM}>
                       {r.castType}

@@ -71,14 +71,32 @@ export interface CastTimeRules {
    * 「吟唱 10 秒」時，它是那個打錯的字被夾住的地方。
    */
   capSec: number;
+  /**
+   * ⏳ owner 夾（#787）。owner 2026-08-27（逐字）：
+   * > 「把所有詠唱超過一秒的都調整至一秒 但是在後台留下記錄」
+   *
+   * 規格值在**進算式之前**先被 min() 到這一格 —— 語意上等於「95 份文件在載入時
+   * 被改成 1 秒」，⛔ 但一份產物 JSON 都不動（第〇·四守則：O(1) 一格公式，
+   * ⛔ 不是 O(N) 重生成 95 份）。「留下記錄」的住處＝後台「📜 詠唱>1秒清單」頁
+   * （原值／夾後／差三欄，`tools/skill-lists/gen.mjs` 產生）。
+   *
+   * 與 `capSec` 的分工：`capSec` 擋**作者打錯**（寫 10 秒），這一格是 **owner 的
+   * 平衡裁決**（超過 1 秒的一律調到 1 秒）。止血閥：拉到 8（≥ capSec）＝
+   * 一支都夾不到 ＝ 回 2026-08-27 之前的行為。
+   */
+  castTimeMaxSec: number;
 }
 
-/** 出貨值。owner 2026-08-13 逐字指定 0.06 與 4.00。 */
+/**
+ * 出貨值。owner 2026-08-13 逐字指定 0.06 與 4.00；
+ * castTimeMaxSec = 1.0 是 owner 2026-08-27 的裁決（「都調整至一秒」，#787）。
+ */
 export const DEFAULT_CAST_TIME_RULES: CastTimeRules = Object.freeze({
   enabled: true,
   multiplier: 1,
   floorSec: 0.06,
   capSec: 4,
+  castTimeMaxSec: 1,
 });
 
 /** 一個 sim tick 的長度。`floorSec` 的下界 —— ⛔ 比這更短 sim 會當它是瞬發。 */
@@ -91,6 +109,13 @@ export const CAST_FLOOR_MIN = CAST_TICK_SEC;
 export const CAST_FLOOR_MAX = 1;
 export const CAST_CAP_MIN = 0.5;
 export const CAST_CAP_MAX = 10;
+/**
+ * `castTimeMaxSec` 的上下界（#787）。上界 8 就是止血閥的那個 8 ——
+ * owner 裁決「拉到 8 = 不夾」：任何 ≥ capSec（出貨 4）的值都夾不到任何技能。
+ * 下界一個 tick：填得比 `floorSec` 低時下限贏（同 capSec 的「區間不可以是空的」）。
+ */
+export const CAST_TIME_MAX_SEC_MIN = CAST_TICK_SEC;
+export const CAST_TIME_MAX_SEC_MAX = 8;
 
 function clampNum(v: unknown, lo: number, hi: number, fallback: number): number {
   if (typeof v !== "number" || !Number.isFinite(v)) return fallback;
@@ -100,7 +125,14 @@ function clampNum(v: unknown, lo: number, hi: number, fallback: number): number 
 /** 把一份 `config.cast-time@1` 文件正規化成規則物件。認不得 → 出貨值。 */
 export function castTimeRulesFromDoc(doc: unknown): CastTimeRules {
   const d = doc as
-    | { schema?: string; enabled?: unknown; multiplier?: unknown; floorSec?: unknown; capSec?: unknown }
+    | {
+        schema?: string;
+        enabled?: unknown;
+        multiplier?: unknown;
+        floorSec?: unknown;
+        capSec?: unknown;
+        castTimeMaxSec?: unknown;
+      }
     | undefined;
   if (!d || d.schema !== "config.cast-time@1") return DEFAULT_CAST_TIME_RULES;
   const floorSec = clampNum(d.floorSec, CAST_FLOOR_MIN, CAST_FLOOR_MAX, DEFAULT_CAST_TIME_RULES.floorSec);
@@ -117,6 +149,14 @@ export function castTimeRulesFromDoc(doc: unknown): CastTimeRules {
     //    夾出來的區間是空的 —— 那會讓 `Math.min(Math.max(v, 1), 0.5)` 回 0.5，
     //    ⛔ 也就是**下限被無聲地違反**。這裡讓下限贏。
     capSec: Math.max(floorSec, clampNum(d.capSec, CAST_CAP_MIN, CAST_CAP_MAX, DEFAULT_CAST_TIME_RULES.capSec)),
+    // ⚠️ 舊的耐久覆蓋層（data/）沒有這一格 ⇒ 回出貨值 1.0（owner 2026-08-27 的
+    //    裁決是全域的，⛔ 不因為某台主機存過舊覆蓋就豁免）。
+    castTimeMaxSec: clampNum(
+      d.castTimeMaxSec,
+      CAST_TIME_MAX_SEC_MIN,
+      CAST_TIME_MAX_SEC_MAX,
+      DEFAULT_CAST_TIME_RULES.castTimeMaxSec,
+    ),
   };
 }
 
@@ -128,7 +168,12 @@ export function castTimeRulesFromDoc(doc: unknown): CastTimeRules {
  */
 export function applyCastTimeRules(rules: CastTimeRules, seconds: number): number {
   if (!rules.enabled) return seconds;
-  const clamped = Math.min(Math.max(seconds, rules.floorSec), rules.capSec);
+  // ⏳ #787 owner 夾（2026-08-27「把所有詠唱超過一秒的都調整至一秒」）：
+  // 在唯一解析入口把**規格值**先 min 到 castTimeMaxSec —— 語意等同「載入時資料
+  // 被改成 1 秒」，之後 floor / multiplier / cap 照舊作用（倍率是另一顆 owner
+  // 旋鈕，對夾後值照乘，⛔ 這一格不給它豁免權）。
+  const spec = Math.min(seconds, rules.castTimeMaxSec);
+  const clamped = Math.min(Math.max(spec, rules.floorSec), rules.capSec);
   const scaled = Math.min(Math.max(clamped * rules.multiplier, rules.floorSec), rules.capSec);
   // 對齊整數 tick，並保證至少 `floorSec` 換算出來的那個 tick 數。
   const ticks = Math.max(Math.round(rules.floorSec / CAST_TICK_SEC), Math.round(scaled / CAST_TICK_SEC));

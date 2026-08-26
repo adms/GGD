@@ -82,16 +82,25 @@ function buildCastList(owners, rules) {
     if (typeof spec !== "number" || !(spec > CAST_LIST_MIN_SEC)) continue;
     const owner = ownerOf(def.id);
     if (!owners.has(owner)) continue;
+    const effective = r3(applyCastTimeRules(rules, spec));
     rows.push({
       id: def.id,
       name: def.name ?? def.id,
       champion: owner,
       championName: Champions.tryGet(owner)?.name ?? owner,
       slot: slotOf(def.id),
-      /** 卡面值（模板補完後的 castTimeSec，⛔ 未套 config.cast-time@1） */
+      /** 原值（模板補完後的 castTimeSec，⛔ 未套 config.cast-time@1） */
       castTimeSec: r3(spec),
-      /** 玩家實際等的秒數 = applyCastTimeRules(出貨 cast-time 文件, 卡面值) */
-      effectiveSec: r3(applyCastTimeRules(rules, spec)),
+      /** 夾後＝玩家實際等的秒數 = applyCastTimeRules(出貨 cast-time 文件, 原值) */
+      effectiveSec: effective,
+      /**
+       * ⏳ #787 owner 夾的「後台記錄」兩欄（owner 2026-08-27：「把所有詠唱超過
+       * 一秒的都調整至一秒 但是在後台留下記錄」）—— 差＝原值−夾後；clamped＝
+       * castTimeMaxSec 真的咬到了這一支（⛔ 從出貨規則推導，不假設 95 支全中：
+       * 止血閥拉到 8 之後這一欄自己歸零）。
+       */
+      deltaSec: r3(spec - effective),
+      clamped: rules.enabled && spec > rules.castTimeMaxSec,
       castType: def.castType,
       /** 被打會不會斷：schema 預設 "none" ＝ 只有死亡/暈眩/擊倒會斷 */
       interruptOn: def.interruptOn ?? "none",
@@ -251,22 +260,32 @@ function renderCastMd(data) {
   L.push(">");
   L.push("> owner 2026-08-24（逐字）：");
   L.push("> 「**施法準備/詠唱/吟唱時間超過1秒的技能列表(md) & 後台**」");
+  L.push(">");
+  L.push("> ⏳ owner 2026-08-27（逐字，#787）：");
+  L.push("> 「**把所有詠唱超過一秒的都調整至一秒 但是在後台留下記錄**」");
+  L.push("> ⇒ 這一份就是那個記錄：原值／夾後／差三欄。夾在載入時的唯一解析入口");
+  L.push("> （`config.cast-time@1` 的 `castTimeMaxSec`，出貨 1.0），⛔ 95 份技能 JSON 一份都沒動。");
   L.push("");
   L.push(`母體：${data.provenance}`);
   L.push("");
   L.push(
-    `卡面值＝技能文件（含鑄技工坊模板補完）的 \`castTimeSec\`；` +
-      `實際值＝套完出貨 \`config.cast-time@1\`（倍率/上下限/tick 對齊）後玩家等的秒數。`,
+    `原值＝技能文件（含鑄技工坊模板補完）的 \`castTimeSec\`；` +
+      `夾後＝套完出貨 \`config.cast-time@1\`（**castTimeMaxSec=${data.castTimeMaxSec}** /倍率/上下限/tick 對齊）後玩家實際等的秒數；` +
+      `差＝原值−夾後。「⏳」＝被 castTimeMaxSec 咬到的（止血閥拉到 8 之後這一欄自己歸零）。`,
   );
   L.push("");
-  L.push(`共 **${data.cast.length}** 支技能詠唱超過 ${data.castThresholdSec} 秒。`);
+  L.push(
+    `共 **${data.cast.length}** 支技能詠唱超過 ${data.castThresholdSec} 秒，` +
+      `其中 **${data.cast.filter((r) => r.clamped).length}** 支被夾。`,
+  );
   L.push("");
-  L.push("| 技能 id | 技能名 | 英雄 | 格 | 詠唱（卡面） | 詠唱（實際） | castType | 可否被打斷 |");
-  L.push("|---|---|---|---|---:|---:|---|---|");
+  L.push("| 技能 id | 技能名 | 英雄 | 格 | 詠唱（原值） | 詠唱（夾後） | 差 | castType | 可否被打斷 |");
+  L.push("|---|---|---|---|---:|---:|---:|---|---|");
   for (const r of data.cast) {
     L.push(
       `| \`${r.id}\` | ${r.name} | ${r.championName} | ${r.slot} | ${r.castTimeSec} | ` +
-        `${r.effectiveSec} | ${r.castType} | ${INTERRUPT_ZH[r.interruptOn]} |`,
+        `${r.effectiveSec} | ${r.clamped ? "⏳ " : ""}${r.deltaSec} | ` +
+        `${r.castType} | ${INTERRUPT_ZH[r.interruptOn]} |`,
     );
   }
   L.push("");
@@ -317,6 +336,8 @@ export async function buildData() {
     $generator: `tools/skill-lists/gen.mjs —— ${CMD}（⛔ 產生的，不要手改）`,
     provenance: BALANCE_POPULATION_PROVENANCE,
     castThresholdSec: CAST_LIST_MIN_SEC,
+    /** ⏳ #787：出貨的 owner 夾（config.cast-time@1 的 castTimeMaxSec）。 */
+    castTimeMaxSec: rules.castTimeMaxSec,
     cast: buildCastList(owners, rules),
     ms: buildMsList(owners),
   };

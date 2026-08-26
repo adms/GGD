@@ -1,9 +1,10 @@
 {
   "id": "cast-time",
   "schema": "config.cast-time@1",
-  "note": "吟唱規則（owner 2026-08-13）。三格是同一條算式的三個位置：先把技能算出來的吟唱夾進 [floorSec, capSec]，乘上 multiplier，再夾一次，最後對齊整數 sim tick。⭐ floorSec 出貨 0.06 = 2 個 tick，是 owner 指定的最低吟唱時間（「讓 tick 一定可以處理」）—— 比一個 tick 更短時 sim 會當它是瞬發，而客戶端照樣畫得出吟唱條與預告光束，兩邊都不報錯。capSec 出貨 4.00 是「一支技能最多讓玩家站著不動多久」的硬上界。multiplier 是全域快慢，⛔ 不要改用 combatEnv.cooldown 代替（冷卻管間隔、吟唱管前搖，兩者一起動等於沒動）。⚠️ 後台『吟唱規則』頁存的是耐久覆蓋層（data/），覆蓋層會蓋掉這一個檔案。",
+  "note": "吟唱規則（owner 2026-08-13）。三格是同一條算式的三個位置：先把技能算出來的吟唱夾進 [floorSec, capSec]，乘上 multiplier，再夾一次，最後對齊整數 sim tick。⭐ floorSec 出貨 0.06 = 2 個 tick，是 owner 指定的最低吟唱時間（「讓 tick 一定可以處理」）—— 比一個 tick 更短時 sim 會當它是瞬發，而客戶端照樣畫得出吟唱條與預告光束，兩邊都不報錯。capSec 出貨 4.00 是「一支技能最多讓玩家站著不動多久」的硬上界。multiplier 是全域快慢，⛔ 不要改用 combatEnv.cooldown 代替（冷卻管間隔、吟唱管前搖，兩者一起動等於沒動）。⏳ castTimeMaxSec 出貨 1.0 = owner 2026-08-27「把所有詠唱超過一秒的都調整至一秒 但是在後台留下記錄」（#787）：規格值進算式前先 min 到這一格，⛔ 不動 95 份技能 JSON；記錄住在後台「📜 詠唱>1秒清單」頁（原值／夾後／差）。止血閥：拉到 8 = 不夾。⚠️ 後台『吟唱規則』頁存的是耐久覆蓋層（data/），覆蓋層會蓋掉這一個檔案。",
   "enabled": true,
   "multiplier": 1,
   "floorSec": 0.06,
-  "capSec": 4
+  "capSec": 4,
+  "castTimeMaxSec": 1
 }
