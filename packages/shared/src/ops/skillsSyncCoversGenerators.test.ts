@@ -38,6 +38,13 @@ const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
  */
 const NO_ARTIFACT: Record<string, string> = {
   roster: "英雄上下架的純守衛 —— 它驗一致性,⛔ 沒有任何檔案是它寫的",
+  ruleslip:
+    "📋 守則犯錯帳本（owner 2026-08-27）—— 它的資料列是**我犯錯的當下**用 " +
+    "`bash scripts/rule-slip.sh <守則> <成因> <一句話>` 一列一列記進去的,⛔ 沒有任何來源可以" +
+    "把它「重生成」:一次犯錯是一個歷史事件,⛔ 不是可推導的產物。" +
+    "⭐ `--check` 驗的是**統計區與資料列一致**（那一半是可重算的:`--stats`）＋" +
+    "**代號在封閉詞彙表裡**（打錯字會讓統計靜默分裂成兩列)。" +
+    "⇒ 「過期」這個概念對資料列不成立,對統計區成立而它有自己的重算指令。",
   models:
     "GH#540 殘留屍體的**反向閘**：帶 gore geoset 卻沒宣告 `hiddenPrimitives` 的就紅。" +
     "⛔ 刻意沒有 build —— 填哪幾個圖元要人看過那顆模型再決定,而**藏錯比屍體更嚴重**" +
