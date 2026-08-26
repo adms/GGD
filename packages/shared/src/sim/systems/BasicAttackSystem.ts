@@ -301,6 +301,7 @@ export function basicAttackSystem(world: SimWorld): void {
         seesTarget(world, t.zone, t.pos, tgtT.pos);
       if (!tgtT || !tgtHp?.alive || !inRange) {
         ab.windup = null;
+        releaseAimOnCancel(world, id);
         // WHIFF (combat-juice): if the swing had already COMMITTED (this was the
         // damage-point tick) and the target escaped/died, it connects with
         // nothing → a melee over-commit forward lunge. An EARLY interrupt
@@ -312,6 +313,7 @@ export function basicAttackSystem(world: SimWorld): void {
       // 打就站定:走動就作廢這一刀(朝目標靠近除外)。安靜取消,不 whiff,不退冷卻。
       if (standstillBlocks(ss, t.vel, t.pos, tgtT.pos)) {
         ab.windup = null;
+        releaseAimOnCancel(world, id);
         continue;
       }
       // 揮劍轉向 (task #264)：整段前搖每 tick 重新瞄準。目標會走位，所以不能只在
@@ -566,6 +568,28 @@ function resolveAttack(
     critSources: cs.critSources,
   });
   fireHooks(world, id, "onBasicAttack", targetId);
+}
+
+/**
+ * GH#783 (#216 回歸)：**取消的前搖要把自己武裝的面向鎖收回來。**
+ *
+ * 出劍那一刻 `aimAtTarget` 鎖了 `dpTicks + followThroughTicks` —— 那是替「這一刀
+ * 會揮完」預付的窗口。前搖被取消（走位作廢 / 目標死亡 / 出射程 / 視線斷）之後,
+ * 那個窗口的剩餘部分沒有任何東西回收,於是打帶跑的每一次走位取消都留下最長
+ * `dpTicks + 3` tick 的殭屍鎖:身體釘在目標方向,腳往反方向走 —— 量到林克
+ * (`attackDamagePoint: 0.5` = 15 tick,全名單最長那一檔)連續 15 tick 180° 月球
+ * 漫步,而 LoL 的語意是「取消那一刻身體立刻交還移動方向」。
+ *
+ * 收回**不是刪除**:夾到 `tick + followThroughTicks`(出貨 3 tick = 100ms),
+ * 讓轉身吃同一段收招餘韻,不會硬切;已經比這短的鎖一格不動。
+ * ⚠️ 只在**這一刀自己的**取消路徑呼叫 —— `ab.cast` / recovery 那兩個分支不碰,
+ * 它們清掉的 windup 旁邊可能站著施法自己武裝的（更長的）鎖,夾了就是打斷吟唱面向。
+ */
+function releaseAimOnCancel(world: SimWorld, id: EntityId): void {
+  const cur = world.facingLock.get(id);
+  if (!cur) return;
+  const until = world.tick + facingTicks(world).followThroughTicks;
+  if (cur.untilTick > until) cur.untilTick = until;
 }
 
 /**

@@ -309,3 +309,60 @@ describe("GH#216 移動指令期間會不會攻擊 —— 全角色矩陣", () =
     expect(brokenBefore("far").length).toBe(rows.length);
   }, 1_800_000);
 });
+
+/**
+ * GH#783（#216 回歸）—— 打帶跑:取消的前搖不得留下殭屍面向鎖。
+ *
+ * owner 2026-08-27:「林克又在倒著走路攻擊了」。上面那張矩陣**只數傷害事件**,
+ * 對面向零斷言(失敗形態④);modelFacing.test.ts 量的是 bind-pose 的模型軸。
+ * 這一案補上缺的那一軸:走位取消前搖之後,**面向要在收招餘韻內交還移動方向**。
+ * 修法見 BasicAttackSystem 的 `releaseAimOnCancel`(突變:拿掉它 → 這裡紅)。
+ */
+describe("GH#783 打帶跑取消前搖 —— 面向交還移動方向", () => {
+  // 林克 = attackDamagePoint 0.5(全名單最長檔,鎖殘留 18 tick)· Saber = #216 主角
+  const KITERS = ["godie-h00l", "godie-e002"] as ChampionId[];
+  it("走位取消 12 tick 後,面向與移動方向夾角 <30°", () => {
+    for (const champ of KITERS) {
+      const world = new SimWorld(SKELETON_ARENA, 20260827);
+      world.combatEnv = shippedEnv();
+      world.combatActive = true;
+      world.combatFeel = { ...DEFAULT_COMBAT_FEEL };
+      const at = (x: number): { x: number; z: number } => ({ x: Z0.center.x + x, z: Z0.center.z });
+      const me = spawnChampion(world, { championId: champ, seatId: asSeatId(0), teamId: asTeamId(1), pos: at(0), zone: 0 });
+      const foe = spawnChampion(world, { championId: DUMMY, seatId: asSeatId(1), teamId: asTeamId(2), pos: at(6), zone: 0 });
+      const myT = world.transform.get(me)!;
+      const foeHp = world.health.get(foe)!;
+      const send = (order: Order): Map<SeatId, IntentFrame> =>
+        new Map([[asSeatId(0), { order, commands: [] }]]);
+      // ① A-move 貼上去,走到第一次前搖開起來(儀器自檢:前搖真的存在)
+      let windupTick = -1;
+      for (let i = 0; i < 150 && windupTick < 0; i++) {
+        foeHp.hp = foeHp.maxHp;
+        world.stats.get(foe)!.final[Stat.MoveSpeed] = IMMOBILE;
+        world.step(i === 0 ? send({ kind: "attackMove", point: at(6) }) : NO_INTENTS);
+        if (world.abilities.get(me)!.windup) windupTick = i;
+      }
+      expect(windupTick, `${champ} 的前搖從來沒開起來 —— 情境失效`).toBeGreaterThanOrEqual(0);
+      // ② 前搖中途點反方向地板(打帶跑)→ 走位取消這一刀
+      const away = at(myT.pos.x - Z0.center.x - 40);
+      const angles: number[] = [];
+      for (let i = 0; i < 20; i++) {
+        foeHp.hp = foeHp.maxHp;
+        world.stats.get(foe)!.final[Stat.MoveSpeed] = IMMOBILE;
+        world.step(i === 0 ? send({ kind: "move", point: away }) : NO_INTENTS);
+        const sp = Math.hypot(myT.vel.x, myT.vel.z);
+        if (i >= 12 && sp > 1) {
+          const fy = Math.atan2(myT.facing.x, myT.facing.z);
+          const vy = Math.atan2(myT.vel.x, myT.vel.z);
+          let d = (Math.abs(fy - vy) * 180) / Math.PI;
+          if (d > 180) d = 360 - d;
+          angles.push(d);
+        }
+      }
+      expect(world.abilities.get(me)!.windup, `${champ} 走位沒有取消前搖 —— 情境失效`).toBeNull();
+      expect(angles.length, `${champ} 取消後根本沒在走 —— 情境失效`).toBeGreaterThan(0);
+      for (const d of angles)
+        expect(d, `${champ} 取消前搖 12 tick 後仍背對移動方向(殭屍面向鎖)`).toBeLessThan(30);
+    }
+  }, 120_000);
+});
