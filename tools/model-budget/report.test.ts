@@ -11,6 +11,7 @@
  */
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
@@ -20,7 +21,22 @@ import { DEFAULT_ARENA_SCENERY_POLICY } from "../../packages/shared/src/content/
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "../..");
-const OUT = path.join(ROOT, "content/assets/model-budget/report.json");
+/**
+ * ⛔ GH#750 —— 這一格以前就是產生器的預設落點（版控的產物），於是**跑一次這支測試
+ * 就把工作樹弄髒**：那份進版控的 report 被就地重生成，「有沒有東西該 commit」這個
+ * 訊號被稀釋掉，而且它同時**掩蓋了自己過期**（每次測試都順手把它更新掉，於是
+ * 沒有任何東西會紅）。
+ *
+ * ⚠️ 產生器**每一種**呼叫都寫檔 —— 含 `--check`：`emit_report.ts` 的
+ * `fs.writeFileSync(outPath(), …)` 在 `if (check)` **之前**無條件跑。
+ * ⇒ 下面每一個 execFileSync 都要帶 `--out`，⛔ 不是只有 beforeAll 那一個。
+ */
+const TRACKED = path.join(ROOT, "content/assets/model-budget/report.json");
+/** ⭐ 在任何 hook 之前抓（模組載入先於 beforeAll），這是「有沒有被弄髒」的比對基準。 */
+const TRACKED_BEFORE = fs.existsSync(TRACKED) ? fs.readFileSync(TRACKED) : null;
+/** 產生器的產物一律落這裡；`emit_report.ts` 的 `--out` 就是為這件事而存在的。 */
+const TMP = fs.mkdtempSync(path.join(os.tmpdir(), "model-budget-"));
+const OUT = path.join(TMP, "report.json");
 
 /**
  * The Blizzard overlay is DEV-ONLY, gitignored runtime state — present on the
@@ -42,7 +58,7 @@ const itWithOverlay = HAS_OVERLAY ? it : it.skip;
 let report: any;
 
 beforeAll(() => {
-  execFileSync("npx", ["tsx", path.join(HERE, "emit_report.ts")], { cwd: ROOT, stdio: "pipe" });
+  execFileSync("npx", ["tsx", path.join(HERE, "emit_report.ts"), "--out", OUT], { cwd: ROOT, stdio: "pipe" });
   report = JSON.parse(fs.readFileSync(OUT, "utf8"));
 }, 120_000);
 
@@ -209,7 +225,7 @@ describe("WHERE IT IS USED is traced, not guessed", () => {
 
 describe("the CI gate is a ratchet against an accepted baseline, not an alarm", () => {
   itWithOverlay("the baseline covers every current breach — --check exits 0", () => {
-    const out = execFileSync("npx", ["tsx", path.join(HERE, "emit_report.ts"), "--check"], {
+    const out = execFileSync("npx", ["tsx", path.join(HERE, "emit_report.ts"), "--check", "--out", OUT], {
       cwd: ROOT,
       encoding: "utf8",
     });
@@ -226,7 +242,10 @@ describe("the CI gate is a ratchet against an accepted baseline, not an alarm", 
       fs.writeFileSync(baselinePath, JSON.stringify(b));
       let failed = false;
       try {
-        execFileSync("npx", ["tsx", path.join(HERE, "emit_report.ts"), "--check"], { cwd: ROOT, stdio: "pipe" });
+        execFileSync("npx", ["tsx", path.join(HERE, "emit_report.ts"), "--check", "--out", OUT], {
+          cwd: ROOT,
+          stdio: "pipe",
+        });
       } catch (e: any) {
         failed = true;
         expect(String(e.stderr)).toContain("NEW BUDGET REGRESSION");
@@ -238,6 +257,24 @@ describe("the CI gate is a ratchet against an accepted baseline, not an alarm", 
   });
 });
 
+/**
+ * ⭐ 承重的那一條（GH#750）—— ⛔ 它必須是**最後**一個 describe：上面每一個
+ * `execFileSync` 都跑過之後才問「版控樹動了沒」。
+ */
+describe("跑這支測試不會弄髒版控樹", () => {
+  it("content/assets/model-budget/report.json 一個位元組都沒被動到 (GH#750)", () => {
+    expect(TRACKED_BEFORE, "版控的 report.json 不存在 —— 這條守衛在空轉").not.toBeNull();
+    expect(
+      fs.readFileSync(TRACKED).equals(TRACKED_BEFORE as Buffer),
+      "產生器寫進了版控檔 —— 某一處 execFileSync 漏了 `--out`（⚠️ 含 `--check`，它也寫檔）",
+    ).toBe(true);
+  });
+});
+
 afterAll(() => {
-  // leave the freshly-generated report in place; it IS the artefact this tool ships
+  // 產物落在 temp dir（`--out`），⛔ 不留在樹上。
+  fs.rmSync(TMP, { recursive: true, force: true });
+  // 真的被寫髒了：上面那條已經紅過，這裡只是不要留下災情給下一個人。
+  if (TRACKED_BEFORE && fs.existsSync(TRACKED) && !fs.readFileSync(TRACKED).equals(TRACKED_BEFORE))
+    fs.writeFileSync(TRACKED, TRACKED_BEFORE);
 });
