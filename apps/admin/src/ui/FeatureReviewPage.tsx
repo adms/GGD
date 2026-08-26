@@ -19,6 +19,23 @@
 import { useCallback, useEffect, useState } from "react";
 import { Panel, TextInput } from "./widgets";
 import { ACCENT, DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "./theme";
+import { browserTokenStorage } from "../session";
+
+/**
+ * 🔐 GH#796 —— `/__review/**` 現在要後台 admin 身分（線上由 review sidecar 轉給
+ * 平台自己的 admin-only 端點驗）。⭐ ⛔ 沒有新憑證：帶的就是這個 console 已經
+ * 登入拿到的那一顆 token（`session.ts` 的 `browserTokenStorage`）。
+ * ⚠️ 本機 dev server 不驗（`GGD_REVIEW_REQUIRE_ADMIN` 只在 live 模式預設開），
+ *    所以拿不到 token 時**照樣送出去** —— 由伺服器那一端決定放不放行，
+ *    ⛔ 不是在這裡自己判斷（判斷在兩個地方 = 兩份真相）。
+ */
+function authHeaders(extra?: Record<string, string>): Record<string, string> {
+  const t = browserTokenStorage.load();
+  return {
+    ...(extra ?? {}),
+    ...(t ? { Authorization: `Bearer ${t.accessToken}` } : {}),
+  };
+}
 
 interface Frame {
   readonly rel: string;
@@ -86,7 +103,7 @@ export function FeatureReviewPage(): React.JSX.Element {
 
   const load = useCallback(async (): Promise<void> => {
     try {
-      const r = await fetch("/__review/features", { headers: { accept: "application/json" } });
+      const r = await fetch("/__review/features", { headers: authHeaders({ accept: "application/json" }) });
       const ct = r.headers.get("content-type") ?? "";
       if (!ct.includes("json"))
         throw new Error(`回的不是 JSON（HTTP ${r.status}）—— 這一台沒掛 /__review（本機是 vite plugin，線上是 review sidecar）`);
@@ -114,7 +131,7 @@ export function FeatureReviewPage(): React.JSX.Element {
     try {
       const r = await fetch("/__review/feature-verdict", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: authHeaders({ "Content-Type": "application/json" }),
         body: JSON.stringify({ id: b.id, hash: b.hash, verdict, reason }),
       });
       if (!r.ok) throw new Error(`HTTP ${r.status}`);

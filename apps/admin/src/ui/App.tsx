@@ -546,7 +546,17 @@ interface LiveSuite {
 function useLiveSuite(): LiveSuite | null {
   const [loaded, setLoaded] = useState<LiveSuite | null>(null);
   useEffect(() => {
-    if (!import.meta.env.DEV) return;
+    // ⭐ GH#794 起這一行**拿掉了**（原本是 `if (!import.meta.env.DEV) return;`）。
+    //
+    // ⚠️ 那道閘在寫下來的當下是**對的**：`/__live/**` 只掛在 vite dev server 上，
+    //    正式 build 裝了也只會 fetch 到 404 ⇒ 與其給 13 個壞掉的頁，不如不給。
+    // ⛔ 但 #794 之後 `/__live/**` **線上真的有了**（review sidecar ＋ nginx 的
+    //    location），於是這道閘變成了「owner 打不開他剛要求上線的那 13 頁」——
+    //    ⭐ 這與 FeatureReviewPage 檔頭那句「正式 build 沒有這條路由」是**同一句
+    //    過期的散文**（第三守則：註解會說謊，而它連著程式一起說）。
+    //
+    // ⭐ 現在的降級是誠實的：`/__live` 打不到時，每一頁自己會顯示
+    //    「/__live/<dataset> 回報：<錯誤>」——⛔ 不是白畫面。
     let alive = true;
     void import("./live").then(
       (m) => {

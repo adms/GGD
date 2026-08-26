@@ -128,6 +128,12 @@ services:
       GGD_REVIEW_MODE: "live"
       GGD_REVIEW_PORT: "8790"
       GGD_REVIEW_ROOT: /srv/repo
+      # 🔐 GH#796 —— 驗身分要問**平台自己**（⛔ 不自己解 JWT ＝ 第二份真相）。
+      GGD_PLATFORM_URL: "http://platform:8080"
+      # 🔁 一鍵 rollback：設 "0" 回到 #794 剛上線時的全開行為。
+      #    ⚠️ 這一格是**環境變數**⛔ 不是後台欄位，而那是刻意的 ——
+      #    用後台欄位控制「後台能不能進」是循環的（鎖在門裡面的鑰匙不是鑰匙）。
+      GGD_REVIEW_REQUIRE_ADMIN: "${GGD_REVIEW_REQUIRE_ADMIN:-1}"
     ports:
       - "127.0.0.1:8790:8790"
     volumes:

@@ -33,6 +33,11 @@
  * 所以線上服務它沒有任何寫入風險 —— ⛔ 而不接它，那 13 頁的批核區也一起是空的。
  *
  * 用法：
+ * ## 🔐 身分（GH#796）
+ * `/__review/**` 與 `/__live/**` 要後台 admin 的 Bearer token（`adminAuth.mjs` 轉給
+ * 平台自己的 admin-only 端點驗）。⛔ 我不建立任何新憑證 —— 用 owner 已經有的登入。
+ * 一鍵 rollback：`GGD_REVIEW_REQUIRE_ADMIN=0`。`/healthz` 刻意保持匿名。
+ *
  *   node tools/review/server.mjs                 # mode=live, port=8790
  *   GGD_REVIEW_MODE=local node tools/review/server.mjs
  */
@@ -44,6 +49,7 @@ import { createReviewMiddleware } from "./middleware.mjs";
 import { createAdminLiveMiddleware } from "../admin-live/middleware.mjs";
 import { buildFeatureQueue } from "./features.mjs";
 import { MATERIAL_REL, VERDICT_DIR_REL } from "./stores.mjs";
+import { checkAdmin, needsAdmin } from "./adminAuth.mjs";
 
 const REPO = process.env.GGD_REVIEW_ROOT ?? join(dirname(fileURLToPath(import.meta.url)), "../..");
 const MODE = process.env.GGD_REVIEW_MODE ?? "live";
@@ -89,7 +95,17 @@ function health() {
   return out;
 }
 
-createServer((req, res) => {
+const server = createServer((req, res) => {
+  void handle(req, res);
+});
+
+/**
+ * 🔐 GH#796 —— `/__review/**` 與 `/__live/**` 要 admin 身分（`adminAuth.mjs`）。
+ * ⚠️ `/healthz` **刻意保持匿名**：它是部署後置條件用的，而那一段沒有 token
+ *    （⛔ 也不該有 —— 部署腳本不可以持有 owner 的憑證）。
+ *    它只吐計數與布林，⛔ 不吐任何批次內容。
+ */
+async function handle(req, res) {
   const path = (req.url ?? "").split("?")[0];
   if (path === "/healthz" || path === "/__review/healthz") {
     const h = health();
@@ -98,6 +114,16 @@ createServer((req, res) => {
     res.end(JSON.stringify(h, null, 2));
     return;
   }
+  if (needsAdmin(path)) {
+    const verdict = await checkAdmin(req.headers?.authorization);
+    if (!verdict.ok) {
+      res.statusCode = verdict.status;
+      res.setHeader("Content-Type", "application/json; charset=utf-8");
+      res.end(JSON.stringify({ error: verdict.error, hint: "後台登入後這一頁會自動帶 token", issue: 796 }));
+      return;
+    }
+  }
+
   const done = () => {
     res.statusCode = 404;
     res.setHeader("Content-Type", "application/json; charset=utf-8");
@@ -113,7 +139,9 @@ createServer((req, res) => {
     );
   };
   review(req, res, () => (adminLive === null ? done() : adminLive(req, res, done)));
-}).listen(PORT, "0.0.0.0", () => {
+}
+
+server.listen(PORT, "0.0.0.0", () => {
   const h = health();
   console.log(
     `[review] mode=${MODE} port=${PORT} root=${REPO}\n` +

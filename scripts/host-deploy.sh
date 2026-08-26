@@ -521,11 +521,24 @@ else
   #    ⛔ 而 nginx 根本沒有 `location /__live/` ⇒ 請求掉進 SPA fallback ⇒
   #    回 200 + text/html ⇒ 那 13 頁拿到一坨 HTML 當 JSON 解 ⇒ 空白。
   #    ⇒ 「模組載得起來」是名詞；「nginx 送得到」才是關係。這一行問的是後者。
-  LIVE_CT=$(curl -fsS -m 30 -o /dev/null -w '%{content_type}' "$BASE/__live/sfx-map" 2>/dev/null || echo none)
-  case "$LIVE_CT" in
-    *json*) ok "13 頁實時資料面: $BASE/__live/ 回 JSON（穿過 edge 真的抓了一份 dataset）" ;;
-    *) warn "⛔ $BASE/__live/ 回的是「$LIVE_CT」⛔ 不是 JSON —— nginx 少了 location /__live/，
-     那 13 頁對照/設定頁在線上會是空白。⛔ 不擋部署（遊戲本體不依賴它）。" ;;
+  # ⭐ GH#796 之後這一條期望的是 **401**，⛔ 不是 200 —— 而那**更強**：
+  #    · 401 ⇒ nginx **送到了** sidecar（沒送到會掉進 SPA fallback ⇒ 200 + text/html）
+  #           **而且** 身分閘在（部署腳本不持有 owner 的憑證，本來就該被擋）
+  #    · 200 ⇒ ⚠️ 閘破了（匿名進得來）
+  #    · 200 + text/html ⇒ ⛔ nginx 少了 location（#794 那次的形狀）
+  #    ⇒ 一個檢查同時罩住兩種相反的故障。⛔ 不要「改成期望 200」——
+  #      那等於把身分閘關掉才會綠。
+  LIVE_CODE=$(curl -s -m 30 -o /private/tmp/ggd-live-probe.txt -w '%{http_code}' "$BASE/__live/sfx-map" 2>/dev/null || echo 000)
+  LIVE_BODY=$(head -c 80 /private/tmp/ggd-live-probe.txt 2>/dev/null || true)
+  rm -f /private/tmp/ggd-live-probe.txt
+  case "$LIVE_CODE" in
+    401) ok "13 頁實時資料面: $BASE/__live/ 回 401（⭐ nginx 送到了 ＋ 身分閘在 —— 兩件一起驗）" ;;
+    200)
+      case "$LIVE_BODY" in
+        *"<"*) warn "⛔ $BASE/__live/ 回 200 + HTML —— nginx 少了 location /__live/，那 13 頁在線上會空白。" ;;
+        *) warn "🔓 $BASE/__live/ 匿名回 200 —— **身分閘破了**（GH#796）。查 GGD_REVIEW_REQUIRE_ADMIN。" ;;
+      esac ;;
+    *) warn "⚠️ $BASE/__live/ 回 $LIVE_CODE —— 判不出來（sidecar 沒起來？）。⛔ 不擋部署。" ;;
   esac
   if [ "$REVIEW_OK" = "True" ]; then
     ok "批核頁資料面: 材料 $REVIEW_N 批 · 結果可寫（穿過 edge 驗的）"

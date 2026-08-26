@@ -5,10 +5,19 @@
  * **不是靜態內容**喔」。
  *
  * ⭐ 與 ContentPage 同一個 DEV-chunk 形狀：routes ＋ label 全部跟著這個 chunk 走，
- * production build **不含**這一段（/__live 只在 vite dev server 存在 —— 正式 build
- * 裝了也只會 fetch 到 404）。⛔ 不要把這裡的頁面加進 SESSION_REQUIRED_PAGES。
+ * ⭐ **GH#794 起正式 build 也含這一段** —— `/__live/**` 線上真的有了
+ * （review sidecar ＋ nginx 的 location）。⛔ 上面那句「正式 build 不含」已作廢。
+ * ⛔ 仍然不要把這裡的頁面加進 SESSION_REQUIRED_PAGES（它們是唯讀對照頁）。
+ *
+ * 🔐 GH#796：載入這個 chunk 的同時裝上 fetch 攔截器，讓 13 頁的
+ * `fetch("/__live/…")` 自動帶上 console 已登入的 token —— ⭐ 一個住處，
+ * ⛔ 不是去改 13 個頁面各加一個 header（第零守則⑨）。
  */
 import type * as React from "react";
+import { installLiveAuthFetch } from "../../liveAuth";
+import { browserTokenStorage } from "../../session";
+
+installLiveAuthFetch(() => browserTokenStorage.load()?.accessToken ?? null);
 import { MdlFamiliesPage } from "./MdlFamiliesPage";
 import { ParallelBoardPage } from "./ParallelBoardPage";
 import { JassVfxPage } from "./JassVfxPage";
