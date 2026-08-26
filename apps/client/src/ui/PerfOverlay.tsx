@@ -19,6 +19,7 @@ import { lifecycleLedger } from "../render/lifecycleLedger";
 //    ⭐ **這一班既有的 4 Hz 計時器**（⛔ 不新增任何計時器、⛔ 不碰 rAF）。
 import { diagSnapshot, diagWarnings } from "../perf/diag";
 import { perfWatch } from "../perf/longTasks";
+import { autoArmOnStall } from "../perf/frameSegments";
 import { useSettings } from "./useSettings";
 import { hudTouch } from "./hud/HudSlot";
 import { HUD_Z, hudSlotHeight, hudSlotStyle } from "./hud/hudLayout";
@@ -121,6 +122,10 @@ function usePerfSample(active: boolean): Snap {
       //    ⭐ 那就是誠實的凍結長度，而 `perfBus.minFps` 因為 dt 被夾在 100ms
       //    永遠 ≥ 10 fps，⛔ 說不出 2 秒凍結與 300ms 卡頓的差別。
       perfWatch.note(nowMs, SAMPLE_MS);
+      // 📏 GH#614 —— ⭐ **卡過一次就自己把逐段量尺打開**，⛔ 不必玩家去 F12
+      //    打指令（owner:「我不想當你的人肉測試機」）。第一次凍結被用來**觸發**，
+      //    下一次凍結才有逐段歸屬 —— 而 lag 從來不會只發生一次。
+      autoArmOnStall(perfWatch.stalls().worstMs);
       lifecycleLedger.tick(nowMs / 1000);
       setSnap(snapshot());
     }, SAMPLE_MS);

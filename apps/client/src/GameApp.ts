@@ -194,6 +194,7 @@ import {
 // GH#278 —— 標記的名字要從它借身分的那份文件上拿（純 TS，沒有 React）。
 import { markSaveText } from "./ui/hud/markModel";
 import { perfBus } from "./perfBus";
+import { frameSegments } from "./perf/frameSegments";
 import { ConnectionStats } from "./net/ConnectionStats";
 import { CastTracker } from "./CastTracker";
 import { registerHudActions } from "./ui/actions";
@@ -1757,6 +1758,10 @@ export class GameApp {
 
   private renderFrame(nowMs: number): void {
     const dtMs = this.frameDelta.take(nowMs);
+    // 📏 GH#614 —— 逐段歸屬的量尺。⛔ 沒武裝時這一行是「一個布林判斷 + return」，
+    //    ⛔ 沒有 `performance.now()`、沒有配置。八個 `mark()` 逐字對到底下的
+    //    步驟編號 0…8（`perf/frameSegments.FRAME_SEGMENTS`），對不上守衛會紅。
+    frameSegments.begin(nowMs);
 
     const state = this.conn.room?.state ?? null;
 
@@ -1776,6 +1781,7 @@ export class GameApp {
     setDisplayEnvJson(hudStore.getState().combatEnvJson);
 
     // 1) drain network events (queued by socket callbacks)
+    frameSegments.mark("drain");
     const localId = hudStore.getState().localEntityId;
     this.drainNetworkEvents(state, localId, nowMs);
     // (The frame's voice lines were SCORED during the drain and are dispatched
@@ -1793,6 +1799,7 @@ export class GameApp {
     const heldByServer = this.predictionHeldByServer(state);
 
     // 2) advance the interpolation clock (delay is a live network setting)
+    frameSegments.mark("predict");
     const renderTick = this.timeSync.ready
       ? this.timeSync.renderTick(nowMs, this.renderParams.interpolationDelayMs)
       : 0;
@@ -1869,6 +1876,7 @@ export class GameApp {
     }
 
     // 4) entity views — imperative transform writes
+    frameSegments.mark("views");
     const localPose = this.prediction.active ? this.prediction.renderPose(dtMs, renderAlpha) : null;
     // Subtle footstep cue for the local champion. Queued CENTRED (source null):
     // it is at the listener, so panning it would be a no-op by construction —
@@ -1987,6 +1995,7 @@ export class GameApp {
 
     // 5) cameras — one per local player, each following its own champion.
     // Mouse edge-pan / key-pan only steer player 0's camera.
+    frameSegments.mark("camera");
     for (let p = 0; p < this.viewports.count; p++) {
       const rig = this.viewports.rigFor(p);
       const pos =
@@ -2078,6 +2087,7 @@ export class GameApp {
     this.lighting.animate(nowMs / 1000);
 
     // 6) vfx (one-shots + the ambient lives-with-entity channel + combat post-fx)
+    frameSegments.mark("vfx");
     this.vfx.update(nowMs);
     if (state && this.contentDb.ready) this.syncAmbient(nowMs);
     this.ambient.tick(nowMs, dtMs);
@@ -2112,11 +2122,14 @@ export class GameApp {
     // overlay used to keep updating regardless, which is why the owner saw
     // 「戰場上的血條」 floating over the shop with nothing behind them. Same
     // switch for both now: no arena render ⇒ no world anchors.
+    frameSegments.mark("anchors");
     if (state && !this.renderSuppressed) this.updateFrameBus(state, nowMs);
     else clearWorldAnchors();
+    frameSegments.mark("draw");
     if (!this.renderSuppressed) this.renderer.render();
 
     // 8) perf sampling → adaptive brain + perfBus (read by the overlay @4Hz)
+    frameSegments.end();
     const workMs = performance.now() - nowMs;
     this.samplePerf(nowMs, dtMs, workMs);
   };

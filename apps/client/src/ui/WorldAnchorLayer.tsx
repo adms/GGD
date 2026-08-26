@@ -26,6 +26,7 @@
 import { useEffect, useRef } from "react";
 import { frameBus, pushEvadeText } from "../frameBus";
 import { drainEvadeSightings } from "../net/RoomConnection";
+import { frameSegments } from "../perf/frameSegments";
 import { floatingTextLayers } from "../vfx/FloatingTextFx";
 import {
   COMBAT_TEXT_FONT,
@@ -302,6 +303,11 @@ export function WorldAnchorLayer(): React.JSX.Element {
 
     const frame = (): void => {
       raf = requestAnimationFrame(frame);
+      // 📏 GH#614 —— ⭐ 這是客戶端的**第二條** rAF 迴圈，而 `perfBus.workMs` 只量
+      //    `GameApp.renderFrame` ⇒ 這裡花掉的每一毫秒在此之前**沒有任何儀表看得到**，
+      //    它整段掉進 `diag.frameBudget.unaccountedMs`（一個沒有名字的差額）。
+      //    ⛔ 沒武裝時 `armed` 是 false ⇒ 這兩行是一個布林判斷，⛔ 不呼叫 clock。
+      const t0 = frameSegments.armed ? performance.now() : 0;
 
       // ---- champion healthbars ----
       for (const [id, anchor] of frameBus.champions) {
@@ -499,6 +505,7 @@ export function WorldAnchorLayer(): React.JSX.Element {
         const n = ftNodes[i]!;
         if (n.style.display !== "none") n.style.display = "none";
       }
+      if (frameSegments.armed) frameSegments.external("domAnchors", performance.now() - t0);
     };
     raf = requestAnimationFrame(frame);
 

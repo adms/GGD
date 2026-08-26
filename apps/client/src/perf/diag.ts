@@ -48,6 +48,7 @@ import { perfBus, type PerfBus } from "../perfBus";
 import { lifecycleLedger, ledgerPolicy } from "../render/lifecycleLedger";
 import { FRAME_DELTA_MAX_MS } from "../render/frameCap";
 import { perfWatch, LONGTASK_WINDOW_SEC, type LongTaskReport, type StallReport } from "./longTasks";
+import { frameSegments, segmentReportText } from "./frameSegments";
 
 /** `minFps` 結構上的地板：`1000 / FRAME_DELTA_MAX_MS`（見 `frameBudget.minFpsIsFloored`）。 */
 export const MIN_FPS_FLOOR = 1000 / FRAME_DELTA_MAX_MS;
@@ -186,6 +187,12 @@ export function diagReport(nowMs = 0): string {
   L.push("");
   L.push("⑤ 累積（逐回合 × 逐類別 —— 「到第七回合就很難動作」的那條線）");
   L.push(lifecycleLedger.report());
+
+  // ⭐ GH#614 —— ①只說得出「一幀共幾 ms」，這一節說**那幾 ms 是誰花的**。
+  //    ⛔ 它預設關著（零成本），所以第一行會是「沒有武裝」而不是一組假數字。
+  L.push("");
+  L.push("⑥ 📏 一幀裡的哪一段（⭐ p50/p95/max ＋ **分母**，⛔ 不是一個平均數）");
+  L.push(segmentReportText(frameSegments.report()));
 
   const warn = [...diagWarnings(d)];
   if (perfBus.renderLoopErrors > 0) warn.push(`繪製例外 ${perfBus.renderLoopErrors}`);
