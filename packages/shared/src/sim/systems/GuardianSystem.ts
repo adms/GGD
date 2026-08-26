@@ -43,6 +43,7 @@
  *    needs new content fields (AbilityDef / ItemDef / ChampionDef).
  */
 import type { EntityId } from "../../ids";
+import { recordGuardianSlain } from "../stats/matchStats";
 import type { SimWorld } from "../SimWorld";
 import { grantGold } from "../economy/progression";
 import { healTarget, restoreMana } from "../combat/restore";
@@ -589,6 +590,10 @@ function payout(
         round: sc.round,
         nextPulseTick: tick + rules.volleyPeriodTicks,
       });
+      // ⭐【結算頁看得見】GH#729 —— 尾刀記在**這一條**（真的付出去的）路上。
+      // ⛔ 下面那個 void payout 分支不記：那一刀沒有人拿到金幣、HP/MP 或 buff，
+      // 把它算成一次擊殺會讓結算的數字與玩家實際拿到的東西對不上。
+      recordGuardianSlain(world, killer);
       world.emit("guardianSlain", {
         id,
         x,

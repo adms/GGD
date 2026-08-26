@@ -2091,6 +2091,11 @@ export class SimWorld {
       mix(s.multikills);
       mix(s.revivesPerformed);
       mix(s.revivesReceived);
+      // GH#729 —— 三個新計數器與上面每一格同一個理由：它們是**權威世界狀態**，
+      // 一個只在某一份 replica 上跳的計數器要在這裡變成 digest 不符。
+      mix(s.guardianDamage);
+      mix(s.guardiansSlain);
+      mix(s.bountyGold);
     }
     // revive circles are authoritative world state: a channel that advanced on
     // one replica but not another shows up here as a digest mismatch.

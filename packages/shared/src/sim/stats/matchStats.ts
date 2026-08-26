@@ -50,6 +50,19 @@ import { mobLedgerRule } from "../mobs";
  *                    so it scores on its OWN line — reviving deliberately does
  *                    NOT erase the death or the enemy's kill.
  *  - revivesReceived : times this player was channelled back up by a teammate.
+ *  - guardianDamage  : 打在**守護塔**（duel-zone 的中立目標物，systems/
+ *                    GuardianSystem）身上的減傷後輸出。⭐ 自己一條線，⛔ 不併進
+ *                    `damageDealt` —— 那一格的語意是「對敵方英雄的輸出」，而
+ *                    評分（rating.ts）就是照那個語意在打分。整場專心拆塔的人
+ *                    在此之前結算頁上**一個數字都沒有**（GH#729／#157）。
+ *  - guardiansSlain  : 守護塔的**尾刀**數（`payout` 真的付出去的那一條路；
+ *                    void payout —— 擊殺者不見了／不是英雄／死了／換區 ——
+ *                    ⛔ 不計，因為那一刀沒有人收到獎勵）。
+ *  - bountyGold      : 首殺賞金（task #90 的 `GOLD_REWARDS.killBounty`）實際入袋的
+ *                    金額。⭐ 它**已經**含在 `goldEarned` 裡（`grantGold` 一律走
+ *                    `recordGold`）—— 這一格是那筆錢的**子集**，讓結算頁印得出
+ *                    「賞金 N / 總金幣 M」。⛔ 不要拿它去餵評分：`goldEarned`
+ *                    本來就刻意不評分，一個它的子集更不該（GH#729 Scope）。
  *  - coinsCollected  : 陣亡投幣 coins picked off the floor (task #191). Its own
  *                    line rather than `goldEarned`, because that coin's 100 gold
  *                    was already counted as earned when the thrower first got
@@ -80,6 +93,9 @@ export interface PlayerMatchStats {
   revivesPerformed: number;
   revivesReceived: number;
   coinsCollected: number;
+  guardianDamage: number;
+  guardiansSlain: number;
+  bountyGold: number;
 }
 
 /** Assist credit window: an enemy that damaged the victim within this many ticks
@@ -113,6 +129,9 @@ export function createMatchStats(): PlayerMatchStats {
     revivesPerformed: 0,
     revivesReceived: 0,
     coinsCollected: 0,
+    guardianDamage: 0,
+    guardiansSlain: 0,
+    bountyGold: 0,
   };
 }
 
@@ -268,6 +287,17 @@ export function recordDamage(
     }
   }
 
+  // ⭐【守護塔】GH#729 —— **在** `!tgtChamp` 那道早退**之前**，因為守護塔是中立的，
+  // 而那道早退正是「打塔的傷害連 `damageDealt` 都不計」的那一行。
+  //
+  // ⛔ 刻意**不**碰 `damageDealt` 也**不**碰 `largestSingleHit`：那兩格的語意是
+  // 「對敵方英雄」，評分（rating.ts）照那個語意打分 —— 把塔的傷害倒進去等於用
+  //  一個中立目標物去衝高對人輸出的評價。它有自己的一條線。
+  if (srcChamp && output > 0 && world.structure.has(target)) {
+    const src = world.matchStats.get(creditedTo(world, source));
+    if (src) src.guardianDamage += output;
+  }
+
   if (!tgtChamp) return; // damage to flowers / neutrals never scores
 
   if (srcChamp && source !== target) {
@@ -360,6 +390,28 @@ export function recordGold(world: SimWorld, id: EntityId, amount: number): void 
   if (amount <= 0) return;
   const s = world.matchStats.get(id);
   if (s) s.goldEarned += amount;
+}
+
+/**
+ * 【守護塔尾刀】GH#729 —— 只在 `payout` **真的付出去**的那條路上呼叫。
+ * ⛔ void payout（擊殺者不見了／不是英雄／死了／換區）不算：那一刀沒有人收到獎勵，
+ *    把它記成一次擊殺會讓結算頁上的數字對不上他實際拿到的金幣與 buff。
+ */
+export function recordGuardianSlain(world: SimWorld, id: EntityId): void {
+  const s = world.matchStats.get(id);
+  if (s) s.guardiansSlain += 1;
+}
+
+/**
+ * 【首殺賞金】GH#729 —— `GOLD_REWARDS.killBounty` **實際入袋**的金額
+ * （倍率套用後的，⛔ 不是設定值）。
+ * ⚠️ 這一筆錢**已經**被 `recordGold` 記進 `goldEarned` 了 —— 這裡記的是同一筆錢的
+ *    **標籤**，⛔ 不是第二次入帳。結算頁把它印成金幣那一列底下的子行。
+ */
+export function recordBountyGold(world: SimWorld, id: EntityId, amount: number): void {
+  if (amount <= 0) return;
+  const s = world.matchStats.get(id);
+  if (s) s.bountyGold += amount;
 }
 
 /** Record XP earned. */

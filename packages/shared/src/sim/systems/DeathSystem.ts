@@ -3,6 +3,7 @@
  * damage events this tick), XP/gold rewards, onKill hooks.
  */
 import type { EntityId } from "../../ids";
+import { recordBountyGold } from "../stats/matchStats";
 import type { SimWorld } from "../SimWorld";
 import { grantXp, grantGold, XP_REWARDS, GOLD_REWARDS } from "../economy/progression";
 import { fireHooks } from "../effects/hooks";
@@ -100,7 +101,12 @@ export function deathSystem(world: SimWorld): void {
         // the bounty is only ever spent when a killer actually collects it.
         if (!world.bountyPaid.has(id)) {
           world.bountyPaid.add(id);
-          grantGold(world, killer, GOLD_REWARDS.killBounty, "hero");
+          // ⭐ GH#729 —— 記的是**實際入袋**的金額（倍率套用後 `grantGold` 的回傳值），
+          // ⛔ 不是 `GOLD_REWARDS.killBounty` 這個設定值：結算頁印給玩家看的數字
+          // 必須是真的進了口袋的那一個（同 `guardianSlain` 的 `paidGold` 前例）。
+          // ⚠️ 這**不是**第二次入帳 —— `grantGold` 內部已經記過 `goldEarned`，
+          // 這一格只是替那一筆錢貼上「賞金」的標籤。
+          recordBountyGold(world, killer, grantGold(world, killer, GOLD_REWARDS.killBounty, "hero"));
         }
         fireHooks(world, killer, "onKill", id);
         // 連殺 COMBO (owner, 2026-07-27). A CHAMPION kill feeds the very same
