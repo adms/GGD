@@ -190,9 +190,14 @@ export function healthWarnings(
 export function FpsPill(): React.JSX.Element | null {
   const snap = usePerfSample(true);
   const touch = hudTouch();
+  const hidden = useHudSlotHidden("fps", touch);
+  const warns = healthWarnings(snap);
   // The reported task #107 collision: this pill painted over the left-docked
   // shop card. Dev telemetry yields (hides) while a panel covers its corner.
-  if (useHudSlotHidden("fps", touch)) return null;
+  // 🧹 GH#782 —— ⛔ **警報不讓位**：owner 2026-08-27「回到商店又開始 lag」——
+  // 而商店正是這個角落被面板蓋住、藥丸自動讓位的時刻 ⇒ 洩漏警報恰好在
+  // 最該被看到的畫面上結構性隱形（fail-open 靜默的形狀）。遙測讓位、警報不讓。
+  if (hidden && warns.length === 0) return null;
   // GH#271: this pill's number said 「frames per second」 while printing
   // 1000/avg(workMs) — the machine's CAPABILITY, which ignores the fps cap
   // entirely (a 60-capped session with 4.4 ms frames printed 「228 fps」).
@@ -230,13 +235,21 @@ export function FpsPill(): React.JSX.Element | null {
         }}
       />
       {/* ⭐ GH#609 —— 非零才出現。⛔ 不受 showPerfOverlay 管（那一格預設是關的）。 */}
-      {healthWarnings(snap).length > 0 && (
+      {warns.length > 0 && (
         <span
           data-testid="perf-health-warn"
-          title={healthWarnings(snap).join(" · ")}
+          title={warns.join(" · ")}
           style={{ color: "#ff8a5c", fontWeight: 700 }}
         >
-          ⚠{healthWarnings(snap).length}
+          ⚠{warns.length}
+        </span>
+      )}
+      {/* 🧹 GH#782 —— 殘留累積要是**畫面上讀得到的紅字**，⛔ 不是一個要 hover
+          才展開的 ⚠ 數字：owner 看到的是 lag，⛔ 不是 tooltip（票上原話
+          「你不是有在監控特效生命週期跟lag嗎？」——監控在叫而輸出沒到達他）。 */}
+      {snap.lifecycleGrowth > 0 && (
+        <span data-testid="perf-lifecycle-warn" style={{ color: "#e5483f", fontWeight: 700 }}>
+          殘留累積 {snap.lifecycleGrowth} 類{snap.lifecycleWorst ? `（${snap.lifecycleWorst}）` : ""}
         </span>
       )}
     </div>

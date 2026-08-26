@@ -663,7 +663,7 @@ export class ModelFxRig {
     //    對 `clipAnimator` / `formAttachGroups` 的順序逐字相同。
     for (const groups of this.clipGroups.values()) for (const g of groups) g.dispose();
     this.clipGroups.clear();
-    for (const root of this.born) root.dispose(false, true);
+    for (const root of this.born) this.disposeInstanceTree(root);
     this.born.length = 0;
     for (const c of this.containers.values()) c?.dispose();
     this.containers.clear();
@@ -901,6 +901,41 @@ export class ModelFxRig {
   private retire(root: TransformNode): void {
     const at = this.born.indexOf(root);
     if (at >= 0) this.born.splice(at, 1);
-    root.dispose(false, true);
+    this.disposeInstanceTree(root);
+  }
+
+  /**
+   * 🧹 GH#782 —— 收一棵實例子樹：**只收 rig 自己 clone 的材質，⛔ 不碰共用快取**。
+   *
+   * ── 在此之前這裡是 `root.dispose(false, true)`，而那個 `true` 是**兩個缺陷**──
+   * ① 無 tint 的實例：mesh 上掛的是**容器的共用來源材質**（`instantiateModelsToScene`
+   *    with `cloneMaterials:false` 直接沿用，Babylon `assetContainer.js` L475 還會把它
+   *    re-add 進 `scene.materials`）⇒ `dispose(…, true)` 把**這個 modelKey 之後每一發**
+   *    共用的材質整個殺掉 —— 池子一滿（trimPoolTo / release 溢位）就觸發，而畫面上
+   *    跟「這支特效本來就沒材質」一模一樣（失敗形態①）。
+   * ② 有 tint 的實例：mesh 上是 `-fxtint` clone，⛔ 但 **clone 與來源共用貼圖** ——
+   *    `dispose(…, true)` 的 forceDisposeTextures 把來源材質的貼圖一起陪葬，
+   *    同 key 的其他實例與之後每一發全部變黑。
+   * ⇒ 判準：**rig 造的（節點、`-fxtint` clone）rig 收；容器的（來源材質/貼圖/幾何）
+   *    容器收**（`dispose()` 走 `containers.dispose()` 那條路）。
+   * `-fxtint` 是 `applyFxTint` 的命名契約（`${mat.name}-fxtint`），守衛
+   * `modelFxRigRoundLeak.test.ts` 兩個方向都鎖：clone 要離場、來源要活著。
+   */
+  private disposeInstanceTree(root: TransformNode): void {
+    for (const mesh of root.getChildMeshes(false)) {
+      const holder = mesh as {
+        material?: { name?: string; dispose?: (fe?: boolean, ft?: boolean) => void } | null;
+      };
+      const m = holder.material;
+      if (m && typeof m.dispose === "function" && (m.name ?? "").endsWith("-fxtint")) {
+        holder.material = null;
+        // ⭐ (true, **true**)：clone 的貼圖是 `Material.clone()` **複製出來的自有份**
+        //    （Babylon 預設 `cloneTexturesOnlyOnce` 會 clone 貼圖，⛔ 不是共用參照 ——
+        //    守衛①量到 +1 貼圖/clone），⛔ 不收就是逐 clone 的貼圖洩漏。
+        //    來源材質自己的貼圖不在這份 clone 身上，所以這個 `true` 碰不到它。
+        m.dispose(true, true);
+      }
+    }
+    root.dispose(false);
   }
 }

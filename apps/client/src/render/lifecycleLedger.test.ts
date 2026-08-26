@@ -107,4 +107,19 @@ describe("🔬 生命週期登記表", () => {
     scene.dispose();
     engine.dispose();
   });
+
+  it("🧹 GH#782 —— **軌不是節點**：animationGroups 在漏也要被指名（在此之前結構性隱形）", () => {
+    const led = new LifecycleLedger();
+    const groups: { name: string }[] = [];
+    const scene: LedgerScene = {
+      meshes: [], materials: [], textures: [], transformNodes: [], particleSystems: [],
+      animationGroups: groups,
+    };
+    led.bindScene(scene);
+    for (let r = 1; r <= 4; r++) {
+      for (let i = 0; i < 10; i++) groups.push({ name: `modelfx-${r}-${i}-stand` });
+      led.markRound(r);
+    }
+    expect(led.suspects(8).map((s) => s.kind)).toContain("anim:modelfx");
+  });
 });

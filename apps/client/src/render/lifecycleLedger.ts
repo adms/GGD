@@ -57,7 +57,8 @@
  * 「還在長」的類別數寫進 `perfBus.lifecycleGrowth`，而 `PerfOverlay` 的
  * `healthWarnings()` **非零就畫在永遠可用的 fps 藥丸旁邊** ——
  * ⛔ 不受 `showPerfOverlay` 管（那一格出貨預設是關的，掛上去等於「擋得掉」）。
- * 第一次亮起時另外 `console.warn` 一次完整的表（⛔ 只有第一次，不洗版）。
+ * 每出現一個**新的**還在長的類別就 `console.warn` 一次完整的表
+ * （🧹 GH#782：同一批持續亮著不洗版，⛔ 但後來才開始漏的那一類不可以沒聲音）。
  */
 import { Configs } from "@ggd/shared/content";
 import { perfBus } from "../perfBus";
@@ -89,6 +90,15 @@ export interface LedgerScene {
   readonly particleSystems: readonly LedgerNamed[];
   readonly transformNodes: readonly LedgerNamed[];
   readonly geometries?: readonly LedgerNamed[];
+  /**
+   * 🧹 GH#782 —— **軌不是節點**。`instantiateModelsToScene` 把 AnimationGroup
+   * clone 進 `scene.animationGroups`，而 `root.dispose()` 一條都收不到 ——
+   * 在此之前這一類**整個不在普查裡**，所以「動畫軌在漏」對這支監控結構性隱形
+   * （owner 2026-08-27「你不是有在監控特效生命週期跟lag嗎？」的其中一半答案）。
+   */
+  readonly animationGroups?: readonly LedgerNamed[];
+  /** 同上：skeleton 也不是節點（skinned glb 的 instantiate 會 clone 它）。 */
+  readonly skeletons?: readonly LedgerNamed[];
   /**
    * Babylon `Scene.getActiveMeshes()` —— 上一幀**真的送去畫**的那些。
    * ⭐ 這才是 draw call 的量級；`scene.meshes.length` 連 disabled 與池子裡的都算。
@@ -256,7 +266,8 @@ export class LifecycleLedger {
   private last: LifecycleSample | null = null;
   private nextSampleSec = -Infinity;
   private roundNo = 0;
-  private announced = false;
+  /** 已經在 console 指名過的類別（🧹 GH#782：新類別要**再**印，⛔ 不是一場一次）。 */
+  private readonly announcedKinds = new Set<string>();
   /** 因為超過 `MAX_KINDS` 而沒接上的量表數（⛔ 不可以靜靜消失，見 `gauge`）。 */
   private droppedGauges = 0;
 
@@ -314,7 +325,7 @@ export class LifecycleLedger {
     this.last = null;
     this.nextSampleSec = -Infinity;
     this.roundNo = 0;
-    this.announced = false;
+    this.announcedKinds.clear();
     perfBus.lifecycleGrowth = 0;
     perfBus.lifecycleWorst = "";
   }
@@ -495,6 +506,11 @@ export class LifecycleLedger {
       // ⚠️ `Geometry` 的 id 是雜湊 ⇒ 逐個分類會**炸掉類別數**（22 個 id = 22 類）。
       //    它們整包一類：這一格要回答的是「幾何體有沒有在長」，⛔ 不是「哪一顆」。
       for (const g of scene.geometries ?? []) bump("geo", "all", g);
+      // 🧹 GH#782 —— 軌與骨架**不是節點**（見 `LedgerScene` 的註解）：
+      //    少了這兩行，一個 clipGroups 記帳缺陷可以漏掉幾百條每幀都在被走訪的軌，
+      //    而這支「生命週期監控」一個字都不會說。
+      for (const a of scene.animationGroups ?? []) bump("anim", a.name ?? "", a);
+      for (const sk of scene.skeletons ?? []) bump("skel", sk.name ?? "", sk);
     }
     for (const [kind, read] of this.gauges) {
       let live = -1; // ⛔ 量表自己壞了要看得見,⛔ 不是靜靜回 0
@@ -513,14 +529,24 @@ export class LifecycleLedger {
     return sample;
   }
 
-  /** fail-loud：把「還在長幾類」寫進 perfBus，第一次亮起時印一次完整的表。 */
+  /**
+   * fail-loud：把「還在長幾類」寫進 perfBus，並在 console 印完整的表。
+   *
+   * 🧹 GH#782 —— 在此之前這裡是「**一場只印一次**」（`announced` 布林），
+   * 於是第 2 類、第 3 類開始漏的東西一個字都不印 —— 而 owner 看 console 的
+   * 時刻多半在**後來**。⇒ 改成**每出現一個新的類別就再印一次**（同一批類別
+   * 持續亮著仍然不洗版）。
+   */
   private publish(p: LedgerPolicy): void {
     const sus = this.suspects(p.minDelta);
     perfBus.lifecycleGrowth = sus.length;
     perfBus.lifecycleWorst = sus[0]?.kind ?? "";
-    if (sus.length > 0 && !this.announced) {
-      this.announced = true;
-      console.warn(`[lifecycle] ⛔ 偵測到還在長的類別 ×${sus.length}\n${this.report()}`);
+    const fresh = sus.filter((s) => !this.announcedKinds.has(s.kind));
+    if (fresh.length > 0) {
+      for (const s of fresh) this.announcedKinds.add(s.kind);
+      console.warn(
+        `[lifecycle] ⛔ 偵測到還在長的類別 ×${sus.length}（新指名：${fresh.map((s) => s.kind).join(" · ")}）\n${this.report()}`,
+      );
     }
   }
 }
