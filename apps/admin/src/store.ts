@@ -300,6 +300,9 @@ export type Page =
    * 資料全部走 /__live/<dataset>（每次請求當場算 —— owner 2026-08-26:
    * 「內容都要 script 實時動態產生，不是靜態內容」）。production build 不含。
    */
+  /** 🗺 導覽地圖（GH#776）—— 121 頁的「平面」入口。⛔ 不進 SESSION_REQUIRED_PAGES：
+   *  它無 session 也完整可用（結構是本機資料），只有覆蓋層徽章那一欄降級。 */
+  | "navMap"
   | "liveMdlFamilies"
   | "liveParallelBoard"
   | "liveJassVfx"

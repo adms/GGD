@@ -1,5 +1,5 @@
 /** App shell — boot → login → console with a left nav rail. */
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { pageRequiresSession, useApp, type Page } from "../store";
 // GH#493 —— 外框的捲動版型與「切頁回頂」。抽成模組是為了讓守衛驗**關係**
 // （有界高度 ⇒ 一定捲得動、右欄永遠不是 hidden），⛔ 不是掃一串字面樣式。
@@ -41,6 +41,9 @@ import { ModelBudgetPage } from "./ModelBudgetPage";
 import { TierOverviewPage } from "./TierOverviewPage";
 import { DamageTierWarningsPage } from "../damageTierWarnings";
 import { CastTimeListPage, MoveSpeedListPage } from "./SkillListsPage";
+// 🔍 GH#776 —— 121 頁沒有搜尋。指令面板（⌘K）＋導覽地圖是「尋找／閱覽」那兩半。
+import { CommandPalette, usePaletteHotkey } from "./CommandPalette";
+import { NavMapPage } from "./NavMapPage";
 import { IconTrackingPage } from "./IconTrackingPage";
 import { VoxelSkinSheetPage } from "./VoxelSkinSheetPage";
 // 體素鑄造廠 (task #229) — EAGER, like Quick Approval and for the same reason.
@@ -335,6 +338,8 @@ export const NAV: NavItem[] = [
   { page: "heroForge", label: "新英雄轉生設計", emoji: "🧬", section: SEC_FORGE },
   // ── 系統 ──────────────────────────────────────────────────────────────────
   { page: "hub", label: "Console Hub", emoji: "🗂️", section: SEC_SYS },
+  // 🗺 GH#776 —— 導覽地圖：11 組排成 treemap，一眼看得到這個 console 的全形狀。
+  { page: "navMap", label: "導覽地圖", emoji: "🗺", section: SEC_SYS },
   // 變身外觀 (#249 GH#288) —— 26 對變身裡有 21 對前後同一個模型,所以「看不看得
   // 出來」全靠顏色/大小/球體掛件這三樣,而它們在 w3x 裡是空的。
   { page: "formVisuals", label: "變身外觀", emoji: "✨", section: SEC_SYS },
@@ -1000,6 +1005,14 @@ export function Console(): React.JSX.Element {
   const rows: NavRow[] = [...nav, ...externalRows()];
   const onNavigate = (p: string, _selectId?: string): void => navigate(p as Page);
 
+  // 🔍 GH#776 —— ⌘K 指令面板。⭐ 它吃的是**左欄真的畫的那一份** `rows`
+  //（含 dev chunk 的 21 頁與 /editor/ 外部列），⛔ 不另組一份清單（第〇·四守則）。
+  //  ⚠️ 回頭點：把這三行與下面 <CommandPalette/> 那一段拿掉 —— 一個 commit，
+  //  ⛔ 這條路徑上沒有後台旋鈕（它是 console 自己的介面，玩家看不到）。
+  const [paletteOpen, setPaletteOpen] = useState(false);
+  const openPalette = useCallback(() => setPaletteOpen(true), []);
+  usePaletteHotkey(openPalette);
+
   // THE SPLIT GATE (task #102): a page whose data lives on the Go platform admin
   // API needs a real operator session; the content editor + local consoles do
   // not. With no session those player-ops pages show a 需登入 state instead.
@@ -1137,6 +1150,8 @@ export function Console(): React.JSX.Element {
             {contentSuite !== null && contentSuite.render(page, onNavigate)}
             {/* 🔴 LIVE 對照·視覺化（GH#775）—— chunk 沒載到就不存在這些路由 */}
             {liveSuite !== null && liveSuite.render(page)}
+            {/* 🗺 GH#776 導覽地圖 —— rows 是左欄真的畫的那一份，⛔ 不是第二份清單 */}
+            {page === "navMap" && <NavMapPage rows={rows} onNavigate={onNavigate} />}
             {contentSuite === null && isContentSuitePage(page) && (
               <div style={{ color: TEXT_DIM, padding: 8 }}>載入內容·素材管理…</div>
             )}
@@ -1184,6 +1199,13 @@ export function Console(): React.JSX.Element {
         )}
       </main>
       {changingPassword && account && <ChangePasswordDialog onClose={() => setChangingPassword(false)} />}
+      {/* 🔍 GH#776 ⌘K —— open=false 時回 null，所以無條件掛在這裡（position:fixed）。 */}
+      <CommandPalette
+        rows={rows}
+        open={paletteOpen}
+        onClose={() => setPaletteOpen(false)}
+        onNavigate={onNavigate}
+      />
     </div>
   );
 }
