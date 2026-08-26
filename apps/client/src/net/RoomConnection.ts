@@ -293,6 +293,12 @@ export class RoomConnection {
    * every offline launch — and every "Restart match" — gets a brand-new SimWorld
    * (cleared battlefield, round 1) and can't rejoin a not-yet-disposed old room.
    * Couch guests join this room by id via connectDevJoin.
+   *
+   * ⛔ owner 裁定（2026-07-26，GH#121）：**bot 局也是伺服器權威** —— 就算整場只有
+   * bot，房間仍是 game-server 上的真房間、模擬跑在伺服器、client 只吃快照。
+   * ⛔ 不要再提案「離線/bot 局改跑 client 端模擬」——那會讓分數/藍水晶失去公信力，
+   * 且 bot 局與真人局會分岔成兩套行為。這裡的「dev flow」只是**免 ticket 建房**，
+   * 不是 client-side sim。
    */
   async connectDev(
     mapId?: string,

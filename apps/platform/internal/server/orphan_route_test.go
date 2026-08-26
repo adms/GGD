@@ -147,14 +147,6 @@ var knownOrphans = map[string]string{
 		"has to be fixable IN the product; until this is wired, taking a role back means hand-editing " +
 		"account JSON — exactly what the route was added to stop.",
 
-	// ---- #666 覆蓋層版本史：後端有,後台沒有那一頁 ----------------------
-	// ⭐ 這一列是**收緊尾界之後才露出來的** —— 在此之前 `${` 算終止符,於是
-	// `/content-overlay/versions/${collection}/${id}`(明細路由的呼叫端)把集合
-	// 路由也一起「叫」了。收緊之後明細只算明細,這一條才被看見。
-	"GET /api/v1/content-overlay/versions": "#666 — 後台沒有「覆蓋層版本史」那一頁。" +
-		"逐文件的版本史(同組的 /versions/{collection}/{id})有人叫,而「這一版有沒有人動過覆蓋層」" +
-		"這個集合層的問題目前沒有任何 UI 回答得了 —— 而覆蓋層是會蓋掉 content/ 的東西。",
-
 	// ---- lobby/room features whose backend shipped ahead of the UI ---------
 	"GET /api/v1/rooms/templates":      "no room-template picker in the client lobby; templates are only ever the compiled defaults",
 	"POST /api/v1/rooms/templates":     "no room-template editor in any UI — a saved template is durable state (data/rooms/templates/<id>.json) that nothing can create",

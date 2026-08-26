@@ -440,7 +440,7 @@ function cardStyle(width: number | string): React.CSSProperties {
  * ⚠️ 貼在卡片右上，⛔ 不是塞進底部的按鈕列 —— 那一列是出口（返回大廳／戰績變化），
  * 而「把畫面縮小」跟「離開這個畫面」是兩種動作，混在一起會誤按。
  */
-function MatchEndCollapseToggle({
+export function MatchEndCollapseToggle({
   collapsed,
   onToggle,
 }: {
@@ -452,6 +452,18 @@ function MatchEndCollapseToggle({
       <button
         type="button"
         data-testid="match-end-collapse"
+        // ⭐ GH#511 —— B 鍵在結算畫面**曾經是死鍵**。`findBackControl` 先找
+        //    `data-pad-back`，找不到才掃標籤 `BACK_ALLOW_RE`（取消/關閉/收起/返回/
+        //    back/close/cancel/dismiss/✕）—— 而這顆的字面是「▴ 收到最小」與
+        //    「▾ 展開戰績」，**一個都不 match**（allow-list 有「收起」沒有「收到」），
+        //    同時底部的 `返回大廳` 被 `BACK_VETO_RE` 明著擋掉。⇒ B 什麼都不做，
+        //    而手把玩家的反射是「B＝退一層」，於是畫面看起來卡住。
+        // ⛔ 修法**不是**去擴 `BACK_ALLOW_RE` 猜字面（那條正則已經是啟發式債，
+        //    GH#271 就是它惹的）—— 顯式契約永遠贏過標籤掃描（padFocusNav.ts:249）。
+        // ⚠️ 兩個狀態**都**帶著它是刻意的：收合之後如果拿掉，B 又變回死鍵，
+        //    那正是這張票在抱怨的東西。B 在這個畫面 = 切換戰績大小，
+        //    ⛔ 不是離開（離開仍然只有 `返回大廳`，它被 VETO 保護著）。
+        data-pad-back
         onClick={onToggle}
         aria-expanded={!collapsed}
         // 手把／鍵盤唸得出來的名字（#252 的教訓：一個只有圖示的按鈕對焦點沒東西可念）

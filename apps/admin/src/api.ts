@@ -341,10 +341,15 @@ export interface OverlayVersionList {
   unavailable?: string;
 }
 
-/** 整批的版本清單（每一次存檔一列）。 */
+/** 整批的版本清單（每一次存檔一列）。
+ *
+ * ⚠️ 路徑刻意寫成**裸字串 + 串接**，⛔ 不是 `` `…${q}` `` 模板 ——
+ * 平台的 `orphan_route_test.go` 把緊跟著 `${` 的字面值視為「還有下一段路徑」
+ * （明細路由誤算成集合路由的那次修正），所以模板寫法會讓這個唯一的呼叫端
+ * 對守衛**隱形**，`knownOrphans` 那一列就永遠刪不掉（GH#666）。 */
 export function getOverlayVersions(limit?: number): Promise<OverlayVersionList> {
   const q = limit === undefined ? "" : `?limit=${String(limit)}`;
-  return api.request<OverlayVersionList>(`/content-overlay/versions${q}`);
+  return api.request<OverlayVersionList>("/content-overlay/versions" + q);
 }
 
 /** 單支文件的版本清單 —— ⚠️ 只有內容**真的變過**的那幾版。 */

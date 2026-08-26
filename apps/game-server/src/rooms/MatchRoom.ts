@@ -7,6 +7,10 @@
  * back on return. One account may hold ONE room process-wide (rooms/accountRooms):
  * joining elsewhere evicts the seat here, and a room left with no human is closed.
  * Match end: HMAC result callback to platform.
+ *
+ * ⛔ owner 裁定（2026-07-26，GH#121）：**bot 局也走這裡、也是伺服器權威**。
+ * 「都是 bot 所以搬去 client 端模擬」曾被考慮並被否決 —— 分數與藍水晶發放
+ * 要有公信力，行為不能分岔成兩套。⛔ 不要再提案一次。
  */
 import { Room, type Client } from "colyseus";
 import { MatchState } from "@ggd/shared/protocol/schema";

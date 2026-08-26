@@ -93,6 +93,17 @@ def main() -> int:
     amb = json.load(open(os.path.join(REPO, "content", "config",
                                       "ambient-vfx.json")))
     ids = {json.load(open(os.path.join(VFX, f)))["id"] for f in docs}
+    # GH#668: ambient-vfx.json is no longer bound only to this extractor's
+    # godie-* docs — GH#564 added HAND-AUTHORED attach.* bindings, and stock
+    # extraction added fx.w3x.* ones. The invariant this assertion pins is
+    # "every binding resolves to a REAL doc in content/vfx", not "…to a doc
+    # this extractor wrote", so resolve against every doc id in the directory.
+    # A typo'd binding still fails: its file does not exist in any family.
+    # Filename stems, not parsed "id" fields: doc id == filename is already
+    # asserted above for the generated family, and some non-generated docs
+    # carry no "id" key at all.
+    ids |= {f[:-len(".json")]
+            for f in os.listdir(VFX) if f.endswith(".json")}
     for arr in amb["bindings"].values():
         for b in arr:
             assert b["vfx"] in ids, b
