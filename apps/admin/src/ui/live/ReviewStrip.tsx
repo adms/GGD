@@ -18,6 +18,11 @@
  *
  * ⚠️ 這一頁沒有任何批次時**不是空白**：它明說「這一頁還沒有登記過批次」並指出
  * 怎麼登記（`pnpm review:register`）—— fail-open 沒錯，靜默才是缺陷。
+ *
+ * ⭐ **本機與線上都活著**（GH#794，owner 2026-08-27「請同步到線上」）：
+ * `/__review/**` 本機由 vite plugin 掛、線上由 review sidecar 提供，
+ * 跑的是**同一份** `tools/review/middleware.mjs`。線上按的裁決寫進
+ * `docs/_review/verdicts/live.json`，回流本機用 `bash scripts/review-sync.sh`。
  */
 import { useCallback, useEffect, useState } from "react";
 import { ACCENT, DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
@@ -74,7 +79,7 @@ export function ReviewStrip(props: {
     try {
       const r = await fetch("/__review/features", { headers: { accept: "application/json" } });
       if (!(r.headers.get("content-type") ?? "").includes("json")) {
-        throw new Error(`/__review 沒掛（HTTP ${r.status}）—— 這一條是 dev-only`);
+        throw new Error(`/__review 沒掛（HTTP ${r.status}）—— 本機看 vite plugin，線上看 review sidecar 起來沒`);
       }
       const j = (await r.json()) as { batches?: readonly Batch[]; error?: string };
       if (j.error) throw new Error(j.error);

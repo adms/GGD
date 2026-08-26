@@ -62,6 +62,28 @@ for (const b of fq.batches) {
 }
 console.log("  功能審查頁：http://localhost:39527/feature-review.html");
 
+// ── 🔐 分署閘（GH#794，硬擋）────────────────────────────────────────────
+// owner 2026-08-27：「批核材料跟批核結果**分署不同資料夾**」。
+// ⭐ 這裡驗的是**分署有沒有落地**（材料檔在不在、兩個結果來源檔在不在），
+//   ⛔ 欄位不相交那一條歸 vitest（`reviewSplitHomes.test.ts`），權限那一條歸
+//   `bash scripts/review-access.sh guard` —— 三層各管一段，⛔ 不互相假設。
+{
+  const { existsSync } = await import("node:fs");
+  const { join } = await import("node:path");
+  const { MATERIAL_REL, VERDICT_SOURCES, verdictRel } = await import("./stores.mjs");
+  const missing = [MATERIAL_REL, ...VERDICT_SOURCES.map(verdictRel)].filter(
+    (rel) => !existsSync(join(repoRoot, rel)),
+  );
+  if (missing.length > 0) {
+    console.error(
+      `[review:check] 批核分署還沒落地 —— 少了：\n${missing.map((m) => `  · ${m}`).join("\n")}\n` +
+        "  修法：node tools/review/split-stores.mjs",
+    );
+    process.exit(1);
+  }
+  console.log("[review:check] 🔐 分署 OK：材料 docs/_review/material/ · 結果 docs/_review/verdicts/{local,live}.json");
+}
+
 // ⭐ 登記閘（硬擋）：登記進帳本卻寫不出可用的 rollback 開關 ⇒ 那一批沒有回頭的路。
 const invalid = fq.batches.filter((b) => b.registered && b.rollbackOk !== true);
 if (invalid.length > 0) {

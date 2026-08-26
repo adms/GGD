@@ -466,6 +466,50 @@ case "$STAMP_LINE" in
   *) ok "版本身分: $STAMP_LINE" ;;
 esac
 
+# ── 🧑‍⚖️ 批核頁的資料面（GH#794）─────────────────────────────────────────
+# owner 2026-08-27：「請**同步到線上**，並且**線上批核的結果也同步到本機端**」
+#
+# ⭐ 這一條**刻意穿過 edge**（$BASE/__review/…），⛔ 不是直接打 127.0.0.1:8790。
+#   直接打容器只證明「容器活著」（一個名詞）；穿過 edge 才證明
+#   「nginx 的那條 location 真的把請求送到得了那台」（**兩個名詞的關係**）——
+#   而 2026-08-02 的教訓正是：只驗名詞的後置條件，在接線壞掉時必然是綠的。
+#
+# ⚠️ verdicts 是這台線上**唯一寫得動**的目錄，容器以 uid 1000 跑 ⇒ host 那一側
+#   要讓 1000 寫得動，否則 owner 在線上按「保留/否決」會靜默失敗。
+#   ⭐ 所以下面先問 /healthz 的 verdicts.writable（它是**真的建檔再刪**量出來的），
+#   不過才 chown —— ⛔ 不是無條件 chown（那會在每次部署動一次權限）。
+REVIEW_JSON=$(curl -fsS -m 15 "$BASE/__review/healthz" 2>/dev/null || true)
+if [ -z "$REVIEW_JSON" ]; then
+  # ⚠️ 這是 warn ⛔ 不是 die：批核頁掛了**不可以擋住遊戲上線**。
+  #    但它必須**出聲** —— 一個沒有人讀的 log 不算（fail-open 沒錯，靜默才是缺陷）。
+  warn "批核頁資料面打不到（$BASE/__review/healthz）—— 線上的 🧑‍⚖️ 批次驗收與 13 頁實時資料會是空的。
+     查：docker compose ... ps review / logs review。⛔ 不擋部署（遊戲本體不依賴它）。"
+else
+  REVIEW_OK=$(printf '%s' "$REVIEW_JSON" | python3 -c 'import json,sys;print(json.load(sys.stdin).get("ok"))' 2>/dev/null || echo None)
+  REVIEW_W=$(printf '%s' "$REVIEW_JSON" | python3 -c 'import json,sys;print(json.load(sys.stdin).get("verdicts",{}).get("ok"))' 2>/dev/null || echo None)
+  REVIEW_N=$(printf '%s' "$REVIEW_JSON" | python3 -c 'import json,sys;print(json.load(sys.stdin).get("material",{}).get("total"))' 2>/dev/null || echo None)
+  if [ "$REVIEW_W" = "False" ] && [ "$MODE" != "verify" ]; then
+    # ⛔ **一行 sudo 都不跑**（閘：hostDeployScript.test.ts 的「腳本自己跑了 sudo」）。
+    #    用**容器自己的 root** 改容器自己的掛載點 —— 那是 docker 權限，⛔ 不是主機提權。
+    #    ⚠️ 這與上面錄影目錄那一段是**同一個形狀**：uid 1000 的容器 × host bind mount。
+    warn "線上的批核結果目錄寫不進去 —— owner 按「保留/否決」會沒反應。先自己修（容器內的 root，⛔ 不是主機 sudo）"
+    docker exec -u root ggd-review-1 chown -R 1000:1000 /srv/repo/docs/_review/verdicts \
+      || warn "容器內 chown 沒成功（繼續，讓下面的重驗來裁決）"
+    docker compose "${COMPOSE_FILES[@]}" --env-file "$ENV_FILE" restart review >/dev/null 2>&1 || true
+    sleep 4
+    # ⭐ 修完**一定重問一次** —— 只修不重驗，就是把沒驗證的希望當成事實。
+    REVIEW_W=$(curl -fsS -m 15 "$BASE/__review/healthz" 2>/dev/null \
+      | python3 -c 'import json,sys;print(json.load(sys.stdin).get("verdicts",{}).get("ok"))' 2>/dev/null || echo None)
+    [ "$REVIEW_W" = "True" ] && ok "批核結果目錄本來寫不進去，腳本自己修好了（chown 1000 + 重啟 + 重讀 /healthz 驗過）"
+  fi
+  if [ "$REVIEW_OK" = "True" ]; then
+    ok "批核頁資料面: 材料 $REVIEW_N 批 · 結果可寫 · /__live 也活著（穿過 edge 驗的）"
+  else
+    warn "批核頁 /healthz 說不健康（ok=$REVIEW_OK, verdicts.writable=$REVIEW_W, 材料=$REVIEW_N）——
+     線上的批次驗收頁可能讀不到批次。⛔ 不擋部署。詳情：curl -s $BASE/__review/healthz"
+  fi
+fi
+
 # 玩家資料。owner 2026-08-02 明確要求。數，不要相信。
 ACCOUNTS_AFTER=$(accounts_now)
 [ "$ACCOUNTS_AFTER" -ge "$ACCOUNTS_BEFORE" ] 2>/dev/null || die \

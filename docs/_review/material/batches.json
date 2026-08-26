@@ -1,0 +1,592 @@
+{
+  "schema": "review-material@1",
+  "note": "📦 批核材料 —— **我**寫的登記（rollback 開關在這）。owner 的裁決⛔ 不在這個檔，在 docs/_review/verdicts/。這個檔平時是 444，寫入請走 `bash scripts/review-access.sh`。",
+  "batches": {
+    "beam_visual-proof_20260824-2240": {
+      "title": "光束砲一族：原地開火（path:static）",
+      "family": "beam-roll 橫放光束砲",
+      "issues": [
+        673,
+        649
+      ],
+      "abilities": [
+        "godie-e002.e",
+        "godie-e00l.e",
+        "godie-e00r.r",
+        "godie-n01c.e",
+        "godie-nbbc.e",
+        "godie-o00x.r",
+        "godie-ogrh.r"
+      ],
+      "commit": "57bad55d",
+      "sequenceDir": "docs/_reports/beam_visual-proof_20260824-2240",
+      "rollback": {
+        "configId": "tpl-beam-roll",
+        "field": "params.path.default",
+        "liveValue": "static",
+        "rollbackValue": "forward",
+        "note": "四支經典一起回到舊的位移演出，⛔ 不必動任何一支技能的 JSON（七份 ability doc 一格 path 都不寫）"
+      },
+      "registeredAt": "2026-08-25T03:31:19.429Z"
+    },
+    "goku_visual-proof_20260825-0200": {
+      "title": "蝗蟲群/光束帶：沿線 N 具一次擺好（count 6 × spacing 2）",
+      "family": "beam-roll 沿線陣列（原作 dummy 群）",
+      "issues": [
+        688,
+        673
+      ],
+      "abilities": [
+        "godie-e002.e",
+        "godie-e00l.e",
+        "godie-e00r.r",
+        "godie-n01c.e",
+        "godie-nbbc.e",
+        "godie-o00x.r",
+        "godie-ogrh.r"
+      ],
+      "commit": "a3bc9838",
+      "sequenceDir": "docs/_reports/goku_visual-proof_20260825-0200",
+      "rollback": {
+        "configId": "tpl-beam-roll",
+        "field": "params.count.default",
+        "liveValue": 1,
+        "rollbackValue": 6,
+        "note": "⚠️⚠️ **2026-08-26 更正方向**（GH#721/#767）：原本登記 live=6 / rollback=1，理由寫「count:6 是本 lane 照原作 A03S 的 i×200 挑的預設」—— ⛔ **那個引用不成立**：A03S@31924 的迴圈生的是 `h006 = FlameStrike1.mdl`（**火柱**，現在有自己的 tpl-locust-line 節點），⛔ 不是光束的模型；而光束本體是 `CreateNUnitsAtLoc(**1**,'h007')`＋`SetUnitScalePercent(200,200,400)`（j:26790）。⇒ 出貨值已改為 **1**（量到的），這一格翻成 6 是**回到被推翻的形狀**，留著只為了讓 owner 一鍵比對。"
+      },
+      "registeredAt": "2026-08-25T03:31:36.327Z"
+    },
+    "weather_rain_visual-proof_20260825": {
+      "title": "天氣：出貨路徑真的下起來（#700 已驗收）→ 強度階梯 → 室內不下 → ⛔ 霧仍零像素",
+      "family": "weather",
+      "issues": [
+        694,
+        700,
+        676,
+        610
+      ],
+      "abilities": [],
+      "commit": "898e7c47",
+      "sequenceDir": "docs/_reports/weather_rain_visual-proof_20260825",
+      "rollback": {
+        "configId": "weather",
+        "field": "rainEnabled",
+        "liveValue": true,
+        "rollbackValue": false,
+        "note": "第二版：#700 修好後**台子一行 import 都沒補**，出貨 buildRain 不再擲例外（threw null · gpu true · 1,200 活粒子）。⛔ 霧那一層（GH#610）仍然是零像素（w6 與 w5 sha1 相同），本批不宣稱它可見。翻 rainEnabled=false ⇒ 整層雨停掉，⛔ 不動任何技能或場地 JSON"
+      },
+      "registeredAt": "2026-08-25T04:22:07.160Z"
+    },
+    "dagger_visual-proof_20260825": {
+      "title": "幻之匕首：3% 觸發噴血 ＋ ⭐ 翻開關之後一顆粒子都不生（#702 已驗收）",
+      "family": "gore",
+      "issues": [
+        696,
+        641,
+        702
+      ],
+      "abilities": [],
+      "commit": "898e7c47",
+      "sequenceDir": "docs/_reports/dagger_visual-proof_20260825",
+      "rollback": {
+        "configId": "gore",
+        "field": "style",
+        "liveValue": "blood",
+        "rollbackValue": "off",
+        "note": "第二版：#702 把 gore 閘搬進 VfxSystem.play()、判準住 vfx@1.gore 之後，**這一格真的關得掉那蓬血** —— d6 是同一顆種子、同一條 3%（第 2,942 tick 又擲中）翻開關後的樣子：血花活粒子 0、全場 liveSystems 空。⚠️ S7 第一版登記時這一格是無效的（只閘 hitImpact）"
+      },
+      "registeredAt": "2026-08-25T04:22:22.031Z"
+    },
+    "stuckescape_visual-proof_20260825": {
+      "title": "互卡脫困保險絲：黏 2 秒後穿過去",
+      "family": "combat-feel",
+      "issues": [
+        677
+      ],
+      "abilities": [],
+      "commit": "898e7c47",
+      "sequenceDir": "docs/_reports/stuckescape_visual-proof_20260825",
+      "rollback": {
+        "configId": "combat-feel",
+        "field": "stuckEscape.enabled",
+        "liveValue": true,
+        "rollbackValue": false,
+        "note": "翻 false ＝ 整條保險絲關掉，回到「互卡就卡到死」的舊行為。⛔ 紅字：「脫困」浮字今天零像素（floatingText 沒有任何渲染消費端），這一批只驗到「穿過去」那一半。"
+      },
+      "registeredAt": "2026-08-25T04:22:22.209Z"
+    },
+    "firering_visual-proof_20260825": {
+      "title": "火圈：最後一個人類死亡 → 立即縮圈",
+      "family": "arena-rules",
+      "issues": [
+        659,
+        643
+      ],
+      "abilities": [],
+      "commit": "898e7c47",
+      "sequenceDir": "docs/_reports/firering_visual-proof_20260825",
+      "rollback": {
+        "configId": "arena-rules",
+        "field": "botOnlyRingAccelSec",
+        "liveValue": 0,
+        "rollbackValue": 10,
+        "note": "翻 10 ＝ 回到 v0.26.1 的行為（bot 互毆再打十秒才收圈）；整個機制的總開關是同一份文件的 botOnlyRingAccelEnabled。"
+      },
+      "registeredAt": "2026-08-25T04:22:22.393Z"
+    },
+    "classic_omnislash_visual-proof_20260825": {
+      "title": "01-04 超究武神霸斬：七連斬 ＋ 收尾閃光（⚠️ 模型層冷快取 0 頂點）",
+      "family": "classics-695",
+      "issues": [
+        695
+      ],
+      "abilities": [
+        "godie-hart.r"
+      ],
+      "commit": null,
+      "sequenceDir": "docs/_reports/classic_omnislash_visual-proof_20260825",
+      "rollback": {
+        "configId": "vfx-families",
+        "field": "families.shockwaveRing.enabled",
+        "liveValue": true,
+        "rollbackValue": false,
+        "note": "01-04 的家族綁定 entry 就是 shockwaveRing（config.vfx-families@1 的 abilities.'godie-hart.r'.family）⇒ 翻它＝這一支的技能特效層整組回到不播。⚠️ 誠實：這一格是**家族級**的（同族其他技能也會一起關），因為 01-04 的 spawnModelFx ⛔ 沒有走 preset ⇒ 沒有自己的模板參數可翻"
+      },
+      "registeredAt": "2026-08-25T10:14:23.784Z"
+    },
+    "classic_avalon_visual-proof_20260825": {
+      "title": "20-002 理想鄉MAX：反彈成功 → 七連斬 → 約束與勝利之劍",
+      "family": "classics-695",
+      "issues": [
+        695,
+        549
+      ],
+      "abilities": [
+        "godie-e002.ex",
+        "godie-e002.r"
+      ],
+      "commit": null,
+      "sequenceDir": "docs/_reports/classic_avalon_visual-proof_20260825",
+      "rollback": {
+        "configId": "screen-fx",
+        "field": "enabled",
+        "liveValue": true,
+        "rollbackValue": false,
+        "note": "這一批新增的可見成果是**反彈成功的回饋**（4 記 screenFlash ＋ 3 記 screenShake ＋ 兩發七彩爆炸）⇒ 一鍵否決＝關掉 config.screen-fx@1。⚠️ 誠實：這一格是**全域**的（所有技能的閃爍/震動一起關），而爆炸粒子本身不受它管；20-002 的 EX ⛔ 沒有自己的 config/ability-template entry 可翻"
+      },
+      "registeredAt": "2026-08-25T10:14:23.964Z"
+    },
+    "classic_dragonslave_visual-proof_20260825": {
+      "title": "04-03 龍破斬：火球出膛 → 飛行（⚠️ 0 亮像素）→ 落點爆炸",
+      "family": "classics-695",
+      "issues": [
+        695
+      ],
+      "abilities": [
+        "godie-h020.e"
+      ],
+      "commit": null,
+      "sequenceDir": "docs/_reports/classic_dragonslave_visual-proof_20260825",
+      "rollback": {
+        "configId": "vfx-families",
+        "field": "families.dissipate.enabled",
+        "liveValue": true,
+        "rollbackValue": false,
+        "note": "04-03 的家族綁定 entry 是 dissipate（config.vfx-families@1 的 abilities.'godie-h020.e'.family，帶 tint [255,0,0]）⇒ 翻它＝這一支的技能特效層回到不播。⚠️ 本批量到飛行段 0 亮像素（模型在、164 頂點、材質不發光），那正是要 owner 批核的那一題"
+      },
+      "registeredAt": "2026-08-25T10:14:36.694Z"
+    },
+    "classic_endworld_visual-proof_20260825": {
+      "title": "42-04 世界終結：十二向放射 → 到點 12 記冰爆",
+      "family": "classics-695",
+      "issues": [
+        695
+      ],
+      "abilities": [
+        "godie-n003.r"
+      ],
+      "commit": null,
+      "sequenceDir": "docs/_reports/classic_endworld_visual-proof_20260825",
+      "rollback": {
+        "configId": "tpl-radial-burst",
+        "field": "params.count.default",
+        "liveValue": 12,
+        "rollbackValue": 2,
+        "note": "42-04 ⛔ 沒有 vfx 家族綁定 entry（config.vfx-families@1 的 abilities 沒有它）⇒ 用它引用的模板參數：tpl-radial-burst 的 count 12 → 2 ＝ 十二向放射收成兩具，⛔ 不必動技能 JSON（那份文件一格參數都沒抄）。⚠️ 誠實：這一格是**模板級**的，同樣引用 tpl-radial-burst 的其他技能會一起變"
+      },
+      "registeredAt": "2026-08-25T10:14:36.898Z"
+    },
+    "tornado_visual-proof_20260825-2100": {
+      "title": "蝗蟲群視覺：TornadoElemental ×9（tpl-locust-orb 龍捲風）",
+      "family": "locust-orb",
+      "issues": [
+        688,
+        693,
+        669
+      ],
+      "abilities": [
+        "godie-emfr.e",
+        "godie-emfr.r",
+        "godie-hart.e",
+        "godie-udre.r",
+        "godie-u01u.r",
+        "godie-u00v.e"
+      ],
+      "commit": null,
+      "sequenceDir": "docs/_reports/tornado_visual-proof_20260825-2100",
+      "rollback": {
+        "configId": "tpl-locust-orb",
+        "field": "params.count.default",
+        "liveValue": 1,
+        "rollbackValue": 0,
+        "note": "⚠️⚠️ 2026-08-26 **第二次**更正（新閘 `rollbackSwitchReaches` 兩次都擋下我憑印象挑的欄位）：① 原登記 `params.alpha.default` —— **2 個節點自寫 alpha**（逐支從 census 帶入的透明度）⇒ 無效。② 我改成 `params.lifeSec.default` —— **也有 2 個節點自寫** ⇒ 還是無效。⇒ ⭐ **實測**這 6 支 / 8 個 orb 節點只有五格沒有被自寫：`path` · `count` · `distance` · `speed` · `spinDegPerSec`。選 `count`：翻成 **0** ⇒ 整族不生成 ＝ 一鍵關掉 TornadoElemental 那一批的視覺，⛔ 不動任何一支技能的 JSON。⭐ 教訓：開關要**量**不要挑 —— 被逐支覆寫的欄位是這個家族的常態（8 個節點裡 modelKey/soundKey 全部自寫）。"
+      },
+      "registeredAt": "2026-08-25T13:19:46.481Z"
+    },
+    "crescent_visual-proof_20260825-2130": {
+      "title": "蝗蟲群/彎月刃：crescent 沿面向飛出（w3a missile 證據 → 3 落點）",
+      "family": "locust-travel",
+      "issues": [
+        688,
+        669
+      ],
+      "abilities": [
+        "godie-h01u.w",
+        "godie-n01c.r",
+        "godie-nbbc.r"
+      ],
+      "commit": "de5ad2b7",
+      "sequenceDir": "docs/_reports/crescent_visual-proof_20260825-2130",
+      "rollback": {
+        "configId": "tpl-locust-travel",
+        "field": "params.alpha.default",
+        "liveValue": 1,
+        "rollbackValue": 0,
+        "note": "1.0 與缺席逐位元同義（modelFxRig 對 alpha>=1 跳過乘法）⇒ 出貨畫面不變；翻 0 ⇒ travel 整族沒寫自己 alpha 的節點（含本批 3 落點的彎月刃與既有 blackhole 層）一起隱形，寫了自己 alpha 的節點不受影響。TORNADO orb 開關同款形狀"
+      },
+      "registeredAt": "2026-08-25T13:58:10.548Z"
+    },
+    "o00e_visual-proof_20260825-1200": {
+      "title": "蝗蟲群視覺:MonsoonBoltTarget o00E 族(tpl-locust-strike 落雷,v0.27.0 已上線補登)",
+      "family": "locust-strike",
+      "issues": [
+        688,
+        691,
+        669
+      ],
+      "abilities": [
+        "godie-e002.r",
+        "godie-e00l.r",
+        "godie-e00w.r",
+        "godie-e00x.r",
+        "godie-edem.e",
+        "godie-emfr.e",
+        "godie-emfr.r",
+        "godie-h020.e",
+        "godie-hjai.e",
+        "godie-u00l.r",
+        "godie-udea.ex",
+        "godie-umal.r"
+      ],
+      "commit": null,
+      "sequenceDir": "docs/_reports/o00e_visual-proof_20260825-1200",
+      "rollback": {
+        "configId": "tpl-locust-strike",
+        "field": "params.alpha.default",
+        "liveValue": 1,
+        "rollbackValue": 0,
+        "note": "1.0 與缺席逐位元同義(modelFxRig.ts:236 對 alpha>=1 跳過乘法,單一 rig 全 preset 共用)。翻 0 => strike 整族沒寫自己 alpha 的節點一起隱形 = 一鍵否決 o00E 批的落雷演出。"
+      },
+      "registeredAt": "2026-08-25T14:41:10.454Z"
+    },
+    "quad_visual-proof_20260825-2200": {
+      "title": "蝗蟲群視覺:QUAD 四小族(ReviveHuman 殘餘/Tome 騎英/Meteor 流星,7 技能 10 節點)",
+      "family": "locust-orb",
+      "issues": [
+        688,
+        669
+      ],
+      "abilities": [
+        "godie-h02r.r",
+        "godie-hgam.r",
+        "godie-e002.e",
+        "godie-e00l.e",
+        "godie-hvsh.passive",
+        "godie-hvsh.r",
+        "godie-hart.w",
+        "godie-u00j.r",
+        "godie-u00j.ex"
+      ],
+      "commit": null,
+      "sequenceDir": "docs/_reports/quad_visual-proof_20260825-2200",
+      "rollback": {
+        "configId": "tpl-locust-orb",
+        "field": "params.alpha.default",
+        "liveValue": 1,
+        "rollbackValue": 0,
+        "note": "orb 家族級開關(與 TORNADO 批共用同一格):翻 0 => 整族沒寫自己 alpha 的 orb 節點(含本批 muzzle/守綱/流星 8 節點)一起隱形。20-03 的 beam-roll 兩節點另隨 tpl-beam-roll 家族開關。"
+      },
+      "registeredAt": "2026-08-25T14:41:49.619Z"
+    },
+    "penta_visual-proof_20260825-2300": {
+      "title": "聖杯黑泥（ForgottenOneTent）＋雷切雷環（ThunderClapCaster）— PENTA 三族",
+      "family": "locust-orb",
+      "issues": [
+        688,
+        669
+      ],
+      "abilities": [
+        "godie-zombiex.r",
+        "godie-zombiex.ex",
+        "godie-edem.e"
+      ],
+      "commit": null,
+      "sequenceDir": "docs/_reports/penta_visual-proof_20260825-2300",
+      "rollback": {
+        "configId": "tpl-locust-orb",
+        "field": "params.alpha.default",
+        "liveValue": 1,
+        "rollbackValue": 0,
+        "note": "orb 家族一鍵開關（與 TORNADO/QUAD 批共用）：翻 0 ⇒ 沒寫自己 alpha 的節點（含本批 9+1 具聖杯黑泥與千鳥雷環）一起隱形；寫了的不受影響"
+      },
+      "registeredAt": "2026-08-25T15:32:01.270Z"
+    },
+    "tail_visual-proof_20260826-0000": {
+      "title": "蝗蟲群長尾五族：水刺/重力球/魔法陣/黑焰/封絕結界",
+      "family": "locust-orb",
+      "issues": [
+        688,
+        693
+      ],
+      "abilities": [
+        "godie-hvwd.ex",
+        "godie-hvwd.r",
+        "godie-emfr.ex",
+        "godie-osam.ex",
+        "godie-edem.ex",
+        "godie-hvsh.r",
+        "godie-e008.r"
+      ],
+      "commit": null,
+      "sequenceDir": "docs/_reports/tail_visual-proof_20260826-0000",
+      "rollback": {
+        "configId": "tpl-locust-orb",
+        "field": "params.alpha.default",
+        "liveValue": 1,
+        "rollbackValue": 0,
+        "note": "orb 家族一鍵透明化（與 TORNADO/QUAD/PENTA 三批共用同一格）；本批 7 個節點一起消失，⛔ 不必動任何一支技能的 JSON"
+      },
+      "registeredAt": "2026-08-25T16:39:37.436Z"
+    },
+    "mark_visual-proof_20260826-0100": {
+      "title": "印記家族(MarkOfChaosTarget PRE2×3)：施法時在身上炸開一圈符印光",
+      "family": "mark 印記",
+      "issues": [
+        699,
+        688
+      ],
+      "abilities": [
+        "godie-h01n.ex",
+        "godie-h01o.ex",
+        "godie-n003.ex",
+        "godie-n01c.ex",
+        "godie-n01g.ex",
+        "godie-nbbc.ex",
+        "godie-orkn.ex",
+        "godie-u01u.ex",
+        "godie-udre.ex"
+      ],
+      "commit": null,
+      "sequenceDir": "docs/_reports/mark_visual-proof_20260826-0100",
+      "rollback": {
+        "configId": "vfx-families",
+        "field": "families.mark.enabled",
+        "liveValue": true,
+        "rollbackValue": false,
+        "note": "⭐ 量過的開關,⛔ 不是宣稱:翻 false ⇒ godie-n01g.ex 場上的 w3xfx-* 粒子系統 4 → 0(markofchaostarget.p00/p01/p02 ＋ 家族主 emitter 全滅),峰值亮像素 101,910 → 16,799、bright 89,341 → 6,117,技能掉回自己的 fx.prim.arcane.pulse-lg。⛔ 不必動任何一支技能的 JSON。⚠️ 這一格是家族級的:9 支 mark 家族技能一起翻。證據 docs/_reports/mark_visual-proof_20260826-0100/"
+      },
+      "registeredAt": "2026-08-25T17:33:20.617Z"
+    },
+    "beamtruth_visual-proof_20260826-1200": {
+      "title": "光束砲家族按 JASS 真相重建：count 6→1、逐支穿回原作模型（⚠️ 像素驗收未過，根因 #767）",
+      "family": "beam-roll 光束砲",
+      "issues": [
+        721,
+        702,
+        767
+      ],
+      "abilities": [
+        "godie-e002.e",
+        "godie-e00l.e",
+        "godie-e00r.r",
+        "godie-h02r.r",
+        "godie-hgam.r",
+        "godie-n01c.e",
+        "godie-nbbc.e",
+        "godie-o00x.r",
+        "godie-ogrh.r"
+      ],
+      "commit": "bd24b4af",
+      "sequenceDir": "docs/_reports/beamtruth_visual-proof_20260826-1200",
+      "rollback": {
+        "configId": "tpl-beam-roll",
+        "field": "params.clip.default",
+        "liveValue": "idle",
+        "rollbackValue": null,
+        "note": "⚠️⚠️ **2026-08-26 更正**：原本登記 `params.modelKey.default`（revivehuman ⇒ netherstrike），而 REVERIFY lane 實測**那一格對這七支一格都蓋不到** —— `modelFxPreset.ts::fillOne()` 是 `if (out[k] === undefined)`（節點自寫的永遠贏），而 **11 個節點逐支自寫 `modelKey`** ⇒ 翻它畫面一個像素都不會變。⭐ 一個翻了沒反應的開關**比沒有更糟**。\n⇒ 改用實測**蓋得到全部 13 個節點**的 `params.clip.default`：拿掉它 ⇒ modelFxRig 一條剪輯都不播 ＝ 整族回到 2026-08-25 的**定格雕像**（本批加的家族 clip 是動畫那一半）。\n⭐ 另外兩格也蓋得到全部、可搭配使用：`params.count.default`（1⇒6，一鍵比對「一具 vs 一排」，登記在 beamverify 那一批）與 `params.lifeSec.default`。\n⛔ **蓋不到的四格**（⛔ 不要拿來當開關）：`modelKey`(11 節點自寫) · `scale`(7) · `arriveSoundKey`(5) · `soundKey`(2)。"
+      },
+      "registeredAt": "2026-08-26T04:28:43.457Z"
+    },
+    "beamverify_visual-proof_20260826-1200": {
+      "title": "光束砲對擷圖驗收（20-03/09-04/59-04 逐幀＋形狀分析器）—— ⚠️ 三項 1 過 · 1 半過 · 1 不過",
+      "family": "beam-roll 光束砲",
+      "issues": [
+        721,
+        767
+      ],
+      "abilities": [
+        "godie-e002.e",
+        "godie-e00l.e",
+        "godie-e00r.r"
+      ],
+      "commit": "bd24b4af",
+      "sequenceDir": "docs/_reports/beamverify_visual-proof_20260826-1200",
+      "rollback": {
+        "configId": "tpl-beam-roll",
+        "field": "params.count.default",
+        "liveValue": 1,
+        "rollbackValue": 6,
+        "note": "⭐ 一格還原「一具 vs 一排」：改回 6 就回到 2026-08-25 的沿線六具。⚠️ 但那是**被推翻的**形狀 —— 13 個 JASS 生成點的 CreateNUnitsAtLoc 第一參數 100% 是 1（j:26790 31907 31909 32322 32324 32327 36048 47757）。留這一格是為了讓你能一鍵比對，⛔ 不是因為 6 有出處。"
+      },
+      "registeredAt": "2026-08-26T05:37:38.416Z"
+    },
+    "invprim_visual-proof_20260826-1700": {
+      "title": "光束核心：ReviveHuman 換回真身＋隊伍發光不再被軟刪除（幾何基準只算可見）",
+      "family": "beam-roll 橫放光束砲",
+      "issues": [
+        767,
+        702,
+        649
+      ],
+      "abilities": [
+        "godie-e002.e",
+        "godie-e00l.e",
+        "godie-h02r.r",
+        "godie-hgam.r",
+        "godie-o00x.r",
+        "godie-ogrh.r",
+        "godie-e00r.r"
+      ],
+      "commit": "e44bf446",
+      "sequenceDir": "docs/_reports/invprim_visual-proof_20260826-1700",
+      "rollback": {
+        "configId": "tpl-beam-roll",
+        "field": "params.clip.default",
+        "liveValue": "idle",
+        "rollbackValue": null,
+        "note": "⚠️ 2026-08-26 更正：原登記 `params.modelKey.default`，而新閘 `rollbackSwitchReaches` 實測**11 個節點逐支自寫 modelKey** ⇒ 翻它沒有作用（`fillOne()` 是 `if (out[k] === undefined)`）。⇒ 改用實測蓋得到全部 13 個節點的 `params.clip.default`。⛔ 本批（TeamGlow luma-key 修復）真正的內容還原是 `git revert` 那兩份 .glb —— 它是**轉檔修復**不是內容選擇，所以沒有一格開關能還原它；這一格還原的是**動畫那一半**。"
+      },
+      "registeredAt": "2026-08-26T06:10:58.563Z"
+    },
+    "stockglow_visual-proof_20260826-1520": {
+      "title": "原作 additive 混合補回引擎：stock 特效的發光層用「加法」畫（#767 驗收②④的共同根因）",
+      "family": "beam-roll 橫放光束砲",
+      "issues": [
+        767,
+        673,
+        649
+      ],
+      "abilities": [
+        "godie-e002.e",
+        "godie-e00l.e",
+        "godie-h02r.r",
+        "godie-hgam.r",
+        "godie-o00x.r",
+        "godie-ogrh.r",
+        "godie-e00r.r"
+      ],
+      "commit": "76d098c5",
+      "sequenceDir": "docs/_reports/stockglow_visual-proof_20260826-1520",
+      "rollback": {
+        "configId": "vfx-cleanup",
+        "field": "stockGlowAdditive",
+        "liveValue": true,
+        "rollbackValue": false,
+        "note": "⭐ 關掉 = 逐格回到 2026-08-26 之前（glTF BLEND）—— 同一頁 ?additive=0/1 實測 7 份材質的 alphaMode 真的翻過去（2↔1）。⚠️ 載入時生效 ⇒ 後台存檔後要重載。⛔ 這格引用不到 owner 的任何一句原話，是我依「沒做完以前自己判斷、但留一格可以 rollback」挑的預設 true。"
+      },
+      "registeredAt": "2026-08-26T07:25:48.083Z"
+    },
+    "dragonslave_visual-proof_20260827-0030": {
+      "title": "🐉 龍破斬 04-03：光束→抵達爆炸的連續影格（量尺自證 462,400）",
+      "family": "vfx-additive",
+      "issues": [
+        779
+      ],
+      "abilities": [],
+      "commit": "8bab9aa1",
+      "sequenceDir": "docs/_reports/dragonslave_visual-proof_20260827-0030",
+      "rollback": {
+        "configId": "vfx-cleanup",
+        "field": "stockGlowAdditive",
+        "liveValue": true,
+        "rollbackValue": false,
+        "note": "整族 stock 光暈回到非疊加（＝修復前的畫法）。⛔ 不必動任何一支技能的 JSON"
+      },
+      "registeredAt": "2026-08-26T20:06:20.765Z"
+    },
+    "dragonslave_visual-proof_20260827-fixed": {
+      "title": "🐉 龍破斬：壞掉 vs 修好 A/B（只剩文字 → 光束回來）",
+      "family": "vfx-additive",
+      "issues": [
+        779
+      ],
+      "abilities": [],
+      "commit": "8bab9aa1",
+      "sequenceDir": "docs/_reports/dragonslave_visual-proof_20260827-fixed",
+      "rollback": {
+        "configId": "vfx-cleanup",
+        "field": "stockGlowAdditive",
+        "liveValue": true,
+        "rollbackValue": false,
+        "note": "整族 stock 光暈回到非疊加（＝修復前的畫法）。⛔ 不必動任何一支技能的 JSON"
+      },
+      "registeredAt": "2026-08-26T20:06:21.122Z"
+    },
+    "dragonslave_visual-proof_20260827": {
+      "title": "🐉 龍破斬：0825 vs 0827 A/B 基線",
+      "family": "vfx-additive",
+      "issues": [
+        779
+      ],
+      "abilities": [],
+      "commit": "8bab9aa1",
+      "sequenceDir": "docs/_reports/dragonslave_visual-proof_20260827",
+      "rollback": {
+        "configId": "vfx-cleanup",
+        "field": "stockGlowAdditive",
+        "liveValue": true,
+        "rollbackValue": false,
+        "note": "整族 stock 光暈回到非疊加（＝修復前的畫法）。⛔ 不必動任何一支技能的 JSON"
+      },
+      "registeredAt": "2026-08-26T20:06:21.476Z"
+    },
+    "kenshiro_visual-proof_20260827": {
+      "title": "⚡ 拳四郎變身閃電：alphaMode 0(ALPHA_DISABLE 黑底) vs 6(ALPHA_ONEONE 去背)",
+      "family": "vfx-additive",
+      "issues": [
+        780
+      ],
+      "abilities": [],
+      "commit": "8bab9aa1",
+      "sequenceDir": "docs/_reports/kenshiro_visual-proof_20260827",
+      "rollback": {
+        "configId": "vfx-cleanup",
+        "field": "stockGlowAdditive",
+        "liveValue": true,
+        "rollbackValue": false,
+        "note": "整族 stock 光暈回到非疊加（＝修復前的畫法）。⛔ 不必動任何一支技能的 JSON"
+      },
+      "registeredAt": "2026-08-26T20:06:21.831Z"
+    }
+  }
+}

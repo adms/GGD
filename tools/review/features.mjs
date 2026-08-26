@@ -25,9 +25,15 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
 import { canonical } from "./triage.mjs";
+import { loadMaterial, loadVerdicts, saveMaterial, saveVerdictEntry } from "./stores.mjs";
 
 const sha1 = (buf) => createHash("sha1").update(buf).digest("hex");
 
+/**
+ * ⚠️ **分署之前**的混合檔（GH#794）。留著只有一個用途：遷移期的回讀。
+ * ⭐ 現在的兩個住處是 `docs/_review/material/`（我寫）與 `docs/_review/verdicts/`（owner 寫）——
+ *   見 `tools/review/stores.mjs` 的檔頭，以及 owner 2026-08-27「分署不同資料夾」那一則。
+ */
 export const FEATURE_LEDGER_REL = "docs/_review/feature-verdicts.json";
 /** 連續圖片的來源：`scripts/visual-proof.sh` 那一族的終端證據目錄。 */
 export const SEQUENCE_ROOT_REL = "docs/_reports";
@@ -36,19 +42,29 @@ const SEQUENCE_DIR_RE = /_visual-proof_/;
 /** rollback 開關可以住的地方（都是**人在編的**出貨資料，⛔ 不是產生器產物）。 */
 const SWITCH_DIRS = ["content/config", "content/ability-templates"];
 
-// ────────────────────────────── 帳本 ──────────────────────────────
+// ────────────────────────────── 帳本（＝兩個分署的**唯讀合成**） ──────────────────────────────
 
+/**
+ * ⭐ 這一支現在是**讀取端的合成**，⛔ 不再是一個檔。
+ * 材料（我寫）與結果（owner 寫）各自載入後在記憶體裡對齊 —— 合成結果**不落地**。
+ * ⚠️ 保留這個函式名是因為它是跨 lane 的契約（middleware / check / pending-digest 都叫它）。
+ */
 export function loadFeatureLedger(repoRoot) {
-  const p = join(repoRoot, FEATURE_LEDGER_REL);
-  if (!existsSync(p)) return { schema: "feature-verdicts@1", batches: {} };
-  const doc = JSON.parse(readFileSync(p, "utf8"));
-  return { schema: doc.schema ?? "feature-verdicts@1", note: doc.note, batches: doc.batches ?? {} };
-}
-
-function writeFeatureLedger(repoRoot, ledger) {
-  mkdirSync(join(repoRoot, "docs/_review"), { recursive: true });
-  writeFileSync(join(repoRoot, FEATURE_LEDGER_REL), `${JSON.stringify(ledger, null, 2)}\n`);
-  return ledger;
+  const material = loadMaterial(repoRoot);
+  const verdicts = loadVerdicts(repoRoot);
+  const batches = {};
+  for (const [id, reg] of Object.entries(material.batches)) {
+    const v = verdicts[id];
+    batches[id] = {
+      ...reg,
+      verdict: v?.verdict ?? null,
+      verdictHash: v?.verdictHash ?? null,
+      reason: v?.reason ?? "",
+      verdictAt: v?.verdictAt ?? null,
+      verdictSource: v?.source ?? null,
+    };
+  }
+  return { schema: "feature-verdicts@2", batches };
 }
 
 // ─────────────────────── rollback 開關的解析（＝閘） ───────────────────────
@@ -270,9 +286,10 @@ export function registerBatch(repoRoot, batch) {
   if (!rb.ok) throw new Error(`拒絕登記「${id}」：${rb.error}`);
   const seq = scanSequences(repoRoot).find((s) => s.id === id);
   if (seq === undefined) throw new Error(`拒絕登記「${id}」：找不到連續圖片序列 ${SEQUENCE_ROOT_REL}/${id}/`);
-  const ledger = loadFeatureLedger(repoRoot);
-  const prev = ledger.batches[id] ?? {};
-  ledger.batches[id] = {
+  // ⭐ 只讀**材料**（⛔ 不讀裁決）—— 登記這條路徑結構上碰不到 owner 的裁決欄位。
+  const material = loadMaterial(repoRoot);
+  const prev = material.batches[id] ?? {};
+  material.batches[id] = {
     title: batch.title ?? seq.title,
     family: batch.family ?? prev.family ?? null,
     issues: batch.issues ?? prev.issues ?? [],
@@ -281,28 +298,25 @@ export function registerBatch(repoRoot, batch) {
     sequenceDir: sequenceDir ?? seq.dir,
     rollback,
     registeredAt: prev.registeredAt ?? new Date().toISOString(),
-    verdict: prev.verdict ?? null,
-    verdictHash: prev.verdictHash ?? null,
-    reason: prev.reason ?? "",
-    verdictAt: prev.verdictAt ?? null,
   };
-  writeFeatureLedger(repoRoot, ledger);
-  return ledger.batches[id];
+  saveMaterial(repoRoot, material.batches);
+  return material.batches[id];
 }
 
 /** 裁決。keep＝確認保留（預設狀態）；veto＝否決還原 ⇒ **必填原因**。 */
-export function saveFeatureVerdict(repoRoot, { id, hash, verdict, reason }) {
+export function saveFeatureVerdict(repoRoot, { id, hash, verdict, reason, source = "local" }) {
   if (verdict !== "keep" && verdict !== "veto") throw new Error("verdict 只能是 keep 或 veto");
   const trimmed = typeof reason === "string" ? reason.trim() : "";
   if (verdict === "veto" && trimmed === "")
     throw new Error("否決必填原因 —— ⛔ 無原因的否決是心情，不是資料");
-  const ledger = loadFeatureLedger(repoRoot);
-  const reg = ledger.batches[id];
+  // ⭐ 只讀**材料**來確認「這一批登記過」，⛔ 讀不到也寫不到別人的裁決。
+  const reg = loadMaterial(repoRoot).batches[id];
   if (reg === undefined) throw new Error(`未登記的批次「${id}」—— 先登記（含 rollback 開關）才判定得了`);
-  reg.verdict = verdict;
-  reg.verdictHash = hash;
-  reg.reason = trimmed;
-  reg.verdictAt = new Date().toISOString();
-  writeFeatureLedger(repoRoot, ledger);
-  return reg;
+  const entry = saveVerdictEntry(repoRoot, source, id, {
+    verdict,
+    verdictHash: hash,
+    reason: trimmed,
+    verdictAt: new Date().toISOString(),
+  });
+  return { ...reg, ...entry, rollback: reg.rollback };
 }

@@ -13,6 +13,17 @@
  *   GET  /__review/frame?p=<rel>   → 一張 PNG（**只**從 docs/_reports/ 底下取）
  *   POST /__review/feature-verdict → body { id, hash, verdict: "keep"|"veto", reason? }
  *     ⭐ 預設是 live（已上線）；veto＝事後否決 ⇒ **必填 reason**（400 擋空的）。
+ *
+ * ## 🔐 兩種權限模式（owner 2026-08-27:「用**特定存取權限**來管理**避免錯改**」）
+ * | mode | 誰在跑 | 可以寫什麼 | 為什麼 |
+ * |---|---|---|---|
+ * | `"local"`（預設） | 本機 dev server | 材料 ＋ 結果 | 這台就是我在開發的機器 |
+ * | `"live"` | 線上 sidecar（ggd.adms.ai） | ⭐ **只有結果**（`verdicts/live.json`） | 📦 材料在線上是 **:ro** 掛載 |
+ *
+ * ⭐ 線上模式**明確 403 並說明理由**，⛔ 不是讓它去撞一個 EACCES ——
+ *   一個沒有人看得懂的 500 與「這條路在這裡不存在」長得一樣（fail-open 的靜默）。
+ * ⇒ 寫材料的兩條路（`POST /__review/verdict` 資產裁決 · `POST /__review/frame` 存證據）
+ *   在 live 模式下回 403 並指出「這件事要在本機做，然後 git push」。
  */
 import { buildInventory, buildQueue, saveVerdict } from "./triage.mjs";
 import { buildFeatureQueue, saveFeatureVerdict, SEQUENCE_ROOT_REL } from "./features.mjs";
@@ -27,9 +38,24 @@ function sendJson(res, status, body) {
   res.end(JSON.stringify(body));
 }
 
-export function createReviewMiddleware(repoRoot) {
+export function createReviewMiddleware(repoRoot, options = {}) {
+  const mode = options.mode ?? "local";
+  const verdictSource = options.verdictSource ?? (mode === "live" ? "live" : "local");
+  /** ⭐ 會寫到**材料**那一側的路 —— 線上一律擋，並說明該去哪裡做。 */
+  const writesMaterial = (method, url) =>
+    (method === "POST" && url === "/__review/verdict") || (method === "POST" && url === "/__review/frame");
+
   return (req, res, next) => {
     const url = (req.url ?? "").split("?")[0];
+    if (mode === "live" && writesMaterial(req.method, url)) {
+      return sendJson(res, 403, {
+        error:
+          `⛔ 線上只開放**批核結果**（${url} 會寫到「批核材料」那一側）。` +
+          "材料是 :ro 掛載 —— 這件事請在本機做完再 git push（owner 2026-08-27「材料與結果分署」）。",
+        mode,
+        allowed: ["GET /__review/features", "GET /__review/frame", "POST /__review/feature-verdict"],
+      });
+    }
     if (req.method === "GET" && url === "/__review/queue") {
       try {
         sendJson(res, 200, { items: buildQueue(repoRoot).items });
@@ -142,10 +168,11 @@ export function createReviewMiddleware(repoRoot) {
               currentHash: batch.hash,
               submittedHash: hash,
             });
-          const entry = saveFeatureVerdict(repoRoot, { id, hash, verdict, reason });
+          const entry = saveFeatureVerdict(repoRoot, { id, hash, verdict, reason, source: verdictSource });
           sendJson(res, 200, {
             ok: true,
             id,
+            source: verdictSource,
             status: entry.verdict === "veto" ? "vetoed" : "live",
             rollback: entry.rollback,
           });

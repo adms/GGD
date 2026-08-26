@@ -112,6 +112,30 @@ services:
     volumes:
       - ../content:/srv/content:ro
 
+  # 🧑‍⚖️ 批核頁的資料面（GH#794）—— owner 2026-08-27「請同步到線上」。
+  # ⭐ 權限**就是這張掛載表**（⛔ 不是程式裡的一個 if）：材料/證據/內容都是 :ro，
+  #    唯一 :rw 的是 verdicts —— 線上寫得動的只有 owner 按下去的那些裁決。
+  #    middleware 的 live 模式再多擋一層（寫材料的兩條路直接 403 並說去哪做）。
+  review:
+    build:
+      context: ..
+      dockerfile: docker/review.Dockerfile
+    environment:
+      GGD_REVIEW_MODE: "live"
+      GGD_REVIEW_PORT: "8790"
+      GGD_REVIEW_ROOT: /srv/repo
+    ports:
+      - "127.0.0.1:8790:8790"
+    volumes:
+      # ⭐ **整個 repo 唯讀** —— /__live 的 15 份 dataset 會讀 content/ · docs/ ·
+      #    tools/ · packages/，逐份列白名單會在下一份 dataset 加進來時無聲漏掉。
+      #    ⇒ 用「全部 ro」把預設立場設成**讀得到但寫不動**。
+      - ..:/srv/repo:ro
+      # ⚠️ 然後**只**把這一格疊回可寫（後掛的覆蓋前面的）。
+      #    這就是 owner 說的「特定存取權限」：線上寫得動的東西**只有這一個目錄**。
+      #    uid 1000 要寫得動 —— host-deploy.sh 的 review 段會確保。
+      - ../docs/_review/verdicts:/srv/repo/docs/_review/verdicts
+
   edge:
     build:
       context: ..
@@ -133,6 +157,7 @@ services:
     depends_on:
       - platform
       - game
+      - review
 
   # dev profile only: content CRUD/validate/SSE (RW mount!)
   content-api:

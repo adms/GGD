@@ -88,7 +88,8 @@ export function FeatureReviewPage(): React.JSX.Element {
     try {
       const r = await fetch("/__review/features", { headers: { accept: "application/json" } });
       const ct = r.headers.get("content-type") ?? "";
-      if (!ct.includes("json")) throw new Error(`回的不是 JSON（HTTP ${r.status}）—— dev server 沒掛 /__review`);
+      if (!ct.includes("json"))
+        throw new Error(`回的不是 JSON（HTTP ${r.status}）—— 這一台沒掛 /__review（本機是 vite plugin，線上是 review sidecar）`);
       const j = (await r.json()) as Feed;
       if (j.error) throw new Error(j.error);
       setFeed(j);
@@ -169,8 +170,16 @@ export function FeatureReviewPage(): React.JSX.Element {
             {err}
             <br />
             <span style={{ color: TEXT_DIM }}>
-              這一頁的資料來自 <code>/__review/features</code>（dev-only middleware，
-              <code>tools/review/middleware.mjs</code>）。正式 build 沒有這條路由 —— 這是刻意的。
+              這一頁的資料來自 <code>/__review/features</code>（<code>tools/review/middleware.mjs</code>
+              ，本機與線上跑的是<b>同一份</b>）。
+              <br />
+              · <b>本機</b>：<code>pnpm --filter @ggd/admin dev</code> 的 vite plugin 掛的。
+              <br />
+              · <b>線上</b>：review sidecar（<code>docker/review.Dockerfile</code>），edge 的{" "}
+              <code>location /__review/</code> 轉進去。讀不到通常是那個容器沒起來 ——{" "}
+              <code>curl -s https://ggd.adms.ai/__review/features | head</code> 可以直接問它。
+              <br />· 線上<b>只寫得動裁決</b>（材料是 :ro 掛載）；線上按的裁決回流本機用{" "}
+              <code>bash scripts/review-sync.sh</code>。
             </span>
           </div>
         </Panel>
