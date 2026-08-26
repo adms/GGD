@@ -36,7 +36,7 @@
             {
               "stat": "ms",
               "op": "pctAdd",
-              "msBonusTier": "大"
+              "value": 1.5
             }
           ],
           "duration": 6.0
@@ -46,7 +46,7 @@
             {
               "stat": "ms",
               "op": "pctAdd",
-              "msBonusTier": "大"
+              "value": 1.5
             }
           ],
           "duration": 12.0
@@ -56,7 +56,7 @@
             {
               "stat": "ms",
               "op": "pctAdd",
-              "msBonusTier": "大"
+              "value": 1.5
             }
           ],
           "duration": 18.0

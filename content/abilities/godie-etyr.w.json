@@ -36,7 +36,7 @@
           {
             "stat": "ms",
             "op": "pctAdd",
-            "msBonusTier": "極小"
+            "value": 0.05
           }
         ]
       },
@@ -50,7 +50,7 @@
           {
             "stat": "ms",
             "op": "pctAdd",
-            "msBonusTier": "極小"
+            "value": 0.1
           }
         ]
       },
@@ -64,7 +64,7 @@
           {
             "stat": "ms",
             "op": "pctAdd",
-            "msBonusTier": "極小"
+            "value": 0.15
           }
         ]
       },
@@ -78,7 +78,7 @@
           {
             "stat": "ms",
             "op": "pctAdd",
-            "msBonusTier": "小"
+            "value": 0.2
           }
         ]
       }

@@ -47,7 +47,7 @@
             {
               "stat": "ms",
               "op": "pctMult",
-              "msBonusTier": "大"
+              "value": 1.0
             },
             {
               "stat": "as",
@@ -67,7 +67,7 @@
             {
               "stat": "ms",
               "op": "pctMult",
-              "msBonusTier": "大"
+              "value": 1.0
             },
             {
               "stat": "as",
@@ -87,7 +87,7 @@
             {
               "stat": "ms",
               "op": "pctMult",
-              "msBonusTier": "大"
+              "value": 1.0
             },
             {
               "stat": "as",

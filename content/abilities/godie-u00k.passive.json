@@ -32,7 +32,7 @@
             {
               "stat": "ms",
               "op": "pctAdd",
-              "msBonusTier": "大"
+              "value": 1.0
             },
             {
               "stat": "healthRegen",

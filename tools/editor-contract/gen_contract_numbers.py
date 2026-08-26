@@ -871,6 +871,20 @@ TIER_AXES = (
         "note": "⚠️ `ratios` / `attrRatios` **不受影響**（那兩條是成長，不是基礎值）",
     },
     {
+        "field": "msBonusTier", "raw": ("value",), "resolver": "resolveMsBonusTier",
+        "cfg": "move-speed-tiers", "schema": "config.move-speed-tiers@1", "env": None,
+        "where": "任何一條加移速的 `modifier`（`stat: \"ms\"` 的 pctAdd／pctMult）—— ability / item / augment 共用",
+        "rows": lambda c: [("移速加成", c["bonus"])],
+        "note": (
+            "owner 2026-08-27（逐字）：「移動速度加成一律的 %轉換為五級距，"
+            "一樣列表可設定，五級距上下限增加移速為 **0.1~4**」。"
+            "⭐ 單位是**百分比加成的小數**（0.5 = +50%；乘區的 1.0 = ×2）。"
+            "⚠️ **exclusive**：帶 `msBonusTier` 的節點**沒有** `value` —— "
+            "值在載入時解析（第〇·四），⛔ 兩個都寫會被守衛擋下。"
+            "⛔ 單位是 u/s 的 flat 移速**不走這條梯子**（另有帶理由的豁免表）。"
+        ),
+    },
+    {
         "field": "manaCostTier", "raw": ("manaCost",), "resolver": "resolveManaCostTier",
         "cfg": "mana-tiers", "schema": "config.mana-tiers@1", "env": None,
         "where": "`ability@1` 頂層",

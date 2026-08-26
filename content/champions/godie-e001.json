@@ -93,7 +93,7 @@
                 {
                   "stat": "ms",
                   "op": "pctAdd",
-                  "msBonusTier": "中"
+                  "value": 0.5
                 }
               ],
               "duration": 12.0
@@ -103,7 +103,7 @@
                 {
                   "stat": "ms",
                   "op": "pctAdd",
-                  "msBonusTier": "中"
+                  "value": 0.5
                 }
               ],
               "duration": 12.0
@@ -113,7 +113,7 @@
                 {
                   "stat": "ms",
                   "op": "pctAdd",
-                  "msBonusTier": "中"
+                  "value": 0.5
                 }
               ],
               "duration": 12.0
@@ -123,7 +123,7 @@
                 {
                   "stat": "ms",
                   "op": "pctAdd",
-                  "msBonusTier": "大"
+                  "value": 1.5
                 }
               ],
               "duration": 45.0
@@ -133,7 +133,7 @@
                 {
                   "stat": "ms",
                   "op": "pctAdd",
-                  "msBonusTier": "極大"
+                  "value": 3.0
                 }
               ],
               "duration": 45.0

@@ -340,6 +340,12 @@ def is_damage(doc):
 #: `packages/shared/src/content/moveSpeedTiers.ts::MS_BONUS_OPS` 同一份名單。
 MS_BONUS_OPS = ("pctAdd", "pctMult")
 
+#: ⭐ **逐階載體** —— 這些鍵底下的值是「每一階不同」，⛔ 不可以級距化
+#: （五級距的語意是「填了級別＝每一階同一個值」）。GH#789 的回歸兩次都出在這裡：
+#: 第一次漏了 `perRank`（22-01 鬼隱之擊 +50%→+150% 被壓平），第二次漏了 `ranks`
+#: （14-03 魔力應援）。⛔ 新增第三種載體時要補進來。
+PER_RANK_KEYS = ("perRank", "ranks")
+
 #: 台詞段（「…」）——說明改寫**跳過**它（第〇·六守則②：「」是角色對白不是效果）。
 _QUOTE_RE = re.compile(r"「[^」]*」")
 
@@ -408,12 +414,25 @@ def _apply_ms_bonus(doc, grids, log):
     doc_id = str(doc.get("id", ""))
     old_values = set()
 
-    def visit(node):
+    # ⛔⛔ GH#789 的回歸（2026-08-27 由 nativeFidelity.test.ts 抓到）——
+    #    **逐階曲線不可以級距化**。五級距的語意是「填了級別 = 每一階同一個值」
+    #    （`cooldownTier` 的 note 早就逐字寫過這句），而 `perRank` 的存在就是為了
+    #    「每一階不同」。兩者放在一起 ⇒ 22-01 鬼隱之擊的 +50%→+150% 被壓成
+    #    「中/中/中/中」，14-03 魔力應援同型。⭐ 這**不是資料的錯，是機制**：
+    #    ⇒ 一個節點只要住在**逐階載體**底下，就整條跳過（進豁免的理由是結構性的，
+    #    ⛔ 不必逐支列進 exemptions —— 那張表會長成 N 列而這是一條規則）。
+    #    ⚠️ 逐階載體有**兩個**（2026-08-27 第二次紅才發現）：`perRank`（技能升階）
+    #    與 `ranks`（天生技/被動的階，例 14-03 魔力應援）。⛔ 只認一個就會漏掉另一半，
+    #    而漏掉的那一半在畫面上與「原作就是這樣」長得一模一樣。
+    def visit(node, in_per_rank=False):
         if isinstance(node, list):
             for v in node:
-                visit(v)
+                visit(v, in_per_rank)
             return
         if not isinstance(node, dict):
+            return
+        if node.get("stat") == "ms" and node.get("op") in MS_BONUS_OPS and in_per_rank:
+            # 逐階值：保留 `value`，⛔ 不級距化（見上面那段）。
             return
         if node.get("stat") == "ms" and node.get("op") in MS_BONUS_OPS:
             v = node.get("value")
@@ -430,8 +449,9 @@ def _apply_ms_bonus(doc, grids, log):
                     node.update(out)
                     log.append(("ms-bonus", v, grid[mi], TIER_NAMES[mi]))
                     old_values.add(float(v))
-        for sub in list(node.values()):
-            visit(sub)
+        for key, sub in list(node.items()):
+            # ⭐ 一旦進了 `perRank`，往下整條都是逐階值（旗標只會傳下去，⛔ 不會被清掉）。
+            visit(sub, in_per_rank or key in PER_RANK_KEYS)
 
     visit(doc)
     if old_values and isinstance(doc.get("description"), str):

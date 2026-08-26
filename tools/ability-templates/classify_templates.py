@@ -219,7 +219,14 @@ for p in sorted(ABIL.glob("godie-*.json")):
             "傷害類型": (dmg or {}).get("damageType", "") if dmg else "",
             "加成": "+".join(f"{r['coeff']}×{r['stat']}" for r in ratios),
             "狀態": f"{status.get('statusId')}({status.get('duration')}s)" if status else "",
-            "增益": "; ".join(f"{m['stat']} {m['op']} {m['value']}" for m in mods),
+            # ⚠️ GH#789 —— modifier 的值是 **exclusive** 的：帶 `msBonusTier` 的節點
+            #    **沒有** `value`（值在載入時由 resolveMsBonusTier 從共用表解析，
+            #    第〇·四守則）。⛔ 直接 m['value'] 會 KeyError 而整支產生器死掉。
+            #    ⇒ 級別在就印級別，⛔ 不要在這裡重算解析值（那會是第二個住處）。
+            "增益": "; ".join(
+                f"{m['stat']} {m['op']} " + str(m.get("value", m.get("msBonusTier", "?")))
+                for m in mods
+            ),
             "增益持續": (buff or {}).get("duration", "") if buff else "",
             "投射物": (proj or {}).get("projectileId", "") if proj else "",
             "施法時間": d.get("castTimeSec", ""),

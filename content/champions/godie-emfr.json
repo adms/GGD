@@ -162,7 +162,7 @@
                 {
                   "stat": "ms",
                   "op": "pctMult",
-                  "msBonusTier": "小"
+                  "value": 0.2
                 },
                 {
                   "stat": "as",
@@ -177,7 +177,7 @@
                 {
                   "stat": "ms",
                   "op": "pctMult",
-                  "msBonusTier": "小"
+                  "value": 0.2
                 },
                 {
                   "stat": "as",
@@ -192,7 +192,7 @@
                 {
                   "stat": "ms",
                   "op": "pctMult",
-                  "msBonusTier": "小"
+                  "value": 0.2
                 },
                 {
                   "stat": "as",
@@ -207,7 +207,7 @@
                 {
                   "stat": "ms",
                   "op": "pctMult",
-                  "msBonusTier": "小"
+                  "value": 0.2
                 },
                 {
                   "stat": "as",
@@ -408,7 +408,7 @@
                 {
                   "stat": "ms",
                   "op": "pctMult",
-                  "msBonusTier": "大"
+                  "value": 1.0
                 },
                 {
                   "stat": "as",
@@ -428,7 +428,7 @@
                 {
                   "stat": "ms",
                   "op": "pctMult",
-                  "msBonusTier": "大"
+                  "value": 1.0
                 },
                 {
                   "stat": "as",
@@ -448,7 +448,7 @@
                 {
                   "stat": "ms",
                   "op": "pctMult",
-                  "msBonusTier": "大"
+                  "value": 1.0
                 },
                 {
                   "stat": "as",
