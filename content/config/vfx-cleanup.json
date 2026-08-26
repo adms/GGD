@@ -34,5 +34,6 @@
   "lifecycleMaxAgeSec": 180,
   "groundTextureCacheMax": 8,
   "groundTextureCacheMaxMobile": 4,
-  "fxTintEmissiveFloor": 0.05
+  "fxTintEmissiveFloor": 0.05,
+  "stockGlowAdditive": true
 }

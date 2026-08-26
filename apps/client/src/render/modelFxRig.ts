@@ -153,6 +153,62 @@ export function setFxTintEmissiveFloor(v: number | undefined): void {
   emissiveFloor = typeof v === "number" && Number.isFinite(v) ? v : FX_TINT_EMISSIVE_FLOOR;
 }
 
+/** 🔆 出貨預設：stock glow 材質走**加法**混合（GH#767）。 */
+const STOCK_GLOW_ADDITIVE_DEFAULT = true;
+let stockGlowAdditive = STOCK_GLOW_ADDITIVE_DEFAULT;
+
+/** 後台那一格（`config.vfx-cleanup@1.stockGlowAdditive`）⇒ 這裡。`undefined` = 回出貨預設。 */
+export function setStockGlowAdditive(v: boolean | undefined): void {
+  stockGlowAdditive = typeof v === "boolean" ? v : STOCK_GLOW_ADDITIVE_DEFAULT;
+}
+
+/** Babylon `Constants.ALPHA_ADD`。⛔ 這裡不 import Babylon 常數（見上面那條迴圈註解）。 */
+const BJS_ALPHA_ADD = 1;
+/** Babylon `Material.MATERIAL_ALPHABLEND` —— 沒有它 `needAlphaBlending()` 是 false ⇒ 混合模式**不會被讀**。 */
+const BJS_ALPHABLEND = 2;
+
+/**
+ * 🔆 **把原作的 additive 混合補回來**（GH#767）。
+ *
+ * ── 為什麼這是一個**缺的機制**，⛔ 不是一格口味參數 ──────────────────────
+ * 原作那一族（`filter_mode >= 3` 且無不透明底層）在 WC3 裡是 **additive**：
+ * 光是**加**到背景上的。`w3xlib/gltf.py` 的 `gltf_texture_luma()` 檔頭**自己承認**
+ * 它只是「approximates WC3 additive blending in **plain glTF BLEND**」——
+ * 而 alpha 混合的結果**永遠 ≤ 兩者的最大值**，於是兩件原作會發生的事
+ * **結構上不可能發生**：①暗地板上的光束非常亮 ②**兩層疊起來更亮**。
+ *
+ * ⭐ 量到的（20-03，2026-08-26）：光束 lum 中位 **56–76** vs 原作 **246–254**；
+ * 多層疊加暈/核 **0.63–1.05** vs 原作 **1.27–3.06** ——⭐ 兩項驗收是同一個缺陷的兩半。
+ *
+ * ⛔ **判準從材質自己推導**（與 {@link applyFxTint} 同一條）：`emissiveColor` 非全黑
+ * ⇒ 這是轉檔的 glow 分支。不透明 body 的自發光是全黑 ⇒ **一格都不會被碰到**。
+ *
+ * ⚠️ 這裡讀的是**最終**掛在 mesh 上的那份材質（`applyFxTint` 之後才呼叫）——
+ * 對**原始**素材物件寫的斷言不管有沒有生效都會過（`views/mobTint.test.ts` 檔頭）。
+ *
+ * @returns 真的被改成加法的材質數（0 = 這一具沒有 glow 材質，或開關關著）。
+ */
+export function applyStockGlowAdditive(root: TransformNode): number {
+  if (!stockGlowAdditive) return 0;
+  let painted = 0;
+  for (const mesh of root.getChildMeshes(false)) {
+    const mat = (mesh as { material?: unknown }).material as
+      | (Record<string, unknown> & { name?: string })
+      | null
+      | undefined;
+    if (!mat) continue;
+    const e = mat["emissiveColor"] as { r: number; g: number; b: number } | undefined;
+    if (!e || (e.r <= 0 && e.g <= 0 && e.b <= 0)) continue;
+    mat["alphaMode"] = BJS_ALPHA_ADD;
+    // ⚠️ 只設 alphaMode 是**寫了但不會發生**：PBR 的不透明素材被載入器鎖成
+    //    `transparencyMode: OPAQUE`，而 `needAlphaBlending()` 回 false 時
+    //    混合模式那一格**根本不會被讀**（同 `applyFxTint` 的 fxAlpha 那一段）。
+    if ("transparencyMode" in mat) mat["transparencyMode"] = BJS_ALPHABLEND;
+    painted++;
+  }
+  return painted;
+}
+
 /**
  * 把 `fxTint` 乘進這一棵子樹上每一份素材**看得見的那一格顏色**。
  *
@@ -704,6 +760,9 @@ export class ModelFxRig {
     const tint = look.tint ?? doc.fxTint;
     const alpha = look.alpha ?? doc.fxAlpha;
     if (tint || alpha !== undefined) applyFxTint(axis, tint ?? [1, 1, 1], alpha);
+    // 🔆 GH#767 —— 原作的 additive 混合。⭐ 一定要在 `applyFxTint` **之後**：
+    //    它會 clone 材質再指回 mesh，寫在前面就是寫到一份被丟掉的舊物件上。
+    applyStockGlowAdditive(axis);
     return true;
   }
 

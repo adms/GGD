@@ -282,6 +282,29 @@ export const zConfigVfxCleanupDoc = z
       .optional(),
 
     /**
+     * 🔆 **原作 additive 混合**（GH#767）：stock 特效模型的 glow 材質要不要用
+     * **加法**混合畫（`ALPHA_ADD`），⛔ 而不是今天的 alpha 混合（`BLEND`）。
+     *
+     * ⚠️ 這一格補的是**引擎缺的一個機制**，⛔ 不是一個口味參數。原作那一族
+     * （`filter_mode >= 3` 且無不透明底層）在 WC3 裡是 **additive** —— 光是**加**到
+     * 背景上的，所以①暗地板上的光束會非常亮 ②**兩層疊起來會更亮**。
+     * 而 `w3xlib/gltf.py` 的 `gltf_texture_luma()` 檔頭自己寫著它只是
+     * 「approximates WC3 additive blending in **plain glTF BLEND**」——
+     * 而 alpha 混合的結果**永遠 ≤ 兩者的最大值** ⇒ 上面那兩件事**結構上不可能發生**。
+     *
+     * ⭐ 量到的（20-03 約束與勝利之劍，2026-08-26）：光束 lum 中位數 **56–76**
+     * vs 原作擷圖 **246–254**（暗約 4 倍）；多層疊加的暈/核比 **0.63–1.05**
+     * vs 原作 **1.27–3.06** —— ⭐ 兩項驗收是**同一個**缺陷的兩半。
+     *
+     * ⛔ **只碰自發光非全黑的材質**（＝轉檔的 glow 分支，全 repo 404 份 glb 裡
+     * 152 個）。不透明 body 的 `emissiveColor` 是全黑 ⇒ 一格都不會被碰到。
+     *
+     * ⭐ `false` ＝ **止血閥**：逐位元回到 2026-08-26 之前的畫面。
+     * ⚠️ 它在**載入時**生效（與 `fxTintEmissiveFloor` 同一條路）⇒ 後台存檔後要重載。
+     */
+    stockGlowAdditive: z.boolean().optional(),
+
+    /**
      * 施法光柱腳邊那圈**往上飄的餘燼**，只在施法窗口的前幾成生成（0–1）。
      *
      * owner 2026-08-23（GH#569）：
@@ -493,6 +516,12 @@ export const DEFAULT_VFX_CLEANUP: ConfigVfxCleanupDoc = {
   // 出貨值沿用他在 GH#569 立的那條常設規定的秒數（0.5），⛔ 不是我另外挑的數字。
   vfxDissipateMaxSec: 0.5,
   fxTintEmissiveFloor: 0.05,
+  // 🔆 ⭐ **我挑的**（owner 2026-08-23 常設：「沒做完以前別問我了自己判斷 但是留
+  // 後台開關可以簡易 rollback」）：預設 `true`，因為原作那一族**就是** additive
+  // （`w3xlib/gltf.py` 自己的檔頭承認 BLEND 只是 approximation），而第〇·六守則的
+  // 階梯說高優先序的來源贏 ⇒ 它「預設啟動」。⛔ 這一格引用不到 owner 的任何一句
+  // 原話，所以它**不可以**寫進 release note 的「owner 的裁決」那一節。
+  stockGlowAdditive: true,
   // owner 2026-08-23 GH#569 —— 「紅色粒子飄上天時間都要減半以上」＝生成窗口減半。
   castMoteEmitShare: 0.5,
   // ⏳ owner 2026-08-23 GH#570 —— 「產生後生命週期最多維持三秒，三秒後一律強制

@@ -85,7 +85,7 @@ import { vfxSoundLayer } from "../audio/vfxSound";
 import { resolveFamilyArt } from "../render/vfx/familyTuning";
 import { setMaxAbilityVfxLayers } from "../render/vfx/abilityLayers";
 import { setOneShotMaxLifeSec } from "../vfx/oneShotLife";
-import { setFxTintEmissiveFloor } from "../render/modelFxRig";
+import { setFxTintEmissiveFloor, setStockGlowAdditive } from "../render/modelFxRig";
 import { setCastArcsEnabled } from "../vfx/arcBolt";
 import { setImpactRingScale, setImpactRingTiers } from "../vfx/vfxPresets";
 import { damageTiersFromDoc } from "@ggd/shared/content/damageTiers";
@@ -395,6 +395,11 @@ export class ContentDb {
     setFxTintEmissiveFloor(
       (Configs.tryGet("vfx-cleanup") as { fxTintEmissiveFloor?: number } | undefined)
         ?.fxTintEmissiveFloor,
+    );
+    // 🔆 GH#767 —— 原作 additive 混合的總開關（同一份文件、同一條路）。
+    setStockGlowAdditive(
+      (Configs.tryGet("vfx-cleanup") as { stockGlowAdditive?: boolean } | undefined)
+        ?.stockGlowAdditive,
     );
     // ⚡ GH#571 —— 施法電弧的總開關（同一份文件、同一條路）。
     setCastArcsEnabled(vfxFamiliesDoc?.castArcs);

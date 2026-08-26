@@ -16,8 +16,8 @@
  */
 import { buildInventory, buildQueue, saveVerdict } from "./triage.mjs";
 import { buildFeatureQueue, saveFeatureVerdict, SEQUENCE_ROOT_REL } from "./features.mjs";
-import { existsSync, readFileSync, statSync } from "node:fs";
-import { join, normalize } from "node:path";
+import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { dirname, join, normalize } from "node:path";
 
 const VERDICTS = new Set(["pass", "fail", "unsure"]);
 
@@ -92,6 +92,33 @@ export function createReviewMiddleware(repoRoot) {
       res.setHeader("Content-Type", "image/png");
       res.setHeader("Cache-Control", "no-store");
       res.end(readFileSync(abs));
+      return;
+    }
+    if (req.method === "POST" && url === "/__review/frame") {
+      // 📸 GH#767 —— 驗收台子把一張 PNG 存進**證據目錄**。⭐ 它存在的理由是
+      //    「連續圖片驗收」不可以是一件手工事：一個要人手動另存的步驟，下一輪
+      //    就不會做，而 `review:register` 的閘正是靠這個目錄擋下沒有證據的登記。
+      // ⚠️ 同一道柵欄（⛔ 不是「有沒有 ..」）：只准寫 docs/_reports/**/*.png。
+      let raw = "";
+      req.on("data", (c) => (raw += c));
+      req.on("end", () => {
+        try {
+          const body = JSON.parse(raw || "{}");
+          const rel = normalize(String(body.path ?? ""));
+          if (!rel.startsWith(`${SEQUENCE_ROOT_REL}/`) || !rel.toLowerCase().endsWith(".png"))
+            return sendJson(res, 400, { error: `只收 ${SEQUENCE_ROOT_REL}/**/*.png，收到：${rel}` });
+          const data = String(body.dataUrl ?? "");
+          const comma = data.indexOf(",");
+          if (!data.startsWith("data:image/png;base64,") || comma < 0)
+            return sendJson(res, 400, { error: "dataUrl 不是 data:image/png;base64,…" });
+          const abs = join(repoRoot, rel);
+          mkdirSync(dirname(abs), { recursive: true });
+          writeFileSync(abs, Buffer.from(data.slice(comma + 1), "base64"));
+          sendJson(res, 200, { ok: true, path: rel, bytes: statSync(abs).size });
+        } catch (err) {
+          sendJson(res, 500, { error: String(err) });
+        }
+      });
       return;
     }
     if (req.method === "POST" && url === "/__review/feature-verdict") {

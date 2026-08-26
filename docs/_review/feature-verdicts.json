@@ -568,6 +568,38 @@
       "verdictHash": null,
       "reason": "",
       "verdictAt": null
+    },
+    "stockglow_visual-proof_20260826-1520": {
+      "title": "原作 additive 混合補回引擎：stock 特效的發光層用「加法」畫（#767 驗收②④的共同根因）",
+      "family": "beam-roll 橫放光束砲",
+      "issues": [
+        767,
+        673,
+        649
+      ],
+      "abilities": [
+        "godie-e002.e",
+        "godie-e00l.e",
+        "godie-h02r.r",
+        "godie-hgam.r",
+        "godie-o00x.r",
+        "godie-ogrh.r",
+        "godie-e00r.r"
+      ],
+      "commit": "PENDING",
+      "sequenceDir": "docs/_reports/stockglow_visual-proof_20260826-1520",
+      "rollback": {
+        "configId": "vfx-cleanup",
+        "field": "stockGlowAdditive",
+        "liveValue": true,
+        "rollbackValue": false,
+        "note": "⭐ 關掉 = 逐格回到 2026-08-26 之前（glTF BLEND）—— 同一頁 ?additive=0/1 實測 7 份材質的 alphaMode 真的翻過去（2↔1）。⚠️ 載入時生效 ⇒ 後台存檔後要重載。⛔ 這格引用不到 owner 的任何一句原話，是我依「沒做完以前自己判斷、但留一格可以 rollback」挑的預設 true。"
+      },
+      "registeredAt": "2026-08-26T07:25:48.083Z",
+      "verdict": null,
+      "verdictHash": null,
+      "reason": "",
+      "verdictAt": null
     }
   }
 }

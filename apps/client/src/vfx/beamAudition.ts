@@ -39,6 +39,7 @@ import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
 import { Texture } from "@babylonjs/core/Materials/Textures/texture";
+import { setStockGlowAdditive } from "../render/modelFxRig";
 
 /** 敵人沿施放方向（+x）排成一直線的偏移。 */
 const ENEMY_LINE: readonly { x: number; z: number }[] = [
@@ -133,11 +134,20 @@ export interface BeamAuditionHandle {
   dispose(): void;
 }
 
+
 export async function startBeamAudition(
   canvas: HTMLCanvasElement,
   /** ⭐ GH#691 —— 驗收哪一支技能。省略 ⇒ 09-04（今天的行為逐位元不變）。 */
   abilityId?: string,
+  /**
+   * 🔆 GH#767 —— A/B 用：`false` ⇒ 這一頁強制走**舊的** glTF BLEND。
+   * 省略 ⇒ 跟出貨一樣（讀後台那一格 `config.vfx-cleanup@1.stockGlowAdditive`）。
+   * ⛔ 這只影響**這一頁**：它是驗收台子，⛔ 不是遊戲路徑上的第二個住處。
+   */
+  stockGlowAdditive?: boolean,
 ): Promise<BeamAuditionHandle> {
+  // ⚠️ 一定要在第一具模型被 spawn **之前**設 —— 材質是在 spawn 當下決定的。
+  if (stockGlowAdditive !== undefined) setStockGlowAdditive(stockGlowAdditive);
   // ⚠️ 坑①：canvas 背後緩衝預設 300×150，CSS 只是放大 —— 不 resize 就是在
   // 300×150 下算圖，「看不見」會是台子造成的，⛔ 不是遊戲。
   const fit = (): void => {
