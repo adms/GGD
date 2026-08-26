@@ -454,7 +454,7 @@
         },
         {
           "kind": "spawnVfx",
-          "vfxId": "fx.thorn",
+          "vfxId": "fx.wave.physical",
           "at": "point"
         }
       ],

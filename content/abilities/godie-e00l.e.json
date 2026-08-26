@@ -58,6 +58,13 @@
       "kind": "spawnModelFx",
       "shape": "single",
       "preset": "tpl-beam-roll",
+      "modelKey": "w3x.stock.revivehuman",
+      "scaleAxis": [
+        1,
+        1,
+        3.12
+      ],
+      "arriveSoundKey": "explosion",
       "onArrive": [
         {
           "kind": "spawnVfx",
@@ -71,14 +78,7 @@
           "durationSec": 0.8,
           "applyTo": "all"
         }
-      ],
-      "modelKey": "w3x.stock.revivehuman",
-      "scaleAxis": [
-        1,
-        1,
-        3.12
-      ],
-      "arriveSoundKey": "explosion"
+      ]
     },
     {
       "kind": "spawnModelFx",
@@ -90,7 +90,7 @@
     },
     {
       "kind": "spawnVfx",
-      "vfxId": "fx.thorn",
+      "vfxId": "fx.wave.physical",
       "at": "point"
     }
   ],

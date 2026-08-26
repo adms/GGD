@@ -61,7 +61,7 @@
     },
     {
       "kind": "spawnVfx",
-      "vfxId": "fx.prim.physical.bolt",
+      "vfxId": "fx.wave.physical",
       "at": "self"
     },
     {
