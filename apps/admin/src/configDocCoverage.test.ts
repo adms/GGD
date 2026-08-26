@@ -191,7 +191,11 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // KNOWN_GAP 變成 OWN_PAGE，因為 ui/RosterPage.tsx 做出來了。⚠️ 這是這張表
     // 唯一「健康」的移動方向：帳單被付掉，而總列數不變。
     // 2026-08-20：14 → 13（arena-rules 走進通用引擎，見上面那一段）。
-    expect(byKind("OWN_PAGE")).toHaveLength(14);
+    // 2026-08-27：14 → 15。`per-level-bonus` **往下走了一格**（KNOWN_GAP → OWN_PAGE）——
+    // owner 2026-08-27:「後台 每級加成 這頁無法顯示」⇒ ui/PerLevelBonusPage.tsx（GH#790）。
+    // ⭐ 健康的方向：帳單被付掉。⚠️ 而 KNOWN_GAP 那一類**同時少一列**（4 → 3），
+    // 總數 29 不動 —— 逐類那三行才看得出方向（上面那段自己寫過這個陷阱）。
+    expect(byKind("OWN_PAGE")).toHaveLength(15);
     // 2026-08-22：3 → 5。`ability-vfx-bindings`（#529）與 `combo-strikes`（#541）
     // 兩份都是**產生器擁有**的推導表（各自有 `--check` 逐位元組閘）——
     // ⛔ 給它們一張編輯表單,操作者填的值會在下一次跑產生器時被無聲蓋掉,
@@ -228,8 +232,9 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // `TOGGLE_ABILITY_SPEC` 進了 `CONFIG_DOC_SPECS`（通用引擎），而一份文件
     // 同時在註冊表與豁免表上會被 `verdict.duplicated` 抓到 ⇒ 這一列**必須**刪。
     // ⭐ 這是這張表最健康的移動方向（帳單被付掉，總列數變少）。
+    // 2026-08-27：4 → 3。`per-level-bonus` 的帳單付掉了 —— owner 撞到「這頁無法顯示」
+    // 之後開了 ui/PerLevelBonusPage.tsx（GH#790），它移到 OWN_PAGE，⛔ 不是被免掉。
     expect(byKind("KNOWN_GAP").map((e) => e.docId)).toEqual([
-      "per-level-bonus",
       "vfx-ability-art",
       "audio-map",
       "origin-routes",

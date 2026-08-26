@@ -118,9 +118,11 @@ export const CONFIG_DOC_EXEMPTIONS: readonly ConfigDocExemption[] = [
   },
   {
     docId: "per-level-bonus",
-    kind: "KNOWN_GAP",
-    why: "⚠️ 這份文件的 `perLevel` 是一個 **`z.record`**（鍵是屬性名，不是固定欄位），而通用表單引擎只走得動**固定形狀的葉節點** —— 它列不出「有哪些鍵」，於是頁面會是空的。做一個空頁比沒有頁更糟：操作者點進去看到什麼都沒有，會以為壞了。",
-    expiresWhen: "⚠️ 通用引擎長出「record 型欄位」的支援（新增/刪除鍵 + 每個鍵一組子欄位）的那一天，這一列就該退場，改成一頁真的能編的表。⭐ `config.stat-caps@1` 的 `caps` 是同一個形狀，兩份會一起解鎖。",
+    kind: "OWN_PAGE",
+    page: "perLevelBonus",
+    docIdConstant: "per-level-bonus",
+    why: "📈 每級加成有自己的專頁（`ui/PerLevelBonusPage.tsx`，GH#790）。⭐ 它為什麼不是通用引擎：`perLevel` 是 **`z.record`**（鍵＝屬性 id，不是固定欄位），通用引擎列不出「有哪些鍵」⇒ 畫出來是**一頁空的**。⚠️ 而那正是 owner 2026-08-27 撞到的：「後台 每級加成 這頁無法顯示」—— 在此之前 NAV/store/session-gate 三處都有它，只有 spec 沒有，於是 `specForPage` 回 null 而畫面靜默空白。專頁用出貨 `ALL_STATS` 下拉新增/刪除鍵，⛔ 不硬編屬性清單。",
+    expiresWhen: "⚠️ 通用引擎長出 record 型欄位支援的那一天，這一頁可以退回通用引擎（⭐ `config.stat-caps@1` 的 `caps` 與 `vfx-ability-art` 的 `bindings` 是同一個形狀，三份會一起解鎖）。⛔ 在那之前拿掉專頁 = 回到那一頁空白。",
   },
   {
     docId: "vfx-ability-art",
