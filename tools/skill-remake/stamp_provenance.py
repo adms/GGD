@@ -21,6 +21,10 @@
    這支腳本只是**補齊剩下的**與提供 `--check`。兩邊蓋出來的值必須一致，
    守衛 `packages/shared/src/content/abilityProvenance.test.ts` 在對。
 """
+# ggd:writes content/abilities/*.json
+# ggd:writes content/champions/*.json
+# ⭐ GH#771 —— 靜態產物宣告（merge-io.mjs 收割）：這一支只在 provenance 戳缺了才寫，
+#    量測（含逼寫）量不到 ⇒ 用宣告補戶籍。宣告住在寫入端旁邊，⛔ 不是手編 sync-io。
 from __future__ import annotations
 
 import glob

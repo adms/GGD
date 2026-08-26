@@ -607,7 +607,7 @@ export const zMobWavesConfig = z
          *
          * ⛔ **[leap吸血] 的三個數字（10% 真傷 · 回復 100% · 追加 50%）不在這裡** ——
          * 它們住 `content/abilities/godie-zombieking.passive.json`，而那份文件本來就是
-         * 鑄技工坊直接編輯、存檔生效的東西。理由與 `abilities/berserkRules.ts` 檔頭
+         * 後台（鑄技工坊）經 **overlay**（putOverlayDoc）編輯、存檔生效的東西（⛔ 出貨 JSON 本身是產物,444,不是直接編它）。理由與 `abilities/berserkRules.ts` 檔頭
          * 逐字相同：**內容表達得出來的就不要在 TS 裡再寫一次**，否則改文件不生效、
          * 改常數要重新部署，而兩邊不一致時畫面上完全看不出來。
          * 留在這裡的只有內容表達不出來的那三件事：**誰**是內建技（id）、

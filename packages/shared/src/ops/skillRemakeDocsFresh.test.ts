@@ -45,7 +45,7 @@ describe("重製技能文件與產生器同步", () => {
     expect(
       code,
       `文件與產生器不同步了。⛔ 不要改這條測試 —— 跑：\n` +
-        `    python3 tools/skill-remake/refresh_docs.py\n` +
+        `    bash scripts/genrun.sh skillremake:docs   # ⛔ 不要手改那兩份 md（產物,444）——直跑 python3 會吃 EACCES\n` +
         `再把 docs/ 的兩份一起 commit。\n腳本說：${out.trim()}`,
     ).toBe(0);
   });

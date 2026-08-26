@@ -56,6 +56,10 @@
  * 欄位都會讓逐位元組比對永遠不相等，於是 `--check` 只能被放寬 —— 而一條被放寬的閘
  * 等於沒有閘（GH#389 · #426）。
  */
+// ggd:writes content/champions/*.json
+// ⭐ GH#771 —— **靜態產物宣告**（merge-io.mjs 收割）。這一支是「級距行缺了才寫」的
+//    條件寫入端：量測（含逼寫）在已收斂的樹上量到 0 寫 ⇒ 戶籍漏登 ⇒ genrun 解鎖不到
+//    ⇒ EACCES。宣告放在寫入端旁邊（第〇·四:單一住處），⛔ 不是手編 sync-io.json。
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";

@@ -54,7 +54,9 @@ describe("Codex 合約貼的能力指紋沒有過期", () => {
       stale,
       `合約文件貼的指紋過期了。引擎現在是 \`${expected}\`。\n` +
         stale.map((f) => `  · 第 ${f.line} 行寫著 ${f.value}`).join("\n") +
-        `\n\n修法：把上面那幾行改成 ${expected}，並且**順手看一眼 manifest 差在哪** ——\n` +
+        `\n\n修法：⚠️ 那份文件是 **skillremake:docs ＋ contract:numbers 的產物**（444）——\n` +
+        `      ⛔ 不要手改：改指紋的**來源**後跑 \`bash scripts/genrun.sh skillremake:docs\`\n` +
+        `      重生成（指紋會被產生器寫成 ${expected}），並且**順手看一眼 manifest 差在哪** ——\n` +
         `      指紋變了代表 effectKinds / hookEvents / conditionLeafKinds /\n` +
         `      templateFamilies / knownBroken 至少有一項變了，而 Codex 會照著抄。\n` +
         `      ⛔ 不要只改數字：如果變的是 knownBroken，文件的第十一章也要跟著更新。`,

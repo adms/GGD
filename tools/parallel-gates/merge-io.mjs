@@ -71,12 +71,40 @@ for (const p of passes) {
   }
 }
 
+/**
+ * ⭐ GH#771 —— **收割靜態宣告**。有一族「語意級條件寫入端」（級距行缺了才寫、
+ * provenance 戳缺了才寫）連逼寫都量不到：機械擾動（append 換行）碰不到它們的觸發
+ * 條件。⇒ 這一族在**自己的原始碼裡**宣告 `// ggd:writes <glob>`（單一住處，
+ * 就在寫入端旁邊），這裡收割進戶籍。⛔ 不是手編 sync-io.json —— 手編的表會過期
+ * 而不會有東西紅；宣告跟著程式碼走，程式碼刪了宣告就跟著消失。
+ */
+import { readdirSync, existsSync } from "node:fs";
+const ROOT = new URL("../..", import.meta.url).pathname;
+function staticWrites(stepName) {
+  let pkg;
+  try { pkg = JSON.parse(readFileSync(`${ROOT}/package.json`, "utf8")); } catch { return []; }
+  const cmd = pkg.scripts?.[stepName] ?? "";
+  const scripts = [...cmd.matchAll(/[\w./-]+\.(?:py|ts|mjs|js|sh)/g)].map((m) => m[0]);
+  const out = [];
+  for (const rel of scripts) {
+    const abs = `${ROOT}/${rel}`;
+    if (!existsSync(abs)) continue;
+    const head = readFileSync(abs, "utf8").split("\n").slice(0, 120).join("\n");
+    // ⚠️ 捕到**行尾**，⛔ 不是 \S+ —— 這個 repo 有含空白的檔名
+    //    （docs/技能編輯器引擎須知 20260811.md），\S+ 會把它截成一個不存在的假鍵，
+    //    而假鍵會進戶籍表變成幽靈產物（2026-08-26 當場發生，guardMessages 閘抓到）。
+    for (const m of head.matchAll(/ggd:writes\s+(.+)$/gm)) out.push(m[1].trim());
+  }
+  return out;
+}
+
 const order = base.steps.map((s) => s.name);
 const allWrites = new Set();
 for (const e of byName.values()) for (const w of e.writes) allWrites.add(w);
 
 const steps = order.map((name) => {
   const e = byName.get(name);
+  for (const g of staticWrites(name)) { e.writes.add(g); allWrites.add(g); }
   const reads = [...e.reads].filter((r) => allWrites.has(r) && !e.writes.has(r)).sort();
   return {
     name,

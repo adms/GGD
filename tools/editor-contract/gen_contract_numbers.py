@@ -41,6 +41,10 @@ owner 2026-08-23：「編輯器只編輯原始資料（五級距），根本不�
 守衛：`packages/shared/src/ops/codexContractNumbers.test.ts`（真的把這支用
 `--check` 跑起來，⛔ 不是掃字串）。
 """
+# ggd:writes docs/技能編輯器引擎須知 20260811.md
+# ggd:writes docs/效果標籤詞彙表v2.md
+# ⭐ GH#771 —— 靜態產物宣告（merge-io.mjs 收割）：兩份都是「內容不同才寫」的條件輸出，
+#    量測在已收斂的樹上量不到 ⇒ 宣告補戶籍。
 import json
 import re
 import subprocess

@@ -29,7 +29,10 @@ const io=JSON.parse(readFileSync('tools/parallel-gates/sync-io.json','utf8'));
 const p=process.argv[1];
 const hit=[];
 // ⭐ GH#771:戶籍表裡的日期戳家族是 glob（merge-io 正規化）⇒ 用 glob→regex 比對。
-const g2re=(g)=>new RegExp('^'+g.replace(/[.+^$()|\\]/g,'\\$&').replace(/\*/g,'[^/]*').replace(/\?/g,'[^/]')+'$');
+// ⚠️ 這段 JS 活在 shell 雙引號裡 —— ⛔ 註解與程式都不可以出現「錢字元+左括號」
+//    或反斜線轉義:2026-08-26 第一版用 replace 做轉義,被 shell 當命令替換吃掉,
+//    regex 靜默壞掉而輸出像正常。⇒ 逐字元組 regex:特殊字元用字元類包住,零反斜線。
+const g2re=(g)=>new RegExp('^'+g.split('').map((c)=>c==='*'?'[^/]*':c==='?'?'[^/]':/[a-zA-Z0-9_/.\u0080-\uffff-]/.test(c)?c:'['+c+']').join('')+'$');
 for (const s of io.steps ?? []) {
   for (const w of s.writes ?? []) {
     const m = /[*?\[]/.test(w) ? g2re(w).test(p) : (p===w || (w.endsWith('/') && p.startsWith(w)));
