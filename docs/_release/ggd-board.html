@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.29.0 · 資料截至 2026-08-27 03:39 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-27 03:39 (GMT+8)</h1><div class="meta"><span>帳本 <b>9</b> 份</span><span>點名票號 <b>265</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.29.0 · 資料截至 2026-08-27 03:39 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-27 03:39 (GMT+8)</h1><div class="meta"><span>帳本 <b>9</b> 份</span><span>點名票號 <b>264</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -155,22 +155,13 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <p class="li"><code>python3 tools/icon-console/emit_style_spec.py</code> —— 等 <code>prompt.py</code> 定稿</p>
 <p class="li"><code>pnpm exec tsx tools/model-budget/emit_report.ts</code> —— <code>report.json</code> 現在就過期，而<b>沒有守衛會說</b></p>
 <p class="li"><code>eventFanout.ts:114</code> 的註解已成假話（線路成本從「施放次數」變成「跳數」）</p></section>
-<section><p class="eyebrow">這一版（08-20）</p><h2>🧾 逐句對票 · 這一版（08-20）</h2><div class="scroll"><table><tr><th>你說的（逐字）</th><th>票</th><th>狀態</th></tr>
-<tr><td>復活火圈太大 <b>減少 40%</b></td><td>#778</td><td>✅ 4 → <b>2.4</b>，判定與視覺<b>同一格</b>一起縮</td></tr>
-<tr><td>莉娜龍破斬沒有特效只剩文字了 <b>你竟然還跟我說你比照JASS了？</b></td><td>#779</td><td>✅ 根因是我 v0.28.5 的常數；爆點亮像素 <b>0 → 3,052</b></td></tr>
-<tr><td>拳四郎變身閃電<b>沒有去背</b> 變成黑色閃電</td><td>#780</td><td>✅ <code>BJS_ALPHA_ONEONE = 0</code> 其實是 <b>ALPHA_DISABLE</b>，真值 6</td></tr>
-<tr><td>閃電演算法太過耗效能 <b>請深入分析原因</b></td><td>#781</td><td>✅ <code>arcs.update</code> <b>10.8ms → 3.8ms</b>、垃圾 −97%＋後台上限一格</td></tr>
-<tr><td>場地特效又沒乾淨…<b>你不是有在監控嗎？</b></td><td>#782</td><td>✅ 漏在 retire 陪葬共用材質；監控<b>看不到軌</b>（軌不是節點）已補</td></tr>
-<tr><td>林克又在倒著走路攻擊了 <b>你不是說已經修正了嗎？</b></td><td>#783</td><td>✅ 取消前搖不收面向鎖；#216 的守衛<b>對面向零斷言</b></td></tr>
-<tr><td>地上殘留好多<b>紫色圈圈</b>特效</td><td>#784</td><td>✅ 圈型 <b>mesh</b> 不在粒子登錄表裡 ⇒ 壽命閘結構性失明</td></tr>
-<tr><td><b>我在後台審查頁面根本找不到</b></td><td>#785</td><td>✅ 誠實答案：它<b>本來不在後台</b>。現在是真的一頁＋13 頁批核條</td></tr>
-<tr><td><b>給人看的話不能只有ID 還要有名稱</b></td><td>#786</td><td>✅ 排行榜四類 ID 全補中文名（載入時 join）</td></tr>
-<tr><td>把所有詠唱超過一秒的<b>都調整至一秒 但在後台留下記錄</b></td><td>#787</td><td>✅ 載入時夾（⛔ 沒動 95 份 JSON）＋清單頁三欄記錄</td></tr>
-<tr><td>吟唱 ≥0.3 秒都要有<b>蓄力特效</b>（隊伍顏色內縮光束）</td><td>#788</td><td>✅ <code>CastChargeFx</code>，通用模組（⛔ 不逐技能）</td></tr>
-<tr><td>移速加成<b>%轉五級距，上下限 0.1~4</b></td><td>#789</td><td>✅ 31 列級距化 ⚠️ 並修掉它引發的回歸（下詳）</td></tr>
-<tr><td>後台 <b>每級加成 這頁無法顯示</b></td><td>#790</td><td>✅ 專頁＋「點下去空白」這一族的覆蓋率閘</td></tr>
-<tr><td>這些設定頁面<b>都會有批核頁面的部分</b></td><td>#669</td><td>✅ <code>ReviewStrip</code> 一元件 × 一格參數掛滿 13 頁</td></tr>
-<tr><td><b>守則犯錯記成一張表</b>，統計頻率及原因</td><td>—</td><td>✅ <code>docs/守則犯錯.md</code> ＋ <code>rule-slip.sh</code> ＋ 閘（已寫進 CLAUDE.md）</td></tr>
+<section><p class="eyebrow">這一版（08-20）</p><h2>🧾 逐句對票 · 這一版（08-20）</h2><div class="scroll"><table><tr><th>owner 說的（逐字）</th><th>票</th><th>狀態</th></tr>
+<tr><td>「dev server 沒掛 /__review ⇒ <b>請同步到線上</b>」</td><td><b>#794</b></td><td>⭐ 已上線（<code>5389179a</code>）⚠️ 線上端待你按一次才算驗收</td></tr>
+<tr><td>「<b>線上批核的結果也同步到本機端</b>」</td><td><b>#794</b></td><td>✅ <code>bash scripts/review-sync.sh</code></td></tr>
+<tr><td>「為避免<b>讀寫混淆</b>，<b>批核材料跟批核結果分署不同資料夾</b>」</td><td><b>#794</b></td><td>✅ 材料 444 / 結果 644，欄位互不相交</td></tr>
+<tr><td>「用<b>特定存取script的特定存取權限</b>來管理<b>避免錯改</b>」</td><td><b>#794</b></td><td>✅ <code>scripts/review-access.sh</code>（三層權限）</td></tr>
+<tr><td>「(analyze &amp; fix or close issues of #300–#799)」</td><td>—</td><td>✅ 106 張逐張查證（下表）</td></tr>
+<tr><td>「整理對話開票進 GGD戰情版 跟 平行批次盤 issue」</td><td>#754 · 戰情表</td><td>✅ 待裁決批次進第一屏</td></tr>
 </table></div></section>
 <section><p class="eyebrow">的每一句話在哪張票上</p><h2>🧾 逐則對票 · owner 的每一句話在哪張票上</h2><h3>08-18</h3>
 <div class="scroll"><table><tr><th>#</th><th>時間</th><th>owner 說了什麼</th><th>落到哪</th><th>狀態</th></tr>

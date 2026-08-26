@@ -120,6 +120,10 @@ services:
     build:
       context: ..
       dockerfile: docker/review.Dockerfile
+    # ⚠️ 死了要自己回來 —— 它掛掉的症狀是「批核頁與 13 頁實時資料是空的」，
+    #    而那看起來跟「還沒做」一模一樣（fail-open 的靜默）。family overlay 給
+    #    每一個服務都加了這一行，⛔ 這一個一開始漏了。
+    restart: unless-stopped
     environment:
       GGD_REVIEW_MODE: "live"
       GGD_REVIEW_PORT: "8790"
