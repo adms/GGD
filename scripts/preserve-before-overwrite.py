@@ -161,7 +161,10 @@ def targets(tool: str, ti: dict, cwd: Path) -> list[Path]:
 #: ⛔ 清單只准放 **sync-io.json 真的有的步驟名**(normalizerListIsReal.test.ts 在守)。
 #: 2026-08-25 拿掉 "prose:apply":那是幽靈名(真名 prose:build,而它**不在** sync-io
 #: 的 38 步裡)⇒ 永遠比不中,掛在這裡只是一句看起來有防的散文。
-NORMALIZER_STEPS = frozenset({"tiers:apply", "apconv:build", "apdmg:build"})
+#: ⛔⛔ 2026-08-26 拿掉 "apdmg:build" —— 量到它的 2 份 writes **共有 0 份**
+#: (content/config/ap-damage-scaling.json 它是唯一寫入者) ⇒ 它是**作者**不是正規化器,
+#: 而 CLAUDE.md 明文把那一份列在「⛔ 不可手改」的 7 份 config 產物裡。
+NORMALIZER_STEPS = frozenset({"tiers:apply", "apconv:build"})
 
 
 def _generator_owner(p: Path) -> tuple[str, bool] | None:
@@ -174,9 +177,15 @@ def _generator_owner(p: Path) -> tuple[str, bool] | None:
         root = tree_root(p)
         rel = str(p.resolve()).replace(str(root) + "/", "")
         claimants: list[str] = []
+        import fnmatch as _fn
         for step in data.get("steps", []):
             for w in step.get("writes", []):
-                if rel == w or (w.endswith("/") and rel.startswith(w)):
+                # ⭐ GH#771:日期戳家族是 glob（merge-io 正規化）⇒ fnmatch。
+                if (
+                    rel == w
+                    or (w.endswith("/") and rel.startswith(w))
+                    or (any(ch in w for ch in "*?[") and _fn.fnmatch(rel, w))
+                ):
                     name = step.get("name") or "?"
                     if name not in claimants:
                         claimants.append(name)
@@ -277,6 +286,25 @@ def main() -> int:
         strict_norm = _os.environ.get("GGD_GENGUARD_NORMALIZER_STRICT") == "1"
         for p in targets(tool, ti, cwd):
             hit = _generator_owner(p)
+            # ⭐ 2026-08-26(owner:「追誤會的多個源頭」)——「無主」有兩種:
+            #    檔案唯讀(444) = 隔離區鎖過 = **它是產物,只是戶籍表漏登**
+            #    (量測洞:條件寫入端在已同步的樹上量到 0 寫,GH#771)。
+            #    在此之前這一段對它**完全靜默放行** —— 連一個字都不印,
+            #    而那正是「改產生物」一再發生的入口之一。
+            if hit is None:
+                try:
+                    if p.exists() and not _os.access(p, _os.W_OK):
+                        print(
+                            f"🚫 genguard:{p} **鎖著(444)但戶籍無主** —— 它是產物,"
+                            f"只是 sync-io 的量測漏了它(GH#771)。⛔ 不要手改。\n"
+                            f"   ⇒ 找產生器: grep -rl \"{p.name}\" tools/ scripts/ | head\n"
+                            f"   ⇒ 改**來源**,跑 bash scripts/genrun.sh <該步驟> 重生成。\n"
+                            f"   真的要改(極罕見):GGD_GENGUARD_OFF=1,commit 訊息裡說為什麼。",
+                            file=sys.stderr,
+                        )
+                        return 2
+                except OSError:
+                    pass
             if hit:
                 owner, only_normalizer = hit
                 if only_normalizer and not strict_norm:

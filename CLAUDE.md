@@ -56,7 +56,10 @@ owner 的原話是「動態載入設定**跟產生說明**」—— 卡面上的
 
 ### 落地順序（新增任何「有級距/有公式」的欄位時）
 
-1. **表住 `content/config/`**（五級距、冷卻表、耗魔表、出身成長表…）
+1. **表住 `content/config/`**（冷卻表、耗魔表、出身成長表…）。
+   ⚠️ **五級距（`damage-tiers.json`）是 `anchors:build` 的產物**（444）—— 改它要改
+   `tools/balance-anchors/gen.ts` 再 `bash scripts/genrun.sh anchors:build`。
+   ⛔ 動任何一張表之前先 `bash scripts/genguard.sh content/config/<檔>`（那目錄 7 份是產物）
 2. **文件只寫級別名**（`damageTier` / `cooldownTier` / `rangeTier` / `manaCostTier` …）
 3. **解析在載入時**（`resolveDamageTier()` 那一族），⛔ 不是在產生器裡
 4. **說明用佔位**（`{{dmg}}` / `{{cd}}` / `{{mp}}` / `{{radius}}`）
@@ -142,7 +145,7 @@ pnpm skills:check    # 全部驗一次（唯讀）；紅了就跑上面那行然
 
 | 層 | 是什麼 | ⛔ 違反的樣子 |
 |---|---|---|
-| **① 資料** | 球體綁定位置 · 特效 pitch/scale/color/alpha · 特效音效綁定 · 五級距 · 說明 —— **全部住 JSON**（`content/`） | 374 個 id-keyed 特效綁定住在 TS 常數裡（GH#384） |
+| **① 資料** | 球體綁定位置 · 特效 pitch/scale/color/alpha · 特效音效綁定 · 五級距 · 說明 —— **全部住 JSON**（`content/`）。⚠️ ⭐ **這幾樣的住處今天全部是產物**（vfx-families=`pitch:build` · ability-vfx-bindings=`vfxbind:build` · damage-tiers=`anchors:build` · abilities 說明=`prose:build`）——「住 JSON」說的是**它該被表達成資料**，⛔ 不是「你去那份 JSON 手打」。動手前 `genguard`，改**產生器來源**再 `genrun` | 374 個 id-keyed 特效綁定住在 TS 常數裡（GH#384） |
 | **② 產生** | 文件 / Codex 契約 / 後台欄位表 **從 ① 推導** | 手改 `docs/技能標記機制與效果規則.md`（它是產生的） |
 | **③ 閘** | `--check` **逐位元組**比對，過期就紅 | 時鐘欄位逼得 `--check` 被放寬 ⇒ 從來沒喊過（GH#389 · #426） |
 
@@ -1005,7 +1008,7 @@ bash scripts/asked-before.sh 吞噬 冷卻   # ← 升級問題**之前**先查:
 
 | 方向 | 指令 | 做什麼 |
 |---|---|---|
-| **收到裁決** | `scripts/ruling.sh <票號[,票號]>` | 逐字寫進票（標「⛔ 不要再問」）**並且**追加到當日帳本 |
+| **收到裁決** | `scripts/ruling.sh <票號[,票號]>` | 逐字寫進票（標「⛔ 不要再問」）**並且**追加到當日帳本。⚠️ 當日帳本是 `msgledger:build` 的產物（444，戶籍以 glob 記）—— 追加走 `ruling.sh`/`ledger_table.py`（有自解鎖），⛔ 不要手動 chmod 或直接編 |
 | **要升級問題之前** | `scripts/asked-before.sh <關鍵字…>` | 掃 `docs/_daily/` + 既有票 + transcript 撈出來的 owner 原話 |
 
 ⭐ **兩個都要**：只寫票，下一輪 context 斷掉後我不會去翻 300 張票；
@@ -1097,7 +1100,7 @@ owner 2026-08-24（在同一個錯第 N 次發生之後）：
 | **閘（會擋下你）** | `scripts/preserve-before-overwrite.py` 的 genguard 段：Write／Edit／Bash 重導的目標若是產生器產物 ⇒ **exit 2 擋下**，訊息指名擁有者與重生成指令 |
 | **擁有者表** | `tools/parallel-gates/sync-io.json` 的 writes —— **量出來的**，⛔ 不是手寫（手寫的表會過期而且不會有東西紅） |
 | **手動查詢** | `bash scripts/genguard.sh <path>` |
-| **為什麼可以擋**（備份那半不擋） | 「改產物」**沒有任何合法情境** —— 產生器自己寫檔走 python/node 檔案 API，⛔ 不經過 Write/Edit/shell 重導。逃生口 `GGD_GENGUARD_OFF=1`，用了要在 commit 訊息裡說為什麼 |
+| **為什麼可以擋**（備份那半不擋） | 「改**作者**的產物」沒有合法情境 —— 產生器自己寫檔走 python/node 檔案 API，⛔ 不經過 Write/Edit/shell 重導。⚠️ **唯一的例外**：只被**正規化器**（就地改欄位：`tiers:apply`/`apconv:build`）認領**且沒有上游來源**的檔 —— genguard 會說「不擋你」並要你補跑該正規化器。⛔ 判準不是記路徑，是 genguard 的**輸出**。逃生口 `GGD_GENGUARD_OFF=1`，用了要在 commit 訊息裡說為什麼 |
 | **正確動作** | 改**來源**（`tools/` 或上游 content），跑該產生器重生成，驗「重生成之後改動還在」——⭐ 那才是「修好了」的定義 |
 
 ### 🔒 產物隔離區 —— hook 的盲區用**檔案權限**關掉（owner 2026-08-24「發生上百次」）
@@ -1147,7 +1150,7 @@ bash scripts/temp-sweep.sh --move     # 搬進 docs/legacy/_temp-retired/（⛔ 
 ⛔ **它只搬不刪**，而且 ⛔ 不掃 `docs/legacy/`（那裡本來就是退休區）。
 
 ⚠️ **什麼**不是*暫存檔*（⛔ 不要亂改名）：
-`docs/_daily/2026-08-19.md` 這種**日期帳本**是永久紀錄；
+`docs/_daily/2026-08-19.md` 這種**日期帳本**是永久紀錄（⚠️ 但它同時是 `msgledger:build` 的**產物**（444）—— 永久 ≠ 手編）；
 `docs/_release/*-draft.md` 是**草稿會變成正式 note**；
 `docs/_release/board-live.md` 是產生器的**來源**。
 判準是：**它會不會過期成沒有人要讀的東西？** 會 → `_temp_`；不會 → 正常命名。
@@ -1456,8 +1459,10 @@ owner 2026-08-21：
 而那正是 2026-08-22/23 在 `godie-e002.e/.r/.ex` 上連中三次、2026-08-25 又中一次的形狀。
 
 ⭐ **量到的底數**（`sync-io.json` 的 `steps[].writes`，⛔ 不是印象）：
-**621 份產物** · 其中 `content/abilities` **331** · `content/champions` **56** ·
-`content/config` **7** · 隔離區實際鎖住 621 份。
+**621 份產物** · `content/abilities` **422/422**、`content/champions` **72/72** ——
+⭐ **這兩個目錄零例外，沒有一份是手編的**；`content/augments` 61/92 · `content/config` 7/89。
+⚠️ 之前這裡寫「abilities 331 · champions 56」—— 那是**正規化器認領的子集**，⛔ 不是產物數：
+少掉的 91+16 份會被讀成「手編」，而它們是 `skillremake:json` 的產物（同一個誤導的第三次）。
 ⇒ ⛔ **`content/` 不是「我編的目錄」** —— 它是**混的**，而肉眼分不出來。
 唯一可靠的問法是 `bash scripts/genguard.sh <path>`（⚠️ 它說「不擋你」也**不代表**
 沒有上游來源 —— 再 `grep -rl "<basename>" tools/` 問一次）。

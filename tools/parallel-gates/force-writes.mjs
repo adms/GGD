@@ -62,6 +62,9 @@ const find = (mark) => {
 };
 
 for (const step of targets) {
+  // ⭐ 2026-08-26（GH#771）：沙盒保留了隔離區的 444 ⇒ 先整棵解鎖再量,
+  //    不然「強迫寫」的那一寫也吃 EACCES,量到的仍然是 0（自我增強迴圈）。
+  execFileSync("bash", ["-c", `find "${SANDBOX}" -type f ! -perm -u+w ! -path '*/.git/*' ! -path '*/node_modules/*' -exec chmod u+w {} +`], { stdio: "ignore" });
   execFileSync("bash", ["tools/parallel-gates/reset-sandbox.sh"], { cwd: SANDBOX, stdio: "ignore" });
   // ⭐ 每一個讀過的文字檔加一個換行 ⇒ 「它會寫的那些」必然跟磁碟上的不一樣
   let touched = 0;
@@ -76,7 +79,7 @@ for (const step of targets) {
   const code = await new Promise((done) => {
     const p = spawn("pnpm", [step.name], {
       cwd: SANDBOX, stdio: "ignore",
-      env: { ...process.env, GGD_TRACE_ROOT: SANDBOX, PYTHONPATH: HOOKS,
+      env: { ...process.env, GGD_TRACE_ROOT: SANDBOX, GGD_QUARANTINE_OFF: "1", PYTHONPATH: HOOKS,
              NODE_OPTIONS: `--require ${HOOKS}/node-trace.cjs` },
     });
     p.on("close", done);

@@ -39,12 +39,31 @@ for (const p of passes) {
   }
 }
 
+/**
+ * ⭐ 2026-08-26（GH#771）—— **日期戳路徑正規化**。
+ * `msgledger:build` 寫的是 `docs/_daily/<今天>.md` ⇒ 一次性量測量到的是**那一天**的
+ * 字面路徑,隔天就變成「無主又鎖著」（今天真的發生:2026-08-26.md 鎖著而戶籍記著
+ * 2026-08-25.md）。⇒ 把已知的日期戳家族改寫成 **glob**,消費端（quarantine /
+ * genguard / hook）都懂 fnmatch。⛔ 清單刻意窄:每一列都要有理由,泛化的「自動偵測
+ * 日期」會把 `2026-08-25.md` 這種**永久帳本檔名**也吞進去。
+ */
+const DATE_FAMILIES = [
+  // msgledger:build 的當日帳本（每天換檔名,永遠寫「今天」那一份）
+  [/^docs\/_daily\/\d{4}-\d{2}-\d{2}\.md$/, "docs/_daily/????-??-??.md"],
+  // msgledger:build 的全文側檔（同一家族,檔名帶 YYYYMMDD）
+  [/^docs\/_daily\/ledger-source_temp_\d{8}\.md$/, "docs/_daily/ledger-source_temp_*.md"],
+];
+const canon = (path) => {
+  for (const [re, glob] of DATE_FAMILIES) if (re.test(path)) return glob;
+  return path;
+};
+
 const byName = new Map();
 for (const p of passes) {
   for (const s of p.steps) {
     const e = byName.get(s.name) ?? { name: s.name, reads: new Set(), writes: new Set(), ms: 0, ok: true, readCount: 0 };
-    for (const r of s.reads) e.reads.add(r);
-    for (const w of s.writes) e.writes.add(w);
+    for (const r of s.reads) e.reads.add(canon(r));
+    for (const w of s.writes) e.writes.add(canon(w));
     e.ms = Math.max(e.ms, s.ms);
     e.ok = e.ok && s.ok;
     e.readCount = Math.max(e.readCount, s.reads.length);

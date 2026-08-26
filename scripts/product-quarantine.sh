@@ -24,15 +24,34 @@ MODE="${1:?用法: lock|unlock|status [--step <name>]}"
 STEP=""; [ "${2:-}" = "--step" ] && STEP="${3:?--step 要帶名字}"
 
 python3 - "$IO" "$MODE" "$STEP" <<'PY'
+import glob as _glob
 import json, os, stat, sys
 io_path, mode, step = sys.argv[1], sys.argv[2], sys.argv[3]
 d = json.load(open(io_path, encoding="utf-8"))
 files: set[str] = set()
+matched = 0
 for s in d.get("steps", []):
     if step and s.get("name") != step:
         continue
+    matched += 1
     for w in s.get("writes", []) or []:
-        files.add(w)
+        # ⭐ GH#771:日期戳家族在戶籍表裡是 glob（merge-io 正規化的）⇒ 展開成現存檔。
+        if any(ch in w for ch in "*?["):
+            files.update(_glob.glob(w))
+        else:
+            files.add(w)
+# ⭐ 2026-08-26（owner:「追誤會的多個源頭」）—— 兩種靜默都要出聲:
+#   ① `--step` 打錯名字 ⇒ 之前**靜默得到空集合**,輸出與成功一模一樣 ⇒ 現在 exit 2 指名。
+#   ② step 存在但宣告 0 份產物 ⇒ 之前印「解鎖 0 份」看起來像正常 ⇒ 現在明說那是
+#      戶籍洞（GH#771:條件寫入端在已同步的樹上量到 0 寫）,單獨跑它會吃 EACCES。
+if step and matched == 0:
+    known = ", ".join(sorted((s.get("name") or "?") for s in d.get("steps", [])))
+    print(f"⛔ 沒有叫 '{step}' 的步驟 —— 名字打錯或它不在 sync-io 的 {len(d.get('steps',[]))} 步裡。", file=sys.stderr)
+    print(f"   有的: {known}", file=sys.stderr)
+    sys.exit(2)
+if step and matched > 0 and not files:
+    print(f"⚠️ 步驟 '{step}' 在戶籍表裡宣告 **0 份產物** —— 若它其實會寫檔,那是量測洞（GH#771）:", file=sys.stderr)
+    print(f"   它寫的檔仍然鎖著(444),單獨跑它會吃 EACCES。正解是重量測 sync-io,⛔ 不是手動 chmod。", file=sys.stderr)
 locked = unlocked = missing = 0
 for f in sorted(files):
     if not os.path.isfile(f):

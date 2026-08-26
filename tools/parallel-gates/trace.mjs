@@ -50,6 +50,14 @@ const interesting = (p) =>
   !DROP.some((d) => p.startsWith(d) || p.includes(`/${d}`)) &&
   (KEEP.some((k) => p.startsWith(k)) || !p.includes("/"));
 
+// ⭐⭐ 2026-08-26（GH#771 的根）：沙盒是 `cp -Rc` 來的 ⇒ **保留 444** ——
+//    隔離區鎖著的 621 份產物在沙盒裡也是唯讀,於是條件寫入端一律 EACCES/略過
+//    ⇒ 量到 0 寫 ⇒ 戶籍 0 ⇒ genrun 解鎖不到 ⇒ 下一次 EACCES。
+//    ⇒ **自我增強迴圈的斷點就在這裡**:量測前把沙盒整棵解鎖（sandbox 在 /private/tmp,
+//    改它的權限不影響真 repo）,並在子行程掛 GGD_QUARANTINE_OFF=1,
+//    讓鏈裡的 quarantine:lock 不會在量測中途把樹鎖回去。
+execFileSync("bash", ["-c", `find "${SANDBOX}" -type f ! -perm -u+w ! -path '*/.git/*' ! -path '*/node_modules/*' -exec chmod u+w {} +`], { stdio: "ignore" });
+
 const pkg = JSON.parse(readFileSync(`${SANDBOX}/package.json`, "utf8"));
 const chain = pkg.scripts?.[SCRIPT];
 if (!chain) {
@@ -108,6 +116,7 @@ function runStep(name) {
         ...process.env,
         GGD_TRACE_LOG: LOG,
         GGD_TRACE_ROOT: SANDBOX,
+        GGD_QUARANTINE_OFF: "1",
         PYTHONPATH: `${HOOKS}${process.env.PYTHONPATH ? `:${process.env.PYTHONPATH}` : ""}`,
         NODE_OPTIONS: `--require ${HOOKS}/node-trace.cjs${process.env.NODE_OPTIONS ? ` ${process.env.NODE_OPTIONS}` : ""}`,
       },
