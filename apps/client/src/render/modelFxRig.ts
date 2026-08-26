@@ -162,8 +162,21 @@ export function setStockGlowAdditive(v: boolean | undefined): void {
   stockGlowAdditive = typeof v === "boolean" ? v : STOCK_GLOW_ADDITIVE_DEFAULT;
 }
 
-/** Babylon `Constants.ALPHA_ADD`。⛔ 這裡不 import Babylon 常數（見上面那條迴圈註解）。 */
-const BJS_ALPHA_ADD = 1;
+/**
+ * Babylon `Constants.ALPHA_ONEONE` —— **`SRC + DEST`**，⛔ 不乘 src alpha。
+ * ⛔ 這裡不 import Babylon 常數（見上面那條迴圈註解）。
+ *
+ * ⚠️⚠️ **⛔ 不可以用 `ALPHA_ADD`（＝1）** —— 這一格 2026-08-26 первый版就踩過：
+ * Babylon 的 `ALPHA_ADD` 是 **`SRC_ALPHA × SRC + DEST`**（仍然乘 alpha），
+ * 而 `w3xlib/gltf.py` 的 luma-key 正是**把亮度搬進了 alpha**（`alpha := max(R,G,B)`）
+ * ⇒ 乘回去等於把剛剛加上來的亮度**再乘掉一次**。
+ * ⭐ 量到的（20-03，同一組 tick 的同一幀）：
+ *   BLEND 亮度中位 **75.4** → `ALPHA_ADD` **86.9**（只 +15%）→ `ALPHA_ONEONE` **237.2**
+ *   （owner 原作擷圖 **246–254**）。全白飽和像素 1,493 → 7,706 → **57,787**。
+ * ⇒ WC3 的 additive filter mode **完全忽略 alpha**，所以只有 `ONEONE` 是翻譯，
+ *   `ALPHA_ADD` 是**近似**（第一守則那條紅線）。
+ */
+const BJS_ALPHA_ONEONE = 0;
 /** Babylon `Material.MATERIAL_ALPHABLEND` —— 沒有它 `needAlphaBlending()` 是 false ⇒ 混合模式**不會被讀**。 */
 const BJS_ALPHABLEND = 2;
 
@@ -177,8 +190,8 @@ const BJS_ALPHABLEND = 2;
  * 而 alpha 混合的結果**永遠 ≤ 兩者的最大值**，於是兩件原作會發生的事
  * **結構上不可能發生**：①暗地板上的光束非常亮 ②**兩層疊起來更亮**。
  *
- * ⭐ 量到的（20-03，2026-08-26）：光束 lum 中位 **56–76** vs 原作 **246–254**；
- * 多層疊加暈/核 **0.63–1.05** vs 原作 **1.27–3.06** ——⭐ 兩項驗收是同一個缺陷的兩半。
+ * ⭐ 量到的（20-03，2026-08-26）：亮度中位 BLEND **75.4** → **237.2**（原作擷圖 246–254）；
+ * ⚠️ 中間還踩過一次 `ALPHA_ADD`（86.9，只 +15%）—— 見 {@link BJS_ALPHA_ONEONE} 的檔頭。
  *
  * ⛔ **判準從材質自己推導**（與 {@link applyFxTint} 同一條）：`emissiveColor` 非全黑
  * ⇒ 這是轉檔的 glow 分支。不透明 body 的自發光是全黑 ⇒ **一格都不會被碰到**。
@@ -199,7 +212,7 @@ export function applyStockGlowAdditive(root: TransformNode): number {
     if (!mat) continue;
     const e = mat["emissiveColor"] as { r: number; g: number; b: number } | undefined;
     if (!e || (e.r <= 0 && e.g <= 0 && e.b <= 0)) continue;
-    mat["alphaMode"] = BJS_ALPHA_ADD;
+    mat["alphaMode"] = BJS_ALPHA_ONEONE;
     // ⚠️ 只設 alphaMode 是**寫了但不會發生**：PBR 的不透明素材被載入器鎖成
     //    `transparencyMode: OPAQUE`，而 `needAlphaBlending()` 回 false 時
     //    混合模式那一格**根本不會被讀**（同 `applyFxTint` 的 fxAlpha 那一段）。

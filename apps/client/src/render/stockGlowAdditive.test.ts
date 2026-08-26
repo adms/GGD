@@ -20,7 +20,7 @@
  * 對原始素材寫的斷言不管有沒有生效都會過，見 `views/mobTint.test.ts` 檔頭）。
  *
  * ── 突變紀錄（一批一條，挑最承重的那一行）────────────────────────────────
- *  · `modelFxRig.ts::applyStockGlowAdditive()` 的 `mat["alphaMode"] = BJS_ALPHA_ADD`
+ *  · `modelFxRig.ts::applyStockGlowAdditive()` 的 `mat["alphaMode"] = BJS_ALPHA_ONEONE`
  *    改回不設 → ① 紅：「發光材質仍然是 alpha 混合」。
  *    ⇒ 沒有它，#767 的驗收②④**結構上不可能過**，而畫面與「沒做」長得一模一樣。
  */
@@ -37,8 +37,8 @@ import { ModelFxRig, setStockGlowAdditive } from "./modelFxRig";
 import type { ModelFxSpawnEvent } from "./modelFxPath";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
-/** Babylon `Constants.ALPHA_ADD` / `Material.MATERIAL_ALPHABLEND`。 */
-const ALPHA_ADD = 1;
+/** Babylon `Constants.ALPHA_ONEONE`（`SRC+DEST`，⛔ 不乘 alpha）/ `Material.MATERIAL_ALPHABLEND`。 */
+const ALPHA_ONEONE = 0;
 const ALPHA_COMBINE = 2;
 
 const WIRE: ModelFxSpawnEvent = {
@@ -78,16 +78,17 @@ const lit = (m: PBRMaterial): boolean =>
   m.emissiveColor.r > 0 || m.emissiveColor.g > 0 || m.emissiveColor.b > 0;
 
 describe("stock glow 走原作的 additive 混合 (@visual-proof)", () => {
-  it("① 出貨光束的發光材質是**加法**混合，⛔ 不是 alpha 混合", async () => {
+  it("① 出貨光束的發光材質是**純加法**（SRC+DEST），⛔ 不是 alpha 混合、⛔ 也不是 ALPHA_ADD", async () => {
     setStockGlowAdditive(undefined); // 出貨預設
     const mats = await spawnShipped("revivehuman.glb");
     const glow = mats.filter(lit);
     // 前提自證：這一份 .glb 真的有發光材質。⛔ 沒有的話下面的結論一律作廢。
     expect(glow.length, "前提不成立：revivehuman.glb 一份發光材質都沒有").toBeGreaterThan(0);
     for (const m of glow) {
-      expect(m.alphaMode, `${m.name} 仍然是 alpha 混合 ⇒ 疊兩層不會變亮、亮度永遠 ≤ 貼圖`).toBe(
-        ALPHA_ADD,
-      );
+      expect(
+        m.alphaMode,
+        `${m.name} 不是純加法（SRC+DEST）⇒ 疊兩層不會變亮；⚠️ 若是 1（ALPHA_ADD）代表又乘了 luma-key 搬進 alpha 的亮度`,
+      ).toBe(ALPHA_ONEONE);
       // ⚠️ 只設 alphaMode 是「寫了但不會發生」：needAlphaBlending() 為 false 時
       //    混合模式那一格根本不會被讀。
       expect(m.transparencyMode, `${m.name} 沒解鎖成 ALPHABLEND ⇒ 上面那一格不會被讀`).toBe(
@@ -101,7 +102,7 @@ describe("stock glow 走原作的 additive 混合 (@visual-proof)", () => {
     try {
       const mats = await spawnShipped("revivehuman.glb");
       for (const m of mats.filter(lit)) {
-        expect(m.alphaMode, "止血閥翻了卻沒有回頭 ⇒ 這格開關是死的").not.toBe(ALPHA_ADD);
+        expect(m.alphaMode, "止血閥翻了卻沒有回頭 ⇒ 這格開關是死的").not.toBe(ALPHA_ONEONE);
       }
     } finally {
       setStockGlowAdditive(undefined);
@@ -114,7 +115,7 @@ describe("stock glow 走原作的 additive 混合 (@visual-proof)", () => {
     const body = mats.filter((m) => !lit(m));
     expect(body.length, "前提不成立：這份角色模型沒有全黑自發光的材質").toBeGreaterThan(0);
     for (const m of body) {
-      expect(m.alphaMode, `${m.name} 是不透明身體，被改成加法會整個變成鬼影`).not.toBe(ALPHA_ADD);
+      expect(m.alphaMode, `${m.name} 是不透明身體，被改成加法會整個變成鬼影`).not.toBe(ALPHA_ONEONE);
     }
   });
 });
