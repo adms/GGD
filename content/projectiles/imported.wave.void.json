@@ -5,7 +5,7 @@
   "maxRange": 12,
   "hitRadius": 0.9,
   "pierce": true,
-  "vfxKey": "fx.prim.void.bolt",
+  "vfxKey": "fx.wave.void",
   "meshShape": "shard",
   "flight": {
     "rollDegPerUnit": 420

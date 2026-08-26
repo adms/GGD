@@ -5,6 +5,6 @@
   "maxRange": 12,
   "hitRadius": 0.9,
   "pierce": true,
-  "vfxKey": "fx.prim.fire.bolt",
+  "vfxKey": "fx.wave.fire",
   "meshShape": "orb"
 }

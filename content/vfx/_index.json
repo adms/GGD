@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "f815779bb604",
+  "hash": "cdb3c8881e01",
   "entries": [
     {
       "id": "attach.ex.midchilder-aura",
@@ -559,6 +559,12 @@
       "path": "vfx/fx.firestorm.json",
       "hash": "6ffd435ece97",
       "size": 697
+    },
+    {
+      "id": "fx.grail.bolt",
+      "path": "vfx/fx.grail.bolt.json",
+      "hash": "f74ae1eb8aa2",
+      "size": 1120
     },
     {
       "id": "fx.prim.arcane.beam",
@@ -2221,6 +2227,54 @@
       "path": "vfx/fx.w3x.stock.warstompcaster.p00.json",
       "hash": "4c7688f1d0e7",
       "size": 1046
+    },
+    {
+      "id": "fx.wave.arcane",
+      "path": "vfx/fx.wave.arcane.json",
+      "hash": "0f658aebc873",
+      "size": 1122
+    },
+    {
+      "id": "fx.wave.earth",
+      "path": "vfx/fx.wave.earth.json",
+      "hash": "d75077de0f10",
+      "size": 1139
+    },
+    {
+      "id": "fx.wave.fire",
+      "path": "vfx/fx.wave.fire.json",
+      "hash": "bc417264abc3",
+      "size": 1111
+    },
+    {
+      "id": "fx.wave.ice",
+      "path": "vfx/fx.wave.ice.json",
+      "hash": "4ed789fb883b",
+      "size": 1119
+    },
+    {
+      "id": "fx.wave.ki",
+      "path": "vfx/fx.wave.ki.json",
+      "hash": "4d64b1f6746b",
+      "size": 1121
+    },
+    {
+      "id": "fx.wave.lightning",
+      "path": "vfx/fx.wave.lightning.json",
+      "hash": "f226d6e582aa",
+      "size": 1123
+    },
+    {
+      "id": "fx.wave.physical",
+      "path": "vfx/fx.wave.physical.json",
+      "hash": "2461a471aff1",
+      "size": 1127
+    },
+    {
+      "id": "fx.wave.void",
+      "path": "vfx/fx.wave.void.json",
+      "hash": "463fa4061025",
+      "size": 1135
     },
     {
       "id": "godie-1hswd-01-p0",

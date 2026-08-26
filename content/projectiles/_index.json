@@ -1,6 +1,6 @@
 {
   "collection": "projectiles",
-  "hash": "7cf907efbc8c",
+  "hash": "952cffc4b28b",
   "entries": [
     {
       "id": "basic-attack",
@@ -11,14 +11,14 @@
     {
       "id": "grail.projection-bolt",
       "path": "projectiles/grail.projection-bolt.json",
-      "hash": "05b8cb1c569e",
-      "size": 175
+      "hash": "439e503d2c0a",
+      "size": 169
     },
     {
       "id": "grail.tracking-bolt",
       "path": "projectiles/grail.tracking-bolt.json",
-      "hash": "34a2fedcafa7",
-      "size": 172
+      "hash": "ecb82c752dcf",
+      "size": 166
     },
     {
       "id": "imported.bolt",
@@ -65,56 +65,56 @@
     {
       "id": "imported.wave",
       "path": "projectiles/imported.wave.json",
-      "hash": "edfe5b7d99ca",
-      "size": 217
+      "hash": "3d870a69b3ad",
+      "size": 225
     },
     {
       "id": "imported.wave.arcane",
       "path": "projectiles/imported.wave.arcane.json",
-      "hash": "fff770c770bc",
-      "size": 191
+      "hash": "fa0c0b52da38",
+      "size": 186
     },
     {
       "id": "imported.wave.earth",
       "path": "projectiles/imported.wave.earth.json",
-      "hash": "170a9c5819b4",
-      "size": 229
+      "hash": "20cc8b01b8cc",
+      "size": 224
     },
     {
       "id": "imported.wave.fire",
       "path": "projectiles/imported.wave.fire.json",
-      "hash": "e2f233b1f541",
-      "size": 187
+      "hash": "57c9c268f2a6",
+      "size": 182
     },
     {
       "id": "imported.wave.ice",
       "path": "projectiles/imported.wave.ice.json",
-      "hash": "c47c347ac403",
-      "size": 229
+      "hash": "1894eb314646",
+      "size": 224
     },
     {
       "id": "imported.wave.ki",
       "path": "projectiles/imported.wave.ki.json",
-      "hash": "aaf05d3b992f",
-      "size": 183
+      "hash": "eb25bf31abcf",
+      "size": 178
     },
     {
       "id": "imported.wave.lightning",
       "path": "projectiles/imported.wave.lightning.json",
-      "hash": "e7a06ad4f387",
-      "size": 241
+      "hash": "d62cf606de62",
+      "size": 236
     },
     {
       "id": "imported.wave.physical",
       "path": "projectiles/imported.wave.physical.json",
-      "hash": "527691134018",
-      "size": 196
+      "hash": "7ac5aceec4cf",
+      "size": 191
     },
     {
       "id": "imported.wave.void",
       "path": "projectiles/imported.wave.void.json",
-      "hash": "d3fa46fe0744",
-      "size": 234
+      "hash": "95be4ec61281",
+      "size": 229
     },
     {
       "id": "sela.q.bolt",

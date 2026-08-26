@@ -5,7 +5,7 @@
   "maxRange": 12,
   "hitRadius": 0.9,
   "pierce": true,
-  "vfxKey": "fx.prim.earth.bolt",
+  "vfxKey": "fx.wave.earth",
   "meshShape": "shard",
   "flight": {
     "pitchDeg": 35

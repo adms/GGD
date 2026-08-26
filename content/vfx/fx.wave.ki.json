@@ -1,0 +1,94 @@
+{
+  "id": "fx.wave.ki",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.55,
+    "angleDeg": 34
+  },
+  "mode": "burst",
+  "burstCount": 42,
+  "lifetimeSec": {
+    "min": 0.45,
+    "max": 1.05
+  },
+  "size": {
+    "start": 0.75,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      1,
+      0.9748,
+      0.8956,
+      1
+    ],
+    "end": [
+      0.18,
+      0.1548,
+      0.0756,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.75
+    ],
+    [
+      0.16,
+      1.25
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        0.9748,
+        0.8956,
+        1
+      ]
+    ],
+    [
+      0.2,
+      [
+        1,
+        0.86,
+        0.42,
+        1
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.5,
+        0.43,
+        0.21,
+        0.42
+      ]
+    ],
+    [
+      1,
+      [
+        0.18,
+        0.1548,
+        0.0756,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 0,
+  "speed": {
+    "min": 3.5,
+    "max": 7
+  },
+  "texture": "assets/textures/particles/light_02.png",
+  "stretched": true,
+  "tailLength": 5.5
+}
