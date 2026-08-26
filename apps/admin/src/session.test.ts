@@ -5,14 +5,14 @@
  */
 import { describe, it, expect, vi } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
-import { ApiClient, ApiError, verifyAdmin, type TokenStorage } from "./session";
+import { ApiClient, ApiError, verifyAdmin, type StoredSession, type TokenStorage } from "./session";
 import type { TokenPair } from "./types";
 
-function memStorage(initial: TokenPair | null = null): TokenStorage & { current: TokenPair | null } {
+function memStorage(initial: StoredSession | null = null): TokenStorage & { current: StoredSession | null } {
   const box = {
     current: initial,
     load: () => box.current,
-    save: (t: TokenPair | null) => {
+    save: (t: StoredSession | null) => {
       box.current = t;
     },
   };
@@ -89,6 +89,34 @@ describe("session refresh + role guard (adminui-session-guard)", () => {
     expect(calls).toEqual(["/api/v1/account/password"]);
     expect(storage.current).toEqual(TOKENS); // still signed in after a typo
     expect(expired).not.toHaveBeenCalled();
+  });
+
+  // 🔐 #724/F-21 —— 承重的那條線，兩件事**一起**成立才算修好：
+  // ① 伺服器說它把 refresh token 種進 httpOnly cookie ⇒ 磁碟上那一份**不留**它
+  // ② 於是重新載入之後（磁碟上只剩 accessToken），401 仍然換發得到 ——
+  //    ⛔ 少了②，這個修補就是「把 operator 鎖在後台外面」，比原本的洞更糟。
+  it("cookie 模式：refresh token 不落地，而重載後的 401 仍然換發得到", async () => {
+    cover("adminui-session-guard");
+    // 一個**重新載入過**的後台：磁碟上只剩 access token 與那格記號。
+    const storage = memStorage({ accessToken: "acc-1", refreshToken: "", expiresIn: 900, rtCookie: true });
+    const bodies: string[] = [];
+    const fetchFn = vi.fn(async (url: RequestInfo | URL, init?: RequestInit) => {
+      const u = String(url);
+      const auth = (init?.headers as Record<string, string> | undefined)?.["Authorization"];
+      if (u.endsWith("/auth/refresh")) {
+        bodies.push(String(init?.body ?? ""));
+        return jsonRes(200, { tokens: NEW_TOKENS, refreshCookie: true });
+      }
+      if (auth === "Bearer acc-2") return jsonRes(200, { ok: true });
+      return jsonRes(401, { error: { code: "unauthorized", message: "expired" } });
+    });
+    const api = new ApiClient({ fetchFn: fetchFn as unknown as typeof fetch, storage });
+
+    await expect(api.request("/me")).resolves.toEqual({ ok: true });
+    expect(bodies[0], "換發時身上沒有 token —— 憑證由 cookie 帶").toContain('"refreshToken":""');
+    expect(storage.current?.refreshToken, "長效憑證⛔不可以落到 localStorage").toBe("");
+    expect(storage.current?.rtCookie).toBe(true);
+    expect(api.refreshToken, "記憶體裡仍是完整的：cookie 沒種成功時這個分頁照舊").toBe("ref-2");
   });
 
   it("a rejected refresh clears the session and fires onSessionExpired", async () => {

@@ -280,6 +280,17 @@ type Config struct {
 	// LobbyWSReadLimitBytes caps one inbound lobby frame
 	// (GGD_LOBBY_WS_READ_LIMIT_KB, default lobby.DefaultReadLimitBytes).
 	LobbyWSReadLimitBytes int64
+
+	// AuthRefreshCookie mirrors every freshly minted refresh token into an
+	// httpOnly cookie and TELLS the caller it did (#724/F-21), so a browser
+	// console can stop keeping that credential in localStorage where one XSS
+	// walks off with it. GGD_AUTH_REFRESH_COOKIE=0 is the way back.
+	//
+	// ⭐ It is one knob for BOTH halves on purpose: the client only drops the
+	// token from storage when the server says the cookie is there, so turning
+	// this off restores the pre-#724 behaviour end to end WITHOUT rebuilding
+	// the front end. Default ON — see internal/auth/refresh_cookie.go.
+	AuthRefreshCookie bool
 }
 
 // #724 http.Server bound defaults. They are FLOORS ON SAFETY, not performance
@@ -896,6 +907,7 @@ func Load() (Config, error) {
 		LobbyMaxConnsPerAccount: getenvInt("GGD_LOBBY_MAX_CONNS_PER_ACCOUNT", Unset),
 		LobbyWSIdleTimeout:      getenvOptionalSeconds("GGD_LOBBY_WS_IDLE_SEC", time.Hour),
 		LobbyWSReadLimitBytes:   int64(getenvIntClamped("GGD_LOBBY_WS_READ_LIMIT_KB", 0, 0, 4096)) << 10,
+		AuthRefreshCookie:       getenvInt("GGD_AUTH_REFRESH_COOKIE", 1) == 1,
 	}
 	if cfg.JWTSecret == "" {
 		return cfg, fmt.Errorf("config: JWT_SIGNING_SECRET is required")

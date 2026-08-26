@@ -15,10 +15,16 @@ import (
 // Handlers exposes the auth REST surface.
 type Handlers struct {
 	svc *Service
+	// refreshCookie mirrors the refresh token into an httpOnly cookie so a
+	// console does not have to keep it in localStorage (#724/F-21). ON by
+	// default; the composition root turns it off from GGD_AUTH_REFRESH_COOKIE.
+	// See refresh_cookie.go for why this is additive rather than a swap.
+	refreshCookie bool
 }
 
-// NewHandlers wires handlers around the service.
-func NewHandlers(svc *Service) *Handlers { return &Handlers{svc: svc} }
+// NewHandlers wires handlers around the service. The refresh cookie starts ON:
+// a default that has to be switched on is a default that is off in production.
+func NewHandlers(svc *Service) *Handlers { return &Handlers{svc: svc, refreshCookie: true} }
 
 // Mount registers /auth/* and /me on the router. r is the /api/v1 subrouter.
 func (h *Handlers) Mount(r chi.Router) {
@@ -75,6 +81,10 @@ type registerReq struct {
 type sessionResp struct {
 	Account account.Public `json:"account"`
 	Tokens  TokenPair      `json:"tokens"`
+	// RefreshCookie says the refresh token above is ALSO held in an httpOnly
+	// cookie, so a browser client may skip persisting it (#724/F-21). Omitted
+	// when false so the wire shape is unchanged for every existing caller.
+	RefreshCookie bool `json:"refreshCookie,omitempty"`
 }
 
 func (h *Handlers) register(w http.ResponseWriter, r *http.Request) {
@@ -89,7 +99,9 @@ func (h *Handlers) register(w http.ResponseWriter, r *http.Request) {
 		httpx.WriteError(w, err)
 		return
 	}
-	httpx.WriteJSON(w, http.StatusCreated, sessionResp{Account: h.svc.PublicAccount(r.Context(), a), Tokens: pair})
+	planted := h.plantRefreshCookie(w, r, pair.RefreshToken)
+	httpx.WriteJSON(w, http.StatusCreated, sessionResp{
+		Account: h.svc.PublicAccount(r.Context(), a), Tokens: pair, RefreshCookie: planted})
 }
 
 // bootstrapStateResp is the first-owner probe the register UI reads on load.
@@ -123,11 +135,20 @@ func (h *Handlers) login(w http.ResponseWriter, r *http.Request) {
 		httpx.WriteError(w, err)
 		return
 	}
-	httpx.WriteJSON(w, http.StatusOK, sessionResp{Account: h.svc.PublicAccount(r.Context(), a), Tokens: pair})
+	planted := h.plantRefreshCookie(w, r, pair.RefreshToken)
+	httpx.WriteJSON(w, http.StatusOK, sessionResp{
+		Account: h.svc.PublicAccount(r.Context(), a), Tokens: pair, RefreshCookie: planted})
 }
 
 type refreshReq struct {
 	RefreshToken string `json:"refreshToken"`
+}
+
+// refreshResp keeps the historical `{"tokens":{...}}` shape and adds the
+// cookie flag beside it — a new sibling key, never a changed one.
+type refreshResp struct {
+	Tokens        TokenPair `json:"tokens"`
+	RefreshCookie bool      `json:"refreshCookie,omitempty"`
 }
 
 func (h *Handlers) refresh(w http.ResponseWriter, r *http.Request) {
@@ -136,12 +157,13 @@ func (h *Handlers) refresh(w http.ResponseWriter, r *http.Request) {
 		httpx.WriteError(w, err)
 		return
 	}
-	pair, err := h.svc.Refresh(r.Context(), req.RefreshToken)
+	pair, err := h.svc.Refresh(r.Context(), refreshTokenFrom(r, req.RefreshToken))
 	if err != nil {
 		httpx.WriteError(w, err)
 		return
 	}
-	httpx.WriteJSON(w, http.StatusOK, map[string]TokenPair{"tokens": pair})
+	planted := h.plantRefreshCookie(w, r, pair.RefreshToken)
+	httpx.WriteJSON(w, http.StatusOK, refreshResp{Tokens: pair, RefreshCookie: planted})
 }
 
 func (h *Handlers) logout(w http.ResponseWriter, r *http.Request) {
@@ -150,7 +172,11 @@ func (h *Handlers) logout(w http.ResponseWriter, r *http.Request) {
 		httpx.WriteError(w, err)
 		return
 	}
-	if err := h.svc.Logout(r.Context(), req.RefreshToken); err != nil {
+	// The cookie goes FIRST and unconditionally: a sign-out that leaves a live
+	// credential in the browser is worse than one that fails to revoke server
+	// side, because nothing on screen would ever show it.
+	h.clearRefreshCookie(w, r)
+	if err := h.svc.Logout(r.Context(), refreshTokenFrom(r, req.RefreshToken)); err != nil {
 		httpx.WriteError(w, err)
 		return
 	}
@@ -170,6 +196,9 @@ type changePasswordResp struct {
 	Status          string    `json:"status"`
 	Tokens          TokenPair `json:"tokens"`
 	SessionsRevoked bool      `json:"sessionsRevoked"`
+	// Same flag as sessionResp — the rotation reissues the cookie too, or the
+	// console would keep refreshing with a token the change just revoked.
+	RefreshCookie bool `json:"refreshCookie,omitempty"`
 }
 
 func (h *Handlers) changePassword(w http.ResponseWriter, r *http.Request) {
@@ -184,7 +213,9 @@ func (h *Handlers) changePassword(w http.ResponseWriter, r *http.Request) {
 		httpx.WriteError(w, err)
 		return
 	}
-	httpx.WriteJSON(w, http.StatusOK, changePasswordResp{Status: "ok", Tokens: pair, SessionsRevoked: true})
+	planted := h.plantRefreshCookie(w, r, pair.RefreshToken)
+	httpx.WriteJSON(w, http.StatusOK, changePasswordResp{
+		Status: "ok", Tokens: pair, SessionsRevoked: true, RefreshCookie: planted})
 }
 
 // deviceStart mints a QR device-login grant for the handheld. The handheld has

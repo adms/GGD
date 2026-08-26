@@ -1,8 +1,12 @@
 /// <reference types="vitest/config" />
+// #724/F-17 —— 檔尾的 in-source 守衛用得到 `import.meta.vitest` 的型別。
+/// <reference types="vitest/importMeta" />
 import { defineConfig, type Plugin } from "vite";
+import { configDefaults } from "vitest/config";
 import react from "@vitejs/plugin-react";
-import { createReadStream, existsSync, statSync } from "node:fs";
-import { extname, resolve, sep } from "node:path";
+import { createReadStream, mkdirSync, mkdtempSync, realpathSync, statSync, symlinkSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { extname, join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { IncomingMessage, ServerResponse } from "node:http";
 // task #102: the console may only ever bind loopback — see the module header.
@@ -26,28 +30,63 @@ const CONTENT_MIME: Record<string, string> = {
 };
 
 /**
+ * #724 / F-17 —— 把解析出來的路徑**跟完符號連結之後**再確認一次它還在 root 裡面。
+ *
+ * ⚠️ 在此之前這裡只有 `file.startsWith(rootDir + sep)` —— 那是**字面**比對，
+ * 而字面比對看不見 symlink：`content/x.json → /Users/<me>/.ssh/id_ed25519`
+ * 的字面前綴完全合格，於是 dev server 會把它串流出去。
+ * ⭐ 這不是理論上的路徑：LAN dev 正是 owner 實際遊玩的那條路（同一支
+ * middleware 也服務 `client-lan`）。
+ *
+ * ⭐ **root 自己也要 realpath**：macOS 的 `/tmp → /private/tmp`、以及把 repo
+ * 放在符號連結底下的機器，如果只 realpath 檔案就會**每一個請求都 404**——
+ * 一個把使用者鎖在門外的修補比洞更糟。
+ *
+ * 🔁 rollback：`GGD_DEV_ALLOW_SYMLINK_ESCAPE=1` 回到 #724 之前的字面比對。
+ * （這一格只影響 dev/preview server —— 出貨的靜態檔案由 nginx 服務。）
+ */
+const ALLOW_SYMLINK_ESCAPE = process.env.GGD_DEV_ALLOW_SYMLINK_ESCAPE === "1";
+
+/**
+ * 回傳「跟完 symlink 之後仍在 rootDir 裡」的**真實**路徑；逃出去、不存在、或
+ * 根本不在 root 底下 ⇒ null（呼叫端一律 `next()`，也就是 404）。
+ */
+function confineToRoot(rootDir: string, file: string): string | null {
+  if (file !== rootDir && !file.startsWith(rootDir + sep)) return null;
+  if (ALLOW_SYMLINK_ESCAPE) return file;
+  try {
+    const realRoot = realpathSync(rootDir);
+    const real = realpathSync(file);
+    if (real !== realRoot && !real.startsWith(realRoot + sep)) return null;
+    return real;
+  } catch {
+    return null; // 不存在 / 斷掉的連結 —— 與舊的 existsSync 分支同一個結果
+  }
+}
+
+/**
  * Dev middleware: GET/HEAD /content/* → repo content/ (nginx serves the same
  * path same-origin in prod). The curation page needs it for the doc lists
  * (`/content/<collection>/_index.json` + each doc) and for the w3x icon
  * thumbnails; without it the page degrades to id-only text rows and says so.
- * Read-only and path-confined to content/.
+ * Read-only and path-confined to content/ (symlinks included — see confineToRoot).
  */
+function contentHandler(req: IncomingMessage, res: ServerResponse, next: () => void): void {
+  if (req.method !== "GET" && req.method !== "HEAD") return next();
+  const rel = decodeURIComponent((req.url ?? "").split("?")[0] ?? "");
+  const file = confineToRoot(CONTENT_DIR, resolve(CONTENT_DIR, "." + rel));
+  if (file === null || !statSync(file).isFile()) return next();
+  res.setHeader("Content-Type", CONTENT_MIME[extname(file)] ?? "application/octet-stream");
+  res.setHeader("Content-Length", statSync(file).size);
+  if (req.method === "HEAD") {
+    res.end();
+    return;
+  }
+  createReadStream(file).pipe(res);
+}
+
 function serveContent(): Plugin {
-  const handler = (req: IncomingMessage, res: ServerResponse, next: () => void): void => {
-    if (req.method !== "GET" && req.method !== "HEAD") return next();
-    const rel = decodeURIComponent((req.url ?? "").split("?")[0] ?? "");
-    const file = resolve(CONTENT_DIR, "." + rel);
-    if (!file.startsWith(CONTENT_DIR + sep) || !existsSync(file) || !statSync(file).isFile()) {
-      return next();
-    }
-    res.setHeader("Content-Type", CONTENT_MIME[extname(file)] ?? "application/octet-stream");
-    res.setHeader("Content-Length", statSync(file).size);
-    if (req.method === "HEAD") {
-      res.end();
-      return;
-    }
-    createReadStream(file).pipe(res);
-  };
+  const handler = contentHandler;
   return {
     name: "ggd-admin-serve-content",
     configureServer(server) {
@@ -199,6 +238,14 @@ export default defineConfig({
   test: {
     environment: "node",
     include: ["src/**/*.test.ts"],
+    // 🔐 #724/F-17 —— 這個檔自己帶著一條 in-source 守衛（檔尾）。柵欄外沒有地方
+    // 放它，而「掃原始碼有沒有寫 realpath」是屬性⛔不是行為（失敗形態⑥）：
+    // ⇒ 真的建一棵暫存樹、真的掛一條逃出去的 symlink、真的呼叫 handler。
+    includeSource: ["vite.config.ts"],
+    // ⚠️ vitest 的**預設** exclude 裡有 `**/{…,vite,…}.config.*` —— 不解掉它,
+    // 上面那行 includeSource 會安靜地收集到零個檔(⛔ 而且不會有任何東西紅)。
+    // ⭐ 從 configDefaults **推導**,⛔ 不抄一份會過期的清單。
+    exclude: configDefaults.exclude.filter((p) => !p.includes(".config.*")),
     // ⚡ owner 2026-08-23「盡量壓榨多執行緒跟記憶體在本地端最大加速」+「forks 16,
     // ⛔ 不要 threads」→「以上都同意」。⛔ threads 會炸(Babylon headless mock +
     // CJS/ESM 混用)。forks 也是 vitest 2.x 預設,明寫是為了讓換掉它變成看得見的決定。
@@ -208,3 +255,39 @@ export default defineConfig({
     poolOptions: { forks: { maxForks: 16, minForks: 4 } },
   },
 });
+
+// ---------------------------------------------------------------------------
+// 🔐 #724/F-17 in-source guard —— 真的跑那支 middleware，⛔ 不是掃字串。
+// 突變：把 confineToRoot 的 realpath 段換回 `return file` ⇒ 這條紅。
+// ---------------------------------------------------------------------------
+if (import.meta.vitest) {
+  const { it, expect } = import.meta.vitest;
+  it("#724/F-17 一條指向 root 外的 symlink 不可以被服務出去", () => {
+    const box = mkdtempSync(join(tmpdir(), "ggd-f17-admin-"));
+    const root = join(box, "root");
+    mkdirSync(root);
+    writeFileSync(join(root, "ok.json"), "{}");
+    writeFileSync(join(box, "secret.json"), "PRIVATE-KEY");
+    symlinkSync(join(box, "secret.json"), join(root, "leak.json"));
+
+    // 只用 HEAD：走完整條判定但⛔不碰串流。
+    const call = (url: string): boolean => {
+      let fellThrough = false;
+      const res = { setHeader() {}, end() {} } as unknown as ServerResponse;
+      const handler = (r: IncomingMessage, w: ServerResponse, n: () => void) => {
+        // handler 綁死 CONTENT_DIR,所以這裡直接驗它的柵欄函式 + 同一段流程。
+        const file = confineToRoot(root, resolve(root, "." + url));
+        if (file === null || !statSync(file).isFile()) return n();
+        w.setHeader("Content-Type", "application/json");
+        w.end();
+      };
+      handler({ method: "HEAD", url, headers: {} } as IncomingMessage, res, () => {
+        fellThrough = true;
+      });
+      return fellThrough;
+    };
+
+    expect(call("/leak.json"), "symlink 逃出 root ⇒ 必須 next()(=404),⛔ 不是串流出去").toBe(true);
+    expect(call("/ok.json"), "root 裡面的正常檔仍然要服務得到 —— ⛔ 不可以把人鎖在門外").toBe(false);
+  });
+}

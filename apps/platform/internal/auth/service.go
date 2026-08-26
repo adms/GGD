@@ -184,6 +184,12 @@ type WalletSeeder interface {
 	SeedNewAccountCrystals(ctx context.Context, accountID string) (int, error)
 }
 
+// RefreshTTL is how long a refresh token stays valid. Exposed so the refresh
+// COOKIE can be given the same lifetime as the token inside it — a cookie that
+// outlives its token is a guaranteed "signed out for no visible reason", and a
+// cookie that dies first is a session that ends early. One number, one住處.
+func (s *Service) RefreshTTL() time.Duration { return s.refreshTTL }
+
 // SetInviteGate installs the invite-code gate (composition root only). nil
 // disables it.
 func (s *Service) SetInviteGate(g InviteGate) { s.invites = g }

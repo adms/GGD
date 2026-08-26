@@ -553,7 +553,11 @@ func (s *Server) buildRouter(templates *room.Templates) {
 		})
 
 		// Public.
-		auth.NewHandlers(s.Auth).Mount(api)
+		authHandlers := auth.NewHandlers(s.Auth)
+		// #724/F-21 — mirror the refresh token into an httpOnly cookie so the
+		// admin console can stop persisting it. One knob rolls both halves back.
+		authHandlers.SetRefreshCookie(s.Cfg.AuthRefreshCookie)
+		authHandlers.Mount(api)
 		ranking.NewHandlers(s.Ranking).MountPublic(api)
 		// GH#645 大廳英雄榜：被選用次數排序（勝率附帶）。Aggregated off the
 		// durable match records gamelink owns, so it mounts from gamelink,

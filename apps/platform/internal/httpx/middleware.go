@@ -196,3 +196,34 @@ func ClientIP(r *http.Request) string {
 	}
 	return host
 }
+
+// RequestIsHTTPS reports whether the BROWSER's leg of this request was
+// encrypted — TLS terminated here, or an X-Forwarded-Proto of "https" from a
+// peer we already trust (the same rule ClientIP applies to X-Real-Ip: a header
+// anyone can send decides nothing on its own).
+//
+// #724/F-21 —— it exists so a Set-Cookie can carry the Secure attribute
+// exactly when the browser will honour it. Setting Secure over plain http makes
+// the browser DISCARD the cookie, and a cookie the browser threw away is a
+// silent sign-out on the next reload; omitting it over TLS gives away transport
+// protection for nothing.
+//
+// ⭐ It lives HERE and not in internal/auth because reading a caller address is
+// this package's job — internal/server/devsurface_test.go's no-address-trust
+// invariant says so, and it is right: the trusted-proxy set is operator
+// configurable (GGD_TRUSTED_PROXY_CIDRS) and must have exactly one住處.
+//
+// ⛔ It is NOT a permission. Nothing may branch on it to decide who may do what.
+func RequestIsHTTPS(r *http.Request) bool {
+	if r.TLS != nil {
+		return true
+	}
+	if !isTrustedProxy(remoteHost(r)) {
+		return false
+	}
+	proto := r.Header.Get("X-Forwarded-Proto")
+	if i := strings.IndexByte(proto, ','); i >= 0 {
+		proto = proto[:i] // left-most entry of a chained header
+	}
+	return strings.EqualFold(strings.TrimSpace(proto), "https")
+}

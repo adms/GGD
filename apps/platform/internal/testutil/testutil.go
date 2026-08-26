@@ -175,6 +175,11 @@ func newTS(t *testing.T, ownerBootstrap, requireInvite bool, mutate ...func(*con
 		InviteTTL:        10 * time.Minute,
 		MatchPendingTTL:  30 * time.Minute,
 		HMACSkew:         30 * time.Second,
+		// #724/F-21 — the SHIPPING default, spelled out here on purpose. A
+		// fixture that quietly leaves a new knob at its zero value tests a
+		// configuration nobody runs (failure mode ⑤: the thing under test is
+		// not the thing we ship). Flip it in a `mutate` to exercise rollback.
+		AuthRefreshCookie: true,
 	}
 	for _, fn := range mutate {
 		fn(&cfg)
