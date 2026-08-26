@@ -17,7 +17,7 @@
  * 彼此隔離。取牆的規則因此與伺服器 `BasicAttackSystem.seesTarget` 逐字相同：
  * **用那個實體自己的 zone 去索引 `arena.zones`**，⛔ 不是找第一個符合條件的。
  */
-import { activeObstacles } from "@ggd/shared/sim/map/gates";
+import { activeObstacles, gateScheduleOf } from "@ggd/shared/sim/map/gates";
 import { hasLineOfSight } from "@ggd/shared/sim/map/lineOfSight";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 import type { ZoneDef } from "@ggd/shared/sim/world/ArenaDef";
@@ -76,6 +76,7 @@ export function occludeArgsFor(
   zones: readonly ZoneDef[],
   viewerZone: number | null,
   center: Vec2 | null,
+  tick: number,
   rules: VisionRules = liveVisionRules(),
 ): OccludeArgs | undefined {
   // ⭐ 全視野 —— 牆後也看得到。⛔ 這一行在前面，因為它是**整個機制**的開關，
@@ -84,7 +85,19 @@ export function occludeArgsFor(
   if (center === null || viewerZone === null) return undefined;
   const zone = zones[viewerZone];
   if (zone === undefined || zone.bounds?.kind !== "rect") return undefined;
-  const live = activeObstacles(zone.obstacles, undefined, 0);
+  // ⭐ GH#718 —— 這一行在此之前寫死 `activeObstacles(zone.obstacles, undefined, 0)`：
+  // `schedule === undefined` ⇒ `activeObstacles` **原樣回傳** ⇒ 每一道門在遮蔽上
+  // **永遠算關著**（門開了視野不會跟著開）。⛔ 而 tsc 綠、既有守衛全綠（失敗形態⑧：
+  // 消費端存在，但它讀的那一格沒有寫入端）。
+  //
+  // ⚠️ `tick` 是**必要參數**（⛔ 沒有預設值）—— 給它 `= 0` 就等於把同一個缺陷
+  // 留一個沒有人會紅的後門；沒傳就是 tsc 紅。
+  // ⚠️ 排程走 `gateScheduleOf`（GH#397 的唯一來源），⛔ 不是 `zones[0]?.gates` ——
+  // 後者在「zone 0 剛好沒排程」那一天會靜靜地回 undefined，也就是這個缺陷本身。
+  // ⭐ 取牆規則因此與伺服器 `BasicAttackSystem.seesTarget` 逐字相同
+  //   （`activeObstacles(zoneDef.obstacles, world.gateSchedule, world.tick)`）：
+  //   狀態是 (doc, 絕對 tick) 的純函式 ⇒ 兩邊各自算出同一個答案，零 wire、零 desync。
+  const live = activeObstacles(zone.obstacles, gateScheduleOf({ zones }), tick);
   return {
     cx: center.x,
     cz: center.z,

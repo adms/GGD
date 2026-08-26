@@ -63,6 +63,7 @@ import {
   type HudViewport,
 } from "./hudLayout";
 import { estimateLabelPx, pingChipState, pingChipText } from "../pingReadout";
+import { ATTACK_CENTER, ATTACK_SIZE } from "./touchControlsRect";
 
 const UI_ROOT = fileURLToPath(new URL("..", import.meta.url));
 
@@ -80,13 +81,6 @@ const VIEWPORTS: readonly HudViewport[] = [
   { width: 1280, height: 720 },
   { width: 1920, height: 1080 },
 ];
-
-/** First number assigned to `name` in `src` (e.g. `const ATTACK_CENTER = 84;`). */
-function constNumber(src: string, name: string): number {
-  const m = new RegExp(`\\b${name}\\s*=\\s*(\\d+)`).exec(src);
-  expect(m, `expected a numeric \`${name}\` constant to still exist`).not.toBeNull();
-  return Number(m![1]);
-}
 
 describe("the build-stamp band is reserved and empty (version-badge-band)", () => {
   it("the band is the bottom HUD_EDGE gutter — the strip the corner stacks already clear", () => {
@@ -183,9 +177,10 @@ describe("the build-stamp band is reserved and empty (version-badge-band)", () =
 
     // Touch: the attack button is the lowest thing on a phone. Its bottom edge
     // is ATTACK_CENTER − ATTACK_SIZE/2 above the viewport bottom.
-    const touch = read("../TouchControls.tsx");
-    const attackBottom =
-      constNumber(touch, "ATTACK_CENTER") - constNumber(touch, "ATTACK_SIZE") / 2;
+    // ⭐ GH#765 —— 常數搬到 `hud/touchControlsRect.ts` 之後這裡改成 **import**，
+    // ⛔ 不再用 regex 從 `.tsx` 撈：這正是上面那段註解說的「number is now read
+    // rather than parsed out of a string」，而且它讓 rename 變成 tsc 的紅。
+    const attackBottom = ATTACK_CENTER - ATTACK_SIZE / 2;
     expect(
       attackBottom,
       "the touch attack button must sit clear of the build-stamp band",
@@ -666,12 +661,11 @@ const BAND_LEDGER: readonly LedgerRow[] = [
     count: 1,
     why: "弧上一格的底邊。⚠️ 縮放之後這不再是「顯然」的：`abilitySize` 走 `hudScaleTappable`（有 44px 下限）而 `arcRadius` 走 `hudScale`（沒有），所以最小檔位是 12.2 - 22 = **-9.8**，比 attackCenter 低。安全的理由是 attackCenter 自己被夾在 `HUD_STAMP_BAND + attackSize/2 = 10 + 22 = 32` 之上，32 - 9.8 = 22.2 > 10 —— 由 anchorFloor 保證，不是由這一項自己保證",
   },
-  {
-    file: "TouchControls.tsx",
-    value: "m.attackCenter + Math.sin(angle) * m.arcRadius",
-    count: 1,
-    why: "弧上一格的**中心**；`angle` 掃過的區間 sin >= 0，所以永遠不低於 attackCenter，而後者已被 anchorFloor 夾住",
-  },
+  // ⭐ GH#765 —— `m.attackCenter + Math.sin(angle) * m.arcRadius` 這一列**刪掉了**：
+  //    `arcCenter()` 搬進 `hud/touchControlsRect.ts`，而這支掃描刻意**不含 .ts**
+  //    （見 `SCANNED_EXT` 的理由：`.ts` 的 `bottom:` 是矩形的欄位，不是 CSS 宣告）。
+  //    ⛔ 留著它會讓「帳本只能變短」的那條檢查紅，而那條檢查是對的 —— 帳本不可以
+  //    答一個已經不存在的宣告。⭐ 它的**消費端**仍然在下面（`bottom - m.abilitySize / 2`）。
   {
     file: "TouchControls.tsx",
     value: "m.attackCenter - m.abilitySize / 2",

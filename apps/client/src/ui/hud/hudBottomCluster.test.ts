@@ -71,6 +71,7 @@ import {
   hudClusterTuning,
   resolveClusterTuning,
 } from "./hudBottomCluster";
+import { touchControlsRect } from "./touchControlsRect";
 import { bottomClusterStyle } from "./BottomCluster";
 import { HudRoot } from "../HudRoot";
 import { hudStore, resetHudStore, type SeatView } from "../../net/RoomStore";
@@ -121,7 +122,14 @@ const VIEWPORTS: readonly (HudViewport & { touch: boolean; note: string })[] = [
 
 const BOTH_ROWS = { resources: true, abilities: true } as const;
 const PLATE_ONLY = { resources: true, abilities: false } as const;
-/** touch replaces the ability row with the joystick + arc (ui/TouchControls) */
+/**
+ * touch replaces the ability row with the joystick + arc (ui/TouchControls).
+ *
+ * ⚠️ GH#765 —— 在此之前這一行是這個檔對 TouchControls **唯一**的處理：把
+ * abilities **整列拿掉**。⇒ 觸控叢集在這個檔的世界裡等於不存在，而
+ * `028aa3bf` 逐字自陳的第二個盲點正是「TouchControls 完全不在 hudLayout 的世界裡」。
+ * ⇒ 底下多一條用**真矩形**（`hud/touchControlsRect`）比對的守衛，⛔ 不再靠拿掉一列繞過。
+ */
 const rowsFor = (touch: boolean): { resources: boolean; abilities: boolean } =>
   touch ? { ...PLATE_ONLY } : { ...BOTH_ROWS };
 
@@ -158,6 +166,42 @@ describe("bottom cluster — 緊鄰但不重疊 (client-28)", () => {
         problems.push(`${label(vp)}: rows are off-axis by ${Math.abs(plateMid - barMid)}px`);
     }
     expect(problems).toEqual([]);
+  });
+
+  /**
+   * ⭐ 今天量到的重疊 —— **只能變短**（修好就刪那一列）。
+   * 375 寬的直立手機根本不夠寬：Q/W/E/R 圓弧的中段落在置中的資源條上。
+   * ⛔ 搬版面是**另一張** fix 票（GH#765 的 Non-goals 逐字寫明）。
+   */
+  const TOUCH_PLATE_KNOWN = new Set(["375x667/W", "375x667/E"]);
+
+  /**
+   * ⭐ GH#765 —— 觸控模式的那一列**不是不存在**，它是 TouchControls。
+   * 這一條把它真的放進來：叢集要在畫面內，而且不可以壓到資源條。
+   */
+  it("touch: the TouchControls cluster is on screen and clear of the resource plate", () => {
+    cover("hud-bottom-cluster");
+    const problems: string[] = [];
+    for (const vp of VIEWPORTS) {
+      if (!vp.touch) continue;
+      const plate = hudClusterRects(vp, true, rowsFor(true)).resources!;
+      // ⛔ 逐顆比對，⛔ 不是拿 `cluster` 外接框 —— 圓弧是扇形，外接框有一大半是空的。
+      for (const { id, rect } of touchControlsRect(vp).buttons) {
+        if (!hudRectInViewport(rect, vp)) problems.push(`${label(vp)}: touch ${id} escapes the viewport`);
+        const key = `${vp.width}x${vp.height}/${id}`;
+        if (hudRectsOverlap(rect, plate) && !TOUCH_PLATE_KNOWN.has(key))
+          problems.push(`${label(vp)}: touch ${id} overlaps the resource plate`);
+      }
+    }
+    expect(problems).toEqual([]);
+    // 帳本不可以爛掉：每一列都必須還真的重疊，否則刪掉它
+    for (const key of TOUCH_PLATE_KNOWN) {
+      const [size, id] = key.split("/");
+      const vp = VIEWPORTS.find((v) => `${v.width}x${v.height}` === size && v.touch)!;
+      const b = touchControlsRect(vp).buttons.find((x) => x.id === id)!;
+      const plate = hudClusterRects(vp, true, rowsFor(true)).resources!;
+      expect(hudRectsOverlap(b.rect, plate), `${key} 已經不重疊了 —— 從帳本刪掉`).toBe(true);
+    }
   });
 
   it("both rows land inside the viewport at every guard size", () => {

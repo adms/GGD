@@ -32,11 +32,11 @@ const ME = { x: 0, z: -4 };
 
 describe("全視野的渲染那一半（owner 2026-08-23）", () => {
   it("⭐ 出貨規則：一格都不遮 —— 牆後的敵人照樣畫出來", () => {
-    expect(occludeArgsFor([ZONE], 0, ME, DEFAULT_VISION_RULES)).toBeUndefined();
+    expect(occludeArgsFor([ZONE], 0, ME, 0, DEFAULT_VISION_RULES)).toBeUndefined();
   });
 
   it("⭐ 關掉它就是一鍵 rollback：GH#324 的遮蔽逐位元回來", () => {
-    const args = occludeArgsFor([ZONE], 0, ME, {
+    const args = occludeArgsFor([ZONE], 0, ME, 0, {
       ...DEFAULT_VISION_RULES,
       fullVision: false,
     });

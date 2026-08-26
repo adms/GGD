@@ -8,12 +8,11 @@
  * per-frame data never touches React state, client-08).
  */
 import { useEffect, useRef } from "react";
-import { hudScale, hudScaleTappable, hudScaleTier } from "./hudScale";
-import { HUD_STAMP_BAND } from "./hud/hudLayout";
+import { arcCenter, touchMetrics, TOUCH_ARC_SLOTS } from "./hud/touchControlsRect";
 import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
 import { isPassiveOnly } from "@ggd/shared/sim/abilities/abilityPassives";
 import type { AbilityId, ChampionId } from "@ggd/shared/ids";
-import { INNATE_SLOT, type CoreAbilitySlot } from "@ggd/shared/sim/intents";
+import { INNATE_SLOT } from "@ggd/shared/sim/intents";
 import {
   activeTouchController,
   touchFrame,
@@ -44,82 +43,19 @@ import { stripAbilityNumber } from "./components/abilityText";
 import { SfxButton } from "./SfxButton";
 import { GOLD, PANEL_BG, TEXT_DIM, TEXT_MAIN } from "./theme";
 
-const SLOTS: CoreAbilitySlot[] = ["Q", "W", "E", "R"];
+/**
+ * ⭐ GH#765 —— 排版常數與 `touchMetrics` / `arcCenter` **搬到** `hud/touchControlsRect.ts`。
+ *
+ * ⚠️ 搬家的唯一理由是「守衛要算得出這幾顆按鈕在畫面上的哪裡」：這個檔是 `.tsx`
+ * 且抓著 React / Zustand / rAF，一條純幾何的守衛 import 它就等於把整個 HUD
+ * 拉進 node 測試。`028aa3bf` 逐字寫的第二個盲點正是「**TouchControls 完全不在
+ * hudLayout 的世界裡**」—— 而它的代價是 844×390 上一塊 88×38 的攻擊鈕被裝備欄吃掉。
+ *
+ * ⛔ **不要在這個檔重新宣告任何一個排版數字** —— 那就是第二個住處，
+ * 而守衛會繼續綠著量另一份已經不是畫面的座標。
+ */
+const SLOTS = TOUCH_ARC_SLOTS;
 const EX_ACCENT = "#f2a13c";
-
-/** attack-button center offset from the bottom-right corner (CSS px) */
-/**
- * ⭐ HUD 縮放（owner 2026-08-10）—— 手機/平板走的是**這一支**，不是 `AbilityBar`
- * （`HudRoot.tsx` 的 `abilities={!touchControls && <AbilityBar />}`）。owner 逐字點名
- * 「最小適合 iphone、小適合 ipad」，所以這支不接的話那兩個場景一格都不會動。
- *
- * ⛔ 這裡沒有任何 `* 倍率` 的算術：倍率、四捨五入、觸控下限全部只住在 `ui/hudScale.ts`
- * 的算子裡（第零守則⑨：一個模板不是 N 份）。可點擊的走 `hudScaleTappable`
- * （最小 10% 時停在 44px 而不是 5.8px），純視覺的走 `hudScale`。
- *
- * ⚠️ **極座標的半徑一定要跟著縮**：`ARC_RADIUS` 不縮而按鈕縮，放大時圓弧上的六個
- * 按鈕會互相重疊 —— 那是「畫的變大、排的沒變」同一個失敗形態（⑤）的極座標版本。
- */
-const ATTACK_CENTER = 84;
-const ATTACK_SIZE = 88;
-const ABILITY_SIZE = 58;
-/** ability arc radius around the attack button */
-const ARC_RADIUS = 122;
-
-/**
- * 天生技 button center — one tile FURTHER LEFT than Q, on the attack button's
- * own row. Kept OFF the Q/W/E/R arc even though an active innate is now a real
- * cast button: the sixth slot is a once-per-40-seconds press, not part of the
- * rotation the thumb sweeps, and a phone-landscape viewport is only ~390px
- * tall so nothing may grow upward (#151/#159). Off-arc also keeps it out of the
- * path of a mis-swiped Q.
- */
-// ⚠️ `PASSIVE_CENTER` 拿掉了：它是三個基準常數的算術，而縮放之後那三個都變成
-// `touchMetrics()` 的欄位 —— 留著一份用未縮放常數算的座標，就是「畫的縮了、
-// 排的沒縮」（失敗形態⑤）。天生技的位置現在直接從 `m` 算，與圓弧同一組數字。
-
-/** Q at due-left of the attack button, R due-above, W/E on the arc between. */
-/** 這一次繪製的實際尺寸。⛔ 全部從 `hudScale*` 來，這裡不做算術。 */
-function touchMetrics(tier = hudScaleTier()): {
-  attackCenter: number;
-  attackSize: number;
-  abilitySize: number;
-  arcRadius: number;
-  s: (px: number) => number;
-  tap: (px: number) => number;
-} {
-  const s = (px: number): number => hudScale(px, tier);
-  const tap = (px: number): number => hudScaleTappable(px, tier);
-  const attackSize = tap(ATTACK_SIZE);
-  /**
-   * ⭐ **錨點不可以縮進版本徽章的保留帶**（`versionBadgeBand.test.ts` 抓到的）。
-   *
-   * 整個觸控叢集都是從 `attackCenter` 往上長的，而 `hudScale(84,"min") = 8` ——
-   * 比 `HUD_STAMP_BAND`（10px，版本徽章在**每一個畫面**都畫在那裡）還低。
-   * 也就是最小檔位會把攻擊鈕壓進徽章底下：按鈕在那裡、字也在那裡，兩個疊著。
-   *
-   * ⛔ 這不是「把徽章讓開」可以解的 —— 徽章是 #245 刻意提到最上層的（它是
-   * 「這是哪一版」的唯一答案）。所以是**錨點有下限**：叢集的最低點至少要在
-   * 帶子之上。⚠️ 下限是 `HUD_STAMP_BAND`，⛔ 不是一個新發明的數字。
-   */
-  const anchorFloor = HUD_STAMP_BAND + attackSize / 2;
-  return {
-    attackCenter: Math.max(s(ATTACK_CENTER), anchorFloor),
-    attackSize,
-    abilitySize: tap(ABILITY_SIZE),
-    arcRadius: s(ARC_RADIUS),
-    s,
-    tap,
-  };
-}
-
-function arcCenter(i: number, m = touchMetrics()): { right: number; bottom: number } {
-  const angle = (i / (SLOTS.length - 1)) * (Math.PI / 2);
-  return {
-    right: m.attackCenter + Math.cos(angle) * m.arcRadius,
-    bottom: m.attackCenter + Math.sin(angle) * m.arcRadius,
-  };
-}
 
 function pressHandler(button: TouchButton): (e: React.TouchEvent) => void {
   return (e) => {

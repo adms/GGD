@@ -72,7 +72,7 @@ describe("GH#606 全視野是出貨預設 —— 牆後也看得到", () => {
   it.each([0, 1])("⭐ zone %i：出貨規則下**一格都不遮**（owner 2026-08-23）", (z) => {
     const [eye] = acrossWall(innerWall(ARENA.zones[z]!));
     expect(
-      occludeArgsFor(ARENA.zones, z, eye),
+      occludeArgsFor(ARENA.zones, z, eye, 0),
       `zone ${z} 還在遮 —— 而 owner 要的是全視野`,
     ).toBeUndefined();
   });
@@ -80,18 +80,19 @@ describe("GH#606 全視野是出貨預設 —— 牆後也看得到", () => {
   it("⭐ 關掉開關之後 GH#421 的取牆邏輯仍然成立（⛔ 這是 rollback 的那條路）", () => {
     const [eye, foe] = acrossWall(innerWall(ARENA.zones[1]!));
     // 同一區的牆會擋
-    expect(occludeArgsFor(ARENA.zones, 1, eye, OCCLUDING)!.blocked(foe.x, foe.z)).toBe(true);
+    expect(occludeArgsFor(ARENA.zones, 1, eye, 0, OCCLUDING)!.blocked(foe.x, foe.z)).toBe(true);
     // ⛔ 拿錯區的牆＝什麼都擋不住（zone 1 半場遮蔽整個消失的原因）
-    expect(occludeArgsFor(ARENA.zones, 0, eye, OCCLUDING)!.blocked(foe.x, foe.z)).toBe(false);
+    expect(occludeArgsFor(ARENA.zones, 0, eye, 0, OCCLUDING)!.blocked(foe.x, foe.z)).toBe(false);
     // ⛔ 同一區、中間沒牆的不會被遮 —— 證明上面不是「一律遮」
-    expect(occludeArgsFor(ARENA.zones, 1, eye, OCCLUDING)!.blocked(eye.x + 0.5, eye.z)).toBe(false);
+    expect(occludeArgsFor(ARENA.zones, 1, eye, 0, OCCLUDING)!.blocked(eye.x + 0.5, eye.z)).toBe(false);
   });
 
   it("⭐ 出貨的 GameApp 真的把『這雙眼睛在哪一區』餵進去", () => {
     // GameApp headless 起不來 ⇒ 接線沿用既有做法（`GameApp.zoneCull.test.ts`）：
     // 註解先剝掉，散文滿足不了。真正的行為覆蓋在上面三條。
     expect(stripComments(read("../GameApp.ts"))).toContain(
-      "occlude: this.occludeArgs(center, this.ownZoneOf(0, state)),",
+      "occlude: this.occludeArgs(center, this.ownZoneOf(0, state), state.tick),",
     );
   });
 });
+

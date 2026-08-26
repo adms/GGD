@@ -1912,7 +1912,9 @@ export class GameApp {
         // （產生器出來的圖才有），⛔ 不是寫死地圖 id。
         // ⚠️ GH#421 —— 第二個參數是**這雙眼睛在哪一區**。⛔ 不可以省略成
         // 「第一個矩形 zone」：那是 zone 1 半場遮蔽整個失效的那一行。
-        occlude: this.occludeArgs(center, this.ownZoneOf(0, state)),
+        // ⚠️ GH#718 —— 第三個參數是**權威 tick**：門的開關由它決定，
+        // ⛔ 少了它 `activeObstacles` 會原樣回傳 ⇒ 門永遠算關著。
+        occlude: this.occludeArgs(center, this.ownZoneOf(0, state), state.tick),
       });
 
       // 4·五 「四拍令咒」 (#257). AFTER sync, deliberately: the dance is an
@@ -4118,12 +4120,18 @@ export class GameApp {
    * `viewerZone` 讀的是玩家英雄自己的實體 zone（`ownZoneOf`，#67 小地圖同一個來源），
    * 與 `center` 是**同一個英雄** —— 兩者不可以各自算，否則又會出現「牆在 A 區、
    * 眼睛在 B 區」的同型缺陷。
+   *
+   * ⚠️ GH#718：第三個參數是**權威 tick**（`state.tick`），⛔ 不是 `renderTick`。
+   * 門的開關是 (doc, 絕對 tick) 的純函式，伺服器用 `world.tick` 算，這裡用
+   * 同一個數字才不會出現「伺服器說門開著、客戶端還在遮」。
+   * ⛔ 在此之前這個參數不存在，`occlusionZone` 寫死 tick 0 ⇒ 門永遠算關著。
    */
   private occludeArgs(
     center: { x: number; z: number } | null,
     viewerZone: number | null,
+    tick: number,
   ): { cx: number; cz: number; blocked: (x: number, z: number) => boolean } | undefined {
-    return occludeArgsFor(this.arenaDef.zones, viewerZone, center);
+    return occludeArgsFor(this.arenaDef.zones, viewerZone, center, tick);
   }
 
   private updateFrameBus(state: MatchState, nowMs: number): void {
