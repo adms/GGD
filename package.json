@@ -129,6 +129,7 @@
     "review:build": "node tools/review/build.mjs",
     "review:check": "node tools/review/check.mjs",
     "review:register": "node tools/review/register.mjs",
+    "vfxfam:build": "tsx apps/client/src/render/vfx/generateFamilyContent.ts",
     "review:split": "node tools/review/split-stores.mjs",
     "review:serve": "GGD_REVIEW_MODE=local node tools/review/server.mjs",
     "review:sync": "bash scripts/review-sync.sh",
