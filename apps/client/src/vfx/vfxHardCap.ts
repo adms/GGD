@@ -56,6 +56,11 @@
  * 或驅逐掉 —— 也就是資源真的回去了，⛔ 不是留在場上不畫東西。
  * 擁有 mesh 的那兩層（`W3xEmitterRig` 的效果、`ModelFxRig` 的實例）各自把
  * **同一格**當成自己的硬上限，所以 mesh 與 TransformNode 也在同一秒被歸還。
+ * ⚠️ 但「各自」在 2026-08-27 之前是**唯一**的一道：rig 的 live-list 漏了
+ * （GH#782 的形狀），這裡不會紅也不會收 —— 出貨的圈型模型（oblivionaura／
+ * midchilder 魔法陣／tome 環）就永遠留在地上（GH#784 的紫色圈圈）。
+ * 🟣 所以掃描器現在也掃 **mesh 半邊**：`modelfx-` 家族的頂層節點吃同一格上限
+ * （見 `MODEL_FX_NODE_PREFIX`）。可見性由這裡兜底；記憶體歸還仍是 rig 的職責。
  *
  * ---------------------------------------------------------------------------
  * ⚠️ 常駐特效的豁免是**兩格顯式旗標**，⛔ 不是「剛好沒被掃到」
@@ -92,9 +97,57 @@ export interface HardCappedParticleSystem {
   reset(): void;
 }
 
-/** 掃描器需要的最小場景面（＝ Babylon 自己維護的那份登錄表）。 */
+/**
+ * 🟣 GH#784 —— 「不管什麼特效」的 **mesh 那一半**需要的最小節點面。
+ *
+ * 上面的粒子掃描對「模型即特效」（`spawnModelFx` → `render/modelFxRig`）
+ * **結構性失明**：那一族是 glb mesh ＋ TransformNode，⛔ 不在
+ * `scene.particleSystems` 裡，於是它們的壽命執行**只剩** rig 自己的 live-list
+ * 一道 —— 那一道漏了（GH#782 量到的形狀），出貨的圈型模型
+ * （oblivionaura／midchilder 魔法陣／tome 環／blackhole）就**永遠留在地上**，
+ * 而這裡的「終極上限」從頭到尾是綠的（fail-open 而且靜默）。
+ */
+export interface HardCappedFxNode {
+  readonly name: string;
+  readonly parent: { readonly name: string } | null;
+  isEnabled(checkAncestors?: boolean): boolean;
+  setEnabled(value: boolean): void;
+}
+
+/**
+ * 掃描器需要的最小場景面（＝ Babylon 自己維護的那份登錄表）。
+ *
+ * `transformNodes`／`meshes` 是 GH#784 的 mesh 半邊：`TransformNode`／`Mesh`
+ * 的建構子會把自己 push 進去，所以**場景仍然是唯一的登錄表** ——
+ * ⛔ 不需要 rig 記得註冊。省略（舊測試面）＝ 只掃粒子，行為與 GH#570 逐位元相同。
+ */
 export interface HardCapScene {
   readonly particleSystems: readonly HardCappedParticleSystem[];
+  readonly transformNodes?: readonly HardCappedFxNode[];
+  readonly meshes?: readonly HardCappedFxNode[];
+}
+
+/**
+ * 「模型即特效」節點的命名契約（`render/modelFxRig` 的
+ * `modelfx-${modelKey}-${serial}` / `modelfx-axis-…` / `modelfx-${serial}-${n}`）。
+ *
+ * ⭐ 這個前綴**就是**這一族的 managed 標記：只有 rig 會造這個名字，所以
+ * `"managed"` 檔位也掃它，⛔ 不需要 rig 呼叫 `markVfxManaged`（那會把
+ * 修法綁進另一條 lane 的檔案柵欄）。
+ */
+export const MODEL_FX_NODE_PREFIX = "modelfx-";
+
+/**
+ * 只掃這一族的**頂層**節點（parent 不是同族）：
+ *   · rig 的實例根（parent = null）——正常的那一種；
+ *   · 被錯誤 dispose 甩回世界原點的孤兒子節點（#131 的形狀，parent 也會是 null）。
+ * ⛔ 子節點（axis／glb clone）不各自計時：關掉根就整棵看不見，而**逐子節點**
+ * 關的話，池化重用只重新啟用根 ⇒ 子節點永遠黑掉（下一發看不見）。
+ */
+function isFxFamilyRoot(node: HardCappedFxNode): boolean {
+  if (!node.name.startsWith(MODEL_FX_NODE_PREFIX)) return false;
+  const p = node.parent;
+  return p === null || typeof p.name !== "string" || !p.name.startsWith(MODEL_FX_NODE_PREFIX);
 }
 
 /**
@@ -195,6 +248,37 @@ export function sweepVfxHardCap(
     ACTIVE_SINCE.delete(ps);
     reclaimed++;
   }
+
+  // 🟣 GH#784 —— mesh 半邊：modelfx- 家族的頂層節點吃**同一格**上限、同一支碼表。
+  // 名字前綴＝這一族的 managed 標記（見 MODEL_FX_NODE_PREFIX），所以 "managed"
+  // 檔位也掃。`isEnabled()`（含祖先）＝「現在畫得出來」——池子裡的（根已關）
+  // 碼表歸零，池化重用拿到新的碼表，與粒子那邊的 isAlive() 同一個語意。
+  for (const list of [scene.transformNodes, scene.meshes]) {
+    if (!list) continue;
+    for (const node of list) {
+      if (!isFxFamilyRoot(node)) continue;
+      if (PERSISTENT.has(node)) continue;
+      if (exempt(node.name, prefixes)) continue;
+      if (!node.isEnabled()) {
+        ACTIVE_SINCE.delete(node);
+        continue;
+      }
+      watched++;
+      const since = ACTIVE_SINCE.get(node);
+      if (since === undefined) {
+        ACTIVE_SINCE.set(node, nowSec);
+        continue;
+      }
+      if (nowSec - since < maxLifeSec) continue;
+      // ⭐ 強制回收（可見性那一半）：關掉整棵。記憶體歸還仍是 rig 的職責
+      // （release → free-list），⛔ 這裡不 dispose —— dispose 別條 lane 池子裡
+      // 的節點會把重用打斷。rig 的 spawn 會重新 setEnabled(true)（modelFxRig:560），
+      // 所以被收掉的池化節點下一發照常可用。
+      node.setEnabled(false);
+      ACTIVE_SINCE.delete(node);
+      reclaimed++;
+    }
+  }
   return { reclaimed, watched };
 }
 
@@ -204,4 +288,9 @@ export function sweepVfxHardCap(
  */
 export function resetVfxHardCapClocks(scene: HardCapScene): void {
   for (const ps of scene.particleSystems) ACTIVE_SINCE.delete(ps);
+  // GH#784 —— mesh 半邊的碼表同一時刻歸零（回合邊界剛把 rig 的 live 全 release）。
+  for (const list of [scene.transformNodes, scene.meshes]) {
+    if (!list) continue;
+    for (const node of list) ACTIVE_SINCE.delete(node);
+  }
 }
