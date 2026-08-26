@@ -70,6 +70,15 @@ fi
 CHANGED=$(git diff --name-only "$BASE" HEAD; git diff --name-only; git diff --name-only --cached)
 CHANGED=$(printf '%s\n' "$CHANGED" | sort -u | sed '/^$/d')
 
+# ⭐ GH#714 —— 未追蹤檔曾經是這支閘的**盲區**:上面三個來源**全部只列 tracked 檔**,
+#    於是一條被規定「⛔ 不碰 git 寫入」的 lane 就算做完了 audition、報告好好躺在硬碟上,
+#    閘照樣紅,而且訊息會說「你改了畫面層卻沒有終端證據」——⚠️ **那句話是假的**。
+#    ⇒ 閘會被當成雜訊忽略,而**被忽略的閘等於沒有閘**。
+#    ⛔ 這是修**盲區**,⛔ 不是放寬判準:它只餵給下面的**證據偵測**,
+#    ⛔ 不餵給 TOUCHED —— 隨手放在 vfx/ 底下的一個未追蹤檔不該被算成「這次改了畫面層」。
+UNTRACKED=$(git ls-files --others --exclude-standard | sed '/^$/d' | sort -u)
+EVIDENCE_POOL=$(printf '%s\n%s\n' "$CHANGED" "$UNTRACKED" | sort -u | sed '/^$/d')
+
 # ⛔ 這一族在 apps/client/src/render/ 底下,但它們**不畫任何像素** ——
 #    它們是「產生 content/ 文件」的離線產生器（node 跑,沒有 scene、沒有材質）。
 #    要它們附終端證據等於要求一份與改動無關的截圖 ⇒ 那會讓閘變成橡皮圖章。
@@ -82,16 +91,30 @@ if [ -z "$TOUCHED" ]; then
 fi
 
 # ② 終端證據：帶 @visual-proof 標記的測試檔（新增或改到），或一份 visual-proof 報告
-PROOF_TESTS=$(printf '%s\n' "$CHANGED" | grep -E "$VISUAL_RE.*\.test\.ts$" || true)
+#    ⭐ 這裡讀的是 EVIDENCE_POOL（含**未追蹤**）,⛔ 不是 CHANGED —— 見上面 GH#714。
+PROOF_TESTS=$(printf '%s\n' "$EVIDENCE_POOL" | grep -E "$VISUAL_RE.*\.test\.ts$" || true)
 HAS_MARK=0
+MARKED=""
 for f in $PROOF_TESTS; do
   [ -f "$f" ] || continue
-  if grep -q '@visual-proof' "$f"; then HAS_MARK=1; fi
+  if grep -q '@visual-proof' "$f"; then HAS_MARK=1; MARKED="$MARKED$f"$'\n'; fi
 done
-HAS_REPORT=$(printf '%s\n' "$CHANGED" | grep -E '^docs/_reports/.*visual-proof.*\.md$' || true)
+HAS_REPORT=$(printf '%s\n' "$EVIDENCE_POOL" | grep -E '^docs/_reports/.*visual-proof.*\.md$' || true)
 
 if [ "$HAS_MARK" = "1" ] || [ -n "$HAS_REPORT" ]; then
   echo "✓ visual-proof：畫面層有改動,而且帶了終端證據。"
+  # ⚠️ fail-open 沒錯,**靜默**才是缺陷：未追蹤的證據算數,⛔ 但一定要說出來 ——
+  #    ⛔ 少了這一行就會複製 2026-08-02 那次事故的形狀（產物 commit 了、來源檔沒 commit
+  #    ⇒ 線上內容整份載入失敗）。
+  EVID=$(printf '%s%s\n' "$MARKED" "$HAS_REPORT" | sed '/^$/d' | sort -u)
+  NOT_ADDED=""
+  if [ -n "$UNTRACKED" ] && [ -n "$EVID" ]; then
+    NOT_ADDED=$(printf '%s\n' "$EVID" | grep -Fxf <(printf '%s\n' "$UNTRACKED") || true)
+  fi
+  if [ -n "$NOT_ADDED" ]; then
+    echo "⚠️ 這份證據還沒 git add —— 出貨的是 git,不是你這台機器的工作區。"
+    printf '%s\n' "$NOT_ADDED" | sed 's/^/     · /'
+  fi
   exit 0
 fi
 
