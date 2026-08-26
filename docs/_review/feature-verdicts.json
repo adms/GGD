@@ -475,6 +475,40 @@
       "verdictHash": null,
       "reason": "",
       "verdictAt": null
+    },
+    "beamtruth_visual-proof_20260826-1200": {
+      "title": "光束砲家族按真相重建：count 1 · 逐支自己的模型 · 慢動作爆殼第二層 · 非等向拉長",
+      "family": "beam-roll",
+      "issues": [
+        702,
+        692,
+        688
+      ],
+      "abilities": [
+        "godie-e002.e",
+        "godie-e00l.e",
+        "godie-o00x.r",
+        "godie-ogrh.r",
+        "godie-n01c.e",
+        "godie-nbbc.e",
+        "godie-e00r.r",
+        "godie-hgam.r",
+        "godie-h02r.r"
+      ],
+      "commit": null,
+      "sequenceDir": "docs/_reports/beamtruth_visual-proof_20260826-1200",
+      "rollback": {
+        "configId": "tpl-beam-roll",
+        "field": "params.modelKey.default",
+        "liveValue": "w3x.stock.revivehuman",
+        "rollbackValue": "imported.netherstrike",
+        "note": "家族身分那一格 —— 翻回 imported.netherstrike ＝ 2026-08-25 的形狀（沒有逐支寫 modelKey 的成員全部長成黑化 Saber 的劍氣）。⚠️ 逐支還有兩格各自的 rollback：① 把節點上的 scaleAxis 拿掉（缺席 = [1,1,1] = 等向，逐位元回到舊渲染）② 把 modelKey=w3x.stock.fragdriller 那個 spawnModelFx 節點刪掉（回到單層）。"
+      },
+      "registeredAt": "2026-08-26T04:28:43.457Z",
+      "verdict": null,
+      "verdictHash": null,
+      "reason": "",
+      "verdictAt": null
     }
   }
 }

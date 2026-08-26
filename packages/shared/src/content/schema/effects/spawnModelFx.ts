@@ -6,6 +6,7 @@ import {
   MODEL_FX_MAX_CLIP_TIME_SCALE,
   MODEL_FX_MAX_LIFE_SEC,
   MODEL_FX_MAX_SCALE,
+  MODEL_FX_MAX_SCALE_AXIS,
   MODEL_FX_MAX_SPEED,
   MODEL_FX_MAX_SPIN_DEG_PER_SEC,
   MODEL_FX_MAX_TOUCH_RADIUS,
@@ -176,6 +177,35 @@ export const zSpawnModelFx = z
         "剪輯的播放速率倍率（原作 SetUnitTimeScalePercent ÷ 100；h008 的凍播＝0.15）。省略 = 1 = 原速。⛔ 只有填了 clip 才讀得到。",
       ),
     scale: z.number().positive().max(MODEL_FX_MAX_SCALE).optional(),
+    /**
+     * ⭐【非等向縮放】沿三個**行進座標系**的軸再乘一次（GH#702）。
+     * **缺席 ⇒ [1,1,1] ＝ 今天的行為，逐位元不變。**
+     *
+     * 三格逐字是 `[橫向, 上, 沿行進軸]` —— ⛔ ⛔ **不是模型自己的座標系**：
+     * `modelFxRig` 把它乘在 `root` 上，而 `root` 底下的 `axis` 已經照
+     * `model@1.fxLongAxis` 把模型的長軸轉到 `+Z`（＝行進軸）。所以第三格永遠是
+     * 「這道光束多長」，⛔ 不會因為換一份 `.glb` 而改變意思。
+     *
+     * ── ⛔ 它**不是**從 JASS 量到的（誠實紀錄，GH#702）───────────────────────
+     * WC3 的 `SetUnitScale(u,x,y,z)` 只讀第一個參數；而這一族在 `war3map.j` 裡
+     * 三個參數**逐字相同**（j:31908 · j:32326 · j:32328 · j:47758）⇒ 原作等向。
+     * ⭐ 它存在是因為一個**量到的缺口**：`convert_stock_model.py` 只轉 geoset，
+     * 這一族的 `.mdx` 每一份都帶被 skip 掉的 `PRE2`（粒子）—— 原作那條又長又窄的
+     * 光帶住在粒子裡。GGD 只拿到核心，`revivehuman.glb` 是 10.751 × 16.757 ×
+     * 10.751（**1.56 : 1**）⇒ 等向放大它只會得到一顆愈來愈大的方塊。
+     * ⇒ owner 2026-08-23「這四個經典總是要看到**橫放的光束砲**吧」在幾何這一側
+     * 需要這一格才做得到。⭐ **一鍵 rollback ＝ 把節點上的 `scaleAxis` 拿掉。**
+     */
+    scaleAxis: z
+      .tuple([
+        z.number().positive().max(MODEL_FX_MAX_SCALE_AXIS),
+        z.number().positive().max(MODEL_FX_MAX_SCALE_AXIS),
+        z.number().positive().max(MODEL_FX_MAX_SCALE_AXIS),
+      ])
+      .optional()
+      .describe(
+        "非等向縮放，乘在 scale 之上：[橫向, 上, 沿行進軸]（第三格＝光束長度）。缺席 = [1,1,1] = 等向。",
+      ),
     /**
      * ⭐【這一次施放的顏色】節點級頂點著色（線性 RGB 各 0…1）。缺席 ⇒ 用
      * `model@1.fxTint`；兩邊都缺 ⇒ ⛔ 不著色。

@@ -1,0 +1,113 @@
+{
+ "name": "awaken",
+ "archive": "War3x.mpq",
+ "mdxBytes": 20833,
+ "path": "Abilities\\Spells\\Other\\Awaken\\Awaken.mdl",
+ "textures": [
+  {
+   "texture": "Textures\\GenericGlowFaded.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 53.5,
+   "lumStd": 55.2,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\firering4.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 28.3,
+   "lumStd": 33.6,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\GenericGlow2_64.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 98.8,
+   "lumStd": 105.3,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Star8b.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 34.0,
+   "lumStd": 52.2,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [
+  {
+   "emitter": "BlizParticle03",
+   "segmentAlpha": [
+    255,
+    200,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle04",
+   "segmentAlpha": [
+    255,
+    200,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle01",
+   "segmentAlpha": [
+    70,
+    254,
+    38
+   ],
+   "birth": 70,
+   "peak": 254,
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 41676,
+ "rawHeight": 603.26,
+ "scaleFactor": 0.02778,
+ "height": 16.757,
+ "visiblePrims": "3/4",
+ "animations": [
+  "Stand"
+ ],
+ "clipMap": {
+  "idle": "Stand",
+  "run": "Stand",
+  "attack": "Stand",
+  "cast": "Stand",
+  "hurt": "Stand",
+  "death": "Stand"
+ },
+ "missingTextures": [],
+ "droppedGlowMaterials": [
+  "TeamGlow0"
+ ],
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/awaken.glb"
+}

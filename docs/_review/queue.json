@@ -1,8 +1,8 @@
 {
   "schema": "review-queue@1",
   "counts": {
-    "assets": 1130,
-    "tier0": 795,
+    "assets": 1133,
+    "tier0": 798,
     "reviewed": 0,
     "pending": 335
   },
@@ -11,9 +11,9 @@
       "id": "imported.heromusashimiyamoto",
       "kind": "model",
       "hash": "743f857a2a14bf9a29e09985603428bcf84ec05c",
-      "risk": 43,
+      "risk": 39,
       "reasons": [
-        "27 支上架技能引用（R/EX ×2 加權後 risk 43）",
+        "25 支上架技能引用（R/EX ×2 加權後 risk 39）",
         "未審"
       ],
       "refs": [
@@ -28,10 +28,8 @@
         "godie-etyr.q",
         "godie-h01n.e",
         "godie-h01o.e",
-        "godie-h02r.r",
         "godie-hart.e",
         "godie-hart.w",
-        "godie-hgam.r",
         "godie-hvsh.passive",
         "godie-hvsh.r",
         "godie-hvwd.ex",
@@ -184,26 +182,27 @@
       "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
     },
     {
-      "id": "imported.netherstrike",
-      "kind": "model",
-      "hash": "e46fdaa513fe8717bd7d45dcc4c4e16b5cedc266",
+      "id": "wc3.crushingwavecaster1",
+      "kind": "sfx",
+      "hash": "f665c768305fff16d2811c80069ae57e571f3e03",
       "risk": 16,
       "reasons": [
-        "8 支上架技能引用（R/EX ×2 加權後 risk 12）",
-        "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
+        "11 支上架技能引用（R/EX ×2 加權後 risk 16）",
         "未審"
       ],
       "refs": [
         "godie-e002.e",
         "godie-e00l.e",
         "godie-e00r.r",
-        "godie-edem.ex",
+        "godie-h01n.e",
+        "godie-h01o.e",
+        "godie-h02r.r",
+        "godie-hgam.r",
         "godie-n01c.e",
         "godie-nbbc.e",
         "godie-o00x.r",
         "godie-ogrh.r"
-      ],
-      "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
+      ]
     },
     {
       "id": "fx.prim.blood.pulse-lg",
@@ -422,27 +421,6 @@
         "godie-u00v.e",
         "godie-u01u.r",
         "godie-udre.r"
-      ]
-    },
-    {
-      "id": "wc3.crushingwavecaster1",
-      "kind": "sfx",
-      "hash": "f665c768305fff16d2811c80069ae57e571f3e03",
-      "risk": 12,
-      "reasons": [
-        "9 支上架技能引用（R/EX ×2 加權後 risk 12）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e002.e",
-        "godie-e00l.e",
-        "godie-e00r.r",
-        "godie-h01n.e",
-        "godie-h01o.e",
-        "godie-n01c.e",
-        "godie-nbbc.e",
-        "godie-o00x.r",
-        "godie-ogrh.r"
       ]
     },
     {
@@ -1251,6 +1229,21 @@
         "godie-uvng.e",
         "godie-uvng.ex"
       ]
+    },
+    {
+      "id": "imported.netherstrike",
+      "kind": "model",
+      "hash": "e46fdaa513fe8717bd7d45dcc4c4e16b5cedc266",
+      "risk": 6,
+      "reasons": [
+        "1 支上架技能引用（R/EX ×2 加權後 risk 2）",
+        "抱怨族「光束砲/蝗蟲群 beam-roll」+4",
+        "未審"
+      ],
+      "refs": [
+        "godie-edem.ex"
+      ],
+      "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
     },
     {
       "id": "imported.tectonicfury",

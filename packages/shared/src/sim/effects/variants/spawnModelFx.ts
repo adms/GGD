@@ -113,6 +113,23 @@ export interface SpawnModelFxVariant {
   /** 模型縮放。純視覺，⛔ sim 不讀它。 */
   scale?: number;
   /**
+   * ⭐【非等向縮放】`[橫向, 上, 沿行進軸]`，乘在 {@link scale} 之上（GH#702）。
+   * 純視覺，⛔ sim 不讀它，只轉發到 `modelFxSpawn`。缺席 ⇒ `[1,1,1]` ＝ 等向
+   * （＝2026-08-26 之前的行為，逐位元不變 ⇒ 這也是一鍵 rollback）。
+   *
+   * ⚠️ 軸是**行進座標系**的，⛔ 不是模型自己的 —— `modelFxRig` 乘在 `root` 上，
+   * 而子節點 `axis` 已經照 `model@1.fxLongAxis` 把模型長軸轉到 `+Z`。
+   *
+   * ⛔⛔ **它引用不到任何一行 JASS**：WC3 的 `SetUnitScale(u,x,y,z)` 只讀第一個
+   * 參數，而這一族在 `war3map.j` 寫下的三軸值逐字相同（j:31908 · j:32326 ·
+   * j:32328 · j:47758）⇒ 原作是等向的。它存在是為了一個**量到的缺口**：
+   * `convert_stock_model.py` 只轉 geoset，而原作那條又長又窄的光帶住在被 skip 掉
+   * 的 `PRE2`（粒子）chunk 裡 ⇒ GGD 拿到的 `revivehuman.glb` 是
+   * 10.751 × 16.757 × 10.751（1.56:1 的方塊）。出處是 owner 2026-08-23
+   * 「這四個經典總是要看到**橫放的光束砲**吧」＋ 上面那個量測。
+   */
+  scaleAxis?: readonly [number, number, number];
+  /**
    * ⭐【這一次施放的顏色】節點級頂點著色（線性 RGB 各 0…1）—— GH#693。
    * 純視覺，⛔ sim 不讀它，只轉發到 `modelFxSpawn`。
    * 缺席 ⇒ 客戶端用 `model@1.fxTint`；⚠️ 節點**取代**模型（⛔ 不相乘），

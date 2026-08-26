@@ -135,13 +135,55 @@ A("20-03", "20-03 約束與勝利之劍", "ground", [60, 60, 60, 60], [250, 350,
        # ⭐ GH#688 Phase 6 · QUAD —— 接上自己的原作模型（staging 契約④的
        #    SHARED_MODEL_FENCED_OUT 點名「20-03＝h00S（ReviveHuman 紅）」）。
        #    census h00S：`Excalibur/ExcaliburMAX/Open Skill of Saber 三生成點 ·
-       #    tint [255,100,100] · usca 0.2 · timedLife 0.5`。tint 照 census 忠實搬；
-       #    scale/life 不覆寫 —— 光束的幾何住 tpl-beam-roll 的共用表（第〇·四守則），
-       #    0.2/0.5s 是原作**逐段小劍氣**的參數，套在單具滾動光束上是張冠李戴。
-       "modelKey": "w3x.stock.revivehuman", "tint": [1.0, 0.3922, 0.3922],
+       #    tint [255,100,100] · usca 0.2 · timedLife 0.5`。
+       # ⛔⛔ GH#702 —— **`tint` 已移除**。TRUTH lane 對 war3map.j 的 57 個
+       #    `SetUnitVertexColorBJ` 呼叫點做了窮盡歸屬：`h00S` / `h00X` / `h007` /
+       #    `h008` / `h01P` / `h01V` **一具都不在裡面** ⇒ 這一族的顏色 100% 來自模型
+       #    自己的貼圖，⛔ 原作沒有任何頂點色。那個 [1.0, 0.3922, 0.3922] 是把
+       #    `tpl-beam-roll` description 裡「頂點色 [255,100,100] 紅」那句**編出來的**話
+       #    照抄成 RGB（0.3922 ≈ 100/255）—— 一個沒有出處的預設被當成量測結果引用，
+       #    正是這一輪要根治的病。⇒ 拿掉它 ⇒ ReviveHuman 恢復自己的金橘色，
+       #    與 docs/_reference/w3x-shots/saber/ 的擷圖一致。
+       # ⭐ GH#702 —— 20-03 是這一族的 **exemplar**：`scale` / `clip` / `lifeSec`
+       #    刻意**不覆寫**，讓 tpl-beam-roll 的家族預設（2.65 = j:32326 的
+       #    250+15×1、idle、2 = j:32357 的 TriggerSleepAction(2)）成為唯一住處。
+       "modelKey": "w3x.stock.revivehuman",
+       # ⭐ GH#702 —— 「多長」。⛔ 這一格引用不到任何一行 JASS（WC3 的
+       #    SetUnitScale 只讀第一個參數，而 j:32326 三個參數逐字相同 ⇒ 原作等向）。
+       #    它是一個**演出決定**，出處是 owner 2026-08-23「這四個經典總是要看到
+       #    **橫放的光束砲**吧」＋ 一個量到的缺口：原作那條又長又窄的光帶住在
+       #    `.mdx` 的 PRE2 粒子裡，而 convert_stock_model.py 只轉 geoset ⇒ GGD 拿到的
+       #    `revivehuman.glb` 是 10.751 × 16.757 × 10.751（1.56:1 的方塊）。
+       #    倍率取「渲染長度 ≈ 這一支自己打得到的距離」：
+       #      16.757(bbox_y) × 0.101(model@1.scale) × 2.65(scale) = 4.486
+       #      → effects[0] 的 damageLine length **14** ⇒ 14 / 4.486 = **3.12**
+       #    ⇒ 卡面上的射程與畫面上的長度不會互相說謊（第一·五守則）。
+       # ⭐ 一鍵 rollback ＝ 把這一格拿掉（缺席 ⇒ [1,1,1] ⇒ 逐位元回到 2026-08-25）。
+       "scaleAxis": [1, 1, 3.12],
+       # ⭐ 2026-08-26 —— `arriveSoundKey` **從家族預設搬到節點上**：那個預設
+       #    （"explosion"）沒有 JASS 出處，而 13 個引用節點裡有 6 個沒有落點畫面
+       #    ⇒ 它們變成「聲音說爆炸、螢幕上什麼都沒有」（第一·五守則，閘
+       #    beamArriveVfx.test.ts 逐支點名）。⇒ 家族預設拿掉，**有畫面的自己宣告**。
+       "arriveSoundKey": "explosion",
        "onArrive": [{"kind": "spawnVfx", "vfxId": "fx.prim.holy.explosion", "at": "point"},
                     {"kind": "screenShake", "shape": "single", "amplitude": 0.6,
                      "durationSec": 0.8, "applyTo": "all"}]},
+      # ⭐⭐ GH#702【第二層：h008 特效三號 —— 慢動作爆殼】
+      #    war3map.j:32327-32329 —— 每一次 20-03 都**一定**再生一具 `h008`
+      #    （FragDriller.mdl · usca 2.0 · `SetUnitScalePercent(350+15×lvl)` ⇒ 等級 1 是
+      #    **365%** · `SetUnitTimeScalePercent(15)` ⇒ 動畫**慢到 15%** · 建完立刻
+      #    `KillUnit` 播死亡序列）。⭐ 同一具第二層在 09-04 龜派氣功（j:31909）與
+      #    Saber EX 收招（j:32630）也在 —— 它是這一族**共有的**外層，⛔ 不是 20-03 專屬。
+      # ⚠️ 兩具是**同點疊加**（都在 udg_LocPoint3 ＝ 施法者前方 150u），⛔ 不是前後排開
+      #    —— 擷圖上「很粗、多層、邊緣分層」的觀感就是這個疊加，而 2026-08-25 之前
+      #    它被讀成「6 具沿線排開」（走歪的第一段）。
+      # ⛔ 在此之前 GGD 一份 FragDriller 的 .glb 都沒有 ⇒ 這一層**從來沒存在過**。
+      #    2026-08-26 用 tools/w3x-import/convert_stock_model.py 轉出來（2/2 primitive
+      #    可見 · 動畫 Birth · 記錄在 tools/w3x-import/out/stock/convert-fragdriller.json）。
+      # ⚠️ 這一層**不帶 onArrive**：落點只炸一次（第一層已經有了），兩份 = 兩次爆炸。
+      # ⚠️ 也**不帶 scaleAxis**：它是槍口的爆殼，⛔ 不是光束本體 —— 缺席 ⇒ 等向。
+      {"kind": "spawnModelFx", "shape": "single", "preset": "tpl-beam-roll",
+       "modelKey": "w3x.stock.fragdriller", "scale": 3.65, "clipTimeScale": 0.15},
   ])
 
 A("20-04", "20-04 Avalon-永恆的理想鄉", "self", [60, 60, 60], [150, 250, 350], 0,

@@ -1,0 +1,373 @@
+{
+  "$comment": "⚠️ 這是一張**棘輪豁免表**,⛔ 不是一份規格。上面每一列的意思都是「這一格 `default` 引用不到任何東西」。守衛 packages/shared/src/content/templateDefaultsHaveOrigin.test.ts —— 它只讓這張表**變短**:新增一格沒有出處的 default 會紅;一格補上 origin 之後這裡沒刪也會紅。⛔ 不要為了讓測試綠而往這裡加列。",
+  "why": "GH#702 / owner 2026-08-25「是哪裡走歪讓你又把約束勝利之劍等光束砲家族又變成間距排列?請你反省根因並修正」—— 根因是 `schema/template.ts` 的 `default` 註解「the exemplar's MEASURED value (never invented)」是一條**判準**,而判準治不了:第一份用到它的模板(tpl-beam-roll, 799e6988)六個數字槽一個出處都沒帶,而 `count:6`(a3bc9838)引用的是一段**一具 unit 都不生**的傷害取樣迴圈,於是一個誤讀變成七個出貨節點的「原作就是這樣」。",
+  "howToRemoveARow": "把該格的出處貼進 `params.<名>.origin`(文法見 schema/template.ts 的 origin 註解:j:<行號> / census:<key> / owner:<日期> / derived:<式> / taxonomy:<理由> / inert),然後把這裡的那一格刪掉。⭐ `j:` 的行號守衛會**真的去讀 war3map.j 的那一行**。",
+  "byTemplate": {
+    "tpl-buff-self": {
+      "reason": "P1 從 29 個 JASS 行為家族恢復模板時,出處只記到 **模板級**(`exemplar.skill` + `exemplar.jass` 的 rawcode),⛔ 沒有逐格記行號 —— 一格數字錯了 exemplar 不會說。⭐ 回填法(這就是反駁它的方式):把 exemplar 的觸發器整段讀一遍,逐格貼 `j:<行號>`;真的量不到的填 `taxonomy:<理由>`,⛔ 不要留白。",
+      "params": [
+        "duration",
+        "modifiers",
+        "castTimeSec"
+      ]
+    },
+    "tpl-charge-push": {
+      "reason": "P1 從 29 個 JASS 行為家族恢復模板時,出處只記到 **模板級**(`exemplar.skill` + `exemplar.jass` 的 rawcode),⛔ 沒有逐格記行號 —— 一格數字錯了 exemplar 不會說。⭐ 回填法(這就是反駁它的方式):把 exemplar 的觸發器整段讀一遍,逐格貼 `j:<行號>`;真的量不到的填 `taxonomy:<理由>`,⛔ 不要留白。",
+      "params": [
+        "dashDistance",
+        "dashDurationSec",
+        "apexHeight",
+        "radius",
+        "damage",
+        "damageType",
+        "pushDistance",
+        "pushSpeed",
+        "pushFrom",
+        "pushLaunchHeight",
+        "castTimeSec"
+      ]
+    },
+    "tpl-combo-finisher": {
+      "reason": "P1 從 29 個 JASS 行為家族恢復模板時,出處只記到 **模板級**(`exemplar.skill` + `exemplar.jass` 的 rawcode),⛔ 沒有逐格記行號 —— 一格數字錯了 exemplar 不會說。⭐ 回填法(這就是反駁它的方式):把 exemplar 的觸發器整段讀一遍,逐格貼 `j:<行號>`;真的量不到的填 `taxonomy:<理由>`,⛔ 不要留白。",
+      "params": [
+        "comboFamily",
+        "hitVfx",
+        "hitText",
+        "hitTextSizeScale",
+        "hitTextRiseSpeed",
+        "hitTextDurationSec",
+        "finisherVfx",
+        "finisherFlashAlpha",
+        "finisherFlashSec",
+        "finisherShakeAmplitude",
+        "finisherShakeSec",
+        "damageType"
+      ]
+    },
+    "tpl-dragon-quake": {
+      "reason": "P1 從 29 個 JASS 行為家族恢復模板時,出處只記到 **模板級**(`exemplar.skill` + `exemplar.jass` 的 rawcode),⛔ 沒有逐格記行號 —— 一格數字錯了 exemplar 不會說。⭐ 回填法(這就是反駁它的方式):把 exemplar 的觸發器整段讀一遍,逐格貼 `j:<行號>`;真的量不到的填 `taxonomy:<理由>`,⛔ 不要留白。",
+      "params": [
+        "modelKey",
+        "count",
+        "ringRadius",
+        "speed",
+        "blastRadius",
+        "scale",
+        "shakeAmplitude",
+        "shakeSec",
+        "impactLifeSec",
+        "damage",
+        "damageType"
+      ]
+    },
+    "tpl-dragon-serpent": {
+      "reason": "P1 從 29 個 JASS 行為家族恢復模板時,出處只記到 **模板級**(`exemplar.skill` + `exemplar.jass` 的 rawcode),⛔ 沒有逐格記行號 —— 一格數字錯了 exemplar 不會說。⭐ 回填法(這就是反駁它的方式):把 exemplar 的觸發器整段讀一遍,逐格貼 `j:<行號>`;真的量不到的填 `taxonomy:<理由>`,⛔ 不要留白。",
+      "params": [
+        "modelKey",
+        "instances",
+        "travel",
+        "speed",
+        "touchRadius",
+        "spinDegPerSec",
+        "scale",
+        "damage",
+        "damageType"
+      ]
+    },
+    "tpl-dragon-shockwave": {
+      "reason": "P1 從 29 個 JASS 行為家族恢復模板時,出處只記到 **模板級**(`exemplar.skill` + `exemplar.jass` 的 rawcode),⛔ 沒有逐格記行號 —— 一格數字錯了 exemplar 不會說。⭐ 回填法(這就是反駁它的方式):把 exemplar 的觸發器整段讀一遍,逐格貼 `j:<行號>`;真的量不到的填 `taxonomy:<理由>`,⛔ 不要留白。",
+      "params": [
+        "modelKey",
+        "travel",
+        "speed",
+        "scale",
+        "spinDegPerSec",
+        "touchRadius",
+        "damage"
+      ]
+    },
+    "tpl-ground-nova": {
+      "reason": "P1 從 29 個 JASS 行為家族恢復模板時,出處只記到 **模板級**(`exemplar.skill` + `exemplar.jass` 的 rawcode),⛔ 沒有逐格記行號 —— 一格數字錯了 exemplar 不會說。⭐ 回填法(這就是反駁它的方式):把 exemplar 的觸發器整段讀一遍,逐格貼 `j:<行號>`;真的量不到的填 `taxonomy:<理由>`,⛔ 不要留白。",
+      "params": [
+        "radius",
+        "damage",
+        "damageType",
+        "castTimeSec"
+      ]
+    },
+    "tpl-instant-blast": {
+      "reason": "P1 從 29 個 JASS 行為家族恢復模板時,出處只記到 **模板級**(`exemplar.skill` + `exemplar.jass` 的 rawcode),⛔ 沒有逐格記行號 —— 一格數字錯了 exemplar 不會說。⭐ 回填法(這就是反駁它的方式):把 exemplar 的觸發器整段讀一遍,逐格貼 `j:<行號>`;真的量不到的填 `taxonomy:<理由>`,⛔ 不要留白。",
+      "params": [
+        "radius",
+        "damage",
+        "damageType",
+        "castTimeSec"
+      ]
+    },
+    "tpl-leap-strike": {
+      "reason": "P1 從 29 個 JASS 行為家族恢復模板時,出處只記到 **模板級**(`exemplar.skill` + `exemplar.jass` 的 rawcode),⛔ 沒有逐格記行號 —— 一格數字錯了 exemplar 不會說。⭐ 回填法(這就是反駁它的方式):把 exemplar 的觸發器整段讀一遍,逐格貼 `j:<行號>`;真的量不到的填 `taxonomy:<理由>`,⛔ 不要留白。",
+      "params": [
+        "mode",
+        "applyTo",
+        "apexHeight",
+        "durationSec",
+        "landRadius",
+        "damage",
+        "damageType",
+        "castTimeSec"
+      ]
+    },
+    "tpl-line-blast": {
+      "reason": "P1 從 29 個 JASS 行為家族恢復模板時,出處只記到 **模板級**(`exemplar.skill` + `exemplar.jass` 的 rawcode),⛔ 沒有逐格記行號 —— 一格數字錯了 exemplar 不會說。⭐ 回填法(這就是反駁它的方式):把 exemplar 的觸發器整段讀一遍,逐格貼 `j:<行號>`;真的量不到的填 `taxonomy:<理由>`,⛔ 不要留白。",
+      "params": [
+        "modelKey",
+        "path",
+        "speed",
+        "distance",
+        "spinDegPerSec",
+        "scale",
+        "touchRadius",
+        "touchSide",
+        "touchDamageTier",
+        "blastRadius",
+        "blastRadiusTier",
+        "blastDamageTier",
+        "blastApRatio",
+        "damageType",
+        "castTimeSec"
+      ]
+    },
+    "tpl-line-sweep": {
+      "reason": "P1 從 29 個 JASS 行為家族恢復模板時,出處只記到 **模板級**(`exemplar.skill` + `exemplar.jass` 的 rawcode),⛔ 沒有逐格記行號 —— 一格數字錯了 exemplar 不會說。⭐ 回填法(這就是反駁它的方式):把 exemplar 的觸發器整段讀一遍,逐格貼 `j:<行號>`;真的量不到的填 `taxonomy:<理由>`,⛔ 不要留白。",
+      "params": [
+        "damage",
+        "damageType",
+        "castTimeSec"
+      ]
+    },
+    "tpl-lock-combo": {
+      "reason": "P1 從 29 個 JASS 行為家族恢復模板時,出處只記到 **模板級**(`exemplar.skill` + `exemplar.jass` 的 rawcode),⛔ 沒有逐格記行號 —— 一格數字錯了 exemplar 不會說。⭐ 回填法(這就是反駁它的方式):把 exemplar 的觸發器整段讀一遍,逐格貼 `j:<行號>`;真的量不到的填 `taxonomy:<理由>`,⛔ 不要留白。",
+      "params": [
+        "hitCount",
+        "hitIntervalSec",
+        "perHitDamage",
+        "finisherDamage",
+        "finisherRadius",
+        "damageType",
+        "lockTarget",
+        "casterGuard",
+        "trigger"
+      ]
+    },
+    "tpl-locust-line": {
+      "reason": "⭐ `census:` 是這一族的**分群**出處(`pnpm locust:build` 從 236 隻 dummy × 644 個 JASS 生成點,用①有沒有 SetUnitPosition ②生成點在不在 loop 裡 兩根軸分出四群)——⛔ 但分群不是**每一格數字**的出處。回填法＝該群 exemplar rawcode 的生成點行號逐格貼。⚠️⚠️ 已知這張表上至少有一格是**錯的**:`spacing` 的 2 來自「200 wc3u ÷100」,而本專案的換算是 `GGD_PER_WC3 = 11/600`(templates/expand.ts:50)⇒ 200 wc3u = **3.67**。⇒ ⛔ 這一族的數字不可以再被引用成「原作量到的」,直到有人逐格重算。",
+      "params": [
+        "modelKey",
+        "path",
+        "count",
+        "spacing",
+        "lifeSec"
+      ]
+    },
+    "tpl-locust-orb": {
+      "reason": "⭐ `census:` 是這一族的**分群**出處(`pnpm locust:build` 從 236 隻 dummy × 644 個 JASS 生成點,用①有沒有 SetUnitPosition ②生成點在不在 loop 裡 兩根軸分出四群)——⛔ 但分群不是**每一格數字**的出處。回填法＝該群 exemplar rawcode 的生成點行號逐格貼。⚠️⚠️ 已知這張表上至少有一格是**錯的**:`spacing` 的 2 來自「200 wc3u ÷100」,而本專案的換算是 `GGD_PER_WC3 = 11/600`(templates/expand.ts:50)⇒ 200 wc3u = **3.67**。⇒ ⛔ 這一族的數字不可以再被引用成「原作量到的」,直到有人逐格重算。",
+      "params": [
+        "modelKey",
+        "path",
+        "count",
+        "distance",
+        "speed",
+        "lifeSec",
+        "alpha"
+      ]
+    },
+    "tpl-locust-strike": {
+      "reason": "⭐ `census:` 是這一族的**分群**出處(`pnpm locust:build` 從 236 隻 dummy × 644 個 JASS 生成點,用①有沒有 SetUnitPosition ②生成點在不在 loop 裡 兩根軸分出四群)——⛔ 但分群不是**每一格數字**的出處。回填法＝該群 exemplar rawcode 的生成點行號逐格貼。⚠️⚠️ 已知這張表上至少有一格是**錯的**:`spacing` 的 2 來自「200 wc3u ÷100」,而本專案的換算是 `GGD_PER_WC3 = 11/600`(templates/expand.ts:50)⇒ 200 wc3u = **3.67**。⇒ ⛔ 這一族的數字不可以再被引用成「原作量到的」,直到有人逐格重算。",
+      "params": [
+        "modelKey",
+        "path",
+        "anchor",
+        "clip",
+        "lifeSec",
+        "scale",
+        "alpha"
+      ]
+    },
+    "tpl-locust-swarm": {
+      "reason": "⭐ `census:` 是這一族的**分群**出處(`pnpm locust:build` 從 236 隻 dummy × 644 個 JASS 生成點,用①有沒有 SetUnitPosition ②生成點在不在 loop 裡 兩根軸分出四群)——⛔ 但分群不是**每一格數字**的出處。回填法＝該群 exemplar rawcode 的生成點行號逐格貼。⚠️⚠️ 已知這張表上至少有一格是**錯的**:`spacing` 的 2 來自「200 wc3u ÷100」,而本專案的換算是 `GGD_PER_WC3 = 11/600`(templates/expand.ts:50)⇒ 200 wc3u = **3.67**。⇒ ⛔ 這一族的數字不可以再被引用成「原作量到的」,直到有人逐格重算。",
+      "params": [
+        "modelKey",
+        "path",
+        "count",
+        "speed",
+        "distance",
+        "spinDegPerSec",
+        "scale"
+      ]
+    },
+    "tpl-locust-travel": {
+      "reason": "⭐ `census:` 是這一族的**分群**出處(`pnpm locust:build` 從 236 隻 dummy × 644 個 JASS 生成點,用①有沒有 SetUnitPosition ②生成點在不在 loop 裡 兩根軸分出四群)——⛔ 但分群不是**每一格數字**的出處。回填法＝該群 exemplar rawcode 的生成點行號逐格貼。⚠️⚠️ 已知這張表上至少有一格是**錯的**:`spacing` 的 2 來自「200 wc3u ÷100」,而本專案的換算是 `GGD_PER_WC3 = 11/600`(templates/expand.ts:50)⇒ 200 wc3u = **3.67**。⇒ ⛔ 這一族的數字不可以再被引用成「原作量到的」,直到有人逐格重算。",
+      "params": [
+        "modelKey",
+        "path",
+        "speed",
+        "distance",
+        "spinDegPerSec",
+        "scale",
+        "alpha"
+      ]
+    },
+    "tpl-mark-stacks": {
+      "reason": "⭐ exemplar 自己逐字寫著「**無 JASS 出處** —— owner 2026-08-08 口述規格,不是從 war3map.j 復原的家族」⇒ 這一族的出處**存在但不是行號**:它是 owner 的話。回填法＝把他那一則逐字貼成 `owner:2026-08-08「…」`。⛔ 在貼之前它仍然是「引用不到」,因為現在沒有任何東西能檢查那 20 格是不是他說的。",
+      "params": [
+        "markId",
+        "initial",
+        "max",
+        "durationSec",
+        "resetOn",
+        "perStackLost",
+        "lethalMode",
+        "lethalConsume",
+        "surviveHpPct",
+        "lethalDamageTypes",
+        "internalCooldown",
+        "invulnerableSec",
+        "invulnerableScope",
+        "restoreHealthPct",
+        "aoeRadius",
+        "knockbackDistance",
+        "knockbackSpeed",
+        "knockbackFrom",
+        "stunSec",
+        "stunStatusId"
+      ]
+    },
+    "tpl-on-attack": {
+      "reason": "P1 從 29 個 JASS 行為家族恢復模板時,出處只記到 **模板級**(`exemplar.skill` + `exemplar.jass` 的 rawcode),⛔ 沒有逐格記行號 —— 一格數字錯了 exemplar 不會說。⭐ 回填法(這就是反駁它的方式):把 exemplar 的觸發器整段讀一遍,逐格貼 `j:<行號>`;真的量不到的填 `taxonomy:<理由>`,⛔ 不要留白。",
+      "params": [
+        "event",
+        "condition",
+        "bonusDamage",
+        "damageType",
+        "internalCooldown"
+      ]
+    },
+    "tpl-on-hit-react": {
+      "reason": "P1 從 29 個 JASS 行為家族恢復模板時,出處只記到 **模板級**(`exemplar.skill` + `exemplar.jass` 的 rawcode),⛔ 沒有逐格記行號 —— 一格數字錯了 exemplar 不會說。⭐ 回填法(這就是反駁它的方式):把 exemplar 的觸發器整段讀一遍,逐格貼 `j:<行號>`;真的量不到的填 `taxonomy:<理由>`,⛔ 不要留白。",
+      "params": [
+        "chance",
+        "reflectDamage",
+        "damageType",
+        "internalCooldown"
+      ]
+    },
+    "tpl-orbit-array": {
+      "reason": "exemplar 已經帶了 **war3map.j:45749-45764** 的行號範圍 ⇒ 逐格回填的成本只有「把那 16 行讀一遍」。⛔ 它現在還在這張表上,唯一的理由是**還沒有人去讀**。",
+      "params": [
+        "rayCount",
+        "reach",
+        "rayIntervalSec",
+        "damage",
+        "damageType",
+        "castTimeSec"
+      ]
+    },
+    "tpl-periodic-field": {
+      "reason": "exemplar 的 jass 欄逐字是「(P3 待查 —— 引擎面由 delayed.anchor 落地)」 ⇒ 模板級出處**自己就是空的**,而它 status=draft(展開路徑還沒接)。⭐ 這一格的反駁方式最便宜:draft 的模板不出貨 ⇒ 先確認沒有人引用它,再決定是回填出處還是整份下架。",
+      "params": [
+        "intervalSec",
+        "durationSec",
+        "radiusTier",
+        "anchor",
+        "applyTo",
+        "damageTier",
+        "damageType",
+        "castTimeSec"
+      ]
+    },
+    "tpl-proxy-cast": {
+      "reason": "exemplar 已經帶了 **war3map.j:48137-48189** 的行號範圍 ⇒ 同 tpl-orbit-array:回填只差把那 53 行讀一遍。",
+      "params": [
+        "anchor",
+        "radius",
+        "damage",
+        "damageType",
+        "statusId",
+        "statusDurationSec",
+        "castTimeSec"
+      ]
+    },
+    "tpl-proxy-fanout": {
+      "reason": "exemplar 已經帶了 **war3map.j:41741-41762** 的行號範圍 ⇒ 同上。",
+      "params": [
+        "radius",
+        "damage",
+        "damageType",
+        "statusId",
+        "statusDurationSec",
+        "castTimeSec"
+      ]
+    },
+    "tpl-radial-burst": {
+      "reason": "P1 從 29 個 JASS 行為家族恢復模板時,出處只記到 **模板級**(`exemplar.skill` + `exemplar.jass` 的 rawcode),⛔ 沒有逐格記行號 —— 一格數字錯了 exemplar 不會說。⭐ 回填法(這就是反駁它的方式):把 exemplar 的觸發器整段讀一遍,逐格貼 `j:<行號>`;真的量不到的填 `taxonomy:<理由>`,⛔ 不要留白。",
+      "params": [
+        "modelKey",
+        "path",
+        "count",
+        "speed",
+        "distance",
+        "spinDegPerSec",
+        "scale",
+        "touchRadius",
+        "touchSide",
+        "touchDamageTier",
+        "damageType",
+        "castTimeSec"
+      ]
+    },
+    "tpl-random-barrage": {
+      "reason": "exemplar 已經帶了 **war3map.j:48501-48519** 的行號範圍(A0F4 → dummy A011 ×8) ⇒ 同上。",
+      "params": [
+        "count",
+        "intervalSec",
+        "impactDamage",
+        "damageType",
+        "impactRadius",
+        "scatterRadius",
+        "payout",
+        "castTimeSec"
+      ]
+    },
+    "tpl-single-strike": {
+      "reason": "P1 從 29 個 JASS 行為家族恢復模板時,出處只記到 **模板級**(`exemplar.skill` + `exemplar.jass` 的 rawcode),⛔ 沒有逐格記行號 —— 一格數字錯了 exemplar 不會說。⭐ 回填法(這就是反駁它的方式):把 exemplar 的觸發器整段讀一遍,逐格貼 `j:<行號>`;真的量不到的填 `taxonomy:<理由>`,⛔ 不要留白。",
+      "params": [
+        "damage",
+        "damageType",
+        "castTimeSec"
+      ]
+    },
+    "tpl-teleport": {
+      "reason": "P1 從 29 個 JASS 行為家族恢復模板時,出處只記到 **模板級**(`exemplar.skill` + `exemplar.jass` 的 rawcode),⛔ 沒有逐格記行號 —— 一格數字錯了 exemplar 不會說。⭐ 回填法(這就是反駁它的方式):把 exemplar 的觸發器整段讀一遍,逐格貼 `j:<行號>`;真的量不到的填 `taxonomy:<理由>`,⛔ 不要留白。",
+      "params": [
+        "destination",
+        "castTimeSec",
+        "travelSec",
+        "arriveRadius",
+        "damageType"
+      ]
+    },
+    "tpl-traveling-wave": {
+      "reason": "P1 從 29 個 JASS 行為家族恢復模板時,出處只記到 **模板級**(`exemplar.skill` + `exemplar.jass` 的 rawcode),⛔ 沒有逐格記行號 —— 一格數字錯了 exemplar 不會說。⭐ 回填法(這就是反駁它的方式):把 exemplar 的觸發器整段讀一遍,逐格貼 `j:<行號>`;真的量不到的填 `taxonomy:<理由>`,⛔ 不要留白。",
+      "params": [
+        "stepSize",
+        "stepCount",
+        "stepIntervalSec",
+        "aoePerStep",
+        "terminalBurst",
+        "damage",
+        "damageType",
+        "castTimeSec"
+      ]
+    }
+  }
+}

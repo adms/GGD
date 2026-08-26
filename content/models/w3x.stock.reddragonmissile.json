@@ -1,0 +1,17 @@
+{
+  "id": "w3x.stock.reddragonmissile",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/reddragonmissile.glb",
+  "scale": 0.344,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Birth",
+    "run": "Birth",
+    "attack": "Birth",
+    "cast": "Birth",
+    "hurt": "Birth",
+    "death": "Death"
+  },
+  "fxLongAxis": "y",
+  "fxSpawnHeight": 0.55
+}

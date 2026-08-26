@@ -73,7 +73,13 @@ STOCK_MODELS: dict[str, str] = {
         "Abilities\\Spells\\Other\\Monsoon\\MonsoonBoltTarget.mdl",
     # already shipped by the 09-04 pilot (M4 lane) — kept so the path that
     # produced them is reproducible instead of living in a scratchpad.
-    "revivehuman": "Objects\\Spawnmodels\\Human\\HumanBloodExplosion\\ReviveHuman.mdl",
+    # ⚠️ GH#702 —— 這一列的路徑在 2026-08-26 之前是
+    #    `Objects\\Spawnmodels\\Human\\HumanBloodExplosion\\ReviveHuman.mdl`,而那條路徑
+    #    **在四個 MPQ 裡都不存在** ⇒ 這一列跑起來是 `nothing extracted`。
+    #    這一列的存在理由逐字是「kept so the path that produced them is reproducible」——
+    #    ⇒ 它從寫下的那天起就不可重現(第三守則:一句被散文守著的宣稱活過了保存期限)。
+    #    真值取自 OBJECTS.json.units.h007.model,與 war3map.j 的 dummy 完全一致。
+    "revivehuman": "Abilities\\Spells\\Human\\ReviveHuman\\ReviveHuman.mdl",
     "flamestrike1": "Abilities\\Spells\\Other\\Doom\\FlameStrike1.mdl",
     # GH#688 Phase 6 · TORNADO lane — the census's single largest suggestion
     # family: 9 dummies (e00Y/e013/e016/h01S/h027/o01H/o01P/u00A/u00Z) all wear
@@ -100,6 +106,26 @@ STOCK_MODELS: dict[str, str] = {
     # the conversion record.
     "thunderclapcaster":
         "Abilities\\Spells\\Human\\ThunderClap\\ThunderClapCaster.mdl",
+    # GH#702 · APPLY lane (光束砲家族按真相重建) — the two dummies the beam
+    # family needs and GGD has never had.  Both measured off war3map.j, not
+    # guessed:
+    #   h008「特效三號」FragDriller  — the SECOND LAYER the three classics all
+    #     share (j:31909 龜派氣功 · j:32327 約束勝利之劍 · j:32630 ExcaliburMAX),
+    #     always `SetUnitScalePercent(350+15×lvl)` + `SetUnitTimeScalePercent(15)`
+    #     + immediate KillUnit ⇒ a slow-motion shell.  usca 2.0 × 3.65 = 7.3 ⇒
+    #     it is the DOMINANT visible mass in docs/_reference/w3x-shots/saber/,
+    #     ⛔ not the ReviveHuman core (0.2 × 2.65 = 0.53).
+    #   h01P「野戰電子砲」Awaken — the WHOLE of 59-04 野戰型陽電子砲 (j:47757).
+    #     ⚠️ It is a ground rune circle, ⛔ not a beam: docs/_reference/w3x-shots
+    #     /eva01/ shows a magenta circle + rising ring and zero beams.
+    "fragdriller": "Abilities\\Weapons\\FragDriller\\FragDriller.mdl",
+    #   e003「特效」RedDragonMissile — 08-03 龍鬥氣砲咒文 的**唯一**視覺
+    #     (j:28838 `i=1..10 × 150u` 沿施法方向,⭐ 全地圖唯一真的「沿線 N 具」)。
+    #     ⛔ 在此之前它穿的是家族預設 `imported.netherstrike`,而那一份的五個
+    #     primitive 全帶 baseColorFactor [0,0,0,0] ⇒ 08-03 從第一天起零像素。
+    "reddragonmissile":
+        "Abilities\\Weapons\\RedDragonBreath\\RedDragonMissile.mdl",
+    "awaken": "Abilities\\Spells\\Other\\Awaken\\Awaken.mdl",
 }
 
 

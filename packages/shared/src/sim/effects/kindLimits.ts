@@ -453,6 +453,27 @@ export const MODEL_FX_MAX_SPIN_DEG_PER_SEC = 3600;
 /** 模型縮放上界。與 `vfx@1` 的縮放同一個量級，這是防打錯數字的柵欄。 */
 export const MODEL_FX_MAX_SCALE = 20;
 
+/**
+ * ⭐【非等向縮放】`scaleAxis` 每一格的上界（GH#702）。
+ *
+ * ⚠️ ⛔ **它不是「原作的 SetUnitScalePercent 有三個參數」** —— WC3 的
+ * `SetUnitScale(u,x,y,z)` 只讀第一個參數，而這一族在 `war3map.j` 裡寫下的三軸值
+ * 逐字是**同一個數字**（j:31908 / j:32326 / j:32328 / j:47758 四處，三個參數
+ * 一模一樣）⇒ 原作是**等向**的，⛔ 這一格引用不到任何一行 JASS。
+ *
+ * ⭐ 它存在的**量到的**理由：`convert_stock_model.py` 只轉 geoset，
+ * 而這一族的 `.mdx` **每一份**都帶 `PRE2`（粒子）chunk 且被 skip
+ * （ReviveHuman / FragDriller / Awaken 三份實測 `skipped_chunks` 皆含 `PRE2`）——
+ * 原作螢幕上那條又長又窄的光帶住在粒子裡，而 GGD 只拿到核心的 geoset：
+ * `revivehuman.glb` 的包圍盒是 **10.751 × 16.757 × 10.751**（長寬比 **1.56 : 1**）
+ * ⇒ 等向放大它得到的是一顆**愈來愈大的方塊**，⛔ 不是一道光束。
+ *
+ * ⇒ 上界 8：把 1.56:1 拉到 12.5:1 就已經比參考擷圖
+ * （`docs/_reference/w3x-shots/saber/`，目測 ~10:1）更細長了，再大只是打錯字。
+ * ⭐ 一鍵 rollback ＝ 把節點上的 `scaleAxis` 拿掉（缺席 ⇒ [1,1,1] ⇒ 逐位元回到今天）。
+ */
+export const MODEL_FX_MAX_SCALE_AXIS = 8;
+
 /** `onTouch` 的碰觸半徑上界，GGD 單位。 */
 export const MODEL_FX_MAX_TOUCH_RADIUS = 12;
 

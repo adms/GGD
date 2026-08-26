@@ -124,6 +124,13 @@ export interface ModelFxSpawnEvent {
   /** 落點那一發聲音要等多久（秒，絕對量，⛔ 不是 tick） */
   arriveDelaySec?: number;
   scale?: number;
+  /**
+   * ⭐【非等向縮放】`[橫向, 上, 沿行進軸]`，乘在 {@link scale} 之上（GH#702）。
+   * 缺席 ⇒ 客戶端當成 `[1,1,1]`（＝2026-08-26 之前的行為，逐位元不變）。
+   * ⚠️ 軸是**行進座標系**的，⛔ 不是模型自己的 —— `modelFxRig` 乘在 `root` 上，
+   * 而 `axis` 子節點已經把 `model@1.fxLongAxis` 轉到 `+Z`。
+   */
+  scaleAxis?: readonly [number, number, number];
   spinDegPerSec?: number;
   /**
    * ⭐【播 .glb 自己的動畫剪輯】要播哪一條（GH#689）。缺席 ⇒ 客戶端 ⛔ 一條都
@@ -350,6 +357,9 @@ export const spawnModelFxEffect: EffectKindSpec<"spawnModelFx"> = {
         ? { arriveSoundKey: e.arriveSoundKey, arriveDelaySec }
         : {}),
       ...(e.scale !== undefined ? { scale: e.scale } : {}),
+      // ⭐ GH#702 —— 非等向縮放。⛔ sim 不知道模型的長軸是哪一根（那住
+      //    `model@1.fxLongAxis`,客戶端解）,只把作者填的三格送過去。
+      ...(e.scaleAxis !== undefined ? { scaleAxis: e.scaleAxis } : {}),
       ...(e.spinDegPerSec !== undefined ? { spinDegPerSec: e.spinDegPerSec } : {}),
       // ⭐ GH#689 —— 剪輯那兩格。⛔ sim 不解名字（它不知道 .glb 裡有哪些軌），
       //    只把作者填的送過去；`clipTimeScale` 沒有 `clip` 時**不送**（schema

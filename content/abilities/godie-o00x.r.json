@@ -50,7 +50,21 @@
           "vfxId": "fx.prim.ki.explosion-lg",
           "at": "point"
         }
-      ]
+      ],
+      "scaleAxis": [
+        1,
+        1,
+        2.68
+      ],
+      "arriveSoundKey": "explosion"
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-beam-roll",
+      "modelKey": "w3x.stock.fragdriller",
+      "scale": 3.65,
+      "clipTimeScale": 0.15
     },
     {
       "kind": "spawnModelFx",

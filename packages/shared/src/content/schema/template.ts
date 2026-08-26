@@ -109,6 +109,31 @@ export const zParamSlot = z
      * P2/P3 added the vocabulary) fails that test until the flag is removed.
      */
     inert: z.string().min(1).optional(),
+    /**
+     * ⭐ 出處 (GH#702 / owner 2026-08-25「是哪裡走歪讓你又把約束勝利之劍等光束砲
+     * 家族又變成間距排列？請你反省根因並修正」).
+     *
+     * 這一格上面的 `default` 註解已經寫了「the exemplar's MEASURED value (never
+     * invented)」—— 而那是**判準**，它從第一份用到它的模板起就被破了：
+     * `tpl-beam-roll` 出生（`799e6988`）時六個數字槽（speed 30 / distance 14 /
+     * spinDegPerSec 720 / scale 2.5 / touchRadius 1.5 / castTimeSec 1）**一個
+     * 出處都沒帶**，而 `count:6` 在 `a3bc9838` 被寫進來時引用的是 20-03 的
+     * **傷害取樣迴圈**（`war3map.j:32335` 那個 `exitwhen > 6` 一具 unit 都不生），
+     * 於是一個誤讀變成七個出貨節點的「原作就是這樣」。
+     *
+     * ⇒ 這一格把判準換成閘：一個 `default` 要嘛在這裡帶得出**可查的引用**，
+     * 要嘛進 `templateOriginBaseline.json` 帶一個**能被反駁的理由**。
+     * 守衛 `templateDefaultsHaveOrigin.test.ts`（棘輪只能變短）。
+     *
+     * 文法（至少含一個 token，其餘自由散文）：
+     *   `j:<行號>`      war3map.j 的行 —— ⭐ 守衛**真的去讀那一行**，空行/越界＝紅
+     *   `census:<key>`  某支普查腳本的量測結果（tools/… 的輸出）
+     *   `owner:<日期>`  owner 的裁決（逐字引言接在後面）
+     *   `derived:<式>`  從另一個有出處的值算出來的（要寫出算式）
+     *   `taxonomy:<理由>` 不是量出來的量 —— 分類/身分的預設（enum 的挑選）
+     *   `inert`         這一格在出貨設定下產不出任何東西（配 `inert` 欄位）
+     */
+    origin: z.string().min(1).optional(),
   })
   .strict();
 export type ParamSlot = z.infer<typeof zParamSlot>;

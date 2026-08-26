@@ -434,17 +434,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "機制先行；採用者要等 57 個呼叫點的逐技能接線批（GH#688 Phase 6 的 alpha 掃描）" +
       "把「哪幾具 dummy 是恆定半透明」從 JASS 撈出來 —— ⛔ 不要為了讓它變綠自己挑一具調透明。",
   },
-  // ═══ GH#689 glb 動畫剪輯播放（含凍播）2026-08-25 ═══════════════════════════
-  "field:abilities.effects[]#spawnModelFx.clipTimeScale": {
-    status: "landing",
-    since: "2026-08-25",
-    why:
-      "凍播那一格（原作 `SetUnitTimeScalePercent` ÷ 100；h008 FragDriller 是 **15%** ＋ " +
-      "立即 `KillUnit` ＝ 慢動作展開的爆殼，悟空 Excalibur／ExcaliburMAX／Turtle Power " +
-      "三支共用）。⚠️ schema refine 把它與 `clip` 綁成**成對**（沒有 clip 就沒有人讀它）" +
-      "⇒ 它的採用率必然等於 `clip` 的採用率 —— 一起紅、一起解。census 量到 8–9 個 " +
-      "`SetUnitTimeScalePercent` 呼叫點在等它。",
-  },
   // ═══ 週期領域機制落地 2026-08-23 ══════════════════════════════════════════
   "field:abilities.effects[]#delayed.anchor": {
     status: "landing",
@@ -1689,9 +1678,9 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // --- landing: the schema arrived on this branch, the content arrives with
   // the bake it describes.
   "field:models.voxel": {
-    status: "landing",
+    status: "debt",
     since: "2026-07-26",
-    why: "task #229's 鑄形工坊 studio authors this block and task #226's `pnpm voxel:gen` consumes it; the field is the seam BETWEEN the two, so it lands with the schema and is populated when the first generated model doc is written (the studio's own save, or #226's five archetype docs). Zero adoption today is correct — no generated model exists yet — and NOT permanent: `packages/shared/src/voxel/doc.test.ts` proves a populated doc validates, so the only thing missing is a saved character. Delete this entry the moment one lands.",
+    why: "task #229's 鑄形工坊 studio authors this block and task #226's `pnpm voxel:gen` consumes it; the field is the seam BETWEEN the two, so it lands with the schema and is populated when the first generated model doc is written (the studio's own save, or #226's five archetype docs). Zero adoption today is correct — no generated model exists yet — and NOT permanent: `packages/shared/src/voxel/doc.test.ts` proves a populated doc validates, so the only thing missing is a saved character. Delete this entry the moment one lands. ⚠️ 2026-08-26: re-filed from `landing` to `debt` — the 30-day grace expired and no generated model doc has been written since 2026-07-26. Nothing about the seam changed; what changed is the honesty of the label: `landing` promised imminent adoption and that promise is a month old. `debt` keeps it visible in the banner every run instead of expiring into silence.",
   },
 
   // "enum:abilities.effects[]#applyBuff.modifiers[].op=capRaise" exemption

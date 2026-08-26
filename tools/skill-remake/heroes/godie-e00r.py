@@ -366,15 +366,56 @@ A("59-04", "59-04 野戰型陽電子砲", "ground", [90, 90, 90], [350, 500, 650
            #    而這個節點沒有落點畫面 ⇒ 聲音說爆炸、螢幕上什麼都沒有。
            #    ki 系（初號機的陽電子砲同族）⇒ 用既有的 `fx.prim.ki.explosion-lg`,
            #    ⛔ 零新資產。
-           # ⭐ GH#692 —— 原作是**一具**光束,⛔ 不是龜派那排六具:
-           #    war3map.j:47757 `CreateNUnitsAtLoc( 1, 'h01P', … )`(生成數字面值 1),
-           #    隨後 SetUnitScalePercent 120+30×lvl%(150–210%)把那一具放大。
-           #    ⇒ 逐支覆寫 `count:1`(模板預設 6 是 09-04 的量值,⛔ 不動模板);
-           #    `spacing` 在 count=1 時天然無效,不必覆寫。
-           #    scale 沿用模板預設 —— h01P 的 dummy 基準尺寸沒有換算到 GGD 單位的
-           #    量值,自己編一個數字就是第一守則要防的猜測;rollback = 刪這一格。
+           # ⭐ GH#692 —— 原作是**一具**光束:war3map.j:47757
+           #    `CreateNUnitsAtLoc( 1, 'h01P', … )`(生成數字面值 1),隨後
+           #    SetUnitScalePercent 120+30×lvl%(150–210%)把那一具放大。
+           # ⛔⛔ GH#702（owner 2026-08-25「是哪裡走歪⋯請你反省根因並修正」）——
+           #    ⭐ **這一格的逐支覆寫已經刪掉了**,因為它正是走歪的第三段:
+           #    GH#692 當時的結論逐字是「逐支覆寫 count:1(模板預設 6 是 09-04 的
+           #    量值,⛔ 不動模板)」—— ⛔ 而「6 是 09-04 的量值」是**誤讀**:
+           #    09-04 的 `i=1..6 × 200`(war3map.j:31925)是 h006 FlameStrike1
+           #    **火柱**的迴圈(現在有自己的節點,preset tpl-locust-line),
+           #    光束 h007/h008 是 `CreateNUnitsAtLoc( 1, … )`(j:31907 j:31909)。
+           #    ⇒ 家族預設本來就該是 1。逐支覆寫**掩蓋**了它:59-04 看起來對了,
+           #    另外六個節點繼續錯了一整版。
+           #    ⇒ 修在**模板那一格**(tpl-beam-roll.params.count.default = 1,
+           #    帶 origin 行號),這裡回到「一格都不寫」——第〇·四守則:同一個數字
+           #    ⛔ 沒有第二個住處(閘:animationFxTemplate.test.ts 會指名它)。
+           # ⭐⭐ GH#702 APPLY —— 這一支終於穿**自己的**模型。
+           #    ⛔ 這個節點一格 `modelKey` 都沒寫 ⇒ 它吃家族預設,而 2026-08-26 之前
+           #    那個預設是 `imported.netherstrike` ——「黑化亞瑟王的勝利劍」。
+           #    ⇒ 初號機的陽電子砲長成 Saber 的劍氣(modelFxStagingContract ⑤ 逐字:
+           #    「modelKey 是**身分**不是幾何」),而三支技能收斂成同一具模型。
+           # ⚠️ 誠實更正:2026-08-26 實測 netherstrike.glb 是 **5/5 primitive 可見**
+           #    (a9cf7187 的 28 份重烘之後,`ZERO_PIXEL_FX_MODELS` 已經空了)——
+           #    ⛔ 所以這**不是**「它從來沒畫出來過」,是「它畫出來的是別人」。
+           # ⭐ 真值 war3map.j:47757 —— `h01P`「野戰電子砲」穿的是
+           #    `Abilities\Spells\Other\Awaken\Awaken.mdl`（OBJECTS.json.units.h01P.model）。
+           #    2026-08-26 用 convert_stock_model.py 轉出來（3/4 primitive 可見 ·
+           #    動畫 Stand · tools/w3x-import/out/stock/convert-awaken.json）。
+           # ⭐ `scale` 1.5 —— j:47758 `SetUnitScalePercent( 120 + 技能等級×30, …)`,
+           #    WC3 的技能等級從 **1** 起算 ⇒ 等級 1 是 **150%**。
+           #    ⛔ 2026-08-25 之前 tpl-beam-roll 的 description 寫「59-04 scale:1.2」——
+           #    那是把**公式的常數項**當成了值,四級其實是 150/180/210%。
+           # ⭐ `scaleAxis` 第三格 3.25 —— 「渲染長度 ≈ 這一支自己打得到的距離」:
+           #      16.757(awaken.glb bbox_y) × 0.101(model@1.scale) × 1.5 = 2.539
+           #      → 上面那條 damageLine 的 length **8.25** ⇒ 8.25 / 2.539 = **3.25**
+           #    ⛔ 它引用不到 JASS（WC3 的 SetUnitScale 只讀第一個參數,而 j:47758
+           #    三個參數逐字相同 ⇒ 原作等向）—— 出處是 owner 2026-08-23「橫放的
+           #    光束砲」＋ PRE2 粒子沒有被轉檔器帶過來這個量到的缺口。
+           #    ⭐ 一鍵 rollback ＝ 把 scaleAxis 拿掉（缺席 ⇒ [1,1,1]）。
+           # ⚠️⚠️ 誠實記下一個**與原作相反**的地方:`docs/_reference/w3x-shots/eva01/`
+           #    四張擷圖上 59-04 是**繞著施法者的粉紫色符文圓陣＋上升的環**,
+           #    ⛔ 一道光束都沒有（Awaken.mdl 是 WC3 的「甦醒」演出,不是砲）。
+           #    ⇒ 照第〇·六守則的階梯,owner 的新版設計（第 1 層,他逐字點名
+           #    「初號機陽離子砲…總是要看到橫放的光束砲」）**贏過** JASS（第 3 層）
+           #    ⇒ 保持 tpl-beam-roll。⭐ rollback = 把 preset 換成 tpl-locust-strike
+           #    （定點播一次,不橫放）—— 那才是原作的形狀。
            {"kind": "spawnModelFx", "shape": "single", "preset": "tpl-beam-roll",
-            "count": 1,
+       # ⭐ 2026-08-26 —— 家族預設的 `arriveSoundKey` 已移除（無 JASS 出處,
+       #    且 13 個節點裡 6 個沒有落點畫面 ⇒ 聲音說謊）⇒ **有畫面的自己宣告**。
+           "arriveSoundKey": "explosion",
+            "modelKey": "w3x.stock.awaken", "scale": 1.5, "scaleAxis": [1, 1, 3.25],
             "onArrive": [{"kind": "spawnVfx", "vfxId": "fx.prim.ki.explosion-lg",
                           "at": "point"}]}])
 

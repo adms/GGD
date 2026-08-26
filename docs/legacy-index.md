@@ -23,11 +23,11 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 1512 個檔案**，分佈在 2 個隔離區。
+**目前共 1545 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
-| [`docs/legacy/`](legacy-index.md#docslegacy) | 1072 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
+| [`docs/legacy/`](legacy-index.md#docslegacy) | 1105 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
 | [`content/_legacy/`](legacy-index.md#contentlegacy) | 440 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
@@ -35,7 +35,7 @@ owner 2026-08-13：
 
 ---
 
-## `docs/legacy/` —— 1072 檔
+## `docs/legacy/` —— 1105 檔
 
 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）
 
@@ -1077,6 +1077,39 @@ owner 2026-08-13：
 | `_overwrites/overwrite_temp_20260826-020235/apps/client/src/vfx/beamAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260826-020351/tools/parallel-gates/ship.mjs` | （.mjs 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260826-021339/tools/w3x-import/extract_stock_vfx.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-111436/docs/_reports/TRI-A_temp_20260826-0300.md` | TRI-A 分診報告 —— #300–#559 的 open issue —— 日期 2026-08-26 · lane TRI-A · 範圍：`gh issue list --state open` 落在 #300–#559 的 **23 張** | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-111444/docs/_reports/TRI-A_temp_20260826-0300.md` | TRI-A 分診報告 —— #300–#559 的 open issue —— 日期 2026-08-26 · lane TRI-A · 範圍：`gh issue list --state open` 落在 #300–#559 的 **23 張** | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-112043/tools/w3x-import/test/particles_checks.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-112055/tools/w3x-import/test/particles_checks.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-113251/content/ability-templates/tpl-beam-roll.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-113353/content/ability-templates/tpl-beam-roll.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-113619/content/ability-templates/tpl-beam-roll.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-113630/content/ability-templates/tpl-beam-roll.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-113639/content/ability-templates/tpl-beam-roll.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-113722/docs/_reports/BEAMTRUTH_temp_20260826-1200.md` | 光束砲家族 —— 逐格 JASS 真相稽核（TRUTH-JASS lane） —— 日期：2026-08-26 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-113730/docs/_reports/BEAMTRUTH_temp_20260826-1200.md` | 光束砲家族 —— 逐格 JASS 真相稽核（TRUTH-JASS lane） —— 日期：2026-08-26 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-113740/docs/_reports/BEAMTRUTH_temp_20260826-1200.md` | 光束砲家族 —— 逐格 JASS 真相稽核（TRUTH-JASS lane） —— 日期：2026-08-26 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-113755/docs/_reports/BEAMTRUTH_temp_20260826-1200.md` | 光束砲家族 —— 逐格 JASS 真相稽核（TRUTH-JASS lane） —— 日期：2026-08-26 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-113757/apps/client/src/render/modelFxStatic.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-113802/docs/_reports/BEAMTRUTH_temp_20260826-1200.md` | 光束砲家族 —— 逐格 JASS 真相稽核（TRUTH-JASS lane） —— 日期：2026-08-26 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-121249/apps/client/src/render/modelFxRig.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-124430/tools/w3x-import/build_ability_w3a.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-124438/tools/w3x-import/build_ability_w3a.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-124516/tools/w3x-import/build_ability_w3a.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-124521/tools/w3x-import/build_ability_w3a.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-124622/tools/w3x-import/build_ability_w3a.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-125749/docs/_reports/beamverify_visual-proof_20260826-1200/frames.md` | 光束砲家族 —— 連續圖片驗收（VERIFY lane · GH#702 · 2026-08-26） —— 台子：`apps/client/public/beam-audition.html?ability=<id>`（`client-beam` :39673，已在跑）。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-130333/tools/w3a-translate/gen.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-130337/tools/w3a-translate/gen.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-130344/tools/w3a-translate/gen.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-130351/tools/w3a-translate/gen.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-130357/tools/w3a-translate/gen.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-130400/tools/w3a-translate/gen.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-130550/packages/shared/src/ops/w3aTranslationGaps.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-130620/tools/w3a-translate/gap-ledger.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-130641/tools/w3a-translate/gen.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-130652/tools/w3a-translate/gap-ledger.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260826-130718/package.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/04.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/06.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/08.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |

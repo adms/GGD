@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_e5636e2289ff",
+    "contentVersion": "cv_56268b4a259c",
     "collections": {
       "champions": {
-        "hash": "2131fe22b8bb",
+        "hash": "38fc763afe0c",
         "count": 71
       },
       "abilities": {
-        "hash": "70fb055492e3",
+        "hash": "efc819b074e2",
         "count": 421
       },
       "items": {
@@ -46,8 +46,8 @@
         "count": 87
       },
       "models": {
-        "hash": "26570af4d14c",
-        "count": 133
+        "hash": "a8f3ae27e1af",
+        "count": 136
       },
       "vfx": {
         "hash": "f815779bb604",
@@ -58,7 +58,7 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "dd686e6a0433",
+        "hash": "eb84256bdfce",
         "count": 46
       }
     },
@@ -89,7 +89,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "c6d619f8",
+    "fingerprint": "89bae3c0",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -417,6 +417,7 @@
       "root",
       "runOnEmptyHit",
       "scale",
+      "scaleAxis",
       "scatterRadius",
       "scripted",
       "shape",
@@ -1390,7 +1391,8 @@
           "params": {
             "modelKey": {
               "type": "docRef",
-              "default": "imported.netherstrike"
+              "default": "w3x.stock.revivehuman",
+              "origin": "OBJECTS.json.units —— 這一族 13 個生成點裡穿 **ReviveHuman.mdl** 的有 h007(特效龜派·usca 1.25) · h00S(勝利劍·0.2) · h01V(81-03天神烈破·3.0) 共 **3 個 unit type / 6 個生成點**(j:26790 j:31907 j:32324 j:32628 j:32916 j:36048),而 NetherStrike **只有 h00X 一個**(j:32322,而且只在黑化亞瑟王 E00Q 身上 —— j:32227 的 if/else)。⚠️ 2026-08-26 之前這一格是 `imported.netherstrike`(1/13),於是每一個沒有逐支寫 modelKey 的成員都**穿了黑化 Saber 的衣服**:59-04 的符文陣與 08-03 的龍息彈長成同一具劍氣(modelFxStagingContract ⑤ 逐字:「modelKey 是**身分**不是幾何」)。⛔ 這**不是**可見性問題 —— 2026-08-26 實測 netherstrike.glb 是 5/5 primitive 可見(a9cf7187 的 28 份重烘之後,ZERO_PIXEL_FX_MODELS 已經空了)。"
             },
             "path": {
               "type": "enum",
@@ -1401,53 +1403,74 @@
                 "radial",
                 "static"
               ],
-              "default": "static"
+              "default": "static",
+              "origin": "owner:2026-08-24「光束砲**原地開火**,只有波飛出去」＋ j:32322 j:31907 j:28838 j:47757 —— 四支經典的觸發器一次 SetUnitPosition 都沒有:dummy 生在施法者前方 150u 的一個點上,兩秒後 KillUnit。"
             },
             "speed": {
               "type": "number",
               "default": 30,
               "min": 1,
               "max": 200,
-              "inert": "path 預設 static（2026-08-24 裁決:光束原地開火）⇒ 不位移,speed 讀不到。rollback 把 params.path.default 改回 forward 的那一刻,把這格 inert 拿掉,守衛會逼你。"
+              "inert": "path 預設 static（2026-08-24 裁決:光束原地開火）⇒ 不位移,speed 讀不到。rollback 把 params.path.default 改回 forward 的那一刻,把這格 inert 拿掉,守衛會逼你。",
+              "origin": "inert —— sim/effects/spawnModelFx.ts 對 path==='static' 逐字把速度夾成 0。⚠️⚠️ 這一格**從來沒有出處**:出生時(799e6988)就是 30,而 exemplar 20-03 在原作裡零位移 ⇒ 30 是憑空的。⭐ rollback 回 forward 的那一刻,要先量到一個真的速度才能拿掉 inert(對照:04-03 龍破斬的 45u/0.03s×11/600 = 27.5 是量出來的,那才是這一格該長的樣子)。"
             },
             "distance": {
               "type": "number",
               "default": 14,
               "min": 1,
               "max": 48,
-              "inert": "同 speed —— static 不位移,唯一終止條件是 lifeSec。"
+              "inert": "同 speed —— static 不位移,唯一終止條件是 lifeSec。",
+              "origin": "inert —— 同 speed。⚠️ 同樣**沒有出處**:出生時就是 14(= 764 wc3u),而 20-03 的傷害線只到 6×200 = 1200 wc3u ⇒ ×11/600 = 22.0,對不上。"
             },
             "count": {
               "type": "number",
-              "default": 6,
+              "default": 1,
               "min": 1,
-              "max": 12
+              "max": 12,
+              "origin": "j:26790 j:31907 j:31909 j:32322 j:32324 j:32327 j:36048 j:47757 —— 光束 dummy 的**每一個**生成點都是 CreateNUnitsAtLoc( **1**, … ),⛔ 沒有一處在迴圈裡。⚠️ 2026-08-25 這一格是 **6**,引用的是 20-03 的 exitwhen > 6(j:32335 j:32346)與 09-04 的 exitwhen > 6(j:31925 j:31937)——⛔ 那兩對迴圈**一具 unit 都不生**,它們是 GetUnitsInRangeOfLocMatching(400) 的傷害取樣格(j:32337 j:32348 j:31939),早在 fa8dc538 就翻成 onTouch ⇒ 拿它當演出 count = 同一段 JASS 算兩次。⭐ 真的沿線 N 具的是 08-03 的 e003(j:28838, i=1..10×150)與 09-04 的 h006 FlameStrike1(j:31926, i=1..6×200),兩者都是**別的模型**,而後者現在有自己的節點(preset: tpl-locust-line)。"
             },
             "spacing": {
               "type": "number",
               "default": 2,
               "min": 0.5,
-              "max": 48
+              "max": 48,
+              "origin": "⛔ **家族預設 count=1 時這一格讀不到**（沿線間距只有 ≥2 具才有意義）—— ⚠️ 但它**不是 inert**：任何一支逐支把 count 覆寫成 >1，展開器就會讀它（`paramsSchema` 閘實測會動）。⭐ 值 2 的出處已撤回：原本寫「200 wc3u ÷100」，而換算是 `GGD_PER_WC3 = 11/600`（expand.ts:50）⇒ 200 wc3u = **3.67**，⛔ 不是 2。⭐ 而這一族**沒有任何一支**原作是沿線 N 具（13 個生成點全是 CreateNUnitsAtLoc(1,…)）⇒ 今天沒有成員需要它。反駁方式：哪天真的有成員要沿線，把值改成量到的那個距離並在這裡寫上 j:行號。"
             },
             "spinDegPerSec": {
               "type": "number",
               "default": 720,
               "min": -3600,
               "max": 3600,
-              "optional": true
+              "optional": true,
+              "origin": "taxonomy:演出選擇 —— fa8dc538 的 commit 訊息逐字寫「spinDegPerSec 720(翻滾)」:它是**家族名字**(翻滾光束)的設計選擇,⛔ 不是量出來的。原作的 h00X/h00S/h007/h008 一次旋轉呼叫都沒有(SetUnitFacing 只在生成時給一次朝向)。⭐ 它可以被反駁(有人量到原作模型自帶旋轉動畫、或 owner 說不要轉),⛔ 但它不可以再被寫成「原作就是這樣」。"
+            },
+            "clip": {
+              "type": "enum",
+              "values": [
+                "idle",
+                "run",
+                "attack",
+                "cast",
+                "hurt",
+                "death"
+              ],
+              "default": "idle",
+              "origin": "derived:model@1.clipMap ＋ 轉檔紀錄的 animations —— 這一族**每一份 .glb 只有一條剪輯**,而 clipMap 已經把它對到 `idle`:revivehuman/awaken = `Stand`(tools/w3x-import/out/stock/convert-awaken.json.animations)、fragdriller = `Birth`(convert-fragdriller.json)、reddragonmissile = `Birth`(convert-reddragonmissile.json)。⇒ 家族層填 `idle` 一格解五支。⚠️ 缺席 ⇒ modelFxRig **一條都不播**(schema 檔頭逐字)⇒ 光束是一具定格的雕像 —— 而那與「沒做」在畫面上長得一模一樣(失敗形態②)。⛔ 原作那一側沒有 SetUnitAnimation 呼叫:WC3 的 dummy 生出來就自動播 birth/stand,⇒ 這一格是把那個**隱含**行為寫出來,⛔ 不是新增演出。"
             },
             "scale": {
               "type": "number",
-              "default": 2.5,
+              "default": 2.65,
               "min": 0.1,
               "max": 20,
-              "optional": true
+              "optional": true,
+              "origin": "j:32326 —— exemplar 20-03 的 SetUnitScalePercent( 250.00 + 技能等級×15, …) ⇒ **等級 1 是 265% = 2.65**。⚠️⚠️ 2026-08-26 之前這一格是 **2.5**,理由寫「250% ＝ 2.5」—— 而 WC3 的技能等級從 **1** 起算(GetUnitAbilityLevelSwapped),⛔ 沒有任何一級等於 250%:四級是 265/280/295/310%。⇒ 2.5 是把**公式的常數項**當成了值(同一個病在 59-04 的 `scale:1.2` 上犯過第二次:120+30×lvl 的最低級是 150%)。⭐ 這一格只管**這一發多粗**;「多長」住 `scaleAxis` 的第三格(逐支),見 description。⛔ 逐支的 w3u `usca`(h00S 0.2 vs h007 1.25 vs h01V 3.0,15 倍差)**刻意沒有**乘進來 —— 理由在 description 的『兩個誠實的偏離』。"
             },
             "touchRadius": {
               "type": "number",
               "default": 1.5,
               "min": 0.5,
-              "max": 12
+              "max": 12,
+              "origin": "taxonomy:接觸盒 —— ⛔ **無 JASS 出處**:exemplar 20-03 的三個半徑是 512(j:32314) · 400(j:32337) · 400(j:32348),換算 ×11/600 是 9.39 與 7.33,w3a 的 area 是 200 ⇒ 3.67 —— 沒有一個是 1.5,而它出生時(799e6988)就是 1.5。⭐ 目前的立場:它是**演出用的**接觸半徑,原作那一段傷害幾何早就翻成 onTouch 的傷害葉了 ⇒ 把 1.5 換成 7.33 必須連 onTouch 一起看,⛔ 不是單獨改一個數字。⚠️ 出貨的 7 個節點一個都沒有 onTouch ⇒ modelFxPreset 的 TOUCH_FIELDS 不注入 ⇒ 這一格目前**到達不了任何出貨節點**。"
             },
             "touchSide": {
               "type": "enum",
@@ -1456,7 +1479,8 @@
                 "allies"
               ],
               "default": "enemies",
-              "optional": true
+              "optional": true,
+              "origin": "taxonomy:陣營 —— 「傷害招打敵人」是分類預設,⛔ 不是量。同 touchRadius:沒有 onTouch 的節點注入不到它。"
             },
             "touchDamageTier": {
               "type": "enum",
@@ -1467,7 +1491,8 @@
                 "大",
                 "極大"
               ],
-              "default": "小"
+              "default": "小",
+              "origin": "taxonomy:五級距 —— 傷害走級距表(第〇·四守則),⛔ 這裡不填算好的數字;預設挑最保守的一格,每一支技能自己選。⚠️ 它⛔ 不在 modelFxPreset 的任何一張欄位表上 ⇒ 到達不了出貨的 spawnModelFx 節點(只有走 expand() 的模板卡讀得到)。"
             },
             "damageType": {
               "type": "enum",
@@ -1476,7 +1501,8 @@
                 "physical",
                 "true"
               ],
-              "default": "magic"
+              "default": "magic",
+              "origin": "taxonomy:傷害類型 —— 光束砲是法術,分類預設。同 touchDamageTier:不在 modelFxPreset 的欄位表上。"
             },
             "castTimeSec": {
               "type": "number",
@@ -1484,24 +1510,27 @@
               "min": 0,
               "max": 5,
               "unit": "s",
-              "optional": true
+              "optional": true,
+              "origin": "taxonomy:施法前搖 —— ⛔ **無出處**:A0D5 的 w3a 沒有給 cast point,觸發器裡也沒有對應的等待。1 秒是出生時(799e6988)挑的。⚠️ 它⛔ 不在 modelFxPreset 的欄位表上 ⇒ 到達不了出貨節點 ⇒ 目前改它逐位元沒有效果(第一·五守則:所以它也不可以被寫進卡面)。"
             },
             "soundKey": {
               "type": "docRef",
               "default": "wc3.crushingwavecaster1",
-              "optional": true
+              "optional": true,
+              "origin": "taxonomy:選音 —— ⛔ 不是原作音:20-03 的觸發器一個 PlaySound 都沒有(同族只有 08-03 的 gg_snd_ThunderClapCaster,j:28827)。2026-08-23 補這一格是為了讓整族**不再無聲**(在此之前 7 個節點一個聲音鍵都沒有),值是從 wc3 音庫挑的。⭐ 一鍵 rollback 住 content/config/audio-map.json 的 modelFxSound.enabled。"
             },
             "arriveSoundKey": {
               "type": "docRef",
-              "default": "explosion",
-              "optional": true
+              "optional": true,
+              "origin": "⛔ **刻意沒有預設**（2026-08-26）：原本預設 \"explosion\" 是我選的（無 JASS 出處），而家族裡 **6/13** 個節點沒有 onArrive ⇒ 它們變成「聲音說爆炸、螢幕上什麼都沒有」（第一·五守則；閘 beamArriveVfx.test.ts 逐支點名）。⭐ 有落點畫面的節點**自己宣告**這一格。"
             },
             "lifeSec": {
               "type": "number",
               "default": 2,
               "min": 0.1,
               "max": 10,
-              "unit": "s"
+              "unit": "s",
+              "origin": "j:32357 —— exemplar 20-03 的 TriggerSleepAction( **2** ) 之後才 KillUnit+RemoveUnit;同族 09-04 是 j:31948、08-03 是 j:28857,三支同值。"
             }
           }
         },
@@ -4116,12 +4145,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "c6d619f8",
+    "engineFingerprint": "89bae3c0",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 c6d619f8 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 89bae3c0 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -4910,5 +4939,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "792e079137a9"
+  "profileDigest": "43811aea5032"
 }

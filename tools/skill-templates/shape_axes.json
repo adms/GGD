@@ -1,703 +1,704 @@
 {
- "_why": "⭐ 「技能的**形狀**」這件知識的**唯一住處**（第〇·四守則）。scan_shapes.py ⛔ 不自己內建任何欄位名 —— 它只讀這一份。owner 技能模板群組⑨逐字：「重新掃描套用在全部技能，檢查是否有**動畫效果等待、迴圈、持續特效**等機制，形成新模板及套用設定」。這一份就是把那三個詞翻成「出貨 JSON 裡的哪一格算數」。",
- "_gate": "⛔ `scan_shapes.py --check` 會把 content/abilities/** 裡**每一個**出現過的欄位名逐一對照這一份。落在 axes / byKind / ignored 之外的 ⇒ **離開碼非零**，訊息指名那個欄位與它出現在哪個 kind。⇒ 引擎加一個新的時序機制（新的 delaySec 家族欄位）而沒有人替它做決定時，這支掃描器會紅，⛔ 不是安靜地把它算成「沒有形狀」。",
- "_axesWhy": "六條軸。前三條逐字來自 owner 的⑨，後三條是掃的當下從資料裡掉出來的（它們與前三條共用同一批欄位，分不開就會把「連續七次斬擊」和「持續七秒的光環」算成同一群）。",
- "axes": {
-  "等待": {
-   "owner": "動畫效果等待",
-   "means": "施放到效果發生之間有一段**什麼都還沒發生**的時間窗（延遲結算、吟唱、飛行時間、演出前搖）。",
-   "whyItsOwnAxis": "它決定的是「這支技能躲不躲得掉」。⛔ 與『持續』不同：等待期間**還沒有東西落地**。"
-  },
-  "迴圈": {
-   "owner": "迴圈",
-   "means": "同一件事**重複**發生：每隔 T 秒一次、共 N 次、或每第 N 次攻擊一次。",
-   "whyItsOwnAxis": "重複是**排程**問題（絕對 tick、終止條件、施法者死掉怎麼辦），⛔ 不是把傷害乘以 N。"
-  },
-  "持續": {
-   "owner": "持續特效（時間那一半）",
-   "means": "一段有**期間**的狀態／增益／無敵／光環；到期會自己收掉。",
-   "whyItsOwnAxis": "它有到期語意（絕對 tick）與可否驅散，而『迴圈』沒有。"
-  },
-  "續效特效": {
-   "owner": "持續特效（畫面那一半）",
-   "means": "特效**本身**有壽命／掛載點／分層／延遲層（spawnVfx.durationSec · persistentVfx · vfxLayers）。",
-   "whyItsOwnAxis": "owner ④ 逐字點名『球體綁定位置 · 特效 pitch/scale/color/透明度 · 特效音效綁定』是要住 JSON 的東西。⛔ 一支『持續 6 秒』的 buff 沒有續效特效，畫面上跟沒放一樣。"
-  },
-  "多段": {
-   "owner": "（掃描時掉出來的）",
-   "means": "一次施放拆成**多下**：連續 N 次斬擊、連鎖 N 跳、最後一下不一樣（finalEffects）、命中後再接一段（onHitTargets）。",
-   "whyItsOwnAxis": "⛔ 與『迴圈』刻意分開：多段不必然等距（連段可以是 0.1/0.1/0.6），而等距重複不必然有段落感。混成一軸就寫不出 tpl-combo-finisher 與 tpl-periodic-field 的差別。"
-  },
-  "路徑": {
-   "owner": "（掃描時掉出來的）",
-   "means": "效果**沿著空間移動**：投射物、衝刺、跳躍、擊退、沿向量分段推進（delayed.advance）、模型特效走一條 path。",
-   "whyItsOwnAxis": "GH#393 owner 逐字：「JASS 應該有安排**位置移動**播放的多次特效搭配傷害」—— 那是『迴圈 × 路徑』，而只有兩軸分開才數得出來有幾支要它。"
-  }
- },
- "_fieldsWhy": "欄位名 → 軸。⚠️ 一格可以同時屬於兩軸（`speed` 既是飛行時間＝等待，也是空間移動＝路徑）。⛔ 這裡只放**跨 kind 同義**的欄位；一格在不同 kind 語意不同的放 byKind。",
- "fields": {
-  "delaySec": [
-   "等待"
-  ],
-  "firstAtCast": [
-   "等待"
-  ],
-  "speed": [
-   "等待",
-   "路徑"
-  ],
-  "intervalSec": [
-   "迴圈"
-  ],
-  "jumpIntervalSec": [
-   "迴圈"
-  ],
-  "amountPerTick": [
-   "迴圈"
-  ],
-  "everyNth": [
-   "迴圈"
-  ],
-  "steps": [
-   "迴圈"
-  ],
-  "duration": [
-   "持續"
-  ],
-  "durationSec": [
-   "持續"
-  ],
-  "lifeSec": [
-   "持續",
-   "續效特效"
-  ],
-  "permanent": [
-   "持續"
-  ],
-  "addSec": [
-   "持續"
-  ],
-  "maxRemainingSec": [
-   "持續"
-  ],
-  "vfxId": [
-   "續效特效"
-  ],
-  "at": [
-   "續效特效"
-  ],
-  "preset": [
-   "續效特效"
-  ],
-  "modelKey": [
-   "續效特效"
-  ],
-  "stackVisual": [
-   "續效特效"
-  ],
-  "finalEffects": [
-   "多段"
-  ],
-  "onHitTargets": [
-   "多段"
-  ],
-  "onHitTargetsMode": [
-   "多段"
-  ],
-  "perStrike": [
-   "多段"
-  ],
-  "finisher": [
-   "多段"
-  ],
-  "hitOncePerTarget": [
-   "多段"
-  ],
-  "advance": [
-   "路徑"
-  ],
-  "path": [
-   "路徑"
-  ],
-  "length": [
-   "路徑"
-  ],
-  "width": [
-   "路徑"
-  ],
-  "aim": [
-   "路徑"
-  ],
-  "fromCaster": [
-   "路徑"
-  ],
-  "distance": [
-   "路徑"
-  ],
-  "distanceTier": [
-   "路徑"
-  ],
-  "maxDistance": [
-   "路徑"
-  ],
-  "throwDistance": [
-   "路徑"
-  ],
-  "apexHeight": [
-   "路徑"
-  ],
-  "landRadius": [
-   "路徑"
-  ],
-  "dragToCaster": [
-   "路徑"
-  ],
-  "stopShortUnits": [
-   "路徑"
-  ],
-  "spinDegPerSec": [
-   "路徑"
-  ],
-  "touchRadius": [
-   "路徑"
-  ],
-  "touchSide": [
-   "路徑"
-  ],
-  "touchOncePerTarget": [
-   "路徑"
-  ],
-  "onTouch": [
-   "路徑"
-  ],
-  "onArrive": [
-   "路徑"
-  ],
-  "onLand": [
-   "路徑"
-  ],
-  "onEnd": [
-   "路徑"
-  ],
-  "projectileId": [
-   "路徑"
-  ],
-  "jumpRange": [
-   "路徑"
-  ],
-  "tint": [
-   "續效特效"
-  ],
-  "alpha": [
-   "續效特效"
-  ]
- },
- "_conditionalWhy": "⭐ 有一族欄位**填了不等於有那個機制** —— `count: 1` 的 delayed 逐字等於「純延遲」（它自己的 schema 檔頭就這麼寫），把它算成迴圈就是憑欄位存在報一個不存在的機制（失敗形態⑦：掃屬性代替掃行為）。",
- "conditional": {
-  "count": {
-   "axes": [
-    "迴圈",
-    "多段"
-   ],
-   "minValue": 2,
-   "why": "count:1 = 退化成純延遲（delayed schema 檔頭逐字）"
-  },
-  "jumps": {
-   "axes": [
-    "迴圈",
-    "多段"
-   ],
-   "minValue": 2,
-   "why": "jumps:1 = 一發連鎖閃電沒有跳，就是一發單體"
-  }
- },
- "_byKindWhy": "同一個欄位名在不同 kind 語意不同的，逐 kind 定案。⛔ 這一格贏過 fields。",
- "byKind": {
-  "spawnVfx.durationSec": [
-   "持續",
-   "續效特效"
-  ],
-  "spawnModelFx.count": [
-   "多段"
-  ],
-  "blink.to": [
-   "路徑"
-  ],
-  "knockback.from": [
-   "路徑"
-  ],
-  "knockback.to": [
-   "路徑"
-  ],
-  "dash.mode": [
-   "路徑"
-  ],
-  "leap.mode": [
-   "路徑"
-  ],
-  "championForm.to": [],
-  "grantGold.to": [],
-  "randomArea.who": [],
-  "dot.stacking": [
-   "迴圈"
-  ],
-  "(passive).deathWard": [
-   "持續",
-   "續效特效"
-  ],
-  "spawnModelFx.spacing": [
-   "路徑"
-  ],
-  "spawnModelFx.clip": [
-   "續效特效"
-  ],
-  "spawnModelFx.clipTimeScale": [
-   "續效特效"
-  ],
-  "spawnModelFx.anchor": []
- },
- "_topLevelWhy": "技能文件**自己**的欄位（⛔ 不在 effects 樹裡），同樣要被分類 —— 一支 `castTimeSec: 3` 的技能有一段三秒的等待，而它一格 effect 都不必有。",
- "topLevel": {
-  "recoverySec": [
-   "等待"
-  ],
-  "interruptOn": [
-   "等待"
-  ],
-  "persistentVfx": [
-   "續效特效"
-  ],
-  "vfxLayers": [
-   "續效特效"
-  ],
-  "toggle": [
-   "持續"
-  ],
-  "marks": [
-   "持續"
-  ]
- },
- "_templateParamsWhy": "⭐ **接上模板的技能，磁碟上的 `effects` 是空的** —— 88 支裡有 86 支逐字如此。展開發生在註冊時（`content/templates/expand.ts`，由 TS 跑），所以只讀 effects 樹會把這 86 支全部算成「沒有形狀」。⇒ 它們的形狀住在 `template.params`，而參數名是模板自己的詞彙（`stepIntervalSec` / `segmentCount` / `pushSpeed`…），⛔ 與 effect 欄位名不共用。這一份就是那套詞彙的分類。⚠️ 覆蓋閘同樣管它：新模板開一格 `windUpSec` 而沒有人分類 ⇒ 紅。",
- "templateParams": {
+  "_why": "⭐ 「技能的**形狀**」這件知識的**唯一住處**（第〇·四守則）。scan_shapes.py ⛔ 不自己內建任何欄位名 —— 它只讀這一份。owner 技能模板群組⑨逐字：「重新掃描套用在全部技能，檢查是否有**動畫效果等待、迴圈、持續特效**等機制，形成新模板及套用設定」。這一份就是把那三個詞翻成「出貨 JSON 裡的哪一格算數」。",
+  "_gate": "⛔ `scan_shapes.py --check` 會把 content/abilities/** 裡**每一個**出現過的欄位名逐一對照這一份。落在 axes / byKind / ignored 之外的 ⇒ **離開碼非零**，訊息指名那個欄位與它出現在哪個 kind。⇒ 引擎加一個新的時序機制（新的 delaySec 家族欄位）而沒有人替它做決定時，這支掃描器會紅，⛔ 不是安靜地把它算成「沒有形狀」。",
+  "_axesWhy": "六條軸。前三條逐字來自 owner 的⑨，後三條是掃的當下從資料裡掉出來的（它們與前三條共用同一批欄位，分不開就會把「連續七次斬擊」和「持續七秒的光環」算成同一群）。",
   "axes": {
-   "duration": [
-    "持續"
-   ],
-   "durationSec": [
-    "持續"
-   ],
-   "statusDurationSec": [
-    "持續"
-   ],
-   "invulnerableSec": [
-    "持續"
-   ],
-   "stunSec": [
-    "持續"
-   ],
-   "impactLifeSec": [
-    "持續",
-    "續效特效"
-   ],
-   "finisherFlashSec": [
-    "持續",
-    "續效特效"
-   ],
-   "finisherShakeSec": [
-    "持續",
-    "續效特效"
-   ],
-   "shakeSec": [
-    "持續",
-    "續效特效"
-   ],
-   "hitTextDurationSec": [
-    "持續",
-    "續效特效"
-   ],
-   "intervalSec": [
-    "迴圈"
-   ],
-   "hitIntervalSec": [
-    "迴圈"
-   ],
-   "rayIntervalSec": [
-    "迴圈"
-   ],
-   "stepIntervalSec": [
-    "迴圈"
-   ],
-   "trailSpacingSec": [
-    "迴圈"
-   ],
-   "count": [
-    "多段"
-   ],
-   "hitCount": [
-    "多段"
-   ],
-   "stepCount": [
-    "多段"
-   ],
-   "segmentCount": [
-    "多段"
-   ],
-   "rayCount": [
-    "多段"
-   ],
-   "proxyCount": [
-    "多段"
-   ],
-   "instances": [
-    "多段"
-   ],
-   "terminalBurst": [
-    "多段"
-   ],
-   "openingDamage": [
-    "多段"
-   ],
-   "perHitDamage": [
-    "多段"
-   ],
-   "finisherAbility": [
-    "多段"
-   ],
-   "finisherDamage": [
-    "多段"
-   ],
-   "comboFamily": [
-    "多段"
-   ],
-   "finisherVfx": [
-    "多段",
-    "續效特效"
-   ],
-   "path": [
-    "路徑"
-   ],
-   "travel": [
-    "路徑"
-   ],
-   "travelSec": [
-    "路徑",
-    "等待"
-   ],
-   "speed": [
-    "路徑",
-    "等待"
-   ],
-   "dashDurationSec": [
-    "路徑",
-    "等待"
-   ],
-   "distance": [
-    "路徑"
-   ],
-   "dashDistance": [
-    "路徑"
-   ],
-   "destination": [
-    "路徑"
-   ],
-   "knockbackDistance": [
-    "路徑"
-   ],
-   "knockbackFrom": [
-    "路徑"
-   ],
-   "knockbackSpeed": [
-    "路徑"
-   ],
-   "pushDistance": [
-    "路徑"
-   ],
-   "pushFrom": [
-    "路徑"
-   ],
-   "pushSpeed": [
-    "路徑"
-   ],
-   "pushLaunchHeight": [
-    "路徑"
-   ],
-   "apexHeight": [
-    "路徑"
-   ],
-   "landRadius": [
-    "路徑"
-   ],
-   "reach": [
-    "路徑"
-   ],
-   "aim": [
-    "路徑"
-   ],
-   "orientation": [
-    "路徑"
-   ],
-   "stepSize": [
-    "路徑"
-   ],
-   "serpentineDeg": [
-    "路徑"
-   ],
-   "spreadDeg": [
-    "路徑"
-   ],
-   "touchRadius": [
-    "路徑"
-   ],
-   "touchSide": [
-    "路徑"
-   ],
-   "spinDegPerSec": [
-    "路徑",
-    "續效特效"
-   ],
-   "modelKey": [
-    "續效特效"
-   ],
-   "clip": [
-    "續效特效"
-   ],
-   "hitVfx": [
-    "續效特效"
-   ],
-   "stepVfx": [
-    "續效特效"
-   ],
-   "scale": [
-    "續效特效"
-   ],
-   "damageTiming": [
-    "等待"
-   ],
-   "castTimeSec": [],
-   "lifeSec": [
-    "等待"
-   ],
-   "spacing": [
-    "路徑"
-   ],
-   "tint": [
-    "續效特效"
-   ],
-   "alpha": [
-    "續效特效"
-   ]
+    "等待": {
+      "owner": "動畫效果等待",
+      "means": "施放到效果發生之間有一段**什麼都還沒發生**的時間窗（延遲結算、吟唱、飛行時間、演出前搖）。",
+      "whyItsOwnAxis": "它決定的是「這支技能躲不躲得掉」。⛔ 與『持續』不同：等待期間**還沒有東西落地**。"
+    },
+    "迴圈": {
+      "owner": "迴圈",
+      "means": "同一件事**重複**發生：每隔 T 秒一次、共 N 次、或每第 N 次攻擊一次。",
+      "whyItsOwnAxis": "重複是**排程**問題（絕對 tick、終止條件、施法者死掉怎麼辦），⛔ 不是把傷害乘以 N。"
+    },
+    "持續": {
+      "owner": "持續特效（時間那一半）",
+      "means": "一段有**期間**的狀態／增益／無敵／光環；到期會自己收掉。",
+      "whyItsOwnAxis": "它有到期語意（絕對 tick）與可否驅散，而『迴圈』沒有。"
+    },
+    "續效特效": {
+      "owner": "持續特效（畫面那一半）",
+      "means": "特效**本身**有壽命／掛載點／分層／延遲層（spawnVfx.durationSec · persistentVfx · vfxLayers）。",
+      "whyItsOwnAxis": "owner ④ 逐字點名『球體綁定位置 · 特效 pitch/scale/color/透明度 · 特效音效綁定』是要住 JSON 的東西。⛔ 一支『持續 6 秒』的 buff 沒有續效特效，畫面上跟沒放一樣。"
+    },
+    "多段": {
+      "owner": "（掃描時掉出來的）",
+      "means": "一次施放拆成**多下**：連續 N 次斬擊、連鎖 N 跳、最後一下不一樣（finalEffects）、命中後再接一段（onHitTargets）。",
+      "whyItsOwnAxis": "⛔ 與『迴圈』刻意分開：多段不必然等距（連段可以是 0.1/0.1/0.6），而等距重複不必然有段落感。混成一軸就寫不出 tpl-combo-finisher 與 tpl-periodic-field 的差別。"
+    },
+    "路徑": {
+      "owner": "（掃描時掉出來的）",
+      "means": "效果**沿著空間移動**：投射物、衝刺、跳躍、擊退、沿向量分段推進（delayed.advance）、模型特效走一條 path。",
+      "whyItsOwnAxis": "GH#393 owner 逐字：「JASS 應該有安排**位置移動**播放的多次特效搭配傷害」—— 那是『迴圈 × 路徑』，而只有兩軸分開才數得出來有幾支要它。"
+    }
   },
+  "_fieldsWhy": "欄位名 → 軸。⚠️ 一格可以同時屬於兩軸（`speed` 既是飛行時間＝等待，也是空間移動＝路徑）。⛔ 這裡只放**跨 kind 同義**的欄位；一格在不同 kind 語意不同的放 byKind。",
+  "fields": {
+    "delaySec": [
+      "等待"
+    ],
+    "firstAtCast": [
+      "等待"
+    ],
+    "speed": [
+      "等待",
+      "路徑"
+    ],
+    "intervalSec": [
+      "迴圈"
+    ],
+    "jumpIntervalSec": [
+      "迴圈"
+    ],
+    "amountPerTick": [
+      "迴圈"
+    ],
+    "everyNth": [
+      "迴圈"
+    ],
+    "steps": [
+      "迴圈"
+    ],
+    "duration": [
+      "持續"
+    ],
+    "durationSec": [
+      "持續"
+    ],
+    "lifeSec": [
+      "持續",
+      "續效特效"
+    ],
+    "permanent": [
+      "持續"
+    ],
+    "addSec": [
+      "持續"
+    ],
+    "maxRemainingSec": [
+      "持續"
+    ],
+    "vfxId": [
+      "續效特效"
+    ],
+    "at": [
+      "續效特效"
+    ],
+    "preset": [
+      "續效特效"
+    ],
+    "modelKey": [
+      "續效特效"
+    ],
+    "stackVisual": [
+      "續效特效"
+    ],
+    "finalEffects": [
+      "多段"
+    ],
+    "onHitTargets": [
+      "多段"
+    ],
+    "onHitTargetsMode": [
+      "多段"
+    ],
+    "perStrike": [
+      "多段"
+    ],
+    "finisher": [
+      "多段"
+    ],
+    "hitOncePerTarget": [
+      "多段"
+    ],
+    "advance": [
+      "路徑"
+    ],
+    "path": [
+      "路徑"
+    ],
+    "length": [
+      "路徑"
+    ],
+    "width": [
+      "路徑"
+    ],
+    "aim": [
+      "路徑"
+    ],
+    "fromCaster": [
+      "路徑"
+    ],
+    "distance": [
+      "路徑"
+    ],
+    "distanceTier": [
+      "路徑"
+    ],
+    "maxDistance": [
+      "路徑"
+    ],
+    "throwDistance": [
+      "路徑"
+    ],
+    "apexHeight": [
+      "路徑"
+    ],
+    "landRadius": [
+      "路徑"
+    ],
+    "dragToCaster": [
+      "路徑"
+    ],
+    "stopShortUnits": [
+      "路徑"
+    ],
+    "spinDegPerSec": [
+      "路徑"
+    ],
+    "touchRadius": [
+      "路徑"
+    ],
+    "touchSide": [
+      "路徑"
+    ],
+    "touchOncePerTarget": [
+      "路徑"
+    ],
+    "onTouch": [
+      "路徑"
+    ],
+    "onArrive": [
+      "路徑"
+    ],
+    "onLand": [
+      "路徑"
+    ],
+    "onEnd": [
+      "路徑"
+    ],
+    "projectileId": [
+      "路徑"
+    ],
+    "jumpRange": [
+      "路徑"
+    ],
+    "tint": [
+      "續效特效"
+    ],
+    "alpha": [
+      "續效特效"
+    ]
+  },
+  "_conditionalWhy": "⭐ 有一族欄位**填了不等於有那個機制** —— `count: 1` 的 delayed 逐字等於「純延遲」（它自己的 schema 檔頭就這麼寫），把它算成迴圈就是憑欄位存在報一個不存在的機制（失敗形態⑦：掃屬性代替掃行為）。",
+  "conditional": {
+    "count": {
+      "axes": [
+        "迴圈",
+        "多段"
+      ],
+      "minValue": 2,
+      "why": "count:1 = 退化成純延遲（delayed schema 檔頭逐字）"
+    },
+    "jumps": {
+      "axes": [
+        "迴圈",
+        "多段"
+      ],
+      "minValue": 2,
+      "why": "jumps:1 = 一發連鎖閃電沒有跳，就是一發單體"
+    }
+  },
+  "_byKindWhy": "同一個欄位名在不同 kind 語意不同的，逐 kind 定案。⛔ 這一格贏過 fields。",
+  "byKind": {
+    "spawnVfx.durationSec": [
+      "持續",
+      "續效特效"
+    ],
+    "spawnModelFx.count": [
+      "多段"
+    ],
+    "blink.to": [
+      "路徑"
+    ],
+    "knockback.from": [
+      "路徑"
+    ],
+    "knockback.to": [
+      "路徑"
+    ],
+    "dash.mode": [
+      "路徑"
+    ],
+    "leap.mode": [
+      "路徑"
+    ],
+    "championForm.to": [],
+    "grantGold.to": [],
+    "randomArea.who": [],
+    "dot.stacking": [
+      "迴圈"
+    ],
+    "(passive).deathWard": [
+      "持續",
+      "續效特效"
+    ],
+    "spawnModelFx.spacing": [
+      "路徑"
+    ],
+    "spawnModelFx.clip": [
+      "續效特效"
+    ],
+    "spawnModelFx.clipTimeScale": [
+      "續效特效"
+    ],
+    "spawnModelFx.anchor": []
+  },
+  "_topLevelWhy": "技能文件**自己**的欄位（⛔ 不在 effects 樹裡），同樣要被分類 —— 一支 `castTimeSec: 3` 的技能有一段三秒的等待，而它一格 effect 都不必有。",
+  "topLevel": {
+    "recoverySec": [
+      "等待"
+    ],
+    "interruptOn": [
+      "等待"
+    ],
+    "persistentVfx": [
+      "續效特效"
+    ],
+    "vfxLayers": [
+      "續效特效"
+    ],
+    "toggle": [
+      "持續"
+    ],
+    "marks": [
+      "持續"
+    ]
+  },
+  "_templateParamsWhy": "⭐ **接上模板的技能，磁碟上的 `effects` 是空的** —— 88 支裡有 86 支逐字如此。展開發生在註冊時（`content/templates/expand.ts`，由 TS 跑），所以只讀 effects 樹會把這 86 支全部算成「沒有形狀」。⇒ 它們的形狀住在 `template.params`，而參數名是模板自己的詞彙（`stepIntervalSec` / `segmentCount` / `pushSpeed`…），⛔ 與 effect 欄位名不共用。這一份就是那套詞彙的分類。⚠️ 覆蓋閘同樣管它：新模板開一格 `windUpSec` 而沒有人分類 ⇒ 紅。",
+  "templateParams": {
+    "axes": {
+      "duration": [
+        "持續"
+      ],
+      "durationSec": [
+        "持續"
+      ],
+      "statusDurationSec": [
+        "持續"
+      ],
+      "invulnerableSec": [
+        "持續"
+      ],
+      "stunSec": [
+        "持續"
+      ],
+      "impactLifeSec": [
+        "持續",
+        "續效特效"
+      ],
+      "finisherFlashSec": [
+        "持續",
+        "續效特效"
+      ],
+      "finisherShakeSec": [
+        "持續",
+        "續效特效"
+      ],
+      "shakeSec": [
+        "持續",
+        "續效特效"
+      ],
+      "hitTextDurationSec": [
+        "持續",
+        "續效特效"
+      ],
+      "intervalSec": [
+        "迴圈"
+      ],
+      "hitIntervalSec": [
+        "迴圈"
+      ],
+      "rayIntervalSec": [
+        "迴圈"
+      ],
+      "stepIntervalSec": [
+        "迴圈"
+      ],
+      "trailSpacingSec": [
+        "迴圈"
+      ],
+      "count": [
+        "多段"
+      ],
+      "hitCount": [
+        "多段"
+      ],
+      "stepCount": [
+        "多段"
+      ],
+      "segmentCount": [
+        "多段"
+      ],
+      "rayCount": [
+        "多段"
+      ],
+      "proxyCount": [
+        "多段"
+      ],
+      "instances": [
+        "多段"
+      ],
+      "terminalBurst": [
+        "多段"
+      ],
+      "openingDamage": [
+        "多段"
+      ],
+      "perHitDamage": [
+        "多段"
+      ],
+      "finisherAbility": [
+        "多段"
+      ],
+      "finisherDamage": [
+        "多段"
+      ],
+      "comboFamily": [
+        "多段"
+      ],
+      "finisherVfx": [
+        "多段",
+        "續效特效"
+      ],
+      "path": [
+        "路徑"
+      ],
+      "travel": [
+        "路徑"
+      ],
+      "travelSec": [
+        "路徑",
+        "等待"
+      ],
+      "speed": [
+        "路徑",
+        "等待"
+      ],
+      "dashDurationSec": [
+        "路徑",
+        "等待"
+      ],
+      "distance": [
+        "路徑"
+      ],
+      "dashDistance": [
+        "路徑"
+      ],
+      "destination": [
+        "路徑"
+      ],
+      "knockbackDistance": [
+        "路徑"
+      ],
+      "knockbackFrom": [
+        "路徑"
+      ],
+      "knockbackSpeed": [
+        "路徑"
+      ],
+      "pushDistance": [
+        "路徑"
+      ],
+      "pushFrom": [
+        "路徑"
+      ],
+      "pushSpeed": [
+        "路徑"
+      ],
+      "pushLaunchHeight": [
+        "路徑"
+      ],
+      "apexHeight": [
+        "路徑"
+      ],
+      "landRadius": [
+        "路徑"
+      ],
+      "reach": [
+        "路徑"
+      ],
+      "aim": [
+        "路徑"
+      ],
+      "orientation": [
+        "路徑"
+      ],
+      "stepSize": [
+        "路徑"
+      ],
+      "serpentineDeg": [
+        "路徑"
+      ],
+      "spreadDeg": [
+        "路徑"
+      ],
+      "touchRadius": [
+        "路徑"
+      ],
+      "touchSide": [
+        "路徑"
+      ],
+      "spinDegPerSec": [
+        "路徑",
+        "續效特效"
+      ],
+      "modelKey": [
+        "續效特效"
+      ],
+      "clip": [
+        "續效特效"
+      ],
+      "hitVfx": [
+        "續效特效"
+      ],
+      "stepVfx": [
+        "續效特效"
+      ],
+      "scale": [
+        "續效特效"
+      ],
+      "damageTiming": [
+        "等待"
+      ],
+      "castTimeSec": [],
+      "lifeSec": [
+        "等待"
+      ],
+      "spacing": [
+        "路徑"
+      ],
+      "tint": [
+        "續效特效"
+      ],
+      "alpha": [
+        "續效特效"
+      ]
+    },
+    "ignored": {
+      "damage": "純數值",
+      "bonusDamage": "純數值",
+      "impactDamage": "純數值",
+      "finisherRadius": "幾何",
+      "reflectDamage": "純數值",
+      "payout": "純數值",
+      "damageType": "傷害型別",
+      "lethalDamageTypes": "傷害型別",
+      "radius": "幾何",
+      "aoeRadius": "幾何",
+      "aoePerStep": "幾何",
+      "arriveRadius": "幾何",
+      "blastRadius": "幾何",
+      "impactRadius": "幾何",
+      "reflectRadius": "幾何",
+      "ringRadius": "幾何",
+      "scatterRadius": "幾何",
+      "scatterBox": "幾何",
+      "segmentAoe": "幾何",
+      "anchor": "錨點選擇（幾何）",
+      "applyTo": "落在誰身上",
+      "blastApRatio": "係數",
+      "blastDamageTier": "級距名",
+      "blastRadiusTier": "級距名",
+      "touchDamageTier": "級距名",
+      "damageTier": "級距名",
+      "radiusTier": "級距名",
+      "restoreHealthPct": "比例",
+      "surviveHpPct": "比例",
+      "perStackLost": "比例",
+      "chance": "機率",
+      "max": "上限",
+      "initial": "起始值",
+      "internalCooldown": "冷卻 —— 是**下一次**能不能觸發，⛔ 不是這一次的時序",
+      "condition": "條件",
+      "event": "觸發事件名",
+      "trigger": "觸發事件名",
+      "resetOn": "重置時機",
+      "casterGuard": "施法者保護開關",
+      "lockTarget": "是否鎖定目標",
+      "lethalConsume": "免死是否消耗層數",
+      "lethalMode": "免死模式",
+      "invulnerableScope": "無敵範圍列舉（期間住在 invulnerableSec）",
+      "markId": "標記識別碼",
+      "statusId": "狀態識別碼",
+      "stunStatusId": "狀態識別碼",
+      "modifiers": "屬性加成清單（期間住在 duration）",
+      "mode": "模式列舉",
+      "hitText": "浮動文字內容",
+      "hitTextRiseSpeed": "文字自己的動畫",
+      "hitTextSizeGrowth": "文字自己的動畫",
+      "hitTextSizeScale": "字級",
+      "finisherFlashAlpha": "透明度",
+      "finisherShakeAmplitude": "震幅",
+      "shakeAmplitude": "震幅",
+      "soundKey": "音效**綁定** —— owner ④ 的範圍（特效音效綁定），⛔ 不是⑨的時序軸:一個聲音鍵沒有壽命、沒有間隔、也不移動",
+      "arriveSoundKey": "同 soundKey —— 落點音效的綁定，⛔ 不是「落點要等多久」（那一格是 speed／distance）"
+    }
+  },
+  "_passiveWhy": "被動的 `ranks[]` 裡有兩族東西自帶軸：`auras` 是一個常駐的圈（持續），`hooks` ⛔ 不是（它是**事件**不是時序 —— 一個 on-hit 觸發沒有期間也沒有重複）。",
+  "passive": {
+    "auras": [
+      "持續"
+    ],
+    "hooks": [],
+    "statusImmunity": []
+  },
+  "_ignoredWhy": "⭐ 每一格都要寫**為什麼它不帶形狀**，⛔ 不是「還沒收」（第〇·四守則的豁免規則）。看不順眼可以反駁 —— 反駁的方式是把它移進 fields，掃描器立刻重新分群。",
   "ignored": {
-   "damage": "純數值",
-   "bonusDamage": "純數值",
-   "impactDamage": "純數值",
-   "finisherRadius": "幾何",
-   "reflectDamage": "純數值",
-   "payout": "純數值",
-   "damageType": "傷害型別",
-   "lethalDamageTypes": "傷害型別",
-   "radius": "幾何",
-   "aoeRadius": "幾何",
-   "aoePerStep": "幾何",
-   "arriveRadius": "幾何",
-   "blastRadius": "幾何",
-   "impactRadius": "幾何",
-   "reflectRadius": "幾何",
-   "ringRadius": "幾何",
-   "scatterRadius": "幾何",
-   "scatterBox": "幾何",
-   "segmentAoe": "幾何",
-   "anchor": "錨點選擇（幾何）",
-   "applyTo": "落在誰身上",
-   "blastApRatio": "係數",
-   "blastDamageTier": "級距名",
-   "blastRadiusTier": "級距名",
-   "touchDamageTier": "級距名",
-   "damageTier": "級距名",
-   "radiusTier": "級距名",
-   "restoreHealthPct": "比例",
-   "surviveHpPct": "比例",
-   "perStackLost": "比例",
-   "chance": "機率",
-   "max": "上限",
-   "initial": "起始值",
-   "internalCooldown": "冷卻 —— 是**下一次**能不能觸發，⛔ 不是這一次的時序",
-   "condition": "條件",
-   "event": "觸發事件名",
-   "trigger": "觸發事件名",
-   "resetOn": "重置時機",
-   "casterGuard": "施法者保護開關",
-   "lockTarget": "是否鎖定目標",
-   "lethalConsume": "免死是否消耗層數",
-   "lethalMode": "免死模式",
-   "invulnerableScope": "無敵範圍列舉（期間住在 invulnerableSec）",
-   "markId": "標記識別碼",
-   "statusId": "狀態識別碼",
-   "stunStatusId": "狀態識別碼",
-   "modifiers": "屬性加成清單（期間住在 duration）",
-   "mode": "模式列舉",
-   "hitText": "浮動文字內容",
-   "hitTextRiseSpeed": "文字自己的動畫",
-   "hitTextSizeGrowth": "文字自己的動畫",
-   "hitTextSizeScale": "字級",
-   "finisherFlashAlpha": "透明度",
-   "finisherShakeAmplitude": "震幅",
-   "shakeAmplitude": "震幅",
-   "soundKey": "音效**綁定** —— owner ④ 的範圍（特效音效綁定），⛔ 不是⑨的時序軸:一個聲音鍵沒有壽命、沒有間隔、也不移動",
-   "arriveSoundKey": "同 soundKey —— 落點音效的綁定，⛔ 不是「落點要等多久」（那一格是 speed／distance）"
+    "kind": "判別鍵本身",
+    "schema": "文件型別標記",
+    "id": "識別碼",
+    "name": "顯示名",
+    "icon": "圖檔路徑",
+    "provenance": "來源標記",
+    "slot": "QWER 槽位",
+    "castType": "施放型態（指向/自我/地面）—— 是**輸入**方式不是時序",
+    "maxRank": "階數",
+    "cooldown": "冷卻是**下一次**能不能放，⛔ 不是這一次的時序",
+    "cooldownTier": "同上（級距名）",
+    "cooldownShape": "冷卻級距表要查哪一欄（單體/範圍/持續…）—— 它決定冷卻**秒數**，⛔ 不決定技能在時間軸上的形狀。與 cooldownTier 同一族。",
+    "manaCost": "資源",
+    "manaCostTier": "資源（級距名）",
+    "effects": "效果樹容器本身",
+    "range": "施法距離是**射程**不是位移",
+    "rangeTier": "同上",
+    "rangeUnlimited": "同上",
+    "description": "文案（宣稱側由 prose_markers.json 讀）",
+    "vfxKey": "單一特效鍵：⛔ 沒有壽命也沒有分層 —— 帶壽命的是 spawnVfx.durationSec / persistentVfx / vfxLayers",
+    "sfxKey": "音效綁定 —— owner ④ 的範圍，⛔ 不是⑨的時序軸",
+    "soundKey": "同上",
+    "arriveSoundKey": "同上",
+    "targetsEnemies": "陣營過濾",
+    "targetsAllies": "陣營過濾",
+    "side": "陣營過濾",
+    "radius": "範圍大小是**幾何**不是時序",
+    "radiusTier": "同上",
+    "scatterRadius": "同上",
+    "shape": "幾何形狀（single/circle）",
+    "includeOrigin": "幾何",
+    "centre": "幾何錨點",
+    "template": "模板綁定（覆蓋率那一欄自己讀它）",
+    "passive": "被動容器（passive 那一節讀它）",
+    "innateKind": "天生技分類",
+    "innateActivePassive": "天生技分類",
+    "augment": "增益卡綁定",
+    "hitFeel": "打擊感預設（畫面回饋強度），⛔ 不帶壽命",
+    "castTimeSec": "⭐ **量過才拿掉的**：絕大多數技能都有它，而它的值是一段連續分布 —— 它是**每一支技能都有的前搖動畫**（多半是 w3x 匯進來的施法動作長度），⛔ 不是作者寫下的機制。把它算成一條軸，『等待』會命中幾乎每一支，於是這條軸分不出任何一群。真正**寫下來的**等待是 delaySec / firstAtCast / vfxLayers[].delayMs / recoverySec / interruptOn / 飛行時間(speed)。⇒ 它的統計單獨列在報表第 2 節的註腳（⭐ 那裡的數字是**當場算的**，⛔ 這裡不複述 —— 複述的那一份必然過期，而它過期時 `--check` 仍然是綠的，因為產物抄的是產生器），⛔ 不進形狀。",
+    "amount": "純數值",
+    "damageType": "傷害型別",
+    "damageTypes": "傷害型別",
+    "canCrit": "暴擊資格",
+    "comboBonus": "連段加成係數",
+    "refund": "回收比例",
+    "incomingPct": "受傷比例項",
+    "resourcePct": "資源比例項",
+    "resourcePctPhase": "資源比例項的取樣時點",
+    "healthPct": "比例",
+    "manaPct": "比例",
+    "healPct": "比例",
+    "pctMaxMana": "比例",
+    "pctCurrentMana": "比例",
+    "perMana": "比例",
+    "perDamagePctOfMaxHealth": "比例",
+    "thresholdPctOfMax": "門檻比例",
+    "flat": "純數值",
+    "ratio": "純數值",
+    "decay": "衰減係數",
+    "value": "純數值",
+    "scale": "尺寸倍率",
+    "statusId": "狀態識別碼",
+    "stacks": "層數",
+    "maxStacks": "層數上限",
+    "minStacks": "層數門檻",
+    "stackKey": "層數命名空間",
+    "cycleKey": "輪替命名空間",
+    "exclusiveGroup": "互斥組",
+    "stun": "控制旗標（它的期間住在 duration）",
+    "root": "控制旗標",
+    "feared": "控制旗標",
+    "silenced": "控制旗標",
+    "disarmed": "控制旗標",
+    "berserk": "控制旗標",
+    "missChance": "命中率",
+    "moveSpeedMult": "移速倍率",
+    "dispellable": "可否驅散",
+    "polarity": "增益/減益極性",
+    "pools": "驅散池",
+    "tag": "標記名",
+    "modifiers": "屬性加成清單（它的期間住在 duration）",
+    "stat": "屬性名",
+    "op": "運算子",
+    "perRank": "逐階欄",
+    "maxStat": "上限屬性",
+    "attr": "三圍欄",
+    "maxAttribute": "三圍上限",
+    "subject": "條件葉的主體",
+    "is": "條件葉的比較值",
+    "condition": "條件（⛔ 不是時序）",
+    "victimCondition": "圈內過濾條件",
+    "applyTo": "落在誰身上",
+    "who": "落在誰身上",
+    "target": "落在誰身上",
+    "victim": "落在誰身上",
+    "to": "落在誰身上（預設讀法）",
+    "maxTargets": "名額（廣度，⛔ 不是段落）",
+    "maxSources": "名額",
+    "branches": "加權分支是**擇一**，⛔ 不是多段（跑完只發生一支）",
+    "mode": "各 kind 自己的模式列舉（帶路徑語意的在 byKind）",
+    "effectsPayload": "保留",
+    "onHit": "投射物命中時的載荷 —— 段落感住在 projectileId（路徑）與 count，⛔ 不是這一格",
+    "onDevour": "吞噬成功的載荷（同上）",
+    "stopOnCasterDeath": "迴圈的**終止條件** —— 迴圈本身由 intervalSec/count 證明，用它會把一次性技能誤判成迴圈",
+    "dropDeadTargets": "同上",
+    "blocksDamage": "無敵的三個開關（期間住在 durationSec）",
+    "blocksTrueDamage": "同上",
+    "blocksControl": "同上",
+    "absorbs": "護盾吃哪一類（期間住在 duration）",
+    "throughShields": "是否穿盾",
+    "clampMin": "夾值下界",
+    "minManaReserve": "保留量",
+    "resource": "資源名",
+    "source": "來源欄",
+    "buff": "buff 參照",
+    "slotRef": "保留",
+    "hookKey": "觸發器鍵",
+    "hookScope": "觸發器範圍",
+    "payCosts": "代理施法是否付費",
+    "respectCooldown": "代理施法是否吃冷卻",
+    "vision": "隱形/真視授予（它的期間住在承載它的 source）",
+    "flight": "飛行授予（同上）",
+    "damageTypeOverride": "傷害型別轉換授予（同上）",
+    "attributes": "三圍授予（同上）",
+    "critStrike": "暴擊來源（同上）",
+    "block": "格擋來源（同上）",
+    "typeStreakImmunity": "型別連擊免疫來源（同上）",
+    "penetration": "穿透授予（同上）",
+    "immobile": "紮根授予（同上）",
+    "primaryAttribute": "主屬性覆寫（同上）",
+    "attackType": "攻擊型態覆寫（同上）",
+    "whileForm": "「只在某個變身形態下生效」是一道**條件閘**，⛔ 不是時序 —— 它的期間是那個形態的期間，而形態自己由 championForm.durationSec 記帳",
+    "colorRgb": "顏色",
+    "peakAlpha": "透明度峰值",
+    "amplitude": "震幅",
+    "text": "浮動文字內容",
+    "sizeScale": "字級",
+    "riseSpeed": "浮動文字上升速度（⛔ 是文字自己的動畫，不是技能時序）",
+    "scripted": "是否由腳本驅動的閃光",
+    "family": "連段家族名",
+    "hooks": "被動觸發器（passive 那一節單獨處理）",
+    "steps_": "保留",
+    "scaleAxis": "外觀（同 scale）—— 模型自身三軸的非等向倍率。⭐ 它調的是**那一具長什麼樣**，⛔ 不是「打到哪裡」：落點選擇仍由 anchor/path/count/spacing 決定，把 scaleAxis 從節點上拿掉，命中判定與生成位置一格都不會變（GH#702，2026-08-26 新增）。反駁方式：哪天它被拿來當**判定體積**（例如拉長的那一軸也拉長 touchRadius），這一列就該搬進 fields。"
   }
- },
- "_passiveWhy": "被動的 `ranks[]` 裡有兩族東西自帶軸：`auras` 是一個常駐的圈（持續），`hooks` ⛔ 不是（它是**事件**不是時序 —— 一個 on-hit 觸發沒有期間也沒有重複）。",
- "passive": {
-  "auras": [
-   "持續"
-  ],
-  "hooks": [],
-  "statusImmunity": []
- },
- "_ignoredWhy": "⭐ 每一格都要寫**為什麼它不帶形狀**，⛔ 不是「還沒收」（第〇·四守則的豁免規則）。看不順眼可以反駁 —— 反駁的方式是把它移進 fields，掃描器立刻重新分群。",
- "ignored": {
-  "kind": "判別鍵本身",
-  "schema": "文件型別標記",
-  "id": "識別碼",
-  "name": "顯示名",
-  "icon": "圖檔路徑",
-  "provenance": "來源標記",
-  "slot": "QWER 槽位",
-  "castType": "施放型態（指向/自我/地面）—— 是**輸入**方式不是時序",
-  "maxRank": "階數",
-  "cooldown": "冷卻是**下一次**能不能放，⛔ 不是這一次的時序",
-  "cooldownTier": "同上（級距名）",
-  "cooldownShape": "冷卻級距表要查哪一欄（單體/範圍/持續…）—— 它決定冷卻**秒數**，⛔ 不決定技能在時間軸上的形狀。與 cooldownTier 同一族。",
-  "manaCost": "資源",
-  "manaCostTier": "資源（級距名）",
-  "effects": "效果樹容器本身",
-  "range": "施法距離是**射程**不是位移",
-  "rangeTier": "同上",
-  "rangeUnlimited": "同上",
-  "description": "文案（宣稱側由 prose_markers.json 讀）",
-  "vfxKey": "單一特效鍵：⛔ 沒有壽命也沒有分層 —— 帶壽命的是 spawnVfx.durationSec / persistentVfx / vfxLayers",
-  "sfxKey": "音效綁定 —— owner ④ 的範圍，⛔ 不是⑨的時序軸",
-  "soundKey": "同上",
-  "arriveSoundKey": "同上",
-  "targetsEnemies": "陣營過濾",
-  "targetsAllies": "陣營過濾",
-  "side": "陣營過濾",
-  "radius": "範圍大小是**幾何**不是時序",
-  "radiusTier": "同上",
-  "scatterRadius": "同上",
-  "shape": "幾何形狀（single/circle）",
-  "includeOrigin": "幾何",
-  "centre": "幾何錨點",
-  "template": "模板綁定（覆蓋率那一欄自己讀它）",
-  "passive": "被動容器（passive 那一節讀它）",
-  "innateKind": "天生技分類",
-  "innateActivePassive": "天生技分類",
-  "augment": "增益卡綁定",
-  "hitFeel": "打擊感預設（畫面回饋強度），⛔ 不帶壽命",
-  "castTimeSec": "⭐ **量過才拿掉的**：絕大多數技能都有它，而它的值是一段連續分布 —— 它是**每一支技能都有的前搖動畫**（多半是 w3x 匯進來的施法動作長度），⛔ 不是作者寫下的機制。把它算成一條軸，『等待』會命中幾乎每一支，於是這條軸分不出任何一群。真正**寫下來的**等待是 delaySec / firstAtCast / vfxLayers[].delayMs / recoverySec / interruptOn / 飛行時間(speed)。⇒ 它的統計單獨列在報表第 2 節的註腳（⭐ 那裡的數字是**當場算的**，⛔ 這裡不複述 —— 複述的那一份必然過期，而它過期時 `--check` 仍然是綠的，因為產物抄的是產生器），⛔ 不進形狀。",
-  "amount": "純數值",
-  "damageType": "傷害型別",
-  "damageTypes": "傷害型別",
-  "canCrit": "暴擊資格",
-  "comboBonus": "連段加成係數",
-  "refund": "回收比例",
-  "incomingPct": "受傷比例項",
-  "resourcePct": "資源比例項",
-  "resourcePctPhase": "資源比例項的取樣時點",
-  "healthPct": "比例",
-  "manaPct": "比例",
-  "healPct": "比例",
-  "pctMaxMana": "比例",
-  "pctCurrentMana": "比例",
-  "perMana": "比例",
-  "perDamagePctOfMaxHealth": "比例",
-  "thresholdPctOfMax": "門檻比例",
-  "flat": "純數值",
-  "ratio": "純數值",
-  "decay": "衰減係數",
-  "value": "純數值",
-  "scale": "尺寸倍率",
-  "statusId": "狀態識別碼",
-  "stacks": "層數",
-  "maxStacks": "層數上限",
-  "minStacks": "層數門檻",
-  "stackKey": "層數命名空間",
-  "cycleKey": "輪替命名空間",
-  "exclusiveGroup": "互斥組",
-  "stun": "控制旗標（它的期間住在 duration）",
-  "root": "控制旗標",
-  "feared": "控制旗標",
-  "silenced": "控制旗標",
-  "disarmed": "控制旗標",
-  "berserk": "控制旗標",
-  "missChance": "命中率",
-  "moveSpeedMult": "移速倍率",
-  "dispellable": "可否驅散",
-  "polarity": "增益/減益極性",
-  "pools": "驅散池",
-  "tag": "標記名",
-  "modifiers": "屬性加成清單（它的期間住在 duration）",
-  "stat": "屬性名",
-  "op": "運算子",
-  "perRank": "逐階欄",
-  "maxStat": "上限屬性",
-  "attr": "三圍欄",
-  "maxAttribute": "三圍上限",
-  "subject": "條件葉的主體",
-  "is": "條件葉的比較值",
-  "condition": "條件（⛔ 不是時序）",
-  "victimCondition": "圈內過濾條件",
-  "applyTo": "落在誰身上",
-  "who": "落在誰身上",
-  "target": "落在誰身上",
-  "victim": "落在誰身上",
-  "to": "落在誰身上（預設讀法）",
-  "maxTargets": "名額（廣度，⛔ 不是段落）",
-  "maxSources": "名額",
-  "branches": "加權分支是**擇一**，⛔ 不是多段（跑完只發生一支）",
-  "mode": "各 kind 自己的模式列舉（帶路徑語意的在 byKind）",
-  "effectsPayload": "保留",
-  "onHit": "投射物命中時的載荷 —— 段落感住在 projectileId（路徑）與 count，⛔ 不是這一格",
-  "onDevour": "吞噬成功的載荷（同上）",
-  "stopOnCasterDeath": "迴圈的**終止條件** —— 迴圈本身由 intervalSec/count 證明，用它會把一次性技能誤判成迴圈",
-  "dropDeadTargets": "同上",
-  "blocksDamage": "無敵的三個開關（期間住在 durationSec）",
-  "blocksTrueDamage": "同上",
-  "blocksControl": "同上",
-  "absorbs": "護盾吃哪一類（期間住在 duration）",
-  "throughShields": "是否穿盾",
-  "clampMin": "夾值下界",
-  "minManaReserve": "保留量",
-  "resource": "資源名",
-  "source": "來源欄",
-  "buff": "buff 參照",
-  "slotRef": "保留",
-  "hookKey": "觸發器鍵",
-  "hookScope": "觸發器範圍",
-  "payCosts": "代理施法是否付費",
-  "respectCooldown": "代理施法是否吃冷卻",
-  "vision": "隱形/真視授予（它的期間住在承載它的 source）",
-  "flight": "飛行授予（同上）",
-  "damageTypeOverride": "傷害型別轉換授予（同上）",
-  "attributes": "三圍授予（同上）",
-  "critStrike": "暴擊來源（同上）",
-  "block": "格擋來源（同上）",
-  "typeStreakImmunity": "型別連擊免疫來源（同上）",
-  "penetration": "穿透授予（同上）",
-  "immobile": "紮根授予（同上）",
-  "primaryAttribute": "主屬性覆寫（同上）",
-  "attackType": "攻擊型態覆寫（同上）",
-  "whileForm": "「只在某個變身形態下生效」是一道**條件閘**，⛔ 不是時序 —— 它的期間是那個形態的期間，而形態自己由 championForm.durationSec 記帳",
-  "colorRgb": "顏色",
-  "peakAlpha": "透明度峰值",
-  "amplitude": "震幅",
-  "text": "浮動文字內容",
-  "sizeScale": "字級",
-  "riseSpeed": "浮動文字上升速度（⛔ 是文字自己的動畫，不是技能時序）",
-  "scripted": "是否由腳本驅動的閃光",
-  "family": "連段家族名",
-  "hooks": "被動觸發器（passive 那一節單獨處理）",
-  "steps_": "保留"
- }
 }

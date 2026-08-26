@@ -36,12 +36,15 @@
     {
       "kind": "spawnModelFx",
       "shape": "single",
-      "preset": "tpl-locust-orb",
+      "preset": "tpl-beam-roll",
       "modelKey": "w3x.stock.revivehuman",
-      "clip": "idle",
       "soundKey": "wc3.shockwave",
-      "scale": 1.25,
-      "lifeSec": 2.0
+      "scale": 2.0,
+      "scaleAxis": [
+        1,
+        1,
+        3.54
+      ]
     }
   ],
   "vfxKey": "fx.w3x.particle.supershinythingy.p00",

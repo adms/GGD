@@ -1,0 +1,128 @@
+{
+ "name": "reddragonmissile",
+ "archive": "war3.mpq",
+ "mdxBytes": 11209,
+ "path": "Abilities\\Weapons\\RedDragonBreath\\RedDragonMissile.mdl",
+ "textures": [
+  {
+   "texture": "Textures\\Dust6.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 34.7,
+   "lumStd": 45.5,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Flame4.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 43.9,
+   "lumStd": 49.0,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "ReplaceableTextures\\Weather\\Clouds8x8.blp",
+   "size": [
+    256,
+    256
+   ],
+   "lumMean": 63.2,
+   "lumStd": 78.8,
+   "alphaMean": 44.7,
+   "alphaStd": 63.4,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Clouds8x8Fade.blp",
+   "size": [
+    256,
+    256
+   ],
+   "lumMean": 28.5,
+   "lumStd": 45.9,
+   "alphaMean": 28.5,
+   "alphaStd": 45.9,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Red_Glow3.blp",
+   "size": [
+    32,
+    32
+   ],
+   "lumMean": 15.1,
+   "lumStd": 19.5,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [
+  {
+   "emitter": "BlizParticle01",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle02burst",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle02",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle02burst01snow",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 23264,
+ "rawHeight": 177.31,
+ "scaleFactor": 0.02778,
+ "height": 4.925,
+ "visiblePrims": "2/2",
+ "animations": [
+  "Birth",
+  "Death"
+ ],
+ "clipMap": null,
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/reddragonmissile.glb"
+}

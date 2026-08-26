@@ -147,8 +147,14 @@ describe('spawnModelFx path:"static"（#649）', () => {
       expect(inst.durationSec).toBeCloseTo(NODE.lifeSec, 5);
     });
 
-    // ② 出貨的 09-04（pilot）：兩層蝗蟲群 —— 主體 ReviveHuman（模板 count 6）＋
-    //    火柱 FlameStrike1（節點 count 6），⛔ 不驗字面值以外的數字。
+    // ② 出貨的 09-04（pilot）：兩層蝗蟲群 —— ⭐ 而兩層的**具數刻意不一樣**：
+    //    · 主體 ReviveHuman 走 `tpl-beam-roll` ⇒ **1 具**。原作 A03S 的光束是
+    //      `CreateNUnitsAtLoc( 1, 'h007' …)`＋`( 1, 'h008' …)` 兩具**疊在同一點**
+    //      （war3map.j:31907 / 31909），⛔ 不是沿線排開。
+    //    · 火柱 FlameStrike1 走 `tpl-locust-line` ⇒ **6 具**沿線，那才是
+    //      `loop i=1..6 × 200`（war3map.j:31925-31926）真正說的東西。
+    //    ⚠️ 2026-08-26 之前這裡兩層都斷言 6 —— 它把「傷害取樣格」凍成了「演出具數」
+    //    （GH#702）。⛔ 不驗字面值以外的數字。
     const ability = Abilities.tryGet("godie-ogrh.r" as never) as { effects?: EffectDef[] } | null;
     expect(ability, "出貨內容裡沒有 godie-ogrh.r").toBeTruthy();
     world.transform.get(caster)!.facing = { x: 1, z: 0 };
@@ -160,10 +166,16 @@ describe('spawnModelFx path:"static"（#649）', () => {
       .filter((e) => e.type === "modelFxSpawn")
       .map((e) => e.data as unknown as ModelFxSpawnEvent);
     const byKey = new Map(evs.map((e) => [e.modelKey, e]));
-    for (const key of ["w3x.stock.revivehuman", "w3x.stock.flamestrike1"]) {
+    for (const [key, want] of [
+      ["w3x.stock.revivehuman", 1],
+      ["w3x.stock.flamestrike1", 6],
+    ] as const) {
       const ev = byKey.get(key);
       expect(ev, `09-04 沒有生出 ${key} 那一層`).toBeDefined();
-      expect(ev!.instances.length, `09-04 的 ${key} 層只擺出 ${ev!.instances.length} 具`).toBe(6);
+      expect(
+        ev!.instances.length,
+        `09-04 的 ${key} 層擺出 ${ev!.instances.length} 具,而原作是 ${want} 具`,
+      ).toBe(want);
       const xs = ev!.instances.map((i) => i.x).sort((a, b) => a - b);
       for (let k = 1; k < xs.length; k++)
         expect(xs[k]! - xs[k - 1]!, `${key} 相鄰兩具的間距不是等距`).toBeCloseTo(xs[1]! - xs[0]!, 5);

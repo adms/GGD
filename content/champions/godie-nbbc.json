@@ -200,14 +200,21 @@
           "kind": "spawnModelFx",
           "shape": "single",
           "preset": "tpl-beam-roll",
-          "scale": 4.5,
+          "scale": 1.0,
           "onArrive": [
             {
               "kind": "spawnVfx",
               "vfxId": "fx.prim.fire.explosion-lg",
               "at": "point"
             }
-          ]
+          ],
+          "modelKey": "w3x.stock.reddragonmissile",
+          "scaleAxis": [
+            1,
+            1,
+            7.09
+          ],
+          "arriveSoundKey": "explosion"
         }
       ],
       "vfxKey": "fx.prim.fire.beam",

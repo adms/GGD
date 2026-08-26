@@ -46,7 +46,14 @@
       "kind": "spawnModelFx",
       "shape": "single",
       "preset": "tpl-beam-roll",
-      "count": 1,
+      "arriveSoundKey": "explosion",
+      "modelKey": "w3x.stock.awaken",
+      "scale": 1.5,
+      "scaleAxis": [
+        1,
+        1,
+        3.25
+      ],
       "onArrive": [
         {
           "kind": "spawnVfx",

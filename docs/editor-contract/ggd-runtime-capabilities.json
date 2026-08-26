@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "c6d619f8",
+  "fingerprint": "89bae3c0",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -328,6 +328,7 @@
     "root",
     "runOnEmptyHit",
     "scale",
+    "scaleAxis",
     "scatterRadius",
     "scripted",
     "shape",

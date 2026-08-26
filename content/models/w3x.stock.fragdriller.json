@@ -1,0 +1,17 @@
+{
+  "id": "w3x.stock.fragdriller",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/fragdriller.glb",
+  "scale": 1.206,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Birth",
+    "run": "Birth",
+    "attack": "Birth",
+    "cast": "Birth",
+    "hurt": "Birth",
+    "death": "Birth"
+  },
+  "fxLongAxis": "y",
+  "fxSpawnHeight": 0.55
+}

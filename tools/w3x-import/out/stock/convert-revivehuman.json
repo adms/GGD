@@ -1,0 +1,91 @@
+{
+ "name": "revivehuman",
+ "archive": "War3x.mpq",
+ "mdxBytes": 23841,
+ "path": "Abilities\\Spells\\Human\\ReviveHuman\\ReviveHuman.mdl",
+ "textures": [
+  {
+   "texture": "Textures\\Yellow_Glow3.blp",
+   "size": [
+    32,
+    32
+   ],
+   "lumMean": 46.0,
+   "lumStd": 49.4,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\firering4.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 28.3,
+   "lumStd": 33.6,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\GenericGlow2_64.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 98.8,
+   "lumStd": 105.3,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Yellow_Star.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 41.3,
+   "lumStd": 68.2,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [
+  {
+   "emitter": "BlizParticle01",
+   "segmentAlpha": [
+    0,
+    255,
+    0
+   ],
+   "birth": 0,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 50628,
+ "rawHeight": 603.26,
+ "scaleFactor": 0.02778,
+ "height": 16.757,
+ "visiblePrims": "4/5",
+ "animations": [
+  "Stand"
+ ],
+ "clipMap": {
+  "idle": "Stand",
+  "run": "Stand",
+  "attack": "Stand",
+  "cast": "Stand",
+  "hurt": "Stand",
+  "death": "Stand"
+ },
+ "missingTextures": [],
+ "droppedGlowMaterials": [
+  "TeamGlow0"
+ ],
+ "baseline@HEAD": "3/4 visible prims, 1 anims",
+ "verdict": "ok"
+}

@@ -81,7 +81,17 @@ describe("橫放光束砲的特效模板 (beam-roll preset)", () => {
       const def = Abilities.tryGet(id as never);
       expect(def, `${id} 沒有註冊`).toBeDefined();
       const beams = modelFxNodes(def).filter((n) => n["preset"] === PRESET_ID);
-      expect(beams.length, `${id} 沒有引用 ${PRESET_ID} —— owner 點名的四支之一沒有光束`).toBe(1);
+      // ⭐⭐ 2026-08-26（GH#702）—— 這裡在此之前逐字寫 `.toBe(1)`,而那把**一層**
+      //    當成了這一族的定義。原作逐行:20-03 與 09-04 每一次施放都生**兩具**——
+      //    `h00S`/`h007`(ReviveHuman,核心) ＋ `h008`(FragDriller,`350+15×lvl`%
+      //    ＋ `SetUnitTimeScalePercent(15)` 的慢動作爆殼),**疊在同一點**
+      //    (war3map.j:32324+32327 / 31907+31909)。⇒ 斷言改成「至少一層」,
+      //    ⛔ 而下面的幾何逐格比對只對**核心那一層**(第一個)——
+      //    爆殼層有自己的 scale/clipTimeScale,那是它的身分,⛔ 不是家族幾何。
+      expect(
+        beams.length,
+        `${id} 沒有引用 ${PRESET_ID} —— owner 點名的四支之一沒有光束`,
+      ).toBeGreaterThanOrEqual(1);
       const beam = beams[0]!;
       // ⭐ 承重：模板補上的每一格都在，而且**逐格等於表上的值**。
       //    ⛔ 這裡沒有任何字面值 —— 表改了它跟著改，表沒被讀它就紅。

@@ -457,7 +457,23 @@ export class ModelFxRig {
       const nodes = this.acquire(ev.modelKey, doc, poolKey, look);
       if (!nodes) break;
       const { root, axis } = nodes;
-      root.scaling.setAll((doc.scale ?? 1) * (ev.scale ?? 1));
+      // ⭐ GH#702 —— 非等向縮放。⛔ 在此之前這一行是 `setAll(…)` ＝ **結構上**
+      //    表達不了「一道細長的光束」：`revivehuman.glb` 的包圍盒是
+      //    10.751 × 16.757 × 10.751（長寬比 **1.56 : 1**），等向放大它得到的是一顆
+      //    愈來愈大的方塊 —— 而 owner 2026-08-23 要的是「橫放的光束砲」。
+      //    （原作那條又長又窄的光帶住在 `.mdx` 的 `PRE2` 粒子裡，而
+      //    `convert_stock_model.py` 只轉 geoset ⇒ GGD 只拿得到核心。）
+      // ⚠️ 掛在 **`root`** ⛔ 不是 `axis`：`axis` 子節點才是「模型自己的座標系」，
+      //    它已經照 `model@1.fxLongAxis` 把長軸轉到 `+Z`。Babylon 的合成順序是
+      //    `S_axis · R_axis · S_root · R_root` ⇒ `root.scaling` 作用在**已經橫放好**
+      //    的座標系上：`+Z` 恆為行進軸、`+X` 橫向、`+Y` 上。⇒ 第三格的意思
+      //    ⛔ 不會因為換一份 .glb 而改變，而且它與 `roll`（spinDegPerSec，同樣繞
+      //    `Z`）可交換 —— 翻滾不會把拉長的光束甩歪。
+      // ⭐ 缺席 ⇒ [1,1,1] ⇒ 與 `setAll` 逐位元同義（＝一鍵 rollback）。
+      const s = (doc.scale ?? 1) * (ev.scale ?? 1);
+      const ax = ev.scaleAxis;
+      if (ax === undefined) root.scaling.setAll(s);
+      else root.scaling.set(s * ax[0], s * ax[1], s * ax[2]);
       axis.rotation.set(axisEuler.x, axisEuler.y, axisEuler.z);
       root.setEnabled(true);
       const item: LiveModelFx = {

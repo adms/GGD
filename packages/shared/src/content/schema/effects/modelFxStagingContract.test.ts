@@ -220,13 +220,25 @@ const SOUNDLESS_TEMPLATES = new Set([
  * `stale` 斷言點名後照規矩刪掉那一列。剩下三支照原作對應：20-03＝h00S/h00X
  * （ReviveHuman 紅/NetherStrike）、59-04＝h000、08-03＝h01P（Awaken）—— Phase 6。
  */
-const SHARED_MODEL_FENCED_OUT = new Set([
-  // ⭐ 2026-08-25（GH#688 Phase 6 · QUAD lane）：20-03 也接上了自己的原作模型
-  //    `w3x.stock.revivehuman` ＋ census h00S 的紅 tint（來源在
-  //    `tools/skill-remake/heroes/godie-e002.py`，鏡射 `godie-e00l.e`），
-  //    照規矩把那一列刪掉。剩下兩支照原作對應：59-04＝h000、08-03＝h01P（Awaken）。
-  "59-04 野戰型陽電子砲",
-  "08-03 龍鬥氣砲咒文",
+const SHARED_MODEL_FENCED_OUT = new Set<string>([
+  // ⭐⭐ 2026-08-26（GH#702 · APPLY lane）：**這張表空了**。
+  //    最後兩列（59-04 / 08-03）在這一輪拿到了自己的原作模型：
+  //      · 59-04 野戰型陽電子砲 → `w3x.stock.awaken`
+  //        （war3map.j:47757 的 `h01P`「野戰電子砲」= `Awaken.mdl`，
+  //         OBJECTS.json.units.h01P.model；2026-08-26 用
+  //         `tools/w3x-import/convert_stock_model.py awaken` 轉出來）
+  //      · 08-03 龍鬥氣砲咒文 → `w3x.stock.reddragonmissile`
+  //        （war3map.j:28838 的 `e003`「特效」= `RedDragonMissile.mdl`）
+  //    ⚠️ ⛔ 2026-08-25 之前這一列的註解寫「59-04＝h000」——**那是錯的**：
+  //    `h000` 是 12-04 龍氣爆發的蓄力球（`ParasiteMissile.mdl`，j:29408），
+  //    59-04 的 dummy 從頭到尾是 `h01P`。⭐ 第三守則的形狀：一句被散文守著的
+  //    對應關係活過了它的保存期限，而**沒有任何東西變紅**。
+  //    ⇒ 這兩支在此之前吃的是家族預設 `imported.netherstrike` ——
+  //    ⚠️ **⛔ 不是「看不見」**（`a9cf7187` 的 28 份重烘之後 netherstrike 實測
+  //    5/5 primitive 可見，`ZERO_PIXEL_FX_MODELS` 也已經空了）——
+  //    是**穿了別人的衣服**：那是黑化 Saber `h00X` 的模型，而 59-04 是符文陣、
+  //    08-03 是龍息彈。⇒ 三支不同英雄的招式長成同一具，正是這一條 ⑤ 在擋的形狀。
+  // ⭐ 這張表留空是有意義的：任何新的「兩支技能共用模板預設模型」都會在這裡紅。
 ]);
 
 describe("④ 引用特效模板的演出：出得了聲，而且保得住自己的身分", () => {

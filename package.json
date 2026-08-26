@@ -96,7 +96,7 @@
     "ship": "bash scripts/ship.sh",
     "tune": "bash scripts/tune.sh",
     "ship:check": "node tools/parallel-gates/ship.mjs",
-    "skills:check": "pnpm tiers:apply:check && pnpm spec:check && pnpm overview:check && pnpm tiers:check && pnpm mana:audit:check && pnpm caps:check && pnpm skillremake:docs:check && pnpm skillremake:json:check && pnpm skillremake:provenance:check && pnpm grail:wishes:check && pnpm contract:numbers:check && pnpm atlas:check && pnpm treasure:csv:check && pnpm docs:readme:check && pnpm docs:status:check && pnpm roster:check && pnpm pitch:check && pnpm newhero:check && pnpm lowdmg:check && pnpm anchors:check && pnpm statcaps:check && pnpm apconv:plan:check && pnpm apconv:check && pnpm apdmg:check && pnpm board:check && pnpm msgledger:check && pnpm skillnorm:check && pnpm speedtiers:check && pnpm jasscombo:check && pnpm vfxbind:check && pnpm models:check && pnpm audit:check && pnpm echoloop:check && pnpm templates:check && pnpm prose:check && pnpm sfxbind:check && pnpm shapes:check && pnpm beam:check && pnpm archetypes:check && pnpm review:check && pnpm speedlists:check && pnpm locust:check",
+    "skills:check": "pnpm tiers:apply:check && pnpm spec:check && pnpm overview:check && pnpm tiers:check && pnpm mana:audit:check && pnpm caps:check && pnpm skillremake:docs:check && pnpm skillremake:json:check && pnpm skillremake:provenance:check && pnpm grail:wishes:check && pnpm contract:numbers:check && pnpm atlas:check && pnpm treasure:csv:check && pnpm docs:readme:check && pnpm docs:status:check && pnpm roster:check && pnpm pitch:check && pnpm newhero:check && pnpm lowdmg:check && pnpm anchors:check && pnpm statcaps:check && pnpm apconv:plan:check && pnpm apconv:check && pnpm apdmg:check && pnpm board:check && pnpm msgledger:check && pnpm skillnorm:check && pnpm speedtiers:check && pnpm jasscombo:check && pnpm vfxbind:check && pnpm models:check && pnpm audit:check && pnpm echoloop:check && pnpm templates:check && pnpm prose:check && pnpm sfxbind:check && pnpm shapes:check && pnpm beam:check && pnpm archetypes:check && pnpm review:check && pnpm speedlists:check && pnpm locust:check && pnpm w3a:check",
     "pitch:build": "python3 tools/w3x-import/build_pitch.py",
     "pitch:check": "python3 tools/w3x-import/build_pitch.py --check",
     "skillplan": "tsx tools/skill-normalize/plan.ts",
@@ -139,7 +139,9 @@
     "quarantine:unlock": "bash scripts/product-quarantine.sh unlock",
     "quarantine:lock": "bash scripts/product-quarantine.sh lock",
     "locust:build": "node tools/locust-census/gen.mjs",
-    "locust:check": "node tools/locust-census/gen.mjs --check"
+    "locust:check": "node tools/locust-census/gen.mjs --check",
+    "w3a:build": "python3 tools/w3a-translate/gen.py",
+    "w3a:check": "python3 tools/w3a-translate/gen.py --check"
   },
   "devDependencies": {
     "@eslint/js": "^10",

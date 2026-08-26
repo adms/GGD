@@ -44,16 +44,29 @@ type NodeSpec = {
   lifeSec?: number;
 };
 
+// ⚠️⚠️ 2026-08-26 GH#702 —— 20-03 兩列的 `tint: [1, 0.3922, 0.3922]` **已移除**。
+//    ⭐ TRUTH lane 對 war3map.j 的 **57 個** `SetUnitVertexColorBJ` 呼叫點做了窮盡歸屬：
+//    `h00S` / `h00X` / `h007` / `h008` / `h01P` / `h01V` **一具都不在裡面**
+//    ⇒ 這一族的顏色 100% 來自模型自己的貼圖，⛔ 原作沒有任何頂點色。
+//    那組數字是把 `tpl-beam-roll` description 裡「頂點色 [255,100,100]」那句**編出來的**話
+//    照抄成 RGB（0.3922 ≈ 100/255）—— 這條測試曾經把那個發明**釘成 census 證據**。
+//    ⇒ ⛔ 這不是放寬斷言：是拿掉一個引用不到任何 JASS 行的期望值。
 const LANDINGS: ReadonlyArray<NodeSpec> = [
+  // ⚠️⚠️ 2026-08-26 GH#702 更正：這兩列原本是 `tpl-locust-orb` + `scale 1.25` + `lifeSec 2`。
+  //    ⭐ 1.25 是 `h007` 的**物件編輯器基礎縮放**，而 JASS 26791 當場覆寫成
+  //    `SetUnitScalePercent(200,200,400)` ⇒ 照 1.25 綁**小了 2 倍**；而且 90-04 的
+  //    h007 是**光束本體**（一具 + 放大），⛔ 不是站著不動的球體 ⇒ 家族也綁錯了。
+  //    ⇒ 改綁 `tpl-beam-roll`（家族預設 count 1 / scale 2.65），逐支只覆寫自己的軸與聲音。
+  //    ⛔ 這不是把測試改成配合程式：期望值換成了**更接近 JASS 的那一組**。
   { rawcode: "h007", file: "content/abilities/godie-h02r.r.json", champion: "godie-h02r", slot: "R",
-    preset: "tpl-locust-orb", modelKey: "w3x.stock.revivehuman", scale: 1.25, lifeSec: 2 },
+    preset: "tpl-beam-roll", modelKey: "w3x.stock.revivehuman", scale: 2.0 },
   { rawcode: "h007", file: "content/abilities/godie-hgam.r.json", champion: "godie-hgam", slot: "R",
-    preset: "tpl-locust-orb", modelKey: "w3x.stock.revivehuman", scale: 1.25, lifeSec: 2 },
+    preset: "tpl-beam-roll", modelKey: "w3x.stock.revivehuman", scale: 2.0 },
   // 20-03：beam-roll 既有節點**補上自己的模型**（scale/life 住模板共用表，⛔ 不覆寫）
   { rawcode: "h00S", file: "content/abilities/godie-e002.e.json", champion: "godie-e002", slot: "E",
-    preset: "tpl-beam-roll", modelKey: "w3x.stock.revivehuman", tint: [1, 0.3922, 0.3922] },
+    preset: "tpl-beam-roll", modelKey: "w3x.stock.revivehuman" },
   { rawcode: "h00S", file: "content/abilities/godie-e00l.e.json", champion: "godie-e00l", slot: "E",
-    preset: "tpl-beam-roll", modelKey: "w3x.stock.revivehuman", tint: [1, 0.3922, 0.3922] },
+    preset: "tpl-beam-roll", modelKey: "w3x.stock.revivehuman" },
   { rawcode: "h025", file: "content/abilities/godie-hvsh.passive.json",
     preset: "tpl-locust-orb", modelKey: "w3x.stock.tomeofretrainingcaster", scale: 4, tint: [1, 0, 1], lifeSec: 2 },
   { rawcode: "h025", file: "content/abilities/godie-hvsh.r.json", champion: "godie-hvsh", slot: "R",

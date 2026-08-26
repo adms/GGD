@@ -1,0 +1,5293 @@
+{
+ "meta": {
+  "generator": "BASE-VOCAB lane 2026-08-26 (ad-hoc, NOT a registered generator)",
+  "sources": [
+   "tools/w3x-import/out/GoDieEX22s-src/OBJECTS.json",
+   "tools/w3x-import/out/GoDieEX22s-src/raw/war3map.w3a",
+   "tools/w3x-import/out/stock/STOCK_ABILITIES.json",
+   "war3.mpq/War3x.mpq/War3Patch.mpq : Units\\AbilityMetaData.slk + UI\\WorldEditStrings.txt"
+  ],
+  "note": "data 欄外層 key = 資料欄索引 (1=DataA...)，內層 = 等級。field code 由 w3a mod 的 dataColumn 還原，名稱由 AbilityMetaData.slk 的 displayName 經 WorldEditStrings 解析。",
+  "customAbilities": 1359,
+  "heroNamed": 823,
+  "distinctBases": 262
+ },
+ "bases": {
+  "Asph": {
+   "wc3Name": "Sphere",
+   "orderCode": "Asph",
+   "usedBy": 75,
+   "usedByHeroAbility": 4,
+   "dataColumns": {},
+   "heroSamples": [
+    "14-04-03 涼宮球體",
+    "82-04-01e 球體 迅雷",
+    "82-04-02d 球體 獄炎",
+    "76-04-x 三檔殘影"
+   ]
+  },
+  "ANcl": {
+   "wc3Name": "Illidan - Channel",
+   "orderCode": "ANcl",
+   "usedBy": 42,
+   "usedByHeroAbility": 40,
+   "dataColumns": {
+    "1": {
+     "field": "Ncl1",
+     "weName": "跟隨經過時間"
+    },
+    "2": {
+     "field": "Ncl2",
+     "weName": "目標類型"
+    },
+    "3": {
+     "field": "Ncl3",
+     "weName": "選項"
+    },
+    "4": {
+     "field": "Ncl4",
+     "weName": "美術時間"
+    },
+    "5": {
+     "field": "Ncl5",
+     "weName": "中止其他能力"
+    }
+   },
+   "heroSamples": [
+    "27-01 忍法風魔手裡劍",
+    "64-02 酒釀精華",
+    "25-01 北斗懺悔拳",
+    "24-03 變態絕技悶絕地獄車",
+    "60-01 科奇利族的迴旋鏢"
+   ]
+  },
+  "AOsh": {
+   "wc3Name": "Chieftain - Shock Wave",
+   "orderCode": "AOsh",
+   "usedBy": 38,
+   "usedByHeroAbility": 29,
+   "dataColumns": {
+    "1": {
+     "field": "Osh1",
+     "weName": "傷害"
+    },
+    "2": {
+     "field": "Osh2",
+     "weName": "傷害上限"
+    },
+    "3": {
+     "field": "Osh3",
+     "weName": "距離"
+    },
+    "4": {
+     "field": "Osh4",
+     "weName": "最終區域"
+    }
+   },
+   "heroSamples": [
+    "09-04 龜派氣功",
+    "03-03 鯨式電漿光束炮",
+    "42-03 暗夜吹雪",
+    "08-03 龍鬥氣砲咒文",
+    "35-04 光牙"
+   ]
+  },
+  "AHtb": {
+   "wc3Name": "Mountain King - Thunder Bolt",
+   "orderCode": "AHtb",
+   "usedBy": 29,
+   "usedByHeroAbility": 25,
+   "dataColumns": {
+    "1": {
+     "field": "Htb1",
+     "weName": "傷害"
+    }
+   },
+   "heroSamples": [
+    "16-02 阿彌陀流真空佛陀斬",
+    "32-01 一騎槍閃",
+    "03-01 磁軌砲",
+    "11-03 鬼氣九刀流-阿修羅壹霧銀",
+    "17-02 殺無真空斬"
+   ]
+  },
+  "Aspb": {
+   "wc3Name": "Spell Book",
+   "orderCode": "Aspb",
+   "usedBy": 28,
+   "usedByHeroAbility": 24,
+   "dataColumns": {
+    "2": {
+     "field": "spb2",
+     "weName": "分散的法術等候時間"
+    },
+    "3": {
+     "field": "spb3",
+     "weName": "最少法術"
+    },
+    "4": {
+     "field": "spb4",
+     "weName": "最多法術"
+    }
+   },
+   "heroSamples": [
+    "16-01 超．占事略決",
+    "27-04-00 遠古之鬥",
+    "48-01o 法術書",
+    "45-00o 法術書 (佐助無想轉生)",
+    "76-04-01 三檔法術書"
+   ]
+  },
+  "Aegr": {
+   "wc3Name": "Elune's Grace",
+   "orderCode": "AIdd",
+   "usedBy": 25,
+   "usedByHeroAbility": 23,
+   "dataColumns": {
+    "1": {
+     "field": "Def1",
+     "weName": "承受傷害 (%)"
+    },
+    "2": {
+     "field": "Def2",
+     "weName": "造成傷害 (%)"
+    },
+    "5": {
+     "field": "Def5",
+     "weName": "魔法傷害降低"
+    },
+    "6": {
+     "field": "Def6",
+     "weName": "反彈機率"
+    },
+    "7": {
+     "field": "Def7",
+     "weName": "反彈所受傷害（穿刺）"
+    },
+    "8": {
+     "field": "Def8",
+     "weName": "反彈所受傷害（法術）"
+    }
+   },
+   "heroSamples": [
+    "08-00 龍紋記憶",
+    "20-00 銀色甲胄",
+    "41-03a 惡魔外皮",
+    "65-00 古老智慧",
+    "72-02-x 抗魔抗穿刺"
+   ]
+  },
+  "AOws": {
+   "wc3Name": "Chieftain - War Stomp",
+   "orderCode": "AOws",
+   "usedBy": 24,
+   "usedByHeroAbility": 22,
+   "dataColumns": {
+    "1": {
+     "field": "Wrs1",
+     "weName": "傷害"
+    }
+   },
+   "heroSamples": [
+    "24-01 這是我的豆皮壽司",
+    "44-03 火車輾過",
+    "11-02 虎狩獵",
+    "05-03 及喀爾度",
+    "39-04 祕奧義．金色的神風"
+   ]
+  },
+  "AOcr": {
+   "wc3Name": "Blade Master - Critical Strike",
+   "orderCode": "AOcr",
+   "usedBy": 24,
+   "usedByHeroAbility": 19,
+   "dataColumns": {
+    "1": {
+     "field": "Ocr1",
+     "weName": "致命一擊機率"
+    },
+    "2": {
+     "field": "Ocr2",
+     "weName": "傷害乘數"
+    },
+    "3": {
+     "field": "Ocr3",
+     "weName": "傷害加成"
+    },
+    "5": {
+     "field": "Ocr5",
+     "weName": "絕不失誤"
+    }
+   },
+   "heroSamples": [
+    "13-04 暗殺奧義",
+    "34-02 合氣斬",
+    "19-01 斷末",
+    "75-02 幻影鬥氣",
+    "19-04 幻影暗殺"
+   ]
+  },
+  "AHbh": {
+   "wc3Name": "Mountain King - Bash",
+   "orderCode": "AHbh",
+   "usedBy": 23,
+   "usedByHeroAbility": 21,
+   "dataColumns": {
+    "1": {
+     "field": "Hbh1",
+     "weName": "狂怒擊機率"
+    },
+    "3": {
+     "field": "Hbh3",
+     "weName": "傷害加成"
+    },
+    "5": {
+     "field": "Hbh5",
+     "weName": "絕不失誤"
+    }
+   },
+   "heroSamples": [
+    "06-02 山形修煉-變",
+    "40-01 威脅之拳",
+    "11-01 燒鬼斬",
+    "26-02 亂入",
+    "59-02 高週波短刀"
+   ]
+  },
+  "AHtc": {
+   "wc3Name": "Mountain King - Thunder Clap",
+   "orderCode": "AHtc",
+   "usedBy": 21,
+   "usedByHeroAbility": 19,
+   "dataColumns": {
+    "1": {
+     "field": "Htc1",
+     "weName": "AOE傷害"
+    },
+    "3": {
+     "field": "Htc3",
+     "weName": "移動速度降低 (%)"
+    },
+    "4": {
+     "field": "Htc4",
+     "weName": "攻擊速度降低 (%)"
+    }
+   },
+   "heroSamples": [
+    "53-03 破法對咒",
+    "77-02 百烈櫻華斬",
+    "14-02 式神炸裂",
+    "82-00-01c 崩拳系列BUFF",
+    "82-02 虛空瞬動"
+   ]
+  },
+  "ANin": {
+   "wc3Name": "Inferno",
+   "orderCode": "ANin",
+   "usedBy": 20,
+   "usedByHeroAbility": 13,
+   "dataColumns": {
+    "1": {
+     "field": "Uin1",
+     "weName": "傷害"
+    },
+    "2": {
+     "field": "Uin2",
+     "weName": "持續時間"
+    },
+    "3": {
+     "field": "Uin3",
+     "weName": "衝擊延遲"
+    }
+   },
+   "heroSamples": [
+    "82-01 雷之斧",
+    "74-03-x 流星雨",
+    "71-01 死亡隕落",
+    "71-01-x 死亡隕落",
+    "64-03-03 工廠機器人"
+   ]
+  },
+  "AItx": {
+   "wc3Name": "AttackBonus +20",
+   "orderCode": "AIat",
+   "usedBy": 19,
+   "usedByHeroAbility": 7,
+   "dataColumns": {
+    "1": {
+     "field": "Iatt",
+     "weName": "攻擊加成"
+    }
+   },
+   "heroSamples": [
+    "79-04-03 狂暴虛化傷害加成",
+    "25-04-02 變身傷害減免",
+    "58-04-x 傷害刺激",
+    "80-00-x 飛將神弓",
+    "23-04-00 物品傷害加成"
+   ]
+  },
+  "Aamk": {
+   "wc3Name": "Attribute Modifier Skill",
+   "orderCode": "Aamk",
+   "usedBy": 19,
+   "usedByHeroAbility": 19,
+   "dataColumns": {
+    "1": {
+     "field": "Iagi",
+     "weName": "靈敏度加成"
+    },
+    "2": {
+     "field": "Iint",
+     "weName": "智慧加成"
+    },
+    "3": {
+     "field": "Istr",
+     "weName": "力量加成"
+    },
+    "4": {
+     "field": "Ihid",
+     "weName": "隱藏按鍵"
+    }
+   },
+   "heroSamples": [
+    "69-01 力量強化",
+    "44-02 死神的規則",
+    "52-011 精練肉體",
+    "69-04 魔力增幅",
+    "59-003屬性加成"
+   ]
+  },
+  "AEev": {
+   "wc3Name": "Demon Hunter - Evasion",
+   "orderCode": "AEev",
+   "usedBy": 17,
+   "usedByHeroAbility": 14,
+   "dataColumns": {
+    "1": {
+     "field": "Eev1",
+     "weName": "閃避的機率"
+    }
+   },
+   "heroSamples": [
+    "12-00 感應意脈",
+    "48-02 心眼",
+    "06-01 山形修煉-放",
+    "33-04 動物拳法",
+    "20-02 感知能力"
+   ]
+  },
+  "AOcl": {
+   "wc3Name": "Farseer - Chain Lightning",
+   "orderCode": "AOcl",
+   "usedBy": 17,
+   "usedByHeroAbility": 9,
+   "dataColumns": {
+    "1": {
+     "field": "Ocl1",
+     "weName": "每個目標傷害"
+    },
+    "2": {
+     "field": "Ocl2",
+     "weName": "目標擊中次數"
+    },
+    "3": {
+     "field": "Ocl3",
+     "weName": "每個目標降低傷害"
+    }
+   },
+   "heroSamples": [
+    "08-02 萊丁快速劍",
+    "40-04 轟轟音聲",
+    "77-00 閃電特效",
+    "52-02 蹂躪編年史",
+    "45-00x 鏈鎖閃電"
+   ]
+  },
+  "AEIl": {
+   "wc3Name": "Illidan - Metamorphosis",
+   "orderCode": "AEme",
+   "usedBy": 17,
+   "usedByHeroAbility": 17,
+   "dataColumns": {
+    "5": {
+     "field": "Eme5",
+     "weName": "其他形態生命點數加成"
+    }
+   },
+   "heroSamples": [
+    "22-04 雛見澤症候群L5",
+    "26-04 開天闢地‧洨者聖臨",
+    "12-03 破凰之心-徒手空破山",
+    "09-03 超級賽亞人",
+    "25-04 ChangeDNA"
+   ]
+  },
+  "Absk": {
+   "wc3Name": "Beserk",
+   "orderCode": "Absk",
+   "usedBy": 15,
+   "usedByHeroAbility": 15,
+   "dataColumns": {
+    "1": {
+     "field": "bsk1",
+     "weName": "移動速度增加"
+    },
+    "2": {
+     "field": "bsk2",
+     "weName": "增加攻擊速度"
+    },
+    "3": {
+     "field": "bsk3",
+     "weName": "增加承受傷害"
+    }
+   },
+   "heroSamples": [
+    "26-01 腳底按摩",
+    "32-03 狂經脈",
+    "27-03 忍法千變萬化之刀",
+    "48-01 怪力",
+    "75-00 戰鬥之歌"
+   ]
+  },
+  "Arel": {
+   "wc3Name": "Regen Life",
+   "orderCode": "Arel",
+   "usedBy": 15,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Ihpr",
+     "weName": "生命點數每秒重生"
+    }
+   },
+   "heroSamples": [
+    "31-00 再生能力",
+    "35-00 再生能力"
+   ]
+  },
+  "AIlz": {
+   "wc3Name": "MaxLifeBonus (Leastest)",
+   "orderCode": "AIml",
+   "usedBy": 13,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Ilif",
+     "weName": "獲得法力上限"
+    }
+   },
+   "heroSamples": []
+  },
+  "Awar": {
+   "wc3Name": "Pulverize",
+   "orderCode": "Awar",
+   "usedBy": 13,
+   "usedByHeroAbility": 8,
+   "dataColumns": {
+    "1": {
+     "field": "War1",
+     "weName": "動地跺機率 (%)"
+    },
+    "2": {
+     "field": "War2",
+     "weName": "造成傷害"
+    },
+    "3": {
+     "field": "War3",
+     "weName": "全面傷害半徑"
+    },
+    "4": {
+     "field": "War4",
+     "weName": "減半傷害半徑"
+    }
+   },
+   "heroSamples": [
+    "47-00 龍搥閃",
+    "79-04-00 虛化破壞",
+    "26-02 亂入",
+    "96-002 易筋經",
+    "09-00 賽亞人的血脈"
+   ]
+  },
+  "ANsb": {
+   "wc3Name": "Rexxar - Storm Bolt",
+   "orderCode": "AHtb",
+   "usedBy": 13,
+   "usedByHeroAbility": 13,
+   "dataColumns": {
+    "1": {
+     "field": "Htb1",
+     "weName": "傷害"
+    }
+   },
+   "heroSamples": [
+    "12-01 鬥仙術",
+    "01-01 凶斬",
+    "04-04 神滅斬",
+    "06-00 猜猜拳",
+    "05-04 巴歐．薩喀爾嘎"
+   ]
+  },
+  "AUcs": {
+   "wc3Name": "Dreadlord - Carrion Swarm",
+   "orderCode": "AUcs",
+   "usedBy": 13,
+   "usedByHeroAbility": 9,
+   "dataColumns": {
+    "1": {
+     "field": "Ucs1",
+     "weName": "傷害"
+    },
+    "2": {
+     "field": "Ucs2",
+     "weName": "傷害上限"
+    },
+    "3": {
+     "field": "Ucs3",
+     "weName": "距離"
+    },
+    "4": {
+     "field": "Ucs4",
+     "weName": "最後區域"
+    }
+   },
+   "heroSamples": [
+    "65-02 寒冰破碎",
+    "23-04 Thunder Blade",
+    "08-04 阿邦快速劍X",
+    "34-04 奧義˙蒼龍破",
+    "37-03 災難之牆"
+   ]
+  },
+  "AEer": {
+   "wc3Name": "Keeper - Entangling Roots",
+   "orderCode": "AEer",
+   "usedBy": 13,
+   "usedByHeroAbility": 10,
+   "dataColumns": {
+    "1": {
+     "field": "Eer1",
+     "weName": "每秒傷害"
+    }
+   },
+   "heroSamples": [
+    "35-02 石絲",
+    "01-04 超究武神霸斬",
+    "17-04 狂龍斬",
+    "18-04-02 老樹盤根",
+    "01-04r 超究武神霸斬 - 改"
+   ]
+  },
+  "AIx5": {
+   "wc3Name": "Crown of Kings (All + 5)",
+   "orderCode": "AIab",
+   "usedBy": 12,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Iagi",
+     "weName": "靈敏度加成"
+    },
+    "2": {
+     "field": "Iint",
+     "weName": "智慧加成"
+    },
+    "3": {
+     "field": "Istr",
+     "weName": "力量加成"
+    }
+   },
+   "heroSamples": []
+  },
+  "Ansk": {
+   "wc3Name": "Hardened Skin(Naga Turtle)",
+   "orderCode": "Assk",
+   "usedBy": 12,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Ssk1",
+     "weName": "降低傷害機率 (%)"
+    },
+    "2": {
+     "field": "Ssk2",
+     "weName": "最小傷害"
+    },
+    "3": {
+     "field": "Ssk3",
+     "weName": "忽視的傷害"
+    }
+   },
+   "heroSamples": [
+    "00-00 硬化外皮(寶箱)",
+    "80-002 戰無不勝"
+   ]
+  },
+  "Aasl": {
+   "wc3Name": "Aura - Slow",
+   "orderCode": "Aasl",
+   "usedBy": 12,
+   "usedByHeroAbility": 3,
+   "dataColumns": {
+    "1": {
+     "field": "Slo1",
+     "weName": "移動速度要素"
+    },
+    "2": {
+     "field": "Slo2",
+     "weName": "攻擊速度要素"
+    },
+    "3": {
+     "field": "Slo3",
+     "weName": "永遠自動施法"
+    }
+   },
+   "heroSamples": [
+    "71-032 緩慢靈光",
+    "21-04x 封絕",
+    "66-04-a 靈壓震撼"
+   ]
+  },
+  "AUim": {
+   "wc3Name": "Crypt Lord - Impale",
+   "orderCode": "AUim",
+   "usedBy": 11,
+   "usedByHeroAbility": 6,
+   "dataColumns": {
+    "1": {
+     "field": "Uim1",
+     "weName": "每波間隙"
+    },
+    "2": {
+     "field": "Uim2",
+     "weName": "每波時間(秒)"
+    },
+    "3": {
+     "field": "Uim3",
+     "weName": "造成傷害"
+    },
+    "4": {
+     "field": "Uim4",
+     "weName": "空中時間(秒)"
+    }
+   },
+   "heroSamples": [
+    "30-04 電車之狼衝擊",
+    "21-03 赤焰爆發",
+    "39-03 無名神風流-蛟龍",
+    "41-02 地裂術",
+    "76-002-00 霸王色效果"
+   ]
+  },
+  "Alit": {
+   "wc3Name": "Lightning Attack",
+   "orderCode": "Alit",
+   "usedBy": 11,
+   "usedByHeroAbility": 3,
+   "dataColumns": {},
+   "heroSamples": [
+    "79-04x 虛化攻擊特效",
+    "82-04-x",
+    "82-04-x"
+   ]
+  },
+  "AIs2": {
+   "wc3Name": "Attack Speed Increase(greater)",
+   "orderCode": "AIas",
+   "usedBy": 10,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Isx1",
+     "weName": "增加攻擊速度"
+    }
+   },
+   "heroSamples": []
+  },
+  "AIsr": {
+   "wc3Name": "Runed Bracers",
+   "orderCode": "AIsr",
+   "usedBy": 10,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "2": {
+     "field": "isr2",
+     "weName": "降低的傷害"
+    }
+   },
+   "heroSamples": []
+  },
+  "AIi6": {
+   "wc3Name": "IntelligenceBonus (+6)",
+   "orderCode": "AIab",
+   "usedBy": 10,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "2": {
+     "field": "Iint",
+     "weName": "智慧加成"
+    }
+   },
+   "heroSamples": []
+  },
+  "Awrs": {
+   "wc3Name": "War Stomp (creep)",
+   "orderCode": "AOws",
+   "usedBy": 10,
+   "usedByHeroAbility": 7,
+   "dataColumns": {
+    "1": {
+     "field": "Wrs1",
+     "weName": "傷害"
+    },
+    "2": {
+     "field": "Wrs2",
+     "weName": "地形變形振幅"
+    },
+    "3": {
+     "field": "Wrs3",
+     "weName": "地形變形持續時間(微秒)"
+    }
+   },
+   "heroSamples": [
+    "22-00 嗚鎖打!",
+    "52-03-x 狂戰震地",
+    "33-032 大地之怒",
+    "78-032 地走龍牙",
+    "41-03-03 跳躍波動"
+   ]
+  },
+  "AIs6": {
+   "wc3Name": "StrengthBonus (+6)",
+   "orderCode": "AIab",
+   "usedBy": 9,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Iagi",
+     "weName": "靈敏度加成"
+    },
+    "2": {
+     "field": "Iint",
+     "weName": "智慧加成"
+    },
+    "3": {
+     "field": "Istr",
+     "weName": "力量加成"
+    }
+   },
+   "heroSamples": []
+  },
+  "Assk": {
+   "wc3Name": "Hardened Skin",
+   "orderCode": "Assk",
+   "usedBy": 9,
+   "usedByHeroAbility": 9,
+   "dataColumns": {
+    "1": {
+     "field": "Ssk1",
+     "weName": "降低傷害機率 (%)"
+    },
+    "2": {
+     "field": "Ssk2",
+     "weName": "最小傷害"
+    },
+    "3": {
+     "field": "Ssk3",
+     "weName": "忽視的傷害"
+    },
+    "4": {
+     "field": "Ssk4",
+     "weName": "包括的遠距傷害"
+    },
+    "5": {
+     "field": "Ssk5",
+     "weName": "包括的近戰傷害"
+    }
+   },
+   "heroSamples": [
+    "28-00 無限再生",
+    "03-00 相轉移裝甲",
+    "52-00 神性",
+    "59-03 AT力場",
+    "78-00 銅皮鐵骨"
+   ]
+  },
+  "ANss": {
+   "wc3Name": "Spell Shield",
+   "orderCode": "ANss",
+   "usedBy": 9,
+   "usedByHeroAbility": 6,
+   "dataColumns": {},
+   "heroSamples": [
+    "37-04-03 天地魔鬥",
+    "45-00 寫輪眼",
+    "07-01 臨、兵、鬥",
+    "19-02 迴切",
+    "32-002 不敗戰嵐"
+   ]
+  },
+  "AIva": {
+   "wc3Name": "Vampiric attack",
+   "orderCode": "AIva",
+   "usedBy": 9,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Ivam",
+     "weName": "每次攻擊偷取生命"
+    }
+   },
+   "heroSamples": [
+    "66-03-a 七夜怪談"
+   ]
+  },
+  "AIaz": {
+   "wc3Name": "AgilityBonus (+10)",
+   "orderCode": "AIab",
+   "usedBy": 9,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Iagi",
+     "weName": "靈敏度加成"
+    }
+   },
+   "heroSamples": []
+  },
+  "AIcs": {
+   "wc3Name": "Critical Strike (item)",
+   "orderCode": "AOcr",
+   "usedBy": 9,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Ocr1",
+     "weName": "致命一擊機率"
+    },
+    "2": {
+     "field": "Ocr2",
+     "weName": "傷害乘數"
+    },
+    "3": {
+     "field": "Ocr3",
+     "weName": "傷害加成"
+    },
+    "5": {
+     "field": "Ocr5",
+     "weName": "絕不失誤"
+    }
+   },
+   "heroSamples": [
+    "48-01a 怪力",
+    "79-04-04 狂暴虛化爆擊"
+   ]
+  },
+  "AOwk": {
+   "wc3Name": "Blade Master - Wind Walk",
+   "orderCode": "AOwk",
+   "usedBy": 8,
+   "usedByHeroAbility": 5,
+   "dataColumns": {
+    "1": {
+     "field": "Owk1",
+     "weName": "變動時間"
+    },
+    "2": {
+     "field": "Owk2",
+     "weName": "增加移動速度 (%)"
+    },
+    "3": {
+     "field": "Owk3",
+     "weName": "背刺傷害"
+    },
+    "4": {
+     "field": "Owk4",
+     "weName": "背刺傷害"
+    }
+   },
+   "heroSamples": [
+    "22-01 鬼隱之擊",
+    "49-01 遮斷獵殺",
+    "25-00 北斗暗殺拳",
+    "66-01 靈體化",
+    "90-01 保護色獵殺"
+   ]
+  },
+  "Awfb": {
+   "wc3Name": "Fire Bolt (warlock)",
+   "orderCode": "ANfb",
+   "usedBy": 8,
+   "usedByHeroAbility": 6,
+   "dataColumns": {
+    "1": {
+     "field": "Htb1",
+     "weName": "傷害"
+    }
+   },
+   "heroSamples": [
+    "47-01 飛龍閃",
+    "04-01 火球術",
+    "01-02 破光擊",
+    "01-02 破光擊 auto",
+    "12-002 仙氣發勁"
+   ]
+  },
+  "AEbl": {
+   "wc3Name": "Warden - Blink",
+   "orderCode": "AEbl",
+   "usedBy": 8,
+   "usedByHeroAbility": 6,
+   "dataColumns": {
+    "1": {
+     "field": "Ebl1",
+     "weName": "最大範圍"
+    },
+    "2": {
+     "field": "Ebl2",
+     "weName": "最小範圍"
+    }
+   },
+   "heroSamples": [
+    "47-02 神速",
+    "09-02 瞬間移動",
+    "65-01 神出鬼沒",
+    "86-02 電光一閃 ",
+    "57-02 任意門"
+   ]
+  },
+  "AIrm": {
+   "wc3Name": "ItemRegenMana",
+   "orderCode": "AIrm",
+   "usedBy": 8,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Imrp",
+     "weName": "法力回復加成(普通的一部份)"
+    }
+   },
+   "heroSamples": [
+    "09-03-00 悟空法力再生"
+   ]
+  },
+  "ANcs": {
+   "wc3Name": "Tinkerer - Cluster Rockets (Level 0)",
+   "orderCode": "ANcs",
+   "usedBy": 8,
+   "usedByHeroAbility": 8,
+   "dataColumns": {
+    "1": {
+     "field": "Ncs1",
+     "weName": "傷害數量"
+    },
+    "2": {
+     "field": "Ncs2",
+     "weName": "傷害間隔"
+    },
+    "3": {
+     "field": "Ncs3",
+     "weName": "投射武器數"
+    },
+    "4": {
+     "field": "Ncs4",
+     "weName": "最高傷害"
+    },
+    "5": {
+     "field": "Ncs5",
+     "weName": "建築物損壞因子"
+    },
+    "6": {
+     "field": "Ncs6",
+     "weName": "效果期限"
+    }
+   },
+   "heroSamples": [
+    "03-04 全彈發射",
+    "42-04 世界終結",
+    "35-01 土爪",
+    "76-03 伸縮自如的槍亂打",
+    "53-01 獸王牙操彈"
+   ]
+  },
+  "ACct": {
+   "wc3Name": "Critical Strike (creep)",
+   "orderCode": "AOcr",
+   "usedBy": 8,
+   "usedByHeroAbility": 4,
+   "dataColumns": {
+    "1": {
+     "field": "Ocr1",
+     "weName": "致命一擊機率"
+    },
+    "2": {
+     "field": "Ocr2",
+     "weName": "傷害乘數"
+    },
+    "3": {
+     "field": "Ocr3",
+     "weName": "傷害加成"
+    },
+    "5": {
+     "field": "Ocr5",
+     "weName": "絕不失誤"
+    }
+   },
+   "heroSamples": [
+    "37-04-00 災難終結",
+    "18-04-03 爪擊",
+    "39-00 真-鬼眼",
+    "01-00-o 破光擊EX"
+   ]
+  },
+  "AEtq": {
+   "wc3Name": "Keeper - Tranquility",
+   "orderCode": "AEtq",
+   "usedBy": 8,
+   "usedByHeroAbility": 8,
+   "dataColumns": {
+    "1": {
+     "field": "Etq1",
+     "weName": "回復生命"
+    },
+    "2": {
+     "field": "Etq2",
+     "weName": "回復間隙"
+    },
+    "3": {
+     "field": "Etq3",
+     "weName": "建築削減"
+    }
+   },
+   "heroSamples": [
+    "20-04 Avalon-永恆的理想鄉",
+    "65-002 永恆的愚蠢鄉",
+    "69-002 固有結界-黑洞",
+    "14-01 東風繪扇、南風末廣",
+    "82-04-02 術式兵裝-獄炎煉我"
+   ]
+  },
+  "Aspy": {
+   "wc3Name": "Spawn Hydra",
+   "orderCode": "Aspd",
+   "usedBy": 8,
+   "usedByHeroAbility": 6,
+   "dataColumns": {
+    "1": {
+     "field": "Sod1",
+     "weName": "部隊數量"
+    }
+   },
+   "heroSamples": [
+    "71-001夜晚",
+    "71-002白天",
+    "71-00 死之王爆炸",
+    "00-001夜晚",
+    "00-002白天"
+   ]
+  },
+  "Atau": {
+   "wc3Name": "Taunt",
+   "orderCode": "Atau",
+   "usedBy": 7,
+   "usedByHeroAbility": 5,
+   "dataColumns": {
+    "1": {
+     "field": "Tau1",
+     "weName": "偏好敵人"
+    },
+    "3": {
+     "field": "Tau3",
+     "weName": "單位上限"
+    }
+   },
+   "heroSamples": [
+    "86-00 裝可愛",
+    "57-00 四次元口袋",
+    "48-00 石化之眼",
+    "90-00 KEROKERO",
+    "91-002x 嘲諷"
+   ]
+  },
+  "Scri": {
+   "wc3Name": "Cripple (Warlock)",
+   "orderCode": "Acri",
+   "usedBy": 7,
+   "usedByHeroAbility": 4,
+   "dataColumns": {
+    "1": {
+     "field": "Cri1",
+     "weName": "降低移動速度 (%)"
+    },
+    "2": {
+     "field": "Cri2",
+     "weName": "攻擊速度降低 (%)"
+    },
+    "3": {
+     "field": "Cri3",
+     "weName": "減少傷害"
+    }
+   },
+   "heroSamples": [
+    "41-00 木乃伊的詛咒",
+    "37-00 鬼眼",
+    "41-03-x 毀壞武器",
+    "84-03-02 癱瘓"
+   ]
+  },
+  "ANbr": {
+   "wc3Name": "Battle Roar",
+   "orderCode": "ANbr",
+   "usedBy": 7,
+   "usedByHeroAbility": 7,
+   "dataColumns": {
+    "1": {
+     "field": "Nbr1",
+     "weName": "增加傷害"
+    },
+    "2": {
+     "field": "Roa2",
+     "weName": "增加防禦"
+    },
+    "3": {
+     "field": "Roa3",
+     "weName": "生命回復率"
+    },
+    "4": {
+     "field": "Roa4",
+     "weName": "法力重生"
+    }
+   },
+   "heroSamples": [
+    "26-02 吃洨火鍋",
+    "44-04 心臟麻痺",
+    "16-002 布都御魂",
+    "09-01 界王拳",
+    "39-00 無名神風流-玄武"
+   ]
+  },
+  "AIfb": {
+   "wc3Name": "Orb of Fire",
+   "orderCode": "AIfb",
+   "usedBy": 7,
+   "usedByHeroAbility": 4,
+   "dataColumns": {
+    "1": {
+     "field": "Idam",
+     "weName": "傷害加成"
+    },
+    "5": {
+     "field": "Iob5",
+     "weName": "強化的攻擊索引"
+    }
+   },
+   "heroSamples": [
+    "11-01 燒鬼斬",
+    "21-01a 夏娜拔焰後擴散火",
+    "38-02  炎殺劍",
+    "41-03-x 火焰噴吐"
+   ]
+  },
+  "AUfn": {
+   "wc3Name": "Lich - Frost Nova",
+   "orderCode": "AUfn",
+   "usedBy": 7,
+   "usedByHeroAbility": 6,
+   "dataColumns": {
+    "1": {
+     "field": "Ufn1",
+     "weName": "區域效果傷害"
+    },
+    "2": {
+     "field": "Ufn2",
+     "weName": "特殊目標傷害"
+    }
+   },
+   "heroSamples": [
+    "42-01 凍結的大地",
+    "23-01 電離光槍",
+    "41-03-x 冰裂術",
+    "91-03 碎心打擊",
+    "93-03 這次考試很簡單"
+   ]
+  },
+  "AIxk": {
+   "wc3Name": "Beserk (item)",
+   "orderCode": "Absk",
+   "usedBy": 7,
+   "usedByHeroAbility": 3,
+   "dataColumns": {
+    "1": {
+     "field": "bsk1",
+     "weName": "移動速度增加"
+    },
+    "2": {
+     "field": "bsk2",
+     "weName": "增加攻擊速度"
+    },
+    "3": {
+     "field": "bsk3",
+     "weName": "增加承受傷害"
+    }
+   },
+   "heroSamples": [
+    "94-03 珍奶顏射",
+    "32-04 狂龍霸體",
+    "77-002 御雷劍"
+   ]
+  },
+  "ACro": {
+   "wc3Name": "Roar (creep)",
+   "orderCode": "Aroa",
+   "usedBy": 7,
+   "usedByHeroAbility": 7,
+   "dataColumns": {
+    "1": {
+     "field": "Roa1",
+     "weName": "增加傷害(%)"
+    },
+    "2": {
+     "field": "Roa2",
+     "weName": "增加防禦"
+    },
+    "3": {
+     "field": "Roa3",
+     "weName": "生命回復率"
+    }
+   },
+   "heroSamples": [
+    "24-04 內褲變身",
+    "21-04 討滅封絕",
+    "31-04 不要踢我蛋蛋",
+    "79-002 虛化",
+    "92-04 馬勒戈壁"
+   ]
+  },
+  "AIcf": {
+   "wc3Name": "ItemCloakOfFlames",
+   "orderCode": "AIcf",
+   "usedBy": 7,
+   "usedByHeroAbility": 5,
+   "dataColumns": {
+    "1": {
+     "field": "Icfd",
+     "weName": "傷害持續時間"
+    }
+   },
+   "heroSamples": [
+    "41-03-x  熔岩高崙",
+    "13-031焚身　阿福",
+    "37-03-00 災難之牆火燄",
+    "05-002 金色巨龍",
+    "90-03-00 鞏固本能毒液"
+   ]
+  },
+  "AIsx": {
+   "wc3Name": "Attack Speed Increase",
+   "orderCode": "AIas",
+   "usedBy": 7,
+   "usedByHeroAbility": 6,
+   "dataColumns": {
+    "1": {
+     "field": "Isx1",
+     "weName": "增加攻擊速度"
+    }
+   },
+   "heroSamples": [
+    "76-00-02 二檔增加攻速",
+    "76-04-02 三檔減少攻速",
+    "79-04-04 狂暴虛化攻速加成",
+    "61-03疾如風 效果",
+    "82-04-01a 攻速"
+   ]
+  },
+  "Aroa": {
+   "wc3Name": "Roar",
+   "orderCode": "Aroa",
+   "usedBy": 7,
+   "usedByHeroAbility": 6,
+   "dataColumns": {
+    "1": {
+     "field": "Roa1",
+     "weName": "增加傷害(%)"
+    },
+    "2": {
+     "field": "Roa2",
+     "weName": "增加防禦"
+    },
+    "3": {
+     "field": "Roa3",
+     "weName": "生命回復率"
+    },
+    "4": {
+     "field": "Roa4",
+     "weName": "法力重生"
+    }
+   },
+   "heroSamples": [
+    "26-00 吃洨火鍋",
+    "59-002 暴走能力提升",
+    "80-03 鬼神烈戟",
+    "94-00 恰恰~",
+    "16-002 朋友們都回來啦"
+   ]
+  },
+  "ACac": {
+   "wc3Name": "Aura - Command (Creep)",
+   "orderCode": "AOac",
+   "usedBy": 7,
+   "usedByHeroAbility": 5,
+   "dataColumns": {
+    "1": {
+     "field": "Cac1",
+     "weName": "增加攻擊傷害"
+    },
+    "2": {
+     "field": "Ear2",
+     "weName": "近戰加權"
+    },
+    "3": {
+     "field": "Ear3",
+     "weName": "遠程加權"
+    }
+   },
+   "heroSamples": [
+    "26-03 熱血",
+    "61-03 打屁股風林火豬",
+    "82-00-02c 攻擊力",
+    "87-03 天下號令",
+    "09-002a 悟空指令靈氣"
+   ]
+  },
+  "ANde": {
+   "wc3Name": "Tinkerer - Demolish (Level 0)",
+   "orderCode": "ANde",
+   "usedBy": 7,
+   "usedByHeroAbility": 6,
+   "dataColumns": {
+    "1": {
+     "field": "Nde1",
+     "weName": "破壞機率"
+    },
+    "2": {
+     "field": "Nde2",
+     "weName": "傷害增幅因子（建築物）"
+    },
+    "3": {
+     "field": "Nde3",
+     "weName": "傷害增幅因子（部隊）"
+    },
+    "4": {
+     "field": "Nde4",
+     "weName": "傷害增幅因子（英雄）"
+    }
+   },
+   "heroSamples": [
+    "69-001 黑化之力",
+    "09-001 愛護地球",
+    "32-00 青龍槍術",
+    "00-00 破塔加成",
+    "80-00 飛將神弓"
+   ]
+  },
+  "AIbm": {
+   "wc3Name": "MaxManaBonus (Most)",
+   "orderCode": "AImm",
+   "usedBy": 7,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Iman",
+     "weName": "獲得法力上限"
+    }
+   },
+   "heroSamples": [
+    "53-002-01 魔力增幅法力加成"
+   ]
+  },
+  "AIms": {
+   "wc3Name": "MoveSpeedBonus",
+   "orderCode": "AIms",
+   "usedBy": 6,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Imvb",
+     "weName": "移動速度加成"
+    }
+   },
+   "heroSamples": [
+    "82-04-01c 跑速"
+   ]
+  },
+  "ANc3": {
+   "wc3Name": "Tinkerer - Cluster Rockets (Level 3)",
+   "orderCode": "ANcs",
+   "usedBy": 6,
+   "usedByHeroAbility": 5,
+   "dataColumns": {
+    "1": {
+     "field": "Ncs1",
+     "weName": "傷害數量"
+    },
+    "2": {
+     "field": "Ncs2",
+     "weName": "傷害間隔"
+    },
+    "3": {
+     "field": "Ncs3",
+     "weName": "投射武器數"
+    },
+    "4": {
+     "field": "Ncs4",
+     "weName": "最高傷害"
+    },
+    "5": {
+     "field": "Ncs5",
+     "weName": "建築物損壞因子"
+    }
+   },
+   "heroSamples": [
+    "29-04 電光毒龍鑽",
+    "47-03 九頭龍閃",
+    "38-02 邪王炎殺煉獄焦",
+    "25-03 北斗百裂拳",
+    "01-02 隕石擊"
+   ]
+  },
+  "AIcl": {
+   "wc3Name": "Chain Lightning (item)",
+   "orderCode": "AOcl",
+   "usedBy": 6,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Ocl1",
+     "weName": "每個目標傷害"
+    },
+    "2": {
+     "field": "Ocl2",
+     "weName": "目標擊中次數"
+    },
+    "3": {
+     "field": "Ocl3",
+     "weName": "每個目標降低傷害"
+    }
+   },
+   "heroSamples": []
+  },
+  "ACev": {
+   "wc3Name": "Evasion (creep)",
+   "orderCode": "AEev",
+   "usedBy": 6,
+   "usedByHeroAbility": 3,
+   "dataColumns": {
+    "1": {
+     "field": "Eev1",
+     "weName": "閃避的機率"
+    }
+   },
+   "heroSamples": [
+    "45-00 寫輪眼",
+    "79-04-01 虛化閃避",
+    "95-00 龍氣"
+   ]
+  },
+  "ANca": {
+   "wc3Name": "Pit Lord - Cleaving Attack",
+   "orderCode": "ANca",
+   "usedBy": 6,
+   "usedByHeroAbility": 3,
+   "dataColumns": {
+    "1": {
+     "field": "nca1",
+     "weName": "分散傷害要素"
+    }
+   },
+   "heroSamples": [
+    "34-01 風華之爪",
+    "76-04-03 三檔法術書擴散",
+    "32-02 橫掃千軍"
+   ]
+  },
+  "AIbx": {
+   "wc3Name": "Bash (item)",
+   "orderCode": "AHbh",
+   "usedBy": 6,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Hbh1",
+     "weName": "狂怒擊機率"
+    },
+    "3": {
+     "field": "Hbh3",
+     "weName": "傷害加成"
+    },
+    "4": {
+     "field": "Hbh4",
+     "weName": "失手機率"
+    },
+    "5": {
+     "field": "Hbh5",
+     "weName": "絕不失誤"
+    }
+   },
+   "heroSamples": [
+    "94-03-01 珍奶狂怒"
+   ]
+  },
+  "ANb2": {
+   "wc3Name": "Bash (maul , SP Bear, level 3)",
+   "orderCode": "AHbh",
+   "usedBy": 6,
+   "usedByHeroAbility": 6,
+   "dataColumns": {
+    "1": {
+     "field": "Hbh1",
+     "weName": "狂怒擊機率"
+    },
+    "3": {
+     "field": "Hbh3",
+     "weName": "傷害加成"
+    },
+    "5": {
+     "field": "Hbh5",
+     "weName": "絕不失誤"
+    }
+   },
+   "heroSamples": [
+    "41-03-04 重槌",
+    "01-00 怒斬",
+    "34-03 爆碎丸",
+    "84-00 熊巴巴",
+    "95-02 大和戰氣"
+   ]
+  },
+  "Atdg": {
+   "wc3Name": "TornadoDamage",
+   "orderCode": "Atdg",
+   "usedBy": 6,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Tdg1",
+     "weName": "每秒傷害"
+    },
+    "2": {
+     "field": "Tdg2",
+     "weName": "中等傷害半徑"
+    },
+    "3": {
+     "field": "Tdg3",
+     "weName": "每秒中等傷害"
+    },
+    "4": {
+     "field": "Tdg4",
+     "weName": "小傷害半徑"
+    },
+    "5": {
+     "field": "Tdg5",
+     "weName": "每秒小型傷害"
+    }
+   },
+   "heroSamples": []
+  },
+  "ANab": {
+   "wc3Name": "Alchemist - Acid Bomb",
+   "orderCode": "ANab",
+   "usedBy": 6,
+   "usedByHeroAbility": 5,
+   "dataColumns": {
+    "1": {
+     "field": "Nab1",
+     "weName": "移動速度減緩(%)"
+    },
+    "2": {
+     "field": "Nab2",
+     "weName": "攻擊速度減緩 (%)"
+    },
+    "3": {
+     "field": "Nab3",
+     "weName": "護甲懲罰"
+    },
+    "4": {
+     "field": "Nab4",
+     "weName": "主要傷害"
+    },
+    "5": {
+     "field": "Nab5",
+     "weName": "次要傷害"
+    }
+   },
+   "heroSamples": [
+    "29-01 鐵砂掌",
+    "01-03 畫龍點睛",
+    "27-03x 千變-火",
+    "92-02 消化液",
+    "06-00x 剪刀出血"
+   ]
+  },
+  "Ablo": {
+   "wc3Name": "Bloodlust",
+   "orderCode": "Ablo",
+   "usedBy": 6,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Blo1",
+     "weName": "增加攻擊速度(%)"
+    },
+    "2": {
+     "field": "Blo2",
+     "weName": "增加移動速度 (%)"
+    },
+    "3": {
+     "field": "Blo3",
+     "weName": "縮放要素"
+    }
+   },
+   "heroSamples": [
+    "57-02 縮小燈",
+    "61-03徐如林 效果"
+   ]
+  },
+  "AOw2": {
+   "wc3Name": "Cairne- War Stomp",
+   "orderCode": "AOws",
+   "usedBy": 6,
+   "usedByHeroAbility": 6,
+   "dataColumns": {
+    "1": {
+     "field": "Wrs1",
+     "weName": "傷害"
+    }
+   },
+   "heroSamples": [
+    "40-02 必殺！爆熱神音！",
+    "60-04 迴旋斬",
+    "86-04 打雷絕招",
+    "72-04 黑化",
+    "52-02 狂暴怒吼"
+   ]
+  },
+  "Aoar": {
+   "wc3Name": "Aura - Regeneration (Ward)",
+   "orderCode": "Aoar",
+   "usedBy": 6,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Oar1",
+     "weName": "回復的生命點數總計"
+    }
+   },
+   "heroSamples": [
+    "70-00 芬多精(效果)"
+   ]
+  },
+  "ACav": {
+   "wc3Name": "Aura - Devotion (Creep)",
+   "orderCode": "AHad",
+   "usedBy": 6,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Had1",
+     "weName": "裝甲加成"
+    }
+   },
+   "heroSamples": [
+    "24-02 熱血靈氣",
+    "64-002 魔幻嘉年華"
+   ]
+  },
+  "AUau": {
+   "wc3Name": "Death Knight - Unholy Aura",
+   "orderCode": "AUau",
+   "usedBy": 6,
+   "usedByHeroAbility": 5,
+   "dataColumns": {
+    "1": {
+     "field": "Uau1",
+     "weName": "增加移動速度 (%)"
+    },
+    "2": {
+     "field": "Uau2",
+     "weName": "增加生命回復(%)"
+    },
+    "3": {
+     "field": "Uau3",
+     "weName": "加權百分比"
+    }
+   },
+   "heroSamples": [
+    "52-03 狂暴血液",
+    "80-04-01 邪黑氣",
+    "89-03 憤怒的胸毛",
+    "90-03 鞏固本能",
+    "99-00 可愛就是正義"
+   ]
+  },
+  "ANsi": {
+   "wc3Name": "Dark Ranger - Silence",
+   "orderCode": "ANsi",
+   "usedBy": 6,
+   "usedByHeroAbility": 6,
+   "dataColumns": {
+    "1": {
+     "field": "Nsi1",
+     "weName": "預防攻擊"
+    },
+    "3": {
+     "field": "Nsi3",
+     "weName": "移動速度修正"
+    },
+    "4": {
+     "field": "Nsi4",
+     "weName": "攻擊速度修正"
+    }
+   },
+   "heroSamples": [
+    "66-02-a 驚駭",
+    "14-04-03 涼宮禁言",
+    "48-00-00 Rider石化之眼",
+    "41-002 絕對屏障",
+    "98-00-00 正妹優勢"
+   ]
+  },
+  "Asth": {
+   "wc3Name": "Storm Hammers",
+   "orderCode": "Asth",
+   "usedBy": 6,
+   "usedByHeroAbility": 6,
+   "dataColumns": {},
+   "heroSamples": [
+    "66-00 恐懼",
+    "61-00百連我殺",
+    "91-02 疫病",
+    "93-02 抽點名",
+    "96-01 華山劍法"
+   ]
+  },
+  "AEme": {
+   "wc3Name": "Demon Hunter - Metamorphosis",
+   "orderCode": "AEme",
+   "usedBy": 6,
+   "usedByHeroAbility": 6,
+   "dataColumns": {
+    "5": {
+     "field": "Eme5",
+     "weName": "其他形態生命點數加成"
+    }
+   },
+   "heroSamples": [
+    "76-00 二檔",
+    "79-04 卍解",
+    "38-00 邪眼全開",
+    "90-002 超進化! 妙蛙花",
+    "92-01 臥草泥馬"
+   ]
+  },
+  "ACtc": {
+   "wc3Name": "Thunder Clap (Creep)",
+   "orderCode": "ACtc",
+   "usedBy": 6,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Ctc1",
+     "weName": "傷害"
+    },
+    "3": {
+     "field": "Ctc3",
+     "weName": "降低移動速度"
+    },
+    "4": {
+     "field": "Ctc4",
+     "weName": "降低攻擊速度"
+    }
+   },
+   "heroSamples": [
+    "98-002 夢想前程的彼方",
+    "99-03 初音未來的消失"
+   ]
+  },
+  "AOeq": {
+   "wc3Name": "Farseer - Earthquake",
+   "orderCode": "AOeq",
+   "usedBy": 5,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Oeq1",
+     "weName": "有效延遲"
+    },
+    "2": {
+     "field": "Oeq2",
+     "weName": "每秒對建築物的傷害"
+    },
+    "3": {
+     "field": "Oeq3",
+     "weName": "部隊變慢 (%)"
+    },
+    "4": {
+     "field": "Oeq4",
+     "weName": "最後區域"
+    }
+   },
+   "heroSamples": [
+    "43-03 少林絕學-火雲掌",
+    "28-04 破滅能量彈"
+   ]
+  },
+  "Amls": {
+   "wc3Name": "Aerial Shackles",
+   "orderCode": "Amls",
+   "usedBy": 5,
+   "usedByHeroAbility": 5,
+   "dataColumns": {
+    "1": {
+     "field": "mls1",
+     "weName": "每秒傷害"
+    }
+   },
+   "heroSamples": [
+    "48-03 魔法枷鎖",
+    "30-01 綁架",
+    "60-02 鎖鏈槍",
+    "91-01 死亡之握",
+    "97-02 貳之秘劍-紅蓮腕"
+   ]
+  },
+  "Arai": {
+   "wc3Name": "Raise Dead",
+   "orderCode": "Arai",
+   "usedBy": 5,
+   "usedByHeroAbility": 5,
+   "dataColumns": {
+    "1": {
+     "field": "Rai1",
+     "weName": "召喚的部隊(第一類)"
+    },
+    "2": {
+     "field": "Rai2",
+     "weName": "召喚的部隊(第二類)"
+    }
+   },
+   "heroSamples": [
+    "41-03 召喚術",
+    "71-01 屍靈裂",
+    "41-03 召喚術",
+    "75-00-x 召喚術",
+    "14-04 聖夜降臨"
+   ]
+  },
+  "AIcb": {
+   "wc3Name": "Orb of Corruption",
+   "orderCode": "AIcb",
+   "usedBy": 5,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Idic",
+     "weName": "傷害加成骰子"
+    },
+    "2": {
+     "field": "Iarp",
+     "weName": "裝甲失利"
+    },
+    "5": {
+     "field": "Iob5",
+     "weName": "強化的攻擊索引"
+    }
+   },
+   "heroSamples": [
+    "41-00 黑色藝術",
+    "02-01-r 破魔之箭"
+   ]
+  },
+  "AOhw": {
+   "wc3Name": "Shadow Hunter - Healing Wave",
+   "orderCode": "AOhw",
+   "usedBy": 5,
+   "usedByHeroAbility": 3,
+   "dataColumns": {
+    "1": {
+     "field": "Ocl1",
+     "weName": "每個目標傷害"
+    },
+    "2": {
+     "field": "Ocl2",
+     "weName": "目標擊中次數"
+    },
+    "3": {
+     "field": "Ocl3",
+     "weName": "每個目標降低傷害"
+    }
+   },
+   "heroSamples": [
+    "14-04-02 六芒星",
+    "99-02 最初的聲音",
+    "99-04b 最初的聲音"
+   ]
+  },
+  "AId0": {
+   "wc3Name": "DefenseBonus (+10)",
+   "orderCode": "AIde",
+   "usedBy": 5,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Idef",
+     "weName": "防禦加成"
+    }
+   },
+   "heroSamples": []
+  },
+  "Aroc": {
+   "wc3Name": "Rocket Attack",
+   "orderCode": "Aroc",
+   "usedBy": 5,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Efk1",
+     "weName": "每個目標傷害"
+    },
+    "2": {
+     "field": "Efk2",
+     "weName": "傷害總計上限"
+    },
+    "3": {
+     "field": "Efk3",
+     "weName": "目標最大數量"
+    }
+   },
+   "heroSamples": [
+    "94-002 歹戲拖棚"
+   ]
+  },
+  "ANr3": {
+   "wc3Name": "Rain of Chaos(Button 0,2)",
+   "orderCode": "ANrc",
+   "usedBy": 5,
+   "usedByHeroAbility": 4,
+   "dataColumns": {
+    "2": {
+     "field": "Nrc2",
+     "weName": "部隊創造數量"
+    }
+   },
+   "heroSamples": [
+    "70-04 千年練成",
+    "74-04 最終殞落星",
+    "74-03 -x 闇之天使",
+    "70-04 樹海降臨"
+   ]
+  },
+  "AIpv": {
+   "wc3Name": "ItemPotionVampirism",
+   "orderCode": "AIpv",
+   "usedBy": 5,
+   "usedByHeroAbility": 5,
+   "dataColumns": {
+    "1": {
+     "field": "ipv1",
+     "weName": "傷害加成"
+    },
+    "2": {
+     "field": "ipv2",
+     "weName": "偷取生命數量"
+    }
+   },
+   "heroSamples": [
+    "08-01 雙龍紋",
+    "59-01 吞噬",
+    "87-04 逆我必殺",
+    "00-00 嗜血劍",
+    "91-00 符文鍛造 - 墮落十字軍符文"
+   ]
+  },
+  "ACbh": {
+   "wc3Name": "Bash (creep)",
+   "orderCode": "AHbh",
+   "usedBy": 5,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Hbh1",
+     "weName": "狂怒擊機率"
+    },
+    "3": {
+     "field": "Hbh3",
+     "weName": "傷害加成"
+    },
+    "5": {
+     "field": "Hbh5",
+     "weName": "絕不失誤"
+    }
+   },
+   "heroSamples": [
+    "26-002-01 揣共"
+   ]
+  },
+  "Amnx": {
+   "wc3Name": "Death Damage (mine)",
+   "orderCode": "Adda",
+   "usedBy": 5,
+   "usedByHeroAbility": 4,
+   "dataColumns": {
+    "1": {
+     "field": "Dda1",
+     "weName": "全面傷害半徑"
+    },
+    "2": {
+     "field": "Dda2",
+     "weName": "全面傷害量"
+    },
+    "3": {
+     "field": "Dda3",
+     "weName": "部份傷害半徑"
+    },
+    "4": {
+     "field": "Dda4",
+     "weName": "部份傷害量"
+    }
+   },
+   "heroSamples": [
+    "37-03-01 黑核晶",
+    "37-03-02 黑核晶",
+    "37-03-03 黑核晶",
+    "37-03-04 黑核晶"
+   ]
+  },
+  "AOls": {
+   "wc3Name": "Rokhan - Voodoo Spirits",
+   "orderCode": "AUls",
+   "usedBy": 4,
+   "usedByHeroAbility": 4,
+   "dataColumns": {
+    "1": {
+     "field": "Uls1",
+     "weName": "蝗蟲部隊數量"
+    },
+    "2": {
+     "field": "Uls2",
+     "weName": "部隊釋放間隙(秒)"
+    },
+    "3": {
+     "field": "Uls3",
+     "weName": "每個目標最大蝗蟲部隊上限"
+    },
+    "4": {
+     "field": "Uls4",
+     "weName": "傷害回彈要素"
+    },
+    "5": {
+     "field": "Uls5",
+     "weName": "傷害回彈界限"
+    }
+   },
+   "heroSamples": [
+    "03-001 龍騎兵",
+    "75-04 無限Saber製",
+    "18-01 風華圓舞陣",
+    "02-04 百鬼夜行"
+   ]
+  },
+  "Afbk": {
+   "wc3Name": "Feedback",
+   "orderCode": "Afbk",
+   "usedBy": 4,
+   "usedByHeroAbility": 4,
+   "dataColumns": {
+    "1": {
+     "field": "fbk1",
+     "weName": "吸取的法力上限－部隊"
+    },
+    "2": {
+     "field": "fbk2",
+     "weName": "傷害率－部隊(%)"
+    },
+    "3": {
+     "field": "fbk3",
+     "weName": "最大法力吸取－英雄"
+    },
+    "4": {
+     "field": "fbk4",
+     "weName": "傷害值－英雄(%)"
+    },
+    "5": {
+     "field": "fbk5",
+     "weName": "召喚傷害"
+    }
+   },
+   "heroSamples": [
+    "02-01 破魔之箭",
+    "77-01 斬魔劍",
+    "41-03-x 魔力奪取",
+    "02-01 破魔之箭"
+   ]
+  },
+  "ACsh": {
+   "wc3Name": "Shockwave (Creep)",
+   "orderCode": "AOsh",
+   "usedBy": 4,
+   "usedByHeroAbility": 4,
+   "dataColumns": {
+    "1": {
+     "field": "Osh1",
+     "weName": "傷害"
+    },
+    "2": {
+     "field": "Osh2",
+     "weName": "傷害上限"
+    },
+    "3": {
+     "field": "Osh3",
+     "weName": "距離"
+    },
+    "4": {
+     "field": "Osh4",
+     "weName": "最終區域"
+    }
+   },
+   "heroSamples": [
+    "02-03 魂飛魄散",
+    "37-01 凱薩之鷹",
+    "37-04-02 凱薩之鷹",
+    "23-00 雷電斬"
+   ]
+  },
+  "AOmi": {
+   "wc3Name": "Blade Master - Mirror Image",
+   "orderCode": "AOmi",
+   "usedBy": 4,
+   "usedByHeroAbility": 4,
+   "dataColumns": {
+    "1": {
+     "field": "Omi1",
+     "weName": "影像數量"
+    },
+    "2": {
+     "field": "Omi2",
+     "weName": "造成傷害(%)"
+    },
+    "3": {
+     "field": "Omi3",
+     "weName": "承受傷害(%)"
+    }
+   },
+   "heroSamples": [
+    "28-03 分身",
+    "28-0021 分身",
+    "27-002 祕法-霧隱分身之術",
+    "00-00 藍星複製技術"
+   ]
+  },
+  "Arsg": {
+   "wc3Name": "Rexxar - Summon Bear",
+   "orderCode": "AOsf",
+   "usedBy": 4,
+   "usedByHeroAbility": 1,
+   "dataColumns": {},
+   "heroSamples": [
+    "16-04 劍之精靈"
+   ]
+  },
+  "AEar": {
+   "wc3Name": "Priestess - Trueshot Aura",
+   "orderCode": "AEar",
+   "usedBy": 4,
+   "usedByHeroAbility": 4,
+   "dataColumns": {
+    "1": {
+     "field": "Ear1",
+     "weName": "傷害加成 (%)"
+    },
+    "2": {
+     "field": "Ear2",
+     "weName": "近戰加權"
+    },
+    "4": {
+     "field": "Ear4",
+     "weName": "統一加權"
+    }
+   },
+   "heroSamples": [
+    "02-02 明鏡止水",
+    "49-03 蛻變",
+    "71-02 魔力反噬",
+    "98-02 平易近人的笑容"
+   ]
+  },
+  "ANfd": {
+   "wc3Name": "Finger of Death",
+   "orderCode": "ANfd",
+   "usedBy": 4,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "3": {
+     "field": "Nfd3",
+     "weName": "傷害"
+    }
+   },
+   "heroSamples": [
+    "65-04 天譴",
+    "05-02 薩喀爾嘎"
+   ]
+  },
+  "Arsp": {
+   "wc3Name": "Rexxar - Stampede",
+   "orderCode": "ANst",
+   "usedBy": 4,
+   "usedByHeroAbility": 4,
+   "dataColumns": {
+    "1": {
+     "field": "Nst1",
+     "weName": "每秒怪獸"
+    },
+    "2": {
+     "field": "Nst2",
+     "weName": "怪獸碰撞半徑"
+    },
+    "3": {
+     "field": "Nst3",
+     "weName": "傷害量"
+    },
+    "4": {
+     "field": "Nst4",
+     "weName": "傷害半徑"
+    },
+    "5": {
+     "field": "Nst5",
+     "weName": "傷害延遲"
+    }
+   },
+   "heroSamples": [
+    "15-01-01 風精召喚",
+    "70-01 伸卡球",
+    "23-01 電離光槍 - 繁星飛躍",
+    "23-01-01 電離光槍效果"
+   ]
+  },
+  "ANms": {
+   "wc3Name": "Sea Witch - Mana Shield",
+   "orderCode": "ANms",
+   "usedBy": 4,
+   "usedByHeroAbility": 4,
+   "dataColumns": {
+    "1": {
+     "field": "Nms1",
+     "weName": "每點生命的法力"
+    },
+    "2": {
+     "field": "Nms2",
+     "weName": "吸收的傷害 (%)"
+    }
+   },
+   "heroSamples": [
+    "44-00 機警",
+    "81-00 守護之光",
+    "61-04 瘋狂怪物",
+    "07-04 神聖結界"
+   ]
+  },
+  "Aam2": {
+   "wc3Name": "Anti-magic Shield (Matrix)",
+   "orderCode": "Aams",
+   "usedBy": 4,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "3": {
+     "field": "Ams3",
+     "weName": "護盾生命值"
+    }
+   },
+   "heroSamples": [
+    "35-03 鏡蠱",
+    "53-03-x 破法對咒"
+   ]
+  },
+  "AIh2": {
+   "wc3Name": "ItemHeal (Greater)",
+   "orderCode": "AIhe",
+   "usedBy": 4,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Ihpg",
+     "weName": "獲得的生命點數"
+    }
+   },
+   "heroSamples": [
+    "33-001 喝了再上"
+   ]
+  },
+  "ACce": {
+   "wc3Name": "Cleaving Attack (Creep)",
+   "orderCode": "ANca",
+   "usedBy": 4,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "nca1",
+     "weName": "分散傷害要素"
+    }
+   },
+   "heroSamples": []
+  },
+  "ANht": {
+   "wc3Name": "Pit Lord - Howl of Terror",
+   "orderCode": "ANht",
+   "usedBy": 4,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Roa1",
+     "weName": "增加傷害(%)"
+    },
+    "2": {
+     "field": "Roa2",
+     "weName": "增加防禦"
+    },
+    "4": {
+     "field": "Roa4",
+     "weName": "法力重生"
+    }
+   },
+   "heroSamples": [
+    "38-04 黑龍波吸收",
+    "11-00 三刀流"
+   ]
+  },
+  "Asal": {
+   "wc3Name": "Pillage",
+   "orderCode": "Asal",
+   "usedBy": 4,
+   "usedByHeroAbility": 4,
+   "dataColumns": {
+    "1": {
+     "field": "Sal1",
+     "weName": "拾荒耗費比率"
+    }
+   },
+   "heroSamples": [
+    "18-00 薔薇荊棘之刃",
+    "59-00 暴走",
+    "31-00 再生能力",
+    "70-00 芬多精"
+   ]
+  },
+  "AIev": {
+   "wc3Name": "Evasion",
+   "orderCode": "AEev",
+   "usedBy": 4,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Eev1",
+     "weName": "閃避的機率"
+    }
+   },
+   "heroSamples": [
+    "45-00a 無想轉生",
+    "59-001 完全暴走"
+   ]
+  },
+  "Alsh": {
+   "wc3Name": "Lightning Shield",
+   "orderCode": "Alsh",
+   "usedBy": 4,
+   "usedByHeroAbility": 3,
+   "dataColumns": {
+    "1": {
+     "field": "Lsh1",
+     "weName": "每秒傷害"
+    }
+   },
+   "heroSamples": [
+    "18-02 寄生種子",
+    "79-01 瞬步",
+    "95-03 皇者戰氣第五十重天"
+   ]
+  },
+  "ACcv": {
+   "wc3Name": "Crushing Wave",
+   "orderCode": "AUcs",
+   "usedBy": 4,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Ucs1",
+     "weName": "傷害"
+    },
+    "2": {
+     "field": "Ucs2",
+     "weName": "傷害上限"
+    },
+    "3": {
+     "field": "Ucs3",
+     "weName": "距離"
+    },
+    "4": {
+     "field": "Ucs4",
+     "weName": "最後區域"
+    }
+   },
+   "heroSamples": []
+  },
+  "Acrs": {
+   "wc3Name": "Curse",
+   "orderCode": "Acrs",
+   "usedBy": 4,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Crs\u0000",
+     "weName": null
+    }
+   },
+   "heroSamples": [
+    "66-00-a 恐懼",
+    "44-01 死神之眼"
+   ]
+  },
+  "Aven": {
+   "wc3Name": "Venom Spears",
+   "orderCode": "Aven",
+   "usedBy": 4,
+   "usedByHeroAbility": 3,
+   "dataColumns": {
+    "1": {
+     "field": "Poi1",
+     "weName": "每秒傷害"
+    },
+    "2": {
+     "field": "Poi2",
+     "weName": "攻擊速度要素"
+    },
+    "3": {
+     "field": "Poi3",
+     "weName": "移動速度要素"
+    },
+    "4": {
+     "field": "Poi4",
+     "weName": "堆疊類型"
+    }
+   },
+   "heroSamples": [
+    "49-02 腐蝕毒液",
+    "52-03 無銘斧劍",
+    "90-02 腐蝕毒液"
+   ]
+  },
+  "ANth": {
+   "wc3Name": "Thorny Shield (Creep)",
+   "orderCode": "AUts",
+   "usedBy": 4,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Uts1",
+     "weName": "傷害回彈要素"
+    },
+    "2": {
+     "field": "Uts2",
+     "weName": "承受傷害要素"
+    },
+    "3": {
+     "field": "Uts3",
+     "weName": "防禦加成"
+    }
+   },
+   "heroSamples": [
+    "75-00-真飛鼠"
+   ]
+  },
+  "AEsh": {
+   "wc3Name": "Warden - Shadow Strike",
+   "orderCode": "AEsh",
+   "usedBy": 4,
+   "usedByHeroAbility": 3,
+   "dataColumns": {
+    "1": {
+     "field": "Esh1",
+     "weName": "腐化傷害"
+    },
+    "2": {
+     "field": "Esh2",
+     "weName": "移動速度要素"
+    },
+    "4": {
+     "field": "Esh4",
+     "weName": "延遲的力量"
+    },
+    "5": {
+     "field": "Esh5",
+     "weName": "初始傷害"
+    }
+   },
+   "heroSamples": [
+    "31-02 重爪擊",
+    "61-01惡魔球",
+    "90-00 寄生種子"
+   ]
+  },
+  "AIcd": {
+   "wc3Name": "ItemAuraCommand",
+   "orderCode": "AOac",
+   "usedBy": 4,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Cac1",
+     "weName": "增加攻擊傷害"
+    }
+   },
+   "heroSamples": []
+  },
+  "AIav": {
+   "wc3Name": "ItemAuraVampiric",
+   "orderCode": "AUav",
+   "usedBy": 4,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Uav1",
+     "weName": "偷取的攻擊傷害 (%)"
+    }
+   },
+   "heroSamples": []
+  },
+  "Aprg": {
+   "wc3Name": "Purge",
+   "orderCode": "Aprg",
+   "usedBy": 4,
+   "usedByHeroAbility": 4,
+   "dataColumns": {
+    "1": {
+     "field": "Prg1",
+     "weName": "移動更新頻率"
+    },
+    "3": {
+     "field": "Prg3",
+     "weName": "召喚的部隊傷害"
+    },
+    "4": {
+     "field": "Prg4",
+     "weName": "部隊暫停時間"
+    },
+    "5": {
+     "field": "Prg5",
+     "weName": "英雄暫停時間"
+    },
+    "6": {
+     "field": "Prg6",
+     "weName": "法力損耗"
+    }
+   },
+   "heroSamples": [
+    "12-022 淨化",
+    "00-00 龍虎亂舞",
+    "23-00 雷光枷鎖",
+    "95-04 藍色戰氣一百重天"
+   ]
+  },
+  "AEim": {
+   "wc3Name": "Demon Hunter - Immolation",
+   "orderCode": "AEim",
+   "usedBy": 4,
+   "usedByHeroAbility": 4,
+   "dataColumns": {
+    "1": {
+     "field": "Eim1",
+     "weName": "每段間隙傷害"
+    },
+    "2": {
+     "field": "Eim2",
+     "weName": "每秒吸取法力"
+    },
+    "3": {
+     "field": "Eim3",
+     "weName": "需要的法力效果"
+    }
+   },
+   "heroSamples": [
+    "66-04  靈壓震撼",
+    "80-04 赤兔咆哮",
+    "61-02 霸獸盔甲",
+    "82-00-02d 執行契約"
+   ]
+  },
+  "Apxf": {
+   "wc3Name": "PhoenixFire",
+   "orderCode": "Apxf",
+   "usedBy": 4,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "pxf1",
+     "weName": "初始傷害"
+    },
+    "2": {
+     "field": "pxf2",
+     "weName": "每秒傷害"
+    }
+   },
+   "heroSamples": [
+    "14-00-01 式神之火",
+    "14-00-01 式神之火"
+   ]
+  },
+  "ACmo": {
+   "wc3Name": "Monsoon(creep)",
+   "orderCode": "ANmo",
+   "usedBy": 4,
+   "usedByHeroAbility": 4,
+   "dataColumns": {
+    "1": {
+     "field": "Esf1",
+     "weName": "造成的傷害"
+    },
+    "2": {
+     "field": "Esf2",
+     "weName": "傷害間隙"
+    },
+    "3": {
+     "field": "Esf3",
+     "weName": "建築削減"
+    }
+   },
+   "heroSamples": [
+    "77-04 真-雷光劍",
+    "23-03 雷電降臨",
+    "15-002 風花-武裝解除",
+    "37-002 真‧黑核晶"
+   ]
+  },
+  "ACnr": {
+   "wc3Name": "Neutral Regen (health only)",
+   "orderCode": "Aoar",
+   "usedBy": 4,
+   "usedByHeroAbility": 4,
+   "dataColumns": {
+    "1": {
+     "field": "Oar1",
+     "weName": "回復的生命點數總計"
+    },
+    "2": {
+     "field": "Oar2",
+     "weName": "百分比"
+    }
+   },
+   "heroSamples": [
+    "35-00 佩的生命再生",
+    "00-00 生命再生",
+    "92-01-01 生命再生光氣",
+    "16-01-02 生命恢復"
+   ]
+  },
+  "AOr2": {
+   "wc3Name": "Cairne - Endurance Aura",
+   "orderCode": "AOae",
+   "usedBy": 4,
+   "usedByHeroAbility": 3,
+   "dataColumns": {
+    "1": {
+     "field": "Oae1",
+     "weName": "增加移動速度 (%)"
+    },
+    "2": {
+     "field": "Oae2",
+     "weName": "增加攻擊速度 (%)"
+    }
+   },
+   "heroSamples": [
+    "82-00-02b 跑速攻速",
+    "00-00 中塔靈氣",
+    "98-04 自在飛翔"
+   ]
+  },
+  "ANba": {
+   "wc3Name": "Dark Ranger - Black Arrow",
+   "orderCode": "ANba",
+   "usedBy": 4,
+   "usedByHeroAbility": 4,
+   "dataColumns": {
+    "1": {
+     "field": "Nba1",
+     "weName": "傷害加成"
+    },
+    "3": {
+     "field": "Nba3",
+     "weName": "召喚的部隊持續時間(秒)"
+    }
+   },
+   "heroSamples": [
+    "49-04-02寄生",
+    "49-04-03寄生",
+    "49-04-01寄生",
+    "49-04-04寄生"
+   ]
+  },
+  "AUts": {
+   "wc3Name": "Crypt Lord - Spiked Carapace",
+   "orderCode": "AUts",
+   "usedBy": 3,
+   "usedByHeroAbility": 3,
+   "dataColumns": {
+    "1": {
+     "field": "Uts1",
+     "weName": "傷害回彈要素"
+    },
+    "3": {
+     "field": "Uts3",
+     "weName": "防禦加成"
+    }
+   },
+   "heroSamples": [
+    "31-04 不要踢我蛋蛋",
+    "24-02 變態根性",
+    "47-002 天翔龍閃‧真打"
+   ]
+  },
+  "AEfk": {
+   "wc3Name": "Warden - Fan of Knives",
+   "orderCode": "AEfk",
+   "usedBy": 3,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Efk1",
+     "weName": "每個目標傷害"
+    },
+    "2": {
+     "field": "Efk2",
+     "weName": "傷害總計上限"
+    },
+    "4": {
+     "field": "Efk4",
+     "weName": "調整最高速度"
+    }
+   },
+   "heroSamples": [
+    "14-01 匕首狂風",
+    "00-001 miku"
+   ]
+  },
+  "AOww": {
+   "wc3Name": "Blade Master - Bladestorm",
+   "orderCode": "AOww",
+   "usedBy": 3,
+   "usedByHeroAbility": 3,
+   "dataColumns": {
+    "1": {
+     "field": "Oww1",
+     "weName": "每秒傷害"
+    },
+    "2": {
+     "field": "Oww2",
+     "weName": "降低魔法傷害"
+    }
+   },
+   "heroSamples": [
+    "47-04 天翔龍閃",
+    "97-04 終極秘劍-火產靈神",
+    "99-04 世界第一的公主殿下"
+   ]
+  },
+  "AHfs": {
+   "wc3Name": "Blood Mage - Flame Strike",
+   "orderCode": "AHfs",
+   "usedBy": 3,
+   "usedByHeroAbility": 3,
+   "dataColumns": {
+    "1": {
+     "field": "Hfs1",
+     "weName": "造成全面傷害"
+    },
+    "2": {
+     "field": "Hfs2",
+     "weName": "全面傷害間隙"
+    },
+    "3": {
+     "field": "Hfs3",
+     "weName": "造成一半傷害"
+    },
+    "5": {
+     "field": "Hfs5",
+     "weName": "削減建築"
+    },
+    "6": {
+     "field": "Hfs6",
+     "weName": "最大傷害力"
+    }
+   },
+   "heroSamples": [
+    "04-02 炸彈陣",
+    "53-02 強化炸彈陣",
+    "74-03 闇之天使"
+   ]
+  },
+  "Aap1": {
+   "wc3Name": "Aura - Plague (Abomination)",
+   "orderCode": "Aapl",
+   "usedBy": 3,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Apl1",
+     "weName": "靈光持續時間"
+    },
+    "2": {
+     "field": "Apl2",
+     "weName": "每秒傷害"
+    },
+    "3": {
+     "field": "Apl3",
+     "weName": "瘟疫結界持續時間"
+    }
+   },
+   "heroSamples": []
+  },
+  "ACfl": {
+   "wc3Name": "Forked Lightning(creep)",
+   "orderCode": "ANfl",
+   "usedBy": 3,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Ocl1",
+     "weName": "每個目標傷害"
+    },
+    "2": {
+     "field": "Ocl2",
+     "weName": "目標擊中次數"
+    },
+    "3": {
+     "field": "Ucs3",
+     "weName": "距離"
+    },
+    "4": {
+     "field": "Ucs4",
+     "weName": "最後區域"
+    }
+   },
+   "heroSamples": [
+    "05-01 薩喀爾"
+   ]
+  },
+  "AEmb": {
+   "wc3Name": "Demon Hunter - Mana Burn",
+   "orderCode": "AEmb",
+   "usedBy": 3,
+   "usedByHeroAbility": 3,
+   "dataColumns": {
+    "1": {
+     "field": "Emb1",
+     "weName": "吸取的法力上限"
+    },
+    "2": {
+     "field": "Emb2",
+     "weName": "光彈延遲"
+    },
+    "3": {
+     "field": "Emb3",
+     "weName": "光彈生命週期"
+    }
+   },
+   "heroSamples": [
+    "16-03 無無明亦無",
+    "65-041 天譴退魔",
+    "15-04 千之雷"
+   ]
+  },
+  "AOhx": {
+   "wc3Name": "Shadow Hunter - Hex",
+   "orderCode": "AOhx",
+   "usedBy": 3,
+   "usedByHeroAbility": 1,
+   "dataColumns": {},
+   "heroSamples": [
+    "61-03 叫如豬效果"
+   ]
+  },
+  "AHab": {
+   "wc3Name": "Arch Mage - Brilliance Aura",
+   "orderCode": "AHab",
+   "usedBy": 3,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Hab1",
+     "weName": "增加法力回復"
+    },
+    "2": {
+     "field": "Hab2",
+     "weName": "加權百分比"
+    }
+   },
+   "heroSamples": [
+    "04-00 魔力增幅",
+    "14-002 魔力激發"
+   ]
+  },
+  "AI2m": {
+   "wc3Name": "200 mana bonus",
+   "orderCode": "AImm",
+   "usedBy": 3,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Iman",
+     "weName": "獲得法力上限"
+    }
+   },
+   "heroSamples": []
+  },
+  "AIae": {
+   "wc3Name": "ItemAuraEndurance",
+   "orderCode": "AOae",
+   "usedBy": 3,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Oae1",
+     "weName": "增加移動速度 (%)"
+    },
+    "2": {
+     "field": "Oae2",
+     "weName": "增加攻擊速度 (%)"
+    }
+   },
+   "heroSamples": []
+  },
+  "AEsb": {
+   "wc3Name": "Cenarius - Beefy Starfall",
+   "orderCode": "AEsf",
+   "usedBy": 3,
+   "usedByHeroAbility": 3,
+   "dataColumns": {
+    "1": {
+     "field": "Esf1",
+     "weName": "造成的傷害"
+    },
+    "2": {
+     "field": "Esf2",
+     "weName": "傷害間隙"
+    },
+    "3": {
+     "field": "Esf3",
+     "weName": "建築削減"
+    }
+   },
+   "heroSamples": [
+    "72-05 億萬星殞落",
+    "72-002 億萬星殞落",
+    "71-04 萬惡歸宗"
+   ]
+  },
+  "ACfn": {
+   "wc3Name": "Frost Nova (creep)",
+   "orderCode": "AUfn",
+   "usedBy": 3,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Ufn1",
+     "weName": "區域效果傷害"
+    },
+    "2": {
+     "field": "Ufn2",
+     "weName": "特殊目標傷害"
+    }
+   },
+   "heroSamples": [
+    "27-03x 千變-冰"
+   ]
+  },
+  "AHbn": {
+   "wc3Name": "Blood Mage - Banish",
+   "orderCode": "AHbn",
+   "usedBy": 3,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Hbn1",
+     "weName": "移動速度降低(%)"
+    }
+   },
+   "heroSamples": [
+    "82-00-02 暫定契約",
+    "00-00 放逐"
+   ]
+  },
+  "ANtr": {
+   "wc3Name": "Detect(War Eagle)",
+   "orderCode": "Atru",
+   "usedBy": 3,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Det1",
+     "weName": "偵測類型"
+    }
+   },
+   "heroSamples": [
+    "21-00 灼眼",
+    "19-00 閃擊"
+   ]
+  },
+  "AIlx": {
+   "wc3Name": "Shaman Claws - lightning melee",
+   "orderCode": "AIsb",
+   "usedBy": 3,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Idam",
+     "weName": "傷害加成"
+    },
+    "2": {
+     "field": "Iob2",
+     "weName": "變更為擊中部隊 (%)"
+    },
+    "3": {
+     "field": "Iob3",
+     "weName": "變更為擊中英雄 (%)"
+    },
+    "4": {
+     "field": "Iob4",
+     "weName": "變更為擊中召喚 (%)"
+    }
+   },
+   "heroSamples": [
+    "75-00 點石"
+   ]
+  },
+  "ANeg": {
+   "wc3Name": "Tinkerer - Engineering Upgrade",
+   "orderCode": "ANeg",
+   "usedBy": 3,
+   "usedByHeroAbility": 3,
+   "dataColumns": {
+    "1": {
+     "field": "Neg1",
+     "weName": "移動速度加權"
+    },
+    "2": {
+     "field": "Neg2",
+     "weName": "傷害加權"
+    }
+   },
+   "heroSamples": [
+    "01-002 究極魔劍效果",
+    "95-02x 大和戰氣龍氣升級",
+    "70-002-01 樹海效果"
+   ]
+  },
+  "Auhf": {
+   "wc3Name": "Unholy Frenzy",
+   "orderCode": "Auhf",
+   "usedBy": 3,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Uhf1",
+     "weName": "攻擊速度加成 (%)"
+    },
+    "2": {
+     "field": "Uhf2",
+     "weName": "每秒傷害"
+    }
+   },
+   "heroSamples": [
+    "11-00x 三刀流效果",
+    "00-00 加速裝置 效果"
+   ]
+  },
+  "ANso": {
+   "wc3Name": "Firelord - Soul Burn",
+   "orderCode": "ANso",
+   "usedBy": 3,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Nso1",
+     "weName": "傷害數量"
+    },
+    "3": {
+     "field": "Nso3",
+     "weName": "傷害懲罰"
+    }
+   },
+   "heroSamples": [
+    "84-03-01 禁言",
+    "45-002-05 禁言"
+   ]
+  },
+  "AIre": {
+   "wc3Name": "ItemRestore",
+   "orderCode": "AIre",
+   "usedBy": 3,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Ihps",
+     "weName": "回復的生命點數"
+    },
+    "2": {
+     "field": "Imps",
+     "weName": "回復的法力點數"
+    }
+   },
+   "heroSamples": [
+    "12-02 仙氣．採藥"
+   ]
+  },
+  "AImt": {
+   "wc3Name": "Staff o' Teleportation",
+   "orderCode": "AHmt",
+   "usedBy": 3,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "2": {
+     "field": "Hmt2",
+     "weName": "施展延遲"
+    }
+   },
+   "heroSamples": []
+  },
+  "AIft": {
+   "wc3Name": "Frostguard - frost melee",
+   "orderCode": "AIob",
+   "usedBy": 3,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Idam",
+     "weName": "傷害加成"
+    }
+   },
+   "heroSamples": [
+    "91-02x 冰結之觸(冰球)"
+   ]
+  },
+  "ANc1": {
+   "wc3Name": "Tinkerer - Cluster Rockets (Level 1)",
+   "orderCode": "ANcs",
+   "usedBy": 3,
+   "usedByHeroAbility": 3,
+   "dataColumns": {
+    "1": {
+     "field": "Ncs1",
+     "weName": "傷害數量"
+    },
+    "3": {
+     "field": "Ncs3",
+     "weName": "投射武器數"
+    },
+    "4": {
+     "field": "Ncs4",
+     "weName": "最高傷害"
+    },
+    "5": {
+     "field": "Ncs5",
+     "weName": "建築物損壞因子"
+    }
+   },
+   "heroSamples": [
+    "19-03 瞬切百殺",
+    "04-03 龍破斬",
+    "75-03 暴雷無限刃"
+   ]
+  },
+  "ANd1": {
+   "wc3Name": "Tinkerer - Demolish (Level 1)",
+   "orderCode": "ANde",
+   "usedBy": 3,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "2": {
+     "field": "Nde2",
+     "weName": "傷害增幅因子（建築物）"
+    },
+    "3": {
+     "field": "Nde3",
+     "weName": "傷害增幅因子（部隊）"
+    },
+    "4": {
+     "field": "Nde4",
+     "weName": "傷害增幅因子（英雄）"
+    }
+   },
+   "heroSamples": []
+  },
+  "AId1": {
+   "wc3Name": "DefenseBonus (+1)",
+   "orderCode": "AIde",
+   "usedBy": 3,
+   "usedByHeroAbility": 3,
+   "dataColumns": {
+    "1": {
+     "field": "Idef",
+     "weName": "防禦加成"
+    }
+   },
+   "heroSamples": [
+    "76-00-05 二檔扣裝甲",
+    "80-01 逆甲扣防",
+    "80-002-02 戰無不勝扣防"
+   ]
+  },
+  "AIil": {
+   "wc3Name": "ItemIllusion",
+   "orderCode": "AIil",
+   "usedBy": 3,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Iild",
+     "weName": "造成傷害(普通的%)"
+    },
+    "2": {
+     "field": "Iilw",
+     "weName": "受到傷害乘數"
+    }
+   },
+   "heroSamples": [
+    "57-03 複製鏡",
+    "98-04-00 分身"
+   ]
+  },
+  "Amgl": {
+   "wc3Name": "Moon Glaive",
+   "orderCode": "Amgl",
+   "usedBy": 3,
+   "usedByHeroAbility": 3,
+   "dataColumns": {},
+   "heroSamples": [
+    "52-03 戰鬥續行",
+    "06-002 殺意",
+    "01-002 究極魔劍"
+   ]
+  },
+  "AHbz": {
+   "wc3Name": "Arch Mage - Blizzard",
+   "orderCode": "AHbz",
+   "usedBy": 3,
+   "usedByHeroAbility": 3,
+   "dataColumns": {
+    "1": {
+     "field": "Hbz1",
+     "weName": "波數"
+    },
+    "2": {
+     "field": "Hbz2",
+     "weName": "傷害"
+    },
+    "3": {
+     "field": "Hbz3",
+     "weName": "碎片數量"
+    },
+    "4": {
+     "field": "Hbz4",
+     "weName": "建築削減"
+    },
+    "6": {
+     "field": "Hbz6",
+     "weName": "每波最大傷害"
+    }
+   },
+   "heroSamples": [
+    "52-04 巨神一擊",
+    "81-01 Barrel Shot",
+    "90-03 藤鞭"
+   ]
+  },
+  "AChx": {
+   "wc3Name": "Hex (Creep)",
+   "orderCode": "AOhx",
+   "usedBy": 2,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Ply1",
+     "weName": "生物等級上限"
+    }
+   },
+   "heroSamples": [
+    "13-02 變化念力"
+   ]
+  },
+  "ANdb": {
+   "wc3Name": "Brewmaster - Drunken Brawler",
+   "orderCode": "ANdb",
+   "usedBy": 2,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Ocr1",
+     "weName": "致命一擊機率"
+    },
+    "2": {
+     "field": "Ocr2",
+     "weName": "傷害乘數"
+    },
+    "4": {
+     "field": "Ocr4",
+     "weName": "閃避機率"
+    },
+    "5": {
+     "field": "Ocr5",
+     "weName": "絕不失誤"
+    }
+   },
+   "heroSamples": [
+    "25-02 北斗神拳秘訣轉龍呼吸法",
+    "74-00 JENOVA"
+   ]
+  },
+  "ACt2": {
+   "wc3Name": "Thunder Clap (Thunder Lizard)",
+   "orderCode": "ACtc",
+   "usedBy": 2,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Ctc1",
+     "weName": "傷害"
+    },
+    "3": {
+     "field": "Ctc3",
+     "weName": "降低移動速度"
+    },
+    "4": {
+     "field": "Ctc4",
+     "weName": "降低攻擊速度"
+    }
+   },
+   "heroSamples": [
+    "04-05 重破斬",
+    "42-04-01 世界終結"
+   ]
+  },
+  "Aclf": {
+   "wc3Name": "Cloud of Fog",
+   "orderCode": "Aclf",
+   "usedBy": 2,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Nsi1",
+     "weName": "預防攻擊"
+    }
+   },
+   "heroSamples": [
+    "23-00 護御屏障",
+    "23-00a 蒸氣爆發"
+   ]
+  },
+  "Aeat": {
+   "wc3Name": "Eat Tree",
+   "orderCode": "Aeat",
+   "usedBy": 2,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Eat1",
+     "weName": "撕碎延遲"
+    },
+    "2": {
+     "field": "Eat2",
+     "weName": "啃食延遲"
+    },
+    "3": {
+     "field": "Eat3",
+     "weName": "獲得的生命點數"
+    }
+   },
+   "heroSamples": [
+    "33-00 砍樹"
+   ]
+  },
+  "AIgo": {
+   "wc3Name": "GiveGold",
+   "orderCode": "AIgo",
+   "usedBy": 2,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Igol",
+     "weName": "給予的黃金"
+    }
+   },
+   "heroSamples": []
+  },
+  "APsa": {
+   "wc3Name": "RuneSpeedAoe",
+   "orderCode": "AIsa",
+   "usedBy": 2,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Ispi",
+     "weName": "增加移動速度"
+    }
+   },
+   "heroSamples": [
+    "53-04 暴爆咒"
+   ]
+  },
+  "Atru": {
+   "wc3Name": "Detect (Shade)",
+   "orderCode": "Atru",
+   "usedBy": 2,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Det1",
+     "weName": "偵測類型"
+    }
+   },
+   "heroSamples": [
+    "07-00 獸化心靈",
+    "41-00 黑色藝術"
+   ]
+  },
+  "ANrf": {
+   "wc3Name": "Pit Lord - Rain of Fire",
+   "orderCode": "ANrf",
+   "usedBy": 2,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Hbz1",
+     "weName": "波數"
+    },
+    "2": {
+     "field": "Hbz2",
+     "weName": "傷害"
+    },
+    "3": {
+     "field": "Hbz3",
+     "weName": "碎片數量"
+    },
+    "4": {
+     "field": "Hbz4",
+     "weName": "建築削減"
+    },
+    "5": {
+     "field": "Hbz5",
+     "weName": "每秒傷害"
+    },
+    "6": {
+     "field": "Hbz6",
+     "weName": "每波最大傷害"
+    }
+   },
+   "heroSamples": [
+    "15-03 雷電風暴"
+   ]
+  },
+  "AUsl": {
+   "wc3Name": "Dreadlord - Sleep",
+   "orderCode": "AUsl",
+   "usedBy": 2,
+   "usedByHeroAbility": 1,
+   "dataColumns": {},
+   "heroSamples": [
+    "15-02 沉睡之霧"
+   ]
+  },
+  "ANtm": {
+   "wc3Name": "Alchemist - Transmute",
+   "orderCode": "ANtm",
+   "usedBy": 2,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Ntm1",
+     "weName": "黃金消耗因子"
+    },
+    "3": {
+     "field": "Ntm3",
+     "weName": "中立怪物最高等級"
+    },
+    "4": {
+     "field": "Ntm4",
+     "weName": "允許賞金"
+    }
+   },
+   "heroSamples": [
+    "28-01 吃掉你"
+   ]
+  },
+  "ANfl": {
+   "wc3Name": "Sea Witch - Forked Lightning",
+   "orderCode": "ANfl",
+   "usedBy": 2,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Ocl1",
+     "weName": "每個目標傷害"
+    },
+    "2": {
+     "field": "Ocl2",
+     "weName": "目標擊中次數"
+    },
+    "3": {
+     "field": "Ucs3",
+     "weName": "距離"
+    },
+    "4": {
+     "field": "Ucs4",
+     "weName": "最後區域"
+    }
+   },
+   "heroSamples": [
+    "17-03 空破圓斬",
+    "58-01 十萬伏特"
+   ]
+  },
+  "ANre": {
+   "wc3Name": "Neutral Regen (mana only)",
+   "orderCode": "Aarm",
+   "usedBy": 2,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Arm1",
+     "weName": "重生數量"
+    }
+   },
+   "heroSamples": [
+    "16-01-02 法力再生"
+   ]
+  },
+  "ACtn": {
+   "wc3Name": "Serpent Ward (tentacle, Forgotten one)",
+   "orderCode": "AOwd",
+   "usedBy": 2,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Hwe2",
+     "weName": "召喚的部隊數量"
+    }
+   },
+   "heroSamples": [
+    "18-03-01 召喚毒蕈",
+    "14-00 召喚式神"
+   ]
+  },
+  "ANef": {
+   "wc3Name": "Brewmaster - Storm, Earth and Fire",
+   "orderCode": "ANef",
+   "usedBy": 2,
+   "usedByHeroAbility": 2,
+   "dataColumns": {},
+   "heroSamples": [
+    "37-04 魔界之王",
+    "28-002 無限分裂"
+   ]
+  },
+  "AIbk": {
+   "wc3Name": "Blink (Item)",
+   "orderCode": "AEbl",
+   "usedBy": 2,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Ebl1",
+     "weName": "最大範圍"
+    },
+    "2": {
+     "field": "Ebl2",
+     "weName": "最小範圍"
+    }
+   },
+   "heroSamples": [
+    "16-04-00 雲遊"
+   ]
+  },
+  "ANpi": {
+   "wc3Name": "Permanent Immolation",
+   "orderCode": "ANpi",
+   "usedBy": 2,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Eim1",
+     "weName": "每段間隙傷害"
+    }
+   },
+   "heroSamples": [
+    "82-04-02b 永久性的熾炎焚身"
+   ]
+  },
+  "Ainf": {
+   "wc3Name": "Inner Fire",
+   "orderCode": "Ainf",
+   "usedBy": 2,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Inf1",
+     "weName": "增加傷害(%)"
+    },
+    "2": {
+     "field": "Inf2",
+     "weName": "增加防禦"
+    },
+    "3": {
+     "field": "Inf3",
+     "weName": "自動施展範圍"
+    }
+   },
+   "heroSamples": [
+    "64-04 魔幻浮水印",
+    "99-03a 初音戰意"
+   ]
+  },
+  "AOfs": {
+   "wc3Name": "Farseer - Far Sight",
+   "orderCode": "AOfs",
+   "usedBy": 2,
+   "usedByHeroAbility": 0,
+   "dataColumns": {},
+   "heroSamples": []
+  },
+  "ANrg": {
+   "wc3Name": "Tinkerer - Robo-Goblin (Level 0)",
+   "orderCode": "ANrg",
+   "usedBy": 2,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "5": {
+     "field": "Nrg5",
+     "weName": "力量加權"
+    },
+    "6": {
+     "field": "Nrg6",
+     "weName": "防禦加權"
+    }
+   },
+   "heroSamples": [
+    "20-01 風王結界",
+    "70-00 紮根"
+   ]
+  },
+  "Afae": {
+   "wc3Name": "Faerie Fire",
+   "orderCode": "Afae",
+   "usedBy": 2,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Fae1",
+     "weName": "削減防禦"
+    }
+   },
+   "heroSamples": [
+    "93-00x 小考標記"
+   ]
+  },
+  "Arll": {
+   "wc3Name": "Regen Life",
+   "orderCode": "Arel",
+   "usedBy": 2,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Ihpr",
+     "weName": "生命點數每秒重生"
+    }
+   },
+   "heroSamples": [
+    "76-00-03 二檔生命損失"
+   ]
+  },
+  "ACua": {
+   "wc3Name": "Unholy Aura (creep)",
+   "orderCode": "AUau",
+   "usedBy": 2,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Uau1",
+     "weName": "增加移動速度 (%)"
+    },
+    "2": {
+     "field": "Uau2",
+     "weName": "增加生命回復(%)"
+    }
+   },
+   "heroSamples": [
+    "59-004邪黑氣"
+   ]
+  },
+  "AOvd": {
+   "wc3Name": "Shadow Hunter - Voodooo",
+   "orderCode": "AOvd",
+   "usedBy": 2,
+   "usedByHeroAbility": 2,
+   "dataColumns": {},
+   "heroSamples": [
+    "70-03 木束縛之術",
+    "41-0021 絕對屏障"
+   ]
+  },
+  "AUdd": {
+   "wc3Name": "Lich - Death and Decay",
+   "orderCode": "AUdd",
+   "usedBy": 2,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Udd1",
+     "weName": "每秒汲取的生命上限 (%)"
+    },
+    "2": {
+     "field": "Udd2",
+     "weName": "建築削減"
+    }
+   },
+   "heroSamples": [
+    "71-03 厄夜靈魂",
+    "41-03-x 烈炎術"
+   ]
+  },
+  "AUls": {
+   "wc3Name": "Crypt Lord - Locust Swarm",
+   "orderCode": "AUls",
+   "usedBy": 2,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Uls1",
+     "weName": "蝗蟲部隊數量"
+    },
+    "2": {
+     "field": "Uls2",
+     "weName": "部隊釋放間隙(秒)"
+    },
+    "3": {
+     "field": "Uls3",
+     "weName": "每個目標最大蝗蟲部隊上限"
+    },
+    "4": {
+     "field": "Uls4",
+     "weName": "傷害回彈要素"
+    },
+    "5": {
+     "field": "Uls5",
+     "weName": "傷害回彈界限"
+    }
+   },
+   "heroSamples": [
+    "66-03 七夜怪談"
+   ]
+  },
+  "AOae": {
+   "wc3Name": "Chieftain - Endurance Aura",
+   "orderCode": "AOae",
+   "usedBy": 2,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Oae1",
+     "weName": "增加移動速度 (%)"
+    },
+    "2": {
+     "field": "Oae2",
+     "weName": "增加攻擊速度 (%)"
+    }
+   },
+   "heroSamples": [
+    "79-00 靈壓",
+    "79-00 靈壓"
+   ]
+  },
+  "Aply": {
+   "wc3Name": "Polymorph",
+   "orderCode": "Aply",
+   "usedBy": 2,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Ply1",
+     "weName": "生物等級上限"
+    }
+   },
+   "heroSamples": [
+    "61-03叫如豬 效果",
+    "43-002-01 化身術"
+   ]
+  },
+  "AIl1": {
+   "wc3Name": "MaxLifeBonus (Lesser)",
+   "orderCode": "AIml",
+   "usedBy": 2,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Ilif",
+     "weName": "獲得法力上限"
+    }
+   },
+   "heroSamples": [
+    "82-04 減少生命最大值"
+   ]
+  },
+  "Asd3": {
+   "wc3Name": "Self Destruct 3 (Clockwerk Goblins)",
+   "orderCode": "Asds",
+   "usedBy": 2,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Dda1",
+     "weName": "全面傷害半徑"
+    },
+    "2": {
+     "field": "Dda2",
+     "weName": "全面傷害量"
+    },
+    "3": {
+     "field": "Dda3",
+     "weName": "部份傷害半徑"
+    },
+    "4": {
+     "field": "Dda4",
+     "weName": "部份傷害量"
+    },
+    "5": {
+     "field": "Sds1",
+     "weName": "建造傷害要素"
+    }
+   },
+   "heroSamples": [
+    "71-011屍暴自暴技能",
+    "14-041聖夜"
+   ]
+  },
+  "AIx2": {
+   "wc3Name": "(All + 2)",
+   "orderCode": "AIab",
+   "usedBy": 2,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Iagi",
+     "weName": "靈敏度加成"
+    },
+    "2": {
+     "field": "Iint",
+     "weName": "智慧加成"
+    },
+    "3": {
+     "field": "Istr",
+     "weName": "力量加成"
+    }
+   },
+   "heroSamples": []
+  },
+  "Aap2": {
+   "wc3Name": "Aura - Plague (Plague Ward)",
+   "orderCode": "Aapl",
+   "usedBy": 2,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Apl1",
+     "weName": "靈光持續時間"
+    },
+    "2": {
+     "field": "Apl2",
+     "weName": "每秒傷害"
+    }
+   },
+   "heroSamples": [
+    "91-02x 疫病雲",
+    "91-02x 疫病雲"
+   ]
+  },
+  "Acri": {
+   "wc3Name": "Cripple",
+   "orderCode": "Acri",
+   "usedBy": 2,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Cri1",
+     "weName": "降低移動速度 (%)"
+    },
+    "2": {
+     "field": "Cri2",
+     "weName": "攻擊速度降低 (%)"
+    },
+    "3": {
+     "field": "Cri3",
+     "weName": "減少傷害"
+    }
+   },
+   "heroSamples": [
+    "92-00-01 降低50%攻擊",
+    "96-03x 吸星緩速效果"
+   ]
+  },
+  "AUav": {
+   "wc3Name": "Dreadlord - Vampiric Aura",
+   "orderCode": "AUav",
+   "usedBy": 2,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Uav1",
+     "weName": "偷取的攻擊傷害 (%)"
+    }
+   },
+   "heroSamples": [
+    "97-03 弱肉強食",
+    "61-002 惡魔吉他"
+   ]
+  },
+  "Acht": {
+   "wc3Name": "Howl of Terror",
+   "orderCode": "ANht",
+   "usedBy": 2,
+   "usedByHeroAbility": 2,
+   "dataColumns": {
+    "1": {
+     "field": "Roa1",
+     "weName": "增加傷害(%)"
+    },
+    "2": {
+     "field": "Roa2",
+     "weName": "增加防禦"
+    }
+   },
+   "heroSamples": [
+    "15-002-00 風花武裝解除BUFF",
+    "32-002 見龍卸甲"
+   ]
+  },
+  "AIxs": {
+   "wc3Name": "Anti-magic Shield",
+   "orderCode": "Aami",
+   "usedBy": 2,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "2": {
+     "field": "Ixs2",
+     "weName": "降低魔法傷害"
+    },
+    "3": {
+     "field": "Ams3",
+     "weName": "護盾生命值"
+    }
+   },
+   "heroSamples": []
+  },
+  "Acyc": {
+   "wc3Name": "Cyclone",
+   "orderCode": "Acyc",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {},
+   "heroSamples": []
+  },
+  "Aens": {
+   "wc3Name": "Ensnare",
+   "orderCode": "Aens",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Ens1",
+     "weName": "空中部隊降落時間"
+    },
+    "2": {
+     "field": "Ens2",
+     "weName": "空中部隊高度"
+    },
+    "3": {
+     "field": "Ens3",
+     "weName": "近戰攻擊範圍"
+    }
+   },
+   "heroSamples": [
+    "33-02 吃完的口香糖"
+   ]
+  },
+  "Aesr": {
+   "wc3Name": "Sentinel (no research)",
+   "orderCode": "Aesn",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Esn1",
+     "weName": "在飛行視線半徑"
+    },
+    "2": {
+     "field": "Esn2",
+     "weName": "浮行視線半徑"
+    }
+   },
+   "heroSamples": [
+    "30-00 攝影機"
+   ]
+  },
+  "ANlm": {
+   "wc3Name": "Firelord - Summon Lava Spawn",
+   "orderCode": "ANlm",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Hwe2",
+     "weName": "召喚的部隊數量"
+    },
+    "2": {
+     "field": "Nlm2",
+     "weName": "分裂延遲"
+    },
+    "3": {
+     "field": "Nlm3",
+     "weName": "分裂攻擊數"
+    }
+   },
+   "heroSamples": [
+    "33-01 放山雞"
+   ]
+  },
+  "AIwm": {
+   "wc3Name": "Watery Minion (item)",
+   "orderCode": "ANwm",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Hwe2",
+     "weName": "召喚的部隊數量"
+    }
+   },
+   "heroSamples": []
+  },
+  "Amb2": {
+   "wc3Name": "Mana Battery (Obsidian Statue)",
+   "orderCode": "Ambt",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {},
+   "heroSamples": []
+  },
+  "ACba": {
+   "wc3Name": "Aura - Brilliance (creep)",
+   "orderCode": "AHab",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Hab1",
+     "weName": "增加法力回復"
+    }
+   },
+   "heroSamples": [
+    "15-00 元素操控"
+   ]
+  },
+  "ACfu": {
+   "wc3Name": "Frost Armor (Autocast, Naga)",
+   "orderCode": "AUfu",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Ufa1",
+     "weName": "裝甲持續時間"
+    },
+    "2": {
+     "field": "Ufa2",
+     "weName": "裝甲加成"
+    }
+   },
+   "heroSamples": [
+    "42-00 魔法障壁"
+   ]
+  },
+  "ACcl": {
+   "wc3Name": "Chain Lightning (creep)",
+   "orderCode": "AOcl",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Ocl1",
+     "weName": "每個目標傷害"
+    },
+    "2": {
+     "field": "Ocl2",
+     "weName": "目標擊中次數"
+    },
+    "3": {
+     "field": "Ocl3",
+     "weName": "每個目標降低傷害"
+    }
+   },
+   "heroSamples": []
+  },
+  "ANcf": {
+   "wc3Name": "Chen - Breath of Fire",
+   "orderCode": "ANbf",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Ucs1",
+     "weName": "傷害"
+    },
+    "5": {
+     "field": "Nbf5",
+     "weName": "每秒傷害"
+    }
+   },
+   "heroSamples": []
+  },
+  "AChw": {
+   "wc3Name": "Healing Ward (creep)",
+   "orderCode": "Ahwd",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {},
+   "heroSamples": [
+    "48-03 鮮血神殿"
+   ]
+  },
+  "ANwk": {
+   "wc3Name": "Wind Walk",
+   "orderCode": "AOwk",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "2": {
+     "field": "Owk2",
+     "weName": "增加移動速度 (%)"
+    },
+    "3": {
+     "field": "Owk3",
+     "weName": "背刺傷害"
+    }
+   },
+   "heroSamples": []
+  },
+  "Ahwd": {
+   "wc3Name": "Healing Ward",
+   "orderCode": "Ahwd",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {},
+   "heroSamples": [
+    "29-00 開設雜貨店"
+   ]
+  },
+  "Aakb": {
+   "wc3Name": "Aura - War Drums",
+   "orderCode": "Aakb",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Akb1",
+     "weName": "增加攻擊傷害"
+    }
+   },
+   "heroSamples": [
+    "40-00 我~是~孩~子~王~"
+   ]
+  },
+  "ANbf": {
+   "wc3Name": "Brewmaster - Breath of Fire",
+   "orderCode": "ANbf",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Ucs1",
+     "weName": "傷害"
+    },
+    "2": {
+     "field": "Ucs2",
+     "weName": "傷害上限"
+    },
+    "5": {
+     "field": "Nbf5",
+     "weName": "每秒傷害"
+    }
+   },
+   "heroSamples": [
+    "40-03 痛哭流悌麥克風"
+   ]
+  },
+  "AIi1": {
+   "wc3Name": "IntelligenceBonus (+1)",
+   "orderCode": "AIab",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "2": {
+     "field": "Iint",
+     "weName": "智慧加成"
+    }
+   },
+   "heroSamples": []
+  },
+  "AImv": {
+   "wc3Name": "MaxManaBonus (Leastest, Really)",
+   "orderCode": "AImm",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Iman",
+     "weName": "獲得法力上限"
+    }
+   },
+   "heroSamples": []
+  },
+  "AIi3": {
+   "wc3Name": "IntelligenceBonus (+3)",
+   "orderCode": "AIab",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "2": {
+     "field": "Iint",
+     "weName": "智慧加成"
+    }
+   },
+   "heroSamples": []
+  },
+  "AIl2": {
+   "wc3Name": "MaxLifeBonus (Greater)",
+   "orderCode": "AIml",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Ilif",
+     "weName": "獲得法力上限"
+    }
+   },
+   "heroSamples": []
+  },
+  "ACam": {
+   "wc3Name": "Anti-magic Shield (creep)",
+   "orderCode": "Aams",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "3": {
+     "field": "Ams3",
+     "weName": "護盾生命值"
+    }
+   },
+   "heroSamples": []
+  },
+  "Apak": {
+   "wc3Name": "Inventory (Pack Mule)",
+   "orderCode": "AInv",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "inv1",
+     "weName": "物品容量"
+    }
+   },
+   "heroSamples": []
+  },
+  "ACmf": {
+   "wc3Name": "Mana Shield(Creep)",
+   "orderCode": "ANms",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {},
+   "heroSamples": [
+    "37-00 光魔護盾"
+   ]
+  },
+  "ANsh": {
+   "wc3Name": "Garithos - Shock Wave",
+   "orderCode": "AOsh",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Osh1",
+     "weName": "傷害"
+    },
+    "2": {
+     "field": "Osh2",
+     "weName": "傷害上限"
+    },
+    "3": {
+     "field": "Osh3",
+     "weName": "距離"
+    },
+    "4": {
+     "field": "Osh4",
+     "weName": "最終區域"
+    }
+   },
+   "heroSamples": [
+    "16-01-04 式神喚來"
+   ]
+  },
+  "Aslo": {
+   "wc3Name": "Slow",
+   "orderCode": "Aslo",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Slo1",
+     "weName": "移動速度要素"
+    },
+    "2": {
+     "field": "Slo2",
+     "weName": "攻擊速度要素"
+    }
+   },
+   "heroSamples": [
+    "64-01 威士忌攻擊"
+   ]
+  },
+  "Afzy": {
+   "wc3Name": "Frenzy",
+   "orderCode": "Afzy",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Blo1",
+     "weName": "增加攻擊速度(%)"
+    },
+    "2": {
+     "field": "Blo2",
+     "weName": "增加移動速度 (%)"
+    },
+    "3": {
+     "field": "Blo3",
+     "weName": "縮放要素"
+    }
+   },
+   "heroSamples": [
+    "23-02 超音型態"
+   ]
+  },
+  "AIhw": {
+   "wc3Name": "Healing Ward",
+   "orderCode": "Ahwd",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {},
+   "heroSamples": []
+  },
+  "AIsa": {
+   "wc3Name": "ItemSpeedAoe",
+   "orderCode": "AIsa",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Ispi",
+     "weName": "增加移動速度"
+    }
+   },
+   "heroSamples": [
+    "21-01 火羽"
+   ]
+  },
+  "ACrn": {
+   "wc3Name": "Reincarnation (creep)",
+   "orderCode": "ACrn",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Ore1",
+     "weName": "重生延遲"
+    }
+   },
+   "heroSamples": []
+  },
+  "AUan": {
+   "wc3Name": "Death Knight - Animate Dead",
+   "orderCode": "AUan",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Uan1",
+     "weName": "喚起屍體數量"
+    },
+    "3": {
+     "field": "Uan3",
+     "weName": "繼承性升級"
+    }
+   },
+   "heroSamples": [
+    "72-02 黑人牙菌斑"
+   ]
+  },
+  "AIv1": {
+   "wc3Name": "ItemInvis (Lesser)",
+   "orderCode": "AIvi",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {},
+   "heroSamples": []
+  },
+  "ANdr": {
+   "wc3Name": "Dark Ranger - Drain",
+   "orderCode": "AHdr",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Ndr1",
+     "weName": "吸取的生命點數"
+    }
+   },
+   "heroSamples": [
+    "41-01 吸血鬼之吻"
+   ]
+  },
+  "Aspo": {
+   "wc3Name": "Slow Poison",
+   "orderCode": "Aspo",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Spo1",
+     "weName": "每秒傷害"
+    },
+    "2": {
+     "field": "Spo2",
+     "weName": "移動速度要素"
+    },
+    "3": {
+     "field": "Spo3",
+     "weName": "攻擊速度要素"
+    },
+    "4": {
+     "field": "Spo4",
+     "weName": "堆疊類型"
+    }
+   },
+   "heroSamples": []
+  },
+  "AIdv": {
+   "wc3Name": "Divine Shield (Item)",
+   "orderCode": "AHds",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {},
+   "heroSamples": []
+  },
+  "AIfl": {
+   "wc3Name": "Flag",
+   "orderCode": "AIfl",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {},
+   "heroSamples": []
+  },
+  "ACuf": {
+   "wc3Name": "Unholy Frenzy (creep)",
+   "orderCode": "Auhf",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Uhf1",
+     "weName": "攻擊速度加成 (%)"
+    },
+    "2": {
+     "field": "Uhf2",
+     "weName": "每秒傷害"
+    }
+   },
+   "heroSamples": []
+  },
+  "AHad": {
+   "wc3Name": "Paladin - Devotion Aura",
+   "orderCode": "AHad",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Had1",
+     "weName": "裝甲加成"
+    }
+   },
+   "heroSamples": []
+  },
+  "Arav": {
+   "wc3Name": "Raven Form (Druid)",
+   "orderCode": "Arav",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {},
+   "heroSamples": []
+  },
+  "Aspd": {
+   "wc3Name": "Spawn Spider",
+   "orderCode": "Aspd",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Sod1",
+     "weName": "部隊數量"
+    }
+   },
+   "heroSamples": []
+  },
+  "Aivs": {
+   "wc3Name": "Invisibility",
+   "orderCode": "Aivs",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {},
+   "heroSamples": []
+  },
+  "AOsf": {
+   "wc3Name": "Farseer - Spirit Wolf",
+   "orderCode": "AOsf",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "2": {
+     "field": "Osf2",
+     "weName": "召喚的部隊數量"
+    }
+   },
+   "heroSamples": []
+  },
+  "ANrc": {
+   "wc3Name": "Rain of Chaos",
+   "orderCode": "ANrc",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "2": {
+     "field": "Nrc2",
+     "weName": "部隊創造數量"
+    }
+   },
+   "heroSamples": [
+    "23-03 Thunder Fall"
+   ]
+  },
+  "AIrc": {
+   "wc3Name": "ItemReincarnation",
+   "orderCode": "AIrc",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Ircd",
+     "weName": "死後延遲(秒)"
+    },
+    "2": {
+     "field": "irc2",
+     "weName": "回復生命"
+    }
+   },
+   "heroSamples": []
+  },
+  "AHav": {
+   "wc3Name": "Mountain King - Avatar",
+   "orderCode": "AHav",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Hav1",
+     "weName": "防禦傷害"
+    },
+    "2": {
+     "field": "Hav2",
+     "weName": "生命點數加成"
+    },
+    "3": {
+     "field": "Hav3",
+     "weName": "傷害加成"
+    }
+   },
+   "heroSamples": [
+    "76-04 三檔"
+   ]
+  },
+  "ACbl": {
+   "wc3Name": "Bloodlust (Creep)",
+   "orderCode": "Ablo",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Blo1",
+     "weName": "增加攻擊速度(%)"
+    },
+    "2": {
+     "field": "Blo2",
+     "weName": "增加移動速度 (%)"
+    },
+    "3": {
+     "field": "Blo3",
+     "weName": "縮放要素"
+    }
+   },
+   "heroSamples": [
+    "76-04-00 三檔副作用"
+   ]
+  },
+  "AIsi": {
+   "wc3Name": "SightBonus",
+   "orderCode": "AIsi",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Isib",
+     "weName": "視線範圍加成"
+    }
+   },
+   "heroSamples": []
+  },
+  "ANmo": {
+   "wc3Name": "Monsoon",
+   "orderCode": "ANmo",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Esf1",
+     "weName": "造成的傷害"
+    },
+    "2": {
+     "field": "Esf2",
+     "weName": "傷害間隙"
+    },
+    "3": {
+     "field": "Esf3",
+     "weName": "建築削減"
+    }
+   },
+   "heroSamples": [
+    "14-04 AKT戰隊"
+   ]
+  },
+  "AIa4": {
+   "wc3Name": "AgilityBonus (+4)",
+   "orderCode": "AIab",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Iagi",
+     "weName": "靈敏度加成"
+    }
+   },
+   "heroSamples": [
+    "79-04x 虛化特效"
+   ]
+  },
+  "ANst": {
+   "wc3Name": "Beast Master - Stampede",
+   "orderCode": "ANst",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Nst1",
+     "weName": "每秒怪獸"
+    },
+    "3": {
+     "field": "Nst3",
+     "weName": "傷害量"
+    },
+    "5": {
+     "field": "Nst5",
+     "weName": "傷害延遲"
+    }
+   },
+   "heroSamples": [
+    "80-03-01 妖火"
+   ]
+  },
+  "AItg": {
+   "wc3Name": "AttackBonus +1",
+   "orderCode": "AIat",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Iatt",
+     "weName": "攻擊加成"
+    }
+   },
+   "heroSamples": [
+    "80-01 逆甲攻擊"
+   ]
+  },
+  "AIpm": {
+   "wc3Name": "ItemPlaceMine",
+   "orderCode": "AIpm",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {},
+   "heroSamples": [
+    "37-02 黑核晶"
+   ]
+  },
+  "AUin": {
+   "wc3Name": "Dreadlord - Inferno",
+   "orderCode": "AUin",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Uin1",
+     "weName": "傷害"
+    },
+    "2": {
+     "field": "Uin2",
+     "weName": "持續時間"
+    }
+   },
+   "heroSamples": [
+    "18-04 億年樹"
+   ]
+  },
+  "AEsf": {
+   "wc3Name": "Priestess - Starfall",
+   "orderCode": "AEsf",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Esf1",
+     "weName": "造成的傷害"
+    },
+    "2": {
+     "field": "Esf2",
+     "weName": "傷害間隙"
+    },
+    "3": {
+     "field": "Esf3",
+     "weName": "建築削減"
+    }
+   },
+   "heroSamples": [
+    "82-04-01 術式兵裝-疾風迅雷"
+   ]
+  },
+  "AIfw": {
+   "wc3Name": "Searing Blade - fire melee",
+   "orderCode": "AIfb",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Idam",
+     "weName": "傷害加成"
+    }
+   },
+   "heroSamples": [
+    "82-04-02a 火傷附加"
+   ]
+  },
+  "AOre": {
+   "wc3Name": "Chieftain - Reincarnation",
+   "orderCode": "AOre",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Ore1",
+     "weName": "重生延遲"
+    }
+   },
+   "heroSamples": []
+  },
+  "Aap3": {
+   "wc3Name": "Aura - Plague (Creep)",
+   "orderCode": "Aapl",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "2": {
+     "field": "Apl2",
+     "weName": "每秒傷害"
+    }
+   },
+   "heroSamples": []
+  },
+  "ANsy": {
+   "wc3Name": "Tinkerer - Summon Factory (Level 0)",
+   "orderCode": "ANsy",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Nsy1",
+     "weName": "出現間隔"
+    },
+    "3": {
+     "field": "Nsy3",
+     "weName": "出現單位期限"
+    },
+    "5": {
+     "field": "Nsy5",
+     "weName": "鍊條範圍"
+    }
+   },
+   "heroSamples": [
+    "49-04 母體"
+   ]
+  },
+  "AIct": {
+   "wc3Name": "ItemChangeTOD",
+   "orderCode": "AIct",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {},
+   "heroSamples": []
+  },
+  "Afrz": {
+   "wc3Name": "Freezing Breath",
+   "orderCode": "Afrz",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {},
+   "heroSamples": [
+    "71-02 靈魂吸取"
+   ]
+  },
+  "Amnb": {
+   "wc3Name": "Mana Burn (demon)",
+   "orderCode": "AEmb",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Emb1",
+     "weName": "吸取的法力上限"
+    }
+   },
+   "heroSamples": []
+  },
+  "ANmr": {
+   "wc3Name": "Mind Rot",
+   "orderCode": "ANmr",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Nmr1",
+     "weName": "每秒吸取的法力"
+    }
+   },
+   "heroSamples": [
+    "84-03 蜜汁"
+   ]
+  },
+  "Asp1": {
+   "wc3Name": "Sphere (SoV Level 1)",
+   "orderCode": "Asph",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {},
+   "heroSamples": []
+  },
+  "AIsz": {
+   "wc3Name": "Slow Poison (item)",
+   "orderCode": "Aspo",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Spo1",
+     "weName": "每秒傷害"
+    },
+    "2": {
+     "field": "Spo2",
+     "weName": "移動速度要素"
+    },
+    "3": {
+     "field": "Spo3",
+     "weName": "攻擊速度要素"
+    },
+    "4": {
+     "field": "Spo4",
+     "weName": "堆疊類型"
+    }
+   },
+   "heroSamples": []
+  },
+  "Apiv": {
+   "wc3Name": "Permanent Invisibility",
+   "orderCode": "Apiv",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {},
+   "heroSamples": [
+    "27-002 永久性的隱形術"
+   ]
+  },
+  "Adef": {
+   "wc3Name": "Defend",
+   "orderCode": "Adef",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Def1",
+     "weName": "承受傷害 (%)"
+    },
+    "2": {
+     "field": "Def2",
+     "weName": "造成傷害 (%)"
+    },
+    "3": {
+     "field": "Def3",
+     "weName": "移動速度要素"
+    },
+    "5": {
+     "field": "Def5",
+     "weName": "魔法傷害降低"
+    },
+    "6": {
+     "field": "Def6",
+     "weName": "反彈機率"
+    },
+    "7": {
+     "field": "Def7",
+     "weName": "反彈所受傷害（穿刺）"
+    },
+    "8": {
+     "field": "Def8",
+     "weName": "反彈所受傷害（法術）"
+    }
+   },
+   "heroSamples": [
+    "32-04 狂龍霸體"
+   ]
+  },
+  "ANsg": {
+   "wc3Name": "Beast Master - Summon Bear",
+   "orderCode": "ANsg",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Hwe2",
+     "weName": "召喚的部隊數量"
+    }
+   },
+   "heroSamples": [
+    "00-001 miku"
+   ]
+  },
+  "ANic": {
+   "wc3Name": "Firelord - Incinerate",
+   "orderCode": "ANic",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Nic1",
+     "weName": "加權傷害增幅因子"
+    },
+    "2": {
+     "field": "Nic2",
+     "weName": "死亡傷害完整數量"
+    },
+    "3": {
+     "field": "Nic3",
+     "weName": "死亡傷害全區"
+    },
+    "4": {
+     "field": "Nic4",
+     "weName": "死亡傷害半減數量"
+    },
+    "5": {
+     "field": "Nic5",
+     "weName": "死亡傷害半減區域"
+    },
+    "6": {
+     "field": "Nic6",
+     "weName": "死亡傷害延遲"
+    }
+   },
+   "heroSamples": [
+    "20-01-01 風王BUFF"
+   ]
+  },
+  "Apg2": {
+   "wc3Name": "Purge",
+   "orderCode": "Aprg",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Prg1",
+     "weName": "移動更新頻率"
+    },
+    "3": {
+     "field": "Prg3",
+     "weName": "召喚的部隊傷害"
+    },
+    "4": {
+     "field": "Prg4",
+     "weName": "部隊暫停時間"
+    },
+    "5": {
+     "field": "Prg5",
+     "weName": "英雄暫停時間"
+    },
+    "6": {
+     "field": "Prg6",
+     "weName": "法力損耗"
+    }
+   },
+   "heroSamples": [
+    "16-03-00 無無明亦無"
+   ]
+  },
+  "AIba": {
+   "wc3Name": "ItemAuraBrilliance",
+   "orderCode": "AHab",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Hab1",
+     "weName": "增加法力回復"
+    }
+   },
+   "heroSamples": []
+  },
+  "ACah": {
+   "wc3Name": "Thorns Aura (creep)",
+   "orderCode": "AEah",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Eah1",
+     "weName": "對攻擊者造成的傷害"
+    }
+   },
+   "heroSamples": []
+  },
+  "AIhl": {
+   "wc3Name": "Holy Light (item)",
+   "orderCode": "AHhb",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Hhb1",
+     "weName": "回復/傷害總計"
+    }
+   },
+   "heroSamples": []
+  },
+  "ANhs": {
+   "wc3Name": "Alchemist - Healing Spray",
+   "orderCode": "ANhs",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Ncs1",
+     "weName": "傷害數量"
+    },
+    "3": {
+     "field": "Ncs3",
+     "weName": "投射武器數"
+    },
+    "4": {
+     "field": "Ncs4",
+     "weName": "最高傷害"
+    },
+    "6": {
+     "field": "Nhs6",
+     "weName": "波數"
+    }
+   },
+   "heroSamples": [
+    "90-03 藤鞭"
+   ]
+  },
+  "ANfb": {
+   "wc3Name": "Fire Bolt",
+   "orderCode": "ANfb",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Htb1",
+     "weName": "傷害"
+    }
+   },
+   "heroSamples": [
+    "96-04 獨孤九劍"
+   ]
+  },
+  "Arpl": {
+   "wc3Name": "Replenish (Life)",
+   "orderCode": "Arpl",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Rej1",
+     "weName": "獲得的生命點數"
+    }
+   },
+   "heroSamples": []
+  },
+  "Arej": {
+   "wc3Name": "Rejuvination",
+   "orderCode": "Arej",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Rej1",
+     "weName": "獲得的生命點數"
+    }
+   },
+   "heroSamples": []
+  },
+  "AHds": {
+   "wc3Name": "Paladin - Divine Shield",
+   "orderCode": "AHds",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {},
+   "heroSamples": [
+    "00-00 緊急逃脫裝置"
+   ]
+  },
+  "AImh": {
+   "wc3Name": "Permanent Hit point Bonus",
+   "orderCode": "AImi",
+   "usedBy": 1,
+   "usedByHeroAbility": 0,
+   "dataColumns": {
+    "1": {
+     "field": "Ilif",
+     "weName": "獲得法力上限"
+    }
+   },
+   "heroSamples": []
+  },
+  "ACpa": {
+   "wc3Name": "Parasite(eredar)",
+   "orderCode": "ANpa",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Poi1",
+     "weName": "每秒傷害"
+    },
+    "2": {
+     "field": "Poi2",
+     "weName": "攻擊速度要素"
+    },
+    "3": {
+     "field": "Poi3",
+     "weName": "移動速度要素"
+    },
+    "4": {
+     "field": "Poi4",
+     "weName": "堆疊類型"
+    },
+    "5": {
+     "field": "Npa5",
+     "weName": "召喚的部隊數量"
+    },
+    "6": {
+     "field": "Npa6",
+     "weName": "召喚單位有效時間"
+    }
+   },
+   "heroSamples": [
+    "49-002 產卵"
+   ]
+  },
+  "AHre": {
+   "wc3Name": "Paladin - Resurrection",
+   "orderCode": "AHre",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Hre1",
+     "weName": "喚醒的屍體數量"
+    }
+   },
+   "heroSamples": [
+    "00-00 投降表決"
+   ]
+  },
+  "AUfa": {
+   "wc3Name": "Lich - Frost Armor",
+   "orderCode": "AUfa",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Ufa1",
+     "weName": "裝甲持續時間"
+    },
+    "2": {
+     "field": "Ufa2",
+     "weName": "裝甲加成"
+    }
+   },
+   "heroSamples": [
+    "99-002 把你給MikuMiku掉"
+   ]
+  },
+  "Andt": {
+   "wc3Name": "Neutral Detection (Reveal ability)",
+   "orderCode": "Andt",
+   "usedBy": 1,
+   "usedByHeroAbility": 1,
+   "dataColumns": {
+    "1": {
+     "field": "Ndt1",
+     "weName": "黃金耗費"
+    }
+   },
+   "heroSamples": [
+    "02-04-02 顯示"
+   ]
+  }
+ }
+}

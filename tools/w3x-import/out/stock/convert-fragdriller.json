@@ -1,0 +1,82 @@
+{
+ "name": "fragdriller",
+ "archive": "War3x.mpq",
+ "mdxBytes": 9513,
+ "path": "Abilities\\Weapons\\FragDriller\\FragDriller.mdl",
+ "textures": [
+  {
+   "texture": "Textures\\Roman1.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 104.5,
+   "lumStd": 76.5,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\GenericGlowX.blp",
+   "size": [
+    32,
+    32
+   ],
+   "lumMean": 64.4,
+   "lumStd": 72.2,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Roman.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 43.9,
+   "lumStd": 18.3,
+   "alphaMean": 111.0,
+   "alphaStd": 107.1,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Clouds8x8Fade.blp",
+   "size": [
+    256,
+    256
+   ],
+   "lumMean": 28.5,
+   "lumStd": 45.9,
+   "alphaMean": 28.5,
+   "alphaStd": 45.9,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [
+  {
+   "emitter": "BlizParticle01",
+   "segmentAlpha": [
+    255,
+    255,
+    46
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 38064,
+ "rawHeight": 11.11,
+ "scaleFactor": 0.02778,
+ "height": 0.309,
+ "visiblePrims": "2/2",
+ "animations": [
+  "Birth"
+ ],
+ "clipMap": null,
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/fragdriller.glb"
+}

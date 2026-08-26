@@ -474,6 +474,14 @@ const DERIVATION_IMPORT = /from\s+["'][^"']*\/(shippedSurface|balancePopulation)
  * 會 → 它該走推導模組，⛔ 不該進這張表。
  */
 const WHOLE_TREE_BY_DESIGN: Record<string, string> = {
+  // ── 2026-08-26 GH#244 —— 模板家族的**採用率**掃全樹 ──────────────────────
+  "packages/shared/src/content/templateFamiliesAreAdopted.test.ts":
+    "問的是「這個模板家族**有沒有被任何內容引用過**」——那是**作者側的採用率**，" +
+    "⛔ 不是玩家側的曝光。一份只被關著的道具引用的模板**已經被套用了**（工作做完了）；" +
+    "它與「玩家今天拿不拿得到那件道具」無關。⭐ 反過來才是缺陷：只看上架面會讓" +
+    "「模板做好了但沒人套」被一件關著的道具**假性滿足**，而那正是這條閘要抓的東西" +
+    "（首輪量到 46 個家族裡 30 個零引用，含 #648 的 tpl-periodic-field）。" +
+    "反駁方式：如果哪天判準改成「玩家看得到的採用率」，這一列就該改走 shippedItemIds() 並刪掉。",
   // ── 2026-08-24 GH#662 —— polarity 誠實性掃全樹 ────────────────────────────
   "packages/shared/src/content/negativeBuffPolarity.test.ts":
     "未標 polarity 的純減益 ⇒ 淨化拔不掉（第一·五守則：卡面說謊）。⭐ 掃**全樹**是刻意的：" +

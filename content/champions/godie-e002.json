@@ -423,11 +423,12 @@
           "shape": "single",
           "preset": "tpl-beam-roll",
           "modelKey": "w3x.stock.revivehuman",
-          "tint": [
-            1.0,
-            0.3922,
-            0.3922
+          "scaleAxis": [
+            1,
+            1,
+            3.12
           ],
+          "arriveSoundKey": "explosion",
           "onArrive": [
             {
               "kind": "spawnVfx",
@@ -442,6 +443,14 @@
               "applyTo": "all"
             }
           ]
+        },
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "preset": "tpl-beam-roll",
+          "modelKey": "w3x.stock.fragdriller",
+          "scale": 3.65,
+          "clipTimeScale": 0.15
         },
         {
           "kind": "spawnVfx",
