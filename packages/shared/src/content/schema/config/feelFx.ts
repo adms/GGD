@@ -133,6 +133,57 @@ export const zConfigFeelFxDoc = z
         drag: z.number().min(0.1).max(1),
       })
       .strict(),
+    /**
+     * ⭐ GH#788 —— **蓄力集氣特效**：吟唱夠長的每一次施放，多道細光束從四周
+     * 向施法者身體**內縮**（owner 附圖：莉娜集氣），顏色＝**隊伍顏色**
+     * （wire 的 teamId → 客戶端隊色盤，⛔ 不寫死紅藍）。
+     *
+     * owner 2026-08-27 逐字：
+     *   「所有吟唱時間超過0.3秒以上都要有蓄力特效（粒子特效從外往身體內縮
+     *     多道小光束像集氣一樣如圖但顏色是隊伍顏色光芒）」
+     *
+     * ⭐ 一個通用模組（第〇·五守則）掛在施法窗口事件上，⛔ 不逐技能加 effects。
+     * 與施法光柱（CastPillarFx）疊配：光柱＝讀秒，集氣＝蓄力感。
+     *
+     * ⚠️ `.optional()` 的理由與 `config.vfx-cleanup@1` 那幾族逐字相同：
+     * 線上已經有 feel-fx 的耐久覆蓋層，缺這一塊的舊 override 必須照樣過驗。
+     * 消費端（`apps/client/src/vfx/CastChargeFx.ts` 的 `readCastCharge`）
+     * 逐格退回出貨值。
+     */
+    castCharge: z
+      .object({
+        /**
+         * 總開關（GH#788 的一鍵 rollback）。false = 完全不畫集氣光束 ——
+         * 施法光柱、吟唱條、技能本身一格都不動，逐位元回到這個功能存在之前。
+         */
+        enabled: z.boolean(),
+        /**
+         * 吟唱至少幾秒才配集氣（owner 明說的門檻）。量的是 sim 夾完
+         * `config.cast-time@1`（floor/cap/multiplier）之後的**最終**吟唱窗口，
+         * ⛔ 不是技能文件裡的原始值。上界對齊 cast-time 的 capSec。
+         */
+        minCastSec: z.number().min(0).max(4),
+        /** 同時幾道光束在內縮。越多越像原圖的滿天集氣，也越吃畫面預算。 */
+        beamCount: z.number().int().min(1).max(24),
+        /**
+         * 一道光束從外圈飛進身體要幾秒（**內縮速度**的倒數）。調小＝吸得更急
+         * 更有磁鐵感；調大＝緩慢匯聚。光束到達就從身體那一點被吸收並在外圈
+         * 重生，整段吟唱連續循環。
+         */
+        convergeSec: z.number().min(0.1).max(2),
+        /** 一道光束的長度（世界單位）。越長越像「光的線」，越短越像「光點」。 */
+        beamLength: z.number().min(0.2).max(4),
+        /**
+         * 亮度倍率（乘在加法混合的 alpha 上）。0 = 看不見（等於關掉但保留循環
+         * 成本，⛔ 要關請用 enabled）；夾在轉不透明之前的上限，隊色永遠蓋不住
+         * 施法者本體。
+         */
+        brightness: z.number().min(0).max(2),
+        /** 光束從離身體幾個世界單位外開始飛進來（外圈半徑）。 */
+        startRadius: z.number().min(0.5).max(6),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 /** 爽度特效（`content/config/feel-fx.json`，GH#494）。 */
@@ -174,5 +225,16 @@ export const DEFAULT_FEEL_FX: ConfigFeelFxDoc = {
     lifetimeMaxSec: 0.35,
     gravityY: 3,
     drag: 0.7,
+  },
+  // ⭐ GH#788 蓄力集氣。minCastSec 0.3 = owner 2026-08-27 逐字「超過0.3秒以上」；
+  // 其餘五格是實作方挑的預設（每一格都是後台可調的回頭路）。
+  castCharge: {
+    enabled: true,
+    minCastSec: 0.3,
+    beamCount: 10,
+    convergeSec: 0.45,
+    beamLength: 1,
+    brightness: 1,
+    startRadius: 2.4,
   },
 };

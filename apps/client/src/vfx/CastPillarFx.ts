@@ -72,6 +72,10 @@ import {
   castBeamPlan,
   type BeamVerdict,
 } from "./castBeam";
+// ⭐ GH#788 蓄力集氣：吟唱 ≥ 門檻（config.feel-fx@1.castCharge）的施放，隊色
+// 細光束由外向身體內縮。掛在這裡是因為這三個觸發點（begin/finish/interrupt）
+// 就是施法窗口的授權流 —— 集氣不能有自己的第二份時序。
+import { CastChargeFx } from "./CastChargeFx";
 
 /** Cylinder sides. 20 reads round at arena zoom; 16×3×MAX_PILLARS stays cheap. */
 const SIDES = 20;
@@ -183,6 +187,11 @@ export interface CastPillarDeps {
    * production wiring always supplies it (see VfxSystem).
    */
   headroomAt?(x: number, z: number): number | null;
+  /**
+   * ⭐ GH#788 —— wire 的隊伍編號（VfxSystem ctx.teamOf），給蓄力集氣解析
+   * 隊色用。缺 = 集氣退回中性色（⛔ 不假設紅藍），光柱本身不讀它。
+   */
+  teamOf?(id: number): number | null;
 }
 
 export interface CastPillarOptions extends PresetSystemOptions {
@@ -227,6 +236,14 @@ export class CastPillarFx {
   private readonly byEntity = new Map<number, Slot>();
   private readonly motes: BurstPool;
   private readonly getScale: () => number;
+  /**
+   * ⭐ GH#788 蓄力集氣 —— 觸發點掛在本類的 begin/finish/interrupt 上。
+   * ⚠️ 只在 `deps.teamOf` 有供應時存在：集氣的唯一顏色契約是「wire 的隊色」，
+   * 沒有隊伍來源就沒有東西可畫（也讓純光柱的 audition/測試 harness 不會
+   * 多出集氣的網格）。出貨接線（VfxSystem）**必須**帶 `teamOf` —— 缺了它
+   * 這一層整個不存在,⛔ 不是退化成某個顏色。
+   */
+  private readonly charge: CastChargeFx | null;
   private groundTex: BaseTexture | null = null;
   private shaftTex: BaseTexture | null = null;
   private disposed = false;
@@ -241,6 +258,14 @@ export class CastPillarFx {
     // WORLD space, so a pulse keeps the position it was born at even after the
     // emitter is re-pointed at the next caster of the same element.
     this.motes = new BurstPool(scene, { ...opts, maxPerKey: 3 });
+    this.charge = deps.teamOf
+      ? new CastChargeFx(scene, this.deps, { getScale: this.getScale })
+      : null;
+  }
+
+  /** ⭐ GH#788 —— 蓄力集氣那一層（測試／觀測接縫）。null = 沒接 teamOf。 */
+  get chargeFx(): CastChargeFx | null {
+    return this.charge;
   }
 
   /** Pillars currently burning (test/observability seam). */
@@ -319,16 +344,20 @@ export class CastPillarFx {
     this.byEntity.set(entityId, slot);
     slot.pivot.setEnabled(true);
     this.applyFrame(slot, nowMs, this.activeCount);
+    // ⭐ GH#788 觸發點：同一個授權窗口。門檻（≥ minCastSec）在 charge 裡量。
+    this.charge?.begin(entityId, durationMs, nowMs);
   }
 
   /** The cast RESOLVED (castEnd): a short outward release flash. */
   finish(entityId: number, nowMs: number): void {
     this.transition(entityId, "release", nowMs);
+    this.charge?.stop(entityId, nowMs); // GH#788：結算＝集氣收光
   }
 
   /** The cast was INTERRUPTED (castInterrupt / death): snuff it, no flash. */
   interrupt(entityId: number, nowMs: number): void {
     this.transition(entityId, "extinguish", nowMs);
+    this.charge?.stop(entityId, nowMs); // GH#788：取消即停
   }
 
   private transition(entityId: number, phase: PillarPhase, nowMs: number): void {
@@ -353,17 +382,20 @@ export class CastPillarFx {
       this.applyFrame(slot, nowMs, active);
     }
     this.motes.update(nowMs);
+    this.charge?.update(nowMs); // GH#788：同一條 update 心跳
   }
 
   /** Kill every column immediately (round end / teardown). */
   clear(): void {
     for (const slot of this.slots) this.release(slot);
     this.byEntity.clear();
+    this.charge?.clear(); // GH#788：回合邊界一起熄
   }
 
   dispose(): void {
     if (this.disposed) return;
     this.disposed = true;
+    this.charge?.dispose(); // GH#788
     for (const slot of this.slots) {
       slot.shellMat.dispose();
       slot.coreMat.dispose();
