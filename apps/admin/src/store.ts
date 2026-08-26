@@ -324,6 +324,7 @@ export type Page =
   | "liveExRoots"
   | "liveTreasures"
   | "liveSkill90"
+  | "liveLaneFences"   // 🚧 GH#754 誰能跟誰同時做（從票的 Files/modules 推導）
   | "msBuffList"
   | "uiLexicon"
   /**

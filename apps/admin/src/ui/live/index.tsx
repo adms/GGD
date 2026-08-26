@@ -31,6 +31,7 @@ import { SkillAuthoringPage } from "./SkillAuthoringPage";
 import { ExRootsPage } from "./ExRootsPage";
 import { TreasuresPage } from "./TreasuresPage";
 import { Skill90Page } from "./Skill90Page";
+import { LaneFencesPage } from "./LaneFencesPage";
 
 export const LIVE_SECTION = "技能對照·視覺化";
 
@@ -45,6 +46,8 @@ export interface LiveRoute {
 export const LIVE_ROUTES: readonly LiveRoute[] = [
   { page: "liveMdlFamilies", label: "MDL特效家族", emoji: "🌪", Component: MdlFamiliesPage },
   { page: "liveParallelBoard", label: "平行處理盤", emoji: "🧭", Component: ParallelBoardPage },
+  // 🚧 GH#754 —— 「誰能跟誰同時做」。⭐ 從每張票自己宣告的 Files/modules 推導。
+  { page: "liveLaneFences", label: "平行柵欄", emoji: "🚧", Component: LaneFencesPage },
   { page: "liveJassVfx", label: "JASS特效對照", emoji: "🎬", Component: JassVfxPage },
   { page: "liveLocustOrbs", label: "蝗蟲群對照", emoji: "🦗", Component: LocustOrbsPage },
   { page: "liveMechTemplates", label: "機制模板·範圍", emoji: "🧩", Component: MechTemplatesPage },
