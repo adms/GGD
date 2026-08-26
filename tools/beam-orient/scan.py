@@ -195,10 +195,33 @@ def mat_apply(m, p):
     return [sum(m[k][r] * p[k] for k in range(3)) + m[3][r] for r in range(3)]
 
 
-def glb_extents(path: str) -> tuple[list[float], list[float]] | None:
-    """rest-pose bbox（世界＝glb 檔案空間）。沒有任何網格 ⇒ None。"""
+def lit_materials(gltf: dict) -> set[int]:
+    """⭐ GH#767 —— 哪些材質**畫得出來**（鏡射 `modelFxStagingContract` ⑥）。"""
+    lit: set[int] = set()
+    for i, mat in enumerate(gltf.get("materials", [])):
+        pbr = mat.get("pbrMetallicRoughness", {})
+        if "baseColorTexture" in pbr or "baseColorFactor" not in pbr:
+            lit.add(i)
+        elif (pbr["baseColorFactor"][3] if len(pbr["baseColorFactor"]) > 3 else 1) > 0:
+            lit.add(i)
+    return lit
+
+
+def glb_extents(path: str, visible_only: bool = True) -> tuple[list[float], list[float]] | None:
+    """rest-pose bbox（世界＝glb 檔案空間）。沒有任何網格 ⇒ None。
+
+    ⭐⭐ GH#767 —— 預設**只算畫得出來的 primitive**。⛔ 在此之前它把
+    `baseColorFactor:[0,0,0,0]` 的面片一起算進去,而那不是一個小誤差:出貨的
+    `revivehuman.glb`(20-03 · 09-04 · 90-04 的光束本體)其 **y 軸有 69% 是由一片
+    必不可見的 TeamGlow 面片撐出來的** ⇒ 「長軸 y」這個結論**整個來自看不見的幾何**,
+    只算可見時 y (5.127) 反而是**最短**的那一軸。
+    ⇒ 拿它去對齊行進方向 = 把一具看得見的東西按照一個看不見的東西的形狀擺 ——
+    而四條既有的閘全綠（它們問的是「這份模型**有沒有**任何一片畫得出來」,
+    那是**名詞**;缺陷住在**關係**）。
+    """
     gltf = read_glb_json(path)
     nodes, meshes, accs = gltf.get("nodes", []), gltf.get("meshes", []), gltf.get("accessors", [])
+    lit = lit_materials(gltf)
     lo, hi = [math.inf] * 3, [-math.inf] * 3
 
     def visit(idx: int, parent):
@@ -206,6 +229,8 @@ def glb_extents(path: str) -> tuple[list[float], list[float]] | None:
         mat = mat_mul(parent, node_matrix(node))
         if "mesh" in node:
             for prim in meshes[node["mesh"]].get("primitives", []):
+                if visible_only and "material" in prim and prim["material"] not in lit:
+                    continue
                 ai = prim.get("attributes", {}).get("POSITION")
                 if ai is None:
                     continue
@@ -354,11 +379,26 @@ def survey() -> list[dict]:
         if not os.path.exists(glb):
             row["skip"] = "missing-glb"
             continue
+        raw_box = glb_extents(glb, visible_only=False)
         box = glb_extents(glb)
-        if box is None:
+        if raw_box is None:
             row["skip"] = "no-mesh"       # 純粒子/純骨架的 .glb,沒有幾何可以量
             continue
+        if box is None:
+            # ⭐ 有幾何、⛔ 但沒有一片畫得出來 ⇒ 這是**零像素**,⛔ 不是「沒有網格」。
+            # 兩者的修法完全不同(重烘 vs 本來就該是空的),所以它們要有不同的名字。
+            row["skip"] = "no-visible-mesh"
+            continue
         lo, hi = box
+        # ⭐ 關係欄:含隱形的長軸,有多少是**可見**幾何撐出來的(見 glb_extents 檔頭)。
+        rlo, rhi = raw_box
+        rext = [rhi[k] - rlo[k] for k in range(3)]
+        rk = max(range(3), key=lambda k: rext[k])
+        row["rawExtents"] = [round(v, 4) for v in rext]
+        row["rawLongAxis"] = "xyz"[rk]
+        row["longAxisVisibleFrac"] = (
+            round((hi[rk] - lo[rk]) / rext[rk], 4) if rext[rk] > 1e-9 else 0.0
+        )
         ext = [round(hi[k] - lo[k], 4) for k in range(3)]
         order = sorted(range(3), key=lambda k: -ext[k])
         # ⭐ 第二個訊號:幾何往哪一邊長出去(佔半邊長的比例)。見檔頭。

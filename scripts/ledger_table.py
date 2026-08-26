@@ -108,6 +108,7 @@ def ensure(path: Path) -> list[str]:
     """把帳本讀成行陣列，必要時補上檔頭與正規表格。"""
     if not path.exists():
         path.parent.mkdir(parents=True, exist_ok=True)
+        _unlock(path)
         path.write_text(f"# {path.stem}\n", encoding="utf-8")
     lines = path.read_text(encoding="utf-8").split("\n")
     if _table_end(lines) is None:
@@ -125,6 +126,19 @@ def ensure(path: Path) -> list[str]:
     return lines
 
 
+def _unlock(path: Path) -> None:
+    """🔒 產物隔離區：這份帳本是**別的步驟**（board:build 那一族）的產物 ⇒ 平時 chmod 444。
+
+    ⭐ 隔離區的設計要求**寫入點自解鎖**（`writeProduct()` 的 python 版）——
+    ⛔ 不是叫人手動 chmod。2026-08-26 已在 `gen_contract_numbers.py`、
+    `apply_placeholders.ts` 各補過同一件事,這是第三處。
+    """
+    try:
+        path.chmod(0o644)
+    except OSError:
+        pass  # 唯讀檔案系統／別人的檔 —— 讓下面的 write 用它自己的錯誤說話
+
+
 def insert(path: Path, rows: list[tuple[str, str, str]]) -> int:
     """把 rows 插進正規表格**最後一列之後**。回傳實際插入的列數。"""
     if not rows:
@@ -133,6 +147,7 @@ def insert(path: Path, rows: list[tuple[str, str, str]]) -> int:
     at = _table_end(lines)
     assert at is not None  # ensure() 保證有表格
     lines[at:at] = ["| " + " | ".join(r) + " |" for r in rows]
+    _unlock(path)
     path.write_text("\n".join(lines).rstrip("\n") + "\n", encoding="utf-8")
     return len(rows)
 

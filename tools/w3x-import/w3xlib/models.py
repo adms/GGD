@@ -5,8 +5,11 @@ units tall (other models: uniform 1/36); the per-unit Scaling Value ('usca')
 is then applied by the model doc's `scale` (see drafts.model_scale) so the map
 author's size intent is preserved without touching the collision radius.
 Materials: BLP alpha + WC3 filter mode drive glTF alphaMode; team-colour
-(replaceableId 1) → neutral opaque + teamTint, team glow (replaceableId 2) →
-dropped, additive glow → emissive (see gltf.gltf_material).
+(replaceableId 1) → neutral opaque + teamTint, additive glow → emissive.
+Team glow (replaceableId 2) follows `convert_all(team_glow=…)`: "drop" (the
+default — 角色) blanks it, "lit" (GH#767 — 純特效模型) resolves the stock
+TeamGlow art and luma-keys it like any other additive glow (see
+gltf.TEAM_GLOW_POLICIES / gltf.gltf_material).
 Attachments: separate models referenced by ATCH nodes are baked into the
 parent at the attach-node transform. Particle emitters (PREM/PRE2/RIBB) and
 GEOA per-sequence visibility are skipped — geometry/bones/animations only.
@@ -26,6 +29,11 @@ from .mpq import W3XArchive
 
 DEFAULT_SCALE = 1.0 / 36.0
 HERO_TARGET_HEIGHT = 1.7
+
+#: ⭐ GH#767 —— replaceableId 2（隊伍發光）真正的美術。WC3 逐隊有 00…27 共 28 張,
+#: GGD 沒有隊伍色可以套 ⇒ 取**第一張**當中性發光貼圖（形狀三張都一樣,差別只在色相）。
+TEAM_GLOW_STOCK_TEXTURE = "ReplaceableTextures\\TeamGlow\\TeamGlow00.blp"
+
 
 # Retail archives, searched only for texture paths the map archive does not
 # carry (stock Blizzard art: Textures\Flame4.blp, ReplaceableTextures\... ).
@@ -501,20 +509,25 @@ def default_sphere_table(raw_dir: str) -> dict:
 
 def convert_all(raw_dir: str, glb_dir: str, tex_dir: str,
                 sphere_table: dict | None = None,
-                only: set[str] | None = None) -> list[dict]:
+                only: set[str] | None = None,
+                team_glow: str = "drop") -> list[dict]:
     """`only`: restrict to the .mdx files whose slug is in the set (targeted
-    re-conversion, e.g. GH#649's 26 zero-pixel effect models); None = all."""
+    re-conversion, e.g. GH#649's 26 zero-pixel effect models); None = all.
+    `team_glow`: "drop" (角色，出貨至今的行為) / "lit" (純特效模型，GH#767) ——
+    見 `w3xlib.gltf.TEAM_GLOW_POLICIES`。"""
     if sphere_table is None:
         sphere_table = default_sphere_table(raw_dir)
     try:
-        return _convert_all(raw_dir, glb_dir, tex_dir, sphere_table, only)
+        return _convert_all(raw_dir, glb_dir, tex_dir, sphere_table, only,
+                            team_glow)
     finally:
         close_stock_archives()
 
 
 def _convert_all(raw_dir: str, glb_dir: str, tex_dir: str,
                  sphere_table: dict | None = None,
-                 only: set[str] | None = None) -> list[dict]:
+                 only: set[str] | None = None,
+                 team_glow: str = "drop") -> list[dict]:
     os.makedirs(glb_dir, exist_ok=True)
     os.makedirs(tex_dir, exist_ok=True)
     report = []
@@ -548,6 +561,17 @@ def _convert_all(raw_dir: str, glb_dir: str, tex_dir: str,
             missing = []
             for i, tex in enumerate(model.textures):
                 if tex.replaceable_id:
+                    # ⭐ GH#767 —— rid-2（隊伍發光）在 `"lit"` 政策下**有真的美術**：
+                    #   `ReplaceableTextures\TeamGlow\TeamGlow00.blp`（war3.mpq，
+                    #   32×32、形狀住 RGB、alpha 平坦 255）。解出來交給 exporter
+                    #   走 luma-key；解不到就退回原本的 drop（fail-open，⛔ 但
+                    #   下面 `missing` 會把它喊出來）。
+                    if tex.replaceable_id == 2 and team_glow == "lit":
+                        got = _find_texture_png(raw_dir, TEAM_GLOW_STOCK_TEXTURE)
+                        if got is not None:
+                            textures_png[i], tex_alpha[i] = got
+                        else:
+                            missing.append(TEAM_GLOW_STOCK_TEXTURE)
                     continue  # team color/glow → handled in exporter
                 if not tex.path:
                     continue
@@ -577,7 +601,8 @@ def _convert_all(raw_dir: str, glb_dir: str, tex_dir: str,
                 scale = DEFAULT_SCALE
             entry["scale_factor"] = round(scale, 5)
 
-            res = convert(model, textures_png, scale, fname, tex_alpha)
+            res = convert(model, textures_png, scale, fname, tex_alpha,
+                          team_glow=team_glow)
             name = slug(fname[:-4])
             entry["name"] = name
             out = os.path.join(glb_dir, name + ".glb")
@@ -589,6 +614,7 @@ def _convert_all(raw_dir: str, glb_dir: str, tex_dir: str,
             entry["anim_names"] = res.anim_names
             entry["team_color_materials"] = res.team_color_materials
             entry["dropped_glow_materials"] = res.dropped_glow_materials
+            entry["lit_glow_materials"] = res.lit_glow_materials
             entry["attach_points"] = res.attach_points
             entry["notes"] = res.notes
             clip = build_clip_map(res.anim_names)

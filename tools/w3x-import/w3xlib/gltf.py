@@ -40,6 +40,7 @@ class ConvertResult:
     anim_names: list[str] = field(default_factory=list)
     team_color_materials: list[str] = field(default_factory=list)
     dropped_glow_materials: list[str] = field(default_factory=list)
+    lit_glow_materials: list[str] = field(default_factory=list)
     dropped_effect_geosets: list = field(default_factory=list)
     attach_points: dict = field(default_factory=dict)
 
@@ -81,13 +82,39 @@ def _layer_rid(model, layer) -> int:
             if 0 <= tid < len(model.textures) else 0)
 
 
-def _material_effect_kind(model, mid: int) -> str:
+#: ⭐ GH#767 —— replaceableId-2（隊伍發光）的**兩種政策**。
+#:
+#: `"drop"`  出貨至今的行為：`baseColorFactor [0,0,0,0]` ⇒ 那一片幾何**必不可見**。
+#:           ⚠️ 它對**角色**是對的（隊伍發光在角色身上是肩膀/腳下的色塊，
+#:           GGD 沒有隊伍色可以套，畫成白光會變成一團不屬於那個角色的亮斑）。
+#: `"lit"`   ⭐ 對**純特效模型**才對：ReviveHuman / Awaken 這一族的**主體本身**
+#:           就是一片 rid-2 的加法發光柱（`Textures` 之外的美術在
+#:           `ReplaceableTextures\TeamGlow\TeamGlow00.blp`，**MPQ 裡真的有**，
+#:           32×32、形狀住 RGB、alpha 平坦 255 ⇒ 正是 GH#649 那個
+#:           「亮在黑底上、沒有 alpha 可以 key」的家族）。
+#:           ⇒ 用**同一條** luma-key 路徑把它變成 emissive 加法發光。
+#:
+#: ⚠️ 為什麼**不是**全域改成 `"lit"`：量到 51 份地圖模型帶 rid-2 材質，其中
+#: **49 份是角色**（heroSaber / goku / cloud …）。全域打開＝替 49 個角色加上
+#: 一團沒有人裁決過的白光。⇒ 政策由**呼叫端**選：`import_w3x.py`（地圖角色）維持
+#: `"drop"`，`convert_stock_model.py`（表格裡每一列都是 `Abilities\Spells\…`
+#: 的**特效**模型）用 `"lit"`。
+#: ⭐ 可反駁：哪天 `STOCK_MODELS` 收進一具真的角色模型，這個分界線就不成立 ——
+#: 到時候要改成逐列的旗標，⛔ 不是繼續假設「stock ⇒ 特效」。
+TEAM_GLOW_POLICIES = ("drop", "lit")
+
+
+def _material_effect_kind(model, mid: int, team_glow: str = "drop") -> str:
     """Classify how material `mid` renders (mirrors gltf_material()'s branches):
       ""            solid body/skin or team-colour → keep
       "team_glow"   replaceableId-2 billboard → rendered INVISIBLE in-game, so
                     dropping its geometry is a visual no-op (safe to prune)
       "additive"    emissive glow quad (additive real-texture, no opaque base)
                     → VISIBLE, so only drop it when it clearly leaves the body
+
+    ⭐ `team_glow="lit"` ⇒ rid-2 也是真的會發光的加法幾何 ⇒ 回報 `"additive"`，
+    這樣它就吃**比較保守**的那條剔除規則（只有明顯離開身體才剔），⛔ 不會再被
+    「隊伍發光反正看不見，寬的就剔掉」那一條順手砍掉。
     """
     layers = model.materials[mid].layers if 0 <= mid < len(model.materials) else []
     if not layers:
@@ -98,7 +125,9 @@ def _material_effect_kind(model, mid: int) -> str:
     if not real:
         if 1 in rids:
             return ""              # team-COLOUR body region → solid, keep
-        return "team_glow" if 2 in rids else ""
+        if 2 not in rids:
+            return ""
+        return "additive" if team_glow == "lit" else "team_glow"
     disp = next((l for l in real if l.filter_mode == 0), real[0])
     return "additive" if (disp.filter_mode >= 3 and not has_opaque_base) else ""
 
@@ -120,7 +149,7 @@ def _geoset_bbox(geoset, scale: float):
     return mins, maxs
 
 
-def classify_geosets(model, scale: float = 1.0):
+def classify_geosets(model, scale: float = 1.0, team_glow: str = "drop"):
     """Split a model's geosets into character BODY vs stray EFFECT geometry.
 
     Returns ``(info, (body_min, body_max))`` where ``info[i]`` is a dict with
@@ -138,7 +167,7 @@ def classify_geosets(model, scale: float = 1.0):
     geos = []
     for i, g in enumerate(model.geosets):
         mins, maxs = _geoset_bbox(g, scale) if g.vertices else ([0.0] * 3, [0.0] * 3)
-        kind = _material_effect_kind(model, g.material_id)
+        kind = _material_effect_kind(model, g.material_id, team_glow)
         geos.append({
             "index": i,
             "verts": len(g.vertices),
@@ -304,11 +333,14 @@ NEUTRAL_TEAM = [0.55, 0.55, 0.60, 1.0]  # untinted team-color base
 
 
 def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
-            model_name: str, tex_alpha: dict[int, str] | None = None
-            ) -> ConvertResult:
+            model_name: str, tex_alpha: dict[int, str] | None = None,
+            team_glow: str = "drop") -> ConvertResult:
     """textures_png: MDX texture index -> PNG bytes (placeholders included).
     tex_alpha:  MDX texture index -> 'opaque'|'mask'|'blend' (from the decoded
-    image's alpha channel), used to choose glTF alphaMode MASK vs BLEND."""
+    image's alpha channel), used to choose glTF alphaMode MASK vs BLEND.
+    team_glow:  see TEAM_GLOW_POLICIES — "drop" (角色) or "lit" (純特效模型)."""
+    if team_glow not in TEAM_GLOW_POLICIES:
+        raise ValueError(f"team_glow must be one of {TEAM_GLOW_POLICIES}: {team_glow!r}")
     tex_alpha = tex_alpha or {}
     used_ext: set[str] = set()
     res = ConvertResult(glb=b"")
@@ -477,12 +509,34 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
             pbr["baseColorFactor"] = list(NEUTRAL_TEAM)
             mat["alphaMode"] = "OPAQUE"
         elif repl:
-            # TEAM GLOW (replaceableId 2): coloured additive billboard we cannot
-            # tint — drop it (fully transparent) so there is no gray blob.
-            mat["name"] = f"TeamGlow{mid}"
-            res.dropped_glow_materials.append(mat["name"])
-            pbr["baseColorFactor"] = [0, 0, 0, 0]
-            mat["alphaMode"] = "BLEND"
+            # TEAM GLOW (replaceableId 2): coloured additive billboard.
+            glow = next((l for l in repl if _rid(l) == 2
+                         and l.texture_id in textures_png), None)
+            if team_glow == "lit" and glow is not None:
+                # ⭐ GH#767 —— 這一片**不是**一塊沒有美術的色塊：rid-2 的美術
+                # 就是 `ReplaceableTextures\TeamGlow\TeamGlow00.blp`，而它是
+                # 「亮在黑底上、alpha 平坦 255」⇒ 逐位元就是 GH#649 那一族。
+                # ⇒ 走**同一條** luma-key 路徑（alpha := max(R,G,B)），⛔ 不要
+                # 再發明第二種處理方式。
+                tix = gltf_texture_luma(glow.texture_id)
+                mat["name"] = f"TeamGlow{mid}"
+                res.lit_glow_materials.append(mat["name"])
+                mat["emissiveTexture"] = {"index": tix}
+                mat["emissiveFactor"] = [1.0, 1.0, 1.0]
+                mat["extensions"] = {"KHR_materials_emissive_strength":
+                                     {"emissiveStrength": 2.0}}
+                used_ext.add("KHR_materials_emissive_strength")
+                mat["alphaMode"] = "BLEND"
+                pbr["baseColorTexture"] = {"index": tix}
+                res.notes.append(
+                    f"mat{mid}: team glow (rid2) → luma-keyed VISIBLE (GH#767)")
+            else:
+                # we cannot tint it — drop it (fully transparent) so there is
+                # no gray blob.
+                mat["name"] = f"TeamGlow{mid}"
+                res.dropped_glow_materials.append(mat["name"])
+                pbr["baseColorFactor"] = [0, 0, 0, 0]
+                mat["alphaMode"] = "BLEND"
         else:
             pbr["baseColorFactor"] = [0.5, 0.5, 0.5, 1.0]
         gltf["materials"].append(mat)
@@ -518,7 +572,7 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
     # bbox and (when the biggest is mistaken for the body) wrecks hero-height
     # normalization. The body "height" is the union of the KEPT body geosets,
     # not a single max-vertex geoset. See classify_geosets().
-    geo_info, (body_min, body_max) = classify_geosets(model, scale)
+    geo_info, (body_min, body_max) = classify_geosets(model, scale, team_glow)
     prims = []
     for gi, g in enumerate(model.geosets):
         if geo_info[gi]["drop"]:

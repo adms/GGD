@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-08-26 12:51 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-08-26 13:40 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.28.2 · 資料截至 2026-08-26 12:51 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-26 12:51 (GMT+8)</h1><div class="meta"><span>帳本 <b>8</b> 份</span><span>點名票號 <b>255</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.28.3 · 資料截至 2026-08-26 13:40 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-26 13:40 (GMT+8)</h1><div class="meta"><span>帳本 <b>8</b> 份</span><span>點名票號 <b>255</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -650,7 +650,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <blockquote>⭐ 這張表由 <code>scripts/message-ledger.sh</code> 從 session transcript <b>逐則</b>撈出來對帳，</blockquote>
 <blockquote><code>scripts/ruling.sh</code> 收到裁決時也寫進同一張表。</blockquote>
 <blockquote>表格那一格是<b>截斷</b>過的；⛔ 全文沒有被壓縮取代，它在 <code>ledger-source_temp_*.md</code>。</blockquote>
-<blockquote>票號那一格 ⛔ 不可以留空：對不到票就寫 <code>⏸ 未對票</code>，<code>--check</code> 會紅。</blockquote>
+<blockquote>票號那一格 ⛔ 不可以留空：對不到票就寫 <code>— 本輪已回應/落地，⛔ 不需獨立票</code>，<code>--check</code> 會紅。</blockquote>
 <div class="scroll"><table><tr><th>時間</th><th>owner 說了什麼（逐字）</th><th>票</th></tr>
 <tr><td>11:13</td><td>（2026-08-26 10:11）因此光束砲家族應該共用特效模板 請你仔細掃描所有使用相同 mdl 的蝗蟲群對應到的特效 我記得還有 小呆 龍鬥氣砲咒文、Rider EX 等一堆人都有用到這個特效 （2026-08-26 10:13）事實上有兩個英雄復活特效 mdl</td><td>#673 #688</td></tr>
 <tr><td>11:14</td><td>（2026-08-26 10:15）我之前給過你一堆 mdl 清單 請你比照一樣的方法清算</td><td>#688</td></tr>
@@ -664,6 +664,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>12:29</td><td>每一張都可以 reopen（關票留言都在），所以這不是不可逆 —— 但如果你要我回捲任何一批，說一聲。 =&gt; reopen 跟 開新票摘要舊票差別在哪？我的觀點是 context 已經改變很多，所以不如開新票而不是 reopen MECH lane 逐行複查發現：我在模板描述裡引的三個 JASS 出處，兩個根本不成立 —— 一個迴圈體是純傷害取樣（零生成、零特效），另一個引錯技能；第三個雖然真的生 6 具，但那是火柱不是光束。而 20-03 那條線 GGD 早就用 damageLine 表達了，我等於把同一條傷害線畫成第二份視覺。 ① 誤讀 —— 我讀龜派氣功的 JASS 時，把迴圈裡那 10…</td><td>— 裁決：context 變太多 ⇒ 改開新票不 reopen ⇒ 14 張轉成 #755–#766，舊票關掉互指</td></tr>
 <tr><td>12:47</td><td>MDL 特效家族總表.md 跟 戰情表.md (更新對話開票) 給我</td><td>— 交付兩份 md（戰情表改一週滾動窗＋<code>scripts/board-week.sh</code>），⛔ 不需開票</td></tr>
 <tr><td>12:51</td><td>WarStompCaster.mdl 全族零落點 —— 刻意不轉 =&gt; why?</td><td>#672 —— WarStompCaster 誤判更正：o019 動地剁／o01U 接技特效<b>有落點</b>且卡 #672（⛔ 不是刻意不轉），演出規格已補進票</td></tr>
+<tr><td>13:40</td><td>戰情表 改成一週滾動窗（8/20–8/26，269 則、170 張票、未對票 0）＋ scripts/board-week.sh 自動輪替 =&gt; 每天自動輪替，輪替前整份備份 戰情版_temp_{timstamp}.md</td><td>#669 —— 改成<b>每天</b>輪替＋輪替前整份備份 <code>戰情版_temp_{timestamp}.md</code>（<code>scripts/board-roll.sh</code>；<code>board:roll:check</code> 進 skills:check ＋ <code>sync:converge</code> 每次先跑；突變驗過）</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

@@ -45,6 +45,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 import statistics
 import struct
@@ -208,8 +209,8 @@ def gltf_json_bytes(b: bytes) -> dict:
     return {}
 
 
-def visible_prims(g: dict) -> tuple[int, int]:
-    """Mirror of modelFxStagingContract ⑥'s visiblePrimitives()."""
+def lit_materials(g: dict) -> set[int]:
+    """Mirror of modelFxStagingContract ⑥'s litMaterials()."""
     lit = set()
     for i, m in enumerate(g.get("materials", [])):
         pbr = m.get("pbrMetallicRoughness", {})
@@ -218,6 +219,12 @@ def visible_prims(g: dict) -> tuple[int, int]:
         elif (pbr["baseColorFactor"][3] if len(pbr["baseColorFactor"]) > 3
               else 1) > 0:
             lit.add(i)
+    return lit
+
+
+def visible_prims(g: dict) -> tuple[int, int]:
+    """Mirror of modelFxStagingContract ⑥'s visiblePrimitives()."""
+    lit = lit_materials(g)
     vis = tot = 0
     for mesh in g.get("meshes", []):
         for p in mesh.get("primitives", []):
@@ -225,6 +232,107 @@ def visible_prims(g: dict) -> tuple[int, int]:
             if "material" not in p or p["material"] in lit:
                 vis += 1
     return vis, tot
+
+
+# ── ⭐ GH#767 —— 「幾何基準」要**只算畫得出來的幾何** ─────────────────────────
+# ⚠️ `visible_prims()` 問的是一個**名詞**（這份模型有沒有任何一片畫得出來），
+# 而缺陷住在**關係**：被拿來當長軸／縮放基準的那一片**自己**是不是看得見。
+# 實測（2026-08-26，出貨的 `revivehuman.glb`）：含隱形面片的包圍盒是
+# 10.751 × 16.757 × 10.751（長軸 y），⛔ 而 y 那一格 53% 由一片
+# `baseColorFactor [0,0,0,0]` 的面片貢獻；只算可見幾何是 7.817 × 5.127 × 7.817
+# —— **y 從最長變成最短**。⇒ `fxLongAxis:"y"` 與 `scaleAxis` 都在拉一個看不見的東西。
+def _node_matrix(node: dict) -> list[list[float]]:
+    if "matrix" in node:
+        m = node["matrix"]
+        return [m[0:4], m[4:8], m[8:12], m[12:16]]
+    tx, ty, tz = node.get("translation", [0, 0, 0])
+    x, y, z, w = node.get("rotation", [0, 0, 0, 1])
+    sx, sy, sz = node.get("scale", [1, 1, 1])
+    rot = [
+        [1 - 2 * (y * y + z * z), 2 * (x * y + z * w), 2 * (x * z - y * w)],
+        [2 * (x * y - z * w), 1 - 2 * (x * x + z * z), 2 * (y * z + x * w)],
+        [2 * (x * z + y * w), 2 * (y * z - x * w), 1 - 2 * (x * x + y * y)],
+    ]
+    sc = (sx, sy, sz)
+    cols = [[rot[i][k] * sc[i] for k in range(3)] + [0.0] for i in range(3)]
+    cols.append([tx, ty, tz, 1.0])
+    return cols
+
+
+def _mat_mul(a, b):
+    return [[sum(a[k][r] * b[c][k] for k in range(4)) for r in range(4)]
+            for c in range(4)]
+
+
+def _mat_apply(m, p):
+    return [sum(m[k][r] * p[k] for k in range(3)) + m[3][r] for r in range(3)]
+
+
+_IDENT4 = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
+
+
+def extents(g: dict, visible_only: bool) -> list[float] | None:
+    """rest-pose bbox 邊長 [x, y, z]（accessor 的 min/max，⛔ 不解頂點）。"""
+    lit = lit_materials(g)
+    nodes, meshes, accs = (g.get("nodes", []), g.get("meshes", []),
+                           g.get("accessors", []))
+    lo, hi = [math.inf] * 3, [-math.inf] * 3
+
+    def visit(idx: int, parent):
+        node = nodes[idx]
+        mat = _mat_mul(parent, _node_matrix(node))
+        if "mesh" in node:
+            for prim in meshes[node["mesh"]].get("primitives", []):
+                if visible_only and "material" in prim and prim["material"] not in lit:
+                    continue
+                ai = prim.get("attributes", {}).get("POSITION")
+                if ai is None:
+                    continue
+                acc = accs[ai]
+                if "min" not in acc or "max" not in acc:
+                    continue
+                mn, mx = acc["min"], acc["max"]
+                for corner in range(8):
+                    pt = [mx[k] if (corner >> k) & 1 else mn[k] for k in range(3)]
+                    world = _mat_apply(mat, pt)
+                    for k in range(3):
+                        lo[k] = min(lo[k], world[k])
+                        hi[k] = max(hi[k], world[k])
+        for child in node.get("children", []):
+            visit(child, mat)
+
+    scenes = g.get("scenes", [])
+    roots = scenes[g.get("scene", 0)]["nodes"] if scenes else range(len(nodes))
+    for r in roots:
+        visit(r, _IDENT4)
+    if math.isinf(lo[0]):
+        return None
+    return [round(hi[k] - lo[k], 4) for k in range(3)]
+
+
+def geometry_basis(g: dict) -> dict:
+    """含隱形 vs 只算可見 —— 兩份包圍盒與各自的長軸，外加**關係**那一欄。"""
+    full = extents(g, False)
+    vis = extents(g, True)
+    row: dict = {"fullExtents": full, "visibleExtents": vis}
+    if full:
+        row["fullLongAxis"] = "xyz"[max(range(3), key=lambda k: full[k])]
+    if vis:
+        k = max(range(3), key=lambda i: vis[i])
+        row["visibleLongAxis"] = "xyz"[k]
+        # ⭐ 這一格就是關係：含隱形的長軸，有多少是可見幾何撐出來的。
+        fk = "xyz".index(row["fullLongAxis"])
+        row["longAxisVisibleFrac"] = (
+            round(vis[fk] / full[fk], 4) if full[fk] > 1e-9 else 0.0)
+        row["basisAgrees"] = row["visibleLongAxis"] == row["fullLongAxis"]
+    return row
+
+
+#: 含隱形的長軸,至少要有這麼多比例是**可見**幾何撐出來的,否則這一份 .glb 的
+#: 「長軸／縮放基準」是在描述一個看不見的東西 ⇒ 拒絕安裝。
+#: ⚠️ 這是**關係**不是名詞:一份 3/4 可見的模型照樣可以中這一條(出貨的
+#: `revivehuman.glb` 就是 —— 4 片有 3 片畫得出來,而長軸那一格只有 31% 是可見的)。
+LONG_AXIS_VISIBLE_MIN = 0.5
 
 
 def head_bytes(path: str) -> bytes | None:
@@ -278,7 +386,12 @@ def main() -> int:
         print("nothing extracted", file=sys.stderr)
         return 1
 
-    report = convert_all(raw_dir, glb_dir, tex_dir, only=wanted)
+    # ⭐ GH#767 —— 這張表**每一列**都是 `Abilities\\Spells\\…` 一族的
+    #    **特效**模型（⛔ 沒有一列是可玩角色）⇒ replaceableId-2 的隊伍發光
+    #    在這裡是**主體本身**，⛔ 不是角色肩膀上的色塊 ⇒ 政策 `"lit"`。
+    #    地圖角色那條路（`import_w3x.py`）維持 `"drop"`，⛔ 沒有動到。
+    report = convert_all(raw_dir, glb_dir, tex_dir, only=wanted,
+                         team_glow="lit")
     by_name = {e.get("name"): e for e in report if e.get("name")}
 
     installed, failed = [], []
@@ -307,7 +420,18 @@ def main() -> int:
             "clipMap": entry.get("clip_map"),
             "missingTextures": entry.get("missing_textures", []),
             "droppedGlowMaterials": entry.get("dropped_glow_materials"),
+            "litGlowMaterials": entry.get("lit_glow_materials"),
+            **geometry_basis(g),
         })
+        # ⭐ 關係型閘：被當成長軸的那一軸，必須真的由**畫得出來的**幾何撐出來。
+        #    ⛔ 「有幾片畫得出來」不夠 —— 那是名詞。
+        frac = row.get("longAxisVisibleFrac")
+        if frac is not None and frac < LONG_AXIS_VISIBLE_MIN:
+            row["verdict"] = (
+                f"長軸 {row['fullLongAxis']} 只有 {frac:.0%} 由可見幾何撐出來"
+                f"（< {LONG_AXIS_VISIBLE_MIN:.0%}）—— REFUSING to install")
+            failed.append(name)
+            continue
         if nv < 1:
             row["verdict"] = "zero-pixel — REFUSING to install"
             failed.append(name)

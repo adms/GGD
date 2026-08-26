@@ -88,11 +88,11 @@
    "verdict": "visible-at-peak"
   }
  ],
- "glbSize": 41676,
+ "glbSize": 42672,
  "rawHeight": 603.26,
  "scaleFactor": 0.02778,
  "height": 16.757,
- "visiblePrims": "3/4",
+ "visiblePrims": "4/4",
  "animations": [
   "Stand"
  ],
@@ -105,9 +105,25 @@
   "death": "Stand"
  },
  "missingTextures": [],
- "droppedGlowMaterials": [
+ "droppedGlowMaterials": [],
+ "litGlowMaterials": [
   "TeamGlow0"
  ],
+ "fullExtents": [
+  10.7513,
+  16.7573,
+  10.7513
+ ],
+ "visibleExtents": [
+  10.7513,
+  16.7573,
+  10.7513
+ ],
+ "fullLongAxis": "y",
+ "visibleLongAxis": "y",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "baseline@HEAD": "3/4 visible prims, 1 anims",
  "verdict": "ok",
  "installed": "content/assets/models/imported/awaken.glb"
 }

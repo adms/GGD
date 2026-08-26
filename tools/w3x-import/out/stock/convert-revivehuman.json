@@ -66,11 +66,11 @@
    "verdict": "visible-at-peak"
   }
  ],
- "glbSize": 50628,
+ "glbSize": 51624,
  "rawHeight": 603.26,
  "scaleFactor": 0.02778,
  "height": 16.757,
- "visiblePrims": "4/5",
+ "visiblePrims": "5/5",
  "animations": [
   "Stand"
  ],
@@ -83,9 +83,25 @@
   "death": "Stand"
  },
  "missingTextures": [],
- "droppedGlowMaterials": [
+ "droppedGlowMaterials": [],
+ "litGlowMaterials": [
   "TeamGlow0"
  ],
+ "fullExtents": [
+  10.7513,
+  16.7573,
+  10.7513
+ ],
+ "visibleExtents": [
+  10.7513,
+  16.7573,
+  10.7513
+ ],
+ "fullLongAxis": "y",
+ "visibleLongAxis": "y",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
  "baseline@HEAD": "3/4 visible prims, 1 anims",
- "verdict": "ok"
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/revivehuman.glb"
 }
