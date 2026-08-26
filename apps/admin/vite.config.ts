@@ -78,6 +78,41 @@ function serveContent(): Plugin {
  * 邏輯住 tools/admin-live/（動態 import，模組缺了回 503 指名缺什麼 —— 與
  * client 端 assetReviewApi 同形狀）。apply:"serve" ⇒ production build 不含。
  */
+/**
+ * 🧑‍⚖️ 一頁批次後台驗收（GH#669/#785）—— owner 2026-08-27：
+ * 「**你還是沒告訴我去後台哪裡審查 [一頁批次後台驗收]**」
+ *
+ * ⭐ 答案在此之前是「它不在後台」：那兩頁只活在 client dev server（:39527）上，
+ * 而 owner 開的是 admin（:60721）。⇒ 把**同一份** middleware（tools/review）也掛在
+ * admin 上，讓 `/__review/*` 在後台同源可用 —— ⛔ 不複製第二份邏輯（第〇·四）。
+ * 頁面本身由 `apps/admin/src/ui/FeatureReviewPage.tsx` 在 console 內畫（真的一頁）。
+ */
+function adminReviewApi(): Plugin {
+  return {
+    name: "ggd-admin-review-api",
+    apply: "serve",
+    async configureServer(server) {
+      const repoRoot = fileURLToPath(new URL("../..", import.meta.url));
+      try {
+        const href = new URL("../../tools/review/middleware.mjs", import.meta.url).href;
+        const mod = (await import(/* @vite-ignore */ href)) as {
+          createReviewMiddleware: (
+            root: string,
+          ) => (req: IncomingMessage, res: ServerResponse, next: () => void) => void;
+        };
+        server.middlewares.use(mod.createReviewMiddleware(repoRoot));
+      } catch (err) {
+        const detail = err instanceof Error ? err.message : String(err);
+        server.middlewares.use("/__review", (_req, res) => {
+          res.statusCode = 503;
+          res.setHeader("Content-Type", "application/json; charset=utf-8");
+          res.end(JSON.stringify({ error: "review middleware unavailable", detail }));
+        });
+      }
+    },
+  };
+}
+
 function adminLiveData(): Plugin {
   return {
     name: "ggd-admin-live-data",
@@ -108,7 +143,7 @@ export default defineConfig({
   base: "/admin/",
   // loopbackOnly FIRST (enforce: "pre"): it must veto the config before
   // anything else acts on it.
-  plugins: [loopbackOnly(), react(), serveContent(), serveIconConsoleStamp(), adminLiveData()],
+  plugins: [loopbackOnly(), react(), serveContent(), serveIconConsoleStamp(), adminLiveData(), adminReviewApi()],
   server: {
     // fixed ops-admin port (user-pinned): http://127.0.0.1:60721/admin/
     port: 60721,

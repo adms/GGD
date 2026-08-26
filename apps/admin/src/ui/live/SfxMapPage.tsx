@@ -19,6 +19,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Panel, TextInput } from "../widgets";
 import { DANGER, DANGER_BG, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
+import { ReviewStrip } from "./ReviewStrip";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
@@ -113,6 +114,7 @@ function KeyCell(props: { hit: SoundHit | null; badKeys: Set<string> }): React.J
   const broken = props.badKeys.has(props.hit.key);
   return (
     <span style={{ fontFamily: MONO, color: broken ? DANGER : TEXT_MAIN }}>
+      <ReviewStrip family={["sfx", "audio", "voice"]} title="技能音效" />
       {props.hit.key}
       <span style={{ color: TEXT_DIM, fontSize: 10, marginLeft: 4 }}>{props.hit.src}</span>
     </span>

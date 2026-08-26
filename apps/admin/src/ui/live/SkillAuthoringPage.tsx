@@ -13,6 +13,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Btn, Panel, TextArea, TextInput } from "../widgets";
 import { GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
+import { ReviewStrip } from "./ReviewStrip";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 const LIVE_URL = "/__live/skill-authoring";
@@ -236,6 +237,7 @@ export function SkillAuthoringPage(): React.JSX.Element {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14, maxWidth: 1280 }}>
+      <ReviewStrip family={["skillremake", "prose"]} title="技能說明→JSON" />
       <Panel title="✍️ 技能撰寫助手 —— 名稱＋說明 → 自動建議 effects JSON 骨架">
         <div style={{ fontSize: 12.5, color: TEXT_DIM, lineHeight: 1.7 }}>
           左邊照卡面慣例寫技能說明（<code style={{ fontFamily: MONO }}>[標籤]</code>、

@@ -14,6 +14,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Panel, TextInput } from "../widgets";
 import { ACCENT, DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
+import { ReviewStrip } from "./ReviewStrip";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
@@ -192,6 +193,7 @@ export function ParallelBoardPage(): React.JSX.Element {
   if (error !== null)
     return (
       <Panel title="🧭 平行處理盤">
+        <ReviewStrip family={["visual-proof"]} title="全部批次" />
         <div style={{ color: DANGER, fontSize: 13, lineHeight: 1.6 }}>
           ⛔ /__live/parallel-board 取不到：<code style={{ fontFamily: MONO }}>{error}</code>
           <div style={{ color: TEXT_DIM, marginTop: 8 }}>

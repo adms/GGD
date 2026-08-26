@@ -19,6 +19,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Panel, Btn, TextInput } from "../widgets";
 import { DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
 import { useApp } from "../../store";
+import { ReviewStrip } from "./ReviewStrip";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
@@ -174,6 +175,7 @@ export function ExRootsPage(): React.JSX.Element {
   if (error !== null) {
     return (
       <Panel title="🧬 EX解放根源三選一 — 載入失敗">
+        <ReviewStrip family={["ex", "root", "liberation"]} title="EX 解放根源" />
         <div style={{ color: DANGER, fontSize: 13, whiteSpace: "pre-wrap", fontFamily: MONO }}>
           /__live/ex-roots 回報：{error}
         </div>

@@ -220,6 +220,9 @@ const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
       "damageTiers",
       "manaTiers",
       "speedGrowthTiers",
+      // 2026-08-27 GH#789：移速**加成**五級距 —— 與成長那一頁同族（同一組級距名），
+      // 一頁管「每級長多快」，這一頁管「buff／道具／增益卡一次加多少 %」。
+      "moveSpeedTiers",
       "skillNormalize",
       "manaEconomy",
       "tierOverview",
@@ -263,6 +266,9 @@ describe("分類重編一頁都沒有掉", () => {
       // 閱覽及管理」—— 左欄是一條線，這一頁是一個平面（11 組 treemap＋覆蓋層徽章）。
       // ⚠️ 它自己也是一列 —— 但它是**入口**，不是第 122 個要掃過去的項目。
       "navMap",
+      // 🧑‍⚖️ 2026-08-27 GH#669/#785：一頁批次後台驗收。owner「你還是沒告訴我去
+      // 後台哪裡審查」—— 在此之前它**不在後台**（只活在 client dev server）。
+      "featureReview",
       // 圖示工坊 (owner 2026-08-17「動態單個/批次產生的功能頁」)。
       "iconWorkshop",
       // 2026-08-17：介面用語（Fate）—— owner「這些替換的介面提示等用語，
@@ -360,6 +366,9 @@ describe("分類重編一頁都沒有掉", () => {
       // 資料與 docs 的兩份 md 共用 `tools/skill-lists/lists.json` 同一次計算。
       "castTimeList",
       "msBuffList",
+      // 2026-08-27 GH#789：移速**加成**五級距（owner「%轉換為五級距⋯0.1~4」）——
+      // #683 清單頁的「表那一格」就住在這裡（msBonusTier → 五格解析值）。
+      "moveSpeedTiers",
     ]);
     const added = [...after].filter((p) => !before.has(p) && !SINCE_BASELINE.has(p));
     expect(lost, `搬家把這些頁面弄丟了（元件還在，但左欄按不到）：${lost.join(", ")}`).toEqual([]);

@@ -14,6 +14,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Btn, Panel, TextInput } from "../widgets";
 import { DANGER, GOLD, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
 import { useApp } from "../../store";
+import { ReviewStrip } from "./ReviewStrip";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
@@ -189,6 +190,7 @@ export function TreasuresPage(): React.JSX.Element {
   if (err !== null) {
     return (
       <Panel title="🗡️ 寶具三選一">
+        <ReviewStrip family={["treasure", "grail", "item"]} title="寶具三選一" />
         <div style={{ color: DANGER, fontSize: 13, whiteSpace: "pre-wrap", fontFamily: MONO }}>
           /__live/treasures 讀取失敗（這一頁是 dev server 實時算的 —— production build 沒有這條路由）：{"\n"}
           {err}

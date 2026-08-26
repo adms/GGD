@@ -19,6 +19,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Panel, TextInput } from "../widgets";
 import { ACCENT, DANGER, GOLD, OK, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
+import { ReviewStrip } from "./ReviewStrip";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
@@ -261,6 +262,7 @@ export function RadarAbilitiesPage(): React.JSX.Element {
   if (err !== null) {
     return (
       <Panel title="📡 技能級距雷達">
+        <ReviewStrip family={["tier", "damage", "cooldown", "range"]} title="技能級距" />
         <div style={{ color: DANGER, fontSize: 13, lineHeight: 1.7 }}>
           <div style={{ fontWeight: 700 }}>讀取 /__live/radar-abilities 失敗：</div>
           <pre style={{ whiteSpace: "pre-wrap", fontFamily: MONO, fontSize: 12, margin: "6px 0 0" }}>{err}</pre>

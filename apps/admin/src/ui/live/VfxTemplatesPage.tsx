@@ -16,6 +16,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Panel, TextInput } from "../widgets";
 import { DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
 import { useApp } from "../../store";
+import { ReviewStrip } from "./ReviewStrip";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
@@ -323,6 +324,7 @@ export function VfxTemplatesPage(): React.JSX.Element {
   if (error !== null) {
     return (
       <Panel title="🧬 技能特效模板對照">
+        <ReviewStrip family={["beam", "stockglow", "invprim", "tpl"]} title="特效模板" />
         <div style={{ color: DANGER, fontSize: 13, whiteSpace: "pre-wrap", fontFamily: MONO }}>
           /__live/vfx-templates 載入失敗（這一頁只在 dev vite server 下有資料面）：{"\n"}
           {error}

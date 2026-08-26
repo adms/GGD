@@ -14,6 +14,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Panel, Btn, TextInput } from "../widgets";
 import { GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN, DANGER } from "../theme";
 import { useApp } from "../../store";
+import { ReviewStrip } from "./ReviewStrip";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
@@ -303,6 +304,7 @@ export function MechTemplatesPage(): React.JSX.Element {
   if (error !== null) {
     return (
       <Panel title="🧩 機制模板×五級距">
+        <ReviewStrip family={["tpl", "template", "beamtruth"]} title="機制模板" />
         <div style={{ color: DANGER, fontSize: 13, whiteSpace: "pre-wrap", fontFamily: MONO }}>
           /__live/mech-templates 讀取失敗：{error}
         </div>

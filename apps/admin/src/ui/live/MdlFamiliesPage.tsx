@@ -16,6 +16,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Panel, TextInput } from "../widgets";
 import { DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
+import { ReviewStrip } from "./ReviewStrip";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
@@ -311,6 +312,7 @@ export function MdlFamiliesPage(): React.JSX.Element {
   if (error) {
     return (
       <Panel title="🌪 MDL 特效家族總表">
+        <ReviewStrip family={["beam", "locust", "mdl", "invprim", "stockglow"]} title="MDL 特效家族" />
         <div style={{ color: DANGER, fontSize: 13, whiteSpace: "pre-wrap", fontFamily: MONO }}>
           <div>/__live/mdl-families 取資料失敗：</div>
           <div>{error}</div>

@@ -2,7 +2,6 @@
  * 🚪 NAV 覆蓋率閘 ＋ 每級加成頁的行為守衛（GH#790）。
  *
  * 閘擋的失敗形態：NAV 有列、右欄沒有東西畫 —— 點下去是**一頁空白**，而元件/路由/
- * session-gate/測試全綠（perLevelBonus 是第 4 個實例，⛔ 不再靠人踩）。
  * ⚠️ render case 是 App.tsx 裡的 JSX 條件行，不是可 import 的表 ⇒ 這一條**例外**允許
  * 把 App.tsx 當文字掃：它抓的是**接線存在性**（`{page === "x" &&` 這一行在不在），
  * ⛔ 不是行為（失敗形態⑥管的是後者）。NAV 與 CONFIG_DOC_SPECS 仍讀出貨常數本身。
@@ -26,7 +25,6 @@ const APP_SRC = readFileSync(join(HERE, "ui", "App.tsx"), "utf8");
 const RENDER_EXEMPT: Record<string, string> = {
   // GH#790：專頁元件已落地（ui/PerLevelBonusPage.tsx），render case 由主 session 接
   //（併行柵欄：App.tsx 是共用檔）。接上的那一刻「豁免會過期」那條會紅，逼著刪這一列。
-  perLevelBonus: "GH#790 主 session 接線中",
 };
 
 /** 只認 JSX 渲染守門的形狀，⛔ 不認 `r.page === "approvals"` 那種導覽列徽章比對。 */

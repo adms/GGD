@@ -20,6 +20,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useApp } from "../../store";
 import { Panel, TextInput } from "../widgets";
 import { ACCENT, DANGER, DANGER_BG, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
+import { ReviewStrip } from "./ReviewStrip";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
@@ -252,6 +253,7 @@ export function JassVfxPage(): React.JSX.Element {
   if (err !== null) {
     return (
       <Panel title="🎬 技能 JASS 特效對照">
+        <ReviewStrip family={["beam", "vfx", "invprim", "stockglow", "dragonslave", "kenshiro"]} title="JASS 特效對照" />
         <div style={{ color: DANGER, fontSize: 13, whiteSpace: "pre-wrap", fontFamily: MONO }}>
           /__live/jass-vfx 載入失敗：{err}
           {"\n"}（這一頁是 dev-only 實時資料面 —— 確認 admin 是用 vite dev server 開的。）

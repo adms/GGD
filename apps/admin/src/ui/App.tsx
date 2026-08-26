@@ -87,6 +87,8 @@ import { ArenaPoolPage } from "./ArenaPoolPage";
 import { specForPage } from "../configForms";
 // 📈 GH#790 —— 每級加成：record 形狀（鍵=屬性 id）通用引擎列不出，同 StatCaps 開專頁。
 import { PerLevelBonusPage } from "./PerLevelBonusPage";
+// 🧑‍⚖️ GH#669/#785 —— 一頁批次後台驗收（連續圖片＋一鍵否決＋必填原因）。
+import { FeatureReviewPage } from "./FeatureReviewPage";
 import { VfxForgePage } from "./VfxForgePage";
 import { HeroForgePage } from "./HeroForgePage";
 import { MCoinGrantPage } from "./MCoinGrantPage";
@@ -265,6 +267,9 @@ export const NAV: NavItem[] = [
   // 移速／攻速的**每級成長**五級距 (2026-08-21)。緊鄰上面五軸 —— 同一組級距名、
   // 同一個「級別住內容、數字住 config」的形狀，只是它掛在**英雄卡**上不是技能。
   { page: "speedGrowthTiers", label: "速度成長五級距", emoji: "🏃", section: SEC_TIERS },
+  // 移速**加成**五級距 (GH#789)。緊鄰成長那一頁 —— 同一組級距名，一頁管「每級長多快」，
+  // 這一頁管「buff／道具／增益卡一次加多少 %」。
+  { page: "moveSpeedTiers", label: "移速加成五級距", emoji: "💨", section: SEC_TIERS },
   { page: "skillNormalize", label: "技能正規化決策點", emoji: "🧮", section: SEC_TIERS },
   // 回魔地板 (GH#446)。緊鄰上面兩頁：owner 那三張單是同一次反算出來的。
   { page: "manaEconomy", label: "魔力經濟（建議滿魔時間）", emoji: "🔵", section: SEC_TIERS },
@@ -342,6 +347,9 @@ export const NAV: NavItem[] = [
   { page: "hub", label: "Console Hub", emoji: "🗂️", section: SEC_SYS },
   // 🗺 GH#776 —— 導覽地圖：11 組排成 treemap，一眼看得到這個 console 的全形狀。
   { page: "navMap", label: "導覽地圖", emoji: "🗺", section: SEC_SYS },
+  // 🧑‍⚖️ owner 2026-08-27:「你還是沒告訴我去後台哪裡審查 [一頁批次後台驗收]」
+  //    ⇒ 在此之前它**不在後台**（只活在 client dev server）。現在是真的一頁。
+  { page: "featureReview", label: "批次驗收（連續圖片）", emoji: "🧑‍⚖️", section: SEC_OPS },
   // 變身外觀 (#249 GH#288) —— 26 對變身裡有 21 對前後同一個模型,所以「看不看得
   // 出來」全靠顏色/大小/球體掛件這三樣,而它們在 w3x 裡是空的。
   { page: "formVisuals", label: "變身外觀", emoji: "✨", section: SEC_SYS },
@@ -1179,6 +1187,7 @@ export function Console(): React.JSX.Element {
             {page === "heroForge" && <HeroForgePage />}
             {page === "statCaps" && <StatCapsPage />}
             {page === "perLevelBonus" && <PerLevelBonusPage />}
+            {page === "featureReview" && <FeatureReviewPage />}
             {page === "combatFeel" && <CombatFeelPage />}
             {page === "matchConfig" && <MatchConfigPage />}
             {page === "storeEconomy" && <StoreEconomyPage />}

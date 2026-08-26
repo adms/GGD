@@ -15,6 +15,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Panel, TextInput } from "../widgets";
 import { DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
+import { ReviewStrip } from "./ReviewStrip";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
@@ -281,6 +282,7 @@ export function Skill90Page(): React.JSX.Element {
   if (error !== null) {
     return (
       <Panel title="📐 90支技能重製對照">
+        <ReviewStrip family={["skillremake", "90"]} title="90 支重製" />
         <div style={{ color: DANGER, fontSize: 13, whiteSpace: "pre-wrap", fontFamily: MONO }}>{error}</div>
       </Panel>
     );

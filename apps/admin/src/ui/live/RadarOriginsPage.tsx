@@ -16,6 +16,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Panel, Btn, TextInput } from "../widgets";
 import { ACCENT, DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
 import { useApp } from "../../store";
+import { ReviewStrip } from "./ReviewStrip";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
@@ -207,6 +208,7 @@ export function RadarOriginsPage(): React.JSX.Element {
   if (error != null) {
     return (
       <Panel title="📡 出身屬性五級距雷達圖">
+        <ReviewStrip family={["tier", "stat", "anchor"]} title="出身屬性五級距" />
         <div style={{ color: DANGER, fontSize: 13, lineHeight: 1.7 }}>
           <div style={{ fontWeight: 700 }}>資料載入失敗（/__live/radar-origins）：</div>
           <pre style={{ whiteSpace: "pre-wrap", fontFamily: MONO, fontSize: 12 }}>{error}</pre>
