@@ -60,6 +60,7 @@
    "dmg_sides": 12,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavySlice",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -108,6 +109,7 @@
    "dmg_sides": 12,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavySlice",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -204,6 +206,7 @@
    "dmg_sides": 12,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavySlice",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -396,6 +399,7 @@
    "dmg_sides": 11,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavySlice",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -420,6 +424,7 @@
    "dmg_sides": 11,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavySlice",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -492,6 +497,7 @@
    "dmg_sides": 6,
    "dmg_base": 22,
    "attack_range": 100,
+   "weapon_type": "MetalHeavySlice",
    "race": "human",
    "_tables": "BWD"
   },
@@ -516,6 +522,7 @@
    "dmg_sides": 6,
    "dmg_base": 22,
    "attack_range": 100,
+   "weapon_type": "MetalHeavySlice",
    "race": "human",
    "_tables": "BWD"
   },
@@ -540,6 +547,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavyBash",
    "race": "human",
    "_tables": "BWD"
   },
@@ -588,6 +596,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavyBash",
    "race": "human",
    "_tables": "BWD"
   },
@@ -636,6 +645,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavyBash",
    "race": "human",
    "_tables": "BWD"
   },
@@ -708,6 +718,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavyBash",
    "race": "human",
    "_tables": "BWD"
   },
@@ -732,6 +743,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavyBash",
    "race": "human",
    "_tables": "BWD"
   },
@@ -756,6 +768,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavyBash",
    "race": "human",
    "_tables": "BWD"
   },
@@ -780,6 +793,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavyBash",
    "race": "human",
    "_tables": "BWD"
   },
@@ -804,6 +818,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavyBash",
    "race": "human",
    "_tables": "BWD"
   },
@@ -828,6 +843,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavyBash",
    "race": "human",
    "_tables": "BWD"
   },
@@ -852,6 +868,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavyBash",
    "race": "human",
    "_tables": "BWD"
   },
@@ -876,6 +893,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavyBash",
    "race": "human",
    "_tables": "BWD"
   },
@@ -948,6 +966,7 @@
    "dmg_sides": 8,
    "dmg_base": 0,
    "attack_range": 128,
+   "weapon_type": "MetalMediumSlice",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -972,6 +991,7 @@
    "dmg_sides": 10,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavyChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -996,6 +1016,7 @@
    "dmg_sides": 10,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavyChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -1020,6 +1041,7 @@
    "dmg_sides": 10,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -1044,6 +1066,7 @@
    "dmg_sides": 10,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavyChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -1068,6 +1091,7 @@
    "dmg_sides": 12,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavySlice",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -1116,6 +1140,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 128,
+   "weapon_type": "MetalHeavySlice",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -1164,6 +1189,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -1188,6 +1214,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -1212,6 +1239,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 200,
+   "weapon_type": "MetalHeavySlice",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -1236,6 +1264,7 @@
    "dmg_sides": 8,
    "dmg_base": 14,
    "attack_range": 200,
+   "weapon_type": "MetalHeavySlice",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -1284,6 +1313,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -1308,6 +1338,7 @@
    "dmg_sides": 6,
    "dmg_base": 10,
    "attack_range": 128,
+   "weapon_type": "MetalHeavySlice",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -1332,6 +1363,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavySlice",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -1356,6 +1388,7 @@
    "dmg_sides": 4,
    "dmg_base": 0,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -1380,6 +1413,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -1404,6 +1438,7 @@
    "dmg_sides": 4,
    "dmg_base": 0,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -1428,6 +1463,7 @@
    "dmg_sides": 12,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavySlice",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -1452,6 +1488,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 128,
+   "weapon_type": "MetalHeavyChop",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -1476,6 +1513,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 128,
+   "weapon_type": "MetalHeavyChop",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -1572,6 +1610,7 @@
    "dmg_sides": 12,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavySlice",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -1596,6 +1635,7 @@
    "dmg_sides": 12,
    "dmg_base": 12,
    "attack_range": 100,
+   "weapon_type": "MetalHeavySlice",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -1620,6 +1660,7 @@
    "dmg_sides": 6,
    "dmg_base": 10,
    "attack_range": 128,
+   "weapon_type": "MetalHeavySlice",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -1668,6 +1709,7 @@
    "dmg_sides": 12,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavySlice",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -1716,6 +1758,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 128,
+   "weapon_type": "MetalHeavyChop",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -1740,6 +1783,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 128,
+   "weapon_type": "MetalHeavyChop",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -1788,6 +1832,7 @@
    "dmg_sides": 4,
    "dmg_base": 0,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -1812,6 +1857,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -1860,6 +1906,7 @@
    "dmg_sides": 4,
    "dmg_base": 0,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -1884,6 +1931,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavySlice",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -1908,6 +1956,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -1932,6 +1981,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -1956,6 +2006,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "MetalHeavySlice",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -2028,6 +2079,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -2076,6 +2128,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -2100,6 +2153,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -2124,6 +2178,7 @@
    "dmg_sides": 6,
    "dmg_base": 0,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -2163,6 +2218,7 @@
    "dmg_sides": 10,
    "dmg_base": 40,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -2178,6 +2234,7 @@
    "dmg_sides": 11,
    "dmg_base": 44,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -2193,6 +2250,7 @@
    "dmg_sides": 9,
    "dmg_base": 37,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -2275,6 +2333,7 @@
    "dmg_sides": 6,
    "dmg_base": 26,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -2290,6 +2349,7 @@
    "dmg_sides": 5,
    "dmg_base": 20,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -2328,6 +2388,7 @@
    "dmg_sides": 4,
    "dmg_base": 18,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -2418,6 +2479,7 @@
    "dmg_sides": 3,
    "dmg_base": 14,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -2440,6 +2502,7 @@
    "dmg_sides": 8,
    "dmg_base": 49,
    "attack_range": 128,
+   "weapon_type": "WoodMediumBash",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -2489,6 +2552,7 @@
    "dmg_sides": 7,
    "dmg_base": 26,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -2514,6 +2578,7 @@
    "dmg_sides": 5,
    "dmg_base": 26,
    "attack_range": 225,
+   "weapon_type": "MetalMediumSlice",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -2529,6 +2594,7 @@
    "dmg_sides": 3,
    "dmg_base": 15,
    "attack_range": 225,
+   "weapon_type": "MetalMediumSlice",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -2583,6 +2649,7 @@
    "dmg_sides": 12,
    "dmg_base": 48,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -2598,6 +2665,7 @@
    "dmg_sides": 15,
    "dmg_base": 59,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -2613,6 +2681,7 @@
    "dmg_sides": 10,
    "dmg_base": 40,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -2628,6 +2697,7 @@
    "dmg_sides": 8,
    "dmg_base": 25,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -2772,6 +2842,7 @@
    "dmg_sides": 2,
    "dmg_base": 19,
    "attack_range": 100,
+   "weapon_type": "MetalMediumSlice",
    "race": "human",
    "_tables": "BWD"
   },
@@ -2831,6 +2902,7 @@
    "dmg_sides": 2,
    "dmg_base": 11,
    "attack_range": 90,
+   "weapon_type": "MetalMediumSlice",
    "race": "human",
    "_tables": "BWD"
   },
@@ -2906,6 +2978,7 @@
    "dmg_sides": 2,
    "dmg_base": 11,
    "attack_range": 90,
+   "weapon_type": "MetalMediumSlice",
    "race": "human",
    "_tables": "BWD"
   },
@@ -2935,6 +3008,7 @@
    "dmg_sides": 5,
    "dmg_base": 28,
    "attack_range": 100,
+   "weapon_type": "MetalMediumSlice",
    "race": "human",
    "_tables": "BWD"
   },
@@ -2957,6 +3031,7 @@
    "dmg_sides": 2,
    "dmg_base": 11,
    "attack_range": 90,
+   "weapon_type": "MetalMediumSlice",
    "race": "human",
    "_tables": "BWD"
   },
@@ -3018,6 +3093,7 @@
    "dmg_sides": 2,
    "dmg_base": 4,
    "attack_range": 90,
+   "weapon_type": "MetalLightChop",
    "race": "human",
    "_tables": "BWD"
   },
@@ -3299,6 +3375,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -3346,6 +3423,7 @@
    "dmg_sides": 4,
    "dmg_base": 23,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -3361,6 +3439,7 @@
    "dmg_sides": 2,
    "dmg_base": 13,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -3376,6 +3455,7 @@
    "dmg_sides": 2,
    "dmg_base": 10,
    "attack_range": 100,
+   "weapon_type": "MetalHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -3440,6 +3520,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -3457,6 +3538,7 @@
    "dmg_sides": 7,
    "dmg_base": 27,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -3487,6 +3569,7 @@
    "dmg_sides": 2,
    "dmg_base": 11,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -3504,6 +3587,7 @@
    "dmg_sides": 7,
    "dmg_base": 48,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -3536,6 +3620,7 @@
    "dmg_sides": 6,
    "dmg_base": 28,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -3551,6 +3636,7 @@
    "dmg_sides": 4,
    "dmg_base": 23,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -3566,6 +3652,7 @@
    "dmg_sides": 2,
    "dmg_base": 6,
    "attack_range": 90,
+   "weapon_type": "MetalLightChop",
    "race": "human",
    "_tables": "BWD"
   },
@@ -3608,6 +3695,7 @@
    "dmg_sides": 6,
    "dmg_base": 38,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -3785,6 +3873,7 @@
    "dmg_sides": 8,
    "dmg_base": 33,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -3814,6 +3903,7 @@
    "dmg_sides": 11,
    "dmg_base": 44,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -3972,6 +4062,7 @@
    "dmg_sides": 4,
    "dmg_base": 17,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -3987,6 +4078,7 @@
    "dmg_sides": 2,
    "dmg_base": 11,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -4002,6 +4094,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -4017,6 +4110,7 @@
    "dmg_sides": 3,
    "dmg_base": 11,
    "attack_range": 60,
+   "weapon_type": "WoodMediumBash",
    "race": "other",
    "_tables": "BWD"
   },
@@ -4032,6 +4126,7 @@
    "dmg_sides": 3,
    "dmg_base": 11,
    "attack_range": 60,
+   "weapon_type": "WoodMediumBash",
    "race": "other",
    "_tables": "BWD"
   },
@@ -4047,6 +4142,7 @@
    "dmg_sides": 3,
    "dmg_base": 11,
    "attack_range": 60,
+   "weapon_type": "WoodMediumBash",
    "race": "other",
    "_tables": "BWD"
   },
@@ -4062,6 +4158,7 @@
    "dmg_sides": 3,
    "dmg_base": 11,
    "attack_range": 60,
+   "weapon_type": "WoodMediumBash",
    "race": "other",
    "_tables": "BWD"
   },
@@ -4077,6 +4174,7 @@
    "dmg_sides": 5,
    "dmg_base": 22,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -4109,6 +4207,7 @@
    "dmg_sides": 5,
    "dmg_base": 22,
    "attack_range": 100,
+   "weapon_type": "MetalMediumSlice",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -4202,6 +4301,7 @@
    "dmg_sides": 7,
    "dmg_base": 48,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -4249,6 +4349,7 @@
    "dmg_sides": 2,
    "dmg_base": 6,
    "attack_range": 90,
+   "weapon_type": "MetalLightChop",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -4290,6 +4391,7 @@
    "dmg_sides": 12,
    "dmg_base": 48,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -4305,6 +4407,7 @@
    "dmg_sides": 15,
    "dmg_base": 59,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -4320,6 +4423,7 @@
    "dmg_sides": 10,
    "dmg_base": 40,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -4438,6 +4542,7 @@
    "dmg_sides": 2,
    "dmg_base": 10,
    "attack_range": 90,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -4463,6 +4568,7 @@
    "dmg_sides": 3,
    "dmg_base": 14,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -4480,6 +4586,7 @@
    "dmg_sides": 7,
    "dmg_base": 53,
    "attack_range": 500,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -4497,6 +4604,7 @@
    "dmg_sides": 9,
    "dmg_base": 68,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -4512,6 +4620,7 @@
    "dmg_sides": 5,
    "dmg_base": 28,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -4529,6 +4638,7 @@
    "dmg_sides": 7,
    "dmg_base": 30,
    "attack_range": 500,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -4544,6 +4654,7 @@
    "dmg_sides": 2,
    "dmg_base": 8,
    "attack_range": 90,
+   "weapon_type": "MetalMediumSlice",
    "race": "other",
    "_tables": "BWD"
   },
@@ -4559,6 +4670,7 @@
    "dmg_sides": 3,
    "dmg_base": 14,
    "attack_range": 90,
+   "weapon_type": "MetalMediumSlice",
    "race": "other",
    "_tables": "BWD"
   },
@@ -4574,6 +4686,7 @@
    "dmg_sides": 4,
    "dmg_base": 15,
    "attack_range": 90,
+   "weapon_type": "MetalMediumSlice",
    "race": "other",
    "_tables": "BWD"
   },
@@ -4599,6 +4712,7 @@
    "dmg_sides": 3,
    "dmg_base": 18,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -4614,6 +4728,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -4654,6 +4769,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -4677,6 +4793,7 @@
    "dmg_sides": 2,
    "dmg_base": 5,
    "attack_range": 90,
+   "weapon_type": "MetalLightChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -4709,6 +4826,7 @@
    "dmg_sides": 5,
    "dmg_base": 28,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -4732,6 +4850,7 @@
    "dmg_sides": 2,
    "dmg_base": 11,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -4772,6 +4891,7 @@
    "dmg_sides": 3,
    "dmg_base": 27,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -4797,6 +4917,7 @@
    "dmg_sides": 7,
    "dmg_base": 48,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -4812,6 +4933,7 @@
    "dmg_sides": 2,
    "dmg_base": 13,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -5188,6 +5310,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -5203,6 +5326,7 @@
    "dmg_sides": 6,
    "dmg_base": 28,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -5220,6 +5344,7 @@
    "dmg_sides": 4,
    "dmg_base": 17,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -5237,6 +5362,7 @@
    "dmg_sides": 5,
    "dmg_base": 31,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -5368,6 +5494,7 @@
    "dmg_sides": 4,
    "dmg_base": 23,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "demon",
    "_tables": "BWD"
   },
@@ -5383,6 +5510,7 @@
    "dmg_sides": 4,
    "dmg_base": 22,
    "attack_range": 100,
+   "weapon_type": "MetalHeavyChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -5400,6 +5528,7 @@
    "dmg_sides": 8,
    "dmg_base": 36,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -5431,6 +5560,7 @@
    "dmg_sides": 5,
    "dmg_base": 25,
    "attack_range": 180,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -5446,6 +5576,7 @@
    "dmg_sides": 2,
    "dmg_base": 10,
    "attack_range": 100,
+   "weapon_type": "MetalHeavyChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -5487,6 +5618,7 @@
    "dmg_sides": 12,
    "dmg_base": 45,
    "attack_range": 500,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -5512,6 +5644,7 @@
    "dmg_sides": 5,
    "dmg_base": 28,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -5529,6 +5662,7 @@
    "dmg_sides": 8,
    "dmg_base": 40,
    "attack_range": 500,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -5546,6 +5680,7 @@
    "dmg_sides": 4,
    "dmg_base": 25,
    "attack_range": 100,
+   "weapon_type": "MetalHeavyChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -5561,6 +5696,7 @@
    "dmg_sides": 6,
    "dmg_base": 38,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -5593,6 +5729,7 @@
    "dmg_sides": 4,
    "dmg_base": 17,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -5627,6 +5764,7 @@
    "dmg_sides": 5,
    "dmg_base": 28,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -5644,6 +5782,7 @@
    "dmg_sides": 7,
    "dmg_base": 48,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -5677,6 +5816,7 @@
    "dmg_sides": 7,
    "dmg_base": 48,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -5694,6 +5834,7 @@
    "dmg_sides": 5,
    "dmg_base": 28,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -5726,6 +5867,7 @@
    "dmg_sides": 6,
    "dmg_base": 38,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -5741,6 +5883,7 @@
    "dmg_sides": 4,
    "dmg_base": 17,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -5774,6 +5917,7 @@
    "dmg_sides": 4,
    "dmg_base": 17,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -6013,6 +6157,7 @@
    "dmg_sides": 8,
    "dmg_base": 60,
    "attack_range": 128,
+   "weapon_type": "RockHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -6061,6 +6206,7 @@
    "dmg_sides": 10,
    "dmg_base": 31,
    "attack_range": 128,
+   "weapon_type": "MetalHeavySlice",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -6106,6 +6252,7 @@
    "dmg_sides": 2,
    "dmg_base": 13,
    "attack_range": 100,
+   "weapon_type": "MetalMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -6137,6 +6284,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "MetalMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -6167,6 +6315,7 @@
    "dmg_sides": 4,
    "dmg_base": 23,
    "attack_range": 100,
+   "weapon_type": "MetalMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -6232,6 +6381,7 @@
    "dmg_sides": 2,
    "dmg_base": 11,
    "attack_range": 100,
+   "weapon_type": "RockHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -6275,6 +6425,7 @@
    "dmg_sides": 5,
    "dmg_base": 28,
    "attack_range": 100,
+   "weapon_type": "RockHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -6306,6 +6457,7 @@
    "dmg_sides": 3,
    "dmg_base": 18,
    "attack_range": 128,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -6321,6 +6473,7 @@
    "dmg_sides": 3,
    "dmg_base": 27,
    "attack_range": 128,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -6336,6 +6489,7 @@
    "dmg_sides": 3,
    "dmg_base": 37,
    "attack_range": 128,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -6351,6 +6505,7 @@
    "dmg_sides": 6,
    "dmg_base": 57,
    "attack_range": 128,
+   "weapon_type": "WoodMediumBash",
    "race": "other",
    "_tables": "BWD"
   },
@@ -6366,6 +6521,7 @@
    "dmg_sides": 4,
    "dmg_base": 45,
    "attack_range": 128,
+   "weapon_type": "WoodMediumBash",
    "race": "other",
    "_tables": "BWD"
   },
@@ -6381,6 +6537,7 @@
    "dmg_sides": 4,
    "dmg_base": 27,
    "attack_range": 128,
+   "weapon_type": "WoodMediumBash",
    "race": "other",
    "_tables": "BWD"
   },
@@ -6396,6 +6553,7 @@
    "dmg_sides": 4,
    "dmg_base": 37,
    "attack_range": 128,
+   "weapon_type": "WoodMediumBash",
    "race": "other",
    "_tables": "BWD"
   },
@@ -6494,6 +6652,7 @@
    "dmg_sides": 2,
    "dmg_base": 6,
    "attack_range": 90,
+   "weapon_type": "MetalLightChop",
    "race": "human",
    "_tables": "BWD"
   },
@@ -6725,6 +6884,7 @@
    "dmg_sides": 12,
    "dmg_base": 48,
    "attack_range": 100,
+   "weapon_type": "RockHeavyBash",
    "race": "demon",
    "_tables": "BWD"
   },
@@ -6858,6 +7018,7 @@
    "dmg_sides": 2,
    "dmg_base": 13,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -6873,6 +7034,7 @@
    "dmg_sides": 5,
    "dmg_base": 35,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -6890,6 +7052,7 @@
    "dmg_sides": 8,
    "dmg_base": 60,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -6905,6 +7068,7 @@
    "dmg_sides": 6,
    "dmg_base": 38,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "human",
    "_tables": "BWD"
   },
@@ -6920,6 +7084,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -6952,6 +7117,7 @@
    "dmg_sides": 4,
    "dmg_base": 23,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -6967,6 +7133,7 @@
    "dmg_sides": 2,
    "dmg_base": 13,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -6999,6 +7166,7 @@
    "dmg_sides": 6,
    "dmg_base": 38,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7014,6 +7182,7 @@
    "dmg_sides": 6,
    "dmg_base": 7,
    "attack_range": 100,
+   "weapon_type": "MetalMediumSlice",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7029,6 +7198,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7044,6 +7214,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7061,6 +7232,7 @@
    "dmg_sides": 9,
    "dmg_base": 68,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7076,6 +7248,7 @@
    "dmg_sides": 5,
    "dmg_base": 25,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7177,6 +7350,7 @@
    "dmg_sides": 3,
    "dmg_base": 13,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7209,6 +7383,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7241,6 +7416,7 @@
    "dmg_sides": 9,
    "dmg_base": 60,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7281,6 +7457,7 @@
    "dmg_sides": 2,
    "dmg_base": 12,
    "attack_range": 100,
+   "weapon_type": "MetalMediumSlice",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7314,6 +7491,7 @@
    "dmg_sides": 10,
    "dmg_base": 75,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7331,6 +7509,7 @@
    "dmg_sides": 8,
    "dmg_base": 53,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7354,6 +7533,7 @@
    "dmg_sides": 4,
    "dmg_base": 26,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7385,6 +7565,7 @@
    "dmg_sides": 4,
    "dmg_base": 23,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7402,6 +7583,7 @@
    "dmg_sides": 5,
    "dmg_base": 24,
    "attack_range": 100,
+   "weapon_type": "MetalMediumSlice",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7425,6 +7607,7 @@
    "dmg_sides": 2,
    "dmg_base": 6,
    "attack_range": 90,
+   "weapon_type": "MetalLightChop",
    "race": "naga",
    "_tables": "BWD"
   },
@@ -7440,6 +7623,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "MetalMediumSlice",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7583,6 +7767,7 @@
    "dmg_sides": 2,
    "dmg_base": 8,
    "attack_range": 100,
+   "weapon_type": "MetalMediumSlice",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7598,6 +7783,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "MetalMediumSlice",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7613,6 +7799,7 @@
    "dmg_sides": 5,
    "dmg_base": 5,
    "attack_range": 100,
+   "weapon_type": "MetalMediumSlice",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7628,6 +7815,7 @@
    "dmg_sides": 5,
    "dmg_base": 28,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7660,6 +7848,7 @@
    "dmg_sides": 5,
    "dmg_base": 20,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -7692,6 +7881,7 @@
    "dmg_sides": 2,
    "dmg_base": 13,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7707,6 +7897,7 @@
    "dmg_sides": 7,
    "dmg_base": 32,
    "attack_range": 128,
+   "weapon_type": "MetalHeavyChop",
    "race": "naga",
    "_tables": "BWD"
   },
@@ -7795,6 +7986,7 @@
    "dmg_sides": 4,
    "dmg_base": 17,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "naga",
    "_tables": "BWD"
   },
@@ -7812,6 +8004,7 @@
    "dmg_sides": 7,
    "dmg_base": 45,
    "attack_range": 128,
+   "weapon_type": "MetalHeavyChop",
    "race": "naga",
    "_tables": "BWD"
   },
@@ -7910,6 +8103,7 @@
    "dmg_sides": 2,
    "dmg_base": 13,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7976,6 +8170,7 @@
    "dmg_sides": 4,
    "dmg_base": 23,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -7999,6 +8194,7 @@
    "dmg_sides": 10,
    "dmg_base": 94,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8016,6 +8212,7 @@
    "dmg_sides": 6,
    "dmg_base": 38,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8031,6 +8228,7 @@
    "dmg_sides": 4,
    "dmg_base": 23,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8048,6 +8246,7 @@
    "dmg_sides": 5,
    "dmg_base": 28,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8063,6 +8262,7 @@
    "dmg_sides": 5,
    "dmg_base": 28,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8078,6 +8278,7 @@
    "dmg_sides": 2,
    "dmg_base": 13,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8095,6 +8296,7 @@
    "dmg_sides": 4,
    "dmg_base": 23,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8130,6 +8332,7 @@
    "dmg_sides": 4,
    "dmg_base": 18,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8145,6 +8348,7 @@
    "dmg_sides": 5,
    "dmg_base": 28,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8162,6 +8366,7 @@
    "dmg_sides": 7,
    "dmg_base": 48,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8187,6 +8392,7 @@
    "dmg_sides": 2,
    "dmg_base": 13,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8204,6 +8410,7 @@
    "dmg_sides": 6,
    "dmg_base": 38,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8245,6 +8452,7 @@
    "dmg_sides": 5,
    "dmg_base": 20,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8260,6 +8468,7 @@
    "dmg_sides": 5,
    "dmg_base": 33,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8275,6 +8484,7 @@
    "dmg_sides": 8,
    "dmg_base": 66,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8307,6 +8517,7 @@
    "dmg_sides": 5,
    "dmg_base": 47,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8322,6 +8533,7 @@
    "dmg_sides": 6,
    "dmg_base": 75,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8354,6 +8566,7 @@
    "dmg_sides": 4,
    "dmg_base": 52,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8533,6 +8746,7 @@
    "dmg_sides": 2,
    "dmg_base": 13,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8550,6 +8764,7 @@
    "dmg_sides": 8,
    "dmg_base": 60,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8567,6 +8782,7 @@
    "dmg_sides": 2,
    "dmg_base": 13,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8584,6 +8800,7 @@
    "dmg_sides": 7,
    "dmg_base": 48,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8601,6 +8818,7 @@
    "dmg_sides": 5,
    "dmg_base": 28,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8618,6 +8836,7 @@
    "dmg_sides": 3,
    "dmg_base": 17,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8648,6 +8867,7 @@
    "dmg_sides": 2,
    "dmg_base": 13,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8665,6 +8885,7 @@
    "dmg_sides": 6,
    "dmg_base": 38,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8682,6 +8903,7 @@
    "dmg_sides": 4,
    "dmg_base": 23,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8697,6 +8919,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8744,6 +8967,7 @@
    "dmg_sides": 5,
    "dmg_base": 28,
    "attack_range": 100,
+   "weapon_type": "WoodLightBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8769,6 +8993,7 @@
    "dmg_sides": 2,
    "dmg_base": 13,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8784,6 +9009,7 @@
    "dmg_sides": 4,
    "dmg_base": 23,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8814,6 +9040,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "WoodLightBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8829,6 +9056,7 @@
    "dmg_sides": 2,
    "dmg_base": 13,
    "attack_range": 90,
+   "weapon_type": "MetalMediumSlice",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8886,6 +9114,7 @@
    "dmg_sides": 7,
    "dmg_base": 42,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8901,6 +9130,7 @@
    "dmg_sides": 5,
    "dmg_base": 28,
    "attack_range": 100,
+   "weapon_type": "MetalHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8916,6 +9146,7 @@
    "dmg_sides": 4,
    "dmg_base": 19,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8931,6 +9162,7 @@
    "dmg_sides": 2,
    "dmg_base": 11,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -8946,6 +9178,7 @@
    "dmg_sides": 4,
    "dmg_base": 17,
    "attack_range": 100,
+   "weapon_type": "WoodLightBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9032,6 +9265,7 @@
    "dmg_sides": 2,
    "dmg_base": 13,
    "attack_range": 90,
+   "weapon_type": "MetalMediumSlice",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9064,6 +9298,7 @@
    "dmg_sides": 7,
    "dmg_base": 11,
    "attack_range": 90,
+   "weapon_type": "MetalHeavySlice",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9106,6 +9341,7 @@
    "dmg_sides": 2,
    "dmg_base": 13,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9172,6 +9408,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "WoodLightBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9189,6 +9426,7 @@
    "dmg_sides": 4,
    "dmg_base": 23,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9282,6 +9520,7 @@
    "dmg_sides": 7,
    "dmg_base": 48,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9297,6 +9536,7 @@
    "dmg_sides": 4,
    "dmg_base": 23,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9312,6 +9552,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "WoodLightBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9335,6 +9576,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9350,6 +9592,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "WoodLightBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9365,6 +9608,7 @@
    "dmg_sides": 2,
    "dmg_base": 10,
    "attack_range": 90,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9380,6 +9624,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "WoodLightBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9397,6 +9642,7 @@
    "dmg_sides": 8,
    "dmg_base": 60,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9414,6 +9660,7 @@
    "dmg_sides": 5,
    "dmg_base": 28,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9431,6 +9678,7 @@
    "dmg_sides": 6,
    "dmg_base": 38,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9446,6 +9694,7 @@
    "dmg_sides": 4,
    "dmg_base": 23,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9510,6 +9759,7 @@
    "dmg_sides": 4,
    "dmg_base": 23,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9574,6 +9824,7 @@
    "dmg_sides": 7,
    "dmg_base": 48,
    "attack_range": 100,
+   "weapon_type": "MetalHeavySlice",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9591,6 +9842,7 @@
    "dmg_sides": 4,
    "dmg_base": 23,
    "attack_range": 100,
+   "weapon_type": "MetalMediumSlice",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9640,6 +9892,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "MetalMediumSlice",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9655,6 +9908,7 @@
    "dmg_sides": 2,
    "dmg_base": 10,
    "attack_range": 90,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9670,6 +9924,7 @@
    "dmg_sides": 2,
    "dmg_base": 15,
    "attack_range": 90,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9687,6 +9942,7 @@
    "dmg_sides": 2,
    "dmg_base": 20,
    "attack_range": 90,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9781,6 +10037,7 @@
    "dmg_sides": 6,
    "dmg_base": 43,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9796,6 +10053,7 @@
    "dmg_sides": 2,
    "dmg_base": 13,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9813,6 +10071,7 @@
    "dmg_sides": 5,
    "dmg_base": 22,
    "attack_range": 125,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9860,6 +10119,7 @@
    "dmg_sides": 5,
    "dmg_base": 20,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9903,6 +10163,7 @@
    "dmg_sides": 19,
    "dmg_base": 64,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9918,6 +10179,7 @@
    "dmg_sides": 8,
    "dmg_base": 38,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9948,6 +10210,7 @@
    "dmg_sides": 5,
    "dmg_base": 5,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -9978,6 +10241,7 @@
    "dmg_sides": 2,
    "dmg_base": 13,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -10014,6 +10278,7 @@
    "dmg_sides": 2,
    "dmg_base": 13,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -10042,6 +10307,7 @@
    "dmg_sides": 2,
    "dmg_base": 13,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -10057,6 +10323,7 @@
    "dmg_sides": 5,
    "dmg_base": 20,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -10074,6 +10341,7 @@
    "dmg_sides": 4,
    "dmg_base": 23,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -10265,6 +10533,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "nightelf",
    "_tables": "BWD"
   },
@@ -10336,6 +10605,7 @@
    "dmg_sides": 4,
    "dmg_base": 17,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -10353,6 +10623,7 @@
    "dmg_sides": 5,
    "dmg_base": 40,
    "attack_range": 450,
+   "weapon_type": "WoodMediumBash",
    "race": "naga",
    "_tables": "BWD"
   },
@@ -10393,6 +10664,7 @@
    "dmg_sides": 5,
    "dmg_base": 28,
    "attack_range": 90,
+   "weapon_type": "MetalMediumChop",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -10408,6 +10680,7 @@
    "dmg_sides": 4,
    "dmg_base": 17,
    "attack_range": 90,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -10423,6 +10696,7 @@
    "dmg_sides": 2,
    "dmg_base": 11,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -10440,6 +10714,7 @@
    "dmg_sides": 8,
    "dmg_base": 60,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -10455,6 +10730,7 @@
    "dmg_sides": 5,
    "dmg_base": 28,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -10472,6 +10748,7 @@
    "dmg_sides": 6,
    "dmg_base": 38,
    "attack_range": 128,
+   "weapon_type": "WoodHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -10487,6 +10764,7 @@
    "dmg_sides": 5,
    "dmg_base": 28,
    "attack_range": 100,
+   "weapon_type": "MetalHeavyBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -10519,6 +10797,7 @@
    "dmg_sides": 5,
    "dmg_base": 28,
    "attack_range": 90,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -10534,6 +10813,7 @@
    "dmg_sides": 2,
    "dmg_base": 11,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -10549,6 +10829,7 @@
    "dmg_sides": 4,
    "dmg_base": 17,
    "attack_range": 90,
+   "weapon_type": "WoodMediumBash",
    "race": "creeps",
    "_tables": "BWD"
   },
@@ -10641,6 +10922,7 @@
    "dmg_sides": 2,
    "dmg_base": 9,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -10801,6 +11083,7 @@
    "dmg_sides": 4,
    "dmg_base": 17,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -10816,6 +11099,7 @@
    "dmg_sides": 4,
    "dmg_base": 17,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -10882,6 +11166,7 @@
    "dmg_sides": 8,
    "dmg_base": 2,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -10897,6 +11182,7 @@
    "dmg_sides": 5,
    "dmg_base": 22,
    "attack_range": 100,
+   "weapon_type": "MetalMediumSlice",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -10922,6 +11208,7 @@
    "dmg_sides": 2,
    "dmg_base": 6,
    "attack_range": 90,
+   "weapon_type": "MetalLightChop",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -10937,6 +11224,7 @@
    "dmg_sides": 5,
    "dmg_base": 22,
    "attack_range": 100,
+   "weapon_type": "MetalMediumSlice",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -11079,6 +11367,7 @@
    "dmg_sides": 2,
    "dmg_base": 10,
    "attack_range": 90,
+   "weapon_type": "WoodMediumBash",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -11094,6 +11383,7 @@
    "dmg_sides": 2,
    "dmg_base": 15,
    "attack_range": 90,
+   "weapon_type": "WoodMediumBash",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -11109,6 +11399,7 @@
    "dmg_sides": 2,
    "dmg_base": 20,
    "attack_range": 90,
+   "weapon_type": "WoodMediumBash",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -11135,6 +11426,7 @@
    "dmg_sides": 7,
    "dmg_base": 29,
    "attack_range": 100,
+   "weapon_type": "WoodHeavyBash",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -11232,6 +11524,7 @@
    "dmg_sides": 8,
    "dmg_base": 2,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -11247,6 +11540,7 @@
    "dmg_sides": 3,
    "dmg_base": 36,
    "attack_range": 128,
+   "weapon_type": "WoodMediumBash",
    "race": "orc",
    "_tables": "BWD"
   },
@@ -11290,6 +11584,7 @@
    "dmg_sides": 7,
    "dmg_base": 32,
    "attack_range": 128,
+   "weapon_type": "MetalHeavyChop",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -11305,6 +11600,7 @@
    "dmg_sides": 7,
    "dmg_base": 32,
    "attack_range": 128,
+   "weapon_type": "MetalHeavyChop",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -11320,6 +11616,7 @@
    "dmg_sides": 2,
    "dmg_base": 8,
    "attack_range": 90,
+   "weapon_type": "WoodLightBash",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -11461,6 +11758,7 @@
    "dmg_sides": 2,
    "dmg_base": 7,
    "attack_range": 90,
+   "weapon_type": "WoodMediumBash",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -11476,6 +11774,7 @@
    "dmg_sides": 4,
    "dmg_base": 14,
    "attack_range": 90,
+   "weapon_type": "WoodMediumBash",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -11491,6 +11790,7 @@
    "dmg_sides": 6,
    "dmg_base": 21,
    "attack_range": 90,
+   "weapon_type": "WoodMediumBash",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -11555,6 +11855,7 @@
    "dmg_sides": 10,
    "dmg_base": 60,
    "attack_range": 128,
+   "weapon_type": "WoodMediumBash",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -11570,6 +11871,7 @@
    "dmg_sides": 2,
    "dmg_base": 10,
    "attack_range": 90,
+   "weapon_type": "WoodMediumBash",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -11784,6 +12086,7 @@
    "dmg_sides": 2,
    "dmg_base": 13,
    "attack_range": 90,
+   "weapon_type": "MetalMediumSlice",
    "race": "undead",
    "_tables": "BWD"
   },
@@ -11967,6 +12270,7 @@
    "dmg_sides": 15,
    "dmg_base": 200,
    "attack_range": 100,
+   "weapon_type": "MetalMediumChop",
    "race": "other",
    "_tables": "BWD"
   },
@@ -11997,6 +12301,7 @@
    "dmg_sides": 4,
    "dmg_base": 21,
    "attack_range": 100,
+   "weapon_type": "WoodMediumBash",
    "race": "other",
    "_tables": "BWD"
   }

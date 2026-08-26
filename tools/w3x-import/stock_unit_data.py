@@ -68,6 +68,23 @@ WEAPON_MAP = {
     "sides1": "dmg_sides",
     "dmgplus1": "dmg_base",
     "rangeN1": "attack_range",
+    # ⭐ GH#745 —— 「這位英雄揮的是什麼」的**保真權威**。
+    #
+    # 普攻音效的武器類別在 2026-08-26 之前是「看角色的中文名猜」,而 29 位近戰
+    # 一個 tag 都沒有 ⇒ 全部落回 `weaponClassOf` 自認的 LAST RESORT（`sword`）
+    # ⇒ 拳四郎、悟空、魯夫、草泥馬都在**揮劍**。
+    #
+    # ⚠️ 這張表**本來就已經讀進來了**（cool1/dice1/… 都出自同一份
+    # `UnitWeapons.slk` 的同一列）—— ⛔ 少的只是這一欄沒被留下來,於是每一次要問
+    # 「他揮什麼」都得重寫一支一次性探針。⇒ 第〇·四守則:值住共用表,
+    # ⛔ 不是每次現算一遍。
+    #
+    # 值域（838 列實測）:`MetalHeavySlice` · `MetalMediumChop` · `WoodHeavyBash`
+    # · `RockHeavyBash` … 三段式 `<材質><重量><動作>`,而**決定音效的是第三段**
+    # （Slice/Chop = 刃器,Bash = 鈍器）。⚠️ 遠程單位這一欄是 `_`（＝ MISSING
+    # ⇒ 這一格自動不寫入）,所以它天然只回答近戰那一半 —— 遠程那半的權威是
+    # `Units/*UnitFunc.txt` 的 `Missileart=`（已經在 WEAPON_TAGS 的檔頭記著）。
+    "weapType1": "weapon_type",
 }
 DATA_MAP = {"race": "race"}
 
