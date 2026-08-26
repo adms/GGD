@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
+	"time"
 
 	"github.com/coder/websocket"
 	"github.com/go-chi/chi/v5"
@@ -15,6 +16,27 @@ import (
 	"github.com/ggd/platform/internal/room"
 )
 
+// DefaultReadLimitBytes caps ONE inbound lobby frame (#724/F-10). Every message
+// this endpoint understands is a small JSON object — the largest is a chat line
+// — so a limit three orders of magnitude above them costs nothing and stops a
+// peer from making the process allocate an arbitrarily large buffer per frame.
+const DefaultReadLimitBytes int64 = 32 << 10 // 32 KiB
+
+// DefaultReadIdleTimeout reaps a socket that has gone silent.
+//
+// A LOBBY SOCKET HAS NO OTHER LIVENESS SIGNAL. TCP alone will hold a half-open
+// connection (peer powered off, laptop lid closed, NAT entry dropped) for
+// hours, and each one costs the hub a goroutine pair, an out channel and a file
+// descriptor — plus it keeps the account's presence lit, so friends see a
+// player who left. Before this the read had no deadline at all.
+//
+// The value is sized against the client's OWN heartbeat, not against taste:
+// LobbySocket beats every 20s, so 90s tolerates four consecutive misses before
+// a live player is disturbed — and a disturbed player reconnects automatically
+// (LobbySocket's 3s backoff), which is why erring low here is cheap and erring
+// high leaves the leak open.
+const DefaultReadIdleTimeout = 90 * time.Second
+
 // Sessions owns the WS endpoint and chat plumbing.
 type Sessions struct {
 	hub   *Hub
@@ -22,11 +44,32 @@ type Sessions struct {
 	pres  *presence.Service
 	rooms *room.Service
 	rdb   *redisx.Client
+
+	readLimit int64
+	readIdle  time.Duration
 }
 
 // NewSessions wires the lobby sessions service.
 func NewSessions(hub *Hub, authn *auth.Service, pres *presence.Service, rooms *room.Service, rdb *redisx.Client) *Sessions {
-	return &Sessions{hub: hub, authn: authn, pres: pres, rooms: rooms, rdb: rdb}
+	return &Sessions{
+		hub: hub, authn: authn, pres: pres, rooms: rooms, rdb: rdb,
+		readLimit: DefaultReadLimitBytes,
+		readIdle:  DefaultReadIdleTimeout,
+	}
+}
+
+// SetReadLimits overrides the per-frame byte cap and the silence deadline.
+// A ZERO idle timeout disables the deadline (pre-#724 behaviour) — the
+// operator's way back if a client ever stops heartbeating. A NEGATIVE idle, or
+// a non-positive byte limit, means "not configured" and leaves this package's
+// default in place, so each default has exactly one home.
+func (s *Sessions) SetReadLimits(limitBytes int64, idle time.Duration) {
+	if limitBytes > 0 {
+		s.readLimit = limitBytes
+	}
+	if idle >= 0 {
+		s.readIdle = idle
+	}
 }
 
 // Mount registers the WS endpoint (token-authenticated at handshake) and the
@@ -53,8 +96,11 @@ type errMsg struct {
 }
 
 func (s *Sessions) handleWS(w http.ResponseWriter, r *http.Request) {
-	// Authenticate BEFORE upgrading: token via ?token= or Authorization.
-	tok := auth.BearerToken(r)
+	// Authenticate BEFORE upgrading: Authorization header, or ?token= — THE ONE
+	// route allowed the query fallback, because the browser's WebSocket
+	// constructor cannot set headers. Every REST route lost it in #724/F-12; see
+	// auth.BearerTokenWS.
+	tok := auth.BearerTokenWS(r)
 	if tok == "" {
 		httpx.WriteError(w, httpx.Unauthorized("missing access token"))
 		return
@@ -78,6 +124,12 @@ func (s *Sessions) handleWS(w http.ResponseWriter, r *http.Request) {
 	}
 	ident := auth.Identity{AccountID: claims.Subject, Username: claims.Username}
 
+	// This socket outlives any server-wide Read/WriteTimeout by design — those
+	// are armed on the connection before this handler runs and survive the
+	// hijack below, so without this the #724/F-09 timeouts would sever every
+	// lobby socket on the clock. See httpx.ClearDeadlines.
+	httpx.ClearDeadlines(w)
+
 	conn, err := websocket.Accept(w, r, &websocket.AcceptOptions{
 		OriginPatterns: []string{"*"}, // the edge enforces origin; skeleton accepts all
 	})
@@ -85,6 +137,7 @@ func (s *Sessions) handleWS(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer conn.Close(websocket.StatusInternalError, "closing")
+	conn.SetReadLimit(s.readLimit)
 
 	c := &client{
 		accountID: ident.AccountID,
@@ -92,8 +145,19 @@ func (s *Sessions) handleWS(w http.ResponseWriter, r *http.Request) {
 		out:       make(chan []byte, 64),
 		closed:    make(chan struct{}),
 	}
-	s.hub.register(c)
+	for _, old := range s.hub.register(c) {
+		old.close() // over the per-account cap — its handler unblocks and cleans up
+	}
 	ctx := r.Context()
+	// A client the hub evicted has already left h.conns, but its own handler is
+	// still parked in conn.Read and would not notice until the idle deadline.
+	// Closing the socket when c.closed fires is what turns "removed from the
+	// routing table" into "the file descriptor is actually gone" — without it
+	// the cap would bound fan-out and nothing else.
+	go func() {
+		<-c.closed
+		_ = conn.Close(websocket.StatusPolicyViolation, "connection replaced")
+	}()
 	_ = s.pres.Set(ctx, ident.AccountID, presence.StateInLobby)
 	// #246 liveness stamp. This handler is NOT behind auth.Middleware — it does
 	// its own token verification above — so without this call a player sitting
@@ -117,8 +181,15 @@ func (s *Sessions) handleWS(w http.ResponseWriter, r *http.Request) {
 	}()
 
 	// Reader loop: malformed frames get an error reply, never kill the socket.
+	// Each read carries the silence deadline (see DefaultReadIdleTimeout) so a
+	// half-open connection is reaped instead of held forever.
 	for {
-		_, data, err := conn.Read(ctx)
+		readCtx, cancelRead := ctx, context.CancelFunc(func() {})
+		if s.readIdle > 0 {
+			readCtx, cancelRead = context.WithTimeout(ctx, s.readIdle)
+		}
+		_, data, err := conn.Read(readCtx)
+		cancelRead()
 		if err != nil {
 			break
 		}

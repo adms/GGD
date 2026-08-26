@@ -426,7 +426,9 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 	}
 
 	hub := lobby.NewHub(rdb, friends)
+	hub.SetMaxConnsPerAccount(cfg.LobbyMaxConnsPerAccount)
 	sessions := lobby.NewSessions(hub, authSvc, pres, rooms, rdb)
+	sessions.SetReadLimits(cfg.LobbyWSReadLimitBytes, cfg.LobbyWSIdleTimeout)
 
 	s := &Server{
 		Cfg: cfg, Rdb: rdb, Store: store, Journal: journal, Accounts: accounts,

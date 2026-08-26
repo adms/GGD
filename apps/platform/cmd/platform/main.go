@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"github.com/ggd/platform/internal/config"
+	"github.com/ggd/platform/internal/httpx"
 	"github.com/ggd/platform/internal/opstate"
 	"github.com/ggd/platform/internal/server"
 )
@@ -44,6 +45,25 @@ func main() {
 		slog.Error("config", "err", err)
 		os.Exit(1)
 	}
+	// #724/F-05: decide WHOSE "X-Real-Ip" is believed before anything can serve
+	// a request. Wired here rather than in internal/server because that package
+	// may not so much as name an address token — see devsurface_test.go's
+	// no-address-trust invariant.
+	trusted := cfg.TrustedProxyCIDRs
+	if trusted == nil {
+		trusted = httpx.DefaultTrustedProxyCIDRs
+	}
+	if bad := httpx.SetTrustedProxies(trusted); len(bad) > 0 {
+		// Fail LOUD, not closed: a mistyped CIDR shrinks the trusted set, which
+		// degrades rate-limit attribution rather than breaking anything, so
+		// refusing to boot would be the worse trade. But it must never be
+		// silent — a quietly-dropped entry is how every player ends up sharing
+		// one bucket with nobody the wiser.
+		slog.Error("config: GGD_TRUSTED_PROXY_CIDRS has unparseable entries — they are NOT trusted",
+			"rejected", strings.Join(bad, ","), "trustedCount", httpx.TrustedProxyCount())
+	}
+	slog.Info("config: trusted edge proxies", "count", httpx.TrustedProxyCount())
+
 	srv, err := server.New(cfg, server.Options{})
 	if err != nil {
 		slog.Error("wire", "err", err)
@@ -88,10 +108,23 @@ func main() {
 
 	srv.Start(ctx)
 
+	// #724/F-09. Before this only ReadHeaderTimeout was set, so a peer that sent
+	// headers promptly and then trickled a body — or read a response one byte a
+	// minute — held a connection, a goroutine and its buffers indefinitely, and
+	// nothing anywhere would ever time it out.
+	//
+	// The two surfaces that legitimately outlive these bounds (the lobby
+	// WebSocket, the platform-archive stage/export) clear their own deadlines
+	// per request via httpx.ClearDeadlines, which is why these numbers can be
+	// sized for ordinary JSON instead of for the longest thing in the process.
 	httpSrv := &http.Server{
 		Addr:              cfg.Addr,
 		Handler:           srv.Router(),
 		ReadHeaderTimeout: 10 * time.Second,
+		ReadTimeout:       cfg.HTTPReadTimeout,
+		WriteTimeout:      cfg.HTTPWriteTimeout,
+		IdleTimeout:       cfg.HTTPIdleTimeout,
+		MaxHeaderBytes:    cfg.HTTPMaxHeaderBytes,
 	}
 	go func() {
 		<-ctx.Done()

@@ -131,6 +131,11 @@ func (h *Handlers) export(w http.ResponseWriter, r *http.Request) {
 	// first byte. Content-Length is deliberately unset (the zip is produced on
 	// the fly); chunked transfer is what lets a large export start immediately
 	// instead of being buffered whole in RAM.
+	// A full export is minutes of streaming zip; the server-wide #724/F-09
+	// WriteTimeout would otherwise truncate it mid-archive and hand the operator
+	// a corrupt backup that looks like a download. See httpx.ClearDeadlines.
+	httpx.ClearDeadlines(w)
+
 	rec := &firstWriteObserver{ResponseWriter: w}
 	_, err := h.svc.Export(r.Context(), me.AccountID, req.ConfirmPassword, req.Groups, rec, func() {
 		host := h.svc.Hostname()
@@ -165,6 +170,11 @@ func (s *firstWriteObserver) Write(p []byte) (int, error) {
 }
 
 func (h *Handlers) stage(w http.ResponseWriter, r *http.Request) {
+	// The one route allowed a large body (see StagePath): reading it can outrun
+	// the server-wide #724/F-09 ReadTimeout on a slow uplink, and a half-read
+	// archive is worse than a slow one. See httpx.ClearDeadlines.
+	httpx.ClearDeadlines(w)
+
 	me := auth.MustIdentity(r.Context())
 	res, err := h.svc.Stage(me.AccountID, r.Body, r.ContentLength)
 	if err != nil {

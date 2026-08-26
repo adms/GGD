@@ -238,6 +238,107 @@ type Config struct {
 	MatchLivenessGrace time.Duration
 	// HMACSkew is the max accepted clock skew on the internal HMAC scheme.
 	HMACSkew time.Duration
+
+	// ------------------------------------------------- #724 edge hardening ---
+
+	// TrustedProxyCIDRs are the socket peers whose "X-Real-Ip" the platform
+	// believes (GGD_TRUSTED_PROXY_CIDRS, comma-separated). Unset uses
+	// httpx.DefaultTrustedProxyCIDRs — loopback plus the private ranges, which
+	// is where our own edge always is. The literal value "none" trusts NOBODY
+	// and is the correct setting for a platform reached without a proxy.
+	//
+	// It is a knob rather than a constant because the ONE thing that would make
+	// the default wrong is a deploy whose edge is not on a private network, and
+	// that operator must be able to say so without a code change.
+	TrustedProxyCIDRs []string
+
+	// HTTPReadTimeout / HTTPWriteTimeout / HTTPIdleTimeout / HTTPMaxHeaderBytes
+	// are the four http.Server bounds #724/F-09 found missing (only
+	// ReadHeaderTimeout was set), each a whole-seconds env knob:
+	// GGD_HTTP_READ_TIMEOUT_SEC / _WRITE_ / _IDLE_ / GGD_HTTP_MAX_HEADER_KB.
+	//
+	// Their defaults are generous for the traffic this server actually carries
+	// (small JSON) because the two surfaces that legitimately run long — the
+	// lobby WebSocket and the platform-archive stage/export — opt OUT per
+	// request via httpx.ClearDeadlines instead of forcing every route to live
+	// under a number sized for the longest one. 0 restores "no limit" for any
+	// of the three durations, which is the pre-#724 behaviour and the way back.
+	HTTPReadTimeout    time.Duration
+	HTTPWriteTimeout   time.Duration
+	HTTPIdleTimeout    time.Duration
+	HTTPMaxHeaderBytes int
+
+	// LobbyMaxConnsPerAccount bounds concurrent lobby WebSockets held by ONE
+	// account (GGD_LOBBY_MAX_CONNS_PER_ACCOUNT, default
+	// lobby.DefaultMaxConnsPerAccount; 0 = uncapped). The edge's limit_conn is
+	// keyed on an address and answers a different question — see that const.
+	LobbyMaxConnsPerAccount int
+	// LobbyWSIdleTimeout reaps a lobby socket that has sent nothing for this
+	// long (GGD_LOBBY_WS_IDLE_SEC, default lobby.DefaultReadIdleTimeout; 0 =
+	// never). Sized against the client's 20s heartbeat, not against taste.
+	LobbyWSIdleTimeout time.Duration
+	// LobbyWSReadLimitBytes caps one inbound lobby frame
+	// (GGD_LOBBY_WS_READ_LIMIT_KB, default lobby.DefaultReadLimitBytes).
+	LobbyWSReadLimitBytes int64
+}
+
+// #724 http.Server bound defaults. They are FLOORS ON SAFETY, not performance
+// tuning: each one turns an unbounded wait into a bounded one, and the routes
+// that need longer say so explicitly (httpx.ClearDeadlines).
+const (
+	DefaultHTTPReadTimeout    = 60 * time.Second
+	DefaultHTTPWriteTimeout   = 120 * time.Second
+	DefaultHTTPIdleTimeout    = 120 * time.Second
+	DefaultHTTPMaxHeaderBytes = 64 << 10 // 64 KiB
+)
+
+// Unset marks a knob the operator did not touch, so the OWNING package's
+// default applies. It is distinct from 0, which the environment CAN express and
+// which means "off" for every knob below — collapsing the two would make
+// `GGD_LOBBY_WS_IDLE_SEC=0` ("never reap") indistinguishable from not setting
+// it, and the default住處 for these values is the package that uses them
+// (lobby.DefaultReadIdleTimeout and friends), not a second copy here.
+const Unset = -1
+
+// UnsetDuration is Unset for the duration-shaped knobs.
+const UnsetDuration = time.Duration(Unset)
+
+// getenvOptionalSeconds reads a whole-seconds knob that has NO default here:
+// absent ⇒ UnsetDuration. A present value is clamped to [0,max] and says so,
+// same fail-loud contract as getenvSeconds.
+func getenvOptionalSeconds(key string, max time.Duration) time.Duration {
+	if strings.TrimSpace(os.Getenv(key)) == "" {
+		return UnsetDuration
+	}
+	return getenvSeconds(key, 0, 0, max)
+}
+
+// TrustNoProxy is the GGD_TRUSTED_PROXY_CIDRS value meaning "believe no
+// forwarded address at all". An EMPTY env var cannot mean that — unset and
+// "set to nothing" are indistinguishable in the environment, and reading an
+// accidental blank as "trust nobody" would silently put every player of a
+// proxied deploy into ONE rate-limit bucket.
+const TrustNoProxy = "none"
+
+// resolveTrustedProxyCIDRs parses the comma-separated knob. Empty ⇒ nil, which
+// the caller reads as "use the defaults"; "none" ⇒ a non-nil empty slice, which
+// means trust nobody. That distinction is why the return is a slice and not a
+// string.
+func resolveTrustedProxyCIDRs(raw string) []string {
+	raw = strings.TrimSpace(raw)
+	if raw == "" {
+		return nil
+	}
+	if strings.EqualFold(raw, TrustNoProxy) {
+		return []string{}
+	}
+	out := []string{}
+	for _, part := range strings.Split(raw, ",") {
+		if p := strings.TrimSpace(part); p != "" {
+			out = append(out, p)
+		}
+	}
+	return out
 }
 
 func getenv(key, def string) string {
@@ -783,6 +884,18 @@ func Load() (Config, error) {
 		MatchPendingTTL:    2 * time.Hour,
 		MatchLivenessGrace: getenvSeconds("GGD_MATCH_LIVENESS_GRACE_SEC", DefaultLivenessGrace, MinLivenessGrace, MaxLivenessGrace),
 		HMACSkew:           30 * time.Second,
+
+		// #724 hardening. Each is "0 = off" so the operator has a way back that
+		// does not need a build, and each ceiling is a typo-catcher rather than
+		// policy (a day-long HTTP timeout is not a setting anyone means).
+		TrustedProxyCIDRs:       resolveTrustedProxyCIDRs(os.Getenv("GGD_TRUSTED_PROXY_CIDRS")),
+		HTTPReadTimeout:         getenvSeconds("GGD_HTTP_READ_TIMEOUT_SEC", DefaultHTTPReadTimeout, 0, time.Hour),
+		HTTPWriteTimeout:        getenvSeconds("GGD_HTTP_WRITE_TIMEOUT_SEC", DefaultHTTPWriteTimeout, 0, time.Hour),
+		HTTPIdleTimeout:         getenvSeconds("GGD_HTTP_IDLE_TIMEOUT_SEC", DefaultHTTPIdleTimeout, 0, time.Hour),
+		HTTPMaxHeaderBytes:      getenvIntClamped("GGD_HTTP_MAX_HEADER_KB", DefaultHTTPMaxHeaderBytes>>10, 1, 1024) << 10,
+		LobbyMaxConnsPerAccount: getenvInt("GGD_LOBBY_MAX_CONNS_PER_ACCOUNT", Unset),
+		LobbyWSIdleTimeout:      getenvOptionalSeconds("GGD_LOBBY_WS_IDLE_SEC", time.Hour),
+		LobbyWSReadLimitBytes:   int64(getenvIntClamped("GGD_LOBBY_WS_READ_LIMIT_KB", 0, 0, 4096)) << 10,
 	}
 	if cfg.JWTSecret == "" {
 		return cfg, fmt.Errorf("config: JWT_SIGNING_SECRET is required")

@@ -18,6 +18,10 @@ import (
 type client struct {
 	accountID string
 	username  string
+	// seq is the hub-wide registration order, used to pick the OLDEST socket
+	// when an account is over its connection cap. It is assigned under h.mu in
+	// register and read only there.
+	seq       uint64
 	out       chan []byte
 	closed    chan struct{}
 	closeOnce sync.Once
@@ -33,13 +37,35 @@ func (c *client) send(payload []byte) {
 	}
 }
 
+// DefaultMaxConnsPerAccount bounds how many lobby sockets ONE account may hold
+// open at once (#724/F-10).
+//
+// The edge's `limit_conn wsconn` is keyed on an ADDRESS, which is a different
+// question and cannot answer this one: a household behind one NAT shares an
+// address, and a single authenticated account reconnecting in a loop from many
+// addresses is not capped by it at all. Before this, hub.register appended to
+// h.conns[accountID] without any ceiling, so one script holding an access token
+// could grow that map — and its per-connection goroutines, 64-slot out channels
+// and file descriptors — until the process died.
+//
+// 8 is deliberately far above real use (a player has one game tab, sometimes a
+// second) and far below anything that costs the process something, so it never
+// fires for a person and always fires for a loop. Over the cap the OLDEST
+// socket is evicted rather than the new one refused: the failure this actually
+// meets in the wild is a client that reconnected without its previous socket
+// being reaped, and refusing the new one there would lock a real player out of
+// their own lobby — the one outcome worse than the leak.
+const DefaultMaxConnsPerAccount = 8
+
 // Hub routes Redis pub/sub traffic to connected WebSocket clients.
 type Hub struct {
 	rdb     *redisx.Client
 	friends *friend.Service
 
-	mu    sync.Mutex
-	conns map[string]map[*client]bool
+	mu            sync.Mutex
+	conns         map[string]map[*client]bool
+	maxPerAccount int
+	seq           uint64
 
 	ready     chan struct{}
 	readyOnce sync.Once
@@ -49,9 +75,25 @@ type Hub struct {
 func NewHub(rdb *redisx.Client, friends *friend.Service) *Hub {
 	return &Hub{
 		rdb: rdb, friends: friends,
-		conns: map[string]map[*client]bool{},
-		ready: make(chan struct{}),
+		conns:         map[string]map[*client]bool{},
+		maxPerAccount: DefaultMaxConnsPerAccount,
+		ready:         make(chan struct{}),
 	}
+}
+
+// SetMaxConnsPerAccount overrides the per-account socket ceiling. 0 disables
+// the cap — the pre-#724 behaviour, offered only so the operator has a
+// one-setting way back if the ceiling ever bites a real player (see the const's
+// doc for why it should not). A NEGATIVE value means "not configured" and
+// leaves DefaultMaxConnsPerAccount in place, so the default lives in exactly
+// one place rather than being copied into the config package.
+func (h *Hub) SetMaxConnsPerAccount(n int) {
+	if n < 0 {
+		return
+	}
+	h.mu.Lock()
+	defer h.mu.Unlock()
+	h.maxPerAccount = n
 }
 
 // Ready is closed once the pub/sub subscription is live.
@@ -130,13 +172,36 @@ func (h *Hub) sendTo(accountID string, payload []byte) {
 	}
 }
 
-func (h *Hub) register(c *client) {
+// register adds a socket and enforces the per-account ceiling, returning every
+// client it evicted so the caller can tear their connections down. Eviction is
+// oldest-first by registration order.
+func (h *Hub) register(c *client) []*client {
 	h.mu.Lock()
 	defer h.mu.Unlock()
 	if h.conns[c.accountID] == nil {
 		h.conns[c.accountID] = map[*client]bool{}
 	}
+	h.seq++
+	c.seq = h.seq
 	h.conns[c.accountID][c] = true
+	if h.maxPerAccount <= 0 {
+		return nil
+	}
+	var evicted []*client
+	for len(h.conns[c.accountID]) > h.maxPerAccount {
+		var oldest *client
+		for k := range h.conns[c.accountID] {
+			if oldest == nil || k.seq < oldest.seq {
+				oldest = k
+			}
+		}
+		if oldest == nil {
+			break
+		}
+		delete(h.conns[c.accountID], oldest)
+		evicted = append(evicted, oldest)
+	}
+	return evicted
 }
 
 // unregister removes the client; reports whether it was the account's last.
