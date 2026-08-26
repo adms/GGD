@@ -176,7 +176,10 @@ export type ReviveCircleConfig = z.infer<typeof zReviveCircleConfig>;
 export const DEFAULT_REVIVE_CIRCLE_CONFIG: ReviveCircleConfig = {
   channelSec: 5, // task #206: 5s accumulate threshold (REVIVE_CHANNEL_SEC)
   // ⭐ owner 2026-08-24 逐字:「隊友死亡的復活火圈 **可以再大一倍**」⇒ 2 → 4。
-  radius: 4,
+  // ⭐ owner 2026-08-27 逐字（GH#778）:「**復活火圈太大 減少 40%**」⇒ 4 × 0.6 = 2.4。
+  //    這一格同時是**復活判定範圍與畫在地上的圈**（sim 判 rules.radius²，wire 送
+  //    同一個值給 ReviveCircleView 縮放）—— 一格動、兩邊一起動，圈圈不說謊。
+  radius: 2.4,
   decayMult: 2,
   revivesPerTeamPerRound: 1,
   reviveHpPctMax: 0.5,

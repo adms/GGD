@@ -69,9 +69,14 @@ export const REVIVE_CHANNEL_SEC = 5.0;
  *                     above the measured p25 death cadence (2.00s) so a revive
  *                     never outpaces a kill, yet the duel still exists when you
  *                     finish. The rim fills toward 100% across those 150 ticks.
- *   radius 2.0      — 1.7x a champion's own diameter (collision radius 0.6),
- *                     1/3 of the flower's burstRadius so the two ground
- *                     effects never read as the same thing.
+ *   radius          — comes off the config (reviveCircles.radius), never a
+ *                     constant here. History: 2.0 at birth (1.7x a champion's
+ *                     own diameter, 1/3 of the flower's burstRadius so the two
+ *                     ground effects never read as the same thing) → 4
+ *                     (owner 2026-08-24「可以再大一倍」) → 2.4 (owner
+ *                     2026-08-27 GH#778「復活火圈太大 減少 40%」). It is BOTH
+ *                     the channel/contest judgement range and the drawn ring
+ *                     (reviveRadiusHonest.test.ts keeps the two equal).
  *
  * THERE IS NO LIFETIME. The ring used to burn for exactly 2x the channel and
  * then vanish; task #196 removed that clock on the owner's call

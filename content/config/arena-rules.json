@@ -173,7 +173,7 @@
   },
   "reviveCircles": {
     "channelSec": 5,
-    "radius": 4,
+    "radius": 2.4,
     "decayMult": 2,
     "revivesPerTeamPerRound": 1,
     "reviveHpPctMax": 0.5,
