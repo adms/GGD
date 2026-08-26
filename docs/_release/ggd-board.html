@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-08-26 21:05 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-08-26 23:29 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.28.4 · 資料截至 2026-08-26 21:05 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-26 21:05 (GMT+8)</h1><div class="meta"><span>帳本 <b>8</b> 份</span><span>點名票號 <b>250</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.28.5 · 資料截至 2026-08-26 23:29 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-26 23:29 (GMT+8)</h1><div class="meta"><span>帳本 <b>8</b> 份</span><span>點名票號 <b>250</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -156,16 +156,10 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <p class="li"><code>pnpm exec tsx tools/model-budget/emit_report.ts</code> —— <code>report.json</code> 現在就過期，而<b>沒有守衛會說</b></p>
 <p class="li"><code>eventFanout.ts:114</code> 的註解已成假話（線路成本從「施放次數」變成「跳數」）</p></section>
 <section><p class="eyebrow">這一版（08-20）</p><h2>🧾 逐句對票 · 這一版（08-20）</h2><div class="scroll"><table><tr><th>owner 說的（逐字）</th><th>票</th><th>狀態</th></tr>
-<tr><td>「因此光束砲家族應該<b>共用特效模板</b>…掃描所有使用相同 mdl 的蝗蟲群」</td><td>#673 #688</td><td>✅ <code>docs/MDL特效家族總表.md</code>（65 顆多 dummy MDL · 229 dummy · 112 技能落點）</td></tr>
-<tr><td>「事實上有<b>兩個</b>英雄復活特效 mdl」</td><td>#673</td><td>✅ ReviveHuman ×4 dummy · ReviveDemon ×1（後者未轉 glb，列前置）</td></tr>
-<tr><td>「我之前給過你一堆 mdl 清單 請你<b>比照一樣的方法清算</b>」</td><td>—</td><td>✅ 17 已清算/裁定 · 48 排隊（隊列在戰情表）</td></tr>
-<tr><td>「請你列給我<b>各 mdl 影響技能特效家族列表</b>」</td><td>—</td><td>✅ 同上一份 md（MDL→dummy→生成點→技能→GGD 落點的 join）</td></tr>
-<tr><td>「reopen 跟 開新票摘要舊票差別在哪？<b>context 已經改變很多，不如開新票</b>」</td><td>—</td><td>✅ 裁決落地：14 張轉成 #755–#766，舊票關掉互指</td></tr>
-<tr><td>「<b>WarStompCaster.mdl 全族零落點 —— 刻意不轉 =&gt; why?</b>」</td><td>#672</td><td>✅ <b>我判錯了</b>：o019 動地剁／o01U 接技特效<b>有落點</b>且卡 #672，演出規格已補進票</td></tr>
-<tr><td>「戰情表『對話開票』要收錄<b>過去一週</b>…滿一週則備份時間戳記 md」→「<b>每天自動輪替</b>，輪替前整份備份」</td><td>#669</td><td>✅ <code>scripts/board-roll.sh</code>（<code>board:roll:check</code> 進 <code>skills:check</code>；突變驗過）</td></tr>
-<tr><td>「你應該做的是<b>翻譯 JASS to 編輯器 JSON</b>，JSON 沒支援的標籤或邏輯則<b>去實作</b>」</td><td>#767</td><td>✅ 本版的主軸：additive 混合就是「JSON 沒支援 ⇒ 去實作」的那一半</td></tr>
-<tr><td>「還缺一個部分就是 <b>w3x 原始技能的設定特效與機制包含傷害方式</b>，也請一起翻譯進去」</td><td>—</td><td>🟡 <code>tools/w3a-translate/</code> 已在，落差表 <code>docs/w3a落差表.md</code>；內容側未套</td></tr>
-<tr><td>（常設）「analyze &amp; fix or close issues of #300–#799」</td><td>—</td><td>✅ <b>100 張逐張讀碼</b> ＋ 每張一則稽核留言（見下）</td></tr>
+<tr><td>「go on and <b>fix it all</b>」＋「如果有<b>改產生物而不是改產生器</b>的情形，你一定要去<b>追誤會的多個源頭</b>修正」</td><td>#771</td><td>✅ 六軸稽核＋複驗（49 筆成立/T0×23）→ 三路修正全落地（下詳）</td></tr>
+<tr><td>「GGD 戰情版.md <b>應該在我本機端阿</b> 並且我也要看到 對話開票 <b>逐訊息對應開的票號 全記錄在裡面</b>」</td><td>#669</td><td>✅ 根目錄 <code>GGD戰情版.md</code>（symlink 永指今天）＋ 282 則逐字內嵌（⛔ 不再是指標）</td></tr>
+<tr><td>「請你將以下內容製作成<b>後臺頁面</b>，並且<b>適當分類</b>，目前後台左測有些<b>分類已經過長</b>」</td><td>#775</td><td>✅ 13 頁全上＋左欄拆兩組（31→16、36→23）</td></tr>
+<tr><td>「這些後台頁面的內容都要 <b>script 實時動態產生</b>，<b>不是靜態內容</b>喔」</td><td>#775</td><td>✅ /__live request-time 計算（mtime 鍵快取＝與磁碟一致；dataset 自動發現）</td></tr>
 </table></div></section>
 <section><p class="eyebrow">的每一句話在哪張票上</p><h2>🧾 逐則對票 · owner 的每一句話在哪張票上</h2><h3>08-18</h3>
 <div class="scroll"><table><tr><th>#</th><th>時間</th><th>owner 說了什麼</th><th>落到哪</th><th>狀態</th></tr>
@@ -660,6 +654,8 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>13:40</td><td>戰情表 改成一週滾動窗（8/20–8/26，269 則、170 張票、未對票 0）＋ scripts/board-week.sh 自動輪替 =&gt; 每天自動輪替，輪替前整份備份 戰情版_temp_{timstamp}.md</td><td>#669 —— 改成<b>每天</b>輪替＋輪替前整份備份 <code>戰情版_temp_{timestamp}.md</code>（<code>scripts/board-roll.sh</code>；<code>board:roll:check</code> 進 skills:check ＋ <code>sync:converge</code> 每次先跑；突變驗過）</td></tr>
 <tr><td>20:45</td><td>go on and fix it all. 另外：今天第三處同型 EACCES docs/_daily/*.md 是別的步驟的產物（chmod 444），msgledger:build 單獨跑必失敗。補了寫入點自解鎖 —— 這是今天第三處（前兩處是 gen_contract_numbers.py、apply_placeholders.ts），代表隔離區的這條約定還沒被所有產生器採用，值得一次盤點。 =&gt; 如果有改產生物而不是改產生器的情形，你一定要去追誤會的多個源頭修正</td><td>#771 —— 六軸稽核+複驗（49 筆成立）：量測層迴圈斷點（trace/force-writes 解鎖沙盒）＋戶籍重量測 621→640＋genguard/hook fail-closed＋CLAUDE.md 六處＋記憶兩份＋6 lane 散文修正；genrun 三條 EACCES 路實測全通</td></tr>
 <tr><td>21:05</td><td>這些後台頁面的內容都要 script 實時動態產生，不是靜態內容喔</td><td>#775 —— 架構定為 /__live request-time 計算（tools/admin-live，mtime 鍵快取＝與磁碟一致；dataset 自動發現）；13 頁全上、實測 200＋cache hit/miss</td></tr>
+<tr><td>22:14</td><td>改 claude.md 前記得都要備份喔 這是我們開發守則之一 後台左側選項已經太長 不容易尋找、閱覽及管理 你有什麼好建議做資訊視覺化改善嗎</td><td>#776 —— 診斷：121 頁 11 組而 App.tsx 搜尋字串數＝<b>0</b>（⛔ 再拆分組治不了「一行接線」病的導覽版）⇒ ⌘K 指令面板（18 組同義詞＋最近用過）＋🗺 導覽地圖 treemap＋🏷 navTags 13 詞彙覆蓋 121 頁；三支守衛各突變驗過。備份確認：rules-backup/2026-08-26_211239 是改動前那份 ✅</td></tr>
+<tr><td>23:29</td><td>push + note + deploy</td><td>— v0.28.6 出貨動作（部署協定六步），⛔ 不需開票</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>
