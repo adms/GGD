@@ -40,6 +40,24 @@ if [ "$CUR_DATE" != "$TODAY" ]; then
   echo "🔄 輪替：今天那一份 = $TARGET"
 fi
 
+# ── ⭐ 固定入口：repo 根目錄的 `GGD戰情版.md` 永遠指向**今天**那一份 ────────
+# owner 2026-08-26：「**GGD 戰情版.md 應該在我本機端阿**」
+# ⇒ 檔名每天換（那是紀錄），⛔ 但**找它的路徑不可以每天換**。symlink 一行解決，
+#   ⛔ 不是複製一份（複製＝同一份知識兩個住處，第〇·四守則）。
+LINK=GGD戰情版.md
+WANT="$TARGET"
+if [ "$CHECK" = 1 ]; then
+  HAVE=$(readlink "$LINK" 2>/dev/null || true)
+  if [ "$HAVE" != "$WANT" ]; then
+    echo "⛔ 根目錄的 $LINK 指向 '${HAVE:-（不存在）}'，應該是 '$WANT'"
+    echo "   跑：bash scripts/board-roll.sh"
+    exit 1
+  fi
+else
+  ln -sfn "$WANT" "$LINK"
+  echo "🔗 固定入口：$LINK → $WANT"
+fi
+
 # ── 七天滾動窗：以**今天**為右界往前推 6 天 ─────────────────────────────
 python3 - "$TARGET" "$TODAY" "$CHECK" <<'PY'
 import sys, os, re, datetime, collections
@@ -48,6 +66,11 @@ end = datetime.datetime.strptime(today, "%Y%m%d").date()
 start = end - datetime.timedelta(days=6)
 
 rows, byday = [], collections.Counter()
+# ⭐ owner 2026-08-26：「我也要看到**對話開票 逐訊息對應開的票號 全記錄在裡面**」
+#    ⇒ 除了統計，也把**每一則**逐字留在 `perday`，等一下整段內嵌進戰情表。
+#    ⛔ 在此之前這一節只寫「逐則原文在 docs/_daily/…」—— 那是一個指標，⛔ 不是紀錄，
+#    而 owner 讀的是**這一份**。
+perday = collections.OrderedDict()
 for i in range(7):
     d = start + datetime.timedelta(days=i)
     p = f"docs/_daily/{d.isoformat()}.md"
@@ -57,6 +80,7 @@ for i in range(7):
         if re.match(r"^\| \d\d:\d\d \|", line):
             rows.append(line.rstrip())
             byday[d.isoformat()[5:]] += 1
+            perday.setdefault(d.isoformat(), []).append(line.rstrip())
 
 issues = set()
 unmapped = 0
@@ -79,6 +103,38 @@ src = open(target, encoding="utf-8").read()
 new = re.sub(r"^# 🎫 對話開票（.*?）$", head, src, count=1, flags=re.M)
 new = re.sub(r"^## 一週窗總量（.*?\n\n\|.*?\n\n\*\*逐日分佈\*\*：.*?$",
              stats, new, count=1, flags=re.M | re.S)
+
+# ── ⭐ 逐訊息全紀錄（owner 2026-08-26 要求「全記錄在裡面」）─────────────────
+BEGIN, END = "<!-- BOARD_MSGLOG_BEGIN -->", "<!-- BOARD_MSGLOG_END -->"
+blocks = [
+    BEGIN,
+    "",
+    "## 🧾 逐訊息全紀錄（每一則 → 票號）",
+    "",
+    "> ⭐ owner 2026-08-26：「我也要看到 **對話開票 逐訊息對應開的票號 全記錄在裡面**」",
+    "> ⇒ 這一節是**紀錄本身**，⛔ 不是指向 `docs/_daily/` 的指標。",
+    "> 來源是 `msgledger:build` 從 session transcript **逐則**撈的，⛔ 不是憑印象重寫；",
+    "> 那一格的原文是**截斷**過的（全文在 `docs/_daily/ledger-source_temp_*.md`）。",
+    "",
+]
+for day, lines in perday.items():
+    blocks += [f"### {day}（{len(lines)} 則）", "", "| 時間 | owner 說了什麼（逐字） | 票 |", "|---|---|---|"]
+    blocks += lines
+    blocks.append("")
+blocks.append(END)
+log_md = "\n".join(blocks)
+
+if BEGIN in new and END in new:
+    new = re.sub(re.escape(BEGIN) + r".*?" + re.escape(END), lambda _m: log_md, new, count=1, flags=re.S)
+else:
+    # 第一次：插在「一週窗總量」那一節的**後面**（下一個 `## ` 之前）
+    m = re.search(r"^## 一週窗總量（.*?$", new, flags=re.M)
+    if m:
+        nxt = new.find("\n## ", m.end())
+        at = len(new) if nxt < 0 else nxt + 1
+        new = new[:at] + log_md + "\n\n" + new[at:]
+    else:
+        new = new.rstrip() + "\n\n" + log_md + "\n"
 
 if check:
     if new != src:
