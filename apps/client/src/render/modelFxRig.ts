@@ -164,19 +164,32 @@ export function setStockGlowAdditive(v: boolean | undefined): void {
 
 /**
  * Babylon `Constants.ALPHA_ONEONE` —— **`SRC + DEST`**，⛔ 不乘 src alpha。
- * ⛔ 這裡不 import Babylon 常數（見上面那條迴圈註解）。
+ * ⛔ 這裡不 import Babylon 常數（見上面那條迴圈註解），⭐ 但守衛
+ * `stockGlowAdditive.test.ts` 用**真的** `Constants.ALPHA_ONEONE` 比對這一格 ——
+ * 字面值再錯一次會當場紅，⛔ 不會再有「兩個住處抄同一個錯值」的形狀。
  *
  * ⚠️⚠️ **⛔ 不可以用 `ALPHA_ADD`（＝1）** —— 這一格 2026-08-26 первый版就踩過：
  * Babylon 的 `ALPHA_ADD` 是 **`SRC_ALPHA × SRC + DEST`**（仍然乘 alpha），
  * 而 `w3xlib/gltf.py` 的 luma-key 正是**把亮度搬進了 alpha**（`alpha := max(R,G,B)`）
  * ⇒ 乘回去等於把剛剛加上來的亮度**再乘掉一次**。
- * ⭐ 量到的（20-03，同一組 tick 的同一幀）：
- *   BLEND 亮度中位 **75.4** → `ALPHA_ADD` **86.9**（只 +15%）→ `ALPHA_ONEONE` **237.2**
+ *
+ * ⚠️⚠️ **⛔ 也不可以是 `0`** —— GH#780（拳四郎黑色閃電）的根因逐字：
+ * v0.28.5 這一格寫了 `0` 並注記「ALPHA_ONEONE」，⭐ 而 Babylon 7.54.3 的
+ * `Engines/constants.js` 逐行是 **`ALPHA_DISABLE = 0` · `ALPHA_ONEONE = 6`**。
+ * `Extensions/engine.alpha.js` 的 `case 0` 是 `alphaBlend = false`＋`depthMask = true`
+ * ⇒ 材質被丟進透明桶卻**不透明畫出還寫深度** ⇒ luma-key 搬進 alpha 的去背
+ * **整格被忽略**，閃電貼圖的黑底直接上畫面 ＝ owner 看到的「黑色閃電沒有去背」。
+ * ⭐ 當時量到的「亮度 237.2」是**不透明**給的（亮 texel 不再乘 alpha），
+ * ⛔ 不是加法 —— 量尺的數字對了，機制的結論錯了；黑底那一半量尺沒有看。
+ * `case 6` 才是 `blendFunc(ONE, ONE)`：黑 texel 加 0＝透明，亮度照樣全額。
+ *
+ * ⭐ 早前量到的（20-03，同一組 tick 的同一幀）：
+ *   BLEND 亮度中位 **75.4** → `ALPHA_ADD` **86.9**（只 +15%）→ 不乘 alpha **237.2**
  *   （owner 原作擷圖 **246–254**）。全白飽和像素 1,493 → 7,706 → **57,787**。
  * ⇒ WC3 的 additive filter mode **完全忽略 alpha**，所以只有 `ONEONE` 是翻譯，
  *   `ALPHA_ADD` 是**近似**（第一守則那條紅線）。
  */
-const BJS_ALPHA_ONEONE = 0;
+const BJS_ALPHA_ONEONE = 6;
 /** Babylon `Material.MATERIAL_ALPHABLEND` —— 沒有它 `needAlphaBlending()` 是 false ⇒ 混合模式**不會被讀**。 */
 const BJS_ALPHABLEND = 2;
 

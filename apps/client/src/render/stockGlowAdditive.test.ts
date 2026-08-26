@@ -23,9 +23,12 @@
  *  · `modelFxRig.ts::applyStockGlowAdditive()` 的 `mat["alphaMode"] = BJS_ALPHA_ONEONE`
  *    改回不設 → ① 紅：「發光材質仍然是 alpha 混合」。
  *    ⇒ 沒有它，#767 的驗收②④**結構上不可能過**，而畫面與「沒做」長得一模一樣。
+ *  · GH#780：`BJS_ALPHA_ONEONE` 改回 `0`（v0.28.5 的原值 = `ALPHA_DISABLE`）→ ① 紅
+ *    （expected 6, got 0）。⇒ 「黑色閃電」那個回歸再發生會當場被指名。
  */
 import { describe, expect, it } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
+import { Constants } from "@babylonjs/core/Engines/constants";
 import { Scene } from "@babylonjs/core/scene";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { LoadAssetContainerAsync } from "@babylonjs/core/Loading/sceneLoader";
@@ -37,8 +40,14 @@ import { ModelFxRig, setStockGlowAdditive } from "./modelFxRig";
 import type { ModelFxSpawnEvent } from "./modelFxPath";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
-/** Babylon `Constants.ALPHA_ONEONE`（`SRC+DEST`，⛔ 不乘 alpha）/ `Material.MATERIAL_ALPHABLEND`。 */
-const ALPHA_ONEONE = 0;
+/**
+ * ⭐⭐ **從真的 Babylon 拿含義，⛔ 不抄字面值**（GH#780 的守衛半根因）：
+ * 這一行在 2026-08-27 之前寫著 `const ALPHA_ONEONE = 0` —— 與實作**同一個錯值的
+ * 第二個住處**，於是「發光材質是純加法」這條斷言綠著，而出貨的 `0` 其實是
+ * `ALPHA_DISABLE`（關混合＋寫深度 ⇒ 黑底不透明畫出 ＝ owner 的「黑色閃電」）。
+ * 引擎的常數表才是含義的唯一出處；實作端的字面值（不 import，避免耦合）由這裡對帳。
+ */
+const ALPHA_ONEONE = Constants.ALPHA_ONEONE;
 const ALPHA_COMBINE = 2;
 
 const WIRE: ModelFxSpawnEvent = {
@@ -78,22 +87,25 @@ const lit = (m: PBRMaterial): boolean =>
   m.emissiveColor.r > 0 || m.emissiveColor.g > 0 || m.emissiveColor.b > 0;
 
 describe("stock glow 走原作的 additive 混合 (@visual-proof)", () => {
-  it("① 出貨光束的發光材質是**純加法**（SRC+DEST），⛔ 不是 alpha 混合、⛔ 也不是 ALPHA_ADD", async () => {
+  it("① 出貨光束的發光材質是**純加法**（SRC+DEST），⛔ 不是 alpha 混合、⛔ 也不是 ALPHA_ADD/DISABLE", async () => {
     setStockGlowAdditive(undefined); // 出貨預設
-    const mats = await spawnShipped("revivehuman.glb");
-    const glow = mats.filter(lit);
-    // 前提自證：這一份 .glb 真的有發光材質。⛔ 沒有的話下面的結論一律作廢。
-    expect(glow.length, "前提不成立：revivehuman.glb 一份發光材質都沒有").toBeGreaterThan(0);
-    for (const m of glow) {
-      expect(
-        m.alphaMode,
-        `${m.name} 不是純加法（SRC+DEST）⇒ 疊兩層不會變亮；⚠️ 若是 1（ALPHA_ADD）代表又乘了 luma-key 搬進 alpha 的亮度`,
-      ).toBe(ALPHA_ONEONE);
-      // ⚠️ 只設 alphaMode 是「寫了但不會發生」：needAlphaBlending() 為 false 時
-      //    混合模式那一格根本不會被讀。
-      expect(m.transparencyMode, `${m.name} 沒解鎖成 ALPHABLEND ⇒ 上面那一格不會被讀`).toBe(
-        ALPHA_COMBINE,
-      );
+    // ⭐ monsoonbolttarget = GH#780 的回歸現場（拳四郎變身閃電，7/7 材質全 glow 分支）。
+    for (const file of ["revivehuman.glb", "monsoonbolttarget.glb"]) {
+      const mats = await spawnShipped(file);
+      const glow = mats.filter(lit);
+      // 前提自證：這一份 .glb 真的有發光材質。⛔ 沒有的話下面的結論一律作廢。
+      expect(glow.length, `前提不成立：${file} 一份發光材質都沒有`).toBeGreaterThan(0);
+      for (const m of glow) {
+        expect(
+          m.alphaMode,
+          `${file}/${m.name} 不是純加法（SRC+DEST）⇒ 疊兩層不會變亮；⚠️ 若是 1（ALPHA_ADD）代表又乘了 luma-key 搬進 alpha 的亮度；⚠️ 若是 0（ALPHA_DISABLE）代表關掉混合不透明畫出 ⇒ 黑底閃電（GH#780）`,
+        ).toBe(ALPHA_ONEONE);
+        // ⚠️ 只設 alphaMode 是「寫了但不會發生」：needAlphaBlending() 為 false 時
+        //    混合模式那一格根本不會被讀。
+        expect(m.transparencyMode, `${file}/${m.name} 沒解鎖成 ALPHABLEND ⇒ 上面那一格不會被讀`).toBe(
+          ALPHA_COMBINE,
+        );
+      }
     }
   });
 
