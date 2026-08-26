@@ -781,6 +781,10 @@ export class VfxSystem {
         // disagree about is at most the difference their targets make, which is
         // far smaller than the 6.4 u constant this replaces.
         headroomAt: (x, z) => this.headroomAt(x, z),
+        // ✨ GH#788 —— 蓄力集氣層的**隊伍顏色**來源（owner 2026-08-27:「顏色是隊伍顏色光芒」）。
+        // ⭐ 集氣層刻意只在 teamOf 有供應時才建：拿不到隊色就不畫，⛔ 不畫一個猜的顏色。
+        // ⚠️ 少了這一行整層線上不存在，而畫面上與「還沒做」長得一模一樣（失敗形態⑧）。
+        teamOf: (id) => this.ctx.teamOf?.(id) ?? null,
       },
       { getScale: () => this.budgetScale() },
     );

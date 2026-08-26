@@ -85,6 +85,8 @@ import { IconWorkshopPage } from "./IconWorkshopPage";
 import { MapReportPage } from "./MapReportPage";
 import { ArenaPoolPage } from "./ArenaPoolPage";
 import { specForPage } from "../configForms";
+// 📈 GH#790 —— 每級加成：record 形狀（鍵=屬性 id）通用引擎列不出，同 StatCaps 開專頁。
+import { PerLevelBonusPage } from "./PerLevelBonusPage";
 import { VfxForgePage } from "./VfxForgePage";
 import { HeroForgePage } from "./HeroForgePage";
 import { MCoinGrantPage } from "./MCoinGrantPage";
@@ -1176,6 +1178,7 @@ export function Console(): React.JSX.Element {
             {page === "vfxForge" && <VfxForgePage />}
             {page === "heroForge" && <HeroForgePage />}
             {page === "statCaps" && <StatCapsPage />}
+            {page === "perLevelBonus" && <PerLevelBonusPage />}
             {page === "combatFeel" && <CombatFeelPage />}
             {page === "matchConfig" && <MatchConfigPage />}
             {page === "storeEconomy" && <StoreEconomyPage />}
