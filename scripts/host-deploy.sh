@@ -502,8 +502,19 @@ else
       | python3 -c 'import json,sys;print(json.load(sys.stdin).get("verdicts",{}).get("ok"))' 2>/dev/null || echo None)
     [ "$REVIEW_W" = "True" ] && ok "批核結果目錄本來寫不進去，腳本自己修好了（chown 1000 + 重啟 + 重讀 /healthz 驗過）"
   fi
+  # ⭐⭐ /__live 要**真的抓一份 dataset**，⛔ 不是信 /healthz 的自我宣告。
+  #    2026-08-27 實際發生：sidecar 服務得好好的、healthz 說 live.ok=true，
+  #    ⛔ 而 nginx 根本沒有 `location /__live/` ⇒ 請求掉進 SPA fallback ⇒
+  #    回 200 + text/html ⇒ 那 13 頁拿到一坨 HTML 當 JSON 解 ⇒ 空白。
+  #    ⇒ 「模組載得起來」是名詞；「nginx 送得到」才是關係。這一行問的是後者。
+  LIVE_CT=$(curl -fsS -m 30 -o /dev/null -w '%{content_type}' "$BASE/__live/sfx-map" 2>/dev/null || echo none)
+  case "$LIVE_CT" in
+    *json*) ok "13 頁實時資料面: $BASE/__live/ 回 JSON（穿過 edge 真的抓了一份 dataset）" ;;
+    *) warn "⛔ $BASE/__live/ 回的是「$LIVE_CT」⛔ 不是 JSON —— nginx 少了 location /__live/，
+     那 13 頁對照/設定頁在線上會是空白。⛔ 不擋部署（遊戲本體不依賴它）。" ;;
+  esac
   if [ "$REVIEW_OK" = "True" ]; then
-    ok "批核頁資料面: 材料 $REVIEW_N 批 · 結果可寫 · /__live 也活著（穿過 edge 驗的）"
+    ok "批核頁資料面: 材料 $REVIEW_N 批 · 結果可寫（穿過 edge 驗的）"
   else
     warn "批核頁 /healthz 說不健康（ok=$REVIEW_OK, verdicts.writable=$REVIEW_W, 材料=$REVIEW_N）——
      線上的批次驗收頁可能讀不到批次。⛔ 不擋部署。詳情：curl -s $BASE/__review/healthz"
