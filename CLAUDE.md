@@ -462,7 +462,8 @@ owner 2026-08-26（他發現我把已經查清楚的事實又推翻回錯的）�
 
 | 段 | 發生了什麼 |
 |---|---|
-| ① **誤讀** | 讀 `Trig_SunFire`（龜派）時，把迴圈裡的 **10 個 `AddSpecialEffectLocBJ` 火柱**（那是**沿線傷害判定的視覺**）誤讀成「光束由 N 具組成」。⭐ 真相：光束是 `CreateNUnitsAtLoc(**1**, 'h007')` ＋ `SetUnitScalePercent(200,200,**400**)` |
+| ⓪ **引錯出處** | 那一格的描述引用了**三個** JASS 出處，而 2026-08-26 逐行複查發現**兩個根本不成立**：`A0D5`(20-03)@32335 的 `exitwhen > 6` 迴圈體是 `GetUnitsInRangeOfLocMatching → damage`，**零個 `CreateUnit`、零個 `AddSpecialEffect`**（它是**傷害取樣班表**）；`A05J`@28838 **引錯技能**（那是 `Trig_DraBom` 的 `e003`）。第三個 `A03S`(09-04) 雖然真的生 6 具，但那 6 具是 `h006` ＝ **`FlameStrike1.mdl` 火柱**，⛔ 不是光束的模型 |
+| ① **誤讀** | 把**沿線傷害取樣的迴圈**讀成「視覺由 N 具組成」。⭐ 真相：光束是 `CreateNUnitsAtLoc(**1**, …)` ＋ `SetUnitScalePercent` 放大（龜派 `200,200,**400**`）。⚠️ 而 20-03 的那條線 GGD **早就表達了** —— `godie-e002.e` 的 `effects[0]` 就是 `damageLine{length:14,width:2}` ⇒ 再映射成 `count/spacing` 等於**把同一條傷害線畫成第二份視覺** |
 | ② **寫進預設** | 把那個推測寫成 `tpl-beam-roll.params.count.default = **6**` —— ⚠️ 連誤讀的 10 都不是，**6 憑空來的、沒有任何出處** |
 | ③ **逐支覆寫掩蓋它** | GH#692 我**查到** 59-04 是 1 具，卻只加了逐支 `count:1` ⇒ ⛔ **沒有回頭問「那家族預設是誰的量值？」** ⇒ 錯誤預設繼續服務另外 **6 支** |
 
@@ -483,6 +484,23 @@ owner 2026-08-26（他發現我把已經查清楚的事實又推翻回錯的）�
 ⚠️ **⛔ 不要把「傷害判定的視覺」與「本體」混為一談** —— 原作常見的形狀是
 「本體 1 具 dummy（放大／非等向拉長）＋ 迴圈沿線 `AddSpecialEffect` 做傷害段的視覺」。
 把後者數成前者的具數，就會得到一排小光束而不是一道大光束（這一次就是）。
+
+6. ⭐⭐ **讀 JASS 的迴圈，先問「迴圈體裡有沒有 `CreateNUnitsAtLoc` / `AddSpecialEffect`」。**
+
+| 迴圈體 | 它是什麼 | GGD 的住處 |
+|---|---|---|
+| `GetUnitsInRangeOfLocMatching` ＋ `ForGroupBJ`（⛔ 沒有生成、沒有特效） | **傷害班表** | `damageLine` / `damageArea` / `delayed` |
+| `AddSpecialEffectLocBJ` | 傷害段的**視覺** | 沿線 `spawnVfx` |
+| `CreateNUnitsAtLoc` | **真的多具實體** | `spawnModelFx.count` |
+
+⛔ 把前兩種數成 `count`，就是**把同一條傷害線畫成第二份視覺** —— 而它看起來很像「原作就是一排」。
+⚠️ 這一段會在**每一支「沿線傷害」技能**上重複發生，所以它是規矩不是註腳。
+
+⚠️ **順帶兩個這一次量到的事實**（⛔ 不要再憑印象猜）：
+· WC3 是 **Z-up** ⇒ `SetUnitScalePercent(200,200,400)` 是「柱子變高 2×」，
+  而 GGD 把模型橫放（`fxLongAxis`）之後，那一軸才變成**光束的長度**。
+· 全 war3map.j 的 35 個 `SetUnitScalePercent` 裡 **13 個（37%）是非等向**，
+  而 `spawnModelFx.scale` 是 `root.scaling.setAll(...)` ⇒ **結構上表達不了**。
 ⛔ 只修一半治不了 —— 我就是在權限那一半修好之後，又從來源那一半犯了同一次。
 
 ### ⛔⛔ 「**可調**」不等於「**我可以轉**」—— 有一族欄位是 owner 的
