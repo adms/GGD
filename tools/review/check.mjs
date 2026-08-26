@@ -27,8 +27,8 @@ if (process.argv.includes("--help") || process.argv.includes("-h")) {
     任何一批的 rollback 開關解析不到 ⇒ exit 1（修法：pnpm review:register 重登記）。
     功能級 pending／未登記數只進警示行，⛔ 不擋部署。
   · 審查頁：pnpm dev 起 client 後
-      資產（#664）  http://localhost:5173/asset-review.html
-      功能（#669）  http://localhost:5173/feature-review.html`);
+      資產（#664）  http://localhost:39527/asset-review.html
+      功能（#669）  http://localhost:39527/feature-review.html`);
   process.exit(0);
 }
 
@@ -47,7 +47,7 @@ console.log(`[review:check] pending ${pending} / 資產 ${assets}（Tier0 ${tier
 for (const it of q.items.slice(0, 5)) {
   console.log(`  · [risk ${it.risk}] ${it.kind}:${it.id} —— ${it.reasons.join("；")}`);
 }
-console.log("  審查頁：http://localhost:5173/asset-review.html（pnpm dev 起 client 後）");
+console.log("  審查頁：http://localhost:39527/asset-review.html（pnpm dev 起 client 後）");
 
 // ── ③ GH#669 功能級：連續圖片批核的帳本 ────────────────────────────────
 const fq = buildFeatureQueue(repoRoot);
@@ -60,7 +60,7 @@ for (const b of fq.batches) {
   if (b.blockers.length === 0) continue;
   console.log(`  · ${b.status} ${b.id} —— ${b.blockers.join("；")}`);
 }
-console.log("  功能審查頁：http://localhost:5173/feature-review.html");
+console.log("  功能審查頁：http://localhost:39527/feature-review.html");
 
 // ⭐ 登記閘（硬擋）：登記進帳本卻寫不出可用的 rollback 開關 ⇒ 那一批沒有回頭的路。
 const invalid = fq.batches.filter((b) => b.registered && b.rollbackOk !== true);

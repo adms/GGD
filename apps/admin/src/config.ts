@@ -120,6 +120,25 @@ export function resolveHubLinks(env: HubEnv = {}, mode: "dev" | "prod" = "dev"):
             healthUrl: null,
             emoji: "🎧",
           },
+          // 🧑‍⚖️ GH#785 —— owner 2026-08-27:「我在後台審查頁面根本找不到頁面跟內容
+          //    可以審查特效連續圖片畫面阿」。兩張審查頁一直只活在 client dev server
+          //    （review:check 之前還印錯埠 :5173），後台 hub 零入口 ⇒ 紅字永遠到不了他。
+          {
+            key: "assetReview",
+            label: "資產批次審查（HITL）",
+            sub: "特效/音效接觸表逐格 ✅/❌（#664, dev only）",
+            url: `${clientBase}asset-review.html`,
+            healthUrl: null,
+            emoji: "🧑‍⚖️",
+          },
+          {
+            key: "featureReview",
+            label: "功能批次驗收（連續圖片）",
+            sub: "一頁批次後台驗收：先上線、一鍵否決（#669, dev only）",
+            url: `${clientBase}feature-review.html`,
+            healthUrl: null,
+            emoji: "🎞️",
+          },
         ]
       : []),
     // #230. The census is COMPUTED, and it is computed in the client's asset
