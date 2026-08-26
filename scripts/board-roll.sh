@@ -40,6 +40,32 @@ if [ "$CUR_DATE" != "$TODAY" ]; then
   echo "🔄 輪替：今天那一份 = $TARGET"
 fi
 
+# ── 🧑‍⚖️ 待你裁決的批次（GH#785）────────────────────────────────────────────
+# owner 2026-08-27:「你還是沒告訴我去後台哪裡審查」——更早的病是:批次帳本誠實記著
+# 「⚠️ 0 亮像素」,⛔ 但要他自己開 dev server 才看得到。⭐ 警報沒有到達的警報＝沒有警報。
+# ⇒ 把它推進他真的會讀的那一份（本機的戰情表）。⛔ 不是第二份資料:從帳本推導。
+if [ "$CHECK" != 1 ]; then
+  DIGEST=$(node tools/review/pending-digest.mjs --limit 8 2>/dev/null || true)
+  if [ -n "$DIGEST" ]; then
+    python3 - "$TARGET" <<PYEOF
+import re, sys
+target = sys.argv[1]
+digest = """$DIGEST"""
+BEGIN, END = "<!-- BOARD_REVIEW_BEGIN -->", "<!-- BOARD_REVIEW_END -->"
+s = open(target, encoding="utf-8").read()
+block = BEGIN + "\n\n" + digest.strip() + "\n\n" + END
+if BEGIN in s and END in s:
+    s = re.sub(re.escape(BEGIN) + r".*?" + re.escape(END), lambda _m: block, s, count=1, flags=re.S)
+else:
+    m = re.search(r"^## ", s, flags=re.M)
+    at = m.start() if m else len(s)
+    s = s[:at] + block + "\n\n" + s[at:]
+open(target, "w", encoding="utf-8").write(s)
+PYEOF
+    echo "🧑‍⚖️ 待裁決批次已推進戰情表"
+  fi
+fi
+
 # ── ⭐ 固定入口：repo 根目錄的 `GGD戰情版.md` 永遠指向**今天**那一份 ────────
 # owner 2026-08-26：「**GGD 戰情版.md 應該在我本機端阿**」
 # ⇒ 檔名每天換（那是紀錄），⛔ 但**找它的路徑不可以每天換**。symlink 一行解決，
