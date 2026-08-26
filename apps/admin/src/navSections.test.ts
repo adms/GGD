@@ -162,37 +162,24 @@ const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
   {
     section: "戰鬥規則",
     pages: [
+      // ⚠️ 2026-08-26 owner「目前後台左測有些分類已經過長」⇒ 15 張五級距/數值頁
+      // 搬去新分類「五級距·數值」（見下面那一列）—— 一頁都沒刪。
       "combatEnv",
-      "baseBonus",
-      "statCaps",
       "cooldownRules",
-      "aoeTiers",
-  "rangeTiers",
       // GH#445 / #447 / #446 —— 四軸的第三、第四軸與它們反算出來的回魔地板。
-      "cooldownTiers",
-      "damageTiers",
-      "manaTiers",
-      "speedGrowthTiers",
-      "skillNormalize",
-      "manaEconomy",
       // 2026-08-21 owner「後台設定及說明⋯全部都是推導動態即時產生」——
       // ⭐ 五級距總覽（唯讀，卡面→實際）。它必須和上面四張級距頁同一區：
       // 分到別區的話，操作者調完一格之後要跨兩區才看得到它換算成幾秒。
-      "tierOverview",
       // 2026-08-22 owner #534 —— ⚠️ 不吃五級距的傷害節點（唯讀）。它必須和
       // tierOverview 同一區：那一頁說「級距表長這樣」，這一頁說「⛔ 但這幾十個
       // 節點不聽它的」，分到兩區等於把警告藏起來。
-      "damageTierWarnings",
       // 2026-08-24 GH#682 / GH#683 —— owner 各逐字點名第二次的兩張唯讀清單
       //（詠唱>1秒／移速加成）。它們讀的是技能資料的推導表，所以住戰鬥規則區，
       // 緊鄰同為唯讀的 tierOverview / damageTierWarnings。
       "castTimeList",
       "msBuffList",
-      "statNormalization",
       "castTime",
       "mitigation",
-      "displacementTiers",
-      "perLevelBonus",
       "mapSpec",
       "mapReport",
       "arenaPool",
@@ -219,6 +206,47 @@ const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
   // ⚠️ 2026-08-13 加入 heroForge —— 新英雄轉生設計的第⑤步就是在挑鑄技工坊裡的技能，
   //    所以它和特效綁定同一組，操作者會把兩頁一起用。
   { section: "鑄技工坊", pages: ["vfxForge", "heroForge"] },
+  // ── 2026-08-26 owner「目前後台左測有些分類已經過長」⇒ 再拆兩組 ──────────────
+  // 拆之前：戰鬥規則 31 列、系統 36 列。判準：五級距/正規化是「數值的形狀」一族，
+  // 狀態規則是「一種狀態一頁」一族 —— 使用者心裡有名字，⛔ 不必掃 31 列。
+  {
+    section: "五級距·數值",
+    pages: [
+      "baseBonus",
+      "statCaps",
+      "aoeTiers",
+      "rangeTiers",
+      "cooldownTiers",
+      "damageTiers",
+      "manaTiers",
+      "speedGrowthTiers",
+      "skillNormalize",
+      "manaEconomy",
+      "tierOverview",
+      "damageTierWarnings",
+      "statNormalization",
+      "displacementTiers",
+      "perLevelBonus",
+    ],
+  },
+  {
+    section: "狀態規則",
+    pages: [
+      "shieldRules",
+      "blockRules",
+      "critRules",
+      "berserkRules",
+      "dispelRules",
+      "woundRules",
+      "weaknessRules",
+      "damageRules",
+      "apDamageScaling",
+      "augmentEnemyFilter",
+      "stealthRules",
+      "tauntRules",
+      "regenRules",
+    ],
+  },
 ];
 
 describe("分類重編一頁都沒有掉", () => {

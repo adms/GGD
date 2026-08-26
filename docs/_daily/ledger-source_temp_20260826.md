@@ -121,3 +121,15 @@ WarStompCaster.mdl 全族零落點 —— 刻意不轉 => why?
 ## 13:40
 
 戰情表	改成一週滾動窗（8/20–8/26，269 則、170 張票、未對票 0）＋ scripts/board-week.sh 自動輪替 => 每天自動輪替，輪替前整份備份 戰情版_temp_{timstamp}.md
+
+## 20:45
+
+go on and fix it all.
+
+另外：今天第三處同型 EACCES
+docs/_daily/*.md 是別的步驟的產物（chmod 444），msgledger:build 單獨跑必失敗。補了寫入點自解鎖 —— 這是今天第三處（前兩處是 gen_contract_numbers.py、apply_placeholders.ts），代表隔離區的這條約定還沒被所有產生器採用，值得一次盤點。
+=> 如果有改產生物而不是改產生器的情形，你一定要去追誤會的多個源頭修正
+
+## 21:05
+
+這些後台頁面的內容都要 script 實時動態產生，不是靜態內容喔

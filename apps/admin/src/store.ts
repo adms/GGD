@@ -295,6 +295,24 @@ export type Page =
    * 所以和 tierOverview 同一類，⛔ 不在 SESSION_REQUIRED_PAGES。
    */
   | "castTimeList"
+  /**
+   * 🔴 LIVE 對照·視覺化 13 頁（GH#775，dev-chunk：apps/admin/src/ui/live/）。
+   * 資料全部走 /__live/<dataset>（每次請求當場算 —— owner 2026-08-26:
+   * 「內容都要 script 實時動態產生，不是靜態內容」）。production build 不含。
+   */
+  | "liveMdlFamilies"
+  | "liveParallelBoard"
+  | "liveJassVfx"
+  | "liveLocustOrbs"
+  | "liveMechTemplates"
+  | "liveVfxTemplates"
+  | "liveSfxMap"
+  | "liveRadarOrigins"
+  | "liveRadarAbilities"
+  | "liveSkillAuthoring"
+  | "liveExRoots"
+  | "liveTreasures"
+  | "liveSkill90"
   | "msBuffList"
   | "uiLexicon"
   /**

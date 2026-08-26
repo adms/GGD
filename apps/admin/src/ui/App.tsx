@@ -129,6 +129,12 @@ const SEC_ASSETS = "資產產線";
 // 這四組不新增也不刪除任何一頁，只是把既有的搬出來（navSections.test.ts 逐一比對
 // 搬家前後「可到達的頁面集合」，漏一頁就紅）。
 const SEC_COMBAT = "戰鬥規則";
+// ── owner 2026-08-26「目前後台左測有些分類已經過長」⇒ 再拆兩組 ─────────────────
+// 拆之前：戰鬥規則 31 列、系統 36 列。⛔ 一頁都不刪，只搬（navSections.test.ts 的
+// APPROVED_MOVES 逐一比對）。判準：五級距/正規化那一族是「數值的形狀」，
+// 狀態規則那一族是「一種狀態一頁」—— 兩族的使用者心裡都有名字，掃 31 列是浪費他的眼睛。
+const SEC_TIERS = "五級距·數值";
+const SEC_STATUS = "狀態規則";
 const SEC_ITEMS = "武器道具";
 const SEC_MOBS = "肉鴿殭屍";
 const SEC_FORGE = "鑄技工坊";
@@ -146,10 +152,14 @@ export const SECTION_ORDER: readonly string[] = [
   SEC_CONTENT,
   SEC_ASSETS,
   SEC_COMBAT,
+  SEC_TIERS,
+  SEC_STATUS,
   SEC_ITEMS,
   SEC_MOBS,
   SEC_FORGE,
   SEC_SYS,
+  // 🔴 dev-only LIVE 對照·視覺化（GH#775 的 13 頁 —— chunk 自帶 label）
+  "技能對照·視覺化",
 ];
 
 export const NAV: NavItem[] = [
@@ -234,46 +244,46 @@ export const NAV: NavItem[] = [
   // 基礎加成 — sits right after 戰鬥系統 because it is the OTHER half of the same
   // question, and the adjacency is the warning: that page holds MULTIPLIERS,
   // this one holds FLAT GRANTS that deliberately escape them.
-  { page: "baseBonus", label: "基礎加成", emoji: "➕", section: SEC_COMBAT },
+  { page: "baseBonus", label: "基礎加成", emoji: "➕", section: SEC_TIERS },
   // 屬性上限 — 這三頁是同一個問題的三個面:戰鬥系統 = 倍率,基礎加成 = 加數,
   // 這一頁 = 天花板(以及技能能把天花板抬到哪)。相鄰就是警告。
-  { page: "statCaps", label: "屬性上限", emoji: "⛰️", section: SEC_COMBAT },
+  { page: "statCaps", label: "屬性上限", emoji: "⛰️", section: SEC_TIERS },
   { page: "cooldownRules", label: "冷卻規則", emoji: "⏱", section: SEC_COMBAT },
-  { page: "aoeTiers", label: "AoE 範圍五級距", emoji: "◎", section: SEC_COMBAT },
+  { page: "aoeTiers", label: "AoE 範圍五級距", emoji: "◎", section: SEC_TIERS },
   // 施法距離五級距 (GH#414)。緊鄰 AoE —— 同一條梯子的兩個視窗。
-  { page: "rangeTiers", label: "施法距離五級距", emoji: "➶", section: SEC_COMBAT },
+  { page: "rangeTiers", label: "施法距離五級距", emoji: "➶", section: SEC_TIERS },
   // 冷卻 (GH#445) 與傷害 (GH#447) 五級距。緊鄰 AoE／施法距離 —— 四軸是一組尺，
   // 而 GH#465 的相稱性規則把「成本兩軸」與「回報一軸」綁在一起，⛔ 不可以分開調。
-  { page: "cooldownTiers", label: "冷卻五級距", emoji: "⏲", section: SEC_COMBAT },
-  { page: "damageTiers", label: "傷害五級距", emoji: "💥", section: SEC_COMBAT },
-  { page: "manaTiers", label: "耗魔五級距", emoji: "🔷", section: SEC_COMBAT },
+  { page: "cooldownTiers", label: "冷卻五級距", emoji: "⏲", section: SEC_TIERS },
+  { page: "damageTiers", label: "傷害五級距", emoji: "💥", section: SEC_TIERS },
+  { page: "manaTiers", label: "耗魔五級距", emoji: "🔷", section: SEC_TIERS },
   // 移速／攻速的**每級成長**五級距 (2026-08-21)。緊鄰上面五軸 —— 同一組級距名、
   // 同一個「級別住內容、數字住 config」的形狀，只是它掛在**英雄卡**上不是技能。
-  { page: "speedGrowthTiers", label: "速度成長五級距", emoji: "🏃", section: SEC_COMBAT },
-  { page: "skillNormalize", label: "技能正規化決策點", emoji: "🧮", section: SEC_COMBAT },
+  { page: "speedGrowthTiers", label: "速度成長五級距", emoji: "🏃", section: SEC_TIERS },
+  { page: "skillNormalize", label: "技能正規化決策點", emoji: "🧮", section: SEC_TIERS },
   // 回魔地板 (GH#446)。緊鄰上面兩頁：owner 那三張單是同一次反算出來的。
-  { page: "manaEconomy", label: "魔力經濟（建議滿魔時間）", emoji: "🔵", section: SEC_COMBAT },
+  { page: "manaEconomy", label: "魔力經濟（建議滿魔時間）", emoji: "🔵", section: SEC_TIERS },
   // 五級距總覽 (owner 2026-08-21「後台設定及說明⋯全部都是推導動態即時產生」)。
   // ⭐ 它排在四張級距頁**後面**是刻意的：先看得到四把尺各自在哪一頁，再看它們
   // 攤平之後的樣子。它唯讀，而且是唯一同時印出「卡面 → 實際」兩欄的地方 ——
   // 那兩欄不一樣，正是 owner 那句「不計入系統倍率」造成的。
-  { page: "tierOverview", label: "五級距總覽（卡面→實際）", emoji: "🪜", section: SEC_COMBAT },
+  { page: "tierOverview", label: "五級距總覽（卡面→實際）", emoji: "🪜", section: SEC_TIERS },
   // ⚠️ 不吃五級距的傷害節點 (owner #534)。⭐ 緊鄰總覽是刻意的：總覽說「級距表長
   // 這樣」，這一頁說「⛔ 但這幾十個節點不聽它的」。分開放的話，owner 調完級距
   // 之後不會有任何東西提醒他還有一批數字原地不動 —— 而那正是這一頁在防的誤判。
-  { page: "damageTierWarnings", label: "⚠️ 不吃五級距的傷害節點", emoji: "🚫", section: SEC_COMBAT },
+  { page: "damageTierWarnings", label: "⚠️ 不吃五級距的傷害節點", emoji: "🚫", section: SEC_TIERS },
   // GH#682 / GH#683 —— owner 2026-08-24 各逐字點名第二次的兩張清單（md ＋ 後台）。
   // 唯讀、與 docs 的 md 共用 `tools/skill-lists/lists.json` 同一次計算。
   { page: "castTimeList", label: "詠唱超過1秒", emoji: "📜", section: SEC_COMBAT },
   { page: "msBuffList", label: "移速加成清單", emoji: "💨", section: SEC_COMBAT },
   { page: "uiLexicon", label: "介面用語（Fate）", emoji: "🏆", section: SEC_COMBAT },
-  { page: "statNormalization", label: "英雄屬性正規化", emoji: "📐", section: SEC_COMBAT },
+  { page: "statNormalization", label: "英雄屬性正規化", emoji: "📐", section: SEC_TIERS },
   // GH#322 —— 這四頁的 spec 早就寫好了，但導覽列沒有那一列 ⇒ 操作者點不到。
   // ⚠️ 「有 spec」與「到得了」是兩件事，`configDocCoverage.test.ts` 兩個方向都驗。
   { page: "castTime", label: "吟唱規則", emoji: "⏳", section: SEC_COMBAT },
   { page: "mitigation", label: "減傷規則", emoji: "🛡️", section: SEC_COMBAT },
-  { page: "displacementTiers", label: "位移級距", emoji: "💨", section: SEC_COMBAT },
-  { page: "perLevelBonus", label: "每級加成", emoji: "📈", section: SEC_COMBAT },
+  { page: "displacementTiers", label: "位移級距", emoji: "💨", section: SEC_TIERS },
+  { page: "perLevelBonus", label: "每級加成", emoji: "📈", section: SEC_TIERS },
   { page: "mapSpec", label: "小地圖規格", emoji: "🗺️", section: SEC_COMBAT },
   { page: "camera", label: "戰鬥鏡頭", emoji: "🎥", section: SEC_COMBAT },
   { page: "mapReport", label: "地圖驗證報告", emoji: "📋", section: SEC_COMBAT },
@@ -386,38 +396,38 @@ export const NAV: NavItem[] = [
   // 護盾規則 —— 一個人身上兩道盾時誰先被吃掉。它是**傷害結算規則**（跟 戰鬥系統
   // 的倍率、屬性上限的天花板同一個家族），不是畫質也不是調性，但排在這裡是因為
   // 它和上面三頁共用同一個 schema 驅動的元件；改到它的人會從左欄找「護盾」。
-  { page: "shieldRules", label: "護盾規則", emoji: "🛡️", section: SEC_SYS },
+  { page: "shieldRules", label: "護盾規則", emoji: "🛡️", section: SEC_STATUS },
   // 格擋規則 —— 緊接在 護盾規則 後面，因為兩頁問的是同一段結算的相鄰兩步：
   // 格擋在護盾之前判、而且刻意不吃護盾。owner 2026-07-31 裁決兩件格擋要獨立
   // 各判一次，那條裁決就住在這一頁。
-  { page: "blockRules", label: "格擋規則", emoji: "🪖", section: SEC_SYS },
+  { page: "blockRules", label: "格擋規則", emoji: "🪖", section: SEC_STATUS },
   // 暴擊規則 (GH#302) —— 緊接在 格擋規則 後面，因為兩頁問的是**同一個問題的兩側**：
   // 「同一發上有好幾條同類判定時怎麼合成」。格擋是防守側（獨立鏈式、會收斂），
   // 暴擊是進攻側（獨立相乘、會爆炸），兩條規則不同而且各自有理由 —— 放在一起
   // 才看得出來那是一個決定，不是一個疏忽。
-  { page: "critRules", label: "暴擊規則", emoji: "💥", section: SEC_SYS },
-  { page: "berserkRules", label: "暴走規則", emoji: "😡", section: SEC_SYS },
-  { page: "dispelRules", label: "淨化規則", emoji: "✨", section: SEC_SYS },
-  { page: "woundRules", label: "重創規則", emoji: "🩸", section: SEC_SYS },
+  { page: "critRules", label: "暴擊規則", emoji: "💥", section: SEC_STATUS },
+  { page: "berserkRules", label: "暴走規則", emoji: "😡", section: SEC_STATUS },
+  { page: "dispelRules", label: "淨化規則", emoji: "✨", section: SEC_STATUS },
+  { page: "woundRules", label: "重創規則", emoji: "🩸", section: SEC_STATUS },
   // 虛弱規則 (GH#301-4) —— 緊接在 重創規則 後面：兩頁都是「一個狀態把一根數值
   // 打折」的全域定義，而且兩頁的倍率都不進屬性面板。
-  { page: "weaknessRules", label: "虛弱規則", emoji: "🥀", section: SEC_SYS },
-  { page: "damageRules", label: "傷害規則", emoji: "⚔️", section: SEC_SYS },
+  { page: "weaknessRules", label: "虛弱規則", emoji: "🥀", section: SEC_STATUS },
+  { page: "damageRules", label: "傷害規則", emoji: "⚔️", section: SEC_STATUS },
   // AP 傷害加成 (owner 2026-08-21) —— 緊接在 傷害規則 後面：那一頁決定技能傷害吃
   // 護甲還是魔抗,這一頁決定它乘多少。兩頁合起來才是「一發技能到底打多痛」。
-  { page: "apDamageScaling", label: "AP 傷害加成", emoji: "🔮", section: SEC_SYS },
+  { page: "apDamageScaling", label: "AP 傷害加成", emoji: "🔮", section: SEC_STATUS },
   // 增益卡敵方過濾 (批 1 決策點 1-1) —— 稜彩卡上「敵方英雄」那句話在殭屍波裡算不算
   // 數。緊接在 格擋規則 後面：三頁都是「同一段結算的規則」，而這一頁決定的是
   // hook 到底跑不跑，也就是前兩頁那些判定有沒有機會被叫到。
-  { page: "augmentEnemyFilter", label: "增益卡敵方過濾", emoji: "🧟", section: SEC_SYS },
-  { page: "stealthRules", label: "隱形規則", emoji: "👻", section: SEC_SYS },
+  { page: "augmentEnemyFilter", label: "增益卡敵方過濾", emoji: "🧟", section: SEC_STATUS },
+  { page: "stealthRules", label: "隱形規則", emoji: "👻", section: SEC_STATUS },
   // 嘲弄規則 —— 唯一一條會**強迫**一個單位改打別人的機制(目前只有鍊金術之盾用到)。
   // 緊接在 隱形規則 後面,因為兩頁問的是同一類問題:「索敵看得到誰 / 索敵被誰綁架」。
-  { page: "tauntRules", label: "嘲弄規則", emoji: "🎯", section: SEC_SYS },
+  { page: "tauntRules", label: "嘲弄規則", emoji: "🎯", section: SEC_STATUS },
   // 回血與扣血規則 (GH#253 · owner 2026-08-02「Berserker 是每秒損失 1%生命,
   // 直到生命不足1%」—— 8/1 那句「回血 1%每秒」的方向更正)。百分比回血與固定
   // 回血的關係、以及百分比自傷停在哪裡。
-  { page: "regenRules", label: "回血與扣血規則", emoji: "💚", section: SEC_SYS },
+  { page: "regenRules", label: "回血與扣血規則", emoji: "💚", section: SEC_STATUS },
   // 場地環境火焰 (GH#251 · owner 2026-08-01「場地天空火焰很礙眼 請全部場地都去
   // 掉」) —— 出貨已經關掉，這一頁是「改主意的時候不用再改程式」的那把開關。
   // 排在 濺血程度 / 傷害數字配色 這些「畫面上出現什麼」的隔壁而不是效能三頁旁邊。
@@ -504,6 +514,43 @@ interface ContentAdmin {
 interface ContentSuite {
   readonly routes: readonly NavItem[];
   readonly render: (page: Page, onNavigate: (page: string, selectId?: string) => void) => React.JSX.Element | null;
+}
+
+/**
+ * 🔴 LIVE 對照·視覺化 SUITE（GH#775）。與 useContentSuite 同一個 DEV 閘姿勢：
+ * bare `import.meta.env.DEV` early-return ＋ 靜態可分析的 `import("./live")`
+ * ⇒ production build **不含**這 13 頁（連 label 字串都不含）。
+ * 資料面也只在 dev 存在（/__live 是 vite dev middleware）—— 兩層一起消失，
+ * ⛔ 不會出現「頁面在、資料 404」的半殘。
+ */
+interface LiveSuite {
+  readonly routes: readonly NavItem[];
+  readonly render: (page: Page) => React.JSX.Element | null;
+}
+
+function useLiveSuite(): LiveSuite | null {
+  const [loaded, setLoaded] = useState<LiveSuite | null>(null);
+  useEffect(() => {
+    if (!import.meta.env.DEV) return;
+    let alive = true;
+    void import("./live").then(
+      (m) => {
+        if (!alive) return;
+        const routes: NavItem[] = m.LIVE_ROUTES.map((r) => ({
+          page: r.page as Page,
+          label: r.label,
+          emoji: r.emoji,
+          section: m.LIVE_SECTION,
+        }));
+        setLoaded({ routes, render: (page) => m.renderLivePage(page) });
+      },
+      () => undefined,
+    );
+    return () => {
+      alive = false;
+    };
+  }, []);
+  return loaded;
 }
 
 function useContentSuite(): ContentSuite | null {
@@ -941,10 +988,13 @@ export function Console(): React.JSX.Element {
   // · curation. A production build shows the section with only curation.
   const withContent =
     contentSuite === null ? NAV : insertBlockAfter(NAV, "audit", contentSuite.routes);
-  const nav =
+  const liveSuite = useLiveSuite();
+  const navBase =
     voiceAdmin === null
       ? withContent
       : insertBefore(withContent, "curation", { ...voiceAdmin.nav, section: SEC_CONTENT });
+  // 🔴 LIVE 13 頁接在尾端 —— 分組是算出來的（groupRows），落點由 section 決定。
+  const nav = liveSuite === null ? navBase : [...navBase, ...liveSuite.routes];
   // 內部路由 + 外部入口（/editor/ 的鑄技工坊）。分組是算出來的，所以外部那一列擺在
   // 陣列尾端也照樣落進「鑄技工坊」那一組。
   const rows: NavRow[] = [...nav, ...externalRows()];
@@ -1085,6 +1135,8 @@ export function Console(): React.JSX.Element {
             {page === "contentOverlay" && <ContentOverlayPage />}
             {/* 內容·素材管理 dev routes — all mounted from the one dev chunk. */}
             {contentSuite !== null && contentSuite.render(page, onNavigate)}
+            {/* 🔴 LIVE 對照·視覺化（GH#775）—— chunk 沒載到就不存在這些路由 */}
+            {liveSuite !== null && liveSuite.render(page)}
             {contentSuite === null && isContentSuitePage(page) && (
               <div style={{ color: TEXT_DIM, padding: 8 }}>載入內容·素材管理…</div>
             )}

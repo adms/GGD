@@ -72,11 +72,43 @@ function serveContent(): Plugin {
 // open the socket, so it has nothing to launder its address through. The game
 // client (LAN-published on :39527) deliberately has no such route — a guarded
 // route is weaker than no route.
+/**
+ * 🔴 LIVE 後台資料面（owner 2026-08-26：「後台頁面的內容都要 **script 實時動態產生**，
+ * ⛔ 不是靜態內容」）—— GET/POST /__live/<dataset> 每次請求當場從 repo 現況算。
+ * 邏輯住 tools/admin-live/（動態 import，模組缺了回 503 指名缺什麼 —— 與
+ * client 端 assetReviewApi 同形狀）。apply:"serve" ⇒ production build 不含。
+ */
+function adminLiveData(): Plugin {
+  return {
+    name: "ggd-admin-live-data",
+    apply: "serve",
+    async configureServer(server) {
+      const repoRoot = fileURLToPath(new URL("../..", import.meta.url));
+      try {
+        const href = new URL("../../tools/admin-live/middleware.mjs", import.meta.url).href;
+        const mod = (await import(/* @vite-ignore */ href)) as {
+          createAdminLiveMiddleware: (
+            root: string,
+          ) => (req: IncomingMessage, res: ServerResponse, next: () => void) => void;
+        };
+        server.middlewares.use(mod.createAdminLiveMiddleware(repoRoot));
+      } catch (err) {
+        const detail = err instanceof Error ? err.message : String(err);
+        server.middlewares.use("/__live", (_req, res) => {
+          res.statusCode = 503;
+          res.setHeader("Content-Type", "application/json; charset=utf-8");
+          res.end(JSON.stringify({ error: "admin-live middleware unavailable", detail }));
+        });
+      }
+    },
+  };
+}
+
 export default defineConfig({
   base: "/admin/",
   // loopbackOnly FIRST (enforce: "pre"): it must veto the config before
   // anything else acts on it.
-  plugins: [loopbackOnly(), react(), serveContent(), serveIconConsoleStamp()],
+  plugins: [loopbackOnly(), react(), serveContent(), serveIconConsoleStamp(), adminLiveData()],
   server: {
     // fixed ops-admin port (user-pinned): http://127.0.0.1:60721/admin/
     port: 60721,
