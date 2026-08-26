@@ -27,12 +27,83 @@
 # 用法：
 #   bash scripts/visual-proof.sh              # 檢查工作樹 + HEAD 這一筆
 #   bash scripts/visual-proof.sh <ref>        # 檢查 <ref>..HEAD
+#   bash scripts/visual-proof.sh --new <題目> # ⭐ 開一份報告骨架,HEAD 自動蓋（GH#795）
 #   GGD_VISUAL_PROOF_OFF=1 …                  # 逃生口（要在 commit 訊息說為什麼）
+#   GGD_VISUAL_PROOF_HEAD_STRICT=1 …          # 報告沒寫 HEAD ⇒ 從「大聲喊」升級成「擋下」
 set -o pipefail
 cd "$(dirname "$0")/.."
 
 if [ "${GGD_VISUAL_PROOF_OFF:-}" = "1" ]; then
   echo "⚠️ visual-proof 被 GGD_VISUAL_PROOF_OFF=1 關掉 —— 請在 commit 訊息裡說明為什麼。"
+  exit 0
+fi
+
+# ── 📅 證據的**時間身分**（GH#795）────────────────────────────────────────────
+# ⭐ **一份過期的證據比沒有證據更危險**：沒有證據時我會說「未驗收」;
+#   有一份格式完美但**比修復更早**的證據時,我會說「已修」。
+#   量到的（2026-08-27 稽核）：#721/#767 的報告驗收 12:00 → 家族重建 13:29 →
+#   additive 修正 20:57 ⇒ **報告比它要驗的東西早 89 分鐘,而那只寫在檔名裡**。
+#   同一天普查：25 份 `*_visual-proof_*` 報告只有 **2 份**寫得出自己拍攝時的 HEAD
+#   ⇒ 另外 23 份「這份證據是不是比修復更早」**永遠判不出來**。
+#
+# ⇒ 兩半,缺一半都不成立：
+#   ① `--new` 開骨架時**自動蓋** `HEAD=<sha>` ＝「**以後產出的都帶**」
+#   ② 這次改動附的報告沒寫 HEAD ⇒ **大聲指名**（⛔ 靜默才是缺陷）
+# ⛔⛔ **不可以自動幫既有報告補一行 HEAD** —— 替一份不知道何時拍的報告蓋今天的 sha
+#     就是**捏造證據**,那比沒有標記更糟。只能要求作者寫。
+# ⚠️ 撈法要與 `tools/review/features.mjs::evidenceHeadOf()` **同一套**（⛔ 不是兩套規則）:
+#    守衛 `packages/shared/src/ops/visualProofScript.test.ts` 拿**那一支**去撈
+#    `--new` 蓋出來的 sha,兩邊哪天漂開就紅。
+HEAD_RE='HEAD[[:space:]]*[=＝:：][[:space:]]*`?[0-9a-f]{7,40}|[Cc]ommit[[:space:]]+`?[0-9a-f]{7,40}'
+# 骨架的機器可讀哨兵。⭐ 作者填完量測後把那一行刪掉;⛔ 沒刪 ⇒ 它不算證據
+# （與 v2 的「空殼標記」同一個病：一份**長得像**證據的空檔）。
+SKELETON_MARK='GGD_VISUAL_PROOF_SKELETON'
+
+if [ "${1:-}" = "--new" ]; then
+  SLUG="${2:-}"
+  if [ -z "$SLUG" ]; then
+    echo "用法：bash scripts/visual-proof.sh --new <題目>    # 例：dragonslave" >&2
+    exit 2
+  fi
+  case "$SLUG" in
+    *[!A-Za-z0-9_-]*) echo "⛔ 題目只收 [A-Za-z0-9_-]（它會變成資料夾名）：$SLUG" >&2; exit 2 ;;
+  esac
+  SHA=$(git rev-parse --short=8 HEAD 2>/dev/null || true)
+  if [ -z "$SHA" ]; then
+    # ⛔ 撈不到就**不生** —— 一份沒有時間身分的報告正是這張票要消滅的東西。
+    echo "⛔ 撈不到 HEAD（這裡不是 git repo,或還沒有任何 commit）—— ⛔ 不生一份判不出時間的報告。" >&2
+    exit 2
+  fi
+  # ⚠️ 「工作樹」三個字**不可以省**：在髒工作樹上拍的證據,它要驗的修復可能還沒進歷史,
+  #    `evidenceOrder()` 只比 commit 的祖孫關係 ⇒ 結構上分不出來。標出來才叫誠實。
+  DIRTY=""
+  [ -n "$(git status --porcelain 2>/dev/null)" ] && DIRTY=" 工作樹"
+  DIR="docs/_reports/${SLUG}_visual-proof_$(date +%Y%m%d-%H%M)"
+  MD="$DIR/frames.md"
+  if [ -e "$MD" ]; then
+    echo "⛔ 已經有一份了：$MD —— ⛔ 不覆蓋（覆蓋前先備份是硬規則）。" >&2
+    exit 2
+  fi
+  mkdir -p "$DIR"
+  {
+    printf '# %s — 連續圖片驗收（GH#____）\n\n' "$SLUG"
+    printf '> 📅 **證據的時間身分（GH#795）**：`HEAD=%s`%s\n>\n' "$SHA" "$DIRTY"
+    printf '> ⭐ 這一行是 `visual-proof.sh --new` **拍攝當下**蓋的,⛔ 不是事後補的。\n'
+    printf '> 它回答的是「這份證據是不是比它要驗的修復更早」——⛔ 沒有它,那題永遠判不出來。\n\n'
+    printf '<!-- %s：填完下面的量測後**刪掉這一行**,否則這份不算證據 -->\n\n' "$SKELETON_MARK"
+    printf '台子：`（⬜ audition 頁的 URL,含 ability id）`\n'
+    printf '鏈路：`（⬜ 逐段寫出來,證明沒有一段是台子造的）`\n'
+    printf '⭐ **量尺先自證**：`calibrate()` 全亮 quad = **⬜** 亮像素（⛔ 量不到 ⇒ 這台量尺的一切結論作廢）\n'
+    printf '亮像素 = max(R,G,B) > 200;lit = > 96。\n\n'
+    printf '| 擷圖 | tick | 亮像素 | lit | 說明 |\n'
+    printf '|---|--:|--:|--:|---|\n'
+    printf '| f0_precast | 0 | ⬜ | ⬜ | 施放前基線 |\n'
+    printf '| f1_peak | ⬜ | ⬜ | ⬜ | ⬜ |\n\n'
+    printf '## 結論\n\n⬜ A（功能開）vs B（功能關）的亮像素差,以及它為什麼是**終端**證據。\n'
+  } > "$MD"
+  echo "✓ 開好了：$MD"
+  echo "   📅 HEAD=$SHA$DIRTY（拍攝當下蓋的）"
+  echo "   ⇒ 量完填進去,並**刪掉** $SKELETON_MARK 那一行 —— 沒刪的骨架⛔ 不算證據。"
   exit 0
 fi
 
@@ -100,6 +171,49 @@ for f in $PROOF_TESTS; do
   if grep -q '@visual-proof' "$f"; then HAS_MARK=1; MARKED="$MARKED$f"$'\n'; fi
 done
 HAS_REPORT=$(printf '%s\n' "$EVIDENCE_POOL" | grep -E '^docs/_reports/.*visual-proof.*\.md$' || true)
+
+# ── 骨架不算證據（GH#795）─────────────────────────────────────────────────
+# ⭐ `--new` 讓「開一份報告」變成一行,⛔ 但那也開了一個新洞：一份**空的**骨架
+#   本來會讓這支閘直接轉綠。那正是 v2 關掉的「空殼標記」在報告上的分身。
+SKELETON=""
+if [ -n "$HAS_REPORT" ]; then
+  KEPT=""
+  while IFS= read -r r; do
+    [ -f "$r" ] || continue
+    if grep -q "$SKELETON_MARK" "$r"; then SKELETON="$SKELETON$r"$'\n'; else KEPT="$KEPT$r"$'\n'; fi
+  done < <(printf '%s\n' "$HAS_REPORT" | sed '/^$/d')
+  HAS_REPORT=$(printf '%s' "$KEPT" | sed '/^$/d')
+fi
+if [ -n "$SKELETON" ]; then
+  echo "⚠️ 這幾份還是 --new 開出來的**骨架**,⛔ 不算終端證據：" >&2
+  printf '%s' "$SKELETON" | sed 's/^/     · /' >&2
+  echo "   ⇒ 量完 A/B 亮像素填進去,並刪掉 $SKELETON_MARK 那一行。" >&2
+fi
+
+# ── 報告有沒有寫出自己拍攝時的 HEAD（GH#795）──────────────────────────────
+# ⛔ 這裡**只看這次改動附上的**報告 —— 既有那 23 份不在 EVIDENCE_POOL 裡,
+#   ⛔ 這支閘不會（也不該）回頭吼它們,更⛔ 不會幫它們補（那是捏造證據）。
+NO_HEAD=""
+if [ -n "$HAS_REPORT" ]; then
+  while IFS= read -r r; do
+    [ -f "$r" ] || continue
+    grep -Eq "$HEAD_RE" "$r" || NO_HEAD="$NO_HEAD$r"$'\n'
+  done < <(printf '%s\n' "$HAS_REPORT" | sed '/^$/d')
+fi
+if [ -n "$NO_HEAD" ]; then
+  NOW=$(git rev-parse --short=8 HEAD 2>/dev/null || echo "????????")
+  NOW_DIRTY=""
+  [ -n "$(git status --porcelain 2>/dev/null)" ] && NOW_DIRTY=" 工作樹"
+  echo "⚠️ 這幾份報告沒有寫出**拍攝當下的 HEAD** ⇒「證據是不是比修復更早」判不出來（GH#795）：" >&2
+  printf '%s' "$NO_HEAD" | sed 's/^/     · /' >&2
+  echo "   ⇒ 在報告開頭加一行（⚠️ 要填**拍攝當下**的 sha,⛔ 不是現在這一個,除非它們相同）：" >&2
+  echo "     > 📅 **證據的時間身分（GH#795）**：\`HEAD=$NOW\`$NOW_DIRTY" >&2
+  echo "   ⭐ 下一次直接用 \`bash scripts/visual-proof.sh --new <題目>\`,它會替你蓋。" >&2
+  if [ "${GGD_VISUAL_PROOF_HEAD_STRICT:-}" = "1" ]; then
+    echo "⛔ GGD_VISUAL_PROOF_HEAD_STRICT=1 ⇒ 這一項從警示升級成擋下。" >&2
+    exit 1
+  fi
+fi
 
 if [ "$HAS_MARK" = "1" ] || [ -n "$HAS_REPORT" ]; then
   echo "✓ visual-proof：畫面層有改動,而且帶了終端證據。"
