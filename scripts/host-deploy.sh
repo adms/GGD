@@ -476,6 +476,8 @@ esac
 #
 # ⚠️ verdicts 是這台線上**唯一寫得動**的目錄，容器以 uid 1000 跑 ⇒ host 那一側
 #   要讓 1000 寫得動，否則 owner 在線上按「保留/否決」會靜默失敗。
+#   ⚠️ 它住 `data/review-verdicts/`（gitignored）⛔ 不在 repo 的工作樹裡 ——
+#   否則容器一寫，下一次 `git merge --ff-only` 就會拒絕合併（＝神秘的部署失敗）。
 #   ⭐ 所以下面先問 /healthz 的 verdicts.writable（它是**真的建檔再刪**量出來的），
 #   不過才 chown —— ⛔ 不是無條件 chown（那會在每次部署動一次權限）。
 REVIEW_JSON=$(curl -fsS -m 15 "$BASE/__review/healthz" 2>/dev/null || true)
@@ -493,6 +495,7 @@ else
     #    用**容器自己的 root** 改容器自己的掛載點 —— 那是 docker 權限，⛔ 不是主機提權。
     #    ⚠️ 這與上面錄影目錄那一段是**同一個形狀**：uid 1000 的容器 × host bind mount。
     warn "線上的批核結果目錄寫不進去 —— owner 按「保留/否決」會沒反應。先自己修（容器內的 root，⛔ 不是主機 sudo）"
+    mkdir -p data/review-verdicts
     docker exec -u root ggd-review-1 chown -R 1000:1000 /srv/repo/docs/_review/verdicts \
       || warn "容器內 chown 沒成功（繼續，讓下面的重驗來裁決）"
     docker compose "${COMPOSE_FILES[@]}" --env-file "$ENV_FILE" restart review >/dev/null 2>&1 || true

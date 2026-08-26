@@ -27,7 +27,11 @@ cd "$(dirname "$0")/.."
 
 HOST="${GGD_REVIEW_HOST:-can@34.81.104.163}"
 RPATH="${GGD_REVIEW_REMOTE:-/home/can/GGD}"
-REL="docs/_review/verdicts/live.json"
+REL="docs/_review/verdicts/live.json"           # 本機：repo 裡的**存檔**（git 追蹤）
+# ⭐ 線上那一份住 `data/`（gitignored · bind-mount），⛔ 不在 repo 的工作樹裡 ——
+#   否則容器每寫一次，host 就多一筆未提交改動，而 host-deploy 是 `git merge --ff-only`。
+#   同 `data/replays` 的形狀：執行期狀態住 data/，repo 那份是存檔。
+REMOTE_REL="data/review-verdicts/live.json"
 CHECK=0
 
 while [[ $# -gt 0 ]]; do
@@ -44,11 +48,11 @@ const fs=require('fs');
 try{const d=JSON.parse(fs.readFileSync(process.argv[1],'utf8'));console.log(Object.keys(d.verdicts||{}).length)}
 catch{console.log(0)}" "$1"; }
 
-echo "🔀 批核結果回流 —— $HOST:$RPATH/$REL → ./$REL"
+echo "🔀 批核結果回流 —— $HOST:$RPATH/$REMOTE_REL → ./$REL"
 
 # ⚠️ 遠端那一份是**容器**寫的（sidecar 掛 verdicts:rw）。用 cat 取，⛔ 不用 rsync：
 #    rsync 的預設是「同步一棵樹」，而我們刻意只要一個檔。
-remote=$(ssh -o BatchMode=yes -o ConnectTimeout=10 "$HOST" "cat $RPATH/$REL 2>/dev/null" 2>/dev/null)
+remote=$(ssh -o BatchMode=yes -o ConnectTimeout=10 "$HOST" "cat $RPATH/$REMOTE_REL 2>/dev/null" 2>/dev/null)
 rc=$?
 if [[ $rc -ne 0 || -z "$remote" ]]; then
   # ⭐ fail-open 沒錯，**靜默**才是缺陷：說清楚「沒同步到」與「同步到 0 筆」的差別。
@@ -61,7 +65,7 @@ n_remote=$(printf '%s' "$remote" | node -e "let s='';process.stdin.on('data',d=>
 n_local=$(count_of "$REL")
 
 if [[ "$n_remote" == "bad" ]]; then
-  echo "⛔ 線上那一份不是合法 JSON —— ⛔ 不覆蓋本機。先去看 $RPATH/$REL"
+  echo "⛔ 線上那一份不是合法 JSON —— ⛔ 不覆蓋本機。先去看 $RPATH/$REMOTE_REL"
   exit 1
 fi
 

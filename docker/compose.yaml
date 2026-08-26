@@ -137,8 +137,15 @@ services:
       - ..:/srv/repo:ro
       # ⚠️ 然後**只**把這一格疊回可寫（後掛的覆蓋前面的）。
       #    這就是 owner 說的「特定存取權限」：線上寫得動的東西**只有這一個目錄**。
-      #    uid 1000 要寫得動 —— host-deploy.sh 的 review 段會確保。
-      - ../docs/_review/verdicts:/srv/repo/docs/_review/verdicts
+      #
+      # ⛔⛔ 來源是 `data/` **⛔ 不是 repo 裡的 docs/_review/verdicts**。
+      #    第一版指到 repo，而那會在幾天後變成一次**神秘的部署失敗**：
+      #    那個檔是 git 追蹤的，容器一寫 host 就多一筆未提交改動，
+      #    而 host-deploy 用 `git merge --ff-only` —— 下一次有 commit 碰到它就拒絕合併。
+      #    ⭐ 執行期狀態的正確住處是 `data/`（gitignored · 持久 · bind-mount），
+      #      與 `data/replays` 完全同型；repo 裡那一份是**存檔**，由
+      #      `scripts/review-sync.sh` 從這裡拉回本機再 commit。
+      - ../data/review-verdicts:/srv/repo/docs/_review/verdicts
 
   edge:
     build:
