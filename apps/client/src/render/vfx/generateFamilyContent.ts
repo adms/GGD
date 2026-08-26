@@ -112,9 +112,32 @@ export function familyArtRows(): Record<string, Record<string, unknown>> {
  * 那些的主人是 `build_vfx_orient.py`、`build_slash_pitch.py`、
  * `build_vfx_sound_bindings.py` 與後台（GH#391 / GH#390 / #366）。
  */
+/**
+ * ⭐ GH#713 / GH#802 —— **出貨了的技能** id 集合，從 `content/abilities/` **現算**。
+ *
+ * ⚠️ 判準要放在**證據這一層**，⛔ 不是只放在合併迴圈裡。第一版我只擋了合併，
+ *    於是 `abilityArtRows()` 仍然回報那 90 條 ⇒ 守衛拿「證據」對「出貨檔」
+ *    就會說少了 90 列 —— 而**單獨跑測試是綠的**，只有 `ship:check`
+ *    （序列段會重生成證據檔）才紅。⭐ 一個只在特定順序下紅的閘最難查。
+ *
+ * ⚠️ 母體是空的時候（讀不到 `content/abilities`）**回 null ⇒ 不剪任何東西** ——
+ *    否則一次掛載失誤會把整份鏡像清空，而那看起來跟「本來就沒有」一模一樣。
+ */
+function shippedAbilityIds(): Set<string> | null {
+  const dir = join(CONTENT_DIR, "abilities");
+  if (!existsSync(dir)) return null;
+  const ids = readdirSync(dir)
+    .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+    .map((f) => f.slice(0, -5));
+  return ids.length > 0 ? new Set(ids) : null;
+}
+
 export function abilityArtRows(): Record<string, Record<string, unknown>> {
   const rows: Record<string, Record<string, unknown>> = {};
+  const shipped = shippedAbilityIds();
   for (const [abilityId, row] of Object.entries(w3xFamilyArtRows()).sort(([a], [b]) => a.localeCompare(b))) {
+    // ⭐ 技能檔不存在的那一列一律不進證據（見 shippedAbilityIds 的檔頭）。
+    if (shipped !== null && !shipped.has(abilityId)) continue;
     rows[abilityId] = {
       family: row.family as W3xArtFamily,
       ...(row.scale !== undefined ? { w3xScale: row.scale } : {}),
@@ -204,25 +227,9 @@ export function shippedFamilyConfig(
   const abilityIds = [...new Set([...Object.keys(existingAbilities), ...Object.keys(abilityArt)])].sort((a, b) =>
     a.localeCompare(b),
   );
-  // ⭐ GH#713 / GH#802 —— **技能檔不存在的那一列一律剪掉**。
-  //
-  // ⚠️ 這一行不在的時候，這支產生器與 `pitch:build` 對同一個檔**永遠打架**：
-  //    `pitch:build` 剪掉 90 條指向不存在技能的死列，而這一支從
-  //    `vfx-ability-art` 的證據把它們**寫回來** ⇒ 誰後跑誰贏、另一邊的閘就紅。
-  //    ⭐ 兩邊都對，錯的是**判準只住在其中一邊**（第〇·四守則）。
-  // ⭐ 判準本身是「這支技能出貨了嗎」—— 從 `content/abilities/` **現算**，
-  //    ⛔ 不是一張會過期的名單。英雄上架的那一天，它的列自己就會長回來。
-  const shippedAbilityIds = new Set(
-    existsSync(join(CONTENT_DIR, "abilities"))
-      ? readdirSync(join(CONTENT_DIR, "abilities"))
-          .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
-          .map((f) => f.slice(0, -5))
-      : [],
-  );
+  // ⚠️ 死列的判準住在 `abilityArtRows()`（見 `shippedAbilityIds` 的檔頭）——
+  //    ⛔ 這裡**不要**再放一份，兩份判準會各自漂（第〇·四守則）。
   for (const id of abilityIds) {
-    // ⚠️ 母體空的時候（沒有 content/abilities）⛔ 不剪 —— 否則一個掛載失誤
-    //    會把整份鏡像清空，而那看起來跟「本來就沒有」一模一樣。
-    if (shippedAbilityIds.size > 0 && !shippedAbilityIds.has(id)) continue;
     const row = mergeRow(existingAbilities[id], abilityArt[id] ?? {}, ownedAbilityFields);
     // 證據不再點名這一支、而它身上又沒有任何別人的覆寫 = 這一列該走了
     // （⛔ 留一個空物件在 UI 上會讀成「未綁定」）。
