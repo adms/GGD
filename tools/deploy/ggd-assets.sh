@@ -40,7 +40,13 @@
 #   ggd-assets.sh verify   <dir> [--deep]     check a copy against its manifest
 #   ggd-assets.sh assert                      edge boot gate (env-driven)
 #
-# Exit codes: 0 ok, 1 failed/missing/short. Never 0 on a partial set.
+# Exit codes: 0 ok, 1 failed/missing/short/unreadable. Never 0 on a partial set.
+#
+# Env knobs (both default ON — they exist to go BACK, not to sit off):
+#   GGD_ASSET_DEEP_VERIFY=0   skip the per-file hash pass in `assert`
+#   GGD_ASSET_STRICT_READ=0   restore the pre-#749 behaviour where a file this
+#                             process cannot open is silently counted as 0 bytes
+#                             and surfaces only as a byte shortfall
 
 set -eu
 
@@ -75,10 +81,46 @@ count_of() {
   find "$1" -type f ! -name 'SHIP.sha256' ! -name 'SHIP.txt' -print | wc -l | tr -d ' '
 }
 
+# Files of a set that EXIST but cannot be READ. POSIX find has no `-readable`
+# (that is GNU findutils; busybox does not have it either), so the test is the
+# shell's own `[ -r ]`, one file at a time — 556 builtin tests cost nothing next
+# to hashing 87 MB. Same newline-in-filename assumption as listing_of().
+unreadable_in() {
+  find "$1" -type f ! -name 'SHIP.sha256' ! -name 'SHIP.txt' -print \
+  | while IFS= read -r f; do
+      [ -r "$f" ] || echo "$f"
+    done
+}
+
 # Total bytes of a set. `cat | wc -c` rather than stat, because stat's flags
 # differ between BSD (-f%z) and GNU (-c%s) and this must be identical on both.
+#
+# ⛔ THE `2>/dev/null` ON THE `cat` IS GONE ON PURPOSE (#749). It had TWO layers
+# of swallow: EACCES went to /dev/null, and the exit code of `find | wc | tr`
+# comes from the TAIL of the pipeline (`tr`, always 0), so `set -eu` could not
+# see it either. A file this process cannot open therefore surfaced ONLY as
+# "'blizzard' is 87,3xx,xxx B, manifest says 87,403,869 B" — a BYTE SHORTFALL —
+# and the operator went hunting for a truncated rsync instead of a mode bit.
+# This runs as the edge boot gate, so that is the wrong diagnosis you get at 3am
+# with nginx refusing to start.
+#
+# Contract: byte count of the READABLE remainder still goes to stdout (so the
+# caller can go on to report the shortfall as well), the offending paths go to
+# stderr, and the return code is 1.
+# GGD_ASSET_STRICT_READ=0 restores the old behaviour byte for byte.
 bytes_of() {
-  find "$1" -type f ! -name 'SHIP.sha256' ! -name 'SHIP.txt' -exec cat {} + 2>/dev/null | wc -c | tr -d ' '
+  case "${GGD_ASSET_STRICT_READ:-1}" in
+    0|no|off|false)
+      find "$1" -type f ! -name 'SHIP.sha256' ! -name 'SHIP.txt' -exec cat {} + 2>/dev/null | wc -c | tr -d ' '
+      return 0
+      ;;
+  esac
+  unreadable=$(unreadable_in "$1")
+  find "$1" -type f ! -name 'SHIP.sha256' ! -name 'SHIP.txt' -exec cat {} + | wc -c | tr -d ' '
+  [ -n "$unreadable" ] || return 0
+  echo "$SELF: 讀取失敗 (READ FAILED) — these files exist but this process cannot open them, so their bytes are NOT counted. This is a PERMISSION problem, not a short copy:" >&2
+  echo "$unreadable" | head -n 10 | sed 's/^/  /' >&2
+  return 1
 }
 
 # Read key=value out of a SHIP.txt.
@@ -102,9 +144,20 @@ cmd_manifest() {
   name="${2:?usage: $SELF manifest <dir> <set-name>}"
   [ -d "$dir" ] || { echo "$SELF: $dir does not exist" >&2; exit 1; }
 
+  # Readability is checked BEFORE anything is written (#749): a manifest whose
+  # `bytes=` was computed over files the generator could not open is a lie that
+  # every later verify inherits — and, because both sides skip the same file, it
+  # is a lie that VERIFIES GREEN. Bail before SHIP.sha256 exists, so there is no
+  # half-written manifest to mistake for a good one.
+  read_ok=1
+  bytes=$(bytes_of "$dir") || read_ok=0
+  if [ "$read_ok" -ne 1 ]; then
+    echo "$SELF: FAIL — refusing to write a manifest for '$name' while files in it cannot be read (paths above)." >&2
+    exit 1
+  fi
+
   listing_of "$dir" > "$dir/SHIP.sha256"
   files=$(count_of "$dir")
-  bytes=$(bytes_of "$dir")
   digest=$(sha256_stdin < "$dir/SHIP.sha256")
 
   {
@@ -138,10 +191,18 @@ cmd_verify() {
   set_name=$(field_of "$man" set)
 
   got_files=$(count_of "$dir")
-  got_bytes=$(bytes_of "$dir")
   got_digest=$(sha256_stdin < "$lst")
 
   rc=0
+  # `|| read_ok=0` rather than a bare assignment: under `set -e` a failing
+  # command substitution would abort the whole verify here, and "which of the
+  # four checks is unhappy" is this function's entire diagnostic value.
+  read_ok=1
+  got_bytes=$(bytes_of "$dir") || read_ok=0
+  if [ "$read_ok" -ne 1 ]; then
+    echo "$SELF: FAIL — '$set_name' could not be read in full (paths above). A byte total computed over files this process cannot open is not evidence." >&2
+    rc=1
+  fi
   if [ "$got_digest" != "$want_digest" ]; then
     echo "$SELF: FAIL — SHIP.sha256 does not match its own recorded digest (the listing was truncated or edited in transit)." >&2
     rc=1
@@ -154,8 +215,12 @@ cmd_verify() {
     echo "$SELF: FAIL — '$set_name' is $(commas "$got_bytes") B, manifest says $(commas "$want_bytes") B." >&2
     rc=1
   fi
-  [ "$rc" -eq 0 ] || return 1
-
+  # ⛔ NO `[ "$rc" -eq 0 ] || return 1` HERE (#749). It used to sit exactly on
+  # this line, in front of the --deep block, which meant the per-file "WHICH
+  # files are wrong" naming below could ONLY run when count and bytes both
+  # already agreed — i.e. never in the one case where you most want the names.
+  # A short or unreadable set now pays the extra hashing pass (about a second on
+  # 87 MB, at a boot that happens rarely) and gets told which files.
   if [ "$deep" = "--deep" ]; then
     # The real thing: re-read every byte and compare content hashes. This is
     # what "verify what arrived rather than trusting the copy" means — rsync
@@ -182,13 +247,41 @@ cmd_verify() {
       # "WARNING: N computed checksum(s) did NOT match" summary to the log (both
       # busybox and GNU do); matching ': FAILED' — the per-file verdict both emit
       # — excludes that summary so the tally is the real file count, not N+1.
-      n_bad=$(grep -c ': FAILED' "$hashlog" 2>/dev/null || echo 0)
-      echo "$SELF: FAIL — '$set_name' is CORRUPT, not merely short: $n_bad of $got_files files do not match their recorded hash." >&2
-      grep ': FAILED' "$hashlog" 2>/dev/null | head -n 10 | sed 's/^/  /' >&2
-      [ "$n_bad" -gt 10 ] && echo "  … and $((n_bad - 10)) more" >&2
+      # `|| true`, not `|| echo 0`: grep -c ALREADY prints "0" when it matches
+      # nothing and then exits 1, so the old spelling produced the two-line
+      # value "0\n0", which then blew up every arithmetic comparison downstream.
+      n_bad=$(grep -c ': FAILED' "$hashlog" || true)
+      # WHICH files. ': FAILED' alone is not enough to name them: that is the
+      # spelling for a CORRUPT file, but for a MISSING or UNREADABLE one macOS's
+      # /sbin/sha256sum prints only `sha256sum: ./x: No such file or directory`
+      # and no per-file verdict at all. So this block, freshly unlocked for the
+      # short case by #749, would have named nothing in exactly that case. Take
+      # every line that is neither a `: OK` verdict nor the WARNING summary —
+      # that is implementation-independent across GNU, busybox, shasum and Apple.
+      bad_lines=$(grep -v ': OK$' "$hashlog" | grep -v 'WARNING' || true)
+      if [ "$rc" -eq 0 ]; then
+        echo "$SELF: FAIL — '$set_name' is CORRUPT, not merely short: $n_bad of $got_files files do not match their recorded hash." >&2
+      else
+        # Reachable only because the early return above is gone (#749): the set
+        # is already known short or unreadable, and these are the per-file
+        # verdicts for it — missing, unopenable or wrong bytes, named one by one.
+        echo "$SELF: FAIL — '$set_name' — per-file verdict for the mismatch reported above:" >&2
+      fi
+      if [ -n "$bad_lines" ]; then
+        echo "$bad_lines" | head -n 10 | sed 's/^/  /' >&2
+        n_lines=$(echo "$bad_lines" | wc -l | tr -d ' ')
+        # `if` rather than `[ … ] &&`: this is no longer the last statement
+        # before a `return`, so a false test must not become the block's status.
+        if [ "$n_lines" -gt 10 ]; then echo "  … and $((n_lines - 10)) more" >&2; fi
+      fi
       rm -f "$hashlog"
-      return 1
+      rc=1
     fi
+  fi
+
+  [ "$rc" -eq 0 ] || return 1
+
+  if [ "$deep" = "--deep" ]; then
     echo "$SELF: OK (deep) — '$set_name' $got_files files / $(commas "$got_bytes") B, every hash matches."
   else
     echo "$SELF: OK — '$set_name' $got_files files / $(commas "$got_bytes") B, digest $got_digest."
