@@ -21,6 +21,7 @@ import {
   type DamageBoardFilter,
   type DamageBoardRow,
 } from "./damageBoard";
+import { fetchNameIndex, itemLabels, nameLabelFor, type NameIndex, type NameKind } from "./contentNames";
 import { DEFAULT_ONE_SHOT_PCT_OF_MAX_HP } from "@ggd/shared/content";
 
 const PER_PAGE = 50;
@@ -44,6 +45,9 @@ export function DamageBoardPage(): JSX.Element {
   // GH#658 —— 標記/過濾的門檻,從 config 讀(覆蓋層 → 出貨檔 → 出貨常數)。
   const [threshold, setThreshold] = useState(DEFAULT_ONE_SHOT_PCT_OF_MAX_HP);
   const [onlyOneShot, setOnlyOneShot] = useState(false);
+  // #786 —— id → 出貨名稱,載入時從 bundle join(⛔ 名稱不進排行榜資料)。
+  // null = 還沒載到/載不到 ⇒ 印裸 id 不加 ⚠(沒查過就不宣稱「沒有」)。
+  const [names, setNames] = useState<NameIndex | null>(null);
 
   useEffect(() => {
     let live = true;
@@ -59,6 +63,13 @@ export function DamageBoardPage(): JSX.Element {
     void fetchOneShotThreshold().then((t) => {
       if (live) setThreshold(t);
     });
+    fetchNameIndex()
+      .then((idx) => {
+        if (live) setNames(idx);
+      })
+      .catch(() => {
+        /* fail-open:報表照開,列退回裸 id —— 名冊只是給人看的那一半 */
+      });
     return () => {
       live = false;
     };
@@ -78,8 +89,27 @@ export function DamageBoardPage(): JSX.Element {
   const pageRows = pageOf(filtered, Math.min(page, pages), PER_PAGE);
   const topShare = shares[0]?.sharePct ?? 0;
 
+  // ---- #786:「名稱＋小字 id」的三個渲染件 --------------------------------
+  // 查不到 = ⚠＋裸 id(⛔ 不編名字);名冊還沒載到 = 裸 id 不加 ⚠。
+  const nameCell = (kind: NameKind, id: string): JSX.Element => {
+    if (id === "") return <>—</>;
+    if (names === null) return <>{id}</>;
+    const l = nameLabelFor(names, kind, id);
+    if (l.name === null) return <span title="出貨 bundle 裡沒有這個 id(退休/舊資料)">⚠ {l.id}</span>;
+    return (
+      <>
+        {l.name} <span style={{ color: TEXT_DIM, fontSize: 10 }}>{l.id}</span>
+      </>
+    );
+  };
+  /** 下拉選項的純文字版(option 裡放不了 JSX)。 */
+  const optionText = (kind: NameKind, id: string): string => {
+    const n = names === null ? null : nameLabelFor(names, kind, id).name;
+    return n === null ? id : `${n}（${id}）`;
+  };
+
   type SelKey = "championId" | "abilityId" | "version";
-  const sel = (key: SelKey, label: string, options: string[]): JSX.Element => (
+  const sel = (key: SelKey, label: string, options: string[], kind?: NameKind): JSX.Element => (
     <label style={{ color: TEXT_DIM, fontSize: 13, marginRight: 14 }}>
       {label}{" "}
       <select
@@ -93,7 +123,7 @@ export function DamageBoardPage(): JSX.Element {
         <option value="">全部</option>
         {options.map((o) => (
           <option key={o} value={o}>
-            {o}
+            {kind === undefined ? o : optionText(kind, o)}
           </option>
         ))}
       </select>
@@ -113,8 +143,8 @@ export function DamageBoardPage(): JSX.Element {
       {rows !== null && (
         <>
           <div style={{ marginBottom: 10 }}>
-            {sel("championId", "英雄", distinctValues(rows, "championId"))}
-            {sel("abilityId", "技能", distinctValues(rows, "abilityId"))}
+            {sel("championId", "英雄", distinctValues(rows, "championId"), "champions")}
+            {sel("abilityId", "技能", distinctValues(rows, "abilityId"), "abilities")}
             {sel("version", "版本", distinctValues(rows, "version"))}
             {/* ⭐ GH#658 —— 門檻**不寫死**:它是「傷害規則」那一頁的 oneShotPctOfMaxHp。 */}
             <label style={{ color: TEXT_DIM, fontSize: 13, marginRight: 14 }}>
@@ -145,8 +175,11 @@ export function DamageBoardPage(): JSX.Element {
               </div>
               {shares.slice(0, 12).map((s) => (
                 <div key={s.championId} style={{ display: "flex", alignItems: "center", fontSize: 12, padding: "1px 0" }}>
-                  <span style={{ width: 180, color: TEXT_MAIN, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                    {s.championId}
+                  <span
+                    title={s.championId}
+                    style={{ width: 180, color: TEXT_MAIN, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
+                  >
+                    {nameCell("champions", s.championId)}
                   </span>
                   <div style={{ flex: 1, margin: "0 8px" }}>
                     <div
@@ -192,12 +225,36 @@ export function DamageBoardPage(): JSX.Element {
                       {fmtPct(pct)}
                       {oneShot && <strong style={{ marginLeft: 6 }}>☠ 一擊</strong>}
                     </td>
-                    <td style={{ padding: "5px 8px" }}>{r.championId || "—"}</td>
-                    <td style={{ padding: "5px 8px" }}>{r.abilityId}</td>
+                    <td style={{ padding: "5px 8px" }}>{nameCell("champions", r.championId)}</td>
+                    <td style={{ padding: "5px 8px" }}>{nameCell("abilities", r.abilityId)}</td>
                     <td style={{ padding: "5px 8px", color: TEXT_DIM }}>{r.slot}</td>
                     <td style={{ padding: "5px 8px" }}>{r.round}</td>
-                    <td style={{ padding: "5px 8px", color: TEXT_DIM, maxWidth: 260, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                      {r.items.length > 0 ? r.items.join(", ") : "—"}
+                    <td
+                      title={
+                        names === null
+                          ? r.items.join(", ")
+                          : itemLabels(names, r.items)
+                              .map((l) => (l.name === null ? `⚠ ${l.id}` : `${l.name}（${l.id}）`))
+                              .join(", ")
+                      }
+                      style={{ padding: "5px 8px", color: TEXT_DIM, maxWidth: 260, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
+                    >
+                      {r.items.length === 0
+                        ? "—"
+                        : names === null
+                          ? r.items.join(", ")
+                          : itemLabels(names, r.items).map((l, j) => (
+                              <span key={`${l.id}-${j}`}>
+                                {j > 0 && ", "}
+                                {l.name === null ? (
+                                  <span title="出貨 bundle 裡沒有這個 id">⚠ {l.id}</span>
+                                ) : (
+                                  <>
+                                    {l.name} <span style={{ fontSize: 10 }}>{l.id}</span>
+                                  </>
+                                )}
+                              </span>
+                            ))}
                     </td>
                     <td style={{ padding: "5px 8px", color: TEXT_DIM }}>{r.version}</td>
                     <td style={{ padding: "5px 8px", color: TEXT_DIM }}>{fmtTs(r.ts)}</td>
