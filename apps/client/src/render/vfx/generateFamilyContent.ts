@@ -38,6 +38,11 @@
  * **那個檔案不存在**（CLAUDE.md 第三守則）。真的在跑的守衛是
  * `generateFamilyContent.test.ts`：它把這支腳本跑在沙箱樹上再比對檔案。
  */
+// ggd:writes content/config/vfx-families.json
+// ⭐ 靜態宣告（`merge-io.mjs` 會收）—— 這一支 2026-08-27 才進 sync 鏈（GH#802），
+//    在那之前它**沒有戶籍**：chain 裡有它、`steps[]` 裡沒有 ⇒ 規劃器看到不認得的
+//    步驟就 fail-closed **全跑**（`syncPlan.test.ts` 當場抓到）。
+//    ⚠️ 這一行是**過渡**：下一次重量測 `sync-io.json` 之後就有真的 reads/writes 了。
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { writeProduct } from "@ggd/shared/ops/writeProduct";
 import { dirname, join } from "node:path";
