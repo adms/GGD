@@ -8,6 +8,21 @@ export const MSG = {
   // client -> server
   INPUT: "input", // continuous + discrete, seq-stamped
   SELECT_CHAMPION: "selectChampion",
+  /**
+   * ⭐ GH#726 ① —— **鎖定英雄**。⛔ 這件事在此之前**只存在於客戶端**
+   * （`ui/panels/champselect/lockGate.ts` 的檔頭逐字自承 CLIENT-SIDE ONLY），
+   * 所以改造過的客戶端鎖定之後可以一直換人，而其他玩家也看不到誰鎖了。
+   *
+   * ⚠️ 為什麼是一個**新訊息**而不是「第一次 `SELECT_CHAMPION` 就算鎖定」：
+   * 出貨的客戶端在鎖定時**再送一次同一個 `SELECT_CHAMPION`**
+   * （`ChampSelectPanel.lockIn` → `pickToCommitOnLock`），而點格子本身也送 ——
+   * ⇒ 「第一次成功就鎖」會讓**每一次正常的鎖定**都收到一則 REJECT。
+   * 一個把出貨流程弄壞的權威閘不是修好，是換一個缺陷。
+   *
+   * ⚠️ 舊客戶端從不送這一則 ⇒ 對它們**逐位元零改變**（鎖定仍然只在本機）。
+   * 伺服器側的洞要等客戶端把 `lockIn()` 接上這一則才真的關上。
+   */
+  LOCK_CHAMPION: "lockChampion",
   CHEAT: "cheat", // dev-only offline testing aid (server hard-gates on dev mode)
   // server -> client (events; state rides the schema)
   EVENT: "event", // sim events fanout {type, tick, data}
@@ -24,6 +39,17 @@ export interface InputMessage {
 }
 
 export interface SelectChampionMessage {
+  championId: string;
+}
+
+/**
+ * GH#726 ① —— 鎖定這個座位現在選的英雄。
+ *
+ * ⚠️ 帶著 `championId` 而不是一個空訊息，理由和 `lockIn()` 重送一次 pick 一樣：
+ * 「我要鎖定的是**這一個**」比「鎖定我現在不知道是什麼的那個」少一次競態
+ * （點擊與鎖定之間的封包重排會把玩家鎖進上一個 hover）。
+ */
+export interface LockChampionMessage {
   championId: string;
 }
 

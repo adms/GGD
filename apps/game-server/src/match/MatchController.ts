@@ -280,6 +280,7 @@ import {
 } from "./arenaRules";
 import { resolveRoyaleArena } from "./arenaSelect";
 import { lobbySpawnAt } from "./lobbySpawn";
+import { resolveChampionLockEnforced } from "./integrityPolicy";
 
 /**
  * Strip the FIGHTING half of a produced intent while combat is not live, so a
@@ -371,7 +372,17 @@ export type SelectReason =
   | "no-seat"
   | "unknown-champion"
   | "not-whitelisted"
-  | "not-owned";
+  | "not-owned"
+  /**
+   * GH#726 —— 這個座位**已經鎖定**了。在此之前伺服器完全沒有這個概念：
+   * 鎖定只住在按下按鈕的那一台客戶端上（`champselect/lockGate.ts` 的檔頭自承），
+   * 所以改造過的客戶端鎖定之後可以一直換人。
+   *
+   * ⭐ 刻意給一個**專屬**的理由（⛔ 不併進 `wrong-phase`）：出貨的客戶端鎖定
+   * 之後名單就凍結，所以真的收到這個拒絕的只有兩種人 —— 改造過的客戶端，
+   * 或一個被後台開關改變了規則而還沒重整的分頁。第二種人需要看得懂的字。
+   */
+  | "already-locked";
 export type SelectResult = { ok: true } | { ok: false; reason: SelectReason };
 
 export interface TeamResult {
@@ -784,6 +795,58 @@ export class MatchController {
   private readonly roundBossKills = new Map<SeatId, number>();
   /** 一個座位手動鎖定英雄的絕對 tick;沒有 = 從未鎖定(系統代選)。 */
   private readonly pickLockTick = new Map<SeatId, number>();
+  /**
+   * ⭐ GH#726 ① —— **伺服器認定已經鎖定英雄**的座位。
+   *
+   * ⚠️ 與隔壁的 `pickLockTick` 是**兩件事**,⛔ 不要合併:
+   * `pickLockTick` 記的是「最後一次決定發生在哪個 tick」(每次成功的改選都會
+   * **覆蓋**它,因為它回答的是「決定花了多久」);這一格記的是「**有沒有**鎖過」,
+   * 而它一旦為真就不會退回。合併之後 `champSelectEarlyStartDue` 的語意會被
+   * 這條新規則靜默地改掉。
+   *
+   * 唯一的寫入點是成功的 `selectChampion`;唯一的讀取點是那支的閘與
+   * `net/snapshot.ts` 的座位投影(`SeatState.locked`)。
+   */
+  private readonly lockedSeats = new Set<SeatId>();
+  /**
+   * ⭐ GH#726 ② —— **這一場用過作弊碼**。⛔ **單向**:沒有任何一條路把它設回 false。
+   *
+   * owner 的規則是「1 vs bot 可以用作弊碼,但用了就沒有分數與藍水晶」。
+   * 在此之前唯一的作弊狀態是 `godModeSeats` / `zeroCdSeats` 兩個**可逆** Set
+   * (`enabled:false` 會 `.delete()`)⇒ 開了再關就查不到 ——
+   * ⭐ **可逆的旗標等於沒有旗標**,單向就是修法本身。
+   */
+  private cheatEverUsed = false;
+
+  /** {@link cheatEverUsed} 的唯一讀取通道。⛔ 刻意沒有 setter。 */
+  get cheatUsed(): boolean {
+    return this.cheatEverUsed;
+  }
+
+  /** 這個座位在伺服器眼中鎖定了嗎(`net/snapshot.ts` 的投影來源)。 */
+  seatLocked(seatId: SeatId): boolean {
+    return this.lockedSeats.has(seatId);
+  }
+
+  /**
+   * ⭐ GH#726 ① —— **鎖定**這個座位現在選的英雄（`MSG.LOCK_CHAMPION` 的落點）。
+   *
+   * 先跑一次 `selectChampion`（同一支權威閘 —— 白名單 / 擁有權 / 隱藏英雄 /
+   * 階段全部照走，⛔ 不另外寫一份會漂掉的複本），成功才鎖。
+   *
+   * ⚠️ 空的 `championId` 是**合法**的鎖定請求嗎？⛔ 不是：`lockIn()` 自己就
+   * 擋著 `!myPick`，而一個「鎖定了但沒有英雄」的座位會讓自動代選（
+   * `autoPickAndSpawn`）與這條鎖互相矛盾。⇒ 沒選就拒絕。
+   *
+   * ⚠️ 鎖定是**單向**的（沒有 unlock）：選角階段結束就整場作廢，⛔ 不需要一條
+   * 會被拿來當攻擊面的解鎖路徑。
+   */
+  lockSeatChampion(seatId: SeatId, championId: string): SelectResult {
+    const res = this.selectChampion(seatId, championId);
+    if (!res.ok) return res;
+    this.lockedSeats.add(seatId);
+    return res;
+  }
   /**
    * 每個 (座位, 技能) **最近一次**施放的 handle。後到的傷害/治療掛回那一次。
    *
@@ -1310,6 +1373,18 @@ export class MatchController {
     // seat whose ownership we were never told (bots / dev joins), so #130's
     // "always at least the free roster" floor is never turned into a dead seat.
     if (!this.ownership.owns(seat.accountId, championId)) return { ok: false, reason: "not-owned" };
+    // ⭐ GH#726 ① —— **座位鎖**的權威閘。這個座位已經**明確地**鎖定過
+    //（`lockSeatChampion`，來自 `MSG.LOCK_CHAMPION`）⇒ 拒絕改選。
+    //
+    // ⚠️ 位置在**所有寫入之前**：寫在下面會讓被拒的那一次仍然改掉 `championId`
+    //（失敗形態②的鏡像 —— 擋下來了但東西還是變了）。
+    //
+    // ⚠️ ⛔ **不可以**改成「第一次成功的 select 就算鎖定」：出貨的客戶端在鎖定
+    // 時會**再送一次同一個 SELECT_CHAMPION**（`ChampSelectPanel.lockIn`），
+    // 而點格子本身也送 ⇒ 那個版本會讓每一次正常的鎖定都收到一則 REJECT。
+    if (this.lockedSeats.has(seatId) && resolveChampionLockEnforced()) {
+      return { ok: false, reason: "already-locked" };
+    }
     seat.championId = championId;
     // #207 選角紀錄的 `lockTick`。記在**成功**的那一支上,所以被拒的選取
     // (非白名單 / 未擁有 / 錯的階段)不會留下一個假的鎖定時間。改選會覆蓋 ——
@@ -4522,6 +4597,15 @@ export class MatchController {
     this.cheatRejection = null;
     const ok = this.runCheat(seatId, cheat);
     if (!ok && this.cheatRejection === null) this.cheatRejection = `cheat-refused:${cheat.kind}`;
+    // ⭐ GH#726 ② —— **單向**。這一行是 owner 的「用了就沒有分數與藍水晶」
+    // 唯一的支點：15 種 cheat kind 全部從這裡走過去，所以⛔ 不必逐條補
+    //（和上面那條 `cheat-refused` 的論證一字不差）。
+    //
+    // ⚠️ 只有**真的套用成功**才算：被拒的一次（不存在的英雄、沒有實體…）
+    // 什麼都沒發生，把它算成作弊等於用一個 no-op 沒收玩家的水晶。
+    //
+    // ⚠️ ⛔ 沒有「關掉就清掉」那一半 —— 那正是 `godModeSeats` 今天的問題。
+    if (ok) this.cheatEverUsed = true;
     return ok;
   }
 

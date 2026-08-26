@@ -180,6 +180,11 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
   // skips a primitive assignment whose value is unchanged, so the constant case
   // costs zero bytes after the first patch.
   state.mobVisualJson = mobVisualJson(world.mobRules);
+  // ⭐ GH#726 ② —— 「本場使用作弊碼，不計分」的**唯一**通道。⛔ 沒有這一行，
+  // 伺服器會誠實地不發水晶，而玩家看到的是一場「莫名其妙沒結算」的比賽 ——
+  // 一個誠實的規則被做成一個看起來像缺陷的東西（失敗形態②）。
+  // 單向，所以 Colyseus 最多送一次這個 patch。
+  state.cheatUsed = ctl.cheatUsed;
 
   // ---- teams ----
   while (state.teams.length < ctl.lives.size) state.teams.push(new TeamState());
@@ -249,6 +254,10 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
     // GH#492：⛔ 這一格不可以從 driver 推 —— 斷線的真人 driver 就是 "ai"。
     ss.human = seat.humanSeat;
     ss.ready = seat.ready;
+    // ⭐ GH#726 ① —— 鎖定是**伺服器的**事實。⛔ 沒有這一行，欄位存在、伺服器
+    // 也真的在拒絕改選，而**其他玩家的選角畫面照樣畫不出誰鎖了**
+    //（失敗形態②：算出來了但從沒送到客戶端 —— 那正是 #104 的另一半）。
+    ss.locked = ctl.seatLocked(seatId);
     ss.lastAckSeq = humanDrivers.get(seatId)?.mailbox.lastSeq ?? 0;
     // PER-ROUND K/D (reset at each combat entry, never cumulative). The round-end
     // winner model (#143) + quote VO (#142) rank the leading team's seats by these

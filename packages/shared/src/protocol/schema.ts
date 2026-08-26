@@ -392,6 +392,29 @@ export class SeatState extends Schema {
    * 也就是這一格出現之前畫面上唯一畫得出來的那個樣子。
    */
   declare toggleMask: number;
+  /**
+   * ⭐ 這個座位**已經鎖定英雄了嗎** —— 伺服器的權威事實（GH#726，接手 #104）。
+   *
+   * 在此之前「鎖定」**只存在於按下按鈕的那一台客戶端上**：
+   * `apps/client/src/ui/panels/champselect/lockGate.ts` 的檔頭逐字自承
+   * 「CLIENT-SIDE ONLY … It does NOT yet stop a crafted client, and OTHER
+   * players do not see the lock」。兩個後果都是真的：
+   *   ① 改造過的客戶端鎖定之後可以一直換人（伺服器完全沒有意見）
+   *   ② 其他玩家的選角畫面**畫不出**別人鎖了沒有 —— 那份資料從來沒上過線
+   *
+   * ⚠️ 為什麼不重用 `ready`：`ready` 是商店/中場的「我準備好了」，每個階段都會
+   * 被重設；鎖定在選角結束前**不會退回**。兩個生命週期不同的事實共用一格，
+   * 就是下一個「兩邊各自漂而沒有東西報錯」。
+   *
+   * ⚠️ 為什麼不是 `ENTITY_FLAG` 的一顆位元：那是**實體**的旗標，而鎖定是**座位**
+   * 的事實（一個還沒生出實體的座位就可以鎖定 —— 選角階段根本沒有實體）。
+   *
+   * 寫端唯一一處是 `net/snapshot.ts` 的座位投影，來源是 `MatchController` 的
+   * `lockedSeats`；強制與否是一格後台開關（`match/integrityPolicy.ts`），
+   * ⛔ 但這一格**永遠**照實反映伺服器知道的狀態 —— 開關管的是「拒不拒絕改選」，
+   * ⛔ 不是「要不要告訴大家」。
+   */
+  declare locked: boolean;
 
   constructor() {
     super();
@@ -436,6 +459,7 @@ export class SeatState extends Schema {
     this.rating = 0;
     this.human = false;
     this.toggleMask = 0;
+    this.locked = false;
   }
 }
 defineTypes(SeatState, {
@@ -506,6 +530,11 @@ defineTypes(SeatState, {
   // 為什麼是一格 uint8 而不是六顆 ENTITY_FLAG，寫在宣告上（三個理由）。
   // 讀端一律走 `toggleMaskHas`，⛔ 不要在任何地方手寫 `1 << i`。
   toggleMask: "uint8",
+  // APPEND-ONLY (見上)：⭐【這個座位已經鎖定英雄】GH#726。⛔ **最後一格**。
+  // 理由寫在宣告上 —— 它把「鎖定」從一個只有本機知道的 client 狀態，變成
+  // **伺服器的**事實。⛔ 不是重用 `ready`：`ready` 是商店/中場的「我準備好了」，
+  // 兩者的生命週期完全不同（`ready` 每個階段重設，鎖定在選角結束前不會退回）。
+  locked: "boolean",
 });
 
 /**
@@ -861,6 +890,23 @@ export class MatchState extends Schema {
    * to spectate once its own duel is decided. See DuelState.
    */
   declare duels: ArraySchema<DuelState>;
+  /**
+   * ⭐ 這一場**用過作弊碼**（GH#726，接手 #144）—— **單向**，設了就不會被清掉。
+   *
+   * owner 的規則是「1 vs bot 可以用作弊碼，但用了就沒有分數與藍水晶」。
+   * 在此之前**完全沒有落地**：`applyCheat()` 的 15 種 kind 全部回傳 boolean 就
+   * 結束，唯一的作弊狀態是 `godModeSeats` / `zeroCdSeats` 兩個**可逆** Set
+   *（`enabled:false` 會 `.delete()`）⇒ 開了再關就查不到。
+   * ⭐ **可逆的旗標等於沒有旗標** —— 這一格單向就是修法本身。
+   *
+   * 上線的理由是 owner 的 AC ③：玩家要在結算畫面**看得到**「本場使用作弊碼，
+   * 不計分」。⛔ 一個只有伺服器知道的旗標會讓玩家看到一場「莫名其妙沒發水晶」
+   * 的比賽 —— 那是把一個誠實的規則做成一個看起來像缺陷的東西。
+   *
+   * ⚠️ 它是 **match 級**不是 seat 級：owner 的句子講的是「本場」，而且一個座位
+   * 開的無敵會改變**整場**的結果（隊友的分數同樣不再誠實）。
+   */
+  declare cheatUsed: boolean;
 
   constructor() {
     super();
@@ -886,6 +932,7 @@ export class MatchState extends Schema {
     this.teams = new ArraySchema<TeamState>();
     this.entities = new MapSchema<EntityState>();
     this.duels = new ArraySchema<DuelState>();
+    this.cheatUsed = false;
   }
 }
 defineTypes(MatchState, {
@@ -918,6 +965,9 @@ defineTypes(MatchState, {
   // APPEND-ONLY (GH#192): 殭屍外觀表. 又一次宣告在**最後一格** —— 理由同上,
   // Colyseus 用宣告順序當欄位索引,插在中間會讓所有舊客戶端整份解碼錯位。
   mobVisualJson: "string",
+  // APPEND-ONLY (見上)：⭐【本場用過作弊碼】GH#726。⛔ **最後一格**，理由同上 ——
+  // Colyseus 用宣告順序當欄位索引。單向旗標，理由寫在宣告上。
+  cheatUsed: "boolean",
 });
 
 /**

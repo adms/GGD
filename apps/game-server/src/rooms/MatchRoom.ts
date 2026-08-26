@@ -19,6 +19,7 @@ import {
   SETTLEMENT_EVENT,
   TEAM_SETTLEMENT_EVENT,
   type SelectChampionMessage,
+  type LockChampionMessage,
   type CheatMessage,
 } from "@ggd/shared/protocol/messages";
 import { TICK_MS, SEAT_COUNT, TEAM_SIZE } from "@ggd/shared/constants";
@@ -63,6 +64,7 @@ import { roomRegistry } from "./roomRegistry";
 import { accountRooms, EVICTED_CLOSE_CODE, type AccountRoomHolder } from "./accountRooms";
 import { resolveDisposeEmptyChampSelect } from "./emptyRoomPolicy";
 import { resolveRoomCombatLifetime, roomOutlivedCombatCap } from "./roomLifetime";
+import { resolveScoreCheatedMatches } from "../match/integrityPolicy";
 import { verifyCreateToken } from "./createGate";
 import { MatchRecorder, reportRecorderSealFailure } from "../replay/Recorder";
 import { replayRecordingEnabled } from "../replay/policy";
@@ -727,6 +729,23 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
         client.send(MSG.REJECT, { reason: res.reason });
       }
     });
+    // ⭐ GH#726 ① —— **鎖定**。走的是 `selectChampion` 的同一支權威閘（白名單 /
+    // 擁有權 / 隱藏英雄 / 階段），成功之後這個座位就不能再改選。
+    //
+    // ⚠️ 錄影記的仍然是**選取**（`recordChampionSelect`）—— 重播只需要「最後選了
+    // 誰」，⛔ 不需要重播「他按了鎖定鈕」這個 UI 事件；而 `Player.ts` 對一個它
+    // 不認得的事件種類會整份重播失敗（append-only 的另一半）。
+    this.onMessage(MSG.LOCK_CHAMPION, (client, msg: LockChampionMessage) => {
+      if (this.rateLimiter.check(client.sessionId) !== "ok") return;
+      const seatId = this.seatBySession.get(client.sessionId);
+      if (seatId === undefined || !msg?.championId) return;
+      const res = this.ctl.lockSeatChampion(seatId, String(msg.championId));
+      if (res.ok) {
+        this.recorder?.recordChampionSelect(this.ctl.world.tick, seatId, String(msg.championId));
+      } else {
+        client.send(MSG.REJECT, { reason: res.reason });
+      }
+    });
     this.onMessage(MSG.CHEAT, (client, msg: CheatMessage) => {
       // HARD GATE: dev mode **or a practice room** (GH#343), never trusting the
       // client. `cheatsAllowed` was resolved server-side in onCreate — the client's
@@ -1294,6 +1313,23 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
     if (this.ctl.practice) {
       console.warn(
         `[match ${this.ctl.matchId}] 練習房：⛔ 不回報結果（不發水晶、不動 MMR、不寫玩家資料）。`,
+      );
+      return;
+    }
+    // ⛔ GH#726 ② —— **本場用過作弊碼**。owner 的規則逐字：
+    // 「1 vs bot 可以用作弊碼，但用了就沒有分數與藍水晶」。
+    //
+    // ⭐ 讀的是 `MatchController.cheatUsed` —— 一個**單向**旗標。在此之前唯一的
+    // 作弊狀態是兩個**可逆** Set（`enabled:false` 就 `.delete()`），所以「開了
+    // 再關」在結算的時候查不出來，而這條規則從來沒有真的落地過。
+    //
+    // ⚠️ 位置與練習房那一閘並排、在 `buildPlatformResult` **之前**：不組 payload、
+    // 不簽名、不發請求 —— ⛔ 一個「送出去但平台自己不算」的版本會把這條規則的
+    // 落地點推到我們控制不到的另一個服務裡。
+    if (this.ctl.cheatUsed && !resolveScoreCheatedMatches()) {
+      console.warn(
+        `[match ${this.ctl.matchId}] 本場使用過作弊碼：⛔ 不回報結果（不給分數、不發藍水晶）。` +
+          "（後台 match.scoreCheatedMatches 可一鍵改回計分。）",
       );
       return;
     }
