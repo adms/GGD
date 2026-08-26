@@ -6,7 +6,8 @@
  * ⛔ ⑥ 會是 grep `snapshot.ts` 有沒有 `BUFFER_SIZE` 這個字。
  * ⭐ 這裡跑的是**出貨的那一條路**：真的 `MatchController` 進戰鬥、真的
  *    `mobRulesFromConfig` / `spawnMob`（數量由**出貨設定**的 `maxAlivePerZone`
- *    推導，⛔ 不抄字面值）、真的 `projectSnapshot`、真的 `encodeAll`
+ *    推導，⛔ 不抄字面值）、真的 `projectSnapshot`、真的 `getFullState`（`encodeAll`
+ *    + `encodeAllView`，見 testkit/wireFullState.ts）
  *    —— 也就是 `SchemaSerializer.getFullState()` 在每一位玩家加入時走的那一趟。
  *
  * 斷言分兩半，缺一半就測不出東西：
@@ -18,6 +19,7 @@
  */
 import { describe, expect, it, vi } from "vitest";
 import { Encoder } from "@colyseus/schema";
+import { fullStateBytes } from "../testkit/wireFullState";
 import { MatchController } from "../match/MatchController";
 import { projectSnapshot, resolveSnapshotBufferBytes, SNAPSHOT_BUFFER_DEFAULT_KB } from "./snapshot";
 import { MatchState } from "@ggd/shared/protocol/schema";
@@ -53,7 +55,11 @@ describe("快照編碼緩衝區裝得下出貨的一場尖峰", () => {
     projectSnapshot(ctl, state, new Map());
 
     const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
-    const full = encoder.encodeAll();
+    // ⚠️ GH#760：`entities` 帶著 view tag 之後，`encodeAll()` 的輸出裡**一個實體
+    // 都沒有**（3,765 B）—— 拿它當「一份完整快照」量，第 ① 條會永遠紅而且理由是
+    // 假的。出貨在玩家加入時走的是 `getFullState(client)` ＝ 共用段 + view 段，
+    // 那就是 `fullStateBytes`（testkit/wireFullState.ts 逐字照抄那四行）。
+    const full = fullStateBytes(encoder, state);
     // ⚠️ 呼叫次數要在 `mockRestore()` **之前**抄下來 —— restore 會把 mock 的
     // 通話紀錄一起清掉,所以「restore 之後才斷言」的寫法對兩種實作都是綠的(形態④)。
     const overflowWarnings = warn.mock.calls.length;

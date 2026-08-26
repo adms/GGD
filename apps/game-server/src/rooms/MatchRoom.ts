@@ -48,6 +48,7 @@ import { HumanDriver } from "../seat/HumanDriver";
 import type { Seat } from "../seat/Seat";
 import type { SimEvent } from "@ggd/shared/sim/SimWorld";
 import { projectSnapshot } from "../net/snapshot";
+import { ZoneViewSync } from "../net/zoneView";
 import { publishMatchDamageBoard } from "../stats/damageBoard";
 import { sign, verifyTicket } from "../auth/hmac";
 import { Whitelist, WHITELIST_BYPASS, sharedWhitelistCache } from "../curation/whitelist";
@@ -304,6 +305,12 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
   private loggedLoopFaults = 0;
   /** per-session inbound-message rate limiter (DoS: message-flood). */
   private readonly rateLimiter = new MessageRateLimiter();
+  /**
+   * ⭐ GH#760 步驟 2 —— per-client 快照剔除。每間房一份（旋鈕在**建構時**讀一次，
+   * ⛔ 不是每 tick），所以守衛可以造一間關掉剔除的房去證明 rollback 那條路。
+   * 規則、安全性論證與「⛔ 每個 client 都必須有 view」寫在 `net/zoneView.ts`。
+   */
+  private readonly zoneViews = new ZoneViewSync();
   /** true once this room holds a process-wide concurrent-room slot. */
   private acquiredRoomSlot = false;
   /**
@@ -879,7 +886,13 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
         break;
       }
     }
-    if (stepped) projectSnapshot(this.ctl, this.state, this.humanDrivers);
+    if (stepped) {
+      projectSnapshot(this.ctl, this.state, this.humanDrivers);
+      // ⭐ L4 剔除（GH#760 步驟 2）—— **在** projectSnapshot 之後：它讀的是剛寫好的
+      // `state.entities`。⛔ 這一行不在的話，`MatchState.entities` 的 `view: true`
+      // 會讓每一個客戶端**一個實體都收不到**（view-tagged 欄位走 filteredChanges）。
+      this.zoneViews.sync(this.state, this.clients, this);
+    }
   }
 
   /**
@@ -966,6 +979,45 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
     }
   }
 
+  /**
+   * `ZoneViewSource` ① —— sessionId → 他驅動的座位們現在站的 duel zone。
+   *
+   * ⚠️ 一個連線可以驅動**多個**座位（分割畫面），所以這是一個陣列而不是一個數字；
+   * 而 `seatBySession` 只記一個 —— 所以這裡走的是 `ctl.seats` 自己的 `sessionId`，
+   * ⛔ 不是那張反查表。
+   * ⚠️ 讀的是**實體真正的** `transform.zone`（屍體保留 zone），⛔ 不是 pairing 表：
+   * 客戶端的 `ownZoneOf` 讀的正是 `es.zone`，兩邊要問同一個問題。
+   */
+  ownZonesBySession(): Map<string, number[]> {
+    const out = new Map<string, number[]>();
+    for (const [, seat] of this.ctl.seats) {
+      const sid = seat.sessionId;
+      if (sid === null || seat.entityId === null) continue;
+      const zone = this.ctl.world.transform.get(seat.entityId)?.zone;
+      if (zone === undefined) continue;
+      const list = out.get(sid);
+      if (list) {
+        if (!list.includes(zone)) list.push(zone);
+      } else {
+        out.set(sid, [zone]);
+      }
+    }
+    return out;
+  }
+
+  /**
+   * `ZoneViewSource` ② —— 還沒分出勝負的 duel zone。
+   * 這正是客戶端 `pickSpectateZone` 能挑的集合（`DuelState.winner < 0`），
+   * 而 `MatchState.duels` 就是從同一對來源投影的（net/snapshot.ts:206-226）。
+   */
+  liveZones(): number[] {
+    const out: number[] = [];
+    for (const p of this.ctl.pairings) {
+      if (this.ctl.duelWinnerOf(p.zone) === undefined) out.push(p.zone);
+    }
+    return out;
+  }
+
   override onJoin(client: Client, options: Record<string, unknown>): void {
     // resolve seat: reserved by accountId (platform flow) or first bot seat (dev)
     const accountId =
@@ -1024,6 +1076,11 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
     const driver = new HumanDriver();
     this.humanDrivers.set(seatId, driver);
     seat.setDriver(driver);
+    // ⭐ GH#760 —— 進房的第一份 full state 就要有 view，⛔ 不是等第一次 sync：
+    // `SchemaSerializer.getFullState(client)` 對沒有 view 的客戶端回傳的是**不含
+    // view-tagged 欄位**的共用編碼 ⇒ 選人畫面會是一座空競技場。這裡先給
+    // 「全部可見」那一份（他的英雄還沒生出來，zone 算不出來），下一個 tick 收窄。
+    this.zoneViews.onJoin(client);
   }
 
   /**
@@ -1082,6 +1139,8 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
     // Drop the session's rate-limit bucket so they never accumulate unbounded
     // over a long-lived room (a returning client just gets a fresh bucket).
     this.rateLimiter.forget(client.sessionId);
+    // GH#760 —— 這個連線的 zone view 跟著他走（共用的「全部可見」那一份留著）。
+    this.zoneViews.onLeave(client.sessionId);
     const seatId = this.seatBySession.get(client.sessionId);
     // 已經被 `evictAccount` 同步收掉了 —— ⛔ 不要再開一次重連窗口。
     if (seatId === undefined) return;

@@ -22,6 +22,7 @@
  */
 import { describe, expect, it } from "vitest";
 import { Encoder, Decoder } from "@colyseus/schema";
+import { fullStateBytes } from "../testkit/wireFullState";
 import { cover } from "../../../../packages/shared/testkit/cover";
 import { MatchController } from "../match/MatchController";
 import { projectSnapshot } from "./snapshot";
@@ -137,7 +138,7 @@ describe("殭屍王 / 特殊殭屍 are visually distinct on the wire", () => {
     const encoder = new Encoder(state);
     projectSnapshot(ctl, state, new Map());
     const decoded = new MatchState();
-    new Decoder(decoded).decode(encoder.encodeAll());
+    new Decoder(decoded).decode(fullStateBytes(encoder, state), { offset: 1 });
 
     const key = (id: number): string => {
       const es = decoded.entities.get(String(id));
@@ -216,7 +217,7 @@ describe("殭屍王 / 特殊殭屍 are visually distinct on the wire", () => {
     const enc2 = new Encoder(state2);
     projectSnapshot(ctl, state2, new Map());
     const dec2 = new MatchState();
-    new Decoder(dec2).decode(enc2.encodeAll());
+    new Decoder(dec2).decode(fullStateBytes(enc2, state2), { offset: 1 });
     expect(parseMobVisualJson(dec2.mobVisualJson).tintStrength).toBe(0.2);
     w.mobRules = rules;
 

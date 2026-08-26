@@ -15,7 +15,7 @@
  * accessor). Do NOT convert these back to field initializers.
  * Regression: apps/game-server/src/net/encode.test.ts (match-13).
  */
-import { Schema, MapSchema, ArraySchema, defineTypes } from "@colyseus/schema";
+import { Schema, MapSchema, ArraySchema, defineTypes, view } from "@colyseus/schema";
 
 export class OfferState extends Schema {
   declare offerId: string;
@@ -969,6 +969,29 @@ defineTypes(MatchState, {
   // Colyseus 用宣告順序當欄位索引。單向旗標，理由寫在宣告上。
   cheatUsed: "boolean",
 });
+
+/**
+ * ⭐ 【GH#760 步驟 2】把 `entities` 標成 **view-gated** —— per-client 快照剔除。
+ *
+ * ⚠️⚠️ **這不是一個新欄位，也沒有移動任何欄位。** `Metadata.setTag` 只在
+ * `entities` 那一格的 metadata 上多一個 `tag`，欄位索引一格都沒動
+ * ⇒ APPEND-ONLY 的規矩沒有被觸碰（那條規矩管的是**宣告順序**）。
+ *
+ * ⛔ **不可以寫成 `entities: { map: EntityState, view: true }`** —— 那個寫法
+ * 只有新的宣告式 `schema()` API 認得（`annotations.js:390-397` 在 `schema()`
+ * 裡面）；`defineTypes()` 走的是 `type(fields[field])(...)`，`view` 這一格
+ * **會被靜默丟掉**。2026-08-27 實測：那樣寫的話共用編碼照樣送出全部實體，
+ * 也就是一個看起來完全正確、而且**沒有任何東西會紅**的 no-op（第三守則）。
+ *
+ * 它改的是**誰收得到**：view-tagged 欄位的異動走 `ChangeTree.filteredChanges`，
+ * Colyseus 只把它編給 `client.view` 明著收下的那些實體。
+ * ⚠️ 反面是 ⛔ **沒有 `client.view` 的客戶端一個實體都收不到**（⛔ 不是「收到
+ * 全部」）—— 所以每一間用 `MatchState` 的房都必須指派 view。今天有兩間：
+ * `MatchRoom`（依 duel zone 收窄）與 `ReplayRoom`（一律全部可見）。
+ * 剔除規則本身、以及「為什麼客戶端結構上看不到別區」的證明寫在
+ * `apps/game-server/src/net/zoneView.ts`；旋鈕是 `GGD_SNAPSHOT_ZONE_CULL=0`。
+ */
+view()(MatchState.prototype, "entities");
 
 /**
  * EntityState.kind values. Flowers (kind 2) are neutral server entities with

@@ -27,6 +27,7 @@
  */
 import { describe, expect, it } from "vitest";
 import { Encoder, Decoder } from "@colyseus/schema";
+import { fullStateBytes } from "../testkit/wireFullState";
 import { MatchController } from "../match/MatchController";
 import { projectSnapshot } from "./snapshot";
 import { MatchState, teamOverrideFromFlags } from "@ggd/shared/protocol/schema";
@@ -71,7 +72,7 @@ function decodedFlags(ctl: MatchController, id: EntityId): number {
   const encoder = new Encoder(state);
   projectSnapshot(ctl, state, new Map());
   const decoded = new MatchState();
-  new Decoder(decoded).decode(encoder.encodeAll());
+  new Decoder(decoded).decode(fullStateBytes(encoder, state), { offset: 1 });
   const es = decoded.entities.get(String(id));
   expect(es, `entity ${id} 從來沒上線`).toBeDefined();
   return es!.flags;

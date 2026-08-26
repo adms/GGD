@@ -9,6 +9,7 @@
 import { describe, it, expect } from "vitest";
 import { cover } from "../../../../packages/shared/testkit/cover";
 import { Encoder, Decoder } from "@colyseus/schema";
+import { fullStateBytes } from "../testkit/wireFullState";
 import { MatchState } from "@ggd/shared/protocol/schema";
 import { MatchController } from "../match/MatchController";
 import { projectSnapshot } from "./snapshot";
@@ -33,13 +34,16 @@ describe("schema encode regression (match-13)", () => {
     projectSnapshot(ctl, state, new Map());
 
     // full encode (what the transport does on client join)
-    const full = encoder.encodeAll();
+    // ⚠️ GH#760：`encodeAll()` 已經**不是**客戶端收到的東西 —— `entities` 帶著
+    // view tag，它的異動走另一個 changeset。出貨走的是 `getFullState(client)`
+    // ＝ 共用段 + 這個 client 的 view 段，那正是 `fullStateBytes` 抄下來的四行。
+    const full = fullStateBytes(encoder, state);
     expect(full.byteLength).toBeGreaterThan(100);
 
     // decode into a fresh state — proves tracking accessors were live
     const decoded = new MatchState();
     const decoder = new Decoder(decoded);
-    decoder.decode(full);
+    decoder.decode(full, { offset: 1 });
     expect(decoded.phase).toBe("combat");
     expect(decoded.seats.size).toBe(12);
     expect(decoded.teams.length).toBe(4);
@@ -104,7 +108,7 @@ describe("schema encode regression (match-13)", () => {
     expect(state.fireRingRadius).toBeLessThan(24); // it has actually moved
 
     const decoded = new MatchState();
-    new Decoder(decoded).decode(encoder.encodeAll());
+    new Decoder(decoded).decode(fullStateBytes(encoder, state), { offset: 1 });
     expect(decoded.fireRingTicks).toBe(state.fireRingTicks);
     expect(decoded.fireRingRadius).toBeCloseTo(state.fireRingRadius, 4);
   });
@@ -122,7 +126,7 @@ describe("schema encode regression (match-13)", () => {
     const encoder = new Encoder(state);
     projectSnapshot(ctl, state, new Map());
     const decoded = new MatchState();
-    new Decoder(decoded).decode(encoder.encodeAll());
+    new Decoder(decoded).decode(fullStateBytes(encoder, state), { offset: 1 });
     // -1 = disarmed; the radius reads as the full zone boundary so a client that
     // renders it unconditionally draws the un-shrunk rim, not a hazard at 0.
     expect(decoded.fireRingTicks).toBe(-1);
@@ -171,7 +175,7 @@ describe("schema encode regression (match-13)", () => {
     projectSnapshot(ctl, state, new Map());
 
     const decoded = new MatchState();
-    new Decoder(decoded).decode(encoder.encodeAll());
+    new Decoder(decoded).decode(fullStateBytes(encoder, state), { offset: 1 });
     expect(decoded.seats.get(String(a.seatId))!.mobKills).toBe(37);
     expect(decoded.seats.get(String(b.seatId))!.mobKills).toBe(0);
 

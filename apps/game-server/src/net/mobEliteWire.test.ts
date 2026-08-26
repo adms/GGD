@@ -33,6 +33,7 @@
  */
 import { describe, expect, it } from "vitest";
 import { Encoder, Decoder } from "@colyseus/schema";
+import { fullStateBytes } from "../testkit/wireFullState";
 import { cover } from "../../../../packages/shared/testkit/cover";
 import { MatchController } from "../match/MatchController";
 import { projectSnapshot } from "./snapshot";
@@ -83,7 +84,7 @@ function wire(ctl: MatchController): MatchState {
   const encoder = new Encoder(state);
   projectSnapshot(ctl, state, new Map());
   const decoded = new MatchState();
-  new Decoder(decoded).decode(encoder.encodeAll());
+  new Decoder(decoded).decode(fullStateBytes(encoder, state), { offset: 1 });
   return decoded;
 }
 

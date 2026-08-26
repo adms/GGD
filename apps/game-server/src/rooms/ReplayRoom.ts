@@ -33,6 +33,7 @@ import {
 import { TICK_MS } from "@ggd/shared/constants";
 import type { HumanDriver } from "../seat/HumanDriver";
 import { projectSnapshot } from "../net/snapshot";
+import { ZoneViewSync } from "../net/zoneView";
 import { isFannedOutEvent } from "../net/eventFanout";
 import { EventBatcher, resolveEventBatch } from "../net/eventBatch";
 import { ReplayPlayer, type ReplayRefusal } from "../replay/Player";
@@ -55,6 +56,12 @@ const MIN_SPEED = 0.25;
 const MAX_SPEED = 8;
 /** Ticks per fast-forward slice while seeking (bounded event-loop work). */
 const SEEK_SLICE = 400;
+
+/** 回放沒有座位也沒有 duel ⇒ 兩個查詢都是空的（`cull: false` 其實不會問它）。 */
+const REPLAY_VIEW_SOURCE = {
+  ownZonesBySession: () => new Map<string, number[]>(),
+  liveZones: () => [] as number[],
+};
 
 export class ReplayRoom extends Room<MatchState> {
   private player: ReplayPlayer | null = null;
@@ -118,6 +125,7 @@ export class ReplayRoom extends Room<MatchState> {
     // 屬性上限 (GH#286) —— 同上,同一份物件。
     this.state.statCapsJson = JSON.stringify(this.player.ctl.world.statCaps);
     projectSnapshot(this.player.ctl, this.state, this.noDrivers);
+    this.syncViews();
 
     this.onMessage(REPLAY_MSG.CONTROL, (client, msg: ReplayControlAction) => {
       void this.control(client, msg);
@@ -125,7 +133,19 @@ export class ReplayRoom extends Room<MatchState> {
     this.setSimulationInterval((dt) => this.loop(dt), TICK_MS / 2);
   }
 
+  /**
+   * ⭐ GH#760 —— 回放觀眾看的是**整場**，⛔ 沒有「自己那一區」可言，所以這一間房
+   * 一律用「全部可見」那條路（`cull: false`）。
+   *
+   * ⚠️ 它**不是**可有可無：`MatchState.entities` 帶著 `view: true`，而
+   * `SchemaSerializer` 對 `client.view == null` 的客戶端送的是不含 view-tagged
+   * 欄位的共用編碼 ⇒ ⛔ 少了這一支，回放畫面上一個實體都不會出現。
+   */
+  private readonly zoneViews = new ZoneViewSync(false);
+
   override onJoin(client: Client): void {
+    // GH#760 —— 先給 view，⛔ 在任何 `send` / full state 之前（見欄位說明）。
+    this.zoneViews.onJoin(client);
     // The refusal / status is pushed on join so a viewer arriving late (or a
     // reconnect) always learns the current state without asking.
     if (this.refusal) {
@@ -188,9 +208,18 @@ export class ReplayRoom extends Room<MatchState> {
     this.seeking = false;
     this.accumulator = 0;
     projectSnapshot(p.ctl, this.state, this.noDrivers);
+    this.syncViews();
     if (p.divergence) this.reportDivergence(p.divergence);
     else this.playing = wasPlaying && !p.finished;
     this.broadcastStatus();
+  }
+
+  /**
+   * 把每個觀眾的 view 對齊「全部實體」。⭐ 共用**一份** `StateView`，所以 N 個
+   * 觀眾只編碼一次（`SchemaSerializer` 用 view 物件當 cache key）。
+   */
+  private syncViews(): void {
+    this.zoneViews.sync(this.state, this.clients, REPLAY_VIEW_SOURCE);
   }
 
   private loop(dtMs: number): void {
@@ -223,6 +252,7 @@ export class ReplayRoom extends Room<MatchState> {
     }
     if (stepped) {
       projectSnapshot(p.ctl, this.state, this.noDrivers);
+      this.syncViews();
       // Cheap heartbeat so the viewer's scrub bar tracks without a message per
       // tick: once every ~half second of playback.
       if (p.tick % 15 === 0) this.broadcastStatus();
