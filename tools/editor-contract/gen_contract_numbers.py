@@ -1182,10 +1182,21 @@ ENGINE_REGISTRY_SOURCE = "`packages/shared/src/sim/effects/effectRegistry.ts`（
 SHARD_SOURCE = "**分片目錄本身**（現場 `readdir`，⛔ 不是手打的宣稱）"
 # ⭐ 五級距那一段讀三種東西，出處要三個都講：級距表（後台）· 出貨 schema（哪幾格存在）·
 #   `content/abilities/`（現場數出來的「級別與原始值對不上」那幾支）。
-TIER_SOURCE = ("`content/config/*-tiers.json`（級距表）＋ 出貨 Zod schema（哪幾格存在）"
-               "＋ `ap-damage-scaling.json`（第 ③ 層）"
+# ⚠️ GH#771 —— 這兩行是**對外契約**：`damage-tiers.json` 與 `ap-damage-scaling.json`
+#    都是產生器產物（anchors:build / apdmg:build），⛔ 不是「後台一格」——
+#    把產物描述成後台欄位，等於叫外部編輯器去手改產物（下一次 sync 就被打回來）。
+#    後台真正動的是**來源**：damage-tiers 走 `combat-env` 的系統倍率，
+#    ap-damage 存的是覆蓋層、出貨值的來源是 `sim/combat/apDamageScaling.ts` 的 `DEFAULT_*`。
+TIER_SOURCE = ("`content/config/*-tiers.json`（級距表；⚠️ 其中 `damage-tiers.json` 是 "
+               "`bash scripts/genrun.sh anchors:build` 的產物，⛔ 不要手改 —— "
+               "後台調的是 `combat-env` 的系統倍率，⛔ 不是這個檔）"
+               "＋ 出貨 Zod schema（哪幾格存在）"
+               "＋ `ap-damage-scaling.json`（第 ③ 層；也是產物，見一之二的出處行）"
                "＋ `damage-tier-exemptions.json`（6.2.6 的豁免謂詞）")
-AP_DMG_SOURCE = ("`content/config/ap-damage-scaling.json`（後台一格）"
+AP_DMG_SOURCE = ("`content/config/ap-damage-scaling.json`"
+                 "（⚠️ `bash scripts/genrun.sh apdmg:build` 的產物，⛔ 不要手改 —— "
+                 "要改出貨值就改來源 `sim/combat/apDamageScaling.ts` 的 `DEFAULT_*` 再重生成；"
+                 "後台那一格存的是覆蓋層，也⛔ 不是這個檔）"
                  "＋ `sim/combat/apDamageScaling.ts`（合法值的唯一住處）")
 # ⭐ §七那一段讀的是 `appliesTo` 這一格，⛔ 沒有一格取決於今天有幾支技能。
 NORMALIZED_SOURCE = "`content/config/stat-normalization.json` 的 `appliesTo`"

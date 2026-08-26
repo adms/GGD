@@ -20,11 +20,15 @@
 產生器一改它就過期，而**沒有任何東西會叫**。2026-08-12 的 90 支重製就是這樣 ——
 產生器修了 8 個缺陷、JSON 全部變了，文件裡那一份還是舊的。
 
-⛔ 所以這些段落**不可以手改**。改了產生器（或引擎能力）就跑這支。
+⛔ 所以這些段落**不可以手改**。改了產生器（或引擎能力）就跑
+`bash scripts/genrun.sh skillremake:docs`。
 
 用法：
-    python3 tools/skill-remake/refresh_docs.py
-    python3 tools/skill-remake/refresh_docs.py --check   # 只檢查有沒有過期，回非零
+    bash scripts/genrun.sh skillremake:docs              # 重生成（解鎖產物→跑→重鎖）
+    python3 tools/skill-remake/refresh_docs.py --check   # 只檢查有沒有過期，回非零（唯讀，隨便跑）
+
+⚠️ 寫入一律走 genrun，⛔ 不要直接 `python3 …/refresh_docs.py`（不帶 --check）——
+兩份產物平時被隔離區鎖成 444，直接跑會吃 EACCES（GH#771）。
 """
 import importlib.util
 import json
@@ -91,7 +95,8 @@ def build_chapter() -> str:
 
     L = [HEAD, ""]
     L.append("> ⛔ **這一節是產生的，不要手改。** 來源是 `tools/skill-remake/batch1.py` 的同一張表，")
-    L.append("> 重新生成：`python3 tools/skill-remake/refresh_docs.py`。")
+    L.append("> 重新生成：`bash scripts/genrun.sh skillremake:docs`（⛔ 不要手改本檔 —— 它是產物；")
+    L.append("> 直接跑 `python3 tools/skill-remake/refresh_docs.py` 會在鎖著的隔離區上吃 EACCES）。")
     L.append(">")
     L.append("> ⚠️ 手改這裡 = 第二個住處 = 它一定會過期。2026-08-12 這一節就過期過一次：")
     L.append("> 產生器修了 8 個缺陷、90 支 JSON 全部變了，而這裡還貼著舊的，**沒有任何東西叫**。")
@@ -130,7 +135,8 @@ def main() -> None:
     s2, stale_fp = splice_fingerprint(s)
 
     if check:
-        fix = "**已過期** —— 跑 `python3 tools/skill-remake/refresh_docs.py`"
+        fix = ("**已過期** —— 跑 `bash scripts/genrun.sh skillremake:docs`"
+               "（⛔ 不要手改「技能編輯器引擎須知 20260811.md」—— 它是產物）")
         print("§13.10 " + (fix if stale else "是最新的"))
         print("檔頭指紋行 " + (fix if stale_fp else "是最新的"))
         sys.exit(1 if (stale or stale_fp) else 0)
