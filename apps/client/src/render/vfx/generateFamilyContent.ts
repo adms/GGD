@@ -204,7 +204,25 @@ export function shippedFamilyConfig(
   const abilityIds = [...new Set([...Object.keys(existingAbilities), ...Object.keys(abilityArt)])].sort((a, b) =>
     a.localeCompare(b),
   );
+  // ⭐ GH#713 / GH#802 —— **技能檔不存在的那一列一律剪掉**。
+  //
+  // ⚠️ 這一行不在的時候，這支產生器與 `pitch:build` 對同一個檔**永遠打架**：
+  //    `pitch:build` 剪掉 90 條指向不存在技能的死列，而這一支從
+  //    `vfx-ability-art` 的證據把它們**寫回來** ⇒ 誰後跑誰贏、另一邊的閘就紅。
+  //    ⭐ 兩邊都對，錯的是**判準只住在其中一邊**（第〇·四守則）。
+  // ⭐ 判準本身是「這支技能出貨了嗎」—— 從 `content/abilities/` **現算**，
+  //    ⛔ 不是一張會過期的名單。英雄上架的那一天，它的列自己就會長回來。
+  const shippedAbilityIds = new Set(
+    existsSync(join(CONTENT_DIR, "abilities"))
+      ? readdirSync(join(CONTENT_DIR, "abilities"))
+          .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+          .map((f) => f.slice(0, -5))
+      : [],
+  );
   for (const id of abilityIds) {
+    // ⚠️ 母體空的時候（沒有 content/abilities）⛔ 不剪 —— 否則一個掛載失誤
+    //    會把整份鏡像清空，而那看起來跟「本來就沒有」一模一樣。
+    if (shippedAbilityIds.size > 0 && !shippedAbilityIds.has(id)) continue;
     const row = mergeRow(existingAbilities[id], abilityArt[id] ?? {}, ownedAbilityFields);
     // 證據不再點名這一支、而它身上又沒有任何別人的覆寫 = 這一列該走了
     // （⛔ 留一個空物件在 UI 上會讀成「未綁定」）。
