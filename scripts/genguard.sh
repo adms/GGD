@@ -24,7 +24,16 @@ import { readFileSync } from 'node:fs';
 //    （content/config/ap-damage-scaling.json 它是唯一寫入者）⇒ 它是**作者**不是正規化器，
 //    而 CLAUDE.md:1440 明文把那一份列在「⛔ 不可手改」的 7 份 config 產物裡。
 //    留在這裡＝這支腳本對一份禁改產物說「不擋你」還教人手改（誤導源 T0）。
-const NORMALIZERS = new Set(['tiers:apply', 'apconv:build']);
+//    ⭐⭐ 2026-08-27 加入 skillremake:provenance —— 它的 writes 是兩條 glob
+//    (content/abilities 與 content/champions 底下的 *.json = **494 份**),
+//    於是 genguard 對那 494 份一律回 AUTHOR ⇒「改產物被擋／改來源沒有來源」的**死路**。
+//    ⛔ 而它不是作者:逐行讀 tools/skill-remake/stamp_provenance.py,它只寫
+//    out 的 provenance 那一格(⛔ 不是信檔頭,是看程式) ⇒ 純就地改欄位。
+//    ⭐ 加進來之後,真的有作者的那些檔(skillremake:json 也認領的 91+16 份)**仍然被擋**
+//    —— authors 濾掉正規化器之後還剩下它。這一格只放行「**只有** provenance 認領」的。
+//    ⚠️⚠️ 這段註解**不可以有反引號** —— 這段 JS 活在 shell 雙引號裡,反引號會被
+//    當成命令替換(2026-08-27 我就是這樣把這支腳本弄壞的,見上面那條同型警告)。
+const NORMALIZERS = new Set(['tiers:apply', 'apconv:build', 'skillremake:provenance']);
 const io=JSON.parse(readFileSync('tools/parallel-gates/sync-io.json','utf8'));
 const p=process.argv[1];
 const hit=[];

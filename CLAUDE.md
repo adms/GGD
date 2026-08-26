@@ -1554,8 +1554,23 @@ owner 2026-08-21：
 而那正是 2026-08-22/23 在 `godie-e002.e/.r/.ex` 上連中三次、2026-08-25 又中一次的形狀。
 
 ⭐ **量到的底數**（`sync-io.json` 的 `steps[].writes`，⛔ 不是印象）：
-**621 份產物** · `content/abilities` **422/422**、`content/champions` **72/72** ——
-⭐ **這兩個目錄零例外，沒有一份是手編的**；`content/augments` 61/92 · `content/config` 7/89。
+**621 份產物** · `content/abilities` 422、`content/champions` 72 ·
+`content/augments` 61/92 · `content/config` 7/89。
+
+⚠️⚠️ **2026-08-27 更正：上面那個 422/72 是被「正規化器的 glob」灌大的。**
+在此之前這裡寫著「⭐ 這兩個目錄**零例外**，沒有一份是手編的」——⛔ **那句話是錯的**。
+`skillremake:provenance` 的 writes 是兩條 glob（`content/{abilities,champions}/*.json`），
+於是它把**全部 492 份**都算成產物；⛔ 而它逐行讀下去**只寫 `provenance` 一格**
+（`tools/skill-remake/stamp_provenance.py`）—— 它是**正規化器，不是作者**。
+
+⭐ 實際量到（把它歸類成正規化器之後）：**492 份裡 161 份真的有作者，331 份沒有。**
+⇒ 那 331 份**手改是合法的**，而在此之前 genguard 對它們一律回 `AUTHOR` ⇒
+「改產物被擋／改來源沒有來源」的**死路** —— 它在 2026-08-27 一天內擋掉了三條 lane
+（#648 的 39 支、#745 的 29 隻、lane C 的內容修復）。
+
+⇒ ⭐ **判準仍然是 `bash scripts/genguard.sh <path>`**（它現在答得對了），
+⛔ 不是記這裡的數字 —— 這一段自己就示範了為什麼：**一個被 glob 灌大的統計，
+讀起來跟真的一模一樣。**
 ⚠️ 之前這裡寫「abilities 331 · champions 56」—— 那是**正規化器認領的子集**，⛔ 不是產物數：
 少掉的 91+16 份會被讀成「手編」，而它們是 `skillremake:json` 的產物（同一個誤導的第三次）。
 ⇒ ⛔ **`content/` 不是「我編的目錄」** —— 它是**混的**，而肉眼分不出來。

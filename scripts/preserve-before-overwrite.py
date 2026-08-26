@@ -232,7 +232,15 @@ def targets(tool: str, ti: dict, cwd: Path) -> list[Path]:
 #: ⛔⛔ 2026-08-26 拿掉 "apdmg:build" —— 量到它的 2 份 writes **共有 0 份**
 #: (content/config/ap-damage-scaling.json 它是唯一寫入者) ⇒ 它是**作者**不是正規化器,
 #: 而 CLAUDE.md 明文把那一份列在「⛔ 不可手改」的 7 份 config 產物裡。
-NORMALIZER_STEPS = frozenset({"tiers:apply", "apconv:build"})
+#:    ⭐⭐ 2026-08-27 加入 `skillremake:provenance` —— 它的 writes 是兩條 glob
+#:    (content/{abilities,champions}/*.json = **494 份**)，於是 genguard 對那 494 份
+#:    一律回 AUTHOR ⇒ 「改產物被擋／改來源沒有來源」的**死路**。
+#:    ⛔ 而它不是作者：逐行讀 `tools/skill-remake/stamp_provenance.py` 只寫
+#:    `out["provenance"]` 一格（⛔ 不是信檔頭，是看程式）。⇒ 純就地改欄位。
+#:    ⭐ 加進來之後，真的有作者的那些檔（`skillremake:json` 也認領的 91+16 份）
+#:    **仍然被擋**——因為 authors 濾掉正規化器之後還剩下它。這一格只放行
+#:    「**只有** provenance 認領」的那些。實測擋住 lane C/K 三次的就是這一條。
+NORMALIZER_STEPS = frozenset({"tiers:apply", "apconv:build", "skillremake:provenance"})
 
 
 def _generator_owner(p: Path) -> tuple[str, bool] | None:
