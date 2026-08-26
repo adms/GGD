@@ -54,9 +54,9 @@
       "rollback": {
         "configId": "tpl-beam-roll",
         "field": "params.count.default",
-        "liveValue": 6,
-        "rollbackValue": 1,
-        "note": "整族回到單具（原地一團），⛔ 不必動任何一支技能的 JSON —— count:6 是本 lane 照原作 A03S 的 i×200 挑的預設，開關存在是為了回頭"
+        "liveValue": 1,
+        "rollbackValue": 6,
+        "note": "⚠️⚠️ **2026-08-26 更正方向**（GH#721/#767）：原本登記 live=6 / rollback=1，理由寫「count:6 是本 lane 照原作 A03S 的 i×200 挑的預設」—— ⛔ **那個引用不成立**：A03S@31924 的迴圈生的是 `h006 = FlameStrike1.mdl`（**火柱**，現在有自己的 tpl-locust-line 節點），⛔ 不是光束的模型；而光束本體是 `CreateNUnitsAtLoc(**1**,'h007')`＋`SetUnitScalePercent(200,200,400)`（j:26790）。⇒ 出貨值已改為 **1**（量到的），這一格翻成 6 是**回到被推翻的形狀**，留著只為了讓 owner 一鍵比對。"
       },
       "registeredAt": "2026-08-25T03:31:36.327Z",
       "verdict": null,
@@ -477,34 +477,61 @@
       "verdictAt": null
     },
     "beamtruth_visual-proof_20260826-1200": {
-      "title": "光束砲家族按真相重建：count 1 · 逐支自己的模型 · 慢動作爆殼第二層 · 非等向拉長",
-      "family": "beam-roll",
+      "title": "光束砲家族按 JASS 真相重建：count 6→1、逐支穿回原作模型（⚠️ 像素驗收未過，根因 #767）",
+      "family": "beam-roll 光束砲",
       "issues": [
+        721,
         702,
-        692,
-        688
+        767
       ],
       "abilities": [
         "godie-e002.e",
         "godie-e00l.e",
-        "godie-o00x.r",
-        "godie-ogrh.r",
+        "godie-e00r.r",
+        "godie-h02r.r",
+        "godie-hgam.r",
         "godie-n01c.e",
         "godie-nbbc.e",
-        "godie-e00r.r",
-        "godie-hgam.r",
-        "godie-h02r.r"
+        "godie-o00x.r",
+        "godie-ogrh.r"
       ],
-      "commit": null,
+      "commit": "bd24b4af",
       "sequenceDir": "docs/_reports/beamtruth_visual-proof_20260826-1200",
       "rollback": {
         "configId": "tpl-beam-roll",
         "field": "params.modelKey.default",
         "liveValue": "w3x.stock.revivehuman",
         "rollbackValue": "imported.netherstrike",
-        "note": "家族身分那一格 —— 翻回 imported.netherstrike ＝ 2026-08-25 的形狀（沒有逐支寫 modelKey 的成員全部長成黑化 Saber 的劍氣）。⚠️ 逐支還有兩格各自的 rollback：① 把節點上的 scaleAxis 拿掉（缺席 = [1,1,1] = 等向，逐位元回到舊渲染）② 把 modelKey=w3x.stock.fragdriller 那個 spawnModelFx 節點刪掉（回到單層）。"
+        "note": "⭐ 一格還原整族：改回 imported.netherstrike。VERIFY 量到 netherstrike 的 5/5 primitive 全可見、可見最長軸 30.71，而 revivehuman 的承重 prim0 是 alpha=0 的 TeamGlow0（佔長軸 53%）⇒ 可見最長軸只有 7.82。⚠️ 若你覺得現在比之前更看不到，翻這一格就回到 2026-08-25 的樣子（#767 是根治那一條）。"
       },
       "registeredAt": "2026-08-26T04:28:43.457Z",
+      "verdict": null,
+      "verdictHash": null,
+      "reason": "",
+      "verdictAt": null
+    },
+    "beamverify_visual-proof_20260826-1200": {
+      "title": "光束砲對擷圖驗收（20-03/09-04/59-04 逐幀＋形狀分析器）—— ⚠️ 三項 1 過 · 1 半過 · 1 不過",
+      "family": "beam-roll 光束砲",
+      "issues": [
+        721,
+        767
+      ],
+      "abilities": [
+        "godie-e002.e",
+        "godie-e00l.e",
+        "godie-e00r.r"
+      ],
+      "commit": "bd24b4af",
+      "sequenceDir": "docs/_reports/beamverify_visual-proof_20260826-1200",
+      "rollback": {
+        "configId": "tpl-beam-roll",
+        "field": "params.count.default",
+        "liveValue": 1,
+        "rollbackValue": 6,
+        "note": "⭐ 一格還原「一具 vs 一排」：改回 6 就回到 2026-08-25 的沿線六具。⚠️ 但那是**被推翻的**形狀 —— 13 個 JASS 生成點的 CreateNUnitsAtLoc 第一參數 100% 是 1（j:26790 31907 31909 32322 32324 32327 36048 47757）。留這一格是為了讓你能一鍵比對，⛔ 不是因為 6 有出處。"
+      },
+      "registeredAt": "2026-08-26T05:37:38.416Z",
       "verdict": null,
       "verdictHash": null,
       "reason": "",

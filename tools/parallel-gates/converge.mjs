@@ -63,6 +63,8 @@ export function staleStepsFrom(out) {
 export async function converge({
   runSync,
   runCheck,
+  /** 每一次收斂開跑前做一次的事（戰情表每日輪替）。⛔ 注入式：測試不必真的滾板子。 */
+  beforeSync = undefined,
   // ⭐ 預設回綠 = 舊行為（注入版的測試不必知道 bundle 這一層）;
   //    出貨的呼叫端一定要傳真的那一支,見檔尾。
   runBundleCheck = async () => ({ code: 0, out: "" }),
@@ -72,6 +74,7 @@ export async function converge({
   let prevStale = null;
   for (let round = 1; round <= maxRounds; round++) {
     log(`\n🔁 第 ${round}/${maxRounds} 輪 —— skills:sync`);
+    if (round === 1 && beforeSync) await beforeSync();
     const sync = await runSync(round);
     if (sync.code !== 0) {
       // ⛔ sync 自己紅了 ⇒ 不是「還沒收斂」，再跑一輪只會把同一個錯再印一次。
@@ -136,6 +139,11 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const r = await converge({
     maxRounds,
     log: (s) => console.log(s),
+    // 📰 owner 2026-08-26：「**每天自動輪替**，輪替前整份備份 戰情版_temp_{timestamp}.md」
+    // ⇒ 每一次收斂都先把戰情表滾到今天（跨日時會自動整份備份）。
+    // ⛔ 不放進 `skills:sync` 的 chain 字串 —— 那是 sync-io 的**身分**，改它要重跑 3-pass trace（GH#710）。
+    // ⭐ 放這裡是安全的：converge.mjs 是我們自己的包裝，不參與 chain 比對。
+    beforeSync: () => run("pnpm", ["board:roll"]),
     runSync: () => run("pnpm", ["skills:sync", ...passthrough]),
     // ⭐ check 走 run.mjs（它自己再並行 40 幾支），⛔ 不是串行的 `pnpm skills:check`。
     runCheck: () => run("node", [`${HERE}run.mjs`, "skills:check"]),
