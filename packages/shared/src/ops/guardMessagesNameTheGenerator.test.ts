@@ -18,10 +18,14 @@
  * 誤報會逼人加豁免，而一張長出來的豁免表會訓練大家忽略這條閘。所以：
  * ① 只讀**訊息字串**：`expect(_, 訊息)` 的第二參數（含 `const message = [...]` 這種同檔常數）、
  *    `it/test/describe` 的標題、**檔頭** block comment。⛔ 不讀程式碼、import、路徑常數。
- * ② 認 `content/{abilities,champions,config,items,augments,status-effects}/…` ——
+ * ② 認 `content/{abilities,champions,config,items,augments,status-effects}/…`
+ *    ＋ **`docs/…`**（2026-08-26 GH#771 收進來 —— sync-io 量到 docs/ 底下有 **37 份產物**
+ *    （`docs/技能標記機制與效果規則.md`、`docs/editor-contract/*`、`docs/engine-atlas.json`…），
+ *    而訊息叫人去改一份產生的 md，跟叫人改出貨 JSON 是同一個誤導）。
  *    前三個是稽核點名的；後三個 2026-08-25 收進來（content/augments 量到 **60/92
  *    是 grail:wishes 的產物** ⇒「混著手編檔所以不掃」不再站得住）。
- *    ⭐ 混目錄天然安全：判定逐檔問 sync-io，不在 writes 裡的手編檔解析成 null（＝跳過）。
+ *    ⭐ 混目錄天然安全：判定逐檔問 sync-io，不在 writes 裡的手編檔解析成 null（＝跳過）——
+ *    docs/ 尤其吃這一條：`docs/_reports/*`、手寫設計文件全部解析成 null，⛔ 不會誤報。
  * ③ glob 與 `<id>` 佔位**只在它涵蓋的每一個實檔都是產物時**才算命中：
  *    `content/abilities/*.json`（實測 422/422 全是產物）算，
  *    `content/config/*.json`（7/89）⛔ 不算 —— 那裡絕大多數真的是人在編的。
@@ -40,6 +44,13 @@
  *     那一半在 `guardProseNamesTheGenerator.test.ts`（同一個 OWNERS 推導，⛔ 不抄第二份表）。
  *   · 已經在 PENDING 上的檔再加一則新的誤導訊息，只要路徑集合不變就不會紅
  *     —— ⭐ 2026-08-25 之後 PENDING 是**空的**，所以這一條暫時沒有母體。
+ *   · 檔名帶空白的 docs 產物（`docs/技能編輯器引擎須知 20260811.md`）PATH_RE 接不完整
+ *     ⇒ 掃不到（截到空白為止的前綴不在 writes 裡 ⇒ null ⇒ 跳過，漏報那一邊）。
+ *   · MARKERS 比對前先剝 `*`（2026-08-26）：訊息裡的 markdown 粗體會把線索切開
+ *     （`改**來源**` 的字面值不含「改來源」）—— 首輪 docs 擴張唯一的「違規」
+ *     `knobValueNotRestated.test.ts` 就是這一種：它的訊息**真的有**寫
+ *     「這些檔是**產生的** —— 改**來源**…再重生成」，只是被粗體切開。
+ *     剝 `*` 只往漏報那一邊動（判準的立場），⛔ 不是放水 —— 線索真的在。
  *
  * ⭐ 棘輪：豁免表 `tools/parallel-gates/guard-message-pending.json` **只准變短**，
  * 而 2026-08-25 它已經**抽乾**（39 → 0）⇒ 現在的語意是「零豁免」。
@@ -53,6 +64,8 @@
  *
  * 突變紀錄（一條，最承重）：把 `abilityCodeParityForms.test.ts` 訊息裡
  * `bash scripts/genguard.sh …` 那四行拿掉 → 這一條紅並**指名那一支**。改回來。
+ * 突變紀錄（2026-08-26 實跑，GH#771）：把 PATH_RE 的 `|docs` 分支拿掉（＝把母體縮回
+ * content/ 六個子目錄）→ GUARD-THE-GUARD 的 docs 斷言紅並指名是擴張被縮掉。改回來。
  */
 import { describe, expect, it } from "vitest";
 import ts from "typescript";
@@ -119,7 +132,9 @@ function messagesOf(sf: ts.SourceFile, text: string): { pos: number; text: strin
   return out;
 }
 
-const PATH_RE = /content\/(?:abilities|champions|config|items|augments|status-effects)\/[^\s"'`,)（）。，、｜|\\]+/g;
+// ⭐ `docs/` 這個分支是 2026-08-26（GH#771）擴的 —— 縮回去會讓 GUARD-THE-GUARD 的 docs 斷言紅。
+const PATH_RE =
+  /(?:content\/(?:abilities|champions|config|items|augments|status-effects)|docs)\/[^\s"'`,)（）。，、｜|\\]+/g;
 const MARKERS = ["genguard", "genrun", "skills:sync", "產生器", "不要手改", "改來源"];
 
 const dirCache = new Map<string, string[]>();
@@ -163,8 +178,17 @@ function productOwners(raw: string): string[] | null {
   return [...owners];
 }
 
-/** sync-io 認得的步驟名（⭐ 同一個住處，⛔ 不抄第二份）。 */
-const STEP_NAMES = new Set([...OWNERS.values()].flat());
+/**
+ * sync-io 認得的步驟名（⭐ 同一個住處，⛔ 不抄第二份）。
+ * ⚠️ 真來源是 `steps[].name`，⛔ **不是** OWNERS 的值 —— `writes` 為空的步驟
+ * （trace 沒抓到它寫什麼，例：`contract:numbers`）仍然是**真的步驟**；
+ * 從 OWNERS 推導會把它們誤判成幽靈名（姊妹閘 2026-08-25 踩過、這支 2026-08-26 跟修）。
+ */
+const STEP_NAMES = new Set(
+  (JSON.parse(readFileSync(join(REPO, "tools/parallel-gates/sync-io.json"), "utf8")) as {
+    steps: { name: string }[];
+  }).steps.map((s) => s.name),
+);
 /** 訊息裡具名的 `bash scripts/genrun.sh <step>`。`<…>` 佔位不算（那是刻意的通用寫法）。 */
 const GENRUN_RE = /genrun\.sh\s+([A-Za-z][\w.-]*:[\w.-]+)/g;
 
@@ -181,7 +205,7 @@ function scan(): { hits: Hit[]; scanned: number } {
   const files = testFiles(REPO).sort();
   for (const abs of files) {
     const text = readFileSync(abs, "utf8");
-    if (!text.includes("content/")) continue;
+    if (!text.includes("content/") && !text.includes("docs/")) continue;
     const sf = ts.createSourceFile(abs, text, ts.ScriptTarget.Latest, true);
     const msgs = messagesOf(sf, text);
     const rel = relative(REPO, abs).split(sep).join("/");
@@ -204,7 +228,9 @@ function scan(): { hits: Hit[]; scanned: number } {
     for (const m of msgs) for (const g of m.text.matchAll(GENRUN_RE)) steps.add(g[1]!);
     hits.push({
       file: rel,
-      named: MARKERS.some((k) => msgs.some((m) => m.text.includes(k))),
+      // ⭐ 比對前剝 `*`：markdown 粗體會把線索切開（`改**來源**` ⊅「改來源」）。
+      //    只往漏報那一邊動 —— 剝掉 `*` 不可能讓一句沒有線索的訊息長出線索。
+      named: MARKERS.some((k) => msgs.some((m) => m.text.replace(/\*/g, "").includes(k))),
       where,
       product: paths.join(" · "),
       owner: [...owners].join(" · "),
@@ -229,6 +255,12 @@ describe("守衛訊息必須指名產生器（誤導源稽核 ③）", () => {
     expect(scanned, "掃到的 *.test.ts 太少 —— 走訪或路徑壞了").toBeGreaterThan(400);
     expect(OWNERS.size, "sync-io.json 的 writes 太少 —— 產物表壞了").toBeGreaterThan(500);
     expect(hits.length, "沒有任何訊息指名產物路徑 —— 訊息抽取器壞了").toBeGreaterThanOrEqual(20);
+    // ⭐ docs/ 的 37 份產物在視野裡（GH#771）—— PATH_RE 縮回 content/ 六個子目錄這裡就紅。
+    //    （2026-08-26 實測：8 支測試的訊息提到 docs/ 產物 —— 母體不是 0。）
+    expect(
+      hits.some((h) => h.product.split(" · ").some((p) => p.startsWith("docs/"))),
+      "沒有任何訊息命中 docs/ 底下的產物 —— PATH_RE 的 docs 分支被縮掉了（GH#771 的擴張）",
+    ).toBe(true);
   });
 
   it("⛔ 訊息指名產物卻不提誰寫它 —— 新增一律紅（PENDING 只准變短）", () => {

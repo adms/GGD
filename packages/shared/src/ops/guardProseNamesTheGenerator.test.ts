@@ -13,7 +13,11 @@
  * ① 只讀 **prose**：註解（# ／ // ／ block comment）、python docstring、
  *    以及 print／echo／console／throw 那一類「說給人聽」的行。
  *    ⛔ 純程式碼的字串（`readJson("content/…")` 的參數）不算 —— 那是路徑，不是 guidance。
- * ② 域：`tools/**\/*.{py,mjs,ts}`（⛔ 不含 `*.test.ts` —— 那是姊妹閘的域）＋ `scripts/*.{sh,py}`。
+ * ② 域：`{tools,packages,apps}/**\/*.{py,mjs,ts,tsx}`（⛔ 不含 `*.test.ts(x)` ——
+ *    那是姊妹閘的域）＋ `scripts/*.{sh,py}`。
+ *    ⭐ 2026-08-26（GH#771）把 `packages/`＋`apps/` 收進母體 —— 原本只掃 tools/scripts，
+ *    而稽核量到 packages/apps 有**成打**的 prose 提到產物卻不說誰寫的（首輪實測 44 檔），
+ *    它們全在閘外。⛔ 「誤導源只住在腳本裡」這個假設本身就是一句誤導。
  * ③ 「是不是產物」只有一個住處：`tools/parallel-gates/sync-io.json` 的 `steps[].writes`。
  *    glob／佔位（`*`、`<id>`、`${x}`、`{aid}`）只在涵蓋的每一個實檔都是產物時才命中。
  * ④ 擁有者線索**逐檔**判定：MARKERS 或**任何一個 sync-io 步驟名**出現在檔案任何地方就算。
@@ -23,14 +27,22 @@
  *   · 動態拼出來的路徑（`f"content/abilities/" + aid`）拆在兩個字串裡 ⇒ 掃不到。
  *   · 報表資料裡的字串（dict 的 value、表格 label）刻意不算 prose ⇒ 掃不到。
  *   · 檔案只要提到**任何一個**步驟名就整檔算 named（判準④偏漏報那一邊）。
+ *   · `docs/` 底下的產物路徑不在這支的 PATH_RE —— 那一半（訊息裡指名 docs/ 產物）
+ *     住在姊妹閘 `guardMessagesNameTheGenerator.test.ts`（同一輪 GH#771 擴的）。
  *
  * ⭐ 棘輪：`tools/parallel-gates/guard-prose-pending.json` **只准變短** ——
  * 首輪抓到而沒當場修的檔進表；修好一支刪一列；新的違規檔直接紅。
  * ⚠️ `scripts/genguard.sh` 與 `scripts/preserve-before-overwrite.py` 由 NORM lane 持有，
  * 它們若違規**進棘輪**，⛔ 不要在這條 lane 改它們（實測兩份都自帶 genguard 字樣 ⇒ named）。
+ * ⭐ packages/apps 的存量走**另一張**表（本檔內的 GRANDFATHERED，同樣只准變短）——
+ * ⛔ 不進 JSON PENDING：那張表由主 session 持有，而這 44 筆是 gate-scope lane
+ * 柵欄外的檔（lane 只准動兩支守衛），逐筆帶理由凍結在測試裡，修好一筆刪一列。
  *
  * 突變紀錄（2026-08-25 實跑）：往 tools/w3x-import/mesh_audit_report.py 塞一行
  * `# 改 content/config/stat-caps.json 讓上限一致` → 「新增一律紅」指名那一檔那一行。撤掉。
+ * 突變紀錄（2026-08-26 實跑，GH#771）：把 proseFiles() 的 packages/apps 兩行 walk 拿掉
+ * （＝把母體縮回舊域）→ GUARD-THE-GUARD 的 roots 斷言紅 ＋ GRANDFATHERED 棘輪 44 列
+ * 全部紅（「已經修好？刪列」）。改回來。
  */
 import { describe, expect, it } from "vitest";
 import { readFileSync, readdirSync } from "node:fs";
@@ -68,6 +80,70 @@ type Row = { product: string; owner: string };
 const PENDING = (JSON.parse(readFileSync(join(REPO, PENDING_JSON), "utf8")) as { pending: Record<string, Row> })
   .pending;
 
+/**
+ * ⭐ 2026-08-26（GH#771）母體擴到 packages/＋apps/ 的首輪存量 —— **棘輪：只准變短。**
+ *
+ * 共同的理由（每一列都適用）：這些檔在 gate-scope lane 的柵欄外（該 lane 只准動
+ * 這兩支守衛），所以首輪⛔不當場修 —— 逐筆凍結，修好一筆（在該句 prose 旁補
+ * genguard／genrun／步驟名任一線索）就**刪一列**。⛔ 不准加新列：新的違規檔直接紅。
+ * 每一列的值 = 抓到什麼、在哪一行（凍結當下的行號，僅供跳轉，⛔ 不比對）——
+ * 首輪 44 筆**全部是註解**（讀取來源說明／行為出處引用），零筆是 print/throw 訊息，
+ * 所以沒有「訊息當場改」的那一類；⛔ 但「只是註解」不等於無害 ——
+ * resolve_unit_tints.py 那句最貴的謊（檔頭宣稱產物是手編的）也「只是」一句 docstring。
+ */
+const GRANDFATHERED: Record<string, string> = {
+  "apps/admin/src/assets/useVoxelSkinSheet.ts": "註解提到 content/champions/_index.json（行 4）",
+  "apps/admin/src/assets/voxelSkinSheet.ts": "註解提到 content/champions/*.json（行 5）",
+  "apps/admin/src/championLabels.ts": "註解提到 content/champions/<id>.json（行 23）",
+  "apps/admin/src/curationReset.ts": "註解提到 content/champions/<id>.json（行 113）",
+  "apps/admin/src/curationTransform.ts": "註解提到 content/champions/<id>.json（行 19）",
+  "apps/admin/src/quickApproval.ts": "註解提到 content/champions/<id>.json（行 17）",
+  "apps/client/scripts/probeCastPillar.ts": "註解提到 content/champions/<id>.json（行 185）",
+  "apps/client/scripts/probeModelSizing.ts": "註解提到 content/champions/*.json（行 29）",
+  "apps/client/src/audio/abilitySfxCues.ts": "註解提到 content/abilities/*.json（行 39）",
+  "apps/client/src/audio/sfxLayerCap.ts": "註解提到 content/config/vfx-families.json（行 13）",
+  "apps/client/src/render/intermission/idlePerform.ts": "註解提到 content/champions/*.json（行 17）",
+  "apps/client/src/render/vfx/familyCastHeight.ts": "註解提到 content/config/vfx-families.json（行 8）",
+  "apps/client/src/render/views/championBody.ts": "註解提到 content/champions/*.json（行 65/225）",
+  "apps/client/src/render/views/standinCensus.ts": "註解提到 content/champions/*.json（行 7）",
+  "apps/client/src/ui/codex/codexEditModel.ts": "註解提到 content/abilities/<id>.json（行 12）",
+  "apps/client/src/vfx/beamAudition.ts": "註解提到 content/abilities/godie-ogrh.r.json（行 13）",
+  "apps/client/src/vfx/castBeam.ts": "註解提到 content/abilities/*.json（行 29）",
+  "apps/client/src/vfx/chainLightningAudition.ts": "註解提到 content/abilities/godie-udea.r.json（行 13）",
+  "apps/client/src/vfx/chainLightningAuditionWorld.ts": "註解提到 content/abilities/godie-udea.r.json（行 5）",
+  "apps/client/src/vfx/vfxHardCap.ts": "註解提到 content/config/ability-vfx-bindings.json（行 13）",
+  "apps/editor/src/preview/PreviewController.ts": "註解提到 content/abilities/<id>.json（行 179）",
+  "packages/shared/src/content/abilityCodeParity.ts": "註解提到 content/abilities/*.json（行 118）",
+  "packages/shared/src/content/abilityCodeParityForms.ts": "註解提到 content/abilities/<id>.*.json（行 98）",
+  "packages/shared/src/content/delistedChampions.ts":
+    "註解提到 content/champions/<id>.json · content/abilities/*.passive.json（行 49/68）",
+  "packages/shared/src/content/editModel.ts":
+    "註解提到 content/abilities/<id>.json · content/champions/godie-hart.json（行 14/551）",
+  "packages/shared/src/content/modelFxPreset.ts": "註解提到 content/champions/*.json（行 124）",
+  "packages/shared/src/content/schema/abilityVfx.ts": "註解提到 content/abilities/<id>.json（行 18）",
+  "packages/shared/src/content/schema/abilityVfxBindings.ts":
+    "註解提到 content/abilities/*.json · content/config/ability-vfx-bindings.json（行 12/113）",
+  "packages/shared/src/content/schema/config/arenaRules.mobWaves.ts":
+    "註解提到 content/abilities/godie-zombieking.passive.json（行 609）",
+  "packages/shared/src/content/templates/failures.ts": "註解提到 content/abilities/<id>.json（行 27）",
+  "packages/shared/src/protocol/schema.ts": "註解提到 content/champions/*.json（行 1101）",
+  "packages/shared/src/sim/aura/aura.ts":
+    "註解提到 content/abilities/godie-h01n.passive.json · content/abilities/godie-e010.passive.json（行 15/173）",
+  "packages/shared/src/sim/berserk.ts": "註解提到 content/abilities/godie-e00r.passive.json（行 12）",
+  "packages/shared/src/sim/combat/apDamageScaling.ts": "註解提到 content/config/ap-damage-scaling.json（行 58）",
+  "packages/shared/src/sim/combat/damage.ts": "註解提到 content/abilities/*.ex.json（行 310）",
+  "packages/shared/src/sim/combatFeel.ts": "註解提到 content/abilities/*.json（行 325/580）",
+  "packages/shared/src/sim/content/defs.ts": "註解提到 content/abilities/godie-h01n.r.json（行 125）",
+  "packages/shared/src/sim/content/registry.ts": "註解提到 content/abilities/<id>.json（行 120）",
+  "packages/shared/src/sim/content/requirement.ts": "註解提到 content/champions/*.json（行 26）",
+  "packages/shared/src/sim/content/skeleton.ts":
+    "註解提到 content/champions/sela.json · content/abilities/thorne.q.json（行 219/284）",
+  "packages/shared/src/sim/economy/augmentEligibility.ts": "註解提到 content/abilities/*.json（行 29）",
+  "packages/shared/src/sim/effects/knockbackLimits.ts": "註解提到 content/abilities/*.json（行 19）",
+  "packages/shared/src/sim/stats/modifiers.ts": "註解提到 content/config/stat-caps.json（行 82）",
+  "packages/shared/src/sim/systems/MobSystem.ts": "註解提到 content/abilities/godie-zombieking.passive.json（行 669）",
+};
+
 const SKIP_DIR = new Set(["node_modules", ".git", "dist", "build", "out", "legacy", "__pycache__"]);
 function proseFiles(): string[] {
   const acc: string[] = [];
@@ -76,13 +152,17 @@ function proseFiles(): string[] {
       if (e.isDirectory()) {
         if (!SKIP_DIR.has(e.name) && !e.name.startsWith(".")) walk(join(dir, e.name));
       } else if (
-        (e.name.endsWith(".py") || e.name.endsWith(".mjs") || e.name.endsWith(".ts")) &&
-        !e.name.endsWith(".test.ts") // 姊妹閘的域
+        (e.name.endsWith(".py") || e.name.endsWith(".mjs") || e.name.endsWith(".ts") || e.name.endsWith(".tsx")) &&
+        !e.name.endsWith(".test.ts") &&
+        !e.name.endsWith(".test.tsx") // 姊妹閘的域
       )
         acc.push(join(dir, e.name));
     }
   };
   walk(join(REPO, "tools"));
+  // ⭐ 2026-08-26（GH#771）：packages/apps 收進母體 —— 縮回去會讓 roots 斷言＋GRANDFATHERED 棘輪紅。
+  walk(join(REPO, "packages"));
+  walk(join(REPO, "apps"));
   for (const e of readdirSync(join(REPO, "scripts"), { withFileTypes: true }))
     if (e.isFile() && (e.name.endsWith(".sh") || e.name.endsWith(".py"))) acc.push(join(REPO, "scripts", e.name));
   return acc.sort();
@@ -197,10 +277,12 @@ function productOwners(raw: string): string[] | null {
 const GENRUN_RE = /genrun\.sh\s+([A-Za-z][\w.-]*:[\w.-]+)/g;
 
 type Hit = { file: string; named: boolean; where: string[]; product: string; owner: string; steps: string[] };
-function scan(): { hits: Hit[]; scanned: number } {
+function scan(): { hits: Hit[]; scanned: number; roots: Set<string> } {
   const hits: Hit[] = [];
+  const roots = new Set<string>();
   const files = proseFiles();
   for (const abs of files) {
+    roots.add(relative(REPO, abs).split(sep)[0]!);
     const text = readFileSync(abs, "utf8");
     if (!text.includes("content/")) continue;
     const rel = relative(REPO, abs).split(sep).join("/");
@@ -235,10 +317,10 @@ function scan(): { hits: Hit[]; scanned: number } {
       steps: [...steps],
     });
   }
-  return { hits, scanned: files.length };
+  return { hits, scanned: files.length, roots };
 }
 
-const { hits, scanned } = scan();
+const { hits, scanned, roots } = scan();
 const violating = hits.filter((h) => !h.named);
 
 const HOWTO =
@@ -248,18 +330,23 @@ const HOWTO =
   `     要改就改**來源**再 bash scripts/genrun.sh <step>。\n` +
   `     ⛔ 直接改出貨 JSON 會被下一次 sync 打回來，而那個「又紅了」看起來像**新的**錯。」`;
 
-describe("tools／scripts 的 prose 必須指名產生器（誤導源稽核的另一半）", () => {
+describe("tools／scripts／packages／apps 的 prose 必須指名產生器（誤導源稽核的另一半）", () => {
   it("GUARD-THE-GUARD：解析器真的看得到東西（掃到 0 個對任何內容都是綠的）", () => {
-    expect(scanned, "掃到的 tools/scripts 檔太少 —— 走訪或路徑壞了").toBeGreaterThan(300);
+    expect(scanned, "掃到的 prose 檔太少 —— 走訪或路徑壞了").toBeGreaterThan(1000);
+    // ⭐ 母體的四個根缺一不可 —— 把 packages/apps 縮回去（2026-08-26 之前的域）這裡就紅。
+    for (const root of ["tools", "scripts", "packages", "apps"])
+      expect(roots.has(root), `母體裡沒有任何 ${root}/ 底下的檔 —— 域被縮回去了（GH#771 的擴張）`).toBe(true);
     expect(OWNERS.size, "sync-io.json 的 writes 太少 —— 產物表壞了").toBeGreaterThan(500);
     expect(hits.length, "沒有任何 prose 提到產物路徑 —— 片段抽取器壞了").toBeGreaterThanOrEqual(8);
   });
 
-  it("⛔ prose 提到產物卻不提誰寫它 —— 新增一律紅（PENDING 只准變短）", () => {
-    const unlisted = violating.filter((h) => PENDING[h.file] === undefined).flatMap((h) => h.where);
+  it("⛔ prose 提到產物卻不提誰寫它 —— 新增一律紅（PENDING／GRANDFATHERED 只准變短）", () => {
+    const unlisted = violating
+      .filter((h) => PENDING[h.file] === undefined && GRANDFATHERED[h.file] === undefined)
+      .flatMap((h) => h.where);
     expect(
       unlisted.join("\n"),
-      `⛔ ${unlisted.length} 句 tools/scripts 的 prose 提到一個**產生器的產物**，而整個檔案沒有一個字說那是誰寫的。\n` +
+      `⛔ ${unlisted.length} 句 prose 提到一個**產生器的產物**，而整個檔案沒有一個字說那是誰寫的。\n` +
         `照著它動手 = 改產物 ⇒ 下一次 sync 打回來 ⇒ 那個「又紅了」看起來像新的錯（owner 2026-08-24：「發生上百次」）。` +
         HOWTO,
     ).toBe("");
@@ -287,5 +374,20 @@ describe("tools／scripts 的 prose 必須指名產生器（誤導源稽核的�
         stale.push(`${file} —— 這一列過期了：實測「${h.product} · ${h.owner}」，表上寫「${row.product} · ${row.owner}」`);
     }
     expect(stale.join("\n"), `⛔ ${PENDING_JSON} 是棘輪：修好一支就刪一列，⛔ 不可以留著。`).toBe("");
+  });
+
+  it("⭐ 棘輪：GRANDFATHERED（packages/apps 首輪存量）只准變短", () => {
+    const live = new Set(violating.map((h) => h.file));
+    const stale: string[] = [];
+    for (const file of Object.keys(GRANDFATHERED)) {
+      // ⛔ tools/scripts 的存量走 JSON PENDING（主 session 持有）—— 這張表只收擴張出來的那兩個根。
+      if (!file.startsWith("packages/") && !file.startsWith("apps/"))
+        stale.push(`${file} —— 這張表只收 packages/／apps/；tools/scripts 的存量走 ${PENDING_JSON}`);
+      else if (!live.has(file)) stale.push(`${file} —— 已經修好（或檔案沒了／不再是違規）⇒ 把這一列刪掉`);
+    }
+    expect(
+      stale.join("\n"),
+      "⛔ GRANDFATHERED 是棘輪：修好一筆（該句旁補 genguard/genrun/步驟名線索）就刪一列，⛔ 不可以留著、⛔ 不准加新列。",
+    ).toBe("");
   });
 });
