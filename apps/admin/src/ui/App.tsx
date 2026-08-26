@@ -548,9 +548,14 @@ function useLiveSuite(): LiveSuite | null {
   useEffect(() => {
     // ⭐ GH#794 起這一行**拿掉了**（原本是 `if (!import.meta.env.DEV) return;`）。
     //
-    // ⚠️ 那道閘在寫下來的當下是**對的**：`/__live/**` 只掛在 vite dev server 上，
+    // ⚠️ ⛔ 這幾行行註解裡**不要寫 glob 的 `/**`** —— `contentGate.test.ts` 的
+    //    `code()` 先剝區塊註解（`/\*…\*/`），而 `//` 行裡的 `/**` 會被當成
+    //    區塊註解的開頭，一路吃到下一個 `*/` ⇒ 那支閘會用一句**與真相無關**的
+    //    訊息紅（GH#798）。這裡寫 `/__live/` 就好。
+    //
+    // ⚠️ 那道閘在寫下來的當下是**對的**：`/__live/` 那一族只掛在 vite dev server 上，
     //    正式 build 裝了也只會 fetch 到 404 ⇒ 與其給 13 個壞掉的頁，不如不給。
-    // ⛔ 但 #794 之後 `/__live/**` **線上真的有了**（review sidecar ＋ nginx 的
+    // ⛔ 但 #794 之後 `/__live/` **線上真的有了**（review sidecar ＋ nginx 的
     //    location），於是這道閘變成了「owner 打不開他剛要求上線的那 13 頁」——
     //    ⭐ 這與 FeatureReviewPage 檔頭那句「正式 build 沒有這條路由」是**同一句
     //    過期的散文**（第三守則：註解會說謊，而它連著程式一起說）。
