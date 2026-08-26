@@ -12,6 +12,7 @@ import { Stat } from "../../sim/stats/statTypes";
 import { ModOp } from "../../sim/stats/modifiers";
 // 傷害五級距（GH#447）。⛔ 不要在這裡重打一份級距名 —— 五個字全專案只有一份。
 import { DAMAGE_TIER_NAMES } from "../damageTiers";
+import { MS_BONUS_OPS, MS_BONUS_TIER_NAMES } from "../moveSpeedTiers";
 
 /** filename stem == id; dots allowed for namespaced ids like "sela.q". */
 export const ID_RE = /^[a-z0-9][a-z0-9._-]*$/;
@@ -145,7 +146,33 @@ export const zStatModifierFields = z
   .object({
     stat: zStat,
     op: zModOp,
-    value: z.number(),
+    /**
+     * ⭐ GH#789 —— `value` 變成**條件必填**：帶 `msBonusTier` 的節點**不寫** `value`
+     * （第〇·四守則的 exclusive 模型，同 `damageTier`↔`flat`），值在載入時由
+     * `resolveMsBonusTier()` 從 `config.move-speed-tiers@1` 解析。
+     * 其餘每一個節點 `value` 仍然必填 —— 兩個方向都由
+     * {@link refineMsBonusTier} 關死（都沒有 → 紅；都有 → 紅）。
+     *
+     * ⚠️ **型別刻意仍宣告成必填**（cast 回 `z.ZodNumber`）：sim 的 `StatModifier.value`
+     * 是必填而且必須是 —— `statPipeline` 的每一條 op 都是 `m.value * stacks`。
+     * 缺席只發生在**原始文件**的 tier 節點上，而每一條註冊路徑都過
+     * `resolveMsBonusTier`（withTiers 接縫）把它填回來。⛔ 把 sim 型別改成 optional
+     * 等於要求整條熱路徑逐點防 undefined —— 那是把載入期的保證搬到執行期去重付。
+     */
+    value: z.number().optional() as unknown as z.ZodNumber,
+    /**
+     * ⭐ GH#789 —— 移速**加成**五級距（owner 2026-08-27「移動速度加成一律的 %
+     * 轉換為五級距⋯上下限 0.1~4」）。只准掛在 `stat:"ms"` × `op:pctAdd|pctMult`
+     * 上（owner 點名的是「%」；flat 的單位是 u/s，走豁免表）。
+     * 表住 `content/config/move-speed-tiers.json`；0.5 = +50%。
+     */
+    msBonusTier: z
+      .enum(MS_BONUS_TIER_NAMES as unknown as [string, ...string[]])
+      .optional()
+      .describe(
+        "移速加成五級距（極小/小/中/大/極大 → config.move-speed-tiers@1 的五格，0.5 = +50%）。" +
+          "填了級別就**不要**再寫 value（值在載入時解析）；只對 stat=ms、op=pctAdd/pctMult 合法。",
+      ),
     from: zStat.optional(),
     /**
      * `percentOf` 的**第二種**來源域:當下的資源,不是另一條屬性。
@@ -296,11 +323,57 @@ export const refineStatModifierScope = (
 export const CAP_RAISE_PCT_MIN = 0.01;
 export const CAP_RAISE_PCT_MAX = 2;
 
+/**
+ * ⭐ GH#789 —— `msBonusTier` 的三道門（第〇·四守則：同一個數字只有一個住處）。
+ *
+ *   ① 級別**和** `value` 一起寫 → 拒（`value` 是第二個住處，必然過期）。
+ *   ② 級別掛錯地方（不是 `ms`，或 op 不是 %）→ 拒（owner 點名的是「%」，
+ *      掛在 `flat`/`capRaise` 上是一格畫得出來、引擎永遠不讀的設定——失敗形態②）。
+ *   ③ 兩個都沒有 → 拒（value 對其餘每一個節點仍然必填——⛔ 不讓「都不填」
+ *      變成一條安靜的 0 加成）。
+ */
+export const refineMsBonusTier = (
+  m: { stat: Stat; op: ModOp; value?: number; msBonusTier?: string },
+  ctx: z.RefinementCtx,
+): void => {
+  if (m.msBonusTier !== undefined) {
+    if (m.value !== undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["value"],
+        message:
+          "msBonusTier 與 value 不可同時存在（第〇·四守則：value 是第二個住處，必然過期）。" +
+          "留級別、刪 value —— 值在載入時由 resolveMsBonusTier() 從 config.move-speed-tiers@1 解析。",
+      });
+    }
+    if (m.stat !== Stat.MoveSpeed || !(MS_BONUS_OPS as readonly string[]).includes(m.op)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["msBonusTier"],
+        message:
+          `msBonusTier 只對 stat=ms、op=${MS_BONUS_OPS.join("/")} 合法（owner 2026-08-27 點名的是「%」；` +
+          `收到 stat=${m.stat} op=${m.op}）。flat 的單位是 u/s，走 move-speed-tiers 的豁免表。`,
+      });
+    }
+    return;
+  }
+  if (m.value === undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["value"],
+      message:
+        "value 必填（只有帶 msBonusTier 的 ms % modifier 可以省略它——那時值在載入時從級距表解析）。",
+    });
+  }
+};
+
 const refineCapRaisePct = (
-  m: { op: ModOp; value: number },
+  m: { op: ModOp; value?: number },
   ctx: z.RefinementCtx,
 ): void => {
   if (m.op !== ModOp.CapRaisePct) return;
+  if (m.value === undefined) return; // 沒有 value 的節點由 refineMsBonusTier 把關
+
   if (m.value < CAP_RAISE_PCT_MIN || m.value > CAP_RAISE_PCT_MAX) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
@@ -316,7 +389,9 @@ const refineCapRaisePct = (
 export const zStatModifier = zStatModifierFields
   .superRefine(refineStatModifierFrom)
   .superRefine(refineStatModifierScope)
-  .superRefine(refineCapRaisePct);
+  .superRefine(refineCapRaisePct)
+  // ⭐ GH#789 —— 級別↔value 互斥、掛錯地方、都不填，三道門在**編輯發生的當下**響。
+  .superRefine(refineMsBonusTier);
 
 /**
  * Per-stat sanity band for ONE item modifier, as an absolute magnitude.
@@ -420,9 +495,12 @@ export const ITEM_PERCENT_LIMIT = 3;
  * game-server startup — whichever of the two shapes the doc uses.
  */
 export const refineItemModifierBand = (
-  m: { stat: Stat; op: ModOp; value: number },
+  m: { stat: Stat; op: ModOp; value?: number },
   ctx: z.RefinementCtx,
 ): void => {
+  // ⭐ GH#789 —— 帶 msBonusTier 的節點沒有 value：量級的柵欄由級距表自己的
+  //    Zod 上下界（0.1~4，owner 逐字）接手，⛔ 這裡沒有第二個數字可以量。
+  if (m.value === undefined) return;
   // `capRaise` IS NOT A MAGNITUDE (GH#286). Its `value` is the ceiling the
   // modifier lifts the stat TO, not the amount it grants — so measuring it
   // against `ITEM_MODIFIER_LIMITS` compares two different units. The table's

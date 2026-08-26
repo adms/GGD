@@ -40,6 +40,11 @@ import { damageTiersFromDoc, resolveDamageTier } from "./damageTiers";
 // 的技能會在 sim 裡擲錯,而 `content:build` 與全套測試對它是綠的。
 import { normalizeComboTable, resolveComboFamilies } from "../sim/effects/comboFamilies";
 import { manaTiersFromDoc, resolveManaCostTier } from "./manaTiers";
+import {
+  DEFAULT_MOVE_SPEED_TIERS,
+  moveSpeedTiersFromDoc,
+  resolveMsBonusTier,
+} from "./moveSpeedTiers";
 import { resolveSpeedGrowthTiers, speedGrowthTiersFromDoc } from "./speedGrowthTiers";
 // ⭐ 說明推導（票號待開） —— 技能說明的佔位符在 `withProse` 被代入（見下面那一格的說明）。
 import { type ProseTables } from "./abilityProse";
@@ -268,6 +273,13 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   // 沒有 `manaCostTier` 一格，所以 212 支要花魔力的技能各自帶一個自由數字：
   // 級距表一改它們一動都不會動，⛔ 而且沒有任何東西會紅。
   const manaTiers = manaTiersFromDoc(configDocs.find((c) => c.schema === "config.mana-tiers@1"));
+  // 移速**加成**五級距（GH#789，owner 2026-08-27「%轉換為五級距⋯0.1~4」）。
+  // ⚠️ 它級距化的是 **modifier 節點**（任意深度的 `{stat:"ms", op:pctAdd|pctMult}`），
+  // 帶 `msBonusTier` 的節點**沒有** `value`（#534 exclusive）——所以這一層**不可以漏**：
+  // 漏了＝modifier 沒有 value＝statPipeline 的 `m.value * stacks` 算出 NaN 傳染進移速。
+  const moveSpeedTiers = moveSpeedTiersFromDoc(
+    configDocs.find((c) => c.schema === "config.move-speed-tiers@1"),
+  );
   // GH#541 —— 29 個 JASS 連段函式的間隔表。⭐ 間隔就是動畫節奏的來源(owner 2026-08-22),
   // 所以它**逐支不同**(克勞德 0.2/0.6/0.4 · 龍虎亂舞 0.3/0.05/0.5 · 理想鄉 0.1/0.3/0.2)——
   // ⛔ 統一成一個 `intervalSec` 會把每一支的手感抹平。
@@ -282,6 +294,9 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
     // ⛔ 不看幾何也不看傷害），⛔ 不要因此以為它有優先權。
     // ⭐ 連段家族包在最外層與耗魔同理:它只讀 `comboStrikes` 節點的 `family`,
     // ⛔ 不看幾何、不看傷害、不看冷卻 ⇒ 順序無關。
+    // ⭐ 移速加成級距包在最外層與耗魔同理：它只讀 modifier 節點的 `msBonusTier`，
+    // ⛔ 不看幾何、不看傷害、不看冷卻 ⇒ 順序無關。
+    resolveMsBonusTier(
     resolveComboFamilies(
       resolveManaCostTier(
       resolveCooldownTier(
@@ -305,6 +320,8 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
       manaTiers,
       ) as never,
       comboFamilies,
+    ) as never,
+      moveSpeedTiers,
     ) as T;
 
   /**
@@ -328,6 +345,9 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
     push: Object.fromEntries(
       Object.entries(displacementTiers.push).map(([k, v]) => [k, v.distance]),
     ) as ProseTables["push"],
+    // GH#789 —— `{{msb}}` 的級距表。⚠️ 出貨路徑上 value 已在 withTiers 解析，
+    // 這一格是給磁碟形狀的草稿（後台創建新英雄）用的退路，跟 resolve 同一套語意。
+    msBonus: moveSpeedTiers.enabled ? moveSpeedTiers.bonus : DEFAULT_MOVE_SPEED_TIERS.bonus,
     // ⭐ 錨從 store 裡的 arenas **推導**，⛔ 不抄字面值 24（`Arenas` 那一圈跑在
     //   技能之後，讀註冊表會拿到上一次載入留下的那一份 —— 一個安靜的跨載入污染）。
     zoneRadius: Math.min(
@@ -368,7 +388,11 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   //    AoE 的接縫漏掉了 `Items`，理由是「今天 0 件道具用 radiusTier」——
   //    那是巧合正確，不是設計，所以這裡一次把兩個機制都接上。
   for (const d of store.all<ItemDef>("items")) Items.register(d.id, withTiers(d));
-  for (const d of store.all<AugmentDef>("augments")) Augments.register(d.id, d);
+  // ⚠️ 增益卡也要過級距（GH#789）—— 出貨就有 5 張帶 `msBonusTier` 的移速卡，
+  //    而帶級別的節點**沒有** value（#534 exclusive）：漏了這一格，那 5 張卡的
+  //    modifier 進 statPipeline 就是 `undefined * stacks` = NaN。
+  //    理由同上面 Items 那一行（AoE 漏掉 Items 是巧合正確，不是設計）。
+  for (const d of store.all<AugmentDef>("augments")) Augments.register(d.id, withTiers(d));
   for (const d of store.all<AbilityDef>("abilities")) {
     const e = expandStandalone(d);
     Abilities.register(e.id, e);

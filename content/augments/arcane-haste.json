@@ -2,7 +2,7 @@
   "id": "arcane-haste",
   "schema": "augment@1",
   "name": "奧術急速",
-  "description": "施放技能後，攻擊速度與移動速度 +15%，持續 2.5 秒。",
+  "description": "施放技能後，攻擊速度 +15%、移動速度 +10%，持續 2.5 秒。",
   "tier": "gold",
   "weight": 55,
   "hooks": [
@@ -22,7 +22,7 @@
             {
               "stat": "ms",
               "op": "pctAdd",
-              "value": 0.15
+              "msBonusTier": "極小"
             }
           ]
         }

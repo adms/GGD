@@ -70,6 +70,7 @@ import {
   zConfigDamageTiersDoc,
   zConfigManaTiersDoc,
   zConfigSpeedGrowthTiersDoc,
+  zConfigMoveSpeedTiersDoc,
   zConfigSkillNormalizeDoc,
   zConfigManaEconomyDoc,
   zConfigStatNormalizationDoc,
@@ -184,6 +185,12 @@ import {
   SPEED_GROWTH_TIER_FIELD,
   SPEED_GROWTH_TIER_NAMES,
 } from "@ggd/shared/content/speedGrowthTiers";
+import {
+  DEFAULT_MOVE_SPEED_TIERS,
+  MS_BONUS_MAX,
+  MS_BONUS_MIN,
+  MS_BONUS_TIER_NAMES,
+} from "@ggd/shared/content/moveSpeedTiers";
 import {
   DEFAULT_SKILL_NORMALIZE,
   CARRIER_BASE_MAX_CEILING,
@@ -2309,6 +2316,61 @@ const SPEED_GROWTH_TIERS_SPEC: ConfigDocSpec = {
   ],
   // 純量葉 + 一個開關 + 一個下拉，沒有不編輯的分支要原封帶走。
   preserved: [],
+};
+
+// ──────────────────── 移速加成五級距 (config/move-speed-tiers) ─
+
+/** 出貨五格一行（現算，⛔ 不是說明裡手打的數字）。 */
+const MSB_ROW = MS_BONUS_TIER_NAMES.map(
+  (n) => `${n} ${DEFAULT_MOVE_SPEED_TIERS.bonus[n]}`,
+).join(" / ");
+
+const MOVE_SPEED_TIERS_SPEC: ConfigDocSpec = {
+  page: "moveSpeedTiers",
+  collection: "config",
+  docId: "move-speed-tiers",
+  schemaTag: "config.move-speed-tiers@1",
+  zod: zConfigMoveSpeedTiersDoc,
+  title: "移速加成五級距",
+  intro: [
+    "owner 2026-08-27（逐字）：「**移動速度加成一律的 %轉換為五級距，一樣列表可設定，五級距上下限增加移速為 0.1~4**」。",
+    `⭐ 這一軸級距化的是 **modifier 節點**（任意深度的 \`{stat:"ms", op:pctAdd|pctMult}\`），⛔ 不是技能頂層欄位 —— 技能 buff／靈氣／死亡守衛／道具／增益卡**同一把梯子**。單位是**百分比加成的小數**：0.5 = +50%（pctAdd 加算；pctMult 乘區，1 = ×2）。出貨 ${MSB_ROW}。`,
+    "⭐ **第〇·四（exclusive）**：帶級別的節點**沒有** `value` —— 值在載入（註冊）時由 `resolveMsBonusTier` 從這一頁解析。⇒ 改這五格 = 全部 24 列一起動，零重新產生。",
+    "⭐ 極小 0.1／極大 4 是 owner 的上下限**逐字**；小 0.2／中 0.5／大 1 是映射時挑的格點（量到最大的三個值叢 0.2／0.5／1.0 逐字落格 ⇒ 那三叢零捨入）。映射走「最近的一格、平手往低」；逐列映射表在 #789。",
+    "⚠️ **豁免不在這一頁編**（`exemptions` 分支原封帶走）：op=flat（單位是 u/s 不是 %）、赤色彗星（原作哏 ×3）、致命魂之首輪（每層 ×1.05 疊層）。要改豁免走 `content/config/move-speed-tiers.json`，守衛 `moveSpeedTiers.test.ts` 兩個方向都會盯。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/move-speed-tiers.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "packages/shared/src/content/moveSpeedTiers.ts 的 resolveMsBonusTier（全專案唯一的查表處）← content/registries.ts 的 withTiers 接縫（技能／道具／增益卡／英雄卡內嵌四條路同一個答案）；{{msb}} 卡面佔位與 docs/技能移速清單.md 讀同一份註冊表",
+  effect:
+    "**要重啟 game-server shard 才生效**（內容在註冊時就解析完）。客戶端要重新載入 bundle。和冷卻／傷害／耗魔五級距同一個形態(#278)。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "級距總開關",
+      note:
+        "⚠️ 關掉**不是**「回到各技能原本的數字」—— 第〇·四的 exclusive 模型下，文件裡已經沒有第二份值（不解析＝modifier 沒有 value＝移速算成 NaN）。" +
+        "關掉的語意是「**無視這一頁（含線上覆蓋層），回到程式裡凍結的出貨預設五格**」：這張表被改壞的那天一鍵回到出貨數字。",
+    },
+    ...MS_BONUS_TIER_NAMES.map((tier) => ({
+      path: `bonus.${tier}`,
+      zh: `「${tier}」的移速加成`,
+      note:
+        `標成「${tier}」的每一個移速加成節點（技能 buff／靈氣／道具／增益卡）解析成多少。` +
+        `小數：0.5 = +50%；pctAdd 直接加，pctMult 進乘區（1 = ×2）。` +
+        `⭐ 出貨值 {{出貨值}}。⚠️ 上下限 ${MS_BONUS_MIN}~${MS_BONUS_MAX} 是 owner 2026-08-27 逐字給的（+10% ~ +400%）。` +
+        `⚠️ 改這一格**同時**改動所有標成「${tier}」的列 —— 這正是五級距的目的（一格改、全表動）。`,
+    })),
+  ],
+  preserved: [
+    {
+      path: "exemptions",
+      why:
+        "「真不屬於級距」的具名豁免（op=flat 的 u/s 列、赤色彗星 ×3、致命魂之首輪每層 ×1.05），每一條帶著能被反駁的理由。" +
+        "通用表單引擎畫不了物件陣列，所以這一頁不編輯它，但每次儲存都必須原封帶走 —— " +
+        "掉了的話 moveSpeedTiers.test.ts 的「沒級別又沒豁免」與「豁免過期」兩個方向會同時紅，而且 7 個 flat 節點會被要求收進一張它們不屬於的 % 梯子。",
+    },
+  ],
 };
 
 // ─────────────────────── 技能正規化決策點 (config/skill-normalize) ─
@@ -5487,6 +5549,11 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   // `msGrowthTier` / `asGrowthTier` 就是兩格**後台調不到**的參數（第一守則），
   // 而它們決定 49 位英雄跑多快、打多快隨等級怎麼變。
   SPEED_GROWTH_TIERS_SPEC,
+  // 移速**加成**五級距（GH#789，owner 2026-08-27）。⚠️ 同 AUDIO_MIX_SPEC 那一段：
+  // 這一列要跟 store.ts 的 `Page` union + `SESSION_REQUIRED_PAGES`、App.tsx 的
+  // 導覽列一列、以及 `content/config/move-speed-tiers.json` 出貨檔一起，
+  // 才到得了操作者手上（本票四件一起落）。
+  MOVE_SPEED_TIERS_SPEC,
   // 技能正規化決策點（2026-08-21）—— owner「決策點一律做成後台開關」的落地。
   SKILL_NORMALIZE_SPEC,
   MANA_ECONOMY_SPEC,

@@ -183,6 +183,12 @@ export function MoveSpeedListPage(): React.JSX.Element {
             applyBuff（與其 perRank）、常駐被動、靈氣、死亡守衛、道具本體、增益卡；
             道具與增益卡不篩母體，全列。
           </div>
+          <div style={{ fontSize: 12, color: TEXT_DIM }}>
+            ⭐ 五級距（GH#789，owner 2026-08-27「%轉換為五級距⋯上下限 0.1~4」）：% 列的量住在
+            msBonusTier 級別上，值在載入時解析 —— <b>改表＝全表一起動</b>。五格的值在左側導覽
+            「💨 移速加成五級距」頁調（每格 0.1~4）。「豁免」列不吃表（flat 的單位是 u/s；
+            具名豁免各帶理由，守衛 moveSpeedTiers.test.ts）。
+          </div>
           <TextInput value={q} onChange={setQ} placeholder="過濾：來源 id / 名 / 英雄…" />
           <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 760 }}>
@@ -194,6 +200,7 @@ export function MoveSpeedListPage(): React.JSX.Element {
                   <Th>英雄</Th>
                   <Th>掛在哪</Th>
                   <Th>加多少</Th>
+                  <Th>五級距</Th>
                   <Th>持續多久</Th>
                 </tr>
               </thead>
@@ -208,6 +215,7 @@ export function MoveSpeedListPage(): React.JSX.Element {
                     <Td mono color={GOLD}>
                       {r.amountText}
                     </Td>
+                    <Td>{r.tierText ?? "—"}</Td>
                     <Td>{r.durationText}</Td>
                   </tr>
                 ))}

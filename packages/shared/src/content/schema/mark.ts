@@ -58,6 +58,8 @@ const zMarkCount = z.number().int().min(0).max(MARK_MAX_COUNT);
  */
 export const zMarkPerStackModifier = zStatModifier.superRefine((m, ctx) => {
   if (m.op === ModOp.CapRaise || m.op === ModOp.CapRaisePct) return;
+  // ⭐ GH#789 —— 帶 msBonusTier 的節點沒有 value：量級柵欄由級距表的 0.1~4 接手。
+  if (m.value === undefined) return;
   if (Math.abs(m.value) > MARK_MAX_PER_STACK_VALUE) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,

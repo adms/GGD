@@ -83,7 +83,7 @@ export type LiveRule =
   | { readonly kind: "none"; readonly why: string };
 
 /**
- * ⭐ 逐軸的決定。**七格一格都不可以少** —— 加一格新佔位符就要在這裡選一邊，
+ * ⭐ 逐軸的決定。**八格一格都不可以少** —— 加一格新佔位符就要在這裡選一邊，
  * 而不是讓它靜靜地沒有實際值（守衛 ③ 在守這件事）。
  */
 export const LIVE_RULES: Readonly<Record<ProseSlotKey, LiveRule>> = Object.freeze({
@@ -133,6 +133,14 @@ export const LIVE_RULES: Readonly<Record<ProseSlotKey, LiveRule>> = Object.freez
       "沒有一個單一因子代表得了「實際」",
   },
   push: { kind: "none", why: "同 `travel` —— 擊退距離沒有任何全域因子乘在上面" },
+  msb: {
+    kind: "none",
+    why:
+      "移速加成（GH#789）是 modifier 進 statPipeline 的一份輸入：實際跑多快取決於" +
+      "基礎移速、其他 flat/pctAdd/pctMult 疊加與 `STAT_CLAMPS` 的上限 18 —— " +
+      "沒有一個單一因子代表得了「實際」。⭐ 反駁方式：owner 指定一個錨" +
+      "（例如「對中位基礎移速 5.8 算」），它就變成一條算得出來的規則",
+  },
 });
 
 /** 算實際值要的兩份出貨設定。⛔ 全部從 `content/config/` 推導，不抄字面值。 */

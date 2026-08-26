@@ -62,6 +62,18 @@ MIRRORED = (
     "effects",
 )
 
+#: ⭐ 2026-08-27（GH#789）—— **只覆寫、⛔ 不刪除**的鏡射欄位。
+#: `passive` 在此之前完全不在鏡射表上，而 ms 級距第一次改到
+#: `passive.ranks[].modifiers`（14-03 魔力應援）就撞出來：standalone 收成
+#: `msBonusTier` 而英雄卡內嵌版還留著 0.05..0.2 ⇒ `abilityMirror.test.ts` 判
+#: 「兩份副本互相矛盾」。⇒ standalone **有** passive 就照 STRICT model 蓋過去。
+#: ⚠️ 但⛔ **不走「standalone 沒有就刪」那一半**：出貨有**內嵌版獨有**的 passive
+#: （godie-ofar.W 58-02 鋼鐵尾巴的 10% on-hit 追擊 —— #571/#634「被動還原」那一族），
+#: 刪掉它＝把一個活著的機制從遊戲裡拔走而全套 schema 綠（失敗形態②）。
+#: `abilityMirror.test.ts` 也刻意只驗「兩邊都有而值不同」，⛔ 不驗單邊 ——
+#: 這一格跟它同一個立場。單邊清單是刻意的紀錄，⛔ 不是漏。
+MIRRORED_UPDATE_ONLY = ("passive",)
+
 
 def _insert_after(doc, key, after, value):
     """把 `key` 插在 `after` 後面（純可讀性；Zod 不在意鍵序）。"""
@@ -154,6 +166,10 @@ def _mirror(write=True):
                     emb[k] = json.loads(json.dumps(src[k]))
                 elif k in emb:
                     del emb[k]
+            for k in MIRRORED_UPDATE_ONLY:
+                if k in src:
+                    emb[k] = json.loads(json.dumps(src[k]))
+                # ⛔ 沒有 else：內嵌版獨有的分支留著（見 MIRRORED_UPDATE_ONLY 檔頭）。
         after = json.dumps(ch, ensure_ascii=False, indent=2) + "\n"
         if after != before:
             n += 1

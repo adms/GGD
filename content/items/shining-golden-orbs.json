@@ -81,7 +81,7 @@
             {
               "stat": "ms",
               "op": "pctMult",
-              "value": 0.1
+              "msBonusTier": "極小"
             }
           ]
         },
@@ -157,7 +157,7 @@
             {
               "stat": "ms",
               "op": "pctMult",
-              "value": 0.2
+              "msBonusTier": "小"
             },
             {
               "stat": "outputDamagePct",

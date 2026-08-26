@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "3d4b04ff5ab8",
+  "hash": "9b21bcf0881c",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -41,8 +41,8 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "2a82409c2ae6",
-      "size": 8385
+      "hash": "e44c335e9531",
+      "size": 8387
     },
     {
       "id": "audio-map",
@@ -113,8 +113,8 @@
     {
       "id": "cast-time",
       "path": "config/cast-time.json",
-      "hash": "e59392ba3734",
-      "size": 934
+      "hash": "4091ecc954c5",
+      "size": 1286
     },
     {
       "id": "champion-voices",
@@ -209,8 +209,8 @@
     {
       "id": "feel-fx",
       "path": "config/feel-fx.json",
-      "hash": "640a98d46516",
-      "size": 942
+      "hash": "c643b1bcfe06",
+      "size": 1717
     },
     {
       "id": "form-visuals",
@@ -295,6 +295,12 @@
       "path": "config/model-lod.json",
       "hash": "1a982fa20301",
       "size": 490
+    },
+    {
+      "id": "move-speed-tiers",
+      "path": "config/move-speed-tiers.json",
+      "hash": "b8a53203c123",
+      "size": 2353
     },
     {
       "id": "new-hero-checks",
@@ -467,8 +473,8 @@
     {
       "id": "vfx-families",
       "path": "config/vfx-families.json",
-      "hash": "43a13fe4e838",
-      "size": 37426
+      "hash": "d8f6508af7d9",
+      "size": 37453
     },
     {
       "id": "victory-fx",

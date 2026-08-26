@@ -482,6 +482,13 @@ const WHOLE_TREE_BY_DESIGN: Record<string, string> = {
     "「模板做好了但沒人套」被一件關著的道具**假性滿足**，而那正是這條閘要抓的東西" +
     "（首輪量到 46 個家族裡 30 個零引用，含 #648 的 tpl-periodic-field）。" +
     "反駁方式：如果哪天判準改成「玩家看得到的採用率」，這一列就該改走 shippedItemIds() 並刪掉。",
+  // ── 2026-08-27 GH#789 —— 移速加成級距的 exclusive 掃全樹 ─────────────────
+  "packages/shared/src/content/moveSpeedTiers.test.ts":
+    "問的是「`ms` modifier 的級別與 value **有沒有第二個住處**」（第〇·四）——" +
+    "那是**資料正確性**不是平衡稽核（形狀同 negativeBuffPolarity）：貨架關著的道具" +
+    "一格後台勾選就上架，而上架動作不重跑測試 ⇒ 一個沒收級距、也沒豁免的 ms 節點" +
+    "要在**進 repo 的當下**紅，⛔ 不是上架之後表改了才發現它一動不動。" +
+    "反駁方式：上架動作本身會觸發完整稽核（#473 落地）的那天，改走上架面並刪掉這一列。",
   // ── 2026-08-24 GH#662 —— polarity 誠實性掃全樹 ────────────────────────────
   "packages/shared/src/content/negativeBuffPolarity.test.ts":
     "未標 polarity 的純減益 ⇒ 淨化拔不掉（第一·五守則：卡面說謊）。⭐ 掃**全樹**是刻意的：" +

@@ -2,7 +2,7 @@
   "id": "overdrive-engine",
   "schema": "augment@1",
   "name": "超載引擎",
-  "description": "冷卻縮減 +20%，攻擊速度 +50%，移動速度 +15%。",
+  "description": "冷卻縮減 +20%，攻擊速度 +50%，移動速度 +10%。",
   "tier": "prismatic",
   "weight": 25,
   "modifiers": [
@@ -19,7 +19,7 @@
     {
       "stat": "ms",
       "op": "pctAdd",
-      "value": 0.15
+      "msBonusTier": "極小"
     }
   ],
   "tags": [

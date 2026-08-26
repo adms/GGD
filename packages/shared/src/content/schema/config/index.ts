@@ -117,6 +117,7 @@ import { zConfigDamageTiersDoc } from "./damageTiers";
 import { zConfigDamageTierExemptionsDoc } from "./damageTierExemptions";
 import { zConfigManaTiersDoc } from "./manaTiers";
 import { zConfigSpeedGrowthTiersDoc } from "./speedGrowthTiers";
+import { zConfigMoveSpeedTiersDoc } from "./moveSpeedTiers";
 import { zConfigSkillNormalizeDoc } from "./skillNormalize";
 import { zConfigManaEconomyDoc } from "./manaEconomy";
 import { zConfigStatNormalizationDoc } from "./statNormalization";
@@ -192,6 +193,7 @@ export * from "./manaEconomy";
 export * from "./manaTiers";
 export * from "./match";
 export * from "./modelLod";
+export * from "./moveSpeedTiers";
 export * from "./originRoutes";
 export * from "./perLevelBonus";
 export * from "./rangeGuide";
@@ -307,6 +309,9 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   // 移速／攻速的**每級成長**五級距（2026-08-21）。⚠️ 同上 —— 漏掉這一行，
   // speed-growth-tiers.json 會讓內容**整份**載入失敗 → 骨架英雄，而網站看起來正常。
   zConfigSpeedGrowthTiersDoc,
+  // 移速**加成**五級距（GH#789，owner 2026-08-27）。⚠️ 同上 —— 漏掉這一行，
+  // move-speed-tiers.json 會讓內容**整份**載入失敗 → 骨架英雄，而網站看起來正常。
+  zConfigMoveSpeedTiersDoc,
   // 技能正規化的九個決策點（2026-08-21）。⚠️ 同上。
   zConfigSkillNormalizeDoc,
   // 回魔地板（GH#446）。⚠️ 同上。

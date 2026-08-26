@@ -3,6 +3,7 @@ import { z } from "zod";
 import type { ItemId } from "../../ids";
 import {
   refineItemModifierBand,
+  refineMsBonusTier,
   refineStatModifierFrom,
   zId,
   zIdFor,
@@ -133,7 +134,10 @@ export const zGatedItemStatModifier = zStatModifierFields
   .extend({ requires: zClassRequirement.optional() })
   .strict()
   .superRefine(refineStatModifierFrom)
-  .superRefine(refineItemModifierBand);
+  .superRefine(refineItemModifierBand)
+  // ⭐ GH#789 —— gated 這一支也要同一組門（級別↔value 互斥／掛錯地方／都不填）：
+  //    少了這一行，職業限定的那條路就是一個 value 可以整格消失的洞。
+  .superRefine(refineMsBonusTier);
 
 /**
  * 三圍加成 — `item@1.attributes`, mirroring `AttrGrant` in

@@ -28,7 +28,7 @@
         {
           "stat": "ms",
           "op": "pctMult",
-          "value": 0.2
+          "msBonusTier": "小"
         },
         {
           "stat": "as",
@@ -44,7 +44,7 @@
             {
               "stat": "ms",
               "op": "pctMult",
-              "value": 0.2
+              "msBonusTier": "小"
             },
             {
               "stat": "as",
@@ -59,7 +59,7 @@
             {
               "stat": "ms",
               "op": "pctMult",
-              "value": 0.2
+              "msBonusTier": "小"
             },
             {
               "stat": "as",
@@ -74,7 +74,7 @@
             {
               "stat": "ms",
               "op": "pctMult",
-              "value": 0.2
+              "msBonusTier": "小"
             },
             {
               "stat": "as",
@@ -89,7 +89,7 @@
             {
               "stat": "ms",
               "op": "pctMult",
-              "value": 0.2
+              "msBonusTier": "小"
             },
             {
               "stat": "as",

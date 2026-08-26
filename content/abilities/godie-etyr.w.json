@@ -3,7 +3,7 @@
   "name": "14-03 魔力應援",
   "icon": "assets/icons/abilities/godie-etyr.w.webp",
   "provenance": "w3x-import",
-  "description": "[靈氣]\n{{cd}}秒冷卻時間\n\n木乃香強大的魔力使得400範圍內的友軍增加攻擊速度35%和移動速度5%。",
+  "description": "[靈氣]\n{{cd}}秒冷卻時間\n\n木乃香強大的魔力使得400範圍內的友軍增加攻擊速度35%和移動速度{{msb}}%。",
   "slot": "W",
   "castType": "self",
   "maxRank": 4,
@@ -36,7 +36,7 @@
           {
             "stat": "ms",
             "op": "pctAdd",
-            "value": 0.05
+            "msBonusTier": "極小"
           }
         ]
       },
@@ -50,7 +50,7 @@
           {
             "stat": "ms",
             "op": "pctAdd",
-            "value": 0.1
+            "msBonusTier": "極小"
           }
         ]
       },
@@ -64,7 +64,7 @@
           {
             "stat": "ms",
             "op": "pctAdd",
-            "value": 0.15
+            "msBonusTier": "極小"
           }
         ]
       },
@@ -78,7 +78,7 @@
           {
             "stat": "ms",
             "op": "pctAdd",
-            "value": 0.2
+            "msBonusTier": "小"
           }
         ]
       }

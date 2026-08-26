@@ -186,6 +186,19 @@ function amountText(op, values) {
   return vs.length === 1 ? one(vs[0]) : `${one(vs[0])} ~ ${one(vs[vs.length - 1])}（隨階級）`;
 }
 
+/**
+ * GH#789 —— 這一列的**五級距**欄。
+ * · 有 `msBonusTier` 的節點（% 列）：印級別（逐階不同就 `中→極大`）。
+ * · 沒有的：豁免列 —— flat（單位 u/s 不是 %）或具名豁免（赤色彗星／首輪），
+ *   印「豁免」讓表上看得出**哪幾列不吃表**（⛔ 不是留白——留白跟漏掉長一樣）。
+ * 級別 → 值的表住 `content/config/move-speed-tiers.json`（後台「移速加成五級距」頁）。
+ */
+function tierText(op, tiers) {
+  const ts = [...new Set(tiers)].filter(Boolean);
+  if (ts.length === 0) return op === "flat" ? "豁免（flat u/s）" : "豁免（字面值）";
+  return ts.length === 1 ? ts[0] : `${ts[0]}→${ts[ts.length - 1]}`;
+}
+
 function buildMsList(owners) {
   const groups = new Map();
   const add = (kind, def, championName) => {
@@ -200,9 +213,13 @@ function buildMsList(owners) {
         ctx,
         op: hit.node.op,
         values: [],
+        tiers: [],
         durs: new Set(),
       };
       g.values.push(hit.node.value);
+      // GH#789 —— 級別留在節點上（resolveMsBonusTier 只補 value 不刪 tier），
+      // 所以這裡讀得到「這一列住在梯子的哪一格」。
+      if (typeof hit.node.msBonusTier === "string") g.tiers.push(hit.node.msBonusTier);
       g.durs.add(dur);
       groups.set(key, g);
     }
@@ -225,6 +242,8 @@ function buildMsList(owners) {
       context: g.ctx,
       op: g.op,
       amountText: amountText(g.op, g.values),
+      /** GH#789：五級距欄（後台頁直接顯示這一格；「豁免」= 這一列不吃表）。 */
+      tierText: tierText(g.op, g.tiers),
       durationText: [...g.durs].sort().join("／"),
     }))
     .sort(
@@ -312,12 +331,19 @@ function renderMsMd(data) {
   L.push("");
   L.push(`共 **${data.ms.length}** 列。`);
   L.push("");
-  L.push("| 來源 id | 名稱 | 種類 | 英雄 | 掛在哪 | 加多少 | 持續多久 |");
-  L.push("|---|---|---|---|---|---|---|");
+  L.push(
+    "⭐ **五級距**（GH#789，owner 2026-08-27「移動速度加成一律的 %轉換為五級距⋯上下限 0.1~4」）：" +
+      "% 列的量住在 `msBonusTier` 級別上，值在載入時從 `content/config/move-speed-tiers.json` 解析 —— " +
+      "**改表 = 全表一起動**。表可在後台「移速加成五級距」頁調（每格 0.1~4）。" +
+      "「豁免」列不吃表：flat 的單位是 u/s 不是 %；具名豁免各帶理由（守衛 `moveSpeedTiers.test.ts`）。",
+  );
+  L.push("");
+  L.push("| 來源 id | 名稱 | 種類 | 英雄 | 掛在哪 | 加多少 | 五級距 | 持續多久 |");
+  L.push("|---|---|---|---|---|---|---|---|");
   for (const r of data.ms) {
     L.push(
       `| \`${r.id}\` | ${r.name} | ${KIND_ZH[r.kind]} | ${r.championName ?? "—"} | ` +
-        `${r.context} | ${r.amountText} | ${r.durationText} |`,
+        `${r.context} | ${r.amountText} | ${r.tierText} | ${r.durationText} |`,
     );
   }
   L.push("");

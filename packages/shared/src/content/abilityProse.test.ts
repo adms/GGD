@@ -24,6 +24,7 @@ import { Abilities, Augments, Champions, Items, LootTables, Projectiles } from "
 import { aoeTiersFromDoc } from "./aoeTiers";
 import { rangeTiersFromDoc } from "./rangeTiers";
 import { displacementTiersFromDoc, minBodyRadiusFromConfigs } from "./displacementTiers";
+import { moveSpeedTiersFromDoc } from "./moveSpeedTiers";
 import {
   abilityQuantities,
   placeholderizeAbilityText,
@@ -123,6 +124,10 @@ describe("技能說明從 JSON 推導（說明推導（票號待開））", () =
       radius: aoeTiersFromDoc(cfgs.find((c) => c.schema === "config.aoe-tiers@1")).radius,
       travel: dist(disp.travel as never) as ProseTables["travel"],
       push: dist(disp.push as never) as ProseTables["push"],
+      // GH#789 —— {{msb}} 的級距表（與 registries.ts 的接縫同一個來源語意）。
+      msBonus: moveSpeedTiersFromDoc(
+        cfgs.find((c) => c.schema === "config.move-speed-tiers@1"),
+      ).bonus,
       zoneRadius: Math.min(...Arenas.all().flatMap((a) => a.zones.map((z) => z.boundaryRadius))),
     };
 

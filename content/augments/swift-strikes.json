@@ -2,7 +2,7 @@
   "id": "swift-strikes",
   "schema": "augment@1",
   "name": "疾風連擊",
-  "description": "攻擊速度 +25%，移動速度 +8%。",
+  "description": "攻擊速度 +25%，移動速度 +10%。",
   "tier": "silver",
   "weight": 100,
   "modifiers": [
@@ -14,7 +14,7 @@
     {
       "stat": "ms",
       "op": "pctAdd",
-      "value": 0.08
+      "msBonusTier": "極小"
     }
   ],
   "tags": [

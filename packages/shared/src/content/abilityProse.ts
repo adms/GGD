@@ -36,6 +36,9 @@
  *   `{{radius}}`  有效半徑      ← 效果樹 `radius` → **級距詞**
  *   `{{travel}}`  位移距離      ← dash/leap/blink 的距離 → **級距詞**
  *   `{{push}}`    擊退距離      ← knockback 的距離 → **級距詞**
+ *   `{{msb}}`     移速加成%     ← 效果樹上第 1 個 `ms` 的 % modifier（GH#789
+ *                                `msBonusTier` 解析後；逐階以 / 分隔；⛔ 不含 % 記號，
+ *                                卡面自己寫「提昇{{msb}}%速度」）
  *
  * ⭐ 結尾加 `!` = **實際值**（`{{cd!}}` = 玩家真的等到的秒數 = 卡面 ×
  * `combatEnv.cooldown`，出貨 0.2 ⇒ 45 秒的技能實際只轉 9 秒）。哪幾軸有實際值、
@@ -66,6 +69,7 @@ import { DUEL_ZONE_RADIUS_REF, SKILL_TIER_NAMES, snapToTier, type SkillTierName 
 import { DEFAULT_RANGE_TIERS } from "./rangeTiers";
 import { DEFAULT_AOE_TIERS } from "./aoeTiers";
 import { DEFAULT_DISPLACEMENT_TIERS } from "./displacementTiers";
+import { DEFAULT_MOVE_SPEED_TIERS, MS_BONUS_TIER_FIELD, isMsBonusNode } from "./moveSpeedTiers";
 
 /* ───────────────────────────── 佔位符詞彙 ───────────────────────────── */
 
@@ -73,7 +77,16 @@ import { DEFAULT_DISPLACEMENT_TIERS } from "./displacementTiers";
  * 佔位符的鍵。⭐ **這是唯一一份清單** —— codex 契約、後台欄位說明、
  * 閘的訊息全部從它推導，⛔ 不要在別處重打一份字串陣列。
  */
-export const PROSE_SLOT_KEYS = ["cd", "mp", "dmg", "range", "radius", "travel", "push"] as const;
+export const PROSE_SLOT_KEYS = [
+  "cd",
+  "mp",
+  "dmg",
+  "range",
+  "radius",
+  "travel",
+  "push",
+  "msb",
+] as const;
 export type ProseSlotKey = (typeof PROSE_SLOT_KEYS)[number];
 
 /** 一格佔位符的人話說明（codex 契約與後台欄位說明從這裡長出來）。 */
@@ -86,6 +99,11 @@ export const PROSE_SLOT_DOC: Readonly<Record<ProseSlotKey, { zh: string; from: s
     radius: { zh: "有效半徑", from: "效果樹 radius / radiusTier", renders: "五級距詞（極小…極大／全場）" },
     travel: { zh: "位移距離", from: "dash / leap / blink 的距離", renders: "五級距詞（極小…極大／全場）" },
     push: { zh: "擊退距離", from: "knockback 的距離", renders: "五級距詞（極小…極大／全場）" },
+    msb: {
+      zh: "移速加成%",
+      from: "效果樹上第 1 個 `stat:ms` 的 % modifier（msBonusTier → config.move-speed-tiers@1）",
+      renders: "百分比數字（逐階以 / 分隔；⛔ 不含 % 記號，卡面自己寫「{{msb}}%」）",
+    },
   });
 
 /** 可以帶序號的那幾格（`{{dmg2}}` = 效果樹上第 2 個傷害葉）。 */
@@ -345,6 +363,8 @@ export interface ProseTables {
   readonly radius: Readonly<Record<SkillTierName, number>>;
   readonly travel: Readonly<Record<SkillTierName, number>>;
   readonly push: Readonly<Record<SkillTierName, number>>;
+  /** 移速加成五級距（GH#789）：級別 → % 加成的小數（0.5 = +50%）。 */
+  readonly msBonus: Readonly<Record<SkillTierName, number>>;
   readonly zoneRadius: number;
 }
 
@@ -365,6 +385,7 @@ export const DEFAULT_PROSE_TABLES: ProseTables = Object.freeze({
   push: Object.fromEntries(
     Object.entries(DEFAULT_DISPLACEMENT_TIERS.push).map(([k, v]) => [k, v.distance]),
   ) as Readonly<Record<SkillTierName, number>>,
+  msBonus: DEFAULT_MOVE_SPEED_TIERS.bonus,
   zoneRadius: DUEL_ZONE_RADIUS_REF,
 });
 
@@ -379,6 +400,11 @@ export interface AbilityQuantities {
   readonly radius?: TierWord;
   readonly travel?: TierWord;
   readonly push?: TierWord;
+  /**
+   * 移速加成（GH#789）：效果樹上**第 1 個** `ms` % modifier 的百分比數字
+   * （`50` 或逐階 `50/50/50/100/400`；⛔ 不含 % 記號）。`undefined` = 沒有這一軸。
+   */
+  readonly msb?: string;
   /**
    * ⭐ 每一軸**可以接受的寫法**（收合形 `45` 與展開形 `45/45/45/45`）。
    * 兩種在語意上逐字相同，所以卡面用哪一種都算「說的就是 JSON 那個數字」，
@@ -464,6 +490,53 @@ function damageRanks(v: unknown): number[] | undefined {
     return rs.length > 0 ? rs : undefined;
   }
   return typeof o.flat === "number" ? [o.flat] : undefined;
+}
+
+/**
+ * 移速加成的**逐階數列**（GH#789）。
+ *
+ * 抓**第 1 個** `ms` 的 % modifier（`isMsBonusNode`——與守衛/清單產生器同一個判準）：
+ * 它的容器有 `perRank[].modifiers` 的 ms 節點 ⇒ 逐階數列取 perRank 那一串
+ * （applyBuff 的 perRank 是**逐階覆寫**，⛔ 不是與 base 相加）；否則取單值。
+ *
+ * ⚠️ 值 = `value` ?? 級距表[`msBonusTier`] —— 出貨路徑（registerAll）在
+ * `withTiers` 之後跑，`value` 已被解析；級距表那一半是給**磁碟形狀**的草稿用的
+ * （後台創建新英雄，那時還沒解析）。⛔ 兩個都沒有 ⇒ 這一葉不算（fail-loud：
+ * `{{msb}}` 裸印、閘紅）。
+ * ⛔ 跳過 `template` 子樹：作者填的來源，展開後的 effects 才是出貨行為。
+ */
+function msBonusRanks(
+  d: Record<string, unknown>,
+  table: Readonly<Record<SkillTierName, number>>,
+): number[] {
+  const valueOf = (n: Record<string, unknown>): number | undefined => {
+    const v = n["value"];
+    if (typeof v === "number" && Number.isFinite(v)) return v;
+    const t = n[MS_BONUS_TIER_FIELD];
+    return typeof t === "string" ? table[t as SkillTierName] : undefined;
+  };
+  const base: number[] = [];
+  const perRank: number[] = [];
+  const visit = (node: unknown, inPerRank: boolean): void => {
+    if (Array.isArray(node)) {
+      for (const v of node) visit(v, inPerRank);
+      return;
+    }
+    if (node === null || typeof node !== "object") return;
+    const rec = node as Record<string, unknown>;
+    if (isMsBonusNode(rec)) {
+      const v = valueOf(rec);
+      if (v !== undefined) (inPerRank ? perRank : base).push(v);
+    }
+    for (const [k, v] of Object.entries(rec)) {
+      if (k === "template") continue;
+      // `perRank`（applyBuff 的逐階覆寫）與 `ranks`（passive 的逐階定義）都是逐階序列。
+      visit(v, inPerRank || k === "perRank" || k === "ranks");
+    }
+  };
+  visit(d, false);
+  if (perRank.length > 0) return perRank;
+  return base.length > 0 ? [base[0]!] : [];
 }
 
 /** 帶「一發傷害量」語意的欄位名（與 `descriptionClaims.DAMAGE_KEYS` 同一份）。 */
@@ -588,6 +661,8 @@ export function abilityQuantities(
   }
   const cdRanks = Array.isArray(d["cooldown"]) ? (d["cooldown"] as number[]) : [];
   const mpRanks = Array.isArray(d["manaCost"]) ? (d["manaCost"] as number[]) : [];
+  // GH#789 —— 移速加成 %。小數 → 百分比數字（0.5 → 50）。
+  const msbRanks = msBonusRanks(d, t.msBonus).map((v) => v * 100);
   return {
     cd: fmtRanks(cdRanks),
     mp: fmtRanks(mpRanks),
@@ -596,6 +671,7 @@ export function abilityQuantities(
     radius: tierField("radiusTier") ?? word(radius, t.radius),
     travel: tierField("distanceTier") ?? word(travel ?? range, t.travel),
     push: word(push, t.push),
+    msb: fmtRanks(msbRanks),
     forms: { cd: acceptedForms(cdRanks), mp: acceptedForms(mpRanks), dmg: dmgForms },
     ranks: { cd: rankListOf(cdRanks), mp: rankListOf(mpRanks), dmg: dmgRanks },
     raw,
@@ -619,6 +695,8 @@ export function slotValue(q: AbilityQuantities, slot: ProseSlotKey, i: number): 
       return q.travel;
     case "push":
       return q.push;
+    case "msb":
+      return q.msb;
   }
 }
 

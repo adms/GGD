@@ -1,23 +1,23 @@
 {
-  "contentVersion": "cv_39f21bfe47a9",
+  "contentVersion": "cv_108b508e8ca1",
   "collections": {
     "champions": {
-      "hash": "38fc763afe0c",
+      "hash": "10c52035cecd",
       "count": 71,
       "path": "champions/_index.json"
     },
     "abilities": {
-      "hash": "efc819b074e2",
+      "hash": "9fa3a68d6364",
       "count": 421,
       "path": "abilities/_index.json"
     },
     "items": {
-      "hash": "cb1f0f93754b",
+      "hash": "32cbc263d2c0",
       "count": 142,
       "path": "items/_index.json"
     },
     "augments": {
-      "hash": "b6f3f4733fee",
+      "hash": "e003b299e8a9",
       "count": 91,
       "path": "augments/_index.json"
     },
@@ -47,8 +47,8 @@
       "path": "maps/_index.json"
     },
     "config": {
-      "hash": "3d4b04ff5ab8",
-      "count": 87,
+      "hash": "9b21bcf0881c",
+      "count": 88,
       "path": "config/_index.json"
     },
     "models": {

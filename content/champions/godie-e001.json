@@ -57,7 +57,7 @@
       "name": "22-01 鬼隱之擊",
       "icon": "assets/icons/abilities/godie-e001.q.webp",
       "provenance": "w3x-import",
-      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n隱形並在一定的時間內提昇50%速度以暗殺目標，當攻擊時隱形術即告失效，但是會造成額外100點的背刺傷害，持續12秒。",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n隱形並在一定的時間內提昇{{msb}}%速度以暗殺目標，當攻擊時隱形術即告失效，但是會造成額外100點的背刺傷害，持續12秒。",
       "slot": "Q",
       "castType": "self",
       "maxRank": 5,
@@ -83,7 +83,7 @@
             {
               "stat": "ms",
               "op": "pctAdd",
-              "value": 0.5
+              "msBonusTier": "中"
             }
           ],
           "duration": 12.0,
@@ -93,7 +93,7 @@
                 {
                   "stat": "ms",
                   "op": "pctAdd",
-                  "value": 0.5
+                  "msBonusTier": "中"
                 }
               ],
               "duration": 12.0
@@ -103,7 +103,7 @@
                 {
                   "stat": "ms",
                   "op": "pctAdd",
-                  "value": 0.5
+                  "msBonusTier": "中"
                 }
               ],
               "duration": 12.0
@@ -113,7 +113,7 @@
                 {
                   "stat": "ms",
                   "op": "pctAdd",
-                  "value": 0.5
+                  "msBonusTier": "中"
                 }
               ],
               "duration": 12.0
@@ -123,7 +123,7 @@
                 {
                   "stat": "ms",
                   "op": "pctAdd",
-                  "value": 1.5
+                  "msBonusTier": "大"
                 }
               ],
               "duration": 45.0
@@ -133,7 +133,7 @@
                 {
                   "stat": "ms",
                   "op": "pctAdd",
-                  "value": 3.0
+                  "msBonusTier": "極大"
                 }
               ],
               "duration": 45.0

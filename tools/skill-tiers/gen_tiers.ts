@@ -171,6 +171,13 @@ const NOT_A_SKILL_AXIS: Readonly<Record<string, string>> = {
     "英雄**移動速度成長**的級距，掛在 `champion@1` 上（`speedGrowthTier`）。" +
     "它不寫在 `ability@1` 的任何一格，也不參與「威力 ↔ 代價」那條式子 ⇒ 不是技能軸。" +
     "文件在 `tools/speed-growth/`（`pnpm speedtiers:build`）。",
+  "config.move-speed-tiers@1":
+    "移速**加成**的級距（GH#789），掛在 **modifier 節點**上（`msBonusTier`——" +
+    "任意深度的 `{stat:\"ms\", op:pctAdd|pctMult}`），而且**道具與增益卡**用同一把梯子 ⇒ " +
+    "它不是 `ability@1` 頂層「威力 ↔ 代價」式子裡的一軸，這份文件的表框畫不下它。" +
+    "表與豁免住 `content/config/move-speed-tiers.json`；解析在 " +
+    "`packages/shared/src/content/moveSpeedTiers.ts::resolveMsBonusTier`；" +
+    "清單在 `docs/技能移速清單.md`（pnpm speedlists:build）與後台「移速加成五級距」頁。",
 };
 
 const isTierSchema = (s: string): boolean => /^config\.[a-z-]+-tiers@\d+$/.test(s);

@@ -265,6 +265,9 @@ export type Page =
   // 那五軸是「216 支各帶一個自由數字」，這一軸量到的是「49 位共用一個常數」
   // （ms 成長全部 0、as 全部 0.02）—— 它開的是一個今天不存在的設計維度。
   | "speedGrowthTiers"
+  // 移速**加成**五級距 (GH#789, owner 2026-08-27)。⚠️ 它級距化的是 modifier 節點
+  // （技能 buff／靈氣／道具／增益卡同一把梯子），⛔ 不是技能頂層欄位。
+  | "moveSpeedTiers"
   // 技能正規化決策點 (2026-08-21) —— owner「決策點一律做成後台開關」。
   // ⚠️ 它是 authoring-time 的設定（決定閘怎麼問），⛔ 不影響正在跑的比賽。
   | "skillNormalize"
@@ -303,6 +306,11 @@ export type Page =
   /** 🗺 導覽地圖（GH#776）—— 121 頁的「平面」入口。⛔ 不進 SESSION_REQUIRED_PAGES：
    *  它無 session 也完整可用（結構是本機資料），只有覆蓋層徽章那一欄降級。 */
   | "navMap"
+  /**
+   * 🧑‍⚖️ 一頁批次後台驗收（GH#669/#785）—— owner:「你還是沒告訴我去後台哪裡審查」。
+   * ⛔ 不進 SESSION_REQUIRED_PAGES：帳本是本機檔，dev middleware 直接供應。
+   */
+  | "featureReview"
   | "liveMdlFamilies"
   | "liveParallelBoard"
   | "liveJassVfx"
@@ -758,6 +766,9 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // 移速／攻速每級成長五級距 (2026-08-21): 同上。⛔ 漏掉 gate 的後果同樣重 ——
   // 這一頁決定 49 位英雄跑多快、打多快隨等級怎麼變。
   "speedGrowthTiers",
+  // 移速加成五級距 (GH#789): 同上。⛔ 漏掉 gate 的後果同樣重 —— 這一頁決定
+  // 24 列移速加成（技能／道具／增益卡）各是多少。
+  "moveSpeedTiers",
   // 技能正規化決策點 (2026-08-21): 同上。
   "skillNormalize",
   "manaEconomy",

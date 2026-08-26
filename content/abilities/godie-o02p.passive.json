@@ -4,7 +4,7 @@
   "name": "99-00 可愛就是正義",
   "icon": "assets/icons/abilities/godie-o02p.passive.webp",
   "provenance": "w3x-import",
-  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n這世界的真理就是可愛，可愛就是正義！在初音的影響下，週遭的部隊可以額外獲得30%生命恢復率及8%跑速。\n\n（GGD 更正 2026-08-22 · GH#314）⚠️ 與 48-00 石化之眼**同一個形狀**，在同一次逐支查證裡撈出來：這一支宣告了 `radius`／`radiusTier: \"極大\"`，而那兩條加成寫在 `passive.ranks[0].modifiers` 裡 —— 那一格 `syncAbilityPassives` **只掛在自己身上**（`stats/modifiers.ts`：「`auras` 才是掛給站在半徑內的人的那一格」）。⇒ 「週遭的部隊」一個都沒拿到，而初音自己拿滿，卡片與遊戲各說各話（第一·五守則）。⛔ 沒有為它寫任何程式：改成 repo 已有的 `auras`（70-00 芬多精 `godie-e010.passive` 同一支 handler，`sim/aura/aura.ts`），`affects: \"ally\"`；`includeSelf` 留空＝友方靈氣的預設（含自己），所以初音自己那一份**一格都沒少**。半徑沿用這一支自己的「極大」級距，⛔ 沒有新的數字。",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n這世界的真理就是可愛，可愛就是正義！在初音的影響下，週遭的部隊可以額外獲得30%生命恢復率及{{msb}}%跑速。\n\n（GGD 更正 2026-08-22 · GH#314）⚠️ 與 48-00 石化之眼**同一個形狀**，在同一次逐支查證裡撈出來：這一支宣告了 `radius`／`radiusTier: \"極大\"`，而那兩條加成寫在 `passive.ranks[0].modifiers` 裡 —— 那一格 `syncAbilityPassives` **只掛在自己身上**（`stats/modifiers.ts`：「`auras` 才是掛給站在半徑內的人的那一格」）。⇒ 「週遭的部隊」一個都沒拿到，而初音自己拿滿，卡片與遊戲各說各話（第一·五守則）。⛔ 沒有為它寫任何程式：改成 repo 已有的 `auras`（70-00 芬多精 `godie-e010.passive` 同一支 handler，`sim/aura/aura.ts`），`affects: \"ally\"`；`includeSelf` 留空＝友方靈氣的預設（含自己），所以初音自己那一份**一格都沒少**。半徑沿用這一支自己的「極大」級距，⛔ 沒有新的數字。",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",
@@ -36,7 +36,7 @@
               {
                 "stat": "ms",
                 "op": "pctAdd",
-                "value": 0.08
+                "msBonusTier": "極小"
               }
             ]
           }

@@ -72,6 +72,7 @@ owner 2026-08-21 00:32：
 """
 import json
 import os
+import re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 CFG = os.path.join(ROOT, "content", "config")
@@ -122,6 +123,14 @@ class Grids:
         #: 而且沒有任何東西在守它。現在三個住處（content/config · Zod DEFAULT_*
         #: · admin SHIPPED_*）之間本來就有 drift 測試。
         self.mana = _load("mana-tiers")["manaCost"]
+        #: ⭐ 移速**加成**五級距（GH#789，owner 2026-08-27「%轉換為五級距⋯0.1~4」）。
+        #: 單位是百分比加成的**小數**（0.5 = +50%；pctAdd/pctMult 共用一把梯子）。
+        _ms = _load("move-speed-tiers")
+        self.msbonus = _ms["bonus"]
+        self.ms_exemptions = _ms.get("exemptions", [])
+
+    def ms_row(self):
+        return [float(self.msbonus[t]) for t in TIER_NAMES]
 
     def mana_row(self):
         return [float(self.mana[t]) for t in TIER_NAMES]
@@ -327,6 +336,109 @@ def is_damage(doc):
 # ─────────────────────────────────────────────────────────────────────────────
 # 靠攏
 # ─────────────────────────────────────────────────────────────────────────────
+#: 移速加成梯子管的兩種 op（owner 2026-08-27 點名「%」）。⭐ 與
+#: `packages/shared/src/content/moveSpeedTiers.ts::MS_BONUS_OPS` 同一份名單。
+MS_BONUS_OPS = ("pctAdd", "pctMult")
+
+#: 台詞段（「…」）——說明改寫**跳過**它（第〇·六守則②：「」是角色對白不是效果）。
+_QUOTE_RE = re.compile(r"「[^」]*」")
+
+
+def _ms_exemption_for(doc_id, op, rules):
+    """這個節點有沒有豁免規則罩著（op 匹配或文件 id 匹配）。
+    ⭐ 與 `moveSpeedTiers.ts::msExemptionFor` 同一個語意。"""
+    for r in rules:
+        if r.get("op") is not None and r.get("op") != op:
+            continue
+        if r.get("id") is not None and r.get("id") != doc_id:
+            continue
+        return r
+    return None
+
+
+def _fmt_pct(v):
+    """0.5 → "50"、0.05 → "5"、0.16 → "16"（先修 float 毛刺再 %g）。"""
+    return "%g" % round(v * 100, 6)
+
+
+def _swap_ms_literal(text, old_value, log):
+    """把說明裡**逐字等於舊值**的 `50%` 換成 `{{msb}}%`。
+
+    · 只動台詞（「…」）**以外**的段落（batch1 的 `_mechanics_text` 同一條規矩）。
+    · `(?<![\\d.])` 釘死數字開頭——⛔ 不然 `5%` 會把 `35%`（攻速）咬掉一半
+      （14-03 魔力應援就同時有兩個 %）。
+    · 找不到逐字相等的字面值就**一個字都不動**（改寫只在逐位元組相等時發生，
+      同 `placeholderizeAbilityText` ③）——對不上的留給報告列成 prose-drift。
+    """
+    lit = _fmt_pct(old_value) + "%"
+    pat = re.compile(r"(?<![\d.])" + re.escape(lit))
+    out, i, changed = [], 0, 0
+    for m in _QUOTE_RE.finditer(text):
+        seg, n = pat.subn("{{msb}}%", text[i : m.start()])
+        changed += n
+        out.append(seg)
+        out.append(m.group(0))
+        i = m.end()
+    seg, n = pat.subn("{{msb}}%", text[i:])
+    changed += n
+    out.append(seg)
+    if changed:
+        log.append(("ms-prose", lit, "{{msb}}%", f"說明字面值 ×{changed} 換佔位"))
+        return "".join(out)
+    return text
+
+
+def _apply_ms_bonus(doc, grids, log):
+    """GH#789：`ms` 的 % modifier 收進五級距——**exclusive**（第〇·四）。
+
+    · 命中節點：任意深度的 `{stat:"ms", op:pctAdd|pctMult, value>0}`。
+      ⭐ **含 `template.params`**（07-01 臨、兵、鬥的 ms 住在 tpl-buff-self 的
+      params.modifiers）——`expandStack` 的 `modifiers()` 逐字回傳參數陣列，
+      所以級別會跟著展開進 effects，再由 `resolveMsBonusTier` 解析。
+      ⛔ 清單產生器（gen.mjs）仍然跳過 template：那邊讀的是**展開後的註冊表**，
+      兩邊都算就是同一條 modifier 數兩次——兩個 skip 的理由不同，⛔ 不要對齊。
+    · 寫法：`value` **換成** `msBonusTier`（⛔ 不是兩格都留——`resolveMsBonusTier`
+      在載入時解析，`moveSpeedTiers.test.ts` ① 對「兩個住處」紅）。
+    · 映射：`nearest_index`（最近的一格，平手往低）——與冷卻/耗魔同一支。
+    · 豁免：`content/config/move-speed-tiers.json` 的 `exemptions`（op=flat 與
+      具名 id）——罩住的節點**一格都不動**。
+    · 說明：舊值的 `%` 字面值換成 `{{msb}}%`（僅逐字相等時；台詞不動）。
+    """
+    grid = grids.ms_row()
+    doc_id = str(doc.get("id", ""))
+    old_values = set()
+
+    def visit(node):
+        if isinstance(node, list):
+            for v in node:
+                visit(v)
+            return
+        if not isinstance(node, dict):
+            return
+        if node.get("stat") == "ms" and node.get("op") in MS_BONUS_OPS:
+            v = node.get("value")
+            if isinstance(v, (int, float)) and v > 0:
+                if _ms_exemption_for(doc_id, node["op"], grids.ms_exemptions) is None:
+                    mi = nearest_index(float(v), grid)
+                    out = {}
+                    for k, val in list(node.items()):
+                        if k == "value":
+                            out["msBonusTier"] = TIER_NAMES[mi]
+                        else:
+                            out[k] = val
+                    node.clear()
+                    node.update(out)
+                    log.append(("ms-bonus", v, grid[mi], TIER_NAMES[mi]))
+                    old_values.add(float(v))
+        for sub in list(node.values()):
+            visit(sub)
+
+    visit(doc)
+    if old_values and isinstance(doc.get("description"), str):
+        for v in sorted(old_values, reverse=True):
+            doc["description"] = _swap_ms_literal(doc["description"], v, log)
+
+
 def nearest_index(value, grid):
     """最近的一根橫木，平手往**低**（便宜那邊）。⛔ 不是「無條件進位到下一格」——
     那會在一條起點 600 的梯子上把整批傷害再往上推一級。"""
@@ -630,4 +742,7 @@ def tierize(doc, grids=None, log=None):
                 log.append(("mana", list(mp), v, f"收進耗魔級距 {TIER_NAMES[mi]}（首階參照）"))
             doc["manaCostTier"] = TIER_NAMES[mi]
             doc["manaCost"] = [v] * len(mp)
+
+    # ── GH#789：移速加成 % → 五級距（modifier 節點；exclusive——級別**取代** value）──
+    _apply_ms_bonus(doc, grids, log)
     return doc
