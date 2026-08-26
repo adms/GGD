@@ -611,13 +611,13 @@ make lan-probe
 ⛔ **不是**由英雄卡上的 `attackType` 決定（出貨資料裡有 10 位兩者刻意相反：
 藏馬是近身揮擊卻構得到 8.2，皮卡娘會放電卻只打 1.4）。
 
-三張表的來源都是 `content/config/`，**改一格是後台的事，不用重新部署**：
+三張表都住在 `content/config/`，⚠️ 但**只有前兩張是手編的** —— 那兩張改一格是後台的事，不用重新部署；第三張 `stat-caps.json` 是 **`pnpm statcaps:build` 的產物**（來源：`tools/stat-caps/gen_stat_caps.ts` 的 capAt 表），手改會被 `statcaps:check` 判 stale，要改上限就改來源再重生成（這一行在 2026-08-25 之前把三張都寫成「後台的事」）：
 
 | 表 | 住在哪 |
 | --- | --- |
 | 出身 × 屬性 → 級距 | `content/config/stat-normalization.json` 的 `byOrigin` |
 | 級距 → 數值 | 同上的 `bands` / `bandsByScale` |
-| 上限 | `content/config/stat-caps.json` |
+| 上限 | `content/config/stat-caps.json`（⚠️ `statcaps:build` 的產物，⛔ 不要手改 —— 改 `tools/stat-caps/gen_stat_caps.ts` 再 `pnpm statcaps:build`） |
 | 每位英雄的出身 | `content/champions/*.json` 的 `origin`（批次改用 `pnpm champions:csv:export`） |
 
 <!-- BEGIN GENERATED:stat-bands -->
@@ -693,7 +693,7 @@ pnpm docs:readme:check
 
 `pnpm docs:readme` **一次寫兩個目標**：README 裡的**開放**清單，以及 `docs/reference/roster.md` / `abilities.md` / `items.md` 裡的**完整**全表（全 78 / 461 / 239）。兩者讀同一棵 `content/`、同一個 `build_context()`，所以永遠不會互相矛盾。（`pnpm docs:reference` 只重寫 docs 那三個檔，是 CI 用的子集。）
 
-> ⚠️ **fresh clone 目前跑不了這兩條指令。** 實測 `git ls-files tools/reference docs/reference` 是空的、`git show HEAD:package.json` 裡也沒有 `docs:readme` / `docs:reference` —— 產生器與那三個 script 只存在於目前的工作區，**尚未 commit**。README 裡的表格本身會隨 README 一起進版控（它們就是檔案內容），但「重新產生」的能力要等產生器進版控。產生器需要 python3。
+> ℹ️ **fresh clone 就能跑這兩條指令**：產生器（`tools/reference/`）、`docs:readme` / `docs:reference` 兩個 script 與 `docs/reference/*.md` 都已進版控（複驗：`git ls-files tools/reference docs/reference` 列得出檔、HEAD 的 `package.json` 兩個 script 都在），只需要 python3。⚠️ 這一段在 2026-08-25 之前寫著「產生器尚未 commit、fresh clone 跑不了」—— 那是它們還躺在工作區時量到的舊事實，早已過期（誤導源稽核 GH#771 抓到）。fresh clone 唯一缺的是 gitignored 的 `data/curation/whitelist.json`：它不在時**開放**清單是空的，產生器會大聲說明而不是印一張安靜的空表。
 
 ### 想要互動版：站內內容圖鑑
 

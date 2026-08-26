@@ -8,15 +8,17 @@
  *     這個檔案應該是由**真實使用的 JSON 動態產生**出來
  *     並且**每次 deploy 都會重 build 避免多檔案內容不一致**」
  *
- * 這個 repo 現在有**六份**在講同一件事的文件，其中四份是手寫的：
+ * 這個 repo 現在有**六份**在講同一件事的文件。⚠️ 2026-08-16 立這支時其中四份是
+ * 手寫的；後來兩份被收編成產物（GH#381 與 `skillremake:docs`），這張表跟著更正過
+ * （2026-08-25 誤導源稽核：一列錯標「手寫」，讀者就會以為那份可以直接 Edit）：
  *
  *   | 檔 | 誰寫的 |
  *   |---|---|
  *   | `docs/editor-contract/ggd-runtime-capabilities.md` | ✅ `pnpm caps:export` |
  *   | `docs/engine-atlas.json` / `.html`                 | ✅ `pnpm atlas` |
- *   | `docs/效果標籤詞彙表v2.md`                          | ⛔ 手寫 |
+ *   | `docs/效果標籤詞彙表v2.md`                          | ✅ `pnpm contract:numbers`（GH#381 收編的退役告示牌；`gen_contract_numbers.py` 的 `VOCAB_DOC` 重寫它的標記區塊，⛔ 不要手改） |
  *   | `docs/_status-effect-tag-vocabulary.md`            | ⛔ 手寫（自稱「資料來源：content/status-effects/*.json」） |
- *   | `docs/技能編輯器引擎須知 20260811.md`               | ⛔ 手寫（自稱「指紋…對帳過」） |
+ *   | `docs/技能編輯器引擎須知 20260811.md`               | ✅ `pnpm skillremake:docs`（§13.10）＋ `pnpm contract:numbers`（數字標記區塊）—— 產物隔離區鎖著它，⛔ 不要手改 |
  *   | `skill-tag-manifest.json`                          | ⛔ 手寫（自稱 `generated:`） |
  *
  * ⚠️ 手寫檔宣稱自己有資料來源，正是 CLAUDE.md 第三守則點名的形狀：
