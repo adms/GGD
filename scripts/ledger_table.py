@@ -132,6 +132,11 @@ def _unlock(path: Path) -> None:
     ⭐ 隔離區的設計要求**寫入點自解鎖**（`writeProduct()` 的 python 版）——
     ⛔ 不是叫人手動 chmod。2026-08-26 已在 `gen_contract_numbers.py`、
     `apply_placeholders.ts` 各補過同一件事,這是第三處。
+
+    ⚠️ 這是 GH#771 修好戶籍前的**過渡 OK 繃**：戶籍表曾以量測那天的字面日期路徑
+    記這份產物 ⇒ 隔天 genrun/quarantine 解鎖不到「今天」那一份，只好在寫入點自解鎖。
+    戶籍已改以 glob 宣告（`tools/parallel-gates/merge-io.mjs` 的 DATE_FAMILIES）——
+    glob 生效、genrun 解鎖得到之後，這段可拆。
     """
     try:
         path.chmod(0o644)

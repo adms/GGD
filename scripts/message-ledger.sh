@@ -15,6 +15,13 @@
 #
 # ⛔ 產物**不含時鐘欄位**:列上的 HH:MM 是**訊息**的時間(來自 transcript,固定),
 # ⛔ 不是執行時間 —— 不然逐位元組比對的下游(gen_board.py)會每跑一次就紅。
+#
+# ⭐ 輸出路徑是**日期相依**的:`docs/_daily/<今天>.md` 與 `ledger-source_temp_<今天>.md`
+# 每天換檔名 —— 戶籍表以 **glob** 宣告它們(`tools/parallel-gates/merge-io.mjs` 的
+# DATE_FAMILIES:`docs/_daily/????-??-??.md` · `docs/_daily/ledger-source_temp_*.md`),
+# ⛔ 不是量測那天的字面路徑。⇒ 改輸出路徑**家族**(搬目錄、改檔名格式)時,
+# 要**同步那張 DATE_FAMILIES 表** —— 不然隔天的產物就變成「無主又鎖著」
+# (2026-08-26 真的發生過:2026-08-26.md 鎖著而戶籍記著 2026-08-25.md,GH#771)。
 set -uo pipefail
 cd "$(dirname "$0")/.."
 
