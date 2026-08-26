@@ -1,5 +1,16 @@
 # 隱形幾何當基準（GH#767）—— 09-04 龜派氣功的 ReviveHuman 核心，改前／改後
 
+> 📅 **證據的時間身分（回填，GH#795）**：`HEAD=e44bf446` —— ⚠️ **工作樹**（拍攝時 #767 的修復尚未 commit）。
+>
+> ⭐ 這一行是**回填**的，⛔ 不是憑空補：
+> · **出處①（作者自己寫的）**：本目錄 `frames_reverify.md`「**修後**（工作樹＝`e44bf446`）」。
+> · **出處②（git 佐證）**：`e44bf446`（08-26 13:53）是這一批擷圖（PNG mtime **14:10–14:37**）
+>   當下的 HEAD —— 它與這批 PNG 進版控的 `470cb1fd`（14:49）之間**沒有第三個 commit**。
+>
+> ⚠️ ⛔ **「工作樹」三個字是關鍵，⛔ 不可以省**：#767 的 TeamGlow 轉檔修復當時只在工作樹上，
+> 它到 `470cb1fd` 才進歷史。⇒ `evidenceOrder()` 只比 commit 的祖孫關係，
+> **結構上分不出「拍攝時修復已在工作樹」與「拍攝時根本還沒修」** —— 這一批屬於前者。
+
 台子：`public/beam-audition.html?ability=godie-ogrh.r`（出貨 `SimWorld` → 出貨
 09-04 → 真 `modelFxSpawn` → 出貨 `VfxSystem`／`ModelFxRig` → 真 `revivehuman.glb`）。
 量尺先自證：`calibrate()` 全亮 quad = **462,400** 亮像素（1280×720）；precast 基線 = **0**。
