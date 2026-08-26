@@ -180,6 +180,16 @@ interface Exemption {
  * Sorted by key, matching the census output order.
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
+  "enum:abilities.effects[]#applyBuff.modifiers[].msBonusTier=極大": {
+    status: "landing", since: "2026-08-27",
+    why:
+      "移速加成五級距的**天花板格**（4.0 ＝ +400%）—— owner 2026-08-27 逐字給的是" +
+      "「上下限 **0.1~4**」，⭐ 上限是**梯子的邊界**，⛔ 不是一個承諾會有技能用到的值。" +
+      "實測逐格採用：極小 7 · 小 7 · 中 3 · 大 5 · **極大 0** —— 出貨 31 列裡最大的 % 是 " +
+      "3.0（赤色彗星，而它另有原作哏豁免留字面值）。⇒ 零採用是**正確的現況**，" +
+      "⛔ 不是「機制做了沒人用」。反駁方式：哪天真的有一支 +400% 的技能，這一列自動失效（會有人用）；" +
+      "或 owner 改了上限，這一列要跟著那次改動一起檢討。",
+  },
   "enum:abilities.augment.targets[].ops[].op=modifierValue": {
     status: "landing", since: "2026-08-24",
     why: "augment 家族 09-002 首發只用到 damageCoeffAp/add —— 其餘成員等 #649/#684 的下一批採用者（機制與 schema 一起出貨是刻意的:分批出 schema 會讓 Codex 契約抖動）。",

@@ -474,6 +474,14 @@ const DERIVATION_IMPORT = /from\s+["'][^"']*\/(shippedSurface|balancePopulation)
  * 會 → 它該走推導模組，⛔ 不該進這張表。
  */
 const WHOLE_TREE_BY_DESIGN: Record<string, string> = {
+  // ── 2026-08-27 GH#789 —— 逐階曲線被級距壓平的回歸閘掃全樹 ─────────────────
+  "packages/shared/src/content/perRankNotTierified.test.ts":
+    "問的是「**產生器有沒有把一條升階曲線量化成級別**」—— 那是**資料形狀**的性質，" +
+    "⛔ 不是玩家側的曝光。⭐ 一件今天關著的道具，它的 `perRank` 曲線一樣是被 " +
+    "`tiers:apply` 壓平的（產生器不看上架面），而它**明天上架**時壞的就是它 —— " +
+    "只掃上架面等於把缺陷排到未來。⚠️ 這一次的實例正是這個形狀：#789 壓平了 10 支，" +
+    "其中兩支剛好有 w3a 對照才被 nativeFidelity 抓到，其餘 40 個節點沒有人問。" +
+    "反駁方式：如果哪天 `tiers:apply` 改成只處理上架面，這一列就該改走 shippedItemIds() 並刪掉。",
   // ── 2026-08-26 GH#244 —— 模板家族的**採用率**掃全樹 ──────────────────────
   "packages/shared/src/content/templateFamiliesAreAdopted.test.ts":
     "問的是「這個模板家族**有沒有被任何內容引用過**」——那是**作者側的採用率**，" +

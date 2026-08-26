@@ -2,7 +2,7 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_39f21bfe47a9`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 產生自 contentVersion **`cv_e4ff0babd43d`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
 > 資料列：**142**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-08-20T16:58:56.072938Z`）
 
 `content/items/*.json` 共 **142** 份，依 `content/items/<id>.json` 的 **`craftRole`** 標記分類（來源：source-map triggers，見 `tools/w3x-import/extract_item_roles.py`）。實際能在商店買到的只有 **38** 件最終合成武器（`craftRole:final` 且有效果）＋ **2** 項服務；三選一 draft 抽 **6** 件任務道具，傳說寶玉抽 **84** 件傳說。其餘（16 組件、0 代幣、24 無角色、4 無 payload 的 final）是配方半成品或 w3x 殘件，不會單獨出現在任何商店或抽卡。
@@ -38,7 +38,7 @@
 | `godie-i00u` | 名刀-天狼 | 最終合成 final | — | T3 | ✅ | ✅ | 攻速 +60% · 吸血 +0.1 | onBasicAttack→damage |
 | `godie-i012` | 熾天使之弓 | 最終合成 final | — | T3 | ✅ | ✅ | 攻速 +30% | onBasicAttack→spendMana/dot |
 | `godie-i013` | 緣一零式 | 最終合成 final | — | T3 | ✅ | ✅ | 攻擊力 +38 | onBasicAttack→damage/applyStatus |
-| `godie-i014` | 天叢雲劍 | 最終合成 final | — | T3 | ✅ | ✅ | 攻速 +30% · 移速 +20% | — |
+| `godie-i014` | 天叢雲劍 | 最終合成 final | — | T3 | ✅ | ✅ | 攻速 +30% · 移速 ? | — |
 | `godie-i016` | 晨曦之光 | 最終合成 final | — | T1 | ✅ | ✅ | 回魔 +8 · 冷卻縮減 +0.3 | onDamageTaken→applyBuff |
 | `godie-i018` | 朗基努斯之槍 | 最終合成 final | — | T2 | ✅ | ✅ | — | onBasicAttack→damage · onBasicAttack→dispel |
 | `godie-i01g` | 貫雷槍 | 最終合成 final | — | T3 | ✅ | ✅ | 射程 +4 · 射程 +2 | onBasicAttack→applyStatus · onDamageTaken→applyBuff |
@@ -115,12 +115,12 @@
 | `godie-i00i` | 炎龍巨弩 | 最終合成 final | — | T2 | ✅ | ✅ | 魔力 +20% · 法強 +228 | onBasicAttack→damageArea |
 | `godie-i00j` | 奇門盾甲 | 最終合成 final | — | T2 | ✅ | ✅ | — | onInterval→heal |
 | `godie-i00l` | 落魂的嗜血劍 | 無角色 none | — | T3 | ✅ | ✅ | 攻擊力 +128 · 攻速 +200% · 攻速上限解鎖至 10 · 吸血 +0.3 · 技能吸血 +0.3 | onInterval→damage |
-| `godie-i00s` | 黃金聖鬥衣 | 無角色 none | — | T2 | ✅ | ✅ | 生命 +1200 · 魔力 +1200 · 攻速 +120% · 移速 +20% | — |
+| `godie-i00s` | 黃金聖鬥衣 | 無角色 none | — | T2 | ✅ | ✅ | 生命 +1200 · 魔力 +1200 · 攻速 +120% · 移速 ? | — |
 | `godie-i00u` | 名刀-天狼 | 最終合成 final | — | T3 | ✅ | ✅ | 攻速 +60% · 吸血 +0.1 | onBasicAttack→damage |
 | `godie-i00z` | 四魂之玉 | 任務獎勵 quest | — | T2 | ✅ | ✅ | 魔力 +300 | — |
 | `godie-i012` | 熾天使之弓 | 最終合成 final | — | T3 | ✅ | ✅ | 攻速 +30% | onBasicAttack→spendMana/dot |
 | `godie-i013` | 緣一零式 | 最終合成 final | — | T3 | ✅ | ✅ | 攻擊力 +38 | onBasicAttack→damage/applyStatus |
-| `godie-i014` | 天叢雲劍 | 最終合成 final | — | T3 | ✅ | ✅ | 攻速 +30% · 移速 +20% | — |
+| `godie-i014` | 天叢雲劍 | 最終合成 final | — | T3 | ✅ | ✅ | 攻速 +30% · 移速 ? | — |
 | `godie-i016` | 晨曦之光 | 最終合成 final | — | T1 | ✅ | ✅ | 回魔 +8 · 冷卻縮減 +0.3 | onDamageTaken→applyBuff |
 | `godie-i018` | 朗基努斯之槍 | 最終合成 final | — | T2 | ✅ | ✅ | — | onBasicAttack→damage · onBasicAttack→dispel |
 | `godie-i01d` | 死之王的長槍 | 無角色 none | — | T3 | ✅ | ✅ | 攻擊力 +17% | onBasicAttack→restore/damage |
@@ -164,7 +164,7 @@
 | `millennium-puzzle` | 千年積木 | 無角色 none | — | T5 | ✅ | — | — | — |
 | `mystery-scrap-of-paper` | 謎之紙片 | 無角色 none | — | T5 | ✅ | ✅ | 單發傷害上限 +0.2 | onDamageTaken→applyBuff |
 | `nezuko-box` | 禰豆子的木箱 | 無角色 none | — | T5 | ✅ | — | — | onInterval→carry |
-| `odm-gear` | 立體機動裝置 | 無角色 none | — | T5 | ✅ | ✅ | 移速上限解鎖 +33.33% · 移速 +50% | onDashOrBlink→applyBuff |
+| `odm-gear` | 立體機動裝置 | 無角色 none | — | T5 | ✅ | ✅ | 移速上限解鎖 +33.33% · 移速 ? | onDashOrBlink→applyBuff |
 | `pale-moon-requiem-crown` | 蒼月葬送・千年彼方花冠 | 無角色 none | — | T5 | ✅ | ✅ | — | onOverheal→applyBuff/shield · onOverheal→applyBuff/shield |
 | `red-comet-mask` | 赤色面具 | 無角色 none | — | T5 | ✅ | — | — | onAllyDeath→applyBuff |
 | `sasumata` | 討伐叉 | 無角色 none | — | T5 | ✅ | — | — | — |

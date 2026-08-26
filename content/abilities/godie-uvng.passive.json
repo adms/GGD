@@ -34,7 +34,7 @@
         {
           "stat": "ms",
           "op": "pctAdd",
-          "msBonusTier": "小"
+          "value": 0.16
         }
       ],
       "duration": 10.0

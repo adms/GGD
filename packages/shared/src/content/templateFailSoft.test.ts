@@ -160,10 +160,25 @@ describe("模板展開失敗 → 只降級那一支，不炸掉整包內容", ()
     // still registered — a champion whose Q vanished would crash the ability bar
     expect(degraded).toBeDefined();
     // 降級成什麼：只留人手寫的東西，不猜。模板承諾的效果一個都不補。
-    expect(degraded["effects"]).toEqual(
-      (pristine.get<AbilityDef>("abilities", victimAbilityId) as unknown as Record<string, unknown>)[
-        "effects"
-      ],
+    // ⚠️ 2026-08-27（GH#789）：比對前要先把**載入時解析**補的欄位剝掉 ——
+    //    `resolveMsBonusTier` 會在帶 `msBonusTier` 的節點上補一格 `value`
+    //    （與 `resolveDamageTier` 同一個設計：級別留著給下游讀，值當場算）。
+    //    ⭐ 那是註冊路徑**應該**做的事，⛔ 不是降級漏補 —— 所以剝的是「解析產物」，
+    //    ⛔ 不是放寬斷言：模板承諾的 effects 有沒有被補，這一條照樣看得出來。
+    const stripResolved = (v: unknown): unknown => {
+      if (Array.isArray(v)) return v.map(stripResolved);
+      if (v === null || typeof v !== "object") return v;
+      const rec = { ...(v as Record<string, unknown>) };
+      if (typeof rec["msBonusTier"] === "string") delete rec["value"];
+      for (const k of Object.keys(rec)) rec[k] = stripResolved(rec[k]);
+      return rec;
+    };
+    expect(stripResolved(degraded["effects"])).toEqual(
+      stripResolved(
+        (pristine.get<AbilityDef>("abilities", victimAbilityId) as unknown as Record<string, unknown>)[
+          "effects"
+        ],
+      ),
     );
     // 降級後不再自稱是模板技能 — a link that cannot expand must not look expandable
     expect(degraded["template"]).toBeUndefined();

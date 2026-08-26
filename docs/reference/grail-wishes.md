@@ -7,7 +7,7 @@
 > 設計母規則：[`docs/聖杯願望三選一-設計規則.md`](../聖杯願望三選一-設計規則.md)。
 > 每個效果的參數與上下界：[`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 
-contentVersion `cv_39f21bfe47a9`
+contentVersion `cv_e4ff0babd43d`
 
 ---
 
@@ -4700,7 +4700,7 @@ contentVersion `cv_39f21bfe47a9`
 
 | id | 名稱 | 階級 | 效果 |
 |---|---|---|---|
-| `arcane-haste` | 奧術急速 | A級願望 | 施放技能後，攻擊速度與移動速度 +15%，持續 2.5 秒。 |
+| `arcane-haste` | 奧術急速 | A級願望 | 施放技能後，攻擊速度 +15%、移動速度 +10%，持續 2.5 秒。 |
 | `berserkers-fury` | 狂戰之怒 | A級願望 | 攻擊速度 +35%，攻擊力 +15%。 |
 | `bone-splitter` | 碎骨 | A級願望 | 每次普攻額外造成 25(+10% 攻擊力) 真實傷害。 |
 | `chill-touch` | Chill Touch | A級願望 | Your Q also slows enemies by 25% for 1.5s. |
@@ -4717,8 +4717,8 @@ contentVersion `cv_39f21bfe47a9`
 | `immortal-bulwark` | 不朽壁壘 | EX級願望 | 最大生命 +30%，護甲 +40，魔法抗性 +40。 |
 | `last-stand` | 背水一戰 | EX級願望 | 擊殺敵人時，獲得 10 秒的 +30 護甲與 +30 魔法抗性。 |
 | `limit-breaker` | 破限超頻 | EX級願望 | 攻擊速度 ×2，並將攻擊速度上限由 4.0 解鎖至 10.0。 |
-| `momentum-core` | 動能核心 | EX級願望 | 施放技能後獲得 6 秒的 +25% 攻擊速度與 +15% 移動速度（4 秒冷卻）。 |
-| `overdrive-engine` | 超載引擎 | EX級願望 | 冷卻縮減 +20%，攻擊速度 +50%，移動速度 +15%。 |
+| `momentum-core` | 動能核心 | EX級願望 | 施放技能後獲得 6 秒的 +25% 攻擊速度與 +10% 移動速度（4 秒冷卻）。 |
+| `overdrive-engine` | 超載引擎 | EX級願望 | 冷卻縮減 +20%，攻擊速度 +50%，移動速度 +10%。 |
 | `phantom-step` | 幻影步 | EX級願望 | 迴避 +25%，移動速度 +20%，攻擊速度 +25%。 |
 | `second-wind` | 二度風息 | EX級願望 | 受到傷害時，回復 6% 最大生命與 6% 最大魔力（8 秒冷卻）。 |
 | `siege-breaker` | 攻城槌 | EX級願望 | 攻擊力 +45%，攻擊距離 +2，但攻擊速度 −15%。 |
@@ -4729,6 +4729,6 @@ contentVersion `cv_39f21bfe47a9`
 | `bloodlust` | Bloodlust | C級願望 | +15% Attack Damage and +8% Lifesteal. |
 | `hunters-instinct` | 獵手直覺 | C級願望 | 暴擊率 +20%，攻擊力 +10%。 |
 | `iron-bulwark` | 鐵壁護甲 | C級願望 | 最大生命 +18%，護甲 +20。 |
-| `swift-strikes` | 疾風連擊 | C級願望 | 攻擊速度 +25%，移動速度 +8%。 |
+| `swift-strikes` | 疾風連擊 | C級願望 | 攻擊速度 +25%，移動速度 +10%。 |
 | `vital-surge` | 生命湧動 | C級願望 | 最大生命 +12%，每秒生命回復 +25。 |
 

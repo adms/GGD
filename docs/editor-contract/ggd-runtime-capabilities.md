@@ -248,7 +248,7 @@
 
 下面這些欄位是**級別欄位**（五格：由後台的級距表把一個級別翻成一個數字）：
 
-　`cooldownTier` · `damageTier` · `distanceTier` · `manaCostTier` · `radiusTier` · `rangeTier`
+　`cooldownTier` · `damageTier` · `distanceTier` · `manaCostTier` · `msBonusTier` · `radiusTier` · `rangeTier`
 
 每一格級別欄位旁邊都有一格**原始值**（例如 `rangeTier` 旁邊是 `range`）。規則只有一句：
 

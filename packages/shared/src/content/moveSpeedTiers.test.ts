@@ -75,8 +75,19 @@ describe("移速加成五級距 (#789 move-speed-bonus-tiers)", () => {
       "⛔ 級別與 value 同時存在（第二個住處，必然過期）—— 改來源再 genrun，⛔ 不要手改產物",
     ).toBe("");
 
+    // ⭐⭐ GH#789 的回歸（2026-08-27）：**逐階載體底下的節點不上梯子**。
+    //    五級距的語意是「填了級別 = 每一階同一個值」（`cooldownTier` 契約逐字），
+    //    而 `perRank` / `ranks` 的存在就是為了「每一階不同」——
+    //    22-01 鬼隱之擊 0.5/0.5/0.5/1.5/3.0 被壓成 中/中/中/大/極大 就是這樣來的。
+    //    ⇒ 它們是**結構性**豁免：⛔ 不必逐支列進 exemptions（那張表會長成 N 列，
+    //    而這是一條規則）。閘由 `perRankNotTierified.test.ts` 專責。
+    const PER_RANK_PATH = /\.(perRank|ranks)\[/;
     const untiered = NODES.filter(
-      (n) => n.tier === undefined && typeof n.value === "number" && n.value > 0,
+      (n) =>
+        n.tier === undefined &&
+        typeof n.value === "number" &&
+        n.value > 0 &&
+        !PER_RANK_PATH.test(n.path),
     );
     const naked = untiered.filter((n) => msExemptionFor(n, SHIPPED) === undefined);
     expect(
