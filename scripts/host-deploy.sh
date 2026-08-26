@@ -239,6 +239,17 @@ fi
 #    pull+build 會失敗 —— ssh 一斷線轉發的 agent socket 就沒了，而 git 報的是
 #    誤導人的「correct access rights / repository exists」。
 # ⚠️ 陷阱 ②：`git pull` **不會抓 tag**，而版本徽章是從 tag 算出來的。
+# ── 🧑‍⚖️ 批核結果目錄（GH#794）—— ⭐ 一定要在 `compose up` **之前** ────────────
+# docker 遇到不存在的 bind mount 來源會**自己建，而且是 root 的** ⇒ 容器（uid 1000）
+# 寫不進去 ⇒ owner 在線上按「保留/否決」會失敗。
+# ⚠️ 這一段第一版寫在**後置條件的自動修裡**，也就是「等它壞了再修」——
+#    實測 2026-08-27：第一次部署就 EACCES，healthz 誠實地喊了，但那本來可以不必發生。
+#    ⭐ 建目錄是**前置條件**，⛔ 不是後置修補。
+mkdir -p data/review-verdicts 2>/dev/null || true
+if [ ! -w data/review-verdicts ] 2>/dev/null; then
+  docker exec -u root ggd-review-1 chown -R 1000:1000 /srv/repo/docs/_review/verdicts 2>/dev/null || true
+fi
+
 if [ "$MODE" != verify ] && [ "$DO_PULL" = 1 ]; then
   say "拉取（含 tag —— 沒有 tag 版本徽章就會停在舊版號）"
   git fetch --tags origin main
