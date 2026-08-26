@@ -107,8 +107,10 @@ function barDiv(cssText: string, role?: string): HTMLDivElement {
  * 直接餵一段 `<img onerror=…>` 給這支函式（⛔ 刻意不走 `RoomConnection`：那一層會
  * 先把 payload 吃掉，於是測到的是 sanitizer 而不是 sink 本身）。
  *
- * `color` 來自內部的 `teamCss(teamId)`，不受攻擊者控制，但它一樣改走
- * `element.style` —— 兩個來源共用一條路，才不會有人下次挑「安全的那一個」貼回字串。
+ * `color` 來自內部（`anchor.color ?? teamCss(teamId)` —— 一顆 kind 決定的常數或
+ * 隊色調色盤，都不受攻擊者控制），但它一樣改走 `element.style`（見
+ * {@link paintChampionNodeColor}）—— 兩個來源共用一條路，才不會有人下次挑
+ * 「安全的那一個」貼回字串。
  */
 export function makeChampionNode(name: string, color: string, isLocal: boolean): HTMLDivElement {
   const el = document.createElement("div");
@@ -121,7 +123,6 @@ export function makeChampionNode(name: string, color: string, isLocal: boolean):
     "text-align:center;font-size:10px;text-shadow:0 1px 2px #000;margin-bottom:2px;white-space:nowrap;",
     "name",
   );
-  nameEl.style.color = color;
   if (isLocal) nameEl.style.fontWeight = "bold";
   nameEl.textContent = name;
 
@@ -129,7 +130,6 @@ export function makeChampionNode(name: string, color: string, isLocal: boolean):
     "height:6px;background:rgba(0,0,0,0.65);border:1px solid rgba(0,0,0,0.8);border-radius:2px;overflow:hidden;",
   );
   const hpFill = barDiv("height:100%;width:100%;", "hp");
-  hpFill.style.background = color;
   hpTrack.appendChild(hpFill);
 
   const manaTrack = barDiv(
@@ -150,7 +150,30 @@ export function makeChampionNode(name: string, color: string, isLocal: boolean):
   stack.appendChild(manaTrack);
   stack.appendChild(castWrap);
   el.appendChild(stack);
+  paintChampionNodeColor(el, color);
   return el;
+}
+
+/**
+ * 一顆頭頂血條的顏色（名字 ＋ 血量填充）—— ⭐ 建立時與**換色時**走同一條路。
+ *
+ * ⚠️ 這支存在的理由是 GH#728 的第二半：`champNodes` 是 **pooled**（一顆 `<div>`
+ * 綁一個 entity id 活過整場），而 {@link makeChampionNode} 只在**節點不存在時**
+ * 被呼叫一次 ⇒ 只把 `anchor.color` 刷新在資料那一層是**看不見的**（失敗形態⑧：
+ * 生產端寫了、消費端沒有第二次讀）。所以 id 被回收給另一種 kind 時，這裡要真的
+ * 把 DOM 改掉。
+ *
+ * ⛔ 顏色只有一個住處：把兩個 `element.style` 寫回抽在這裡，⛔ 不要在建立那一段
+ * 再抄一份 —— 抄了之後只有其中一份會被換色路徑更新。
+ * 穩態成本是每條血條每幀**一次字串比較**（`dataset` 早退），⛔ 沒有 DOM 寫入。
+ */
+export function paintChampionNodeColor(node: HTMLDivElement, color: string): void {
+  if (node.dataset.barColor === color) return;
+  node.dataset.barColor = color;
+  const nameEl = node.querySelector<HTMLElement>('[data-role="name"]');
+  if (nameEl) nameEl.style.color = color;
+  const hpFill = node.querySelector<HTMLElement>('[data-role="hp"]');
+  if (hpFill) hpFill.style.background = color;
 }
 
 /**
@@ -283,10 +306,19 @@ export function WorldAnchorLayer(): React.JSX.Element {
       // ---- champion healthbars ----
       for (const [id, anchor] of frameBus.champions) {
         let node = champNodes.get(id);
+        // ⭐ GH#728 —— 中立錨點（守護塔／治療花）的 `teamId` 是 **-1**，而
+        // `teamCss(-1)` 繞回 `TEAM_CSS[3]` = 金色 ⇒ 在此之前它們的頭頂血條被畫成
+        // **第四隊**，跟小地圖（`dotColorFor(a.teamId, a.color)` 一直是對的）互相
+        // 打架。`anchor.color` 由 `render/overheadAnchors::anchorColorFor(kind)` 指定，
+        // 而它對 champion 回 `undefined` ⇒ 英雄血條逐位元不變。
+        const barColor = anchor.color ?? teamCss(anchor.teamId);
         if (!node) {
-          node = makeChampionNode(anchor.name, teamCss(anchor.teamId), anchor.isLocal);
+          node = makeChampionNode(anchor.name, barColor, anchor.isLocal);
           champNodes.set(id, node);
           root.appendChild(node);
+        } else {
+          // pooled 節點換 kind ⇒ 換色（同色時 `dataset` 早退，穩態零 DOM 寫入）
+          paintChampionNodeColor(node, barColor);
         }
         const show = anchor.pose.visible && anchor.alive;
         node.style.display = show ? "block" : "none";

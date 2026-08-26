@@ -4235,12 +4235,17 @@ export class GameApp {
           worldZ: pos.z,
           pose: { sx: 0, sy: 0, visible: false },
           cast: null,
-          color: anchorColorFor(es.kind),
         };
         frameBus.champions.set(es.id, anchor);
       }
       anchor.alive = es.alive;
       anchor.kind = es.kind; // pooled anchors outlive an entity id; keep it honest
+      // ⭐ GH#728 —— 顏色跟著 `kind` 一起刷新，⛔ 不是只在建立時指派一次。
+      // 同一顆 pooled anchor 的 id 被回收給另一種 kind 時（上一行的註解講的正是
+      // 這件事），只更新 kind 而讓 color 凍在建立那一刻 = 治療花的綠色留在守護塔
+      // 頭上。⛔ champion 這一支回 `undefined`（`anchorColorFor`），所以英雄血條
+      // 逐位元不變 —— 消費端是 `anchor.color ?? teamCss(anchor.teamId)`。
+      anchor.color = anchorColorFor(es.kind);
       // picks land after the anchor is created (and change between rounds), so
       // the champion id is refreshed rather than frozen at spawn
       anchor.championId = isNeutral ? "" : (champBySeat.get(es.seatId) ?? "");

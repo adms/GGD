@@ -1,8 +1,19 @@
+// @vitest-environment jsdom
 /**
- * WorldAnchorLayer.probeTextGradientPaints — the runtime feature-detect behind
- * the combat-text fill (task #92 colour-bug fix).
+ * WorldAnchorLayer — ① 頭頂血條的**顏色**真的畫在 DOM 上（GH#728）
+ *                    ② `probeTextGradientPaints` 的執行期偵測（task #92）
  *
- * The bug this guards: floating damage numbers rendered BLACK because the
+ * ⚠️ 這一支檔在 **jsdom** 底下跑，因為①要掛出貨的 `<WorldAnchorLayer/>` 本人並讀
+ * 最終節點的 `background`（⛔ 不是中間 model，也⛔ 不是自己造 payload 餵給
+ * `makeChampionNode` —— 那是形態⑤「被測的不是出貨的那個」，而壞掉的正是**呼叫端**
+ * 那一行）。②因此把「沒有 DOM」明著造出來：jsdom 底下省略參數會落回**真的**
+ * `document`／`getComputedStyle`，那就量不到原本要量的那條分支了。
+ *
+ * ① 守的 bug：中立錨點（守護塔／治療花）的 `teamId` 是 -1，`teamCss(-1)` 繞回
+ * `TEAM_CSS[3]` = 金色 ⇒ 頭頂血條被畫成第四隊，而小地圖一直是對的 ⇒ 同一個物件
+ * 在兩個 HUD 上兩種顏色。
+ *
+ * ② 守的 bug：floating damage numbers rendered BLACK because the
  * text-clipped gradient fill did not actually paint (an in-app browser / iOS
  * WKWebView reporting `background-clip:text` support via `CSS.supports` yet
  * dropping it on the real element), leaving a transparent glyph whose only ink
@@ -10,14 +21,25 @@
  * stamps the real CSS on a real node and reads back the COMPUTED result, so a
  * faked support claim resolves to the solid-hue fallback instead of black text.
  *
- * The test runner is `environment: "node"` (no DOM), so the probe's deps are
- * injected: a fake `document` + `getComputedStyle` drive each branch —
+ * ②的 probe deps 一律**注入**：一個 fake `document` + `getComputedStyle` 逐條驅動 —
  *   painted  → gradient (true)
  *   dropped  → solid    (false)
+ *
+ * 突變紀錄（2026-08-26 · GH#728）① 把 frame loop 的 `anchor.color ??` 拿掉
+ * （退回 `teamCss(anchor.teamId)`）⇒ 第一條紅：守護塔的 hp 背景變成
+ * `rgb(242, 198, 55)` 金色而不是 `rgb(201, 154, 92)`。
+ * ② 拿掉 pooled 節點的 `paintChampionNodeColor(node, barColor)` ⇒ 第二條紅（換 kind
+ * 之後 hp 仍是 `rgb(201, 154, 92)`，⛔ 沒有換成治療花的 `rgb(183, 227, 168)`）。
  */
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, afterEach } from "vitest";
+import { createElement } from "react";
+import { act } from "react";
+import { createRoot, type Root } from "react-dom/client";
 import { cover } from "@ggd/shared/testkit/cover";
-import { probeTextGradientPaints } from "./WorldAnchorLayer";
+import { frameBus, type ChampionAnchor } from "../frameBus";
+import { GUARDIAN_BAR_COLOR, NEUTRAL_BAR_COLOR } from "../render/overheadAnchors";
+import { probeTextGradientPaints, WorldAnchorLayer } from "./WorldAnchorLayer";
+import { teamCss } from "./theme";
 
 /** A computed-style stub keyed by property name. */
 function computedFrom(values: Record<string, string>): (el: Element) => CSSStyleDeclaration {
@@ -103,9 +125,11 @@ describe("probeTextGradientPaints — a real paint probe, not a support string (
 
   it("returns FALSE with no DOM (SSR / the node unit env) — the safe default is solid", () => {
     cover("combat-text-legibility");
-    expect(probeTextGradientPaints(undefined, undefined)).toBe(false);
+    // ⚠️ 明著傳 `null`，⛔ 不是省略參數：這一支檔跑在 jsdom 底下，而 `undefined`
+    //    會觸發預設值落回**真的** document/getComputedStyle ⇒ 量到的就不是這條分支了。
+    expect(probeTextGradientPaints(null as never, null as never)).toBe(false);
     // a document but no getComputedStyle is still unsafe
-    expect(probeTextGradientPaints(fakeDoc().doc, undefined)).toBe(false);
+    expect(probeTextGradientPaints(fakeDoc().doc, null as never)).toBe(false);
   });
 
   it("returns FALSE (never throws) when the probe blows up mid-flight", () => {
@@ -114,5 +138,84 @@ describe("probeTextGradientPaints — a real paint probe, not a support string (
       throw new Error("getComputedStyle exploded");
     };
     expect(probeTextGradientPaints(fakeDoc().doc, throwing)).toBe(false);
+  });
+});
+
+(globalThis as unknown as { IS_REACT_ACT_ENVIRONMENT: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
+
+/** rAF 換成手動步進 —— ⛔ 不睡覺等瀏覽器的 16ms（那是 flake 的來源）。 */
+let pending: FrameRequestCallback | null = null;
+globalThis.requestAnimationFrame = ((cb: FrameRequestCallback) => ((pending = cb), 1)) as never;
+globalThis.cancelAnimationFrame = (() => (pending = null)) as never;
+const step = (): void => {
+  const cb = pending;
+  pending = null;
+  act(() => cb?.(performance.now()));
+};
+
+/** 一顆出貨形狀的錨點（`GameApp` 建的就是這個物件）。 */
+function anchorAt(id: number, color: string | undefined): ChampionAnchor {
+  return {
+    entityId: id,
+    name: "",
+    teamId: -1, // ⭐ 中立錨點真的是 -1（GameApp: `isNeutral ? -1 : …`）
+    championId: "",
+    isLocal: false,
+    alive: true,
+    hpPct: 1,
+    shieldPct: 0,
+    manaPct: 1,
+    worldX: 0,
+    worldZ: 0,
+    pose: { sx: 100, sy: 100, visible: true },
+    cast: null,
+    color,
+  };
+}
+
+let root: Root | null = null;
+afterEach(() => {
+  act(() => root?.unmount());
+  frameBus.champions.clear();
+});
+
+/** 掛出貨的 layer 本人並跑一幀。 */
+function mountAndStep(host: HTMLDivElement): void {
+  root = createRoot(host);
+  act(() => root!.render(createElement(WorldAnchorLayer)));
+  step();
+}
+const hpBg = (host: HTMLElement): string =>
+  (host.querySelector('[data-role="hp"]') as HTMLElement).style.background;
+/** jsdom 把 `#rrggbb` 正規化成 `rgb(r, g, b)` —— 換算走同一條路，⛔ 不抄字面值。 */
+const asCss = (color: string): string => {
+  const probe = document.createElement("div");
+  probe.style.background = color;
+  return probe.style.background;
+};
+
+describe("頭頂血條的顏色讀 anchor.color，⛔ 不是 teamCss(-1) 的金色 (#728)", () => {
+  it("中立錨點畫成自己的色、英雄仍走隊色，pooled 節點換 kind 會換色", () => {
+    const host = document.createElement("div");
+    document.body.appendChild(host);
+    frameBus.champions.set(1, anchorAt(1, GUARDIAN_BAR_COLOR));
+    mountAndStep(host);
+
+    // ⛔ 讀最終 DOM，不是中間 model。缺陷的樣子＝這兩格是 teamCss(-1) 的金色
+    expect(hpBg(host), "守護塔被畫成第四隊金色").toBe(asCss(GUARDIAN_BAR_COLOR));
+    expect((host.querySelector('[data-role="name"]') as HTMLElement).style.color).toBe(
+      asCss(GUARDIAN_BAR_COLOR),
+    );
+
+    // ① 沒有 color 的錨點（＝英雄，`anchorColorFor` 回 undefined）仍然是隊色
+    frameBus.champions.set(2, { ...anchorAt(2, undefined), teamId: 1 });
+    // ② 同一顆 pooled 節點的 id 被回收給治療花（GameApp 的 refresh 區重寫 color）
+    frameBus.champions.get(1)!.color = NEUTRAL_BAR_COLOR;
+    step();
+    const bars = [...host.querySelectorAll<HTMLElement>('[data-role="hp"]')];
+    expect(bars.map((b) => b.style.background), "pooled 節點殘留舊色").toEqual([
+      asCss(NEUTRAL_BAR_COLOR),
+      asCss(teamCss(1)),
+    ]);
   });
 });
