@@ -1404,7 +1404,7 @@
   "castArcs": true,
   "maxConcurrentArcs": 32,
   "impactRingAlpha": 0.35,
-  "impactRingRadius": 1.0,
+  "impactRingRadius": 1,
   "impactRingLife": 0.55,
   "impactRingFadePow": 3,
   "impactRingMaxLifeSec": 0.8,

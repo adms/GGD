@@ -73,7 +73,13 @@ function ghIssues() {
   });
 }
 
-export const deps = () => [];
+/**
+ * ⚠️ 這一份的**真正來源是 gh**（不是檔案），而 mtime 快取看不見 gh。
+ * ⛔ 回空陣列 = 永遠吃快取 ⇒ 票關掉了它還在說「open」。
+ * ⭐ 所以掛一份**會動的**檔案當節拍器：票務狀態每次收斂都會動到帳本，
+ *   ⇒ 帳本一動就重算。⛔ 這不精確，而檔頭已經說明它不精確。
+ */
+export const deps = () => ["docs/_task-ledger.json", "docs/_daily"];
 
 export async function build() {
   const gh = await ghIssues();

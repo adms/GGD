@@ -388,6 +388,36 @@ export const SFX_REACHABILITY: readonly SfxReachRow[] = [
       "Shadowed. combatSfxKey routes the `damage` event to hit / hitMagic / hitTrue / block / crit — the type-differentiated hit voice — and never returns the bare key.",
   },
   {
+    // GH#713 —— 同上（與 `wc3.blinkbirth1` 同一批被剪掉的死列）。
+    key: "wc3.coldarrow1",
+    kind: "unreachable",
+    reason:
+      "Orphaned by GH#713. Its only player was a vfx-families row whose ability/champion does not " +
+      "exist in shipped content (one of 90 pruned dead entries). The .wav and its PROVENANCE entry " +
+      "stay — attribution is a licence condition; only the claim that it plays is removed.",
+  },
+  {
+    // GH#713 —— 同上（與 `wc3.blinkbirth1` 同一批被剪掉的死列）。
+    key: "wc3.stasistotem",
+    kind: "unreachable",
+    reason:
+      "Orphaned by GH#713. Its only player was a vfx-families row whose ability/champion does not " +
+      "exist in shipped content (one of 90 pruned dead entries). The .wav and its PROVENANCE entry " +
+      "stay — attribution is a licence condition; only the claim that it plays is removed.",
+  },
+  {
+    // GH#713 —— 死列被剪掉之後它就沒有播放端了。⭐ 這一列存在的理由是**誠實**：
+    // 它讓「有一顆已授權的音檔目前無人播放」變成一個**看得見**的事實，
+    // ⛔ 而不是一句沒有人會發現的沉默。要復活它：把它綁到一支真的出貨技能上。
+    key: "wc3.blinkbirth1",
+    kind: "unreachable",
+    reason:
+      "Orphaned by GH#713. Its only player was vfx-families' `godie-hlgr.e` soundLaunch, " +
+      "and neither that ability nor its champion exists in shipped content — the row was one of " +
+      "90 dead entries pruned. The .wav and its PROVENANCE entry stay (attribution is a licence " +
+      "condition); only the claim that it plays is removed.",
+  },
+  {
     key: "basicAttackHit",
     kind: "unreachable",
     reason:
@@ -491,8 +521,11 @@ export const SFX_REACHABILITY: readonly SfxReachRow[] = [
   // 決定它的檔案是 **config**（⛔ 不是某一支 .ts），所以 site 指向那份 config ——
   // 後台把綁定拿掉，這一列就會紅。
   { key: "wc3.blademasterwhirlwind", kind: "combat", site: VFX_SOUND_SITE, events: ["abilityCast"], payload: { abilityCast: ["abilityId", "caster"] } },
-  { key: "wc3.blinkbirth1", kind: "combat", site: VFX_SOUND_SITE, events: ["abilityCast"], payload: { abilityCast: ["abilityId", "caster"] } },
-  { key: "wc3.coldarrow1", kind: "combat", site: VFX_SOUND_SITE, events: ["abilityCast"], payload: { abilityCast: ["abilityId", "caster"] } },
+  // ⚠️ `wc3.blinkbirth1` 從這裡搬到下面的 unreachable（2026-08-27，GH#713）——
+  //    它唯一的播放端是 `vfx-families` 的 `godie-hlgr.e` 那一列，而**那支技能
+  //    與它的英雄都不存在於出貨內容**（90 條同型死列一起被剪掉）。
+  //    ⭐ 音檔與出處**留著**（PROVENANCE 是授權條件，⛔ 不可以因為沒人播就刪），
+  //    ⛔ 但「它會被播放」這句宣稱不可以留（第一·五守則：卡片上不放無效說明）。
   { key: "wc3.flaretarget1", kind: "combat", site: VFX_SOUND_SITE, events: ["abilityCast"], payload: { abilityCast: ["abilityId", "caster"] } },
   { key: "wc3.flashback1second", kind: "combat", site: VFX_SOUND_SITE, events: ["damage"], payload: { damage: ["origin"] } },
   { key: "wc3.fountainoflifewhat1", kind: "combat", site: VFX_SOUND_SITE, events: ["abilityCast"], payload: { abilityCast: ["abilityId", "caster"] } },
@@ -501,7 +534,6 @@ export const SFX_REACHABILITY: readonly SfxReachRow[] = [
   { key: "wc3.invisibilitytarget", kind: "combat", site: VFX_SOUND_SITE, events: ["abilityCast"], payload: { abilityCast: ["abilityId", "caster"] } },
   { key: "wc3.keeperofthegrovemissilehit1", kind: "combat", site: VFX_SOUND_SITE, events: ["damage"], payload: { damage: ["origin"] } },
   { key: "wc3.shimmeringportaldeath", kind: "combat", site: VFX_SOUND_SITE, events: ["damage"], payload: { damage: ["origin"] } },
-  { key: "wc3.stasistotem", kind: "combat", site: VFX_SOUND_SITE, events: ["damage"], payload: { damage: ["origin"] } },
   { key: "wc3.wandofneutralization", kind: "combat", site: VFX_SOUND_SITE, events: ["damage"], payload: { damage: ["origin"] } },
   { key: "wc3.waterelementalmissile3", kind: "combat", site: VFX_SOUND_SITE, events: ["damage"], payload: { damage: ["origin"] } },
   { key: "wc3.witchdoctorcastattack1", kind: "combat", site: VFX_SOUND_SITE, events: ["damage"], payload: { damage: ["origin"] } },

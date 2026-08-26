@@ -233,6 +233,8 @@ export const NAV_TAGS: Record<string, readonly NavTag[]> = {
   liveExRoots: ["內容", "技能", "唯讀", "對照表", "dev限定"], // EX 根源三選一
   liveTreasures: ["內容", "唯讀", "對照表", "dev限定"], // 寶具三選一
   liveSkill90: ["技能", "內容", "唯讀", "對照表", "dev限定"], // 90 支重製對照
+  // 🚧 GH#754 —— 誰能跟誰同時做（從票自己宣告的 Files/modules 推導）。
+  liveLaneFences: ["營運", "唯讀", "對照表"],   // ⛔ 不為了一頁多開一個詞彙
 
   // ── 內容·素材管理 dev chunk（8）—— 真正的編輯器。共同性質：內容 ＋ 可調 ＋ dev限定
   //    （production build 不含這個 chunk，連寫入模組都不在）。
