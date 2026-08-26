@@ -1,5 +1,39 @@
 # Kill bounty (擊殺賞金) — final spec
 
+> ## ⛔ SUPERSEDED —— 這份是**被否決的設計稿**，⛔ 不要照它改經濟數值
+>
+> **狀態（2026-08-26 逐行複查，GH#735）**：第 1 行那句「final spec」是 2026-07-22 的話。
+> 出貨的實作**沒有照這份做**，而且下面**五處方向相反**。
+> ⇒ ⛔ 今天照這份 doc 去調賞金／分帳／清帳時機，得到的一定是錯的。
+> ⭐ 原文一個字都沒刪（第一·五守則：被取代的東西**另存/保留**，⛔ 不是壓縮取代）——
+> 它保留下來的是**推理與否決過的選項**，⛔ 不是現行規則。
+>
+> ### 現行規則 vs 這份 doc
+>
+> | | ⭐ 出貨的行為 | ⛔ 這份 doc 說的（沒有發生） |
+> | --- | --- | --- |
+> | 疊不疊加 | 基礎擊殺金 `kill`(150) **＋** 賞金 `killBounty`(100) **一起付** | §1「額外 means "instead of"」——`GOLD_REWARDS.kill` 被賞金**取代**、不疊加 |
+> | 金額 | **flat 100**，一個寫死的字面值 | §3.1 `BOUNTY_PURSE = 1.0 × ITEM_TIER_PRICE.SIMPLE = 300`，而且刻意是**符號**不是字面值 |
+> | 誰拿 | **全額給 killer** | §3.2 killer:assist:assist = **2:1:1** 分帳（`GOLD_REWARDS.assist` 至今仍是死常數） |
+> | 範圍（一次是多久） | **per-match** —— `bountyPaid` 只在**實體被 `destroy`** 時清，而英雄實體一場之內不會被移除 | §2「場 = **ROUND**」，ledger 在 `enterCombat` 清空 |
+> | 何時結清 | **killer 收款的那一刻**才消費 —— 沒有 killer 的死亡（塔／友傷／自殺）**不**消費 | §5.2「consumed on **death**, not on payment」，任何死因都結清 |
+>
+> ### 出貨位置（行號＝2026-08-26 複查時的值，⚠️ 會漂，以符號名為準）
+>
+> | | |
+> | --- | --- |
+> | 金額 | `packages/shared/src/sim/economy/progression.ts` 的 `GOLD_REWARDS`（`kill: 150` · `killBounty: 100`） |
+> | 付款 | `packages/shared/src/sim/systems/DeathSystem.ts:95`（基礎擊殺金）與 `:101-103`（賞金，用 `world.bountyPaid` 判重） |
+> | 帳本生命週期 | `packages/shared/src/sim/SimWorld.ts:334` 宣告；唯一的清除在 `destroy()` 內的 `:1492` ⇒ 這就是「per-match」的來源 |
+> | 釘住它的測試 | `packages/shared/src/sim/pipeline.test.ts:539`（斷言 `kill + killBounty` **相加**）· `packages/shared/src/sim/economy/statPath.test.ts:381`（第一次 `kill+killBounty`、復活再殺只剩 `kill`） |
+> | 後台可調嗎 | ⛔ **沒有活的欄位**。`content/config/config.match.json` 的 `economy.killBounty` 是**死格**（`apps/admin/src/matchConfig.ts` 已標 `live: null` ＋ `realHome` 指向 `progression.ts`）。⇒ 改金額＝改那個常數＝一次完整部署 |
+>
+> ### 要看現行規則請看哪一份
+>
+> ⭐ `docs/todo/economy.md` 的「**Kill bounty (task #90)**」一節 —— 它描述的是**出貨的行為**
+> （一次性、付在基礎擊殺金**之上**、`world.bountyPaid` 逐 victim 記帳、同 entity id 記整場），
+> 並登記著釘住它的測試 `eco-kill-bounty`。兩邊打架時**以那一份為準**，這一份只當設計史讀。
+
 Task #90, phase 3 (post-review). **Design only — this document touches no source or content file.**
 Written while #82 (economy), #84 (revive circles) and #89 (guardian tower) are all in flight.
 Every number is expressed against a symbol those tasks own, never against a literal.
