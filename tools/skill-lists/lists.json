@@ -1343,8 +1343,8 @@
       "championName": "蟬在叫人壞掉 - 龍宮禮奈",
       "context": "施放後增益",
       "op": "pctAdd",
-      "amountText": "+50% ~ +400%（隨階級）",
-      "tierText": "中→極大",
+      "amountText": "+50% ~ +300%（隨階級）",
+      "tierText": "中",
       "durationText": "12 秒"
     },
     {
@@ -1354,7 +1354,7 @@
       "championName": "火霧戰士 - 夏娜",
       "context": "施放後增益",
       "op": "pctAdd",
-      "amountText": "+100%",
+      "amountText": "+100% ~ +150%（隨階級）",
       "tierText": "大",
       "durationText": "6 秒"
     },
@@ -1387,8 +1387,8 @@
       "championName": "治癒系公主 - 木乃香",
       "context": "常駐被動",
       "op": "pctAdd",
-      "amountText": "+10% ~ +20%（隨階級）",
-      "tierText": "極小→小",
+      "amountText": "+5% ~ +20%（隨階級）",
+      "tierText": "豁免（字面值）",
       "durationText": "常駐"
     },
     {
@@ -1421,7 +1421,7 @@
       "context": "死亡守衛",
       "op": "pctAdd",
       "amountText": "+100%",
-      "tierText": "大",
+      "tierText": "豁免（字面值）",
       "durationText": "守衛存活期間"
     },
     {
@@ -1453,8 +1453,8 @@
       "championName": "邪眼師 - 飛影",
       "context": "施放後增益",
       "op": "pctAdd",
-      "amountText": "+20%",
-      "tierText": "小",
+      "amountText": "+16%",
+      "tierText": "豁免（字面值）",
       "durationText": "10 秒"
     },
     {
