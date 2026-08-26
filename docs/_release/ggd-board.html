@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.28.5 · 資料截至 2026-08-26 23:29 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-26 23:29 (GMT+8)</h1><div class="meta"><span>帳本 <b>8</b> 份</span><span>點名票號 <b>250</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.28.5 · 資料截至 2026-08-26 23:29 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-26 23:29 (GMT+8)</h1><div class="meta"><span>帳本 <b>8</b> 份</span><span>點名票號 <b>251</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -156,10 +156,10 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <p class="li"><code>pnpm exec tsx tools/model-budget/emit_report.ts</code> —— <code>report.json</code> 現在就過期，而<b>沒有守衛會說</b></p>
 <p class="li"><code>eventFanout.ts:114</code> 的註解已成假話（線路成本從「施放次數」變成「跳數」）</p></section>
 <section><p class="eyebrow">這一版（08-20）</p><h2>🧾 逐句對票 · 這一版（08-20）</h2><div class="scroll"><table><tr><th>owner 說的（逐字）</th><th>票</th><th>狀態</th></tr>
-<tr><td>「go on and <b>fix it all</b>」＋「如果有<b>改產生物而不是改產生器</b>的情形，你一定要去<b>追誤會的多個源頭</b>修正」</td><td>#771</td><td>✅ 六軸稽核＋複驗（49 筆成立/T0×23）→ 三路修正全落地（下詳）</td></tr>
-<tr><td>「GGD 戰情版.md <b>應該在我本機端阿</b> 並且我也要看到 對話開票 <b>逐訊息對應開的票號 全記錄在裡面</b>」</td><td>#669</td><td>✅ 根目錄 <code>GGD戰情版.md</code>（symlink 永指今天）＋ 282 則逐字內嵌（⛔ 不再是指標）</td></tr>
-<tr><td>「請你將以下內容製作成<b>後臺頁面</b>，並且<b>適當分類</b>，目前後台左測有些<b>分類已經過長</b>」</td><td>#775</td><td>✅ 13 頁全上＋左欄拆兩組（31→16、36→23）</td></tr>
-<tr><td>「這些後台頁面的內容都要 <b>script 實時動態產生</b>，<b>不是靜態內容</b>喔」</td><td>#775</td><td>✅ /__live request-time 計算（mtime 鍵快取＝與磁碟一致；dataset 自動發現）</td></tr>
+<tr><td>「<b>改 claude.md 前記得都要備份喔</b> 這是我們開發守則之一」</td><td>—</td><td>✅ 已確認：<code>rules-backup/2026-08-26_211239</code> 是<b>改動前</b>那一份（還寫著舊的 <code>331</code>）</td></tr>
+<tr><td>「後台左側選項<b>已經太長 不容易尋找、閱覽及管理</b> 你有什麼好建議做<b>資訊視覺化改善</b>嗎」</td><td>#776</td><td>✅ ⌘K 指令面板＋🗺 導覽地圖＋🏷 標籤資料層</td></tr>
+<tr><td>「<b>w3x jass, mdl, 蝗蟲群 球體 都已經建表對照移植完了嗎？</b>」</td><td>#777</td><td>⚠️ <b>建表 ✅ · 移植 ❌</b>（數字在下面）＋ 普查快照過期另開 #777</td></tr>
+<tr><td>「push + note + deploy」</td><td>—</td><td>本版</td></tr>
 </table></div></section>
 <section><p class="eyebrow">的每一句話在哪張票上</p><h2>🧾 逐則對票 · owner 的每一句話在哪張票上</h2><h3>08-18</h3>
 <div class="scroll"><table><tr><th>#</th><th>時間</th><th>owner 說了什麼</th><th>落到哪</th><th>狀態</th></tr>
