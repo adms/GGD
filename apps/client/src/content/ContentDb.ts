@@ -86,7 +86,7 @@ import { resolveFamilyArt } from "../render/vfx/familyTuning";
 import { setMaxAbilityVfxLayers } from "../render/vfx/abilityLayers";
 import { setOneShotMaxLifeSec } from "../vfx/oneShotLife";
 import { setFxTintEmissiveFloor, setStockGlowAdditive } from "../render/modelFxRig";
-import { setCastArcsEnabled } from "../vfx/arcBolt";
+import { setCastArcsEnabled, setMaxConcurrentArcs } from "../vfx/arcBolt";
 import { setImpactRingScale, setImpactRingTiers } from "../vfx/vfxPresets";
 import { damageTiersFromDoc } from "@ggd/shared/content/damageTiers";
 import { setCastHeightSource } from "../render/vfx/familyCastHeight";
@@ -403,6 +403,8 @@ export class ContentDb {
     );
     // ⚡ GH#571 —— 施法電弧的總開關（同一份文件、同一條路）。
     setCastArcsEnabled(vfxFamiliesDoc?.castArcs);
+    // ⚡ GH#781 —— 同時在場的電弧帶上限（同一份文件、同一條路）。
+    setMaxConcurrentArcs(vfxFamiliesDoc?.maxConcurrentArcs);
     // 🔵 GH#617 —— 衝擊波環的亮度/大小（同一份文件、同一條路）。
     setImpactRingScale(
       vfxFamiliesDoc?.impactRingAlpha,

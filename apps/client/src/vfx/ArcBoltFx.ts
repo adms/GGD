@@ -34,6 +34,7 @@ import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { RawTexture } from "@babylonjs/core/Materials/Textures/rawTexture";
 import type { Texture } from "@babylonjs/core/Materials/Textures/texture";
 import { Engine } from "@babylonjs/core/Engines/engine";
+import { DEFAULT_MAX_CONCURRENT_ARCS } from "@ggd/shared/content/schema/vfx";
 import {
   arcColorAt,
   arcForks,
@@ -42,6 +43,7 @@ import {
   arcStripPaths,
   ARC_BOLT_TUNING,
   buildArcPath,
+  maxConcurrentArcs,
   type ArcBoltSpec,
   type ArcEnd,
 } from "./arcBolt";
@@ -55,15 +57,24 @@ const GLOW_RAMP_PX = 32;
  * 一次連鎖 16 跳 × (1 主幹 + 2 分岔) = 48，但**一跳一閃**：每段只活
  * `spec.lifeMs`（出貨 130ms），而 owner 要的逐跳間隔讓它們不會同時在場上。
  * 這條線擋的是「兩個人同時放 + 有人把間隔調到 0」那種病態組合。
+ *
+ * ⚡ GH#781：這一格從寫死變**後台可調**（`config.vfx-families@1.maxConcurrentArcs`）。
+ * 這裡 re-export 出貨預設是為了不動既有讀者；⛔ 值只住 schema 那一份（第〇·四守則）。
  */
-export const MAX_ARC_STRIPS = 32;
+export const MAX_ARC_STRIPS = DEFAULT_MAX_CONCURRENT_ARCS;
 
 interface Strip {
   mesh: Mesh | null;
   mat: StandardMaterial;
-  /** CreateRibbon 的兩條 path（重用同一批 Vector3，⛔ 每次不重新配置） */
+  /** CreateRibbon 的兩條 path（只有**建網格**那一刻用；重算走 `pos` 直寫） */
   left: Vector3[];
   right: Vector3[];
+  /**
+   * ⚡ GH#781 —— 重算折線直寫頂點用的緩衝（一條 strip 一份，重用到死）。
+   * 佈局 = CreateRibbon 的 path-major：`[左路 n 點][右路 n 點]`，每點 3 個 float
+   * （`chainLightningArc.test.ts` 的 `node()` 讀的就是這個佈局）。
+   */
+  pos: Float32Array;
   bornMs: number;
   spec: ArcBoltSpec | null;
   active: boolean;
@@ -107,7 +118,9 @@ export class ArcBoltFx {
   }
 
   private get cap(): number {
-    return Math.max(1, this.opts.maxStrips ?? MAX_ARC_STRIPS);
+    // ⚡ GH#781 —— 後台那一格（`maxConcurrentArcs`）是活的：每次要格子時讀，
+    // 所以存檔重載內容之後**下一段弧**就吃到新上限，⛔ 不必重建這個池子。
+    return Math.max(1, this.opts.maxStrips ?? maxConcurrentArcs());
   }
 
   /**
@@ -172,14 +185,31 @@ export class ArcBoltFx {
     const n = points.length;
     this.ensureMesh(strip, n);
     const { left, right } = arcStripPaths(points, spec.halfWidth);
+    // ⚡⚡ GH#781 —— **直寫頂點，⛔ 不再走 `CreateRibbon(…, { instance })`**。
+    //
+    // 那條路每一次都重算 `VertexData.ComputeNormals` + 重建包圍盒 + 走一整層
+    // builder 閉包，而這裡**兩個產物都沒有讀者**：材質 `disableLighting`（法線
+    // 沒人取樣）、`alwaysSelectAsActiveMesh`（包圍盒不進視錐剔除）。
+    // ⭐ 量到的（#781 bench）：reshape 5.98µs → 直寫 ~2µs，而重災現場是
+    // 一發天譴 2,183 次 reshape ×（draw 900/s ＋ 30Hz 重抖）。
+    //
+    // 頂點佈局 = 建立時 `CreateRibbonVertexData` 的 **path-major**
+    // （`[左路 n 點][右路 n 點]`，`chainLightningArc.test.ts::node()` 同一個假設）；
+    // 守衛 `arcReshapeDirect.test.ts` 拿 Babylon 自己的 instance 路徑逐 float 比對。
+    const pos = strip.pos;
     for (let i = 0; i < n; i++) {
       const l = left[i]!;
       const r = right[i]!;
-      strip.left[i]!.set(l[0], l[1], l[2]);
-      strip.right[i]!.set(r[0], r[1], r[2]);
+      const o = i * 3;
+      pos[o] = l[0];
+      pos[o + 1] = l[1];
+      pos[o + 2] = l[2];
+      const q = (n + i) * 3;
+      pos[q] = r[0];
+      pos[q + 1] = r[1];
+      pos[q + 2] = r[2];
     }
-    const mesh = strip.mesh!;
-    CreateRibbon(mesh.name, { pathArray: [strip.left, strip.right], instance: mesh });
+    strip.mesh!.updateVerticesData(VertexBuffer.PositionKind, pos, false, false);
     strip.step = step;
   }
 
@@ -238,6 +268,7 @@ export class ArcBoltFx {
       mat,
       left: [],
       right: [],
+      pos: new Float32Array(0), // ensureMesh 依節點數重配
       bornMs: -Infinity,
       spec: null,
       active: false,
@@ -283,6 +314,8 @@ export class ArcBoltFx {
     strip.mesh?.dispose(false, false);
     strip.left = new Array<Vector3>(n);
     strip.right = new Array<Vector3>(n);
+    // ⚡ GH#781 —— 直寫緩衝跟著節點數走（path-major：左 n 點 + 右 n 點 × xyz）。
+    strip.pos = new Float32Array(n * 2 * 3);
     for (let i = 0; i < n; i++) {
       strip.left[i] = new Vector3(0, 0, 0);
       strip.right[i] = new Vector3(0, 0, 0);
@@ -310,9 +343,13 @@ export class ArcBoltFx {
     // ⇒ 自己寫：**u 沿著弧走**（0→1），**v 橫跨弧帶寬度**（左緣 0、右緣 1）——
     // 那正是 `arcGlowRamp` 的檔頭本來就說的那件事（「v 軸橫跨弧帶寬度」）。
     {
-      // ⚠️ 頂點是**交錯**的：`[左0, 右0, 左1, 右1, …]`（量出來的 ——
-      // 相鄰兩個頂點的距離剛好是一個帶寬，⛔ 不是「左半段接右半段」）。
-      // ⇒ 偶數 index 是左緣（v=0）、奇數是右緣（v=1）；u 沿著弧走。
+      // ⚠️⚠️ 下面這段 UV 寫的是「交錯佈局」的假設，而 #781 查核發現它**不成立**：
+      // Babylon 的 `CreateRibbonVertexData` 是 **path-major**（先排完左路 n 點、
+      // 再排右路 n 點）—— `chainLightningArc.test.ts::node()` 用 path-major 讀
+      // 端點而它是綠的，這就是實測。⇒ 這組 UV 的 v 沿著弧來回鋸齒。
+      // ⭐ 今天它**沒有讀者**（`make()` 刻意一張貼圖都不掛，見上面那段 2026-08-24
+      // 的紀錄），所以行為零影響；哪天要把橫截面貼圖接回來，先把 v 改成
+      // 「i < n ⇒ 0、否則 1」再說。⛔ 本次不動它（順手修是替 owner 決定排序）。
       const uvs = new Float32Array(n * 2 * 2);
       for (let i = 0; i < n * 2; i++) {
         const along = n > 1 ? Math.floor(i / 2) / (n - 1) : 0;
@@ -324,6 +361,10 @@ export class ArcBoltFx {
     mesh.material = strip.mat;
     mesh.isPickable = false;
     mesh.receiveShadows = false;
+    // ⚡ GH#781 —— 法線凍結:這個材質 `disableLighting`,法線**沒有任何讀者**,
+    // 而 `CreateRibbon(…, { instance })` 那條路(若未來有人走回去)會每次重算
+    // `ComputeNormals` —— 凍結讓它結構上跳過,⛔ 不是靠「記得別走那條路」。
+    mesh.freezeNormals();
     // instance 更新不會刷新包圍盒,留著會讓活著的弧被視錐剔除掉(RibbonTrail
     // 踩過同一個坑)。一條弧只有十幾個三角形,不值得為它算 extents。
     mesh.alwaysSelectAsActiveMesh = true;

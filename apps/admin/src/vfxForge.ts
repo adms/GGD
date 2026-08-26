@@ -272,6 +272,9 @@ export const GLOBAL_BOUNDS: Readonly<Record<string, ForgeBound>> = {
   // `MIN_/MAX_ONE_SHOT_MAX_LIFE_SEC` 的註解裡(3 秒 = 12 人混戰會吃掉九成畫面
   // 粒子預算的那條線;0.1 秒 = 手機 30fps 的 3 張畫面)。
   oneShotMaxLifeSec: { min: 0.1, max: 3 },
+  // ⚡ GH#781 —— 電弧帶上限。上下界逐字照 `zVfxFamilies.maxConcurrentArcs`
+  // (4 = 一次 strike「主幹+2岔」放得下還剩一格;128 = 出貨 32 的四倍)。
+  maxConcurrentArcs: { min: 4, max: 128, int: true },
   // 🔵 GH#617 —— 衝擊波環的三格。上下界逐字照 `zVfxFamilies` 的三行。
   // ⚠️ `impactRingLife` 的下界 0.1 不是隨便訂的:heavy 出貨 240ms × 0.1 = 24ms,
   //    在 60fps 上只有 **1.4 張畫面** —— 再低就是「閃一下就不見」而不是「快」。
@@ -336,6 +339,9 @@ export const GLOBAL_FIELDS = [
   "scaleMax",
   "maxAbilityVfxLayers",
   "oneShotMaxLifeSec",
+  // ⚡ GH#781 —— 同時在場的電弧帶上限(ArcBoltFx 池子的 cap)。緊接在壽命上限
+  // 後面,因為操作者調的是同一類東西:畫面上的特效預算。
+  "maxConcurrentArcs",
   // 🔵 GH#617 —— 三格連著放:操作者調的是**同一顆環**的三個面。
   "impactRingAlpha",
   "impactRingRadius",
@@ -459,6 +465,7 @@ export const FIELD_LABEL: Readonly<Record<string, string>> = {
   scaleMax: "縮放上限",
   maxAbilityVfxLayers: "單技能特效層數上限",
   oneShotMaxLifeSec: "餘燼壽命上限（秒）",
+  maxConcurrentArcs: "電弧同場上限（條）",
   impactRingAlpha: "衝擊波環亮度倍率",
   impactRingRadius: "衝擊波環大小倍率",
   impactRingLife: "衝擊波環壽命倍率（越小越快）",
@@ -562,6 +569,13 @@ export const FIELD_HINT: Readonly<Record<string, string>> = {
     "所以特效只會更靠近地板、不可能飛出畫面上緣；" +
     "每個家族都用自己的高度 = 連往上那一半也照做（會改到 200 多支技能的構圖，先看過畫面再開）；" +
     "全部固定在胸口 = 升級前的行為，改壞了用這一格退回去，不用重新出 client",
+  maxConcurrentArcs:
+    "畫面上**同時**最多幾條電弧帶（連鎖閃電的每一跳、施法電弧、分岔全部共用這個池）。" +
+    "超過就把最舊的那一條提早熄掉讓位，所以調低不是「後面的不畫」而是「舊的讓位」。" +
+    "⚠️ GH#781 量到的：一發天譴（65-04）= 320 跳 → 960 條弧帶擠這個池，" +
+    "三個閃電系英雄同場時 GPU 的加法混合疊加與這一格成正比 —— 覺得團戰 lag 先調低這格" +
+    "（例：16）看差異。32 = 出貨（與改動前寫死的上限相同）；下界 4 = 一次施放" +
+    "「主幹＋兩條分岔」剛好放得下",
   castArcs:
     "雷電技能施放時，除了粒子之外再畫一道**有分岔的鋸齒電弧**。" +
     "⚠️ 這一格治的不是「特效不好看」，是 owner 2026-08-22 說的「一堆閃電特效" +
@@ -754,6 +768,9 @@ export function familiesDocFor(doc: ConfigVfxFamiliesDoc): ConfigVfxFamiliesDoc 
     // ⚠️ 同上 —— 少寫這一行,操作者按存檔就會把餘燼壽命上限從文件裡刪掉,
     // 而畫面上那一格還好好地填著 2.0。round-trip 守衛盯著每一個 GLOBAL_FIELD。
     oneShotMaxLifeSec: doc.oneShotMaxLifeSec,
+    // ⚠️ ⚡ GH#781 —— 同樣的一行。少寫它，操作者把電弧上限調完按存檔，
+    // 頁面顯示他打的數字而文件裡那個 key 根本沒被寫出去。
+    maxConcurrentArcs: doc.maxConcurrentArcs,
     // ⚠️ 🔵 GH#617 —— 同樣的三行。少寫任何一行，操作者按存檔就把那一格從文件裡刪掉，
     // 而畫面上那一格還好好地填著值。round-trip 守衛盯著每一個 GLOBAL_FIELD。
     impactRingAlpha: doc.impactRingAlpha,
@@ -899,6 +916,9 @@ function checkNumber(bound: ForgeBound, text: string, optional: boolean): string
 export const OPTIONAL_GLOBAL_FIELDS: ReadonlySet<string> = new Set([
   "maxAbilityVfxLayers",
   "oneShotMaxLifeSec",
+  // ⚡ GH#781 —— 同一條規則:schema 上是 optional,留白 = 用出貨預設 32。
+  // ⚠️ 尤其不可以幫忙填:`Number("")` 是 **0**,而 0 是界外(下界 4)⇒ 存檔整份被拒。
+  "maxConcurrentArcs",
   // 🔵 GH#617 —— 同一條規則:schema 上是 optional。
   // ⚠️ 這三格尤其不可以幫忙填預設:`Number("")` 是 **0**,而 0 對
   //    `impactRingRadius`/`impactRingLife` 是**界外**(下界 0.1)⇒ 存檔整份被拒。

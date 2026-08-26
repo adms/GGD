@@ -478,6 +478,13 @@ export const DEFAULT_ONE_SHOT_MAX_LIFE_SEC = 0.6;
  */
 export const DEFAULT_CAST_ARCS = false;
 
+/**
+ * ⚡ 同時在場的電弧帶上限（`config.vfx-families@1.maxConcurrentArcs`，GH#781）
+ * 的出貨預設。32 ＝ 改動前 `ArcBoltFx.MAX_ARC_STRIPS` 的字面值 ——
+ * 這一格從「寫死」變「後台可調」的那一天，畫面逐位元組不變。
+ */
+export const DEFAULT_MAX_CONCURRENT_ARCS = 32;
+
 /** 衝擊波環的亮度倍率出貨值（GH#617，owner「太亮太搶眼」）。1 = 回到 2026-08-23 之前。 */
 export const DEFAULT_IMPACT_RING_ALPHA = 0.35;
 /** 同上,大小倍率。 */
@@ -1103,6 +1110,24 @@ export const zConfigVfxFamiliesDoc = z
      * 優先權大的更新預設啟動）。
      */
     castArcs: z.boolean().optional(),
+
+    /**
+     * ⚡ GH#781 —— **同時在場的電弧帶上限**（`ArcBoltFx` 池子的 cap）。
+     *
+     * owner 2026-08-27（逐字）：「閃電演算法太過耗效能 請深入分析原因
+     * 特別是場上有飛鼠先生、拳四郎、皮卡丘都在的時候」。
+     * ⭐ 量到的（`docs/_reports/lightning-perf_temp_20260827.md`）：一發 65-04
+     * 天譴 = 320 跳 → **960 條弧帶**擠進 32 格池子 ⇒ 每一格都是「畫了就被搶」，
+     * 而**畫面上永遠只有 cap 條** —— 這一格就是那個 cap。
+     *
+     * 32 = 出貨值（＝改動前寫死的 `MAX_ARC_STRIPS`，逐位元組同一個畫面）。
+     * 調低 = 團戰時電弧變稀但每一條活滿自己的壽命；調高 = 更密、GPU 加法混合
+     * overdraw 線性上升。下界 4 = 一次 strike（主幹＋2 岔）要放得下還剩一格；
+     * 上界 128 = 出貨的 4 倍，再上去是 128 顆 mesh＋材質逐幀在動。
+     *
+     * ⚠️ OPTIONAL 的理由與上面各格逐字相同（舊 overlay 沒有這個 key）。
+     */
+    maxConcurrentArcs: z.number().int().min(4).max(128).optional(),
 
     /**
      * ⛔⛔ **衝擊波環的亮度與大小倍率**（GH#617）—— owner 2026-08-23 逐字：

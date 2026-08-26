@@ -36,7 +36,7 @@
 import type { VfxBlendMode } from "@ggd/shared/content";
 import { hotToCoolStops, type ColorStop, type Rgb } from "./vfxPresets";
 import { sampleColorStops, type Vec3Triple } from "./ribbonMath";
-import { DEFAULT_CAST_ARCS } from "@ggd/shared/content/schema/vfx";
+import { DEFAULT_CAST_ARCS, DEFAULT_MAX_CONCURRENT_ARCS } from "@ggd/shared/content/schema/vfx";
 
 /** 世界座標的一端（電弧兩頭都是點，⛔ 不是實體 —— 實體會死掉，點不會）。 */
 export interface ArcEnd {
@@ -235,6 +235,32 @@ export function setCastArcsEnabled(v: boolean | undefined): void {
 
 export function castArcsEnabled(): boolean {
   return arcCastEnabled;
+}
+
+/**
+ * ⚡ 同時在場的電弧帶上限（`config.vfx-families@1.maxConcurrentArcs`，GH#781）。
+ *
+ * ⭐ 樣板逐字照 `setCastArcsEnabled` —— 由 `ContentDb.load()` 呼叫，
+ * 後台存檔 → 下一次載入內容就生效，⛔ 不必重建映像。
+ *
+ * 這一格管的是 `ArcBoltFx` 池子的 cap：**畫面上最多同時幾條弧帶**
+ * （連鎖閃電的跳、施法電弧、分岔全部算在內 —— 它們共用同一個池）。
+ * 超過就搶最舊的那一條，所以調低不是「後面的不畫」而是「舊的早一點讓位」。
+ *
+ * ⚠️ 夾值抄 Zod 的上下界（4/128）：後台耐久 overlay 走寬鬆路徑不跑 Zod，
+ * 一個界外的數字有可能走到這裡（`readWorldCues` 的同一個立場）。
+ */
+let maxArcsCap: number = DEFAULT_MAX_CONCURRENT_ARCS;
+
+export function setMaxConcurrentArcs(v: number | undefined): void {
+  maxArcsCap =
+    typeof v === "number" && Number.isFinite(v)
+      ? Math.min(128, Math.max(4, Math.floor(v)))
+      : DEFAULT_MAX_CONCURRENT_ARCS;
+}
+
+export function maxConcurrentArcs(): number {
+  return maxArcsCap;
 }
 
 export const ARC_CAST_MIN_STRIKE_LEN = 0.6;

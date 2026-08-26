@@ -354,6 +354,9 @@ describe("鑄技工坊 · 存得進去讀得回來 (adminui-vfx-forge-roundtrip)
       // (「projectileRadiusGain 沒有哨兵值」)，所以它不是裝飾。
       projectileRadiusGain: 0.4,
       projectileFlyHeightY: 1.6,
+      // ⚡ GH#781 —— 電弧同場上限。哨兵值刻意 ≠ 出貨值 32（否則「掉了之後
+      // 補回預設」會蒙混過關），而且在 Zod 上下界 4..128 內。
+      maxConcurrentArcs: 16,
       // GH#379 —— 五格家族仰角。每一格都刻意**不是**出貨值，否則「掉了之後
       // 補回預設」會蒙混過關。
       beamPitchDeg: 12,
