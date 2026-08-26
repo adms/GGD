@@ -71,6 +71,30 @@ set -euo pipefail
 # 忽略 HUP，ssh 斷了 build 照樣跑完，留下的是一個完整的狀態而不是一個殘骸。
 trap '' HUP PIPE
 
+# ⛔⛔ **這支腳本會在執行中把自己換掉**（2026-08-27，一天騙到我三次）。
+#
+# 第 1 步 `git pull` 拉的**包含這個檔案自己**。而 bash 是**按位元組偏移逐段讀**
+# 腳本的 —— 檔案在它讀到一半時被換掉，它接下來讀到的是**新檔案的那個偏移量**，
+# 也就是一段可能對不齊的內容。實際發生的三次都是同一個症狀：
+#   · 新加的後置條件**一行都沒印**（看起來像「沒生效」）
+#   · 印出來的是**舊版的訊息文字**（看起來像「改動沒上去」）
+# ⇒ ⭐ 兩次我都因此誤判，而第三次才想通。⚠️ 更糟的是它**沒有錯誤**，
+#   只是安靜地跑了一個半新半舊的東西。
+#
+# ⭐ 修法：**先把自己複製到 repo 外面，再從那份副本重跑。**
+#   副本不會被 `git pull` 動到 ⇒ 整場部署跑的是**同一份**腳本。
+#   ⚠️ 用一個 env 旗標避免無限重跑；⛔ 不用 `$0`（它在 `bash <path>` 下才是路徑）。
+if [ -z "${GGD_DEPLOY_PINNED:-}" ]; then
+  __pin="$(mktemp -t ggd-host-deploy)" || __pin=/tmp/ggd-host-deploy.$$
+  cp "${BASH_SOURCE[0]}" "$__pin"
+  export GGD_DEPLOY_PINNED="$__pin"
+  # ⚠️ 刪除交給 trap：exec 之後這一行不會再跑到。
+  trap 'rm -f "$__pin"' EXIT
+  exec bash "$__pin" "$@"
+fi
+[ -n "${GGD_DEPLOY_PINNED:-}" ] && trap 'rm -f "$GGD_DEPLOY_PINNED"' EXIT
+
+
 COMPOSE_FILES=(-f docker/compose.yaml -f docker/compose.family.yaml)
 ENV_FILE=docker/.env
 MODE=full
