@@ -57,7 +57,7 @@ import {
   normalizeHitstopRules,
   type HitstopRules,
 } from "./combat/hitstopHold";
-import { dot, lenSq, normalize, sub, type Vec2 } from "./math/vec2";
+import { dot, len, lenSq, normalize, sub, type Vec2 } from "./math/vec2";
 
 /** 擊退規則(全部後台可調)。 */
 export interface KnockbackRules {
@@ -132,6 +132,43 @@ export interface StandstillRules {
    * 關掉的話小怪能邊走邊打而英雄不行,那是一個沒有人會想要的不對稱。
    */
   applyToMobs: boolean;
+  /**
+   * ⭐ GH#755 —— 「**完全沒動**」的雜訊地板 (GGD units/sec)。
+   *
+   * ⚠️ 這一格把 `walkEps` **一格當兩用**拆開了。在此之前同一個 0.5 同時是
+   * 「有沒有在動」與「靠近多快」的門檻,於是 **有效移速 ≤ 0.5 的單位整條規則
+   * 靜默關閉** —— 重減速之下純後退風箏拿**全額**輸出,而且沒有任何守衛量過。
+   *
+   * 為什麼是 **0.1**:它必須落在「浮點/碰撞雜訊」與「最慢的**真的在移動**」
+   * 之間。出貨的移速中位數 ≈5.9,而 60% 減速把它壓到 2.36;疊到本票舉的
+   * 0.3 仍然遠在 0.1 之上。⇒ 0.1 擋得掉雜訊而擋不掉任何一個真的在走的人。
+   * ⛔ 它**不是**手感旋鈕(手感住 {@link closingRatio}),所以⛔ 不要拿它調平衡。
+   */
+  stillEps: number;
+  /**
+   * ⭐ GH#755 —— 「正在朝目標靠近」的門檻,寫成**這個單位自己移速的幾成**。
+   *
+   * ⚠️ 它是**無因次**的,而那就是修法本身:舊版用一個**絕對速度** 0.5 當門檻,
+   * 於是同樣斜著走,慢的人徑向分量 < 0.5 被擋、快的人放行 ——
+   * **允許的移動角度隨移速伸縮**,而且是**非單調**的(對敵人疊更多減速反而
+   * 可能讓他拿回全額攻擊)。比例門檻讓判定只看**方向**,⛔ 不看速度。
+   *
+   * 0.5 的來源是幾何,⛔ 不是手感:徑向分量等於速度的一半 ⇔ 移動方向與
+   * 「指向目標」夾角 60°。也就是「你的移動要有一半以上是朝著他去的」。
+   * ⛔ sim 禁三角函數,所以它寫成投影比較而不是角度(見 {@link closingSpeed})。
+   *
+   * 上界是 1(等於「必須全速直衝」),下界 0(等於只擋真的在拉開距離)。
+   */
+  closingRatio: number;
+  /**
+   * ⭐ GH#755 的 **rollback** —— `true` = 逐位元回到 2026-08-27 之前的行為
+   *(`|vel| > walkEps` 且 `closingSpeed < walkEps`)。
+   *
+   * 出貨 `false`(第〇·六守則:優先權大的更新後都是預設啟動)。它存在是為了
+   * **回頭**,⛔ 不是觀望 —— 新規則會讓「被重減速的近戰接近戰」更難出手,
+   * 而那是一個要用真的比賽才看得出來的取捨。
+   */
+  legacyAbsoluteClosing: boolean;
 }
 
 /**
@@ -560,6 +597,10 @@ export const DEFAULT_STANDSTILL: StandstillRules = Object.freeze({
   enabled: true,
   walkEps: 0.5,
   applyToMobs: true,
+  // GH#755 —— 兩格門檻各自可調（理由寫在宣告上），rollback 預設關。
+  stillEps: 0.1,
+  closingRatio: 0.5,
+  legacyAbsoluteClosing: false,
 });
 
 /**
@@ -807,6 +848,14 @@ export function normalizeStandstillRules(raw: unknown): StandstillRules {
     walkEps: num(r.walkEps, DEFAULT_STANDSTILL.walkEps, 0, 100),
     applyToMobs:
       typeof r.applyToMobs === "boolean" ? r.applyToMobs : DEFAULT_STANDSTILL.applyToMobs,
+    // GH#755 —— 上界不只有下界（第一守則）：`stillEps` 到 100（＝關掉整條規則的
+    // 極端），`closingRatio` 硬性 [0,1]（>1 沒有意義：徑向分量不可能大於速度）。
+    stillEps: num(r.stillEps, DEFAULT_STANDSTILL.stillEps, 0, 100),
+    closingRatio: num(r.closingRatio, DEFAULT_STANDSTILL.closingRatio, 0, 1),
+    legacyAbsoluteClosing:
+      typeof r.legacyAbsoluteClosing === "boolean"
+        ? r.legacyAbsoluteClosing
+        : DEFAULT_STANDSTILL.legacyAbsoluteClosing,
   });
 }
 
@@ -1083,7 +1132,17 @@ export function closingSpeed(vel: Vec2, selfPos: Vec2, targetPos: Vec2): number 
 /**
  * 站定規則的**唯一**判斷:這一 tick 該不該擋下對 `targetPos` 的出手?
  *
- *     有在動(|vel| > walkEps) 而且 不是在朝目標靠近(徑向速度 < walkEps) → 擋
+ *     有在動(|vel| > stillEps) 而且 不是在朝目標靠近(徑向速度 < closingRatio × |vel|) → 擋
+ *
+ * ⭐ **GH#755 把兩個門檻拆開了**(2026-08-27)。在此之前兩者共用同一個 `walkEps`,
+ * 而那不是設計選擇 —— 它有兩個沒有人量過的結構後果:
+ *
+ *     A  有效移速 ≤ 0.5 的單位**整條規則靜默關閉**(重減速下純後退拿全額輸出)
+ *     B  允許的移動角度**隨移速伸縮**而且非單調(疊更多減速反而可能拿回攻擊)
+ *
+ * 現在「有沒有在動」讀雜訊地板 `stillEps`,「靠近多快」讀**無因次**的
+ * `closingRatio × |vel|` ⇒ 判定只看**方向**,對移速齊次。舊行為留在
+ * `legacyAbsoluteClosing` 這一格後台開關後面(預設關)。
  *
  * 三種移動被清楚地分開:
  *
@@ -1129,6 +1188,21 @@ export function standstillBlocks(
   targetPos: Vec2,
 ): boolean {
   if (!rules.enabled) return false;
-  if (!isWalking(rules, vel)) return false;
-  return closingSpeed(vel, selfPos, targetPos) < rules.walkEps;
+  // ⛔ ROLLBACK（GH#755）—— 逐位元的舊行為。⚠️ 兩行都要留在同一支裡：
+  // 分成兩個函式就會有兩份「什麼叫在走」，而漂掉的那一份不會有東西紅。
+  if (rules.legacyAbsoluteClosing) {
+    if (!isWalking(rules, vel)) return false;
+    return closingSpeed(vel, selfPos, targetPos) < rules.walkEps;
+  }
+  // ── 新規則（GH#755）：兩個門檻**不再共用同一個數字** ────────────────────
+  // ① 有沒有在動 —— 雜訊地板 `stillEps`（⛔ 不是 `walkEps`）。
+  //    舊版拿 0.5 當這一格 ⇒ **有效移速 ≤ 0.5 的單位整條規則靜默關閉**，
+  //    重減速之下純後退風箏拿全額輸出（本票的後果 A）。
+  const speed = len(vel);
+  if (!(speed > rules.stillEps)) return false;
+  // ② 靠近多快 —— **比例**門檻。舊版用絕對速度 0.5 ⇒ 允許的移動角度隨移速
+  //    伸縮而且非單調（後果 B）：同一個方向把 |vel| 從 2.0 縮到 0.8 會翻面。
+  //    `closing / speed` 只看方向，⇒ 對移速**齊次**。⛔ 寫成乘法而不是除法：
+  //    `speed > stillEps ≥ 0` 保證分母非零，但乘法連那個假設都不需要。
+  return closingSpeed(vel, selfPos, targetPos) < rules.closingRatio * speed;
 }

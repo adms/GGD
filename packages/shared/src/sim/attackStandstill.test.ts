@@ -18,7 +18,7 @@ import { SimWorld } from "./SimWorld";
 import { SKELETON_ARENA } from "./world/ArenaDef";
 import { registerSkeletonContent } from "./content/skeleton";
 import { spawnChampion } from "./spawnChampion";
-import { DEFAULT_COMBAT_FEEL } from "./combatFeel";
+import { DEFAULT_COMBAT_FEEL, standstillBlocks } from "./combatFeel";
 import { Stat } from "./stats/statTypes";
 import { spawnMob, MONSTER_TEAM, MOB_MODEL_KEY, type MobRules } from "./mobs";
 import { beginCombatMobs } from "./systems/MobSystem";
@@ -412,5 +412,72 @@ describe("打就站定 —— 小怪與殭屍王 (MobSystem)", () => {
       }
     }
     expect(mobHits).toBeGreaterThan(0);
+  });
+});
+
+/**
+ * GH#755 —— `walkEps` **一格當兩用**造成的兩個結構後果。
+ *
+ * ⭐ 讀的是**出貨的那一份規則**（`DEFAULT_COMBAT_FEEL.standstill`）跑**出貨的**
+ * `standstillBlocks`，⛔ 不自己手寫一份判斷式（失敗形態⑤）。
+ *
+ * ⛔ 這兩條裡沒有任何一個出貨數值 —— 門檻一律從 `DEFAULT_STANDSTILL` 推導。
+ */
+describe("兩個門檻不再共用同一個數字 (GH#755)", () => {
+  const SS = DEFAULT_COMBAT_FEEL.standstill;
+  const ME_POS = { x: 0, z: 0 };
+  const FOE_POS = { x: 10, z: 0 }; // 目標在 +x
+
+  /** `|vel| = speed`、方向 `dir`（會被正規化）。 */
+  const vel = (dirX: number, dirZ: number, speed: number): { x: number; z: number } => {
+    const n = Math.sqrt(dirX * dirX + dirZ * dirZ);
+    return { x: (dirX / n) * speed, z: (dirZ / n) * speed };
+  };
+
+  it("⭐ A：**重減速**的單位不再讓整條規則靜默關閉 —— 純後退照樣被擋", () => {
+    cover("ss-heavy-slow-still-governed");
+    // 有效移速遠低於 `walkEps`（舊版的「有沒有在動」門檻）⇒ 舊版 `isWalking`
+    // 回 false ⇒ 第二行根本走不到 ⇒ 重減速下純後退風箏拿**全額**輸出。
+    const crawl = SS.walkEps * 0.6;
+    expect(crawl).toBeGreaterThan(SS.stillEps); // 儀器：這仍然是「真的在走」
+    expect(standstillBlocks(SS, vel(-1, 0, crawl), ME_POS, FOE_POS)).toBe(true);
+
+    // ⛔ 對照組①：舊行為（rollback 開關打開）在**同一個**輸入上放行 ——
+    // 這一條就是後果 A 的機器可檢查形式，也證明開關真的接著。
+    const legacy = { ...SS, legacyAbsoluteClosing: true };
+    expect(standstillBlocks(legacy, vel(-1, 0, crawl), ME_POS, FOE_POS)).toBe(false);
+
+    // ⛔ 對照組②：**真的站著**（雜訊地板以下）仍然打得出來 —— 新規則不是
+    // 「只要不是全速直衝就擋」。
+    expect(standstillBlocks(SS, vel(-1, 0, SS.stillEps * 0.5), ME_POS, FOE_POS)).toBe(false);
+    expect(standstillBlocks(SS, { x: 0, z: 0 }, ME_POS, FOE_POS)).toBe(false);
+  });
+
+  it("⭐ B：判定對移速**齊次** —— 同一個方向縮放 |vel| 不會翻面", () => {
+    cover("ss-verdict-speed-invariant");
+    // 舊版門檻是絕對速度 ⇒ 同樣斜著走，快的放行、慢的被擋（而且非單調：
+    // 對敵人疊更多減速反而可能讓他拿回全額攻擊）。
+    //
+    // 這個方向的徑向分量約是速度的 0.196 倍（< closingRatio 0.5）⇒ 新規則一律擋。
+    const dirX = 0.2;
+    const dirZ = 1;
+    for (const speed of [0.3, 0.8, 2.0, 6.0]) {
+      expect(standstillBlocks(SS, vel(dirX, dirZ, speed), ME_POS, FOE_POS), `speed=${speed}`).toBe(
+        true,
+      );
+    }
+    // 反方向也要齊次：夠直的衝刺在**每一個**速度上都放行。
+    for (const speed of [0.3, 0.8, 2.0, 6.0]) {
+      expect(standstillBlocks(SS, vel(1, 0, speed), ME_POS, FOE_POS), `charge speed=${speed}`).toBe(
+        false,
+      );
+    }
+    // ⛔ 對照組：舊行為在**同一個方向**上會隨速度翻面（2.0 擋、6.0 放行）——
+    // ⭐ 兩個速度在舊版底下**都算「有在動」**，所以翻面純粹來自「門檻是絕對值」，
+    // ⛔ 不是 A 那個後果。少了這一條，上面那兩迴圈對「規則整個被刪掉」也會過
+    //（失敗形態③）。
+    const legacy = { ...SS, legacyAbsoluteClosing: true };
+    const verdicts = [2.0, 6.0].map((s) => standstillBlocks(legacy, vel(dirX, dirZ, s), ME_POS, FOE_POS));
+    expect(new Set(verdicts).size).toBe(2);
   });
 });

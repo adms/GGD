@@ -11,6 +11,7 @@
  */
 import { describe, it, expect } from "vitest";
 import { SimWorld } from "@ggd/shared/sim/SimWorld";
+import { DEFAULT_COMBAT_FEEL } from "@ggd/shared/sim/combatFeel";
 import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
 import {
   asSeatId,
@@ -103,8 +104,20 @@ const RANGE = 11;
  * which the ranged bot LANDED an auto. Seat/positions are shared by every case
  * so the determinism guard replays the exact scenario.
  */
-function runKiteDuel(seed: number, ticks: number): { gaps: number[]; rangedAttackDists: number[] } {
+function runKiteDuel(
+  seed: number,
+  ticks: number,
+  standstill?: Partial<typeof DEFAULT_COMBAT_FEEL.standstill>,
+): { gaps: number[]; rangedAttackDists: number[] } {
   const world = new SimWorld(SKELETON_ARENA, seed);
+  // GH#755 —— 讓同一個場景跑得起「這條規則不存在」的對照組。⛔ 出貨路徑不受
+  // 影響：不傳 `standstill` 時 `world.combatFeel` 一個 byte 都沒動。
+  if (standstill !== undefined) {
+    world.combatFeel = {
+      ...DEFAULT_COMBAT_FEEL,
+      standstill: { ...DEFAULT_COMBAT_FEEL.standstill, ...standstill },
+    };
+  }
   world.economyOpen = false; // combat-only: no shop side-effects in the brain
   // z = -14 is a clear lane (all three pillars are ≥ 6u away); the ranged bot
   // retreats toward +x with ~25u of room before the boundary.
@@ -147,8 +160,20 @@ describe("ranged bots fight from range and KITE (ai-kiting)", () => {
   });
 
   it("(a) the ranged bot's autos ALL fire from range, never at melee contact", () => {
-    const { rangedAttackDists } = runKiteDuel(99, 150);
-    expect(rangedAttackDists.length).toBeGreaterThan(0);
+    // GH#755 —— ⛔ 這一條以前的下限是 `> 0`（「至少打出一發」），而它對**產出
+    // 塌陷**結構性失明：把「打就站定」調成幾乎什麼都擋，遠程 bot 掉到一場一發
+    // 也照樣綠。現在的下限是**相對於同一場景關掉這條規則**的基準比例。
+    //
+    // ⛔ 不寫死次數（第零守則：驗機制不驗數字）—— 基準是**跑出來的**，
+    // 所以 owner 之後調任何一格門檻，這條的意義都不會過期。
+    // ⚠️ 600 tick 而不是 150：150 tick 只打得出個位數，一發的抖動就是 ±50%。
+    const HORIZON = 600;
+    const { rangedAttackDists } = runKiteDuel(99, HORIZON);
+    const baseline = runKiteDuel(99, HORIZON, { enabled: false }).rangedAttackDists.length;
+    expect(baseline, "儀器活著：關掉規則的那一場真的有輸出").toBeGreaterThan(0);
+    // 「塌陷」的定義：掉到基準的三分之一以下。⭐ 實測今天是 ≈0.5，所以這個
+    // 下限離現況有一段距離 —— 它擋的是**塌陷**，⛔ 不是釘住今天的手感。
+    expect(rangedAttackDists.length).toBeGreaterThanOrEqual(Math.ceil(baseline / 3));
     for (const d of rangedAttackDists) {
       // every auto lands well outside melee and near the attack band
       expect(d).toBeGreaterThan(CONTACT * 3); // nowhere near body contact

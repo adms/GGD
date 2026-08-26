@@ -150,7 +150,16 @@ describe("combat-feel 設定表的正規化", () => {
       launchLongUnits: DEFAULT_KNOCKBACK.launchLongUnits,
       launchEdgeUsesFireRing: DEFAULT_KNOCKBACK.launchEdgeUsesFireRing,
     });
-    expect(rules.standstill).toEqual({ enabled: false, walkEps: 0.8, applyToMobs: false });
+    // GH#755 把「有沒有在動」與「靠近多快」拆成兩格 ⇒ 缺格同樣回到出貨預設。
+    // ⛔ 這裡讀 `DEFAULT_STANDSTILL` 而不是抄 0.1 / 0.5 / false —— 同上一段的理由。
+    expect(rules.standstill).toEqual({
+      enabled: false,
+      walkEps: 0.8,
+      applyToMobs: false,
+      stillEps: DEFAULT_STANDSTILL.stillEps,
+      closingRatio: DEFAULT_STANDSTILL.closingRatio,
+      legacyAbsoluteClosing: DEFAULT_STANDSTILL.legacyAbsoluteClosing,
+    });
   });
 });
 
