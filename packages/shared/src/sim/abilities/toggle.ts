@@ -56,6 +56,7 @@ import { Abilities } from "../content/registry";
 import { runEffects } from "../effects/effectRunner";
 import { abilityInstanceFor } from "./innateActive";
 import { attachToggleWhileOn, detachToggleWhileOn } from "./abilityPassives";
+import { flooredMana } from "../manaFloor";
 
 /** 為什麼關的。⛔ 它只影響 `costOnExit` 與事件上的字串，**不影響 onExit**。 */
 export type ToggleExitReason =
@@ -253,7 +254,7 @@ export function toggleUpkeepSystem(world: SimWorld): void {
         // 有人會想要的設計（免費維持的儀式型切換），所以它是一格。
         continue;
       }
-      if (onMana) hp.mana = pool - cost;
+      if (onMana) hp.mana = flooredMana(pool - cost); // GH#733 —— 地板
       else hp.hp = pool - cost;
     }
   }

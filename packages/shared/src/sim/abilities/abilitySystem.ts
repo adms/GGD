@@ -34,6 +34,7 @@ import {
   armFacingLock,
   facingTicks,
 } from "../facingLock";
+import { flooredMana } from "../manaFloor";
 
 /**
  * Enemies of `caster` currently standing inside a ground-AoE circle.
@@ -691,7 +692,10 @@ export function castAbility(
   }
 
   // ---- pay costs (mana + cooldown paid up-front, at cast-begin) ----
-  hp.mana -= mana;
+  // ⭐ GH#733 —— 地板。今天 `:594` 的 `hp.mana < mana` 讓這一行**在這條路上**
+  // 不可能扣成負數，但那是一個**別人維護的前置閘**：它與付款之間隔著整段
+  // targeting 解析，而「魔力 ≥ 0」是不變量不是巧合。⛔ 不要拿掉。
+  hp.mana = flooredMana(hp.mana - mana);
   // ⭐ G9 —— 冷卻縮減是**站在這一格技能的角度**問的，不是面板上那一個數字。
   //
   // 「[瞬步] 冷卻縮短 50% 持續 8 秒」在這一行出現之前寫不出來：全域

@@ -26,6 +26,7 @@ import { ModOp, type ModifierSource } from "./modifiers";
 // 而且不可解鎖」那一段，抄第二份就會在某一條沒列進表的屬性上分岔。
 import { capCeiling, capFor } from "../statCaps";
 import { Champions } from "../content/registry";
+import { flooredMana } from "../manaFloor";
 
 /**
  * 這個單位身上有沒有任何一條 `ModOp.PercentOf`,如果有,**目的地**是哪幾條屬性。
@@ -359,7 +360,9 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
       hp.hp = newMaxHp;
     }
     if (prev.maxMana > 0 && newMaxMana !== prev.maxMana) {
-      hp.mana = newMaxMana * (hp.mana / prev.maxMana);
+      // ⭐ GH#733 —— 保持比例是**放大器**：負的魔力乘上變大的上限會變得更負
+      //（#185 實測的 `-344/825` 就是這個形狀）。地板夾在這裡，⛔ 不是在面板上。
+      hp.mana = flooredMana(newMaxMana * (hp.mana / prev.maxMana));
     } else if (prev.maxMana === 0 && newMaxMana > 0) {
       hp.mana = newMaxMana;
     }

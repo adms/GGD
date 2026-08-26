@@ -103,6 +103,7 @@ import { attachSource, detachSource } from "../stats/statPipeline";
 import { shapeTargets } from "./shapeTargets";
 import { MANA_BARRIER_MAX_DURATION_SEC, MANA_BARRIER_MAX_PER_MANA } from "./kindLimits";
 import { MARK_NEVER_EXPIRES, markNeverExpires } from "../markLimits";
+import { flooredMana } from "../manaFloor";
 
 /** 一個來源（技能/道具/buff）授予的魔力屏障。 */
 export interface ManaBarrierGrant {
@@ -176,7 +177,8 @@ export function manaBarrierCutFor(
       hp.mana = floor;
       (drained ??= []).push(src.id);
     } else {
-      hp.mana -= absorbed / perMana;
+      // GH#733 —— 地板（`floor` 自己已經 ≥ 0，見上面 `Math.max(0, …)`）。
+      hp.mana = Math.max(floor, flooredMana(hp.mana - absorbed / perMana));
     }
     if (!(remaining > 0)) break;
   }

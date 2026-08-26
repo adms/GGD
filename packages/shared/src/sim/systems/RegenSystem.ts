@@ -24,6 +24,7 @@ import { Stat } from "../stats/statTypes";
 import { Champions } from "../content/registry";
 import { applyHealthDrain, healthDrainPerSec, healthRegenPerSec } from "../regenRules";
 import { manaRegenPerSec } from "../manaEconomy";
+import { flooredMana } from "../manaFloor";
 import { woundMult } from "../grievousWounds";
 
 export function regenSystem(world: SimWorld): void {
@@ -83,6 +84,10 @@ export function regenSystem(world: SimWorld): void {
       { flatPerSec: sc.final[Stat.ManaRegen], maxMana: hp.maxMana, isChampion },
       world.manaEconomy,
     );
-    hp.mana = Math.min(hp.maxMana, hp.mana + manaPerSec * world.dt);
+    // ⭐ GH#733 —— **兩邊都要夾**。這一行以前只有 `Math.min(maxMana, …)`，
+    // 而 `manaPerSec` **可以是負的**（`Stat.ManaRegen` 收得下負的 flat 加成，
+    // 而出貨 `enforceFloor:false` 讓 `manaRegenPerSec` 原樣把它送出來）
+    // ⇒ 每 tick 往下扣、沒有底 ⇒ `-344/825`。理由全文在 `sim/manaFloor.ts`。
+    hp.mana = flooredMana(hp.mana + manaPerSec * world.dt, hp.maxMana);
   }
 }
