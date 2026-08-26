@@ -270,23 +270,23 @@
         "godie-hart.e",
         "godie-udre.r",
         "godie-u01u.r",
-        "godie-u00v.e",
-        "godie-i01v"
+        "godie-u00v.e"
       ],
       "commit": null,
       "sequenceDir": "docs/_reports/tornado_visual-proof_20260825-2100",
       "rollback": {
         "configId": "tpl-locust-orb",
-        "field": "params.alpha.default",
+        "field": "params.count.default",
         "liveValue": 1,
         "rollbackValue": 0,
-        "note": "翻成 0 ⇒ 整個 tpl-locust-orb 家族沒寫自己 alpha 的節點一起隱形（本批 6 個龍捲風節點全滅；寫了 alpha 的——三千世界 musashi 0.5——不受影響）。live=1.0 與缺席逐位元同義（modelFxRig 對 alpha≥1 跳過乘法）⇒ 出貨畫面不變。⚠️ emfr 兩支的節點在 tools/skill-remake/heroes/godie-emfr.py，等主 session 跑 skillremake:json 落地"
+        "note": "⚠️⚠️ 2026-08-26 **第二次**更正（新閘 `rollbackSwitchReaches` 兩次都擋下我憑印象挑的欄位）：① 原登記 `params.alpha.default` —— **2 個節點自寫 alpha**（逐支從 census 帶入的透明度）⇒ 無效。② 我改成 `params.lifeSec.default` —— **也有 2 個節點自寫** ⇒ 還是無效。⇒ ⭐ **實測**這 6 支 / 8 個 orb 節點只有五格沒有被自寫：`path` · `count` · `distance` · `speed` · `spinDegPerSec`。選 `count`：翻成 **0** ⇒ 整族不生成 ＝ 一鍵關掉 TornadoElemental 那一批的視覺，⛔ 不動任何一支技能的 JSON。⭐ 教訓：開關要**量**不要挑 —— 被逐支覆寫的欄位是這個家族的常態（8 個節點裡 modelKey/soundKey 全部自寫）。"
       },
       "registeredAt": "2026-08-25T13:19:46.481Z",
       "verdict": null,
       "verdictHash": null,
       "reason": "",
-      "verdictAt": null
+      "verdictAt": null,
+      "note": " ⚠️ 2026-08-26 移除 `godie-i01v` —— 它是**道具**不是技能（`content/items/godie-i01v.json`），登記在 abilities 欄位裡讓可達性檢查掃不到它。"
     },
     "crescent_visual-proof_20260825-2130": {
       "title": "蝗蟲群/彎月刃：crescent 沿面向飛出（w3a missile 證據 → 3 落點）",
@@ -499,10 +499,10 @@
       "sequenceDir": "docs/_reports/beamtruth_visual-proof_20260826-1200",
       "rollback": {
         "configId": "tpl-beam-roll",
-        "field": "params.modelKey.default",
-        "liveValue": "w3x.stock.revivehuman",
-        "rollbackValue": "imported.netherstrike",
-        "note": "⭐ 一格還原整族：改回 imported.netherstrike。VERIFY 量到 netherstrike 的 5/5 primitive 全可見、可見最長軸 30.71，而 revivehuman 的承重 prim0 是 alpha=0 的 TeamGlow0（佔長軸 53%）⇒ 可見最長軸只有 7.82。⚠️ 若你覺得現在比之前更看不到，翻這一格就回到 2026-08-25 的樣子（#767 是根治那一條）。"
+        "field": "params.clip.default",
+        "liveValue": "idle",
+        "rollbackValue": null,
+        "note": "⚠️⚠️ **2026-08-26 更正**：原本登記 `params.modelKey.default`（revivehuman ⇒ netherstrike），而 REVERIFY lane 實測**那一格對這七支一格都蓋不到** —— `modelFxPreset.ts::fillOne()` 是 `if (out[k] === undefined)`（節點自寫的永遠贏），而 **11 個節點逐支自寫 `modelKey`** ⇒ 翻它畫面一個像素都不會變。⭐ 一個翻了沒反應的開關**比沒有更糟**。\n⇒ 改用實測**蓋得到全部 13 個節點**的 `params.clip.default`：拿掉它 ⇒ modelFxRig 一條剪輯都不播 ＝ 整族回到 2026-08-25 的**定格雕像**（本批加的家族 clip 是動畫那一半）。\n⭐ 另外兩格也蓋得到全部、可搭配使用：`params.count.default`（1⇒6，一鍵比對「一具 vs 一排」，登記在 beamverify 那一批）與 `params.lifeSec.default`。\n⛔ **蓋不到的四格**（⛔ 不要拿來當開關）：`modelKey`(11 節點自寫) · `scale`(7) · `arriveSoundKey`(5) · `soundKey`(2)。"
       },
       "registeredAt": "2026-08-26T04:28:43.457Z",
       "verdict": null,
@@ -532,6 +532,38 @@
         "note": "⭐ 一格還原「一具 vs 一排」：改回 6 就回到 2026-08-25 的沿線六具。⚠️ 但那是**被推翻的**形狀 —— 13 個 JASS 生成點的 CreateNUnitsAtLoc 第一參數 100% 是 1（j:26790 31907 31909 32322 32324 32327 36048 47757）。留這一格是為了讓你能一鍵比對，⛔ 不是因為 6 有出處。"
       },
       "registeredAt": "2026-08-26T05:37:38.416Z",
+      "verdict": null,
+      "verdictHash": null,
+      "reason": "",
+      "verdictAt": null
+    },
+    "invprim_visual-proof_20260826-1700": {
+      "title": "光束核心：ReviveHuman 換回真身＋隊伍發光不再被軟刪除（幾何基準只算可見）",
+      "family": "beam-roll 橫放光束砲",
+      "issues": [
+        767,
+        702,
+        649
+      ],
+      "abilities": [
+        "godie-e002.e",
+        "godie-e00l.e",
+        "godie-h02r.r",
+        "godie-hgam.r",
+        "godie-o00x.r",
+        "godie-ogrh.r",
+        "godie-e00r.r"
+      ],
+      "commit": "e44bf446",
+      "sequenceDir": "docs/_reports/invprim_visual-proof_20260826-1700",
+      "rollback": {
+        "configId": "tpl-beam-roll",
+        "field": "params.clip.default",
+        "liveValue": "idle",
+        "rollbackValue": null,
+        "note": "⚠️ 2026-08-26 更正：原登記 `params.modelKey.default`，而新閘 `rollbackSwitchReaches` 實測**11 個節點逐支自寫 modelKey** ⇒ 翻它沒有作用（`fillOne()` 是 `if (out[k] === undefined)`）。⇒ 改用實測蓋得到全部 13 個節點的 `params.clip.default`。⛔ 本批（TeamGlow luma-key 修復）真正的內容還原是 `git revert` 那兩份 .glb —— 它是**轉檔修復**不是內容選擇，所以沒有一格開關能還原它；這一格還原的是**動畫那一半**。"
+      },
+      "registeredAt": "2026-08-26T06:10:58.563Z",
       "verdict": null,
       "verdictHash": null,
       "reason": "",
