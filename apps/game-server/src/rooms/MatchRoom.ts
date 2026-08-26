@@ -62,6 +62,7 @@ import { sanitizeDisplayName } from "../net/sanitizeText";
 import { roomRegistry } from "./roomRegistry";
 import { accountRooms, EVICTED_CLOSE_CODE, type AccountRoomHolder } from "./accountRooms";
 import { resolveDisposeEmptyChampSelect } from "./emptyRoomPolicy";
+import { resolveRoomCombatLifetime, roomOutlivedCombatCap } from "./roomLifetime";
 import { verifyCreateToken } from "./createGate";
 import { MatchRecorder, reportRecorderSealFailure } from "../replay/Recorder";
 import { replayRecordingEnabled } from "../replay/policy";
@@ -285,6 +286,12 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
    */
   private cheatsAllowed = DEV_CHEATS;
   private accumulator = 0;
+  /**
+   * GH#588 —— 戰鬥**第一次**開始的牆上時刻（`null` = 還沒打起來）。
+   * ⚠️ 只寫一次：owner 說的是「開始進入戰鬥後」，⛔ 不是「最後一次進入戰鬥後」
+   * —— 每回合重設等於一間房可以無限續命，而那正是本票要殺掉的東西。
+   */
+  private combatSinceMs: number | null = null;
   private humanDrivers = new Map<number, HumanDriver>();
   private seatByAccount = new Map<string, SeatId>();
   private seatBySession = new Map<string, SeatId>();
@@ -805,6 +812,21 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
       // 是 'combat'，而 `finishMatch()` 是這間房唯一的主動關閉路徑。
       if (wasChampSelect && phase !== "champSelect" && this.champSelectLeftEmpty()) {
         this.closeRoom("選角結束時房裡沒有任何真人（沒有連線、也沒有還沒領走的保留席位）");
+        return;
+      }
+      // GH#588 ② —— owner 2026-08-23 的裁決：「每間房間存活時間只要**開始進入
+      // 戰鬥後**，存活時間最多 30 分鐘，避免幽靈房間」。
+      //
+      // ⭐ 這一條**刻意不看相位**：練習房的 `endlessCombat` 讓相位機永遠停在
+      // `combat`，所以任何「等結算」的兜底對它結構性失明（本票的第 2 條量測）。
+      // 它量的是牆上時鐘 —— 幽靈房間吃的是真實的 CPU 秒，⛔ 不是 tick 數。
+      if (this.combatSinceMs === null && this.ctl.world.combatActive) {
+        this.combatSinceMs = Date.now();
+      }
+      if (roomOutlivedCombatCap(resolveRoomCombatLifetime(), this.combatSinceMs, Date.now())) {
+        this.closeRoom(
+          `進入戰鬥後已超過存活上限（${resolveRoomCombatLifetime().maxSec} 秒）—— 幽靈房間兜底`,
+        );
         return;
       }
       // Fan out selected sim events. The whitelist lives in one place
