@@ -1,22 +1,22 @@
 {
  "schema": "model-budget@1",
- "sourcesDigest": "f29194ed9e161b30",
+ "sourcesDigest": "db0d21d1dd322f5f",
  "generatedBy": "tools/model-budget/emit_report.ts (task #99)",
  "sources": [
   {
    "path": "content/models/_index.json",
-   "sha256": "200b5d1396da027d",
-   "bytes": 17832
+   "sha256": "3c3e2f9bcf051168",
+   "bytes": 19686
   },
   {
    "path": "content/arenas/_index.json",
-   "sha256": "a9a956a548113adb",
+   "sha256": "61ccd36f0b750bcf",
    "bytes": 1875
   },
   {
    "path": "content/champions/_index.json",
-   "sha256": "b7143bbb1dbb2688",
-   "bytes": 9384
+   "sha256": "979e4196f923b3e0",
+   "bytes": 9386
   },
   {
    "path": "apps/client/src/render/ArenaGround.ts",
@@ -1129,8 +1129,8 @@
     },
     {
      "label": "障礙柱 + 牆",
-     "triangles": 168,
-     "meshes": 14,
+     "triangles": 216,
+     "meshes": 18,
      "note": "0 根 CreateCylinder(tessellation 24) × 96 面 —— 這個競技場沒有 pillar 擺設，所以柱子全留著。"
     },
     {
@@ -1148,8 +1148,8 @@
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 89089,
-   "drawCalls": 186,
+   "triangles": 89137,
+   "drawCalls": 190,
    "animChannels": 216,
    "textureBytes": 3187658,
    "vramBytes": 69233307,
@@ -1201,8 +1201,8 @@
     {
      "id": "median",
      "label": "中位陣容（12 隻 herokyo —— 名冊面數中位數）",
-     "triangles": 59761,
-     "drawCalls": 174,
+     "triangles": 59809,
+     "drawCalls": 178,
      "animChannels": 216,
      "textureBytes": 3006879,
      "vramBytes": 57851896,
@@ -1216,8 +1216,8 @@
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 51865,
-     "drawCalls": 150,
+     "triangles": 51913,
+     "drawCalls": 154,
      "animChannels": 96,
      "textureBytes": 2895141,
      "vramBytes": 57328974,
@@ -1625,8 +1625,8 @@
     },
     {
      "label": "障礙柱 + 牆",
-     "triangles": 288,
-     "meshes": 24,
+     "triangles": 336,
+     "meshes": 28,
      "note": "0 根 CreateCylinder(tessellation 24) × 96 面 —— 這個競技場沒有 pillar 擺設，所以柱子全留著。"
     },
     {
@@ -1644,8 +1644,8 @@
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 81164,
-   "drawCalls": 186,
+   "triangles": 81212,
+   "drawCalls": 190,
    "animChannels": 216,
    "textureBytes": 712061,
    "vramBytes": 45464222,
@@ -1697,8 +1697,8 @@
     {
      "id": "median",
      "label": "中位陣容（12 隻 herokyo —— 名冊面數中位數）",
-     "triangles": 51836,
-     "drawCalls": 174,
+     "triangles": 51884,
+     "drawCalls": 178,
      "animChannels": 216,
      "textureBytes": 531282,
      "vramBytes": 34082811,
@@ -1712,8 +1712,8 @@
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 43940,
-     "drawCalls": 150,
+     "triangles": 43988,
+     "drawCalls": 154,
      "animChannels": 96,
      "textureBytes": 419544,
      "vramBytes": 33559889,
@@ -1813,8 +1813,8 @@
     },
     {
      "label": "障礙柱 + 牆",
-     "triangles": 384,
-     "meshes": 32,
+     "triangles": 432,
+     "meshes": 36,
      "note": "0 根 CreateCylinder(tessellation 24) × 96 面 —— 這個競技場沒有 pillar 擺設，所以柱子全留著。"
     },
     {
@@ -1832,8 +1832,8 @@
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 89377,
-   "drawCalls": 229,
+   "triangles": 89425,
+   "drawCalls": 233,
    "animChannels": 232,
    "textureBytes": 2161701,
    "vramBytes": 68098715,
@@ -1885,8 +1885,8 @@
     {
      "id": "median",
      "label": "中位陣容（12 隻 herokyo —— 名冊面數中位數）",
-     "triangles": 60049,
-     "drawCalls": 217,
+     "triangles": 60097,
+     "drawCalls": 221,
      "animChannels": 232,
      "textureBytes": 1980922,
      "vramBytes": 56717304,
@@ -1900,8 +1900,8 @@
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 52153,
-     "drawCalls": 193,
+     "triangles": 52201,
+     "drawCalls": 197,
      "animChannels": 112,
      "textureBytes": 1869184,
      "vramBytes": 56194382,
@@ -1997,8 +1997,8 @@
     },
     {
      "label": "障礙柱 + 牆",
-     "triangles": 192,
-     "meshes": 16,
+     "triangles": 240,
+     "meshes": 20,
      "note": "0 根 CreateCylinder(tessellation 24) × 96 面 —— 這個競技場沒有 pillar 擺設，所以柱子全留著。"
     },
     {
@@ -2016,8 +2016,8 @@
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 93972,
-   "drawCalls": 194,
+   "triangles": 94020,
+   "drawCalls": 198,
    "animChannels": 219,
    "textureBytes": 3447132,
    "vramBytes": 72291653,
@@ -2069,8 +2069,8 @@
     {
      "id": "median",
      "label": "中位陣容（12 隻 herokyo —— 名冊面數中位數）",
-     "triangles": 64644,
-     "drawCalls": 182,
+     "triangles": 64692,
+     "drawCalls": 186,
      "animChannels": 219,
      "textureBytes": 3266353,
      "vramBytes": 60910242,
@@ -2084,8 +2084,8 @@
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 56748,
-     "drawCalls": 158,
+     "triangles": 56796,
+     "drawCalls": 162,
      "animChannels": 99,
      "textureBytes": 3154615,
      "vramBytes": 60387320,
@@ -2329,8 +2329,8 @@
     },
     {
      "label": "障礙柱 + 牆",
-     "triangles": 168,
-     "meshes": 14,
+     "triangles": 216,
+     "meshes": 18,
      "note": "0 根 CreateCylinder(tessellation 24) × 96 面 —— 這個競技場沒有 pillar 擺設，所以柱子全留著。"
     },
     {
@@ -2348,8 +2348,8 @@
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 105562,
-   "drawCalls": 192,
+   "triangles": 105610,
+   "drawCalls": 196,
    "animChannels": 219,
    "textureBytes": 1280463,
    "vramBytes": 66699249,
@@ -2401,8 +2401,8 @@
     {
      "id": "median",
      "label": "中位陣容（12 隻 herokyo —— 名冊面數中位數）",
-     "triangles": 76234,
-     "drawCalls": 180,
+     "triangles": 76282,
+     "drawCalls": 184,
      "animChannels": 219,
      "textureBytes": 1099684,
      "vramBytes": 55317838,
@@ -2416,8 +2416,8 @@
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 68338,
-     "drawCalls": 156,
+     "triangles": 68386,
+     "drawCalls": 160,
      "animChannels": 99,
      "textureBytes": 987946,
      "vramBytes": 54794916,
@@ -2673,8 +2673,8 @@
     },
     {
      "label": "障礙柱 + 牆",
-     "triangles": 288,
-     "meshes": 24,
+     "triangles": 336,
+     "meshes": 28,
      "note": "0 根 CreateCylinder(tessellation 24) × 96 面 —— 這個競技場沒有 pillar 擺設，所以柱子全留著。"
     },
     {
@@ -2692,8 +2692,8 @@
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 99908,
-   "drawCalls": 196,
+   "triangles": 99956,
+   "drawCalls": 200,
    "animChannels": 219,
    "textureBytes": 1303729,
    "vramBytes": 69494087,
@@ -2745,8 +2745,8 @@
     {
      "id": "median",
      "label": "中位陣容（12 隻 herokyo —— 名冊面數中位數）",
-     "triangles": 70580,
-     "drawCalls": 184,
+     "triangles": 70628,
+     "drawCalls": 188,
      "animChannels": 219,
      "textureBytes": 1122950,
      "vramBytes": 58112676,
@@ -2760,8 +2760,8 @@
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 62684,
-     "drawCalls": 160,
+     "triangles": 62732,
+     "drawCalls": 164,
      "animChannels": 99,
      "textureBytes": 1011212,
      "vramBytes": 57589754,
@@ -3948,7 +3948,7 @@
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
-   "id": "assets/models/imported/aquaspikeversion2.glb",
+   "id": "imported.aquaspikeversion2",
    "path": "assets/models/imported/aquaspikeversion2.glb",
    "group": "imported",
    "shipping": true,
@@ -3974,6 +3974,51 @@
     }
    ],
    "fileBytes": 32064,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "w3x.stock.awaken",
+   "path": "assets/models/imported/awaken.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 170,
+   "vertices": 340,
+   "drawCalls": 4,
+   "materials": 4,
+   "skins": 1,
+   "joints": 16,
+   "clips": 1,
+   "animChannels": 10,
+   "textureCount": 3,
+   "textureBytes": 5926,
+   "vramBytes": 49151,
+   "maxTextureEdge": 64,
+   "textures": [
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 741
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 2571
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 2614
+    }
+   ],
+   "fileBytes": 42672,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -5072,6 +5117,39 @@
    "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
   },
   {
+   "id": "w3x.stock.flamestrike1",
+   "path": "assets/models/imported/flamestrike1.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 414,
+   "vertices": 425,
+   "drawCalls": 5,
+   "materials": 5,
+   "skins": 1,
+   "joints": 7,
+   "clips": 3,
+   "animChannels": 5,
+   "textureCount": 1,
+   "textureBytes": 151671,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 151671
+    }
+   ],
+   "fileBytes": 199924,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
    "id": "assets/models/imported/flash.glb",
    "path": "assets/models/imported/flash.glb",
    "group": "imported",
@@ -5115,6 +5193,39 @@
    "broken": "near-zero",
    "verdicts": {},
    "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
+  },
+  {
+   "id": "w3x.stock.forgottenonetent",
+   "path": "assets/models/imported/forgottenonetent.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 192,
+   "vertices": 300,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 1,
+   "joints": 13,
+   "clips": 4,
+   "animChannels": 9,
+   "textureCount": 1,
+   "textureBytes": 133897,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 133897
+    }
+   ],
+   "fileBytes": 185572,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "imported.fox",
@@ -5217,6 +5328,45 @@
     "animChannels": "ok"
    },
    "note": ""
+  },
+  {
+   "id": "w3x.stock.fragdriller",
+   "path": "assets/models/imported/fragdriller.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 80,
+   "vertices": 50,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 1,
+   "joints": 6,
+   "clips": 1,
+   "animChannels": 12,
+   "textureCount": 2,
+   "textureBytes": 21214,
+   "vramBytes": 43690,
+   "maxTextureEdge": 64,
+   "textures": [
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 11710
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 9504
+    }
+   ],
+   "fileBytes": 38064,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "imported.frostnova",
@@ -8123,56 +8273,50 @@
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
-   "id": "assets/models/imported/meteor.glb",
+   "id": "imported.meteor",
    "path": "assets/models/imported/meteor.glb",
    "group": "imported",
    "shipping": true,
    "role": "unused",
-   "triangles": 158,
-   "vertices": 272,
-   "drawCalls": 7,
-   "materials": 6,
+   "triangles": 106,
+   "vertices": 168,
+   "drawCalls": 4,
+   "materials": 4,
    "skins": 1,
    "joints": 21,
    "clips": 1,
    "animChannels": 7,
-   "textureCount": 5,
-   "textureBytes": 1702,
-   "vramBytes": 6825,
-   "maxTextureEdge": 32,
+   "textureCount": 4,
+   "textureBytes": 111859,
+   "vramBytes": 535210,
+   "maxTextureEdge": 256,
    "textures": [
     {
-     "w": 8,
-     "h": 8,
+     "w": 128,
+     "h": 256,
      "format": "png",
-     "diskBytes": 77
+     "diskBytes": 54481
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1394
+     "diskBytes": 1599
     },
     {
-     "w": 8,
-     "h": 8,
+     "w": 32,
+     "h": 32,
      "format": "png",
-     "diskBytes": 77
+     "diskBytes": 963
     },
     {
-     "w": 8,
-     "h": 8,
+     "w": 256,
+     "h": 256,
      "format": "png",
-     "diskBytes": 77
-    },
-    {
-     "w": 8,
-     "h": 8,
-     "format": "png",
-     "diskBytes": 77
+     "diskBytes": 54816
     }
    ],
-   "fileBytes": 41456,
+   "fileBytes": 141960,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -8307,6 +8451,69 @@
    "broken": "",
    "verdicts": {},
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "w3x.stock.monsoonbolttarget",
+   "path": "assets/models/imported/monsoonbolttarget.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 22,
+   "vertices": 44,
+   "drawCalls": 8,
+   "materials": 7,
+   "skins": 1,
+   "joints": 12,
+   "clips": 1,
+   "animChannels": 12,
+   "textureCount": 6,
+   "textureBytes": 48760,
+   "vramBytes": 180224,
+   "maxTextureEdge": 128,
+   "textures": [
+    {
+     "w": 64,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 13432
+    },
+    {
+     "w": 64,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 7236
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 8088
+    },
+    {
+     "w": 64,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 16421
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 2077
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1506
+    }
+   ],
+   "fileBytes": 70400,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "near-zero",
+   "verdicts": {},
+   "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
   },
   {
    "id": "imported.ne-shield",
@@ -8690,6 +8897,45 @@
    "note": ""
   },
   {
+   "id": "w3x.stock.reddragonmissile",
+   "path": "assets/models/imported/reddragonmissile.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 40,
+   "vertices": 49,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 1,
+   "joints": 12,
+   "clips": 2,
+   "animChannels": 5,
+   "textureCount": 2,
+   "textureBytes": 9026,
+   "vramBytes": 27306,
+   "maxTextureEdge": 64,
+   "textures": [
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 7427
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1599
+    }
+   ],
+   "fileBytes": 23264,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
    "id": "imported.renaryugu2",
    "path": "assets/models/imported/renaryugu2.glb",
    "group": "imported",
@@ -8733,6 +8979,57 @@
     "animChannels": "ok"
    },
    "note": ""
+  },
+  {
+   "id": "w3x.stock.revivehuman",
+   "path": "assets/models/imported/revivehuman.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 254,
+   "vertices": 430,
+   "drawCalls": 5,
+   "materials": 5,
+   "skins": 1,
+   "joints": 17,
+   "clips": 1,
+   "animChannels": 10,
+   "textureCount": 4,
+   "textureBytes": 7742,
+   "vramBytes": 54612,
+   "maxTextureEdge": 64,
+   "textures": [
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 741
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1816
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 2571
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 2614
+    }
+   ],
+   "fileBytes": 51624,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "imported.ritsu",
@@ -9025,6 +9322,117 @@
     }
    ],
    "fileBytes": 55528,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "w3x.stock.thunderclapcaster",
+   "path": "assets/models/imported/thunderclapcaster.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 150,
+   "vertices": 190,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 1,
+   "joints": 44,
+   "clips": 2,
+   "animChannels": 4,
+   "textureCount": 2,
+   "textureBytes": 24031,
+   "vramBytes": 65536,
+   "maxTextureEdge": 128,
+   "textures": [
+    {
+     "w": 64,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 13432
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 10599
+    }
+   ],
+   "fileBytes": 49308,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "w3x.stock.tomeofretrainingcaster",
+   "path": "assets/models/imported/tomeofretrainingcaster.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 102,
+   "vertices": 204,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 9,
+   "clips": 1,
+   "animChannels": 6,
+   "textureCount": 2,
+   "textureBytes": 9712,
+   "vramBytes": 43690,
+   "maxTextureEdge": 64,
+   "textures": [
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 4941
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 4771
+    }
+   ],
+   "fileBytes": 30524,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "w3x.stock.tornadoelemental",
+   "path": "assets/models/imported/tornadoelemental.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 152,
+   "vertices": 189,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 20,
+   "clips": 3,
+   "animChannels": 19,
+   "textureCount": 1,
+   "textureBytes": 158101,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 158101
+    }
+   ],
+   "fileBytes": 212512,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -15927,14 +16335,14 @@
   }
  },
  "totals": {
-  "files": 275,
-  "shipping": 235,
-  "triangles": 199075,
-  "shippingTriangles": 174959,
-  "textureBytes": 52305903,
-  "vramBytes": 416429952,
+  "files": 285,
+  "shipping": 245,
+  "triangles": 200599,
+  "shippingTriangles": 176483,
+  "textureBytes": 52986140,
+  "vramBytes": 418471121,
   "zeroGeometry": 1,
-  "nearZero": 39,
-  "unused": 117
+  "nearZero": 40,
+  "unused": 127
  }
 }
