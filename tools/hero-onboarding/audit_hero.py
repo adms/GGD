@@ -241,12 +241,26 @@ def audit(hid: str) -> list[tuple[str, bool, str]]:
     row("15 可施放掃描", bool(cells) and all(c in ("✅", "🟣") for c in cells), " ".join(cells) or "未出現在報告中")
 
     # -- 16. store catalog ---------------------------------------------------
-    prices = load("content/config/store.json")["championPrices"]
-    row(
-        "16 商店目錄",
-        hid in prices,
-        f"{prices[hid]} 水晶" if hid in prices else "不在 championPrices → 喜愛/解鎖 API 會 404",
-    )
+    # ⚠️ GH#740 —— 這一格在 2026-08-27 之前讀 `store.json["championPrices"]`，而那一格
+    #    **已經不存在**（KeyError ⇒ 整支稽核工具鏽掉、一位英雄都稽核不了）。
+    # ⭐ schema 換成了「一個統一售價 + 一張免費名單」（`config.store@1`）：
+    #    `championPrices` 那個**逐英雄 map** 正是它取代掉的東西 —— 舊模型的失敗形態
+    #    是「上架忘了補一列 ⇒ 那位英雄免費送」（CLAUDE.md 第一守則逐字記著的前科）。
+    #    ⇒ 新模型下那個失敗形態**結構上不存在**，所以這一格改問**還在的那個關係**：
+    #    「這位英雄的售價解得開嗎」（免費名單裡 ⇒ 0；否則 ⇒ 統一價，而它必須 > 0）。
+    store = load("content/config/store.json")
+    free = set(store.get("freeChampionIds") or [])
+    cost = store.get("championUnlockCost")
+    if hid in free:
+        row("16 商店目錄", True, "在 freeChampionIds → 免費（0 水晶）")
+    else:
+        row(
+            "16 商店目錄",
+            isinstance(cost, (int, float)) and cost > 0,
+            f"{cost} 水晶（championUnlockCost 統一價）"
+            if isinstance(cost, (int, float)) and cost > 0
+            else f"championUnlockCost 解不開（{cost!r}）→ 解鎖 API 算不出價錢",
+        )
     return rows
 
 

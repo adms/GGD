@@ -119,5 +119,22 @@
  },
  "missingTextures": [],
  "droppedGlowMaterials": [],
- "verdict": "ok"
+ "litGlowMaterials": [],
+ "fullExtents": [
+  11.4122,
+  11.9202,
+  11.3133
+ ],
+ "visibleExtents": [
+  11.4122,
+  11.9202,
+  11.3133
+ ],
+ "fullLongAxis": "y",
+ "visibleLongAxis": "y",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "baseline@HEAD": "3/3 visible prims, 3 anims",
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/tornadoelemental.glb"
 }

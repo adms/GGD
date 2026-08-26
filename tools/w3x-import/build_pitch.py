@@ -56,6 +56,22 @@ import build_vfx_orient as W3A  # noqa: E402  w3a 表推導（40 支）
 
 VFX_FAMILIES = os.path.join(HERE, "..", "..", "content", "config", "vfx-families.json")
 VFX_FAMILIES = os.path.normpath(VFX_FAMILIES)
+ABILITY_DIR = os.path.normpath(os.path.join(HERE, "..", "..", "content", "abilities"))
+
+
+def shipped_ability_ids() -> set[str]:
+    """出貨的技能 id（`content/abilities/<id>.json` 的檔名）。
+
+    ⭐ 從**磁碟**推導,⛔ 不是一張手寫名單 —— 一張手寫的名單會過期,而且它過期的時候
+    這條規則會靜靜地放行（CLAUDE.md 元規則:判準不是閘）。
+    """
+    if not os.path.isdir(ABILITY_DIR):  # 沙盒/半棵樹 —— 不知道就不要剪
+        return set()
+    return {
+        n[: -len(".json")]
+        for n in os.listdir(ABILITY_DIR)
+        if n.endswith(".json") and not n.startswith("_")
+    }
 
 
 def combine() -> tuple[dict[str, dict], dict[str, str], list[str]]:
@@ -92,7 +108,23 @@ def apply_to_content(merged: dict[str, dict], dead: list[str]) -> tuple[dict, li
     abilities = doc.setdefault("abilities", {})
     changes: list[str] = []
 
+    # ⭐ GH#713 —— **死列**:掛著 family/tint/anchor 而 `content/abilities/<id>.json`
+    #    根本不存在。第一·五守則的形狀:一份**沒有消費端的宣稱**（沒有任何技能查得到它）。
+    #    2026-08-27 量到 313 列裡 **93 列**是死的（票上只點名了 family:"mark" 那 4 支）。
+    # ⚠️ 為什麼剪在這裡而不是「別碰 family」那條規矩的例外:那條規矩說的是
+    #    **⛔ 不要改別人推導出來的值**;整列刪掉不是改值,是把一列**指向不存在的技能**的
+    #    索引移除。⭐ 它們全部從 w3a/模型量測**重新推導得出來** —— 那幾位英雄哪天真的
+    #    上架,下一次 `pitch:build` 會連同 family 一起把列長回來,⛔ 知識不會消失。
+    shipped = shipped_ability_ids()
+    if shipped:
+        for aid in sorted(abilities):
+            if aid not in shipped:
+                changes.append(f"{aid}: （刪列,content/abilities 沒有這份出貨文件）")
+                del abilities[aid]
+
     for aid in sorted(merged):
+        if shipped and aid not in shipped:
+            continue  # ⛔ 不要把剛剪掉的那一列又加回來
         slot = abilities.setdefault(aid, {})
         before = slot.get("pitchDeg")
         want = merged[aid]["pitchDeg"]
