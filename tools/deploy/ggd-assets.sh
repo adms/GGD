@@ -64,16 +64,62 @@ sha256_stdin() {
 
 # Emit `<sha256>  <relpath>` for every file under $1, excluding the manifest
 # itself, LC_ALL=C sorted so the listing is byte-stable across machines.
+#
+# ⛔ A PER-FILE FAILURE USED TO BE UNDIAGNOSED (#772 — the twin of the #749 hole
+# one function down). `sha256sum "$f"` sits in a `while` loop that is the TAIL of
+# a pipeline inside a subshell, and nothing here ever looked at its status.
+#
+# MEASURED (2026-08-27, 3-file fixture, middle file chmod 000, STRICT_READ=0):
+#   exit 1, one raw `sha256sum: ./b.bin: Permission denied` line, and — the part
+#   that matters — a TRUNCATED `SHIP.sha256` LEFT ON DISK holding 1 of 3 files,
+#   with no SHIP.txt beside it. `set -e` had killed the loop's subshell at the
+#   broken file, so the listing simply stops there. count_of() still counts 3.
+# ⚠️ WHICH files land in it is shell-dependent (bash sh-mode aborts at the first
+# failure; a shell that does not apply `set -e` inside that subshell walks the
+# whole set and silently omits only the broken ones) — and the edge runs busybox
+# ash while the owner's Mac runs bash. A listing with a hole verifies GREEN
+# either way: a later `verify` skips exactly the same file on both sides.
+#
+# So: name the files, refuse to leave a partial listing behind, and check the
+# listing's line count against count_of() — see cmd_manifest.
+#
+# Contract (mirrors bytes_of): the readable remainder still goes to stdout, the
+# offending paths go to stderr, and the return code is 1.
+# GGD_ASSET_STRICT_READ=0 — the SAME knob as #749, deliberately not a second
+# one — restores the old behaviour byte for byte.
 listing_of() {
   dir="$1"
+  case "${GGD_ASSET_STRICT_READ:-1}" in
+    0|no|off|false)
+      ( cd "$dir" && \
+        find . -type f ! -name 'SHIP.sha256' ! -name 'SHIP.txt' -print \
+        | LC_ALL=C sort \
+        | while IFS= read -r f; do
+            if command -v sha256sum >/dev/null 2>&1; then sha256sum "$f"
+            else shasum -a 256 "$f"
+            fi
+          done )
+      return 0
+      ;;
+  esac
+  # The loop body runs in a SUBSHELL of a pipeline, so a variable set inside it
+  # is unreadable out here — the failing paths have to travel through a file.
+  # `|| echo …` rather than a bare call so `set -e` cannot abort mid-listing.
+  failed="${TMPDIR:-/tmp}/ggd-assets-listing.$$"
+  : > "$failed"
   ( cd "$dir" && \
     find . -type f ! -name 'SHIP.sha256' ! -name 'SHIP.txt' -print \
     | LC_ALL=C sort \
     | while IFS= read -r f; do
-        if command -v sha256sum >/dev/null 2>&1; then sha256sum "$f"
-        else shasum -a 256 "$f"
+        if command -v sha256sum >/dev/null 2>&1; then sha256sum "$f" || echo "$f" >> "$failed"
+        else shasum -a 256 "$f" || echo "$f" >> "$failed"
         fi
       done )
+  [ -s "$failed" ] || { rm -f "$failed"; return 0; }
+  echo "$SELF: 雜湊失敗 (HASH FAILED) — these files are counted by the set but could NOT be hashed, so they are MISSING from SHIP.sha256. A listing that silently omits a file verifies GREEN on both sides:" >&2
+  head -n 10 "$failed" | sed 's/^/  /' >&2
+  rm -f "$failed"
+  return 1
 }
 
 # File count of a set (manifest files excluded).
@@ -156,8 +202,36 @@ cmd_manifest() {
     exit 1
   fi
 
-  listing_of "$dir" > "$dir/SHIP.sha256"
-  files=$(count_of "$dir")
+  case "${GGD_ASSET_STRICT_READ:-1}" in
+    0|no|off|false)
+      # Rollback path — byte for byte the pre-#772 behaviour, `set -e` and all:
+      # a truncated SHIP.sha256 is left exactly where it used to be left.
+      listing_of "$dir" > "$dir/SHIP.sha256"
+      files=$(count_of "$dir")
+      ;;
+    *)
+      # Same shape as the bytes_of bail above (#772): fail BEFORE a partial
+      # SHIP.sha256 can be mistaken for a good one. `|| list_ok=0` because under
+      # `set -e` a bare failing redirect aborts with no diagnosis at all.
+      list_ok=1
+      listing_of "$dir" > "$dir/SHIP.sha256" || list_ok=0
+      files=$(count_of "$dir")
+      if [ "$list_ok" -ne 1 ]; then
+        rm -f "$dir/SHIP.sha256"
+        echo "$SELF: FAIL — refusing to write a manifest for '$name' while files in it cannot be hashed (paths above)." >&2
+        exit 1
+      fi
+      # TWO NOUNS, ONE RELATION. `files` comes from count_of() and the listing
+      # from listing_of(); each half alone is green in exactly the case that
+      # matters. This is the only place both exist at the same moment.
+      listed=$(wc -l < "$dir/SHIP.sha256" | tr -d ' ')
+      if [ "$listed" != "$files" ]; then
+        rm -f "$dir/SHIP.sha256"
+        echo "$SELF: FAIL — '$name': SHIP.sha256 lists $listed files but the set contains $files. A listing with a hole in it verifies GREEN, because a later verify skips the same file on both sides." >&2
+        exit 1
+      fi
+      ;;
+  esac
   digest=$(sha256_stdin < "$dir/SHIP.sha256")
 
   {

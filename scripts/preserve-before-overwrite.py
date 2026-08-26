@@ -113,6 +113,73 @@ def preserve(p: Path, why: str, stamp: str, actor: str) -> str:
     return str(dest)
 
 
+# ── 🪤 heredoc 的**內文不是命令**（GH#791,2026-08-27 實測)──────────────────
+#
+# 在此之前這裡只做 `re.sub(r"<<-?\s*'?\w+'?", " ", cmd)` —— 那只拿掉**分隔符**,
+# ⛔ 內文原封不動留在字串裡。於是 `cat > scripts/x.sh <<'SH' … SH` 的內文(註解、
+# 程式碼、markdown 表格裡到處都是 `>`)被當成一道又一道重導,取後面的 token 當路徑,
+# 解析成 `/`(repo 根) ⇒ 走到 #771 那條「鎖著無主 ⇒ 擋」的分支 ⇒ **擋下合法的寫新檔**。
+#
+# ⭐ 為什麼它 2026-08-27 才爆:在此之前「無主」是**靜默放行**,解析錯了也看不出來;
+#    #771 把它改成會擋之後,同一個解析缺陷就開始擋錯人。
+# ⚠️ 誤報的成本是**不對稱**的:一個會擋錯人的閘會被關掉,而被關掉的閘等於沒有閘。
+_HEREDOC_START = re.compile(r"<<-?\s*(?:'([^']*)'|\"([^\"]*)\"|\\?([A-Za-z_][A-Za-z0-9_]*))")
+
+
+def _strip_heredocs(cmd: str) -> str:
+    """把每一段 heredoc 的**內文**整段丟掉,只留下真正的命令行。
+
+    ⛔ 不重寫整個 shell 解析(#791 Non-goals)—— 只認得「起訖標記之間不是命令」。
+    `<<-` 允許結束標記前面有 tab;`<<<`(herestring)⛔ 不是 heredoc,不會匹配。
+    """
+    if "<<" not in cmd:
+        return cmd
+    lines = cmd.split("\n")
+    out: list[str] = []
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        i += 1
+        pending = [
+            ((m.group(1) or m.group(2) or m.group(3)), m.group(0).startswith("<<-"))
+            for m in _HEREDOC_START.finditer(line)
+        ]
+        out.append(_HEREDOC_START.sub(" ", line))  # 命令那一行留著,分隔符不是檔案
+        for delim, dash in pending:
+            while i < len(lines):
+                probe = lines[i]
+                i += 1
+                if (probe.lstrip("\t") if dash else probe).rstrip() == delim:
+                    break
+            # 內文整段**不 append** —— 它不是命令
+    return "\n".join(out)
+
+
+#: 解析失敗的註記(⛔ 只印一次,targets() 在 main 裡會被叫到兩次)。
+_PARSE_NOTES: list[str] = []
+
+
+def _looks_like_a_file_target(p: Path) -> bool:
+    """解析出來的東西像不像一個**真的檔案目標**。
+
+    ⭐ #791 的第二件:解析成 repo 根 / 檔案系統根 / 父目錄不存在 ⇒ 那是**我解析失敗**,
+    ⛔ 不是「使用者要覆蓋 repo 根」。⇒ 放行並出聲(fail-open 沒錯,靜默才是缺陷 ——
+    但**擋錯人**比靜默更糟)。
+    """
+    try:
+        rp = p.resolve()
+    except OSError:
+        _PARSE_NOTES.append(f"{p}(路徑解析不了)")
+        return False
+    if rp.parent == rp or rp == REPO or rp == tree_root(rp):
+        _PARSE_NOTES.append(f"{p}(解析成 repo 根/檔案系統根)")
+        return False
+    if not rp.parent.is_dir():
+        _PARSE_NOTES.append(f"{p}(父目錄不存在)")
+        return False
+    return True
+
+
 def targets(tool: str, ti: dict, cwd: Path) -> list[Path]:
     out: list[Path] = []
     if tool in ("Write", "Edit"):
@@ -120,15 +187,16 @@ def targets(tool: str, ti: dict, cwd: Path) -> list[Path]:
         if fp:
             out.append(Path(fp))
     elif tool == "Bash":
-        cmd = ti.get("command") or ""
-        if "<<" in cmd:  # heredoc 的分隔符不是檔案
-            cmd = re.sub(r"<<-?\s*'?\w+'?", " ", cmd)
+        cmd = _strip_heredocs(ti.get("command") or "")
         for pat in PATTERNS:
             for m in pat.finditer(cmd):
                 tok = m.group(1)
                 if tok.startswith("$") or tok in ("/dev/null", "/dev/stdout", "/dev/stderr"):
                     continue
-                out.append(Path(tok) if tok.startswith("/") else cwd / tok)
+                p = Path(tok) if tok.startswith("/") else cwd / tok
+                if not _looks_like_a_file_target(p):
+                    continue
+                out.append(p)
     return out
 
 
@@ -282,9 +350,17 @@ def main() -> int:
                 )
     # 🚫 genguard:只攔 Write/Edit(手改)與 Bash 重導 —— 產生器不走這些路
     import os as _os
+    tgts = targets(tool, ti, cwd)
+    if _PARSE_NOTES:
+        # ⭐ #791:解析不了就**放行並出聲**。⛔ 靜默的跳過與「全過」長得一樣。
+        print(
+            "🤷 hook:這道命令有我**解析不了**的重導目標 —— " + " · ".join(_PARSE_NOTES)
+            + "\n   ⇒ 放行不擋(⛔ 一個會擋錯人的閘會被關掉,而被關掉的閘等於沒有閘)。",
+            file=sys.stderr,
+        )
     if _os.environ.get("GGD_GENGUARD_OFF") != "1":
         strict_norm = _os.environ.get("GGD_GENGUARD_NORMALIZER_STRICT") == "1"
-        for p in targets(tool, ti, cwd):
+        for p in tgts:
             hit = _generator_owner(p)
             # ⭐ 2026-08-26(owner:「追誤會的多個源頭」)——「無主」有兩種:
             #    檔案唯讀(444) = 隔離區鎖過 = **它是產物,只是戶籍表漏登**
@@ -330,7 +406,7 @@ def main() -> int:
     # 清理 docs/ 的時候一眼就看得出「這是暫存的，過時了可以進 legacy」。
     stamp = "overwrite_temp_" + time.strftime("%Y%m%d-%H%M%S")
     lines: list[str] = []
-    for p in targets(tool, ti, cwd):
+    for p in tgts:
         try:
             if not p.is_file():
                 continue

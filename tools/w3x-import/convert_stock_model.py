@@ -347,7 +347,12 @@ def main() -> int:
     ap.add_argument("names", nargs="*", help="slug(s) from the table")
     ap.add_argument("--list", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--check", action="store_true",
+                    help="對帳:每一筆轉檔紀錄都要對得上磁碟上的 .glb（GH#769）")
     args = ap.parse_args()
+
+    if args.check:
+        return check_records()
 
     if args.list or not args.names:
         for k, v in STOCK_MODELS.items():
@@ -455,15 +460,67 @@ def main() -> int:
             row["installed"] = os.path.relpath(ship_p, ROOT)
         installed.append(name)
 
-    os.makedirs(OUT, exist_ok=True)
-    for row in rows:
-        with open(os.path.join(OUT, f"convert-{row['name']}.json"), "w",
-                  encoding="utf-8") as f:
-            json.dump(row, f, ensure_ascii=False, indent=1)
+    # ⛔⛔ GH#769 —— `--dry-run` **一個位元組都不寫**。
+    #
+    # 在此之前這個迴圈是無條件的:一次 dry-run 照樣把 `convert-<slug>.json` 寫出去,
+    # 而那份紀錄的 `verdict` 是 **"ok"**。⇒ 紀錄上寫著「這顆模型已經用政策 X 轉過」,
+    # 而**磁碟上的 .glb 一個位元組都沒變**。下一輪(或下一條 lane)讀到的是一個
+    # **沒發生過的事實**,而它與真的發生過的長得幾乎一模一樣 —— 差別只有
+    # `installed` 這個鍵**不在**,也就是一個**缺席**。
+    # ⚠️ 更糟的是它會**覆蓋**一份真的紀錄:真跑過的 `installed` 會被 dry-run 洗掉。
+    # ⭐ 要留痕就留在 stdout(下面那行 json.dumps 本來就印全文)。
+    if not args.dry_run:
+        os.makedirs(OUT, exist_ok=True)
+        for row in rows:
+            with open(os.path.join(OUT, f"convert-{row['name']}.json"), "w",
+                      encoding="utf-8") as f:
+                json.dump(row, f, ensure_ascii=False, indent=1)
     print(json.dumps(rows, ensure_ascii=False, indent=1))
-    print(f"\ninstalled={installed} failed={failed}"
-          + ("  (dry-run: nothing copied)" if args.dry_run else ""))
+    if args.dry_run:
+        print(f"\n(dry-run) would-install={installed} failed={failed}"
+              f"  —— ⛔ nothing copied AND no record written to "
+              f"{os.path.relpath(OUT, ROOT)}/ (GH#769); the JSON above is the "
+              f"whole trace.")
+    else:
+        print(f"\ninstalled={installed} failed={failed}")
     return 1 if failed else 0
+
+
+def check_records() -> int:
+    """`--check` —— 每一筆轉檔紀錄都要對得上一顆**磁碟上真的存在**的 .glb（GH#769）。
+
+    ⭐ 這是**兩個名詞的關係**:缺陷不在紀錄、也不在 .glb,而在兩者對不上 ——
+    分別檢查每一半都會是綠的(紀錄格式正確、.glb 也是好的)。
+
+    ⚠️ 刻意**不比 mtime**:`git checkout` 會把工作樹每一個檔的 mtime 重設成簽出當下,
+    所以一條 mtime 相等的斷言在乾淨簽出的樹上必定紅 —— 那會是一條被放寬或被關掉的閘,
+    而被關掉的閘等於沒有閘。⭐ 能查的關係是「紀錄宣稱安裝了 ⇒ 那個檔真的在」。
+    """
+    import glob as _glob
+    bad: list[str] = []
+    recs = sorted(_glob.glob(os.path.join(OUT, "convert-*.json")))
+    for p in recs:
+        rel = os.path.relpath(p, ROOT)
+        try:
+            row = json.load(open(p, encoding="utf-8"))
+        except Exception as e:
+            bad.append(f"{rel}: 讀不了（{e}）")
+            continue
+        name = row.get("name") or os.path.basename(p)[len("convert-"):-len(".json")]
+        inst = row.get("installed")
+        if inst is None:
+            if row.get("verdict") == "ok":
+                bad.append(
+                    f"{rel}: verdict=ok 卻**沒有 `installed`** —— 這是一筆 dry-run "
+                    f"留下的幽靈紀錄（GH#769）。重跑 `convert_stock_model.py {name}`"
+                    f"（⛔ 不加 --dry-run），或刪掉這一筆。")
+            continue
+        if not os.path.exists(os.path.join(ROOT, inst)):
+            bad.append(f"{rel}: 宣稱裝了 {inst},而**那個檔不在磁碟上**。")
+    for b in bad:
+        print(f"✗ {b}", file=sys.stderr)
+    print(f"{'✗' if bad else '✓'} 轉檔紀錄 {len(recs)} 筆,對不上 {len(bad)} 筆")
+    return 1 if bad else 0
 
 
 def gltf_json(path: str) -> dict:
