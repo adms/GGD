@@ -156,14 +156,18 @@ describe("GH#779 龍破斬的出貨鏈（真 content → 真詠唱 → 真 GameA
 
     // 客戶端那一半：**出貨場景樹**上兩具模型的實例節點（⛔ 不是讀 rig 的內部欄位）。
     const axisNodes = scene.transformNodes.filter((n) => n.name.startsWith("modelfx-axis-"));
-    expect(
-      axisNodes.some((n) => n.name.includes("imported.fireblast")),
-      "⛔ 龍破斬的光束本體一具都沒生出來 —— #606/#779 的形狀",
-    ).toBe(true);
-    expect(
-      axisNodes.some((n) => n.name.includes("w3x.stock.monsoonbolttarget")),
-      "⛔ 落雷 dummy（tpl-locust-strike × monsoonbolttarget）沒有生出來",
-    ).toBe(true);
+    const beam = axisNodes.find((n) => n.name.includes("imported.fireblast"));
+    const bolt = axisNodes.find((n) => n.name.includes("w3x.stock.monsoonbolttarget"));
+    expect(beam !== undefined, "⛔ 龍破斬的光束本體一具都沒生出來 —— #606/#779 的形狀").toBe(true);
+    expect(bolt !== undefined, "⛔ 落雷 dummy（tpl-locust-strike × monsoonbolttarget）沒有生出來").toBe(true);
+
+    // ⭐ **存在 ≠ 看得見**（失敗形態①：算出來但畫在畫面外／被關掉）。
+    // 一個 `isEnabled()===false` 的節點好端端躺在場景樹上，而畫面上零像素 ——
+    // 上面那兩條對它是綠的。⇒ 這一支帶著 `@visual-proof` 標記，就必須問到這一層。
+    // ⚠️ 誠實邊界仍然成立（見檔頭）：真正的像素數住 audition 的報告目錄；
+    //    這裡問的是 headless 判得出來的那一半 —— 而它正是 #779 的形狀之一。
+    expect(beam?.isEnabled(), "⛔ 光束節點在場景樹上但 isEnabled()=false ⇒ 畫面上一個像素都沒有").toBe(true);
+    expect(bolt?.isEnabled(), "⛔ 落雷 dummy 在場景樹上但被關掉了 ⇒ 玩家看不到").toBe(true);
 
     vfx.dispose();
   });

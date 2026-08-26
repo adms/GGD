@@ -1,5 +1,5 @@
 /**
- * reviewFeatureVerdicts.test.ts —— GH#669 功能級「先上線 + 事後否決」的薄守衛（體驗層，≤80 行）。
+ * reviewFeatureVerdicts.test.ts —— GH#669 功能級「先上線 + 事後否決」的薄守衛（體驗層）。
  *
  * 兩條承重的線，⛔ 其餘（欄位標籤、鍵盤、樣式）不測：
  *   ① **登記閘** —— 寫不出可用的 rollback 開關 ⇒ 拒絕登記。這是 owner 常設指令
@@ -7,6 +7,11 @@
  *   ② 帳本契約 —— 預設 live · 否決必填原因 · 否決落帳本並指名開關 · 序列重渲染 ⇒ 裁決過期。
  *
  * 突變驗證（2026-08-25）：features.mjs 的 `if (!rb.ok) throw` 拿掉 → ①紅（假登記被放行）。
+ *
+ * ⚠️ 2026-08-27（GH#794）：帳本從**一個檔**變成**兩個分署的資料夾**
+ * （`docs/_review/material/` 我寫 · `docs/_review/verdicts/` owner 按）。
+ * ⇒ ② 改成分開讀兩份，並且**互相斷言對方的欄位不在**——⭐ 那才是分署的不變量，
+ *   ⛔ 不是「換一個路徑繼續讀同一坨」。
  */
 import { describe, it, expect } from "vitest";
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync } from "node:fs";
@@ -62,10 +67,14 @@ describe("功能級連續圖片批核（#669）", () => {
       /必填原因/,
     );
     saveFeatureVerdict(r, { id: SEQ, hash: b1.hash, verdict: "veto", reason: "光束太短" });
-    const led = JSON.parse(readFileSync(join(r, "docs/_review/feature-verdicts.json"), "utf8"));
-    expect(led.schema).toBe("feature-verdicts@1");
-    expect(led.batches[SEQ].reason).toBe("光束太短");
-    expect(led.batches[SEQ].rollback.field, "否決要指名翻哪一格").toBe("knobs.path");
+    // ⭐ GH#794 起，材料與結果**分署不同資料夾**（owner 2026-08-27「避免讀寫混淆」）。
+    //   ⇒ 這裡刻意**分開讀兩份**：一份不可以有另一份的欄位，那正是分署的重點。
+    const verdicts = JSON.parse(readFileSync(join(r, "docs/_review/verdicts/local.json"), "utf8"));
+    const material = JSON.parse(readFileSync(join(r, "docs/_review/material/batches.json"), "utf8"));
+    expect(verdicts.verdicts[SEQ].reason).toBe("光束太短");
+    expect(material.batches[SEQ].rollback.field, "否決要指名翻哪一格").toBe("knobs.path");
+    expect(verdicts.verdicts[SEQ].rollback, "⛔ 裁決檔裡不可以有登記欄位（分署破了）").toBeUndefined();
+    expect(material.batches[SEQ].verdict, "⛔ 材料檔裡不可以有裁決欄位（分署破了）").toBeUndefined();
     expect(buildFeatureQueue(r).batches[0].status).toBe("vetoed");
 
     writeFileSync(join(r, `docs/_reports/${SEQ}/f1_peak.png`), "changed");
