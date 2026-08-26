@@ -586,11 +586,15 @@ recoverySec?:    number,   // 新增。RECOVERY 後搖：不可施法、不可�
 **授權規則**：作者只填 `radius` 與傷害，四個時間欄由 4.4 的公式產生預設值，
 只有需要偏離時才手動覆寫——與 `hitFeel`（#133）「damage-derived 預設 + 可選覆寫」完全同一個模式。
 
-> 🔴 **`#79` 的覆寫陷阱在這裡會再咬一次，而且會無聲無息。**
-> `registries.ts:70-71` 先註冊 standalone 技能 doc，然後 `registerChampion`
-> 把英雄 doc **內嵌的 Q/W/E/R 副本蓋回去**（`sim/content/registry.ts:41-46`，只走 QWER，不走 EX／被動）。
-> 所以 **Q/W/E/R 的幀資料必須同時寫進 `content/champions/*.json` 的內嵌副本**，
-> 只改 `content/abilities/*.json` 會在載入當下被靜默丟棄——這正是 #79 死掉的方式。
+> 🔴 **`#79` 的覆寫陷阱（⭐ 2026-08-26 複查：引擎側已修掉，⛔ 本段的舊教條不要再照做）。**
+> 當年 `registerChampion` 會把英雄 doc **內嵌的 Q/W/E/R 副本蓋掉** standalone 技能 doc ——
+> 只改 `content/abilities/*.json` 在載入當下被靜默丟棄，這正是 #79 死掉的方式。
+> ⭐ **現況**：`sim/content/registry.ts` 的 `registerChampion` 已改為 **standalone doc 為權威**
+> （內嵌副本只 `fillGaps` 補 standalone 沒定義的欄位，⛔ 不再覆蓋），
+> 而兩份副本的**鏡射由產生器自動維護（abilityMirror）**——standalone → embedded 單向，
+> `tools/skill-remake/apply_tiers.py::_mirror`，守衛 `abilityMirror.test.ts`。
+> ⛔ **不要手動同步兩份**：`content/champions/*.json` 72/72 全是產物
+> （`tiers:apply`／`skillremake:json` 擁有，隔離區鎖 444），要動就改產生器來源再重生成。
 > **驗收條件不得是「JSON 裡有這個欄位」，必須是「`Abilities.all()` 讀出來有這個值」。**
 
 ---
@@ -1382,16 +1386,17 @@ volleyRadius:    3.0  →  2.5      # 對齊 guardianTower.radius = 2.5，語意
 | Lane | 檔案領域 | 內容 |
 |---|---|---|
 | **3-A 授權腳本** ⚠ | `scripts/`（不用 `tools/`，該目錄他人持有） | 依 4.4 公式對 554 個技能產出建議 `castTimeSec`，輸出審核表（不自動寫入） |
-| **3-B 寫入** | `content/abilities/*.json` **＋** `content/champions/*.json` 的**內嵌 Q/W/E/R 副本** | 見下方 🔴 |
+| **3-B 寫入** | `content/abilities/*.json`（英雄內嵌 Q/W/E/R 副本的**鏡射由產生器自動維護**，⛔ 不要手動同步兩份） | 見下方 🔴 |
 | **3-C 半徑審核** | `content/abilities/*.json` | `d > 5.0u` 的技能縮半徑而非拉長時間 |
 | **3-D targeted 補救** ⚠ | `packages/shared/src/content/schema/ability.ts`、`sim/systems/CastResolveSystem.ts` | `resolveRecheck: "lock" \| "range"`，造成傷害的 targeted 一律 `"range"` |
 
-> 🔴 **會靜默失效的陷阱（#79 就是這樣死的）**：
-> `packages/shared/src/content/registries.ts:70-71` **先**註冊獨立技能文件，**再**跑
-> `registerChampion(d)`，而 `sim/content/registry.ts:41-46` 的 `registerChampion` 會用
-> **英雄文件內嵌的 Q/W/E/R 副本覆蓋**掉獨立文件。
-> **只改 `content/abilities/*.json` 的 Q/W/E/R，在 runtime 會被完全丟棄。**
-> EX 與 passive 安全（`registerChampion` 只走 QWER）。
+> 🔴 **#79 的覆寫陷阱（⭐ 2026-08-26 複查：引擎側已修掉）**：
+> 當年 `registerChampion` 會用**英雄文件內嵌的 Q/W/E/R 副本覆蓋**掉獨立文件，
+> 只改 `content/abilities/*.json` 的 Q/W/E/R 在 runtime 會被完全丟棄。
+> ⭐ **現況**：`sim/content/registry.ts` 以 **standalone doc 為權威**（內嵌副本只 `fillGaps`，⛔ 不覆蓋），
+> 兩份副本的**鏡射由產生器自動維護（abilityMirror）**——standalone → embedded 單向
+> （`tools/skill-remake/apply_tiers.py::_mirror`），⛔ **不要手動同步兩份**：
+> `content/champions/*.json` 72/72 全是產物，要動就改產生器來源再重生成。
 > **每一次授權後，驗收必須是「載入真實登錄表、讀 `Abilities.all()`」，不是讀檔案。**
 
 ### 階段 4 — 火圈（設計決策，需 owner 拍板）

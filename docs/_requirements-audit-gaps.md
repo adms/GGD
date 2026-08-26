@@ -493,12 +493,16 @@ Genuinely-incomplete / deferred requirements surfaced during the ~1920-file bran
 > **教訓（與前三例完全相同）**：綠色測試斷言的是**記憶體中的表**，不是**載入後的登錄表**，
 > 也不是**跨過網路邊界的事件**。設計文件裡每一階段的驗收都刻意寫成 **runtime 驗收**（真的開房間、真的看 client 收到什麼）。
 
-### ⚠ 授權時會靜默失效的陷阱（#79 就是這樣死的）
+### ⚠ 授權時會靜默失效的陷阱（#79 就是這樣死的）—— ⭐ 2026-08-26 複查：引擎側已修掉
 
-`packages/shared/src/content/registries.ts:70-71` **先**註冊獨立技能文件、**再**跑 `registerChampion(d)`，
-而 `sim/content/registry.ts:41-46` 會用**英雄文件內嵌的 Q/W/E/R 副本覆蓋**掉獨立文件。
-→ **只改 `content/abilities/*.json` 的 Q/W/E/R，runtime 會被完全丟棄**（EX 與 passive 安全，`registerChampion` 只走 QWER）。
-已驗證現有 8 個非零值逐位元存活（`sela.r`/`thorne.r` 正是**從英雄文件內嵌副本**取得 0.5/0.4）。
+**當時**：`registerChampion(d)` 會用**英雄文件內嵌的 Q/W/E/R 副本覆蓋**掉獨立文件
+→ 只改 `content/abilities/*.json` 的 Q/W/E/R，runtime 會被完全丟棄（EX 與 passive 安全，只走 QWER）。
+當時已驗證 8 個非零值逐位元存活（`sela.r`/`thorne.r` 從內嵌副本取得 0.5/0.4）。
+⭐ **現況**：`sim/content/registry.ts` 的 `registerChampion` 已改為 **standalone doc 為權威**
+（內嵌副本只 `fillGaps` 補洞，⛔ 不覆蓋），而兩份副本的**鏡射由產生器自動維護（abilityMirror）**——
+standalone → embedded 單向（`tools/skill-remake/apply_tiers.py::_mirror`；守衛 `abilityMirror.test.ts`）。
+⛔ **不要手動同步兩份**：`content/champions/*.json` 72/72 全是產物（`tiers:apply`／`skillremake:json` 擁有），
+要動技能就改產生器來源再重生成。
 
 ### ✅ 已存在、必須重用而不是重寫
 
@@ -564,6 +568,7 @@ Genuinely-incomplete / deferred requirements surfaced during the ~1920-file bran
 > 所以施展技能的時候都要帶一段 0.6 秒的施展光柱光芒來提示」
 
 - **規則已套用**：`content/abilities/*.json`（權威）＋ `content/champions/*.json` 內嵌 Q/W/E/R 副本（MIRROR RULE）同步改寫。
+  （⭐ 2026-08-26 註：鏡射如今由產生器自動維護——`tools/skill-remake/apply_tiers.py::_mirror`，守衛 `abilityMirror.test.ts`——⛔ 不要手動同步兩份；`content/champions/*.json` 全是產物。）
   554 個技能中 **545 個可施放技能全部拿到 castTimeSec**，9 個純被動豁免。
   contentVersion `cv_6c0d23e1c545` → **`cv_8b91ac43fbdb`**。
 - **實測登錄表分佈**（`scripts/probeCastTelegraph.ts`，走 game-server 開機同一條 `ContentLoader`+`registerAll`）：
