@@ -559,9 +559,16 @@ else
   #    · 200 + text/html ⇒ ⛔ nginx 少了 location（#794 那次的形狀）
   #    ⇒ 一個檢查同時罩住兩種相反的故障。⛔ 不要「改成期望 200」——
   #      那等於把身分閘關掉才會綠。
-  LIVE_CODE=$(curl -s -m 30 -o /private/tmp/ggd-live-probe.txt -w '%{http_code}' "$BASE/__live/sfx-map" 2>/dev/null || echo 000)
-  LIVE_BODY=$(head -c 80 /private/tmp/ggd-live-probe.txt 2>/dev/null || true)
-  rm -f /private/tmp/ggd-live-probe.txt
+  # ⚠️ ⛔ **不要寫死 `/private/tmp`** —— 那是 macOS 的路徑，而這支腳本跑在
+  #    **Linux 主機**上。寫死的後果不是「找不到檔」這種好認的錯：
+  #    curl 寫不出 -o 的檔 ⇒ 離開碼非零 ⇒ `|| echo 000` 也跟著印
+  #    ⇒ 變數變成 `401000`，於是 case 兩邊都不中、落到「判不出來」。
+  #    ⭐ 一個**印得出數字**的誤報比沒有輸出更難查（2026-08-27 實際發生）。
+  LIVE_PROBE=$(mktemp) || LIVE_PROBE=/tmp/ggd-live-probe.$$
+  LIVE_CODE=$(curl -s -m 30 -o "$LIVE_PROBE" -w '%{http_code}' "$BASE/__live/sfx-map" 2>/dev/null || true)
+  LIVE_CODE=${LIVE_CODE:-000}
+  LIVE_BODY=$(head -c 80 "$LIVE_PROBE" 2>/dev/null || true)
+  rm -f "$LIVE_PROBE"
   case "$LIVE_CODE" in
     401) ok "13 頁實時資料面: $BASE/__live/ 回 401（⭐ nginx 送到了 ＋ 身分閘在 —— 兩件一起驗）" ;;
     200)
@@ -588,7 +595,9 @@ ACCOUNTS_AFTER=$(accounts_now)
 ok "帳號數: $ACCOUNTS_BEFORE → $ACCOUNTS_AFTER（沒有掉）"
 
 # ⏱ GH#671 —— 全量部署的 wall-clock（owner 的目標是 ≤ 3 分鐘 = 180s）。
-if [ -n "${DEPLOY_T0:-}" ]; then
+# ⚠️ `--verify-only` 沒有 build ⇒ 這個秒數量的是「跑幾條 curl」，⛔ 不是部署耗時。
+#    報它只會讓帳本裡混進一堆 4 秒的假樣本（第一守則：行為相依的量不可以報單點）。
+if [ -n "${DEPLOY_T0:-}" ] && [ "$MODE" != verify ]; then
   DEPLOY_SEC=$(( $(date +%s) - DEPLOY_T0 ))
   if [ "$DEPLOY_SEC" -le 180 ]; then
     ok "全量部署 wall-clock ${DEPLOY_SEC}s（目標 ≤180s ✓）${BUILD_SEC:+ · 其中 build ${BUILD_SEC}s}"
