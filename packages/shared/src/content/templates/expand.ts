@@ -730,9 +730,10 @@ const FAMILIES: Readonly<Record<string, Family>> = {
   // .toBeCloseTo(...)`) rather than a body losing HP — 七種失敗形態 ⑦.
   //
   // The exemplar itself is the proof: the shipped 呂布 80-03 doc
-  // (content/abilities/godie-h01u.e.json) is hand-authored as `"castType":
-  // "ground", "range": 0, "radius": 9.72` — the template never reproduced the
-  // one skill it was extracted from.
+  // (content/abilities/godie-h01u.e.json — a `skillremake:json` product
+  // regenerated from tools/skill-remake/batch1.py, ⛔ NOT hand-authored) ships
+  // `"castType": "ground", "range": 0, "radius": 9.72` — the template never
+  // reproduced the one skill it was extracted from.
   //
   // "ground" + the doc's own `range: 0` IS the self-centred nova: the ground
   // branch clamps the requested point to `range`, so a range-0 ability always

@@ -15,8 +15,11 @@
  * ════════════════════════════════════════════════════════════════════════════
  * ⭐ 為什麼這個檔只有三格,而不是把上面九個數字全抄一遍
  *
- * 六個數字**已經是**後台可調的欄位,因為它們住在兩份 ability 文件裡,而 ability
- * 文件是 內容管理 / 鑄技工坊 直接編輯的東西(存檔生效,不用重新部署):
+ * 六個數字**已經是**後台可調的欄位,因為它們住在兩份 ability 文件裡。⚠️ 後台編輯
+ * 走 **overlay**(`apps/admin/src/contentOverlay.ts` 的 `putOverlayDoc`,落在
+ * `data/content-overlay/overlay.json`,存檔生效、不用重新部署),⛔ 不是直接編
+ * 出貨 JSON —— `content/abilities/*.json` 是 `skillremake:json` 等產生器的產物
+ * (隔離區 444,手改會被下一次 sync 打回來):
  *
  *   · 5% / 15% 門檻   → 天生技 hook 的 `condition.value` / 這裡的 `castHpPct`
  *   · 10 秒持續       → `applyBuff.duration` + `applyStatus.duration`

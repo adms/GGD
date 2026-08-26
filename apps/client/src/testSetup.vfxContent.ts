@@ -7,7 +7,9 @@
  * 一起看到空的綁定，而它們紅的訊息會說「特效沒綁上」，⛔ 不是「內容沒載入」。
  *
  * ⛔ 這一支**不是**「ContentDb 有沒有接線」的替身：那條由
- * `abilityArtWiredIntoContentDb.test.ts` 顧，它讀的是 ContentDb 自己。
+ * `render/vfx/abilityArtContentWired.test.ts` 顧 —— 它讀 ContentDb 自己的原始碼
+ * （`setAbilityArtBindings` 真的在 `load()` 裡被餵 `config.vfx-ability-art@1`，
+ * 而且在 `setFamilyTuning` 之前），並驗三個消費模組拿得到東西。
  */
 import { loadAbilityArtFromDisk } from "./render/vfx/loadAbilityArtFromDisk";
 

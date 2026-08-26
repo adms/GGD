@@ -86,8 +86,11 @@ console.log(
 );
 
 // ───────────────────────────────────────── 2. hitstun vs startup: does it link?
-// Constants copied from sim/combat/damage.ts (kept in sync by the assertions in
-// recoveryCombo.test.ts, which imports the real ones).
+// Constants copied from sim/combat/damage.ts. ⚠️ No test imports these copies —
+// the curve itself is pinned behaviourally by sim/recovery.test.ts ("pins the
+// hitstun ceiling": impact 12→4t, 120→9t, 220→12t, cap 12t), which drives a
+// real SimWorld against the real constants. If damage.ts moves, that test goes
+// red and these copies must be re-derived by hand.
 const hitstopOf = (impact: number, crit = false): number => {
   let h = Math.min(6, Math.max(2, 2 + Math.floor(impact / 55)));
   if (crit) h += 2;
