@@ -2948,6 +2948,406 @@
           "forksPerSuite": 5
         }
       ]
+    },
+    {
+      "id": "2026-08-26/v0.29.1-28-g49a9cc50-dirty",
+      "at": "2026-08-26T21:43",
+      "ref": "v0.29.1-28-g49a9cc50-dirty",
+      "stages": [
+        {
+          "name": "ship:content:build",
+          "ms": 12328,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:sync:converge",
+          "ms": 90205,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:visual-proof",
+          "ms": 6967,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/test-dashboard",
+          "ms": 9021,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest tools/deploy-timing",
+          "ms": 13893,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/content-api",
+          "ms": 23585,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:skills:check",
+          "ms": 26069,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:go test (platform)",
+          "ms": 37603,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:typecheck",
+          "ms": 55680,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/admin",
+          "ms": 83199,
+          "code": 1,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/editor",
+          "ms": 109047,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/game-server",
+          "ms": 192520,
+          "code": 1,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest packages/shared",
+          "ms": 278120,
+          "code": 1,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/client",
+          "ms": 285398,
+          "code": 1,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:total",
+          "ms": 388044,
+          "code": 1,
+          "phase": "summary",
+          "serialSec": 102.5,
+          "parallelCpuSec": 1121.1,
+          "forksPerSuite": 5
+        }
+      ]
+    },
+    {
+      "id": "2026-08-26/v0.29.1-29-gfd8ba435-dirty",
+      "at": "2026-08-26T21:58",
+      "ref": "v0.29.1-29-gfd8ba435-dirty",
+      "stages": [
+        {
+          "name": "ship:content:build",
+          "ms": 12812,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:sync:converge",
+          "ms": 90283,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:visual-proof",
+          "ms": 6680,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/test-dashboard",
+          "ms": 6746,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest tools/deploy-timing",
+          "ms": 9328,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:go test (platform)",
+          "ms": 9795,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/content-api",
+          "ms": 16695,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:skills:check",
+          "ms": 24034,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/admin",
+          "ms": 82080,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:typecheck",
+          "ms": 89487,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/editor",
+          "ms": 110544,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/game-server",
+          "ms": 195220,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest packages/shared",
+          "ms": 282004,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/client",
+          "ms": 288434,
+          "code": 1,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:total",
+          "ms": 391663,
+          "code": 1,
+          "phase": "summary",
+          "serialSec": 103.1,
+          "parallelCpuSec": 1121,
+          "forksPerSuite": 5
+        }
+      ]
+    },
+    {
+      "id": "2026-08-26/v0.29.1-30-g5102190f-dirty",
+      "at": "2026-08-26T22:06",
+      "ref": "v0.29.1-30-g5102190f-dirty",
+      "stages": [
+        {
+          "name": "ship:content:build",
+          "ms": 11845,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:sync:converge",
+          "ms": 89379,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:vitest apps/test-dashboard",
+          "ms": 7296,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:visual-proof",
+          "ms": 7392,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest tools/deploy-timing",
+          "ms": 9339,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:go test (platform)",
+          "ms": 10176,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/content-api",
+          "ms": 16757,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:skills:check",
+          "ms": 21357,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:typecheck",
+          "ms": 48435,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/admin",
+          "ms": 75160,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/editor",
+          "ms": 97668,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/game-server",
+          "ms": 180763,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest packages/shared",
+          "ms": 260852,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/client",
+          "ms": 267170,
+          "code": 1,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:total",
+          "ms": 368498,
+          "code": 1,
+          "phase": "summary",
+          "serialSec": 101.2,
+          "parallelCpuSec": 1002.4,
+          "forksPerSuite": 5
+        }
+      ]
+    },
+    {
+      "id": "2026-08-26/v0.29.1-31-ga72a24f2-dirty",
+      "at": "2026-08-26T22:15",
+      "ref": "v0.29.1-31-ga72a24f2-dirty",
+      "stages": [
+        {
+          "name": "ship:content:build",
+          "ms": 12213,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:sync:converge",
+          "ms": 89909,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:visual-proof",
+          "ms": 6831,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/test-dashboard",
+          "ms": 7046,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest tools/deploy-timing",
+          "ms": 9384,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:go test (platform)",
+          "ms": 10440,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/content-api",
+          "ms": 16840,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:skills:check",
+          "ms": 21397,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:typecheck",
+          "ms": 49324,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/admin",
+          "ms": 74594,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/editor",
+          "ms": 98805,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/game-server",
+          "ms": 180476,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest packages/shared",
+          "ms": 263343,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/client",
+          "ms": 269422,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:total",
+          "ms": 371648,
+          "code": 0,
+          "phase": "summary",
+          "serialSec": 102.1,
+          "parallelCpuSec": 1007.9,
+          "forksPerSuite": 5
+        }
+      ]
     }
   ]
 }
