@@ -7,10 +7,12 @@
  * disc and was invisible from the fixed top-down camera. This ring is built to
  * be unmistakable at the camera's DEFAULT (closest) zoom before anything else:
  *
- *   • a team-tinted ground ring at the authoritative `radius` (⭐ 出貨 **4.0u**
- *     自 2026-08-24 起 —— owner 逐字:「隊友死亡的復活火圈 **可以再大一倍**」,
- *     從 2.0u 翻倍;⛔ 這裡不寫死它,環的幾何是在 radius 1 上做的再照線上值縮放,
- *     所以後台改一個數字這一整套演出跟著變),
+ *   • a team-tinted ground ring at the authoritative `radius`
+ *     (⭐ 歷史鏈: 2.0 → **4.0**（2026-08-24 owner「可以再大一倍」）→ **2.4**
+ *     （2026-08-27 owner「復活火圈太大 減少 40%」,GH#778）。⚠️ 帶**現值**的註解
+ *     每調一次參就過期一次 —— 權威永遠是 config.arena-rules@1 的
+ *     `reviveCircles.radius`,⛔ 這裡不寫死它:環的幾何在 radius 1 上做好再照
+ *     **線上值**縮放,所以後台改一個數字這一整套演出跟著變),
  *   • a crown of RISING FLAME TONGUES around that ring: the tongues light up
  *     in order, so the ring visibly FILLS as the channel progresses. This is
  *     the world-space progress read the brief demands — the channeller AND the
