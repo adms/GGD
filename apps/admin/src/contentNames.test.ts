@@ -4,7 +4,10 @@
  * 突變驗證:itemLabels 不再逐 id join(改回裸 id / 丟掉查表)⇒ 這裡紅。
  */
 import { describe, expect, it } from "vitest";
+import { createElement } from "react";
+import { renderToString } from "react-dom/server";
 import { buildNameIndex, itemLabels, nameLabelFor } from "./contentNames";
+import { mapCell } from "./ui/MatchesPage";
 
 /** 與出貨 bundle 同形的最小假料(collections.<kind>.entries[].doc.{id,name})。 */
 const bundle = {
@@ -17,6 +20,9 @@ const bundle = {
       ],
     },
     abilities: { entries: [{ doc: { id: "godie-hjai.e", name: "39-03 迴旋盾擊" } }] },
+    // #793 —— `maps` 這個 kind 的來源**有兩個集合**（game shard 廣播的是 arena 文件的 id）
+    arenas: { entries: [{ doc: { id: "arena.godie", name: "去死團的逆襲 EX 2.2s" } }] },
+    maps: { entries: [{ doc: { id: "map.infinity-castle", name: "無限城" } }] },
     items: {
       entries: [
         { doc: { id: "bulwark-charge-greaves", name: "壁壘衝鋒脛甲" } },
@@ -65,5 +71,29 @@ describe("contentNames (#786)", () => {
       expect(idx.names.champions.size).toBe(0);
       expect(idx.names.items.size).toBe(0);
     }
+  });
+});
+
+/**
+ * #793 —— Matches 頁的 mapId。⭐ 承重的那一條:`maps` 這個 kind **兩個集合都要收**
+ * (拿掉 SOURCES.maps 的任一邊 ⇒ 這裡紅),而頁面真的消費得到它(失敗形態⑧)。
+ */
+describe("mapId 的名稱 join (#793)", () => {
+  it("arenas 與 maps 兩個集合都進 maps 索引;查不到的誠實回 null", () => {
+    const idx = buildNameIndex(bundle);
+    expect(idx.names.maps.get("arena.godie")).toBe("去死團的逆襲 EX 2.2s");
+    expect(idx.names.maps.get("map.infinity-castle")).toBe("無限城");
+    expect(nameLabelFor(idx, "maps", "arena-default").name).toBeNull(); // 退休/舊資料
+    expect(nameLabelFor(idx, "maps", "godie-hjai").name).toBeNull(); // ⛔ 不跨集合撈
+  });
+
+  it("MatchesPage 真的把它畫出來:名稱＋小字 id / ⚠ 裸 id / 還沒載到就不加 ⚠", () => {
+    const idx = buildNameIndex(bundle);
+    const html = (v: React.ReactNode): string => renderToString(createElement("div", null, v));
+    expect(html(mapCell(idx, "arena.godie"))).toContain("去死團的逆襲 EX 2.2s");
+    expect(html(mapCell(idx, "arena.godie"))).toContain("arena.godie");
+    expect(html(mapCell(idx, "arena-default"))).toContain("⚠");
+    expect(html(mapCell(null, "arena.godie"))).not.toContain("⚠");
+    expect(html(mapCell(idx, undefined))).toContain("—");
   });
 });

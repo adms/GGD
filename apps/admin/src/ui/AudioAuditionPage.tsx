@@ -37,7 +37,7 @@ export const AUDIO_NAV = { page: "audio", label: "音樂音效素材管理", emo
 
 type TabKey = "bgm" | "voice" | "spatial" | "progress";
 
-interface AudioTab {
+export interface AudioTab {
   readonly key: TabKey;
   readonly label: string;
   readonly url: string;
@@ -51,52 +51,62 @@ function readEnv(): { env: HubEnv; mode: "dev" | "prod" } {
   return { env: raw, mode: raw.PROD ? "prod" : "dev" };
 }
 
+/**
+ * 這一頁的分頁表。⭐ 從 `resolveHubLinks` **查 key** 得到網址 —— 而 `byKey` 打錯一個字
+ * 今天是**靜默的空白畫面**（`?? ""` → 頁面只畫一句中文，沒有任何東西回非零）。
+ * ⇒ 抽成純函式**不是為了整潔**，是為了讓 `audioAuditionTabs.test.ts` 驗得到**出貨的
+ * 那一張表**（⛔ 不是測試自己造一份 —— 失敗形態⑤）。行為與抽出來之前逐字相同。
+ */
+export function buildAudioTabs(env: HubEnv, mode: "dev" | "prod"): readonly AudioTab[] {
+  const links = resolveHubLinks(env, mode);
+  const byKey = (k: string): string => links.find((l) => l.key === k)?.url ?? "";
+  return [
+    {
+      key: "bgm",
+      label: "音樂/音效試聽",
+      url: byKey("bgmAudition"),
+      needsClient: true,
+      note:
+        "12 首場景曲 ＋ 13 首場地戰鬥曲（#531，一張地圖一首）＋ 12 首 Samantha 變體 " +
+        "＋ 114 句英雄名言 ＋ 全部 SFX，共 381 個播放器。" +
+        "場地曲每張卡片會畫出五段弧線（導入→熱血→收束低潮→轉折→高潮→LOOP）、" +
+        "列出該場地的實錄場景音效，以及 CosyVoice 名言與它的作品出處與「原文把握」。",
+    },
+    {
+      key: "voice",
+      label: "語音試聽",
+      url: byKey("voiceAudition"),
+      needsClient: true,
+      note: "角色台詞試聽（每位英雄 × 46 句）。",
+    },
+    {
+      // GH#732 —— #259 的驗收面。task #62 表示**沒有任何 agent 聽得到這個功能**，
+      // 所以「遠近的曲線調得對不對」是只有人類拖著滑桿、開著聲音才做得出的判斷。
+      // 在此之前這一頁只存在於檔案系統裡，後台零入口。
+      key: "spatial",
+      label: "語音空間混音",
+      url: byKey("voiceSpatialAudition"),
+      needsClient: true,
+      note:
+        "#259「遠近之分」的空間混音試聽：拖左右／前後位置，聽同一句台詞的相位、" +
+        "距離衰減與遠處低通變化，並看五個關係帶在同一距離下各是多大聲。" +
+        "頁上每一個數字都是向出貨引擎（voiceSpatial / spatial / AudioSystem）問來的，" +
+        "⛔ 不是這一頁自己重算的。",
+    },
+    {
+      key: "progress",
+      label: "語音看板",
+      url: byKey("voiceProgress"),
+      needsClient: false,
+      note: "語音生成即時進度看板（與本後台同源）。",
+    },
+  ];
+}
+
 export function AudioAuditionPage(): React.JSX.Element {
   const tabs = useMemo<readonly AudioTab[]>(() => {
     const { env, mode } = readEnv();
-    const links = resolveHubLinks(env, mode);
-    const byKey = (k: string): string => links.find((l) => l.key === k)?.url ?? "";
-    return [
-      {
-        key: "bgm",
-        label: "音樂/音效試聽",
-        url: byKey("bgmAudition"),
-        needsClient: true,
-        note:
-          "12 首場景曲 ＋ 13 首場地戰鬥曲（#531，一張地圖一首）＋ 12 首 Samantha 變體 " +
-          "＋ 114 句英雄名言 ＋ 全部 SFX，共 381 個播放器。" +
-          "場地曲每張卡片會畫出五段弧線（導入→熱血→收束低潮→轉折→高潮→LOOP）、" +
-          "列出該場地的實錄場景音效，以及 CosyVoice 名言與它的作品出處與「原文把握」。",
-      },
-      {
-        key: "voice",
-        label: "語音試聽",
-        url: byKey("voiceAudition"),
-        needsClient: true,
-        note: "角色台詞試聽（每位英雄 × 46 句）。",
-      },
-      {
-        // GH#732 —— #259 的驗收面。task #62 表示**沒有任何 agent 聽得到這個功能**，
-        // 所以「遠近的曲線調得對不對」是只有人類拖著滑桿、開著聲音才做得出的判斷。
-        // 在此之前這一頁只存在於檔案系統裡，後台零入口。
-        key: "spatial",
-        label: "語音空間混音",
-        url: byKey("voiceSpatialAudition"),
-        needsClient: true,
-        note:
-          "#259「遠近之分」的空間混音試聽：拖左右／前後位置，聽同一句台詞的相位、" +
-          "距離衰減與遠處低通變化，並看五個關係帶在同一距離下各是多大聲。" +
-          "頁上每一個數字都是向出貨引擎（voiceSpatial / spatial / AudioSystem）問來的，" +
-          "⛔ 不是這一頁自己重算的。",
-      },
-      {
-        key: "progress",
-        label: "語音看板",
-        url: byKey("voiceProgress"),
-        needsClient: false,
-        note: "語音生成即時進度看板（與本後台同源）。",
-      },
-    ];
+    return buildAudioTabs(env, mode);
   }, []);
 
   const [active, setActive] = useState<TabKey>("bgm");
