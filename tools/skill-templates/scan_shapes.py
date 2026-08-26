@@ -120,11 +120,27 @@ def implemented_axes(doc: dict, axes: dict) -> tuple[set[str], list[tuple[str, s
             return []
         return None
 
+    hook_on = axes["hookOn"]
+
     def walk(node) -> None:
         if isinstance(node, dict):
+            # ⭐ hook 的軸住在它的 `on`，⛔ 不住在「它是一個 hook」這件事上（GH#648）。
+            #   `onInterval` 由引擎每 tick 評估、ICD 決定節奏 ⇒ 那**就是**迴圈；
+            #   其餘 10 個是事件 ⇒ 無軸。落在表外的 `on` 要**紅**，⛔ 不是算成沒形狀。
+            #   ⚠️ 這裡放在 walk 裡（⛔ 不是只掃 passive.ranks[].hooks）——實測 hook
+            #   出現在 5 個不同位置，其中 15 個在 `effects[].hooks[]` 底下。
+            if "on" in node:
+                on = node["on"]
+                r = hook_on.get(on) if isinstance(on, str) else None
+                if r is None:
+                    unknown.append(("(hook)", f"on={on}"))
+                else:
+                    got.update(r)
             kind = node.get("kind")
             if isinstance(kind, str):
                 for f, v in node.items():
+                    if f == "on":
+                        continue  # 已由上面的 hook 分支決定
                     r = resolve(kind, f, v)
                     if r is None:
                         unknown.append((kind, f))
@@ -553,9 +569,27 @@ def selftest() -> int:
     if not implemented_axes(novel, axes)[1]:
         fails.append("③ 覆蓋閘瞎了：沒分類過的 windUpSec 沒有被回報")
 
+    # ④ hook 的軸住在 `on`（GH#648）—— ⭐ 承重的那一條：沒有它，`onInterval` 被算成
+    #    「沒有形狀」,於是 3 支**早就實作了週期機制**的技能出現在「說明宣稱迴圈、
+    #    JSON 一格都沒有」的差集裡（`godie-e00r.q` `.e` · `godie-emfr.passive`）。
+    #    ⚠️ 三個方向一起關：該叫的要叫、不該叫的不能叫、沒分類過的要紅。
+    ticker = {"id": "x", "passive": {"ranks": [{"hooks": [
+        {"on": "onInterval", "internalCooldown": 1.0,
+         "effects": [{"kind": "damage", "amount": 1}]}]}]}}
+    if "迴圈" not in implemented_axes(ticker, axes)[0]:
+        fails.append("④ onInterval 沒有被算成迴圈")
+    event = json.loads(json.dumps(ticker))
+    event["passive"]["ranks"][0]["hooks"][0]["on"] = "onBasicAttack"
+    if "迴圈" in implemented_axes(event, axes)[0]:
+        fails.append("④ onBasicAttack 被算成迴圈（重複的是那個事件，⛔ 不是這支技能）")
+    novel_hook = json.loads(json.dumps(ticker))
+    novel_hook["passive"]["ranks"][0]["hooks"][0]["on"] = "onFullMoon"
+    if not implemented_axes(novel_hook, axes)[1]:
+        fails.append("④ 覆蓋閘瞎了：沒分類過的 on=onFullMoon 沒有被回報")
+
     for f in fails:
         print("FAIL " + f, file=sys.stderr)
-    print(f"selftest: {len(fails)} 條失敗" if fails else "selftest: 3/3 ok")
+    print(f"selftest: {len(fails)} 條失敗" if fails else "selftest: 4/4 ok")
     return 1 if fails else 0
 
 

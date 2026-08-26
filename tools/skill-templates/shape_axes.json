@@ -547,13 +547,29 @@
       "arriveSoundKey": "同 soundKey —— 落點音效的綁定，⛔ 不是「落點要等多久」（那一格是 speed／distance）"
     }
   },
-  "_passiveWhy": "被動的 `ranks[]` 裡有兩族東西自帶軸：`auras` 是一個常駐的圈（持續），`hooks` ⛔ 不是（它是**事件**不是時序 —— 一個 on-hit 觸發沒有期間也沒有重複）。",
+  "_passiveWhy": "被動的 `ranks[]` 裡有兩族東西自帶軸：`auras` 是一個常駐的圈（持續），`hooks` **這個容器本身**⛔ 不帶軸 —— 軸住在**每一個 hook 的 `on`**（見 `hookOn`）。⚠️ 這一格在 2026-08-27 之前寫的是「`hooks` ⛔ 不是（它是**事件**不是時序 —— 一個 on-hit 觸發沒有期間也沒有重複）」，而那句話**對 10 個 `on` 成立、對第 11 個是假的**：`onInterval` 逐字就是「每隔 T 秒一次」。⇒ 把整族判成無軸 = 用一句對多數成立的散文蓋掉少數的真相（GH#648，量到 3 支誤報）。",
   "passive": {
     "auras": [
       "持續"
     ],
     "hooks": [],
     "statusImmunity": []
+  },
+  "_hookOnWhy": "⭐ 一個 hook 帶不帶時序軸，**由它的 `on` 決定**，⛔ 不是由「它是一個 hook」決定。判準只有一句：**這個 `on` 自己會不會重複發射？** · `onInterval` 由引擎每 tick 評估、`internalCooldown` 決定節奏（`schema/effects/_hook.ts` 逐字：「`onInterval` 更直接是**每秒 30 次**」）⇒ 它**就是**迴圈軸的定義（「同一件事重複發生：每隔 T 秒一次」）。 · 其餘 10 個是**事件**：發不發射由玩家/敵人做了什麼決定，hook 自己沒有節奏也沒有期間 ⇒ 無軸。⚠️ 重複的是**那個事件**（玩家一直普攻），⛔ 不是這支技能 —— 把 `onBasicAttack` 算成迴圈會讓全 repo 67 條 on-hit 被動全部變成「週期技能」。⛔ 這一格**不可以留空白**：`on` 落在表外 ⇒ 覆蓋閘非零（同 fields／byKind 的規矩），因為引擎加一個新的時序 hook 而沒有人做決定時，掃描器要**紅**，⛔ 不是安靜地把它算成沒有形狀。",
+  "hookOn": {
+    "onInterval": [
+      "迴圈"
+    ],
+    "onBasicAttack": [],
+    "onDamageTaken": [],
+    "onDamageDealt": [],
+    "onAbilityCast": [],
+    "onAbilityHit": [],
+    "onKill": [],
+    "onEvade": [],
+    "onReflectSuccess": [],
+    "onStatusApplied": [],
+    "onStunned": []
   },
   "_ignoredWhy": "⭐ 每一格都要寫**為什麼它不帶形狀**，⛔ 不是「還沒收」（第〇·四守則的豁免規則）。看不順眼可以反駁 —— 反駁的方式是把它移進 fields，掃描器立刻重新分群。",
   "ignored": {
