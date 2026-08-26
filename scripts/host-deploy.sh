@@ -112,6 +112,7 @@ BASE="http://127.0.0.1:${PORT}"
 # 數，不要相信。部署後會再數一次，少了就 die。
 accounts_now() { find data/accounts -type f -name '*.json' 2>/dev/null | wc -l | tr -d ' '; }
 ACCOUNTS_BEFORE=$(accounts_now)
+DEPLOY_T0=$(date +%s)   # ⏱ GH#671 全量部署 wall-clock 的起點
 # 現在線上跑的那個 commit —— 一定要在 pull **之前**抓，它是 --rollback 的落腳點。
 COMMIT_AT_START=$(git rev-parse HEAD 2>/dev/null || echo "")
 [ "$ACCOUNTS_BEFORE" -gt 0 ] 2>/dev/null \
@@ -297,7 +298,13 @@ if [ "$MODE" = full ]; then
   ok "上一版 commit 記在 $PREV_FILE: $COMMIT_AT_START"
 
   say "建置映像（客戶端帶 VITE_GGD_FULL_ASSETS=1）"
+  # ⏱ GH#671 —— **量到再說**。這一段的耗時進帳本，讓「變慢了」會被看見。
+  #    ⚠️ build 時間是**行為相依**的量（冷快取 vs 熱快取差很多）⇒ 記的是**這一次**，
+  #    ⛔ 不是一個代表性數字。分析要看序列，⛔ 不是看單點。
+  BUILD_T0=$(date +%s)
   docker compose "${COMPOSE_FILES[@]}" --env-file "$ENV_FILE" build
+  BUILD_SEC=$(( $(date +%s) - BUILD_T0 ))
+  ok "映像 build 耗時 ${BUILD_SEC}s"
 fi
 
 # ── 3. 起 ────────────────────────────────────────────────────────────────────
@@ -555,6 +562,17 @@ ACCOUNTS_AFTER=$(accounts_now)
      帳號住在 host 的 data/（bind mount），部署本來就碰不到它。
      會弄丟的只有三條路，詳見這支腳本檔頭的「玩家資料」那一段。"
 ok "帳號數: $ACCOUNTS_BEFORE → $ACCOUNTS_AFTER（沒有掉）"
+
+# ⏱ GH#671 —— 全量部署的 wall-clock（owner 的目標是 ≤ 3 分鐘 = 180s）。
+if [ -n "${DEPLOY_T0:-}" ]; then
+  DEPLOY_SEC=$(( $(date +%s) - DEPLOY_T0 ))
+  if [ "$DEPLOY_SEC" -le 180 ]; then
+    ok "全量部署 wall-clock ${DEPLOY_SEC}s（目標 ≤180s ✓）${BUILD_SEC:+ · 其中 build ${BUILD_SEC}s}"
+  else
+    warn "全量部署 wall-clock ${DEPLOY_SEC}s > 目標 180s（GH#671）${BUILD_SEC:+ · 其中 build ${BUILD_SEC}s}。
+     ⛔ 不擋部署 —— 這是一條**計時**，不是一條閘。慢下來要有人看得見，⛔ 不是被擋住。"
+  fi
+fi
 
 printf '\n\033[32m✓ 部署驗證通過\033[0m\n'
 if [ -f "$PREV_FILE" ]; then
