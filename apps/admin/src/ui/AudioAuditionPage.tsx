@@ -35,7 +35,7 @@ import { ACCENT, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
 /** The nav entry — lives in this dev chunk so a prod build lacks even the label. */
 export const AUDIO_NAV = { page: "audio", label: "音樂音效素材管理", emoji: "🎵" } as const;
 
-type TabKey = "bgm" | "voice" | "progress";
+type TabKey = "bgm" | "voice" | "spatial" | "progress";
 
 interface AudioTab {
   readonly key: TabKey;
@@ -74,6 +74,20 @@ export function AudioAuditionPage(): React.JSX.Element {
         url: byKey("voiceAudition"),
         needsClient: true,
         note: "角色台詞試聽（每位英雄 × 46 句）。",
+      },
+      {
+        // GH#732 —— #259 的驗收面。task #62 表示**沒有任何 agent 聽得到這個功能**，
+        // 所以「遠近的曲線調得對不對」是只有人類拖著滑桿、開著聲音才做得出的判斷。
+        // 在此之前這一頁只存在於檔案系統裡，後台零入口。
+        key: "spatial",
+        label: "語音空間混音",
+        url: byKey("voiceSpatialAudition"),
+        needsClient: true,
+        note:
+          "#259「遠近之分」的空間混音試聽：拖左右／前後位置，聽同一句台詞的相位、" +
+          "距離衰減與遠處低通變化，並看五個關係帶在同一距離下各是多大聲。" +
+          "頁上每一個數字都是向出貨引擎（voiceSpatial / spatial / AudioSystem）問來的，" +
+          "⛔ 不是這一頁自己重算的。",
       },
       {
         key: "progress",

@@ -102,6 +102,26 @@ export function resolveHubLinks(env: HubEnv = {}, mode: "dev" | "prod" = "dev"):
       healthUrl: null,
       emoji: "🎵",
     },
+    // GH#732 —— #259 的空間混音試聽頁存在（apps/client/public/voice-spatial-audition.html）
+    // 而**後台一個入口都沒有**（在此之前 `grep -rn spatial apps/admin/src/` = 0 命中），
+    // 於是那 343 行唯一給人類判斷「遠近之分調得對不對」的驗收面，owner 點不進去。
+    //
+    // ⛔ **刻意只在 dev 出現**（同 contentApi 的形狀：有網址才畫卡）。ConsoleHub 是
+    // 把這張表**整張**畫出來的，所以無條件 push 等於在正式站的控制台掛一張卡 ——
+    // 而 voiceAuditionPage.test.ts 的那一條線是「這一頁不進正式面」。它是一個
+    // 調參用的工作台，⛔ 不是出貨面：夾在 dev 這一側，正式站上連標籤都不存在。
+    ...(mode === "dev"
+      ? [
+          {
+            key: "voiceSpatialAudition",
+            label: "語音空間混音試聽",
+            sub: "Spatial voice audition (#259, dev only)",
+            url: `${clientBase}voice-spatial-audition.html`,
+            healthUrl: null,
+            emoji: "🎧",
+          },
+        ]
+      : []),
     // #230. The census is COMPUTED, and it is computed in the client's asset
     // console from the shipped content + the archaeology sidecar. Linking there
     // rather than re-implementing it here is deliberate: two implementations of
