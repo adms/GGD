@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { Panel } from "./widgets";
 import { DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
 import { getShippedDoc } from "../api";
+import { mapCell, useNameIndex } from "./nameCells";
 import {
   zConfigMapReportDoc,
   type MapReportRow,
@@ -23,6 +24,9 @@ const num = (v: number): string => (Number.isInteger(v) ? `${v}` : v.toFixed(1))
 export function MapReportPage(): JSX.Element {
   const [rows, setRows] = useState<MapReportRow[] | null>(null);
   const [err, setErr] = useState<string | null>(null);
+  // #799 —— 「`map.infinity-castle` 是哪一張圖」只有 id 看不出來。名冊在**載入時 join**
+  // （⛔ 不抄進報告資料，第〇·四）；名冊還沒到就印裸 id、⛔ 不加 ⚠。
+  const names = useNameIndex();
 
   useEffect(() => {
     let live = true;
@@ -76,7 +80,7 @@ export function MapReportPage(): JSX.Element {
             <tbody>
               {rows.map((m) => (
                 <tr key={m.mapId} style={{ color: TEXT_MAIN }}>
-                  <td style={{ padding: "6px 8px" }}>{m.mapId}</td>
+                  <td style={{ padding: "6px 8px" }}>{mapCell(names, m.mapId)}</td>
                   <td style={{ padding: "6px 8px", color: TEXT_DIM }}>{m.template}</td>
                   <td style={{ padding: "6px 8px" }}>
                     {m.cols}×{m.rows}
@@ -112,7 +116,8 @@ export function MapReportPage(): JSX.Element {
                     key={`${m.mapId}-${k}`}
                     style={{ color: i.kind === "hard" ? DANGER : GOLD, fontSize: 13, padding: "2px 0" }}
                   >
-                    {i.kind === "hard" ? "⛔" : "⚠️"} <strong>{m.mapId}</strong> [{i.check}] {i.message}
+                    {i.kind === "hard" ? "⛔" : "⚠️"} <strong>{mapCell(names, m.mapId)}</strong> [{i.check}]{" "}
+                    {i.message}
                   </div>
                 )),
               )}

@@ -301,7 +301,18 @@ describe("B · HudRoot 真的畫得出精英小怪的小血條 (v0.9.28 缺的�
 
 // ⚠️ `__dirname`, NOT `new URL(…, import.meta.url)` —— 這個檔跑在 jsdom 環境，
 // 那裡的 `import.meta.url` 不是 `file:` scheme，`fileURLToPath` 會直接丟例外。
-const GAME_APP = stripComments(readFileSync(join(__dirname, "../../GameApp.ts"), "utf8"));
+// ⭐ GH#716 —— 掃描面 = `GameApp.ts` ＋ 拆出去的 `game/frameBusProjection.ts`。
+// ⚠️ 少了第二個檔，C 這一組會在拆檔之後**安靜地變成空的**（`updateFrameBus` 還在，
+// 但它已經是轉發）—— 也就是這支檔頭寫的失敗形態 ③ 換一個穿法。
+// ⭐ `d.` → `this.` 還原搬家時唯一的機械代換 ⇒ 底下每一條斷言逐字不動。
+const GAME_APP = stripComments(
+  readFileSync(join(__dirname, "../../GameApp.ts"), "utf8") +
+    "\n" +
+    readFileSync(join(__dirname, "../../game/frameBusProjection.ts"), "utf8").replace(
+      /\bd\./g,
+      "this.",
+    ),
+);
 
 /** 切出 `header` 後面那個大括號區塊（不含外層括號）。做法同 GameApp.zoneCull.test.ts。 */
 function bodyAfter(header: string): string {
@@ -318,7 +329,10 @@ function bodyAfter(header: string): string {
 
 describe("C · GameApp 是 frameBus 那兩格的寫入者", () => {
   const body = (): string =>
-    bodyAfter("private updateFrameBus(state: MatchState, nowMs: number): void");
+    // GH#716 —— 本體搬到 `game/frameBusProjection.ts`（`GameApp` 那支是轉發）。
+    bodyAfter(
+      "export function updateFrameBusFrom(d: FrameBusDeps, state: MatchState, nowMs: number): void",
+    );
 
   it("★ `frameBus.mobBars` 有寫入者，而且用的是出貨的那個判斷", () => {
     cover(TAG);

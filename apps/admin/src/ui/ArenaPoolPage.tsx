@@ -15,6 +15,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Panel, Btn } from "./widgets";
 import { ACCENT, DANGER, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
 import { getOverlayDoc, getShippedDoc, putOverlayDoc } from "../api";
+import { mapCell, useNameIndex } from "./nameCells";
 import {
   DEFAULT_ARENA_POOL,
   resolveArenaPoolConfig,
@@ -31,6 +32,8 @@ export function ArenaPoolPage(): JSX.Element {
   const [generated, setGenerated] = useState<MapReportRow[]>([]);
   const [msg, setMsg] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  // #799 —— ⭐ owner 會**真的來勾**這一頁，而「`arena.godie` 是哪一張圖」只有 id 看不出來。
+  const names = useNameIndex();
 
   useEffect(() => {
     let live = true;
@@ -133,7 +136,9 @@ export function ArenaPoolPage(): JSX.Element {
                   }}
                 >
                   <input type="checkbox" checked={on} onChange={() => toggle(id)} />
-                  <code>{id}</code>
+                  {/* #799 —— ⚠️ 這個 id 是 `map.` → `arena.` 換算來的，兩個集合都可能查不到
+                      ⇒ 那時候誠實 ⚠＋裸 id，⛔ 不要退回去印 map 那一邊的名字冒充。 */}
+                  <span>{mapCell(names, id)}</span>
                   {rep !== undefined && (
                     <span style={{ color: TEXT_DIM }}>
                       {rep.template} · {rep.cols}×{rep.rows} · {rep.regions} 區 ·{" "}

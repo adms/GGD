@@ -20,7 +20,7 @@
  * ⭐ 只驗「有沒有起點」，因為那正是這個缺陷的定義。
  *
  * ── 突變紀錄（實跑）────────────────────────────────────────────────────────
- * M1 `apps/client/src/GameApp.ts` 小怪迴圈裡的 `this.vfx.noteGoldBody(...)` 刪掉
+ * M1 `apps/client/src/game/frameBusProjection.ts` 小怪迴圈裡的 `d.vfx.noteGoldBody(...)` 刪掉
  *    ⇒ ★① 紅（`從沒被 noteBody 記過的身體，死掉時金幣不生`）。
  *    ⚠️ 這一次是**這個檔**紅，⛔ 不是靠別的測試的正則恰好被打斷。
  */
@@ -31,7 +31,10 @@ import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { GoldPickupFx } from "./GoldPickupFx";
 
-const GAMEAPP = fileURLToPath(new URL("../GameApp.ts", import.meta.url));
+// ⭐ GH#716 —— 小怪迴圈搬到 `game/frameBusProjection.ts`（`GameApp.updateFrameBus`
+// 現在是轉發）。⚠️ 錨點 `if (es.kind === KIND_MOB) {` 跟著走了 ⇒ 繼續讀舊檔的話
+// 這條守衛會在**第一行**就炸（那還算誠實），⛔ 但更糟的是有人把它改成軟性比對。
+const GAMEAPP = fileURLToPath(new URL("../game/frameBusProjection.ts", import.meta.url));
 
 describe("殭屍的身體有被記下來 (gold-body-for-mobs-575)", () => {
   it("★① 沒有起點就不生金幣 —— 這就是缺陷本身", () => {

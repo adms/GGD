@@ -3,6 +3,9 @@
  * 查得到就 join 出貨名稱,查不到誠實回 null(⛔ 不編名字、⛔ 不把 id 冒充名稱)。
  * 突變驗證:itemLabels 不再逐 id join(改回裸 id / 丟掉查表)⇒ 這裡紅。
  */
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { createElement } from "react";
 import { renderToString } from "react-dom/server";
@@ -95,5 +98,30 @@ describe("mapId 的名稱 join (#793)", () => {
     expect(html(mapCell(idx, "arena-default"))).toContain("⚠");
     expect(html(mapCell(null, "arena.godie"))).not.toContain("⚠");
     expect(html(mapCell(idx, undefined))).toContain("—");
+  });
+});
+
+/**
+ * #799 —— 同一句判準的第三、第四頁。⭐ 這裡掃的是**接線存在性**（那一格有沒有走
+ * `mapCell`），⛔ 不是行為 —— `mapCell` 本身的三個狀態上面那條已經在驗了，重寫第二遍
+ * 只是同一件事換個角度（第零守則⑦）。⚠️ 掃原始碼是 `navPagesRender.test.ts` 逐字記錄
+ * 過的那個例外：JSX 裡的一格不是可 import 的表。
+ * 突變：把任一頁改回裸 `{m.mapId}` / `<code>{id}</code>` ⇒ 這裡紅並指名那一頁。
+ */
+describe("MapReport / ArenaPool 的場地名 (#799)", () => {
+  const HERE = dirname(fileURLToPath(import.meta.url));
+  const read = (f: string): string => readFileSync(join(HERE, "ui", f), "utf8");
+
+  it("兩頁都走共用的 mapCell,⛔ 沒有第三份 join,⛔ 沒有裸 id 殘留", () => {
+    for (const [file, call, bare] of [
+      ["MapReportPage.tsx", "mapCell(names, m.mapId)", ">{m.mapId}<"],
+      ["ArenaPoolPage.tsx", "mapCell(names, id)", "<code>{id}</code>"],
+    ] as const) {
+      const src = read(file);
+      expect(src, `${file} 沒有 import 共用的 mapCell`).toContain('from "./nameCells"');
+      expect(src, `${file} 的場地欄沒有走 mapCell —— 又變回裸 id 了`).toContain(call);
+      expect(src, `${file} 還留著裸 id 的寫法 ${bare}`).not.toContain(bare);
+      expect(src, `${file} 自己寫了第二份 join（該用 mapCell）`).not.toContain("nameLabelFor");
+    }
   });
 });

@@ -33,8 +33,23 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { stripComments } from "@ggd/shared/testkit/stripComments";
 
+/**
+ * ⭐ GH#716 —— 掃描面 = `GameApp.ts` **＋** 從它拆出去的投影模組。
+ *
+ * ⚠️ 少了第二個檔，這一支會在拆檔之後**安靜地變成空的**：`updateFrameBus` 還在
+ * （它是 prototype-bound 的轉發），而剔除那兩行搬到了 `game/frameBusProjection.ts`
+ * ⇒ 「掃不到 ⇒ 沒有東西可以違反 ⇒ 全綠」正是這一支檔頭在罵的那個形狀。
+ *
+ * ⭐ `d.` → `this.` 是**還原搬家時唯一的那個機械代換**（見 frameBusProjection 檔頭），
+ * 這樣底下每一條斷言的字串都**逐字不動** —— 拆檔沒有偷偷放寬任何一條。
+ */
 const SRC = stripComments(
-  readFileSync(fileURLToPath(new URL("./GameApp.ts", import.meta.url)), "utf8"),
+  readFileSync(fileURLToPath(new URL("./GameApp.ts", import.meta.url)), "utf8") +
+    "\n" +
+    readFileSync(
+      fileURLToPath(new URL("./game/frameBusProjection.ts", import.meta.url)),
+      "utf8",
+    ).replace(/\bd\./g, "this."),
 );
 
 /** 切出 `header` 後面那個大括號區塊(不含外層括號)。找不到就丟例外。 */
@@ -119,7 +134,10 @@ describe("L3 · 四個消費點都真的剔除了", () => {
   });
 
   it("血條錨點與復活圈：updateFrameBus 兩個迴圈都剔除別區", () => {
-    const body = bodyAfter("private updateFrameBus(state: MatchState, nowMs: number): void");
+    // GH#716 —— 本體搬到 `game/frameBusProjection.ts`（`GameApp` 那支是轉發）。
+    const body = bodyAfter(
+      "export function updateFrameBusFrom(d: FrameBusDeps, state: MatchState, nowMs: number): void",
+    );
     // 錨點迴圈：在 hasOverheadBar 之後、在**做任何工作之前**。
     // ⚠️ 2026-07-31 從「緊鄰」放寬成「之後 + 在 seen.add 之前」,而且這是修正
     //    不是放水:原本的 `\s*` 要求兩行**字面相鄰**,而 #85 的匿蹤血條判斷

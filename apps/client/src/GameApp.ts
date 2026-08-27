@@ -12,11 +12,9 @@ import { spawnModelFxKeysInUse } from "@ggd/shared/content/modelFxWarmKeys";
 import { SKELETON_ARENA, arenaDefFromDoc, type ArenaDef } from "@ggd/shared/sim/world/ArenaDef";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import {
-  Abilities,
   Champions,
   Items,
   Projectiles,
-  championPassive,
 } from "@ggd/shared/sim/content/registry";
 import { Stat } from "@ggd/shared/sim/stats/statTypes";
 import { predictedMoveSpeed } from "./predict/predictedStats";
@@ -27,12 +25,11 @@ import {
   type CombatEnvMultipliers,
 } from "@ggd/shared/sim/combatEnv";
 import type { ModelDoc } from "@ggd/shared/content";
-import type { AbilityId, ChampionId, ItemId, ProjectileId } from "@ggd/shared/ids";
-import type { AbilitySlot, CastableSlot } from "@ggd/shared/sim/intents";
+import type { ChampionId, ItemId, ProjectileId } from "@ggd/shared/ids";
+import type { CastableSlot } from "@ggd/shared/sim/intents";
 import type { Room } from "colyseus.js";
 import type { MatchState } from "@ggd/shared/protocol/schema";
 import { ENTITY_FLAG, teamOverrideFromFlags } from "@ggd/shared/protocol/schema";
-import { stealthVisualFor } from "./render/stealthVisual";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 import {
   facingModePredictsLocally,
@@ -120,7 +117,6 @@ import {
 import { blizzardOverlayModels } from "./render/views/blizzardOverlay";
 import {
   championBodyHooks,
-  type ChampionBodyDeps,
   type ChampionBodyHooks,
 } from "./render/views/championBody";
 import { formAttachmentSpecFor, wornAttachmentSpec } from "./render/views/formVisual";
@@ -133,16 +129,12 @@ import { entityTintFor } from "./render/views/mobTint";
 import { mobRingDiameterFor } from "./render/views/mobGroundRing";
 import { mobShadowSuppressedFor } from "./render/views/mobShadow";
 import { modelFxDocFor } from "./render/modelFxRig";
-import { persistentVfxKeysFor } from "./render/views/persistentVfx";
 import {
   MOB_VISUAL_DEFAULT,
   parseMobVisualJson,
   type MobVisualTable,
 } from "@ggd/shared/sim/mobs";
 import {
-  hasOverheadBar,
-  anchorColorFor,
-  anchorHeightFor,
   KIND_CHAMPION,
   KIND_FLOWER,
   KIND_GUARDIAN,
@@ -169,14 +161,11 @@ import { DeathFocusFx, type DeathFocusFrame } from "./vfx/DeathFocusFx";
 import { BurnTintFx, type BurnTintFrame } from "./vfx/BurnTintFx";
 import type { FireRingFx, FireRingFrame } from "./render/vfx/FireRingFx";
 import type { VictoryFireworks } from "./vfx/VictoryFireworks";
-import type { VictoryInput } from "./vfx/victoryTrigger";
 import { ContentDb } from "./content/ContentDb";
 import {
   frameBus,
   clearCombatText,
   clearWorldAnchors,
-  expireCombatText,
-  mobBossMarkerFor,
   setCombatTextScope,
   setDamageNumberCap,
   pushMarkSaveText,
@@ -186,8 +175,6 @@ import {
 // 只有這一份實作,不在這裡重寫（失敗形態 ⑤）。
 import {
   SHIPPED_MOB_HEALTH_BAR,
-  mobBarAnchorFor,
-  mobBarAnchorY,
   mobHealthBarConfigFrom,
   type MobHealthBarConfig,
 } from "./ui/hud/mobHealthBarModel";
@@ -220,7 +207,6 @@ import { vfxLoopPushes, vfxSoundCues, vfxSoundLayer } from "./audio/vfxSound";
 import { cueEventZone, spatialSourceFor, zoneAllowsCue } from "./audio/spatialPolicy";
 import { zoneCueIsolationOn } from "./vfx/worldCues";
 import type { SpatialSource } from "./audio/spatial";
-import { abilityIdOfOrigin } from "@ggd/shared/sim/combat/damage";
 import { fullAssetsEnabled } from "./config/fullAssets";
 import { SpatialSfxQueue } from "./audio/SpatialSfxQueue";
 import type { SfxRelation, SpatialListener } from "./audio/spatial";
@@ -241,89 +227,36 @@ import { installInputGuard, shouldRelockFollow, type InputGuard } from "./input/
 import { settingsStore } from "./settings";
 import { SETTLEMENT_EVENT, TEAM_SETTLEMENT_EVENT } from "@ggd/shared/protocol/messages";
 import type { EventMessage, MatchSettlement } from "@ggd/shared/protocol/messages";
-
-const SLOT_INDEX: Record<AbilitySlot, number> = { Q: 0, W: 1, E: 2, R: 3, EX: 4 };
-/** authoritative error beyond which we treat the correction as a teleport */
-const TELEPORT_EPS = 6;
-// fps 上限規則搬到 render/frameCap（#23/#266）：這裡以前是四份抄寫中的一份，
-// 而漏抄的那一份（StorePreview）就這樣一路以面板頻率在跑。
-/** draw distances at/above this are treated as "no cull" (skip the check). */
-const DRAW_DISTANCE_MAX = 300;
-
-// The heavy/light grunt threshold now lives with the rest of the voice-audience
-// policy (audio/voiceAudience.HURT_HEAVY_FRACTION), because #223 measures it
-// against the VICTIM'S own max-hp rather than the local hero's.
-/** Idle seconds before the "hum" line may roll (the idle latch is the real gate). */
-const HUM_IDLE_MS = 10_000;
-interface PendingAuth {
-  entityId: number;
-  x: number;
-  z: number;
-  /**
-   * 權威面向 (GH#281 (a) 校正路徑). 在此之前這個 interface 只有位置 ——
-   * 也就是說**自己的英雄的權威面向從來沒有被取樣過**，`poseFor` 又把整個權威
-   * pose 換成預測 pose，所以那兩個 float 一路從 wire 走到 client 然後被丟掉。
-   * 站定出手時影子沒有任何一行寫 facing，身體就凍在最後一次走路的方向。
-   */
-  fx: number;
-  fz: number;
-  zone: number;
-  ackSeq: number;
-}
-
-export interface GameAppOptions {
-  /** platform account id (defaults to a random dev id) */
-  accountId?: string;
-  /**
-   * equipped-skin substitution: base champion modelKey -> skin modelKey.
-   * Applied to the LOCAL seat only (client-side visual; the server-
-   * authoritative skin field on the seat is future work).
-   */
-  skinOverrides?: Map<string, string>;
-  /**
-   * Couch play (dev flow): number of local players (1..4). Player k is
-   * driven by the k-th connected pad; player 0 also has mouse/keyboard.
-   */
-  localPlayers?: number;
-  /**
-   * Couch play (platform flow): the match_ready seatTokens[] entries —
-   * one RoomConnection per entry (owner first, then ":p2".."p4" guests).
-   */
-  seatTokens?: SeatTokenEntry[];
-  /**
-   * Offline flow: the arena to create the dev room with (Arenas registry id).
-   * Platform flow ignores this — the room's map comes from the server state.
-   */
-  mapId?: string;
-  /**
-   * Offline flow: 開成**練習房**（GH#343）—— 單人沙盒，沒有敵隊、不結算、測試碼
-   * 可用、可以即時生殭屍。Platform flow ignores this，同 `mapId`。
-   */
-  practice?: boolean;
-}
-
-/** ⭐ M1（GH#599）—— 沒有狀態時共用的空清單,⛔ 不要每幀 new 一個。 */
-const EMPTY_STATUS_IDS: readonly string[] = [];
-
-/**
- * ⭐ M1（GH#599）—— **`statusIdsForSeat` 在這個組裝點是必填的。**
- *
- * `ChampionBodyDeps.statusIdsForSeat` 本身是 `?`（`render/**` 對 HUD store 是
- * 封閉的，所以那個模組必須能在沒有座位表的測試裡建構）。而**出貨的組裝點只有
- * 這一個**，漏掉它的後果是：`statusIdsForSeat` 恆 `undefined` ⇒ 狀態外觀那一半
- * 整個是死的，⛔ 而畫面上跟「這幾對本來就沒有變身外觀」一模一樣
- * （第二守則失敗形態③：整行可以刪掉而測試全綠）。
- *
- * ⇒ 這個別名讓 **`tsc` 擋住忘記**，⛔ 不是寫一條「要記得注入」的散文 ——
- * 與 `render/roundFxRegistry.ts` 的 `RoundFxDeps.ambientToggleMask`
- * （同一天、同一族、同一個修法）逐字同一個做法。
- *
- * ⚠️ 它寫在這裡而不是把 `ChampionBodyDeps` 上的 `?` 直接拿掉，是因為
- * `render/views/championBody.ts` 這一輪在另一條 lane 的檔案柵欄裡。
- * 那個 `?` 拿掉之後，這個別名就可以整段刪除（它會變成 `ChampionBodyDeps` 本身）。
- */
-type SeatedChampionBodyDeps = ChampionBodyDeps &
-  Required<Pick<ChampionBodyDeps, "statusIdsForSeat">>;
+// ⭐ GH#716（第〇·七守則）—— 模組層型別與常數搬到 `./game/gameAppTypes`。
+// ⛔ 這不是「切成兩半」：搬走的是這個檔裡**唯一不碰 `this`** 的那一段，所以它的
+// 搬家可以被逐位元組證明（`game/gameAppSplit.test.ts`）。
+import {
+  DRAW_DISTANCE_MAX,
+  EMPTY_STATUS_IDS,
+  HUM_IDLE_MS,
+  TELEPORT_EPS,
+  type GameAppOptions,
+  type PendingAuth,
+  type SeatedChampionBodyDeps,
+} from "./game/gameAppTypes";
+// ⭐ GH#716 —— **零個 `this`** 的查詢搬到 `./game/gameAppQueries`（見該檔檔頭的收錄判準）。
+import {
+  abilityForSeat,
+  championIdForEntity,
+  championIdForSeat,
+  localAbility,
+  localChampionId,
+  persistentVfxFor,
+  playerSkillPoints,
+  playerTeam,
+  playerView,
+  victoryInput,
+  zoneCenter,
+} from "./game/gameAppQueries";
+import { updateFrameBusFrom, type FrameBusDeps } from "./game/frameBusProjection";
+// ⭐ 門面：`main.tsx` / `ui/replay/ReplayApp.tsx` 的 `import type { GameAppOptions }
+// from "./GameApp"` 一行都不用改。
+export type { GameAppOptions };
 
 export class GameApp {
   private readonly renderer: Renderer;
@@ -747,7 +680,7 @@ export class GameApp {
     // 現在這裡只剩資料來源；決策與其守衛在 championBody.ts /
     // formAwareModelResolve.test.ts。
     this.championBody = championBodyHooks({
-      championIdForSeat: (seatId) => this.championIdForSeat(seatId),
+      championIdForSeat: (seatId) => championIdForSeat(seatId),
       // ⭐ M1（GH#599）—— 變身外觀掛在**狀態**上的那一半。
       // ⚠️ ⛔ 少了這一行,`statusIdsForSeat` 恆 `undefined` ⇒ M1 在客戶端是**死的**
       //    （失敗形態③:整條可以刪掉而測試全綠）—— 今天已經抓到六次這個形狀。
@@ -806,7 +739,7 @@ export class GameApp {
       // (「seat 表還沒好」)原樣傳回去,所以重試語意沒有被吃掉。
       //
       // #223 2026-07-30 —— 「問哪一隻」這個決定搬進 `championBody` 了。這裡
-      // 以前寫的是 `championTintForId(this.championIdForSeat(e.seatId))`,
+      // 以前寫的是 `championTintForId(championIdForSeat(e.seatId))`,
       // 也就是**第四條形態盲的縫**,而本檔與 formVisual.ts 的註解當時都已經
       // 宣稱它是形態感知的。實測 26 對只有 #06 傑·富力士 兩半顏色不同,所以
       // 它變身之後那具 herobiggon.glb 被漆成本體的綠色。
@@ -861,7 +794,7 @@ export class GameApp {
         // ⚠️ GH#603 —— 這一條路也要吃**同一個**學習閘。⛔ 少了 `e.seatId`,
         // 粒子那一半等到 EX 解鎖才出現、而模型那一半從出生就掛著（同一份宣告
         // 兩個時機 = 一個看得見卻查不出來的錯）。
-        for (const id of this.persistentVfxFor(e.key, e.seatId) ?? []) {
+        for (const id of persistentVfxFor(e.key, e.seatId) ?? []) {
           const doc = this.contentDb.attachmentFor(id);
           if (!doc) continue;
           for (const worn of wornFromAttachmentDoc(doc)) {
@@ -1100,13 +1033,13 @@ export class GameApp {
     this.input = new InputCapture(canvas, {
       screenToGround: (x, y) => this.cameraRig.screenToGround(x, y),
       getSelfPos: () => this.localSelfPos(),
-      getAbility: (slot) => this.localAbility(slot),
+      getAbility: (slot) => localAbility(slot),
       pickEnemy: (ground) => this.pickEnemyAt(ground),
       pickSelf: (ground) => this.pickSelfAt(ground),
       onOrder: (order) => this.sender.setOrder(order),
       onCommand: (cmd) => this.sender.pushCommand(cmd, performance.now()),
       onSelectSelf: () => {
-        const champ = this.localChampionId();
+        const champ = localChampionId();
         if (!champ) return;
         // click-self quip: 二擇一 (client Math.random) between the select-voice
         // ladder (map-quip / soundset / #139 名言) and the generated pack's own
@@ -1154,8 +1087,8 @@ export class GameApp {
         ctx: () => ({
           selfPos: this.localSelfPos(),
           facing: this.playerFacing(0),
-          ability: (slot) => this.localAbility(slot),
-          enemyUnits: () => this.enemyUnitsFor(this.playerTeam(0)),
+          ability: (slot) => localAbility(slot),
+          enemyUnits: () => this.enemyUnitsFor(playerTeam(0)),
         }),
         onOrder: (order) => this.sender.setOrder(order),
         onCommand: (cmd) => this.sender.pushCommand(cmd, performance.now()),
@@ -1186,7 +1119,7 @@ export class GameApp {
         nearestEnemy: (from, maxRange, aimDir) =>
           pickNearestUnit(
             from,
-            this.enemyUnitsFor(this.playerTeam(player)),
+            this.enemyUnitsFor(playerTeam(player)),
             maxRange,
             aimDir,
             // GH#315：小怪讓路幅度現在住在 `config.combat-feel@1`（後台可調），
@@ -1195,7 +1128,7 @@ export class GameApp {
           ),
         // what a LONG PRESS on a skill button does: spend this point, or (with
         // none) show that ability's description (owner's 2026-07-27 pad map)
-        skillPoints: this.playerSkillPoints(player),
+        skillPoints: playerSkillPoints(player),
       }),
     );
   }
@@ -1310,24 +1243,7 @@ export class GameApp {
     return this.championBody.modelDocFor(key, seatId, formIndex);
   }
 
-  /** ChampionId seated at `seatId` ("" / null until champ-select confirms). */
-  private championIdForSeat(seatId?: number): string | null {
-    if (seatId === undefined) return null;
-    const seat = hudStore.getState().seats.find((s) => s.seatId === seatId);
-    return seat?.championId ? seat.championId : null;
-  }
 
-  /**
-   * ChampionId of the entity `entityId` via the seat table (seat.entityId →
-   * championId), or null when the entity is not a seated champion (a mob, a
-   * projectile, a guardian, or a seat that has not spawned). CLIENT-ONLY, used
-   * solely to route the contextual voice line to the right champion's pack.
-   */
-  private championIdForEntity(entityId: number | null | undefined): string | null {
-    if (entityId === null || entityId === undefined) return null;
-    const seat = hudStore.getState().seats.find((s) => s.entityId === entityId);
-    return seat?.championId ? seat.championId : null;
-  }
 
   /** Equipped-skin substitution for the LOCAL seat's champion model. */
   private resolveModelKey(key: string, seatId?: number): string {
@@ -2105,7 +2021,7 @@ export class GameApp {
     // victory fireworks (task #93): the pure VictoryGate inside decides whether
     // THIS frame crosses a round-win or match-win (吃雞) edge for the local
     // team, and fires the matching tier. Costs nothing until an edge fires.
-    if (state) this.victoryFx.sync(this.victoryInput(state), nowMs);
+    if (state) this.victoryFx.sync(victoryInput(state), nowMs);
     this.victoryFx.update(nowMs);
 
     // round-end winner presentation (task #143): the round WINNER's champion
@@ -2522,7 +2438,7 @@ export class GameApp {
       // (`MidchilderNanohaAura.mdx`) 掛在 `"origin"` 而**從來沒有 DestroyEffect**,
       // 所以它與 ambient 綁定是同一件事:活著就播、死了就收。⛔ 少了這一行,
       // `persistentVfx` 是一格填了沒人讀的欄位（失敗形態③:整條可以刪掉而測試全綠）。
-      this.ambient.attach(e.id, modelKey, view.root, this.persistentVfxFor(e.key, e.seatId));
+      this.ambient.attach(e.id, modelKey, view.root, persistentVfxFor(e.key, e.seatId));
       // task #59: the state-gated channel needs the CURRENT visual anim state,
       // which only the view knows. Bound models only — everything else is a
       // cheap map miss that never allocates.
@@ -2534,36 +2450,6 @@ export class GameApp {
     this.ambient.sweep(seen);
   }
 
-  /**
-   * 一位英雄現在該掛著的**常駐特效** vfx id（GH#539）。
-   *
-   * ⚠️ 今天只解析 `when` **缺席**的那一批 —— 那等於原作的
-   * `GetUnitAbilityLevel(u, id) > 0`（「這支技能在身上就掛著」）。帶條件的那些需要
-   * `SimWorld` 才求得了值(條件葉住在 sim 那一側),⛔ 而我不在這裡重寫一份會跟 sim
-   * 漂開的求值器（那正是第二守則失敗形態⑤:被測的不是出貨的那個）。
-   * ⭐ 閘在 `persistentVfxClientCoverage.test.ts`:出貨內容一旦出現客戶端求不了值的
-   * `when`,它就紅 —— ⛔ 不是靜靜不掛（那會讓「條件沒成立」與「引擎不支援」長得一樣）。
-   *
-   * ⭐ GH#603 —— 「`when` 缺席」**不是恆真**：它逐字是
-   * `GetUnitAbilityLevel(u,id) > 0`（「這支技能**學到了沒**」）。整段判斷住在
-   * `render/views/persistentVfx.ts::persistentVfxKeysFor`（純函式、守衛讀得到出貨內容），
-   * ⛔ 這裡只負責把兩個注入點接上：註冊表與**這位英雄的 seat**。
-   */
-  private persistentVfxFor(
-    championKey: string,
-    seatId?: number,
-  ): readonly string[] | undefined {
-    const doc = Champions.tryGet(championKey as never) as unknown;
-    if (!doc) return undefined;
-    // ⚠️ 小怪的 `seatId` 是 -1 ⇒ 找不到 seat ⇒ `null` ⇒ 只有天生技那一格會掛。
-    const seat =
-      seatId === undefined ? undefined : hudStore.getState().seats.find((s) => s.seatId === seatId);
-    return persistentVfxKeysFor(
-      doc,
-      (id) => Abilities.tryGet(id as never) as unknown,
-      seat ? { abilityRanks: seat.abilityRanks, exRank: seat.exRank } : null,
-    );
-  }
 
   /**
    * Feed the arena's DecorFader: every viewport camera eye + every alive
@@ -2765,7 +2651,7 @@ export class GameApp {
       // exactly what it was.
       this.queueVoiceCandidate(
         plainVoiceCandidate({
-          champId: this.championIdForEntity(caster),
+          champId: championIdForEntity(caster),
           category: `skill-name.${slot.toLowerCase()}`,
           speaker: caster,
           counterpart: null,
@@ -2788,7 +2674,7 @@ export class GameApp {
         // not on the victim's x/z that the same packet carries.
         this.queueVoiceCandidate(
           plainVoiceCandidate({
-            champId: this.championIdForEntity(source),
+            champId: championIdForEntity(source),
             category: Math.random() < 0.5 ? "crit" : "attack-heavy",
             speaker: source,
             counterpart: Number.isFinite(target) ? target : null,
@@ -2800,7 +2686,7 @@ export class GameApp {
       }
       // block is gated to the LOCAL defender: a hit you fully/partly warded off.
       if (d.blocked === true && localId !== null && target === localId) {
-        const blocker = this.championIdForEntity(target);
+        const blocker = championIdForEntity(target);
         if (blocker) playContextualVoice(blocker, "block");
       }
       // #223 — hurt fans out to EVERY champion, weighted by audience. The
@@ -2809,7 +2695,7 @@ export class GameApp {
       // needs no entity lookup and no frame-order-sensitive views.posOf read.
       this.queueVoiceCandidate(
         damageVoiceCandidate({
-          champId: this.championIdForEntity(target),
+          champId: championIdForEntity(target),
           speaker: target,
           counterpart: Number.isFinite(source) ? source : null,
           localId,
@@ -2838,7 +2724,7 @@ export class GameApp {
       // per-tick regen is never emitted, revive rides reviveComplete elsewhere).
       const target = Number(d.target);
       if (localId !== null && target === localId) {
-        const champ = this.championIdForEntity(target);
+        const champ = championIdForEntity(target);
         if (champ) playContextualVoice(champ, "healed");
         this.noteLocalCombat(); // being healed counts as activity
       }
@@ -2854,7 +2740,7 @@ export class GameApp {
       // clean seam — no socket-callback fanout, no double-drain of the buffer.
       const target = Number(d.target);
       if (localId !== null && target === localId) {
-        const champ = this.championIdForEntity(target);
+        const champ = championIdForEntity(target);
         if (champ) playContextualVoice(champ, "dodge");
         this.noteLocalCombat(); // dodging is combat activity
       }
@@ -2869,7 +2755,7 @@ export class GameApp {
       if (Number.isFinite(floored)) {
         this.queueVoiceCandidate(
           plainVoiceCandidate({
-            champId: this.championIdForEntity(floored),
+            champId: championIdForEntity(floored),
             category: "knockdown",
             speaker: floored,
             counterpart: typeof d.source === "number" ? d.source : null,
@@ -2889,7 +2775,7 @@ export class GameApp {
       const killer = typeof d.killer === "number" ? d.killer : null;
       this.queueVoiceCandidate(
         deathVoiceCandidate({
-          champId: this.championIdForEntity(id),
+          champId: championIdForEntity(id),
           speaker: id,
           counterpart: killer,
           localId,
@@ -2994,7 +2880,7 @@ export class GameApp {
     this.prevEntityFlags.set(entityId, flags);
     const rose = flags & ~prev; // bits newly set this tick
     if (rose === 0) return;
-    const champ = this.championIdForEntity(entityId);
+    const champ = championIdForEntity(entityId);
     if (!champ) return;
     const isLocal = localId !== null && entityId === localId;
     // #259 — the CC lines fan out to EVERY champion (this edge detector walks
@@ -3056,7 +2942,7 @@ export class GameApp {
   private maybeHum(nowMs: number, localId: number | null): void {
     if (localId === null) return;
     if (nowMs - this.lastLocalActivityMs < HUM_IDLE_MS) return;
-    const champ = this.championIdForEntity(localId);
+    const champ = championIdForEntity(localId);
     if (!champ) return;
     // Re-arm the latch to nowMs whether or not the roll fires, so a blocked roll
     // waits another full idle window instead of retrying every frame.
@@ -3182,7 +3068,7 @@ export class GameApp {
   private screenCueViewers(): (number | null)[] {
     const out: (number | null)[] = [];
     for (let p = 0; p < this.cueLayers.length; p++) {
-      out.push(p === 0 ? hudStore.getState().localEntityId : (this.playerView(p)?.entityId ?? null));
+      out.push(p === 0 ? hudStore.getState().localEntityId : (playerView(p)?.entityId ?? null));
     }
     return out;
   }
@@ -3314,9 +3200,6 @@ export class GameApp {
     return p ? { x: p.x, z: p.z } : { x: es.x, z: es.z };
   }
 
-  private localAbility(slot: CastableSlot): AimAbility | null {
-    return this.abilityForSeat(hudStore.getState().localSeatId, slot);
-  }
 
   /**
    * Hold-to-preview ground telegraph (task #152): the dashed cast-RANGE ring +
@@ -3327,7 +3210,7 @@ export class GameApp {
    * has no position yet — nothing to draw.
    */
   private resolveHoldPreview(slot: CastableSlot): AimIndicatorState {
-    const ability = this.localAbility(slot);
+    const ability = localAbility(slot);
     const self = this.localSelfPos();
     if (!ability || !self) return null;
     // keep the imperative displayFinal singleton in sync with the live wire table
@@ -3399,59 +3282,21 @@ export class GameApp {
     return mine === theirs ? "ally" : "enemy";
   }
 
-  private abilityForSeat(seatId: number | null, slot: CastableSlot): AimAbility | null {
-    if (seatId === null) return null;
-    const seat = hudStore.getState().seats.find((s) => s.seatId === seatId);
-    if (!seat || !seat.championId) return null;
-    const def = Champions.tryGet(seat.championId as ChampionId);
-    if (!def) return null;
-    // EX lives in its own slot (standalone ability doc, unlocked not ranked)
-    if (slot === "EX") {
-      if (!seat.exAbilityId || seat.exRank <= 0) return null; // no EX / still locked
-      return Abilities.tryGet(seat.exAbilityId as AbilityId) ?? null;
-    }
-    // 天生技 — the SIXTH slot (the level-1 innate). It is NOT in
-    // `champion.abilities` and has no rank on the wire: it is a standalone
-    // `<championId>.passive` doc, owned at rank 1 from spawn, so
-    // `championPassive` is the whole resolution (same seam ui/passiveSlot uses).
-    //
-    // Only the ~60 `innateKind: "active"` innates resolve. A permanent 被動
-    // innate returns null and therefore issues NO command — the sim would
-    // answer "passive" anyway (innateCastBlock), but sending a cast we already
-    // know is refused would burn a wire slot and make every 被動 hero's D key
-    // look like a laggy ability instead of a tile that was never a button.
-    // `ui/castAnnounce` still SAYS so on the press; this only declines to send.
-    //
-    // The 3 heroes with no NN-00 return null here too, which reads as
-    // "not-learned" on the press — the same answer the other five slots give.
-    if (slot === "PASSIVE") {
-      const innate = championPassive(seat.championId as ChampionId);
-      if (!innate || innate.innateKind !== "active") return null;
-      return innate;
-    }
-    const rank = seat.abilityRanks[SLOT_INDEX[slot]] ?? 0;
-    if (rank <= 0) return null; // not learned yet — don't spam the server
-    return def.abilities[slot];
-  }
 
   // -------------------------------------------------- couch player views --
 
-  /** HUD projection of couch player k (null before its seat materializes). */
-  private playerView(player: number) {
-    return hudStore.getState().localPlayers.find((lp) => lp.player === player) ?? null;
-  }
 
   /** Rendered position of couch player k's champion (0 = predicted). */
   private playerSelfPos(player: number): Vec2 | null {
     if (player === 0) return this.localSelfPos();
-    const lp = this.playerView(player);
+    const lp = playerView(player);
     if (!lp || lp.entityId === null) return null;
     return this.views.posOf(lp.entityId) ?? this.schemaPos(lp.entityId);
   }
 
   /** Authoritative facing of couch player k (gamepad aim fallback). */
   private playerFacing(player: number): Vec2 | null {
-    const lp = this.playerView(player);
+    const lp = playerView(player);
     const entityId = player === 0 ? hudStore.getState().localEntityId : (lp?.entityId ?? null);
     if (entityId === null) return null;
     const es = this.conn.room?.state.entities.get(String(entityId));
@@ -3460,30 +3305,11 @@ export class GameApp {
   }
 
   private playerAbility(player: number, slot: CastableSlot): AimAbility | null {
-    if (player === 0) return this.localAbility(slot);
-    return this.abilityForSeat(this.playerView(player)?.seatId ?? null, slot);
+    if (player === 0) return localAbility(slot);
+    return abilityForSeat(playerView(player)?.seatId ?? null, slot);
   }
 
-  /**
-   * Unspent skill points held by couch player k — what decides whether a LONG
-   * PRESS on A/B/X/Y spends a point or explains the ability (see
-   * `input/GamepadInput`'s long-press block). 0 before the seat materialises,
-   * which is the safe answer: no seat, nothing to spend.
-   */
-  private playerSkillPoints(player: number): number {
-    const hud = hudStore.getState();
-    const seatId = player === 0 ? hud.localSeatId : (this.playerView(player)?.seatId ?? null);
-    if (seatId === null) return 0;
-    return hud.seats.find((s) => s.seatId === seatId)?.unspentPoints ?? 0;
-  }
 
-  private playerTeam(player: number): number {
-    if (player === 0) {
-      const hud = hudStore.getState();
-      return hud.seats.find((s) => s.seatId === hud.localSeatId)?.teamId ?? -1;
-    }
-    return this.playerView(player)?.teamId ?? -1;
-  }
 
   /** Live enemy champions of a team as pickable circles (view-space). */
   private enemyUnitsFor(myTeam: number): PickableUnit[] {
@@ -3546,7 +3372,7 @@ export class GameApp {
   }
 
   private pickEnemyAt(ground: Vec2): number | null {
-    return pickUnit(ground, this.enemyUnitsFor(this.playerTeam(0)));
+    return pickUnit(ground, this.enemyUnitsFor(playerTeam(0)));
   }
 
   /**
@@ -3603,12 +3429,6 @@ export class GameApp {
     };
   }
 
-  /** ChampionId picked by the local seat (null until champ-select confirms). */
-  private localChampionId(): string | null {
-    const hud = hudStore.getState();
-    const seat = hud.seats.find((s) => s.seatId === hud.localSeatId);
-    return seat?.championId ? seat.championId : null;
-  }
 
   // ----------------------------------------------- death spectator camera --
 
@@ -3620,33 +3440,6 @@ export class GameApp {
    * live in render/deathFocus, which is Babylon-free and unit-tested. Zero
    * allocation: the object and both arrays are long-lived fields.
    */
-  /**
-   * Project the authoritative state into the victory-trigger's input for the
-   * LOCAL player (player 0). Resolves my team from the local seat, then reads
-   * that TeamState's roundWins + placement. Any field that is not yet known
-   * degrades to -1/0, which the gate treats as "unresolved" and never fires on.
-   */
-  private victoryInput(state: MatchState): VictoryInput {
-    const myTeam = this.playerTeam(0);
-    let myRoundWins = -1;
-    let myPlacement = 0;
-    if (myTeam >= 0) {
-      for (const t of state.teams) {
-        if (t.teamId !== myTeam) continue;
-        myRoundWins = t.roundWins;
-        myPlacement = t.placement;
-        break;
-      }
-    }
-    return {
-      phase: state.phase,
-      outcomeDecided: state.outcomeDecided === true,
-      round: state.round,
-      myTeamId: myTeam,
-      myRoundWins,
-      myPlacement,
-    };
-  }
 
   /**
    * Round-end winner presentation (task #143). On the phase EDGE into
@@ -3760,7 +3553,7 @@ export class GameApp {
     const localId = hudStore.getState().localEntityId;
     const duels = this.duelViews(state);
     for (let p = 0; p < ids.length; p++) {
-      const id = p === 0 ? localId : (this.playerView(p)?.entityId ?? null);
+      const id = p === 0 ? localId : (playerView(p)?.entityId ?? null);
       ids[p] = id ?? -1;
       // #208: while your teammates still fight in YOUR zone the #85 wash stays;
       // it lifts the instant your duel is decided (you're now watching another).
@@ -3805,7 +3598,7 @@ export class GameApp {
     f.outcomeDecided = state.outcomeDecided === true;
     const zones = frameBus.arenaZones;
     for (let p = 0; p < this.viewports.count; p++) {
-      const id = p === 0 ? hudStore.getState().localEntityId : (this.playerView(p)?.entityId ?? null);
+      const id = p === 0 ? hudStore.getState().localEntityId : (playerView(p)?.entityId ?? null);
       const es = id !== null ? state.entities.get(String(id)) : undefined;
       this.burnBurning[p] = es ? (es.flags & ENTITY_FLAG.BURNING) !== 0 : false;
       this.burnAlive[p] = es ? es.alive : false;
@@ -3832,7 +3625,7 @@ export class GameApp {
    */
   private updateSpectatorCam(player: number, rig: CameraRig, state: MatchState): void {
     const entityId =
-      player === 0 ? hudStore.getState().localEntityId : (this.playerView(player)?.entityId ?? null);
+      player === 0 ? hudStore.getState().localEntityId : (playerView(player)?.entityId ?? null);
     if (entityId === null) return; // no champion yet (champ-select) — leave the rig
     const es = state.entities.get(String(entityId));
     if (!es) return;
@@ -3849,7 +3642,7 @@ export class GameApp {
 
   /** Nearest alive ally to the corpse, else the corpse's zone centroid. */
   private spectatorCenter(player: number, dead: { id: number; x: number; z: number; zone: number }): Vec2 {
-    const myTeam = this.playerTeam(player);
+    const myTeam = playerTeam(player);
     const state = this.conn.room?.state;
     let best: Vec2 | null = null;
     let bestD = Infinity;
@@ -3897,7 +3690,7 @@ export class GameApp {
    */
   private ownZoneOf(player: number, state: MatchState): number | null {
     const entityId =
-      player === 0 ? hudStore.getState().localEntityId : (this.playerView(player)?.entityId ?? null);
+      player === 0 ? hudStore.getState().localEntityId : (playerView(player)?.entityId ?? null);
     if (entityId === null) return null;
     const es = state.entities.get(String(entityId));
     return es ? es.zone : null;
@@ -3927,13 +3720,6 @@ export class GameApp {
     zones.end();
   }
 
-  /** Centre of duel `zone` from the ACTIVE arena (frameBus), else the skeleton. */
-  private zoneCenter(zone: number): Vec2 | null {
-    const zc = frameBus.arenaZones?.[zone];
-    if (zc) return { x: zc.x, z: zc.z };
-    const z = SKELETON_ARENA.zones[zone];
-    return z ? { x: z.center.x, z: z.center.z } : null;
-  }
 
   /**
    * #269 — THE CAMERA NO LONGER MOVES ITSELF.
@@ -4014,7 +3800,7 @@ export class GameApp {
     const rig = this.cameraRig;
     this.spectateZoneByPlayer.set(0, zone);
     frameBus.spectateZone = zone;
-    const c = this.zoneCenter(zone);
+    const c = zoneCenter(zone);
     if (c) rig.focusOn(c); // breaks follow-lock + jumps (no-op in settlement)
   }
 
@@ -4147,216 +3933,38 @@ export class GameApp {
     return occludeArgsFor(this.arenaDef.zones, viewerZone, center, tick);
   }
 
+  /**
+   * ⭐ GH#716 —— 本體搬到 `./game/frameBusProjection`（一個職責：快照 → HUD 投影）。
+   * ⚠️ 這支方法**必須留在 prototype 上** —— `render/anchorBounds.test.ts` 用
+   * `GameApp.prototype.updateFrameBus.call(fakeSelf, …)` 呼叫它。⇒ 這裡是轉發，
+   * ⛔ 不是「還沒搬完」。
+   *
+   * ⚠️ 這一包**不能**直接傳 `this`：那 10 格是 `private`，而 `private` 在結構型別
+   * 上不可指派 ⇒ `tsc` 會擋（已經擋過一次）。⇒ 明寫成一個 deps。
+   * ⭐ 而它**建一次就留著**（⛔ 不要每幀 new 一個，同 `EMPTY_STATUS_IDS` 的理由）；
+   * 兩格**會變**的用 getter 讀，⛔ 不是把建立當下的值複製走 —— 複製走的話
+   * 後台改 `mobBarCfg`、或本地英雄換 entity id，這裡會凍在開場那一刻。
+   */
+  private fbDeps: FrameBusDeps | null = null;
+
   private updateFrameBus(state: MatchState, nowMs: number): void {
-    expireCombatText(nowMs);
-    const project = frameBus.project;
-    if (!project) return;
-    const hud = hudStore.getState();
-    const nameBySeat = this.fbNameBySeat;
-    const champBySeat = this.fbChampBySeat;
-    nameBySeat.clear();
-    champBySeat.clear();
-    for (const s of hud.seats) {
-      nameBySeat.set(s.seatId, s.displayName || `Seat ${s.seatId}`);
-      champBySeat.set(s.seatId, s.championId);
-    }
-
-    // 隱形原語 —— the viewer's team, resolved once for this frame's anchor sweep
-    // exactly as the entity pool does it (same store, same client-08 reason).
-    const localTeam =
-      hud.localSeatId === null ? null : (this.teamBySeat.get(hud.localSeatId) ?? null);
-    const isFriendlyEntity = (seatId: number): boolean =>
-      localTeam !== null && (this.teamBySeat.get(seatId) ?? -1) === localTeam;
-
-    const seen = this.fbSeen;
-    seen.clear();
-    // ---- 精英小怪頭上的小血條 (GH#268) --------------------------------------
-    // REBUILT FROM SCRATCH EVERY FRAME, like `reviveCircles` below: 一條血條的
-    // 存續條件就是「那一列還在快照裡」,所以屍體與離場的怪自己就消失了,不需要
-    // 任何 death handler。
-    //
-    // ⚠️ v0.9.28 出貨時**這個迴圈不存在** —— 伺服器把 `ENTITY_FLAG.MOB_ELITE`
-    // 寫上線(付掉最後一格,不可逆),客戶端一個字都沒讀,整包功能可以刪掉而畫面
-    // 不變(失敗形態 ③)。守衛:`ui/hud/mobHealthBarWiring.test.ts`。
-    const bars = frameBus.mobBars;
-    bars.length = 0;
-    const barCfg = this.mobBarCfg;
-    state.entities.forEach((es) => {
-      if (es.kind === KIND_MOB) {
-        // ⭐ GH#575 —— **在任何 return 之前**記下這一具身體。`mobSlain` 的 payload
-        // 沒有 x/z，而殭屍在事件到達時通常已經從快照裡消失（sim 同一個 tick 就
-        // `destroyAfterHooks`）⇒ 少了這一行，金幣不生、音效與音階都不播。
-        // ⚠️ 刻意放在**分區剔除與界外閘之前**：金幣的歸屬與音階是**擊殺者**的回饋，
-        //    ⛔ 與「這一隻的血條有沒有畫在螢幕上」無關。
-        this.vfx.noteGoldBody(es.id, es.x, es.z);
-        // L3 ZONE CULL —— 別區的小怪血條沒有消費者(`MobHealthBars` 只畫投影到
-        // 螢幕上的),而波峰時一區 50 隻,少跑一次 `project()` 是真的省。
-        if (!this.visibleZones.has(es.zone)) return;
-        const mp = this.views.posOf(es.id) ?? { x: es.x, z: es.z };
-        // ⭐ 出口的閘（owner 2026-08-19「在牆外也不應該是顯示在那邊」）。見
-        // `render/anchorBounds.ts`：⛔ 不夾回界內，不畫，而且會被數到。
-        if (!anchorDrawable(frameBus.arenaZones, mp.x, mp.z, `mob bar #${es.id}`)) return;
-        // ⚠️ `es.mana` 是體型倍率(GH#192),不是法力 —— 一般殭屍 0.68 / 特殊 2 /
-        // 王 5。不餵它的話 `yOffset` 就是一個寫了沒人讀的欄位,而王的血條會掛在
-        // 牠膝蓋上(失敗形態 ①)。
-        const bar = mobBarAnchorFor(es, project(mp.x, mobBarAnchorY(es.mana, barCfg), mp.z), mp);
-        if (bar) bars.push(bar);
-        return;
-      }
-      // champions AND neutral objectives (kind 2 flower, kind 4 guardian) carry
-      // overhead bars. A guardian is NEUTRAL (task #89): no name, teamId -1, and
-      // an explicit neutral bar colour (anchorColorFor) — never a team tint.
-      if (!hasOverheadBar(es.kind)) return;
-      // 隱形原語 —— NO BAR FOR A HIDDEN ENEMY. This is a SECOND decision, not a
-      // consequence of the model fade: `enemyAlpha` is a field, so an operator
-      // who picks a 「半透明鬼影」 look (0.15) would otherwise still get a crisp
-      // health bar floating over the ghost — a perfect position readout, i.e.
-      // exactly the thing being hidden. `stealthVisualFor` owns both answers so
-      // they cannot drift; `friendly` is the seat's team (see the entity pool).
-      // Returning BEFORE `seen.add` is what deletes an already-pooled anchor:
-      // the sweep at the bottom of this method drops every id it did not see,
-      // so a bar that was on screen when the hero faded really goes away.
-      if (
-        es.kind === KIND_CHAMPION &&
-        !stealthVisualFor((es.flags & ENTITY_FLAG.INVISIBLE) !== 0, isFriendlyEntity(es.seatId)).healthBar
-      )
-        return;
-      // ⭐ GH#324 視野遮蔽的**另一半**：牆後的敵人身體不畫，那條血條就不可以留著。
-      // 理由與上面那一段隱形的逐字相同 —— 一條浮在牆後、底下沒有身體的血條是一份
-      // 完美的位置讀數，也就是遮蔽這條機制本來要藏的那個東西。⛔ 繪製距離剔除
-      // **不**走這條（那是畫質設定，遠處的血條照樣要看得到）。
-      // 跟隱形那一條一樣寫在 `seen.add` **之前**：已經在畫的錨點會被下面的掃描
-      // 真的刪掉，而不是凍在原地。
-      if (es.kind === KIND_CHAMPION && this.views.isOccluded(es.id)) return;
-      // L3 ZONE CULL —— 別區的血條沒有任何消費者：`WorldAnchorLayer` 只畫
-      // 螢幕內的錨點，而 #67 的小地圖本來就只畫一個 zone。省掉的是每個實體
-      // 每幀一次的 `project()` 3D→2D 投影 + 一個 DOM 節點的更新。
-      if (!this.visibleZones.has(es.zone)) return;
-      const isNeutral = es.kind === KIND_FLOWER || es.kind === KIND_GUARDIAN;
-      const pos = this.views.posOf(es.id) ?? { x: es.x, z: es.z };
-      // ⭐ 出口的閘（owner 2026-08-19）。⚠️ 寫在 `seen.add` **之前**：已經在畫的
-      // 錨點要被下面的掃描真的**刪掉**，⛔ 不是凍在最後那個界外座標上 ——
-      // 凍住正是 owner 看到的那個畫面。同 `stealthVisualFor` 那一條的擺法。
-      if (!anchorDrawable(frameBus.arenaZones, pos.x, pos.z, `bar #${es.id}`)) return;
-      seen.add(es.id);
-      let anchor = frameBus.champions.get(es.id);
-      if (!anchor) {
-        anchor = {
-          entityId: es.id,
-          kind: es.kind,
-          name: isNeutral ? "" : (nameBySeat.get(es.seatId) ?? `#${es.id}`),
-          teamId: isNeutral ? -1 : (this.teamBySeat.get(es.seatId) ?? 0),
-          championId: "",
-          isLocal: es.id === this.predictedEntityId,
-          alive: es.alive,
-          hpPct: 1,
-          shieldPct: 0,
-          manaPct: 1,
-          worldX: pos.x,
-          worldZ: pos.z,
-          pose: { sx: 0, sy: 0, visible: false },
-          cast: null,
-        };
-        frameBus.champions.set(es.id, anchor);
-      }
-      anchor.alive = es.alive;
-      anchor.kind = es.kind; // pooled anchors outlive an entity id; keep it honest
-      // ⭐ GH#728 —— 顏色跟著 `kind` 一起刷新，⛔ 不是只在建立時指派一次。
-      // 同一顆 pooled anchor 的 id 被回收給另一種 kind 時（上一行的註解講的正是
-      // 這件事），只更新 kind 而讓 color 凍在建立那一刻 = 治療花的綠色留在守護塔
-      // 頭上。⛔ champion 這一支回 `undefined`（`anchorColorFor`），所以英雄血條
-      // 逐位元不變 —— 消費端是 `anchor.color ?? teamCss(anchor.teamId)`。
-      anchor.color = anchorColorFor(es.kind);
-      // picks land after the anchor is created (and change between rounds), so
-      // the champion id is refreshed rather than frozen at spawn
-      anchor.championId = isNeutral ? "" : (champBySeat.get(es.seatId) ?? "");
-      anchor.hpPct = es.maxHp > 0 ? es.hp / es.maxHp : 0;
-      anchor.shieldPct = es.maxHp > 0 ? es.shield / es.maxHp : 0;
-      anchor.manaPct = es.maxMana > 0 ? es.mana / es.maxMana : 0;
-      anchor.worldX = pos.x;
-      anchor.worldZ = pos.z;
-      anchor.pose = project(pos.x, anchorHeightFor(es.kind), pos.z);
-      // over-head cast bar (hidden while dead)
-      const cp = es.alive ? this.casts.progressFor(es.id, nowMs) : null;
-      anchor.cast = cp ? { fraction: cp.fraction, kind: cp.kind } : null;
-    });
-
-    // ---- 殭屍王 minimap marker (task #262) ---------------------------------
-    // The king is a KIND_MOB, so the `hasOverheadBar` cull above skipped it with
-    // the other 50 zombies — correct for the rank and file, wrong for the one
-    // entity the 戰場任務 is about. It gets its own bus slot (frameBus.mobBoss);
-    // ui/hud/minimapBossMarker turns it into the map ping the source map's
-    // war3map.j:11824 `PingMinimapLocForForce` did.
-    //
-    // WHICH entity is the king comes from `mobBossSpawn` — the wire has no boss
-    // bit. Rebuilt from scratch every frame, so a king that died (no live entity
-    // with that id) clears itself with no death handler.
-    //
-    // ⛔ GH#268 —— 這裡以前讀的是 `hud.mobBoss`（「最後一則王的消息」），也就是一顆
-    // **一場只有一個槽**的欄位；而自 #288 起每一隻特殊殭屍死掉也發 `mobBossSlain`,
-    // 所以任何一區任何一隻精英一死就把 bossId 打成 -1,本區那隻**滿血的王**的長
-    // 血條當場消失（owner 回報兩次）。現在讀的是 `hud.mobBossLive`（「現在場上有沒有
-    // 王」），它只被同一顆 bossId 的結算清掉。決策本身在 `mobBossMarkerFor` ——
-    // `GameApp` headless 起不來,寫在這裡的判斷沒有任何行為測試搆得到。
-    frameBus.mobBoss = mobBossMarkerFor(
-      hud.mobBossLive,
-      (bossId) => {
-        const row = state.entities.get(String(bossId));
-        return {
-          row,
-          world: row ? (this.views.posOf(row.id) ?? { x: row.x, z: row.z }) : { x: 0, z: 0 },
-        };
+    const app = this;
+    this.fbDeps ??= {
+      casts: app.casts,
+      fbChampBySeat: app.fbChampBySeat,
+      fbNameBySeat: app.fbNameBySeat,
+      fbSeen: app.fbSeen,
+      teamBySeat: app.teamBySeat,
+      vfx: app.vfx,
+      views: app.views,
+      visibleZones: app.visibleZones,
+      get mobBarCfg() {
+        return app.mobBarCfg;
       },
-      localDuelZone(hud),
-    );
-
-    // ---- revive circles (task #84) -----------------------------------------
-    // Their own frameBus list, NOT champion anchors: they carry no HP bar and
-    // no name, and nothing that walks `frameBus.champions` should ever see one.
-    // The minimap and the spectating owner's HUD banner both read from here.
-    const circles = frameBus.reviveCircles;
-    circles.length = 0;
-    state.entities.forEach((es) => {
-      if (es.kind !== KIND_REVIVE_CIRCLE) return;
-      // L3 ZONE CULL —— 兩個消費者(小地圖 #67、ReviveBanner)都只看得到本區的
-      // 圈圈；自己那一區永遠在可見集合裡，所以自己的復活圈不受影響。
-      if (!this.visibleZones.has(es.zone)) return;
-      const pos = this.views.posOf(es.id) ?? { x: es.x, z: es.z };
-      circles.push({
-        entityId: es.id,
-        ownerSeatId: es.seatId,
-        teamId: this.teamBySeat.get(es.seatId) ?? -1,
-        zone: es.zone,
-        worldX: pos.x,
-        worldZ: pos.z,
-        radius: es.shield > 0 ? es.shield : 2,
-        progress: es.maxHp > 0 ? Math.min(1, es.hp / es.maxHp) : 0,
-        channelling: (es.flags & ENTITY_FLAG.CHANNELLING) !== 0,
-        contested: (es.flags & ENTITY_FLAG.CONTESTED) !== 0,
-      });
-    });
-
-    // local player's ability-icon fill overlay (imperative, off React state)
-    const localId = hud.localEntityId;
-    const lc = localId !== null ? this.casts.progressFor(localId, nowMs) : null;
-    frameBus.localCast = lc ? { slot: lc.slot, fraction: lc.fraction, kind: lc.kind } : null;
-    for (const id of [...frameBus.champions.keys()]) {
-      if (!seen.has(id)) frameBus.champions.delete(id);
-    }
-    // Each category projects from its OWN world height (see ui/combatText):
-    // damage over the chest, heals lower, mana lower still. They must clear the
-    // health-bar block at y = 2.45 — a number that covers the HP readout is
-    // worse than no number — and the split heights are also what keeps 補血 and
-    // 補魔 apart when a flower burst fires both on the same body in one tick.
-    for (const e of frameBus.combatText) {
-      if (!e.active) continue;
-      // ⭐ 出口的閘（owner 2026-08-19）—— 飄字與血條同一條規則。⛔ 不夾回界內：
-      // `pose.visible = false` 就是「不畫」，而 `WorldAnchorLayer` 已經在讀它。
-      if (!anchorDrawable(frameBus.arenaZones, e.worldX, e.worldZ, "combat text")) {
-        e.pose = { sx: 0, sy: 0, visible: false };
-        continue;
-      }
-      e.pose = project(e.worldX, e.anchorY, e.worldZ);
-    }
+      get predictedEntityId() {
+        return app.predictedEntityId;
+      },
+    };
+    updateFrameBusFrom(this.fbDeps, state, nowMs);
   }
 }

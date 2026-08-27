@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import * as apiFns from "../api";
 import { ApiError } from "../session";
 import type { MatchRecord } from "../types";
-import { fetchNameIndex, nameLabelFor, type NameIndex } from "../contentNames";
+import { mapCell, useNameIndex } from "./nameCells";
 import { Btn, ErrorBanner, Panel, TextInput } from "./widgets";
 import { GOLD, TEXT_DIM, TEXT_MAIN } from "./theme";
 
@@ -21,7 +21,8 @@ export function MatchesPage(): React.JSX.Element {
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<MatchRecord | null>(null);
   // #793 —— null = 名冊還沒載到/載不到 ⇒ 印裸 id **不加 ⚠**（沒查過就不宣稱「沒有」）。
-  const [names, setNames] = useState<NameIndex | null>(null);
+  // #799 —— 載入那一段搬進 `useNameIndex()`（四頁共用一份，⛔ 不是每頁抄一次）。
+  const names = useNameIndex();
   const pageSize = 20;
 
   async function load(p = 1): Promise<void> {
@@ -38,17 +39,6 @@ export function MatchesPage(): React.JSX.Element {
 
   useEffect(() => {
     void load(1);
-    let live = true;
-    fetchNameIndex()
-      .then((idx) => {
-        if (live) setNames(idx);
-      })
-      .catch(() => {
-        /* fail-open：名冊只是給人看的那一半，比賽紀錄照開（列退回裸 id、⛔ 不加 ⚠） */
-      });
-    return () => {
-      live = false;
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -147,23 +137,9 @@ function Row(props: { k: string; v: React.ReactNode }): React.JSX.Element {
   );
 }
 
-/**
- * #793 —— 「名稱＋小字 id」。三個狀態刻意分開：
- *  · 沒有 mapId          → 「—」
- *  · 名冊還沒載到（null） → 裸 id（⛔ 不加 ⚠：什麼都還沒查過）
- *  · 查過了沒有          → ⚠ ＋裸 id（⛔ 不編一個名字出來；退休場地本來就查不到）
- */
-export function mapCell(names: NameIndex | null, mapId: string | undefined): React.ReactNode {
-  if (mapId === undefined || mapId === "") return "—";
-  if (names === null) return mapId;
-  const l = nameLabelFor(names, "maps", mapId);
-  if (l.name === null) return <span title="出貨 bundle 裡沒有這個場地 id（退休／舊資料）">⚠ {l.id}</span>;
-  return (
-    <>
-      {l.name} <span style={{ color: TEXT_DIM, fontSize: 10 }}>{l.id}</span>
-    </>
-  );
-}
+// #799 —— `mapCell` 已搬到 `./nameCells`（MapReport／ArenaPool 也要用它）。
+// ⭐ 門面：既有 import 端（`contentNames.test.ts`）不必動。
+export { mapCell };
 
 function fmt(iso: string): string {
   const d = new Date(iso);
