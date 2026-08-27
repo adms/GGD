@@ -1,0 +1,108 @@
+{
+ "name": "darkportaltarget",
+ "archive": "war3.mpq",
+ "mdxBytes": 10464,
+ "path": "Abilities\\Spells\\Demon\\DarkPortal\\DarkPortalTarget.mdl",
+ "textures": [
+  {
+   "texture": "Textures\\LightningBall.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 34.0,
+   "lumStd": 56.7,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\firering1A.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 88.6,
+   "lumStd": 90.6,
+   "alphaMean": 84.7,
+   "alphaStd": 88.9,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Dust5A.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 255.0,
+   "lumStd": 0.0,
+   "alphaMean": 39.5,
+   "alphaStd": 39.0,
+   "verdict": "LUMA-KEY-NEEDED"
+  },
+  {
+   "texture": "abilities\\Spells\\Demon\\DarkPortal\\DemonRune1backup.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 90.8,
+   "lumStd": 84.7,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [
+  {
+   "emitter": "BlizParticle01",
+   "segmentAlpha": [
+    109,
+    255,
+    0
+   ],
+   "birth": 109,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle02",
+   "segmentAlpha": [
+    109,
+    255,
+    0
+   ],
+   "birth": 109,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 54796,
+ "rawHeight": 245.2,
+ "scaleFactor": 0.02778,
+ "height": 6.811,
+ "visiblePrims": "3/3",
+ "animations": [
+  "Birth"
+ ],
+ "clipMap": null,
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "litGlowMaterials": [],
+ "fullExtents": [
+  0.192,
+  6.8111,
+  2.691
+ ],
+ "visibleExtents": [
+  0.192,
+  6.8111,
+  2.691
+ ],
+ "fullLongAxis": "y",
+ "visibleLongAxis": "y",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/darkportaltarget.glb"
+}

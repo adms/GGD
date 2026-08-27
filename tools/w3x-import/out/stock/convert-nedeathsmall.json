@@ -1,0 +1,210 @@
+{
+ "name": "nedeathsmall",
+ "archive": "war3.mpq",
+ "mdxBytes": 11516,
+ "path": "Objects\\Spawnmodels\\NightElf\\NEDeathSmall\\NEDeathSmall.mdl",
+ "textures": [
+  {
+   "texture": "Textures\\Leaf.blp",
+   "size": [
+    16,
+    16
+   ],
+   "lumMean": 19.4,
+   "lumStd": 35.7,
+   "alphaMean": 63.5,
+   "alphaStd": 100.4,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Leaf4x4.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 19.7,
+   "lumStd": 35.5,
+   "alphaMean": 63.6,
+   "alphaStd": 98.2,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Clouds8x8Fire.blp",
+   "size": [
+    256,
+    256
+   ],
+   "lumMean": 49.1,
+   "lumStd": 66.5,
+   "alphaMean": 49.1,
+   "alphaStd": 66.5,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\star2_32.blp",
+   "size": [
+    32,
+    32
+   ],
+   "lumMean": 35.5,
+   "lumStd": 64.7,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\GenericGlow64.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 64.3,
+   "lumStd": 72.2,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\GenericGlowFaded.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 53.5,
+   "lumStd": 55.2,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\star5tga.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 28.7,
+   "lumStd": 59.7,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [
+  {
+   "emitter": "CenterExplo",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "DeathParticle",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "LeafBomb01",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "LeafBomb02",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "CenterGlowBlast",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "CenterGlowBlast02",
+   "segmentAlpha": [
+    22,
+    255,
+    0
+   ],
+   "birth": 22,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticleDemonglow",
+   "segmentAlpha": [
+    255,
+    207,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticleDemonglow0pixies",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 20120,
+ "rawHeight": 187.56,
+ "scaleFactor": 0.02778,
+ "height": 5.21,
+ "visiblePrims": "1/1",
+ "animations": [
+  "Birth"
+ ],
+ "clipMap": null,
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "litGlowMaterials": [],
+ "fullExtents": [
+  5.3384,
+  5.2099,
+  5.3384
+ ],
+ "visibleExtents": [
+  5.3384,
+  5.2099,
+  5.3384
+ ],
+ "fullLongAxis": "x",
+ "visibleLongAxis": "x",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/nedeathsmall.glb"
+}

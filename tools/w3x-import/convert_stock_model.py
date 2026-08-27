@@ -79,6 +79,24 @@ OUT = os.path.join(HERE, "out", "stock")
 # slug → in-archive path.  The census reports `.mdl`; the archives carry `.mdx`,
 # so both spellings are tried.  Rows are added as each Phase-6 batch lands.
 STOCK_MODELS: dict[str, str] = {
+    # ── GH#838 三招驗收批 —— 12 顆 JASS 逐行點名、GGD 零 key 的 stock 特效 ──
+    # 路徑逐字取自 docs/_reports/vfx-editor-jass3_temp_20260828-0042.md 的
+    # AddSpecialEffect* 原文（⛔ 不是猜的）。超究（血濺/鳳凰彈/鏡像殘影/中立爆炸）、
+    # 龍破斬拖尾（HCancelDeath/VolcanoDeath/FlameStrikeTarget）、
+    # 理想鄉EX（DarkPortal/Stampede/SteamTank/NEDeathSmall/AIviTarget）。
+    "humanbloodpeasant": "Objects\\Spawnmodels\\Human\\HumanBlood\\HumanBloodPeasant.mdl",
+    "phoenixmissile": "Abilities\\Weapons\\PhoenixMissile\\Phoenix_Missile.mdl",
+    "mirrorimagecaster": "Abilities\\Spells\\Orc\\MirrorImage\\MirrorImageCaster.mdl",
+    "neutralbuildingexplosion":
+        "Objects\\Spawnmodels\\Other\\NeutralBuildingExplosion\\NeutralBuildingExplosion.mdl",
+    "steamtankimpact": "Abilities\\Weapons\\SteamTank\\SteamTankImpact.mdl",
+    "stampedemissiledeath": "Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",
+    "darkportaltarget": "Abilities\\Spells\\Demon\\DarkPortal\\DarkPortalTarget.mdl",
+    "nedeathsmall": "Objects\\Spawnmodels\\NightElf\\NEDeathSmall\\NEDeathSmall.mdl",
+    "hcanceldeath": "Objects\\Spawnmodels\\Human\\HCancelDeath\\HCancelDeath.mdl",
+    "volcanodeath": "Abilities\\Spells\\Other\\Volcano\\VolcanoDeath.mdl",
+    "flamestriketarget": "Abilities\\Spells\\Human\\FlameStrike\\FlameStrikeTarget.mdl",
+    "aivitarget": "Abilities\\Spells\\Items\\AIvi\\AIviTarget.mdl",
     # GH#691 · locust visual batch 1 — 17 JASS spawn sites across 5 dummies
     # (o00E/o00G/o02M/n00N/h00Q), the top non-invisible rawcode in the census.
     "monsoonbolttarget":

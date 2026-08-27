@@ -1,0 +1,15 @@
+{
+  "id": "w3x.stock.flamestriketarget",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/flamestriketarget.glb",
+  "scale": 0.02778,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "stand",
+    "run": "stand",
+    "attack": "stand",
+    "cast": "stand",
+    "hurt": "stand",
+    "death": "stand"
+  }
+}

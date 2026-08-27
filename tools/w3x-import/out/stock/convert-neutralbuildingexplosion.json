@@ -1,0 +1,150 @@
+{
+ "name": "neutralbuildingexplosion",
+ "archive": "war3.mpq",
+ "mdxBytes": 4498,
+ "path": "Objects\\Spawnmodels\\Other\\NeutralBuildingExplosion\\NeutralBuildingExplosion.mdl",
+ "textures": [
+  {
+   "texture": "Textures\\Dust3x.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 80.5,
+   "lumStd": 56.3,
+   "alphaMean": 60.5,
+   "alphaStd": 49.8,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\CartoonCloud.blp",
+   "size": [
+    32,
+    32
+   ],
+   "lumMean": 255.0,
+   "lumStd": 0.0,
+   "alphaMean": 136.2,
+   "alphaStd": 124.4,
+   "verdict": "LUMA-KEY-NEEDED"
+  },
+  {
+   "texture": "Textures\\Dust5A.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 255.0,
+   "lumStd": 0.0,
+   "alphaMean": 39.5,
+   "alphaStd": 39.0,
+   "verdict": "LUMA-KEY-NEEDED"
+  },
+  {
+   "texture": "ReplaceableTextures\\Weather\\Clouds8x8.blp",
+   "size": [
+    256,
+    256
+   ],
+   "lumMean": 63.2,
+   "lumStd": 78.8,
+   "alphaMean": 44.7,
+   "alphaStd": 63.4,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [
+  {
+   "emitter": "BlizParticle01fire05",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlastFlareStreamers",
+   "segmentAlpha": [
+    128,
+    128,
+    0
+   ],
+   "birth": 128,
+   "peak": 128,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "MushroomCap",
+   "segmentAlpha": [
+    128,
+    128,
+    0
+   ],
+   "birth": 128,
+   "peak": 128,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlastFlare",
+   "segmentAlpha": [
+    255,
+    143,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlastFlareStreamers01",
+   "segmentAlpha": [
+    128,
+    128,
+    0
+   ],
+   "birth": 128,
+   "peak": 128,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlastFlareStreamers02",
+   "segmentAlpha": [
+    128,
+    128,
+    0
+   ],
+   "birth": 128,
+   "peak": 128,
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 155592,
+ "rawHeight": 173.1,
+ "scaleFactor": 0.02778,
+ "height": 4.808,
+ "visiblePrims": "4/4",
+ "animations": [],
+ "clipMap": null,
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "litGlowMaterials": [],
+ "fullExtents": [
+  4.8083,
+  4.8083,
+  4.8083
+ ],
+ "visibleExtents": [
+  4.8083,
+  4.8083,
+  4.8083
+ ],
+ "fullLongAxis": "x",
+ "visibleLongAxis": "x",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/neutralbuildingexplosion.glb"
+}

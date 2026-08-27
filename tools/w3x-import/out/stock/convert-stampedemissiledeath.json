@@ -1,0 +1,95 @@
+{
+ "name": "stampedemissiledeath",
+ "archive": "War3x.mpq",
+ "mdxBytes": 4589,
+ "path": "Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",
+ "textures": [
+  {
+   "texture": "Textures\\BloodSplash.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 69.1,
+   "lumStd": 13.4,
+   "alphaMean": 24.6,
+   "alphaStd": 63.9,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Shockwave1White.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 19.8,
+   "lumStd": 33.5,
+   "alphaMean": 19.8,
+   "alphaStd": 33.5,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [
+  {
+   "emitter": "BlizParticle02",
+   "segmentAlpha": [
+    0,
+    255,
+    0
+   ],
+   "birth": 0,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle04",
+   "segmentAlpha": [
+    215,
+    255,
+    0
+   ],
+   "birth": 215,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle05wave",
+   "segmentAlpha": [
+    255,
+    212,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 35848,
+ "rawHeight": 136.3,
+ "scaleFactor": 0.02778,
+ "height": 3.786,
+ "visiblePrims": "2/2",
+ "animations": [
+  "Birth"
+ ],
+ "clipMap": null,
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "litGlowMaterials": [],
+ "fullExtents": [
+  3.7861,
+  3.7861,
+  3.7861
+ ],
+ "visibleExtents": [
+  3.7861,
+  3.7861,
+  3.7861
+ ],
+ "fullLongAxis": "x",
+ "visibleLongAxis": "x",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/stampedemissiledeath.glb"
+}

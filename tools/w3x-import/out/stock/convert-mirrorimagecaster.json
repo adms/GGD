@@ -1,0 +1,73 @@
+{
+ "name": "mirrorimagecaster",
+ "archive": "war3.mpq",
+ "mdxBytes": 10229,
+ "path": "Abilities\\Spells\\Orc\\MirrorImage\\MirrorImageCaster.mdl",
+ "textures": [
+  {
+   "texture": "Textures\\HeroBladeMaster.blp",
+   "size": [
+    256,
+    256
+   ],
+   "lumMean": 87.4,
+   "lumStd": 73.5,
+   "alphaMean": 234.5,
+   "alphaStd": 61.5,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Yellow_Star.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 41.3,
+   "lumStd": 68.2,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [
+  {
+   "emitter": "BlizParticle01",
+   "segmentAlpha": [
+    0,
+    120,
+    0
+   ],
+   "birth": 0,
+   "peak": 120,
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 153368,
+ "rawHeight": 168.54,
+ "scaleFactor": 0.02778,
+ "height": 4.682,
+ "visiblePrims": "1/1",
+ "animations": [
+  "Birth"
+ ],
+ "clipMap": null,
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "litGlowMaterials": [],
+ "fullExtents": [
+  1.3103,
+  4.6816,
+  2.4099
+ ],
+ "visibleExtents": [
+  1.3103,
+  4.6816,
+  2.4099
+ ],
+ "fullLongAxis": "y",
+ "visibleLongAxis": "y",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/mirrorimagecaster.glb"
+}

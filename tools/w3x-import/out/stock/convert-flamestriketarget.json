@@ -1,0 +1,105 @@
+{
+ "name": "flamestriketarget",
+ "archive": "War3x.mpq",
+ "mdxBytes": 3574,
+ "path": "Abilities\\Spells\\Human\\FlameStrike\\FlameStrikeTarget.mdl",
+ "textures": [
+  {
+   "texture": "Textures\\MegaBlast.blp",
+   "size": [
+    256,
+    256
+   ],
+   "lumMean": 64.1,
+   "lumStd": 59.4,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "abilities\\Spells\\Human\\FlameStrike\\MegaBlastTail.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 248.7,
+   "lumStd": 11.6,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Shockwave1.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 17.1,
+   "lumStd": 24.1,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [
+  {
+   "emitter": "BlizParticle01",
+   "segmentAlpha": [
+    255,
+    255,
+    100
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticleShockWave1",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 38032,
+ "rawHeight": 297.25,
+ "scaleFactor": 0.02778,
+ "height": 8.257,
+ "visiblePrims": "2/2",
+ "animations": [
+  "birth",
+  "stand",
+  "death"
+ ],
+ "clipMap": {
+  "idle": "stand",
+  "run": "stand",
+  "attack": "stand",
+  "cast": "stand",
+  "hurt": "stand",
+  "death": "death"
+ },
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "litGlowMaterials": [],
+ "fullExtents": [
+  14.8512,
+  8.2569,
+  14.6729
+ ],
+ "visibleExtents": [
+  14.8512,
+  8.2569,
+  14.6729
+ ],
+ "fullLongAxis": "x",
+ "visibleLongAxis": "x",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/flamestriketarget.glb"
+}

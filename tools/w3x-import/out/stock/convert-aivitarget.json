@@ -1,0 +1,104 @@
+{
+ "name": "aivitarget",
+ "archive": "war3.mpq",
+ "mdxBytes": 19496,
+ "path": "Abilities\\Spells\\Items\\AIvi\\AIviTarget.mdl",
+ "textures": [
+  {
+   "texture": "Textures\\GenericGlow2c.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 17.1,
+   "lumStd": 25.3,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\GenericGlow64.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 64.3,
+   "lumStd": 72.2,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\star5tga.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 28.7,
+   "lumStd": 59.7,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\pixies1.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 10.3,
+   "lumStd": 40.1,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Ghost2.blp",
+   "size": [
+    64,
+    32
+   ],
+   "lumMean": 53.1,
+   "lumStd": 54.5,
+   "alphaMean": 60.5,
+   "alphaStd": 58.3,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [],
+ "glbSize": 79492,
+ "rawHeight": 380.84,
+ "scaleFactor": 0.02778,
+ "height": 10.579,
+ "visiblePrims": "6/6",
+ "animations": [
+  "Stand"
+ ],
+ "clipMap": {
+  "idle": "Stand",
+  "run": "Stand",
+  "attack": "Stand",
+  "cast": "Stand",
+  "hurt": "Stand",
+  "death": "Stand"
+ },
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "litGlowMaterials": [],
+ "fullExtents": [
+  18.4435,
+  10.5788,
+  18.4435
+ ],
+ "visibleExtents": [
+  18.4435,
+  10.5788,
+  18.4435
+ ],
+ "fullLongAxis": "x",
+ "visibleLongAxis": "x",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/aivitarget.glb"
+}

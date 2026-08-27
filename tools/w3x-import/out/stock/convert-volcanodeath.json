@@ -1,0 +1,82 @@
+{
+ "name": "volcanodeath",
+ "archive": "War3Patch.mpq",
+ "mdxBytes": 1742,
+ "path": "Abilities\\Spells\\Other\\Volcano\\VolcanoDeath.mdl",
+ "textures": [
+  {
+   "texture": "Textures\\Dust5A.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 255.0,
+   "lumStd": 0.0,
+   "alphaMean": 39.5,
+   "alphaStd": 39.0,
+   "verdict": "LUMA-KEY-NEEDED"
+  },
+  {
+   "texture": "Textures\\LavaLump.blp",
+   "size": [
+    32,
+    32
+   ],
+   "lumMean": 22.8,
+   "lumStd": 42.9,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [
+  {
+   "emitter": "DeathBlast",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "LavaBlast",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 9044,
+ "rawHeight": 200.0,
+ "scaleFactor": 0.02778,
+ "height": 5.556,
+ "visiblePrims": "2/2",
+ "animations": [],
+ "clipMap": null,
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "litGlowMaterials": [],
+ "fullExtents": [
+  5.5556,
+  5.5556,
+  5.5556
+ ],
+ "visibleExtents": [
+  5.5556,
+  5.5556,
+  5.5556
+ ],
+ "fullLongAxis": "x",
+ "visibleLongAxis": "x",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/volcanodeath.glb"
+}

@@ -1,0 +1,162 @@
+{
+ "name": "steamtankimpact",
+ "archive": "war3.mpq",
+ "mdxBytes": 4226,
+ "path": "Abilities\\Weapons\\SteamTank\\SteamTankImpact.mdl",
+ "textures": [
+  {
+   "texture": "ReplaceableTextures\\Weather\\Clouds8x8.blp",
+   "size": [
+    256,
+    256
+   ],
+   "lumMean": 63.2,
+   "lumStd": 78.8,
+   "alphaMean": 44.7,
+   "alphaStd": 63.4,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\rock64.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 65.3,
+   "lumStd": 30.1,
+   "alphaMean": 102.8,
+   "alphaStd": 119.8,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Shockwave10.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 19.2,
+   "lumStd": 24.7,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\GenericGlowX.blp",
+   "size": [
+    32,
+    32
+   ],
+   "lumMean": 64.4,
+   "lumStd": 72.2,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\LavaLump.blp",
+   "size": [
+    32,
+    32
+   ],
+   "lumMean": 22.8,
+   "lumStd": 42.9,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [
+  {
+   "emitter": "BlizParticle01",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle08rocks",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle08shockwaves",
+   "segmentAlpha": [
+    255,
+    195,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle08x",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle08shockwaves01",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlastFlareStreamers",
+   "segmentAlpha": [
+    215,
+    128,
+    0
+   ],
+   "birth": 215,
+   "peak": 215,
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 170072,
+ "rawHeight": 168.7,
+ "scaleFactor": 0.02778,
+ "height": 4.686,
+ "visiblePrims": "5/5",
+ "animations": [],
+ "clipMap": null,
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "litGlowMaterials": [],
+ "fullExtents": [
+  4.6861,
+  4.6861,
+  4.6861
+ ],
+ "visibleExtents": [
+  4.6861,
+  4.6861,
+  4.6861
+ ],
+ "fullLongAxis": "x",
+ "visibleLongAxis": "x",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/steamtankimpact.glb"
+}

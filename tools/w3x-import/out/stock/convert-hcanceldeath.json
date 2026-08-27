@@ -1,0 +1,174 @@
+{
+ "name": "hcanceldeath",
+ "archive": "war3.mpq",
+ "mdxBytes": 5346,
+ "path": "Objects\\Spawnmodels\\Human\\HCancelDeath\\HCancelDeath.mdl",
+ "textures": [
+  {
+   "texture": "Textures\\Clouds8x8Fire.blp",
+   "size": [
+    256,
+    256
+   ],
+   "lumMean": 49.1,
+   "lumStd": 66.5,
+   "alphaMean": 49.1,
+   "alphaStd": 66.5,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Dust5A.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 255.0,
+   "lumStd": 0.0,
+   "alphaMean": 39.5,
+   "alphaStd": 39.0,
+   "verdict": "LUMA-KEY-NEEDED"
+  },
+  {
+   "texture": "Textures\\RockParticle.blp",
+   "size": [
+    16,
+    16
+   ],
+   "lumMean": 33.6,
+   "lumStd": 31.5,
+   "alphaMean": 127.9,
+   "alphaStd": 124.1,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\SpinningBoard.blp",
+   "size": [
+    32,
+    32
+   ],
+   "lumMean": 47.8,
+   "lumStd": 42.0,
+   "alphaMean": 36.3,
+   "alphaStd": 84.8,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\CartoonCloud.blp",
+   "size": [
+    32,
+    32
+   ],
+   "lumMean": 255.0,
+   "lumStd": 0.0,
+   "alphaMean": 136.2,
+   "alphaStd": 124.4,
+   "verdict": "LUMA-KEY-NEEDED"
+  },
+  {
+   "texture": "Textures\\Dust3x.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 80.5,
+   "lumStd": 56.3,
+   "alphaMean": 60.5,
+   "alphaStd": 49.8,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [
+  {
+   "emitter": "BlastFlare",
+   "segmentAlpha": [
+    255,
+    231,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "MushroomCap",
+   "segmentAlpha": [
+    128,
+    128,
+    0
+   ],
+   "birth": 128,
+   "peak": 128,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "SmallBlastDebris",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "SmallBlastSpinningBoard01",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlastFlareStreamers",
+   "segmentAlpha": [
+    128,
+    128,
+    0
+   ],
+   "birth": 128,
+   "peak": 128,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle01fire05",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 97172,
+ "rawHeight": 196.0,
+ "scaleFactor": 0.02778,
+ "height": 5.445,
+ "visiblePrims": "6/6",
+ "animations": [],
+ "clipMap": null,
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "litGlowMaterials": [],
+ "fullExtents": [
+  3.0549,
+  5.4446,
+  3.2724
+ ],
+ "visibleExtents": [
+  3.0549,
+  5.4446,
+  3.2724
+ ],
+ "fullLongAxis": "y",
+ "visibleLongAxis": "y",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/hcanceldeath.glb"
+}

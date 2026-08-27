@@ -1,0 +1,61 @@
+{
+ "name": "humanbloodpeasant",
+ "archive": "war3.mpq",
+ "mdxBytes": 3175,
+ "path": "Objects\\Spawnmodels\\Human\\HumanBlood\\HumanBloodPeasant.mdl",
+ "textures": [
+  {
+   "texture": "Textures\\BloodWhiteSmall.blp",
+   "size": [
+    16,
+    16
+   ],
+   "lumMean": 62.9,
+   "lumStd": 53.3,
+   "alphaMean": 66.6,
+   "alphaStd": 78.2,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [
+  {
+   "emitter": "BlizParticleBloodSpray_blood",
+   "segmentAlpha": [
+    255,
+    200,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 10620,
+ "rawHeight": 15.0,
+ "scaleFactor": 0.02778,
+ "height": 0.417,
+ "visiblePrims": "1/1",
+ "animations": [
+  "Birth"
+ ],
+ "clipMap": null,
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "litGlowMaterials": [],
+ "fullExtents": [
+  0.4167,
+  0.4167,
+  0.4167
+ ],
+ "visibleExtents": [
+  0.4167,
+  0.4167,
+  0.4167
+ ],
+ "fullLongAxis": "x",
+ "visibleLongAxis": "x",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/humanbloodpeasant.glb"
+}

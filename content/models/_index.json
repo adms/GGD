@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "a8f3ae27e1af",
+  "hash": "1a8450ee2f7e",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -759,16 +759,34 @@
       "size": 399
     },
     {
+      "id": "w3x.stock.aivitarget",
+      "path": "models/w3x.stock.aivitarget.json",
+      "hash": "ca7574974eb9",
+      "size": 306
+    },
+    {
       "id": "w3x.stock.awaken",
       "path": "models/w3x.stock.awaken.json",
       "hash": "6a3d01c94759",
       "size": 342
     },
     {
+      "id": "w3x.stock.darkportaltarget",
+      "path": "models/w3x.stock.darkportaltarget.json",
+      "hash": "3e8bdcd7105e",
+      "size": 318
+    },
+    {
       "id": "w3x.stock.flamestrike1",
       "path": "models/w3x.stock.flamestrike1.json",
       "hash": "146e4cbb9484",
       "size": 308
+    },
+    {
+      "id": "w3x.stock.flamestriketarget",
+      "path": "models/w3x.stock.flamestriketarget.json",
+      "hash": "15999aeb3c38",
+      "size": 320
     },
     {
       "id": "w3x.stock.forgottenonetent",
@@ -783,10 +801,46 @@
       "size": 352
     },
     {
+      "id": "w3x.stock.hcanceldeath",
+      "path": "models/w3x.stock.hcanceldeath.json",
+      "hash": "2acab5b2ec66",
+      "size": 310
+    },
+    {
+      "id": "w3x.stock.humanbloodpeasant",
+      "path": "models/w3x.stock.humanbloodpeasant.json",
+      "hash": "f6d018252984",
+      "size": 320
+    },
+    {
+      "id": "w3x.stock.mirrorimagecaster",
+      "path": "models/w3x.stock.mirrorimagecaster.json",
+      "hash": "5a16399ae16a",
+      "size": 320
+    },
+    {
       "id": "w3x.stock.monsoonbolttarget",
       "path": "models/w3x.stock.monsoonbolttarget.json",
       "hash": "a58012fd42bc",
       "size": 319
+    },
+    {
+      "id": "w3x.stock.nedeathsmall",
+      "path": "models/w3x.stock.nedeathsmall.json",
+      "hash": "a4868811900a",
+      "size": 310
+    },
+    {
+      "id": "w3x.stock.neutralbuildingexplosion",
+      "path": "models/w3x.stock.neutralbuildingexplosion.json",
+      "hash": "0baa311e55d0",
+      "size": 334
+    },
+    {
+      "id": "w3x.stock.phoenixmissile",
+      "path": "models/w3x.stock.phoenixmissile.json",
+      "hash": "c9c8463c3bae",
+      "size": 314
     },
     {
       "id": "w3x.stock.reddragonmissile",
@@ -799,6 +853,18 @@
       "path": "models/w3x.stock.revivehuman.json",
       "hash": "59fce0d3bc56",
       "size": 352
+    },
+    {
+      "id": "w3x.stock.stampedemissiledeath",
+      "path": "models/w3x.stock.stampedemissiledeath.json",
+      "hash": "d76219c81570",
+      "size": 326
+    },
+    {
+      "id": "w3x.stock.steamtankimpact",
+      "path": "models/w3x.stock.steamtankimpact.json",
+      "hash": "1b4231ffd1ec",
+      "size": 316
     },
     {
       "id": "w3x.stock.thunderclapcaster",
@@ -817,6 +883,12 @@
       "path": "models/w3x.stock.tornadoelemental.json",
       "hash": "4c5184aa5cdd",
       "size": 342
+    },
+    {
+      "id": "w3x.stock.volcanodeath",
+      "path": "models/w3x.stock.volcanodeath.json",
+      "hash": "39d3cc137947",
+      "size": 310
     }
   ]
 }

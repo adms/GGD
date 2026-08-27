@@ -1,0 +1,150 @@
+{
+ "name": "phoenixmissile",
+ "archive": "War3x.mpq",
+ "mdxBytes": 9532,
+ "path": "Abilities\\Weapons\\PhoenixMissile\\Phoenix_Missile.mdl",
+ "textures": [
+  {
+   "texture": "Textures\\RibbonNE1_Red2.blp",
+   "size": [
+    64,
+    32
+   ],
+   "lumMean": 68.0,
+   "lumStd": 69.7,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "abilities\\Weapons\\PhoenixMissile\\RibbonMagic1.blp",
+   "size": [
+    128,
+    64
+   ],
+   "lumMean": 73.1,
+   "lumStd": 74.6,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Red_Glow3.blp",
+   "size": [
+    32,
+    32
+   ],
+   "lumMean": 15.1,
+   "lumStd": 19.5,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\LavaLump2.blp",
+   "size": [
+    32,
+    32
+   ],
+   "lumMean": 22.9,
+   "lumStd": 43.0,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [
+  {
+   "emitter": "BlizParticle02",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle01",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle03firebits",
+   "segmentAlpha": [
+    255,
+    200,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle03firebits01",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle03firebits02",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 11724,
+ "rawHeight": 85.09,
+ "scaleFactor": 0.02778,
+ "height": 2.364,
+ "visiblePrims": "1/1",
+ "animations": [
+  "Death",
+  "Stand",
+  "Birth"
+ ],
+ "clipMap": {
+  "idle": "Stand",
+  "run": "Stand",
+  "attack": "Stand",
+  "cast": "Stand",
+  "hurt": "Stand",
+  "death": "Death"
+ },
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "litGlowMaterials": [],
+ "fullExtents": [
+  2.5286,
+  2.3637,
+  2.6527
+ ],
+ "visibleExtents": [
+  2.5286,
+  2.3637,
+  2.6527
+ ],
+ "fullLongAxis": "z",
+ "visibleLongAxis": "z",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/phoenixmissile.glb"
+}
