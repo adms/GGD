@@ -153,7 +153,9 @@ export async function bootVfxScriptStudio(): Promise<void> {
 
   // ── 場景 ───────────────────────────────────────────────────────────────────
   const canvas = $("view") as HTMLCanvasElement;
-  const engine = new Engine(canvas, true);
+  // ⚠️ `preserveDrawingBuffer` —— ⛔ 沒有它 `toDataURL` 在 WebGL 上讀到的是空的
+//    （連拍證據會變成一排黑圖，而它看起來就像「特效沒出來」）。
+const engine = new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
   const scene = new Scene(engine);
   scene.clearColor = new Color4(0.02, 0.024, 0.04, 1);
   new HemisphericLight("sun", new Vector3(0.3, 1, 0.2), scene).intensity = 0.9;
@@ -202,16 +204,29 @@ export async function bootVfxScriptStudio(): Promise<void> {
     { x: 10, z: 2 },
     { x: 12, z: -2 },
   ];
-  const { world, castOnce, casterPos, enemyPos } = await buildBeamAuditionWorld(
-    ENEMY_LINE,
-    abilityId as never,
-  );
+  // ⭐ 反應型技能（`effects: []` ＋ 只有 passive hooks，例：20-002 理想鄉EX 的
+  //    `onReflectSuccess`）**自己不施放** —— 要施放的是把它的前提做出來的那一支
+  //    （Avalon 20-04）。`?pre=` 指定它；缺席就照舊施放 `?ability=` 本人。
+  const castId = params.get("pre") ?? abilityId;
+  const { world, castOnce, casterId, casterPos, enemyPos, enemyIds } =
+    await buildBeamAuditionWorld(ENEMY_LINE, castId as never);
 
   // ⛔ 順序逐字照抄 `ContentDb.load()`（beamAudition 盲區②）。
   setAbilityArtBindings((Configs.tryGet("vfx-ability-art") ?? null) as never);
   setAbilityVfxBindings((Configs.tryGet("ability-vfx-bindings") ?? null) as never);
   setFamilyTuning((Configs.tryGet("vfx-families") ?? null) as never);
 
+  // ⭐⭐ 台子盲區（studio 首次連拍量到）：`spawnFighter` 把 `stats.sources` 設成
+  //    **空陣列**且 `dirty:false` ⇒ `statRecomputeSystem` 不跑 ⇒ 英雄的**被動**
+  //    （`passive.ranks[].hooks`）一條都沒安裝 ⇒ `fireHooks` 在 `sources` 上找不到
+  //    任何東西 ⇒ 反應型技能的演出**逐位元等於不存在**，而畫面看起來只是「沒特效」。
+  //    ⇒ 標成 dirty，讓出貨的重算把被動裝上去。
+  const abx = world.abilities.get(casterId);
+  if (abx?.exSlot) (abx.exSlot as { rank: number }).rank = 1; // EX 槽預設 rank 0 ⇒ 被動不裝
+  const { syncAbilityPassives } = await import("@ggd/shared/sim/abilities/abilityPassives");
+  syncAbilityPassives(world, casterId); // ⭐ 出貨路徑上把 passive.hooks 掛成 ModifierSource 的那一支
+  const sc = world.stats.get(casterId);
+  if (sc) sc.dirty = true;
   mkBody(casterPos.x, casterPos.z, true);
   for (const p of enemyPos) mkBody(p.x, p.z, false);
   ground.position.set(casterPos.x + 6, 0, casterPos.z);
@@ -408,6 +423,124 @@ export async function bootVfxScriptStudio(): Promise<void> {
     renderFields();
     syncJson();
   };
+
+  // ── 📸 連拍證據（?capture=1）—— 天譴式：量尺先自證，再決定性 frame-step ────
+  //    ⛔ 不用 rAF（它跟著螢幕跑，同一段演出每次擷到的時刻都不一樣）。
+  const measureCanvas = document.createElement("canvas");
+  const mctx = measureCanvas.getContext("2d", { willReadFrequently: true });
+
+  const readRuler = (): { w: number; h: number; bright: number; lit: number } => {
+    // ⚠️ **先 render 再讀** —— 少了這一行讀到的是「上一幀」，而校準的第一個方向
+    //    （全亮 quad 在）就會量到 0 ⇒ 量尺自證失敗。這正是 auditionCalibrate
+    //    檔頭點名的坑之一，⭐ 而它在 studio 首次連拍時當場咬到我。
+    scene.render();
+    const w = canvas.width;
+    const h = canvas.height;
+    measureCanvas.width = w;
+    measureCanvas.height = h;
+    if (!mctx) return { w, h, bright: 0, lit: 0 };
+    mctx.drawImage(canvas, 0, 0);
+    const px = mctx.getImageData(0, 0, w, h).data;
+    let bright = 0;
+    let lit = 0;
+    for (let i = 0; i + 2 < px.length; i += 4) {
+      const v = Math.max(px[i]!, px[i + 1]!, px[i + 2]!);
+      if (v > 200) bright++;
+      if (v > 96) lit++;
+    }
+    return { w, h, bright, lit };
+  };
+
+  async function runCapture(totalTicks: number, everyTicks: number): Promise<void> {
+    const { calibrateTwoWay } = await import("./auditionCalibrate");
+    engine.stopRenderLoop(); // ⭐ 決定性：接下來每一幀都是我推的
+    say("量尺自證中（全亮 quad 在／不在，兩個方向）…", "dim");
+    let control = 0;
+    try {
+      control = await calibrateTwoWay({ scene, camera, rulers: { canvas: readRuler } });
+    } catch (err) {
+      say(`⛔ 量尺校準失敗 —— 這一頁的結論作廢：${err instanceof Error ? err.message : String(err)}`, "err");
+      return;
+    }
+    const sheet = $("contact");
+    sheet.innerHTML = `<div class="cap-head">📸 ${abilityId} —— 量尺 control=${control} 亮像素（兩方向已驗）</div>`;
+    sheet.style.display = "block";
+    castOnce();
+    const shots: { t: string; bright: number; png: string }[] = [];
+    // `?hitAt=<tick>[,<tick>…]` —— 敵人在這些 tick 各打施法者一發（⭐ 反彈/格擋
+    // 那一族的**前提**：沒有人打你就沒有東西可以反彈）。走出貨的 `damageQueue`，
+    // ⛔ 不是自己算傷害。
+    const hitAt = new Set(
+      (params.get("hitAt") ?? "")
+        .split(",")
+        .map((x) => Number(x.trim()))
+        .filter((n) => Number.isFinite(n)),
+    );
+    let clk = 0;
+    for (let t = 0; t < totalTicks; t++) {
+      if (hitAt.has(t)) {
+        const attacker = enemyIds[0];
+        if (attacker !== undefined) {
+          world.damageQueue.push({
+            source: attacker,
+            target: casterId,
+            amount: Number(params.get("hitAmount") ?? 400),
+            type: world.damageRules.defaultAbilityDamageType,
+            crit: false,
+            origin: "audition:hit",
+          } as never);
+        }
+      }
+      clk += TICK_MS;
+      try {
+        world.step(new Map());
+      } catch {
+        /* 施放被拒已在別處回報 */
+      }
+      for (const ev of world.events) vfx.handleEvent(ev as never, clk);
+      vfx.update(clk);
+      scene.render();
+      if (t % everyTicks !== 0) continue;
+      const r = readRuler();
+      const cell = document.createElement("figure");
+      cell.className = "cap-cell";
+      const img = document.createElement("img");
+      // ⚠️ 縮圖 ＋ JPEG —— 一份全尺寸 PNG 接觸表是 4MB，而它要進版控當耐久證據。
+      //    ⭐ 亮像素是從**全尺寸**畫面量的（上面那一行），⛔ 不是從縮圖 ——
+      //    縮圖只是給人看的，數字才是判準。
+      const thumb = document.createElement("canvas");
+      const tw = 360;
+      thumb.width = tw;
+      thumb.height = Math.max(1, Math.round((canvas.height / canvas.width) * tw));
+      thumb.getContext("2d")?.drawImage(canvas, 0, 0, thumb.width, thumb.height);
+      img.src = thumb.toDataURL("image/jpeg", 0.72);
+      const cap = document.createElement("figcaption");
+      cap.textContent = `t=${(t / 30).toFixed(2)}s · 亮 ${r.bright}`;
+      cell.appendChild(img);
+      cell.appendChild(cap);
+      sheet.appendChild(cell);
+      shots.push({ t: (t / 30).toFixed(2), bright: r.bright, png: img.src });
+      await new Promise((res) => setTimeout(res, 0)); // 讓瀏覽器把 png 編碼完
+    }
+    // 📸 落成檔案 —— ⛔ 只活在分頁裡的證據，捲過去就沒了（第零守則：留歷史紀錄）。
+    const stamp = (params.get("stamp") ?? "run").replace(/[^A-Za-z0-9-]/g, "");
+    try {
+      const res = await fetch("/__vfxstudio/proof", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ abilityId, control, stamp, frames: shots }),
+      });
+      const body = (await res.json()) as { ok?: boolean; path?: string; peak?: number; error?: string };
+      say(
+        body.ok
+          ? `📸 連拍完成 ${shots.length} 格（control=${control}，峰值 ${body.peak}）→ ${body.path}`
+          : `連拍完成但報告沒落地：${body.error ?? res.status}`,
+        body.ok ? "ok" : "err",
+      );
+    } catch (err) {
+      say(`連拍完成但報告沒落地：${err instanceof Error ? err.message : String(err)}`, "err");
+    }
+  }
 
   // ── 左側資源面板（從出貨登錄表列，⛔ 不手寫清單）───────────────────────────
   let tab: "models" | "vfx" = "models";
@@ -626,6 +759,13 @@ export async function bootVfxScriptStudio(): Promise<void> {
   renderPalette();
   await loadScript();
   say(`就緒 —— ${abilityId}。拖資源進畫面、拖 slider、按 ▶ 全程觀看。`, "ok");
+
+  // ?capture=1 ⇒ 直接進連拍（總 tick / 每幾 tick 一格 可由 query 調）
+  if (params.get("capture")) {
+    const total = Number(params.get("ticks") ?? 150);
+    const every = Number(params.get("every") ?? 10);
+    await runCapture(Number.isFinite(total) ? total : 150, Number.isFinite(every) ? every : 10);
+  }
 }
 
 void bootVfxScriptStudio().catch((err) => {

@@ -19,6 +19,7 @@ import { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
 import { spawnChampion } from "@ggd/shared/sim/spawnChampion";
 import { castAbility } from "@ggd/shared/sim/abilities/abilitySystem";
+import { syncAbilityPassives } from "@ggd/shared/sim/abilities/abilityPassives";
 import { asSeatId, asTeamId, type ChampionId } from "@ggd/shared/ids";
 import { ContentLoader } from "@ggd/shared/content/loader";
 import { shippedContentSource } from "@ggd/shared/content/__fixtures__/shippedContent";
@@ -273,5 +274,74 @@ describe("GH#838 演出腳本的出貨鏈（真 content → 真施放 → 真 Vf
       "strikeIndex:7 的段要正好在第 7 段 fire",
     ).toBe(seventh);
     expect(seventh, "真事件流裡沒有第 7 段 —— 超究的班表標本失效了").toBeGreaterThan(0);
+  });
+
+  it("⑤ 反應型技能：Avalon 反彈成功 ⇒ 理想鄉EX 的逐段錨真的發出來（⛔ 不是 Avalon 自己的特效）", () => {
+    // ⭐ studio 首次連拍量到：理想鄉EX 全程 **0 亮像素** —— 而根因不是 script，
+    //    是**台子產不出前提**（`effects: []` ＋ 只有 `onReflectSuccess` 鉤）。
+    //    這一條把前提做出來，然後問「EX 的錨有沒有發」——⛔ 不是問「畫面亮不亮」
+    //    （亮的可能全是 Avalon 自己的施法特效，那是失敗形態④：斷言方向與缺陷無關）。
+    const world = new SimWorld(SKELETON_ARENA, 1);
+    world.combatActive = true;
+    const c = SKELETON_ARENA.zones[0]!.center;
+    const saber = spawnChampion(world, {
+      championId: "godie-e002" as ChampionId,
+      seatId: asSeatId(0),
+      teamId: asTeamId(0),
+      pos: { x: c.x, z: c.z },
+      zone: 0,
+    });
+    const foe = spawnChampion(world, {
+      championId: "godie-e002" as ChampionId,
+      seatId: asSeatId(1),
+      teamId: asTeamId(1),
+      pos: { x: c.x + 4, z: c.z },
+      zone: 0,
+    });
+    world.step(new Map());
+    // ⭐ 被動要**顯式**裝上去：`spawnChampion` 之後 EX 槽 rank 是 0，而
+    //    `syncAbilityPassives` 是出貨路徑上把 `passive.ranks[].hooks` 掛成
+    //    ModifierSource 的那一支 —— 少了這兩行，`fireHooks` 在 `sources` 上
+    //    找不到 `onReflectSuccess`，整條 EX 鏈逐位元等於不存在。
+    const abx = world.abilities.get(saber)!;
+    if (abx.exSlot) (abx.exSlot as { rank: number }).rank = 1;
+    syncAbilityPassives(world, saber);
+    const sc = world.stats.get(saber);
+    if (sc) sc.dirty = true;
+    const ab = world.abilities.get(saber)!;
+    (ab.slots as Record<string, { rank: number }>).R!.rank = 1;
+    const hp = world.health.get(saber)!;
+    hp.mana = hp.maxMana;
+    // 20-04 Avalon 開反射窗
+    expect(castAbility(world, saber, "R", { type: "self" })).toBe("ok");
+    const strikes: EventMessage[] = [];
+    for (let t = 0; t < 220; t++) {
+      // ⚠️ 時機承重：Avalon 是**有吟唱**的技能，反彈 buff 要等 `castEnd` 才落地
+      //    ⇒ 太早打進來的那一發**沒有東西可以反彈**（首版守衛就是這樣紅的，
+      //    而它看起來像「EX 壞了」）。打兩發，跨過吟唱結束。
+      if (t === 45 || t === 50) {
+        // 敵方英雄打進來 —— 反彈的**前提**
+        (world.damageQueue as unknown as Record<string, unknown>[]).push({
+          source: foe,
+          target: saber,
+          amount: 400,
+          type: world.damageRules.defaultAbilityDamageType,
+          crit: false,
+          origin: "test:hit",
+        });
+      }
+      world.step(new Map());
+      for (const e of world.events) if (e.type === "comboStrike") strikes.push({ ...e } as EventMessage);
+    }
+    expect(
+      strikes.length,
+      "⛔ 反彈成功之後一則 comboStrike 都沒有 —— 理想鄉EX 的七連斬演出沒有錨（畫面上會是「什麼都沒發生」）",
+    ).toBeGreaterThan(0);
+    // ⭐ 而且錨要**指名 EX**（⛔ 不是 Avalon 或別的技能借過）
+    const origins = new Set(strikes.map((e) => String((e.data as { origin?: string }).origin ?? "")));
+    expect(
+      [...origins].some((o) => o.includes(".ex")),
+      `錨的 origin 是 ${[...origins].join(" / ")} —— 沒有一則來自 EX`,
+    ).toBe(true);
   });
 });

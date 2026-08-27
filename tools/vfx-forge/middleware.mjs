@@ -109,6 +109,60 @@ export function createVfxStudioMiddleware(repoRoot) {
       return;
     }
 
+    if (req.method === "POST" && url.pathname === `${ROUTE_PREFIX}/proof`) {
+      // 📸 連拍證據落成檔案（天譴式驗收的耐久產物）。
+      // ⚠️ 報告帶著 **control**（量尺自證的讀數）與每一格的亮像素 —— ⛔ 一份沒有
+      //    control 的接觸表證明不了任何事（量尺可能整台是瞎的）。
+      let raw = "";
+      req.on("data", (c) => {
+        raw += c;
+        if (raw.length > 64 * 1024 * 1024) req.destroy();
+      });
+      req.on("end", () => {
+        try {
+          const b = JSON.parse(raw);
+          const id = String(b?.abilityId ?? "");
+          if (!ID_RE.test(id)) return sendJson(res, 400, { error: `abilityId 不合法：${id}` });
+          const frames = Array.isArray(b?.frames) ? b.frames : [];
+          if (frames.length === 0) return sendJson(res, 400, { error: "frames 是空的" });
+          const stamp = String(b?.stamp ?? "unknown");
+          const control = Number(b?.control ?? 0);
+          const cells = frames
+            .map(
+              (f) =>
+                `<figure><img src="${String(f.png)}" alt="t=${f.t}"><figcaption>t=${f.t}s<br><b>亮 ${f.bright}</b></figcaption></figure>`,
+            )
+            .join("\n");
+          const peak = Math.max(...frames.map((f) => Number(f.bright) || 0));
+          const html = `<!doctype html><html lang="zh-Hant"><meta charset="utf-8">
+<title>${id} 連拍證據（GH#838）</title>
+<style>body{background:#05060a;color:#e8ecf6;font:13px/1.6 system-ui,"Noto Sans TC";margin:16px}
+h1{font-size:16px;color:#f0c674}figure{display:inline-block;margin:0 8px 10px 0;text-align:center}
+img{width:230px;border:1px solid #2a3145;border-radius:4px;display:block}
+figcaption{color:#98a2bd;font-size:11px;margin-top:3px}b{color:#8fe38f}
+.meta{color:#98a2bd;margin:6px 0 14px}code{color:#7dc4fc}</style>
+<h1>📸 ${id} —— 演出腳本連拍證據（GH#838）</h1>
+<div class="meta">
+產生：<code>vfx-script-studio.html?ability=${id}&amp;capture=1</code>（真 SimWorld 施放 → 真事件 → 出貨 VfxSystem → VfxScriptPlayer）<br>
+⭐ 量尺自證（兩個方向）：全亮 quad 在 ⇒ <b>${control}</b> 亮像素；quad 不在 ⇒ 更少（<code>calibrateTwoWay</code> 會擲例外，所以這份報告存在本身就是它過了）<br>
+峰值 <b>${peak}</b> 亮像素 · ${frames.length} 格 · 時間戳 ${stamp}
+</div>
+${cells}
+</html>`;
+          // ⚠️ `outDir` ⛔ 不叫 dir —— 外層 closure 已經有一個 dir（vfx-scripts），
+          //    同名遮蔽在這種檔案寫入的程式裡是下一個人讀錯的起點。
+          const outDir = join(repoRoot, "docs", "_reports");
+          if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
+          const rel = `docs/_reports/vfx-proof_${id}_temp_${stamp}.html`;
+          writeFileSync(join(repoRoot, rel), html, "utf8");
+          return sendJson(res, 200, { ok: true, path: rel, peak, frames: frames.length });
+        } catch (err) {
+          return sendJson(res, 400, { error: String(err?.message ?? err) });
+        }
+      });
+      return;
+    }
+
     if (req.method === "POST" && url.pathname === `${ROUTE_PREFIX}/publish`) {
       // ── 回存主線：build → commit（逐檔 pathspec）→ push ───────────────────
       const PATHSPEC = ["content/vfx-scripts", "content/bundle.json", "content/manifest.json"];
