@@ -14,7 +14,8 @@ import {
   writeFileSync,
   existsSync,
 } from "node:fs";
-import { dirname, join, resolve, sep } from "node:path";
+import { dirname, join, relative, resolve, sep } from "node:path";
+import { createHash } from "node:crypto";
 import { writeProduct } from "../../ops/writeProduct";
 import {
   CONTENT_BUNDLE_FILE,
@@ -122,6 +123,34 @@ export function rebuildCollectionIndex(
 }
 
 /**
+ * ⭐ 資產樹的內容摘要（GH#838）—— `content/assets/**` 的每一個位元組。
+ *
+ * ⚠️ 決定性：只吃**相對路徑＋位元組**，⛔ 不吃 mtime／inode／順序（走排序）。
+ * 不存在的資產目錄回 `undefined`（⇒ 這一格不進 manifest，舊行為逐位元不變）。
+ */
+export function hashAssetTree(assetsDir: string): string | undefined {
+  if (!existsSync(assetsDir)) return undefined;
+  const files: string[] = [];
+  const walk = (d: string): void => {
+    for (const e of readdirSync(d, { withFileTypes: true })) {
+      const p = join(d, e.name);
+      if (e.isDirectory()) walk(p);
+      else files.push(p);
+    }
+  };
+  walk(assetsDir);
+  files.sort();
+  const h = createHash("sha256");
+  for (const f of files) {
+    h.update(relative(assetsDir, f).split(sep).join("/"));
+    h.update("\0");
+    h.update(readFileSync(f));
+    h.update("\0");
+  }
+  return h.digest("hex").slice(0, 12);
+}
+
+/**
  * (Re)build manifest.json from every existing collection dir. Pure function
  * of content — no timestamps, so identical content always yields an identical
  * manifest (and contentVersion).
@@ -147,6 +176,25 @@ export function rebuildManifest(
     };
     hashes[name] = index.hash;
   }
+  // ⭐⭐ GH#838 —— **資產位元組也要進 contentVersion**（owner 2026-08-28：
+  //    「Rider EX 地上魔法陣沒有去背透明，你已經不是第一次沒去背乾淨」）。
+  //
+  // ⛔ 那一次「不是第一次」的真根因**不是漏了哪一張圖** —— 那張圖 2026-08-24 就
+  //    修好了。根因是**交付**：客戶端用 `?h=<contentVersion>` 抓每一顆 glb
+  //    （`AssetManager.ts`），而 nginx 對非空 `?h=` 給
+  //    `max-age=31536000, immutable`（`deploy/helm/ggd/files/nginx.conf`）——
+  //    ⭐ 而 `contentVersion` 在這一行之前**只由 JSON 文件推導**，
+  //    `content/assets/**` 貢獻 **0 bit**。
+  //    ⇒ 一次「只改 glb、零份文件」的修復（`a9cf7187` 改了 25 顆）產生**一模一樣**
+  //      的 cv ⇒ 修好的資產用**跟壞掉那份完全相同的 URL** 出貨 ⇒ 每一個看過壞版本
+  //      的瀏覽器把它鎖一年。**修好了，而玩家看到的還是壞的，且沒有任何東西會紅。**
+  //
+  // ⇒ 把資產樹摘要成一格 hash 餵進去。實測 12,551 檔 / 340MB ⇒ **1.1 秒**，
+  //    而它換掉的是「靜默交付失敗」——那是划算的（⛔ 不要為了省 1 秒退回去）。
+  // ⚠️ 摘要**只吃路徑與位元組**（⛔ 不吃 mtime）：同一份內容在任何機器上都要算出
+  //    同一個 cv，否則每一次 CI 都會 bust 掉全世界的快取。
+  const assetsHash = hashAssetTree(join(rootDir, "assets"));
+  if (assetsHash !== undefined) hashes["__assets"] = assetsHash;
   const manifest: Manifest = { contentVersion: contentVersion(hashes), collections };
   if (opts.write !== false) {
     writeProduct(join(rootDir, "manifest.json"), fileJson(manifest)); // 同 _index:直寫 ⇒ 要解鎖
