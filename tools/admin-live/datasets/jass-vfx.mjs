@@ -17,8 +17,36 @@
  *   就是下一次的過期快照。閘：`packages/shared/src/ops/laneCENSUSVfxCensusFresh.test.ts`。
  */
 
-import { readdirSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+
+/**
+ * ⭐ GH#821 寫入宣告 —— POST /__live/jass-vfx/save。
+ * GGD 側的頂層 `vfxKey` 是技能文件自己的欄位（家在 content/abilities —— 混編目錄，
+ * 寫入端逐次 spawn genguard 裁決；skillremake:json 的產物會 409 指名擁有者）。
+ * check：key 要在 content/vfx/_index.json 的 entries 裡（zRef("vfx") 的名冊）——
+ * 存一個查不到的 key = 卡上宣稱了不會發生的特效（第一·五守則）。
+ * effects 樹裡巢狀的 spawn 節點**刻意不開**：單格 pointer 表達不了一個節點的編輯，
+ * 那屬於技能編輯器（skill-authoring 的骨架路線）。
+ */
+export const write = {
+  kind: "source",
+  rules: [
+    {
+      paths: ["content/abilities/*.json"],
+      pointers: ["/vfxKey"],
+      value: { type: "string", maxLen: 80, nullable: true },
+      why: "技能頂層 vfxKey（null＝移除）",
+      check(repoRoot, { value }) {
+        if (value === null) return null;
+        const idx = JSON.parse(readFileSync(join(repoRoot, "content/vfx/_index.json"), "utf8"));
+        return (idx.entries ?? []).some((e) => e.id === value)
+          ? null
+          : `「${value}」不在 content/vfx/_index.json —— 存了也畫不出來（第一·五守則）`;
+      },
+    },
+  ],
+};
 
 const FX_EFFECT_KINDS = new Set(["spawnModelFx", "spawnVfx", "spawnProjectile"]);
 

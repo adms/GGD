@@ -38,6 +38,37 @@ function listJson(repoRoot, dir) {
 }
 
 /**
+ * ⭐ GH#821 寫入宣告 —— POST /__live/sfx-map/save。
+ * 施放音綁定**真正的家**是技能文件的 `sfxKey`（build_bindings.py 檔頭逐字：
+ * "WHERE THE BINDING ACTUALLY LIVES: content/abilities/<id>.json's sfxKey"）——
+ * ⛔ 不寫 ability-sfx-cues.json（那是 sfxbind:build 的產物，寫了下一次 sync 打回來）。
+ * ⚠️ content/abilities 是**混的**（105 份有作者）—— 寫入端逐次 spawn genguard 裁決；
+ * 產物會 409 並指名擁有者，手編檔放行（附正規化器提醒）。
+ * check：cue 要在 cues 名單＋audio-map 都查得到（執行期查不到會被靜默退回通用池）。
+ */
+export const write = {
+  kind: "source",
+  rules: [
+    {
+      paths: ["content/abilities/*.json"],
+      pointers: ["/sfxKey"],
+      value: { type: "string", maxLen: 64, nullable: true },
+      why: "施放音 cue（null＝移除綁定，退回元素/通用池）",
+      check(repoRoot, { value }) {
+        if (value === null) return null;
+        const cues = JSON.parse(readFileSync(join(repoRoot, "content/audio-manifests/ability-sfx-cues.json"), "utf8"));
+        if (!Object.prototype.hasOwnProperty.call(cues.cues ?? {}, value))
+          return `「${value}」不在 cues 名單（audio.ability-sfx-cues@1）—— 執行期會被退回通用池，存了等於謊話`;
+        const am = JSON.parse(readFileSync(join(repoRoot, "content/config/audio-map.json"), "utf8"));
+        if (!Object.prototype.hasOwnProperty.call(am.sfx ?? {}, value))
+          return `「${value}」不在 audio-map 的 sfx 表 —— 沒有檔案可播`;
+        return null;
+      },
+    },
+  ],
+};
+
+/**
  * deps 逐檔列名（⛔ 不是只列目錄）：目錄的 mtime 只在增刪檔時動，
  * 改一支技能的 sfxKey 不會動它 —— 只列目錄的話這一頁就變回「靜態內容」。
  * 目錄本身也列（抓增刪檔）。

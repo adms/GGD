@@ -17,6 +17,16 @@ import { execFile } from "node:child_process";
 import { readdirSync, readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 
+/**
+ * GH#821 豁免（能被反駁）：這一頁是 drift 稽核 —— 規格側的家是 tools/skill-remake/
+ * batch1.py 的 T 表（**程式**，改它要跑 refresh_docs.py＋genrun）；出貨側那 91 份是
+ * skillremake:json 的產物（genguard AUTHOR）。兩側都不是「資料儲存」寫得到的地方；
+ * 從這裡寫任一側都會被下一次 sync 打回來或造成兩側靜默分岔。
+ * 反駁法：指出一格 target 過得了 genguard 且不在 batch1.py 的權威範圍。
+ */
+export const readonlyWhy =
+  "drift 稽核頁：規格側住 batch1.py（程式）、出貨側是 skillremake:json 產物 —— 兩側都不是資料儲存的家。";
+
 /** 這個 dataset 讀哪些檔 —— 誠實列（漏列＝變回靜態內容）。
  *  build() 實際讀的面：
  *   · tools/skill-remake/ 的每一支 .py（含 heroes/ 分片）

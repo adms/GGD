@@ -7,7 +7,10 @@
  * ⭐ 與 ContentPage 同一個 DEV-chunk 形狀：routes ＋ label 全部跟著這個 chunk 走，
  * ⭐ **GH#794 起正式 build 也含這一段** —— `/__live/**` 線上真的有了
  * （review sidecar ＋ nginx 的 location）。⛔ 上面那句「正式 build 不含」已作廢。
- * ⛔ 仍然不要把這裡的頁面加進 SESSION_REQUIRED_PAGES（它們是唯讀對照頁）。
+ * ⛔ 仍然不要把這裡的頁面加進 SESSION_REQUIRED_PAGES（身分由 /__live 伺服端裁決）。
+ * 💾 GH#821：這些頁**不是唯讀** —— 儲存走共用寫入端 POST /__live/<dataset>/save；
+ *    每個 dataset 要嘛宣告 write、要嘛帶能被反駁的 readonlyWhy
+ *    （覆蓋率閘 packages/shared/src/ops/liveWriteCoverage.test.ts 逐頁在驗）。
  *
  * 🔐 GH#796：載入這個 chunk 的同時裝上 fetch 攔截器，讓 13 頁的
  * `fetch("/__live/…")` 自動帶上 console 已登入的 token —— ⭐ 一個住處，

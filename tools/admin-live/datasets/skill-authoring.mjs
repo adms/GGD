@@ -27,6 +27,15 @@
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 
+/**
+ * GH#821 豁免（能被反駁）：這一頁是**建議器** —— GET 是判斷表×出貨掃描的推導，
+ * POST(compute) 產出骨架給人貼進編輯器/Zod（檔頭 honest 段逐字：骨架要進編輯器才算數）。
+ * 頁上沒有一格是資料的家；判斷表（TEXT_RULES/TAG_RULES）的家是本檔程式碼 ⇒ 改它是程式改動。
+ * 反駁法：指出頁上一格是出貨資料的家。
+ */
+export const readonlyWhy =
+  "建議器：輸出是給人貼進編輯器的骨架，頁上沒有一格是出貨資料的家；判斷表住程式碼。";
+
 export const deps = [
   "tools/skill-templates/shape_axes.json",
   "tools/skill-templates/prose_markers.json",

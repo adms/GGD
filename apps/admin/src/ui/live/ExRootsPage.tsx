@@ -1,5 +1,6 @@
 /**
- * 🧬 EX解放／EX∅ 根源 三選一 —— 唯讀 live 對照頁（GET /__live/ex-roots）。
+ * 🧬 EX解放／EX∅ 根源 三選一 —— live 對照頁（GET /__live/ex-roots；
+ * offerCount／exUnlockRound 兩格可存 —— POST /__live/ex-roots/save，GH#821）。
  *
  * owner 2026-08-26（逐字）：
  * > 「這些後台頁面的內容都要 **script 實時動態產生**，**不是靜態內容**喔」
@@ -20,8 +21,11 @@ import { Panel, Btn, TextInput } from "../widgets";
 import { DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
 import { useApp } from "../../store";
 import { ReviewStrip } from "./ReviewStrip";
+import { LiveEditCell } from "./LiveEditCell";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
+/** 寫入端的目標（與 datasets/ex-roots.mjs 的 write.rules 同一個檔）。 */
+const RULES_PATH = "content/config/arena-rules.json";
 
 interface PoolItemRow {
   id: string;
@@ -211,14 +215,19 @@ export function ExRootsPage(): React.JSX.Element {
           ))}
           <div style={{ fontSize: 13, color: GOLD, marginTop: 4 }}>{data.ladder}</div>
           <div style={{ fontSize: 12, color: TEXT_DIM, fontFamily: MONO }}>
-            三選一 offerCount={String(d.offerCount)} · EX 解鎖回合={String(d.exUnlockRound)} · 決勝回合=
+            三選一 offerCount=
+            <LiveEditCell dataset="ex-roots" path={RULES_PATH} pointer="/offerCount" current={d.offerCount} type="number" onSaved={load} />
+            {" "}· EX 解鎖回合=
+            <LiveEditCell dataset="ex-roots" path={RULES_PATH} pointer="/exUnlockRound" current={d.exUnlockRound} type="number" onSaved={load} />
+            {" "}· 決勝回合=
             {String(d.finalRound)}（寶具表 {d.round10WeaponTable ?? "—"}
             {d.round10DraftBoth ? " · 兩邊都抽" : ""}） · 貨架直買 weaponShelfOpen=
             {String(d.weaponShelfOpen)}
           </div>
           <div style={{ fontSize: 12, color: TEXT_DIM }}>
+            ✏️ 那兩格經共用寫入端存回 <code style={{ fontFamily: MONO }}>{RULES_PATH}</code>（GH#821，寫前過 genguard）。
             機率／劣勢加權／數量上限是 <code style={{ fontFamily: MONO }}>config.arena-rules@1.weaponTiers</code>
-            的現值 —— 要改請走右上角的既有設定頁，⛔ 這一頁唯讀。
+            的現值 —— 那幾格走右上角的既有設定頁。
           </div>
         </div>
       </Panel>

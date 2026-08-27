@@ -27,6 +27,15 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
+/**
+ * GH#821 豁免（能被反駁）：這一頁每一格都是 w3x 普查產物（OBJECTS/MODEL_USAGE/
+ * JASS_BEHAVIOR/CENSUS）與出貨綁定的 **join 推導值** —— 頁上沒有一格自己是資料的家。
+ * 家族視覺旋鈕的家在 vfx-families.json（pitch:build 產物）⇒ 改它是改產生器來源，
+ * ⛔ 不是這個端點的「資料儲存」。反駁法：指出頁上任何一格是家而非推導值。
+ */
+export const readonlyWhy =
+  "全頁是 w3x 普查產物 × 出貨綁定的 join 推導值，沒有一格是資料的家；家族旋鈕住 vfx-families.json（pitch:build 產物，改來源走 genrun）。";
+
 const SRC = {
   objects: "tools/w3x-import/out/GoDieEX22s-src/OBJECTS.json",
   usage: "tools/w3x-import/out/vfx-census/MODEL_USAGE.json",

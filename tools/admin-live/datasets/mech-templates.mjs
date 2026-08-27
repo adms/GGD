@@ -17,6 +17,15 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
+/**
+ * GH#821 豁免（能被反駁）：檔頭已逐字聲明「上面點名的 content/** 檔全是**產生器產物**」
+ * （ability-templates · 五級距表 · abilities 的模板 ref 掃描）—— 沒有一份 target
+ * 過得了 genguard 的 AUTHOR 裁決；改模板要改產生器來源再 genrun。
+ * 反駁法：對任一 target 跑 bash scripts/genguard.sh 得到 ✓。
+ */
+export const readonlyWhy =
+  "所有 target 都是產生器產物（genguard AUTHOR）—— 直接寫等於沒寫，改模板走產生器來源＋genrun。";
+
 const CONFIG_FILES = [
   "content/config/aoe-tiers.json",
   "content/config/range-tiers.json",

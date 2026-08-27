@@ -19,6 +19,43 @@ import { join } from "node:path";
 
 const NORM = "content/config/stat-normalization.json";
 const ARCHETYPES = "docs/hero-archetypes.json";
+
+/**
+ * ⭐ GH#821 寫入宣告 —— POST /__live/radar-origins/save。
+ * `stat-normalization.json` 是**手編 config**（genguard ✓）——「哪一個出身在哪一項
+ * 屬性落哪一格」（byOrigin）就是這一頁的資料的家。級距**值**（bands/bandsByScale）
+ * 也住同一份，但那是平衡梯子 —— 只開 byOrigin 的**級名**格；值的改動走既有 config 流程。
+ * ⚠️ ARCHETYPES 是 archetypes:build 產物，⛔ 永遠不寫。
+ * check：級名要在同一份檔的 bands/bandsByScale 真的有的名字裡（⛔ 不寫死五級名）。
+ */
+export const write = {
+  kind: "source",
+  rules: [
+    {
+      paths: [NORM],
+      pointers: ["/byOrigin/*/*"],
+      value: { type: "string", maxLen: 8 },
+      why: "出身 × 屬性 → 級距名（值在載入時從 bands 解析）",
+      check(repoRoot, { value }) {
+        const norm = JSON.parse(readFileSync(join(repoRoot, NORM), "utf8"));
+        const names = new Set();
+        const collect = (node) => {
+          if (node === null || typeof node !== "object") return;
+          const vals = Object.values(node);
+          if (!Array.isArray(node) && vals.length > 0 && vals.every((v) => typeof v === "number")) {
+            for (const k of Object.keys(node)) names.add(k);
+            return;
+          }
+          for (const v of vals) collect(v);
+        };
+        collect(norm.bands);
+        collect(norm.bandsByScale);
+        if (names.size === 0) return "讀不到 bands 的級名 —— ⛔ 不要把「讀不到」當成「合法」";
+        return names.has(value) ? null : `「${value}」不在 bands 的級名（${[...names].join("/")}）`;
+      },
+    },
+  ],
+};
 const ROUTES = "content/config/origin-routes.json";
 const CHAMP_DIR = "content/champions";
 

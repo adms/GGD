@@ -22,6 +22,16 @@
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
 
+/**
+ * GH#821 豁免（能被反駁）：三張表裡 ①ability-templates 與 ③vfx-families 是產生器產物
+ * （genguard AUTHOR —— 寫了下一次 sync 打回來）；②model@1 有手編子集，但 scale/clipMap/
+ * fxTint 是**要對 glb 驗的視覺值** —— 單格寫入會做出「改了但沒有終端證據」的宣稱
+ * （👁 用詞紀律：鏈路接上 ≠ 玩家看得到），那一族的修改走 audition＋visual-proof 流程。
+ * 反駁法：指出一格既是手編的家、又不需要視覺驗收的欄位。
+ */
+export const readonlyWhy =
+  "①③是產生器產物；②model@1 的視覺欄要 audition 終端證據 —— 單格盲寫違反 👁 用詞紀律。";
+
 export const deps = [
   "content/ability-templates",
   "content/ability-templates/_index.json",

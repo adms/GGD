@@ -23,6 +23,16 @@
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
 
+/**
+ * GH#821 豁免（能被反駁）：左側是 locust:build 的 census 產物（量測，⛔ 不可編）；
+ * 右側是 effects 樹裡的 spawnModelFx **巢狀節點** —— 共用寫入端的單格 scalar pointer
+ * 表達不了「編一個節點」（節點索引又是 join 推導的，指錯格就是改錯技能）。
+ * 節點級編輯屬技能編輯器（skill-authoring 骨架路線）。
+ * 反駁法：指出頁上一格是可以用單格 scalar 安全定址的家。
+ */
+export const readonlyWhy =
+  "左側 census＝產物；右側是 effects 樹巢狀節點，單格 pointer 定址不安全 —— 節點編輯屬技能編輯器。";
+
 /** deps 誠實列到檔案層級：目錄 mtime 在 macOS 上不因「改既有檔內容」而動。 */
 export function deps(repoRoot) {
   const out = ["tools/locust-census/census.json"];

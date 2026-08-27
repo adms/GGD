@@ -30,6 +30,50 @@ const CONFIGS = [
   "content/config/aoe-tiers.json",
 ];
 
+/** pointer → 這一軸的級距表（check 從**表**收合法級名，⛔ 不寫死 —— 第〇·四守則）。 */
+const AXIS_TABLE = {
+  "/cooldownTier": "content/config/cooldown-tiers.json",
+  "/manaCostTier": "content/config/mana-tiers.json",
+  "/rangeTier": "content/config/range-tiers.json",
+  "/radiusTier": "content/config/aoe-tiers.json",
+};
+
+/** 走訪表 JSON，收所有「值全是數字的物件」的鍵（各表形狀不同，級名集合是它們的聯集）。 */
+function tierNamesOf(node, out) {
+  if (node === null || typeof node !== "object") return;
+  const vals = Object.values(node);
+  if (!Array.isArray(node) && vals.length > 0 && vals.every((v) => typeof v === "number")) {
+    for (const k of Object.keys(node)) out.add(k);
+    return;
+  }
+  for (const v of vals) tierNamesOf(v, out);
+}
+
+/**
+ * ⭐ GH#821 寫入宣告 —— POST /__live/radar-abilities/save。
+ * 四個**級距名**欄住 content/abilities（混編目錄 —— 寫入端逐次 spawn genguard 裁決）；
+ * 級距**值**表是 anchors:build 家族的產物，⛔ 這裡永遠不寫它們。
+ * ⚠️ 編輯 UI 尚未接在這一頁上（逐頁票）—— 端點本身已可用且被覆蓋率閘點名。
+ */
+export const write = {
+  kind: "source",
+  rules: [
+    {
+      paths: ["content/abilities/*.json"],
+      pointers: Object.keys(AXIS_TABLE),
+      value: { type: "string", maxLen: 8 },
+      why: "四軸級距名（值由載入時從共用表解析，⛔ 不烘數字）",
+      check(repoRoot, { pointer, value }) {
+        const rel = AXIS_TABLE[pointer];
+        const names = new Set();
+        tierNamesOf(JSON.parse(readFileSync(join(repoRoot, rel), "utf8")), names);
+        if (names.size === 0) return `讀不到 ${rel} 的級名 —— ⛔ 不要把「讀不到」當成「合法」`;
+        return names.has(value) ? null : `「${value}」不在 ${rel} 的級名（${[...names].join("/")}）`;
+      },
+    },
+  ],
+};
+
 /** deps 逐檔列（⛔ 不是只列目錄 —— 目錄 mtime 在 macOS 不會因為改檔內容而動）。 */
 export function deps(repoRoot) {
   const out = ["content/abilities", "content/champions", ...CONFIGS];

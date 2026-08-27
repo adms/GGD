@@ -32,6 +32,29 @@ function listJson(repoRoot, dir) {
 }
 
 /**
+ * ⭐ GH#821 寫入宣告 —— 走共用寫入端 POST /__live/ex-roots/save。
+ * arena-rules.json 是**手編 config**（genguard ✓ 無擁有者；寫入端每次寫前仍會再問它）。
+ * 三個住處已存在（content/config + Zod DEFAULT_* + admin SHIPPED_*）—— 這裡只改出貨值。
+ */
+export const write = {
+  kind: "source",
+  rules: [
+    {
+      paths: [CONFIG],
+      pointers: ["/offerCount"],
+      value: { type: "number", integer: true, min: 1, max: 6 },
+      why: "三選一的張數（config.arena-rules@1.offerCount）",
+    },
+    {
+      paths: [CONFIG],
+      pointers: ["/exUnlockRound"],
+      value: { type: "number", integer: true, min: 1, max: 10 },
+      why: "EX 解鎖回合",
+    },
+  ],
+};
+
+/**
  * deps 是**函式**：目錄 mtime 只在增刪檔時動，逐檔列 mtime 才會在「編某一份
  * ability/item JSON」時失效快取 ——「實時」＝與磁碟現況一致。
  */

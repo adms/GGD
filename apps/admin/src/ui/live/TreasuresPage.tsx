@@ -1,5 +1,6 @@
 /**
- * 🗡️ 寶具三選一（live）—— GET /__live/treasures 的唯讀對照頁。
+ * 🗡️ 寶具三選一（live）—— GET /__live/treasures 對照頁；權重欄可存
+ * （POST /__live/treasures/save → content/loot-tables/<表>.json，GH#821）。
  *
  * owner 2026-08-26（逐字）：
  * > 「這些後台頁面的內容都要 **script 實時動態產生**，**不是靜態內容**喔」
@@ -10,15 +11,18 @@
  *   · 聖杯願望：60 張願望的階／顯現位置／權重／適性條件 × grailDraft 規則
  * 「設定」半邊連去既有的 itemDraft config 頁（含聖杯顯現規則區塊），⛔ 不複製表單。
  */
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Btn, Panel, TextInput } from "../widgets";
 import { DANGER, GOLD, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
 import { useApp } from "../../store";
 import { ReviewStrip } from "./ReviewStrip";
+import { LiveEditCell } from "./LiveEditCell";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
 interface WeaponEntry {
+  /** 檔案裡的原始索引 —— 寫入端的 pointer 用它（entries 在 dataset 已按翻盤力重排）。 */
+  srcIndex: number;
   itemId: string;
   name: string;
   weight: number;
@@ -44,6 +48,8 @@ interface WeaponTier {
 }
 interface WeaponTable {
   id: string;
+  /** repo 相對路徑（寫入端的 path 用它，⛔ 不從 id 拼檔名）。 */
+  file: string;
   name: string;
   note: string;
   label: string;
@@ -153,22 +159,16 @@ export function TreasuresPage(): React.JSX.Element {
   const [err, setErr] = useState<string | null>(null);
   const [q, setQ] = useState("");
 
-  useEffect(() => {
-    let dead = false;
+  const load = useCallback(() => {
     fetch("/__live/treasures")
       .then(async (r) => {
         const j = (await r.json()) as TreasuresData & { error?: string };
-        if (dead) return;
         if (j.error) setErr(j.error);
         else setData(j);
       })
-      .catch((e) => {
-        if (!dead) setErr(String(e));
-      });
-    return () => {
-      dead = true;
-    };
+      .catch((e) => setErr(String(e)));
   }, []);
+  useEffect(() => load(), [load]);
 
   const needle = q.trim().toLowerCase();
   const tables = useMemo(() => {
@@ -264,7 +264,14 @@ export function TreasuresPage(): React.JSX.Element {
                       <Td mono>{e.itemId}</Td>
                       <Td>{e.name}</Td>
                       <Td align="right" mono>
-                        {e.weight}
+                        <LiveEditCell
+                          dataset="treasures"
+                          path={t.file}
+                          pointer={`/entries/${e.srcIndex}/weight`}
+                          current={e.weight}
+                          type="number"
+                          onSaved={load}
+                        />
                       </Td>
                       <Td align="right" mono color={TEXT_DIM}>
                         {e.sharePct}%

@@ -61,7 +61,9 @@ const review = createReviewMiddleware(REPO, { mode: MODE });
 let adminLive = null;
 let adminLiveWhy = null;
 try {
-  adminLive = createAdminLiveMiddleware(REPO);
+  // ⭐ GH#821：mode 傳下去 —— live 模式下共用寫入端對「材料側」(kind:"source") 回 403
+  //   並說明去本機做，⛔ 不是讓它去撞 :ro 掛載的 EACCES（靜默才是缺陷）。
+  adminLive = createAdminLiveMiddleware(REPO, { mode: MODE });
 } catch (err) {
   adminLiveWhy = String(err);
 }

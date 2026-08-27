@@ -12,7 +12,8 @@
  *   「佔比」只是滿池權重的除法（給人看密度用），實際機率還要過
  *   eligibility / 白名單 / 已擁有 / 顯現位置多樣性（sim/economy/draft.ts）——
  *   這裡刻意不模擬那條鏈。
- * ⛔ 唯讀：不寫任何檔。CSV 解析 spawn python3（多行引號欄位，⛔ 不自己手刻 parser）。
+ * build() 不寫任何檔；儲存走共用寫入端（見下面的 `write` 宣告，GH#821）。
+ * CSV 解析 spawn python3（多行引號欄位，⛔ 不自己手刻 parser）。
  */
 
 export const deps = [
@@ -43,6 +44,23 @@ print(json.dumps(out, ensure_ascii=False))
 const TIER_ZH = { silver: "白銀", gold: "黃金", prismatic: "稜彩" };
 /** 池的呈現順序照賽程：基礎 EX（第 2/5 回合）→ EX解放 → EX∅ 根源。 */
 const TABLE_ORDER = ["legendary-weapons", "ex-release-weapons", "ex-origin-weapons"];
+
+/**
+ * ⭐ GH#821 寫入宣告 —— POST /__live/treasures/save。
+ * loot table 是手編檔（genguard ✓；寫入端每次寫前仍會再問它）。
+ * pointer 用**檔案裡的原始索引**（rows 的 srcIndex），⛔ 不是頁面排序後的位置。
+ */
+export const write = {
+  kind: "source",
+  rules: [
+    {
+      paths: ["content/loot-tables/*.json"],
+      pointers: ["/entries/*/weight"],
+      value: { type: "number", min: 0, max: 1000 },
+      why: "獎池逐件權重（sharePct 由它推導）",
+    },
+  ],
+};
 
 export async function build(repoRoot) {
   const { readFileSync, readdirSync, existsSync } = await import("node:fs");
@@ -93,7 +111,9 @@ export async function build(repoRoot) {
     const tierRow = tierByTable.get(tid) ?? null;
     const entries = [];
     const totalWeight = (table.entries ?? []).reduce((s, e) => s + (e.weight ?? 1), 0);
+    let srcIndex = -1; // 檔案裡的原始索引（寫入端的 pointer 用它；entries 稍後會重排）
     for (const e of table.entries ?? []) {
+      srcIndex += 1;
       const p = join(repoRoot, "content/items", `${e.itemId}.json`);
       let doc = null;
       if (existsSync(p)) doc = JSON.parse(readFileSync(p, "utf8"));
@@ -103,6 +123,7 @@ export async function build(repoRoot) {
       const swingRaw = csvRow ? String(csvRow["翻盤力"] ?? "") : "";
       const bar = swingRaw.indexOf("｜");
       entries.push({
+        srcIndex,
         itemId: e.itemId,
         name: doc?.name ?? "（content/items 缺這一份）",
         weight: e.weight ?? 1,
@@ -119,6 +140,7 @@ export async function build(repoRoot) {
     entries.sort((a, b) => (b.swingScore ?? -1) - (a.swingScore ?? -1) || a.itemId.localeCompare(b.itemId));
     tables.push({
       id: tid,
+      file: `content/loot-tables/${f}`, // 寫入端的 path 用它（⛔ 不從 id 拼檔名）
       name: table.name ?? tid,
       note: table.note ?? "",
       label: tierRow?.label ?? "EX（基礎池）",

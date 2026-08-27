@@ -1,5 +1,7 @@
 /**
- * 🔊 技能音效對照 —— 技能 → 施放音／特效發射音／命中音／落點音 的唯讀 join。
+ * 🔊 技能音效對照 —— 技能 → 施放音／特效發射音／命中音／落點音 的 live join；
+ * 施放音欄可存（POST /__live/sfx-map/save → 技能文件的 sfxKey，GH#821 —— 產物由
+ * genguard 在寫入端擋，訊息指名擁有者）。
  *
  * owner 2026-08-26（逐字）：「這些後台頁面的內容都要 **script 實時動態產生**，
  * **不是靜態內容**喔」⇒ 這一頁 mount 時 fetch `/__live/sfx-map`（dev-only vite
@@ -20,6 +22,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Panel, TextInput } from "../widgets";
 import { DANGER, DANGER_BG, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
 import { ReviewStrip } from "./ReviewStrip";
+import { LiveEditCell } from "./LiveEditCell";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
@@ -336,10 +339,18 @@ export function SfxMapPage(): React.JSX.Element {
                         color={
                           r.cast === null ? TEXT_DIM : bads.has(r.cast) ? DANGER : GOLD
                         }
-                        title={r.castSrc === "overlay" ? "來源：ability-sfx-cues.json bindings 覆蓋層" : undefined}
+                        title={r.castSrc === "overlay" ? "來源：ability-sfx-cues.json bindings 覆蓋層（產物）—— ✏️ 存的是技能文件自己的 sfxKey（綁定真正的家）" : undefined}
                       >
-                        {r.cast ?? "—（元素/通用）"}
-                        {r.castSrc === "overlay" ? " ⧉" : ""}
+                        {r.castSrc === "overlay" ? `${r.cast} ⧉ / doc:` : ""}
+                        <LiveEditCell
+                          dataset="sfx-map"
+                          path={`content/abilities/${r.id}.json`}
+                          pointer="/sfxKey"
+                          current={r.castSrc === "doc" ? r.cast : null}
+                          type="string"
+                          nullable
+                          onSaved={() => setReloadTick((t) => t + 1)}
+                        />
                       </Td>
                       <Td mono color={TEXT_DIM}>
                         {r.fam ?? "—"}

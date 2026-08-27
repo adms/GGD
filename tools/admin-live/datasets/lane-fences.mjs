@@ -24,6 +24,14 @@
 import { execFile } from "node:child_process";
 
 /**
+ * GH#821 豁免（能被反駁）：柵欄是從每張 open 票 body 的 `Files / modules likely
+ * affected` 欄**推導**的（檔頭整段在講這件事）—— 家在 GitHub 票，⛔ 不在 repo 檔案。
+ * 反駁法：指出一份此頁在讀的 repo 手編來源。
+ */
+export const readonlyWhy =
+  "從票的 Files 欄推導（#833 的合法豁免候選）；可編的家在 GitHub 票 body，repo 裡沒有手編來源。";
+
+/**
  * 柵欄定義 —— ⭐ 與實際派工用的那幾條**一致**。
  * ⚠️ 順序有意義：由**窄到寬**比對，第一個命中的贏（`tools/review` 要贏過 `tools/`）。
  */

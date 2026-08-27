@@ -111,6 +111,36 @@ for m in re.finditer(rf"`((?:{ROOTS})/[^`\s]+)`", body):
     elif not claims_absent and not os.path.exists(path) and not re.search(r"新|new|要加|預計", before + after):
         soft.append(f"票文點名的 `{path}` 今天**不存在**（新檔的話請在旁邊註明「新」）")
 
+# ── GH#821 Scope ③：**AC 不可以比 owner 的原話窄**（引言動詞覆蓋，警告⛔不擋）────
+# 根因（#775 的反省）：owner 說「讀取**及儲存**」，我開的票把 AC 寫成只有讀的方向 ——
+# 「唯讀」兩個字是我自己寫進票裡的，而四條 AC 全綠＝我宣告「做完」。
+# ⇒ 票 body 有 `> 引言`（規矩：owner 的話一律引言格式）時，引言裡出現的**動作動詞**
+#   若沒被 AC 段覆蓋（含同義詞）⇒ soft 警告點名那個動詞。⛔ 治不了根因②③（那兩層
+#   各自有閘）；同義表是啟發式 —— 它的產出是「去看一眼」，⛔ 不是裁決。
+VERB_COVER = {
+    "儲存": r"儲存|保存|存檔|存回|寫入|寫回|改得動|save|writ",
+    "寫入": r"寫入|寫回|儲存|存回|改得動|save|writ",
+    "讀取": r"讀取|重讀|載入|讀得|read|load",
+    "產生": r"產生|生成|generate|推導",
+    "同步": r"同步|sync|回流",
+    "更新": r"更新|update|重生成",
+    "刪除": r"刪除|移除|delete|退場",
+    "備份": r"備份|留底|backup|快照",
+    "還原": r"還原|rollback|回捲|開關",
+    "rollback": r"rollback|還原|回捲|開關",
+    "驗收": r"驗收|acceptance|驗證|端到端",
+    "部署": r"部署|deploy|上線",
+}
+quotes = "\n".join(l for l in body.split("\n") if re.match(r"\s*>", l))
+if quotes.strip():
+    m = re.search(r"(?:acceptance criteria|驗收標準|##\s*驗收)([\s\S]*?)(?=\n##|\Z)", body, re.I)
+    ac = m.group(1) if m else ""
+    missing = [v for v, cover in VERB_COVER.items() if v in quotes and not re.search(cover, ac, re.I)]
+    if missing:
+        soft.append("⭐ owner 引言裡的動詞「" + "、".join(dict.fromkeys(missing))
+                    + "」沒被驗收標準覆蓋 —— **AC 不可以比原話窄**"
+                    "（GH#821 根因①：「唯讀」是我自己寫進 #775 的，AC 把它固定下來了）")
+
 for x in dict.fromkeys(soft):
     print(f"ℹ️ {label} {x}")
 for x in dict.fromkeys(hard):

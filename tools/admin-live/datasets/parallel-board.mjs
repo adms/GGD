@@ -15,6 +15,14 @@ import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { execFile } from "node:child_process";
 
+/**
+ * GH#821 豁免（能被反駁）：三個來源分別是 gh 票（家在 GitHub，⛔ 不在 repo 檔案）、
+ * docs/_task-ledger.json（gen_status.py 產物）、docs/_daily/*.md（msgledger:build 產物，444）。
+ * repo 裡沒有一份手編來源可以當寫入目標。反駁法：指出一份此頁在讀的手編檔。
+ */
+export const readonlyWhy =
+  "從 GitHub 票＋兩種產生器產物推導；可編的家在 GitHub 票本身，repo 裡沒有手編來源（#832 的合法豁免候選）。";
+
 const DAILY_DIR = "docs/_daily";
 const LEDGER = "docs/_task-ledger.json";
 const QUOTE_MAX = 280;
