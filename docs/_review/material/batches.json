@@ -40,8 +40,6 @@
         "godie-e002.e",
         "godie-e00l.e",
         "godie-e00r.r",
-        "godie-n01c.e",
-        "godie-nbbc.e",
         "godie-o00x.r",
         "godie-ogrh.r"
       ],
@@ -52,7 +50,7 @@
         "field": "params.count.default",
         "liveValue": 1,
         "rollbackValue": 6,
-        "note": "⚠️⚠️ **2026-08-26 更正方向**（GH#721/#767）：原本登記 live=6 / rollback=1，理由寫「count:6 是本 lane 照原作 A03S 的 i×200 挑的預設」—— ⛔ **那個引用不成立**：A03S@31924 的迴圈生的是 `h006 = FlameStrike1.mdl`（**火柱**，現在有自己的 tpl-locust-line 節點），⛔ 不是光束的模型；而光束本體是 `CreateNUnitsAtLoc(**1**,'h007')`＋`SetUnitScalePercent(200,200,400)`（j:26790）。⇒ 出貨值已改為 **1**（量到的），這一格翻成 6 是**回到被推翻的形狀**，留著只為了讓 owner 一鍵比對。"
+        "note": "⚠️⚠️ **2026-08-26 更正方向**（GH#721/#767）：原本登記 live=6 / rollback=1，理由寫「count:6 是本 lane 照原作 A03S 的 i×200 挑的預設」—— ⛔ **那個引用不成立**：A03S@31924 的迴圈生的是 `h006 = FlameStrike1.mdl`（**火柱**，現在有自己的 tpl-locust-line 節點），⛔ 不是光束的模型；而光束本體是 `CreateNUnitsAtLoc(**1**,'h007')`＋`SetUnitScalePercent(200,200,400)`（j:26790）。⇒ 出貨值已改為 **1**（量到的），這一格翻成 6 是**回到被推翻的形狀**，留著只為了讓 owner 一鍵比對。\n\n⚠️⚠️ **2026-08-27 拆批**（GH#688 lane AC）：`godie-n01c.e` 與 `godie-nbbc.e`（08-03 龍鬥氣砲咒文）**從這一批移出**。理由：lane AC 逐行讀 `A05J`@28836（`loop i=1..10 × CreateNUnitsAtLoc(1,'e003',…,150×i)`）之後在**節點上**寫了`count:10`，而 `fillOne()` 只在 `undefined` 時才填 ⇒ ⭐ **翻這一格家族預設對那兩支毫無反應**。\n⛔ 一個翻了沒反應的開關**比沒有更糟** —— owner 是在**已經上線之後**才會去翻它。\n⇒ 那兩支的 rollback 住它們自己的節點（把 `count` 拿掉就回到家族預設），由 #688 那一批登記。⭐ 這一批剩下的 5 支仍然吃家族預設，這一格對它們是活的。"
       },
       "registeredAt": "2026-08-25T03:31:36.327Z"
     },

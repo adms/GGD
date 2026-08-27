@@ -15,10 +15,6 @@
       "product": "content/champions/<id>.json · content/abilities/<id>.ex.json",
       "owner": "content:build · skillremake:json · tiers:apply"
     },
-    "tools/tts-gen/src/build-champ-names.mjs": {
-      "product": "content/champions/*.json",
-      "owner": "content:build · skillremake:json · tiers:apply"
-    },
     "tools/w3x-import/build_vfx_bindings.py": {
       "product": "content/abilities/*.json",
       "owner": "content:build · skillremake:json · tiers:apply"

@@ -18,6 +18,12 @@
 //   content/assets/audio/voices/names/MANIFEST.json     (canonical mapping + client)
 //   content/assets/audio/voices/names/_tts-mixlang.json (task #120 tts-gen input)
 //
+// ⚠️ **上面那幾份是產生器的產物** —— 擁有者就是這一支腳本自己。
+//    查任何一份的擁有者：`bash scripts/genguard.sh <路徑>`；
+//    要改就改**來源**（`content/champions/*.json` ＋ 下面的表），再重跑這一支。
+//    ⛔ 直接手改那三份出貨 JSON 會被下一次重生成打回來，
+//    而那個「又紅了」看起來像**新的**錯。
+//
 // Writing them from one table is what stops the display text and the spoken text
 // drifting apart — the failure this pack has had twice.
 //

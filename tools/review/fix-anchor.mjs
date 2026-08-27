@@ -30,6 +30,12 @@
  *   `abilities[]` → `content/abilities/<id>.json`
  *     → `modelKey`  → `content/models/<key>.json` → 它的 `glbPath` → `content/<glbPath>`
  *     → `vfxKey`／`vfxId`／`stepVfx` → `content/vfx/<id>.json`
+ *
+ * ⚠️ **上面那幾條路徑底下有很多是產生器的產物**（`content/abilities` 與
+ *    `content/champions` 尤其 —— 那兩個目錄是**混的**，肉眼分不出手編檔與產物）。
+ *    ⭐ 這一支只**讀**它們，⛔ 從不寫。要改就先 `bash scripts/genguard.sh <路徑>`
+ *    問擁有者：是產物就改**來源**再 `bash scripts/genrun.sh <step>`。
+ *    ⛔ 直接改出貨 JSON 會被下一次 sync 打回來，而那個「又紅了」看起來像**新的**錯。
  *     → `sfxKey`… → `content/config/audio-map.json`
  *     → `preset:"tpl-*"` → `content/ability-templates/<tpl>.json`（＋它 params 的預設資產）
  *   `rollback.configId` → `resolveRollback()` 已經解出來的那一份出貨文件

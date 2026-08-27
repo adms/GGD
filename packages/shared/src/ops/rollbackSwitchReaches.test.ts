@@ -21,7 +21,14 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
-const VERDICTS = join(REPO, "docs/_review/feature-verdicts.json");
+// ⭐ 2026-08-27 —— 讀**材料**那一側（owner 逐字：「批核材料跟批核結果分署不同資料夾」）。
+// ⛔ 在此之前這裡讀 `docs/_review/feature-verdicts.json` —— 那是**分署之前**的合併檔，
+//    今天只剩 21 批而材料側有 25 批 ⇒ ⭐ **這條閘量的是一份已經不是真相的檔**：
+//    我照它的訊息去修材料側，它照樣紅，而訊息一個字都沒變（⛔ 一個看起來已經量過的東西，
+//    量的不是你以為的那個）。
+// ⚠️ 路徑是從 `tools/review/stores.mjs` 的 `MATERIAL_REL` 抄過來的常數 ——
+//    ⭐ 它與寫入端同一個住處的宣告，⛔ 不是我自己編的一條路徑。
+const VERDICTS = join(REPO, "docs/_review/material/batches.json");
 
 type Rollback = { configId?: string; field?: string; note?: string };
 type Batch = { rollback?: Rollback; abilities?: string[]; title?: string };

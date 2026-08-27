@@ -77,7 +77,11 @@ describe("#248 決策稿的 SUPERSEDED 標頭要對得上出貨 (attribute-deriv
     expect(
       stale.join("\n"),
       "SUPERSEDED 標頭一旦過期就比沒有標頭更危險（讀者會直接相信它）。\n" +
-        `→ 出貨值住 content/champions/*.json 與 content/config/stat-caps.json；\n` +
+        "→ 出貨值住 content/champions/*.json（⚠️ **產物** —— skillremake:json ／ tiers:apply ／\n" +
+        "   speedtiers:build 的輸出；改**來源** tools/skill-remake/ 再 bash scripts/genrun.sh <step>）\n" +
+        "   與 content/config/stat-caps.json（⚠️ **產物** —— statcaps:build；\n" +
+        "   改 tools/stat-caps/gen_stat_caps.ts 再 bash scripts/genrun.sh statcaps:build）；\n" +
+        "   ⛔ 直接手改那兩份會被下一次 sync 打回來，而那個「又紅了」看起來像**新的**錯。\n" +
         `→ 把 ${DOC} 標頭那一格改成新的數字。⛔ 不要改這條測試。\n`,
     ).toBe("");
   });
