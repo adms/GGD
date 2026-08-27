@@ -2,9 +2,9 @@
   "schema": "review-queue@1",
   "counts": {
     "assets": 1142,
-    "tier0": 803,
+    "tier0": 802,
     "reviewed": 0,
-    "pending": 339
+    "pending": 340
   },
   "items": [
     {
@@ -3896,6 +3896,19 @@
       "refs": [
         "godie-u010.w",
         "godie-uvng.w"
+      ]
+    },
+    {
+      "id": "godie-herocloudkfksword-p0",
+      "kind": "vfx",
+      "hash": "caa21df5cb2adca3b134b41c5c76de5d94482da1",
+      "risk": 2,
+      "reasons": [
+        "1 支上架技能引用（R/EX ×2 加權後 risk 2）",
+        "未審"
+      ],
+      "refs": [
+        "godie-hart.r"
       ]
     },
     {

@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.29.3 · 資料截至 2026-08-27 03:39 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-27 03:39 (GMT+8)</h1><div class="meta"><span>帳本 <b>9</b> 份</span><span>點名票號 <b>288</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.29.4 · 資料截至 2026-08-27 03:39 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-27 03:39 (GMT+8)</h1><div class="meta"><span>帳本 <b>9</b> 份</span><span>點名票號 <b>301</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -669,6 +669,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>05:0x</td><td>清理完 #300~#899為止 … analyze &amp; fix or close issues … 別問我了自己判斷但是留後台開關可以簡易 rollback … 盡量平行多工作流</td><td><b>七條平行 lane</b> —— 關 #713 #718 #733 #755(後回歸重開) #758 #765 #772 #773 #774 #776 #791 #793 #798；⭐ 自行收掉 #796 曝險（留 <code>GGD_REVIEW_REQUIRE_ADMIN</code> 開關）；新開 #797–#802</td></tr>
 <tr><td>06:0x</td><td>（同一則 goal 的第二輪執行）</td><td><b>六條平行 lane</b> —— 關 #538 #713 #718 #733 #755→重開 #758 #760 #765 #767 #772 #773 #774 #776 #791 #793 #794 #796 #798 #802；⭐ 拆掉「331 份檔的死路」（<code>skillremake:provenance</code> 誤判成作者）；新開 #797–#804</td></tr>
 <tr><td>07:0x</td><td>（同一則 goal 的第三/四輪執行）</td><td><b>六條 lane</b> —— 關 #325(部分) #635 #671 #716 #723 #799 #805；⭐ 拆掉牆的<b>另一半</b>（<code>speedtiers:build</code> 也是正規化器 ⇒ 387/492 份全開）；#763 打擊音分層落地</td></tr>
+<tr><td>09:0x</td><td>（同一則 goal 的第五/六輪執行）</td><td><b>八條 lane</b> —— 前提查證 ×3（#325–#807 全掃）＋ 修復 ×5；關 #565 #667 #669? #727 #738 #744? #746 #748 #763 #769 #795；⭐ 挖到「兩種接手切法同時在跑」造出四對重複票（#808）與「純 content 改動跑不到任何 tools/ 測試」（#810）；新開 #808–#811</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

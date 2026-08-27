@@ -396,6 +396,12 @@
               "at": "target"
             },
             {
+              "kind": "spawnVfx",
+              "vfxId": "godie-herocloudkfksword-p0",
+              "at": "bone",
+              "attach": "weapon"
+            },
+            {
               "kind": "floatingText",
               "shape": "single",
               "text": "{{i}}Hit",
