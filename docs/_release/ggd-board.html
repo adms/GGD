@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.29.7 · 資料截至 2026-08-27 15:11 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-27 15:11 (GMT+8)</h1><div class="meta"><span>帳本 <b>9</b> 份</span><span>點名票號 <b>308</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.29.7 · 資料截至 2026-08-27 15:11 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-27 15:11 (GMT+8)</h1><div class="meta"><span>帳本 <b>9</b> 份</span><span>點名票號 <b>309</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -678,12 +678,12 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>09:0x</td><td>（同一則 goal 的第五/六輪執行）</td><td><b>八條 lane</b> —— 前提查證 ×3（#325–#807 全掃）＋ 修復 ×5；關 #565 #667 #669? #727 #738 #744? #746 #748 #763 #769 #795；⭐ 挖到「兩種接手切法同時在跑」造出四對重複票（#808）與「純 content 改動跑不到任何 tools/ 測試」（#810）；新開 #808–#811</td></tr>
 <tr><td>10:0x</td><td>（同一則 goal 的第七輪執行）</td><td><b>兩條 lane</b> —— 關 #509 #707 #759；⭐ #800 的 88×38 <b>歸零</b>（根因是欄位預算⛔ 不是宣告錯角落）；#707 量到 <b>388 份「genguard 說可以改而檔案是 444」</b>（我早上的修復把它放大了 388 倍）⇒ 清單收成單一住處</td></tr>
 <tr><td>11:0x</td><td>（同一則 goal 的第八輪執行）</td><td><b>兩條 lane</b> —— 關 #684；⭐ 貼圖去重：<b>一張 15.4KB 的圖被上傳 12 次</b>，每個戰鬥場景省 26.7–48.0 MB、13 筆「已接受」的越界 11 筆回到閘內；⭐ #623 的 v2 報告<b>從來沒讀過卡面文字</b>（9 個🟢只有 1 個真的可退場）</td></tr>
-<tr><td>13:53</td><td>今天第五次同型 EACCES —— content:build 直寫一個 444 產物而沒自解鎖。走 genrun： =&gt;請你尋找污染源、根因有哪些，再來開票提改善計畫</td><td>815</td></tr>
-<tr><td>13:54</td><td>連續圖片全部都看不到，你是不是沒有傳完整圖片？或是沒串接好？</td><td>669</td></tr>
-<tr><td>13:54</td><td>連續圖片批核顯示修好了嗎？ 遊戲回合LAG監控及異常回報修正修好了嗎？</td><td>669 382</td></tr>
-<tr><td>14:12</td><td>既然做成開關 那就請你預設是會清理完重新盤點必要物件載入後 再進入戰鬥回合</td><td>819</td></tr>
+<tr><td>13:53</td><td>今天第五次同型 EACCES —— content:build 直寫一個 444 產物而沒自解鎖。走 genrun： =&gt;請你尋找污染源、根因有哪些，再來開票提改善計畫</td><td>#815</td></tr>
+<tr><td>13:54</td><td>連續圖片全部都看不到，你是不是沒有傳完整圖片？或是沒串接好？</td><td>#669</td></tr>
+<tr><td>13:54</td><td>連續圖片批核顯示修好了嗎？ 遊戲回合LAG監控及異常回報修正修好了嗎？</td><td>#669 #382 #819</td></tr>
+<tr><td>14:12</td><td>既然做成開關 那就請你預設是會清理完重新盤點必要物件載入後 再進入戰鬥回合</td><td>#819</td></tr>
 <tr><td>14:00</td><td>⛔ lag 本身沒修 —— 要減 draw-call，那是 #382，⛔ 我還沒做 =&gt; 一定是物件、特效沒回收乾淨，必要手段就是每回合開始前多一個完整清理重新載入的按鈕 先試試看 MDL 特效家族總表 GGD 平行處理盤 技能JASS特效實作對照表及設定頁 蝗蟲群球體實作對照表及設定頁 技能機制模板對照表及距離範圍視覺化設定頁 技能特效模板對照表及模型與粒子特效視覺設定頁 技能音效對照表及設定頁 出身及屬性五級距雷達圖視覺化對照及設定頁 技能傷害冷卻距離範圍雷達圖視覺化對照與設定頁 英雄技能名稱與說明實時編輯後自動判斷生成對應JSON設定頁 EX解放根源三選一對照表及設定頁 寶具三選一對照表…</td><td>#382</td></tr>
-<tr><td>15:11</td><td>go on</td><td>⏸ 未對票</td></tr>
+<tr><td>15:11</td><td>go on</td><td>— 續跑指令，⛔ 不是新需求（本輪：收四條 lane 的孤兒工作 + 四格爽度旋鈕落三住處 + skills:sync 全鏈）</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

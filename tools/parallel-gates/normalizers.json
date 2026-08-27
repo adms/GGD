@@ -29,6 +29,10 @@
     {
       "step": "speedtiers:build",
       "reason": "逐行讀 tools/speed-growth/gen.ts 的 withTierLines()：它只在**原始字串**上刪/插 tier 欄位那幾行，⛔ 其餘位元組一個都不碰。writes 是一條 glob（content/champions/*.json ＝ 71 份），漏掉它的話 55 份英雄卡被判 AUTHOR 而訊息叫人「改來源」——**英雄卡自己就是來源**（GH#805 實測撞到）。2026-08-27 加入。"
+    },
+    {
+      "step": "castderive:build:raw",
+      "reason": "逐行讀過 packages/shared/scripts/deriveCastTimes.ts：它載入既有內容、對每一份算 deriveCastTime()、**只覆寫 castTimeSec 一格**（含英雄卡的內嵌鏡像），其餘位元組一個都不碰。⛔ 把它當作者會讓 492 份技能/英雄檔全部落進「改產物被擋／改來源沒有來源」的死路 —— 那正是 GH#707 記錄過的、一天內擋掉三條 lane 的形狀。"
     }
   ],
   "$rejected": [

@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_d13f03d0acd1`
+contentVersion `cv_c81c5cc8d6bc`
 
 ---
 
@@ -224,7 +224,7 @@ contentVersion `cv_d13f03d0acd1`
 | `witch-form` | `witch-form` |
 | `wound` | `grievous-wounds`、`no-heal` |
 
-## 特效（vfx）—— 661 份
+## 特效（vfx）—— 649 份
 
 由 `spawnVfx.vfxId`、技能的 `vfxKey`、彈道的 `vfxKey` 引用。
 
@@ -233,24 +233,21 @@ contentVersion `cv_d13f03d0acd1`
 - `fx.bramble-burst` · `fx.cinder-ward` · `fx.dragon-awaken` · `fx.ember-bolt`
 - `fx.ember-bolt-cast` · `fx.fam.blink.arcane.s65` · `fx.fam.blink.arcane.s90` · `fx.fam.blink.ki.s65`
 - `fx.fam.blink.lightning.s90` · `fx.fam.bolt-strike.lightning.s115` · `fx.fam.bolt-strike.lightning.s345` · `fx.fam.bolt-strike.physical.s345`
-- `fx.fam.breath.blood.s110` · `fx.fam.breath.nature.s110` · `fx.fam.burst.fire.s100` · `fx.fam.burst.fire.s105`
-- `fx.fam.burst.holy.s100` · `fx.fam.burst.ki.s150` · `fx.fam.burst.physical.s100` · `fx.fam.burst.physical.s105`
-- `fx.fam.burst.w3x-646464.s100` · `fx.fam.burst.w3x-646464.s150` · `fx.fam.burst.w3x-ff0000.s150` · `fx.fam.burst.w3x-ff0000.s170`
-- `fx.fam.burst.w3x-ffaaaa.s100` · `fx.fam.cloud.physical.s120` · `fx.fam.cloud.void.s180` · `fx.fam.cloud.wind.s120`
+- `fx.fam.breath.nature.s110` · `fx.fam.burst.fire.s100` · `fx.fam.burst.holy.s100` · `fx.fam.burst.ki.s150`
+- `fx.fam.burst.physical.s100` · `fx.fam.burst.physical.s105` · `fx.fam.burst.w3x-646464.s100` · `fx.fam.burst.w3x-646464.s150`
+- `fx.fam.burst.w3x-ff0000.s150` · `fx.fam.burst.w3x-ff0000.s170` · `fx.fam.burst.w3x-ffaaaa.s100` · `fx.fam.cloud.void.s180`
 - `fx.fam.dissipate.physical.s125` · `fx.fam.dissipate.void.s85` · `fx.fam.dissipate.w3x-0a0a0a.s100` · `fx.fam.dissipate.w3x-ff0000.s85`
-- `fx.fam.flame-pillar.w3x-ff0000.s115` · `fx.fam.ground-dust.earth.s80` · `fx.fam.ground-dust.ki.s120` · `fx.fam.ground-dust.nature.s80`
-- `fx.fam.kaboom.fire.s115` · `fx.fam.level-up.holy.s90` · `fx.fam.level-up.ki.s65` · `fx.fam.light-column.arcane.s100`
-- `fx.fam.light-column.arcane.s240` · `fx.fam.light-column.fire.s150` · `fx.fam.light-column.holy.s100` · `fx.fam.light-column.holy.s150`
-- `fx.fam.light-column.ice.s100` · `fx.fam.light-column.w3x-00ffff.s150` · `fx.fam.light-column.w3x-ff00ff.s205` · `fx.fam.mark.w3x-ff6400.s125`
-- `fx.fam.mark.w3x-ff6400.s85` · `fx.fam.mirror-image.arcane.s100` · `fx.fam.mirror-image.holy.s150` · `fx.fam.mirror-image.physical.s100`
-- `fx.fam.mirror-image.physical.s150` · `fx.fam.mirror-image.void.s100` · `fx.fam.missile.fire.s205` · `fx.fam.portal.holy.s160`
-- `fx.fam.portal.void.s160` · `fx.fam.resurrect.fire.s95` · `fx.fam.resurrect.holy.s95` · `fx.fam.resurrect.lightning.s95`
-- `fx.fam.resurrect.sound.s95` · `fx.fam.resurrect.w3x-ff0000.s170` · `fx.fam.shine.ki.s150` · `fx.fam.shine.nature.s150`
-- `fx.fam.shockwave-ring.arcane.s100` · `fx.fam.shockwave-ring.arcane.s150` · `fx.fam.shockwave-ring.earth.s100` · `fx.fam.shockwave-ring.fire.s100`
-- `fx.fam.shockwave-ring.fire.s150` · `fx.fam.shockwave-ring.holy.s150` · `fx.fam.shockwave-ring.ki.s100` · `fx.fam.shockwave-ring.lightning.s100`
-- `fx.fam.shockwave-ring.lightning.s150` · `fx.fam.shockwave-ring.physical.s100` · `fx.fam.shockwave-ring.physical.s150` · `fx.fam.shockwave-ring.void.s100`
-- `fx.fam.shockwave-ring.void.s150` · `fx.fam.shockwave-ring.void.s70` · `fx.fam.shockwave-ring.w3x-00ffff.s100` · `fx.fam.shockwave-ring.w3x-00ffff.s150`
-- `fx.fam.tornado.w3x-9696ff.s135` · `fx.fam.tornado.w3x-c86464.s170` · `fx.fam.tornado.wind.s100` · `fx.fam.tornado.wind.s150`
+- `fx.fam.flame-pillar.w3x-ff0000.s115` · `fx.fam.ground-dust.ki.s120` · `fx.fam.ground-dust.nature.s80` · `fx.fam.kaboom.fire.s115`
+- `fx.fam.level-up.ki.s65` · `fx.fam.light-column.arcane.s100` · `fx.fam.light-column.fire.s150` · `fx.fam.light-column.holy.s100`
+- `fx.fam.light-column.holy.s150` · `fx.fam.light-column.ice.s100` · `fx.fam.light-column.w3x-00ffff.s150` · `fx.fam.light-column.w3x-ff00ff.s205`
+- `fx.fam.mark.w3x-ff6400.s125` · `fx.fam.mark.w3x-ff6400.s85` · `fx.fam.mirror-image.arcane.s100` · `fx.fam.mirror-image.physical.s100`
+- `fx.fam.mirror-image.physical.s150` · `fx.fam.mirror-image.void.s100` · `fx.fam.resurrect.fire.s95` · `fx.fam.resurrect.holy.s95`
+- `fx.fam.resurrect.lightning.s95` · `fx.fam.resurrect.sound.s95` · `fx.fam.resurrect.w3x-ff0000.s170` · `fx.fam.shine.ki.s150`
+- `fx.fam.shine.nature.s150` · `fx.fam.shockwave-ring.arcane.s100` · `fx.fam.shockwave-ring.arcane.s150` · `fx.fam.shockwave-ring.earth.s100`
+- `fx.fam.shockwave-ring.fire.s100` · `fx.fam.shockwave-ring.fire.s150` · `fx.fam.shockwave-ring.holy.s150` · `fx.fam.shockwave-ring.ki.s100`
+- `fx.fam.shockwave-ring.lightning.s100` · `fx.fam.shockwave-ring.lightning.s150` · `fx.fam.shockwave-ring.physical.s100` · `fx.fam.shockwave-ring.physical.s150`
+- `fx.fam.shockwave-ring.void.s100` · `fx.fam.shockwave-ring.void.s150` · `fx.fam.shockwave-ring.void.s70` · `fx.fam.shockwave-ring.w3x-00ffff.s100`
+- `fx.fam.shockwave-ring.w3x-00ffff.s150` · `fx.fam.tornado.w3x-9696ff.s135` · `fx.fam.tornado.w3x-c86464.s170` · `fx.fam.tornado.wind.s150`
 - `fx.firestorm` · `fx.grail.bolt` · `fx.prim.arcane.beam` · `fx.prim.arcane.beam-lg`
 - `fx.prim.arcane.bolt` · `fx.prim.arcane.bolt-lg` · `fx.prim.arcane.dash` · `fx.prim.arcane.explosion`
 - `fx.prim.arcane.nova` · `fx.prim.arcane.nova-lg` · `fx.prim.arcane.pulse` · `fx.prim.arcane.pulse-lg`
