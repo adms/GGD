@@ -1,0 +1,18 @@
+{
+  "schema": "provenance.icon-gen-lora@1",
+  "ticket": "GH#457",
+  "authorisation": "owner 2026-08-19（逐字）：「你說的對，**不應該直接畫出角色**，圖示應該是類似**剪影、局部動作、特效、符咒或物件**的呈現，但我們應該要**能支援 LoRA 跟 SDXL 等更新版本**才對」",
+  "whyThisFileExists": "⭐ 與 GH#443 的資產優先序**同一條規矩**：一份下載來的位元組要出現在這個 repo 的產出裡，就要記來源＋授權＋sha256。⚠️ LoRA 有一個音訊／模型沒有的性質 —— ⭐ **它的位元組不會出貨，但它的風格會**：權重檔住 `tools/icon-gen/models/`（gitignore 第 8 行），出貨的是**它畫出來的 .webp**。⇒ 帳本要記的不只是「這個檔哪來的」，是「**畫出這批圖示的那個風格哪來的**」。⛔ 沒有這一列，一張圖示的授權就追不回去了。",
+  "gate": "`packages/shared/src/ops/laneARTAssetProvenance.test.ts` —— `content/config/icon-style.json` 的 `loras[*].path` 與這一份的 `loras` 必須**逐一對得上**：掛了沒記 → 紅、記了沒掛 → ⚠️ 不紅（收錄未啟用是合法的，判例同 `sfxLabCredits.ts` 的「使用中 vs 收錄未啟用」），⛔ 但欄位缺一格就紅。",
+  "rowContract": {
+    "path": "相對於 `tools/icon-gen/models/` —— ⛔ 這裡不會出現絕對路徑（那個目錄是 gitignore 的，路徑會因機器而異）",
+    "sourceUrl": "抓取頁面的網址（Civitai 的**版本頁**，⛔ 不是模型首頁 —— 同一個模型的不同版本授權可以不一樣）",
+    "fetchedAt": "抓取日期 YYYY-MM-DD。⚠️ 上游日後改授權，這份帳本不會自己知道 —— 判例同 `content/assets/models/scenery-cc0/PROVENANCE.md` 第三節",
+    "license": "逐字抄上游那一行，⛔ 不要摘要成「CC0」這種一個詞的結論",
+    "allowsCommercial": "上游那一頁的機器可讀欄位（Civitai 有），布林。⛔ 與 `license` 打架時以 `license` 的逐字為準並在 `note` 寫下打架",
+    "sha256": "權重檔的 sha256 —— ⛔ 這是唯一一格改散文改不掉的欄位",
+    "arch": "sd15 | sdxl。⚠️ ⛔ 不要從檔名猜：`pipeline.detect_arch()` 從 safetensors 檔頭的 cross-attention dim 讀（768 / 2048），而本機那份 `43820_v3.0-sd15_pixelartV3` 檔名寫著 sd15 但它根本不是 checkpoint"
+  },
+  "whyEmpty": "⭐ 出貨的 `content/config/icon-style.json` 是 `\"loras\": []` —— ⛔ **今天一個 LoRA 都沒掛**，所以這一份是空的。⚠️ 而空的理由**不是**「還沒做」：載入路徑已經在 `tools/icon-gen/local/pipeline.py`（`_lora_specs()` / `_apply_loras()`，架構不符會**擲例外停下來**⛔ 不靜默略過），SDXL 也已經是一格環境變數的事。缺的是**挑一個 LoRA**，而那是 owner 的 HITL：Civitai 上 Fate/ufotable 風格 LoRA 全在 Pony/Illustrious（SDXL 系），⭐ 而換到 SDXL 的成本已經量過了（同批三張、暖機後：SD1.5 7.9 s/張 vs SDXL 24.4 s/張 = 3.1×；1,010 張 ≈ 2.2 h vs 6.9 h），⛔ 不是猜的。",
+  "loras": {}
+}

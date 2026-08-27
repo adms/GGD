@@ -34,16 +34,16 @@
       "element": 51,
       "generic": 298
     },
-    "suggested": 105,
+    "suggested": 106,
     "applicable": 15,
     "byTier": {
       "A-vfx-owned": 15,
-      "C-family-generic": 90
+      "C-family-generic": 91
     },
-    "noSuggestion": 244,
+    "noSuggestion": 243,
     "byCause": {
       "element-whoosh-already": 49,
-      "no-source-audio": 185,
+      "no-source-audio": 184,
       "source-map-silent": 2,
       "stock-label-only": 8
     }
@@ -1173,6 +1173,38 @@
       }
     },
     {
+      "ability": "godie-o030.ex",
+      "name": "30-002 變態紳士",
+      "champion": "godie-o030",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "buffApply",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "mark",
+        "familySoundLaunch": "buffApply"
+      }
+    },
+    {
+      "ability": "godie-o030.r",
+      "name": "30-04 電車之狼衝擊",
+      "champion": "godie-o030",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
       "ability": "godie-ogld.r",
       "name": "72-04 黑化",
       "champion": "godie-ogld",
@@ -1250,22 +1282,6 @@
       "evidence": {
         "vfxFamily": "blink",
         "familySoundLaunch": "magicBolt"
-      }
-    },
-    {
-      "ability": "godie-orkn.ex",
-      "name": "30-002 變態紳士",
-      "champion": "godie-orkn",
-      "todayPlays": "abilityCast",
-      "tier": "C-family-generic",
-      "sfxKey": "buffApply",
-      "applicable": false,
-      "needsCueDeclaration": true,
-      "repeatDropped": false,
-      "sharedWithChampions": [],
-      "evidence": {
-        "vfxFamily": "mark",
-        "familySoundLaunch": "buffApply"
       }
     },
     {
@@ -3552,28 +3568,8 @@
       }
     },
     {
-      "ability": "godie-o030.ex",
-      "name": "30-002 變態紳士",
-      "champion": "godie-o030",
-      "todayPlays": "abilityCast",
-      "cause": "no-source-audio",
-      "evidence": {
-        "base": null
-      }
-    },
-    {
       "ability": "godie-o030.passive",
       "name": "30-00 攝影機",
-      "champion": "godie-o030",
-      "todayPlays": "abilityCast",
-      "cause": "no-source-audio",
-      "evidence": {
-        "base": null
-      }
-    },
-    {
-      "ability": "godie-o030.r",
-      "name": "30-04 電車之狼衝擊",
       "champion": "godie-o030",
       "todayPlays": "abilityCast",
       "cause": "no-source-audio",
@@ -3721,6 +3717,16 @@
       "cause": "element-whoosh-already",
       "evidence": {
         "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-orkn.ex",
+      "name": "30-002 變態紳士",
+      "champion": "godie-orkn",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
       }
     },
     {
