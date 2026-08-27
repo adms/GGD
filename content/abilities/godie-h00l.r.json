@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "60-04 完美盾反",
   "provenance": "owner-spec",
-  "description": "[主動][反彈]\n{{cd}}秒冷卻 吟唱2秒\n消耗[MP] {{mp}}\n有效半徑：{{radius}}\n\n「唯一擋不住的是你的魅力」\n瞬間架起海拉爾之盾，[反彈]魔法([AP])及物理([AD])傷害，持續3秒，期間若成功[反彈]敵方技能[AP]傷害，立即 [回復] 8/16/24% [最大生命]，並且[擊退]敵人。",
+  "description": "[主動][反彈]\n{{cd}}秒冷卻 吟唱{{cast}}秒\n消耗[MP] {{mp}}\n有效半徑：{{radius}}\n\n「唯一擋不住的是你的魅力」\n瞬間架起海拉爾之盾，[反彈]魔法([AP])及物理([AD])傷害，持續3秒，期間若成功[反彈]敵方技能[AP]傷害，立即 [回復] 8/16/24% [最大生命]，並且[擊退]敵人。",
   "slot": "R",
   "castType": "self",
   "maxRank": 3,
@@ -116,5 +116,5 @@
     "camKick": 0.466
   },
   "cooldownTier": "中",
-  "castTimeSec": 2
+  "castTimeSec": 0.667
 }

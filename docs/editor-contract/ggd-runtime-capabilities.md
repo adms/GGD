@@ -288,6 +288,124 @@
 
 ⛔ **例外要帶一個能被反駁的理由** ——「還沒收」不算理由。被豁免的**節點名單**不在這份契約裡（它會動，而這份契約是逐位元組比對的）；判準在上面，名單在遊戲端的豁免表。
 
+## 12. ⭐ 你交出來的 JSON 被拒絕時，你會拿到什麼
+
+遊戲端收件時逐份跑一次**嚴格** Zod 驗證。回傳值只有兩種形狀：
+
+```ts
+{ ok: true,  doc }
+{ ok: false, issues: Array<{ path: string; message: string; code: string }> }
+```
+
+- `path` —— 進到文件裡的**點路徑**（`effects.0.kind`）。**空字串 = 這一層物件本身**。
+- `code` —— 機器讀的分類，取自 Zod 的 issue code（`invalid_type` · `too_big` · `invalid_enum_value` · `unrecognized_keys` · `invalid_union_discriminator` …）。
+- `message` —— 給人看的英文句子。⭐ enum／discriminator 那兩類的訊息**自己列出合法值**。
+
+⛔ **`issues` 是一個陣列，不是第一個錯誤。** 一次交件請把整批都改完再送 ——逐條修、逐條重送會讓你在同一份文件上來回很多次。
+
+下面每一筆都是把一份出貨技能文件**只弄壞一個地方**再餵進出貨驗證器，真的跑出來的回傳值（⛔ 不是手寫的範例）：
+
+### 12.1 少一格必填欄位
+
+`path` 就是那一格的名字。
+
+```json
+{
+  "ok": false,
+  "issues": [
+    {
+      "path": "cooldown",
+      "message": "Required",
+      "code": "invalid_type"
+    }
+  ]
+}
+```
+
+### 12.2 引擎沒有的 effect kind
+
+⭐ 拒絕訊息**自己列出**全部合法的 kind —— 這是第 3 節那張表的執行期版本。
+
+```json
+{
+  "ok": false,
+  "issues": [
+    {
+      "path": "effects.0.kind",
+      "message": "Invalid discriminator value. Expected 'damage' | 'damageArea' | 'damageLine' | 'grantAttribute' | 'revive' | 'heal' | 'shield' | 'applyStatus' | 'applyBuff' | 'cycleBuff' | 'restore' | 'spendMana' | 'dash' | 'leap' | 'blink' | 'championForm' | 'spawnProjectile' | 'spawnVfx' | 'dot' | 'summon' | 'invulnerable' | 'knockback' | 'evasion' | 'taunt' | 'grantGold' | 'dispel' | 'shieldBreak' | 'devour' | 'modifyCooldown' | 'weightedBranch' | 'swapResource' | 'eventValueConversion' | 'randomArea' | 'delayed' | 'proxyCast' | 'manaBarrier' | 'extendBuff' | 'carry' | 'convertTeam' | 'chainLightning' | 'comboStrikes' | 'pull' | 'spawnModelFx' | 'screenFlash' | 'screenShake' | 'floatingText'",
+      "code": "invalid_union_discriminator"
+    }
+  ]
+}
+```
+
+### 12.3 enum 值打錯字
+
+同上：合法值就在訊息裡，⛔ 不必回頭查文件。
+
+```json
+{
+  "ok": false,
+  "issues": [
+    {
+      "path": "castType",
+      "message": "Invalid enum value. Expected 'targeted' | 'skillshot' | 'ground' | 'self' | 'dash', received 'point'",
+      "code": "invalid_enum_value"
+    }
+  ]
+}
+```
+
+### 12.4 多打了一個引擎不認得的鍵
+
+⚠️ `path` 是**空字串**＝這一層物件本身。⛔ 未知欄位不會被忽略，整份會被拒絕。
+
+```json
+{
+  "ok": false,
+  "issues": [
+    {
+      "path": "",
+      "message": "Unrecognized key(s) in object: 'manaDrain'",
+      "code": "unrecognized_keys"
+    }
+  ]
+}
+```
+
+### 12.5 數字超出上下界
+
+上下界住 schema，⛔ 不在這份文件裡；被拒絕時訊息會說出那個界。
+
+```json
+{
+  "ok": false,
+  "issues": [
+    {
+      "path": "maxRank",
+      "message": "Number must be less than or equal to 6",
+      "code": "too_big"
+    }
+  ]
+}
+```
+
+### 12.6 🔴 軟參照指到不存在的東西
+
+⭐ **它回 `ok: true`。** 逐份驗證**不查參照** —— 參照是整批載入時才解的（解不開的那一份會被隔離，理由 `dangling-ref`）。⇒ ⛔ 一次乾淨的逐份驗證**不代表**你的 `vfxKey` / `projectileId` 指得到東西。
+
+```json
+{
+  "ok": true
+}
+```
+
+### 12.7 ⛔ 通過驗證**不等於**上得了線
+
+這一關只回答「這份 JSON 的**形狀**對不對」。它 ⛔ 不回答：① 參照指不指得到（見 12.6）② 用到的 capability 引擎有沒有（那是第 1、2 節的事，會回 `unsupported-runtime`）③ 這條 modifier 在出貨設定下改不改得動任何數字。
+
+⇒ **收到 `ok: true` 之後仍然要拿第 2 節的不可使用清單自己掃一遍。**
+
 ---
 
 這份檔案由 GGD repo 的匯出工具產生，並由一條 CI 閘（`--check`）保證它跟引擎同步：引擎改了而清單沒重新產生，建置就會紅。所以**清單過期**這件事不會靜悄悄地發生。

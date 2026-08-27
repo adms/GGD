@@ -1,12 +1,12 @@
 {
   "collection": "config",
-  "hash": "99fbf06d18b4",
+  "hash": "5b6c5522bbc6",
   "entries": [
     {
       "id": "ability-vfx-bindings",
       "path": "config/ability-vfx-bindings.json",
-      "hash": "725079dfe0e1",
-      "size": 41676
+      "hash": "19fa85020817",
+      "size": 46494
     },
     {
       "id": "admin-friend",
@@ -131,20 +131,20 @@
     {
       "id": "combat-feel",
       "path": "config/combat-feel.json",
-      "hash": "d8fa8b5214be",
-      "size": 1313
+      "hash": "3463a4eaa416",
+      "size": 1397
     },
     {
       "id": "combo-strikes",
       "path": "config/combo-strikes.json",
-      "hash": "364e3328a74b",
-      "size": 30364
+      "hash": "12c42556d5c8",
+      "size": 31810
     },
     {
       "id": "config.match",
       "path": "config/config.match.json",
-      "hash": "6e5c466ce0bc",
-      "size": 1528
+      "hash": "fc93e90c1272",
+      "size": 1660
     },
     {
       "id": "content-load",
@@ -173,8 +173,8 @@
     {
       "id": "damage-colors",
       "path": "config/damage-colors.json",
-      "hash": "1984e7e4e981",
-      "size": 1471
+      "hash": "a6f5c09245fc",
+      "size": 1500
     },
     {
       "id": "damage-rules",
@@ -209,8 +209,8 @@
     {
       "id": "feel-fx",
       "path": "config/feel-fx.json",
-      "hash": "c643b1bcfe06",
-      "size": 1717
+      "hash": "c844055b68bf",
+      "size": 1920
     },
     {
       "id": "form-visuals",

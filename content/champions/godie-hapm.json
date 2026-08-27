@@ -190,7 +190,7 @@
       "id": "godie-hapm.w",
       "name": "52-02 蹂躪編年史",
       "provenance": "owner-spec",
-      "description": "[主動][指向][範圍][AP加成]\n{{cd}}秒冷卻，吟唱 1秒\n消耗MP{{mp}}\n施法距離：{{range}}\n\n「歷史是勝利者寫的，敗者只配飛出去擦地板」\n將敵方目標抓回再暴力的丟出去，使之撞擊[前方]一[直線][範圍]的敵人造成{{dmg}}+50% [AP]傷害。\n(若自身在 [狂怒] 狀態則額外附加受到 [範圍] 傷害的敵人 [恐懼] 狀態，持續 3秒)",
+      "description": "[主動][指向][範圍][AP加成]\n{{cd}}秒冷卻，吟唱{{cast}}秒\n消耗MP{{mp}}\n施法距離：{{range}}\n\n「歷史是勝利者寫的，敗者只配飛出去擦地板」\n將敵方目標抓回再暴力的丟出去，使之撞擊[前方]一[直線][範圍]的敵人造成{{dmg}}+50% [AP]傷害。\n(若自身在 [狂怒] 狀態則額外附加受到 [範圍] 傷害的敵人 [恐懼] 狀態，持續 3秒)",
       "slot": "W",
       "castType": "ground",
       "maxRank": 4,
@@ -259,7 +259,7 @@
       "cooldownTier": "大",
       "manaCostTier": "極小",
       "rangeTier": "極大",
-      "castTimeSec": 1
+      "castTimeSec": 0.833
     },
     "E": {
       "id": "godie-hapm.e",
@@ -436,7 +436,7 @@
       "id": "godie-hapm.r",
       "name": "52-04 巨神一擊",
       "provenance": "owner-spec",
-      "description": "[主動][衝刺][範圍]\n{{cd}}秒冷卻，吟唱2秒\n消耗[MP] {{mp}}\n\n「體型差不是霸凌，是傷害公式」\n向前[衝刺]一小段距離後揮出致命的一擊，對[周圍][範圍] 敵人造成{{dmg}} 傷害。\n(若敵人具有[恐懼]狀態，則額外追加 自身[最大生命]25%傷害)",
+      "description": "[主動][衝刺][範圍]\n{{cd}}秒冷卻，吟唱{{cast}}秒\n消耗[MP] {{mp}}\n\n「體型差不是霸凌，是傷害公式」\n向前[衝刺]一小段距離後揮出致命的一擊，對[周圍][範圍] 敵人造成{{dmg}} 傷害。\n(若敵人具有[恐懼]狀態，則額外追加 自身[最大生命]25%傷害)",
       "slot": "R",
       "castType": "self",
       "maxRank": 3,
@@ -498,7 +498,7 @@
       "vfxKey": "fx.prim.physical.shockwave-lg",
       "cooldownTier": "極大",
       "manaCostTier": "中",
-      "castTimeSec": 2
+      "castTimeSec": 0.067
     }
   },
   "skillOrder": [

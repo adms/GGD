@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "45-03 千鳥",
   "provenance": "owner-spec",
-  "description": "[主動][指向][範圍][衝刺][AP加成]\n{{cd}}秒冷卻，吟唱2秒\n消耗MP{{mp}}\n施法距離：{{range}}\n有效半徑：{{radius}}\n\n「千鳥・雷切」\n將查克拉集中在手上，以高速[直線][衝刺]，對沿途[周圍]敵人造成{{dmg}}+100% [AP]點傷害。",
+  "description": "[主動][指向][範圍][衝刺][AP加成]\n{{cd}}秒冷卻，吟唱{{cast}}秒\n消耗MP{{mp}}\n施法距離：{{range}}\n有效半徑：{{radius}}\n\n「千鳥・雷切」\n將查克拉集中在手上，以高速[直線][衝刺]，對沿途[周圍]敵人造成{{dmg}}+100% [AP]點傷害。",
   "slot": "E",
   "castType": "ground",
   "maxRank": 4,
@@ -81,5 +81,5 @@
   "cooldownTier": "小",
   "manaCostTier": "小",
   "rangeTier": "極大",
-  "castTimeSec": 2
+  "castTimeSec": 0.067
 }
