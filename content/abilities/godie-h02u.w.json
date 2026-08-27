@@ -1,57 +1,225 @@
 {
   "id": "godie-h02u.w",
-  "name": "92-02 狂草泥馬",
-  "icon": "assets/icons/abilities/godie-h02u.w.webp",
+  "schema": "ability@1",
+  "name": "92-03 狂草泥馬",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n草泥馬中最上等的一隻，是草泥馬中的馬王，要朝尼族騎術最好的人才能獲得，對施法距離{{range}}內的敵人造成(現有金錢*0.1)點傷害，最大傷害不超過400點，並增加攻速50%，增加跑速10%，持續12秒。",
+  "description": "[被動][屬性門檻][普攻時][吞噬][層數累積]\n\n「平常吃草，發瘋時吃人」\n當草泥馬生命降低到 30%時，普通 [攻擊時] 附加 [吞噬] 生命低於 3/4/5/6% 的敵方單位，並且永久增加1點 [AP]。",
   "slot": "W",
-  "castType": "targeted",
+  "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    60.0,
-    60.0,
-    60.0,
-    60.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "cooldownTier": "極大",
   "manaCost": [
-    72.0,
-    72.0,
-    72.0,
-    72.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "manaCostTier": "極小",
-  "range": 8.0,
-  "rangeTier": "大",
-  "targetsEnemies": true,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
-        "damageTier": "大",
-        "ratios": [
+  "range": 0.0,
+  "targetsEnemies": false,
+  "effects": [],
+  "passive": {
+    "name": "92-03 狂草泥馬",
+    "ranks": [
+      {
+        "hooks": [
           {
-            "stat": "ap",
-            "coeff": 1.0
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "devour",
+                "shape": "single",
+                "thresholdPctOfMax": [
+                  0.03
+                ],
+                "victim": "any",
+                "throughShields": true,
+                "onDevour": [
+                  {
+                    "kind": "applyBuff",
+                    "modifiers": [
+                      {
+                        "stat": "ap",
+                        "op": "flat",
+                        "value": 1.0
+                      }
+                    ],
+                    "permanent": true,
+                    "applyTo": "self",
+                    "maxStat": {
+                      "stat": "ap",
+                      "value": 200.0,
+                      "basis": "thisSource"
+                    },
+                    "stackKey": "caonima-devour-ap"
+                  }
+                ]
+              }
+            ],
+            "internalCooldown": 1.8,
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "hp",
+              "mode": "percent",
+              "op": "<=",
+              "value": 0.3
+            },
+            "target": "event"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "devour",
+                "shape": "single",
+                "thresholdPctOfMax": [
+                  0.04
+                ],
+                "victim": "any",
+                "throughShields": true,
+                "onDevour": [
+                  {
+                    "kind": "applyBuff",
+                    "modifiers": [
+                      {
+                        "stat": "ap",
+                        "op": "flat",
+                        "value": 1.0
+                      }
+                    ],
+                    "permanent": true,
+                    "applyTo": "self",
+                    "maxStat": {
+                      "stat": "ap",
+                      "value": 200.0,
+                      "basis": "thisSource"
+                    },
+                    "stackKey": "caonima-devour-ap"
+                  }
+                ]
+              }
+            ],
+            "internalCooldown": 1.8,
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "hp",
+              "mode": "percent",
+              "op": "<=",
+              "value": 0.3
+            },
+            "target": "event"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "devour",
+                "shape": "single",
+                "thresholdPctOfMax": [
+                  0.05
+                ],
+                "victim": "any",
+                "throughShields": true,
+                "onDevour": [
+                  {
+                    "kind": "applyBuff",
+                    "modifiers": [
+                      {
+                        "stat": "ap",
+                        "op": "flat",
+                        "value": 1.0
+                      }
+                    ],
+                    "permanent": true,
+                    "applyTo": "self",
+                    "maxStat": {
+                      "stat": "ap",
+                      "value": 200.0,
+                      "basis": "thisSource"
+                    },
+                    "stackKey": "caonima-devour-ap"
+                  }
+                ]
+              }
+            ],
+            "internalCooldown": 1.8,
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "hp",
+              "mode": "percent",
+              "op": "<=",
+              "value": 0.3
+            },
+            "target": "event"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "devour",
+                "shape": "single",
+                "thresholdPctOfMax": [
+                  0.06
+                ],
+                "victim": "any",
+                "throughShields": true,
+                "onDevour": [
+                  {
+                    "kind": "applyBuff",
+                    "modifiers": [
+                      {
+                        "stat": "ap",
+                        "op": "flat",
+                        "value": 1.0
+                      }
+                    ],
+                    "permanent": true,
+                    "applyTo": "self",
+                    "maxStat": {
+                      "stat": "ap",
+                      "value": 200.0,
+                      "basis": "thisSource"
+                    },
+                    "stackKey": "caonima-devour-ap"
+                  }
+                ]
+              }
+            ],
+            "internalCooldown": 1.8,
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "hp",
+              "mode": "percent",
+              "op": "<=",
+              "value": 0.3
+            },
+            "target": "event"
           }
         ]
       }
-    },
-    {
-      "kind": "applyBuff",
-      "modifiers": [
-        {
-          "stat": "as",
-          "op": "flat",
-          "value": 0.4
-        }
-      ],
-      "duration": 8.0
-    }
-  ],
-  "vfxKey": "fx.prim.physical.shockwave",
-  "sfxKey": "wc3.taunt",
-  "schema": "ability@1",
-  "castTimeSec": 1.633
+    ]
+  },
+  "icon": "assets/icons/abilities/godie-h02u.w.webp",
+  "vfxKey": "fx.prim.nature.pulse-sm",
+  "sfxKey": "wc3.taunt"
 }

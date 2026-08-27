@@ -104,15 +104,15 @@
       "name": "48-02 心眼",
       "icon": "assets/icons/abilities/godie-hvsh.w.webp",
       "provenance": "w3x-import",
-      "description": "[被動]\n0秒冷卻時間\n\n心眼讓梅杜莎有12%的機會閃避攻擊。",
+      "description": "[被動]\n{{cd}}秒冷卻時間\n\n心眼讓梅杜莎有12%的機會閃避攻擊。",
       "slot": "W",
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        6.0,
-        6.0,
-        6.0,
-        6.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
         0.0,
@@ -123,22 +123,48 @@
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.arcane.pulse",
-      "castTimeSec": 0.233,
-      "template": {
-        "ref": "tpl-buff-self",
-        "params": {
-          "duration": 6,
-          "modifiers": [
-            {
-              "stat": "armor",
-              "op": "flat",
-              "value": 25
-            }
-          ],
-          "castTimeSec": 0.233
-        }
-      },
-      "cooldownTier": "極小"
+      "targetsEnemies": false,
+      "passive": {
+        "name": "48-02 心眼",
+        "ranks": [
+          {
+            "modifiers": [
+              {
+                "stat": "evasion",
+                "op": "flat",
+                "value": 0.12
+              }
+            ]
+          },
+          {
+            "modifiers": [
+              {
+                "stat": "evasion",
+                "op": "flat",
+                "value": 0.18
+              }
+            ]
+          },
+          {
+            "modifiers": [
+              {
+                "stat": "evasion",
+                "op": "flat",
+                "value": 0.24
+              }
+            ]
+          },
+          {
+            "modifiers": [
+              {
+                "stat": "evasion",
+                "op": "flat",
+                "value": 0.3
+              }
+            ]
+          }
+        ]
+      }
     },
     "E": {
       "id": "godie-hvsh.e",

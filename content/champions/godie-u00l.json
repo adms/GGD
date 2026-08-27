@@ -103,44 +103,67 @@
       "name": "25-02 北斗神拳秘訣轉龍呼吸法",
       "icon": "assets/icons/abilities/godie-u00l.w.webp",
       "provenance": "w3x-import",
-      "description": "[被動]\n0秒冷卻時間\n\n有7%的機會閃避攻擊，而且有12%機會擊中敵人祕穴造成正常攻擊1.5倍的傷害。",
+      "description": "[被動]\n{{cd}}秒冷卻時間\n\n有7%的機會閃避攻擊，而且有12%機會擊中敵人祕穴造成正常攻擊1.5倍的傷害。",
       "slot": "W",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        6.0,
-        6.0,
-        6.0,
-        6.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        72.0,
-        72.0,
-        72.0,
-        72.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "ratios": [
+      "effects": [],
+      "vfxKey": "fx.prim.physical.pulse-sm",
+      "targetsEnemies": false,
+      "range": 0.0,
+      "passive": {
+        "name": "25-02 北斗神拳秘訣轉龍呼吸法",
+        "ranks": [
+          {
+            "modifiers": [
               {
-                "stat": "ad",
-                "coeff": 0.5
+                "stat": "evasion",
+                "op": "flat",
+                "value": 0.07
+              }
+            ]
+          },
+          {
+            "modifiers": [
+              {
+                "stat": "evasion",
+                "op": "flat",
+                "value": 0.11
+              }
+            ]
+          },
+          {
+            "modifiers": [
+              {
+                "stat": "evasion",
+                "op": "flat",
+                "value": 0.15
+              }
+            ]
+          },
+          {
+            "modifiers": [
+              {
+                "stat": "evasion",
+                "op": "flat",
+                "value": 0.19
               }
             ]
           }
-        }
-      ],
-      "vfxKey": "fx.prim.physical.pulse-sm",
-      "targetsEnemies": true,
-      "castTimeSec": 0.233,
-      "rangeTier": "極大",
-      "range": 12,
-      "cooldownTier": "極小",
-      "manaCostTier": "極小"
+        ]
+      }
     },
     "E": {
       "id": "godie-u00l.e",

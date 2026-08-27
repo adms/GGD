@@ -1,9 +1,9 @@
 {
   "id": "godie-h02u.e",
-  "name": "92-03 狂草泥馬",
-  "icon": "assets/icons/abilities/godie-h02u.e.webp",
+  "schema": "ability@1",
+  "name": "92-02 消化液",
   "provenance": "w3x-import",
-  "description": "[被動][屬性門檻][普攻時][吞噬][層數累積]\n\n「平常吃草，發瘋時吃人」\n當草泥馬生命降低到 30%時，普通 [攻擊時] 附加 [吞噬] 生命低於 3/4/5/6% 的敵方單位，並且永久增加1點 [AP]。",
+  "description": "[被動][指向][範圍][破魔][AP加成][機率][週期]\n\n草泥馬在 [受到傷害] 的時候有 10% [機率]，會從嘴巴裡噴出消化液攻擊敵人，造成[前方][一直線] [範圍] 敵人，每秒受到20/30/40/50+ 30% [AP] 傷害，附帶 [破魔] 降低魔抗 50%，持續3秒。",
   "slot": "E",
   "castType": "self",
   "maxRank": 4,
@@ -19,58 +19,73 @@
     0.0,
     0.0
   ],
-  "effects": [],
-  "vfxKey": "fx.prim.nature.nova",
-  "targetsEnemies": false,
-  "schema": "ability@1",
   "range": 0.0,
+  "targetsEnemies": false,
+  "effects": [],
   "passive": {
-    "name": "92-03 狂草泥馬",
+    "name": "92-02 消化液",
     "ranks": [
       {
         "hooks": [
           {
-            "on": "onBasicAttack",
+            "on": "onDamageTaken",
             "effects": [
               {
-                "kind": "devour",
-                "shape": "single",
-                "thresholdPctOfMax": [
-                  0.03
-                ],
-                "victim": "any",
-                "throughShields": true,
-                "onDevour": [
+                "kind": "damageLine",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 20.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.3
+                    }
+                  ]
+                },
+                "length": 8,
+                "width": 1.8,
+                "aim": "target",
+                "fromCaster": true,
+                "onHitTargets": [
+                  {
+                    "kind": "dot",
+                    "damageType": "magic",
+                    "amountPerTick": {
+                      "flat": 20.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.3
+                        }
+                      ]
+                    },
+                    "intervalSec": 1.0,
+                    "durationSec": 3.0,
+                    "stacking": "refresh"
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "magic-break",
+                    "duration": 3.0
+                  },
                   {
                     "kind": "applyBuff",
                     "modifiers": [
                       {
-                        "stat": "ap",
-                        "op": "flat",
-                        "value": 1.0
+                        "stat": "mr",
+                        "op": "pctAdd",
+                        "value": -1.0
                       }
                     ],
-                    "permanent": true,
-                    "applyTo": "self",
-                    "maxStat": {
-                      "stat": "ap",
-                      "value": 200.0,
-                      "basis": "thisSource"
-                    },
-                    "stackKey": "caonima-devour-ap"
+                    "duration": 3.0,
+                    "dispellable": true,
+                    "polarity": "debuff"
                   }
                 ]
               }
             ],
-            "internalCooldown": 1.8,
-            "condition": {
-              "kind": "stat",
-              "subject": "self",
-              "stat": "hp",
-              "mode": "percent",
-              "op": "<=",
-              "value": 0.3
-            },
+            "internalCooldown": 2.0,
+            "chance": 0.1,
             "target": "event"
           }
         ]
@@ -78,47 +93,64 @@
       {
         "hooks": [
           {
-            "on": "onBasicAttack",
+            "on": "onDamageTaken",
             "effects": [
               {
-                "kind": "devour",
-                "shape": "single",
-                "thresholdPctOfMax": [
-                  0.04
-                ],
-                "victim": "any",
-                "throughShields": true,
-                "onDevour": [
+                "kind": "damageLine",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 30.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.3
+                    }
+                  ]
+                },
+                "length": 8,
+                "width": 1.8,
+                "aim": "target",
+                "fromCaster": true,
+                "onHitTargets": [
+                  {
+                    "kind": "dot",
+                    "damageType": "magic",
+                    "amountPerTick": {
+                      "flat": 30.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.3
+                        }
+                      ]
+                    },
+                    "intervalSec": 1.0,
+                    "durationSec": 3.0,
+                    "stacking": "refresh"
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "magic-break",
+                    "duration": 3.0
+                  },
                   {
                     "kind": "applyBuff",
                     "modifiers": [
                       {
-                        "stat": "ap",
-                        "op": "flat",
-                        "value": 1.0
+                        "stat": "mr",
+                        "op": "pctAdd",
+                        "value": -1.0
                       }
                     ],
-                    "permanent": true,
-                    "applyTo": "self",
-                    "maxStat": {
-                      "stat": "ap",
-                      "value": 200.0,
-                      "basis": "thisSource"
-                    },
-                    "stackKey": "caonima-devour-ap"
+                    "duration": 3.0,
+                    "dispellable": true,
+                    "polarity": "debuff"
                   }
                 ]
               }
             ],
-            "internalCooldown": 1.8,
-            "condition": {
-              "kind": "stat",
-              "subject": "self",
-              "stat": "hp",
-              "mode": "percent",
-              "op": "<=",
-              "value": 0.3
-            },
+            "internalCooldown": 2.0,
+            "chance": 0.1,
             "target": "event"
           }
         ]
@@ -126,47 +158,64 @@
       {
         "hooks": [
           {
-            "on": "onBasicAttack",
+            "on": "onDamageTaken",
             "effects": [
               {
-                "kind": "devour",
-                "shape": "single",
-                "thresholdPctOfMax": [
-                  0.05
-                ],
-                "victim": "any",
-                "throughShields": true,
-                "onDevour": [
+                "kind": "damageLine",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 40.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.3
+                    }
+                  ]
+                },
+                "length": 8,
+                "width": 1.8,
+                "aim": "target",
+                "fromCaster": true,
+                "onHitTargets": [
+                  {
+                    "kind": "dot",
+                    "damageType": "magic",
+                    "amountPerTick": {
+                      "flat": 40.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.3
+                        }
+                      ]
+                    },
+                    "intervalSec": 1.0,
+                    "durationSec": 3.0,
+                    "stacking": "refresh"
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "magic-break",
+                    "duration": 3.0
+                  },
                   {
                     "kind": "applyBuff",
                     "modifiers": [
                       {
-                        "stat": "ap",
-                        "op": "flat",
-                        "value": 1.0
+                        "stat": "mr",
+                        "op": "pctAdd",
+                        "value": -1.0
                       }
                     ],
-                    "permanent": true,
-                    "applyTo": "self",
-                    "maxStat": {
-                      "stat": "ap",
-                      "value": 200.0,
-                      "basis": "thisSource"
-                    },
-                    "stackKey": "caonima-devour-ap"
+                    "duration": 3.0,
+                    "dispellable": true,
+                    "polarity": "debuff"
                   }
                 ]
               }
             ],
-            "internalCooldown": 1.8,
-            "condition": {
-              "kind": "stat",
-              "subject": "self",
-              "stat": "hp",
-              "mode": "percent",
-              "op": "<=",
-              "value": 0.3
-            },
+            "internalCooldown": 2.0,
+            "chance": 0.1,
             "target": "event"
           }
         ]
@@ -174,51 +223,70 @@
       {
         "hooks": [
           {
-            "on": "onBasicAttack",
+            "on": "onDamageTaken",
             "effects": [
               {
-                "kind": "devour",
-                "shape": "single",
-                "thresholdPctOfMax": [
-                  0.06
-                ],
-                "victim": "any",
-                "throughShields": true,
-                "onDevour": [
+                "kind": "damageLine",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 50.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.3
+                    }
+                  ]
+                },
+                "length": 8,
+                "width": 1.8,
+                "aim": "target",
+                "fromCaster": true,
+                "onHitTargets": [
+                  {
+                    "kind": "dot",
+                    "damageType": "magic",
+                    "amountPerTick": {
+                      "flat": 50.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.3
+                        }
+                      ]
+                    },
+                    "intervalSec": 1.0,
+                    "durationSec": 3.0,
+                    "stacking": "refresh"
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "magic-break",
+                    "duration": 3.0
+                  },
                   {
                     "kind": "applyBuff",
                     "modifiers": [
                       {
-                        "stat": "ap",
-                        "op": "flat",
-                        "value": 1.0
+                        "stat": "mr",
+                        "op": "pctAdd",
+                        "value": -1.0
                       }
                     ],
-                    "permanent": true,
-                    "applyTo": "self",
-                    "maxStat": {
-                      "stat": "ap",
-                      "value": 200.0,
-                      "basis": "thisSource"
-                    },
-                    "stackKey": "caonima-devour-ap"
+                    "duration": 3.0,
+                    "dispellable": true,
+                    "polarity": "debuff"
                   }
                 ]
               }
             ],
-            "internalCooldown": 1.8,
-            "condition": {
-              "kind": "stat",
-              "subject": "self",
-              "stat": "hp",
-              "mode": "percent",
-              "op": "<=",
-              "value": 0.3
-            },
+            "internalCooldown": 2.0,
+            "chance": 0.1,
             "target": "event"
           }
         ]
       }
     ]
-  }
+  },
+  "icon": "assets/icons/abilities/godie-h02u.e.webp",
+  "vfxKey": "fx.prim.arcane.nova"
 }
