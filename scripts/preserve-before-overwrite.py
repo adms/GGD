@@ -369,6 +369,61 @@ def main() -> int:
                 file=sys.stderr,
             )
             return 2
+    # ── 🏷️ commit 訊息的票號 / lane 代號（GH#663）────────────────────────────
+    #
+    # `scripts/commit-ref-lint.sh` 在 `9d634cfe` 就寫好了，⛔ **而沒有任何東西呼叫它** ——
+    # 一支沒有掛上去的閘等於沒有閘（這份文件記錄過同型的五次）。
+    # 票裡列的掛法有兩個:`.claude/settings.json`（lane Y 柵欄外）或
+    # ⭐ 逐字：「或併入 `scripts/preserve-before-overwrite.py` 的 Bash 攔截段
+    # —— 它已攔 git 指令」。⇒ 走這一條。
+    #
+    # ⚠️⚠️ **為什麼這一格是「擋」而不是「警告」**（票裡要求寫下分界與理由）：
+    #   ⭐ commit 訊息在併行 lane 裡是**不可修的** —— CLAUDE.md 逐字禁止
+    #      `git commit --amend`（它動的是 HEAD，而 HEAD 不屬於任何一條 lane）。
+    #   ⇒ 一個寫壞的訊息**落地那一刻就是永久的**，警告完全沒有用：
+    #      看到警告的時候 commit 已經跑完了。⇒ 唯一有效的時機是**送出之前**。
+    #   ⛔ 而只擋 lint 自己判成硬紅的那一種（lane 代號形狀 / 快取重抓後仍對不到的票號）；
+    #      「沒驗到」（離線、沒有快取）在那支腳本裡就是 exit 0 ⇒ 這裡自然放行。
+    #   逃生口 `GGD_COMMITREF_OFF=1`（commit 訊息裡說為什麼）。
+    if tool == "Bash" and os.environ.get("GGD_COMMITREF_OFF") != "1":
+        _cmd = ti.get("command") or ""
+        if re.search(r"\bgit\s+commit\b", _cmd):
+            _msg = None
+            # `-F <檔>` / `--file <檔>` —— ⭐ CLAUDE.md 規定的併行 commit 形狀就是這個
+            _m = re.search(r"(?:-F|--file)[=\s]+(\S+)", _cmd)
+            if _m:
+                _p = Path(_m.group(1).strip("\"'"))
+                if not _p.is_absolute():
+                    _p = cwd / _p
+                try:
+                    _msg = _p.read_text(encoding="utf-8", errors="replace")
+                except OSError:
+                    _msg = None  # 讀不到 ⇒ ⛔ 不擋（它可能是 heredoc 剛要建的檔）
+            else:
+                _m = re.search(r"-m\s+(\"(?:[^\"\\]|\\.)*\"|'[^']*')", _cmd)
+                if _m:
+                    _msg = _m.group(1)[1:-1]
+            if _msg:
+                try:
+                    import subprocess as _sp
+                    _r = _sp.run(
+                        ["bash", "scripts/commit-ref-lint.sh", "--message-file", "/dev/stdin"],
+                        input=_msg, capture_output=True, text=True, cwd=str(REPO), timeout=30,
+                    )
+                    if _r.returncode == 1:
+                        print(
+                            "🏷️ **commit 訊息擋下**(GH#663)——\n"
+                            + (_r.stderr or "").rstrip() + "\n"
+                            "   ⭐ 這一格擋而不只是警告,因為併行 lane ⛔ 禁止 `--amend`\n"
+                            "      ⇒ 訊息落地就**改不掉了**,唯一有效的時機是送出之前。\n"
+                            "   逃生口:GGD_COMMITREF_OFF=1（並在訊息裡說為什麼）。",
+                            file=sys.stderr,
+                        )
+                        return 2
+                    if (_r.stderr or "").strip():
+                        print(_r.stderr.rstrip(), file=sys.stderr)  # 「沒驗到」也要出聲
+                except Exception:
+                    pass  # ⛔ lint 自身故障不可以癱瘓 commit
     # 🎫 開票規格(owner 2026-08-24):「開票要把 [acceptance criteria,] 及
     # [緊急][重要][優先] 的tag, 採用的 [思考策略] 與 [解決模板] 寫清楚」。
     # ⭐ 警告⛔ 不擋(exit 0):一張缺欄的票仍然比沒有票好,而被擋掉的開票
