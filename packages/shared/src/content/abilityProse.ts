@@ -39,6 +39,16 @@
  *   `{{msb}}`     移速加成%     ← 效果樹上第 1 個 `ms` 的 % modifier（GH#789
  *                                `msBonusTier` 解析後；逐階以 / 分隔；⛔ 不含 % 記號，
  *                                卡面自己寫「提昇{{msb}}%速度」）
+ *   `{{cast}}`    吟唱秒數      ← `castTimeSec` 經 `applyCastTimeRules` **夾過**
+ *                                （GH#792；⛔ 不含「秒」，卡面自己寫「吟唱{{cast}}秒」）
+ *
+ * ⭐⭐ `{{cast}}` 是**唯一**一格算繪出來就是**實際值**的軸，而那不是特例是必然：
+ * `abilitySystem.ts` 讀 `def.castTimeSec` 的**同一行**就套 `applyCastTimeRules`
+ * ⇒ 規格值 2 秒的技能，玩家從來沒有站著不動 2 秒過（出貨 `castTimeMaxSec` = 1.0，
+ * owner 2026-08-27 #787「把所有詠唱超過一秒的都調整至一秒」）。
+ * ⇒ 卡面若印規格值就是第一·五守則那句「說了但不會發生」——
+ * GH#792 量到 **11 支**卡面寫著「吟唱2秒／3秒」而引擎只吟唱 1 秒。
+ * ⛔ 所以這一軸**沒有第二種值**（`{{cast!}}` 刻意不存在，理由逐字在 `LIVE_RULES.cast`）。
  *
  * ⭐ 結尾加 `!` = **實際值**（`{{cd!}}` = 玩家真的等到的秒數 = 卡面 ×
  * `combatEnv.cooldown`，出貨 0.2 ⇒ 45 秒的技能實際只轉 9 秒）。哪幾軸有實際值、
@@ -70,6 +80,11 @@ import { DEFAULT_RANGE_TIERS } from "./rangeTiers";
 import { DEFAULT_AOE_TIERS } from "./aoeTiers";
 import { DEFAULT_DISPLACEMENT_TIERS } from "./displacementTiers";
 import { DEFAULT_MOVE_SPEED_TIERS, MS_BONUS_TIER_FIELD, isMsBonusNode } from "./moveSpeedTiers";
+import {
+  DEFAULT_CAST_TIME_RULES,
+  applyCastTimeRules,
+  type CastTimeRules,
+} from "../sim/castTimeRules";
 
 /* ───────────────────────────── 佔位符詞彙 ───────────────────────────── */
 
@@ -86,6 +101,7 @@ export const PROSE_SLOT_KEYS = [
   "travel",
   "push",
   "msb",
+  "cast",
 ] as const;
 export type ProseSlotKey = (typeof PROSE_SLOT_KEYS)[number];
 
@@ -103,6 +119,11 @@ export const PROSE_SLOT_DOC: Readonly<Record<ProseSlotKey, { zh: string; from: s
       zh: "移速加成%",
       from: "效果樹上第 1 個 `stat:ms` 的 % modifier（msBonusTier → config.move-speed-tiers@1）",
       renders: "百分比數字（逐階以 / 分隔；⛔ 不含 % 記號，卡面自己寫「{{msb}}%」）",
+    },
+    cast: {
+      zh: "吟唱秒數",
+      from: "ability@1.castTimeSec → applyCastTimeRules(config.cast-time@1)（**夾後**）",
+      renders: "數字（⛔ 不含「秒」，卡面自己寫「吟唱{{cast}}秒」）",
     },
   });
 
@@ -366,6 +387,20 @@ export interface ProseTables {
   /** 移速加成五級距（GH#789）：級別 → % 加成的小數（0.5 = +50%）。 */
   readonly msBonus: Readonly<Record<SkillTierName, number>>;
   readonly zoneRadius: number;
+  /**
+   * 吟唱規則（`config.cast-time@1`）—— `{{cast}}` 算繪時要套的那三格＋owner 的夾
+   * （GH#792）。
+   *
+   * ⭐ **選填是刻意的**，而且它的退路與其他每一軸同一個語意：缺席時用
+   * `DEFAULT_CAST_TIME_RULES`（第一守則的住處②，Zod 的 `DEFAULT_*`）——
+   * ⛔ 不是一份手抄的數字，也⛔ 不是一張「中性表」。
+   * ⚠️ 這與 `renderAbilityText.DEFAULT_LIVE_DEPS` 的處境**刻意不同**：那一份的
+   * `DEFAULT_COMBAT_ENV` 每一格是 1.0（中性），拿去算會印出一個等於卡面值的假數字；
+   * 而這一份的 `castTimeMaxSec` 逐字**就是**出貨值（`content/config/cast-time.json`
+   * 與它零漂移，`configDrift` 那一族在守）⇒ 退路值不會說謊。
+   * ⭐ 出貨路徑（`registries.ts`）仍然餵真文件，⛔ 不倚賴這條退路。
+   */
+  readonly castTime?: CastTimeRules;
 }
 
 /**
@@ -387,6 +422,7 @@ export const DEFAULT_PROSE_TABLES: ProseTables = Object.freeze({
   ) as Readonly<Record<SkillTierName, number>>,
   msBonus: DEFAULT_MOVE_SPEED_TIERS.bonus,
   zoneRadius: DUEL_ZONE_RADIUS_REF,
+  castTime: DEFAULT_CAST_TIME_RULES,
 });
 
 /** 一支技能上**引擎真的有**的量，已經算成卡面上那串字。 */
@@ -405,6 +441,12 @@ export interface AbilityQuantities {
    * （`50` 或逐階 `50/50/50/100/400`；⛔ 不含 % 記號）。`undefined` = 沒有這一軸。
    */
   readonly msb?: string;
+  /**
+   * 吟唱秒數（GH#792）—— ⭐ **已經套過 `applyCastTimeRules`**，也就是玩家真的
+   * 站著不動那幾秒，⛔ 不是 JSON 上那個 `castTimeSec` 規格值。
+   * `undefined` = 這一支沒有吟唱（瞬發）⇒ `{{cast}}` 會原樣印出來並被閘點名。
+   */
+  readonly cast?: string;
   /**
    * ⭐ 每一軸**可以接受的寫法**（收合形 `45` 與展開形 `45/45/45/45`）。
    * 兩種在語意上逐字相同，所以卡面用哪一種都算「說的就是 JSON 那個數字」，
@@ -663,6 +705,20 @@ export function abilityQuantities(
   const mpRanks = Array.isArray(d["manaCost"]) ? (d["manaCost"] as number[]) : [];
   // GH#789 —— 移速加成 %。小數 → 百分比數字（0.5 → 50）。
   const msbRanks = msBonusRanks(d, t.msBonus).map((v) => v * 100);
+  /**
+   * GH#792 —— 吟唱秒數，**套過夾子之後**的那個值。
+   * ⚠️ 這一行與 `abilitySystem.ts` 讀 `def.castTimeSec` 的那一行是同一條算式
+   * （`(castTimeSec ?? 0) > 0 ? applyCastTimeRules(rules, castTimeSec) : 0`）——
+   * ⛔ 刻意不在這裡自己寫一次 clamp（`applyCastTimeRules` 是唯一知道三格怎麼作用
+   * 的地方，同 `applyCooldownFloor` 的理由）。
+   * ⛔ 瞬發（0 或缺席）不給值 ⇒ `{{cast}}` 原樣印出來（fail-loud）：一張寫著
+   * 「吟唱0秒」的卡片比一個裸的佔位符更難發現。
+   */
+  const castSpec = d["castTimeSec"];
+  const cast =
+    typeof castSpec === "number" && Number.isFinite(castSpec) && castSpec > 0
+      ? fmtNum(applyCastTimeRules(t.castTime ?? DEFAULT_CAST_TIME_RULES, castSpec))
+      : undefined;
   return {
     cd: fmtRanks(cdRanks),
     mp: fmtRanks(mpRanks),
@@ -672,6 +728,7 @@ export function abilityQuantities(
     travel: tierField("distanceTier") ?? word(travel ?? range, t.travel),
     push: word(push, t.push),
     msb: fmtRanks(msbRanks),
+    cast,
     forms: { cd: acceptedForms(cdRanks), mp: acceptedForms(mpRanks), dmg: dmgForms },
     ranks: { cd: rankListOf(cdRanks), mp: rankListOf(mpRanks), dmg: dmgRanks },
     raw,
@@ -697,6 +754,8 @@ export function slotValue(q: AbilityQuantities, slot: ProseSlotKey, i: number): 
       return q.push;
     case "msb":
       return q.msb;
+    case "cast":
+      return q.cast;
   }
 }
 

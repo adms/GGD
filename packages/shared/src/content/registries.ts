@@ -50,6 +50,8 @@ import { resolveSpeedGrowthTiers, speedGrowthTiersFromDoc } from "./speedGrowthT
 import { type ProseTables } from "./abilityProse";
 // ⭐ 唯一入口（抽量 → 算實際值 → 代入）。⛔ 不要退回自己組那三步，見 `withProse`。
 import { liveDepsFromConfigs, renderAbilityDescription } from "./renderAbilityText";
+// GH#792 —— `{{cast}}` 的吟唱規則（含 owner 的 castTimeMaxSec 夾，#787）。
+import { castTimeRulesFromDoc } from "../sim/castTimeRules";
 // 位移四級距 + **無條件的速度天花板**（GH#318）。同上，唯一的查表處。
 import {
   displacementTiersFromDoc,
@@ -353,6 +355,10 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
     zoneRadius: Math.min(
       ...store.all<ArenaDoc>("arenas").flatMap((a) => a.zones.map((z) => z.boundaryRadius)),
     ),
+    // GH#792 —— `{{cast}}` 要的吟唱規則（含 owner 的 castTimeMaxSec 夾，#787）。
+    // ⛔ 從 `configDocs`（store）讀，⛔ 不讀 `Configs` 註冊表 —— 那一圈跑在技能之後，
+    //    會拿到上一次載入留下的那一份（同 liveDeps 那一行的理由）。
+    castTime: castTimeRulesFromDoc(configDocs.find((c) => c.schema === "config.cast-time@1")),
   };
   // ⭐ 實際值（`{{cd!}}` = 卡面 × `combatEnv.cooldown`）要的兩份設定，同樣從 store 讀
   //   —— ⛔ 不讀 `Configs` 註冊表（那一圈跑在技能之後，會拿到上一次載入留下的那一份）。

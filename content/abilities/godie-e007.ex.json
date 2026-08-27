@@ -3,7 +3,7 @@
   "name": "12-002 仙氣發勁",
   "icon": "assets/icons/abilities/godie-e007.ex.webp",
   "provenance": "w3x-import",
-  "description": "[主動][指定][擊退][AP加成]\n{{cd}}秒冷卻，吟唱2秒\n消耗MP{{mp}}\n施法距離：{{range}}\n\n「Hey Siri，打開電風扇」\n近身最後必殺絕技，將身上所有的仙氣集中在手上瞬間爆發造成 {{dmg}} + 600% [AP] 傷害，並[擊退]敵方單位。",
+  "description": "[主動][指定][擊退][AP加成]\n{{cd}}秒冷卻，吟唱{{cast}}秒\n消耗MP{{mp}}\n施法距離：{{range}}\n\n「Hey Siri，打開電風扇」\n近身最後必殺絕技，將身上所有的仙氣集中在手上瞬間爆發造成 {{dmg}} + 600% [AP] 傷害，並[擊退]敵方單位。",
   "slot": "EX",
   "castType": "targeted",
   "maxRank": 1,

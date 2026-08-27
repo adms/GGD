@@ -75,7 +75,7 @@ A("13-03", "13-03 龍頭戲畫。布陣", "self", [60, 60, 60, 60], [120, 180, 2
 #    `targetsEnemies` 也跟著翻成 false（`e["cast"] != "self" or bool(radiusTier)`）。
 #    明填 = 出貨那一份逐位元不變，⛔ 不是新的平衡值。
 A("13-04", "13-04 龍星群", "self", [120, 120, 120], [150, 200, 250], 0,
-  "[主動][範圍][週期][AP加成]\n{{cd}}秒冷卻，吟唱0.6秒\n消耗MP{{mp}}\n\n「生。意。星。龍」\n自身[周圍]每0.2秒[隨機]地點落下一顆流星，共10顆；每顆造成[小範圍] {{dmg}} + 40% [AP] [魔法傷害]。",
+  "[主動][範圍][週期][AP加成]\n{{cd}}秒冷卻，吟唱{{cast}}秒\n消耗MP{{mp}}\n\n「生。意。星。龍」\n自身[周圍]每0.2秒[隨機]地點落下一顆流星，共10顆；每顆造成[小範圍] {{dmg}} + 40% [AP] [魔法傷害]。",
   maxRank=3, cast_time=0.6, radiusTier="極小",
   effects=[{"kind": "randomArea", "who": "self", "count": [10], "intervalSec": 0.2,
             "scatterRadius": 8.0, "firstAtCast": True, "stopOnCasterDeath": True,

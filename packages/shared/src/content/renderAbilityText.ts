@@ -141,6 +141,17 @@ export const LIVE_RULES: Readonly<Record<ProseSlotKey, LiveRule>> = Object.freez
       "沒有一個單一因子代表得了「實際」。⭐ 反駁方式：owner 指定一個錨" +
       "（例如「對中位基礎移速 5.8 算」），它就變成一條算得出來的規則",
   },
+  cast: {
+    kind: "none",
+    why:
+      "⭐ 這一格的理由與其他七格**方向相反**：`{{cast}}` 算繪出來的**本來就是實際值** " +
+      "—— `abilityQuantities` 那一行已經套過 `applyCastTimeRules`（含 owner 的 " +
+      "`castTimeMaxSec` 夾，#787/#792），因為 `abilitySystem.ts` 讀 `castTimeSec` 的" +
+      "**同一行**就套它 ⇒ 玩家從來沒有經歷過規格值。" +
+      "⇒ `{{cast!}}` 會與 `{{cast}}` **逐位元組相同**，那是一句空話（第一·五守則）。" +
+      "⭐ 反駁方式：哪天吟唱長出一個「這一場、這一刻」才知道的因子（急速？狀態？）" +
+      "而卡面值與實際值真的分家了，這一格就該改成 factor，而 `{{cast}}` 要退回規格值",
+  },
 });
 
 /** 算實際值要的兩份出貨設定。⛔ 全部從 `content/config/` 推導，不抄字面值。 */
