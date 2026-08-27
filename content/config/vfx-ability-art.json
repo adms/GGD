@@ -105,6 +105,20 @@
       "prim": {
         "element": "wind",
         "primitive": "tornado"
+      },
+      "promoted": {
+        "family": "holyawakening",
+        "w3aId": "A0DZ",
+        "provenance": "w3a-override",
+        "via": "art:caster",
+        "primary": "fx.w3x.particle.holyawakening.p04",
+        "extra": [
+          "fx.w3x.particle.holyawakening.p00",
+          "fx.w3x.particle.holyawakening.p01",
+          "fx.w3x.particle.holyawakening.p02",
+          "fx.w3x.particle.holyawakening.p03",
+          "fx.w3x.particle.holyawakening.p05"
+        ]
       }
     },
     "godie-e007.e": {
@@ -367,6 +381,22 @@
         ]
       }
     },
+    "godie-e00l.w": {
+      "promoted": {
+        "family": "holyawakening",
+        "w3aId": "A0DZ",
+        "provenance": "w3a-override",
+        "via": "art:caster",
+        "primary": "fx.w3x.particle.holyawakening.p04",
+        "extra": [
+          "fx.w3x.particle.holyawakening.p00",
+          "fx.w3x.particle.holyawakening.p01",
+          "fx.w3x.particle.holyawakening.p02",
+          "fx.w3x.particle.holyawakening.p03",
+          "fx.w3x.particle.holyawakening.p05"
+        ]
+      }
+    },
     "godie-e00n.passive": {
       "family": {
         "family": "shockwaveRing",
@@ -398,20 +428,6 @@
         "w3aId": "A0D5",
         "provenance": "jass-literal",
         "via": "jass.AddSpecialEffectLocBJ"
-      },
-      "promoted": {
-        "family": "holyawakening",
-        "w3aId": "A0D5",
-        "provenance": "w3a-override",
-        "via": "art:caster",
-        "primary": "fx.w3x.particle.holyawakening.p04",
-        "extra": [
-          "fx.w3x.particle.holyawakening.p00",
-          "fx.w3x.particle.holyawakening.p01",
-          "fx.w3x.particle.holyawakening.p02",
-          "fx.w3x.particle.holyawakening.p03",
-          "fx.w3x.particle.holyawakening.p05"
-        ]
       }
     },
     "godie-e00r.e": {
@@ -859,16 +875,6 @@
         "w3aId": "A0WK",
         "provenance": "jass-literal",
         "via": "jass.AddSpecialEffectLocBJ"
-      }
-    },
-    "godie-ekee.q": {
-      "promoted": {
-        "family": "darkbreathdamage",
-        "w3aId": "Abof",
-        "provenance": "w3h-override",
-        "via": "buff:Bbof/target",
-        "primary": "fx.w3x.orb.darkbreathdamage.p00",
-        "extra": []
       }
     },
     "godie-ekee.r": {
@@ -1497,16 +1503,6 @@
         "w3aId": "A0Q5",
         "provenance": "jass-literal",
         "via": "jass.AddSpecialEffectLocBJ"
-      },
-      "promoted": {
-        "family": "lightningnova",
-        "w3aId": "A0Q5",
-        "provenance": "w3a-override",
-        "via": "art:caster",
-        "primary": "fx.w3x.orb.lightningnova.p00",
-        "extra": [
-          "fx.w3x.orb.lightningnova.p01"
-        ]
       }
     },
     "godie-h022.q": {
@@ -1527,19 +1523,6 @@
         "via": "ability.casterArt",
         "scale": 1,
         "paramSource": "model"
-      },
-      "promoted": {
-        "family": "boomnl",
-        "w3aId": "A0Q6",
-        "provenance": "w3a-override",
-        "via": "art:caster",
-        "primary": "fx.w3x.locust.boomnl.p01",
-        "extra": [
-          "fx.w3x.locust.boomnl.p00",
-          "fx.w3x.locust.boomnl.p02",
-          "fx.w3x.locust.boomnl.p03",
-          "fx.w3x.locust.boomnl.p04"
-        ]
       }
     },
     "godie-h022.w": {
@@ -2894,24 +2877,6 @@
           0
         ],
         "paramSource": "model"
-      },
-      "promoted": {
-        "family": "gxhuge",
-        "w3aId": "A0SY",
-        "provenance": "w3a-override",
-        "via": "art:missile",
-        "primary": "fx.w3x.particle.gxhuge.p00",
-        "extra": []
-      }
-    },
-    "godie-ntin.q": {
-      "promoted": {
-        "family": "gx",
-        "w3aId": "A0NA",
-        "provenance": "w3a-override",
-        "via": "art:missile",
-        "primary": "fx.w3x.particle.gx.p00",
-        "extra": []
       }
     },
     "godie-ntin.r": {
@@ -2929,16 +2894,6 @@
           10
         ],
         "paramSource": "model"
-      },
-      "promoted": {
-        "family": "lightningnova",
-        "w3aId": "A0OD",
-        "provenance": "w3a-override",
-        "via": "art:special",
-        "primary": "fx.w3x.orb.lightningnova.p00",
-        "extra": [
-          "fx.w3x.orb.lightningnova.p01"
-        ]
       }
     },
     "godie-o00k.e": {
