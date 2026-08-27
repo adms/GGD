@@ -21,6 +21,11 @@ import { Panel, TextInput } from "./widgets";
 import { ACCENT, DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "./theme";
 import { browserTokenStorage } from "../session";
 import { AuthedImg } from "./live/AuthedImg";
+// 🔍 owner 2026-08-27：「按單張圖片可跳出放大至全螢幕、按左右可上下一張圖片
+// （保持全螢幕），再點一下取消全螢幕。不然現在看起來太小加上沒有連續性可言」
+// ⚠️ 載入路徑與 AuthedImg 同構（fetch→blob，⛔ 裸 <img src> 每張 401）——
+//    AuthedImg 住在另一條 lane 的柵欄裡，收工後抽成共用 hook。
+import { FrameLightbox } from "./FrameLightbox";
 
 /**
  * 🔐 GH#796 —— `/__review/**` 現在要後台 admin 身分（線上由 review sidecar 轉給
@@ -100,6 +105,8 @@ export function FeatureReviewPage(): React.JSX.Element {
   const [err, setErr] = useState<string | null>(null);
   const [q, setQ] = useState("");
   const [open, setOpen] = useState<string | null>(null);
+  // 🔍 全螢幕燈箱：哪一批的第幾張。null = 關著。
+  const [zoom, setZoom] = useState<{ batch: string; index: number } | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
 
   const load = useCallback(async (): Promise<void> => {
@@ -278,12 +285,22 @@ export function FeatureReviewPage(): React.JSX.Element {
                     <figure key={f.rel} style={{ margin: 0, minWidth: 260 }}>
                       {/* 🖼️ GH#669 —— ⛔ 不可以用裸的 `<img src>`：那是瀏覽器的圖片載入，
                           `liveAuth.ts` 的 fetch 攔截器碰不到它 ⇒ 每一張都吃 401 而空白。 */}
-                      <AuthedImg
-                        rel={f.rel}
-                        alt={f.label ?? f.rel}
-                        width={260}
-                        style={{ border: PANEL_BORDER, background: "#000" }}
-                      />
+                      {/* ① 點縮圖 ⇒ 全螢幕（owner 2026-08-27）。⛔ 不是連結 —— 燈箱留在頁內，關掉回到原捲動位置。 */}
+                      <div
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`放大 ${f.label ?? f.rel}`}
+                        onClick={() => setZoom({ batch: b.id, index: frames.indexOf(f) })}
+                        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setZoom({ batch: b.id, index: frames.indexOf(f) }); } }}
+                        style={{ cursor: "zoom-in" }}
+                      >
+                        <AuthedImg
+                          rel={f.rel}
+                          alt={f.label ?? f.rel}
+                          width={260}
+                          style={{ border: PANEL_BORDER, background: "#000" }}
+                        />
+                      </div>
                       <figcaption style={{ color: TEXT_DIM, fontSize: 11.5, marginTop: 4 }}>
                         <b style={{ color: TEXT_MAIN }}>{f.label ?? ""}</b>
                         {typeof f.bright === "number" ? <> · 亮 {f.bright.toLocaleString()}</> : null}
@@ -297,6 +314,21 @@ export function FeatureReviewPage(): React.JSX.Element {
           </Panel>
         );
       })}
+      {zoom !== null
+        ? (() => {
+            const zb = batches.find((x) => x.id === zoom.batch);
+            const zf = zb?.frames ?? [];
+            if (zf.length === 0) return null;
+            return (
+              <FrameLightbox
+                frames={zf}
+                index={Math.min(zoom.index, zf.length - 1)}
+                onStep={(i) => setZoom({ batch: zoom.batch, index: i })}
+                onClose={() => setZoom(null)}
+              />
+            );
+          })()
+        : null}
     </div>
   );
 }
