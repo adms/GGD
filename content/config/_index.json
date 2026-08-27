@@ -1,12 +1,12 @@
 {
   "collection": "config",
-  "hash": "2e5223a894ed",
+  "hash": "99fbf06d18b4",
   "entries": [
     {
       "id": "ability-vfx-bindings",
       "path": "config/ability-vfx-bindings.json",
-      "hash": "618c345995f8",
-      "size": 42136
+      "hash": "725079dfe0e1",
+      "size": 41676
     },
     {
       "id": "admin-friend",
@@ -461,8 +461,8 @@
     {
       "id": "vfx-ability-art",
       "path": "config/vfx-ability-art.json",
-      "hash": "1fd0c9954c1a",
-      "size": 115618
+      "hash": "53c160cbfe1c",
+      "size": 114465
     },
     {
       "id": "vfx-cleanup",

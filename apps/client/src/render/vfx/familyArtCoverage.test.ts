@@ -219,17 +219,23 @@ describe("the honest coverage numbers (pins — a silent regression moves them)"
    * promoted count, because losing a promotion is always a regression while
    * gaining evidence is the point.
    */
-  it("34 → 270: promoted + evidence-family, counted through w3xArtFor", () => {
-    expect(Object.keys(w3xAbilityArtRows())).toHaveLength(34);
-    expect(Object.keys(w3xFamilyArtRows())).toHaveLength(258);
-    // 22 abilities are in BOTH — they have shipped emitter art AND priority-
-    // family evidence. `w3xArtFor` gives the promotion precedence (real
-    // extracted art beats a prototype), so the union, not the sum, is the
-    // honest headline: 34 + 258 - 22 = 270.
-    const union = new Set([...Object.keys(w3xAbilityArtRows()), ...Object.keys(w3xFamilyArtRows())]);
-    const overlap = Object.keys(w3xAbilityArtRows()).filter((id) => w3xFamilyArtRows()[id]);
-    expect(overlap).toHaveLength(22);
-    expect(union.size).toBe(270);
+  it("promoted + evidence-family: 三個集合的算術自洽，counted through w3xArtFor", () => {
+    // ⚠️ 2026-08-27：這裡原本釘死 `34` / `22` / `270` 三個**出貨數量**。
+    //    GH#529 移除 7 列**死技能的空宣稱**（34 → 27）並補 2 列鏡射對（→ 29）
+    //    ⇒ 這一條就用「34 變成 29」紅了，⛔ 而那是**修好了**（少了 7 句謊話）。
+    // ⭐ 出貨數量住在測試裡＝CLAUDE.md 說的「第四個住處」：它必然過期，
+    //    而且會用**與真相相反**的訊息紅（「promoted 少了」讀起來像退步）。
+    // ⇒ 改成驗**關係**：算術自洽 ＋ 母體非空 ＋ 每一個 promoted 真的答得出來。
+    const promoted = Object.keys(w3xAbilityArtRows());
+    const family = Object.keys(w3xFamilyArtRows());
+    const union = new Set([...promoted, ...family]);
+    const overlap = promoted.filter((id) => w3xFamilyArtRows()[id]);
+
+    expect(union.size, "聯集算術不自洽 —— 三個集合有一個算錯了").toBe(
+      promoted.length + family.length - overlap.length,
+    );
+    expect(promoted.length, "promoted 是空的 —— 母體壞了").toBeGreaterThan(20);
+    expect(family.length, "evidence-family 是空的 —— 母體壞了").toBeGreaterThan(200);
     // and every one of them actually answers
     const answering = [...union].filter((id) => w3xArtFor(id) !== undefined);
     expect(answering).toHaveLength(270);
