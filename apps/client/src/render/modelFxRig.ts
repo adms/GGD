@@ -418,6 +418,33 @@ function poolKeyOf(modelKey: string, look: ModelFxAppearance): string {
   return `${modelKey}|${look.tint ? look.tint.join(",") : ""}|${look.alpha ?? ""}`;
 }
 
+/**
+ * ⭐ GH#838 M3 —— 升空曲線取樣（逐段線性，兩端夾住）。
+ *
+ * ⚠️ 純函式住這裡而不是 class 裡：`modelFxRig.test.ts` 要驗得到它，而且它與
+ * Babylon 一點關係都沒有。⛔ keys 假設**已排序**（schema 的 refine 保證）——
+ * 這裡不再排一次：每幀排序一個陣列是 N 個實例 × 60fps 的浪費。
+ */
+export function sampleHeightKeys(
+  keys: readonly { t: number; h: number }[],
+  ageSec: number,
+): number {
+  if (keys.length === 0) return 0;
+  const first = keys[0]!;
+  if (ageSec <= first.t) return first.h;
+  const last = keys[keys.length - 1]!;
+  if (ageSec >= last.t) return last.h;
+  for (let i = 1; i < keys.length; i++) {
+    const b = keys[i]!;
+    if (ageSec > b.t) continue;
+    const a = keys[i - 1]!;
+    const span = b.t - a.t;
+    if (span <= 0) return b.h;
+    return a.h + ((b.h - a.h) * (ageSec - a.t)) / span;
+  }
+  return last.h;
+}
+
 interface LiveModelFx {
   root: TransformNode;
   axis: TransformNode;
@@ -429,6 +456,8 @@ interface LiveModelFx {
   /** ⭐ sim 解算完的**這一具**（⛔ 不是整發的 spec —— 客戶端不再自己算路徑，GH#606） */
   inst: ModelFxSpawnInstance;
   y: number;
+  /** ⭐ GH#838 M3 —— 升空曲線（秒→高度，逐段線性）。缺席 ⇒ 固定在 {@link y}。 */
+  heightKeys?: readonly { t: number; h: number }[];
   spinDegPerSec?: number;
   /**
    * ⭐ 這一發要播的剪輯與速率（GH#689）。⚠️ 它必須存在**這裡**而不是只在
@@ -577,6 +606,9 @@ export class ModelFxRig {
         //    的離地」,這裡乘上 ev.scale。⚠️ 這個語意變更是免費的:fieldAdoption 普查
         //    證明 netherstrike 是**第一個**採用者,沒有別的消費端要遷移。
         y: (doc.fxSpawnHeight ?? 0) * (ev.scale ?? 1) + (ev.heightU ?? 0),
+        ...(ev.heightKeys !== undefined && ev.heightKeys.length > 0
+          ? { heightKeys: ev.heightKeys }
+          : {}),
         ...(ev.spinDegPerSec !== undefined ? { spinDegPerSec: ev.spinDegPerSec } : {}),
         // ⭐ GH#689 —— 剪輯那兩格。⚠️ `clip` 缺席時**整段不存在** ⇒ 一條軌都不
         //    碰 ＝ 2026-08-25 之前的行為，逐位元不變（rollback：內容清空這一格）。
@@ -714,9 +746,13 @@ export class ModelFxRig {
   // ── 內部 ──────────────────────────────────────────────────────────────────
 
   private applyPose(item: LiveModelFx): ReturnType<typeof modelFxPoseFromWire> {
+    // ⭐ GH#838 M3 —— 升空曲線：有 keys 就照年齡內插，⛔ 沒有就是固定高度
+    //    （逐位元同這一格出現以前）。基準是同一個 `item.y`（模型自己的
+    //    fxSpawnHeight×scale ＋ heightU），所以曲線是**疊上去**的。
+    const y = item.heightKeys ? item.y + sampleHeightKeys(item.heightKeys, item.ageSec) : item.y;
     const pose = modelFxPoseFromWire(
       item.inst,
-      { y: item.y, ...(item.spinDegPerSec !== undefined ? { spinDegPerSec: item.spinDegPerSec } : {}) },
+      { y, ...(item.spinDegPerSec !== undefined ? { spinDegPerSec: item.spinDegPerSec } : {}) },
       item.ageSec,
     );
     item.root.position.set(pose.x, pose.y, pose.z);

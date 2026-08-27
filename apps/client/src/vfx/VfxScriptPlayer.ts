@@ -345,6 +345,7 @@ export class VfxScriptPlayer {
           ...(seg.tint !== undefined ? { tint: seg.tint } : {}),
           ...(seg.alpha !== undefined ? { alpha: seg.alpha } : {}),
           ...(seg.heightU !== undefined ? { heightU: seg.heightU } : {}),
+          ...(seg.heightKeys !== undefined ? { heightKeys: seg.heightKeys } : {}),
           instances,
         };
         this.deps.dispatch(

@@ -88,6 +88,17 @@ export const zVfxScriptModelFx = zSpawnModelFx
     heightU: z.number().min(0).max(30).optional(),
     /** 朝向偏移（度，逆時針；JASS `CreateNUnitsAtLoc(…, angle)` 的那一格）。 */
     yawOffsetDeg: z.number().min(-360).max(360).optional(),
+    /**
+     * ⭐【升空曲線】M3 —— JASS `SetUnitFlyHeightBJ(u, h, rate)`：01-04 收尾把三個
+     * 身體拉到 1000 wc3u 再急墜。單一個 `heightU` 表達不了「升上去再掉下來」。
+     * `[{t 秒, h 世界單位}]`，逐段線性、兩端夾住；疊在 `heightU` 之上。
+     * ⚠️ 必須**依 t 遞增**（客戶端每幀取樣，⛔ 不會替你排序）—— refine 擋。
+     */
+    heightKeys: z
+      .array(z.object({ t: z.number().min(0).max(30), h: z.number().min(-10).max(40) }).strict())
+      .min(2)
+      .max(12)
+      .optional(),
   });
 
 /** 粒子／貼圖 vfx 段 —— 詞彙照抄 spawnVfx（含 at:"bone"＋attach 掛骨）。 */
@@ -166,6 +177,21 @@ export const zVfxScriptDoc = z
         });
       }
       if (seg.kind === "modelFx") {
+        // ⚠️ 升空曲線的 t 必須遞增 —— 客戶端每幀取樣時**不排序**（那是 N×60fps
+        //    的浪費），所以順序錯了會靜靜地跳高度，⛔ 而畫面上看起來只是「抖」。
+        const hk = seg.heightKeys;
+        if (hk) {
+          for (let k = 1; k < hk.length; k++) {
+            if (hk[k]!.t <= hk[k - 1]!.t) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                path: ["segments", i, "heightKeys", k, "t"],
+                message: `heightKeys 的 t 必須嚴格遞增（第 ${k} 格 ${hk[k]!.t} ≤ 前一格 ${hk[k - 1]!.t}）`,
+              });
+              break;
+            }
+          }
+        }
         // 鏡射 spawnModelFx 的跨欄檢查（pick 不帶 refinement）—— 訊息同語意
         if ((seg.path === "static" || seg.path === "orbit") && seg.lifeSec === undefined) {
           ctx.addIssue({

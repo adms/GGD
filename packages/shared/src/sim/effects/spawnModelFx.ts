@@ -153,6 +153,17 @@ export interface ModelFxSpawnEvent {
    */
   heightU?: number;
   /**
+   * ⭐【升空曲線】GH#838 M3 —— 原作 `SetUnitFlyHeightBJ(u, h, rate)`：01-04 收尾
+   * 把三個身體拉到 1000 wc3u 再以 rate 5000/4000/3800 急墜。單一個 `heightU`
+   * 表達不了「升上去再掉下來」，而那正是那一招的招牌節拍。
+   *
+   * 形狀：`[{t 秒（從生成算起）, h 世界單位}]`，**逐段線性內插**，兩端夾住
+   * （t 在第一格之前＝第一格的 h；最後一格之後＝最後一格的 h）。
+   * 缺席 ⇒ 用 {@link heightU}（＝這一格出現以前的行為，逐位元不變）。
+   * ⚠️ 它**加在** `model@1.fxSpawnHeight×scale` 之上，與 `heightU` 同一個基準。
+   */
+  heightKeys?: readonly { t: number; h: number }[];
+  /**
    * ⭐ **已經解算完的每一具實例。** 客戶端照抄就好 ——
    * ⛔ 它不需要（也不可以）自己再算一次路徑：`sim` 這一份才是傷害真的發生的地方，
    * 客戶端算第二份就是「畫面說在這裡、傷害在那裡」（而且它會是第二個住處）。
