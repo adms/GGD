@@ -65,6 +65,21 @@ export const zConfigCombatFeelDoc = z
         walkEps: z.number().min(0).max(100),
         /** 小怪(含殭屍王)是否同樣受約束 */
         applyToMobs: z.boolean(),
+        /**
+         * ⭐ GH#755 / GH#801 —— 語意、出處與出貨預設全部寫在 `sim/combatFeel.ts`
+         * 的 `StandstillRules`（⛔ 這裡不重講一次，第〇·四守則）。
+         *
+         * ⚠️ 三格一律 `.optional()`：ABSENT ⇒ `DEFAULT_STANDSTILL`，⛔ 不是
+         * `0` / `false`。一份這三格出現之前的舊文件應該拿到**現在出貨的行為**，
+         * 而不是被靜默地退回一個沒有人選過的組合。
+         *
+         * ⚠️ 上界不只有下界（第一守則）：`stillEps` 到 100（＝把整條規則關掉的
+         * 極端），`closingRatio` 硬性 [0,1] —— 徑向分量不可能大於速度，>1 是
+         * 一個**永遠為真**的門檻，而它不會有任何錯誤訊息。
+         */
+        stillEps: z.number().min(0).max(100).optional(),
+        closingRatio: z.number().min(0).max(1).optional(),
+        legacyAbsoluteClosing: z.boolean().optional(),
       })
       .strict()
       .optional(),

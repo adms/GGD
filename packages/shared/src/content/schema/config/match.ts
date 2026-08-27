@@ -463,6 +463,34 @@ export const zConfigMatchDoc = z
          */
         disposeEmptyChampSelect: z.boolean().optional(),
         /**
+         * ⭐ **房間的存活上限**（GH#588 的第二半 / GH#801）。語意、owner 的原話與
+         * 出貨預設全部寫在 `apps/game-server/src/rooms/roomLifetime.ts`
+         * （`DEFAULT_ROOM_COMBAT_MAX_SEC` / `DEFAULT_ROOM_COMBAT_CAP_ENABLED`）——
+         * ⛔ 這裡不重講一次（第〇·四守則：同一個值不要有第二個住處）。
+         *
+         * ⚠️ 兩格一律 `.optional()`：ABSENT ⇒ 解析端的預設（1800 秒 / 開著），
+         * ⛔ 不是 `0` / `false`。同 `disposeEmptyChampSelect` 的約定。
+         *
+         * ⚠️ 上界不只有下界（第一守則）：`[60, 14400]` 與解析端的夾限**同一組
+         * 數字**。⛔ 下界不是 0 —— 0 秒等於「一進戰鬥就收房」，而那不是一個
+         * 兜底，是一個看起來像伺服器壞掉的設定。
+         */
+        roomCombatMaxSec: z.number().min(60).max(14_400).optional(),
+        roomCombatCapEnabled: z.boolean().optional(),
+        /**
+         * ⭐ 兩格**誠信**開關（GH#726 / GH#801）。語意與出貨預設寫在
+         * `apps/game-server/src/match/integrityPolicy.ts`
+         * （`DEFAULT_CHAMPION_LOCK_ENFORCED` / `DEFAULT_SCORE_CHEATED_MATCHES`）。
+         *
+         * ⚠️ 兩格都 `.optional()`，ABSENT ⇒ 上面那兩個常數 —— 而它們**不是同一個
+         * 布林值**（一個 true 一個 false）⇒ ⛔ 這裡寫死任何一邊都會是謊話。
+         *
+         * ⛔ 它們**不是平衡旋鈕**（不進 `owner-knobs.json`）：一個字都不改傷害，
+         * 只決定伺服器承不承認一件客戶端宣稱的事。
+         */
+        championLockEnforced: z.boolean().optional(),
+        scoreCheatedMatches: z.boolean().optional(),
+        /**
          * 中場（商店）秒數。
          *
          * ⚠️ 上界是 #288 補的：這一格從此**房主開房時可以覆蓋**，而房主那條路不會

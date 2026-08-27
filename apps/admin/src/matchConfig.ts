@@ -167,6 +167,21 @@ export const MATCH_BOOL_LABELS: Readonly<Record<string, MatchBoolLabels>> = Obje
     on: "免死擋得住火圈（回合可能被拖長）",
     off: "火圈無視免死，燒到 0 就是死（出貨）",
   },
+  // GH#588 第二半 / GH#726 —— 三格的解析端在 game-server 上已經跑了一段時間，
+  // 這裡補的是第一守則的第三個住處（後台）。⚠️ 「哪一邊是出貨」寫在解析端的
+  // `DEFAULT_*` 常數上，⛔ 這裡不重抄一次數字。
+  "match.roomCombatCapEnabled": {
+    on: "打太久的房間會被收掉（出貨）",
+    off: "不設上限（壓力測試／長時間錄影素材）",
+  },
+  "match.championLockEnforced": {
+    on: "伺服器承認鎖定，鎖了就不能改選（出貨）",
+    off: "鎖定只是客戶端的顯示（沙發同樂／賽事裁判要讓一個座位重選時）",
+  },
+  "match.scoreCheatedMatches": {
+    on: "用過作弊碼的場次照樣結算分數與藍水晶",
+    off: "用了就沒有分數與藍水晶（出貨，owner 明說的那一邊）",
+  },
 });
 
 /** 這一格是不是布林（＝畫成開關而不是輸入框）。 */
@@ -282,6 +297,42 @@ export const MATCH_FIELD_INFO: Readonly<Record<string, MatchFieldInfo>> = Object
       "練習房更是永遠打不完（`endlessCombat` 讓相位停在戰鬥，實測 60,660 tick 還在跑）。那正是「離開房間之後還有隱形英雄在打我」的來源。" +
       "⚠️ 保留席位那一條不能少：客戶端要先下載資產才連得上遊戲 socket（保留席位開 120 秒），而 PvP 的選角只有 20 秒 —— 少了它，網路慢的玩家會在自己還在讀取時被收房。",
     live: "game-server MatchRoom.loop（選角相位結束的那一 tick）",
+  },
+  "match.roomCombatMaxSec": {
+    zh: "房間進入戰鬥後的存活上限（秒）",
+    note:
+      "owner 2026-08-23:「每間房間存活時間**只要開始進入戰鬥後**，存活時間最多 30 分鐘，避免幽靈房間」。" +
+      "計時的起點是**戰鬥第一次開始**的那一刻（選角／中場／商店都不算），量的是**牆上時鐘**而不是 tick —— " +
+      "掉 tick 的房間跑得比真實時間慢，而幽靈房間吃的是真實的 CPU 秒。" +
+      "⚠️ 它是一條**獨立於相位機**的兜底：練習房的相位永遠停在戰鬥（`endlessCombat`），所以「等相位走完」對它結構性失明。" +
+      "⚠️ **留白 = 用解析端的預設**（`DEFAULT_ROOM_COMBAT_MAX_SEC`），⛔ 不是 0 —— 0 會被下界擋掉（那等於「一進戰鬥就收房」）。",
+    live: "game-server rooms/roomLifetime.resolveRoomCombatLifetime → MatchRoom 的收房判斷",
+  },
+  "match.roomCombatCapEnabled": {
+    zh: "上面那條存活上限要不要生效",
+    note:
+      "關掉整條兜底。⚠️ 這一格存在的理由是**回頭**，⛔ 不是觀望：壓力測試與長時間錄影素材是關掉它的合法用途，" +
+      "而關著的代價正是 owner 抱怨的那個 —— 一場沒有人在看的比賽以 30Hz 打到底，佔著一顆核心。" +
+      "⚠️ 留白 = 用解析端的預設（`DEFAULT_ROOM_COMBAT_CAP_ENABLED`），⛔ 不是關。",
+    live: "game-server rooms/roomLifetime.resolveRoomCombatLifetime",
+  },
+  "match.championLockEnforced": {
+    zh: "伺服器強制英雄鎖定",
+    note:
+      "選角時按下鎖定之後，伺服器要不要**拒絕**後續的改選。" +
+      "關掉＝鎖定只是客戶端的顯示，於是一個改造過的客戶端可以鎖定後一直換人，而其他人看到的是他早就定案了。" +
+      "⚠️ 合法的關掉理由只有一種：沙發同樂／賽事裁判真的要讓某一個座位重選。" +
+      "⚠️ 留白 = 用解析端的預設（`DEFAULT_CHAMPION_LOCK_ENFORCED`）。",
+    live: "game-server match/integrityPolicy.resolveChampionLockEnforced → MatchRoom 的選角訊息處理",
+  },
+  "match.scoreCheatedMatches": {
+    zh: "用過作弊碼的場次照樣結算",
+    note:
+      "owner:「1 vs bot 可以用作弊碼，但**用了就沒有分數與藍水晶**」。開著＝那一場照樣進 MMR／賽季積分與錢包。" +
+      "⚠️ 合法的打開理由：內部壓力測試想要一份真的有結算的錄影。" +
+      "⚠️ 它一個字都不改任何傷害數字 —— 只決定伺服器承不承認這一場的結果。" +
+      "⚠️ 留白 = 用解析端的預設（`DEFAULT_SCORE_CHEATED_MATCHES`）。",
+    live: "game-server match/integrityPolicy.resolveScoreCheatedMatches → MatchRoom 結算",
   },
   "match.intermissionSec": {
     zh: "中場（商店）秒數",
@@ -536,6 +587,22 @@ export const MATCH_GROUPS: readonly MatchGroup[] = [
       "match.intermissionSec",
       "match.combatMaxSec",
       "match.resolutionSec",
+    ],
+  },
+  {
+    key: "roomIntegrity",
+    title: "房間存活與誠信（可調）",
+    intro:
+      "這一組**不影響任何一場比賽裡發生的事** —— 它決定「這間房還該不該存在」與「伺服器承不承認客戶端說的話」，" +
+      "所以刻意與上面的回合時鐘分開：那一組調的是節奏，這一組調的是**邊界**。" +
+      "⚠️ 四格全部是 `.optional()`，**留白 = 用 game-server 解析端的 `DEFAULT_*`** —— " +
+      "⛔ 不是 0／關。畫面上留白不代表功能沒開，代表「沒有人在這裡覆蓋它」。" +
+      "⚠️ 存檔之後要**重啟 game-server shard**才生效（同這一頁其餘每一格）。",
+    paths: [
+      "match.roomCombatMaxSec",
+      "match.roomCombatCapEnabled",
+      "match.championLockEnforced",
+      "match.scoreCheatedMatches",
     ],
   },
   {
