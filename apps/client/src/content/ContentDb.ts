@@ -86,8 +86,11 @@ import { resolveFamilyArt } from "../render/vfx/familyTuning";
 import { setMaxAbilityVfxLayers } from "../render/vfx/abilityLayers";
 import { setOneShotMaxLifeSec } from "../vfx/oneShotLife";
 import { setFxTintEmissiveFloor, setStockGlowAdditive } from "../render/modelFxRig";
+import { setBlockFlashMode } from "../render/combatFeedback";
+import { setExDimTuning } from "../render/screenFx";
+import { setCooldownPredictTuning } from "../ui/cooldownPredict";
 import { setCastArcsEnabled, setMaxConcurrentArcs } from "../vfx/arcBolt";
-import { setImpactRingScale, setImpactRingTiers } from "../vfx/vfxPresets";
+import { setImpactRingScale, setImpactRingTiers, setImpactSmokeLifeScale } from "../vfx/vfxPresets";
 import { damageTiersFromDoc } from "@ggd/shared/content/damageTiers";
 import { setCastHeightSource } from "../render/vfx/familyCastHeight";
 import { setFamilyPitchDefaults } from "../render/vfx/familyOrient";
@@ -401,6 +404,26 @@ export class ContentDb {
       (Configs.tryGet("vfx-cleanup") as { stockGlowAdditive?: boolean } | undefined)
         ?.stockGlowAdditive,
     );
+    // ── GH#741／#725（lane FEEL 2026-08-27）四格 ─────────────────────────
+    // ⚠️⚠️ **少了這四行 = 失敗形態②**：操作者在後台存得起來、重整讀得回來、
+    //    而**遊戲一輩子看不到**。`damagePalette.ts` 的檔頭逐字記著同一件事，
+    //    而今天一天之內同型的洞被量到五次（`modelFxSpawn` / `screenFlash` /
+    //    `floatingText` / `immune` / `vfxArc`）。
+    // ⭐ 四支 setter 都自帶「認不得的值 ＝ 出貨預設」（⛔ 不是「關掉」）——
+    //    那是 `voxelBodyFor` 立下的三態規矩，⛔ 這裡不重複判斷。
+    const feelFxDoc = Configs.tryGet("feel-fx") as
+      | {
+          impactSmokeLifeScale?: number;
+          exDim?: { enabled: boolean; peakAlpha: number; saturate: number; durationMs: number };
+          cooldownPredict?: { enabled: boolean; graceMs: number };
+        }
+      | undefined;
+    setBlockFlashMode(
+      (Configs.tryGet("damage-colors") as { blockFlashMode?: string } | undefined)?.blockFlashMode,
+    );
+    setImpactSmokeLifeScale(feelFxDoc?.impactSmokeLifeScale);
+    setExDimTuning(feelFxDoc?.exDim);
+    setCooldownPredictTuning(feelFxDoc?.cooldownPredict);
     // ⚡ GH#571 —— 施法電弧的總開關（同一份文件、同一條路）。
     setCastArcsEnabled(vfxFamiliesDoc?.castArcs);
     // ⚡ GH#781 —— 同時在場的電弧帶上限（同一份文件、同一條路）。

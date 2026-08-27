@@ -32,5 +32,16 @@
     "beamLength": 1,
     "brightness": 1,
     "startRadius": 2.4
+  },
+  "impactSmokeLifeScale": 1,
+  "exDim": {
+    "enabled": true,
+    "peakAlpha": 0.34,
+    "saturate": 0.35,
+    "durationMs": 300
+  },
+  "cooldownPredict": {
+    "enabled": true,
+    "graceMs": 700
   }
 }

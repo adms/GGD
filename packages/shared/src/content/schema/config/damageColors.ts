@@ -120,6 +120,19 @@ export const zConfigDamageColorsDoc = z
         widthMult: z.number().min(1.1).max(3),
       })
       .strict(),
+    /**
+     * ⭐ GH#741（舊 #43）—— **被格擋的一擊閃什麼色**。⛔ 缺席 ＝ 出貨預設（`steel`）。
+     *
+     * ⚠️⚠️ **⛔ 不要挑白色或灰色。** `combatFeedback.ts` 自己量過的 ALPHA_COMBINE
+     * 陷阱：白／灰對七個真實 w3x 色調只推得動 **ΔL 0.03–0.09** ⇒
+     * ⭐ **在最需要它的淡色模型上等於沒閃** —— 而那正是真傷色最後是 `#33FFFF`
+     * 的原因（同一份檔記過同一次）。
+     *
+     * · `steel` —— 深鋼藍（出貨）：讀得出「擋下了」，⛔ 不會被讀成受傷
+     * · `damage` —— 回到今天的行為（照傷害類型閃，⭐ 粒子說擋下了而模型說被打中）
+     * · `none` —— 完全不閃（最保守的止血）
+     */
+    blockFlashMode: z.enum(["steel", "damage", "none"]).optional(),
   })
   .strict();
 export type DamageTextAxis = z.infer<typeof zDamageTextAxis>;

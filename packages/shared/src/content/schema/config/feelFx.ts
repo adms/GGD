@@ -184,6 +184,47 @@ export const zConfigFeelFxDoc = z
       })
       .strict()
       .optional(),
+
+    // ── GH#741／#725（lane FEEL 2026-08-27）三格 ─────────────────────────
+    // ⚠️ 三格**全部 optional** ⇒ 缺席時的行為與今天逐位元相同（rollback ＝刪掉它）。
+    /**
+     * 命中煙的**壽命倍率**。1 = 出貨（light 0.3s / heavy·ex 保留 ~0.6s）。
+     * ⭐ 它乘在 `IMPACT_TUNING` 的分級上，⛔ 不是一個絕對秒數 ——
+     * 那樣就會把三檔壓成一檔（而「輕重分得出來」正是這一批要的東西）。
+     * 調大 = 尾巴更久更黏；調小 = 收得更乾淨但打擊感變薄。
+     */
+    impactSmokeLifeScale: z.number().min(0.1).max(4).optional(),
+    /** EX 施放時的**畫面壓暗／去飽和**（GH#725 舊 #42）。⛔ 缺席 = 完全不畫。 */
+    exDim: z
+      .object({
+        /** 總開關。false ＝ 回到「只有推鏡、沒有壓暗」的今天。 */
+        enabled: z.boolean(),
+        /** 最暗那一刻的黑幕不透明度。太高會蓋掉自己的特效。 */
+        peakAlpha: z.number().min(0).max(0.8),
+        /** 去飽和強度（0 = 不動色，1 = 全灰）。⭐ 它讓 EX 的顏色跳出來。 */
+        saturate: z.number().min(0).max(1),
+        /**
+         * 整段持續幾毫秒。⭐ 出貨值**逐字等於** `EX_PUNCH_MS` ——
+         * ⛔ 兩者不一致時，壓暗會比推鏡早收或晚收，而那看起來像掉幀。
+         */
+        durationMs: z.number().min(50).max(2000),
+      })
+      .strict()
+      .optional(),
+    /** 冷卻圈的**本地預測**（GH#725 舊 #119）：按下的當幀起轉，⛔ 不等一趟 RTT。 */
+    cooldownPredict: z
+      .object({
+        /** 總開關。false ＝ 回到「等權威快照才起轉」的今天。 */
+        enabled: z.boolean(),
+        /**
+         * 預測**最多**先轉幾毫秒；權威快照一到就以權威為準。
+         * ⛔⛔ 它只能**提前起轉**，⛔ 永遠不可以**延長**冷卻 ——
+         * 那會變成一個玩家看得到、伺服器不知情的作弊面（結構保證在 `ui/cooldownPredict`）。
+         */
+        graceMs: z.number().min(0).max(5000),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 /** 爽度特效（`content/config/feel-fx.json`，GH#494）。 */
