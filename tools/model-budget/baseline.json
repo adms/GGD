@@ -1,5 +1,5 @@
 {
- "note": "Accepted budget breaches (task #99). New entries must be a reviewed decision; do not regenerate blindly.",
+ "note": "Accepted budget breaches (task #99 · GH#382). ⛔ Every key needs a reasons[] entry — a bare key does not buy silence; --check names it.",
  "updatedAt": "2026-08-18T17:25:53.805Z",
  "accepted": [
   "model:assets/models/menu/dragon2.glb/animChannels",
@@ -22,5 +22,27 @@
   "scene:intermission/drawCalls",
   "scene:intermission/vramBytes",
   "scene:settlement/vramBytes"
- ]
+ ],
+ "reasons": {
+  "model:assets/models/menu/dragon2.glb/animChannels": "412 通道 / hero-prop 閘 200 —— 登入畫面的巨龍,⭐ 場上只有 2 隻而且**不在戰鬥幀裡**(LOGIN 專用)。⇒ 它吃的是登入畫面的預算,⛔ 不是 16.67 ms 的戰鬥幀。分母不同,所以這一列是刻意接受的。",
+  "model:imported.japanesecherry/animChannels": "arena-decor 的動畫通道閘是 0(佈景本來就不該有動畫),而這棵櫻花帶 1 條通道 × 最壞 28 株。⭐ 成本可忽略,⛔ 但閘是對的 —— 它擋的是「佈景開始跑骨架」。⇒ 例外理由:單通道的擺動,⛔ 不是骨架。",
+  "model:imported.linkstik/drawCalls": "6 draw call / champion 閘 5 —— 原作 w3x 匯入的英雄本來就是多材質分件(時空勇者-林克)。⭐ 分母是對的(場上最多 12 位);合併 primitive 會改變模型本身,⛔ 不是自動化修得掉的軸(guard.ts 檔頭逐字說了這一點)。要 owner 決定合不合併。",
+  "model:imported.negi/drawCalls": "7 draw call / champion 閘 5 —— 原作 w3x 匯入的英雄本來就是多材質分件(魔法老師-涅吉)。⭐ 分母是對的(場上最多 12 位);合併 primitive 會改變模型本身,⛔ 不是自動化修得掉的軸(guard.ts 檔頭逐字說了這一點)。要 owner 決定合不合併。",
+  "model:imported.picacugy/drawCalls": "6 draw call / champion 閘 5 —— 原作 w3x 匯入的英雄本來就是多材質分件(神騎寶貝-皮卡丘)。⭐ 分母是對的(場上最多 12 位);合併 primitive 會改變模型本身,⛔ 不是自動化修得掉的軸(guard.ts 檔頭逐字說了這一點)。要 owner 決定合不合併。",
+  "model:imported.pika/drawCalls": "6 draw call / champion 閘 5 —— 原作 w3x 匯入的英雄本來就是多材質分件(傲嬌電氣老鼠-皮卡娘)。⭐ 分母是對的(場上最多 12 位);合併 primitive 會改變模型本身,⛔ 不是自動化修得掉的軸(guard.ts 檔頭逐字說了這一點)。要 owner 決定合不合併。",
+  "scene:champ-select/vramBytes": "⛔ 不是模型貼圖:81.0 MB 幾乎全部是 extraVram —— 1,061 張 UI 圖示(943×128² WEBP + 118×64² PNG)被瀏覽器解成 RGBA8。⭐ 與 GH#382 的貼圖重複**無關**,治它要的是圖示 atlas / 依需求解碼,⛔ 不是模型預算。追蹤:GH#382。",
+  "scene:combat-castle/vramBytes": "⭐ 已知成因 = 同一張貼圖被上傳 N 次(GH#382):KayKit `dungeon_texture` 一張 15.4 KB 1024² PNG 內嵌在 12 份 prop,各算 5.33 MB。內容雜湊去重後這一格省 42.7 MB ⇒ 30.0 MB,**回到 48 MB 閘內**。客戶端已修(apps/client/src/render/textureDedup.ts);⛔ 這一列要等 report.json 依「每張不同的圖」重算後才移除得掉(那支寫在本 lane 柵欄外)。",
+  "scene:combat-colosseum/vramBytes": "⭐ 已知成因 = 同一張貼圖被上傳 N 次(GH#382):KayKit `dungeon_texture` 一張 15.4 KB 1024² PNG 內嵌在 12 份 prop,各算 5.33 MB。內容雜湊去重後這一格省 37.3 MB ⇒ 40.7 MB,**回到 48 MB 閘內**。客戶端已修(apps/client/src/render/textureDedup.ts);⛔ 這一列要等 report.json 依「每張不同的圖」重算後才移除得掉(那支寫在本 lane 柵欄外)。",
+  "scene:combat-dota/vramBytes": "⭐ 已知成因 = 同一張貼圖被上傳 N 次(GH#382):KayKit `dungeon_texture` 一張 15.4 KB 1024² PNG 內嵌在 12 份 prop,各算 5.33 MB。內容雜湊去重後這一格省 37.3 MB ⇒ 30.0 MB,**回到 48 MB 閘內**。客戶端已修(apps/client/src/render/textureDedup.ts);⛔ 這一列要等 report.json 依「每張不同的圖」重算後才移除得掉(那支寫在本 lane 柵欄外)。",
+  "scene:combat-frieren/vramBytes": "⭐ 已知成因 = 同一張貼圖被上傳 N 次(GH#382):KayKit `dungeon_texture` 一張 15.4 KB 1024² PNG 內嵌在 12 份 prop,各算 5.33 MB。內容雜湊去重後這一格省 32.0 MB ⇒ 34.0 MB,**回到 48 MB 閘內**。客戶端已修(apps/client/src/render/textureDedup.ts);⛔ 這一列要等 report.json 依「每張不同的圖」重算後才移除得掉(那支寫在本 lane 柵欄外)。",
+  "scene:combat-heavens-arena/vramBytes": "⚠️ **真債,⛔ 不是重複**:去重後仍 52.9 MB(省了 34.7 MB)。主因是 `scenery-cc0/medieval-fair__Fair_Flags_Line.glb` 單件 16.0 MB(2048² 貼圖)。⇒ 這一件要貼圖降階,⛔ 不可以再收進棘輪就算了。要 owner 勾。",
+  "scene:combat-infinity-castle/vramBytes": "⭐ 已知成因 = 同一張貼圖被上傳 N 次(GH#382):KayKit `dungeon_texture` 一張 15.4 KB 1024² PNG 內嵌在 12 份 prop,各算 5.33 MB。內容雜湊去重後這一格省 26.7 MB ⇒ 38.3 MB,**回到 48 MB 閘內**。客戶端已修(apps/client/src/render/textureDedup.ts);⛔ 這一列要等 report.json 依「每張不同的圖」重算後才移除得掉(那支寫在本 lane 柵欄外)。",
+  "scene:combat-nazarick/vramBytes": "⭐ 已知成因 = 同一張貼圖被上傳 N 次(GH#382):KayKit `dungeon_texture` 一張 15.4 KB 1024² PNG 內嵌在 12 份 prop,各算 5.33 MB。內容雜湊去重後這一格省 26.7 MB ⇒ 42.3 MB,**回到 48 MB 閘內**。客戶端已修(apps/client/src/render/textureDedup.ts);⛔ 這一列要等 report.json 依「每張不同的圖」重算後才移除得掉(那支寫在本 lane 柵欄外)。",
+  "scene:combat-shiganshina/vramBytes": "⭐ 已知成因 = 同一張貼圖被上傳 N 次(GH#382):KayKit `dungeon_texture` 一張 15.4 KB 1024² PNG 內嵌在 12 份 prop,各算 5.33 MB。內容雜湊去重後這一格省 29.3 MB ⇒ 34.3 MB,**回到 48 MB 閘內**。客戶端已修(apps/client/src/render/textureDedup.ts);⛔ 這一列要等 report.json 依「每張不同的圖」重算後才移除得掉(那支寫在本 lane 柵欄外)。",
+  "scene:combat-skeleton/vramBytes": "⭐ 已知成因 = 同一張貼圖被上傳 N 次(GH#382):KayKit `dungeon_texture` 一張 15.4 KB 1024² PNG 內嵌在 12 份 prop,各算 5.33 MB。內容雜湊去重後這一格省 26.7 MB ⇒ 27.4 MB,**回到 48 MB 閘內**。客戶端已修(apps/client/src/render/textureDedup.ts);⛔ 這一列要等 report.json 依「每張不同的圖」重算後才移除得掉(那支寫在本 lane 柵欄外)。",
+  "scene:combat-world-tree/vramBytes": "⭐ 已知成因 = 同一張貼圖被上傳 N 次(GH#382):KayKit `dungeon_texture` 一張 15.4 KB 1024² PNG 內嵌在 12 份 prop,各算 5.33 MB。內容雜湊去重後這一格省 26.7 MB ⇒ 39.6 MB,**回到 48 MB 閘內**。客戶端已修(apps/client/src/render/textureDedup.ts);⛔ 這一列要等 report.json 依「每張不同的圖」重算後才移除得掉(那支寫在本 lane 柵欄外)。",
+  "scene:intermission/drawCalls": "254 draw call / 上限 240 —— 幕間市集把 13 件 prop 逐件擺出來。⭐ 與貼圖無關;正解是同 prop 走 thin-instance,⛔ 不是刪佈景。追蹤:GH#99。",
+  "scene:intermission/vramBytes": "⭐ 已知成因 = 同一張貼圖被上傳 N 次(GH#382):KayKit `dungeon_texture` 一張 15.4 KB 1024² PNG 內嵌在 12 份 prop,各算 5.33 MB。內容雜湊去重後這一格省 48.0 MB ⇒ 15.8 MB,**回到 48 MB 閘內**。客戶端已修(apps/client/src/render/textureDedup.ts);⛔ 這一列要等 report.json 依「每張不同的圖」重算後才移除得掉(那支寫在本 lane 柵欄外)。",
+  "scene:settlement/vramBytes": "⭐ 已知成因 = 同一張貼圖被上傳 N 次(GH#382):KayKit `dungeon_texture` 一張 15.4 KB 1024² PNG 內嵌在 12 份 prop,各算 5.33 MB。內容雜湊去重後這一格省 37.3 MB ⇒ 30.0 MB,**回到 48 MB 閘內**。客戶端已修(apps/client/src/render/textureDedup.ts);⛔ 這一列要等 report.json 依「每張不同的圖」重算後才移除得掉(那支寫在本 lane 柵欄外)。"
+ }
 }

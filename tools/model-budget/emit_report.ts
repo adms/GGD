@@ -769,9 +769,25 @@ function main(): void {
     if (s.id.startsWith("combat-") || s.id === "settlement") {
       // the ground set is 4 × 512² PNG per style and lives in no .glb at all
       vramBytes += 4 * 512 * 512 * 4 * (4 / 3);
-      // Texture does not dedupe across DISTINCT models (AssetManager caches per
-      // path, so byte-identical atlases in two .glb are two GPU uploads). The
-      // draft that maximises texture is therefore NOT the one that maximises
+      // ⚠️⚠️ THIS PARAGRAPH DESCRIBES A CLIENT DEFECT THAT IS NOW FIXED, and the
+      // arithmetic below has NOT yet been updated to match — GH#382. Until it is,
+      // every `vramBytes` this file prints is an OVER-COUNT, and the 13 scene
+      // entries in baseline.json's accepted list are that over-count, not debt.
+      //
+      // What was true, and why: byte-identical atlases in two .glb used to be two
+      // GPU uploads. Babylon dedupes InternalTextures by `url`, but the glTF
+      // loader builds `data:<rootUrl><file>#image<n>` — unique per .glb — so a
+      // hit was structurally impossible. Measured: KayKit's one 15.4 KB
+      // `dungeon_texture` is embedded in TWELVE shipping props at 5.33 MB VRAM
+      // each. `apps/client/src/render/textureDedup.ts` now re-points duplicates
+      // at one InternalTexture by CONTENT digest, so the real cost is per
+      // distinct IMAGE, not per distinct .glb. Correcting the sum below drops
+      // every combat scene by 26–48 MB and clears 11 of the 13 accepted entries.
+      //
+      // ⛔ Not done here because regenerating report.json writes outside this
+      // lane's fence; the reasons in baseline.json name this ticket.
+      //
+      // The draft that maximises texture is therefore NOT the one that maximises
       // geometry: 12 copies of one model is one upload, 12 distinct models is
       // twelve. Only the worst-case row swaps in the 12 heaviest distinct
       // champion models; the median/best rows keep their own honest cost.
@@ -975,6 +991,25 @@ function main(): void {
    * before, or a new shipping model breaks an import gate. Known debt stays
    * quiet; regressions do not. `--update-baseline` records the current state as
    * accepted (a deliberate, reviewable act).
+   *
+   * ⛔⛔ EXCEPT IT WAS NOT A DELIBERATE ACT — GH#382, and this is the fix.
+   *
+   * `--update-baseline` used to write `accepted: current` WHOLESALE: every
+   * breach in the tree became a bare string, with one shared `note` for all of
+   * them and NOT ONE WORD about why any individual line was tolerable. So the
+   * price of accepting a new defect forever was one command and one line of
+   * JSON, and afterwards nothing in the repository could tell "reviewed and
+   * genuinely fine" from "regenerated blindly". The list reached 20 entries.
+   *
+   * That is the same shape CLAUDE.md keeps re-recording: a claim defended by
+   * prose (here, `note`'s "must be a reviewed decision") outlives the prose's
+   * expiry date and NOTHING GOES RED. So the reason is now DATA, not prose:
+   *   • every accepted key must have a `reasons[key]` that is not the sentinel;
+   *   • `--check` fails and NAMES the un-reasoned keys — regenerating the
+   *     baseline therefore does not buy silence, which is the whole point;
+   *   • `--update-baseline` PRESERVES the reasons already written, stamps new
+   *     entries with the sentinel, and exits non-zero telling you to write one.
+   * `accepted` keeps its exact old shape, so every existing reader still works.
    */
   const sceneBreaches = sceneRows.flatMap((s) =>
     Object.entries(s.verdicts)
@@ -990,19 +1025,48 @@ function main(): void {
     );
   const current = [...sceneBreaches, ...modelBreaches].sort();
 
+  const readBaseline = (): { accepted: string[]; reasons: Record<string, string> } => {
+    const b = fs.existsSync(BASELINE) ? JSON.parse(fs.readFileSync(BASELINE, "utf8")) : {};
+    return { accepted: b.accepted ?? [], reasons: b.reasons ?? {} };
+  };
+  /** An entry carrying this (or nothing) has not been reviewed — `--check` names it. */
+  const UNREASONED = "⛔ 未填理由";
+  const unreasoned = (keys: string[], reasons: Record<string, string>): string[] =>
+    keys.filter((k) => !reasons[k] || reasons[k].trim() === "" || reasons[k].startsWith(UNREASONED));
+
   if (process.argv.includes("--update-baseline")) {
+    const prior = readBaseline().reasons;
+    // ⭐ Carry forward what a human already wrote; only NEW keys get the sentinel.
+    const reasons: Record<string, string> = {};
+    for (const k of current) reasons[k] = prior[k] ?? UNREASONED;
     fs.writeFileSync(
       BASELINE,
-      `${JSON.stringify({ note: "Accepted budget breaches (task #99). New entries must be a reviewed decision; do not regenerate blindly.", updatedAt: new Date().toISOString(), accepted: current }, null, 1)}\n`,
+      `${JSON.stringify(
+        {
+          note: "Accepted budget breaches (task #99 · GH#382). ⛔ Every key needs a reasons[] entry — a bare key does not buy silence; --check names it.",
+          updatedAt: new Date().toISOString(),
+          accepted: current,
+          reasons,
+        },
+        null,
+        1,
+      )}\n`,
     );
+    const blank = unreasoned(current, reasons);
     process.stdout.write(`updated baseline — ${current.length} accepted breaches\n`);
+    if (blank.length > 0) {
+      process.stderr.write(
+        `⛔ ${blank.length} accepted breach(es) have no reason — write one in baseline.json "reasons":\n` +
+          blank.map((r) => `  ${r}`).join("\n") +
+          `\n⭐ A reason must be REFUTABLE ("the 1024² atlas is shared by 12 props and the client now dedupes it"), ⛔ not "not got to it yet".\n`,
+      );
+      process.exit(1);
+    }
     return;
   }
 
   if (check) {
-    const accepted: string[] = fs.existsSync(BASELINE)
-      ? JSON.parse(fs.readFileSync(BASELINE, "utf8")).accepted ?? []
-      : [];
+    const { accepted, reasons } = readBaseline();
     const acceptedSet = new Set(accepted);
     const regressions = current.filter((c) => !acceptedSet.has(c));
     const fixed = accepted.filter((c) => !current.includes(c));
@@ -1016,7 +1080,17 @@ function main(): void {
       );
       process.exit(1);
     }
-    process.stdout.write(`✓ no new budget regressions (${current.length} breaches, all accepted in baseline)\n`);
+    // ⭐ GH#382 — "accepted" without a written reason is the defect, not the debt.
+    const blank = unreasoned(accepted, reasons);
+    if (blank.length > 0) {
+      process.stderr.write(
+        `UNREASONED ACCEPTED BREACH (${blank.length}) — these sit in the ratchet with no stated reason:\n` +
+          blank.map((r) => `  ${r}`).join("\n") +
+          `\nWrite a refutable reason into baseline.json "reasons" for each. ⛔ Re-running --update-baseline will NOT silence this.\n`,
+      );
+      process.exit(1);
+    }
+    process.stdout.write(`✓ no new budget regressions (${current.length} breaches, all accepted AND reasoned)\n`);
   }
 }
 

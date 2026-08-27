@@ -45,6 +45,7 @@ import type { AssetContainer } from "@babylonjs/core/assetContainer";
 import { LoadAssetContainerAsync } from "@babylonjs/core/Loading/sceneLoader";
 import { withContentVersion } from "../content/assetVersion";
 import { resolveLodPath } from "./modelLod";
+import { glbImageDigests, initTextureDedup, shareDuplicateTextures } from "./textureDedup";
 
 /**
  * Ceiling on the shared raw-bytes cache. 24 MB holds the whole intermission
@@ -149,7 +150,12 @@ export class AssetManager {
   constructor(
     private readonly scene: Scene,
     private readonly baseUrl = "/content/",
-  ) {}
+  ) {
+    // 🔁 讀一次貼圖去重的逃生口（`localStorage["ggd.textureDedup"]="off"`）。
+    // ⭐ 掛在這裡而不是 boot：`main.tsx` 不在這條 lane 的柵欄內,而**每一條**載入
+    // 模型的路徑都會先建一個 AssetManager ⇒ 這裡是柵欄內唯一必經的閘口。冪等。
+    initTextureDedup();
+  }
 
   /**
    * Resolve an AssetContainer for a glb path relative to content/
@@ -205,11 +211,15 @@ export class AssetManager {
         // nothing; if that changes, stamp the siblings, not the parent.
         return await LoadAssetContainerAsync(url, this.scene);
       }
-      return await LoadAssetContainerAsync(bytes, this.scene, {
+      const container = await LoadAssetContainerAsync(bytes, this.scene, {
         pluginExtension: ".glb",
         name: url.slice(slash + 1),
         rootUrl: url.slice(0, slash + 1),
       });
+      // 🎽 內容相同的貼圖只留一塊 GPU 記憶體（GH#382）。⚠️ 一定要在 await 之後 ——
+      // `LoadAssetContainerAsync` 到這裡才保證每一張貼圖的 InternalTexture 已經生出來。
+      shareDuplicateTextures(this.scene, container, glbImageDigests(bytes));
+      return container;
     } catch {
       return null; // caller keeps its procedural fallback
     }
