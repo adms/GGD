@@ -51,6 +51,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from collections import defaultdict
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -156,8 +157,29 @@ for rc, rec in w3a.items():
         by_doc[g["docId"]].append((rc, g))
 
 
+#: The hero-ability number that prefixes both sides' names (`38-01 邪王炎殺劍`, `13-002 …`).
+#: ⭐ THIS is the JASS join key, and it is the half that may NOT float. The name may: the owner
+#: approved GGD carrying its own skill names, so a rename is a feature, ⛔ not a defect.
+_NUMBER = re.compile(r"^\s*(\d{2}-\d{2,3})")
+
+
+def _number(name: str) -> str | None:
+    m = _NUMBER.match(name or "")
+    return m.group(1) if m else None
+
+
 def join(doc_id: str, doc_name: str) -> tuple[list[str], str, str]:
-    """(rawcodes, method, confidence) — exact name wins over the ggdDocs link."""
+    """(rawcodes, method, confidence) — the ggdDocs link proposes, the NUMBER decides.
+
+    ⛔ This used to decide on the full name alone, and that made the census rot silently.
+    GGD renames abilities on purpose (13/15/60 were re-themed wholesale; 39 fixed a
+    無名→無明 typo; 72 億萬星殞落→億萬衛星殞落). Every rename dropped the row from
+    CONFIRMED to WEAK, its real art stopped being credited, and NOTHING went red — the
+    generator just crossed a hard-coded 85% floor and aborted (#777).
+
+    ⭐ 第〇·六守則: before joining on a key, ask whether the KEY itself is trustworthy.
+    The number is; the name is not. So the name is now corroboration, not the key.
+    """
     cands = by_doc.get(doc_id, [])
     if not cands:
         return [], "none", "NONE"
@@ -166,8 +188,32 @@ def join(doc_id: str, doc_name: str) -> tuple[list[str], str, str]:
         return exact, "hero-number+exact-name", "CONFIRMED"
     if len(exact) > 1:
         return sorted(exact), "hero-number+exact-name (several records share the name)", "AMBIGUOUS"
+    num = _number(doc_name)
+    if num:
+        # ⚠️ Verify the key before using it: the number must pick out EXACTLY ONE of this
+        # doc's own candidates. Two records under the same number are a real ambiguity in
+        # the map (a base ability and its transformed-form twin) — ⛔ never resolved by guessing.
+        by_num = [rc for rc, _ in cands if _number(w3a[rc].get("name") or "") == num]
+        if len(by_num) == 1:
+            return by_num, "hero-number (the GGD name was changed — number is the join key)", "CONFIRMED"
+        if len(by_num) > 1:
+            return sorted(by_num), f"hero-number {num} matches several w3a records", "AMBIGUOUS"
     if len(cands) == 1:
-        return [cands[0][0]], "ggdDocs link only — no name agreement", "WEAK"
+        # ⚠️ The SOURCE MAP has key errors of its own. `A0BZ` sits in the middle of hero 86's
+        # rawcode run (A0BX 86-00 / A0BY 86-02 / A0BZ / A0C0 86-04) but is labelled `58-01`
+        # — the author copy-pasted from the other Pikachu and never renumbered. The names
+        # agree word for word. ⭐ 第〇·六守則 says name the cell rather than sync blindly, so
+        # this resolves ONLY when the candidate is unique AND the name body is identical, and
+        # the disagreement is written into the row instead of being smoothed away.
+        rc0 = cands[0][0]
+        body = lambda s: _NUMBER.sub("", (s or "").strip()).strip()  # noqa: E731
+        if body(w3a[rc0].get("name")) == body(doc_name) and body(doc_name):
+            other = _number(w3a[rc0].get("name") or "")
+            return [rc0], (
+                f"sole ggdDocs candidate, names identical, but the w3a record is numbered "
+                f"{other} against the doc's {num} — a mis-numbering in the source map"
+            ), "CONFIRMED"
+        return [rc0], "ggdDocs link only — no name or number agreement", "WEAK"
     return sorted(rc for rc, _ in cands), "ggdDocs link only — several candidates", "AMBIGUOUS"
 
 
@@ -340,15 +386,38 @@ rows.sort(key=lambda r: (r["championId"], SLOT_ORDER.get(r["slot"], 9)))
 
 # ------------------------------------------------------------- assertions
 
-assert len(abilities) >= 600, f"only {len(abilities)} ability docs — wrong checkout?"
+# ⛔ This used to be `assert len(abilities) >= 600` — a LITERAL that answered "did I read the
+# whole checkout?" with a number frozen at the moment it was typed. Content legitimately shrank
+# (heroes were consolidated), so from then on this generator ABORTED on every correct checkout
+# and the census froze into a snapshot (#777). ⭐ The question is a RELATIONSHIP — "did I read
+# every ability the shipped manifest lists?" — so ask the manifest, which moves with content.
+manifest_ids = {e["id"] for e in load(os.path.join(ABILITY_DIR, "_index.json"))["entries"]}
+missed = manifest_ids - set(abilities)
+assert not missed, f"{len(missed)} abilities in _index.json were not read: {sorted(missed)[:5]}"
+assert abilities, "no ability docs read at all — wrong checkout?"
 exact = sum(1 for r in rows if r["joinConfidence"] == "CONFIRMED")
-assert exact > len(rows) * 0.85, f"only {exact}/{len(rows)} rows joined on an exact name"
+
+# ⛔ This used to be `exact > len(rows) * 0.85`. A percentage floor answers "is the join still
+# good enough?" with a number nobody can re-derive, and it FAILS IN THE WRONG DIRECTION: the
+# first thing it did when the name key drifted was abort the generator, which is how a census
+# turns into a snapshot. ⭐ Ask the relationship instead: a row that had exactly one candidate
+# proposed for it must have RESOLVED to that candidate. `WEAK` means the join gave up while
+# holding a unique answer in its hand — that is the failure this generator must not ship.
+weak = [r for r in rows if r["joinConfidence"] == "WEAK"]
+assert not weak, (
+    f"{len(weak)} rows fell back to the bare ggdDocs link with neither name nor number "
+    f"agreement — the join key drifted: {[r['abilityId'] for r in weak][:8]}"
+)
+assert exact, "no row joined at all — the ggdDocs link in VFX_BINDINGS.json is stale; "\
+              "re-run `python3 tools/w3x-import/build_vfx_bindings.py` first"
 
 # ------------------------------------------------------------- rollups
 
 status_totals: dict[str, int] = defaultdict(int)
+join_confidence: dict[str, int] = defaultdict(int)
 for r in rows:
     status_totals[r["status"]] += 1
+    join_confidence[r["joinConfidence"]] += 1
 
 key_totals: dict[str, int] = defaultdict(int)
 for doc in abilities.values():
@@ -406,10 +475,16 @@ out = {
         "vfxDocs": len(vfx_ids),
     },
     "joinContract": {
-        "method": "ggdDocs proposes, an EXACT hero-number+name match decides",
-        "why": "VFX_BINDINGS' slotFromNumber crosses Saber's Q/W against content",
+        "method": "ggdDocs proposes; an exact name decides, else the HERO NUMBER decides",
+        "why": (
+            "VFX_BINDINGS' slotFromNumber crosses Saber's Q/W against content, so the slot "
+            "letter cannot be the key. And the NAME cannot be the key either: GGD carries its "
+            "own skill names by design, so 29 rows across 6 heroes had already drifted off the "
+            "join. The hero number is the one half that may not float (#777)."
+        ),
         "exact": exact,
         "rows": len(rows),
+        "byConfidence": dict(sorted(join_confidence.items())),
     },
     "statusTotals": dict(sorted(status_totals.items())),
     "vfxKeyTotals": dict(sorted(key_totals.items())),

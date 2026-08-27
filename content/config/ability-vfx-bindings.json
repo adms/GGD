@@ -91,6 +91,24 @@
       "confidence": "CONFIRMED"
     },
     {
+      "abilityId": "godie-e00w.passive",
+      "vfxKeys": [
+        "fx.w3x.stock.thunderclapcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A0JD",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-e00x.passive",
+      "vfxKeys": [
+        "fx.w3x.stock.thunderclapcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A0JD",
+      "confidence": "CONFIRMED"
+    },
+    {
       "abilityId": "godie-ewar.ex",
       "vfxKeys": [
         "fx.w3x.particle.supershinythingy.p00",
@@ -122,6 +140,33 @@
       "confidence": "CONFIRMED"
     },
     {
+      "abilityId": "godie-h01n.e",
+      "vfxKeys": [
+        "fx.w3x.stock.thunderclapcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A0LL",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-h01o.e",
+      "vfxKeys": [
+        "fx.w3x.stock.thunderclapcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A0LL",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-h020.e",
+      "vfxKeys": [
+        "fx.w3x.stock.warstompcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A04R",
+      "confidence": "CONFIRMED"
+    },
+    {
       "abilityId": "godie-h02r.r",
       "vfxKeys": [
         "fx.w3x.particle.supershinythingy.p00",
@@ -142,12 +187,30 @@
       "confidence": "CONFIRMED"
     },
     {
+      "abilityId": "godie-hapm.w",
+      "vfxKeys": [
+        "fx.w3x.stock.thunderclapcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A0U1",
+      "confidence": "CONFIRMED"
+    },
+    {
       "abilityId": "godie-hart.r",
       "vfxKeys": [
         "fx.w3x.orb.herocloudkfksword.p00"
       ],
       "source": "jass-literal:jass:effectTargetUnit",
       "rawcode": "A077",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-hart.w",
+      "vfxKeys": [
+        "fx.w3x.stock.warstompcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A0UX",
       "confidence": "CONFIRMED"
     },
     {
@@ -159,6 +222,51 @@
       ],
       "source": "w3a-override:art:caster",
       "rawcode": "A0R4",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-hjai.e",
+      "vfxKeys": [
+        "fx.w3x.stock.warstompcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A04R",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-hpb1.e",
+      "vfxKeys": [
+        "fx.w3x.stock.warstompcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A0G3",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-huth.r",
+      "vfxKeys": [
+        "fx.w3x.stock.warstompcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A08U",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-hvsh.r",
+      "vfxKeys": [
+        "fx.w3x.stock.thunderclapcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A0RQ",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-hvwd.ex",
+      "vfxKeys": [
+        "fx.w3x.stock.thunderclapcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A0S6",
       "confidence": "CONFIRMED"
     },
     {
@@ -222,6 +330,15 @@
       "confidence": "CONFIRMED"
     },
     {
+      "abilityId": "godie-osam.ex",
+      "vfxKeys": [
+        "fx.w3x.stock.thunderclapcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A0MV",
+      "confidence": "CONFIRMED"
+    },
+    {
       "abilityId": "godie-u00h.r",
       "vfxKeys": [
         "fx.w3x.stock.warstompcaster.p00"
@@ -249,6 +366,42 @@
       "confidence": "CONFIRMED"
     },
     {
+      "abilityId": "godie-u00n.q",
+      "vfxKeys": [
+        "fx.w3x.stock.warstompcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A0IS",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-u00n.w",
+      "vfxKeys": [
+        "fx.w3x.stock.thunderclapcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A0IP",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-u00o.q",
+      "vfxKeys": [
+        "fx.w3x.stock.warstompcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A0IS",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-u00o.w",
+      "vfxKeys": [
+        "fx.w3x.stock.thunderclapcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A0IP",
+      "confidence": "CONFIRMED"
+    },
+    {
       "abilityId": "godie-u00v.r",
       "vfxKeys": [
         "fx.w3x.locust.boomnl.p00",
@@ -273,10 +426,13 @@
     {
       "abilityId": "godie-u010.e",
       "vfxKeys": [
-        "godie-tectonicfury-p0",
-        "godie-tectonicfury-p1"
+        "fx.w3x.locust.boomnl.p00",
+        "fx.w3x.locust.boomnl.p01",
+        "fx.w3x.locust.boomnl.p02",
+        "fx.w3x.locust.boomnl.p03",
+        "fx.w3x.locust.boomnl.p04"
       ],
-      "source": "w3a-override:art:missile",
+      "source": "jass-literal:jass:effectTargetUnit",
       "rawcode": "A09I",
       "confidence": "CONFIRMED"
     },
@@ -317,6 +473,24 @@
       "confidence": "CONFIRMED"
     },
     {
+      "abilityId": "godie-u01u.r",
+      "vfxKeys": [
+        "fx.w3x.stock.thunderclapcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A0MQ",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-u034.passive",
+      "vfxKeys": [
+        "fx.w3x.stock.warstompcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A08Y",
+      "confidence": "CONFIRMED"
+    },
+    {
       "abilityId": "godie-u034.r",
       "vfxKeys": [
         "fx.w3x.locust.boomnl.p00",
@@ -327,6 +501,15 @@
       ],
       "source": "w3h-override:buff:B04R/target",
       "rawcode": "A0Y1",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-ucrl.passive",
+      "vfxKeys": [
+        "fx.w3x.stock.warstompcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A08Y",
       "confidence": "CONFIRMED"
     },
     {
@@ -345,19 +528,31 @@
     {
       "abilityId": "godie-udea.w",
       "vfxKeys": [
-        "fx.w3x.stock.warstompcaster.p00"
+        "fx.w3x.stock.thunderclapcaster.p00"
       ],
-      "source": "w3a-override:art:area",
+      "source": "jass-literal:jass:effectLoc",
       "rawcode": "A05S",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-udre.r",
+      "vfxKeys": [
+        "fx.w3x.stock.thunderclapcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A0MQ",
       "confidence": "CONFIRMED"
     },
     {
       "abilityId": "godie-uvng.e",
       "vfxKeys": [
-        "godie-tectonicfury-p0",
-        "godie-tectonicfury-p1"
+        "fx.w3x.locust.boomnl.p00",
+        "fx.w3x.locust.boomnl.p01",
+        "fx.w3x.locust.boomnl.p02",
+        "fx.w3x.locust.boomnl.p03",
+        "fx.w3x.locust.boomnl.p04"
       ],
-      "source": "w3a-override:art:missile",
+      "source": "jass-literal:jass:effectTargetUnit",
       "rawcode": "A09I",
       "confidence": "CONFIRMED"
     },
@@ -425,19 +620,19 @@
     },
     {
       "vfxKey": "fx.w3x.orb.bloodbreathstream.p00",
-      "why": "閘1 join —— 這個模型只經由 joinConfidence=AMBIGUOUS 的技能列連到技能,自動綁上去可能是**別支技能的特效**。⭐ 人工裁決過的可以留在 `vfx-ability-art.json` 的 promoted 列(對帳會標成 EXTRA,⛔ 不是錯)"
+      "why": "閘3 可渲染性 —— 3 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
     },
     {
       "vfxKey": "fx.w3x.orb.bloodbreathstream.p01",
-      "why": "閘1 join —— 這個模型只經由 joinConfidence=AMBIGUOUS 的技能列連到技能,自動綁上去可能是**別支技能的特效**。⭐ 人工裁決過的可以留在 `vfx-ability-art.json` 的 promoted 列(對帳會標成 EXTRA,⛔ 不是錯)"
+      "why": "閘3 可渲染性 —— 3 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
     },
     {
       "vfxKey": "fx.w3x.orb.bloodbreathstream.p02",
-      "why": "閘1 join —— 這個模型只經由 joinConfidence=AMBIGUOUS 的技能列連到技能,自動綁上去可能是**別支技能的特效**。⭐ 人工裁決過的可以留在 `vfx-ability-art.json` 的 promoted 列(對帳會標成 EXTRA,⛔ 不是錯)"
+      "why": "閘3 可渲染性 —— 3 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
     },
     {
       "vfxKey": "fx.w3x.orb.darkbreathdamage.p00",
-      "why": "閘4 技能 —— 唯一引用它的技能 `godie-ekee.q` 已經不在 content/abilities/(英雄退休)"
+      "why": "原作地圖裡**沒有任何技能**引用模型 `darkbreathdamage`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
     },
     {
       "vfxKey": "fx.w3x.orb.demonfilth.p00",
@@ -549,11 +744,11 @@
     },
     {
       "vfxKey": "fx.w3x.orb.lightningnova.p00",
-      "why": "閘4 技能 —— 唯一引用它的技能 `godie-h022.e` 已經不在 content/abilities/(英雄退休)"
+      "why": "原作地圖裡**沒有任何技能**引用模型 `lightningnova`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
     },
     {
       "vfxKey": "fx.w3x.orb.lightningnova.p01",
-      "why": "閘4 技能 —— 唯一引用它的技能 `godie-h022.e` 已經不在 content/abilities/(英雄退休)"
+      "why": "原作地圖裡**沒有任何技能**引用模型 `lightningnova`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
     },
     {
       "vfxKey": "fx.w3x.orb.magical-sword.p00",
@@ -633,19 +828,19 @@
     },
     {
       "vfxKey": "fx.w3x.particle.flash.p00",
-      "why": "閘3 可渲染性 —— 2 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+      "why": "原作地圖裡**沒有任何技能**引用模型 `flash`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
     },
     {
       "vfxKey": "fx.w3x.particle.flash.p01",
-      "why": "閘3 可渲染性 —— 2 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+      "why": "原作地圖裡**沒有任何技能**引用模型 `flash`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
     },
     {
       "vfxKey": "fx.w3x.particle.gx.p00",
-      "why": "閘4 技能 —— 唯一引用它的技能 `godie-ntin.q` 已經不在 content/abilities/(英雄退休)"
+      "why": "原作地圖裡**沒有任何技能**引用模型 `gx`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
     },
     {
       "vfxKey": "fx.w3x.particle.gxhuge.p00",
-      "why": "閘4 技能 —— 唯一引用它的技能 `godie-ntin.e` 已經不在 content/abilities/(英雄退休)"
+      "why": "原作地圖裡**沒有任何技能**引用模型 `gxhuge`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
     },
     {
       "vfxKey": "fx.w3x.particle.heroluffeattack.p00",
@@ -761,39 +956,39 @@
     },
     {
       "vfxKey": "fx.w3x.particle.sonicbreathstream.p00",
-      "why": "閘3 可渲染性 —— 3 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+      "why": "原作地圖裡**沒有任何技能**引用模型 `sonicbreathstream`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
     },
     {
       "vfxKey": "fx.w3x.particle.sonicbreathstream.p01",
-      "why": "閘3 可渲染性 —— 3 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+      "why": "原作地圖裡**沒有任何技能**引用模型 `sonicbreathstream`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
     },
     {
       "vfxKey": "fx.w3x.particle.sonicbreathstream.p02",
-      "why": "閘3 可渲染性 —— 3 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+      "why": "原作地圖裡**沒有任何技能**引用模型 `sonicbreathstream`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
     },
     {
       "vfxKey": "fx.w3x.stock.markofchaostarget.p00",
-      "why": "零售 MPQ 抽出來的 `markofchaostarget`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 6 支在**身上**的通道點名它(godie-h01n.ex:art:caster, godie-h01o.ex:art:caster, godie-n003.ex:art:missile, godie-n01c.ex:art:missile, godie-n01g.ex:art:missile, godie-nbbc.ex:art:missile);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+      "why": "零售 MPQ 抽出來的 `markofchaostarget`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 7 支在**身上**的通道點名它(godie-h01n.ex:art:caster, godie-h01o.ex:art:caster, godie-hapm.r:jass:effectTargetUnit, godie-n003.ex:art:missile, godie-n01c.ex:art:missile, godie-n01g.ex:art:missile…);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
     },
     {
       "vfxKey": "fx.w3x.stock.markofchaostarget.p01",
-      "why": "零售 MPQ 抽出來的 `markofchaostarget`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 6 支在**身上**的通道點名它(godie-h01n.ex:art:caster, godie-h01o.ex:art:caster, godie-n003.ex:art:missile, godie-n01c.ex:art:missile, godie-n01g.ex:art:missile, godie-nbbc.ex:art:missile);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+      "why": "零售 MPQ 抽出來的 `markofchaostarget`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 7 支在**身上**的通道點名它(godie-h01n.ex:art:caster, godie-h01o.ex:art:caster, godie-hapm.r:jass:effectTargetUnit, godie-n003.ex:art:missile, godie-n01c.ex:art:missile, godie-n01g.ex:art:missile…);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
     },
     {
       "vfxKey": "fx.w3x.stock.markofchaostarget.p02",
-      "why": "零售 MPQ 抽出來的 `markofchaostarget`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 6 支在**身上**的通道點名它(godie-h01n.ex:art:caster, godie-h01o.ex:art:caster, godie-n003.ex:art:missile, godie-n01c.ex:art:missile, godie-n01g.ex:art:missile, godie-nbbc.ex:art:missile);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+      "why": "零售 MPQ 抽出來的 `markofchaostarget`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 7 支在**身上**的通道點名它(godie-h01n.ex:art:caster, godie-h01o.ex:art:caster, godie-hapm.r:jass:effectTargetUnit, godie-n003.ex:art:missile, godie-n01c.ex:art:missile, godie-n01g.ex:art:missile…);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
     },
     {
       "vfxKey": "fx.w3x.stock.markofchaostarget.p03",
-      "why": "零售 MPQ 抽出來的 `markofchaostarget`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 6 支在**身上**的通道點名它(godie-h01n.ex:art:caster, godie-h01o.ex:art:caster, godie-n003.ex:art:missile, godie-n01c.ex:art:missile, godie-n01g.ex:art:missile, godie-nbbc.ex:art:missile);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+      "why": "零售 MPQ 抽出來的 `markofchaostarget`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 7 支在**身上**的通道點名它(godie-h01n.ex:art:caster, godie-h01o.ex:art:caster, godie-hapm.r:jass:effectTargetUnit, godie-n003.ex:art:missile, godie-n01c.ex:art:missile, godie-n01g.ex:art:missile…);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
     },
     {
       "vfxKey": "fx.w3x.stock.markofchaostarget.p04",
-      "why": "零售 MPQ 抽出來的 `markofchaostarget`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 6 支在**身上**的通道點名它(godie-h01n.ex:art:caster, godie-h01o.ex:art:caster, godie-n003.ex:art:missile, godie-n01c.ex:art:missile, godie-n01g.ex:art:missile, godie-nbbc.ex:art:missile);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+      "why": "零售 MPQ 抽出來的 `markofchaostarget`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 7 支在**身上**的通道點名它(godie-h01n.ex:art:caster, godie-h01o.ex:art:caster, godie-hapm.r:jass:effectTargetUnit, godie-n003.ex:art:missile, godie-n01c.ex:art:missile, godie-n01g.ex:art:missile…);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
     },
     {
       "vfxKey": "fx.w3x.stock.markofchaostarget.p05",
-      "why": "零售 MPQ 抽出來的 `markofchaostarget`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 6 支在**身上**的通道點名它(godie-h01n.ex:art:caster, godie-h01o.ex:art:caster, godie-n003.ex:art:missile, godie-n01c.ex:art:missile, godie-n01g.ex:art:missile, godie-nbbc.ex:art:missile);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+      "why": "零售 MPQ 抽出來的 `markofchaostarget`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 7 支在**身上**的通道點名它(godie-h01n.ex:art:caster, godie-h01o.ex:art:caster, godie-hapm.r:jass:effectTargetUnit, godie-n003.ex:art:missile, godie-n01c.ex:art:missile, godie-n01g.ex:art:missile…);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
     }
   ]
 }

@@ -11,9 +11,10 @@
  *   · content/config/ability-vfx-bindings.json —— skills:sync 產物
  *   · content/abilities/*.json · content/champions/*.json —— 出貨內容
  *
- * ⚠️ 誠實缺口：VFX_BINDINGS.json 是 2026-08-02 的普查（當時 662 份技能文件），
- *   content/abilities 現在是 ~421 份 —— 普查之後退休/新增的文件在 JASS 側
- *   沒有 join（回傳裡的 censusDrift 把兩個數字都攤開，⛔ 不是假裝對齊）。
+ * ⚠️ 這裡以前寫著「VFX_BINDINGS.json 是 2026-08-02 的普查（當時 662 份技能文件）」——
+ *   #777 把那個缺口關掉了：普查現在**跟著出貨內容重跑**，兩側逐份對齊。
+ *   ⛔ 但 `censusDrift` 沒有拿掉，也不該拿掉 —— 它是量到的，而一份不再被量的對齊
+ *   就是下一次的過期快照。閘：`packages/shared/src/ops/laneCENSUSVfxCensusFresh.test.ts`。
  */
 
 import { readdirSync } from "node:fs";
@@ -250,7 +251,12 @@ export async function build(repoRoot) {
       retiredFromCensus,
       newSinceCensus,
       note:
-        "VFX_BINDINGS.json 是一次性的普查產物；普查後退休的文件不在本表，普查後新增的文件 JASS 側沒有 join（status=notInCensus）。",
+        retiredFromCensus === 0 && newSinceCensus === 0
+          ? "普查與出貨內容逐份對齊（#777）。⭐ 這兩個 0 是**閘**守著的：laneCENSUS 的 " +
+            "vfxCensusFresh.test.ts 會在任何一邊漂掉時變紅並指名那幾份文件。"
+          : "⛔ 普查與出貨內容對不上了 —— VFX_BINDINGS.json 是產物，跑 " +
+            "`python3 tools/w3x-import/build_vfx_bindings.py && python3 tools/w3x-import/build_vfx_census.py`" +
+            " 重跑普查（⚠️ 之後 vfxbind / audit / jasscombo 三支產生器都要跟著重跑）。",
     },
     statusCounts,
     rows,

@@ -7,7 +7,7 @@ owner 2026-08-22 逐字判準（⛔ 不要改）：函式裡**同時**有 `Trigg
 
 | 總數 | per-step | loop | tail | 串到 GGD ability id |
 |---:|---:|---:|---:|---:|
-| **29** | 5 | 9 | 15 | **23 / 29** |
+| **29** | 5 | 9 | 15 | **18 / 29** |
 
 ⭐ **間隔就是動畫節奏的來源** —— `間隔序列` 是從 `war3map.j` 逐字抄的，⛔ 沒有四捨五入、⛔ 沒有統一成 0.12。
 `W<秒>` = 一次等待、`D` = 一次傷害呼叫，照原始碼順序。
@@ -27,8 +27,8 @@ owner 2026-08-22 逐字判準（⛔ 不要改）：函式裡**同時**有 `Trigg
 | 9 | `Trig_plant_Actions` | 27908 | A0RV | godie-n00p.w<br>godie-nsjs.w | 18-02 寄生種子 | per-step | `W0.01 D W5 D W2` | 2 | GetUnitAbilityLevel、udg_EX_Mode |
 | 10 | `Trig_Romove_Actions` | 29084 | A06P | godie-u01u.e<br>godie-udre.e | 11-03 鬼氣九刀流-阿修羅壹霧銀 | loop | `W0.5 W0.5 D` | 1 | — |
 | 11 | `Trig_LinaS_Actions` | 29777 | A07F | godie-h020.r<br>godie-hjai.r | 04-04 神滅斬 | loop | `D D W0.5 W0.5` | 2 | GetUnitAbilityLevel |
-| 12 | `Trig_HolySword_Actions` | 31224 | A0OD | godie-ntin.r | 23-04 雷焰聖劍 | loop | `D W0.5` | 1 | GetUnitAbilityLevel、udg_EX_Mode |
-| 13 | `Trig_Empty_Actions` | 31457 | A044 | godie-nplh.q | 16-03 無無明亦無 | tail | `W0.5 D W1` | 1 | GetUnitAbilityLevel |
+| 12 | `Trig_HolySword_Actions` | 31224 | A0OD | ⛔ — | 23-04 雷焰聖劍 | loop | `D W0.5` | 1 | GetUnitAbilityLevel、udg_EX_Mode |
+| 13 | `Trig_Empty_Actions` | 31457 | A044 | ⛔ — | 16-03 無無明亦無 | tail | `W0.5 D W1` | 1 | GetUnitAbilityLevel |
 | 14 | `Trig_ExcaliburMAX_Actions` | 32559 | A0CT | godie-e002.r<br>godie-e00l.r | 20-04 Avalon-永恆的理想鄉 | loop | `D W0.1 W0.3 W0.2 W0.5 W4` | 1 | GetEventDamageSource、udg_EX_Mode、udg_IsAvalonReady |
 | 15 | `Trig_XFight_Actions` | 33409 | A072、A0AZ | godie-hart.q | 01-01 凶斬<br>01-01r 囧斬 | tail | `W0.1 D W0.3` | 1 | GetUnitAbilityLevel |
 | 16 | `Trig_Toro_Rotation_Actions` | 33465 | A000 | godie-hart.e | 01-03 畫龍點睛 | tail | `W0.01 W0.1 D` | 1 | GetUnitAbilityLevel |
@@ -38,13 +38,13 @@ owner 2026-08-22 逐字判準（⛔ 不要改）：函式裡**同時**有 `Trigg
 | 20 | `Trig_Bleach_Rush_Actions` | 37401 | A0RX | godie-h01n.q<br>godie-h01o.q | 79-01 瞬步 | per-step | `W0.1 D W0.3 D D W0.3 D` | 4 | GetUnitAbilityLevel |
 | 21 | `Trig_Bleach_Strike_Actions` | 37471 | A0LK | godie-h01n.w<br>godie-h01o.w | 79-02 斬擊 | tail | `W0.1 D` | 1 | GetUnitAbilityLevel |
 | 22 | `Trig_YouDie_Actions` | 38595 | A0AF | godie-u00l.q<br>godie-umal.q | 25-01 北斗懺悔拳 | per-step | `W1 W1 W1 D D` | 2 | GetUnitAbilityLevel、udg_EX_Mode |
-| 23 | `Trig_FlySwallow_Actions` | 41663 | A030 | godie-naka.r | 27-04 忍法暗殺奧義-飛燕閃 | per-step | `W0.1 D D W0.1` | 2 | udg_EX_Mode |
+| 23 | `Trig_FlySwallow_Actions` | 41663 | A030 | ⛔ — | 27-04 忍法暗殺奧義-飛燕閃 | per-step | `W0.1 D D W0.1` | 2 | udg_EX_Mode |
 | 24 | `Trig_Spell_Mark_Actions` | 41715 | A08Y | godie-u034.passive<br>godie-ucrl.passive | 06-00 猜猜拳 | tail | `W10 D` | 1 | GetUnitAbilityLevel |
 | 25 | `Trig_LightCutRun_Actions` | 41943 | A0IJ | godie-edem.e | 45-03 千鳥 | loop | `D D W0.1 W2 W2` | 2 | GetUnitAbilityLevel |
 | 26 | `Trig_MagicUp_Actions` | 46924 | A0CH | godie-udea.e | 65-03 魔法膨脹 | tail | `D W1` | 1 | GetUnitAbilityLevel |
-| 27 | `Trig_MoriyaShadow_Actions` | 47235 | A07W | godie-u00b.w | 75-02 幻影鬥氣 | tail | `D W0.5` | 1 | GetUnitAbilityLevel |
+| 27 | `Trig_MoriyaShadow_Actions` | 47235 | A07W | ⛔ — | 75-02 幻影鬥氣 | tail | `D W0.5` | 1 | GetUnitAbilityLevel |
 | 28 | `Trig_Nine_Lives_Hits_Actions` | 52140 | A0U5 | godie-hapm.ex | 52-002 射殺百頭 | loop | `D W0.3 W0.4 D W0.6` | 2 | — |
-| 29 | `Trig_Hundred_Sky_Actions` | 54617 | A0Y9 | godie-e00j.r | 95-04 藍色戰氣一百重天 | tail | `W0 D` | 1 | GetUnitAbilityLevel |
+| 29 | `Trig_Hundred_Sky_Actions` | 54617 | A0Y9 | ⛔ — | 95-04 藍色戰氣一百重天 | tail | `W0 D` | 1 | GetUnitAbilityLevel |
 
 ## ⛔ 補不完的那幾個 —— 每一筆都是一個能被反駁的理由
 
@@ -71,6 +71,26 @@ AHtb 的持有者是英雄 U01F「萬夫莫敵 黑化張飛」，而 GGD 目前 
 ### `Trig_Near_To_Death_Actions`（25912 行，orphan）
 
 原作裡的**孤兒技能**：A0AC 在 OBJECTS.json 的 461 個單位 + 127 位英雄的技能表裡**一個都沒有**，war3map.j 裡也沒有任何 UnitAddAbility 授予它（全檔只出現在自己的 Conditions 那一行），而且 tooltip 還是未翻譯的英文（base=AHbn）⇒ 它是從別的地圖抄進來、**沒有接完**的殘留 ⇒ 沒有英雄可以歸屬。
+
+### `Trig_HolySword_Actions`（31224 行，ability）
+
+`A0OD`（23-04 雷焰聖劍） 在 w3x-ability-provenance.json 裡對不到**任何活著的** GGD 技能 ⇒ 這條連段的持有者已經不在 content/abilities/(英雄下架或改編號)。⭐ 要反駁它:讓那支技能重新出貨,或在 RESOLUTION 裡指定 ownerRawcodes。
+
+### `Trig_Empty_Actions`（31457 行，ability）
+
+`A044`（16-03 無無明亦無） 在 w3x-ability-provenance.json 裡對不到**任何活著的** GGD 技能 ⇒ 這條連段的持有者已經不在 content/abilities/(英雄下架或改編號)。⭐ 要反駁它:讓那支技能重新出貨,或在 RESOLUTION 裡指定 ownerRawcodes。
+
+### `Trig_FlySwallow_Actions`（41663 行，ability）
+
+`A030`（27-04 忍法暗殺奧義-飛燕閃） 在 w3x-ability-provenance.json 裡對不到**任何活著的** GGD 技能 ⇒ 這條連段的持有者已經不在 content/abilities/(英雄下架或改編號)。⭐ 要反駁它:讓那支技能重新出貨,或在 RESOLUTION 裡指定 ownerRawcodes。
+
+### `Trig_MoriyaShadow_Actions`（47235 行，ability）
+
+`A07W`（75-02 幻影鬥氣） 在 w3x-ability-provenance.json 裡對不到**任何活著的** GGD 技能 ⇒ 這條連段的持有者已經不在 content/abilities/(英雄下架或改編號)。⭐ 要反駁它:讓那支技能重新出貨,或在 RESOLUTION 裡指定 ownerRawcodes。
+
+### `Trig_Hundred_Sky_Actions`（54617 行，ability）
+
+`A0Y9`（95-04 藍色戰氣一百重天） 在 w3x-ability-provenance.json 裡對不到**任何活著的** GGD 技能 ⇒ 這條連段的持有者已經不在 content/abilities/(英雄下架或改編號)。⭐ 要反駁它:讓那支技能重新出貨,或在 RESOLUTION 裡指定 ownerRawcodes。
 
 ## 怎麼解析出來的
 

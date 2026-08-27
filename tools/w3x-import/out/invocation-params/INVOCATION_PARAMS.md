@@ -21,22 +21,22 @@ wrong size, the wrong colour, the wrong speed, in the wrong place.
 | abilitiesInDataset | 607 |
 | abilitiesWithJassHandler | 278 |
 | abilitiesWithObjectArt | 464 |
-| abilitiesWithAtLeastOneInvocation | 182 |
-| abilitiesWithHandlerButNoArtCalls | 96 |
-| attributedInvocationRows | 492 |
-| attributedInvocationsDistinct | 455 |
-| distinctModelsWithRecoveredParams | 134 |
-| unattributedTriggerGroupsWithArt | 270 |
-| unattributedInvocations | 511 |
+| abilitiesWithAtLeastOneInvocation | 204 |
+| abilitiesWithHandlerButNoArtCalls | 74 |
+| attributedInvocationRows | 705 |
+| attributedInvocationsDistinct | 655 |
+| distinctModelsWithRecoveredParams | 161 |
+| unattributedTriggerGroupsWithArt | 196 |
+| unattributedInvocations | 311 |
 | systemInitInvocations | 4 |
 | referencedDummyUnits | 196 |
 | referencedDummyUnitsLocust | 146 |
 | reboundAcrossSiblingFunctions | 12 |
-| unboundParamsInAbilityGroups | 186 |
+| unboundParamsInAbilityGroups | 307 |
 
-Invocations by kind (ability-attributed): `dummyUnit` 209, `effectLoc` 137, `effectTargetUnit` 146
+Invocations by kind (ability-attributed): `dummyUnit` 265, `effectLoc` 220, `effectTargetUnit` 220
 
-Parameter binding confidence: **CONFIRMED** 333, **INFERRED** 38
+Parameter binding confidence: **CONFIRMED** 417, **INFERRED** 47
 
 ### Invariant — every art-creating call in the file is accounted for
 
@@ -58,19 +58,19 @@ spell art. Only the statement form `call CreateUnit(...)` is an effect spawn.
 
 | parameter | on abilities | on system triggers |
 |---|---:|---:|
-| addedAbility | 87 | 47 |
-| animation | 6 | 12 |
-| facing | 26 | 23 |
-| flyHeight | 10 | 8 |
-| hidden | 59 | 33 |
+| addedAbility | 102 | 32 |
+| animation | 10 | 8 |
+| facing | 38 | 11 |
+| flyHeight | 17 | 1 |
+| hidden | 67 | 25 |
 | invulnerable | 0 | 2 |
-| killed | 27 | 22 |
+| killed | 39 | 10 |
 | pathing | 2 | 0 |
-| removed | 22 | 18 |
-| scalePercent | 20 | 5 |
-| timeScalePercent | 12 | 5 |
-| timedLife | 94 | 45 |
-| vertexColor | 6 | 14 |
+| removed | 31 | 9 |
+| scalePercent | 22 | 3 |
+| timeScalePercent | 15 | 2 |
+| timedLife | 110 | 29 |
+| vertexColor | 11 | 9 |
 
 ## 3. The traps this encodes
 
@@ -114,32 +114,40 @@ spell art. Only the statement form `call CreateUnit(...)` is an effect spawn.
 | `A09I` | 38-03 邪王炎殺黑龍波 | 30.0 | 3.33x slower | darkraor | 44072 |
 | `A09I` | 38-03 邪王炎殺黑龍波 | 30.0 | 3.33x slower | darkraor | 44075 |
 | `A0D5` | 20-03 約束與勝利之劍 | 15.0 | 6.67x slower | fragdriller | 32329 |
+| `A0J8` | 34-冥道殘月破 | 0.0 | frozen (first frame) | sesshomaru | 38990 |
 | `A0SD` | 41-002 絕對屏障 | 8.0 | 12.5x slower | animatedeadtarget | 44737 |
 
 ## 6. Abilities with the most recovered art
 
 | ability | name | invocations | params | triggers |
 |---|---|---:|---:|---|
-| `A0U6` | 35-04 光牙 | 8 | 24 | EightCloud, Light |
+| `A0U6` | 35-04 光牙 | 9 | 24 | EightCloud, Light |
+| `A0RZ` | 76-04 三檔.巨人迴旋彈 | 6 | 13 | Luf_Three |
+| `A08Y` | 06-00 猜猜拳 | 12 | 12 | XHunterStone, XHunterStone_pre |
 | `A0DJ` | 39-04 祕奧義．金色的神風 | 13 | 12 | GodWind |
+| `A0JZ` | 14-04 AKT戰隊 | 15 | 12 | AKT_Effect, AKT_start, AKT_stop |
 | `A0QG` | 94-02 橘山斬空破 | 4 | 12 | OranMon |
-| `A0JZ` | 14-04 AKT戰隊 | 14 | 10 | AKT_Effect, AKT_start, AKT_stop |
+| `A0LZ` | 40-04 地獄搖滾 | 16 | 10 | Hell_Rock |
 | `A05H` | 44-03 火車輾過 | 2 | 8 | DeathTrain |
 | `A077` | 01-04 超究武神霸斬 | 17 | 8 | SuperFF7 |
-| `A09I` | 38-03 邪王炎殺黑龍波 | 4 | 8 | DarkDragonEX |
+| `A09I` | 38-03 邪王炎殺黑龍波 | 16 | 8 | DarkDragonEX |
 | `A0B1` | 01-04r 超究武神霸斬 - 改 | 17 | 8 | SuperFF7 |
 | `A0C0` | 86-04 打雷絕招 | 3 | 8 | PIKACHU |
+| `A0HW` | 25-04 ChangeDNA | 3 | 8 | ChangeDNA |
 | `A0XN` | 81-03 Divine Buster Extention | 5 | 8 | DivineBusterEx |
 | `A09K` | 38-04 黑龍波吸收 | 5 | 7 | EatDragon |
 | `A0JE` | 77-04 真-雷光劍 | 5 | 7 | Light_Fight, Light_Final, Light_Final_Dam |
 | `A044` | 16-03 無無明亦無 | 2 | 6 | Empty |
 | `A04N` | 03-04 全彈發射 | 6 | 6 | Allbullet |
-| `A08Y` | 06-00 猜猜拳 | 5 | 6 | XHunterStone, XHunterStone_pre |
+| `A092` | 05-04 巴歐．薩喀爾嘎 | 8 | 6 | GoldDrgan |
 | `A0D6` | 84-03 蜜汁 | 1 | 6 | Sugoi |
+| `A0U5` | 52-002 射殺百頭 | 9 | 6 | Nine_Lives_EX |
+| `A11C` | 99-04 世界第一的公主殿下 | 2 | 6 | MikuNo1 |
 | `A07Z` | 75-03 暴雷無限刃 | 1 | 5 | InfniLight |
 | `A0D5` | 20-03 約束與勝利之劍 | 6 | 5 | Excalibur |
 | `A0JL` | 14-01 東風繪扇、南風末廣 | 6 | 5 | MagicFan, Wind_Effect |
 | `A0N0` | 80-03 鬼神烈戟 | 3 | 5 | skill3 |
+| `A0RQ` | 48-04 騎英之疆繩 | 17 | 5 | Initate_Crazy, RiderSprint |
 | `A0VS` | 91-002 亡靈大軍 | 3 | 5 | ArmyOfTheDead |
 | `A00O` | 18-04-02 老樹盤根 | 1 | 4 | SuperOldTree |
 | `A00U` |  | 1 | 4 | InvBook |
@@ -149,17 +157,10 @@ spell art. Only the statement form `call CreateUnit(...)` is an effect spawn.
 | `A054` | 15-02 沉睡之霧 | 1 | 4 | Sleep_Air |
 | `A05I` | 44-04 心臟麻痺 | 1 | 4 | DeathHeart |
 | `A07T` | 53-03 破法對咒 | 1 | 4 | DefMagic |
-| `A0AP` | 24-03 變態絕技悶絕地獄車 | 4 | 4 | Initate_Crazy |
+| `A0AP` | 24-03 變態絕技悶絕地獄車 | 14 | 4 | Initate_Crazy |
 | `A0CO` | 72-04 黑化 | 1 | 4 | BlackTooth |
-| `A0CX` | 84-04 給我蜂蜜 | 2 | 4 | GiveMeHoney |
-| `A0HW` | 25-04 ChangeDNA | 1 | 4 | ChangeDNA |
-| `A0JX` | 45-02 千鳥流 | 1 | 4 | ThuBird |
-| `A0RQ` | 48-04 騎英之疆繩 | 5 | 4 | Initate_Crazy, RiderSprint |
-| `A0RV` | 18-02 寄生種子 | 9 | 4 | plant |
-| `A0SL` | 58-002 打雷絕招 | 2 | 4 | LightningSpread |
-| `A0XO` | 81-04 Starlight Breaker Plus | 4 | 4 | StarlightBreakerPlus |
-| `A0Y9` | 95-04 藍色戰氣一百重天 | 4 | 4 | Hundred_Sky |
-| `AIds` |  | 1 | 4 | MoriyaBYEBYE |
+| `A0CX` | 84-04 給我蜂蜜 | 7 | 4 | GiveMeHoney |
+| `A0J8` | 34-冥道殘月破 | 5 | 4 | lzfs |
 
 ## 7. Per model — what the map actually does to each asset when it spawns it
 
@@ -168,68 +169,68 @@ Joined to `out/emitters/EMITTERS.json` by `stem`, so a rebuild can go straight f
 
 | model | spawned as | scale % | timeScale % | flyHeight | timedLife s | kill/remove | PRE2 | abilities |
 |---|---|---|---|---|---|---|---:|---:|
-| `warstompcaster` | effectTargetUnit×20, dummyUnit×1, effectLoc×20 | — | — | — | — | 0/0 | stock | 20 |
-| `thunderclapcaster` | effectTargetUnit×7, effectLoc×19, dummyUnit×2 | — | — | — | 1.0 | 1/1 | stock | 16 |
-| `stampedemissiledeath` | effectTargetUnit×12, effectLoc×2, dummyUnit×1 | — | — | — | 1.0 | 0/0 | stock | 5 |
-| `flamestriketarget` | dummyUnit×2, effectLoc×10 | — | — | — | 3.0–5.0 | 0/0 | stock | 11 |
-| `mirrorimagecaster` | effectLoc×6, effectTargetUnit×6 | — | — | — | — | 0/0 | stock | 9 |
-| `monsoonbolttarget` | dummyUnit×7, effectLoc×3, effectTargetUnit×2 | — | — | — | 1.0–6.0 | 0/0 | stock | 12 |
-| `nagadeath` | effectTargetUnit×10, effectLoc×2 | — | — | — | — | 0/0 | stock | 5 |
-| `impaletargetdust` | effectLoc×10 | — | — | — | — | 0/0 | stock | 8 |
-| `blinkcaster` | effectLoc×9 | — | — | — | — | 0/0 | stock | 2 |
-| `neutralbuildingexplosion` | effectLoc×8, effectTargetUnit×1 | — | — | — | — | 0/0 | stock | 9 |
+| `warstompcaster` | effectTargetUnit×24, effectLoc×39, dummyUnit×3 | — | — | — | — | 0/0 | stock | 36 |
+| `thunderclapcaster` | effectTargetUnit×11, effectLoc×38, dummyUnit×3 | — | — | — | 1.0 | 1/1 | stock | 36 |
+| `stampedemissiledeath` | effectTargetUnit×21, effectLoc×4, dummyUnit×1 | — | — | — | 1.0 | 0/0 | stock | 14 |
+| `impaletargetdust` | effectLoc×25 | — | — | — | — | 0/0 | stock | 17 |
+| `monsoonbolttarget` | dummyUnit×13, effectTargetUnit×3, effectLoc×4 | 300.0 | — | — | 1.0–6.0 | 0/0 | stock | 16 |
+| `flamestriketarget` | dummyUnit×2, effectLoc×13 | — | — | — | 3.0–5.0 | 0/0 | stock | 14 |
+| `mirrorimagecaster` | effectLoc×6, effectTargetUnit×9 | — | — | — | — | 0/0 | stock | 11 |
+| `nagadeath` | effectTargetUnit×12, effectLoc×2 | — | — | — | — | 0/0 | stock | 7 |
+| `neutralbuildingexplosion` | effectLoc×11, effectTargetUnit×1 | — | — | — | — | 0/0 | stock | 12 |
+| `blinkcaster` | effectLoc×11 | — | — | — | — | 0/0 | stock | 3 |
+| `phoenix-missile-mini` | dummyUnit×1, effectTargetUnit×10 | — | — | — | — | 0/0 | stock | 4 |
+| `herocloudcyd` | effectLoc×1, effectTargetUnit×8 | — | — | — | — | 0/0 | 0 | 7 |
 | `resurrecttarget` | effectLoc×2, effectTargetUnit×7 | — | — | — | — | 0/0 | stock | 6 |
 | `ansatarget` | dummyUnit×4, effectLoc×4 | — | — | — | 1.0–10.0 | 0/0 | stock | 4 |
-| `herocloudcyd` | effectLoc×1, effectTargetUnit×7 | — | — | — | — | 0/0 | 0 | 6 |
+| `bloodbreathstream` | effectTargetUnit×6, effectLoc×2 | — | — | — | — | 0/0 | 3 | 8 |
+| `boomnl` | dummyUnit×1, effectTargetUnit×3, effectLoc×4 | — | — | — | 2.0 | 0/0 | 5 | 3 |
+| `markofchaostarget` | effectLoc×3, dummyUnit×1, effectTargetUnit×4 | 230.0 | — | — | — | 0/0 | stock | 8 |
 | `midchildernanohaaura` | effectLoc×2, dummyUnit×6 | — | — | — | 3.0 | 4/4 | 0 | 6 |
+| `tomeofretrainingcaster` | dummyUnit×6, effectLoc×1, effectTargetUnit×1 | 365.0 | 25.0 | — | 1.0–3.0 | 1/1 | stock | 7 |
+| `tornadoelemental` | dummyUnit×8 | 240.0 | — | — | — | 1/1 | stock | 8 |
+| `undeaddissipate` | effectTargetUnit×5, effectLoc×3 | — | — | — | — | 0/0 | stock | 7 |
 | `flamestrike1` | dummyUnit×2, effectLoc×3, effectTargetUnit×2 | — | — | — | — | 0/0 | stock | 7 |
-| `tomeofretrainingcaster` | dummyUnit×5, effectLoc×1, effectTargetUnit×1 | 365.0 | 25.0 | — | 1.0–3.0 | 1/0 | stock | 7 |
-| `tornadoelemental` | dummyUnit×7 | 240.0 | — | — | — | 0/0 | stock | 7 |
+| `hcanceldeath` | effectLoc×4, effectTargetUnit×3 | — | — | — | — | 0/0 | stock | 7 |
 | `abominationexplosion` | dummyUnit×2, effectTargetUnit×4 | — | — | — | 0.8 | 0/0 | stock | 5 |
-| `markofchaostarget` | effectLoc×3, dummyUnit×1, effectTargetUnit×2 | 230.0 | — | — | — | 0/0 | stock | 6 |
+| `blackhole` | dummyUnit×6 | — | — | — | — | 0/0 | 7 | 2 |
+| `bronzedragon` | dummyUnit×6 | — | — | — | — | 3/0 | stock | 2 |
+| `steamtankimpact` | effectLoc×2, effectTargetUnit×4 | — | — | — | — | 0/0 | stock | 6 |
 | `aquaspikeversion2` | dummyUnit×3, effectLoc×2 | 300.0–800.0 | — | — | 1.0–6.0 | 0/0 | 12 | 5 |
+| `doomdeath` | effectTargetUnit×2, dummyUnit×1, effectLoc×2 | — | — | — | — | 0/0 | stock | 5 |
+| `herobloodelfblood` | effectTargetUnit×5 | — | — | — | — | 0/0 | stock | 2 |
+| `none` | dummyUnit×5 | — | — | — | 1.0–2.0 | 1/1 | stock | 3 |
+| `phoenix-missile` | effectTargetUnit×4, dummyUnit×1 | — | — | — | — | 1/0 | stock | 5 |
 | `revivehuman` | dummyUnit×5 | 150.0–265.0 | — | — | — | 1/1 | stock | 5 |
-| `steamtankimpact` | effectLoc×2, effectTargetUnit×3 | — | — | — | — | 0/0 | stock | 5 |
+| `rockchunks0` | dummyUnit×5 | — | — | — | — | 0/0 | stock | 3 |
 | `ailbspecialart` | dummyUnit×4 | — | — | — | — | 0/0 | stock | 1 |
 | `darkraor` | dummyUnit×4 | — | 10.0–30.0 | — | 2.0 | 0/0 | 3 | 2 |
+| `orbofdeathmissile` | dummyUnit×4 | — | — | — | — | 0/0 | stock | 4 |
 | `orcsmalldeathexplode` | effectTargetUnit×4 | — | — | — | — | 0/0 | stock | 2 |
-| `phoenix-missile` | effectTargetUnit×4 | — | — | — | — | 0/0 | stock | 4 |
-| `rockchunks0` | dummyUnit×4 | — | — | — | — | 0/0 | stock | 2 |
 | `shockwavemissile` | dummyUnit×4 | — | — | — | 3.0 | 0/0 | stock | 4 |
 | `unsummontarget` | effectLoc×1, dummyUnit×1, effectTargetUnit×2 | — | — | — | — | 0/0 | stock | 4 |
-| `bloodbreathstream` | effectTargetUnit×3 | — | — | — | — | 0/0 | 3 | 3 |
-| `hcanceldeath` | effectLoc×3 | — | — | — | — | 0/0 | stock | 3 |
+| `barrensfissure1` | effectLoc×3 | — | — | — | — | 0/0 | stock | 3 |
+| `blackhole1` | dummyUnit×3 | — | — | — | 5.0–6.0 | 1/1 | 3 | 3 |
+| `critterbloodalbatross` | effectTargetUnit×3 | — | — | — | — | 0/0 | stock | 2 |
+| `darkportaltarget` | dummyUnit×2, effectTargetUnit×1 | — | — | — | 1.0 | 1/1 | stock | 3 |
+| `farseermissile` | dummyUnit×3 | — | — | — | — | 2/2 | stock | 1 |
+| `frostnovatarget` | dummyUnit×3 | — | — | — | 1.0–2.0 | 0/0 | stock | 3 |
 | `nedeathsmall` | effectLoc×3 | — | — | — | — | 0/0 | stock | 3 |
-| `none` | dummyUnit×3 | — | — | — | 1.0–2.0 | 1/1 | stock | 2 |
 | `oblivionaura` | dummyUnit×3 | 500.0 | — | — | — | 0/0 | 1 | 2 |
-| `phoenix-missile-mini` | dummyUnit×1, effectTargetUnit×2 | — | — | — | — | 0/0 | stock | 2 |
 | `resurrectcaster` | effectTargetUnit×1, dummyUnit×2 | — | — | — | — | 0/0 | stock | 3 |
+| `rockchunks3` | effectLoc×3 | — | — | — | — | 0/0 | stock | 2 |
+| `starfallcaster` | effectTargetUnit×2, effectLoc×1 | — | — | — | — | 0/0 | stock | 3 |
 | `supershinythingy` | effectTargetUnit×3 | — | — | — | — | 0/0 | 3 | 1 |
 | `ucanceldeath` | effectLoc×1, dummyUnit×2 | — | — | — | 0.5 | 0/0 | stock | 3 |
 | `unholyaura` | dummyUnit×3 | — | — | — | 2.0 | 0/0 | stock | 3 |
+| `volcanodeath` | effectLoc×2, effectTargetUnit×1 | — | — | — | — | 0/0 | stock | 3 |
+| `wispexplode` | effectTargetUnit×1, effectLoc×2 | — | — | — | — | 0/0 | stock | 3 |
+| `ancientprotectormissile` | effectLoc×1, dummyUnit×1 | — | — | — | — | 1/0 | stock | 2 |
 | `awing` | dummyUnit×2 | — | — | — | 3.0 | 0/0 | 0 | 2 |
 | `battrollblood` | effectTargetUnit×2 | — | — | — | — | 0/0 | stock | 2 |
-| `blackhole1` | dummyUnit×2 | — | — | — | 5.0–6.0 | 0/0 | 3 | 2 |
-| `blinktarget` | dummyUnit×1, effectTargetUnit×1 | — | — | — | — | 1/1 | stock | 2 |
-| `bronzedragon` | dummyUnit×2 | — | — | — | — | 1/0 | stock | 1 |
-| `chaosorcrange` | dummyUnit×2 | — | 600.0 | — | 1.0 | 0/0 | stock | 2 |
-| `doomdeath` | dummyUnit×1, effectLoc×1 | — | — | — | — | 0/0 | stock | 2 |
-| `earthtornado2` | dummyUnit×2 | — | — | — | — | 2/2 | 14 | 2 |
-| `firelorddeathexplode` | effectLoc×2 | — | — | — | — | 0/0 | stock | 2 |
-| `fragdriller` | dummyUnit×2 | 365.0 | 15.0 | — | — | 2/0 | stock | 2 |
-| `glaivemissile` | dummyUnit×2 | — | — | — | — | 0/0 | stock | 1 |
-| `herocloudkfksword` | effectTargetUnit×2 | — | — | — | — | 0/0 | 1 | 2 |
-| `herocloudstrife` | dummyUnit×2 | — | — | 0.0–1000.0 | — | 0/0 | 2 | 2 |
-| `herofatezemberformbig` | effectTargetUnit×2 | — | — | — | — | 0/0 | 0 | 1 |
-| `humanbloodpeasant` | effectTargetUnit×2 | — | — | — | — | 0/0 | stock | 2 |
-| `illidanmissile` | dummyUnit×1, effectTargetUnit×1 | — | — | — | — | 0/0 | stock | 2 |
-| `largebuildingfire1` | effectLoc×2 | — | — | — | — | 0/0 | stock | 2 |
-| `massteleporttarget` | dummyUnit×1, effectTargetUnit×1 | 365.0 | 15.0 | — | — | 0/0 | stock | 2 |
-| `netherstrike` | dummyUnit×2 | 265.0 | — | — | — | 0/0 | 5 | 2 |
-| `outland-plant1` | effectLoc×2 | — | — | — | — | 0/0 | stock | 1 |
-| `parasitemissile` | dummyUnit×2 | — | — | — | 6.0 | 0/0 | stock | 2 |
+| `bladestorm-swordeffect` | effectTargetUnit×1, dummyUnit×1 | — | — | — | 2.0 | 0/0 | 1 | 2 |
 
-…and 74 more in the JSON (`byModel`).
+…and 101 more in the JSON (`byModel`).
 
 ## 8. Dummy-effect units resolved through `war3map.w3u`
 
@@ -240,18 +241,18 @@ its complete raw `w3u` mod map — no field whitelist, so nothing is silently dr
 
 ## 9. Findings that are answers, not gaps
 
-- **96 of the 278 abilities that DO have a JASS handler create no art in it at all.** Their handler is pure
+- **74 of the 278 abilities that DO have a JASS handler create no art in it at all.** Their handler is pure
   gameplay; every visual they have comes from the object-data art fields. That is a
   definitive answer for those abilities, not missing data — don't go looking for more.
-- **464 abilities carry object-data art** but only 182 have per-invocation parameters. For the rest the
+- **464 abilities carry object-data art** but only 204 have per-invocation parameters. For the rest the
   w3a model at its natural size, colour and speed IS the correct reproduction.
 
 ## 10. What is deliberately NOT resolved
 
-- **270 trigger groups** create art but have no
+- **196 trigger groups** create art but have no
   `GetSpellAbilityId()` gate. They are system triggers (revive, shop, tower, on-attack).
   They are kept under `unattributed` with their `unitTypeGates`, tagged UNRESOLVED. Not guessed.
-- **186 parameters** inside ability groups could not be
+- **307 parameters** inside ability groups could not be
   bound to a specific spawned effect (runtime global, or cross-function flow with more than
   one candidate). They are kept per ability under `unboundParams` with their subject
   expression, so the information is not lost — it is just not falsely attached.

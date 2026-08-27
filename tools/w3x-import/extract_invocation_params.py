@@ -52,6 +52,13 @@ OUT_DIR = HERE / "out" / "invocation-params"
 sys.path.insert(0, str(HERE))
 from w3xlib.objdata import parse_object_file, all_entries  # noqa: E402
 
+# ⭐ #762 — the EnableTrigger transitive closure. It is IMPORTED, never re-written:
+# `tools/skill-audit/jassfacts.py` already owns that edge (`_ENABLE`) and the traversal
+# (`closure()`), it is already gated by `skillAuditFresh.test.ts`, and a second regex here
+# would be a second home for the same knowledge (第〇·四守則).
+sys.path.insert(0, str(HERE.parent / "skill-audit"))
+from jassfacts import closure as jass_closure, parse_jass  # noqa: E402
+
 SCHEMA = "invocation-params@1"
 
 CONFIRMED = "CONFIRMED"
@@ -915,6 +922,45 @@ def main():
         group_gates[g] = sorted(gates)
         group_unit_gates[g] = sorted(ugates)
 
+    # ---- ⭐ #762 EnableTrigger closure: a cast trigger's art is not all in ITS OWN group ----
+    #
+    # WC3 的時間序演出幾乎不寫在同一個 trigger 裡：施法那一個 `EnableTrigger` 下一個，
+    # 下一個再 `EnableTrigger` 下下個（或掛週期 timer）。只看「有 GetSpellAbilityId() gate
+    # 的那一個群組」會**整段漏掉**下游的美術 —— 42-04 世界終結的 `A05D` 只 gate 在
+    # `The_End_ofWorldStart`（1 次傷害），而卡面承諾的 12 次區域傷害住在它 EnableTrigger
+    # 起來的 `The_End_ofWorldCasting`（0.10 秒週期 timer）裡。
+    #
+    # ⚠️ 繼承是**單向且不覆蓋**的：只有**自己完全沒有 gate** 的下游群組才會繼承上游的
+    #    ability id。一個自己 gate 得出來的群組是別支技能的處理器，⛔ 不可以被覆寫
+    #    （那就是「照 join key 盲目同步」那一族的資料毀損）。
+    inherited_gates: dict[str, list[str]] = {}
+    inherited_from: dict[str, list[str]] = {}
+    jass_groups = parse_jass(str(JASS))
+    for g in sorted(group_gates):
+        if not group_gates[g]:
+            continue
+        seed = jass_groups.get(g)
+        if seed is None:
+            continue
+        for reached in jass_closure(jass_groups, [seed]):
+            base = reached.base
+            if base == g or group_gates.get(base):
+                continue
+            slot = inherited_gates.setdefault(base, [])
+            slot.extend(a for a in group_gates[g] if a not in slot)
+            inherited_from.setdefault(base, []).append(g)
+    for base in inherited_gates:
+        inherited_gates[base] = sorted(inherited_gates[base])
+        inherited_from[base] = sorted(set(inherited_from[base]))
+
+    INHERITED_WHY = (
+        "no GetSpellAbilityId() gate of its own — reached from the gating trigger group(s) "
+        "named in `viaEnableTrigger` by following EnableTrigger(gg_trg_*) edges transitively "
+        "(the same closure tools/skill-audit/jassfacts.py uses). WC3 spreads a timed "
+        "performance across several triggers; the art in this one belongs to the cast that "
+        "switched it on."
+    )
+
     scanner = Scanner(ability_levels)
 
     by_group: dict[str, list] = {}
@@ -1019,6 +1065,9 @@ def main():
             "objectArtConfidence": CONFIRMED if art.get(aid) else UNRESOLVED,
             "hasJassHandler": False,
             "triggers": [],
+            # ⭐ #762 — downstream groups reached only by an EnableTrigger edge. Kept in their
+            # OWN list so a consumer can always tell "its own handler" from "the chain it lit".
+            "triggersViaEnableTrigger": [],
             "attribution": UNRESOLVED,
             "attributionWhy": "no GetSpellAbilityId() handler in war3map.j — object data is the "
                               "only source of art for this ability",
@@ -1043,12 +1092,24 @@ def main():
             if e["attribution"] == UNRESOLVED or conf == INFERRED:
                 e["attribution"] = conf
                 e["attributionWhy"] = why
+    # ⭐ #762 — the same registration for groups reached only along EnableTrigger edges.
+    # ⚠️ `hasJassHandler` is deliberately NOT set here: the ability's handler is still the
+    #    gated group. What this records is that its performance CONTINUES in another trigger.
+    for g, gates in sorted(inherited_gates.items()):
+        for aid in gates:
+            e = abilities_out.setdefault(aid, blank_ability(aid))
+            e["triggersViaEnableTrigger"].append(g)
+
     # every ability whose OBJECT DATA carries art, handler or not
     for aid in set(art) | set(art_attach):
         abilities_out.setdefault(aid, blank_ability(aid))
 
     for g, recs in sorted(by_group.items()):
         gates = group_gates[g]
+        via = None
+        if not gates:
+            gates = inherited_gates.get(g) or []
+            via = inherited_from.get(g)
         if not gates:
             continue
         for aid in gates:
@@ -1056,6 +1117,10 @@ def main():
             for r in recs:
                 r2 = json.loads(json.dumps(r))
                 r2["trigger"] = g
+                if via:
+                    r2["viaEnableTrigger"] = via
+                    r2["attribution"] = INFERRED
+                    r2["attributionWhy"] = INHERITED_WHY
                 if r2.get("kind") == "unboundParam":
                     entry["unboundParams"].append(r2)
                 else:
@@ -1071,7 +1136,9 @@ def main():
     # ---- unattributed groups -------------------------------------------------------------
     unattributed = []
     for g, recs in sorted(by_group.items()):
-        if group_gates[g]:
+        # ⭐ #762 — a group the closure attributed is no longer unattributed. ⛔ Leaving it in
+        # both buckets would double-count it and break `invocationCensusPreserved` downstream.
+        if group_gates[g] or inherited_gates.get(g):
             continue
         eff = [r for r in recs if r.get("kind") != "unboundParam"]
         if not eff:
@@ -1263,6 +1330,20 @@ def main():
         "jassFunctions": len(funcs),
         "triggerGroups": len(groups),
         "abilityGatedGroups": sum(1 for g in group_gates.values() if g),
+        # ⭐ #762 — how much of the map's art only becomes visible once the EnableTrigger edges
+        # are followed. Every one of these numbers is DERIVED here, never typed in.
+        "enableTriggerClosure": {
+            "edges": sum(len(g.enables) for g in jass_groups.values()),
+            "groupsWithOutgoingEdge": sum(1 for g in jass_groups.values() if g.enables),
+            "groupsAttributedByClosure": len(inherited_gates),
+            "groupsAttributedByClosureThatCreateArt": sum(
+                1 for g in inherited_gates if by_group.get(g)),
+            "invocationsAttributedByClosure": sum(
+                1 for a in abilities_out.values() for r in a["invocations"] if r.get("viaEnableTrigger")),
+            "abilitiesGainingArtFromClosure": sum(
+                1 for a in abilities_out.values()
+                if any(r.get("viaEnableTrigger") for r in a["invocations"])),
+        },
         "abilitiesInDataset": len(abilities_out),
         "abilitiesWithJassHandler": sum(1 for a in abilities_out.values() if a["hasJassHandler"]),
         "abilitiesWithObjectArt": sum(1 for a in abilities_out.values() if a["objectArt"]),
@@ -1465,8 +1546,12 @@ def write_markdown(doc):
             for e in (inv.get("params") or {}).get("timeScalePercent", []):
                 v = (e.get("value") or {}).get("value")
                 if v is not None and v < 100:
+                    # ⚠️ 0 is a real WC3 idiom: SetUnitTimeScalePercent(u, 0) FREEZES the
+                    # animation on its first frame (a posed prop, not slow motion). ⛔ It is
+                    # not "infinitely slow" — and dividing by it used to crash this writer.
+                    rate = "frozen (first frame)" if not v else f"{round(100.0/v,2)}x slower"
                     A(f"| `{a['abilityId']}` | {a['name'] or ''} | {v} | "
-                      f"{round(100.0/v,2)}x slower | "
+                      f"{rate} | "
                       f"{inv.get('unitModelStem') or inv.get('modelStem') or ''} | {e.get('line','')} |")
                     n += 1
     if not n:

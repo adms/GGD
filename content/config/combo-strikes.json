@@ -456,15 +456,14 @@
       "w3xNames": [
         "23-04 雷焰聖劍"
       ],
-      "abilityIds": [
-        "godie-ntin.r"
-      ],
+      "abilityIds": [],
       "resolvedVia": "conditions:GetSpellAbilityId",
       "gates": [
         "GetUnitAbilityLevel",
         "udg_EX_Mode"
       ],
-      "note": "loop：等待與傷害寫在迴圈裡。⭐ 間隔就是動畫節奏的來源"
+      "note": "loop：等待與傷害寫在迴圈裡。⭐ 間隔就是動畫節奏的來源",
+      "unresolvedReason": "`A0OD`（23-04 雷焰聖劍） 在 w3x-ability-provenance.json 裡對不到**任何活著的** GGD 技能 ⇒ 這條連段的持有者已經不在 content/abilities/(英雄下架或改編號)。⭐ 要反駁它:讓那支技能重新出貨,或在 RESOLUTION 裡指定 ownerRawcodes。"
     },
     {
       "key": "empty",
@@ -492,14 +491,13 @@
       "w3xNames": [
         "16-03 無無明亦無"
       ],
-      "abilityIds": [
-        "godie-nplh.q"
-      ],
+      "abilityIds": [],
       "resolvedVia": "conditions:GetSpellAbilityId",
       "gates": [
         "GetUnitAbilityLevel"
       ],
-      "note": "tail：先跑完 2 段等待，收尾才給傷害（龍虎亂舞那種）。⭐ 間隔就是動畫節奏的來源"
+      "note": "tail：先跑完 2 段等待，收尾才給傷害（龍虎亂舞那種）。⭐ 間隔就是動畫節奏的來源",
+      "unresolvedReason": "`A044`（16-03 無無明亦無） 在 w3x-ability-provenance.json 裡對不到**任何活著的** GGD 技能 ⇒ 這條連段的持有者已經不在 content/abilities/(英雄下架或改編號)。⭐ 要反駁它:讓那支技能重新出貨,或在 RESOLUTION 裡指定 ownerRawcodes。"
     },
     {
       "key": "excaliburmax",
@@ -866,14 +864,13 @@
       "w3xNames": [
         "27-04 忍法暗殺奧義-飛燕閃"
       ],
-      "abilityIds": [
-        "godie-naka.r"
-      ],
+      "abilityIds": [],
       "resolvedVia": "conditions:GetSpellAbilityId",
       "gates": [
         "udg_EX_Mode"
       ],
-      "note": "per-step：wait→傷害 反覆 2 次。⭐ 間隔就是動畫節奏的來源"
+      "note": "per-step：wait→傷害 反覆 2 次。⭐ 間隔就是動畫節奏的來源",
+      "unresolvedReason": "`A030`（27-04 忍法暗殺奧義-飛燕閃） 在 w3x-ability-provenance.json 裡對不到**任何活著的** GGD 技能 ⇒ 這條連段的持有者已經不在 content/abilities/(英雄下架或改編號)。⭐ 要反駁它:讓那支技能重新出貨,或在 RESOLUTION 裡指定 ownerRawcodes。"
     },
     {
       "key": "spell-mark",
@@ -997,14 +994,13 @@
       "w3xNames": [
         "75-02 幻影鬥氣"
       ],
-      "abilityIds": [
-        "godie-u00b.w"
-      ],
+      "abilityIds": [],
       "resolvedVia": "unit-type:Trig_MoriyaShadow_Conditions@47217 要求 GetUnitTypeId(GetAttacker())=='U00B'（飛鼠先生）；本體 47240 行讀 A07W（75-02 幻影鬥氣）等級算傷害",
       "gates": [
         "GetUnitAbilityLevel"
       ],
-      "note": "tail：先跑完 1 段等待，收尾才給傷害（龍虎亂舞那種）。⭐ 間隔就是動畫節奏的來源"
+      "note": "tail：先跑完 1 段等待，收尾才給傷害（龍虎亂舞那種）。⭐ 間隔就是動畫節奏的來源",
+      "unresolvedReason": "`A07W`（75-02 幻影鬥氣） 在 w3x-ability-provenance.json 裡對不到**任何活著的** GGD 技能 ⇒ 這條連段的持有者已經不在 content/abilities/(英雄下架或改編號)。⭐ 要反駁它:讓那支技能重新出貨,或在 RESOLUTION 裡指定 ownerRawcodes。"
     },
     {
       "key": "nine-lives-hits",
@@ -1061,14 +1057,13 @@
       "w3xNames": [
         "95-04 藍色戰氣一百重天"
       ],
-      "abilityIds": [
-        "godie-e00j.r"
-      ],
+      "abilityIds": [],
       "resolvedVia": "conditions:GetSpellAbilityId",
       "gates": [
         "GetUnitAbilityLevel"
       ],
-      "note": "tail：先跑完 1 段等待，收尾才給傷害（龍虎亂舞那種）。⭐ 間隔就是動畫節奏的來源"
+      "note": "tail：先跑完 1 段等待，收尾才給傷害（龍虎亂舞那種）。⭐ 間隔就是動畫節奏的來源",
+      "unresolvedReason": "`A0Y9`（95-04 藍色戰氣一百重天） 在 w3x-ability-provenance.json 裡對不到**任何活著的** GGD 技能 ⇒ 這條連段的持有者已經不在 content/abilities/(英雄下架或改編號)。⭐ 要反駁它:讓那支技能重新出貨,或在 RESOLUTION 裡指定 ownerRawcodes。"
     }
   ]
 }

@@ -286,10 +286,25 @@ def build() -> tuple[str, str]:
             "note": note,
         }
         reason = res.get("unresolvedReason")
+        if not ability_ids and not reason:
+            # ⭐ 這一格以前是 `assert`,而它的前提是「provenance 裡查不到 = 我漏寫了一筆
+            # RESOLUTION」。⛔ 那個前提在 2026-08-27 破了:普查一旦真的跟著內容重跑
+            # (#777),**下架一位英雄**就會讓他的連段家族查不到 id —— 而那不是漏寫,
+            # 是事實。舊行為是整支產生器 AssertionError ⇒ 一次英雄下架就擋死 build。
+            #
+            # ⚠️ 契約沒有變鬆:每一筆仍然要帶一句**能被反駁**的話。差別只在它現在是
+            # **推導**的(指名 rawcode 與它在原作的名字),⛔ 不是每退休一位英雄就要
+            # 有人回來手寫一列 —— 一張要靠人記得維護的表,就是下一次的過期快照。
+            named = "、".join(f"`{rc}`（{w3x_names.get(rc) or '原作無名'}）" for rc in owner_rcs) or "（掃不到 rawcode）"
+            reason = (
+                f"{named} 在 w3x-ability-provenance.json 裡對不到**任何活著的** GGD 技能 ⇒ "
+                "這條連段的持有者已經不在 content/abilities/(英雄下架或改編號)。"
+                "⭐ 要反駁它:讓那支技能重新出貨,或在 RESOLUTION 裡指定 ownerRawcodes。"
+            )
         if reason:
             entry["unresolvedReason"] = reason
         assert bool(ability_ids) != bool(reason), (
-            f"{fam.func}：有 abilityIds 就不該有 unresolvedReason，沒有就一定要有一個能被反駁的理由"
+            f"{fam.func}：有 abilityIds 就不該有 unresolvedReason"
         )
         families.append(entry)
 
