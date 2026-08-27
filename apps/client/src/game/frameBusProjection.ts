@@ -33,6 +33,7 @@ import type { CastTracker } from "../CastTracker";
 import type { VfxSystem } from "../vfx/VfxSystem";
 import type { EntityViewRegistry } from "../render/EntityViewRegistry";
 import type { VisibleZones } from "../net/zoneVisibility";
+import { entitiesOf } from "../net/viewGatedEntities";
 
 /**
  * 這支投影**真正**讀到的 10 格實例狀態 —— 量出來的（⛔ 不是「大概需要這些」）。
@@ -88,7 +89,7 @@ export function updateFrameBusFrom(d: FrameBusDeps, state: MatchState, nowMs: nu
     const bars = frameBus.mobBars;
     bars.length = 0;
     const barCfg = d.mobBarCfg;
-    state.entities.forEach((es) => {
+    entitiesOf(state).forEach((es) => {
       if (es.kind === KIND_MOB) {
         // ⭐ GH#575 —— **在任何 return 之前**記下這一具身體。`mobSlain` 的 payload
         // 沒有 x/z，而殭屍在事件到達時通常已經從快照裡消失（sim 同一個 tick 就
@@ -208,7 +209,7 @@ export function updateFrameBusFrom(d: FrameBusDeps, state: MatchState, nowMs: nu
     frameBus.mobBoss = mobBossMarkerFor(
       hud.mobBossLive,
       (bossId) => {
-        const row = state.entities.get(String(bossId));
+        const row = entitiesOf(state).get(String(bossId));
         return {
           row,
           world: row ? (d.views.posOf(row.id) ?? { x: row.x, z: row.z }) : { x: 0, z: 0 },
@@ -223,7 +224,7 @@ export function updateFrameBusFrom(d: FrameBusDeps, state: MatchState, nowMs: nu
     // The minimap and the spectating owner's HUD banner both read from here.
     const circles = frameBus.reviveCircles;
     circles.length = 0;
-    state.entities.forEach((es) => {
+    entitiesOf(state).forEach((es) => {
       if (es.kind !== KIND_REVIVE_CIRCLE) return;
       // L3 ZONE CULL —— 兩個消費者(小地圖 #67、ReviveBanner)都只看得到本區的
       // 圈圈；自己那一區永遠在可見集合裡，所以自己的復活圈不受影響。

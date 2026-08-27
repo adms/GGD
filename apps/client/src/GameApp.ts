@@ -35,6 +35,7 @@ import {
   facingModePredictsLocally,
   facingModeSnapsFromAuthority,
 } from "@ggd/shared/sim/facingLock";
+import { entitiesOf } from "./net/viewGatedEntities";
 import { localFacingMode } from "./predict/localFacingMode";
 import { predictionHoldFlagMask } from "./predict/predictionHold";
 import { localRenderPose } from "./predict/localRenderPose";
@@ -1378,7 +1379,7 @@ export class GameApp {
     if (mask === 0) return false;
     const lid = hudStore.getState().localEntityId;
     if (lid === null || !state?.entities) return false;
-    const es = state.entities.get(String(lid));
+    const es = entitiesOf(state).get(String(lid));
     // ⚠️ `!== 0` 不是 `> 0` —— flags 是 uint32，高半部 `&` 出來是負數。
     return es !== undefined && (es.flags & mask) !== 0;
   }
@@ -1545,7 +1546,14 @@ export class GameApp {
     // 而 owner 看到的正是「**還在動但畫不出來**」（隱形的英雄在攻擊我）。
     if (this.disposed) return;
     // reflection-based state may not be materialized before the first patch
-    if (!state?.seats || !state.entities) return;
+    //
+    // ⛔⛔ GH#760 —— 這裡在 2026-08-27 之前還多一個 `|| !state.entities`，而
+    // `entities` 自從被標成 **view-gated** 之後，「view 裡還沒有實體」時**根本
+    // 不會上線**（是 `undefined`，⛔ 不是空 map）。⇒ 選人畫面每一份快照都被這一行
+    // 丟掉 ⇒ `syncHudFromState` 一次都沒跑 ⇒ HUD 永遠停在「Connecting to match…」。
+    // ⭐ 判準沒變、只是換了一個**不會被剔除**的欄位：`seats` 沒有 view tag。
+    // 完整量測與理由在 `net/viewGatedEntities.ts`。
+    if (!state?.seats) return;
     // the authoritative arena — (re)build the rendered map when it changes. The
     // arena is now per-round (task #145): the sim picks a new arena each round
     // and broadcasts its id, so prefer that per-round id and fall back to the
@@ -1579,13 +1587,19 @@ export class GameApp {
     this.refreshVisibleZones(state);
     // 別區的實體連插值緩衝都不進(連同它們的 ring buffer 一起被 prune 掉)。
     // 剔除那一行在 net/zoneVisibility.ts 的 `ingestZonedTransforms` 裡。
-    ingestZonedTransforms(state.entities, this.visibleZones, state.tick, this.interp, this.interpSeen);
+    ingestZonedTransforms(
+      entitiesOf(state),
+      this.visibleZones,
+      state.tick,
+      this.interp,
+      this.interpSeen,
+    );
 
     // authoritative sample for the local champion → reconciliation input
     const hud = hudStore.getState();
     if (hud.localSeatId !== null && hud.localEntityId !== null) {
       const seat = state.seats.get(String(hud.localSeatId));
-      const es = state.entities.get(String(hud.localEntityId));
+      const es = entitiesOf(state).get(String(hud.localEntityId));
       if (seat && es) {
         this.connStats.noteAck(seat.lastAckSeq, nowMs); // RTT from input ack
         this.pendingAuth = {
@@ -1885,7 +1899,7 @@ export class GameApp {
       // a stunned champion looked identical to a healthy one. Feed each live
       // champion's flags at its RENDERED position; the aura layer pulses on
       // `vfx.update` below and self-prunes on despawn (`statusFx.forget`).
-      state.entities.forEach((es) => {
+      entitiesOf(state).forEach((es) => {
         // L3 ZONE CULL —— 別區的英雄沒有 view，`posOf` 會落到 schema 座標，
         // 於是狀態光環會被畫在一個看不到的地方，而 CC 語音會照樣搶語音檔位。
         // 刻意排在 kind/alive 那一行**之前**：`GameApp.batch1Wiring.test.ts` 的
@@ -2318,7 +2332,7 @@ export class GameApp {
       this.mobBarCfg = mobHealthBarConfigFrom(this.mobVisual);
     }
     let i = 0;
-    state.entities.forEach((es) => {
+    entitiesOf(state).forEach((es) => {
       // L3 ZONE CULL —— 別區的實體不建 view、不做插值取樣、不掛環境特效、
       // 不產生遠端腳步聲。`visibleZones` 由 `refreshVisibleZones` 在每一份
       // 快照重算，並且跟著 #269 的觀戰目標走(不是寫死本地 zone)。
@@ -2487,7 +2501,7 @@ export class GameApp {
   }
 
   private schemaPos(id: number): { x: number; z: number } | null {
-    const es = this.conn.room?.state.entities.get(String(id));
+    const es = entitiesOf(this.conn.room?.state).get(String(id));
     return es ? { x: es.x, z: es.z } : null;
   }
 
@@ -2498,7 +2512,7 @@ export class GameApp {
    * low-priority third-party band instead of guessing.
    */
   private teamOfEntity(id: number): number | null {
-    const es = this.conn.room?.state.entities.get(String(id));
+    const es = entitiesOf(this.conn.room?.state).get(String(id));
     if (!es) return null;
     return this.teamBySeat.get(es.seatId) ?? null;
   }
@@ -2556,7 +2570,7 @@ export class GameApp {
    * 是負數）= null = 放行，與 `VisibleZones` 同一個安全的失效方向。
    */
   private readonly zoneOfEntity = (id: number): number | null => {
-    const es = this.conn.room?.state.entities.get(String(id));
+    const es = entitiesOf(this.conn.room?.state).get(String(id));
     return es && Number.isInteger(es.zone) && es.zone >= 0 ? es.zone : null;
   };
 
@@ -2832,7 +2846,7 @@ export class GameApp {
 
   /** Max hp of ANY entity from the schema (0 when unknown) — the heavy/light split. */
   private entityMaxHp(id: number): number {
-    const es = this.conn.room?.state.entities.get(String(id));
+    const es = entitiesOf(this.conn.room?.state).get(String(id));
     return es?.maxHp ?? 0;
   }
 
@@ -3166,7 +3180,7 @@ export class GameApp {
   private localMaxHp(): number {
     const id = hudStore.getState().localEntityId;
     if (id === null) return 0;
-    const es = this.conn.room?.state.entities.get(String(id));
+    const es = entitiesOf(this.conn.room?.state).get(String(id));
     return es?.maxHp ?? 0;
   }
 
@@ -3191,7 +3205,7 @@ export class GameApp {
   private combatFacingTargetPos(state: MatchState | null, renderTick: number): Vec2 | null {
     const id = this.attackOrderTargetId;
     if (id === null || !state) return null;
-    const es = state.entities.get(String(id));
+    const es = entitiesOf(state).get(String(id));
     if (!es || !es.alive) {
       this.attackOrderTargetId = null;
       return null;
@@ -3260,7 +3274,7 @@ export class GameApp {
    *   伺服器會拿來結算的那個位置。
    */
   private entityPos(id: number): Vec2 | null {
-    const e = this.conn.room?.state.entities.get(String(id));
+    const e = entitiesOf(this.conn.room?.state).get(String(id));
     return e ? { x: e.x, z: e.z } : null;
   }
 
@@ -3299,7 +3313,7 @@ export class GameApp {
     const lp = playerView(player);
     const entityId = player === 0 ? hudStore.getState().localEntityId : (lp?.entityId ?? null);
     if (entityId === null) return null;
-    const es = this.conn.room?.state.entities.get(String(entityId));
+    const es = entitiesOf(this.conn.room?.state).get(String(entityId));
     if (!es) return null;
     return { x: es.fx, z: es.fz };
   }
@@ -3316,7 +3330,7 @@ export class GameApp {
     const state = this.conn.room?.state;
     if (!state) return [];
     const units: PickableUnit[] = [];
-    state.entities.forEach((es) => {
+    entitiesOf(state).forEach((es) => {
       // ZONE CULL — the FIFTH consumption point (the other four are
       // onStatePatch / collectEntities / renderFrame / updateFrameBus).
       // Without it this list carries the other duel zone's champions and its
@@ -3384,7 +3398,7 @@ export class GameApp {
     const id = hudStore.getState().localEntityId;
     const pos = this.localSelfPos();
     if (id === null || !pos) return false;
-    const es = this.conn.room?.state.entities.get(String(id));
+    const es = entitiesOf(this.conn.room?.state).get(String(id));
     if (es && !es.alive) return false; // a corpse has no quips
     return pickUnit(ground, [{ id, x: pos.x, z: pos.z, radius: 0.6 }]) !== null;
   }
@@ -3574,7 +3588,7 @@ export class GameApp {
     f.fireRingTicks = state.fireRingTicks;
     f.fireRingRadius = state.fireRingRadius;
     const localId = hudStore.getState().localEntityId;
-    const es = localId !== null ? state.entities.get(String(localId)) : undefined;
+    const es = localId !== null ? entitiesOf(state).get(String(localId)) : undefined;
     const zones = frameBus.arenaZones;
     const z = es && zones ? zones[es.zone] : undefined;
     // ⭐ GH#364 —— 矩形分區把半寬半深一起帶下去。sim 對 rect 分區判的是
@@ -3599,7 +3613,7 @@ export class GameApp {
     const zones = frameBus.arenaZones;
     for (let p = 0; p < this.viewports.count; p++) {
       const id = p === 0 ? hudStore.getState().localEntityId : (playerView(p)?.entityId ?? null);
-      const es = id !== null ? state.entities.get(String(id)) : undefined;
+      const es = id !== null ? entitiesOf(state).get(String(id)) : undefined;
       this.burnBurning[p] = es ? (es.flags & ENTITY_FLAG.BURNING) !== 0 : false;
       this.burnAlive[p] = es ? es.alive : false;
       const zr = es && zones ? (zones[es.zone]?.r ?? 0) : 0;
@@ -3627,7 +3641,7 @@ export class GameApp {
     const entityId =
       player === 0 ? hudStore.getState().localEntityId : (playerView(player)?.entityId ?? null);
     if (entityId === null) return; // no champion yet (champ-select) — leave the rig
-    const es = state.entities.get(String(entityId));
+    const es = entitiesOf(state).get(String(entityId));
     if (!es) return;
     const alive = es.alive;
     const prev = this.aliveByPlayer.get(player);
@@ -3646,7 +3660,7 @@ export class GameApp {
     const state = this.conn.room?.state;
     let best: Vec2 | null = null;
     let bestD = Infinity;
-    state?.entities.forEach((e) => {
+    entitiesOf(state).forEach((e) => {
       if (e.kind !== 0 || !e.alive || e.id === dead.id) return;
       if ((this.teamBySeat.get(e.seatId) ?? -1) !== myTeam) return;
       const dx = e.x - dead.x;
@@ -3672,7 +3686,12 @@ export class GameApp {
    */
   private duelViews(state: MatchState): DuelView[] {
     const out = this.duelScratch;
-    const n = state.duels.length;
+    // ⚠️ 第一份快照抵達**之前** `renderFrame` 就已經在跑（它讀的是
+    //    `this.conn.room?.state`，⛔ 不經過 `onStatePatch` 的閘）——
+    //    那時候集合欄位一格都還沒被解碼 ⇒ `duels` 是 undefined。
+    //    量到的：真瀏覽器每次進場**必定** 擲 4 次 TypeError，而每一次都讓
+    //    `renderFrame` 死在第 5 步 ⇒ 後面的 vfx/anchors/**draw** 全部不跑。
+    const n = state.duels?.length ?? 0;
     while (out.length < n) out.push({ zone: 0, live: false });
     out.length = n;
     for (let i = 0; i < n; i++) {
@@ -3692,7 +3711,7 @@ export class GameApp {
     const entityId =
       player === 0 ? hudStore.getState().localEntityId : (playerView(player)?.entityId ?? null);
     if (entityId === null) return null;
-    const es = state.entities.get(String(entityId));
+    const es = entitiesOf(state).get(String(entityId));
     return es ? es.zone : null;
   }
 
@@ -3834,7 +3853,7 @@ export class GameApp {
       this.predictedEntityId = null;
       return;
     }
-    const es = state.entities.get(String(entityId));
+    const es = entitiesOf(state).get(String(entityId));
     if (!es) return;
     // keep the parsed combat-env table in sync with the authoritative snapshot
     if (state.combatEnvJson !== this.combatEnvJson) {
