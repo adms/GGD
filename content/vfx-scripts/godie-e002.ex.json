@@ -1,0 +1,153 @@
+{
+  "id": "godie-e002.ex",
+  "schema": "vfx-script@1",
+  "abilityId": "godie-e002.ex",
+  "notes": "GH#838 三招之一（JASS ExcaliburMAX，war3map.j 32475–32668，掛 Saber unit 受傷事件；底稿 §3）。行為層1＝passive hooks onReflectSuccess→delayed×7（strikeCue ⇒ strike 事件）→damageLine 收尾。每刀：暗紅殘影（600% 攻擊剪輯）＋DarkPortal＋Stampede＋「傷害!」；第 7 刀後：聖光舉劍→勝利劍光柱（前方 1.3u，scale 0.7）＋FragDriller 凍格（scale 8×0.15 速）＋NEDeathSmall/SteamTank/中立爆炸掃蕩＋震動。缺口：M1 拖行、M10 隨機刀距。",
+  "segments": [
+    {
+      "kind": "modelFx",
+      "on": "strike",
+      "modelKey": "imported.herosaber",
+      "path": "static",
+      "anchor": "target",
+      "clip": "attack",
+      "clipTimeScale": 6,
+      "tint": [
+        0.4,
+        0.05,
+        0.05
+      ],
+      "alpha": 0.5,
+      "lifeSec": 0.35
+    },
+    {
+      "kind": "modelFx",
+      "on": "strike",
+      "modelKey": "w3x.stock.darkportaltarget",
+      "path": "static",
+      "anchor": "self",
+      "heightU": 1.2,
+      "lifeSec": 0.4
+    },
+    {
+      "kind": "modelFx",
+      "on": "strike",
+      "modelKey": "w3x.stock.stampedemissiledeath",
+      "path": "static",
+      "anchor": "target",
+      "heightU": 1.1,
+      "lifeSec": 0.4
+    },
+    {
+      "kind": "floatingText",
+      "on": "strike",
+      "text": "傷害!",
+      "colorRgb": [
+        255,
+        77,
+        64
+      ],
+      "sizeScale": 1.1,
+      "at": "target",
+      "durationSec": 0.5
+    },
+    {
+      "kind": "vfx",
+      "on": "strike",
+      "strikeIndex": 7,
+      "atMs": 100,
+      "vfxId": "fx.w3x.particle.holyawakening.p00",
+      "at": "self",
+      "durationSec": 1.0
+    },
+    {
+      "kind": "vfx",
+      "on": "strike",
+      "strikeIndex": 7,
+      "atMs": 100,
+      "vfxId": "fx.w3x.orb.magical-sword.p00",
+      "at": "bone",
+      "attach": "hand,right",
+      "durationSec": 1.0
+    },
+    {
+      "kind": "floatingText",
+      "on": "strike",
+      "strikeIndex": 7,
+      "atMs": 400,
+      "text": "8Hit",
+      "colorRgb": [
+        255,
+        212,
+        90
+      ],
+      "sizeScale": 1.5,
+      "durationSec": 0.8
+    },
+    {
+      "kind": "modelFx",
+      "on": "strike",
+      "strikeIndex": 7,
+      "atMs": 400,
+      "modelKey": "w3x.stock.revivehuman",
+      "path": "static",
+      "anchor": "self",
+      "offsetForwardU": 1.3,
+      "scale": 0.7,
+      "lifeSec": 1.2
+    },
+    {
+      "kind": "modelFx",
+      "on": "strike",
+      "strikeIndex": 7,
+      "atMs": 400,
+      "modelKey": "w3x.stock.fragdriller",
+      "path": "static",
+      "anchor": "target",
+      "scale": 8,
+      "clip": "idle",
+      "clipTimeScale": 0.15,
+      "lifeSec": 1.5
+    },
+    {
+      "kind": "modelFx",
+      "on": "strike",
+      "strikeIndex": 7,
+      "atMs": 400,
+      "modelKey": "w3x.stock.nedeathsmall",
+      "path": "static",
+      "anchor": "target",
+      "lifeSec": 0.8
+    },
+    {
+      "kind": "modelFx",
+      "on": "strike",
+      "strikeIndex": 7,
+      "atMs": 500,
+      "modelKey": "w3x.stock.steamtankimpact",
+      "path": "static",
+      "anchor": "target",
+      "scale": 1.3,
+      "lifeSec": 0.8
+    },
+    {
+      "kind": "modelFx",
+      "on": "strike",
+      "strikeIndex": 7,
+      "atMs": 500,
+      "modelKey": "w3x.stock.neutralbuildingexplosion",
+      "path": "static",
+      "anchor": "target",
+      "scale": 1.2,
+      "lifeSec": 1.0
+    },
+    {
+      "kind": "screenShake",
+      "on": "strike",
+      "strikeIndex": 7,
+      "atMs": 600,
+      "amplitude": 0.6,
+      "durationSec": 0.5
+    }
+  ]
+}

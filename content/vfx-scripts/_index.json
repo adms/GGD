@@ -1,12 +1,36 @@
 {
   "collection": "vfx-scripts",
-  "hash": "dd377d452e56",
+  "hash": "0057f9363e7b",
   "entries": [
+    {
+      "id": "godie-e002.ex",
+      "path": "vfx-scripts/godie-e002.ex.json",
+      "hash": "67d31d96355e",
+      "size": 3664
+    },
+    {
+      "id": "godie-e00l.ex",
+      "path": "vfx-scripts/godie-e00l.ex.json",
+      "hash": "73cc8b84896f",
+      "size": 3664
+    },
     {
       "id": "godie-h020.e",
       "path": "vfx-scripts/godie-h020.e.json",
-      "hash": "39365f0af85a",
-      "size": 947
+      "hash": "ecb08c9f4c7d",
+      "size": 819
+    },
+    {
+      "id": "godie-hart.r",
+      "path": "vfx-scripts/godie-hart.r.json",
+      "hash": "1b79a2a492e6",
+      "size": 3396
+    },
+    {
+      "id": "godie-hjai.e",
+      "path": "vfx-scripts/godie-hjai.e.json",
+      "hash": "655fe3834e5c",
+      "size": 819
     }
   ]
 }
