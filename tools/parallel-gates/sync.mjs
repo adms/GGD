@@ -136,6 +136,10 @@ const _quarantine = (mode) => {
   catch (e) { console.error(`⚠️ 隔離區 ${mode} 失敗(不擋 sync): ${String(e)}`); }
 };
 _quarantine("unlock");
+// ⭐ GH#815 —— 告訴鏈上每一支 `genrun.sh` wrapper：**這裡已經解鎖了，⛔ 不要各自重鎖**。
+//   少了這一行，第一支跑完就把自己的產物鎖回去，而鏈上後面寫同一批檔的步驟吃 EACCES
+//   —— ⭐ 一個「只在鏈裡發生、單獨跑永遠是綠的」的缺陷。
+process.env.GGD_QUARANTINE_UNLOCKED = "1";
 process.on("exit", () => _quarantine("lock"));
 
 const prune = new Set();
