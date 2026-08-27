@@ -56,6 +56,34 @@ const interesting = (p) =>
 //    ⇒ **自我增強迴圈的斷點就在這裡**:量測前把沙盒整棵解鎖（sandbox 在 /private/tmp,
 //    改它的權限不影響真 repo）,並在子行程掛 GGD_QUARANTINE_OFF=1,
 //    讓鏈裡的 quarantine:lock 不會在量測中途把樹鎖回去。
+// ⭐⭐ GH#804 —— **沙盒不存在或陳舊時要自己建**（2026-08-27）。
+//    在此之前這一支假設沙盒已經在那裡，而它的兩種失敗都**用錯誤的訊息說話**：
+//      · 沙盒不存在 ⇒ 上面那條 find 直接爆 `Command failed`（看起來像 trace 壞了）
+//      · 沙盒**陳舊** ⇒ 「⛔ 沒有叫 'x:build' 的步驟」——⚠️ 而那一句是**假的**：
+//        步驟在真 repo 的 package.json 裡，只是沙盒那份是舊的。
+//    ⭐ 而第二種特別壞：它讀起來像「你名字打錯了」，於是人會去改名字。
+//    ⇒ 沙盒的 package.json 對不上真 repo 的 ⇒ **重建**（`cp -Rc` 是 APFS clonefile,
+//      共用區塊 ⇒ 幾乎不佔空間也幾乎不花時間）。`--fresh` 強制重建。
+{
+  const { existsSync, readFileSync: rf } = await import("node:fs");
+  const REPO_ROOT = new URL("../..", import.meta.url).pathname.replace(/\/$/, "");
+  const stale = (() => {
+    if (argv.includes("--fresh")) return "強制（--fresh）";
+    if (!existsSync(`${SANDBOX}/package.json`)) return "沙盒不存在";
+    try {
+      const a = rf(`${SANDBOX}/package.json`, "utf8");
+      const b = rf(`${REPO_ROOT}/package.json`, "utf8");
+      return a === b ? null : "沙盒的 package.json 與真 repo 不一致（陳舊）";
+    } catch {
+      return "讀不到沙盒的 package.json";
+    }
+  })();
+  if (stale !== null) {
+    console.log(`🧹 重建量測沙盒（${stale}）：${SANDBOX}`);
+    execFileSync("bash", ["-c", `rm -rf "${SANDBOX}" && cp -Rc "${REPO_ROOT}" "${SANDBOX}" 2>/dev/null || cp -R "${REPO_ROOT}" "${SANDBOX}"`], { stdio: "inherit" });
+  }
+}
+
 execFileSync("bash", ["-c", `find "${SANDBOX}" -type f ! -perm -u+w ! -path '*/.git/*' ! -path '*/node_modules/*' -exec chmod u+w {} +`], { stdio: "ignore" });
 
 const pkg = JSON.parse(readFileSync(`${SANDBOX}/package.json`, "utf8"));
