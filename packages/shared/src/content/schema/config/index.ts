@@ -99,6 +99,7 @@ import { zConfigFormVisualsDoc } from "./formVisuals";
 import { zConfigModelLodDoc } from "./modelLod";
 import { zConfigVfxCleanupDoc } from "./vfxCleanup";
 import { zConfigVfxScriptsDoc } from "./vfxScripts";
+import { zConfigVfxBudgetDoc } from "./vfxBudget";
 import { zConfigFeelFxDoc } from "./feelFx";
 import { zConfigShieldDoc } from "./shield";
 import { zConfigBlockDoc } from "./block";
@@ -216,6 +217,7 @@ export * from "./unitTints";
 export * from "./valhallaSandbox";
 export * from "./vfxCleanup";
 export * from "./vfxScripts";
+export * from "./vfxBudget";
 export * from "./victoryFx";
 export * from "./victoryTaunts";
 export * from "./voxelBarcodes";
@@ -271,6 +273,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   // 完全正常（2026-08-02 事故的形狀）。
   zConfigFeelFxDoc,
   zConfigVfxScriptsDoc,
+  zConfigVfxBudgetDoc,
   zConfigRoundGradeDoc,
   zConfigShieldDoc,
   zConfigBlockDoc,

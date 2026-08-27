@@ -85,6 +85,7 @@ import { vfxSoundLayer } from "../audio/vfxSound";
 import { resolveFamilyArt } from "../render/vfx/familyTuning";
 import { setMaxAbilityVfxLayers } from "../render/vfx/abilityLayers";
 import { setOneShotMaxLifeSec } from "../vfx/oneShotLife";
+import { setParticleDensityCaps } from "../vfx/particleFactory";
 import { setFxTintEmissiveFloor, setStockGlowAdditive } from "../render/modelFxRig";
 import { setBlockFlashMode } from "../render/combatFeedback";
 import { setExDimTuning } from "../render/screenFx";
@@ -394,6 +395,14 @@ export class ContentDb {
     // 同樣是第②號故障的位置:少了這一行,後台把 0.6 調成 2.0 之後 schema 收下了、
     // 頁面顯示 2.0、而 `VfxSystem` 仍然照 0.6 夾。傳 undefined = 出貨的 0.6。
     setOneShotMaxLifeSec(vfxFamiliesDoc?.oneShotMaxLifeSec);
+    // 🎚️ GH#838 粒子密度上限（owner 2026-08-28）—— 出貨前端的**單個特效**上限。
+    // ⭐ 與特效工坊 studio 讀同一支 `particleFactory`，所以編輯器裡看到的密度
+    //    就是上線的密度；缺文件 ⇒ 出貨預設（⛔ 不是 0）。
+    setParticleDensityCaps(
+      Configs.tryGet("vfx-budget") as
+        | { maxParticlesPerSystem?: number; maxRatePerSystem?: number }
+        | undefined,
+    );
     // 🎨 GH#697 —— 染色下限（黑剪影退路）。同一條路:後台存檔 ⇒ 下一次載入生效。
     setFxTintEmissiveFloor(
       (Configs.tryGet("vfx-cleanup") as { fxTintEmissiveFloor?: number } | undefined)

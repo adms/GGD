@@ -10,6 +10,7 @@ import {
   zConfigModelLodDoc,
   zConfigVfxCleanupDoc,
   zConfigVfxScriptsDoc,
+  zConfigVfxBudgetDoc,
   // 世界演出（2026-08-23 稽核）—— 六則「某個東西在某個座標出現／消失／掃過」
   // 的事件合成兩個模板 + 一張表。走 barrel，同上面那一族。
   zConfigWorldCuesDoc,
@@ -676,6 +677,39 @@ export const VFX_SCRIPTS_SPEC: ConfigDocSpec<"vfxScripts"> = {
       path: "enabled",
       zh: "演出腳本總開關",
       note: "關掉＝所有 vfx-scripts 演出停播、退回預設綁定（rollback 那一格）。⛔ 不是特效總開關 —— 技能原有的特效（sim 側 spawnVfx/spawnModelFx）完全不受它管。",
+    },
+  ],
+  preserved: [],
+};
+
+
+// ───────────────────────────────── 粒子密度上限 (config/vfx-budget) ──
+
+export const VFX_BUDGET_SPEC: ConfigDocSpec<"vfxBudget"> = {
+  page: "vfxBudget",
+  collection: "config",
+  docId: "vfx-budget",
+  schemaTag: "config.vfx-budget@1",
+  zod: zConfigVfxBudgetDoc,
+  title: "粒子密度上限",
+  intro: [
+    "owner 2026-08-28：「所有特效粒子特效密度要受到上限值管制，後台可設定，這次的特效編輯器裡設定共同遵守上限值，這個上限值也會**卡入實際遊戲前端執行的單個特效上限值**」。",
+    "⭐ 一份文件、三個消費端共用：出貨前端的每一個粒子系統（particleFactory 的 capacityFor/rateFor）、特效工坊 studio 的預覽、以及這一頁。所以**編輯器裡看到的密度就是上線的密度** —— ⛔ 不會出現「工坊調得很漂亮、上線被另一套上限砍掉」。",
+    "⚠️ 這是**單發**的上限（一個特效自己能多密），⛔ 不是「場上總共幾個特效」——那一族是 特效回收 與 三秒鐵則 在管，兩者不衝突。",
+  ],
+  consumer:
+    "apps/client/src/vfx/particleFactory.ts 的 capacityFor()／rateFor()（每一個 ParticleSystem 的容量與 emitRate 都從這兩支出來）；由 ContentDb.load() 裝上，與 setOneShotMaxLifeSec／setFamilyTuning 同一條路",
+  effect: "玩家**下一次重新整理遊戲頁面**之後生效（客戶端載入內容時讀一次）。",
+  fields: [
+    {
+      path: "maxParticlesPerSystem",
+      zh: "單個特效最多幾顆粒子",
+      note: "一個粒子系統的容量天花板（瞬間密度）。調小＝畫面乾淨、GPU 負擔低，代價是爆炸類特效會被削薄；調大＝更濃，但一發大招就可能把整場的預算吃掉。⚠️ 這一格夾的是**容量**，所以它同時決定了記憶體：一顆粒子的 buffer 是固定的，1200 顆 × 場上十幾個系統就是實際的 VRAM 成本。",
+    },
+    {
+      path: "maxRatePerSystem",
+      zh: "單個持續特效每秒最多噴幾顆",
+      note: "持續型（stream）特效每秒的噴發上限（時間軸密度）。⭐ 它與上面那一格是**兩個軸**：顆數管「同時最多幾顆在畫面上」，噴發率管「補得多快」。只夾顆數的話，一個高噴發率的系統會一直撞天花板然後抖動；兩格一起夾才穩。",
     },
   ],
   preserved: [],

@@ -233,6 +233,18 @@ const engine = new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: 
   camera.position.set(casterPos.x + 6, 9, casterPos.z - 14);
   camera.setTarget(new Vector3(casterPos.x + 6, 1.0, casterPos.z));
 
+  // 🎚️ GH#838 —— 粒子密度上限：studio **裝上同一份後台文件**，所以編輯器裡看到的
+  //    密度就是上線的密度（owner 2026-08-28：「編輯器裡設定共同遵守上限值」）。
+  //    ⛔ 不自己挑一個預覽用的數字 —— 那會讓工坊調得漂亮、上線被砍掉。
+  const { setParticleDensityCaps, maxParticlesPerSystem, maxRatePerSystem } = await import(
+    "./particleFactory"
+  );
+  setParticleDensityCaps(
+    Configs.tryGet("vfx-budget") as
+      | { maxParticlesPerSystem?: number; maxRatePerSystem?: number }
+      | undefined,
+  );
+
   const assets = new AssetManager(scene);
   const vfx = new VfxSystem(scene, {
     entityPos: (id: number) => {
@@ -758,6 +770,10 @@ const engine = new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: 
 
   renderPalette();
   await loadScript();
+  // ⭐ 上限印在畫面上 —— 一個生效中的天花板如果沒有人看得到，它就會被讀成
+  //    「我調的參數沒有用」（fail-open 沒錯，靜默才是缺陷）。
+  const capEl = $("caps");
+  capEl.textContent = `🎚️ 粒子上限（後台 config.vfx-budget@1）：單個特效 ${maxParticlesPerSystem()} 顆 · 每秒 ${maxRatePerSystem()} 顆`;
   say(`就緒 —— ${abilityId}。拖資源進畫面、拖 slider、按 ▶ 全程觀看。`, "ok");
 
   // ?capture=1 ⇒ 直接進連拍（總 tick / 每幾 tick 一格 可由 query 調）

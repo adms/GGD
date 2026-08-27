@@ -16,6 +16,10 @@ import type { BaseTexture } from "@babylonjs/core/Materials/Textures/baseTexture
 import { Color4 } from "@babylonjs/core/Maths/math.color";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import type { VfxDoc, VfxBlendMode, VfxOrient } from "@ggd/shared/content";
+import {
+  clampMaxParticlesPerSystem,
+  clampMaxRatePerSystem,
+} from "@ggd/shared/content/schema/vfx";
 import { addSwirl, orientAxis, orientDirection, orientIsIdentity } from "./orient";
 import { clampFadeOutTail } from "./fadeOut";
 import { vfxDissipateMaxSec, vfxFadeOutMaxSec } from "./vfxCleanupPolicy";
@@ -159,12 +163,57 @@ export function scaledBurstCount(doc: VfxDoc, scale = 1): number {
 // VfxSystem.frontLoadDoc which shapes imported stream docs the same way).
 // ---------------------------------------------------------------------------
 
+// ---------------------------------------------------------------------------
+// 🎚️ 粒子密度上限（GH#838，owner 2026-08-28：「所有特效粒子特效密度要受到上限值
+// 管制，後台可設定⋯這個上限值也會**卡入實際遊戲前端執行的單個特效上限值**」）
+//
+// ⭐ 咬在 `capacityFor` / `rateFor`：**每一個** ParticleSystem 的容量與噴發率都
+// 從這兩支出來（出貨路徑、audition、預設族、特效工坊 studio 共用同一支）——
+// ⛔ 不在各呼叫端各夾一次：那是 N 個住處，而漏掉的那一個就是下一次的爆量來源。
+//
+// 由 `ContentDb.load()` 裝上，和 `setOneShotMaxLifeSec` / `setFamilyTuning`
+// 同一條路 ⇒ 後台存檔、玩家重整就生效。
+// ---------------------------------------------------------------------------
+
+let activeMaxParticles: number | undefined;
+let activeMaxRate: number | undefined;
+
+/** 裝上（或清掉）後台的粒子密度上限。傳 `undefined` = 回到出貨預設。 */
+export function setParticleDensityCaps(
+  caps: { maxParticlesPerSystem?: number; maxRatePerSystem?: number } | undefined,
+): void {
+  activeMaxParticles = caps?.maxParticlesPerSystem;
+  activeMaxRate = caps?.maxRatePerSystem;
+}
+
+/** 現在生效的單個特效顆數上限（後台值，沒有就是出貨預設；界外夾回）。 */
+export function maxParticlesPerSystem(): number {
+  return clampMaxParticlesPerSystem(activeMaxParticles);
+}
+
+/** 現在生效的單個特效每秒噴發上限。 */
+export function maxRatePerSystem(): number {
+  return clampMaxRatePerSystem(activeMaxRate);
+}
+
+/**
+ * 這一份文件在**現在生效的上限**下實際會用到的每秒噴發率。
+ * ⭐ 出貨的 `ps.emitRate` 與 studio 的預覽讀同一支 —— 兩邊不可能各夾一次。
+ */
+export function rateFor(doc: VfxDoc, scale = 1): number {
+  return Math.max(1, Math.min(maxRatePerSystem(), Math.ceil((doc.rate ?? 30) * scale)));
+}
+
 /** Capacity that comfortably fits the doc's emission profile (scaled). */
 export function capacityFor(doc: VfxDoc, scale = 1): number {
   // burst: room for 2 bursts in flight (a pooled instance can be re-fired
   // while the previous burst is still alive)
-  if (doc.mode === "burst") return Math.max(8, scaledBurstCount(doc, scale) * 2);
-  return Math.max(16, Math.ceil((doc.rate ?? 30) * scale * doc.lifetimeSec.max) + 8);
+  // ⭐ 上限咬在**回傳前的最後一步** —— 兩個分支都經過它，⛔ 不是各夾一次。
+  const cap = maxParticlesPerSystem();
+  if (doc.mode === "burst") return Math.min(cap, Math.max(8, scaledBurstCount(doc, scale) * 2));
+  // 持續型的容量從**夾過的**噴發率算 ⇒ 兩個軸一致（⛔ 不會出現「容量被夾、
+  // 噴發率沒夾」那種每幀撞天花板的抖動）。
+  return Math.min(cap, Math.max(16, Math.ceil(rateFor(doc, scale) * doc.lifetimeSec.max) + 8));
 }
 
 /**
@@ -350,7 +399,7 @@ export function toParticleSystem(
   ps.blendMode = blendModeFor(doc.blendMode);
 
   if (doc.mode === "continuous") {
-    ps.emitRate = Math.max(1, Math.ceil((doc.rate ?? 30) * scale));
+    ps.emitRate = rateFor(doc, scale); // ⭐ 同一支 —— 上限已經在裡面夾過
   } else {
     // bursts fire via burstNow() / ps.manualEmitCount (see VfxSystem). No
     // emitRate, no targetStopDuration — see the burst-emission note above:

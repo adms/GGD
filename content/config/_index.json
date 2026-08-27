@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "33ac70b75caf",
+  "hash": "ffe13d1a79e2",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -463,6 +463,12 @@
       "path": "config/vfx-ability-art.json",
       "hash": "7ff476e13da6",
       "size": 88869
+    },
+    {
+      "id": "vfx-budget",
+      "path": "config/vfx-budget.json",
+      "hash": "c00a6d1f2d9f",
+      "size": 437
     },
     {
       "id": "vfx-cleanup",

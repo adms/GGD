@@ -71,7 +71,7 @@
 
 export * from "./configForms/engine";
 import type { ConfigDocSpec } from "./configForms/engine";
-import { MODEL_LOD_SPEC, VFX_CLEANUP_SPEC, VFX_SCRIPTS_SPEC, WEATHER_SPEC, WORLD_CUES_SPEC } from "./configForms/specs/render";
+import { MODEL_LOD_SPEC, VFX_BUDGET_SPEC, VFX_CLEANUP_SPEC, VFX_SCRIPTS_SPEC, WEATHER_SPEC, WORLD_CUES_SPEC } from "./configForms/specs/render";
 import { AP_DAMAGE_SCALING_SPEC, BLOCK_SPEC, COOLDOWN_RULES_SPEC, CRIT_SPEC, DAMAGE_RULES_SPEC, FEEL_FX_SPEC, GORE_SPEC, SHIELD_SPEC, WEAKNESS_SPEC, WOUNDS_SPEC } from "./configForms/specs/combat";
 import { AUTHORING_RULES_SPEC, CAST_TIME_SPEC, CONTENT_LOAD_SPEC, NEW_HERO_CHECKS_SPEC } from "./configForms/specs/authoring";
 import { AOE_TIERS_SPEC, COOLDOWN_TIERS_SPEC, DAMAGE_TIERS_SPEC, MANA_ECONOMY_SPEC, MANA_TIERS_SPEC, MOVE_SPEED_TIERS_SPEC, RANGE_TIERS_SPEC, SKILL_NORMALIZE_SPEC, SPEED_GROWTH_TIERS_SPEC } from "./configForms/specs/tiers";
@@ -144,6 +144,7 @@ export const CONFIG_DOC_SPECS = [
   // 演出腳本開關（GH#838 特效工坊）。⚠️ 同 NEW_HERO_CHECKS_SPEC 那一列的三件套：
   // navTags + App.tsx 導覽列 + content/config/vfx-scripts.json 出貨檔要一起在。
   VFX_SCRIPTS_SPEC,
+  VFX_BUDGET_SPEC,
   // 爽度特效（GH#494，owner 2026-08-21）。⚠️ 同 AUDIO_MIX_SPEC 那一段：這一列要跟
   // store.ts 的 `Page` union + `SESSION_REQUIRED_PAGES`、以及 App.tsx 的導覽列一列
   // 一起，才到得了操作者手上；那兩個檔不在這條 lane 手上（#491/#492/#493 正在動）。

@@ -522,6 +522,45 @@ export const MIN_ONE_SHOT_MAX_LIFE_SEC = 0.1;
  */
 export const MAX_ONE_SHOT_MAX_LIFE_SEC = 3;
 
+// ---------------------------------------------------------------------------
+// 🎚️ 粒子密度上限（GH#838，owner 2026-08-28）
+// ---------------------------------------------------------------------------
+//
+// owner 逐字：「所有特效粒子特效密度要受到上限值管制，後台可設定，這次的特效
+// 編輯器裡設定共同遵守上限值，這個上限值也會卡入實際遊戲前端執行的**單個特效
+// 上限值**」
+//
+// ⭐ 兩格，因為「密度」有兩個軸，而只夾一個治不了另一個：
+//   · `maxParticlesPerSystem` —— **一個** ParticleSystem 的容量上限（瞬間顆數）
+//   · `maxRatePerSystem`      —— 持續型每秒噴幾顆（時間軸上的密度）
+//
+// ⭐ 咬在哪：`particleFactory.capacityFor()`（**每一個** ParticleSystem 的容量都
+// 從那一支出來 —— 出貨路徑、audition、預設族、編輯器共用同一支）。⛔ 不在
+// 呼叫端各夾一次：那會變成 N 個住處，而漏掉的那一個就是下一次的爆量來源。
+//
+// ⚠️ 上界 20000 不是「建議值」是**護欄**：一份把 burstCount 寫成 999999 的文件
+// 今天會讓瀏覽器直接配一個百萬顆的 buffer。下界 16 是「還畫得出東西」的底。
+
+export const DEFAULT_MAX_PARTICLES_PER_SYSTEM = 1200;
+export const MIN_MAX_PARTICLES_PER_SYSTEM = 16;
+export const MAX_MAX_PARTICLES_PER_SYSTEM = 20000;
+
+export const DEFAULT_MAX_RATE_PER_SYSTEM = 600;
+export const MIN_MAX_RATE_PER_SYSTEM = 4;
+export const MAX_MAX_RATE_PER_SYSTEM = 5000;
+
+/** 後台的「單個特效顆數上限」（缺席／界外 ⇒ 出貨預設／夾回範圍）。 */
+export function clampMaxParticlesPerSystem(v: number | undefined): number {
+  if (v === undefined || !Number.isFinite(v)) return DEFAULT_MAX_PARTICLES_PER_SYSTEM;
+  return Math.min(MAX_MAX_PARTICLES_PER_SYSTEM, Math.max(MIN_MAX_PARTICLES_PER_SYSTEM, Math.floor(v)));
+}
+
+/** 後台的「單個特效每秒噴幾顆上限」。 */
+export function clampMaxRatePerSystem(v: number | undefined): number {
+  if (v === undefined || !Number.isFinite(v)) return DEFAULT_MAX_RATE_PER_SYSTEM;
+  return Math.min(MAX_MAX_RATE_PER_SYSTEM, Math.max(MIN_MAX_RATE_PER_SYSTEM, Math.floor(v)));
+}
+
 /**
  * 後台的值 → 真正生效的天花板。`undefined`(沒設過)= 出貨預設,**不是 0**。
  * 界外的值夾回範圍內:一份手改壞的 durable overlay 不可以讓粒子壽命變成 0
