@@ -302,6 +302,12 @@ export interface RefReport {
 /**
  * ⛔⛔ **順序相依：展開發生在 `registerAll()`，而這支跑在它之前。**
  *
+ * ⚠️ `content/abilities/<id>.json` **是產生器的產物**（`skillremake:json` ＋
+ *    正規化器 `tiers:apply` / `skillremake:provenance`）——
+ *    要改就 `bash scripts/genguard.sh <路徑>` 問擁有者，改**來源**再
+ *    `bash scripts/genrun.sh <step>`。⛔ 直接改出貨 JSON 會被下一次 sync 打回來，
+ *    而那個「又紅了」看起來像**新的**錯（owner 2026-08-24：「發生上百次」）。
+ *
  * `content/abilities/<id>.json` 存的是 `template:{ref,params}` ＋ 一個空的
  * `effects`（設計 §2.2：存綁定不存展開結果，這樣模板一升級每一支引用它的技能
  * 下一次載入就重新展開）。⇒ store 裡那份**原樣**文件身上，

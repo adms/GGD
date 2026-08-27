@@ -23,11 +23,11 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 1931 個檔案**，分佈在 2 個隔離區。
+**目前共 1970 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
-| [`docs/legacy/`](legacy-index.md#docslegacy) | 1491 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
+| [`docs/legacy/`](legacy-index.md#docslegacy) | 1530 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
 | [`content/_legacy/`](legacy-index.md#contentlegacy) | 440 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
@@ -35,7 +35,7 @@ owner 2026-08-13：
 
 ---
 
-## `docs/legacy/` —— 1491 檔
+## `docs/legacy/` —— 1530 檔
 
 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）
 
@@ -98,6 +98,8 @@ owner 2026-08-13：
 | `_ability-prose-before-placeholders_temp_2026082118304/descriptions.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_ability-prose-before-placeholders_temp_2026082206082/README.md` | 技能說明改成佔位符 —— 轉檔前的原文（說明推導（票號待開）） —— · 改寫 **1** 支技能、**1** 個 JSON、**0** 處產生器規格字串。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_ability-prose-before-placeholders_temp_2026082206082/descriptions.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026082700284/README.md` | 技能說明改成佔位符 —— 轉檔前的原文（說明推導（票號待開）） —— · 改寫 **3** 支技能、**6** 個 JSON、**0** 處產生器規格字串。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026082700284/descriptions.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/_vox/frieren.0_temp_20260822-0239_b5c924117e30bbe2.wav` | （.wav 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/_vox/heavens-arena.0_temp_20260822-0239_64118f01b35f60d0.wav` | （.wav 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/_vox/infinity-castle.0_temp_20260822-0237_d2c644bff4d29776.wav` | （.wav 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
@@ -1496,6 +1498,43 @@ owner 2026-08-13：
 | `_overwrites/overwrite_temp_20260827-065408/apps/client/src/perf/frameSegments.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260827-065410/apps/client/src/perf/frameSegments.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260827-065440/apps/client/src/GameApp.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-074714/apps/admin/src/ui/MatchesPage.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-074719/apps/admin/src/ui/MatchesPage.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-074734/apps/admin/src/ui/MapReportPage.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-074738/apps/admin/src/ui/MapReportPage.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-074739/apps/admin/src/ui/MapReportPage.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-074746/apps/admin/src/ui/ArenaPoolPage.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-074758/apps/admin/src/ui/ArenaPoolPage.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075052/tools/skill-templates/scan_shapes.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075114/tools/skill-templates/scan_shapes.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075125/packages/shared/src/content/schema/arena.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075140/packages/shared/src/content/schema/arena.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075245/packages/shared/src/content/schema/config/configUnionCoversDirectory.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075303/packages/shared/src/content/schema/config/configUnionCoversDirectory.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075314/apps/client/src/audio/combatSfx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075324/apps/client/src/audio/combatSfx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075341/apps/client/src/audio/AudioSystem.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075342/packages/shared/src/content/refs.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075353/packages/shared/src/content/refs.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075400/packages/shared/src/content/refs.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075406/apps/client/src/audio/sfxReachability.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075411/apps/client/src/audio/sfxReachability.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075424/apps/client/src/audio/sfxReachability.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075459/packages/shared/src/content/templateExpandedRefs.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075509/packages/shared/src/content/templateExpandedRefs.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075719/apps/client/src/audio/combatSfx.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075723/packages/shared/src/content/templateExpandedRefs.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075725/apps/client/src/audio/combatSfx.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075728/apps/client/src/GameApp.zoneCull.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075732/packages/shared/src/content/templateExpandedRefs.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075736/apps/client/src/ui/hud/mobHealthBarWiring.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075756/apps/client/src/audio/combatSfx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-075803/packages/shared/src/content/refs.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-080115/apps/client/src/GameApp.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-080122/packages/shared/src/content/arenaCollision.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-080347/apps/client/src/GameApp.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-082740/content/champions/godie-h02u.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-083052/packages/shared/src/content/laneRChampionAbilitySlotIdentity.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/04.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/06.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/08.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
