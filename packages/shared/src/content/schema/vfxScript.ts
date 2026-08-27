@@ -137,6 +137,29 @@ export const zVfxScriptShake = zScreenShake
   .pick({ amplitude: true, durationSec: true })
   .extend({ kind: z.literal("screenShake"), ...SEG_COMMON });
 
+/**
+ * ⭐【動畫脈衝】M4 —— 讓**受害者**（或施法者）播一次動畫並用剪輯窗拉長成慢動作。
+ *
+ * 原作 01-04／20-002 每一刀都對目標 `SetUnitAnimation(死亡)` ＋
+ * `SetUnitTimeScalePercent(10)`：屍體僵在那裡被連續劈。
+ * ⭐ 零新渲染機制：`ChampionView.pulse(kind, now, {clipWindowMs})` 的
+ * `clipWindowMs` 本來就會**拉長/壓縮**一次性剪輯 —— 拉長 = 慢動作 = 定格感。
+ * ⚠️ 誠實邊界：出貨的脈衝詞彙只有 `attack|cast|hurt`（`AnimPulse`），
+ * ⛔ **沒有 death** —— 這裡用 `hurt` 拉長來表達，那是**近似**不是 1:1，
+ * 而缺的那一格（受害者強制播 death 剪輯）留在票上的 M4 尾巴。
+ */
+export const zVfxScriptAnim = z
+  .object({
+    kind: z.literal("anim"),
+    ...SEG_COMMON,
+    /** 誰演：目標（省略＝target —— 這一族的主詞就是受害者）或施法者。 */
+    at: z.enum(["target", "caster"]).optional(),
+    pulse: z.enum(["attack", "cast", "hurt"]),
+    /** 剪輯窗（毫秒）—— 拉長＝慢動作。省略＝用出貨預設窗。 */
+    clipWindowMs: z.number().int().min(50).max(6000).optional(),
+  })
+  .strict();
+
 /** 純音效段（audio-map 的 key，⛔ 不是檔名）。 */
 export const zVfxScriptSound = z
   .object({
@@ -153,6 +176,7 @@ export const zVfxScriptSegment = z.discriminatedUnion("kind", [
   zVfxScriptFlash,
   zVfxScriptShake,
   zVfxScriptSound,
+  zVfxScriptAnim,
 ]);
 export type VfxScriptSegment = z.infer<typeof zVfxScriptSegment>;
 

@@ -140,6 +140,13 @@ const FIELDS: Record<VfxScriptSegment["kind"], FieldSpec[]> = {
     { key: "durationSec", label: "持續 s", kind: "range", min: 0.05, max: 2, step: 0.05 },
   ],
   sound: [...COMMON, { key: "soundKey", label: "音效 key", kind: "text" }],
+  // M4 動畫脈衝（受害者被劈的那一下／慢動作定格）
+  anim: [
+    ...COMMON,
+    { key: "at", label: "誰演", kind: "select", options: ["target", "caster"] },
+    { key: "pulse", label: "動畫", kind: "select", options: ["hurt", "attack", "cast"] },
+    { key: "clipWindowMs", label: "剪輯窗 ms", kind: "range", min: 50, max: 3000, step: 25 },
+  ],
 };
 
 export async function bootVfxScriptStudio(): Promise<void> {

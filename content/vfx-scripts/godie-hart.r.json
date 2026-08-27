@@ -154,6 +154,13 @@
       "strikeIndex": 7,
       "amplitude": 0.55,
       "durationSec": 0.6
+    },
+    {
+      "kind": "anim",
+      "on": "strike",
+      "at": "target",
+      "pulse": "hurt",
+      "clipWindowMs": 900
     }
   ]
 }

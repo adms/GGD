@@ -220,6 +220,13 @@ export interface VfxContext {
    * ⛔ 不是「整個功能不生效」。
    */
   playSfx?(event: string, opts: { volume?: number; gateKey?: string; semitones?: number }): boolean;
+  /**
+   * ⭐ GH#838 M4 —— 讓某個實體播一次動畫脈衝（受害者被劈的那一下、慢動作定格）。
+   * 注入而不是在 vfx/** 裡拿 `EntityViewRegistry`：特效層知道「要演什麼」，
+   * ⛔ 不知道「view 從哪來」（同 `vfxDoc` / `modelDocFor` 一字不差的理由）。
+   * 缺席 ⇒ 動畫段是 no-op（headless 測試與舊接線的樣子，⛔ 不是整個功能不生效）。
+   */
+  pulseAnim?(id: number, kind: "attack" | "cast" | "hurt", opts?: { clipWindowMs?: number }): void;
 }
 
 // ---------------------------------------------------------------------------
@@ -818,6 +825,7 @@ export class VfxSystem {
       entityPos: (id) => this.ctx.entityPos(id),
       dispatch: (sev, t) => this.handleEvent(sev, t),
       playSfx: (event, opts) => this.ctx.playSfx?.(event, opts ?? {}) ?? false,
+      pulseAnim: (id, kind, opts) => this.ctx.pulseAnim?.(id, kind, opts),
       enabled: () =>
         (ContentConfigs.tryGet("vfx-scripts") as { enabled?: boolean } | undefined)?.enabled ??
         DEFAULT_VFX_SCRIPTS.enabled,

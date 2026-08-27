@@ -61,6 +61,8 @@ function applyFacingOffset(
 interface TriggerFrame {
   caster: number;
   tick: number;
+  /** ⭐ M4 —— 這一段的受害者實體 id（只有 `comboStrike` 帶得到）。 */
+  victim?: number;
   point?: { x: number; z: number };
   direction?: { x: number; z: number };
   targetPos?: { x: number; z: number };
@@ -85,6 +87,8 @@ export interface VfxScriptPlayerDeps {
   /** 回餵出貨消費端（＝ `VfxSystem.handleEvent`）。 */
   dispatch(ev: EventMessage, nowMs: number): void;
   playSfx?(event: string, opts?: { volume?: number; gateKey?: string }): boolean;
+  /** M4 動畫脈衝（受害者定格）—— 缺席 ⇒ 動畫段 no-op。 */
+  pulseAnim?(id: number, kind: "attack" | "cast" | "hurt", opts?: { clipWindowMs?: number }): void;
   /** 後台開關（三個住處那一格）—— 每次事件都活讀，關掉＝逐位元回到沒有 script 的世界。 */
   enabled(): boolean;
 }
@@ -173,9 +177,11 @@ export class VfxScriptPlayer {
           typeof d.x === "number" && typeof d.z === "number"
             ? { x: d.x as number, z: d.z as number }
             : undefined;
+        const victim = d.victim as number | undefined;
         const frame: TriggerFrame = {
           caster,
           tick: ev.tick | 0,
+          ...(victim !== undefined ? { victim } : {}),
           ...(at !== undefined ? { point: at, targetPos: at } : {}),
         };
         for (const seg of script.segments) {
@@ -433,6 +439,14 @@ export class VfxScriptPlayer {
       }
       case "sound": {
         this.deps.playSfx?.(seg.soundKey, {});
+        return;
+      }
+      case "anim": {
+        // ⭐ M4 —— 受害者（預設）或施法者播一次脈衝；clipWindowMs 拉長＝慢動作。
+        // ⚠️ 目標實體 id 只有 `comboStrike` 事件帶得到（`victim`）——
+        //    其他觸發器解不到人就退回施法者，⛔ 不是靜靜跳過（失敗形態②）。
+        const id = seg.at === "caster" ? frame.caster : (frame.victim ?? frame.caster);
+        this.deps.pulseAnim?.(id, seg.pulse, seg.clipWindowMs !== undefined ? { clipWindowMs: seg.clipWindowMs } : undefined);
         return;
       }
     }

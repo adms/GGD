@@ -148,6 +148,13 @@
       "atMs": 600,
       "amplitude": 0.6,
       "durationSec": 0.5
+    },
+    {
+      "kind": "anim",
+      "on": "strike",
+      "at": "target",
+      "pulse": "hurt",
+      "clipWindowMs": 700
     }
   ]
 }
