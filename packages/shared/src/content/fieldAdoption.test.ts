@@ -180,6 +180,128 @@ interface Exemption {
  * Sorted by key, matching the census output order.
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
+  // ── GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）────────────────
+  "variant:vfx-scripts.segments[]#screenFlash": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 —— ⭐ 這一格的零是**對的**，而理由值得寫下來：畫面閃光今天住 **ability JSON**（`godie-e002.ex` 的 hooks 裡就有三處 `screenFlash`），而它走的是 sim 的權威觀眾判定（`broadcast`／`subjects` 由 sim 解算 —— 客戶端沒有第二份觀眾規則）。⇒ 腳本再放一份就是**同一件事畫兩次**（第〇·四守則：同一個事實不可以有兩個住處）。⛔ 這一格存在的理由是**未來**：一支 JASS 有閃光而 GGD 的 ability JSON 沒有的技能，作者要能在腳本裡補上而不必改行為檔。⚠️ 30 天內若沒有那樣的技能出現，正解是**把這個段 kind 拿掉**，⛔ 不是在某支腳本裡塞一個沒有 JASS 出處的閃光。",
+  },
+  "field:vfx-scripts.segments[]#modelFx.spinDegPerSec": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
+  },
+  "field:vfx-scripts.segments[]#modelFx.yawOffsetDeg": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
+  },
+  "field:vfx-scripts.segments[]#modelFx.trailIntervalSec": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 M11 沿路拖尾 —— 機制與守衛都在（rig 在**這一幀模型真的所在的點**放一發，走 VfxSystem 自己的 play ⇒ 同一份粒子密度上限）。⛔ 內容今天是 0，而那是**誠實的**：04-03 龍破斬的原作拖尾是 HCancelDeath／VolcanoDeath 兩顆 mdx，GGD 今天只有它們的 **model@1**（glb），⛔ 沒有對應的 `vfx@1` 粒子文件 ——⭐ 而拖尾吃的是 vfxId。硬指一份「看起來像的」就是第〇·五守則禁的近似。⇒ 30 天內要嘛補那兩顆的 vfx 文件（資產批），要嘛讓拖尾也吃 modelKey；⛔ 不是編一份內容餵這個閘。",
+  },
+  "field:vfx-scripts.segments[]#modelFx.trailVfxId": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 M11 沿路拖尾 —— 機制與守衛都在（rig 在**這一幀模型真的所在的點**放一發，走 VfxSystem 自己的 play ⇒ 同一份粒子密度上限）。⛔ 內容今天是 0，而那是**誠實的**：04-03 龍破斬的原作拖尾是 HCancelDeath／VolcanoDeath 兩顆 mdx，GGD 今天只有它們的 **model@1**（glb），⛔ 沒有對應的 `vfx@1` 粒子文件 ——⭐ 而拖尾吃的是 vfxId。硬指一份「看起來像的」就是第〇·五守則禁的近似。⇒ 30 天內要嘛補那兩顆的 vfx 文件（資產批），要嘛讓拖尾也吃 modelKey；⛔ 不是編一份內容餵這個閘。",
+  },
+  "field:vfx-scripts.segments[]#vfx.offsetForwardU": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 —— 拖拉落點寫進來的位移（studio 把畫面落點換算成面向座標）。六招的段今天都錨在 self/target 的預設點上（JASS 逐行如此），所以沒有一份用到側向位移。⭐ 它有真的消費端（`applyFacingOffset`，守衛驗過）—— 這是「作者面剛開」不是「機制沒接」。",
+  },
+  "field:vfx-scripts.segments[]#vfx.offsetSideU": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 —— 拖拉落點寫進來的位移（studio 把畫面落點換算成面向座標）。六招的段今天都錨在 self/target 的預設點上（JASS 逐行如此），所以沒有一份用到側向位移。⭐ 它有真的消費端（`applyFacingOffset`，守衛驗過）—— 這是「作者面剛開」不是「機制沒接」。",
+  },
+  "enum:vfx-scripts.segments[]#modelFx.path=forward": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
+  },
+  "enum:vfx-scripts.segments[]#modelFx.path=orbit": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
+  },
+  "enum:vfx-scripts.segments[]#modelFx.path=radial": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
+  },
+  "enum:vfx-scripts.segments[]#modelFx.path=toTarget": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
+  },
+  "field:vfx-scripts.segments[]#modelFx.count": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
+  },
+  "field:vfx-scripts.segments[]#modelFx.distance": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
+  },
+  "field:vfx-scripts.segments[]#modelFx.offsetSideU": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
+  },
+  "field:vfx-scripts.segments[]#modelFx.scaleAxis": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
+  },
+  "field:vfx-scripts.segments[]#modelFx.soundKey": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
+  },
+  "field:vfx-scripts.segments[]#modelFx.spacing": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
+  },
+  "field:vfx-scripts.segments[]#modelFx.speed": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
+  },
+  "enum:vfx-scripts.segments[]#anim.on=projectileHit": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 —— 演出腳本的觸發器/段組合。六招的 JASS 逐行**沒有**這個時機的動作（原作那幾支沒有投射物階段的動畫脈衝），所以今天沒有內容用它。⭐ 它不是憑空發明：`on` 的每一個值都對得上一個**客戶端真的收得到**的 wire 事件（`vfxScriptShippedChain.test.ts` 走出貨鏈驗過 castStart/castEffect/strike）。⚠️ 30 天內若仍無腳本用到，正解是**把這個組合從 enum 拿掉**，⛔ 不是編一份內容餵它。",
+  },
+  "enum:vfx-scripts.segments[]#anim.on=projectileSpawn": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 —— 演出腳本的觸發器/段組合。六招的 JASS 逐行**沒有**這個時機的動作（原作那幾支沒有投射物階段的動畫脈衝），所以今天沒有內容用它。⭐ 它不是憑空發明：`on` 的每一個值都對得上一個**客戶端真的收得到**的 wire 事件（`vfxScriptShippedChain.test.ts` 走出貨鏈驗過 castStart/castEffect/strike）。⚠️ 30 天內若仍無腳本用到，正解是**把這個組合從 enum 拿掉**，⛔ 不是編一份內容餵它。",
+  },
+  "enum:vfx-scripts.segments[]#anim.pulse=attack": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 —— 演出腳本的觸發器/段組合。六招的 JASS 逐行**沒有**這個時機的動作（原作那幾支沒有投射物階段的動畫脈衝），所以今天沒有內容用它。⭐ 它不是憑空發明：`on` 的每一個值都對得上一個**客戶端真的收得到**的 wire 事件（`vfxScriptShippedChain.test.ts` 走出貨鏈驗過 castStart/castEffect/strike）。⚠️ 30 天內若仍無腳本用到，正解是**把這個組合從 enum 拿掉**，⛔ 不是編一份內容餵它。",
+  },
+  "field:vfx-scripts.segments[]#anim.atMs": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 —— 演出腳本的觸發器/段組合。六招的 JASS 逐行**沒有**這個時機的動作（原作那幾支沒有投射物階段的動畫脈衝），所以今天沒有內容用它。⭐ 它不是憑空發明：`on` 的每一個值都對得上一個**客戶端真的收得到**的 wire 事件（`vfxScriptShippedChain.test.ts` 走出貨鏈驗過 castStart/castEffect/strike）。⚠️ 30 天內若仍無腳本用到，正解是**把這個組合從 enum 拿掉**，⛔ 不是編一份內容餵它。",
+  },
+  "field:vfx-scripts.segments[]#anim.strikeIndex": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 —— 演出腳本的觸發器/段組合。六招的 JASS 逐行**沒有**這個時機的動作（原作那幾支沒有投射物階段的動畫脈衝），所以今天沒有內容用它。⭐ 它不是憑空發明：`on` 的每一個值都對得上一個**客戶端真的收得到**的 wire 事件（`vfxScriptShippedChain.test.ts` 走出貨鏈驗過 castStart/castEffect/strike）。⚠️ 30 天內若仍無腳本用到，正解是**把這個組合從 enum 拿掉**，⛔ 不是編一份內容餵它。",
+  },
+  "enum:vfx-scripts.segments[]#floatingText.at=caster": {
+    status: "landing", since: "2026-08-28",
+    why:
+      "GH#838 —— 這一格的**預設值就是它**（省略＝caster），所以沒有一份腳本會顯式寫它。⭐ 這與「機制沒發生」相反：它每一份腳本都在發生，只是不需要寫出來。⚠️ 30 天到期仍是對的 —— 若屆時仍為零，該問的是「這個 enum 值需不需要存在」。",
+  },
+
   "enum:abilities.effects[]#applyBuff.modifiers[].msBonusTier=極大": {
     status: "landing", since: "2026-08-27",
     why:

@@ -16,7 +16,7 @@
    "unitOnly": 124,
    "w3aOnly": 170,
    "shared": 208,
-   "converted": 80,
+   "converted": 91,
    "zeroChannelUnits": 47
   }
  },
@@ -2185,7 +2185,9 @@
    "paths": [
     "Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl"
    ],
-   "ggdModelIds": [],
+   "ggdModelIds": [
+    "w3x.stock.stampedemissiledeath"
+   ],
    "counts": {
     "units": 1,
     "sites": 1,
@@ -3127,7 +3129,9 @@
    "paths": [
     "Abilities\\Spells\\Human\\FlameStrike\\FlameStrikeTarget.mdl"
    ],
-   "ggdModelIds": [],
+   "ggdModelIds": [
+    "w3x.stock.flamestriketarget"
+   ],
    "counts": {
     "units": 1,
     "sites": 3,
@@ -3321,7 +3325,9 @@
    "paths": [
     "Abilities\\Spells\\Orc\\MirrorImage\\MirrorImageCaster.mdl"
    ],
-   "ggdModelIds": [],
+   "ggdModelIds": [
+    "w3x.stock.mirrorimagecaster"
+   ],
    "counts": {
     "units": 0,
     "sites": 0,
@@ -3817,7 +3823,9 @@
    "paths": [
     "Objects\\Spawnmodels\\Human\\HCancelDeath\\HCancelDeath.mdl"
    ],
-   "ggdModelIds": [],
+   "ggdModelIds": [
+    "w3x.stock.hcanceldeath"
+   ],
    "counts": {
     "units": 1,
     "sites": 0,
@@ -4496,7 +4504,9 @@
    "paths": [
     "Objects\\Spawnmodels\\Other\\NeutralBuildingExplosion\\NeutralBuildingExplosion.mdl"
    ],
-   "ggdModelIds": [],
+   "ggdModelIds": [
+    "w3x.stock.neutralbuildingexplosion"
+   ],
    "counts": {
     "units": 0,
     "sites": 0,
@@ -5117,7 +5127,9 @@
    "paths": [
     "Abilities\\Weapons\\SteamTank\\SteamTankImpact.mdl"
    ],
-   "ggdModelIds": [],
+   "ggdModelIds": [
+    "w3x.stock.steamtankimpact"
+   ],
    "counts": {
     "units": 0,
     "sites": 0,
@@ -5681,7 +5693,9 @@
    "paths": [
     "Abilities\\Spells\\Demon\\DarkPortal\\DarkPortalTarget.mdl"
    ],
-   "ggdModelIds": [],
+   "ggdModelIds": [
+    "w3x.stock.darkportaltarget"
+   ],
    "counts": {
     "units": 2,
     "sites": 5,
@@ -9327,7 +9341,9 @@
    "paths": [
     "Abilities\\Spells\\Other\\Volcano\\VolcanoDeath.mdl"
    ],
-   "ggdModelIds": [],
+   "ggdModelIds": [
+    "w3x.stock.volcanodeath"
+   ],
    "counts": {
     "units": 2,
     "sites": 0,
@@ -11917,7 +11933,9 @@
    "paths": [
     "Objects\\Spawnmodels\\NightElf\\NEDeathSmall\\NEDeathSmall.mdl"
    ],
-   "ggdModelIds": [],
+   "ggdModelIds": [
+    "w3x.stock.nedeathsmall"
+   ],
    "counts": {
     "units": 0,
     "sites": 0,
@@ -17622,7 +17640,9 @@
    "paths": [
     "Abilities\\Spells\\Items\\AIvi\\AIviTarget.mdl"
    ],
-   "ggdModelIds": [],
+   "ggdModelIds": [
+    "w3x.stock.aivitarget"
+   ],
    "counts": {
     "units": 0,
     "sites": 0,
@@ -20686,7 +20706,9 @@
    "paths": [
     "Objects\\Spawnmodels\\Human\\HumanBlood\\HumanBloodPeasant.mdl"
    ],
-   "ggdModelIds": [],
+   "ggdModelIds": [
+    "w3x.stock.humanbloodpeasant"
+   ],
    "counts": {
     "units": 0,
     "sites": 0,

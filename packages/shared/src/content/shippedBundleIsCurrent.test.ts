@@ -42,7 +42,7 @@ import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { bundlePath, rebuildAllIndexes } from "./node/fsStore";
+import { bundlePath, rebuildAllIndexes, hashAssetTree,} from "./node/fsStore";
 import { COLLECTION_NAMES } from "./schema/index";
 
 const CONTENT_DIR = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
@@ -66,7 +66,10 @@ function rebuiltFromSources(): string {
   }
   cpSync(join(CONTENT_DIR, "manifest.json"), join(t, "manifest.json"));
   unlockSandbox(t);
-  rebuildAllIndexes(t);
+  // ⭐ GH#838 —— 同 bundle.test.ts：這棵重建樹**刻意不複製** content/assets，
+  //    而 contentVersion 現在含資產摘要 ⇒ 要把**真樹**的那一格傳進來，
+  //    ⛔ 否則「重建的 cv」會與出貨的差一格，而那個差異看起來像「bundle 過期」。
+  rebuildAllIndexes(t, { assetsHash: hashAssetTree(join(CONTENT_DIR, "assets")) });
   freshTree = t;
   return t;
 }
