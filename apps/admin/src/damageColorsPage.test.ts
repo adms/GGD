@@ -64,6 +64,9 @@ describe("傷害數字配色 後台頁 (adminui-damage-colors)", () => {
       "outline.outgoing",
       "outline.incoming",
       "outline.widthMult",
+      // ⭐ GH#741 —— 格擋閃什麼色。排在最後：它與上面十一格是**不同的問題**
+      //   （那些管「數字與閃光長什麼樣」，這一格管「被擋下時要不要閃」）。
+      "blockFlashMode",
     ]);
     // 現在生效的值就是出貨值（沒有 overlay 時）
     expect(rows.find((r) => r.path === "text.true")!.current).toBe(

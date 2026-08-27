@@ -206,4 +206,9 @@ export const DEFAULT_DAMAGE_COLORS: ConfigDamageColorsDoc = {
     incoming: "#5A0000",
     widthMult: 1.9,
   },
+  // ⭐ GH#741 —— 被格擋的一擊閃深鋼藍，⛔ 不是「受傷紅」。
+  // ⚠️ ⛔ **不要改成白或灰**：疊色是 `原色×0.4 + 這色×0.6`，白/灰對七個真實 w3x
+  //    色調只推得動 ΔL 0.03–0.09（紅色是 0.45）⇒ ⭐ 在最需要它的淡色模型上等於沒閃。
+  //    那正是上面 `flash.true` 最後填 `#33FFFF` 而不是純白的原因（同一個陷阱）。
+  blockFlashMode: "steel",
 };
