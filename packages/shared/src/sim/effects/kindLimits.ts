@@ -539,3 +539,13 @@ export const FLOATING_TEXT_MAX_RISE = 20;
 
 /** 特效文字最多停留幾秒。 */
 export const FLOATING_TEXT_MAX_SEC = 10;
+
+/**
+ * ⭐ GH#838 M1 —— 連段逐段瞬移的最大半徑（GGD 世界單位）。
+ *
+ * 原作 01-04 是 70 wc3u ≈ 1.3 GGD（換算分母 54.5，實證三組見
+ * `docs/_reports/vfx-editor-jass3_temp_20260828-0042.md` §⑤）。上界放到 6 是
+ * 給「繞著打」那一族留餘裕，⛔ 不是給人拿它當位移技 —— 連段期間身體是
+ * pause＋無敵的，瞬移得太遠會變成一次沒有人要求過的脫離戰鬥。
+ */
+export const COMBO_MAX_REPOSITION_DIST_U = 6;

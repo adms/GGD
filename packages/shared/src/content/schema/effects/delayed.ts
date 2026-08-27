@@ -1,6 +1,13 @@
 import { z } from "zod";
 import type { EffectDef } from "../../../sim/effects/effect";
-import { DELAYED_MAX_COUNT, DELAYED_MAX_DELAY_SEC, DELAYED_MAX_INTERVAL_SEC, DELAYED_MAX_STEP_DIST } from "../../../sim/effects/kindLimits";
+import {
+  COMBO_MAX_REPOSITION_DIST_U,
+  DELAYED_MAX_COUNT,
+  DELAYED_MAX_DELAY_SEC,
+  DELAYED_MAX_INTERVAL_SEC,
+  DELAYED_MAX_STEP_DIST,
+  PULL_MAX_ANCHORS,
+} from "../../../sim/effects/kindLimits";
 import {
   EFFECT_COMMON_SHAPE,
   refineDispelShape,
@@ -132,6 +139,22 @@ z
       .optional()
       .describe("鎖定的目標死了就跳過他。留空＝跳過（不繼續鞭屍）。"),
     stopOnCasterDeath: z.boolean().optional(),
+    /**
+     * ⭐【逐段瞬移】GH#838 M1 —— 與 `comboStrikes.strikeReposition` **同一格詞彙**
+     * （⛔ 不是第二套：兩個作者 kind 推的是同一個 `DelayedWave`，套用在
+     * `delayedSystem` 的同一行）。20-002 理想鄉EX 的七連斬走的是這個 kind，
+     * 而原作 `Trig_ExcaliburMAX` 每一刀把**目標**拖 10 wc3u 再貼身。
+     * ⚠️ 角度是等分格，⛔ 不是度數（`sim/**` 禁三角函式）。缺席 ⇒ 誰都不動。
+     */
+    strikeReposition: z
+      .object({
+        who: z.enum(["caster", "victim"]),
+        distU: z.number().positive().max(COMBO_MAX_REPOSITION_DIST_U),
+        ringN: z.number().int().min(2).max(PULL_MAX_ANCHORS),
+        stepPerStrike: z.number().int().min(1).max(PULL_MAX_ANCHORS),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 

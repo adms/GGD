@@ -121,6 +121,8 @@ import { shapeTargets, type ShapedEffect } from "./shapeTargets";
 import { runEffects } from "./effectRunner";
 import { rebaseTriggerForDeferred } from "./deferredTrigger";
 import { aimDirection } from "./effectCommon";
+import { ringPoints } from "./modelFxPlacement";
+import { teleportBody } from "../movement/blink";
 import {
   DELAYED_MAX_COUNT,
   DELAYED_MAX_DELAY_SEC,
@@ -171,6 +173,16 @@ export interface ComboStrikeEvent {
 
 /** 一次施放排出來的一整串。 */
 export interface DelayedWave {
+  /**
+   * ⭐【逐段瞬移】GH#838 M1 —— 每一段把 `who` 挪到目標周圍環上的一點。
+   * 只有 `comboStrikes` 會填（作者介面在那一側）。缺席 ⇒ 誰都不動（嚴格 no-op）。
+   */
+  reposition?: {
+    who: "caster" | "victim";
+    distU: number;
+    ringN: number;
+    stepPerStrike: number;
+  };
   /**
    * ⭐ GH#838 —— 這一串的每一段要不要發 {@link ComboStrikeEvent}。
    * 只有**作者 kind**（`comboStrikes`／`delayed`）的排程器設 true；
@@ -284,6 +296,7 @@ export const delayedEffect: EffectKindSpec<"delayed"> = {
       rank: ctx.rank,
       origin: ctx.origin,
       strikeCue: true, // ⭐ GH#838 —— 作者寫的 delayed 串（詠唱句/EX 七連斬），逐段發演出錨
+      ...(e.strikeReposition !== undefined ? { reposition: e.strikeReposition } : {}),
       ...(ctx.abilitySlot !== undefined ? { abilitySlot: ctx.abilitySlot } : {}),
       // ⭐ 觸發脈絡跟著名單一起凍住。定基是 `resolvePass` 那一格的事（見
       // `deferredTrigger.ts`）—— ⛔ 不可以順手把 `reflectDepth` 也歸零，
@@ -424,6 +437,28 @@ export function delayedSystem(world: SimWorld): void {
       if (struck) for (const id of targets) struck.add(id);
 
       const ctx: EffectContext = { ...base, targets };
+      // ⭐【逐段瞬移】GH#838 M1 —— 身體先就位，**然後**才發演出錨與跑效果
+      //    （原作順序逐字如此：SetUnitPositionLoc → UnitDamage）。
+      // ⚠️ 落點合法性走 `teleportBody`（障礙推出／邊界夾限／穿牆開關的**唯一**
+      //    住處），⛔ 不在這裡直接寫 `t.pos =`。
+      // ⚠️ 角度：`ringPoints` 的常數旋轉表 —— `sim/**` 沒有三角函式。
+      if (wave.reposition !== undefined) {
+        const rp = wave.reposition;
+        const anchorId = targets[0] ?? wave.frozen[0];
+        const anchorPos = anchorId !== undefined ? world.transform.get(anchorId)?.pos : undefined;
+        const moverId = rp.who === "caster" ? wave.caster : anchorId;
+        // 受害者被拖時，環心是**施法者**（把他拉到我旁邊），⛔ 不是他自己。
+        const centre =
+          rp.who === "caster" ? anchorPos : world.transform.get(wave.caster)?.pos;
+        if (moverId !== undefined && centre !== undefined) {
+          const alive = world.health.get(moverId)?.alive !== false;
+          if (alive) {
+            const slots = ringPoints(centre, rp.distU, rp.ringN);
+            const slot = slots[(index * rp.stepPerStrike) % slots.length];
+            if (slot !== undefined) teleportBody(world, moverId, slot);
+          }
+        }
+      }
       // ⭐ GH#838 —— 逐段演出錨。在 runEffects **之前**發（演出錨的是「這一刀
       //    落下的那一刻」）；受害者位置由 sim 解算完送過去（⛔ 客戶端自己查第二次）。
       if (wave.strikeCue === true) {

@@ -93,4 +93,14 @@ export interface DelayedVariant {
    * ⚠️ 分區決鬥結束一律停，那不是欄位。
    */
   stopOnCasterDeath?: boolean;
+  /**
+   * ⭐【逐段瞬移】GH#838 M1 —— 同 `comboStrikes.strikeReposition`（同一格詞彙、
+   * 同一行套用）。⚠️ 角度是等分格，⛔ 不是度數。缺席 ⇒ 誰都不動（嚴格 no-op）。
+   */
+  strikeReposition?: {
+    who: "caster" | "victim";
+    distU: number;
+    ringN: number;
+    stepPerStrike: number;
+  };
 }

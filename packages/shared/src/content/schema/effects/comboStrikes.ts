@@ -2,6 +2,8 @@ import { z } from "zod";
 import type { EffectDef } from "../../../sim/effects/effect";
 import {
   COMBO_MAX_FINISHER_DELAY_SEC,
+  COMBO_MAX_REPOSITION_DIST_U,
+  PULL_MAX_ANCHORS,
   COMBO_MAX_INTERVAL_SEC,
   COMBO_MAX_STEP_SEC,
   COMBO_MAX_STRIKES,
@@ -70,6 +72,30 @@ export const zComboStrikes = z
       ),
     dropDeadTargets: z.boolean().optional(),
     stopOnCasterDeath: z.boolean().optional(),
+    /**
+     * ⭐【逐段瞬移】GH#838 M1 —— 原作連段每一刀都把身體挪到目標旁邊
+     * （01-04：施法者到目標周圍 70 wc3u、角度每刀 +270°；20-002：目標被拖 10u）。
+     * `tpl-lock-combo.json` 的展開器自己記著「原作連段中施法者一擊一擊瞬移到
+     * 目標身邊，這裡沒有搬」—— 這一格就是把那句話收掉。
+     *
+     * ⚠️ **角度用等分格，⛔ 不是度數**：`sim/**` 禁止三角函式
+     *（`purity.test.ts`），等分方向的唯一住處是 `ringPoints` 的常數旋轉表。
+     * 原作的 +270°／刀 正好是「4 等分走 3 格」——⭐ 表達得下，而且**逐位元**是
+     * 同一個東西，⛔ 不是近似（第〇·五守則：翻譯，不是湊）。
+     */
+    strikeReposition: z
+      .object({
+        /** 誰被挪：施法者貼上去（01-04）或受害者被拖（20-002）。 */
+        who: z.enum(["caster", "victim"]),
+        /** 半徑（GGD 世界單位；原作 70 wc3u ÷54.5 ≈ 1.3）。 */
+        distU: z.number().positive().max(COMBO_MAX_REPOSITION_DIST_U),
+        /** 環的等分數（原作 270°／刀 ⇒ 4）。 */
+        ringN: z.number().int().min(2).max(PULL_MAX_ANCHORS),
+        /** 每一刀往前走幾格（原作 270°＝4 等分走 3 格 ⇒ 3）。 */
+        stepPerStrike: z.number().int().min(1).max(PULL_MAX_ANCHORS),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 

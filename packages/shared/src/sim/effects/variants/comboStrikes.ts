@@ -72,4 +72,16 @@ export interface ComboStrikesVariant {
   dropDeadTargets?: boolean;
   /** 施法者陣亡就整串停掉。省略 = 不停（與 `delayed` 逐字相同）。 */
   stopOnCasterDeath?: boolean;
+  /**
+   * ⭐【逐段瞬移】GH#838 M1 —— 每一刀把身體挪到目標周圍的環上一點。
+   * ⚠️ 角度是**等分格**（`ringPoints` 的常數表），⛔ 不是度數：`sim/**` 禁三角
+   * 函式，而原作的 +270°／刀 正好是 4 等分走 3 格 —— 表達得下且逐位元相同。
+   * 缺席 ⇒ 誰都不動 ＝ 這一格出現以前的每一份文件（嚴格 no-op）。
+   */
+  strikeReposition?: {
+    who: "caster" | "victim";
+    distU: number;
+    ringN: number;
+    stepPerStrike: number;
+  };
 }

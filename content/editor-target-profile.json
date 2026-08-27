@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_2c2b46a2bfc9",
+    "contentVersion": "cv_40bb557c09d7",
     "collections": {
       "champions": {
         "hash": "3a503e5c887c",
         "count": 71
       },
       "abilities": {
-        "hash": "1f78388e98c0",
+        "hash": "58fc99f245f4",
         "count": 421
       },
       "items": {
@@ -62,8 +62,8 @@
         "count": 46
       },
       "vfx-scripts": {
-        "hash": "dd377d452e56",
-        "count": 1
+        "hash": "0057f9363e7b",
+        "count": 5
       }
     },
     "collectionCount": 15
@@ -93,7 +93,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "89bae3c0",
+    "fingerprint": "640bf1af",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -446,6 +446,7 @@
       "stopOnCasterDeath",
       "stopShortUnits",
       "store",
+      "strikeReposition",
       "strikes",
       "stun",
       "subtractGap",
@@ -4149,12 +4150,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "89bae3c0",
+    "engineFingerprint": "640bf1af",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 89bae3c0 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 640bf1af —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -4943,5 +4944,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "1dcdae0660d3"
+  "profileDigest": "a3bb06bc1165"
 }

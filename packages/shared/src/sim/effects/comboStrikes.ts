@@ -160,6 +160,7 @@ export const comboStrikesEffect: EffectKindSpec<"comboStrikes"> = {
       strikes,
       next: 0,
       strikeCue: true, // ⭐ GH#838 —— 作者寫的連段，每一段發逐段演出錨
+      ...(e.strikeReposition !== undefined ? { reposition: e.strikeReposition } : {}),
       dropDeadTargets: e.dropDeadTargets ?? true,
       stopOnCasterDeath: e.stopOnCasterDeath ?? false,
       zone: t?.zone ?? 0,

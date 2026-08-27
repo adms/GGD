@@ -66,6 +66,12 @@
                 "delaySec": 0.12,
                 "count": 7,
                 "intervalSec": 0.12,
+                "strikeReposition": {
+                  "who": "victim",
+                  "distU": 1.1,
+                  "ringN": 4,
+                  "stepPerStrike": 1
+                },
                 "effects": [
                   {
                     "kind": "damage",

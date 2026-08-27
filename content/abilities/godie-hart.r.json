@@ -131,7 +131,13 @@
           "durationSec": 0.45,
           "applyTo": "all"
         }
-      ]
+      ],
+      "strikeReposition": {
+        "who": "caster",
+        "distU": 1.3,
+        "ringN": 4,
+        "stepPerStrike": 3
+      }
     },
     {
       "kind": "spawnModelFx",

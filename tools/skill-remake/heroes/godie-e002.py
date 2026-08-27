@@ -254,6 +254,14 @@ A("20-002", "20-002 解放.約束勝利劍MAX", "self", [0], [0], 0,
            {"kind": "screenShake", "shape": "single", "amplitude": 0.62,
             "durationSec": 0.5, "applyTo": "all"},
            {"kind": "delayed", "shape": "single", "delaySec": 0.12, "count": 7, "intervalSec": 0.12,
+            # ⭐【逐刀拖行】GH#838 M1 —— 原作 `Trig_ExcaliburMAX` 每一刀
+            #    `SetUnitPositionLoc(target, PolarProjection(saber, 10, angle))`：
+            #    目標被拖到 Saber 身邊再挨刀（底稿 §3-5/3-6）。
+            #    ⚠️ 角度用**等分格**（sim 禁三角函式）：4 等分逐刀走 1 格 ＝ 每刀
+            #    換一個方位，正是原作「繞著砍」的樣子。10 wc3u ÷54.5 太小會與
+            #    碰撞半徑打架 ⇒ 取 1.1u（一個體位），由 `teleportBody` 夾合法。
+            "strikeReposition": {"who": "victim", "distU": 1.1,
+                                 "ringN": 4, "stepPerStrike": 1},
             # ⭐「每次造成 **7 倍[反彈]**傷害」—— 出貨到今天是 ap=1.0，跟反彈毫無關係。
             #    ⚠️ 這一條要等 E1（delayed 繼承觸發脈絡）落地才有消費端，否則七刀靜默付 0。
             # ⚠️ maxChainDepth 1 **不是選配**：onReflectSuccess 帶進來的封包

@@ -398,3 +398,56 @@ describe("GH#250 C — both bodies are locked for the performance", () => {
     expect(castAbility(world, cloud, "Q", { type: "entity", entityId: foe })).not.toBe("stunned");
   });
 });
+
+describe("GH#838 M1 — 逐刀瞬移：身體真的挪到目標旁邊（JASS SetUnitPositionLoc）", () => {
+  /**
+   * 原作 `Trig_SuperFF7_Actions` 每一刀都把施法者挪到目標周圍 **70 wc3u**、
+   * 角度每刀 **+270°**（war3map.j 33759–33944；底稿 §1-4）。
+   * `tpl-lock-combo.json` 的展開器自己記著「這裡沒有搬」——這一支把那句話收掉。
+   *
+   * ⚠️ 斷言驗**機制**（有沒有動、動到不動到目標旁邊、有沒有走環）——
+   * ⛔ 不驗數字（1.3 / 4 / 3 是內容，住 ability JSON，第二守則）。
+   */
+  function trackCaster(): { samples: { x: number; z: number }[]; foePos: { x: number; z: number } } {
+    const { world, cloud, foe } = rig(3);
+    toRank(world, cloud, "R", 1);
+    fillMana(world, cloud);
+    const fh = world.health.get(foe)!;
+    fh.hp = fh.maxHp = 100000;
+    expect(castAbility(world, cloud, "R", { type: "entity", entityId: foe })).toBe("ok");
+    const samples: { x: number; z: number }[] = [];
+    let prev = { ...world.transform.get(cloud)!.pos };
+    for (let i = 0; i < 200; i++) {
+      world.step(NO_INTENTS);
+      const now = world.transform.get(cloud)!.pos;
+      if (Math.abs(now.x - prev.x) > 1e-6 || Math.abs(now.z - prev.z) > 1e-6) {
+        samples.push({ x: now.x, z: now.z });
+        prev = { x: now.x, z: now.z };
+      }
+    }
+    return { samples, foePos: { ...world.transform.get(foe)!.pos } };
+  }
+
+  it("連段期間施法者換過位置，而且每一次都停在目標身邊（⛔ 不是站在原地劈）", () => {
+    const { samples, foePos } = trackCaster();
+    expect(samples.length, "⛔ 施法者整段連段一步都沒動 —— 逐刀瞬移沒有發生").toBeGreaterThan(1);
+    // 每一個落點都要在目標附近（⛔ 不驗「正好 1.3」——那是內容值）
+    for (const p of samples) {
+      const d = Math.hypot(p.x - foePos.x, p.z - foePos.z);
+      expect(d, `落點 (${p.x.toFixed(2)},${p.z.toFixed(2)}) 離目標 ${d.toFixed(2)}u —— 瞬移沒有貼到人`).toBeLessThan(4);
+    }
+  });
+
+  it("落點繞著目標換邊（環的等分格，⛔ 不是每刀都跳同一個點）", () => {
+    const { samples, foePos } = trackCaster();
+    // 相對目標的方位角要出現**兩種以上**（原作 270°/刀 ⇒ 四個方位輪流）。
+    const dirs = new Set(
+      samples.map((p) => {
+        const dx = p.x - foePos.x;
+        const dz = p.z - foePos.z;
+        return `${Math.sign(Math.round(dx * 100) / 100)},${Math.sign(Math.round(dz * 100) / 100)}`;
+      }),
+    );
+    expect(dirs.size, `方位只有 ${dirs.size} 種 —— 每刀都瞬移到同一邊，環沒有在走`).toBeGreaterThan(1);
+  });
+});
