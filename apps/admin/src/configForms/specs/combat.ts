@@ -28,7 +28,7 @@ import {
 import type { ConfigDocSpec } from "../engine";
 // ───────────────────────────────────────────── 爽度特效 (config/feel-fx) ───
 
-export const FEEL_FX_SPEC: ConfigDocSpec = {
+export const FEEL_FX_SPEC: ConfigDocSpec<"feelFx"> = {
   page: "feelFx",
   collection: "config",
   docId: "feel-fx",
@@ -167,7 +167,7 @@ export const FEEL_FX_SPEC: ConfigDocSpec = {
 
 // ──────────────────────────────────────────────────── 濺血 (config/gore) ───
 
-export const GORE_SPEC: ConfigDocSpec = {
+export const GORE_SPEC: ConfigDocSpec<"gore"> = {
   page: "gore",
   collection: "config",
   docId: "gore",
@@ -203,7 +203,7 @@ export const GORE_SPEC: ConfigDocSpec = {
 
 // ─────────────────────────────────────────────── 護盾規則 (config/shield) ──
 
-export const SHIELD_SPEC: ConfigDocSpec = {
+export const SHIELD_SPEC: ConfigDocSpec<"shieldRules"> = {
   page: "shieldRules",
   collection: "config",
   docId: "shield",
@@ -237,7 +237,7 @@ export const SHIELD_SPEC: ConfigDocSpec = {
 
 // ─────────────────────────────────────────────── 格擋規則 (config/block) ──
 
-export const BLOCK_SPEC: ConfigDocSpec = {
+export const BLOCK_SPEC: ConfigDocSpec<"blockRules"> = {
   page: "blockRules",
   collection: "config",
   docId: "block",
@@ -270,7 +270,7 @@ export const BLOCK_SPEC: ConfigDocSpec = {
 
 // ───────────────────────────────────────────────── 暴擊規則 (config/crit) ──
 
-export const CRIT_SPEC: ConfigDocSpec = {
+export const CRIT_SPEC: ConfigDocSpec<"critRules"> = {
   page: "critRules",
   collection: "config",
   docId: "crit",
@@ -313,7 +313,7 @@ export const CRIT_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
-export const DAMAGE_RULES_SPEC: ConfigDocSpec = {
+export const DAMAGE_RULES_SPEC: ConfigDocSpec<"damageRules"> = {
   page: "damageRules",
   collection: "config",
   docId: "damage-rules",
@@ -351,7 +351,7 @@ export const DAMAGE_RULES_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
-export const AP_DAMAGE_SCALING_SPEC: ConfigDocSpec = {
+export const AP_DAMAGE_SCALING_SPEC: ConfigDocSpec<"apDamageScaling"> = {
   page: "apDamageScaling",
   collection: "config",
   docId: "ap-damage-scaling",
@@ -402,7 +402,7 @@ export const AP_DAMAGE_SCALING_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
-export const WOUNDS_SPEC: ConfigDocSpec = {
+export const WOUNDS_SPEC: ConfigDocSpec<"woundRules"> = {
   page: "woundRules",
   collection: "config",
   docId: "wounds",
@@ -434,7 +434,7 @@ export const WOUNDS_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
-export const WEAKNESS_SPEC: ConfigDocSpec = {
+export const WEAKNESS_SPEC: ConfigDocSpec<"weaknessRules"> = {
   page: "weaknessRules",
   collection: "config",
   docId: "weakness",
@@ -472,7 +472,7 @@ export const WEAKNESS_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
-export const COOLDOWN_RULES_SPEC: ConfigDocSpec = {
+export const COOLDOWN_RULES_SPEC: ConfigDocSpec<"cooldownRules"> = {
   page: "cooldownRules",
   collection: "config",
   docId: "cooldown-rules",

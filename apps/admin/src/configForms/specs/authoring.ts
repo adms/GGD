@@ -47,7 +47,7 @@ import {
   zConfigNewHeroChecksDoc,
 } from "@ggd/shared/content/newHeroChecks";
 import type { ConfigDocSpec } from "../engine";
-export const AUTHORING_RULES_SPEC: ConfigDocSpec = {
+export const AUTHORING_RULES_SPEC: ConfigDocSpec<"authoringRules"> = {
   page: "authoringRules",
   collection: "config",
   docId: "authoring-rules",
@@ -210,7 +210,7 @@ export const AUTHORING_RULES_SPEC: ConfigDocSpec = {
  * 「一支技能的冷卻該落在哪個區間」（規則的**內容**），這一頁調的是
  * 「哪幾條規則要在作者存檔的那一刻跳出來」（規則的**開關**）。
  */
-export const NEW_HERO_CHECKS_SPEC: ConfigDocSpec = {
+export const NEW_HERO_CHECKS_SPEC: ConfigDocSpec<"newHeroChecks"> = {
   page: "newHeroChecks",
   collection: "config",
   docId: NEW_HERO_CHECKS_DOC_ID,
@@ -290,7 +290,7 @@ export const NEW_HERO_CHECKS_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
-export const CONTENT_LOAD_SPEC: ConfigDocSpec = {
+export const CONTENT_LOAD_SPEC: ConfigDocSpec<"contentLoad"> = {
   page: "contentLoad",
   collection: "config",
   docId: "content-load",
@@ -333,7 +333,7 @@ export const CONTENT_LOAD_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
-export const CAST_TIME_SPEC: ConfigDocSpec = {
+export const CAST_TIME_SPEC: ConfigDocSpec<"castTime"> = {
   page: "castTime",
   collection: "config",
   docId: "cast-time",

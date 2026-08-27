@@ -41,7 +41,7 @@ const WALL_BLOCK_OPTION_LABELS = {
   cancel: "cancel 整段位移不發生",
 } satisfies Record<WallBlockPolicy, string>;
 
-export const DISPLACEMENT_TIERS_SPEC: ConfigDocSpec = {
+export const DISPLACEMENT_TIERS_SPEC: ConfigDocSpec<"displacementTiers"> = {
   page: "displacementTiers",
   collection: "config",
   docId: "displacement-tiers",
@@ -97,7 +97,7 @@ export const DISPLACEMENT_TIERS_SPEC: ConfigDocSpec = {
 
 // ───────────────────────────────────── 介面用語 (config/ui-lexicon) ─
 
-export const UI_LEXICON_SPEC: ConfigDocSpec = {
+export const UI_LEXICON_SPEC: ConfigDocSpec<"uiLexicon"> = {
   page: "uiLexicon",
   collection: "config",
   docId: "ui-lexicon",
@@ -172,7 +172,7 @@ export const UI_LEXICON_SPEC: ConfigDocSpec = {
 
 // ────────────────────────────── 範圍指引與預告 (config/range-guide) ─────────
 
-export const RANGE_GUIDE_SPEC: ConfigDocSpec = {
+export const RANGE_GUIDE_SPEC: ConfigDocSpec<"rangeGuide"> = {
   page: "rangeGuide",
   collection: "config",
   docId: "range-guide",
@@ -331,7 +331,7 @@ export const RANGE_GUIDE_SPEC: ConfigDocSpec = {
 //   ② `store.ts` 的 `Page` union ＋ `SESSION_REQUIRED_PAGES`
 //   ③ `App.tsx` 的導覽列一列
 //   ④ `navSections.test.ts` 的基準線一列
-export const TOGGLE_ABILITY_SPEC: ConfigDocSpec = {
+export const TOGGLE_ABILITY_SPEC: ConfigDocSpec<"toggleAbility"> = {
   page: "toggleAbility",
   collection: "config",
   docId: TOGGLE_ABILITY_DOC_ID,

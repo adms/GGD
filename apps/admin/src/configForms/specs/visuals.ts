@@ -25,7 +25,7 @@ import type { ConfigDocSpec } from "../engine";
 // ─────────────────────────────────── 傷害數字配色 (config/damage-colors) ───
 
 
-export const DAMAGE_COLORS_SPEC: ConfigDocSpec = {
+export const DAMAGE_COLORS_SPEC: ConfigDocSpec<"damageColors"> = {
   page: "damageColors",
   collection: "config",
   docId: "damage-colors",
@@ -139,7 +139,7 @@ export const DAMAGE_COLORS_SPEC: ConfigDocSpec = {
 
 // ───────────────────────────────── 場地環境火焰 (config/ambient-vfx.arenaFire) ─
 
-export const ARENA_FIRE_SPEC: ConfigDocSpec = {
+export const ARENA_FIRE_SPEC: ConfigDocSpec<"arenaFire"> = {
   page: "arenaFire",
   collection: "config",
   docId: "ambient-vfx",
@@ -229,7 +229,7 @@ export const ARENA_FIRE_SPEC: ConfigDocSpec = {
 
 // ───────────────────────────────── 勝利煙火 (config/victory-fx) ────────────
 
-export const VICTORY_FX_SPEC: ConfigDocSpec = {
+export const VICTORY_FX_SPEC: ConfigDocSpec<"victoryFx"> = {
   page: "victoryFx",
   collection: "config",
   docId: "victory-fx",
@@ -274,7 +274,7 @@ const VICTORY_PODIUM_CLIP_LABELS: Record<string, string> = {
   death: "death（倒下｜給「敗方也上台」那種玩法用的）",
 };
 
-export const VICTORY_PODIUM_SPEC: ConfigDocSpec = {
+export const VICTORY_PODIUM_SPEC: ConfigDocSpec<"victoryPodium"> = {
   page: "victoryPodium",
   collection: "config",
   docId: "victory-podium",
@@ -389,7 +389,7 @@ export const VICTORY_PODIUM_SPEC: ConfigDocSpec = {
 
 // ───────────────────────────────────────── 體型與射程 (config/body-scale) ──
 
-export const BODY_SCALE_SPEC: ConfigDocSpec = {
+export const BODY_SCALE_SPEC: ConfigDocSpec<"bodyScale"> = {
   page: "bodyScale",
   collection: "config",
   docId: "body-scale",
@@ -453,7 +453,7 @@ export const BODY_SCALE_SPEC: ConfigDocSpec = {
 
 // ───────────────────────────────────────────── 回血規則 (config/regen) ──
 
-export const REGEN_SPEC: ConfigDocSpec = {
+export const REGEN_SPEC: ConfigDocSpec<"regenRules"> = {
   page: "regenRules",
   collection: "config",
   docId: "regen",
@@ -530,7 +530,7 @@ export const REGEN_SPEC: ConfigDocSpec = {
 
 // ─────────────────────────────────────────── 對戰錄影 (config/replay) ──
 
-export const REPLAY_SPEC: ConfigDocSpec = {
+export const REPLAY_SPEC: ConfigDocSpec<"replayPolicy"> = {
   page: "replayPolicy",
   collection: "config",
   docId: "replay",
@@ -582,7 +582,7 @@ export const REPLAY_SPEC: ConfigDocSpec = {
 
 // ─────────────────────────────────── 殭屍王出場演出 (config/boss-intro) ──
 
-export const BOSS_INTRO_SPEC: ConfigDocSpec = {
+export const BOSS_INTRO_SPEC: ConfigDocSpec<"bossIntro"> = {
   page: "bossIntro",
   collection: "config",
   docId: "boss-intro",

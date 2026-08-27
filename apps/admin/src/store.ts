@@ -14,8 +14,26 @@ import {
   me as apiMe,
 } from "./api";
 import { ApiError, verifyAdmin } from "./session";
+/**
+ * ⭐ **出貨註冊表**（GH#807）—— 通用設定引擎每一頁的唯一來源。
+ *
+ * ⚠️ 這是一個**值**的 import，不只是型別：下面的 `SESSION_REQUIRED_PAGES` 也從它
+ * 推導。⛔ 沒有循環風險 —— `configForms.ts` 與它底下的 `engine` / `specs/*` 一份都
+ * 不 import 這個檔（唯一反向的 `configDocCoverage.ts` 不在這條鏈上）。
+ * ⚠️ 也沒有新的 bundle 成本：`ui/App.tsx` 早就 eager import 了 `specForPage`。
+ */
+import { CONFIG_DOC_SPECS } from "./configForms";
 
 export type Screen = "boot" | "login" | "console";
+
+/**
+ * 通用設定引擎的路由 key，**從註冊表推導**。
+ *
+ * ⛔ 這裡刻意不寫 `string` —— 那會讓 `Page` 整個塌掉（任何打錯的路由名都能通過）。
+ * 承重的是 `configForms.ts` 上那個 `as const`：拿掉它，這一行會靜靜地變成 `string`。
+ */
+export type ConfigDocPage = (typeof CONFIG_DOC_SPECS)[number]["page"];
+
 export type Page =
   | "hub"
   | "players"
@@ -83,7 +101,6 @@ export type Page =
    * 的那個決策（「玩家撞牆時要不要讓系統接手」）。寫入走 `putOverlayDoc`。
    */
   | "combatFeel"
-  | "castApproach"
   /**
    * 傳說武器三選一 (`config/arena-rules.json` 的 `itemDraft`, GH#249): 候選武器
    * 不足時卡片要發短、借別的獎池、還是重複補滿。與 mobWaves 同一份文件、不同區塊,
@@ -122,156 +139,6 @@ export type Page =
    * 操作者決定。寫入同樣走 `putOverlayDoc`,所以下面要 session-gate。
    */
   | "formVisuals"
-  /**
-   * ── schema 長出來的四頁 (E2) ──────────────────────────────────────────────
-   * `content/config/` 下有十一份文件**完全沒有後台入口**。這四份是其中有真正
-   * 消費端、而且是 owner 會想改的決策點的那幾份；它們共用 `ui/ConfigDocPage`
-   * 一個元件，欄位結構從 Zod schema 走出來，中文名稱與「它影響什麼」逐格手寫在
-   * `configForms.ts`（少寫一格測試就紅）。
-   *
-   * 為什麼是四個路由而不是一個「設定」頁掛下拉選單：它們問的是四個不相干的
-   * 問題（模型下載哪一階 / 回合之間回收多少記憶體 / 打中噴多少血 / 兩道盾誰先
-   * 被吃掉），塞在一起操作者就得先猜自己要找的東西被歸到哪一類。
-   *
-   * 四頁都走 `putOverlayDoc`，所以下面都要 session-gate。
-   */
-  /**
-   * 對戰錄影 (`config/replay.json`, owner 2026-08-02「請幫我預設打開」):
-   * 錄不錄影、多久落地一次、留幾份留幾天。
-   */
-  | "replayPolicy"
-  /**
-   * 內容載入政策 (`config/content-load.json`, GH#326 owner 2026-08-14):
-   * 一份壞掉的內容文件要不要殺掉**整份**內容。出貨 `quarantine`(隔離壞的、
-   * 好的照跑)—— 舊的「全有全無」害線上悄悄退回 2 隻骨架英雄兩次。
-   */
-  | "contentLoad"
-  /**
-   * 編輯器創作規則 (`config/authoring-rules.json`, GH#327): 外部技能編輯器建包時
-   * 的**原則界**(單體/範圍/變身冷卻區間)。⚠️ 違反只警告不擋。
-   */
-  | "authoringRules"
-  /**
-   * 新英雄檢查警示 (`config/new-hero-checks.json`, GH#480): 建立一位新英雄時，
-   * **按下建立的那一刻**要跳哪幾條警示（六欄留白／超出 Zod 界／冷卻不在原則區間／
-   * 說明對不上 JSON／說了但不會發生／⭐ 機制數字寫進了「」台詞），加上六欄中位數
-   * 代入的最小樣本數與「要不要自動生說明」。⚠️ 與 `authoringRules` 是**兩層**：
-   * 那一頁調規則的**內容**（冷卻該落在哪個區間），這一頁調規則的**開關**。
-   */
-  | "newHeroChecks"
-  /** 畫質分級 (`config/model-lod.json`): 四個畫質 preset 各自抓哪一階 .glb。 */
-  | "modelLod"
-  /**
-   * 場地天氣 (`config/weather.json`, GH#610 第二批): 逐場地的濕地面／積水／霧濃度，
-   * 以及 owner 2026-08-23「有些場景是**室內**，請**不要下雨**」的那一格。
-   * ⛔ 沒有一格會改變任何碰撞、視野或傷害 —— 積水沒有實體，霧的上界由玩法界線反解。
-   */
-  | "weather"
-  /** 特效回收 (`config/vfx-cleanup.json`): 回合邊界把共用特效池回收到什麼程度。 */
-  | "vfxCleanup"
-  /**
-   * 爽度特效 (`config/feel-fx.json`, GH#494): 殭屍死掉掉的那枚小金幣怎麼飛回
-   * 擊殺者、落袋那一聲多輕、連段音階升多高，以及施法餘燼活多久。
-   * ⛔ 沒有一格會改變任何人拿到的金幣 —— 賞金是伺服器發的。
-   */
-  | "feelFx"
-  /** 濺血程度 (`config/gore.json`): 打中噴多少血 —— 家裡有人在看時的那個開關。 */
-  | "gore"
-  /**
-   * 傷害數字配色 (`config/damage-colors.json`, owner 2026-08-01): 物理紅／
-   * 魔法紫／真實白／治療綠。自己一頁,因為在它出現之前客戶端只判斷「是不是
-   * 魔法」—— 真實傷害的數字和物理傷害**逐像素相同**,[無視] 在畫面上唯一的
-   * 證據是「對面死得比較快」。
-   */
-  | "damageColors"
-  /**
-   * 範圍指引與預告 (`config/range-guide.json`, GH#376): hold/hover 時畫在腳下
-   * 的施法距離圈與命中範圍圈（顏色、填滿濃度、框粗細、hover 延遲），加上 #228
-   * 地面預告的三條通道「自己／隊友／來襲」各自怎麼分辨。⚠️ 兩半同一頁是刻意
-   * 的:自己那條預告的出貨顏色**就是**命中範圍圈的顏色,分兩頁的話調了一邊忘了
-   * 另一邊不會有任何東西紅。
-   */
-  | "rangeGuide"
-  // GH#546 —— 開關型技能的「開啟中」外觀（圖示流轉）。owner:「圖示跟特效要明顯看出是開還是關狀態」
-  | "toggleAbility"
-  /**
-   * 畫面提示 (`config/ui-cues.json`, GH#576/#573, owner 2026-08-23 三則 [優先]):
-   * 預告圈的白色魔法陣 · 被動觸發閃圖示（含節流與內部冷卻讀數）· 主揪「多等 1 分鐘」
-   * 的選項表。⚠️ 三格同一頁是刻意的:它們回答的是**同一個**問題 ——
-   * 「遊戲裡真的發生了一件事,畫面上有沒有東西說出來」。
-   */
-  | "uiCues"
-  /**
-   * 世界演出 (`config/world-cues.json`, 2026-08-23 稽核): 六則「某個東西在某個
-   * 座標出現／消失／掃過」的事件各自畫成什麼（顏色/大小/高度/壽命）。
-   * ⛔ 沒有一格會改變任何傷害或任何一個實體 —— 只決定那一刻看不看得見。
-   */
-  | "worldCues"
-  /**
-   * 競技場規則 (`config/arena-rules.json` 的八個一直調不到的區塊, GH#410):
-   * 治療花 · 復活圈 · 守護塔 · 陣亡投幣 · 大絕／EX 解鎖回合 · 最後一回合 ·
-   * bot 的商店行為 · #261 普通武器上不上架（GH#350）。
-   * ⚠️ 同一份文件另外有三頁在編別的區塊（殭屍波系統 / 傳說武器三選一 /
-   * 對戰設定），所以這一頁刻意**一格都不重複**它們 —— 兩個輸入框改同一個數字，
-   * 哪一個會贏是操作者猜不出來的（宣告在 `ConfigDocSpec.elsewhere`）。
-   */
-  | "arenaTuning"
-  /**
-   * 護盾規則 (`config/shield.json`): 一個人身上同時有兩道盾時,一發傷害先花掉
-   * 哪一道。自己一頁而不是併進 戰鬥手感,因為手感那一頁的欄位是
-   * `deriveFields(zConfigCombatFeelDoc)` 推導出來的而那支推導器只認得
-   * number / boolean —— 這一格是 enum。
-   */
-  | "shieldRules"
-  /**
-   * 格擋規則 (`config/block.json`): 一個人身上同時有兩件 [格擋] 傳說武器時,
-   * 它們獨立各抽各的(owner 2026-07-31 的裁決,出貨值)還是只有最強的那一件會
-   * 擋。自己一頁而不是併進 護盾規則,因為那是**兩份文件** —— 併進去等於把
-   * `config.shield@1` 升版,而一份線上已經存過 overlay 的文件升版,代價是操作者
-   * 存過的值要遷移。
-   */
-  | "blockRules"
-  /**
-   * 暴擊規則 (`config/crit.json`, GH#302): 一次攻擊上有多條暴擊時怎麼合成
-   * (owner 2026-08-09「每一條暴擊獨立算完傷害再帶入下一條」,出貨 multiply)、
-   * 總倍率上限、最多算幾條。自己一頁而不是併進 格擋規則,同 護盾規則 的理由 ——
-   * 那是**兩份文件**,併進去等於把 `config.block@1` 升版,而一份線上已經存過
-   * overlay 的文件升版,代價是操作者存過的值要遷移。
-   */
-  | "critRules"
-  | "berserkRules"
-  | "dispelRules"
-  | "cooldownRules"
-  | "castTime"
-  // AoE 四級距 (owner 2026-08-11「原則上不寫範圍數字」): 同一個 `ConfigDocPage`
-  // 元件、同一條 `putOverlayDoc`。刻意排在 冷卻規則 旁邊 —— 兩者都是「技能的
-  // 尺」，操作者會一起找。
-  | "aoeTiers"
-  // 施法距離五級距 (GH#414, owner「可施展技能的距離普遍超遠」): 同一個
-  // `ConfigDocPage` 元件、同一條 `putOverlayDoc`。刻意緊鄰 aoeTiers —— 兩者是
-  // 同一條梯子的兩個視窗，操作者一定會一起找。
-  | "rangeTiers"
-  // 冷卻五級距 (GH#445, owner 2026-08-19 親自給滿三張表) / 傷害五級距 (GH#447) /
-  // 回魔地板 (GH#446): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  // 刻意緊鄰 aoeTiers / rangeTiers —— 四軸（範圍・距離・冷卻・傷害）是一組尺，
-  // 而 owner 調其中一格的時候一定會看另外三格。
-  | "cooldownTiers"
-  | "damageTiers"
-  // 耗魔五級距 (2026-08-21) —— 五軸的**最後一軸**。⚠️ 在它之前 `ability@1` 上
-  // 根本沒有 `manaCostTier` 一格，所以另外四軸各有 96–350 支填了級別，而這一軸
-  // 是 **0 支** —— 那不是大家忘了填，是機制沒做。
-  | "manaTiers"
-  // 移速／攻速的**每級成長**五級距 (2026-08-21)。⚠️ 它與上面五軸的起點不同：
-  // 那五軸是「216 支各帶一個自由數字」，這一軸量到的是「49 位共用一個常數」
-  // （ms 成長全部 0、as 全部 0.02）—— 它開的是一個今天不存在的設計維度。
-  | "speedGrowthTiers"
-  // 移速**加成**五級距 (GH#789, owner 2026-08-27)。⚠️ 它級距化的是 modifier 節點
-  // （技能 buff／靈氣／道具／增益卡同一把梯子），⛔ 不是技能頂層欄位。
-  | "moveSpeedTiers"
-  // 技能正規化決策點 (2026-08-21) —— owner「決策點一律做成後台開關」。
-  // ⚠️ 它是 authoring-time 的設定（決定閘怎麼問），⛔ 不影響正在跑的比賽。
-  | "skillNormalize"
-  | "manaEconomy"
   /**
    * 五級距總覽 (owner 2026-08-21「後台設定及說明⋯全部都是推導動態即時產生」) ——
    * 四軸一頁，每一格 **卡面值 → 實際值**。
@@ -326,138 +193,23 @@ export type Page =
   | "liveSkill90"
   | "liveLaneFences"   // 🚧 GH#754 誰能跟誰同時做（從票的 Files/modules 推導）
   | "msBuffList"
-  | "uiLexicon"
-  /**
-   * 混音 (`config/audio-mix.json`, owner 2026-08-17「其他角色語音應該是自己的一半」)
-   * —— 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-   */
-  | "audioMix"
-  /**
-   * 練習模式 (`config/practice.json`, GH#343「進入不會有對戰⋯即時生成殭屍」)
-   * —— 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-   */
-  | "practice"
-  /**
-   * 大廳集合令 (`config/lobby-rally.json`, GH#492「創建房間最重要的就是拉人進來⋯
-   * 最多等 10 秒，包含 vs bot」) —— 同一個 `ConfigDocPage` 元件、同一條
-   * `putOverlayDoc`。⚠️ 消費端是**客戶端**（`ui/platform/lobbyRally.ts`），所以
-   * 存檔之後玩家**重整一次分頁**就生效，⛔ 不必重啟 shard。
-   */
-  | "lobbyRally"
-  /**
-   * 手把手感 (`config/gamepad.json`, GH#520「五個手感常數全部寫死在 TS」)
-   * —— 死區／兩個前導距離／搜敵半徑／長按門檻。同一個 `ConfigDocPage` 元件、
-   * 同一條 `putOverlayDoc`。⚠️ 消費端是**客戶端**（`input/GamepadInput.ts` 每一幀
-   * 重讀），所以存檔之後玩家**重整一次分頁**就生效，⛔ 不必重啟 shard。
-   */
-  | "gamepad"
-  /**
-   * 管理員預設好友 (`config/admin-friend.json`, GH#499「所有人預設都會加管理員帳號
-   * 為好友」「管理員是強制雙向 不必請求」) —— 同一個 `ConfigDocPage` 元件、同一條
-   * `putOverlayDoc`。⚠️ 消費端是 **Go 平台**（`internal/friend/adminfriend.go`），
-   * 而且是**每一次決策重讀**，所以存檔就生效，⛔ 不必重啟 shard —— 只有「開機回填
-   * 既有帳號」那一格要等下一次重啟（或去 Quick Approval 手動按一次）。
-   */
-  | "adminFriend"
-  /**
-   * 排名獎勵 (`config/ranking.json`, owner 2026-08-17「MMR 倍率跟賽季積分也是類似
-   * 的規則」) —— 真人倍率進 MMR／賽季積分的兩格 share，加上宿敵加成。
-   * ⚠️ 它的消費端是 **Go**（`internal/ranking/standingsoverride.go`），而且是
-   * **每一場結算重讀**，所以存檔就生效，⛔ 不必重啟 shard。
-   */
-  | "ranking"
-  /**
-   * 圖示風格 (`config/icon-style.json`, GH#178/#101 的地端兩階段產圖器)
-   * —— PASS-2 的風格字串與兩階段的步數／CFG／strength。
-   * ⚠️ 它的消費端是 **Python**（`tools/icon-gen/local/keywords.py`），不是遊戲；
-   * 改了要**下一次跑產圖**才生效，⛔ 不影響已經產出的圖。
-   */
-  | "iconStyle"
   /**
    * 圖示工坊 (owner 2026-08-17) —— 多選 + 批次重畫。
    * ⚠️ 它的請求走 daemon（`/icon-api`），⛔ 不是 overlay，所以它**不在** gate 名單裡：
    * daemon 自己只收 loopback，而這一頁在遠端本來就會顯示「服務未啟動」。
    */
   | "iconWorkshop"
-  // 英雄屬性正規化 (owner 2026-08-12): 小/中/大 的三格 + 角色定位對照表。
-  // 極小/極大 不在這裡 —— 它們是硬上下限，住「屬性上限」頁。
-  | "statNormalization"
-  /** GH#324 —— 小地圖規格（所有動漫場地共用的驗收標準）。 */
-  | "mapSpec"
-  /** GH#332 —— 戰鬥鏡頭的滾輪縮放界線（owner 2026-08-15「最大視野減少兩節」）。 */
-  | "camera"
   /** GH#324 —— 地圖驗證報告（唯讀）。 */
   | "mapReport"
   /** GH#324 —— 場地輪替（勾選哪幾張進輪替）。 */
   | "arenaPool"
-  /** GH#322 —— 減傷天花板 / 位移級距 / 每級加成，2026-08-13 平衡批新開的三份 config。 */
-  | "mitigation"
-  | "displacementTiers"
+  /**
+   * GH#322 —— 每級加成（2026-08-13 平衡批新開的三份 config 之一）。
+   * ⚠️ 同一批的 減傷天花板 / 位移級距 走通用引擎，所以它們在下面的 `ConfigDocPage`
+   * 裡；這一份的 `perLevel` 是 `z.record`（鍵不固定），引擎列不出「有哪些鍵」，
+   * 所以 owner 撞到「這頁無法顯示」之後它變成自己一頁（GH#790）。
+   */
   | "perLevelBonus"
-  | "woundRules"
-  | "weaknessRules"
-  | "damageRules"
-  /** AP 傷害加成 (`config/ap-damage-scaling.json`, owner 2026-08-21)：技能 vs 普攻的全域旋鈕。 */
-  | "apDamageScaling"
-  /**
-   * 增益卡敵方過濾 (`config/augment-filter.json`, 批 1 決策點 1-1): 殭屍算不算
-   * hook 上 `victim: "enemyChampion"` 的敵人。自己一頁而不是併進 戰鬥系統,
-   * 同 護盾規則 的理由 —— 戰鬥系統那一份是純數值倍率表(而且 Go 平台有一份
-   * key 對 key 的鏡射在守),塞一個 boolean 進去是同時改三個語言的形狀。
-   */
-  | "augmentEnemyFilter"
-  | "stealthRules"
-  /**
-   * 嘲弄規則 (`config/taunt.json`): 誰拉得動誰、拉多久、以及嘲弄能不能從**玩家
-   * 自己手上**把目標搶走。自己一頁而不是併進 戰鬥手感,同 護盾規則 的理由
-   * (`conflictMode` 是 enum,而手感那一頁的推導器只認得 number / boolean)。
-   */
-  | "tauntRules"
-  /**
-   * 體型與射程 (`config/body-scale.json`, GH#252): 身體放大倍數怎麼換算成普攻
-   * 射程。自己一頁而不是併進 戰鬥系統,理由是 戰鬥系統 那一張表的每一格都是
-   * 「一個 stat × 一個常數」,而這一頁是一條**公式**(1 + (體型−1) × 係數)加上
-   * 兩個夾值 —— 塞進去會讓那張表多出三格語意不同的東西。
-   */
-  | "bodyScale"
-  /**
-   * 回血規則 (`config/regen.json`, GH#253): 百分比回血與英雄卡固定回血的關係、
-   * 以及有沒有保底。同上,它是規則不是倍率。
-   */
-  | "regenRules"
-  | "arenaFire"
-  /**
-   * 勝利煙火 (`config/victory-fx`, #93 / #235) —— owner 2026-08-02「請你直接取消
-   * 煙火(變成後台開關)」。回合小煙火與吃雞烤雞煙火各一格,出貨都是關的。
-   */
-  | "victoryFx"
-  /**
-   * 回合頒獎台 (`config/victory-podium`, GH#257 / GH#256) —— 回合分出勝負時中央
-   * 那一排 3D 模型站幾個人、誰站正中間、誰在慶祝、第一名說什麼。
-   * ⚠️ 這一頁的到期條件是**機器數出來的**：`configDocCoverage.ts` 上原本有一列
-   * DEFERRED 說「`resolveVictoryPodium` 零 production 呼叫端，開後台頁等於存了
-   * 不生效」，而 `RoundWinnerStage.victoryPodiumPolicy()` 在 2026-08-03 接上去
-   * 之後那一列就過期了 —— 守衛自己紅，逼人補這一頁。
-   */
-  | "victoryPodium"
-  /**
-   * 殭屍王出場演出 (`config/boss-intro`, owner 2026-08-02「殭屍王出場 會音效+大字
-   * 講該英雄的名言，然後跳出該英雄的描述及攻略注意要點及弱點等提示，五秒後提示
-   * 淡出消失」)。停留秒數／淡出秒數／描述字數上限／要點與弱點的條數上限。
-   * ⚠️ 逐英雄的文案表不在這一頁編輯（`champions`，儲存時原封不動帶著走）——
-   * 王的臉是 `mobWaves.boss.championSource` 抽的，出貨是隨機，所以那張表天生
-   * 是不完整的，而缺一位的正確表現是少畫幾段，不是空白面板。
-   */
-  | "bossIntro"
-  /**
-   * 道具卡片排版 (`config/item-card`, owner 2026-08-02「卡片道具的排版連在一起
-   * 不好閱讀，關於效果及數值的部分應該要特殊顏色表示」)。四個分類的名稱與顏色、
-   * 數值色、解說色，加上三張「方括號裡的字算哪一類」的對照表。
-   * ⚠️ 它是唯一一份**帶著可編輯對照表**的 `ConfigDocPage`（`spec.tables`）——
-   * 因為 owner 那天真正要改的是「`[On-Hit]` 算主動還是被動」，而那是表的一列，
-   * 不是一個純量欄位。
-   */
-  | "itemCard"
   /**
    * 鑄技工坊 · 特效綁定 (`config/vfx-bindings`, tasks #205 / #230 / #272) —— 每支
    * 技能綁哪一個**家族原型** + 六段 per-invocation 參數 (scale / tint / alpha /
@@ -593,7 +345,21 @@ export type Page =
    * password to re-confirm without a real account.
    */
   | "dataMigration"
-  | "audit";
+  | "audit"
+  /**
+   * ⭐ 通用設定引擎的 59 頁 —— **從出貨註冊表推導**（GH#807，第〇·七守則的
+   * 「一行接線」病）。在它之前每一份 `content/config/*.json` 都要在這裡再打一次
+   * 路由名，而那一行是**機械的**：59 份 spec、59 個路由名，一個字都不差。
+   *
+   * ⚠️ 每一頁「為什麼是自己一頁 / 誰讀它 / 存檔什麼時候生效」的散文**沒有消失**，
+   * 它住在那一頁自己的 spec 上（`configForms/specs/*.ts` 的 `title` / `intro` /
+   * `consumer` / `effect`）—— 那裡本來就比這裡完整，而這裡是它的第二份住處
+   * （第〇·四守則：⛔ 同一份知識不要有兩個住處，因為第二份必然過期）。
+   *
+   * ⛔ **NAV 的順序沒有被自動化**：那個陣列的順序是一個**決定**（導覽列由上到下),
+   * 交給資料夾／字母序會讓它漂。⇒ 這是「一行接線」病裡**不該**推導的那一種。
+   */
+  | ConfigDocPage;
 
 export interface AdminAccount {
   id: string;
@@ -684,7 +450,6 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // the loopback drop-in — this one writes what every player sees on the
   // deployed host, so it takes a real operator session like every other
   // platform-backed page.
-  
   // #229: its save is a `putOverlayDoc` — the same admin-JWT, audited platform
   // writer 內容覆蓋層 uses — so without a session every 寫入覆蓋層 would 401 and
   // read as a broken page rather than a missing sign-in.
@@ -703,7 +468,6 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // 戰鬥手感 / 對戰設定: 同上 —— eager page + `putOverlayDoc`,沒有 session 每一次
   // 儲存都 401,而畫面看起來只是「壞掉」而不是「沒登入」。
   "combatFeel",
-  "castApproach",
   "matchConfig",
   // 商店經濟: 同上 —— eager page + `putOverlayDoc`,沒有 session 每一次儲存都 401。
   "storeEconomy",
@@ -713,127 +477,12 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "roster",
   // 變身外觀: 同上 —— eager page + `putOverlayDoc`,沒有 session 每一次儲存都 401。
   "formVisuals",
-  // 畫質分級 / 特效回收 / 濺血程度 (E2): 同一個 `ConfigDocPage` 元件、同一條
-  // `putOverlayDoc` 寫入路徑,所以同一條規則。少了這三行,登出的操作者會看到三頁
-  // 完全可以編輯的表單,改完才在儲存時發現從頭到尾就沒有可以寫入的 session。
-  // 對戰錄影 (owner 2026-08-02): 同一個 `ConfigDocPage` 元件、同一條
-  // `putOverlayDoc`,所以同一條 session 規則。
-  "replayPolicy",
-  // 內容載入政策 (GH#326): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  "contentLoad",
-  "authoringRules",
-  // 新英雄檢查警示 (GH#480): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  "newHeroChecks",
-  "modelLod",
-  // 場地天氣 (GH#610 第二批): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  "weather",
-  "vfxCleanup",
-  // 爽度特效 (GH#494): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  "feelFx",
-  "gore",
-  // 傷害數字配色: 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  "damageColors",
-  // 範圍指引與預告 (GH#376): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  "rangeGuide",
-  "toggleAbility",
-  // 畫面提示 (GH#576/#573): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  "uiCues",
-  // 世界演出 (2026-08-23): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  "worldCues",
-  // 競技場規則 (GH#410): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  "arenaTuning",
-  // 護盾規則: 第四頁,同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`,所以
-  // 同一條規則。
-  "shieldRules",
-  // 格擋規則: 第五頁,同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  "blockRules",
-  // 暴擊規則 (GH#302): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  "critRules",
-  "berserkRules",
-  "dispelRules",
-  "cooldownRules",
-  "castTime",
-  // AoE 四級距: 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  "aoeTiers",
-  // 施法距離五級距 (GH#414): 同上。
-  "rangeTiers",
-  // 冷卻五級距 (GH#445) / 傷害五級距 (GH#447) / 回魔地板 (GH#446): 同上。
-  // ⛔ 漏掉 gate 的後果在這三頁特別重: 它們決定的是全部技能的冷卻、傷害與回魔。
-  "cooldownTiers",
-  "damageTiers",
-  // 耗魔五級距 (2026-08-21): 同上。⛔ 漏掉 gate 的後果同樣重 —— 這一頁決定
-  // 全部 212 支要花魔力的技能各花多少。
-  "manaTiers",
-  // 移速／攻速每級成長五級距 (2026-08-21): 同上。⛔ 漏掉 gate 的後果同樣重 ——
-  // 這一頁決定 49 位英雄跑多快、打多快隨等級怎麼變。
-  "speedGrowthTiers",
-  // 移速加成五級距 (GH#789): 同上。⛔ 漏掉 gate 的後果同樣重 —— 這一頁決定
-  // 24 列移速加成（技能／道具／增益卡）各是多少。
-  "moveSpeedTiers",
-  // 技能正規化決策點 (2026-08-21): 同上。
-  "skillNormalize",
-  "manaEconomy",
-  "uiLexicon",
-  // 混音 (owner 2026-08-17): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  "audioMix",
-  // 練習模式 (GH#343): 同上。⛔ 這一頁決定練習房開不開得起來與作弊碼的第二扇門，
-  // 少了 session gate 等於讓沒登入的人改得到那些開關。
-  "practice",
-  // 大廳集合令 (GH#492): 同上。⛔ 漏掉 gate 的話沒登入的人改得到「一鍵開打要不要
-  // 先等人」與倒數秒數 —— 那是每一場比賽開場前的節奏。
-  "lobbyRally",
-  // 手把手感 (GH#520): 同上。⛔ 漏掉 gate 的話沒登入的人改得到死區與長按門檻 ——
-  // 死區被推到上界＝每一個手把玩家的搖桿前半段整段變成死的。
-  "gamepad",
-  // 管理員預設好友 (GH#499): 同上。⛔ 漏掉 gate 的後果在這一頁特別重 —— 那一格填的是
-  // 「誰會出現在每一個玩家的好友名單上、因此看得到全站每一個人的在線狀態」。
-  "adminFriend",
-  // 排名獎勵 (owner 2026-08-17): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  // ⛔ 漏掉 gate 的後果在這一頁特別重: 它決定的是「一場比賽值多少排名分」,
-  // 而沒登入的人改得到它 = 任何人都能替自己開加成。
-  "ranking",
-  // 圖示風格 (GH#178): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  "iconStyle",
-  // 英雄屬性正規化: 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  "statNormalization",
-  // GH#324 —— 走 `putOverlayDoc`（沒有 session 一律 401）。
-  "mapSpec",
   // GH#332 —— 同上。⛔ 漏掉 gate 的話登出的操作者會填完整張表才發現存不下去。
-  "camera",
   "mapReport",
   "arenaPool",
   // GH#322 —— 2026-08-13 平衡批新開的三頁。三頁都走 `putOverlayDoc`（沒有 session
   // 一律 401），⛔ 漏掉 gate 的話登出的操作者會填完整張表才發現存不下去。
-  "mitigation",
-  "displacementTiers",
   "perLevelBonus",
-  "woundRules",
-  "weaknessRules",
-  "damageRules",
-  // AP 傷害加成: 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`,所以同一條 session 規則。
-  "apDamageScaling",
-  // 增益卡敵方過濾: 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  "augmentEnemyFilter",
-  "stealthRules",
-  // 嘲弄規則: 第六頁,同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  "tauntRules",
-  // 體型與射程 / 回血規則 (GH#252 / GH#253): 同一個 `ConfigDocPage` 元件、同一條
-  // `putOverlayDoc`,所以同一條 session 規則。
-  "bodyScale",
-  "regenRules",
-  // 場地環境火焰 (GH#251): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  "arenaFire",
-  // 勝利煙火 (#93 / #235): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  "victoryFx",
-  // 回合頒獎台 (GH#257 / GH#256): 同上,同一個元件、同一條 `putOverlayDoc`。
-  "victoryPodium",
-  // 殭屍王出場演出 (owner 2026-08-02): 同一個 `ConfigDocPage` 元件、同一條
-  // `putOverlayDoc`,所以同一條規則。
-  "bossIntro",
-  // 道具卡片排版 (owner 2026-08-02): 同一個 `ConfigDocPage` 元件、同一條
-  // `putOverlayDoc`。這一頁的三張對照表也走同一條寫入路徑,所以沒有 session 時
-  // 操作者可以改完 32 列 markers 才在儲存時吃 401。
-  "itemCard",
   // 鑄技工坊: 同上。它讀 /content(不需要 session)但寫 `putOverlayDoc`(需要),
   // 少了這一行,登出的操作者會看到一個完全可以編輯的表格,填完十列才在儲存時
   // 發現從頭到尾就沒有可以寫入的 session。
@@ -859,6 +508,19 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // weakening of loopbackOnly; it is a refusal to extend it.
   "dataMigration",
   "audit",
+  // ⭐ 通用設定引擎的 59 頁 —— **從出貨註冊表推導**（GH#807）。
+  // 在它之前這裡有 59 列手打的路由名，而它們**全部**是同一個理由：那一族共用
+  // `ui/ConfigDocPage` 一個元件、同一條 `putOverlayDoc` 寫入路徑 ⇒ 沒有 session
+  // 一律 401。⇒ 59/59 沒有例外 ⇒ 它是**機械的**，⛔ 不是一個決定。
+  //
+  // ⛔ 漏掉一列的後果就是這一段存在的理由：登出的操作者會看到一頁**完全可以編輯**
+  // 的表單，填完十格才在儲存時吃 401 —— 看起來像壞掉，不像沒登入。推導之後
+  // 「忘了加那一行」這個缺陷**不再存在**。
+  //
+  // ⚠️ 推導只**加**閘，⛔ 不會讓任何一頁變成不設防：它往集合裡塞東西，拿不走。
+  // 刻意不 gate 的唯讀頁（tierOverview / damageTierWarnings / mapReport 的對照組…）
+  // 本來就不在 `CONFIG_DOC_SPECS` 裡。
+  ...CONFIG_DOC_SPECS.map((s) => s.page),
 ]);
 
 /** True when `page` needs a real platform admin session to do anything. */

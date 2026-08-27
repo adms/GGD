@@ -18,7 +18,7 @@ import type { ConfigDocSpec } from "../engine";
  * ⛔ 選「做一頁」而不是豁免 —— 這三份**全部是 owner 會調的平衡旋鈕**
  * （減傷天花板 / 位移級距 / 每級加成），豁免它們就是第一守則的三個住處缺第三個。
  */
-export const MAP_SPEC_SPEC: ConfigDocSpec = {
+export const MAP_SPEC_SPEC: ConfigDocSpec<"mapSpec"> = {
   page: "mapSpec",
   collection: "config",
   docId: "map-spec",
@@ -77,7 +77,7 @@ export const MAP_SPEC_SPEC: ConfigDocSpec = {
 };
 
 // ── 戰鬥鏡頭（config/camera）—— GH#332 ─────────────────────────────────────
-export const CAMERA_SPEC: ConfigDocSpec = {
+export const CAMERA_SPEC: ConfigDocSpec<"camera"> = {
   page: "camera",
   collection: "config",
   docId: "camera",
@@ -109,7 +109,7 @@ export const CAMERA_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
-export const MITIGATION_SPEC: ConfigDocSpec = {
+export const MITIGATION_SPEC: ConfigDocSpec<"mitigation"> = {
   page: "mitigation",
   collection: "config",
   docId: "mitigation",

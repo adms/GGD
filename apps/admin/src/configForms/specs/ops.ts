@@ -23,7 +23,7 @@ import {
 import type { ConfigDocSpec } from "../engine";
 // ────────────────────────────────────────────────── 混音 (config/audio-mix) ─
 
-export const AUDIO_MIX_SPEC: ConfigDocSpec = {
+export const AUDIO_MIX_SPEC: ConfigDocSpec<"audioMix"> = {
   page: "audioMix",
   collection: "config",
   docId: "audio-mix",
@@ -66,7 +66,7 @@ export const AUDIO_MIX_SPEC: ConfigDocSpec = {
 
 // ─────────────────────────────────────────────── 手把手感 (config/gamepad) ─
 
-export const GAMEPAD_SPEC: ConfigDocSpec = {
+export const GAMEPAD_SPEC: ConfigDocSpec<"gamepad"> = {
   page: "gamepad",
   collection: "config",
   docId: "gamepad",
@@ -140,7 +140,7 @@ export const GAMEPAD_SPEC: ConfigDocSpec = {
 
 // ───────────────────────────────────────────── 練習模式 (config/practice) ─
 
-export const PRACTICE_SPEC: ConfigDocSpec = {
+export const PRACTICE_SPEC: ConfigDocSpec<"practice"> = {
   page: "practice",
   collection: "config",
   docId: "practice",
@@ -213,7 +213,7 @@ export const PRACTICE_SPEC: ConfigDocSpec = {
 
 // ─────────────────────────────────────────── 排名獎勵 (config/ranking) ─
 
-export const RANKING_SPEC: ConfigDocSpec = {
+export const RANKING_SPEC: ConfigDocSpec<"ranking"> = {
   page: "ranking",
   collection: "config",
   docId: "ranking",
@@ -292,7 +292,7 @@ export const RANKING_SPEC: ConfigDocSpec = {
 
 // ─────────────────────────────────────── 圖示畫風 (config/icon-style) ─
 
-export const ICON_STYLE_SPEC: ConfigDocSpec = {
+export const ICON_STYLE_SPEC: ConfigDocSpec<"iconStyle"> = {
   page: "iconStyle",
   collection: "config",
   docId: "icon-style",

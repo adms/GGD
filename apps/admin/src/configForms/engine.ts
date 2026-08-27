@@ -205,9 +205,22 @@ export function elsewhereCovers(spec: ConfigDocSpec, path: string): boolean {
   return (spec.elsewhere ?? []).some((e) => path === e.path || path.startsWith(`${e.path}.`));
 }
 
-export interface ConfigDocSpec {
-  /** 後台路由 key */
-  page: string;
+/**
+ * 一份設定文件的「語意」宣告。
+ *
+ * ⭐ **`P` 是後台路由 key 的字面型別**（GH#807）。在它之前 `page` 是 `string`，
+ * 於是 `store.ts` 的 `Page` union 只能**再手打一次** 59 個路由名 —— 那是第〇·七守則
+ * 點名的「一行接線」病：每加一份設定就要在別的檔案補一行，而那一行是**機械的**
+ * （59/59 全部照抄），⛔ 不是一個決定。
+ *
+ * ⇒ 逐份 spec 宣告成 `ConfigDocSpec<"audioMix">`，`CONFIG_DOC_SPECS` 就帶得動
+ * 字面型別，`store.ts` 的 `ConfigDocPage` 直接從**出貨註冊表**推導出來。
+ * ⚠️ 預設值 `string` 讓所有「不在乎是哪一頁」的消費端（`specForPage` 的回傳值、
+ * `configDocCoverage`、十幾支測試）一個字都不用改。
+ */
+export interface ConfigDocSpec<P extends string = string> {
+  /** 後台路由 key。⭐ 逐份宣告成字面值 —— `store.ts` 的 `Page` union 從它推導。 */
+  page: P;
   collection: "config";
   docId: string;
   /** `schema` 欄位的字面值，讀回來時用它擋掉「存錯文件」 */

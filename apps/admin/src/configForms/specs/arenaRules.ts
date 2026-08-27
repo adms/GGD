@@ -27,7 +27,7 @@ import type { ConfigDocSpec, ElsewhereField } from "../engine";
 // 「每一個葉節點都有標籤」只跑在 CONFIG_DOC_SPECS 上，而它不在裡面。
 // ⇒ 修法是把它**放進** CONFIG_DOC_SPECS（於是那條雙向守衛開始管它），
 // 已經有專屬頁的區塊走 `elsewhere` 逐列宣告「它在哪一頁編」。
-export const ARENA_RULES_SPEC: ConfigDocSpec = {
+export const ARENA_RULES_SPEC: ConfigDocSpec<"arenaTuning"> = {
   page: "arenaTuning",
   collection: "config",
   docId: "arena-rules",

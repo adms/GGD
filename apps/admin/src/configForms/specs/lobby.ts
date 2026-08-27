@@ -18,7 +18,7 @@ import {
 import type { ConfigDocSpec } from "../engine";
 // ─────────────────────────────────── 大廳集合令 (config/lobby-rally) ─
 
-export const LOBBY_RALLY_SPEC: ConfigDocSpec = {
+export const LOBBY_RALLY_SPEC: ConfigDocSpec<"lobbyRally"> = {
   page: "lobbyRally",
   collection: "config",
   docId: "lobby-rally",
@@ -114,7 +114,7 @@ export const LOBBY_RALLY_SPEC: ConfigDocSpec = {
  * 對得起來的那一半住在 `apps/platform/internal/friend/adminfriend_test.go`
  * （它讀真的 `content/config/admin-friend.json`，逐格比對 Go 的出貨預設）。
  */
-export const ADMIN_FRIEND_SPEC: ConfigDocSpec = {
+export const ADMIN_FRIEND_SPEC: ConfigDocSpec<"adminFriend"> = {
   page: "adminFriend",
   collection: "config",
   docId: "admin-friend",
@@ -158,7 +158,7 @@ export const ADMIN_FRIEND_SPEC: ConfigDocSpec = {
 
 // ──────────────────────────── 走過去放技能 (config/cast-approach) ─
 
-export const CAST_APPROACH_SPEC: ConfigDocSpec = {
+export const CAST_APPROACH_SPEC: ConfigDocSpec<"castApproach"> = {
   page: "castApproach",
   collection: "config",
   docId: "cast-approach",
@@ -201,7 +201,7 @@ export const CAST_APPROACH_SPEC: ConfigDocSpec = {
  * 畫面上有沒有東西說出來。分成三頁的話，「哪一種提示已經有了、哪一種還沒有」
  * 沒有任何一頁答得出來。
  */
-export const UI_CUES_SPEC: ConfigDocSpec = {
+export const UI_CUES_SPEC: ConfigDocSpec<"uiCues"> = {
   page: "uiCues",
   collection: "config",
   docId: "ui-cues",

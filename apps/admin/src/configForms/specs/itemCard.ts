@@ -33,7 +33,7 @@ const ITEM_CARD_CATEGORY_OPTIONS = [
   { value: "debuff", zh: "debuff 負面控場（作用在敵人身上）" },
 ] as const;
 
-export const ITEM_CARD_SPEC: ConfigDocSpec = {
+export const ITEM_CARD_SPEC: ConfigDocSpec<"itemCard"> = {
   page: "itemCard",
   collection: "config",
   docId: "item-card",

@@ -19,7 +19,7 @@ import {
 import type { ConfigDocSpec } from "../engine";
 // ────────────────────────────────────────────── 畫質分級 (config/model-lod) ─
 
-export const MODEL_LOD_SPEC: ConfigDocSpec = {
+export const MODEL_LOD_SPEC: ConfigDocSpec<"modelLod"> = {
   page: "modelLod",
   collection: "config",
   docId: "model-lod",
@@ -85,7 +85,7 @@ export const MODEL_LOD_SPEC: ConfigDocSpec = {
 
 // ──────────────────────────────────────────── 特效回收 (config/vfx-cleanup) ─
 
-export const VFX_CLEANUP_SPEC: ConfigDocSpec = {
+export const VFX_CLEANUP_SPEC: ConfigDocSpec<"vfxCleanup"> = {
   page: "vfxCleanup",
   collection: "config",
   docId: "vfx-cleanup",
@@ -235,7 +235,7 @@ export const VFX_CLEANUP_SPEC: ConfigDocSpec = {
 
 // ───────────────────────────────────── 世界演出 (config/world-cues, 2026-08-23) ─
 
-export const WORLD_CUES_SPEC: ConfigDocSpec = {
+export const WORLD_CUES_SPEC: ConfigDocSpec<"worldCues"> = {
   page: "worldCues",
   collection: "config",
   docId: "world-cues",
@@ -466,7 +466,7 @@ const WEATHER_KIND_OPTIONS = WEATHER_KINDS.map((k) => ({
   zh: `${k}｜${WEATHER_KIND_LABELS[k]}`,
 }));
 
-export const WEATHER_SPEC: ConfigDocSpec = {
+export const WEATHER_SPEC: ConfigDocSpec<"weather"> = {
   page: "weather",
   collection: "config",
   docId: "weather",

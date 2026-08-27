@@ -84,7 +84,13 @@ import { DISPLACEMENT_TIERS_SPEC, RANGE_GUIDE_SPEC, TOGGLE_ABILITY_SPEC, UI_LEXI
 import { ARENA_RULES_SPEC } from "./configForms/specs/arenaRules";
 import { ADMIN_FRIEND_SPEC, CAST_APPROACH_SPEC, LOBBY_RALLY_SPEC, UI_CUES_SPEC } from "./configForms/specs/lobby";
 
-export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
+/**
+ * 有序註冊表。⭐ **`as const` 是承重的**（GH#807）：少了它，元素型別會被壓成
+ * `ConfigDocSpec<string>`，於是 `store.ts` 的 `ConfigDocPage`（＝
+ * `(typeof CONFIG_DOC_SPECS)[number]["page"]`）會塌成 `string` —— `Page` union
+ * 從此收不住任何打錯的路由名，而**沒有任何東西會紅**。
+ */
+export const CONFIG_DOC_SPECS = [
   // 競技場規則（GH#410）。⚠️ 這一列同時做了兩件事：①把八個一直調不到的區塊變成
   // 真的欄位；②讓 `configForms.test.ts` 的「每一個葉節點都有標籤」**開始管**
   // 這一份文件 —— 在此之前 arena-rules 走的是 configDocCoverage 的文件層豁免，
@@ -209,7 +215,7 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   // `SESSION_REQUIRED_PAGES`、App.tsx 的導覽列一列，以及 `content/config/weather.json`
   // 出貨檔一起，才到得了操作者手上（少了出貨檔 `configForms.test.ts` 直接紅）。
   WEATHER_SPEC,
-];
+] as const satisfies readonly ConfigDocSpec[];
 
 export function specForPage(page: string): ConfigDocSpec | null {
   return CONFIG_DOC_SPECS.find((s) => s.page === page) ?? null;

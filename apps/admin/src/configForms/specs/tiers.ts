@@ -106,7 +106,7 @@ const rungFrac = (i: number): string => fracText(LADDER_FRACTIONS[i + 1] ?? 0);
 /** 「（決鬥區半徑 24 的 1/4）」那一段字。 */
 const rungWhy = (i: number): string => `決鬥區半徑 ${DUEL_ZONE_RADIUS_REF} 的 ${rungFrac(i)}`;
 
-export const AOE_TIERS_SPEC: ConfigDocSpec = {
+export const AOE_TIERS_SPEC: ConfigDocSpec<"aoeTiers"> = {
   page: "aoeTiers",
   collection: "config",
   docId: "aoe-tiers",
@@ -160,7 +160,7 @@ export const AOE_TIERS_SPEC: ConfigDocSpec = {
 
 // ───────────────────────────── 施法距離級距 (config/range-tiers) ─
 
-export const RANGE_TIERS_SPEC: ConfigDocSpec = {
+export const RANGE_TIERS_SPEC: ConfigDocSpec<"rangeTiers"> = {
   page: "rangeTiers",
   collection: "config",
   docId: "range-tiers",
@@ -218,7 +218,7 @@ const COOLDOWN_TIER_WHY = [
   `**上限例外**（同極小）。⚠️ 這一格在範圍表上是 **${CD_SECONDS["範圍"][CD_LARGEST]} 卡面秒**，而實際等待要再乘「戰鬥系統」頁的冷卻係數 —— ⭐ 換算後的秒數在「五級距總覽」那一頁現算，⛔ 這裡不抄。`,
 ];
 
-export const COOLDOWN_TIERS_SPEC: ConfigDocSpec = {
+export const COOLDOWN_TIERS_SPEC: ConfigDocSpec<"cooldownTiers"> = {
   page: "cooldownTiers",
   collection: "config",
   docId: "cooldown-tiers",
@@ -304,7 +304,7 @@ const DAMAGE_TIER_WHY = SKILL_TIER_NAMES.map((tier, i) => {
   );
 });
 
-export const DAMAGE_TIERS_SPEC: ConfigDocSpec = {
+export const DAMAGE_TIERS_SPEC: ConfigDocSpec<"damageTiers"> = {
   page: "damageTiers",
   collection: "config",
   docId: "damage-tiers",
@@ -358,7 +358,7 @@ export const DAMAGE_TIERS_SPEC: ConfigDocSpec = {
 const MANA_CASTS_AT = (tier: (typeof SKILL_TIER_NAMES)[number]): number =>
   Math.round(MANA_TIER_MAX / DEFAULT_MANA_TIERS.manaCost[tier]);
 
-export const MANA_TIERS_SPEC: ConfigDocSpec = {
+export const MANA_TIERS_SPEC: ConfigDocSpec<"manaTiers"> = {
   page: "manaTiers",
   collection: "config",
   docId: "mana-tiers",
@@ -409,7 +409,7 @@ const SG = (id: (typeof SPEED_GROWTH_LADDER_IDS)[number], axis: "ms" | "as"): st
 const SG_SHIPPED_TIER: Readonly<Record<"ms" | "as", (typeof SPEED_GROWTH_TIER_NAMES)[number]>> =
   Object.freeze({ ms: SPEED_GROWTH_TIER_NAMES[0], as: SPEED_GROWTH_TIER_NAMES[1] });
 
-export const SPEED_GROWTH_TIERS_SPEC: ConfigDocSpec = {
+export const SPEED_GROWTH_TIERS_SPEC: ConfigDocSpec<"speedGrowthTiers"> = {
   page: "speedGrowthTiers",
   collection: "config",
   docId: "speed-growth-tiers",
@@ -485,7 +485,7 @@ const MSB_ROW = MS_BONUS_TIER_NAMES.map(
   (n) => `${n} ${DEFAULT_MOVE_SPEED_TIERS.bonus[n]}`,
 ).join(" / ");
 
-export const MOVE_SPEED_TIERS_SPEC: ConfigDocSpec = {
+export const MOVE_SPEED_TIERS_SPEC: ConfigDocSpec<"moveSpeedTiers"> = {
   page: "moveSpeedTiers",
   collection: "config",
   docId: "move-speed-tiers",
@@ -535,7 +535,7 @@ export const MOVE_SPEED_TIERS_SPEC: ConfigDocSpec = {
 
 // ─────────────────────── 技能正規化決策點 (config/skill-normalize) ─
 
-export const SKILL_NORMALIZE_SPEC: ConfigDocSpec = {
+export const SKILL_NORMALIZE_SPEC: ConfigDocSpec<"skillNormalize"> = {
   page: "skillNormalize",
   collection: "config",
   docId: "skill-normalize",
@@ -636,7 +636,7 @@ export const SKILL_NORMALIZE_SPEC: ConfigDocSpec = {
 
 // ───────────────────────────── 魔力經濟 (config/mana-economy) ─
 
-export const MANA_ECONOMY_SPEC: ConfigDocSpec = {
+export const MANA_ECONOMY_SPEC: ConfigDocSpec<"manaEconomy"> = {
   page: "manaEconomy",
   collection: "config",
   docId: "mana-economy",

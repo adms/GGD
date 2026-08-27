@@ -30,7 +30,9 @@ const RENDER_EXEMPT: Record<string, string> = {
 /** 只認 JSX 渲染守門的形狀，⛔ 不認 `r.page === "approvals"` 那種導覽列徽章比對。 */
 const renderCases = (src: string): Set<string> =>
   new Set([...src.matchAll(/\{page === "(\w+)" &&/g)].map((m) => m[1]!));
-const specPages = new Set(CONFIG_DOC_SPECS.map((s) => s.page));
+// ⚠️ `Set<string>` 是刻意的：GH#807 之後 `s.page` 是**字面型別**，而這裡拿它去比對
+// 的是 `NAV` 的 `page as string`。少了這個標注，`.has(p)` 會變成型別錯而不是查詢。
+const specPages = new Set<string>(CONFIG_DOC_SPECS.map((s) => s.page));
 const uncovered = (cases: Set<string>): string[] =>
   NAV.map((n) => n.page as string).filter(
     (p) => !cases.has(p) && !specPages.has(p) && !(p in RENDER_EXEMPT),

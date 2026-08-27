@@ -226,7 +226,7 @@ const NORM_HAND_WRITTEN: ConfigFieldLabel[] = [
     },
 ];
 
-export const STAT_NORMALIZATION_SPEC: ConfigDocSpec = {
+export const STAT_NORMALIZATION_SPEC: ConfigDocSpec<"statNormalization"> = {
   page: "statNormalization",
   collection: "config",
   docId: "stat-normalization",
@@ -261,7 +261,7 @@ export const STAT_NORMALIZATION_SPEC: ConfigDocSpec = {
   ],
 };
 
-export const DISPEL_SPEC: ConfigDocSpec = {
+export const DISPEL_SPEC: ConfigDocSpec<"dispelRules"> = {
   page: "dispelRules",
   collection: "config",
   docId: "dispel",
@@ -349,7 +349,7 @@ export const DISPEL_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
-export const BERSERK_SPEC: ConfigDocSpec = {
+export const BERSERK_SPEC: ConfigDocSpec<"berserkRules"> = {
   page: "berserkRules",
   collection: "config",
   docId: "berserk",
@@ -392,7 +392,7 @@ export const BERSERK_SPEC: ConfigDocSpec = {
 
 // ──────────────────────────── 增益卡敵方過濾 (config/augment-filter) ──
 
-export const AUGMENT_FILTER_SPEC: ConfigDocSpec = {
+export const AUGMENT_FILTER_SPEC: ConfigDocSpec<"augmentEnemyFilter"> = {
   page: "augmentEnemyFilter",
   collection: "config",
   docId: "augment-filter",
@@ -421,7 +421,7 @@ export const AUGMENT_FILTER_SPEC: ConfigDocSpec = {
 
 // ────────────────────────────────────────────── 隱形規則 (config/stealth) ──
 
-export const STEALTH_SPEC: ConfigDocSpec = {
+export const STEALTH_SPEC: ConfigDocSpec<"stealthRules"> = {
   page: "stealthRules",
   collection: "config",
   docId: "stealth",
@@ -500,7 +500,7 @@ export const STEALTH_SPEC: ConfigDocSpec = {
 
 // ────────────────────────────────────────────── 嘲弄規則 (config/taunt) ──
 
-export const TAUNT_SPEC: ConfigDocSpec = {
+export const TAUNT_SPEC: ConfigDocSpec<"tauntRules"> = {
   page: "tauntRules",
   collection: "config",
   docId: "taunt",
