@@ -100,8 +100,22 @@ describe("殭屍王 SFX — the owner asked for these by LENGTH (GH #190)", () =
     // exempts them from the 効果音ラボ attribution condition — and that claim is
     // only honest if the generator is in the tree.
     const gen = readFileSync(join(FX, "GENERATE.sh"), "utf8");
-    expect(gen).toContain("synth_mp3 boss-horror");
-    expect(gen).toContain("synth_mp3 boss-jackpot");
+    // ⚠️ 2026-08-27：這裡原本斷言 `synth_mp3 boss-horror` —— 一個**helper 的名字**。
+    //    GH#744 把 `synth` / `synth_mp3` 合成一支（兩支都寫 `$OUT/$name.mp3`，
+    //    而舊的 `synth_mp3` 那一路其實是 `pcm_s16le` 套 `.mp3` 副檔名 ⇒ ffmpeg 直接拒絕）
+    //    ⇒ 這一條就用「找不到那個 helper 名」紅了，⛔ 而配方其實是**修好了**。
+    // ⭐ 改成驗**性質**（配方點名這兩顆 ＋ 它真的產 .mp3 ＋ 兩個長度都在），
+    //    ⛔ 不是驗一個會被重構掉的 helper 名字。
+    for (const name of ["boss-horror", "boss-jackpot"]) {
+      expect(
+        new RegExp(`^\\s*synth(_mp3)?\\s+${name}\\b`, "m").test(gen),
+        `配方裡找不到產 ${name} 的那一段 —— 它就不能被重新算出來（而「自己做的」這個宣稱靠它成立）`,
+      ).toBe(true);
+    }
+    expect(
+      /-c:a\s+libmp3lame[\s\S]*\$OUT\/\$name\.mp3/.test(gen),
+      "配方沒有寫出 .mp3 —— 出貨的是 .mp3，配方產別的東西就重算不出同一顆",
+    ).toBe(true);
     expect(gen).toContain("-t 4.40");
     expect(gen).toContain("-t 6.00");
   });

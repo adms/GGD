@@ -254,7 +254,8 @@
     "spawnModelFx.clipTimeScale": [
       "續效特效"
     ],
-    "spawnModelFx.anchor": []
+    "spawnModelFx.anchor": [],
+    "spawnVfx.attach": []
   },
   "_topLevelWhy": "技能文件**自己**的欄位（⛔ 不在 effects 樹裡），同樣要被分類 —— 一支 `castTimeSec: 3` 的技能有一段三秒的等待，而它一格 effect 都不必有。",
   "topLevel": {
@@ -716,5 +717,8 @@
     "hooks": "被動觸發器（passive 那一節單獨處理）",
     "steps_": "保留",
     "scaleAxis": "外觀（同 scale）—— 模型自身三軸的非等向倍率。⭐ 它調的是**那一具長什麼樣**，⛔ 不是「打到哪裡」：落點選擇仍由 anchor/path/count/spacing 決定，把 scaleAxis 從節點上拿掉，命中判定與生成位置一格都不會變（GH#702，2026-08-26 新增）。反駁方式：哪天它被拿來當**判定體積**（例如拉長的那一軸也拉長 touchRadius），這一列就該搬進 fields。"
+  },
+  "_byKindNotes": {
+    "spawnVfx.attach": "`at:\"bone\"` 的掛點名稱（hand,right / chest / weapon…）—— 它決定特效**貼在模型的哪裡**，⛔ 不決定技能的形狀（時序/範圍/多段/路徑一格都不動）。⭐ 與 `spawnModelFx.anchor` 完全同型（那一格也是空軸）。⭐ 可反駁：哪天出現「掛在不同骨頭 ⇒ 打到不同範圍」這種機制，它就變成一條軸。"
   }
 }

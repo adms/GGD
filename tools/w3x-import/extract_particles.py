@@ -843,7 +843,10 @@ def classify_doc(shipped_path: str, fresh: str, recorded: str | None,
 # ---------------------------------------------------------------------------
 #
 # `ambient` is derived as `is_hero and not anim_driven and visible_ratio >= 0.5`,
-# and `is_hero` is read out of `content/champions/**` — a directory that moves
+# and `is_hero` is read out of `content/champions/**` — ⚠️ **產生器的產物**
+# （`skillremake:json` ＋ 正規化器 `speedtiers:build` / `skillremake:provenance`）：
+# 要改先 `bash scripts/genguard.sh <路徑>` 問擁有者，改**來源**再 `bash scripts/genrun.sh <step>`。
+# ⛔ 直接改出貨 JSON 會被下一次 sync 打回來。 —— a directory that moves
 # for reasons that have NOTHING to do with this extractor. When 鋼彈 (godie-hlgr)
 # was retired into `content/_legacy/champions/`, `imported.gumdam` stopped being
 # a champion modelKey, so a rerun stopped emitting `ambient` for its docs. The

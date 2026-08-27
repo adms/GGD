@@ -31,7 +31,11 @@ const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 
 describe("content 改動要帶上讀 content 的 tool 測試 (content-change-runs-content-readers)", () => {
   it("⭐ 一條 content/ 路徑排得出讀 content 的那幾支 tool（⛔ 不是空陣列）", async () => {
-    const href = new URL("../../../../tools/parallel-gates/packages.mjs", `file://${join(REPO, "x")}`).href;
+    // ⚠️ 一定要用 `import.meta.url` 當 base。⛔ 用 `file://${join(REPO,"x")}` 在
+    //    `ship:check` 的 vitest root 底下會解析成 `/tools/…`（絕對根）⇒
+    //    `Failed to load url /tools/parallel-gates/packages.mjs`。
+    //    ⭐ 而它**單獨跑是綠的** —— 今天第三次踩「只在特定跑法下紅」。
+    const href = new URL("../../../../tools/parallel-gates/packages.mjs", import.meta.url).href;
     const mod = (await import(/* @vite-ignore */ href)) as {
       suitesForPaths: (paths: readonly string[], repo: string) => { suites: unknown; extras: readonly string[]; why: string };
     };

@@ -270,11 +270,11 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "所以這個 enum 家族並不是整族 0 —— 掉到 0 的只有「等於預設值的那一個成員」。\n" +
       "⭐ 可反駁：哪天預設換成 `self`，`point` 就會變成逐支明寫的那一個，這一列 stale 而紅。",
   },
-  "field:abilities.effects[]#spawnVfx.attach": {
-    status: "landing",
-    since: "2026-08-24",
-    why: "`at:\"bone\"` 的掛點字串（hand,right / chest / weapon…）—— 同上，schema refine 把它與那一格 enum 綁成**成對**（缺一半就是第一·五守則的「說了但不會發生」），所以兩列必然同進同出。43 支的內容批在 GH#649 第 2 批。",
-  },
+  // ⭐ 2026-08-27 —— `spawnVfx.attach` 與 `spawnVfx.at=bone` 的豁免**回收了**：
+  //    GH#565/#674 讓 `godie-hart.r`（超究武神霸斬的武器掛件）成為**第一份出貨引用**
+  //    ⇒ 採用數 0 → 2（standalone ＋ 英雄卡鏡射）⇒ 那兩列變成謊話，照規矩刪除。
+  //    ⚠️ ⛔ 這**不代表**那 43 支的內容批做完了 —— 它只代表「機制在、內容 0」
+  //    這個狀態結束了。剩下的 9 支卡在 `at:"bone"` 只錨定施法者（GH#809）。
   "field:abilities.persistentVfx[].scale": {
     status: "landing",
     since: "2026-08-24",
@@ -301,11 +301,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // （`path=static` 那一列在 2026-08-25 被自己的 stale 斷言點名刪掉 ——
   //   GH#688 Phase 5 pilot 的 09-04 沿線火柱節點是第一個逐字寫 `path:"static"`
   //   的內容採用者，豁免照規矩回收。）
-  "enum:abilities.effects[]#spawnVfx.at=bone": {
-    status: "landing",
-    since: "2026-08-24",
-    why: "一次性掛骨頭（`90fb4167`）—— 同上：機制＋出貨鏈守衛已在（含「替身骨架沒有那根骨 ⇒ 退回胸口仍然畫」那一格），43 支的內容批在 GH#649 第 2 批。",
-  },
   // ═══ 2026-08-23 · M2 狀態閘 + M5 紮根/主屬性覆寫（變身態退場的前提）═══════
   // ⭐ 這三格（`whileStatus` / `immobile` / `primaryAttribute`）是 GH#599「變身態
   //    退場」量出來的**擋路機制**：19 對變身裡有 4 對的全部差別住在
