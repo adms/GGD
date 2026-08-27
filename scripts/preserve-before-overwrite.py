@@ -240,7 +240,13 @@ def targets(tool: str, ti: dict, cwd: Path) -> list[Path]:
 #:    ⭐ 加進來之後，真的有作者的那些檔（`skillremake:json` 也認領的 91+16 份）
 #:    **仍然被擋**——因為 authors 濾掉正規化器之後還剩下它。這一格只放行
 #:    「**只有** provenance 認領」的那些。實測擋住 lane C/K 三次的就是這一條。
-NORMALIZER_STEPS = frozenset({"tiers:apply", "apconv:build", "skillremake:provenance"})
+#:    ⭐⭐ 2026-08-27 第二筆:speedtiers:build —— 與上面**同一個形狀**,而我第一次只修了一半。
+#:    它的 writes 是一條 glob(content/champions 的 *.json = 71 份),而逐行讀
+#:    tools/speed-growth/gen.ts 的 withTierLines():它只在**原始字串**上刪/插
+#:    tier 欄位那幾行,⛔ 其餘位元組一個都不碰 ⇒ 正規化器。
+#:    ⚠️ 漏掉它的後果:71 份英雄卡裡 55 份被判 AUTHOR 而訊息叫人「改來源」——
+#:    **英雄卡自己就是來源**,那是一條死路(另一條 lane 實測撞到,GH#805)。
+NORMALIZER_STEPS = frozenset({"tiers:apply", "apconv:build", "skillremake:provenance", "speedtiers:build"})
 
 
 def _generator_owner(p: Path) -> tuple[str, bool] | None:
