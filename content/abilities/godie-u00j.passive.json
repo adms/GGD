@@ -23,6 +23,11 @@
       {
         "modifiers": [
           {
+            "stat": "evasion",
+            "op": "flat",
+            "value": 0.15
+          },
+          {
             "stat": "critChance",
             "op": "flat",
             "value": 0.15
