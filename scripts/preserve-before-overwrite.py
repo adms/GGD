@@ -253,6 +253,32 @@ def targets(tool: str, ti: dict, cwd: Path) -> list[Path]:
 #:    每一格的理由（逐行讀過那支程式）住在那份 JSON 裡，⛔ 不再散落在三處註解。
 _NORMALIZERS_JSON = REPO / "tools/parallel-gates/normalizers.json"
 
+# ── 🎫 接手宣告的抽取（GH#808）─────────────────────────────────────────────
+# ⭐ 慣例詞彙的**唯一住處**是 tools/parallel-gates/takeover-vocab.json，
+#   `scripts/ticket-lint.sh --dupes` 讀同一份 ——⛔ 兩支各寫一條 regex 就是 GH#707 的病
+#   （#808 的 Known risks 逐字說了「換一種寫法就漏掉」⇒ 那一格要有**一個**住處）。
+_TAKEOVER_JSON = REPO / "tools/parallel-gates/takeover-vocab.json"
+
+
+def _takeover_ids(text: str) -> set[int]:
+    """從一段票文字抽出「接手 #N」的票號集合。
+
+    ⛔ 先剝掉**兩種引用**（與 --dupes 逐字一致，量到的效果見那支腳本的註解）：
+      ① 表格列（行首 `|`）—— 一張在**描述**重複的票會把別人的清單抄進表格
+      ② `「…」` 與 `` `…` `` —— CLAUDE.md 第〇·六守則①②：讀文字找機制的正則
+         一律先剝引號。#808 的驗收欄裡那個「接手 #20」是**測試夾具**，⛔ 不是宣告。
+    """
+    try:
+        v = json.loads(_TAKEOVER_JSON.read_text(encoding="utf-8"))
+        verbs, seps = v["verbs"], v["separators"]
+    except Exception:
+        return set()  # 詞彙表讀不到 ⇒ 不喊（⛔ 這是提醒不是閘）
+    cls = "[" + "".join("\\" + c if c in "]^\\-" else c for c in seps) + "]*"
+    rx = re.compile("(?:" + "|".join(re.escape(x) for x in verbs) + r")\s*((?:#\d+" + cls + r")+)")
+    txt = "\n".join(l for l in text.split("\n") if not l.lstrip().startswith("|"))
+    txt = re.sub(r"`[^`]*`", "", re.sub(r"「[^」]*」", "", txt))
+    return {int(n) for grp in rx.findall(txt) for n in re.findall(r"\d+", grp)}
+
 
 def _normalizer_steps() -> frozenset[str]:
     """正規化器清單 —— ⛔ 不快取（hook 是一次性行程，而 lane 的樹可能有不同的表）。
@@ -381,20 +407,26 @@ def main() -> int:
             # ⚠️ 它抓不到,因為**每張票的標題都自己成立、body 都自己完整** ——
             #    只有把 `接手 #N` 攤開比對才看得見。
             # ⇒ 新票的「接手 #N」清單若與**任何 open 票**的相交 ⇒ 喊出來(⛔ 仍不擋)。
-            _takeover = set(re.findall(r"接手\s*((?:#\d+[\s,、]*)+)", _cmd))
-            _mine = {int(n) for grp in _takeover for n in re.findall(r"\d+", grp)}
+            # ⭐⭐ 2026-08-27（GH#808 Scope 2 一起收）—— 抽取搬到 `_takeover_ids()`，
+            #    詞彙表與 `ticket-lint.sh --dupes` 共用一份。三個實測到的修正：
+            #    ① 分隔字元少了 `＋` ⇒「接手 #14＋#20」**只讀到 #14**（#727 正是這個寫法）
+            #    ② 比對**只掃別人的標題** ⇒ 量到 `接手 #N` 標題 14 次 / **內文 21 次**，
+            #       也就是漏掉了大多數 ⇒ 改成標題＋內文
+            #    ③ 沒有剝引用 ⇒ 一張在**描述**重複的票（#808 自己）變成誤報
+            _mine = _takeover_ids(_cmd)
             if _mine:
                 try:
                     import subprocess as _sp
                     _raw = _sp.run(
                         ["gh", "issue", "list", "--state", "open", "--limit", "400",
-                         "--json", "number,title"],
-                        capture_output=True, text=True, timeout=15,
+                         "--json", "number,title,body"],
+                        capture_output=True, text=True, timeout=20,
                     ).stdout
                     _clash = []
                     for _it in json.loads(_raw or "[]"):
-                        _theirs = {int(n) for grp in re.findall(r"接手\s*((?:#\d+[\s,、]*)+)", _it.get("title", ""))
-                                   for n in re.findall(r"\d+", grp)}
+                        _theirs = _takeover_ids(
+                            (_it.get("title") or "") + "\n" + (_it.get("body") or "")
+                        )
                         if _theirs & _mine:
                             _clash.append(f"#{_it['number']}（也接手 {sorted(_theirs & _mine)}）")
                     if _clash:

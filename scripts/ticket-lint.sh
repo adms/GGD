@@ -17,9 +17,18 @@
 #   scripts/ticket-lint.sh 669 670 …        # lint 這幾張(讀 GitHub)
 #   scripts/ticket-lint.sh --recent [天數]   # lint 最近 N 天開的 open 票(預設 3)
 #   scripts/ticket-lint.sh --body-file 檔   # 開票**之前**先驗草稿(不碰網路)
+#   scripts/ticket-lint.sh --dupes          # ⭐ GH#808 Scope 2:一次列出**所有**接手相交
+#
+# ⭐ --dupes 在問一個**單張票答不出來**的問題(GH#808):
+#   2026-08-26 有兩種接手切法同時在跑(主題合併票 02:1x / 逐張接手票 03:2x),
+#   造出四對重複 —— ⚠️ 而**每張票的標題都自己成立、body 都自己完整**,
+#   五件規格檢查對它們**全綠**。判準不在單張票裡,只在**票與票的關係**裡。
+#   ⇒ 開票 hook 管「當下」(Scope 1,⛔ 不擋),這個模式管「存量」。
+#   慣例詞彙的唯一住處:tools/parallel-gates/takeover-vocab.json（hook 讀同一份）。
 #
 # 離開碼: 0 = 全過 · 1 = 有缺(逐張列出缺什麼) · 0 = gh 連不上(警告後跳過,
 #   ⛔ 網路不通不可以擋人 —— 但會明說「沒驗到」,安靜的跳過與全過長得一樣)
+#   --dupes: 1 = 找到相交(它是報表也是閘) · 0 = 沒有 · 0 = gh 連不上(明說沒驗到)
 set -o pipefail
 cd "$(dirname "$0")/.."
 
@@ -68,6 +77,98 @@ lint_text() { # $1=標籤 $2=標題 $3=內文
 }
 
 BAD=0
+if [ "${1:-}" = "--dupes" ]; then
+  # ⭐ 預設只掃 open（存量清理）;`--dupes all` 連已關的一起掃 ——
+  #   ⛔ 這不是選配:GH#808 的四對裡**有三對已經關掉一張**,只掃 open 看不到它們,
+  #   而「列得出今天這四對」正是那張票的驗收標準 ⇒ 量尺要驗得到自己。
+  STATE="${2:-open}"
+  # ⭐ GGD_TICKET_DUPES_JSON=<夾具檔> —— 讓守衛驗得到**這支腳本本身**而不必碰網路。
+  #   ⛔ 不是「測試自己造一份 payload 餵進消費端」(失敗形態⑤) —— 它跑的是**出貨的**
+  #   這支腳本、出貨的抽取與分組，只有「issue 從哪來」被換掉。
+  if [ -n "${GGD_TICKET_DUPES_JSON:-}" ]; then
+    RAW=$(cat "$GGD_TICKET_DUPES_JSON") || RAW=""
+    STATE="夾具"
+  else
+    RAW=$(gh issue list --state "$STATE" --limit 800 --json number,title,body 2>/dev/null) || RAW=""
+  fi
+  [ -n "$RAW" ] || { echo "⚠️ gh 連不上 —— 接手相交**沒有被掃**(⛔ 這不是「沒有重複」)。"; exit 0; }
+  # ⚠️ macOS 的 mktemp 要求 XXXXXX 在**結尾** —— 加了 .json 後綴會 mkstemp failed。
+  TMP=$(mktemp /private/tmp/ticket-lint-dupes_temp_XXXXXX)
+  printf '%s' "$RAW" > "$TMP"
+  python3 - "$TMP" "tools/parallel-gates/takeover-vocab.json" "$STATE" <<'PY'
+import json, re, sys, itertools
+issues = json.load(open(sys.argv[1], encoding="utf-8"))
+try:
+    v = json.load(open(sys.argv[2], encoding="utf-8"))
+    verbs, seps = v["verbs"], v["separators"]
+except Exception as exc:  # noqa: BLE001
+    print(f"⛔ 讀不到接手詞彙表 {sys.argv[2]}（{exc}）—— ⛔ 不要把「掃不到」當成「沒有重複」。", file=sys.stderr)
+    sys.exit(2)
+
+# ⭐ 分隔字元類逐字元組（⛔ 不用 re.escape 拼字串:它會把 - 之類的東西搬位置）。
+_CLS = "[" + "".join("\\" + c if c in "]^\\-" else c for c in seps) + "]*"
+_RE = re.compile("(?:" + "|".join(map(re.escape, verbs)) + r")\s*((?:#\d+" + _CLS + r")+)")
+
+def takeovers(it: dict) -> set[int]:
+    """⭐ **標題＋內文一起掃** —— 量到的:標題 14 次 / 內文 21 次。
+    只掃標題（hook 的第一版）會漏掉大多數。
+
+    ⛔ **兩種「引用」要先剝掉** —— 一張**在描述重複**的票（#808 自己就是）
+    會把別人的接手清單抄進來，於是它變成一個看起來很合理的誤報:
+      ① **表格列**（行首 `|`）—— #808 的對照表整張抄了四對
+      ② ⭐ **`「…」` 與 `` `…` ``** —— CLAUDE.md 第〇·六守則①②已經立過同一條規矩:
+         任何讀文字找機制的正則都要先剝掉引號內容。#808 的驗收欄寫著
+         「造一個『接手 #20』的假開票」—— 那是**測試夾具**，⛔ 不是宣告。
+    ⭐ 量到的（2026-08-27，91 張 open 票）:表格列命中 **1**（正是 #808）；
+    非表格列剝除前 **40** → 剝除後 **39**，被剝掉的就是上面那一行。
+    ⇒ 兩道都**零成本**（真陽性一個都沒少）。
+    """
+    lines = ((it.get("title") or "") + "\n" + (it.get("body") or "")).split("\n")
+    txt = "\n".join(l for l in lines if not l.lstrip().startswith("|"))
+    txt = re.sub(r"「[^」]*」", "", txt)
+    txt = re.sub(r"`[^`]*`", "", txt)
+    return {int(n) for grp in _RE.findall(txt) for n in re.findall(r"\d+", grp)}
+
+owned = {it["number"]: takeovers(it) for it in issues}
+owned = {n: s - {n} for n, s in owned.items() if s - {n}}  # ⛔ 自我引用不算
+
+pairs = [
+    (a, b, sorted(owned[a] & owned[b]))
+    for a, b in itertools.combinations(sorted(owned), 2)
+    if owned[a] & owned[b]
+]
+print(f"🎫 掃了 {len(issues)} 張 {sys.argv[3]} 票，其中 {len(owned)} 張宣告了接手。")
+if not pairs:
+    print("✓ 接手相交：0 對。")
+    sys.exit(0)
+# ⭐ 收成連通分量:三張票互相相交時列成一組,⛔ 不是三行看起來無關的配對。
+parent = {n: n for n in owned}
+def find(x):
+    while parent[x] != x:
+        parent[x] = parent[parent[x]]; x = parent[x]
+    return x
+for a, b, _ in pairs:
+    parent[find(a)] = find(b)
+groups: dict[int, list[int]] = {}
+for n in owned:
+    groups.setdefault(find(n), []).append(n)
+groups = {k: sorted(v) for k, v in groups.items() if len(v) > 1}
+print(f"⚠️ **接手相交 {len(pairs)} 對 / {len(groups)} 組**（GH#808）——")
+for g in sorted(groups.values()):
+    print(f"  ── 這一組互相重疊：{' ⇄ '.join('#' + str(n) for n in g)}")
+    for n in g:
+        print(f"     #{n} 接手 {sorted(owned[n])}")
+    common = sorted(set.intersection(*(owned[n] for n in g)))
+    if common:
+        print(f"     ⭐ 全組共有：{common}")
+print("   ⇒ 每一組:要**合併**,還是其中一張**縮範圍**?")
+print("   ⛔ 兩張都留著 = 同一件事做兩次,而每張票自己看都是合理的。")
+sys.exit(1)
+PY
+  BAD=$?
+  rm -f "$TMP"
+  exit "$BAD"
+fi
 if [ "$1" = "--body-file" ]; then
   [ -f "$2" ] || { echo "⛔ 讀不到 $2" >&2; exit 2; }
   # 草稿模式沒有標題 ⇒ tag 檢查落在草稿第一行（慣例:第一行寫未來的標題）
