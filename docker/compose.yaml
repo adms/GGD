@@ -64,6 +64,43 @@ services:
       JWT_SIGNING_SECRET: "${JWT_SIGNING_SECRET:?set JWT_SIGNING_SECRET in docker/.env}"
       PLATFORM_GAME_SHARED_SECRET: "${PLATFORM_GAME_SHARED_SECRET:?set PLATFORM_GAME_SHARED_SECRET in docker/.env}"
       GAME_INTERNAL_URL: "http://game:2567" # legacy alias, read by nothing
+      # ------------------------------------------- #724 OPERATOR KNOBS ------
+      # PASS-THROUGH, NOT DEFAULTS. Every entry below is `${VAR:-}`: unset on
+      # the host ⇒ the container receives an empty string ⇒ internal/config's
+      # getenv helpers ALL read "" as UNSET and return the in-code default
+      # (verified read-site by read-site). So this block changes nothing about
+      # how the platform runs today. What it changes is whether an operator can
+      # change it TOMORROW.
+      #
+      # WHY IT HAD TO EXIST. #724 shipped nine rollback switches — trusted-edge
+      # CIDRs, the four http.Server bounds, the three lobby-socket bounds, the
+      # refresh cookie — and every one was documented as "one env var, no
+      # rebuild". But compose passes ONLY what is listed under `environment:`;
+      # it does not forward the host's environment. None of the nine was
+      # reachable on a compose deploy, which is the one deploy we run. ⭐ A
+      # rollback you cannot reach is not a rollback — and the failure it exists
+      # to undo (say, the httpOnly refresh cookie signing the operator out of
+      # the console) is precisely the moment nobody wants to be editing YAML
+      # and recreating containers.
+      #
+      # The six after the #724 group are the same disease from older tickets,
+      # listed for the same reason and equally inert while unset.
+      # Guard: apps/platform/internal/config/knob_reachability_test.go.
+      GGD_TRUSTED_PROXY_CIDRS: "${GGD_TRUSTED_PROXY_CIDRS:-}" # "none" = believe no forwarded address at all
+      GGD_HTTP_READ_TIMEOUT_SEC: "${GGD_HTTP_READ_TIMEOUT_SEC:-}" # 0 = unbounded (pre-#724 behaviour)
+      GGD_HTTP_WRITE_TIMEOUT_SEC: "${GGD_HTTP_WRITE_TIMEOUT_SEC:-}" # 0 = unbounded (pre-#724 behaviour)
+      GGD_HTTP_IDLE_TIMEOUT_SEC: "${GGD_HTTP_IDLE_TIMEOUT_SEC:-}" # 0 = unbounded (pre-#724 behaviour)
+      GGD_HTTP_MAX_HEADER_KB: "${GGD_HTTP_MAX_HEADER_KB:-}"
+      GGD_LOBBY_MAX_CONNS_PER_ACCOUNT: "${GGD_LOBBY_MAX_CONNS_PER_ACCOUNT:-}" # 0 = uncapped (pre-#724)
+      GGD_LOBBY_WS_IDLE_SEC: "${GGD_LOBBY_WS_IDLE_SEC:-}" # 0 = never reap a silent socket
+      GGD_LOBBY_WS_READ_LIMIT_KB: "${GGD_LOBBY_WS_READ_LIMIT_KB:-}"
+      GGD_AUTH_REFRESH_COOKIE: "${GGD_AUTH_REFRESH_COOKIE:-}" # 0 = back to localStorage-only, no front-end rebuild
+      GGD_ALLOW_EMPTY_WHITELIST: "${GGD_ALLOW_EMPTY_WHITELIST:-}"
+      GGD_BURN_INVITE_ON_CONFLICT: "${GGD_BURN_INVITE_ON_CONFLICT:-}"
+      GGD_MATCH_LIVENESS_GRACE_SEC: "${GGD_MATCH_LIVENESS_GRACE_SEC:-}"
+      GGD_MAX_PENDING: "${GGD_MAX_PENDING:-}"
+      GGD_NEW_ACCOUNT_CRYSTALS: "${GGD_NEW_ACCOUNT_CRYSTALS:-}"
+      GGD_PENDING_TTL: "${GGD_PENDING_TTL:-}"
     ports:
       - "127.0.0.1:8080:8080"
     volumes:
