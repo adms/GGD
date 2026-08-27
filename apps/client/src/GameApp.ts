@@ -154,6 +154,10 @@ import { RoundVfxLifecycle } from "./render/roundVfxLifecycle";
 import { createRoundFx } from "./render/roundFxRegistry";
 // 🧹 GH#819 —— 回合間完整清理（出 combat 清＋重盤點；沒 ready 進 combat 就蓋遮罩）。
 import { RoundPurgeCoordinator, bindRoundPurge, sceneCounts } from "./render/roundPurge";
+import { buildRoundInventory } from "./game/roundInventory";
+import { IdleHum } from "./game/idleHum";
+import { resolveLocalChampionModel, type LocalChampionModel } from "./game/localChampionModel";
+import { footstepRelationOf } from "./game/audioRelation";
 import { showRoundLoadOverlay, hideRoundLoadOverlay } from "./render/roundLoadOverlay";
 import { roundPurgeModeOf } from "./vfx/vfxCleanupPolicy";
 import type { AssetTag } from "./render/AssetManager";
@@ -511,7 +515,7 @@ export class GameApp {
    * damage/heal event. After HUM_IDLE_MS of silence the frame loop rolls the
    * quiet "hum" line. -Infinity so a fresh match does not hum before any input.
    */
-  private lastLocalActivityMs = -Infinity;
+  private readonly idleHum = new IdleHum();
   /** reused: champion entity id of each local player (-1 = none) — task #85. */
   private readonly focusLocalEntities: number[] = [];
   /** reused: each local player's OWN duel decided? (task #208 — lifts the #85 wash). */
@@ -931,11 +935,8 @@ export class GameApp {
     // ——「只有一個 target」正是 owner 看到的殘留的根因。
     this.roundVfx = new RoundVfxLifecycle(roundFx.registry);
 
-    // 🧹 GH#819 —— 回合間**完整**清理（owner 2026-08-27:「每回合開始前多一個
-    // 完整清理重新載入」「預設是會清理完重新盤點必要物件載入後 再進入戰鬥回合」）。
-    // 出 combat 的那一幀:registry 再扇出＋ModelFxRig 硬重置＋（full）丟掉
-    // fx-only 容器 → 重新盤點本場資產並載入;下一次進 combat 沒 ready 就蓋遮罩。
-    // 檔位 `config/vfx-cleanup.json` 的 `roundPurgeMode`（off＝逐位元回到之前）。
+    // 🧹 GH#819 —— 回合間完整清理（owner:「清理完重新盤點必要物件載入後再進入戰鬥」）。
+    // 細節與時序住 render/roundPurge.ts 檔頭;檔位 config/vfx-cleanup.json 的 roundPurgeMode。
     this.roundPurge = new RoundPurgeCoordinator({
       mode: () => roundPurgeModeOf(),
       counts: () => sceneCounts(this.renderer.scene),
@@ -943,8 +944,7 @@ export class GameApp {
       hardResetModelFx: () => this.vfx.hardResetModelFx(),
       purgeFxContainers: () => this.assets.purgeFxContainers(),
       inventory: () => this.roundAssetInventory(),
-      // 標籤查 `roundAssetInventory()` 剛記下的那張表:fx 族＝"fx"、英雄 glb＝"shared"
-      // （⛔ 預設 shared —— 判不出來的路徑寧可永不 purge，不可誤殺）。
+      // 標籤表由 buildRoundInventory 寫;⛔ 預設 shared —— 判不出來寧可永不 purge。
       loadAsset: (p) => this.assets.load(p, this.roundInventoryTags.get(p) ?? "shared"),
       warmAfterLoad: () => this.vfx.warmModelFx(spawnModelFxKeysInUse()),
     });
@@ -1454,23 +1454,14 @@ export class GameApp {
    * 雖然 `warmGroundTextures` 本身是冪等的（命中就是一次 map 查找），
    * 但每秒 20 次的無謂呼叫仍然是白花的。
    */
-  /**
-   * 🧹 GH#819 —— **重新盤點**：這一場現在要用的資產路徑。
-   *
-   * 兩族：①技能特效模型（`spawnModelFx` 名單從已註冊技能推導，⛔ 不是手寫
-   * 清單 —— 同 GH#703 的預熱）標 `"fx"`；②場上英雄**實際採用**的 glb 標
-   * `"shared"`（永不 purge —— 它們的來源材質正掛在活著的實例上）。
-   * 順帶把「路徑→標籤」記進 {@link roundInventoryTags} 給 `loadAsset` 查。
-   */
+  /** 🧹 GH#819 —— 盤點邏輯住 `game/roundInventory.ts`（4,000 行線，⛔ 不塞回這裡）。 */
   private roundAssetInventory(): string[] {
-    this.roundInventoryTags.clear();
-    for (const key of spawnModelFxKeysInUse()) {
-      const p = this.contentDb.modelFor(key)?.glbPath;
-      if (p) this.roundInventoryTags.set(p, "fx");
-    }
-    // ⭐ 後寫 —— 同一個路徑兩族都要（名字巧合）時，shared 贏：寧可永不 purge。
-    for (const p of this.views.adoptedGlbPaths()) this.roundInventoryTags.set(p, "shared");
-    return [...this.roundInventoryTags.keys()];
+    return buildRoundInventory(
+      spawnModelFxKeysInUse(),
+      (key) => this.contentDb.modelFor(key)?.glbPath,
+      this.views.adoptedGlbPaths(),
+      this.roundInventoryTags,
+    );
   }
 
   private warmGroundForNextRound(phase: string): void {
@@ -1981,7 +1972,7 @@ export class GameApp {
       // hum — the LOCAL champion idles a quiet line after HUM_IDLE_MS of no
       // input / combat. Suppressed during the settlement freeze (the match is
       // over, the hero is pinned for the front-view). Client-only cosmetic.
-      if (!frozen) this.maybeHum(nowMs, localId);
+      if (!frozen) this.idleHum.tick(nowMs, localId);
     } else {
       this.remoteSteps.reset();
     }
@@ -2680,13 +2671,9 @@ export class GameApp {
    * only team membership, which is the whole point: an enemy's step is the
    * one you need to hear over your own team's shuffling.
    */
+  /** 腳步聲的敵我關係 —— 純函式住 `game/audioRelation.ts`（4,000 行線）。 */
   private footstepRelation(id: number, localId: number | null): SfxRelation {
-    if (localId === null) return "third";
-    if (id === localId) return "self";
-    const mine = this.teamOfEntity(localId);
-    const theirs = this.teamOfEntity(id);
-    if (mine === null || theirs === null) return "third";
-    return mine === theirs ? "ally" : "enemy";
+    return footstepRelationOf(id, localId, (e) => this.teamOfEntity(e));
   }
 
   /**
@@ -3006,26 +2993,10 @@ export class GameApp {
 
   /** Mark the local player active NOW, resetting the hum idle latch (voice §三). */
   private noteLocalCombat(): void {
-    this.lastLocalActivityMs =
-      typeof performance !== "undefined" ? performance.now() : Date.now();
+    this.idleHum.noteActivity();
   }
 
-  /**
-   * Roll the idle "hum" line once the LOCAL player has been silent for
-   * HUM_IDLE_MS. The idle latch is the real gate; the per-category cooldown
-   * (20 s) + low prob keep it from chattering between fights. Client-only, and
-   * the shared throttle/de-dup layer still applies inside playContextualVoice.
-   */
-  private maybeHum(nowMs: number, localId: number | null): void {
-    if (localId === null) return;
-    if (nowMs - this.lastLocalActivityMs < HUM_IDLE_MS) return;
-    const champ = championIdForEntity(localId);
-    if (!champ) return;
-    // Re-arm the latch to nowMs whether or not the roll fires, so a blocked roll
-    // waits another full idle window instead of retrying every frame.
-    this.lastLocalActivityMs = nowMs;
-    playContextualVoice(champ, "hum");
-  }
+  // 閒置哼歌 —— 邏輯與 latch 住 game/idleHum.ts（4,000 行線）。
 
   /**
    * Screen-space combat feedback for one drained event.
@@ -3475,35 +3446,9 @@ export class GameApp {
    * confirms or while the content DB is still loading — the market then simply
    * shows no hero rather than a placeholder.
    */
-  private localChampionModel(): {
-    glbPath: string;
-    scale: number;
-    yawOffsetDeg?: number;
-    relativeScale?: number;
-    hiddenPrimitives?: readonly number[];
-  } | null {
-    const hud = hudStore.getState();
-    const seat = hud.seats.find((s) => s.seatId === hud.localSeatId);
-    if (!seat?.championId) return null;
-    const def = Champions.tryGet(seat.championId as ChampionId);
-    if (!def) return null;
-    const doc = this.modelDocFor(def.modelKey, seat.seatId);
-    if (!doc) return null;
-    // GH#368 —— 尺寸倍率跟著模型一起送出去。市場攤位以前只拿到 glbPath + doc.scale，
-    // 而 doc.scale **不是尺寸**（overlay 文件一律是 1），所以「跟你並肩作戰的那一隻」
-    // 走進補給站就換了一個大小。⚠️ 讀 `seat.championId` 而不是形態感知的那條縫是
-    // 刻意的：補給站是回合之間的畫面，下一回合一律以基本型重生，而且 `bodyChampionIdFor`
-    // 需要一個 EntityViewState —— 這裡沒有 entity，只有座位。
-    const override = this.contentDb.modelOverrideFor(seat.championId);
-    return {
-      glbPath: doc.glbPath,
-      scale: doc.scale,
-      yawOffsetDeg: doc.yawOffsetDeg,
-      relativeScale: bodyRelativeScale(doc.glbPath, override),
-      // GH#368 —— 血泥宣告也一起送。攤位讀不到它的話，16 隻 overlay 英雄會拖著
-      // 一片屍體站在櫃台前（而且那片屍體會把他墊高）。
-      hiddenPrimitives: doc.hiddenPrimitives,
-    };
+  /** 補給站攤位要畫的本地英雄模型 —— 邏輯住 `game/localChampionModel.ts`（4,000 行線）。 */
+  private localChampionModel(): LocalChampionModel | null {
+    return resolveLocalChampionModel(this.championBody.modelDocFor, (id) => this.contentDb.modelOverrideFor(id));
   }
 
 
