@@ -93,6 +93,10 @@ export const SIM_WORLD_DIGEST_EXEMPT: Readonly<Record<string, string>> = {
   wallBlock: CONFIG,
   reviveRules: CONFIG,
   guardianRules: CONFIG,
+  // GH#752 戰場任務的陣營塔規則 —— 與隔壁 `guardianRules` 逐字同一個理由：主機在
+  // combat 入場一次指派、之後沒有任何一個 system 動它。⭐ 而塔**本身**的狀態
+  // （血量歸零沒有）走 `structure` + `transform`/`health` 那兩圈，已經被摺進去了。
+  objectiveRules: CONFIG,
   coinRules: CONFIG,
   mobRules: CONFIG,
   combatEnv: CONFIG,

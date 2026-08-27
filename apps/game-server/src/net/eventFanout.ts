@@ -702,6 +702,21 @@ export const SERVER_ONLY_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // to see, because the correct behaviour on a broken document is that nothing
   // happens. Fan it out only if a debug overlay is ever built to show it.
   "summonFailed",
+  // 戰場任務「陣營塔」的兩則 (GH#752 mini dota)。⭐ 它們**該**外送 —— owner 逐字
+  // 點名「任務提示要明顯」，而這兩則就是那句話的線路。⛔ 今天沒有外送，理由是
+  // **順序**而不是設計：客戶端的 `performanceEventsHaveConsumers` 閘要求白名單上
+  // 的每一則都有歸宿，而塔的 HUD 消費端（任務條 / 小地圖圖示 / 拆塔演出）住在
+  // `apps/client/`，那是另一條 lane 的柵欄。先開線路 = 那道閘當場紅，而一道紅著
+  // 的閘等於沒有閘。⇒ 塔本體今天靠**快照**（`ENTITY_KIND.GUARDIAN` + `mana` 帶
+  // teamId）就看得見、血條就畫得出來，缺的只有提示那一層。
+  // ⭐ 失效條件（⛔ 這一列不是永久的）：客戶端長出塔的 view 與任務條的那一個
+  // commit，要**同時**把這兩個名字從這裡搬到 `FANNED_OUT_EVENT_TYPES`。
+  //   · `objectiveSpawn`     `{ id, zone, teamId, x, z, maxHp, onDestroyed }`
+  //   · `objectiveDestroyed` `{ id, zone, teamId, x, z, killerSeatId }` ——
+  //     ⭐ 它與那一區分出勝負是**同一個瞬間**，所以演出接它才對得準時間；
+  //     接在回合結束上會晚一拍，而且說不出「為什麼輸」。
+  "objectiveSpawn",
+  "objectiveDestroyed",
 ]);
 
 /** True when this sim event should be broadcast to clients on MSG.EVENT. */

@@ -42,7 +42,7 @@
  *  · The `vsStructure` siege scalar (§1.4): a `combat/damage.ts` seam that also
  *    needs new content fields (AbilityDef / ItemDef / ChampionDef).
  */
-import type { EntityId } from "../../ids";
+import type { EntityId, TeamId } from "../../ids";
 import { recordGuardianSlain } from "../stats/matchStats";
 import type { SimWorld } from "../SimWorld";
 import { grantGold } from "../economy/progression";
@@ -85,12 +85,34 @@ export function guardianModelKeyForArena(arenaId: string): string {
 }
 
 /**
- * The neutral guardian marker + all of its per-round runtime state. Stored in
- * `world.structure` (a guardian is the only carrier in the game). All timing is
- * ABSOLUTE `world.tick`.
+ * The structure marker + all of its per-round runtime state. Stored in
+ * `world.structure`. All timing is ABSOLUTE `world.tick`.
+ *
+ * ⭐ GH#752 —— 這一格 Map 從此有**兩種住客**，用 {@link StructureComp.kind} 分辨：
+ *   · `"guardian"`  —— task #89 的**中立**守護塔（本檔的 NEUTRALITY CONTRACT）
+ *   · `"objective"` —— GH#752 的**陣營所屬**目標物（`systems/ObjectiveSystem.ts`）
+ *
+ * ⚠️ 共用載體是刻意的：`mitigateStructure` / 靜態碰撞 / `guardianDamage` /
+ * digest 摺疊 / `destroy()` 清理 / 「目標是建築」條件葉 —— 這六件事已經對
+ * `world.structure` 正確了，另開一個 Map 等於把每一件再寫第二遍。
+ * ⛔ 但 `guardianSystem` 的每一圈都要問 `kind === "guardian"`：中立塔的威脅表、
+ *    齊射、鎮守之力、付款**一格都不可以**掉到陣營塔身上。
  */
 export interface StructureComp {
-  /** duel zone; a guardian only ever affects its own zone */
+  /**
+   * 哪一種建築。⛔ 刻意**沒有預設值**（必填）：一個「不填就是守護塔」的欄位
+   * 會讓下一個新增建築的人靜靜地繼承整套中立塔行為（齊射、付款、鎮守之力），
+   * 而 tsc 不會說話。
+   */
+  kind: "guardian" | "objective";
+  /**
+   * 擁有這座建築的隊伍。⭐ **只有 `kind: "objective"` 有**，中立守護塔恆為
+   * `undefined`（NEUTRALITY CONTRACT）。
+   * ⚠️ ⛔ 刻意**不**寫進 `world.team`：那一格會讓 `sim/revive.ts::teamAliveInZone`
+   *    把一座塔數成一個活著的隊友。
+   */
+  teamId?: TeamId;
+  /** duel zone; a structure only ever affects its own zone */
   zone: number;
   /** match round it was spawned in — drives HP + volley damage scaling */
   round: number;
@@ -277,6 +299,7 @@ export function spawnGuardian(
   });
   world.health.set(id, { hp, maxHp: hp, mana: 0, maxMana: 0, alive: true, shields: [] });
   world.structure.set(id, {
+    kind: "guardian",
     zone,
     round,
     modelKey: guardianModelKeyForArena(world.arena.id),
@@ -317,16 +340,21 @@ export function beginCombatGuardians(
  * post-round farming (a 3v1 hostage cannot PvE the guardian for gold). Idempotent.
  */
 export function endCombatGuardians(world: SimWorld): void {
-  for (const id of [...world.structure.keys()]) world.destroy(id);
+  // ⭐ GH#752 —— 只清**中立守護塔**。陣營塔（`kind: "objective"`）有自己的
+  // `endCombatObjectives`，而它們的生命週期由主機分開武裝：一個關著守護塔、
+  // 開著 mini dota 的設定曾經會在這一行把整個任務靜靜地掃掉。
+  for (const [id, sc] of [...world.structure]) {
+    if (sc.kind === "guardian") world.destroy(id);
+  }
   world.guardianBuffs.clear();
   world.guardianRules = null;
 }
 
-/** Alive guardians currently in `zone`. */
+/** Alive NEUTRAL guardians currently in `zone`（⛔ 不含陣營塔）。 */
 export function guardiansAliveInZone(world: SimWorld, zone: number): number {
   let n = 0;
   for (const [id, sc] of world.structure) {
-    if (sc.zone !== zone) continue;
+    if (sc.kind !== "guardian" || sc.zone !== zone) continue;
     if (world.health.get(id)?.alive) n++;
   }
   return n;
@@ -353,7 +381,8 @@ export function guardianSystem(world: SimWorld): void {
   for (const ev of world.events) {
     if (ev.type !== "damage") continue;
     const sc = world.structure.get(ev.data.target as EntityId);
-    if (!sc) continue;
+    // ⭐ GH#752 —— 陣營塔挨打**不會**建威脅表、不會醒來、不會齊射。
+    if (!sc || sc.kind !== "guardian") continue;
     const src = ev.data.source as EntityId;
     const amount = ev.data.amount as number;
     // Only a CHAMPION's damage builds threat (a stray summon/DoT never marks a
@@ -374,6 +403,7 @@ export function guardianSystem(world: SimWorld): void {
 
   // 2) per-guardian: sleep, resolve due marks, fire a volley.
   for (const [id, sc] of world.structure) {
+    if (sc.kind !== "guardian") continue; // GH#752 —— 陣營塔不睡不醒不齊射
     const hp = world.health.get(id);
     if (!hp?.alive) continue; // dead guardians are handled in the payout pass (4)
 
@@ -433,7 +463,9 @@ export function guardianSystem(world: SimWorld): void {
     if (ev.type !== "death") continue;
     const id = ev.data.id as EntityId;
     const sc = world.structure.get(id);
-    if (!sc) continue;
+    // ⭐ GH#752 —— 拆掉陣營塔**沒有**尾刀獎（沒有金幣、沒有滿血、沒有鎮守之力），
+    // 而且屍體**留在場上**：「這一區誰的塔倒了」就是勝負判定要讀的那個事實。
+    if (!sc || sc.kind !== "guardian") continue;
     payout(world, id, sc, (ev.data.killer as EntityId | null) ?? null, rules, tick);
     world.destroy(id);
   }

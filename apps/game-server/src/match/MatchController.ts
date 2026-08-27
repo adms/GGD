@@ -150,6 +150,8 @@ import {
 } from "@ggd/shared/sim/stats/matchLedger";
 import type {
   MatchSettlement,
+  RoundScoreEntry,
+  RoundSettlement,
   RoundStatDelta,
   RoundStatsEntry,
   SettlementPlayer,
@@ -180,6 +182,12 @@ import {
   endCombatGuardians,
   guardianRulesFromConfig,
 } from "@ggd/shared/sim/systems/GuardianSystem";
+import {
+  beginCombatObjectives,
+  duelLoserFromObjectives,
+  endCombatObjectives,
+  objectiveRulesFromConfig,
+} from "@ggd/shared/sim/systems/ObjectiveSystem";
 import { beginCombatCoins, endCombatCoins, coinRulesFromConfig } from "@ggd/shared/sim/coins";
 import {
   beginCombatDeathWards,
@@ -464,6 +472,18 @@ export type StoredOffer = (
  * settlement.test.ts 的「draining the queue mutates nothing」在守這件事）。
  */
 export const DEFAULT_SETTLEMENT_CARD_ON_HEALTH_SPENT = false;
+
+/**
+ * 【回合分數與排名】GH#737 —— 戰鬥中即時取樣的**週期**（tick）。
+ *
+ * ⭐ 這是一個**決策點**（第一守則），而我挑的是 **1 Hz**：
+ *   · 每 tick（30 Hz）＝ 把一個**推導值**當成狀態在推，12 席 × 4 個數字 × 30；
+ *   · 慢於 1 Hz ＝ owner 的「隨時顯示」變成「偶爾更新」，玩家會看到自己剛打完
+ *     一套技能而數字沒動 —— 那比不顯示更糟（它看起來像壞掉）。
+ * ⛔ 它**不是** sim 規則：純輸出，⛔ 不進 `SimWorld`、⛔ 不進 digest。
+ * ⭐ 一鍵 rollback ＝ 把它調大（極大值 ⇒ 只剩回合結束那一則），⛔ 不必動線路。
+ */
+export const LIVE_SCORE_PERIOD_TICKS = TICK_HZ;
 
 /** `config.match@1` 的文件 id（`phaseConfig` 的三支 resolve* 讀的是同一份）。 */
 const MATCH_CONFIG_DOC_ID = "config.match";
@@ -779,6 +799,20 @@ export class MatchController {
    * against zero, which is correct for the first round a champion exists.
    */
   private readonly lastRoundCumulative = new Map<SeatId, RoundStatDelta>();
+
+  /**
+   * 【回合分數與排名】GH#737 —— 待送的一則（0 或 1 則，見 `queueRoundScores`）。
+   * ⛔ 不是 sim 狀態、⛔ 不進 digest：它是 `world.matchStats` 的**推導值**，
+   * 排乾它不會讓兩個 replica 分岔。與 `eliminationSettlements` 同一個形狀。
+   */
+  private roundSettlements: RoundSettlement[] = [];
+
+  /**
+   * 上一次**回合結算**時每一席的排名 —— 「排名變化」箭頭的基準。
+   * ⚠️ 只有 `final` 的那一次取樣會寫它；戰鬥中的即時取樣**刻意不寫**，
+   * 否則「變化」永遠是 0（基準每秒追上來一次）。
+   */
+  private readonly lastRoundRank = new Map<SeatId, number>();
 
   /**
    * Dev-cheat toggles (offline testing only; MatchRoom hard-gates the channel).
@@ -2461,6 +2495,25 @@ export class MatchController {
       endCombatGuardians(this.world);
     }
 
+    // ⭐ 戰場任務「陣營塔」(GH#752 mini dota) —— 每一場決鬥的**兩側**各一座。
+    //
+    // ⚠️ 它與守護塔是**兩條獨立的線**（共用 `world.structure` 這個載體，但各自
+    // 武裝／各自收場）：一場關著守護塔、開著 mini dota 的設定必須成立，否則
+    // 「戰場任務」就變成守護塔的附掛品。
+    //
+    // ⚠️ `beginCombatObjectives` 自己會問 `objectiveEnabledForArena` —— 場地不對
+    // 就一座都不生（`world.objectiveRules` 留 null ⇒ 整條機制是嚴格 no-op ⇒
+    // 那一場逐位元等於這個任務不存在）。⛔ 所以這裡**不要**再抄一次場地判斷。
+    //
+    // ⚠️ 決賽（royale）沒有 pairing，所以這一段自然是空的：混戰場沒有「對面」，
+    // 而「拆掉對面的塔」在那裡不成立。
+    beginCombatObjectives(
+      this.world,
+      objectiveRulesFromConfig(this.rules.objective),
+      this.pairings.map((p) => ({ zone: p.zone, sideA: p.sideA, sideB: p.sideB })),
+      this.phase.round,
+    );
+
     // arm 陣亡投幣 (task #191): ten 100-gold throws for every champion actually
     // placed into a duel this round. `fighters` — not `this.seats` — is the
     // authoritative list, which is what makes a bye/eliminated seat's throw come
@@ -2850,6 +2903,24 @@ export class MatchController {
     if (this.royale) return this.checkRoyaleEnd(this.royale, timerExpired);
     for (const pairing of this.pairings) {
       if (this.duelWinners.has(pairing.zone)) continue;
+      // ⭐ 戰場任務「拆掉對面的塔就立即輸掉」(GH#752, owner 2026-07-26)。
+      //
+      // ⚠️ 它必須是這個迴圈的**第一件事**，而且理由不是排版：
+      //   · 排在人數分支後面 ⇒ 一場「塔倒了但兩隊都還有人」的比賽照常打下去，
+      //     而 owner 的原話是「**立即**輸掉」；
+      //   · 排在殭屍 hold 後面 ⇒ 場上還有王的時候塔倒了也不算 —— 那條 hold
+      //     是為了「別把還在打的 PvE 切掉」而存在的，⛔ 不是一個勝負規則。
+      // ⭐ 機制關著（`objectiveRules === null` / `onDestroyed !== "lose"`）時
+      //    `duelLoserFromObjectives` 回 null ⇒ 這三行逐位元不存在。
+      const byObjective = duelLoserFromObjectives(this.world, {
+        zone: pairing.zone,
+        sideA: pairing.sideA,
+        sideB: pairing.sideB,
+      });
+      if (byObjective !== null) {
+        this.recordDuelWinner(pairing.zone, byObjective);
+        continue;
+      }
       const aAlive = this.teamAliveCount(pairing.sideA, pairing.zone);
       const bAlive = this.teamAliveCount(pairing.sideB, pairing.zone);
       if (aAlive === 0 && bAlive === 0) {
@@ -3282,6 +3353,7 @@ export class MatchController {
     endCombatRevives(this.world); // …and every circle + in-flight channel dies
     endCombatFireRing(this.world); // …and the round-pacing fire ring re-idles (#132)
     endCombatGuardians(this.world); // …and every neutral guardian despawns (no post-round farming, #89)
+    endCombatObjectives(this.world); // …and every 陣營塔（含屍體）收走 —— 下一回合重新立 (GH#752)
     endCombatCoins(this.world); // …and every unclaimed coin BURNS — no carry into the next round (#191)
     endCombatDeathWards(this.world); // …and every 死亡遺留物 + 其加成 clears (71-00 暗夜旗)
     endCombatMobs(this.world); // …and every mob despawns — no post-round PvE farming (#215)
@@ -3301,6 +3373,12 @@ export class MatchController {
     // — the two halves of one payload disagreeing. roundHistory.test.ts pins
     // this by summing an elimination payload's rounds against its own totals.
     this.recordRoundHistory();
+    // ⭐【回合分數與排名】GH#737 —— owner:「回合結束**提示排名變化**」。
+    // ⚠️ 位置是承重的：一定要在 `recordRoundHistory()` **之後**（那一支才剛把
+    // 這一回合的 `roundsSurvived` 加上去，而存活加成是分數的一半），並且在
+    // `settleRound()` **之前**（與 #173 / #212 選的是同一個瞬間，理由也一樣：
+    // settleRound 會扣團隊生命並可能當場淘汰一隊）。
+    this.queueRoundScores(true);
     // #207:同一個瞬間、同一個理由(見上)。`recordRoundHistory` 之後才跑,是
     // 因為兩者都讀 world.matchStats 的**同一個**累積值,而 settleRound 之後就
     // 不是「戰鬥剛結束」了。兩份 delta 各自維護自己的減數(`lastRoundCumulative`
@@ -3429,6 +3507,83 @@ export class MatchController {
   }
 
   /**
+   * ⭐ 每一席的 {@link RankEntry} —— **評分輸入的唯一組裝點**（GH#737）。
+   *
+   * 在此之前這段程式只存在於 {@link buildSettlement} 裡面，於是「回合中的即時
+   * 分數」除了再抄一份之外沒有別的做法 —— 而那正是這張票要修的病：畫面上的
+   * 數字與結算頁的數字來自兩個式子（第〇·四守則）。
+   *
+   * 順序 = `this.seats` 的迭代序（座位是插入序的 Map，兩個 replica 一致），
+   * 所以呼叫端可以拿它與 `perMatchRanks` 的回傳陣列逐格對位。
+   */
+  private rankEntriesBySeat(): { seatId: SeatId; entry: RankEntry }[] {
+    const out: { seatId: SeatId; entry: RankEntry }[] = [];
+    for (const [seatId, seat] of this.seats) {
+      if (seat.entityId === null) continue;
+      const stats = this.world.matchStats.get(seat.entityId) ?? createMatchStats();
+      const role = Champions.tryGet(seat.championId as ChampionId)?.role ?? "fighter";
+      out.push({
+        seatId,
+        entry: { stats, role, roundsSurvived: this.roundsSurvived.get(seatId) ?? 0 },
+      });
+    }
+    return out;
+  }
+
+  /**
+   * 【回合分數與排名】GH#737 —— 一次取樣。
+   *
+   * `final: true` = 回合剛結算完的那一次（⭐ 帶 `prevRank`，客戶端在這一則上
+   * 跳「排名變化」提示，並且**更新**上一回合的排名基準）；
+   * `false` = 戰鬥中的即時取樣（⛔ 不動基準，否則「變化」永遠是 0）。
+   *
+   * 純讀 `world.matchStats` + `rating.ts`，⛔ 不碰任何 sim 狀態 ⇒ digest 不動。
+   */
+  private buildRoundScores(final: boolean): RoundSettlement | null {
+    const seatEntries = this.rankEntriesBySeat();
+    if (seatEntries.length === 0) return null;
+    const entries = seatEntries.map((e) => e.entry);
+    const lobby = entries.map((e) => e.stats);
+    const ranks = perMatchRanks(entries);
+    const players: RoundScoreEntry[] = seatEntries.map(({ seatId, entry }, i) => {
+      const prev = this.lastRoundRank.get(seatId);
+      return {
+        seatId,
+        // ⭐ 逐字同一支：結算頁的 `SettlementPlayer.score` 也是這一行。
+        score: rankScore(entry, lobby),
+        survivalBonus: survivalBonus(entry),
+        rank: ranks[i]!,
+        // 第一回合沒有上一次 ⇒ 留 undefined（⛔ 不是 0：0 會被畫成「從第 0 名掉下來」）。
+        ...(final && prev !== undefined ? { prevRank: prev } : {}),
+      };
+    });
+    if (final) {
+      for (const p of players) this.lastRoundRank.set(asSeatId(p.seatId), p.rank);
+    }
+    return { round: this.phase.round, final, players };
+  }
+
+  /**
+   * 排一則回合分數廣播給 `MatchRoom` 送出去。
+   *
+   * ⚠️ **有界**：即時取樣是 1 Hz，而 `MatchRoom` 每 tick 都排乾這個佇列，所以它
+   * 的長度永遠是 0 或 1。⛔ 沒有排乾的那條路（單元測試裡的 controller）也不會
+   * 讓它長大，因為每一次 push 之前先清空 —— 一則過期的分數沒有任何價值。
+   */
+  private queueRoundScores(final: boolean): void {
+    const payload = this.buildRoundScores(final);
+    if (payload === null) return;
+    this.roundSettlements = [payload];
+  }
+
+  /** `MatchRoom` 每 tick 排乾（與 {@link takeEliminationSettlements} 同一個形狀）。 */
+  takeRoundSettlements(): RoundSettlement[] {
+    const drained = this.roundSettlements;
+    this.roundSettlements = [];
+    return drained;
+  }
+
+  /**
    * Assemble the victory-settlement payload: every player's scoreboard, their
    * role-normalised grade (vs the lobby), and their per-match rank 1..N, plus
    * the winning team. Pure read of world.matchStats + the rating module. The
@@ -3437,22 +3592,22 @@ export class MatchController {
    */
   private buildSettlement(): MatchSettlement {
     const players: SettlementPlayer[] = [];
-    const entries: RankEntry[] = [];
-    for (const [seatId, seat] of this.seats) {
-      if (seat.entityId === null) continue;
-      const stats = this.world.matchStats.get(seat.entityId) ?? createMatchStats();
-      const cdef = Champions.tryGet(seat.championId as ChampionId);
-      const role = cdef?.role ?? "fighter";
-      entries.push({ stats, role, roundsSurvived: this.roundsSurvived.get(seatId) ?? 0 });
+    // ⭐ GH#737 —— 組裝走 {@link rankEntriesBySeat}（**唯一**一份）。回合中的即時
+    // 分數與這裡的結算分數從此一定是同一條路算出來的：⛔ 兩份組裝就是兩個式子，
+    // 而玩家會相信比較大的那一個。
+    const seatEntries = this.rankEntriesBySeat();
+    const entries: RankEntry[] = seatEntries.map((e) => e.entry);
+    for (const { seatId, entry } of seatEntries) {
+      const seat = this.seats.get(seatId)!;
       players.push({
         seatId,
         accountId: seat.accountId,
         champ: seat.championId,
         teamId: seat.teamId,
-        role,
+        role: entry.role,
         grade: "C", // replaced below (kept non-optional for the type)
         rank: 0, // replaced below
-        stats,
+        stats: entry.stats,
       });
     }
     const lobby = entries.map((e) => e.stats);
@@ -4308,6 +4463,11 @@ export class MatchController {
         // 的結束判定。這裡擋的是這一間房的相位推進，正式賽一個字都沒碰到。
         if (this.practice?.endlessCombat) break;
         this.accelFireRingForBotOnly(); // GH#643 —— 只剩 bot 在打就提前縮火圈
+        // ⭐【回合分數與排名】GH#737 —— owner:「進入戰鬥房間，**隨時**顯示玩家
+        // 自己回合累積分數及排名」。1 Hz 取樣（⛔ 不是每 tick：12 席 × 4 個數字 ×
+        // 30 Hz 是把一個**推導值**當成狀態在推），排在 `checkCombatEnd` 之前，
+        // 所以回合結束的那一 tick 送出去的是 `final` 那一則而不是這一則。
+        if (this.world.tick % LIVE_SCORE_PERIOD_TICKS === 0) this.queueRoundScores(false);
         if (this.checkCombatEnd(this.combatTimeUp(expired))) {
           this.concludeCombat(); // despawn flowers + settle + maybe latch freeze
           this.phase.advance(); // -> resolution

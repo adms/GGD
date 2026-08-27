@@ -5,7 +5,7 @@
  */
 import type { ArraySchema } from "@colyseus/schema";
 import { Encoder } from "@colyseus/schema";
-import { DuelState, ENTITY_FLAG, ENTITY_KIND, EntityState, GROWTH_TIER_STACKS, MatchState, OfferState, ROUND_OUTCOME, SEAT_COUNTER_MAX, SeatState, TeamState, formFlagsForIndex, teamOverrideFlagsFor, toggleMaskWith } from "@ggd/shared/protocol/schema";
+import { DuelState, ENTITY_FLAG, ENTITY_KIND, EntityState, GROWTH_TIER_STACKS, MatchState, OBJECTIVE_TOWER_MANA_TEAM_OFFSET, OfferState, ROUND_OUTCOME, SEAT_COUNTER_MAX, SeatState, TeamState, formFlagsForIndex, teamOverrideFlagsFor, toggleMaskWith } from "@ggd/shared/protocol/schema";
 import { forEachMark } from "@ggd/shared/sim/marks";
 // ⭐ GH#546 開關型技能的開/關。⛔ 這一行不在的話 `toggleMask` 恆 0 ——
 // 而「永遠關著」跟「這個技能沒有開關」在畫面上逐位元一模一樣（失敗形態②）。
@@ -496,6 +496,12 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         // target it; #85 never keeps it in colour as a teammate); key = the
         // per-arena model doc id (樹人 / 石頭人 / 巨獸人). hp rides along so a
         // neutral health bar renders.
+        // ⭐ GH#752 —— `world.structure` 現在有**兩種**住客：中立守護塔與戰場任務
+        // 的陣營塔。兩者共用這一個 kind（塔就是塔，客戶端畫得出來），而**擁有者**
+        // 騎在 `mana` 上：`mana = teamId + 1`，0 = 中立。完整理由與到期條件寫在
+        // `protocol/schema.ts` 的 {@link OBJECTIVE_TOWER_MANA_TEAM_OFFSET}。
+        // ⛔ 不要在客戶端的塔 view 落地之前把它改成一個新的 ENTITY_KIND ——
+        //    未知 kind 在客戶端會掉進 ChampionView，變成一隻上了隊伍色的小人。
         es.kind = ENTITY_KIND.GUARDIAN;
         es.seatId = -1;
         es.key = structure.modelKey;
@@ -503,7 +509,10 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         if (hp) {
           es.hp = hp.hp;
           es.maxHp = hp.maxHp;
-          es.mana = 0;
+          es.mana =
+            structure.kind === "objective" && structure.teamId !== undefined
+              ? structure.teamId + OBJECTIVE_TOWER_MANA_TEAM_OFFSET
+              : 0;
           es.maxMana = 0;
           es.alive = hp.alive;
           es.shield = 0;

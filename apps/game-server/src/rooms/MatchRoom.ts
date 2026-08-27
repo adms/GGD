@@ -16,6 +16,7 @@ import { Room, type Client } from "colyseus";
 import { MatchState } from "@ggd/shared/protocol/schema";
 import {
   MSG,
+  ROUND_SETTLEMENT_EVENT,
   SETTLEMENT_EVENT,
   TEAM_SETTLEMENT_EVENT,
   type SelectChampionMessage,
@@ -879,6 +880,17 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
           type: TEAM_SETTLEMENT_EVENT,
           tick: this.ctl.world.tick,
           data: es.settlement as unknown as Record<string, unknown>,
+        });
+      }
+      // ⭐【回合分數與排名】GH#737 —— 戰鬥中 1 Hz 的即時取樣 + 回合結束那一則
+      // （`final: true`，帶 `prevRank`）。與上面的淘汰卡同一條路：主機**推導**、
+      // 這裡排乾、⛔ 不進 Colyseus schema（`defineTypes` 是 APPEND-ONLY，而這三個
+      // 數字是 `rankScore` 的輸出，不是權威世界狀態）。
+      for (const rs of this.ctl.takeRoundSettlements()) {
+        this.broadcast(MSG.EVENT, {
+          type: ROUND_SETTLEMENT_EVENT,
+          tick: this.ctl.world.tick,
+          data: rs as unknown as Record<string, unknown>,
         });
       }
       if (phase === "matchEnd") {

@@ -13,6 +13,7 @@ import { AUGMENT_TIER_SCHEDULE, DEFAULT_ITEM_DRAFT_POLICY } from "@ggd/shared/si
 import type { ItemDraftPolicy } from "@ggd/shared/sim/economy/draft";
 import { DEFAULT_GRAIL_DRAFT } from "@ggd/shared/sim/economy/grailVocabulary";
 import type { GrailDraftRules } from "@ggd/shared/sim/economy/grailVocabulary";
+import type { ObjectiveConfigLike } from "@ggd/shared/sim/systems/ObjectiveSystem";
 import {
   Configs,
   scheduledRetiredTables,
@@ -223,6 +224,20 @@ export interface ArenaRules {
    * 消費端一律走 `roundCapReached`，它自己吃得下 undefined。
    */
   maxRounds: number;
+  /**
+   * ⭐ 戰場任務「陣營塔」的覆蓋值（GH#752 mini dota）。
+   *
+   * ⚠️ **刻意 optional 而且刻意不在 {@link DEFAULT_ARENA_RULES} 裡**：出貨值
+   * 只有**一個**住處，就是 `sim/systems/ObjectiveSystem.ts` 的
+   * `DEFAULT_OBJECTIVE_RULES`（第〇·四守則 —— 在這裡再抄一份就是第二個住處，
+   * 而兩份會各自漂）。缺席 ⇒ `objectiveRulesFromConfig(undefined)` ⇒ 出貨值。
+   *
+   * ⛔ 今天沒有任何一條路填它：`config.arena-rules@1` 的 Zod 還沒長出 `objective`
+   * 那一格（那份 schema 在本 lane 的檔案柵欄外，見 #752 的接線清單）。
+   * ⭐ 那一格一落地，`rulesFromDoc` 只要多一行 `objective: doc.objective`，
+   *    後台就變成三住處的旋鈕，⛔ 而這裡與 sim 一個字都不用改。
+   */
+  objective?: ObjectiveConfigLike;
 }
 
 /** Legacy behavior: augment tiers per AUGMENT_TIER_SCHEDULE + round-2+ gacha. */

@@ -311,6 +311,56 @@ export interface RoundStatsEntry {
   players: RoundStatDelta[];
 }
 
+/**
+ * 【回合分數與排名】GH#737（接手 #14）—— 戰鬥中與回合結束的**同一則**廣播。
+ *
+ * > owner（#14 原引）：「進入戰鬥房間，**隨時顯示**玩家自己回合累積分數及排名，
+ * >  **回合結束提示排名變化**」
+ *
+ * ## ⭐ 為什麼是**事件**而不是 seat 欄位
+ * `defineTypes` 是 APPEND-ONLY —— 加三個 seat 欄位是**不可逆**的協定決定，而
+ * 這三個數字是**推導值**（`rankScore` 的輸出），不是權威世界狀態。
+ * 一則 1 Hz 的事件（12 席 × 4 個數字）可以隨時撤掉，一格 schema 欄位不行。
+ *
+ * ## ⭐ 為什麼「即時」與「回合結束」共用同一個型別
+ * 兩者是**同一個式子的兩次取樣**。分成兩個型別就會有兩個計算點，而
+ * 「畫面上的分數 ≠ 結算頁的分數」正是這張票要修的病（第〇·四守則：一個住處）。
+ * `final` 分辨這一則是不是回合結算的那一次（⭐ 只有它帶 {@link RoundScoreEntry.prevRank}）。
+ */
+export const ROUND_SETTLEMENT_EVENT = "roundSettlement" as const;
+
+/** 一個座位在某一次取樣時的分數與排名。 */
+export interface RoundScoreEntry {
+  seatId: number;
+  /**
+   * ⭐ **`rankScore` 這個式子本身的輸出** —— 與結算頁 `SettlementPlayer.score`
+   * 逐位元同一條路（同一個 `RankEntry` / 同一份 lobby）。
+   * ⛔ 客戶端不可以自己再算一次：兩個式子遲早會漂，而玩家會相信比較大的那個。
+   */
+  score: number;
+  /** `score` 裡屬於「活下來」的那一半（owner 2026-07-27 的每回合 +200） */
+  survivalBonus: number;
+  /** 1..N，全場排名（`perMatchRanks` 的輸出，與結算頁同一支） */
+  rank: number;
+  /**
+   * 上一次**回合結算**時的排名。⭐ 只有 `final: true` 的那一則帶它 ——
+   * 「排名變化」是回合與回合之間的事，戰鬥中每秒抖動一次的箭頭沒有意義。
+   * 第一回合（沒有上一次）留 `undefined`，⛔ 不是 0（0 會被畫成「從第 0 名掉下來」）。
+   */
+  prevRank?: number;
+}
+
+export interface RoundSettlement {
+  /** 1-based：這一則講的是第幾回合（戰鬥中的取樣＝**進行中**的那一回合） */
+  round: number;
+  /**
+   * `true` = 這一回合剛剛結算完的那一次取樣（⭐ 帶 `prevRank`，客戶端在這一則
+   * 上跳「排名變化」提示）；`false` = 戰鬥中的即時取樣。
+   */
+  final: boolean;
+  players: RoundScoreEntry[];
+}
+
 export interface MatchSettlement {
   matchId: string;
   /** team id that placed 1st (winner), or -1 if undecided */

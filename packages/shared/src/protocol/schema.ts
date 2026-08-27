@@ -1096,6 +1096,30 @@ export const ENTITY_KIND = {
   NIGHT_FLAG: 7,
 } as const;
 
+/**
+ * ⭐ GH#752 —— 戰場任務的**陣營塔**（mini dota）騎在 {@link ENTITY_KIND.GUARDIAN}
+ * 上，而擁有者藏在 `mana`：**`mana = teamId + 1`，0 = 中立守護塔**。
+ *
+ * ## ⛔ 為什麼**沒有**開一個新的 ENTITY_KIND
+ * 開得起來（kind 是值不是欄位，append 安全）—— ⛔ 但客戶端的 view 分派是一串
+ * `if (e.kind === N)`，而**掉到最後**的預設分支是 `ChampionView`：一個新 kind
+ * 在客戶端接上之前，會被畫成一隻**上了隊伍色的體素小人**站在場邊
+ * （`protocol` 這一段自己警告過的「grey blob painted as a blue teammate」）。
+ * ⇒ 沿用 `GUARDIAN` 的話，塔今天就是一座**有血條、畫得出來的塔**，
+ *   客戶端零改動；⛔ 而開新 kind 會讓它在客戶端那一半落地之前**壞給玩家看**。
+ *
+ * ## ⚠️ 為什麼是 `+1` 而不是直接放 teamId
+ * `teamId` 的合法值從 **0** 開始，而守護塔出貨 `mana = 0` ⇒ 直接放的話
+ * 「第 0 隊的塔」與「中立守護塔」在線上**逐位元相同**。+1 讓 0 空出來當哨兵。
+ *
+ * ## 到期條件（⛔ 這不是永久設計）
+ * 客戶端長出自己的塔 view（隊伍色 + 小地圖圖示 + 任務條）的那一個 commit，
+ * 應該**同時**：① 在這裡加 `OBJECTIVE_TOWER: 8` ② 改 `net/snapshot.ts` 那一行
+ * ③ 加 view 分派。三件事分開做的每一種排列都會壞：先改伺服器 = 小人；
+ * 先加 view = 永遠收不到那個 kind。
+ */
+export const OBJECTIVE_TOWER_MANA_TEAM_OFFSET = 1;
+
 export const ENTITY_FLAG = {
   DASHING: 1,
   ROOTED: 2,

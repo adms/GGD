@@ -127,6 +127,7 @@ import {
   type GuardianBuff,
   type GuardianRules,
 } from "./systems/GuardianSystem";
+import { objectiveSystem, type ObjectiveRules } from "./systems/ObjectiveSystem";
 import { mobSystem } from "./systems/MobSystem";
 import { summonSystem } from "./summons";
 import { championFormSystem } from "./systems/ChampionFormSystem";
@@ -901,6 +902,15 @@ export class SimWorld {
    * every replica, never mutated by a system, so determinism holds automatically.
    */
   guardianRules: GuardianRules | null = null;
+
+  /**
+   * 戰場任務「陣營所屬目標物」的規則（GH#752 mini dota）。null（預設）＝ 機制
+   * 整個關著，而 `objectiveSystem` / `duelLoserFromObjectives` 都是嚴格 no-op
+   * ⇒ 一場沒有武裝的比賽逐位元等於這條機制不存在。
+   * 主機用 `beginCombatObjectives` / `endCombatObjectives` 武裝它
+   * （見 systems/ObjectiveSystem.ts）；與 flowerRules 一樣是**主機武裝的世界狀態**。
+   */
+  objectiveRules: ObjectiveRules | null = null;
 
   /**
    * Dropped-coin rules (task #191). null (default) = the mechanic is OFF — unit
@@ -1787,6 +1797,11 @@ export class SimWorld {
     //                             payout (no-op unless armed). Runs AFTER deathSystem
     //                             (sees this tick's `death`) and reviveSystem (killer's
     //                             final alive-state is settled before payout).
+    objectiveSystem(this); // 9d⁺. 戰場任務的陣營塔 (GH#752): 把「這一 tick 剛倒下的
+    //                             塔」喊成一則事件 (no-op unless armed)。同一個 slot
+    //                             理由：它讀的是**這一 tick** 的 `death` 事件，而且
+    //                             要排在 guardianSystem 之後 —— 那一支會把中立塔的
+    //                             屍體 despawn 掉，兩者共用 `world.structure`。
     mobSystem(this); //      9d′. roguelite mob waves: clock/spawn schedule, AI aim,
     //                             melee queue, +gold/xp payout + every-30 level-up
     //                             (no-op unless armed + combatActive). Same slot
@@ -2128,6 +2143,11 @@ export class SimWorld {
     // that advanced on one replica but not another must surface here as a
     // mismatch. When the mechanic is off both maps are empty and the digest is
     // byte-identical to a pre-feature world.
+    //
+    // ⚠️ GH#752 的陣營塔也住這格，而 `kind` / `teamId` 刻意**不**摺進來：兩者都在
+    // `spawnObjective` 一次寫定、之後沒有任何一行改它們（決定性由擺位本身保證），
+    // 摺一個永不變動的常數只會讓既有錄影的 digest 全部作廢卻抓不到任何東西。
+    // ⭐ 「塔倒了沒有」**已經**在上面 `mix(hp.hp)` 那一圈被摺過（血量 0 = 倒了）。
     for (const [id, sc] of this.structure) {
       mix(id);
       mix(sc.wakeTick);
