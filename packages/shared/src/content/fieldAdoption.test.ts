@@ -587,11 +587,13 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   //    內容今天走**天生技 rank** 那一面（殭屍王的內建天生技
   //    `godie-zombieking.passive`，所以 `abilities.passive.ranks[].statusImmunity`
   //    **沒有**豁免，也不該有）。下面兩列是其餘兩面。
-  "field:abilities.effects[]#applyBuff.statusImmunity": {
-    status: "landing",
-    since: "2026-08-24",
-    why: "GH#656 owner「殭屍王**免疫負面狀態** 包含暈眩緩慢詛咒致盲 但可被吸血、暴擊、淨化跟其他技能標記與疊層」。落地成 `SOURCE_GRANT_SHAPE` 的一格 ⇒ 一次出現在四個授權面。內容今天只走天生技 rank 那一面（常駐身分）。⛔ 這不是機制沒接線：消費端 `sim/effects/applyStatus.ts` 走 `StatsComp.sources` 而不問 kind，四面共用同一支 `sourceGrants()`。**到期**：第一支「接下來 N 秒免疫減速／免疫暈眩」的限時 buff 填了它 —— 那是這一面最自然的形狀（LoL 的水銀鞋），這一列會被 STALE 那半邊叫，刪掉即可。",
-  },
+  // ⭐ 2026-08-27 —— `field:abilities.effects[]#applyBuff.statusImmunity` 的豁免**回收了**，
+  //    而它是**照著自己寫的到期條件**發生的。那一列的 `why` 逐字寫著：
+  //      「**到期**：第一支『接下來 N 秒免疫減速／免疫暈眩』的限時 buff 填了它
+  //        —— 那是這一面最自然的形狀，這一列會被 STALE 那半邊叫，刪掉即可。」
+  //    GH#684（初號機暴走 × 殭屍王免疫共用模板）正好就是那一支。
+  // ⭐ 這是一條**寫得好**的豁免：它預測了自己什麼時候會失效，而閘在那一刻叫了。
+  //    ⛔ 對照組是「還沒收」那種豁免 —— 它永遠不會到期，因為它沒有說什麼算到期。
   "field:augments.statusImmunity": {
     status: "landing",
     since: "2026-08-24",

@@ -23,11 +23,11 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 2040 個檔案**，分佈在 2 個隔離區。
+**目前共 2056 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
-| [`docs/legacy/`](legacy-index.md#docslegacy) | 1600 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
+| [`docs/legacy/`](legacy-index.md#docslegacy) | 1616 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
 | [`content/_legacy/`](legacy-index.md#contentlegacy) | 440 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
@@ -35,7 +35,7 @@ owner 2026-08-13：
 
 ---
 
-## `docs/legacy/` —— 1600 檔
+## `docs/legacy/` —— 1616 檔
 
 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）
 
@@ -1605,6 +1605,22 @@ owner 2026-08-13：
 | `_overwrites/overwrite_temp_20260827-104858/tools/parallel-gates/trace.mjs` | （.mjs 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260827-105032/tools/parallel-gates/trace.mjs` | （.mjs 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260827-105718/scripts/preserve-before-overwrite.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-113239/tools/skill-remake/heroes/godie-e00r.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-113519/content/config/roster.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-113610/apps/client/src/render/AssetManager.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-113802/apps/client/src/render/textureDedup.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-113810/apps/client/src/render/textureDedup.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-113836/apps/client/src/render/textureDedup.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-113845/tools/skill-remake/heroes/godie-e00r.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-113902/apps/client/src/render/textureDedup.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-113913/apps/client/src/render/textureDedup.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-113916/apps/client/src/render/AssetManager.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-113923/apps/client/src/render/AssetManager.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-114131/tools/model-budget/emit_report.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-114142/tools/model-budget/emit_report.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-114147/tools/model-budget/emit_report.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-114317/tools/model-budget/baseline.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260827-114537/docs/_reports/texture-dedup_visual-proof_20260827-1144/frames.md` | texture-dedup — 連續圖片驗收（GH#____） —— 📅 **證據的時間身分（GH#795）**：`HEAD=21c218fd` 工作樹 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/04.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/06.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/08.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
