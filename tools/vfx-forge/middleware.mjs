@@ -9,6 +9,12 @@
  *   GET  /__vfxstudio/scripts        → { scripts: [{id, abilityId, path}] }（掃目錄）
  *   GET  /__vfxstudio/script?id=X    → 該檔原文
  *   POST /__vfxstudio/script         → { id, doc } 寫進 content/vfx-scripts/<id>.json
+ *   POST /__vfxstudio/publish        → 回存主線（owner 2026-08-28 裁決「編輯儲存完後
+ *        可以回存到主線甚至間接到github」）：`pnpm content:build`（產物跟上）→
+ *        `git commit -F … -- <逐檔 pathspec>`（⛔ 不 stage、⛔ 不掃別人的檔 ——
+ *        pathspec 只含 content/vfx-scripts 與 bundle/manifest 產物）→ `git push`。
+ *        `.git/index.lock` 在 ⇒ 409（別的 git 動作在飛，⛔ 不搶）。逐步回報，
+ *        任何一步紅都把 log 尾巴帶回去 —— 安靜的失敗與成功長得一樣（守則）。
  *
  * ⚠️ 驗證的分工：**權威 Zod 驗證在頁面側**（studio import 出貨的 zVfxScriptDoc，
  * 存檔前 parse —— schema 單一住處）；這裡只做結構與路徑安全（id 白名單字元、
@@ -20,6 +26,8 @@
  */
 import { readFileSync, readdirSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
+import { execFileSync } from "node:child_process";
+import { tmpdir } from "node:os";
 
 const ROUTE_PREFIX = "/__vfxstudio";
 const ID_RE = /^[a-z0-9][a-z0-9.-]{0,80}$/;
@@ -99,6 +107,73 @@ export function createVfxStudioMiddleware(repoRoot) {
         }
       });
       return;
+    }
+
+    if (req.method === "POST" && url.pathname === `${ROUTE_PREFIX}/publish`) {
+      // ── 回存主線：build → commit（逐檔 pathspec）→ push ───────────────────
+      const PATHSPEC = ["content/vfx-scripts", "content/bundle.json", "content/manifest.json"];
+      const run = (cmd, args, timeoutMs) =>
+        execFileSync(cmd, args, {
+          cwd: repoRoot,
+          encoding: "utf8",
+          timeout: timeoutMs,
+          stdio: ["ignore", "pipe", "pipe"],
+          maxBuffer: 16 * 1024 * 1024,
+        });
+      const steps = [];
+      try {
+        if (existsSync(join(repoRoot, ".git", "index.lock")))
+          return sendJson(res, 409, {
+            error: ".git/index.lock 在 —— 別的 git 動作在飛，等它完再按。",
+            steps,
+          });
+        // ① 產物跟上（bundle 是 build 的產物 —— 沒有這一步，push 上去的是說謊的 bundle）
+        try {
+          run("pnpm", ["content:build"], 8 * 60 * 1000);
+          steps.push({ step: "content:build", ok: true });
+        } catch (err) {
+          const tail = String(err?.stdout ?? "").slice(-1200) + String(err?.stderr ?? "").slice(-600);
+          return sendJson(res, 500, { error: "content:build 紅了 —— 沒 commit 沒 push", steps, log: tail });
+        }
+        // ② 新檔進版控視野（-N＝intent-to-add，⛔ 不 stage 內容）
+        const untracked = run("git", ["ls-files", "--others", "--exclude-standard", "content/vfx-scripts"], 30_000)
+          .split("\n")
+          .filter(Boolean);
+        if (untracked.length) run("git", ["add", "-N", ...untracked], 30_000);
+        // ③ 有沒有東西可 commit（乾淨就誠實說乾淨，⛔ 不空 commit）
+        const dirty = run("git", ["status", "--porcelain", "--", ...PATHSPEC], 30_000).trim();
+        if (!dirty) return sendJson(res, 200, { ok: true, clean: true, message: "工作樹乾淨 —— 沒有要回存的改動。", steps });
+        const changed = dirty.split("\n").map((l) => l.slice(3)).filter((p) => p.startsWith("content/vfx-scripts/") && !p.endsWith("_index.json"));
+        // ④ commit：訊息寫進 tmp 檔，pathspec 逐檔 —— ⛔ 不 stage、⛔ 不掃別人的檔
+        const msgPath = join(tmpdir(), `vfxstudio-publish-${Date.now()}.txt`);
+        writeFileSync(
+          msgPath,
+          `content(vfx-scripts)(#838): studio 回存主線 —— ${changed.map((p) => p.replace("content/vfx-scripts/", "").replace(".json", "")).join("、") || "產物刷新"}\n\n` +
+            `特效工坊「⬆️ 回存主線」：content:build → commit（pathspec 只含 vfx-scripts＋bundle/manifest 產物）→ push，由 dev middleware 代跑（owner 2026-08-28 裁決）。\n\n` +
+            `Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>\n`,
+          "utf8",
+        );
+        try {
+          run("git", ["commit", "-F", msgPath, "--", ...PATHSPEC], 60_000);
+          steps.push({ step: "commit", ok: true, hash: run("git", ["rev-parse", "--short", "HEAD"], 10_000).trim() });
+        } catch (err) {
+          return sendJson(res, 500, { error: "git commit 紅了", steps, log: String(err?.stderr ?? err?.message ?? "").slice(-800) });
+        }
+        // ⑤ push（間接到 github 的那一步）—— 失敗要說「commit 在了、push 沒上去」
+        try {
+          run("git", ["push"], 120_000);
+          steps.push({ step: "push", ok: true });
+        } catch (err) {
+          return sendJson(res, 500, {
+            error: "push 失敗 —— ⚠️ commit 已在本機主線，只是還沒上 GitHub（多半要先 pull）",
+            steps,
+            log: String(err?.stderr ?? err?.message ?? "").slice(-800),
+          });
+        }
+        return sendJson(res, 200, { ok: true, steps, message: "✓ 已回存主線並 push 到 GitHub。" });
+      } catch (err) {
+        return sendJson(res, 500, { error: String(err?.message ?? err), steps });
+      }
     }
 
     return sendJson(res, 404, { error: `未知路由 ${req.method} ${url.pathname}` });

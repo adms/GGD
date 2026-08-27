@@ -61,6 +61,7 @@ import {
   type FieldSpec,
 } from "../contentFields";
 import { AudioAuditionPage } from "./AudioAuditionPage";
+import { VfxStudioPage } from "./VfxStudioPage";
 import { NewHeroPageRoot } from "./NewHeroPage";
 import { VoxelStudioPageRoot } from "./voxel/VoxelStudioPage";
 import { Badge, Btn, ErrorBanner, Panel, TextInput } from "./widgets";
@@ -244,6 +245,10 @@ export const CONTENT_ROUTES: readonly ContentRoute[] = [
   // (form). Like `audio`/`newHero` it renders its OWN component rather than the
   // ContentPage editor, so it carries no `only` list.
   { page: "voxelStudio", label: "鑄形工坊", emoji: "🧱" },
+  // 特效工坊 · 演出腳本 (GH#838) — 嵌 client dev server 的 studio（拖拉×slider×
+  // 即時重放），同 `audio` 一樣自帶元件、無 `only` 清單。owner 2026-08-28 裁決
+  // 「應該也是後台其中一頁」。
+  { page: "vfxStudio", label: "特效工坊 · 演出腳本", emoji: "🎨" },
 ];
 
 /**
@@ -259,6 +264,7 @@ export function renderContentDevPage(
   if (page === "audio") return <AudioAuditionPage />;
   if (page === "newHero") return <NewHeroPageRoot onNavigate={onNavigate} />;
   if (page === "voxelStudio") return <VoxelStudioPageRoot onNavigate={onNavigate} />;
+  if (page === "vfxStudio") return <VfxStudioPage />;
   const route = CONTENT_ROUTES.find((r) => r.page === page && r.only !== undefined);
   if (route === undefined) return null;
   return <ContentPageRoot only={route.only} />;

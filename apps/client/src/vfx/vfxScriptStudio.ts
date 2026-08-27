@@ -521,6 +521,34 @@ export async function bootVfxScriptStudio(): Promise<void> {
     castOnce();
   };
 
+  // ⬆️ 回存主線（owner 2026-08-28：「編輯儲存完後可以回存到主線甚至間接到github」）
+  // build＋commit＋push 由 dev middleware 代跑 —— 這裡只按、顯示逐步結果。
+  const publish = async (): Promise<void> => {
+    const btn = $("btn-publish") as HTMLButtonElement;
+    btn.disabled = true;
+    say("回存主線中：content:build → commit → push（build 要一陣子）…", "dim");
+    try {
+      const res = await fetch("/__vfxstudio/publish", { method: "POST" });
+      const body = (await res.json()) as {
+        ok?: boolean;
+        clean?: boolean;
+        message?: string;
+        error?: string;
+        log?: string;
+      };
+      if (body.ok) say(body.message ?? "✓ 已回存主線。", "ok");
+      else {
+        say(`回存失敗：${body.error ?? res.status}`, "err");
+        if (body.log) issues.textContent = body.log;
+      }
+    } catch (err) {
+      say(`回存失敗：${err instanceof Error ? err.message : String(err)}`, "err");
+    } finally {
+      btn.disabled = false;
+    }
+  };
+  ($("btn-publish") as HTMLButtonElement).onclick = () => void publish();
+
   ($("btn-load") as HTMLButtonElement).onclick = () => void loadScript();
   ($("btn-save") as HTMLButtonElement).onclick = () => void save();
   ($("btn-cast") as HTMLButtonElement).onclick = () => {

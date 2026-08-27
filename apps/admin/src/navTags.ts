@@ -248,6 +248,7 @@ export const NAV_TAGS: Record<string, readonly NavTag[]> = {
   vfx: ["內容", "演出", "可調", "dev限定"], // 特效文件
   arenas: ["內容", "可調", "dev限定"], // 場景物件
   voxelStudio: ["資產", "內容", "可調", "dev限定"], // 鑄形工坊
+  vfxStudio: ["技能", "演出", "可調", "dev限定"], // GH#838 特效工坊 · 演出腳本（拖拉×slider）
 };
 
 /** 一頁的標籤（不認得的 pageId 回空陣列 —— ⛔ 不要為了找不到就丟例外）。 */

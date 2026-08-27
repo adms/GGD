@@ -80,6 +80,12 @@ export type Page =
    * through the one contentApi write path, adding none of its own.
    */
   | "voxelStudio"
+  /**
+   * 特效工坊 · 演出腳本 (GH#838) — dev chunk 的 iframe 頁（嵌 client dev server
+   * 的 vfx-script-studio.html）。寫入走 client 端 middleware（⛔ 不經 admin 的
+   * loopback 寫伺服器），所以刻意不在 SESSION_REQUIRED_PAGES。
+   */
+  | "vfxStudio"
   | "combatEnv"
   /**
    * 基礎加成 (`config/base-bonus.json`): 每位英雄一開始就多拿的固定數值。
