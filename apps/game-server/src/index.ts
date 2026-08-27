@@ -34,6 +34,8 @@ import { startMatchHeartbeat } from "./config/matchHeartbeat";
 import { roomRegistry } from "./rooms/roomRegistry";
 import { tickHealth } from "./match/tickHealth";
 import { recordQuarantine } from "./contentHealth";
+import { loadContentCached } from "@ggd/shared/content/cache/index";
+import { recordCacheLoad, recordUncachedLoad, shouldUseRuntimeCache } from "./contentCacheHealth";
 import { ReplayRoom } from "./rooms/ReplayRoom";
 import { handleInternalReplays } from "./replay/http";
 import { serveDamageBoard } from "./stats/damageBoard";
@@ -370,14 +372,44 @@ async function loadContent(): Promise<void> {
   const loadFrom = async (label: string): Promise<boolean> => {
     const withOverlay = overlay !== null && label === "overlay";
     const source = withOverlay ? new OverlayContentSource(base, overlay) : base;
+    const tLoad = performance.now();
     // ⭐ GH#326 —— 兩趟的政策**必須不同**（同 client 的 bootContent.ts）：
     //    帶 overlay 那一趟 ⛔ `fail-closed`，因為 overlay 是一**層** —— 它破一個洞
     //    應該**露出下面的出貨樹**（下面那個 catch 就是做這件事），⛔ 不是把兩層
     //    一起打穿。退回出貨樹那一趟才用內容說了算的 `quarantine`：那是最後一層，
     //    沒有東西可以再退了，少一份設定好過整站退骨架。
-    const result = await new ContentLoader(source).load(
-      withOverlay ? { policy: "fail-closed" } : undefined,
-    );
+    // ⭐ GH#717 —— **執行期的內容快取**（owner 2026-08-23:「大量重複 IO 的地方
+    //    先讀取後合成暫存起來(Redis with lifetime 24HR)」)。這裡是 game-server
+    //    唯一一處會大量讀檔的路徑：量到 **1,763 次 readFile / 475 ms**，
+    //    而建房、每 tick、每場結算**一次檔案都不讀**（登錄表是行程內記憶體）。
+    //
+    // ⛔⛔ **只有沒有 overlay 的那一趟可以走快取**，而這不是保守，是正確性：
+    //    `loadContentCached` 的失效鍵是**內容樹＋解析它的程式碼**的指紋
+    //    ——⛔ 它看不見 platform 的 overlay（後台改的那一份）。帶 overlay 還走
+    //    快取 ⇒ owner 在後台改了設定、下一場比賽拿到**被快取蓋住的舊內容**，
+    //    也就是 CLAUDE.md 記過的「後台的 override 會蓋掉 content/ 的檔案⋯
+    //    deploy 成功但玩家那一場沒變」。
+    //    ⭐ 而「有沒有 overlay」正好就是「後台有沒有人改過東西」⇒ 這條分岔
+    //    **結構上**保證了 AC5（後台一改就一定拿到新的），⛔ 不是靠記得去 invalidate。
+    const cached = shouldUseRuntimeCache({ withOverlay })
+      ? await loadContentCached({
+          rootDir: CONTENT_DIR,
+          log: (line) => console.warn(`[game-server][content-cache] ${line}`),
+        })
+      : null;
+    const result =
+      cached ??
+      (await new ContentLoader(source).load(withOverlay ? { policy: "fail-closed" } : undefined));
+    // ⚠️ fail-open 沒錯，**靜默**才是缺陷 —— 這兩行是那個「說得出來」的地方。
+    //    `/healthz` 的 `contentCache` 區塊會指名這一次到底有沒有命中、為什麼沒有。
+    if (cached) recordCacheLoad(cached.cache, performance.now() - tLoad);
+    else
+      recordUncachedLoad(
+        withOverlay
+          ? "帶 platform overlay 的那一趟**刻意不走快取**（失效鍵看不見 overlay）"
+          : "GGD_CONTENT_CACHE_RUNTIME 關閉",
+        performance.now() - tLoad,
+      );
     registerAll(result.store);
     // THE CONTENT VERSION NOW GOES SOMEWHERE. It was logged and thrown away,
     // while `MatchState.contentVersion` stayed "" on every room. It is the
@@ -436,6 +468,10 @@ async function loadContent(): Promise<void> {
       err,
     );
     registerSkeletonContent();
+    // ⭐ GH#717 —— 骨架開機也要在 `/healthz` 上說得出來。⛔ 不覆寫成「快取沒生效」
+    //    那種誤導的句子：這一刻的真相是**內容整份載入失敗**，而 `content.ok`
+    //    已經在講那件事，這一格只是不要繼續宣稱上一次的狀態。
+    recordUncachedLoad("內容載入失敗 ⇒ 退回骨架（見 /healthz 的 content 區塊）", 0);
     // A skeleton boot has NO manifest, so there is no cv_ to record. Leaving it
     // empty is honest: every recording made in this state carries "" and will
     // only replay against another skeleton boot.

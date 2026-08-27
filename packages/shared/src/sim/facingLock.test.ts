@@ -28,6 +28,8 @@ const SEAT_B = asSeatId(1);
 
 /** zone 0 的圓心 —— 骨架競技場的 zone 不在原點，放在 (0,0) 會被邊界夾出去。 */
 const ZC = SKELETON_ARENA.zones[0]!.center;
+/** zone 0 的可玩半徑 —— 「壓在牆上往外走」那支夾具的座標從這裡推導，⛔ 不抄字面值。 */
+const BOUNDARY_R = SKELETON_ARENA.zones[0]!.boundaryRadius;
 const at = (dx: number, dz: number): { x: number; z: number } => ({ x: ZC.x + dx, z: ZC.z + dz });
 
 function newWorld(): SimWorld {
@@ -196,21 +198,43 @@ describe("面向鎖 — 揮劍 (task #264)", () => {
    * 所以 `nav.order.kind === "move"` 且 `moveTarget !== null`，MovementSystem 走的
    * 是**移動分支** —— 修復前那條路徑上人是面向走路方向揮劍的。
    *
-   * 攻擊者被上一個極重的緩速：他仍然「在走」（moved = true，走的是移動分支），
-   * 但幾乎不位移，所以敵人不會走出攻擊距離，一次測試能觀察到完整的一輪揮擊。
+   * ⭐⭐ GH#755（2026-08-27）—— **這支夾具換掉了，而換掉的理由是它以前靠一個
+   * 缺陷才綠的**。
+   *
+   * 舊版給攻擊者一個極重的緩速（`moveSpeedMult: 0.02` ⇒ 有效移速 ≈0.118 u/s），
+   * 目的是「在走但幾乎不位移」。⛔ 但它同時**鑽過**了「打就站定」把 `walkEps`
+   * 一格當兩用留下的洞：舊規則的第一行是 `lenSq(vel) > walkEps²`（0.5²），
+   * 0.118 落在門檻底下 ⇒ **整條站定規則對他靜默關閉**。
+   * ⇒ 而這支夾具做的事情，逐字就是站定規則要擋的那一種：**背對敵人後退還揮劍**。
+   * ⇒ #755 把洞補起來的那一刻它當場紅了，看起來像「新規則造成靈魂層回歸」，
+   *   ⭐ 實際是**這條守衛的前提本來就不成立**。
+   *
+   * 現在改用**出貨真的會發生**的那一種（`attackStandstill.test.ts` 的
+   * `ss-blocked-counts-as-still` 用的是同一個情境）：**把身體壓在場地邊界上
+   * 繼續往外走**。
+   *
+   *   · `moveWithCollision` 正面撞牆 ⇒ 切向分量為 0 ⇒ 整步取消 ⇒ 位移**正好 0**
+   *     ⇒ `t.vel` 是 0 ⇒ 站定規則放行（「讀的是實際位移而不是移動意圖」）
+   *   · 而 `nav.moveTarget` 一直在 ⇒ `moved` 仍然是 true ⇒ **移動分支照樣每
+   *     tick 把 facing 轉向走路方向** —— 也就是這一組測試要防的那件事
+   *
+   * ⭐ 附帶好處：這支夾具對「站定規則怎麼算」**完全免疫**（vel 是 0，兩套規則
+   * 的第一行都放行）⇒ 它量的純粹是**面向的擁有權**，而那本來就是它的題目。
    */
   function movingAttacker(): { w: SimWorld; a: EntityId; enemy: EntityId } {
     const w = newWorld();
-    const a = champ(w, "thorne", SEAT_A, 0, at(0, 0));
-    const enemy = champ(w, "sela", SEAT_B, 1, at(-1.2, 0));
-    w.status.get(a)!.effects.push({
-      statusId: "test.crawl" as StatusId,
-      sourceId: "test",
-      expiresAtTick: 1_000_000,
-      moveSpeedMult: 0.02,
-    });
+    // 起手內縮 0.8（和 ss-blocked-counts-as-still 同一個數）；走 +X 撞牆之後身體
+    // 會停在 `BOUNDARY_R − 半徑` 上，之後每一 tick 位移都是 0。
+    const a = champ(w, "thorne", SEAT_A, 0, at(BOUNDARY_R - 0.8, 0));
+    // 敵人在**正後方**（−X）。兩條斷言（「朝著敵人」與「不是朝著走路方向」）要能
+    // 互相反駁就必須是正對／正背 —— 這是舊版就有的性質，保留。
+    const enemy = champ(w, "sela", SEAT_B, 1, at(BOUNDARY_R - 2.0, 0));
     return { w, a, enemy };
   }
+
+  /** 這一 tick 有沒有**這個攻擊者自己**的事件。 */
+  const sawFrom = (w: SimWorld, type: string, src: EntityId): boolean =>
+    w.events.some((e) => e.type === type && (e.data as { source?: EntityId }).source === src);
 
   it("邊走邊砍：普攻的傷害點必定朝著目標，不是朝著走路方向", () => {
     cover("facing-lock-basic-attack");
@@ -223,7 +247,12 @@ describe("面向鎖 — 揮劍 (task #264)", () => {
     for (let i = 0; i < 90; i++) {
       // 只有走路訂單 —— 攻擊目標交給 #221 自動選取，這才是「邊走邊砍」。
       step(w, walk(SEAT_A, w.transform.get(a)!.pos, PLUS_X));
-      if (w.events.some((e) => e.type === "basicAttack")) {
+      // ⭐ GH#755 —— **認 `source`**。在此之前這一行是 `e.type === "basicAttack"`，
+      // ⛔ 沒有問是誰打的：對面那位也會自動平砍，所以**敵人的**那一發就足以讓
+      // `sawBasicAttack` 成立，而下面量的是**攻擊者**的 facing。
+      // ⇒ 攻擊者根本沒出手的那些世界裡，這條守衛量到的是一個與它無關的 tick
+      //（失敗形態④：斷言方向跟缺陷無關）。
+      if (sawFrom(w, "basicAttack", a)) {
         sawBasicAttack = true;
         // 傷害點這一 tick 的 facing —— basicAttackSystem 在 movementSystem 之後
         // 跑（slot 6 vs 5），所以這是這一 tick 最終送上線的值。
@@ -255,7 +284,10 @@ describe("面向鎖 — 揮劍 (task #264)", () => {
     let sawWindup = false;
     for (let i = 0; i < 90; i++) {
       step(w, walk(SEAT_A, w.transform.get(a)!.pos, PLUS_X));
-      const ev = w.events.find((e) => e.type === "attackWindup");
+      // ⭐ GH#755 —— 認 `source`（理由同上一條）。
+      const ev = w.events.find(
+        (e) => e.type === "attackWindup" && (e.data as { source?: EntityId }).source === a,
+      );
       if (ev) {
         sawWindup = true;
         expect((ev.data as { ticks: number }).ticks).toBeGreaterThan(0); // 真的有前搖
@@ -297,11 +329,13 @@ describe("面向鎖 — 揮劍 (task #264)", () => {
       });
       step(w, frames);
 
-      if (dirAtWindup === null && w.events.some((e) => e.type === "attackWindup")) {
+      // ⭐ GH#755 —— 認 `source`（理由同上）。⚠️ 這一條尤其重要：敵人這裡是**被
+      // 指揮著橫走**的，它自己的平砍事件會把 `sawHit` 提前點亮。
+      if (dirAtWindup === null && sawFrom(w, "attackWindup", a)) {
         const f = w.transform.get(a)!.facing;
         dirAtWindup = { x: f.x, z: f.z };
       }
-      if (dirAtWindup !== null && w.events.some((e) => e.type === "basicAttack")) {
+      if (dirAtWindup !== null && sawFrom(w, "basicAttack", a)) {
         sawHit = true;
         const et = w.transform.get(enemy)!.pos;
         const ap = w.transform.get(a)!.pos;

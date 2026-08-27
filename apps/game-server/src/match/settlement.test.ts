@@ -276,7 +276,19 @@ describe("per-team elimination settlement (elimination-settlement, task #193 / G
     //    誰先被打光、決賽是誰又全部改變，4212 那一場冠軍（隊伍 1）不再被打光過。
     //    ⛔ 掃 4200–4399 共 200 個 seed：**24 個**冠軍本人也歸零過，前八個是
     //    **4209 / 4211 / 4213 / 4222 / 4240 / 4251 / 4267 / 4277**，取最小的。
-    const run = runFullMatch("elim1", 4209, matchDocWithCard(false));
+    // ⚠️ GH#755 —— seed 4209 換成 **4201**（第九次換，同一個理由）：
+    //    2026-08-27 把「打就站定」的兩個門檻拆開並**啟用新規則**
+    //    （`legacyAbsoluteClosing` 預設 false）—— 舊規則讓**有效移速 ≤ walkEps**
+    //    的單位整條規則靜默關閉，於是重減速之下純後退的 bot 拿全額輸出。
+    //    修好之後「誰在什麼時候打得出來」變了 ⇒ 整場的戰鬥軌跡、誰先被打光、
+    //    決賽是誰全部改變，4209 那一場冠軍不再被打光過（`spent` 是隊伍 0 與 1，
+    //    而冠軍是隊伍 2）。
+    //    ⛔ 這不是把測試調鬆 —— 掃 4200–4399 共 200 個 seed：**200 個全部**
+    //    有隊伍歸零、其中 **29 個**冠軍本人也歸零過，前八個是
+    //    **4201 / 4203 / 4234 / 4242 / 4244 / 4245 / 4251 / 4256**，取最小的。
+    //    ⭐ 判準不變：如果哪天掃 200 個 seed 一個都不重現，那就不是換 seed 的
+    //    問題，是**淘汰這條路整個死了**。
+    const run = runFullMatch("elim1", 4201, matchDocWithCard(false));
     // 這一條測的是 OFF 那一側 —— 而且是**經由內容文件**到達控制器的。
     expect(run.ctl.settlementCardOnHealthSpent).toBe(false);
 
@@ -303,7 +315,7 @@ describe("per-team elimination settlement (elimination-settlement, task #193 / G
   it("後台打開就退回舊行為 —— 這個功能是被關掉,不是被刪掉", () => {
     cover("elimination-settlement");
     // 同上，與 OFF 那一側用同一個 seed 才比得出「打開的代價」。
-    const run = runFullMatch("elim1", 4209, matchDocWithCard(true));
+    const run = runFullMatch("elim1", 4201, matchDocWithCard(true));
     expect(run.ctl.settlementCardOnHealthSpent).toBe(true);
 
     // 血歸零的隊伍**當場**拿到一張卡:不多不少就是那些隊伍，各一張。

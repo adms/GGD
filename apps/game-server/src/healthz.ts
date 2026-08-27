@@ -19,6 +19,7 @@ import { tickHealth } from "./match/tickHealth";
 import { platformStatusWithContent } from "./config/contentBus";
 import { degradedHealthzStatus, replayHealth, type ReplayHealthSnapshot } from "./replay/replayHealth";
 import { contentHealth, type ContentHealthSnapshot } from "./contentHealth";
+import { contentCacheHealth, type ContentCacheSnapshot } from "./contentCacheHealth";
 
 export interface HealthzPayload {
   /** Conjunction of every subsystem that can be unhealthy — today: replay. */
@@ -32,6 +33,16 @@ export interface HealthzPayload {
    * 因為每一項都在驗一個名詞，沒有一項在驗兩個名詞之間的關係。
    */
   content: ContentHealthSnapshot;
+  /**
+   * ⭐ GH#717 —— 「執行期的內容快取這一次開機**有沒有生效**」。
+   *
+   * ⚠️ 它**刻意不進 `ok`**：退回讀內容樹是**對的**設計（一台沒有 Redis 的機器
+   * 要照樣跑得起來），⛔ 那不是「不健康」。它進這裡的理由是另一條 ——
+   * fail-open 沒錯，**靜默**才是缺陷：在此之前「快取生效」與「快取整層沒接上」
+   * 在外面看起來一模一樣，而 2026-08-26 量到的真相是**後者**（`apps/` 零消費端）。
+   * 見 ./contentCacheHealth.ts 的檔頭。
+   */
+  contentCache: ContentCacheSnapshot;
   platform: ReturnType<typeof platformStatusWithContent>;
 }
 
@@ -81,6 +92,7 @@ export function buildHealthzPayload(): HealthzPayload {
     sim: tickHealth.snapshot(),
     replay,
     content,
+    contentCache: contentCacheHealth(),
     platform: platformStatusWithContent(),
   };
 }

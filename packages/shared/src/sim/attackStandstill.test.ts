@@ -424,13 +424,13 @@ describe("打就站定 —— 小怪與殭屍王 (MobSystem)", () => {
  * ⛔ 這兩條裡沒有任何一個出貨數值 —— 門檻一律從 `DEFAULT_STANDSTILL` 推導。
  */
 describe("兩個門檻不再共用同一個數字 (GH#755)", () => {
-  // ⭐ 2026-08-27：出貨預設翻回 `legacyAbsoluteClosing: true`（#755 的新規則造成
-  //   `facingLock` 靈魂層回歸 —— 量到 `alignAtHit = -0.73`，攻擊朝反方向出手）。
-  // ⇒ 這兩條驗的是**開關打開之後**的行為，所以夾具要**明說**把它打開。
-  //   ⚠️ 第〇·六守則：測試只做預設啟動的那一邊 —— ⭐ 而這兩條刻意是例外，
-  //   因為它們是「這個機制本身能不能用」的證明，⛔ 不是「出貨會發生什麼」。
-  //   ⛔ 預設改回 false 的那一天，這三行要拿掉（否則它會開始騙人）。
-  const SS = { ...DEFAULT_COMBAT_FEEL.standstill, legacyAbsoluteClosing: false };
+  // ⭐ 2026-08-27（第二次）：出貨預設**又翻回新規則**（`legacyAbsoluteClosing:
+  //   false`）—— 中間那次 rollback 的歸因是錯的，真正紅的是 `facingLock.test.ts`
+  //   自己的兩個夾具缺陷（靠缺陷 A 才綠 ＋ 事件不認 `source`）。理由逐條記在
+  //   `DEFAULT_STANDSTILL` 的宣告上。
+  // ⇒ 這兩條現在驗的**就是出貨預設**（第〇·六守則：只做預設啟動的那一邊），
+  //   所以直接讀 `DEFAULT_COMBAT_FEEL.standstill`，⛔ 不再自己覆寫那一格。
+  const SS = DEFAULT_COMBAT_FEEL.standstill;
   const ME_POS = { x: 0, z: 0 };
   const FOE_POS = { x: 10, z: 0 }; // 目標在 +x
 
