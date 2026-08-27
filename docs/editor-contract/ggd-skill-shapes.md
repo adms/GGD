@@ -321,10 +321,9 @@ CLAUDE.md 第〇·五守則：「⛔ **不要逐支實作。** 按**擋住的支
 
 ## 5. 閘 —— 未分類欄位
 
-⛔ 下面這些欄位出現在出貨技能裡，而 `shape_axes.json` 沒有替它們做過決定：
+✅ 出貨技能裡的**每一個**欄位名都在 `shape_axes.json` 裡有決定
+（帶軸，或在 `ignored` 裡帶著一個能被反駁的理由）。
 
-| 欄位 | 出現次數 |
-|---|---:|
-| `delayed.strikeReposition` | 2 |
-| `comboStrikes.strikeReposition` | 1 |
+⇒ 引擎哪天多一個 `windUpSec` 而沒有人分類它，`--check` 會**紅**並指名它 ——
+⛔ 不是安靜地把那一族技能算成「沒有等待」。
 

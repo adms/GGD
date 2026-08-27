@@ -157,7 +157,7 @@ import { RoundPurgeCoordinator, bindRoundPurge, sceneCounts } from "./render/rou
 import { buildRoundInventory } from "./game/roundInventory";
 import { IdleHum } from "./game/idleHum";
 import { resolveLocalChampionModel, type LocalChampionModel } from "./game/localChampionModel";
-import { footstepRelationOf } from "./game/audioRelation";
+import { footstepRelationOf, makeAnimPulseBridge } from "./game/appBridges";
 import { showRoundLoadOverlay, hideRoundLoadOverlay } from "./render/roundLoadOverlay";
 import { roundPurgeModeOf } from "./vfx/vfxCleanupPolicy";
 import type { AssetTag } from "./render/AssetManager";
@@ -836,10 +836,7 @@ export class GameApp {
           return p;
         },
         vfxDoc: (key) => this.contentDb.vfxFor(key),
-        // ⭐ GH#838 M4 —— 演出腳本要讓受害者播一次動畫（被劈的那一下／慢動作
-        //    定格）。⛔ 特效層不拿 registry，只拿這一個函式（同 vfxDoc 的理由）。
-        pulseAnim: (id, kind, opts) =>
-          this.views.getChampionView(id)?.pulse(kind, performance.now(), opts),
+        pulseAnim: makeAnimPulseBridge(this.views), // GH#838 M4（理由住該檔檔頭）
         // ⭐ GH#551/#543 —— 移動中的**模型**特效要的兩個接縫（翻滾光束／圓周冰塊／
         //    直線火球）。⚠️ 它們是**注入**的,理由與上面 `vfxDoc` 一字不差：
         //    特效層知道「要播什麼」,⛔ 不知道「內容從哪來」。
@@ -2675,7 +2672,7 @@ export class GameApp {
    * only team membership, which is the whole point: an enemy's step is the
    * one you need to hear over your own team's shuffling.
    */
-  /** 腳步聲的敵我關係 —— 純函式住 `game/audioRelation.ts`（4,000 行線）。 */
+  /** 腳步聲的敵我關係 —— 純函式住 `game/appBridges.ts`（4,000 行線）。 */
   private footstepRelation(id: number, localId: number | null): SfxRelation {
     return footstepRelationOf(id, localId, (e) => this.teamOfEntity(e));
   }

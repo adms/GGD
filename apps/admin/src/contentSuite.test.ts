@@ -73,6 +73,8 @@ describe("the 內容·素材管理 dev routes", () => {
       "vfx",
       "arenas",
       "voxelStudio",
+      // 🎨 特效工坊 · 演出腳本（GH#838）—— 第四個「自己的元件」頁（iframe studio）。
+      "vfxStudio",
     ]);
     const only = new Set(CONTENT_ROUTES.flatMap((r) => r.only ?? []));
     for (const c of ["champions", "abilities", "augments", "items", "loot-tables", "vfx", "arenas"]) {

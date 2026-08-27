@@ -157,7 +157,18 @@ export function hashAssetTree(assetsDir: string): string | undefined {
  */
 export function rebuildManifest(
   rootDir: string,
-  opts: { write?: boolean; indexes?: Partial<Record<CollectionName, CollectionIndex>> } = {},
+  opts: {
+    write?: boolean;
+    indexes?: Partial<Record<CollectionName, CollectionIndex>>;
+    /**
+     * ⭐ GH#838 —— 資產樹的摘要。省略 ⇒ 從 `rootDir/assets` 現算（出貨路徑）。
+     * ⚠️ **部分樹**的呼叫端（例：bundle 測試的暫存樹刻意不複製 113MB 的 assets）
+     * 要把**真樹**的值傳進來 —— 否則它建出來的 bundle 會帶一個與出貨不同的
+     * `contentVersion`，而那個差異看起來像「bundle 壞了」。⛔ 不是讓它靜靜地
+     * 少一格：少一格就是「同一份內容算出兩個 cv」，而那正是這一格要防的東西。
+     */
+    assetsHash?: string;
+  } = {},
 ): Manifest {
   const collections: Partial<Record<CollectionName, ManifestCollection>> = {};
   const hashes: Record<string, string> = {};
@@ -193,7 +204,7 @@ export function rebuildManifest(
   //    而它換掉的是「靜默交付失敗」——那是划算的（⛔ 不要為了省 1 秒退回去）。
   // ⚠️ 摘要**只吃路徑與位元組**（⛔ 不吃 mtime）：同一份內容在任何機器上都要算出
   //    同一個 cv，否則每一次 CI 都會 bust 掉全世界的快取。
-  const assetsHash = hashAssetTree(join(rootDir, "assets"));
+  const assetsHash = opts.assetsHash ?? hashAssetTree(join(rootDir, "assets"));
   if (assetsHash !== undefined) hashes["__assets"] = assetsHash;
   const manifest: Manifest = { contentVersion: contentVersion(hashes), collections };
   if (opts.write !== false) {
@@ -265,7 +276,7 @@ export function deleteContentBundle(rootDir: string): boolean {
  */
 export function rebuildAllIndexes(
   rootDir: string,
-  opts: { write?: boolean; bundle?: boolean } = {},
+  opts: { write?: boolean; bundle?: boolean; assetsHash?: string } = {},
 ): Manifest {
   const indexes: Partial<Record<CollectionName, CollectionIndex>> = {};
   const docs: Partial<Record<CollectionName, Record<string, unknown>>> = {};
@@ -280,7 +291,11 @@ export function rebuildAllIndexes(
       },
     });
   }
-  const manifest = rebuildManifest(rootDir, { write: opts.write, indexes });
+  const manifest = rebuildManifest(rootDir, {
+    write: opts.write,
+    indexes,
+    ...(opts.assetsHash !== undefined ? { assetsHash: opts.assetsHash } : {}),
+  });
   if (opts.write !== false && opts.bundle !== false) {
     writeContentBundle(rootDir, manifest, indexes, docs);
   }

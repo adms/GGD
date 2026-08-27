@@ -33,6 +33,7 @@ import { FsContentSource } from "./node/FsContentSource";
 import {
   bundlePath,
   deleteContentBundle,
+  hashAssetTree,
   rebuildAllIndexes,
   rebuildManifest,
 } from "./node/fsStore";
@@ -103,7 +104,11 @@ function bundleTree(): string {
   }
   cpSync(join(CONTENT_DIR, "manifest.json"), join(t, "manifest.json"));
   unlockSandbox(t);
-  rebuildAllIndexes(t);
+  // ⭐ GH#838 —— 這棵暫存樹**刻意不複製** `content/assets`（113MB，這條路一個位元組
+  //    都不讀它）。但 `contentVersion` 現在**含資產摘要**（改一顆 glb 要 bust 掉
+  //    immutable 快取），所以要把**真樹**的那一格傳進來 —— ⛔ 否則這裡建出來的
+  //    bundle 會帶一個與出貨不同的 cv，而那個差異看起來像「bundle 壞了」。
+  rebuildAllIndexes(t, { assetsHash: hashAssetTree(join(CONTENT_DIR, "assets")) });
   sharedTree = t;
   return t;
 }

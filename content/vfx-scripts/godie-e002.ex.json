@@ -2,7 +2,7 @@
   "id": "godie-e002.ex",
   "schema": "vfx-script@1",
   "abilityId": "godie-e002.ex",
-  "notes": "GH#838 三招之一（JASS ExcaliburMAX，war3map.j 32475–32668，掛 Saber unit 受傷事件；底稿 §3）。行為層1＝passive hooks onReflectSuccess→delayed×7（strikeCue ⇒ strike 事件）→damageLine 收尾。每刀：暗紅殘影（600% 攻擊剪輯）＋DarkPortal＋Stampede＋「傷害!」；第 7 刀後：聖光舉劍→勝利劍光柱（前方 1.3u，scale 0.7）＋FragDriller 凍格（scale 8×0.15 速）＋NEDeathSmall/SteamTank/中立爆炸掃蕩＋震動。缺口：M1 拖行、M10 隨機刀距。",
+  "notes": "GH#838 三招之一（JASS ExcaliburMAX，war3map.j 32475–32668，掛 Saber unit 受傷事件；底稿 §3）。行為層1＝passive hooks onReflectSuccess→delayed×7（strikeCue ⇒ strike 事件）→damageLine 收尾。每刀：暗紅殘影（600% 攻擊剪輯）＋DarkPortal＋Stampede＋「傷害!」；第 7 刀後：聖光舉劍→勝利劍光柱（前方 1.3u，scale 0.7）＋FragDriller 凍格（scale 8×0.15 速）＋NEDeathSmall/SteamTank/中立爆炸掃蕩＋震動。缺口：M1 拖行、M10 隨機刀距。 ⭐ 音效（M6）：每刀 wc3.defendcaster（j:549 **逐字命中**）；收尾兩顆 —— ⚠️ FlameStrikeTargetWaveNonLoop1（j:565）與 SuccubusYesAttack2（j:572）**庫裡沒有這兩顆**，用同族的 wc3.flamestrikebirth1／wc3.succubusdeath1 代打 ⇒ 那是**近似不是 1:1**，真品要走匯入批（資產缺口，⛔ 不要讀成已還原）。",
   "segments": [
     {
       "kind": "modelFx",
@@ -155,6 +155,25 @@
       "at": "target",
       "pulse": "hurt",
       "clipWindowMs": 700
+    },
+    {
+      "kind": "sound",
+      "on": "strike",
+      "soundKey": "wc3.defendcaster"
+    },
+    {
+      "kind": "sound",
+      "on": "strike",
+      "strikeIndex": 7,
+      "atMs": 50,
+      "soundKey": "wc3.flamestrikebirth1"
+    },
+    {
+      "kind": "sound",
+      "on": "strike",
+      "strikeIndex": 7,
+      "atMs": 100,
+      "soundKey": "wc3.succubusdeath1"
     }
   ]
 }

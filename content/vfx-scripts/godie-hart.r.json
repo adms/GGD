@@ -2,7 +2,7 @@
   "id": "godie-hart.r",
   "schema": "vfx-script@1",
   "abilityId": "godie-hart.r",
-  "notes": "GH#838 三招之一（JASS A077，war3map.j 33759–33944；底稿 docs/_reports/vfx-editor-jass3_temp_20260828-0042.md §1）。行為＝comboStrikes superff7（6 段＋收尾 3.5s，GH#250）。每刀：劍氣/血濺/雷擊/殘影/鳳凰彈；收尾（strikeIndex 7＝sim 終傷那一刻）：中立爆炸＋震動；升空 KFK/FlameStrike 錨在第 6 段＋offsets。M 缺口（票§MISSING）：M1 逐刀瞬移、M3 升空曲線、M4 受害者定格 —— 落地後補段。 ⭐ M3 升空曲線已用在收尾（JASS 三人升空 1000wc3u≈18.3u 再以 rate 5000 急墜；這裡取半高 9.2u 讓它留在戰鬥鏡頭的視野內 —— 逐格微調走 studio 的 slider）。",
+  "notes": "GH#838 三招之一（JASS A077，war3map.j 33759–33944；底稿 docs/_reports/vfx-editor-jass3_temp_20260828-0042.md §1）。行為＝comboStrikes superff7（6 段＋收尾 3.5s，GH#250）。每刀：劍氣/血濺/雷擊/殘影/鳳凰彈；收尾（strikeIndex 7＝sim 終傷那一刻）：中立爆炸＋震動；升空 KFK/FlameStrike 錨在第 6 段＋offsets。M 缺口（票§MISSING）：M1 逐刀瞬移、M3 升空曲線、M4 受害者定格 —— 落地後補段。 ⭐ M3 升空曲線已用在收尾（JASS 三人升空 1000wc3u≈18.3u 再以 rate 5000 急墜；這裡取半高 9.2u 讓它留在戰鬥鏡頭的視野內 —— 逐格微調走 studio 的 slider）。 ⭐ M4 施法者側：JASS 每一刀也對克勞德 SetUnitAnimation(\"Spell\")（j:109）＋ SetUnitTimeScalePercent(SupI×100)（j:107，⚠️ 段數越後越快）——GGD 用 pulse:cast＋短剪輯窗表達「每刀都揮一次」；⛔ 逐段加速那一半今天表達不了（clipWindowMs 是固定值），那是 M4 的尾巴。",
   "segments": [
     {
       "kind": "floatingText",
@@ -161,6 +161,13 @@
       "at": "target",
       "pulse": "hurt",
       "clipWindowMs": 900
+    },
+    {
+      "kind": "anim",
+      "on": "strike",
+      "at": "caster",
+      "pulse": "cast",
+      "clipWindowMs": 320
     }
   ]
 }
