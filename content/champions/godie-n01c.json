@@ -203,11 +203,8 @@
             }
           ],
           "modelKey": "w3x.stock.reddragonmissile",
-          "scaleAxis": [
-            1,
-            1,
-            7.09
-          ],
+          "count": 10,
+          "spacing": 1.2,
           "arriveSoundKey": "explosion"
         }
       ],
