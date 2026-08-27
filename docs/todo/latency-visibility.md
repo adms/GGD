@@ -112,7 +112,7 @@ docker logs ggd-game 2>&1 | grep ggd.tick.shed
 | pc-06 | **接線**：`noteSent`/`noteAck`/`noteSnapshot` 有生產呼叫者；`perfBus.*` 六行都在；replay 標記與 dispose 歸零都在；`textContent` 真的被寫 | ping-chip-wiring | regression | done |
 | pc-07 | `ConnectionStats` 帶 provenance（樣本數／樣本年齡／快照數）且 `reset()` 真的忘掉一切 | ping-provenance | unit | done |
 | pc-08 | 「慢」與「斷」分得開：gap > 2000ms → `offline`，且恢復後不鎖死 | conn-offline-vs-slow | unit | done |
-| pc-09 | `enemy-team` 觸控 780×360 侵入下緣保留帶 6px（**#107 既有缺陷**，本任務只登記＋界定上限，未修） | ping-band-gutter | regression | in-progress |
+| pc-09 | `enemy-team` 觸控 780×360 侵入下緣保留帶 6px（**#107 既有缺陷**）—— ⭐ **2026-08-27 修好**（GH#759）：逐項算術 `10+44+8+44+8+116+8+44+8+66 = 356` vs 預算 350 ⇒ ⛔ **不是 `enemy-team` 太高，是整條 column 多 6px**；動的是 `minimap` 116→110（`Minimap.tsx:462` 真的拿它當畫布邊長），⛔ 沒有走「把 `enemy-team` 66→60」那條作弊法。⚠️ 這一格在此之前寫著 `in-progress`，而它**自己就是 #759 的最後一個阻塞項** —— 一句在它到期之後還活著的散文（第三守則）。 | ping-band-gutter | regression | **done** |
 | th-01 | shed 事件數／丟掉的 tick 數／最近一次時戳分開計，且 `droppedTicks` 與 `%` 丟掉的完全一致 | tick-health-counters | unit | done |
 | th-02 | 每 tick 耗時 p50/p95/p99 抓得到「永遠稍慢但從不 clamp」；壞時鐘不污染分布；max 是全期 | tick-health-percentiles | unit | done |
 | th-03 | 日誌節流（前 5 次＋每 300 次）但**計數器一次都不漏**；格式固定可 grep 且保留 #46 原句 | tick-health-log | unit | done |
