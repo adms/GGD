@@ -355,6 +355,39 @@ def main() -> int:
             ):
                 if not re.search(_pat, _cmd, re.I):
                     _missing.append(_name)
+            # ⭐⭐ 2026-08-27（GH#808）:**同一批舊票被兩種切法接手兩次**。
+            # 量到的:08-26 02:1x 開了一批「主題合併票」、03:2x 又開了一批「逐張接手票」,
+            # 造出**四對重複**(#727⇄#737/#752 · #724⇄#738 · #726⇄#748 · #725⇄#741/#742)。
+            # ⚠️ 它抓不到,因為**每張票的標題都自己成立、body 都自己完整** ——
+            #    只有把 `接手 #N` 攤開比對才看得見。
+            # ⇒ 新票的「接手 #N」清單若與**任何 open 票**的相交 ⇒ 喊出來(⛔ 仍不擋)。
+            _takeover = set(re.findall(r"接手\s*((?:#\d+[\s,、]*)+)", _cmd))
+            _mine = {int(n) for grp in _takeover for n in re.findall(r"\d+", grp)}
+            if _mine:
+                try:
+                    import subprocess as _sp
+                    _raw = _sp.run(
+                        ["gh", "issue", "list", "--state", "open", "--limit", "400",
+                         "--json", "number,title"],
+                        capture_output=True, text=True, timeout=15,
+                    ).stdout
+                    _clash = []
+                    for _it in json.loads(_raw or "[]"):
+                        _theirs = {int(n) for grp in re.findall(r"接手\s*((?:#\d+[\s,、]*)+)", _it.get("title", ""))
+                                   for n in re.findall(r"\d+", grp)}
+                        if _theirs & _mine:
+                            _clash.append(f"#{_it['number']}（也接手 {sorted(_theirs & _mine)}）")
+                    if _clash:
+                        print(
+                            "🎫 ⚠️ **接手重複**(GH#808):這張票要接手的舊票,已經有 open 票在接手了 ——\n"
+                            "   " + " · ".join(_clash[:5]) + "\n"
+                            "   ⇒ 先看那幾張:是要**合併**、還是這一張要**縮範圍**?\n"
+                            "   ⛔ 兩張都留著 = 同一件事做兩次,而每張票自己看都是合理的。",
+                            file=sys.stderr,
+                        )
+                except Exception:
+                    pass  # gh 打不到就算了 —— ⛔ 這是提醒不是閘
+
             if _missing:
                 print(
                     "🎫 開票規格警告(owner 2026-08-24,⛔ 不擋但要補):這張票缺 "

@@ -447,6 +447,37 @@ npx vitest run packages/shared/src/ops/balanceAnchorDocHonest.test.ts   # 文件
 `apps/admin/src/configForms.ts` 的**兩處**）—— 而 owner 讀的正是後台那兩處。
 ⇒ ⭐ 修一處不夠：**改推導鏈的時候要 `grep KILL_CASTS_REF` 把每一處都掃過。**
 
+### ⛔ 票文寫「**缺席的檔案路徑**」時，要同時寫下**哪一行程式會去讀它**
+
+2026-08-27 量到（GH#565 / #674）：
+
+> 票文寫「6 支共用一份**缺席的** `content/models/imported.bloodbreathstream.json`，先補它」。
+> ⭐ **那句話活過了五則稽核留言**，每一則都把它複述成「下一步第一個動作」。
+
+實際：那份美術**早就出貨了，而且是 6 份** —— 只是住在 `content/vfx/`
+（`fx.w3x.orb.bloodbreathstream.p00–p02` ＋ `godie-bloodbreathstream-p0–p2`，
+全在 `_index.json`、且非必不可見）。而消費端 `spawnVfx.ts:15` 是 `vfxId: zRef("vfx")`
+⇒ 它吃 **`vfx@1`**，⛔ 不是 `model@1`（那是 `spawnModelFx` 的路）。
+⇒ ⭐ **那 6 支今天零個新檔就寫得出來。**
+
+### ⭐ 根因不是記錯，是**跨集合的名字巧合**
+
+同一顆 mdx 有**兩種合法的表達**（`model@1` 與 `vfx@1`）。
+票文寫了其中一種的**路徑**卻沒寫**哪一行程式會讀它** ⇒ 之後每一輪
+`ls content/models/` ⇒ 沒有 ⇒ 複述「它缺席」。⭐ 而每一輪都是「查證過」的。
+
+### ⭐ 判準（開票時一行，讀票時一問）
+
+| ⛔ 不夠 | ⭐ 要有 |
+|---|---|
+| 「缺 `content/x/y.json`」 | 「缺 `content/x/y.json` —— **`a/b.ts:NN` 的 `zRef("x")` 會讀它**」 |
+
+⚠️ 沒有那半句，「它缺席」就**驗證不了**：你只能證明**某個路徑**不存在，
+⛔ 而那不等於**那個東西**不存在。
+
+⚠️ 同族：`docs/` 與 `content/` 底下同一份知識常有產物與來源兩種住處 ——
+⭐ 判斷「這個檔在不在」之前，先問「**誰會讀它**」。
+
 ### ⛔ 「它沒有在跑」與「**它在哪一個環境**沒有在跑」是兩件事
 
 2026-08-27 量到（GH#473，一條前提查證 lane 找到的）：
