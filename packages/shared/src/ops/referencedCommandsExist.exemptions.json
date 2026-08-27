@@ -8,8 +8,12 @@
   "exemptions": [
     {
       "ref": "prose:apply",
-      "files": ["scripts/genguard.sh", "scripts/preserve-before-overwrite.py"],
-      "reason": "歷史紀錄，⛔ 不是指令：NORM lane 2026-08-25 修掉幽靈名 prose:apply（真名 prose:build）時，在這兩個檔留下「為什麼拿掉」的註解，引用的是幽靈名本身。註解若被改寫或刪除，這一列會被棘輪要求刪掉。"
+      "files": [
+        "scripts/genguard.sh",
+        "scripts/preserve-before-overwrite.py",
+        "tools/parallel-gates/normalizers.json"
+      ],
+      "reason": "歷史紀錄，⛔ 不是指令：NORM lane 2026-08-25 修掉幽靈名 prose:apply（真名 prose:build）時，在這兩個檔留下「為什麼拿掉」的註解，引用的是幽靈名本身。註解若被改寫或刪除，這一列會被棘輪要求刪掉。⭐ 2026-08-27（GH#707）：那份知識從**兩份手寫副本**（genguard ＋ hook）搬進單一住處 `tools/parallel-gates/normalizers.json` —— ⭐ **歷史紀錄跟著搬家**，所以這一列的 files 多一個。⛔ 這不是新的幽靈，是同一個幽靈換了住處。"
     }
   ]
 }
