@@ -19,6 +19,7 @@ import {
   selectVoiceGain,
   selectVoiceLadder,
   voicePackFromDoc,
+  withoutExcludedClips,
   type SelectVoiceInputs,
 } from "./selectVoiceLadder";
 import { championVoicesFromDoc, blizzardManifestFromDoc } from "./championVoice";
@@ -165,18 +166,31 @@ describe("select-voice ladder — the name rung", () => {
 
   it("drops a pinned missing clip so the champion falls through to its 名言", () => {
     cover("voice-select-name-rung");
-    expect(EXCLUDED_NAME_CLIPS.has("assets/audio/voices/names/godie-e00j.name.mp3")).toBe(true);
+    // ⭐ GH#744 —— the pin list is EMPTY today (godie-e00j is a RETIRED champion,
+    // so its reading moved to the manifest's `retiredCasting` and the clip it
+    // named is no longer asked for). ⛔ So this cannot assert an entry — it
+    // asserts the RULE, with a synthetic set, which is the half that has to keep
+    // working for the day a shipped clip goes missing again.
+    // The real set's contents are pinned to disk (both directions) by
+    // `selectVoiceCoverage.test.ts`; that is the other half.
+    expect(withoutExcludedClips(["keep.mp3", "gone.mp3"], new Set(["gone.mp3"]))).toEqual([
+      "keep.mp3",
+    ]);
+    const missing = "assets/audio/voices/names/plain.name.mp3";
     const names = championNamesFromDoc({
       champions: {
         plain: {
           zhName: "甲", spokenLine: "甲", jaName: "イチ",
-          clip: "assets/audio/voices/names/godie-e00j.mp3",
-          voSegments: [{ part: "name", clip: "assets/audio/voices/names/godie-e00j.name.mp3" }],
+          clip: "assets/audio/voices/names/plain.mp3",
+          voSegments: [{ part: "name", clip: missing }],
         },
       },
     });
-    const rung = resolveSelectVoice("plain", inputs({ names }));
-    expect(rung?.tier).toBe("quote");
+    // with nothing excluded the champion answers from the name rung…
+    expect(resolveSelectVoice("plain", inputs({ names }))?.tier).toBe("name");
+    // …and the excluded set is what drops it to 名言.
+    expect(withoutExcludedClips([missing], EXCLUDED_NAME_CLIPS)).toEqual([missing]);
+    expect([...EXCLUDED_NAME_CLIPS]).toEqual([]);
   });
 
   it("falls back to the single canonical clip on a pre-#120 manifest", () => {

@@ -2,9 +2,12 @@
  * task #27 (reopened) — the PROOF half: run the real ladder over the real
  * `content/` tree and assert the property the task is about.
  *
- *   • PUBLIC tier (no copyright-gated overlay): all 113 champions answer, and
- *     every clip the ladder can name is a file that exists on disk. This is the
- *     number the family actually plays against; the previous answer was 16/113.
+ *   • PUBLIC tier (no copyright-gated overlay): every SHIPPING champion answers,
+ *     and every clip the ladder can name is a file that exists on disk. This is
+ *     the number the family actually plays against; the first answer was 16/113.
+ *     ⚠️ 「shipping」是推導的（英雄文件在 `content/champions/` 還是
+ *     `content/_legacy/champions/`）—— ⛔ 不是 `champion-voices.json` 的 key 數，
+ *     那一份covers 每一份文件，退休的也在裡面。見 CHAMP_IDS。
  *   • Two DIFFERENT characters never answer with the same audio file. The
  *     content tree does contain byte-identical clips, but only between duplicate
  *     docs of the SAME character (#113) — so a click still says who you are.
@@ -17,7 +20,7 @@
  */
 import { describe, it, expect } from "vitest";
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
@@ -55,7 +58,36 @@ const PUBLIC: SelectVoiceInputs = {
   quotes: QUOTES,
 };
 
-const CHAMP_IDS = Object.keys(VOICES?.champions ?? {});
+/** Champion ids whose doc lives in a directory (`champions` / `_legacy/champions`). */
+function docIds(dir: string): Set<string> {
+  return new Set(
+    readdirSync(join(CONTENT, dir))
+      .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+      .map((f) => f.slice(0, -5)),
+  );
+}
+
+const LIVE_DOCS = docIds("champions");
+const RETIRED_DOCS = docIds("_legacy/champions");
+
+/**
+ * The roster the click is actually asked for — ⛔ NOT every key in
+ * `champion-voices.json`.
+ *
+ * ⚠️ GH#744 / GH#811 —— 這一行以前是 `Object.keys(VOICES.champions)`，而那**曾經**
+ * 等於出貨名單。2026-08-27 呼名產生器把 **47 位退休英雄**的讀音從 MANIFEST 的
+ * `champions` 搬到 `retiredCasting`（「casting kept so the reading is not lost if it
+ * returns」），於是那一刻起 `champion-voices.json` 的 119 個 key 裡有 **48 個的英雄
+ * 文件住在 `content/_legacy/champions/`** —— 點不到、也不該有人替它們錄音。
+ *
+ * ⇒ 在那之前這條的「每一位都出得了聲」量的是**退休名單也算在內**的母體，於是
+ * `godie-h00w` / `godie-n01b` 兩位退休英雄把它判成紅的。⭐ 紅的是**母體**，
+ * ⛔ 不是階梯 —— 而一條用錯母體的守衛會**用錯誤的訊息紅**（失敗形態④）。
+ *
+ * ⭐ 母體現在**推導**：英雄文件在哪個資料夾就是答案，⛔ 不是一張要有人記得維護的
+ * 跳過清單。下一次退休一位，這裡自動跟著走。
+ */
+const CHAMP_IDS = Object.keys(VOICES?.champions ?? {}).filter((id) => !RETIRED_DOCS.has(id));
 
 function sha(rel: string): string {
   return createHash("sha256").update(readFileSync(join(CONTENT, rel))).digest("hex");
@@ -64,12 +96,15 @@ function sha(rel: string): string {
 describe("select-voice coverage on the PUBLIC tier", () => {
   it("answers for every champion, with files that exist", () => {
     cover("voice-select-coverage");
-    // 115 since task #249 imported godie-o02n (曹操孟德's BASE unit O02N).
-    // 119 once the same task imported the four 變身 ALTERNATE bodies
-    // (godie-e010 / h00w / n01b / o030) — `Champions.get()` throws on an
-    // unregistered id and the transform re-points the body at one, so they had
-    // to become real champion docs, and champion-voices.json covers EVERY doc.
-    expect(CHAMP_IDS).toHaveLength(119);
+    // ⭐ 關係，⛔ 不是一個會過期的數字：`champion-voices.json` 覆蓋**每一份**英雄
+    // 文件，而每一份文件不是出貨的就是退休的 —— 兩邊剛好把它分完，沒有孤兒。
+    // 一個 key 兩邊都查不到 ⇒ 有人加了語音設定卻沒有英雄文件（或反過來刪錯了）。
+    const orphans = Object.keys(VOICES?.champions ?? {}).filter(
+      (id) => !LIVE_DOCS.has(id) && !RETIRED_DOCS.has(id),
+    );
+    expect(orphans, "champion-voices.json 有查不到英雄文件的 key").toEqual([]);
+    expect(CHAMP_IDS.length, "出貨名單是空的 —— 母體抽壞了").toBeGreaterThan(50);
+    expect(new Set(CHAMP_IDS)).toEqual(LIVE_DOCS);
 
     const silent: string[] = [];
     const missing: string[] = [];
@@ -88,31 +123,24 @@ describe("select-voice coverage on the PUBLIC tier", () => {
     expect(silent).toEqual([]);
     expect(missing).toEqual([]);
     // The composition is asserted, not just the total: a regression that
-    // silently promoted the 名言 floor over the name rung would keep 114/114.
-    // The generated voice pack (51 CosyVoice3 heroes) now answers rung 2 for the
-    // 42 packed heroes without an authored map-quip; authored stays 16, and the
-    // 42 are drawn out of what was previously the name rung (95 → 54, task #184).
-    // name 54 → 55: task #249 imported godie-o02n (曹操孟德's BASE unit O02N),
-    // which answers on the name rung exactly like its 天下號令 form.
+    // silently promoted the 名言 floor over the name rung would keep 71/71.
+    // Rungs: 1 authored map-quip · 2 generated CosyVoice3 pack (incl. the
+    // 變身 form share, owner 2026-07-26「變身前/後共用就好」) · 3 soundset ·
+    // 4 JP name call-out · 5 名言 floor (machine TTS).
     //
-    // generated 42 → 57, name 55 → 40 (owner 2026-07-26 「變身前/後共用就好」):
-    // a champion with no pack of its own now answers with its w3x FORM
-    // COUNTERPART's, so 15 more champions climb off the TTS name rung onto a
-    // real cloned voice. 51 packs cover 66 champions across the 26 pairs; the
-    // 15 are the shares that are not ALSO map-quip champions (rung 1 still
-    // wins) and that appear in this 115-key config.
+    // ⭐ MEASURED 2026-08-27 over the LIVE roster (see CHAMP_IDS above), and the
+    // shape is the headline: **`quote` is 0**. Not one shipping champion falls to
+    // the machine-TTS floor any more — every click is either a real map quip or
+    // the champion's own cloned voice, with 6 on the JP call-out.
     //
-    // #249's four ALTERNATE bodies add +1 authored and +3 name, MEASURED off a
-    // real run rather than predicted, and each split is explainable:
-    //   · godie-o030 → authored. Its entry mirrors godie-orkn's, which carries
-    //     a real map quip (assets/audio/sfx/bads.mp3), so rung 1 wins.
-    //   · godie-e010 / h00w / n01b → name. Their base halves (e00s / harf /
-    //     nman) have no generated pack either, so the FORM-COUNTERPART share
-    //     rung has nothing to hand down and they fall to the JP call-out clip
-    //     tools/tts-gen minted for them. When those three bases get a
-    //     CosyVoice3 pack, all six climb to `generated` together and this line
-    //     moves again — that is the counterpart rule working, not a break.
-    expect(byTier).toEqual({ authored: 17, generated: 57, name: 43, quote: 2 });
+    // ⚠️ 這一行以前是 `{authored:17, generated:57, name:43, quote:2}`，⛔ 而那個母體
+    // 含 48 位退休英雄。⇒ 差額**不是**任何東西壞掉：`authored 17→13` /
+    // `generated 57→52` / `name 43→6` / `quote 2→0` 全部是那 48 位離場帶走的。
+    // 退休名單本來就不該被算進「家裡真的玩得到的那個數字」。
+    //
+    // 加總單獨驗一次：⛔ 不要讓「有人靜靜地掉出所有階梯」躲在四個數字的算術裡。
+    expect(Object.values(byTier).reduce((a, b) => a + b, 0)).toBe(CHAMP_IDS.length);
+    expect(byTier).toEqual({ authored: 13, generated: 52, name: 6 });
   });
 
   it("never gives two DIFFERENT characters the same audio file — outside the two the w3x already shared", () => {
@@ -156,20 +184,22 @@ describe("select-voice coverage on the PUBLIC tier", () => {
     // The rungs THIS task added are clean: no two characters share a clip.
     expect(collisions.filter((c) => c.tier !== "authored")).toEqual([]);
 
-    // The authored rung is not, and the exception is pinned rather than scoped
-    // away: the w3x itself binds one quip to two heroes (16 champions, 13
-    // distinct clips — see docs/todo/champion-voices.md). That is inherited
-    // source content and predates this ladder; fixing it means re-cutting map
-    // audio, not changing a fallback. Neither pair sits in the curated roster
-    // today, so it cannot be heard as a collision inside one match.
+    // …and so is the authored rung, NOW.
+    //
+    // ⚠️ 這兩行以前釘著兩對 w3x 自己帶進來的碰撞（`dogdie.mp3` = 清蒸飛鼠先生／
+    // 飛鼠先生、`kickme.mp3` = 打我阿笨蛋／鬼王達）—— 原作把同一句 quip 綁在兩位
+    // 英雄身上，屬於來源內容、修它要重剪地圖音訊。⭐ 而當時的註解自己就寫著
+    // 「Neither pair sits in the curated roster today」：⇒ 2026-08-27 那四位隨著
+    // 47 位一起退休（`content/_legacy/champions/`），母體一改正它們就自然消失。
+    //
+    // ⇒ 出貨名單今天是**乾淨的**：⛔ 沒有任何兩位玩得到的英雄共用同一個音檔。
+    // 它們哪天回鍋，這一行會紅並指名是哪一對 —— 那時候要做的是重剪音訊，
+    // ⛔ 不是把它們再釘回來。
     expect(
       collisions
         .map((c) => `${c.clip} = ${[...c.who].sort().join(" / ")}`)
         .sort(),
-    ).toEqual([
-      "assets/audio/sfx/dogdie.mp3 = 清蒸 飛鼠先生 / 飛鼠先生",
-      "assets/audio/sfx/kickme.mp3 = 打我阿笨蛋 / 鬼王達",
-    ]);
+    ).toEqual([]);
   });
 
   it("pins EXCLUDED_NAME_CLIPS to the clips actually missing from disk", () => {
@@ -226,6 +256,8 @@ describe("the generated voice pack, as shipped today", () => {
       (id) => !authoredIds.has(id) && resolveVoicePackId(PACK, id) !== null,
     );
     expect(generated.sort()).toEqual(packedNonAuthored.sort());
-    expect(generated.length).toBe(57);
+    // 57 → 52 for the same reason as the tier table above: the 48 retired
+    // champions left the measured roster on 2026-08-27, not the pack.
+    expect(generated.length).toBe(52);
   });
 });

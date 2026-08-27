@@ -97,21 +97,51 @@ export const VOICE_PACK_SELECT_CATEGORY = "select";
 /**
  * Name-manifest entries whose clip file is NOT on disk. The client cannot stat
  * the content mount, so a rung that resolves to a 404 would be silent — exactly
- * the defect being fixed. This set removes those clips from rung 4 so the
- * champion drops to rung 5 and still speaks.
+ * the defect this ladder exists to fix. This set removes those clips from rung 4
+ * so the champion drops to rung 5 and still speaks.
  *
  * It is PINNED, not guessed: `selectVoiceCoverage.test.ts` asserts it equals the
- * set of name-manifest clips actually missing from `content/`, so regenerating
- * the clip (or losing another one) fails the test instead of quietly changing
- * what a champion says.
+ * set of name-manifest clips actually missing from `content/`, in BOTH
+ * directions, so a newly-lost clip must be added here and a resolved one must be
+ * removed. That two-way equality is what makes the empty state below a
+ * measurement rather than an omission.
  *
- * Today: godie-e00j (皇者 - 騜) — manifest entry present, `.name.mp3` never
- * rendered. Owned by the tts-gen lane, not this one; it drops to its 名言
- * 「ひざまずけ、皇者の御成りだ！」 meanwhile, which is a perfectly good ack.
+ * ── EMPTY TODAY, and the reason matters (GH#744 / GH#811) ─────────────────
+ * The single entry this set ever held was `godie-e00j.name.mp3` (皇者 - 騜), and
+ * the note beside it said the clip was 「never rendered — owned by the tts-gen
+ * lane」. ⛔ That reason was already wrong when it was written down as a to-do:
+ * the fix was never a render.
+ *
+ *   `godie-e00j` is one of the 47 RETIRED champions. Its doc lives in
+ *   `content/_legacy/champions/godie-e00j.json`, and on 2026-08-27 the name
+ *   generator moved its reading out of `champions` and into the manifest's
+ *   `retiredCasting` list (「casting kept so the reading is not lost if it
+ *   returns」). A retired champion is never clicked, so its name rung is never
+ *   asked — there is nothing to render and nothing to fall through from.
+ *
+ * ⚠️ 而那個移動**當場**讓這一格變成謊話：the pin declared a missing clip that the
+ * manifest no longer names, so the two-way equality above went red — not because
+ * a champion went quiet, but because a stale reason outlived the thing it
+ * described (第三守則). The pin is removed; the MECHANISM stays, because the
+ * measurement that keeps it honest is the same one that would re-populate it.
  */
-export const EXCLUDED_NAME_CLIPS: ReadonlySet<string> = new Set([
-  "assets/audio/voices/names/godie-e00j.name.mp3",
-]);
+export const EXCLUDED_NAME_CLIPS: ReadonlySet<string> = new Set<string>([]);
+
+/**
+ * Drop the clips that are known not to exist on disk.
+ *
+ * Split out from `nameClips` so the rule stays provable while
+ * {@link EXCLUDED_NAME_CLIPS} is empty: the guard hands it a synthetic set and
+ * asserts the filtering, and `selectVoiceCoverage.test.ts` separately asserts
+ * the real set equals what is really missing. ⛔ Asserting only against the real
+ * set would mean the mechanism is untested exactly while it holds nothing.
+ */
+export function withoutExcludedClips(
+  clips: readonly string[],
+  excluded: ReadonlySet<string> = EXCLUDED_NAME_CLIPS,
+): string[] {
+  return clips.filter((c) => !excluded.has(c));
+}
 
 /** Which rung of the ladder a champion's click is answered from. */
 export type SelectVoiceTier = "authored" | "generated" | "soundset" | "name" | "quote";
@@ -326,7 +356,7 @@ function nameClips(names: ChampionNamesManifest | null, champId: string): string
   // the SAME character (#113), which is not a legibility failure.
   const pool = entry.voSegments.filter((s) => s.part === "name").map((s) => s.clip);
   const fallback = pool.length > 0 ? pool : [entry.clip];
-  return normalizedPool(fallback).filter((c) => !EXCLUDED_NAME_CLIPS.has(c));
+  return withoutExcludedClips(normalizedPool(fallback));
 }
 
 /**

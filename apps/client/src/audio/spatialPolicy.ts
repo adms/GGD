@@ -159,13 +159,6 @@ export type DormantCause = "no-signal" | "no-wiring";
 
 export interface DormantVerdict {
   readonly cause: DormantCause;
-  /**
-   * `no-wiring` 專用：**今天真的出貨**的狀態文件 id。它們經
-   * `SeatState.statusIds`（per-seat，⚠️ 只有自己的）上線，所以接線的人拿得到的
-   * 是**本地**那一具身體 —— 要讓別人的也說話得先開一顆新的 `ENTITY_FLAG`。
-   * ⛔ `no-signal` 不可以有這一格。
-   */
-  readonly statusIds?: readonly string[];
   /** 一行：為什麼是這個結論。⛔ 不要只複述 cause。 */
   readonly note: string;
 }
@@ -175,6 +168,27 @@ export interface VoicePolicyRow extends PolicyRow {
   readonly dispatched: boolean;
   /** ⛔ 只有 `dispatched: false` 才有；⭐ 而那時候它是**必填**（見守衛）。 */
   readonly dormant?: DormantVerdict;
+  /**
+   * ⭐ GH#743 —— **今天真的出貨**的 `content/status-effects/<id>.json`，這一格語音
+   * 就是替它們說話的。
+   *
+   * ⚠️ 它住在**列上**而不是 `dormant` 裡，⛔ 這不是排版偏好：`dormant` 在接線那一天
+   * 會整塊消失（守衛：`dispatched: true` 的列不可以帶 dormant），而「哪幾個狀態
+   * 對到這一句」在那一天**只會變得更重要** —— 它正是接線要讀的那張表。
+   * 把它埋在 dormant 裡等於保證接線的人得先把它抄到第二個住處（第〇·四守則）。
+   *
+   * ⭐ 它是**可以被反駁**的宣稱：`spatialPolicy.test.ts` 逐個回去讀
+   * `content/status-effects/`，改名或撤掉一個 ⇒ 紅，⛔ 不是靜默腐爛。
+   *
+   * ⭐⭐ 而載具問題（GH#743 票文寫「ENTITY_FLAG FREE_BITS 只剩 5 格，四類佔 4 格
+   * 太奢侈」）**在 2026-08-27 量掉了**：`SeatState.statusIds` 是
+   * `apps/game-server/src/net/snapshot.ts` 的座位迴圈**逐座位全送**的
+   * （`MatchState.seats` 沒有任何 Colyseus filter），而 `EntityState.seatId` 也在
+   * 線上 ⇒ 任何一具身體都查得到它此刻身上的狀態 id。
+   * ⇒ ⛔ **不需要新的 ENTITY_FLAG bit、不需要動協定、不需要動 game-server。**
+   * 缺的只是上升緣（`statusVoiceEdges.ts`）與一個呼叫端。
+   */
+  readonly statusIds?: readonly string[];
 }
 
 /** `skill-name.<slot>` is one policy for all five slots (matched by prefix). */
@@ -226,37 +240,37 @@ export const VOICE_CATEGORY_POLICY: Readonly<Record<string, VoicePolicyRow>> = {
     dispatched: false,
     dormant: {
       cause: "no-signal",
-      note: "出貨的 40 份 status-effect 裡**沒有中毒**；唯一的持續傷害是 `burn`(燃燒/fire)。把「中毒的咳嗽／作嘔」掛在火焰上，等於用聲音說一件沒發生的事",
+      note: "⭐ 2026-08-27 重量：出貨的 44 份 status-effect 裡**仍然沒有中毒**。唯一帶 `dot` 的是 `burn`，而它的標籤是 `fire`/`elemental` —— ⛔ 「有 dot」≠「有毒」。把「中毒的咳嗽／作嘔」掛在火焰上，等於用聲音說一件沒發生的事。⇒ 補它要先有一份 `content/status-effects/poison.json` 與用它的技能，⛔ 不是接一條線",
     },
   },
   "blind": {
     policy: "world",
     reason: "status line",
     dispatched: false,
+    statusIds: ["blind"],
     dormant: {
       cause: "no-wiring",
-      statusIds: ["blind"],
-      note: "【致盲】今天就在線上（SeatState.statusIds），只差一個上升緣偵測 —— ⛔ 不要順手把【詛咒】也算進來，那是另一格語音(curse=咒罵)",
+      note: "【致盲】今天就在線上（SeatState.statusIds，⭐ 全座位都送）。上升緣已經做好在 `statusVoiceEdges.ts`，剩下的是一個呼叫端 —— ⛔ 不要順手把【詛咒】也算進來，那是另一格語音(curse=咒罵)",
     },
   },
   "paralyzed": {
     policy: "world",
     reason: "status line",
     dispatched: false,
+    statusIds: ["paralysis", "numbness"],
     dormant: {
       cause: "no-wiring",
-      statusIds: ["paralysis", "numbness"],
-      note: "【癱瘓】與【麻痺】都出貨了，兩份都是 disable+cc，共用這一句",
+      note: "【癱瘓】與【麻痺】都出貨了，兩份都是 disable+cc，共用這一句。上升緣同上",
     },
   },
   "confused": {
     policy: "world",
     reason: "status line",
     dispatched: false,
+    statusIds: ["confusion"],
     dormant: {
       cause: "no-wiring",
-      statusIds: ["confusion"],
-      note: "【混亂】出貨了。⛔ 同樣掛 `ai-override` 的【暴走】【恐懼】【魅惑】各自是別的東西，沒有自己的語音格",
+      note: "【混亂】出貨了。上升緣同上。⛔ 同樣掛 `ai-override` 的【暴走】【恐懼】【魅惑】各自是別的東西，沒有自己的語音格",
     },
   },
   "retreat": {

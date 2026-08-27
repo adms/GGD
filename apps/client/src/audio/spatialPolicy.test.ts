@@ -246,16 +246,22 @@ describe("every voice category is classified (spatial-policy-voice)", () => {
       expect(d, `${cat} fires nowhere and does not say why`).toBeDefined();
       expect(d!.note.length, `${cat} needs a real note`).toBeGreaterThan(8);
       if (d!.cause === "no-wiring") {
-        const ids = d!.statusIds ?? [];
+        const ids = row.statusIds ?? [];
         expect(ids.length, `${cat} claims the signal ships — name it`).toBeGreaterThan(0);
-        const ghosts = ids.filter((id) => !shipped.has(id));
-        expect(
-          ghosts,
-          `${cat} claims these status-effect docs ship, and they do not: ${ghosts.join(", ")}`,
-        ).toEqual([]);
       } else {
-        expect(d!.statusIds, `${cat} is no-signal — it must not name one`).toBeUndefined();
+        expect(row.statusIds, `${cat} is no-signal — it must not name one`).toBeUndefined();
       }
+    }
+    // ⭐ GH#743 —— `statusIds` 搬到**列上**（⛔ 不在 dormant 裡），因為接線那一天
+    // dormant 整塊會消失而這張對照表只會更重要。⇒ 驗證也跟著搬到列上，
+    // 而且 ⭐ **每一列**都驗（⛔ 不只 dormant 的那幾列）：接完線之後那幾列會變成
+    // `dispatched: true`，而它們宣稱的狀態 id 仍然必須是真的出貨文件。
+    for (const [cat, row] of Object.entries(VOICE_CATEGORY_POLICY)) {
+      const ghosts = (row.statusIds ?? []).filter((id) => !shipped.has(id));
+      expect(
+        ghosts,
+        `${cat} claims these status-effect docs ship, and they do not: ${ghosts.join(", ")}`,
+      ).toEqual([]);
     }
     // and the export the next lane will read agrees with the table
     expect(dormantVoiceCategories().map(([c]) => c).sort()).toEqual(

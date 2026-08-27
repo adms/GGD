@@ -14,7 +14,7 @@
  * NameVoiceAudioPort — this layer never touches the WebAudio graph.
  */
 import { describe, it, expect } from "vitest";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { resolve } from "node:path";
 import { cover } from "@ggd/shared/testkit/cover";
@@ -549,7 +549,19 @@ describe("the generated MANIFEST carries a zh-稱號 + ja-全名 clip per champi
     expect(zhVoice).not.toBe("Kyoko"); // the 稱號 is a distinct Chinese voice
 
     const ids = Object.keys(doc.champions);
-    expect(ids.length).toBeGreaterThan(100);
+    // ⭐ GH#744 / GH#811 —— 這裡以前是 `expect(ids.length).toBeGreaterThan(100)`，
+    // 一個「有讀到真的檔案」的粗略下界。2026-08-27 呼名產生器把 47 位退休英雄的
+    // 讀音搬到 `retiredCasting`（英雄文件在 `content/_legacy/champions/`），
+    // 於是 `champions` 從 118 掉到 71，而那個下界**用錯誤的訊息**紅了：
+    // 它看起來在說「產生器少寫了 47 位」，實際上是「那 47 位下架了」。
+    //
+    // ⇒ 換成**關係**：這一份要覆蓋的就是**出貨名單**，一位不多一位不少。
+    // 少一位 ⇒ 那位英雄的呼名是啞的；多一位 ⇒ 退休的沒有被搬走。兩種都會紅，
+    // 而且訊息指名是誰。⛔ 不是一個要有人記得往下調的數字。
+    const liveDocs = readdirSync(`${CONTENT}/champions`)
+      .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+      .map((f) => f.slice(0, -5));
+    expect(ids.slice().sort()).toEqual(liveDocs.slice().sort());
 
     for (const id of ids) {
       const e = doc.champions[id]!;
