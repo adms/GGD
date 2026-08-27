@@ -5,17 +5,17 @@
  "ledger": "tools/w3a-translate/gap-ledger.json",
  "joined": 452,
  "tally": {
-  "cooldown:ggd-zero": 11,
+  "cooldown:ggd-zero": 12,
   "cooldown:same": 113,
-  "cooldown:tier": 156,
+  "cooldown:tier": 155,
   "cooldown:w3a-absent": 172,
   "duration:free-number": 31,
   "duration:ggd-absent": 195,
   "duration:same": 3,
   "duration:w3a-absent": 223,
-  "mana:ggd-zero": 76,
+  "mana:ggd-zero": 77,
   "mana:same": 25,
-  "mana:tier": 170,
+  "mana:tier": 169,
   "mana:w3a-absent": 181,
   "radius:free-number": 5,
   "radius:ggd-absent": 91,
@@ -837,6 +837,16 @@
   {
    "axis": "cooldown",
    "key": "cooldown:ggd-zero",
+   "w3a": "A0WA",
+   "ggd": "godie-h02u.w",
+   "name": "92-02 消化液",
+   "w3aValue": 40.0,
+   "ggdValue": 0.0,
+   "verdict": "ggd-zero"
+  },
+  {
+   "axis": "cooldown",
+   "key": "cooldown:ggd-zero",
    "w3a": "A0S3",
    "ggd": "godie-u00j.ex",
    "name": "74-002 超新星",
@@ -1531,16 +1541,6 @@
    "ggd": "godie-h02u.r",
    "name": "92-04 馬勒戈壁",
    "w3aValue": 90.0,
-   "ggdValue": 60.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "cooldown",
-   "key": "cooldown:tier",
-   "w3a": "A0WA",
-   "ggd": "godie-h02u.w",
-   "name": "92-02 消化液",
-   "w3aValue": 40.0,
    "ggdValue": 60.0,
    "verdict": "tier"
   },
@@ -2767,6 +2767,16 @@
   {
    "axis": "mana",
    "key": "mana:ggd-zero",
+   "w3a": "A0WA",
+   "ggd": "godie-h02u.w",
+   "name": "92-02 消化液",
+   "w3aValue": 150.0,
+   "ggdValue": 0.0,
+   "verdict": "ggd-zero"
+  },
+  {
+   "axis": "mana",
+   "key": "mana:ggd-zero",
    "w3a": "A02C",
    "ggd": "godie-hpb1.r",
    "name": "07-04 神聖結界",
@@ -3732,16 +3742,6 @@
    "name": "92-04 馬勒戈壁",
    "w3aValue": 300.0,
    "ggdValue": 288.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
-   "w3a": "A0WA",
-   "ggd": "godie-h02u.w",
-   "name": "92-02 消化液",
-   "w3aValue": 150.0,
-   "ggdValue": 72.0,
    "verdict": "tier"
   },
   {

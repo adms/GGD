@@ -685,26 +685,6 @@
       ]
     },
     {
-      "id": "fx.prim.physical.shockwave",
-      "kind": "vfx",
-      "hash": "b62abd208ec00735a39c74e88dd392bda2e78a61",
-      "risk": 8,
-      "reasons": [
-        "8 支上架技能引用（R/EX ×2 加權後 risk 8）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e00x.passive",
-        "godie-emns.e",
-        "godie-h01u.q",
-        "godie-h02k.q",
-        "godie-h02u.q",
-        "godie-h02u.w",
-        "godie-hapm.w",
-        "godie-u00n.q"
-      ]
-    },
-    {
       "id": "fx.prim.void.beam",
       "kind": "vfx",
       "hash": "5d65a5b2d831c0751630a955a88d1b9802dc9e52",
@@ -868,6 +848,25 @@
         "godie-u00o.r"
       ],
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
+    },
+    {
+      "id": "fx.prim.physical.shockwave",
+      "kind": "vfx",
+      "hash": "b62abd208ec00735a39c74e88dd392bda2e78a61",
+      "risk": 7,
+      "reasons": [
+        "7 支上架技能引用（R/EX ×2 加權後 risk 7）",
+        "未審"
+      ],
+      "refs": [
+        "godie-e00x.passive",
+        "godie-emns.e",
+        "godie-h01u.q",
+        "godie-h02k.q",
+        "godie-h02u.q",
+        "godie-hapm.w",
+        "godie-u00n.q"
+      ]
     },
     {
       "id": "fx.prim.void.pulse-sm",
@@ -1492,6 +1491,23 @@
       "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
     },
     {
+      "id": "fx.prim.nature.pulse-sm",
+      "kind": "vfx",
+      "hash": "1283d578cb5c456d61b2deb612ff9fdd76657759",
+      "risk": 5,
+      "reasons": [
+        "5 支上架技能引用（R/EX ×2 加權後 risk 5）",
+        "未審"
+      ],
+      "refs": [
+        "godie-e00s.e",
+        "godie-e010.e",
+        "godie-h02u.w",
+        "godie-h02v.q",
+        "godie-h02v.w"
+      ]
+    },
+    {
       "id": "fx.prim.void.bolt",
       "kind": "vfx",
       "hash": "b4ec3cced9794dc0868f7af9a7165bd9c593e88d",
@@ -1781,6 +1797,22 @@
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
     {
+      "id": "fx.prim.arcane.nova",
+      "kind": "vfx",
+      "hash": "96b667bde804641b42a2d3d8fe8138fdabdc1105",
+      "risk": 4,
+      "reasons": [
+        "4 支上架技能引用（R/EX ×2 加權後 risk 4）",
+        "未審"
+      ],
+      "refs": [
+        "godie-h02u.e",
+        "godie-h02v.e",
+        "godie-hgam.w",
+        "godie-o02l.e"
+      ]
+    },
+    {
       "id": "fx.prim.arcane.summon",
       "kind": "vfx",
       "hash": "693035b7cc8f488c07e800c9c1f2c7332d38f007",
@@ -1882,22 +1914,6 @@
       ],
       "refs": [],
       "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
-    },
-    {
-      "id": "fx.prim.nature.pulse-sm",
-      "kind": "vfx",
-      "hash": "1283d578cb5c456d61b2deb612ff9fdd76657759",
-      "risk": 4,
-      "reasons": [
-        "4 支上架技能引用（R/EX ×2 加權後 risk 4）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e00s.e",
-        "godie-e010.e",
-        "godie-h02v.q",
-        "godie-h02v.w"
-      ]
     },
     {
       "id": "fx.prim.nature.slash",
@@ -2992,21 +3008,6 @@
       "spec": "施法淡出粒子 ≤0.5 秒（#569），天空不可以有殘留"
     },
     {
-      "id": "fx.prim.arcane.nova",
-      "kind": "vfx",
-      "hash": "96b667bde804641b42a2d3d8fe8138fdabdc1105",
-      "risk": 3,
-      "reasons": [
-        "3 支上架技能引用（R/EX ×2 加權後 risk 3）",
-        "未審"
-      ],
-      "refs": [
-        "godie-h02v.e",
-        "godie-hgam.w",
-        "godie-o02l.e"
-      ]
-    },
-    {
       "id": "fx.prim.blood.nova",
       "kind": "vfx",
       "hash": "f54a18320b552e89faad1f51d200ea3f144e997f",
@@ -3063,21 +3064,6 @@
         "godie-e002.e",
         "godie-e00l.e",
         "godie-etyr.e"
-      ]
-    },
-    {
-      "id": "fx.prim.nature.nova",
-      "kind": "vfx",
-      "hash": "6d6024ccec12efce73210852d0ec8cdc4f9fffca",
-      "risk": 3,
-      "reasons": [
-        "3 支上架技能引用（R/EX ×2 加權後 risk 3）",
-        "未審"
-      ],
-      "refs": [
-        "godie-h02u.e",
-        "godie-o030.w",
-        "godie-orkn.w"
       ]
     },
     {
@@ -3459,6 +3445,20 @@
       "refs": [
         "godie-o00x.e",
         "godie-o00x.q"
+      ]
+    },
+    {
+      "id": "fx.prim.nature.nova",
+      "kind": "vfx",
+      "hash": "6d6024ccec12efce73210852d0ec8cdc4f9fffca",
+      "risk": 2,
+      "reasons": [
+        "2 支上架技能引用（R/EX ×2 加權後 risk 2）",
+        "未審"
+      ],
+      "refs": [
+        "godie-o030.w",
+        "godie-orkn.w"
       ]
     },
     {
