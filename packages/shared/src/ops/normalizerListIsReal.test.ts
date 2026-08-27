@@ -1,20 +1,25 @@
 /**
  * normalizerListIsReal.test.ts
- * —— ⭐ **genguard 兩份腳本的正規化器清單，每一個名字都要是真的。**
+ * —— ⭐ **正規化器清單裡的每一個名字都要是真的，而且只准有一份。**
  *
  * 2026-08-25：兩份清單都掛著 "prose:apply" —— 這個名字不在 package.json
- * （真名 prose:build / prose:check），也不在 sync-io.json 的 38 個步驟裡
+ * （真名 prose:build / prose:check），也不在 sync-io.json 的步驟裡
  * ⇒ 它**永遠比不中**，而沒有任何測試會紅（owner 點名的「閘自己在說謊」形狀）。
  *
- * 三條斷言（⛔ 清單不抄進測試 —— 那是第〇·四守則說的第二個住處，
- * 一律用 regex 從腳本**原文**抽）：
- *   ① 兩份腳本抽出來的清單**集合相等**（hook 放行而 genguard 擋 = 散文說謊）
+ * ⭐⭐ 2026-08-27（GH#707）**清單搬進 `tools/parallel-gates/normalizers.json`**。
+ * 在此之前它有兩份手寫副本（genguard.sh + hook），而這條閘只比對那兩份 ——
+ * 於是**第三個消費端**（`scripts/product-quarantine.sh`）連這個概念都沒有，
+ * 全綠地把 387 份手編檔 chmod 444。⇒ 第〇·四守則：一份知識一個住處。
+ * 這條閘的問題因此從「兩份一不一樣」變成「**有沒有人又自己抄了一份**」。
+ *
+ * 四條斷言（⛔ 清單不抄進測試 —— 那會是第二個住處）：
+ *   ① 唯一住處讀得到，而且非空；每一格帶得出**能被反駁的理由**
  *   ② 每一個名字 ∈ sync-io.json 的 steps[].name（比不中的名字＝幽靈）
  *   ③ 每一個名字 ∈ package.json 的 scripts（訊息叫人跑 `pnpm <名>` 要跑得動）
+ *   ④ ⭐ 三個消費端**都引用那份 JSON**，而且⛔ 沒有人自己硬寫一份清單
  *
- * 突變紀錄（2026-08-25 實跑）：往 genguard.sh 的 NORMALIZERS 塞 'prose:apply'
- * → ① 紅（指名兩邊不等）。改回來。⚠️ ②③ 掃的是**兩份清單的聯集** ——
- * 幽靈塞進單邊被 ① 抓，塞進兩邊 ① 綠但聯集必含它 ⇒ ②③ 抓，沒有第三種塞法。
+ * 突變紀錄（2026-08-27 實跑）：往 normalizers.json 塞 {"step":"prose:apply"}
+ * → ②③ 同時紅並指名它。改回來。
  */
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
@@ -22,57 +27,63 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
+const read = (f: string): string => readFileSync(join(REPO, f), "utf8");
 
-/** 從腳本原文抽清單；regex 比不到就**大聲失敗**（變數改名不可以讓這條閘靜默變空）。 */
-function extract(file: string, re: RegExp): string[] {
-  const src = readFileSync(join(REPO, file), "utf8");
-  const m = src.match(re);
-  expect(m, `${file}: 找不到正規化器清單（變數改名了？連這條閘一起改）`).not.toBeNull();
-  return [...m![1]!.matchAll(/["']([^"']+)["']/g)].map((q) => q[1]!).sort();
-}
-
-const hookList = extract(
+/** ⭐ 三個消費端 —— 一個都不可以自己抄清單。 */
+const CONSUMERS = [
+  "scripts/genguard.sh",
   "scripts/preserve-before-overwrite.py",
-  /NORMALIZER_STEPS\s*=\s*frozenset\(\{([^}]*)\}\)/,
-);
-const genguardList = extract("scripts/genguard.sh", /const NORMALIZERS\s*=\s*new Set\(\[([^\]]*)\]\)/);
+  "scripts/product-quarantine.sh",
+] as const;
+
+const home = JSON.parse(read("tools/parallel-gates/normalizers.json")) as {
+  normalizers: { step: string; reason?: string }[];
+};
+const names = home.normalizers.map((n) => n.step).sort();
 
 const stepNames = new Set(
-  (JSON.parse(readFileSync(join(REPO, "tools/parallel-gates/sync-io.json"), "utf8")) as {
-    steps: { name: string }[];
-  }).steps.map((s) => s.name),
-);
-const pkgScripts = new Set(
-  Object.keys(
-    (JSON.parse(readFileSync(join(REPO, "package.json"), "utf8")) as { scripts: Record<string, string> })
-      .scripts,
+  (JSON.parse(read("tools/parallel-gates/sync-io.json")) as { steps: { name: string }[] }).steps.map(
+    (s) => s.name,
   ),
 );
+const pkgScripts = new Set(
+  Object.keys((JSON.parse(read("package.json")) as { scripts: Record<string, string> }).scripts),
+);
 
-/** ②③ 掃聯集：幽靈同時塞進兩份清單時 ① 是綠的，聯集仍然抓得到它。 */
-const union = [...new Set([...hookList, ...genguardList])].sort();
-
-describe("normalizer 清單裡沒有幽靈名", () => {
-  it("① hook 與 genguard.sh 的清單集合相等", () => {
-    expect(genguardList, "兩份腳本的裁決必須逐字一致 —— 一邊放行一邊擋就是散文在說謊").toEqual(
-      hookList,
-    );
-    expect(hookList.length, "清單抽出來是空的 —— regex 壞了或清單真的被清空").toBeGreaterThan(0);
+describe("normalizer 清單：一個住處、沒有幽靈名", () => {
+  it("① 唯一住處非空，而且每一格寫得出理由", () => {
+    expect(names.length, "清單是空的 —— 那會讓每一份被認領的檔都判成 AUTHOR").toBeGreaterThan(0);
+    const noReason = home.normalizers.filter((n) => (n.reason ?? "").trim().length < 20);
+    expect(
+      noReason.map((n) => n.step),
+      "⛔ 沒有理由的豁免＝下一輪的我會把它當成證據（CLAUDE.md：要一個能被反駁的理由）",
+    ).toEqual([]);
   });
 
   it("② 每一個名字都是 sync-io.json 真的有的步驟", () => {
-    const ghosts = union.filter((n) => !stepNames.has(n));
-    expect(
-      ghosts,
-      `幽靈步驟名（不在 sync-io 的 steps[].name ⇒ 永遠比不中）：${ghosts.join(", ")}`,
-    ).toEqual([]);
+    const ghosts = names.filter((n) => !stepNames.has(n));
+    expect(ghosts, `幽靈步驟名（不在 sync-io 的 steps[].name ⇒ 永遠比不中）：${ghosts.join(", ")}`)
+      .toEqual([]);
   });
 
   it("③ 每一個名字都是 package.json 跑得動的 script", () => {
-    const dead = union.filter((n) => !pkgScripts.has(n));
-    expect(
-      dead,
-      `不在 package.json scripts 的名字（訊息叫人跑 pnpm <名> 會失敗）：${dead.join(", ")}`,
-    ).toEqual([]);
+    const dead = names.filter((n) => !pkgScripts.has(n));
+    expect(dead, `不在 package.json scripts 的名字（訊息叫人跑 pnpm <名> 會失敗）：${dead.join(", ")}`)
+      .toEqual([]);
+  });
+
+  it("④ 三個消費端都讀那份 JSON，⛔ 沒有人自己硬寫一份", () => {
+    for (const f of CONSUMERS) {
+      const src = read(f);
+      expect(src, `${f} 沒有引用唯一住處 —— 它的裁決會與另外兩支漂開（GH#707 的形狀）`).toContain(
+        "parallel-gates/normalizers.json",
+      );
+      // ⭐ 硬寫的副本長什麼樣：同一行裡出現 ≥2 個已知的步驟名字面值。
+      const hardcoded = src
+        .split("\n")
+        .filter((l) => !l.includes("normalizers.json"))
+        .filter((l) => names.filter((n) => l.includes(`"${n}"`) || l.includes(`'${n}'`)).length >= 2);
+      expect(hardcoded, `${f} 疑似又硬寫了一份清單：\n${hardcoded.join("\n")}`).toEqual([]);
+    }
   });
 });

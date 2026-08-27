@@ -39,8 +39,20 @@ import { readFileSync } from 'node:fs';
 //    tier 欄位那幾行,⛔ 其餘位元組一個都不碰 ⇒ 正規化器。
 //    ⚠️ 漏掉它的後果:71 份英雄卡裡 55 份被判 AUTHOR 而訊息叫人「改來源」——
 //    **英雄卡自己就是來源**,那是一條死路(另一條 lane 實測撞到,GH#805)。
-const NORMALIZERS = new Set(['tiers:apply', 'apconv:build', 'skillremake:provenance', 'speedtiers:build']);
-const io=JSON.parse(readFileSync('tools/parallel-gates/sync-io.json','utf8'));
+//    ⭐⭐ 2026-08-27（GH#707）清單**搬進 tools/parallel-gates/normalizers.json** ——
+//    在此之前它有兩份手寫副本(這裡 + hook),而**第三個消費端**(產物隔離區)
+//    根本不認得這個概念 ⇒ genguard 說「不擋你」而檔案是 444 ⇒ 387 份合法手編吃 EACCES。
+//    ⇒ 唯一住處 + 三個消費端一起讀(第〇·四守則)。每一格的理由住在那份 JSON 裡。
+//    ⚠️ 讀不到那份 JSON ⇒ 印 ERROR 並讓這支回非零,⛔ 不可以靜默當成「沒有正規化器」
+//    (那會讓 387 份手編檔全部被判 AUTHOR,而輸出看起來完全正常)。
+let NORMALIZERS, io;
+try {
+  NORMALIZERS = new Set(JSON.parse(readFileSync('tools/parallel-gates/normalizers.json','utf8')).normalizers.map((n) => n.step));
+  io = JSON.parse(readFileSync('tools/parallel-gates/sync-io.json','utf8'));
+} catch (e) {
+  console.log('ERROR\t' + String((e && e.message) || e).split('\n')[0]);
+  process.exit(0);
+}
 const p=process.argv[1];
 const hit=[];
 // ⭐ GH#771:戶籍表裡的日期戳家族是 glob（merge-io 正規化）⇒ 用 glob→regex 比對。
@@ -61,6 +73,14 @@ if (hit.length) {
 " "$p" 2>/dev/null)
   KIND=${OWNER%%$'\t'*}
   NAME=${OWNER#*$'\t'}
+  if [ "$KIND" = "ERROR" ]; then
+    # ⚠️ 表讀不到 ⇒ **大聲**,⛔ 不是靜默放行。這支腳本的整個裁決都建立在那兩份表上。
+    echo "🚫 genguard 自己壞了 —— 讀不到擁有者表:$NAME"
+    echo "   ⇒ 需要 tools/parallel-gates/{sync-io,normalizers}.json 兩份都在。"
+    echo "   ⛔ 在修好之前**不要**把「沒有輸出」當成「可以改」。"
+    RC=1
+    continue
+  fi
   if [ "$KIND" = "AUTHOR" ]; then
     echo "🚫 $p 是產生器 **$NAME** 的產物 —— ⛔ 直接改它,下一次 sync 就打回來。"
     echo "   ⇒ 改它的**來源**,然後 \`bash scripts/genrun.sh $NAME\` 重生成"
@@ -75,6 +95,15 @@ if (hit.length) {
     echo "      ⇒ 改之前再問一次: grep -rl \"\$(basename \"$p\" .json)\" tools/ | head"
     echo "      找得到來源就改來源＋genrun,⛔ 不要直接編這一份。"
     echo "   ⚠️ 真的手改了,請跑一次 \`pnpm $NAME\`,讓級距/換算欄位跟著新內容重算。"
+    # ⭐ GH#707:在此之前這一支說「不擋你」而**產物隔離區把它 chmod 444**（388 份,100%）
+    #    ⇒ 合法手編吃 EACCES 而訊息裡零指引。現在隔離區認得正規化器了,
+    #    ⛔ 但這一行仍然要在 —— 它是第二把量尺:兩個閘再度分家時,**這裡會說出來**。
+    if [ -e "$p" ] && [ ! -w "$p" ]; then
+      echo "   🚫🚫 ⚠️ **但這個檔現在是唯讀的(444)** —— 隔離區與這一支又意見相左了(GH#707)。"
+      echo "      ⇒ 修法: bash scripts/product-quarantine.sh lock   （它會放行正規化器專屬檔）"
+      echo "      ⛔ 不要手動 chmod 這一份 —— 那只治好眼前這一個,下一次 sync 又是全部。"
+      RC=1
+    fi
   else
     # ⭐ 2026-08-26（owner:「追誤會的多個源頭」）——「無主」有兩種，⛔ 不可以長一樣:
     #    檔案是唯讀(444) = 隔離區鎖過它 = **它是產物,只是戶籍表漏登**（量測洞:

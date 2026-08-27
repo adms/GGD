@@ -246,7 +246,26 @@ def targets(tool: str, ti: dict, cwd: Path) -> list[Path]:
 #:    tier 欄位那幾行,⛔ 其餘位元組一個都不碰 ⇒ 正規化器。
 #:    ⚠️ 漏掉它的後果:71 份英雄卡裡 55 份被判 AUTHOR 而訊息叫人「改來源」——
 #:    **英雄卡自己就是來源**,那是一條死路(另一條 lane 實測撞到,GH#805)。
-NORMALIZER_STEPS = frozenset({"tiers:apply", "apconv:build", "skillremake:provenance", "speedtiers:build"})
+#:    ⭐⭐ 2026-08-27（GH#707）清單**搬進 tools/parallel-gates/normalizers.json** ——
+#:    在此之前它有兩份手寫副本（這裡 + genguard.sh），而**第三個消費端**
+#:    （scripts/product-quarantine.sh）根本不認得這個概念 ⇒ 這支 hook 說「放行」
+#:    而檔案是 chmod 444 ⇒ **387 份**合法手編吃 EACCES。⇒ 唯一住處，三邊一起讀。
+#:    每一格的理由（逐行讀過那支程式）住在那份 JSON 裡，⛔ 不再散落在三處註解。
+_NORMALIZERS_JSON = REPO / "tools/parallel-gates/normalizers.json"
+
+
+def _normalizer_steps() -> frozenset[str]:
+    """正規化器清單 —— ⛔ 不快取（hook 是一次性行程，而 lane 的樹可能有不同的表）。
+
+    ⚠️ 讀不到就回**空集合**：那讓每一個被認領的檔都判成 AUTHOR ＝ **擋**。
+    hook 這一側刻意 fail-**closed**（擋一個該放的，代價是一句話；
+    放一個該擋的，代價是 owner 記錄過上百次的那個事故）。
+    """
+    try:
+        data = json.loads(_NORMALIZERS_JSON.read_text(encoding="utf-8"))
+        return frozenset(str(n["step"]) for n in data.get("normalizers", []))
+    except Exception:
+        return frozenset()
 
 
 def _generator_owner(p: Path) -> tuple[str, bool] | None:
@@ -274,7 +293,8 @@ def _generator_owner(p: Path) -> tuple[str, bool] | None:
                     break
         if not claimants:
             return None
-        authors = [c for c in claimants if c not in NORMALIZER_STEPS]
+        normalizer_steps = _normalizer_steps()
+        authors = [c for c in claimants if c not in normalizer_steps]
         if authors:
             return (authors[0], False)
         return (claimants[0], True)

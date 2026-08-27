@@ -1,0 +1,44 @@
+{
+  "$schema-note": "⭐ 正規化器清單的**唯一住處**（第〇·四守則：同一份知識不可以有第二個住處）。",
+  "$why": [
+    "sync-io.json 是**量出來的**寫入表 ⇒ 它只知道「誰寫過這個檔」，⛔ 不知道「誰**擁有**它」。",
+    "有一族步驟是**就地改欄位**的正規化器：它們讀既有檔、只覆寫其中幾格、⛔ 不產生那個檔。",
+    "把正規化器當成作者的後果是**封死唯一的合法路** —— 訊息叫人「改來源」，而那些檔自己就是來源。",
+    "⛔ 每一格都要寫得出**能被反駁的理由**（逐行讀過那支程式），⛔ 不是「看起來像」。",
+    "⛔ 名字只准放 sync-io.json 真的有的步驟名 —— 幽靈名永遠比不中，掛在這裡只是一句看起來有防的散文。"
+  ],
+  "$consumers": [
+    "scripts/genguard.sh —— 查詢用（AUTHOR ⇒ exit 1；NORMALIZER ⇒ exit 0 + 提醒）",
+    "scripts/preserve-before-overwrite.py —— PreToolUse hook 的同一套裁決",
+    "scripts/product-quarantine.sh —— ⭐ GH#707：只被正規化器認領的檔**不上鎖**（它們是手編檔）"
+  ],
+  "$gate": "packages/shared/src/ops/normalizerListIsReal.test.ts（名字要真）+ laneYQuarantineAgreesWithGenguard.test.ts（三個消費端不可以各自硬寫一份）",
+  "normalizers": [
+    {
+      "step": "tiers:apply",
+      "reason": "讀 530 個檔、寫 401 個檔 —— 它把五級距重新解析回每一份技能文件，檔案裡 99% 的位元組不是它寫的。出貨的 401 支技能文件裡有 39 支是直接編 JSON 的（沒有 tools/skill-remake/heroes/*.py 來源）⇒「改來源再重生成」對它們不存在（GH#648）。"
+    },
+    {
+      "step": "apconv:build",
+      "reason": "AP 換算欄位的就地重算 —— 與 tiers:apply 同型：它只覆寫換算那幾格，⛔ 不產生那些技能文件。"
+    },
+    {
+      "step": "skillremake:provenance",
+      "reason": "逐行讀 tools/skill-remake/stamp_provenance.py（⛔ 不是信檔頭，是看程式）：它只寫 out 的 provenance 那一格。它的 writes 是兩條 glob（content/{abilities,champions}/*.json ＝ 494 份）⇒ 判成作者的話那 494 份全部走進「改產物被擋／改來源沒有來源」的死路。2026-08-27 加入。"
+    },
+    {
+      "step": "speedtiers:build",
+      "reason": "逐行讀 tools/speed-growth/gen.ts 的 withTierLines()：它只在**原始字串**上刪/插 tier 欄位那幾行，⛔ 其餘位元組一個都不碰。writes 是一條 glob（content/champions/*.json ＝ 71 份），漏掉它的話 55 份英雄卡被判 AUTHOR 而訊息叫人「改來源」——**英雄卡自己就是來源**（GH#805 實測撞到）。2026-08-27 加入。"
+    }
+  ],
+  "$rejected": [
+    {
+      "step": "apdmg:build",
+      "why-not": "2026-08-26 量到它的 2 份 writes **共有 0 份**（content/config/ap-damage-scaling.json 它是唯一寫入者）⇒ 它是**作者**。CLAUDE.md 明文把那一份列在「⛔ 不可手改」的 7 份 config 產物裡；留在清單裡＝這支腳本對一份禁改產物說「不擋你」還教人手改（誤導源 T0）。"
+    },
+    {
+      "step": "prose:apply",
+      "why-not": "2026-08-25：幽靈名。真名是 prose:build，而它**不在** sync-io 的步驟裡 ⇒ 永遠比不中。"
+    }
+  ]
+}
