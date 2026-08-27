@@ -20,6 +20,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Panel, TextInput } from "./widgets";
 import { ACCENT, DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "./theme";
 import { browserTokenStorage } from "../session";
+import { AuthedImg } from "./live/AuthedImg";
 
 /**
  * 🔐 GH#796 —— `/__review/**` 現在要後台 admin 身分（線上由 review sidecar 轉給
@@ -275,10 +276,13 @@ export function FeatureReviewPage(): React.JSX.Element {
                 <div style={{ marginTop: 10, display: "flex", gap: 10, overflowX: "auto", paddingBottom: 6 }}>
                   {frames.map((f) => (
                     <figure key={f.rel} style={{ margin: 0, minWidth: 260 }}>
-                      <img
-                        src={`/__review/frame?p=${encodeURIComponent(f.rel)}`}
+                      {/* 🖼️ GH#669 —— ⛔ 不可以用裸的 `<img src>`：那是瀏覽器的圖片載入，
+                          `liveAuth.ts` 的 fetch 攔截器碰不到它 ⇒ 每一張都吃 401 而空白。 */}
+                      <AuthedImg
+                        rel={f.rel}
                         alt={f.label ?? f.rel}
-                        style={{ width: 260, borderRadius: 6, border: PANEL_BORDER, background: "#000", display: "block" }}
+                        width={260}
+                        style={{ border: PANEL_BORDER, background: "#000" }}
                       />
                       <figcaption style={{ color: TEXT_DIM, fontSize: 11.5, marginTop: 4 }}>
                         <b style={{ color: TEXT_MAIN }}>{f.label ?? ""}</b>

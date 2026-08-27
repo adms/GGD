@@ -27,6 +27,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { ACCENT, DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
 import { browserTokenStorage } from "../../session";
+import { AuthedImg } from "./AuthedImg";
 
 /**
  * 🔐 GH#796 —— `/__review/**` 現在要後台 admin 身分（線上由 review sidecar 轉給
@@ -233,8 +234,9 @@ export function ReviewStrip(props: {
               <div style={{ marginTop: 8, display: "flex", gap: 8, overflowX: "auto", paddingBottom: 4 }}>
                 {frames.map((f) => (
                   <figure key={f.rel} style={{ margin: 0, minWidth: 220 }}>
-                    <img src={`/__review/frame?p=${encodeURIComponent(f.rel)}`} alt={f.label ?? f.rel}
-                         style={{ width: 220, borderRadius: 5, border: PANEL_BORDER, background: "#000", display: "block" }} />
+                    {/* 🖼️ GH#669 —— 同 FeatureReviewPage：裸 `<img src>` 帶不上 token ⇒ 401 ⇒ 空白。 */}
+                    <AuthedImg rel={f.rel} alt={f.label ?? f.rel} width={220}
+                               style={{ border: PANEL_BORDER, background: "#000" }} />
                     <figcaption style={{ color: TEXT_DIM, fontSize: 11, marginTop: 3 }}>
                       {f.label ?? ""}{typeof f.bright === "number" ? ` · 亮 ${f.bright.toLocaleString()}` : ""}
                     </figcaption>
