@@ -21,7 +21,7 @@
 ## 總計
 
 - **格數**：51 英雄 × 7 槽 = **357**
-- **✅ PASS：293 / 357**（82.1%）　🟣 PASSIVE：58　🟡 只有特效：0　❌ FAIL：1　— 無此格：5
+- **✅ PASS：291 / 357**（81.5%）　🟣 PASSIVE：60　🟡 只有特效：0　❌ FAIL：1　— 無此格：5
 - 把「正確的永久被動」算進可接受行為：**351 / 357**（98.3%）如預期運作，真正的缺口是 **1** 格（❌ 1 ＋ 🟡 0），另有 **0** 格 🔵 本次未量測（形態閘）。
 - **閘 3 在看的那個數字**（只算版控首發名單那 49 人、扣掉「無此格」）：**341 / 342 = 99.71%**（棘輪下限 100.00%）。
 - 英雄生成失敗：**0**（無）
@@ -38,8 +38,8 @@
 
 | 頻道 | PASS 格數 |
 | --- | --: |
-| damage | 180 |
-| buff | 63 |
+| damage | 179 |
+| buff | 62 |
 | projectile | 14 |
 | status | 8 |
 | heal | 8 |
@@ -78,7 +78,7 @@
 | 黑魔導士 - 莉娜因巴斯 | `godie-hjai` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | 獸矛傳承使 - 蒼月潮 | `godie-hpb1` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | 超級普烏 - 魔人普烏 | `godie-huth` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
-| 梅杜莎 - Rider | `godie-hvsh` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 梅杜莎 - Rider | `godie-hvsh` | 近 | ✅ | 🟣 | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 除魔巫女 - 桔梗 | `godie-hvwd` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 黑暗福音 - 依文潔琳 | `godie-n003` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 小叮噹 - 哆拉A夢 | `godie-n00b` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
@@ -101,7 +101,7 @@
 | 職業獵人 - 傑 富力士 | `godie-ucrl` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 至尊學長 - 飛鼠先生 | `godie-udea` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | 三刀流劍士 - 索隆 | `godie-udre` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 北斗神拳掌門人 - 拳四郎 | `godie-umal` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 北斗神拳掌門人 - 拳四郎 | `godie-umal` | 近 | ✅ | 🟣 | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 邪眼師 - 飛影 | `godie-uvng` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 聖杯黑泥醬 - 喪標麥可 | `godie-zombiex` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | Sela, the Ember Sage | `sela` | 遠 | ✅ | ✅ | ✅ | ✅ | — | — | ✅ |
@@ -190,6 +190,7 @@
 | 黑魔導士 - 莉娜因巴斯 | `godie-hjai` | PASSIVE | passive:hooks |
 | 獸矛傳承使 - 蒼月潮 | `godie-hpb1` | PASSIVE | passive:hooks |
 | 超級普烏 - 魔人普烏 | `godie-huth` | PASSIVE | passive:modifiers |
+| 梅杜莎 - Rider | `godie-hvsh` | W | passive:modifiers |
 | 傳說的龍騎士 - 勇者小呆 | `godie-nbbc` | PASSIVE | passive:hooks |
 | 妖狐藏馬 - 南野秀一 | `godie-nsjs` | PASSIVE | passive:hooks |
 | 夢幻之星 - 初音 | `godie-o02p` | PASSIVE | passive:hooks |
@@ -199,6 +200,7 @@
 | 邪惡意念集合體 - 死之王 | `godie-u00k` | PASSIVE | passive:hooks |
 | 黑手黨老大 - 基廉列克 | `godie-u00v` | PASSIVE | passive:modifiers |
 | 至尊學長 - 飛鼠先生 | `godie-udea` | PASSIVE | passive:modifiers |
+| 北斗神拳掌門人 - 拳四郎 | `godie-umal` | W | passive:modifiers |
 | 聖杯黑泥醬 - 喪標麥可 | `godie-zombiex` | PASSIVE | passive:hooks |
 
 ## 方法與抽樣說明
