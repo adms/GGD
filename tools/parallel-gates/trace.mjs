@@ -27,6 +27,7 @@ import { spawn } from "node:child_process";
 import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync, appendFileSync, closeSync, openSync, rmSync } from "node:fs";
 import { resolve } from "node:path";
+import { parseChain, ghostSteps } from "./chainSteps.mjs";
 
 const argv = process.argv.slice(2);
 const arg = (k, d) => {
@@ -92,7 +93,43 @@ if (!chain) {
   console.error(`⛔ 沙盒的 package.json 沒有 "${SCRIPT}"`);
   process.exit(2);
 }
-const steps = chain.split("&&").map((s) => s.trim().replace(/^pnpm\s+/, "")).filter(Boolean);
+/**
+ * ⭐⭐ GH#804/#810 —— **鏈的每一節⛔ 不一定是「pnpm <script 名>」**。
+ *
+ * 在此之前這裡是 `chain.split("&&").map(s => s.trim().replace(/^pnpm\s+/, ""))`，
+ * 然後 `spawn("pnpm", [那一節])` —— 它只對 `skills:sync` 成立（38 節**剛好**全是
+ * `pnpm x:y`）。⚠️ 對其他兩種形狀它**靜默地量出一個假的答案**：
+ *
+ * | `--script` | 那一節長什麼樣 | 舊行為 |
+ * |---|---|---|
+ * | `vfxfam:build` | `tsx apps/client/.../generateFamilyContent.ts`（**葉子**，沒有 pnpm 前綴） | `pnpm "tsx apps/…"` ⇒ `Command not found` ⇒ **ok:false · writes:[]** |
+ * | `content:build` | `pnpm --filter @ggd/shared content:build`（**多 token**） | 整串當成一個 script 名 ⇒ 同上 |
+ *
+ * ⭐ 而它的訊息**指向錯的地方**：摘要只說「⛔ exit 1」，收尾那行甚至寫
+ * 「⚠️ 沙盒裡紅了 N 支(⛔ 不影響 I/O 量測)」—— ⛔ 那一句在這個情況是**假的**
+ * （量測正是被它毀掉的），而它讀起來像「產生器自己壞了，跟 trace 無關」。
+ * ⇒ 上一輪因此往權限與探針查了兩圈，⛔ 而根因在**解析**這一層。
+ *
+ * ⇒ 逐節切成 argv。⭐ 而**葉子**（整條鏈只有一節、且不是 `pnpm …`）的正解是
+ *   **原封不動跑 `pnpm <SCRIPT>` 本人** —— ⛔ 不是把它拆開自己執行：
+ *   ⚠️ 第一版改成 `bash -lc "tsx apps/…"` 得到 **exit 127**（`tsx` 不在 login shell
+ *   的 PATH 上）—— ⭐ 那是**同一個病的第二層**：把 pnpm 的工作（架好
+ *   `node_modules/.bin`）自己重做一遍，然後在別的地方失敗。
+ *   ⇒ 葉子＝`pnpm SCRIPT`；真的有多節而其中一節不是 pnpm 時才 `bash -c`，
+ *     並且**自己把 `node_modules/.bin` 補進 PATH**（見 runStep 的 env）。
+ */
+const steps = parseChain(chain, SCRIPT);
+
+// ⭐ 閘：解析出不存在的 script 名 ⇒ **當場死**，⛔ 不要跑下去產出一份
+//    「ok:false · writes:[]」的假量測（那正是 #804 燒掉兩圈的東西）。
+{
+  const ghosts = ghostSteps(steps, pkg.scripts ?? {});
+  if (ghosts.length) {
+    console.error("⛔ 這幾節解析成了不存在的 script 名 —— ⛔ 這是 trace 的**解析**問題,不是產生器紅了:");
+    for (const g of ghosts) console.error(`   · ${JSON.stringify(g)}`);
+    process.exit(2);
+  }
+}
 
 console.log(`⏱  ${SCRIPT} —— ${steps.length} 支,在沙盒 ${SANDBOX} 逐支跑並量 I/O`);
 
@@ -122,7 +159,8 @@ function writesSince() {
     .filter((l) => l && interesting(l));
 }
 
-function runStep(name) {
+function runStep(step) {
+  const { label: name, cmd, args } = step;
   return new Promise((done) => {
     closeSync(openSync(LOG, "w")); // 清空這一支的 log
     /**
@@ -137,7 +175,7 @@ function runStep(name) {
     }
     writeFileSync(MARK, "");
     const t = Date.now();
-    const p = spawn("pnpm", [name], {
+    const p = spawn(cmd, args, {
       cwd: SANDBOX,
       stdio: ["ignore", "pipe", "pipe"],
       env: {
@@ -145,6 +183,8 @@ function runStep(name) {
         GGD_TRACE_LOG: LOG,
         GGD_TRACE_ROOT: SANDBOX,
         GGD_QUARANTINE_OFF: "1",
+        // ⭐ `bash -c` 的那條路沒有 pnpm 幫忙架 PATH ⇒ 自己補（exit 127 的解藥）。
+        PATH: `${SANDBOX}/node_modules/.bin:${process.env.PATH ?? ""}`,
         PYTHONPATH: `${HOOKS}${process.env.PYTHONPATH ? `:${process.env.PYTHONPATH}` : ""}`,
         NODE_OPTIONS: `--require ${HOOKS}/node-trace.cjs${process.env.NODE_OPTIONS ? ` ${process.env.NODE_OPTIONS}` : ""}`,
       },
@@ -178,11 +218,11 @@ function runStep(name) {
 }
 
 const traced = [];
-for (const [i, name] of steps.entries()) {
-  const r = await runStep(name);
+for (const [i, step] of steps.entries()) {
+  const r = await runStep(step);
   traced.push(r);
   process.stdout.write(
-    `  ${String(i + 1).padStart(2)}/${steps.length} ${name.padEnd(28)} ` +
+    `  ${String(i + 1).padStart(2)}/${steps.length} ${step.label.padEnd(28)} ` +
       `${(r.ms / 1000).toFixed(1)}s  讀 ${r.reads.length} 寫 ${r.writes.length}` +
       `${r.ok ? "" : `  ⛔ exit ${r.exit}`}\n`,
   );
