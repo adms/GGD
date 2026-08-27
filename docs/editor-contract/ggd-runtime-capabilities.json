@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "89bae3c0",
+  "fingerprint": "640bf1af",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -353,6 +353,7 @@
     "stopOnCasterDeath",
     "stopShortUnits",
     "store",
+    "strikeReposition",
     "strikes",
     "stun",
     "subtractGap",

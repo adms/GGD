@@ -1,0 +1,21 @@
+{
+  "id": "godie-udea.r",
+  "schema": "vfx-script@1",
+  "abilityId": "godie-udea.r",
+  "notes": "65-04 天譴（JASS A04C，war3map.j 46950-47021；底稿 docs/_reports/vfx-editor-jass3b_temp_20260828-0312.md §3）。⭐⭐ 這一份天生就短，而那是量到的：原作每個敵人各生一具 'ogru' 施法者，而 ogru 的 w3u 模型欄是空字串 \" .mdl\" ⇒ **完全隱形**（OBJECTS.json.units.ogru）。⇒ 這一支原作沒有任何自己的模型特效，畫面全部是 WC3 內建的鏈鎖閃電／奪魔美術。段落對應：①所有 ogru 都生在**施法者腳下**（j:46985 j:46986）⇒ 每一條電弧的起點都是施法者 ⇒ 一發 lightning nova 表達這件事；②TerrainDeformationWaveBJ(2.00,…)（j:47009）⇒ screenShake 2 秒（M5 建議豁免）。⛔ 觸發器沒有 PlaySound、沒有 CreateTextTag ⇒ 這裡也沒有。⚠️ 待查證：這一支的畫面主體是客戶端的 vfxArc（鏈鎖弧線），CLAUDE.md 記過它曾經零 emitter —— ⛔ 本報告沒有跑測試，不宣稱它今天的狀態。",
+  "segments": [
+    {
+      "kind": "vfx",
+      "on": "castEffect",
+      "vfxId": "fx.prim.lightning.nova-lg",
+      "at": "self",
+      "durationSec": 0.6
+    },
+    {
+      "kind": "screenShake",
+      "on": "castEffect",
+      "amplitude": 0.4,
+      "durationSec": 2
+    }
+  ]
+}

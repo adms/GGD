@@ -352,6 +352,14 @@ export class VfxScriptPlayer {
           ...(seg.alpha !== undefined ? { alpha: seg.alpha } : {}),
           ...(seg.heightU !== undefined ? { heightU: seg.heightU } : {}),
           ...(seg.heightKeys !== undefined ? { heightKeys: seg.heightKeys } : {}),
+          ...(seg.trailVfxId !== undefined
+            ? {
+                trailVfxId: seg.trailVfxId,
+                ...(seg.trailIntervalSec !== undefined
+                  ? { trailIntervalSec: seg.trailIntervalSec }
+                  : {}),
+              }
+            : {}),
           instances,
         };
         this.deps.dispatch(

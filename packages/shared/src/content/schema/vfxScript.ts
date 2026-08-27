@@ -99,6 +99,15 @@ export const zVfxScriptModelFx = zSpawnModelFx
       .min(2)
       .max(12)
       .optional(),
+    /**
+     * ⭐【沿路拖尾】M11 —— 移動中的模型每隔一段時間在**當下的位置**放一發 vfx
+     * （04-03 龍破斬的火球沿路 HCancelDeath＋VolcanoDeath）。
+     * ⚠️ 那是「傷害段的視覺」，⛔ 不是多具實體（三種迴圈的判別，CLAUDE.md）。
+     * ⛔ `path:"static"` 不動 ⇒ 拖尾會疊在同一點，refine 擋。
+     */
+    trailVfxId: zRef("vfx", { soft: true }).optional(),
+    /** 拖尾間隔（秒）。⛔ 只有填了 trailVfxId 才讀得到。 */
+    trailIntervalSec: z.number().min(0.02).max(2).optional(),
   });
 
 /** 粒子／貼圖 vfx 段 —— 詞彙照抄 spawnVfx（含 at:"bone"＋attach 掛骨）。 */
@@ -215,6 +224,20 @@ export const zVfxScriptDoc = z
               break;
             }
           }
+        }
+        if (seg.trailIntervalSec !== undefined && seg.trailVfxId === undefined) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["segments", i, "trailIntervalSec"],
+            message: "沒有 trailVfxId 就沒有人讀 trailIntervalSec —— 一個看起來有設、其實沒人讀的數字",
+          });
+        }
+        if (seg.trailVfxId !== undefined && seg.path === "static") {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["segments", i, "trailVfxId"],
+            message: 'path:"static" 不會移動 —— 拖尾會整串疊在同一點（那不是拖尾，是一個越來越亮的點）',
+          });
         }
         // 鏡射 spawnModelFx 的跨欄檢查（pick 不帶 refinement）—— 訊息同語意
         if ((seg.path === "static" || seg.path === "orbit") && seg.lifeSec === undefined) {

@@ -362,6 +362,13 @@ export interface ModelFxRigOptions {
   maxPooledTotal?: number;
   /** 任何實例的硬壽命上限（秒）。忘了收也會死 */
   maxEffectSec?: number;
+  /**
+   * ⭐ GH#838 M11 —— 沿路拖尾：在模型**當下的位置**放一發 vfx。
+   * 注入而不是在這裡拿 `VfxSystem`：rig 知道「模型現在在哪」，⛔ 不知道
+   * 「一份 vfx 文件怎麼變成粒子」（同 `resolveModel` / `loadContainer` 的理由）。
+   * 缺席 ⇒ 拖尾是 no-op（headless 測試的樣子，⛔ 不是整支功能不生效）。
+   */
+  spawnTrail?(vfxId: string, x: number, y: number, z: number): void;
 }
 
 /** 出貨預設 —— ⚠️ 這幾格是**預算**不是平衡值，所以住這裡是對的（第〇·四守則的豁免）。 */
@@ -458,6 +465,10 @@ interface LiveModelFx {
   y: number;
   /** ⭐ GH#838 M3 —— 升空曲線（秒→高度，逐段線性）。缺席 ⇒ 固定在 {@link y}。 */
   heightKeys?: readonly { t: number; h: number }[];
+  /** ⭐ GH#838 M11 —— 沿路拖尾的 vfx 與間隔；`trailNext` 是下一發的年齡（秒）。 */
+  trailVfxId?: string;
+  trailIntervalSec?: number;
+  trailNext?: number;
   spinDegPerSec?: number;
   /**
    * ⭐ 這一發要播的剪輯與速率（GH#689）。⚠️ 它必須存在**這裡**而不是只在
@@ -609,6 +620,13 @@ export class ModelFxRig {
         ...(ev.heightKeys !== undefined && ev.heightKeys.length > 0
           ? { heightKeys: ev.heightKeys }
           : {}),
+        ...(ev.trailVfxId !== undefined
+          ? {
+              trailVfxId: ev.trailVfxId,
+              trailIntervalSec: Math.max(0.02, ev.trailIntervalSec ?? 0.06),
+              trailNext: 0,
+            }
+          : {}),
         ...(ev.spinDegPerSec !== undefined ? { spinDegPerSec: ev.spinDegPerSec } : {}),
         // ⭐ GH#689 —— 剪輯那兩格。⚠️ `clip` 缺席時**整段不存在** ⇒ 一條軌都不
         //    碰 ＝ 2026-08-25 之前的行為，逐位元不變（rollback：內容清空這一格）。
@@ -643,7 +661,19 @@ export class ModelFxRig {
     for (let k = this.live.length - 1; k >= 0; k--) {
       const item = this.live[k]!;
       item.ageSec += dt;
-      this.applyPose(item);
+      const pose = this.applyPose(item);
+      // ⭐ M11 沿路拖尾：在**這一幀模型真的所在的點**放一發（⛔ 不是重算軌跡 ——
+      //    那會是第二個住處，而它會跟畫面差幾幀）。
+      // ⚠️ 迴圈是「補到追上」而不是 `if`：一幀掉到 100ms 時要補三發，
+      //    ⛔ 不是只放一發然後拖尾出現一個洞。上限 8 發防背景分頁醒來時的暴衝。
+      if (item.trailVfxId !== undefined && this.opts.spawnTrail) {
+        const gap = item.trailIntervalSec ?? 0.06;
+        let guard = 0;
+        while ((item.trailNext ?? 0) <= item.ageSec && guard++ < 8) {
+          this.opts.spawnTrail(item.trailVfxId, pose.x, pose.y, pose.z);
+          item.trailNext = (item.trailNext ?? 0) + gap;
+        }
+      }
       if (item.ageSec >= item.lifeSec) {
         this.live.splice(k, 1);
         this.release(item);

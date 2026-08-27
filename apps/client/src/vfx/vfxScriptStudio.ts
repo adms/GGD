@@ -98,6 +98,8 @@ const FIELDS: Record<VfxScriptSegment["kind"], FieldSpec[]> = {
     // ⭐ 升空曲線：三個 slider（升到多高／何時到頂／何時落地）組成 heightKeys ——
     //    ⛔ 不讓作者手打陣列（那不是「人類友善」，而且順序打錯 schema 才擋得到）。
     { key: "heightKeys", label: "升空曲線", kind: "heightCurve" },
+    { key: "trailVfxId", label: "拖尾粒子", kind: "text", show: (s) => s.path !== "static" },
+    { key: "trailIntervalSec", label: "拖尾間隔 s", kind: "range", min: 0.02, max: 1, step: 0.01, show: (s) => typeof s.trailVfxId === "string" && s.trailVfxId.length > 0 },
     { key: "offsetForwardU", label: "前後 u", kind: "range", min: -15, max: 15, step: 0.1, clearAt: 0 },
     { key: "offsetSideU", label: "左右 u", kind: "range", min: -15, max: 15, step: 0.1, clearAt: 0 },
     { key: "lifeSec", label: "存活 s", kind: "range", min: 0.1, max: 10, step: 0.1, show: (s) => s.path === "static" || s.path === "orbit" },

@@ -1,8 +1,8 @@
 {
-  "contentVersion": "cv_ae0a4e98906c",
+  "contentVersion": "cv_4c623ebd7fde",
   "collections": {
     "champions": {
-      "hash": "3a503e5c887c",
+      "hash": "78ae8663c911",
       "count": 71,
       "path": "champions/_index.json"
     },
@@ -72,8 +72,8 @@
       "path": "ability-templates/_index.json"
     },
     "vfx-scripts": {
-      "hash": "bece354010c8",
-      "count": 5,
+      "hash": "9d8480727b7a",
+      "count": 10,
       "path": "vfx-scripts/_index.json"
     }
   }

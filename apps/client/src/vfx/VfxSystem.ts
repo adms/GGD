@@ -765,6 +765,13 @@ export class VfxSystem {
             // （它自己的出貨預設是 8 秒）。⛔ 不要在 `modelFxRig` 裡再抄一個
             // 數字：那就是第〇·四守則說的第二個住處。
             maxEffectSec: vfxHardMaxLifeSec(),
+            // ⭐ GH#838 M11 —— 沿路拖尾走 **VfxSystem 自己的 `play`**：同一個
+            //    文件查詢、同一套壽命夾限、同一份粒子密度上限、同一個池。
+            //    ⛔ 不另開一條渲染路（那會是第二個腐爛速度）。
+            spawnTrail: (vfxId, tx, ty, tz) => {
+              const doc = this.doc(vfxId);
+              if (doc) this.play(doc, tx, tz, this.lastUpdateMs ?? 0, ty);
+            },
           })
         : null;
     // ⭐ GH#549 —— `config.screen-fx@1` 的**唯一** production 消費端。

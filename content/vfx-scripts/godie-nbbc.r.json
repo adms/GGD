@@ -1,0 +1,33 @@
+{
+  "id": "godie-nbbc.r",
+  "schema": "vfx-script@1",
+  "abilityId": "godie-nbbc.r",
+  "notes": "08-04 阿邦快速劍X（JASS A0EZ，war3map.j 28874-28940；底稿 docs/_reports/vfx-editor-jass3b_temp_20260828-0312.md §2）。段落對應：e003 RedDragonMissile 擺在出發點朝施法者面向、活 1 秒（j:28906 j:28909 j:28911，w3u usca 4.0，⛔ 觸發器沒有 SetUnitScalePercent）；出發點地板的 ImpaleTargetDust（j:28914）—— ⚠️ 該資產不在庫，這裡用 fx.fam.ground-dust.nature.s80 代打；落點每個受害者腳下的 ThunderClapCaster 活 1 秒（j:28884 j:28885 RemoveEffectSP 1.00）。⚠️ 原作的 TriggerSleepAction 是 1.00 秒，GGD 的 castTimeSec 是 0.667 ⇒ 這裡把 e003 的 lifeSec 壓到 0.7 對齊詠唱窗。⛔ 28921-28925 的喊招 TextTag 在原作裡是**被註解掉的** ⇒ 這裡沒有 floatingText。⛔ MISSING N6：ShowUnitHide（本體消失 1 秒）今天沒有任何標籤表達得出來 —— 那是這一招的招牌。 ⚠️ 本檔是 godie-n01c.r 的雙生鏡像（對帳守衛要求兩邊一起動）。",
+  "segments": [
+    {
+      "kind": "modelFx",
+      "on": "castStart",
+      "modelKey": "w3x.stock.reddragonmissile",
+      "path": "static",
+      "anchor": "self",
+      "scale": 4,
+      "clip": "idle",
+      "lifeSec": 0.7
+    },
+    {
+      "kind": "vfx",
+      "on": "castStart",
+      "atMs": 600,
+      "vfxId": "fx.fam.ground-dust.nature.s80",
+      "at": "self",
+      "durationSec": 0.8
+    },
+    {
+      "kind": "vfx",
+      "on": "castEffect",
+      "vfxId": "fx.w3x.stock.thunderclapcaster.p00",
+      "at": "target",
+      "durationSec": 1
+    }
+  ]
+}

@@ -164,6 +164,16 @@ export interface ModelFxSpawnEvent {
    */
   heightKeys?: readonly { t: number; h: number }[];
   /**
+   * ⭐【沿路拖尾】GH#838 M11 —— 原作的火球/波每 tick 在**路過的那一點**
+   * `AddSpecialEffectLocBJ` 一發（04-03 龍破斬的 HCancelDeath＋VolcanoDeath）。
+   * 那是「傷害段的視覺」，⛔ 不是多具實體（CLAUDE.md 的三種迴圈判別）。
+   * 客戶端每 `trailIntervalSec` 在**模型當下的位置**放一發 `trailVfxId`。
+   * 缺席 ⇒ 不拖尾（＝這一格出現以前，逐位元不變）。
+   */
+  trailVfxId?: string;
+  /** 拖尾間隔（秒）。有 `trailVfxId` 才讀得到；省略 ⇒ 0.06。 */
+  trailIntervalSec?: number;
+  /**
    * ⭐ **已經解算完的每一具實例。** 客戶端照抄就好 ——
    * ⛔ 它不需要（也不可以）自己再算一次路徑：`sim` 這一份才是傷害真的發生的地方，
    * 客戶端算第二份就是「畫面說在這裡、傷害在那裡」（而且它會是第二個住處）。

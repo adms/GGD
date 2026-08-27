@@ -1,0 +1,32 @@
+{
+  "id": "godie-ogrh.r",
+  "schema": "vfx-script@1",
+  "abilityId": "godie-ogrh.r",
+  "notes": "09-04 龜派氣功（JASS A03S，war3map.j 31804-31953；底稿 docs/_reports/vfx-editor-jass3b_temp_20260828-0312.md §1）。⭐ 只補 ability JSON 沒有畫的三段：槍口的兩發爆炸（j:31903 j:31905，掛在施法者前方 150wc3u=2.75u 的地板點）＋ 鏡頭噪動（j:31815-31817，2 秒後 j:31948 清除）。h007/h008/h006 已住 ability 的三個 spawnModelFx 節點 ⇒ ⛔ 這裡不重複。⚠️ 原作 A03S 沒有 CreateTextTag、沒有 PlaySound、沒有 SetUnitAnimation ⇒ 這裡也沒有。⚠️ 已知偏差：ability 的三個 spawnModelFx 缺 offsetForwardU（MISSING N1）⇒ 它們今天畫在腳下而不是槍口；鏡頭噪動只能是全域（MISSING N3，原作限 512wc3u=9.39u 內的英雄玩家）。",
+  "segments": [
+    {
+      "kind": "modelFx",
+      "on": "castEffect",
+      "modelKey": "w3x.stock.nedeathsmall",
+      "path": "static",
+      "anchor": "self",
+      "offsetForwardU": 2.75,
+      "lifeSec": 1
+    },
+    {
+      "kind": "modelFx",
+      "on": "castEffect",
+      "modelKey": "w3x.stock.neutralbuildingexplosion",
+      "path": "static",
+      "anchor": "self",
+      "offsetForwardU": 2.75,
+      "lifeSec": 1.2
+    },
+    {
+      "kind": "screenShake",
+      "on": "castEffect",
+      "amplitude": 0.3,
+      "durationSec": 2
+    }
+  ]
+}

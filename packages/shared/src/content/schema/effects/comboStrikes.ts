@@ -95,7 +95,10 @@ export const zComboStrikes = z
         stepPerStrike: z.number().int().min(1).max(PULL_MAX_ANCHORS),
       })
       .strict()
-      .optional(),
+      .optional()
+      .describe(
+        "⭐【逐段瞬移】連段的每一段把身體挪到目標周圍環上的一點（原作 01-04 施法者貼到目標旁 70wc3u、角度每刀 +270°；20-002 目標被拖到 Saber 身邊）。who＝誰被挪（caster/victim）· distU＝半徑（世界單位）· ringN＝環的等分數 · stepPerStrike＝每一刀往前走幾格。⚠️ 角度用**等分格**⛔不是度數（sim 禁三角函式，而原作的 270°／刀 正好是 4 等分走 3 格）。缺席 ⇒ 誰都不動。",
+      ),
   })
   .strict();
 

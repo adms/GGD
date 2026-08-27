@@ -73,6 +73,17 @@ const NO_ARTIFACT: Record<string, string> = {
  * 2026-08-23 實測:21 個產生器目錄、11 個沒被涵蓋,逐支分類後 6 支進豁免、2 支補了腳本。
  */
 const GENERATOR_NO_CHECK: Record<string, string> = {
+  "vfx-forge":
+    "⭐ GH#838 —— 它是**編輯器的寫入端**，⛔ 不是產生器：`middleware.mjs` 只在 dev " +
+    "server 上把**人在 studio 裡拖 slider 拖出來的東西**寫進 `content/vfx-scripts/`。" +
+    "⇒ 那些 JSON 沒有「上游來源」可以重新推導出來 —— 它們**就是**來源（手編集合，" +
+    "genguard 對它們回『沒有產生器擁有者』）。⛔ 給它一支 `*:check` 會變成一條" +
+    "「比對編輯器的輸出與它自己」的空閘。" +
+    "⚠️ 它真正該有的閘是**別的兩條**，而兩條都已經在：" +
+    "① `content:build` 的 fail-closed Zod（一份壞掉的 script 進不了 bundle）；" +
+    "② `vfxScriptShippedChain.test.ts`（出貨 script 的段真的走到場景樹）。" +
+    "⇒ 這一列的到期條件：哪一天 vfx-script 變成從別的東西**推導**出來的（例如從 JASS " +
+    "自動翻譯），它就該有 `*:check`，這一列當場作廢。",
   "bgm-gen": "產物是**渲染出來的音樂**與它的 MANIFEST —— 輸入是取樣器與曲式,技能改動不會動到任何一個位元組",
   "icon-gen": "產物是**圖示點陣圖**（本機擴散模型跑出來的 PNG）。它的可審查那一半是提示詞常數,而那一半已經有 `iconstyle:check`",
   "item-csv": "owner 的 CSV **往返編輯**流程（export → 他填三欄 → import）。⛔ `items.csv` 不在 repo 裡,沒有一份會過期的產物",
