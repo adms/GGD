@@ -9,7 +9,10 @@
   "standstill": {
     "enabled": true,
     "walkEps": 0.5,
-    "applyToMobs": true
+    "applyToMobs": true,
+    "stillEps": 1e-06,
+    "closingRatio": 0.5,
+    "legacyAbsoluteClosing": false
   },
   "facing": {
     "followThroughTicks": 3,

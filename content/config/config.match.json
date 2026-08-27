@@ -47,7 +47,11 @@
         "delayFireRingSec": 180
       }
     },
-    "resolutionSec": 6
+    "resolutionSec": 6,
+    "roomCombatMaxSec": 1800,
+    "roomCombatCapEnabled": true,
+    "championLockEnforced": true,
+    "scoreCheatedMatches": false
   },
   "economy": {
     "startingGold": 600,
