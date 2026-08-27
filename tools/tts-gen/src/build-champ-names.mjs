@@ -318,6 +318,28 @@ function championNames() {
   return out;
 }
 
+/**
+ * GH#811 — ids whose champion doc now lives in `content/_legacy/champions/`.
+ *
+ * ⭐ 退休的理由是**量出來的**,⛔ 不是手寫一張 RETIRED 名單:一列 CASTING 之所以
+ * 「多餘」,唯一可以被反駁的證據就是**那位英雄的文件搬到 _legacy 去了**。手寫的
+ * 名單沒有寫入端 ⇒ 它會過期,而且下一次 roster 再換一批時**不會有東西紅**
+ * (CLAUDE.md 第零守則:手寫的表會過期而且不會有東西紅)。
+ *
+ * ⚠️ 目錄不存在時回**空集合**,於是每一列漂移都退回 fatal —— fail-loud。
+ * ⛔ 不可以「讀不到就全部放行」:那會把 roster 真的打錯字也一起吞掉。
+ */
+function retiredChampionIds() {
+  const dir = path.join(CONTENT, "_legacy", "champions");
+  const out = new Set();
+  if (!fs.existsSync(dir)) return out;
+  for (const f of fs.readdirSync(dir).sort()) {
+    if (!f.endsWith(".json") || f === "_index.json") continue;
+    out.add(f.slice(0, -".json".length));
+  }
+  return out;
+}
+
 /** Split the authored "稱號 - 全名" convention. 4 champions have no 稱號. */
 function splitName(name) {
   const i = name.indexOf(" - ");
@@ -444,13 +466,47 @@ for (const [id, zhName] of champs) {
   }
 }
 
+/**
+ * GH#811 — 反方向的兩種漂移**刻意不同級**。
+ *
+ * | 方向 | 級別 | 為什麼 |
+ * |---|---|---|
+ * | 出貨英雄**缺** CASTING 列 | ⛔ **fatal**（上面那個迴圈） | 漏掉 = 那位英雄**靜默地沒有呼名**，玩家選他時一片安靜 |
+ * | CASTING **多**一列，而那位英雄在 `_legacy/` | ⚠️ **警示** | 他被下架了，⛔ 不是我打錯字。casting 知識留著（見下面 manifest 的 `retiredCasting`） |
+ * | CASTING **多**一列，而**兩邊都查不到** | ⛔ **fatal** | 這才是真的漂移／打錯字 |
+ *
+ * ⛔ 在此之前三種一律 fatal ⇒ roster 換過之後這支**執行即 exit 1、一個檔都不寫**
+ * ⇒ 它的三份產物永遠停在某一次手改的狀態，而**沒有任何東西會紅**。
+ */
+const retired = retiredChampionIds();
+const retiredCasting = [];
 for (const id of Object.keys(CASTING)) {
-  if (!champs.has(id)) problems.push(`CASTING row ${id} is not an authored champion`);
+  if (champs.has(id)) continue;
+  if (retired.has(id)) {
+    const [mode, title, , name] = CASTING[id];
+    retiredCasting.push({
+      id,
+      mode,
+      title,
+      name,
+      why: `champion doc moved to content/_legacy/champions/${id}.json — retired from the roster, casting kept so the reading is not lost if it returns`,
+    });
+    continue;
+  }
+  problems.push(
+    `CASTING row ${id} matches neither content/champions/${id}.json nor content/_legacy/champions/${id}.json — real drift, not a retirement`,
+  );
 }
+retiredCasting.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
 
 if (problems.length) {
   for (const p of problems) console.error(`build-champ-names: ${p}`);
   process.exit(1);
+}
+if (retiredCasting.length) {
+  console.warn(
+    `build-champ-names: ⚠️ ${retiredCasting.length} CASTING rows are RETIRED (champion doc is in content/_legacy/champions/) — kept in MANIFEST.retiredCasting, no clip emitted: ${retiredCasting.map((r) => r.id).join(", ")}`,
+  );
 }
 
 // ---- write ------------------------------------------------------------------
@@ -521,12 +577,46 @@ const manifest = {
     },
   },
   skipped: SKIPPED,
+  // GH#811 — casting rows for champions that have left the roster. 第一·五守則:
+  // 被取代的知識要**另存**,⛔ 不是壓縮取代 —— 這些讀音是查出來的,英雄哪天回鍋
+  // 時它就在這裡。`why` 是**量出來的**(那份文件現在住 _legacy/),⛔ 不是手打的理由。
+  retiredCasting,
   champions,
 };
 
-fs.writeFileSync(path.join(CONTENT, NAMES_DIR, "MANIFEST.json"), `${JSON.stringify(manifest, null, 2)}\n`);
-fs.writeFileSync(path.join(CONTENT, "audio-manifests/champ-names.ja-JP.json"), `${JSON.stringify(ttsLines, null, 2)}\n`);
-fs.writeFileSync(path.join(CONTENT, NAMES_DIR, MIX_TTS_MANIFEST), `${JSON.stringify(mixLines, null, 2)}\n`);
+// ---- write (or --check) -----------------------------------------------------
+
+/**
+ * GH#811 — `--check` 逐位元組比對三份產物,過期就紅並**指名那一份**。
+ *
+ * ⭐ 為什麼需要它:這支產生器**不在 `skills:sync` 的鏈裡**(`sync-io.json` 沒有它,
+ * 三份產物也沒被隔離區鎖起來)⇒ 「產生器綠不綠」與「產物新不新」是兩個名詞,
+ * 而在此之前**沒有任何東西在問後者**。
+ */
+const CHECK = process.argv.includes("--check");
+const outputs = [
+  [path.join(CONTENT, NAMES_DIR, "MANIFEST.json"), `${JSON.stringify(manifest, null, 2)}\n`],
+  [path.join(CONTENT, "audio-manifests/champ-names.ja-JP.json"), `${JSON.stringify(ttsLines, null, 2)}\n`],
+  [path.join(CONTENT, NAMES_DIR, MIX_TTS_MANIFEST), `${JSON.stringify(mixLines, null, 2)}\n`],
+];
+
+if (CHECK) {
+  const stale = [];
+  for (const [file, next] of outputs) {
+    const rel = path.relative(REPO, file);
+    if (!fs.existsSync(file)) stale.push(`${rel} — MISSING`);
+    else if (fs.readFileSync(file, "utf8") !== next) stale.push(`${rel} — STALE`);
+  }
+  if (stale.length) {
+    for (const s of stale) console.error(`build-champ-names --check: ${s}`);
+    console.error("build-champ-names --check: run `node tools/tts-gen/src/build-champ-names.mjs` and `git add content/`");
+    process.exit(1);
+  }
+  console.log(`build-champ-names --check: ${outputs.length} products up to date`);
+  process.exit(0);
+}
+
+for (const [file, next] of outputs) fs.writeFileSync(file, next);
 
 const byMode = {};
 for (const e of Object.values(champions)) byMode[e.voice] = (byMode[e.voice] ?? 0) + 1;
