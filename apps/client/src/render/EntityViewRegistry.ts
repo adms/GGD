@@ -1164,6 +1164,19 @@ export class EntityViewRegistry {
     }
   }
 
+  /**
+   * 🧹 GH#819 —— 場上英雄**實際採用**的 glb 路徑（回合間盤點的 shared 族）。
+   * 替身（還沒升級成 glb）回報不出路徑 —— 那一族本來就不吃容器快取。
+   */
+  adoptedGlbPaths(): string[] {
+    const out = new Set<string>();
+    for (const v of this.champions.values()) {
+      const p = v.adoptedGlb;
+      if (p) out.add(p);
+    }
+    return [...out];
+  }
+
   dispose(): void {
     // #262: unconditional, same reason as `retireChampion` — a growth-tier
     // clone exists on bodies whose `tinted` entry has `tint: null`, and the old

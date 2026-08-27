@@ -464,6 +464,12 @@ export class ModelFxRig {
   private readonly containers = new Map<string, AssetContainer | null>();
   private readonly loading = new Set<string>();
   private disposed = false;
+  /**
+   * 🧹 GH#819 —— `hardReset()` 的世代戳。in-flight 的 `loadContainer` 醒來時
+   * 世代不同＝那一批引用已經被整批放掉，⛔ 不可以把（可能已被快取端 purge 的）
+   * 舊容器塞回新世代的 map。
+   */
+  private generation = 0;
 
   private readonly maxLive: number;
   private readonly maxPooledPerModel: number;
@@ -653,10 +659,22 @@ export class ModelFxRig {
     }
   }
 
-  /** 收掉這個 rig 造過的**每一個**節點與容器。 */
+  /**
+   * 收掉這個 rig 造過的**每一個**節點。
+   *
+   * ⛔⛔ GH#558① —— **容器不 dispose，只放手。** 在此之前這裡有一行
+   * `for (const c of this.containers.values()) c?.dispose();`，而那些容器是
+   * `loadContainer`（出貨＝`AssetManager.load`，**per-Scene 共用快取**）借來的：
+   * rig 在這裡 dispose 它們，快取端的 Promise 仍然指著同一份物件 ⇒ 之後每一個
+   * 消費者（ChampionView 替身升級、場地佈景、下一個 rig）拿到的都是屍體，
+   * 而畫面上那是「模型偶爾不出現」，⛔ 沒有任何錯誤訊息。
+   * ⇒ 容器的 dispose 權在**建它的那一端**（`AssetManager.purgeFxContainers()`
+   * 或 scene 整個收掉時），⛔ 不在借用者手上。
+   */
   dispose(): void {
     if (this.disposed) return;
     this.disposed = true;
+    this.generation++;
     this.live.length = 0;
     this.pool.clear();
     // ⭐ GH#689 —— 軌**先**收（趁它們的目標還活著），與 `ChampionView.dispose()`
@@ -665,8 +683,32 @@ export class ModelFxRig {
     this.clipGroups.clear();
     for (const root of this.born) this.disposeInstanceTree(root);
     this.born.length = 0;
-    for (const c of this.containers.values()) c?.dispose();
+    this.containers.clear(); // ⛔ 只放手 —— 見上面 GH#558① 的檔頭
+    this.loading.clear();
+  }
+
+  /**
+   * 🧹 GH#819 —— **回合間完整清理**：把這個 rig 造過的每一個節點、軌與 free-list
+   * 全部收掉，並放掉所有容器引用 —— 但 rig **繼續可用**（下一發 `spawn`／`warm`
+   * 會重新向 loader 要容器）。
+   *
+   * 與 `dispose()` 的差別只有一個：不設 `disposed`。與 `resetForRound()` 的差別
+   * 是力道 —— 那一支把活著的收回 free-list（幾何留著），這一支連 free-list 與
+   * 幾何一起 dispose（`purgeBetweenRounds("soft"/"full")` 的「幾何」那一段）。
+   * ⛔ 容器同樣**只放手不 dispose**（GH#558①）—— 要真的丟共用快取，走
+   * `AssetManager.purgeFxContainers()`（它才是建立者）。
+   */
+  hardReset(): void {
+    if (this.disposed) return;
+    this.generation++; // in-flight 的載入醒來時發現世代不同 ⇒ 放手
+    this.live.length = 0;
+    this.pool.clear();
+    for (const groups of this.clipGroups.values()) for (const g of groups) g.dispose();
+    this.clipGroups.clear();
+    for (const root of this.born) this.disposeInstanceTree(root);
+    this.born.length = 0;
     this.containers.clear();
+    this.loading.clear();
   }
 
   // ── 內部 ──────────────────────────────────────────────────────────────────
@@ -702,14 +744,16 @@ export class ModelFxRig {
   private ensureContainer(modelKey: string, glbPath: string): void {
     if (this.containers.has(modelKey) || this.loading.has(modelKey)) return;
     this.loading.add(modelKey);
+    const gen = this.generation;
     void this.opts
       .loadContainer(glbPath)
       .then((c) => {
+        // 🧹 GH#819 / GH#558① —— 世代不同（hardReset 過）或整個 rig 收掉了：
+        // **放手**就好。⛔ 不 dispose —— 這份容器屬於 loader 的共用快取
+        // （出貨是 `AssetManager` 的 per-Scene cache），rig 只是借用者；
+        // 在這裡 dispose 等於把一份**別的消費者還讀得到**的快取條目變成屍體。
+        if (this.disposed || gen !== this.generation) return;
         this.loading.delete(modelKey);
-        if (this.disposed) {
-          c?.dispose();
-          return;
-        }
         this.containers.set(modelKey, c);
         // ⭐ GH#673-①c —— 首發那幾具是在容器**之前**生的空殼,現在補幾何。
         //    ⛔ 不補的話「第一次施放沒有特效」,而那正是玩家最會注意的那一次
@@ -730,6 +774,7 @@ export class ModelFxRig {
         }
       })
       .catch(() => {
+        if (this.disposed || gen !== this.generation) return;
         this.loading.delete(modelKey);
         this.containers.set(modelKey, null);
       });
@@ -917,7 +962,8 @@ export class ModelFxRig {
    *    `dispose(…, true)` 的 forceDisposeTextures 把來源材質的貼圖一起陪葬，
    *    同 key 的其他實例與之後每一發全部變黑。
    * ⇒ 判準：**rig 造的（節點、`-fxtint` clone）rig 收；容器的（來源材質/貼圖/幾何）
-   *    容器收**（`dispose()` 走 `containers.dispose()` 那條路）。
+   *    由建它的那一端收**（GH#558①：出貨＝`AssetManager.purgeFxContainers()`，
+   *    ⛔ rig 的 `dispose()` 不再碰容器）。
    * `-fxtint` 是 `applyFxTint` 的命名契約（`${mat.name}-fxtint`），守衛
    * `modelFxRigRoundLeak.test.ts` 兩個方向都鎖：clone 要離場、來源要活著。
    */

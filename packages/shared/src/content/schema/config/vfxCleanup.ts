@@ -62,6 +62,18 @@ export const VFX_HARD_CAP_SCOPES = ["scene", "managed", "off"] as const;
 export type VfxHardCapScope = (typeof VFX_HARD_CAP_SCOPES)[number];
 
 /**
+ * 🧹 回合間完整清理的三個檔位（GH#819）。⭐ 這是**唯一**的住處 ——
+ * client 的 `roundPurge.ts` 與 admin 欄位都從這裡讀，⛔ 不再抄一次字面值。
+ *
+ *   · `"off"`  完全不跑（逐位元回到 GH#819 之前的行為，**止血閥**）。
+ *   · `"soft"` 回合結束把特效幾何／粒子／free-list 硬重置（共用容器不動）。
+ *   · `"full"` soft ＋ 丟掉特效層的共用模型容器 ＋ **重新盤點**本場要用的資產
+ *              並載入，**全部 ready 才放行進戰鬥**（出貨預設，owner 2026-08-27）。
+ */
+export const ROUND_PURGE_MODES = ["off", "soft", "full"] as const;
+export type RoundPurgeMode = (typeof ROUND_PURGE_MODES)[number];
+
+/**
  * 🖼 地面貼圖快取的「同時留幾**組**」上下界（GH#561）。⭐ 同上，這是**唯一**的住處。
  *
  * ⚠️ **下界是 4，⛔ 不是 1**，而且那是一個正確性下界不是品味：一張場地有兩個區，
@@ -374,6 +386,23 @@ export const zConfigVfxCleanupDoc = z
     vfxHardCapScope: z.enum(VFX_HARD_CAP_SCOPES).optional(),
 
     /**
+     * 🧹 回合間完整清理（GH#819）。owner 2026-08-27（逐字）：
+     * > 「lag 本身沒修 —— 一定是**物件、特效沒回收乾淨**，必要手段就是
+     * >  **每回合開始前多一個完整清理重新載入的按鈕** 先試試看」
+     * > 「既然做成開關 那就請你**預設是會清理完重新盤點必要物件載入後
+     * >  再進入戰鬥回合**」
+     *
+     * ⇒ 出貨預設 **`"full"`**（他的第二句話）：回合結束 → 特效幾何／粒子／
+     * free-list 硬重置 → 丟掉特效層的共用模型容器 → 重新盤點本場要用的資產
+     * （英雄 glb ＋ 技能特效模型）並載入 → **全部 ready 才放行進戰鬥**
+     * （沒 ready 時畫面上有「載入中＋進度」，⛔ 不是黑畫面）。
+     * `"off"` ＝ 逐位元回到 GH#819 之前的行為（**止血閥**）。
+     * 消費端 `apps/client/src/render/roundPurge.ts`；⚠️ `.optional()` 理由同
+     * 這一族每一格：線上耐久 override 少這一格不可以讓整份 config 被退回。
+     */
+    roundPurgeMode: z.enum(ROUND_PURGE_MODES).optional(),
+
+    /**
      * ⭐ **豁免表** —— 這些粒子系統是**刻意長命**的，兜底不碰它們。
      * 比對的是 Babylon `ParticleSystem.name` 的**前綴**。
      *
@@ -527,6 +556,9 @@ export const DEFAULT_VFX_CLEANUP: ConfigVfxCleanupDoc = {
   // ⏳ owner 2026-08-23 GH#570 —— 「產生後生命週期最多維持三秒，三秒後一律強制
   // 清理回收」。出貨值就是他說的那個數字，⛔ 不是我挑的。
   vfxHardMaxLifeSec: 5,
+  // 🧹 owner 2026-08-27 GH#819 —— 「既然做成開關 那就請你**預設是會清理完重新
+  // 盤點必要物件載入後 再進入戰鬥回合**」⇒ 預設就是他點名的 full，⛔ 不是我挑的。
+  roundPurgeMode: "full",
   // ⭐ 我挑的（owner 2026-08-23:「沒做完以前別問我了自己判斷 但是留後台開關可以
   // 簡易 rollback」）：預設 `"scene"`，因為他的原話是「**不管什麼特效，包含技能、
   // 場地特效等**」—— 場地火把不走 vfx 管線，只有 `"scene"` 掃得到它。

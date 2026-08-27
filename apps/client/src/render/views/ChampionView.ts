@@ -387,6 +387,10 @@ export class ChampionView {
    * 實際載入的 glb,不能看 modelKey。
    */
   private adoptedGlbPath: string | null = null;
+  /** 🧹 GH#819 —— 回合間盤點要問「這一具真的穿著哪份 glb」（null＝還是替身）。 */
+  get adoptedGlb(): string | null {
+    return this.adoptedGlbPath;
+  }
   /**
    * Skeletons of THIS instance (from `instantiateModelsToScene`) — read by the
    * #226 look, and OWNED by this view.

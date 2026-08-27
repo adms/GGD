@@ -144,8 +144,21 @@ export function clearAssetByteCache(budget = DEFAULT_ASSET_BYTE_BUDGET): void {
   byteBudget = budget;
 }
 
+/**
+ * 🧹 GH#819 —— 一份快取條目的**消費族群**標籤。
+ *   · `"shared"`（預設）：英雄本體／變身掛件／場地佈景／守衛與花 —— 這一族的
+ *     實例常以 `cloneMaterials:false` 直接掛**容器的來源材質**，容器被 dispose
+ *     它們當場破圖 ⇒ 回合間 purge **永遠不碰**。
+ *   · `"fx"`：`ModelFxRig`（模型即特效）那一條路。rig `hardReset()` 之後這一族
+ *     零個活引用 ⇒ 可以安全地整批丟掉重載。
+ * ⭐ 同一個路徑兩族都要過（名字巧合）時，它同時帶兩個標籤 ⇒ 視同 shared 保留。
+ */
+export type AssetTag = "shared" | "fx";
+
 export class AssetManager {
   private readonly cache = new Map<string, Promise<AssetContainer | null>>();
+  /** resolved path → 誰要過它（🧹 GH#819 的 purge 判準；⛔ 不是手寫名單）。 */
+  private readonly tags = new Map<string, Set<AssetTag>>();
 
   constructor(
     private readonly scene: Scene,
@@ -172,14 +185,52 @@ export class AssetManager {
    * the authored path would hand back the previous tier's container after a
    * settings change and the setting would silently do nothing again.
    */
-  load(path: string): Promise<AssetContainer | null> {
+  load(path: string, tag: AssetTag = "shared"): Promise<AssetContainer | null> {
     const resolved = resolveLodPath(path);
+    let tags = this.tags.get(resolved);
+    if (!tags) {
+      tags = new Set();
+      this.tags.set(resolved, tags);
+    }
+    tags.add(tag);
     let pending = this.cache.get(resolved);
     if (!pending) {
       pending = this.loadUncached(resolved);
       this.cache.set(resolved, pending);
     }
     return pending;
+  }
+
+  /**
+   * 🧹 GH#819 —— 回合間完整清理：把**只有特效層要過**的容器整批丟掉。
+   *
+   * 只清 `tags === {"fx"}` 的條目 —— 那一族的唯一消費者（`ModelFxRig`）剛剛
+   * `hardReset()` 過，零個活引用；曾被任何 shared 消費端要過的路徑**一份都不碰**
+   * （它們的來源材質可能正掛在場上活著的實例上，GH#558① 的教訓）。
+   *
+   * in-flight 的條目照樣移出快取，等它落地那一刻再 dispose —— 下一次 `load()`
+   * 會拿到全新的容器，⛔ 不會拿到即將變屍體的那一份。
+   *
+   * @returns 丟掉的條目數（purge 的 console 報表用）。
+   */
+  purgeFxContainers(): number {
+    let purged = 0;
+    for (const [resolved, tags] of [...this.tags]) {
+      if (tags.size !== 1 || !tags.has("fx")) continue;
+      const pending = this.cache.get(resolved);
+      this.cache.delete(resolved);
+      this.tags.delete(resolved);
+      if (pending) {
+        purged++;
+        void pending.then((c) => c?.dispose()).catch(() => {});
+      }
+    }
+    return purged;
+  }
+
+  /** 快取裡現在有幾份容器條目（purge 前後的計數報表用）。 */
+  get containerCount(): number {
+    return this.cache.size;
   }
 
   private async loadUncached(path: string): Promise<AssetContainer | null> {

@@ -152,6 +152,11 @@ import { FrameRateMeter } from "./render/fpsMeter";
 import { RoundVfxLifecycle } from "./render/roundVfxLifecycle";
 // GH#337 —— 場景型 FX 的**唯一組裝點**。⛔ 不要在這個檔案裡再 new 一個。
 import { createRoundFx } from "./render/roundFxRegistry";
+// 🧹 GH#819 —— 回合間完整清理（出 combat 清＋重盤點；沒 ready 進 combat 就蓋遮罩）。
+import { RoundPurgeCoordinator, bindRoundPurge, sceneCounts } from "./render/roundPurge";
+import { showRoundLoadOverlay, hideRoundLoadOverlay } from "./render/roundLoadOverlay";
+import { roundPurgeModeOf } from "./vfx/vfxCleanupPolicy";
+import type { AssetTag } from "./render/AssetManager";
 import type { VfxSystem } from "./vfx/VfxSystem";
 import type { AmbientVfx } from "./vfx/AmbientVfx";
 // ⚠️ 值匯入（不是 type-only）：`WhirlwindFx.handles()` 是 static，syncAmbient 用它
@@ -289,6 +294,10 @@ export class GameApp {
    * 只能靠掃字串「證明」，而那分不出程式碼與註解。
    */
   private readonly roundVfx: RoundVfxLifecycle;
+  /** 🧹 GH#819 —— 回合間完整清理＋就緒閘（出 combat 清；沒 ready 進 combat 蓋遮罩）。 */
+  private readonly roundPurge: RoundPurgeCoordinator;
+  /** 🧹 GH#819 —— 最近一次盤點的路徑→標籤表（loadAsset 查它決定 "fx"/"shared"）。 */
+  private readonly roundInventoryTags = new Map<string, AssetTag>();
   /** ambient per-bone particle/ribbon attachments (lives-with-entity vfx) */
   private readonly ambient: AmbientVfx;
   /**
@@ -837,7 +846,9 @@ export class GameApp {
         // ⭐ 修法不是「把兩格補進那個字面值」（下一格照樣會漏），是**不要投影**：
         //    `modelFxDocFor` 整份文件走過去，rig 讀得到哪幾格由 rig 自己說了算。
         modelDocFor: (modelKey) => modelFxDocFor(this.contentDb.modelFor(modelKey)),
-        loadModelContainer: (glbPath) => this.assets.load(glbPath),
+        // 🧹 GH#819 —— 帶 `"fx"` 標籤：這一族容器的唯一消費者是 ModelFxRig，
+        // 回合間 full purge 才知道哪些容器丟了不會弄壞別人（GH#558①）。
+        loadModelContainer: (glbPath) => this.assets.load(glbPath, "fx"),
         // floating combat text (task #92) is coloured by RELATIONSHIP to the
         // local player, so the vfx layer needs the same seat→team table the
         // healthbars use. render/** may not read the HUD store (client-08), which
@@ -919,6 +930,25 @@ export class GameApp {
     // 那一幀對**整張註冊表**扇出。⛔ 這裡以前寫的是 `new RoundVfxLifecycle(this.vfx)`
     // ——「只有一個 target」正是 owner 看到的殘留的根因。
     this.roundVfx = new RoundVfxLifecycle(roundFx.registry);
+
+    // 🧹 GH#819 —— 回合間**完整**清理（owner 2026-08-27:「每回合開始前多一個
+    // 完整清理重新載入」「預設是會清理完重新盤點必要物件載入後 再進入戰鬥回合」）。
+    // 出 combat 的那一幀:registry 再扇出＋ModelFxRig 硬重置＋（full）丟掉
+    // fx-only 容器 → 重新盤點本場資產並載入;下一次進 combat 沒 ready 就蓋遮罩。
+    // 檔位 `config/vfx-cleanup.json` 的 `roundPurgeMode`（off＝逐位元回到之前）。
+    this.roundPurge = new RoundPurgeCoordinator({
+      mode: () => roundPurgeModeOf(),
+      counts: () => sceneCounts(this.renderer.scene),
+      softReset: () => roundFx.registry.resetForRound("leave"),
+      hardResetModelFx: () => this.vfx.hardResetModelFx(),
+      purgeFxContainers: () => this.assets.purgeFxContainers(),
+      inventory: () => this.roundAssetInventory(),
+      // 標籤查 `roundAssetInventory()` 剛記下的那張表:fx 族＝"fx"、英雄 glb＝"shared"
+      // （⛔ 預設 shared —— 判不出來的路徑寧可永不 purge，不可誤殺）。
+      loadAsset: (p) => this.assets.load(p, this.roundInventoryTags.get(p) ?? "shared"),
+      warmAfterLoad: () => this.vfx.warmModelFx(spawnModelFxKeysInUse()),
+    });
+    bindRoundPurge(this.roundPurge); // 手動按鈕（PerfOverlay 🧹）與 __ggdPurge() 的接點
 
     // Combat post-fx (red vignette) on the LOCAL player's camera. Heavy
     // full-screen pass → quality-tier gated: constructed disabled on mobile/low,
@@ -1307,6 +1337,10 @@ export class GameApp {
     //    共用池子與 module 單例（`vfxSoundLayer` 的循環音登記表）先還回去 ——
     //    倒過來的話這一行拿到的是一堆已經 dispose 的物件。
     this.roundVfx.exit();
+    // 🧹 GH#819 —— 手動按鈕的接點解綁＋遮罩收掉（離場後 __ggdPurge 不可以還
+    //    指著一個已 dispose 的場景）。
+    bindRoundPurge(null);
+    hideRoundLoadOverlay();
     this.vfx.dispose();
     // 🖥️🖥️ GH#612 —— 逐格 overlay 與它的路由旗標一起收（⛔ 留著旗標 = 下一場
     //    全螢幕那一層也被關掉,而逐格那一層已經不在了 ⇒ 畫面上一發都沒有）。
@@ -1420,6 +1454,25 @@ export class GameApp {
    * 雖然 `warmGroundTextures` 本身是冪等的（命中就是一次 map 查找），
    * 但每秒 20 次的無謂呼叫仍然是白花的。
    */
+  /**
+   * 🧹 GH#819 —— **重新盤點**：這一場現在要用的資產路徑。
+   *
+   * 兩族：①技能特效模型（`spawnModelFx` 名單從已註冊技能推導，⛔ 不是手寫
+   * 清單 —— 同 GH#703 的預熱）標 `"fx"`；②場上英雄**實際採用**的 glb 標
+   * `"shared"`（永不 purge —— 它們的來源材質正掛在活著的實例上）。
+   * 順帶把「路徑→標籤」記進 {@link roundInventoryTags} 給 `loadAsset` 查。
+   */
+  private roundAssetInventory(): string[] {
+    this.roundInventoryTags.clear();
+    for (const key of spawnModelFxKeysInUse()) {
+      const p = this.contentDb.modelFor(key)?.glbPath;
+      if (p) this.roundInventoryTags.set(p, "fx");
+    }
+    // ⭐ 後寫 —— 同一個路徑兩族都要（名字巧合）時，shared 贏：寧可永不 purge。
+    for (const p of this.views.adoptedGlbPaths()) this.roundInventoryTags.set(p, "shared");
+    return [...this.roundInventoryTags.keys()];
+  }
+
   private warmGroundForNextRound(phase: string): void {
     if (phase === this.warmedPhase) return;
     this.warmedPhase = phase;
@@ -1699,6 +1752,16 @@ export class GameApp {
     // 邊界那一幀的事件屬於「新的那一側」—— 進 combat 的第一幀帶的是開場特效，
     // 出 combat 的那一幀帶的是收尾事件。先清再 drain，兩邊都不會被自己清掉。
     this.roundVfx.sync(state?.phase ?? "");
+    // 🧹 GH#819 —— 回合間完整清理（出 combat 那一幀觸發）＋就緒閘的遮罩：
+    // full 模式清完會重新盤點本場資產，沒載完就進 combat 時畫面要**說出來**
+    // （「回合準備中 N/M 件」），⛔ 不是黑畫面（owner 的驗收條）。
+    this.roundPurge.sync(state?.phase ?? "");
+    if (this.roundPurge.gateActive(state?.phase ?? "")) {
+      const rp = this.roundPurge.progress;
+      showRoundLoadOverlay(rp.loaded, rp.total);
+    } else {
+      hideRoundLoadOverlay();
+    }
     // 🖥️🖥️ GH#612 —— 逐格閃爍的推進與回合清場（⛔ 不留一層淡紅到下一回合）。
     this.tickScreenCues(dtMs, state?.phase ?? "");
 

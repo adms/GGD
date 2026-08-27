@@ -21,12 +21,14 @@ import {
   Configs,
   DEFAULT_VFX_CLEANUP,
   GROUND_TEX_CACHE_BOUNDS,
+  ROUND_PURGE_MODES,
   VFX_DISSIPATE_MAX_SEC_BOUNDS,
   FX_TINT_EMISSIVE_FLOOR_BOUNDS,
   VFX_FADE_OUT_MAX_SEC_BOUNDS,
   VFX_HARD_CAP_SCOPES,
   VFX_HARD_MAX_LIFE_SEC_BOUNDS,
   type ConfigVfxCleanupDoc,
+  type RoundPurgeMode,
   type VfxHardCapScope,
 } from "@ggd/shared/content";
 
@@ -256,6 +258,25 @@ export function vfxHardCapScope(policy: ConfigVfxCleanupDoc = vfxCleanupPolicy()
   const v = policy.vfxHardCapScope;
   const fallback = DEFAULT_VFX_CLEANUP.vfxHardCapScope ?? "scene";
   return VFX_HARD_CAP_SCOPES.includes(v as VfxHardCapScope) ? (v as VfxHardCapScope) : fallback;
+}
+
+// ---------------------------------------------------------------------------
+// 🧹 GH#819 —— 回合間完整清理（owner 2026-08-27）
+// ---------------------------------------------------------------------------
+
+/**
+ * 回合間完整清理的檔位（出貨 `"full"` ＝ owner 2026-08-27 點名的預設：
+ * 「預設是會清理完重新盤點必要物件載入後 再進入戰鬥回合」）。
+ *
+ * ⚠️ 同 `vfxHardMaxLifeSec`，這一格**不吃 `enabled`**：那一格管的是既有的
+ * 池子修剪，這一格是一條獨立的回合間流程；要回頭走 `"off"`（止血閥）。
+ * 認不得／缺席的值退回出貨值 —— 線上舊 override 沒這一格時拿到的是 owner
+ * 點名的預設，⛔ 不是靜默關閉。
+ */
+export function roundPurgeModeOf(policy: ConfigVfxCleanupDoc = vfxCleanupPolicy()): RoundPurgeMode {
+  const v = policy.roundPurgeMode;
+  const fallback = DEFAULT_VFX_CLEANUP.roundPurgeMode ?? "full";
+  return ROUND_PURGE_MODES.includes(v as RoundPurgeMode) ? (v as RoundPurgeMode) : fallback;
 }
 
 /**

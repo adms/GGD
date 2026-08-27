@@ -849,6 +849,15 @@ export class VfxSystem {
     this.modelFx?.warm(keys);
   }
 
+  /**
+   * 🧹 GH#819 —— 回合間完整清理：模型即特效那一條路的**硬重置**（活的＋free-list
+   * ＋軌全部 dispose、容器引用整批放手；rig 繼續可用）。
+   * ⛔ 共用容器本身在 `AssetManager.purgeFxContainers()` 那一端收（GH#558①）。
+   */
+  hardResetModelFx(): void {
+    this.modelFx?.hardReset();
+  }
+
   installShakeSink(fn: (amplitude: number, durationMs: number) => void): void {
     this.screenFx.setShakeSink(fn);
   }

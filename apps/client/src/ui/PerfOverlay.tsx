@@ -14,6 +14,8 @@
 import { useEffect, useState } from "react";
 import { perfBus, type ConnectionQuality, type PerfBus } from "../perfBus";
 import { lifecycleLedger } from "../render/lifecycleLedger";
+// 🧹 GH#819 —— 手動「完整清理重新載入」按鈕的接點（GameApp 綁定的協調器）。
+import { manualPurgeAvailable, triggerManualPurge } from "../render/roundPurge";
 // 🩺 owner 2026-08-23「監控 LAG 縮小找 root cause⋯**之前應該有做類似功能請整合起來**」——
 //    import 這一支同時做兩件事：註冊 `__ggdDiag()`，並把 longtask/凍結量表接上
 //    ⭐ **這一班既有的 4 Hz 計時器**（⛔ 不新增任何計時器、⛔ 不碰 rAF）。
@@ -256,6 +258,31 @@ export function FpsPill(): React.JSX.Element | null {
         <span data-testid="perf-lifecycle-warn" style={{ color: "#e5483f", fontWeight: 700 }}>
           殘留累積 {snap.lifecycleGrowth} 類{snap.lifecycleWorst ? `（${snap.lifecycleWorst}）` : ""}
         </span>
+      )}
+      {/* 🧹 GH#819 —— owner 的「完整清理重新載入的按鈕」：任何時刻按一次＝
+          立即 full 清理＋重新盤點載入（同回合邊界那一套，走同一支
+          purgeBetweenRounds 路徑）。⚠️ 藥丸容器是 pointerEvents:none（遙測
+          不搶點擊），按鈕自己開回 auto。比賽中才出現（沒有場景就沒東西可清）。 */}
+      {manualPurgeAvailable() && (
+        <button
+          type="button"
+          data-testid="perf-purge-btn"
+          title="完整清理＋重新盤點載入（GH#819）—— 清理場上特效幾何與共用容器，重載本場資產"
+          onClick={() => void triggerManualPurge()}
+          style={{
+            pointerEvents: "auto",
+            cursor: "pointer",
+            background: "transparent",
+            border: "1px solid rgba(255,255,255,0.25)",
+            borderRadius: 6,
+            color: "#e8eefc",
+            fontSize: 12,
+            lineHeight: 1,
+            padding: "2px 5px",
+          }}
+        >
+          🧹
+        </button>
       )}
     </div>
   );
