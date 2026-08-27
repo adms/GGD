@@ -40,26 +40,6 @@
     "truePeakDb": -1.5
   },
   {
-    "id": "name-godie-e00j",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "コウジャ・ホアン。",
-    "out": "../assets/audio/voices/names/godie-e00j.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-e00k",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "センゴクアサシン・アズミ。",
-    "out": "../assets/audio/voices/names/godie-e00k.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
     "id": "name-godie-e00l",
     "lang": "ja-JP",
     "voice": "Kyoko",
@@ -75,16 +55,6 @@
     "voice": "Kyoko",
     "text": "ヒグラシノナクコロニ・リュウグウレナ。",
     "out": "../assets/audio/voices/names/godie-e00n.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-e00q",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "エイレイアーサーオウ・セイバーオルタ。",
-    "out": "../assets/audio/voices/names/godie-e00q.mp3",
     "rate": 185,
     "targetLufs": -16,
     "truePeakDb": -1.5
@@ -110,36 +80,6 @@
     "truePeakDb": -1.5
   },
   {
-    "id": "name-godie-e00t",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "リング・ヤマムラサダコ。",
-    "out": "../assets/audio/voices/names/godie-e00t.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-e00u",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "カンゼンデショウシャナジュウシャ・イザヨイサクヤ。",
-    "out": "../assets/audio/voices/names/godie-e00u.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-e00v",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "ヒャクエーカーノモリノオウ・クマノプーサン。",
-    "out": "../assets/audio/voices/names/godie-e00v.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
     "id": "name-godie-e00w",
     "lang": "ja-JP",
     "voice": "Kyoko",
@@ -160,16 +100,6 @@
     "truePeakDb": -1.5
   },
   {
-    "id": "name-godie-e00z",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "センゴクアサシン・アズミ。",
-    "out": "../assets/audio/voices/names/godie-e00z.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
     "id": "name-godie-e010",
     "lang": "ja-JP",
     "voice": "Kyoko",
@@ -178,56 +108,6 @@
     "rate": 185,
     "targetLufs": -16,
     "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-e012",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "サツジンケンカク・ササキコジロウ。",
-    "out": "../assets/audio/voices/names/godie-e012.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-e015",
-    "lang": "zh-TW ‖ ja-JP",
-    "out": "../assets/audio/voices/names/godie-e015.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5,
-    "segments": [
-      {
-        "lang": "zh-TW",
-        "voice": "Tingting",
-        "text": "夜市人生，"
-      },
-      {
-        "lang": "ja-JP",
-        "voice": "Kyoko",
-        "text": "キンキョフク。"
-      }
-    ]
-  },
-  {
-    "id": "name-godie-ecen",
-    "lang": "zh-TW ‖ en-AU",
-    "out": "../assets/audio/voices/names/godie-ecen.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5,
-    "segments": [
-      {
-        "lang": "zh-TW",
-        "voice": "Tingting",
-        "text": "姜窩肯，"
-      },
-      {
-        "lang": "en-AU",
-        "voice": "Karen",
-        "text": "Johnnie Walker."
-      }
-    ]
   },
   {
     "id": "name-godie-edem",
@@ -245,16 +125,6 @@
     "voice": "Kyoko",
     "text": "ゾルディックケノトウシュ・ゼノゾルディック。",
     "out": "../assets/audio/voices/names/godie-efur.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-ekee",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "ホエルケモノ・デンセツノダイトウ。",
-    "out": "../assets/audio/voices/names/godie-ekee.mp3",
     "rate": 185,
     "targetLufs": -16,
     "truePeakDb": -1.5
@@ -300,26 +170,6 @@
     "truePeakDb": -1.5
   },
   {
-    "id": "name-godie-ewrd",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "テンジョウテンゲ・ナツメマヤ。",
-    "out": "../assets/audio/voices/names/godie-ewrd.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-h001",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "ジゴクノシュウライシャ・バンシャー。",
-    "out": "../assets/audio/voices/names/godie-h001.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
     "id": "name-godie-h00l",
     "lang": "ja-JP",
     "voice": "Kyoko",
@@ -328,26 +178,6 @@
     "rate": 185,
     "targetLufs": -16,
     "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-h00w",
-    "lang": "zh-TW ‖ ja-JP",
-    "out": "../assets/audio/voices/names/godie-h00w.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5,
-    "segments": [
-      {
-        "lang": "zh-TW",
-        "voice": "Tingting",
-        "text": "豪洨天王，"
-      },
-      {
-        "lang": "ja-JP",
-        "voice": "Kyoko",
-        "text": "テイセンセイ。"
-      }
-    ]
   },
   {
     "id": "name-godie-h01n",
@@ -410,36 +240,6 @@
     "truePeakDb": -1.5
   },
   {
-    "id": "name-godie-h021",
-    "lang": "zh-TW ‖ ja-JP",
-    "out": "../assets/audio/voices/names/godie-h021.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5,
-    "segments": [
-      {
-        "lang": "zh-TW",
-        "voice": "Tingting",
-        "text": "破銅爛鐵，"
-      },
-      {
-        "lang": "ja-JP",
-        "voice": "Kyoko",
-        "text": "コウテツジーグ。"
-      }
-    ]
-  },
-  {
-    "id": "name-godie-h022",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "シロキツバサ・ネギスプリングフィールド。",
-    "out": "../assets/audio/voices/names/godie-h022.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
     "id": "name-godie-h02k",
     "lang": "zh-TW ‖ ja-JP",
     "out": "../assets/audio/voices/names/godie-h02k.mp3",
@@ -460,41 +260,11 @@
     ]
   },
   {
-    "id": "name-godie-h02n",
-    "lang": "zh-TW ‖ ja-JP",
-    "out": "../assets/audio/voices/names/godie-h02n.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5,
-    "segments": [
-      {
-        "lang": "zh-TW",
-        "voice": "Tingting",
-        "text": "腦包英雄，"
-      },
-      {
-        "lang": "ja-JP",
-        "voice": "Kyoko",
-        "text": "ダーウォアーベンダン。"
-      }
-    ]
-  },
-  {
     "id": "name-godie-h02r",
     "lang": "ja-JP",
     "voice": "Kyoko",
     "text": "タネポケモン・フシギバナ。",
     "out": "../assets/audio/voices/names/godie-h02r.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-h02s",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "デスナイト。",
-    "out": "../assets/audio/voices/names/godie-h02s.mp3",
     "rate": 185,
     "targetLufs": -16,
     "truePeakDb": -1.5
@@ -540,26 +310,6 @@
     ]
   },
   {
-    "id": "name-godie-h02y",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "バクマツノフクシュウキ・シシオマコト。",
-    "out": "../assets/audio/voices/names/godie-h02y.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-h02z",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "フリョウショウネン。",
-    "out": "../assets/audio/voices/names/godie-h02z.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
     "id": "name-godie-hapm",
     "lang": "ja-JP",
     "voice": "Kyoko",
@@ -570,41 +320,11 @@
     "truePeakDb": -1.5
   },
   {
-    "id": "name-godie-harf",
-    "lang": "zh-TW ‖ ja-JP",
-    "out": "../assets/audio/voices/names/godie-harf.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5,
-    "segments": [
-      {
-        "lang": "zh-TW",
-        "voice": "Tingting",
-        "text": "豪洨天王，"
-      },
-      {
-        "lang": "ja-JP",
-        "voice": "Kyoko",
-        "text": "テイセンセイ。"
-      }
-    ]
-  },
-  {
     "id": "name-godie-hart",
     "lang": "ja-JP",
     "voice": "Kyoko",
     "text": "ファイナルファンタジー・クラウドストライフ。",
     "out": "../assets/audio/voices/names/godie-hart.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-hblm",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "ジヒノオウジャ・ガッシュベル。",
-    "out": "../assets/audio/voices/names/godie-hblm.mp3",
     "rate": 185,
     "targetLufs": -16,
     "truePeakDb": -1.5
@@ -625,26 +345,6 @@
     "voice": "Kyoko",
     "text": "クロマドウシ・リナインバース。",
     "out": "../assets/audio/voices/names/godie-hjai.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-hlgr",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "ガンダム・キラヤマト。",
-    "out": "../assets/audio/voices/names/godie-hlgr.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-hpal",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "フジミノム・フジイヤクモ。",
-    "out": "../assets/audio/voices/names/godie-hpal.mp3",
     "rate": 185,
     "targetLufs": -16,
     "truePeakDb": -1.5
@@ -730,26 +430,6 @@
     "truePeakDb": -1.5
   },
   {
-    "id": "name-godie-n01b",
-    "lang": "zh-TW ‖ ja-JP",
-    "out": "../assets/audio/voices/names/godie-n01b.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5,
-    "segments": [
-      {
-        "lang": "zh-TW",
-        "voice": "Tingting",
-        "text": "地獄歌神，"
-      },
-      {
-        "lang": "ja-JP",
-        "voice": "Kyoko",
-        "text": "ジャイアン。"
-      }
-    ]
-  },
-  {
     "id": "name-godie-n01c",
     "lang": "ja-JP",
     "voice": "Kyoko",
@@ -770,36 +450,6 @@
     "truePeakDb": -1.5
   },
   {
-    "id": "name-godie-n01l",
-    "lang": "zh-TW ‖ ja-JP",
-    "out": "../assets/audio/voices/names/godie-n01l.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5,
-    "segments": [
-      {
-        "lang": "zh-TW",
-        "voice": "Tingting",
-        "text": "學姊，"
-      },
-      {
-        "lang": "ja-JP",
-        "voice": "Kyoko",
-        "text": "シャオパイ。"
-      }
-    ]
-  },
-  {
-    "id": "name-godie-naka",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "サルトビサスケ・フウマコジロウ。",
-    "out": "../assets/audio/voices/names/godie-naka.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
     "id": "name-godie-nbbc",
     "lang": "ja-JP",
     "voice": "Kyoko",
@@ -810,61 +460,11 @@
     "truePeakDb": -1.5
   },
   {
-    "id": "name-godie-nbst",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "ヘンタイセイギ・ヘンタイカメン。",
-    "out": "../assets/audio/voices/names/godie-nbst.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-nman",
-    "lang": "zh-TW ‖ ja-JP",
-    "out": "../assets/audio/voices/names/godie-nman.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5,
-    "segments": [
-      {
-        "lang": "zh-TW",
-        "voice": "Tingting",
-        "text": "地獄歌神，"
-      },
-      {
-        "lang": "ja-JP",
-        "voice": "Kyoko",
-        "text": "ジャイアン。"
-      }
-    ]
-  },
-  {
-    "id": "name-godie-nplh",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "シャーマン・アサクラヨウ。",
-    "out": "../assets/audio/voices/names/godie-nplh.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
     "id": "name-godie-nsjs",
     "lang": "ja-JP",
     "voice": "Kyoko",
     "text": "ヨウコクラマ・ミナミノシュウイチ。",
     "out": "../assets/audio/voices/names/godie-nsjs.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-ntin",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "ジクウカンリキョクシツムカン・フェイトテスタロッサ。",
-    "out": "../assets/audio/voices/names/godie-ntin.mp3",
     "rate": 185,
     "targetLufs": -16,
     "truePeakDb": -1.5
@@ -900,16 +500,6 @@
     "truePeakDb": -1.5
   },
   {
-    "id": "name-godie-o01z",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "マホウショウジョ・タカマチナノハ。",
-    "out": "../assets/audio/voices/names/godie-o01z.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
     "id": "name-godie-o02l",
     "lang": "zh-TW ‖ ja-JP",
     "out": "../assets/audio/voices/names/godie-o02l.mp3",
@@ -930,61 +520,11 @@
     ]
   },
   {
-    "id": "name-godie-o02n",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "ソウソウモウトク・アマンサマ。",
-    "out": "../assets/audio/voices/names/godie-o02n.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-o02o",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "ソウソウモウトク・アマンサマ。",
-    "out": "../assets/audio/voices/names/godie-o02o.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
     "id": "name-godie-o02p",
     "lang": "ja-JP",
     "voice": "Kyoko",
     "text": "ムゲンノホシ・ハツネミク。",
     "out": "../assets/audio/voices/names/godie-o02p.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-o02s",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "ユウウツショウジョ・スズミヤハルヒ。",
-    "out": "../assets/audio/voices/names/godie-o02s.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-o02v",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "シロイアクマ・タカマチナノハ。",
-    "out": "../assets/audio/voices/names/godie-o02v.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-o02w",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "ショウゴウコウコ・レイコチュウ。",
-    "out": "../assets/audio/voices/names/godie-o02w.mp3",
     "rate": 185,
     "targetLufs": -16,
     "truePeakDb": -1.5
@@ -998,26 +538,6 @@
     "rate": 185,
     "targetLufs": -16,
     "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-obla",
-    "lang": "zh-TW ‖ ja-JP",
-    "out": "../assets/audio/voices/names/godie-obla.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5,
-    "segments": [
-      {
-        "lang": "zh-TW",
-        "voice": "Tingting",
-        "text": "被剝削的勞工階級，"
-      },
-      {
-        "lang": "ja-JP",
-        "voice": "Kyoko",
-        "text": "マキタロウ。"
-      }
-    ]
   },
   {
     "id": "name-godie-ofar",
@@ -1070,16 +590,6 @@
     "truePeakDb": -1.5
   },
   {
-    "id": "name-godie-opgh",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "ジョウショウショウグン・チョウウンシリュウ。",
-    "out": "../assets/audio/voices/names/godie-opgh.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
     "id": "name-godie-orkn",
     "lang": "ja-JP",
     "voice": "Kyoko",
@@ -1098,56 +608,6 @@
     "rate": 185,
     "targetLufs": -16,
     "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-oshd",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "キンニクマン・キオウタツ。",
-    "out": "../assets/audio/voices/names/godie-oshd.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-othr",
-    "lang": "zh-TW ‖ en-AU",
-    "out": "../assets/audio/voices/names/godie-othr.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5,
-    "segments": [
-      {
-        "lang": "zh-TW",
-        "voice": "Tingting",
-        "text": "X戰警，"
-      },
-      {
-        "lang": "en-AU",
-        "voice": "Karen",
-        "text": "Wolverine."
-      }
-    ]
-  },
-  {
-    "id": "name-godie-u00b",
-    "lang": "zh-TW ‖ ja-JP",
-    "out": "../assets/audio/voices/names/godie-u00b.mp3",
-    "rate": 200,
-    "targetLufs": -16,
-    "truePeakDb": -1.5,
-    "segments": [
-      {
-        "lang": "zh-TW",
-        "voice": "Tingting",
-        "text": "最M的魔法Jizz，"
-      },
-      {
-        "lang": "ja-JP",
-        "voice": "Kyoko",
-        "text": "セイジョウムササビセンセイ。"
-      }
-    ]
   },
   {
     "id": "name-godie-u00h",
@@ -1225,36 +685,6 @@
     "voice": "Kyoko",
     "text": "ジャガンシ・ヒエイ。",
     "out": "../assets/audio/voices/names/godie-u010.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-u011",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "シノジナン・クラウザーサン。",
-    "out": "../assets/audio/voices/names/godie-u011.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-u012",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "ヘヴィメタルバンドノカイブツ・ヨハネクラウザーニセイ。",
-    "out": "../assets/audio/voices/names/godie-u012.mp3",
-    "rate": 205,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-u01f",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "バンプバクテキ・チョウヒエキトク。",
-    "out": "../assets/audio/voices/names/godie-u01f.mp3",
     "rate": 185,
     "targetLufs": -16,
     "truePeakDb": -1.5
@@ -1340,16 +770,6 @@
     "truePeakDb": -1.5
   },
   {
-    "id": "name-godie-usyl",
-    "lang": "ja-JP",
-    "voice": "Kyoko",
-    "text": "サツリクノキバ・エイリアン。",
-    "out": "../assets/audio/voices/names/godie-usyl.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5
-  },
-  {
     "id": "name-godie-uvng",
     "lang": "ja-JP",
     "voice": "Kyoko",
@@ -1358,26 +778,6 @@
     "rate": 185,
     "targetLufs": -16,
     "truePeakDb": -1.5
-  },
-  {
-    "id": "name-godie-uwar",
-    "lang": "zh-TW ‖ ja-JP",
-    "out": "../assets/audio/voices/names/godie-uwar.mp3",
-    "rate": 185,
-    "targetLufs": -16,
-    "truePeakDb": -1.5,
-    "segments": [
-      {
-        "lang": "zh-TW",
-        "voice": "Tingting",
-        "text": "食神，"
-      },
-      {
-        "lang": "ja-JP",
-        "voice": "Kyoko",
-        "text": "サーニャオニウワン。"
-      }
-    ]
   },
   {
     "id": "name-godie-zombiex",

@@ -65,6 +65,337 @@
       "why": "test hero (測試英雄) — placeholder duplicate of godie-u01u"
     }
   ],
+  "retiredCasting": [
+    {
+      "id": "godie-e00j",
+      "mode": "ja",
+      "title": "コウジャ",
+      "name": "ホアン",
+      "why": "champion doc moved to content/_legacy/champions/godie-e00j.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-e00k",
+      "mode": "ja",
+      "title": "センゴクアサシン",
+      "name": "アズミ",
+      "why": "champion doc moved to content/_legacy/champions/godie-e00k.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-e00q",
+      "mode": "ja",
+      "title": "エイレイアーサーオウ",
+      "name": "セイバーオルタ",
+      "why": "champion doc moved to content/_legacy/champions/godie-e00q.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-e00t",
+      "mode": "ja",
+      "title": "リング",
+      "name": "ヤマムラサダコ",
+      "why": "champion doc moved to content/_legacy/champions/godie-e00t.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-e00u",
+      "mode": "ja",
+      "title": "カンゼンデショウシャナジュウシャ",
+      "name": "イザヨイサクヤ",
+      "why": "champion doc moved to content/_legacy/champions/godie-e00u.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-e00v",
+      "mode": "ja",
+      "title": "ヒャクエーカーノモリノオウ",
+      "name": "クマノプーサン",
+      "why": "champion doc moved to content/_legacy/champions/godie-e00v.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-e00z",
+      "mode": "ja",
+      "title": "センゴクアサシン",
+      "name": "アズミ",
+      "why": "champion doc moved to content/_legacy/champions/godie-e00z.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-e012",
+      "mode": "ja",
+      "title": "サツジンケンカク",
+      "name": "ササキコジロウ",
+      "why": "champion doc moved to content/_legacy/champions/godie-e012.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-e015",
+      "mode": "zh+ja",
+      "title": "夜市人生",
+      "name": "キンキョフク",
+      "why": "champion doc moved to content/_legacy/champions/godie-e015.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-ecen",
+      "mode": "zh+en",
+      "title": "姜窩肯",
+      "name": "Johnnie Walker",
+      "why": "champion doc moved to content/_legacy/champions/godie-ecen.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-ekee",
+      "mode": "ja",
+      "title": "ホエルケモノ",
+      "name": "デンセツノダイトウ",
+      "why": "champion doc moved to content/_legacy/champions/godie-ekee.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-ewrd",
+      "mode": "ja",
+      "title": "テンジョウテンゲ",
+      "name": "ナツメマヤ",
+      "why": "champion doc moved to content/_legacy/champions/godie-ewrd.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-h001",
+      "mode": "ja",
+      "title": "ジゴクノシュウライシャ",
+      "name": "バンシャー",
+      "why": "champion doc moved to content/_legacy/champions/godie-h001.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-h00w",
+      "mode": "zh+ja",
+      "title": "豪洨天王",
+      "name": "テイセンセイ",
+      "why": "champion doc moved to content/_legacy/champions/godie-h00w.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-h021",
+      "mode": "zh+ja",
+      "title": "破銅爛鐵",
+      "name": "コウテツジーグ",
+      "why": "champion doc moved to content/_legacy/champions/godie-h021.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-h022",
+      "mode": "ja",
+      "title": "シロキツバサ",
+      "name": "ネギスプリングフィールド",
+      "why": "champion doc moved to content/_legacy/champions/godie-h022.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-h02n",
+      "mode": "zh+ja",
+      "title": "腦包英雄",
+      "name": "ダーウォアーベンダン",
+      "why": "champion doc moved to content/_legacy/champions/godie-h02n.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-h02s",
+      "mode": "ja",
+      "title": null,
+      "name": "デスナイト",
+      "why": "champion doc moved to content/_legacy/champions/godie-h02s.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-h02y",
+      "mode": "ja",
+      "title": "バクマツノフクシュウキ",
+      "name": "シシオマコト",
+      "why": "champion doc moved to content/_legacy/champions/godie-h02y.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-h02z",
+      "mode": "ja",
+      "title": null,
+      "name": "フリョウショウネン",
+      "why": "champion doc moved to content/_legacy/champions/godie-h02z.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-harf",
+      "mode": "zh+ja",
+      "title": "豪洨天王",
+      "name": "テイセンセイ",
+      "why": "champion doc moved to content/_legacy/champions/godie-harf.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-hblm",
+      "mode": "ja",
+      "title": "ジヒノオウジャ",
+      "name": "ガッシュベル",
+      "why": "champion doc moved to content/_legacy/champions/godie-hblm.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-hlgr",
+      "mode": "ja",
+      "title": "ガンダム",
+      "name": "キラヤマト",
+      "why": "champion doc moved to content/_legacy/champions/godie-hlgr.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-hpal",
+      "mode": "ja",
+      "title": "フジミノム",
+      "name": "フジイヤクモ",
+      "why": "champion doc moved to content/_legacy/champions/godie-hpal.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-n01b",
+      "mode": "zh+ja",
+      "title": "地獄歌神",
+      "name": "ジャイアン",
+      "why": "champion doc moved to content/_legacy/champions/godie-n01b.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-n01l",
+      "mode": "zh+ja",
+      "title": "學姊",
+      "name": "シャオパイ",
+      "why": "champion doc moved to content/_legacy/champions/godie-n01l.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-naka",
+      "mode": "ja",
+      "title": "サルトビサスケ",
+      "name": "フウマコジロウ",
+      "why": "champion doc moved to content/_legacy/champions/godie-naka.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-nbst",
+      "mode": "ja",
+      "title": "ヘンタイセイギ",
+      "name": "ヘンタイカメン",
+      "why": "champion doc moved to content/_legacy/champions/godie-nbst.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-nman",
+      "mode": "zh+ja",
+      "title": "地獄歌神",
+      "name": "ジャイアン",
+      "why": "champion doc moved to content/_legacy/champions/godie-nman.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-nplh",
+      "mode": "ja",
+      "title": "シャーマン",
+      "name": "アサクラヨウ",
+      "why": "champion doc moved to content/_legacy/champions/godie-nplh.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-ntin",
+      "mode": "ja",
+      "title": "ジクウカンリキョクシツムカン",
+      "name": "フェイトテスタロッサ",
+      "why": "champion doc moved to content/_legacy/champions/godie-ntin.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-o01z",
+      "mode": "ja",
+      "title": "マホウショウジョ",
+      "name": "タカマチナノハ",
+      "why": "champion doc moved to content/_legacy/champions/godie-o01z.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-o02n",
+      "mode": "ja",
+      "title": "ソウソウモウトク",
+      "name": "アマンサマ",
+      "why": "champion doc moved to content/_legacy/champions/godie-o02n.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-o02o",
+      "mode": "ja",
+      "title": "ソウソウモウトク",
+      "name": "アマンサマ",
+      "why": "champion doc moved to content/_legacy/champions/godie-o02o.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-o02s",
+      "mode": "ja",
+      "title": "ユウウツショウジョ",
+      "name": "スズミヤハルヒ",
+      "why": "champion doc moved to content/_legacy/champions/godie-o02s.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-o02v",
+      "mode": "ja",
+      "title": "シロイアクマ",
+      "name": "タカマチナノハ",
+      "why": "champion doc moved to content/_legacy/champions/godie-o02v.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-o02w",
+      "mode": "ja",
+      "title": "ショウゴウコウコ",
+      "name": "レイコチュウ",
+      "why": "champion doc moved to content/_legacy/champions/godie-o02w.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-obla",
+      "mode": "zh+ja",
+      "title": "被剝削的勞工階級",
+      "name": "マキタロウ",
+      "why": "champion doc moved to content/_legacy/champions/godie-obla.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-opgh",
+      "mode": "ja",
+      "title": "ジョウショウショウグン",
+      "name": "チョウウンシリュウ",
+      "why": "champion doc moved to content/_legacy/champions/godie-opgh.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-oshd",
+      "mode": "ja",
+      "title": "キンニクマン",
+      "name": "キオウタツ",
+      "why": "champion doc moved to content/_legacy/champions/godie-oshd.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-othr",
+      "mode": "zh+en",
+      "title": "X戰警",
+      "name": "Wolverine",
+      "why": "champion doc moved to content/_legacy/champions/godie-othr.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-u00b",
+      "mode": "zh+ja",
+      "title": "最M的魔法Jizz",
+      "name": "セイジョウムササビセンセイ",
+      "why": "champion doc moved to content/_legacy/champions/godie-u00b.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-u011",
+      "mode": "ja",
+      "title": "シノジナン",
+      "name": "クラウザーサン",
+      "why": "champion doc moved to content/_legacy/champions/godie-u011.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-u012",
+      "mode": "ja",
+      "title": "ヘヴィメタルバンドノカイブツ",
+      "name": "ヨハネクラウザーニセイ",
+      "why": "champion doc moved to content/_legacy/champions/godie-u012.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-u01f",
+      "mode": "ja",
+      "title": "バンプバクテキ",
+      "name": "チョウヒエキトク",
+      "why": "champion doc moved to content/_legacy/champions/godie-u01f.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-usyl",
+      "mode": "ja",
+      "title": "サツリクノキバ",
+      "name": "エイリアン",
+      "why": "champion doc moved to content/_legacy/champions/godie-usyl.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    },
+    {
+      "id": "godie-uwar",
+      "mode": "zh+ja",
+      "title": "食神",
+      "name": "サーニャオニウワン",
+      "why": "champion doc moved to content/_legacy/champions/godie-uwar.json — retired from the roster, casting kept so the reading is not lost if it returns"
+    }
+  ],
   "champions": {
     "godie-e001": {
       "zhName": "蟬在叫人壞掉 - 龍宮禮奈",
@@ -194,70 +525,6 @@
       "lang": "ja-JP",
       "voice": "Kyoko"
     },
-    "godie-e00j": {
-      "zhName": "皇者 - 騜",
-      "zhTitle": "皇者",
-      "zhFullName": "騜",
-      "spokenTitle": "コウジャ",
-      "spokenName": "ホアン",
-      "jaTitle": "コウジャ",
-      "jaName": "ホアン",
-      "reading": "Kouja Hoan",
-      "confidence": "low",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-e00j.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "皇者",
-          "clip": "assets/audio/voices/names/godie-e00j.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "騜",
-          "clip": "assets/audio/voices/names/godie-e00j.name.mp3"
-        }
-      ],
-      "spokenLine": "コウジャ・ホアン。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
-    "godie-e00k": {
-      "zhName": "戰國刺客Azumi - 安云",
-      "zhTitle": "戰國刺客Azumi",
-      "zhFullName": "安云",
-      "spokenTitle": "センゴクアサシン",
-      "spokenName": "アズミ",
-      "jaTitle": "センゴクアサシン",
-      "jaName": "アズミ",
-      "reading": "Sengoku Assassin Azumi",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-e00k.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "戰國刺客Azumi",
-          "clip": "assets/audio/voices/names/godie-e00k.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "安云",
-          "clip": "assets/audio/voices/names/godie-e00k.name.mp3"
-        }
-      ],
-      "spokenLine": "センゴクアサシン・アズミ。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
     "godie-e00l": {
       "zhName": "亞瑟王 - Saber",
       "zhTitle": "亞瑟王",
@@ -319,38 +586,6 @@
         }
       ],
       "spokenLine": "ヒグラシノナクコロニ・リュウグウレナ。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
-    "godie-e00q": {
-      "zhName": "英靈-亞瑟王 - 黑化Saber",
-      "zhTitle": "英靈-亞瑟王",
-      "zhFullName": "黑化Saber",
-      "spokenTitle": "エイレイアーサーオウ",
-      "spokenName": "セイバーオルタ",
-      "jaTitle": "エイレイアーサーオウ",
-      "jaName": "セイバーオルタ",
-      "reading": "Eirei Arthur-ou Saber Alter",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-e00q.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "英靈-亞瑟王",
-          "clip": "assets/audio/voices/names/godie-e00q.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "黑化Saber",
-          "clip": "assets/audio/voices/names/godie-e00q.name.mp3"
-        }
-      ],
-      "spokenLine": "エイレイアーサーオウ・セイバーオルタ。",
       "lang": "ja-JP",
       "voice": "Kyoko"
     },
@@ -418,102 +653,6 @@
       "lang": "ja-JP",
       "voice": "Kyoko"
     },
-    "godie-e00t": {
-      "zhName": "七夜怪談 - 貞子",
-      "zhTitle": "七夜怪談",
-      "zhFullName": "貞子",
-      "spokenTitle": "リング",
-      "spokenName": "ヤマムラサダコ",
-      "jaTitle": "リング",
-      "jaName": "ヤマムラサダコ",
-      "reading": "Ring Yamamura Sadako",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-e00t.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "七夜怪談",
-          "clip": "assets/audio/voices/names/godie-e00t.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "貞子",
-          "clip": "assets/audio/voices/names/godie-e00t.name.mp3"
-        }
-      ],
-      "spokenLine": "リング・ヤマムラサダコ。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
-    "godie-e00u": {
-      "zhName": "完全而瀟灑的女僕 - 十六夜Sakuya",
-      "zhTitle": "完全而瀟灑的女僕",
-      "zhFullName": "十六夜Sakuya",
-      "spokenTitle": "カンゼンデショウシャナジュウシャ",
-      "spokenName": "イザヨイサクヤ",
-      "jaTitle": "カンゼンデショウシャナジュウシャ",
-      "jaName": "イザヨイサクヤ",
-      "reading": "Kanzen de Shousha na Juusha Izayoi Sakuya",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-e00u.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "完全而瀟灑的女僕",
-          "clip": "assets/audio/voices/names/godie-e00u.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "十六夜Sakuya",
-          "clip": "assets/audio/voices/names/godie-e00u.name.mp3"
-        }
-      ],
-      "spokenLine": "カンゼンデショウシャナジュウシャ・イザヨイサクヤ。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
-    "godie-e00v": {
-      "zhName": "百畝森林的霸主 - 維尼",
-      "zhTitle": "百畝森林的霸主",
-      "zhFullName": "維尼",
-      "spokenTitle": "ヒャクエーカーノモリノオウ",
-      "spokenName": "クマノプーサン",
-      "jaTitle": "ヒャクエーカーノモリノオウ",
-      "jaName": "クマノプーサン",
-      "reading": "Hyaku Eekaa no Mori no Ou Kuma no Puu-san",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-e00v.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "百畝森林的霸主",
-          "clip": "assets/audio/voices/names/godie-e00v.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "維尼",
-          "clip": "assets/audio/voices/names/godie-e00v.name.mp3"
-        }
-      ],
-      "spokenLine": "ヒャクエーカーノモリノオウ・クマノプーサン。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
     "godie-e00w": {
       "zhName": "神鳴流劍士 - 櫻綻剎那",
       "zhTitle": "神鳴流劍士",
@@ -578,38 +717,6 @@
       "lang": "ja-JP",
       "voice": "Kyoko"
     },
-    "godie-e00z": {
-      "zhName": "戰國刺客Azumi - 安云",
-      "zhTitle": "戰國刺客Azumi",
-      "zhFullName": "安云",
-      "spokenTitle": "センゴクアサシン",
-      "spokenName": "アズミ",
-      "jaTitle": "センゴクアサシン",
-      "jaName": "アズミ",
-      "reading": "Sengoku Assassin Azumi",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-e00z.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "戰國刺客Azumi",
-          "clip": "assets/audio/voices/names/godie-e00z.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "安云",
-          "clip": "assets/audio/voices/names/godie-e00z.name.mp3"
-        }
-      ],
-      "spokenLine": "センゴクアサシン・アズミ。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
     "godie-e010": {
       "zhName": "白木老樹精 - 白木卡迪那",
       "zhTitle": "白木老樹精",
@@ -641,126 +748,6 @@
       "spokenLine": "シラキノロウジュセイ・シラキカディナ。",
       "lang": "ja-JP",
       "voice": "Kyoko"
-    },
-    "godie-e012": {
-      "zhName": "殺人劍客 - 佐佐木小次郎",
-      "zhTitle": "殺人劍客",
-      "zhFullName": "佐佐木小次郎",
-      "spokenTitle": "サツジンケンカク",
-      "spokenName": "ササキコジロウ",
-      "jaTitle": "サツジンケンカク",
-      "jaName": "ササキコジロウ",
-      "reading": "Satsujin Kenkaku Sasaki Kojirou",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-e012.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "殺人劍客",
-          "clip": "assets/audio/voices/names/godie-e012.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "佐佐木小次郎",
-          "clip": "assets/audio/voices/names/godie-e012.name.mp3"
-        }
-      ],
-      "spokenLine": "サツジンケンカク・ササキコジロウ。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
-    "godie-e015": {
-      "zhName": "夜市人生 - 金居福",
-      "zhTitle": "夜市人生",
-      "zhFullName": "金居福",
-      "spokenTitle": "夜市人生",
-      "spokenName": "キンキョフク",
-      "jaTitle": null,
-      "jaName": "キンキョフク",
-      "reading": "Kin Kyofuku",
-      "confidence": "medium",
-      "evidence": "RULE 2 — the 稱號 is untranslatable Taiwanese (PTT slang, campus hierarchy, local TV, class satire). Tingting reads it in Mandarin, then hands to Kyoko for the Japanese name. A Japanese rendering would lose the sneer.",
-      "clip": "assets/audio/voices/names/godie-e015.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "夜市人生",
-          "clip": "assets/audio/voices/names/godie-e015.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "金居福",
-          "clip": "assets/audio/voices/names/godie-e015.name.mp3"
-        }
-      ],
-      "spokenLine": "夜市人生， ‖ キンキョフク。",
-      "lang": "zh-TW ‖ ja-JP",
-      "voice": "Tingting ‖ Kyoko",
-      "segments": [
-        {
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "夜市人生，"
-        },
-        {
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "キンキョフク。"
-        }
-      ]
-    },
-    "godie-ecen": {
-      "zhName": "姜窩肯 - 約翰走路",
-      "zhTitle": "姜窩肯",
-      "zhFullName": "約翰走路",
-      "spokenTitle": "姜窩肯",
-      "spokenName": "Johnnie Walker",
-      "jaTitle": null,
-      "jaName": null,
-      "reading": "Johnnie Walker",
-      "confidence": "high",
-      "evidence": "RULE 3 — the name is a genuinely English/Western referent, so Karen speaks it. The pun only lands if BOTH halves are pronounced correctly by a voice that speaks that language.",
-      "clip": "assets/audio/voices/names/godie-ecen.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "姜窩肯",
-          "clip": "assets/audio/voices/names/godie-ecen.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "約翰走路",
-          "clip": "assets/audio/voices/names/godie-ecen.name.mp3"
-        }
-      ],
-      "spokenLine": "姜窩肯， ‖ Johnnie Walker.",
-      "lang": "zh-TW ‖ en-AU",
-      "voice": "Tingting ‖ Karen",
-      "segments": [
-        {
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "姜窩肯，"
-        },
-        {
-          "lang": "en-AU",
-          "voice": "Karen",
-          "text": "Johnnie Walker."
-        }
-      ]
     },
     "godie-edem": {
       "zhName": "寫輪眼復仇者 - 宇智波佐助",
@@ -823,38 +810,6 @@
         }
       ],
       "spokenLine": "ゾルディックケノトウシュ・ゼノゾルディック。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
-    "godie-ekee": {
-      "zhName": "會叫的野獸 - 傳說中的大刀",
-      "zhTitle": "會叫的野獸",
-      "zhFullName": "傳說中的大刀",
-      "spokenTitle": "ホエルケモノ",
-      "spokenName": "デンセツノダイトウ",
-      "jaTitle": "ホエルケモノ",
-      "jaName": "デンセツノダイトウ",
-      "reading": "Hoeru Kemono Densetsu no Daitou",
-      "confidence": "low",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-ekee.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "會叫的野獸",
-          "clip": "assets/audio/voices/names/godie-ekee.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "傳說中的大刀",
-          "clip": "assets/audio/voices/names/godie-ekee.name.mp3"
-        }
-      ],
-      "spokenLine": "ホエルケモノ・デンセツノダイトウ。",
       "lang": "ja-JP",
       "voice": "Kyoko"
     },
@@ -986,70 +941,6 @@
       "lang": "ja-JP",
       "voice": "Kyoko"
     },
-    "godie-ewrd": {
-      "zhName": "天上天下 - 棗 真夜",
-      "zhTitle": "天上天下",
-      "zhFullName": "棗 真夜",
-      "spokenTitle": "テンジョウテンゲ",
-      "spokenName": "ナツメマヤ",
-      "jaTitle": "テンジョウテンゲ",
-      "jaName": "ナツメマヤ",
-      "reading": "Tenjou Tenge Natsume Maya",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-ewrd.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "天上天下",
-          "clip": "assets/audio/voices/names/godie-ewrd.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "棗 真夜",
-          "clip": "assets/audio/voices/names/godie-ewrd.name.mp3"
-        }
-      ],
-      "spokenLine": "テンジョウテンゲ・ナツメマヤ。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
-    "godie-h001": {
-      "zhName": "地獄來襲者 - 斑剎",
-      "zhTitle": "地獄來襲者",
-      "zhFullName": "斑剎",
-      "spokenTitle": "ジゴクノシュウライシャ",
-      "spokenName": "バンシャー",
-      "jaTitle": "ジゴクノシュウライシャ",
-      "jaName": "バンシャー",
-      "reading": "Jigoku no Shuuraisha Banshee",
-      "confidence": "low",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-h001.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "地獄來襲者",
-          "clip": "assets/audio/voices/names/godie-h001.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "斑剎",
-          "clip": "assets/audio/voices/names/godie-h001.name.mp3"
-        }
-      ],
-      "spokenLine": "ジゴクノシュウライシャ・バンシャー。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
     "godie-h00l": {
       "zhName": "時空勇者 - 林克",
       "zhTitle": "時空勇者",
@@ -1081,50 +972,6 @@
       "spokenLine": "ジクウノユウシャ・リンク。",
       "lang": "ja-JP",
       "voice": "Kyoko"
-    },
-    "godie-h00w": {
-      "zhName": "豪洨天王 - 鄭先生",
-      "zhTitle": "豪洨天王",
-      "zhFullName": "鄭先生",
-      "spokenTitle": "豪洨天王",
-      "spokenName": "テイセンセイ",
-      "jaTitle": null,
-      "jaName": "テイセンセイ",
-      "reading": "Tei Sensei",
-      "confidence": "medium",
-      "evidence": "RULE 2 — the 稱號 is untranslatable Taiwanese (PTT slang, campus hierarchy, local TV, class satire). Tingting reads it in Mandarin, then hands to Kyoko for the Japanese name. A Japanese rendering would lose the sneer.",
-      "clip": "assets/audio/voices/names/godie-h00w.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "豪洨天王",
-          "clip": "assets/audio/voices/names/godie-h00w.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "鄭先生",
-          "clip": "assets/audio/voices/names/godie-h00w.name.mp3"
-        }
-      ],
-      "spokenLine": "豪洨天王， ‖ テイセンセイ。",
-      "lang": "zh-TW ‖ ja-JP",
-      "voice": "Tingting ‖ Kyoko",
-      "segments": [
-        {
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "豪洨天王，"
-        },
-        {
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "テイセンセイ。"
-        }
-      ]
     },
     "godie-h01n": {
       "zhName": "開外掛的死神 - 黑崎一護",
@@ -1278,82 +1125,6 @@
       "lang": "ja-JP",
       "voice": "Kyoko"
     },
-    "godie-h021": {
-      "zhName": "破銅爛鐵 - 阿強一號",
-      "zhTitle": "破銅爛鐵",
-      "zhFullName": "阿強一號",
-      "spokenTitle": "破銅爛鐵",
-      "spokenName": "コウテツジーグ",
-      "jaTitle": null,
-      "jaName": "コウテツジーグ",
-      "reading": "Koutetsu Jeeg",
-      "confidence": "medium",
-      "evidence": "RULE 2 — the 稱號 is untranslatable Taiwanese (PTT slang, campus hierarchy, local TV, class satire). Tingting reads it in Mandarin, then hands to Kyoko for the Japanese name. A Japanese rendering would lose the sneer.",
-      "clip": "assets/audio/voices/names/godie-h021.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "破銅爛鐵",
-          "clip": "assets/audio/voices/names/godie-h021.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "阿強一號",
-          "clip": "assets/audio/voices/names/godie-h021.name.mp3"
-        }
-      ],
-      "spokenLine": "破銅爛鐵， ‖ コウテツジーグ。",
-      "lang": "zh-TW ‖ ja-JP",
-      "voice": "Tingting ‖ Kyoko",
-      "segments": [
-        {
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "破銅爛鐵，"
-        },
-        {
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "コウテツジーグ。"
-        }
-      ]
-    },
-    "godie-h022": {
-      "zhName": "白色之翼 - 涅吉。史普林。菲爾德",
-      "zhTitle": "白色之翼",
-      "zhFullName": "涅吉。史普林。菲爾德",
-      "spokenTitle": "シロキツバサ",
-      "spokenName": "ネギスプリングフィールド",
-      "jaTitle": "シロキツバサ",
-      "jaName": "ネギスプリングフィールド",
-      "reading": "Shiroki Tsubasa Negi Springfield",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-h022.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "白色之翼",
-          "clip": "assets/audio/voices/names/godie-h022.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "涅吉。史普林。菲爾德",
-          "clip": "assets/audio/voices/names/godie-h022.name.mp3"
-        }
-      ],
-      "spokenLine": "シロキツバサ・ネギスプリングフィールド。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
     "godie-h02k": {
       "zhName": "國寶級的畜生 - 熊貓",
       "zhTitle": "國寶級的畜生",
@@ -1398,50 +1169,6 @@
         }
       ]
     },
-    "godie-h02n": {
-      "zhName": "腦包英雄 - 打我阿笨蛋",
-      "zhTitle": "腦包英雄",
-      "zhFullName": "打我阿笨蛋",
-      "spokenTitle": "腦包英雄",
-      "spokenName": "ダーウォアーベンダン",
-      "jaTitle": null,
-      "jaName": "ダーウォアーベンダン",
-      "reading": "Daa Wo Aa Bendan",
-      "confidence": "low",
-      "evidence": "RULE 2 — the 稱號 is untranslatable Taiwanese (PTT slang, campus hierarchy, local TV, class satire). Tingting reads it in Mandarin, then hands to Kyoko for the Japanese name. A Japanese rendering would lose the sneer.",
-      "clip": "assets/audio/voices/names/godie-h02n.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "腦包英雄",
-          "clip": "assets/audio/voices/names/godie-h02n.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "打我阿笨蛋",
-          "clip": "assets/audio/voices/names/godie-h02n.name.mp3"
-        }
-      ],
-      "spokenLine": "腦包英雄， ‖ ダーウォアーベンダン。",
-      "lang": "zh-TW ‖ ja-JP",
-      "voice": "Tingting ‖ Kyoko",
-      "segments": [
-        {
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "腦包英雄，"
-        },
-        {
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "ダーウォアーベンダン。"
-        }
-      ]
-    },
     "godie-h02r": {
       "zhName": "種子神奇寶貝 - 妙蛙花",
       "zhTitle": "種子神奇寶貝",
@@ -1471,31 +1198,6 @@
         }
       ],
       "spokenLine": "タネポケモン・フシギバナ。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
-    "godie-h02s": {
-      "zhName": "死亡騎士",
-      "zhTitle": null,
-      "zhFullName": "死亡騎士",
-      "spokenTitle": null,
-      "spokenName": "デスナイト",
-      "jaTitle": null,
-      "jaName": "デスナイト",
-      "reading": "Death Knight",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-h02s.mp3",
-      "voSegments": [
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "死亡騎士",
-          "clip": "assets/audio/voices/names/godie-h02s.name.mp3"
-        }
-      ],
-      "spokenLine": "デスナイト。",
       "lang": "ja-JP",
       "voice": "Kyoko"
     },
@@ -1587,63 +1289,6 @@
         }
       ]
     },
-    "godie-h02y": {
-      "zhName": "幕末復仇狂者 - 志志雄真實",
-      "zhTitle": "幕末復仇狂者",
-      "zhFullName": "志志雄真實",
-      "spokenTitle": "バクマツノフクシュウキ",
-      "spokenName": "シシオマコト",
-      "jaTitle": "バクマツノフクシュウキ",
-      "jaName": "シシオマコト",
-      "reading": "Bakumatsu no Fukushuuki Shishio Makoto",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-h02y.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "幕末復仇狂者",
-          "clip": "assets/audio/voices/names/godie-h02y.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "志志雄真實",
-          "clip": "assets/audio/voices/names/godie-h02y.name.mp3"
-        }
-      ],
-      "spokenLine": "バクマツノフクシュウキ・シシオマコト。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
-    "godie-h02z": {
-      "zhName": "不良少年",
-      "zhTitle": null,
-      "zhFullName": "不良少年",
-      "spokenTitle": null,
-      "spokenName": "フリョウショウネン",
-      "jaTitle": null,
-      "jaName": "フリョウショウネン",
-      "reading": "Furyou Shounen",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-h02z.mp3",
-      "voSegments": [
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "不良少年",
-          "clip": "assets/audio/voices/names/godie-h02z.name.mp3"
-        }
-      ],
-      "spokenLine": "フリョウショウネン。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
     "godie-hapm": {
       "zhName": "海克力斯 - Berserker",
       "zhTitle": "海克力斯",
@@ -1676,50 +1321,6 @@
       "lang": "ja-JP",
       "voice": "Kyoko"
     },
-    "godie-harf": {
-      "zhName": "豪洨天王 - 鄭先生",
-      "zhTitle": "豪洨天王",
-      "zhFullName": "鄭先生",
-      "spokenTitle": "豪洨天王",
-      "spokenName": "テイセンセイ",
-      "jaTitle": null,
-      "jaName": "テイセンセイ",
-      "reading": "Tei Sensei",
-      "confidence": "medium",
-      "evidence": "RULE 2 — the 稱號 is untranslatable Taiwanese (PTT slang, campus hierarchy, local TV, class satire). Tingting reads it in Mandarin, then hands to Kyoko for the Japanese name. A Japanese rendering would lose the sneer.",
-      "clip": "assets/audio/voices/names/godie-harf.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "豪洨天王",
-          "clip": "assets/audio/voices/names/godie-harf.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "鄭先生",
-          "clip": "assets/audio/voices/names/godie-harf.name.mp3"
-        }
-      ],
-      "spokenLine": "豪洨天王， ‖ テイセンセイ。",
-      "lang": "zh-TW ‖ ja-JP",
-      "voice": "Tingting ‖ Kyoko",
-      "segments": [
-        {
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "豪洨天王，"
-        },
-        {
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "テイセンセイ。"
-        }
-      ]
-    },
     "godie-hart": {
       "zhName": "最終幻想 - 克勞德",
       "zhTitle": "最終幻想",
@@ -1749,38 +1350,6 @@
         }
       ],
       "spokenLine": "ファイナルファンタジー・クラウドストライフ。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
-    "godie-hblm": {
-      "zhName": "慈悲的王者 - 賈修貝爾",
-      "zhTitle": "慈悲的王者",
-      "zhFullName": "賈修貝爾",
-      "spokenTitle": "ジヒノオウジャ",
-      "spokenName": "ガッシュベル",
-      "jaTitle": "ジヒノオウジャ",
-      "jaName": "ガッシュベル",
-      "reading": "Jihi no Ouja Gash Bell",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-hblm.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "慈悲的王者",
-          "clip": "assets/audio/voices/names/godie-hblm.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "賈修貝爾",
-          "clip": "assets/audio/voices/names/godie-hblm.name.mp3"
-        }
-      ],
-      "spokenLine": "ジヒノオウジャ・ガッシュベル。",
       "lang": "ja-JP",
       "voice": "Kyoko"
     },
@@ -1845,70 +1414,6 @@
         }
       ],
       "spokenLine": "クロマドウシ・リナインバース。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
-    "godie-hlgr": {
-      "zhName": "鋼彈 - 煌",
-      "zhTitle": "鋼彈",
-      "zhFullName": "煌",
-      "spokenTitle": "ガンダム",
-      "spokenName": "キラヤマト",
-      "jaTitle": "ガンダム",
-      "jaName": "キラヤマト",
-      "reading": "Gundam Kira Yamato",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-hlgr.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "鋼彈",
-          "clip": "assets/audio/voices/names/godie-hlgr.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "煌",
-          "clip": "assets/audio/voices/names/godie-hlgr.name.mp3"
-        }
-      ],
-      "spokenLine": "ガンダム・キラヤマト。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
-    "godie-hpal": {
-      "zhName": "不死之身-無 - 藤井八雲",
-      "zhTitle": "不死之身-無",
-      "zhFullName": "藤井八雲",
-      "spokenTitle": "フジミノム",
-      "spokenName": "フジイヤクモ",
-      "jaTitle": "フジミノム",
-      "jaName": "フジイヤクモ",
-      "reading": "Fujimi no Mu Fujii Yakumo",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-hpal.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "不死之身-無",
-          "clip": "assets/audio/voices/names/godie-hpal.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "藤井八雲",
-          "clip": "assets/audio/voices/names/godie-hpal.name.mp3"
-        }
-      ],
-      "spokenLine": "フジミノム・フジイヤクモ。",
       "lang": "ja-JP",
       "voice": "Kyoko"
     },
@@ -2148,50 +1653,6 @@
       "lang": "ja-JP",
       "voice": "Kyoko"
     },
-    "godie-n01b": {
-      "zhName": "地獄歌神 - 憤怒的胖虎",
-      "zhTitle": "地獄歌神",
-      "zhFullName": "憤怒的胖虎",
-      "spokenTitle": "地獄歌神",
-      "spokenName": "ジャイアン",
-      "jaTitle": null,
-      "jaName": "ジャイアン",
-      "reading": "Gian",
-      "confidence": "high",
-      "evidence": "RULE 2 — the 稱號 is untranslatable Taiwanese (PTT slang, campus hierarchy, local TV, class satire). Tingting reads it in Mandarin, then hands to Kyoko for the Japanese name. A Japanese rendering would lose the sneer.",
-      "clip": "assets/audio/voices/names/godie-n01b.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "地獄歌神",
-          "clip": "assets/audio/voices/names/godie-n01b.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "憤怒的胖虎",
-          "clip": "assets/audio/voices/names/godie-n01b.name.mp3"
-        }
-      ],
-      "spokenLine": "地獄歌神， ‖ ジャイアン。",
-      "lang": "zh-TW ‖ ja-JP",
-      "voice": "Tingting ‖ Kyoko",
-      "segments": [
-        {
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "地獄歌神，"
-        },
-        {
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "ジャイアン。"
-        }
-      ]
-    },
     "godie-n01c": {
       "zhName": "傳說的龍騎士 - 勇者小呆",
       "zhTitle": "傳說的龍騎士",
@@ -2256,82 +1717,6 @@
       "lang": "ja-JP",
       "voice": "Kyoko"
     },
-    "godie-n01l": {
-      "zhName": "學姊 - 小派",
-      "zhTitle": "學姊",
-      "zhFullName": "小派",
-      "spokenTitle": "學姊",
-      "spokenName": "シャオパイ",
-      "jaTitle": null,
-      "jaName": "シャオパイ",
-      "reading": "Shao Pai",
-      "confidence": "low",
-      "evidence": "RULE 2 — the 稱號 is untranslatable Taiwanese (PTT slang, campus hierarchy, local TV, class satire). Tingting reads it in Mandarin, then hands to Kyoko for the Japanese name. A Japanese rendering would lose the sneer.",
-      "clip": "assets/audio/voices/names/godie-n01l.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "學姊",
-          "clip": "assets/audio/voices/names/godie-n01l.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "小派",
-          "clip": "assets/audio/voices/names/godie-n01l.name.mp3"
-        }
-      ],
-      "spokenLine": "學姊， ‖ シャオパイ。",
-      "lang": "zh-TW ‖ ja-JP",
-      "voice": "Tingting ‖ Kyoko",
-      "segments": [
-        {
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "學姊，"
-        },
-        {
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "シャオパイ。"
-        }
-      ]
-    },
-    "godie-naka": {
-      "zhName": "猿飛佐助 - 風魔小次郎",
-      "zhTitle": "猿飛佐助",
-      "zhFullName": "風魔小次郎",
-      "spokenTitle": "サルトビサスケ",
-      "spokenName": "フウマコジロウ",
-      "jaTitle": "サルトビサスケ",
-      "jaName": "フウマコジロウ",
-      "reading": "Sarutobi Sasuke Fuuma Kojirou",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-naka.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "猿飛佐助",
-          "clip": "assets/audio/voices/names/godie-naka.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "風魔小次郎",
-          "clip": "assets/audio/voices/names/godie-naka.name.mp3"
-        }
-      ],
-      "spokenLine": "サルトビサスケ・フウマコジロウ。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
     "godie-nbbc": {
       "zhName": "傳說的龍騎士 - 勇者小呆",
       "zhTitle": "傳說的龍騎士",
@@ -2364,114 +1749,6 @@
       "lang": "ja-JP",
       "voice": "Kyoko"
     },
-    "godie-nbst": {
-      "zhName": "變態正義 - 瘋狂假面",
-      "zhTitle": "變態正義",
-      "zhFullName": "瘋狂假面",
-      "spokenTitle": "ヘンタイセイギ",
-      "spokenName": "ヘンタイカメン",
-      "jaTitle": "ヘンタイセイギ",
-      "jaName": "ヘンタイカメン",
-      "reading": "Hentai Seigi Hentai Kamen",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-nbst.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "變態正義",
-          "clip": "assets/audio/voices/names/godie-nbst.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "瘋狂假面",
-          "clip": "assets/audio/voices/names/godie-nbst.name.mp3"
-        }
-      ],
-      "spokenLine": "ヘンタイセイギ・ヘンタイカメン。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
-    "godie-nman": {
-      "zhName": "地獄歌神 - 憤怒的胖虎",
-      "zhTitle": "地獄歌神",
-      "zhFullName": "憤怒的胖虎",
-      "spokenTitle": "地獄歌神",
-      "spokenName": "ジャイアン",
-      "jaTitle": null,
-      "jaName": "ジャイアン",
-      "reading": "Gian",
-      "confidence": "high",
-      "evidence": "RULE 2 — the 稱號 is untranslatable Taiwanese (PTT slang, campus hierarchy, local TV, class satire). Tingting reads it in Mandarin, then hands to Kyoko for the Japanese name. A Japanese rendering would lose the sneer.",
-      "clip": "assets/audio/voices/names/godie-nman.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "地獄歌神",
-          "clip": "assets/audio/voices/names/godie-nman.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "憤怒的胖虎",
-          "clip": "assets/audio/voices/names/godie-nman.name.mp3"
-        }
-      ],
-      "spokenLine": "地獄歌神， ‖ ジャイアン。",
-      "lang": "zh-TW ‖ ja-JP",
-      "voice": "Tingting ‖ Kyoko",
-      "segments": [
-        {
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "地獄歌神，"
-        },
-        {
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "ジャイアン。"
-        }
-      ]
-    },
-    "godie-nplh": {
-      "zhName": "通靈人 - 麻倉葉",
-      "zhTitle": "通靈人",
-      "zhFullName": "麻倉葉",
-      "spokenTitle": "シャーマン",
-      "spokenName": "アサクラヨウ",
-      "jaTitle": "シャーマン",
-      "jaName": "アサクラヨウ",
-      "reading": "Shaman Asakura You",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-nplh.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "通靈人",
-          "clip": "assets/audio/voices/names/godie-nplh.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "麻倉葉",
-          "clip": "assets/audio/voices/names/godie-nplh.name.mp3"
-        }
-      ],
-      "spokenLine": "シャーマン・アサクラヨウ。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
     "godie-nsjs": {
       "zhName": "妖狐藏馬 - 南野秀一",
       "zhTitle": "妖狐藏馬",
@@ -2501,38 +1778,6 @@
         }
       ],
       "spokenLine": "ヨウコクラマ・ミナミノシュウイチ。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
-    "godie-ntin": {
-      "zhName": "時空管理局執務官 - 菲特·泰斯塔羅沙",
-      "zhTitle": "時空管理局執務官",
-      "zhFullName": "菲特·泰斯塔羅沙",
-      "spokenTitle": "ジクウカンリキョクシツムカン",
-      "spokenName": "フェイトテスタロッサ",
-      "jaTitle": "ジクウカンリキョクシツムカン",
-      "jaName": "フェイトテスタロッサ",
-      "reading": "Jikuu Kanrikyoku Shitsumukan Fate Testarossa",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-ntin.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "時空管理局執務官",
-          "clip": "assets/audio/voices/names/godie-ntin.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "菲特·泰斯塔羅沙",
-          "clip": "assets/audio/voices/names/godie-ntin.name.mp3"
-        }
-      ],
-      "spokenLine": "ジクウカンリキョクシツムカン・フェイトテスタロッサ。",
       "lang": "ja-JP",
       "voice": "Kyoko"
     },
@@ -2632,38 +1877,6 @@
       "lang": "ja-JP",
       "voice": "Kyoko"
     },
-    "godie-o01z": {
-      "zhName": "魔砲少女 - 高町奈葉",
-      "zhTitle": "魔砲少女",
-      "zhFullName": "高町奈葉",
-      "spokenTitle": "マホウショウジョ",
-      "spokenName": "タカマチナノハ",
-      "jaTitle": "マホウショウジョ",
-      "jaName": "タカマチナノハ",
-      "reading": "Mahou Shoujo Takamachi Nanoha",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-o01z.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "魔砲少女",
-          "clip": "assets/audio/voices/names/godie-o01z.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "高町奈葉",
-          "clip": "assets/audio/voices/names/godie-o01z.name.mp3"
-        }
-      ],
-      "spokenLine": "マホウショウジョ・タカマチナノハ。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
     "godie-o02l": {
       "zhName": "神騎寶貝 - 皮卡丘",
       "zhTitle": "神騎寶貝",
@@ -2708,70 +1921,6 @@
         }
       ]
     },
-    "godie-o02n": {
-      "zhName": "曹操孟德 - 阿瞞大人",
-      "zhTitle": "曹操孟德",
-      "zhFullName": "阿瞞大人",
-      "spokenTitle": "ソウソウモウトク",
-      "spokenName": "アマンサマ",
-      "jaTitle": "ソウソウモウトク",
-      "jaName": "アマンサマ",
-      "reading": "Sou Sou Moutoku Aman-sama",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-o02n.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "曹操孟德",
-          "clip": "assets/audio/voices/names/godie-o02n.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "阿瞞大人",
-          "clip": "assets/audio/voices/names/godie-o02n.name.mp3"
-        }
-      ],
-      "spokenLine": "ソウソウモウトク・アマンサマ。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
-    "godie-o02o": {
-      "zhName": "曹操孟德 - 阿瞞大人",
-      "zhTitle": "曹操孟德",
-      "zhFullName": "阿瞞大人",
-      "spokenTitle": "ソウソウモウトク",
-      "spokenName": "アマンサマ",
-      "jaTitle": "ソウソウモウトク",
-      "jaName": "アマンサマ",
-      "reading": "Sou Sou Moutoku Aman-sama",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-o02o.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "曹操孟德",
-          "clip": "assets/audio/voices/names/godie-o02o.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "阿瞞大人",
-          "clip": "assets/audio/voices/names/godie-o02o.name.mp3"
-        }
-      ],
-      "spokenLine": "ソウソウモウトク・アマンサマ。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
     "godie-o02p": {
       "zhName": "夢幻之星 - 初音",
       "zhTitle": "夢幻之星",
@@ -2801,102 +1950,6 @@
         }
       ],
       "spokenLine": "ムゲンノホシ・ハツネミク。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
-    "godie-o02s": {
-      "zhName": "憂鬱少女 - 涼宮八ㄦ匕",
-      "zhTitle": "憂鬱少女",
-      "zhFullName": "涼宮八ㄦ匕",
-      "spokenTitle": "ユウウツショウジョ",
-      "spokenName": "スズミヤハルヒ",
-      "jaTitle": "ユウウツショウジョ",
-      "jaName": "スズミヤハルヒ",
-      "reading": "Yuuutsu Shoujo Suzumiya Haruhi",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-o02s.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "憂鬱少女",
-          "clip": "assets/audio/voices/names/godie-o02s.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "涼宮八ㄦ匕",
-          "clip": "assets/audio/voices/names/godie-o02s.name.mp3"
-        }
-      ],
-      "spokenLine": "ユウウツショウジョ・スズミヤハルヒ。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
-    "godie-o02v": {
-      "zhName": "白色惡魔 - 高町奈葉",
-      "zhTitle": "白色惡魔",
-      "zhFullName": "高町奈葉",
-      "spokenTitle": "シロイアクマ",
-      "spokenName": "タカマチナノハ",
-      "jaTitle": "シロイアクマ",
-      "jaName": "タカマチナノハ",
-      "reading": "Shiroi Akuma Takamachi Nanoha",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-o02v.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "白色惡魔",
-          "clip": "assets/audio/voices/names/godie-o02v.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "高町奈葉",
-          "clip": "assets/audio/voices/names/godie-o02v.name.mp3"
-        }
-      ],
-      "spokenLine": "シロイアクマ・タカマチナノハ。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
-    "godie-o02w": {
-      "zhName": "笑傲江湖 - 令狐沖",
-      "zhTitle": "笑傲江湖",
-      "zhFullName": "令狐沖",
-      "spokenTitle": "ショウゴウコウコ",
-      "spokenName": "レイコチュウ",
-      "jaTitle": "ショウゴウコウコ",
-      "jaName": "レイコチュウ",
-      "reading": "Shougou Kouko Reiko Chuu",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-o02w.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "笑傲江湖",
-          "clip": "assets/audio/voices/names/godie-o02w.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "令狐沖",
-          "clip": "assets/audio/voices/names/godie-o02w.name.mp3"
-        }
-      ],
-      "spokenLine": "ショウゴウコウコ・レイコチュウ。",
       "lang": "ja-JP",
       "voice": "Kyoko"
     },
@@ -2931,50 +1984,6 @@
       "spokenLine": "デンシャチカン・シュウサク。",
       "lang": "ja-JP",
       "voice": "Kyoko"
-    },
-    "godie-obla": {
-      "zhName": "被剝削的勞工階級 - 牧太郎",
-      "zhTitle": "被剝削的勞工階級",
-      "zhFullName": "牧太郎",
-      "spokenTitle": "被剝削的勞工階級",
-      "spokenName": "マキタロウ",
-      "jaTitle": null,
-      "jaName": "マキタロウ",
-      "reading": "Maki Tarou",
-      "confidence": "medium",
-      "evidence": "RULE 2 — the 稱號 is untranslatable Taiwanese (PTT slang, campus hierarchy, local TV, class satire). Tingting reads it in Mandarin, then hands to Kyoko for the Japanese name. A Japanese rendering would lose the sneer.",
-      "clip": "assets/audio/voices/names/godie-obla.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "被剝削的勞工階級",
-          "clip": "assets/audio/voices/names/godie-obla.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "牧太郎",
-          "clip": "assets/audio/voices/names/godie-obla.name.mp3"
-        }
-      ],
-      "spokenLine": "被剝削的勞工階級， ‖ マキタロウ。",
-      "lang": "zh-TW ‖ ja-JP",
-      "voice": "Tingting ‖ Kyoko",
-      "segments": [
-        {
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "被剝削的勞工階級，"
-        },
-        {
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "マキタロウ。"
-        }
-      ]
     },
     "godie-ofar": {
       "zhName": "神奇寶貝兒 - 皮卡丘",
@@ -3096,38 +2105,6 @@
       "lang": "ja-JP",
       "voice": "Kyoko"
     },
-    "godie-opgh": {
-      "zhName": "常勝將軍 - 趙子龍",
-      "zhTitle": "常勝將軍",
-      "zhFullName": "趙子龍",
-      "spokenTitle": "ジョウショウショウグン",
-      "spokenName": "チョウウンシリュウ",
-      "jaTitle": "ジョウショウショウグン",
-      "jaName": "チョウウンシリュウ",
-      "reading": "Joushou Shougun Chou Un Shiryuu",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-opgh.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "常勝將軍",
-          "clip": "assets/audio/voices/names/godie-opgh.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "趙子龍",
-          "clip": "assets/audio/voices/names/godie-opgh.name.mp3"
-        }
-      ],
-      "spokenLine": "ジョウショウショウグン・チョウウンシリュウ。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
     "godie-orkn": {
       "zhName": "電車癡漢 - 臭作",
       "zhTitle": "電車癡漢",
@@ -3191,126 +2168,6 @@
       "spokenLine": "イヌヨウカイ・セッショウマル。",
       "lang": "ja-JP",
       "voice": "Kyoko"
-    },
-    "godie-oshd": {
-      "zhName": "魔鬼筋肉人 - 鬼王達",
-      "zhTitle": "魔鬼筋肉人",
-      "zhFullName": "鬼王達",
-      "spokenTitle": "キンニクマン",
-      "spokenName": "キオウタツ",
-      "jaTitle": "キンニクマン",
-      "jaName": "キオウタツ",
-      "reading": "Kinnikuman Kiou Tatsu",
-      "confidence": "low",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-oshd.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "魔鬼筋肉人",
-          "clip": "assets/audio/voices/names/godie-oshd.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "鬼王達",
-          "clip": "assets/audio/voices/names/godie-oshd.name.mp3"
-        }
-      ],
-      "spokenLine": "キンニクマン・キオウタツ。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
-    "godie-othr": {
-      "zhName": "X戰警 - 金鋼狼",
-      "zhTitle": "X戰警",
-      "zhFullName": "金鋼狼",
-      "spokenTitle": "X戰警",
-      "spokenName": "Wolverine",
-      "jaTitle": null,
-      "jaName": null,
-      "reading": "Wolverine",
-      "confidence": "high",
-      "evidence": "RULE 3 — the name is a genuinely English/Western referent, so Karen speaks it. The pun only lands if BOTH halves are pronounced correctly by a voice that speaks that language.",
-      "clip": "assets/audio/voices/names/godie-othr.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "X戰警",
-          "clip": "assets/audio/voices/names/godie-othr.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "金鋼狼",
-          "clip": "assets/audio/voices/names/godie-othr.name.mp3"
-        }
-      ],
-      "spokenLine": "X戰警， ‖ Wolverine.",
-      "lang": "zh-TW ‖ en-AU",
-      "voice": "Tingting ‖ Karen",
-      "segments": [
-        {
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "X戰警，"
-        },
-        {
-          "lang": "en-AU",
-          "voice": "Karen",
-          "text": "Wolverine."
-        }
-      ]
-    },
-    "godie-u00b": {
-      "zhName": "最M的魔法Jizz - 清蒸 飛鼠先生",
-      "zhTitle": "最M的魔法Jizz",
-      "zhFullName": "清蒸 飛鼠先生",
-      "spokenTitle": "最M的魔法Jizz",
-      "spokenName": "セイジョウムササビセンセイ",
-      "jaTitle": null,
-      "jaName": "セイジョウムササビセンセイ",
-      "reading": "Seijou Musasabi Sensei",
-      "confidence": "low",
-      "evidence": "RULE 2 — the 稱號 is untranslatable Taiwanese (PTT slang, campus hierarchy, local TV, class satire). Tingting reads it in Mandarin, then hands to Kyoko for the Japanese name. A Japanese rendering would lose the sneer.",
-      "clip": "assets/audio/voices/names/godie-u00b.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "最M的魔法Jizz",
-          "clip": "assets/audio/voices/names/godie-u00b.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "清蒸 飛鼠先生",
-          "clip": "assets/audio/voices/names/godie-u00b.name.mp3"
-        }
-      ],
-      "spokenLine": "最M的魔法Jizz， ‖ セイジョウムササビセンセイ。",
-      "lang": "zh-TW ‖ ja-JP",
-      "voice": "Tingting ‖ Kyoko",
-      "segments": [
-        {
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "最M的魔法Jizz，"
-        },
-        {
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "セイジョウムササビセンセイ。"
-        }
-      ]
     },
     "godie-u00h": {
       "zhName": "鬼畜紅王 - 鬼畜狂刀KYO",
@@ -3568,102 +2425,6 @@
       "lang": "ja-JP",
       "voice": "Kyoko"
     },
-    "godie-u011": {
-      "zhName": "死亡老二 - 克勞薩先生",
-      "zhTitle": "死亡老二",
-      "zhFullName": "克勞薩先生",
-      "spokenTitle": "シノジナン",
-      "spokenName": "クラウザーサン",
-      "jaTitle": "シノジナン",
-      "jaName": "クラウザーサン",
-      "reading": "Shi no Jinan Krauser-san",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-u011.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "死亡老二",
-          "clip": "assets/audio/voices/names/godie-u011.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "克勞薩先生",
-          "clip": "assets/audio/voices/names/godie-u011.name.mp3"
-        }
-      ],
-      "spokenLine": "シノジナン・クラウザーサン。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
-    "godie-u012": {
-      "zhName": "重金屬樂團的怪物 - 克勞薩II世",
-      "zhTitle": "重金屬樂團的怪物",
-      "zhFullName": "克勞薩II世",
-      "spokenTitle": "ヘヴィメタルバンドノカイブツ",
-      "spokenName": "ヨハネクラウザーニセイ",
-      "jaTitle": "ヘヴィメタルバンドノカイブツ",
-      "jaName": "ヨハネクラウザーニセイ",
-      "reading": "Heavy Metal Band no Kaibutsu Johannes Krauser II",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-u012.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "重金屬樂團的怪物",
-          "clip": "assets/audio/voices/names/godie-u012.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "克勞薩II世",
-          "clip": "assets/audio/voices/names/godie-u012.name.mp3"
-        }
-      ],
-      "spokenLine": "ヘヴィメタルバンドノカイブツ・ヨハネクラウザーニセイ。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
-    "godie-u01f": {
-      "zhName": "萬夫莫敵 - 黑化張飛",
-      "zhTitle": "萬夫莫敵",
-      "zhFullName": "黑化張飛",
-      "spokenTitle": "バンプバクテキ",
-      "spokenName": "チョウヒエキトク",
-      "jaTitle": "バンプバクテキ",
-      "jaName": "チョウヒエキトク",
-      "reading": "Banpu Bakuteki Chou Hi Ekitoku",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-u01f.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "萬夫莫敵",
-          "clip": "assets/audio/voices/names/godie-u01f.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "黑化張飛",
-          "clip": "assets/audio/voices/names/godie-u01f.name.mp3"
-        }
-      ],
-      "spokenLine": "バンプバクテキ・チョウヒエキトク。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
     "godie-u01u": {
       "zhName": "三刀流劍士 - 索隆",
       "zhTitle": "三刀流劍士",
@@ -3900,38 +2661,6 @@
       "lang": "ja-JP",
       "voice": "Kyoko"
     },
-    "godie-usyl": {
-      "zhName": "殺戮之牙 - 異形",
-      "zhTitle": "殺戮之牙",
-      "zhFullName": "異形",
-      "spokenTitle": "サツリクノキバ",
-      "spokenName": "エイリアン",
-      "jaTitle": "サツリクノキバ",
-      "jaName": "エイリアン",
-      "reading": "Satsuriku no Kiba Alien",
-      "confidence": "high",
-      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
-      "clip": "assets/audio/voices/names/godie-usyl.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "殺戮之牙",
-          "clip": "assets/audio/voices/names/godie-usyl.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "異形",
-          "clip": "assets/audio/voices/names/godie-usyl.name.mp3"
-        }
-      ],
-      "spokenLine": "サツリクノキバ・エイリアン。",
-      "lang": "ja-JP",
-      "voice": "Kyoko"
-    },
     "godie-uvng": {
       "zhName": "邪眼師 - 飛影",
       "zhTitle": "邪眼師",
@@ -3963,50 +2692,6 @@
       "spokenLine": "ジャガンシ・ヒエイ。",
       "lang": "ja-JP",
       "voice": "Kyoko"
-    },
-    "godie-uwar": {
-      "zhName": "食神 - 撒尿牛丸",
-      "zhTitle": "食神",
-      "zhFullName": "撒尿牛丸",
-      "spokenTitle": "食神",
-      "spokenName": "サーニャオニウワン",
-      "jaTitle": null,
-      "jaName": "サーニャオニウワン",
-      "reading": "Saa Nyao Niu Wan",
-      "confidence": "low",
-      "evidence": "RULE 2 — the 稱號 is untranslatable Taiwanese (PTT slang, campus hierarchy, local TV, class satire). Tingting reads it in Mandarin, then hands to Kyoko for the Japanese name. A Japanese rendering would lose the sneer.",
-      "clip": "assets/audio/voices/names/godie-uwar.mp3",
-      "voSegments": [
-        {
-          "part": "title",
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "食神",
-          "clip": "assets/audio/voices/names/godie-uwar.title.mp3"
-        },
-        {
-          "part": "name",
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "撒尿牛丸",
-          "clip": "assets/audio/voices/names/godie-uwar.name.mp3"
-        }
-      ],
-      "spokenLine": "食神， ‖ サーニャオニウワン。",
-      "lang": "zh-TW ‖ ja-JP",
-      "voice": "Tingting ‖ Kyoko",
-      "segments": [
-        {
-          "lang": "zh-TW",
-          "voice": "Tingting",
-          "text": "食神，"
-        },
-        {
-          "lang": "ja-JP",
-          "voice": "Kyoko",
-          "text": "サーニャオニウワン。"
-        }
-      ]
     },
     "godie-zombiex": {
       "zhName": "聖杯黑泥醬 - 喪標麥可",
