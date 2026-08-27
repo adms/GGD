@@ -18,6 +18,7 @@ import { zModelDoc } from "./model";
 import { zVfxCollectionDoc } from "./vfx";
 import { zSkinDoc } from "./skin";
 import { zTemplateDoc } from "./template";
+import { zVfxScriptDoc } from "./vfxScript";
 import { zId } from "./common";
 
 export interface CollectionSpec {
@@ -55,6 +56,14 @@ export const COLLECTIONS = {
     schemaTag: "template@1",
     schema: zTemplateDoc,
     label: "Ability Templates",
+  },
+  // 特效工坊 (VFX Forge, GH#838): pure-presentation timelines, one per ability,
+  // owned by the forge editor. Behaviour truth stays in the ability doc; the
+  // client VfxScriptPlayer anchors segments to real wire events.
+  "vfx-scripts": {
+    schemaTag: "vfx-script@1",
+    schema: zVfxScriptDoc,
+    label: "VFX Scripts",
   },
 } as const satisfies Record<string, CollectionSpec>;
 

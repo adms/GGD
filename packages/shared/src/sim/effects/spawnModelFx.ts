@@ -172,7 +172,29 @@ export interface ModelFxSpawnInstance {
 
 export type ModelFxPathName = "forward" | "toTarget" | "orbit" | "radial" | "static";
 
-export function modelFxInstances(e: ModelFx, ctx: EffectContext, origin: Vec2): Instance[] {
+/**
+ * ⭐ GH#838 —— 擺位幾何的**唯一住處**，context-free。
+ *
+ * sim 的 {@link modelFxInstances} 與客戶端 VfxScriptPlayer（特效工坊的演出腳本）
+ * 都吃這一份：sim 從 `EffectContext` 解出 frame 再委派；播放器從線上事件/畫面
+ * 狀態解出 frame。⛔ 幾何**不可以**在兩邊各活一份 —— 那正是家族預設漂移那次的形狀。
+ */
+export interface ModelFxFrame {
+  /** 施法者腳下（所有路徑的共同起點）。 */
+  origin: Vec2;
+  /** 施法者面向（單位向量不強求，內部會 normalize；解不到就缺席）。 */
+  facing?: Vec2;
+  /** 施放的地板點（anchor:"point" 與 target 缺席時的退化）。 */
+  point?: Vec2;
+  /** 第一個 shape 目標的位置（anchor:"target"／path:"toTarget" 用）。 */
+  targetPos?: Vec2;
+}
+
+export function modelFxInstancesFromFrame(
+  e: Pick<ModelFx, "path" | "anchor" | "distance" | "count" | "spacing">,
+  frame: ModelFxFrame,
+): Instance[] {
+  const origin = frame.origin;
   const spread = e.path === "radial" || e.path === "orbit";
   const count = spread
     ? Math.max(1, Math.min(MODEL_FX_MAX_INSTANCES, Math.floor(e.count ?? 1)))
@@ -190,11 +212,9 @@ export function modelFxInstances(e: ModelFx, ctx: EffectContext, origin: Vec2): 
     // ⛔ 不是整支消失（一支安靜什麼都不做的技能是失敗形態②）。
     let at: Vec2 | undefined;
     if (e.anchor === "target") {
-      const tid = shapeTargets(e, ctx)[0];
-      at = tid !== undefined ? ctx.world.transform.get(tid)?.pos : undefined;
-      at ??= ctx.point;
+      at = frame.targetPos ?? frame.point;
     } else if (e.anchor === "point") {
-      at = ctx.point;
+      at = frame.point;
     }
     const p = at ?? origin;
     // ⭐⭐ 不動 ≠ 沒有方向。原作那十具 dummy 是**沿一條線**擺的（`A0D5`@32322
@@ -211,7 +231,7 @@ export function modelFxInstances(e: ModelFx, ctx: EffectContext, origin: Vec2): 
       if (len(to) > 1e-6) sdir = normalize(to);
     }
     if (sdir === undefined) {
-      const f = ctx.world.transform.get(ctx.caster)?.facing;
+      const f = frame.facing;
       if (f !== undefined && len(f) > 1e-6) sdir = normalize(f);
     }
     // ⛔ 解不到方向就退回無向（`dx=dz=0`）—— 仍然**畫**，⛔ 不是整支消失。
@@ -253,13 +273,10 @@ export function modelFxInstances(e: ModelFx, ctx: EffectContext, origin: Vec2): 
   }
 
   // 直線兩種：方向從面向或目標來。
-  const t = ctx.world.transform.get(ctx.caster);
   let dir: Vec2 | undefined;
   let travel = far;
   if (e.path === "toTarget") {
-    const victims = shapeTargets(e, ctx);
-    const tid = victims[0];
-    const tp = tid !== undefined ? ctx.world.transform.get(tid)?.pos : undefined;
+    const tp = frame.targetPos;
     if (tp !== undefined) {
       const to = sub(tp, origin);
       if (len(to) > 1e-6) {
@@ -274,11 +291,29 @@ export function modelFxInstances(e: ModelFx, ctx: EffectContext, origin: Vec2): 
   if (dir === undefined) {
     // `forward`，以及「`toTarget` 但目標已經不在了」—— ⛔ 退化成面向直線，
     // 不是整支消失：一支安靜什麼都不做的技能是失敗形態②。
-    const f = t?.facing;
+    const f = frame.facing;
     if (f !== undefined && len(f) > 1e-6) dir = normalize(f);
   }
   if (dir === undefined) return [];
   return [{ origin, dir, travel }];
+}
+
+export function modelFxInstances(e: ModelFx, ctx: EffectContext, origin: Vec2): Instance[] {
+  // 薄 adapter：從 EffectContext 解出 frame 再委派。⚠️ `shapeTargets` **只在**
+  // 原本會叫它的兩個分支叫（anchor:"target"／path:"toTarget"）—— 無條件叫它
+  // 不是逐位元同行為（多一次名單解算，而名單解算讀 world 狀態）。
+  const needTarget = (e.path === "static" && e.anchor === "target") || e.path === "toTarget";
+  let targetPos: Vec2 | undefined;
+  if (needTarget) {
+    const tid = shapeTargets(e, ctx)[0];
+    targetPos = tid !== undefined ? ctx.world.transform.get(tid)?.pos : undefined;
+  }
+  return modelFxInstancesFromFrame(e, {
+    origin,
+    facing: ctx.world.transform.get(ctx.caster)?.facing,
+    point: ctx.point,
+    targetPos,
+  });
 }
 
 export const spawnModelFxEffect: EffectKindSpec<"spawnModelFx"> = {

@@ -9,6 +9,7 @@
 import {
   zConfigModelLodDoc,
   zConfigVfxCleanupDoc,
+  zConfigVfxScriptsDoc,
   // 世界演出（2026-08-23 稽核）—— 六則「某個東西在某個座標出現／消失／掃過」
   // 的事件合成兩個模板 + 一張表。走 barrel，同上面那一族。
   zConfigWorldCuesDoc,
@@ -653,3 +654,29 @@ export const WEATHER_SPEC: ConfigDocSpec<"weather"> = {
   preserved: [],
 };
 
+
+// ─────────────────────────────────── 演出腳本開關 (config/vfx-scripts) ──
+
+export const VFX_SCRIPTS_SPEC: ConfigDocSpec<"vfxScripts"> = {
+  page: "vfxScripts",
+  collection: "config",
+  docId: "vfx-scripts",
+  schemaTag: "config.vfx-scripts@1",
+  zod: zConfigVfxScriptsDoc,
+  title: "演出腳本",
+  intro: [
+    "GH#838 特效工坊：`content/vfx-scripts/` 裡每一份演出腳本（一支技能一份時間軸 —— 超究武神霸斬、龍破斬、理想鄉EX 這一族的全動畫）要不要播。",
+    "這一格是「自己判斷但留後台開關」的那個開關：關掉＝播放器對每一個事件直接跳過，有腳本的技能退回它沒有腳本時的預設演出，**逐位元同開關存在之前**。⛔ 它不影響任何傷害／行為 —— 腳本是純演出，行為真相在技能 JSON。",
+  ],
+  consumer:
+    "apps/client/src/vfx/VfxSystem.ts 的 VfxScriptPlayer（每一個事件都活讀這一格；缺文件＝開，⛔ 不是關 —— 部署漏帶 JSON 不可以讓整座工坊靜默消失）",
+  effect: "玩家**下一次重新整理遊戲頁面**生效（客戶端載入內容時讀，一場中途改要重整）。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "演出腳本總開關",
+      note: "關掉＝所有 vfx-scripts 演出停播、退回預設綁定（rollback 那一格）。⛔ 不是特效總開關 —— 技能原有的特效（sim 側 spawnVfx/spawnModelFx）完全不受它管。",
+    },
+  ],
+  preserved: [],
+};

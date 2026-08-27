@@ -200,6 +200,7 @@ export const NAV_TAGS: Record<string, readonly NavTag[]> = {
   modelLod: ["演出", "可調"], // 載進來多重
   weather: ["演出", "可調"], // ⛔ 沒有一格改變碰撞或視野
   vfxCleanup: ["演出", "運維", "可調"], // 打完留多少在記憶體
+  vfxScripts: ["演出", "技能", "可調"], // GH#838 演出腳本要不要播（rollback 那一格）
   feelFx: ["演出", "音效", "可調"], // 爽度＝看得到＋聽得到
   gore: ["演出", "可調"], // 調性決定，不是效能決定
   damageColors: ["演出", "可調"], // 物理紅/魔法紫/真實白/治療綠

@@ -98,6 +98,7 @@ import { zConfigCombatFeelDoc } from "./combatFeel";
 import { zConfigFormVisualsDoc } from "./formVisuals";
 import { zConfigModelLodDoc } from "./modelLod";
 import { zConfigVfxCleanupDoc } from "./vfxCleanup";
+import { zConfigVfxScriptsDoc } from "./vfxScripts";
 import { zConfigFeelFxDoc } from "./feelFx";
 import { zConfigShieldDoc } from "./shield";
 import { zConfigBlockDoc } from "./block";
@@ -214,6 +215,7 @@ export * from "./uiLexicon";
 export * from "./unitTints";
 export * from "./valhallaSandbox";
 export * from "./vfxCleanup";
+export * from "./vfxScripts";
 export * from "./victoryFx";
 export * from "./victoryTaunts";
 export * from "./voxelBarcodes";
@@ -268,6 +270,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   // content/ 之後**整份**內容驗證失敗 → fail-open 退回 2 隻骨架英雄，而網站看起來
   // 完全正常（2026-08-02 事故的形狀）。
   zConfigFeelFxDoc,
+  zConfigVfxScriptsDoc,
   zConfigRoundGradeDoc,
   zConfigShieldDoc,
   zConfigBlockDoc,

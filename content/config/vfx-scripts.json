@@ -1,0 +1,6 @@
+{
+  "id": "vfx-scripts",
+  "schema": "config.vfx-scripts@1",
+  "note": "GH#838 特效工坊（演出腳本）總開關。關掉＝有腳本的技能退回預設演出，逐位元同腳本不存在。缺這份文件＝開（客戶端讀 DEFAULT_VFX_SCRIPTS），⛔ 不是關。",
+  "enabled": true
+}

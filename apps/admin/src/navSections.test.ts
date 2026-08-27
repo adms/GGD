@@ -80,6 +80,7 @@ const BASELINE_PAGES: readonly Page[] = [
   "newHeroChecks",
   "modelLod",
   "vfxCleanup",
+  "vfxScripts", // GH#838 演出腳本開關（2026-08-28 登記）
   // 爽度特效 (GH#494, owner 2026-08-21) —— 同一個 `ConfigDocPage` 元件，
   // 緊接在 特效回收 後面（一個管「留多少在記憶體裡」，一個管「那一瞬間看得到什麼」）。
   "feelFx",

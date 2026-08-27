@@ -54,6 +54,10 @@ import type { AbilityId, ProjectileId } from "@ggd/shared/ids";
 import type { VfxDoc } from "@ggd/shared/content";
 // ⭐ GH#649/#565 —— vfxSpawn 的酬載型別住在 sim 的 emit 站旁邊（GH#608 的規矩）
 import type { VfxSpawnEvent } from "@ggd/shared/sim/effects/spawnVfx";
+import { Configs as ContentConfigs, VfxScripts } from "@ggd/shared/content/registries";
+import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
+import { DEFAULT_VFX_SCRIPTS } from "@ggd/shared/content/schema/config/vfxScripts";
+import { VfxScriptPlayer } from "./VfxScriptPlayer";
 import { TICK_MS } from "@ggd/shared/constants";
 // GH#649/#565 —— WC3 掛點字串 → glb 骨頭節點（正規化＋fallback 鏈，#98 的那一半）
 import { resolveAttachment } from "../render/vfx/attachment";
@@ -641,6 +645,8 @@ export class VfxSystem {
   private readonly arcs: ArcBoltFx;
   /** ⭐ GH#551 —— 移動中的**模型**特效（翻滾光束／圓周冰塊／直線火球）。null = 沒有內容接縫。 */
   private readonly modelFx: ModelFxRig | null;
+  /** GH#838 特效工坊的演出腳本播放器（constructor 尾建）。 */
+  private readonly scriptPlayer!: VfxScriptPlayer;
   /** ⭐ GH#549 —— 全螢幕閃爍 + 相機震動。owner：「不然都不知道發生什麼事情有沒有反擊成功」 */
   private readonly screenFx: ScreenFxLayer;
   /** ⭐ 特效文字（原作 CreateTextTagUnitBJ）。 */
@@ -800,6 +806,65 @@ export class VfxSystem {
       entityPos: (id) => this.ctx.entityPos(id),
       castProgress: (id, nowMs) => this.ctx.castProgress?.(id, nowMs) ?? null,
     });
+    // ⭐ GH#838 特效工坊 —— 演出腳本播放器。它自己不畫任何東西：把
+    //    `content/vfx-scripts/` 的 segment 翻成既有 wire payload **回餵
+    //    handleEvent**（modelFxSpawn/vfxSpawn/floatingText/screenFlash|Shake
+    //    —— 全是出貨消費端，⛔ 沒有第二條渲染路）。沒有 script 的技能與
+    //    開關關掉的世界都是零成本路（`scriptFor` 查不到就 return）。
+    this.scriptPlayer = new VfxScriptPlayer({
+      scriptFor: (abilityId) => this.vfxScriptIndex().get(abilityId),
+      allScripts: () => VfxScripts.all(),
+      projectileIdsOf: (abilityId) => this.abilityProjectileIds(abilityId),
+      entityPos: (id) => this.ctx.entityPos(id),
+      dispatch: (sev, t) => this.handleEvent(sev, t),
+      playSfx: (event, opts) => this.ctx.playSfx?.(event, opts ?? {}) ?? false,
+      enabled: () =>
+        (ContentConfigs.tryGet("vfx-scripts") as { enabled?: boolean } | undefined)?.enabled ??
+        DEFAULT_VFX_SCRIPTS.enabled,
+    });
+  }
+
+  private scriptIndexCache: Map<string, VfxScriptDoc> | null = null;
+  private projectileIdsCache = new Map<string, ReadonlySet<string>>();
+
+  /** abilityId → script（懶建；forge 熱改後 `invalidateVfxScripts()` 重建）。 */
+  private vfxScriptIndex(): Map<string, VfxScriptDoc> {
+    if (this.scriptIndexCache === null) {
+      this.scriptIndexCache = new Map();
+      for (const s of VfxScripts.all()) this.scriptIndexCache.set(s.abilityId, s);
+    }
+    return this.scriptIndexCache;
+  }
+
+  /** forge 編輯器存檔後叫這一支 —— script 索引與彈道歸屬全部重建。 */
+  invalidateVfxScripts(): void {
+    this.scriptIndexCache = null;
+    this.projectileIdsCache.clear();
+    this.scriptPlayer.invalidate();
+  }
+
+  /**
+   * 這支技能的 effects deep-scan 收集到的 projectileId 集合 —— wire 的
+   * `projectileSpawn/Hit` 只帶 `projectileId`，歸屬**從技能 JSON 推導**（⛔ 不猜）。
+   */
+  private abilityProjectileIds(abilityId: string): ReadonlySet<string> {
+    const hit = this.projectileIdsCache.get(abilityId);
+    if (hit) return hit;
+    const out = new Set<string>();
+    const walk = (node: unknown): void => {
+      if (Array.isArray(node)) {
+        for (const n of node) walk(n);
+        return;
+      }
+      if (node === null || typeof node !== "object") return;
+      const rec = node as Record<string, unknown>;
+      if (rec.kind === "spawnProjectile" && typeof rec.projectileId === "string")
+        out.add(rec.projectileId);
+      for (const v of Object.values(rec)) walk(v);
+    };
+    walk(Abilities.tryGet(abilityId as AbilityId)?.effects);
+    this.projectileIdsCache.set(abilityId, out);
+    return out;
   }
 
   /**
@@ -1529,6 +1594,9 @@ export class VfxSystem {
   }
 
   handleEvent(ev: EventMessage, nowMs: number): void {
+    // ⭐ GH#838 —— 演出腳本的觸發器抽取。⛔ 不會迴圈：播放器合成的事件型別
+    //    （modelFxSpawn/vfxSpawn/…）不在它自己的觸發器集合裡。
+    this.scriptPlayer.onEvent(ev, nowMs);
     switch (ev.type) {
       case "abilityCast": {
         const abilityId = ev.data.abilityId as string | undefined;
@@ -2575,6 +2643,8 @@ export class VfxSystem {
     const dtMs = this.lastUpdateMs === null ? 0 : nowMs - this.lastUpdateMs;
     this.lastUpdateMs = nowMs;
     this.w3xCast.tick(dtMs, nowMs);
+    // ⭐ GH#838 —— 到期的演出腳本 segment 在這裡 fire（atMs 的時鐘）。
+    this.scriptPlayer.update(nowMs);
     // ⏳ GH#570 —— **終極**三秒兜底。owner 2026-08-23:「不管什麼特效⋯產生後
     // 生命週期最多維持三秒，三秒後一律強制清理回收」。
     // ⭐ 它掃的是 `scene.particleSystems`（Babylon 自己維護的登錄表），所以

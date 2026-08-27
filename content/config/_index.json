@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "7c79b2243674",
+  "hash": "33ac70b75caf",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -475,6 +475,12 @@
       "path": "config/vfx-families.json",
       "hash": "cca8498035ab",
       "size": 28946
+    },
+    {
+      "id": "vfx-scripts",
+      "path": "config/vfx-scripts.json",
+      "hash": "0209d0edbd90",
+      "size": 300
     },
     {
       "id": "victory-fx",

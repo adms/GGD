@@ -28,6 +28,7 @@ import type { AnyVfxDoc, AttachmentDoc, RibbonDoc, VfxDoc } from "./schema/vfx";
 import type { StatusEffectDoc } from "./schema/statusEffect";
 import type { SkinDoc } from "./schema/skin";
 import type { TemplateDoc } from "./schema/template";
+import type { VfxScriptDoc } from "./schema/vfxScript";
 import { zAbilityDef, zAbilityDoc } from "./schema/ability";
 // AoE 四級距 → 半徑。全專案唯一的查表處，理由寫在那支檔案。
 import { aoeTiersFromDoc, resolveRadiusTier } from "./aoeTiers";
@@ -124,6 +125,8 @@ export const RibbonDefs = new ContentRegistry<RibbonDoc>();
 export const AttachmentDefs = new ContentRegistry<AttachmentDoc>();
 export const StatusEffects = new ContentRegistry<StatusEffectDoc>();
 export const Skins = new ContentRegistry<SkinDoc>();
+/** vfx-script@1 docs（GH#838 特效工坊）—— 客戶端 VfxScriptPlayer 的唯一資料源。 */
+export const VfxScripts = new ContentRegistry<VfxScriptDoc>();
 
 /** One field where a champion's embedded ability copy disagrees with the standalone doc. */
 export interface AbilityMirrorDrift {
@@ -432,6 +435,7 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
     else VfxDefs.register(d);
   }
   for (const d of store.all<StatusEffectDoc>("status-effects")) StatusEffects.register(d);
+  for (const d of store.all<VfxScriptDoc>("vfx-scripts")) VfxScripts.register(d);
   // sim 那一側只要 `polarity` 與 `tags`(A4b/#278;`tags` 2026-08-08 加)。
   // 兩張表分開是刻意的:UI 讀 `StatusEffects` 拿名字與圖示,sim 讀 `Statuses` 拿
   // 它**真的會拿來分岔**的那幾格,而 `sim/**` 不 import `content/**`(那條分層

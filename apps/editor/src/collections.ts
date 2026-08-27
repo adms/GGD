@@ -185,6 +185,15 @@ const TEMPLATES: Record<CollectionName, (id: string) => unknown> = {
     gapScore: 5,
     exemplar: { skill: "(填入 xx-0X 技能名)", jass: "(填入 rawcode 或 war3map.j:行號)" },
   }),
+  // GH#838 特效工坊：一支技能一份純演出時間軸。abilityId 先填自己的 id 當佔位 ——
+  // 存檔時 zRef("abilities") 會擋不存在的技能，作者要換成真的。
+  "vfx-scripts": (id) => ({
+    id,
+    schema: "vfx-script@1",
+    abilityId: id,
+    notes: "（JASS 出處：war3map.j:行號；換算依據）",
+    segments: [{ kind: "floatingText", on: "castStart", text: "（示意段 —— 換成真的演出）" }],
+  }),
   vfx: (id) => ({
     id,
     schema: "vfx@1",

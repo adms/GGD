@@ -368,6 +368,9 @@ export const NAV: NavItem[] = [
   // 「這台機器／這張圖，畫面上該出現多少東西」。⛔ 這一頁沒有一格會改變碰撞或視野。
   { page: "weather", label: "場地天氣", emoji: "🌧️", section: SEC_SYS },
   { page: "vfxCleanup", label: "特效回收", emoji: "🧹", section: SEC_SYS },
+  // GH#838 特效工坊的 rollback 開關（演出腳本要不要播）。編輯本體是 dev 頁
+  // （client 的 vfx-script-studio），這一頁只有那一格開關。
+  { page: "vfxScripts", label: "演出腳本", emoji: "🎬", section: SEC_SYS },
   // 爽度特效 (GH#494, owner 2026-08-21「提高爽度 模仿肉鴿遊戲的氛圍感」) —— 緊接在
   // 特效回收 後面，因為它是同一個引擎的另一半：一個管「留多少在記憶體裡」，
   // 一個管「那一瞬間看得到、聽得到什麼」。⛔ 這一頁沒有一格會改變任何人的金幣。

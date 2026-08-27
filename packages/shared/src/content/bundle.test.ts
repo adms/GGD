@@ -306,6 +306,8 @@ const DOC_FLOORS: Record<CollectionName, number> = {
   vfx: 500,
   skins: 5,
   "ability-templates": 29, // 鑄技工坊: 8 enabled + 21 draft families (#141/#205)
+  // GH#838 特效工坊：演出腳本。⚠️ 1 是**下限**不是現況 —— 三招驗收批會往上長。
+  "vfx-scripts": 1,
 };
 
 describe("content bundle — emission", () => {
