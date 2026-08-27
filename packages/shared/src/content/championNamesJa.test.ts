@@ -266,11 +266,20 @@ describe("champion call-out VO pack", () => {
       ["godie-o01z", "godie-o02v"], // 魔砲少女 vs 白色惡魔 — 高町奈葉
       ["godie-u00l", "godie-umal"], // 北斗之鼠 vs 北斗神拳掌門人 — 拳四郎
     ];
-    for (const [a, b] of pairs) {
+    // ⭐ 2026-08-27（GH#811）：這張對子表是**手寫**的，而英雄會退休 ——
+    //   `godie-u00b` 2026-08-27 搬進 `content/_legacy/champions/` 之後，
+    //   這一條就用「u00b mapped: expected undefined to be defined」紅了，
+    //   ⚠️ 而那句訊息讀起來像「呼名產生器壞了」，⛔ 真相是「那位英雄下架了」。
+    // ⇒ 只驗**今天還在 MANIFEST 裡**的對子；⭐ 並且斷言母體非空
+    //   （⛔ 否則全部退休時這一條會變成一個永遠綠的空迴圈 —— 失敗形態③）。
+    const live = pairs.filter(([a, b]) => doc.champions[a] && doc.champions[b]);
+    expect(
+      live.length,
+      "⛔ 一對「只差稱號」的英雄都不在架上了 —— 這條守衛變成空轉，請補新的對子",
+    ).toBeGreaterThan(0);
+    for (const [a, b] of live) {
       const ea = doc.champions[a]!;
       const eb = doc.champions[b]!;
-      expect(ea, `${a} mapped`).toBeDefined();
-      expect(eb, `${b} mapped`).toBeDefined();
       expect(ea.zhTitle, `${a}/${b} really do differ by title`).not.toBe(eb.zhTitle);
       expect(
         ea.spokenLine,
@@ -439,7 +448,26 @@ describe("champion call-out VO pack", () => {
     cover("name-vo-clips-exist");
     const doc = loadNames();
     const ids = Object.keys(doc.champions);
-    expect(ids.length).toBeGreaterThan(100);
+    // ⭐ 2026-08-27（GH#811）：母體從**推導**來，⛔ 不是一個寫死的 `> 100`。
+    //   47 位英雄退休（文件搬進 `content/_legacy/champions/`）之後，呼名 MANIFEST
+    //   合法地縮到 71 —— ⚠️ 而 `> 100` 會用**與真相相反**的訊息紅
+    //   （它說「呼名少了」，真相是「母體換了」）。
+    //   ⇒ 問**關係**：MANIFEST 的每一位都要是**今天還在架上**的英雄，
+    //     而架上的每一位都要有呼名。⛔ 兩個方向都要，⛔ 不是一個下限。
+    const onRoster = new Set(
+      readdirSync(join(CONTENT, "champions"))
+        .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+        .map((f) => f.slice(0, -".json".length)),
+    );
+    expect(onRoster.size, "讀不到任何上架英雄 —— 母體壞了").toBeGreaterThan(10);
+    expect(
+      ids.filter((id) => !onRoster.has(id)).join(", "),
+      "⛔ 呼名 MANIFEST 裡有**已下架**的英雄 —— 產生器該把它移進 retiredCasting",
+    ).toBe("");
+    expect(
+      [...onRoster].filter((id) => !ids.includes(id)).join(", "),
+      "⛔ 上架英雄沒有呼名 clip —— 選角時他會沒有聲音",
+    ).toBe("");
     for (const id of ids) {
       const file = join(CONTENT, doc.champions[id]!.clip);
       expect(existsSync(file), `${id} clip exists`).toBe(true);
