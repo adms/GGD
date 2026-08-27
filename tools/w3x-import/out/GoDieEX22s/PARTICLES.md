@@ -2,7 +2,7 @@
 
 - models scanned: 129; models with emitters/events: 90
 - vfx@1 docs (PRE2): 228; ribbon@1 docs (RIBB): 54; total docs: 282
-- hero models with ambient bindings: 6 (content/config/ambient-vfx.json)
+- hero models with ambient bindings: 4 (content/config/ambient-vfx.json)
 - map-archive textures copied to content/assets/textures/particles/wc3/: 8
 - Blizzard stock textures substituted with CC0 sprites: 71
 - scale: per-model `scale_factor` from models_report.json (heroes normalized to 1.7 world units tall; props 1/36); applied to width/speed/gravity/segmentScaling/ribbon heights
@@ -117,20 +117,20 @@
 | HeroCloudStrife.mdx |  | godie-herocloudstrife-r0 | ribbon | UNNAMED | additive |  | Y | Bone_Hand_R | assets/textures/particles/wc3/ribbonblur1.png |
 | HeroEVA01S2.mdx |  | godie-heroeva01s2-p0 | pre2 | BlizParticle01 | alpha |  |  |  | assets/textures/particles/smoke_01.png |
 | HeroEVA01S2.mdx |  | godie-heroeva01s2-p1 | pre2 | UNNAMED | additive |  |  |  | assets/textures/particles/wc3/heroeva01effect.png |
-| HeroGirl.mdx | Y | godie-herogirl-r0 | ribbon | BlizRibbon_R | additive |  | Y | Sword_R | assets/textures/particles/wc3/ribbonblur1.png |
-| HeroGirl.mdx | Y | godie-herogirl-r1 | ribbon | BlizRibbon_L | additive |  | Y | Sword_L | assets/textures/particles/wc3/ribbonblur1.png |
-| HeroHanzouHattori.mdx | Y | godie-herohanzouhattori-p0 | pre2 | BlizParticle01 | additive |  | Y |  | assets/textures/particles/flame_03.png |
-| HeroHanzouHattori.mdx | Y | godie-herohanzouhattori-r0 | ribbon | BlizRibbon01 | additive |  | Y | Sword | assets/textures/particles/wc3/ribbonblur1.png |
+| HeroGirl.mdx |  | godie-herogirl-r0 | ribbon | BlizRibbon_R | additive |  | Y | Sword_R | assets/textures/particles/wc3/ribbonblur1.png |
+| HeroGirl.mdx |  | godie-herogirl-r1 | ribbon | BlizRibbon_L | additive |  | Y | Sword_L | assets/textures/particles/wc3/ribbonblur1.png |
+| HeroHanzouHattori.mdx |  | godie-herohanzouhattori-p0 | pre2 | BlizParticle01 | additive |  | Y |  | assets/textures/particles/flame_03.png |
+| HeroHanzouHattori.mdx |  | godie-herohanzouhattori-r0 | ribbon | BlizRibbon01 | additive |  | Y | Sword | assets/textures/particles/wc3/ribbonblur1.png |
 | HeroHehi.mdx | Y | godie-herohehi-p0 | pre2 | BlizParticle01 | additive |  | Y |  | assets/textures/particles/flame_03.png |
 | HeroHehi.mdx | Y | godie-herohehi-r0 | ribbon | BlizRibbon_R | additive |  | Y | Sword_R | assets/textures/particles/wc3/ribbonblur1.png |
-| HeroHimuraKenshin.mdx | Y | godie-herohimurakenshin-p0 | pre2 | BlizParticle01 | additive |  | Y |  | assets/textures/particles/flame_03.png |
-| HeroHimuraKenshin.mdx | Y | godie-herohimurakenshin-p1 | pre2 | BlizParticle03tubespinner | additive |  | Y |  | assets/textures/particles/light_03.png |
-| HeroHimuraKenshin.mdx | Y | godie-herohimurakenshin-r0 | ribbon | BlizRibbon01 | additive |  | Y | Sword | assets/textures/particles/wc3/ribbonblur1.png |
+| HeroHimuraKenshin.mdx |  | godie-herohimurakenshin-p0 | pre2 | BlizParticle01 | additive |  | Y |  | assets/textures/particles/flame_03.png |
+| HeroHimuraKenshin.mdx |  | godie-herohimurakenshin-p1 | pre2 | BlizParticle03tubespinner | additive |  | Y |  | assets/textures/particles/light_03.png |
+| HeroHimuraKenshin.mdx |  | godie-herohimurakenshin-r0 | ribbon | BlizRibbon01 | additive |  | Y | Sword | assets/textures/particles/wc3/ribbonblur1.png |
 | HeroIchigo.mdx | Y | godie-heroichigo-p0 | pre2 | UNNAMED | additive |  | Y | bone_handR | assets/textures/particles/smoke_02.png |
 | HeroIchigo.mdx | Y | godie-heroichigo-r0 | ribbon | BlizRibbon02 | additive |  | Y | bone_ribbonwan | assets/textures/particles/wc3/ribbonblur1.png |
 | HeroIchigo.mdx | Y | godie-heroichigo-r1 | ribbon | BlizRibbon01 | additive |  | Y | bone_ribbon | assets/textures/particles/wc3/ribbonblur1.png |
-| HeroKunoichi.mdx | Y | godie-herokunoichi-r0 | ribbon | BlizRibbon_R | additive |  | Y | Sword_R | assets/textures/particles/wc3/ribbonblur1.png |
-| HeroKunoichi.mdx | Y | godie-herokunoichi-r1 | ribbon | BlizRibbon_L | additive |  | Y | Sword_L | assets/textures/particles/wc3/ribbonblur1.png |
+| HeroKunoichi.mdx |  | godie-herokunoichi-r0 | ribbon | BlizRibbon_R | additive |  | Y | Sword_R | assets/textures/particles/wc3/ribbonblur1.png |
+| HeroKunoichi.mdx |  | godie-herokunoichi-r1 | ribbon | BlizRibbon_L | additive |  | Y | Sword_L | assets/textures/particles/wc3/ribbonblur1.png |
 | HeroMiku.mdx | Y | godie-heromiku-p0 | pre2 | BlizParticle01 | additive |  | Y |  | assets/textures/particles/circle_01.png |
 | HeroMiku.mdx | Y | godie-heromiku-p1 | pre2 | BlizParticle02 | additive |  | Y |  | assets/textures/particles/spark_06.png |
 | HeroMusashiMiyamoto.mdx | Y | godie-heromusashimiyamoto-p0 | pre2 | BlizParticle01 | additive |  | Y |  | assets/textures/particles/flame_03.png |
@@ -269,34 +269,34 @@
 | frostnova.mdx |  | godie-frostnova-p1 | pre2 | Brilliance_Rings | additive |  |  |  | assets/textures/particles/circle_02.png |
 | frostnova.mdx |  | godie-frostnova-p2 | pre2 | Birth_Inner_Particle | additive |  |  |  | assets/textures/particles/circle_02.png |
 | frostnova.mdx |  | godie-frostnova-p3 | pre2 | BlizParticle01 | additive |  |  |  | assets/textures/particles/star_09.png |
-| gumdam.mdx | Y | godie-gumdam-p0 | pre2 | BlizParticle01 | alpha | Y |  | Object11 | assets/textures/particles/smoke_01.png |
-| gumdam.mdx | Y | godie-gumdam-p1 | pre2 | BlizParticle06 | alpha |  | Y |  | assets/textures/particles/smoke_03.png |
-| gumdam.mdx | Y | godie-gumdam-p2 | pre2 | BlizParticle09 | additive | Y |  |  | assets/textures/particles/flame_03.png |
-| gumdam.mdx | Y | godie-gumdam-p3 | pre2 | BlizParticle01fire05 | additive |  | Y |  | assets/textures/particles/smoke_07.png |
-| gumdam.mdx | Y | godie-gumdam-p4 | pre2 | BlizParticle08 | alpha |  | Y |  | assets/textures/particles/smoke_04.png |
+| gumdam.mdx |  | godie-gumdam-p0 | pre2 | BlizParticle01 | alpha |  |  | Object11 | assets/textures/particles/smoke_01.png |
+| gumdam.mdx |  | godie-gumdam-p1 | pre2 | BlizParticle06 | alpha |  | Y |  | assets/textures/particles/smoke_03.png |
+| gumdam.mdx |  | godie-gumdam-p2 | pre2 | BlizParticle09 | additive |  |  |  | assets/textures/particles/flame_03.png |
+| gumdam.mdx |  | godie-gumdam-p3 | pre2 | BlizParticle01fire05 | additive |  | Y |  | assets/textures/particles/smoke_07.png |
+| gumdam.mdx |  | godie-gumdam-p4 | pre2 | BlizParticle08 | alpha |  | Y |  | assets/textures/particles/smoke_04.png |
 | gx.mdx |  | godie-gx-p0 | pre2 | BlizParticle01 | additive |  |  |  | assets/textures/particles/wc3/blue-glow2.png |
 | gx.mdx |  | godie-gx-r0 | ribbon | BlizRibbon01 | additive |  |  |  | assets/textures/particles/wc3/blue-glow2.png |
 | gxhuge.mdx |  | godie-gxhuge-p0 | pre2 | BlizParticle01 | additive |  |  |  | assets/textures/particles/wc3/blue-glow2.png |
 | gxhuge.mdx |  | godie-gxhuge-r0 | ribbon | BlizRibbon01 | additive |  |  |  | assets/textures/particles/wc3/blue-glow2.png |
-| herofate.mdx | Y | godie-herofate-p0 | pre2 | blizparticle01 | additive |  | Y |  | assets/textures/particles/flame_03.png |
-| herofate.mdx | Y | godie-herofate-p1 | pre2 | ff_particles | alpha |  | Y | bone_hand_l | assets/textures/particles/circle_04.png |
-| herofate.mdx | Y | godie-herofate-r0 | ribbon | blizribbon | alpha |  | Y | weapon | assets/textures/particles/light_01.png |
+| herofate.mdx |  | godie-herofate-p0 | pre2 | blizparticle01 | additive |  | Y |  | assets/textures/particles/flame_03.png |
+| herofate.mdx |  | godie-herofate-p1 | pre2 | ff_particles | alpha |  | Y | bone_hand_l | assets/textures/particles/circle_04.png |
+| herofate.mdx |  | godie-herofate-r0 | ribbon | blizribbon | alpha |  | Y | weapon | assets/textures/particles/light_01.png |
 | heroluffeattack.mdx |  | godie-heroluffeattack-p0 | pre2 | UNNAMED | additive |  |  | Hero05 | assets/textures/particles/spark_04.png |
 | horse.mdx | Y | godie-horse-p0 | pre2 | UNNAMED | alpha |  | Y |  | assets/textures/particles/smoke_07.png |
-| ma.mdx | Y | godie-ma-p0 | pre2 | BlizParticle01 | additive |  | Y |  | assets/textures/particles/light_02.png |
-| ma.mdx | Y | godie-ma-p1 | pre2 | BlizParticle02 | additive |  | Y |  | assets/textures/particles/light_02.png |
+| ma.mdx |  | godie-ma-p0 | pre2 | BlizParticle01 | additive |  | Y |  | assets/textures/particles/light_02.png |
+| ma.mdx |  | godie-ma-p1 | pre2 | BlizParticle02 | additive |  | Y |  | assets/textures/particles/light_02.png |
 | mfls.mdx | Y | godie-mfls-r0 | ribbon | UNNAMED | additive |  | Y | Bone_Hand_R | assets/textures/particles/wc3/ribbonblur1.png |
 | mfls.mdx | Y | godie-mfls-r1 | ribbon | UNNAMED | additive |  | Y | Bone_Hand_L | assets/textures/particles/wc3/ribbonblur1.png |
 | negi.mdx | Y | godie-negi-p0 | pre2 | UNNAMED | additive |  | Y | Bone_Hand_R | assets/textures/particles/star_09.png |
 | negi.mdx | Y | godie-negi-p1 | pre2 | UNNAMED | additive |  | Y | Bone_Hand_L | assets/textures/particles/star_09.png |
-| niya.mdx | Y | godie-niya-p0 | pre2 | BlizParticle01 | additive |  | Y |  | assets/textures/particles/flame_03.png |
-| niya.mdx | Y | godie-niya-p1 | pre2 | BlizParticle02 | additive |  | Y | Bone_Hand_L | assets/textures/particles/flare_01.png |
-| niya.mdx | Y | godie-niya-r0 | ribbon | BlizRibbon | additive |  | Y | Weapon | assets/textures/particles/wc3/ribbonblur1.png |
+| niya.mdx |  | godie-niya-p0 | pre2 | BlizParticle01 | additive |  | Y |  | assets/textures/particles/flame_03.png |
+| niya.mdx |  | godie-niya-p1 | pre2 | BlizParticle02 | additive |  | Y | Bone_Hand_L | assets/textures/particles/flare_01.png |
+| niya.mdx |  | godie-niya-r0 | ribbon | BlizRibbon | additive |  | Y | Weapon | assets/textures/particles/wc3/ribbonblur1.png |
 | picacugy.mdx | Y | godie-picacugy-r0 | ribbon | UNNAMED | additive |  | Y | bone_tail | assets/textures/particles/wc3/ribbonblur1.png |
-| ye-wuqi1.mdx | Y | godie-ye-wuqi1-p0 | pre2 | BlizParticle02 | additive | Y |  | Box02 | assets/textures/particles/light_03.png |
-| ye-wuqi1.mdx | Y | godie-ye-wuqi1-p1 | pre2 | BlizParticle04 | additive | Y |  | bone_Box11 | assets/textures/particles/light_03.png |
-| ye-wuqi1.mdx | Y | godie-ye-wuqi1-p2 | pre2 | BlizParticle03 | additive | Y |  | bone_Box10 | assets/textures/particles/light_03.png |
-| ye-wuqi1.mdx | Y | godie-ye-wuqi1-r0 | ribbon | BlizRibbon01 | additive |  | Y | Box02 | assets/textures/particles/wc3/ribbonblur1.png |
+| ye-wuqi1.mdx |  | godie-ye-wuqi1-p0 | pre2 | BlizParticle02 | additive |  |  | Box02 | assets/textures/particles/light_03.png |
+| ye-wuqi1.mdx |  | godie-ye-wuqi1-p1 | pre2 | BlizParticle04 | additive |  |  | bone_Box11 | assets/textures/particles/light_03.png |
+| ye-wuqi1.mdx |  | godie-ye-wuqi1-p2 | pre2 | BlizParticle03 | additive |  |  | bone_Box10 | assets/textures/particles/light_03.png |
+| ye-wuqi1.mdx |  | godie-ye-wuqi1-r0 | ribbon | BlizRibbon01 | additive |  | Y | Box02 | assets/textures/particles/wc3/ribbonblur1.png |
 
 ## Texture substitutions (Blizzard stock -> CC0 Kenney sprite)
 
@@ -809,6 +809,9 @@ Names are SPN (spawn model), SPL (ground splat), UBR (uber splat), SND (sound) +
 - godie-darkraor-p1: dropped 8x8 spriteSheet (substituted single-frame texture)
 - godie-darkraor-p2: dropped 8x8 spriteSheet (substituted single-frame texture)
 - godie-deathwave-p0: emissionRate 0, used KP2E peak 236.7
+- godie-deathwave-r0: additive ribbon with alpha 0 — alpha luma-keyed from RGB (GH#665)
+- godie-deathwave-r1: additive ribbon with alpha 0 — alpha luma-keyed from RGB (GH#665)
+- godie-deathwave-r2: additive ribbon with alpha 0 — alpha luma-keyed from RGB (GH#665)
 - godie-demonfilth-p1: dropped 8x8 spriteSheet (substituted single-frame texture)
 - godie-demonfilth-p2: dropped 8x8 spriteSheet (substituted single-frame texture)
 - godie-demonfilth-p4: dropped 8x8 spriteSheet (substituted single-frame texture)
@@ -837,8 +840,10 @@ Names are SPN (spawn model), SPL (ground splat), UBR (uber splat), SND (sound) +
 - godie-herotoshiiemaeda-p0: rectangular 5.244x5.2 emission plane approximated by its bounding disc r=0.033 (vfx@1 has no box emitter)
 - godie-heroxelloss-p0: dropped 4x4 spriteSheet (substituted single-frame texture)
 - godie-herokyo-p0: rectangular 5.244x5.2 emission plane approximated by its bounding disc r=0.034 (vfx@1 has no box emitter)
+- godie-holyawakening-p0: modulate emitter with segmentAlpha 0/0/0 — alpha luma-keyed from RGB (GH#665)
 - godie-holyawakening-p0: emissionRate 0, used KP2E peak 40.0
 - godie-holyawakening-p0: dropped 8x8 spriteSheet (substituted single-frame texture)
+- godie-holyawakening-p1: modulate emitter with segmentAlpha 0/0/0 — alpha luma-keyed from RGB (GH#665)
 - godie-holyawakening-p1: emissionRate 0, used KP2E peak 50.0
 - godie-holyawakening-p1: dropped 8x8 spriteSheet (substituted single-frame texture)
 - godie-holyawakening-p3: emissionRate 0, used KP2E peak 26.3
@@ -868,6 +873,7 @@ Names are SPN (spawn model), SPL (ground splat), UBR (uber splat), SND (sound) +
 - godie-netherstrike-p4: emissionRate 0, used KP2E peak 10.0
 - godie-renaryugu2-p0: rectangular 5.244x5.2 emission plane approximated by its bounding disc r=0.036 (vfx@1 has no box emitter)
 - godie-renaryugu2-p1: rectangular 0.03x0.0 emission plane approximated by its bounding disc r=0.001 (vfx@1 has no box emitter)
+- godie-sd2-r0: static heightAbove/Below 0/0, used KRHA/KRHB peak 24.0/36.0
 - godie-sesshomaru-p0: rectangular 5.244x5.2 emission plane approximated by its bounding disc r=0.032 (vfx@1 has no box emitter)
 - godie-tectonicfury-p0: dropped 8x8 spriteSheet (substituted single-frame texture)
 - godie-tectonicfury-p1: negative emissionRate -10.41670036315918 folded to abs

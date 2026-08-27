@@ -50,6 +50,11 @@ Usage:  python3 extract_particles.py [--dry-run] [--density=1.0] [--out-dir=DIR]
                  let config/ambient-vfx.json be fully replaced, dropping any
                  hand-added binding and any non-generated key (`arenaFire`).
                  OFF by default — see write_ambient_config().
+  --drop-hand-owned
+                 stop carrying HAND_OWNED_DOC_KEYS (`ambient`) over from the
+                 shipped doc. OFF by default — see the block above emit_doc()
+                 for why the extractor cannot derive that key and why losing
+                 it is silent at runtime (GH#667).
 
 2026-07-24: `emission_disc_radius` changed meaning (2x smaller, and it now
 honours `Length`); `burstCount` stopped carrying a hidden 0.3 haircut.
@@ -669,22 +674,66 @@ def write_ambient_config(path: str, prior_path: str, derived: dict,
     doc = dict(derived)
     kept_keys: list[str] = []
     kept_bindings: list[str] = []
+    kept_entries: list[str] = []
     if prior and not replace:
         for k, v in prior.items():
             if k not in doc:
                 doc[k] = v
                 kept_keys.append(k)
-        merged = dict(derived["bindings"])
-        for model_key, binds in (prior.get("bindings") or {}).items():
-            if model_key not in merged:
+        # ⭐ GH#667, three separate ways this merge used to lose bytes:
+        #
+        #  1. It merged at MODEL-KEY granularity, so a hand-added entry inside a
+        #     key the extractor DOES derive was dropped without a word. Measured:
+        #     `imported.heroshana` shipped [p0,p1,p2,r0] and a rerun staged
+        #     [p0,p1,p2] — 閃 (Shana)'s ribbon trail, gone, while the banner
+        #     below still said "preserved". Merging per `vfx` id fixes it, and
+        #     the prior entry object wins so a hand-added `whileToggle`/`note`
+        #     on a derived binding survives too (GH#546 herosaber carries one).
+        #  2. It rebuilt the map derived-first, so every rerun reshuffled the
+        #     whole file. Prior order is kept and only genuinely new derived
+        #     keys are appended — a rerun is now byte-idempotent.
+        #  3. See the ensure_ascii note at the dump below.
+        merged: dict = {}
+        prior_binds = prior.get("bindings") or {}
+        for model_key, binds in prior_binds.items():
+            fresh = derived["bindings"].get(model_key)
+            if fresh is None:
                 merged[model_key] = binds
                 kept_bindings.append(model_key)
+                continue
+            have = {b.get("vfx") for b in binds}
+            extra = [b for b in fresh if b.get("vfx") not in have]
+            merged[model_key] = list(binds) + extra
+            kept_entries.extend(f"{model_key} -> {b.get('vfx')}"
+                                for b in binds
+                                if b.get("vfx") not in
+                                {c.get("vfx") for c in fresh})
+        for model_key, binds in derived["bindings"].items():
+            if model_key not in merged:
+                merged[model_key] = binds
         doc["bindings"] = merged
     if not dry_run:
-        with open(path, "w") as f:
-            json.dump(doc, f, indent=2)
+        with open(path, "w", encoding="utf-8") as f:
+            # ⛔ NOT the default ensure_ascii=True. The shipped file carries
+            # multi-paragraph Chinese `note` fields (GH#546); escaping them to
+            # \uXXXX rewrites every one of those lines on every run, makes the
+            # file unreadable to the person who is supposed to edit it, and
+            # buries the real diff under noise.
+            json.dump(doc, f, indent=2, ensure_ascii=False)
             f.write("\n")
-    return doc, kept_keys, kept_bindings
+        # ⭐ The banner this function feeds used to be printed unconditionally.
+        # Read the bytes back and say so if they disagree with what we are
+        # about to claim — a "preserved" line that does not match the file is
+        # worse than no line at all (it is what hid #667 for two weeks).
+        try:
+            with open(path, encoding="utf-8") as f:
+                if json.load(f) != doc:
+                    print("⛔ ambient-vfx.json: what was written does NOT match "
+                          "what this run reports below", file=sys.stderr)
+        except (OSError, ValueError) as ex:
+            print(f"⛔ ambient-vfx.json unreadable after write: {ex}",
+                  file=sys.stderr)
+    return doc, kept_keys, kept_bindings, kept_entries
 
 
 # ---------------------------------------------------------------------------
@@ -789,19 +838,75 @@ def classify_doc(shipped_path: str, fresh: str, recorded: str | None,
     return False, "hand-tuned"        # bytes on disk are not the tool's bytes
 
 
+# ---------------------------------------------------------------------------
+# GH#667: keys this extractor does not derive, but the shipped doc owns
+# ---------------------------------------------------------------------------
+#
+# `ambient` is derived as `is_hero and not anim_driven and visible_ratio >= 0.5`,
+# and `is_hero` is read out of `content/champions/**` — a directory that moves
+# for reasons that have NOTHING to do with this extractor. When 鋼彈 (godie-hlgr)
+# was retired into `content/_legacy/champions/`, `imported.gumdam` stopped being
+# a champion modelKey, so a rerun stopped emitting `ambient` for its docs. The
+# side-car legitimately says "these bytes are mine" (they were), so classify_doc
+# says STALE and the key is overwritten away — silently, and with the run still
+# printing a cheerful "preserved" banner about the CONFIG file.
+#
+# The cost is not cosmetic: `isSwingTrailDoc()` (apps/client/src/vfx/
+# swingTrailMath.ts) recognises a blade afterimage by
+# `ambient === true && mode === "continuous" && anchorBone !== undefined`.
+# Drop the key and 鋼彈's swing trail disappears at runtime while every gate
+# stays green.
+#
+# So the whitelist below is carried over per key from the shipped doc when a
+# rerun would otherwise drop it. It is deliberately TINY, and it is the same
+# one `test/shippedVfxIsCurrent.test.ts` already excludes from drift
+# (HAND_OWNED_KEYS) — that guard learned to TOLERATE the difference; this makes
+# the extractor stop CREATING it. Before adding a second entry, ask whether the
+# extractor could derive it instead.
+#
+# ⚠️ Only the "shipped has it, tool no longer produces it" direction is carried.
+# The tool starting to produce a key it did not before is real news and lands.
+HAND_OWNED_DOC_KEYS = ("ambient",)
+
+
+def carry_hand_owned(shipped_path: str, doc: dict) -> list[str]:
+    """Copy whitelisted keys the shipped doc has and `doc` lacks. -> key names."""
+    try:
+        with open(shipped_path) as f:
+            prior = json.load(f)
+    except (OSError, ValueError):
+        return []
+    carried = []
+    for k in HAND_OWNED_DOC_KEYS:
+        if k in prior and k not in doc:
+            doc[k] = prior[k]
+            carried.append(k)
+    return carried
+
+
 def emit_doc(doc_id: str, doc: dict, out_path: str,
              recorded: dict, unknown_policy: str, overwrite_tuned: bool,
              out_root: str, dry_run: bool,
-             fresh_hashes: dict, classified: dict) -> None:
+             fresh_hashes: dict, classified: dict,
+             drop_hand_owned: bool = False,
+             carried_log: dict | None = None) -> None:
     """Write one extracted doc, honouring the provenance classification.
 
-    `fresh_hashes` always gets the hash of the GENERATED text, even for a doc
-    that is kept — see the provenance block for why recording the on-disk bytes
-    of a hand-tune would revert it two runs later.
+    `fresh_hashes` gets the hash of the bytes this tool WRITES — never the
+    on-disk bytes of a doc it decided to keep (see the provenance block: that
+    would make a hand-tune match its own record and get reverted two runs
+    later). Carrying a HAND_OWNED_DOC_KEY happens BEFORE the hash is taken,
+    because the carry is part of generation and is idempotent: a second run
+    produces the same bytes, so the doc classifies `reproduced` rather than
+    flapping between stale and hand-tuned.
     """
+    shipped_path = os.path.join(VFX_DIR, doc_id + ".json")
+    if not drop_hand_owned:
+        carried = carry_hand_owned(shipped_path, doc)
+        if carried and carried_log is not None:
+            carried_log[doc_id] = carried
     text = doc_text(doc)
     fresh_hashes[doc_id] = sha256_text(text)
-    shipped_path = os.path.join(VFX_DIR, doc_id + ".json")
     write, reason = classify_doc(shipped_path, text, recorded.get(doc_id),
                                  unknown_policy)
     if overwrite_tuned:
@@ -840,6 +945,14 @@ def main() -> int:
     out_root = _arg("--out-dir", "")
     trail_budget = "--raw-ribbons" not in sys.argv
     overwrite_tuned = "--overwrite-tuned" in sys.argv
+    # GH#667. Default OFF = carry the key over, because the failure it prevents
+    # is silent (a swing trail that stops existing) while the failure it can
+    # cause is loud (the drift guard names the doc and the field). The flag is
+    # the stated way to say "the extractor's word is final", exactly like
+    # `--replace-ambient` next door. ⛔ Do not fold it into --overwrite-tuned:
+    # that one is about WHOSE BYTES win for a whole doc; this one is about a
+    # key the extractor cannot derive at all.
+    drop_hand_owned = "--drop-hand-owned" in sys.argv
     unknown_policy = _arg("--unknown-provenance", "keep")
     if unknown_policy not in ("keep", "overwrite"):
         print(f"--unknown-provenance must be keep|overwrite, got "
@@ -858,6 +971,7 @@ def main() -> int:
     fingerprint = tool_fingerprint()
     fresh_hashes: dict[str, str] = {}
     classified: dict[str, list[str]] = {}
+    carried_keys: dict[str, list[str]] = {}
     if out_root and not dry_run:
         os.makedirs(vfx_dir, exist_ok=True)
         os.makedirs(config_dir, exist_ok=True)
@@ -918,7 +1032,7 @@ def main() -> int:
             # word, which is the mirror-image failure of pinning a stale one.
             emit_doc(doc_id, doc, out_path, recorded_hashes,
                      unknown_policy, overwrite_tuned, out_root, dry_run,
-                     fresh_hashes, classified)
+                     fresh_hashes, classified, drop_hand_owned, carried_keys)
             written.append(out_path)
             n_p2 += 1
             n_docs += 1
@@ -942,7 +1056,7 @@ def main() -> int:
             # `--overwrite-tuned` is the deliberate escape hatch.
             emit_doc(doc_id, doc, out_path, recorded_hashes,
                      unknown_policy, overwrite_tuned, out_root, dry_run,
-                     fresh_hashes, classified)
+                     fresh_hashes, classified, drop_hand_owned, carried_keys)
             written.append(out_path)
             n_rb += 1
             n_docs += 1
@@ -968,7 +1082,7 @@ def main() -> int:
         "schema": "config.ambient-vfx@1",
         "bindings": {k: bindings[k] for k in sorted(bindings)},
     }
-    ambient_doc, kept_cfg_keys, kept_cfg_bindings = write_ambient_config(
+    ambient_doc, kept_cfg_keys, kept_cfg_bindings, kept_cfg_entries = write_ambient_config(
         os.path.join(config_dir, "ambient-vfx.json"),
         os.path.join(CONFIG_DIR, "ambient-vfx.json"), ambient_doc,
         "--replace-ambient" in sys.argv, dry_run)
@@ -1097,13 +1211,20 @@ def main() -> int:
         print(f"KEPT {len(ids)} doc(s) — {reason}: {blurb}")
         for d in ids:
             print(f"  - {d}")
-    if kept_cfg_keys or kept_cfg_bindings:
+    if carried_keys:
+        print(f"carried hand-owned doc key(s) on {len(carried_keys)} doc(s) "
+              "(GH#667, --drop-hand-owned to let the extractor's word be final):")
+        for d in sorted(carried_keys):
+            print(f"  - {d}: {', '.join(carried_keys[d])}")
+    if kept_cfg_keys or kept_cfg_bindings or kept_cfg_entries:
         print("ambient-vfx.json: preserved non-extracted content "
               "(--replace-ambient to drop it):")
         for k in kept_cfg_keys:
             print(f"  - top-level key `{k}` (admin-editable config, not MDX)")
         for k in kept_cfg_bindings:
             print(f"  - hand-added binding `{k}`")
+        for k in kept_cfg_entries:
+            print(f"  - hand-added entry inside a DERIVED binding: {k}")
     print(f"summary: {particles_md}")
     if dry_run:
         print("(dry run: nothing written)")

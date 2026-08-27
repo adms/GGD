@@ -160,6 +160,22 @@ describe.skipIf(!runnable)("extractor rerun reproduces what ships", () => {
     }
 
     // …and the derived ones are still derived, not just echoed back.
-    expect(produced.bindings["imported.heroshana"]?.length).toBe(3);
+    // ⚠️ GH#667 corrected the SHAPE of this assertion. It used to read
+    // `.length).toBe(3)`, and that number was pinning the bug: the merge ran at
+    // model-key granularity, so `godie-heroshana-r0` — a hand-added entry inside
+    // a key the extractor DOES derive — was dropped on every rerun while the
+    // run still printed "preserved". The invariant worth holding is "the three
+    // derived ids are present AND the hand-added one survived", not a count.
+    const shana = (produced.bindings["imported.heroshana"] ?? []).map((b) => b.vfx);
+    expect(shana).toEqual(
+      expect.arrayContaining([
+        "godie-heroshana-p0",
+        "godie-heroshana-p1",
+        "godie-heroshana-p2",
+      ]),
+    );
+    expect(shana, "hand-added entry inside a derived binding must survive").toContain(
+      "godie-heroshana-r0",
+    );
   }, 120_000);
 });
