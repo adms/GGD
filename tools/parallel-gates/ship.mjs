@@ -287,6 +287,13 @@ const PARALLEL = [
   //    ⚠️ 沒有 Go 工具鏈時要**說出來再跳過**,⛔ 不是靜靜過(那是另一個綠的謊)——
   //    scripts/go-test-or-skip.sh 負責這件事。
   { name: "go test (platform)", cmd: ["bash", ["scripts/go-test-or-skip.sh"]] },
+  // 🏷️ GH#663 —— `commit-ref-lint.sh` 在 2026-08-24 就寫好了，⛔ **而沒有任何東西跑它**。
+  //    ⭐ 一個沒有人跑的閘等於沒有閘（本 repo 已經記錄過四次同型）。
+  //    ⚠️ 刻意接在**這裡**（部署前）⛔ 不是 commit-msg hook：`.git/hooks/` 不進版控，
+  //    clone 一次就沒了，而併行 lane 每一條都在 commit ⇒ 那個洞是量產的。
+  //    它自己會判「離線/快取缺號 ⇒ 警告後放行」（⛔ 不擋剛開票的人），
+  //    只有 lane 代號寫成 `#A5` 這種**不需要外部知識就判得出來**的形狀才硬紅。~0.3s。
+  { name: "commit-ref-lint", cmd: ["bash", ["scripts/commit-ref-lint.sh", "--recent", "50"]] },
   ...(noTypecheck ? [] : [{ name: "typecheck", cmd: ["pnpm", ["typecheck"]] }]),
   // ⭐ **這條管線自己的守衛**（分級表 + 閘選擇 + 部署步驟）。
   // ⚠️ 它在此之前**沒有被任何閘跑到**:`pnpm test` 是 `pnpm -r`（逐 package）,

@@ -10,7 +10,7 @@
  *   · 離線且無快取   ⇒ 放行，⛔ 但一定要說「沒驗到」（安靜的跳過與全過長得一樣）
  */
 import { execFileSync } from "node:child_process";
-import { writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -69,5 +69,23 @@ describe("GH#663 · commit 訊息的票號 / lane 代號不可以互相冒充", 
     });
     expect(r.code, r.out).toBe(0); // ⛔ 網路不通不可以擋人
     expect(r.out, r.out).toContain("沒驗到"); // …但安靜的跳過與全過長得一樣
+  });
+
+  /**
+   * ⭐ 2026-08-27 —— **這條才是 GH#663 缺的那一半**。
+   * 上面三條證明這支腳本**做得對**，⛔ 而它們對「**有沒有人跑它**」完全看不見：
+   * `commit-ref-lint.sh` 從 2026-08-24 寫好起，`.git/hooks/` 沒有它、`package.json`
+   * 沒有它、`ship.mjs` 沒有它 ⇒ ⭐ **一個沒有人跑的閘等於沒有閘**（本 repo 同型第五次）。
+   *
+   * ⚠️ ⛔ 為什麼不是 commit-msg hook：`.git/hooks/` **不進版控**（clone 一次就沒了），
+   * 而併行 lane 每一條都在 commit ⇒ 那個洞是量產的。⇒ 接在部署閘上。
+   */
+  it("★ `ship.mjs` 真的把它排進閘裡（⛔ 不是「腳本存在」）", () => {
+    const ship = readFileSync(join(REPO, "tools/parallel-gates/ship.mjs"), "utf8");
+    expect(
+      ship,
+      "⛔ `ship:check` 不跑 commit-ref-lint —— 那支腳本會回到「寫好了但沒有人跑」的狀態。\n" +
+        "   修在 tools/parallel-gates/ship.mjs 的 PARALLEL 陣列。",
+    ).toContain("scripts/commit-ref-lint.sh");
   });
 });
