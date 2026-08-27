@@ -90,6 +90,17 @@ export interface SfxReachRow {
    */
   readonly site?: string;
   /**
+   * ⭐ GH#763 —— **第二個（含以上）決定點**，when a key is decided on more than
+   * one AXIS. Today only the three weight-tiered hit clips need it: they are
+   * chosen by 技能家族 (`vfx-families.json` 的 `soundImpact`) AND by 打擊重量
+   * (`combatSfx.ts` 讀 `hitImpact.profile.tier`) —— 兩條**並存**的軸。
+   *
+   * ⚠️ 為什麼不是把 `site` 改掉：那會讓另一條軸的宣稱從**機器證明**掉回散文。
+   * 每一個 altSite 走的是與 `site` **逐字相同**的檢查（檔案要在、要含這個 key
+   * 的字面值），所以刪掉任何一條路都會紅。
+   */
+  readonly altSites?: readonly string[];
+  /**
    * Sim events the key rides. EVERY name here must be fanned out, or the cue is
    * silent in a real match no matter how correct the client code is.
    */
@@ -448,32 +459,44 @@ export const SFX_REACHABILITY: readonly SfxReachRow[] = [
   // ⚠️ 為什麼守衛沒喊：`sfxReachability.test.ts` 舊版問的是「**那個檔案**有沒有提到
   //   `origin`」，而 `ProjectileSystem.ts` 滿篇都是 `proj.origin`。現在它改成**逐
   //   emit-site 抽 payload 物件**，同一句謊話會當場紅。
+  // ⭐⭐ GH#763 —— 這三列現在騎**兩條軸**，⛔ 不是一條：
+  //   · 技能家族軸（GH#390）：`vfx-families.json` 的 `soundImpact`，每個家族一顆
+  //     固定 key，73 支技能。
+  //   · ⭐ 打擊重量軸（GH#763）：`combatSfx.ts` 從 `hitImpact.profile.tier` 解出
+  //     light / medium / heavy —— 這一條才是「12 點的刺拳 ≠ 400 點的大絕」。
+  // ⚠️ 走 `damage` 的普攻與絕大多數技能傷害**只吃得到第二條**，所以在 GH#763
+  //   之前它們是同一顆 `hit`：家族軸回答的是另一個問題（「這一招的特效帶什麼聲音」）。
+  // ⚠️ 重量騎的是 `hitImpact` 而**不是** `damage`，因為 `tier` 只在前者的
+  //   `profile` 上；`damage` 那一顆同時讓位（回 null）以免同一次命中響兩發。
   {
     key: "hit-light",
     kind: "combat",
     site: VFX_SOUND_SITE,
-    events: ["damage"],
-    payload: { damage: ["origin"] },
-    note: "families.breath.soundImpact — 4 支。",
+    altSites: [COMBAT_SFX_SITE],
+    events: ["damage", "hitImpact"],
+    payload: { damage: ["origin"], hitImpact: ["profile"] },
+    note: "families.breath.soundImpact — 4 支；＋ GH#763 的輕量打擊（hitImpact.profile.tier）。",
   },
   {
     key: "hit-medium",
     kind: "combat",
     site: VFX_SOUND_SITE,
-    events: ["damage"],
-    payload: { damage: ["origin"] },
-    note: "families.tornado / lightColumn 的 soundImpact — 14 支。",
+    altSites: [COMBAT_SFX_SITE],
+    events: ["damage", "hitImpact"],
+    payload: { damage: ["origin"], hitImpact: ["profile"] },
+    note: "families.tornado / lightColumn 的 soundImpact — 14 支；＋ GH#763 的中量打擊。",
   },
   {
     key: "hit-heavy",
     kind: "combat",
     site: VFX_SOUND_SITE,
-    events: ["damage"],
-    payload: { damage: ["origin"] },
+    altSites: [COMBAT_SFX_SITE],
+    events: ["damage", "hitImpact"],
+    payload: { damage: ["origin"], hitImpact: ["profile"] },
     // ⚠️ `families.blood.soundLaunch` 也填著這個 key，但**沒有任何技能的 family 是
     // `blood`**（同型空綁定，見 GH#440）—— 所以這一列刻意**不**宣稱它騎 abilityCast：
     // 那會是一個沒有乘客的宣稱。blood 真的被綁上技能的那天要回來補 abilityCast。
-    note: "families.burst / boltStrike / flamePillar 的 soundImpact — 55 支。",
+    note: "families.burst / boltStrike / flamePillar 的 soundImpact — 55 支；＋ GH#763 的重量打擊。",
   },
   {
     key: "hit-crit",

@@ -56,7 +56,7 @@ import {
   type SfxPreloadPolicy,
 } from "./sfxPreloadPolicy";
 import { ABILITY_SFX_CUES_PATH, applyAbilitySfxCuesDoc } from "./abilitySfxCues";
-import { setRankUpAudience } from "./combatSfx";
+import { setHitTierKeys, setRankUpAudience } from "./combatSfx";
 import {
   EMPTY_AUDIO_MAP,
   audioMapFromDoc,
@@ -589,6 +589,10 @@ export class AudioSystem {
     // 技能升級鈴要播誰的 —— 交給那個純映射的模組持有（與 `setCombatSfxSeat`
     // 由 AudioDirector 發布是同一個形狀：純規則住 `combatSfx`，⛔ 它不去讀狀態）。
     setRankUpAudience(map.rankUpAudience);
+    // ⭐ GH#763 —— 打擊音的分層開關**就是資料本身**：三顆 `hit-light/medium/heavy`
+    // 都在音效表裡才啟用。⚠️ 要餵 `this.map.sfx`（⛔ 不是 `map.sfx`）—— 上面那一行
+    // 才剛把 `sfx` 補成 `?? {}`，而一份沒有 sfx 的地圖應該讓分層關掉，⛔ 不是爆炸。
+    setHitTierKeys(this.map.sfx);
     // a map swap can change the current scene's file — restart the bed
     if (this.unlocked && this.currentScene) {
       const track = this.trackFor(this.currentScene);

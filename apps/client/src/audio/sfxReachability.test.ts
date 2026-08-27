@@ -135,13 +135,18 @@ describe("sfxReachability (credits-data)", () => {
     for (const row of SFX_REACHABILITY) {
       if (row.kind === "unreachable") continue;
       expect(row.site, `no emit site declared for ${row.key}`).toBeTruthy();
-      const path = join(REPO, row.site!);
-      expect(existsSync(path), `emit site for ${row.key} does not exist: ${row.site}`).toBe(true);
-      const src = readFileSync(path, "utf8");
-      expect(
-        new RegExp(`["'\`]${row.key.replace(/[-]/g, "\\$&")}["'\`]`).test(src),
-        `${row.site} no longer names "${row.key}" — the claim that it is played is stale`,
-      ).toBe(true);
+      // ⭐ GH#763 —— `altSites` 走**逐字相同**的檢查：一個 key 被兩條軸決定
+      // （家族 soundImpact ＋ 打擊重量）時，刪掉任何一條都要紅，⛔ 不可以有
+      // 一條是散文另一條是證明。
+      for (const site of [row.site!, ...(row.altSites ?? [])]) {
+        const path = join(REPO, site);
+        expect(existsSync(path), `emit site for ${row.key} does not exist: ${site}`).toBe(true);
+        const src = readFileSync(path, "utf8");
+        expect(
+          new RegExp(`["'\`]${row.key.replace(/[-]/g, "\\$&")}["'\`]`).test(src),
+          `${site} no longer names "${row.key}" — the claim that it is played is stale`,
+        ).toBe(true);
+      }
     }
   });
 
@@ -188,6 +193,7 @@ describe("sfxReachability (credits-data)", () => {
       expect((row.reason ?? "").length, `no reason given for silent key ${row.key}`).toBeGreaterThan(20);
       // A silent key must not also carry an emit-site claim — the two contradict.
       expect(row.site, `${row.key} is marked unreachable but names an emit site`).toBeUndefined();
+      expect(row.altSites, `${row.key} is marked unreachable but names a second site`).toBeUndefined();
       expect(row.events, `${row.key} is marked unreachable but names sim events`).toBeUndefined();
       expect(isPlayableSfxKey(row.key), `${row.key} is both silent and playable`).toBe(false);
       expect(sfxSilentReason(row.key)).toBe(row.reason);

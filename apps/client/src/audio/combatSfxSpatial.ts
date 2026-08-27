@@ -73,6 +73,12 @@ export const EVENT_SPATIAL: Readonly<Record<string, EventSpatialSpec>> = {
   // --- things that land on a body ------------------------------------------
   // payload x/z is the VICTIM's transform (sim/combat/damage.ts)
   damage: { cls: "focus", entityFallback: ["target", "source"], actorField: "source", victimField: "target" },
+  // ⭐ GH#763 —— `hitImpact` 現在**會出聲**（分層打擊音 hit-light/medium/heavy），
+  // ⛔ 不再只是計時事件。它與 `damage` 是同一次命中的雙生事件，payload 逐格同形
+  // （`sim/combat/damage.ts` 的 `applyImpact`：x/z 是**受害者**的 transform，
+  //  source/target 同名）⇒ 位置規則必須與 `damage` **逐字相同**，否則同一次命中
+  // 的兩顆聲音會落在兩個地方。
+  hitImpact: { cls: "focus", entityFallback: ["target", "source"], actorField: "source", victimField: "target" },
   guardBreak: { cls: "focus", entityFallback: ["target", "source"], actorField: "source", victimField: "target" },
   knockdown: { cls: "focus", entityFallback: ["target", "source"], actorField: "source", victimField: "target" },
   heal: { cls: "focus", entityFallback: ["target", "source"], actorField: "source", victimField: "target" },

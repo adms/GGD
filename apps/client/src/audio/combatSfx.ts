@@ -7,9 +7,12 @@
  *   • The rich `damage` event drives the type-differentiated HIT voice —
  *     物理 (hit) / 魔法 (hitMagic) / true (hitTrue) — and the special reactions
  *     防禦 (block, a shield/DR-absorbed hit) and crit. This is the single hit
- *     voice, so `basicAttackHit` (a duplicate of the same moment) and the
- *     timing-only `hitImpact` map to nothing — no double-thud. The ONE
- *     exception is a tracked bow arrow (see `arrowPierce` below).
+ *     voice, so `basicAttackHit` (a duplicate of the same moment) maps to
+ *     nothing — no double-thud. The ONE exception is a tracked bow arrow (see
+ *     `arrowPierce` below).
+ *     ⭐ GH#763 —— 普通物理命中那**一條**分支移到了它的雙生事件 `hitImpact`
+ *     上，因為**打擊重量只在那一顆身上**（`profile.tier`）。一次命中仍然恰好
+ *     一發：`damage` 讓位的時候 `hitImpact` 才出聲。見 {@link hitWeightKey}。
  *   • 破防 (guardBreak), knockdown and whiff each get their own distinct clip.
  *   • PER-WEAPON / PER-ELEMENT ROUTING (全用). A `basicAttack` plays its
  *     WEAPON-class voice (sword / greatsword / katana / bow / gun / magic /
@@ -497,6 +500,74 @@ export function rankUpKey(ev: EventMessage, localEntityId: number | null): strin
   return who === localEntityId ? "abilityRankUp" : null;
 }
 
+// ───────────────────── 打擊重量 → 打擊音 (GH#763) ────────────────────────────
+/**
+ * 12 點的刺拳與 400 點的大絕在此之前播**同一顆 `hit`** —— 音效是唯一完全不隨
+ * 打擊重量變化的頻道（震動 / 火花 / 閃光 / 鏡頭 kick 早就全部讀 `ImpactTier`）。
+ *
+ * ⭐ **重量從 sim 來，⛔ 不在這裡重推。** `ImpactTier` 由
+ * `sim/combat/damage.ts` 的 `deriveTier()` 解出，騎在 `hitImpact.data.profile.tier`
+ * 上。客戶端自己拿 `damage.amount` 去比一次門檻 = 把 `TIER_MEDIUM_IMPACT` /
+ * `TIER_HEAVY_IMPACT` 抄成**第二個住處**（第〇·四守則），而那一份必然過期 ——
+ * 而且它會用「音效跟震動對不起來」這種**認不出來的**方式過期。
+ *
+ * ⚠️ 所以**發聲的事件換了一顆**：sim 對同一次命中送「`damage` 先到、`hitImpact`
+ * 隨後」的雙生事件（`applyImpact` 就在 `emit("damage")` 的下一行，⭐ 而且它
+ * **永遠**發 `hitImpact`），而重量只在後面那一顆身上。於是：
+ *   · `damage`    —— 仍然擁有 block / crit / 魔法 / 真傷 四條**識別**路；
+ *                    只有「普通物理命中」那一條讓位（回 null）。
+ *   · `hitImpact` —— 只在那一條讓位時發聲，回 `hit-light` / `hit-medium` /
+ *                    `hit-heavy`。
+ * ⇒ 一次命中仍然**恰好一發**（⛔ 沒有 double-thud —— 與 `basicAttackHit` 那一列
+ *   刻意被遮蔽是同一條規矩）。
+ *
+ * ── ⭐ 一鍵 rollback，而且它是**資料**不是旗標 ───────────────────────────────
+ * 分層只在出貨的音效表**三顆 key 都在**的時候啟用（{@link setHitTierKeys}，由
+ * `AudioSystem.setMap` 從 `config.audio-map@1.sfx` 推）。把 `hit-light` /
+ * `hit-medium` / `hit-heavy` 任何一顆從 audio-map 拿掉 ⇒ 分層整條關閉、`damage`
+ * 立刻回到 `"hit"`，⭐ **逐位元等於今天的行為**（`content/` 是 live bind-mount，
+ * ⛔ 不必重建映像）。
+ * ⚠️ 這裡刻意**沒有第二個布林旗標**：「開著但 key 不在」那個組合就是靜音，而
+ * 那正是失敗形態⑧（三個零件都對，組合是空的）。⇒ 讓「**播得出來嗎**」與
+ * 「**要不要播**」是同一個問題，兩者結構上不可能不同步。
+ */
+const HIT_TIER_KEY: Readonly<Record<string, string>> = {
+  light: "hit-light",
+  medium: "hit-medium",
+  heavy: "hit-heavy",
+};
+
+/** 出貨音效表帶齊那三顆分層 key 了嗎（＝分層開著嗎）。 */
+let hitTiersMapped = false;
+
+/**
+ * 由 `AudioSystem.setMap` 餵：出貨 `audio-map` 的 `sfx` 表。
+ * ⛔ 這裡不持有音效表本身 —— 只記「三顆 key 在不在」這**一個位元**（與
+ * `setRankUpAudience` 同一個形狀：純規則住這裡，⛔ 它不去讀狀態）。
+ */
+export function setHitTierKeys(sfx: unknown): void {
+  const rec = sfx && typeof sfx === "object" ? (sfx as Record<string, unknown>) : {};
+  hitTiersMapped = Object.values(HIT_TIER_KEY).every((k) => rec[k] !== undefined);
+}
+
+/** 分層打擊音是否啟用。 */
+export function hitTieringActive(): boolean {
+  return hitTiersMapped;
+}
+
+/**
+ * `hitImpact.data.profile` → 分層打擊音的 key。
+ *
+ * ⚠️ 認不出重量就回 `"hit"`（⛔ 不是 null）：`damage` 那一條已經讓位了，這裡
+ * 再靜音就會讓「舊 server + 新 client」整場沒有打擊音。fail-open 的代價是**舊
+ * 的那顆聲音**，⛔ 不是沉默。
+ */
+export function hitWeightKey(profile: unknown): string {
+  const tier =
+    profile && typeof profile === "object" ? (profile as { tier?: unknown }).tier : undefined;
+  return (typeof tier === "string" ? HIT_TIER_KEY[tier] : undefined) ?? "hit";
+}
+
 /**
  * The SFX-map key an event should play, or null for silence. Reads the enriched
  * `damage` payload names from the contract (dmgType/blocked/crit/killingBlow),
@@ -546,7 +617,21 @@ function combatSfxKeyUngated(
       const t = (d.dmgType ?? d.type) as string | undefined;
       if (t === "magic") return "hitMagic"; // 魔法
       if (t === "true") return "hitTrue";
-      return "hit"; // 物理 (default)
+      // 物理 (default) —— ⭐ GH#763：分層開著的時候這一條**讓位**給雙生的
+      // `hitImpact`（重量只在那一顆身上）。關著就逐位元回到今天的 `"hit"`。
+      return hitTieringActive() ? null : "hit";
+    }
+    case "hitImpact": {
+      // ⭐ GH#763 —— 打擊重量的發聲點（12 點的刺拳 ≠ 400 點的大絕）。
+      // ⛔ 分層關著時它逐位元回到「純計時事件」——**沒有第二條路**。
+      if (!hitTieringActive()) return null;
+      // 四條**識別**路仍然歸先到的 `damage`（它已經發過聲了）——
+      // 這裡再發一次就是 double-thud。
+      if (d.blocked) return null; // `damage` 已經播了 block
+      if (d.crit || d.killingBlow) return null; // …已經播了 crit
+      const t = (d.dmgType ?? d.type) as string | undefined;
+      if (t === "magic" || t === "true") return null; // …已經播了 hitMagic / hitTrue
+      return hitWeightKey(d.profile); // hit-light / hit-medium / hit-heavy
     }
     case "basicAttack":
       // ARM the archery join: a RANGED bow auto is about to emit its

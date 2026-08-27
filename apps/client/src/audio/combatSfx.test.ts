@@ -28,6 +28,8 @@ import {
   setRankUpAudience,
   rankUpAudienceNow,
   DEFAULT_RANK_UP_AUDIENCE,
+  setHitTierKeys,
+  hitTieringActive,
 } from "./combatSfx";
 import { abilitySfxCueRegistry } from "./abilitySfxCues";
 import { AudioSystem } from "./AudioSystem";
@@ -441,11 +443,30 @@ describe("combat SFX key selection (juice-sfx-key)", () => {
       // `sfxMap` 是 `vfxSoundLayer.setAudioMap()` 的唯一來源（GameApp 那一行）
       expect(sys.sfxMap.castLayerCap?.maxLayers).toBe(3);
       expect(sys.sfxMap.modelFxSound?.enabled).toBe(false);
+
+      // ⭐ GH#763 —— 打擊分層的開關**就是音效表本身**（⛔ 沒有第二個布林）。
+      // 這兩行釘的是 `setMap` 到 `setHitTierKeys` 的那一行接線 ＋ `audioMapFromDoc`
+      // 真的把那三顆 key 帶過來了：少了任一個，分層在正式站上逐位元不存在，
+      // 而 `hitWeightTier.test.ts` 自己餵夾具是看不見的（失敗形態⑤）。
+      const clip = { files: ["x.mp3"], gain: 1 };
+      expect(hitTieringActive(), "沒有三顆 key 的音效表 ⇒ 分層必須是關的").toBe(false);
+      try {
+        sys.setMap(audioMapFromDoc({
+          id: "audio-map", schema: "config.audio-map@1", bgm: {},
+          sfx: { "hit-light": clip, "hit-medium": clip, "hit-heavy": clip },
+        })!);
+        expect(hitTieringActive(), "⛔ setMap 沒有把 sfx 表交給打擊分層 —— 接線斷了").toBe(true);
+      } finally {
+        setHitTierKeys({}); // 這個模組是全域狀態,⛔ 不可以漏給同檔後面的斷言
+      }
     });
   });
 
   it("timing-only + tally-owned events are silent (no double sound)", () => {
     cover("juice-sfx-key");
+    // ⭐ GH#763 —— `hitImpact` 只在**分層關著**（音效表沒有那三顆 key）時是純
+    // 計時事件；分層開著它就是打擊重量的發聲點，而那時候讓位的是 `damage`。
+    // ⇒ 兩個狀態下「一次命中恰好一發」都成立，見 `hitWeightTier.test.ts`。
     expect(combatSfxKey(ev("hitImpact", { dmgType: "physical" }))).toBeNull(); // timing only
     expect(combatSfxKey(ev("basicAttackHit"))).toBeNull(); // damage covers the hit voice
     expect(combatSfxKey(ev("death", { id: 1 }))).toBeNull(); // AudioDirector tally

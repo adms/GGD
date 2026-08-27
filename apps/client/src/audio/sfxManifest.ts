@@ -121,6 +121,12 @@ const COMBAT_SFX: readonly string[] = [
   "block",
   "crit",
   "hit",
+  // ⭐ GH#763 —— 分層打擊音。它們現在是**每一次普通物理命中**的聲音（`hit` 退成
+  // 分層關掉時的退路），所以三顆都要跟 `hit` 一起暖 —— 少了它們，一回合的頭幾
+  // 拳全部吃冷 buffer 的取得延遲，⛔ 而那正是這條預載清單存在的理由。
+  "hit-light",
+  "hit-medium",
+  "hit-heavy",
   "hitMagic",
   "hitTrue",
   "guardBreak",
