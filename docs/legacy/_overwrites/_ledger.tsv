@@ -2653,3 +2653,321 @@ overwrite_temp_20260827-022130	Bash	repo 外	/private/tmp/f3.log	/Users/Takuro/.
 overwrite_temp_20260827-022908	Bash	repo 外	/private/tmp/c1.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-022908/c1.log
 overwrite_temp_20260827-022908	Bash	repo 外	/private/tmp/c2.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-022908/c2.log
 overwrite_temp_20260827-022908	Bash	repo 外	/private/tmp/c3.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-022908/c3.log
+overwrite_temp_20260827-024957	Bash	repo 外	/private/tmp/msg-b.txt	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-024957/msg-b.txt
+overwrite_temp_20260827-032932	Bash	repo 外	/private/tmp/pc.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-032932/pc.log
+overwrite_temp_20260827-033023	Bash	repo 外	/private/tmp/pc.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-033023/pc.log
+overwrite_temp_20260827-033116	Bash	repo 外	/private/tmp/pc.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-033116/pc.log
+overwrite_temp_20260827-035107	Bash	repo 外	/private/tmp/ggd-triage/all.json	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-035107/all.json
+overwrite_temp_20260827-035803	Write	repo 外	/private/tmp/ggd-audit-700s/normcheck.mjs	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-035803/normcheck.mjs
+overwrite_temp_20260827-035948	Bash	SKIP(git 有)	/Users/Takuro/GGD/deploy/helm/ggd/files/nginx.conf	
+overwrite_temp_20260827-040155	Bash	有未提交改動	/Users/Takuro/GGD/tools/review/middleware.mjs	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-040155/tools/review/middleware.mjs
+overwrite_temp_20260827-040155	Bash	有未提交改動	/Users/Takuro/GGD/tools/review/middleware.mjs	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-040155/tools/review/middleware.mjs
+overwrite_temp_20260827-040155	Bash	未追蹤	/Users/Takuro/GGD/docker/review.Dockerfile	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-040155/docker/review.Dockerfile
+overwrite_temp_20260827-040434	Bash	有未提交改動	/Users/Takuro/GGD/tools/review/middleware.mjs	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-040434/tools/review/middleware.mjs
+overwrite_temp_20260827-040727	Bash	repo 外	/private/tmp/vt.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-040727/vt.log
+overwrite_temp_20260827-040732	Bash	repo 外	/private/tmp/tsc.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-040732/tsc.log
+overwrite_temp_20260827-041440	Bash	repo 外	/private/tmp/ml2.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-041440/ml2.log
+overwrite_temp_20260827-041515	Bash	repo 外	/private/tmp/br.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-041515/br.log
+overwrite_temp_20260827-043311	Bash	repo 外	/private/tmp/deploy.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-043311/deploy.log
+overwrite_temp_20260827-043614	Bash	repo 外	/private/tmp/verify.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-043614/verify.log
+overwrite_temp_20260827-043810	Bash	SKIP(git 有)	/Users/Takuro/GGD/deploy/helm/ggd/files/nginx.conf	
+overwrite_temp_20260827-043842	Bash	repo 外	/private/tmp/deploy2.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-043842/deploy2.log
+overwrite_temp_20260827-044535	Bash	有未提交改動	/Users/Takuro/GGD/docs/_review/verdicts/live.json	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-044535/docs/_review/verdicts/live.json
+overwrite_temp_20260827-044555	Bash	repo 外	/private/tmp/deploy3.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-044555/deploy3.log
+overwrite_temp_20260827-044924	Bash	未追蹤	/Users/Takuro/GGD/docs/_review/verdicts/live_temp_20260827-044906.json	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-044924/docs/_review/verdicts/live_temp_20260827-044906.json
+overwrite_temp_20260827-045528	Edit	SKIP(git 有)	/Users/Takuro/GGD/scripts/preserve-before-overwrite.py	
+overwrite_temp_20260827-045537	Edit	有未提交改動	/Users/Takuro/GGD/scripts/preserve-before-overwrite.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045537/scripts/preserve-before-overwrite.py
+overwrite_temp_20260827-045541	Edit	有未提交改動	/Users/Takuro/GGD/scripts/preserve-before-overwrite.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045541/scripts/preserve-before-overwrite.py
+overwrite_temp_20260827-045607	Bash	repo 外	/private/tmp/laneA/s2.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-045607/s2.log
+overwrite_temp_20260827-045623	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/admin/src/contentNames.ts	
+overwrite_temp_20260827-045627	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/contentNames.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045627/apps/admin/src/contentNames.ts
+overwrite_temp_20260827-045636	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/contentNames.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045636/apps/admin/src/contentNames.ts
+overwrite_temp_20260827-045645	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/contentNames.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045645/apps/admin/src/contentNames.ts
+overwrite_temp_20260827-045653	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/admin/src/ui/MatchesPage.tsx	
+overwrite_temp_20260827-045657	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/ui/MatchesPage.tsx	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045657/apps/admin/src/ui/MatchesPage.tsx
+overwrite_temp_20260827-045702	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/ui/MatchesPage.tsx	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045702/apps/admin/src/ui/MatchesPage.tsx
+overwrite_temp_20260827-045705	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/ui/MatchesPage.tsx	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045705/apps/admin/src/ui/MatchesPage.tsx
+overwrite_temp_20260827-045713	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/ui/MatchesPage.tsx	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045713/apps/admin/src/ui/MatchesPage.tsx
+overwrite_temp_20260827-045734	Bash	SKIP(git 有)	/Users/Takuro/GGD/docs/kill-bounty.md	
+overwrite_temp_20260827-045734	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/render/occlusionZone.ts	
+overwrite_temp_20260827-045736	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/admin/src/contentNames.test.ts	
+overwrite_temp_20260827-045746	Bash	未追蹤	/Users/Takuro/GGD/packages/shared/src/ops/killBountyDocSuperseded.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045746/packages/shared/src/ops/killBountyDocSuperseded.test.ts
+overwrite_temp_20260827-045750	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/render/occlusionZone.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045750/apps/client/src/render/occlusionZone.ts
+overwrite_temp_20260827-045751	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/contentNames.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045751/apps/admin/src/contentNames.test.ts
+overwrite_temp_20260827-045754	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/contentNames.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045754/apps/admin/src/contentNames.test.ts
+overwrite_temp_20260827-045755	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/GameApp.ts	
+overwrite_temp_20260827-045801	Edit	SKIP(git 有)	/Users/Takuro/GGD/tools/deploy/ggd-assets.sh	
+overwrite_temp_20260827-045803	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/admin/src/ui/AudioAuditionPage.tsx	
+overwrite_temp_20260827-045803	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/GameApp.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045803/apps/client/src/GameApp.ts
+overwrite_temp_20260827-045807	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/GameApp.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045807/apps/client/src/GameApp.ts
+overwrite_temp_20260827-045811	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/ui/AudioAuditionPage.tsx	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045811/apps/admin/src/ui/AudioAuditionPage.tsx
+overwrite_temp_20260827-045811	Edit	有未提交改動	/Users/Takuro/GGD/tools/deploy/ggd-assets.sh	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045811/tools/deploy/ggd-assets.sh
+overwrite_temp_20260827-045817	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/ui/AudioAuditionPage.tsx	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045817/apps/admin/src/ui/AudioAuditionPage.tsx
+overwrite_temp_20260827-045849	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/sim/systems/RegenSystem.ts	
+overwrite_temp_20260827-045854	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/sim/systems/RegenSystem.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045854/packages/shared/src/sim/systems/RegenSystem.ts
+overwrite_temp_20260827-045857	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/sim/stats/statPipeline.ts	
+overwrite_temp_20260827-045902	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/sim/stats/statPipeline.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045902/packages/shared/src/sim/stats/statPipeline.ts
+overwrite_temp_20260827-045907	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/sim/abilities/abilitySystem.ts	
+overwrite_temp_20260827-045911	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/sim/abilities/abilitySystem.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045911/packages/shared/src/sim/abilities/abilitySystem.ts
+overwrite_temp_20260827-045915	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/sim/effects/manaBarrier.ts	
+overwrite_temp_20260827-045917	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/sim/effects/manaBarrier.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045917/packages/shared/src/sim/effects/manaBarrier.ts
+overwrite_temp_20260827-045918	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/sim/abilities/toggle.ts	
+overwrite_temp_20260827-045920	Edit	有未提交改動	/Users/Takuro/GGD/tools/deploy/ggd-assets.sh	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045920/tools/deploy/ggd-assets.sh
+overwrite_temp_20260827-045921	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/sim/abilities/toggle.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045921/packages/shared/src/sim/abilities/toggle.ts
+overwrite_temp_20260827-045935	Edit	有未提交改動	/Users/Takuro/GGD/tools/deploy/ggd-assets.sh	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-045935/tools/deploy/ggd-assets.sh
+overwrite_temp_20260827-050012	Bash	有未提交改動	/Users/Takuro/GGD/apps/client/src/render/occlusionZone.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050012/apps/client/src/render/occlusionZone.ts
+overwrite_temp_20260827-050020	Bash	repo 外	/private/tmp/RegenSystem.bak.ts	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-050020/RegenSystem.bak.ts
+overwrite_temp_20260827-050020	Bash	有未提交改動	/Users/Takuro/GGD/packages/shared/src/sim/systems/RegenSystem.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050020/packages/shared/src/sim/systems/RegenSystem.ts
+overwrite_temp_20260827-050139	Bash	未追蹤	/Users/Takuro/GGD/tools/review/adminAuth.mjs	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050139/tools/review/adminAuth.mjs
+overwrite_temp_20260827-050208	Edit	SKIP(git 有)	/Users/Takuro/GGD/tools/w3x-import/convert_stock_model.py	
+overwrite_temp_20260827-050213	Edit	有未提交改動	/Users/Takuro/GGD/tools/w3x-import/convert_stock_model.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050213/tools/w3x-import/convert_stock_model.py
+overwrite_temp_20260827-050309	Bash	repo 外	/private/tmp/laneA/dry.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-050309/dry.log
+overwrite_temp_20260827-050350	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/game-server/src/rooms/MatchRoom.ts	
+overwrite_temp_20260827-050353	Edit	有未提交改動	/Users/Takuro/GGD/apps/game-server/src/rooms/MatchRoom.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050353/apps/game-server/src/rooms/MatchRoom.ts
+overwrite_temp_20260827-050404	Edit	有未提交改動	/Users/Takuro/GGD/apps/game-server/src/rooms/MatchRoom.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050404/apps/game-server/src/rooms/MatchRoom.ts
+overwrite_temp_20260827-050413	Bash	repo 外	/private/tmp/c244.md	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-050413/c244.md
+overwrite_temp_20260827-050451	Edit	repo 外	/private/tmp/claude-503/-Users-Takuro-GGD/1fc1e42e-e26b-4bec-88ef-ca25238c0f4c/scratchpad/split_configforms.py	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-050451/split_configforms.py
+overwrite_temp_20260827-050511	Bash	有未提交改動	/Users/Takuro/GGD/tools/deploy/ggd-assets.sh	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050511/tools/deploy/ggd-assets.sh
+overwrite_temp_20260827-050517	Bash	有未提交改動	/Users/Takuro/GGD/apps/game-server/src/rooms/MatchRoom.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050517/apps/game-server/src/rooms/MatchRoom.ts
+overwrite_temp_20260827-050531	Edit	未追蹤	/Users/Takuro/GGD/packages/shared/src/ops/laneAGenguardHeredoc.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050531/packages/shared/src/ops/laneAGenguardHeredoc.test.ts
+overwrite_temp_20260827-050545	Bash	有未提交改動	/Users/Takuro/GGD/scripts/preserve-before-overwrite.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050545/scripts/preserve-before-overwrite.py
+overwrite_temp_20260827-050613	Bash	有未提交改動	/Users/Takuro/GGD/apps/admin/src/configForms.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050613/apps/admin/src/configForms.ts
+overwrite_temp_20260827-050658	Bash	有未提交改動	/Users/Takuro/GGD/apps/admin/src/configForms.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050658/apps/admin/src/configForms.ts
+overwrite_temp_20260827-050728	Bash	repo 外	/private/tmp/laneF-msg.txt	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-050728/laneF-msg.txt
+overwrite_temp_20260827-050751	Bash	未追蹤	/Users/Takuro/GGD/apps/client/src/ui/hud/touchControlsRect.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050751/apps/client/src/ui/hud/touchControlsRect.ts
+overwrite_temp_20260827-050756	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/protocol/schema.ts	
+overwrite_temp_20260827-050801	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/protocol/schema.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050801/packages/shared/src/protocol/schema.ts
+overwrite_temp_20260827-050819	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/protocol/schema.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050819/packages/shared/src/protocol/schema.ts
+overwrite_temp_20260827-050827	Edit	未追蹤	/Users/Takuro/GGD/packages/shared/src/ops/killBountyDocSuperseded.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050827/packages/shared/src/ops/killBountyDocSuperseded.test.ts
+overwrite_temp_20260827-050832	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/protocol/schema.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050832/packages/shared/src/protocol/schema.ts
+overwrite_temp_20260827-050834	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/protocol/schema.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050834/packages/shared/src/protocol/schema.ts
+overwrite_temp_20260827-050836	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/protocol/schema.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050836/packages/shared/src/protocol/schema.ts
+overwrite_temp_20260827-050910	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/game-server/src/match/MatchController.ts	
+overwrite_temp_20260827-050920	Edit	有未提交改動	/Users/Takuro/GGD/apps/game-server/src/match/MatchController.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050920/apps/game-server/src/match/MatchController.ts
+overwrite_temp_20260827-050937	Bash	有未提交改動	/Users/Takuro/GGD/apps/client/src/render/occlusionZone.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050937/apps/client/src/render/occlusionZone.ts
+overwrite_temp_20260827-050939	Edit	有未提交改動	/Users/Takuro/GGD/apps/game-server/src/match/MatchController.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050939/apps/game-server/src/match/MatchController.ts
+overwrite_temp_20260827-050943	Edit	有未提交改動	/Users/Takuro/GGD/apps/game-server/src/match/MatchController.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050943/apps/game-server/src/match/MatchController.ts
+overwrite_temp_20260827-050950	Edit	有未提交改動	/Users/Takuro/GGD/apps/game-server/src/match/MatchController.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050950/apps/game-server/src/match/MatchController.ts
+overwrite_temp_20260827-050952	Edit	未追蹤	/Users/Takuro/GGD/packages/shared/src/ops/killBountyDocSuperseded.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050952/packages/shared/src/ops/killBountyDocSuperseded.test.ts
+overwrite_temp_20260827-050956	Edit	未追蹤	/Users/Takuro/GGD/packages/shared/src/ops/killBountyDocSuperseded.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-050956/packages/shared/src/ops/killBountyDocSuperseded.test.ts
+overwrite_temp_20260827-050956	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/game-server/src/net/snapshot.ts	
+overwrite_temp_20260827-051008	Edit	有未提交改動	/Users/Takuro/GGD/apps/game-server/src/net/snapshot.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051008/apps/game-server/src/net/snapshot.ts
+overwrite_temp_20260827-051017	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/game-server/src/rooms/MatchRoom.ts	
+overwrite_temp_20260827-051020	Edit	有未提交改動	/Users/Takuro/GGD/apps/game-server/src/rooms/MatchRoom.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051020/apps/game-server/src/rooms/MatchRoom.ts
+overwrite_temp_20260827-051143	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/protocol/messages.ts	
+overwrite_temp_20260827-051156	Edit	有未提交改動	/Users/Takuro/GGD/apps/game-server/src/match/MatchController.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051156/apps/game-server/src/match/MatchController.ts
+overwrite_temp_20260827-051208	Edit	有未提交改動	/Users/Takuro/GGD/apps/game-server/src/match/MatchController.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051208/apps/game-server/src/match/MatchController.ts
+overwrite_temp_20260827-051221	Edit	有未提交改動	/Users/Takuro/GGD/apps/game-server/src/rooms/MatchRoom.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051221/apps/game-server/src/rooms/MatchRoom.ts
+overwrite_temp_20260827-051226	Edit	有未提交改動	/Users/Takuro/GGD/apps/game-server/src/rooms/MatchRoom.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051226/apps/game-server/src/rooms/MatchRoom.ts
+overwrite_temp_20260827-051231	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/protocol/messages.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051231/packages/shared/src/protocol/messages.ts
+overwrite_temp_20260827-051232	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/platform/internal/httpx/middleware.go	
+overwrite_temp_20260827-051234	Edit	有未提交改動	/Users/Takuro/GGD/apps/platform/internal/httpx/middleware.go	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051234/apps/platform/internal/httpx/middleware.go
+overwrite_temp_20260827-051256	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/platform/internal/auth/middleware.go	
+overwrite_temp_20260827-051301	Edit	SKIP(git 有)	/Users/Takuro/GGD/tools/w3x-import/build_pitch.py	
+overwrite_temp_20260827-051314	Edit	有未提交改動	/Users/Takuro/GGD/tools/w3x-import/build_pitch.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051314/tools/w3x-import/build_pitch.py
+overwrite_temp_20260827-051330	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/platform/internal/lobby/hub.go	
+overwrite_temp_20260827-051345	Edit	有未提交改動	/Users/Takuro/GGD/apps/platform/internal/lobby/hub.go	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051345/apps/platform/internal/lobby/hub.go
+overwrite_temp_20260827-051352	Edit	有未提交改動	/Users/Takuro/GGD/apps/platform/internal/lobby/hub.go	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051352/apps/platform/internal/lobby/hub.go
+overwrite_temp_20260827-051407	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/platform/internal/lobby/ws.go	
+overwrite_temp_20260827-051411	Edit	有未提交改動	/Users/Takuro/GGD/apps/platform/internal/lobby/ws.go	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051411/apps/platform/internal/lobby/ws.go
+overwrite_temp_20260827-051422	Edit	有未提交改動	/Users/Takuro/GGD/apps/platform/internal/lobby/ws.go	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051422/apps/platform/internal/lobby/ws.go
+overwrite_temp_20260827-051426	Edit	有未提交改動	/Users/Takuro/GGD/apps/platform/internal/lobby/ws.go	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051426/apps/platform/internal/lobby/ws.go
+overwrite_temp_20260827-051458	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/platform/internal/config/config.go	
+overwrite_temp_20260827-051504	Edit	SKIP(git 有)	/Users/Takuro/GGD/tools/hero-onboarding/audit_hero.py	
+overwrite_temp_20260827-051508	Edit	有未提交改動	/Users/Takuro/GGD/apps/platform/internal/config/config.go	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051508/apps/platform/internal/config/config.go
+overwrite_temp_20260827-051624	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/platform/cmd/platform/main.go	
+overwrite_temp_20260827-051625	Edit	有未提交改動	/Users/Takuro/GGD/apps/game-server/src/match/MatchController.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051625/apps/game-server/src/match/MatchController.ts
+overwrite_temp_20260827-051632	Edit	有未提交改動	/Users/Takuro/GGD/apps/platform/cmd/platform/main.go	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051632/apps/platform/cmd/platform/main.go
+overwrite_temp_20260827-051638	Bash	未追蹤	/Users/Takuro/GGD/apps/client/src/ui/hud/zzprobe.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051638/apps/client/src/ui/hud/zzprobe.test.ts
+overwrite_temp_20260827-051651	Bash	有未提交改動	/Users/Takuro/GGD/apps/game-server/src/match/MatchController.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051651/apps/game-server/src/match/MatchController.ts
+overwrite_temp_20260827-051657	Edit	有未提交改動	/Users/Takuro/GGD/tools/w3x-import/build_pitch.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051657/tools/w3x-import/build_pitch.py
+overwrite_temp_20260827-051715	Edit	有未提交改動	/Users/Takuro/GGD/tools/w3x-import/build_pitch.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051715/tools/w3x-import/build_pitch.py
+overwrite_temp_20260827-051730	Edit	有未提交改動	/Users/Takuro/GGD/tools/w3x-import/build_pitch.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051730/tools/w3x-import/build_pitch.py
+overwrite_temp_20260827-051803	Bash	repo 外	/private/tmp/laneF-msg.txt	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-051803/laneF-msg.txt
+overwrite_temp_20260827-051937	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/sim/combatFeel.ts	
+overwrite_temp_20260827-051942	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/sim/combatFeel.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051942/packages/shared/src/sim/combatFeel.ts
+overwrite_temp_20260827-051947	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/sim/combatFeel.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-051947/packages/shared/src/sim/combatFeel.ts
+overwrite_temp_20260827-052001	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/sim/combatFeel.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-052001/packages/shared/src/sim/combatFeel.ts
+overwrite_temp_20260827-052004	Edit	SKIP(git 有)	/Users/Takuro/GGD/nginx/nginx.conf	
+overwrite_temp_20260827-052012	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/sim/combatFeel.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-052012/packages/shared/src/sim/combatFeel.ts
+overwrite_temp_20260827-052019	Edit	有未提交改動	/Users/Takuro/GGD/nginx/nginx.conf	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-052019/nginx/nginx.conf
+overwrite_temp_20260827-052024	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/sim/combatFeel.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-052024/packages/shared/src/sim/combatFeel.ts
+overwrite_temp_20260827-052026	Edit	有未提交改動	/Users/Takuro/GGD/nginx/nginx.conf	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-052026/nginx/nginx.conf
+overwrite_temp_20260827-052052	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/sim/combatFeel.test.ts	
+overwrite_temp_20260827-052056	Bash	repo 外	/private/tmp/laneG-nginxt.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-052056/laneG-nginxt.log
+overwrite_temp_20260827-052101	Bash	repo 外	/private/tmp/laneG-nginxt.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-052101/laneG-nginxt.log
+overwrite_temp_20260827-052136	Bash	repo 外	/private/tmp/laneG-nginxt.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-052136/laneG-nginxt.log
+overwrite_temp_20260827-052141	Bash	repo 外	/private/tmp/laneG-nginxt.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-052141/laneG-nginxt.log
+overwrite_temp_20260827-052149	Bash	repo 外	/private/tmp/laneG-nginxt.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-052149/laneG-nginxt.log
+overwrite_temp_20260827-052152	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/sim/attackStandstill.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-052152/packages/shared/src/sim/attackStandstill.test.ts
+overwrite_temp_20260827-052216	Bash	SKIP(git 有)	/Users/Takuro/GGD/deploy/helm/ggd/files/nginx.conf	
+overwrite_temp_20260827-052230	Bash	repo 外	/private/tmp/laneG-csp.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-052230/laneG-csp.log
+overwrite_temp_20260827-052243	Bash	有未提交改動	/Users/Takuro/GGD/nginx/nginx.conf	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-052243/nginx/nginx.conf
+overwrite_temp_20260827-052342	Bash	有未提交改動	/Users/Takuro/GGD/packages/shared/src/sim/combatFeel.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-052342/packages/shared/src/sim/combatFeel.ts
+overwrite_temp_20260827-052532	Bash	repo 外	/private/tmp/laneF-msg.txt	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-052532/laneF-msg.txt
+overwrite_temp_20260827-052619	Bash	repo 外	/private/tmp/cb.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-052619/cb.log
+overwrite_temp_20260827-052724	Bash	repo 外	/private/tmp/c771.md	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-052724/c771.md
+overwrite_temp_20260827-052833	Bash	未追蹤	/Users/Takuro/GGD/apps/game-server/src/net/snapshotCensus_temp.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-052833/apps/game-server/src/net/snapshotCensus_temp.test.ts
+overwrite_temp_20260827-053300	Bash	repo 外	/private/tmp/laneF-msg.txt	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-053300/laneF-msg.txt
+overwrite_temp_20260827-053342	Bash	repo 外	/private/tmp/laneF-msg.txt	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-053342/laneF-msg.txt
+overwrite_temp_20260827-054558	Bash	repo 外	/private/tmp/pc.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-054558/pc.log
+overwrite_temp_20260827-054758	Bash	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/sim/combatFeel.ts	
+overwrite_temp_20260827-054758	Bash	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/sim/combatFeel.ts	
+overwrite_temp_20260827-061548	Bash	repo 外	/private/tmp/ml3.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-061548/ml3.log
+overwrite_temp_20260827-061607	Bash	repo 外	/private/tmp/br2.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-061607/br2.log
+overwrite_temp_20260827-061746	Bash	repo 外	/private/tmp/deploy4.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-061746/deploy4.log
+overwrite_temp_20260827-062925	Bash	有未提交改動	/Users/Takuro/GGD/tools/parallel-gates/sync-io.json	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-062925/tools/parallel-gates/sync-io.json
+overwrite_temp_20260827-063129	Edit	SKIP(git 有)	/Users/Takuro/GGD/scripts/visual-proof.sh	
+overwrite_temp_20260827-063150	Edit	有未提交改動	/Users/Takuro/GGD/scripts/visual-proof.sh	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063150/scripts/visual-proof.sh
+overwrite_temp_20260827-063209	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/GameApp.ts	
+overwrite_temp_20260827-063212	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/GameApp.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063212/apps/client/src/GameApp.ts
+overwrite_temp_20260827-063214	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/GameApp.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063214/apps/client/src/GameApp.ts
+overwrite_temp_20260827-063217	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/GameApp.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063217/apps/client/src/GameApp.ts
+overwrite_temp_20260827-063219	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/GameApp.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063219/apps/client/src/GameApp.ts
+overwrite_temp_20260827-063223	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/GameApp.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063223/apps/client/src/GameApp.ts
+overwrite_temp_20260827-063224	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/ops/visualProofScript.test.ts	
+overwrite_temp_20260827-063226	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/GameApp.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063226/apps/client/src/GameApp.ts
+overwrite_temp_20260827-063232	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/GameApp.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063232/apps/client/src/GameApp.ts
+overwrite_temp_20260827-063237	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/perf/diag.ts	
+overwrite_temp_20260827-063243	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/perf/diag.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063243/apps/client/src/perf/diag.ts
+overwrite_temp_20260827-063246	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/ops/visualProofScript.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063246/packages/shared/src/ops/visualProofScript.test.ts
+overwrite_temp_20260827-063254	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/ui/WorldAnchorLayer.tsx	
+overwrite_temp_20260827-063256	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/ui/WorldAnchorLayer.tsx	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063256/apps/client/src/ui/WorldAnchorLayer.tsx
+overwrite_temp_20260827-063301	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/ui/WorldAnchorLayer.tsx	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063301/apps/client/src/ui/WorldAnchorLayer.tsx
+overwrite_temp_20260827-063330	Bash	有未提交改動	/Users/Takuro/GGD/scripts/visual-proof.sh	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063330/scripts/visual-proof.sh
+overwrite_temp_20260827-063331	Edit	未追蹤	/Users/Takuro/GGD/apps/client/src/perf/frameSegments.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063331/apps/client/src/perf/frameSegments.ts
+overwrite_temp_20260827-063336	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/ui/PerfOverlay.tsx	
+overwrite_temp_20260827-063339	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/ui/PerfOverlay.tsx	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063339/apps/client/src/ui/PerfOverlay.tsx
+overwrite_temp_20260827-063431	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/platform/internal/auth/handlers.go	
+overwrite_temp_20260827-063436	Edit	有未提交改動	/Users/Takuro/GGD/apps/platform/internal/auth/handlers.go	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063436/apps/platform/internal/auth/handlers.go
+overwrite_temp_20260827-063440	Edit	有未提交改動	/Users/Takuro/GGD/apps/platform/internal/auth/handlers.go	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063440/apps/platform/internal/auth/handlers.go
+overwrite_temp_20260827-063453	Edit	有未提交改動	/Users/Takuro/GGD/apps/platform/internal/auth/handlers.go	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063453/apps/platform/internal/auth/handlers.go
+overwrite_temp_20260827-063459	Edit	有未提交改動	/Users/Takuro/GGD/apps/platform/internal/auth/handlers.go	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063459/apps/platform/internal/auth/handlers.go
+overwrite_temp_20260827-063500	Bash	SKIP(git 有)	/Users/Takuro/GGD/apps/admin/src/liveAuth.ts	
+overwrite_temp_20260827-063503	Edit	有未提交改動	/Users/Takuro/GGD/apps/platform/internal/auth/handlers.go	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063503/apps/platform/internal/auth/handlers.go
+overwrite_temp_20260827-063508	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/platform/internal/auth/service.go	
+overwrite_temp_20260827-063516	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/platform/internal/config/config.go	
+overwrite_temp_20260827-063520	Edit	有未提交改動	/Users/Takuro/GGD/apps/platform/internal/config/config.go	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063520/apps/platform/internal/config/config.go
+overwrite_temp_20260827-063524	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/platform/internal/server/server.go	
+overwrite_temp_20260827-063540	Edit	repo 外	/private/tmp/laneK-gen-wave.py	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-063540/laneK-gen-wave.py
+overwrite_temp_20260827-063621	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/platform/internal/testutil/testutil.go	
+overwrite_temp_20260827-063654	Bash	有未提交改動	/Users/Takuro/GGD/content/projectiles/imported.wave.ki.json	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063654/content/projectiles/imported.wave.ki.json
+overwrite_temp_20260827-063726	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/protocol/schema.ts	
+overwrite_temp_20260827-063729	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/admin/src/session.ts	
+overwrite_temp_20260827-063735	Bash	repo 外	/private/tmp/laneI-t1.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-063735/laneI-t1.log
+overwrite_temp_20260827-063738	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/session.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063738/apps/admin/src/session.ts
+overwrite_temp_20260827-063746	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/session.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063746/apps/admin/src/session.ts
+overwrite_temp_20260827-063808	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/session.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063808/apps/admin/src/session.ts
+overwrite_temp_20260827-063815	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/session.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063815/apps/admin/src/session.ts
+overwrite_temp_20260827-063826	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/session.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063826/apps/admin/src/session.ts
+overwrite_temp_20260827-063845	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/session.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063845/apps/admin/src/session.ts
+overwrite_temp_20260827-063849	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/admin/src/session.test.ts	
+overwrite_temp_20260827-063853	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/session.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063853/apps/admin/src/session.test.ts
+overwrite_temp_20260827-063908	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/session.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063908/apps/admin/src/session.test.ts
+overwrite_temp_20260827-063915	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/admin/vite.config.ts	
+overwrite_temp_20260827-063937	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/vite.config.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063937/apps/admin/vite.config.ts
+overwrite_temp_20260827-063947	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/vite.config.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-063947/apps/admin/vite.config.ts
+overwrite_temp_20260827-064009	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/vite.config.ts	
+overwrite_temp_20260827-064030	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/vite.config.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-064030/apps/client/vite.config.ts
+overwrite_temp_20260827-064033	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/vite.config.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-064033/apps/client/vite.config.ts
+overwrite_temp_20260827-064039	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/vite.config.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-064039/apps/client/vite.config.ts
+overwrite_temp_20260827-064144	Bash	repo 外	/private/tmp/laneJ-admin-vitest.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-064144/laneJ-admin-vitest.log
+overwrite_temp_20260827-064203	Bash	未追蹤	/Users/Takuro/GGD/apps/game-server/src/net/zvdbg_temp.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-064203/apps/game-server/src/net/zvdbg_temp.test.ts
+overwrite_temp_20260827-064215	Bash	未追蹤	/Users/Takuro/GGD/apps/game-server/src/net/zvdbg_temp.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-064215/apps/game-server/src/net/zvdbg_temp.test.ts
+overwrite_temp_20260827-064239	Bash	未追蹤	/Users/Takuro/GGD/apps/game-server/src/net/zvdbg_temp.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-064239/apps/game-server/src/net/zvdbg_temp.test.ts
+overwrite_temp_20260827-064250	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/render/modelFxRig.ts	
+overwrite_temp_20260827-064251	Bash	repo 外	/private/tmp/laneJ-mut-go.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-064251/laneJ-mut-go.log
+overwrite_temp_20260827-064251	Bash	有未提交改動	/Users/Takuro/GGD/apps/client/vite.config.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-064251/apps/client/vite.config.ts
+overwrite_temp_20260827-064251	Bash	有未提交改動	/Users/Takuro/GGD/apps/admin/src/session.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-064251/apps/admin/src/session.ts
+overwrite_temp_20260827-064251	Bash	未追蹤	/Users/Takuro/GGD/apps/platform/internal/auth/refresh_cookie.go	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-064251/apps/platform/internal/auth/refresh_cookie.go
+overwrite_temp_20260827-064301	Bash	未追蹤	/Users/Takuro/GGD/apps/platform/internal/auth/refresh_cookie.go	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-064301/apps/platform/internal/auth/refresh_cookie.go
+overwrite_temp_20260827-064306	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/render/modelFxRig.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-064306/apps/client/src/render/modelFxRig.ts
+overwrite_temp_20260827-064329	Bash	repo 外	/private/tmp/laneI-t1.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-064329/laneI-t1.log
+overwrite_temp_20260827-064337	Bash	未追蹤	/Users/Takuro/GGD/apps/game-server/src/net/zvdbg_temp.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-064337/apps/game-server/src/net/zvdbg_temp.test.ts
+overwrite_temp_20260827-064506	Bash	未追蹤	/Users/Takuro/GGD/apps/game-server/src/net/zvmeasure_temp.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-064506/apps/game-server/src/net/zvmeasure_temp.test.ts
+overwrite_temp_20260827-064613	Bash	repo 外	/private/tmp/laneJ-tsc-admin.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-064613/laneJ-tsc-admin.log
+overwrite_temp_20260827-064613	Bash	repo 外	/private/tmp/laneJ-tsc-client.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-064613/laneJ-tsc-client.log
+overwrite_temp_20260827-064925	Bash	未追蹤	/Users/Takuro/GGD/apps/game-server/src/net/zoneView.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-064925/apps/game-server/src/net/zoneView.ts
+overwrite_temp_20260827-065055	Bash	repo 外	/private/tmp/laneI-probe.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-065055/laneI-probe.log
+overwrite_temp_20260827-065408	Edit	未追蹤	/Users/Takuro/GGD/apps/client/src/perf/frameSegments.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-065408/apps/client/src/perf/frameSegments.ts
+overwrite_temp_20260827-065410	Edit	未追蹤	/Users/Takuro/GGD/apps/client/src/perf/frameSegments.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-065410/apps/client/src/perf/frameSegments.ts
+overwrite_temp_20260827-065413	Bash	repo 外	/private/tmp/laneI-probe.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-065413/laneI-probe.log
+overwrite_temp_20260827-065417	Bash	repo 外	/private/tmp/laneI-probe.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-065417/laneI-probe.log
+overwrite_temp_20260827-065440	Bash	有未提交改動	/Users/Takuro/GGD/apps/client/src/GameApp.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-065440/apps/client/src/GameApp.ts
+overwrite_temp_20260827-065446	Bash	repo 外	/private/tmp/laneI-t1.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-065446/laneI-t1.log
+overwrite_temp_20260827-065636	Bash	repo 外	/private/tmp/laneL-msg.txt	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-065636/laneL-msg.txt
+overwrite_temp_20260827-065815	Bash	repo 外	/private/tmp/laneL-msg.txt	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-065815/laneL-msg.txt
+overwrite_temp_20260827-070202	Bash	repo 外	/private/tmp/laneL-msg.txt	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-070202/laneL-msg.txt
+overwrite_temp_20260827-073929	Bash	repo 外	/private/tmp/deploy5.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-073929/deploy5.log
+overwrite_temp_20260827-074709	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/admin/src/ui/MatchesPage.tsx	
+overwrite_temp_20260827-074714	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/ui/MatchesPage.tsx	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-074714/apps/admin/src/ui/MatchesPage.tsx
+overwrite_temp_20260827-074719	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/ui/MatchesPage.tsx	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-074719/apps/admin/src/ui/MatchesPage.tsx
+overwrite_temp_20260827-074731	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/admin/src/ui/MapReportPage.tsx	
+overwrite_temp_20260827-074734	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/ui/MapReportPage.tsx	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-074734/apps/admin/src/ui/MapReportPage.tsx
+overwrite_temp_20260827-074738	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/ui/MapReportPage.tsx	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-074738/apps/admin/src/ui/MapReportPage.tsx
+overwrite_temp_20260827-074739	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/ui/MapReportPage.tsx	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-074739/apps/admin/src/ui/MapReportPage.tsx
+overwrite_temp_20260827-074743	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/admin/src/ui/ArenaPoolPage.tsx	
+overwrite_temp_20260827-074746	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/ui/ArenaPoolPage.tsx	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-074746/apps/admin/src/ui/ArenaPoolPage.tsx
+overwrite_temp_20260827-074758	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/ui/ArenaPoolPage.tsx	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-074758/apps/admin/src/ui/ArenaPoolPage.tsx
+overwrite_temp_20260827-075001	Edit	SKIP(git 有)	/Users/Takuro/GGD/tools/skill-templates/shape_axes.json	
+overwrite_temp_20260827-075028	Edit	SKIP(git 有)	/Users/Takuro/GGD/tools/skill-templates/scan_shapes.py	
+overwrite_temp_20260827-075052	Edit	有未提交改動	/Users/Takuro/GGD/tools/skill-templates/scan_shapes.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075052/tools/skill-templates/scan_shapes.py
+overwrite_temp_20260827-075114	Bash	有未提交改動	/Users/Takuro/GGD/tools/skill-templates/scan_shapes.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075114/tools/skill-templates/scan_shapes.py
+overwrite_temp_20260827-075119	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/content/schema/arena.ts	
+overwrite_temp_20260827-075125	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/content/schema/arena.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075125/packages/shared/src/content/schema/arena.ts
+overwrite_temp_20260827-075140	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/content/schema/arena.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075140/packages/shared/src/content/schema/arena.ts
+overwrite_temp_20260827-075233	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/content/schema/config/configUnionCoversDirectory.test.ts	
+overwrite_temp_20260827-075245	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/content/schema/config/configUnionCoversDirectory.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075245/packages/shared/src/content/schema/config/configUnionCoversDirectory.test.ts
+overwrite_temp_20260827-075246	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/audio/combatSfx.ts	
+overwrite_temp_20260827-075303	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/content/schema/config/configUnionCoversDirectory.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075303/packages/shared/src/content/schema/config/configUnionCoversDirectory.test.ts
+overwrite_temp_20260827-075310	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/content/refs.ts	
+overwrite_temp_20260827-075314	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/audio/combatSfx.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075314/apps/client/src/audio/combatSfx.ts
+overwrite_temp_20260827-075324	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/audio/combatSfx.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075324/apps/client/src/audio/combatSfx.ts
+overwrite_temp_20260827-075331	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/audio/combatSfxSpatial.ts	
+overwrite_temp_20260827-075337	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/audio/AudioSystem.ts	
+overwrite_temp_20260827-075341	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/audio/AudioSystem.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075341/apps/client/src/audio/AudioSystem.ts
+overwrite_temp_20260827-075342	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/content/refs.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075342/packages/shared/src/content/refs.ts
+overwrite_temp_20260827-075352	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/audio/sfxReachability.ts	
+overwrite_temp_20260827-075353	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/content/refs.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075353/packages/shared/src/content/refs.ts
+overwrite_temp_20260827-075400	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/content/refs.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075400/packages/shared/src/content/refs.ts
+overwrite_temp_20260827-075406	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/audio/sfxReachability.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075406/apps/client/src/audio/sfxReachability.ts
+overwrite_temp_20260827-075411	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/audio/sfxReachability.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075411/apps/client/src/audio/sfxReachability.ts
+overwrite_temp_20260827-075419	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/audio/sfxReachability.test.ts	
+overwrite_temp_20260827-075424	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/audio/sfxReachability.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075424/apps/client/src/audio/sfxReachability.test.ts
+overwrite_temp_20260827-075459	Edit	未追蹤	/Users/Takuro/GGD/packages/shared/src/content/templateExpandedRefs.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075459/packages/shared/src/content/templateExpandedRefs.test.ts
+overwrite_temp_20260827-075509	Edit	未追蹤	/Users/Takuro/GGD/packages/shared/src/content/templateExpandedRefs.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075509/packages/shared/src/content/templateExpandedRefs.test.ts
+overwrite_temp_20260827-075540	Edit	SKIP(git 有)	/Users/Takuro/GGD/tools/w3x-import/stock_unit_data.py	
+overwrite_temp_20260827-075552	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/content/fieldAdoption.test.ts	
+overwrite_temp_20260827-075553	Bash	repo 外	/private/tmp/laneP-probe.test.ts	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-075553/laneP-probe.test.ts
+overwrite_temp_20260827-075638	Bash	repo 外	/private/tmp/laneN-msg.txt	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-075638/laneN-msg.txt
+overwrite_temp_20260827-075712	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/audio/combatSfx.test.ts	
+overwrite_temp_20260827-075719	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/audio/combatSfx.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075719/apps/client/src/audio/combatSfx.test.ts
+overwrite_temp_20260827-075723	Edit	未追蹤	/Users/Takuro/GGD/packages/shared/src/content/templateExpandedRefs.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075723/packages/shared/src/content/templateExpandedRefs.test.ts
+overwrite_temp_20260827-075725	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/audio/combatSfx.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075725/apps/client/src/audio/combatSfx.test.ts
+overwrite_temp_20260827-075726	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/GameApp.zoneCull.test.ts	
+overwrite_temp_20260827-075728	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/GameApp.zoneCull.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075728/apps/client/src/GameApp.zoneCull.test.ts
+overwrite_temp_20260827-075732	Edit	未追蹤	/Users/Takuro/GGD/packages/shared/src/content/templateExpandedRefs.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075732/packages/shared/src/content/templateExpandedRefs.test.ts
+overwrite_temp_20260827-075735	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/ui/hud/mobHealthBarWiring.test.ts	
+overwrite_temp_20260827-075736	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/ui/hud/mobHealthBarWiring.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075736/apps/client/src/ui/hud/mobHealthBarWiring.test.ts
+overwrite_temp_20260827-075756	Bash	repo 外	/private/tmp/laneP-combatSfx.bak.ts	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-075756/laneP-combatSfx.bak.ts
+overwrite_temp_20260827-075756	Bash	有未提交改動	/Users/Takuro/GGD/apps/client/src/audio/combatSfx.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075756/apps/client/src/audio/combatSfx.ts
+overwrite_temp_20260827-075803	Bash	有未提交改動	/Users/Takuro/GGD/packages/shared/src/content/refs.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-075803/packages/shared/src/content/refs.ts
+overwrite_temp_20260827-075926	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/audio/sfxManifest.ts	
+overwrite_temp_20260827-080115	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/GameApp.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-080115/apps/client/src/GameApp.ts
+overwrite_temp_20260827-080116	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/content/arenaCollision.test.ts	
+overwrite_temp_20260827-080122	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/content/arenaCollision.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-080122/packages/shared/src/content/arenaCollision.test.ts
+overwrite_temp_20260827-080328	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/vfx/goldBodyForMobs.test.ts	
+overwrite_temp_20260827-080347	Bash	有未提交改動	/Users/Takuro/GGD/apps/client/src/GameApp.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-080347/apps/client/src/GameApp.ts
+overwrite_temp_20260827-080409	Bash	repo 外	/private/tmp/laneN-msg.txt	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-080409/laneN-msg.txt
+overwrite_temp_20260827-081628	Write	SKIP(git 有)	/Users/Takuro/GGD/content/abilities/godie-h02u.e.json	
+overwrite_temp_20260827-081630	Edit	SKIP(git 有)	/Users/Takuro/GGD/content/abilities/godie-h02u.w.json	
+overwrite_temp_20260827-082141	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/content/abilityCodeParityForms.baseline.json	
+overwrite_temp_20260827-082145	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/content/abilityCodeParity.baseline/92.json	
+overwrite_temp_20260827-082435	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/content/abilityCodeParity.baseline/25.json	
+overwrite_temp_20260827-082447	Bash	repo 外	/private/tmp/laneR-fp.py	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260827-082447/laneR-fp.py
+overwrite_temp_20260827-082740	Bash	有未提交改動	/Users/Takuro/GGD/content/champions/godie-h02u.json	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-082740/content/champions/godie-h02u.json
+overwrite_temp_20260827-082854	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/content/descriptionClaims.baseline/godie-hvsh.json	
+overwrite_temp_20260827-082856	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/content/descriptionClaims.baseline/godie-u00l.json	
+overwrite_temp_20260827-082857	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/content/descriptionClaims.baseline/godie-umal.json	
+overwrite_temp_20260827-082931	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/content/descriptionClaims.baseline/godie-h02u.json	
+overwrite_temp_20260827-083052	Edit	未追蹤	/Users/Takuro/GGD/packages/shared/src/content/laneRChampionAbilitySlotIdentity.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260827-083052/packages/shared/src/content/laneRChampionAbilitySlotIdentity.test.ts
