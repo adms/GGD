@@ -106,7 +106,39 @@ export function suitesForPaths(paths, repo) {
   const extras = new Set();
   for (const p of paths) {
     if (p.startsWith("content/")) {
-      return { suites: null, extras: [], why: `content/ 動了(${p}) ⇒ 每一個 runtime 都在載入時吃它 ⇒ 全包` };
+      // ⭐⭐ GH#809（2026-08-27）—— `suites: null` 是「全**包**」，⛔ 不是「全部測試」。
+      //    `extras` 走的是 `tools/` 那一半，而這一行以前回 `[]`
+      //    ⇒ **純 content 改動永遠跑不到任何 tools/ 的測試**。
+      //    ⚠️ 而 #667 / #668 兩張票的觸發改動**都只碰 content/** ——
+      //    也就是說：抓得到它們的那幾支守衛，在它們壞掉的那一刻**結構上跑不到**。
+      // ⭐ 補法是**推導**的，⛔ 不是一張手寫的 tools 清單：
+      //    `sync-io.json` 量過每一支產生器**讀了什麼** ⇒ 讀 content/ 的那幾支，
+      //    它們自己的測試就該跟著 content 改動一起跑。
+      const readers = new Set();
+      try {
+        const io = JSON.parse(readFileSync(`${base}tools/parallel-gates/sync-io.json`, "utf8"));
+        // ⭐ 步驟名 → 它的 tool 目錄：從 `package.json` 的指令文字推導。
+        //    ⛔ 不從 `writes` 推 —— 多數產生器寫的是 `content/` 或 `docs/`，
+        //    它們自己的目錄根本不在 writes 裡（第一版就是這樣只抓到 1 支）。
+        const scripts = JSON.parse(readFileSync(`${base}package.json`, "utf8")).scripts ?? {};
+        for (const st of io.steps ?? []) {
+          if (!(st.reads ?? []).some((r) => String(r).startsWith("content/"))) continue;
+          const cmd = String(scripts[st.name] ?? "");
+          for (const t of cmd.matchAll(/(tools\/[^/\s]+)\//g)) {
+            if (hasTestFiles(`${base}${t[1]}`)) readers.add(t[1]);
+          }
+        }
+      } catch {
+        // ⛔ 讀不到戶籍表 ⇒ 回全包（fail-closed），⛔ 不是靜靜少跑幾支
+        return { suites: null, extras: [], why: `content/ 動了(${p})，而戶籍表讀不到 ⇒ 全包(fail-closed)` };
+      }
+      return {
+        suites: null,
+        extras: [...readers].sort(),
+        why:
+          `content/ 動了(${p}) ⇒ 每一個 runtime 都在載入時吃它 ⇒ 全包` +
+          (readers.size ? `＋讀 content 的 tool 測試 ${[...readers].sort().join(",")}` : ""),
+      };
     }
     const m = /^(apps|packages)\/([^/]+)\//.exec(p);
     if (m) {
