@@ -1,16 +1,35 @@
 #!/usr/bin/env bash
-# Procedurally generate the neutral "mechanical" combat SFX (fx/*.wav).
+# Procedurally generate the neutral "mechanical" combat SFX (fx/*.mp3).
 #
 # WHY: the 21 imported w3x clips (../*.mp3) are ALL Chinese voice quips — great
 # for kills/deaths/announces, useless for the high-frequency combat events
 # (swing / hit / damage tick / projectile / cast). This script synthesises a
 # small set of short, band-limited, non-verbal clips for those.
 #
-# WHY .wav and not .mp3: MP3 carries encoder delay/padding that browsers apply
-# inconsistently through decodeAudioData; on a 40 ms transient that reads as a
-# late, mushy hit. These clips are tiny (<= ~70 KB) so raw PCM costs nothing and
-# is sample-accurate. 16-bit / 44.1 kHz / MONO (mono is required for WebAudio
-# PannerNode spatialisation).
+# ── WHY .mp3 (GH#744; this header used to claim .wav and it was a lie) ───────
+# For roughly a year this file opened with "WHY .wav and not .mp3: MP3 carries
+# encoder delay/padding that browsers apply inconsistently through
+# decodeAudioData; on a 40 ms transient that reads as a late, mushy hit."
+#
+# MEASURED 2026-08-27, and every clause of that sentence is now false here:
+#   · The directory holds 32 .mp3 and ZERO .wav. `content/config/audio-map.json`
+#     names `.mp3` paths. So re-running the old script emitted 27 .wav files that
+#     no code path can ever load — 27 silent 404s dressed up as a regeneration.
+#   · Every shipped clip in here is mp3 / 44100 Hz / MONO / CBR 128 kbps, i.e.
+#     exactly what `synth_mp3` already produced and what
+#     `tools/audio-optimize/optimize.sh` caps at.
+#   · The delay/padding worry is answered by the container itself: every file
+#     here carries a LAME `Info` (Xing) frame, which is where the encoder writes
+#     its delay and padding counts. That is the gapless metadata browsers read;
+#     it is present, so the transient is not smeared by an unknown offset.
+#     (Verified per file: `head -c 200 <f>.mp3 | strings | grep Info`.)
+#
+# ⚠️ The old header was not merely stale — it was the *reason* the drift was
+# invisible: a rationale reads as a decision, so nobody re-measured it. Its 第三
+# 守則 shape is why the honest numbers above are written down instead of a claim.
+#
+# MONO is still load-bearing and is NOT a container question: WebAudio's
+# PannerNode only spatialises a mono source.
 #
 # Deterministic: same ffmpeg -> same bytes (anoisesrc seeds are pinned).
 # Every clip is peak-normalised to -3.0 dBFS; relative loudness between events
@@ -23,36 +42,18 @@ OUT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 
-# synth <name> <ffmpeg-args...>  -> peak-normalised 16-bit mono wav in $OUT
+# synth <name> <ffmpeg-args...> -> peak-normalised MONO 44.1 kHz 128 kbps mp3
+#
+# ONE function, not two. `synth` and `synth_mp3` were byte-identical apart from
+# the final encoder line, which is the 第〇·七守則 "重複" shape — and the copy is
+# what let the two halves drift into disagreeing about the container. The four
+# `synth_mp3 …` call sites now call this.
 synth() {
   local name="$1"; shift
   ffmpeg -y -v error -nostdin "$@" -ac 1 -ar 44100 -c:a pcm_f32le "$TMP/$name.wav"
   # measure peak, then apply the gain that lands it on -3.0 dBFS.
   # NOTE: volumedetect reports at ffmpeg's *info* level — `-v error` would eat
   # the line and silently skip normalisation, so keep -hide_banner/-nostats.
-  local peak
-  peak="$(ffmpeg -hide_banner -nostats -nostdin -i "$TMP/$name.wav" -af volumedetect -f null - 2>&1 \
-          | sed -n 's/.*max_volume: \(-*[0-9.]*\) dB.*/\1/p')"
-  [ -n "$peak" ] || { echo "FATAL: no peak measured for $name" >&2; exit 1; }
-  local gain
-  gain="$(awk -v p="$peak" 'BEGIN{printf "%.4f", -3.0 - p}')"
-  ffmpeg -y -v error -nostdin -i "$TMP/$name.wav" -af "volume=${gain}dB" \
-    -ac 1 -ar 44100 -c:a pcm_s16le "$OUT/$name.wav"
-}
-
-# synth_mp3 <name> <ffmpeg-args...> -> peak-normalised MONO 44.1 kHz 128 kbps mp3
-#
-# Same normalisation contract as `synth`, different CONTAINER. The WAV rationale
-# at the top of this file (encoder delay smears a 40 ms transient) is about the
-# 40-200 ms combat transients; it does not apply to a clip that is over a second
-# long and whose onset is a deliberate ~130 ms SWELL — a few ms of encoder pad is
-# inaudible there, and every file actually shipped in this directory today is
-# mp3/44100/mono/128k (`tools/audio-optimize/optimize.sh`'s ceiling). A clip
-# emitted as .wav here would be a silent 404 against the .mp3 path the audio map
-# names, so anything long enough to tolerate mp3 is authored straight to mp3.
-synth_mp3() {
-  local name="$1"; shift
-  ffmpeg -y -v error -nostdin "$@" -ac 1 -ar 44100 -c:a pcm_f32le "$TMP/$name.wav"
   local peak
   peak="$(ffmpeg -hide_banner -nostats -nostdin -i "$TMP/$name.wav" -af volumedetect -f null - 2>&1 \
           | sed -n 's/.*max_volume: \(-*[0-9.]*\) dB.*/\1/p')"
@@ -283,8 +284,16 @@ synth block-hit \
 # One name, one recipe. If a countdown sound changes again, EDIT the live
 # block; never add a second.
 
-echo "generated:"
-ls -l "$OUT"/*.wav
+# ⚠️ GH#744 — a `echo "generated:"; ls -l "$OUT"/*.wav` summary used to sit HERE,
+# in the MIDDLE of the file. It was written when this was the last line; every
+# recipe below was appended after it and nobody moved it. Under `set -e` that
+# stale `ls` is not cosmetic — once the directory stopped holding .wav files the
+# `ls` returned non-zero and ABORTED the run at this line, so the last 7 clips
+# (ui-hover-cyber, draft-confirm, count-tick, count-final, crowd-cheer,
+# crowd-cheer-big, boss-horror, boss-jackpot) were never regenerated at all.
+# Measured 2026-08-27: 24 of 31 emitted, exit 1, and the failure looked like a
+# tidy "generated:" report. The summary now lives at the END of the file and
+# lists what this script actually writes.
 
 # --- uiHoverCyber: ELECTRIC ZAP  咻咻電流  (task #86, redone) ----------------
 # User (2026-07-22): 「按鈕 hover 聲音變成鼓聲非常奇怪，應該是科技感咻咻電流才有賽博味」.
@@ -319,8 +328,17 @@ PEAK="$(ffmpeg -hide_banner -nostats -nostdin -i "$TMP/uihc_raw.wav" \
         | sed -n 's/.*Peak level dB: *\(-*[0-9.]*\).*/\1/p' | head -1)"
 [ -n "$PEAK" ] || { echo "FATAL: no peak measured for ui-hover-cyber" >&2; exit 1; }
 UIHC_GAIN="$(awk -v p="$PEAK" 'BEGIN{printf "%.4f", -3.0 - p}')"
+# ⚠️ GH#744 — this line used to say `-c:a pcm_s16le "$OUT/ui-hover-cyber.mp3"`,
+# i.e. RAW PCM written under an .mp3 name. ffmpeg refuses outright ("Invalid
+# audio stream. Exactly one MP3 audio stream is required") and, with `set -e`,
+# takes the rest of the script with it. It had never been caught because the
+# stale mid-file `ls *.wav` summary aborted the run seven recipes EARLIER, so
+# this block was unreachable. Two dead lines hiding each other.
+# STEREO is deliberate here and is the ONE exception in this file: a UI hover is
+# a 2-D interface cue, never fed to a PannerNode, and the shipped file is
+# mp3/44100/stereo/128k — so the encoder matches it rather than the mono rule.
 ffmpeg -y -v error -nostdin -i "$TMP/uihc_raw.wav" -af "volume=${UIHC_GAIN}dB" \
-  -ac 2 -ar 44100 -c:a pcm_s16le "$OUT/ui-hover-cyber.mp3"
+  -ac 2 -ar 44100 -c:a libmp3lame -b:a 128k "$OUT/ui-hover-cyber.mp3"
 echo "ui-hover-cyber.mp3: peak ${PEAK} dBFS -> -3.0 dBFS (applied ${UIHC_GAIN} dB)"
 
 # --- countTick / countFinal: RINGSIDE BELL --------------------------------
@@ -438,7 +456,7 @@ aecho=0.85:0.30:55:0.26,highpass=f=42,lowpass=f=5000[a]" -map "[a]"
 # ===========================================================================
 
 # --- crowdCheer: the standard 歓声 (a single kill) ---------------------------
-synth_mp3 crowd-cheer \
+synth crowd-cheer \
   -f lavfi -i "anoisesrc=r=44100:c=pink:d=1.60:a=1:seed=61" \
   -f lavfi -i "anoisesrc=r=44100:c=pink:d=2.10:a=1:seed=62" \
   -f lavfi -i "anoisesrc=r=44100:c=white:d=1.60:a=1:seed=63" \
@@ -456,7 +474,7 @@ synth_mp3 crowd-cheer \
   -map "[out]" -t 1.60
 
 # --- crowdCheerBig: the ROAR (first blood / triple+ / unstoppable) -----------
-synth_mp3 crowd-cheer-big \
+synth crowd-cheer-big \
   -f lavfi -i "anoisesrc=r=44100:c=pink:d=2.80:a=1:seed=64" \
   -f lavfi -i "anoisesrc=r=44100:c=pink:d=3.60:a=1:seed=65" \
   -f lavfi -i "anoisesrc=r=44100:c=white:d=2.80:a=1:seed=66" \
@@ -512,7 +530,7 @@ synth_mp3 crowd-cheer-big \
 #   4. a low brown-noise GROWL, tremolo'd at 23 Hz (a throat, not a hiss).
 #   5. an impact at 3.05 s with a downward 55 Hz body — the king LANDS.
 # Long echo taps (97/181/307 ms) put it in a big empty room.
-synth_mp3 boss-horror \
+synth boss-horror \
   -f lavfi -i "aevalsrc='(0.95*(1-exp(-1.2*t))*(sin(2*PI*36*t)+0.85*sin(2*PI*37.7*t)))*min(1,(4.40-t)/0.6)':d=4.40:s=44100" \
   -f lavfi -i "aevalsrc='exp(-pow((t-3.05)/1.55,2))*(0.55*sin(2*PI*110*t)+0.50*sin(2*PI*155.6*t)+0.20*sin(2*PI*233.1*t))':d=4.40:s=44100" \
   -f lavfi -i "aevalsrc='0.34*min(1,t/1.0)*exp(-pow((t-3.10)/1.9,2))*sin(2*PI*(150*t+62*t*t))':d=4.40:s=44100" \
@@ -538,7 +556,7 @@ afade=t=in:st=0:d=0.05:curve=qsin,afade=t=out:st=4.05:d=0.35:curve=exp[out]" \
 #   3. the JACKPOT chord at 3.20 s (F5-A5-C6-F6-C7) with a 1 s ring-down —
 #      the second peak, and the reason this is 6 s rather than 2.
 #   4. a low kick at 0 s and 3.20 s so the two beats have weight.
-synth_mp3 boss-jackpot \
+synth boss-jackpot \
   -f lavfi -i "aevalsrc='0.54*(gt(t,0.00)*exp(-4.2*(t-0.00))*(sin(2*PI*349.23*t)+0.40*sin(2*PI*698.46*t)+0.24*sin(2*PI*838.15*t))+gt(t,0.16)*exp(-4.2*(t-0.16))*(sin(2*PI*440.00*t)+0.40*sin(2*PI*880.00*t)+0.24*sin(2*PI*1056.00*t))+gt(t,0.32)*exp(-4.2*(t-0.32))*(sin(2*PI*523.25*t)+0.40*sin(2*PI*1046.50*t)+0.24*sin(2*PI*1255.80*t))+gt(t,0.48)*exp(-4.2*(t-0.48))*(sin(2*PI*698.46*t)+0.40*sin(2*PI*1396.91*t)+0.24*sin(2*PI*1676.30*t))+gt(t,0.64)*exp(-4.2*(t-0.64))*(sin(2*PI*880.00*t)+0.40*sin(2*PI*1760.00*t)+0.24*sin(2*PI*2112.00*t))+gt(t,0.80)*exp(-4.2*(t-0.80))*(sin(2*PI*1046.50*t)+0.40*sin(2*PI*2093.00*t)+0.24*sin(2*PI*2511.60*t))+gt(t,0.96)*exp(-3.4*(t-0.96))*(sin(2*PI*1396.91*t)+0.40*sin(2*PI*2793.83*t)+0.24*sin(2*PI*3352.60*t)))':d=6.00:s=44100" \
   -f lavfi -i "aevalsrc='0.64*gt(t,3.20)*exp(-1.00*(t-3.20))*(sin(2*PI*698.46*t)+0.70*sin(2*PI*880.00*t)+0.60*sin(2*PI*1046.50*t)+0.34*sin(2*PI*1396.91*t)+0.20*sin(2*PI*2093.00*t))':d=6.00:s=44100" \
   -f lavfi -i "aevalsrc='0.85*exp(-6.0*t)*sin(2*PI*(92*t-42*t*t))+0.85*gt(t,3.20)*exp(-4.6*(t-3.20))*sin(2*PI*72*(t-3.20))':d=6.00:s=44100" \
@@ -551,3 +569,7 @@ synth_mp3 boss-jackpot \
 [dry]aecho=0.9:0.32:83|151|229:0.28|0.18|0.11,highpass=f=60:p=2,lowpass=f=13000:p=2,\
 afade=t=in:st=0:d=0.004:curve=qsin,afade=t=out:st=5.40:d=0.60:curve=exp[out]" \
   -map "[out]" -t 6.00
+
+# --- summary (keep this LAST; see the GH#744 note above) ---------------------
+echo "generated:"
+ls -l "$OUT"/*.mp3

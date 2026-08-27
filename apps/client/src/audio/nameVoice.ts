@@ -42,6 +42,8 @@
 import { AUDIO_CONTENT_BASE, audioSystem, shouldSilenceAudio } from "./AudioSystem";
 import { effectiveGain, type VolumeState } from "./audioSelect";
 import { grantRoundEndVoice } from "./roundEndVoice";
+import { confirmTailClip } from "./cryConfirm";
+import type { ChampionVoicePack } from "./selectVoiceLadder";
 import { withContentVersion } from "../content/assetVersion";
 
 /** Path of the generated name-VO manifest, relative to the content mount. */
@@ -320,6 +322,8 @@ export interface ChampionNameVoiceOptions {
   guardMs?: number;
   gain?: number;
   createAudio?: () => NameVoiceElement | null;
+  /** GH#744 — generated voice pack loader for the cry-champion confirm tail. */
+  packLoader?: () => Promise<ChampionVoicePack | null>;
   warn?: (msg: string, err?: unknown) => void;
   /**
    * Force test-mode silence (task #62). When omitted the gate is read from the
@@ -344,6 +348,9 @@ export class ChampionNameVoice {
   private manifestPromise: Promise<ChampionNamesManifest | null> | null = null;
   /** task #139 — the quote pack, loaded once alongside the name manifest. */
   private quotesPromise: Promise<ChampionQuotesManifest | null> | null = null;
+  /** GH#744 — injected loader for the generated voice pack (see `loadPack`). */
+  private packLoader: (() => Promise<ChampionVoicePack | null>) | null = null;
+  private packPromise: Promise<ChampionVoicePack | null> | null = null;
   private el: NameVoiceElement | null = null;
   private elCreated = false;
   /**
@@ -367,6 +374,7 @@ export class ChampionNameVoice {
     // `new Audio()` element is never created, so play() no-ops like the no-DOM path.
     this.silent = opts.silent ?? shouldSilenceAudio();
     this.createAudio = this.silent ? () => null : (opts.createAudio ?? defaultCreateAudio);
+    this.packLoader = opts.packLoader ?? null;
     this.warn = opts.warn ?? ((msg, err) => console.warn(`[nameVo] ${msg}`, err ?? ""));
   }
 
@@ -388,6 +396,39 @@ export class ChampionNameVoice {
       this.quotesPromise = this.fetchJson(QUOTE_VO_MANIFEST_PATH).then(championQuotesFromDoc);
     }
     return this.quotesPromise;
+  }
+
+  /**
+   * GH#744 — the generated per-champion voice pack, used ONLY to answer the
+   * confirm call-out's third segment for the `voiceClass: cry` champions
+   * (`cryConfirm.ts`). Null until something injects a loader ⇒ the call-out
+   * carries the synthesised 名言, i.e. bit-for-bit the pre-#744 behaviour.
+   *
+   * ⭐ INJECTED rather than fetched here, and that is not style: the pack
+   * manifest is **949 KB**, `championVoice` already single-flight caches it for
+   * the rung-2 click, and a second loader in this module would be a second
+   * 住處 for the same bytes — one that re-parses ~1 MB of JSON on every confirm.
+   * The wiring lives in `championVoice.ts` because that module already imports
+   * this one; the reverse edge would be an import cycle.
+   */
+  loadPack(): Promise<ChampionVoicePack | null> {
+    if (!this.packLoader) return Promise.resolve(null);
+    if (!this.packPromise) {
+      this.packPromise = this.packLoader().catch((err) => {
+        this.warn("voice pack failed to load (confirm falls back to the 名言)", err);
+        return null;
+      });
+    }
+    return this.packPromise;
+  }
+
+  /**
+   * Hand this module the champion voice pack loader. Idempotent and cache-
+   * clearing, so a test may swap the pack between cases.
+   */
+  setPackLoader(loader: (() => Promise<ChampionVoicePack | null>) | null): void {
+    this.packLoader = loader;
+    this.packPromise = null;
   }
 
   /**
@@ -417,13 +458,23 @@ export class ChampionNameVoice {
 
     // Both packs are cached single-flight; fetched together so CONFIRM never
     // pays two serial round-trips. Either being missing degrades gracefully.
-    const [manifest, quotes] = await Promise.all([this.load(), this.loadQuotes()]);
+    const [manifest, quotes, pack] = await Promise.all([
+      this.load(),
+      this.loadQuotes(),
+      this.loadPack(),
+    ]);
     const clips = nameSegmentsFor(manifest, champId);
     // task #139 — the champion's famous quote plays as the FINAL segment, after
     // the 稱號→全名 call-out. A champion with no quote just gets the call-out; a
     // champion mapped ONLY in the quote pack still speaks its line.
-    const quoteClip = quoteClipFor(quotes, champId);
-    if (quoteClip) clips.push(quoteClip);
+    //
+    // GH#744 — for the seven `voiceClass: cry` champions that segment is the
+    // champion's own CRY out of the generated voice pack instead of a `say`
+    // render of a sentence the character cannot speak (`_voice-casting.md` §8.3:
+    // keep the 名言 TEXT on screen, play the cry). Everyone else, and any cry
+    // champion whose pack cry is absent, gets `quoteClip` unchanged.
+    const tailClip = confirmTailClip(champId, quoteClipFor(quotes, champId), pack);
+    if (tailClip) clips.push(tailClip);
     if (clips.length === 0) return false;
     const el = this.element();
     if (!el) return false;
@@ -588,6 +639,7 @@ export class ChampionNameVoice {
   reset(): void {
     this.manifestPromise = null;
     this.quotesPromise = null;
+    this.packPromise = null;
     this.lastPlay.clear();
   }
 }

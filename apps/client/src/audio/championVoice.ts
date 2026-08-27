@@ -33,6 +33,7 @@ import { AUDIO_CONTENT_BASE, audioSystem, type SfxPlayOptions } from "./AudioSys
 import type { Rng } from "./audioSelect";
 import { fullAssetsEnabled } from "../config/fullAssets";
 import {
+  championNameVoice,
   loadChampionNames,
   loadChampionQuotes,
   type ChampionNamesManifest,
@@ -342,6 +343,19 @@ export class ChampionVoicePlayer {
 
 /** Process-wide voice layer riding the process-wide mixer. */
 export const championVoice = new ChampionVoicePlayer();
+
+/**
+ * GH#744 — hand the champ-select CONFIRM call-out the generated voice pack, so
+ * the seven `voiceClass: cry` champions end their call-out with their own cry
+ * instead of a `say` render of a sentence they cannot speak (`cryConfirm.ts`).
+ *
+ * The edge points THIS WAY on purpose. `championVoice` already imports
+ * `nameVoice`, and it already single-flight caches the 949 KB pack manifest for
+ * the rung-2 click; wiring it here reuses that one cache. `nameVoice` importing
+ * `championVoice` would be a cycle, and fetching the manifest a second time
+ * inside `nameVoice` would be a second 住處 for the same megabyte.
+ */
+championNameVoice.setPackLoader(() => championVoice.loadPack());
 
 /**
  * Warm the voice layer (cached; call from any boot path, safe to repeat).

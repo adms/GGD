@@ -74,6 +74,31 @@ const TRUE_PEAK_DB = -1.5;
  * read TRADITIONAL characters correctly — the canonical pack already leans on
  * exactly that for its Mandarin 稱號 fragments — so no character is dropped.
  */
+/**
+ * GH#744 — 全名 fragments the JAPANESE voice physically cannot pronounce, and
+ * the reading it is fed instead. TTS INPUT ONLY: the displayed 全名 is unchanged
+ * (it comes from `zhName`, not from here), so the gag survives intact.
+ *
+ * ⭐ MEASURED, not assumed. `say -v Kyoko -r 185 -o x.aiff "騜"` renders
+ * **0.030 s** — digital silence, because 騜 is outside Kyoko's lexicon. That is
+ * under `generate.mjs`'s 0.15 s floor, so the line threw, `godie-e00j.name.mp3`
+ * was never written, and `selectVoiceLadder.EXCLUDED_NAME_CLIPS` had to pin the
+ * 404 to keep the champion audible. Control: 「ホアン」 renders 0.372 s.
+ *
+ * ⚠️ This is deliberately a TABLE, not an `if`. The next unpronounceable glyph
+ * gets a row and a reason; it does not get a second code path. A row is only
+ * legitimate when the CANNOT-SPEAK claim is measured — the reading itself is not
+ * invented here either: 「ホアン」 is the same on'yomi this champion's
+ * `spokenName` already carries.
+ */
+const MIX_JA_READING_OVERRIDE = Object.freeze({
+  "godie-e00j": {
+    // 皇者 - 騜
+    text: "ホアン",
+    why: "`say -v Kyoko` renders 騜 as 0.030 s of silence (measured 2026-08-27); ホアン is this entry's own spokenName reading.",
+  },
+});
+
 const MIX_ZH_VOICE = "Tingting";
 /** The 稱號 text is Traditional Chinese; the explicit voice bypasses the (absent) zh-TW default. */
 const MIX_ZH_LANG = "zh-TW";
@@ -344,11 +369,14 @@ for (const [id, zhName] of champs) {
       clip: `${NAMES_DIR}/${id}.title.mp3`,
     });
   }
+  // GH#744 — the 全名 fragment is the Chinese text EXCEPT where the Japanese
+  // voice cannot pronounce it (see MIX_JA_READING_OVERRIDE); the displayed name
+  // is untouched either way.
   voSegments.push({
     part: "name",
     lang: MIX_JA_LANG,
     voice: MIX_JA_VOICE,
-    text: zhFullName,
+    text: MIX_JA_READING_OVERRIDE[id]?.text ?? zhFullName,
     clip: `${NAMES_DIR}/${id}.name.mp3`,
   });
   for (const seg of voSegments) {
