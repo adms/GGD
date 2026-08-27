@@ -49,6 +49,7 @@ import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
+import { calibrateTwoWay } from "./auditionCalibrate";
 
 export interface ChainAuditionHandle {
   /** 施放一次 65-04 天譴（重置場面）。 */
@@ -217,46 +218,32 @@ export async function startChainLightningAudition(
   };
 
   /**
-   * 量尺校準（見檔頭「台子自己的兩個坑」）。全亮 quad 貼在鏡頭正前方：
+   * 量尺校準 —— ⭐ GH#768 走 `calibrateTwoWay`（唯一住處，**兩個方向**）。
+   * 全亮 quad 貼在鏡頭正前方：
    * emissive 純白 + disableLighting ⇒ 不管燈光怎麼擺它都必須亮。
    * 它量到 0 ⇒ 壞的是台子（canvas 尺寸／相機／readPixels 時序），⛔ 不是特效。
    */
-  const calibrate = async (): Promise<number> => {
-    const quad = MeshBuilder.CreatePlane("calib-quad", { size: 4 }, scene);
-    const qm = new StandardMaterial("calib-mat", scene);
-    qm.emissiveColor = new Color3(1, 1, 1);
-    qm.disableLighting = true;
-    quad.material = qm;
-    quad.parent = camera;
-    quad.position.set(0, 0, 5);
-    try {
-      // ⚠️ 坑③：材質沒 ready 時 render 會**靜默跳過**這顆 mesh（parallel shader
-      // compile 讓前幾幀 isReady()=false）⇒ 先等編譯完成再量。
-      await qm.forceCompilationAsync(quad);
-      // ⚠️ 坑②：readPixels 會讀到上一幀 ⇒ 先 render **兩次**再讀。
-      scene.render();
-      scene.render();
-      const w = engine.getRenderWidth();
-      const h = engine.getRenderHeight();
-      const buf = (await engine.readPixels(0, 0, w, h)) as Uint8Array;
-      let bright = 0;
-      for (let i = 0; i + 2 < buf.length; i += 4) {
-        if (Math.max(buf[i]!, buf[i + 1]!, buf[i + 2]!) > 200) bright++;
-      }
-      if (bright <= 0) {
-        throw new Error(
-          `calibrate(): 全亮 quad 在 ${w}×${h} 的畫面上量到 0 個亮像素 —— ` +
-            "量尺本身壞了（canvas 背後緩衝 300×150？readPixels 讀到上一幀？相機沒對到？）。" +
-            "這一頁之後量到的任何「看不見」都不可信,先修台子。",
-        );
-      }
-      return bright;
-    } finally {
-      quad.dispose();
-      qm.dispose();
-      scene.render(); // 把移除 quad 之後的畫面畫回來，⛔ 不讓校準圖殘留進下一張截圖
-    }
-  };
+  const calibrate = (): Promise<number> =>
+    calibrateTwoWay({
+      scene,
+      camera,
+      rulers: {
+        "engine.readPixels": async () => {
+          // ⚠️ 坑②：readPixels 會讀到上一幀 ⇒ 先 render **兩次**再讀。
+          scene.render();
+          scene.render();
+          const w = engine.getRenderWidth();
+          const h = engine.getRenderHeight();
+          const buf = (await engine.readPixels(0, 0, w, h)) as Uint8Array;
+          let bright = 0;
+          for (let i = 0; i + 2 < buf.length; i += 4) {
+            if (Math.max(buf[i]!, buf[i + 1]!, buf[i + 2]!) > 200) bright++;
+          }
+          return { w, h, bright, lit: bright };
+        },
+      },
+    });
+
 
   const handle: ChainAuditionHandle = {
     calibrate,

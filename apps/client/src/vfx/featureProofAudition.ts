@@ -38,6 +38,7 @@ import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
+import { calibrateTwoWay } from "./auditionCalibrate";
 
 /** 一張證據圖的量測結果（`frames.md` 逐列就是它）。 */
 export interface ProofFrame {
@@ -137,31 +138,9 @@ function makeStage(canvas: HTMLCanvasElement, sinkUrl: string, frames: ProofFram
     return { w, h, ...countBright(buf) };
   };
 
-  const calibrate = async (): Promise<number> => {
-    const quad = MeshBuilder.CreatePlane("calib-quad", { size: 4 }, scene);
-    const qm = new StandardMaterial("calib-mat", scene);
-    qm.emissiveColor = new Color3(1, 1, 1);
-    qm.disableLighting = true;
-    quad.material = qm;
-    quad.parent = camera;
-    quad.position.set(0, 0, 5);
-    try {
-      // ⚠️ 坑③：材質沒 ready 時 render 靜默跳過 mesh。
-      await qm.forceCompilationAsync(quad);
-      const m = await measure();
-      if (m.bright <= 0) {
-        throw new Error(
-          `calibrate(): 全亮 quad 在 ${m.w}×${m.h} 上量到 0 個亮像素 —— 量尺壞了，` +
-            "這一批之後量到的任何「看不見」都不可信。",
-        );
-      }
-      return m.bright;
-    } finally {
-      quad.dispose();
-      qm.dispose();
-      renderFrame();
-    }
-  };
+  /** ⭐ GH#768 —— 校準走 `calibrateTwoWay`（唯一住處，**兩個方向**：亮量得到 ⊕ 暗量得少）。 */
+  const calibrate = (): Promise<number> =>
+    calibrateTwoWay({ scene, camera, rulers: { "engine.readPixels": () => measure() } });
 
   /**
    * 推進 n 幀。⛔ 沒有 render loop —— 這一頁自己畫，所以「幀」是可數的。

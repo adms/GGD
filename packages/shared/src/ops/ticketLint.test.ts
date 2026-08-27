@@ -27,7 +27,7 @@ describe("開票規格 lint", () => {
 
   it("帶齊四件 ⇒ 0", () => {
     const f = join(dir, "ok.md");
-    writeFileSync(f, "[重要][fix] 標題\n**Objective** o\n**Scope** s\n**Files / modules likely affected** f\n**Implementation constraints** c\n## 驗收\nx\n**Test / verification criteria** t\n[思考策略] 閘不是判準\n[解決模板] 三個住處開關\n");
+    writeFileSync(f, "[重要][fix] 標題\n**Objective** o\n**Scope** s\n**Files / modules likely affected** f\n**Implementation constraints** c\n## 驗收\nx\n**Test / verification criteria** t\n[思考策略] 閘不是判準\n[解決模板] 三個住處開關：content/config/x.json ＋ Zod DEFAULT_X ＋ admin SHIPPED_X\n");
     expect(run(f).code).toBe(0);
   });
 
@@ -39,5 +39,25 @@ describe("開票規格 lint", () => {
     for (const piece of ["驗收標準", "類型 tag", "[緊急]", "思考策略", "解決模板", "Objective", "Scope", "Files", "constraints", "verification"]) {
       expect(r.out, `訊息沒指名缺「${piece}」`).toContain(piece);
     }
+  });
+
+  // ── ⭐ GH#686 Scope ②⑤：第三層 —— 票**宣稱**的東西要被驗 ────────────────
+  const FULL = "**Objective** o\n**Scope** s\n**Files / modules likely affected** f\n" +
+    "**Implementation constraints** c\n## 驗收\nx\n**Test / verification criteria** 突變\n[思考策略] 閘不是判準\n";
+
+  it("② 宣稱模板「三個住處開關」而內文只寫得出兩個住處 ⇒ 1 且**指名缺哪一格**", () => {
+    const f = join(dir, "tpl.md");
+    writeFileSync(f, `[重要][fix] t\n${FULL}[解決模板] 三個住處開關 —— content/config/x.json ＋ Zod DEFAULT_X\n`);
+    const r = run(f);
+    expect(r.code).toBe(1);
+    expect(r.out).toContain("三個住處開關");
+    expect(r.out, "沒指名缺的是 admin 那一格").toContain("SHIPPED_");
+  });
+
+  it("⑤ [breaking change] 沒有部署節奏聲明 ⇒ 1（漏了它的代價是一次線上事故）", () => {
+    const f = join(dir, "bc.md");
+    writeFileSync(f, `[緊急][breaking change] t\n${FULL}[解決模板] 條件葉 —— 一片新的條件葉\n`);
+    expect(run(f).code).toBe(1);
+    expect(run(f).out).toContain("部署節奏");
   });
 });

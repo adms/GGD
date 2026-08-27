@@ -1,25 +1,283 @@
 {
   "_why": "開票規格的機器可讀目錄（owner 2026-08-24 核可的心得①②③）。三個消費者讀同一份：scripts/ticket-new.sh（scaffold 的選項清單）· scripts/ticket-lint.sh（未來:模板必要欄檢查,GH#686）· lane prompt（開工前讀該模板的坑清單）。⛔ 不要在任何腳本裡再抄一份清單 —— 這裡是唯一住處。",
   "strategies": [
-    { "id": "gate-not-criteria", "name": "閘不是判準", "when": "規則靠『要記得』就會失效的地方", "pitfalls": ["閘被放寬成模糊比對＝沒有閘", "警告型的閘要 fail-loud,靜默跳過與全過長得一樣"], "exemplars": ["scripts/ticket-lint.sh", "packages/shared/src/ops/skillsSyncCoversGenerators.test.ts"] },
-    { "id": "inventory-then-rank", "name": "盤點→按擋住支數排序", "when": "一批同型工作(N 支技能/N 個事件)", "pitfalls": ["逐支實作＝N 輪;先數每個缺口擋住幾支"], "exemplars": ["docs/_reports/N3_temp_20260824n.md"] },
-    { "id": "relation-not-noun", "name": "兩個名詞的關係", "when": "部署/相容性/配對故障", "pitfalls": ["逐一驗名詞必然全綠而組合壞掉"], "exemplars": ["apps/platform/internal/server/orphan_route_test.go", "scripts/host-deploy.sh"] },
-    { "id": "five-layer-root-cause", "name": "五層根因", "when": "『做完了』但使用者拿不到的事故", "pitfalls": ["只修最上層必然復發"], "exemplars": ["CLAUDE.md 👁 節"] },
-    { "id": "measure-first", "name": "量到再說", "when": "效能/成本/『大概是』的爭論", "pitfalls": ["行為相依的量是區間不是單點", "量尺自己要先自證(calibrate)"], "exemplars": ["apps/client/src/render/vfx/w3xRigHonoursDissipateCap.test.ts"] },
-    { "id": "player-visible-done", "name": "玩家看得到才算做完", "when": "畫面/音效/特效類交付", "pitfalls": ["NullEngine 畫不出像素;共用 scene 的池子讓兩次量測讀到同一個結果;vi.spyOn(Configs) 靜默不生效", "『鏈路已接上』≠『已驗收』"], "exemplars": ["apps/client/src/vfx/arcGlowRenders.test.ts", "scripts/visual-proof.sh"] },
-    { "id": "single-home", "name": "值只有一個住處", "when": "同一個數字/清單出現在第二個地方", "pitfalls": ["烘出去的副本必過期而且不會有東西紅"], "exemplars": ["content/ability-templates/tpl-beam-roll.json"] },
-    { "id": "ship-then-veto", "name": "先上線後否決", "when": "成果驗收(HITL)", "pitfalls": ["事前審批門會把部署卡死在『人不在』"], "exemplars": ["tools/review/"] }
+    {
+      "id": "gate-not-criteria",
+      "name": "閘不是判準",
+      "when": "規則靠『要記得』就會失效的地方",
+      "pitfalls": [
+        "閘被放寬成模糊比對＝沒有閘",
+        "警告型的閘要 fail-loud,靜默跳過與全過長得一樣"
+      ],
+      "exemplars": [
+        "scripts/ticket-lint.sh",
+        "packages/shared/src/ops/skillsSyncCoversGenerators.test.ts"
+      ]
+    },
+    {
+      "id": "inventory-then-rank",
+      "name": "盤點→按擋住支數排序",
+      "when": "一批同型工作(N 支技能/N 個事件)",
+      "pitfalls": [
+        "逐支實作＝N 輪;先數每個缺口擋住幾支"
+      ],
+      "exemplars": [
+        "docs/_reports/N3_temp_20260824n.md"
+      ]
+    },
+    {
+      "id": "relation-not-noun",
+      "name": "兩個名詞的關係",
+      "when": "部署/相容性/配對故障",
+      "pitfalls": [
+        "逐一驗名詞必然全綠而組合壞掉"
+      ],
+      "exemplars": [
+        "apps/platform/internal/server/orphan_route_test.go",
+        "scripts/host-deploy.sh"
+      ]
+    },
+    {
+      "id": "five-layer-root-cause",
+      "name": "五層根因",
+      "when": "『做完了』但使用者拿不到的事故",
+      "pitfalls": [
+        "只修最上層必然復發"
+      ],
+      "exemplars": [
+        "CLAUDE.md 👁 節"
+      ]
+    },
+    {
+      "id": "measure-first",
+      "name": "量到再說",
+      "when": "效能/成本/『大概是』的爭論",
+      "pitfalls": [
+        "行為相依的量是區間不是單點",
+        "量尺自己要先自證(calibrate)"
+      ],
+      "exemplars": [
+        "apps/client/src/render/vfx/w3xRigHonoursDissipateCap.test.ts"
+      ]
+    },
+    {
+      "id": "player-visible-done",
+      "name": "玩家看得到才算做完",
+      "when": "畫面/音效/特效類交付",
+      "pitfalls": [
+        "NullEngine 畫不出像素;共用 scene 的池子讓兩次量測讀到同一個結果;vi.spyOn(Configs) 靜默不生效",
+        "『鏈路已接上』≠『已驗收』"
+      ],
+      "exemplars": [
+        "apps/client/src/vfx/arcGlowRenders.test.ts",
+        "scripts/visual-proof.sh"
+      ]
+    },
+    {
+      "id": "single-home",
+      "name": "值只有一個住處",
+      "when": "同一個數字/清單出現在第二個地方",
+      "pitfalls": [
+        "烘出去的副本必過期而且不會有東西紅"
+      ],
+      "exemplars": [
+        "content/ability-templates/tpl-beam-roll.json"
+      ]
+    },
+    {
+      "id": "ship-then-veto",
+      "name": "先上線後否決",
+      "when": "成果驗收(HITL)",
+      "pitfalls": [
+        "事前審批門會把部署卡死在『人不在』"
+      ],
+      "exemplars": [
+        "tools/review/"
+      ]
+    }
   ],
   "templates": [
-    { "id": "three-home-switch", "name": "三個住處開關", "requires": ["content/config 的 json", "Zod DEFAULT_*", "admin SHIPPED_*/標籤"], "pitfalls": ["漏 admin 那格＝owner 要改就是一次部署", "上界不是只有下界", "『回到出貨值』與 dirty 判斷都要接新欄位"], "exemplars": ["packages/shared/src/content/schema/config/roster.ts"] },
-    { "id": "condition-leaf", "name": "條件葉", "requires": ["一個可重用的判準節點,⛔ 不是為單一內容寫 if"], "pitfalls": ["寫成 if 就是 N 份會各自腐爛的程式"], "exemplars": ["tools/skill-remake/heroes/godie-emfr.py 的 HP_LOW_50"] },
-    { "id": "generator-check-gate", "name": "產生器+--check 閘", "requires": ["逐位元組 --check", "零時鐘欄位", "進 skills:sync/skills:check 鏈"], "pitfalls": ["產生日期會逼 --check 放寬", "改產物不改來源＝下一次 sync 打回來(走 genrun.sh)"], "exemplars": ["tools/skill-lists/gen.mjs"] },
-    { "id": "load-bearing-guard", "name": "承重守衛+突變", "requires": ["把關鍵那行改壞→紅→改回", "驗機制不驗數字"], "pitfalls": ["八種失敗形態;被測的要是出貨的那條路"], "exemplars": ["apps/client/src/render/modelFxWireContract.test.ts"] },
-    { "id": "hitl-funnel", "name": "HITL 分層漏斗", "requires": ["Tier0 硬不變量→Tier1 可量界線→Tier1.5 初審→Tier2 人審批次頁"], "pitfalls": ["全機器與全人工都是錯的極端"], "exemplars": ["tools/review/"] },
-    { "id": "n-to-k-template", "name": "N 同型=K 模板+一張表", "requires": ["先抽模板再填參數表"], "pitfalls": ["第二個東西只差參數就該停手抽模板"], "exemplars": ["content/ability-templates/"] },
-    { "id": "audition-screenshots", "name": "audition+連續擷圖", "requires": ["真 Sim→出貨內容→真消費端→逐幀截圖+亮像素計數", "量尺 calibrate"], "pitfalls": ["canvas 背後緩衝 300×150;readPixels 讀到上一幀;材質沒 ready 被靜默跳過"], "exemplars": ["apps/client/public/chain-lightning-audition.html"] },
-    { "id": "readonly-admin-list", "name": "後台唯讀清單頁", "requires": ["資料與 md 同一來源", "進 configDocCoverage 的正規路徑"], "pitfalls": ["label 帶 > 之類會被 HTML 轉義的字元"], "exemplars": ["apps/admin/src/skillLists.test.ts"] },
-    { "id": "typed-payload-at-emit", "name": "payload 型別住 emit 站旁", "requires": ["介面在發射端定義,兩端 import 同一份"], "pitfalls": ["as never 是靜默的洞;interface 拿不到隱含索引簽章(用 type)"], "exemplars": ["packages/shared/src/sim/systems/DeathSystem.ts"] },
-    { "id": "facade-split", "name": "門面+閘拆檔", "requires": ["export * 門面保 import 端", "閘從出貨物推導,⛔ 不掃資料夾"], "pitfalls": ["拆檔治不了一行接線與順序相依"], "exemplars": ["CLAUDE.md 第〇·七守則"] }
-  ]
+    {
+      "id": "three-home-switch",
+      "name": "三個住處開關",
+      "requires": [
+        "content/config 的 json",
+        "Zod DEFAULT_*",
+        "admin SHIPPED_*/標籤"
+      ],
+      "pitfalls": [
+        "漏 admin 那格＝owner 要改就是一次部署",
+        "上界不是只有下界",
+        "『回到出貨值』與 dirty 判斷都要接新欄位"
+      ],
+      "exemplars": [
+        "packages/shared/src/content/schema/config/roster.ts"
+      ],
+      "lint": [
+        "content/config",
+        "DEFAULT_",
+        "SHIPPED_"
+      ]
+    },
+    {
+      "id": "condition-leaf",
+      "name": "條件葉",
+      "requires": [
+        "一個可重用的判準節點,⛔ 不是為單一內容寫 if"
+      ],
+      "pitfalls": [
+        "寫成 if 就是 N 份會各自腐爛的程式"
+      ],
+      "exemplars": [
+        "tools/skill-remake/heroes/godie-emfr.py 的 HP_LOW_50"
+      ],
+      "lint": [
+        "條件葉|condition\\.|謂詞"
+      ]
+    },
+    {
+      "id": "generator-check-gate",
+      "name": "產生器+--check 閘",
+      "requires": [
+        "逐位元組 --check",
+        "零時鐘欄位",
+        "進 skills:sync/skills:check 鏈"
+      ],
+      "pitfalls": [
+        "產生日期會逼 --check 放寬",
+        "改產物不改來源＝下一次 sync 打回來(走 genrun.sh)"
+      ],
+      "exemplars": [
+        "tools/skill-lists/gen.mjs"
+      ],
+      "lint": [
+        "--check|:check",
+        "tools/|genrun|skills:sync"
+      ]
+    },
+    {
+      "id": "load-bearing-guard",
+      "name": "承重守衛+突變",
+      "requires": [
+        "把關鍵那行改壞→紅→改回",
+        "驗機制不驗數字"
+      ],
+      "pitfalls": [
+        "八種失敗形態;被測的要是出貨的那條路"
+      ],
+      "exemplars": [
+        "apps/client/src/render/modelFxWireContract.test.ts"
+      ],
+      "lint": [
+        "突變|mutation",
+        "\\.test\\.|測試"
+      ]
+    },
+    {
+      "id": "hitl-funnel",
+      "name": "HITL 分層漏斗",
+      "requires": [
+        "Tier0 硬不變量→Tier1 可量界線→Tier1.5 初審→Tier2 人審批次頁"
+      ],
+      "pitfalls": [
+        "全機器與全人工都是錯的極端"
+      ],
+      "exemplars": [
+        "tools/review/"
+      ],
+      "lint": [
+        "Tier",
+        "rollback|否決"
+      ]
+    },
+    {
+      "id": "n-to-k-template",
+      "name": "N 同型=K 模板+一張表",
+      "requires": [
+        "先抽模板再填參數表"
+      ],
+      "pitfalls": [
+        "第二個東西只差參數就該停手抽模板"
+      ],
+      "exemplars": [
+        "content/ability-templates/"
+      ],
+      "lint": [
+        "模板|template",
+        "參數表|params|一張表"
+      ]
+    },
+    {
+      "id": "audition-screenshots",
+      "name": "audition+連續擷圖",
+      "requires": [
+        "真 Sim→出貨內容→真消費端→逐幀截圖+亮像素計數",
+        "量尺 calibrate"
+      ],
+      "pitfalls": [
+        "canvas 背後緩衝 300×150;readPixels 讀到上一幀;材質沒 ready 被靜默跳過"
+      ],
+      "exemplars": [
+        "apps/client/public/chain-lightning-audition.html"
+      ],
+      "lint": [
+        "calibrate|校準",
+        "audition"
+      ]
+    },
+    {
+      "id": "readonly-admin-list",
+      "name": "後台唯讀清單頁",
+      "requires": [
+        "資料與 md 同一來源",
+        "進 configDocCoverage 的正規路徑"
+      ],
+      "pitfalls": [
+        "label 帶 > 之類會被 HTML 轉義的字元"
+      ],
+      "exemplars": [
+        "apps/admin/src/skillLists.test.ts"
+      ],
+      "lint": [
+        "admin",
+        "configDocCoverage|後台"
+      ]
+    },
+    {
+      "id": "typed-payload-at-emit",
+      "name": "payload 型別住 emit 站旁",
+      "requires": [
+        "介面在發射端定義,兩端 import 同一份"
+      ],
+      "pitfalls": [
+        "as never 是靜默的洞;interface 拿不到隱含索引簽章(用 type)"
+      ],
+      "exemplars": [
+        "packages/shared/src/sim/systems/DeathSystem.ts"
+      ],
+      "lint": [
+        "emit",
+        "型別|interface|type "
+      ]
+    },
+    {
+      "id": "facade-split",
+      "name": "門面+閘拆檔",
+      "requires": [
+        "export * 門面保 import 端",
+        "閘從出貨物推導,⛔ 不掃資料夾"
+      ],
+      "pitfalls": [
+        "拆檔治不了一行接線與順序相依"
+      ],
+      "exemplars": [
+        "CLAUDE.md 第〇·七守則"
+      ],
+      "lint": [
+        "門面|export \\*",
+        "閘|test"
+      ]
+    }
+  ],
+  "_lint_why": "⭐ GH#686 Scope ②：票宣稱了某個解決模板 ⇒ `scripts/ticket-lint.sh` 驗它的 `lint` 逐條在內文裡命中得到（regex，⛔ 不是關鍵字比對）。⚠️ 這一格是**票文的自我宣告**在被**驗**：宣稱「三個住處開關」而內文只寫得出兩個住處 ⇒ 那張票做完之後 owner 就是改不到那一格。⛔ 加新模板時 `lint` 可以留空（＝這個模板沒有可機器驗的必要欄），⛔ 但不可以寫一條驗不到東西的假 regex。"
 }

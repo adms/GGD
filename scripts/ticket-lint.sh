@@ -46,6 +46,79 @@ RE_TYPE='\[(breaking change|fix|improve|feature|refactor|perf|docs|test|chore|bu
 RE_STRAT='\[思考策略\]|##[[:space:]]*思考策略'
 RE_TPL='\[解決模板\]|##[[:space:]]*解決模板'
 
+# ── ⭐ 第三層：catalog 驗必要欄 · tag 路由 · 前提回驗（GH#686 Scope ②④⑤）─────────
+# ⚠️ 前兩層問的是「**這張票有沒有寫**」；這一層問的是「**它寫的那句話今天成不成立**」。
+#   三個問題各自獨立，但它們共用同一個形狀：**票文的自我宣告要被驗**，
+#   ⛔ 不是「有寫這個詞就算數」（第三守則：註解會說謊，票文也會）。
+lint_deep() { # $1=標籤 $2=標題 $3=內文 —— 回 1 = 有硬缺
+  python3 - "$1" "$2" "$3" <<'PY'
+import json, os, re, sys
+label, title, body = sys.argv[1], sys.argv[2], sys.argv[3]
+hard: list[str] = []
+soft: list[str] = []
+
+# ── ② catalog：宣稱了模板 X ⇒ 驗 X 的必要欄 ──────────────────────────────────
+# ⭐ catalog 是**唯一住處**：⛔ 這裡不抄任何模板名或必要欄（GH#707 的病）。
+try:
+    cat = json.load(open("tools/ticket-templates/catalog.json", encoding="utf-8"))
+except Exception as exc:  # noqa: BLE001
+    print(f"⛔ 讀不到 catalog（{exc}）—— ⛔ 不要把「讀不到」當成「模板檢查過了」。", file=sys.stderr)
+    sys.exit(2)
+# 只讀 [解決模板] 那一行（⛔ 不掃全文：內文引用別的模板名不算宣稱）
+claim = "\n".join(l for l in body.split("\n") if re.search(r"\[解決模板\]|^##\s*解決模板", l))
+for t in cat["templates"]:
+    if t["name"] in claim and t.get("lint"):
+        miss = [r for r in t["lint"] if not re.search(r, body, re.I)]
+        if miss:
+            hard.append(f"宣稱了模板「{t['name']}」但內文點名不到：" + " · ".join(miss)
+                        + f"（必要欄：{' / '.join(t['requires'])}）")
+
+# ── ⑤ tag 路由：類型 tag 決定**驗證形狀** ────────────────────────────────────
+# ⛔ 只有 [breaking change] 是硬擋 —— 它是**部署節奏**的訊號（⛔ 不可 --content-only），
+#    漏了它的代價是一次線上事故；其餘兩條是建議（⛔ 不擋，同 hook 的哲學）。
+if re.search(r"\[breaking\s*change\]", title, re.I) and not re.search(
+        r"完整重建|重建映像|--content-only|部署節奏|append-only|舊分頁|deploy", body, re.I):
+    hard.append("[breaking change] 但內文沒有**部署節奏**聲明"
+                "（要寫：完整重建映像 ⛔ 不可 --content-only／舊分頁會怎樣）")
+if re.search(r"\[fix\]|\[bug\]", title, re.I) and not re.search(r"突變|mutation|迴歸|regression", body, re.I):
+    soft.append("[fix] 建議寫**迴歸守衛＋突變**（哪一行改壞會紅）")
+SCREEN = re.compile(r"apps/client/src/(vfx|render|ui)|畫面|特效|渲染")
+if re.search(r"\[feature\]|\[improve\]", title, re.I) and SCREEN.search(body) and not re.search(
+        r"@visual-proof|visual-proof|終端證據|亮像素", body):
+    soft.append("[feature]＋畫面層 建議寫 **@visual-proof** 的終端證據"
+                "（CLAUDE.md 👁：鏈路接上 ≠ 玩家看得到）")
+
+# ── ④ 前提回驗：票文點名的 repo 路徑，今天還成立嗎 ────────────────────────────
+# ⭐ lane T 2026-08-27 手工驗 25 張票抓到 3 張前提被證偽，而**最便宜也最值錢**的那一種
+#   逐字是「檔案 X 不存在」——它是一行 `os.path.exists`。#565/#674 的那句假前置
+#   活過了**五則**稽核留言，每一則都把它複述成「下一步第一個動作」。
+ROOTS = r"apps|packages|content|tools|scripts|docs|infra|deploy"
+for m in re.finditer(rf"`((?:{ROOTS})/[^`\s]+)`", body):
+    # ⚠️ 票文的慣例是 `檔:行號`（`a/b.ts:162/222`）—— ⛔ 不切掉行號就會判成「檔不存在」。
+    path = re.sub(r":[\d/,\-–]+$", "", m.group(1)).rstrip("/")
+    # ⛔ 佔位符不是路徑（`tools/<dir>` · `content/.../x`）—— 判它「不存在」是**誤報**,
+    #   而一支會誤報的閘,下一輪就會被整段忽略（⛔ 那比沒有閘更糟）。
+    if any(c in path for c in "*{<>") or "..." in path or "/" not in path:
+        continue
+    # ⚠️ 視窗要**切在分隔符**上 —— 第一版取前 60 字，於是 `a 缺席 · b` 裡的 b
+    #   被上一個條目的「缺席」誤判成前提過期（實測踩到，⛔ 那是量尺自己在說謊）。
+    before = re.split(r"[·\n。；;、]", body[max(0, m.start() - 80):m.start()])[-1]
+    after = re.split(r"[·\n。；;、]", body[m.end():m.end() + 40])[0]
+    claims_absent = re.search(r"缺席|不存在|沒有這一?份|尚未建立|missing|補一份|先補它", before + after)
+    if claims_absent and os.path.exists(path):
+        soft.append(f"⭐ **前提過期**：票文說 `{path}` 缺席／不存在，而**它今天在**"
+                    "（⛔ 先確認是不是換了集合／換了住處，再改票文）")
+    elif not claims_absent and not os.path.exists(path) and not re.search(r"新|new|要加|預計", before + after):
+        soft.append(f"票文點名的 `{path}` 今天**不存在**（新檔的話請在旁邊註明「新」）")
+
+for x in dict.fromkeys(soft):
+    print(f"ℹ️ {label} {x}")
+for x in dict.fromkeys(hard):
+    print(f"⚠️ {label} {x}")
+sys.exit(1 if hard else 0)
+PY
+}
+
 lint_text() { # $1=標籤 $2=標題 $3=內文
   local missing=()
   echo "$2" | grep -qE  "$RE_TAG"   || missing+=("標題缺 [緊急]/[重要]/[優先]/[一般]")
@@ -71,8 +144,10 @@ lint_text() { # $1=標籤 $2=標題 $3=內文
     local joined=""
     for m in "${missing[@]}"; do joined="${joined}${joined:+ · }${m}"; done
     echo "⚠️ $1 缺:${joined}"
+    lint_deep "$1" "$2" "$3" || true   # 五件都沒齊時第三層只印,⛔ 不重複算一次紅
     return 1
   fi
+  lint_deep "$1" "$2" "$3" || return 1
   return 0
 }
 

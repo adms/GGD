@@ -27,8 +27,13 @@
  *   ② `readPixels` 讀到上一幀 —— 先 render ×2 再讀；
  *   ③ 材質沒 ready 時 render 靜默跳過 mesh —— 量已知亮的 control 前先
  *      `forceCompilationAsync`。
- *   ⇒ 頁面載入時 `calibrate()` 先量一次已知會亮的 quad；它失敗 ⇒ 這一頁之後
- *      量到的每一個「看不見」都不可信。
+ *   ④ ⭐ **分頁被隱藏 ⇒ `requestAnimationFrame` 整個不跑**（2026-08-27 lane LAG 量到
+ *      12 秒 0 幀）—— 而「0 幀」與「這個特效不會動」量起來一模一樣；
+ *   ⑤ ⭐ **縮視窗之後 canvas 的背後緩衝沒跟著變**（同上）—— 於是 `readPixels` 讀的是
+ *      一塊與畫面對不起來的舊尺寸緩衝。
+ *   ⇒ 頁面載入時 `calibrate()` 量**兩個方向**（見 `auditionCalibrate.ts`）：
+ *      已知**亮** ⇒ 量得到；把它拿掉 ⇒ 量到的**嚴格變少**。
+ *      ⛔ 只驗前者的尺不算自證過 —— 一支永遠回大數字的壞尺會通過它（GH#768）。
  */
 import { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
@@ -40,6 +45,7 @@ import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
 import { Texture } from "@babylonjs/core/Materials/Textures/texture";
 import { setStockGlowAdditive } from "../render/modelFxRig";
+import { calibrateTwoWay } from "./auditionCalibrate";
 
 /** 敵人沿施放方向（+x）排成一直線的偏移。 */
 const ENEMY_LINE: readonly { x: number; z: number }[] = [
@@ -332,31 +338,28 @@ export async function startBeamAudition(
     return { w, h, ...countBright(buf) };
   };
 
-  const calibrate = async (): Promise<number> => {
-    const quad = MeshBuilder.CreatePlane("calib-quad", { size: 4 }, scene);
-    const qm = new StandardMaterial("calib-mat", scene);
-    qm.emissiveColor = new Color3(1, 1, 1);
-    qm.disableLighting = true;
-    quad.material = qm;
-    quad.parent = camera;
-    quad.position.set(0, 0, 5);
-    try {
-      // ⚠️ 坑③：材質沒 ready 時 render 靜默跳過 mesh ⇒ 先等編譯完成再量。
-      await qm.forceCompilationAsync(quad);
-      const m = await measure();
-      if (m.bright <= 0) {
-        throw new Error(
-          `calibrate(): 全亮 quad 在 ${m.w}×${m.h} 的畫面上量到 0 個亮像素 —— ` +
-            "量尺本身壞了。這一頁之後量到的任何「看不見」都不可信，先修台子。",
-        );
-      }
-      return m.bright;
-    } finally {
-      quad.dispose();
-      qm.dispose();
-      scene.render(); // 移除 quad 之後畫回來，⛔ 不讓校準圖殘留進截圖
-    }
-  };
+  /**
+   * ⭐ GH#768 —— 校準走 `calibrateTwoWay`（唯一住處），而且**兩把尺都要驗**。
+   *
+   * ⚠️⚠️ 在此之前這裡只跑 `measure()`（非同步的 `engine.readPixels`），
+   * 而 `probeDocs()` 出的每一份讀數用的是 `readRaw()`（同步的 `gl.readPixels`）
+   * ⇒ ⛔ **真正在出讀數的那把尺從來沒有被校準過**。
+   * 一把沒被校準的尺量到 0，與「這份文件是空的」長得一模一樣。
+   */
+  const calibrate = (): Promise<number> =>
+    calibrateTwoWay({
+      scene,
+      camera,
+      rulers: {
+        // 尺 A：`measure()` —— A/B 亮像素比較用的那把
+        "engine.readPixels": () => measure(),
+        // 尺 B：`readRaw()` —— ⭐ `probeDocs()` 每一份 vfx@1 文件的讀數用的那把
+        "gl.readPixels": () => {
+          const r = readRaw();
+          return { w: r.w, h: r.h, ...countBright(r.buf) };
+        },
+      },
+    });
 
   /**
    * render ×2 → **同步** GL readback（坑②：不 render 兩次會讀到上一幀）。
