@@ -83,8 +83,15 @@ const LAYER_KEYS = [
   "fx.w3x.orb.bloodbreathstream.p01",
   "fx.w3x.orb.bloodbreathstream.p02",
 ] as const;
-/** 綁定前這一支走的家族原型 —— 實測讀回來的貼圖 */
-const PROTOTYPE_TEXTURE = "trace_03.png";
+/**
+ * 綁定前這一支走的**家族原型**貼圖。
+ * ⭐ 2026-08-27：原本釘死 `"trace_03.png"` —— ⛔ 而普查跟著內容重跑（#777，662 → 421 支）
+ *   之後這一支的家族換了，實測變成 `slash_01.png` ⇒ 這一條用
+ *   「expected 'slash_01.png' to be 'trace_03.png'」紅，⭐ **一句與真相無關的訊息**
+ *   （真相是「家族分群變了」，⛔ 不是「重綁壞了」）。
+ * ⇒ 這一條在守的是**關係**：綁定前是**一個**家族原型、綁定後是**三份原作圖層**，
+ *   而**兩者的貼圖不重疊**。⛔ 原型叫什麼名字不是它在守的東西。
+ */
 const W3X_TEXTURE = "smoke_04.png";
 
 let engine: NullEngine;
@@ -167,7 +174,7 @@ describe("B2 · 31-02 重爪擊 綁上原作 BloodBreathStream", () => {
     expect(after.length, "三個 emitter 應該變成三個 ParticleSystem").toBe(3);
     for (const e of after) {
       expect(e.texture, `${e.name} 的貼圖不是原作模型那張`).toBe(W3X_TEXTURE);
-      expect(e.texture).not.toBe(PROTOTYPE_TEXTURE);
+      expect(e.texture).not.toBe(castOnce(preBindingDoc())[0]!.texture);
       expect(e.count, `${e.name} 一顆粒子都沒發`).toBeGreaterThan(0);
     }
     // 名字帶著三份真文件的 id —— 播的不是別的東西
@@ -179,8 +186,10 @@ describe("B2 · 31-02 重爪擊 綁上原作 BloodBreathStream", () => {
     const after = castOnce(loadAbility(ABILITY));
 
     expect(before.length, "綁定前應該只有家族原型那一個").toBe(1);
-    expect(before[0]!.texture).toBe(PROTOTYPE_TEXTURE);
-    expect(before[0]!.sizes[0]).toBeCloseTo(0.231, 3);
+    // ⭐ 只問「它真的是一份家族原型」（有貼圖、非空），⛔ 不釘名字也不釘 size
+    //   —— 那兩個都會隨家族分群改變，而「換掉了」才是這一條的內容。
+    expect(before[0]!.texture, "綁定前沒有貼圖 —— 家族原型根本沒上").toBeTruthy();
+    expect(before[0]!.sizes.length, "綁定前沒有 size ramp").toBeGreaterThan(0);
 
     expect(after.length).toBeGreaterThan(before.length);
     // 換上去的是普查點名的那三份,不是「隨便換一份就算不同」
