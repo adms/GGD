@@ -66,7 +66,7 @@ const hexToRgb255 = (h: string): [number, number, number] => {
 interface FieldSpec {
   key: string;
   label: string;
-  kind: "range" | "select" | "text" | "color";
+  kind: "range" | "select" | "text" | "color" | "heightCurve";
   min?: number;
   max?: number;
   step?: number;
@@ -95,6 +95,9 @@ const FIELDS: Record<VfxScriptSegment["kind"], FieldSpec[]> = {
     { key: "tint", label: "顏色", kind: "color" },
     { key: "yawOffsetDeg", label: "轉向 °", kind: "range", min: -180, max: 180, step: 1, clearAt: 0 },
     { key: "heightU", label: "高度 u", kind: "range", min: 0, max: 20, step: 0.1, clearAt: 0 },
+    // ⭐ 升空曲線：三個 slider（升到多高／何時到頂／何時落地）組成 heightKeys ——
+    //    ⛔ 不讓作者手打陣列（那不是「人類友善」，而且順序打錯 schema 才擋得到）。
+    { key: "heightKeys", label: "升空曲線", kind: "heightCurve" },
     { key: "offsetForwardU", label: "前後 u", kind: "range", min: -15, max: 15, step: 0.1, clearAt: 0 },
     { key: "offsetSideU", label: "左右 u", kind: "range", min: -15, max: 15, step: 0.1, clearAt: 0 },
     { key: "lifeSec", label: "存活 s", kind: "range", min: 0.1, max: 10, step: 0.1, show: (s) => s.path === "static" || s.path === "orbit" },
@@ -402,6 +405,67 @@ const engine = new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: 
         };
         row.appendChild(sel);
         row.appendChild(document.createElement("span"));
+      } else if (f.kind === "heightCurve") {
+        // ⭐ 三個 slider → [{t:0,h:0},{t:peak,h:H},{t:peak+hold,h:H},{t:land,h:0}]
+        //    「升上去 → 停一下 → 掉下來」，正是 JASS SetUnitFlyHeightBJ 的節拍。
+        const cur3 = Array.isArray(cur) ? (cur as { t: number; h: number }[]) : null;
+        const peakH = cur3 ? Math.max(...cur3.map((k) => k.h)) : 0;
+        const peakT = cur3 ? (cur3.find((k) => k.h === peakH)?.t ?? 0.4) : 0.4;
+        const landT = cur3 ? (cur3[cur3.length - 1]?.t ?? 1.1) : 1.1;
+        const wrap = document.createElement("div");
+        wrap.style.gridColumn = "2 / span 2";
+        const mk3 = (lab: string, v: number, min: number, max: number, step: number,
+                     onSet: (n: number) => void): void => {
+          const row = document.createElement("div");
+          row.style.cssText = "display:grid;grid-template-columns:64px 1fr 44px;gap:4px;align-items:center";
+          const l = document.createElement("label");
+          l.textContent = lab;
+          l.style.cssText = "color:var(--dim);font-size:11px";
+          const inp = document.createElement("input");
+          inp.type = "range";
+          inp.min = String(min);
+          inp.max = String(max);
+          inp.step = String(step);
+          inp.value = String(v);
+          const out = document.createElement("span");
+          out.className = "val";
+          out.textContent = String(v);
+          inp.oninput = () => {
+            out.textContent = inp.value;
+            onSet(Number(inp.value));
+          };
+          row.append(l, inp, out);
+          wrap.appendChild(row);
+        };
+        let H = peakH;
+        let P = peakT;
+        let L = landT;
+        const rebuild = (): void => {
+          if (H <= 0) {
+            commit(undefined); // 高度 0 ＝ 沒有升空（清掉欄位）
+            return;
+          }
+          const hold = Math.max(0.05, (L - P) * 0.4);
+          commit([
+            { t: 0, h: 0 },
+            { t: Math.round(P * 100) / 100, h: Math.round(H * 10) / 10 },
+            { t: Math.round((P + hold) * 100) / 100, h: Math.round(H * 10) / 10 },
+            { t: Math.round(Math.max(P + hold + 0.05, L) * 100) / 100, h: 0 },
+          ]);
+        };
+        mk3("升到多高", H, 0, 25, 0.1, (n) => {
+          H = n;
+          rebuild();
+        });
+        mk3("何時到頂 s", P, 0.05, 5, 0.05, (n) => {
+          P = n;
+          rebuild();
+        });
+        mk3("何時落地 s", L, 0.1, 8, 0.05, (n) => {
+          L = n;
+          rebuild();
+        });
+        row.appendChild(wrap);
       } else if (f.kind === "color") {
         const input = document.createElement("input");
         input.type = "color";
