@@ -55,6 +55,10 @@ export function pendingDigest(repoRoot = REPO, limit = 10) {
     "## 🧑‍⚖️ 一頁批次後台驗收 —— ⭐ 等你裁決",
     "",
     `**待裁決 ${pending.length} 批**` +
+      (q.counts?.evidenceStale > 0 ? ` · ⚠️ **${q.counts.evidenceStale} 批的證據比修復早**` : "") +
+      (q.counts?.evidenceUndeterminable > 0
+        ? ` · ℹ️ ${q.counts.evidenceUndeterminable} 批判不了（報告沒寫拍於哪個 HEAD，⛔ 補不回來）`
+        : "") +
       (flagged.length > 0 ? ` · ⚠️ **其中 ${flagged.length} 批自己承認有問題（已置頂）**` : "") +
       (unreg.length > 0 ? ` · ⛔ 未登記 ${unreg.length} 批（沒有 rollback 開關）` : ""),
     "",

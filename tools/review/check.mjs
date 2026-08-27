@@ -60,6 +60,15 @@ for (const b of fq.batches) {
   if (b.blockers.length === 0) continue;
   console.log(`  · ${b.status} ${b.id} —— ${b.blockers.join("；")}`);
 }
+// ⭐ GH#795 Scope④ —— 「判不了」要是一個**看得見的數字**，⛔ 不是沉默。
+if (fq.counts.evidenceUndeterminable > 0 || fq.counts.evidenceStale > 0) {
+  console.log(
+    `  📅 證據時間身分：⚠️ 比修復早 ${fq.counts.evidenceStale} 批 · ` +
+      `ℹ️ 判不了 ${fq.counts.evidenceUndeterminable} 批（報告沒寫拍於哪個 HEAD）\n` +
+      "     ⛔ 判不了的那些**補不回來** —— 捕捉發生在工作樹上，git 只給得出上界。\n" +
+      "     ⭐ 往後的報告會自動蓋 HEAD（`bash scripts/visual-proof.sh --new`）。",
+  );
+}
 console.log("  功能審查頁：http://localhost:39527/feature-review.html");
 
 // ── 🔐 分署閘（GH#794，硬擋）────────────────────────────────────────────

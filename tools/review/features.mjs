@@ -271,7 +271,19 @@ export function evidenceOrder(repoRoot, evidenceSha, fixSha) {
 export function buildFeatureQueue(repoRoot) {
   const ledger = loadFeatureLedger(repoRoot);
   const batches = [];
-  const counts = { total: 0, pending: 0, confirmed: 0, vetoed: 0, unregistered: 0, invalid: 0 };
+  // ⭐ GH#795 Scope④ —— 「證據是不是比修復早」**判不了**的批次要有一個**看得見的數字**。
+  //    ⛔ 原本的 Scope④ 寫「回頭補那 23 份的 HEAD」——⭐ 那做不到，而且做了就是
+  //    **捏造證據**：捕捉發生在工作樹上，git 只給得出「它在哪個 commit 被 commit」
+  //    這個**上界**，⛔ 不是拍攝當下的 HEAD。
+  //    ⇒ 誠實的做法是把「判不了」**數出來**：一個沉默的 23 與一個寫著 23 的欄位，
+  //      對讀的人是兩件完全不同的事。
+  const counts = {
+    total: 0, pending: 0, confirmed: 0, vetoed: 0, unregistered: 0, invalid: 0,
+    /** 報告沒寫自己拍於哪個 HEAD ⇒ 這一批的證據新舊**永遠判不出來**。 */
+    evidenceUndeterminable: 0,
+    /** ⚠️ 報告自報的 HEAD 是修復 commit 的祖先 ⇒ 證據**比修復早**。 */
+    evidenceStale: 0,
+  };
   for (const seq of scanSequences(repoRoot)) {
     counts.total++;
     const reg = ledger.batches[seq.id];
@@ -298,6 +310,8 @@ export function buildFeatureQueue(repoRoot) {
     if (reg.verdict != null && !fresh) notes.push("⚠️ 序列已重渲染（hash 漂）—— 先前的裁決過期，請重看");
     // 📅 GH#795：證據**比它要驗的修復更早** ⇒ 那份報告驗的是舊的東西。
     const order = evidenceOrder(repoRoot, seq.evidenceHead, reg.commit);
+    if (seq.evidenceHead === null) counts.evidenceUndeterminable++;
+    if (order === "before") counts.evidenceStale++;
     if (order === "before")
       notes.push(
         `⚠️⚠️ **證據比修復早**：報告在 ${seq.evidenceHead} 拍的，而登記的修復是 ${reg.commit} —— ` +
