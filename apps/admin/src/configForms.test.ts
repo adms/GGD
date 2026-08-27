@@ -160,7 +160,41 @@ describe("設定文件標籤表 (adminui-config-forms-labels)", () => {
           expect(t.value!.options.length).toBeGreaterThan(1);
           for (const o of t.value!.options) expect(HAS_CJK.test(o.zh)).toBe(true);
         } else {
-          expect(t.value, `${spec.docId}.${t.path} 是 stringList，不該有值那一欄`).toBeUndefined();
+          expect(
+            t.value,
+            `${spec.docId}.${t.path} 不是 recordEnum，不該有值那一欄`,
+          ).toBeUndefined();
+        }
+        // ⭐ `recordScalars`（GH#806）的一列是**一個 entry 模板 × N 欄**，所以那幾欄
+        // 要吃和純量欄位一模一樣的規則 —— ⛔ 表格不是逃過「每一格都要有人話與上界」
+        // 的漏洞。少了這一段，232 顆 SFX 會變成 696 個沒有說明、沒有上界的輸入框。
+        if (t.shape === "recordScalars") {
+          expect(t.columns?.length, `${spec.docId}.${t.path} 是 recordScalars 但沒有欄`)
+            .toBeGreaterThan(0);
+          for (const c of t.columns ?? []) {
+            expect(HAS_CJK.test(c.zh), `${spec.docId}.${t.path}.${c.field} 的名稱不是中文`).toBe(true);
+            expect(
+              c.note.length,
+              `${spec.docId}.${t.path}.${c.field} 的說明太短，講不完它影響什麼`,
+            ).toBeGreaterThan(30);
+            expect(HAS_CJK.test(c.note)).toBe(true);
+            // #277：上界不是只有下界。number/int 要 max，text 要 maxLen。
+            if (c.kind === "number" || c.kind === "int") {
+              expect(
+                Number.isFinite(c.max),
+                `${spec.docId}.${t.path}.${c.field} 是數字但沒有上界`,
+              ).toBe(true);
+              expect(Number.isFinite(c.min)).toBe(true);
+            }
+            if (c.kind === "text") {
+              expect(
+                Number.isFinite(c.maxLen),
+                `${spec.docId}.${t.path}.${c.field} 是文字但沒有字數上界`,
+              ).toBe(true);
+            }
+          }
+        } else {
+          expect(t.columns, `${spec.docId}.${t.path} 不是 recordScalars，不該有欄`).toBeUndefined();
         }
       }
     }

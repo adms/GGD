@@ -351,13 +351,6 @@ export const CONFIG_DOC_EXEMPTIONS: readonly ConfigDocExemption[] = [
 
   // ── ④ KNOWN_GAP：確認是缺口，只是還沒做。這是帳單不是免死金牌 ───────────
   {
-    docId: "audio-map",
-    kind: "KNOWN_GAP",
-    issue: "#87 / #109 / #134 / #190 都是 owner 親自調音量與選曲的紀錄",
-    why: "12 個 BGM 場景 + 147 個 SFX key，每一格都是真的執行期播放參數（bgm 的 gain/loop、sfx 的 gain/cooldownMs/maxConcurrent），消費端是 apps/client/src/audio/AudioSystem.ts。今天調一格 gain 要編 repo + content deploy。⚠️ 它的形狀不適合通用長表單（147 × 3 格），該是一頁混音表（每列一個 key、gain 滑桿 + 試聽），所以不是「順手註冊一個 spec」就能收掉的。",
-    expiresWhen: "那一頁做出來（或 owner 明說音量不必後台調）的那一天。做出來之後這一列會**被守衛強迫刪掉** —— 同時在註冊表與豁免表上是紅的。",
-  },
-  {
     docId: "origin-routes",
     kind: "KNOWN_GAP",
     issue: "owner 2026-08-12 指名要一頁「新英雄轉生設計」，這一份是它的資料基礎",
@@ -428,9 +421,10 @@ export interface CoverageVerdict {
 /**
  * 每一份文件的去向。
  *
- * `duplicated` 是**讓豁免自己到期**的那個機制：`audio-map` 的頁做出來、spec 被
- * 註冊進 `CONFIG_DOC_SPECS` 的那一刻，那一列 KNOWN_GAP 就從「帳單」變成「謊言」，
- * 而這條守衛會紅，逼人把它刪掉。
+ * `duplicated` 是**讓豁免自己到期**的那個機制。⭐ 2026-08-27（GH#806）它真的
+ * 發生了一次：`audio-map` 的頁做出來、`AUDIO_MAP_SPEC` 被註冊進 `CONFIG_DOC_SPECS`
+ * 的那一刻，那一列 KNOWN_GAP 就從「帳單」變成「謊言」，而這條守衛紅了，逼人把它
+ * 刪掉 —— ⛔ 這正是設計，⛔ 不是一次要繞過的紅燈。
  */
 export function coverageVerdict(
   scanned: readonly ScannedConfigDoc[],

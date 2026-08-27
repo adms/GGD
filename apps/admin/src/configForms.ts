@@ -83,6 +83,7 @@ import { AUDIO_MIX_SPEC, GAMEPAD_SPEC, ICON_STYLE_SPEC, PRACTICE_SPEC, RANKING_S
 import { DISPLACEMENT_TIERS_SPEC, RANGE_GUIDE_SPEC, TOGGLE_ABILITY_SPEC, UI_LEXICON_SPEC } from "./configForms/specs/ui";
 import { ARENA_RULES_SPEC } from "./configForms/specs/arenaRules";
 import { ADMIN_FRIEND_SPEC, CAST_APPROACH_SPEC, LOBBY_RALLY_SPEC, UI_CUES_SPEC } from "./configForms/specs/lobby";
+import { AUDIO_MAP_SPEC } from "./configForms/specs/audio";
 
 /**
  * 有序註冊表。⭐ **`as const` 是承重的**（GH#807）：少了它，元素型別會被壓成
@@ -105,6 +106,13 @@ export const CONFIG_DOC_SPECS = [
   // store.ts 的 `Page` union + `SESSION_REQUIRED_PAGES`、App.tsx 的導覽列與路由、
   // 以及 `content/config/audio-mix.json` 出貨檔（三者都不在這條 lane 手上）。
   AUDIO_MIX_SPEC,
+  // 🔊 音訊對照表（GH#806）—— 緊接在 混音 後面是刻意的：那一頁調的是**匯流排**
+  // （「不是我」那一整族整體壓多少），這一頁調的是**逐一顆音**（哪一首、哪一顆、
+  // 多大聲、多密集）。操作者要調音量的時候會先想到其中一個，兩頁相鄰他就不會找錯。
+  // ⚠️ 這一列讓 `configDocCoverage.ts` 的 `audio-map` KNOWN_GAP 那一列**必須**刪掉
+  //（同時在註冊表與豁免表上會被 `verdict.duplicated` 抓到）—— ⭐ 那是這張表最健康
+  // 的移動方向：帳單被付掉，總列數變少。
+  AUDIO_MAP_SPEC,
   // 練習模式（GH#343，owner 2026-08-17）。⚠️ 同 AUDIO_MIX_SPEC 那一段：這一列要跟
   // store.ts 的 `Page` union / App.tsx 的導覽列一起才到得了操作者手上，那兩個檔
   // 不在這條 lane 手上（見 needsFromIntegrator）。

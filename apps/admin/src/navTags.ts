@@ -208,6 +208,7 @@ export const NAV_TAGS: Record<string, readonly NavTag[]> = {
   uiCues: ["演出", "可調"], // 事情發生了畫面有沒有說出來
   worldCues: ["演出", "可調"], // 世界裡那一團，不是螢幕那一層
   audioMix: ["音效", "可調"], // 其他角色語音是自己的一半
+  audioMap: ["音效", "可調"], // 逐一顆音：哪一首、哪一顆、多大聲、多密集（GH#806）
   practice: ["規則", "可調"], // 練習模式的六格行為
   lobbyRally: ["營運", "可調"], // 大廳集合令（比賽外的流程）
   gamepad: ["規則", "可調"], // 死區/前導距離＝輸入判定

@@ -18,7 +18,7 @@
  *    之後玩家要重新整理頁面才拿得到。寫成「下一場生效」是 #278 那個形態：
  *    操作者照著做，然後以為功能壞了。
  */
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { Fragment, type ReactNode, useEffect, useMemo, useState } from "react";
 import { Panel, Btn } from "./widgets";
 import { ACCENT, DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
 import { getOverlayDoc, getShippedDoc, putOverlayDoc } from "../api";
@@ -46,6 +46,7 @@ import {
   addTableRow,
   removeTableRow,
   setTableCell,
+  setTableColumnCell,
   tableDirty,
   tableRowsFrom,
   validateTable,
@@ -161,7 +162,10 @@ export function ConfigDocPage(props: { spec: ConfigDocSpec }): JSX.Element {
       (spec.tables ?? []).map((t) => ({
         spec: t,
         rows: tableRows[t.path] ?? null,
-        verdict: validateTable(tableRows[t.path] ?? [], t),
+        // ⭐ `base` 是**承重**的（GH#806）：`recordScalars` 的存檔值是逐鍵
+        // **合併**回基底那一份，⛔ 不是覆蓋。少了它，`sfx.*.files` 與任何一個
+        // 這一頁沒有畫的子鍵會在下一次儲存裡整批消失。
+        verdict: validateTable(tableRows[t.path] ?? [], t, base),
         dirty: tableDirty(tableRows[t.path] ?? null, base, t),
       })),
     [spec.tables, tableRows, base],
@@ -427,6 +431,21 @@ function DocTable(props: {
   const { spec, rows, setRows } = props;
   const verdict = useMemo(() => validateTable(rows ?? [], spec), [rows, spec]);
   const live = rows ?? [];
+  const cols = spec.columns ?? [];
+  /**
+   * ⭐ 搜尋（GH#806）。232 列的 SFX 表沒有搜尋，操作者**找不到**他要調的那一列 ——
+   * 而「找不到」與「這一頁不存在」對他來說是同一件事（票的 Known risk 逐字）。
+   *
+   * ⚠️ 它只影響**畫出哪幾列**，⛔ 不影響存檔：`setRows` 拿到的永遠是完整的 `live`
+   * 陣列（下面每一個 handler 都用 `live` 的真實索引）。少了這一條，一個過濾中的
+   * 存檔會把沒被畫出來的 200 列一起丟掉，而畫面上完全正常。
+   */
+  const [filter, setFilter] = useState("");
+  const showFilter = (spec.filterAfter ?? 0) > 0 && live.length > (spec.filterAfter ?? 0);
+  const needle = filter.trim().toLowerCase();
+  const visible = live
+    .map((r, i) => ({ r, i }))
+    .filter(({ r }) => needle === "" || r.key.toLowerCase().includes(needle));
 
   return (
     <div
@@ -456,7 +475,41 @@ function DocTable(props: {
             {spec.value.note}
           </>
         )}
+        {cols.map((c) => (
+          <Fragment key={c.field}>
+            <br />
+            <b style={{ color: TEXT_MAIN }}>{c.zh}</b>
+            <code style={{ fontSize: 10, marginLeft: 4 }}>{c.field}</code>
+            {c.optional ? "（留白 = 不覆蓋，走消費端的預設）" : ""}　{c.note}
+          </Fragment>
+        ))}
       </div>
+
+      {showFilter && (
+        <div style={{ display: "flex", gap: 8, alignItems: "center", margin: "0 0 10px" }}>
+          <input
+            aria-label={`搜尋 ${spec.key.zh}`}
+            data-field={`table-filter.${spec.path}`}
+            value={filter}
+            placeholder={`搜尋${spec.key.zh}⋯`}
+            onChange={(e) => setFilter(e.target.value)}
+            style={{
+              width: 260,
+              padding: "5px 8px",
+              background: "#10141f",
+              color: TEXT_MAIN,
+              border: `1px solid ${PANEL_BORDER}`,
+              borderRadius: 4,
+              fontSize: 13,
+            }}
+          />
+          <span style={{ color: TEXT_DIM, fontSize: 11 }}>
+            {needle === ""
+              ? `${live.length} 列`
+              : `${visible.length} / ${live.length} 列 —— ⚠️ 過濾只影響畫面，存檔寫的是全部 ${live.length} 列`}
+          </span>
+        </div>
+      )}
 
       {live.length === 0 ? (
         <div data-field={`table-empty.${spec.path}`} style={{ color: TEXT_DIM, fontSize: 12 }}>
@@ -466,7 +519,7 @@ function DocTable(props: {
         </div>
       ) : (
         <div style={{ display: "grid", gap: 6 }}>
-          {live.map((r, i) => {
+          {visible.map(({ r, i }) => {
             const err = verdict.rows[i] ?? {};
             return (
               <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
@@ -478,12 +531,18 @@ function DocTable(props: {
                     aria-label={`第 ${i + 1} 列 ${spec.key.zh}`}
                     data-field={`table.${spec.path}.${i}.key`}
                     value={r.key}
+                    readOnly={spec.keysFixed === true}
+                    title={
+                      spec.keysFixed === true
+                        ? "這一欄的鍵由內容作者決定（改了就對不到消費端）—— 這一頁只調它的值"
+                        : undefined
+                    }
                     onChange={(e) => setRows(setTableCell(live, i, "key", e.target.value))}
                     style={{
                       width: 240,
                       padding: "5px 8px",
-                      background: "#10141f",
-                      color: err.key ? DANGER : TEXT_MAIN,
+                      background: spec.keysFixed === true ? "#0b0e16" : "#10141f",
+                      color: err.key ? DANGER : spec.keysFixed === true ? TEXT_DIM : TEXT_MAIN,
                       border: `1px solid ${err.key ? DANGER : PANEL_BORDER}`,
                       borderRadius: 4,
                       fontSize: 13,
@@ -491,6 +550,58 @@ function DocTable(props: {
                   />
                   {err.key && <span style={{ color: DANGER, fontSize: 11 }}>{err.key}</span>}
                 </span>
+                {cols.map((c) => (
+                  <span
+                    key={c.field}
+                    style={{ display: "inline-flex", flexDirection: "column", gap: 3 }}
+                  >
+                    {c.kind === "boolean" ? (
+                      <select
+                        aria-label={`第 ${i + 1} 列 ${c.zh}`}
+                        data-field={`table.${spec.path}.${i}.${c.field}`}
+                        value={r.cells?.[c.field] ?? ""}
+                        onChange={(e) =>
+                          setRows(setTableColumnCell(live, i, c.field, e.target.value))
+                        }
+                        style={{
+                          width: c.width ?? 110,
+                          padding: "5px 8px",
+                          background: "#10141f",
+                          color: err[c.field] ? DANGER : TEXT_MAIN,
+                          border: `1px solid ${err[c.field] ? DANGER : PANEL_BORDER}`,
+                          borderRadius: 4,
+                          fontSize: 13,
+                        }}
+                      >
+                        {c.optional && <option value="">（不覆蓋）</option>}
+                        <option value="true">開</option>
+                        <option value="false">關</option>
+                      </select>
+                    ) : (
+                      <input
+                        aria-label={`第 ${i + 1} 列 ${c.zh}`}
+                        data-field={`table.${spec.path}.${i}.${c.field}`}
+                        value={r.cells?.[c.field] ?? ""}
+                        placeholder={c.optional ? "（不覆蓋）" : c.zh}
+                        onChange={(e) =>
+                          setRows(setTableColumnCell(live, i, c.field, e.target.value))
+                        }
+                        style={{
+                          width: c.width ?? (c.kind === "text" ? 300 : 100),
+                          padding: "5px 8px",
+                          background: "#10141f",
+                          color: err[c.field] ? DANGER : TEXT_MAIN,
+                          border: `1px solid ${err[c.field] ? DANGER : PANEL_BORDER}`,
+                          borderRadius: 4,
+                          fontSize: 13,
+                        }}
+                      />
+                    )}
+                    {err[c.field] && (
+                      <span style={{ color: DANGER, fontSize: 11 }}>{err[c.field]}</span>
+                    )}
+                  </span>
+                ))}
                 {spec.value && (
                   <span style={{ display: "inline-flex", flexDirection: "column", gap: 3 }}>
                     <select
@@ -517,20 +628,22 @@ function DocTable(props: {
                     {err.value && <span style={{ color: DANGER, fontSize: 11 }}>{err.value}</span>}
                   </span>
                 )}
-                <Btn
-                  small
-                  kind="danger"
-                  dataField={`table.${spec.path}.remove.${i}`}
-                  disabled={live.length <= spec.minRows}
-                  title={
-                    live.length <= spec.minRows
-                      ? `已經只剩 ${spec.minRows} 列 —— 再刪這張表就不成立了`
-                      : "刪掉這一列"
-                  }
-                  onClick={() => setRows(removeTableRow(live, i))}
-                >
-                  刪除
-                </Btn>
+                {spec.keysFixed !== true && (
+                  <Btn
+                    small
+                    kind="danger"
+                    dataField={`table.${spec.path}.remove.${i}`}
+                    disabled={live.length <= spec.minRows}
+                    title={
+                      live.length <= spec.minRows
+                        ? `已經只剩 ${spec.minRows} 列 —— 再刪這張表就不成立了`
+                        : "刪掉這一列"
+                    }
+                    onClick={() => setRows(removeTableRow(live, i))}
+                  >
+                    刪除
+                  </Btn>
+                )}
               </div>
             );
           })}
@@ -538,17 +651,26 @@ function DocTable(props: {
       )}
 
       <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 10 }}>
-        <Btn
-          small
-          dataField={`table.${spec.path}.add`}
-          disabled={live.length >= spec.maxRows}
-          title={
-            live.length >= spec.maxRows ? `最多 ${spec.maxRows} 列` : "加一列（填上去才存得出去）"
-          }
-          onClick={() => setRows(addTableRow(live, spec))}
-        >
-          ＋ 新增一列
-        </Btn>
+        {spec.keysFixed === true ? (
+          // ⛔ 這一族**不開放加/刪列**：鍵的集合是內容作者的決定。對 `sfx` 這是
+          // 功能性的 —— 一個新的事件名要先有音檔（`files` 必填 min(1)），後台加一列
+          // 空的只會讓整份文件被 loader 丟掉，而畫面上會說「✓ 已寫入」。
+          <span style={{ color: TEXT_DIM, fontSize: 11 }}>
+            🔒 這張表只調既有列的值 —— 加一列要先有音檔（走內容編輯器）
+          </span>
+        ) : (
+          <Btn
+            small
+            dataField={`table.${spec.path}.add`}
+            disabled={live.length >= spec.maxRows}
+            title={
+              live.length >= spec.maxRows ? `最多 ${spec.maxRows} 列` : "加一列（填上去才存得出去）"
+            }
+            onClick={() => setRows(addTableRow(live, spec))}
+          >
+            ＋ 新增一列
+          </Btn>
+        )}
         <span style={{ color: TEXT_DIM, fontSize: 11 }}>目前 {live.length} 列</span>
         {verdict.table && (
           <span data-field={`table-error.${spec.path}`} style={{ color: DANGER, fontSize: 12 }}>

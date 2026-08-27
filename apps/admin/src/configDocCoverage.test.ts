@@ -186,7 +186,10 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // 2026-08-22（同日稍晚）：29 → 29。⚠️ **總數不動不代表沒事** —— 這一次是一次
     // **交換**：`toggle-ability` 的 KNOWN_GAP 被付掉（走進通用引擎），而
     // `screen-fx`（GH#549）以 DEFERRED 進場。逐類的那三行才看得出方向。
-    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(29); // 2026-08-22：25 → 27（#529 ability-vfx-bindings · #541 combo-strikes，兩份都是產生器擁有的推導表）
+    // 2026-08-27（GH#806）：29 → 28。`audio-map` 的 KNOWN_GAP 被付掉 —— ⭐ 而它是被
+    // **引擎**付掉的（`configTables.ts` 長出 `recordScalars`），⛔ 不是手刻一頁。
+    // ⭐ 總列數變少 = 這張表最健康的移動方向。
+    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(28); // 2026-08-22：25 → 27（#529 ability-vfx-bindings · #541 combo-strikes，兩份都是產生器擁有的推導表）
     // 2026-08-17：13 → 14。`roster`（英雄上下架）**往下走了一格** —— 它從
     // KNOWN_GAP 變成 OWN_PAGE，因為 ui/RosterPage.tsx 做出來了。⚠️ 這是這張表
     // 唯一「健康」的移動方向：帳單被付掉，而總列數不變。
@@ -234,9 +237,13 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // ⭐ 這是這張表最健康的移動方向（帳單被付掉，總列數變少）。
     // 2026-08-27：4 → 3。`per-level-bonus` 的帳單付掉了 —— owner 撞到「這頁無法顯示」
     // 之後開了 ui/PerLevelBonusPage.tsx（GH#790），它移到 OWN_PAGE，⛔ 不是被免掉。
+    // 2026-08-27（GH#806）：3 → 2。`audio-map` 的帳單付掉了 —— ⭐ 而它是被**引擎**
+    // 付掉的，⛔ 不是手刻一頁：`configTables.ts` 長出 `recordScalars`（一個 entry
+    // 模板 × N 列）之後，那句「它的形狀不適合通用長表單（N × 3 格）」就不再成立。
+    // ⇒ 剩下兩列都是 `z.record` 的**巢狀**缺口（bindings 底下還有三個形狀不同的
+    // 子物件 / 110 個文案葉節點），⛔ 不是同一個病。
     expect(byKind("KNOWN_GAP").map((e) => e.docId)).toEqual([
       "vfx-ability-art",
-      "audio-map",
       "origin-routes",
     ]);
   });

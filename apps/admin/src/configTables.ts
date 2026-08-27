@@ -36,10 +36,57 @@
  * 和 `configCurve.ts` / `vfxLayers.ts` 同一個分工。規則寫進元件就沒有人測得到，
  * 而這張表最容易錯的是「這一列永遠不會命中」，不是排版。
  */
-import { getAtPath } from "./configFields";
+import { getAtPath, validateNumeric } from "./configFields";
 
-/** 表的形狀。**只有這兩種** —— 第三種要先想清楚它的錯誤形態長什麼樣。 */
-export type ConfigTableShape = "recordEnum" | "stringList";
+/**
+ * 表的形狀。
+ *
+ * ⭐ 第三種 `recordScalars` 是 GH#806 加的，而它**先想清楚了自己的錯誤形態**
+ * （這一行原本寫著「只有這兩種 —— 第三種要先想清楚它的錯誤形態長什麼樣」）：
+ *
+ * | 錯誤形態 | 為什麼它在別的形狀上不存在 | 擋在哪 |
+ * |---|---|---|
+ * | ⛔ **存檔把沒畫在表上的子鍵洗掉** | 前兩種的值就是一個字串，沒有「其餘欄位」 | `validateTable` 的第三個參數 `base` —— 逐鍵**合併**，⛔ 不是覆蓋 |
+ * | ⛔ **操作者加一列，而那一列缺必填子鍵** | 前兩種加一列只要填一個鍵 | `keysFixed` —— 這一族的鍵**由內容作者決定**（沒有音檔就沒有那個事件），後台只調既有列的值 |
+ * | ⛔ **選填欄位留白被寫成 0** | 前兩種沒有數字 | 留白 ⇒ **刪掉那一格**（走消費端的預設），⛔ 不是 `Number("") === 0` |
+ *
+ * ⚠️ 第一個是這三個裡唯一**畫面上完全看不出來**的：`sfx.basicAttack.files` 被洗掉
+ * 之後 Zod 會擋（`files` 必填 min(1)），但 `gain` 那種選填子鍵被洗掉不會有任何
+ * 錯誤 —— 它只是安靜地退回 1.0，而操作者以為自己只改了 `cooldownMs`。
+ */
+export type ConfigTableShape = "recordEnum" | "stringList" | "recordScalars";
+
+/**
+ * `recordScalars` 的一欄 —— ⭐ **一個 entry 模板**（第零守則⑨：N 個同型 = K 個
+ * 模板 + 一張表）。232 顆 SFX × 3 格 ⛔ 不是 696 個手寫欄位，是 3 欄 × 232 列。
+ */
+export interface ConfigTableColumn {
+  /** entry 裡的子鍵（`gain` / `cooldownMs` / `loop` / `file`） */
+  field: string;
+  zh: string;
+  /** **它影響什麼** —— 不是複述子鍵名 */
+  note: string;
+  kind: "number" | "int" | "boolean" | "text";
+  /** number/int 專用。⭐ 上界是必填的（#277：欄位要有上界，不是只有下界）。 */
+  min?: number;
+  max?: number;
+  /** text 專用；同樣是必填的上界。 */
+  maxLen?: number;
+  /**
+   * text 專用：值的**形狀**（#277 在字串上的形狀）。⛔ 少了它，一條打錯的音檔
+   * 路徑會存得進去、PUT 成功、遊戲**安靜地不播**那一顆音 —— 而畫面上一切正常。
+   */
+  pattern?: RegExp;
+  /** `pattern` 沒過時說的那一句中文（要說得出「那會發生什麼」）。 */
+  patternError?: string;
+  /**
+   * 這一格在 schema 上是 `.optional()`。
+   * ⭐ 留白 ⇒ **從文件裡刪掉這一格**（走消費端的預設），⛔ 不是寫 0 / false。
+   */
+  optional?: boolean;
+  /** 畫面上這一欄多寬（px） */
+  width?: number;
+}
 
 /** 值那一欄的一個選項（`value` 是文件裡的字面值，`zh` 是操作者看到的字）。 */
 export interface ConfigTableOption {
@@ -79,6 +126,24 @@ export interface ConfigTableSpec {
     options: readonly ConfigTableOption[];
   };
   /**
+   * `recordScalars` 專用：一列的每一欄。⚠️ **這裡沒列到的子鍵不會被畫，也不會被
+   * 動** —— 存檔時逐鍵合併回基底那一份（見 {@link validateTable} 的 `base`）。
+   */
+  columns?: readonly ConfigTableColumn[];
+  /**
+   * 鍵的集合是**內容作者的決定**，⛔ 不是操作者的：後台只調既有列的值，不加/刪列。
+   *
+   * ⚠️ 對 `sfx` 這是**功能性的**：一個新的事件名要先有音檔（`files` 是必填
+   * `min(1)`），後台加一列空的只會讓整份文件被 loader 丟掉。
+   */
+  keysFixed?: boolean;
+  /**
+   * 超過這麼多列就在表格上方畫一個搜尋框。0 / 未填 = 不畫。
+   * ⚠️ 這不是美觀：232 列的表沒有搜尋，等於操作者找不到他要調的那一列 ——
+   * 而「找不到」與「沒有這一頁」對他來說是同一件事。
+   */
+  filterAfter?: number;
+  /**
    * 至少幾列。**0 不一定合法** —— `markers` 空掉時客戶端的
    * `applyItemCardDoc` 會整張退回出貨表（刻意的：全部落到 unknownCategory 會讓
    * 卡片變單色，看起來像功能沒做），於是操作者存了一張空表、畫面說已儲存、
@@ -88,14 +153,19 @@ export interface ConfigTableSpec {
   maxRows: number;
 }
 
-/** 畫面上一列的字面內容。`stringList` 只用 `key`。 */
+/** 畫面上一列的字面內容。`stringList` 只用 `key`；`recordScalars` 用 `key` + `cells`。 */
 export interface TableRowDraft {
   key: string;
   value: string;
+  /** `recordScalars` 專用：子鍵 → 畫面上的字面值（留白 = 這一格不寫） */
+  cells?: Record<string, string>;
 }
 
-/** 一列的錯誤；沒有錯的欄位不會出現在這裡。 */
-export type TableRowErrors = Partial<Record<"key" | "value", string>>;
+/**
+ * 一列的錯誤；沒有錯的欄位不會出現在這裡。
+ * `recordScalars` 的每一欄用**子鍵**當索引（`gain` / `cooldownMs`…）。
+ */
+export type TableRowErrors = Partial<Record<string, string>>;
 
 export interface TableVerdict {
   /** 逐列逐欄的拒絕理由 */
@@ -103,13 +173,18 @@ export interface TableVerdict {
   /** 整張表的問題（列數），沒有就是 null */
   table: string | null;
   /** 全部合法時要寫進文件的值；有任何錯誤就是 null */
-  value: Record<string, string> | string[] | null;
+  value: Record<string, unknown> | string[] | null;
 }
 
 /** 空白的一列。 */
 export function emptyTableRow(spec: ConfigTableSpec): TableRowDraft {
   // 值那一欄**預設填第一個選項**而不是留白：enum 沒有「空」這個合法值，留白的話
   // 操作者加一列、填好鍵、按儲存 → 被自己的表擋下來，而他看不出少填了什麼。
+  if (spec.shape === "recordScalars") {
+    const cells: Record<string, string> = {};
+    for (const c of spec.columns ?? []) cells[c.field] = "";
+    return { key: "", value: "", cells };
+  }
   return { key: "", value: spec.value ? (spec.value.options[0]?.value ?? "") : "" };
 }
 
@@ -129,9 +204,58 @@ export function tableRowsFrom(doc: unknown, spec: ConfigTableSpec): TableRowDraf
     return raw.filter((s): s is string => typeof s === "string").map((s) => ({ key: s, value: "" }));
   }
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) return [];
+  if (spec.shape === "recordScalars") {
+    const cols = spec.columns ?? [];
+    return Object.entries(raw as Record<string, unknown>)
+      .filter(([, v]) => v !== null && typeof v === "object" && !Array.isArray(v))
+      .map(([k, v]) => {
+        const entry = v as Record<string, unknown>;
+        const cells: Record<string, string> = {};
+        // ⚠️ 缺席的子鍵讀成**空字串**，⛔ 不是消費端的預設：畫面上留白的意思就是
+        // 「這一格沒有被覆蓋」，而顯示一個沒有寫進文件的數字會讓操作者以為它在。
+        for (const c of cols) {
+          const cur = entry[c.field];
+          cells[c.field] = cur === undefined || cur === null ? "" : String(cur);
+        }
+        return { key: k, value: "", cells };
+      });
+  }
   return Object.entries(raw as Record<string, unknown>)
     .filter(([, v]) => typeof v === "string")
     .map(([k, v]) => ({ key: k, value: v as string }));
+}
+
+/** 一格 `recordScalars` 的拒絕理由（null = 合法）。 */
+function cellIssue(col: ConfigTableColumn, raw: string): string | null {
+  const text = raw.trim();
+  if (col.kind === "boolean") {
+    if (text === "") return col.optional ? null : `${col.zh}不能空白`;
+    return text === "true" || text === "false" ? null : `${col.zh}只能是開或關`;
+  }
+  if (col.kind === "text") {
+    if (text === "") return col.optional ? null : `${col.zh}不能空白`;
+    if (raw !== text) return `${col.zh}的開頭或結尾有空白 —— 路徑是逐字比對的，載不到就是靜音`;
+    if (col.maxLen !== undefined && text.length > col.maxLen) {
+      return `${col.zh}最多 ${col.maxLen} 個字（現在 ${text.length} 個）`;
+    }
+    if (col.pattern && !col.pattern.test(text)) return col.patternError ?? `${col.zh}的格式不對`;
+    return null;
+  }
+  // number / int —— 上下界一律走和純量欄位同一支，⛔ 不在這裡再寫一次比較。
+  return validateNumeric(
+    raw,
+    { min: col.min ?? 0, minExclusive: false, max: col.max ?? 0, maxFromConsole: false },
+    col.kind === "int" ? "int" : "number",
+    col.optional === true,
+  );
+}
+
+/** 一格的字面值 → 要寫進文件的值。呼叫端保證它已經通過 {@link cellIssue}。 */
+function cellValue(col: ConfigTableColumn, raw: string): unknown {
+  const text = raw.trim();
+  if (col.kind === "boolean") return text === "true";
+  if (col.kind === "text") return text;
+  return Number(text);
 }
 
 /** 加一列。 */
@@ -155,6 +279,18 @@ export function setTableCell(
   text: string,
 ): TableRowDraft[] {
   return rows.map((r, i) => (i === index ? { ...r, [col]: text } : r));
+}
+
+/** `recordScalars`：改一列裡某一個**子鍵**的格子。 */
+export function setTableColumnCell(
+  rows: readonly TableRowDraft[],
+  index: number,
+  field: string,
+  text: string,
+): TableRowDraft[] {
+  return rows.map((r, i) =>
+    i === index ? { ...r, cells: { ...(r.cells ?? {}), [field]: text } } : r,
+  );
 }
 
 /**
@@ -187,14 +323,27 @@ function keyIssue(text: string, spec: ConfigTableSpec): string | null {
 export function validateTable(
   rows: readonly TableRowDraft[],
   spec: ConfigTableSpec,
+  /**
+   * ⭐ `recordScalars` 專用（其餘形狀忽略它）：**基底文件**。
+   *
+   * ⛔ 少了它，存檔會把「這一頁沒有畫的子鍵」整批洗掉 —— 而那正是這個形狀唯一
+   * 一個畫面上看不出來的錯誤形態（`sfx.*.files` 被洗掉會被 Zod 擋，但一個選填的
+   * `gain` 被洗掉不會有任何訊息，它只是安靜地退回消費端的預設）。
+   */
+  base?: unknown,
 ): TableVerdict {
   const allowed = new Set((spec.value?.options ?? []).map((o) => o.value));
+  const cols = spec.shape === "recordScalars" ? (spec.columns ?? []) : [];
   const rowErrors: TableRowErrors[] = rows.map((r) => {
     const e: TableRowErrors = {};
     const ki = keyIssue(r.key, spec);
     if (ki) e.key = ki;
     if (spec.shape === "recordEnum" && !allowed.has(r.value)) {
       e.value = `${spec.value?.zh ?? "值"}要從清單裡選一個`;
+    }
+    for (const c of cols) {
+      const issue = cellIssue(c, r.cells?.[c.field] ?? "");
+      if (issue) e[c.field] = issue;
     }
     return e;
   });
@@ -219,12 +368,31 @@ export function validateTable(
     table = `最多 ${spec.maxRows} 列`;
   }
 
-  const clean = rowErrors.every((e) => e.key === undefined && e.value === undefined);
+  const clean = rowErrors.every((e) => Object.values(e).every((v) => v === undefined));
   const ok = clean && table === null;
   let value: TableVerdict["value"] = null;
   if (ok) {
     if (spec.shape === "stringList") {
       value = rows.map((r) => r.key);
+    } else if (spec.shape === "recordScalars") {
+      const baseRec = (getAtPath(base ?? {}, spec.path) ?? {}) as Record<string, unknown>;
+      const rec: Record<string, unknown> = {};
+      for (const r of rows) {
+        const prev = baseRec[r.key];
+        // ⭐ **合併**，⛔ 不是覆蓋：這一頁沒有畫的子鍵（`sfx.*.files`）原封帶著走。
+        const entry: Record<string, unknown> =
+          prev !== null && typeof prev === "object" && !Array.isArray(prev)
+            ? { ...(prev as Record<string, unknown>) }
+            : {};
+        for (const c of cols) {
+          const raw = (r.cells?.[c.field] ?? "").trim();
+          // 選填欄位留白 = **刪掉這一格**（走消費端的預設），⛔ 不是寫 0 / false。
+          if (raw === "") delete entry[c.field];
+          else entry[c.field] = cellValue(c, raw);
+        }
+        rec[r.key] = entry;
+      }
+      value = rec;
     } else {
       const rec: Record<string, string> = {};
       for (const r of rows) rec[r.key] = r.value;
