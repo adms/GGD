@@ -409,8 +409,16 @@ export interface ImpactFeedbackPlan {
   //           it should switch its spark heaviness to `tier` (do NOT spawn here).
   // CAMERA  : DONE — `shake` (amp + dir + camKick) is consumed by
   //           resolveCameraKick → GameApp → CameraRig.addShake(dir…).
-  // SFX     : combatSfx should pick a light/med/heavy variant off `tier` (audit
-  //           "SFX weight tiering") — do NOT play audio here.
+  // SFX     : ✅ DONE (GH#763, 2026-08-27) — `combatSfxKey` now picks
+  //           hit-light / hit-medium / hit-heavy off this event's `tier`
+  //           (see apps/client/src/audio/…; guard `hitWeightTier.test.ts` runs
+  //           shipping content → shipping damage pipeline → the event the sim
+  //           really emits → shipping `combatSfxKey`). Still: do NOT play audio
+  //           here — this module builds the REQUEST, the audio layer consumes it.
+  //           ⚠️ This line said "should" for weeks while it was already the
+  //           blocking item on #763 — a comment that describes a TODO after the
+  //           TODO is done is the 第三守則 failure shape (prose outliving its
+  //           expiry with nothing going red).
   // NUMBER  : the floating damage number (#92) already emphasises crit/kill; it
   //           should read `tier` so its pop crosses the same boundary. Spawned
   //           in the UI layer, not here.
