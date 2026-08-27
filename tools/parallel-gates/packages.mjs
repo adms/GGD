@@ -123,7 +123,15 @@ export function suitesForPaths(paths, repo) {
         const scripts = JSON.parse(readFileSync(`${base}package.json`, "utf8")).scripts ?? {};
         for (const st of io.steps ?? []) {
           if (!(st.reads ?? []).some((r) => String(r).startsWith("content/"))) continue;
-          const cmd = String(scripts[st.name] ?? "");
+          // ⭐⭐ GH#815 之後 41 支入口被包成 `bash scripts/genrun.sh <step> <step>:raw`
+          //    ⇒ 公開名的指令文字裡**一個 `tools/` 都沒有** ⇒ 這條推導會靜靜地回 0。
+          //    ⚠️ 實測過：包裝上線的那一刻 `extras` 從 23 掉到 **0**，
+          //    ⭐ 而 `contentChangeRunsContentReaders.test.ts` 立刻紅並指名它
+          //    —— 那正是那條閘存在的理由（⛔ 不是「有沒有 extras 這個字」）。
+          //    ⇒ 公開名指到 wrapper 時，改讀 `<step>:raw` 的指令文字。
+          const raw = String(scripts[`${st.name}:raw`] ?? "");
+          const direct = String(scripts[st.name] ?? "");
+          const cmd = direct.includes("genrun.sh") && raw !== "" ? raw : direct;
           for (const t of cmd.matchAll(/(tools\/[^/\s]+)\//g)) {
             if (hasTestFiles(`${base}${t[1]}`)) readers.add(t[1]);
           }
