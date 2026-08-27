@@ -507,6 +507,41 @@ const PRACTICE_ZONE = 0;
  */
 const PRACTICE_DUMMY_FIRST_SEAT = (PRACTICE_TEAM + 1) * TEAM_SIZE;
 
+/**
+ * 🅰️ **一側的第 `slot` 個出生點** —— GH#325 的消費端那一半。
+ *
+ * ## 為什麼要有這支（⛔ 而不是繼續寫兩個 `!`）
+ * `zZoneDef.spawns` 的 schema 只要求每側 ≥ 1 個，而**這裡**以 `TEAM_SIZE` 取模。
+ * ⇒ 一份**完全合法**的 `arena@1` 文件（每側只有 1 個 spawn）會讓 slot 1/2 取到
+ * `undefined`，而兩個非空斷言把它一路帶進 runtime。
+ * ⭐ 出貨 13 張場地每側都手寫了 3 個 —— ⛔ 那是**巧合，不是契約**。
+ *
+ * ⚠️ schema 那一層（`zZoneDef` 的 superRefine）已經把它擋在**編輯的當下**，
+ * 這一支守的是**繞過 schema 進來的那條路**（舊映像的 bind-mount 內容、
+ * 熱載、測試夾具）。⭐ 兩層都要 —— 產生器的保證救不了手寫的場地。
+ *
+ * ## ⛔ 刻意 fail-loud，⛔ 不 fail-open 退回 `spawns[side][0]`
+ * 退回第 0 格會讓**三個人疊在同一格**，而畫面上看起來只是「站得很近」——
+ * ⭐ 沒有任何人會知道。fail-open 沒錯，**靜默**才是缺陷（CLAUDE.md）。
+ */
+function spawnAt(
+  zoneDef: { id: string; spawns: readonly (readonly { x: number; z: number }[])[] },
+  side: number,
+  slot: number,
+): { x: number; z: number } {
+  const row = zoneDef.spawns[side];
+  const at = row?.[slot % TEAM_SIZE];
+  if (at === undefined) {
+    throw new Error(
+      `arena zone "${zoneDef.id}" side ${side} 只有 ${row?.length ?? 0} 個出生點，` +
+        `而這裡要第 ${slot % TEAM_SIZE} 格（TEAM_SIZE=${TEAM_SIZE}）——\n` +
+        "  ⇒ 那份 arena 文件繞過了 zZoneDef 的 superRefine（舊映像的 bind-mount 內容／熱載／測試夾具）。\n" +
+        "  ⛔ 修在內容：每一側補到 TEAM_SIZE 個。⛔ 不要在這裡退回第 0 格 —— 三個人會疊在同一格而沒有人知道。",
+    );
+  }
+  return at;
+}
+
 // ── 練習面板（GH#365）的常數 ─────────────────────────────────────────────────
 
 /**
@@ -2326,7 +2361,7 @@ export class MatchController {
         for (const seat of this.seats.values()) {
           if (seat.teamId !== teamId || seat.entityId === null) continue;
           const t = this.world.transform.get(seat.entityId)!;
-          const spawn = zoneDef.spawns[side]![slot % TEAM_SIZE]!;
+          const spawn = spawnAt(zoneDef, side, slot);
           t.pos = { x: spawn.x, z: spawn.z };
           t.zone = pairing.zone;
           t.facing = { x: side === 0 ? 1 : -1, z: 0 };
@@ -2540,7 +2575,7 @@ export class MatchController {
       if (!dummy && seat.teamId !== PRACTICE_TEAM) continue;
       const side = dummy ? 1 : 0;
       const t = this.world.transform.get(seat.entityId)!;
-      const spawn = zoneDef.spawns[side]![(dummy ? dummySlot : slot) % TEAM_SIZE]!;
+      const spawn = spawnAt(zoneDef, side, dummy ? dummySlot : slot);
       t.pos = { x: spawn.x, z: spawn.z };
       t.zone = PRACTICE_ZONE;
       t.facing = { x: dummy ? -1 : 1, z: 0 };
