@@ -51,6 +51,12 @@ const CAST_RE = /(?:吟唱|詠唱)\s*([0-9]+(?:\.[0-9]+)?)\s*秒/g;
 /** `「…」` 是角色對白不是效果 —— ⛔ 剝**整段**（含跨行、含行中）。 */
 const stripQuotes = (s: string): string => s.replace(/「[^」]*」/gs, "");
 
+/**
+ * ⭐ **算繪器印出來的那個字串** —— 逐字照 `abilityProse.ts` 的 `fmtNum`
+ * （四捨五入到小數兩位）。⛔ 兩處各寫一次就是第二個住處，而它會各自漂。
+ */
+const shown = (n: number): string => String(Math.round(n * 100) / 100);
+
 describe("卡面的吟唱秒數 = 引擎真的吟唱那幾秒（GH#792）", () => {
   /** `[技能 id, 卡面上寫的秒數們, 引擎真的吟唱幾秒]`。 */
   let rows: [string, string[], number][] = [];
@@ -85,8 +91,16 @@ describe("卡面的吟唱秒數 = 引擎真的吟唱那幾秒（GH#792）", () =
    * 裸的 `castTimeSec`，`{{cast}}` 就會算繪出規格值 ⇒ 這一條逐支點名（突變驗過）。
    */
   it("① 說明裡每一個吟唱秒數都等於夾後的實際秒數", () => {
+    // ⭐ 2026-08-27 更正：這一條原本是 `Number.parseFloat(s) !== real` ——
+    //   ⛔ 它拿**顯示字串**去對**全精度浮點數**，於是一支**已經正確改用 `{{cast}}`**
+    //   的技能照樣紅：卡面印 `0.83`（`fmtNum` = 四捨五入到小數兩位），
+    //   而 `real` 是 `0.8333…`。⇒ ⭐ **那不是謊話，那是四捨五入。**
+    // ⚠️ 而它紅的訊息叫人「改用 `{{cast}}`」—— 那正是已經做過的事
+    //   ⇒ 下一個人會照著再做一次，然後又紅（本 repo 記過的「用錯誤的訊息紅」）。
+    // ⇒ 問**關係**：卡面說的，等不等於**算繪器對真值會印出來的那個字串**。
+    //   ⛔ 這仍然抓得到真缺口：`{{cast}}` 換回裸 `castTimeSec` ⇒ 印出規格值 ⇒ 逐支紅（突變驗過）。
     const bad = rows
-      .filter(([, said, real]) => said.some((s) => Number.parseFloat(s) !== real))
+      .filter(([, said, real]) => said.some((s) => s !== shown(real)))
       .map(([id, said, real]) => `  ${id}：卡面寫「吟唱${said.join("/")}秒」，引擎 ${real} 秒`);
     expect(
       bad.join("\n"),
@@ -112,18 +126,34 @@ describe("卡面的吟唱秒數 = 引擎真的吟唱那幾秒（GH#792）", () =
    * 一支都夾不到）⇒ 真的佔位符會跟著回到規格值，寫死的字面值不會動。
    */
   it("③ 佔位真的是佔位：castTimeMaxSec 拉到 8 ⇒ 卡面跟著回到規格值", () => {
-    const def = Abilities.get("godie-e007.ex" as never) as unknown as { castTimeSec?: number };
     const src = "吟唱{{cast}}秒";
-    const spec = def.castTimeSec!;
     const shipped = castTimeRulesFromDoc(
       (Configs.all() as unknown as { schema?: string }[]).find(
         (c) => c.schema === "config.cast-time@1",
       ),
     );
+    // ⭐ 2026-08-27：夾具從**出貨內容推導**，⛔ 不是寫死 `godie-e007.ex`。
+    //   那一支原本真的被夾住，而 `deriveCastTimes --write`（skills:sync 裡）把它的
+    //   `castTimeSec` 重算成 **1**＝上限本身 ⇒ ⭐ **夾具在出貨的世界裡不再成立**，
+    //   而這一條會用「expected 1 to be greater than 1」紅 —— ⛔ 一句與真相無關的訊息。
+    //   ⚠️ 這正是 CLAUDE.md 記的失敗形態⑩：**守衛是靠夾具的某個極端值才綠的**。
+    // ⇒ 找**任何一支**真的被夾住的技能；一支都沒有 ⇒ 明說「這條無事可守」而不是假裝綠。
+    const clamped = Abilities.ids()
+      .map((id) => Abilities.get(id) as unknown as { castTimeSec?: number })
+      .find((d) => typeof d.castTimeSec === "number" && d.castTimeSec > shipped.castTimeMaxSec);
+    expect(
+      clamped,
+      "⛔ 出貨內容裡沒有任何一支技能的規格吟唱**超過**上限 —— " +
+        "這一條證明不了「佔位真的是佔位」（沒被夾到的技能證明不了任何事）。\n" +
+        "   ⇒ 要嘛上限被調高了（那就改看新的上限），要嘛規格值全被重算過。",
+    ).toBeDefined();
+    const def = clamped!;
+    const spec = def.castTimeSec!;
     const render = (maxSec: number): string =>
       renderAbilityText(src, abilityQuantities(def, { ...DEFAULT_PROSE_TABLES, castTime: { ...shipped, castTimeMaxSec: maxSec } }));
     expect(spec).toBeGreaterThan(shipped.castTimeMaxSec); // ⛔ 沒被夾到的技能證明不了任何事
-    expect(render(shipped.castTimeMaxSec)).toBe(`吟唱${shipped.castTimeMaxSec}秒`);
-    expect(render(8)).toBe(`吟唱${spec}秒`);
+    expect(render(shipped.castTimeMaxSec)).toBe(`吟唱${shown(shipped.castTimeMaxSec)}秒`);
+    // ⚠️ 同 ①：比的是**算繪器會印什麼**，⛔ 不是全精度浮點數（1.033 印出來是 1.03）。
+    expect(render(8)).toBe(`吟唱${shown(spec)}秒`);
   });
 });
