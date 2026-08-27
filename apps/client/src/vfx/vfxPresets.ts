@@ -724,10 +724,67 @@ const IMPACT_TUNING = {
   // white-hot flare now pops to 1.15u for 2–3 frames and 30 stretched sparks
   // fan off the contact point, so a clean hit lands visibly — still well inside
   // the perf bands (sparkN ≤ 80, flash ≤ 3 frames) and below the heavy tier.
-  light: { flashN: 3, flashSize: 1.15, flashLife: 0.045, sparkN: 30, sparkLife: 0.3, sparkSize: 0.14, sparkSpeed: 10, smokeN: 7, smokeSize: 0.6, smokeAlpha: 0.3, ring: undefined as RingSpec | undefined },
-  heavy: { flashN: 3, flashSize: 1.3, flashLife: 0.045, sparkN: 36, sparkLife: 0.32, sparkSize: 0.15, sparkSpeed: 10, smokeN: 10, smokeSize: 0.75, smokeAlpha: 0.33, ring: { startRadius: 0.3, endRadius: 1.7, lifeMs: 240, alpha: 0.8 } as RingSpec },
-  ex: { flashN: 4, flashSize: 1.8, flashLife: 0.05, sparkN: 56, sparkLife: 0.35, sparkSize: 0.18, sparkSpeed: 12, smokeN: 14, smokeSize: 0.95, smokeAlpha: 0.38, ring: { startRadius: 0.4, endRadius: 2.6, lifeMs: 320, alpha: 0.9 } as RingSpec },
+  light: { flashN: 3, flashSize: 1.15, flashLife: 0.045, sparkN: 30, sparkLife: 0.3, sparkSize: 0.14, sparkSpeed: 10, smokeN: 7, smokeSize: 0.6, smokeAlpha: 0.3, smokeLife: 0.3, ring: undefined as RingSpec | undefined },
+  heavy: { flashN: 3, flashSize: 1.3, flashLife: 0.045, sparkN: 36, sparkLife: 0.32, sparkSize: 0.15, sparkSpeed: 10, smokeN: 10, smokeSize: 0.75, smokeAlpha: 0.33, smokeLife: 0.5, ring: { startRadius: 0.3, endRadius: 1.7, lifeMs: 240, alpha: 0.8 } as RingSpec },
+  ex: { flashN: 4, flashSize: 1.8, flashLife: 0.05, sparkN: 56, sparkLife: 0.35, sparkSize: 0.18, sparkSpeed: 12, smokeN: 14, smokeSize: 0.95, smokeAlpha: 0.38, smokeLife: 0.6, ring: { startRadius: 0.4, endRadius: 2.6, lifeMs: 320, alpha: 0.9 } as RingSpec },
 } as const;
+
+// ───────────── 命中煙的**壽命分級**（GH#741 / 舊 #44）─────────────────────────
+/**
+ * ⭐ **收尾預算是按打擊重量分的,⛔ 不是一個常數。**
+ *
+ * 2026-08-27 之前 `smoke.lifetimeSec` 三個 tier 共用 `{min:0.4, max:0.6}`,
+ * 而 `HitSpark.doneAfterMs` 由 **`smoke.max` 驅動** ⇒ ⭐ 最輕的普攻也被綁到
+ * ~600ms。`flashLife` / `sparkLife` 早就逐 tier 分級了,**只有煙沒有** ——
+ * 也就是三個通道裡有兩個在 0.3s 內收乾淨,第三個還在畫,而它是**面積最大**的那一層。
+ *
+ * ⚠️ 這不是「數字調小一點」:普攻每 ~2s 一發、一場團戰同時好幾條線,
+ * 一層 0.6s 的半透明煙**疊起來**就是專案自己寫下的收尾預算被吃光。
+ *
+ * ⭐ **預算是關係,⛔ 不是字面值**:{@link impactTailMs} 算出「這一級真的畫多久」,
+ * {@link IMPACT_TAIL_BUDGET_MS} 是那一級的上界,守衛比對**兩者**
+ * （第零守則：驗機制不驗數字 —— 一個 `≤` 是機制,一個 `=== 300` 是第四個住處）。
+ */
+export const IMPACT_TAIL_BUDGET_MS: Readonly<Record<ImpactIntensity, number>> = {
+  // ⭐ 輕擊 = 最常見的那一發 ⇒ 它才是預算真正的守備位置。
+  light: 350,
+  heavy: 700,
+  ex: 900,
+};
+
+/** 煙壽命的**全域倍率**（後台一格；1 = 出貨）。⛔ 它不改分級,只整排縮放。 */
+let smokeLifeScale = 1;
+
+/**
+ * 由 `ContentDb.load()` 呼叫（樣板逐字照 {@link setImpactRingScale}）。
+ * ⚠️ 認不得的值 = 1（出貨）,⛔ 不是 0（那會讓煙整層消失而看起來像「壞了」）。
+ */
+export function setImpactSmokeLifeScale(scale: number | undefined): void {
+  smokeLifeScale = typeof scale === "number" && Number.isFinite(scale) && scale > 0 ? scale : 1;
+}
+
+/** 現在生效的那一格（守衛用）。 */
+export function impactSmokeLifeScale(): number {
+  return smokeLifeScale;
+}
+
+/** 這一級的煙活多久（秒）—— 分級 × 後台倍率。 */
+export function impactSmokeLifeSec(intensity: ImpactIntensity): number {
+  return IMPACT_TUNING[intensity].smokeLife * smokeLifeScale;
+}
+
+/**
+ * ⭐ **這一發真的在畫面上留多久（ms）** —— `HitSpark.doneAfterMs` 的純函式雙生,
+ * 也就是收尾預算的**被測量**。⛔ 不要在別處再算一次（第〇·四守則）。
+ */
+export function impactTailMs(intensity: ImpactIntensity, amount?: number): number {
+  const t = IMPACT_TUNING[intensity];
+  const ringMs =
+    t.ring === undefined
+      ? 0
+      : Math.min((t.ring.lifeMs * ringLifeScale) / ringTierSpeedFor(amount), ringMaxLifeSec * 1000);
+  return Math.max(impactSmokeLifeSec(intensity) * 1000, ringMs);
+}
 
 /**
  * PURE recipe for a layered impact at an intensity, tinted by damage type.
@@ -767,7 +824,9 @@ export function impactRecipe(
     },
     smoke: {
       count: t.smokeN,
-      lifetimeSec: { min: 0.4, max: 0.6 },
+      // ⭐ GH#741 —— 逐 tier 的收尾預算（見 IMPACT_TAIL_BUDGET_MS）。
+      //    `min` 跟著 `max` 走（固定 2/3），⛔ 不是第二個要各自維護的數字。
+      lifetimeSec: { min: impactSmokeLifeSec(intensity) * (2 / 3), max: impactSmokeLifeSec(intensity) },
       speed: { min: 0.6, max: 1.6 },
       sizeStops: popShrinkStops(t.smokeSize, { popT: 0.25 }),
       colorStops: softBodyColorStops([0.45, 0.45, 0.5], t.smokeAlpha),

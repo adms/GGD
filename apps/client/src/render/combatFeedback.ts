@@ -155,6 +155,64 @@ function clamp01(v: number): number {
   return v < 0 ? 0 : v > 1 ? 1 : v;
 }
 
+// ───────────────────── 擋下的一擊 ⛔ 不閃「受傷紅」(GH#741 / 舊 #43) ──────────
+/**
+ * ⭐ **粒子說擋下了、模型說被打中。**
+ *
+ * `ImpactProfile.isBlock` 從 2026 年初就騎在同一份 payload 上（宣告 `:211`、
+ * 解析 `:276`、塞進 plan `:465`），⛔ 而 {@link resolveVictimFlash} 從來沒有讀過它
+ * ⇒ 一發被完全擋下的攻擊，接觸點放的是 `sparkKind:"block"` 的**冷白**火花，
+ * 身體卻同時閃**物理紅** —— 兩個通道對同一次命中說相反的話（失敗形態⑧的親戚：
+ * 值已經送到了，消費端不讀）。
+ *
+ * ── ⛔ 為什麼**不是**「改成白閃」──────────────────────────────────────────
+ * 這個檔頭已經量過一次：身體閃光走 `ALPHA_COMBINE`（`out = base·(1−a) + flash·a`），
+ * 所以**純白只能把三個通道往上推** —— 對著 `content/config/unit-tints.json` 的
+ * 七個真實 w3x 色調量到 ΔLuminance 0.03–0.09，也就是在**最需要它的那些淡色模型上
+ * 等於沒閃**。⭐ 這正是 `flashColorFor("true")` 最後變成 `#33FFFF` 而不是白色的原因。
+ * ⇒ 格擋色也**必須**清得過同一條可見度地板（{@link FLASH_MIN_SPREAD}），
+ * ⛔ 不可以憑「鋼灰比較像格擋」挑一個灰。
+ *
+ * `[0.25, 0.45, 0.95]` 的 spread 是 **0.70**（≥ 0.65 的地板），而且它與三個學派色
+ * 都不同族：物理紅 / 魔法洋紅 / 真傷**淡**青白 —— 這一格是**深**鋼藍。
+ *
+ * ⚠️ 格擋**覆蓋**技能自己寫的 `hitFeel.flashColor`：「這一發被擋下了」是系統狀態，
+ * 它比「這一發是火屬性」重要。⛔ 反過來會讓 31 支有色技能的格擋各閃各的顏色。
+ */
+export type BlockFlashMode =
+  /** 深鋼藍、較短、較淡 —— ⭐ 出貨預設（我挑的） */
+  | "steel"
+  /** 完全不閃（火花＋音效＋hitstop 仍在）—— 最保守的一格 */
+  | "none"
+  /** ⛔ 2026-08-27 之前的行為：照樣閃受傷色。**一鍵 rollback 就是這一格** */
+  | "damage";
+
+/** 格擋身體閃光的色（0..1）。spread 0.70 —— 清得過 {@link FLASH_MIN_SPREAD}。 */
+export const BLOCK_FLASH_RGB: readonly [number, number, number] = [0.25, 0.45, 0.95];
+/** 格擋閃光相對於該 tier 的強度倍率（擋下 ≠ 受傷，所以比受傷淡）。 */
+export const BLOCK_FLASH_ALPHA_SCALE = 0.75;
+/** 格擋閃光相對於該 tier 的長度倍率（短促＝「彈開了」）。 */
+export const BLOCK_FLASH_MS_SCALE = 0.7;
+
+/** ⭐ 出貨值。⛔ 改這裡不叫改設定 —— 設定走 {@link setBlockFlashMode}。 */
+export const SHIPPED_BLOCK_FLASH_MODE: BlockFlashMode = "steel";
+
+let blockFlash: BlockFlashMode = SHIPPED_BLOCK_FLASH_MODE;
+
+/**
+ * 由 `ContentDb.load()` 灌入（樣板逐字照 `vfxPresets.setImpactRingScale`）。
+ * ⚠️ 認不得的值 = 出貨預設，⛔ 不是「關掉」（`voxelBodyFor` 那條三態規矩）。
+ */
+export function setBlockFlashMode(mode: unknown): void {
+  blockFlash =
+    mode === "steel" || mode === "none" || mode === "damage" ? mode : SHIPPED_BLOCK_FLASH_MODE;
+}
+
+/** 現在生效的那一格（守衛用）。 */
+export function blockFlashMode(): BlockFlashMode {
+  return blockFlash;
+}
+
 /**
  * ATTACKER (source) flash on a LANDED hit — a brief WHITE impact pop on the
  * body that dealt the blow (task #69). The victim's red flash reads "I'm being
@@ -445,10 +503,22 @@ export function resolveVictimFlash(
   dmgType: string | undefined,
 ): FlashSpec {
   const fx = TIER_FX[profile.tier];
+  const ms = profile.flashMs ?? fx.flashMs;
+  // ⭐ GH#741 —— **擋下的一擊不閃受傷色。** 這一行是這條線的承重點：拿掉它，
+  //    格擋就退回「粒子說擋下了、模型說被打中」（見 BlockFlashMode 的說明）。
+  if (profile.isBlock && blockFlash !== "damage") {
+    return blockFlash === "none"
+      ? { rgb: [...BLOCK_FLASH_RGB], alpha: 0, ms: 0 }
+      : {
+          rgb: [...BLOCK_FLASH_RGB],
+          alpha: fx.flashAlpha * BLOCK_FLASH_ALPHA_SCALE,
+          ms: Math.round(ms * BLOCK_FLASH_MS_SCALE),
+        };
+  }
   return {
     rgb: profile.flashColor ? legibleFlashColor(profile.flashColor) : flashColorFor(dmgType),
     alpha: fx.flashAlpha,
-    ms: profile.flashMs ?? fx.flashMs,
+    ms,
   };
 }
 

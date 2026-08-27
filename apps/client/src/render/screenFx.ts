@@ -370,6 +370,117 @@ export function screenFlashAlpha(t01: number, peakAlpha: number, gentle = false)
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+//  ⭐ GH#741（舊 #42）—— EX 的**變暗／去飽和** backdrop
+// ═══════════════════════════════════════════════════════════════════════════
+/**
+ * ⭐ EX 施放的推鏡（`CameraRig.exPunchIn`）在 2026 年初就上線了,
+ * 而它的**另一半**「畫面壓暗、周圍失去顏色」從來沒有消費端:
+ * `vfx/CombatPostFx` 的 fragment shader 只有 `vignette` + `vignetteColor`,
+ * `vfx/postFxMath` 零個 dim/desaturate 常數（2026-08-26、2026-08-27 各複驗一次）。
+ * ⇒ 特寫只有「鏡頭靠近」,⛔ 沒有「世界安靜下來」。
+ *
+ * ── ⛔ 為什麼**不**做成 PostProcess ────────────────────────────────────────
+ * `CombatPostFx` 是 **desktop 限定**（`heavyPostFxEnabled(q) === "desktop"`）——
+ * 也就是把 EX 變暗做在那裡,**手機／低階機一輩子看不到它**,而 EX 特寫在小螢幕上
+ * 更需要「哪裡是重點」。⭐ 這與 `ScreenFxLayer` 檔頭記的是**同一條**理由:
+ * 全螢幕純色壓底是一個 composited 的 div,不吃 GPU、每一個品質層都在、
+ * 而且**逐格可測**（vitest 讀 `style.opacity`,⛔ 不需要 GPU）。
+ *
+ * ⚠️ 去飽和用 `backdrop-filter: saturate()`。它在不支援的瀏覽器上**靜靜地不生效**,
+ * 所以「變暗」那一半**不可以**靠它 —— 變暗走的是不透明度,去飽和是加分項。
+ * ⭐ 這是刻意的分工:一個必定生效的通道 ＋ 一個更好看的通道。
+ */
+export interface ExDimTuning {
+  /** 這一格的總開關（false = 逐位元回到 2026-08-27 之前）。 */
+  enabled: boolean;
+  /** 壓底的黑色最高不透明度（0..1）。 */
+  peakAlpha: number;
+  /** 背後畫面的飽和度乘數（1 = 不去飽和；0 = 全灰）。 */
+  saturate: number;
+  /** 整段長度（ms）—— 對齊 `EX_PUNCH_MS` 那一拍。 */
+  durationMs: number;
+  /** 進場（上升緣）佔整段的比例。 */
+  attackFrac: number;
+  /** 到頂之後保持的比例（其餘是退場）。 */
+  holdFrac: number;
+}
+
+/**
+ * ⭐ 出貨值（我挑的 —— owner 常設令「沒做完以前別問我了自己判斷 但是留後台開關」）。
+ *
+ * `peakAlpha 0.34` 的判準是**可讀性**,⛔ 不是「暗一點比較帥」:HP 條、技能圖示、
+ * 小地圖在這個壓底下都還讀得出來（與 `postFxMath.BURN_MAX = 0.42` 同一條理由 ——
+ * 畫面要讀成「有大事」,⛔ 不是「壞了」）。
+ * `durationMs 300` 逐字等於 `combatFeedback.EX_PUNCH_MS` —— ⭐ 兩個通道同一拍收尾,
+ * ⛔ 不是各自挑一個長度（那正是「五個解耦常數」那個 bug 的形狀）。
+ */
+export const SHIPPED_EX_DIM: ExDimTuning = {
+  enabled: true,
+  peakAlpha: 0.34,
+  saturate: 0.35,
+  durationMs: 300,
+  attackFrac: 0.18,
+  holdFrac: 0.22,
+};
+
+let exDim: ExDimTuning = { ...SHIPPED_EX_DIM };
+
+/**
+ * 由 `ContentDb.load()` 灌入（樣板逐字照 `vfxPresets.setImpactRingScale`）。
+ * ⚠️ 逐格降級:壞掉的一格用出貨值,⛔ 不是整份丟掉（`applyDamageColorsDoc` 那條規矩）。
+ */
+export function setExDimTuning(partial: Partial<ExDimTuning> | null | undefined): void {
+  const p = partial ?? {};
+  const num = (v: unknown, lo: number, hi: number, dflt: number): number =>
+    typeof v === "number" && Number.isFinite(v) ? clampTo(v, lo, hi) : dflt;
+  exDim = {
+    enabled: typeof p.enabled === "boolean" ? p.enabled : SHIPPED_EX_DIM.enabled,
+    peakAlpha: num(p.peakAlpha, 0, 0.8, SHIPPED_EX_DIM.peakAlpha),
+    saturate: num(p.saturate, 0, 1, SHIPPED_EX_DIM.saturate),
+    durationMs: num(p.durationMs, 0, 2000, SHIPPED_EX_DIM.durationMs),
+    attackFrac: num(p.attackFrac, 0, 1, SHIPPED_EX_DIM.attackFrac),
+    holdFrac: num(p.holdFrac, 0, 1, SHIPPED_EX_DIM.holdFrac),
+  };
+}
+
+/** 現在生效的那幾格（守衛用）。 */
+export function exDimTuning(): ExDimTuning {
+  return exDim;
+}
+
+/**
+ * 這一發 EX backdrop 現在該壓多暗（0..1）。
+ *
+ * 形狀是**快進 → 短保持 → 慢退**的梯形:進場要跟上推鏡的第一幀,
+ * 退場要慢到讓「世界回來」是一個動作而不是一次跳變。
+ * ⚠️ `reducedMotion` 走 `reducedFlashMult` **同一格**上界 —— ⛔ 不另發明一個
+ * （壓暗是「畫面整片變化」,對動態敏感的人與閃爍同一類）。
+ */
+export function exDimAlpha(t01: number, tuning: ExDimTuning = exDim): number {
+  if (!tuning.enabled || !(tuning.peakAlpha > 0)) return 0;
+  const t = clampTo(t01, 0, 1);
+  if (t >= 1) return 0;
+  const a = clampTo(tuning.attackFrac, 0.01, 0.9);
+  const h = clampTo(tuning.holdFrac, 0, 1 - a - 0.01);
+  if (t <= a) return tuning.peakAlpha * (t / a);
+  if (t <= a + h) return tuning.peakAlpha;
+  return tuning.peakAlpha * (1 - (t - a - h) / (1 - a - h));
+}
+
+/**
+ * `backdrop-filter` 的字串,或 `""` 代表「這一格不去飽和」。
+ * ⭐ `alpha01` 是**現在的壓暗進度**（0..1 相對於峰值）—— 去飽和跟著壓暗一起進退,
+ * ⛔ 不是整段都全灰（那會在退場時留下一個突然回色的跳變）。
+ */
+export function exDimFilter(alpha01: number, tuning: ExDimTuning = exDim): string {
+  if (!tuning.enabled) return "";
+  const k = clampTo(alpha01, 0, 1);
+  if (!(k > 0)) return "";
+  const s = 1 - (1 - clampTo(tuning.saturate, 0, 1)) * k;
+  return s >= 0.999 ? "" : `saturate(${s.toFixed(3)})`;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 //  ⭐ GH#549 —— `config.screen-fx@1` → 這一層（＝那份文件唯一的去向）
 // ═══════════════════════════════════════════════════════════════════════════
 

@@ -669,7 +669,12 @@ export class EntityViewRegistry {
           const view = this.champions.get(target);
           if (view) {
             view.triggerHurt(nowMs);
-            view.flash(plan.victimFlash.rgb, nowMs, plan.victimFlash.ms, plan.victimFlash.alpha);
+            // ⚠️ `ChampionView.flash` **無條件**寫 `flashRgb`/`flashAlpha`,只有
+            //    `flashUntilMs` 走 `Math.max` ⇒ 一發 `ms: 0` 的閃光（GH#741 的
+            //    `blockFlashMode: "none"`）會把**還在燒的上一發**的 alpha 洗成 0。
+            //    ⇒ 「不閃」要真的**不呼叫**,⛔ 不是呼叫一個 0 長度的閃。
+            if (plan.victimFlash.ms > 0)
+              view.flash(plan.victimFlash.rgb, nowMs, plan.victimFlash.ms, plan.victimFlash.alpha);
             view.setHitstop(plan.freezeMs, nowMs);
           }
         }

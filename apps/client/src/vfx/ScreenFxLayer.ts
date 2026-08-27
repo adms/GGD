@@ -28,6 +28,9 @@
 import { prefersReducedMotion } from "../ui/buttonSfx";
 import {
   DEFAULT_SCREEN_FX_LIMITS,
+  exDimAlpha,
+  exDimFilter,
+  exDimTuning,
   resolveScreenFlash,
   resolveScreenShake,
   screenFlashAlpha,
@@ -81,6 +84,16 @@ export class ScreenFxLayer {
   private lastAlpha = -1;
   private lastColor = "";
   private disposed = false;
+
+  // ── EX backdrop（GH#741 / 舊 #42）—— ⭐ 刻意**不**共用上面那四格 slot ────────
+  // 壓暗是**黑色**的:丟進 flash 的合成裡,「取最亮的一發當色相」會把它與同一幀的
+  // 紅色受傷閃平均成一團髒色,而且它的 alpha 會被 `flashMaxAlpha` 一起夾掉。
+  // ⇒ 自己一個 div、自己一條包絡線、自己一格上界。
+  private dimAgeMs = 0;
+  private dimLifeMs = 0;
+  private dimEl: HTMLDivElement | null = null;
+  private lastDimAlpha = -1;
+  private lastDimFilter = "";
 
   constructor(private readonly opts: ScreenFxLayerOptions = {}) {
     this.limits = opts.limits ?? DEFAULT_SCREEN_FX_LIMITS;
@@ -141,6 +154,31 @@ export class ScreenFxLayer {
     return true;
   }
 
+  /**
+   * ⭐ GH#741 —— 放一次 **EX backdrop**（壓暗＋去飽和）。回傳有沒有真的排進去。
+   *
+   * ⚠️ **重放而不是疊加**:同一發 EX 只該有一次壓暗,而 `abilityCast` 在
+   * 「多段 EX」上會來好幾則（`wantsExPunch` 也是為了這個才有最小間隔）。
+   * ⇒ 這裡把時鐘**歸零重跑**,⛔ 不是開第二個 slot。
+   *
+   * ⚠️ `reducedMotion` 走 `reducedFlashMult` 那一格（見 `exDimAlpha` 的說明）——
+   * ⛔ 不是直接關掉:對動態敏感的人也需要知道「大絕放出來了」。
+   */
+  exDim(): boolean {
+    if (this.disposed) return false;
+    const t = exDimTuning();
+    if (!t.enabled || !(t.peakAlpha > 0) || !(t.durationMs > 0)) return false;
+    if (this.reduced && !(this.limits.reducedFlashMult > 0)) return false;
+    this.dimAgeMs = 0;
+    this.dimLifeMs = t.durationMs;
+    return true;
+  }
+
+  /** 現在的 EX 壓暗不透明度（守衛量這個 —— ⛔ 不是「有沒有呼叫過」）。 */
+  get exDimAlphaNow(): number {
+    return this.currentDimAlpha();
+  }
+
   /** 放一發相機震動。回傳有沒有真的送到相機。 */
   shake(spec: ScreenShakeSpec, viewer: { isCaster: boolean; isVictim: boolean }): boolean {
     if (this.disposed) return false;
@@ -187,20 +225,27 @@ export class ScreenFxLayer {
     }
     const alpha = Math.min(sum, this.limits.flashMaxAlpha);
     this.paint(alpha, alpha > 0 ? `rgb(${Math.round(br)},${Math.round(bg)},${Math.round(bb)})` : "");
+    this.tickDim(dtMs);
   }
 
   /** 回合邊界:立刻收乾淨（⛔ 不留一層淡紅到下一回合）。 */
   resetForRound(): void {
     for (const s of this.slots) s.active = false;
     this.paint(0, "");
+    this.dimLifeMs = 0;
+    this.dimAgeMs = 0;
+    this.paintDim(0, "");
   }
 
   dispose(): void {
     if (this.disposed) return;
     this.disposed = true;
     for (const s of this.slots) s.active = false;
+    this.dimLifeMs = 0;
     this.el?.remove();
     this.el = null;
+    this.dimEl?.remove();
+    this.dimEl = null;
   }
 
   // ── 內部 ──────────────────────────────────────────────────────────────────
@@ -208,6 +253,55 @@ export class ScreenFxLayer {
   private currentAlpha(s: FlashSlot): number {
     if (!s.active || !(s.lifeMs > 0)) return 0;
     return screenFlashAlpha(s.ageMs / s.lifeMs, s.peak, s.gentle);
+  }
+
+  /** 現在的 EX 壓暗（0..1）—— 純讀,⛔ 不推進時鐘。 */
+  private currentDimAlpha(): number {
+    if (!(this.dimLifeMs > 0)) return 0;
+    const a = exDimAlpha(this.dimAgeMs / this.dimLifeMs);
+    return this.reduced ? a * Math.max(0, Math.min(1, this.limits.reducedFlashMult)) : a;
+  }
+
+  private tickDim(dtMs: number): void {
+    if (!(this.dimLifeMs > 0)) return;
+    this.dimAgeMs += dtMs;
+    if (this.dimAgeMs >= this.dimLifeMs) {
+      this.dimLifeMs = 0;
+      this.dimAgeMs = 0;
+      this.paintDim(0, "");
+      return;
+    }
+    const a = this.currentDimAlpha();
+    const peak = exDimTuning().peakAlpha;
+    this.paintDim(a, exDimFilter(peak > 0 ? a / peak : 0));
+  }
+
+  private paintDim(alpha: number, filter: string): void {
+    if (alpha === this.lastDimAlpha && filter === this.lastDimFilter) return;
+    this.lastDimAlpha = alpha;
+    this.lastDimFilter = filter;
+    const el = this.ensureDimEl();
+    if (!el) return;
+    el.style.opacity = String(alpha);
+    // ⚠️ 兩個字串都寫:`backdrop-filter` 在不支援的瀏覽器上是 no-op,而
+    //    `-webkit-` 前綴在 Safari 上仍然是它唯一認得的名字。
+    el.style.backdropFilter = filter;
+    el.style.setProperty("-webkit-backdrop-filter", filter);
+  }
+
+  private ensureDimEl(): HTMLDivElement | null {
+    if (this.dimEl) return this.dimEl;
+    const host = this.opts.host ?? (typeof document !== "undefined" ? document.body : null);
+    if (!host) return null;
+    const el = document.createElement("div");
+    el.className = "ggd-screen-exdim";
+    // ⚠️ `z-index` 比閃爍那一層**低**:壓暗是 backdrop（世界安靜下來）,
+    //    而閃爍是前景的一記重音 —— 反過來會讓每一發閃光都被自己壓暗。
+    el.style.cssText =
+      "position:fixed;inset:0;pointer-events:none;z-index:59;opacity:0;background:#000;will-change:opacity";
+    host.appendChild(el);
+    this.dimEl = el;
+    return el;
   }
 
   private paint(alpha: number, color: string): void {

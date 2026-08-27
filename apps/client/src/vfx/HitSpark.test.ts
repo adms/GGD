@@ -20,7 +20,7 @@ import { Scene } from "@babylonjs/core/scene";
 import { ParticleSystem } from "@babylonjs/core/Particles/particleSystem";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { HitSpark, sparkIntensity, impactComposerFor } from "./HitSpark";
-import { impactRecipe, IMPACT_TINTS } from "./vfxPresets";
+import { impactRecipe, impactTailMs, IMPACT_TINTS } from "./vfxPresets";
 
 let engine: NullEngine;
 let scene: Scene;
@@ -110,10 +110,14 @@ describe("layered pooled impact kit (impact-sparks-retune)", () => {
     expect(spark.intensity).toBe("heavy");
     expect(impactComposerFor(scene).activeRingCount).toBe(1);
     expect(spark.done).toBe(false);
-    spark.update(6300); // ring life 240ms → expired; smoke still alive
+    // ⭐ GH#741 —— 這幾個時刻**從 recipe 推導**，⛔ 不抄出貨的毫秒數：煙的壽命
+    //    現在逐級距分級（收尾預算），而抄一份就是第四個住處（第〇·四守則）。
+    const heavyRing = impactRecipe("heavy", IMPACT_TINTS.physical).ring!.lifeMs;
+    const heavyTail = impactTailMs("heavy");
+    spark.update(6000 + heavyRing + 1); // ring expired; the smoke body is still alive
     expect(impactComposerFor(scene).activeRingCount).toBe(0);
     expect(spark.done).toBe(false);
-    spark.update(6600); // longest layer (smoke 600ms) finished
+    spark.update(6000 + heavyTail); // longest layer (the smoke body) finished
     expect(spark.done).toBe(true);
   });
 
@@ -131,9 +135,11 @@ describe("layered pooled impact kit (impact-sparks-retune)", () => {
     cover("impact-sparks-retune");
     const spark = new HitSpark(scene, 1, 1, 10000);
     const count = scene.particleSystems.length;
-    spark.update(10500);
+    // 同上：時刻從 `impactTailMs` 推導，⛔ 不是抄 600ms（light 現在短很多）。
+    const tail = impactTailMs(spark.intensity);
+    spark.update(10000 + tail - 1);
     expect(spark.done).toBe(false);
-    spark.update(10600);
+    spark.update(10000 + tail);
     expect(spark.done).toBe(true);
     spark.dispose();
     expect(scene.particleSystems.length).toBe(count);

@@ -72,6 +72,8 @@ import {
   resolveClusterTuning,
 } from "./hudBottomCluster";
 import { touchControlsRect } from "./touchControlsRect";
+// ⭐ GH#800 —— 「這個 viewport 玩家到得了嗎」由**出貨的**那支 predicate 回答。
+import { shouldShowRotateOverlay } from "../../input/mobileDetect";
 import { bottomClusterStyle } from "./BottomCluster";
 import { HudRoot } from "../HudRoot";
 import { hudStore, resetHudStore, type SeatView } from "../../net/RoomStore";
@@ -169,11 +171,33 @@ describe("bottom cluster — 緊鄰但不重疊 (client-28)", () => {
   });
 
   /**
-   * ⭐ 今天量到的重疊 —— **只能變短**（修好就刪那一列）。
-   * 375 寬的直立手機根本不夠寬：Q/W/E/R 圓弧的中段落在置中的資源條上。
-   * ⛔ 搬版面是**另一張** fix 票（GH#765 的 Non-goals 逐字寫明）。
+   * ⭐⭐ GH#800 —— **`TOUCH_PLATE_KNOWN` 空了，而且它⛔ 不是被搬版面清掉的。**
+   *
+   * 在此之前這裡寫著 `["375x667/W", "375x667/E"]`：375 寬的直立手機不夠寬，
+   * Q/W/E/R 圓弧的中段落在置中的資源條上（實測 W ∩ plate、E ∩ plate）。
+   *
+   * ⚠️⚠️ **而那兩列量的是一個玩家永遠看不到的畫面。** 出貨的
+   * `input/mobileDetect.shouldShowRotateOverlay` 逐字是
+   * `opts.touch && opts.height > opts.width` ⇒ ⭐ **每一個直立的觸控 viewport
+   * 都整片蓋著 `ui/RotateOverlay`**（`position:fixed; inset:0; zIndex:100;
+   * background:#0b0e14; pointerEvents:auto` —— 不透明、吃點擊、蓋住整個 HUD）。
+   *
+   * ⇒ 「搬幾 px」在這裡是**優化一個沒有人看的畫面**。而算術也不允許：把資源條
+   * 抬到 E 的上緣之上（bottom ≥ 219）之後它會撞上 `recall`（上緣 y 371），
+   * 要清掉 recall 得 bottom ≥ 296 —— 超過 `clusterTouchBottomPx` 的上界 280，
+   * 而且那會讓橫向觸控的血條浮到畫面正中間。
+   *
+   * ⭐ 所以豁免是**推導**的，⛔ 不是一張手寫名單：這個 viewport 上 HUD 到底
+   * 是不是躲在旋轉提示後面，由**出貨的那支 predicate** 回答。
+   * ⇒ 哪天有人放行直立（或改了那個判準），這條守衛**當場**變回會紅的。
+   * ⛔ 這與「改量法讓帳本變綠」不同：`touchControlsRect` 的算術一個字都沒改，
+   *    ⭐ 改的是「這個 viewport 算不算一個玩家到得了的 HUD 狀態」。
    */
-  const TOUCH_PLATE_KNOWN = new Set(["375x667/W", "375x667/E"]);
+  const TOUCH_PLATE_KNOWN = new Set<string>([]);
+
+  /** 這個 viewport 上，HUD 整片躲在 `RotateOverlay` 後面嗎？（讀出貨的 predicate） */
+  const behindRotatePrompt = (vp: (typeof VIEWPORTS)[number]): boolean =>
+    shouldShowRotateOverlay({ touch: vp.touch, width: vp.width, height: vp.height });
 
   /**
    * ⭐ GH#765 —— 觸控模式的那一列**不是不存在**，它是 TouchControls。
@@ -184,6 +208,9 @@ describe("bottom cluster — 緊鄰但不重疊 (client-28)", () => {
     const problems: string[] = [];
     for (const vp of VIEWPORTS) {
       if (!vp.touch) continue;
+      // ⭐ GH#800 —— 直立的觸控畫面整片蓋著 RotateOverlay（見上面那段）。
+      //    ⛔ 這個 `continue` 讀的是**出貨的 predicate**，⛔ 不是一張名單。
+      if (behindRotatePrompt(vp)) continue;
       const plate = hudClusterRects(vp, true, rowsFor(true)).resources!;
       // ⛔ 逐顆比對，⛔ 不是拿 `cluster` 外接框 —— 圓弧是扇形，外接框有一大半是空的。
       for (const { id, rect } of touchControlsRect(vp).buttons) {
@@ -201,6 +228,33 @@ describe("bottom cluster — 緊鄰但不重疊 (client-28)", () => {
       const b = touchControlsRect(vp).buttons.find((x) => x.id === id)!;
       const plate = hudClusterRects(vp, true, rowsFor(true)).resources!;
       expect(hudRectsOverlap(b.rect, plate), `${key} 已經不重疊了 —— 從帳本刪掉`).toBe(true);
+    }
+  });
+
+  /**
+   * ⭐⭐ 上一條的**自證**（⛔ 沒有這一條，那個 `continue` 就只是一個安靜的豁免）。
+   *
+   * 三件事一起驗，缺一條那個豁免就可能是在說謊：
+   *   ① 豁免**不是全面的** —— 至少有一個觸控 viewport 真的被逐顆量過；
+   *   ② 被豁免的那一個，是**出貨的 predicate** 說它蓋著旋轉提示的；
+   *   ③ ⭐ 把豁免拿掉，這把尺**仍然量得到**那個真重疊 ——
+   *      也就是它不是「量不到所以綠」（天譴那次的 d 洞：一把在特定方向上是瞎的尺）。
+   */
+  it("⭐ 旋轉提示的豁免是推導的、非全面的，而且尺仍然量得到被豁免的那個重疊", () => {
+    const touchVps = VIEWPORTS.filter((v) => v.touch);
+    const measured = touchVps.filter((v) => !behindRotatePrompt(v));
+    const exempt = touchVps.filter((v) => behindRotatePrompt(v));
+    expect(measured.length, "每一個觸控 viewport 都被豁免了 —— 這條守衛是空的").toBeGreaterThan(0);
+    expect(exempt.length, "沒有任何 viewport 走到豁免那條路 —— 這段自證是空的").toBeGreaterThan(0);
+    for (const vp of exempt) {
+      expect(vp.height, "被豁免的 viewport 不是直立的").toBeGreaterThan(vp.width);
+      // ③ 尺的自證：豁免拿掉之後，那些重疊**還在**（⛔ 不是被搬走了）
+      const plate = hudClusterRects(vp, true, rowsFor(true)).resources!;
+      const hits = touchControlsRect(vp).buttons.filter((b) => hudRectsOverlap(b.rect, plate));
+      expect(
+        hits.length,
+        `${label(vp)}: 這裡已經不重疊了 —— 那就⛔ 不需要旋轉提示的豁免，把它從這段自證裡拿掉`,
+      ).toBeGreaterThan(0);
     }
   });
 

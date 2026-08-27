@@ -494,6 +494,7 @@ export function AbilityBar(): React.JSX.Element | null {
         const innateCd = cooldownView(
           seat.passiveCooldown ?? 0,
           displayFinal(innate.cooldownSec ?? 0, "cooldown", env),
+          { seatId: seat.seatId, slot: "PASSIVE" },
         );
         // A permanent innate whose doc grants nothing (29 of 48) must not read
         // like the 19 that work — see passiveSlot.effective.
@@ -665,6 +666,8 @@ export function AbilityBar(): React.JSX.Element | null {
         const cd = cooldownView(
           learned ? (seat.cooldowns[i] ?? 0) : 0,
           learned ? displayFinal(ability.cooldown[rank - 1] ?? 0, "cooldown", env) : 0,
+          // ⭐ GH#725（舊 #119）—— 本地預測：按下的當幀起轉（`ui/cooldownPredict`）
+          { seatId: seat.seatId, slot },
         );
         // passive-only skill (no castable effects) — dashed tile + soft cue
         const passive = isPassiveOnly(ability);
@@ -807,7 +810,10 @@ export function AbilityBar(): React.JSX.Element | null {
         if (!ex) return null;
         // exSlotView's own `sweep` still divides by the AUTHORED cooldown; the
         // tile's progress geometry uses the env-scaled max instead (#219).
-        const cd = cooldownView(seat.exCooldown, displayFinal(ex.cooldownSec, "cooldown", env));
+        const cd = cooldownView(seat.exCooldown, displayFinal(ex.cooldownSec, "cooldown", env), {
+          seatId: seat.seatId,
+          slot: "EX",
+        });
         // EX can (rarely) be a passive-only skill → dashed tile + soft cue
         const exDef = Abilities.tryGet(seat.exAbilityId as AbilityId);
         const exPassive = exDef ? isPassiveOnly(exDef) : false;

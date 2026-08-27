@@ -37,6 +37,7 @@
  */
 import { TICK_HZ } from "@ggd/shared/constants";
 import type { CSSProperties } from "react";
+import { predictedCooldownTicks, type CooldownPredictKey } from "./cooldownPredict";
 
 /** Below this many seconds the number shows one decimal (see `cooldownLabel`). */
 export const SUBSEC_AT = 3;
@@ -85,9 +86,22 @@ export function cooldownLabel(cdSecs: number): string {
   return cdSecs.toFixed(1);
 }
 
-/** The whole cooldown read for one tile. */
-export function cooldownView(cdTicks: number, maxSecs: number): CooldownView {
-  const cdSecs = cooldownSeconds(cdTicks);
+/**
+ * The whole cooldown read for one tile.
+ *
+ * ⭐ GH#725（舊 #119）—— `predict` 給了就走**本地預測**那一條：按下的當幀起轉,
+ * 權威快照一到就以權威為準。⛔ 省略 = 逐位元等於 2026-08-27 之前的行為
+ * （所以 `CouchHudGrid` 那種**別人的**技能列一個字都不用改）。
+ * 規則、上界與「⛔ 不可以延長冷卻」的結構保證全在 `ui/cooldownPredict`。
+ */
+export function cooldownView(
+  cdTicks: number,
+  maxSecs: number,
+  predict?: CooldownPredictKey,
+): CooldownView {
+  const cdSecs = cooldownSeconds(
+    predict ? predictedCooldownTicks(predict, cdTicks, maxSecs) : cdTicks,
+  );
   return {
     cdSecs,
     frac: cooldownFrac(cdSecs, maxSecs),

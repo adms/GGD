@@ -41,6 +41,7 @@ import {
   type CastEventLike,
   type CastNotice,
 } from "./castFeedback";
+import { clearCooldownPrediction, noteCooldownPrediction } from "./cooldownPredict";
 import { notePassiveProc, passiveHookIcdSeconds, passiveProcAbilityId } from "./passiveProc";
 import { INNATE_INERT_NOTE, passiveSlotView } from "./passiveSlot";
 import { stripAbilityNumber } from "./components/abilityText";
@@ -169,7 +170,15 @@ export function announceCastAttempt(slot: ChampionAbilitySlot): CastAnnouncement
     alive: hud.localAlive,
     passive: view.passive,
   });
-  if (!predicted) return null;
+  if (!predicted) {
+    // ⭐⭐ GH#725（舊 #119）—— **這裡就是「按下的那一幀」。**
+    // 客戶端剛剛跑完一次完整的預測（等級／冷卻／魔力／生死／被動）而**沒有理由拒絕**
+    // ⇒ 這一按幾乎一定會成立。在此之前這個分支只是 `return null`（＝「不要罵他」），
+    // ⛔ 一個字都沒寫下來,於是冷卻圈要等一趟 RTT 才開始轉。
+    // ⚠️ ⛔ 這裡**不重算**任何規則 —— 規則的唯一住處是上面那一次 `predictCastReject`。
+    noteCooldownPrediction({ seatId: seat.seatId, slot });
+    return null;
+  }
 
   return push(
     castRejectNotice(slot, predicted.reason, {
@@ -214,6 +223,12 @@ export function recordCastEvent(ev: CastEventLike, localEntityId: number | null,
     if (notice) {
       pushCastNotice(notice);
       noteCastDenied(notice.slot, nowMs);
+      // ⭐ GH#725 —— 權威說「這一次不算」⇒ **立刻**收掉那一格的本地預測。
+      // ⛔ 少了這一行,一次超出射程的按鍵會讓冷卻圈轉滿 graceMs 才跳回去 ——
+      //    那正是票文點名「比不預測更糟」的那個樣子。
+      const mySeat = hudStore.getState().localSeatId;
+      if (mySeat !== null && notice.slot !== null)
+        clearCooldownPrediction({ seatId: mySeat, slot: notice.slot });
     }
     return;
   }

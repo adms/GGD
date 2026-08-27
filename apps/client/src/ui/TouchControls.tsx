@@ -268,6 +268,8 @@ export function TouchControls(): React.JSX.Element | null {
         const cd = cooldownView(
           learned ? (seat.cooldowns[i] ?? 0) : 0,
           learned ? displayFinal(ability.cooldown[rank - 1] ?? 0, "cooldown", env) : 0,
+          // ⭐ GH#725（舊 #119）—— 本地預測：按下的當幀起轉（`ui/cooldownPredict`）
+          { seatId: seat.seatId, slot },
         );
         // passive-only skill (no castable effects) — dashed tile + soft cue
         const passive = isPassiveOnly(ability);
@@ -385,7 +387,10 @@ export function TouchControls(): React.JSX.Element | null {
       {(() => {
         const ex = exSlotView(seat);
         if (!ex) return null;
-        const cd = cooldownView(seat.exCooldown, displayFinal(ex.cooldownSec, "cooldown", env));
+        const cd = cooldownView(seat.exCooldown, displayFinal(ex.cooldownSec, "cooldown", env), {
+          seatId: seat.seatId,
+          slot: "EX",
+        });
         // EX can (rarely) be a passive-only skill → dashed tile + soft cue
         const exDef = Abilities.tryGet(seat.exAbilityId as AbilityId);
         const exPassive = exDef ? isPassiveOnly(exDef) : false;
@@ -476,6 +481,7 @@ export function TouchControls(): React.JSX.Element | null {
         const cd = cooldownView(
           seat.passiveCooldown ?? 0,
           displayFinal(innate.cooldownSec ?? 0, "cooldown", env),
+          { seatId: seat.seatId, slot: "PASSIVE" },
         );
         return (
           <div

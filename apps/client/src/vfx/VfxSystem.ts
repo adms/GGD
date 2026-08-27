@@ -1538,6 +1538,18 @@ export class VfxSystem {
             | { x: number; z: number }
             | undefined, nowMs);
         }
+        // ⭐⭐ GH#741（舊 #42）—— **EX 的變暗／去飽和 backdrop。**
+        //
+        // 推鏡（`CameraRig.exPunchIn`）2026 年初就上線了,而「畫面壓暗」那一半
+        // 從來沒有消費端。⛔ 它**不**跟著上面的 `isFinitePos(pos)` 走:壓暗是
+        // 螢幕空間的,施法者的世界座標算不出來（剛生成、剛換場）**不該**讓
+        // 特寫的另一半消失。⇒ 放在那道 break 的**前面**。
+        //
+        // ⚠️ 觀眾判定與 `combatFeedback.wantsExPunch` **同一條**:只有**本機自己**
+        // 的 EX 壓暗。⛔ 廣播每一個人的 EX = 團戰時畫面整場是暗的。
+        // ⚠️ 節流交給 `ScreenFxLayer.exDim()`（重放而不是疊加）。
+        if (ev.data.slot === "EX" && caster !== undefined && caster === (this.ctx.localEntityId?.() ?? null))
+          this.screenFx.exDim();
         // FIX #131: a null OR non-finite caster position spawns nothing — an
         // un-interpolated {x:NaN} would otherwise park the EX white-hot pop
         // (layeredPop) off-world at a screen corner.
