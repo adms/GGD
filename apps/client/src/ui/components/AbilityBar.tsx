@@ -306,6 +306,53 @@ function PassiveIcdChip(props: { slot: ChampionAbilitySlot; size: number }): Rea
  * on-cooldown tile's number reads on top as before. Touch tiles already show
  * the name and carry no icon, so they don't need this (see TouchControls).
  */
+/**
+ * ⭐ GH#330 —— 「還沒加點」要**畫在格子上**，⛔ 不是只有 pips 少一顆。
+ *
+ * ⚠️ 這一條是 owner 自己踩出來的：他回報「悟空變身超級賽亞人**沒有任何效果、
+ * 甚至沒有進入 CD 冷卻**」，而引擎與內容都是好的 —— 真相是 `rank: 0` ⇒
+ * `castAbility` 回 `"not-learned"`，被拒的施法⛔不進冷卻、不播特效、不變身，
+ * **四個症狀一次全中**。⇒ ⭐ **一個沒讀到 toast 的玩家拿到的體驗，和「這技能壞了」
+ * 逐項相同** —— 而出貨當下唯一的訊號是一行會消失的提示與三顆暗掉的 pips。
+ *
+ * 修法沿用商店 #517 已證明的同一句話：**理由用畫的**（⛔ 不是藏在 hover 或 toast
+ * 裡 —— 手把與觸控都沒有 hover，而 toast 會捲掉）。
+ * ⚠️ 文案分兩種狀態，因為玩家要做的事不一樣：手上**有點**就是「按 ＋」，
+ * 沒點就只是「還沒學」——⛔ 對著一個沒有點數的人喊「去加點」是假的指示。
+ */
+function UnlearnedMark({ hasPoint }: { hasPoint: boolean }): React.JSX.Element {
+  const m = abilityBarMetrics();
+  return (
+    <div
+      aria-label={hasPoint ? "尚未學習，可以加點" : "尚未學習"}
+      style={{
+        position: "absolute",
+        inset: 0,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        pointerEvents: "none",
+      }}
+    >
+      <span
+        style={{
+          padding: `${m.s(1)}px ${m.s(4)}px`,
+          borderRadius: m.s(3),
+          fontSize: m.s(9),
+          lineHeight: `${m.s(12)}px`,
+          whiteSpace: "nowrap",
+          background: "rgba(6,8,14,0.88)",
+          border: `${m.s(1)}px solid ${hasPoint ? "#f2c637" : "#4a5468"}`,
+          color: hasPoint ? GOLD : "#93a0bb",
+          textShadow: "0 1px 2px rgba(0,0,0,0.9)",
+        }}
+      >
+        {hasPoint ? "＋ 未學習" : "未學習"}
+      </span>
+    </div>
+  );
+}
+
 function TileName({ label, color }: { label: string; color?: string }): React.JSX.Element {
   const m = abilityBarMetrics();
   return (
@@ -690,6 +737,9 @@ export function AbilityBar(): React.JSX.Element | null {
                   toggleOn: seatToggleOn(seat, slot),
                 }}
               />
+              {/* ⭐ GH#330 —— 沒加點就把「未學習」畫在格子上。⚠️ 排在三態框**之後**
+                  才蓋得過去；被動不畫（它本來就不用學，字會變成謊話）。 */}
+              {!learned && !passive && <UnlearnedMark hasPoint={seat.unspentPoints > 0} />}
               {/* cast-fill overlay (imperative; grows while this slot casts) */}
               <div
                 data-cast-slot={i}
