@@ -55,10 +55,21 @@ import tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from w3xlib.blp import decode_blp  # noqa: E402
-from w3xlib.mdx import parse_mdx  # noqa: E402
-from w3xlib.models import STOCK_MPQS, STOCK_MPQ_DIR, convert_all, slug  # noqa: E402
-from w3xlib.mpq import W3XArchive  # noqa: E402
+# ⭐ GH#769: `--check` reads JSON and stats files. Nothing else. But this import
+# block drags in Pillow (w3xlib.blp), and on a machine where Pillow is missing —
+# or installed for the WRONG ARCH, which is what a universal2 python3 spawned
+# from node hits here — the whole script refuses to start. A reconciliation gate
+# that cannot run in the environment that runs the gates is not a gate, so the
+# conversion imports are allowed to fail and are re-raised at the moment a
+# conversion actually needs them (⛔ never silently: main() names the cause).
+_CONVERT_IMPORT_ERROR: Exception | None = None
+try:
+    from w3xlib.blp import decode_blp  # noqa: E402
+    from w3xlib.mdx import parse_mdx  # noqa: E402
+    from w3xlib.models import STOCK_MPQS, STOCK_MPQ_DIR, convert_all, slug  # noqa: E402
+    from w3xlib.mpq import W3XArchive  # noqa: E402
+except Exception as _e:  # pragma: no cover - environment-dependent
+    _CONVERT_IMPORT_ERROR = _e
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
@@ -353,6 +364,12 @@ def main() -> int:
 
     if args.check:
         return check_records()
+
+    if _CONVERT_IMPORT_ERROR is not None:
+        print(f"⛔ 轉檔用的相依載不起來（{_CONVERT_IMPORT_ERROR}）。"
+              "⭐ `--check` 不需要它們，其餘子指令需要 —— 裝一份與這個直譯器"
+              "同架構的 Pillow 再跑一次。", file=sys.stderr)
+        return 2
 
     if args.list or not args.names:
         for k, v in STOCK_MODELS.items():
