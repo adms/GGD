@@ -141,6 +141,10 @@ export class RoundPurgeCoordinator {
     const prev = this.prev;
     this.prev = phase;
     if (prev === phase) return;
+    // ⭐ 邊界打點（debug 級，每回合 ~3 行）—— 2026-08-27 真瀏覽器驗收時
+    //   「三次回合邊界零次 purge」而**沒有任何東西說話**，只能逐層猜。
+    //   fail-open 沒錯，**靜默**才是缺陷：這一行讓下一次同型故障 30 秒定位。
+    console.debug(`[purge] phase ${prev || "∅"} → ${phase}`);
     if (prev === COMBAT_PHASE) void this.purgeNow();
   }
 
