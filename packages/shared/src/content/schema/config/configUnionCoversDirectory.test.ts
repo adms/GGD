@@ -14,6 +14,13 @@
  * ⭐ 為什麼 union 不能改成掃資料夾自動組出來：`z.discriminatedUnion` 吃的是一個
  * **元組**，`ConfigDoc = z.infer<…>` 的精度完全來自它（`config.ts` 自己記著一次
  * 「ConfigDoc 型別不夠準 ⇒ 一個永遠 false 的死比對」）。⇒ 表手寫，代價由這裡擋。
+ *
+ * ⭐ **兩個推導源，⛔ 不是一個**（GH#558 ③，2026-08-27 補上第二個）：
+ *   ① **原始碼** —— `schema/` 樹裡宣告了 `config.*@1` 的每一個檔（開了 schema 忘了掛 union）
+ *   ② ⭐ **出貨內容** —— `content/config/*.json` 每一份文件的 `schema` tag
+ *      （內容已經上線，而這個映像的 union 不認得它 ⇒ 整包內容被拒 ⇒ 骨架英雄）
+ * ⚠️ ① 救不了 ②：一份新的內容 JSON 不必在 `schema/` 底下留下任何痕跡，
+ *    就能在部署之後把整包內容帶走。
  */
 import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -62,6 +69,36 @@ function tagsOnDisk(): Map<string, string[]> {
 
 const unionTags = zConfigDoc.options.map((o) => o.shape.schema.value as string);
 
+/**
+ * ⭐⭐ GH#558 ③ —— **第二個推導源：出貨的內容。**
+ *
+ * 上面那一段掃的是**原始碼**（`schema/` 樹裡誰宣告了 `config.*@1`）。它答得出
+ * 「有人開了一份 schema 卻忘了掛 union」，⛔ 但它答不出反方向：
+ * **`content/config/` 裡躺著一份文件，而這個映像的 union 根本不認得它的 tag。**
+ *
+ * ⚠️ 反方向才是 2026-08-02 線上壞掉四小時的形狀，而它在 v0.24.8 前夕又發生一次
+ * （#557）：`zConfigDoc` 拒絕整份文件 → ContentLoader 驗證失敗 → `main.tsx`
+ * fail-open 註冊 2 隻骨架 → 選人畫面空掉，**而網站看起來完全正常**。
+ *
+ * ⭐ CLAUDE.md 第〇·七守則的拆檔第 3 條逐字寫著「閘要從**出貨的東西**推導，
+ * ⛔ 不是掃資料夾」—— 而在 2026-08-27 之前，這一支**兩個方向都在掃檔案**。
+ * 掃原始碼救不了「未追蹤／新加的內容文件」那一半：那份 JSON 不必在 `schema/`
+ * 底下留下任何痕跡，就能在部署後把整包內容帶走。
+ */
+const CONTENT_CONFIG_DIR = join(DIR, "../../../../../../content/config");
+
+/** `content/config/*.json` 每一份出貨文件宣告的 `schema` tag（`_` 開頭的是索引，不是文件）。 */
+function shippedConfigTags(): Map<string, string> {
+  const out = new Map<string, string>();
+  for (const name of readdirSync(CONTENT_CONFIG_DIR).sort()) {
+    if (!name.endsWith(".json") || name.startsWith("_")) continue;
+    const raw: unknown = JSON.parse(readFileSync(join(CONTENT_CONFIG_DIR, name), "utf8"));
+    const tag = (raw as { schema?: unknown }).schema;
+    if (typeof tag === "string") out.set(name, tag);
+  }
+  return out;
+}
+
 describe("schema/ 樹裡的每一份 config schema 都在 zConfigDoc 的 union 裡", () => {
   it("★ 掃的是整個 schema/ 樹 —— 上一層那 17 個檔也算數", () => {
     const files = [...tagsOnDisk().keys()];
@@ -100,6 +137,30 @@ describe("schema/ 樹裡的每一份 config schema 都在 zConfigDoc 的 union �
       }
     }
     expect(new Set(unionTags).size).toBe(unionTags.length);
+  });
+
+  /**
+   * MUTATION LOG（第二守則 —— 真的跑過）:
+   *   · `config/index.ts` 的 union 拔掉 `zConfigCombatEnvDoc` 那一行
+   *       → 這一條紅，訊息指名 `combat-env.json` 與 `config.combat-env@1`。
+   */
+  it("⭐ 出貨內容裡的每一個 config schema tag，這個映像的 union 都認得", () => {
+    const shipped = shippedConfigTags();
+    // 量尺先自證：掃不到東西的「全過」與真的全過長得一模一樣。
+    expect(shipped.size, `${CONTENT_CONFIG_DIR} 掃不到出貨的 config 文件`).toBeGreaterThan(50);
+    const unknown: string[] = [];
+    for (const [file, tag] of shipped) {
+      if (!unionTags.includes(tag)) unknown.push(`content/config/${file} 的 schema="${tag}"`);
+    }
+    expect(
+      unknown,
+      `⛔ 這幾份**已經出貨**的內容，這個映像的 zConfigDoc 不認得：\n  ${unknown.join("\n  ")}\n` +
+        "後果不是「這幾份被忽略」——是 zConfigDoc 拒絕整份文件 ⇒ 內容驗證整份失敗 ⇒ " +
+        "fail-open 退回 2 隻骨架英雄 ⇒ 選人畫面空掉，而網站看起來完全正常" +
+        "（2026-08-02 線上四小時 · #557 第二次）。\n" +
+        "修法：在 config/index.ts 的 zConfigDoc union 補上它們（⛔ 不要改這條測試，" +
+        "⛔ 也不要刪那份內容 —— 內容已經在線上了）。",
+    ).toEqual([]);
   });
 
   it("⛔ 拆檔前的私有零件不可以被 index.ts 洩漏成公開名字", async () => {

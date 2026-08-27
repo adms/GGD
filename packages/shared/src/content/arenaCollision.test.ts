@@ -3,6 +3,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../testkit/cover";
+import { TEAM_SIZE } from "../constants";
 import { zArenaDoc, zArenaDef } from "./schema/arena";
 import { GROUND_STYLE_IDS } from "./schema/groundStyle";
 import { auditArenaCollision, classifyModel, circleObstacleForDecor } from "./arenaCollision";
@@ -12,7 +13,13 @@ const miniZone = {
   center: { x: 0, z: 0 },
   boundaryRadius: 24,
   obstacles: [],
-  spawns: [[{ x: -10, z: 0 }], [{ x: 10, z: 0 }]],
+  // ⭐ GH#325 —— 每側要坐得滿一隊（`TEAM_SIZE`）。這個夾具在 2026-08-27 之前
+  //   每側只有 1 個出生點，而它**通過** schema —— 那正是那張票的缺口：
+  //   一份合法的 arena@1 讓 slot 1/2 取到 undefined。⛔ 不抄 3。
+  spawns: [
+    Array.from({ length: TEAM_SIZE }, (_, i) => ({ x: -10, z: i * 2 })),
+    Array.from({ length: TEAM_SIZE }, (_, i) => ({ x: 10, z: i * 2 })),
+  ],
 };
 
 describe("arena groundStyle enum (arena-groundstyle)", () => {

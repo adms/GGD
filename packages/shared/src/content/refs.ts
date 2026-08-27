@@ -3,6 +3,11 @@
  * extract every cross-collection reference from a parsed doc. HARD refs
  * (items, projectiles, models, abilities) produce DanglingRefError; SOFT refs
  * (vfx, status-effects — content that may not be authored yet) only warn.
+ *
+ * ⭐ GH#723 —— `validateReferences` 讀的是「這份技能**展開之後**長成什麼樣」，
+ * ⛔ 不是磁碟上那份存著 `template:{ref,params}` 的原樣文件。理由與作法寫在
+ * 檔案下半 `expandedForRefs` 的檔頭（一句話：展開跑在 `registerAll()`，而這支
+ * 跑在它之前 ⇒ 展開出來的硬引用曾經整片逃過檢查）。
  */
 import type { CoreAbilitySlot } from "../sim/intents";
 import type { EffectDef } from "../sim/effects/effect";
@@ -19,6 +24,8 @@ import type { LootTableDoc } from "./schema/lootTable";
 import type { SkinDoc } from "./schema/skin";
 import type { AnyConfigDoc } from "./schema/config";
 import type { VfxDoc, RibbonDoc, AttachmentDoc } from "./schema/vfx";
+import type { TemplateDoc } from "./schema/template";
+import { hasTemplateBinding, resolveTemplateExpansion } from "./templates/resolve";
 
 export interface RefEdge {
   /** dot path of the referencing field inside the doc */
@@ -53,8 +60,11 @@ function effectRefs(effects: readonly EffectDef[] | undefined, base: string, out
       //     所以指不到模板 = 連「該用哪一具模型」都問不出來。
       //   · 出貨語料量到 9 個字面 `modelKey` + 3 個 `preset`,dangling **0** ——
       //     ⭐ 這條閘是在**現況已經乾淨**的時候關上的,⛔ 不是拿它去追既有的債。
-      // ⭐ 註冊之後才被模板補上的那些 modelKey 由 `modelFxStagingContract.test.ts`
-      //   的第 ⑥ 條驗(它讀**註冊後**的技能);這裡驗的是**作者寫下的**那一份。
+      // ⭐ 2026-08-27（GH#723）之前這兩行寫著「這裡驗的是**作者寫下的**那一份」,
+      //   而模板補上的那些由 `modelFxStagingContract.test.ts` ⑥ 驗。⚠️ 那句話現在
+      //   只剩一半為真:`validateReferences` 已經讀展開後的樣子（見 `expandedForRefs`）,
+      //   所以模板生出來的 modelKey/preset **在載入時就驗得到**;
+      //   `modelFxStagingContract` ⑥ 仍在,但它守的是註冊後的完整性,⛔ 不再是唯一一道。
       if (e.modelKey !== undefined) {
         out.push({ field: `${p}.modelKey`, targetCollection: "models", targetId: e.modelKey });
       }
@@ -286,13 +296,90 @@ export interface RefReport {
   warnings: DanglingRefError[];
 }
 
+// ---------------------------------------------------------------------------
+// GH#723 —— 模板展開出來的引用**也要被驗**
+// ---------------------------------------------------------------------------
+/**
+ * ⛔⛔ **順序相依：展開發生在 `registerAll()`，而這支跑在它之前。**
+ *
+ * `content/abilities/<id>.json` 存的是 `template:{ref,params}` ＋ 一個空的
+ * `effects`（設計 §2.2：存綁定不存展開結果，這樣模板一升級每一支引用它的技能
+ * 下一次載入就重新展開）。⇒ store 裡那份**原樣**文件身上，
+ * `spawnProjectile.projectileId` / `spawnModelFx.modelKey` / `preset` 這些
+ * **硬引用一個都看不到** —— 它們是展開之後才長出來的。
+ *
+ * #173 開票時靠「今天還沒有人用模板」這個前提活著。⚠️ 那個前提在 2026-08-26
+ * 靜默失效（121 份技能／英雄文件採用 template · 46 個模板 · 其中 13 個帶硬引用），
+ * ⛔ 而**沒有任何東西變紅**。
+ *
+ * ⭐ 這裡的修法是把**順序**關起來，⛔ 不是把展開搬家：
+ * 驗證讀的是「這份文件展開後**會**長成什麼樣」，所以無論 `registerAll` 什麼時候
+ * 跑、跑不跑，載入期看到的引用集合都是完整的。
+ *
+ * ⚠️ **fail-soft 不可以退化**（2026-08-01 事故：選人畫面全空）：
+ * 展開**失敗**的文件在這裡原樣通過（回傳原 doc）——那一支的降級由
+ * `registries.ts::handleFailure` 負責，而它已經有 `templateFailSoft.test.ts` 在守。
+ * 這一支只多說「展開**成功**、但指到不存在的東西」這一句話。
+ */
+function expandedForRefs<T>(doc: T, templates: ReadonlyMap<string, TemplateDoc>): T {
+  const raw = doc as unknown as Record<string, unknown>;
+  if (templates.size === 0 || raw === null || typeof raw !== "object") return doc;
+  if (!hasTemplateBinding(raw)) return doc;
+  const resolution = resolveTemplateExpansion(raw, templates);
+  // ⛔ 展開失敗 ⇒ 原樣回傳。⛔ 不在這裡製造第二條降級路徑。
+  return resolution.ok ? (resolution.merged as unknown as T) : doc;
+}
+
+/** 展開之後才出現的那些 edge，欄位路徑前面掛一個記號 —— 它在磁碟上找不到。 */
+const TEMPLATE_FIELD_PREFIX = "template→";
+
+/**
+ * 一份文件的 ref edge，**已經把模板展開算進去**。
+ * 非技能／非英雄的集合原樣走 `extractRefs`（模板只長在技能上）。
+ */
+function refEdgesOf(
+  collection: CollectionName,
+  doc: unknown,
+  templates: ReadonlyMap<string, TemplateDoc>,
+): RefEdge[] {
+  const onDisk = extractRefs(collection, doc);
+  let view: unknown = doc;
+  if (collection === "abilities") {
+    view = expandedForRefs(doc, templates);
+  } else if (collection === "champions") {
+    const champ = doc as ChampionDoc;
+    const abilities = { ...champ.abilities };
+    let any = false;
+    for (const slot of SLOTS) {
+      const expanded = expandedForRefs(champ.abilities[slot], templates);
+      if (expanded === champ.abilities[slot]) continue;
+      abilities[slot] = expanded;
+      any = true;
+    }
+    if (any) view = { ...champ, abilities };
+  }
+  if (view === doc) return onDisk;
+  // ⭐ 差集才掛記號：`abilities.Q.id` / `modelKey` 這些**作者寫下的**引用照舊，
+  //   只有展開才長出來的那些才在訊息裡自報「我不在磁碟上，我是模板生的」。
+  const authored = new Set(onDisk.map((e) => `${e.field} ${e.targetCollection} ${e.targetId}`));
+  return extractRefs(collection, view).map((e) =>
+    authored.has(`${e.field} ${e.targetCollection} ${e.targetId}`)
+      ? e
+      : { ...e, field: `${TEMPLATE_FIELD_PREFIX}${e.field}` },
+  );
+}
+
 /** Check every reference in the store. Hard dangles -> errors, soft -> warnings. */
 export function validateReferences(store: ContentStore): RefReport {
   const errors: DanglingRefError[] = [];
   const warnings: DanglingRefError[] = [];
+  // GH#723 —— 模板表要在走 REFERENCES 之前建好（純資料，⛔ 不碰註冊表）。
+  const templates = new Map<string, TemplateDoc>(
+    store.all<TemplateDoc>("ability-templates").map((t) => [t.id, t]),
+  );
   for (const collection of Object.keys(REFERENCES) as CollectionName[]) {
     for (const doc of store.all<{ id: string }>(collection)) {
-      for (const edge of extractRefs(collection, doc)) {
+      for (const edge of refEdgesOf(collection, doc, templates)) {
         if (store.has(edge.targetCollection, edge.targetId)) continue;
         const err = new DanglingRefError(
           collection,

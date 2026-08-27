@@ -1749,13 +1749,18 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // "field:abilities.passive.ranks[].auras" exemption DELETED 2026-07-25: the
   // JASS effect-audit batch converted 66-04 靈壓震撼 (godie-e00t.r, A0IC/A0ID)
   // to a passive slow-aura — the first content aura, so the key is adopted.
+  // ⚠️ 2026-08-27（GH#757）—— 這兩列**在此之前指不到任何開著的票**：它們引用的
+  //    #114 早就被關掉，而 debt 的定義（本檔 :53-55）是「每一次跑都印一條 banner」
+  //    ⇒ 一條每跑必吼、而吼給誰聽沒有人說得出來的債。順帶：舊 why 寫的「662 支技能」
+  //    也早就過期（今天是 421 份 ability doc · 71 份 champion doc）——
+  //    第三守則的形狀：一個被散文守著的數字活過了保存期限，而沒有東西變紅。
   "field:abilities.descriptionRoles": {
     status: "debt",
-    why: "task #114 (semantic colour-role markup) is marked COMPLETE and the render path handles it, but the importer has never been re-run, so 0 of 662 abilities carry it and every tooltip falls back to plain text. schema/ability.ts predicted exactly this: 'absent until the importer re-runs'.",
+    why: "GH#757（接手已關的 #114）—— 語意色彩鏈**有渲染沒有輸入**：schema 開了欄位、`abilityText.ts::parseRoleMarkup` → Tooltip / Codex 四個消費端全部活著，而 2026-08-27 實查 `content/abilities`（**421** 份）與 `content/champions`（**71** 份）採用數仍是 **0**，importer 的產出函式 `tools/w3x-import/w3xlib/wts.py::to_role_markup` **零呼叫者** ⇒ 重跑 importer 也產不出東西。⭐ #757 要的是**收乾淨（拆或餵，選一條）**，⛔ 不是把這一列改成 landing 讓它安靜。⚠️ 選『餵』之前必須先修 `abilityText.ts` 兩條正則與 `parseRoleMarkup` 的呼叫順序（先 rescale 再 parse ⇒ 插入 `[/c]` 之後冷卻/傷害數字不再被乘倍率，卡面會直接說謊）。⚠️ 兩條出路**都動不了只有 schema 的一半**：拿掉這個欄位會讓 `content/editor-target-profile.json`（skillremake:json）、`docs/editor-contract/ggd-runtime-capabilities.{md,json}`（caps:export）、`docs/技能標記機制與效果規則.md`（spec:build）四份產物同時過期。",
   },
   "field:champions.abilities.*.descriptionRoles": {
     status: "debt",
-    why: "the champion-embedded mirror of the above; same missing importer run.",
+    why: "GH#757 —— 上面那一列的 champion-embedded 鏡像（STRICT 鏡像規則 ⇒ 兩邊一起動、一起收）。2026-08-27 實查 71 份 champion doc 採用數 0。⛔ 不要單獨處置這一列：只收一邊就是把鏡像規則破掉。",
   },
   // `field:champions.abilities.*.hitFeel` was exempt here as "a MIRROR GAP, not a
   // plain zero" — 30 standalone ability docs carried hitFeel and 0 of their

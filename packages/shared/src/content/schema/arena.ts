@@ -1,5 +1,6 @@
 /** arena@1 — mirrors `ArenaDef` in sim/world/ArenaDef.ts. */
 import { z } from "zod";
+import { TEAM_SIZE } from "../../constants";
 import { zId, zVec2 } from "./common";
 import { GROUND_STYLE_IDS, DEFAULT_GROUND_STYLE } from "./groundStyle";
 import { zArenaScenery } from "./arenaScenery";
@@ -55,7 +56,13 @@ export const zZoneDef = z
     center: zVec2,
     boundaryRadius: z.number().positive(),
     obstacles: z.array(zObstacle),
-    /** Spawn points, indexed by side (0/1) then slot (0..2). */
+    /**
+     * Spawn points, indexed by side (0/1) then slot (0..2).
+     *
+     * ⚠️ GH#325 —— 每一側**至少 `TEAM_SIZE` 個**，那條規則由下面的 superRefine 執行
+     * （⛔ 不寫成 `.min(3)`：3 是 `TEAM_SIZE` 的值，抄一份就是第〇·四守則說的第二個住處）。
+     * 這裡留 `.min(1)` 是為了讓「一個都沒有」與「不夠坐滿一隊」得到**兩種不同**的訊息。
+     */
     spawns: z.tuple([z.array(zVec2).min(1), z.array(zVec2).min(1)]),
 
     // ── GH#324 的三個 optional 擴充 ────────────────────────────────────────
@@ -227,6 +234,28 @@ export const zZoneDef = z
       }
     });
     zone.spawns.forEach((side, si) => {
+      // ⭐ GH#325 —— **座位數與出生點數是一對關係，⛔ 不是兩個各自合法的名詞。**
+      //
+      // 消費端（`MatchController` 的 `spawns[side]![slot % TEAM_SIZE]!` 兩處、
+      // `royaleSpawnAt`、`lobbySpawn`）全部以 `TEAM_SIZE` 為模數取格。schema 在
+      // 2026-08-27 之前只要求每側 ≥ 1 ⇒ 一份**完全合法**的 arena@1 會讓 slot 1/2
+      // 取到 `undefined`，而兩個非空斷言把它一路帶進 runtime（或在 royale/lobby
+      // 那兩條路上靜默繞回 [0]，＝三個人疊在同一格而沒有人知道）。
+      //
+      // 出貨 13 張場地每側都手寫了 3 個 —— ⚠️ 那是**巧合**，沒有任何東西在保證它。
+      // ⛔ `TEAM_SIZE` 一律 import：抄一個 3 進來，就是第〇·四守則說的第二個住處，
+      //    而它會在 owner 把隊伍改成 4 人的那一天靜默過期。
+      if (side.length < TEAM_SIZE) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["spawns", si],
+          message:
+            `zone "${zone.id}" side ${si} 只有 ${side.length} 個出生點，` +
+            `少於一隊的人數 TEAM_SIZE=${TEAM_SIZE} —— ` +
+            `第 ${side.length}..${TEAM_SIZE - 1} 號座位會取到 undefined（或疊在同一格）。` +
+            `補滿這一側的 spawns（⛔ 不要把消費端改成退回 spawns[${si}][0]）。`,
+        });
+      }
       side.forEach((s, pi) => {
         const r2 = zone.bounds?.kind === "rect" ? zone.bounds : undefined;
         const outside =
