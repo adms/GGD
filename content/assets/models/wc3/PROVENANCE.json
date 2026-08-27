@@ -1,0 +1,18 @@
+{
+  "schema": "provenance.wc3-models@1",
+  "ticket": "GH#443",
+  "authorisation": "owner 2026-08-19（兩則，逐字）：「w3xArtFamilies.ts 的檔頭就是在寫 WarStompCaster，記錄你當初裁決『這一族用參數化原型，⛔ 不出貨模型』…幫我改掉規則 現在都可以出貨」／「我說過有就用，沒有才用外部 cc0/ccby，再沒有就自己生成，請記得規則，我已經全部都可以使用 BZ 了」",
+  "condition": "⭐ 授權是**有條件**的，條件就是這一份檔案。owner 在 GH#402 給音訊解禁時說的是「直接上架但**註記來源**就好」—— 那不是客套，是條件。⇒ 每一個進 `content/assets/models/wc3/` 的位元組都要在這裡有一列，而那是一條**會紅的閘**（`apps/client/src/render/views/blizzardOverlayGate.test.ts`：有檔沒列 → 紅、有列沒檔 → 紅、sha256 對不上 → 紅）。",
+  "order": "⭐ **先帳本、後開閘**（GH#443 票文自己的順序約束）。這一份**現在是空的**，而它必須先存在：反過來做（先把模型倒進 content/、之後再補帳本）＝ 中間那段時間「沒有出處的位元組」自由進場，而且沒有任何東西會說話。",
+  "rowContract": {
+    "file": "相對於 `content/` 的路徑（沿用 audio/wc3/PROVENANCE.json 的慣例，閘照這個去讀位元組重算 sha256）",
+    "archive": "來源封存檔：war3.mpq / War3x.mpq / War3xLocal.mpq / War3Patch.mpq",
+    "wc3Path": "封存檔內的原始路徑，反斜線分隔（例：`Abilities\\\\Spells\\\\Human\\\\Thunderclap\\\\WarStompCaster.mdl`）",
+    "sha256": "**出貨那一份位元組**的 sha256 —— ⛔ 不是 MPQ 裡原始 .mdl 的（轉檔會變）。這是唯一一格改散文改不掉的欄位",
+    "sourceSha256": "⭐ MPQ 裡那一份原始 .mdl/.blp 的 sha256（選填但強烈建議）—— 它回答「這一份真的是從那一格抽出來的嗎」，而 `sha256` 只回答「出貨的位元組沒被換過」",
+    "converter": "把來源變成出貨位元組的那一支（例：`tools/w3x-import/mdx_to_glb.py`）＋它的版本／commit"
+  },
+  "whyEmpty": "⛔ **今天 `content/` 裡一個 Blizzard 模型位元組都沒有**，所以這一份是空的 —— ⚠️ 而空的理由**不是**版權（版權在 2026-08-19 已經全面解禁）。⭐ 逐行讀碼查出來的真正阻塞點是**位元組還沒被抽出來**：`w3xAbilityArt.ts` 檔頭寫的「1305 of the 1529 … we cannot ship」裡，那 1305 個是 **retail Blizzard `.mdl` 路徑**，它們從來沒有被抽取／轉檔過（`content/assets/vfx/w3x-ability-provenance.json` 的 `models` 只有 265 筆，全部是**地圖作者自己 import** 的那一批）。⇒ ⭐ 「解禁」本身**解不開任何一支技能** —— 要解開它要跑一次抽取＋轉檔（四份 MPQ 就在 repo 根目錄），而那條管線住 `tools/w3x-import/`。⛔ 在位元組落地之前把 `w3xAbilityArt` 的 filter #1 拿掉，會把技能綁到**不存在的資產**上 —— 那正是 CLAUDE.md 失敗形態⑧（消費端存在，但它消費不到）。",
+  "notInScope": "⛔ `data/blizzard-overlay/` 底下的 40 份**每單位 glb** 與 511 段**角色語音台詞**不在這一份裡。它們仍然 git-ignored、不進映像、只靠 runtime mount —— ⚠️ ⛔ 不要把「owner 開放了 BZ 資產」讀成「那個目錄可以搬進 content/」：搬與不搬是**另一個決定**（#10 / #81 的範圍），而這一份帳本只管**已經在 `content/` 裡**的位元組。",
+  "models": {}
+}
