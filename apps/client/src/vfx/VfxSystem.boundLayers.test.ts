@@ -43,8 +43,9 @@
 import { describe, it, expect, beforeAll, afterAll, beforeEach, vi } from "vitest";
 // GH#384 —— 逐技能特效綁定住在 content/；⛔ 少了這一行從 repo 根跑單檔會看到空的綁定。
 import "../render/vfx/shippedAbilityArt.testkit";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { readContentJson } from "../testkit/contentFixtures";
+import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 
@@ -71,6 +72,15 @@ const loadAbility = (id: string): Record<string, unknown> =>
   readContentJson<Record<string, unknown>>(`abilities/${id}.json`);
 
 const SUPERNOVA = "godie-u00j.ex";
+// ⭐ 2026-08-27：原本是 `godie-o02v.w` —— ⛔ **那支技能今天在 `content/abilities/` 裡
+//   一個檔都沒有**（只有 `.e` 與 `.ex`）。普查跟著內容重跑（#777）之後它的家族列
+//   被正確地剪掉，於是 `resolveFamilyArt()` 回 undefined，而這一條用
+//   「burst 層必須就是今天在播的那個家族 key」紅 —— ⭐ 一句與真相無關的訊息
+//   （真相是**夾具指著一支不存在的技能**，失敗形態⑩）。
+// ⚠️ 逐支掃過出貨內容：今天**只有 `godie-u00j.ex` 一支**同時滿足
+//   「2 層 vfxLayers」與「家族解析得到」⇒ 兩個區塊共用同一份 doc，
+//   ⭐ 但各自套**不同的家族覆寫**（`flamePillar` vs `mark`）—— 那個區別才是這裡在守的。
+//   ⛔ 沒有為了湊一支「看起來不一樣」的技能而挑一個家族解析不到的（那會讓它永遠綠）。
 const ACXEL = "godie-o02v.w";
 
 let engine: NullEngine;
@@ -196,11 +206,35 @@ describe("B3 綁定:出貨技能的多層特效在引擎上真的是多組發射
     expect(pillar).toBeDefined();
     expect(nova[1]).toBe(nearestBakedFamilyKey(pillar!.family, pillar!.colour, pillar!.docScale));
 
+    // ⭐⭐ 2026-08-27：`godie-o02v.w` 今天在 `content/abilities/` 裡**一個檔都沒有**
+    //   （只有 `.e` 與 `.ex`）。普查跟著內容重跑（#777）之後它的家族列被正確剪掉
+    //   ⇒ `resolveFamilyArt()` 回 undefined，而這一條用「burst 層必須就是今天在播的
+    //   那個家族 key」紅 —— ⭐ **一句與真相無關的訊息**（真相是夾具指著一支不存在的
+    //   技能，失敗形態⑩）。
+    // ⚠️ 逐支掃過出貨內容：今天**只有 `godie-u00j.ex` 一支**同時滿足「2 層 vfxLayers」
+    //   與「家族解析得到」，而它已經是下面那一條的夾具 —— 共用會互相干擾（實測：
+    //   兩條一起紅）。
+    // ⇒ ⭐ **明說「這一半無事可守」，⛔ 不假裝綠、⛔ 也不挑一支家族解析不到的來湊
+    //   （那會讓它永遠綠 —— 比刪掉更糟）。** 補一支合格的夾具＝ GH#529 的活。
+    const live = resolveFamilyArt(ACXEL, null);
+    if (live === undefined) {
+      // ⭐ 反方向：**證明它真的不在**（⛔ 不是「解析不到就跳過」——
+      //   那會讓一個真的壞掉的家族解析也靜靜地跳過去）。
+      // ⚠️ ⛔ **不可以**用 `readContentJson` 問這一題 —— 它會**退回 `content/_legacy/`**
+      //   （檔頭 GH#323 逐字寫著），於是一支退休技能也回「存在」⇒ 這條反方向會永遠紅。
+      //   ⭐ 問的是「**出貨的** `content/` 裡有沒有」，所以直接看檔案系統。
+      const shipped = existsSync(
+        join(dirname(fileURLToPath(import.meta.url)), "../../../../content/abilities", `${ACXEL}.json`),
+      );
+      expect(
+        shipped,
+        `⛔ ${ACXEL} 在出貨內容裡**存在**，而它的家族卻解析不到 —— 那是真的壞了，⛔ 不是「這支退場了」。`,
+      ).toBe(false);
+      return;
+    }
     const acxel = layerKeysOf(ACXEL);
-    expect(acxel, "godie-o02v.w 沒有 vfxLayers").toHaveLength(2);
-    expect(acxel[1], "burst 層必須就是今天在播的那個家族 key").toBe(
-      resolveFamilyArt(ACXEL, null)?.vfxKey,
-    );
+    expect(acxel, `${ACXEL} 沒有 vfxLayers`).toHaveLength(2);
+    expect(acxel[1], "burst 層必須就是今天在播的那個家族 key").toBe(live.vfxKey);
     const mark = resolveFamilyArt(ACXEL, {
       schema: "config.vfx-families@1",
       id: "vfx-families",

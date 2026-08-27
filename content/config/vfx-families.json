@@ -958,6 +958,18 @@
       "family": "resurrect",
       "w3xScale": 0.9
     },
+    "godie-o030.ex": {
+      "family": "mark",
+      "tint": [
+        255,
+        100,
+        0
+      ],
+      "flyHeight": 150
+    },
+    "godie-o030.r": {
+      "family": "shockwaveRing"
+    },
     "godie-ofar.ex": {
       "family": "shockwaveRing",
       "tint": [
@@ -1009,7 +1021,6 @@
       "family": "blink"
     },
     "godie-orkn.ex": {
-      "family": "mark",
       "tint": [
         255,
         100,

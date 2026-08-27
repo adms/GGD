@@ -103,7 +103,27 @@ try {
           size: Buffer.byteLength(raw),
         });
       }
-      return extra.length ? { ...idx, entries: [...idx.entries, ...extra] } : idx;
+      // ⭐⭐ GH#835 —— 上面那個聯集是**單向**的：目錄有而索引沒有的會補進來，
+      //   ⛔ 而**索引有而檔案已經沒了**的不會被拿掉 ⇒ 驗證去讀它 ⇒ `ENOENT` ⇒
+      //   `content:build` 整份失敗，訊息是「read failed」而**真相是索引過期**。
+      // ⚠️ 這是失敗形態⑫（只驗一個方向）：從「宣告」走的迴圈，永遠看不到
+      //   「有宣告而無實體」的那一半。
+      // ⭐ 建置期的**存在性**以目錄為準（這一步的工作正是重建索引）——
+      //   ⛔ 但**不靜默**：逐個印出來（一份被誤刪的文件與一份被正確剪掉的孤兒
+      //   長得一模一樣，而只有印出來才分得出）。
+      const alive = idx.entries.filter((e) => existsSync(join(CONTENT_DIR, e.path)));
+      const dropped = idx.entries.length - alive.length;
+      if (dropped > 0) {
+        console.warn(
+          `⚠️ ${collection}/_index.json 有 ${dropped} 筆指向**已經不存在**的檔 —— ` +
+            "建置期以目錄為準把它們拿掉（⛔ 若其中有一份是被誤刪的，現在就是發現它的時候）：",
+        );
+        for (const e of idx.entries) {
+          if (!existsSync(join(CONTENT_DIR, e.path))) console.warn(`   · ${e.path}`);
+        }
+      }
+      const base = dropped > 0 ? { ...idx, entries: alive } : idx;
+      return extra.length ? { ...base, entries: [...alive, ...extra] } : base;
     },
   };
   loaded = await new ContentLoader(buildTimeSource).load({ policy: "fail-closed" });

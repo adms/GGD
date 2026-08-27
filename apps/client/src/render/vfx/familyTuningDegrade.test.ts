@@ -154,7 +154,7 @@ describe("family tuning: the knob must never delete the effect", () => {
   it("sanity — the db really loaded, and 91 shockwaveRing abilities exist", () => {
     expect(db.ready).toBe(true);
     expect(db.vfxFor("fx.ember-bolt-cast")).not.toBeNull();
-    expect(RING_IDS.length).toBeGreaterThan(70);
+    expect(RING_IDS.length, `ring 家族一支都沒有 —— 母體壞了。${'⭐ 母體非空（⛔ 不釘數字）—— 普查跟著內容重跑（#777：662 → 421 支，**259 個消失的全部是退休的、活著的 0 個**）之後，任何寫死的下限都會用「母體壞了」這種**與真相相反**的訊息紅。'}`).toBeGreaterThan(0);
     // ⛔ 不抄出貨數字（那會是第四個住處）—— 這裡要證明的是「磁碟上那一堆**就是**
     // 解析器要的那一堆」，而那是一個**關係**，⛔ 不是一個常數。
     // （GH#431 讓它從 78 變 79，而一個常數只會用錯誤的訊息紅。）

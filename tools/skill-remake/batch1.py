@@ -175,6 +175,26 @@ def finalize_content():
     env = dict(os.environ, GGD_CONTENT_DIR=os.path.join(ROOT, "content"))
     # ⭐ castTimeSec 的唯一來源是 castTimeFormula.deriveCastTime()（RETIRED 那張表
     #    說明了為什麼舊值不可以抄回來）。這一步就是那個「後處理」。
+    # ⭐⭐ 2026-08-27（GH#835）——**順序**是承重的，⛔ 不是風格問題。
+    #   `deriveCastTime()` 要讀 `config.cast-time@1`（`castTimeMaxSec` 的夾子），
+    #   而它走的是**載入器**，也就是 `_index.json` / `bundle.json`。
+    #   ⇒ ⛔ 在 `content:build` **之前**跑，它讀到的是**上一次**的設定
+    #     ⇒ 算出來的 castTimeSec 用**舊的**夾子（實測 `godie-ewar.r` = 1.233），
+    #     而 `castTimeCoverage.test.ts` 拿**新的**公式對它 ⇒ 紅，
+    #     ⭐ 訊息說「內容 1.233 != 公式 1」而真相是「**它讀了舊設定**」。
+    #   ⇒ 三步：先 build（讓設定新鮮）→ 再 derive → 再 build（把新值烘進 bundle）。
+    #   ⚠️ 兩次 build 是必要的，⛔ 不是浪費：第一次餵公式，第二次收成果。
+    def build(tag: str) -> None:
+        print(f"→ pnpm content:build（{tag}）")
+        rc = subprocess.run([pnpm, "content:build"], cwd=ROOT, env=env).returncode
+        if rc != 0:
+            sys.exit(
+                f"✖ pnpm content:build 失敗（exit {rc}）—— 索引與 bundle **沒有**重建。\n"
+                "  上面那幾行已經指名出問題的檔與欄位（buildIndexes.ts 是先驗再寫）。\n"
+                "  ⛔ 不要 commit：現在 content/ 的來源檔是新的、產物是舊的。"
+            )
+
+    build("① 先讓 config.cast-time 新鮮 —— 公式要讀它")
     print("→ deriveCastTimes --write（castTimeSec 由公式重算，含英雄卡鏡像）")
     rc = subprocess.run(
         [pnpm, "--filter", "@ggd/shared", "exec", "tsx", "scripts/deriveCastTimes.ts", "--write"],
@@ -182,7 +202,7 @@ def finalize_content():
     ).returncode
     if rc != 0:
         sys.exit(f"✖ deriveCastTimes 失敗（exit {rc}）—— castTimeSec 沒有補上，⛔ 不要 commit。")
-    print("→ pnpm content:build（嚴格 Zod 驗證 → 重建 _index / manifest / bundle）")
+    print("→ pnpm content:build（② 把重算後的 castTimeSec 烘進 _index / manifest / bundle）")
     rc = subprocess.run([pnpm, "content:build"], cwd=ROOT, env=env).returncode
     if rc != 0:
         sys.exit(

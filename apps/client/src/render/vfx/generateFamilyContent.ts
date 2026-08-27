@@ -235,7 +235,27 @@ export function shippedFamilyConfig(
   // ⚠️ 死列的判準住在 `abilityArtRows()`（見 `shippedAbilityIds` 的檔頭）——
   //    ⛔ 這裡**不要**再放一份，兩份判準會各自漂（第〇·四守則）。
   for (const id of abilityIds) {
-    const row = mergeRow(existingAbilities[id], abilityArt[id] ?? {}, ownedAbilityFields);
+    // ⭐⭐ GH#835 —— 「產生器**這一格**沒產出」與「產生器**整列**沒產出」是兩件事。
+    //   ⚠️ 在此之前兩者共用同一條路：`abilityArt[id] ?? {}` ⇒ 整列缺席時
+    //   `mergeRow` 把**每一個 owned 欄位**都當成「產生器決定拿掉它」而刪光，
+    //   ⛔ 連 owner 手調的 `tint` / `flyHeight` / `anchor` 一起 ——
+    //   ⭐ 而那正是這一份自己的守衛在喊的「這幾格被產生器吃掉了」。
+    //
+    //   量到的（2026-08-27）：普查跟著內容重跑（#777，662 → 421 支，**259 個消失的
+    //   全部是退休的、活著的 0 個**）之後，`godie-orkn.ex` 這一支**還活著**卻不再被
+    //   證據點名 ⇒ 它在 `vfx-ability-art` 的列只剩 `family` 一格因而整列消失
+    //   ⇒ 這裡連帶把它在 `vfx-families` 的 `tint:[255,100,0]` 與 `flyHeight:150` 吃掉。
+    //
+    // ⇒ ⭐ **整列缺席時，產生器什麼都沒說** —— 只收回**純證據**那一格（`family`），
+    //   其餘（人工演出旋鈕）原樣留著。⛔ 剪列的判準仍然住 `abilityArtRows()`：
+    //   一列在證據消失後**身上沒有任何別人的覆寫**，下面那個 `length > 0` 就會剪掉它。
+    const generated = abilityArt[id];
+    const row =
+      generated === undefined
+        ? Object.fromEntries(
+            Object.entries(existingAbilities[id] ?? {}).filter(([k]) => k !== "family"),
+          )
+        : mergeRow(existingAbilities[id], generated, ownedAbilityFields);
     // 證據不再點名這一支、而它身上又沒有任何別人的覆寫 = 這一列該走了
     // （⛔ 留一個空物件在 UI 上會讀成「未綁定」）。
     if (Object.keys(row).length > 0) abilities[id] = row as never;

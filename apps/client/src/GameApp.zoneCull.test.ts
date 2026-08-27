@@ -99,8 +99,14 @@ describe("L3 · 可見 zone 集合是怎麼算出來的", () => {
 describe("L3 · 四個消費點都真的剔除了", () => {
   it("插值緩衝：走的是 ingestZonedTransforms，而且 zone 集合先算好", () => {
     const body = bodyAfter("private onStatePatch(state: MatchState): void");
+    // ⭐ 2026-08-27：第一個引數從 `state.entities` 改成 `entitiesOf(state)`
+    //   （GH#614/#760 `4d5a5417`：**空的 view-gated 集合根本不上線**，⛔ 不是空 map）。
+    //   ⚠️ 這一條原本把**實作細節**釘死在正則裡 ⇒ 一次正當的重構讓它紅，
+    //   而訊息只說「不 match」—— ⛔ 一句與真相無關的話（失敗形態⑥：掃字串代替行為）。
+    // ⇒ 只釘**承重的那幾格**：三個 zone-cull 專屬的引數必須逐個傳進去；
+    //   第一個引數是「實體從哪來」，⛔ 它怎麼取不是這一條在守的東西。
     expect(body).toMatch(
-      /ingestZonedTransforms\(\s*state\.entities,\s*this\.visibleZones,\s*state\.tick,\s*this\.interp,\s*this\.interpSeen,?\s*\)/,
+      /ingestZonedTransforms\([\s\S]{0,80}?this\.visibleZones,\s*state\.tick,\s*this\.interp,\s*this\.interpSeen,?\s*\)/,
     );
     // 缺陷原狀：不分 zone 的 forEach + interp.push 不可以再存在
     expect(
@@ -190,7 +196,10 @@ describe("L3 · 沒有動到伺服器 / 協定 / 預測", () => {
 
   it("本地英雄的權威樣本仍然直接讀 state，不經過剔除", () => {
     const body = bodyAfter("private onStatePatch(state: MatchState): void");
-    // 自己的 reconcile 輸入永遠拿得到，就算 zone 集合算錯也一樣
-    expect(body).toContain("state.entities.get(String(hud.localEntityId))");
+    // 自己的 reconcile 輸入永遠拿得到，就算 zone 集合算錯也一樣。
+    // ⭐ 2026-08-27：`state.entities` → `entitiesOf(state)`（GH#614/#760 `4d5a5417`
+    //   —— **空的 view-gated 集合根本不上線**）。⭐ 這一條的**意思沒變**：
+    //   `entitiesOf()` 是**未剔除**的來源，剔除只發生在 `ingestZonedTransforms` 裡。
+    expect(body).toContain("entitiesOf(state).get(String(hud.localEntityId))");
   });
 });

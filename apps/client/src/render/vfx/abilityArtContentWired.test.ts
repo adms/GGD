@@ -53,8 +53,8 @@ describe("逐技能特效綁定：content → 註冊表 → 三個消費者", ()
 
   it("⭐ 三個消費者都拿得到；⛔ 沒交進去時是 FAIL-LOUD 而不是靜靜空掉", () => {
     expect(rosterBindings().length).toBeGreaterThan(300);
-    expect(Object.keys(w3xFamilyArtRows()).length).toBeGreaterThan(200);
-    expect(Object.keys(w3xAbilityArtRows()).length).toBeGreaterThan(30);
+    expect(Object.keys(w3xFamilyArtRows()).length, `family 列是空的 —— 母體壞了。${'⭐ 母體非空（⛔ 不釘數字）—— 普查跟著內容重跑（#777：662 → 421 支，**259 個消失的全部是退休的、活著的 0 個**）之後，任何寫死的下限都會用「母體壞了」這種**與真相相反**的訊息紅。'}`).toBeGreaterThan(0);
+    expect(Object.keys(w3xAbilityArtRows()).length, "promoted 列是空的 —— 母體壞了（⛔ 不釘數字：#529 移除 7 列死技能後是 29）").toBeGreaterThan(0);
 
     const err = vi.spyOn(console, "error").mockImplementation(() => {});
     try {

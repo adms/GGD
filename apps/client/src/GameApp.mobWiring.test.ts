@@ -88,7 +88,13 @@ describe("殭屍染黑真的接在 registry 的 tint 接縫上 (GH#192)", () => 
     // 順序是載重的:先更新表,再走 entities。反過來的話一場比賽的第一波殭屍
     // 會用上一份(或預設)的染黑強度上色,而 applyTint 是每個實體只解析一次的。
     const parseAt = collect.indexOf("parseMobVisualJson(");
-    const forEachAt = collect.indexOf("state.entities.forEach(");
+    // ⭐ 2026-08-27：`state.entities.forEach` → `entitiesOf(state).forEach`
+    //   （GH#614/#760 `4d5a5417`）。⭐ 這一條守的是**順序**，
+    //   ⛔ 不是「實體集合怎麼取」—— 所以只找「開始走 entities」那一刻。
+    const forEachAt = Math.max(
+      collect.indexOf("entitiesOf(state).forEach("),
+      collect.indexOf("state.entities.forEach("),
+    );
     expect(parseAt).toBeGreaterThanOrEqual(0);
     expect(forEachAt).toBeGreaterThanOrEqual(0);
     expect(parseAt, "mobVisualJson 在走完 entities 之後才解析").toBeLessThan(forEachAt);

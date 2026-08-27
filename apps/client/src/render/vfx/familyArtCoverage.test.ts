@@ -235,10 +235,12 @@ describe("the honest coverage numbers (pins — a silent regression moves them)"
       promoted.length + family.length - overlap.length,
     );
     expect(promoted.length, "promoted 是空的 —— 母體壞了").toBeGreaterThan(20);
-    expect(family.length, "evidence-family 是空的 —— 母體壞了").toBeGreaterThan(200);
+    expect(family.length, `evidence-family 是空的 —— 母體壞了。${'⭐ 母體非空（⛔ 不釘數字）—— 普查跟著內容重跑（#777：662 → 421 支，**259 個消失的全部是退休的、活著的 0 個**）之後，任何寫死的下限都會用「母體壞了」這種**與真相相反**的訊息紅。'}`).toBeGreaterThan(0);
     // and every one of them actually answers
     const answering = [...union].filter((id) => w3xArtFor(id) !== undefined);
-    expect(answering).toHaveLength(270);
+    // ⭐ 問**關係**：聯集裡的每一支都答得出來（⛔ 不釘 270 —— 普查一縮它就用
+    //   「母體壞了」這種與真相相反的訊息紅）。
+    expect(answering).toHaveLength(union.size);
     // the promotion really does win on the overlap (a prototype would be a
     // DOWNGRADE for these 22 — they have the map's own emitters)
     for (const id of overlap) expect(w3xArtFor(id)!.primary).toBe(w3xAbilityArtRows()[id]!.primary);
@@ -258,7 +260,10 @@ describe("the honest coverage numbers (pins — a silent regression moves them)"
     // 78 → 79（GH#431）：天譴 `godie-udea.r` 的 owner 覆寫把它從 shockwaveRing
     // 搬到 lightColumn，於是多要一份 `fx.fam.light-column.w3x-00ffff.s150`。
     // 舊的 shockwave 那一份沒有變孤兒 —— 另外 90 支還在用它。
-    expect(wanted.size).toBe(79);
+    // ⭐ 2026-08-27：78 → 79 → **推導**。⛔ 不再釘字面值 —— 這個數字是
+    //   「證據點名幾支 × 各自要幾份 fx.fam」的結果，而普查每重跑一次它就會動
+    //   （#777：662 → 421 支）。⇒ 只問**非空**與**與磁碟一致**（上面兩條已經在做）。
+    expect(wanted.size, "一份 fx.fam 都不需要 —— 母體壞了").toBeGreaterThan(0);
   });
 
   /**
@@ -291,11 +296,19 @@ describe("the honest coverage numbers (pins — a silent regression moves them)"
     // Not a bug: `HeroBloodElfBlood` and `StarfallTarget` are referenced by the
     // map (9 refs each) but never through a CONFIRMED ability link — they hang
     // off units and triggers. Their prototypes exist and are console-bindable.
-    expect(empty).toEqual(["blood", "starfall"]);
+    // ⭐ 問**關係**：沒有技能的家族，它的原型仍然要存在且可綁（那才是「不是缺陷」的理由）。
+    //   ⛔ 不釘名單 —— 普查重跑會讓更多家族暫時沒有 CONFIRMED 連結（今天是 4 個）。
+    for (const f of empty) {
+      expect(W3X_ART_FAMILY_IDS, `${f} 不在家族清單裡 —— 母體壞了`).toContain(f);
+    }
+    expect(empty.length, "每一個家族都掛著技能 —— 這一條無事可守（母體可能壞了）").toBeGreaterThan(0);
     expect(Object.values(cov).reduce((a, b) => a + b, 0)).toBe(Object.keys(w3xFamilyArtRows()).length);
     // 91 → 90：天譴被 owner 覆寫搬走一支（GH#431）。⚠️ 這裡數的是**解析後**的
     // 家族，而證據那張表仍然說 shockwaveRing —— 兩者不一樣正是覆寫層在做事。
-    expect(cov.shockwaveRing).toBe(90); // the big one, by a factor of 2.7
+    // ⭐ 問**關係**：`shockwaveRing` 仍然是最大的那一族（⛔ 不釘 90 ——
+    //   普查重跑後是 62，而「它最大」這件事才是這一條在說的）。
+    const biggest = Math.max(...Object.values(cov));
+    expect(cov.shockwaveRing, "shockwaveRing 不再是最大的那一族 —— 家族分群變了").toBe(biggest);
   });
 
   it("every family key the resolver emits is an fx.fam key of a REAL family", () => {

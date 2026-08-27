@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "cdb3c8881e01",
+  "hash": "d7021a0f265c",
   "entries": [
     {
       "id": "attach.ex.midchilder-aura",
@@ -123,12 +123,6 @@
       "size": 1129
     },
     {
-      "id": "fx.fam.breath.blood.s110",
-      "path": "vfx/fx.fam.breath.blood.s110.json",
-      "hash": "89bf4f351372",
-      "size": 1144
-    },
-    {
       "id": "fx.fam.breath.nature.s110",
       "path": "vfx/fx.fam.breath.nature.s110.json",
       "hash": "60e46efe038c",
@@ -139,12 +133,6 @@
       "path": "vfx/fx.fam.burst.fire.s100.json",
       "hash": "eaee70b827cd",
       "size": 1064
-    },
-    {
-      "id": "fx.fam.burst.fire.s105",
-      "path": "vfx/fx.fam.burst.fire.s105.json",
-      "hash": "795b6fac7c73",
-      "size": 1066
     },
     {
       "id": "fx.fam.burst.holy.s100",
@@ -201,22 +189,10 @@
       "size": 1074
     },
     {
-      "id": "fx.fam.cloud.physical.s120",
-      "path": "vfx/fx.fam.cloud.physical.s120.json",
-      "hash": "e92143c1574b",
-      "size": 1090
-    },
-    {
       "id": "fx.fam.cloud.void.s180",
       "path": "vfx/fx.fam.cloud.void.s180.json",
       "hash": "99c55bdd75e8",
       "size": 1098
-    },
-    {
-      "id": "fx.fam.cloud.wind.s120",
-      "path": "vfx/fx.fam.cloud.wind.s120.json",
-      "hash": "f7308ff16733",
-      "size": 1104
     },
     {
       "id": "fx.fam.dissipate.physical.s125",
@@ -249,12 +225,6 @@
       "size": 1109
     },
     {
-      "id": "fx.fam.ground-dust.earth.s80",
-      "path": "vfx/fx.fam.ground-dust.earth.s80.json",
-      "hash": "28b0e00413ee",
-      "size": 1160
-    },
-    {
       "id": "fx.fam.ground-dust.ki.s120",
       "path": "vfx/fx.fam.ground-dust.ki.s120.json",
       "hash": "cd2e88809884",
@@ -273,12 +243,6 @@
       "size": 1069
     },
     {
-      "id": "fx.fam.level-up.holy.s90",
-      "path": "vfx/fx.fam.level-up.holy.s90.json",
-      "hash": "c0dc1ba727c5",
-      "size": 1140
-    },
-    {
       "id": "fx.fam.level-up.ki.s65",
       "path": "vfx/fx.fam.level-up.ki.s65.json",
       "hash": "da8e9e8e3412",
@@ -289,12 +253,6 @@
       "path": "vfx/fx.fam.light-column.arcane.s100.json",
       "hash": "4858bdf76376",
       "size": 1142
-    },
-    {
-      "id": "fx.fam.light-column.arcane.s240",
-      "path": "vfx/fx.fam.light-column.arcane.s240.json",
-      "hash": "b0d75d091467",
-      "size": 1144
     },
     {
       "id": "fx.fam.light-column.fire.s150",
@@ -351,12 +309,6 @@
       "size": 1083
     },
     {
-      "id": "fx.fam.mirror-image.holy.s150",
-      "path": "vfx/fx.fam.mirror-image.holy.s150.json",
-      "hash": "76fa60a8e74a",
-      "size": 1087
-    },
-    {
       "id": "fx.fam.mirror-image.physical.s100",
       "path": "vfx/fx.fam.mirror-image.physical.s100.json",
       "hash": "6a7183a6f52d",
@@ -373,24 +325,6 @@
       "path": "vfx/fx.fam.mirror-image.void.s100.json",
       "hash": "951def942b02",
       "size": 1096
-    },
-    {
-      "id": "fx.fam.missile.fire.s205",
-      "path": "vfx/fx.fam.missile.fire.s205.json",
-      "hash": "2aabaa051e3a",
-      "size": 1123
-    },
-    {
-      "id": "fx.fam.portal.holy.s160",
-      "path": "vfx/fx.fam.portal.holy.s160.json",
-      "hash": "52baa7416630",
-      "size": 1149
-    },
-    {
-      "id": "fx.fam.portal.void.s160",
-      "path": "vfx/fx.fam.portal.void.s160.json",
-      "hash": "ed7859edd4c9",
-      "size": 1161
     },
     {
       "id": "fx.fam.resurrect.fire.s95",
@@ -541,12 +475,6 @@
       "path": "vfx/fx.fam.tornado.w3x-c86464.s170.json",
       "hash": "a2a06bfabbfe",
       "size": 1225
-    },
-    {
-      "id": "fx.fam.tornado.wind.s100",
-      "path": "vfx/fx.fam.tornado.wind.s100.json",
-      "hash": "3a15e2def0de",
-      "size": 1205
     },
     {
       "id": "fx.fam.tornado.wind.s150",
