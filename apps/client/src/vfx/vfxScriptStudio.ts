@@ -71,6 +71,8 @@ interface FieldSpec {
 const COMMON: FieldSpec[] = [
   { key: "on", label: "觸發", kind: "select", options: VFX_SCRIPT_TRIGGERS },
   { key: "atMs", label: "延遲 ms", kind: "range", min: 0, max: 5000, step: 10, clearAt: 0 },
+  // 0＝清掉＝每一段都觸發（schema 的合法值從 1 起）
+  { key: "strikeIndex", label: "第N段觸發", kind: "range", min: 0, max: 12, step: 1, clearAt: 0, show: (s) => s.on === "strike" },
 ];
 const FIELDS: Record<VfxScriptSegment["kind"], FieldSpec[]> = {
   modelFx: [

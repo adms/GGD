@@ -58,30 +58,54 @@ beforeAll(async () => {
   registerAll((await new ContentLoader(shippedContentSource(CONTENT)).load()).store);
 });
 
-/** 真的施放一次龍破斬，回傳每 tick 的事件批（⛔ 不是手捏的）。 */
-function castAndRecord(): EventMessage[][] {
+/** 真的施放一次（預設龍破斬），回傳每 tick 的事件批（⛔ 不是手捏的）。 */
+function castAndRecord(
+  opts: {
+    champion?: ChampionId;
+    slot?: "Q" | "W" | "E" | "R";
+    target?: "point" | "entity";
+    ticks?: number;
+  } = {},
+): EventMessage[][] {
   const world = new SimWorld(SKELETON_ARENA, 1);
   world.combatActive = true;
   const c = SKELETON_ARENA.zones[0]!.center;
   const caster = spawnChampion(world, {
-    championId: CASTER,
+    championId: opts.champion ?? CASTER,
     seatId: asSeatId(0),
     teamId: asTeamId(0),
     pos: { x: c.x, z: c.z },
     zone: 0,
   });
+  const enemy = spawnChampion(world, {
+    championId: CASTER,
+    seatId: asSeatId(1),
+    teamId: asTeamId(1),
+    pos: { x: c.x + 4, z: c.z },
+    zone: 0,
+  });
   world.step(new Map());
   world.transform.get(caster)!.facing = { x: 1, z: 0 };
+  const slot = opts.slot ?? "E";
   const ab = world.abilities.get(caster)!;
-  (ab.slots as { E: { rank: number } }).E.rank = 1;
+  (ab.slots as Record<string, { rank: number }>)[slot]!.rank = 1;
   const hp = world.health.get(caster)!;
   hp.mana = hp.maxMana;
-  const verdict = castAbility(world, caster, "E", { type: "point", point: { x: c.x + 10, z: c.z } });
-  expect(verdict, "出貨的 castAbility 拒絕了龍破斬 —— 標本失效了").toBe("ok");
+  const verdict = castAbility(
+    world,
+    caster,
+    slot,
+    opts.target === "entity"
+      ? { type: "entity", entityId: enemy }
+      : { type: "point", point: { x: c.x + 10, z: c.z } },
+  );
+  expect(verdict, `出貨的 castAbility 拒絕了 ${opts.champion ?? CASTER}.${slot} —— 標本失效了`).toBe(
+    "ok",
+  );
   // ⚠️ `world.step()` 第一行清空 events ⇒ 提交批（abilityCast＋castBegin）要在
   //    第一次 step **之前**快照 —— 線上的 drain 順序正是「提交批先送、之後逐 tick」。
   const batches: EventMessage[][] = [world.events.map((e) => ({ ...e }) as EventMessage)];
-  for (let t = 0; t < TICKS_TO_RUN; t++) {
+  for (let t = 0; t < (opts.ticks ?? TICKS_TO_RUN); t++) {
     world.step(new Map());
     batches.push(world.events.map((e) => ({ ...e }) as EventMessage));
   }
@@ -203,5 +227,51 @@ describe("GH#838 演出腳本的出貨鏈（真 content → 真施放 → 真 Vf
       player.update(t * (1000 / 30));
     }
     expect(count, "⛔ 開關關了播放器還在 dispatch —— rollback 那一格是假的").toBe(0);
+  });
+
+  it("④ strike 觸發器：真放超究武神霸斬 ⇒ 逐段 comboStrike 錨，段 7 只 fire 一次", () => {
+    // 01-04 的行為（GH#250：comboStrikes superff7，七連斬）是出貨標本 ——
+    // 這裡驗的是 GH#838 的逐段演出錨：sim 每一段發 comboStrike，播放器照
+    // strikeIndex 過濾。⛔ 段數（7）不進斷言 —— 期望從真事件流推導。
+    const batches = castAndRecord({
+      champion: "godie-hart" as ChampionId,
+      slot: "R",
+      target: "entity",
+      ticks: 160, // 超究全程 ≈3.5s（105 tick）＋收尾餘裕
+    });
+    const strikes = batches.flat().filter((e) => e.type === "comboStrike");
+    expect(strikes.length, "真施放沒有發出任何 comboStrike —— 逐段錨斷線了").toBeGreaterThan(1);
+    const seventh = strikes.filter((e) => (e.data as { index?: number }).index === 7).length;
+    const doc = zVfxScriptDoc.parse({
+      id: "test-strike",
+      schema: "vfx-script@1",
+      abilityId: "godie-hart.r",
+      segments: [
+        { kind: "floatingText", on: "strike", text: "STRIKE" },
+        { kind: "floatingText", on: "strike", strikeIndex: 7, text: "SEVENTH" },
+      ],
+    });
+    const fired: string[] = [];
+    const player = new VfxScriptPlayer({
+      scriptFor: (id) => (id === "godie-hart.r" ? doc : undefined),
+      allScripts: () => [doc],
+      projectileIdsOf: () => new Set(),
+      entityPos: () => ({ x: 0, z: 0 }),
+      dispatch: (ev) => fired.push((ev.data as { text?: string }).text ?? ev.type),
+      enabled: () => true,
+    });
+    for (let t = 0; t < batches.length; t++) {
+      for (const ev of batches[t]!) player.onEvent(ev, t * (1000 / 30));
+      player.update(t * (1000 / 30));
+    }
+    expect(
+      fired.filter((x) => x === "STRIKE").length,
+      "每一段都該 fire 一次無過濾的 strike 段",
+    ).toBe(strikes.length);
+    expect(
+      fired.filter((x) => x === "SEVENTH").length,
+      "strikeIndex:7 的段要正好在第 7 段 fire",
+    ).toBe(seventh);
+    expect(seventh, "真事件流裡沒有第 7 段 —— 超究的班表標本失效了").toBeGreaterThan(0);
   });
 });

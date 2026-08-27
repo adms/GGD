@@ -35,6 +35,8 @@ import { zScreenShake } from "./effects/screenShake";
 export const VFX_SCRIPT_TRIGGERS = [
   "castStart",
   "castEffect",
+  /** wire `comboStrike`（GH#838 逐段演出錨 —— comboStrikes／delayed 的每一段）。 */
+  "strike",
   "projectileSpawn",
   "projectileHit",
 ] as const;
@@ -44,6 +46,11 @@ const SEG_COMMON = {
   on: z.enum(VFX_SCRIPT_TRIGGERS),
   /** 觸發後再等幾毫秒（0–20000）。省略＝0＝事件當幀。 */
   atMs: z.number().int().min(0).max(20000).optional(),
+  /**
+   * 只在第 N 段觸發（1 起算，同 JASS 的 `SupI`；省略＝每一段都觸發）。
+   * ⛔ 只有 `on:"strike"` 讀它（doc-level refine 擋半套）。
+   */
+  strikeIndex: z.number().int().min(1).max(100).optional(),
 } as const;
 
 /** 模型演出段 —— 詞彙照抄 spawnModelFx 的演出子集（單一住處）。 */
@@ -151,6 +158,13 @@ export const zVfxScriptDoc = z
   .strict()
   .superRefine((doc, ctx) => {
     doc.segments.forEach((seg, i) => {
+      if (seg.strikeIndex !== undefined && seg.on !== "strike") {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["segments", i, "strikeIndex"],
+          message: '只有 on:"strike" 讀得到 strikeIndex —— 其他觸發器沒有段號',
+        });
+      }
       if (seg.kind === "modelFx") {
         // 鏡射 spawnModelFx 的跨欄檢查（pick 不帶 refinement）—— 訊息同語意
         if ((seg.path === "static" || seg.path === "orbit") && seg.lifeSec === undefined) {

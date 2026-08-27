@@ -146,8 +146,37 @@ export interface DelayedStrike {
   readonly finisherOnly?: boolean;
 }
 
+/**
+ * ⭐ GH#838 —— **逐段演出錨**事件的酬載（`world.emit("comboStrike", …)`）。
+ * 型別住 emit 站旁邊，客戶端 import 同一個（GH#606 的規矩，⛔ as never）。
+ * 只有 `strikeCue: true` 的 wave 會發（＝作者寫的 `comboStrikes`／`delayed`），
+ * ⛔ `spawnModelFx` 的 onTouch 逐 tick 取樣班表不發 —— 那是每 tick 一發的量。
+ */
+export interface ComboStrikeEvent {
+  caster: EntityId;
+  /** `"ability:<id>"` —— 客戶端用既有的 `abilityIdOfOrigin` 解出技能 id。 */
+  origin: string;
+  /** 1 起算（同 `sequenceIndex` —— 第 7 刀＝7）。 */
+  index: number;
+  count: number;
+  /** 這一發是收尾（`final` 或 `finisherOnly`）。 */
+  finisher: boolean;
+  zone: number;
+  /** 這一段的主要受害者（過濾後名單第一位；全滅時缺席）。 */
+  victim?: EntityId;
+  /** 這一段落點（受害者當下位置，退化用 wave 的 point）—— sim 解算完送過去。 */
+  x?: number;
+  z?: number;
+}
+
 /** 一次施放排出來的一整串。 */
 export interface DelayedWave {
+  /**
+   * ⭐ GH#838 —— 這一串的每一段要不要發 {@link ComboStrikeEvent}。
+   * 只有**作者 kind**（`comboStrikes`／`delayed`）的排程器設 true；
+   * 缺席 = false = 不發（既有 wave 逐位元不變）。
+   */
+  strikeCue?: boolean;
   caster: EntityId;
   rank: number;
   origin: string;
@@ -254,6 +283,7 @@ export const delayedEffect: EffectKindSpec<"delayed"> = {
       caster: ctx.caster,
       rank: ctx.rank,
       origin: ctx.origin,
+      strikeCue: true, // ⭐ GH#838 —— 作者寫的 delayed 串（詠唱句/EX 七連斬），逐段發演出錨
       ...(ctx.abilitySlot !== undefined ? { abilitySlot: ctx.abilitySlot } : {}),
       // ⭐ 觸發脈絡跟著名單一起凍住。定基是 `resolvePass` 那一格的事（見
       // `deferredTrigger.ts`）—— ⛔ 不可以順手把 `reflectDepth` 也歸零，
@@ -394,6 +424,24 @@ export function delayedSystem(world: SimWorld): void {
       if (struck) for (const id of targets) struck.add(id);
 
       const ctx: EffectContext = { ...base, targets };
+      // ⭐ GH#838 —— 逐段演出錨。在 runEffects **之前**發（演出錨的是「這一刀
+      //    落下的那一刻」）；受害者位置由 sim 解算完送過去（⛔ 客戶端自己查第二次）。
+      if (wave.strikeCue === true) {
+        const victim = targets[0] ?? wave.frozen[0];
+        const vp = victim !== undefined ? world.transform.get(victim)?.pos : undefined;
+        const at = vp ?? point;
+        const payload: ComboStrikeEvent = {
+          caster: wave.caster,
+          origin: wave.origin,
+          index: index + 1,
+          count: wave.strikes.length,
+          finisher: strike.final === true || strike.finisherOnly === true,
+          zone: wave.zone,
+          ...(victim !== undefined ? { victim } : {}),
+          ...(at !== undefined ? { x: at.x, z: at.z } : {}),
+        };
+        world.emit("comboStrike", payload as unknown as Record<string, unknown>);
+      }
       // ⭐ `finisherOnly` 的那一發跳過本體（#541 的「停半拍再劈最後一發」）。
       // 缺席 = false，所以既有的每一份 wave 逐位元不變。
       if (strike.finisherOnly !== true) runEffects(wave.effects, ctx);

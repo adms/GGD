@@ -64,6 +64,7 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   "screenFlash",
   "screenShake",
   "floatingText", // 原作 CreateTextTagUnitBJ —— 克勞德每一刀的 "1Hit"…"7Hit"
+  "comboStrike", // GH#838 逐段演出錨（strikeCue wave 才發）—— VfxScriptPlayer 的 strike 觸發器
   "damage",
   "death",
   "projectileSpawn",

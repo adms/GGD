@@ -159,6 +159,32 @@ export class VfxScriptPlayer {
         if (script) this.schedule(script, "castEffect", { ...frame, tick: ev.tick | 0 }, nowMs);
         return;
       }
+      case "comboStrike": {
+        // GH#838 逐段演出錨（sim 的 delayed/comboStrikes 每一段發一則）。
+        // 歸屬走 origin "ability:<id>"（sim 解算完的落點也在 payload 裡）。
+        const origin = d.origin as string | undefined;
+        const caster = d.caster as number | undefined;
+        if (!origin?.startsWith("ability:") || caster === undefined) return;
+        const abilityId = origin.slice("ability:".length);
+        const script = this.deps.scriptFor(abilityId);
+        if (!script) return;
+        const index = (d.index as number | undefined) ?? 0;
+        const at =
+          typeof d.x === "number" && typeof d.z === "number"
+            ? { x: d.x as number, z: d.z as number }
+            : undefined;
+        const frame: TriggerFrame = {
+          caster,
+          tick: ev.tick | 0,
+          ...(at !== undefined ? { point: at, targetPos: at } : {}),
+        };
+        for (const seg of script.segments) {
+          if (seg.on !== "strike") continue;
+          if (seg.strikeIndex !== undefined && seg.strikeIndex !== index) continue;
+          this.pending.push({ dueMs: nowMs + (seg.atMs ?? 0), seg, frame });
+        }
+        return;
+      }
       case "projectileSpawn":
       case "projectileHit": {
         const projectileId = d.projectileId as string | undefined;
