@@ -116,9 +116,14 @@ def berserk_beam_trail_hook():
 def _debuff_dispel():
     """一發「把身上的負面全部拔掉」——【暴走】免疫組合的下半身（GH#644 ②）。
 
+    ⭐ GH#684 之後這一發**只剩一個掛載點**（`onInterval` 每秒補掃），⛔ 不再掛在
+    `onStatusApplied` 上 —— 「掛上來的那一刻」現在由 `statusImmunity{tags:["debuff"]}`
+    在**掛上之前**擋掉（見 {@link berserk_package}）。⭐ 留著它是因為它涵蓋一段
+    免疫**結構上**看不到的東西：**DoT 與減益型 buff 不走 `applyStatus`**。
+
     ⚠️ `polarity:"debuff"` 是承重的：`berserk` 狀態文件自己是 polarity:"buff"、
     `devour-cooldown` 由 59-01 明寫 `dispellable:false` —— 兩者都拔不到，
-    所以這一發可以放心地掛在「每一次狀態落地」與每秒的掃描上。
+    所以這一發可以放心地掛在每秒的掃描上。
     `count` 刻意省略 ＝ 跟著後台 `dispelRules.maxCountCap` 走（⛔ 不要寫數字）。
     """
     return {"kind": "dispel", "shape": "single",
@@ -129,22 +134,49 @@ def _debuff_dispel():
 def berserk_package(dur, mods, hz=4.0):
     """【暴走】的完整效果包 —— 59-00 與 59-001 只差參數（第零守則⑨）。
 
-    「免疫所有負面 buff」由**兩個既有零件**組出來（⛔ 沒有為它寫任何新機制）：
-      · `invulnerable {blocksDamage:"none", blocksControl:true}` ——
-        CC 那一族（暈眩/纏繞/減速/恐懼/繳械）在**掛上之前**就被拒絕，
-        並發 `immuneControl` 讓玩家看見（07-01 臨、兵、鬥 的同一格先例）。
-      · 增益自帶兩條 hook：`onStatusApplied` 一落地就拔（非 CC 的負面**狀態**，
-        例如詛咒/破甲/禁療），`onInterval` 每秒補掃（DoT 與減益型 buff ——
-        它們不走 `applyStatus`，上一條聽不到）。增益到期 hook 跟著消失，
-        所以「免疫」精確地只活在暴走期間。
+    ⭐ GH#684（owner 2026-08-24 逐字：「殭屍王免疫負面狀態⋯**跟初號機暴走一樣，
+    我建議可以參考甚至共用部分模板**」）—— 這一包現在與殭屍王**共用同一個機制**。
+
+    ── 收斂前後（⭐ 這是 #684 的全部內容）────────────────────────────────────
+    | | 殭屍王（GH#656） | 暴走（收斂**前**） |
+    |---|---|---|
+    | 掛不上來 | `statusImmunity{tags:["cc"]}` | ⛔ **寫不出來** ⇒ `onStatusApplied` 事後拔 |
+
+    ⭐ 兩邊要的是**同一件事**（「這具身體不吃某一類狀態」），差的只有**廣度**：
+    殭屍王是 `cc`（owner 要保留標記與疊層），暴走是 `debuff`（owner：「免疫**所有**
+    負面效果」）。而 `cc ⊂ debuff`（量到的：21 份帶 cc 的**每一份**也帶 debuff）
+    ⇒ ⭐ 一個機制、一格參數，⛔ 不是兩份平行實作。
+
+    ── ⚠️ 為什麼 `tags:["debuff"]` 是**量出來**的，⛔ 不是挑的 ───────────────
+    44 份出貨 status 逐份掃：`polarity:"debuff"` 有 28 份，帶 `debuff` tag 的 27 份。
+    ⭐ **唯一的差集是 `devour-cooldown`** —— 59-01 吞噬**自己**的內部冷卻標記
+    （`no-stat-change` `internal-cooldown` `self`）。⭐ 它落在免疫**外面**正是對的：
+    `applyStatus.ts:116` 逐字寫著免疫「⛔ 不排除 `target === ctx.caster`」，
+    所以它要是帶了 `debuff` tag，暴走會**免疫掉自己的吞噬冷卻** ⇒ 無限吞噬。
+    ⚠️ 同理 `berserk` 狀態自己是 `polarity:"buff"` 且不帶 `debuff` ⇒ ⭐ 免疫**不會
+    把自己擋掉**（這一包的順序是 buff → invulnerable → status("berserk")）。
+
+    ── 三個零件各自負責的那一段（⛔ 沒有重疊，這是收斂的重點）────────────────
+      · ⭐ `statusImmunity{tags:["debuff"]}`（**新**，與殭屍王同一個機制）——
+        任何走 `applyStatus` 的負面狀態在**掛上之前**被拒絕，並發 `immuneControl`
+        讓玩家看見。⭐ 它**取代**了原本的 `onStatusApplied` dispel：那條 hook 修的是
+        「已經落地的」，而落地本身現在不會發生了。
+        ⚠️ 順帶修好一個既有的洞：`invulnerable.blocksControl` 的 `isCc` 讀的是**效果
+        欄位**（stun/root/feared/disarmed/moveSpeedMult），**漏掉詛咒與致盲**
+        （那兩支走 `missChance`）—— 在此之前它們得等 dispel 事後拔，也就是
+        **先生效再被拔掉**。走 tag 就沒有那個窗口了。
+      · `invulnerable {blocksDamage:"none", blocksControl:true}` —— 留著：它擋的是
+        **控制效果**那一族，⛔ 不是只有 `applyStatus` 那條路。
+      · `onInterval` 每秒補掃 —— ⭐ **留著，而且它不是重複的**：DoT 與**減益型
+        buff** 不走 `applyStatus`，`statusImmunity` 在結構上**聽不到**它們。
 
     ⭐ GH#661 —— 第三條 hook 是【移動拖曳光束】的心跳，掛在**同一份增益**上
     正是為了同一個理由：增益到期／被拔掉，下一拍就不會來（見
     {@link berserk_beam_trail_hook}）。
     """
-    return [buff(mods, dur, hooks=[
-                {"on": "onStatusApplied", "target": "self",
-                 "effects": [_debuff_dispel()]},
+    return [buff(mods, dur,
+                 statusImmunity={"tags": ["debuff"]},
+                 hooks=[
                 {"on": "onInterval", "target": "self", "internalCooldown": 1.0,
                  "effects": [_debuff_dispel()]},
                 berserk_beam_trail_hook()]),

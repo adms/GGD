@@ -47,22 +47,6 @@
                 "duration": 6.0,
                 "hooks": [
                   {
-                    "on": "onStatusApplied",
-                    "effects": [
-                      {
-                        "kind": "dispel",
-                        "shape": "single",
-                        "pools": {
-                          "status": true,
-                          "dot": true,
-                          "buffs": true
-                        },
-                        "polarity": "debuff"
-                      }
-                    ],
-                    "target": "self"
-                  },
-                  {
                     "on": "onInterval",
                     "effects": [
                       {
@@ -92,7 +76,12 @@
                     "internalCooldown": 0.25,
                     "target": "self"
                   }
-                ]
+                ],
+                "statusImmunity": {
+                  "tags": [
+                    "debuff"
+                  ]
+                }
               },
               {
                 "kind": "invulnerable",

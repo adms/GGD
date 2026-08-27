@@ -502,6 +502,12 @@ _BUFF_FIELDS = frozenset({
     # ⭐ B2-G：SOURCE_GRANT_SHAPE 的五格授權欄位。在此之前對這 90 支**全部不可達**
     #    （出貨 96 份裡五格都是 0），因為 `buff()` 只有三個具名參數。
     "block", "critStrike", "attributes", "damageTypeOverride", "flight",
+    # ⭐ GH#684：第 13 格 `statusImmunity`（GH#656 為殭屍王做的「這具身體不吃某一類
+    #    狀態」）。⚠️ 它在 schema 上**早就**騎在 SOURCE_GRANT_SHAPE 上（＝ `applyBuff`
+    #    授予得起），⛔ 而這張白名單漏了它 ⇒ 對 skill-remake 的 90 支**不可達**。
+    #    ⭐ 那正是 #684 要收斂的那件事的**根因**：暴走寫不出「掛不上來」，
+    #    只好用 dispel hook 事後補拔，於是同一個意圖長出了第二份平行實作。
+    "statusImmunity",
 })
 
 
