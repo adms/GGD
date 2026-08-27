@@ -244,8 +244,19 @@ const SLOTS = [
     // the mobile-MOBA convention (Wild Rift / Mobile Legends) — and shrunk.
     touchCorner: "top-left",
     touchOrder: 2,
-    touchHeight: 116,
-    touchWidth: 116,
+    // ⭐ GH#759 —— 116 → 110。⚠️ 這 6px **不是**隨手調的：觸控 780×360（#151
+    // breakpoint）的 top-left 疊起來是
+    //   10 ＋ 44(menu) ＋8＋ 44(team-lives) ＋8＋ **116(minimap)** ＋8＋ 44(revive)
+    //   ＋8＋ 66(enemy-team) = **356**，而預算是 350（`HUD_STAMP_BAND` 保留給版本
+    // 徽章的 10px）⇒ `enemy-team` 侵入下緣保留帶**恰好 6px**。
+    //
+    // ⛔ **禁止的作弊法是把 `enemy-team` 的 66 偷改成 60**（#759 逐字點名）——
+    // 那會讓登記表變綠而元件照樣畫 66px。這裡動的是**真的縮得下去**的那一個：
+    // Minimap.tsx:462 `hudSlotWidth("minimap", touch)` 就是它的畫布邊長，
+    // 6px 是一張 110×110 的地圖與一張 116×116 的地圖 —— ⛔ 不是一個說謊的數字。
+    // ⚠️ 高寬**一起**動：地圖是正方形，只縮一邊會把世界拉扁。
+    touchHeight: 110,
+    touchWidth: 110,
     owner: "ui/hud/Minimap.tsx",
     managed: true,
     overlay: true,
@@ -296,11 +307,47 @@ const SLOTS = [
     note: "current duel's 3 enemies — champion + HP/MP + level; below the team-lives/revive stack",
   },
 
-  // ── top-right ─────────────────────────────────────────────────────────────
+  /* ── top-right ───────────────────────────────────────────────────────────
+   * ⭐⭐ GH#800 —— 觸控時這一疊的**排序是量出來的**，⛔ 不是抄桌機的 order。
+   *
+   * ⚠️ 量到的事實（`touchControlsRect` × `hudSlotRect`，2026-08-27）：觸控的
+   * 右下角整塊是 TouchControls，攻擊鈕的上緣落在 `height − 128`
+   * （= `ATTACK_CENTER 84 + ATTACK_SIZE/2 44`）—— 780×360 上是 **y 232**。
+   * 而這一疊（leave 26 · scoreboard 44 · audio-toggle 44 · settings 44 ·
+   * cheats 44 · equipment 48 ＋ 五個 8px 間隙 ＋ 10px 邊）＝ **300**。
+   * ⇒ ⭐ **這一疊在矮的橫向螢幕上一定有 ~68px 落在攻擊鈕那一列** ——
+   * 這是**欄位預算**的問題，⛔ 不是某一個 slot 宣告錯了角落。
+   *
+   * ⇒ 兩件事這裡就決定得了（⛔ 而它們都不需要新的機制）：
+   *   ① **最寬的那一個排最上面**。`equipment` 150 寬，右對齊之後與攻擊鈕的
+   *      水平交集是**滿的 88px** —— 那正是 `028aa3bf` 量到的「88×38」。
+   *      把它排到 `touchOrder: 0`（10..58）之後，它在四個守衛 viewport 上
+   *      **一格都不碰攻擊鈕**。
+   *   ② **最窄的那一個排最下面**。右對齊寬度 w 的 slot 與攻擊鈕的水平交集是
+   *      `min(w − 30, 88)` ⇒ settings(44) = **14** · leave(80) = 50 ·
+   *      cheats(90) = 60 · audio(100) = 70 · scoreboard(110) = 80。
+   *      所以 `settings` 排最後。
+   *
+   * ⭐ 這個順序是**窮舉 6! = 720 種排法量出來的**（目標函式：先最小化與**攻擊鈕**
+   * 的交集面積，再最小化與整個叢集的交集面積）——⛔ 不是「看起來比較順」：
+   *
+   * | 排法 | 與攻擊鈕的交集 | 與整個叢集 |
+   * |---|---:|---:|
+   * | 出貨前（leave·scoreboard·audio·settings·cheats·**equipment**） | **11,368 px²** | 18,822 px² |
+   * | 現在（**equipment**·scoreboard·audio·cheats·leave·settings） | **2,438 px²** | 14,594 px² |
+   *
+   * ⚠️⚠️ **這只把傷害壓到 21%，⛔ 沒有歸零。** 歸零的算術做不到：觸控叢集的
+   * `recall` 上緣在 y≈94，而這一疊有 300px —— 也就是**右欄真正空著的只有 84px**，
+   * 放得下**一個** slot。⇒ 歸零＝手機上少一顆控制項，那是 owner 看得到的取捨
+   * （第一守則：一格後台開關，而開關要落三個住處 ⇒ ⛔ 不是只准動 `apps/client` 的
+   * lane 做得完的）。殘量記在 `touchControlsCollision.test.ts` 的
+   * `CLUSTER_RESIDUAL`，**#800 不關**。⛔ 那本帳不是垃圾桶：它只能變短。
+   * ────────────────────────────────────────────────────────────────────────── */
   {
     id: "leave",
     corner: "top-right",
     order: 0,
+    touchOrder: 4, // #800
     height: 26,
     width: 80,
     owner: "ui/platform/AppRoot.tsx",
@@ -311,6 +358,7 @@ const SLOTS = [
     id: "scoreboard",
     corner: "top-right",
     order: 1,
+    touchOrder: 1, // #800
     height: 26,
     touchHeight: HUD_TOUCH_TARGET,
     width: 110,
@@ -322,6 +370,7 @@ const SLOTS = [
     id: "audio-toggle",
     corner: "top-right",
     order: 2,
+    touchOrder: 2, // #800
     height: HUD_TOUCH_TARGET,
     width: 100,
     owner: "ui/AudioToggle.tsx",
@@ -335,6 +384,8 @@ const SLOTS = [
     id: "settings",
     corner: "top-right",
     order: 3,
+    // #800: 觸控時排**最後** —— 44px 是這一疊裡最窄的,與攻擊鈕的水平交集只有 14px
+    touchOrder: 5,
     height: 30,
     touchHeight: HUD_TOUCH_TARGET,
     width: 44,
@@ -349,6 +400,7 @@ const SLOTS = [
     id: "cheats",
     corner: "top-right",
     order: 4,
+    touchOrder: 3, // #800
     height: 32,
     touchHeight: HUD_TOUCH_TARGET,
     width: 90,
@@ -490,7 +542,10 @@ const SLOTS = [
     // re-homes on coarse pointers), so the item bar moves to the top-right —
     // another right-edge corner the left shop never reaches — and shrinks.
     touchCorner: "top-right",
-    touchOrder: 5,
+    // ⭐ #800: 5 → **0**。150 寬的它右對齊之後與攻擊鈕的水平交集是**滿的 88px**,
+    // 所以它是這一疊裡唯一**絕對不能**排在下面的。排到最上面 (10..58) 之後,
+    // 四個守衛 viewport 上 attack × equipment 全部歸零(原本 844x390 是 88x38)。
+    touchOrder: 0,
     touchHeight: 48,
     touchWidth: 150,
     owner: "ui/hud/EquipmentBar.tsx",

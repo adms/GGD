@@ -1348,7 +1348,27 @@ function ShelfBlock(props: {
 // one catalogue row
 // ---------------------------------------------------------------------------
 
-function CatalogueRow(props: {
+/**
+ * ⭐ GH#509 — 這條軌**本身**是控制項，⛔ 不是一塊掛著 onClick 的裸 div。
+ *
+ * 展開（＝看得到 ✦ 效果全文、ItemCardBody 原文、以及「買下去屬性會變多少」的
+ * delta 預覽）唯一的入口是這條軌的 `onClick`，而 `PadFocusNav.FOCUSABLE_SELECTOR`
+ * 只收 `a[href]` / `button` / 表單元素 / `[tabindex]` / `[data-pad-focusable]`
+ * —— 裸 div 對它**不存在**。列裡唯一的 `<button>`（購買）又在自己的 onClick
+ * 第一行 `e?.stopPropagation()`，所以連「按購買會不小心展開」這條側路也沒有。
+ * ⇒ 純手把玩家只讀得到一行被 ellipsis 截斷的說明就得決定要不要花錢，
+ * 而且「道具欄已滿，無法裝上」這種**買不下去的理由**也永遠看不到。
+ *
+ * 修法沿用 StoreScreen 那條貨架的同一份契約（#516）：`data-pad-focusable` ＋
+ * `tabIndex={0}` ＋ `role="button"`，A 走 `PadFocusNav` 的 `cur.click()`，
+ * 鍵盤的 Enter/Space 要自己補（瀏覽器不會替 div 合成 click）。
+ * ⛔ 沒有放寬 FOCUSABLE_SELECTOR 去收所有裸 div —— 那會把每一塊排版容器
+ * 都掃進焦點走訪。
+ *
+ * ⚠️ 購買鍵仍在同一列，所以 pickSpatial 的橫向移動就到得了它，
+ * ⛔ 不必另做一套鍵位。
+ */
+export function CatalogueRow(props: {
   item: CatItem;
   anchorStat: string | null;
   seat: SeatView;
@@ -1398,8 +1418,19 @@ function CatalogueRow(props: {
     >
       {/* --- the collapsed track: [icon] [name+chips] [anchor] [price] --- */}
       <div
+        data-pad-focusable=""
+        tabIndex={0}
+        role="button"
+        aria-expanded={expanded}
+        aria-label={`${displayName} ${price} g`}
         onClick={onToggle}
+        onKeyDown={(e) => {
+          if (e.key !== "Enter" && e.key !== " ") return;
+          e.preventDefault();
+          onToggle();
+        }}
         style={{
+          outline: "none",
           display: "grid",
           gridTemplateColumns: "30px 1fr 56px 72px",
           alignItems: "center",

@@ -260,10 +260,17 @@ describe("the ping chip's band is reserved, disjoint, and empty (ping-chip-band)
    *
    * The row is keyed tightly and proven NON-VACUOUS below, so it cannot become
    * a dumping ground: if the slot is fixed, this row fails as stale.
+   *
+   * ⭐⭐ 2026-08-27 / GH#759 —— **修好了，所以這張表是空的。**
+   * 修的**不是** `enemy-team` 的 66（上面那一段逐字警告過：那會把看得見的 6px
+   * 重疊換成登記表在說謊）。修的是同一疊裡**真的縮得下去**的那一個：
+   * `minimap` 的觸控尺寸 116 → **110**（高寬一起，地圖是正方形），
+   * 而 `Minimap.tsx:462` 就是拿 `hudSlotWidth("minimap", touch)` 當畫布邊長 ——
+   * ⇒ 那 6px 是一張真的變小的地圖，⛔ 不是一個說謊的數字。
+   * top-left 觸控疊：10 ＋44＋8＋44＋8＋**110**＋8＋44＋8＋66 = **350** ＝ 預算，
+   * `enemy-team` 的下緣**剛好**停在保留帶的上緣（10px 給版本徽章／ping 帶）。
    */
-  const GUTTER_INTRUDERS: readonly { id: HudSlotId; vp: HudViewport; touch: boolean }[] = [
-    { id: "enemy-team" as HudSlotId, vp: { width: 780, height: 360 }, touch: true },
-  ];
+  const GUTTER_INTRUDERS: readonly { id: HudSlotId; vp: HudViewport; touch: boolean }[] = [];
 
   const isIntruder = (id: HudSlotId, vp: HudViewport, touch: boolean): boolean =>
     GUTTER_INTRUDERS.some(
@@ -341,6 +348,13 @@ describe("the ping chip's band is reserved, disjoint, and empty (ping-chip-band)
         "margin AND the build stamp's / ping chip's band; a slot in it will be painted over.\n  " +
         others.join("\n  "),
     ).toEqual([]);
+
+    // 4. ⭐ GH#759 —— 帳本空了，所以 1/2 變成空跑 ⇒ **這把尺要自證**。
+    //    `enemy-team` 觸控 780×360 的下緣**剛好**落在保留帶的上緣（350 of 360）：
+    //    再多 1px 就是侵入。⇒ 這一條同時釘住「修好了」與「⛔ 沒有多留餘裕可以再吃」。
+    expect(GUTTER_INTRUDERS).toEqual([]);
+    const tight = hudSlotRect("enemy-team" as HudSlotId, { width: 780, height: 360 }, true);
+    expect(tight.y + tight.h).toBe(360 - HUD_STAMP_BAND);
   });
 
   it("every chip state still shows its NUMBER at 375px — the label ladder is not decorative", () => {

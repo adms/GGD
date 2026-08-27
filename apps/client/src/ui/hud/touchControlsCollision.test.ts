@@ -14,15 +14,21 @@
  * ⛔ 它只關掉**幾何**那一半：`pointerEvents` / z 序不是矩形，不重疊
  * ⛔ 不等於觸控不會被吃掉。
  *
- * ⚠️⚠️ **這條守衛一上就抓到 3 個真重疊，而 844×390 那一個逐位元等於 `028aa3bf` 的 88×38**
- * —— 也就是那個缺陷**從來沒有被修掉**：`touchCorner: "top-right"` 只是把裝備欄
- * 換一個角落，而 390 高的螢幕上那一疊往下長，照樣落在攻擊鈕上。
- * ⇒ 依本票 Non-goals（「⛔ 不搬版面⋯若守衛當場抓到真重疊，那是**另一張** fix 票」），
- * 這裡把它們記成一本**只能變短的帳本**：新的重疊 ⇒ 紅；修好了 ⇒ 也紅（要刪那一列）。
+ * ⚠️⚠️ 這條守衛一上就抓到 3 個真重疊，而 844×390 那一個逐位元等於 `028aa3bf` 的
+ * **88×38** —— 也就是那個缺陷在 2026-08-27 之前**從來沒有被修掉**：
+ * `touchCorner: "top-right"` 只是把裝備欄換一個角落，而 390 高的螢幕上那一疊
+ * 往下長，照樣落在攻擊鈕上。
  *
- * ── 突變（2026-08-27）：`touchControlsRect` 的 `x: vp.width - b.right - b.size`
- *    改成 `x: vp.width - b.size`（＝把叢集縮回角落，水平偏移歸零）
- *    → 帳本那一條紅（量到的尺寸變了）。改回來即綠。
+ * ⭐⭐ **GH#800 修掉了它**（2026-08-27）：`equipment` 的 `touchOrder` 5 → **0**，
+ * 也就是那一疊裡**最寬**（150px，右對齊後與攻擊鈕的水平交集是滿的 88）的那一個
+ * 排到最上面 y 10..58。⇒ `KNOWN` 現在是**空的**，而 `touchControlsRect.ts` 的
+ * 量法**一個字都沒改**（⛔ 修尺不是修缺陷 —— 與 #759 逐字禁止的作弊法同型）。
+ *
+ * ⚠️ 但 `KNOWN` 空了 **⛔ 不等於觸控叢集乾淨了** —— 見下面的 `CLUSTER_RESIDUAL`：
+ * 右欄整疊 300px 而叢集的上緣在 y≈94 ⇒ 算術上一定還有殘量。**#800 因此不關。**
+ *
+ * ── 突變（2026-08-27）：`hudLayout.ts` 的 `equipment.touchOrder` 從 0 改回 5
+ *    → `CLUSTER_RESIDUAL` 紅並指名 `844x390/equipment×attack = 88×38`。改回來即綠。
  */
 import { describe, it, expect } from "vitest";
 import { hudSlotRect, type HudRect, type HudViewport } from "./hudLayout";
@@ -52,9 +58,11 @@ describe("GH#765 觸控攻擊鈕 × 裝備欄 —— 真矩形，⛔ 不是 `dis
    * —— 這同時就是這把尺的**自證**：它量得到那個已知的壞（⛔ 否則它綠了不代表任何事）。
    */
   const KNOWN = new Map<string, string>([
-    ["844x390/attack", "88×38"],
-    ["852x393/attack", "88×35"],
-    ["780x360/attack", "88×48"],
+    // ⭐⭐ GH#800 —— **空的，而且是真的空的**：`equipment` 的 `touchOrder` 從 5
+    // 換到 **0**（top-right 那一疊的最上面，y 10..58），四個 viewport 上
+    // 攻擊鈕 × 裝備欄的交集全部歸零。⛔ 量法一個字都沒改（`touchControlsRect.ts`
+    // 在這次的 diff 裡是零改動）—— 動的是 `hudLayout.ts` 的排序。
+    // ⚠️ 它空了**不代表觸控叢集乾淨了** —— 見下面的 `CLUSTER_RESIDUAL`。
   ]);
 
   /** 這一次量到的全部重疊（key → 「w×h」）。 */
@@ -85,6 +93,59 @@ describe("GH#765 觸控攻擊鈕 × 裝備欄 —— 真矩形，⛔ 不是 `dis
     const now = measured();
     const stale = [...KNOWN.keys()].filter((k) => !now.has(k));
     expect(stale, "這幾列已經不重疊了 —— 刪掉它們，⛔ 不要留著").toEqual([]);
+  });
+
+  /**
+   * ⭐⭐ GH#800 的**誠實那一半**：`KNOWN` 空了只證明「攻擊鈕 × 裝備欄」歸零，
+   * ⛔ 不證明觸控叢集不再被 chrome 蓋住。這一本量的是 **top-right 整疊 × 逐顆按鈕**。
+   *
+   * ⚠️ 它**一上就不是空的**，而那正是重點：右欄真正空著的只有 y 10..94
+   * （`recall` 的上緣），而那一疊有 300px ⇒ 算術上放不下六個控制項。
+   * 歸零＝手機上少一顆控制項 = owner 看得到的取捨（第一守則：一格後台開關，
+   * 三個住處）⇒ ⛔ 不是只准動 `apps/client` 的 lane 做得完的。**#800 因此不關。**
+   *
+   * ⭐ 它同時是這把尺的**自證**：一本量得到真重疊的帳，比一條「什麼都沒量到」
+   * 的綠燈可信（天譴那次的 d 洞）。⛔ 只能變短。
+   */
+  const TOP_RIGHT_TOUCH = ["leave", "scoreboard", "audio-toggle", "settings", "cheats", "equipment"] as const;
+  const CLUSTER_RESIDUAL = new Map<string, string>([
+    ["844x390/scoreboard×recall", "44×16"],
+    ["844x390/audio-toggle×R", "55×7"],
+    ["844x390/audio-toggle×recall", "44×20"],
+    ["844x390/settings×attack", "14×38"],
+    ["844x390/cheats×R", "45×43"],
+    ["852x393/scoreboard×recall", "44×13"],
+    ["852x393/audio-toggle×R", "55×4"],
+    ["852x393/audio-toggle×recall", "44×23"],
+    ["852x393/settings×attack", "14×35"],
+    ["852x393/cheats×R", "45×44"],
+    ["780x360/leave×attack", "50×16"],
+    ["780x360/scoreboard×recall", "44×42"],
+    ["780x360/audio-toggle×R", "55×37"],
+    ["780x360/settings×attack", "14×44"],
+    ["780x360/cheats×R", "45×13"],
+  ]);
+
+  it("⭐ top-right 整疊 × 觸控叢集：⛔ 沒有新的，而帳本仍然逐列為真", () => {
+    const now = new Map<string, string>();
+    for (const vp of VIEWPORTS) {
+      for (const slot of TOP_RIGHT_TOUCH) {
+        const sr = hudSlotRect(slot, vp, true);
+        for (const { id, rect } of touchControlsRect(vp).buttons) {
+          const hit = intersection(rect, sr);
+          if (hit) now.set(`${vp.width}x${vp.height}/${slot}×${id}`, `${hit.w}×${hit.h}`);
+        }
+      }
+    }
+    const problems: string[] = [];
+    for (const [k, v] of now) {
+      const known = CLUSTER_RESIDUAL.get(k);
+      if (known === undefined) problems.push(`新的重疊 ${k} = ${v}`);
+      else if (known !== v) problems.push(`${k} 從 ${known} 變成 ${v}`);
+    }
+    for (const k of CLUSTER_RESIDUAL.keys())
+      if (!now.has(k)) problems.push(`${k} 已經不重疊了 —— 從帳本刪掉`);
+    expect(problems).toEqual([]);
   });
 
   it("⭐ 非空洞：375×667 直立完全不重疊 —— 證明這把尺不是「一律回重疊」", () => {
