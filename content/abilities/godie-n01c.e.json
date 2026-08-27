@@ -50,7 +50,8 @@
       "modelKey": "w3x.stock.reddragonmissile",
       "count": 10,
       "spacing": 1.2,
-      "arriveSoundKey": "explosion"
+      "arriveSoundKey": "explosion",
+      "lifeSec": 1
     }
   ],
   "vfxKey": "fx.prim.fire.beam",

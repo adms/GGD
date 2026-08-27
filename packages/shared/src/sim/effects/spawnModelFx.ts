@@ -218,7 +218,7 @@ export function modelFxInstances(e: ModelFx, ctx: EffectContext, origin: Vec2): 
     if (sdir === undefined) return [{ origin: { x: p.x, z: p.z }, travel: 0 }];
     // ⭐【沿線 N 具】#673-④／GH#688 Phase 4 —— 原作的光束/火柱是**一次擺出一條線**：
     //   `A03S`（09-04 龜派氣功）@31924 逐行 `loop i=1..6: PolarProjectionBJ(caster,
-    //   i×200, angle)`（火柱 h006）；`A05J`（59-04）@28838 同型 `i=1..10 × 150`。
+    //   i×200, angle)`（火柱 h006）；`A05J`（**08-03**）@28838 同型 `i=1..10 × 150`。
     // ⇒ 第 k 具（k=0..count−1）在錨點沿 `sdir` 的 **spacing×k** 處。間距與具數
     //   照量到的原作值（200 wc3u ÷100 ＝ 2.0 世界單位 × 6 具）；⚠️ 與原作差**一個
     //   步長的平移**（原作 i=1..6 從 spacing 起，我們第 0 具在錨點上 —— 光束/火柱

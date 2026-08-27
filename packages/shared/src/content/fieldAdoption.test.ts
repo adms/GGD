@@ -230,21 +230,12 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   //    鏡射共 6 份文件），而那一列自己寫著「第一支回填的技能出現那天這一列就會
   //    stale 而紅」。⇒ 照規矩刪掉，⛔ 不是留著一句謊話。
   //    值的對帳在 `content/runtimeAlphaBackfill.test.ts`（census ↔ 內容，兩個方向）。
-  "field:abilities.effects[]#spawnModelFx.spacing": {
-    status: "default-live",
-    why:
-      "⭐ **值住模板，⛔ 不住技能** —— 這一格 2026-08-25 之前唯一的兩個字面採用者" +
-      "（09-04 龜派氣功的火柱 ×2）在 GH#693 改成引用 `tpl-locust-line` 了，而" +
-      "`spacing:2`（原作 h006 `loop i=1..6 × 200` ÷100）現在住那份模板的 " +
-      "`params.spacing.default`。⇒ 這份普查讀的是**磁碟原文**（⛔ 不是 " +
-      "`resolveModelFxPreset` 之後的節點），所以一格「被正確地收進共用表」的欄位" +
-      "在這裡必然掉到 0 —— 那正是第〇·四守則要的結果，⛔ 不是 S8。\n" +
-      "⚠️ 這條豁免說的是「今天 0 筆是對的」，⛔ 不是「這個機制沒有人守」：" +
-      "`templates/locustTemplates.test.ts` ② 逐格斷言補完之後的節點真的帶著 " +
-      "`spacing: 2`，`sim/effects/spawnModelFx` 的 static 沿線測試斷言它真的被讀。\n" +
-      "⭐ 可反駁：哪天有一支技能要**覆寫**間距（原作 59-04 是 150 ⇒ 1.5，" +
-      "與模板預設 2 不同），它就會在自己的節點上寫出這一格，這一列就 stale 而紅。",
-  },
+  // ═══ GH#688 lane AC 2026-08-27 ═════════════════════════════════════════
+  // ⚠️ `field:abilities.effects[]#spawnModelFx.spacing` 的豁免列（GH#693 寫的）
+  //    **兌現了它自己的反駁條件**：那一列逐字寫著「哪天有一支技能要**覆寫**間距
+  //    ⋯這一列就 stale 而紅」。08-03 龍鬥氣砲咒文（`A05J` @28836 `loop i=1..10 ×
+  //    150`）在自己的節點上寫出 `spacing`（含 champion 鏡射共 4 份文件）⇒ 照規矩
+  //    刪掉，⛔ 不是留著一句謊話。家族預設 `count` 仍是 1（⛔ 沒有人替它挑過量值）。
   // ═══ GH#698 tpl-locust-strike 收攏 o00E 那 13 個節點 2026-08-25 ═══════════
   // ⚠️ 下面三列與上面的 `spacing` 是**逐字同一件事**：值被收進 `tpl-locust-strike`
   //    的 `params[*].default`，而這份普查讀的是磁碟原文 ⇒ 必然掉到 0。
