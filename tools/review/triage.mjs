@@ -22,6 +22,7 @@
 import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync, mkdirSync, writeFileSync } from "node:fs";
 import { join, basename } from "node:path";
+import { voiceHitl } from "./voice.mjs";
 
 const sha1 = (buf) => createHash("sha1").update(buf).digest("hex");
 
@@ -75,7 +76,7 @@ function loadComplaints(repoRoot) {
  * 盤點出貨資產 ＋ 引用圖 ＋ risk。
  * 回傳 [{ id, kind, hash, refs, risk, reasons, spec? }]，risk 降冪、同分按 id。
  */
-export function buildInventory(repoRoot) {
+export function buildInventory(repoRoot, voice = voiceHitl(repoRoot)) {
   const assets = new Map(); // "kind:id" -> item
   const add = (kind, id, hash) =>
     assets.set(`${kind}:${id}`, { id, kind, hash, refs: [], risk: 0, reasons: [] });
@@ -101,6 +102,24 @@ export function buildInventory(repoRoot) {
     }
   }
 
+  // ── voice：content/assets/audio/voices/lines/<英雄>/status.json（GH#756 段③）
+  //    ⭐ **一位英雄一列**，hash 沿用 status.json 既有的 sha256（⛔ 不另立一套）。
+  //    風險由分離度灰區決定 —— 見下面的 voiceHitl()，⛔ 不是「有語音就送人審」。
+  const grayDegree = new Map();
+  for (const p of voice.pairs) {
+    for (const who of [p.a, p.b]) grayDegree.set(who, (grayDegree.get(who) ?? 0) + 1);
+  }
+  for (const v of voice.inventory) {
+    add("voice", v.id, v.hash);
+    const a = assets.get(`voice:${v.id}`);
+    a.clips = v.clips;
+    // ⭐ 有邏輯的篩選：只有**分離度灰區**裡的英雄才值得人耳去聽（owner：⛔ 不要全給人）。
+    const deg = grayDegree.get(v.id) ?? 0;
+    if (deg > 0) {
+      a.risk += deg * 2;
+      a.reasons.push(`分離度灰區 ${deg} 對（${voice.reason}）—— 需要人耳 ABX`);
+    }
+  }
   // ── 引用圖：出貨技能 JSON 遞迴掃 ＋ tpl preset 解析
   const tplDefaults = templateDefaults(repoRoot);
   const abilitiesDir = join(repoRoot, "content/abilities");
@@ -172,17 +191,21 @@ export function saveVerdict(repoRoot, { kind, id, hash, verdict, note }) {
  * risk 0 的資產屬於 Tier0（機器閘），⛔ 不進人審佇列。
  */
 export function buildQueue(repoRoot) {
-  const inventory = buildInventory(repoRoot);
+  const voice = voiceHitl(repoRoot);
+  const inventory = buildInventory(repoRoot, voice);
   const entries = loadLedger(repoRoot).entries ?? {};
   const items = [];
   let tier0 = 0;
   let reviewed = 0;
   for (const a of inventory) {
-    if (a.risk <= 0) {
+    const e = entries[`${a.kind}:${a.id}`];
+    // ⭐ 「人審一次，機器守永遠」的另一半：**核准過而內容變了**的資產一律回佇列，
+    //    ⛔ 不論 risk —— 那一格綠燈是對**舊位元組**發的（#664 Phase 2 的核心語意）。
+    const staleApproval = e !== undefined && e.hash !== a.hash;
+    if (a.risk <= 0 && !staleApproval) {
       tier0++;
       continue;
     }
-    const e = entries[`${a.kind}:${a.id}`];
     if (e && e.hash === a.hash) {
       reviewed++;
       continue;
@@ -194,7 +217,20 @@ export function buildQueue(repoRoot) {
   }
   return {
     schema: "review-queue@1",
-    counts: { assets: inventory.length, tier0, reviewed, pending: items.length },
+    counts: {
+      assets: inventory.length,
+      tier0,
+      reviewed,
+      pending: items.length,
+      // GH#756 —— ⭐ 語音那一族的**分離度**今天判不判得了，要是一個看得見的數字。
+      voice: {
+        champions: voice.inventory.length,
+        status: voice.status,
+        grayPairs: voice.pairs.length,
+        ladderRow: voice.row === null ? null : voice.row.clipsPerChampion,
+        reason: voice.reason,
+      },
+    },
     items,
   };
 }

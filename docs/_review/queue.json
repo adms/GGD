@@ -1,10 +1,17 @@
 {
   "schema": "review-queue@1",
   "counts": {
-    "assets": 1142,
-    "tier0": 802,
+    "assets": 1193,
+    "tier0": 853,
     "reviewed": 0,
-    "pending": 340
+    "pending": 340,
+    "voice": {
+      "champions": 51,
+      "status": "measurement-stale",
+      "grayPairs": 0,
+      "ladderRow": 8,
+      "reason": "量測是 2026-07-24 的 n=1／1128 對，而現在是 n=8／1275 對 ⇒ ⛔ 兩個空間混算。修法＝段①：重跑 campplus GEMM（voice-gen 車道，⛔ 不在一般 CI）"
+    }
   },
   "items": [
     {

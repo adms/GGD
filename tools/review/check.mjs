@@ -49,6 +49,22 @@ for (const it of q.items.slice(0, 5)) {
 }
 console.log("  審查頁：http://localhost:39527/asset-review.html（pnpm dev 起 client 後）");
 
+// ── 🎙 GH#756 語音分離度：漏斗裡有沒有**流量** ────────────────────────────────
+// ⚠️ 在此之前 voice 對整條漏斗**零命中** —— 有管線沒有流量，而那與「沒有管線」
+//    在儀表板上長得一模一樣。⇒ 現在它是一行**看得見的數字**。
+{
+  const v = q.counts.voice ?? { champions: 0, status: null, grayPairs: 0 };
+  console.log(
+    `[review:check] 🎙 語音 ${v.champions} 位（ladder n=${v.ladderRow ?? "?"} · 灰區 ${v.grayPairs} 對進 HITL）`,
+  );
+  if (v.status !== "ok") {
+    console.log(
+      `  ⚠️ 分離度**判不了**：${v.reason}\n` +
+        "     ⛔ 「一對都沒選出來」不等於「沒問題」—— 它等於這一族今天沒有量尺。",
+    );
+  }
+}
+
 // ── ③ GH#669 功能級：連續圖片批核的帳本 ────────────────────────────────
 const fq = buildFeatureQueue(repoRoot);
 const fc = fq.counts;
@@ -67,6 +83,15 @@ if (fq.counts.evidenceUndeterminable > 0 || fq.counts.evidenceStale > 0) {
       `ℹ️ 判不了 ${fq.counts.evidenceUndeterminable} 批（報告沒寫拍於哪個 HEAD）\n` +
       "     ⛔ 判不了的那些**補不回來** —— 捕捉發生在工作樹上，git 只給得出上界。\n" +
       "     ⭐ 往後的報告會自動蓋 HEAD（`bash scripts/visual-proof.sh --new`）。",
+  );
+}
+// ── 🎯 GH#797 —— 登記的修復 commit 真的碰過這一批嗎（⛔ 警示，不硬擋）。
+//    ⚠️ #795 的祖孫比對**架在這個前提上**：錨錯了，那整條推理在該批上就不成立。
+if (fc.fixAnchorUnrelated > 0 || fc.fixAnchorUndeterminable > 0) {
+  console.log(
+    `  🎯 修復錨：⚠️ 錨錯 ${fc.fixAnchorUnrelated} 批 · ℹ️ 驗不了 ${fc.fixAnchorUndeterminable} 批\n` +
+      "     判準是 **diff 碰到的檔案**，⛔ 不是 commit 訊息（訊息會說謊 —— tools/review/fix-anchor.mjs 檔頭）。\n" +
+      "     「驗不了」多半是那一批沒登記 --abilities ⇒ 推導不出它的出貨面（渲染端看不到）。",
   );
 }
 console.log("  功能審查頁：http://localhost:39527/feature-review.html");

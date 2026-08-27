@@ -82,7 +82,16 @@ try {
   // ⇒ 登記的當下就把這兩種情況喊出來（⛔ 不是等到有人去讀那一頁才發現）。
   const me = q.batches.find((b) => b.id === args.get("id"));
   for (const note of me?.blockers ?? []) {
-    if (note.startsWith("⚠️⚠️") || note.startsWith("ℹ️")) console.warn(`  ${note}`);
+    if (note.startsWith("⚠️⚠️") || note.startsWith("ℹ️") || note.startsWith("🎯")) console.warn(`  ${note}`);
+  }
+  // 🎯 GH#797 —— 登記的**當下**就喊，⛔ 不是等到有人去讀那一頁才發現錨錯了。
+  //    ⛔ 不硬擋（同 #795 Non-goals）：一批「錨可疑」的登記仍然比「不登記」好。
+  if (me?.fixAnchor?.status === "unrelated" || me?.fixAnchor?.status === "evidence-only") {
+    console.warn(
+      `  🎯 **這個修復錨對不上**：${me.fixAnchor.reason}\n` +
+        "     ⭐ 判準是 diff 碰到的檔案，⛔ 不是 commit 訊息 —— 用 `git show --name-only <sha>` 自己看一眼。\n" +
+        "     ⚠️ 錨錯了，「證據比修復早」那條比對在這一批上就不成立。",
+    );
   }
   if (me?.evidenceHead == null) {
     console.warn(

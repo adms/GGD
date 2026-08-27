@@ -26,6 +26,7 @@ import { execFileSync, spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
 import { canonical } from "./triage.mjs";
+import { fixTouchesBatch } from "./fix-anchor.mjs";
 import { loadMaterial, loadVerdicts, saveMaterial, saveVerdictEntry } from "./stores.mjs";
 
 const sha1 = (buf) => createHash("sha1").update(buf).digest("hex");
@@ -283,6 +284,10 @@ export function buildFeatureQueue(repoRoot) {
     evidenceUndeterminable: 0,
     /** ⚠️ 報告自報的 HEAD 是修復 commit 的祖先 ⇒ 證據**比修復早**。 */
     evidenceStale: 0,
+    /** ⚠️ GH#797 —— 登記的修復 commit **一個宣稱檔案都沒碰到** ⇒ 這個錨是錯的。 */
+    fixAnchorUnrelated: 0,
+    /** GH#797 —— 錨對不對**判不了**（沒登記 commit／sha 解析不到／推導不出宣稱檔案）。 */
+    fixAnchorUndeterminable: 0,
   };
   for (const seq of scanSequences(repoRoot)) {
     counts.total++;
@@ -319,6 +324,17 @@ export function buildFeatureQueue(repoRoot) {
       );
     else if (seq.evidenceHead === null && reg.commit)
       notes.push("ℹ️ 報告沒寫它在哪一個 HEAD 上拍的 ⇒ 判不出證據是不是比修復早（⛔ 不等於沒問題）");
+    // 🎯 GH#797：⭐ 上面那條祖孫比對**架在一個前提上** —— 登記的 sha 真的是這批的修復嗎？
+    //    ⛔ 錨錯了，`evidenceOrder()` 比的就是「證據 vs 一支毫無關係的 commit」。
+    //    ⚠️ 判準是 **diff 碰到的檔案**，⛔ 不是 commit 訊息（訊息會說謊 —— 見 fix-anchor.mjs 檔頭）。
+    const anchor = fixTouchesBatch(repoRoot, { ...reg, rollbackDocRel: rb.ok ? rb.docRel : null });
+    if (anchor.status === "unrelated" || anchor.status === "evidence-only") {
+      counts.fixAnchorUnrelated++;
+      notes.push(`🎯 **修復錨錯了**：${anchor.reason}`);
+    } else if (anchor.status === null) {
+      counts.fixAnchorUndeterminable++;
+      if (anchor.rich === false) notes.push(`ℹ️ 修復錨驗不了：${anchor.reason}`);
+    }
     batches.push({
       ...seq,
       registered: true,
@@ -335,6 +351,7 @@ export function buildFeatureQueue(repoRoot) {
       verdict: fresh ? reg.verdict : null,
       reason: fresh ? (reg.reason ?? "") : "",
       verdictAt: fresh ? (reg.verdictAt ?? null) : null,
+      fixAnchor: anchor,
       blockers: notes,
     });
   }
