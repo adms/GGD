@@ -16,6 +16,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { HttpContentSource, Arenas, Configs, Models, VfxDefs } from "@ggd/shared/content";
 import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
+import { TEAM_SIZE } from "@ggd/shared/constants";
 import { ContentDb, contentAssetUrl } from "./ContentDb";
 import { ensureContentLoaded, __resetContentBoot } from "./bootContent";
 import { maxAbilityVfxLayers, setMaxAbilityVfxLayers } from "../render/vfx/abilityLayers";
@@ -48,7 +49,12 @@ const ARENA = {
       center: { x: 0, z: 0 },
       boundaryRadius: 20,
       obstacles: [],
-      spawns: [[{ x: -5, z: 0 }], [{ x: 5, z: 0 }]],
+      // ⭐ GH#325 —— 每側 TEAM_SIZE 個（⛔ 不抄字面 3）。夾具也要是**合法的**場地，
+      //    否則它量的是一個出貨永遠不會出現的形狀（失敗形態⑤）。
+      spawns: [
+        Array.from({ length: TEAM_SIZE }, (_, i) => ({ x: -5, z: i * 2 })),
+        Array.from({ length: TEAM_SIZE }, (_, i) => ({ x: 5, z: i * 2 })),
+      ],
     },
   ],
 };

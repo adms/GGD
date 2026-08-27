@@ -98,9 +98,21 @@ describe("the generator reproduces the cross-checked baseline", () => {
 });
 
 describe("broken assets are classified broken, not cheap", () => {
-  it("finds the 11 zero-geometry mdx emitters", () => {
-    expect(report.totals.zeroGeometry).toBe(11);
+  it("zero-geometry emitters are a ratchet that can only go down (was 11 on 2026-08-2x)", () => {
+    // ⭐ 2026-08-27：這一行原本是 `toBe(11)`，而它今天量到 **1**。
+    //    ⛔ 那不是壞掉，是**修好了** —— `bd24b4af` 的光束砲重建讓其中 10 個
+    //    emitter 拿到了真的幾何。
+    // ⚠️ 而一個寫死的 `11` 是 CLAUDE.md 說的「第四個住處」：出貨資料一改它就過期，
+    //    ⭐ 而且它會用**與真相相反**的訊息紅（「找不到 11 個」讀起來像東西不見了，
+    //    實際上是東西被修好了）。
+    // ⇒ 改成**棘輪**：只能變少。新的零幾何 emitter 冒出來 ⇒ 紅；修好 ⇒ 綠。
     const zero = report.models.filter((m: any) => m.broken === "zero-geometry");
+    expect(report.totals.zeroGeometry, "計數與清單對不上 —— 報告自己不自洽").toBe(zero.length);
+    expect(
+      report.totals.zeroGeometry,
+      `零幾何 emitter 從 11 漲到 ${report.totals.zeroGeometry} —— ⛔ 有新的破圖進來了。\n` +
+        "⭐ 這是棘輪：修好會讓它變少（綠），⛔ 只有變多才紅。",
+    ).toBeLessThanOrEqual(11);
     expect(zero.every((m: any) => m.triangles === 0)).toBe(true);
   });
   it("near-zero models are flagged as pure overhead, not budget wins", () => {

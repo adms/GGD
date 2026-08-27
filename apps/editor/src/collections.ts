@@ -5,6 +5,7 @@
 import { COLLECTIONS, COLLECTION_NAMES, type CollectionName } from "@ggd/shared/content";
 import type { ZodTypeAny } from "zod";
 import { starterMap } from "@ggd/shared/map/starter";
+import { TEAM_SIZE } from "@ggd/shared/constants";
 // ⛔ 種子值不可以是字面量：`progression.levelCap` 抄 99 的那一刻就開始等著過期。
 import { LEVEL_CAP } from "@ggd/shared/sim/economy/progression";
 // ⭐ 同一個理由的第二批（owner 2026-08-19「技能相關設定正規化成五級距⋯編輯器⋯都統一」）：
@@ -118,7 +119,14 @@ const TEMPLATES: Record<CollectionName, (id: string) => unknown> = {
         center: { x: 0, z: 0 },
         boundaryRadius: 24,
         obstacles: [],
-        spawns: [[{ x: -16, z: 0 }], [{ x: 16, z: 0 }]],
+        // ⭐ GH#325 —— 每側必須有 **TEAM_SIZE** 個出生點，⛔ 不是 1 個。
+        //    在此之前這份骨架是「schema 合法」的，⛔ 而消費端讀
+        //    `spawns[side][slot % TEAM_SIZE]` ⇒ slot 1/2 取到 `undefined`。
+        //    ⚠️ 從 import 的 `TEAM_SIZE` 推導，⛔ 不抄字面 3（那是第二個住處）。
+        spawns: [
+          Array.from({ length: TEAM_SIZE }, (_, i) => ({ x: -16, z: (i - (TEAM_SIZE - 1) / 2) * 4 })),
+          Array.from({ length: TEAM_SIZE }, (_, i) => ({ x: 16, z: (i - (TEAM_SIZE - 1) / 2) * 4 })),
+        ],
       },
     ],
   }),

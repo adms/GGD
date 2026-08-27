@@ -48,6 +48,7 @@ import {
   type FieldKind,
   type WritePlanStep,
 } from "@ggd/shared/content/editModel";
+import { TEAM_SIZE } from "@ggd/shared/constants";
 import { createContentEditApi, type BackupEntry, type ContentEditApi, type EditIssue } from "../contentApi";
 import { createIconApi, type IconApi } from "../icons/iconApi";
 import { IconGenButton, IconGenStrip, useIconGen, type IconGen } from "./IconGenStrip";
@@ -154,7 +155,14 @@ export function skeletonDoc(collection: EditCollection, id: string): Record<stri
           center: { x: 0, z: 0 },
           boundaryRadius: 40,
           obstacles: [],
-          spawns: [[{ x: -10, z: 0 }], [{ x: 10, z: 0 }]],
+          // ⭐ GH#325 —— 每側必須有 **TEAM_SIZE** 個出生點，⛔ 不是 1 個。
+          //    在此之前這份骨架是「schema 合法」的，⛔ 而消費端讀
+          //    `spawns[side][slot % TEAM_SIZE]` ⇒ slot 1/2 取到 `undefined`。
+          //    ⚠️ 從 import 的 `TEAM_SIZE` 推導，⛔ 不抄字面 3（那是第二個住處）。
+          spawns: [
+            Array.from({ length: TEAM_SIZE }, (_, i) => ({ x: -10, z: (i - (TEAM_SIZE - 1) / 2) * 4 })),
+            Array.from({ length: TEAM_SIZE }, (_, i) => ({ x: 10, z: (i - (TEAM_SIZE - 1) / 2) * 4 })),
+          ],
         },
       ],
     };
