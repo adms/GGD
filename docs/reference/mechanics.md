@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_8b156067529c`
+contentVersion `cv_0529a1eacb4b`
 
 ---
 
@@ -96,7 +96,7 @@ contentVersion `cv_8b156067529c`
 | `onShieldBroken` | 護盾破碎時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onShieldGained` | 獲得護盾時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onStatCapReached` | 屬性首次到頂時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `onStatusApplied` | 被掛上狀態時 | 5 | `godie-e00r.ex`、`godie-e00r.passive`、`grail-c-01`、`grail-c-11`、`grail-a-15` |
+| `onStatusApplied` | 被掛上狀態時 | 3 | `grail-c-01`、`grail-c-11`、`grail-a-15` |
 | `onStunned` | 被暈眩時 | 2 | `godie-n01c.passive`、`godie-nbbc.passive` |
 | `onUltimateCast` | 大招（R）施放時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onUltimateHit` | 大招（R）命中時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
