@@ -13,31 +13,31 @@
   "pending": {
     "tools/role-classify/src/features.ts": {
       "product": "content/champions/<id>.json · content/abilities/<id>.ex.json",
-      "owner": "content:build · skillremake:json · tiers:apply"
+      "owner": "castderive:build:raw · content:build · skillremake:json · tiers:apply"
     },
     "tools/w3x-import/build_vfx_bindings.py": {
       "product": "content/abilities/*.json",
-      "owner": "content:build · skillremake:json · tiers:apply"
+      "owner": "castderive:build:raw · content:build · skillremake:json · tiers:apply"
     },
     "tools/w3x-import/extract_ex.py": {
       "product": "content/champions/godie-<rawcode>.json",
-      "owner": "skillremake:json · tiers:apply"
+      "owner": "castderive:build:raw · skillremake:json · tiers:apply"
     },
     "tools/w3x-import/extract_jass_spells.py": {
       "product": "content/champions/**",
-      "owner": "content:build · skillremake:json · tiers:apply"
+      "owner": "castderive:build:raw · content:build · skillremake:json · tiers:apply"
     },
     "tools/w3x-import/gen_ex_content.py": {
       "product": "content/abilities/godie-<rawcode>.ex.json · content/champions/godie-<rawcode>.json",
-      "owner": "skillremake:json · tiers:apply"
+      "owner": "castderive:build:raw · skillremake:json · tiers:apply"
     },
     "tools/w3x-import/model_audit_61.mjs": {
       "product": "content/champions/*.json",
-      "owner": "content:build · skillremake:json · tiers:apply"
+      "owner": "castderive:build:raw · content:build · skillremake:json · tiers:apply"
     },
     "tools/w3x-import/strip_teamglow.py": {
       "product": "content/champions/*.json",
-      "owner": "content:build · skillremake:json · tiers:apply"
+      "owner": "castderive:build:raw · content:build · skillremake:json · tiers:apply"
     }
   }
 }

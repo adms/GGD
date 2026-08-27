@@ -120,7 +120,7 @@
     "apconv:build:raw": "python3 tools/ap-conversion/apply.py",
     "apconv:check": "python3 tools/ap-conversion/apply.py --check",
     "apconv:freeze": "python3 tools/ap-conversion/apply.py --freeze",
-    "skills:sync": "pnpm quarantine:unlock && pnpm skillremake:json && pnpm castderive:build:raw && pnpm apconv:build && pnpm tiers:apply && pnpm skillremake:provenance && pnpm grail:wishes && pnpm pitch:build && pnpm anchors:build && pnpm statcaps:build && pnpm apconv:plan && pnpm apdmg:build && pnpm content:build && pnpm audit:build && pnpm mana:audit && pnpm caps:export && pnpm skillremake:docs && pnpm contract:numbers && pnpm atlas:build && pnpm treasure:csv && pnpm docs:readme && pnpm docs:status && pnpm newhero:build && pnpm lowdmg:build && pnpm archetypes:build && pnpm templates:build && pnpm msgledger:build && pnpm board:build && pnpm skillnorm:build && pnpm jasscombo:build && pnpm vfxbind:build && pnpm sfxbind:build && pnpm speedtiers:build && pnpm shapes:build && pnpm review:build && pnpm speedlists:build && pnpm locust:build && pnpm roster:check && pnpm quarantine:lock",
+    "skills:sync": "pnpm quarantine:unlock && pnpm skillremake:json && pnpm castderive:build:raw && pnpm apconv:build && pnpm tiers:apply && pnpm skillremake:provenance && pnpm grail:wishes && pnpm vfxfam:build && pnpm pitch:build && pnpm anchors:build && pnpm statcaps:build && pnpm apconv:plan && pnpm apdmg:build && pnpm content:build && pnpm audit:build && pnpm mana:audit && pnpm caps:export && pnpm skillremake:docs && pnpm contract:numbers && pnpm atlas:build && pnpm treasure:csv && pnpm docs:readme && pnpm docs:status && pnpm newhero:build && pnpm lowdmg:build && pnpm archetypes:build && pnpm templates:build && pnpm msgledger:build && pnpm board:build && pnpm skillnorm:build && pnpm jasscombo:build && pnpm vfxbind:build && pnpm sfxbind:build && pnpm speedtiers:build && pnpm shapes:build && pnpm review:build && pnpm speedlists:build && pnpm locust:build && pnpm roster:check && pnpm quarantine:lock",
     "ship": "bash scripts/ship.sh",
     "tune": "bash scripts/tune.sh",
     "ship:check": "node tools/parallel-gates/ship.mjs",
@@ -170,7 +170,7 @@
     "review:build:raw": "node tools/review/build.mjs",
     "review:check": "node tools/review/check.mjs",
     "review:register": "node tools/review/register.mjs",
-    "vfxfam:build": "tsx apps/client/src/render/vfx/generateFamilyContent.ts",
+    "vfxfam:build": "bash scripts/genrun.sh vfxfam:build vfxfam:build:raw",
     "review:split": "node tools/review/split-stores.mjs",
     "review:serve": "GGD_REVIEW_MODE=local node tools/review/server.mjs",
     "review:sync": "bash scripts/review-sync.sh",
@@ -196,7 +196,8 @@
     "board:roll:raw": "bash scripts/board-roll.sh",
     "board:roll:check": "bash scripts/board-roll.sh --check",
     "castderive:build:raw": "pnpm --filter @ggd/shared exec tsx scripts/deriveCastTimes.ts --write",
-    "castderive:build": "bash scripts/genrun.sh castderive:build castderive:build:raw"
+    "castderive:build": "bash scripts/genrun.sh castderive:build castderive:build:raw",
+    "vfxfam:build:raw": "tsx apps/client/src/render/vfx/generateFamilyContent.ts"
   },
   "devDependencies": {
     "@eslint/js": "^10",
