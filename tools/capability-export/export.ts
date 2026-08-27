@@ -49,6 +49,7 @@ import {
   DEPRECATED_FIELDS,
   type RuntimeCapabilityManifest,
 } from "../../packages/shared/src/content/editorCapabilities";
+import { validateDoc } from "../../packages/shared/src/content/loader";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = resolve(HERE, "../..");
@@ -264,6 +265,124 @@ export function tierRewriteSection(): string[] {
 }
 
 /**
+ * §12 —— ⭐ **回饋管道**（GH#675 ③）：你交出來的 JSON 被拒絕時，你會拿到什麼。
+ *
+ * ⛔ **這一節的每一個位元組都是跑出來的，不是打出來的。** 做法是把一份**出貨的**
+ * 技能文件複製一份、只弄壞一個地方，然後餵進**出貨的** {@link validateDoc} ——
+ * 貼在契約上的是它真的回傳的東西。
+ *
+ * ⚠️ 為什麼非這樣不可：一段手抄的錯誤格式與驗證器之間**沒有任何東西**在對帳，
+ * 而對方唯一能拿來寫錯誤處理的就是這一段。它一旦漂掉，Codex 會照著一個
+ * 不存在的形狀去 parse，然後在**每一次**被拒絕時安靜地拿不到原因
+ *（檔頭 ③ 記過的同一個病：一段被散文守著的宣稱活過了它的保存期限）。
+ * 現在驗證器的訊息一改，`--check` 的逐位元組比對當場就紅。
+ *
+ * ⚠️ ⛔ 這裡**不印**那份基底文件的檔名／內容：對方沒有這個 repo（檔頭「必須自足」），
+ * 而且印了會讓一個不相干的內容改動把契約弄 stale。四個破壞點刻意都是
+ * **與基底無關**的（少一格必填、換掉 kind、打錯 enum、多一個鍵），
+ * 所以換一份基底文件不會改變輸出。
+ */
+const REJECTION_PROBES: ReadonlyArray<{
+  readonly label: string;
+  readonly note: string;
+  readonly breakIt: (doc: Record<string, unknown>) => void;
+}> = [
+  {
+    label: "少一格必填欄位",
+    note: "`path` 就是那一格的名字。",
+    breakIt: (d) => void delete d.cooldown,
+  },
+  {
+    label: "引擎沒有的 effect kind",
+    note: "⭐ 拒絕訊息**自己列出**全部合法的 kind —— 這是第 3 節那張表的執行期版本。",
+    breakIt: (d) => void (d.effects = [{ kind: "mindControl", durationSec: 3 }]),
+  },
+  {
+    label: "enum 值打錯字",
+    note: "同上：合法值就在訊息裡，⛔ 不必回頭查文件。",
+    breakIt: (d) => void (d.castType = "point"),
+  },
+  {
+    label: "多打了一個引擎不認得的鍵",
+    note: "⚠️ `path` 是**空字串**＝這一層物件本身。⛔ 未知欄位不會被忽略，整份會被拒絕。",
+    breakIt: (d) => void (d.manaDrain = 5),
+  },
+  {
+    label: "數字超出上下界",
+    note: "上下界住 schema，⛔ 不在這份文件裡；被拒絕時訊息會說出那個界。",
+    breakIt: (d) => void (d.maxRank = 99),
+  },
+  {
+    label: "🔴 軟參照指到不存在的東西",
+    note:
+      "⭐ **它回 `ok: true`。** 逐份驗證**不查參照** —— 參照是整批載入時才解的" +
+      "（解不開的那一份會被隔離，理由 `dangling-ref`）。" +
+      "⇒ ⛔ 一次乾淨的逐份驗證**不代表**你的 `vfxKey` / `projectileId` 指得到東西。",
+    breakIt: (d) => void (d.vfxKey = "no-such-vfx-id"),
+  },
+];
+
+/** 挑一份**出貨的**技能文件當基底。⛔ 它必須真的驗得過，否則整節就是在示範一個謊。 */
+function rejectionBaseDoc(): Record<string, unknown> {
+  const dir = join(REPO, "content/abilities");
+  for (const f of readdirSync(dir).filter((x) => x.endsWith(".json") && !x.startsWith("_")).sort()) {
+    const doc = JSON.parse(readFileSync(join(dir, f), "utf8")) as Record<string, unknown>;
+    if ("vfxKey" in doc && validateDoc("abilities", doc).ok) return doc;
+  }
+  throw new Error(
+    "⛔ content/abilities 裡找不到任何一份**驗得過又帶軟參照**的技能文件 —— " +
+      "§12 的拒絕範例會變成手寫的謊。修內容或修這支的挑選條件，⛔ 不要讓它靜靜地空掉。",
+  );
+}
+
+export function rejectionFormatSection(): string[] {
+  const base = rejectionBaseDoc();
+  const L = [
+    "## 12. ⭐ 你交出來的 JSON 被拒絕時，你會拿到什麼",
+    "",
+    "遊戲端收件時逐份跑一次**嚴格** Zod 驗證。回傳值只有兩種形狀：",
+    "",
+    "```ts",
+    "{ ok: true,  doc }",
+    "{ ok: false, issues: Array<{ path: string; message: string; code: string }> }",
+    "```",
+    "",
+    "- `path` —— 進到文件裡的**點路徑**（`effects.0.kind`）。**空字串 = 這一層物件本身**。",
+    "- `code` —— 機器讀的分類，取自 Zod 的 issue code（`invalid_type` · `too_big` ·" +
+      " `invalid_enum_value` · `unrecognized_keys` · `invalid_union_discriminator` …）。",
+    "- `message` —— 給人看的英文句子。⭐ enum／discriminator 那兩類的訊息**自己列出合法值**。",
+    "",
+    "⛔ **`issues` 是一個陣列，不是第一個錯誤。** 一次交件請把整批都改完再送 ——" +
+      "逐條修、逐條重送會讓你在同一份文件上來回很多次。",
+    "",
+    "下面每一筆都是把一份出貨技能文件**只弄壞一個地方**再餵進出貨驗證器，" +
+      "真的跑出來的回傳值（⛔ 不是手寫的範例）：",
+    "",
+  ];
+  for (const p of REJECTION_PROBES) {
+    const doc = JSON.parse(JSON.stringify(base)) as Record<string, unknown>;
+    p.breakIt(doc);
+    const r = validateDoc("abilities", doc);
+    L.push(`### 12.${REJECTION_PROBES.indexOf(p) + 1} ${p.label}`, "", p.note, "");
+    L.push("```json");
+    L.push(JSON.stringify(r.ok ? { ok: true } : { ok: false, issues: r.issues }, null, 2));
+    L.push("```", "");
+  }
+  L.push(
+    "### 12.7 ⛔ 通過驗證**不等於**上得了線",
+    "",
+    "這一關只回答「這份 JSON 的**形狀**對不對」。它 ⛔ 不回答：" +
+      "① 參照指不指得到（見 12.6）② 用到的 capability 引擎有沒有" +
+      "（那是第 1、2 節的事，會回 `unsupported-runtime`）" +
+      "③ 這條 modifier 在出貨設定下改不改得動任何數字。",
+    "",
+    "⇒ **收到 `ok: true` 之後仍然要拿第 2 節的不可使用清單自己掃一遍。**",
+    "",
+  );
+  return L;
+}
+
+/**
  * ⭐【GH#534】**還收得下、但⛔ 不要再填的欄位**。
  *
  * ⚠️ 這一段補的是上面那張表**答不出來的問題**：通則只說「兩格都填 → 級別贏」，
@@ -472,6 +591,7 @@ export function renderMarkdown(m: RuntimeCapabilityManifest): string {
   }
   L.push(...parallelOutputSection());
   L.push(...tierRewriteSection());
+  L.push(...rejectionFormatSection());
   L.push("---");
   L.push("");
   L.push(
