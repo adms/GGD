@@ -44,14 +44,22 @@ const $ = (id: string): HTMLElement => {
 };
 const TICK_MS = 1000 / 30;
 
-// ── 顏色（schema 是線性 RGB 0..1 三元組；UI 是 hex）────────────────────────
+// ── 顏色。⚠️ 兩個慣例並存（content:build 抓過一次）：modelFx 的 `tint` 是
+//    線性 0..1 浮點；floatingText/screenFlash 的 `colorRgb` 是 0..255 整數。
+//    FieldSpec.color255 記著每一格是哪一種 —— ⛔ 不要憑欄位名猜。
 const rgb01ToHex = (c: readonly number[]): string =>
   "#" + c.map((v) => Math.round(Math.max(0, Math.min(1, v)) * 255).toString(16).padStart(2, "0")).join("");
+const rgb255ToHex = (c: readonly number[]): string =>
+  "#" + c.map((v) => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, "0")).join("");
 const hexToRgb01 = (h: string): [number, number, number] => {
   const n = parseInt(h.replace("#", ""), 16);
   return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255].map(
     (v) => Math.round(v * 1000) / 1000,
   ) as [number, number, number];
+};
+const hexToRgb255 = (h: string): [number, number, number] => {
+  const n = parseInt(h.replace("#", ""), 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
 };
 
 // ── slider/欄位規格（資料驅動；⛔ 不逐段手刻表單）──────────────────────────
@@ -67,6 +75,8 @@ interface FieldSpec {
   show?: (seg: Record<string, unknown>) => boolean;
   /** slider 拖到這個值時視為「清掉欄位」（回 schema 預設）。 */
   clearAt?: number;
+  /** color 欄位的慣例：true＝0..255 整數（colorRgb），false/缺席＝0..1 浮點（tint）。 */
+  color255?: boolean;
 }
 const COMMON: FieldSpec[] = [
   { key: "on", label: "觸發", kind: "select", options: VFX_SCRIPT_TRIGGERS },
@@ -110,14 +120,14 @@ const FIELDS: Record<VfxScriptSegment["kind"], FieldSpec[]> = {
     ...COMMON,
     { key: "text", label: "文字", kind: "text" },
     { key: "at", label: "錨點", kind: "select", options: ["caster", "target"] },
-    { key: "colorRgb", label: "顏色", kind: "color" },
+    { key: "colorRgb", label: "顏色", kind: "color", color255: true },
     { key: "sizeScale", label: "字級×", kind: "range", min: 0.5, max: 4, step: 0.1 },
     { key: "riseSpeed", label: "上浮速", kind: "range", min: 0, max: 5, step: 0.1 },
     { key: "durationSec", label: "持續 s", kind: "range", min: 0.3, max: 5, step: 0.1 },
   ],
   screenFlash: [
     ...COMMON,
-    { key: "colorRgb", label: "顏色", kind: "color" },
+    { key: "colorRgb", label: "顏色", kind: "color", color255: true },
     { key: "peakAlpha", label: "最亮", kind: "range", min: 0.02, max: 0.8, step: 0.01 },
     { key: "durationSec", label: "持續 s", kind: "range", min: 0.05, max: 2, step: 0.05 },
   ],
@@ -184,9 +194,12 @@ export async function bootVfxScriptStudio(): Promise<void> {
     import("../render/vfx/abilityArtContent"),
   ]);
 
+  // 第一個敵人擺 4u —— targeted 近戰大招（超究）在施距內；後兩個遠一點給
+  // 直線/波的視覺留空間。⚠️ 太遠 ⇒ castAbility 回 "approaching"（走過去），
+  // ⛔ 不是施放 —— studio 首驗就撞過。
   const ENEMY_LINE = [
-    { x: 10, z: 0 },
-    { x: 12, z: 2 },
+    { x: 4, z: 0 },
+    { x: 10, z: 2 },
     { x: 12, z: -2 },
   ];
   const { world, castOnce, casterPos, enemyPos } = await buildBeamAuditionWorld(
@@ -226,7 +239,13 @@ export async function bootVfxScriptStudio(): Promise<void> {
     while (acc >= TICK_MS) {
       acc -= TICK_MS;
       clockMs += TICK_MS;
-      world.step(new Map());
+      try {
+        world.step(new Map());
+      } catch (err) {
+        // castOnce 包在下一個 step 裡 —— 施放被拒（approaching/no-mana…）會在這裡
+        // throw。⛔ 不能讓它殺掉 render loop：亮在狀態列，場景繼續跑。
+        say(`施放失敗：${err instanceof Error ? err.message : String(err)}`, "err");
+      }
       for (const ev of world.events) vfx.handleEvent(ev as never, clockMs);
     }
     vfx.update(clockMs);
@@ -359,8 +378,10 @@ export async function bootVfxScriptStudio(): Promise<void> {
       } else if (f.kind === "color") {
         const input = document.createElement("input");
         input.type = "color";
-        input.value = Array.isArray(cur) ? rgb01ToHex(cur as number[]) : "#ffffff";
-        input.oninput = () => commit(hexToRgb01(input.value));
+        input.value = Array.isArray(cur)
+          ? (f.color255 ? rgb255ToHex : rgb01ToHex)(cur as number[])
+          : "#ffffff";
+        input.oninput = () => commit((f.color255 ? hexToRgb255 : hexToRgb01)(input.value));
         row.appendChild(input);
         const clear = document.createElement("button");
         clear.textContent = "清";
