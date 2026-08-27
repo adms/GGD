@@ -26,12 +26,36 @@
  */
 import type { EventMessage } from "@ggd/shared/protocol/messages";
 import type { VfxScriptDoc, VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
-import {
-  modelFxInstancesFromFrame,
-  type ModelFxSpawnEvent,
-} from "@ggd/shared/sim/effects/spawnModelFx";
+import { modelFxInstancesFromFrame } from "@ggd/shared/sim/effects/modelFxPlacement";
+// ⚠️ 型別 import（會被抹除）⇒ 不會把 delayed↔effectRegistry 的環拖進瀏覽器。
+import type { ModelFxSpawnEvent } from "@ggd/shared/sim/effects/spawnModelFx";
 import type { FloatingTextEvent, ScreenFlashEvent, ScreenShakeEvent } from "@ggd/shared/sim/effects/clientCues";
 import type { VfxSpawnEvent } from "@ggd/shared/sim/effects/spawnVfx";
+
+/**
+ * 面向座標系的位移（JASS PolarProjectionBJ 的翻譯；＋side＝面向的右手邊）。
+ * 面向解不到 ⇒ 退回 +x（⛔ 不是不套 —— 拖拉落點的段沒有位移就疊在錨上）。
+ * 三角函式與此處的乘加都在客戶端 —— sim purity 只管 `sim/**`。
+ */
+function applyFacingOffset(
+  pos: { x: number; z: number },
+  facing: { x: number; z: number } | undefined,
+  fwd: number,
+  side: number,
+): { x: number; z: number } {
+  if (fwd === 0 && side === 0) return pos;
+  let fx = facing?.x ?? 0;
+  let fz = facing?.z ?? 0;
+  const fl = Math.hypot(fx, fz);
+  if (fl < 1e-6) {
+    fx = 1;
+    fz = 0;
+  } else {
+    fx /= fl;
+    fz /= fl;
+  }
+  return { x: pos.x + fx * fwd + fz * side, z: pos.z + fz * fwd - fx * side };
+}
 
 /** 一次觸發當下解出的錨點材料（之後 firing 時仍會 refresh 施法者位置）。 */
 interface TriggerFrame {
@@ -241,8 +265,28 @@ export class VfxScriptPlayer {
           targetPos: frame.targetPos,
         });
         if (insts.length === 0) return;
+        // ── owner 2026-08-28 slider 裁決的連續參數（純演出，⛔ 不進 sim）──────
+        // 位移在**面向座標系**（JASS PolarProjectionBJ 的翻譯）；朝向偏移旋轉
+        // 每一具的 dir（CreateNUnitsAtLoc 的 angle 格）。三角函式在客戶端合法
+        // （sim purity 只管 sim/**）。
+        const fwd = seg.offsetForwardU ?? 0;
+        const side = seg.offsetSideU ?? 0;
+        const yawDeg = seg.yawOffsetDeg ?? 0;
+        const rad = (yawDeg * Math.PI) / 180;
+        const cos = Math.cos(rad);
+        const sin = Math.sin(rad);
+        const placed =
+          fwd === 0 && side === 0 && yawDeg === 0
+            ? insts
+            : insts.map((i) => ({
+                ...i,
+                origin: applyFacingOffset(i.origin, frame.direction, fwd, side),
+                ...(i.dir && yawDeg !== 0
+                  ? { dir: { x: i.dir.x * cos - i.dir.z * sin, z: i.dir.x * sin + i.dir.z * cos } }
+                  : {}),
+              }));
         const speed = seg.path === "static" ? 0 : (seg.speed ?? 0);
-        const instances = insts.map((i) => {
+        const instances = placed.map((i) => {
           if (i.travel === 0) {
             return { x: i.origin.x, z: i.origin.z, dx: i.dir?.x ?? 0, dz: i.dir?.z ?? 0, dist: 0, durationSec: seg.lifeSec ?? 0 };
           }
@@ -274,6 +318,7 @@ export class VfxScriptPlayer {
             : {}),
           ...(seg.tint !== undefined ? { tint: seg.tint } : {}),
           ...(seg.alpha !== undefined ? { alpha: seg.alpha } : {}),
+          ...(seg.heightU !== undefined ? { heightU: seg.heightU } : {}),
           instances,
         };
         this.deps.dispatch(
@@ -286,8 +331,14 @@ export class VfxScriptPlayer {
         // `at:"bone"` 的骨頭解析在消費端（`boneSpawnPos` 讀 `attach`＋`caster`）——
         // 這裡只要給施法者座標當退化錨。self/bone→caster、target→target、point→point。
         const at = seg.at === "target" ? "target" : seg.at === "point" ? "point" : "caster";
-        const pos = this.anchorPos(at, frame);
-        if (!pos) return;
+        const anchored = this.anchorPos(at, frame);
+        if (!anchored) return;
+        const pos = applyFacingOffset(
+          anchored,
+          frame.direction,
+          seg.offsetForwardU ?? 0,
+          seg.offsetSideU ?? 0,
+        );
         const payload: Partial<VfxSpawnEvent> = {
           vfxId: seg.vfxId,
           x: pos.x,

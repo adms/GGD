@@ -57,49 +57,13 @@ import {
   PULL_MAX_SPEED,
   PULL_MAX_TRAVEL,
 } from "./kindLimits";
+import { ringPoints, RING_UNIT_ROTATION } from "./modelFxPlacement";
+export { ringPoints, RING_UNIT_ROTATION };
 
-/**
- * `(cos 2π/N, sin 2π/N)`，N = 1…{@link PULL_MAX_ANCHORS}。索引 0 不用。
- * ⛔ 這是**常數表**不是算出來的（見檔頭③）。長度必須等於 `PULL_MAX_ANCHORS + 1`。
- */
-export const RING_UNIT_ROTATION: readonly (readonly [number, number])[] = [
-  [1, 0],
-  [1, 0],
-  [-1, 0],
-  [-0.5, 0.8660254037844387],
-  [0, 1],
-  [0.30901699437494745, 0.9510565162951535],
-  [0.5, 0.8660254037844386],
-  [0.6234898018587336, 0.7818314824680298],
-  [0.7071067811865476, 0.7071067811865476],
-  [0.766044443118978, 0.6427876096865393],
-  [0.8090169943749475, 0.5877852522924731],
-  [0.8412535328311812, 0.5406408174555976],
-  [0.8660254037844387, 0.5],
-];
 
-/**
- * N 個等分點，半徑 `r`，圓心 `centre`。第 0 個永遠在 +x 方向 —— ⭐ 一個**固定**
- * 的起始相位，⛔ 不是「跟著施法者面向轉」：後者要一次旋轉（= 一次三角函式），
- * 而且原作 A091 的第一個錨點也是固定相位（`180/level × i`，i 從 1 起算）。
- */
-export function ringPoints(centre: Vec2, r: number, n: number): Vec2[] {
-  const count = Math.max(1, Math.min(PULL_MAX_ANCHORS, Math.floor(n)));
-  const rot = RING_UNIT_ROTATION[count] ?? RING_UNIT_ROTATION[1]!;
-  const [c, s] = rot;
-  const out: Vec2[] = [];
-  let ux = 1;
-  let uz = 0;
-  for (let i = 0; i < count; i++) {
-    out.push({ x: centre.x + ux * r, z: centre.z + uz * r });
-    // 複數乘法 (ux + i·uz) × (c + i·s)。只有 + − ×（檔頭③）。
-    const nx = ux * c - uz * s;
-    const nz = ux * s + uz * c;
-    ux = nx;
-    uz = nz;
-  }
-  return out;
-}
+
+
+
 
 export const pullEffect: EffectKindSpec<"pull"> = {
   apply(e, ctx) {

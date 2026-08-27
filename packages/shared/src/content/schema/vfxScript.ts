@@ -72,12 +72,28 @@ export const zVfxScriptModelFx = zSpawnModelFx
     // script 裡沒有 preset 補值 ⇒ 這兩格必填（sim 版是 optional）
     modelKey: z.string().min(1),
     path: z.enum(["forward", "toTarget", "orbit", "radial", "static"]),
+    // ── owner 2026-08-28 slider 裁決的四格連續參數（各自有 JASS 對應動詞）────
+    /** 沿施法者面向的前後位移（世界單位；JASS `PolarProjectionBJ` 的 dist 分量）。 */
+    offsetForwardU: z.number().min(-30).max(30).optional(),
+    /** 垂直面向的左右位移（＋＝面向的右手邊；同上 PolarProjection 的側分量）。 */
+    offsetSideU: z.number().min(-30).max(30).optional(),
+    /** 離地高度（世界單位；JASS `SetUnitFlyHeightBJ` —— 500 wc3u ≈ 9.2u）。 */
+    heightU: z.number().min(0).max(30).optional(),
+    /** 朝向偏移（度，逆時針；JASS `CreateNUnitsAtLoc(…, angle)` 的那一格）。 */
+    yawOffsetDeg: z.number().min(-360).max(360).optional(),
   });
 
 /** 粒子／貼圖 vfx 段 —— 詞彙照抄 spawnVfx（含 at:"bone"＋attach 掛骨）。 */
 export const zVfxScriptVfx = zSpawnVfx
   .pick({ vfxId: true, at: true, attach: true, durationSec: true })
-  .extend({ kind: z.literal("vfx"), ...SEG_COMMON });
+  .extend({
+    kind: z.literal("vfx"),
+    ...SEG_COMMON,
+    /** 沿施法者面向的前後位移（世界單位；拖拉落點的翻譯 —— PolarProjection 同族）。 */
+    offsetForwardU: z.number().min(-30).max(30).optional(),
+    /** 垂直面向的左右位移（＋＝面向的右手邊）。 */
+    offsetSideU: z.number().min(-30).max(30).optional(),
+  });
 
 /** 浮動文字段（喊招／Hit 數）。 */
 export const zVfxScriptText = zFloatingText

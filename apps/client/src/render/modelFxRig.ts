@@ -576,7 +576,7 @@ export class ModelFxRig {
         //    抬 ~2.7;08-03 的 4.5 ⇒ 半高 ~4.7）⇒ fxSpawnHeight 定義為「施放縮放 1 時
         //    的離地」,這裡乘上 ev.scale。⚠️ 這個語意變更是免費的:fieldAdoption 普查
         //    證明 netherstrike 是**第一個**採用者,沒有別的消費端要遷移。
-        y: (doc.fxSpawnHeight ?? 0) * (ev.scale ?? 1),
+        y: (doc.fxSpawnHeight ?? 0) * (ev.scale ?? 1) + (ev.heightU ?? 0),
         ...(ev.spinDegPerSec !== undefined ? { spinDegPerSec: ev.spinDegPerSec } : {}),
         // ⭐ GH#689 —— 剪輯那兩格。⚠️ `clip` 缺席時**整段不存在** ⇒ 一條軌都不
         //    碰 ＝ 2026-08-25 之前的行為，逐位元不變（rollback：內容清空這一格）。

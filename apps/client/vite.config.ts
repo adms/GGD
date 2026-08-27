@@ -515,6 +515,45 @@ function assetReviewApi(): Plugin {
 }
 
 /**
+ * VFX-SCRIPT STUDIO API (GH#838) — dev-only wiring for public/vfx-script-studio.html.
+ * 與上面的 assetReviewApi 同一個模式：路由邏輯住 tools/vfx-forge/middleware.mjs
+ * （動態 import；缺席 ⇒ 503 指名），`apply:"serve"` ⇒ 出貨 build 不存在這條路。
+ */
+const VFXSTUDIO_ROUTE_PREFIX = "/__vfxstudio";
+
+function vfxStudioApi(): Plugin {
+  return {
+    name: "ggd-vfx-studio-api",
+    apply: "serve",
+    async configureServer(server) {
+      const repoRoot = fileURLToPath(new URL("../..", import.meta.url));
+      try {
+        const href = new URL("../../tools/vfx-forge/middleware.mjs", import.meta.url).href;
+        const mod = (await import(/* @vite-ignore */ href)) as {
+          createVfxStudioMiddleware: (
+            root: string,
+          ) => (req: IncomingMessage, res: ServerResponse, next: () => void) => void;
+        };
+        server.middlewares.use(mod.createVfxStudioMiddleware(repoRoot));
+      } catch (err) {
+        const detail = err instanceof Error ? err.message : String(err);
+        server.middlewares.use(VFXSTUDIO_ROUTE_PREFIX, (_req, res) => {
+          res.statusCode = 503;
+          res.setHeader("Content-Type", "application/json; charset=utf-8");
+          res.end(
+            JSON.stringify({
+              error: "vfx studio middleware unavailable",
+              detail,
+              hint: "tools/vfx-forge/middleware.mjs（GH#838）尚未落地或載入失敗；vfx-script-studio.html 需要它供應 /__vfxstudio/*。",
+            }),
+          );
+        });
+      }
+    },
+  };
+}
+
+/**
  * BUILD STAMP (task #66). Computed ONCE here, at config-evaluation time on the
  * build machine — never at runtime in the browser — and handed to the client as
  * `import.meta.env.VITE_BUILD_STAMP` via `define` below, so the bottom-pinned
@@ -672,6 +711,7 @@ export default defineConfig({
     react(),
     contentApiGuard(),
     assetReviewApi(),
+    vfxStudioApi(),
     liveBuildStamp(),
     serveIconConsoleStamp(),
     // compressDevModules only wraps the /src, /@fs, /@id, /@vite and

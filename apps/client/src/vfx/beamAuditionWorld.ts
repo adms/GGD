@@ -223,6 +223,8 @@ export async function buildBeamAuditionWorld(
   };
 
   function doCast(): void {
+      // ⚠️ 受審技能由 `spawnFighter` **一律掛在 R 槽**（不論它原生是 Q/W/E/R）——
+      //    所以這裡放 R 永遠是對的，⛔ 不要「照後綴推導槽位」（推導版放到空槽會被拒絕）。
       const ab = w.abilities.get(casterId);
       if (ab) (ab.slots as { R: { cooldownRemainingTicks: number } }).R.cooldownRemainingTicks = 0;
       const hp = w.health.get(casterId);
