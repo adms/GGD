@@ -40,7 +40,13 @@ case "$HOST" in
 esac
 [ -n "$USER_" ] || { echo "$RED⛔ 請設 GGD_MINI_USER（在 mini 上跑 whoami 就知道）$RST" >&2; exit 2; }
 SSH=(ssh -o BatchMode=yes -o ConnectTimeout=10 "$USER_@$HOST")
-r(){ "${SSH[@]}" "$@"; }
+# ⛔⛔ 非互動 SSH 拿到的是**最小 PATH** —— macOS 上它由 /etc/paths 決定,
+#   而 OrbStack/Docker Desktop 的 CLI 住在 `~/.orbstack/bin`（以及 /usr/local/bin）。
+#   2026-08-29 實測:`docker info` 在互動 shell 裡好好的,而這支腳本說「docker 不通」
+#   ⇒ ⭐ 一個**看起來像環境壞掉、實際上是我沒設 PATH** 的假紅燈。
+#   ⚠️ 這一族的危險在於它會讓人去修**沒有壞的東西**（重裝 OrbStack、查授權…）。
+REMOTE_PATH='export PATH="$HOME/.orbstack/bin:/usr/local/bin:/opt/homebrew/bin:$PATH"; '
+r(){ "${SSH[@]}" "$REMOTE_PATH$*"; }
 
 # ═══════════════════════════════════════ check
 cmd_check() {
