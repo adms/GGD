@@ -270,14 +270,14 @@
             {
               "kind": "applyStatus",
               "statusId": "aban-x-mark",
-              "duration": 1.5
+              "duration": 1.0
             }
           ]
         },
         {
           "kind": "delayed",
           "shape": "single",
-          "delaySec": 1.0,
+          "delaySec": 0.5,
           "effects": [
             {
               "kind": "blink",
@@ -304,12 +304,6 @@
                   "damageType": "true",
                   "amount": {
                     "damageTier": "小",
-                    "ratios": [
-                      {
-                        "stat": "ap",
-                        "coeff": 1.8
-                      }
-                    ],
                     "mult": 10
                   },
                   "radius": 4.5,
@@ -317,7 +311,8 @@
                     "kind": "status",
                     "subject": "target",
                     "statusId": "aban-x-mark"
-                  }
+                  },
+                  "radiusTier": "小"
                 }
               ],
               "distanceUnits": 10.08
