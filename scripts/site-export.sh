@@ -217,14 +217,29 @@ fi
 if [ "$DRY" -eq 1 ]; then head_ "dry-run 結束 —— ⛔ 一個位元組都沒寫"; exit 0; fi
 
 head_ "5. 打包"
+# ⛔⛔ 壓法要**看目的地吃不吃得下**,⛔ 不是看來源有什麼。
+#   實測（2026-08-29）:目的機 Mac mini **沒有 zstd**,而且 macOS 的 `tar` 也不支援它
+#   ⇒ 一包 `.tar.zst` 在那台上完全解不開。
+#   ⚠️ 而事後轉檔會讓 `BUNDLE.sha256` 對不上（它是對檔名算的）
+#     ⇒ ⭐ 要在**產生的時候**就選對,⛔ 不是搬完再轉。
+#   GGD_EXPORT_COMPRESS=gzip 給沒有 zstd 的目的地;預設 zstd（更小更快）。
+COMPRESS="${GGD_EXPORT_COMPRESS:-zstd}"
+case "$COMPRESS" in
+  zstd) command -v zstd >/dev/null 2>&1 || die "⛔ 這台沒有 zstd ⇒ 用 GGD_EXPORT_COMPRESS=gzip"
+        EXT=tar.zst; C_CORE=(zstd -q -12 -T0 -c); C_BULK=(zstd -q -3 -T0 -c) ;;
+  gzip) EXT=tar.gz;  C_CORE=(gzip -9 -c);        C_BULK=(gzip -1 -c) ;;
+  *) die "⛔ GGD_EXPORT_COMPRESS 只認 zstd / gzip" ;;
+esac
+info "壓法：$COMPRESS（.$EXT）"
+
 [ "${#PRESENT[@]}" -gt 0 ] || die "⛔ 一個 core 目錄都沒有 —— 拒絕產出空包"
-tar -C "$REPO/data" --numeric-owner -cf - "${PRESENT[@]}" | zstd -q -12 -T0 -o "$BUNDLE/data-core.tar.zst" \
+tar -C "$REPO/data" --numeric-owner -cf - "${PRESENT[@]}" | "${C_CORE[@]}" > "$BUNDLE/data-core.$EXT" \
   || die "core 打包失敗"
-ok "data-core.tar.zst $(du -h "$BUNDLE/data-core.tar.zst" | cut -f1)"
+ok "data-core.$EXT $(du -h "$BUNDLE/data-core.$EXT" | cut -f1)"
 for d in "${CRITICAL_BULK[@]}" "${BULK[@]}"; do
   [ -d "$REPO/data/$d" ] || continue
-  tar -C "$REPO/data" --numeric-owner -cf - "$d" 2>/dev/null | zstd -q -3 -T0 -o "$BUNDLE/data-$d.tar.zst" \
-    && ok "data-$d.tar.zst $(du -h "$BUNDLE/data-$d.tar.zst" | cut -f1)"
+  tar -C "$REPO/data" --numeric-owner -cf - "$d" 2>/dev/null | "${C_BULK[@]}" > "$BUNDLE/data-$d.$EXT" \
+    && ok "data-$d.$EXT $(du -h "$BUNDLE/data-$d.$EXT" | cut -f1)"
 done
 
 head_ "6. manifest（⭐ 這才是搬遷成功的判準）"
@@ -256,7 +271,7 @@ head_ "6. manifest（⭐ 這才是搬遷成功的判準）"
   echo "# ── 逐檔校驗和 ──"
   (cd "$REPO/data" && find "${PRESENT[@]}" -type f 2>/dev/null | sort | xargs -r shasum -a 256) 2>/dev/null
 } > "$BUNDLE/MANIFEST.txt"
-(cd "$BUNDLE" && sha256sum ./*.tar.zst > BUNDLE.sha256 2>/dev/null)
+(cd "$BUNDLE" && sha256sum ./*.$EXT > BUNDLE.sha256 2>/dev/null)
 ACC=$(grep -c ' accounts/' "$BUNDLE/MANIFEST.txt" 2>/dev/null; true)
 ok "MANIFEST.txt  帳號檔 $ACC 個 · 逐檔校驗和 $(grep -c '^[0-9a-f]\{64\}' "$BUNDLE/MANIFEST.txt") 條"
 

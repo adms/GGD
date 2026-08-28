@@ -45,10 +45,10 @@ info "來源 $(mval source_host) · $(mval source_arch) · git $(mval git_head) 
 
 head_ "2. 包的完整性（⛔ 在碰任何東西之前）"
 if [ -f "$BUNDLE/BUNDLE.sha256" ]; then
-  (cd "$BUNDLE" && sha256sum -c BUNDLE.sha256 >/dev/null 2>&1) \
+  (cd "$BUNDLE" && { command -v sha256sum >/dev/null 2>&1 && sha256sum -c BUNDLE.sha256 || shasum -a 256 -c BUNDLE.sha256; } >/dev/null 2>&1) \
     && ok "tar 校驗和全部相符" || bad "⛔ tar 校驗和不符 —— 這一包在路上壞了,⛔ 不要匯入"
 else warn "沒有 BUNDLE.sha256"; fi
-[ -f "$BUNDLE/data-core.tar.zst" ] || bad "缺 data-core.tar.zst"
+ls "$BUNDLE"/data-core.tar.* >/dev/null 2>&1 || bad "缺 data-core.tar.*"
 [ -d "$BUNDLE/redis" ] && ok "Redis 快照在" || warn "⛔ 這一包沒有 Redis —— 排行榜與錢包不會回來"
 [ -f "$BUNDLE/env.secret" ] && warn "包裡有 secrets（env.secret）—— ⛔ 這一包不可以進 git" \
   || info "（沒帶 secrets ⇒ docker/.env 要手動放）"
@@ -86,13 +86,33 @@ fi
 mkdir -p "$REPO/data"
 
 head_ "5. 還原"
-zstd -dq -c "$BUNDLE/data-core.tar.zst" | tar -C "$REPO/data" -xf - || die "core 還原失敗"
-ok "core 還原完成"
+# ⛔⛔ 目的地不一定有 zstd。實測（2026-08-29，Mac mini）：
+#   macOS **沒有** zstd,而且系統的 `tar` 也**不支援** `--zstd`
+#   ⇒ 一個只認 `.tar.zst` 的匯入端,在目的機上完全跑不起來。
+# ⭐ 判準:解壓要**按副檔名挑,並且問這台有沒有那個工具**,
+#   ⛔ 不是假設兩端的工具鏈一樣 —— 而搬遷的定義就是「兩端不一樣」。
+decomp() {
+  local f="$1"
+  case "$f" in
+    *.tar.zst) command -v zstd >/dev/null 2>&1 || die "⛔ 需要 zstd 才能解 $(basename "$f")
+   ⇒ 這台沒有。改用 .tar.gz 的包（來源端轉換）,或先裝 zstd。"
+               zstd -dq -c "$f" ;;
+    *.tar.gz|*.tgz) gzip -dc "$f" ;;
+    *.tar)     cat "$f" ;;
+    *) die "⛔ 不認得的格式：$(basename "$f")" ;;
+  esac
+}
+# 一個集合可能以任何一種壓法存在 —— 挑存在的那一個
+pick() { local b="$1" e; for e in tar.zst tar.gz tgz tar; do [ -f "$BUNDLE/$b.$e" ] && { echo "$BUNDLE/$b.$e"; return 0; }; done; return 1; }
+
+CORE=$(pick data-core) || die "⛔ 包裡找不到 data-core.*"
+decomp "$CORE" | tar -C "$REPO/data" -xf - || die "core 還原失敗"
+ok "core 還原完成（$(basename "$CORE")）"
 if [ "$NOBULK" -eq 0 ]; then
-  for f in "$BUNDLE"/data-*.tar.zst; do
-    case "$f" in *data-core.tar.zst) continue;; esac
+  for f in "$BUNDLE"/data-*.tar.zst "$BUNDLE"/data-*.tar.gz "$BUNDLE"/data-*.tgz "$BUNDLE"/data-*.tar; do
     [ -e "$f" ] || continue
-    zstd -dq -c "$f" | tar -C "$REPO/data" -xf - && ok "$(basename "$f") 還原完成"
+    case "$(basename "$f")" in data-core.*) continue;; esac
+    decomp "$f" | tar -C "$REPO/data" -xf - && ok "$(basename "$f") 還原完成"
   done
 else warn "--no-bulk：⛔ 沒還原 replays / blizzard-overlay"; fi
 

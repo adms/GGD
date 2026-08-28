@@ -73,8 +73,9 @@ except Exception: print('')" 2>/dev/null)
   r 'command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1' \
     && ok "docker 通了（$(r 'docker info --format "{{.Architecture}} {{.NCPU}} 核"' 2>/dev/null)）" \
     || bad "⛔ docker 不通 —— 裝 OrbStack,並確認**自動登入**已開（它是使用者層程式）"
-  r "test -d $REMOTE_REPO/.git" && ok "repo 在 $(r "echo $REMOTE_REPO")" \
-    || warn "repo 還沒有 ⇒ 跑 bootstrap"
+  if r "test -f $REMOTE_REPO/package.json"; then
+    ok "repo 在（版本 $(r "cat $REMOTE_REPO/DEPLOYED_COMMIT 2>/dev/null | cut -c1-8" || echo "?")）"
+  else warn "repo 還沒有 ⇒ 跑 deploy（它會用 git archive 推過去）"; fi
   r "test -f $REMOTE_REPO/docker/.env" && ok "docker/.env 在" \
     || bad "⛔ 缺 docker/.env —— ⚠️ 它有 secrets,⛔ 不進 git,要**手動**放上去"
   r "test -d $REMOTE_REPO/data/accounts" && ok "帳號資料在" \
@@ -94,13 +95,8 @@ except Exception: print('')" 2>/dev/null)
 # ═══════════════════════════════════════ bootstrap
 cmd_bootstrap() {
   cmd_check >/dev/null 2>&1
-  r "test -d $REMOTE_REPO/.git" || {
-    head_ "clone"
-    local url; url=$(git -C "$REPO" remote get-url origin 2>/dev/null)
-    [ -n "$url" ] || die "本機沒有 origin remote"
-    r "git clone '$url' $REMOTE_REPO" || die "clone 失敗（mini 上的 git 有沒有存取權?）"
-    ok "clone 完成"
-  }
+  # ⛔ 不 clone —— deploy 會用 git archive 推過去（mini 不需要 git）
+  r "mkdir -p $REMOTE_REPO/docker" && ok "$REMOTE_REPO 已建立"
   head_ "⛔ 只能你自己做的兩件"
   info "① docker/.env —— 有 secrets,⛔ 不進 git："
   info "     scp $REPO/docker/.env $USER_@$HOST:$REMOTE_REPO/docker/.env"
@@ -113,13 +109,27 @@ cmd_bootstrap() {
 cmd_deploy() {
   cmd_check || die "前置條件沒過 —— ⛔ 不部署"
 
-  head_ "1. 同步程式（git，⛔ 不是 rsync 工作區）"
-  # ⭐ 出貨的是 git,⛔ 不是這台機器的工作區 —— 2026-08-02 的生產事故就是後者
-  #   （未追蹤的來源被烘進產物,而來源沒進版控）。
-  local head_local; head_local=$(git -C "$REPO" rev-parse --short HEAD)
-  r "cd $REMOTE_REPO && git fetch --all --tags -q && git checkout -q $head_local" \
-    || die "checkout $head_local 失敗（⛔ 那個 commit push 了嗎?）"
-  ok "mini 對到 $head_local"
+  head_ "1. 同步程式"
+  # ⭐ 出貨的是 **git 的某個 commit**,⛔ 不是這台機器的工作區 ——
+  #   2026-08-02 的生產事故就是後者（未追蹤的來源被烘進產物,而來源沒進版控）。
+  #
+  # ⭐ 用 `git archive <commit>` 串過去,⛔ 不是在 mini 上跑 git:
+  #   · 保證一樣強 —— archive 的內容**就是**那個 commit 的樹（⛔ 工作區的髒東西進不來）
+  #   · mini 不需要 git（macOS 的 /usr/bin/git 是 CLT stub,而裝 CLT 要 GUI 點一次）
+  #   · mini 不需要 repo 的存取憑證（⭐ 少一份要管的秘密）
+  #   ⚠️ 代價:mini 上沒有 .git ⇒ 問不出「你是哪一版」
+  #     ⇒ 所以寫一個 DEPLOYED_COMMIT,而 verify 讀它。
+  local head_local; head_local=$(git -C "$REPO" rev-parse HEAD)
+  git -C "$REPO" diff --quiet HEAD 2>/dev/null \
+    || warn "⚠️ 工作區有未提交的改動 —— ⭐ 它們**不會**被部署（部署的是 $(echo "$head_local" | cut -c1-8)）"
+  r "mkdir -p $REMOTE_REPO" || die "建不了 $REMOTE_REPO"
+  git -C "$REPO" archive --format=tar "$head_local" \
+    | "${SSH[@]}" "$REMOTE_PATH tar -x -C $REMOTE_REPO && printf '%s' '$head_local' > $REMOTE_REPO/DEPLOYED_COMMIT" \
+    || die "同步失敗"
+  local remote_head; remote_head=$(r "cat $REMOTE_REPO/DEPLOYED_COMMIT" 2>/dev/null)
+  [ "$remote_head" = "$head_local" ] \
+    && ok "mini 對到 $(echo "$head_local" | cut -c1-8)" \
+    || die "⛔ 同步後版本對不上（mini=$remote_head 本機=$head_local）"
 
   head_ "2. build（arm64）"
   r "cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env build" \
