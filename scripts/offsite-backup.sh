@@ -92,8 +92,11 @@ cmd_run() {
   [ -n "$DEST" ] || die "⛔ 沒設 GGD_BACKUP_DEST —— 一份沒有目的地的備份不是備份"
 
   # ⭐ 目的地在同一顆碟上 ＝ 第二份副本,⛔ 不是備份。火災/失竊/檔案系統毀損一起帶走。
+  # ⚠️ rclone remote 的形狀是 `<remote>:<path>`（例:`r2:ggd-backups`）——
+  #   它與 `user@host:/path` 都含冒號,但**傳輸方式完全不同**,所以先分出來。
   case "$DEST" in
-    *:*) : ;;   # 遠端,一定不同碟
+    rclone:*) : ;;                    # ⭐ 物件儲存,一定離站
+    *@*:*) : ;;                       # ssh 遠端
     *)
       local dev_src dev_dst
       dev_src=$(df -P "$REPO" 2>/dev/null | tail -1 | awk '{print $1}')
@@ -105,19 +108,44 @@ cmd_run() {
 
   head_ "1. 匯出"
   rm -rf "$STAGE"; mkdir -p "$STAGE"
-  GGD_EXPORT_OUT="$STAGE" GGD_REPO="$REPO" bash "$REPO/scripts/site-export.sh" --with-secrets >/dev/null 2>&1 \
+  GGD_EXPORT_OUT="$STAGE" GGD_REPO="$REPO" bash "$REPO/scripts/site-export.sh" >/dev/null 2>&1 \
     || { stamp_status failed "$DEST" "site-export.sh 非零"; die "匯出失敗"; }
   local B; B=$(ls -d "$STAGE"/ggd-export_temp_* 2>/dev/null | tail -1)
   [ -n "$B" ] || { stamp_status failed "$DEST" "沒有產出包"; die "匯出沒有產出包"; }
   ok "$(basename "$B")  $(du -sh "$B" | cut -f1)"
-  warn "⚠️ 這一包含 secrets（--with-secrets）⇒ 目的地必須是**你信任的地方**"
+  # ⛔⛔ **刻意不帶 secrets**（2026-08-29 的決定）。
+  #   `docker/.env` 裡有 `JWT_SIGNING_SECRET`（拿到就能偽造 admin token）、
+  #   `REDIS_PASSWORD`、`CLOUDFLARE_TUNNEL_TOKEN`。
+  #   ⭐ 而備份目的地是**第三方**（R2/Dropbox/…）⇒ 那些不該未加密地放上去。
+  # ⇒ ⭐ 秘密與資料**分開保管**:`.env` 只有 591 bytes,放密碼管理器;
+  #   資料（141 MB,⛔ 沒有秘密）走這條。
+  # ⚠️ 代價要記著:災難復原需要**兩個來源** —— 而那正是它應該的樣子。
+  warn "⛔ 這一包**不含** docker/.env —— 復原時 .env 要從密碼管理器拿"
 
   head_ "2. 送走"
-  rsync -a --partial "$B" "$DEST/" 2>&1 | tail -3 \
-    || { stamp_status failed "$DEST" "rsync 非零"; die "傳輸失敗"; }
+  case "$DEST" in
+    rclone:*)
+      # ⭐ 物件儲存（R2/S3/B2…）。⛔ 它**不是同步** —— 本地檔壞了不會污染已上傳的,
+      #   而那正是它比 Dropbox 這類同步服務更適合當備份的理由。
+      RC="${GGD_RCLONE:-$HOME/.local/bin/rclone}"
+      [ -x "$RC" ] || RC=$(command -v rclone) || die "⛔ 找不到 rclone"
+      REMOTE="${DEST#rclone:}"
+      "$RC" copy "$B" "$REMOTE/$(basename "$B")" --transfers 4 --checksum 2>&1 | tail -3 \
+        || { stamp_status failed "$DEST" "rclone copy 非零"; die "傳輸失敗"; }
+      ;;
+    *)
+      rsync -a --partial "$B" "$DEST/" 2>&1 | tail -3 \
+        || { stamp_status failed "$DEST" "rsync 非零"; die "傳輸失敗"; }
+      ;;
+  esac
   # ⭐ 「rsync 沒報錯」⛔ 不等於「東西到了」—— 遠端問一次
   case "$DEST" in
-    *:*) local h="${DEST%%:*}" pth="${DEST#*:}"
+    rclone:*)
+      # ⭐ 「rclone 沒報錯」⛔ 不等於「東西到了」—— 回頭 ls 一次遠端
+      "$RC" lsf "$REMOTE/$(basename "$B")" 2>/dev/null | grep -q '^MANIFEST.txt$' \
+        || { stamp_status failed "$DEST" "遠端讀不到 MANIFEST"; die "上傳「成功」但遠端讀不到 MANIFEST —— ⛔ 這不是備份"; }
+      ;;
+    *@*:*) local h="${DEST%%:*}" pth="${DEST#*:}"
          ssh -o ConnectTimeout=15 "$h" "test -f '$pth/$(basename "$B")/MANIFEST.txt'" \
            || { stamp_status failed "$DEST" "遠端讀不到 MANIFEST"; die "傳輸「成功」但遠端讀不到 MANIFEST —— ⛔ 這不是備份"; } ;;
     *) [ -f "$DEST/$(basename "$B")/MANIFEST.txt" ] \
@@ -127,7 +155,11 @@ cmd_run() {
 
   head_ "3. 修剪（保留最近 $KEEP 份）"
   case "$DEST" in
-    *:*) ssh -o ConnectTimeout=15 "${DEST%%:*}" \
+    rclone:*)
+      "$RC" lsf --dirs-only "$REMOTE" 2>/dev/null | sed 's#/$##' | sort -r | tail -n +$((KEEP+1)) \
+        | while read -r old; do "$RC" purge "$REMOTE/$old" >/dev/null 2>&1 && ok "已刪遠端 $old"; done
+      ;;
+    *@*:*) ssh -o ConnectTimeout=15 "${DEST%%:*}" \
            "ls -1dt '${DEST#*:}'/ggd-export_temp_* 2>/dev/null | tail -n +$((KEEP+1)) | xargs -r rm -rf" \
            && ok "遠端已修剪" ;;
     *) ls -1dt "$DEST"/ggd-export_temp_* 2>/dev/null | tail -n +$((KEEP+1)) | xargs -r rm -rf && ok "已修剪" ;;
