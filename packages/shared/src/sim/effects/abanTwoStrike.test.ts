@@ -73,7 +73,15 @@ describe("08-04 阿邦快速劍X 是二連技（GH#843 · owner 2026-08-28）", 
     const victim = mk(8, 0, 1, 1); // 線上 ＋ 落點（10.08）2.08 內
     world.step(new Map());
     world.transform.get(caster)!.facing = { x: 1, z: 0 };
-    const before = world.health.get(victim)!.hp;
+    // ⭐⭐ 血池要**遠大於**這一發，否則量到的是「血條見底」⛔ 不是「這一發多大」。
+    //    2026-08-28 的教訓：出貨 max HP 是 **2086**，而帶印記那一次量到的
+    //    「傷害」也正好是 2086 —— 我把**死亡**讀成了「90% 傷害不見了」，
+    //    還為此開了一張票（#855，已更正關閉）。⛔ 一把量不到上限之外的尺，
+    //    在它最需要說話的時候只會回報上限本身。
+    const pool = world.health.get(victim)!;
+    pool.maxHp = 1_000_000;
+    pool.hp = 1_000_000;
+    const before = pool.hp;
     runEffects((Abilities.get(SUBJECT).effects ?? []) as EffectDef[], {
       world, caster, rank: 1, targets: [], point: { x: C.x + 12, z: C.z },
       origin: `ability:${SUBJECT}`, rng: world.rng,
@@ -98,15 +106,9 @@ describe("08-04 阿邦快速劍X 是二連技（GH#843 · owner 2026-08-28）", 
       withMark,
       `⛔ 帶印記與不帶印記吃到的傷害沒有拉開（${Math.round(withMark)} vs ${Math.round(without)}）` +
         " ⇒ 十倍那一發沒有發生，或它是無條件的",
-      // ⚠️⚠️ 門檻是 **1.3×**，⛔ 不是「十倍」——⭐ 而那個差距本身是一個**已量到、
-      //    但屬於別條線**的發現（GH#855）：這一發的授權值是 **7016**
-      //    （`resolveScaling` 實測，而且 `damageArea` 內部印出來的 `base` 就是 7016、
-      //    `struck.length` 帶印記是 **1**、不帶是 **0** —— 條件百分之百正確），
-      //    ⛔ 而玩家身上只掉了 **683**。那 90% 消失在傷害管線的下游（減傷/抗性/夾子），
-      //    ⇒ 它影響的是**每一發大傷害**，⛔ 不是這一支技能。
-      //    ⭐ 這條守衛守的是「**條件對不對**」（有印記才多挨），
-      //    ⛔ 不是「倍率兌現了多少」—— 後者要等 #855 有結論才有一個可以釘的數字。
-    ).toBeGreaterThan(without * 1.3);
+      // ⭐ 門檻 **3×**：授權值是 (500+AP×1.8)×10 ≈ 7016，而不帶印記那一次只有
+      //    基礎那幾發（~1400）⇒ 真實比值 ~5×。3× 給了餘裕又擋得住「倍率沒生效」。
+    ).toBeGreaterThan(without * 3);
   });
 
   it("⭐⭐ 印記必須**活得比 B 段的延遲久** —— 否則這個機制是擲硬幣", async () => {
