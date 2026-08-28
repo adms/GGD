@@ -109,6 +109,9 @@ export const SIM_WORLD_DIGEST_EXEMPT: Readonly<Record<string, string>> = {
   // tick 0 之前定格，比賽中途不會變，所以每個 replica 讀到的是同一份。
   manaEconomy: CONFIG,
   combatFeel: CONFIG,
+  // 手把操作方案（GH#863）—— 與 combatFeel 完全同一條路：MatchController 在
+  // tick 0 之前定格，比賽中途不會變。sim 只讀它的 combatInput / autoApproach。
+  controllerScheme: CONFIG,
   shieldRules: CONFIG,
   blockRules: CONFIG,
   critRules: CONFIG,

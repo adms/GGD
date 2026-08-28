@@ -199,6 +199,8 @@ export const NAV_TAGS: Record<string, readonly NavTag[]> = {
   replayPolicy: ["運維", "可調"], // 要不要錄
   modelLod: ["演出", "可調"], // 載進來多重
   weather: ["演出", "可調"], // ⛔ 沒有一格改變碰撞或視野
+  // 手把操作版本（GH#863）——「玩法」因為它改的是**索敵與追擊的規則**（⛔ 不只是按鍵位置）。
+  controllerScheme: ["規則", "可調"],
   vfxCleanup: ["演出", "運維", "可調"], // 打完留多少在記憶體
   vfxScripts: ["演出", "技能", "可調"], // GH#838 演出腳本要不要播（rollback 那一格）
   vfxBudget: ["演出", "運維", "可調"], // GH#838 單個特效的粒子密度天花板（運維＝機器的事）

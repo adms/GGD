@@ -1,8 +1,8 @@
 {
   "id": "controller-scheme",
   "schema": "config.controller-scheme@1",
-  "note": "手把操作版本（GH#863）。owner 2026-08-28：「把這版當作 v4 後台可切換的其中一種手把操作版本」。⭐ 切 active 一格就換版本，⛔ 不必重新部署。⚠️ 出貨在 v3-shipped：v4 的機制（玩家專注／加權瞄準／短距貼近）還沒落地，現在切過去等於選一個沒有實作的方案。實作完成後把 active 改成 v4。",
-  "active": "v3-shipped",
+  "note": "手把操作版本（GH#863）。owner 2026-08-28：「把這版當作 v4 後台可切換的其中一種手把操作版本」。⭐ 切 active 一格就換版本，⛔ 不必重新部署（⚠️ game shard 要重啟才吃得到 sim 那一半）。⭐ 出貨在 v4（第〇·六守則：優先權大的更新預設啟動）。⚠️ **⛔ 未經玩家實測驗收** —— 覺得哪裡不對，把這一格改回 v3-shipped 就是完整 rollback。",
+  "active": "v4",
   "schemes": {
     "v3-shipped": {
       "label": "v3（出貨）",

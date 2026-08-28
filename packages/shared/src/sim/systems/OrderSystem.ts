@@ -484,7 +484,13 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
     //   追擊在 `d > reach×0.9` 觸發，貼近在 `d ≤ cap` 才准 ——
     //   近戰 (reach≈2.8) 兩區間相交於 2.5–3.0；遠程 (reach 8) 7.2 > 3.0 ⇒ 不相交。
     let chaseBlocked = false;
-    if (nav.attackTargetAuto) {
+    // ⚠️⚠️ `attackMove` **不在這條規則裡**，而這是 `#274` 那條既有的整合測試抓到的：
+    //   A 點地板是玩家逐字說「**走過去打**」—— 它索到的目標雖然是 `attackTargetAuto`，
+    //   但那個「auto」指的是「不是手選的」，⛔ 不是「自動化自己決定的」。
+    //   ⇒ spec §23 禁止的是**自動化**決定走去哪；A 點是明確意圖，一格都不該被限。
+    //   ⛔ 少了這半句，v4 的 attack-move 會走到一半停住，而畫面上看起來像卡住。
+    const orderedToFight = nav.order?.kind === "attackMove";
+    if (nav.attackTargetAuto && !orderedToFight) {
       const ap = world.controllerScheme.autoApproach;
       if (ap.enabled) {
         // §31：**永遠**不自動追玩家（⛔ 這一條沒有例外，schema 也擋 false）。

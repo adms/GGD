@@ -14,6 +14,7 @@ import { readFileSync } from "node:fs";
 import type { AimAbility } from "./AimResolver";
 import type { CastableSlot } from "@ggd/shared/sim/intents";
 import {
+  zCastType,
   zConfigControllerSchemeDoc,
   type ControllerSchemeEntry,
 } from "@ggd/shared/content";
@@ -139,5 +140,21 @@ describe("手把操作方案真的驅動派送 (GH#863)", () => {
     expect(notes.some((n) => n.label.includes("Auto Approach"))).toBe(false);
     // ⑤ §80③ 最重要的一句
     expect(label("scheme-noautocast")).toContain("永遠不會自動施放");
+  });
+
+  it("⭐ Phase 7：GGD 的每一種 castType 都對得到 spec §35 的四種瞄準模式", () => {
+    // spec §35 逐字：「Support only: instant | unit | direction | ground」，
+    // 而且「⛔ Do not implement vector targeting until a real hero requires it」。
+    // ⇒ 這條閘不是要 GGD 改名，是要**這張對照表保持是滿的**：
+    //   加第六種 castType 而沒想過手把怎麼瞄它 ⇒ 紅。
+    const MODE: Record<string, "instant" | "unit" | "direction" | "ground"> = {
+      self: "instant",
+      targeted: "unit",
+      skillshot: "direction",
+      dash: "direction", // §39 自己把 dash 列在 Direction Ability 的例子裡
+      ground: "ground",
+    };
+    for (const t of zCastType.options) expect(MODE[t], `castType=${t}`).toBeDefined();
+    expect(new Set(Object.values(MODE)).size).toBe(4); // ⛔ 沒有第五種模式
   });
 });
