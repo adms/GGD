@@ -383,20 +383,6 @@
       "rootWhileCasting": true
     },
     {
-      "id": "godie-nbbc.r",
-      "name": "08-04 阿邦快速劍X",
-      "champion": "godie-nbbc",
-      "championName": "傳說的龍騎士 - 勇者小呆",
-      "slot": "R",
-      "castTimeSec": 1.233,
-      "effectiveSec": 1,
-      "deltaSec": 0.233,
-      "clamped": true,
-      "castType": "targeted",
-      "interruptOn": "none",
-      "rootWhileCasting": true
-    },
-    {
       "id": "godie-nsjs.r",
       "name": "18-04 億年樹",
       "champion": "godie-nsjs",

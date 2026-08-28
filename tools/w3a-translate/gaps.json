@@ -9,8 +9,8 @@
   "cooldown:same": 113,
   "cooldown:tier": 155,
   "cooldown:w3a-absent": 172,
-  "duration:free-number": 31,
-  "duration:ggd-absent": 195,
+  "duration:free-number": 27,
+  "duration:ggd-absent": 199,
   "duration:same": 3,
   "duration:w3a-absent": 223,
   "mana:ggd-zero": 77,
@@ -18,9 +18,9 @@
   "mana:tier": 169,
   "mana:w3a-absent": 181,
   "radius:free-number": 5,
-  "radius:ggd-absent": 91,
+  "radius:ggd-absent": 90,
   "radius:same": 4,
-  "radius:tier": 51,
+  "radius:tier": 52,
   "radius:w3a-absent": 301,
   "range:ggd-zero": 30,
   "range:same": 7,
@@ -6727,16 +6727,6 @@
   {
    "axis": "radius",
    "key": "radius:ggd-absent",
-   "w3a": "A0EZ",
-   "ggd": "godie-n01c.r",
-   "name": "08-04 阿邦快速劍X",
-   "w3aValue": 200.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:ggd-absent",
    "w3a": "A05T",
    "ggd": "godie-n01c.w",
    "name": "08-02 萊丁快速劍",
@@ -7397,6 +7387,16 @@
   {
    "axis": "radius",
    "key": "radius:tier",
+   "w3a": "A0EZ",
+   "ggd": "godie-n01c.r",
+   "name": "08-04 阿邦快速劍X",
+   "w3aValue": 200.0,
+   "ggdValue": 4.5,
+   "verdict": "tier"
+  },
+  {
+   "axis": "radius",
+   "key": "radius:tier",
    "w3a": "A04V",
    "ggd": "godie-o00k.e",
    "name": "86-03 神鳴",
@@ -7637,16 +7637,6 @@
   {
    "axis": "duration",
    "key": "duration:free-number",
-   "w3a": "A0CT",
-   "ggd": "godie-e002.r",
-   "name": "20-04 Avalon-永恆的理想鄉",
-   "w3aValue": 0.01,
-   "ggdValue": 0.5,
-   "verdict": "free-number"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:free-number",
    "w3a": "A102",
    "ggd": "godie-edem.ex",
    "name": "45-002 天照",
@@ -7702,16 +7692,6 @@
    "name": "79-04 卍解",
    "w3aValue": 0.0,
    "ggdValue": 8.0,
-   "verdict": "free-number"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:free-number",
-   "w3a": "A04R",
-   "ggd": "godie-h020.e",
-   "name": "04-03 龍破斬",
-   "w3aValue": 0.0,
-   "ggdValue": 1.3,
    "verdict": "free-number"
   },
   {
@@ -7822,26 +7802,6 @@
    "name": "42-002 魔力印章",
    "w3aValue": 0.0,
    "ggdValue": 7.0,
-   "verdict": "free-number"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:free-number",
-   "w3a": "A05D",
-   "ggd": "godie-n003.r",
-   "name": "42-04 世界終結",
-   "w3aValue": 0.01,
-   "ggdValue": 1.3,
-   "verdict": "free-number"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:free-number",
-   "w3a": "A0P6",
-   "ggd": "godie-n003.r",
-   "name": "42-04-01 世界終結",
-   "w3aValue": 3.0,
-   "ggdValue": 1.3,
    "verdict": "free-number"
   },
   {
@@ -7981,6 +7941,16 @@
    "ggd": "godie-e001.q",
    "name": "22-01 鬼隱之擊",
    "w3aValue": 12.0,
+   "ggdValue": null,
+   "verdict": "ggd-absent"
+  },
+  {
+   "axis": "duration",
+   "key": "duration:ggd-absent",
+   "w3a": "A0CT",
+   "ggd": "godie-e002.r",
+   "name": "20-04 Avalon-永恆的理想鄉",
+   "w3aValue": 0.01,
    "ggdValue": null,
    "verdict": "ggd-absent"
   },
@@ -8557,6 +8527,16 @@
   {
    "axis": "duration",
    "key": "duration:ggd-absent",
+   "w3a": "A04R",
+   "ggd": "godie-h020.e",
+   "name": "04-03 龍破斬",
+   "w3aValue": 0.0,
+   "ggdValue": null,
+   "verdict": "ggd-absent"
+  },
+  {
+   "axis": "duration",
+   "key": "duration:ggd-absent",
    "w3a": "A0OE",
    "ggd": "godie-h020.ex",
    "name": "04-002 惡夢魔王的碎片",
@@ -8961,6 +8941,26 @@
    "ggd": "godie-n003.q",
    "name": "42-01 凍結的大地",
    "w3aValue": 2.0,
+   "ggdValue": null,
+   "verdict": "ggd-absent"
+  },
+  {
+   "axis": "duration",
+   "key": "duration:ggd-absent",
+   "w3a": "A05D",
+   "ggd": "godie-n003.r",
+   "name": "42-04 世界終結",
+   "w3aValue": 0.01,
+   "ggdValue": null,
+   "verdict": "ggd-absent"
+  },
+  {
+   "axis": "duration",
+   "key": "duration:ggd-absent",
+   "w3a": "A0P6",
+   "ggd": "godie-n003.r",
+   "name": "42-04-01 世界終結",
+   "w3aValue": 3.0,
    "ggdValue": null,
    "verdict": "ggd-absent"
   },

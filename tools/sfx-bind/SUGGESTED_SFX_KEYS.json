@@ -31,18 +31,18 @@
     "census": {
       "overlay": 0,
       "sfxKey": 72,
-      "element": 51,
-      "generic": 298
+      "element": 52,
+      "generic": 297
     },
-    "suggested": 106,
+    "suggested": 105,
     "applicable": 15,
     "byTier": {
       "A-vfx-owned": 15,
-      "C-family-generic": 91
+      "C-family-generic": 90
     },
-    "noSuggestion": 243,
+    "noSuggestion": 244,
     "byCause": {
-      "element-whoosh-already": 49,
+      "element-whoosh-already": 50,
       "no-source-audio": 184,
       "source-map-silent": 2,
       "stock-label-only": 8
@@ -1687,22 +1687,6 @@
       "evidence": {
         "vfxFamily": "blink",
         "familySoundLaunch": "magicBolt"
-      }
-    },
-    {
-      "ability": "godie-udea.r",
-      "name": "65-04 天譴",
-      "champion": "godie-udea",
-      "todayPlays": "abilityCast",
-      "tier": "C-family-generic",
-      "sfxKey": "guardianSlam",
-      "applicable": false,
-      "needsCueDeclaration": true,
-      "repeatDropped": false,
-      "sharedWithChampions": [],
-      "evidence": {
-        "vfxFamily": "shockwaveRing",
-        "familySoundLaunch": "guardianSlam"
       }
     },
     {
@@ -4048,6 +4032,16 @@
       "cause": "no-source-audio",
       "evidence": {
         "base": "Aegr"
+      }
+    },
+    {
+      "ability": "godie-udea.r",
+      "name": "65-04 天譴",
+      "champion": "godie-udea",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
       }
     },
     {
