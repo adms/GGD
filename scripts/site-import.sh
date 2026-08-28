@@ -20,7 +20,12 @@ die(){ printf '\n%s⛔ %s%s\n' "$RED" "$*" "$RST" >&2; exit 1; }
 info(){ printf '    %s\n' "$*"; }
 FAIL=0; bad(){ printf '  %s✗%s %s\n' "$RED" "$RST" "$*"; FAIL=$((FAIL+1)); }
 
-REPO="$(cd "$(dirname "$0")/.." && pwd)"
+# ⛔⛔ 第一版寫死「腳本上一層」⇒ 從**別的 checkout** 跑這支腳本,它會把資料
+#   還原進**那個 checkout**,而不是你要的目的地。2026-08-28 來回測時實際發生:
+#   我指定了目的地,而它還原回了原本的 repo（幸好先留了底,而且內容相同）。
+#   ⭐ 對一支搬遷工具來說,「還原到哪裡」是它最不可以猜的一件事。
+#   ⇒ GGD_REPO 優先,而且**印出來讓人看見**（⛔ 不要安靜地選一個）。
+REPO="${GGD_REPO:-$(cd "$(dirname "$0")/.." && pwd)}"
 BUNDLE="${1:?用法: $0 <bundle> [--check] [--no-bulk]}"; shift
 CHECK=0; NOBULK=0
 while [ $# -gt 0 ]; do case "$1" in
@@ -31,6 +36,8 @@ M="$BUNDLE/MANIFEST.txt"; [ -f "$M" ] || die "⛔ 沒有 MANIFEST.txt —— 這
 mval(){ sed -n "s/^$1=//p" "$M" | head -1; }
 
 head_ "1. 這一包是誰、從哪來"
+info "⭐ 還原目的地：$REPO/data   （用 GGD_REPO=… 改）"
+[ -d "$REPO" ] || die "⛔ 目的地 $REPO 不存在"
 info "來源 $(mval source_host) · $(mval source_arch) · git $(mval git_head) · $(mval stamp)"
 [ "$(mval source_arch)" = "$(uname -m)" ] \
   && info "架構同為 $(uname -m)" \
@@ -90,6 +97,9 @@ if [ "$NOBULK" -eq 0 ]; then
 else warn "--no-bulk：⛔ 沒還原 replays / blizzard-overlay"; fi
 
 head_ "6. ⭐ 對帳 —— 這一段才是「搬遷成功」的定義"
+# ⭐ 先講清楚哪幾格**來源本來就沒有** —— ⛔ 不要讓它們看起來像「還原時掉了」。
+ABS=$(mval absent_at_source | tr ',' ' ')
+[ -n "${ABS// /}" ] && info "來源本來就沒有：$ABS（⇒ 目的地也不該有,這不是遺失）"
 # ⛔ 「tar 解得開」不是證據。逐項比對 manifest 記下的計數。
 while IFS= read -r line; do
   d=${line%%=*}; d=${d#count.}; want=${line#*=}
@@ -99,8 +109,31 @@ while IFS= read -r line; do
 done < <(grep '^count\.' "$M")
 
 head_ "7. 逐檔校驗和（⭐ 數量對不代表內容對）"
-MIS=$( (cd "$REPO/data" && grep '^[0-9a-f]\{64\}' "$M" | sha256sum -c - 2>/dev/null | grep -cv ': OK$') || echo 0 )
-[ "${MIS:-0}" -eq 0 ] && ok "$EXPECT 條校驗和全部相符" || bad "⛔ $MIS 條校驗和不符"
+# ⛔⛔ 第一版數的是「**不是 OK 的行**」,而那把尺在 macOS 上是瞎的。
+#
+#   2026-08-28 實測（就在要用它的那一台上）:
+#     · macOS 的 /sbin/sha256sum 對**缺席**的檔只寫 **stderr**,stdout 一個字都不寫
+#     · GNU coreutils 會在 **stdout** 印 `path: FAILED open or read`
+#   ⇒ 同一條 `... 2>/dev/null | grep -cv ': OK$'`:
+#       在 Linux 來源機上抓得到、在 **macOS 目的機上回 0** —— ⭐ 而目的機才是它要跑的地方。
+#
+# ⭐ 它證明得了「存在的檔內容對」,⛔ 證明不了「**沒有檔不見**」——
+#   而搬遷丟掉的正是後者。（CLAUDE.md:「一把只驗過單邊的尺,不算自證過」。）
+#
+# ⇒ 改成問一個**關係**:「**verified 的條數 == manifest 記的條數嗎**」。
+#   缺席 / 內容不符 / 讀不到,三種都會讓 OK 的行數變少,
+#   ⛔ 而它完全不依賴任何工具怎麼措辭它的錯誤。
+SUMCMD=$(command -v sha256sum >/dev/null 2>&1 && echo "sha256sum" || echo "shasum -a 256")
+OKN=$( (cd "$REPO/data" && grep '^[0-9a-f]\{64\}' "$M" | $SUMCMD -c - 2>/dev/null | grep -c ': OK$') 2>/dev/null | head -1 | tr -dc '0-9' )
+OKN=${OKN:-0}
+if [ "$OKN" -eq "$EXPECT" ]; then
+  ok "$EXPECT 條校驗和全部相符"
+else
+  bad "⛔ 只有 $OKN / $EXPECT 條通過 —— 差的 $((EXPECT - OKN)) 條是**不見了或內容不符**"
+  info "指名它們："
+  (cd "$REPO/data" && grep '^[0-9a-f]\{64\}' "$M" | $SUMCMD -c - 2>&1 | grep -v ': OK$' | head -8) \
+    | sed 's/^/      /'
+fi
 
 head_ "8. Redis（⛔ 手動,而且要在 redis 停著的時候）"
 if [ -d "$BUNDLE/redis" ]; then

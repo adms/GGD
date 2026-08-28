@@ -73,8 +73,14 @@ CRITICAL_BULK=(blizzard-overlay)
 
 head_ "1. 盤點（⭐ 判準是「毀了能不能重做」,⛔ 不是大小）"
 TOTAL=0
+# ⛔ 第一版把整個 CARRY 丟給 tar,而其中幾格在這台機器上不存在 ⇒ tar 非零 ⇒ 整包失敗。
+# ⭐ 而修法**不只是跳過** —— 缺席的那幾格要記進 manifest,
+#   否則匯入端分不出「**來源本來就沒有**」與「**路上掉了**」,
+#   而後者正是這整支腳本存在的理由。
+PRESENT=(); ABSENT=()
 for d in "${CARRY[@]}"; do
-  [ -d "$REPO/data/$d" ] || { warn "data/$d 不存在,跳過"; continue; }
+  [ -d "$REPO/data/$d" ] || { warn "data/$d 不存在,跳過"; ABSENT+=("$d"); continue; }
+  PRESENT+=("$d")
   sz=$(du -sk "$REPO/data/$d" 2>/dev/null | cut -f1); TOTAL=$((TOTAL+sz))
   printf "    %-18s %8s  %s\n" "$d" "$(du -sh "$REPO/data/$d" 2>/dev/null | cut -f1)" "⭐ 不可重建"
 done
@@ -177,7 +183,8 @@ fi
 if [ "$DRY" -eq 1 ]; then head_ "dry-run 結束 —— ⛔ 一個位元組都沒寫"; exit 0; fi
 
 head_ "5. 打包"
-tar -C "$REPO/data" -cf - "${CARRY[@]}" 2>/dev/null | zstd -q -12 -T0 -o "$BUNDLE/data-core.tar.zst" \
+[ "${#PRESENT[@]}" -gt 0 ] || die "⛔ 一個 core 目錄都沒有 —— 拒絕產出空包"
+tar -C "$REPO/data" -cf - "${PRESENT[@]}" | zstd -q -12 -T0 -o "$BUNDLE/data-core.tar.zst" \
   || die "core 打包失敗"
 ok "data-core.tar.zst $(du -h "$BUNDLE/data-core.tar.zst" | cut -f1)"
 for d in "${CRITICAL_BULK[@]}" "${BULK[@]}"; do
@@ -201,17 +208,19 @@ head_ "6. manifest（⭐ 這才是搬遷成功的判準）"
   #   「this deploy is networked with the invite gate ON but the first-owner claim OPEN」
   #   —— ⭐ 一句完全看不出「你少了一個環境變數」的話。
   #   ⇒ 把來源需要哪些 key 記下來,import 端才能在**開機之前**指名缺哪一個。
+  # ⭐ 來源**本來就沒有**的那幾格。⛔ 沒有這一行,匯入端會把「來源沒有」
+  #   讀成「還原時掉了」,或者反過來安靜地不檢查它。
+  echo "absent_at_source=$(printf '%s,' "${ABSENT[@]}")"
   echo "env_keys=$(sed -n 's/^\([A-Z_][A-Z0-9_]*\)=.*/\1/p' "$REPO/docker/.env" 2>/dev/null | sort | tr '\n' ',')"
   echo "# ── 逐項計數（import 端要逐條對上）──"
-  for d in "${CARRY[@]}"; do
-    [ -d "$REPO/data/$d" ] || continue
+  for d in "${PRESENT[@]}"; do
     echo "count.$d=$(find "$REPO/data/$d" -type f 2>/dev/null | wc -l | tr -d ' ')"
   done
   echo "# ── 逐檔校驗和 ──"
-  (cd "$REPO/data" && find "${CARRY[@]}" -type f 2>/dev/null | sort | xargs -r sha256sum) 2>/dev/null
+  (cd "$REPO/data" && find "${PRESENT[@]}" -type f 2>/dev/null | sort | xargs -r shasum -a 256) 2>/dev/null
 } > "$BUNDLE/MANIFEST.txt"
 (cd "$BUNDLE" && sha256sum ./*.tar.zst > BUNDLE.sha256 2>/dev/null)
-ACC=$(grep -c '^accounts/' "$BUNDLE/MANIFEST.txt" 2>/dev/null || echo 0)
+ACC=$(grep -c ' accounts/' "$BUNDLE/MANIFEST.txt" 2>/dev/null; true)
 ok "MANIFEST.txt  帳號檔 $ACC 個 · 逐檔校驗和 $(grep -c '^[0-9a-f]\{64\}' "$BUNDLE/MANIFEST.txt") 條"
 
 head_ "完成"
