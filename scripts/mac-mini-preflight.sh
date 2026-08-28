@@ -232,6 +232,10 @@ sec_net() {
         printf "    直連 %.0f ms   經 tunnel %.0f ms   差 %.0f ms\n", d*1000, t*1000, (t-d)*1000
         if ((t-d)*1000 < 15) print "  ⭐ 差 <15ms ⇒ ⛔ 不值得為快路多維護一條組態"
         else                 print "  ⭐ 差得夠多 ⇒ 同一區網時值得開 compose.lan.yaml" }'
+    # ⭐ 2026-08-29 在 owner 的網段上實測過一次,結論是**不做**:
+    #   LAN 直連 6.51ms · CF edge 7.62ms · 今天的 GCP 9.84ms
+    #   ⇒ tunnel ≈ 15.2ms（家用上行被算兩次）⇒ 快路只省 8.7ms < 15ms 門檻。
+    #   ⚠️ 那是 Wi-Fi;改有線後差距約 14ms,仍在門檻邊緣,判斷不變。
     else
       info "（量不到兩邊 —— 站還沒起來,或 GGD_LAN_BIND 不對）"
     fi
