@@ -196,6 +196,48 @@ sec_net() {
 
   # C5 ⭐ 上傳頻寬是玩家體驗的分母,⛔ 不是下載
   info "⚠️ 上傳頻寬要自己量（家用線路常常上下不對稱,而伺服器吃的是**上傳**）"
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # C6 ⭐⭐ 這台機器**會換網段**（owner 2026-08-29:「有時候會放在同一個區網」）
+  #    ⇒ 「站現在開在哪些介面上」是一個**每換一次網路就要重問**的問題。
+  # ─────────────────────────────────────────────────────────────────────────
+  head_ "C-LAN. 這台現在在哪個網段,而站開給誰"
+  local iface
+  for iface in en0 en1 en5 en6; do
+    local a; a=$(ipconfig getifaddr "$iface" 2>/dev/null) || continue
+    [ -n "$a" ] && info "$iface  $a  /  閘道 $(route -n get default 2>/dev/null | awk '/gateway/{print $2}')"
+  done
+
+  # ⭐ 出貨的 edge 是 `${GGD_BIND:-0.0.0.0}:${GGD_PORT:-8088}:8080` ——
+  #   而 0.0.0.0 在一台**會換網路**的機器上,意思是「它加入的**每一個**網路」。
+  #   ⚠️ family tier 是刻意沒有存取閘的 ⇒ 那個網段上的任何人都進得來。
+  local bind
+  bind=$(sed -n 's/^GGD_BIND=//p' "$ROOT/docker/.env" 2>/dev/null | tr -d '"'"'"'\r' | head -1)
+  if [ -z "$bind" ] || [ "$bind" = "0.0.0.0" ]; then
+    bad "⛔ edge 會綁 0.0.0.0（GGD_BIND ${bind:-未設 ⇒ 走預設}）—— 這台加入的**每一個**網路都看得到站"
+    info "⭐ 走 tunnel 的話正解是**完全不發佈埠**：加上 -f docker/compose.tunnel.yaml"
+    info "   （cloudflared 在同一個 docker 網路裡直接連 edge:8080，⛔ 不需要 host 的埠）"
+    info "⭐ 要在同一區網走直連：-f docker/compose.lan.yaml 並寫出 GGD_LAN_BIND=<網卡IP>"
+  else
+    ok "edge 綁在 $bind（⛔ 不是 0.0.0.0）"
+  fi
+
+  # ⭐ 直連 vs 繞出去再繞回來 —— ⛔ 不要猜「應該差不多」
+  if [ -n "${GGD_LAN_BIND:-}" ]; then
+    local d t
+    d=$(curl -fsS -m 5 -o /dev/null -w '%{time_total}' "http://$GGD_LAN_BIND:${GGD_LAN_PORT:-8088}/" 2>/dev/null)
+    t=$(curl -fsS -m 8 -o /dev/null -w '%{time_total}' "https://${GGD_PUBLIC_HOST:-ggd.adms.ai}/" 2>/dev/null)
+    if [ -n "$d" ] && [ -n "$t" ]; then
+      awk -v d="$d" -v t="$t" 'BEGIN{
+        printf "    直連 %.0f ms   經 tunnel %.0f ms   差 %.0f ms\n", d*1000, t*1000, (t-d)*1000
+        if ((t-d)*1000 < 15) print "  ⭐ 差 <15ms ⇒ ⛔ 不值得為快路多維護一條組態"
+        else                 print "  ⭐ 差得夠多 ⇒ 同一區網時值得開 compose.lan.yaml" }'
+    else
+      info "（量不到兩邊 —— 站還沒起來,或 GGD_LAN_BIND 不對）"
+    fi
+  else
+    info "⚠️ 沒設 GGD_LAN_BIND ⇒ **沒有量**直連 vs tunnel 的差。⛔ 不要憑感覺決定要不要開快路"
+  fi
 }
 
 # ═══════════════════════════════════════════════════ io —— bind mount 的代價

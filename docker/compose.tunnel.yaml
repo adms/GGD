@@ -3,9 +3,16 @@
 #   docker compose -f docker/compose.yaml -f docker/compose.family.yaml \
 #     -f docker/compose.tunnel.yaml --env-file docker/.env up -d --scale caddy=0
 #
-# ⚠️ `--scale caddy=0` 不是可選的:走 tunnel 時 **caddy 必須不跑**。
-#    caddy 會去跟 Let's Encrypt 要憑證,而家用機沒有 inbound 80/443 ⇒ 它會失敗重試,
+# ⚠️ `--scale caddy=0`:走 tunnel 時 caddy **在這個組合裡**不該跑。
+#    Cloudflare 已經在它的 edge 終結 TLS ⇒ 再讓 caddy 去要一次憑證是多餘的,
+#    而它用的 HTTP-01/TLS-ALPN-01 需要 inbound 80/443 ⇒ 家用機沒有 ⇒ 失敗重試,
 #    ⭐ 而 Let's Encrypt 的失敗**有速率限制** —— 撞到之後連正確設定也要等一週。
+#
+# ⭐⭐ **更正**（2026-08-29）:上面那句話一度寫成「caddy **必須**不跑」,而那太絕對。
+#    caddy 用 **DNS-01**（Cloudflare API token）可以在**零 inbound** 的情況下拿到
+#    `ggd.adms.ai` 的真憑證 —— DNS-01 是去改 TXT 記錄,⛔ 不需要任何人連得進來。
+#    ⇒ 那正是「同一區網直連」那條快路需要的東西（valid HTTPS 而不是憑證警告）。
+#    ⇒ 它住在 `compose.lan.yaml`,⛔ 不在這個檔裡 —— 因為它是**明確的選擇**。
 #
 # ═══ 這個檔為什麼存在 ═══
 # 現況 ggd.adms.ai 的 A 記錄**直接**指 GCP 那台,憑證**簽在那台上**,前面零 CDN。
@@ -23,6 +30,26 @@
 # ⚠️ WebSocket:Colyseus 走 WS,Cloudflare Tunnel **支援**,⛔ 不必額外開關。
 #    但 ⭐ **要實測**,⛔ 不要因為文件說支援就當它通了（第二守則:量到再說）。
 services:
+  # ⛔⛔ 走 tunnel 時 edge **不需要發佈任何埠** —— 而預設它綁 0.0.0.0。
+  #
+  # `compose.family.yaml` 的 edge 是 `${GGD_BIND:-0.0.0.0}:${GGD_PORT:-8088}:8080`,
+  # 而正式機的 docker/.env **沒有 GGD_BIND** ⇒ 出貨走的就是 0.0.0.0。
+  # 在 GCP 上那沒問題:它在雲防火牆後面,只有 caddy 走得到。
+  #
+  # ⭐ 但 Mac mini **會跟著人換網路**（owner 2026-08-29:「有時候會放在同一個區網」）
+  #   ⇒ 0.0.0.0 的意思是「**它加入的每一個網路**都看得到這個站」——
+  #     咖啡廳、旅館、公司網段。⚠️ 而 family tier 是**刻意**沒有任何存取閘的
+  #     （分級全開,見本檔開頭）⇒ 那個網段上的任何人都進得來。
+  #
+  # ⇒ cloudflared 與 edge 在**同一個 docker 網路**裡,它直接連 `edge:8080`,
+  #   ⛔ 完全不需要 host 上的埠。⭐ 唯一的入口變成 Cloudflare,
+  #   而那條路是 tunnel 自己認證的。
+  #
+  # ⚠️ 要在同一區網走直連的**快路**,⛔ 不要拿掉這一段 —— 用 compose.lan.yaml
+  #   （它是**明確的選擇**,⛔ 不是預設）。
+  edge:
+    ports: !reset []
+
   cloudflared:
     image: cloudflare/cloudflared:latest
     container_name: ggd-cloudflared-1

@@ -1,0 +1,46 @@
+# docker/compose.lan.yaml — 同一區網的**直連快路**（GH#861）
+#
+#   GGD_LAN_BIND=192.168.0.42 \
+#   docker compose -f docker/compose.yaml -f docker/compose.family.yaml \
+#     -f docker/compose.tunnel.yaml -f docker/compose.lan.yaml \
+#     --env-file docker/.env up -d --scale caddy=0
+#
+#   同一區網的人連 http://192.168.0.42:8088  ← ⭐ 不經過網際網路
+#   其他人照常連 https://ggd.adms.ai         ← 走 tunnel
+#
+# ═══ 為什麼它是**獨立的一個檔**,⛔ 不是預設 ═══
+# owner 2026-08-29:「這台 mac mini **有時候**會放在同一個區網 (maybe 192.168.0.x)」
+#
+# ⭐ 關鍵字是「**有時候**」—— 這台機器**會換網路**。
+#   （實測:owner 的另一台 Mac 在 172.16.0.x,而他說 mini 會在 192.168.0.x
+#     ⇒ 至少兩個不同網段。）
+#
+# ⛔ 而 family tier 是**刻意**沒有任何存取閘的（分級全開,見 compose.family.yaml 開頭）
+#   ⇒ 把站開在「它剛好加入的那個網路」上,等於開給咖啡廳/旅館/公司網段的每一個人。
+#   ⇒ ⭐ 所以這一格必須是一次**明確的動作**,⛔ 不可以是預設,
+#     ⛔ 也不可以「偵測到像家裡就自動打開」—— 那種猜法錯的時候代價太大。
+#
+# ═══ GGD_LAN_BIND 沒有預設值,這是刻意的 ═══
+# ⛔ 沒有 `:-0.0.0.0`。你必須寫出**那一張網卡的 IP**。
+# ⭐ 理由:`0.0.0.0` 的意思是「**現在與未來**加入的每一個網路」,
+#   而綁定一個具體的 192.168.0.x,在機器換到別的網段之後**會直接綁不起來**
+#   ⇒ ⭐ 它**主動失敗**,⛔ 而不是安靜地把站開給新網段。
+#   那個「換了網段就起不來」正是我們要的行為,⛔ 不是缺點。
+#
+# ═══ ⚠️ 這條路是**純 HTTP**,而那是一個被講清楚的取捨 ═══
+# LAN 上不做 TLS ⇒ 同一區網的人**看得到流量**（含登入 token）。
+# ⭐ 可行的理由是量過的:客戶端**沒有**硬性 secure-context 需求 ——
+#   `apps/client/src/render/textureDedup.ts:158` 逐字寫著它**刻意不用** `crypto.subtle`
+#   「因為它只在 secure context 可用」⇒ 純 HTTP 下功能是完整的。
+# ⛔ 但這表示:**只在你信任的網段上打開它。**
+#
+# ═══ ⚠️ 先量,再決定要不要用 ═══
+# 這條路省下的是「繞出網際網路再繞回來」的往返。⛔ 那個數字**還沒量**。
+# ⭐ 用 `bash scripts/mac-mini-preflight.sh net` 的 LAN 段量它:
+#   直連 vs 經 tunnel 的 RTT 差。差得不夠多就**不要開** —— 多一條路就是多一個要維護的東西。
+services:
+  edge:
+    # `!override` 是必要的:compose.tunnel.yaml 用 `!reset []` 把 ports 清空了,
+    # 而 list 的預設語意是合併 ⇒ 不 override 的話這裡會變成「空 + 這一條」的混合。
+    ports: !override
+      - "${GGD_LAN_BIND:?⛔ 必須寫出網卡 IP，例如 GGD_LAN_BIND=192.168.0.42。⛔ 不要填 0.0.0.0 —— 那會把站開給這台機器未來加入的每一個網路}:${GGD_LAN_PORT:-8088}:8080"
