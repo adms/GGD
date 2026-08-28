@@ -370,6 +370,9 @@ export const NAV: NavItem[] = [
   // 室內，請不要下雨」) —— 緊接在 畫質分級 後面，因為兩頁問的是同一類問題：
   // 「這台機器／這張圖，畫面上該出現多少東西」。⛔ 這一頁沒有一格會改變碰撞或視野。
   { page: "weather", label: "場地天氣", emoji: "🌧️", section: SEC_SYS },
+  // 手把操作版本（GH#863）。⚠️ 這一列是**唯一**還要手加的接線 ——
+  // store.ts 的 `Page` union 早就從 CONFIG_DOC_SPECS 推導了（store.ts:35）。
+  { page: "controllerScheme", label: "手把操作版本", emoji: "🎮", section: SEC_SYS },
   { page: "vfxCleanup", label: "特效回收", emoji: "🧹", section: SEC_SYS },
   // GH#838 特效工坊的 rollback 開關（演出腳本要不要播）。編輯本體是 dev 頁
   // （client 的 vfx-script-studio），這一頁只有那一格開關。

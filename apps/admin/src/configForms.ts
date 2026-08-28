@@ -72,7 +72,8 @@
 export * from "./configForms/engine";
 import type { ConfigDocSpec } from "./configForms/engine";
 import { MODEL_LOD_SPEC, VFX_BUDGET_SPEC, VFX_CLEANUP_SPEC, VFX_SCRIPTS_SPEC, WEATHER_SPEC, WORLD_CUES_SPEC } from "./configForms/specs/render";
-import { AP_DAMAGE_SCALING_SPEC, BLOCK_SPEC, COOLDOWN_RULES_SPEC, CRIT_SPEC, DAMAGE_RULES_SPEC, FEEL_FX_SPEC, GORE_SPEC, SHIELD_SPEC, WEAKNESS_SPEC, WOUNDS_SPEC } from "./configForms/specs/combat";
+import {
+  CONTROLLER_SCHEME_SPEC, AP_DAMAGE_SCALING_SPEC, BLOCK_SPEC, COOLDOWN_RULES_SPEC, CRIT_SPEC, DAMAGE_RULES_SPEC, FEEL_FX_SPEC, GORE_SPEC, SHIELD_SPEC, WEAKNESS_SPEC, WOUNDS_SPEC } from "./configForms/specs/combat";
 import { AUTHORING_RULES_SPEC, CAST_TIME_SPEC, CONTENT_LOAD_SPEC, NEW_HERO_CHECKS_SPEC } from "./configForms/specs/authoring";
 import { AOE_TIERS_SPEC, COOLDOWN_TIERS_SPEC, DAMAGE_TIERS_SPEC, MANA_ECONOMY_SPEC, MANA_TIERS_SPEC, MOVE_SPEED_TIERS_SPEC, RANGE_TIERS_SPEC, SKILL_NORMALIZE_SPEC, SPEED_GROWTH_TIERS_SPEC } from "./configForms/specs/tiers";
 import { AUGMENT_FILTER_SPEC, BERSERK_SPEC, DISPEL_SPEC, STAT_NORMALIZATION_SPEC, STEALTH_SPEC, TAUNT_SPEC } from "./configForms/specs/stats";
@@ -227,6 +228,10 @@ export const CONFIG_DOC_SPECS = [
   // `SESSION_REQUIRED_PAGES`、App.tsx 的導覽列一列，以及 `content/config/weather.json`
   // 出貨檔一起，才到得了操作者手上（少了出貨檔 `configForms.test.ts` 直接紅）。
   WEATHER_SPEC,
+  // 手把操作版本（GH#863，owner 2026-08-28「當作 v4 後台可切換的其中一種手把操作版本」）。
+  // ⚠️ 同上：這一列要跟 store.ts 的 `Page` union + `SESSION_REQUIRED_PAGES`、
+  // App.tsx 的導覽列一列，以及 `content/config/controller-scheme.json` 出貨檔一起。
+  CONTROLLER_SCHEME_SPEC,
 ] as const satisfies readonly ConfigDocSpec[];
 
 export function specForPage(page: string): ConfigDocSpec | null {

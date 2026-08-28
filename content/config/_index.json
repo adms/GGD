@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "7e734001a283",
+  "hash": "c33c62a8f401",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -151,6 +151,12 @@
       "path": "config/content-load.json",
       "hash": "353591cea474",
       "size": 513
+    },
+    {
+      "id": "controller-scheme",
+      "path": "config/controller-scheme.json",
+      "hash": "a785d47fa8d8",
+      "size": 3346
     },
     {
       "id": "cooldown-rules",

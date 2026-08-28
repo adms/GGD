@@ -131,7 +131,7 @@ it("no compose volume is declared external — it would make a fresh host unboot
       if (inVolumes && /^\S/.test(line)) { inVolumes = false; return; }
       if (!inVolumes) return;
       const named = /^ {2}([A-Za-z0-9._-]+):\s*$/.exec(line);
-      if (named) { current = named[1]; return; }
+      if (named) { current = named[1] ?? ""; return; }
       if (/^\s+external:\s*(true|yes)\s*$/.test(line)) {
         offenders.push(`${file}:${i + 1} volume "${current}" is external`);
       }

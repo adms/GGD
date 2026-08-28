@@ -1,0 +1,100 @@
+{
+  "id": "controller-scheme",
+  "schema": "config.controller-scheme@1",
+  "note": "手把操作版本（GH#863）。owner 2026-08-28：「把這版當作 v4 後台可切換的其中一種手把操作版本」。⭐ 切 active 一格就換版本，⛔ 不必重新部署。⚠️ 出貨在 v3-shipped：v4 的機制（玩家專注／加權瞄準／短距貼近）還沒落地，現在切過去等於選一個沒有實作的方案。實作完成後把 active 改成 v4。",
+  "active": "v3-shipped",
+  "schemes": {
+    "v3-shipped": {
+      "label": "v3（出貨）",
+      "note": "2026-07-27 起的出貨配置。owner 當時的裁決：「the triggers swapped」。LT 是 attack-move，自動索敵走 GH#652 的 LoL 模型 —— 有指令就聽指令，走位時不索敵。切回這一版 ＝ 一鍵 rollback。",
+      "bindings": {
+        "A": "ability:Q",
+        "B": "ability:W",
+        "X": "ability:E",
+        "Y": "ability:R",
+        "LB": "ability:EX",
+        "RB": "ability:PASSIVE",
+        "LT": "attackMove",
+        "RT": "basicAttack",
+        "L3": "cameraFollowToggle",
+        "R3": "cameraZoomStep"
+      },
+      "combatInput": {
+        "aimStick": true,
+        "moveStick": true,
+        "basicAttack": true,
+        "pvpFocus": true,
+        "ability": true
+      },
+      "autoFarm": {
+        "enabled": true,
+        "idleDelaySecOverride": null,
+        "pveOnly": true
+      },
+      "aim": {
+        "manualScoring": "legacy-nearest-enemy",
+        "aimAssistRadiusMult": {
+          "player": 1.0,
+          "zombie": 1.0,
+          "boss": 1.0
+        }
+      },
+      "autoApproach": {
+        "enabled": false,
+        "maxRangeMult": 1.0,
+        "pveOnly": true,
+        "allowBoss": false,
+        "requireMoveStickNeutral": true
+      }
+    },
+    "v4": {
+      "label": "v4（自動清怪／玩家專注）",
+      "note": "owner 2026-08-28 的 v4 設計（docs/controller-combat-spec-v4.md）。三個本質差別：① LT 從 attack-move 變成「玩家專注」—— 按住時敵對單位只認敵方玩家；② 左搖桿移動⛔不算戰鬥輸入，所以走位時自動清怪仍然活著（§50）；③ 近戰允許短距貼近 PvE（§29），LS 一動同一幀取消。",
+      "bindings": {
+        "A": "ability:Q",
+        "X": "ability:W",
+        "Y": "ability:E",
+        "B": "ability:R",
+        "LB": "ability:PASSIVE",
+        "RB": "ability:EX",
+        "LT": "pvpFocus",
+        "RT": "basicAttack",
+        "L3": "cameraFollowToggle",
+        "R3": "cameraZoomStep"
+      },
+      "combatInput": {
+        "aimStick": true,
+        "moveStick": false,
+        "basicAttack": true,
+        "pvpFocus": true,
+        "ability": true
+      },
+      "autoFarm": {
+        "enabled": true,
+        "idleDelaySecOverride": null,
+        "pveOnly": true
+      },
+      "aim": {
+        "manualScoring": "weighted",
+        "weights": {
+          "direction": 0.75,
+          "distance": 0.15,
+          "stickiness": 0.1
+        },
+        "switchThreshold": 0.1,
+        "aimAssistRadiusMult": {
+          "player": 1.0,
+          "zombie": 1.0,
+          "boss": 1.5
+        }
+      },
+      "autoApproach": {
+        "enabled": true,
+        "maxRangeMult": 1.67,
+        "pveOnly": true,
+        "allowBoss": false,
+        "requireMoveStickNeutral": true
+      }
+    }
+  }
+}

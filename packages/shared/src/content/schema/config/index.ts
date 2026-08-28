@@ -105,6 +105,7 @@ import { zConfigShieldDoc } from "./shield";
 import { zConfigBlockDoc } from "./block";
 import { zConfigCritDoc } from "./crit";
 import { zConfigBerserkDoc } from "./berserk";
+import { zConfigControllerSchemeDoc } from "./controllerScheme";
 import { zConfigWoundsDoc } from "./wounds";
 import { zConfigWeaknessDoc } from "./weakness";
 import { zConfigDamageRulesDoc } from "./damageRules";
@@ -175,6 +176,7 @@ export * from "./championVoices";
 export * from "./combatEnv";
 export * from "./combatFeel";
 export * from "./contentLoad";
+export * from "./controllerScheme";
 export * from "./cooldownRules";
 export * from "./cooldownTiers";
 export * from "./crit";
@@ -281,6 +283,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   // 內容驗證失敗 → 骨架英雄，理由見下面那一段。
   zConfigCritDoc,
   zConfigBerserkDoc,
+  zConfigControllerSchemeDoc,
   zConfigWoundsDoc,
   // 【虛弱】的全域定義（GH#301-4）。⚠️ 漏掉這一行 = 一份 weakness.json 進了
   // content/ 之後整份內容驗證失敗 → 骨架英雄，理由見下面那一段。
