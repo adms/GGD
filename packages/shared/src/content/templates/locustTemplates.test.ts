@@ -51,8 +51,18 @@ const RETROFIT: ReadonlyArray<readonly [string, string, Record<string, unknown>]
   ["godie-etyr.q", "tpl-locust-orb", {"kind": "spawnModelFx", "shape": "single", "modelKey": "imported.oblivionaura", "path": "orbit", "count": 2, "distance": 1.0, "speed": 1.0, "lifeSec": 2.5, "soundKey": "wc3.blademasterwhirlwind"}],
   ["godie-h01o.e", "tpl-locust-orb", {"kind": "spawnModelFx", "shape": "single", "modelKey": "imported.deathwave", "path": "orbit", "count": 1, "distance": 0.1, "speed": 1.0, "lifeSec": 2.5, "soundKey": "wc3.crushingwavecaster1"}],
   ["godie-u01u.r", "tpl-locust-orb", {"kind": "spawnModelFx", "shape": "single", "modelKey": "imported.heromusashimiyamoto", "path": "orbit", "count": 1, "distance": 0.1, "speed": 1.0, "lifeSec": 2.5, "soundKey": "wc3.blademasterwhirlwind", "arriveSoundKey": "wc3.orcdissipate1"}],
-  ["godie-o00x.r", "tpl-locust-line", {"kind": "spawnModelFx", "shape": "single", "path": "static", "count": 6, "spacing": 2, "lifeSec": 2, "modelKey": "w3x.stock.flamestrike1"}],
-  ["godie-ogrh.r", "tpl-locust-line", {"kind": "spawnModelFx", "shape": "single", "path": "static", "count": 6, "spacing": 2, "lifeSec": 2, "modelKey": "w3x.stock.flamestrike1"}],
+  // ⭐ 2026-08-28（GH#838 N1）—— 這兩列的 golden **刻意往前動了一格**：
+  //    加上 `offsetForwardU: 2.75`（＝原作 150 wc3u ÷54.5）。
+  //    出處：`Trig_Turtle_Power_*` 的 `PolarProjectionBJ(GetUnitLoc(caster), 150.00,
+  //    GetUnitFacing(caster))`（war3map.j 31903/31905/31924）—— 09-04 的光束/鑽頭/
+  //    火柱在**槍口**，⛔ 不在腳下，而 GGD 在那一版之前畫在腳下。
+  // ⚠️ 為什麼是**更新 golden** 而不是把這一格排除在比對外（`alpha` 那一格的做法）：
+  //    `alpha` 有自己的兩方向對帳守衛（census 有值沒回填⇒紅、回填沒出處⇒紅），
+  //    ⛔ 而 `offsetForwardU` 沒有那樣一份母體 —— 把它排除掉，這張表就對**未來
+  //    任何一次意外改到它**失明。⇒ golden 跟著**刻意的**改動走，並在這裡留下出處，
+  //    意外的改動照樣紅。
+  ["godie-o00x.r", "tpl-locust-line", {"kind": "spawnModelFx", "shape": "single", "path": "static", "count": 6, "spacing": 2, "lifeSec": 2, "modelKey": "w3x.stock.flamestrike1", "offsetForwardU": 2.75}],
+  ["godie-ogrh.r", "tpl-locust-line", {"kind": "spawnModelFx", "shape": "single", "path": "static", "count": 6, "spacing": 2, "lifeSec": 2, "modelKey": "w3x.stock.flamestrike1", "offsetForwardU": 2.75}],
   ["godie-u010.e", "tpl-locust-travel", {"kind": "spawnModelFx", "shape": "single", "modelKey": "imported.blackhole", "path": "forward", "speed": 30.0, "distance": 14.0, "spinDegPerSec": 720.0, "scale": 0.6}],
   ["godie-uvng.e", "tpl-locust-travel", {"kind": "spawnModelFx", "shape": "single", "modelKey": "imported.blackhole", "path": "forward", "speed": 30.0, "distance": 14.0, "spinDegPerSec": 720.0, "scale": 0.6}],
   ["godie-u010.ex", "tpl-locust-swarm", {"kind": "spawnModelFx", "shape": "single", "modelKey": "imported.blackhole", "path": "radial", "count": 3, "distance": 8.0, "speed": 7.7, "spinDegPerSec": 720.0, "scale": 0.6}],
