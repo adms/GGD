@@ -51,18 +51,27 @@ announce() {
   local state="$1"; shift
   local msg="$*"
   mkdir -p "$(dirname "$STATUS")" 2>/dev/null
-  python3 - "$STATUS" "$state" "$msg" <<'PY' 2>/dev/null
-import json, sys, time
-json.dump({"ok": sys.argv[2] == "ok", "state": sys.argv[2], "reason": sys.argv[3],
-           "at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-           "host": __import__("socket").gethostname()},
-          open(sys.argv[1], "w"), ensure_ascii=False, indent=2)
-PY
+  # ⛔⛔ 這裡**曾經**用 python3 寫 JSON,而 macOS 上的 /usr/bin/python3 是
+  #   **Command Line Tools 的 stub** —— 沒裝 CLT 時它不但失敗,還會**彈一個 GUI 對話框**。
+  #   ⇒ 2026-08-29 實測:守衛印著「站起來了」,而 `boot-status.json` **是空的**
+  #     ⭐ 一個報告成功、而心跳從來沒寫過的守衛 —— 而 `status` 與備份稽核都讀它。
+  # ⭐ 判準:**開機時要跑的東西,只能用系統保證存在的工具**（sh / awk / sed / date）。
+  #   ⛔ python3 / git / make / cc 在乾淨的 macOS 上**都不是**。
+  printf '{\n  "ok": %s,\n  "state": "%s",\n  "reason": "%s",\n  "at": "%s",\n  "host": "%s"\n}\n' \
+    "$([ "$state" = ok ] && echo true || echo false)" \
+    "$state" \
+    "$(printf '%s' "$msg" | sed 's/\\/\\\\/g; s/"/\\"/g' | tr '\n' ' ')" \
+    "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+    "$(hostname -s 2>/dev/null || echo '?')" \
+    > "$STATUS" 2>/dev/null
   if [ "$state" != ok ]; then
     osascript -e "display notification \"$msg\" with title \"GGD 開機守衛\" sound name \"Basso\"" >/dev/null 2>&1
-    [ -n "${GGD_ALERT_WEBHOOK:-}" ] && curl -fsS -m 10 -X POST -H 'content-type: application/json' \
-        --data "$(python3 -c 'import json,sys;print(json.dumps({"text":sys.argv[1]}))' "GGD 開機守衛：$msg")" \
-        "$GGD_ALERT_WEBHOOK" >/dev/null 2>&1
+    # ⛔ 同上 —— ⛔ 不用 python3。訊息是我們自己產的,只需要逃掉引號與換行。
+    if [ -n "${GGD_ALERT_WEBHOOK:-}" ]; then
+      esc=$(printf '%s' "GGD 開機守衛：$msg" | sed 's/\\/\\\\/g; s/"/\\"/g' | tr '\n' ' ')
+      curl -fsS -m 10 -X POST -H 'content-type: application/json' \
+        --data "{\"text\":\"$esc\"}" "$GGD_ALERT_WEBHOOK" >/dev/null 2>&1
+    fi
   fi
 }
 
@@ -162,13 +171,9 @@ cmd_start() {
     return 1
   fi
   ok "edge 回應了"
-  curl -fsS -m 5 http://127.0.0.1:2567/healthz 2>/dev/null | python3 -c '
-import json,sys
-try: d=json.load(sys.stdin)
-except Exception: print("  ⚠ /healthz 不是 JSON"); raise SystemExit
-c=d.get("content",{}); r=d.get("replay",{})
-print(f"  {chr(10003) if c.get(\"ok\") else chr(10007)} content.ok={c.get(\"ok\")} champions={c.get(\"champions\")}")
-print(f"  {chr(10003) if r.get(\"ok\") else chr(10007)} replay.ok={r.get(\"ok\")}")' 2>/dev/null
+  # ⛔ 不用 python3（見上）—— healthz 是扁平的 JSON,tr+grep 就夠
+  curl -fsS -m 5 http://127.0.0.1:2567/healthz 2>/dev/null \
+    | tr ',' '\n' | grep -E '"ok":|champions|writable' | head -5 | sed 's/^/    /'
   announce ok "站已啟動"
   printf '\n%s站起來了%s\n' "$GRN" "$RST"
 }

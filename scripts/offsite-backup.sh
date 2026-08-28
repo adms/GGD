@@ -45,28 +45,21 @@ alert() {
   osascript -e "display notification \"$msg\" with title \"GGD 離站備份\" sound name \"Basso\"" >/dev/null 2>&1
   local hook="${GGD_ALERT_WEBHOOK:-${GGD_SLACK_WEBHOOK_URL:-}}"
   [ -n "$hook" ] && curl -fsS -m 10 -X POST -H 'content-type: application/json' \
-      --data "$(python3 -c 'import json,sys;print(json.dumps({"text":sys.argv[1]}))' "GGD 離站備份：$msg")" \
+      --data "{\"text\":\"$(printf '%s' "GGD 離站備份：$msg" | sed 's/\\/\\\\/g; s/"/\\"/g' | tr '\n' ' ')\"}" \\
       "$hook" >/dev/null 2>&1
   logger -t ggd-backup "$msg" 2>/dev/null
 }
 
 stamp_status() {
   mkdir -p "$(dirname "$STATUS")" 2>/dev/null
-  python3 - "$STATUS" "$1" "$2" "${3:-}" <<'PY' 2>/dev/null
-import json, os, sys, time
-path, state, dest, note = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
-prev = {}
-if os.path.exists(path):
-    try: prev = json.load(open(path))
-    except Exception: prev = {}
-now = time.time()
-d = {"state": state, "dest": dest, "note": note,
-     "at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(now)), "at_epoch": now,
-     "last_success": prev.get("last_success"), "last_success_epoch": prev.get("last_success_epoch")}
-if state == "ok":
-    d["last_success"] = d["at"]; d["last_success_epoch"] = now
-json.dump(d, open(path, "w"), ensure_ascii=False, indent=2)
-PY
+  # ⛔ 不用 python3 —— macOS 上它是 CLT stub（會失敗且彈 GUI 對話框）。
+  # ⭐ 排程跑的東西只能用系統保證存在的工具（sh/sed/date）。
+  _po=$(sed -n 's/.*"last_success"[ ]*:[ ]*"\([^"]*\)".*/\1/p' "$STATUS" 2>/dev/null | head -1)
+  _pe=$(sed -n 's/.*"last_success_epoch"[ ]*:[ ]*\([0-9]*\).*/\1/p' "$STATUS" 2>/dev/null | head -1)
+  _now=$(date -u +%Y-%m-%dT%H:%M:%SZ); _nowe=$(date +%s)
+  if [ "$1" = ok ]; then _po="$_now"; _pe="$_nowe"; fi
+  printf '{\n  "state": "%s",\n  "dest": "%s",\n  "note": "%s",\n  "at": "%s",\n  "at_epoch": %s,\n  "last_success": "%s",\n  "last_success_epoch": %s\n}\n' \
+    "$1" "$2" "${3:-}" "$_now" "$_nowe" "${_po:-}" "${_pe:-0}" > "$STATUS" 2>/dev/null
 }
 
 # ═══════════════════════════════════════ audit —— ⭐ 這一段才是 #857 的修法
@@ -77,18 +70,15 @@ cmd_audit() {
     info "⭐ 這正是 #857 的樣子:沒有任何東西變紅,而備份已經死了 31 天。"
     return 1
   fi
-  local age; age=$(python3 - "$STATUS" <<'PY'
-import json, sys, time
-try: d = json.load(open(sys.argv[1]))
-except Exception: print(-1); raise SystemExit
-e = d.get("last_success_epoch")
-print(-1 if not e else int((time.time() - e) / 3600))
-PY
-)
+  # ⛔ 不用 python3（見 stamp_status）
+  local _e _now age
+  _e=$(sed -n 's/.*"last_success_epoch"[ ]*:[ ]*\([0-9]*\).*/\1/p' "$STATUS" 2>/dev/null | head -1)
+  _now=$(date +%s)
+  if [ -z "$_e" ] || [ "$_e" = 0 ]; then age=-1; else age=$(( (_now - _e) / 3600 )); fi
   if [ "${age:--1}" -lt 0 ]; then
     printf '  %s✗%s ⛔ 沒有成功紀錄\n' "$RED" "$RST"; return 1
   fi
-  info "上一次成功：$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1])).get("last_success","?"))' "$STATUS")（${age} 小時前）"
+  info "上一次成功：$(sed -n 's/.*"last_success"[ ]*:[ ]*"\\([^"]*\\)".*/\\1/p' "$STATUS" 2>/dev/null | head -1)（${age} 小時前）"
   if [ "$age" -le "$MAX_AGE_H" ]; then ok "在 ${MAX_AGE_H} 小時的門檻內"; return 0
   else
     printf '  %s✗%s ⛔ 已經 %s 小時沒有成功的離站備份（門檻 %s）\n' "$RED" "$RST" "$age" "$MAX_AGE_H"
