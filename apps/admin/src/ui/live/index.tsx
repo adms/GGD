@@ -1,7 +1,7 @@
 /**
  * 🔴 LIVE 對照·視覺化 SUITE（GH#775，owner 2026-08-26）——
  * 13 頁全部吃 `/__live/<dataset>`（tools/admin-live：**每次請求當場從 repo 現況算**，
- * mtime 快取）。owner 逐字：「這些後台頁面的內容都要 **script 實時動態產生**，
+ * md5 checksum 快取，miss 才重算）。owner 逐字：「這些後台頁面的內容都要 **script 實時動態產生**，
  * **不是靜態內容**喔」。
  *
  * ⭐ 與 ContentPage 同一個 DEV-chunk 形狀：routes ＋ label 全部跟著這個 chunk 走，

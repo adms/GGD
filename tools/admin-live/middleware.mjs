@@ -23,9 +23,16 @@
  *    第〇·七守則的「一行接線」病：每加一頁就要在這裡加一行的設計，撞車次數
  *    會把它變成重災區。掃目錄 = 加檔案就上線。
  *
- * ⭐ 快取是 **mtime 鍵**的：build() 宣告它讀了哪些檔（deps），下次請求先比對
- *    這些檔的 mtime，全都沒動才回快取 —— 「實時」的定義是**與磁碟現況一致**，
- *    ⛔ 不是每次都白算一遍。deps 動了就重算。
+ * ⭐ 快取是 **checksum（md5）鍵**的（owner 2026-08-28 逐字：「善用redis cache在
+ *    原資料沒更新(md5+checksum)的時候讀取cache就好不用每次都重算」）：
+ *    build() 宣告它讀了哪些檔（deps）→ 對來源 bytes 算 md5 合成 key →
+ *    命中（記憶體 → redis/檔案後端）就回 cache，未命中才算。
+ *    「實時」的定義是**與磁碟現況一致**，⛔ 不是每次都白算一遍。
+ *    ⚠️ 舊制是 mtime 鍵 —— macOS 目錄 mtime 不因就地改檔而動，外部編輯會拿到過期快取；
+ *    checksum 兩個方向都對（bytes 變必 miss、沒變必 hit）。細節與後端（REDIS_URL ⇒
+ *    redis；否則檔案）住 cache.mjs；開關 GGD_LIVE_CACHE=0；命中與否誠實寫在
+ *    X-Live-Cache header（hit|miss|off key=前8碼 store=memory|file|redis）。
+ *    守衛：packages/shared/src/ops/liveChecksumCache.test.ts（兩個方向都量）。
  *
  * ⚠️ dev-only：由 vite `configureServer` 掛載（apply:"serve"），production build
  *    不含這一段 —— 與 tools/review/middleware.mjs 同一個形狀。
@@ -34,6 +41,7 @@ import { readdirSync, statSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { spawnSync } from "node:child_process";
+import { cacheEnabled, createCacheStore, sourcesChecksum } from "./cache.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const DATASETS = join(HERE, "datasets");
@@ -61,25 +69,28 @@ async function loadModule(name) {
   return entry;
 }
 
-function depsKey(repoRoot, deps) {
-  const parts = [];
-  for (const d of deps ?? []) {
-    const p = join(repoRoot, d);
-    try {
-      const st = statSync(p);
-      parts.push(`${d}:${st.isDirectory() ? "d" : ""}${st.mtimeMs}`);
-    } catch {
-      parts.push(`${d}:absent`);
-    }
-  }
-  return parts.join("|");
+function sendJson(res, code, body) {
+  sendJsonText(res, code, JSON.stringify(body));
 }
 
-function sendJson(res, code, body) {
+function sendJsonText(res, code, text) {
   res.statusCode = code;
   res.setHeader("Content-Type", "application/json; charset=utf-8");
   res.setHeader("Cache-Control", "no-store");
-  res.end(JSON.stringify(body));
+  res.end(text);
+}
+
+/** 快取後端單例（第一次用到才建）＋ 「後端連不上」只 warn 一次（fail-open 但要有聲音）。 */
+let cacheStore = null;
+let storeWarned = false;
+function getCacheStore() {
+  cacheStore ??= createCacheStore();
+  return cacheStore;
+}
+function warnStoreOnce(err) {
+  if (storeWarned) return;
+  storeWarned = true;
+  console.warn(`[admin-live] 快取後端連不上（fail-open 續算，header 標 -unreachable）：${String(err)}`);
 }
 
 /* ───────── ⭐ 共用寫入端（GH#821）—— 一條路，⛔ 不是 13 種寫法 ───────── */
@@ -264,17 +275,55 @@ export function createAdminLiveMiddleware(repoRoot, options = {}) {
       }
       if (typeof build !== "function")
         return sendJson(res, 500, { error: `${name} 沒有 export build()` });
-      const key = depsKey(repoRoot, typeof deps === "function" ? deps(repoRoot) : deps);
-      if (entry.cache && entry.cache.key === key) {
-        res.setHeader("X-Live-Cache", "hit");
-        return sendJson(res, 200, entry.cache.body);
+      // ⭐ checksum 快取層（owner 2026-08-28「原資料沒更新(md5+checksum)⋯讀取cache就好」）
+      if (!cacheEnabled()) {
+        const t0 = Date.now();
+        const body = await build(repoRoot);
+        body._live = { computedAt: new Date().toISOString(), ms: Date.now() - t0, cache: "off" };
+        res.setHeader("X-Live-Cache", "off");
+        return sendJson(res, 200, body);
+      }
+      const depList = typeof deps === "function" ? deps(repoRoot) : deps;
+      // key = 來源檔 bytes 的 md5 ＋ dataset 模組自己（程式變了結果就可能變）
+      const sum = sourcesChecksum(repoRoot, depList, [join(DATASETS, `${name}.mjs`)]);
+      const key8 = sum.key.slice(0, 8);
+      if (entry.cache && entry.cache.key === sum.key) {
+        res.setHeader("X-Live-Cache", `hit key=${key8} store=memory`);
+        return sendJsonText(res, 200, entry.cache.text);
+      }
+      const store = getCacheStore();
+      let storeLabel = store.label;
+      try {
+        const cached = await store.get(sum.key);
+        if (cached != null) {
+          entry.cache = { key: sum.key, text: cached };
+          res.setHeader("X-Live-Cache", `hit key=${key8} store=${store.label}`);
+          return sendJsonText(res, 200, cached);
+        }
+      } catch (err) {
+        storeLabel = `${store.label}-unreachable`;
+        warnStoreOnce(err);
       }
       const t0 = Date.now();
       const body = await build(repoRoot);
-      body._live = { computedAt: new Date().toISOString(), ms: Date.now() - t0, cacheKey: key ? "mtime" : "none" };
-      entry.cache = { key, body };
-      res.setHeader("X-Live-Cache", "miss");
-      return sendJson(res, 200, body);
+      body._live = {
+        computedAt: new Date().toISOString(),
+        ms: Date.now() - t0,
+        cacheKey: key8,
+        sourceFiles: sum.files,
+      };
+      const text = JSON.stringify(body);
+      entry.cache = { key: sum.key, text };
+      if (!storeLabel.endsWith("-unreachable")) {
+        try {
+          await store.set(sum.key, text);
+        } catch (err) {
+          storeLabel = `${store.label}-unreachable`;
+          warnStoreOnce(err);
+        }
+      }
+      res.setHeader("X-Live-Cache", `miss key=${key8} store=${storeLabel}`);
+      return sendJsonText(res, 200, text);
     } catch (err) {
       return sendJson(res, 500, { error: String(err && err.stack ? err.stack : err) });
     }

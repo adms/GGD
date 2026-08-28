@@ -368,7 +368,7 @@ export function JassVfxPage(): React.JSX.Element {
           </div>
           <div style={{ fontSize: 11.5, color: TEXT_DIM }}>
             顯示 {rows.length} / {data.rows.length} 列 · 實時計算於{" "}
-            {data._live?.computedAt ?? "?"}（{data._live?.ms ?? "?"} ms，deps mtime 沒動時走快取）
+            {data._live?.computedAt ?? "?"}（{data._live?.ms ?? "?"} ms，deps md5 沒變時走快取）
           </div>
         </div>
       </Panel>

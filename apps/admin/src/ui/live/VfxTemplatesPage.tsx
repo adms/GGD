@@ -12,11 +12,12 @@
  * 設定不在這裡改（⛔ 不複製第二份表單）：粒子家族連 🔮 鑄技工坊 · 特效綁定，
  * 技能節點連 ✨ 技能編輯器，模板／模型文件連 🗃 內容管理。
  */
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Panel, TextInput } from "../widgets";
 import { DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
 import { useApp } from "../../store";
 import { ReviewStrip } from "./ReviewStrip";
+import { TplParamCells, type NumericParam } from "./TplParamCells";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
@@ -44,6 +45,7 @@ interface Member {
 
 interface TemplateRow {
   id: string;
+  file: string;
   name: string;
   family: string | null;
   status: string | null;
@@ -51,6 +53,7 @@ interface TemplateRow {
   defaults: Record<string, unknown>;
   inert: string[];
   paramCount: number;
+  numericParams: NumericParam[];
   model: {
     id: string;
     glbPath: string | null;
@@ -203,7 +206,7 @@ function NavLink(props: { page: string; children: React.ReactNode }): React.JSX.
   );
 }
 
-function TemplateBlock(props: { t: TemplateRow; filter: string }): React.JSX.Element | null {
+function TemplateBlock(props: { t: TemplateRow; filter: string; onSaved: () => void }): React.JSX.Element | null {
   const { t, filter } = props;
   const members = useMemo(() => {
     const needle = filter.trim().toLowerCase();
@@ -228,11 +231,8 @@ function TemplateBlock(props: { t: TemplateRow; filter: string }): React.JSX.Ele
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         <div style={{ fontSize: 12, color: TEXT_DIM, fontFamily: MONO, lineHeight: 1.8 }}>
           家族預設：modelKey=<b style={{ color: TEXT_MAIN }}>{String(d.modelKey ?? "—")}</b>
-          {" · "}scale={String(d.scale ?? "—")}
           {" · "}clip={String(d.clip ?? "—")}
           {" · "}path={String(d.path ?? "—")}
-          {" · "}count={String(d.count ?? "—")}
-          {" · "}lifeSec={String(d.lifeSec ?? "—")}
           {" · "}soundKey={String(d.soundKey ?? "—")}
           {t.inert.length > 0 ? (
             <span style={{ color: WARN }}>
@@ -241,6 +241,15 @@ function TemplateBlock(props: { t: TemplateRow; filter: string }): React.JSX.Ele
             </span>
           ) : null}
         </div>
+        {t.numericParams.length > 0 && (
+          <div style={{ fontSize: 12, color: TEXT_DIM, display: "flex", gap: 10, alignItems: "baseline", flexWrap: "wrap" }}>
+            <span>
+              💾 數字預設（存回 <code style={{ fontFamily: MONO }}>{t.file}</code>，
+              引用這張模板的 {t.members.length} 個節點一起變）：
+            </span>
+            <TplParamCells dataset="vfx-templates" file={t.file} params={t.numericParams} onSaved={props.onSaved} />
+          </div>
+        )}
         {t.model ? (
           <div style={{ fontSize: 12, color: TEXT_DIM, fontFamily: MONO }}>
             預設模型：{t.model.id} → {t.model.glbPath ?? "（無 glb）"} · 模型自身 scale=
@@ -304,22 +313,22 @@ export function VfxTemplatesPage(): React.JSX.Element {
   const [error, setError] = useState<string | null>(null);
   const [q, setQ] = useState("");
 
-  useEffect(() => {
-    let alive = true;
+  const load = useCallback(() => {
     fetch("/__live/vfx-templates")
       .then(async (res) => {
         const body = (await res.json()) as Payload & { error?: string };
-        if (!alive) return;
         if (!res.ok || body.error) setError(body.error ?? `HTTP ${res.status}`);
-        else setData(body);
+        else {
+          setData(body);
+          setError(null);
+        }
       })
-      .catch((err) => {
-        if (alive) setError(String(err));
-      });
-    return () => {
-      alive = false;
-    };
+      .catch((err) => setError(String(err)));
   }, []);
+
+  useEffect(() => {
+    load();
+  }, [load]);
 
   if (error !== null) {
     return (
@@ -373,7 +382,7 @@ export function VfxTemplatesPage(): React.JSX.Element {
       </Panel>
 
       {data.templates.map((t) => (
-        <TemplateBlock key={t.id} t={t} filter={q} />
+        <TemplateBlock key={t.id} t={t} filter={q} onSaved={load} />
       ))}
 
       {data.noPreset.length > 0 && q.trim() === "" ? (

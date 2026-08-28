@@ -9,12 +9,16 @@
  *   值**直讀**出貨 config（aoe-tiers / range-tiers），顏色直讀 range-guide 的出貨色，
  *   ⛔ 頁面一個數字都不重算（第〇·四守則）。
  * 「設定」半邊連去既有的 aoeTiers / rangeTiers config 頁，⛔ 不複製第二份表單。
+ * 💾 GH#825：模板家族的 `params.<名>.default`（手編檔 tpl-*.json）**在這一頁可存**——
+ * 點「參數格」展開該家族，逐格 LiveEditCell 走 POST /__live/mech-templates/save。
+ * 五級距的數字仍走既有設定頁（⛔ 這裡不放第二份表單）。
  */
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import { Panel, Btn, TextInput } from "../widgets";
 import { GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN, DANGER } from "../theme";
 import { useApp } from "../../store";
 import { ReviewStrip } from "./ReviewStrip";
+import { TplParamCells, type NumericParam } from "./TplParamCells";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
@@ -27,12 +31,14 @@ interface AdopterRow {
 
 interface TemplateRow {
   id: string;
+  file: string;
   name: string;
   family: string;
   status: string;
   description: string;
   gapScore: number | null;
   paramNames: string[];
+  numericParams: NumericParam[];
   requires: string[];
   exemplar: { skill?: string; jass?: string } | null;
   adoptedBy: number;
@@ -265,6 +271,7 @@ export function MechTemplatesPage(): React.JSX.Element {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [q, setQ] = useState("");
+  const [openTpl, setOpenTpl] = useState<string | null>(null); // 展開哪個家族的參數編輯列
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -452,36 +459,70 @@ export function MechTemplatesPage(): React.JSX.Element {
               </thead>
               <tbody>
                 {rows.map((t) => (
-                  <tr key={t.id}>
-                    <Td mono title={t.description}>
-                      {t.id}
-                    </Td>
-                    <Td>{t.name}</Td>
-                    <Td mono color={TEXT_DIM}>
-                      {t.family}
-                    </Td>
-                    <Td color={t.status === "enabled" ? OK : WARN}>{t.status}</Td>
-                    <Td align="right" mono title={t.paramNames.join(", ")}>
-                      {t.paramNames.length}
-                    </Td>
-                    <Td align="right" mono color={TEXT_DIM}>
-                      {t.gapScore ?? "—"}
-                    </Td>
-                    <Td align="right" mono color={t.adoptedBy > 0 ? GOLD : TEXT_DIM}>
-                      {t.adoptedBy}
-                    </Td>
-                    <Td
-                      color={TEXT_DIM}
-                      title={t.adopters.map((a) => `${a.id} ${a.name}（覆寫 ${a.overrides} 格）`).join("\n")}
-                    >
-                      {t.adoptedBy === 0
-                        ? "—"
-                        : t.adopters
-                            .slice(0, 4)
-                            .map((a) => `${a.id}(${a.overrides})`)
-                            .join("、") + (t.adoptedBy > 4 ? ` …+${t.adoptedBy - 4}` : "")}
-                    </Td>
-                  </tr>
+                  <Fragment key={t.id}>
+                    <tr>
+                      <Td mono title={t.description}>
+                        {t.id}
+                      </Td>
+                      <Td>{t.name}</Td>
+                      <Td mono color={TEXT_DIM}>
+                        {t.family}
+                      </Td>
+                      <Td color={t.status === "enabled" ? OK : WARN}>{t.status}</Td>
+                      <Td align="right" mono title={t.paramNames.join(", ")}>
+                        <button
+                          onClick={() => setOpenTpl(openTpl === t.id ? null : t.id)}
+                          title={`${t.paramNames.join(", ")}\n點開逐格編輯數字預設（存回 ${t.file}）`}
+                          style={{
+                            cursor: "pointer",
+                            background: "none",
+                            border: "none",
+                            color: t.numericParams.some((p) => p.editable) ? GOLD : TEXT_DIM,
+                            fontFamily: MONO,
+                            fontSize: 13,
+                          }}
+                        >
+                          {t.paramNames.length} {openTpl === t.id ? "▾" : "✏️"}
+                        </button>
+                      </Td>
+                      <Td align="right" mono color={TEXT_DIM}>
+                        {t.gapScore ?? "—"}
+                      </Td>
+                      <Td align="right" mono color={t.adoptedBy > 0 ? GOLD : TEXT_DIM}>
+                        {t.adoptedBy}
+                      </Td>
+                      <Td
+                        color={TEXT_DIM}
+                        title={t.adopters.map((a) => `${a.id} ${a.name}（覆寫 ${a.overrides} 格）`).join("\n")}
+                      >
+                        {t.adoptedBy === 0
+                          ? "—"
+                          : t.adopters
+                              .slice(0, 4)
+                              .map((a) => `${a.id}(${a.overrides})`)
+                              .join("、") + (t.adoptedBy > 4 ? ` …+${t.adoptedBy - 4}` : "")}
+                      </Td>
+                    </tr>
+                    {openTpl === t.id && (
+                      <tr>
+                        <td colSpan={8} style={{ padding: "8px 10px 12px 24px", borderTop: PANEL_BORDER, background: "#1a2130" }}>
+                          <div style={{ fontSize: 12, color: TEXT_DIM, marginBottom: 6 }}>
+                            💾 存回 <code style={{ fontFamily: MONO }}>{t.file}</code> 的{" "}
+                            <code style={{ fontFamily: MONO }}>params.&lt;名&gt;.default</code> ——
+                            改一格，引用這個家族的 {t.adoptedBy} 支一起變。上下界用那一格自己宣告的
+                            （tooltip）；「留白」＝刻意沒有家族預設（逐支填），不開編輯。
+                            ⚠️ 改了值請把出處補成 owner:…（templateDefaultsHaveOrigin 閘）。
+                          </div>
+                          <TplParamCells
+                            dataset="mech-templates"
+                            file={t.file}
+                            params={t.numericParams}
+                            onSaved={() => void load()}
+                          />
+                        </td>
+                      </tr>
+                    )}
+                  </Fragment>
                 ))}
               </tbody>
             </table>

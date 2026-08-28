@@ -389,7 +389,7 @@ export function Skill90Page(): React.JSX.Element {
             <div style={{ fontSize: 13, color: TEXT_DIM }}>沒有符合過濾條件的技能。</div>
           )}
           <div style={{ fontSize: 11, color: TEXT_DIM, textAlign: "right" }}>
-            這一頁算於 {data._live?.computedAt ?? "？"}（{data._live?.ms ?? "？"} ms，mtime 快取：deps 沒動就不重算）
+            這一頁算於 {data._live?.computedAt ?? "？"}（{data._live?.ms ?? "？"} ms，md5 快取：deps bytes 沒變就不重算）
           </div>
         </div>
       </Panel>

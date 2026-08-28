@@ -22,16 +22,23 @@
  */
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
+import { numericParamRows, tplDefaultRule, tplOriginRule } from "./_tplWrite.mjs";
 
 /**
- * GH#821 豁免（能被反駁）：左側是 locust:build 的 census 產物（量測，⛔ 不可編）；
- * 右側是 effects 樹裡的 spawnModelFx **巢狀節點** —— 共用寫入端的單格 scalar pointer
- * 表達不了「編一個節點」（節點索引又是 join 推導的，指錯格就是改錯技能）。
- * 節點級編輯屬技能編輯器（skill-authoring 骨架路線）。
- * 反駁法：指出頁上一格是可以用單格 scalar 安全定址的家。
+ * ⭐ GH#824 寫入宣告 —— 舊豁免被自己的反駁法反駁掉了一半：
+ * 「左側 census＝產物、右側 effects 巢狀節點不可單格定址」對那**兩側**仍然成立
+ * （census 仍唯讀、逐技能節點仍歸技能編輯器），⛔ 但頁上還有**第三側**：
+ * 家族模板 tpl-locust-*.json 的 `params.<名>.default` —— 手編檔（genguard ✓）、
+ * 名字定址（object 形 params，⛔ 不是索引）、正是票上「一鍵 rollback 那格」。
+ * 改一格，引用該模板的每一支技能一起變（⚠️ 存之前頁面會列出動到哪幾支）。
  */
-export const readonlyWhy =
-  "左側 census＝產物；右側是 effects 樹巢狀節點，單格 pointer 定址不安全 —— 節點編輯屬技能編輯器。";
+export const write = {
+  kind: "source",
+  rules: [
+    tplDefaultRule(["content/ability-templates/tpl-locust-*.json", "content/ability-templates/tpl-beam-roll.json"]),
+    tplOriginRule(["content/ability-templates/tpl-locust-*.json", "content/ability-templates/tpl-beam-roll.json"]),
+  ],
+};
 
 /** deps 誠實列到檔案層級：目錄 mtime 在 macOS 上不因「改既有檔內容」而動。 */
 export function deps(repoRoot) {
@@ -66,15 +73,20 @@ export async function build(repoRoot) {
   const census = readJson(join(repoRoot, "tools/locust-census/census.json"));
 
   // ── GGD 側 ①：模板家族預設（preset → 預設 modelKey ＋ 幾格演出參數） ──
-  const templates = new Map(); // tplId -> { modelKey, path, count, lifeSec, scale }
+  // ⚠️ params 是 **object**（key → slot），⛔ 不是陣列 —— 這裡曾經用 Array.isArray
+  //    讀它，於是模板預設整段靜默變 null（GH#824 修掉）。
+  const templates = new Map(); // tplId -> { file, modelKey, path, count, … , numericParams }
   const tplDir = join(repoRoot, "content/ability-templates");
   for (const f of readdirSync(tplDir)) {
     if (!f.startsWith("tpl-") || !f.endsWith(".json")) continue;
     const doc = readJson(join(tplDir, f));
-    const params = Array.isArray(doc.params) ? doc.params : [];
-    const def = (key) => params.find((p) => p.key === key)?.default ?? null;
+    const params =
+      doc.params && typeof doc.params === "object" && !Array.isArray(doc.params) ? doc.params : {};
+    const def = (key) => params[key]?.default ?? null;
     templates.set(doc.id, {
       id: doc.id,
+      file: `content/ability-templates/${f}`, // 寫入端的 path 用它（⛔ 不從 id 拼檔名）
+      name: doc.name ?? doc.id,
       modelKey: def("modelKey"),
       path: def("path"),
       count: def("count"),
@@ -82,19 +94,30 @@ export async function build(repoRoot) {
       scale: def("scale"),
       tint: def("tint"),
       alpha: def("alpha"),
+      numericParams: numericParamRows(params), // 頁上可存的格（只有 number 且已有預設的）
     });
   }
 
   // ── GGD 側 ②：出貨 spawnModelFx 節點（abilities ＋ items；champions 是鏡射不重掃） ──
   const landings = new Map(); // modelKey -> [{docId, docName, docKind, preset, explicit, scale, scaleAxis, tint, alpha, lifeSec, count, path}]
+  const presetAdopters = new Map(); // tplId -> Set(docId) —— 「改這一格會動到哪幾支」
   let spawnNodes = 0;
   for (const [dir, docKind] of [["content/abilities", "ability"], ["content/items", "item"]]) {
     const abs = join(repoRoot, dir);
     for (const f of readdirSync(abs)) {
       if (!f.endsWith(".json") || f.startsWith("_")) continue;
       const doc = readJson(join(abs, f));
+      const docId = doc.id ?? f.replace(/\.json$/, "");
+      if (doc.template && typeof doc.template.ref === "string") {
+        if (!presetAdopters.has(doc.template.ref)) presetAdopters.set(doc.template.ref, new Set());
+        presetAdopters.get(doc.template.ref).add(docId);
+      }
       for (const n of walkSpawnModelFx(doc)) {
         spawnNodes++;
+        if (n.preset) {
+          if (!presetAdopters.has(n.preset)) presetAdopters.set(n.preset, new Set());
+          presetAdopters.get(n.preset).add(docId);
+        }
         const tpl = n.preset ? templates.get(n.preset) : null;
         const key = n.modelKey ?? tpl?.modelKey ?? null;
         if (!key) continue;
@@ -169,9 +192,9 @@ export async function build(repoRoot) {
   const rank = { missing: 0, "model-only": 1, landed: 2, proxy: 3 };
   rows.sort((a, b) => rank[a.status] - rank[b.status] || a.id.localeCompare(b.id));
 
-  const locustTemplates = [...templates.values()].filter(
-    (t) => t.id.startsWith("tpl-locust-") || t.id === "tpl-beam-roll",
-  );
+  const locustTemplates = [...templates.values()]
+    .filter((t) => t.id.startsWith("tpl-locust-") || t.id === "tpl-beam-roll")
+    .map((t) => ({ ...t, adopters: [...(presetAdopters.get(t.id) ?? [])].sort() }));
 
   return {
     source: {

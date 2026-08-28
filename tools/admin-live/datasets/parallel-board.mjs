@@ -4,7 +4,7 @@
  * 三個來源（誠實列）：
  *   ① `gh issue list`（**best-effort**）—— open 票與標題上的優先級/類型 tag。
  *      ⚠️ gh 不是檔案：離線／逾時就 `ghAvailable:false` 帶錯誤字串，頁面照畫其餘兩塊。
- *      ⚠️ mtime 快取看不見 gh 的變化 —— open 票的新舊以 deps 檔案有動時的那次重算為準。
+ *      ⚠️ 來源檔 md5 快取看不見 gh 的變化 —— open 票的新舊以 deps 檔案有動時的那次重算為準。
  *   ② `docs/_task-ledger.json`（tools/status/gen_status.py 的產物）—— session 任務帳本。
  *   ③ `docs/_daily/<YYYY-MM-DD>.md` 的逐則對票表 —— owner 的話（逐字、截斷）→ 票。
  *      兩種歷史格式都收：3 欄 `|時間|話|票|`（08-20 起）與 5 欄 `|#|時間|話|落到哪|狀態|`（08-19）。

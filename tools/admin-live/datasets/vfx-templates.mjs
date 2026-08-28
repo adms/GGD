@@ -17,20 +17,29 @@
  * effective = 節點覆寫 ?? 模板 params[k].default；touch 兩格只在節點有 onTouch 時補；
  * 聲音兩格無條件補。剖不出來就 throw（fail-loud：頁面會畫出錯誤）。
  *
- * ⛔ 唯讀。⛔ 不 import apps/** / packages/**（node 環境；modelFxPreset.ts 是**讀文字**）。
+ * 💾 GH#826：①的 `params.<名>.default` **可存**（見 write）；②③仍唯讀（理由見 write 檔頭）。
+ * ⛔ 不 import apps/** / packages/**（node 環境；modelFxPreset.ts 是**讀文字**）。
  */
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
+import { numericParamRows, tplDefaultRule, tplOriginRule } from "./_tplWrite.mjs";
 
 /**
- * GH#821 豁免（能被反駁）：三張表裡 ①ability-templates 與 ③vfx-families 是產生器產物
- * （genguard AUTHOR —— 寫了下一次 sync 打回來）；②model@1 有手編子集，但 scale/clipMap/
- * fxTint 是**要對 glb 驗的視覺值** —— 單格寫入會做出「改了但沒有終端證據」的宣稱
- * （👁 用詞紀律：鏈路接上 ≠ 玩家看得到），那一族的修改走 audition＋visual-proof 流程。
- * 反駁法：指出一格既是手編的家、又不需要視覺驗收的欄位。
+ * ⭐ GH#826 寫入宣告 —— 舊豁免的①「ability-templates 是產生器產物（genguard AUTHOR）」
+ * **是錯的**（第三守則：genguard ✓、sync-io 只認領 _index.json、tools/ 零寫入端）——
+ * 模板的 `params.<名>.default`（scale / alpha / lifeSec / count 那一族）是手編的家，可存。
+ * 仍唯讀的兩側（理由不變、能被反駁）：
+ *   ② model@1 的 scale/clipMap/fxTint 是**要對 glb 驗的視覺值** —— 單格盲寫違反
+ *     👁 用詞紀律（鏈路接上 ≠ 玩家看得到），走 audition＋visual-proof 流程；
+ *   ③ vfx-families.json 是 vfxfam:build 的產物 —— 改**來源**再 genrun，⛔ 不開直寫。
  */
-export const readonlyWhy =
-  "①③是產生器產物；②model@1 的視覺欄要 audition 終端證據 —— 單格盲寫違反 👁 用詞紀律。";
+export const write = {
+  kind: "source",
+  rules: [
+    tplDefaultRule(["content/ability-templates/tpl-*.json"]),
+    tplOriginRule(["content/ability-templates/tpl-*.json"]),
+  ],
+};
 
 export const deps = [
   "content/ability-templates",
@@ -62,7 +71,9 @@ function readJsonDir(dir) {
   for (const f of readdirSync(dir)) {
     if (!f.endsWith(".json") || f.startsWith("_")) continue;
     try {
-      out.push(JSON.parse(readFileSync(join(dir, f), "utf8")));
+      const doc = JSON.parse(readFileSync(join(dir, f), "utf8"));
+      doc._file = f; // 寫入端的 path 要用真的檔名（⛔ 不從 id 拼）
+      out.push(doc);
     } catch (err) {
       out.push({ id: f, _parseError: String(err) });
     }
@@ -211,6 +222,7 @@ export async function build(repoRoot) {
       if (defModelId) referencedModelIds.add(defModelId);
       return {
         id: t.id,
+        file: `content/ability-templates/${t._file}`, // 寫入端的 path 用它
         name: t.name ?? t.id,
         family: t.family ?? null,
         status: t.status ?? null,
@@ -218,6 +230,7 @@ export async function build(repoRoot) {
         defaults,
         inert,
         paramCount: Object.keys(t.params).length,
+        numericParams: numericParamRows(t.params), // 可存的格（number 且已有預設）
         model: modelSummary(defModelId ? modelById.get(defModelId) : null),
         members: membersByTpl.get(t.id),
       };

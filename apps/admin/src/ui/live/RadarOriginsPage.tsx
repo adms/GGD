@@ -5,7 +5,7 @@
  * > 「這些後台頁面的內容都要 **script 實時動態產生**，**不是靜態內容**喔」
  *
  * ⇒ 這一頁**零 build-time import**：資料由 tools/admin-live/datasets/radar-origins.mjs
- *   每次請求當場從磁碟算（mtime 快取），改一份英雄卡／級距表存檔重整就是新的。
+ *   每次請求當場從磁碟算（md5 快取），改一份英雄卡／級距表存檔重整就是新的。
  *
  * 資料語意：雷達的半徑是**五級距的序**（極小=1 … 極大=5），⛔ 不是屬性絕對值 ——
  * 級距名抄 config.stat-normalization@1 的 byOrigin，級距值抄 bands/bandsByScale

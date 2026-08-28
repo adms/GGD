@@ -11,20 +11,31 @@
  *
  * ⚠️ 只掃 standalone abilities（鏡射權威側）；champion-embedded 那一份是 sync 出來的
  *    副本，掃它只會重複計數。
- * ⚠️ 上面點名的 content/** 檔全是**產生器產物**（genguard 查擁有者;這一頁只**讀**它們,
- *    要改就改來源再 bash scripts/genrun.sh <step>）。
+ * ⚠️ 讀的檔分兩類（⛔ 這一段曾寫「全是產生器產物」—— 那句話是錯的，第三守則）：
+ *    aoe-tiers 是產物（值推導自 skillTiers.ts 的梯子）、abilities 多數是 skillremake 產物；
+ *    range-tiers / map-spec / range-guide 是手編 config **但已有各自的設定頁**
+ *    （navigate rangeTiers / aoeTiers；⛔ 這一頁不放第二份表單 —— 第〇·四守則）；
+ *    **content/ability-templates/tpl-*.json 是手編檔**（genguard ✓、sync-io 只認領
+ *    _index.json）—— 那就是這一頁可存的那一側。
  */
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import { numericParamRows, tplDefaultRule, tplOriginRule } from "./_tplWrite.mjs";
 
 /**
- * GH#821 豁免（能被反駁）：檔頭已逐字聲明「上面點名的 content/** 檔全是**產生器產物**」
- * （ability-templates · 五級距表 · abilities 的模板 ref 掃描）—— 沒有一份 target
- * 過得了 genguard 的 AUTHOR 裁決；改模板要改產生器來源再 genrun。
- * 反駁法：對任一 target 跑 bash scripts/genguard.sh 得到 ✓。
+ * ⭐ GH#825 寫入宣告 —— 舊豁免被它自己的反駁法反駁：
+ * 「反駁法：對任一 target 跑 genguard 得到 ✓」⇒ tpl-*.json 全數 ✓（手編、無上游）。
+ * 可存的是模板 `params.<名>.default`（number 格、逐格用自己的 min/max）＋ origin。
+ * 五級距表**仍然唯讀**：值推導自同一條梯子（aoe-tiers 是產物；改數字走既有的
+ * rangeTiers / aoeTiers 設定頁 —— 那邊有 overlay 寫入，這裡不開第二條路）。
  */
-export const readonlyWhy =
-  "所有 target 都是產生器產物（genguard AUTHOR）—— 直接寫等於沒寫，改模板走產生器來源＋genrun。";
+export const write = {
+  kind: "source",
+  rules: [
+    tplDefaultRule(["content/ability-templates/tpl-*.json"]),
+    tplOriginRule(["content/ability-templates/tpl-*.json"]),
+  ],
+};
 
 const CONFIG_FILES = [
   "content/config/aoe-tiers.json",
@@ -120,17 +131,19 @@ export async function build(repoRoot) {
   }
 
   const templateRows = templates
-    .map(({ doc }) => {
+    .map(({ file, doc }) => {
       const used = adopters.get(doc.id) ?? [];
       const params = doc.params && typeof doc.params === "object" ? Object.keys(doc.params) : [];
       return {
         id: doc.id,
+        file: `content/ability-templates/${file}`, // 寫入端的 path 用它（⛔ 不從 id 拼檔名）
         name: doc.name ?? "",
         family: doc.family ?? "",
         status: doc.status ?? "",
         description: typeof doc.description === "string" ? doc.description.slice(0, 220) : "",
         gapScore: doc.gapScore ?? null,
         paramNames: params,
+        numericParams: numericParamRows(doc.params), // 可存的格（number 且已有預設）
         requires: Array.isArray(doc.requires) ? doc.requires : [],
         exemplar: doc.exemplar ?? null,
         adoptedBy: used.length,

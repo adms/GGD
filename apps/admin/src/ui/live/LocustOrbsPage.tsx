@@ -11,12 +11,16 @@
  * 對照的兩邊（dataset 檔頭有完整說明）：
  *   原作側 = tools/locust-census/census.json（pnpm locust:build 的產物）
  *   GGD 側 = content/abilities+items 的 spawnModelFx ＋ ability-templates 預設 ＋ content/models
- * 「設定」不在這一頁：家族預設住 content/ability-templates/tpl-locust-*.json（一鍵 rollback 那格）。
+ * 💾 GH#824：家族預設（content/ability-templates/tpl-locust-*.json 的
+ * `params.<名>.default`——一鍵 rollback 那格）**在這一頁可存**：
+ * POST /__live/locust-orbs/save 走共用寫入端；census 側與逐技能節點仍唯讀
+ * （前者是產物、後者歸技能編輯器）。
  */
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Panel, TextInput } from "../widgets";
 import { DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
 import { ReviewStrip } from "./ReviewStrip";
+import { TplParamCells, type NumericParam } from "./TplParamCells";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
@@ -70,11 +74,17 @@ type Payload = {
   };
   locustTemplates: Array<{
     id: string;
+    file: string;
+    name: string;
     modelKey: string | null;
     path: string | null;
     count: number | null;
     lifeSec: number | null;
     scale: number | null;
+    tint: number[] | null;
+    alpha: number | null;
+    numericParams: NumericParam[];
+    adopters: string[];
   }>;
   rows: Row[];
   _live?: { computedAt: string; ms: number };
@@ -109,9 +119,11 @@ function Td(props: {
   align?: "left" | "right";
   mono?: boolean;
   color?: string;
+  title?: string;
 }): React.JSX.Element {
   return (
     <td
+      title={props.title}
       style={{
         padding: "6px 8px",
         borderTop: PANEL_BORDER,
@@ -167,22 +179,20 @@ export function LocustOrbsPage(): React.JSX.Element {
   const [q, setQ] = useState("");
   const [statusFilter, setStatusFilter] = useState<RowStatus | "all">("all");
 
-  useEffect(() => {
-    let alive = true;
+  const load = useCallback(() => {
     fetch("/__live/locust-orbs")
       .then(async (res) => {
         const body = (await res.json()) as Payload & { error?: string };
-        if (!alive) return;
         if (!res.ok || body.error) throw new Error(body.error ?? `HTTP ${res.status}`);
         setData(body);
+        setError(null);
       })
-      .catch((err: unknown) => {
-        if (alive) setError(String(err));
-      });
-    return () => {
-      alive = false;
-    };
+      .catch((err: unknown) => setError(String(err)));
   }, []);
+
+  useEffect(() => {
+    load();
+  }, [load]);
 
   const rows = useMemo(() => {
     if (!data) return [];
@@ -354,7 +364,55 @@ export function LocustOrbsPage(): React.JSX.Element {
           </div>
           <div style={{ fontSize: 11, color: TEXT_DIM, borderTop: PANEL_BORDER, paddingTop: 6 }}>
             實時計算於 {data._live?.computedAt ?? "?"} · 費時 {data._live?.ms ?? "?"}ms
-            （/__live/locust-orbs，deps mtime 沒動時回快取）
+            （/__live/locust-orbs，來源 md5 沒變時回快取）
+          </div>
+        </div>
+      </Panel>
+
+      <Panel title="🎛 家族模板預設（可存 —— 一鍵 rollback 那格）">
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <div style={{ fontSize: 12, color: TEXT_DIM, lineHeight: 1.6 }}>
+            改一格 ⇒ 存回 <code style={{ fontFamily: MONO }}>content/ability-templates/tpl-*.json</code>{" "}
+            的 <code style={{ fontFamily: MONO }}>params.&lt;名&gt;.default</code>，
+            <b>引用該模板的每一支技能一起變</b>（「動到」欄先看清楚）。上下界用那一格自己宣告的；
+            「留白」格是刻意沒有家族預設（逐支填），不開編輯。
+            ⚠️ 改了值請一併把出處記成 owner:…（templateDefaultsHaveOrigin 閘的文法；出處看 tooltip）。
+          </div>
+          <div style={{ overflowX: "auto" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 900 }}>
+              <thead>
+                <tr>
+                  <Th>模板</Th>
+                  <Th>預設模型</Th>
+                  <Th>可存的格（存回 JSON）</Th>
+                  <Th>動到（引用它的技能）</Th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.locustTemplates.map((t) => (
+                  <tr key={t.id}>
+                    <Td mono title={t.name}>
+                      {t.id}
+                    </Td>
+                    <Td mono color={TEXT_DIM}>
+                      {t.modelKey ? t.modelKey.replace(/^(w3x\.stock|imported)\./, "") : "—"}
+                      {t.path ? ` · ${t.path}` : ""}
+                    </Td>
+                    <Td>
+                      <TplParamCells
+                        dataset="locust-orbs"
+                        file={t.file}
+                        params={t.numericParams}
+                        onSaved={load}
+                      />
+                    </Td>
+                    <Td color={t.adopters.length > 0 ? TEXT_MAIN : TEXT_DIM}>
+                      {t.adopters.length === 0 ? "（目前沒有技能引用）" : t.adopters.join("、")}
+                    </Td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </Panel>

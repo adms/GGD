@@ -352,7 +352,7 @@ export function ExRootsPage(): React.JSX.Element {
 
       <div style={{ fontSize: 12, color: TEXT_DIM, fontFamily: MONO }}>
         {data._live
-          ? `這一頁算於 ${data._live.computedAt} · ${data._live.ms}ms（deps mtime 快取：內容檔一動就重算）`
+          ? `這一頁算於 ${data._live.computedAt} · ${data._live.ms}ms（deps md5 快取：內容 bytes 一變就重算）`
           : "（沒有 _live 中繼資料 —— 不是經由 /__live middleware 來的回應）"}
         {"　"}
         <Btn small onClick={load}>重新整理</Btn>

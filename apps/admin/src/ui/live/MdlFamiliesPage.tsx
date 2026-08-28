@@ -413,8 +413,8 @@ export function MdlFamiliesPage(): React.JSX.Element {
         ))}
       </div>
       <div style={{ fontSize: 11, color: TEXT_DIM, fontFamily: MONO }}>
-        computedAt {data._live?.computedAt ?? "?"} · 算了 {data._live?.ms ?? "?"} ms（mtime
-        快取：來源檔沒動就回快取）
+        computedAt {data._live?.computedAt ?? "?"} · 算了 {data._live?.ms ?? "?"} ms（md5
+        快取：來源 bytes 沒變就回快取）
       </div>
     </div>
   );
