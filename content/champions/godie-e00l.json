@@ -186,7 +186,12 @@
       },
       "vfxKey": "fx.prim.wind.tornado",
       "castTimeSec": 0.267,
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.wind.tornado"
+        }
+      ]
     },
     "E": {
       "id": "godie-e00l.e",
