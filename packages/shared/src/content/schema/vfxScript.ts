@@ -169,6 +169,27 @@ export const zVfxScriptAnim = z
   })
   .strict();
 
+/**
+ * ⭐【暫時隱形】N6 —— 把**英雄本體模型**藏起來一段時間（純演出）。
+ *
+ * JASS `Trig_ABanX`（war3map.j:28905）逐字 `ShowUnitHide(GetTriggerUnit())`：
+ * 08-04 阿邦快速劍X 的招牌 —— 小呆本人消失 1 秒，畫面上只有那道劍氣。
+ *
+ * ⚠️ 這**不是** `ENTITY_FLAG.INVISIBLE`（那是權威隱身，伺服器索敵會拒絕鎖定
+ * ⇒ 借它來做演出等於偷加一個無敵窗）。客戶端自己一格 alpha 覆寫，⛔ 不動 sim。
+ * ⭐ 它**自己會過期** —— 掉一則封包不會留下一具永遠不回來的身體。
+ */
+export const zVfxScriptHideBody = z
+  .object({
+    kind: z.literal("hideBody"),
+    ...SEG_COMMON,
+    /** 藏誰：施法者（省略＝caster —— 原作的主詞）或目標。 */
+    at: z.enum(["caster", "target"]).optional(),
+    /** 藏多久（毫秒）。原作最長的那一發是 1 秒。 */
+    durationMs: z.number().int().min(50).max(4000),
+  })
+  .strict();
+
 /** 純音效段（audio-map 的 key，⛔ 不是檔名）。 */
 export const zVfxScriptSound = z
   .object({
@@ -186,6 +207,7 @@ export const zVfxScriptSegment = z.discriminatedUnion("kind", [
   zVfxScriptShake,
   zVfxScriptSound,
   zVfxScriptAnim,
+  zVfxScriptHideBody,
 ]);
 export type VfxScriptSegment = z.infer<typeof zVfxScriptSegment>;
 

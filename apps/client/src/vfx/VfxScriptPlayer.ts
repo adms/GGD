@@ -89,6 +89,8 @@ export interface VfxScriptPlayerDeps {
   playSfx?(event: string, opts?: { volume?: number; gateKey?: string }): boolean;
   /** M4 動畫脈衝（受害者定格）—— 缺席 ⇒ 動畫段 no-op。 */
   pulseAnim?(id: number, kind: "attack" | "cast" | "hurt", opts?: { clipWindowMs?: number }): void;
+  /** N6 演出用暫時隱形 —— 缺席 ⇒ 段 no-op。 */
+  hideBody?(id: number, durationMs: number): void;
   /** 後台開關（三個住處那一格）—— 每次事件都活讀，關掉＝逐位元回到沒有 script 的世界。 */
   enabled(): boolean;
 }
@@ -447,6 +449,12 @@ export class VfxScriptPlayer {
       }
       case "sound": {
         this.deps.playSfx?.(seg.soundKey, {});
+        return;
+      }
+      case "hideBody": {
+        // ⭐ N6 —— 原作的主詞是施法者（ShowUnitHide(GetTriggerUnit())）。
+        const who = seg.at === "target" ? (frame.victim ?? frame.targetPos ? frame.victim : undefined) : frame.caster;
+        this.deps.hideBody?.(who ?? frame.caster, seg.durationMs);
         return;
       }
       case "anim": {

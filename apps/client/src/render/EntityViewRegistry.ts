@@ -27,6 +27,7 @@ import { applyModelTint, releaseModelTint, type ModelTint } from "./views/modelT
 import { mudTintFor, type GrowthTier } from "./views/growthTier";
 import { growthTierFromFlags, formIndexFromFlags, ENTITY_FLAG, ENTITY_KIND } from "@ggd/shared/protocol/schema";
 import { stealthVisualFor } from "./stealthVisual";
+import { isBodyHidden } from "./scriptedHide";
 import type { VoxelLook } from "./views/voxelLook";
 import type { AssetManager } from "./AssetManager";
 import {
@@ -1022,9 +1023,13 @@ export class EntityViewRegistry {
       // acquire. `friendly` decides WHICH of the two opacities applies: your
       // own team keeps a translucent silhouette, the enemy gets `enemyAlpha`
       // (0 = gone). Written every sync, never latched — 破隱 is a per-tick fact.
+      // ⭐ GH#838 N6 —— 演出用的暫時隱形（阿邦快速劍X：人消失 1 秒，只剩劍氣）
+      //    **乘**在權威隱身之上，⛔ 不是取代：一個正在隱身的人被腳本藏起來，
+      //    兩件事都成立。⚠️ 它自己會過期（`scriptedHide` 只記「到什麼時候」），
+      //    所以掉一則封包不會留下一具永遠不回來的身體。
       view.setStealthAlpha(
         stealthVisualFor((e.flags ?? 0) & ENTITY_FLAG.INVISIBLE ? true : false, e.friendly === true)
-          .alpha,
+          .alpha * (isBodyHidden(e.id, args.nowMs) ? 0 : 1),
       );
       const pose = args.poseFor(e);
       // #247: the interpolated height rides the same pose seam as x/z. The

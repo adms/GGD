@@ -142,6 +142,12 @@ const FIELDS: Record<VfxScriptSegment["kind"], FieldSpec[]> = {
     { key: "durationSec", label: "持續 s", kind: "range", min: 0.05, max: 2, step: 0.05 },
   ],
   sound: [...COMMON, { key: "soundKey", label: "音效 key", kind: "text" }],
+  // N6 暫時隱形（阿邦快速劍X：人消失 1 秒，只剩劍氣）
+  hideBody: [
+    ...COMMON,
+    { key: "at", label: "藏誰", kind: "select", options: ["caster", "target"] },
+    { key: "durationMs", label: "藏多久 ms", kind: "range", min: 50, max: 4000, step: 50 },
+  ],
   // M4 動畫脈衝（受害者被劈的那一下／慢動作定格）
   anim: [
     ...COMMON,

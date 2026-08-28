@@ -1,3 +1,4 @@
+import { hideBodyFor } from "../render/scriptedHide";
 /**
  * appBridges — GameApp **注給子系統的接線**（GH#838）。
  *
@@ -48,4 +49,30 @@ export function makeAnimPulseBridge(
   return (id, kind, opts) => {
     views.getChampionView(id)?.pulse(kind, now(), opts);
   };
+}
+
+
+/* ── GH#838 N6：演出用的暫時隱形 ────────────────────────────────────────
+ * ⚠️ 這不是權威隱身（`ENTITY_FLAG.INVISIBLE`）—— 那一格會讓伺服器索敵拒絕鎖定。
+ * 這裡只是客戶端的一格 alpha 覆寫，由 `render/scriptedHide` 記「到什麼時候」，
+ * 再由 `EntityViewRegistry` 在**每一次 sync** 的同一個合成點乘進去。 */
+export function makeHideBodyBridge(
+  now: () => number = () => performance.now(),
+): (id: number, durationMs: number) => void {
+  return (id, durationMs) => hideBodyFor(id, durationMs, now());
+}
+
+/**
+ * ⭐ 演出腳本要的**全部**接縫，一次給齊（GH#838）。
+ * GameApp 只寫一行 `...makeScriptFxBridges(this.views)` —— 第〇·七守則的
+ * 「一行接線」病的正解是**讓那一行不隨功能數成長**，⛔ 不是每加一個機制多一行。
+ */
+export function makeScriptFxBridges(
+  views: ChampionViewLookup,
+  now: () => number = () => performance.now(),
+): {
+  pulseAnim: (id: number, kind: "attack" | "cast" | "hurt", opts?: { clipWindowMs?: number }) => void;
+  hideBody: (id: number, durationMs: number) => void;
+} {
+  return { pulseAnim: makeAnimPulseBridge(views, now), hideBody: makeHideBodyBridge(now) };
 }

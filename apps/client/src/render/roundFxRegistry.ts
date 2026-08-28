@@ -24,6 +24,7 @@
  * target」在那支測試裡完全看不見,所以它全綠了一整年。把組裝收成這一個函式
  * 之後,守衛拿到的場景型 FX 集合與 `GameApp` 建構子拿到的是同一份。
  */
+import { clearScriptedHides } from "./scriptedHide";
 import type { Scene } from "@babylonjs/core/scene";
 import { VfxSystem, type VfxContext } from "../vfx/VfxSystem";
 import { AmbientVfx, type AmbientContentHooks } from "../vfx/AmbientVfx";
@@ -198,6 +199,10 @@ export function createRoundFx(scene: Scene, deps: RoundFxDeps): RoundFx {
   const registry = new RoundFxRegistry()
     // 一次性效果 + per-doc-id 的池子 + 預告圈/打擊感共用池（#259 / #262 / GH#270）
     .add("vfx", () => vfx.resetForRound())
+    // ⭐ GH#838 N6 —— 演出用的暫時隱形表。它自己會過期（只記「到什麼時候」），
+    //    但回合邊界仍要清空：一個在回合結束那一刻正被藏起來的身體，⛔ 不可以
+    //    帶著那一格跨進下一回合（同 `roundPurge` 的規矩：跨回合不留東西）。
+    .add("scripted-hide", () => clearScriptedHides())
     // 沒有主人的常駐特效 free-list（⛔ 活著的英雄身上那些不動）
     .add("ambient", () => ambient.resetForRound())
     // 漏斗殼 free-list（同上,活著的不動）

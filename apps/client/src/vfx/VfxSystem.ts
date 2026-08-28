@@ -227,6 +227,11 @@ export interface VfxContext {
    * 缺席 ⇒ 動畫段是 no-op（headless 測試與舊接線的樣子，⛔ 不是整個功能不生效）。
    */
   pulseAnim?(id: number, kind: "attack" | "cast" | "hurt", opts?: { clipWindowMs?: number }): void;
+  /**
+   * ⭐ GH#838 N6 —— 演出用的暫時隱形（阿邦快速劍X：人消失 1 秒，只剩劍氣）。
+   * ⚠️ 這**不是**權威隱身；缺席 ⇒ 段是 no-op（headless 測試的樣子）。
+   */
+  hideBody?(id: number, durationMs: number): void;
 }
 
 // ---------------------------------------------------------------------------
@@ -833,6 +838,7 @@ export class VfxSystem {
       dispatch: (sev, t) => this.handleEvent(sev, t),
       playSfx: (event, opts) => this.ctx.playSfx?.(event, opts ?? {}) ?? false,
       pulseAnim: (id, kind, opts) => this.ctx.pulseAnim?.(id, kind, opts),
+      hideBody: (id, ms) => this.ctx.hideBody?.(id, ms),
       enabled: () =>
         (ContentConfigs.tryGet("vfx-scripts") as { enabled?: boolean } | undefined)?.enabled ??
         DEFAULT_VFX_SCRIPTS.enabled,
