@@ -127,7 +127,16 @@ for d in "${PRESENT[@]}" "${CRITICAL_BULK[@]}" "${BULK[@]}"; do
   #   ⇒ 2026-08-29 在 mini 上實測:整段印「**0 個檔全部讀得到**」——
   #     ⭐ 一個**假綠燈**,而這條檢查存在的唯一理由就是抓「讀不到」。
   # ⭐ `-exec test -r {} \; -print` 兩邊都能用（POSIX）。
-  all=$($SUDO find "$REPO/data/$d" -type f 2>/dev/null | wc -l | tr -d ' ')
+  # ⛔⛔ 這裡**不可以無條件用 sudo**。2026-08-29 在 mini 上實測:
+  #   非互動 SSH 下 `sudo` 要密碼 ⇒ `sudo find` 直接失敗 ⇒ `all=0`
+  #   ⇒ 而 `mine` 也是 0 ⇒ `0 == 0` ⇒ ⭐ **假綠燈「0 個檔全部讀得到」**。
+  #   ⚠️ 而 mini 上的檔案本來就屬於執行者（genieacceler）—— **根本不需要 sudo**。
+  # ⭐ 判準:先用**自己的身分**數;數得到就用它,數不到才升級 sudo。
+  #   ⛔ 「有 sudo 就用 sudo」會在沒有免密碼 sudo 的機器上把檢查變成空轉。
+  all=$(find "$REPO/data/$d" -type f 2>/dev/null | wc -l | tr -d ' ')
+  if [ "${all:-0}" -eq 0 ] && [ -n "$SUDO" ]; then
+    all=$($SUDO find "$REPO/data/$d" -type f 2>/dev/null | wc -l | tr -d ' ')
+  fi
   mine=$(find "$REPO/data/$d" -type f -exec test -r {} \; -print 2>/dev/null | wc -l | tr -d ' ')
   TOTALF=$((TOTALF + all)); UNREADABLE=$((UNREADABLE + all - mine))
   [ "$all" -eq "$mine" ] || printf "  %s✗%s %-18s %s/%s 讀不到（擁有者 %s）\n" "$RED" "$RST" "$d" \
