@@ -171,6 +171,10 @@ export const SIM_WORLD_DIGEST_EXEMPT: Readonly<Record<string, string>> = {
   lastMoveOrderTick:
     "上一次移動指令的 tick（GH#637 的搖桿流判準）：純粹的去抖動輔助，它唯一的效果是決定 " +
     "`moveOrderNoAggroUntil` 要不要被重寫 —— 同上一格的理由。",
+  lastCommandTick:
+    "上一次玩家指令（含成功施法）的 tick（owner 2026-08-28 的 `idleAutoEngageSec`）：" +
+    "與 `lastMoveOrderTick` 逐字同型 —— 它唯一的效果是決定「放著不管夠久了沒、要不要接手索敵」，" +
+    "而接手的**結果**（nav.attackTarget ＋ 位置）已經被 hash ⇒ 分岔在下一 tick 就從已被 hash 的欄位說出來。",
   autoEngaging: "同 walkStall：效果是 nav.attackTarget 與位置，兩個都被 hash",
   suspendedOrder: "被暫存的指令：它生效的那一刻就變成 nav 的內容，而 nav.attackTarget 與位置被 hash",
 };

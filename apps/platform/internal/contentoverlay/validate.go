@@ -129,6 +129,11 @@ var KnownCollections = []string{
 	"skins",
 	"status-effects",
 	"vfx",
+	// GH#838 —— 演出腳本（`vfx-script@1`）。⚠️ 與上面 `maps` **逐字同一個壞法**：
+	// 它在 2026-08-28 進了 shared 的 COLLECTIONS，這份鏡像沒跟上 ⇒ 後台
+	// **存不進任何演出腳本**（overlay 拒絕一個合法的 collection）。
+	// ⭐ 而抓到它的仍然是同一條比對測試 —— 那條測試是這兩份清單唯一的接縫。
+	"vfx-scripts",
 }
 
 var knownCollectionSet = func() map[string]bool {
