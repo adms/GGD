@@ -1555,9 +1555,10 @@
       "coeff": 7.0,
       "stacking": "base",
       "claimIndex": 0,
-      "damageSlots": 1,
+      "damageSlots": 3,
       "payload": "damage",
       "damageTypes": [
+        "magic",
         "true"
       ],
       "rawPct": 175.0,
@@ -1626,9 +1627,10 @@
       "coeff": 7.0,
       "stacking": "base",
       "claimIndex": 0,
-      "damageSlots": 1,
+      "damageSlots": 3,
       "payload": "damage",
       "damageTypes": [
+        "magic",
         "true"
       ],
       "rawPct": 175.0,

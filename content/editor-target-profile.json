@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_72c74e9ce85a",
+    "contentVersion": "cv_7cd4c222ee96",
     "collections": {
       "champions": {
-        "hash": "9640f4417937",
+        "hash": "6a35fb7bc467",
         "count": 71
       },
       "abilities": {
-        "hash": "b00af2e75175",
+        "hash": "c267bb178f69",
         "count": 421
       },
       "items": {
@@ -26,8 +26,8 @@
         "count": 21
       },
       "status-effects": {
-        "hash": "30215be0c195",
-        "count": 43
+        "hash": "301dacc87752",
+        "count": 44
       },
       "loot-tables": {
         "hash": "50b52195cd4a",
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "ffe13d1a79e2",
+        "hash": "7e734001a283",
         "count": 90
       },
       "models": {
@@ -50,7 +50,7 @@
         "count": 148
       },
       "vfx": {
-        "hash": "d7021a0f265c",
+        "hash": "c34d7961a306",
         "count": 649
       },
       "skins": {
@@ -58,7 +58,7 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "ea27219f2775",
+        "hash": "d097227c0c17",
         "count": 46
       },
       "vfx-scripts": {
@@ -2631,7 +2631,8 @@
               "max": 1,
               "unit": "ratio",
               "optional": true,
-              "default": 1
+              "default": 0.9,
+              "origin": "derived: 2026-08-28 A/B 像素驗收（beam-audition ?ability=godie-etyr.q / godie-hvsh.r，docs/_reports/magic-circle-alpha_temp_20260828-1800.md）。這一族（WC3 static dummy × AddSpecialEffect 的圈/環/球）是 2–3 片同平面 primitive 疊放；GH#767 的一律 ONEONE（忽略 alpha 的 SRC+DEST）讓每片以全額 RGB × emissiveStrength 2 相加 ⇒ 疊爆成實心白（owner 第三次報「Rider, 木乃香 魔法陣沒有去背」）。default < 1 宣告「本家族的 alpha 有語意」⇒ modelFxRig.applyStockGlowAdditive 改走 ALPHA_ADD（= WC3 fm3 逐字 blendFunc (SRC_ALPHA, ONE)，mdx-m3-viewer layer 表）；0.9 這個數字是我挑的最小衰減（機制在 <1 這個閾值，⛔ 不在 0.9 本身），一鍵 rollback：改回 1.0 ⇒ 整族回 ONEONE。"
             },
             "soundKey": {
               "type": "docRef",
@@ -4949,5 +4950,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "6348d00730a7"
+  "profileDigest": "e0ddfd195cd6"
 }

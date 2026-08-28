@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-08-28 16:56 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-08-28 19:22 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.30.3 · 資料截至 2026-08-28 16:56 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-28 16:56 (GMT+8)</h1><div class="meta"><span>帳本 <b>10</b> 份</span><span>點名票號 <b>314</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.30.3 · 資料截至 2026-08-28 19:22 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-28 19:22 (GMT+8)</h1><div class="meta"><span>帳本 <b>10</b> 份</span><span>點名票號 <b>325</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -84,6 +84,20 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>└ 已排進 9 條工作流</td><td><b>54</b></td></tr>
 <tr><td>└ <b>還沒排</b></td><td><b>53</b></td></tr>
 </table></div>
+<h3>🆕 2026-08-28 批次（平行批次盤 v3 ＝ GH#852）</h3>
+<p>owner 當日八則 → 9 張票 · 6 條平行 lane（檔案柵欄互斥，全 lane 禁 build/sync）：</p>
+<div class="scroll"><table><tr><th>票</th><th>內容</th><th>lane</th><th>狀態</th></tr>
+<tr><td>#845</td><td>二次施放特效被三秒碼表砍頭（noteVfxRefired 4 通道漏 2）</td><td>A</td><td>✅ <code>8c817f38</code>（17 通道全掃，無第五個）</td></tr>
+<tr><td>#843</td><td>08-04 二連技：直線傷害缺＋第二段缺等級成長 L×7×AGI</td><td>B</td><td>✅ 對照報告貼票，級距等 owner 裁</td></tr>
+<tr><td>#851</td><td>六招牌技能模板化稽核</td><td>C</td><td>🔍</td></tr>
+<tr><td>#848</td><td>風王結界太濃太久</td><td>D</td><td>🔧</td></tr>
+<tr><td>#849</td><td>Rider/木乃香魔法陣三度沒去背（alphaMode 層）</td><td>E</td><td>🔧</td></tr>
+<tr><td>#850</td><td>live 資料面 checksum 快取＋8 頁可編輯（#822~834）</td><td>F</td><td>🔧</td></tr>
+<tr><td>#846</td><td>idle N 秒恢復自動索敵（<code>idleAutoEngageSec</code> 出貨 3s，0=關）</td><td>主</td><td>✅ 已落地</td></tr>
+<tr><td>#847</td><td>練習/離線 ready 即開（early start 讀活座位）</td><td>主</td><td>✅ 已落地</td></tr>
+<tr><td>#844</td><td>後台每頁 footer copyright</td><td>主</td><td>✅ 已關</td></tr>
+</table></div>
+<p>部署節奏（owner 逐字）：「都做完並註解 github issues close 才 push note deploy」。</p>
 <h3>已派出的 9 條</h3>
 <div class="scroll"><table><tr><th>run</th><th>領域</th><th>票</th><th>狀態</th></tr>
 <tr><td>batch 1</td><td>ground 護盾 · 商店回血 · 宿敵榜 · 逐階冷卻 · slash 動畫 · LoRA/SDXL · 卡面說謊 · 文案規則</td><td>458 455 454 464 456 457 459 461</td><td>✅ 13/13</td></tr>
@@ -705,6 +719,24 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>13:15</td><td>常常打一打 動畫就消失沒有播完</td><td>#842</td></tr>
 <tr><td>16:40</td><td>後台右側頁面 每一頁都要加上 footer copyright</td><td>#844</td></tr>
 <tr><td>16:56</td><td>後台右側頁面 每一頁都要加上 footer copyright</td><td>#844</td></tr>
+<tr><td>17:47</td><td>技能施展兩次特效就會缺失 例如光束砲家族 請深入找到多處根因</td><td>#845</td></tr>
+<tr><td>17:47</td><td>08-04 阿邦快速劍X 本質上是一個二連技你知道嗎？ 請你比較目前實作與設定上的差異 （動畫及傷害判定）</td><td>#843</td></tr>
+<tr><td>17:47</td><td>我們精心雕琢的六技能 是否都變成技能與特效模板了？是否還有缺漏？</td><td>#851</td></tr>
+<tr><td>17:48</td><td>現在自動索敵不見了，我說過如果沒有任何指令，停頓一段時間（N秒後台可設定）就會自動索敵攻擊</td><td>#846</td></tr>
+<tr><td>17:48</td><td>練習模式 按 ready 就可以直接開始</td><td>#847</td></tr>
+<tr><td>17:48</td><td>風王結界特效太奇怪、太濃 且太久</td><td>#848</td></tr>
+<tr><td>17:48</td><td>Rider, 木乃香 施展技能底下魔法陣依然沒有去背</td><td>#849</td></tr>
+<tr><td>17:48</td><td>#822~834 記得要修成可以視覺化編輯，並且善用redis cache在原資料沒更新(md5+checksum)的時候讀取cache就好不用每次都重算</td><td>#850</td></tr>
+<tr><td>17:51</td><td>提醒你 我們所有技能傷害 距離 範圍 冷卻 耗魔 都已經規範成五級距 額外的三屬性傷害也都轉換為AP額外加成了喔</td><td>#843</td></tr>
+<tr><td>18:01</td><td>Rider, 木乃香 施展技能底下魔法陣依然沒有去背 =&gt;我們之前討論過根因了</td><td>#849</td></tr>
+<tr><td>18:07</td><td>技能施展兩次特效就會缺失 例如光束砲家族 請深入找到多處根因 08-04 阿邦快速劍X 本質上是一個二連技你知道嗎？ 請你比較目前實作與設定上的差異 （動畫及傷害判定） 我們精心雕琢的六技能 是否都變成技能與特效模板了？是否還有缺漏？ 現在自動索敵不見了，我說過如果沒有任何指令，停頓一段時間（N秒後台可設定）就會自動索敵攻擊 練習模式 按 ready 就可以直接開始 風王結界特效太奇怪、太濃 且太久 Rider, 木乃香 施展技能底下魔法陣依然沒有去背 #822~834 記得要修成可以視覺化編輯，並且善用redis cache在原資料沒更新(md5+checksum)的時候讀取cache就好不…</td><td>#852</td></tr>
+<tr><td>18:10</td><td>二次施放特效缺失（光束砲家族）=&gt; 應該不只光束砲家族，你根因有修正到所有特效無法多次播放嗎</td><td>#845</td></tr>
+<tr><td>18:15</td><td>08-04 是二連技 你還沒解釋給我聽什麼是二連技，你實作的差距是什麼？ 六技能模板化了嗎 =&gt; 這六個是特效工坊的驗收項目，你已經收錄進去當示範編輯技能特效並且在後台了嗎 還有像風王結界這樣 用錯特效的技能等待修正的嗎 #846 自動索敵 —— 不是回歸，是 LoL 指令模型的刻意行為。新旋鈕 idleAutoEngageSec 出貨 3 秒 =&gt; 1秒</td><td>#843</td></tr>
+<tr><td>18:43</td><td>我補充，實際上第一個A式直線命中的敵人身上都會帶1秒 技能標籤，B一秒後生效有帶該技能標籤敵方單位則額外造成 （A+AP） 10倍傷害 才對</td><td>#843</td></tr>
+<tr><td>18:43</td><td>特效工坊 =&gt; 各種特效標籤、model/粒子資源、表示形選項及參數來微調逼近真實，儲存成JSON來完成校正，並用容易操作的UI如silder, 各種拖曳所見即所得，直到做到可以上線獨立完整完成 超究武神霸斬 龍破斬 理想鄉EX 龜派氣功 阿邦快速劍X 天譴 六個全動畫特效 為止(你自己操作，請你參考JASS一比一還原不要自己亂猜)我要可以拖拉model,粒子特效進編輯器模擬遊戲畫面，用silder調大小、透明度、顏色、轉向、高度、動畫速度 等各種連續參數，盡量人類友善視覺直覺的操作方式來設定及模擬觀看全程 特效工坊 · 演出腳本 應該也是後台其中一頁對吧 也是一樣的機制，編輯儲存完後可以回存到主線甚至間接到github</td><td>#838</td></tr>
+<tr><td>19:07</td><td>再多補充一句，在B小範圍內又有技能標籤的交集的才有十倍傷害喔 B不是延遲一秒，是延遲半秒 但技能標籤維持一秒</td><td>#843</td></tr>
+<tr><td>19:13</td><td>提醒你，我們討論過很多次，造成傷害的五級距公式不考慮系統倍率，請你排除系統倍率來檢查</td><td>#843</td></tr>
+<tr><td>19:22</td><td>我要做一個系統重大搬遷 我要確定後台 資料搬遷頁 是否有效並且有包含到所有資料能一起打包備份</td><td>#856</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

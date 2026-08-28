@@ -196,7 +196,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 傳說的龍騎士 - 勇者小呆 `godie-nbbc` | Q | 08-01 雙龍紋 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 傳說的龍騎士 - 勇者小呆 `godie-nbbc` | W | 08-02 萊丁快速劍 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 傳說的龍騎士 - 勇者小呆 `godie-nbbc` | E | 08-03 龍鬥氣砲咒文 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave.fire maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |
-| 傳說的龍騎士 - 勇者小呆 `godie-nbbc` | R | 08-04 阿邦快速劍X | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 傳說的龍騎士 - 勇者小呆 `godie-nbbc` | R | 08-04 阿邦快速劍X | `ground` | line 10.08×3.67u | 🟡 AMBIGUOUS | damageLine length 10.08 × width 3.67 (sim applies no abilityRange) — the capsule the damage query tests |
 | 傳說的龍騎士 - 勇者小呆 `godie-nbbc` | EX | 08-002 龍魔人 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 妖狐藏馬 - 南野秀一 `godie-nsjs` | PASSIVE | 18-00 薔薇荊棘之刃 | `—` | — | 🟣 PASSIVE | never cast |
 | 妖狐藏馬 - 南野秀一 `godie-nsjs` | Q | 18-01 風華圓舞陣 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
