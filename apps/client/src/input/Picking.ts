@@ -39,6 +39,14 @@ export interface PickableUnit {
    * 點到誰就是誰，插一個優先序進去等於「我點了殭屍，英雄卻去打別人」。
    */
   priority?: number;
+  /**
+   * ⭐ 這一格是什麼**種類**（GH#863）。⛔ 它與 `priority` 不同義：
+   * `priority` 只分「英雄類（0）／小怪（1）」，而守衛塔與花也是 0 ——
+   * 「玩家專注」要的是**敵方玩家**，⛔ 不是「所有非小怪」。
+   *
+   * 省略 ⇒ 不參與任何過濾（既有呼叫端逐位元不變）。
+   */
+  kind?: "champion" | "mob" | "objective";
 }
 
 /**
@@ -70,6 +78,16 @@ export function pickNearestUnit(
   aimDir?: Vec2 | null,
   /** 小怪讓路幅度。省略＝結構性回退值，見 {@link MOB_AIM_ASSIST_PENALTY}。 */
   mobPenalty: number = MOB_AIM_ASSIST_PENALTY,
+  /**
+   * ⭐ **玩家專注**（spec §11–§13，GH#863）：只有敵方英雄是合法候選。
+   *
+   * ⚠️ 它是**過濾**，⛔ 不是加權 —— spec §16 逐字禁止「Player +100 / Boss +50」
+   * 那種優先權加成（會造成瞄準磁吸）。⭐ 判準是「RS = WHERE，LT = WHO」。
+   * ⚠️ 沒有 `kind` 的候選在開啟時會被**排除**（⛔ 不是放行）：一個沒有標種類的
+   * 單位無法證明自己是玩家，而放行的代價是「按住 LT 還是打到殭屍」——
+   * 那正是這個功能存在要解決的問題。
+   */
+  opts?: { readonly playersOnly?: boolean },
 ): number | null {
   let best: number | null = null;
   let bestScore = Infinity;
@@ -79,6 +97,9 @@ export function pickNearestUnit(
     const len = Math.sqrt(dx * dx + dz * dz);
     const d = len - u.radius;
     if (d > maxRange) continue;
+    // ⭐ 無效候選**整個移除**，⛔ 不是給一個很差的分數（spec §54）——
+    //   一個「分數很低但還是會被選上」的候選，在場上只剩它時就會被選上。
+    if (opts?.playersOnly && u.kind !== "champion") continue;
     let score = d;
     if (aimDir && len > 1e-9) {
       const align = (dx * aimDir.x + dz * aimDir.z) / len; // -1..1

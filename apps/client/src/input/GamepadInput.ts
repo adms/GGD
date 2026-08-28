@@ -352,7 +352,16 @@ export interface GamepadPlayerCtx {
   lastAimDir: Vec2 | null;
   ability(slot: CastableSlot): AimAbility | null;
   /** nearest valid enemy from a point, biased along aimDir when given */
-  nearestEnemy(from: Vec2, maxRange: number, aimDir: Vec2 | null): number | null;
+  /**
+   * @param opts ⭐ `playersOnly` = **玩家專注**（spec §11–§13）：只有敵方英雄
+   *   是合法候選。⛔ 選用 —— 省略等於舊行為，既有夾具一個字都不用改。
+   */
+  nearestEnemy(
+    from: Vec2,
+    maxRange: number,
+    aimDir: Vec2 | null,
+    opts?: { readonly playersOnly?: boolean },
+  ): number | null;
   /**
    * Unspent skill points this player is holding (`seat.unspentPoints`). It is
    * REQUIRED, not optional-with-a-default, on purpose: it is the one thing that
@@ -473,6 +482,18 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
   //   長按升級表也從同一份綁定推導 ⇒ 換版本時它不可能錯位。
   const pad = padActionTable(ctx.scheme ?? DEFAULT_CONTROLLER_SCHEME);
 
+  // ⭐ **玩家專注**（spec §11–§13，GH#863）—— 這是一個**修飾鍵**（按住的 level），
+  //   ⛔ 不是一個模式（沒有進入/離開，放開就沒了）。
+  //   ⚠️ 它只改「敵對**單位**目標」的候選集合：
+  //     · 手動普攻（RT）與 `targeted` 技能 ⇒ 只選敵方玩家
+  //     · 方向技／地面技 ⇒ ⛔ 一格不受影響（spec §13，那兩種根本不查目標）
+  //     · 友方技能 ⇒ ⛔ 不受影響（它們查的是隊友）
+  //   ⛔ 它**不會**讓角色自動攻擊或自動追人（spec §12）。
+  const playersOnly =
+    pad.pvpFocusButton !== null && (frame.held ?? []).includes(pad.pvpFocusButton);
+  const pick = (range: number): number | null =>
+    ctx.nearestEnemy(self!, range, aimDir, playersOnly ? { playersOnly: true } : undefined);
+
   for (const b of frame.justPressed) {
     const slot = pad.slotByButton.get(b);
     if (slot) {
@@ -492,7 +513,7 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
       const cursorGround = { x: self.x + dir.x * reach, z: self.z + dir.z * reach };
       // ⚠️ `targeted` 的搜尋半徑也走同一個 `reach`：伺服器的 out-of-range 判定用的
       //   就是 `range × abilityRange`,拿卡面值去挑目標會挑到一個必定被拒的敵人。
-      const hovered = ability.castType === "targeted" ? ctx.nearestEnemy(self, reach, aimDir) : null;
+      const hovered = ability.castType === "targeted" ? pick(reach) : null;
       const cmd = buildCastCommand(slot, ability, { selfPos: self, cursorGround, hoveredEntityId: hovered });
       if (cmd) commands.push(cmd);
       else refused.push(slot); // targeted 沒目標／方向退化成零向量
@@ -514,7 +535,7 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
       // RT = basic attack. The right trigger is the primary action everywhere
       // else on a console, and #221's auto-attack means the manual one is now a
       // correction rather than a rotation key.
-      const id = ctx.nearestEnemy(self, feel.basicAttackRange, aimDir);
+      const id = pick(feel.basicAttackRange);
       if (id !== null) order = { kind: "attackTarget", entity: asEntityId(id) };
     } else if (b === BTN.DPAD_UP) {
       order = { kind: "stop" };

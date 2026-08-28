@@ -87,10 +87,20 @@ describe("config.controller-scheme@1", () => {
     expect(resolveControllerSchemeOrDefault({ ...DOC, active: "v44" }).fellBackFrom).toBe("v44");
   });
 
-  it("每一個方案都不可以讓自動化去打／追玩家（spec §8 §31）", () => {
-    for (const [name, s] of Object.entries(DOC.schemes)) {
-      expect(s.autoFarm.pveOnly, name).toBe(true);
+  it("自動貼近**永遠**不追玩家（spec §31）——⛔ 這一條沒有例外", () => {
+    for (const [name, s] of Object.entries(DOC.schemes))
       if (s.autoApproach.enabled) expect(s.autoApproach.pveOnly, name).toBe(true);
+  });
+
+  it("⭐ 自動索敵挑上玩家（spec §8 的例外）一定要寫得出理由", () => {
+    // ⚠️ §8 是 v4 的硬規則,⛔ 但把它當成全域硬規則會**偷改 v3** ——
+    //   出貨的 idle 索敵（GH#846）本來就會挑上敵方英雄,而 owner 那句
+    //   「停頓一段時間就會自動索敵攻擊」沒有限定對象。
+    //   ⇒ 例外可以存在,但它要帶一個**能被反駁**的理由。
+    for (const [name, s] of Object.entries(DOC.schemes)) {
+      if (s.autoFarm.pveOnly) expect(s.autoFarm.pveOnlyWaiverReason, name).toBeUndefined();
+      else expect(s.autoFarm.pveOnlyWaiverReason, name).toBeTruthy();
     }
+    expect(DOC.schemes.v4?.autoFarm.pveOnly).toBe(true); // v4 照 spec
   });
 });

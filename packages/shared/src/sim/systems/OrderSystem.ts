@@ -979,7 +979,16 @@ function autoAcquirePass(
     // 最新那一次 —— ⛔ 不需要第二個住處記游標。
     const cursor =
       mo.attackMoveNearestToCursor && order?.kind === "attackMove" ? order.point : undefined;
-    const best = acquireTarget(world, id, radius, cursor);
+    // ⭐ spec §8（GH#863）：**只有 v4 的 idle 自動清怪**帶 pveOnly。
+    // ⛔ 其餘每一條路（bot、attackMove、被打反擊、v3 的 idle 索敵）逐位元不變 ——
+    //   v3 的 `autoFarm.pveOnly` 是 false 而且帶著 waiver（出貨行為刻意保留）。
+    const best = acquireTarget(
+      world,
+      id,
+      radius,
+      cursor,
+      idleEngaged && world.controllerScheme.autoFarm.pveOnly,
+    );
 
     // ---- keep, swap, or drop the held AUTO target ----
     if (nav.attackTarget !== null && nav.attackTargetAuto) {

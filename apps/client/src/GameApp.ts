@@ -1148,7 +1148,7 @@ export class GameApp {
         selfPos: this.playerSelfPos(player),
         facing: this.playerFacing(player),
         ability: (slot) => this.playerAbility(player, slot),
-        nearestEnemy: (from, maxRange, aimDir) =>
+        nearestEnemy: (from, maxRange, aimDir, opts) =>
           pickNearestUnit(
             from,
             this.enemyUnitsFor(playerTeam(player)),
@@ -1157,6 +1157,8 @@ export class GameApp {
             // GH#315：小怪讓路幅度現在住在 `config.combat-feel@1`（後台可調），
             // ⛔ 不是客戶端常數。每次呼叫都讀，這樣後台改完重新載入就生效。
             aimAssistMobPenalty(),
+            // ⭐ 玩家專注（GH#863）—— 轉發，⛔ 這一層不判斷。
+            opts,
           ),
         // what a LONG PRESS on a skill button does: spend this point, or (with
         // none) show that ability's description (owner's 2026-07-27 pad map)
@@ -3415,6 +3417,10 @@ export class GameApp {
         z: pos.z,
         radius: 0.6,
         priority: es.kind === KIND_MOB ? 1 : 0,
+        // ⭐ GH#863「玩家專注」要的是**敵方玩家**，⛔ 不是「所有非小怪」——
+        //   守衛塔與花的 priority 也是 0，而它們不是玩家。
+        kind:
+          es.kind === KIND_MOB ? "mob" : es.kind === KIND_CHAMPION ? "champion" : "objective",
       });
     });
     return units;

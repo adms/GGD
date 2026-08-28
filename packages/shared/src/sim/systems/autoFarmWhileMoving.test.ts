@@ -22,7 +22,7 @@ import { Stat, zeroStats } from "../stats/statTypes";
 import { zeroAttrBonus } from "../stats/attributes";
 import type { AbilitiesComp } from "../stats/statsComp";
 import type { IntentFrame } from "../intents";
-import { mobRulesFromConfig, type MobWavesConfigLike } from "../mobs";
+import { mobRulesFromConfig, MONSTER_TEAM, type MobWavesConfigLike } from "../mobs";
 import { DEFAULT_MANUAL_ORDER, type ManualOrderRules } from "../combatFeel";
 import { zConfigControllerSchemeDoc, type ControllerSchemeEntry } from "../../content";
 import { TICK_HZ } from "../../constants";
@@ -54,8 +54,24 @@ function spawn(w: SimWorld, seat: number, team: number, pos: V.Vec2): EntityId {
   return id;
 }
 
-/** 一個真人座位（LoL 模型）＋ 一個站在索敵半徑內的敵人。 */
-function world(scheme: ControllerSchemeEntry): { w: SimWorld; me: EntityId } {
+/** 一隻**殭屍**（PvE）—— ⭐ 自動清怪的合法目標。 */
+function spawnMob(w: SimWorld, pos: V.Vec2): EntityId {
+  const id = spawn(w, 99, MONSTER_TEAM, pos);
+  w.champion.delete(id); // ⛔ 殭屍不是英雄 —— spec §8 的過濾正是看這個
+  w.mob.set(id, { zone: 0, team: MONSTER_TEAM, target: -1 as EntityId, attackCdTicks: 0, spawnTick: 0, kind: "normal" });
+  return id;
+}
+
+/**
+ * 一個真人座位（LoL 模型）＋ 一個站在索敵半徑內的目標。
+ *
+ * @param foe `"mob"` = 殭屍（PvE）· `"champion"` = 敵方英雄
+ *   ⭐ 這個參數本身就是 spec §8 的實驗：v4 只准挑前者。
+ */
+function world(
+  scheme: ControllerSchemeEntry,
+  foe: "mob" | "champion" = "mob",
+): { w: SimWorld; me: EntityId } {
   const w = new SimWorld(SKELETON_ARENA, 11);
   w.combatActive = true;
   const cfg = (JSON.parse(readFileSync(join(CONTENT, "config/arena-rules.json"), "utf8")) as { mobWaves: MobWavesConfigLike }).mobWaves;
@@ -64,7 +80,8 @@ function world(scheme: ControllerSchemeEntry): { w: SimWorld; me: EntityId } {
   w.combatFeel = Object.freeze({ ...w.combatFeel, manualOrder: Object.freeze(mo) });
   w.controllerScheme = scheme;
   const me = spawn(w, 0, 0, at(0));
-  spawn(w, 1, 1, at(3)); // 敵人,索敵半徑內
+  if (foe === "mob") spawnMob(w, at(3));
+  else spawn(w, 1, 1, at(3));
   return { w, me };
 }
 
@@ -91,7 +108,21 @@ describe("自動清怪 vs 走位 (GH#863 · spec §26/§50)", () => {
     expect(w.nav.get(me)?.attackTarget).toBeNull();
   });
 
-  it("兩版**站著不動**都會索敵 —— ⭐ 差別只在「走位算不算」", () => {
+  it("⭐⭐ spec §8：v4 站著不動也**⛔ 不會**自己挑上敵方玩家", () => {
+    const { w, me } = world(SCHEMES.v4 as ControllerSchemeEntry, "champion");
+    for (let i = 0; i < IDLE_TICKS * 3; i++) w.step(new Map());
+    expect(w.nav.get(me)?.attackTarget).toBeNull();
+  });
+
+  it("⭐ 而 v3 會（出貨行為，帶著 waiver 刻意保留）", () => {
+    // ⚠️ ⛔ 這不是「v3 有缺陷」—— owner 2026-08-28 那句「停頓一段時間就會自動
+    //   索敵攻擊」沒有限定對象。把 §8 套到 v3 上等於**偷改出貨行為**。
+    const { w, me } = world(SCHEMES["v3-shipped"] as ControllerSchemeEntry, "champion");
+    for (let i = 0; i < IDLE_TICKS * 3; i++) w.step(new Map());
+    expect(w.nav.get(me)?.attackTarget).not.toBeNull();
+  });
+
+  it("兩版**站著不動**都會索敵殭屍 —— ⭐ 差別只在「走位算不算」", () => {
     for (const key of ["v3-shipped", "v4"] as const) {
       const { w, me } = world(SCHEMES[key] as ControllerSchemeEntry);
       for (let i = 0; i < IDLE_TICKS * 3; i++) w.step(new Map());

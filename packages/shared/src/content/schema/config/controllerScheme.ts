@@ -154,12 +154,21 @@ const zScheme = z
         /** 偏離的理由。⛔ 「還沒收」不算理由 —— 它要能被反駁。 */
         overrideReason: z.string().min(1).max(200).optional(),
         /**
-         * ⭐ **spec §8 的硬規則**：自動清怪**只打 PvE**。
-         * ⛔ 它是 `true` 以外的任何值都代表「系統會自己開打玩家」，
-         * 而 v4 §8 逐字說 "This is a hard rule"。留成欄位是為了讓它**看得見**，
-         * ⛔ 不是為了讓人關掉 —— 守衛會擋 false。
+         * ⭐ **spec §8**：自動清怪**只打 PvE**（「Auto Farm must NEVER
+         * spontaneously attack another player. **This is a hard rule.**」）。
+         *
+         * ⚠️⚠️ 但它**對出貨的 v3 是錯的**，而我 2026-08-29 差點就這樣寫死：
+         * v3 的 idle 索敵（GH#846）是 owner 2026-08-28 要的「停頓一段時間就會
+         * **自動索敵攻擊**」——⭐ 那句話**沒有限定對象**，而出貨行為確實會挑上
+         * 敵方英雄。⇒ 把 §8 當成全域硬規則會**改掉 v3**，
+         * 而 v3 的整個存在理由是「逐位元不變」。
+         *
+         * ⇒ 改成第〇·四守則的出口：**false 要帶一個能被反駁的理由**
+         * （`pveOnlyWaiverReason`）。⛔ 「還沒收」不算理由。
          */
         pveOnly: z.boolean(),
+        /** `pveOnly: false` 時必填 —— 為什麼這一版允許自動索敵挑上玩家。 */
+        pveOnlyWaiverReason: z.string().min(1).max(300).optional(),
       })
       .strict(),
 
@@ -305,11 +314,12 @@ const zScheme = z
       });
     }
     // ④ spec 的三條硬規則（§8 §30 §31）。留成欄位是為了**看得見**，⛔ 不是為了關掉。
-    if (!s.autoFarm.pveOnly) {
+    if (!s.autoFarm.pveOnly && !s.autoFarm.pveOnlyWaiverReason) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        path: ["autoFarm", "pveOnly"],
-        message: "spec §8 硬規則：自動清怪永遠不可以主動攻擊敵方玩家",
+        path: ["autoFarm", "pveOnlyWaiverReason"],
+        message:
+          "spec §8：自動清怪只打 PvE。要放行就寫下**為什麼**這一版允許它挑上玩家 —— 一個能被反駁的理由，⛔ 不是「還沒收」",
       });
     }
     if (s.autoApproach.enabled && !s.autoApproach.pveOnly) {
@@ -406,7 +416,14 @@ export const DEFAULT_CONTROLLER_SCHEME: ControllerSchemeEntry = Object.freeze({
     pvpFocus: true,
     ability: true,
   }),
-  autoFarm: Object.freeze({ enabled: true, idleDelaySecOverride: null, pveOnly: true }),
+  autoFarm: Object.freeze({
+    enabled: true,
+    idleDelaySecOverride: null,
+    // ⚠️ v3 刻意**不**套 spec §8 —— 見 `pveOnly` 欄位說明與出貨檔的 waiver。
+    pveOnly: false,
+    pveOnlyWaiverReason:
+      "出貨行為：GH#846 的 idle 索敵來自 owner 2026-08-28「停頓一段時間就會自動索敵攻擊」—— ⭐ 那句話沒有限定對象，而出貨確實會挑上敵方英雄。v3 的存在理由是逐位元不變，所以這一版刻意不套 spec §8。⛔ 這不是同意「自動打人」是對的，是同意「⛔ 不要偷改出貨行為」。",
+  }),
   aim: Object.freeze({
     manualScoring: "legacy-nearest-enemy",
     aimAssistRadiusMult: Object.freeze({ player: 1, zombie: 1, boss: 1 }),

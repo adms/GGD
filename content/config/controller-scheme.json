@@ -29,7 +29,8 @@
       "autoFarm": {
         "enabled": true,
         "idleDelaySecOverride": null,
-        "pveOnly": true
+        "pveOnly": false,
+        "pveOnlyWaiverReason": "出貨行為：GH#846 的 idle 索敵來自 owner 2026-08-28「停頓一段時間就會自動索敵攻擊」—— ⭐ 那句話沒有限定對象，而出貨確實會挑上敵方英雄。v3 的存在理由是逐位元不變，所以這一版刻意不套 spec §8。⛔ 這不是同意「自動打人」是對的，是同意「⛔ 不要偷改出貨行為」。"
       },
       "aim": {
         "manualScoring": "legacy-nearest-enemy",

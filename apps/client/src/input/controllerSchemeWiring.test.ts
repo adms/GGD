@@ -18,6 +18,7 @@ import {
   type ControllerSchemeEntry,
 } from "@ggd/shared/content";
 import { BTN, mapGamepadFrame, type GamepadFrame, type GamepadPlayerCtx } from "./GamepadInput";
+import { pickNearestUnit } from "./Picking";
 
 const DOC = zConfigControllerSchemeDoc.parse(
   JSON.parse(
@@ -75,6 +76,41 @@ describe("手把操作方案真的驅動派送 (GH#863)", () => {
     };
     expect(longPress(V3)).toBe("W");
     expect(longPress(V4)).toBe("R");
+  });
+
+  it("⭐⭐ 玩家專注（LT）：只有 v4 會把「只選玩家」傳下去", () => {
+    // ⚠️ 驗的是**接縫** —— 按住 LT 時，挑目標那一支收到的參數。
+    const seen: (boolean | undefined)[] = [];
+    const spy = (scheme: ControllerSchemeEntry, held: number[]): void => {
+      mapGamepadFrame(
+        { move: null, aim: null, justPressed: [BTN.RT], held },
+        {
+          ...ctx(scheme),
+          nearestEnemy: (_f, _r, _a, opts) => {
+            seen.push(opts?.playersOnly);
+            return 5;
+          },
+        },
+      );
+    };
+    spy(V4, [BTN.LT]); // 按住 → 只選玩家
+    spy(V4, []); // 沒按 → 一般
+    spy(V3, [BTN.LT]); // v3 的 LT 是 attack-move ⇒ ⛔ 沒有這個功能
+    expect(seen).toEqual([true, undefined, undefined]);
+  });
+
+  it("⭐ 過濾是**移除**候選，⛔ 不是加權（spec §16 禁止瞄準磁吸）", () => {
+    // 殭屍近、英雄遠 —— 一般情況挑近的；按住玩家專注時殭屍**整個不在候選裡**。
+    const units = [
+      { id: 1, x: 1, z: 0, radius: 0.5, priority: 1, kind: "mob" as const },
+      { id: 2, x: 9, z: 0, radius: 0.5, priority: 0, kind: "champion" as const },
+      { id: 3, x: 2, z: 0, radius: 0.5, priority: 0, kind: "objective" as const },
+    ];
+    const from = { x: 0, z: 0 };
+    expect(pickNearestUnit(from, units, 20, null, 0)).toBe(1); // 一般:最近的殭屍
+    expect(pickNearestUnit(from, units, 20, null, 0, { playersOnly: true })).toBe(2);
+    // ⭐ 守衛塔（objective）也被排除 —— 它的 priority 是 0 但它不是玩家。
+    expect(pickNearestUnit(from, [units[2]!], 20, null, 0, { playersOnly: true })).toBeNull();
   });
 
   it("LT：v3 是 attack-move，v4 ⛔ 不送任何 order（那一顆給了玩家專注）", () => {

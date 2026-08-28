@@ -565,6 +565,15 @@ export function acquireTarget(
    * 的話 A 點在場外會索到整張地圖。換掉的只有**比較鍵**。
    */
   rankFrom?: Readonly<{ x: number; z: number }>,
+  /**
+   * ⭐ **spec §8（GH#863）**：自動索敵這一次只准挑 PvE。
+   *
+   * ⚠️ 選用，而且**只有 v4 的 idle 自動清怪會傳它** —— 出貨的 v3 一格都不動
+   * （`idleAutoEngageSec` 的索敵本來就會挑上敵方英雄，那是 owner 2026-08-28
+   * 要的行為，見 `config.controller-scheme@1` 的 waiver）。
+   * ⛔ 傳 `false` 與省略**逐位元等價**。
+   */
+  pveOnly?: boolean,
 ): AcquiredTarget | null {
   const t = world.transform.get(self);
   if (!t) return null;
@@ -597,6 +606,10 @@ export function acquireTarget(
   for (const cand of ids) {
     const r = rankOf(world, self, cand);
     if (!r || r.d2 > maxD2) continue; // ← 半徑閘:永遠是身體距離
+    // ⭐ spec §8（GH#863）—— 自動清怪只挑 PvE。
+    // ⚠️ **嘲弄照樣贏**（`r.forced === 0`）：被嘲弄不是「自動清怪自己挑上玩家」，
+    //   那是別人強加的，⛔ 不在 §8 要防的那一類（「spontaneously attack」）。
+    if (pveOnly && r.forced !== 0 && world.champion.has(cand)) continue;
     if (r.forced === 0) sawForced = true;
     const ranked = rerank(r, cand);
     if (best === null || better(ranked, best, priority)) best = ranked;
