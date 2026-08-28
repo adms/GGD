@@ -604,7 +604,11 @@ const engine = new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: 
       thumb.width = tw;
       thumb.height = Math.max(1, Math.round((canvas.height / canvas.width) * tw));
       thumb.getContext("2d")?.drawImage(canvas, 0, 0, thumb.width, thumb.height);
-      img.src = thumb.toDataURL("image/jpeg", 0.72);
+      // ⚠️ **PNG，⛔ 不是 JPEG** —— #669 的批次驗收頁（`tools/review/features.mjs`
+      //    的 `scanSequences`）只認 `.png`。⭐ 這一格是**它的判準**，⛔ 不是我的
+      //    偏好：改我這一側輸出，不去放寬那條掃描（那會讓下一個人寫別的格式）。
+      //    縮到 360px 之後 PNG 也只有一格 ~20KB。
+      img.src = thumb.toDataURL("image/png");
       const cap = document.createElement("figcaption");
       cap.textContent = `t=${(t / 30).toFixed(2)}s · 亮 ${r.bright}`;
       cell.appendChild(img);

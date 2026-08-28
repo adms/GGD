@@ -155,7 +155,41 @@ ${cells}
           if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
           const rel = `docs/_reports/vfx-proof_${id}_temp_${stamp}.html`;
           writeFileSync(join(repoRoot, rel), html, "utf8");
-          return sendJson(res, 200, { ok: true, path: rel, peak, frames: frames.length });
+
+          // ⭐ GH#669 —— **同時**落一個逐格 PNG 的序列目錄。批次驗收頁
+          //    （`feature-review.html`）吃的是那個形狀（`sequenceDir` ＋ 逐格檔），
+          //    ⛔ 不是一份 HTML。⇒ 一次連拍同時產出「給人讀的接觸表」與
+          //    「給驗收頁吃的序列」，⛔ 不必為了登記再拍一次（那會是第二份證據，
+          //    而兩份會漂）。
+          const seqRel = `docs/_reports/vfxscript_visual-proof_${stamp}`;
+          const seqDir = join(repoRoot, seqRel);
+          if (!existsSync(seqDir)) mkdirSync(seqDir, { recursive: true });
+          const written = [];
+          frames.forEach((f, i) => {
+            const b64 = String(f.png).split(",")[1] ?? "";
+            const name = `${id}_t${String(i).padStart(2, "0")}_${String(f.t).replace(".", "p")}s_bright${f.bright}.png`;
+            writeFileSync(join(seqDir, name), Buffer.from(b64, "base64"));
+            written.push(name);
+          });
+          // frames.md —— 序列目錄的**索引**（既有目錄都有一份；驗收頁與人都讀它）
+          const mdPath = join(seqDir, "frames.md");
+          // ⭐ **在哪一個 HEAD 上拍的** —— 沒有這一行，「這份證據驗的是不是修好
+          //    之後的東西」永遠判不出來（`review:register` 逐字指出這個缺口）。
+          //    ⚠️ 由**產生端**寫，⛔ 不是事後手補（手補的那一行下一次就會忘）。
+          let head = "unknown";
+          try {
+            head = execFileSync("git", ["rev-parse", "--short", "HEAD"], {
+              cwd: repoRoot, encoding: "utf8", timeout: 10_000,
+            }).trim();
+          } catch { /* 不是 git 樹也要能產證據 —— 只是判不出新舊 */ }
+          const header = existsSync(mdPath) ? readFileSync(mdPath, "utf8") : `# 演出腳本連拍證據（GH#838 · 批次驗收 #669）\n\n> 台子：vfx-script-studio.html（真 SimWorld → 真事件 → 出貨 VfxSystem → VfxScriptPlayer）（HEAD=${head}）\n\n⭐ 每一格的檔名帶著**量到的亮像素**；量尺兩方向自證過（\`calibrateTwoWay\`）。\n`;
+          writeFileSync(
+            mdPath,
+            header + `\n## ${id}（control=${control} · 峰值 ${peak}）\n\n` +
+              written.map((n) => `- \`${n}\``).join("\n") + "\n",
+            "utf8",
+          );
+          return sendJson(res, 200, { ok: true, path: rel, sequenceDir: seqRel, peak, frames: frames.length });
         } catch (err) {
           return sendJson(res, 400, { error: String(err?.message ?? err) });
         }

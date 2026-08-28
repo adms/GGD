@@ -585,6 +585,40 @@
         "note": "整族 stock 光暈回到非疊加（＝修復前的畫法）。⛔ 不必動任何一支技能的 JSON"
       },
       "registeredAt": "2026-08-26T20:06:21.831Z"
+    },
+    "vfxscript_visual-proof_20260828-1320": {
+      "title": "特效工坊：六招全動畫演出腳本（超究/龍破斬/理想鄉EX/龜派/阿邦快速劍X/天譴）",
+      "family": "vfx-script 演出腳本",
+      "issues": [
+        838,
+        670,
+        672,
+        673,
+        674,
+        688
+      ],
+      "abilities": [
+        "godie-hart.r",
+        "godie-h020.e",
+        "godie-hjai.e",
+        "godie-e002.ex",
+        "godie-e00l.ex",
+        "godie-ogrh.r",
+        "godie-o00x.r",
+        "godie-n01c.r",
+        "godie-nbbc.r",
+        "godie-udea.r"
+      ],
+      "commit": "025ab4f3",
+      "sequenceDir": "docs/_reports/vfxscript_visual-proof_20260828-1320",
+      "rollback": {
+        "configId": "vfx-scripts",
+        "field": "enabled",
+        "liveValue": true,
+        "rollbackValue": false,
+        "note": "關掉＝十份演出腳本全部停播、有腳本的技能退回預設演出（逐位元同腳本不存在）。⛔ 不影響傷害／行為。"
+      },
+      "registeredAt": "2026-08-28T05:10:24.604Z"
     }
   }
 }
