@@ -1,0 +1,13 @@
+# GGD 前門 —— 2026-08-28 從 Caddy 自己的 autosave.json 重建。
+#
+# ⚠️ 這個檔在 2026-08-28 之前**從來沒有進過 git**，而它是 ggd.adms.ai 的 TLS 前門。
+# 它在某個時間點從磁碟上消失了（很可能是一次 git 操作），而**跑著的容器沒有受影響**
+# —— bind mount 一旦建立，來源檔被刪也照樣服務。於是它安靜地壞了幾週，
+# 直到 2026-08-28 的 containerd 搬遷第一次重啟容器才爆出來（Exited 127）。
+# ⇒ 這一版**必須進版控**。
+#
+# 內容逐項對照 /data/docker/volumes/ggd_caddy-config/_data/caddy/autosave.json：
+#   listen :443 · h1+h2 · host ggd.adms.ai · reverse_proxy edge:8080 · 自動 TLS
+ggd.adms.ai {
+	reverse_proxy edge:8080
+}
