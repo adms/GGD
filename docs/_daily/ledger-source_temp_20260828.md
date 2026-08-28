@@ -21,3 +21,11 @@ context 81% but backup because I want to compact
 ## 02:24
 
 go on
+
+## 12:51
+
+go on dont stop
+
+## 13:15
+
+常常打一打 動畫就消失沒有播完

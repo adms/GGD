@@ -241,7 +241,8 @@
             1,
             2.68
           ],
-          "arriveSoundKey": "explosion"
+          "arriveSoundKey": "explosion",
+          "offsetForwardU": 2.75
         },
         {
           "kind": "spawnModelFx",
@@ -249,13 +250,15 @@
           "preset": "tpl-beam-roll",
           "modelKey": "w3x.stock.fragdriller",
           "scale": 3.65,
-          "clipTimeScale": 0.15
+          "clipTimeScale": 0.15,
+          "offsetForwardU": 2.75
         },
         {
           "kind": "spawnModelFx",
           "shape": "single",
           "preset": "tpl-locust-line",
-          "modelKey": "w3x.stock.flamestrike1"
+          "modelKey": "w3x.stock.flamestrike1",
+          "offsetForwardU": 2.75
         }
       ],
       "vfxKey": "fx.prim.ki.beam-lg",

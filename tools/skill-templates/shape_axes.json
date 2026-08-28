@@ -261,6 +261,9 @@
     ],
     "delayed.strikeReposition": [
       "多段"
+    ],
+    "spawnModelFx.offsetForwardU": [
+      "路徑"
     ]
   },
   "_topLevelWhy": "技能文件**自己**的欄位（⛔ 不在 effects 樹裡），同樣要被分類 —— 一支 `castTimeSec: 3` 的技能有一段三秒的等待，而它一格 effect 都不必有。",
@@ -728,6 +731,7 @@
   "_byKindNotes": {
     "spawnVfx.attach": "`at:\"bone\"` 的掛點名稱（hand,right / chest / weapon…）—— 它決定特效**貼在模型的哪裡**，⛔ 不決定技能的形狀（時序/範圍/多段/路徑一格都不動）。⭐ 與 `spawnModelFx.anchor` 完全同型（那一格也是空軸）。⭐ 可反駁：哪天出現「掛在不同骨頭 ⇒ 打到不同範圍」這種機制，它就變成一條軸。",
     "comboStrikes.strikeReposition": "GH#838 M1 —— 連段的**每一段**把身體挪到目標周圍環上的一點（原作 01-04 每刀 +270°）。⭐ 軸是【多段】而不是【路徑】：它不是一條連續軌跡，是 N 個離散落點，而『第 N 段在哪』正是多段這個軸在問的問題。⛔ 也不是【等待】——挪位與那一刀的結算同一 tick。",
-    "delayed.strikeReposition": "同 comboStrikes.strikeReposition（同一格詞彙、同一行套用；20-002 理想鄉EX 走這個 kind）。"
+    "delayed.strikeReposition": "同 comboStrikes.strikeReposition（同一格詞彙、同一行套用；20-002 理想鄉EX 走這個 kind）。",
+    "spawnModelFx.offsetForwardU": "GH#838 N1 槍口偏移（JASS `PolarProjectionBJ(loc, 150, facing)`）—— 09-04 龜派的光束/鑽頭/火柱在**槍口**而不是腳下。⭐ 軸是【路徑】：它回答的是「這一發從**哪裡**出發」，而那是路徑這個軸在問的第一個問題。⛔ 不是【多段】（它不分段）、⛔ 也不是【等待】（偏移與施放同一 tick）。"
   }
 }

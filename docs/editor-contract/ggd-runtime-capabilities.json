@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "640bf1af",
+  "fingerprint": "343d547d",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -273,6 +273,7 @@
     "modelKey",
     "modifiers",
     "moveSpeedMult",
+    "offsetForwardU",
     "onArrive",
     "onCap",
     "onCarrierDeath",
