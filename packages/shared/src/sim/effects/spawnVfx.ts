@@ -32,6 +32,20 @@ export type VfxSpawnEvent = {
   durationSec?: number;
   /** ⭐ `at:"bone"` 才有：WC3 掛點字串（chest / hand,right / weapon / …） */
   attach?: string;
+  /**
+   * ⭐【這一發的連續參數覆寫】GH#838（owner 2026-08-28「用 silder 調大小、透明度、
+   * 顏色、轉向、高度、動畫速度」）。詞彙是 `AbilityVfxLayerOverride`
+   * （w3xScale / alpha / tint / facingDeg / pitchDeg / flyHeight / timeScale）。
+   *
+   * ⚠️ **唯一的寫入端是客戶端的 `VfxScriptPlayer`** —— 演出腳本本來就在客戶端
+   * 合成 wire 酬載（那是它的設計）。⛔ sim 的 `spawnVfx` 不寫它：粒子的外觀是
+   * 演出，⛔ 不是權威狀態，讓 sim 帶它只會多一份要對帳的東西。
+   * ⇒ 這一格刻意**沒有** Zod（wire 型別不是內容 schema），而它的內容 schema
+   * 住在 `vfx-script@1` 的 vfx 段上（`zAbilityVfxLayerOverride.shape`）。
+   *
+   * 缺席 ⇒ 客戶端走 `applyVfxOverrides` 的 identity 快速路徑 ⇒ 逐位元同以前。
+   */
+  overrides?: Record<string, unknown>;
 };
 
 export const spawnVfxEffect: EffectKindSpec<"spawnVfx"> = {

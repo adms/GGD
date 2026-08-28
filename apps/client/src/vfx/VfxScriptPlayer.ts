@@ -25,6 +25,7 @@
  * ⚠️ 純客戶端、純演出：這裡沒有任何傷害/狀態/資源 —— 那些住 ability JSON。
  */
 import type { EventMessage } from "@ggd/shared/protocol/messages";
+import { ABILITY_VFX_LAYER_OVERRIDE_FIELDS } from "@ggd/shared/content/schema/abilityVfx";
 import type { VfxScriptDoc, VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
 import { modelFxInstancesFromFrame } from "@ggd/shared/sim/effects/modelFxPlacement";
 // ⚠️ 型別 import（會被抹除）⇒ 不會把 delayed↔effectRegistry 的環拖進瀏覽器。
@@ -395,6 +396,15 @@ export class VfxScriptPlayer {
           ...(seg.attach !== undefined ? { attach: seg.attach } : {}),
           ...(seg.durationSec !== undefined ? { durationSec: seg.durationSec } : {}),
         };
+        // ⭐ GH#838 —— 這一發的連續參數（大小/透明度/顏色/轉向/高度/動畫速度）。
+        //    ⚠️ 詞彙從 **schema 讀出來**（`ABILITY_VFX_LAYER_OVERRIDE_FIELDS`），
+        //    ⛔ 不是在這裡手抄六個欄位名 —— 那會在有人加第七格的那天靜靜漏掉它。
+        const ov: Record<string, unknown> = {};
+        for (const f of ABILITY_VFX_LAYER_OVERRIDE_FIELDS) {
+          const v = (seg as unknown as Record<string, unknown>)[f];
+          if (v !== undefined) ov[f] = v;
+        }
+        if (Object.keys(ov).length > 0) payload.overrides = ov;
         this.deps.dispatch(
           { type: "vfxSpawn", tick: frame.tick, data: payload as Record<string, unknown> },
           nowMs,

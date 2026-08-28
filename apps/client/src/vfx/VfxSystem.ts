@@ -2332,7 +2332,14 @@ export class VfxSystem {
         if (doc) {
           const cpos = data.caster !== undefined ? this.ctx.entityPos(data.caster) : null;
           const aimYaw = cpos ? yawDegToward(x - cpos.x, z - cpos.z) : null;
-          this.play(applyAimYaw(doc, aimYaw), anchor.x, anchor.z, nowMs, anchor.y);
+          // ⭐ GH#838 —— 演出腳本可以逐段覆寫這一發的連續參數（大小/透明度/顏色/
+          //    轉向/高度/動畫速度）。⛔ 這裡**不寫第二套套用邏輯**：走的是家族層
+          //    在用的同一支 `applyVfxOverrides`（它連池 key 的簽章都算好了，所以
+          //    同樣的覆寫共用同一格池，⛔ 不會每一發多開一個池）。
+          //    缺席 ⇒ identity 快速路徑 ⇒ 逐位元同這一格出現之前。
+          const ov = data.overrides;
+          const tuned = ov ? applyVfxOverrides(doc, ov as never) : doc;
+          this.play(applyAimYaw(tuned, aimYaw), anchor.x, anchor.z, nowMs, anchor.y);
         } else this.sparks.push(new HitSpark(this.scene, anchor.x, anchor.z, nowMs));
         // ⚡🌈 GH#549 —— 「**反彈成功**」那一族的**真的電弧**（owner 2026-08-22：
         //    「被反彈的敵方單位 身上要有明顯的**七彩閃電爆炸**」）。

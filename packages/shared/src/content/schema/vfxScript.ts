@@ -23,6 +23,7 @@ import { z } from "zod";
 import { zId, zRef } from "./common";
 import { zSpawnModelFx } from "./effects/spawnModelFx";
 import { zSpawnVfx } from "./effects/spawnVfx";
+import { zAbilityVfxLayerOverride } from "./abilityVfx";
 import { zFloatingText } from "./effects/floatingText";
 import { zScreenFlash } from "./effects/screenFlash";
 import { zScreenShake } from "./effects/screenShake";
@@ -120,6 +121,22 @@ export const zVfxScriptVfx = zSpawnVfx
     offsetForwardU: z.number().min(-30).max(30).optional(),
     /** 垂直面向的左右位移（＋＝面向的右手邊）。 */
     offsetSideU: z.number().min(-30).max(30).optional(),
+    /**
+     * ⭐【這一發粒子的連續參數】owner 2026-08-28（逐字）：
+     * > 「我要可以拖拉 model,**粒子特效**進編輯器模擬遊戲畫面，用 silder 調
+     * >  **大小、透明度、顏色、轉向、高度、動畫速度** 等各種連續參數」
+     *
+     * ⭐ 六格**直接展開 `zAbilityVfxLayerOverride`**（它自己又是 pick 鑄技工坊
+     * 那張表的同名欄位）⇒ 上下界與語意**不可能**與家族綁定表漂開，
+     * ⛔ 這裡一個 `z.number()` 都沒有自己寫。
+     * 對應：`w3xScale` 大小 · `alpha` 透明度 · `tint` 顏色 ·
+     *       `facingDeg`/`pitchDeg` 轉向 · `flyHeight` 高度 · `timeScale` 動畫速度。
+     *
+     * ⚠️ 消費端**沿用出貨的 `applyVfxOverrides`**（客戶端 `abilityLayers.ts`）——
+     * ⛔ 不是第二套套用邏輯：它連池 key 的簽章都算好了，所以同樣的覆寫共用同一格池。
+     * 全部缺席 ⇒ `applyVfxOverrides` 走 identity 快速路徑 ⇒ 逐位元同這一格出現之前。
+     */
+    ...zAbilityVfxLayerOverride.shape,
   });
 
 /** 浮動文字段（喊招／Hit 數）。 */
