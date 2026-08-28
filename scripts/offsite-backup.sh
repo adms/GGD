@@ -108,8 +108,25 @@ cmd_run() {
 
   head_ "1. 匯出"
   rm -rf "$STAGE"; mkdir -p "$STAGE"
-  GGD_EXPORT_OUT="$STAGE" GGD_REPO="$REPO" bash "$REPO/scripts/site-export.sh" >/dev/null 2>&1 \
-    || { stamp_status failed "$DEST" "site-export.sh 非零"; die "匯出失敗"; }
+  # ⛔⛔ **不要吞掉失敗原因**。2026-08-29 實測:這裡原本是 `>/dev/null 2>&1`,
+  #   而 site-export 失敗時只印「⛔ 匯出失敗」—— ⭐ **而它自己的錯誤訊息裡
+  #   已經寫了確切的修法**（「這台沒有 zstd ⇒ 用 GGD_EXPORT_COMPRESS=gzip」）。
+  #   ⇒ 上層把它丟掉,害人要再手動跑一次才看得到。
+  # ⭐ 判準:**包裝一支腳本時,它的錯誤訊息是它最有價值的輸出** —— ⛔ 不要丟。
+  #
+  # ⚠️ 壓法:目的地是物件儲存 ⇒ 沒有「對面有沒有 zstd」的問題,
+  #   ⛔ 但**這台**有沒有 zstd 是問題。預設跟著環境走,⛔ 不寫死。
+  local exlog; exlog=$(mktemp)
+  if ! GGD_EXPORT_OUT="$STAGE" GGD_REPO="$REPO" \
+       GGD_EXPORT_COMPRESS="${GGD_EXPORT_COMPRESS:-$(command -v zstd >/dev/null 2>&1 && echo zstd || echo gzip)}" \
+       bash "$REPO/scripts/site-export.sh" >"$exlog" 2>&1; then
+    stamp_status failed "$DEST" "site-export.sh 非零"
+    printf '\n%s匯出失敗,它自己說：%s\n' "$YEL" "$RST" >&2
+    tail -6 "$exlog" | sed 's/^/    /' >&2
+    rm -f "$exlog"
+    die "匯出失敗（原因見上）"
+  fi
+  rm -f "$exlog"
   local B; B=$(ls -d "$STAGE"/ggd-export_temp_* 2>/dev/null | tail -1)
   [ -n "$B" ] || { stamp_status failed "$DEST" "沒有產出包"; die "匯出沒有產出包"; }
   ok "$(basename "$B")  $(du -sh "$B" | cut -f1)"
