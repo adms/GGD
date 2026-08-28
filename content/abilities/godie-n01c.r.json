@@ -33,38 +33,73 @@
       "kind": "damageLine",
       "damageType": "magic",
       "amount": {
-        "damageTier": "小"
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.8
+          }
+        ]
       },
       "length": 10.08,
-      "width": 3.67
+      "width": 3.67,
+      "onHitTargets": [
+        {
+          "kind": "applyStatus",
+          "statusId": "aban-x-mark",
+          "duration": 1.5
+        }
+      ]
     },
     {
-      "kind": "blink",
+      "kind": "delayed",
       "shape": "single",
-      "to": "point",
-      "applyTo": "self",
-      "onArrive": [
+      "delaySec": 1.0,
+      "effects": [
         {
-          "kind": "spawnVfx",
-          "vfxId": "fx.prim.physical.slash",
-          "at": "point"
-        },
-        {
-          "kind": "damageArea",
-          "damageType": "true",
-          "amount": {
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 1.8
+          "kind": "blink",
+          "shape": "single",
+          "to": "point",
+          "applyTo": "self",
+          "onArrive": [
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.physical.slash",
+              "at": "point"
+            },
+            {
+              "kind": "damageArea",
+              "damageType": "true",
+              "amount": {
+                "damageTier": "小"
+              },
+              "radius": 4.5,
+              "radiusTier": "小"
+            },
+            {
+              "kind": "damageArea",
+              "damageType": "true",
+              "amount": {
+                "damageTier": "小",
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 1.8
+                  }
+                ],
+                "mult": 10
+              },
+              "radius": 4.5,
+              "victimCondition": {
+                "kind": "status",
+                "subject": "target",
+                "statusId": "aban-x-mark"
               }
-            ]
-          },
-          "radius": 4.5,
-          "radiusTier": "小"
+            }
+          ],
+          "distanceUnits": 10.08
         }
-      ],
-      "distanceUnits": 10.08
+      ]
     }
   ],
   "vfxKey": "fx.prim.physical.slash-lg",

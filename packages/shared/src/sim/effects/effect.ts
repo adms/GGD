@@ -173,6 +173,12 @@ export interface Scaling {
    * 必填之後那種漏接是**編譯錯誤**,不是一條要記得寫的測試。
    */
   attrRatios?: { attr: AttrKey; basis?: AttrBasis; coeff: number }[];
+  /**
+   * ⭐ 整份酬載的倍率（GH#843，owner 2026-08-28「（A+AP）10倍」）。
+   * 解算**完成之後**才乘 —— 見 `resolveScaling`。缺席 ⇒ ×1。
+   * ⛔ 不可以用寫死的 `flat` 代替：級距是產物，算好的值是第二個住處。
+   */
+  mult?: number;
 }
 
 /**
@@ -457,5 +463,8 @@ export function resolveScaling(
   let v = (sc.flat ?? 0) + (sc.perRank?.[Math.max(0, rank - 1)] ?? 0);
   for (const r of sc.ratios ?? []) v += (finalStats[r.stat] ?? 0) * r.coeff;
   for (const r of sc.attrRatios ?? []) v += attrs(r.attr, r.basis ?? "total") * r.coeff;
-  return v;
+  // ⭐ GH#843 —— 整份酬載的倍率，**最後**才乘（owner 2026-08-28:「（A+AP）10倍」）。
+  //    ⚠️ 位置是承重的：乘在 ratios 之前的話它只放大基礎值，而 owner 寫的是
+  //    「A ＋ AP 的十倍」。缺席 ⇒ ×1 ⇒ 逐位元同這一格出現之前。
+  return sc.mult !== undefined ? v * sc.mult : v;
 }
