@@ -255,6 +255,9 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
       const order = frame.order;
       if (!order) continue;
       nav.order = order;
+      // ⭐ owner 2026-08-28 —— `idleAutoEngageSec` 的計時器：任何一條指令歸零。
+      //    （成功施法的那一半在 `castAbility`；兩邊寫同一張 map。）
+      world.lastCommandTick.set(id, world.tick);
       // ---- GH#652 細節①: 後搖取消 (animation cancel) ----
       // LoL:結算**之後**的後搖，任何一條新指令都砍得掉，⭐ 而那一發照樣算數。
       // ⛔ 前搖不在這裡 —— `ab.windup` / `ab.cast` 一格未動,走開仍然作廢那一刀
@@ -910,20 +913,41 @@ function autoAcquirePass(
     // ⚠️ 關掉（輔助模型）= 這一版之前的 GGD 行為（站著自動索敵、被打自動反擊、
     //    走位卡住自動接敵）⇒ 後台一格切回去就是完整 rollback。
     // ══════════════════════════════════════════════════════════════════════
+    let idleEngaged = false;
     if (mo.lolControlModel && nav.attackTarget === null) {
       const seat = world.team.get(id)?.seatId;
       const isHuman = seat !== undefined && world.mobRules?.humanSeats?.has(seat) === true;
       const orderedToFight = order?.kind === "attackMove" || holdPosition;
       if (isHuman && !orderedToFight && forcedTargetOf(world, id) === null) {
-        // 玩家沒有下「打」的指令 ⇒ 這一 tick 不索敵。⭐ 走位、追擊、施法、
-        // 已承諾的前搖全部不受影響 —— 這裡只決定「要不要自己挑一個新目標」。
-        world.autoEngaging.delete(id);
-        continue;
+        // ⭐⭐ owner 2026-08-28（逐字）：「如果沒有任何指令，停頓一段時間
+        //    （N秒後台可設定）就會自動索敵攻擊」。
+        //    GH#652 的 LoL 模型把 idle 索敵整段關掉（下面那個 continue）——
+        //    owner 回報的「自動索敵不見了」正是它。這一段把「放著不管 N 秒」
+        //    接回索敵，⛔ 而 LoL 語意（有指令就聽指令）一格不動：
+        //    · 手上還有指令（move 進行中）⇒ 照舊不索（走位權是玩家的）
+        //    · 計時器由任何指令／施法歸零（`world.lastCommandTick`）
+        //    · `idleAutoEngageSec: 0` ⇒ 這一段逐位元不存在（純 LoL ＝ rollback）
+        //    ⚠️ 首次見到（undefined）＝ **從這一 tick 起算**，⛔ 不是「從 tick 0」
+        //    —— tick 是跨階段的絕對值，從 0 起算等於開戰當下直接接管。
+        const idleTicks = Math.round(mo.idleAutoEngageSec / world.dt);
+        if (idleTicks > 0 && nav.order === null) {
+          const last = world.lastCommandTick.get(id);
+          if (last === undefined) world.lastCommandTick.set(id, world.tick);
+          else if (world.tick - last >= idleTicks) idleEngaged = true;
+        }
+        if (!idleEngaged) {
+          // 玩家沒有下「打」的指令 ⇒ 這一 tick 不索敵。⭐ 走位、追擊、施法、
+          // 已承諾的前搖全部不受影響 —— 這裡只決定「要不要自己挑一個新目標」。
+          world.autoEngaging.delete(id);
+          continue;
+        }
       }
     }
 
     const engaging = autoEngageActive(world, id, ae);
-    const idleSeeking = ae.enabled && ae.idleSeeks && nav.order === null;
+    // ⭐ idle 接管拿 `seekRadius`（W4 量過：近戰地板 6 在 bot 平均 40+ 單位遠的
+    //    對局裡等於「開了跟沒開一樣」）。
+    const idleSeeking = idleEngaged || (ae.enabled && ae.idleSeeks && nav.order === null);
     const nearRadius = acquireRadius(sc, t.radius);
     const radius = holdPosition
       ? reachTo(sc, t.radius, 0) * HOLD_FRACTION

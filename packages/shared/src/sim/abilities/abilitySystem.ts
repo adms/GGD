@@ -556,6 +556,8 @@ export function castAbility(
   // 手動與 MP 不足自動關閉共用它（計畫 §13）。這一段只是「按鈕被按了」。
   if (def.toggle && isToggleOn(ab, slot)) {
     exitToggle(world, caster, slot, "manual");
+    // ⭐ owner 2026-08-28 —— 成功施法也是「指令」：idleAutoEngage 計時器歸零。
+    world.lastCommandTick.set(caster, world.tick);
     return "ok";
   }
 
@@ -825,6 +827,8 @@ export function castAbility(
       //    —— 而那是「兩邊都不報錯，只有玩家看得出來」的那種缺陷。
       castTimeSec: castSec,
     });
+    // ⭐ owner 2026-08-28 —— 成功施法也是「指令」：idleAutoEngage 計時器歸零。
+    world.lastCommandTick.set(caster, world.tick);
     return "ok";
   }
 
@@ -872,7 +876,9 @@ export function castAbility(
   // their damage (combatResolveSystem drains it at step 8 of this same tick), so
   // the hit-cancel still lands on the same tick if it connects.
   armRecovery(world, caster, slot, def, targets);
-  return "ok";
+  // ⭐ owner 2026-08-28 —— 成功施法也是「指令」：idleAutoEngage 計時器歸零。
+    world.lastCommandTick.set(caster, world.tick);
+    return "ok";
 }
 
 /**

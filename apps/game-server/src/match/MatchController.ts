@@ -1479,12 +1479,27 @@ export class MatchController {
    * tick 跳過選角。
    */
   private champSelectEarlyStartDue(): boolean {
-    if (!this.vsBotPacing.earlyStart || !this.vsBotPacing.soloVsBots) return false;
+    if (!this.vsBotPacing.earlyStart) return false;
+    // ⭐⭐ owner 2026-08-28「練習模式 按 ready 就可以直接開始」——
+    // 人性讀**活的座位**（`seat.humanSeat`），⛔ 不是建構時凍結的 `specs`。
+    //
+    // ── 為什麼舊判準對離線／練習流**結構性失明**（2026-08-28 實測重現）──
+    // 離線 dev join 與練習模式的房間在建立時 `options.seats = []` ⇒ 12 席全部
+    // `isBot: true` ⇒ `resolveVsBotPacing` 凍結成 `humans = 0`、
+    // `soloVsBots = false`。人是**之後** `onJoin` 才接管座位
+    // （`MatchRoom.ts`「dev mode: take over the first AI seat」⇒
+    // `seat.humanSeat = true`）—— 而這裡讀的兩個東西都在那之前就定案了
+    // ⇒ 鎖定英雄後倒數照跑 80 秒，early start 從第一天起只對平台預約流生效。
+    //
+    // ⚠️ `soloVsBots` 那一格照舊管 A1（forceSettle）；這裡改成同一個判準的
+    // **活版本**：真人座位（1..n 都算 —— couch play 也是「大家鎖了就開」）
+    // 全部鎖定 ⇒ 直接開打。0 個真人 ⇒ false（全 bot 沙盒沒有人在等，
+    // 而「全部鎖定」對空集合恆真 —— 那一關不能少）。
     let humans = 0;
-    for (const [seatId, spec] of this.specs) {
-      if (spec.isBot) continue;
+    for (const st of this.seats.values()) {
+      if (!st.humanSeat) continue;
       humans++;
-      if (!this.pickLockTick.has(seatId)) return false;
+      if (!this.pickLockTick.has(st.seatId)) return false;
     }
     return humans > 0;
   }

@@ -24,6 +24,7 @@
     "moveOrderNoAggroSec": 1.0,
     "moveOrderNoAggroUntilArrival": true,
     "lolControlModel": true,
+    "idleAutoEngageSec": 3,
     "recoveryCancelOnOrder": true,
     "attackMoveNearestToCursor": true
   },

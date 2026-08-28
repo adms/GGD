@@ -158,6 +158,17 @@ export const zConfigCombatFeelDoc = z
          */
         lolControlModel: z.boolean(),
         /**
+         * ⭐【idle N 秒 ⇒ 恢復自動索敵】owner 2026-08-28（逐字）：
+         * 「我說過如果沒有任何指令，停頓一段時間（**N秒後台可設定**）就會自動索敵攻擊」
+         *
+         * LoL 模型的補丁：有指令 ⇒ LoL 語意一格不動；**放著不管 N 秒**
+         * （任何指令／成功施法都讓計時器歸零）⇒ 自動索敵接手，半徑用
+         * `autoEngage.seekRadius`。**0 ＝ 關**（純 LoL，2026-08-28 之前的行為
+         * ＝ 一鍵 rollback）。只作用在 `lolControlModel: true` 的真人座位。
+         * 出貨 3 秒（我挑的 —— owner 沒給數字；要改就在這裡改）。
+         */
+        idleAutoEngageSec: z.number().min(0).max(60).optional(),
+        /**
          * ⭐ **後搖取消**（GH#652 細節①，owner 2026-08-24「do it」）。
          *
          * LoL：結算**之後**的後搖任何一條新指令都砍得掉，⭐ 而那一發照樣算數；

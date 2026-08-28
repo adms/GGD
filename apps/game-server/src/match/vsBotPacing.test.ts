@@ -158,6 +158,28 @@ describe("A2 —— vs bot 的選角早退", () => {
     expect(ctl.phase.phase).toBe("champSelect");
   });
 
+  it("⭐⑦ owner 2026-08-28「練習模式 按 ready 就可以直接開始」—— 離線/練習流的 join-後人類也早退", () => {
+    cover("vs-bot-pacing");
+    // ── 這一條釘的是 2026-08-28 實測重現的結構性失明 ─────────────────────
+    // 離線 dev join 與練習模式的房間 `options.seats = []` ⇒ 12 席建構時全部
+    // `isBot: true` ⇒ `vsBotPacing` 凍結成 humans=0。人是**之後** onJoin 才接管
+    // 座位（`seat.humanSeat = true`）—— 舊判準讀凍結的 specs ⇒ 鎖定英雄後
+    // 倒數照跑 80 秒。⇒ 判準要讀**活的座位**。
+    const ctl = new MatchController("vsbot-cs-dev", 99, seatsWithHumans(0), CFG);
+    expect(ctl.vsBotPacing.soloVsBots, "前提:建構時 0 個人（dev-join 的形狀）").toBe(false);
+    // dev join:接管第一個 AI 座位（MatchRoom.onJoin 逐字做的事）。
+    ctl.seats.get(asSeatId(0))!.humanSeat = true;
+    ctl.tick();
+    expect(ctl.phase.phase, "join 了但還沒鎖 → 不早退").toBe("champSelect");
+    expect(ctl.selectChampion(asSeatId(0), "sela").ok).toBe(true);
+    // 突變點:champSelectEarlyStartDue 改回讀 `this.specs`/`vsBotPacing.soloVsBots`
+    // → 這裡仍在 champSelect,這一條紅。
+    ctl.tick();
+    expect(ctl.phase.phase, "鎖定之後仍在等倒數 —— early start 對 join-後人類失明").not.toBe(
+      "champSelect",
+    );
+  });
+
   it("⑥ 全 bot 沙盒照樣跑完選角倒數 —— 「全部鎖定」對空集合恆真,那一關必須擋住", () => {
     cover("vs-bot-pacing");
     const ctl = new MatchController("vsbot-cs0", 7, seatsWithHumans(0), CFG);

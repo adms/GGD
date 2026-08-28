@@ -494,6 +494,12 @@ export class SimWorld {
    * `humanSeats` 的英雄;讀寫都在 `OrderSystem.armMoveOrderNoAggro` 一個地方。
    */
   readonly lastMoveOrderTick = new Map<EntityId, number>();
+  /**
+   * ⭐ 最後一次「玩家指令」的 tick（任何 order 或成功施法）——
+   * `idleAutoEngageSec` 的計時器（owner 2026-08-28「沒有任何指令，停頓一段時間
+   * 就會自動索敵攻擊」）。⛔ 只由 orderSystem 與 castAbility 寫入。
+   */
+  readonly lastCommandTick = new Map<EntityId, number>();
 
   /**
    * AIRBORNE RENDER STATE (task #247) — entity → { y: GGD units above the arena
@@ -1481,6 +1487,7 @@ export class SimWorld {
     // 一生出來就帶著別人點的那 1 秒不索敵。
     this.moveOrderNoAggroUntil.delete(id);
     this.lastMoveOrderTick.delete(id);
+    this.lastCommandTick.delete(id);
     // task #249: nor a stale 變身 form — a recycled id that inherited one would
     // be dragged back to a PREVIOUS unit's base champion on the next tick.
     this.championForm.delete(id);

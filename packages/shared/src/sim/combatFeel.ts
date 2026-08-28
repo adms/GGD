@@ -502,6 +502,23 @@ export interface ManualOrderRules {
    */
   lolControlModel: boolean;
   /**
+   * ⭐【idle N 秒 ⇒ 恢復自動索敵】owner 2026-08-28（逐字）：
+   * 「我說過如果沒有任何指令，停頓一段時間（**N秒後台可設定**）就會自動索敵攻擊」
+   *
+   * ⚠️ 它是 `lolControlModel` 的**補丁**，⛔ 不是取代：LoL 模型（GH#652）出貨後，
+   * 真人座位 idle/走位時**完全不索敵** —— 而 owner 2026-08-28 回報的
+   * 「自動索敵不見了」正是那一格的刻意行為。這一格把兩件事接起來：
+   * 有指令 ⇒ LoL 語意一格不動；**放著不管 N 秒** ⇒ 自動索敵接手
+   * （半徑用 `autoEngage.seekRadius`，⛔ 不是近戰地板 6 —— 一場 bot 平均離你
+   * 40+ 單位，6 的半徑等於「開了跟沒開一樣」，那是 W4 量過的不對稱）。
+   *
+   * 計時器：任何一條指令（move/attackMove/attackTarget/stop/hold）或一次成功
+   * 施法都歸零（`world.lastCommandTick`）。**0 ＝ 關**（純 LoL，2026-08-28 之前
+   * 的行為 ＝ 一鍵 rollback）。只作用在 `lolControlModel: true` 的真人座位 ——
+   * 輔助模型本來就會索敵，bot 走自己的 AI。
+   */
+  idleAutoEngageSec: number;
+  /**
    * ⭐ **後搖取消（animation cancel）** —— LoL 老玩家最有感的那一項（GH#652 細節①）。
    *
    * LoL：技能／普攻**結算之後**的後搖，任何一條新指令（走位、下一發技能、A、S、H）
@@ -778,6 +795,9 @@ export const DEFAULT_MANUAL_ORDER: ManualOrderRules = Object.freeze({
   moveOrderNoAggroUntilArrival: true,
   // ⭐ owner 2026-08-24:「現在玩 LOL 人數最多，最容易被接受」⇒ 預設就是 LoL 語意。
   lolControlModel: true,
+  // ⭐ owner 2026-08-28「停頓一段時間（N秒後台可設定）就會自動索敵攻擊」。
+  //   3 秒是我挑的預設（owner 沒給數字）—— rollback ＝ 後台調 0（純 LoL）。
+  idleAutoEngageSec: 3,
   // ⭐ GH#652 細節①:owner 2026-08-24「do it」⇒ 出貨就是 LoL 那一邊（第〇·六守則）。
   recoveryCancelOnOrder: true,
   // ⭐ GH#652 細節②:同上。
@@ -988,6 +1008,7 @@ export function normalizeManualOrderRules(raw: unknown): ManualOrderRules {
       typeof r.lolControlModel === "boolean"
         ? r.lolControlModel
         : DEFAULT_MANUAL_ORDER.lolControlModel,
+    idleAutoEngageSec: num(r.idleAutoEngageSec, DEFAULT_MANUAL_ORDER.idleAutoEngageSec, 0, 60),
     recoveryCancelOnOrder:
       typeof r.recoveryCancelOnOrder === "boolean"
         ? r.recoveryCancelOnOrder

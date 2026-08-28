@@ -559,6 +559,18 @@ export const COMBAT_FEEL_LABELS: Readonly<Record<string, FeelLabel>> = Object.fr
         "那是一格下拉選單，⛔ 不是一次部署。",
     },
   },
+  "manualOrder.idleAutoEngageSec": {
+    zh: "放著不管 N 秒後恢復自動索敵（0＝關）",
+    note:
+      "owner 2026-08-28（逐字）:「我說過如果沒有任何指令，停頓一段時間（**N秒後台可設定**）" +
+      "就會自動索敵攻擊」。\n" +
+      "LoL 模型的補丁:有指令 ⇒ LoL 語意一格不動；**完全放著不管 N 秒**（任何指令／成功施法都讓" +
+      "計時器歸零）⇒ 自動索敵接手，半徑用「接敵」那一族的 `seekRadius`（出貨 48，蓋滿競技場 —— " +
+      "⛔ 不是近戰地板 6，那個半徑在 bot 平均 40+ 單位遠的對局裡等於開了跟沒開一樣）。\n" +
+      "**0 ＝ 關**（純 LoL，2026-08-28 之前的行為，一鍵 rollback）。" +
+      "⚠️ 只作用在 LoL 模型開著的**真人座位**；輔助模型本來就會索敵，bot 走自己的 AI。" +
+      "出貨 3 秒是 Claude 挑的預設（owner 沒給數字）—— 要長要短就是這一格。",
+  },
   "manualOrder.moveOrderNoAggroUntilArrival": {
     zh: "打帶跑：一路撐到抵達目的地",
     note:

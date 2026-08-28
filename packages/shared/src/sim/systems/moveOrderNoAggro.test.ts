@@ -191,6 +191,36 @@ describe("GH#637 點地板 1 秒不搶指揮權(打帶跑)", () => {
     expect(w.nav.get(me)!.attackTarget, "A 鍵下了 attackMove 卻還是不出手").toBe(enemy);
   });
 
+  it("⭐⭐ owner 2026-08-28:放著不管 N 秒 ⇒ 自動索敵接手；任何指令都讓計時器歸零", () => {
+    // 「我說過如果沒有任何指令，停頓一段時間（N秒後台可設定）就會自動索敵攻擊」。
+    // ⭐ 驗機制⛔不驗數字:N 從出貨預設推導（DEFAULT_MANUAL_ORDER.idleAutoEngageSec），
+    //   ⛔ 不抄 3。敵人擺在 3 單位（< 近戰索敵地板 6），所以「接手」量得到。
+    const IDLE = Math.round(DEFAULT_MANUAL_ORDER.idleAutoEngageSec * TICK_HZ);
+    expect(IDLE, "出貨預設是 0 ⇒ 這條測試在測一個關著的機制").toBeGreaterThan(0);
+    const w = world(new Set([asSeatId(0)]), true);
+    const me = spawnFighter(w, 0, 0, at(0));
+    const enemy = spawnFighter(w, 1, 1, at(3), 1e-9);
+    // ① 前 N 秒（不含）:LoL 語意 —— 一次都不出手。
+    //    ⚠️ 第一 tick 才蓋「首次見到」的章，所以窗口從 tick 1 起算。
+    w.step(NO_INTENTS);
+    for (let k = 0; k < IDLE - 2; k++) {
+      w.step(NO_INTENTS);
+      expect(w.nav.get(me)!.attackTarget, `第 ${k} tick（N 秒內）就出手了 —— LoL 語意被打破`).toBe(null);
+    }
+    // ② 過了 N 秒:自動索敵接手（⭐ 承重 —— owner 回報「自動索敵不見了」的修復）。
+    for (let k = 0; k < 5 && w.nav.get(me)!.attackTarget === null; k++) w.step(NO_INTENTS);
+    expect(w.nav.get(me)!.attackTarget, "放著不管超過 N 秒卻沒有恢復自動索敵").toBe(enemy);
+    // ③ 一條走位指令 ⇒ 計時器歸零 + 目標理應被 LoL 語意管回去:
+    //    走位結束後又要**重新**等滿 N 秒才會再接手。
+    w.step(move(at(-2)));
+    const afterOrder = w.tick;
+    // 走到（2 單位 / 5.8 速 ≈ 11 tick）之後站著:
+    for (let k = 0; k < IDLE - 5; k++) w.step(NO_INTENTS);
+    // 從下指令起算還不滿 N 秒（走路吃掉一段），⛔ 不可以已經接手。
+    expect(w.tick - afterOrder).toBeLessThan(IDLE);
+    expect(w.nav.get(me)!.attackTarget, "指令後計時器沒歸零 —— 舊碼表還在跑").toBe(null);
+  });
+
   it("非真人座位:同一套指令一格都不變(bot 不受影響,#274 走位中索敵照常)", () => {
     const w = world(new Set([asSeatId(7)])); // 名單裡沒有 seat 0
     const me = spawnFighter(w, 0, 0, at(0));
