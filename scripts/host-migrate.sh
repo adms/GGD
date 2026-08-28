@@ -384,7 +384,16 @@ PY
     warn "/healthz 沒回應（game shard 沒起來?）"
   fi
 
-  head_ "⑤ 開機碟現況"
+  head_ "⑤ 離站備份（GH#857）"
+  # ⭐ 搬遷會**放大**這個風險:搬完之後唯一的副本會在新機器上。
+  #   ⇒ 在搬遷的驗證裡問一次,⛔ 不是「之後再說」。
+  if [ -x "$(dirname "$0")/offsite-backup.sh" ]; then
+    bash "$(dirname "$0")/offsite-backup.sh" audit 2>&1 | sed -n '2,4p' | sed 's/^/  /'
+  else
+    warn "找不到 offsite-backup.sh"
+  fi
+
+  head_ "⑥ 開機碟現況"
   df -h / | tail -1 | awk '{printf "    已用 %s（%s）剩 %s\n", $3,$5,$4}'
   local i
   for i in "${!MOVE_SRC[@]}"; do

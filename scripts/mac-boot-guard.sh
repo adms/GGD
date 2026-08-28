@@ -94,6 +94,15 @@ cmd_check() {
   # ⓓ secrets（compose 的 ${VAR:?} 會擋,但擋的時候訊息很難懂）
   [ -f "$REPO/docker/.env" ] && ok "docker/.env 在" || fail "缺 docker/.env —— compose 會以難懂的訊息失敗"
 
+  # ⭐ 離站備份的年齡（GH#857）—— ⛔ **不進 REASONS**:備份壞了不該讓站起不來,
+  #   但它必須在**有人會看到的地方**出現。#857 的整個教訓是「它死掉那天,
+  #   沒有任何東西變得不一樣」—— 而開機是這台機器每次都會經過的路。
+  if [ -x "$REPO/scripts/offsite-backup.sh" ]; then
+    bash "$REPO/scripts/offsite-backup.sh" audit >/dev/null 2>&1 \
+      && ok "離站備份是新的" \
+      || warn "⛔ 離站備份過期或從來沒成功過 —— bash scripts/offsite-backup.sh audit"
+  fi
+
   [ "${#REASONS[@]}" -eq 0 ]
 }
 

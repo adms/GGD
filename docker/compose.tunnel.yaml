@@ -1,0 +1,46 @@
+# docker/compose.tunnel.yaml — Cloudflare Tunnel 前台（GH#861,Mac mini M4 用）
+#
+#   docker compose -f docker/compose.yaml -f docker/compose.family.yaml \
+#     -f docker/compose.tunnel.yaml --env-file docker/.env up -d --scale caddy=0
+#
+# ⚠️ `--scale caddy=0` 不是可選的:走 tunnel 時 **caddy 必須不跑**。
+#    caddy 會去跟 Let's Encrypt 要憑證,而家用機沒有 inbound 80/443 ⇒ 它會失敗重試,
+#    ⭐ 而 Let's Encrypt 的失敗**有速率限制** —— 撞到之後連正確設定也要等一週。
+#
+# ═══ 這個檔為什麼存在 ═══
+# 現況 ggd.adms.ai 的 A 記錄**直接**指 GCP 那台,憑證**簽在那台上**,前面零 CDN。
+# 家用線路多數不會通:動態 IP／可能 CGNAT（＝**完全沒有 inbound**）／ISP 常擋 80·443。
+# ⭐ 而它失敗的樣子是「**憑證續不了**」—— 三個月後才發作。
+#
+# Tunnel 是**純 outbound**:cloudflared 從家裡連出去,Cloudflare 在它的 edge 終結 TLS,
+# ⇒ ⛔ 不需要固定 IP、⛔ 不需要埠轉發、⛔ 不需要路由器設定。
+#
+# ═══ 設定在哪（⭐ 刻意不在這個檔裡）═══
+# token 型 tunnel 的路由住在 Cloudflare 後台:
+#   Public hostname  ggd.adms.ai  →  Service  http://edge:8080
+# ⭐ 這裡只放**連線**,⛔ 不放路由 —— 路由改了不必重新部署,而那正是 tunnel 的好處。
+#
+# ⚠️ WebSocket:Colyseus 走 WS,Cloudflare Tunnel **支援**,⛔ 不必額外開關。
+#    但 ⭐ **要實測**,⛔ 不要因為文件說支援就當它通了（第二守則:量到再說）。
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: ggd-cloudflared-1
+    restart: unless-stopped
+    # --no-autoupdate:⛔ 不要讓它在半夜自己換版本。版本升級是一次**部署**,
+    #                 ⛔ 不是一個容器自己決定的事。
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: "${CLOUDFLARE_TUNNEL_TOKEN:?set CLOUDFLARE_TUNNEL_TOKEN in docker/.env（Cloudflare 後台 Tunnels → 建立 → 複製 token）}"
+      # 指標埠:⭐ 讓「tunnel 活著嗎」變成一個問得到的問題,⛔ 不是看 log
+      TUNNEL_METRICS: "0.0.0.0:2000"
+    depends_on:
+      - edge
+    healthcheck:
+      # ⭐ 驗的是「**它連上 Cloudflare 了嗎**」,⛔ 不是「process 還在嗎」——
+      #   一個連不上的 cloudflared 會很開心地一直重試,而站是死的。
+      test: ["CMD", "cloudflared", "tunnel", "--metrics", "127.0.0.1:2000", "ready"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
