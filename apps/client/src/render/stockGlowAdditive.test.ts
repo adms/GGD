@@ -48,6 +48,7 @@ const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
  * 引擎的常數表才是含義的唯一出處；實作端的字面值（不 import，避免耦合）由這裡對帳。
  */
 const ALPHA_ONEONE = Constants.ALPHA_ONEONE;
+const ALPHA_ADD = Constants.ALPHA_ADD;
 const ALPHA_COMBINE = 2;
 
 const WIRE: ModelFxSpawnEvent = {
@@ -62,8 +63,12 @@ const WIRE: ModelFxSpawnEvent = {
   instances: [{ x: 0, z: 0, dx: 1, dz: 0, dist: 5, durationSec: 0.5 }],
 };
 
-/** 出貨那條路：真 .glb → 真載入器 → 真 `spawn()`。回場景樹上**最終**那批素材。 */
-async function spawnShipped(file: string): Promise<PBRMaterial[]> {
+/**
+ * 出貨那條路：真 .glb → 真載入器 → 真 `spawn()`。回場景樹上**最終**那批素材。
+ * `alpha` = 節點級透明度（出貨時由 `tpl-locust-orb.params.alpha.default` 展開進
+ * 每一個 orb 節點，再經 `modelFxSpawn` 事件到 `spawn()` —— 與這裡同一條線）。
+ */
+async function spawnShipped(file: string, alpha?: number): Promise<PBRMaterial[]> {
   const scene = new Scene(new NullEngine());
   const bytes = readFileSync(join(REPO, "content/assets/models/imported", file));
   const container = await LoadAssetContainerAsync(
@@ -76,7 +81,11 @@ async function spawnShipped(file: string): Promise<PBRMaterial[]> {
     resolveModel: () => ({ glbPath: `assets/models/imported/${file}`, scale: 1 }),
     loadContainer: () => Promise.resolve(container),
   });
-  rig.spawn({ ...WIRE, instances: [WIRE.instances[0]!] });
+  rig.spawn({
+    ...WIRE,
+    ...(alpha !== undefined ? { alpha } : {}),
+    instances: [WIRE.instances[0]!],
+  });
   await new Promise((r) => setTimeout(r, 0));
   return scene.meshes
     .map((m) => m.material)
@@ -118,6 +127,29 @@ describe("stock glow 走原作的 additive 混合 (@visual-proof)", () => {
       }
     } finally {
       setStockGlowAdditive(undefined);
+    }
+  });
+
+  it("④ 宣告了透明度（節點級 `alpha` < 1，locust-orb 家族預設 0.9）的發光材質走 **ALPHA_ADD**，⛔ 不是忽略 alpha 的 ONEONE", async () => {
+    // ⭐ GH#767 的洞（owner 第三次報「Rider, 木乃香 魔法陣沒有去背」，2026-08-28）：
+    // 地面魔法陣族（midchilder / oblivion / tome —— 2–3 片同平面 primitive ×
+    // emissiveStrength 2 × albedo 同貼圖）在一律 ONEONE 下逐片全額 RGB 相加
+    // ⇒ 疊爆成實心白。A/B 像素實測：ONEONE = 白色一大團；ALPHA_ADD／BLEND = 正確
+    // 粉紫魔法陣。分工判準是**材質自己的宣告**：alpha < 1 ⇒ 混合模式必須讀 alpha
+    // （WC3 fm3 的逐字 blendFunc 就是 (SRC_ALPHA, ONE) ＝ Babylon ALPHA_ADD）。
+    setStockGlowAdditive(undefined);
+    const mats = await spawnShipped("oblivionaura.glb", 0.9);
+    const glow = mats.filter(lit);
+    expect(glow.length, "前提不成立：oblivionaura 一份發光材質都沒有").toBeGreaterThan(0);
+    for (const m of glow) {
+      expect(
+        m.alphaMode,
+        `${m.name} 宣告了 alpha 0.9 卻仍是 ONEONE ⇒ alpha 逐位元被忽略 ＝ #669 rollback 開關是死的、魔法陣疊爆成白`,
+      ).toBe(ALPHA_ADD);
+      expect(m.alpha, `${m.name} 的節點級 alpha 沒乘進最終材質`).toBeCloseTo(0.9, 5);
+      expect(m.transparencyMode, `${m.name} 沒解鎖成 ALPHABLEND ⇒ 混合模式那一格不會被讀`).toBe(
+        ALPHA_COMBINE,
+      );
     }
   });
 

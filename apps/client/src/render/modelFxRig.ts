@@ -191,6 +191,18 @@ export function setStockGlowAdditive(v: boolean | undefined): void {
  *   `ALPHA_ADD` 是**近似**（第一守則那條紅線）。
  */
 const BJS_ALPHA_ONEONE = 6;
+/**
+ * Babylon `Constants.ALPHA_ADD` —— **`SRC_ALPHA × SRC + DEST`**。
+ *
+ * ⭐ 這正是 WC3 對 fm3/fm4 的**逐字** blendFunc（`(SRC_ALPHA, ONE)`，mdx-m3-viewer
+ * 的 layer 表）—— 加法，但 **src 先乘 alpha**。它與 {@link BJS_ALPHA_ONEONE} 的分工
+ * 見 {@link applyStockGlowAdditive} 檔頭：**宣告了透明度**（材質 alpha < 1，
+ * 來源是 `model@1.fxAlpha` 或節點級 `alpha`）的發光材質走這一格 ——
+ * ⛔ 一個宣告了 alpha 的材質配一個**忽略 alpha** 的混合模式，就是
+ * 「寫了但不會發生」（第一·五守則）：#669 批核頁登記的 rollback 開關
+ * （`tpl-locust-orb.alpha` → 0 ＝ 整族隱形）在 ONEONE 下**逐位元是死的**。
+ */
+const BJS_ALPHA_ADD = 1;
 /** Babylon `Material.MATERIAL_ALPHABLEND` —— 沒有它 `needAlphaBlending()` 是 false ⇒ 混合模式**不會被讀**。 */
 const BJS_ALPHABLEND = 2;
 
@@ -213,6 +225,19 @@ const BJS_ALPHABLEND = 2;
  * ⚠️ 這裡讀的是**最終**掛在 mesh 上的那份材質（`applyFxTint` 之後才呼叫）——
  * 對**原始**素材物件寫的斷言不管有沒有生效都會過（`views/mobTint.test.ts` 檔頭）。
  *
+ * ── ⭐【GH#767 的洞，2026-08-28 量到】ONEONE 對**宣告了透明度**的材質是錯的 ────
+ * owner（第三次）：「Rider, 木乃香 施展技能底下魔法陣依然沒有去背」。
+ * A/B 實測（beam-audition `?ability=godie-hvsh.r` / `godie-etyr.q`）：
+ * 出貨預設（一律 ONEONE）⇒ 地面魔法陣（midchilder／oblivion／tome，2–3 個
+ * primitive 疊在同一平面、emissiveStrength 2.0、albedo 同貼圖再疊一次）
+ * **每一片都以全額 RGB 相加 ⇒ 疊爆成一大團實心白**；`?additive=0` 與
+ * `ALPHA_ADD` 都是正確的粉紫魔法陣。⛔ 而光束家族（20-03/59-04）的
+ * 246–254 亮度驗收**只在 ONEONE 下成立**（ALPHA_ADD 量到 86.9）。
+ * ⇒ ⭐ 分工不是家族名單，是**材質自己的宣告**：alpha < 1（`model@1.fxAlpha`
+ * 或節點級 `alpha`，applyFxTint 已乘進最終材質）＝「這一份的透明度有語意」
+ * ⇒ 混合模式必須**讀 alpha**（{@link BJS_ALPHA_ADD}＝WC3 fm3 的逐字 blendFunc）；
+ * 沒宣告 ⇒ 維持 ONEONE（光束驗收不動）。
+ *
  * @returns 真的被改成加法的材質數（0 = 這一具沒有 glow 材質，或開關關著）。
  */
 export function applyStockGlowAdditive(root: TransformNode): number {
@@ -226,7 +251,9 @@ export function applyStockGlowAdditive(root: TransformNode): number {
     if (!mat) continue;
     const e = mat["emissiveColor"] as { r: number; g: number; b: number } | undefined;
     if (!e || (e.r <= 0 && e.g <= 0 && e.b <= 0)) continue;
-    mat["alphaMode"] = BJS_ALPHA_ONEONE;
+    const a = mat["alpha"];
+    mat["alphaMode"] =
+      typeof a === "number" && a < 1 ? BJS_ALPHA_ADD : BJS_ALPHA_ONEONE;
     // ⚠️ 只設 alphaMode 是**寫了但不會發生**：PBR 的不透明素材被載入器鎖成
     //    `transparencyMode: OPAQUE`，而 `needAlphaBlending()` 回 false 時
     //    混合模式那一格**根本不會被讀**（同 `applyFxTint` 的 fxAlpha 那一段）。

@@ -88,9 +88,12 @@ const PRESET_FIELDS = [
   //    ⚠️ 出貨的 locust 模板**刻意不給 tint 預設**（census 量到 133/236
   //    非白而且每一具都不同 ⇒ 家族層沒有一個共同的值）⇒ `slotDefault` 回
   //    undefined ⇒ 既有節點逐位元不變。
-  //    ⭐ 例外（GH#688 Phase 6）：`tpl-locust-orb` 的 `alpha` 有預設 **1.0** ——
-  //    那是 #669 批核頁登記的**一鍵 rollback 開關**，不是顏色決定：1.0 與缺席
-  //    逐位元同義（modelFxRig 對 alpha ≥ 1 明文跳過乘法），翻成 0 ＝整族隱形。
+  //    ⭐ 例外（GH#688 Phase 6 · 2026-08-28 改 0.9）：`tpl-locust-orb` 的 `alpha`
+  //    有預設 **0.9** —— <1 宣告「這一族的透明度有語意」⇒ modelFxRig 對發光材質
+  //    走 ALPHA_ADD（WC3 fm3 的 (SRC_ALPHA, ONE)），⛔ 不是忽略 alpha 的 ONEONE
+  //    （一律 ONEONE 讓同平面疊放的魔法陣疊爆成實心白 —— owner 第三次報
+  //    「Rider, 木乃香 魔法陣沒有去背」）。節點寫 1.0 ＝ 與缺席同義（回 ONEONE）；
+  //    #669 的一鍵 rollback（翻 0 ＝ 整族隱形）仍在，而且現在 alpha 真的被讀了。
   "tint",
   "alpha",
   // ⭐ GH#673-② —— static/orbit 的**唯一終止條件**。2026-08-24 之前不在這張表:
