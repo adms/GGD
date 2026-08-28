@@ -123,9 +123,30 @@ cmd_deploy() {
   git -C "$REPO" diff --quiet HEAD 2>/dev/null \
     || warn "⚠️ 工作區有未提交的改動 —— ⭐ 它們**不會**被部署（部署的是 $(echo "$head_local" | cut -c1-8)）"
   r "mkdir -p $REMOTE_REPO" || die "建不了 $REMOTE_REPO"
-  git -C "$REPO" archive --format=tar "$head_local" \
-    | "${SSH[@]}" "$REMOTE_PATH tar -x -C $REMOTE_REPO && printf '%s' '$head_local' > $REMOTE_REPO/DEPLOYED_COMMIT" \
-    || die "同步失敗"
+
+  # ⭐⭐ 只送差異,⛔ 不是每次都送整個 repo。
+  #
+  # 2026-08-29 量到:`git archive HEAD` 是 **684 MB**（含 354 MB 的 content）,
+  #   走 VPN 從行動網路推一次要 **355 秒**。⭐ 而一次典型的部署只改幾個檔。
+  #   ⇒ 瓶頸不是傳輸方式,是**每次都送全部**。
+  #
+  # ⭐ 做法:先把那個 commit 展開到**本機**的暫存區（快,不過網路）,
+  #   再 rsync 過去 —— rsync 只送**真的不一樣的區塊**。
+  #   ⚠️ 這仍然保住「部署的是某個 commit,⛔ 不是工作區」那個性質:
+  #     暫存區的內容**就是** `git archive <commit>` 的輸出。
+  #
+  # ⚠️ `--delete` 會刪掉遠端多出來的檔 ⇒ **必須排除不在 git 裡的東西**:
+  #   `data/`（帳號、錢包、排行榜…）· `docker/.env`（secrets）· `DEPLOYED_COMMIT`
+  #   ⛔ 漏掉任何一個,一次部署就會把玩家資料刪掉。
+  local stage="${GGD_STAGE_DIR:-$HOME/.cache/ggd-deploy-stage}"
+  mkdir -p "$stage"
+  git -C "$REPO" archive --format=tar "$head_local" | tar -x -C "$stage" || die "本機展開失敗"
+  printf '%s' "$head_local" > "$stage/DEPLOYED_COMMIT"
+  rsync -a --delete \
+    --exclude='/data/' --exclude='/docker/.env' \
+    -e "ssh -o BatchMode=yes -o ConnectTimeout=10" \
+    "$stage/" "$USER_@$HOST:$REMOTE_REPO/" \
+    || die "rsync 同步失敗"
   local remote_head; remote_head=$(r "cat $REMOTE_REPO/DEPLOYED_COMMIT" 2>/dev/null)
   [ "$remote_head" = "$head_local" ] \
     && ok "mini 對到 $(echo "$head_local" | cut -c1-8)" \

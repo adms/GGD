@@ -17,6 +17,11 @@
 #   ⛔ 在 mini 上掛 `ggd.adms.ai`（它還指著正式站）⇒ 挑戰打到正式站 ⇒ 失敗重試
 #     ⇒ ⚠️ **Let's Encrypt 的失敗有速率限制,撞到要等一週**。
 #   ⇒ 搬遷期間 mini 用 GGD_SITE_HOST=mini.adms.ai,切換那一刻才改成正式名字。
-{$GGD_SITE_HOST:ggd.adms.ai} {
+# ⭐ 可以列**多個**主機名（空白分隔）—— 切換期間同時服務臨時名字與正式名字,
+#   ⇒ 切 DNS 的那一刻憑證**已經在手上**,⛔ 不是切完才開始要（那會有一段空窗）。
+# ⚠️ 但 Caddy 會為**列出的每一個**名字去要憑證 ⇒ 每一個都必須**已經指向這台**,
+#   ⛔ 否則挑戰失敗、累積速率限制（Let's Encrypt:每小時 5 次/每個名字）。
+#   ⇒ 所以是 `GGD_SITE_HOSTS`（複數）,由部署腳本按當下的 DNS 狀態決定要列哪些。
+{$GGD_SITE_HOSTS:{$GGD_SITE_HOST:ggd.adms.ai}} {
 	reverse_proxy edge:8080
 }
