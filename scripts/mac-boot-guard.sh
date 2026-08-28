@@ -37,6 +37,8 @@ warn(){ printf '  %s⚠%s %s\n' "$YEL" "$RST" "$*"; }
 info(){ printf '    %s\n' "$*"; }
 
 REPO="${GGD_REPO:-$(cd "$(dirname "$0")/.." && pwd)}"
+# ⛔ launchd 給的 PATH 不含 OrbStack 的 CLI（同 mini-deploy.sh 踩過的那個）
+export PATH="$HOME/.orbstack/bin:/usr/local/bin:/opt/homebrew/bin:$PATH"
 LABEL="ai.adms.ggd.boot"
 PLIST="$HOME/Library/LaunchAgents/$LABEL.plist"
 LOG="${GGD_BOOT_LOG:-$HOME/Library/Logs/ggd-boot.log}"
@@ -84,11 +86,35 @@ cmd_check() {
     fail "$REPO/data/accounts 是空的或不存在 —— ⛔ 這通常表示資料碟掛錯地方"
   fi
 
-  # ⓒ docker
-  if docker info >/dev/null 2>&1; then
-    ok "docker 通了（$(docker info --format '{{.Architecture}}' 2>/dev/null)）"
+  # ⓒ ⭐ docker —— ⛔ 不只是「檢查」,而是**負責把它弄起來**
+  #
+  # ⛔⛔ 2026-08-29 的重開機實測:自動登入成功、GUI session 在、守衛也跑了,
+  #   ⭐ **而 OrbStack 是 0 個程序** ⇒ docker 不通 ⇒ 守衛 exit 1 ⇒ 站沒回來。
+  #   根因:OrbStack 是 GUI App,用 `cp` 裝進 /Applications **不會**註冊成登入項目。
+  #
+  # ⭐ 修法是讓守衛**自己啟動它**,⛔ 不是去依賴一個要人在 GUI 裡勾的設定 ——
+  #   那個勾在重灌、換帳號、App 更新之後都可能消失,而它消失的樣子是**站不會回來**。
+  #   （這與整份 CLAUDE.md 的「閘,⛔ 不是判準」是同一條。）
+  ensure_docker() {
+    docker info >/dev/null 2>&1 && return 0
+    local app
+    for app in /Applications/OrbStack.app "$HOME/Applications/OrbStack.app" /Applications/Docker.app; do
+      [ -d "$app" ] || continue
+      info "啟動 $(basename "$app")…"
+      open "$app" >/dev/null 2>&1
+      # ⚠️ 開機後 VM 要一段時間才好 —— 給它 90 秒,⛔ 不是試一次就放棄
+      local i
+      for i in $(seq 1 45); do
+        docker info >/dev/null 2>&1 && return 0
+        /bin/sleep 2
+      done
+    done
+    return 1
+  }
+  if ensure_docker; then
+    ok "docker 通了（$(docker info --format '{{.Architecture}} {{.NCPU}} 核' 2>/dev/null)）"
   else
-    fail "docker 不通 —— ⭐ 最常見的原因是**沒有自動登入**（OrbStack/Docker 是使用者層程式）"
+    fail "docker 起不來 —— 檢查 /Applications 裡有沒有 OrbStack.app,以及 GUI session 在不在"
   fi
 
   # ⓓ secrets（compose 的 ${VAR:?} 會擋,但擋的時候訊息很難懂）
