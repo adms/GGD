@@ -29,3 +29,7 @@ go on dont stop
 ## 13:15
 
 常常打一打 動畫就消失沒有播完
+
+## 16:40
+
+後台右側頁面 每一頁都要加上 footer copyright
