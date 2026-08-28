@@ -29,6 +29,7 @@
  *
  * Everything pure is unit-tested on NullEngine in vfxPresets.test.ts.
  */
+import { noteVfxRefired } from "./vfxHardCap";
 import type { Scene } from "@babylonjs/core/scene";
 import { ParticleSystem } from "@babylonjs/core/Particles/particleSystem";
 import { Texture } from "@babylonjs/core/Materials/Textures/texture";
@@ -415,6 +416,12 @@ export class BurstPool {
     const ps = entry.ps;
     (ps.emitter as Vector3).set(x, y, z);
     if (!ps.isStarted()) ps.start();
+    // ⭐ GH#842 —— **這一發是新的一次演出**，三秒碼表歸零（同 `VfxSystem.play`
+    //    的池：重新點燃時 ⛔ 不排空 ⇒ `isAlive()` 一直 true ⇒ 碼表從第一次點燃
+    //    數下去 ⇒ 連續戰鬥 3 秒後砍掉玩家眼前正在播的那一發）。
+    //    ⚠️ 這是**同一個病的第二個載體** —— 只修 VfxSystem 那一半，
+    //    `vfx-preset-*` 這一整族（退路階梯的預設特效）會照樣消失。
+    noteVfxRefired(ps);
     fireBurst(ps, spec, scale);
     return ps;
   }

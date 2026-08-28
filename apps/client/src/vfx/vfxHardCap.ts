@@ -212,6 +212,32 @@ function exempt(name: string, prefixes: readonly string[]): boolean {
  * `nowSec` 由呼叫端給（`VfxSystem` 用 `nowMs / 1000`），所以暫停 / 逐格步進的
  * 錄影跟即時播放走同一條路。
  */
+/**
+ * ⭐ GH#842 —— **這一發是新的一次演出**，碼表歸零。
+ *
+ * owner 2026-08-28：「常常打一打 動畫就消失沒有播完」。
+ *
+ * ── 根因（量到的，⛔ 不是猜的）────────────────────────────────────────────
+ * owner 的三秒鐵則（2026-08-23）逐字是「不管什麼特效⋯**產生後**生命週期最多維持
+ * 三秒」—— 主詞是**一次演出**。而在這一行出現之前，碼表量的是
+ * 「**這個 emitter 物件**連續 `isAlive()` 了多久」，而那是**另一個東西**：
+ *
+ * `VfxSystem` 的粒子系統按 doc id **池化**（cap 4，滿了偷 LRU），
+ * 重新點燃時 ⛔ 不排空 ⇒ `isAlive()` 一直是 true
+ * ⇒ `ACTIVE_SINCE` 從**第一次**點燃就沒歸零過
+ * ⇒ 連續戰鬥 3 秒後，掃描對**玩家眼前正在播的那一發**做 `stop()+reset()`。
+ *
+ * ⇒ ⭐ 獨自站著放技能：中間會排空、碼表歸零，**看起來完全正常**。
+ *   打起來：同一顆 emitter 每半秒被再點一次 ⇒ **每三秒砍一次**。
+ *   ⚠️ 那正是「常常」與「打一打」兩個詞的意思 —— ⛔ 它不是隨機，是負載相依。
+ *
+ * ⭐ 這一格**沒有放寬**鐵則：一發真的播超過三秒的仍然會被回收
+ *（守衛 `hardCapRefire.test.ts` 的第二條就是釘這一半）。
+ */
+export function noteVfxRefired(ps: object): void {
+  ACTIVE_SINCE.delete(ps);
+}
+
 export function sweepVfxHardCap(
   scene: HardCapScene,
   nowSec: number,

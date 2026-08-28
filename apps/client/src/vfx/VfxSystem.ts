@@ -88,7 +88,7 @@ import {
   purgeImpactPoolOnRoundEnd,
   vfxHardMaxLifeSec,
 } from "./vfxCleanupPolicy";
-import { resetVfxHardCapClocks, sweepVfxHardCap } from "./vfxHardCap";
+import { resetVfxHardCapClocks, sweepVfxHardCap, noteVfxRefired} from "./vfxHardCap";
 import { TelegraphLayer } from "./TelegraphLayer";
 import { resolveTelegraphShape, type TelegraphAbilityLike } from "./telegraphShape";
 import type { TelegraphRelation } from "./telegraphChannel";
@@ -1107,6 +1107,12 @@ export class VfxSystem {
     // stopped), so always restart before firing — pooled instances outlive
     // many plays and must stay re-fireable forever
     ps.start();
+    // ⭐ GH#842 —— **這一發是新的一次演出**，三秒碼表歸零。
+    //    ⚠️ 池化實例重新點燃時 ⛔ 不排空 ⇒ `isAlive()` 一直 true ⇒ 碼表會從
+    //    **第一次**點燃一路數下去 ⇒ 連續戰鬥 3 秒後，硬上限掃描會對**正在播的
+    //    那一發**做 stop()+reset()。那正是 owner 說的「打一打動畫就消失沒播完」。
+    //    ⛔ 這不是放寬鐵則：一發真的播超過三秒的仍然會被回收。
+    noteVfxRefired(ps);
     // ALL of the burst lands on this frame — that IS the impact
     ps.manualEmitCount = Math.max(1, Math.round(scaledBurstCount(doc, scale) * boost));
     return ps;
