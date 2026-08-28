@@ -473,7 +473,31 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
         ? reachTo(sc, self.radius, tgt.radius)
         : self.radius + tgt.radius + 0.1;
     const stop = reach * HOLD_FRACTION;
-    if (distSq(self.pos, tgt.pos) > stop * stop) {
+    const d2 = distSq(self.pos, tgt.pos);
+    // ⭐⭐ spec §25/§29/§31（GH#863）—— **自動**目標的追擊距離上限。
+    //
+    // ⚠️ 只管 `attackTargetAuto`：玩家**自己點的**目標照舊追到天涯海角
+    //   （那是明確意圖，§23 只禁止「自動化決定走去哪」）。
+    // ⛔ `enabled: false`（v3）⇒ 這一段逐位元不存在。
+    //
+    // ⭐ 「遠程⛔不追」是**推導**出來的，⛔ 不是職業判斷（§33）：
+    //   追擊在 `d > reach×0.9` 觸發，貼近在 `d ≤ cap` 才准 ——
+    //   近戰 (reach≈2.8) 兩區間相交於 2.5–3.0；遠程 (reach 8) 7.2 > 3.0 ⇒ 不相交。
+    let chaseBlocked = false;
+    if (nav.attackTargetAuto) {
+      const ap = world.controllerScheme.autoApproach;
+      if (ap.enabled) {
+        // §31：**永遠**不自動追玩家（⛔ 這一條沒有例外，schema 也擋 false）。
+        if (ap.pveOnly && world.champion.has(nav.attackTarget)) chaseBlocked = true;
+        else if (!ap.allowBoss && world.mob.get(nav.attackTarget)?.kind === "boss")
+          chaseBlocked = true; // §32：⛔ 不自動走向危險的王
+        else {
+          const cap = Math.min(reach * ap.maxRangeMult, ap.maxAbsoluteUnits);
+          if (d2 > cap * cap) chaseBlocked = true;
+        }
+      }
+    }
+    if (!chaseBlocked && d2 > stop * stop) {
       nav.moveTarget = { x: tgt.pos.x, z: tgt.pos.z };
     } else {
       nav.moveTarget = null;

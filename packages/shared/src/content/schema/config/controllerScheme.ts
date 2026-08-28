@@ -240,6 +240,19 @@ const zScheme = z
         enabled: z.boolean(),
         /** 觸發上限 ＝ `attackRange × 這個倍率`（spec §29 的 1.8→3.0 ≈ 1.67）。 */
         maxRangeMult: z.number().min(1).max(5),
+        /**
+         * ⭐⭐ **絕對上限（世界單位）** —— 這一格才是「遠程⛔不追」（spec §25）的實作，
+         * 而它**不需要任何職業判斷**（§33 逐字禁止 `if (hero.class === "melee")`）。
+         *
+         * 追擊只在 `距離 > 射程×0.9` 時才觸發，而貼近只在 `距離 ≤ 這一格` 時才准。
+         * ⇒ 兩個區間**會不會相交**，由英雄自己的射程決定：
+         *   · 近戰（有效射程 ≈2.8）：追擊 >2.5 觸發，貼近 ≤3.0 准 ⇒ ⭐ 2.5–3.0 這一段會貼近
+         *   · 遠程（射程 8）：追擊 >7.2 才觸發，而 7.2 > 3.0 ⇒ ⛔ **兩個區間不相交 ⇒ 永遠不追**
+         * ⇒ 同一個數字，兩種原型各自得到 spec 要的行為，⛔ 而程式裡一個 if 都沒有。
+         *
+         * ⚠️ 調大它會讓遠程開始追人。上界 6 是保險絲，⛔ 不是平衡政策。
+         */
+        maxAbsoluteUnits: z.number().min(0).max(6),
         /** ⭐ spec §31：**永遠不自動追玩家**。守衛擋 false。 */
         pveOnly: z.boolean(),
         /** spec §32 預設 false —— 自動走向危險的王多半不是玩家要的。 */
@@ -431,6 +444,7 @@ export const DEFAULT_CONTROLLER_SCHEME: ControllerSchemeEntry = Object.freeze({
   autoApproach: Object.freeze({
     enabled: false,
     maxRangeMult: 1,
+    maxAbsoluteUnits: 0,
     pveOnly: true,
     allowBoss: false,
     requireMoveStickNeutral: true,

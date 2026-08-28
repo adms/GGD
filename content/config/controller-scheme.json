@@ -45,7 +45,8 @@
         "maxRangeMult": 1.0,
         "pveOnly": true,
         "allowBoss": false,
-        "requireMoveStickNeutral": true
+        "requireMoveStickNeutral": true,
+        "maxAbsoluteUnits": 0
       }
     },
     "v4": {
@@ -94,7 +95,8 @@
         "maxRangeMult": 1.67,
         "pveOnly": true,
         "allowBoss": false,
-        "requireMoveStickNeutral": true
+        "requireMoveStickNeutral": true,
+        "maxAbsoluteUnits": 3.0
       }
     }
   }
