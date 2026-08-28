@@ -194,16 +194,23 @@ cmd_tunnel() {
   }
 
   head_ "3. ⭐ edge 真的不發佈埠了嗎（安全性的那一半）"
-  local ports; ports=$(r "cd $REMOTE_REPO && docker ps --filter name=ggd-edge --format '{{.Ports}}'" 2>/dev/null)
-  [ -z "${ports// /}" ] && ok "edge 零發佈埠 —— 主機上沒有任何入口" \
-                        || bad "⛔ edge 仍發佈：$ports（tunnel overlay 沒吃到?）"
+  # ⛔⛔ 第一版問 `docker ps --format '{{.Ports}}'`,而它**同時列出 EXPOSE 與發佈**:
+  #   未發佈時它印 `8080/tcp`,發佈時才是 `0.0.0.0:8088->8080/tcp`。
+  #   ⇒ 我把 EXPOSE 宣告讀成「還在發佈」⇒ ⭐ **一個假紅燈,而 tunnel 其實完全正常**。
+  # ⭐ `docker port <容器>` 只列**真的發佈**的映射 —— 回空就是零發佈。
+  local pub; pub=$(r "cd $REMOTE_REPO && docker port ggd-edge-1" 2>/dev/null | tr -d ' \n')
+  [ -z "$pub" ] && ok "edge 零發佈埠 —— 主機上沒有任何入口（EXPOSE 8080/tcp ⛔ 不算）" \
+                || bad "⛔ edge 仍**發佈**：$pub（tunnel overlay 沒吃到?）"
 
-  head_ "4. 站（從 mini 內部）"
-  r "curl -fsS -m 5 -o /dev/null -w '    edge HTTP %{http_code}\n' http://127.0.0.1:8088/" 2>&1 \
-    || info "（edge 已不發佈埠 ⇒ 從主機連不到是**正確的**,走 docker 內網驗）"
-  r "cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml exec -T cloudflared sh -c 'wget -qO- -T5 http://edge:8080/ >/dev/null && echo OK'" >/dev/null 2>&1 \
-    && ok "cloudflared → edge:8080 走得通（⭐ 那才是 tunnel 實際走的路）" \
-    || warn "cloudflared 連不到 edge:8080"
+  head_ "4. ⭐ cloudflared → edge 走得通嗎（那才是 tunnel 實際走的路）"
+  # ⛔ 第一版在 cloudflared 容器裡跑 `sh -c wget` —— 而它是 **distroless 映像,
+  #   沒有 shell 也沒有 wget** ⇒ 探測本身跑不起來,⭐ 而失敗看起來像「連不到」。
+  # ⭐ 改成開一個 alpine **加入 cloudflared 的網路命名空間**,從**同一個視角**問。
+  r "docker run --rm --network container:ggd-cloudflared-1 alpine:3.21 \
+       wget -qO- -T5 http://edge:8080/" 2>/dev/null | head -c 40 | grep -qi "doctype\|html" \
+    && ok "cloudflared 的網路裡連得到 edge:8080（拿到真的 HTML）" \
+    || bad "⛔ cloudflared 的網路裡連不到 edge:8080"
+  info "（⚠️ 主機的 127.0.0.1:8088 連不到是**正確的** —— edge 已不發佈）"
 
   head_ "下一步"
   info "在 Cloudflare 後台的這個 tunnel 加 Public hostname："
@@ -220,14 +227,31 @@ cmd_tunnel_verify() {
   curl -fsS -m 30 -o /dev/null -w "  bundle.json   HTTP %{http_code}  %{size_download} bytes\n" "https://$host/content/bundle.json" 2>&1
   curl -fsS -m 15 -o /dev/null -w "  whitelist     HTTP %{http_code}\n" "https://$host/api/v1/curation/whitelist" 2>&1
   echo
-  # ⭐ WebSocket:握手回 101 才算通
-  local code
-  code=$(curl -fsS -m 15 -o /dev/null -w '%{http_code}' \
-      -H "Connection: Upgrade" -H "Upgrade: websocket" \
-      -H "Sec-WebSocket-Version: 13" -H "Sec-WebSocket-Key: $(head -c16 /dev/urandom | base64)" \
-      "https://$host/colyseus/" 2>/dev/null || echo 000)
-  [ "$code" = 101 ] && ok "WebSocket 握手回 101 —— ⭐ Colyseus 走得通" \
-                    || bad "⛔ WebSocket 握手回 $code（要 101）—— 去 tunnel 的 Additional application settings 開它"
+  # ⭐⭐ WebSocket 這一條要**對照正式站**,⛔ 不是拿一個絕對值去比。
+  #
+  # ⛔ 第一版打 `/colyseus/` 期望 101,拿到 404 就判 tunnel 壞了。
+  #   ⭐ 而**正式站對同一個請求也回 404** —— 那個路徑在兩邊都不存在,
+  #     我拿了一個不存在的路徑去測,然後把 404 讀成「tunnel 沒開 WebSocket」。
+  #   ⚠️ 真正的 Colyseus 入口是 `/matchmake/...`（見 nginx 的 location 與客戶端）。
+  #
+  # ⭐ 判準:**與正式站比對**。兩邊一樣 ⇒ tunnel 是透明的（那就是要驗的東西）;
+  #   ⛔ 「絕對值等於 101」是我對協定的假設,而它剛剛就是錯的。
+  local ref="${GGD_REF_HOST:-ggd.adms.ai}"
+  local wsp="${GGD_WS_PATH:-/matchmake/joinOrCreate/arena}"
+  _ws() {
+    curl -s -o /dev/null -m 12 -w '%{http_code}' \
+      -H 'Connection: Upgrade' -H 'Upgrade: websocket' \
+      -H 'Sec-WebSocket-Version: 13' -H 'Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==' \
+      "https://$1$wsp" 2>/dev/null
+  }
+  local mine ref_code
+  mine=$(_ws "$host"); ref_code=$(_ws "$ref")
+  if [ "$mine" = "$ref_code" ]; then
+    ok "WebSocket 升級路徑與正式站一致（兩邊都是 HTTP $mine）—— ⭐ tunnel 是透明的"
+  else
+    bad "⛔ WebSocket 升級：本站 $mine ≠ 正式站 $ref_code（$wsp）"
+    info "⇒ 去 tunnel 的 Additional application settings 確認 WebSocket 沒被關掉"
+  fi
   echo
   info "⚠️ 這只證明**路徑通**。真的一場比賽還要玩家實際連一次。"
 }
