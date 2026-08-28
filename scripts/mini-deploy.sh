@@ -153,7 +153,17 @@ cmd_deploy() {
     || die "⛔ 同步後版本對不上（mini=$remote_head 本機=$head_local）"
 
   head_ "2. build（arm64）"
-  r "cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env build" \
+  # ⛔⛔ **裸的 `docker compose build` 會掉版本戳**。
+  #   `GGD_BUILD_STAMP` 是 Makefile 算好再插進 compose 的 build arg,
+  #   而 mini 上沒有 make ⇒ 徽章顯示 `UNSTAMPED-BUILD`
+  #   ⇒ ⭐ **「這是哪一版」失去唯一的答案**（CLAUDE.md 部署協定的地雷 #4,task #66）。
+  #   2026-08-29 實際發生:搬完之後 footer 就是 UNSTAMPED-BUILD。
+  # ⭐ 在**這台**算（有 git、有 tag）,再傳進去 —— ⛔ 不要在 mini 上算,
+  #   它沒有 .git（我們用 rsync 推的是 archive 的內容）。
+  local stamp
+  stamp="$(git -C "$REPO" describe --tags --always --dirty 2>/dev/null || echo "$head_local") $(date -u +%F)"
+  info "版本戳：$stamp"
+  r "cd $REMOTE_REPO && GGD_BUILD_STAMP='$stamp' docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env build" \
     2>&1 | tail -4 | sed 's/^/    /'
   r "cd $REMOTE_REPO && docker image inspect ggd-edge --format '{{.Architecture}}'" 2>/dev/null \
     | grep -q arm64 && ok "映像是 arm64" || warn "⛔ 映像不是 arm64?"
