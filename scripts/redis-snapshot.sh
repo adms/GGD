@@ -75,12 +75,18 @@ STATUS=$("${RCLI[@]}" INFO persistence 2>/dev/null | tr -d '\r' | grep '^rdb_las
 say "落地完成（rdb_last_bgsave_status=ok）"
 
 # ③ 複製出去
-SRC=$(docker inspect -f '{{range .Mounts}}{{if eq .Destination "/data"}}{{.Source}}{{end}}{{end}}' "$C")
-[ -n "$SRC" ] && [ -d "$SRC" ] || die "找不到 Redis 的資料目錄（掛在 /data 的那個）"
+# ⛔⛔ **不要讀 volume 的主機路徑** —— 那在 macOS 上不存在。
+#   `docker inspect .Mounts[].Source` 在 Linux 上是真的主機路徑,
+#   ⭐ 而在 macOS（OrbStack / Docker Desktop）上 volume 住在**Linux VM 裡**
+#     ⇒ 那個路徑在主機的檔案系統上**根本不存在** ⇒ die「找不到資料目錄」。
+#   （2026-08-29 在 mini 上實測到,而它擋下了第一份備份。）
+#
+# ⭐ `docker cp` 兩邊都能用 —— 它走 daemon,⛔ 不假設主機看得到 volume。
 OUT="$DEST/redis_$TS"
 mkdir -p "$OUT"
-cp -a "$SRC/dump.rdb" "$OUT/" 2>/dev/null || die "dump.rdb 複製失敗"
-[ -d "$SRC/appendonlydir" ] && cp -a "$SRC/appendonlydir" "$OUT/" 2>/dev/null || true
+SRC="container:$C:/data"
+docker cp "$C:/data/dump.rdb" "$OUT/dump.rdb" >/dev/null 2>&1 || die "dump.rdb 複製失敗（docker cp）"
+docker cp "$C:/data/appendonlydir" "$OUT/appendonlydir" >/dev/null 2>&1 || true
 
 # ⭐ 驗證落點真的有東西（⛔ 「指令沒報錯」不算）
 SZ=$(du -sb "$OUT" | cut -f1)

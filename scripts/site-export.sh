@@ -122,8 +122,13 @@ UNREADABLE=0; TOTALF=0
 for d in "${PRESENT[@]}" "${CRITICAL_BULK[@]}" "${BULK[@]}"; do
   [ -d "$REPO/data/$d" ] || continue
   # ⚠️ 用 `-readable` 問的是**這個行程**讀不讀得到,⛔ 不是「檔案存不存在」
+  # ⛔⛔ `-readable` 是 **GNU find 專屬**。BSD find（macOS）不認得它,
+  #   而它**不會報錯到 stderr 以外** ⇒ `wc -l` 數到的是錯誤訊息的行數
+  #   ⇒ 2026-08-29 在 mini 上實測:整段印「**0 個檔全部讀得到**」——
+  #     ⭐ 一個**假綠燈**,而這條檢查存在的唯一理由就是抓「讀不到」。
+  # ⭐ `-exec test -r {} \; -print` 兩邊都能用（POSIX）。
   all=$($SUDO find "$REPO/data/$d" -type f 2>/dev/null | wc -l | tr -d ' ')
-  mine=$(find "$REPO/data/$d" -type f -readable 2>/dev/null | wc -l | tr -d ' ')
+  mine=$(find "$REPO/data/$d" -type f -exec test -r {} \; -print 2>/dev/null | wc -l | tr -d ' ')
   TOTALF=$((TOTALF + all)); UNREADABLE=$((UNREADABLE + all - mine))
   [ "$all" -eq "$mine" ] || printf "  %s✗%s %-18s %s/%s 讀不到（擁有者 %s）\n" "$RED" "$RST" "$d" \
       "$((all-mine))" "$all" "$($SUDO find "$REPO/data/$d" -type f -printf '%u:%g\n' 2>/dev/null | sort -u | head -1)"
