@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "343d547d",
+  "fingerprint": "8c745086",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -194,6 +194,7 @@
     "distance",
     "distanceScale",
     "distanceTier",
+    "distanceUnits",
     "dodgesAbilities",
     "dodgesTrueDamage",
     "dragToCaster",

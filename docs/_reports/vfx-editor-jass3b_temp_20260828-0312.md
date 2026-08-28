@@ -542,7 +542,7 @@ endfunction
 | 每跳衰減 **0.0**（w3a data 欄3） | `decay:0.9` | ⚠️ **資料偏離**（GGD 卡面「每跳一次傷害只剩前一次的九成」是 GGD 自己的設計，w3x 是不衰減） |
 | 跳距 area **1800 ＝ 33.0** | `jumpRange:24.0` | ⚠️ 資料偏離 |
 | 奪魔 250/350/450 | `onHitTargets:[spendMana perRank:[250,350,450]]` | ✅ **逐格吻合** |
-| 對 `U00K` 抽乾（99999） | — | ⛔ **MISSING N11**：`spendMana` 沒有「全部」語意（只有固定數字／perRank） |
+| 對 `U00K` 抽乾（99999） | `spendMana pctCurrentMana:1.0` | ✅⚠️ **N11 是假的** —— 2026-08-28 逐行讀 schema 後撤回：`spendMana` **早就有** `pctCurrentMana`（0..1，熾天使之弓 godie-i012 在用）⇒ 「抽乾」＝ `1.0`，⛔ 零個新機制。⭐ 我當時只掃了 `amount`／`pctMaxMana` 兩格就下了「沒有」的結論（CLAUDE.md 記過的同一個錯：能力問題要讀完整份 schema）。⚠️ 仍未接 —— GGD 場上有沒有 `U00K`（邪惡意念集合體）待查 |
 | 指定目標額外 501/1000/1500 | `damageArea maxTargets:1 {damageTier:大}` | ✅ 已出貨（GGD 用「最近一名」代替「指定目標」） |
 | `ogru` **空模型**、生在施法者腳下 | — | ⭐ **正確的翻譯是「什麼都不要畫」** —— 但它告訴我們**每一條電弧的起點都是施法者腳下** ⇒ script 用一發 `fx.prim.lightning.nova-lg @self` 表達這件事是**有出處**的 |
 | WC3 內建鏈鎖閃電的弧線 | 客戶端 `vfxArc` | ⚠️ **待查證**：CLAUDE.md 記過「`vfxArc` 零 emitter ⇒ 28 支雷電技能裡 26 支走不到電弧」。⛔ 我沒有跑測試，⛔ 不宣稱它今天的狀態 —— 但這一支的整個畫面都靠它 |
@@ -559,9 +559,9 @@ endfunction
 | # | 缺的機制 | 一句話 | 誰要 | 建議形狀 |
 |---|---|---|---|---|
 | **N1** | **`spawnModelFx` 的前後位移** | 原作把模型擺在「施法者前方 d」（`PolarProjectionBJ`），而 `spawnModelFx` 的 `anchor` 只有 self/point/target | ①（150u＝2.75）· 全 beam-roll 家族 | ⭐ **`vfx-script@1` 的 `modelFx` 段已經有 `offsetForwardU`** ⇒ 短期走 script；長期把這一格加進 `spawnModelFx`（與 script 共用同一格） |
-| **N3** | **範圍限定的鏡頭震動** | `CameraSetEQNoiseForPlayer` 只對「以施法點為圓心 R 內的英雄的擁有者」生效 | ①（512＝9.39u） | `screenShake` 加 `radius`（`EFFECT_COMMON_SHAPE` 已有 `shape:"circle"+radius`，只是 `applyTo:"all"` 時沒有讀） |
+| ✅**N3**（2026-08-28 落地） | **範圍限定的鏡頭震動** | `CameraSetEQNoiseForPlayer` 只對「以施法點為圓心 R 內的英雄的擁有者」生效 | ①（512＝9.39u） | ⭐ **已落地**：`applyTo:"nearby"`（`cueRecipients` 的新分支 —— 圓內**敵我都算**，⚠️ 而 `shapeTargets` 的 `side` 只有 enemies/allies **兩檔沒有「兩邊」**，`side:"enemies"` 正好漏掉施法者自己）。守衛 `cueNearbyAudience.test.ts`（兩個方向都量） |
 | **N6** | ⭐ **隱藏英雄本體模型（時限）** | `ShowUnitHide` 1 秒：人消失、只剩劍氣 —— 這是 08-04 的招牌 | ②（1.0s） | `status-effect@1` 加 `hideModel:boolean`（渲染側；與 M2 的 tint/alpha 同一格家族） |
-| **N11** | **「抽乾」語意的奪魔** | `SetUnitAbilityLevel(A04I, 9)` ⇒ 99999 ＝ 全部魔力 | ③（對 U00K） | `spendMana.amount` 收 `{resourcePct:1.0}`（`damageLine` 已有 `resourcePct` 的先例） |
+| ~~**N11**~~ | ~~「抽乾」語意的奪魔~~ | ⛔ **2026-08-28 撤回：這一格不是缺口** —— `spendMana.pctCurrentMana`（0..1）出貨中，「抽乾」＝ `1.0`。⭐ 一個**只掃兩欄就下結論**的假前提 | ③ | ⛔ 不必實作 |
 | **M5** | 地形波紋／地形波 | `TerrainDeformationRipple` / `…Wave` | ①②③ | ⛔ **建議豁免**（`screenShake` 近似；體素地板無變形機制） |
 
 **⛔ 不是機制缺口（是資料或接法，今天就改得動）：**

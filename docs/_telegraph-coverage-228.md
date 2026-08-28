@@ -8,8 +8,8 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | verdict | cells | meaning |
 | --- | ---: | --- |
-| ✅ OK | 218 | shape derived from the ability's own authored data |
-| 🟡 AMBIGUOUS | 16 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
+| ✅ OK | 217 | shape derived from the ability's own authored data |
+| 🟡 AMBIGUOUS | 17 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
 | ❌ MISSING | 0 | no derivable shape — **fails the test** |
 | 🟣 PASSIVE | 59 | permanent WC3 passive, never cast, nothing to warn about |
 
@@ -20,9 +20,9 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | castType | cells | shape language |
 | --- | ---: | --- |
 | `self` | 93 | self marker at the caster's feet |
-| `targeted` | 71 | lock (arc at the victim + tether to the caster) — walking does not help |
+| `targeted` | 70 | lock (arc at the victim + tether to the caster) — walking does not help |
 | `—` | 59 | not cast |
-| `ground` | 53 | circle — the real `enemiesInCircle` disc; you can walk out. ⭐ WITH a `damageLine` node: line — the capsule the damage query tests (step sideways) |
+| `ground` | 54 | circle — the real `enemiesInCircle` disc; you can walk out. ⭐ WITH a `damageLine` node: line — the capsule the damage query tests (step sideways) |
 | `skillshot` | 15 | line — the projectile's corridor; step sideways |
 | `dash` | 2 | line — the sweep of the dash body |
 
@@ -196,7 +196,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 傳說的龍騎士 - 勇者小呆 `godie-nbbc` | Q | 08-01 雙龍紋 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 傳說的龍騎士 - 勇者小呆 `godie-nbbc` | W | 08-02 萊丁快速劍 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 傳說的龍騎士 - 勇者小呆 `godie-nbbc` | E | 08-03 龍鬥氣砲咒文 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave.fire maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |
-| 傳說的龍騎士 - 勇者小呆 `godie-nbbc` | R | 08-04 阿邦快速劍X | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 傳說的龍騎士 - 勇者小呆 `godie-nbbc` | R | 08-04 阿邦快速劍X | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
 | 傳說的龍騎士 - 勇者小呆 `godie-nbbc` | EX | 08-002 龍魔人 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 妖狐藏馬 - 南野秀一 `godie-nsjs` | PASSIVE | 18-00 薔薇荊棘之刃 | `—` | — | 🟣 PASSIVE | never cast |
 | 妖狐藏馬 - 南野秀一 `godie-nsjs` | Q | 18-01 風華圓舞陣 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |

@@ -179,9 +179,9 @@
     },
     {
       "key": "radius:tier",
-      "max": 51,
+      "max": 52,
       "layer": "GGD-tier-table",
-      "reason": "owner 2026-08-11「原則上不寫範圍數字」⇒ AOE 走級距(`content/config/aoe-tiers.json`);出貨文件帶著 `radiusTier`。"
+      "reason": "owner 2026-08-11「原則上不寫範圍數字」⇒ AOE 走級距(`content/config/aoe-tiers.json`);出貨文件帶著 `radiusTier`。⭐ 2026-08-28 +1：08-04 阿邦快速劍X 變身態（godie-nbbc.r）拿掉空模板殼之後，落點 AoE（j:28918 `GetUnitsInRangeOfLocAll(250)` = 4.58→級距 4.5「小」）第一次進到出貨形狀 ——⛔ 不是漂移，是它本來就該有而以前被 `tpl-single-strike` 蓋住了。"
     },
     {
       "key": "radius:free-number",
@@ -192,23 +192,23 @@
     },
     {
       "key": "radius:ggd-absent",
-      "max": 91,
+      "max": 90,
       "layer": "⚫無主",
-      "reason": "w3a 有 `area`(範圍技)而出貨側**整棵效果樹找不到任何 radius**。⚠️ 這一批混了兩種:重製時刻意改成單體的,以及**漏接範圍**的 —— 而兩種在 JSON 裡長得一模一樣。",
+      "reason": "w3a 有 `area`(範圍技)而出貨側**整棵效果樹找不到任何 radius**。⚠️ 這一批混了兩種:重製時刻意改成單體的,以及**漏接範圍**的 —— 而兩種在 JSON 裡長得一模一樣。⭐ 2026-08-28 −1：同上一列的另一半（nbbc.r 從『沒有半徑』變成『有半徑』）。",
       "followUp": "逐支對 owner 的新版技能說明(階梯第 1 層):說明寫[範圍]而 JSON 沒有 radius ⇒ 漏接;說明就是單體 ⇒ 在文件裡記一行,這一列的 max 跟著降。"
     },
     {
       "key": "duration:free-number",
-      "max": 31,
+      "max": 27,
       "layer": "⚫無主",
-      "reason": "出貨的 `durationSec` 與 w3a 的持續秒數不同,而**五級距裡根本沒有 duration 這一軸**(damage/cooldown/mana/range/aoe 五張表都沒有它),`config/skill-normalize.json` 的決策點也不含它 ⇒ 每一支的秒數都是逐支手填的自由數字。",
+      "reason": "出貨的 `durationSec` 與 w3a 的持續秒數不同,而**五級距裡根本沒有 duration 這一軸**(damage/cooldown/mana/range/aoe 五張表都沒有它),`config/skill-normalize.json` 的決策點也不含它 ⇒ 每一支的秒數都是逐支手填的自由數字。⭐ 2026-08-28 −4：`_walk_numbers` 開始跳過 cue kinds —— `screenShake.durationSec`（震多久）以前被讀成**技能的持續時間**。⛔ 那 4 筆從來不是技能時長。",
       "followUp": "這一軸要嘛給它一張級距表(⇒ 變成 GGD-tier-table),要嘛承認它是逐支設計值並在文件裡留下出處。⛔ 現況是兩者皆非。"
     },
     {
       "key": "duration:ggd-absent",
-      "max": 195,
+      "max": 199,
       "layer": "⚫無主",
-      "reason": "w3a 宣告了持續時間而出貨側**整棵效果樹沒有任何 durationSec**。⚠️ 同 `radius:ggd-absent`:混了「重製成瞬發」與「漏接持續效果」兩種,而 JSON 裡分不出來。⭐ 另外 w3a 還有 `hero_duration`(對英雄減時)這一格,GGD **一格都沒有** —— 那是一個缺的機制,不只是漏翻。",
+      "reason": "w3a 宣告了持續時間而出貨側**整棵效果樹沒有任何 durationSec**。⚠️ 同 `radius:ggd-absent`:混了「重製成瞬發」與「漏接持續效果」兩種,而 JSON 裡分不出來。⭐ 另外 w3a 還有 `hero_duration`(對英雄減時)這一格,GGD **一格都沒有** —— 那是一個缺的機制,不只是漏翻。⚠️ 2026-08-28 +4：上一列的鏡像。⭐ 這 4 支**本來就沒有**時長，只是以前被 cue 的 `durationSec` 冒名頂替 ⇒ 195 是**低報**，199 才是真的缺口。",
       "followUp": "先做「對英雄/對雜兵分開的持續時間」那一格(w3a 573 支帶值),再逐支對說明分堆。"
     },
     {

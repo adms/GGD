@@ -29,6 +29,7 @@
  * 而 Python 那邊決定「填哪一格」。兩邊分岔就紅 —— 那正是守衛要的。
  */
 import { AOE_TIER_NAMES } from "./aoeTiers";
+import { CUE_KINDS } from "./cooldownTiers";
 import { SKILL_TIER_NAMES, SNAP_POLICIES, type SkillTierName, type SnapPolicy } from "./skillTiers";
 import { SELA, THORNE } from "../sim/content/skeleton";
 
@@ -435,6 +436,13 @@ export function radiusNodes(doc: unknown): RadiusNode[] {
     if (
       !underTemplate &&
       typeof kind === "string" &&
+      // ⭐⭐ GH#838【`radius` 有兩個意思】—— cue 的圓是**觀眾**（誰看得到），
+      //    ⛔ 不是命中（誰被打到）。把它算進來會要求一個 `radiusTier`，而
+      //    `zScreenShake` 是 `.strict()` 不收那一格 ⇒ 一條**兩邊互相打架、
+      //    永遠修不好**的紅（2026-08-28 實際發生，這是同一個誤判的第四個住處：
+      //    `cooldownTiers.ts::mentions` · `tierize.py::_mentions` ＋ `assign`
+      //    · `skill-normalize/plan.ts::coverage` · 這裡）。
+      !CUE_KINDS.has(kind) &&
       typeof r === "number" &&
       Number.isFinite(r) &&
       r > 0

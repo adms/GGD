@@ -28,7 +28,14 @@ export const zScreenShake = z
         "⭐ 0..1 的**正規化**強度，⛔ 不是像素：真正的位移量 = 這個數字 × config.screen-cues@1 的上限。",
       ),
     durationSec: z.number().positive().max(SCREEN_SHAKE_MAX_SEC),
-    applyTo: z.enum(["self", "victim", "all"]).optional(),
+    applyTo: z
+      .enum(["self", "victim", "nearby", "all"])
+      .describe(
+        '⭐ `nearby` ＝ 以圓心為心 `radius` 內的**每一個人**（敵我都算）—— ' +
+          "JASS `ForGroup(GetUnitsInRangeOfLocAll(R), CameraSetEQNoiseForPlayer)`；" +
+          "war3map.j 的 40 次鏡頭噪動裡 **38 次是這個形狀**，⛔ 不是全場。",
+      )
+      .optional(),
   })
   .strict();
 

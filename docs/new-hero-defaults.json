@@ -686,17 +686,17 @@
       "description": "指定單一敵人，施法距離 {{range}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
       "cooldown": {
         "value": 60,
-        "sample": 15,
+        "sample": 14,
         "basis": "slot+castType"
       },
       "manaCost": {
         "value": 144,
-        "sample": 15,
+        "sample": 14,
         "basis": "slot+castType"
       },
       "range": {
         "value": 12,
-        "sample": 15,
+        "sample": 14,
         "basis": "slot+castType"
       },
       "radius": {
@@ -746,13 +746,13 @@
       "description": "在指定地點，施法距離 {{range}}，範圍 {{radius}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
       "cooldown": {
         "value": 60,
-        "sample": 47,
-        "basis": "slot"
+        "sample": 8,
+        "basis": "slot+castType"
       },
       "manaCost": {
         "value": 144,
-        "sample": 34,
-        "basis": "slot"
+        "sample": 8,
+        "basis": "slot+castType"
       },
       "range": {
         "value": 12,

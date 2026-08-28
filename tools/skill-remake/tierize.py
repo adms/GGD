@@ -255,6 +255,13 @@ def damage_leaves(doc):
     return out
 
 
+#: 螢幕回饋三兄弟 —— 它們的 `radius` 是**觀眾**半徑，⛔ 不是命中半徑。
+#: ⚠️ 這份名單與 `content/schema/effects/_shared.ts::refineCueGeometry`、
+#: `content/cooldownTiers.ts::CUE_KINDS` 是同一批 kind（三個住處，⛔ 不是我想分家 ——
+#: TS 那兩份在同一個 package，Python 這份跨語言，沒有共用的辦法）。
+CUE_KINDS = ("screenFlash", "screenShake", "floatingText")
+
+
 def _mentions(node, names):
     """⚠️ **鍵名與 `kind` 值兩種都要看** —— 理由逐字同 `cooldownTiers.ts::mentions`：
     `radiusTier` 是**鍵**而變身是 `{kind:"championForm"}`（一個**值**），
@@ -262,6 +269,12 @@ def _mentions(node, names):
     if isinstance(node, list):
         return any(_mentions(x, names) for x in node)
     if not isinstance(node, dict):
+        return False
+    # ⭐⭐ GH#838 —— `radius` 有兩個意思，這一整支子樹要跳過（鏡射
+    #    `cooldownTiers.ts::mentions` 的同一段）：`damageArea.radius` 說「誰被打到」，
+    #    `screenShake.radius`（applyTo:"nearby"）說「誰看得到」。⛔ 兩邊分岔的症狀是
+    #    「某一支技能的冷卻莫名其妙變兩倍」（2026-08-28 在 09-04 龜派實際發生）。
+    if node.get("kind") in CUE_KINDS:
         return False
     for k in names:
         if node.get(k) is not None:
@@ -561,9 +574,12 @@ def _assign_geometry_tiers(doc, grids, log):
 
     ⭐ 哪些節點可以掛 `radiusTier` 是**推導**的，⛔ 不是一張名單：
       · 技能**頂層**（`ability@1` 有這一格）
-      · 任何 **effect 節點**（有 `kind`）—— 實測 `schema/effects/` 裡每一份帶
-        `radius:` 的檔案**都**帶 `radiusTier`，所以「有 kind + 有 radius」等價於
-        「Zod 收得下」。
+      · 任何 **effect 節點**（有 `kind`）—— 除了 {@link CUE_KINDS}。
+        ⚠️⚠️ 這裡在 2026-08-28 之前寫著「實測 `schema/effects/` 裡每一份帶 `radius:`
+        的檔案**都**帶 `radiusTier`，所以『有 kind + 有 radius』等價於『Zod 收得下』」
+        —— ⭐ **那句實測過期了**：`screenShake`／`screenFlash`／`floatingText`
+        有 `radius` 而**沒有** `radiusTier`（它們的圓是觀眾，不是命中）。
+        一句被散文守著的量測活過了保存期限，而沒有任何東西變紅（第三守則）。
     ⛔ **不碰** `template.params.radius`：那一格的單位是 **wc3u**
       （`tpl-ground-nova` 的 `params.radius.unit == "wc3u"`，出貨值 224.5），
       而級距表的單位是場地單位（決鬥區半徑 24）。填進去 = 圈從 224.5 wc3u 變成
@@ -580,6 +596,11 @@ def _assign_geometry_tiers(doc, grids, log):
     grid_r = [float(grids.radius[t]) for t in TIER_NAMES]
 
     def assign(node):
+        # ⭐ GH#838 —— cue 的 `radius` 是觀眾半徑：它**沒有** `radiusTier` 這一格
+        #    （`zScreenShake` 是 `.strict()` ⇒ 蓋下去內容當場驗不過），而且級距表
+        #    的單位是平衡值、cue 的是 JASS 逐字換算（512wc3u=9.39）。
+        if node.get("kind") in CUE_KINDS:
+            return
         r = node.get("radius")
         if node.get("radiusTier") is None and isinstance(r, (int, float)) and r > 0:
             i = nearest_index(float(r), grid_r)

@@ -53,6 +53,12 @@ export interface BlinkVariant {
    *   · `"caster"`     集結到施法者身邊（3 支，配 `applyTo:"target"`）
    */
   to: "point" | "targetUnit" | "caster";
+  /**
+   * ⭐【固定距離】GH#838 —— 落點＝從施法者朝目的地方向走這麼遠（JASS
+   * `PolarProjectionBJ` ＋ `SetUnitPositionLoc`）。與 `stopShortUnits` 互斥。
+   * 缺席 ⇒ 走到目的地（逐位元同以前）。
+   */
+  distanceUnits?: number;
   /** 誰移動：施法者（預設），或每一個解算出來的目標（集結／拉人）。 */
   applyTo?: "self" | "target";
   /**

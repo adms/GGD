@@ -159,6 +159,15 @@ function mentions(node: unknown, names: readonly string[]): boolean {
   if (node === null || typeof node !== "object") return false;
   const rec = node as Record<string, unknown>;
   const kind = rec["kind"];
+  // ⭐⭐【`radius` 有兩個意思】GH#838 —— 這一整支子樹要跳過。
+  //    `damageArea.radius` 回答「**誰被打到**」⇒ 它讓一支技能變成範圍技。
+  //    `screenShake.radius`（`applyTo:"nearby"`）回答「**誰看得到**」——
+  //    一格鏡頭震動不會多傷到任何人，⛔ 卻長得跟前者一模一樣。
+  //    2026-08-28 實測：09-04 龜派補上 N3 的範圍限定鏡頭噪動之後，
+  //    `cooldownShapeOf` 立刻把它從「單體」改判成「範圍」⇒ `resolveCooldownTier`
+  //    把冷卻 **60 → 120**。⭐ 一個純視覺的忠實度修正**靜靜地把冷卻加倍**，
+  //    而卡面、schema、註冊表沒有一處會紅（tierRawParity 是唯一叫的）。
+  if (typeof kind === "string" && CUE_KINDS.has(kind)) return false;
   for (const k of names) {
     if (rec[k] !== undefined) return true;
     if (kind === k) return true;
@@ -166,6 +175,13 @@ function mentions(node: unknown, names: readonly string[]): boolean {
   for (const v of Object.values(rec)) if (mentions(v, names)) return true;
   return false;
 }
+
+/**
+ * 螢幕回饋三兄弟 —— 它們的 `radius` 是**觀眾**半徑，⛔ 不是命中半徑。
+ * ⚠️ 這份名單與 `_shared.ts::refineCueGeometry` 管的是同一批 kind；
+ * 兩邊分岔的那一天，症狀會是「某一支技能的冷卻莫名其妙變兩倍」。
+ */
+export const CUE_KINDS: ReadonlySet<string> = new Set(["screenFlash", "screenShake", "floatingText"]);
 
 /**
  * 一支技能該查哪一張表。

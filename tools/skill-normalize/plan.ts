@@ -69,7 +69,7 @@ import {
   displacementTiersFromDoc,
   minBodyRadiusFromConfigs,
 } from "../../packages/shared/src/content/displacementTiers";
-import { cooldownTiersFromDoc, cooldownShapeOf } from "../../packages/shared/src/content/cooldownTiers";
+import { CUE_KINDS, cooldownTiersFromDoc, cooldownShapeOf } from "../../packages/shared/src/content/cooldownTiers";
 import { damageTiersFromDoc } from "../../packages/shared/src/content/damageTiers";
 import { tierSnapFromDoc, headlineDamage } from "../../packages/shared/src/content/tierSnap";
 import { lowDamageCells, placeAbility } from "../../packages/shared/src/content/lowDamageCells";
@@ -388,6 +388,11 @@ function coverage(def: unknown): { value: number; basis: string; lineOnly: boole
     }
     if (n === null || typeof n !== "object") return;
     const rec = n as Record<string, unknown>;
+    // ⭐ GH#838 —— cue 的 `radius` 是**觀眾**半徑，⛔ 不是命中半徑。把它算進
+    //    「這支技能的範圍」會讓正規化閘要求一個 `radiusTier`，而 `zScreenShake`
+    //    是 `.strict()` 根本不收那一格 ⇒ 一條**永遠修不好**的紅（2026-08-28 實際發生：
+    //    閘說「補級別」、補下去內容驗證就拒絕，兩邊互相打架）。
+    if (typeof rec["kind"] === "string" && CUE_KINDS.has(rec["kind"] as string)) return;
     for (const k of COVERAGE_KEYS) {
       const v = numOf(rec[k]);
       if (v !== undefined && v > best) {

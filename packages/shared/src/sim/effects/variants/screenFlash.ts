@@ -33,6 +33,10 @@ export interface ScreenFlashVariant {
    *   · `victim`      —— 這一段解出來的目標
    *   · `all`         —— 全場（⚠️ 只給真正的全場事件，例如殭屍王登場）
    */
+  /**
+   * ⭐ `nearby` ＝ 圓心 `radius` 內的每一個人（敵我都算）—— JASS
+   * `CameraSetEQNoiseForPlayer` 的主流形狀（40 次裡 38 次）。
+   */
   applyTo?: "self" | "victim" | "all";
   /**
    * ⭐ 劇本指定的演出：豁免 `config.screen-fx@1` 的全域上限（owner 2026-08-23 裁決 (a)）。

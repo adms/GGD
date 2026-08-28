@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_5d42c0ef546a",
+    "contentVersion": "cv_72c74e9ce85a",
     "collections": {
       "champions": {
-        "hash": "60795c611f42",
+        "hash": "9640f4417937",
         "count": 71
       },
       "abilities": {
-        "hash": "cb0510ea0528",
+        "hash": "b00af2e75175",
         "count": 421
       },
       "items": {
@@ -58,11 +58,11 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "ade9cd671c18",
+        "hash": "ea27219f2775",
         "count": 46
       },
       "vfx-scripts": {
-        "hash": "1346cbf400ec",
+        "hash": "96ce70e76242",
         "count": 10
       }
     },
@@ -93,7 +93,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "343d547d",
+    "fingerprint": "8c745086",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -287,6 +287,7 @@
       "distance",
       "distanceScale",
       "distanceTier",
+      "distanceUnits",
       "dodgesAbilities",
       "dodgesTrueDamage",
       "dragToCaster",
@@ -1382,7 +1383,7 @@
     "note": "出貨內容**實際用了**哪些值。⚠️ 與 runtimeCapabilities 不同：那一份說引擎做得到什麼，這一份說內容裡有哪些合法的 id。⛔ 填一個不在這裡的 vfxKey，技能照放但畫面上什麼都不會出現。",
     "ability": {
       "count": 421,
-      "fromTemplate": 86,
+      "fromTemplate": 85,
       "templates": [
         {
           "id": "tpl-barrier-domain",
@@ -2513,13 +2514,15 @@
               "type": "number",
               "default": 6,
               "min": 1,
-              "max": 12
+              "max": 12,
+              "origin": "j:31926 `exitwhen udg_TurtlePowerCounter > 6` —— 迴圈跑 counter=1..6 ⇒ **6 具**（09-04 龜派 h006）。⚠️ 08-03 龍鬥氣砲咒文（A05J j:28838）的同型迴圈是 10 具 ⇒ 那一支要逐支覆寫 `count:10`，⛔ 不是改這一格。"
             },
             "spacing": {
               "type": "number",
-              "default": 2,
+              "default": 3.67,
               "min": 0.5,
-              "max": 48
+              "max": 48,
+              "origin": "j:31926 `exitwhen udg_TurtlePowerCounter > 6` ＋ j:31927 `PolarProjectionBJ(LocPoint1, (counter * **200.00**), …)` —— 09-04 龜派氣功的 h006 火柱逐格量到 **200 wc3u**。⭐ 換算是 `GGD_PER_WC3 = 11/600`（templates/expand.ts:50）⇒ 200 × 11/600 = **3.67**。⚠️⚠️ 2026-08-28 之前這一格是 **2**，來自「200 ÷ 100」—— 一個**憑空的除數**（本專案沒有任何地方用 ÷100 換算），而 templateOriginBaseline 的 reason 欄自己記著這件事卻沒有人回頭改：⭐ 一句被散文守著的更正活過了它的保存期限。⚠️ 已知的二階偏差（⛔ 不修，記在這裡免得下一輪當成新發現）：原作的第 k 具在 `k×200`（k 從 **1** 起算 ⇒ 200…1200），GGD 是錨點 + `spacing×k`（k 從 0）⇒ 配上 `offsetForwardU:2.75`(150u) 之後整條線比原作近 50 wc3u（≈0.9 GGD-u）。"
             },
             "lifeSec": {
               "type": "number",
@@ -3894,6 +3897,7 @@
         "fx.prim.lightning.dash",
         "fx.prim.lightning.explosion-lg",
         "fx.prim.lightning.nova",
+        "fx.prim.lightning.nova-lg",
         "fx.prim.lightning.pulse",
         "fx.prim.lightning.pulse-lg",
         "fx.prim.lightning.pulse-sm",
@@ -4151,12 +4155,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "343d547d",
+    "engineFingerprint": "8c745086",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 343d547d —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 8c745086 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -4945,5 +4949,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "5547809a6594"
+  "profileDigest": "6348d00730a7"
 }

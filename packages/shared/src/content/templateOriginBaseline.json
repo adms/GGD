@@ -160,12 +160,10 @@
       ]
     },
     "tpl-locust-line": {
-      "reason": "⭐ `census:` 是這一族的**分群**出處(`pnpm locust:build` 從 236 隻 dummy × 644 個 JASS 生成點,用①有沒有 SetUnitPosition ②生成點在不在 loop 裡 兩根軸分出四群)——⛔ 但分群不是**每一格數字**的出處。回填法＝該群 exemplar rawcode 的生成點行號逐格貼。⚠️⚠️ 已知這張表上至少有一格是**錯的**:`spacing` 的 2 來自「200 wc3u ÷100」,而本專案的換算是 `GGD_PER_WC3 = 11/600`(templates/expand.ts:50)⇒ 200 wc3u = **3.67**。⇒ ⛔ 這一族的數字不可以再被引用成「原作量到的」,直到有人逐格重算。",
+      "reason": "⭐ `census:` 是這一族的**分群**出處(`pnpm locust:build` 從 236 隻 dummy × 644 個 JASS 生成點,用①有沒有 SetUnitPosition ②生成點在不在 loop 裡 兩根軸分出四群)——⛔ 但分群不是**每一格數字**的出處。回填法＝該群 exemplar rawcode 的生成點行號逐格貼。⚠️⚠️ 已知這張表上至少有一格是**錯的**:`spacing` 的 2 來自「200 wc3u ÷100」,而本專案的換算是 `GGD_PER_WC3 = 11/600`(templates/expand.ts:50)⇒ 200 wc3u = **3.67**。⇒ ⛔ 這一族的數字不可以再被引用成「原作量到的」,直到有人逐格重算。⭐ 2026-08-28 已重算兩格:`spacing` 2→**3.67**、`count` 6 各自補上 j: 出處(見模板檔)。⛔ 其餘三格(modelKey/path/lifeSec)仍未重算。",
       "params": [
         "modelKey",
         "path",
-        "count",
-        "spacing",
         "lifeSec"
       ]
     },

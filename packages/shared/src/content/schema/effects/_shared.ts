@@ -337,13 +337,27 @@ export function refineCueGeometry(
   e: Extract<EffectDef, { kind: "screenFlash" | "screenShake" | "floatingText" }>,
   ctx: z.RefinementCtx,
 ): void {
-  if (e.shape === "circle" && (e.applyTo ?? "self") !== "victim") {
+  // ⭐ GH#838 N3 —— `nearby` 也讀那個圓（`cueRecipients` 的新分支：圓內敵我都算）。
+  //    ⚠️ 反過來也要成立：`nearby` **沒有**圓就沒有「範圍限定」可言 ⇒ 那是一個
+  //    看起來限了範圍、實際退化成「上游解析好的名單」的宣稱（同一個病的鏡像）。
+  const READS_CIRCLE = new Set(["victim", "nearby"]);
+  const mode = (e as { applyTo?: string }).applyTo ?? "self";
+  if (e.shape === "circle" && !READS_CIRCLE.has(mode)) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["shape"],
       message:
-        `applyTo:"${e.applyTo ?? "self"}" 讀不到 shape:"circle" —— 只有 applyTo:"victim" 會去解那個圓，` +
+        `applyTo:"${mode}" 讀不到 shape:"circle" —— 只有 applyTo:"victim"／"nearby" 會去解那個圓，` +
         "現在這一格是一個看起來有設定範圍、其實沒有人讀的圓",
+    });
+  }
+  if (mode === "nearby" && e.shape !== "circle") {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["applyTo"],
+      message:
+        'applyTo:"nearby" 需要 shape:"circle" ＋ radius —— 沒有圓的「附近」' +
+        "會退化成上游解析好的名單，而那與 applyTo:\"victim\" 逐位元相同（一個看起來限了範圍、其實沒限的宣稱）",
     });
   }
 }

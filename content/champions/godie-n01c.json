@@ -224,7 +224,7 @@
       "provenance": "w3x-import",
       "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n小呆獨自思考和特訓中，所創出的新阿邦式快速劍，將A式(Arrow)與B式(Break)兩種快速劍同時使用(A+B)，造成威力強大的兩段式傷害( X ) ，造成一直線敵人{{dmg}}點傷害，{{range}}距離交叉在X中給予(技能等級*180% [AP])的額外傷害，是個令人錯愕的超級必殺劍法。",
       "slot": "R",
-      "castType": "targeted",
+      "castType": "ground",
       "maxRank": 3,
       "cooldown": [
         60.0,
@@ -249,9 +249,8 @@
         {
           "kind": "blink",
           "shape": "single",
-          "to": "targetUnit",
+          "to": "point",
           "applyTo": "self",
-          "stopShortUnits": 1.8,
           "onArrive": [
             {
               "kind": "spawnVfx",
@@ -259,8 +258,8 @@
               "at": "point"
             },
             {
-              "kind": "damage",
-              "damageType": "physical",
+              "kind": "damageArea",
+              "damageType": "true",
               "amount": {
                 "damageTier": "小",
                 "ratios": [
@@ -269,18 +268,22 @@
                     "coeff": 1.8
                   }
                 ]
-              }
+              },
+              "radius": 4.5,
+              "radiusTier": "小"
             }
-          ]
+          ],
+          "distanceUnits": 10.08
         }
       ],
       "vfxKey": "fx.prim.physical.slash-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.833,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "中"
+      "manaCostTier": "中",
+      "cooldownShape": "單體"
     }
   },
   "skillOrder": [

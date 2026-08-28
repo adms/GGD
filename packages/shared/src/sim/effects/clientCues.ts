@@ -58,12 +58,46 @@ const clamp = (v: number, lo: number, hi: number): number => (v < lo ? lo : v > 
  */
 export function cueRecipients(
   e: { shape: "single" | "circle"; radius?: number; side?: "enemies" | "allies"; maxTargets?: number },
-  applyTo: "self" | "victim" | "all" | undefined,
+  applyTo: "self" | "victim" | "nearby" | "all" | undefined,
   ctx: EffectContext,
 ): { subjects: EntityId[]; broadcast: boolean } {
   if (applyTo === "all") return { subjects: [], broadcast: true };
+  if (applyTo === "nearby") return { subjects: nearbyBothSides(e, ctx), broadcast: false };
   if (applyTo === "victim") return { subjects: shapeTargets(e, ctx), broadcast: false };
   return { subjects: [ctx.caster], broadcast: false };
+}
+
+/**
+ * ⭐【範圍限定的觀眾】GH#838 N3 —— 圓心 `radius` 內的**每一個人**，敵我都算。
+ *
+ * ⚠️ 為什麼需要它：`shapeTargets` 的 `side` 只有 `enemies`／`allies` 兩檔
+ * （省略 ＝ 友方），⛔ **沒有「兩邊」** —— 那對傷害是對的（傷害一定選邊），
+ * 對**觀眾**是錯的：JASS 的
+ * `ForGroup(GetUnitsInRangeOfLocAll(R), CameraSetEQNoiseForPlayer)` 連施法者
+ * 自己的玩家都會震，而 `side:"enemies"` 正好把他排除掉。
+ *
+ * ⛔ **不在這裡重新發明「圓怎麼取人」**（本檔上游 `shapeTargets` 的檔頭逐字
+ * 禁止）—— 這裡只是把同一支函式跑兩次再併起來。
+ *
+ * purity：兩邊各自已是全序，併集按 id 重排（⛔ 不靠 Set 的插入序）。
+ */
+function nearbyBothSides(
+  e: { shape: "single" | "circle"; radius?: number; side?: "enemies" | "allies"; maxTargets?: number },
+  ctx: EffectContext,
+): EntityId[] {
+  // `single` 沒有圓可言 ⇒ 退回上游解析好的名單（與 `victim` 同義），
+  // ⛔ 不要回空陣列：那會讓一支忘了寫 shape:"circle" 的技能**靜默無聲**。
+  if (e.shape !== "circle") return shapeTargets(e, ctx);
+  const enemies = shapeTargets({ ...e, side: "enemies" }, ctx);
+  const allies = shapeTargets({ ...e, side: "allies" }, ctx);
+  const seen = new Set<EntityId>();
+  const out: EntityId[] = [];
+  for (const id of [...enemies, ...allies]) {
+    if (seen.has(id)) continue;
+    seen.add(id);
+    out.push(id);
+  }
+  return out.sort((a, b) => a - b);
 }
 
 

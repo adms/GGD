@@ -24,5 +24,9 @@ export interface ScreenShakeVariant {
   amplitude: number;
   durationSec: number;
   /** 誰的畫面會震。語意與 `screenFlash.applyTo` 逐字相同。 */
-  applyTo?: "self" | "victim" | "all";
+  /**
+   * ⭐ `nearby` ＝ 圓心 `radius` 內的每一個人（敵我都算）—— JASS
+   * `CameraSetEQNoiseForPlayer` 的主流形狀（40 次裡 38 次）。
+   */
+  applyTo?: "self" | "victim" | "nearby" | "all";
 }

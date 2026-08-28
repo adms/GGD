@@ -352,24 +352,6 @@
       "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
     },
     {
-      "id": "fx.prim.holy.nova-lg",
-      "kind": "vfx",
-      "hash": "5ad389d444aaf696c31cdd1a5fff25b511380b9a",
-      "risk": 12,
-      "reasons": [
-        "6 支上架技能引用（R/EX ×2 加權後 risk 12）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e002.r",
-        "godie-e00l.r",
-        "godie-etyr.r",
-        "godie-hpb1.r",
-        "godie-o02p.r",
-        "godie-udea.r"
-      ]
-    },
-    {
       "id": "fx.prim.physical.beam",
       "kind": "vfx",
       "hash": "6c48fc5bdf8424693c76e71cecaa8302b3ae7a7d",
@@ -466,6 +448,23 @@
         "godie-e00l.ex"
       ],
       "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
+    },
+    {
+      "id": "fx.prim.holy.nova-lg",
+      "kind": "vfx",
+      "hash": "5ad389d444aaf696c31cdd1a5fff25b511380b9a",
+      "risk": 10,
+      "reasons": [
+        "5 支上架技能引用（R/EX ×2 加權後 risk 10）",
+        "未審"
+      ],
+      "refs": [
+        "godie-e002.r",
+        "godie-e00l.r",
+        "godie-etyr.r",
+        "godie-hpb1.r",
+        "godie-o02p.r"
+      ]
     },
     {
       "id": "fx.prim.lightning.beam-flat",
@@ -1016,6 +1015,21 @@
       "refs": [
         "godie-o02l.passive",
         "godie-ofar.passive"
+      ],
+      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
+    },
+    {
+      "id": "fx.prim.lightning.nova-lg",
+      "kind": "vfx",
+      "hash": "995aa3ca7b54dfb9f091ad68b171ff8d3d3bed38",
+      "risk": 6,
+      "reasons": [
+        "1 支上架技能引用（R/EX ×2 加權後 risk 2）",
+        "抱怨族「閃電/雷電」+4",
+        "未審"
+      ],
+      "refs": [
+        "godie-udea.r"
       ],
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
@@ -1890,18 +1904,6 @@
       "id": "fx.prim.ki.bolt",
       "kind": "vfx",
       "hash": "7f2f7c22828a03d2191f25ce5069927fb8f8a53a",
-      "risk": 4,
-      "reasons": [
-        "抱怨族「閃電/雷電」+4",
-        "未審"
-      ],
-      "refs": [],
-      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
-    },
-    {
-      "id": "fx.prim.lightning.nova-lg",
-      "kind": "vfx",
-      "hash": "995aa3ca7b54dfb9f091ad68b171ff8d3d3bed38",
       "risk": 4,
       "reasons": [
         "抱怨族「閃電/雷電」+4",

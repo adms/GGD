@@ -2872,17 +2872,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       + "⛔ 不是 `screenShake` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
       + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
       + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
-      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
-  },
-  "field:abilities.effects[]#screenShake.radius": {
-    status: "landing",
-    since: "2026-08-22",
-    why:
-      "⭐ 這一格來自 `EFFECT_COMMON_SHAPE`（每一個 effect kind 都被迫帶著的公共外殼），"
-      + "⛔ 不是 `screenShake` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
-      + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
-      + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
-      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
+      + "的真實需求 —— ⚠️⚠️ 2026-08-28 更新:同族的 `radius` 與 `shape=circle` **已經被反駁掉了**(GH#838 N3 `applyTo:nearby`,那兩列已刪)。⭐ 但這一格還沒有:`nearby` 的語意是「圓內**敵我都算**」⇒ 它刻意**不讀** `side`／`maxTargets`(`side:enemies` 正好會漏掉施法者自己)。要反駁這一列,要拿出一個「只有某一邊看得到」或「只給最近 N 個人」的真實需求。",
   },
   "field:abilities.effects[]#screenShake.side": {
     status: "landing",
@@ -2892,7 +2882,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       + "⛔ 不是 `screenShake` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
       + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
       + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
-      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
+      + "的真實需求 —— ⚠️⚠️ 2026-08-28 更新:同族的 `radius` 與 `shape=circle` **已經被反駁掉了**(GH#838 N3 `applyTo:nearby`,那兩列已刪)。⭐ 但這一格還沒有:`nearby` 的語意是「圓內**敵我都算**」⇒ 它刻意**不讀** `side`／`maxTargets`(`side:enemies` 正好會漏掉施法者自己)。要反駁這一列,要拿出一個「只有某一邊看得到」或「只給最近 N 個人」的真實需求。",
   },
   "field:abilities.effects[]#screenShake.maxTargets": {
     status: "landing",
@@ -2902,13 +2892,27 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       + "⛔ 不是 `screenShake` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
       + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
       + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
-      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
+      + "的真實需求 —— ⚠️⚠️ 2026-08-28 更新:同族的 `radius` 與 `shape=circle` **已經被反駁掉了**(GH#838 N3 `applyTo:nearby`,那兩列已刪)。⭐ 但這一格還沒有:`nearby` 的語意是「圓內**敵我都算**」⇒ 它刻意**不讀** `side`／`maxTargets`(`side:enemies` 正好會漏掉施法者自己)。要反駁這一列,要拿出一個「只有某一邊看得到」或「只給最近 N 個人」的真實需求。",
   },
-  "enum:abilities.effects[]#screenShake.shape=circle": {
+  "enum:abilities.cooldownShape=範圍": {
     status: "landing",
-    since: "2026-08-22",
+    since: "2026-08-28",
     why:
-      "⭐ E1 硬約束逼每一個 kind 帶 `shape`，而首批內容三支全部是 `single`。⚠️ `circle` 對 `screenShake` 要等到有一支技能真的需要「一圈各發一份」才會被用到。⛔ 零採用是**約束的形狀**，不是缺口。",
+      "⭐ `cooldownShape` 是**手填的覆寫**,而它存在的理由就是「自動判形猜錯的時候」"
+      + "（`cooldownShapeOf`:手填 > championForm > radius/radiusTier > 單體）。"
+      + "⇒ 自動判形猜對的時候**沒有人需要手填** —— 一支真的範圍技會自己被判成「範圍」。"
+      + "⚠️ 所以這兩個值零採用是**這個欄位的設計**,⛔ 不是缺口:只有`單體`會被手填"
+      + "（2026-08-28 08-04 阿邦快速劍X 兩形態:落點 4.58u 是**衝刺落地的濺射**,"
+      + "⛔ 不是一支控場範圍技,而自動判形會把冷卻從 60 翻成 120）。"
+      + "⭐ 要反駁它:拿出一支「自動判形說單體、而它其實是範圍/變身」的技能。",
+  },
+  "enum:abilities.cooldownShape=變身": {
+    status: "landing",
+    since: "2026-08-28",
+    why:
+      "⭐ 同上一列（`cooldownShape` 只在自動判形猜錯時才手填）。"
+      + "⚠️ `變身` 這一格更難用到:`championForm` 是一個 **kind**,"
+      + "而 `cooldownShapeOf` 掃 kind 值 ⇒ 變身技一定自己被判對。",
   },
   "field:abilities.effects[]#floatingText.condition": {
     status: "landing",
@@ -2918,7 +2922,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       + "⛔ 不是 `floatingText` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
       + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
       + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
-      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
+      + "的真實需求 —— ⚠️⚠️ 2026-08-28 更新:同族的 `radius` 與 `shape=circle` **已經被反駁掉了**(GH#838 N3 `applyTo:nearby`,那兩列已刪)。⭐ 但這一格還沒有:`nearby` 的語意是「圓內**敵我都算**」⇒ 它刻意**不讀** `side`／`maxTargets`(`side:enemies` 正好會漏掉施法者自己)。要反駁這一列,要拿出一個「只有某一邊看得到」或「只給最近 N 個人」的真實需求。",
   },
   "field:abilities.effects[]#floatingText.radius": {
     status: "landing",
@@ -2928,7 +2932,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       + "⛔ 不是 `floatingText` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
       + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
       + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
-      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
+      + "的真實需求 —— ⚠️⚠️ 2026-08-28 更新:同族的 `radius` 與 `shape=circle` **已經被反駁掉了**(GH#838 N3 `applyTo:nearby`,那兩列已刪)。⭐ 但這一格還沒有:`nearby` 的語意是「圓內**敵我都算**」⇒ 它刻意**不讀** `side`／`maxTargets`(`side:enemies` 正好會漏掉施法者自己)。要反駁這一列,要拿出一個「只有某一邊看得到」或「只給最近 N 個人」的真實需求。",
   },
   "field:abilities.effects[]#floatingText.side": {
     status: "landing",
@@ -2938,7 +2942,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       + "⛔ 不是 `floatingText` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
       + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
       + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
-      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
+      + "的真實需求 —— ⚠️⚠️ 2026-08-28 更新:同族的 `radius` 與 `shape=circle` **已經被反駁掉了**(GH#838 N3 `applyTo:nearby`,那兩列已刪)。⭐ 但這一格還沒有:`nearby` 的語意是「圓內**敵我都算**」⇒ 它刻意**不讀** `side`／`maxTargets`(`side:enemies` 正好會漏掉施法者自己)。要反駁這一列,要拿出一個「只有某一邊看得到」或「只給最近 N 個人」的真實需求。",
   },
   "field:abilities.effects[]#floatingText.maxTargets": {
     status: "landing",
@@ -2948,7 +2952,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       + "⛔ 不是 `floatingText` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
       + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
       + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
-      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
+      + "的真實需求 —— ⚠️⚠️ 2026-08-28 更新:同族的 `radius` 與 `shape=circle` **已經被反駁掉了**(GH#838 N3 `applyTo:nearby`,那兩列已刪)。⭐ 但這一格還沒有:`nearby` 的語意是「圓內**敵我都算**」⇒ 它刻意**不讀** `side`／`maxTargets`(`side:enemies` 正好會漏掉施法者自己)。要反駁這一列,要拿出一個「只有某一邊看得到」或「只給最近 N 個人」的真實需求。",
   },
   "enum:abilities.effects[]#floatingText.shape=circle": {
     status: "landing",
@@ -3017,7 +3021,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       + "⛔ 不是 `spawnModelFx` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
       + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
       + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
-      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
+      + "的真實需求 —— ⚠️⚠️ 2026-08-28 更新:同族的 `radius` 與 `shape=circle` **已經被反駁掉了**(GH#838 N3 `applyTo:nearby`,那兩列已刪)。⭐ 但這一格還沒有:`nearby` 的語意是「圓內**敵我都算**」⇒ 它刻意**不讀** `side`／`maxTargets`(`side:enemies` 正好會漏掉施法者自己)。要反駁這一列,要拿出一個「只有某一邊看得到」或「只給最近 N 個人」的真實需求。",
   },
   "field:abilities.effects[]#spawnModelFx.radius": {
     status: "landing",
@@ -3027,7 +3031,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       + "⛔ 不是 `spawnModelFx` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
       + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
       + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
-      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
+      + "的真實需求 —— ⚠️⚠️ 2026-08-28 更新:同族的 `radius` 與 `shape=circle` **已經被反駁掉了**(GH#838 N3 `applyTo:nearby`,那兩列已刪)。⭐ 但這一格還沒有:`nearby` 的語意是「圓內**敵我都算**」⇒ 它刻意**不讀** `side`／`maxTargets`(`side:enemies` 正好會漏掉施法者自己)。要反駁這一列,要拿出一個「只有某一邊看得到」或「只給最近 N 個人」的真實需求。",
   },
   "field:abilities.effects[]#spawnModelFx.side": {
     status: "landing",
@@ -3037,7 +3041,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       + "⛔ 不是 `spawnModelFx` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
       + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
       + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
-      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
+      + "的真實需求 —— ⚠️⚠️ 2026-08-28 更新:同族的 `radius` 與 `shape=circle` **已經被反駁掉了**(GH#838 N3 `applyTo:nearby`,那兩列已刪)。⭐ 但這一格還沒有:`nearby` 的語意是「圓內**敵我都算**」⇒ 它刻意**不讀** `side`／`maxTargets`(`side:enemies` 正好會漏掉施法者自己)。要反駁這一列,要拿出一個「只有某一邊看得到」或「只給最近 N 個人」的真實需求。",
   },
   "field:abilities.effects[]#spawnModelFx.maxTargets": {
     status: "landing",
@@ -3047,7 +3051,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       + "⛔ 不是 `spawnModelFx` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
       + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
       + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
-      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
+      + "的真實需求 —— ⚠️⚠️ 2026-08-28 更新:同族的 `radius` 與 `shape=circle` **已經被反駁掉了**(GH#838 N3 `applyTo:nearby`,那兩列已刪)。⭐ 但這一格還沒有:`nearby` 的語意是「圓內**敵我都算**」⇒ 它刻意**不讀** `side`／`maxTargets`(`side:enemies` 正好會漏掉施法者自己)。要反駁這一列,要拿出一個「只有某一邊看得到」或「只給最近 N 個人」的真實需求。",
   },
   "enum:abilities.effects[]#spawnModelFx.shape=circle": {
     status: "landing",

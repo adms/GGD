@@ -115,6 +115,23 @@ export const blinkEffect: EffectKindSpec<"blink"> = {
       // `abilityRange` 係數 —— 那個係數縮的是「打得到多遠」，把它套在偏移上會
       // 讓「停在對方面前」這件事隨著全域射程設定漂移。
       let aim = dest;
+      // ⭐【固定距離】GH#838 —— 先做這一格：它**取代**「走到目的地」而不是修飾它。
+      //    JASS `PolarProjectionBJ(origin, d, angleTo(dest))`（38 處用這個形狀）。
+      //    ⚠️ schema 已經把它與 `stopShortUnits` 定為互斥，所以這裡不必考慮兩格
+      //    同時存在 —— 但順序仍然寫成 if/else，免得將來有人放寬 refine 之後
+      //    得到一個「兩格都有作用」的靜默組合。
+      const fixed = e.distanceUnits ?? 0;
+      if (fixed > 0) {
+        const dx = dest.x - mt.pos.x;
+        const dz = dest.z - mt.pos.z;
+        const l2 = dx * dx + dz * dz;
+        // 目的地就在腳下 ⇒ 沒有方向可言。⛔ 不要退化成「往某個預設方向飛」——
+        // 一個朝任意方向的 10 單位瞬移，比不瞬移糟糕得多。
+        if (l2 > 1e-12) {
+          const l = Math.sqrt(l2);
+          aim = { x: mt.pos.x + (dx / l) * fixed, z: mt.pos.z + (dz / l) * fixed };
+        }
+      } else {
       const gap = e.stopShortUnits ?? 0;
       if (gap > 0) {
         const dx = dest.x - mt.pos.x;
@@ -127,6 +144,7 @@ export const blinkEffect: EffectKindSpec<"blink"> = {
           const travel = l - gap > 0 ? l - gap : 0;
           aim = { x: mt.pos.x + (dx / l) * travel, z: mt.pos.z + (dz / l) * travel };
         }
+      }
       }
 
       // ⭐ 承重：同一個 tick 內位置就變了（中間位置一格都不存在）。

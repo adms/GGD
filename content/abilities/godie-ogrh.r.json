@@ -74,6 +74,14 @@
       "preset": "tpl-locust-line",
       "modelKey": "w3x.stock.flamestrike1",
       "offsetForwardU": 2.75
+    },
+    {
+      "kind": "screenShake",
+      "shape": "circle",
+      "radius": 9.39,
+      "applyTo": "nearby",
+      "amplitude": 0.3,
+      "durationSec": 2.0
     }
   ],
   "vfxKey": "fx.prim.ki.beam-lg",

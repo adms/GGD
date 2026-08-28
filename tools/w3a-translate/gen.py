@@ -161,8 +161,20 @@ def shipped_abilities() -> dict:
     return out
 
 
+#: 螢幕回饋三兄弟 —— 它們的 `radius`／`durationSec` 描述的是**演出**，
+#: ⛔ 不是這支技能的範圍或持續時間。⚠️ 與 `tools/skill-remake/tierize.py::CUE_KINDS`
+#: 及 `packages/shared/src/content/cooldownTiers.ts::CUE_KINDS` 是同一批 kind
+#: （閘：`sim/effects/cueNearbyAudience.test.ts` 比對 Python 那一份）。
+CUE_KINDS = ("screenFlash", "screenShake", "floatingText")
+
+
 def _walk_numbers(node, key: str, acc: list) -> None:
     if isinstance(node, dict):
+        # ⭐ GH#838 —— cue 的 radius 是「誰看得到」、durationSec 是「震多久」。
+        #    把它們算進 w3a 落差表，會讓一支技能因為**加了一格鏡頭震動**就在
+        #    「範圍」那一軸憑空多出一筆漂移（2026-08-28 在 09-04 龜派實際發生）。
+        if node.get("kind") in CUE_KINDS:
+            return
         for k, v in node.items():
             if k == key and isinstance(v, (int, float)):
                 acc.append(float(v))
