@@ -22,6 +22,20 @@
 # Tunnel 是**純 outbound**:cloudflared 從家裡連出去,Cloudflare 在它的 edge 終結 TLS,
 # ⇒ ⛔ 不需要固定 IP、⛔ 不需要埠轉發、⛔ 不需要路由器設定。
 #
+# ═══ ⛔⛔ Tunnel 的 DNS 記錄**必須是橘雲（Proxied）** ═══
+# 2026-08-29 踩到:我在講直連那條路時說「灰雲很關鍵」（那對 **A 記錄指自家 IP** 是對的),
+# 而 owner 把它套到了 tunnel 的記錄上 ⇒ tunnel 當場死掉,錯誤是 `Could not resolve host`。
+#
+# ⭐ 原因:tunnel 的記錄是 CNAME 指向 `<uuid>.cfargotunnel.com`,
+#   而**那個名字沒有公開的 A 記錄** —— 它只在 Cloudflare 的代理層內部解析得到。
+#   ⇒ 灰雲（DNS only）= 把一個解不開的 CNAME 交給客戶端 = **NXDOMAIN**。
+#
+# ⚠️ 兩種記錄的要求是**相反**的,而它們在後台長得一樣:
+#   | 記錄 | 雲色 | 理由 |
+#   |---|---|---|
+#   | A → 自家固定 IP（直連） | ⭐ **灰雲** | 走 CF 會多一大段延遲;橘雲還會攔截 HTTP-01 憑證挑戰 |
+#   | CNAME → cfargotunnel.com | ⭐ **橘雲** | ⛔ 灰雲直接 NXDOMAIN |
+#
 # ═══ 設定在哪（⭐ 刻意不在這個檔裡）═══
 # token 型 tunnel 的路由住在 Cloudflare 後台:
 #   Public hostname  ggd.adms.ai  →  Service  http://edge:8080
