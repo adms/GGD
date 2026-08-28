@@ -49,7 +49,12 @@ if [ -f "$BUNDLE/BUNDLE.sha256" ]; then
     && ok "tar 校驗和全部相符" || bad "⛔ tar 校驗和不符 —— 這一包在路上壞了,⛔ 不要匯入"
 else warn "沒有 BUNDLE.sha256"; fi
 ls "$BUNDLE"/data-core.tar.* >/dev/null 2>&1 || bad "缺 data-core.tar.*"
-[ -d "$BUNDLE/redis" ] && ok "Redis 快照在" || warn "⛔ 這一包沒有 Redis —— 排行榜與錢包不會回來"
+if find "$BUNDLE/redis" -name 'dump.rdb' -o -name 'appendonly*' 2>/dev/null | grep -q .; then
+  ok "Redis 快照在（$(du -sh "$BUNDLE/redis" 2>/dev/null | cut -f1)）"
+else
+  # ⭐ 算成一項**對不上**,⛔ 不是 warn —— 排行榜與錢包是 owner 點名不可重建的資料
+  bad "⛔ 這一包**沒有 Redis** —— 排行榜（lb）與錢包（wallet/walletmeta）不會回來"
+fi
 [ -f "$BUNDLE/env.secret" ] && warn "包裡有 secrets（env.secret）—— ⛔ 這一包不可以進 git" \
   || info "（沒帶 secrets ⇒ docker/.env 要手動放）"
 EXPECT=$(grep -c '^[0-9a-f]\{64\}' "$M" 2>/dev/null)

@@ -32,7 +32,12 @@
 set -euo pipefail
 
 C=${GGD_REDIS_CONTAINER:-ggd-redis-1}
-DEST=${1:-/data/redis-snapshots}
+# ⭐ 落點:位置參數 > 環境變數 > 預設。
+# ⛔⛔ 在 2026-08-29 之前只認位置參數,而 site-export.sh 用環境變數傳 ——
+#   ⇒ 快照**成功寫到預設位置**,而呼叫端以為它進了搬遷包。
+#     ⭐ 而那個包 exit 0、印著「✓ 快照完成」,裡面**一個 redis 檔都沒有**。
+#   （owner 逐字:「我還有**排行榜**等資料在上面**不只快取**」）
+DEST=${1:-${GGD_REDIS_SNAPSHOT_DIR:-/data/redis-snapshots}}
 TS=$(date -u +%Y%m%dT%H%M%SZ)
 
 say() { printf '  %s\n' "$1"; }

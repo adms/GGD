@@ -141,8 +141,23 @@ ok "$TOTALF 個檔全部讀得到"
 head_ "2. Redis"
 REDIS_KEYS=""
 if [ "$DRY" -eq 0 ] && [ -x "$REPO/scripts/redis-snapshot.sh" ]; then
-  GGD_REDIS_SNAPSHOT_DIR="$BUNDLE/redis" bash "$REPO/scripts/redis-snapshot.sh" >/dev/null 2>&1 \
-    && ok "快照完成 → $BUNDLE/redis" || warn "快照失敗 —— ⛔ 這一包**沒有** Redis"
+  # ⭐ 落點用**位置參數**傳（⛔ 不是環境變數 —— 2026-08-29 就是這樣掉了 Redis）
+  bash "$REPO/scripts/redis-snapshot.sh" "$BUNDLE/redis" >/dev/null 2>&1 || true
+  # ⛔⛔ **不信離開碼** —— 驗檔案真的在包裡。
+  #   那一次快照 exit 0（它成功了),只是寫到了別的地方,
+  #   而呼叫端照著離開碼印了「✓ 快照完成 → <包>/redis」= 一句假話。
+  #   ⭐ 判準:驗**我要的那個結果**,⛔ 不是「指令有沒有報錯」。
+  RDB=$(find "$BUNDLE/redis" -name 'dump.rdb' -o -name 'appendonly*' 2>/dev/null | head -1)
+  if [ -n "$RDB" ]; then
+    ok "Redis 快照在包裡（$(du -sh "$BUNDLE/redis" 2>/dev/null | cut -f1)）"
+  else
+    # ⭐ 這是 owner 點名的資料（排行榜 lb=37 / 錢包 wallet+walletmeta=120）
+    #   ⇒ 缺它必須 die,⛔ 不是 warn。一包沒有 Redis 的「成功」比失敗更糟:
+    #     它會在對面「還原成功」,而排行榜與 M 幣消失無聲。
+    die "⛔ Redis 快照**沒有進到包裡**（$BUNDLE/redis 是空的）。
+   ⭐ 這一包會讓排行榜與錢包無聲消失 ⇒ 拒絕產出。
+   ⇒ 單獨跑一次看錯在哪：bash scripts/redis-snapshot.sh $BUNDLE/redis"
+  fi
 fi
 # ⭐ 逐前綴數 key —— 這是給對面對帳用的,⛔ 不是「總數對就好」
 # ⚠️ redis 的密碼是**命令列參數**（`--requirepass`）,⛔ 不在容器的 env 裡 ——
