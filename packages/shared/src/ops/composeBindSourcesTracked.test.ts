@@ -103,3 +103,45 @@ describe("compose 的 bind 來源都要有人負責（GH#859）", () => {
     ).toEqual([]);
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ⛔⛔ external volume 讓整套在「還沒有那個 volume 的機器」上**一個容器都起不來**。
+//
+// 2026-08-28 實測（GH#861，arm64 上第一次拉起整套）：
+//   `docker compose up` 死在 `external volume "ggd_caddy-config" not found`
+//   —— ⭐ 不是「caddy 起不來」，是**六個服務全部沒起來**，因為 compose 在建立
+//   任何容器之前就先解析 volume。
+//
+// ⭐ 而它想達成的目的（重用已簽發的 TLS 憑證）**只要 `name:` 就夠了**：
+//   compose 照名字找，有就接上去、沒有就建。`external: true` 額外加的那一句
+//   語意是「**我拒絕建立它**」—— 那一句沒有帶來任何好處，只帶來一台全新機器
+//   完全無法啟動。
+//
+// ⚠️ 這條閘存在的理由是**搬遷**：一份只在既有機器上驗證過的 compose，
+//   在全新機器上的第一次啟動是它從來沒被測過的那條路。
+// ─────────────────────────────────────────────────────────────────────────────
+it("no compose volume is declared external — it would make a fresh host unbootable", () => {
+  const offenders: string[] = [];
+  for (const file of readdirSync(COMPOSE_DIR).filter((n) => /^compose.*\.ya?ml$/.test(n))) {
+    const lines = readFileSync(join(COMPOSE_DIR, file), "utf-8").split("\n");
+    let inVolumes = false;
+    let current = "";
+    lines.forEach((line, i) => {
+      if (/^volumes:\s*$/.test(line)) { inVolumes = true; return; }
+      if (inVolumes && /^\S/.test(line)) { inVolumes = false; return; }
+      if (!inVolumes) return;
+      const named = /^ {2}([A-Za-z0-9._-]+):\s*$/.exec(line);
+      if (named) { current = named[1]; return; }
+      if (/^\s+external:\s*(true|yes)\s*$/.test(line)) {
+        offenders.push(`${file}:${i + 1} volume "${current}" is external`);
+      }
+    });
+  }
+  expect(
+    offenders,
+    `⛔ external volume 會讓全新主機的第一次 \`docker compose up\` 整套失敗\n` +
+      `（compose 在建立任何容器之前就解析 volume ⇒ 六個服務一個都不會起來）。\n` +
+      `⭐ 重用既有 volume 只要寫 \`name:\` 就夠了，⛔ 不需要 external。\n` +
+      offenders.map((o) => `  ${o}`).join("\n"),
+  ).toEqual([]);
+});

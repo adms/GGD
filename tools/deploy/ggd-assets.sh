@@ -266,6 +266,10 @@ cmd_verify() {
 
   got_files=$(count_of "$dir")
   got_digest=$(sha256_stdin < "$lst")
+  # Scratch for the surplus diagnostic below. Created unconditionally so the
+  # cleanup trap has something to remove no matter which branch runs.
+  tmp_got=$(mktemp) && tmp_want=$(mktemp) || { tmp_got=/dev/null; tmp_want=/dev/null; }
+  trap 'rm -f "$tmp_got" "$tmp_want" 2>/dev/null' RETURN 2>/dev/null || true
 
   rc=0
   # `|| read_ok=0` rather than a bare assignment: under `set -e` a failing
@@ -281,8 +285,39 @@ cmd_verify() {
     echo "$SELF: FAIL — SHIP.sha256 does not match its own recorded digest (the listing was truncated or edited in transit)." >&2
     rc=1
   fi
+  # ⛔⛔ THE MESSAGE USED TO ALWAYS SAY "short by N" — including when the set has
+  #     MORE files than the manifest, where N goes negative and it printed
+  #     "(short by -61)". A surplus reported as a shortfall sends the reader
+  #     hunting for missing files that are not missing. Measured 2026-08-28 on
+  #     arm64 while rehearsing the Mac mini move (GH#861).
+  #
+  # ⭐ Why a SURPLUS must still fail: the manifest is a byte-exact contract, and
+  #    an unexpected file in the tree means the copy is not the thing that was
+  #    signed. The comparison was always right; only the wording lied.
+  #
+  # ⚠️ macOS makes this the LIKELY direction on the new host: one Finder peek at
+  #    the overlay directory drops `.DS_Store` files into it, and AppleDouble
+  #    `._*` forks appear whenever the set crosses a non-APFS filesystem. Both
+  #    are surpluses. So name them — the fix is `find … -delete`, not a re-ship.
   if [ "$got_files" != "$want_files" ]; then
-    echo "$SELF: FAIL — '$set_name' has $got_files files, manifest says $want_files (short by $((want_files - got_files)))." >&2
+    if [ "$got_files" -lt "$want_files" ]; then
+      echo "$SELF: FAIL — '$set_name' has $got_files files, manifest says $want_files (MISSING $((want_files - got_files)))." >&2
+    else
+      echo "$SELF: FAIL — '$set_name' has $got_files files, manifest says $want_files (EXTRA $((got_files - want_files)) — the copy has files the manifest never signed)." >&2
+      # The actionable half: show what the extras actually are.
+      mac_junk=$(find "$dir" \( -name '.DS_Store' -o -name '._*' \) -type f 2>/dev/null | wc -l | tr -d ' ')
+      if [ "${mac_junk:-0}" -gt 0 ]; then
+        echo "$SELF:   ⇒ $mac_junk of them are macOS metadata (.DS_Store / ._*). Remove them, do NOT re-ship:" >&2
+        echo "$SELF:     find '$dir' \\( -name .DS_Store -o -name '._*' \\) -type f -delete" >&2
+      fi
+      find "$dir" -type f ! -name 'SHIP.sha256' ! -name 'SHIP.txt' -print 2>/dev/null \
+        | sed "s|^$dir/||" | sort > "$tmp_got" 2>/dev/null || true
+      sed 's/^[0-9a-f]*  //' "$lst" 2>/dev/null | sort > "$tmp_want" 2>/dev/null || true
+      if [ -s "$tmp_got" ] && [ -s "$tmp_want" ]; then
+        echo "$SELF:   ⇒ first extras:" >&2
+        comm -23 "$tmp_got" "$tmp_want" 2>/dev/null | head -10 | sed "s|^|$SELF:     |" >&2
+      fi
+    fi
     rc=1
   fi
   if [ "$got_bytes" != "$want_bytes" ]; then

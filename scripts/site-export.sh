@@ -61,7 +61,15 @@ BUNDLE="$OUT/ggd-export_temp_$STAMP"
 #              ⇒ log 這一類:壓一份進包,**原檔留在原地**
 CARRY=(accounts matches rankings walletmeta friends invites journal
        admin-audit curation content-overlay history review-verdicts)
-BULK=(replays blizzard-overlay)
+# ⛔⛔ blizzard-overlay **不是**「可接受損失」—— 它是 edge 的**開機必要條件**。
+#   2026-08-28 在 arm64 上實測:overlay 短少 ⇒ edge 逐字說
+#   「refusing to start nginx — a full-asset deploy that is not full」⇒ exit 1
+#   ⇒ 而 edge 是 `restart:"no"` ⇒ ⭐ **整站 502,而且不會自己回來**。
+#   （這個 assert 是刻意的:少了它 40/113 英雄變替身、97/113 沒語音,
+#     而那**不會有任何東西看起來壞掉** —— 所以它選擇不開機。）
+#   ⇒ 這一格從「體積大,可接受損失」改成「⭐ 少了它站起不來」。
+BULK=(replays)
+CRITICAL_BULK=(blizzard-overlay)
 
 head_ "1. 盤點（⭐ 判準是「毀了能不能重做」,⛔ 不是大小）"
 TOTAL=0
@@ -69,6 +77,14 @@ for d in "${CARRY[@]}"; do
   [ -d "$REPO/data/$d" ] || { warn "data/$d 不存在,跳過"; continue; }
   sz=$(du -sk "$REPO/data/$d" 2>/dev/null | cut -f1); TOTAL=$((TOTAL+sz))
   printf "    %-18s %8s  %s\n" "$d" "$(du -sh "$REPO/data/$d" 2>/dev/null | cut -f1)" "⭐ 不可重建"
+done
+for d in "${CRITICAL_BULK[@]}"; do
+  if [ -d "$REPO/data/$d" ]; then
+    sz=$(du -sk "$REPO/data/$d" 2>/dev/null | cut -f1); TOTAL=$((TOTAL+sz))
+    printf "    %-18s %8s  %s\n" "$d" "$(du -sh "$REPO/data/$d" 2>/dev/null | cut -f1)" "⭐ 少了它 edge 拒絕開機"
+  else
+    die "⛔ 缺 data/$d —— 少了它 edge **拒絕開機**（exit 1,而且 restart:\"no\" ⇒ 不會自己回來）"
+  fi
 done
 for d in "${BULK[@]}"; do
   [ -d "$REPO/data/$d" ] || continue
@@ -164,7 +180,7 @@ head_ "5. 打包"
 tar -C "$REPO/data" -cf - "${CARRY[@]}" 2>/dev/null | zstd -q -12 -T0 -o "$BUNDLE/data-core.tar.zst" \
   || die "core 打包失敗"
 ok "data-core.tar.zst $(du -h "$BUNDLE/data-core.tar.zst" | cut -f1)"
-for d in "${BULK[@]}"; do
+for d in "${CRITICAL_BULK[@]}" "${BULK[@]}"; do
   [ -d "$REPO/data/$d" ] || continue
   tar -C "$REPO/data" -cf - "$d" 2>/dev/null | zstd -q -3 -T0 -o "$BUNDLE/data-$d.tar.zst" \
     && ok "data-$d.tar.zst $(du -h "$BUNDLE/data-$d.tar.zst" | cut -f1)"
@@ -180,6 +196,12 @@ head_ "6. manifest（⭐ 這才是搬遷成功的判準）"
   echo "git_head=$(cd "$REPO" && git rev-parse --short HEAD 2>/dev/null)"
   echo "redis_keys=$REDIS_KEYS"
   echo "logs_raw_over_compressed=$LOGSUM"
+  # ⭐⭐ .env 的 **key 名**（⛔ 絕不是值）。2026-08-28 實測到的缺口:
+  #   在一台 .env 少了 6 個 key 的機器上,platform **拒絕開機**,而訊息是
+  #   「this deploy is networked with the invite gate ON but the first-owner claim OPEN」
+  #   —— ⭐ 一句完全看不出「你少了一個環境變數」的話。
+  #   ⇒ 把來源需要哪些 key 記下來,import 端才能在**開機之前**指名缺哪一個。
+  echo "env_keys=$(sed -n 's/^\([A-Z_][A-Z0-9_]*\)=.*/\1/p' "$REPO/docker/.env" 2>/dev/null | sort | tr '\n' ',')"
   echo "# ── 逐項計數（import 端要逐條對上）──"
   for d in "${CARRY[@]}"; do
     [ -d "$REPO/data/$d" ] || continue

@@ -51,7 +51,26 @@ info "manifest 記了 $EXPECT 條逐檔校驗和"
 
 if [ "$CHECK" -eq 1 ]; then head_ "--check 結束 —— ⛔ 沒寫任何東西"; exit 0; fi
 
-head_ "3. 目的地留底（⛔ 永不覆蓋）"
+head_ "3. ⭐ .env 的 key 對帳（⛔ 在開機之前,⛔ 不是開機失敗之後）"
+# ⭐ 這一段為什麼在還原**之前**:少一個 key 的症狀是 platform 拒絕開機,
+#   而它的訊息講的是**權限模型**（「invite gate ON but first-owner claim OPEN」),
+#   ⛔ 完全看不出「你少了一個環境變數」。⇒ 在這裡指名它,⛔ 不要讓人去讀那句話。
+WANT_KEYS=$(mval env_keys | tr ',' '\n' | grep -v '^$' | sort)
+if [ -n "$WANT_KEYS" ]; then
+  if [ -f "$REPO/docker/.env" ]; then
+    HAVE_KEYS=$(sed -n 's/^\([A-Z_][A-Z0-9_]*\)=.*/\1/p' "$REPO/docker/.env" | sort)
+    MISS=$(comm -23 <(echo "$WANT_KEYS") <(echo "$HAVE_KEYS") | tr '\n' ' ')
+    if [ -n "${MISS// /}" ]; then
+      bad "docker/.env 缺 key：$MISS"
+      info "⚠️ 少了它們 platform 會**拒絕開機**，而錯誤訊息完全看不出是環境變數的問題"
+    else ok "docker/.env 的 key 齊全（$(echo "$WANT_KEYS" | wc -l | tr -d ' ') 個）"; fi
+  else
+    bad "⛔ 沒有 docker/.env —— 來源需要這些 key：$(echo "$WANT_KEYS" | tr '\n' ' ')"
+  fi
+fi
+[ "$FAIL" -eq 0 ] || die "⛔ 先把 .env 補齊 —— 目的地一個位元組都沒動"
+
+head_ "4. 目的地留底（⛔ 永不覆蓋）"
 if [ -d "$REPO/data" ] && [ -n "$(ls -A "$REPO/data" 2>/dev/null)" ]; then
   B="$REPO/data.pre-import-$(date -u +%Y%m%dT%H%M%SZ)"
   cp -a "$REPO/data" "$B" || die "留底失敗 —— ⛔ 不繼續"
@@ -59,7 +78,7 @@ if [ -d "$REPO/data" ] && [ -n "$(ls -A "$REPO/data" 2>/dev/null)" ]; then
 fi
 mkdir -p "$REPO/data"
 
-head_ "4. 還原"
+head_ "5. 還原"
 zstd -dq -c "$BUNDLE/data-core.tar.zst" | tar -C "$REPO/data" -xf - || die "core 還原失敗"
 ok "core 還原完成"
 if [ "$NOBULK" -eq 0 ]; then
@@ -70,7 +89,7 @@ if [ "$NOBULK" -eq 0 ]; then
   done
 else warn "--no-bulk：⛔ 沒還原 replays / blizzard-overlay"; fi
 
-head_ "5. ⭐ 對帳 —— 這一段才是「搬遷成功」的定義"
+head_ "6. ⭐ 對帳 —— 這一段才是「搬遷成功」的定義"
 # ⛔ 「tar 解得開」不是證據。逐項比對 manifest 記下的計數。
 while IFS= read -r line; do
   d=${line%%=*}; d=${d#count.}; want=${line#*=}
@@ -79,11 +98,11 @@ while IFS= read -r line; do
                        || bad "$(printf '%-18s %6s 個檔,⛔ 來源是 %s' "$d" "$got" "$want")"
 done < <(grep '^count\.' "$M")
 
-head_ "6. 逐檔校驗和（⭐ 數量對不代表內容對）"
+head_ "7. 逐檔校驗和（⭐ 數量對不代表內容對）"
 MIS=$( (cd "$REPO/data" && grep '^[0-9a-f]\{64\}' "$M" | sha256sum -c - 2>/dev/null | grep -cv ': OK$') || echo 0 )
 [ "${MIS:-0}" -eq 0 ] && ok "$EXPECT 條校驗和全部相符" || bad "⛔ $MIS 條校驗和不符"
 
-head_ "7. Redis（⛔ 手動,而且要在 redis 停著的時候）"
+head_ "8. Redis（⛔ 手動,而且要在 redis 停著的時候）"
 if [ -d "$BUNDLE/redis" ]; then
   info "包裡的快照：$(ls "$BUNDLE/redis" 2>/dev/null | tr '\n' ' ')"
   info "來源 key 前綴：$(mval redis_keys)"
@@ -96,7 +115,7 @@ if [ -d "$BUNDLE/redis" ]; then
 STEPS
 fi
 
-head_ "8. log"
+head_ "9. log"
 if ls "$BUNDLE/logs/"* >/dev/null 2>&1; then
   info "包裡有壓縮過的舊 log $(ls "$BUNDLE"/logs | wc -l | tr -d ' ') 份 —— ⭐ 它們是**歸檔**,"
   info "⛔ 不要解開放回容器 log 目錄（owner：已經有壓縮檔就不要搬遷原檔）"

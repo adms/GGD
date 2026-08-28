@@ -248,9 +248,17 @@ services:
     restart: "no"
 
 volumes:
+  # ⭐ `name:` 就足以「有就重用」—— 正式機上這兩個 volume 已經裝著**已簽發的 TLS 憑證**,
+  #   compose 會照名字接上去,⛔ 不會建一個新的匿名 volume（那等於憑證全沒,
+  #   要重新跟 Let's Encrypt 要,而它有速率限制）。
+  #
+  # ⛔⛔ 這裡**曾經**寫 `external: true`,而那是錯的機制:
+  #   external 的語意是「**我拒絕建立它**」⇒ 在任何還沒有這兩個 volume 的機器上,
+  #   `docker compose up` 直接死在 `external volume "ggd_caddy-config" not found`,
+  #   **整套服務一個都起不來**。2026-08-28 在 arm64 上實測到 —— ⭐ 那正是全新的
+  #   Mac mini 第一次啟動會遇到的事（GH#861）。
+  #   ⇒ 要的是「有就重用、沒有就建」= 只寫 name,⛔ 不要 external。
   caddy-config:
-    external: true
     name: ggd_caddy-config
   caddy-data:
-    external: true
     name: ggd_caddy-data
