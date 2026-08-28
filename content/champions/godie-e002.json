@@ -358,6 +358,11 @@
           }
         ]
       },
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.wind.tornado"
+        }
+      ],
       "icon": "assets/icons/abilities/godie-e002.w.webp",
       "vfxKey": "fx.prim.wind.tornado",
       "cooldownTier": "中",

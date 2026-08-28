@@ -1427,6 +1427,18 @@ def build(e):
     #    已經存在的鍵，所以先填就是贏；放到迴圈後面則永遠是舊值贏（靜默失效）。
     if e.get("vfx_key"):
         doc["vfxKey"] = e["vfx_key"]
+    # ── 施法特效的**完整堆疊**（`vfx_layers=`）───────────────────────────────
+    # ⭐ GH#848：`resolveAbilityVfxSource` 的四階覆蓋裡，`vfx_key=` 填 `fx.prim.*`
+    #    仍是**第四階** —— 推導綁定表（第三階，`ability-vfx-bindings.json`）照樣
+    #    蓋掉它。只有**第一階（作者自己的 `vfxLayers`）**壓得過表。20-01 風王結界
+    #    就是這一格存在的理由：A0DZ 的 w3a art:caster 是 HolyAwakening 整組 6 顆，
+    #    表照證據綁上去，而 owner 2026-08-28 逐字「風王結界特效太奇怪、太濃 且太久」
+    #    —— 階梯第 1 層（owner 的設計）贏過第 5 層（w3x 原始設定）。
+    # ⛔ 同 vfx_key / cooldown_shape / persistent_vfx：一格**表格欄位**，
+    #    不是「if 這支技能」（第〇·五守則）。值照 `zAbilityVfxLayers` 的形狀。
+    # ⚠️ 位置在 A-6 setdefault **之前**：表格填了就贏。
+    if e.get("vfx_layers"):
+        doc["vfxLayers"] = [dict(x) for x in e["vfx_layers"]]
     # ── 冷卻查表的**明示形狀**（`cooldown_shape=`）──────────────────────────
     # ⭐ GH#644：59-01 吞噬帶著 devour 的 radius/radiusTier，`tierize` 的推導
     #    （逐字照抄引擎 `cooldownTiers.ts::cooldownShapeOf`）必然判成「範圍」——

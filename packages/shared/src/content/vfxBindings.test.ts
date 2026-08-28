@@ -19,7 +19,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { zConfigAbilityVfxBindingsDoc } from "./schema/abilityVfxBindings";
 import { resolveAbilityVfxSource, buildAbilityVfxBindingIndex, isOriginalArtVfxKey } from "./vfxBindings";
-import { resolveAbilityVfxLayers } from "./schema/abilityVfx";
+import { resolveAbilityVfxLayers, type AbilityVfxSource } from "./schema/abilityVfx";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const read = (p: string) => JSON.parse(readFileSync(join(REPO, p), "utf-8"));
@@ -31,7 +31,14 @@ describe("config.ability-vfx-bindings@1 —— 載入時的四階覆蓋", () => 
   it("表有這一列 + 技能文件是通用原型 ⇒ 解析出原作那一組(⛔ 不是 fx.prim.*)", () => {
     // 出貨表裡真的存在「文件寫 fx.prim.*、表有列」的技能 —— 沒有的話這條就是
     // 一條永遠不會失敗的假守衛,所以先把它釘住。
-    const covered = doc.bindings.filter((r) => !isOriginalArtVfxKey(readAbility(r.abilityId)?.vfxKey));
+    // ⚠️ GH#848 —— 階 1(作者自己的 vfxLayers)本來就贏過表(resolveAbilityVfxSource
+    //    的第一行),所以帶著作者堆疊的列不屬於「表該換掉它」這個母體:20-01 風王結界
+    //    是第一個實例(owner 2026-08-28「太奇怪、太濃 且太久」否決了 A0DZ 的聖光組)。
+    //    它自己的守衛在 apps/client/src/render/vfx/windBarrierCastVfx.test.ts。
+    const covered = doc.bindings.filter((r) => {
+      const d = readAbility(r.abilityId);
+      return !(d?.vfxLayers && d.vfxLayers.length > 0) && !isOriginalArtVfxKey(d?.vfxKey);
+    });
     expect(covered.length).toBeGreaterThan(0);
     for (const row of covered) {
       const def = readAbility(row.abilityId)!;
@@ -71,7 +78,7 @@ describe("config.ability-vfx-bindings@1 —— 載入時的四階覆蓋", () => 
   });
 });
 
-function readAbility(id: string): { vfxKey?: string } | undefined {
+function readAbility(id: string): AbilityVfxSource | undefined {
   try {
     return read(`content/abilities/${id}.json`);
   } catch {
