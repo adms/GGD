@@ -171,6 +171,32 @@ cmd_deploy() {
   done
   if [ "$up" -eq 1 ]; then
     ok "edge 回應了"
+
+  # ⛔⛔ 2026-08-29 的停機教訓：`edge 回應了` **不代表站活著**。
+  #   那次 caddy 因為 Caddyfile 的巢狀變數起不來 ⇒ 80/443 沒有人聽
+  #   ⇒ ⭐ **ggd.adms.ai 從網際網路完全連不上,而 edge 與 /healthz 全綠**。
+  #   ⇒ 我驗了每一個**名詞**（game 在、content 在、容器在跑）,
+  #     ⛔ 而沒有驗**那條路**（外面 → caddy → edge → game）。
+  #
+  # ⭐ 判準:驗收要走**玩家真正走的那條路**,⛔ 不是最靠近伺服器的那一段。
+  head_ "5. ⭐ 前門（caddy）—— ⛔ edge 通不代表玩家連得到"
+  local pub="${GGD_PUBLIC_HOST:-}"
+  if r "nc -z -G 3 127.0.0.1 443" >/dev/null 2>&1; then
+    ok "mini 的 :443 有人在聽"
+  else
+    bad "⛔ :443 沒有人在聽 —— caddy 沒起來?"
+    r "docker logs --tail 6 ggd-caddy-1" 2>&1 | grep -iE "error|Error" | head -3 | sed 's/^/    /'
+  fi
+  if [ -n "$pub" ]; then
+    # ⭐ 從**外部**驗,⛔ 不從 mini 自己（NAT 迴環會騙人）
+    local code
+    code=$(curl -fsS -m 20 -o /dev/null -w '%{http_code}' "https://$pub/" 2>/dev/null || echo 000)
+    [ "$code" = 200 ] && ok "https://$pub/ → HTTP 200（⭐ 玩家真正走的路）" \
+                      || bad "⛔ https://$pub/ → HTTP $code —— 前門不通,⚠️ 而 edge 是好的"
+  else
+    warn "⚠️ 沒設 GGD_PUBLIC_HOST ⇒ **沒有從外部驗過** —— ⛔ 這一段是這次停機沒抓到的那一段"
+    info "⇒ GGD_PUBLIC_HOST=ggd.adms.ai bash $0 deploy"
+  fi
     r 'curl -fsS -m 5 http://127.0.0.1:2567/healthz' 2>/dev/null | python3 -c '
 import json,sys
 d=json.load(sys.stdin); c=d.get("content",{}); rp=d.get("replay",{})
