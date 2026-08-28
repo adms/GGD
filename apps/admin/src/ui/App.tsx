@@ -104,6 +104,9 @@ import { DataMigrationPage } from "./DataMigrationPage";
 import { ChangePasswordDialog } from "./ChangePasswordDialog";
 import { Btn, Panel } from "./widgets";
 import { ACCENT, BG, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "./theme";
+// owner 2026-08-28「後台右側頁面 每一頁都要加上 footer copyright」——
+// ⭐ 掛在 `<main>` 尾巴**一處**（60+ 頁 + 未來每一頁都自動有），理由見該檔檔頭。
+import { ConsoleFooter } from "./ConsoleFooter";
 import { resolveHubLinks, type HubEnv } from "../config";
 import {
   allSections,
@@ -1235,6 +1238,9 @@ export function Console(): React.JSX.Element {
             {page === "audit" && <AuditPage />}
           </>
         )}
+        {/* ⭐ 在 `gated ? … : …` **外面** —— 沒登入的「需要連線」畫面也是一頁。
+            ⛔ 放進三元運算子的任一邊都會漏掉另一邊。 */}
+        <ConsoleFooter />
       </main>
       {changingPassword && account && <ChangePasswordDialog onClose={() => setChangingPassword(false)} />}
       {/* 🔍 GH#776 ⌘K —— open=false 時回 null，所以無條件掛在這裡（position:fixed）。 */}

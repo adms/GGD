@@ -43,7 +43,12 @@ export interface CreditEntry {
   readonly terms?: string;
 }
 
-export const COPYRIGHT_LINE = "© 2026 Moriyamouse/Adms 糟糕騎士團";
+/**
+ * ⭐ 2026-08-28 起**住在 `@ggd/shared/brand`** —— 後台每一頁的頁尾要印同一行，
+ * 而後台 import 不到客戶端。這裡只是 re-export，讓既有的 import 端不動。
+ * ⛔ 不要把字串搬回來：兩份會在改年份的那一天漂掉，而沒有東西會紅。
+ */
+export { COPYRIGHT_LINE } from "@ggd/shared/brand";
 
 export const CREDITS: readonly CreditEntry[] = [
   {
