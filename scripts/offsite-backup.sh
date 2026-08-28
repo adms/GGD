@@ -158,9 +158,21 @@ cmd_run() {
   # ⭐ 「rsync 沒報錯」⛔ 不等於「東西到了」—— 遠端問一次
   case "$DEST" in
     rclone:*)
-      # ⭐ 「rclone 沒報錯」⛔ 不等於「東西到了」—— 回頭 ls 一次遠端
-      "$RC" lsf "$REMOTE/$(basename "$B")" 2>/dev/null | grep -q '^MANIFEST.txt$' \
+      # ⭐ 「rclone 沒報錯」⛔ 不等於「東西到了」—— 回頭問遠端。
+      # ⚠️ 用 `lsf -R`（遞迴）並比對**路徑結尾**,⛔ 不是 `lsf` 的單層輸出 ——
+      #   後者對含子目錄的樹回傳的形狀與預期不同（2026-08-29 實測到:
+      #   ⭐ 備份其實 9 個物件 126 MB 都上去了,而我的檢查說「讀不到」）。
+      # ⭐ 而且順便驗**體積** —— 一個只有 MANIFEST 的「備份」也會通過名字檢查。
+      local rlist rsize
+      rlist=$("$RC" lsf -R "$REMOTE/$(basename "$B")" 2>/dev/null)
+      rsize=$("$RC" size "$REMOTE/$(basename "$B")" 2>/dev/null | sed -n 's/.*(\([0-9]*\) Byte).*/\1/p')
+      printf '%s\n' "$rlist" | grep -q 'MANIFEST.txt$' \
         || { stamp_status failed "$DEST" "遠端讀不到 MANIFEST"; die "上傳「成功」但遠端讀不到 MANIFEST —— ⛔ 這不是備份"; }
+      printf '%s\n' "$rlist" | grep -q 'dump.rdb$' \
+        || { stamp_status failed "$DEST" "遠端沒有 Redis"; die "⛔ 遠端沒有 Redis 快照 —— 排行榜與錢包不會回來"; }
+      [ "${rsize:-0}" -gt 10485760 ] \
+        || { stamp_status failed "$DEST" "遠端只有 ${rsize:-0} bytes"; die "⛔ 遠端只有 ${rsize:-0} bytes —— 那不是一份備份"; }
+      ok "遠端驗到 $(printf '%s\n' "$rlist" | grep -c . ) 個物件 / $(awk -v b="${rsize:-0}" 'BEGIN{printf "%.0f MB", b/1048576}')（含 MANIFEST ＋ Redis）"
       ;;
     *@*:*) local h="${DEST%%:*}" pth="${DEST#*:}"
          ssh -o ConnectTimeout=15 "$h" "test -f '$pth/$(basename "$B")/MANIFEST.txt'" \
