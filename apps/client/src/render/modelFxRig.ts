@@ -42,6 +42,7 @@ import {
   type ModelFxSpawnEvent,
   type ModelFxSpawnInstance,
 } from "./modelFxPath";
+import { noteVfxRefired } from "../vfx/vfxHardCap";
 
 /** 一個 `model@1` 文件裡這個 rig 需要的三格。 */
 export interface ModelFxModelDoc {
@@ -604,6 +605,15 @@ export class ModelFxRig {
       else root.scaling.set(s * ax[0], s * ax[1], s * ax[2]);
       axis.rotation.set(axisEuler.x, axisEuler.y, axisEuler.z);
       root.setEnabled(true);
+      // ⭐ GH#842（第四個池，mesh 半邊）—— 這一發是**新的一次演出**，三秒碼表歸零。
+      // `vfxHardCap` 的 mesh 碼表只在「某次掃描**觀察到**節點 disabled」時歸零，
+      // 而 release 發生在 frame N 的 `modelFx.tick`（`VfxSystem.update` **先**掃描
+      // （:2680）**後** tick（:2683）），重用＋re-enable 發生在 frame N+1 的事件
+      // drain（在 update **之前**跑）⇒ 掃描永遠看不到 disabled 的那一格 ⇒ 碼表從
+      // 第一發起算，第二發在 3 秒門檻被 `setEnabled(false)` —— 光束砲家族
+      // 「施展兩次特效就缺失」的 mesh 半邊。多人共用池（poolKey＝modelKey+look，
+      // 跨施法者）時機率更高。新造的節點沒有碼表，這一行對它無害（delete 空鍵）。
+      noteVfxRefired(root);
       const item: LiveModelFx = {
         root,
         axis,

@@ -82,14 +82,22 @@ describe("GH#842 三秒鐵則的碼表 —— 主詞是「一次演出」⛔不�
   it("⭐ **每一個**重新點燃池化粒子的地方都要通知碼表（⛔ 漏一個＝那一族照樣消失）", () => {
     // ⚠️ 這一條是**掃出貨原始碼**的（失敗形態⑥的例外：這裡問的正是「有沒有人
     //    在這一行旁邊忘了那一行」，而那不是行為，是接線的完整性）。
-    // ⇒ 判準：`ps.start()`／`fireBurst(` 這種「重新點燃池化實例」的地方，
-    //    同一個函式裡必須看得到 `noteVfxRefired`。
-    const files = [
-      "apps/client/src/vfx/VfxSystem.ts",
-      "apps/client/src/vfx/vfxPresets.ts",
+    // ⇒ 判準：「重新點燃池化實例」的那一行旁邊，同一個檔裡必須看得到
+    //    `noteVfxRefired` 的**呼叫**。每個池的重新點燃長相不同 ⇒ 逐檔一個簽章。
+    // ⭐ 2026-08-28 owner「技能施展兩次特效就會缺失 例如光束砲家族」——
+    //    GH#842 修了前兩個池之後**還有兩個**：W3xEmitterRig（release 不排空 ⇒
+    //    isAlive 恆 true ⇒ 碼表不歸零）與 ModelFxRig（release 在掃描之後、
+    //    reuse 在下一幀掃描之前 ⇒ 掃描永遠看不到 disabled）。
+    const files: { rel: string; refire: RegExp }[] = [
+      { rel: "apps/client/src/vfx/VfxSystem.ts", refire: /manualEmitCount\s*=|fireBurst\(/ },
+      { rel: "apps/client/src/vfx/vfxPresets.ts", refire: /manualEmitCount\s*=|fireBurst\(/ },
+      // 池化 emitter 重新點燃（acquire 的 pooled 分支）
+      { rel: "apps/client/src/render/vfx/W3xEmitterRig.ts", refire: /manualEmitCount\s*=/ },
+      // mesh 半邊：free-list 重用後 re-enable（spawn 的唯一一處）
+      { rel: "apps/client/src/render/modelFxRig.ts", refire: /setEnabled\(true\)/ },
     ];
     const missing: string[] = [];
-    for (const rel of files) {
+    for (const { rel, refire } of files) {
       const raw = readFileSync(join(REPO, rel), "utf8");
       // ⚠️⚠️ **把 import 行與註解剝掉再問**（2026-08-28 的教訓）：
       //    第一版寫的是 `src.includes("noteVfxRefired")` —— 而 **import 行就滿足它**
@@ -99,13 +107,53 @@ describe("GH#842 三秒鐵則的碼表 —— 主詞是「一次演出」⛔不�
         .split("\n")
         .filter((l) => !/^\s*(import|\/\/|\*|\/\*)/.test(l))
         .join("\n");
-      // 兩個池的共同形狀：先 start()（或檢查 isStarted），再發 burst
-      const firesBurst = /manualEmitCount\s*=|fireBurst\(/.test(src);
-      if (firesBurst && !/noteVfxRefired\s*\(/.test(src)) missing.push(rel);
+      if (refire.test(src) && !/noteVfxRefired\s*\(/.test(src)) missing.push(rel);
     }
     expect(
       missing,
       `這些檔重新點燃池化粒子卻沒有通知三秒碼表 ⇒ 那一族在連續戰鬥中會被砍掉正在播的那一發：\n  ${missing.join("\n  ")}`,
     ).toEqual([]);
+  });
+
+  it("🟣 mesh 半邊：release→reuse 落在同一個掃描間隔內 ⇒ 掃描看不到 disabled ⇒ spawn 要自己通知碼表", () => {
+    // owner 2026-08-28：「技能施展兩次特效就會缺失 例如光束砲家族」。
+    //
+    // ── 為什麼 mesh 半邊「排空歸零」那條路**結構上走不到** ─────────────────
+    // `vfxHardCap` 的 mesh 碼表只在「某次掃描**觀察到**節點 disabled」時歸零。
+    // 而出貨的順序是：frame N 的 `VfxSystem.update` **先**掃描（:2680）**後**
+    // `modelFx.tick`（:2683，release ⇒ setEnabled(false)）；frame N+1 的事件
+    // drain（在 update **之前**跑）重用 ⇒ setEnabled(true)。
+    // ⇒ 每一次掃描看到的都是 enabled ⇒ 碼表從**第一發**起算 ⇒ 第二發在
+    //    3 秒門檻被 setEnabled(false) 砍頭。修法＝`ModelFxRig.spawn()` 重用時
+    //    呼叫 `noteVfxRefired(root)`（這條守衛釘的就是那個語意）。
+    const node = {
+      name: "modelfx-beam-0", // rig 的命名契約 ⇒ 掃描器把它當這一族的頂層節點
+      parent: null,
+      enabled: true,
+      sweepDisables: 0,
+      isEnabled: () => node.enabled,
+      setEnabled(v: boolean): void {
+        if (!v && node.enabled) node.sweepDisables++;
+        node.enabled = v;
+      },
+    };
+    const scene = { particleSystems: [], transformNodes: [node as never] };
+    // 第一發：t=0 點燃，t=2.9 還在播
+    sweepVfxHardCap(scene as never, 0, { maxLifeSec: 3, scope: "managed" });
+    sweepVfxHardCap(scene as never, 2.9, { maxLifeSec: 3, scope: "managed" });
+    // release（frame N，掃描之後）→ 下一幀 spawn 重用（frame N+1，掃描之前）——
+    // ⚠️ 直接寫欄位，⛔ 不走 setEnabled()：模擬的正是「掃描沒有觀察到那一格」
+    node.enabled = false;
+    node.enabled = true;
+    noteVfxRefired(node); // ⭐ 修復的那一行：spawn 對重用的 root 說「新的一次演出」
+    // 第二發 3 秒內 ⇒ ⛔ 不可以被砍（沒有上面那行，3.1-0 ≥ 3 就砍了）
+    sweepVfxHardCap(scene as never, 3.1, { maxLifeSec: 3, scope: "managed" });
+    expect(
+      node.sweepDisables,
+      "⛔ 第二發被掃掉了 —— 那正是「施展兩次特效就會缺失」的 mesh 半邊",
+    ).toBe(0);
+    // 而第二發**自己**仍然吃三秒鐵則（owner 的鐵則沒有被放寬）
+    sweepVfxHardCap(scene as never, 6.2, { maxLifeSec: 3, scope: "managed" });
+    expect(node.sweepDisables, "一發播超過 3 秒卻沒被回收 —— 鐵則破了").toBe(1);
   });
 });

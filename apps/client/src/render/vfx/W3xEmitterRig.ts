@@ -43,6 +43,7 @@ import "@babylonjs/core/Shaders/particles.fragment";
 import type { VfxDoc } from "@ggd/shared/content";
 import { burstNow, toParticleSystem } from "../../vfx/particleFactory";
 import { clampFadeOutTail } from "../../vfx/fadeOut";
+import { noteVfxRefired } from "../../vfx/vfxHardCap";
 import { vfxDissipateMaxSec, vfxFadeOutMaxSec, vfxHardMaxLifeSec } from "../../vfx/vfxCleanupPolicy";
 import { resolveAttachment, type AttachResolution } from "./attachment";
 import { applyRateScale, planEffectBudget, type BudgetContext, type EffectBudgetPlan } from "./emitterBudget";
@@ -549,6 +550,13 @@ export class W3xEmitterRig {
       // for burst docs on the very next line of `play()`.
       pooled.ps.manualEmitCount = -1;
       pooled.ps.reset();
+      // ⭐ GH#842（第三個池）—— 這一發是**新的一次演出**，三秒硬上限的碼表歸零。
+      // `release(id, hard=false)` 只 `stop()` ⛔ 不排空（hard 才 reset）⇒ 粒子還在
+      // 飛就進池子 ⇒ `isAlive()` 一直是 true ⇒ `vfxHardCap` 的掃描永遠沒觀察到
+      // 「排空」那一格，碼表不歸零 ⇒ 重新點燃的第二發**承接第一發的碼表**，
+      // 3 秒門檻從第一發起算，第二發被 `stop()+reset()` 砍頭 ——
+      // 「技能施展兩次特效就會缺失」（光束砲家族）的粒子半邊。
+      noteVfxRefired(pooled.ps);
       return pooled;
     }
     if (pooled) this.destroy(pooled); // never reuse a corpse (task #131)
