@@ -22,6 +22,10 @@
 # ⚠️ 但 Caddy 會為**列出的每一個**名字去要憑證 ⇒ 每一個都必須**已經指向這台**,
 #   ⛔ 否則挑戰失敗、累積速率限制（Let's Encrypt:每小時 5 次/每個名字）。
 #   ⇒ 所以是 `GGD_SITE_HOSTS`（複數）,由部署腳本按當下的 DNS 狀態決定要列哪些。
-{$GGD_SITE_HOSTS:{$GGD_SITE_HOST:ggd.adms.ai}} {
+# ⛔⛔ Caddy **不支援巢狀**的 `{$A:{$B:default}}` —— 內層不會展開,
+#   整份 Caddyfile 變成 `subject does not qualify for certificate: '}'`
+#   ⇒ caddy **起不來** ⇒ 80/443 沒有人聽 ⇒ ⭐ **正式站直接掛掉**（2026-08-29 實際發生）。
+#   ⇒ 只用**一個**變數,預設值寫在 compose 那一層（那裡才支援 `${A:-${B:-x}}`）。
+{$GGD_SITE_HOSTS:ggd.adms.ai} {
 	reverse_proxy edge:8080
 }

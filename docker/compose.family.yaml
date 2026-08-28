@@ -200,9 +200,9 @@ services:
       # ⚠️ 這一格**必須在既有的 environment 區塊裡** —— YAML 的 mapping key 不可重複,
       #   而 compose 對重複的 `environment:` 是**整份 parse 失敗**（⛔ 不是後者覆蓋前者）
       #   ⇒ 症狀是 caddy 根本沒起來,而錯誤訊息在 compose 的輸出裡很容易被滑過去。
-      GGD_SITE_HOST: "${GGD_SITE_HOST:-ggd.adms.ai}"
       # ⭐ 複數版:切換期間同時掛臨時名字與正式名字（空白分隔）
-      GGD_SITE_HOSTS: "${GGD_SITE_HOSTS:-}"
+      # ⭐ 巢狀預設值放在**這裡**（compose 支援 `${A:-${B:-x}}`,Caddyfile ⛔ 不支援）
+      GGD_SITE_HOSTS: "${GGD_SITE_HOSTS:-${GGD_SITE_HOST:-ggd.adms.ai}}"
     ports:
       - "80:80"
       - "443:443"
