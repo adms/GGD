@@ -569,7 +569,7 @@ export const COMBAT_FEEL_LABELS: Readonly<Record<string, FeelLabel>> = Object.fr
       "⛔ 不是近戰地板 6，那個半徑在 bot 平均 40+ 單位遠的對局裡等於開了跟沒開一樣）。\n" +
       "**0 ＝ 關**（純 LoL，2026-08-28 之前的行為，一鍵 rollback）。" +
       "⚠️ 只作用在 LoL 模型開著的**真人座位**；輔助模型本來就會索敵，bot 走自己的 AI。" +
-      "出貨 3 秒是 Claude 挑的預設（owner 沒給數字）—— 要長要短就是這一格。",
+      "出貨 **1 秒**（owner 2026-08-28 逐字指定；Claude 原本挑 3）—— 要長要短就是這一格。",
   },
   "manualOrder.moveOrderNoAggroUntilArrival": {
     zh: "打帶跑：一路撐到抵達目的地",

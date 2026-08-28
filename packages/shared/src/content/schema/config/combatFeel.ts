@@ -165,7 +165,7 @@ export const zConfigCombatFeelDoc = z
          * （任何指令／成功施法都讓計時器歸零）⇒ 自動索敵接手，半徑用
          * `autoEngage.seekRadius`。**0 ＝ 關**（純 LoL，2026-08-28 之前的行為
          * ＝ 一鍵 rollback）。只作用在 `lolControlModel: true` 的真人座位。
-         * 出貨 3 秒（我挑的 —— owner 沒給數字；要改就在這裡改）。
+         * 出貨 **1 秒**（owner 2026-08-28 指定）。
          */
         idleAutoEngageSec: z.number().min(0).max(60).optional(),
         /**

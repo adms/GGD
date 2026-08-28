@@ -795,9 +795,10 @@ export const DEFAULT_MANUAL_ORDER: ManualOrderRules = Object.freeze({
   moveOrderNoAggroUntilArrival: true,
   // ⭐ owner 2026-08-24:「現在玩 LOL 人數最多，最容易被接受」⇒ 預設就是 LoL 語意。
   lolControlModel: true,
-  // ⭐ owner 2026-08-28「停頓一段時間（N秒後台可設定）就會自動索敵攻擊」。
-  //   3 秒是我挑的預設（owner 沒給數字）—— rollback ＝ 後台調 0（純 LoL）。
-  idleAutoEngageSec: 3,
+  // ⭐ owner 2026-08-28「停頓一段時間（N秒後台可設定）就會自動索敵攻擊」，
+  //   秒數同日他自己指定：**1 秒**（我原本挑 3，他改成 1）。
+  //   rollback ＝ 後台調 0（純 LoL，⛔ 不索敵）。
+  idleAutoEngageSec: 1,
   // ⭐ GH#652 細節①:owner 2026-08-24「do it」⇒ 出貨就是 LoL 那一邊（第〇·六守則）。
   recoveryCancelOnOrder: true,
   // ⭐ GH#652 細節②:同上。

@@ -66,7 +66,18 @@ function spawnFighter(w: SimWorld, seat: number, team: number, pos: V.Vec2, spee
 }
 
 /** 真人名單走 GH#577 開的那扇門(MobRules.humanSeats);mobZones 不開,不生怪。 */
-function world(humanSeats: ReadonlySet<SeatId>, lolModel = false): SimWorld {
+function world(
+  humanSeats: ReadonlySet<SeatId>,
+  lolModel = false,
+  /**
+   * ⭐ owner 2026-08-28 的新旋鈕（出貨 1 秒）。**0 ＝ 純 LoL**（2026-08-28 之前的
+   * 行為）。⚠️ 需要顯式傳 0 的測試就是「純 LoL 從頭到尾不出手」那一條 ——
+   * 它的**前提**被這格旋鈕改掉了（⛔ 不是回歸）：出貨值下站著超過 1 秒**本來就會**
+   * 接手，那正是 owner 要的。⇒ 那一條改成測 rollback 的那一側（它驗的是
+   * 「LoL 語意本身」，而 LoL 語意今天住在 `idleAutoEngageSec: 0`）。
+   */
+  idleAutoEngageSec = DEFAULT_MANUAL_ORDER.idleAutoEngageSec,
+): SimWorld {
   const w = new SimWorld(SKELETON_ARENA, 11);
   w.combatActive = true;
   const cfg = (JSON.parse(readFileSync(join(CONTENT, "config/arena-rules.json"), "utf8")) as { mobWaves: MobWavesConfigLike }).mobWaves;
@@ -82,6 +93,7 @@ function world(humanSeats: ReadonlySet<SeatId>, lolModel = false): SimWorld {
     ...DEFAULT_MANUAL_ORDER,
     ...(w.combatFeel.manualOrder ?? {}),
     lolControlModel: lolModel,
+    idleAutoEngageSec,
   };
   w.combatFeel = Object.freeze({ ...w.combatFeel, manualOrder: Object.freeze(mo) });
   return w;
@@ -166,7 +178,9 @@ describe("GH#637 點地板 1 秒不搶指揮權(打帶跑)", () => {
     // owner 2026-08-24:「請你**完整拆解 LOL 的英雄控制指令與移動、攻擊、反擊邏輯**，
     // 現在玩 LOL 人數最多，最容易被接受」。LoL 的英雄**沒有 idle auto-acquire、
     // 也不會自動反擊** ⇒ 站著、走著、挨打，都不會自己挑一個目標。
-    const w = world(new Set([asSeatId(0)]), true);
+    // ⭐ 顯式 `idleAutoEngageSec: 0` ＝ **純 LoL**。出貨值是 1 秒（owner 2026-08-28）
+    //    ⇒ 站著超過 1 秒本來就會接手，那是**另一條**測試在驗的東西。
+    const w = world(new Set([asSeatId(0)]), true, 0);
     const me = spawnFighter(w, 0, 0, at(0));
     const enemy = spawnFighter(w, 1, 1, at(3), 1e-9);
     // ① 站著不動 + 一直被打 ⇒ 一次都不出手（assist 模型下這裡會咬住敵人）。
