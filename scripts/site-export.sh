@@ -103,6 +103,40 @@ info "合計 ≈ $((TOTAL/1024)) MB（⛔ 不含映像 9.4G —— arm64 一定�
    ⇒ 確認 $REPO/data/ 底下真的有 accounts/ matches/ 等目錄。"
 info "repo = $REPO"
 
+# ═══════════════════════════════════════ 1.5 ⭐⭐ 讀得到嗎（⛔ 在寫任何東西之前）
+# 2026-08-29 在正式機上量到：`data/` 底下的檔案**全部屬於 65532:65532**
+#   （distroless 容器的 nonroot 使用者，platform 寫進 bind mount 的），
+#   而 ssh 進去的 `can` **1998 個檔只讀得到 889 個（44%）** ——
+#   ⭐ **213 個帳號檔裡讀得到 2 個**，`walletmeta`/`friends`/`invites` 是 0。
+#
+# ⛔⛔ 沒有這一段的話會發生什麼：`tar` 跳過讀不到的檔，
+#   而 **manifest 是從同一個讀不到的視角算的** ⇒ 兩邊會**互相同意，而一起是錯的**。
+#   ⭐ 那正是 CLAUDE.md 記了一整輪的「一把只驗過單邊的尺」。
+#
+# ⚠️ 而這個教訓這個 repo **早就學過**：`tools/deploy/ggd-assets.sh` 逐字寫著
+#   「refusing to write a manifest for '$name' while files in it cannot be read
+#    (paths above). A byte total computed over files this process cannot open
+#    is not evidence.」（GH#749）—— ⛔ 我沒有把它帶過來，這一段就是補上。
+head_ "1.5 ⭐ 讀得到嗎（⛔ 在寫任何東西之前）"
+UNREADABLE=0; TOTALF=0
+for d in "${PRESENT[@]}" "${CRITICAL_BULK[@]}" "${BULK[@]}"; do
+  [ -d "$REPO/data/$d" ] || continue
+  # ⚠️ 用 `-readable` 問的是**這個行程**讀不讀得到,⛔ 不是「檔案存不存在」
+  all=$($SUDO find "$REPO/data/$d" -type f 2>/dev/null | wc -l | tr -d ' ')
+  mine=$(find "$REPO/data/$d" -type f -readable 2>/dev/null | wc -l | tr -d ' ')
+  TOTALF=$((TOTALF + all)); UNREADABLE=$((UNREADABLE + all - mine))
+  [ "$all" -eq "$mine" ] || printf "  %s✗%s %-18s %s/%s 讀不到（擁有者 %s）\n" "$RED" "$RST" "$d" \
+      "$((all-mine))" "$all" "$($SUDO find "$REPO/data/$d" -type f -printf '%u:%g\n' 2>/dev/null | sort -u | head -1)"
+done
+if [ "$UNREADABLE" -gt 0 ]; then
+  die "⛔ $TOTALF 個檔裡有 $UNREADABLE 個**這個行程讀不到**。
+   ⭐ 一份跳過讀不到的檔而產出的包,它的 manifest 也是從同一個瞎掉的視角算的
+     ⇒ 匯入端會「對帳通過」而資料其實少了一半。⛔ 拒絕產出。
+   ⇒ 用 sudo 重跑：  sudo -E bash $0 $*
+     （data/ 屬於容器的 nonroot 使用者,而 ssh 進來的帳號讀不到它）"
+fi
+ok "$TOTALF 個檔全部讀得到"
+
 # ═══════════════════════════════════════ 2. Redis（⛔ 不要靠 AOF 剛好開著）
 head_ "2. Redis"
 REDIS_KEYS=""
@@ -184,12 +218,12 @@ if [ "$DRY" -eq 1 ]; then head_ "dry-run 結束 —— ⛔ 一個位元組都沒
 
 head_ "5. 打包"
 [ "${#PRESENT[@]}" -gt 0 ] || die "⛔ 一個 core 目錄都沒有 —— 拒絕產出空包"
-tar -C "$REPO/data" -cf - "${PRESENT[@]}" | zstd -q -12 -T0 -o "$BUNDLE/data-core.tar.zst" \
+tar -C "$REPO/data" --numeric-owner -cf - "${PRESENT[@]}" | zstd -q -12 -T0 -o "$BUNDLE/data-core.tar.zst" \
   || die "core 打包失敗"
 ok "data-core.tar.zst $(du -h "$BUNDLE/data-core.tar.zst" | cut -f1)"
 for d in "${CRITICAL_BULK[@]}" "${BULK[@]}"; do
   [ -d "$REPO/data/$d" ] || continue
-  tar -C "$REPO/data" -cf - "$d" 2>/dev/null | zstd -q -3 -T0 -o "$BUNDLE/data-$d.tar.zst" \
+  tar -C "$REPO/data" --numeric-owner -cf - "$d" 2>/dev/null | zstd -q -3 -T0 -o "$BUNDLE/data-$d.tar.zst" \
     && ok "data-$d.tar.zst $(du -h "$BUNDLE/data-$d.tar.zst" | cut -f1)"
 done
 
@@ -210,6 +244,9 @@ head_ "6. manifest（⭐ 這才是搬遷成功的判準）"
   #   ⇒ 把來源需要哪些 key 記下來,import 端才能在**開機之前**指名缺哪一個。
   # ⭐ 來源**本來就沒有**的那幾格。⛔ 沒有這一行,匯入端會把「來源沒有」
   #   讀成「還原時掉了」,或者反過來安靜地不檢查它。
+  # ⭐ 容器以哪個 UID 寫 data/。匯入端還原成別的 UID ⇒ 容器**寫不進去**,
+  #   而症狀是「站起來了但存不了檔」—— ⛔ 一個不會在啟動時報錯的缺陷。
+  echo "data_owner=$($SUDO find "$REPO/data/accounts" -type f -printf '%u:%g\n' 2>/dev/null | sort -u | head -1)"
   echo "absent_at_source=$(printf '%s,' "${ABSENT[@]}")"
   echo "env_keys=$(sed -n 's/^\([A-Z_][A-Z0-9_]*\)=.*/\1/p' "$REPO/docker/.env" 2>/dev/null | sort | tr '\n' ',')"
   echo "# ── 逐項計數（import 端要逐條對上）──"
