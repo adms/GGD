@@ -219,6 +219,69 @@ cmd_tunnel() {
   info "加完跑： bash scripts/mini-deploy.sh tunnel-verify"
 }
 
+# ═══════════════════════════════════════ direct —— 埠轉發那條路（GH#861）
+# ⭐⭐ 這支的**整個重點是順序**：
+#   Caddy 一啟動就會為它列出的主機名去要 Let's Encrypt 憑證（HTTP-01）
+#   ⇒ 那個名字必須**已經指向這台**,而且 **80 埠必須從外面通得到**。
+#   ⛔ 條件沒滿足就啟動 ⇒ 失敗重試 ⇒ ⚠️ **速率限制,撞到要等一週**。
+#   ⇒ 所以這支腳本**先驗、後啟動**,⛔ 而不是啟動了再看 log。
+cmd_direct() {
+  local host="${GGD_SITE_HOST:?⛔ 請設 GGD_SITE_HOST（搬遷期間用臨時名字，例如 mini.adms.ai）}"
+
+  head_ "1. ⭐ 這個名字指到哪裡（⛔ 指錯地方就不要啟動）"
+  local ip mine
+  ip=$(dig +short @1.1.1.1 "$host" A 2>/dev/null | tail -1)
+  mine=$(r "curl -fsS -m 8 https://api.ipify.org" 2>/dev/null)
+  info "$host → ${ip:-?}   /   mini 的出口 IP → ${mine:-?}"
+  [ -n "$ip" ] && [ "$ip" = "$mine" ] \
+    && ok "指向這台 ✓" \
+    || die "⛔ $host 指向 ${ip:-（查不到）}，而 mini 是 ${mine:-?}
+   ⭐ 憑證挑戰會打到**別的機器**上 ⇒ 失敗重試 ⇒ ⚠️ Let's Encrypt 速率限制（撞到等一週）。
+   ⇒ 先把 A 記錄指過來（Cloudflare 上要**灰雲 DNS only**，⛔ 橘雲會把流量繞回 CF）"
+
+  head_ "2. ⭐ 80 埠從**外面**真的通嗎（⛔ 不是從家裡測）"
+  # ⚠️ NAT 迴環不一定支援 ⇒ 從 mini 自己測會騙人。用外部服務代打。
+  local probe
+  probe=$(curl -fsS -m 20 "https://api.allorigins.win/raw?url=http://$mine/" -o /dev/null -w '%{http_code}' 2>/dev/null || echo "")
+  if r "curl -fsS -m 6 -o /dev/null http://127.0.0.1:80/" 2>/dev/null; then
+    info "（mini 本機 :80 有東西在聽）"
+  fi
+  # 直接從這台（在同一個 NAT 內）測不準,所以只做下界檢查並要求人工確認
+  if nc -z -G 6 "$mine" 80 >/dev/null 2>&1; then
+    ok "從這台連得到 $mine:80"
+  else
+    warn "從這台連不到 $mine:80 —— ⚠️ 這**可能**只是 NAT 迴環不支援"
+    info "⭐ 請用手機關 Wi-Fi 走 4G/5G 開 http://$mine/ 確認,⛔ 家裡測不準"
+  fi
+
+  head_ "3. 起 caddy（⭐ edge 維持零發佈埠 —— caddy 走 docker 內網連它）"
+  r "cd $REMOTE_REPO && GGD_SITE_HOST='$host' docker compose \
+       -f docker/compose.yaml -f docker/compose.family.yaml -f docker/compose.tunnel.yaml \
+       --env-file docker/.env up -d caddy" 2>&1 | tail -4 | sed 's/^/    /'
+
+  head_ "4. ⭐ 憑證真的拿到了嗎（⛔ 不是「caddy 在跑」）"
+  local i got=0
+  for i in $(seq 1 40); do
+    if echo | openssl s_client -connect "$host:443" -servername "$host" 2>/dev/null \
+         | openssl x509 -noout -subject 2>/dev/null | grep -q "$host"; then got=1; break; fi
+    /bin/sleep 3
+  done
+  if [ "$got" = 1 ]; then
+    local cert; cert=$(echo | openssl s_client -connect "$host:443" -servername "$host" 2>/dev/null \
+      | openssl x509 -noout -issuer -subject -dates 2>/dev/null | tr '\n' ' ')
+    ok "憑證已簽發"
+    info "$cert"
+  else
+    bad "⛔ 120 秒內沒拿到 $host 的憑證"
+    r "docker logs --tail 25 ggd-caddy-1" 2>&1 | grep -iE "error|challenge|rate|obtain" | tail -6 | sed 's/^/    /'
+    info "⚠️ 若看到 rate limit ⇒ **停下來**，⛔ 不要重試（會加深）"
+    return 1
+  fi
+
+  head_ "5. 對外實測"
+  GGD_PUBLIC_HOST="$host" cmd_tunnel_verify
+}
+
 # ⭐ 對外實測 —— ⛔ 不因為文件說支援 WebSocket 就當它通了
 cmd_tunnel_verify() {
   local host="${GGD_PUBLIC_HOST:-ggd.adms.ai}"
@@ -258,6 +321,6 @@ cmd_tunnel_verify() {
 
 case "${1:-check}" in
   check) cmd_check ;; bootstrap) cmd_bootstrap ;; deploy) cmd_deploy ;; logs) shift; cmd_logs "$@" ;;
-  tunnel) cmd_tunnel ;; tunnel-verify) cmd_tunnel_verify ;;
-  *) echo "用法: $0 {check|bootstrap|deploy|tunnel|tunnel-verify|logs}"; exit 2 ;;
+  tunnel) cmd_tunnel ;; tunnel-verify) cmd_tunnel_verify ;; direct) cmd_direct ;;
+  *) echo "用法: $0 {check|bootstrap|deploy|tunnel|tunnel-verify|direct|logs}"; exit 2 ;;
 esac

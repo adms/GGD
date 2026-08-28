@@ -194,6 +194,9 @@ services:
     restart: unless-stopped
     command: caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
     environment:
+      # ⭐ 搬遷期間指向臨時名字；⛔ 預設（未設時）走 Caddyfile 裡的正式名字
+      GGD_SITE_HOST: "${GGD_SITE_HOST:-ggd.adms.ai}"
+    environment:
       ACME_EMAIL: ${ACME_EMAIL:-adms@mobagel.com}
       SITE_DOMAIN: ${SITE_DOMAIN:-ggd.adms.ai}
     ports:

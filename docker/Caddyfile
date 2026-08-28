@@ -8,6 +8,15 @@
 #
 # 內容逐項對照 /data/docker/volumes/ggd_caddy-config/_data/caddy/autosave.json：
 #   listen :443 · h1+h2 · host ggd.adms.ai · reverse_proxy edge:8080 · 自動 TLS
-ggd.adms.ai {
+# ⭐ 主機名可切換,⛔ 而預設**就是正式站現在的值** —— 正式機吃這個檔,
+#   ⛔ 一個會改變它行為的預設值是不可接受的。
+#
+# ⚠️⚠️ 為什麼要可切換（2026-08-29 踩到的）:
+#   Caddy 一啟動就會為**它列出的每一個主機名**去要 Let's Encrypt 憑證，走 HTTP-01
+#   ⇒ 那個名字必須**已經指向這台**。
+#   ⛔ 在 mini 上掛 `ggd.adms.ai`（它還指著正式站）⇒ 挑戰打到正式站 ⇒ 失敗重試
+#     ⇒ ⚠️ **Let's Encrypt 的失敗有速率限制,撞到要等一週**。
+#   ⇒ 搬遷期間 mini 用 GGD_SITE_HOST=mini.adms.ai,切換那一刻才改成正式名字。
+{$GGD_SITE_HOST:ggd.adms.ai} {
 	reverse_proxy edge:8080
 }
