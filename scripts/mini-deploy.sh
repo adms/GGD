@@ -166,7 +166,74 @@ print(f"  {\"OK\" if rp.get(\"ok\") else \"BAD\"} replay.ok={rp.get(\"ok\")}")' 
 
 cmd_logs(){ r "cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml logs --tail 60 ${1:-}"; }
 
+# ═══════════════════════════════════════ tunnel —— Cloudflare Tunnel（GH#861）
+# ⭐ 走 tunnel 時 edge **零發佈埠**（compose.tunnel.yaml 的 `ports: !reset []`），
+#   而 caddy 不跑（`--scale caddy=0`）—— 它會去跟 Let's Encrypt 要憑證,
+#   ⛔ 而家用機沒有 inbound 80/443 ⇒ 失敗重試 ⇒ ⚠️ 撞到速率限制要等一週。
+cmd_tunnel() {
+  r "grep -q '^CLOUDFLARE_TUNNEL_TOKEN=' $REMOTE_REPO/docker/.env" \
+    || die "⛔ mini 的 docker/.env 裡沒有 CLOUDFLARE_TUNNEL_TOKEN
+   ⇒ Cloudflare 後台 → Zero Trust → Networks → Tunnels → 建一個 → 複製 token,然後：
+     ssh $USER_@$HOST 'echo \"CLOUDFLARE_TUNNEL_TOKEN=<token>\" >> $REMOTE_REPO/docker/.env'"
+
+  head_ "1. 起 tunnel（edge 改為零發佈埠）"
+  r "cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml \
+       -f docker/compose.tunnel.yaml --env-file docker/.env up -d --scale caddy=0" 2>&1 | tail -5 | sed 's/^/    /'
+
+  head_ "2. ⭐ 驗它**真的連上 Cloudflare**（⛔ 不是「容器在跑」）"
+  # ⚠️ 一個連不上的 cloudflared 會很開心地一直重試,而站是死的。
+  local i ok_=0
+  for i in $(seq 1 30); do
+    r "docker exec ggd-cloudflared-1 cloudflared tunnel --metrics 127.0.0.1:2000 ready" >/dev/null 2>&1 && { ok_=1; break; }
+    /bin/sleep 3
+  done
+  [ "$ok_" = 1 ] && ok "cloudflared 已連上 Cloudflare" || {
+    bad "⛔ cloudflared 沒有連上"
+    r "docker logs --tail 20 ggd-cloudflared-1" 2>&1 | sed 's/^/    /'
+    return 1
+  }
+
+  head_ "3. ⭐ edge 真的不發佈埠了嗎（安全性的那一半）"
+  local ports; ports=$(r "cd $REMOTE_REPO && docker ps --filter name=ggd-edge --format '{{.Ports}}'" 2>/dev/null)
+  [ -z "${ports// /}" ] && ok "edge 零發佈埠 —— 主機上沒有任何入口" \
+                        || bad "⛔ edge 仍發佈：$ports（tunnel overlay 沒吃到?）"
+
+  head_ "4. 站（從 mini 內部）"
+  r "curl -fsS -m 5 -o /dev/null -w '    edge HTTP %{http_code}\n' http://127.0.0.1:8088/" 2>&1 \
+    || info "（edge 已不發佈埠 ⇒ 從主機連不到是**正確的**,走 docker 內網驗）"
+  r "cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml exec -T cloudflared sh -c 'wget -qO- -T5 http://edge:8080/ >/dev/null && echo OK'" >/dev/null 2>&1 \
+    && ok "cloudflared → edge:8080 走得通（⭐ 那才是 tunnel 實際走的路）" \
+    || warn "cloudflared 連不到 edge:8080"
+
+  head_ "下一步"
+  info "在 Cloudflare 後台的這個 tunnel 加 Public hostname："
+  info "  Subdomain=ggd  Domain=adms.ai  Type=HTTP  URL=edge:8080"
+  info "⚠️ 展開 Additional application settings 確認 **WebSocket 沒被關掉**（Colyseus 靠它）"
+  info "加完跑： bash scripts/mini-deploy.sh tunnel-verify"
+}
+
+# ⭐ 對外實測 —— ⛔ 不因為文件說支援 WebSocket 就當它通了
+cmd_tunnel_verify() {
+  local host="${GGD_PUBLIC_HOST:-ggd.adms.ai}"
+  head_ "從網際網路驗 $host"
+  curl -fsS -m 15 -o /dev/null -w "  首頁          HTTP %{http_code}  TLS %{time_appconnect}s  總計 %{time_total}s\n" "https://$host/" 2>&1
+  curl -fsS -m 30 -o /dev/null -w "  bundle.json   HTTP %{http_code}  %{size_download} bytes\n" "https://$host/content/bundle.json" 2>&1
+  curl -fsS -m 15 -o /dev/null -w "  whitelist     HTTP %{http_code}\n" "https://$host/api/v1/curation/whitelist" 2>&1
+  echo
+  # ⭐ WebSocket:握手回 101 才算通
+  local code
+  code=$(curl -fsS -m 15 -o /dev/null -w '%{http_code}' \
+      -H "Connection: Upgrade" -H "Upgrade: websocket" \
+      -H "Sec-WebSocket-Version: 13" -H "Sec-WebSocket-Key: $(head -c16 /dev/urandom | base64)" \
+      "https://$host/colyseus/" 2>/dev/null || echo 000)
+  [ "$code" = 101 ] && ok "WebSocket 握手回 101 —— ⭐ Colyseus 走得通" \
+                    || bad "⛔ WebSocket 握手回 $code（要 101）—— 去 tunnel 的 Additional application settings 開它"
+  echo
+  info "⚠️ 這只證明**路徑通**。真的一場比賽還要玩家實際連一次。"
+}
+
 case "${1:-check}" in
   check) cmd_check ;; bootstrap) cmd_bootstrap ;; deploy) cmd_deploy ;; logs) shift; cmd_logs "$@" ;;
-  *) echo "用法: $0 {check|bootstrap|deploy|logs}"; exit 2 ;;
+  tunnel) cmd_tunnel ;; tunnel-verify) cmd_tunnel_verify ;;
+  *) echo "用法: $0 {check|bootstrap|deploy|tunnel|tunnel-verify|logs}"; exit 2 ;;
 esac
