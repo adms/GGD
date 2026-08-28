@@ -107,7 +107,10 @@ export function pickNearestUnit(
     }
     // 小怪讓路給英雄 —— 見 MOB_AIM_ASSIST_PENALTY。⛔ 這是**自動**索敵才有的
     // 偏好；滑鼠直接點（pickUnit）不讀 priority。
-    score += (u.priority ?? 0) * mobPenalty;
+    // ⭐ `priority` 現在**可以從 `kind` 推導**（GH#863）—— 小怪讓路，其餘不讓。
+    //   ⇒ 呼叫端只要給 `kind` 就好，⛔ 不必再寫一次同一個事實（第〇·四守則）。
+    //   顯式的 `priority` 仍然贏（既有呼叫端逐位元不變）。
+    score += (u.priority ?? (u.kind === "mob" ? 1 : 0)) * mobPenalty;
     if (score < bestScore) {
       bestScore = score;
       best = u.id;

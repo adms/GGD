@@ -19,6 +19,7 @@ import {
 } from "@ggd/shared/content";
 import { BTN, mapGamepadFrame, type GamepadFrame, type GamepadPlayerCtx } from "./GamepadInput";
 import { pickNearestUnit } from "./Picking";
+import { controllerSchemeNotes } from "../ui/controlLegendModel";
 
 const DOC = zConfigControllerSchemeDoc.parse(
   JSON.parse(
@@ -116,5 +117,27 @@ describe("手把操作方案真的驅動派送 (GH#863)", () => {
   it("LT：v3 是 attack-move，v4 ⛔ 不送任何 order（那一顆給了玩家專注）", () => {
     expect(mapGamepadFrame(press(BTN.LT), ctx(V3)).order?.kind).toBe("attackMove");
     expect(mapGamepadFrame(press(BTN.LT), ctx(V4)).order).toBeUndefined();
+  });
+
+  it("⭐ 說明卡：v3 ⛔ 一列都不多（rollback 的意義）", () => {
+    expect(controllerSchemeNotes(V3)).toEqual([]);
+  });
+
+  it("⭐⭐ 說明卡：v4 的每一句都從方案推導，⛔ 沒有寫死", () => {
+    const notes = controllerSchemeNotes(V4);
+    const label = (id: string): string =>
+      notes.find((n) => n.id === id)?.label ?? "";
+    // ① 自動清怪 —— 「移動不會關掉它」只有在 moveStick=false 時才是真的
+    expect(label("scheme-autofarm")).toContain("移動不會關掉它");
+    // ② 玩家專注 —— **鍵名從綁定來**（v4 是 LT）
+    expect(notes.find((n) => n.id === "scheme-pvpfocus")?.control).toContain("LT");
+    // ③ 用詞照 spec §79/§86：⛔ 不可以叫「鎖定」（它不是硬鎖）
+    expect(label("scheme-pvpfocus")).toContain("玩家專注");
+    expect(label("scheme-pvpfocus")).not.toContain("鎖定");
+    // ④ §86：⛔ 不暴露「Auto Approach」這個技術名詞
+    expect(label("scheme-approach")).toContain("自動靠近");
+    expect(notes.some((n) => n.label.includes("Auto Approach"))).toBe(false);
+    // ⑤ §80③ 最重要的一句
+    expect(label("scheme-noautocast")).toContain("永遠不會自動施放");
   });
 });

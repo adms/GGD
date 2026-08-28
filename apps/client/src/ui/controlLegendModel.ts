@@ -68,6 +68,8 @@
  *            rows off a reference card is the one thing it may never do.
  */
 import type { AbilitySlot, CastableSlot } from "@ggd/shared/sim/intents";
+import { activeControllerScheme } from "../input/GamepadInput";
+import { padActionTable } from "../input/controllerBindings";
 import {
   BTN,
   mapGamepadFrame,
@@ -208,6 +210,11 @@ function probeCtx(skillPoints = 0): GamepadPlayerCtx {
     ability: () => ({ castType: "skillshot", range: 6 }),
     nearestEnemy: () => 1,
     skillPoints,
+    // ⭐⭐ GH#863 —— **說明頁必須問生效中的方案**。
+    // ⚠️ 少了這一行，切到 v4 之後這一頁還是印 v3 的鍵：說明頁**說謊**，
+    //   而它看起來完全正常（每一列都在、每一顆鍵都有字）。
+    //   ⇒ 這正是本 repo 記過的「壞掉跟正常長得一模一樣」。
+    scheme: activeControllerScheme(),
   };
 }
 
@@ -325,6 +332,53 @@ export function padFace(name: string): string {
  * button in the order `BTN` declares them — which is the controller's own
  * reading order, face buttons before shoulders before menu keys.
  */
+/**
+ * ⭐ 這一版的**自動化在做什麼**，用玩家的話說（spec §78–§86，GH#863）。
+ *
+ * ⭐⭐ 全部從**生效中的方案**推導，⛔ 沒有一句是寫死的 ——
+ * 一段寫死的說明會在切版本之後變成謊話，而那正是這張卡最不該做的事。
+ *
+ * ⛔ **v3 回空陣列** ⇒ 出貨那一版的說明卡逐位元不變（rollback 的意義）。
+ *
+ * ⚠️ 用詞照 spec §86：
+ *   · Auto Farm → 「自動清怪」  · PvP Focus → 「玩家專注」（⛔ 不是「鎖定」，它不是硬鎖）
+ *   · Auto Approach → ⛔ **不暴露技術名詞**，只說「差一小段距離時會自動靠近殭屍」
+ */
+export function controllerSchemeNotes(scheme = activeControllerScheme()): LegendRow[] {
+  const rows: LegendRow[] = [];
+  const pad = padActionTable(scheme);
+  // ① 自動清怪 —— ⭐ 只有在「移動⛔不算戰鬥輸入」時，「一邊走一邊清」才是真的。
+  //    ⚠️ v3 的 idle 索敵一走位就停，說它「移動不會關掉」會是謊話。
+  if (scheme.autoFarm.enabled && !scheme.combatInput.moveStick)
+    rows.push({
+      id: "scheme-autofarm",
+      control: "自動",
+      label: "沒有戰鬥操作一小段時間後自動清怪；移動不會關掉它",
+    });
+  // ② 玩家專注 —— 鍵名從綁定來。
+  if (pad.pvpFocusButton !== null) {
+    const name = Object.entries(BTN).find(([, i]) => i === pad.pvpFocusButton)?.[0];
+    if (name)
+      rows.push({
+        id: "scheme-pvpfocus",
+        control: padFace(name),
+        label: "玩家專注：攻擊與指定敵人的技能只選敵方玩家（⛔ 不會自動追人）",
+      });
+  }
+  // ③ 近戰貼近（§86：⛔ 不講「Auto Approach」）
+  if (scheme.autoApproach.enabled)
+    rows.push({
+      id: "scheme-approach",
+      control: "自動",
+      label: "差一小段距離時會自動靠近殭屍；碰左搖桿立刻取消",
+    });
+  // ④ ⭐ 最重要的一句 —— 但只在**已經在解釋自動化**時才說，
+  //    ⛔ 否則它在 v3 上是一句無中生有的雜訊。
+  if (rows.length > 0)
+    rows.push({ id: "scheme-noautocast", control: "技能", label: "永遠不會自動施放" });
+  return rows;
+}
+
 export function gamepadLegend(): LegendRow[] {
   const rows: LegendRow[] = [];
   const sticks = probeGamepadSticks();
@@ -347,6 +401,7 @@ export function gamepadLegend(): LegendRow[] {
       : legendActionLabel(action);
     rows.push({ id: `btn-${name}`, control: padFace(name), label });
   }
+  rows.push(...controllerSchemeNotes());
   if (probeGamepadPan()) {
     rows.push({
       id: "stick-right-pan",
