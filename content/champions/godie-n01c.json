@@ -247,6 +247,15 @@
           "distance": 12.0
         },
         {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小"
+          },
+          "length": 10.08,
+          "width": 3.67
+        },
+        {
           "kind": "blink",
           "shape": "single",
           "to": "point",
@@ -261,7 +270,6 @@
               "kind": "damageArea",
               "damageType": "true",
               "amount": {
-                "damageTier": "小",
                 "ratios": [
                   {
                     "stat": "ap",
