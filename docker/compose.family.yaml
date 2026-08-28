@@ -194,11 +194,13 @@ services:
     restart: unless-stopped
     command: caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
     environment:
-      # ⭐ 搬遷期間指向臨時名字；⛔ 預設（未設時）走 Caddyfile 裡的正式名字
-      GGD_SITE_HOST: "${GGD_SITE_HOST:-ggd.adms.ai}"
-    environment:
       ACME_EMAIL: ${ACME_EMAIL:-adms@mobagel.com}
       SITE_DOMAIN: ${SITE_DOMAIN:-ggd.adms.ai}
+      # ⭐ 搬遷期間指向臨時名字；⛔ 預設（未設時）走 Caddyfile 裡的正式名字。
+      # ⚠️ 這一格**必須在既有的 environment 區塊裡** —— YAML 的 mapping key 不可重複,
+      #   而 compose 對重複的 `environment:` 是**整份 parse 失敗**（⛔ 不是後者覆蓋前者）
+      #   ⇒ 症狀是 caddy 根本沒起來,而錯誤訊息在 compose 的輸出裡很容易被滑過去。
+      GGD_SITE_HOST: "${GGD_SITE_HOST:-ggd.adms.ai}"
     ports:
       - "80:80"
       - "443:443"
