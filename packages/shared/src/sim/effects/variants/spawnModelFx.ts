@@ -96,6 +96,12 @@ export interface SpawnModelFxVariant {
    */
   spacing?: number;
   /** ⭐「翻滾」：模型繞自己的軸轉，度/秒。純視覺，⛔ sim 不讀它。 */
+  /**
+   * ⭐【槍口偏移】GH#838 N1 —— 沿**開火方向**把整組實例往前推幾個世界單位
+   * （JASS `PolarProjectionBJ(loc, d, facing)`；09-04 龜派的三個東西都在槍口
+   * +150wc3u≈2.75u，⛔ 不在腳下）。負值＝往後。缺席 ⇒ 0 ⇒ 逐位元同以前。
+   */
+  offsetForwardU?: number;
   spinDegPerSec?: number;
   /**
    * ⭐【播 .glb 自己的動畫剪輯】要播哪一條（GH#689）。純視覺，⛔ sim 不讀它，
