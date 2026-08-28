@@ -122,6 +122,16 @@ export const zSpawnModelFx = z
       .describe(
         'path:"static" 且 count≥2 時，相鄰兩具的間距（世界單位）。⛔ 其他路徑讀不到它（radial/orbit 的距離住 distance）。',
       ),
+    offsetForwardU: z
+      .number()
+      .min(-MODEL_FX_MAX_DISTANCE)
+      .max(MODEL_FX_MAX_DISTANCE)
+      .optional()
+      .describe(
+        "⭐【槍口偏移】沿**開火方向**把整組實例往前推幾個世界單位（JASS 的 " +
+          "`PolarProjectionBJ(loc, d, facing)`；09-04 龜派的三個東西都在槍口 +150wc3u≈2.75u，" +
+          "⛔ 不在腳下）。負值＝往後。缺席 ⇒ 0 ⇒ 逐位元同以前。",
+      ),
     spinDegPerSec: z
       .number()
       .min(-MODEL_FX_MAX_SPIN_DEG_PER_SEC)

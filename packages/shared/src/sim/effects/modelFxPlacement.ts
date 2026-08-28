@@ -28,6 +28,13 @@ export interface ModelFxPlacementParams {
   distance?: number;
   count?: number;
   spacing?: number;
+  /**
+   * ⭐【槍口偏移】GH#838 N1 —— 沿**開火方向**把整組實例往前推。
+   * JASS 的 `PolarProjectionBJ(GetUnitLoc(caster), 150.00, GetUnitFacing(caster))`
+   * 是真動詞（09-04 龜派的三個東西都在槍口 +150wc3u ≈ 2.75u，⛔ 不在腳下）。
+   * 缺席 ⇒ 0 ⇒ 這一格出現以前的每一份文件逐位元不變。
+   */
+  offsetForwardU?: number;
 }
 
 /** 一個實例：從哪出發、往哪走、走多遠。`dir` 缺席 = `orbit`（不做線性推進）。 */
@@ -98,11 +105,26 @@ export interface ModelFxFrame {
   targetPos?: Vec2;
 }
 
+/**
+ * 沿面向把一個點往前推（GH#838 N1；JASS `PolarProjectionBJ(loc, d, facing)`）。
+ * ⚠️ 面向解不到 ⇒ **不推**（⛔ 不是猜一個 +x：那會讓落點跑到一個沒有人指定的方向）。
+ * ⚠️ 純度：只有乘加，⛔ 沒有三角函式（角度已經在單位向量 `facing` 裡）。
+ */
+function offsetAlongFacing(p: Vec2, facing: Vec2 | undefined, d: number): Vec2 {
+  if (d === 0 || facing === undefined) return p;
+  const l = len(facing);
+  if (l <= 1e-6) return p;
+  return { x: p.x + (facing.x / l) * d, z: p.z + (facing.z / l) * d };
+}
+
 export function modelFxInstancesFromFrame(
   e: ModelFxPlacementParams,
   frame: ModelFxFrame,
 ): Instance[] {
-  const origin = frame.origin;
+  // ⭐ N1 槍口偏移：把**起點**沿開火方向推出去（⛔ 不是推每一具 —— radial/orbit
+  //    的環心要跟著動，而沿線 static 的第 0 具本來就從 origin 長出來）。
+  //    方向優先用面向（原作讀的正是 `GetUnitFacing`），面向解不到就不推。
+  const origin = offsetAlongFacing(frame.origin, frame.facing, e.offsetForwardU ?? 0);
   const spread = e.path === "radial" || e.path === "orbit";
   const count = spread
     ? Math.max(1, Math.min(MODEL_FX_MAX_INSTANCES, Math.floor(e.count ?? 1)))

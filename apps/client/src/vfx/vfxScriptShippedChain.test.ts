@@ -344,4 +344,52 @@ describe("GH#838 演出腳本的出貨鏈（真 content → 真施放 → 真 Vf
       `錨的 origin 是 ${[...origins].join(" / ")} —— 沒有一則來自 EX`,
     ).toBe(true);
   });
+
+  it("⑥ 前後偏移只套**一次**（⛔ 不是 placement 與 player 各推一次）", () => {
+    // ⭐ GH#838 N1 把 offsetForwardU 加進**共用**擺位核心之後，播放器若還自己推
+    //    一次，畫面上只會看起來「偏移量是我填的兩倍」—— 而兩邊各自都對，
+    //    那正是最難查的那一種（第〇·四守則：同一個事實不可以有兩個住處）。
+    const doc = zVfxScriptDoc.parse({
+      id: "t-offset",
+      schema: "vfx-script@1",
+      abilityId: "godie-hart.r",
+      segments: [
+        {
+          kind: "modelFx",
+          on: "castStart",
+          modelKey: "imported.doom",
+          path: "static",
+          anchor: "self",
+          lifeSec: 1,
+          offsetForwardU: 5,
+        },
+      ],
+    });
+    const sent: { x: number; z: number }[] = [];
+    const player = new VfxScriptPlayer({
+      scriptFor: (id) => (id === "godie-hart.r" ? doc : undefined),
+      allScripts: () => [doc],
+      projectileIdsOf: () => new Set(),
+      entityPos: () => ({ x: 0, z: 0 }),
+      dispatch: (ev) => {
+        const d = ev.data as { instances?: { x: number; z: number }[] };
+        for (const i of d.instances ?? []) sent.push({ x: i.x, z: i.z });
+      },
+      enabled: () => true,
+    });
+    player.onEvent(
+      {
+        type: "abilityCast",
+        tick: 0,
+        data: { caster: 1, abilityId: "godie-hart.r", direction: { x: 1, z: 0 } },
+      } as unknown as EventMessage,
+      0,
+    );
+    player.update(0);
+    expect(sent.length, "沒有生出實例").toBeGreaterThan(0);
+    expect(
+      sent[0]!.x,
+      `落點 x=${sent[0]!.x} —— 填 5 卻推到 ${sent[0]!.x}，那是推了兩次`,
+    ).toBeCloseTo(5, 6);
+  });
 });

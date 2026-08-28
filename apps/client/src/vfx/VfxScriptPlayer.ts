@@ -303,7 +303,12 @@ export class VfxScriptPlayer {
         // 位移在**面向座標系**（JASS PolarProjectionBJ 的翻譯）；朝向偏移旋轉
         // 每一具的 dir（CreateNUnitsAtLoc 的 angle 格）。三角函式在客戶端合法
         // （sim purity 只管 sim/**）。
-        const fwd = seg.offsetForwardU ?? 0;
+        //
+        // ⚠️⚠️ **前後那一格由 `modelFxInstancesFromFrame` 套過了**（GH#838 N1 把
+        //    `offsetForwardU` 加進共用擺位核心，因為 sim 側的 09-04 也需要它）。
+        //    ⇒ 這裡**只套側向**，⛔ 不可以再推一次 —— 推兩次的畫面看起來只是
+        //    「偏移量怎麼是我填的兩倍」，而那種錯最難查（兩邊各自都對）。
+        const fwd = 0;
         const side = seg.offsetSideU ?? 0;
         const yawDeg = seg.yawOffsetDeg ?? 0;
         const rad = (yawDeg * Math.PI) / 180;
