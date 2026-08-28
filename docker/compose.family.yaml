@@ -173,6 +173,39 @@ services:
       # the owner can pull .jsonl.gz recordings off the box after the evening.
       - ../data/replays:/data/replays
 
+  # ─────────────────────────────────────────────────────────────────────────
+  # 🔒 TLS 前門（GH#859）—— ggd.adms.ai 的入口，⭐ 2026-08-28 之前**完全沒有配方**
+  #
+  # ⚠️ 它原本是用一次手打的 `docker run` 建起來的，於是：
+  #   · repo 裡零配方 ⇒ 沒有人可以重建它
+  #   · 它 bind 的 `docker/Caddyfile` **從來沒進過 git**，而且早就從磁碟上消失了
+  #   · 而網站一直活著 —— bind mount 一旦建立，來源檔被刪也照樣服務
+  #   ⇒ 它安靜地壞了幾週，直到 2026-08-28 的 containerd 搬遷第一次重啟容器才爆
+  #     （`docker start` 看到缺席的來源 ⇒ 自動建了一個同名目錄 ⇒ 掛不進去）
+  #
+  # ⭐ 下面每一格都是從**跑著的那一個容器** `docker inspect` 抄出來的，⛔ 不是憑印象寫。
+  #
+  # ⚠️⚠️ **volume 用 `external: true` 指向既有的那兩個**（`ggd_caddy-config` /
+  # `ggd_caddy-data`）—— 那裡面是**已經簽發好的 TLS 憑證**。讓 compose 自己建新的
+  # 匿名 volume ＝ 憑證全部不見 ＝ 重新跟 Let's Encrypt 要（有速率限制，會鎖）。
+  caddy:
+    image: caddy:2-alpine
+    container_name: ggd-caddy-1
+    restart: unless-stopped
+    command: caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
+    environment:
+      ACME_EMAIL: ${ACME_EMAIL:-adms@mobagel.com}
+      SITE_DOMAIN: ${SITE_DOMAIN:-ggd.adms.ai}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ../docker/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-config:/config
+      - caddy-data:/data
+    depends_on:
+      - edge
+
   edge:
     build:
       context: ..
@@ -213,3 +246,11 @@ services:
     # failure into a crash-loop nobody reads, which is the silent-degradation
     # failure mode this whole task exists to remove.
     restart: "no"
+
+volumes:
+  caddy-config:
+    external: true
+    name: ggd_caddy-config
+  caddy-data:
+    external: true
+    name: ggd_caddy-data
