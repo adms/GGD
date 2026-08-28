@@ -255,9 +255,18 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
       const order = frame.order;
       if (!order) continue;
       nav.order = order;
-      // ⭐ owner 2026-08-28 —— `idleAutoEngageSec` 的計時器：任何一條指令歸零。
+      // ⭐ owner 2026-08-28 —— `idleAutoEngageSec` 的計時器：指令歸零。
       //    （成功施法的那一半在 `castAbility`；兩邊寫同一張 map。）
-      world.lastCommandTick.set(id, world.tick);
+      //
+      // ⭐⭐ GH#863：**「移動算不算戰鬥輸入」是版本的差別**，⛔ 不是缺陷。
+      //   v3（出貨）＝ 算 ⇒ 逐位元維持 GH#652 的 LoL 語意（走位權是玩家的）。
+      //   v4 ＝ ⛔ 不算 ⇒ spec §6/§50 逐字：「LS movement 不重置計時器」、
+      //        「LS 按住 10 秒 → Auto Farm 仍然活著」。⚠️ 少了這一條，
+      //        按住左搖桿的玩家**永遠**等不到自動清怪，而那是 v4 的整個前提。
+      //   ⛔ 走位權不受影響：`autoEngageActive()` 只讓**空轉**的走位被接管，
+      //     而「走得動的走位順手索到的目標不上鎖」（下面 nav.attackTargetAuto 那條路）。
+      if (world.controllerScheme.combatInput.moveStick || order.kind !== "move")
+        world.lastCommandTick.set(id, world.tick);
       // ---- GH#652 細節①: 後搖取消 (animation cancel) ----
       // LoL:結算**之後**的後搖，任何一條新指令都砍得掉，⭐ 而那一發照樣算數。
       // ⛔ 前搖不在這裡 —— `ab.windup` / `ab.cast` 一格未動,走開仍然作廢那一刀
@@ -930,7 +939,13 @@ function autoAcquirePass(
         //    ⚠️ 首次見到（undefined）＝ **從這一 tick 起算**，⛔ 不是「從 tick 0」
         //    —— tick 是跨階段的絕對值，從 0 起算等於開戰當下直接接管。
         const idleTicks = Math.round(mo.idleAutoEngageSec / world.dt);
-        if (idleTicks > 0 && nav.order === null) {
+        // ⭐⭐ GH#863：v4 的走位**不是**「手上還有指令」的那種指令。
+        //   ⚠️ 只改上面那個歸零是不夠的 —— 這個閘會單獨把整段擋掉，
+        //     而症狀一模一樣（計時器跑完了卻永遠不索敵）。兩處要一起改。
+        const idleUnblocked =
+          nav.order === null ||
+          (!world.controllerScheme.combatInput.moveStick && nav.order.kind === "move");
+        if (idleTicks > 0 && idleUnblocked) {
           const last = world.lastCommandTick.get(id);
           if (last === undefined) world.lastCommandTick.set(id, world.tick);
           else if (world.tick - last >= idleTicks) idleEngaged = true;

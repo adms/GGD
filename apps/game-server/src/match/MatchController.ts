@@ -5,6 +5,11 @@
  * whole match flow is unit-testable without sockets.
  */
 import {
+  CONTROLLER_SCHEME_DOC_ID,
+  resolveControllerSchemeOrDefault,
+  type ControllerSchemeEntry,
+} from "@ggd/shared/content";
+import {
   SEAT_COUNT,
   TEAM_COUNT,
   TEAM_SIZE,
@@ -1112,6 +1117,16 @@ export class MatchController {
      */
     combatFeel: CombatFeelRules = combatFeelFromDoc(Configs.tryGet(COMBAT_FEEL_DOC_ID)),
     /**
+     * ⭐ 手把操作方案 (`config.controller-scheme@1`, GH#863) —— sim 只用它的
+     * `combatInput`（「移動算不算戰鬥輸入」）。和 `combatFeel` 完全同一條路，
+     * 含同一個已知限制：`Configs` 是 boot 時載入的，後台切了版本要重啟 shard。
+     * ⚠️ 解析不到 `active` 時退回出貨的 v3 —— `resolveControllerSchemeOrDefault`
+     * 會回報退回原因，而客戶端那一側會把它喊到 console。
+     */
+    controllerScheme: ControllerSchemeEntry = resolveControllerSchemeOrDefault(
+      Configs.tryGet(CONTROLLER_SCHEME_DOC_ID),
+    ).scheme,
+    /**
      * 護盾規則 (`config.shield@1`, GH#289 lane P6) —— 多個護盾池誰先被吃掉。
      * 和 `combatFeel` 完全同一條路(含同一個已知限制:`Configs` 是 boot 時載入
      * 的,後台改了要重啟 shard;#278 的 TTL 快取還沒延伸到這一份)。
@@ -1271,6 +1286,8 @@ export class MatchController {
     // 戰鬥手感 (`config.combat-feel@1`, GH#193) —— 擊退法則 + 打就站定開關。
     // 同樣在 tick 0 之前定格,比賽中途不會變。
     this.world.combatFeel = combatFeel;
+    // 手把操作方案 (`config.controller-scheme@1`, GH#863) —— 同樣在 tick 0 之前定格。
+    this.world.controllerScheme = controllerScheme;
     // 護盾規則 (`config.shield@1`, GH#289 lane P6) —— 同樣在 tick 0 之前定格。
     this.world.shieldRules = shieldRules;
     // 格擋規則 (`config.block@1`) —— 同樣在 tick 0 之前定格。

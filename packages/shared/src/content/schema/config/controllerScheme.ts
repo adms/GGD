@@ -370,3 +370,72 @@ export function resolveControllerScheme(
     : undefined;
 }
 
+
+/** 出貨文件的 id。⭐ 消費端一律用它，⛔ 不要重打字串。 */
+export const CONTROLLER_SCHEME_DOC_ID = "controller-scheme";
+
+/**
+ * 出貨預設 ＝ `v3-shipped`（2026-07-27 起的配置）。
+ *
+ * ⚠️ 這**不是**第二個住處 —— 它是第一守則的「三個住處 ＋ drift 測試」模式
+ * （同 `DEFAULT_COMBAT_FEEL`）：`controllerScheme.test.ts` 逐欄比對它與
+ * `content/config/controller-scheme.json` 的 `v3-shipped`，兩邊分岔就紅。
+ *
+ * ⭐ 它存在的唯一理由是**內容還沒載入時手把仍然能動**（`main.tsx` 的 fail-open
+ * 已經會退回骨架，而一支完全不回應的手把比骨架更糟：玩家會以為是硬體壞了）。
+ */
+export const DEFAULT_CONTROLLER_SCHEME: ControllerSchemeEntry = Object.freeze({
+  label: "v3（出貨）",
+  note: "內建退路 —— 與 content/config/controller-scheme.json 的 v3-shipped 逐欄相同（drift 測試在守）。",
+  bindings: Object.freeze({
+    A: "ability:Q",
+    B: "ability:W",
+    X: "ability:E",
+    Y: "ability:R",
+    LB: "ability:EX",
+    RB: "ability:PASSIVE",
+    LT: "attackMove",
+    RT: "basicAttack",
+    L3: "cameraFollowToggle",
+    R3: "cameraZoomStep",
+  }),
+  combatInput: Object.freeze({
+    aimStick: true,
+    moveStick: true,
+    basicAttack: true,
+    pvpFocus: true,
+    ability: true,
+  }),
+  autoFarm: Object.freeze({ enabled: true, idleDelaySecOverride: null, pveOnly: true }),
+  aim: Object.freeze({
+    manualScoring: "legacy-nearest-enemy",
+    aimAssistRadiusMult: Object.freeze({ player: 1, zombie: 1, boss: 1 }),
+  }),
+  autoApproach: Object.freeze({
+    enabled: false,
+    maxRangeMult: 1,
+    pveOnly: true,
+    allowBoss: false,
+    requireMoveStickNeutral: true,
+  }),
+}) as ControllerSchemeEntry;
+
+/**
+ * 從一份（可能缺席／可能 `active` 打錯字的）文件解析出**一定拿得到**的方案。
+ *
+ * ⭐ **fail-open 但⛔不靜默**（CLAUDE.md：「fail-open 沒錯，靜默才是缺陷」）：
+ * 回傳值第二格說出「我退了，而且是從哪一個名字退的」，呼叫端有責任喊出來。
+ * ⛔ 不要把它改成只回方案 —— 那樣一個後台打錯的字會變成一個沒有人知道的降級。
+ */
+export function resolveControllerSchemeOrDefault(doc: unknown): {
+  readonly scheme: ControllerSchemeEntry;
+  /** null = 正常解析；否則是那個解析不到的 `active` 值（或 `"(no doc)"`）。 */
+  readonly fellBackFrom: string | null;
+} {
+  const parsed = zConfigControllerSchemeDoc.safeParse(doc);
+  if (!parsed.success) return { scheme: DEFAULT_CONTROLLER_SCHEME, fellBackFrom: "(no doc)" };
+  const hit = resolveControllerScheme(parsed.data);
+  return hit
+    ? { scheme: hit, fellBackFrom: null }
+    : { scheme: DEFAULT_CONTROLLER_SCHEME, fellBackFrom: parsed.data.active };
+}

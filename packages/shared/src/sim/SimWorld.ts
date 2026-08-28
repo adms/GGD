@@ -35,6 +35,10 @@ import { DEFAULT_STAT_CAPS, type StatCapTable } from "./statCaps";
 import { DEFAULT_BODY_SCALE_RULES, type BodyScaleRules } from "./bodyScale";
 import { DEFAULT_REGEN_RULES, type RegenRules } from "./regenRules";
 import { DEFAULT_MANA_ECONOMY, type ManaEconomy } from "./manaEconomy";
+import {
+  DEFAULT_CONTROLLER_SCHEME,
+  type ControllerSchemeEntry,
+} from "../content/schema/config/controllerScheme";
 import { DEFAULT_COMBAT_FEEL, type CombatFeelRules } from "./combatFeel";
 import { DEFAULT_WALL_BLOCK, type WallBlockRules } from "./movement/wallBlock";
 import { DEFAULT_SHIELD_RULES, type ShieldRules } from "./shieldRules";
@@ -827,6 +831,20 @@ export class SimWorld {
    * 預設是**出貨表**,不是空表 —— 空表會讓擊退/站定兩條規則靜默消失。
    */
   combatFeel: CombatFeelRules = DEFAULT_COMBAT_FEEL;
+
+  /**
+   * ⭐ 生效中的**手把操作方案**（`config.controller-scheme@1`，GH#863）。
+   * 與 `combatFeel` 同一條規矩：開賽前指派一次、之後不動、sim 從不讀 config/globals。
+   *
+   * ⚠️ sim 只用得到它的 `combatInput` 那一半（「移動算不算戰鬥輸入」），⛔ 不是按鍵 ——
+   * 按鍵是客戶端的事。放整個物件而不是一個 boolean 是刻意的：⛔ 不要在這裡
+   * 攤平成第二份資料，那正是第〇·四守則說的第二個住處。
+   *
+   * ⚠️ **這一格會影響所有真人座位，⛔ 不只是拿手把的**（idle 計時器是座位層級的，
+   * sim 看不到輸入裝置，也不該看到）。owner 的話是「手把操作**版本**」——
+   * 而「走位算不算戰鬥」正是那個版本的一部分。
+   */
+  controllerScheme: ControllerSchemeEntry = DEFAULT_CONTROLLER_SCHEME;
 
   /**
    * 位移的穿牆規則 (see movement/wallBlock.ts, `config.displacement-tiers@1`

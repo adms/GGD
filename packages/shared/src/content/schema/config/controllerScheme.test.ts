@@ -9,7 +9,9 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { CASTABLE_SLOTS } from "../../../sim/intents";
 import {
+  DEFAULT_CONTROLLER_SCHEME,
   resolveControllerScheme,
+  resolveControllerSchemeOrDefault,
   zConfigControllerSchemeDoc,
   type ConfigControllerSchemeDoc,
 } from "./controllerScheme";
@@ -66,6 +68,23 @@ describe("config.controller-scheme@1", () => {
     expect(DOC.schemes.v4?.combatInput.moveStick).toBe(false);
     // spec §2：LT 從 attack-move 變成玩家專注。
     expect(DOC.schemes.v4?.bindings.LT).toBe("pvpFocus");
+  });
+
+  it("⭐ 內建退路與出貨的 v3-shipped 逐欄相同（drift）", () => {
+    // ⛔ 這不是第二個住處,是第一守則的「三住處 ＋ drift 測試」模式（同 DEFAULT_COMBAT_FEEL）。
+    //   兩邊分岔 ⇒ 內容載入失敗時手把的行為會跟載入成功時不一樣,而那看不出來。
+    expect(DEFAULT_CONTROLLER_SCHEME.bindings).toEqual(DOC.schemes["v3-shipped"]?.bindings);
+    expect(DEFAULT_CONTROLLER_SCHEME.combatInput).toEqual(DOC.schemes["v3-shipped"]?.combatInput);
+    expect(DEFAULT_CONTROLLER_SCHEME.autoFarm).toEqual(DOC.schemes["v3-shipped"]?.autoFarm);
+    expect(DEFAULT_CONTROLLER_SCHEME.aim).toEqual(DOC.schemes["v3-shipped"]?.aim);
+    expect(DEFAULT_CONTROLLER_SCHEME.autoApproach).toEqual(DOC.schemes["v3-shipped"]?.autoApproach);
+  });
+
+  it("⭐ 退路是 fail-open 但⛔不靜默:它說得出自己從哪個名字退的", () => {
+    expect(resolveControllerSchemeOrDefault(DOC).fellBackFrom).toBeNull();
+    expect(resolveControllerSchemeOrDefault(undefined).fellBackFrom).toBe("(no doc)");
+    // 後台把 active 打錯字 ⇒ 退回預設,⭐ 而且**指名那個打錯的字**
+    expect(resolveControllerSchemeOrDefault({ ...DOC, active: "v44" }).fellBackFrom).toBe("v44");
   });
 
   it("每一個方案都不可以讓自動化去打／追玩家（spec §8 §31）", () => {

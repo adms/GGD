@@ -44,6 +44,13 @@ import {
   type GamepadFeelPolicyDoc,
 } from "@ggd/shared/content";
 import type { CastableSlot, Command, CoreAbilitySlot, Order } from "@ggd/shared/sim/intents";
+import { padActionTable } from "./controllerBindings";
+import {
+  CONTROLLER_SCHEME_DOC_ID,
+  DEFAULT_CONTROLLER_SCHEME,
+  resolveControllerSchemeOrDefault,
+  type ControllerSchemeEntry,
+} from "@ggd/shared/content";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 import { abilityActivationCue } from "../ui/abilityCue";
 import { getHeldAbility, setHeldAbility } from "../ui/abilityHold";
@@ -79,6 +86,31 @@ export const DEFAULT_GAMEPAD_FEEL: GamepadFeel = { ...DEFAULT_GAMEPAD_FEEL_POLIC
  */
 export function activeGamepadFeel(): GamepadFeel {
   return resolveGamepadFeel(Configs.tryGet(GAMEPAD_DOC_ID) as ConfigGamepadDoc | undefined);
+}
+
+/** 已經喊過的退回原因 —— ⛔ 每一幀喊一次會把 console 洗掉，而洗掉等於沒喊。 */
+let warnedSchemeFallback: string | null = null;
+
+/**
+ * 生效中的手把操作方案（GH#863）。⭐ 後台切 `active` 一格就換版本。
+ *
+ * ⚠️ **fail-open 但⛔不靜默**：內容沒載入、或 operator 把版本名打錯字時，
+ * 它退回出貨的 v3 **並且在 console 大聲說**（每個原因只喊一次）。
+ * ⛔ 不要把那行 warn 拿掉 —— 一個沒有人知道的降級與「壞掉」長得一模一樣，
+ * 而這正是 CLAUDE.md 記過兩次的 fail-open 靜默。
+ */
+export function activeControllerScheme(): ControllerSchemeEntry {
+  const { scheme, fellBackFrom } = resolveControllerSchemeOrDefault(
+    Configs.tryGet(CONTROLLER_SCHEME_DOC_ID),
+  );
+  if (fellBackFrom !== null && warnedSchemeFallback !== fellBackFrom) {
+    warnedSchemeFallback = fellBackFrom;
+    console.warn(
+      `[pad] 手把操作方案退回出貨的 v3 —— config.controller-scheme@1 的 active="${fellBackFrom}" 解析不到。` +
+        `請確認後台「🎮 手把操作版本」那一格填的名字與設計檔一致。`,
+    );
+  } else if (fellBackFrom === null) warnedSchemeFallback = null;
+  return scheme;
 }
 
 /**
@@ -197,14 +229,11 @@ export const BTN = {
  * itself (it shows the 天生技's description — see the long-press block below),
  * which is a better answer to "why did nothing happen" than a second meaning.
  */
-const SLOT_BY_BUTTON: Partial<Record<number, CastableSlot>> = {
-  [BTN.A]: "Q",
-  [BTN.B]: "W",
-  [BTN.X]: "E",
-  [BTN.Y]: "R",
-  [BTN.LB]: "EX", // per-hero "EX 技能" (5th slot); no-op until unlocked
-  [BTN.RB]: "PASSIVE", // 天生技 (6th slot); owned from level 1, active kind only
-};
+// ⛔⛔ 這裡曾經是一張手寫的 `SLOT_BY_BUTTON`。GH#863 之後它是**方案的資料**
+//   （`content/config/controller-scheme.json` → `padActionTable()`）。
+//   ⚠️ ⛔ 不要為了「方便」再放一張回來 —— 一張留著的舊表會被下一個人讀成出貨值，
+//     而它與方案分岔的症狀是「切了版本但有一半的鍵沒換」。
+//   出貨值仍然看得到：`DEFAULT_CONTROLLER_SCHEME.bindings`（drift 測試在守）。
 
 /**
  * ════════════════════════════════════════════════════════════════════════════
@@ -252,12 +281,10 @@ export const GAMEPAD_LONG_PRESS_MS = DEFAULT_GAMEPAD_FEEL.longPressMs;
  * long press on those two therefore always falls through to the description,
  * rather than sending a command that would be silently thrown away.
  */
-const RANK_BY_LONG_PRESS: Partial<Record<number, CoreAbilitySlot>> = {
-  [BTN.A]: "Q",
-  [BTN.B]: "W",
-  [BTN.X]: "E",
-  [BTN.Y]: "R",
-};
+// ⛔⛔ 這裡曾經是第二張手寫表。⭐ 現在它從 `slotByButton` **推導**
+//   （`padActionTable()`：只有四個可加點的槽位進得來）。
+//   ⚠️ 為什麼一定要推導：v4 把 B 從 W 換成 R ⇒ 一張寫死的表會讓長按 B 加點加到 W，
+//     而畫面上完全看得過去（確實有一格升了，只是不是你按的那一格）。
 
 /** Camera ops a pad frame asks for (client-only; never a sim intent). */
 export interface GamepadCameraIntent {
@@ -351,6 +378,14 @@ export interface GamepadPlayerCtx {
    * 測試餵一個物件就好。
    */
   feel?: GamepadFeel;
+  /**
+   * 生效中的**手把操作方案**（GH#863）。省略 = 出貨的 v3。
+   *
+   * ⚠️ 與 `feel` 同一個理由**不由 ctxProvider 提供**：poller 在 poll 的當下從
+   * `Configs` 讀進來（operator 隨時可以切），所以 `mapGamepadFrame` 維持**純函式**。
+   * ⭐ 而它拿到的是**解析後的物件** —— 拿不到方案名字 ⇒ 這裡寫不出按名字分岔的程式。
+   */
+  scheme?: ControllerSchemeEntry;
 }
 
 export interface GamepadIntent {
@@ -434,8 +469,12 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
   // it. That is why no modifier is needed to pan any more.
   if (frame.aim) cam({ pan: frame.aim });
 
+  // ⭐ 按鍵語意來自**方案**（GH#863）,⛔ 不再是兩張手寫表。
+  //   長按升級表也從同一份綁定推導 ⇒ 換版本時它不可能錯位。
+  const pad = padActionTable(ctx.scheme ?? DEFAULT_CONTROLLER_SCHEME);
+
   for (const b of frame.justPressed) {
-    const slot = SLOT_BY_BUTTON[b];
+    const slot = pad.slotByButton.get(b);
     if (slot) {
       if (!self) continue; // 還沒有英雄位置 —— 這一按什麼都不是,連拒絕都不是
       const ability = ctx.ability(slot);
@@ -457,8 +496,10 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
       const cmd = buildCastCommand(slot, ability, { selfPos: self, cursorGround, hoveredEntityId: hovered });
       if (cmd) commands.push(cmd);
       else refused.push(slot); // targeted 沒目標／方向退化成零向量
-    } else if (b === BTN.LT && self) {
-      // LT = attack-move (owner, 2026-07-27: the triggers swapped)
+    } else if (b === pad.attackMoveButton && self) {
+      // attack-move —— v3 綁 LT（owner, 2026-07-27「the triggers swapped」）。
+      // ⚠️ v4 沒有這個動作（LT 給了玩家專注）⇒ `attackMoveButton` 是 null,
+      //   而 `b` 永遠不會等於 null ⇒ 這一支自然不會被走到,⛔ 不需要一個 if (version)。
       const dir = frame.move ?? aimDir;
       if (dir) {
         order = {
@@ -469,7 +510,7 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
           },
         };
       }
-    } else if (b === BTN.RT && self) {
+    } else if (b === pad.basicAttackButton && self) {
       // RT = basic attack. The right trigger is the primary action everywhere
       // else on a console, and #221's auto-attack means the manual one is now a
       // correction rather than a rotation key.
@@ -479,9 +520,9 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
       order = { kind: "stop" };
     } else if (b === BTN.DPAD_DOWN) {
       commands.push({ kind: "recall" });
-    } else if (b === BTN.L3) {
+    } else if (pad.actionByButton.get(b) === "cameraFollowToggle") {
       cam({ toggleFollow: true });
-    } else if (b === BTN.R3) {
+    } else if (pad.actionByButton.get(b) === "cameraZoomStep") {
       cam({ zoomCycle: true });
     } else if (b === BTN.START) {
       commands.push({ kind: "ready" });
@@ -494,15 +535,15 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
   // as the touch hold (#152) and a mouse-down on an ability tile.
   let describe: CastableSlot | undefined;
   for (const b of frame.longHeld ?? []) {
-    const slot = SLOT_BY_BUTTON[b];
+    const slot = pad.slotByButton.get(b);
     if (!slot) continue;
-    if (RANK_BY_LONG_PRESS[b] && ctx.skillPoints > 0) continue; // this hold is a rank-up
+    if (pad.rankByLongPress.get(b) && ctx.skillPoints > 0) continue; // this hold is a rank-up
     describe = slot;
   }
   // Edge: spend the point. Fires once per physical press (see poll), and only
   // when there is a point to spend — otherwise the hold stays a description.
   for (const b of frame.longPressed ?? []) {
-    const rankSlot = RANK_BY_LONG_PRESS[b];
+    const rankSlot = pad.rankByLongPress.get(b);
     if (rankSlot && ctx.skillPoints > 0) commands.push({ kind: "rankUpAbility", slot: rankSlot });
   }
 
@@ -779,6 +820,7 @@ export class GamepadSystem {
       lastAimDir: this.lastAimDir,
       abilityRangeMult: this.abilityRangeMult(),
       feel: this.gamepadFeel(),
+      scheme: activeControllerScheme(),
     });
     if (frame.aim) this.lastAimDir = frame.aim;
     if (intent.order) this.sinks.onOrder(intent.order);
@@ -900,6 +942,7 @@ export class MultiGamepadSystem {
         lastAimDir: this.lastAim.get(player) ?? null,
         abilityRangeMult: this.abilityRangeMult(),
         feel: this.gamepadFeel(),
+        scheme: activeControllerScheme(),
       });
       if (frame.aim) this.lastAim.set(player, frame.aim);
       if (intent.order) this.sinks.onOrder(player, intent.order);
