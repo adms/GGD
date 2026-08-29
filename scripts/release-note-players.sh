@@ -35,15 +35,41 @@ echo "🎮 玩家公告草稿：$SINCE → $NOW"
 echo
 
 # ── 這一段期間關掉的票 ────────────────────────────────────────────────────
+# ⚠️ ⭐ 拿**完整 ISO 時間戳**比，⛔ 不是日期字串：
+#   `updatedAt`（`2026-08-30T02:11:44Z`）>= `"2026-08-30"` 在字串序上是 true，
+#   ⛔ 但 `>= "2026-08-30"` 對**同一天稍早**更新的票會誤判 ——
+#   ⭐ 而更糟的是：上一版的 tag 就在今天 ⇒ 撈到 **0 張**，
+#   而結果讀起來是「這一版沒有玩家可見的改動」（⛔ 又一個空轉的綠燈）。
+# ⇒ 用 tag 自己的時間戳，並**往前抓一天**當緩衝（真正的篩選在下面的 commit 祖先檢查）。
 SINCE_DATE=$(git log -1 --format=%cI "$SINCE" 2>/dev/null | cut -c1-10)
-CLOSED=$(gh issue list --state closed --limit 200 --json number,title,closedAt \
-          -q ".[] | select(.closedAt >= \"${SINCE_DATE}\") | .number" 2>/dev/null) || {
+SINCE_DATE=$(date -j -v-1d -f %Y-%m-%d "$SINCE_DATE" +%Y-%m-%d 2>/dev/null \
+             || date -d "$SINCE_DATE -1 day" +%Y-%m-%d 2>/dev/null || echo "$SINCE_DATE")
+# ⚠️ ⭐ **判準是「出貨了沒」，⛔ 不是「票關了沒」**（2026-08-30 量到）：
+#   #401 是 PARTIAL、票還開著，⛔ 而它的修復**已經隨版本出貨** —— 玩家看得到它。
+#   ⇒ 只掃 closed 會漏掉每一個「做了一半但那一半已經上線」的改動。
+# ⭐ 改成看**進度標記裡的 commit 有沒有落在這一段**（`SINCE..NOW`）。
+CLOSED=$(gh issue list --state all --limit 300 --json number,updatedAt \
+          -q ".[] | select(.updatedAt >= \"${SINCE_DATE}\") | .number" 2>/dev/null) || {
   echo "⚠️ gh 連不上 —— **沒有產生草稿**（⛔ 這不是「這一版沒有玩家可見的改動」）" >&2; exit 1; }
 
 LINES=""; MISSING=""
 for N in $CLOSED; do
-  B=$(gh issue view "$N" --json comments -q '[.comments[].body] | reverse | join("\n")' 2>/dev/null) || continue
+  # ⚠️ ⭐ 只讀**最新一則進度標記**，⛔ 不是「所有留言裡第一個命中的」：
+  #   2026-08-30 量到 —— 我把 #866 的玩家那一句**清空**（它是後台的事，玩家無感），
+  #   而反序 join 後 `grep -m1` 就往下找到了**上一則**的舊句子
+  #   ⇒ ⭐ 一句已經被撤回的話又被發出去。**撤回要真的撤得掉。**
+  B=$(gh issue view "$N" --json comments -q '[.comments[].body] | reverse | .[]' 2>/dev/null \
+        | awk '/🧭 進度標記/{f=1} f{print} f&&/^---$/{exit}') || continue
+  [ -n "$B" ] || continue
   P=$(printf '%s' "$B" | grep -m1 '🎮 玩家看得到的' | sed 's/.*）\*\*：//')
+  # ⭐ 那一句對應的 commit 有沒有**落在這一段**？（⛔ 不然舊版的會一直重發）
+  if [ -n "$P" ]; then
+    SHA=$(printf '%s' "$B" | grep -m1 -oE '\| \*\*commit\*\* \| `[0-9a-f]{7,40}`' | grep -oE '[0-9a-f]{7,40}' || true)
+    if [ -n "$SHA" ] && git cat-file -e "$SHA" 2>/dev/null; then
+      git merge-base --is-ancestor "$SHA" "$NOW" 2>/dev/null || P=""      # 還沒進這一版
+      [ -n "$P" ] && { git merge-base --is-ancestor "$SHA" "$SINCE" 2>/dev/null && P=""; }  # 上一版就有了
+    fi
+  fi
   T=$(gh issue view "$N" --json title -q .title 2>/dev/null | sed 's/\[[^]]*\]//g' | sed 's/^ *//')
   if [ -n "$P" ]; then
     LINES="${LINES}- ${P}
