@@ -1,0 +1,65 @@
+{
+  "$schema-note": "⭐ 欄位級擁有權的**探針登記表**（GH#827）—— ⛔ 這裡沒有一格「哪幾欄是誰的」的答案。",
+  "$why": [
+    "sync-io.json 的粒度是**檔**：`content/config/vfx-families.json` 整份掛在 vfxfam:build 名下。",
+    "⛔ 而那不是真的：那支產生器**逐格保留**一整族欄位（它自己的 TSDoc 逐字列著），",
+    "於是 genguard 對整份回 AUTHOR、隔離區把整份 chmod 444 ⇒ 那幾欄**沒有任何合法寫入端**",
+    "（產生器不寫它們、手改被擋、後台被 444 擋）＝ ⭐ **欄位級的孤兒**（GH#815 ② 的更細一層）。",
+    "⭐ 判準（CLAUDE.md 逐字）：擁有者表是**量出來的** ⇒ 欄位級也要能量。",
+    "⇒ 這裡只登記**去哪裡問**（模組＋既有的推導函式）；答案由 field-io.mts 當場呼叫產生器算出來。",
+    "⛔ 這一份**不可以**變成一張手抄的欄位清單 —— 那正是它要取代的東西。"
+  ],
+  "$fieldAuthors-note": [
+    "⭐ 與 normalizers.json 的 $rejected 同一個形狀：每一族「產生器不擁有」的欄位，",
+    "要嘛寫得出**誰才是它的寫入端**（≥20 字、可被反駁），要嘛被 --doctor ④ 判成孤兒而紅。",
+    "⛔ 「還沒收」不是理由。",
+    "⚠️⚠️ `abilities[*]/…` 那幾格今天**沒有被量到**（field-io.mts 的 recipe 校準不過：",
+    "`abilityArtRows()` 在乾淨的 checkout 上回 0 列 ⇒ owned=∅ ⇒ 會宣稱「169 列每一欄都自由」，",
+    "而那是危險的那個方向）⇒ ⛔ 不要把那幾行讀成「已查證」，它們是**等那把尺修好之後**要用的。"
+  ],
+  "probes": [
+    {
+      "path": "content/config/vfx-families.json",
+      "fileOwner": "vfxfam:build",
+      "recipe": "vfx-families",
+      "module": "apps/client/src/render/vfx/generateFamilyContent.ts",
+      "why": "vfxfam:build 的 TSDoc（generateFamilyContent.ts:191-210「所有權是三層的」）逐字說它逐格保留一族欄位，而 shippedFamilyConfig({}) / ownedRowFields() 正是**它自己**用來推導『我擁有哪幾格』的函式（generateFamilyContent.test.ts:63-65 用同一組）⇒ 這裡呼叫同一組，⛔ 不抄它的結論。",
+      "fieldAuthors": {
+        "families[*]/soundLaunch": "tools/w3x-import/build_vfx_sound_bindings.py:143 的 CUE_FIELDS —— 它直接寫 vfx-families.json 的 families[].sound*（檔頭:10 逐字），⚠️ 而它**不在 sync 鏈上**（package.json 零 script、sync-io 零步驟）⇒ 它的產出沒有任何 --check 在守，改了也不會有東西紅。",
+        "families[*]/soundImpact": "同上（CUE_FIELDS 四個時機之一）。",
+        "families[*]/soundLoop": "同上（CUE_FIELDS 四個時機之一）。",
+        "families[*]/soundDissipate": "同上（CUE_FIELDS 四個時機之一）。",
+        "families[*]/enabled": "⭐ **操作者的欄位**：後台「這一族整個關掉」的開關，產生器只在**建立新列**時 seed 一次（generateFamilyContent.ts:220 逐字）⇒ 之後每一次它都逐格保留。寫入端是後台，⛔ 不是任何產生器。",
+        "families[*]/groundDecal": "⭐ **後台欄位**（GH#439）：寫入端是 apps/admin 的 VFX 鑄造頁（vfxForge.ts / VfxForgePage.tsx），⛔ 沒有產生器算得出它。",
+        "abilities[*]/pitchDeg": "tools/w3x-import/build_vfx_orient.py 與 build_slash_pitch.py（generateFamilyContent.ts:209 逐字點名），同樣不在 sync 鏈上。",
+        "abilities[*]/soundLaunch": "tools/w3x-import/build_vfx_sound_bindings.py:491 —— 把 clip key 填進 abilities[] 的四個時機。",
+        "abilities[*]/soundImpact": "同上。",
+        "abilities[*]/soundLoop": "同上。",
+        "abilities[*]/soundDissipate": "同上。",
+        "abilities[*]/soundGain": "同上（音量那一格與 sound* 同一支寫入端）。",
+        "abilities[*]/facingDeg": "generateFamilyContent.ts:209 逐字列在「別人的（逐格保留）」那一欄；與 pitchDeg 同族的朝向資料。",
+        "abilities[*]/alpha": "同上 —— 後台逐技能的透明度覆寫。",
+        "abilities[*]/timeScale": "同上 —— 後台逐技能的播放速度覆寫。",
+        "abilities[*]/enabled": "同上 —— 後台「這一支整個關掉」的開關。",
+        "$top/maxAbilityVfxLayers": "頂層旋鈕族：generateFamilyContent.ts:208 逐字列在「別人的」那一欄，寫入端是後台 config 表單（三個住處那一套）。",
+        "$top/oneShotMaxLifeSec": "同上（頂層後台旋鈕）。",
+        "$top/castHeightSource": "同上（頂層後台旋鈕）。",
+        "$top/projectileArtFromDoc": "同上（頂層後台旋鈕）。",
+        "$top/projectileRadiusGain": "同上（頂層後台旋鈕）。",
+        "$top/projectileFlyHeightY": "同上（頂層後台旋鈕）。",
+        "$top/familyPitchDefaults": "同上；逐族的 pitch 預設，寫入端是 build_pitch.py（pitch:build）＋後台。",
+        "$top/soundEnabled": "同上（頂層總開關，後台）。",
+        "$top/*PitchDeg": "pitch:build（tools/w3x-import/build_pitch.py）—— ⭐ 它**在**鏈上而且也認領這一份（sync-io 兩個 claimant），只是粒度是檔。",
+        "$top/*AngleDeg": "同上（build_pitch.py 的角度族）。",
+        "$top/maxConcurrentArcs": "頂層後台旋鈕（電弧預算），寫入端是後台 config 表單。",
+        "$top/castArcs": "頂層後台旋鈕（施法弧），寫入端是後台 config 表單。",
+        "$top/impactRingAlpha": "impactRing 那一族頂層後台旋鈕，寫入端是後台 config 表單。",
+        "$top/impactRingFadePow": "同上（impactRing 族）。",
+        "$top/impactRingLife": "同上（impactRing 族）。",
+        "$top/impactRingMaxLifeSec": "同上（impactRing 族）。",
+        "$top/impactRingRadius": "同上（impactRing 族）。",
+        "$top/impactRingTierSpeed": "同上（impactRing 族）。"
+      }
+    }
+  ]
+}
