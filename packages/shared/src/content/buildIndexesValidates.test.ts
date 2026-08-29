@@ -24,7 +24,15 @@
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { unlockSandbox } from "../ops/writeProduct";
 import { execFileSync } from "node:child_process";
-import { cpSync, mkdtempSync, readFileSync, writeFileSync, rmSync, existsSync } from "node:fs";
+import {
+  cpSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  writeFileSync,
+  rmSync,
+  existsSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -144,5 +152,54 @@ describe("pnpm content:build 先驗證再寫入 (build-indexes-validates)", () =
     expect(readFileSync(bundle, "utf8"), "被擋下了,bundle 還是被重寫了").toBe(before);
 
     writeFileSync(victim, original);
+  });
+
+  /**
+   * ⭐⭐ GH#839 —— **新集合的第一次 build** 以前完全跳過驗證。
+   *
+   * `ContentLoader.load()` 走 `Object.keys(manifest.collections)`，而那份 manifest
+   * 是**上一次 build** 的產物 ⇒ 一個第一次出現的集合目錄在驗證迴圈裡一個 doc 都不會
+   * 被讀到，⛔ 而 `rebuildAllIndexes` 照樣掃目錄把它寫進 manifest **與 bundle**。
+   * ⇒ 未驗的 doc 逐位元組進 bundle ＝ 2026-08-01／08-02 兩次事故的形狀。
+   *
+   * ⚠️ 這一條**不能**用 `items` 之類有人參照的集合當夾具（失敗形態⑩：守衛靠別的
+   * 缺陷才綠）—— 把它從 manifest 拿掉會先炸出一片 DanglingRef，於是修不修都是紅的。
+   * `vfx-scripts` 是葉子（沒有人硬參照它），⇒ 修好之前這一條實測拿到 EXIT 0。
+   *
+   * 突變點就是 `buildIndexes.ts` `buildTimeSource.readManifest` 裡那段
+   * 「目錄存在就補進 collections」的聯集：改回 `() => fsSource.readManifest()`,
+   * 這一行會拿到 0。
+   */
+  it("★ 第一次見到的集合也要驗,失敗要指名那個檔與那個欄位,而且 bundle 不動", () => {
+    cover("build-indexes-validates");
+    const bundle = join(sandbox, "bundle.json");
+    const before = readFileSync(bundle, "utf8");
+    const manifestPath = join(sandbox, "manifest.json");
+    const manifestBefore = readFileSync(manifestPath, "utf8");
+
+    // 「這個集合這次 build 才第一次出現」＝ 舊 manifest 沒有它、也還沒有 _index.json。
+    const m = JSON.parse(manifestBefore) as { collections: Record<string, unknown> };
+    delete m.collections["vfx-scripts"];
+    writeFileSync(manifestPath, JSON.stringify(m, null, 2) + "\n");
+    rmSync(join(sandbox, "vfx-scripts/_index.json"), { force: true });
+    mkdirSync(join(sandbox, "vfx-scripts"), { recursive: true });
+    const newDoc = join(sandbox, "vfx-scripts/godie-gh839-sentinel.r.json");
+    writeFileSync(
+      newDoc,
+      JSON.stringify(
+        { id: "godie-gh839-sentinel.r", schema: "vfx-script@1", segments: "not-an-array" },
+        null,
+        2,
+      ) + "\n",
+    );
+
+    const r = runBuild(sandbox);
+    expect(r.code, "新集合的文件沒被驗到,content:build 仍然回報成功").not.toBe(0);
+    expect(r.out).toContain("godie-gh839-sentinel.r"); // 指名那個檔
+    expect(r.out).toContain("segments"); // 指名那個欄位
+    expect(readFileSync(bundle, "utf8"), "被擋下了,bundle 還是被重寫了").toBe(before);
+
+    rmSync(newDoc, { force: true });
+    writeFileSync(manifestPath, manifestBefore);
   });
 });

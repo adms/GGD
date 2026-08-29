@@ -14,10 +14,10 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 import { readdirSync } from "node:fs";
 import { bundlePath, rebuildAllIndexes } from "../src/content/node/index";
-import { COLLECTION_NAMES } from "../src/content/schema/index";
+import { COLLECTION_NAMES, type CollectionName } from "../src/content/schema/index";
 import { ContentLoader } from "../src/content/loader";
 import { FsContentSource } from "../src/content/node/FsContentSource";
-import type { ContentSource, IndexEntry } from "../src/content/types";
+import type { ContentSource, IndexEntry, Manifest } from "../src/content/types";
 import { registerAll } from "../src/content/registries";
 import {
   findActiveCardsWithNoPayload,
@@ -78,17 +78,64 @@ try {
   //    照樣進驗證 —— 覆蓋只會更嚴,⛔ 不是放寬;runtime 的 FsContentSource 一個
   //    位元不動（出貨仍以 committed 索引為準,shippedBundleHasTrackedSources 照守）。
   const buildTimeSource: ContentSource = {
-    readManifest: () => fsSource.readManifest(),
+    // ⭐⭐ GH#839 —— 上面那個聯集做在**每一個集合的裡面**，⛔ 而「有哪些集合」
+    //   這一層自己**從來沒有做過聯集**：`ContentLoader.load()` 走的是
+    //   `Object.keys(manifest.collections)`，而那份 manifest 是**上一次 build**
+    //   寫下的產物。⇒ 一個**第一次出現的集合目錄**（manifest 還沒有它）在驗證
+    //   迴圈裡**一個 doc 都不會被讀到**，而下面的 `rebuildAllIndexes` 照樣掃目錄、
+    //   把它寫進 `manifest.json` **與 `bundle.json`**。
+    //   ⇒ 沙盒複驗（2026-08-29）：把 `vfx-scripts` 從 manifest 拿掉 ＋ 丟一份
+    //     `segments: "字串"`（schema 要陣列）的文件進去 ⇒ `content:build` **EXIT 0**，
+    //     而那份文件**逐位元組躺在 bundle.json 的 entries 裡**。
+    // ⚠️ 那正是 2026-08-01／08-02 兩次生產事故的形狀：bundle 有 X、映像的 Zod
+    //   不認得 X ⇒ 內容載入**整份**失敗 ⇒ fail-open 退回 2 隻骨架英雄。
+    // ⚠️ 也正是失敗形態⑫（只驗一個方向）**上一層**的實例：GH#688／#835 把
+    //   「索引 ∪ 目錄」補在集合**內部**，⛔ 沒有人回頭問「集合清單本身呢」。
+    // ⇒ 集合清單同樣取聯集：`COLLECTION_NAMES` 裡**目錄存在**的一律進驗證。
+    //   ⛔ **只加不減**（覆蓋只會更嚴），而且**只影響驗證那一趟** —— 出貨的
+    //   manifest 仍然由 `rebuildAllIndexes` 從磁碟重算，一個位元不動。
+    async readManifest() {
+      // ⭐ manifest.json 自己缺席／壞掉時**不要死在這裡**：這一步的工作正是**產生**
+      //   它，讀不到它就整份不驗 = 一個「第一次 build 永遠驗不了」的雞生蛋。
+      //   ⛔ 但**不靜默**（fail-open 沒錯，靜默才是缺陷）：印出來，然後底下的
+      //   聯集會把每一個存在的集合都補進來 ⇒ 覆蓋是**全部**，⛔ 不是零。
+      const m = await fsSource.readManifest().catch((e: unknown) => {
+        console.warn(
+          `⚠️ 讀不到 manifest.json（${String(e)}）—— 這一趟改以**目錄掃描**為準把每一個` +
+            "集合都納入驗證（這正是 content:build 要重建的那一份產物）。",
+        );
+        return { contentVersion: "", collections: {} } as Manifest;
+      });
+      const collections = { ...m.collections };
+      const added: CollectionName[] = [];
+      for (const name of COLLECTION_NAMES) {
+        if (collections[name]) continue;
+        if (!existsSync(join(CONTENT_DIR, name))) continue;
+        // hash/count/path 這一趟沒有任何人讀（loader 只吃 key），⛔ 但也不假裝它是
+        // 真的 —— 標成建置期補的，真值由下面的 `rebuildManifest` 從磁碟算。
+        collections[name] = { hash: "buildtime0000", count: 0, path: `${name}/_index.json` };
+        added.push(name);
+      }
+      if (added.length > 0) {
+        console.log(
+          `（manifest 還沒有這些集合，一併納入驗證：${added.join("、")} —— ` +
+            "它們是這次 build 才第一次進 manifest 與 bundle 的）",
+        );
+      }
+      return { ...m, collections };
+    },
     readObject: (c, e) => fsSource.readObject(c, e),
     async readIndex(collection) {
       const idx = await fsSource
         .readIndex(collection)
         .catch(() => ({ collection, hash: "", entries: [] as IndexEntry[] }));
       const dir = join(CONTENT_DIR, collection);
-      if (!existsSync(dir)) return idx;
       const seen = new Set(idx.entries.map((e) => e.path));
       const extra: IndexEntry[] = [];
-      for (const f of readdirSync(dir).sort()) {
+      // ⚠️ 目錄不存在時**不要提早 return `idx`**（GH#839 順手補的同一個方向）——
+      //   那條捷徑會讓「索引還列著、而整個目錄已經被刪掉」的情況跳過下面的 `alive`
+      //   過濾 ⇒ 驗證去讀每一筆 ⇒ `ENOENT` ⇒ 訊息說「read failed」而真相是索引過期。
+      for (const f of (existsSync(dir) ? readdirSync(dir) : []).sort()) {
         if (!f.endsWith(".json") || f.startsWith("_")) continue;
         const rel = `${collection}/${f}`;
         if (seen.has(rel)) continue;
