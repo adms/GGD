@@ -39,7 +39,14 @@ case "$HOST" in
     die "⛔ $HOST 看起來是正式站 —— 這支腳本只對 mini 說話。正式站走 scripts/host-deploy.sh" ;;
 esac
 [ -n "$USER_" ] || { echo "$RED⛔ 請設 GGD_MINI_USER（在 mini 上跑 whoami 就知道）$RST" >&2; exit 2; }
-SSH=(ssh -o BatchMode=yes -o ConnectTimeout=10 "$USER_@$HOST")
+# ⭐ `-A`（agent 轉發）—— mini 用**我這台的** GitHub 金鑰 clone/fetch,
+#   ⛔ 而 mini 上不需要存放任何憑證。GCP 的 `host-deploy.sh` 也是這樣做的。
+#
+# ⚠️⚠️ CLAUDE.md 逐字記過這個陷阱:agent 轉發失效時 `git` 報的是
+#   「correct access rights / repository exists」—— ⭐ **一句指著錯方向的訊息**
+#   （它聽起來像 repo 不存在或權限沒開,而真正的原因是 socket 沒轉發過去）。
+#   ⇒ 2026-08-29 第一次切到 git 流程時就撞到它,而那正是因為我漏了 `-A`。
+SSH=(ssh -A -o BatchMode=yes -o ConnectTimeout=10 "$USER_@$HOST")
 # ⛔⛔ 非互動 SSH 拿到的是**最小 PATH** —— macOS 上它由 /etc/paths 決定,
 #   而 OrbStack/Docker Desktop 的 CLI 住在 `~/.orbstack/bin`（以及 /usr/local/bin）。
 #   2026-08-29 實測:`docker info` 在互動 shell 裡好好的,而這支腳本說「docker 不通」
@@ -135,7 +142,10 @@ cmd_deploy() {
     info "mini 上還沒有 .git ⇒ clone（一次性,repo 約 650 MB）"
     local url; url=$(git -C "$REPO" remote get-url origin)
     r "rm -rf ${REMOTE_REPO}.old && ([ -d $REMOTE_REPO ] && mv $REMOTE_REPO ${REMOTE_REPO}.old || true) \
-       && git clone -q '$url' $REMOTE_REPO" || die "clone 失敗（mini 有沒有 repo 存取權?）"
+       && git clone -q '$url' $REMOTE_REPO" || die "clone 失敗。
+   ⚠️ 若訊息是「correct access rights / repository exists」——
+   ⭐ 那**通常不是權限問題**,是 **SSH agent 轉發沒過去**（CLAUDE.md 記過的誤導訊息）。
+   ⇒ 確認本機 \`ssh-add -l\` 有 GitHub 的金鑰,且這支腳本用 \`ssh -A\`。"
     # ⭐ 把不在 git 裡、但服務要的東西搬回來（⛔ 漏一個站就起不來）
     r "for d in data docker/.env; do [ -e ${REMOTE_REPO}.old/\$d ] && cp -a ${REMOTE_REPO}.old/\$d $REMOTE_REPO/\$(dirname \$d)/ || true; done" || true
     ok "clone 完成,並搬回 data/ 與 docker/.env"
