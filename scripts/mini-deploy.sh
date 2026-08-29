@@ -109,47 +109,42 @@ cmd_bootstrap() {
 cmd_deploy() {
   cmd_check || die "前置條件沒過 —— ⛔ 不部署"
 
-  head_ "1. 同步程式"
-  # ⭐ 出貨的是 **git 的某個 commit**,⛔ 不是這台機器的工作區 ——
-  #   2026-08-02 的生產事故就是後者（未追蹤的來源被烘進產物,而來源沒進版控）。
+  head_ "1. 同步程式（git，⭐ 與 GCP 同一套）"
+  # ⭐⭐ 用 `git fetch + checkout`,⛔ 不是 rsync —— owner 2026-08-29 問「why 不直接 git pull
+  #   跟 GCP 一樣」,而我原本的理由（**mini 上的 git 是 CLT stub**）**已經過期**（CLT 已裝）。
   #
-  # ⭐ 用 `git archive <commit>` 串過去,⛔ 不是在 mini 上跑 git:
-  #   · 保證一樣強 —— archive 的內容**就是**那個 commit 的樹（⛔ 工作區的髒東西進不來）
-  #   · mini 不需要 git（macOS 的 /usr/bin/git 是 CLT stub,而裝 CLT 要 GUI 點一次）
-  #   · mini 不需要 repo 的存取憑證（⭐ 少一份要管的秘密）
-  #   ⚠️ 代價:mini 上沒有 .git ⇒ 問不出「你是哪一版」
-  #     ⇒ 所以寫一個 DEPLOYED_COMMIT,而 verify 讀它。
+  # git 這條贏在三點：
+  #   ① ⭐ mini 上有 `.git` ⇒ `git describe` 直接可用
+  #      ⇒ ⛔ 不必從本機傳版本戳（那正是 `UNSTAMPED-BUILD` 的根因）
+  #   ② ⭐「出貨的是 git,⛔ 不是工作區」由**構造**保證,⛔ 不是靠我在本機展開 archive
+  #      （2026-08-02 的生產事故就是「未追蹤的來源被烘進產物」）
+  #   ③ 與 GCP 同一個心智模型 —— ⛔ 少一套要記的流程
+  #
+  # ⚠️ 代價:**必須先 push**。⭐ 而那是更好的紀律 ——
+  #   ⛔ 不會部署到一個不在 repo 裡的東西。
   local head_local; head_local=$(git -C "$REPO" rev-parse HEAD)
+  git -C "$REPO" merge-base --is-ancestor "$head_local" origin/main 2>/dev/null \
+    || die "⛔ HEAD（$(echo "$head_local" | cut -c1-8)）還沒 push 到 origin/main
+   ⭐ git 這條路的前提是「部署的東西在 repo 裡」⇒ 先 push,⛔ 不要繞過去。
+   （owner 常設：工作中的 session 不要自己 push —— ⇒ 請 owner 確認）"
   git -C "$REPO" diff --quiet HEAD 2>/dev/null \
-    || warn "⚠️ 工作區有未提交的改動 —— ⭐ 它們**不會**被部署（部署的是 $(echo "$head_local" | cut -c1-8)）"
-  r "mkdir -p $REMOTE_REPO" || die "建不了 $REMOTE_REPO"
+    || warn "⚠️ 工作區有未提交的改動 —— ⭐ 它們**不會**被部署"
 
-  # ⭐⭐ 只送差異,⛔ 不是每次都送整個 repo。
-  #
-  # 2026-08-29 量到:`git archive HEAD` 是 **684 MB**（含 354 MB 的 content）,
-  #   走 VPN 從行動網路推一次要 **355 秒**。⭐ 而一次典型的部署只改幾個檔。
-  #   ⇒ 瓶頸不是傳輸方式,是**每次都送全部**。
-  #
-  # ⭐ 做法:先把那個 commit 展開到**本機**的暫存區（快,不過網路）,
-  #   再 rsync 過去 —— rsync 只送**真的不一樣的區塊**。
-  #   ⚠️ 這仍然保住「部署的是某個 commit,⛔ 不是工作區」那個性質:
-  #     暫存區的內容**就是** `git archive <commit>` 的輸出。
-  #
-  # ⚠️ `--delete` 會刪掉遠端多出來的檔 ⇒ **必須排除不在 git 裡的東西**:
-  #   `data/`（帳號、錢包、排行榜…）· `docker/.env`（secrets）· `DEPLOYED_COMMIT`
-  #   ⛔ 漏掉任何一個,一次部署就會把玩家資料刪掉。
-  local stage="${GGD_STAGE_DIR:-$HOME/.cache/ggd-deploy-stage}"
-  mkdir -p "$stage"
-  git -C "$REPO" archive --format=tar "$head_local" | tar -x -C "$stage" || die "本機展開失敗"
-  printf '%s' "$head_local" > "$stage/DEPLOYED_COMMIT"
-  rsync -a --delete \
-    --exclude='/data/' --exclude='/docker/.env' \
-    -e "ssh -o BatchMode=yes -o ConnectTimeout=10" \
-    "$stage/" "$USER_@$HOST:$REMOTE_REPO/" \
-    || die "rsync 同步失敗"
-  local remote_head; remote_head=$(r "cat $REMOTE_REPO/DEPLOYED_COMMIT" 2>/dev/null)
+  # 第一次:clone。之後:fetch + checkout。
+  if ! r "test -d $REMOTE_REPO/.git"; then
+    info "mini 上還沒有 .git ⇒ clone（一次性,repo 約 650 MB）"
+    local url; url=$(git -C "$REPO" remote get-url origin)
+    r "rm -rf ${REMOTE_REPO}.old && ([ -d $REMOTE_REPO ] && mv $REMOTE_REPO ${REMOTE_REPO}.old || true) \
+       && git clone -q '$url' $REMOTE_REPO" || die "clone 失敗（mini 有沒有 repo 存取權?）"
+    # ⭐ 把不在 git 裡、但服務要的東西搬回來（⛔ 漏一個站就起不來）
+    r "for d in data docker/.env; do [ -e ${REMOTE_REPO}.old/\$d ] && cp -a ${REMOTE_REPO}.old/\$d $REMOTE_REPO/\$(dirname \$d)/ || true; done" || true
+    ok "clone 完成,並搬回 data/ 與 docker/.env"
+  fi
+  r "cd $REMOTE_REPO && git fetch -q --all --tags && git checkout -q $head_local" \
+    || die "checkout $head_local 失敗"
+  local remote_head; remote_head=$(r "cd $REMOTE_REPO && git rev-parse HEAD" 2>/dev/null)
   [ "$remote_head" = "$head_local" ] \
-    && ok "mini 對到 $(echo "$head_local" | cut -c1-8)" \
+    && ok "mini 對到 $(echo "$head_local" | cut -c1-8)（⭐ git,有 .git ⇒ 版本戳自己算得出來）" \
     || die "⛔ 同步後版本對不上（mini=$remote_head 本機=$head_local）"
 
   head_ "2. build（arm64）"
@@ -160,9 +155,9 @@ cmd_deploy() {
   #   2026-08-29 實際發生:搬完之後 footer 就是 UNSTAMPED-BUILD。
   # ⭐ 在**這台**算（有 git、有 tag）,再傳進去 —— ⛔ 不要在 mini 上算,
   #   它沒有 .git（我們用 rsync 推的是 archive 的內容）。
-  local stamp
-  stamp="$(git -C "$REPO" describe --tags --always --dirty 2>/dev/null || echo "$head_local") $(date -u +%F)"
-  info "版本戳：$stamp"
+  # ⭐ 版本戳由 **mini 自己**算 —— 它現在有 `.git` 了（⛔ 不必從本機傳）
+  local stamp; stamp=$(r "cd $REMOTE_REPO && echo \"\$(git describe --tags --always --dirty) \$(date -u +%F)\"" 2>/dev/null)
+  info "版本戳（mini 自己算的）：$stamp"
   r "cd $REMOTE_REPO && GGD_BUILD_STAMP='$stamp' docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env build" \
     2>&1 | tail -4 | sed 's/^/    /'
   r "cd $REMOTE_REPO && docker image inspect ggd-edge --format '{{.Architecture}}'" 2>/dev/null \
