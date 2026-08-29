@@ -170,6 +170,33 @@ export const write = {
         // 指不到就是缺陷（vfxPromotedRefsResolve.test.ts 會紅）—— 擋在存之前而不是閘上。
         if (!existsSync(join(repoRoot, "content/vfx", `${value}.json`)))
           return `content/vfx/${value}.json 不存在 —— 懸空的晉升綁定會讓 vfxPromotedRefsResolve 紅`;
+        // ⭐ **這一格有第二個住處**（2026-08-29 對抗性複驗抓到,GH#822）。
+        //
+        // ⚠️ 在此之前這條 check 只問「那個檔在不在」—— ⛔ 一個**名詞**。
+        //   而 `w3xAbilityArt.test.ts` 驗的是**關係**:
+        //   「這一支技能出貨的 `vfxKey` **就是** promoted.primary」。
+        //   ⇒ 只改這一邊 ⇒ 存檔成功、Zod 全過,⭐ 而兩條出貨守衛當場變紅;
+        //     且 `extra` 仍是舊家族的 emitter ⇒ **場上同時放兩個家族的碎片**。
+        //
+        // ⛔ 這條路改不到另一半（技能文件不在本 dataset 的 paths 裡）
+        //   ⇒ **擋下來並指名**,⛔ 不是偷偷寫過去（第〇·六守則:
+        //   key 驗不過就停下來指名那一格,⛔ 不是「照樣同步,反正兩邊會一致」）。
+        const abilityPath = join(repoRoot, "content/abilities", `${id}.json`);
+        if (existsSync(abilityPath)) {
+          let vk = null;
+          try {
+            vk = JSON.parse(readFileSync(abilityPath, "utf8")).vfxKey ?? null;
+          } catch {
+            vk = null;
+          }
+          if (typeof vk === "string" && vk !== value)
+            return (
+              `⛔ 這一格有**第二個住處**:content/abilities/${id}.json 的 vfxKey 今天是「${vk}」。\n` +
+              `  改成「${value}」只動到晉升表這一半 ⇒ w3xAbilityArt 與 laneADPromotedArtIsLive 兩條出貨守衛會紅,\n` +
+              `  而且 extra 仍是舊家族的 emitter ⇒ 場上會同時放兩個家族的碎片。\n` +
+              `  ⭐ 這一格要與技能文件一起改 —— 本端點改不到那一半。`
+            );
+        }
         return "";
       },
     },
