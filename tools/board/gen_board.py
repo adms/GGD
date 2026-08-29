@@ -216,6 +216,38 @@ def build() -> str:
             f'⛔ 不要手改這份 HTML</footer></div>\n')
 
 
+def _preserve_previous() -> None:
+    """把**即將被覆蓋**的那一份戰情板複製進 legacy，並記進同一本帳。
+
+    ⭐ 內容**逐位元組相同**時跳過（⛔ 不然每跑一次 `--check` 之後的重生成都留一份，
+    legacy 會爆），但仍記一列 `SKIP(內容相同)` —— ⚠️ 靜默跳過與沒跑過長得一樣。
+    ⚠️ 這支**永遠不讓產生器失敗**（備份壞掉不可以弄壞出貨），⛔ 但它會大聲說。
+    """
+    import shutil, time, hashlib
+    try:
+        if not OUT.exists():
+            return
+        repo = Path(__file__).resolve().parents[2]
+        log = repo / "docs/legacy/_overwrites/_ledger.tsv"
+        stamp = "overwrite_temp_" + time.strftime("%Y%m%d-%H%M%S")
+        prev = OUT.read_bytes()
+        new_sum = hashlib.sha256(build().encode("utf-8")).hexdigest()
+        if hashlib.sha256(prev).hexdigest() == new_sum:
+            dest, why = "", "SKIP(內容相同)"
+        else:
+            dest_p = repo / "docs/legacy/_overwrites" / stamp / OUT.relative_to(repo)
+            dest_p.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(OUT, dest_p)
+            dest, why = str(dest_p), "產生器覆蓋前"
+        log.parent.mkdir(parents=True, exist_ok=True)
+        with log.open("a", encoding="utf-8") as fh:
+            fh.write(f"{time.strftime('%Y%m%d-%H%M%S')}\tgen_board\t{why}\t{OUT}\t{dest}\n")
+        if dest:
+            print(f"  🗄 覆蓋前留底 → {Path(dest).relative_to(repo)}")
+    except Exception as exc:                       # noqa: BLE001
+        print(f"  ⚠️ 留底失敗（⛔ 仍然繼續產生）：{exc}")
+
+
 if __name__ == "__main__":
     page = build()
     if "--check" in sys.argv:
@@ -226,5 +258,15 @@ if __name__ == "__main__":
         print("ggd-board.html is current")
     else:
         OUT.parent.mkdir(parents=True, exist_ok=True)
+        # ⭐ **覆蓋前先留底**（owner 2026-08-29：「每次產生記得都有備份」）。
+        #
+        # ⚠️ 為什麼產生器要自己做：`scripts/preserve-before-overwrite.py` 那道 hook
+        # 只攔 Write／Edit／shell 重導 —— ⛔ 它對 **Python 檔案 API 直寫是瞎的**，
+        # 而這一行正是。⇒ 這份戰情板在 2026-08-20 被 `cat >` 洗掉過一次，
+        # 當時唯一副本在 scratchpad 且未版控 ⇒ **救不回來**。
+        #
+        # ⭐ 復用**同一套**慣例與同一本帳（⛔ 不造第二套）：
+        #   落點 docs/legacy/_overwrites/overwrite_temp_<ts>/ · 帳本 _ledger.tsv
+        _preserve_previous()
         OUT.write_text(page, encoding="utf-8")
         print(f"✓ 寫出 {OUT}（{len(page.splitlines())} 行）")

@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-08-28 19:22 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-08-29 08:47 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.30.4 · 資料截至 2026-08-28 19:22 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-28 19:22 (GMT+8)</h1><div class="meta"><span>帳本 <b>10</b> 份</span><span>點名票號 <b>325</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.31.0 · 資料截至 2026-08-29 08:47 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-29 08:47 (GMT+8)</h1><div class="meta"><span>帳本 <b>11</b> 份</span><span>點名票號 <b>325</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -737,6 +737,78 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>19:07</td><td>再多補充一句，在B小範圍內又有技能標籤的交集的才有十倍傷害喔 B不是延遲一秒，是延遲半秒 但技能標籤維持一秒</td><td>#843</td></tr>
 <tr><td>19:13</td><td>提醒你，我們討論過很多次，造成傷害的五級距公式不考慮系統倍率，請你排除系統倍率來檢查</td><td>#843</td></tr>
 <tr><td>19:22</td><td>我要做一個系統重大搬遷 我要確定後台 資料搬遷頁 是否有效並且有包含到所有資料能一起打包備份</td><td>#856</td></tr>
+<tr><td>22:25</td><td>Redis 要停機時也要有備份機制，不要等待暖開機，因為我還有排行榜等資料在上面不只快取</td><td>860</td></tr>
+<tr><td>23:59</td><td>所以我要你把這版當作v4後台可切換的其中一種手把操作版本</td><td>863</td></tr>
+</table></div>
+<p># 2026-08-29</p>
+<blockquote>⭐ 這張表由 <code>scripts/message-ledger.sh</code> 從 session transcript <b>逐則</b>撈出來對帳，</blockquote>
+<blockquote><code>scripts/ruling.sh</code> 收到裁決時也寫進同一張表。</blockquote>
+<blockquote>表格那一格是<b>截斷</b>過的；⛔ 全文沒有被壓縮取代，它在 <code>ledger-source_temp_*.md</code>。</blockquote>
+<blockquote>票號那一格 ⛔ 不可以留空：對不到票就寫 <code>⏸ 未對票</code>，<code>--check</code> 會紅。</blockquote>
+<div class="scroll"><table><tr><th>時間</th><th>owner 說了什麼（逐字）</th><th>票</th></tr>
+<tr><td>00:00</td><td>所以我要你把這版當作v4後台可切換的其中一種手把操作版本</td><td>863</td></tr>
+<tr><td>00:19</td><td>這台 mac mini 有時候會放在同一個區網 網段內 (maybe 192.168.0.x)</td><td>861</td></tr>
+<tr><td>01:42</td><td>請你做完</td><td>861</td></tr>
+<tr><td>02:10</td><td>幫我掃描 192.168.0.133</td><td>861</td></tr>
+<tr><td>02:18</td><td>我可以在 ap 開 port 或 mini 上開 port ，告訴我做法就好</td><td>861</td></tr>
+<tr><td>02:22</td><td>通了</td><td>861</td></tr>
+<tr><td>02:32</td><td>Connection to GenieAccelerdeMac-mini-2.local port 22 [tcp/ssh] succeeded! ✓ 通了 Takuro@iPhone6sProMax GGD % nc -z -G 3 192.168.0.133 22 &amp;&amp; echo &quot;✓ 權限已生效&quot; Connection to 192.168.0.133 port 22 [tcp/ssh] succeeded! ✓ 權限已生效 Takuro@iPhone6sProMax GGD %</td><td>861</td></tr>
+<tr><td>02:35</td><td>LAN 直連 6.51 ms CF edge 7.62 ms 今天的 GCP 9.84 ms</td><td>861</td></tr>
+<tr><td>02:40</td><td>ping 以外 還有頻寬也是考量吧</td><td>861</td></tr>
+<tr><td>02:51</td><td>請你幫我啟用 因為之後都會從這台部署到 mini</td><td>861</td></tr>
+<tr><td>03:07</td><td>請你測試這台到 mini 另外一條有線路線的 ping 與頻寬</td><td>861</td></tr>
+<tr><td>03:10</td><td>應該是 2.5Gbps 才對</td><td>861</td></tr>
+<tr><td>03:14</td><td>TB再量看看</td><td>861</td></tr>
+<tr><td>03:18</td><td>try tb5</td><td>861</td></tr>
+<tr><td>03:23</td><td>ok 那我們來搬遷吧</td><td>861</td></tr>
+<tr><td>03:24</td><td>等等 wifi 很慢嗎</td><td>861</td></tr>
+<tr><td>03:30</td><td>你要教我如何在 mini 安全的產生 key 讓你可以 ssh 登入</td><td>861</td></tr>
+<tr><td>03:35</td><td>iiuiopiujhyujujjjki8uiklouytrdeswedrftyuiopoiuytrewsrtyi8u765432q2wertyuioiuytreswasdefrtguiopoiuytreswedrftyuiopoiuytreswasdrtyuiop[]\</td><td>861</td></tr>
+<tr><td>03:38</td><td>ok</td><td>861</td></tr>
+<tr><td>03:39</td><td>ok</td><td>861</td></tr>
+<tr><td>03:40</td><td>mini 帳號是 genieacceler</td><td>861</td></tr>
+<tr><td>03:49</td><td>自動登入開了</td><td>861</td></tr>
+<tr><td>04:11</td><td>mini重開機了</td><td>861</td></tr>
+<tr><td>04:20</td><td>rebooted</td><td>861</td></tr>
+<tr><td>04:23</td><td>如果我要從外網啟動，我要打開/port forward 哪些? 還要設定哪些?</td><td>861</td></tr>
+<tr><td>04:25</td><td>我以為 public IP 是 122.116.95.244</td><td>861</td></tr>
+<tr><td>04:32</td><td>Cloudflare Tunnel 你幫我設定</td><td>861</td></tr>
+<tr><td>04:36</td><td>把 adms.ai 加進 Cloudflare dash.cloudflare.com =&gt; why not ggd.adms.ai</td><td>861</td></tr>
+<tr><td>04:39</td><td>教我一步步設定</td><td>861</td></tr>
+<tr><td>04:48</td><td>carrera.ns.cloudflare.com cesar.ns.cloudflare.com</td><td>861</td></tr>
+<tr><td>04:52</td><td>adms.ai A 114.32.220.203 已經廢除了 沒差</td><td>861</td></tr>
+<tr><td>04:57</td><td>我好了</td><td>861</td></tr>
+<tr><td>05:08</td><td>brew install cloudflared &amp;&amp; sudo cloudflared service install eyJhIjoiNDViZjBjZmVkZmI4MmZhZDU5ZTVlMmQ5MmQxZDA1ZjAiLCJ0IjoiNzNhNTAyZGUtZDU5MC00ZDhkLWI5YmEtOTdmMzk2NzE4MDU0IiwicyI6IlpURXdOREptTUdRdE5EVTBZaTAwTkRnMkxUazBPV010WTJFME5EZGxPV0ppTmpRMyJ9</td><td>861</td></tr>
+<tr><td>05:13</td><td>加好了</td><td>861</td></tr>
+<tr><td>05:18</td><td>沒問題 我可以同時多一條新線</td><td>861</td></tr>
+<tr><td>05:26</td><td>proxy 關掉 是對的嗎</td><td>861</td></tr>
+<tr><td>05:28</td><td>check again and compare 3 path</td><td>861</td></tr>
+<tr><td>05:33</td><td>check 3 route again and compare lag and bandwidth</td><td>861</td></tr>
+<tr><td>05:34</td><td>路由器轉發還沒設 我已經設定了</td><td>861</td></tr>
+<tr><td>05:53</td><td>try again</td><td>861</td></tr>
+<tr><td>05:55</td><td>早就都加了</td><td>861</td></tr>
+<tr><td>06:06</td><td>好 我現在要將這台 M5 Max 設定為手機網路 請你重新測試一次</td><td>861</td></tr>
+<tr><td>06:12</td><td>我要如何從外網連進來更新 deploy 版本？</td><td>865</td></tr>
+<tr><td>06:16</td><td>那就用 Cloudflare Tunnel 吧 有什麼優缺點？</td><td>861</td></tr>
+<tr><td>06:18</td><td>我可以用 vpn</td><td>861</td></tr>
+<tr><td>06:21</td><td>我連上 vpn 了</td><td>861</td></tr>
+<tr><td>06:23</td><td>透過 VPN 連線傳送所有流量 ok</td><td>861</td></tr>
+<tr><td>06:25</td><td>go</td><td>861</td></tr>
+<tr><td>06:40</td><td>xcode-select: note: install requested for command line developer tools</td><td>861</td></tr>
+<tr><td>06:51</td><td>我設定好 DNS 了 接下來呢？</td><td>861</td></tr>
+<tr><td>06:55</td><td>ok</td><td>861</td></tr>
+<tr><td>07:02</td><td>offsite-backup.sh install /BackupDaily/</td><td>857</td></tr>
+<tr><td>07:25</td><td>dropbox 可以嗎</td><td>857</td></tr>
+<tr><td>07:26</td><td>Cloudflare R2 ok</td><td>857</td></tr>
+<tr><td>07:33</td><td>② 建 API Token R2 頁面右上 → Manage R2 API Tokens → Create API token =&gt; 找不到</td><td>857</td></tr>
+<tr><td>07:42</td><td>yes, please check https://ggd.adms.ai/ playable, too.</td><td>861</td></tr>
+<tr><td>07:55</td><td>後台一堆服務都壞了 請你檢查</td><td>867</td></tr>
+<tr><td>07:59</td><td>yes 不要一直問我這種沒有決策點的問題</td><td>861</td></tr>
+<tr><td>08:04</td><td>給我最終搬遷前後各種指標比較差異表</td><td>865</td></tr>
+<tr><td>08:07</td><td>(a) 切到 git pull 你（或授權我）先 push 那 38 個 commit ⇒ 之後與 GCP 同一套流程，⭐ 版本戳問題自動解決 完整前後對照表 是表現 例如處理哪項任務的時間 響應速度 頻寬 等各種實驗結果</td><td>865</td></tr>
+<tr><td>08:26</td><td>📐 90支技能重製對照 🧑‍⚖️ 一頁批次後台驗收 —— 90 支重製 這一頁相關 0 批 · 待裁決 0 重新讀取 這一頁<b>還沒有登記過批次</b>。上線一批成果之後用 pnpm review:register 登記（⭐ 登記時必須寫得出 rollback 開關， 寫不出來就代表那一批違反「留後台開關」的常設指令）。 GET /__live/skill90 → HTTP 500：Error: python3 dump 失敗：Command failed: python3 -c import importlib.util, json, os, sys root = sys.argv[1] her…</td><td>866</td></tr>
+<tr><td>08:42</td><td>mini 同一個區網玩起來會比較快嗎?</td><td>861</td></tr>
+<tr><td>08:47</td><td>手把 v4 也上線了吧？</td><td>863</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

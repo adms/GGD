@@ -291,7 +291,9 @@ head_ "6. manifest（⭐ 這才是搬遷成功的判準）"
   # ⭐ 容器以哪個 UID 寫 data/。匯入端還原成別的 UID ⇒ 容器**寫不進去**,
   #   而症狀是「站起來了但存不了檔」—— ⛔ 一個不會在啟動時報錯的缺陷。
   echo "data_owner=$($SUDO find "$REPO/data/accounts" -type f -printf '%u:%g\n' 2>/dev/null | sort -u | head -1)"
-  echo "absent_at_source=$(printf '%s,' "${ABSENT[@]}")"
+  # ⚠️ `set -u` 下,空陣列展開會噴 unbound variable（bash 4.3 以前的語意,
+  #   而 macOS 內建的 bash 是 3.2）⇒ 用 ${ARR[@]+"${ARR[@]}"} 的慣用法。
+  echo "absent_at_source=$(printf '%s,' ${ABSENT[@]+"${ABSENT[@]}"})"
   echo "env_keys=$(sed -n 's/^\([A-Z_][A-Z0-9_]*\)=.*/\1/p' "$REPO/docker/.env" 2>/dev/null | sort | tr '\n' ',')"
   echo "# ── 逐項計數（import 端要逐條對上）──"
   for d in "${PRESENT[@]}"; do
