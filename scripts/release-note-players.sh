@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+# 🎮 給**玩家**看的 release note ——（預設只預覽；發到 Discord 要 --post）
+#
+# owner 2026-08-30：「我接下來還會多一個**給玩家看的 release note** 要發佈在 discord」
+#
+# ⭐ 它與 GitHub 的 release note 是**兩種不同的東西**，⛔ 不是同一份的兩個格式：
+#   · GitHub note   → 給**開發**看：守則、突變紀錄、commit、誠實的界線
+#   · 這一份         → 給**玩家**看：他按下去會看到什麼不一樣
+#
+# ⚠️ ⭐ **來源不是 commit 訊息** —— 那是回頭重建，而 2026-08-19 我憑印象重寫工作進度時
+#   owner 當場抓到整條線不見了（GH#456）。⇒ 玩家那一句必須在**做完的當下**寫進票裡：
+#     bash scripts/ticket-progress.sh write <票號> … --player "<一句玩家看得懂的話>"
+#
+#   bash scripts/release-note-players.sh                 # 預覽（自動抓上一個 tag 到現在）
+#   bash scripts/release-note-players.sh --since v0.31.0
+#   bash scripts/release-note-players.sh --post          # ⭐ 真的發到 Discord
+set -uo pipefail
+cd "$(dirname "$0")/.."
+
+SINCE=""; POST=0
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --since) SINCE="$2"; shift 2;;
+    --post) POST=1; shift;;
+    *) echo "不認得 $1" >&2; exit 2;;
+  esac
+done
+
+# 上一個 tag（⛔ 不是 HEAD~N —— 那會因為 commit 密度而漂）
+[ -n "$SINCE" ] || SINCE=$(git tag --sort=-v:refname | sed -n '2p')
+NOW=$(git describe --tags --abbrev=0 2>/dev/null || echo HEAD)
+[ -n "$SINCE" ] || { echo "⛔ 找不到上一個 tag，用 --since <tag>" >&2; exit 2; }
+
+echo "🎮 玩家公告草稿：$SINCE → $NOW"
+echo
+
+# ── 這一段期間關掉的票 ────────────────────────────────────────────────────
+SINCE_DATE=$(git log -1 --format=%cI "$SINCE" 2>/dev/null | cut -c1-10)
+CLOSED=$(gh issue list --state closed --limit 200 --json number,title,closedAt \
+          -q ".[] | select(.closedAt >= \"${SINCE_DATE}\") | .number" 2>/dev/null) || {
+  echo "⚠️ gh 連不上 —— **沒有產生草稿**（⛔ 這不是「這一版沒有玩家可見的改動」）" >&2; exit 1; }
+
+LINES=""; MISSING=""
+for N in $CLOSED; do
+  B=$(gh issue view "$N" --json comments -q '[.comments[].body] | reverse | join("\n")' 2>/dev/null) || continue
+  P=$(printf '%s' "$B" | grep -m1 '🎮 玩家看得到的' | sed 's/.*）\*\*：//')
+  T=$(gh issue view "$N" --json title -q .title 2>/dev/null | sed 's/\[[^]]*\]//g' | sed 's/^ *//')
+  if [ -n "$P" ]; then
+    LINES="${LINES}- ${P}
+"
+  else
+    # ⭐ 只有**玩家看得到的類型**才算漏；infra/test/docs 本來就不該有
+    case "$(gh issue view "$N" --json title -q .title 2>/dev/null)" in
+      *"[feature]"*|*"[fix]"*|*"[improve]"*|*"[bug]"*)
+        MISSING="${MISSING}  · #$N $T
+";;
+    esac
+  fi
+done
+
+if [ -z "$LINES" ]; then
+  echo "  （這一版沒有任何票寫了玩家那一句）"
+else
+  printf '%s' "$LINES"
+fi
+
+# ⚠️ ⭐ fail-loud：漏掉的要**說出來**，⛔ 不是靜默省略（安靜的跳過與全過長得一樣）
+if [ -n "$MISSING" ]; then
+  echo
+  echo "⚠️ 這幾張是 feature/fix/improve 卻**沒寫玩家那一句** —— ⛔ 它們不會出現在公告裡："
+  printf '%s' "$MISSING"
+  echo "  ⇒ 補：bash scripts/ticket-progress.sh write <票號> --state 完成 \\"
+  echo "        --baseline … --next … --player \"<一句玩家看得懂的話>\""
+fi
+
+# ── ⭐ 實作細節的閘（owner 2026-08-30：「記得**不要講實作細節**」）─────────
+#
+# ⚠️ 為什麼是閘不是判準：「記得不要 X」是判準，⛔ 而這份 repo 記錄了五次判準失效。
+# ⭐ 而我自己第一版就違反了它 —— 寫了「**後台**每一頁多了…」，
+#   ⛔ 後台根本不是玩家看得到的東西。
+#
+# 判準：一行裡出現**只有開發看得懂的東西** ⇒ 擋下並指名那個詞。
+DETAIL_RE='[A-Za-z_][A-Za-z0-9_]*\.(ts|tsx|json|py|mjs|md)|godie-[a-z0-9]|\bj:[0-9]|commit|\b[0-9a-f]{7,40}\b|第[〇一二三四五六七八九]+·?[〇一二三四五六七八九]*守則|--check|genrun|schema|Zod|vitest|突變|棘輪|後台|admin|dataset|API|webhook|#[0-9]{2,4}'
+BAD_LINES=$(printf '%s' "$LINES" | grep -nE "$DETAIL_RE" || true)
+if [ -n "$BAD_LINES" ]; then
+  echo
+  echo "⛔ 這幾行有**實作細節**（owner：「記得不要講實作細節」）——⛔ 不發："
+  printf '%s\n' "$BAD_LINES" | sed 's/^/  · /'
+  echo "  ⭐ 玩家公告只講：**他按下去會看到什麼不一樣**。"
+  echo "     ⛔ 不講：檔名 · commit · 欄位名 · 守則 · 閘／測試 · 票號 · **後台**（那不是玩家看得到的）"
+  echo "  ⇒ 改：bash scripts/ticket-progress.sh write <票號> … --player \"<改寫過的一句>\""
+  exit 1
+fi
+
+[ "$POST" -eq 1 ] || { echo; echo "⭐ 這是**預覽**。要真的發到 Discord：加 --post"; exit 0; }
+
+# ── 發布（⭐ 對外動作，所以它是一個明確的旗標，⛔ 不是預設）──────────────
+HOOK="${GGD_DISCORD_WEBHOOK:-}"
+[ -n "$HOOK" ] || { echo "⛔ 沒設 GGD_DISCORD_WEBHOOK —— 去 Discord 伺服器設定→整合→Webhook 建一個" >&2; exit 1; }
+[ -n "$LINES" ] || { echo "⛔ 沒有內容可發（零張票寫了玩家那一句）" >&2; exit 1; }
+
+BODY=$(printf '## 🎮 %s 更新\n\n%s' "$NOW" "$LINES")
+JSON=$(python3 -c 'import json,sys; print(json.dumps({"content": sys.stdin.read()[:1900]}))' <<< "$BODY")
+CODE=$(curl -s -o /tmp/dc.out -w '%{http_code}' -H 'Content-Type: application/json' -d "$JSON" "$HOOK")
+case "$CODE" in
+  20*) echo "✓ 已發到 Discord（HTTP $CODE）";;
+  *)   echo "⛔ 發布失敗 HTTP $CODE：$(head -c 200 /tmp/dc.out)" >&2; exit 1;;
+esac

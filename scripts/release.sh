@@ -133,6 +133,26 @@ EOF
     echo "下一步:"
     echo "  git push origin main --follow-tags"
     echo "  gh release create $NEXT --title ... --notes ...   # 每一次 push 都要帶 release note"
+
+    # ⭐ **玩家公告**（owner 2026-08-30：「你自動發版就發玩家 discord 公告就好」）
+    #
+    # ⚠️ ⭐ 它與 GitHub 的 note 是**兩種東西**：那一份給開發（守則／突變／commit），
+    #   這一份給**玩家**（他按下去會看到什麼不一樣）。
+    # ⭐ 內容來自票裡的 `--player` 那一句（做完的當下寫的），⛔ 不是從 commit 訊息重建。
+    # ⛔ 有實作細節就擋下來 —— owner 逐字：「記得**不要講實作細節**」。
+    if [ -n "${GGD_DISCORD_WEBHOOK:-}" ]; then
+      echo
+      if bash "$(dirname "$0")/release-note-players.sh" --post; then
+        :
+      else
+        # ⚠️ fail-loud ⛔ 不 fail-silent：發不出去要看得見，⛔ 但**不擋發版**
+        echo "⚠️ 玩家公告沒發出去（見上）—— ⛔ 這**不擋發版**，補發：" >&2
+        echo "   set -a; . docker/.env; set +a; bash scripts/release-note-players.sh --post" >&2
+      fi
+    else
+      echo
+      echo "ℹ️ 沒設 GGD_DISCORD_WEBHOOK ⇒ **沒發**玩家公告（⛔ 這不是「這一版沒有玩家可見的改動」）"
+    fi
     ;;
 
   *)

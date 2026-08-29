@@ -37,7 +37,7 @@ read)
   ;;
 write)
   N="${1:?用法: write <票號> --state …}"; shift
-  STATE=""; BASE=""; DID=""; NEXT=""; SHA=""
+  STATE=""; BASE=""; DID=""; NEXT=""; SHA=""; PLAYER=""
   while [ $# -gt 0 ]; do
     case "$1" in
       --state) STATE="$2"; shift 2;;
@@ -45,6 +45,11 @@ write)
       --did) DID="$2"; shift 2;;
       --next) NEXT="$2"; shift 2;;
       --commit) SHA="$2"; shift 2;;
+      # ⭐ **玩家看得懂的一句話** —— 給 Discord 的公告用。
+      #   ⚠️ 它必須在**做完的當下**寫，⛔ 不是發版時回頭從 commit 訊息重建：
+      #   2026-08-19 我憑印象重寫工作進度，owner 當場抓到整條線不見了（後來成為 GH#456）。
+      #   ⛔ 沒有玩家看得到的改動就**不要填** —— 空白是誠實的答案。
+      --player) PLAYER="$2"; shift 2;;
       *) die "不認得 $1";;
     esac
   done
@@ -69,6 +74,8 @@ write)
 **這一輪做了**：${DID:-—}
 
 **下一個人從哪裡接**：$NEXT
+${PLAYER:+
+**🎮 玩家看得到的（給公告用）**：$PLAYER}
 
 > ⭐ 下一輪**開工第一件事**：\`bash scripts/ticket-progress.sh read $N\`
 > ⛔ 不要重讀票文當規格 —— 票文是過期的，這一格才是現況。
