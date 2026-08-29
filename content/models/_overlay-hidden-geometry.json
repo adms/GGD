@@ -154,6 +154,14 @@
       ],
       "champions": "殺戮之牙 - 異形(godie-usyl)",
       "why": "prim2 = WC3 gutz00 血泥 geoset(69 頂點,權重 100%),#59 掉了 geoset 可見度動畫所以永遠畫得出來"
+    },
+    "assets/blizzard-local/models/E00S.glb": {
+      "hiddenPrimitives": [
+        3,
+        4
+      ],
+      "champions": "森林的白木老樹精(godie-e00s)",
+      "why": "prim3/prim4 各 25 頂點,y∈[11.77,12.25] 與 [11.31,11.67] —— 而模型本體最高只到 7.55(prim10) ⇒ 浮在半空約 4 個單位。與 #540 的揍敵客阿福**同型**:分身被 key 到 Walk 動畫的高處,而三支普查工具全部量 **bind pose** ⇒ 結構上全綠、量不到它。2026-08-29 直接解 GLB 的 accessor min/max 量到(GH#558②)。"
     }
   }
 }

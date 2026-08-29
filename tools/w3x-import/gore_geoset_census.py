@@ -91,6 +91,29 @@ _COMPONENT = {5120: ("b", 1), 5121: ("B", 1), 5122: ("h", 2), 5123: ("H", 2),
 _NUM_COMPONENTS = {"SCALAR": 1, "VEC2": 2, "VEC3": 3, "VEC4": 4, "MAT4": 16}
 
 
+
+def _min_y(gltf, prim_indices):
+    """這幾個圖元在 Y 軸上最低到哪裡（⭐ 讀 accessor 的 `min`,⛔ 不解 buffer）。
+
+    ⚠️ 圖元索引是**跨 mesh 連號**的（與 `gorePrimitives.primitive` 同一套）。
+    量不到就回 `None` —— ⭐ 消費端要能分辨「沒有量到」與「量到 0」。
+    """
+    if not prim_indices:
+        return None
+    want = set(prim_indices)
+    seen = 0
+    lows = []
+    for mesh in gltf.get("meshes", []):
+        for prim in mesh.get("primitives", []):
+            if seen in want:
+                acc = gltf["accessors"][prim["attributes"]["POSITION"]]
+                mn = acc.get("min")
+                if isinstance(mn, list) and len(mn) >= 2:
+                    lows.append(float(mn[1]))
+            seen += 1
+    return min(lows) if lows else None
+
+
 def read_glb(path: str):
     """(gltf-json, bin-chunk) from a binary .glb."""
     with open(path, "rb") as fh:
@@ -203,12 +226,24 @@ def census_one(path: str) -> dict:
         name = names[r]
         if root_verts.get(name, 0) <= 0:
             continue
+        prims_here = sorted(root_prims.get(name, []))
         out["bodyRoots"].append({
             "joint": name,
             "vertices": root_verts[name],
-            "primitives": sorted(root_prims.get(name, [])),
+            "primitives": prims_here,
             "animatedJoints": sum(1 for j in joints if joint_root[j] == r and j in driven),
             "subtreeJoints": sum(1 for j in joints if joint_root[j] == r),
+            # ⭐ **量到的**幾何（GH#558②）：這個 root 的圖元在 Y 軸上最低到哪裡。
+            #
+            # ⚠️ 為什麼需要它：消費端 `hiddenPrimitives.test.ts` 原本只用
+            #   `vertices >= 100` 當「這是不是第二具身體」的**代理值** ——
+            #   而 E00S（白木老樹精）的兩顆浮空球各只有 **25 頂點**，
+            #   ⭐ 正好落在門檻的另一邊 ⇒ 閘對這一整類**結構上失明**
+            #   （CLAUDE.md 失敗形態⑩：一個極端值落在門檻另一邊）。
+            #
+            # ⭐ 有了 `minY`，消費端問得出「它是不是**浮在本體之上**」——
+            #   ⛔ 那是量到的事實，不是頂點數這個代理。
+            "minY": _min_y(gltf, prims_here),
         })
     out["bodyRoots"].sort(key=lambda e: -e["vertices"])
     return out

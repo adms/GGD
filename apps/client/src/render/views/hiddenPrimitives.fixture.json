@@ -7,6 +7,7 @@
         {
           "animatedJoints": 34,
           "joint": "Bone_Root",
+          "minY": -0.005125,
           "primitives": [
             0,
             1
@@ -17,6 +18,7 @@
         {
           "animatedJoints": 0,
           "joint": "gutz00",
+          "minY": 0.119449,
           "primitives": [
             2
           ],
@@ -42,6 +44,7 @@
         {
           "animatedJoints": 81,
           "joint": "Bone_Turret",
+          "minY": -0.057234,
           "primitives": [
             7,
             8,
@@ -57,6 +60,7 @@
         {
           "animatedJoints": 9,
           "joint": "Dummy02",
+          "minY": -0.713483,
           "primitives": [
             5
           ],
@@ -66,6 +70,7 @@
         {
           "animatedJoints": 4,
           "joint": "Cylinder06",
+          "minY": -3.390695,
           "primitives": [
             6
           ],
@@ -75,6 +80,7 @@
         {
           "animatedJoints": 5,
           "joint": "Sphere01",
+          "minY": 11.766806,
           "primitives": [
             3
           ],
@@ -84,6 +90,7 @@
         {
           "animatedJoints": 5,
           "joint": "Sphere02",
+          "minY": 11.308167,
           "primitives": [
             4
           ],
@@ -93,6 +100,7 @@
         {
           "animatedJoints": 1,
           "joint": "leaf-fall01",
+          "minY": 3.283333,
           "primitives": [
             0
           ],
@@ -102,6 +110,7 @@
         {
           "animatedJoints": 1,
           "joint": "leaf-fall02",
+          "minY": 3.282,
           "primitives": [
             1
           ],
@@ -111,6 +120,7 @@
         {
           "animatedJoints": 1,
           "joint": "leaf-fall03",
+          "minY": 3.876111,
           "primitives": [
             2
           ],
@@ -126,6 +136,7 @@
         {
           "animatedJoints": 56,
           "joint": "Bone_Root",
+          "minY": -1.0611,
           "primitives": [
             0,
             1,
@@ -137,6 +148,7 @@
         {
           "animatedJoints": 6,
           "joint": "Dummy01",
+          "minY": 0.009961,
           "primitives": [
             3
           ],
@@ -146,6 +158,7 @@
         {
           "animatedJoints": 6,
           "joint": "Dummy05",
+          "minY": 0.289268,
           "primitives": [
             4
           ],
@@ -161,6 +174,7 @@
         {
           "animatedJoints": 27,
           "joint": "Bone_Root",
+          "minY": 0.008424,
           "primitives": [
             0,
             1
@@ -171,6 +185,7 @@
         {
           "animatedJoints": 0,
           "joint": "gutz00",
+          "minY": 0.038977,
           "primitives": [
             2
           ],
@@ -196,6 +211,7 @@
         {
           "animatedJoints": 24,
           "joint": "Bone_Bear_Dummy Center",
+          "minY": -0.0554,
           "primitives": [
             0,
             1
@@ -206,6 +222,7 @@
         {
           "animatedJoints": 0,
           "joint": "gutz08",
+          "minY": 0.060511,
           "primitives": [
             2
           ],
@@ -231,6 +248,7 @@
         {
           "animatedJoints": 48,
           "joint": "Bone_Root",
+          "minY": -0.324141,
           "primitives": [
             0,
             1,
@@ -242,6 +260,7 @@
         {
           "animatedJoints": 2,
           "joint": "1throw",
+          "minY": 0.308149,
           "primitives": [
             3,
             7
@@ -252,6 +271,7 @@
         {
           "animatedJoints": 1,
           "joint": "1axe-hide",
+          "minY": 0.554175,
           "primitives": [
             4,
             5
@@ -262,6 +282,7 @@
         {
           "animatedJoints": 2,
           "joint": "1Box03",
+          "minY": 1.23685,
           "primitives": [
             6
           ],
@@ -277,6 +298,7 @@
         {
           "animatedJoints": 83,
           "joint": "BONE_ABDOMEN",
+          "minY": 0.025992,
           "primitives": [
             0,
             1,
@@ -295,6 +317,7 @@
         {
           "animatedJoints": 1,
           "joint": "SA 9",
+          "minY": 0.755838,
           "primitives": [
             5
           ],
@@ -304,6 +327,7 @@
         {
           "animatedJoints": 1,
           "joint": "Spring04",
+          "minY": 0.897035,
           "primitives": [
             12
           ],
@@ -313,6 +337,7 @@
         {
           "animatedJoints": 1,
           "joint": "Dummy03",
+          "minY": 0.12997,
           "primitives": [
             13
           ],
@@ -322,6 +347,7 @@
         {
           "animatedJoints": 1,
           "joint": "SA 1",
+          "minY": 0.877569,
           "primitives": [
             4
           ],
@@ -337,6 +363,7 @@
         {
           "animatedJoints": 50,
           "joint": "Bone_RootArchDruid",
+          "minY": 0.010895,
           "primitives": [
             0,
             1,
@@ -349,6 +376,7 @@
         {
           "animatedJoints": 55,
           "joint": "Bone_Root01ArchDruid",
+          "minY": 0.010895,
           "primitives": [
             3,
             4,
@@ -365,6 +393,7 @@
         {
           "animatedJoints": 3,
           "joint": "Object49ArchDruid",
+          "minY": -0.273372,
           "primitives": [
             9,
             13
@@ -381,6 +410,7 @@
         {
           "animatedJoints": 23,
           "joint": "DoC_Dummy",
+          "minY": -0.000781,
           "primitives": [
             0,
             1,
@@ -392,6 +422,7 @@
         {
           "animatedJoints": 28,
           "joint": "Bone_Bear_Dummy Center",
+          "minY": -0.024009,
           "primitives": [
             3,
             4,
@@ -403,6 +434,7 @@
         {
           "animatedJoints": 0,
           "joint": "gutz08",
+          "minY": 0.053643,
           "primitives": [
             7
           ],
@@ -412,6 +444,7 @@
         {
           "animatedJoints": 0,
           "joint": "gutz00",
+          "minY": 0.053147,
           "primitives": [
             6
           ],
@@ -421,6 +454,7 @@
         {
           "animatedJoints": 1,
           "joint": "Plane10",
+          "minY": 1.222993,
           "primitives": [
             8
           ],
@@ -456,6 +490,7 @@
         {
           "animatedJoints": 58,
           "joint": "Bone_Root",
+          "minY": -0.041263,
           "primitives": [
             0,
             1,
@@ -470,6 +505,7 @@
         {
           "animatedJoints": 1,
           "joint": "Cylinder02",
+          "minY": 0.695016,
           "primitives": [
             7
           ],
@@ -479,6 +515,7 @@
         {
           "animatedJoints": 1,
           "joint": "Cylinder01",
+          "minY": 0.726645,
           "primitives": [
             6
           ],
@@ -494,6 +531,7 @@
         {
           "animatedJoints": 16,
           "joint": "Bone_Root01",
+          "minY": 0.024655,
           "primitives": [
             0
           ],
@@ -503,6 +541,7 @@
         {
           "animatedJoints": 0,
           "joint": "gutz00",
+          "minY": -0.062617,
           "primitives": [
             1
           ],
@@ -528,6 +567,7 @@
         {
           "animatedJoints": 54,
           "joint": "Bone_Root",
+          "minY": -0.298453,
           "primitives": [
             0,
             1,
@@ -541,6 +581,7 @@
         {
           "animatedJoints": 1,
           "joint": "Mesh34",
+          "minY": 1.217846,
           "primitives": [
             3
           ],
@@ -550,6 +591,7 @@
         {
           "animatedJoints": 0,
           "joint": "hero2",
+          "minY": -0.045182,
           "primitives": [
             6
           ],
@@ -565,6 +607,7 @@
         {
           "animatedJoints": 28,
           "joint": "Root",
+          "minY": -0.002514,
           "primitives": [
             0,
             1,
@@ -582,6 +625,7 @@
         {
           "animatedJoints": 31,
           "joint": "Root",
+          "minY": 0.000661,
           "primitives": [
             0,
             1,
@@ -595,6 +639,7 @@
         {
           "animatedJoints": 1,
           "joint": "SwordFall",
+          "minY": 17.971112,
           "primitives": [
             6
           ],
@@ -604,6 +649,7 @@
         {
           "animatedJoints": 0,
           "joint": "hero",
+          "minY": 0.239743,
           "primitives": [
             5
           ],
@@ -619,6 +665,7 @@
         {
           "animatedJoints": 28,
           "joint": "Bone_Root",
+          "minY": -0.000775,
           "primitives": [
             0,
             1,
@@ -631,6 +678,7 @@
         {
           "animatedJoints": 0,
           "joint": "hero",
+          "minY": 0.115342,
           "primitives": [
             4
           ],
@@ -646,6 +694,7 @@
         {
           "animatedJoints": 31,
           "joint": "Root",
+          "minY": 0.000661,
           "primitives": [
             0,
             1,
@@ -659,6 +708,7 @@
         {
           "animatedJoints": 1,
           "joint": "SwordFall",
+          "minY": 17.971112,
           "primitives": [
             6
           ],
@@ -668,6 +718,7 @@
         {
           "animatedJoints": 0,
           "joint": "hero",
+          "minY": 0.239743,
           "primitives": [
             5
           ],
@@ -683,6 +734,7 @@
         {
           "animatedJoints": 16,
           "joint": "Bone_Root",
+          "minY": 0.003797,
           "primitives": [
             0,
             1
@@ -693,6 +745,7 @@
         {
           "animatedJoints": 0,
           "joint": "gutz00",
+          "minY": 0.022572,
           "primitives": [
             2
           ],
@@ -718,6 +771,7 @@
         {
           "animatedJoints": 28,
           "joint": "Root",
+          "minY": -0.002514,
           "primitives": [
             0,
             1,
@@ -735,6 +789,7 @@
         {
           "animatedJoints": 16,
           "joint": "Bone_Root01",
+          "minY": 0.024655,
           "primitives": [
             0
           ],
@@ -744,6 +799,7 @@
         {
           "animatedJoints": 0,
           "joint": "gutz00",
+          "minY": -0.062617,
           "primitives": [
             1
           ],
@@ -769,6 +825,7 @@
         {
           "animatedJoints": 48,
           "joint": "Bone_Root",
+          "minY": 0.002211,
           "primitives": [
             0,
             1,
@@ -782,6 +839,7 @@
         {
           "animatedJoints": 71,
           "joint": "Bone_Root Alternate",
+          "minY": -0.275695,
           "primitives": [
             2,
             8
@@ -792,6 +850,7 @@
         {
           "animatedJoints": 1,
           "joint": "Dummy01",
+          "minY": 0.370008,
           "primitives": [
             12
           ],
@@ -801,6 +860,7 @@
         {
           "animatedJoints": 2,
           "joint": "Plane02",
+          "minY": -0.054976,
           "primitives": [
             10,
             11
@@ -811,6 +871,7 @@
         {
           "animatedJoints": 1,
           "joint": "Dummy05",
+          "minY": 0.365529,
           "primitives": [
             13
           ],
@@ -820,6 +881,7 @@
         {
           "animatedJoints": 1,
           "joint": "Bonedeath_hide",
+          "minY": 0.37221,
           "primitives": [
             6,
             7
@@ -830,6 +892,7 @@
         {
           "animatedJoints": 1,
           "joint": "Plane80",
+          "minY": 0.32921,
           "primitives": [
             9
           ],
@@ -839,6 +902,7 @@
         {
           "animatedJoints": 0,
           "joint": "hero",
+          "minY": 0.066168,
           "primitives": [
             15,
             16
@@ -849,6 +913,7 @@
         {
           "animatedJoints": 0,
           "joint": "HeroGlow03",
+          "minY": -0.186085,
           "primitives": [
             14
           ],
@@ -864,6 +929,7 @@
         {
           "animatedJoints": 44,
           "joint": "Bone_Root",
+          "minY": -1.182031,
           "primitives": [
             0,
             1,
@@ -888,6 +954,7 @@
         {
           "animatedJoints": 31,
           "joint": "Bone_Root",
+          "minY": -0.000369,
           "primitives": [
             0,
             1,
@@ -901,6 +968,7 @@
         {
           "animatedJoints": 0,
           "joint": "hero3",
+          "minY": 0.12953,
           "primitives": [
             6
           ],
@@ -910,6 +978,7 @@
         {
           "animatedJoints": 1,
           "joint": "Arrow",
+          "minY": 1.14277,
           "primitives": [
             5
           ],
@@ -925,6 +994,7 @@
         {
           "animatedJoints": 31,
           "joint": "Bone_Root",
+          "minY": 0.002314,
           "primitives": [
             0,
             1,
@@ -944,6 +1014,7 @@
         {
           "animatedJoints": 44,
           "joint": "Bone_Root",
+          "minY": 0.154687,
           "primitives": [
             0,
             1,
@@ -961,6 +1032,7 @@
         {
           "animatedJoints": 39,
           "joint": "Bone Center",
+          "minY": 0.020739,
           "primitives": [
             0,
             1
@@ -971,6 +1043,7 @@
         {
           "animatedJoints": 0,
           "joint": "gutz00",
+          "minY": 0.026598,
           "primitives": [
             2
           ],
@@ -996,6 +1069,7 @@
         {
           "animatedJoints": 20,
           "joint": "Bone_Root",
+          "minY": 0.046432,
           "primitives": [
             0,
             1,
@@ -1008,6 +1082,7 @@
         {
           "animatedJoints": 0,
           "joint": "gutz00",
+          "minY": 0.04622,
           "primitives": [
             4
           ],
@@ -1033,6 +1108,7 @@
         {
           "animatedJoints": 32,
           "joint": "Bone_Root",
+          "minY": -0.00714,
           "primitives": [
             0,
             1
@@ -1043,6 +1119,7 @@
         {
           "animatedJoints": 4,
           "joint": "gutz00",
+          "minY": 0.029978,
           "primitives": [
             2
           ],
@@ -1071,6 +1148,7 @@
         {
           "animatedJoints": 28,
           "joint": "Bone_Root",
+          "minY": 0.001422,
           "primitives": [
             0,
             1,
@@ -1091,6 +1169,7 @@
         {
           "animatedJoints": 16,
           "joint": "Bone_Root",
+          "minY": 0.003443,
           "primitives": [
             0,
             1,
@@ -1103,6 +1182,7 @@
         {
           "animatedJoints": 9,
           "joint": "Rifle01bone",
+          "minY": -0.103151,
           "primitives": [
             2,
             5,
@@ -1121,6 +1201,7 @@
         {
           "animatedJoints": 16,
           "joint": "Bone_Root",
+          "minY": 0.008365,
           "primitives": [
             0,
             1,
@@ -1132,6 +1213,7 @@
         {
           "animatedJoints": 0,
           "joint": "gutz00",
+          "minY": 0.039563,
           "primitives": [
             2
           ],
@@ -1157,6 +1239,7 @@
         {
           "animatedJoints": 64,
           "joint": "Bone Horse",
+          "minY": 0.000142,
           "primitives": [
             0,
             1,
@@ -1176,6 +1259,7 @@
         {
           "animatedJoints": 44,
           "joint": "Bone_Root",
+          "minY": 0.001917,
           "primitives": [
             0,
             1,
@@ -1187,6 +1271,7 @@
         {
           "animatedJoints": 1,
           "joint": "hero2",
+          "minY": 0.082209,
           "primitives": [
             3
           ],
@@ -1202,6 +1287,7 @@
         {
           "animatedJoints": 47,
           "joint": "Bone_Root",
+          "minY": -0.091533,
           "primitives": [
             0,
             1,
@@ -1213,6 +1299,7 @@
         {
           "animatedJoints": 1,
           "joint": "Bat11",
+          "minY": 1.40003,
           "primitives": [
             2
           ],
@@ -1222,6 +1309,7 @@
         {
           "animatedJoints": 1,
           "joint": "Bat20",
+          "minY": 1.191638,
           "primitives": [
             5
           ],
@@ -1231,6 +1319,7 @@
         {
           "animatedJoints": 1,
           "joint": "Bat18",
+          "minY": 1.230363,
           "primitives": [
             6
           ],
@@ -1240,6 +1329,7 @@
         {
           "animatedJoints": 1,
           "joint": "Bat15",
+          "minY": 1.51797,
           "primitives": [
             3
           ],
@@ -1249,6 +1339,7 @@
         {
           "animatedJoints": 1,
           "joint": "Bat16",
+          "minY": 1.389684,
           "primitives": [
             4
           ],
@@ -1258,6 +1349,7 @@
         {
           "animatedJoints": 1,
           "joint": "Bat17",
+          "minY": 1.286815,
           "primitives": [
             7
           ],
@@ -1267,6 +1359,7 @@
         {
           "animatedJoints": 1,
           "joint": "Bat21",
+          "minY": 1.189568,
           "primitives": [
             8
           ],
@@ -1276,6 +1369,7 @@
         {
           "animatedJoints": 1,
           "joint": "Bat23",
+          "minY": 1.565835,
           "primitives": [
             9
           ],
@@ -1285,6 +1379,7 @@
         {
           "animatedJoints": 1,
           "joint": "Bat26",
+          "minY": 1.565835,
           "primitives": [
             10
           ],
@@ -1300,6 +1395,7 @@
         {
           "animatedJoints": 17,
           "joint": "Bone_Root",
+          "minY": 0.007705,
           "primitives": [
             1,
             2,
@@ -1311,6 +1407,7 @@
         {
           "animatedJoints": 1,
           "joint": "Dummy01",
+          "minY": 0.090565,
           "primitives": [
             0
           ],
@@ -1320,6 +1417,7 @@
         {
           "animatedJoints": 0,
           "joint": "gutz00",
+          "minY": 0.036441,
           "primitives": [
             4
           ],
@@ -1329,6 +1427,7 @@
         {
           "animatedJoints": 1,
           "joint": "Grunt2_15AxeFree",
+          "minY": -0.154148,
           "primitives": [
             3
           ],
@@ -1354,6 +1453,7 @@
         {
           "animatedJoints": 34,
           "joint": "Bone_Root",
+          "minY": -0.045016,
           "primitives": [
             0,
             1,
@@ -1365,6 +1465,7 @@
         {
           "animatedJoints": 0,
           "joint": "gutz00",
+          "minY": -0.035494,
           "primitives": [
             5
           ],
@@ -1374,6 +1475,7 @@
         {
           "animatedJoints": 4,
           "joint": "staff01",
+          "minY": -0.079254,
           "primitives": [
             4
           ],
@@ -1383,6 +1485,7 @@
         {
           "animatedJoints": 1,
           "joint": "skull",
+          "minY": 0.36433,
           "primitives": [
             3
           ],
@@ -1408,6 +1511,7 @@
         {
           "animatedJoints": 22,
           "joint": "Bone_Root",
+          "minY": -0.000596,
           "primitives": [
             0,
             1,
@@ -1421,6 +1525,7 @@
         {
           "animatedJoints": 0,
           "joint": "gutz00",
+          "minY": 0.04069,
           "primitives": [
             6
           ],
@@ -1430,6 +1535,7 @@
         {
           "animatedJoints": 1,
           "joint": "hide-ax",
+          "minY": 0.407254,
           "primitives": [
             5
           ],
@@ -1455,6 +1561,7 @@
         {
           "animatedJoints": 64,
           "joint": "Bone Horse",
+          "minY": 0.000142,
           "primitives": [
             0,
             1,
@@ -1474,6 +1581,7 @@
         {
           "animatedJoints": 16,
           "joint": "Bone_Root",
+          "minY": -0.000598,
           "primitives": [
             0,
             1,
@@ -1485,6 +1593,7 @@
         {
           "animatedJoints": 14,
           "joint": "Bone_Root01",
+          "minY": -0.009666,
           "primitives": [
             2
           ],
@@ -1494,6 +1603,7 @@
         {
           "animatedJoints": 0,
           "joint": "gutz00",
+          "minY": 0.041963,
           "primitives": [
             4
           ],
@@ -1519,6 +1629,7 @@
         {
           "animatedJoints": 19,
           "joint": "Zerg01",
+          "minY": -3.5e-05,
           "primitives": [
             0,
             1
@@ -1529,6 +1640,7 @@
         {
           "animatedJoints": 0,
           "joint": "gutz00",
+          "minY": -0.032594,
           "primitives": [
             2
           ],
@@ -1554,6 +1666,7 @@
         {
           "animatedJoints": 44,
           "joint": "Bone_Root",
+          "minY": 0.001917,
           "primitives": [
             0
           ],
@@ -1563,6 +1676,7 @@
         {
           "animatedJoints": 1,
           "joint": "hero2",
+          "minY": 0.082209,
           "primitives": [
             2
           ],
@@ -1572,6 +1686,7 @@
         {
           "animatedJoints": 0,
           "joint": "hero",
+          "minY": 0.096223,
           "primitives": [
             1
           ],

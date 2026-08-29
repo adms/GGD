@@ -215,7 +215,7 @@ describe("A · 出貨的 content/assets/models —— 血泥圖元必須被宣�
 // ────────────────────────────────────────────────────────────────────────────
 interface FixtureModel {
   gorePrimitives: { primitive: number; vertices: number; joints: string[] }[];
-  bodyRoots: { joint: string; vertices: number; primitives: number[]; animatedJoints: number }[];
+  bodyRoots: { joint: string; vertices: number; primitives: number[]; animatedJoints: number; minY?: number | null }[];
   primitiveCount: number;
 }
 const fixture = JSON.parse(
@@ -270,11 +270,33 @@ describe("B · Blizzard overlay —— 每一個帶血泥的模型都要有宣�
       const file = key.split("/").pop()!;
       const m = fixture.models[file]!;
       expect(m, `${key} 不在指紋裡 —— 這個檔名不存在於 overlay 樹`).toBeTruthy();
+      // ⭐ 主體 = 頂點最多的那個 root（指紋已按頂點數排序）。
+      const bodyMinY = m.bodyRoots[0]?.minY ?? null;
       const justified = new Set<number>([
         ...m.gorePrimitives.map((g) => g.primitive),
         // 第二具(含以上)骨架:按頂點數排序後的第 2 名以下,且真的被動畫驅動
         ...m.bodyRoots
           .filter((r, i) => i > 0 && r.vertices >= 100 && r.animatedJoints > 0)
+          .flatMap((r) => r.primitives),
+        // ⭐ **浮在本體之上的獨立 root**（GH#558②）—— ⛔ 頂點數這個代理看不到它。
+        //
+        // ⚠️ E00S（白木老樹精）的兩顆浮空球各只有 **25 頂點**，
+        //   ⭐ 正好落在上面那條 `vertices >= 100` 的**另一邊** ⇒ 閘對這一整類結構上失明
+        //   （CLAUDE.md 失敗形態⑩：一個極端值落在門檻另一邊，而守衛因此是綠的）。
+        //   而它的症狀是 #540 阿福那個：**戰鬥中一個分身飛上天**。
+        //
+        // ⭐ 判準改用**量到的幾何**：這個 root 的最低點，比主體的最低點高 3 個單位以上
+        //   ⇒ 它整個懸在本體上方，⛔ 不可能是身體的一部分。
+        //   （`minY` 由 `tools/w3x-import/gore_geoset_census.py` 從 accessor 量出來。）
+        ...m.bodyRoots
+          .filter(
+            (r, i) =>
+              i > 0 &&
+              r.animatedJoints > 0 &&
+              typeof r.minY === "number" &&
+              typeof bodyMinY === "number" &&
+              r.minY - bodyMinY >= 3,
+          )
           .flatMap((r) => r.primitives),
       ]);
       for (const p of entry.hiddenPrimitives) {
