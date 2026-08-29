@@ -37,7 +37,7 @@
             "op": "damageCoeffAp",
             "mode": "add",
             "value": 2.5,
-            "nodeKind": "damage"
+            "nodeKind": "damageLine"
           }
         ]
       }
