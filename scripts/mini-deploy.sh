@@ -163,8 +163,25 @@ cmd_deploy() {
   #   版本庫抓不到新 HEAD）,⭐ 而且 `git describe` 找不到 tag ⇒ 版本戳退回裸 hash。
   #   ⇒ ⛔ 這裡**不用 --depth**;真的淺了就先 unshallow。
   r "cd $REMOTE_REPO && { [ -f .git/shallow ] && git fetch -q --unshallow origin main 2>/dev/null; true; } \
-     && git fetch -q --all --tags && git checkout -q $head_local" \
-    || die "checkout $head_local 失敗"
+     && git fetch -q --all --tags" || die "fetch 失敗"
+
+  # ⚠️ 工作區可能有殘留的改動（例如上一輪 rsync 流程留下的）⇒ 普通 checkout 會拒絕。
+  # ⛔⛔ 但**不可以盲目 `checkout -f`** —— 它會把**被追蹤**的檔案還原成 HEAD 的版本。
+  # ⭐ 先問一個具體的問題：**有沒有任何被追蹤的改動落在 `data/` 底下？**
+  #   （2026-08-29 實測:`git ls-files data/` 只有 `data/.gitkeep` 一個空檔
+  #     ⇒ 玩家資料**零個**在 git 裡 ⇒ 強制是安全的。
+  #    ⚠️ 但那是**今天的事實**,⛔ 不是永遠 —— 所以每次都問,而不是記住答案。）
+  local dirty risky
+  dirty=$(r "cd $REMOTE_REPO && git diff --name-only HEAD" 2>/dev/null)
+  risky=$(printf '%s\n' "$dirty" | grep -c '^data/' || true)
+  if [ -n "${dirty// /}" ]; then
+    info "工作區有 $(printf '%s\n' "$dirty" | grep -c .) 個被追蹤的檔案有改動"
+    [ "${risky:-0}" -eq 0 ] \
+      || die "⛔ 其中 $risky 個在 **data/** 底下 —— 強制 checkout 會覆蓋玩家資料。
+   ⇒ 先人工確認那幾個檔是什麼：ssh $USER_@$HOST 'cd $REMOTE_REPO && git diff --stat HEAD -- data/'"
+    info "⭐ 沒有一個在 data/ 底下 ⇒ 強制還原是安全的"
+  fi
+  r "cd $REMOTE_REPO && git checkout -f -q $head_local" || die "checkout $head_local 失敗"
   local remote_head; remote_head=$(r "cd $REMOTE_REPO && git rev-parse HEAD" 2>/dev/null)
   [ "$remote_head" = "$head_local" ] \
     && ok "mini 對到 $(echo "$head_local" | cut -c1-8)（⭐ git,有 .git ⇒ 版本戳自己算得出來）" \
