@@ -26,6 +26,8 @@ type Live = {
   fresh?: string;
   store?: string;
   sourceFiles?: number;
+  /** ⭐ rollback 開關：伺服器端 `GGD_LIVE_FRESHNESS_BAR=0` ⇒ 這條列整個不畫。 */
+  bar?: boolean;
 };
 
 /** `2026-08-29T07:48:04.000Z` → `07:48:04`；⛔ 認不得就原樣回傳。 */
@@ -47,7 +49,7 @@ function ago(iso: string | undefined): string {
   return `${Math.round(s / 86400)} 天前`;
 }
 
-export function LiveFreshnessBar(props: { dataset: string }): React.JSX.Element {
+export function LiveFreshnessBar(props: { dataset: string }): React.JSX.Element | null {
   const [live, setLive] = React.useState<Live | null>(null);
   const [cacheHdr, setCacheHdr] = React.useState<string>("");
   const [busy, setBusy] = React.useState(false);
@@ -85,6 +87,11 @@ export function LiveFreshnessBar(props: { dataset: string }): React.JSX.Element 
       ? { text: "💾 來自快取", bg: "#2a2617", fg: "#e0c96a" }
       : { text: "⚡ 剛剛重新計算", bg: "#1c2b22", fg: "#7fd1a8" };
 
+  // ⭐ **rollback**（owner 常設：留一格可以簡易回頭）——
+  //   伺服器端 `GGD_LIVE_FRESHNESS_BAR=0` ⇒ 整條列消失，⛔ 不必重建映像。
+  // ⚠️ 只在**明確回 false** 時隱藏：`undefined`（還沒載到 / 舊版後端）要照畫，
+  //   ⛔ 否則一次網路失敗就會讓這條列靜默消失（fail-open 的方向要對）。
+  if (live?.bar === false) return null;
   return (
     <div
       style={{

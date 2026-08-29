@@ -321,6 +321,12 @@ export function createAdminLiveMiddleware(repoRoot, options = {}) {
         //   ⛔ 沒有這一格,使用者無法判斷畫面上的數字有多新（owner 的原始問題）。
         fresh: forceFresh ? "forced" : "computed",
         store: storeLabel,
+        // ⭐ **rollback 開關**（owner 常設：「自己判斷 **但留後台開關可以簡易 rollback**」）。
+        //   `GGD_LIVE_FRESHNESS_BAR=0` ⇒ 前端整條列不畫。
+        //   ⚠️ 慣例跟著這個模組既有的 `GGD_LIVE_CACHE=0` 走（⛔ 不是三個住處 config）——
+        //   rollback ＝ `docker/.env` 一行 ＋ 重啟 review，⛔ 不是重建映像。
+        //   ⭐ 每次請求讀（⛔ 不是 module load 時鎖死），所以改完重啟就生效。
+        bar: process.env.GGD_LIVE_FRESHNESS_BAR !== "0",
       };
       const text = JSON.stringify(body);
       entry.cache = { key: sum.key, text };
