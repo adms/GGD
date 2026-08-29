@@ -11,7 +11,12 @@
  * 突變紀錄：把 `grepEnvSwitch` 的回傳改成恆為 `["x"]` → 「假 env 被拒」那條紅。
  */
 import { describe, it, expect } from "vitest";
-import { registerBatch } from "../../../../tools/review/features.mjs";
+// ⚠️ `tools/review/features.mjs` 是純 JS（⛔ 沒有 .d.ts）⇒ 具名 import 會 TS7016。
+// ⭐ 用動態 import 拿到出貨的**同一支**函式（⛔ 不是複製一份實作進測試）。
+type RegisterBatch = (repoRoot: string, batch: Record<string, unknown>) => { evidenceKind: string; rollback: { configId: string } };
+const registerBatch: RegisterBatch = (
+  (await import(/* @vite-ignore */ ("../../../../tools/review/features.mjs" as string))) as { registerBatch: RegisterBatch }
+).registerBatch;
 import { mkdtempSync, mkdirSync, writeFileSync, cpSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
