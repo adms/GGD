@@ -28,6 +28,18 @@ import { STAT_CAP_CEILING, statCapBounds } from "../../../sim/statCaps";
  *     上限,而是地板無條件獲勝、這一格完全失效)。
  * 這一層擋的是打錯,不是平衡:每一條上界都遠高於出貨內容打得到的值,見
  * sim/statCaps.ts 的 `STAT_CAP_MAX`。
+ *
+ * ⛔⛔ **`healthRegen 1366` / `manaRegen 1711` 是防 mis-parse 的柵欄,⛔ 不是平衡上限**
+ * (GH#766,接手 #177)。出貨最極端的一位 `godie-huth` 是 **12** ⇒ 餘裕約 **106 倍**,
+ * 那兩格在出貨設定下**夾不到任何人**、逐位元等於不存在。同 `ad` 的 cap 21200。
+ * ⇒ ⛔ **下一輪不可以把「這一格存在」讀成「回血上限已補」** —— #177 就是這樣被關掉的,
+ *   而第一·五守則點名的正是這個形狀:**欄位存在 ≠ 它會改變任何一個數字。**
+ * ⭐ 今天真的在看著回血離群值的是一條**閘**,⛔ 不是這一格:
+ *   `packages/shared/src/content/regenOutlierOrigin.test.ts` —— 中位數**現算**,
+ *   凡不合原作地圖、或超過中位數 10× 的每一位都要說得出出處。
+ * ⚠️ 一格**真的會夾住**的平衡上限今天**還不存在**;它要落三個住處
+ *   (`content/config/*.json` + 這裡的 Zod + admin `SHIPPED_*`),而**預設值必須是
+ *   「不改變任何現況」的那一個** —— 第一刀砍在哪是 owner 的旋鈕,⛔ 不是我的。
  */
 export const zStatCap = z
   .object({
