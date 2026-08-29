@@ -81,6 +81,7 @@ import {
   vfxHardCapExemptPrefixes,
   vfxHardCapScope,
   vfxHardMaxLifeSec,
+  vfxRefireClock,
 } from "./vfxCleanupPolicy";
 import type { VfxHardCapScope } from "@ggd/shared/content";
 
@@ -233,8 +234,19 @@ function exempt(name: string, prefixes: readonly string[]): boolean {
  *
  * ⭐ 這一格**沒有放寬**鐵則：一發真的播超過三秒的仍然會被回收
  *（守衛 `hardCapRefire.test.ts` 的第二條就是釘這一半）。
+ *
+ * ── 🔁 ROLLBACK（owner 常設指令：自己判斷，但留一格一鍵回頭）─────────────
+ * ⭐ **四個池全部從這一行走**（`VfxSystem.play` · `vfxPresets.fireBurst` ·
+ * `W3xEmitterRig` · `modelFxRig.spawn`），所以開關住在這裡就只有**一個住處**
+ * —— ⛔ 不必在四個呼叫端各放一格（那是四份會各自漂的規則）。
+ *
+ * `vfxRefireClock() === "emitter"` ⇒ 這一行變成 no-op ⇒ 碼表回到
+ * 「這顆 emitter 連續活了多久」＝ **2026-08-28 之前逐位元組的行為**。
+ * 翻的方法（⛔ 不必重建 client）：`?vfxRefireClock=emitter`
+ * / `globalThis.__GGD_VFX_REFIRE_CLOCK__ = "emitter"` / `GGD_VFX_REFIRE_CLOCK=emitter`。
  */
 export function noteVfxRefired(ps: object): void {
+  if (vfxRefireClock() !== "performance") return;
   ACTIVE_SINCE.delete(ps);
 }
 
