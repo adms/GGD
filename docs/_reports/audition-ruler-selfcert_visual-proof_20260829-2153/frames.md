@@ -54,3 +54,21 @@
 ⛔ **不是**「量尺的自證是對的」—— ⭐ 後者由
 `apps/client/src/vfx/auditionCalibrates.test.ts` 與 `beamAuditionWiring.test.ts` 守，
 ⚠️ 而 2026-08-29 的對抗性複驗指出**其中幾條是掃字串**（失敗形態⑥）⇒ 已記在 GH#768。
+
+---
+
+## 追記 2026-08-30 —— 第二台也接上了自證
+
+`featureProofAudition.ts` 的 `measure()` 從**直接讀**改成
+**先自證再讀**（`certifiedRead(calibrate, readRaw)`）。
+
+| | 出貨 `dist/assets/*.js` 含它的檔 |
+|---|---:|
+| `featureProofAudition` / `certifiedRead` | **0** |
+| ⭐ **對照組** `playCastVfx`（確定會出貨的符號） | **1** |
+
+⇒ ⭐ 與上面同一個結論：**對玩家的畫面逐位元組恆等**。
+
+⭐ 而 `chainLightningAudition` **刻意不接** —— 它對外只有 `snapshot()`，
+⛔ 不出讀數 ⇒ #768 的病（量到 0 被當成證據）在那一台**結構上不存在**。
+到期條件寫在該檔註解裡。

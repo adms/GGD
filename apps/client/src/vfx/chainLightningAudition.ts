@@ -222,6 +222,15 @@ export async function startChainLightningAudition(
    * 全亮 quad 貼在鏡頭正前方：
    * emissive 純白 + disableLighting ⇒ 不管燈光怎麼擺它都必須亮。
    * 它量到 0 ⇒ 壞的是台子（canvas 尺寸／相機／readPixels 時序），⛔ 不是特效。
+   *
+   * ⭐ **這一台刻意不接 `certifiedRead`**（GH#768，2026-08-30 逐條查過）——
+   * ⚠️ 它**不出讀數**：對外只有 `snapshot()`（走 `CreateScreenshotAsync`），
+   * ⛔ 沒有任何 API 會回一個「亮像素數」給人寫進報告
+   * ⇒ ⭐ #768 的病（**量到 0 被當成證據**）在這一台**結構上不存在**。
+   * ⛔ 硬接一個 `certifiedRead` 只會多一層沒有人走的程式。
+   *
+   * ⭐ **到期條件**：哪一天這一台長出一個回數字的 API（`measure()` 那一族），
+   * 這段話當場作廢 —— 那時它就要跟 `beamAudition` / `featureProofAudition` 一樣先自證。
    */
   const calibrate = (): Promise<number> =>
     calibrateTwoWay({

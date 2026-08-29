@@ -39,6 +39,7 @@ import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
 import { calibrateTwoWay } from "./auditionCalibrate";
+import { certifiedRead } from "./beamAudition";
 
 /** 一張證據圖的量測結果（`frames.md` 逐列就是它）。 */
 export interface ProofFrame {
@@ -128,7 +129,11 @@ function makeStage(canvas: HTMLCanvasElement, sinkUrl: string, frames: ProofFram
     engine.endFrame();
   };
 
-  const measure = async (): Promise<{ bright: number; lit: number; faint: number; w: number; h: number }> => {
+  /**
+   * ⭐ ⚠️ **沒有自證過的**讀數（GH#768，2026-08-30）——
+   * ⛔ 呼叫端要用下面那個 `measure`，⛔ 不是這一支。
+   */
+  const readRaw = async (): Promise<{ bright: number; lit: number; faint: number; w: number; h: number }> => {
     // ⚠️ 坑②：readPixels 讀到上一幀 ⇒ 先 render 兩次再讀。
     renderFrame();
     renderFrame();
@@ -140,7 +145,20 @@ function makeStage(canvas: HTMLCanvasElement, sinkUrl: string, frames: ProofFram
 
   /** ⭐ GH#768 —— 校準走 `calibrateTwoWay`（唯一住處，**兩個方向**：亮量得到 ⊕ 暗量得少）。 */
   const calibrate = (): Promise<number> =>
-    calibrateTwoWay({ scene, camera, rulers: { "engine.readPixels": () => measure() } });
+    calibrateTwoWay({ scene, camera, rulers: { "engine.readPixels": () => readRaw() } });
+
+  /**
+   * ⭐⭐ **先自證，再讀那一幀**（GH#768，2026-08-30 補上這一台）。
+   *
+   * ⚠️ 在此之前這一台只在**開頁時**校準一次 ⇒ ⭐ 尺在中途瞎掉時，
+   * 後面每一次讀數都會回一個**看起來很正常的 0**，而結論照樣被寫進報告。
+   * ⇒ 自證不過 ⇒ **擲例外**，⛔ 不是回 0（「量不到」與「沒有東西」要分得開）。
+   *
+   * `opts.certify === false` 是連拍時的一鍵回頭（⭐ 預設啟動）。
+   */
+  const measure = (opts?: { certify?: boolean }): Promise<{
+    bright: number; lit: number; faint: number; w: number; h: number;
+  }> => (opts?.certify === false ? readRaw() : certifiedRead(calibrate, readRaw));
 
   /**
    * 推進 n 幀。⛔ 沒有 render loop —— 這一頁自己畫，所以「幀」是可數的。
