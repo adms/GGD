@@ -27,6 +27,7 @@ import { asEntityId } from "@ggd/shared/ids";
 import type { CastableSlot, Command, Order } from "@ggd/shared/sim/intents";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 import { buildCastCommand, type AimAbility } from "./AimResolver";
+import { allyPickablesFor } from "./allyTargets";
 import {
   stickToWorld,
   MOVE_LEAD,
@@ -107,6 +108,14 @@ export interface TouchPlayerCtx {
   ability(slot: CastableSlot): (AimAbility & { radius?: number }) | null;
   /** live enemy champions as pickable circles (view-space) */
   enemyUnits(): PickableUnit[];
+  /**
+   * ⭐ 隊友（含自己）作為可挑選的圓（GH#722）—— 友方指定技能唯一的候選來源。
+   *
+   * ⛔ **選用**：`TouchController` 在呼叫這一族純函式之前補上出貨的
+   * `allyTargets.allyPickablesFor(0)`，所以省略它的既有呼叫端（與既有夾具）
+   * 逐位元不變，而**真的觸控路徑仍然是活的**。
+   */
+  allyUnits?(): PickableUnit[];
 }
 
 /** Direction from self toward the nearest enemy within maxRange, or null. */
@@ -144,9 +153,18 @@ export function tapCastCommand(
       : facing;
   const reach = Math.min(ability.range, GROUND_CAST_MAX);
   const cursorGround = { x: self.x + dir.x * reach, z: self.z + dir.z * reach };
-  const hovered =
-    ability.castType === "targeted" ? pickNearestUnit(self, units, ability.range, facing) : null;
-  return buildCastCommand(slot, ability, { selfPos: self, cursorGround, hoveredEntityId: hovered });
+  const targeted = ability.castType === "targeted";
+  const hovered = targeted ? pickNearestUnit(self, units, ability.range, facing) : null;
+  // ⭐ GH#722 —— 兩側都送，側別由 `resolveCastTarget` 決定（⛔ 不在這裡分岔）。
+  const ally = targeted
+    ? pickNearestUnit(self, ctx.allyUnits?.() ?? [], ability.range, facing)
+    : null;
+  return buildCastCommand(slot, ability, {
+    selfPos: self,
+    cursorGround,
+    hoveredEntityId: hovered,
+    hoveredAllyId: ally,
+  });
 }
 
 /**
@@ -167,11 +185,16 @@ export function aimCastCommand(
       ? Math.max(0.5, mag) * Math.min(ability.range, GROUND_CAST_MAX)
       : Math.min(ability.range, GROUND_CAST_MAX);
   const cursorGround = { x: self.x + dir.x * reach, z: self.z + dir.z * reach };
-  const hovered =
-    ability.castType === "targeted"
-      ? pickNearestUnit(self, ctx.enemyUnits(), ability.range, dir)
-      : null;
-  return buildCastCommand(slot, ability, { selfPos: self, cursorGround, hoveredEntityId: hovered });
+  const targeted = ability.castType === "targeted";
+  const hovered = targeted ? pickNearestUnit(self, ctx.enemyUnits(), ability.range, dir) : null;
+  // ⭐ GH#722 —— 同 `tapCastCommand`：兩側都送，側別在 `resolveCastTarget`。
+  const ally = targeted ? pickNearestUnit(self, ctx.allyUnits?.() ?? [], ability.range, dir) : null;
+  return buildCastCommand(slot, ability, {
+    selfPos: self,
+    cursorGround,
+    hoveredEntityId: hovered,
+    hoveredAllyId: ally,
+  });
 }
 
 /** Basic-attack button — the gamepad LT semantics (attackTarget nearest). */
@@ -276,6 +299,9 @@ interface AbilityTouch {
   /** latched once the drag exceeds AIM_START_PX */
   aiming: boolean;
 }
+
+/** 觸控的友方候選 —— 一個裝置一雙手 ⇒ 永遠是 1P。模組層常數 ⇒ ⛔ 每幀零配置。 */
+const TOUCH_ALLY_UNITS = (): PickableUnit[] => allyPickablesFor(0);
 
 export class TouchController {
   private joyId: number | null = null;
@@ -390,13 +416,30 @@ export class TouchController {
     }
   }
 
+  /**
+   * ⭐ GH#722 —— 補上出貨的友方候選來源。
+   *
+   * ⚠️ 這裡（**類別**）而不是 `tapCastCommand`（**純函式**）是刻意的：那一族
+   * 純函式的既有夾具餵一個物件就好，而**真的觸控路徑**必須是活的。
+   * ⇒ 和手把 poller 補 `feel` / `abilityRangeMult` 完全同一個形狀。
+   * ⛔ 呼叫端自己給了 `allyUnits` 就用它的（測試可以覆寫）。
+   *
+   * ⚠️ 寫死 **1P**：一個裝置只有一雙手，`GameApp` 也只替 player 0 建這一支
+   *   （`localSelfPos()` / `playerTeam(0)`）。⛔ couch 的 2..4P 是純手把，
+   *   他們那一條在 `MultiGamepadSystem`（見 `allyTargets.casterOf`）。
+   */
+  private playerCtx(): TouchPlayerCtx {
+    const base = this.deps.ctx();
+    return base.allyUnits ? base : { ...base, allyUnits: TOUCH_ALLY_UNITS };
+  }
+
   private releaseAbility(a: AbilityTouch, endX: number, endY: number): void {
     if (a.button === "ATTACK") return;
     const slot = a.button;
     const ability = this.deps.ctx().ability(slot);
     if (!ability) return;
     if (!a.aiming) {
-      const cmd = tapCastCommand(slot, ability, this.deps.ctx());
+      const cmd = tapCastCommand(slot, ability, this.playerCtx());
       if (cmd) this.deps.onCommand(cmd);
       return;
     }
@@ -406,7 +449,7 @@ export class TouchController {
     const dir = stickToWorld(dx / AIM_DRAG_RADIUS_PX, dy / AIM_DRAG_RADIUS_PX, AIM_EPS);
     if (!dir) return;
     const mag = Math.min(1, Math.hypot(dx, dy) / AIM_DRAG_RADIUS_PX);
-    const cmd = aimCastCommand(slot, ability, this.deps.ctx(), dir, mag);
+    const cmd = aimCastCommand(slot, ability, this.playerCtx(), dir, mag);
     if (cmd) this.deps.onCommand(cmd);
   }
 

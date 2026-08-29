@@ -14,13 +14,36 @@ import type { CastTarget, CastableSlot, Command } from "@ggd/shared/sim/intents"
 import type { AbilityDef } from "@ggd/shared/sim/content/defs";
 import { add, clampLen, normalize, sub, type Vec2 } from "@ggd/shared/sim/math/vec2";
 
-export type AimAbility = Pick<AbilityDef, "castType" | "range">;
+export type AimAbility = Pick<AbilityDef, "castType" | "range" | "targetsEnemies">;
 
 export interface AimContext {
   selfPos: Vec2;
   cursorGround: Vec2;
   /** entity under the cursor (already filtered to valid targets), if any */
   hoveredEntityId?: number | null;
+  /**
+   * ⭐ 同一個位置的**友方**候選（GH#722）—— `input/allyTargets` 挑出來的那一個。
+   *
+   * ⚠️ 它與 `hoveredEntityId` 是**兩份清單**，⛔ 不是同一份加了旗標：敵方那一份
+   * 由 `GameApp.enemyUnitsFor` 推導並被**普攻／右鍵**共用，把隊友合併進去
+   * 就等於打開友軍傷害（GH#160 的形狀）。⇒ 兩側分開送，側別由
+   * {@link aimsAtAllies} 在**下面那一個 switch 裡**決定，⛔ 不在呼叫端。
+   */
+  hoveredAllyId?: number | null;
+}
+
+/**
+ * 這一發查的是**哪一側**的候選 —— ⭐ 側別判準的**唯一住處**（GH#722）。
+ *
+ * ⛔ 不要在呼叫端再寫一次 `targetsEnemies === false`：三條輸入路徑各寫一次
+ * ＝ 三個會各自漂的住處（第〇·四守則），而漂掉的樣子是「手把能治療、滑鼠不能」。
+ *
+ * ⚠️ 省略 = `true`（出貨 420 支技能的絕大多數），與 sim 的
+ * `abilitySystem.ts` 的 `def.targetsEnemies !== false` **同一個預設** ——
+ * 兩邊若不同義，輸入層會挑一個伺服器必定拒絕的目標。
+ */
+export function aimsAtAllies(ability: AimAbility): boolean {
+  return ability.targetsEnemies === false;
 }
 
 /** Resolve a castType into a CastTarget; null = no valid target (don't send). */
@@ -40,8 +63,10 @@ export function resolveCastTarget(ability: AimAbility, ctx: AimContext): CastTar
       return { type: "point", point: add(ctx.selfPos, off) };
     }
     case "targeted": {
-      if (ctx.hoveredEntityId === null || ctx.hoveredEntityId === undefined) return null;
-      return { type: "entity", entityId: asEntityId(ctx.hoveredEntityId) };
+      // ⭐ GH#722 —— 側別在這裡決定，⛔ 不在三條輸入路徑各決定一次。
+      const hovered = aimsAtAllies(ability) ? ctx.hoveredAllyId : ctx.hoveredEntityId;
+      if (hovered === null || hovered === undefined) return null;
+      return { type: "entity", entityId: asEntityId(hovered) };
     }
   }
 }
@@ -130,7 +155,11 @@ function withCursorlessAim(ability: AimAbility, ctx: AimContext): AimContext {
   return {
     selfPos: ctx.selfPos,
     cursorGround: add(ctx.selfPos, { x: dir.x * ability.range, z: dir.z * ability.range }),
+    // ⭐ GH#722 —— 軟鎖定暫存器存的是「手把這一幀鎖到**誰**」，而填它的那一支
+    //   已經是照 `aimsAtAllies` 挑的側別（`mapGamepadFrame` 的 describeTarget）
+    //   ⇒ 兩側都指向同一格就對了，⛔ 不需要第二個暫存器（它只會多一個會漂的住處）。
     hoveredEntityId: cursorlessTarget,
+    hoveredAllyId: cursorlessTarget,
   };
 }
 

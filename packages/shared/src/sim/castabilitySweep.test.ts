@@ -21,6 +21,21 @@
  *      mana restore, a shield, a status, a buff source, a spawned projectile, a
  *      dash, or a VFX — with no exception thrown.
  *
+ * ⛔⛔ WHAT THIS SWEEP CANNOT SAY — read this before quoting its green matrix
+ * (GH#722 / #283). Step 2 above **hand-writes** the target: `targetFor()` returns
+ * `{ type:"entity", entityId: ally }` for every `targetsEnemies:false` spell.
+ * ⇒ It measures the SIM half only. It is **structurally blind** to the half that
+ * was actually dead: no client input path could produce an ally target at all
+ * (`GameApp.enemyUnitsFor` excludes teammates by construction), so all four
+ * `targeted` + `targetsEnemies:false` abilities on the shipped roster read PASS
+ * here while pressing the button in a real match did **nothing** for months.
+ * ⭐ This file cannot close that gap — `packages/shared` may not import
+ * `apps/client` — so the input-path proof lives where the input paths live:
+ *   · `apps/client/src/input/allyTargetPaths.test.ts` (mouse / touch / pad,
+ *     plus the couch 2P lanes), and
+ *   · `apps/game-server/src/ai/allyCast.test.ts` (the bot).
+ * ⚠️ A PASS row here means "the sim would accept it", ⛔ NOT "a player can cast it".
+ *
  * A slot that throws, is rejected, or is accepted-but-produces-nothing = FAIL.
  * A permanent WC3 passive (native Cool=0, no castable effects) is not a bug: it
  * is reported as PASSIVE and we verify its ModifierSource actually attaches.

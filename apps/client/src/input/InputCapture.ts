@@ -22,6 +22,7 @@ import { abilityActivationCue } from "../ui/abilityCue";
 import { clearHeldAbility, setHeldAbility } from "../ui/abilityHold";
 import { rangeGuide } from "../ui/rangeGuideConfig";
 import { buildCastCommand, type AimAbility } from "./AimResolver";
+import { pickAllyAt } from "./allyTargets";
 import { cancelTwoStageCast, getTwoStageArmedSlot } from "./mouseTwoStageCast";
 
 /** Right-click: attack the hovered enemy, otherwise move to the point. */
@@ -132,6 +133,14 @@ export interface InputDeps {
   getAbility(slot: CastableSlot): AimAbility | null;
   /** enemy entity under a ground point (server's circle model) */
   pickEnemy(ground: Vec2): number | null;
+  /**
+   * ⭐ 友方實體（GH#722）—— 友方指定技能唯一的候選來源。
+   *
+   * ⛔ **選用**：省略 ⇒ 用出貨的 {@link pickAllyAt}（讀 `frameBus.champions`，
+   * 每一幀由 `game/frameBusProjection` 重建）。⇒ 呼叫端不必接第二條線就已經是活的，
+   * ⛔ 不是一個等著別人來填的空欄位（失敗形態⑧：消費端存在但它消費不到）。
+   */
+  pickAlly?(ground: Vec2): number | null;
   /** true when the LOCAL player's own champion is under the ground point */
   pickSelf(ground: Vec2): boolean;
   onOrder(order: Order): void;
@@ -167,6 +176,16 @@ export class InputCapture {
   private setAttackArmed(armed: boolean): void {
     this.attackMoveArmed = armed;
     setCursorVariant(armed ? "attack" : null);
+  }
+
+  /**
+   * 地面點下的**隊友**（GH#722）。呼叫端沒接線 ⇒ 走出貨的即時錨點表。
+   *
+   * ⚠️ ⛔ 只有 `buildCastCommand` 讀它 —— 右鍵 (`mapRightClick`) 與攻擊移動一格
+   * 都不碰，所以打開這條路**不會**讓普攻指得到隊友（AC2 / GH#160）。
+   */
+  private allyAt(ground: Vec2): number | null {
+    return (this.deps.pickAlly ?? pickAllyAt)(ground);
   }
 
   constructor(
@@ -279,6 +298,7 @@ export class InputCapture {
       selfPos,
       cursorGround: ground,
       hoveredEntityId: this.deps.pickEnemy(ground),
+      hoveredAllyId: this.allyAt(ground),
     });
     if (!cmd) {
       abilityActivationCue(slot, { denied: true });
@@ -318,6 +338,7 @@ export class InputCapture {
           selfPos,
           cursorGround,
           hoveredEntityId: this.deps.pickEnemy(cursorGround),
+          hoveredAllyId: this.allyAt(cursorGround),
         });
         if (cmd) this.deps.onCommand(cmd);
       }

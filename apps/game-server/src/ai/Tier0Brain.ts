@@ -12,7 +12,7 @@ import type { EntityId, ItemId } from "@ggd/shared/ids";
 import type { Command, IntentFrame, Order } from "@ggd/shared/sim/intents";
 import type { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { Champions, Items } from "@ggd/shared/sim/content/registry";
-import { resolveAbilityRange } from "@ggd/shared/sim/abilities/abilitySystem";
+import { bodiesInCircle, resolveAbilityRange } from "@ggd/shared/sim/abilities/abilitySystem";
 import {
   LEGENDARY_ORB_ITEM_ID,
   LEGENDARY_ORB_PRICE,
@@ -23,6 +23,43 @@ import { distSq } from "@ggd/shared/sim/math/vec2";
 import { acquireRadius, acquireTarget } from "@ggd/shared/sim/targeting";
 import { Stat } from "@ggd/shared/sim/stats/statTypes";
 import type { Seat, SeatDriver } from "../seat/Seat";
+
+/**
+ * ⭐ GH#722 —— 一發**友方**技能（`targetsEnemies:false`）該打誰：
+ * 施法距離內**最近的隊友**，一個都沒有就是**自己**。
+ *
+ * ⭐ 這條規則是**客戶端那一條的鏡像**，而那是刻意的：`input/allyTargets` 用既有的
+ * `PickableUnit.priority` 讓施法者在自動索敵裡讓路（隊友在射程內就贏，沒有隊友時
+ * 自己仍然被選上）—— 於是「bot 和玩家站在同一個位置會挑同一個目標」對友方那一側
+ * 也成立，⛔ 而不是兩邊各長一條會漂的規則（同一個檔上面那段對**敵方**的說明）。
+ *
+ * ⭐ 候選走**出貨的** {@link bodiesInCircle}（`side:"allies"`），⛔ 不在這裡自己
+ * 掃一遍 `world.team`：那一支已經帶著 zone 閘、`aliveOnly`、隱形閘、以及
+ * 「沒有 TeamComp 的花/守護塔不是隊友」，而 sim 的友方分支**明確拒絕**花。
+ * ⛔ 自己抄一份 = 第二個住處，而它漂掉的樣子是「bot 一直對花丟治療」。
+ *
+ * ⚠️ 決定性：`bodiesInCircle` 回 id 遞增，而這裡用嚴格 `<` ⇒ 同距離取**最小 id**。
+ * ⚠️ 再驗一次**圓心到圓心**的距離：`bodiesInCircle` 用的是身體圓與圓的重疊
+ * （邊緣擦到就算），而 `castAbility` 的射程閘量的是 `distSq(t.pos, tgt.pos)` ——
+ * 不補這一行，剛好擦邊的那一位會讓每一次施放都變成一道接近指令。
+ */
+function nearestAllyOrSelf(world: SimWorld, id: EntityId, castRange: number): EntityId {
+  const t = world.transform.get(id);
+  if (!t) return id;
+  let best = id; // 自己永遠合法：同隊、距離 0、不是花
+  let bestD2 = Infinity;
+  const maxD2 = castRange * castRange;
+  for (const a of bodiesInCircle(world, id, t.pos, castRange, { side: "allies" })) {
+    const at = world.transform.get(a);
+    if (!at) continue;
+    const d2 = distSq(t.pos, at.pos);
+    if (d2 <= maxD2 && d2 < bestD2) {
+      bestD2 = d2;
+      best = a;
+    }
+  }
+  return best;
+}
 
 /** Below this HP fraction the bot prefers an in-zone healing flower. */
 const FLOWER_SEEK_HP_PCT = 0.65;
@@ -396,30 +433,56 @@ export class AIDriver implements SeatDriver {
           const castRange = resolveAbilityRange(world, abilityDef.range);
           const inCastRange = nearestD2 <= castRange * castRange;
 
+          // ⭐⭐ GH#722 —— 這一發打**哪一側**，由 `def.targetsEnemies` 決定。
+          //
+          // ⛔ 在此之前這整個 switch 無條件送 `nearest`（＝最近的**敵人**），
+          // 而出貨內容裡有 5 支 `targetsEnemies:false`（4 支 targeted ＋ 1 支 ground）
+          // ⇒ bot 每一次施放都被 `abilitySystem` 的友方分支判 `bad-target`
+          // （那一段逐字：友方技能「can never target a neutral flower — nor an ENEMY」）
+          // ⇒ 不扣魔、不上冷卻、每一次 replan 再送一次 —— **一場都沒放出去過**。
+          //
+          // ⭐ 側別判準是 `targetsEnemies === false`，與 sim（`abilitySystem`）和
+          //   客戶端（`AimResolver.aimsAtAllies`）**同一個預設**（省略 = 敵方）。
+          const friendly = abilityDef.targetsEnemies === false;
+          const ally = friendly ? nearestAllyOrSelf(world, id, castRange) : null;
+          // ⚠️ 友方那一側**不吃 `inCastRange`**：那個布林量的是「離**敵人**多遠」，
+          //   而 `nearestAllyOrSelf` 挑的東西本來就已經夾在 `castRange` 裡（最差是自己，距離 0）。
+          const canCast = friendly || inCastRange;
+          const allyT = ally !== null ? world.transform.get(ally) : undefined;
           switch (abilityDef.castType) {
             case "self":
               commands.push({ kind: "castAbility", slot, target: { type: "self" } });
               break;
             case "targeted":
-              if (inCastRange)
-                commands.push({ kind: "castAbility", slot, target: { type: "entity", entityId: nearest } });
+              if (canCast)
+                commands.push({
+                  kind: "castAbility",
+                  slot,
+                  target: { type: "entity", entityId: ally ?? nearest },
+                });
               break;
             case "skillshot":
             case "dash": {
               if (inCastRange) {
+                // ⚠️ 出貨內容裡**零支**方向型友方技能（量到的：friendly = 4 targeted
+                //   ＋ 1 ground）⇒ ⛔ 這裡不寫一條走不到的友方分支（它會假裝自己是閘）。
                 const dir = { x: tgtT.pos.x - t.pos.x, z: tgtT.pos.z - t.pos.z };
                 commands.push({ kind: "castAbility", slot, target: { type: "dir", dir } });
               }
               break;
             }
-            case "ground":
-              if (inCastRange)
+            case "ground": {
+              // 友方地面 AoE（`godie-o00l.e` 破法對咒）落在**隊友**腳下，
+              // ⛔ 不是敵人腳下 —— `groundAoeTargets` 的友方分支是以落點展開的。
+              const at = friendly ? (allyT?.pos ?? t.pos) : tgtT.pos;
+              if (canCast)
                 commands.push({
                   kind: "castAbility",
                   slot,
-                  target: { type: "point", point: { x: tgtT.pos.x, z: tgtT.pos.z } },
+                  target: { type: "point", point: { x: at.x, z: at.z } },
                 });
               break;
+            }
           }
         }
       }

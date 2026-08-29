@@ -57,11 +57,13 @@ import { getHeldAbility, setHeldAbility } from "../ui/abilityHold";
 import { rangeGuide } from "../ui/rangeGuideConfig";
 import { envFactor } from "../ui/displayFinal";
 import {
+  aimsAtAllies,
   buildCastCommand,
   setCursorlessAim,
   setCursorlessTarget,
   type AimAbility,
 } from "./AimResolver";
+import { nearestAllyTo } from "./allyTargets";
 import { isPadMenuCapturing } from "./padMenuCapture";
 
 export type GamepadFeel = GamepadFeelPolicyDoc;
@@ -363,6 +365,19 @@ export interface GamepadPlayerCtx {
     opts?: { readonly playersOnly?: boolean },
   ): number | null;
   /**
+   * ⭐ 最近的**隊友**（含自己），GH#722 —— 友方指定技能唯一的候選來源。
+   *
+   * ⚠️ 與 `feel` / `abilityRangeMult` / `scheme` **同一個理由不由 ctxProvider 提供**：
+   * poller 在 poll 的當下從出貨的 `input/allyTargets` 讀進來，所以
+   * `mapGamepadFrame` 維持**純函式**（測試餵一支函式就好），
+   * 而**真的手把路徑**不必等任何人接線就是活的。
+   *
+   * ⛔ 選用：省略 ⇒ 沒有友方候選（既有夾具逐位元不變）。
+   * ⛔ 它**不吃** `playersOnly`：玩家專注只改敵對候選集合（spec §13 逐字：
+   *   「友方技能 ⇒ 不受影響（它們查的是隊友）」）。
+   */
+  nearestAlly?(from: Vec2, maxRange: number, aimDir: Vec2 | null): number | null;
+  /**
    * Unspent skill points this player is holding (`seat.unspentPoints`). It is
    * REQUIRED, not optional-with-a-default, on purpose: it is the one thing that
    * decides whether a long press spends a point or explains the ability, and a
@@ -493,6 +508,9 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
     pad.pvpFocusButton !== null && (frame.held ?? []).includes(pad.pvpFocusButton);
   const pick = (range: number): number | null =>
     ctx.nearestEnemy(self!, range, aimDir, playersOnly ? { playersOnly: true } : undefined);
+  // ⭐ GH#722 —— 友方候選。⛔ 不吃 playersOnly（見 `nearestAlly` 的檔頭）。
+  const pickAlly = (range: number): number | null =>
+    ctx.nearestAlly?.(self!, range, aimDir) ?? null;
 
   for (const b of frame.justPressed) {
     const slot = pad.slotByButton.get(b);
@@ -513,8 +531,15 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
       const cursorGround = { x: self.x + dir.x * reach, z: self.z + dir.z * reach };
       // ⚠️ `targeted` 的搜尋半徑也走同一個 `reach`：伺服器的 out-of-range 判定用的
       //   就是 `range × abilityRange`,拿卡面值去挑目標會挑到一個必定被拒的敵人。
-      const hovered = ability.castType === "targeted" ? pick(reach) : null;
-      const cmd = buildCastCommand(slot, ability, { selfPos: self, cursorGround, hoveredEntityId: hovered });
+      const targeted = ability.castType === "targeted";
+      const hovered = targeted ? pick(reach) : null;
+      const cmd = buildCastCommand(slot, ability, {
+        selfPos: self,
+        cursorGround,
+        hoveredEntityId: hovered,
+        // ⭐ GH#722 —— 兩側都送，側別由 `resolveCastTarget` 決定（⛔ 不在這裡分岔）。
+        hoveredAllyId: targeted ? pickAlly(reach) : null,
+      });
       if (cmd) commands.push(cmd);
       else refused.push(slot); // targeted 沒目標／方向退化成零向量
     } else if (b === pad.attackMoveButton && self) {
@@ -579,9 +604,13 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
     // ⭐ GH#519 ——「這一發會打誰」。⛔ 跟按下去那條路共用同一支挑選函式與同一個
     //   夾限（`padCastReach`），所以畫面上高亮的那個人，就是 command 會鎖住的那個人。
     const held = ctx.ability(describe);
+    // ⭐ GH#722 —— 側別走**同一支** `aimsAtAllies`，⛔ 不在這裡再寫一次判準：
+    //   按住預覽高亮的那個人，必須就是放開時 command 會鎖住的那一個。
     out.describeTarget =
       held && held.castType === "targeted" && self
-        ? ctx.nearestEnemy(self, padCastReach(held, rangeMult), aimDir)
+        ? aimsAtAllies(held)
+          ? (ctx.nearestAlly?.(self, padCastReach(held, rangeMult), aimDir) ?? null)
+          : ctx.nearestEnemy(self, padCastReach(held, rangeMult), aimDir)
         : null;
   }
   if (refused.length > 0) out.refused = refused;
@@ -760,6 +789,33 @@ export type AbilityRangeMultProvider = () => number;
 const liveAbilityRangeMult: AbilityRangeMultProvider = () => envFactor("abilityRange");
 
 /**
+ * ⭐ 出貨的友方候選來源（GH#722）。poller 在 poll 的當下補進 ctx，
+ * ⇒ `mapGamepadFrame` 維持純函式，而手把路徑不必等 `GameApp` 接線就是活的。
+ *
+ * ⚠️⚠️ ⭐ **綁的是「第幾位本機玩家」，⛔ 不是一支全域函式**：`MultiGamepadSystem`
+ * 一幀之內會替 2..4 位 couch 玩家各跑一次 `mapGamepadFrame`，而他們各有自己的
+ * 身體、自己的座位、**而且可以在另一隊**。一支不吃 `player` 的友方挑選器會把
+ * 每一位的答案都算成 1P 的（見 `allyTargets.casterOf` 的檔頭：兩個缺陷，
+ * 「2P 只治療得到自己」與「2P 的候選整份是敵隊」）。
+ */
+const liveNearestAllyFor =
+  (player: number) =>
+  (from: Vec2, maxRange: number, aimDir: Vec2 | null): number | null =>
+    nearestAllyTo(from, maxRange, aimDir, player);
+
+/**
+ * 逐位玩家記憶一個閉包 —— ⛔ 不在 `poll()` 裡現配置（那是每幀 ×4 的配置，
+ * 而這一層的既有規矩是零配置：`duelScratch` / `fbSeen` 那一族）。
+ */
+const nearestAllyByPlayer: NonNullable<GamepadPlayerCtx["nearestAlly"]>[] = [];
+function liveNearestAllyOf(player: number): NonNullable<GamepadPlayerCtx["nearestAlly"]> {
+  return (nearestAllyByPlayer[player] ??= liveNearestAllyFor(player));
+}
+
+/** 單手把系統：它逐字「drives the local champion」＝ 1P。 */
+const liveNearestAlly = liveNearestAllyOf(0);
+
+/**
  * Connect/disconnect tracking + single-player wiring: the most recently
  * connected pad drives the local champion. (The local-multiplayer follow-up
  * replaces this with one GamepadInput+ctx per seat.)
@@ -837,6 +893,7 @@ export class GamepadSystem {
     }
 
     const intent = mapGamepadFrame(frame, {
+      nearestAlly: liveNearestAlly, // ⭐ GH#722 —— ctxProvider 有給就蓋掉它（測試）
       ...this.ctxProvider(),
       lastAimDir: this.lastAimDir,
       abilityRangeMult: this.abilityRangeMult(),
@@ -959,6 +1016,8 @@ export class MultiGamepadSystem {
       for (const b of frame.justPressed) this.sinks.onButton?.(player, b);
 
       const intent = mapGamepadFrame(frame, {
+        // ⭐ GH#722 —— **這一位玩家的**友方候選（⛔ 不是 1P 的）。ctxProvider 給了就用它的。
+        nearestAlly: liveNearestAllyOf(player),
         ...this.ctxProvider(player),
         lastAimDir: this.lastAim.get(player) ?? null,
         abilityRangeMult: this.abilityRangeMult(),
