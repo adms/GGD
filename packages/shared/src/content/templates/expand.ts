@@ -35,6 +35,10 @@ import type { MarkResetPolicy, MarkSpec } from "../../sim/marks";
 import type { MarkLethalRule } from "../../sim/combat/lethalSave";
 import { zEffectCondition } from "../schema/condition";
 import { zId } from "../schema/common";
+// ⭐【週期領域】的 schema 過門用它，⛔ 不是在這裡抄一張半徑表：
+//    `resolveRadiusTier` 在載入時會用**出貨的** `config.aoe-tiers@1` 覆寫，
+//    這裡只是為了讓 `shape:"circle"` 通過 refine（見 `periodic-field` 家族）。
+import { DEFAULT_AOE_TIERS, type AoeTierName } from "../aoeTiers";
 
 // ---------------------------------------------------------------------------
 // LENGTH CONVERSION — load-bearing constant (design §四, verified in expand.test.ts)
@@ -1605,6 +1609,109 @@ const FAMILIES: Readonly<Record<string, Family>> = {
   //     「扣血那一刻血條停在哪」（沒有它人就死了），後者是緊接著的回復。十二道
   //     試煉把前者設在 1%、後者 50%，所以畫面上是「剩一絲血 → 回到半血」。
   //     兩個都設 0.5 也是合法的（直接停在半血，不演那一下）。
+  // 17.5 ⭐【週期領域】—— 一片每 `intervalSec` 就把圈內重算一次的傷害場。
+  //      04-02 炸彈陣 · 37-03 災難之牆（anchor:"point"，放完留在原地）／
+  //      90-01 飛葉快刀 · 92-04 馬勒戈壁 · 99-04「初音週遭的部隊每秒受到傷害」
+  //      （anchor:"caster"，圈跟著施法者走）。
+  //
+  // ── ⛔ 這一族在 2026-08-30 之前**不存在**，而 `tpl-periodic-field.json` 已經
+  //    出貨了 ⇒ 任何技能寫下 `template.ref="tpl-periodic-field"` 都會在
+  //    `registerAll` 展開時擲 `family "periodic-field" has no P1 expand path`，
+  //    然後被 `expandIfTemplated` 的 fail-open **降級成一支空技能**。
+  //    ⇒ GH#648 的 38 支「卡面宣稱迴圈、JSON 一格機制都沒有」全部卡在這一列。
+  //
+  // ── ⭐⭐ 這一族存在的**第二個**理由：它是一個平衡決策的**唯一住處** ────────
+  //
+  //  ⭐【決策】`damageTier` 名的是**整段**的預算，⛔ 不是**逐發**的量。
+  //     每一發拿到的是 `整段 ÷ 發數`，而那個除法寫成 `Scaling.mult` ——
+  //     一個**運算子**，⛔ 不是一個算好的數字（第〇·四守則）。
+  //
+  //  為什麼是「整段」而不是「逐發」（⛔ 不是我挑的，這條有出處）：
+  //  `content/config/damage-tier-exemptions.json` 的 `dot-per-tick` 逐字寫著
+  //  「五級距的錨點是『20 發打死中位英雄』，那把尺量的是**單發**；把每跳拉到
+  //   級距等於整條 DoT 乘上跳數」。⇒ 一片跳 5 發的領域若每發都吃滿級距，
+  //  它就是設計預算的 **5 倍**，而 ⛔ **沒有任何既有的閘會紅**
+  //  （`tierFlatExclusive` 只問「有沒有第二個住處」，⛔ 不問「乘了幾次」）。
+  //
+  //  ⚠️ ⛔ **不可以把這個決策抄進 N 份技能 JSON**（＝在每一支上手寫
+  //  `damage{flat: 整段÷發數}`）—— 那正是第〇·四守則的 O(N) 第二住處：
+  //  owner 改一格級距表，N 份 JSON 一起變成謊話，而全部是綠的。
+  //  ⇒ 它住在**這一列**，而發數由 `durationSec / intervalSec` **算出來**
+  //    （⛔ 所以模板沒有 `count` 這一格 —— 算得出來的值不進文件）。
+  //
+  //  ⭐ 回頭的成本：改**這一行**（把 `mult` 拿掉 = 回到逐發吃滿級距），
+  //  ⛔ 不是去改 N 份內容。
+  //
+  // ── ⚠️ `shape:"circle"` **一定要帶字面 `radius`** ───────────────────────
+  //  `schema/effects/_shared.ts:286` 的 refine 逐字要求它（「沒有半徑的圓在執行期
+  //  會直接 return」），⛔ 而它跑在 `withTiers` 的 `resolveRadiusTier` **之前**
+  //  （`registries.ts::expandIfTemplated` 的 `zAbilityDoc.safeParse`）——
+  //  ⇒ 只填 `radiusTier` 的圓**連載入都載不了**，而且是**靜默降級**。
+  //  ⭐ 所以兩格都填，而 `resolveRadiusTier` 在載入時會**覆寫** `radius`
+  //    ⇒ 級距仍然是唯一的住處，字面值只是 schema 的過門。
+  //    這與 8 個出貨 circle 節點（`godie-e007.r` / `godie-o00k.r` …）逐字同形。
+  "periodic-field": (t, p) => {
+    const intervalSec = num(t, p, "intervalSec");
+    const durationSec = num(t, p, "durationSec");
+    // 落幾發 —— **算出來的**，⛔ 不是一格參數（第〇·四守則）。
+    const ticks = Math.max(1, Math.round(durationSec / intervalSec));
+    // ⛔ 大聲擋下，⛔ 不靜默夾掉（同 `traveling-wave` 的 stepCount）：一片被偷偷
+    // 夾成 32 發的 60 秒領域，畫面上跟「這支技能就是這樣」一模一樣（失敗形態②）。
+    if (ticks > DELAYED_MAX_COUNT) {
+      throw new ExpandError(
+        `template ${t.id}: durationSec=${durationSec} ÷ intervalSec=${intervalSec} = ${ticks} 發，` +
+          `超過模擬器一次施放能排的段數 (DELAYED_MAX_COUNT=${DELAYED_MAX_COUNT})。` +
+          `把 durationSec 調短、或把 intervalSec 加大。`,
+      );
+    }
+    const anchor = str(t, p, "anchor") as "point" | "caster";
+    const side = str(t, p, "applyTo") as "enemies" | "allies";
+    const radiusTier = str(t, p, "radiusTier") as AoeTierName;
+    // schema 的過門（見上）——`resolveRadiusTier` 在載入時覆寫它。
+    // ⭐ 讀的是 `DEFAULT_AOE_TIERS`（級距表的唯一住處），⛔ 不是抄一張數字表。
+    const radius = DEFAULT_AOE_TIERS.radius[radiusTier];
+    const perTick: EffectDef[] = [
+      damageEffect(damageType(t, p, "damageType"), {
+        damageTier: str(t, p, "damageTier"),
+        // ⭐ 整段 ÷ 發數（見上面的決策）。1 發時整格省略 ⇒ 逐位元等於沒有這一格。
+        ...(ticks > 1 ? { mult: 1 / ticks } : {}),
+      } as unknown as Scaling),
+    ];
+    // 每一發要**看得見**（同 `traveling-wave` 的 stepVfx）：落在那一發自己的
+    // 圓心上，所以畫面上的位置與判定的位置是同一個座標。
+    if (has(t, p, "hitVfx")) {
+      perTick.push({ kind: "spawnVfx", vfxId: docRef(t, p, "hitVfx") as VfxId, at: "point" });
+    }
+    return {
+      // ⭐ 圓心跟著人走 ⇒ 沒有東西要瞄（`delayed` 自己每發重讀施法者位置）；
+      //    釘在地上 ⇒ 要一個落點，而 `ground` 那條分支才會把點交出來。
+      castType: anchor === "caster" ? "self" : "ground",
+      targetsEnemies: side === "enemies",
+      // ⚠️ 施法指示器的走廊是從**技能自己的** `radius` 推導的（#401 的教訓：
+      //    「a player cannot dodge what is not drawn」）⇒ 地上型一定要帶它。
+      ...(anchor === "point" ? { radius } : {}),
+      ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+      effects: [
+        {
+          kind: "delayed",
+          shape: "circle",
+          radius,
+          radiusTier,
+          side,
+          // 第一發等一個間隔（＝「每秒」的第一秒），之後每 intervalSec 一發。
+          delaySec: intervalSec,
+          count: ticks,
+          intervalSec,
+          // ⭐ 這兩格合起來才是【週期領域】：`reresolve` 決定「到期重算誰在圈裡」，
+          //    `anchor` 決定「那個圈在哪裡」（`schema/effects/delayed.ts` 檔頭⑥）。
+          targetMode: "reresolve",
+          ...(anchor === "caster" ? { anchor } : {}),
+          effects: perTick,
+        },
+      ],
+    };
+  },
+
   // 18. 翻滾光束（橫放光束砲）—— 一具沿路徑硬推的模型，穿透式地掃過整條線。
   //     20-03 約束與勝利之劍（A0D5）是 exemplar；59-04 陽電子砲 / 08-03 龍鬥氣砲
   //     咒文 / 09-04 龜派氣功是同一個形狀（owner 2026-08-23 點名的四支經典）。

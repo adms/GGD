@@ -2,14 +2,14 @@
   "id": "tpl-periodic-field",
   "schema": "template@1",
   "name": "週期領域",
-  "description": "一片每隔 intervalSec 就把圈內重算一次的傷害／治療場。⭐ 它與【延遲序列】的差別只有一格 anchor：point = 放完就留在原地(04-02 炸彈陣的火柱、37-03 災難之牆)；caster = 圈跟著施法者走(90-01 飛葉快刀「每秒對附近的敵人造成傷害」、92-04 馬勒戈壁「每秒奪取周圍英雄」、99-04「初音週遭的部隊每秒受到傷害」)。⛔ 落幾發不是一格參數 —— 它是 durationSec / intervalSec 算出來的(第〇·四守則:算得出來的值不進文件)。⚠️ 引擎面已落地(delayed.anchor,守衛 periodicFieldAnchor.test.ts);expand.ts 的家族接線仍缺,所以這份仍是 draft —— 在它接上以前引用這份模板的技能會在註冊時擲錯,⛔ 不會安靜地變成空技能。",
+  "description": "一片每隔 intervalSec 就把圈內重算一次的傷害場。⭐ 它與【延遲序列】的差別只有一格 anchor：point = 放完就留在原地(04-02 炸彈陣的火柱、37-03 災難之牆)；caster = 圈跟著施法者走(90-01 飛葉快刀「每秒對附近的敵人造成傷害」、92-04 馬勒戈壁「每秒奪取周圍英雄」、99-04「初音週遭的部隊每秒受到傷害」)。⛔ 落幾發不是一格參數 —— 它是 durationSec / intervalSec 算出來的(第〇·四守則:算得出來的值不進文件)。⭐⭐【平衡決策的唯一住處】damageTier 名的是**整段**的預算,⛔ 不是逐發的量:每一發拿到 整段÷發數,而那個除法寫成 Scaling.mult(一個**運算子**,⛔ 不是算好的數字)。出處是 config/damage-tier-exemptions.json 的 dot-per-tick 逐字「五級距的錨點是『20 發打死中位英雄』,那把尺量的是**單發**」。⇒ 這個決策住在 expand.ts 的 FAMILIES['periodic-field'] **一列**,⛔ 不可以抄進 N 份技能 JSON。⚠️ applyTo 今天只選圈的 side(enemies/allies),⛔ 治療場還沒有參數 —— 要做的話是補一格 healTier,⛔ 不是拿 damageTier 去治療。⚠️ intervalSec 的下界在 2026-08-30 從 0.034(＝30Hz 的一個 tick)收到 0.2,兩個理由:①一片每一幀都跳的圈是**光環**,⛔ 不是週期領域 —— 這一族的卡面逐字都是「每秒」;②發數＝durationSec÷intervalSec,而模擬器一次施放排得出的段數上界是 DELAYED_MAX_COUNT=32(sim/effects/kindLimits.ts) ⇒ 下界太小會讓一組合法的表單值展開成一個排不出來的班表。超界時 expand.ts **大聲擲錯並指名要調哪一格**,⛔ 不靜默夾掉。⛔ 收緊的當下零支出貨技能引用這份模板,所以它改變不了任何一場比賽。",
   "family": "periodic-field",
-  "status": "draft",
+  "status": "enabled",
   "params": {
     "intervalSec": {
       "type": "number",
       "default": 1,
-      "min": 0.034,
+      "min": 0.2,
       "max": 10,
       "unit": "s"
     },
