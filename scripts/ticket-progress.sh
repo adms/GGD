@@ -55,7 +55,7 @@ write)
   done
   case "$STATE" in
     未動|進行中|卡住|鏈路已接上未驗收|完成) :;;
-    *) die "--state 只收：未動 · 進行中 · 卡住 · 鏈路已接上未驗收 · 完成（收到「$STATE」）";;
+    *) die "--state 只收：未動 · 進行中 · 卡住 · 鏈路已接上未驗收 · 完成（收到「${STATE}」）";;
   esac
   [ -n "$BASE" ] || die "--baseline 必填 —— ⭐ 「動手之前它今天的行為是什麼」，⛔ 不是複述票文"
   [ -n "$NEXT" ] || die "--next 必填 —— ⭐ 「下一個人從哪裡接」，⛔ 留空等於下一輪從零開始"
@@ -84,7 +84,7 @@ ${PLAYER:+
 EOF
 )
   gh issue comment "$N" --body "$BODY" >/dev/null || die "寫不進 #$N"
-  echo "✓ #$N 進度標記已寫（$STATE）"
+  echo "✓ #$N 進度標記已寫（${STATE}）"
   exit 0    # ⭐ 明確回 0 —— ⚠️ 沒有它,case 會落到最後一個指令的離開碼
   ;;
 check)
