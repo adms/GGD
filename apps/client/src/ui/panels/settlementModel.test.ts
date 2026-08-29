@@ -122,6 +122,32 @@ describe("stat formatters + breakdown (settle-stat-format)", () => {
   });
 });
 
+/**
+ * GH#729 —— sim 早就在數 guardianDamage/guardiansSlain/bountyGold 而結算頁一格
+ * 都沒有：**失敗形態⑧**，而每一條既有守衛都是綠的。⇒ 驗的是**畫面上那一列**，
+ * ⛔ 不是「型別上有這個欄位」：先走一次 JSON 往返（＝伺服器 `buildSettlement()`
+ * 的 `stats: entry.stats` 整包過線、客戶端**重讀**的那條路），再餵進
+ * `buildStatBreakdown` —— 兩個出貨消費端（MatchEndPanel.StatBreakdown /
+ * LeaveSettlementOverlay.StatGrid）都是無條件 `rows.map()`，所以「有這一列」
+ * ＝「玩家看得到那個數字」。
+ */
+describe("守護塔與賞金在結算頁上看得到 (settle-stat-format)", () => {
+  it("重讀之後守護塔兩列帶著數字，賞金掛在金錢那一列裡", () => {
+    cover("settle-stat-format");
+    const s = stats({ guardianDamage: 8210, guardiansSlain: 3, goldEarned: 1500, bountyGold: 300 });
+    const reread = JSON.parse(JSON.stringify(player({ stats: s }))) as SettlementPlayer;
+    const val = (rows: ReturnType<typeof buildStatBreakdown>, k: string): string | undefined =>
+      rows.find((r) => r.key === k)?.value;
+    const rows = buildStatBreakdown(reread.stats);
+    expect(val(rows, "guardianDamage")).toBe("8,210");
+    expect(val(rows, "guardiansSlain")).toBe("3");
+    expect(val(rows, "gold")).toContain("300"); // 賞金看得到…
+    expect(val(rows, "gold")).toContain("1,500"); // …而它含在總額裡 ⇒ 同一列上
+    // ⭐ 反方向（一把只驗過單邊的尺不算自證過）：沒賞金就不可以長出「(含賞金 0)」。
+    expect(val(buildStatBreakdown(stats({ goldEarned: 900 })), "gold")).toBe("900");
+  });
+});
+
 describe("reflection hints (settle-hints)", () => {
   it("flags low skillshot accuracy with the coaching tip", () => {
     cover("settle-hints");
