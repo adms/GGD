@@ -1,34 +1,32 @@
 {
   "id": "godie-e007.q",
+  "schema": "ability@1",
   "name": "12-01 鬥仙術",
-  "icon": "assets/icons/abilities/godie-e007.q.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n將武道融入仙道而創出來所謂的不敗的武術，以念體攻擊敵人，造成{{dmg}}傷害的同時可以迷惑目標1秒。",
+  "description": "[主動][指定][混亂][AP加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n施法距離：{{range}}\n\n「我一個人無聊的時候，喜歡跟自己打麻將」\n以念體攻擊敵人，造成{{dmg}}+60% [AP]傷害的同時可以[混亂]目標1秒。",
   "slot": "Q",
   "castType": "targeted",
-  "maxRank": 5,
+  "maxRank": 4,
   "cooldown": [
-    6.0,
     6.0,
     6.0,
     6.0,
     6.0
   ],
-  "cooldownTier": "極小",
   "manaCost": [
-    72.0,
     72.0,
     72.0,
     72.0,
     72.0
   ],
-  "manaCostTier": "極小",
+  "range": 4.5,
+  "targetsEnemies": true,
   "effects": [
     {
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "damageTier": "小",
+        "damageTier": "極小",
         "ratios": [
           {
             "stat": "ap",
@@ -39,15 +37,16 @@
     },
     {
       "kind": "applyStatus",
-      "statusId": "slow40",
+      "statusId": "confusion",
       "duration": 1.0,
-      "moveSpeedMult": 0.6
+      "berserk": true,
+      "targetsAllies": true
     }
   ],
+  "icon": "assets/icons/abilities/godie-e007.q.webp",
   "vfxKey": "fx.prim.ki.pulse-sm",
-  "targetsEnemies": true,
-  "schema": "ability@1",
-  "castTimeSec": 0.233,
+  "cooldownTier": "極小",
+  "manaCostTier": "極小",
   "rangeTier": "小",
-  "range": 4.5
+  "castTimeSec": 0.233
 }
