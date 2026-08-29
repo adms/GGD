@@ -110,6 +110,8 @@ interface Wish {
 interface TreasuresData {
   warnings: string[];
   weapon: {
+    /** 🔁 rollback 開關（`GGD_TREASURE_ITEM_EDIT=0`）的現況 —— 關著就不畫 ✏️。 */
+    itemEdit: { on: boolean; why: string | null };
     offerCount: number;
     draftConflict: string;
     itemDraft: { shortPoolMode?: string; fallbackTable?: string; maxDraws?: number; excludedCraftRoles?: string[] };
@@ -231,7 +233,7 @@ function ModifierChips(props: { entry: WeaponEntry; onSaved: () => void }): Reac
             {!m.editable ? (
               <span style={{ color: m.error !== null ? DANGER : WARN }}>
                 {m.field === "msBonusTier" ? (m.msBonusTier ?? "—") : (m.value ?? "—")}（
-                {m.error !== null ? "帶讀不到，唯讀" : "改了也不會發生任何事"}）
+                {m.error !== null ? "唯讀" : "改了也不會發生任何事"}）
               </span>
             ) : entry.itemFile === null ? (
               <span style={{ color: WARN }}>（content/items 缺這一份）</span>
@@ -353,6 +355,12 @@ export function TreasuresPage(): React.JSX.Element {
             移速加成那一族改的是<b>五級距的級別</b>（那些節點沒有 value，值在載入時解析）。
             每一格後面的帶是<b>逐格從出貨 schema × config.stat-caps@1 推導</b>的，⛔ 不是挑的；
             灰掉的那幾格寫著「改了也不會發生任何事」—— 那是第一·五守則，⛔ 不是還沒做。
+            {!data.weapon.itemEdit.on && (
+              <>
+                {" "}
+                <b style={{ color: WARN }}>{data.weapon.itemEdit.why}</b>
+              </>
+            )}
           </div>
           <TextInput value={q} onChange={setQ} placeholder="過濾兩邊：id / 名 / tags / 翻盤力 / 願望說明…" />
         </div>
@@ -400,7 +408,7 @@ export function TreasuresPage(): React.JSX.Element {
                           {e.sharePct}%
                         </Td>
                         <Td align="right" mono>
-                          {e.itemFile === null ? (
+                          {e.itemFile === null || !data.weapon.itemEdit.on ? (
                             (e.cost ?? "—")
                           ) : (
                             <LiveEditCell

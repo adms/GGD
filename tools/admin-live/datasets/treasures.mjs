@@ -85,6 +85,20 @@ const TABLE_ORDER = ["legendary-weapons", "ex-release-weapons", "ex-origin-weapo
  *   ⇒ 這兩種在頁上是**沒有 ✏️ 的一行灰字**，⛔ 不是一顆按下去會 400 的按鈕。
  */
 
+/**
+ * 🔁 **rollback 開關**（owner 常設：「自己判斷 **但留後台開關可以簡易 rollback**」）。
+ * `GGD_TREASURE_ITEM_EDIT=0` ⇒ `content/items` 那三條退回**唯讀**（loot table 的權重不受影響）。
+ * ⚠️ **每次請求讀**（⛔ 不是 module load 時鎖死），所以改完重啟 dev server 就生效。
+ * ⚠️ 慣例跟著**同一個模組既有的**環境開關走（`GGD_LIVE_CACHE` / `GGD_LIVE_FRESHNESS_BAR`）——
+ * ⛔ 不開一份 `content/config/*.json`：那會逼著改 `apps/admin/src/store.ts` 與 `ui/App.tsx`
+ * 各一行，而那兩個檔是 CLAUDE.md 逐字點名的「已知唯一真正共用的檔」。
+ */
+function itemEditOff(env = process.env) {
+  return env.GGD_TREASURE_ITEM_EDIT === "0";
+}
+const ITEM_EDIT_OFF_WHY =
+  "🔁 GGD_TREASURE_ITEM_EDIT=0 —— 寶具本體（modifier／級別／現值）那幾格被 rollback 開關關成唯讀。";
+
 /** `\n};` 之前的那一塊（⛔ 非貪婪：常數檔裡後面還有別的物件字面值）。 */
 function block(src, decl) {
   const m = new RegExp(`export const ${decl}[^=]*=\\s*\\{([\\s\\S]*?)\\n\\};`).exec(src);
@@ -237,6 +251,7 @@ function loadBands(repoRoot) {
 // ⚠️ 這幾行是 `//` 註解：pointer 樣式含 `*` 加 `/`，寫進區塊註解會**提早關掉它**
 //    （middleware.mjs 的 `pointerHit` 上面逐字踩過同一個坑）。
 function itemModifierValueCheck(repoRoot, { path, pointer, value }) {
+  if (itemEditOff()) return ITEM_EDIT_OFF_WHY;
   const i = modifierIndex(pointer, "value");
   if (i === null) return `pointer 要長成 /modifiers/<第幾條>/value（收到 ${pointer}）`;
   const mod = readModifier(repoRoot, path, i);
@@ -263,6 +278,7 @@ function itemModifierValueCheck(repoRoot, { path, pointer, value }) {
 
 // ✏️ `/modifiers/<第幾條>/msBonusTier` —— 級別名兩邊要**對得上**（config × 出貨常數）。
 function itemMsTierCheck(repoRoot, { path, pointer, value }) {
+  if (itemEditOff()) return ITEM_EDIT_OFF_WHY;
   const i = modifierIndex(pointer, "msBonusTier");
   if (i === null) return `pointer 要長成 /modifiers/<第幾條>/msBonusTier（收到 ${pointer}）`;
   const mod = readModifier(repoRoot, path, i);
@@ -343,6 +359,7 @@ export const write = {
         //   ⛔ 那裡沒有上界，所以這裡也**不發明**一個（第〇·四：那會是第二個住處）。
       value: { type: "number", integer: true, min: 0 },
       why: "寶具現值（商店價與架上價 ×priceMultiplier 都從它推導）",
+      check: () => (itemEditOff() ? ITEM_EDIT_OFF_WHY : null),
     },
   ],
 };
@@ -361,6 +378,9 @@ export async function build(repoRoot) {
   const bands = typeof loaded === "string" ? null : loaded.bands;
   const caps = typeof loaded === "string" ? null : loaded.caps;
   if (typeof loaded === "string") warnings.push(`寶具 modifier 的可編輯帶讀不到 ⇒ 那幾格退回唯讀：${loaded}`);
+  // 🔁 rollback 開關關著時，頁上**不畫** ✏️（⛔ 不是畫一顆按下去必被 check 擋的按鈕）。
+  const itemEdit = { on: !itemEditOff(), why: itemEditOff() ? ITEM_EDIT_OFF_WHY : null };
+  if (!itemEdit.on) warnings.push(ITEM_EDIT_OFF_WHY);
   const msTierValues = (() => {
     try {
       return readJson(CFG_MS_TIERS).bonus ?? {};
@@ -396,10 +416,11 @@ export async function build(repoRoot) {
             : `級別在載入時由 config.move-speed-tiers@1 解析成 %（${Object.entries(msTierValues)
                 .map(([k, v]) => `${k}=${v}`)
                 .join("／")}）`,
-        // 死的（第一·五守則）與讀不到的，兩種都**不長 ✏️**，但理由不一樣所以分開列。
+        // 死的（第一·五守則）與唯讀的（帶讀不到／rollback 開關），兩種都**不長 ✏️**，
+        // 但理由不一樣所以分開列 —— ⛔ 「壞掉」與「刻意關著」不可以長得一樣。
         dead: band.dead ?? null,
-        error: band.error ?? null,
-        editable: band.dead === undefined && band.error === undefined,
+        error: band.error ?? (itemEdit.on ? null : ITEM_EDIT_OFF_WHY),
+        editable: itemEdit.on && band.dead === undefined && band.error === undefined,
       };
     });
 
@@ -562,6 +583,7 @@ export async function build(repoRoot) {
   return {
     warnings,
     weapon: {
+      itemEdit, // 🔁 rollback 開關的現況（頁面用它決定 /cost 那一格畫不畫 ✏️）
       offerCount: rules.offerCount ?? 3,
       draftConflict: rules.draftConflict ?? "",
       itemDraft: rules.itemDraft ?? {},
