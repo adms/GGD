@@ -1,0 +1,72 @@
+{
+ "_note": "GH#742 — geosets WC3 swapped out on transform. glTF has no visibility channel, so every one of these ships DRAWN IN BOTH FORMS. Regenerate: python3 tools/w3x-import/geoset_alpha_report.py --fixture tools/w3x-import/geoset_form_gating.fixture.json",
+ "models": {
+  "heroichigo.glb": {
+   "mdx": "HeroIchigo.mdx",
+   "champion_ids": [
+    "godie-h01n",
+    "godie-h01o"
+   ],
+   "champions": [
+    "開外掛的死神 - 黑崎一護",
+    "外掛開很大的死神 - 黑崎一護"
+   ],
+   "forms": {
+    "base": [
+     1,
+     3
+    ],
+    "alternate": [
+     2
+    ],
+    "both": [
+     0,
+     4
+    ]
+   },
+   "geosets": {
+    "1": {
+     "geoset": 1,
+     "verts": 540,
+     "material": 0,
+     "form": "base"
+    },
+    "2": {
+     "geoset": 2,
+     "verts": 739,
+     "material": 1,
+     "form": "alternate"
+    },
+    "3": {
+     "geoset": 3,
+     "verts": 134,
+     "material": 0,
+     "form": "base"
+    }
+   },
+   "lod_prim_vertex_counts": {
+    "heroichigo.glb": [
+     74,
+     540,
+     739,
+     134,
+     349
+    ],
+    "heroichigo-mid.glb": [
+     43,
+     304,
+     444,
+     73,
+     230
+    ],
+    "heroichigo-small.glb": [
+     24,
+     177,
+     253,
+     41,
+     129
+    ]
+   }
+  }
+ }
+}
