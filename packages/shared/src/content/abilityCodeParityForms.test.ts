@@ -3,14 +3,30 @@
  *
  * 界線與「為什麼 `abilityCodeParity` 擋不住」寫在 `abilityCodeParityForms.ts` 檔頭。
  *
- * ⭐ 基準線**不用手動重生成**（H5，2026-08-23）：
- *   · **兩邊一起動**（both／兩邊同時新增／兩邊同時消失）＝ 正常的技能改動
- *     ⇒ 這條測試自己把基準線改寫成新現況（訊息會提醒 `git add` .baseline.json）。
- *   · **只動一邊** ⇒ 紅 —— 那才是這條閘要抓的缺陷。⛔ 判準沒有變弱：
- *     單邊改動**永遠**紅，而且不會被自動吸收進基準線。
- *   · 刻意的**單邊**形態差異（極少數，要能講出理由）才需要手動：
- *     GGD_FORM_PAIR_DUMP=1 npx vitest run packages/shared/src/content/abilityCodeParityForms.test.ts
- *     → 直接覆寫 abilityCodeParityForms.baseline.json，然後 `git add` 它
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⛔⛔ GH#854 —— 這條閘**曾經自己重寫基準線**，所以它不是一條閘
+ * ─────────────────────────────────────────────────────────────────────────────
+ * H5（2026-08-23）給了它一個「兩邊一起動＝自動吸收成新基準」的分支：發現差異 →
+ * `writeFileSync(BASELINE, …)` → 綠。⇒ ⭐ **它把自己的證據改掉然後宣告通過。**
+ *
+ * ⚠️ 那正是 CLAUDE.md 失敗形態⑩（守衛是靠缺陷才綠的）：
+ *   · 「兩邊一起動」聽起來像正常的技能改動，⛔ 但它同時是**兩邊各自被推開**的樣子 ——
+ *     `deriveCastTimes.ts --write` 照**每一份文件自己的機制**算 `castTimeSec`，
+ *     本體被規格重寫、變身態沒有來源停在 w3x 匯入值 ⇒ 同一個公式給出兩個答案，
+ *     **兩個指紋一起變** ⇒ 落進吸收分支 ⇒ 靜默寫回基準線 ⇒ 綠。
+ *   · 2026-08-29 量到的後果：`castTimeSec` 兩形態不同的比例，
+ *     **本體有產生器來源的 14/36（39%）** vs 其餘手編對子 **5/84（6%）**，
+ *     例：12-04 龍氣爆發 `godie-ewar` 1.0s ／ `godie-e007` 2.033s。
+ *     ⇒ 一路推開了六個對子，而這條閘**從頭到尾是綠的**。
+ *   · 帳本自己也記著：commit `a8641eeb` 逐字寫「重生成變身對子基準線 —— 這是**吸收**，
+ *     ⛔ 不是修好」。⇒ 吸收發生過，而且發生的時候沒有人被擋下來。
+ *
+ * ⭐ 現在：**斷言路徑一行都不寫檔。** 任何對不上基準線的東西都紅，
+ *    重生成是一個**明示的、另一條路**（下面的 dump 分支 `return`，⛔ 不做斷言），
+ *    跟這個 repo 每一條 `--check` 棘輪同一個形狀：紅 → 人看 diff → 重生成 → `git add`。
+ *
+ *    GGD_FORM_PAIR_DUMP=1 npx vitest run packages/shared/src/content/abilityCodeParityForms.test.ts
+ *    git add packages/shared/src/content/abilityCodeParityForms.baseline.json
  */
 import { describe, it, expect } from "vitest";
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -25,12 +41,17 @@ import {
   toBaseline,
   type FormPairBaseline,
   type FormPairFinding,
-  type SideFingerprint,
 } from "./abilityCodeParityForms";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ABILITY_DIR = join(HERE, "../../../../content/abilities");
-const BASELINE = join(HERE, "abilityCodeParityForms.baseline.json");
+/**
+ * ⚠️ 可以被 `GGD_FORM_PAIR_BASELINE` 指到別處 —— **只為了讓守衛餵得進一份假基準線**
+ * （`packages/shared/src/ops/formPairGateNeverWritesBaseline.test.ts`）。
+ * ⛔ 它**不是**逃生口：換掉路徑之後斷言照跑，⛔ 沒有任何一條分支會因此變綠。
+ * ⭐ 同一個做法的前例：`deriveCastTimes.ts` 的 `GGD_CONTENT_DIR`。
+ */
+const BASELINE = process.env.GGD_FORM_PAIR_BASELINE ?? join(HERE, "abilityCodeParityForms.baseline.json");
 
 /** 直接讀檔，⛔ 不經 ContentLoader —— 這條要在 `content:build` 之前也能跑。 */
 function abilitiesByChampion(): Map<string, Record<string, unknown>[]> {
@@ -46,27 +67,36 @@ function abilitiesByChampion(): Map<string, Record<string, unknown>[]> {
   return out;
 }
 
+/** ⭐ 單邊改動＝ owner 描述的那個缺陷；兩邊一起動＝要人看過才准進基準線。 */
+function isOneSided(f: FormPairFinding): boolean {
+  if (f.kind === "base-only" || f.kind === "alternate-only") return true;
+  // added：只有一邊長出這個編號 = 同一個缺陷的「新增」形狀。
+  return f.kind === "added" && (f.state.base === null || f.state.alternate === null);
+}
+
 describe("變身對子的技能同步", () => {
   const { shipped, halfMigrated } = splitFormPairsByShipping();
 
-  /**
-   * 「兩邊一起動」＝ 不是這條閘要抓的缺陷，是正常的技能改動。
-   * ⛔ 單邊改動（base-only / alternate-only / 只有一邊長出新編號）永遠不算。
-   */
-  function movedTogether(f: FormPairFinding): boolean {
-    if (f.kind === "both" || f.kind === "removed") return true;
-    // added：兩邊**同時**出現才算一起動；只有一邊有 = 同一個缺陷的「新增」形狀。
-    if (f.kind === "added") return f.state.base !== null && f.state.alternate !== null;
-    return false;
-  }
-
-  it("⭐ 只改到一邊就會紅（本體 ⇄ 變身態逐支對帳；兩邊一起動＝自動新基準）", () => {
+  it("⭐ 對不上基準線就紅（本體 ⇄ 變身態逐支對帳；⛔ 這條閘自己不寫基準線）", () => {
     cover("form-pair-ability-parity");
     const states = scanFormPairAbilities(shipped, abilitiesByChampion());
 
+    // ⭐⭐ 重生成是**另一條路**，而且它 `return` —— 斷言路徑因此**結構上**寫不了檔。
+    //    ⛔ 不要把它改回「發現差異就順手寫回去」：那一版看起來只是少打一個指令，
+    //    實際上是這條閘唯一的一次失效（GH#854，見檔頭）。
     if (process.env.GGD_FORM_PAIR_DUMP) {
+      const before = JSON.parse(readFileSync(BASELINE, "utf8")) as FormPairBaseline;
+      const absorbing = diffAgainstBaseline(states, before);
       writeFileSync(BASELINE, JSON.stringify(toBaseline(states), null, 2) + "\n", "utf8");
-      console.log(`[dump] ${states.length} 個編號 → ${BASELINE}`);
+      // ⚠️ 重生成會把**單邊改動也一起洗白** —— 所以它要被念出來，⛔ 不可以安靜
+      //    （fail-open 沒錯，靜默才是缺陷）。
+      const oneSided = absorbing.filter(isOneSided);
+      console.log(`[dump] ${states.length} 個編號 → ${BASELINE}（吸收 ${absorbing.length} 筆）`);
+      for (const f of oneSided) console.log(`[dump] ⚠️ 連同這筆**單邊**改動一起吸收：${formatFinding(f)}`);
+      if (oneSided.length > 0) {
+        console.log(`[dump] ⛔ 上面 ${oneSided.length} 筆是 GH#479 要抓的缺陷本身 —— 確認過再 git add。`);
+      }
+      return;
     }
 
     const baseline = JSON.parse(readFileSync(BASELINE, "utf8")) as FormPairBaseline;
@@ -75,43 +105,77 @@ describe("變身對子的技能同步", () => {
     expect(Object.keys(baseline).length).toBeGreaterThan(50);
 
     const findings = diffAgainstBaseline(states, baseline);
-    const absorbed = findings.filter(movedTogether);
-    const oneSided = findings.filter((f) => !movedTogether(f));
-
-    // ⭐ 兩邊一起動的自動吸收成新基準（H5）。⛔ **逐筆**合併，不整份覆寫 ——
-    //    整份覆寫會把同一輪紅著的單邊改動一起洗白，那就是把閘弄弱。
-    if (absorbed.length > 0) {
-      const merged: Record<string, readonly [SideFingerprint, SideFingerprint]> = { ...baseline };
-      const byCode = new Map(states.map((s) => [s.code, s]));
-      for (const f of absorbed) {
-        const now = byCode.get(f.state.code);
-        if (now) merged[f.state.code] = [now.base, now.alternate];
-        else delete merged[f.state.code]; // removed：兩邊同時消失
-      }
-      const sorted = Object.fromEntries(
-        Object.keys(merged)
-          .sort()
-          .map((k) => [k, merged[k]]),
-      );
-      writeFileSync(BASELINE, JSON.stringify(sorted, null, 2) + "\n", "utf8");
-      console.log(
-        `[auto-baseline] ${absorbed.length} 個編號兩邊一起動，基準線已更新 → 記得 git add ${BASELINE}`,
-      );
-    }
+    const oneSided = findings.filter(isOneSided);
+    const together = findings.filter((f) => !isOneSided(f));
+    const lines = [
+      ...oneSided.map((f) => `⛔ 單邊　${formatFinding(f)}`),
+      ...together.map((f) => `⚠️ 兩邊　${formatFinding(f)}`),
+    ];
 
     expect(
-      oneSided.map((f) => formatFinding(f)).join("\n"),
-      `⛔ ${oneSided.length} 支技能只動了一邊。有變身的英雄在內容樹裡是**兩份文件**，` +
-        `本體改了、變身態沒改 ⇒ 玩家變身之後用的是舊的那一份（全套測試會全綠）。\n` +
-        `⭐ 照訊息去把另一邊補上（補上之後兩邊一起動，下一次跑會自動變成新基準）。\n` +
+      lines.join("\n"),
+      `⛔ ${findings.length} 個編號對不上基準線（單邊 ${oneSided.length}／兩邊 ${together.length}）。\n` +
+        `⭐ **「⛔ 單邊」是缺陷**：有變身的英雄在內容樹裡是**兩份文件**，本體改了、變身態沒改\n` +
+        `   ⇒ 玩家變身之後用的是舊的那一份（全套測試會全綠）。照訊息去把另一邊補上。\n` +
+        `⚠️ **「⚠️ 兩邊」不會自動變成新基準**（GH#854）—— 兩邊一起動也可能是**兩邊一起被推開**：\n` +
+        `   \`deriveCastTimes.ts --write\` 照每一份文件**自己的**機制算 castTimeSec，兩形態的機制\n` +
+        `   一旦不同，它就給出兩個答案而**兩個指紋一起變**。所以這裡要人看過 diff 才准進基準線。\n` +
         `⚠️⚠️ **補之前先查那一邊是誰的**：bash scripts/genguard.sh content/abilities/<id>.json\n` +
-        `   · 產生器的產物 ⇒ 改**來源**（tools/skill-remake/heroes/*.py 的 model_fx= 那類表格出口）\n` +
-        `     再 bash scripts/genrun.sh <step>。⛔ 直接改出貨 JSON 會被下一次 sync 打回來，\n` +
-        `     而那個「又紅了」看起來像**新的**錯（2026-08-25 我在這一條上就繞了一整圈）。\n` +
+        `   · 產生器的產物 ⇒ 改**來源**（tools/skill-remake/heroes/*.py）再 bash scripts/genrun.sh <step>。\n` +
+        `     ⛔ 直接改出貨 JSON 會被下一次 sync 打回來，而那個「又紅了」看起來像**新的**錯。\n` +
+        `   · ⚠️ 變身態**沒有產生器**（六個對子逐一的理由在 tools/skill-remake/form_counterparts.py）\n` +
+        `     ⇒ 那一邊是手編的，改它就是改 content/abilities/<變身態 id>.<slot>.json 本人。\n` +
         `   · ⚠️ 同一支技能在內容樹裡有**兩份**：standalone content/abilities/ ＋\n` +
         `     內嵌 content/champions/<hero>.json 的 abilities.<SLOT> —— **兩份都要動**。\n` +
-        `確認過是**刻意的單邊形態差異**才手動重生成：\n` +
-        `   GGD_FORM_PAIR_DUMP=1 npx vitest run packages/shared/src/content/abilityCodeParityForms.test.ts`,
+        `確認過 diff 之後才重生成基準線（⛔ 這條測試自己不會做這件事）：\n` +
+        `   GGD_FORM_PAIR_DUMP=1 npx vitest run packages/shared/src/content/abilityCodeParityForms.test.ts\n` +
+        `   git add packages/shared/src/content/abilityCodeParityForms.baseline.json`,
+    ).toBe("");
+  });
+
+  /**
+   * ⭐ 今天**兩形態的 `castTimeSec` 就是不一樣**的編號 —— 一條只准變短的棘輪。
+   *
+   * ⚠️ 上面那條閘問的是「有沒有人只改一邊」，⛔ 它問不出「**已經**不一樣的有幾個」——
+   *    一旦一組差異進了基準線，它就是新的正常。而 GH#854 的症狀正是這一種：
+   *    `deriveCastTimes.ts --write` 照每一份文件**自己的**機制算 castTimeSec，
+   *    本體有產生器來源、變身態沒有（`tools/skill-remake/form_counterparts.py`）
+   *    ⇒ 同一個公式對兩邊給出兩個答案，而沒有任何東西數過它。
+   *
+   * ⭐ 2026-08-29 量到（⛔ 不是估的）：**本體有產生器來源的 14/36（39%）**，
+   *    其餘手編對子 **5/84（6%）** —— **6.5 倍**。最貴的一筆是
+   *    12-04 龍氣爆發：`godie-ewar` 1.0s ／ `godie-e007` 2.033s（差 1.033 秒）。
+   *
+   * ⛔ 這裡刻意**不裁決哪一邊是對的**（第〇·六守則）：79 卍解那一對的定義就是
+   *    「技能換一套」，兩形態的詠唱本來就該不同。所以它是**棘輪**不是等式 ——
+   *    只准變短，⛔ 不准變長。
+   */
+  const CAST_TIME_DRIFT = [
+    "08-02", "09-03", "12-03", "12-04", "18-03", "25-04", "58-04", "70-03",
+    "77-00", "77-002", "77-01", "77-03", "77-04", "79-002", "79-01", "79-03",
+    "92-002", "92-01", "92-04",
+  ] as const;
+
+  it("⭐ 兩形態詠唱不同的編號只准變少（⛔ 新的一筆＝又被推開了一支）", () => {
+    const now = new Set(
+      scanFormPairAbilities(shipped, abilitiesByChampion())
+        .filter((s) => s.driftFields.includes("castTimeSec"))
+        .map((s) => s.code),
+    );
+    const known = new Set<string>(CAST_TIME_DRIFT);
+    const grew = [...now].filter((c) => !known.has(c)).sort();
+    const fixed = CAST_TIME_DRIFT.filter((c) => !now.has(c));
+    expect(
+      [
+        ...grew.map((c) => `⛔ 新增　${c}　兩形態的 castTimeSec 被推開了`),
+        ...fixed.map((c) => `✅ 修好　${c}　把它從 CAST_TIME_DRIFT 拿掉（棘輪只能變短）`),
+      ].join("\n"),
+      `⛔ 兩形態詠唱不同的編號從 ${CAST_TIME_DRIFT.length} 變成 ${now.size}（GH#854）。\n` +
+        `⭐ **castTimeSec 是推導的**（\`deriveCastTimes.ts --write\` 讀那份文件自己的\n` +
+        `   castType／effects／cooldown）⇒ ⛔ 手寫一個值進 JSON **修不好它**，下一次\n` +
+        `   sync 就會照舊算回去。要對齊詠唱，要對齊的是**機制**。\n` +
+        `⚠️ 新增一筆通常代表：本體被規格重寫了，而變身態那一份沒有人跟著改\n` +
+        `   （變身態逐一的作者與理由在 tools/skill-remake/form_counterparts.py）。`,
     ).toBe("");
   });
 
