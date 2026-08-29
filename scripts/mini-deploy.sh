@@ -151,7 +151,7 @@ cmd_deploy() {
     info "mini 上還沒有 .git ⇒ ⭐ **就地**建立（⛔ 不搬動任何東西）"
     local url; url=$(git -C "$REPO" remote get-url origin)
     r "cd $REMOTE_REPO && git init -q && git remote add origin '$url' 2>/dev/null; \
-       git fetch -q --depth=50 origin main && git reset -q --mixed FETCH_HEAD" \
+       git fetch -q origin main && git reset -q --mixed FETCH_HEAD && git fetch -q --tags origin" \
       || die "就地建立 .git 失敗。
    ⚠️ 若訊息是「correct access rights / repository exists」——
    ⭐ 那**通常不是權限問題**，是 **SSH agent 轉發沒過去**（CLAUDE.md 記過的誤導訊息）。
@@ -159,7 +159,11 @@ cmd_deploy() {
     ok "版本庫已就地建立（⭐ data/ 與 docker/.env 一個位元組都沒動）"
   fi
 
-  r "cd $REMOTE_REPO && git fetch -q --all --tags && git checkout -q $head_local" \
+  # ⚠️ 淺 clone（`--depth`）會讓**下一個** commit checkout 不出來（實測:1 個 commit 的
+  #   版本庫抓不到新 HEAD）,⭐ 而且 `git describe` 找不到 tag ⇒ 版本戳退回裸 hash。
+  #   ⇒ ⛔ 這裡**不用 --depth**;真的淺了就先 unshallow。
+  r "cd $REMOTE_REPO && { [ -f .git/shallow ] && git fetch -q --unshallow origin main 2>/dev/null; true; } \
+     && git fetch -q --all --tags && git checkout -q $head_local" \
     || die "checkout $head_local 失敗"
   local remote_head; remote_head=$(r "cd $REMOTE_REPO && git rev-parse HEAD" 2>/dev/null)
   [ "$remote_head" = "$head_local" ] \
