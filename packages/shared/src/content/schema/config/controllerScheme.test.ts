@@ -104,3 +104,46 @@ describe("config.controller-scheme@1", () => {
     expect(DOC.schemes.v4?.autoFarm.pveOnly).toBe(true); // v4 照 spec
   });
 });
+
+/**
+ * ⭐ `active` 這根指針**真的被跟隨**（GH#863 的 AC5）。
+ *
+ * ⚠️ 2026-08-29 量到：把 `resolveControllerScheme` 的
+ * `doc.schemes[doc.active]` 寫死成 `doc.schemes["v3-shipped"]`，
+ * ⛔ **27 條既有測試全部照樣綠** —— 它們驗的是**方案的內容**（名詞），
+ * ⭐ 沒有一條驗「`active` 指到哪裡，拿到的就是哪一個」（**關係**）。
+ *
+ * ⇒ 那正是 AC5 逐字要的：「突變：把方案解析換成寫死 ⇒ **有東西紅**」。
+ *
+ * ⭐ 它同時是 owner 那格 rollback 開關的**唯一**守衛：`active` 不被跟隨 ＝
+ * 後台切到 `v3-shipped` 什麼都不會發生，而畫面上看不出來。
+ */
+describe("active 指針真的被跟隨（GH#863 AC5）", () => {
+  it("⭐ 切 active ⇒ 拿到的是**那一個**方案，⛔ 不是別的", async () => {
+    const { resolveControllerScheme } = await import("./controllerScheme");
+    const { readFileSync } = await import("node:fs");
+    const { join, dirname } = await import("node:path");
+    const { fileURLToPath } = await import("node:url");
+    const repo = join(dirname(fileURLToPath(import.meta.url)), "../../../../../..");
+    // ⭐ 拿**出貨的**那份文件（⛔ 不是自造夾具 —— 失敗形態⑤）
+    const doc = JSON.parse(readFileSync(join(repo, "content/config/controller-scheme.json"), "utf8"));
+    const names = Object.keys(doc.schemes);
+    expect(names.length, "⛔ 至少要有兩個方案才談得上「切」").toBeGreaterThan(1);
+
+    for (const name of names) {
+      const got = resolveControllerScheme({ ...doc, active: name });
+      expect(got, `⛔ active=${name} 解析不到`).toBeTruthy();
+      expect(
+        got,
+        `⛔ active=${name} 拿到的**不是**那一個方案 —— ` +
+          `解析被寫死了 ⇒ 後台切 active 什麼都不會發生，⭐ 而畫面上看不出來。`,
+      ).toEqual(doc.schemes[name]);
+    }
+
+    // ⭐ 反方向：兩個方案**真的不一樣**（⛔ 否則上面那條在寫死時也會過）
+    expect(
+      resolveControllerScheme({ ...doc, active: names[0]! }),
+      "⛔ 兩個方案內容相同 ⇒ 這條守衛量不出「有沒有跟隨 active」",
+    ).not.toEqual(doc.schemes[names[1]!]);
+  });
+});
