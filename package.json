@@ -147,7 +147,7 @@
     "jasscombo:check": "python3 tools/jass-combo/extract.py --check",
     "vfxbind:build": "bash scripts/genrun.sh vfxbind:build vfxbind:build:raw",
     "vfxbind:build:raw": "python3 tools/vfx-bind/scan.py",
-    "vfxbind:check": "python3 tools/vfx-bind/scan.py --check",
+    "vfxbind:check": "python3 tools/vfx-bind/scan.py --check --strict",
     "models:check": "python3 tools/model-census/gore_geoset.py --check",
     "audit:build": "bash scripts/genrun.sh audit:build audit:build:raw",
     "audit:build:raw": "python3 tools/skill-audit/audit.py",

@@ -748,6 +748,95 @@ def crosscheck(doc: dict[str, Any]) -> list[str]:
     return problems
 
 
+# ---------------------------------------------------------------------------
+# ⭐ GH#818 —— `--strict` 的**棘輪**：還在等人審的 `promoted` 列
+# ---------------------------------------------------------------------------
+# 這一段的存在理由是 CLAUDE.md 元規則⑨:**一個永遠不會綠的閘等於沒有閘**。
+#
+# 「補完就把 `vfxbind:check` 改成 `--check --strict`」是這張票的收口動作,而
+# 「補完」那一半是 **HITL**(哪一張圖層是這支技能的主體是視覺判斷,#529 逐字寫著
+# 「接錯比不接糟」)—— 它不會在這一條 lane 裡發生。⇒ 兩條路都是錯的:
+#
+#   · 直接翻 `--strict`  ⇒ `skills:check` 在**每一次正確的 checkout 上**都紅,
+#                          而且它擋住的是**每一條** lane(⑨ 那個 `>= 600` 的形狀)
+#   · 留著不翻          ⇒ 第 35 列漏掉的那一天,⛔ 沒有任何東西會紅
+#
+# ⇒ 棘輪:下面這一批**已知在等 HITL** 的列不擋,⛔ 其餘一律擋。所以
+#   ① 新出現的 MISSING(第 35 支) ⇒ 紅  ② DEAD / SET-DRIFT ⇒ 紅
+#   ③ 這張表上**已經不缺**的那一列 ⇒ 紅(⭐ 棘輪只能變短 —— 逼人把它劃掉)
+#
+# ⚠️ 它**不是**一張豁免表:每一列都會在 `--check` 的輸出裡逐支列名(MISSING),
+# 只是不回非零。名單清空的那一天,這個常數與這段註解一起刪掉。
+# 量到(2026-08-29,`python3 tools/vfx-bind/scan.py --check`):34 列。
+# 逃生口 `GGD_VFXBIND_STRICT_OFF=1`(⛔ 用了要在 commit 訊息裡說為什麼)。
+HITL_PENDING_PROMOTED = frozenset(
+    {
+        "godie-e002.w",
+        "godie-e00l.w",
+        "godie-e00w.passive",
+        "godie-e00x.passive",
+        "godie-h01n.e",
+        "godie-h01o.e",
+        "godie-h020.e",
+        "godie-hapm.ex",
+        "godie-hapm.w",
+        "godie-hart.w",
+        "godie-hjai.e",
+        "godie-hpb1.e",
+        "godie-huth.r",
+        "godie-hvsh.r",
+        "godie-hvwd.ex",
+        "godie-n01c.r",
+        "godie-nbbc.r",
+        "godie-o00x.e",
+        "godie-ogrh.e",
+        "godie-osam.ex",
+        "godie-u00h.r",
+        "godie-u00j.w",
+        "godie-u00n.q",
+        "godie-u00n.w",
+        "godie-u00o.q",
+        "godie-u00o.w",
+        "godie-u00v.w",
+        "godie-u010.e",
+        "godie-u01u.r",
+        "godie-u034.passive",
+        "godie-ucrl.passive",
+        "godie-udea.w",
+        "godie-udre.r",
+        "godie-uvng.e",
+    }
+)
+
+
+def strict_failures(problems: list[str]) -> list[str]:
+    """`--strict` 真的要回非零的那幾筆 —— 棘輪過濾之後的。
+
+    ⭐ 兩個方向都走(元規則⑫):既問「哪一筆問題不在名單上」,也問
+    「名單上哪一筆已經不是問題了」。⛔ 只走前者的話,名單會變成一張永遠不變短
+    的豁免表,而那正是它要防的東西。
+    """
+    out: list[str] = []
+    still_pending: set[str] = set()
+    for p in problems:
+        if p.startswith("⚠️"):
+            continue
+        kind, _, rest = p.partition(" ")
+        aid = rest.split()[0] if rest.split() else ""
+        if kind == "EXTRA":
+            continue
+        if kind == "MISSING" and aid in HITL_PENDING_PROMOTED:
+            still_pending.add(aid)
+            continue
+        out.append(p)
+    for aid in sorted(HITL_PENDING_PROMOTED - still_pending):
+        out.append(
+            f"RATCHET   {aid} —— 已經不缺了(補上了、或這支技能退休了),"
+            "⛔ 把它從 scan.py 的 HITL_PENDING_PROMOTED 劃掉(棘輪只能變短)"
+        )
+    return out
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="從原作證據推導技能→原作特效綁定表")
     ap.add_argument("--check", action="store_true", help="唯讀:逐位元組比對 + 跨表對帳")
@@ -755,8 +844,10 @@ def main() -> int:
     ap.add_argument(
         "--strict",
         action="store_true",
-        help="讓跨表對帳的 MISSING/DEAD/SET-DRIFT 也回非零(⭐ 那幾筆修完之後,"
-        "把 skills:check 裡的這一支改成 --check --strict,閘就從此關上)",
+        help="讓跨表對帳的 MISSING/DEAD/SET-DRIFT 也回非零。"
+        "⭐ GH#818 起 `skills:check` 就是跑 `--check --strict` —— 還在等 HITL 的那幾列"
+        "住 HITL_PENDING_PROMOTED(棘輪,只能變短),⛔ 其餘一律擋。"
+        "逃生口 GGD_VFXBIND_STRICT_OFF=1(只警告不擋)",
     )
     args = ap.parse_args()
 
@@ -805,9 +896,18 @@ def main() -> int:
             return 1
         with open(OUT, "r", encoding="utf-8") as fh:
             have = fh.read()
-        fatal = [p for p in problems if not p.startswith(("EXTRA", "⚠️"))] if args.strict else []
+        fatal = strict_failures(problems) if args.strict else []
+        if fatal and os.environ.get("GGD_VFXBIND_STRICT_OFF") == "1":
+            # fail-open 沒錯,**靜默**才是缺陷 —— 所以它照樣把每一筆印出來。
+            print("⚠️ GGD_VFXBIND_STRICT_OFF=1 —— --strict 這一輪只警告不擋:", file=sys.stderr)
+            for p in fatal:
+                print("   " + p, file=sys.stderr)
+            fatal = []
         if fatal:
+            # ⭐ 一次撈全部,⛔ 不是「跑一次→修一筆→再跑一次」(第零守則)。
             print(f"⛔ 跨表對帳有 {len(fatal)} 筆問題(--strict)", file=sys.stderr)
+            for p in fatal:
+                print("   " + p, file=sys.stderr)
             return 1
         if have != text:
             print(

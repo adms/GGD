@@ -264,12 +264,20 @@ describe("#251 施法高度真的送到 Babylon (cast-height-applied)", () => {
     }
   });
 
-  it("`familyCastHeightY` 對沒有家族的技能一律回平面高度（硬表晉升那 34 支）", () => {
-    // `w3xAbilityArtRows()` 的列沒有 `heightY`（它們沒有家族原型），absent 必須
-    // 讀成「用平面高度」而不是 0 —— 0 = 埋進地板，第①號故障。
+  it("`familyCastHeightY` 對真的沒有家族的技能一律回平面高度", () => {
+    // absent 必須讀成「用平面高度」而不是 0 —— 0 = 埋進地板，第①號故障。
+    //
+    // ⚠️ GH#818：這條的夾具原本寫死 `godie-e002.e`，⛔ 而那一支**有**家族證據 ——
+    // 它 absent 的唯一原因是晉升列把家族層短路掉（失敗形態②）。⇒ 這條當年是
+    // 「靠缺陷才綠的守衛」（元規則⑩）。修好之後它紅了，而那不是回歸，是前提消失。
+    // ⭐ 夾具改成**出貨真的會發生的那一種**：晉升列而**同一列沒有家族**的那幾支。
     setCastHeightSource("family");
-    const art = w3xArtFor("godie-e002.e");
-    expect(art, "拿來當對照的硬表列不見了").toBeTruthy();
+    const bare = Object.keys(w3xAbilityArtRows()).filter(
+      (id) => !w3xFamilyArtRows()[id] && !SHIPPED.abilities?.[id]?.family,
+    );
+    expect(bare.length, "每一支晉升都有家族了 —— 這條沒有被測對象").toBeGreaterThan(0);
+    const art = w3xArtFor(bare[0]!);
+    expect(art, "拿來當對照的晉升列不見了").toBeTruthy();
     expect(art?.heightY).toBeUndefined();
     expect(familyCastHeightY(art)).toBe(SHIPPED_CAST_HEIGHT_Y);
     expect(familyCastHeightY(undefined)).toBe(SHIPPED_CAST_HEIGHT_Y);

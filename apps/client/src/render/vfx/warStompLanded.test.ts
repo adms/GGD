@@ -62,8 +62,12 @@ describe("動地跺（GH#439）", () => {
 describe("掛點（GH#392）", () => {
   it("宣告了掛點的技能，掛點會走到美術列上（⛔ 不在 familyRow 那一行蒸發）", () => {
     setFamilyTuning(doc);
-    // ⚠️ 只看**家族層**解出來的那些：晉升列（`bindings.<id>.promoted`）的
-    // 結構裡根本沒有掛點這一格，所以它們回 undefined 是正確的，⛔ 不是缺陷。
+    // ⚠️ 只看**家族層**解出來的那些（`via` 以 `family:` 開頭）。
+    // ⭐ GH#818 更正：這裡原本寫「晉升列⋯回 undefined 是正確的，⛔ 不是缺陷」——
+    // ⛔ 那句話是假的。`zVfxPromotedBinding` 確實沒有掛點那一格，但晉升列現在
+    // **借**同一支技能家族層解出來的掛點（`promotedSpatialFields`），量到 10 支
+    // 因此拿回了後台真的存過的 `chest` / `hand,left`。這條的分母仍然只數家族列，
+    // 晉升那一半由 `promotedCarriesSpatial.test.ts` 守。
     // ⭐ 逐支掃、⛔ 不挑「第一支」——出貨表的第一支剛好是晉升列（godie-e007.r），
     // 挑第一支的寫法會對「掛點還在蒸發」與「掛點已經接好」**都紅**（斷言方向
     // 與缺陷無關，失敗形態④）。
