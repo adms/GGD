@@ -279,6 +279,107 @@ export function roundPurgeModeOf(policy: ConfigVfxCleanupDoc = vfxCleanupPolicy(
   return ROUND_PURGE_MODES.includes(v as RoundPurgeMode) ? (v as RoundPurgeMode) : fallback;
 }
 
+// ---------------------------------------------------------------------------
+// 🎬 GH#842 —— 三秒碼表的**主詞**（rollback 開關）
+// ---------------------------------------------------------------------------
+
+/**
+ * 三秒鐵則的碼表**量的是哪一個東西**。
+ *
+ * owner 2026-08-28：「常常打一打 動畫就消失沒有播完」。根因是碼表的**主詞錯了** ——
+ * owner 的鐵則（2026-08-23）逐字是「不管什麼特效⋯**產生後**生命週期最多維持三秒」，
+ * 主詞是**一次演出**；而在 GH#842 之前碼表量的是「**這個 emitter 物件**連續
+ * `isAlive()` 了多久」。四個池（`VfxSystem.play` · `vfxPresets.fireBurst` ·
+ * `W3xEmitterRig` · `modelFxRig.spawn`）重新點燃時 ⛔ 不排空 ⇒ 碼表從**第一次**
+ * 點燃就沒歸零過 ⇒ 連續戰鬥 3 秒後砍掉玩家眼前正在播的那一發。
+ *
+ *   · `"performance"`（出貨）—— 主詞是**一次演出**：重新點燃 ⇒ 碼表歸零。
+ *   · `"emitter"`（rollback）—— 主詞是**這顆 emitter**：⭐ 逐位元組回到
+ *      2026-08-28 之前的行為（`noteVfxRefired` 變成 no-op）。
+ *
+ * ⚠️ 兩個檔位**都**吃三秒鐵則 —— 這一格切的是「碼表從哪一刻起算」，
+ * ⛔ 不是「要不要回收」。要整支關掉仍然是 `vfxHardCapScope: "off"`。
+ */
+export const VFX_REFIRE_CLOCKS = ["performance", "emitter"] as const;
+export type VfxRefireClock = (typeof VFX_REFIRE_CLOCKS)[number];
+export const DEFAULT_VFX_REFIRE_CLOCK: VfxRefireClock = "performance";
+
+/**
+ * 四條通道的名字。⭐ 這裡是它們**唯一的住處**（帳本 `docs/_review/material/`
+ * 引用的就是 `GGD_VFX_REFIRE_CLOCK` 這一格，而 `review:register` 會回頭
+ * 到出貨原始碼裡查「誰讀它」—— 查不到就拒絕登記）。
+ *
+ * ⚠️ 為什麼**不是** `content/config/vfx-cleanup@1` 的一格欄位：那要同時動
+ * `packages/shared` 的 Zod 與 `apps/admin` 的 `SHIPPED_*`（併行時的共用檔）。
+ * ⇒ 慣例照抄 `config/fullAssets.ts` 與 `audio/AudioSystem.ts`：build 旗標
+ * ＋ **runtime** 通道。⭐ 後兩條（全域 / 查詢字串）讓 owner **不必重建 client**
+ * 就翻得回去（`https://…/?vfxRefireClock=emitter`），那才叫「簡易 rollback」。
+ */
+export const VFX_REFIRE_CLOCK_ENV = "VITE_GGD_VFX_REFIRE_CLOCK";
+export const VFX_REFIRE_CLOCK_NODE_ENV = "GGD_VFX_REFIRE_CLOCK";
+export const VFX_REFIRE_CLOCK_GLOBAL = "__GGD_VFX_REFIRE_CLOCK__";
+export const VFX_REFIRE_CLOCK_QUERY = "vfxRefireClock";
+
+/**
+ * 純函式、可注入（同 `resolveFullAssets` / `resolveStockEmitterWindow`）。
+ * ⚠️ 認不得的值退回**出貨檔位**，⛔ 不是 `"emitter"` —— 一個打錯的旗標
+ * 不可以把修好的東西靜默地關掉。
+ */
+export function resolveVfxRefireClock(explicit: unknown): VfxRefireClock {
+  if (explicit === undefined || explicit === null) return DEFAULT_VFX_REFIRE_CLOCK;
+  const s = String(explicit).trim().toLowerCase();
+  if (s === "emitter" || s === "legacy" || s === "0" || s === "off" || s === "false")
+    return "emitter";
+  return DEFAULT_VFX_REFIRE_CLOCK;
+}
+
+/**
+ * 四條通道各讀一次（優先序：build 旗標 → node env → 全域 → 查詢字串）。
+ * ⚠️ `import.meta.env` 在 vitest 的純 node 下**存取就擲例外**，而 `process`
+ * 在瀏覽器裡不存在 —— 包起來是這個 repo 的既有慣例。
+ */
+function refireClockOverride(): unknown {
+  try {
+    const env = (import.meta as unknown as { env?: Record<string, unknown> }).env;
+    const v = env?.[VFX_REFIRE_CLOCK_ENV];
+    if (v !== undefined && v !== "") return v;
+  } catch {
+    /* not a vite bundle */
+  }
+  const g = globalThis as unknown as {
+    process?: { env?: Record<string, string | undefined> };
+    location?: { search?: unknown };
+    [k: string]: unknown;
+  };
+  const fromNode = g.process?.env?.[VFX_REFIRE_CLOCK_NODE_ENV];
+  if (fromNode !== undefined && fromNode !== "") return fromNode;
+  const fromGlobal = g[VFX_REFIRE_CLOCK_GLOBAL];
+  if (fromGlobal !== undefined && fromGlobal !== null && fromGlobal !== "") return fromGlobal;
+  const search = typeof g.location?.search === "string" ? g.location.search : "";
+  if (search) {
+    try {
+      const raw = new URLSearchParams(search).get(VFX_REFIRE_CLOCK_QUERY);
+      if (raw !== null && raw !== "") return raw;
+    } catch {
+      /* malformed search string */
+    }
+  }
+  return undefined;
+}
+
+/** 記住的檔位。⭐ `noteVfxRefired` 是每秒幾十次的熱路徑，⛔ 不逐次重讀四條通道。 */
+let cachedRefireClock: VfxRefireClock | null = null;
+
+/** 現在生效的檔位（讀一次就記住，同 `shouldSilenceAudio` 的「開機讀一次」）。 */
+export function vfxRefireClock(): VfxRefireClock {
+  return (cachedRefireClock ??= resolveVfxRefireClock(refireClockOverride()));
+}
+
+/** 測試 / audition 的接縫：把記住的那一格作廢。⛔ 出貨路徑不呼叫。 */
+export function resetVfxRefireClockCache(): void {
+  cachedRefireClock = null;
+}
+
 /**
  * 常駐特效的豁免前綴（出貨那一族場地／實體綁定的粒子系統）。
  *
