@@ -304,6 +304,16 @@ export function deriveTelegraphGeometry(
       const eff = firstEffect(def, (e) => typeof e.projectileId === "string" && e.projectileId.length > 0);
       const proj = eff?.projectileId ? env.projectile(eff.projectileId) : null;
       if (!proj) {
+        // ⭐ GH#401（2026-08-30）—— **沿線推進轉換之後沒有投射物了**。
+        //
+        // ⚠️ 量到的：`godie-hgam.r` / `godie-ogrh.r` 從投射物翻成 `damageLine` 之後
+        //   這一支推導不出走廊 ⇒ 回 null ⇒ ⭐ **玩家閃不掉一個沒有被畫出來的東西**。
+        // ⭐ 而走廊的兩個尺寸 `damageLine` **自己就帶著**（`length` / `width`）——
+        //   ⛔ 不必為它發明新欄位，也⛔ 不必假裝有投射物。
+        // ⇒ 借 `groundLashGeometry()`（同一份幾何，⛔ 不是第二個住處）。
+        const lash = groundLashGeometry(def);
+        if (lash) return lash;
+
         // ⭐ GH#393（2026-08-19）—— 沿向量分段推進（`delayed` + `advance`）。
         // 它**不是**投射物：沒有飛行體、沒有 projectileId，而是「一條線上逐段落點、
         // 每段各結算一次」。⛔ 但玩家要閃的東西完全一樣是一條走廊，而走廊的兩個

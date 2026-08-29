@@ -23,11 +23,11 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 2931 個檔案**，分佈在 2 個隔離區。
+**目前共 2994 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
-| [`docs/legacy/`](legacy-index.md#docslegacy) | 2491 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
+| [`docs/legacy/`](legacy-index.md#docslegacy) | 2554 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
 | [`content/_legacy/`](legacy-index.md#contentlegacy) | 440 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
@@ -35,7 +35,7 @@ owner 2026-08-13：
 
 ---
 
-## `docs/legacy/` —— 2491 檔
+## `docs/legacy/` —— 2554 檔
 
 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）
 
@@ -2496,6 +2496,69 @@ owner 2026-08-13：
 | `_overwrites/overwrite_temp_20260830-003105/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/content/crossHeroAssetBinding.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260830-003115/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/content/crossHeroAssetBinding.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260830-005949/docs/_release/ggd-board.html` | （.html 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010034/.claude/worktrees/wf_d6c1056a-bf8-2/apps/client/src/vfx/beamAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010045/.claude/worktrees/wf_d6c1056a-bf8-2/apps/client/src/vfx/beamAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010154/.claude/worktrees/wf_d6c1056a-bf8-2/apps/client/src/vfx/auditionCalibrates.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010213/.claude/worktrees/wf_d6c1056a-bf8-2/apps/client/src/vfx/auditionCalibrates.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010257/.claude/worktrees/wf_d6c1056a-bf8-2/apps/client/src/vfx/beamAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010316/.claude/worktrees/wf_d6c1056a-bf8-2/apps/client/src/vfx/beamAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010520/.claude/worktrees/wf_d6c1056a-bf8-3/packages/shared/src/content/cache/fingerprint.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010529/.claude/worktrees/wf_d6c1056a-bf8-3/packages/shared/src/content/cache/fingerprint.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010543/.claude/worktrees/wf_d6c1056a-bf8-3/packages/shared/src/content/cache/fingerprint.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010551/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/AimResolver.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010558/.claude/worktrees/wf_d6c1056a-bf8-3/packages/shared/src/content/cache/fingerprint.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010600/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/AimResolver.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010612/.claude/worktrees/wf_d6c1056a-bf8-3/packages/shared/src/content/cache/fingerprint.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010613/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/InputCapture.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010620/.claude/worktrees/wf_d6c1056a-bf8-2/docs/_reports/measure-injectable_visual-proof_20260830-0105/frames.md` | measure-injectable — 連續圖片驗收（GH#____） —— 📅 **證據的時間身分（GH#795）**：`HEAD=65e11fea` 工作樹 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010621/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/InputCapture.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010625/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/InputCapture.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010629/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/InputCapture.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010639/.claude/worktrees/wf_d6c1056a-bf8-3/packages/shared/src/content/cache/fingerprint.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010643/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/TouchInput.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010644/.claude/worktrees/wf_d6c1056a-bf8-3/packages/shared/src/content/cache/fingerprint.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010648/.claude/worktrees/wf_d6c1056a-bf8-3/packages/shared/src/content/cache/fingerprint.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010649/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/TouchInput.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010710/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/TouchInput.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010714/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/TouchInput.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010718/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/TouchInput.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010722/.claude/worktrees/wf_d6c1056a-bf8-3/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010725/.claude/worktrees/wf_d6c1056a-bf8-3/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010735/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/GamepadInput.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010738/.claude/worktrees/wf_d6c1056a-bf8-3/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010741/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/GamepadInput.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010749/.claude/worktrees/wf_d6c1056a-bf8-3/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010749/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/GamepadInput.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010750/.claude/worktrees/wf_d6c1056a-bf8-2/apps/client/src/vfx/auditionCalibrates.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010756/.claude/worktrees/wf_d6c1056a-bf8-3/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010757/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/GamepadInput.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010758/.claude/worktrees/wf_d6c1056a-bf8-2/apps/client/src/vfx/auditionCalibrates.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010802/.claude/worktrees/wf_d6c1056a-bf8-3/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010804/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/GamepadInput.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010806/.claude/worktrees/wf_d6c1056a-bf8-3/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010812/.claude/worktrees/wf_d6c1056a-bf8-2/apps/client/src/vfx/auditionCalibrates.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010815/.claude/worktrees/wf_d6c1056a-bf8-3/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010817/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/GamepadInput.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010823/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/GamepadInput.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010824/.claude/worktrees/wf_d6c1056a-bf8-3/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010846/.claude/worktrees/wf_d6c1056a-bf8-5/packages/shared/src/ops/geosetFormGating.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010852/.claude/worktrees/wf_d6c1056a-bf8-2/apps/client/src/vfx/auditionCalibrates.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010858/.claude/worktrees/wf_d6c1056a-bf8-2/apps/client/src/vfx/auditionCalibrates.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010924/.claude/worktrees/wf_d6c1056a-bf8-3/apps/game-server/src/contentCacheHealth.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010935/.claude/worktrees/wf_d6c1056a-bf8-3/apps/game-server/src/contentCacheHealth.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-010955/.claude/worktrees/wf_d6c1056a-bf8-2/apps/client/src/vfx/auditionCalibrates.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-011002/.claude/worktrees/wf_d6c1056a-bf8-2/apps/client/src/vfx/auditionCalibrates.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-011138/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/allyTargets.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-011151/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/allyTargetPaths.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-011158/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/allyTargetPaths.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-011217/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/AimResolver.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-011236/.claude/worktrees/wf_d6c1056a-bf8-4/apps/client/src/input/AimResolver.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-011359/.claude/worktrees/wf_d6c1056a-bf8-5/packages/shared/src/ops/geosetFormGating.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-011437/.claude/worktrees/wf_d6c1056a-bf8-3/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-011455/.claude/worktrees/wf_d6c1056a-bf8-3/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-011714/.claude/worktrees/wf_d6c1056a-bf8-1/content/abilities/godie-o02p.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-011729/.claude/worktrees/wf_d6c1056a-bf8-1/content/abilities/godie-o02p.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-011913/.claude/worktrees/wf_d6c1056a-bf8-1/packages/shared/src/content/periodicFieldContentWiring.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/04.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/06.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/08.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
