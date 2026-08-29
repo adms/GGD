@@ -173,6 +173,59 @@ export async function certifiedRead<T>(
   return read();
 }
 
+/**
+ * 「亮」與「有顏色」的**唯一**門檻住這裡（⛔ 呼叫端不抄那兩個數字）。
+ *
+ * ⭐ GH#768 AC#2 —— 2026-08-26 那一張**滿版黃光**的幀被量成 `lit: 0`。
+ * 那個缺陷有兩半：① GPU 讀回一塊空的緩衝（要真 GPU 才驗得到）
+ * ② **數的那一半** —— 而②是靜態可判的，所以它在這裡，而且守衛餵得到它。
+ * ⚠️ 黃 = `(255,255,0)`：`max` 是 255（⇒ bright），**平均**是 170（⇒ 只算 lit）
+ * —— 也就是說一個看起來很無害的「max 改成平均」會讓滿版黃光的 `bright` 掉一半，
+ * ⛔ 而它不會有任何東西紅。⇒ 兩個方向都要有守衛（滿版黃 ⇒ 數得到；全黑 ⇒ 數到 0）。
+ */
+export function countBright(buf: Uint8Array): { bright: number; lit: number } {
+  let bright = 0;
+  let lit = 0;
+  for (let i = 0; i + 2 < buf.length; i += 4) {
+    const v = Math.max(buf[i]!, buf[i + 1]!, buf[i + 2]!);
+    if (v > 200) bright++;
+    if (v > 96) lit++;
+  }
+  return { bright, lit };
+}
+
+/** `measure()` 的三個零件 —— ⭐ **注入**進來，⛔ 不是關在 `createBeamAudition()` 的閉包裡。 */
+export interface CertifiedMeasureDeps {
+  /** 這一次讀數**之前**要跑的自證。⛔ 它 reject ⇒ 呼叫端一個數字都拿不到。 */
+  readonly certify: () => Promise<unknown>;
+  /** ⛔ **沒有自證過的**像素讀數。 */
+  readonly readPixels: () => Promise<Pick<BeamMeasurement, "w" | "h" | "bright" | "lit">>;
+  /** 坑⑥的分母：這一幀台上還活著的 beam（⇒ 分得出「台上沒東西」與「畫不出來」）。 */
+  readonly census: () => Pick<BeamMeasurement, "liveBeams" | "liveVertices">;
+}
+
+/**
+ * ⭐⭐ GH#768 —— `measure()` 的**組裝**，抽出來是為了讓守衛驗得到**行為**。
+ *
+ * ⚠️ 在此之前 `measure` 是 `createBeamAudition()` 裡的一個區域常數 ⇒ 唯一驗得到它的
+ * 手段是**掃字串**（「那一行還在嗎」）。⛔ 掃字串擋得住「有人把那一行刪掉」，
+ * 擋不住「有人把它接錯」—— 而 2026-08-26 的缺陷正是**接線**層的：量到 0 照樣交出去。
+ * ⇒ 這一支可注入 ⇒ 餵一個**會 reject 的** `certify`，就能證明呼叫端**一個數字都拿不到**
+ * （失敗形態⑥的反面：驗行為，⛔ 不是驗「檔案裡有沒有提到這個名字」）。
+ *
+ * `opts.certify === false` 是連拍時的一鍵回頭（第〇·六守則：⭐ **預設啟動**，
+ * ⛔ 而測試只做預設那一邊）。
+ */
+export function makeCertifiedMeasure(
+  deps: CertifiedMeasureDeps,
+): (opts?: { certify?: boolean }) => Promise<BeamMeasurement> {
+  const read = async (): Promise<BeamMeasurement> => ({
+    ...(await deps.readPixels()),
+    ...deps.census(),
+  });
+  return (opts) => (opts?.certify === false ? read() : certifiedRead(deps.certify, read));
+}
+
 export interface BeamAuditionHandle {
   /** 施放一次 09-04（重置冷卻與魔力 —— 只有這一頁這樣做）。 */
   cast(): Promise<void>;
@@ -399,17 +452,6 @@ export async function startBeamAudition(
     return got;
   };
 
-  const countBright = (buf: Uint8Array): { bright: number; lit: number } => {
-    let bright = 0;
-    let lit = 0;
-    for (let i = 0; i + 2 < buf.length; i += 4) {
-      const v = Math.max(buf[i]!, buf[i + 1]!, buf[i + 2]!);
-      if (v > 200) bright++;
-      if (v > 96) lit++;
-    }
-    return { bright, lit };
-  };
-
   /**
    * ⛔ **沒有自證過的**引擎讀數 —— 只給 `calibrate()` 當「尺 A」用。
    * ⚠️ 坑②：readPixels 讀到上一幀 ⇒ 先 render 兩次再讀。
@@ -438,16 +480,16 @@ export async function startBeamAudition(
   /**
    * ⭐ GH#768 AC#1：**先自證，再讀那一幀**。量不到已知亮的 control ⇒ 擲例外
    * （訊息逐字含「這台量尺的一切結論作廢」），⛔ 不是回 0 讓呼叫端當成「看不見」。
+   *
+   * ⭐ 組裝住 `makeCertifiedMeasure()`（模組層、可注入）⇒ 這一段的**行為**被守衛
+   * 釘著，⛔ 而這裡剩下的只是「哪三個零件接上去」。
+   * ⚠️ `certify` 必須是**惰性的** thunk：`calibrate` 是下面才宣告的 `const`（TDZ）。
    */
-  const measure = async (opts?: { certify?: boolean }): Promise<BeamMeasurement> => {
-    const read = async (): Promise<BeamMeasurement> => ({
-      ...(await readEngine()),
-      ...liveCensus(),
-    });
-    // ⭐ 預設啟動（第〇·六守則：優先權大的更新後都是預設啟動）；
-    //    `{certify:false}` 是連拍時的一鍵回頭。
-    return opts?.certify === false ? read() : certifiedRead(calibrate, read);
-  };
+  const measure = makeCertifiedMeasure({
+    certify: () => calibrate(),
+    readPixels: readEngine,
+    census: liveCensus,
+  });
 
   /**
    * ⭐ GH#768 —— 校準走 `calibrateTwoWay`（唯一住處），而且**兩把尺都要驗**。
