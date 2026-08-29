@@ -250,6 +250,37 @@ function loadBands(repoRoot) {
 // ✏️ `/modifiers/<第幾條>/value` —— 帶逐格推導，⛔ 不是一個常數。
 // ⚠️ 這幾行是 `//` 註解：pointer 樣式含 `*` 加 `/`，寫進區塊註解會**提早關掉它**
 //    （middleware.mjs 的 `pointerHit` 上面逐字踩過同一個坑）。
+/**
+ * 這一次改值，會不會讓**卡面**（`description`）變成謊話？（GH#831）
+ *
+ * ⭐ 判準：卡面裡**印著舊值的字面數字**、而它**不是佔位**（`{{...}}`）⇒ 會說謊 ⇒ 擋。
+ * ⛔ 不比對整句文案（那要一套文案解析器）—— 只問「舊的那個數字還在不在句子裡」。
+ * ⚠️ 誠實的界線：卡面用別的寫法（換算過、四捨五入）表達同一個值時它看不出來
+ *   —— ⭐ 那種情況 `legendaryClaims.test.ts` 才是最終裁判，這裡只擋**看得出來**的。
+ */
+function descriptionWouldLie(repoRoot, path, mod, next) {
+  let desc;
+  try {
+    desc = JSON.parse(readFileSync(join(repoRoot, path), "utf8")).description;
+  } catch {
+    return null;
+  }
+  if (typeof desc !== "string" || desc === "") return null;
+  const old = mod.value;
+  if (typeof old !== "number" || old === next) return null;
+  // 佔位寫的卡面會自己跟著走（`prose:build` / `apply_placeholders.ts`）⇒ 放行。
+  if (/\{\{[^}]+\}\}/.test(desc)) return null;
+  const shown = [String(old), String(Math.round(old)), String(Math.round(old * 100))];
+  const hit = shown.find((t) => t.length >= 2 && new RegExp(`(^|[^\\d.])${t}([^\\d.]|$)`).test(desc));
+  if (hit === undefined) return null;
+  return (
+    `⛔ 這一格有**第二個住處**：同一份文件的卡面 \`description\` 印著「${hit}」。\n` +
+    `  改成 ${next} 只動 modifier 這一半 ⇒ ⭐ **卡面當場變成謊話**（第一·五守則），\n` +
+    `  而 legendaryClaims 這條出貨閘會紅。\n` +
+    `  ⭐ 這一格要與卡面一起改 —— 本端點改不到那一半（改法：把卡面改成佔位 {{...}}，或兩邊一起改）。`
+  );
+}
+
 function itemModifierValueCheck(repoRoot, { path, pointer, value }) {
   if (itemEditOff()) return ITEM_EDIT_OFF_WHY;
   const i = modifierIndex(pointer, "value");
@@ -273,6 +304,19 @@ function itemModifierValueCheck(repoRoot, { path, pointer, value }) {
   if (band.minExclusive === true ? !(value > band.min) : value < band.min)
     return `低於下界（要 ${lo}，收到 ${value}）：${band.why}`;
   if (value > band.max) return `高於上界（要 ≤${band.max}，收到 ${value}）：${band.why}`;
+  // ⭐ **第二個住處：玩家抽卡時讀的卡面**（GH#831，2026-08-29 對抗性複驗抓到）。
+  //
+  // ⚠️ 量到的：91 格可編輯的 value 裡 **86 格**把自己的值印在**同一份文件**的
+  //   `description` 裡（例 `godie-i06d` 的「攻擊力+128」↔ `modifiers[0]={ad,flat,128}`），
+  //   第三個住處是 `寶具總表_EX三階.csv` 的「效能（卡面逐行）」欄。
+  //   ⇒ ⛔ 只改 modifier ⇒ **卡面當場變成謊話**（第一·五守則），
+  //   而且 `legendaryClaims.test.ts` 這條今天綠的出貨閘會紅。
+  //
+  // ⭐ 這條路改不到卡面（description 不在本 dataset 的 pointers 裡）
+  //   ⇒ **擋下來並指名**，⛔ 不是偷偷改文案（第〇·六守則）。
+  //   ⚠️ 用**佔位**（`{{...}}`）寫的卡面會自己跟著走 ⇒ 放行。
+  const stale = descriptionWouldLie(repoRoot, path, mod, value);
+  if (stale !== null) return stale;
   return null;
 }
 
