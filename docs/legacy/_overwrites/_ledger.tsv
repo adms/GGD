@@ -4845,3 +4845,7 @@ overwrite_temp_20260830-012739	Bash	SKIP(git 有)	/Users/Takuro/GGD/content/abil
 overwrite_temp_20260830-013703	Bash	repo 外	/tmp/m.out	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260830-013703/m.out
 overwrite_temp_20260830-013853	Bash	repo 外	/private/tmp/laneZ-663-stale.txt	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260830-013853/laneZ-663-stale.txt
 overwrite_temp_20260830-013932	Bash	repo 外	/private/tmp/laneZ-663-stale.txt	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260830-013932/laneZ-663-stale.txt
+20260830-020714	preserve.sh	SKIP(git 有)	docs/_execution-batches.md	
+20260830-020714	preserve.sh	覆蓋前	docs/_execution-batches.md	docs/legacy/_overwrites/overwrite_temp_20260830-020714/docs/_execution-batches.md
+overwrite_temp_20260830-020814	Bash	有未提交改動	/Users/Takuro/GGD/scripts/mpndd.sh	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260830-020814/scripts/mpndd.sh
+20260830-020820	preserve.sh	SKIP(git 有)	docs/_execution-batches.md	
