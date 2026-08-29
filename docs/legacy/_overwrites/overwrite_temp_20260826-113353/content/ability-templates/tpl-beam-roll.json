@@ -1,0 +1,133 @@
+{
+  "id": "tpl-beam-roll",
+  "schema": "template@1",
+  "name": "翻滾光束（橫放光束砲）",
+  "description": "⭐ 這一份同時是兩件事。①【行為模板】一具帶骨架的 3D 模型沿面向直線推出去，一路自轉，穿透式地掃到路上的每一個人（同一個人只掃一次）。原作是 locust dummy 單位（CreateUnit → 每 tick SetUnitPosition → RemoveUnit），所以它既不是定點特效也不是會被擋下來的投射物。②【特效預設表】`spawnModelFx` 的 `preset` 欄位**逐格讀這裡的 `params[*].default`**（`content/modelFxPreset.ts`，在載入時解析）—— 也就是說「一道橫放的光束砲長什麼樣」只住在這一份文件裡，⛔ 不是散在每一支技能的 JSON 節點上。改這裡的一個數字，四支經典（59-04 陽電子砲 · 20-03 約束與勝利之劍 · 08-03 龍鬥氣砲咒文 · 09-04 龜派氣功）一起變。⚠️ 傷害走**級距**（damageTier），⛔ 這裡不填算好的數字；速度／距離／自轉／縮放是**演出幾何**，引擎的 spawnModelFx 只收數字、沒有對應的級距表，所以它們是本模板唯一的字面值欄位。⚠️ `preset` **只供演出幾何**（模型／路徑／速度／距離／自轉／縮放／碰觸半徑與陣營），⛔ 不自動塞傷害：那會替四支技能各加一份沒有人裁決過的傷害。要沿路掃傷害的技能自己寫 `onTouch`。⭐【聲音也住這裡】`soundKey`（發射）與 `arriveSoundKey`（落點）是**家族級預設**：在 2026-08-23 之前這一族**整族無聲** —— 四支經典的 spawnModelFx 節點一個聲音鍵都沒有，而 `performanceEventsHaveConsumers` 是綠的（`modelFxSpawn` 確實有消費端，只是那一半只畫模型）。⇒ 補在這裡**一格解四支**，⛔ 不是逐支填（第〇·五守則：按擋住的支數做機制）。一鍵 rollback 住 `content/config/audio-map.json` 的 `modelFxSound.enabled` / `.arrive`。⚠️ `modelKey` 是**身分**不是幾何：它有預設值是為了讓稀疏文件載得起來，⛔ 不是為了讓四支不同英雄的招式長成同一具模型 —— 守衛在 `schema/effects/modelFxStagingContract.test.ts` ⑤。⭐【原作是五具 dummy，⛔ 不是一具】2026-08-23 逐支對回 JASS：`h00S`(ReviveHuman·頂點色[255,100,100]紅·250+lvl×15) · `h00X`(**NetherStrike**·白·250+lvl×15) · `h007`(ReviveHuman·白·250+lvl×15) · `h01P`(Awaken·[100,100,0]橄欖·**120+lvl×30**) · `h000`(ParasiteMissile·白·**450×蓄力秒**)。⇒ 五具裡**只有一具真的是 NetherStrike**。⭐ 所以 `scale` 的預設 **2.5 ＝ 原作的 250%**（h00S/h00X/h007 共用的那一格，⛔ 不是我挑的數字），而兩個例外**逐支寫在自己的節點上**：59-04 野戰型陽電子砲 `scale:1.2`、08-03 龍鬥氣砲咒文 `scale:4.5`。⚠️ 要整族一起變大就改**這一格預設**，⛔ 不要逐支加數字 —— 那三支的比例會跟著動（第〇·四守則）。⛔⛔【還沒解決：這一族從第一天起一個像素都沒畫出來過】直接讀 .glb 位元組量到：`netherstrike.glb` 的 **5 個 primitive 全部**帶 `baseColorFactor:[0,0,0,0]` ＋ `alphaMode:\"BLEND\"`，而戰鬥場景**沒有 GlowLayer／bloom**（`views/CoinView.ts` 檔頭逐字）。⇒ 這是轉檔器**刻意的軟刪除**：`tools/w3x-import/w3xlib/gltf.py` 的 `fm>=3 and not has_opaque_base` 分支 「solid bright-on-black glow: no alpha to key on → drop the quad」，而 netherstrike 的四張貼圖在 `models_report.json` 裡全在 `missing_textures` ⇒ alpha 提示退回 opaque ⇒ 五張材質全中。⇒ ⭐ 修法是**重烘／客戶端走 ALPHA_ADD**，⛔ 不是換一具好看的模型、⛔ 也不是調 scale ——一個 0 像素的東西沒有大小也沒有顏色可言。守衛：`modelFxStagingContract.test.ts` ⑥。⭐⭐【2026-08-24：這一族**不位移**了，⛔ 而且那不是演出偏好 —— 是逐行 JASS】owner：「光束砲**原地開火**，只有波飛出去」。逐支撈原作觸發器驗證：`A0D5`(20-03)@32322 · `A03S`(09-04)@31907 · `A05J`(**08-03**)@28838 · `A0GI`(**59-04**)@47757 —— 四支**一次 `SetUnitPosition` 都沒有**：光束 dummy **一具**擺在施法者前方 150u，然後 `TriggerSleepAction(2)` → `KillUnit`+`RemoveUnit`。⚠️⚠️ 這一句在 2026-08-25 之前寫的是「它們是**十具 dummy 沿一條線一次擺好**」—— 那是**誤讀**，而且它就是 owner 2026-08-25 抓到的走歪的**起點**：`OBJECTS.json` 逐格對過，`A05J` 是 **08-03 龍鬥氣砲咒文**、`A0GI` 是 **59-04 野戰型陽電子砲**（在此之前這兩個標籤是**對調**的），而「十具」是 08-03 的 `e003`（RedDragonMissile，⛔ 不是光束模型）。（對照組 12-04 `A04X`@29587 **真的**每 0.02 秒推進 75 —— 所以缺的不是我們沒實作位移。）⇒ `path` 預設改成 **`static`**、新增 `lifeSec` 預設 **2**（＝原作那個 `TriggerSleepAction(2)`）。⭐【一鍵 rollback 就是這一格】把 `params.path.default` 改回 `\"forward\"` —— 四支一起回到舊演出，⛔ 不必動任何一支技能的 JSON（七份 ability doc 現在**一格 path 都不寫**，刻意的：讓這一格成為唯一的住處，第〇·四守則）。⚠️ `speed`／`distance` 在 `static` 下**讀不到**（schema 明文），留著是為了 rollback 回 forward 時還在。⛔⛔【2026-08-26 撤回：`count` 預設 6 是誤讀，已改回 **1**（GH#702 · owner 2026-08-25「是哪裡走歪讓你又把約束勝利之劍等光束砲家族又變成間距排列？請你反省根因並修正」）】走歪的三段，逐段有行號：①**誤讀** —— 20-03 的 `exitwhen udg_WinSwordCounter > 6`（j:32335 / j:32346）與 09-04 的 `exitwhen udg_TurtlePowerCounter > 6`（j:31925 / j:31937）被讀成「光束由 6 具組成」，而那兩對迴圈**一具 unit 都不生**：它們是 `GetUnitsInRangeOfLocMatching(400)` 的**傷害取樣格**（j:32337 j:32348 / j:31939），早在 `fa8dc538` 就已經翻成 `onTouch` 的傷害葉 ⇒ 再拿它當演出 count＝**同一段 JASS 被算了兩次**。②**推測變成預設** —— `a3bc9838` 把 6/2 寫成**家族預設**，於是七個出貨節點一起吃；③**逐支覆寫掩蓋它** —— GH#692 查到 59-04 是一具，卻只加了 `count:1` 的**逐支**覆寫，⛔ 沒有回頭問「那家族預設是誰的量值？」，另外六個節點繼續錯。⭐ 真值：光束 dummy 的**每一個**生成點都是 `CreateNUnitsAtLoc( 1, … )`（j:26790 j:31907 j:31909 j:32322 j:32324 j:32327 j:36048 j:47757），⛔ 沒有一處在迴圈裡。⭐ 唯一真的「沿線 N 具」是 **08-03** 的 `e003`（RedDragonMissile，j:28838 `i=1..10 × 150`）與 **09-04** 的 `h006`（FlameStrike1，j:31926 `i=1..6 × 200`）—— 兩者都是**別的模型**，而 09-04 的火柱現在有**自己的節點**（`preset: tpl-locust-line`）。⇒ 光束這一格回到 1，⛔ 而且它現在有出處（見 `params.count.origin`）。⭐【一鍵 rollback】要回到 2026-08-25 的演出就把 `params.count.default` 改回 **6** —— 但那一刻請先把 `origin` 換成一個引用得到的東西，`templateDefaultsHaveOrigin.test.ts` 會逼你。",
+  "family": "beam-roll",
+  "status": "enabled",
+  "params": {
+    "modelKey": {
+      "type": "docRef",
+      "default": "imported.netherstrike"
+    },
+    "path": {
+      "type": "enum",
+      "values": [
+        "forward",
+        "toTarget",
+        "orbit",
+        "radial",
+        "static"
+      ],
+      "default": "static"
+    },
+    "speed": {
+      "type": "number",
+      "default": 30,
+      "min": 1,
+      "max": 200,
+      "inert": "path 預設 static（2026-08-24 裁決:光束原地開火）⇒ 不位移,speed 讀不到。rollback 把 params.path.default 改回 forward 的那一刻,把這格 inert 拿掉,守衛會逼你。"
+    },
+    "distance": {
+      "type": "number",
+      "default": 14,
+      "min": 1,
+      "max": 48,
+      "inert": "同 speed —— static 不位移,唯一終止條件是 lifeSec。"
+    },
+    "count": {
+      "type": "number",
+      "default": 6,
+      "min": 1,
+      "max": 12
+    },
+    "spacing": {
+      "type": "number",
+      "default": 2,
+      "min": 0.5,
+      "max": 48
+    },
+    "spinDegPerSec": {
+      "type": "number",
+      "default": 720,
+      "min": -3600,
+      "max": 3600,
+      "optional": true
+    },
+    "scale": {
+      "type": "number",
+      "default": 2.5,
+      "min": 0.1,
+      "max": 20,
+      "optional": true
+    },
+    "touchRadius": {
+      "type": "number",
+      "default": 1.5,
+      "min": 0.5,
+      "max": 12
+    },
+    "touchSide": {
+      "type": "enum",
+      "values": [
+        "enemies",
+        "allies"
+      ],
+      "default": "enemies",
+      "optional": true
+    },
+    "touchDamageTier": {
+      "type": "enum",
+      "values": [
+        "極小",
+        "小",
+        "中",
+        "大",
+        "極大"
+      ],
+      "default": "小"
+    },
+    "damageType": {
+      "type": "enum",
+      "values": [
+        "magic",
+        "physical",
+        "true"
+      ],
+      "default": "magic"
+    },
+    "castTimeSec": {
+      "type": "number",
+      "default": 1,
+      "min": 0,
+      "max": 5,
+      "unit": "s",
+      "optional": true
+    },
+    "soundKey": {
+      "type": "docRef",
+      "default": "wc3.crushingwavecaster1",
+      "optional": true
+    },
+    "arriveSoundKey": {
+      "type": "docRef",
+      "default": "explosion",
+      "optional": true
+    },
+    "lifeSec": {
+      "type": "number",
+      "default": 2,
+      "min": 0.1,
+      "max": 10,
+      "unit": "s"
+    }
+  },
+  "requires": [
+    "modelFx"
+  ],
+  "gapScore": 8,
+  "exemplar": {
+    "skill": "20-03 約束與勝利之劍",
+    "jass": "A0D5"
+  }
+}

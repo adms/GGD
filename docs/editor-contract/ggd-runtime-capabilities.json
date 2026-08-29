@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "8c745086",
+  "fingerprint": "74a4cffd",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -198,6 +198,10 @@
     "dodgesAbilities",
     "dodgesTrueDamage",
     "dragToCaster",
+    "driftAngleDeg",
+    "driftAngleStepDeg",
+    "driftFrom",
+    "driftSpeed",
     "dropDeadTargets",
     "duration",
     "durationSec",

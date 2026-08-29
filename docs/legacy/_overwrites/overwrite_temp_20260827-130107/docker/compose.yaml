@@ -1,0 +1,231 @@
+# docker/compose.yaml — lightest inner dev loop (no k8s): redis + platform +
+# game + edge with live ./content and ./data bind mounts.
+#
+#   docker compose -f docker/compose.yaml up --build
+#   docker compose -f docker/compose.yaml --profile dev up   # + content-api
+#
+# CONTRACT NOTE: apps/{platform,game-server,client,editor,content-api} are
+# being built in parallel; their image builds will succeed once those packages
+# land. Until then you can bring up subsets, e.g.:
+#   docker compose -f docker/compose.yaml up redis
+#
+# Secrets are injected via env (never baked into images) and are REQUIRED: each
+# uses the ${VAR:?...} fail-fast form, so `docker compose ... up|config` errors
+# immediately if a value is unset instead of silently booting on a guessable
+# default. Provide them in a .env file next to this compose file (gitignored via
+# the root .gitignore `.env` rule); copy docker/.env.example and fill it, e.g.
+#   REDIS_PASSWORD=$(openssl rand -hex 32)
+
+name: ggd
+
+services:
+  redis:
+    image: redis:7-alpine
+    command:
+      [
+        "redis-server",
+        "--appendonly", "yes",
+        "--appendfsync", "everysec",
+        "--requirepass", "${REDIS_PASSWORD:?set REDIS_PASSWORD in docker/.env}",
+      ]
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:?set REDIS_PASSWORD in docker/.env}", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  platform:
+    build:
+      context: ..
+      dockerfile: docker/platform.Dockerfile
+    environment:
+      APP_ENV: development
+      # ENV NAME FIXES (#176). The three below were set under names the Go
+      # config NEVER READS, so each silently fell back to a default:
+      #   HTTP_ADDR        → config reads PLATFORM_ADDR (default ":8080" — the
+      #                      default happened to match, so this one was harmless)
+      #   GAME_INTERNAL_URL→ config reads GAME_SERVER_ADDR (default
+      #                      "http://127.0.0.1:2567", which INSIDE the platform
+      #                      container is the platform itself — not the game)
+      # The old names are kept below, commented, so a search for them lands here
+      # rather than on nothing.
+      PLATFORM_ADDR: ":8080"
+      HTTP_ADDR: ":8080" # legacy alias, read by nothing — see above
+      GAME_SERVER_ADDR: "http://game:2567"
+      PLATFORM_INTERNAL_URL: "http://platform:8080"
+      REDIS_ADDR: "redis:6379"
+      REDIS_PASSWORD: "${REDIS_PASSWORD:?set REDIS_PASSWORD in docker/.env}"
+      DATA_DIR: /data
+      CONTENT_DIR: /srv/content
+      JWT_SIGNING_SECRET: "${JWT_SIGNING_SECRET:?set JWT_SIGNING_SECRET in docker/.env}"
+      PLATFORM_GAME_SHARED_SECRET: "${PLATFORM_GAME_SHARED_SECRET:?set PLATFORM_GAME_SHARED_SECRET in docker/.env}"
+      GAME_INTERNAL_URL: "http://game:2567" # legacy alias, read by nothing
+      # ------------------------------------------- #724 OPERATOR KNOBS ------
+      # PASS-THROUGH, NOT DEFAULTS. Every entry below is `${VAR:-}`: unset on
+      # the host ⇒ the container receives an empty string ⇒ internal/config's
+      # getenv helpers ALL read "" as UNSET and return the in-code default
+      # (verified read-site by read-site). So this block changes nothing about
+      # how the platform runs today. What it changes is whether an operator can
+      # change it TOMORROW.
+      #
+      # WHY IT HAD TO EXIST. #724 shipped nine rollback switches — trusted-edge
+      # CIDRs, the four http.Server bounds, the three lobby-socket bounds, the
+      # refresh cookie — and every one was documented as "one env var, no
+      # rebuild". But compose passes ONLY what is listed under `environment:`;
+      # it does not forward the host's environment. None of the nine was
+      # reachable on a compose deploy, which is the one deploy we run. ⭐ A
+      # rollback you cannot reach is not a rollback — and the failure it exists
+      # to undo (say, the httpOnly refresh cookie signing the operator out of
+      # the console) is precisely the moment nobody wants to be editing YAML
+      # and recreating containers.
+      #
+      # The six after the #724 group are the same disease from older tickets,
+      # listed for the same reason and equally inert while unset.
+      # Guard: apps/platform/internal/config/knob_reachability_test.go.
+      GGD_TRUSTED_PROXY_CIDRS: "${GGD_TRUSTED_PROXY_CIDRS:-}" # "none" = believe no forwarded address at all
+      GGD_HTTP_READ_TIMEOUT_SEC: "${GGD_HTTP_READ_TIMEOUT_SEC:-}" # 0 = unbounded (pre-#724 behaviour)
+      GGD_HTTP_WRITE_TIMEOUT_SEC: "${GGD_HTTP_WRITE_TIMEOUT_SEC:-}" # 0 = unbounded (pre-#724 behaviour)
+      GGD_HTTP_IDLE_TIMEOUT_SEC: "${GGD_HTTP_IDLE_TIMEOUT_SEC:-}" # 0 = unbounded (pre-#724 behaviour)
+      GGD_HTTP_MAX_HEADER_KB: "${GGD_HTTP_MAX_HEADER_KB:-}"
+      GGD_LOBBY_MAX_CONNS_PER_ACCOUNT: "${GGD_LOBBY_MAX_CONNS_PER_ACCOUNT:-}" # 0 = uncapped (pre-#724)
+      GGD_LOBBY_WS_IDLE_SEC: "${GGD_LOBBY_WS_IDLE_SEC:-}" # 0 = never reap a silent socket
+      GGD_LOBBY_WS_READ_LIMIT_KB: "${GGD_LOBBY_WS_READ_LIMIT_KB:-}"
+      # MUTATION-IN-PROGRESS GGD_AUTH_REFRESH_COOKIE
+      GGD_ALLOW_EMPTY_WHITELIST: "${GGD_ALLOW_EMPTY_WHITELIST:-}"
+      GGD_BURN_INVITE_ON_CONFLICT: "${GGD_BURN_INVITE_ON_CONFLICT:-}"
+      GGD_MATCH_LIVENESS_GRACE_SEC: "${GGD_MATCH_LIVENESS_GRACE_SEC:-}"
+      GGD_MAX_PENDING: "${GGD_MAX_PENDING:-}"
+      GGD_NEW_ACCOUNT_CRYSTALS: "${GGD_NEW_ACCOUNT_CRYSTALS:-}"
+      GGD_PENDING_TTL: "${GGD_PENDING_TTL:-}"
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      # durable truth — survives container restarts, lives in the repo
+      - ../data:/data
+      - ../content:/srv/content:ro
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  game:
+    build:
+      context: ..
+      dockerfile: docker/game.Dockerfile
+    environment:
+      NODE_ENV: development
+      PORT: "2567"
+      PLATFORM_GAME_SHARED_SECRET: "${PLATFORM_GAME_SHARED_SECRET:?set PLATFORM_GAME_SHARED_SECRET in docker/.env}"
+      CONTENT_DIR: /srv/content
+      # Task #48. Where the game-server fetches curation / combat-env /
+      # server-ops. It was NEVER set here, and the code's non-k8s default is
+      # http://localhost:8080 — which inside this container is the GAME itself,
+      # not the platform. Unset, every compose match silently ran on allow-all
+      # curation and untuned combat multipliers. `platform` is the compose
+      # service name on the shared default network.
+      GGD_PLATFORM_URL: "http://platform:8080"
+      # CONTENT-BUS LIVE PROPAGATION. Same "localhost = myself" class as #48/#176
+      # above: the content-bus subscriber (apps/game-server/src/config/contentBus.ts
+      # startContentBus → parseRedisAddr) reads REDIS_ADDR with an in-code default
+      # of 127.0.0.1:6379. It was NEVER set on THIS container, so inside the game
+      # container it dialed the game itself → ECONNREFUSED (v0.5.10 deploy log) →
+      # the bus stayed disconnected and admin 後台 content edits did NOT propagate
+      # live; they only took effect on the next match's cache TTL. `redis` is the
+      # compose service name on the shared default network (platform already uses
+      # it at line 60). The code default 127.0.0.1:6379 is KEPT for pnpm dev / LAN,
+      # where localhost IS the redis. This sets NO ports, so redis stays
+      # loopback-published + internal-network only — #117 exposure untouched.
+      REDIS_ADDR: "redis:6379"
+      # redis runs with --requirepass (line 29); without the password the SUBSCRIBE
+      # gets NOAUTH and the bus stays dead. The subscriber sends AUTH before
+      # SUBSCRIBE when a password is present (redisSubscriber.ts:208). Same
+      # fail-fast ${VAR:?...} form platform uses at line 61.
+      REDIS_PASSWORD: "${REDIS_PASSWORD:?set REDIS_PASSWORD in docker/.env}"
+    ports:
+      - "127.0.0.1:2567:2567"
+    volumes:
+      - ../content:/srv/content:ro
+
+  # 🧑‍⚖️ 批核頁的資料面（GH#794）—— owner 2026-08-27「請同步到線上」。
+  # ⭐ 權限**就是這張掛載表**（⛔ 不是程式裡的一個 if）：材料/證據/內容都是 :ro，
+  #    唯一 :rw 的是 verdicts —— 線上寫得動的只有 owner 按下去的那些裁決。
+  #    middleware 的 live 模式再多擋一層（寫材料的兩條路直接 403 並說去哪做）。
+  review:
+    build:
+      context: ..
+      dockerfile: docker/review.Dockerfile
+    # ⚠️ 死了要自己回來 —— 它掛掉的症狀是「批核頁與 13 頁實時資料是空的」，
+    #    而那看起來跟「還沒做」一模一樣（fail-open 的靜默）。family overlay 給
+    #    每一個服務都加了這一行，⛔ 這一個一開始漏了。
+    restart: unless-stopped
+    environment:
+      GGD_REVIEW_MODE: "live"
+      GGD_REVIEW_PORT: "8790"
+      GGD_REVIEW_ROOT: /srv/repo
+      # 🔐 GH#796 —— 驗身分要問**平台自己**（⛔ 不自己解 JWT ＝ 第二份真相）。
+      GGD_PLATFORM_URL: "http://platform:8080"
+      # 🔁 一鍵 rollback：設 "0" 回到 #794 剛上線時的全開行為。
+      #    ⚠️ 這一格是**環境變數**⛔ 不是後台欄位，而那是刻意的 ——
+      #    用後台欄位控制「後台能不能進」是循環的（鎖在門裡面的鑰匙不是鑰匙）。
+      GGD_REVIEW_REQUIRE_ADMIN: "${GGD_REVIEW_REQUIRE_ADMIN:-1}"
+    ports:
+      - "127.0.0.1:8790:8790"
+    volumes:
+      # ⭐ **整個 repo 唯讀** —— /__live 的 15 份 dataset 會讀 content/ · docs/ ·
+      #    tools/ · packages/，逐份列白名單會在下一份 dataset 加進來時無聲漏掉。
+      #    ⇒ 用「全部 ro」把預設立場設成**讀得到但寫不動**。
+      - ..:/srv/repo:ro
+      # ⚠️ 然後**只**把這一格疊回可寫（後掛的覆蓋前面的）。
+      #    這就是 owner 說的「特定存取權限」：線上寫得動的東西**只有這一個目錄**。
+      #
+      # ⛔⛔ 來源是 `data/` **⛔ 不是 repo 裡的 docs/_review/verdicts**。
+      #    第一版指到 repo，而那會在幾天後變成一次**神秘的部署失敗**：
+      #    那個檔是 git 追蹤的，容器一寫 host 就多一筆未提交改動，
+      #    而 host-deploy 用 `git merge --ff-only` —— 下一次有 commit 碰到它就拒絕合併。
+      #    ⭐ 執行期狀態的正確住處是 `data/`（gitignored · 持久 · bind-mount），
+      #      與 `data/replays` 完全同型；repo 裡那一份是**存檔**，由
+      #      `scripts/review-sync.sh` 從這裡拉回本機再 commit。
+      - ../data/review-verdicts:/srv/repo/docs/_review/verdicts
+
+  edge:
+    build:
+      context: ..
+      dockerfile: docker/edge.Dockerfile
+      args:
+        # BUILD IDENTITY (task #66, defect P0-6(a)). The image has no .git and
+        # no git binary, so the stamp can only come from the host. `make
+        # family-up` / `make up` export GGD_BUILD_STAMP; a bare
+        # `docker compose build` leaves it empty and the badge then reads
+        # UNSTAMPED-BUILD — loudly wrong, instead of the old plausible "dev".
+        # To stamp a hand-rolled build:
+        #   GGD_BUILD_STAMP="$(git rev-parse --short HEAD) $(date -u +%F)" \
+        #     docker compose -f docker/compose.yaml build edge
+        GGD_BUILD_STAMP: "${GGD_BUILD_STAMP:-}"
+    ports:
+      - "127.0.0.1:8088:8080"
+    volumes:
+      - ../content:/srv/content:ro
+    depends_on:
+      - platform
+      - game
+      - review
+
+  # dev profile only: content CRUD/validate/SSE (RW mount!)
+  content-api:
+    profiles: ["dev"]
+    build:
+      context: ..
+      dockerfile: docker/content-api.Dockerfile
+    environment:
+      APP_ENV: development
+      CONTENT_DIR: /srv/content
+    ports:
+      - "127.0.0.1:8787:8787"
+    volumes:
+      - ../content:/srv/content
+
+volumes:
+  redis-data:

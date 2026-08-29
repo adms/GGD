@@ -1,0 +1,4028 @@
+{
+  "id": "vfx-ability-art",
+  "schema": "config.vfx-ability-art@1",
+  "bindings": {
+    "godie-e001.e": {
+      "prim": {
+        "element": "physical",
+        "primitive": "beam"
+      }
+    },
+    "godie-e001.ex": {
+      "prim": {
+        "element": "blood",
+        "primitive": "pulse"
+      }
+    },
+    "godie-e001.passive": {
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0CL",
+        "provenance": "stock-inherited",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-e001.q": {
+      "prim": {
+        "element": "void",
+        "primitive": "pulse",
+        "size": "sm"
+      }
+    },
+    "godie-e001.r": {
+      "prim": {
+        "element": "blood",
+        "primitive": "nova"
+      },
+      "family": {
+        "family": "burst",
+        "model": "doomdeath",
+        "w3aId": "A02Q",
+        "provenance": "w3a-override",
+        "via": "ability.targetArt",
+        "tint": [
+          100,
+          100,
+          100
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-e001.w": {
+      "prim": {
+        "element": "blood",
+        "primitive": "slash"
+      }
+    },
+    "godie-e002.e": {
+      "prim": {
+        "element": "holy",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "burst",
+        "model": "neutralbuildingexplosion",
+        "w3aId": "A0D5",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectLocBJ"
+      },
+      "promoted": {
+        "family": "holyawakening",
+        "w3aId": "A0D5",
+        "provenance": "w3a-override",
+        "via": "art:caster",
+        "primary": "fx.w3x.particle.holyawakening.p04",
+        "extra": [
+          "fx.w3x.particle.holyawakening.p00",
+          "fx.w3x.particle.holyawakening.p01",
+          "fx.w3x.particle.holyawakening.p02",
+          "fx.w3x.particle.holyawakening.p03",
+          "fx.w3x.particle.holyawakening.p05"
+        ]
+      }
+    },
+    "godie-e002.ex": {
+      "prim": {
+        "element": "holy",
+        "primitive": "beam"
+      }
+    },
+    "godie-e002.q": {
+      "prim": {
+        "element": "holy",
+        "primitive": "pulse",
+        "size": "sm"
+      }
+    },
+    "godie-e002.r": {
+      "prim": {
+        "element": "holy",
+        "primitive": "nova"
+      }
+    },
+    "godie-e002.w": {
+      "prim": {
+        "element": "wind",
+        "primitive": "tornado"
+      },
+      "promoted": {
+        "family": "holyawakening",
+        "w3aId": "A0DZ",
+        "provenance": "w3a-override",
+        "via": "art:caster",
+        "primary": "fx.w3x.particle.holyawakening.p04",
+        "extra": [
+          "fx.w3x.particle.holyawakening.p00",
+          "fx.w3x.particle.holyawakening.p01",
+          "fx.w3x.particle.holyawakening.p02",
+          "fx.w3x.particle.holyawakening.p03",
+          "fx.w3x.particle.holyawakening.p05"
+        ]
+      }
+    },
+    "godie-e007.e": {
+      "prim": {
+        "element": "ki",
+        "primitive": "shockwave"
+      }
+    },
+    "godie-e007.ex": {
+      "prim": {
+        "element": "ki",
+        "primitive": "pulse"
+      },
+      "family": {
+        "family": "dissipate",
+        "model": "nagadeath",
+        "w3aId": "A0SQ",
+        "provenance": "w3a-override",
+        "via": "ability.specialArt",
+        "scale": 1.5,
+        "tint": [
+          10,
+          10,
+          10
+        ],
+        "paramSource": "model"
+      },
+      "promoted": {
+        "family": "supershinythingy",
+        "w3aId": "A0SQ",
+        "provenance": "jass-literal",
+        "via": "jass:effectTargetUnit",
+        "primary": "fx.w3x.particle.supershinythingy.p00",
+        "extra": [
+          "fx.w3x.particle.supershinythingy.p01",
+          "fx.w3x.particle.supershinythingy.p02"
+        ]
+      }
+    },
+    "godie-e007.q": {
+      "prim": {
+        "element": "ki",
+        "primitive": "pulse",
+        "size": "sm"
+      },
+      "family": {
+        "family": "levelUp",
+        "model": "levelupcaster",
+        "w3aId": "A04Y",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-e007.r": {
+      "prim": {
+        "element": "ki",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "shine",
+        "model": "supershinythingy",
+        "w3aId": "A04X",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "anchor": "hand,left"
+      },
+      "promoted": {
+        "family": "supershinythingy",
+        "w3aId": "A04X",
+        "provenance": "w3a-override",
+        "via": "art:caster",
+        "primary": "fx.w3x.particle.supershinythingy.p00",
+        "extra": [
+          "fx.w3x.particle.supershinythingy.p01",
+          "fx.w3x.particle.supershinythingy.p02"
+        ]
+      }
+    },
+    "godie-e007.w": {
+      "prim": {
+        "element": "nature",
+        "primitive": "pulse"
+      }
+    },
+    "godie-e008.e": {
+      "prim": {
+        "element": "fire",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0BF",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-e008.ex": {
+      "prim": {
+        "element": "fire",
+        "primitive": "explosion"
+      }
+    },
+    "godie-e008.q": {
+      "prim": {
+        "element": "fire",
+        "primitive": "slash"
+      }
+    },
+    "godie-e008.r": {
+      "prim": {
+        "element": "fire",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "flamePillar",
+        "model": "flamestriketarget",
+        "w3aId": "A0HB",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "scale": 1.1,
+        "tint": [
+          255,
+          0,
+          0
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-e008.w": {
+      "prim": {
+        "element": "fire",
+        "primitive": "nova"
+      }
+    },
+    "godie-e00k.e": {
+      "prim": {
+        "element": "physical",
+        "primitive": "beam"
+      }
+    },
+    "godie-e00k.ex": {
+      "prim": {
+        "element": "void",
+        "primitive": "pulse"
+      }
+    },
+    "godie-e00k.q": {
+      "prim": {
+        "element": "physical",
+        "primitive": "slash"
+      }
+    },
+    "godie-e00k.r": {
+      "prim": {
+        "element": "void",
+        "primitive": "swarm"
+      }
+    },
+    "godie-e00k.w": {
+      "prim": {
+        "element": "physical",
+        "primitive": "slash"
+      }
+    },
+    "godie-e00l.e": {
+      "family": {
+        "family": "burst",
+        "model": "neutralbuildingexplosion",
+        "w3aId": "A0D5",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectLocBJ"
+      },
+      "promoted": {
+        "family": "holyawakening",
+        "w3aId": "A0D5",
+        "provenance": "w3a-override",
+        "via": "art:caster",
+        "primary": "fx.w3x.particle.holyawakening.p04",
+        "extra": [
+          "fx.w3x.particle.holyawakening.p00",
+          "fx.w3x.particle.holyawakening.p01",
+          "fx.w3x.particle.holyawakening.p02",
+          "fx.w3x.particle.holyawakening.p03",
+          "fx.w3x.particle.holyawakening.p05"
+        ]
+      }
+    },
+    "godie-e00l.w": {
+      "promoted": {
+        "family": "holyawakening",
+        "w3aId": "A0DZ",
+        "provenance": "w3a-override",
+        "via": "art:caster",
+        "primary": "fx.w3x.particle.holyawakening.p04",
+        "extra": [
+          "fx.w3x.particle.holyawakening.p00",
+          "fx.w3x.particle.holyawakening.p01",
+          "fx.w3x.particle.holyawakening.p02",
+          "fx.w3x.particle.holyawakening.p03",
+          "fx.w3x.particle.holyawakening.p05"
+        ]
+      }
+    },
+    "godie-e00n.passive": {
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0CL",
+        "provenance": "stock-inherited",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-e00n.r": {
+      "family": {
+        "family": "burst",
+        "model": "doomdeath",
+        "w3aId": "A02Q",
+        "provenance": "w3a-override",
+        "via": "ability.targetArt",
+        "tint": [
+          100,
+          100,
+          100
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-e00r.e": {
+      "prim": {
+        "element": "ki",
+        "primitive": "nova"
+      },
+      "promoted": {
+        "family": "heroeva01s2",
+        "w3aId": "A0GH",
+        "provenance": "w3a-override",
+        "via": "art:special",
+        "primary": "fx.w3x.particle.heroeva01s2.p01",
+        "extra": [
+          "fx.w3x.particle.heroeva01s2.p00"
+        ]
+      }
+    },
+    "godie-e00r.ex": {
+      "prim": {
+        "element": "void",
+        "primitive": "explosion"
+      }
+    },
+    "godie-e00r.q": {
+      "prim": {
+        "element": "void",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0O5",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-e00r.r": {
+      "prim": {
+        "element": "ki",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "groundDust",
+        "model": "impaletargetdust",
+        "w3aId": "A0GI",
+        "provenance": "w3a-override",
+        "via": "ability.missileArt"
+      }
+    },
+    "godie-e00r.w": {
+      "prim": {
+        "element": "physical",
+        "primitive": "slash"
+      }
+    },
+    "godie-e00s.e": {
+      "prim": {
+        "element": "nature",
+        "primitive": "pulse",
+        "size": "sm"
+      }
+    },
+    "godie-e00s.ex": {
+      "prim": {
+        "element": "blood",
+        "primitive": "pulse"
+      }
+    },
+    "godie-e00s.q": {
+      "prim": {
+        "element": "arcane",
+        "primitive": "bolt"
+      },
+      "family": {
+        "family": "burst",
+        "model": "steamtankimpact",
+        "w3aId": "A0UJ",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectLocBJ",
+        "tint": [
+          255,
+          170,
+          170
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-e00s.r": {
+      "prim": {
+        "element": "arcane",
+        "primitive": "nova"
+      }
+    },
+    "godie-e00s.w": {
+      "prim": {
+        "element": "earth",
+        "primitive": "pulse",
+        "size": "sm"
+      }
+    },
+    "godie-e00w.e": {
+      "prim": {
+        "element": "lightning",
+        "primitive": "nova"
+      },
+      "family": {
+        "family": "resurrect",
+        "model": "resurrectcaster",
+        "w3aId": "A0JG",
+        "provenance": "w3a-override",
+        "via": "ability.missileArt",
+        "scale": 0.9,
+        "paramSource": "model"
+      }
+    },
+    "godie-e00w.ex": {
+      "prim": {
+        "element": "lightning",
+        "primitive": "beam"
+      }
+    },
+    "godie-e00w.q": {
+      "prim": {
+        "element": "physical",
+        "primitive": "slash"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0TV",
+        "provenance": "stock-inherited",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-e00w.r": {
+      "prim": {
+        "element": "lightning",
+        "primitive": "beam"
+      }
+    },
+    "godie-e00w.w": {
+      "prim": {
+        "element": "lightning",
+        "primitive": "beam"
+      }
+    },
+    "godie-e00x.e": {
+      "family": {
+        "family": "resurrect",
+        "model": "resurrectcaster",
+        "w3aId": "A0JG",
+        "provenance": "w3a-override",
+        "via": "ability.missileArt",
+        "scale": 0.9,
+        "paramSource": "model"
+      }
+    },
+    "godie-e00x.q": {
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0TV",
+        "provenance": "stock-inherited",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-e010.e": {
+      "prim": {
+        "element": "nature",
+        "primitive": "pulse",
+        "size": "sm"
+      }
+    },
+    "godie-e010.ex": {
+      "prim": {
+        "element": "blood",
+        "primitive": "pulse"
+      }
+    },
+    "godie-e010.q": {
+      "prim": {
+        "element": "arcane",
+        "primitive": "bolt"
+      }
+    },
+    "godie-e010.r": {
+      "prim": {
+        "element": "arcane",
+        "primitive": "nova"
+      }
+    },
+    "godie-e010.w": {
+      "prim": {
+        "element": "earth",
+        "primitive": "pulse",
+        "size": "sm"
+      }
+    },
+    "godie-edem.e": {
+      "prim": {
+        "element": "lightning",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "thunderclapcaster",
+        "w3aId": "A0IJ",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "anchor": "weapon",
+        "tint": [
+          0,
+          255,
+          255
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-edem.ex": {
+      "prim": {
+        "element": "void",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A102",
+        "provenance": "stock-inherited",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-edem.q": {
+      "prim": {
+        "element": "fire",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "burst",
+        "model": "steamtankimpact",
+        "w3aId": "A0M7",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectTargetUnitBJ",
+        "anchor": "chest",
+        "tint": [
+          255,
+          170,
+          170
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-edem.r": {
+      "prim": {
+        "element": "void",
+        "primitive": "pulse"
+      }
+    },
+    "godie-edem.w": {
+      "prim": {
+        "element": "lightning",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "boltStrike",
+        "model": "monsoonbolttarget",
+        "w3aId": "A0JX",
+        "provenance": "jass-spawn",
+        "via": "jass.unitSpawn",
+        "scale": 10,
+        "paramSource": "ref"
+      }
+    },
+    "godie-efur.e": {
+      "prim": {
+        "element": "arcane",
+        "primitive": "dash"
+      }
+    },
+    "godie-efur.ex": {
+      "prim": {
+        "element": "arcane",
+        "primitive": "pulse"
+      }
+    },
+    "godie-efur.q": {
+      "prim": {
+        "element": "wind",
+        "primitive": "tornado"
+      }
+    },
+    "godie-efur.r": {
+      "prim": {
+        "element": "void",
+        "primitive": "pulse"
+      }
+    },
+    "godie-efur.w": {
+      "prim": {
+        "element": "ki",
+        "primitive": "pulse",
+        "size": "sm"
+      }
+    },
+    "godie-emfr.e": {
+      "prim": {
+        "element": "lightning",
+        "primitive": "nova"
+      },
+      "family": {
+        "family": "boltStrike",
+        "model": "monsoonbolttarget",
+        "w3aId": "A052",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectTargetUnitBJ",
+        "anchor": "chest"
+      }
+    },
+    "godie-emfr.ex": {
+      "prim": {
+        "element": "wind",
+        "primitive": "tornado"
+      }
+    },
+    "godie-emfr.q": {
+      "prim": {
+        "element": "wind",
+        "primitive": "tornado"
+      }
+    },
+    "godie-emfr.r": {
+      "prim": {
+        "element": "lightning",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A053",
+        "provenance": "w3a-override",
+        "via": "ability.targetArt"
+      }
+    },
+    "godie-emfr.w": {
+      "prim": {
+        "element": "wind",
+        "primitive": "pulse"
+      }
+    },
+    "godie-emns.e": {
+      "prim": {
+        "element": "physical",
+        "primitive": "shockwave"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A05H",
+        "provenance": "stock-inherited",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-emns.ex": {
+      "prim": {
+        "element": "void",
+        "primitive": "pulse"
+      }
+    },
+    "godie-emns.q": {
+      "prim": {
+        "element": "void",
+        "primitive": "pulse",
+        "size": "sm"
+      }
+    },
+    "godie-emns.r": {
+      "prim": {
+        "element": "void",
+        "primitive": "nova"
+      }
+    },
+    "godie-emns.w": {
+      "prim": {
+        "element": "void",
+        "primitive": "pulse"
+      }
+    },
+    "godie-etyr.e": {
+      "prim": {
+        "element": "holy",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "lightColumn",
+        "model": "tomeofretrainingcaster",
+        "w3aId": "A0JM",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-etyr.ex": {
+      "prim": {
+        "element": "holy",
+        "primitive": "pulse"
+      }
+    },
+    "godie-etyr.q": {
+      "prim": {
+        "element": "wind",
+        "primitive": "nova"
+      },
+      "family": {
+        "family": "resurrect",
+        "model": "resurrecttarget",
+        "w3aId": "A0JL",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectTargetUnitBJ",
+        "anchor": "chest",
+        "scale": 3,
+        "tint": [
+          255,
+          0,
+          0
+        ],
+        "flyHeight": 150,
+        "paramSource": "model"
+      }
+    },
+    "godie-etyr.r": {
+      "prim": {
+        "element": "holy",
+        "primitive": "nova"
+      },
+      "family": {
+        "family": "resurrect",
+        "model": "resurrecttarget",
+        "w3aId": "A0SS",
+        "provenance": "w3a-override",
+        "via": "ability.effectArt",
+        "scale": 3,
+        "tint": [
+          255,
+          0,
+          0
+        ],
+        "flyHeight": 150,
+        "paramSource": "model"
+      }
+    },
+    "godie-etyr.w": {
+      "prim": {
+        "element": "holy",
+        "primitive": "pulse"
+      },
+      "family": {
+        "family": "lightColumn",
+        "model": "tomeofretrainingcaster",
+        "w3aId": "A0JM",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-ewar.e": {
+      "prim": {
+        "element": "ki",
+        "primitive": "shockwave"
+      }
+    },
+    "godie-ewar.ex": {
+      "prim": {
+        "element": "ki",
+        "primitive": "pulse"
+      },
+      "family": {
+        "family": "dissipate",
+        "model": "nagadeath",
+        "w3aId": "A0SQ",
+        "provenance": "w3a-override",
+        "via": "ability.specialArt",
+        "scale": 1.5,
+        "tint": [
+          10,
+          10,
+          10
+        ],
+        "paramSource": "model"
+      },
+      "promoted": {
+        "family": "supershinythingy",
+        "w3aId": "A0SQ",
+        "provenance": "jass-literal",
+        "via": "jass:effectTargetUnit",
+        "primary": "fx.w3x.particle.supershinythingy.p00",
+        "extra": [
+          "fx.w3x.particle.supershinythingy.p01",
+          "fx.w3x.particle.supershinythingy.p02"
+        ]
+      }
+    },
+    "godie-ewar.q": {
+      "prim": {
+        "element": "ki",
+        "primitive": "pulse",
+        "size": "sm"
+      },
+      "family": {
+        "family": "levelUp",
+        "model": "levelupcaster",
+        "w3aId": "A04Y",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-ewar.r": {
+      "prim": {
+        "element": "ki",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "shine",
+        "model": "supershinythingy",
+        "w3aId": "A04X",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "anchor": "hand,left"
+      },
+      "promoted": {
+        "family": "supershinythingy",
+        "w3aId": "A04X",
+        "provenance": "w3a-override",
+        "via": "art:caster",
+        "primary": "fx.w3x.particle.supershinythingy.p00",
+        "extra": [
+          "fx.w3x.particle.supershinythingy.p01",
+          "fx.w3x.particle.supershinythingy.p02"
+        ]
+      }
+    },
+    "godie-ewar.w": {
+      "prim": {
+        "element": "nature",
+        "primitive": "pulse"
+      }
+    },
+    "godie-h00l.e": {
+      "prim": {
+        "element": "holy",
+        "primitive": "pulse"
+      }
+    },
+    "godie-h00l.ex": {
+      "prim": {
+        "element": "holy",
+        "primitive": "beam"
+      }
+    },
+    "godie-h00l.q": {
+      "prim": {
+        "element": "wind",
+        "primitive": "slash"
+      }
+    },
+    "godie-h00l.r": {
+      "prim": {
+        "element": "physical",
+        "primitive": "nova"
+      },
+      "promoted": {
+        "family": "bladestorm-swordeffect",
+        "w3aId": "A0BR",
+        "provenance": "w3a-override",
+        "via": "art:caster",
+        "primary": "godie-bladestorm-swordeffect-p0",
+        "extra": []
+      }
+    },
+    "godie-h00l.w": {
+      "prim": {
+        "element": "physical",
+        "primitive": "beam"
+      }
+    },
+    "godie-h01n.e": {
+      "prim": {
+        "element": "void",
+        "primitive": "beam"
+      }
+    },
+    "godie-h01n.ex": {
+      "prim": {
+        "element": "void",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "mark",
+        "model": "markofchaostarget",
+        "w3aId": "A0W5",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "tint": [
+          255,
+          100,
+          0
+        ],
+        "flyHeight": 150,
+        "paramSource": "model"
+      }
+    },
+    "godie-h01n.q": {
+      "prim": {
+        "element": "void",
+        "primitive": "pulse",
+        "size": "sm"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0RX",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectTargetUnitBJ",
+        "anchor": "chest"
+      }
+    },
+    "godie-h01n.r": {
+      "prim": {
+        "element": "void",
+        "primitive": "pulse"
+      },
+      "family": {
+        "family": "resurrect",
+        "model": "resurrecttarget",
+        "w3aId": "A0LN",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "scale": 3,
+        "tint": [
+          255,
+          0,
+          0
+        ],
+        "flyHeight": 150,
+        "paramSource": "model"
+      }
+    },
+    "godie-h01n.w": {
+      "prim": {
+        "element": "physical",
+        "primitive": "slash"
+      },
+      "family": {
+        "family": "flamePillar",
+        "model": "flamestriketarget",
+        "w3aId": "A0LK",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "scale": 1.1,
+        "tint": [
+          255,
+          0,
+          0
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-h01o.ex": {
+      "family": {
+        "family": "mark",
+        "model": "markofchaostarget",
+        "w3aId": "A0W5",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "tint": [
+          255,
+          100,
+          0
+        ],
+        "flyHeight": 150,
+        "paramSource": "model"
+      }
+    },
+    "godie-h01o.q": {
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0RX",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectTargetUnitBJ",
+        "anchor": "chest"
+      }
+    },
+    "godie-h01o.r": {
+      "family": {
+        "family": "resurrect",
+        "model": "resurrecttarget",
+        "w3aId": "A0LN",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "scale": 3,
+        "tint": [
+          255,
+          0,
+          0
+        ],
+        "flyHeight": 150,
+        "paramSource": "model"
+      }
+    },
+    "godie-h01o.w": {
+      "family": {
+        "family": "flamePillar",
+        "model": "flamestriketarget",
+        "w3aId": "A0LK",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "scale": 1.1,
+        "tint": [
+          255,
+          0,
+          0
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-h01u.e": {
+      "prim": {
+        "element": "physical",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "burst",
+        "model": "neutralbuildingexplosion",
+        "w3aId": "A0N0",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectTargetUnitBJ",
+        "anchor": "origin"
+      }
+    },
+    "godie-h01u.ex": {
+      "prim": {
+        "element": "physical",
+        "primitive": "pulse"
+      }
+    },
+    "godie-h01u.q": {
+      "prim": {
+        "element": "physical",
+        "primitive": "shockwave"
+      }
+    },
+    "godie-h01u.r": {
+      "prim": {
+        "element": "physical",
+        "primitive": "shockwave"
+      },
+      "family": {
+        "family": "dissipate",
+        "model": "undeaddissipate",
+        "w3aId": "A0MZ",
+        "provenance": "w3h-override",
+        "via": "buff.specialArt",
+        "anchor": "chest"
+      }
+    },
+    "godie-h01u.w": {
+      "prim": {
+        "element": "physical",
+        "primitive": "slash"
+      }
+    },
+    "godie-h020.e": {
+      "prim": {
+        "element": "fire",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "dissipate",
+        "model": "hcanceldeath",
+        "w3aId": "A04R",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "tint": [
+          255,
+          0,
+          0
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-h020.ex": {
+      "prim": {
+        "element": "void",
+        "primitive": "nova"
+      }
+    },
+    "godie-h020.q": {
+      "prim": {
+        "element": "fire",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "dissipate",
+        "model": "hcanceldeath",
+        "w3aId": "A0AY",
+        "provenance": "w3a-override",
+        "via": "ability.effectArt",
+        "tint": [
+          255,
+          0,
+          0
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-h020.r": {
+      "prim": {
+        "element": "void",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "cloud",
+        "model": "herocloudcyd",
+        "w3aId": "A07F",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectLocBJ"
+      }
+    },
+    "godie-h020.w": {
+      "prim": {
+        "element": "fire",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "flamePillar",
+        "model": "flamestriketarget",
+        "w3aId": "A021",
+        "provenance": "stock-inherited",
+        "via": "ability.effectArt",
+        "scale": 1.1,
+        "tint": [
+          255,
+          0,
+          0
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-h02k.e": {
+      "prim": {
+        "element": "physical",
+        "primitive": "swarm"
+      }
+    },
+    "godie-h02k.ex": {
+      "prim": {
+        "element": "fire",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "lightColumn",
+        "model": "tomeofretrainingcaster",
+        "w3aId": "A0TU",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-h02k.q": {
+      "prim": {
+        "element": "physical",
+        "primitive": "shockwave"
+      }
+    },
+    "godie-h02k.r": {
+      "prim": {
+        "element": "physical",
+        "primitive": "shockwave"
+      }
+    },
+    "godie-h02k.w": {
+      "prim": {
+        "element": "nature",
+        "primitive": "explosion"
+      }
+    },
+    "godie-h02r.e": {
+      "prim": {
+        "element": "nature",
+        "primitive": "beam"
+      }
+    },
+    "godie-h02r.ex": {
+      "prim": {
+        "element": "nature",
+        "primitive": "pulse"
+      }
+    },
+    "godie-h02r.q": {
+      "prim": {
+        "element": "nature",
+        "primitive": "slash"
+      }
+    },
+    "godie-h02r.r": {
+      "prim": {
+        "element": "nature",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "shine",
+        "model": "supershinythingy",
+        "w3aId": "A0R4",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "anchor": "chest"
+      },
+      "promoted": {
+        "family": "supershinythingy",
+        "w3aId": "A0R4",
+        "provenance": "w3a-override",
+        "via": "art:caster",
+        "primary": "fx.w3x.particle.supershinythingy.p00",
+        "extra": [
+          "fx.w3x.particle.supershinythingy.p01",
+          "fx.w3x.particle.supershinythingy.p02"
+        ]
+      }
+    },
+    "godie-h02r.w": {
+      "prim": {
+        "element": "nature",
+        "primitive": "swarm"
+      },
+      "family": {
+        "family": "groundDust",
+        "model": "impaletargetdust",
+        "w3aId": "A0NB",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-h02u.e": {
+      "prim": {
+        "element": "nature",
+        "primitive": "nova"
+      }
+    },
+    "godie-h02u.ex": {
+      "prim": {
+        "element": "nature",
+        "primitive": "explosion"
+      }
+    },
+    "godie-h02u.q": {
+      "prim": {
+        "element": "physical",
+        "primitive": "shockwave"
+      }
+    },
+    "godie-h02u.r": {
+      "prim": {
+        "element": "nature",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "flamePillar",
+        "model": "flamestriketarget",
+        "w3aId": "A06Y",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "scale": 1.1,
+        "tint": [
+          255,
+          0,
+          0
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-h02u.w": {
+      "prim": {
+        "element": "physical",
+        "primitive": "shockwave"
+      }
+    },
+    "godie-h02v.e": {
+      "prim": {
+        "element": "nature",
+        "primitive": "nova"
+      }
+    },
+    "godie-h02v.ex": {
+      "prim": {
+        "element": "nature",
+        "primitive": "explosion"
+      }
+    },
+    "godie-h02v.q": {
+      "prim": {
+        "element": "physical",
+        "primitive": "shockwave"
+      }
+    },
+    "godie-h02v.r": {
+      "prim": {
+        "element": "nature",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "flamePillar",
+        "model": "flamestriketarget",
+        "w3aId": "A06Y",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "scale": 1.1,
+        "tint": [
+          255,
+          0,
+          0
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-h02v.w": {
+      "prim": {
+        "element": "physical",
+        "primitive": "shockwave"
+      }
+    },
+    "godie-hapm.e": {
+      "prim": {
+        "element": "physical",
+        "primitive": "slash"
+      }
+    },
+    "godie-hapm.ex": {
+      "prim": {
+        "element": "fire",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "thunderclapcaster",
+        "w3aId": "A0U5",
+        "provenance": "w3a-override",
+        "via": "ability.missileArt",
+        "tint": [
+          0,
+          255,
+          255
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-hapm.q": {
+      "prim": {
+        "element": "physical",
+        "primitive": "pulse"
+      }
+    },
+    "godie-hapm.r": {
+      "prim": {
+        "element": "physical",
+        "primitive": "shockwave"
+      }
+    },
+    "godie-hapm.w": {
+      "prim": {
+        "element": "physical",
+        "primitive": "shockwave"
+      }
+    },
+    "godie-hart.e": {
+      "prim": {
+        "element": "physical",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "tornado",
+        "model": "tornadoelemental",
+        "w3aId": "A000",
+        "provenance": "jass-spawn",
+        "via": "jass.unitSpawn",
+        "scale": 2,
+        "tint": [
+          150,
+          150,
+          255
+        ],
+        "flyHeight": -500,
+        "paramSource": "ref"
+      }
+    },
+    "godie-hart.ex": {
+      "prim": {
+        "element": "holy",
+        "primitive": "beam"
+      }
+    },
+    "godie-hart.q": {
+      "prim": {
+        "element": "physical",
+        "primitive": "slash"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A072",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectTargetUnitBJ",
+        "anchor": "chest"
+      }
+    },
+    "godie-hart.r": {
+      "prim": {
+        "element": "physical",
+        "primitive": "slash"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A077",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      },
+      "promoted": {
+        "family": "herocloudkfksword",
+        "w3aId": "A077",
+        "provenance": "jass-literal",
+        "via": "jass:effectTargetUnit",
+        "primary": "fx.w3x.orb.herocloudkfksword.p00",
+        "extra": []
+      }
+    },
+    "godie-hart.w": {
+      "prim": {
+        "element": "fire",
+        "primitive": "explosion"
+      }
+    },
+    "godie-hblm.e": {
+      "prim": {
+        "element": "holy",
+        "primitive": "nova"
+      }
+    },
+    "godie-hblm.ex": {
+      "prim": {
+        "element": "void",
+        "primitive": "pulse"
+      }
+    },
+    "godie-hblm.q": {
+      "prim": {
+        "element": "lightning",
+        "primitive": "nova"
+      }
+    },
+    "godie-hblm.r": {
+      "prim": {
+        "element": "lightning",
+        "primitive": "nova"
+      }
+    },
+    "godie-hblm.w": {
+      "prim": {
+        "element": "lightning",
+        "primitive": "dash"
+      }
+    },
+    "godie-hgam.e": {
+      "prim": {
+        "element": "nature",
+        "primitive": "beam"
+      }
+    },
+    "godie-hgam.ex": {
+      "prim": {
+        "element": "nature",
+        "primitive": "pulse"
+      }
+    },
+    "godie-hgam.q": {
+      "prim": {
+        "element": "nature",
+        "primitive": "slash"
+      }
+    },
+    "godie-hgam.r": {
+      "prim": {
+        "element": "nature",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "shine",
+        "model": "supershinythingy",
+        "w3aId": "A0R4",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "anchor": "chest"
+      },
+      "promoted": {
+        "family": "supershinythingy",
+        "w3aId": "A0R4",
+        "provenance": "w3a-override",
+        "via": "art:caster",
+        "primary": "fx.w3x.particle.supershinythingy.p00",
+        "extra": [
+          "fx.w3x.particle.supershinythingy.p01",
+          "fx.w3x.particle.supershinythingy.p02"
+        ]
+      }
+    },
+    "godie-hgam.w": {
+      "prim": {
+        "element": "nature",
+        "primitive": "swarm"
+      },
+      "family": {
+        "family": "groundDust",
+        "model": "impaletargetdust",
+        "w3aId": "A0NB",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-hjai.e": {
+      "prim": {
+        "element": "fire",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "dissipate",
+        "model": "hcanceldeath",
+        "w3aId": "A04R",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "tint": [
+          255,
+          0,
+          0
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-hjai.ex": {
+      "prim": {
+        "element": "void",
+        "primitive": "nova"
+      }
+    },
+    "godie-hjai.q": {
+      "prim": {
+        "element": "fire",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "dissipate",
+        "model": "hcanceldeath",
+        "w3aId": "A0AY",
+        "provenance": "w3a-override",
+        "via": "ability.effectArt",
+        "tint": [
+          255,
+          0,
+          0
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-hjai.r": {
+      "prim": {
+        "element": "void",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "cloud",
+        "model": "herocloudcyd",
+        "w3aId": "A07F",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectLocBJ"
+      }
+    },
+    "godie-hjai.w": {
+      "prim": {
+        "element": "fire",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "flamePillar",
+        "model": "flamestriketarget",
+        "w3aId": "A021",
+        "provenance": "stock-inherited",
+        "via": "ability.effectArt",
+        "scale": 1.1,
+        "tint": [
+          255,
+          0,
+          0
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-hpal.e": {
+      "prim": {
+        "element": "void",
+        "primitive": "swarm"
+      }
+    },
+    "godie-hpal.ex": {
+      "prim": {
+        "element": "void",
+        "primitive": "swarm"
+      }
+    },
+    "godie-hpal.q": {
+      "prim": {
+        "element": "earth",
+        "primitive": "shockwave"
+      }
+    },
+    "godie-hpal.r": {
+      "prim": {
+        "element": "holy",
+        "primitive": "beam"
+      }
+    },
+    "godie-hpal.w": {
+      "prim": {
+        "element": "earth",
+        "primitive": "beam"
+      }
+    },
+    "godie-hpb1.e": {
+      "prim": {
+        "element": "physical",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0G3",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-hpb1.ex": {
+      "prim": {
+        "element": "physical",
+        "primitive": "explosion"
+      }
+    },
+    "godie-hpb1.q": {
+      "prim": {
+        "element": "physical",
+        "primitive": "pulse",
+        "size": "sm"
+      }
+    },
+    "godie-hpb1.r": {
+      "prim": {
+        "element": "holy",
+        "primitive": "nova"
+      }
+    },
+    "godie-hpb1.w": {
+      "prim": {
+        "element": "physical",
+        "primitive": "pulse",
+        "size": "sm"
+      },
+      "family": {
+        "family": "burst",
+        "model": "stampedemissiledeath",
+        "w3aId": "A0G2",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectLocBJ",
+        "scale": 3,
+        "tint": [
+          255,
+          0,
+          0
+        ],
+        "paramSource": "ref"
+      }
+    },
+    "godie-huth.e": {
+      "prim": {
+        "element": "arcane",
+        "primitive": "swarm"
+      },
+      "family": {
+        "family": "mirrorImage",
+        "model": "mirrorimagecaster",
+        "w3aId": "A03T",
+        "provenance": "stock-inherited",
+        "via": "ability.specialArt"
+      }
+    },
+    "godie-huth.ex": {
+      "prim": {
+        "element": "void",
+        "primitive": "explosion"
+      }
+    },
+    "godie-huth.q": {
+      "prim": {
+        "element": "arcane",
+        "primitive": "pulse",
+        "size": "sm"
+      }
+    },
+    "godie-huth.r": {
+      "prim": {
+        "element": "void",
+        "primitive": "explosion"
+      }
+    },
+    "godie-huth.w": {
+      "prim": {
+        "element": "arcane",
+        "primitive": "pulse"
+      }
+    },
+    "godie-hvsh.e": {
+      "prim": {
+        "element": "blood",
+        "primitive": "nova"
+      }
+    },
+    "godie-hvsh.ex": {
+      "prim": {
+        "element": "arcane",
+        "primitive": "beam"
+      }
+    },
+    "godie-hvsh.passive": {
+      "family": {
+        "family": "lightColumn",
+        "model": "tomeofretrainingcaster",
+        "w3aId": "A0RR",
+        "provenance": "jass-spawn",
+        "via": "jass.unitSpawn",
+        "scale": 4,
+        "tint": [
+          255,
+          0,
+          255
+        ],
+        "paramSource": "ref"
+      }
+    },
+    "godie-hvsh.q": {
+      "prim": {
+        "element": "arcane",
+        "primitive": "beam"
+      }
+    },
+    "godie-hvsh.r": {
+      "prim": {
+        "element": "arcane",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0RQ",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-hvsh.w": {
+      "prim": {
+        "element": "arcane",
+        "primitive": "pulse"
+      }
+    },
+    "godie-hvwd.e": {
+      "prim": {
+        "element": "void",
+        "primitive": "nova"
+      }
+    },
+    "godie-hvwd.ex": {
+      "prim": {
+        "element": "holy",
+        "primitive": "pulse"
+      },
+      "family": {
+        "family": "lightColumn",
+        "model": "tomeofretrainingcaster",
+        "w3aId": "A0S6",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-hvwd.q": {
+      "prim": {
+        "element": "holy",
+        "primitive": "beam"
+      }
+    },
+    "godie-hvwd.r": {
+      "prim": {
+        "element": "void",
+        "primitive": "swarm"
+      }
+    },
+    "godie-hvwd.w": {
+      "prim": {
+        "element": "holy",
+        "primitive": "pulse"
+      }
+    },
+    "godie-n003.e": {
+      "prim": {
+        "element": "ice",
+        "primitive": "nova"
+      },
+      "family": {
+        "family": "lightColumn",
+        "model": "tomeofretrainingcaster",
+        "w3aId": "A05C",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-n003.ex": {
+      "prim": {
+        "element": "ice",
+        "primitive": "pulse"
+      },
+      "family": {
+        "family": "mark",
+        "model": "markofchaostarget",
+        "w3aId": "A06K",
+        "provenance": "w3a-override",
+        "via": "ability.missileArt",
+        "tint": [
+          255,
+          100,
+          0
+        ],
+        "flyHeight": 150,
+        "paramSource": "model"
+      }
+    },
+    "godie-n003.q": {
+      "prim": {
+        "element": "ice",
+        "primitive": "shockwave"
+      }
+    },
+    "godie-n003.r": {
+      "prim": {
+        "element": "ice",
+        "primitive": "explosion"
+      },
+      "promoted": {
+        "family": "frostnova",
+        "w3aId": "A05D",
+        "provenance": "jass-literal",
+        "via": "jass:effectLoc",
+        "primary": "fx.w3x.locust.frostnova.p01",
+        "extra": [
+          "fx.w3x.locust.frostnova.p00",
+          "fx.w3x.locust.frostnova.p02",
+          "fx.w3x.locust.frostnova.p03"
+        ]
+      }
+    },
+    "godie-n003.w": {
+      "prim": {
+        "element": "blood",
+        "primitive": "nova"
+      }
+    },
+    "godie-n00b.e": {
+      "prim": {
+        "element": "arcane",
+        "primitive": "pulse",
+        "size": "sm"
+      },
+      "family": {
+        "family": "blink",
+        "model": "blinkcaster",
+        "w3aId": "A0D2",
+        "provenance": "stock-inherited",
+        "via": "ability.specialArt"
+      }
+    },
+    "godie-n00b.ex": {
+      "prim": {
+        "element": "arcane",
+        "primitive": "nova"
+      }
+    },
+    "godie-n00b.q": {
+      "prim": {
+        "element": "wind",
+        "primitive": "beam"
+      }
+    },
+    "godie-n00b.r": {
+      "prim": {
+        "element": "wind",
+        "primitive": "tornado"
+      },
+      "family": {
+        "family": "tornado",
+        "model": "tornadoelemental",
+        "w3aId": "A0JN",
+        "provenance": "w3a-override",
+        "via": "ability.targetArt"
+      }
+    },
+    "godie-n00b.w": {
+      "prim": {
+        "element": "arcane",
+        "primitive": "pulse"
+      },
+      "family": {
+        "family": "blink",
+        "model": "blinkcaster",
+        "w3aId": "A0D2",
+        "provenance": "stock-inherited",
+        "via": "ability.specialArt"
+      }
+    },
+    "godie-n00p.e": {
+      "prim": {
+        "element": "nature",
+        "primitive": "pulse"
+      }
+    },
+    "godie-n00p.ex": {
+      "prim": {
+        "element": "nature",
+        "primitive": "swarm"
+      }
+    },
+    "godie-n00p.q": {
+      "prim": {
+        "element": "nature",
+        "primitive": "slash"
+      }
+    },
+    "godie-n00p.r": {
+      "prim": {
+        "element": "nature",
+        "primitive": "shockwave"
+      }
+    },
+    "godie-n00p.w": {
+      "prim": {
+        "element": "nature",
+        "primitive": "swarm"
+      },
+      "family": {
+        "family": "breath",
+        "model": "bloodbreathstream",
+        "w3aId": "A0RV",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectTargetUnitBJ",
+        "anchor": "chest"
+      }
+    },
+    "godie-n01c.e": {
+      "prim": {
+        "element": "fire",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A05J",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-n01c.ex": {
+      "prim": {
+        "element": "fire",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "mark",
+        "model": "markofchaostarget",
+        "w3aId": "A0T1",
+        "provenance": "w3a-override",
+        "via": "ability.missileArt",
+        "tint": [
+          255,
+          100,
+          0
+        ],
+        "flyHeight": 150,
+        "paramSource": "model"
+      }
+    },
+    "godie-n01c.q": {
+      "prim": {
+        "element": "fire",
+        "primitive": "pulse"
+      },
+      "family": {
+        "family": "resurrect",
+        "model": "resurrectcaster",
+        "w3aId": "A0CF",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "scale": 0.9,
+        "paramSource": "model"
+      }
+    },
+    "godie-n01c.r": {
+      "prim": {
+        "element": "physical",
+        "primitive": "slash"
+      },
+      "family": {
+        "family": "mirrorImage",
+        "model": "mirrorimagecaster",
+        "w3aId": "A0EZ",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-n01c.w": {
+      "prim": {
+        "element": "lightning",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A05T",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectTargetUnitBJ",
+        "anchor": "chest"
+      }
+    },
+    "godie-n01g.e": {
+      "family": {
+        "family": "lightColumn",
+        "model": "tomeofretrainingcaster",
+        "w3aId": "A05C",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-n01g.ex": {
+      "family": {
+        "family": "mark",
+        "model": "markofchaostarget",
+        "w3aId": "A06K",
+        "provenance": "w3a-override",
+        "via": "ability.missileArt",
+        "tint": [
+          255,
+          100,
+          0
+        ],
+        "flyHeight": 150,
+        "paramSource": "model"
+      }
+    },
+    "godie-n01g.r": {
+      "promoted": {
+        "family": "frostnova",
+        "w3aId": "A05D",
+        "provenance": "jass-literal",
+        "via": "jass:effectLoc",
+        "primary": "fx.w3x.locust.frostnova.p01",
+        "extra": [
+          "fx.w3x.locust.frostnova.p00",
+          "fx.w3x.locust.frostnova.p02",
+          "fx.w3x.locust.frostnova.p03"
+        ]
+      }
+    },
+    "godie-nbbc.e": {
+      "prim": {
+        "element": "fire",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A05J",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-nbbc.ex": {
+      "prim": {
+        "element": "fire",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "mark",
+        "model": "markofchaostarget",
+        "w3aId": "A0T1",
+        "provenance": "w3a-override",
+        "via": "ability.missileArt",
+        "tint": [
+          255,
+          100,
+          0
+        ],
+        "flyHeight": 150,
+        "paramSource": "model"
+      }
+    },
+    "godie-nbbc.q": {
+      "prim": {
+        "element": "fire",
+        "primitive": "pulse"
+      },
+      "family": {
+        "family": "resurrect",
+        "model": "resurrectcaster",
+        "w3aId": "A0CF",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "scale": 0.9,
+        "paramSource": "model"
+      }
+    },
+    "godie-nbbc.r": {
+      "prim": {
+        "element": "physical",
+        "primitive": "slash"
+      },
+      "family": {
+        "family": "mirrorImage",
+        "model": "mirrorimagecaster",
+        "w3aId": "A0EZ",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-nbbc.w": {
+      "prim": {
+        "element": "lightning",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A05T",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectTargetUnitBJ",
+        "anchor": "chest"
+      }
+    },
+    "godie-nplh.e": {
+      "prim": {
+        "element": "holy",
+        "primitive": "beam"
+      }
+    },
+    "godie-nplh.ex": {
+      "prim": {
+        "element": "holy",
+        "primitive": "beam"
+      }
+    },
+    "godie-nplh.q": {
+      "prim": {
+        "element": "holy",
+        "primitive": "pulse",
+        "size": "sm"
+      }
+    },
+    "godie-nplh.r": {
+      "prim": {
+        "element": "holy",
+        "primitive": "slash"
+      }
+    },
+    "godie-nplh.w": {
+      "prim": {
+        "element": "holy",
+        "primitive": "nova"
+      }
+    },
+    "godie-nsjs.e": {
+      "prim": {
+        "element": "nature",
+        "primitive": "pulse"
+      }
+    },
+    "godie-nsjs.ex": {
+      "prim": {
+        "element": "nature",
+        "primitive": "swarm"
+      }
+    },
+    "godie-nsjs.q": {
+      "prim": {
+        "element": "nature",
+        "primitive": "slash"
+      }
+    },
+    "godie-nsjs.r": {
+      "prim": {
+        "element": "nature",
+        "primitive": "shockwave"
+      }
+    },
+    "godie-nsjs.w": {
+      "prim": {
+        "element": "nature",
+        "primitive": "swarm"
+      },
+      "family": {
+        "family": "breath",
+        "model": "bloodbreathstream",
+        "w3aId": "A0RV",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectTargetUnitBJ",
+        "anchor": "chest"
+      }
+    },
+    "godie-o00k.e": {
+      "prim": {
+        "element": "lightning",
+        "primitive": "nova"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A04V",
+        "provenance": "w3h-override",
+        "via": "buff.effectArt"
+      }
+    },
+    "godie-o00k.ex": {
+      "prim": {
+        "element": "lightning",
+        "primitive": "explosion"
+      }
+    },
+    "godie-o00k.q": {
+      "prim": {
+        "element": "lightning",
+        "primitive": "nova"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "thunderclapcaster",
+        "w3aId": "A0BZ",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "anchor": "body",
+        "tint": [
+          0,
+          255,
+          255
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-o00k.r": {
+      "prim": {
+        "element": "lightning",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "thunderclapcaster",
+        "w3aId": "A0C0",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "anchor": "body",
+        "tint": [
+          0,
+          255,
+          255
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-o00k.w": {
+      "prim": {
+        "element": "lightning",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "blink",
+        "model": "blinkcaster",
+        "w3aId": "A0BY",
+        "provenance": "stock-inherited",
+        "via": "ability.specialArt"
+      }
+    },
+    "godie-o00l.e": {
+      "prim": {
+        "element": "arcane",
+        "primitive": "pulse"
+      }
+    },
+    "godie-o00l.ex": {
+      "prim": {
+        "element": "void",
+        "primitive": "nova"
+      }
+    },
+    "godie-o00l.q": {
+      "prim": {
+        "element": "void",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "burst",
+        "model": "steamtankimpact",
+        "w3aId": "A0K1",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectTargetUnitBJ",
+        "anchor": "chest",
+        "tint": [
+          255,
+          170,
+          170
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-o00l.r": {
+      "prim": {
+        "element": "fire",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0UE",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-o00l.w": {
+      "prim": {
+        "element": "fire",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "flamePillar",
+        "model": "flamestriketarget",
+        "w3aId": "A0DQ",
+        "provenance": "stock-inherited",
+        "via": "ability.effectArt",
+        "scale": 1.1,
+        "tint": [
+          255,
+          0,
+          0
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-o00x.e": {
+      "prim": {
+        "element": "ki",
+        "primitive": "pulse"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A09E",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectTargetUnitBJ",
+        "anchor": "origin"
+      }
+    },
+    "godie-o00x.ex": {
+      "prim": {
+        "element": "ki",
+        "primitive": "beam"
+      }
+    },
+    "godie-o00x.q": {
+      "prim": {
+        "element": "ki",
+        "primitive": "pulse"
+      },
+      "family": {
+        "family": "burst",
+        "model": "doomdeath",
+        "w3aId": "A082",
+        "provenance": "w3h-override",
+        "via": "buff.targetArt",
+        "anchor": "right,hand",
+        "tint": [
+          100,
+          100,
+          100
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-o00x.r": {
+      "prim": {
+        "element": "ki",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "burst",
+        "model": "neutralbuildingexplosion",
+        "w3aId": "A03S",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectLocBJ"
+      }
+    },
+    "godie-o00x.w": {
+      "prim": {
+        "element": "ki",
+        "primitive": "pulse",
+        "size": "sm"
+      },
+      "family": {
+        "family": "blink",
+        "model": "blinkcaster",
+        "w3aId": "A03Y",
+        "provenance": "stock-inherited",
+        "via": "ability.specialArt"
+      }
+    },
+    "godie-o02l.ex": {
+      "family": {
+        "family": "shockwaveRing",
+        "model": "thunderclapcaster",
+        "w3aId": "A0SL",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "anchor": "body",
+        "tint": [
+          0,
+          255,
+          255
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-o02l.passive": {
+      "family": {
+        "family": "blink",
+        "model": "blinkcaster",
+        "w3aId": "A0R6",
+        "provenance": "stock-inherited",
+        "via": "ability.specialArt"
+      }
+    },
+    "godie-o02l.q": {
+      "family": {
+        "family": "shockwaveRing",
+        "model": "thunderclapcaster",
+        "w3aId": "A0BZ",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "anchor": "body",
+        "tint": [
+          0,
+          255,
+          255
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-o02l.r": {
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A040",
+        "provenance": "w3a-override",
+        "via": "ability.missileArt"
+      }
+    },
+    "godie-o02p.e": {
+      "prim": {
+        "element": "sound",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "resurrect",
+        "model": "resurrectcaster",
+        "w3aId": "A11B",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "scale": 0.9,
+        "paramSource": "model"
+      }
+    },
+    "godie-o02p.ex": {
+      "prim": {
+        "element": "sound",
+        "primitive": "swarm"
+      }
+    },
+    "godie-o02p.q": {
+      "prim": {
+        "element": "sound",
+        "primitive": "nova"
+      }
+    },
+    "godie-o02p.r": {
+      "prim": {
+        "element": "holy",
+        "primitive": "nova"
+      }
+    },
+    "godie-o02p.w": {
+      "prim": {
+        "element": "sound",
+        "primitive": "pulse"
+      }
+    },
+    "godie-o030.ex": {
+      "family": {
+        "family": "mark",
+        "model": "markofchaostarget",
+        "w3aId": "A0YT",
+        "provenance": "w3a-override",
+        "via": "ability.missileArt",
+        "tint": [
+          255,
+          100,
+          0
+        ],
+        "flyHeight": 150,
+        "paramSource": "model"
+      }
+    },
+    "godie-o030.r": {
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A01P",
+        "provenance": "w3h-override",
+        "via": "buff.effectArt"
+      }
+    },
+    "godie-ofar.e": {
+      "prim": {
+        "element": "lightning",
+        "primitive": "pulse"
+      }
+    },
+    "godie-ofar.ex": {
+      "prim": {
+        "element": "lightning",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "thunderclapcaster",
+        "w3aId": "A0SL",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "anchor": "body",
+        "tint": [
+          0,
+          255,
+          255
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-ofar.passive": {
+      "family": {
+        "family": "blink",
+        "model": "blinkcaster",
+        "w3aId": "A0R6",
+        "provenance": "stock-inherited",
+        "via": "ability.specialArt"
+      }
+    },
+    "godie-ofar.q": {
+      "prim": {
+        "element": "lightning",
+        "primitive": "nova"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "thunderclapcaster",
+        "w3aId": "A0BZ",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "anchor": "body",
+        "tint": [
+          0,
+          255,
+          255
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-ofar.r": {
+      "prim": {
+        "element": "lightning",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A040",
+        "provenance": "w3a-override",
+        "via": "ability.missileArt"
+      }
+    },
+    "godie-ofar.w": {
+      "prim": {
+        "element": "physical",
+        "primitive": "slash"
+      }
+    },
+    "godie-ogld.e": {
+      "prim": {
+        "element": "holy",
+        "primitive": "nova"
+      }
+    },
+    "godie-ogld.ex": {
+      "prim": {
+        "element": "holy",
+        "primitive": "swarm"
+      }
+    },
+    "godie-ogld.q": {
+      "prim": {
+        "element": "holy",
+        "primitive": "pulse"
+      }
+    },
+    "godie-ogld.r": {
+      "prim": {
+        "element": "void",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0CO",
+        "provenance": "stock-inherited",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-ogld.w": {
+      "prim": {
+        "element": "void",
+        "primitive": "swarm"
+      }
+    },
+    "godie-ogrh.e": {
+      "prim": {
+        "element": "ki",
+        "primitive": "pulse"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A09E",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectTargetUnitBJ",
+        "anchor": "origin"
+      }
+    },
+    "godie-ogrh.ex": {
+      "prim": {
+        "element": "ki",
+        "primitive": "beam"
+      }
+    },
+    "godie-ogrh.q": {
+      "prim": {
+        "element": "ki",
+        "primitive": "pulse"
+      },
+      "family": {
+        "family": "burst",
+        "model": "doomdeath",
+        "w3aId": "A082",
+        "provenance": "w3h-override",
+        "via": "buff.targetArt",
+        "anchor": "right,hand",
+        "tint": [
+          100,
+          100,
+          100
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-ogrh.r": {
+      "prim": {
+        "element": "ki",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "burst",
+        "model": "neutralbuildingexplosion",
+        "w3aId": "A03S",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectLocBJ"
+      }
+    },
+    "godie-ogrh.w": {
+      "prim": {
+        "element": "ki",
+        "primitive": "pulse",
+        "size": "sm"
+      },
+      "family": {
+        "family": "blink",
+        "model": "blinkcaster",
+        "w3aId": "A03Y",
+        "provenance": "stock-inherited",
+        "via": "ability.specialArt"
+      }
+    },
+    "godie-orkn.e": {
+      "prim": {
+        "element": "fire",
+        "primitive": "explosion"
+      }
+    },
+    "godie-orkn.ex": {
+      "prim": {
+        "element": "void",
+        "primitive": "pulse"
+      }
+    },
+    "godie-orkn.q": {
+      "prim": {
+        "element": "void",
+        "primitive": "pulse",
+        "size": "sm"
+      }
+    },
+    "godie-orkn.r": {
+      "prim": {
+        "element": "physical",
+        "primitive": "shockwave"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A01P",
+        "provenance": "w3h-override",
+        "via": "buff.effectArt"
+      }
+    },
+    "godie-orkn.w": {
+      "prim": {
+        "element": "nature",
+        "primitive": "nova"
+      }
+    },
+    "godie-osam.e": {
+      "prim": {
+        "element": "void",
+        "primitive": "explosion"
+      }
+    },
+    "godie-osam.ex": {
+      "prim": {
+        "element": "void",
+        "primitive": "nova"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0MV",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-osam.passive": {
+      "family": {
+        "family": "dissipate",
+        "model": "undeaddissipate",
+        "w3aId": "ACdr",
+        "provenance": "w3a-override",
+        "via": "ability.targetArt"
+      }
+    },
+    "godie-osam.q": {
+      "prim": {
+        "element": "wind",
+        "primitive": "slash"
+      }
+    },
+    "godie-osam.r": {
+      "prim": {
+        "element": "ki",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "thunderclapcaster",
+        "w3aId": "A0FP",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "tint": [
+          0,
+          255,
+          255
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-osam.w": {
+      "prim": {
+        "element": "wind",
+        "primitive": "slash"
+      }
+    },
+    "godie-u00h.e": {
+      "prim": {
+        "element": "ice",
+        "primitive": "beam"
+      }
+    },
+    "godie-u00h.ex": {
+      "prim": {
+        "element": "fire",
+        "primitive": "explosion"
+      }
+    },
+    "godie-u00h.passive": {
+      "family": {
+        "family": "flamePillar",
+        "model": "flamestriketarget",
+        "w3aId": "A07C",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "scale": 1.1,
+        "tint": [
+          255,
+          0,
+          0
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-u00h.q": {
+      "prim": {
+        "element": "wind",
+        "primitive": "slash"
+      }
+    },
+    "godie-u00h.r": {
+      "prim": {
+        "element": "holy",
+        "primitive": "tornado"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0DJ",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectLocBJ"
+      }
+    },
+    "godie-u00h.w": {
+      "prim": {
+        "element": "fire",
+        "primitive": "slash"
+      }
+    },
+    "godie-u00j.e": {
+      "prim": {
+        "element": "void",
+        "primitive": "pulse"
+      },
+      "family": {
+        "family": "flamePillar",
+        "model": "flamestriketarget",
+        "w3aId": "A0F4",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "scale": 1.1,
+        "tint": [
+          255,
+          0,
+          0
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-u00j.ex": {
+      "prim": {
+        "element": "void",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "burst",
+        "model": "stampedemissiledeath",
+        "w3aId": "A0S3",
+        "provenance": "w3a-override",
+        "via": "ability.targetArt",
+        "anchor": "chest",
+        "tint": [
+          255,
+          0,
+          0
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-u00j.q": {
+      "prim": {
+        "element": "void",
+        "primitive": "pulse",
+        "size": "sm"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0S4",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectTargetUnitBJ",
+        "anchor": "chest"
+      },
+      "promoted": {
+        "family": "herocloudkfksword",
+        "w3aId": "A0S4",
+        "provenance": "w3a-override",
+        "via": "art:caster",
+        "primary": "fx.w3x.orb.herocloudkfksword.p00",
+        "extra": []
+      }
+    },
+    "godie-u00j.r": {
+      "prim": {
+        "element": "void",
+        "primitive": "explosion"
+      }
+    },
+    "godie-u00j.w": {
+      "prim": {
+        "element": "physical",
+        "primitive": "slash"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "thunderclapcaster",
+        "w3aId": "A0ET",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectLocBJ",
+        "tint": [
+          0,
+          255,
+          255
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-u00k.e": {
+      "prim": {
+        "element": "void",
+        "primitive": "swarm"
+      }
+    },
+    "godie-u00k.ex": {
+      "prim": {
+        "element": "void",
+        "primitive": "explosion"
+      }
+    },
+    "godie-u00k.q": {
+      "prim": {
+        "element": "void",
+        "primitive": "explosion"
+      }
+    },
+    "godie-u00k.r": {
+      "prim": {
+        "element": "void",
+        "primitive": "nova"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "thunderclapcaster",
+        "w3aId": "A0HK",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectTargetUnitBJ",
+        "anchor": "chest",
+        "tint": [
+          0,
+          255,
+          255
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-u00k.w": {
+      "prim": {
+        "element": "void",
+        "primitive": "beam"
+      }
+    },
+    "godie-u00l.e": {
+      "prim": {
+        "element": "physical",
+        "primitive": "swarm"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0HV",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-u00l.ex": {
+      "prim": {
+        "element": "physical",
+        "primitive": "shockwave"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A10Y",
+        "provenance": "w3a-override",
+        "via": "ability.effectArt"
+      }
+    },
+    "godie-u00l.q": {
+      "prim": {
+        "element": "physical",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "burst",
+        "model": "abominationexplosion",
+        "w3aId": "A0AF",
+        "provenance": "jass-spawn",
+        "via": "jass.unitSpawn",
+        "scale": 1.1,
+        "paramSource": "ref"
+      }
+    },
+    "godie-u00l.r": {
+      "prim": {
+        "element": "physical",
+        "primitive": "pulse"
+      },
+      "family": {
+        "family": "boltStrike",
+        "model": "monsoonbolttarget",
+        "w3aId": "A0HW",
+        "provenance": "jass-spawn",
+        "via": "jass.unitSpawn",
+        "scale": 10,
+        "paramSource": "ref"
+      }
+    },
+    "godie-u00l.w": {
+      "prim": {
+        "element": "physical",
+        "primitive": "pulse",
+        "size": "sm"
+      }
+    },
+    "godie-u00n.e": {
+      "prim": {
+        "element": "physical",
+        "primitive": "swarm"
+      },
+      "family": {
+        "family": "burst",
+        "model": "steamtankimpact",
+        "w3aId": "A0IV",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectTargetUnitBJ",
+        "anchor": "chest",
+        "tint": [
+          255,
+          170,
+          170
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-u00n.ex": {
+      "prim": {
+        "element": "void",
+        "primitive": "nova"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0ZK",
+        "provenance": "stock-inherited",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-u00n.passive": {
+      "family": {
+        "family": "flamePillar",
+        "model": "flamestriketarget",
+        "w3aId": "A0IR",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectLocBJ",
+        "scale": 1.1,
+        "tint": [
+          255,
+          0,
+          0
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-u00n.q": {
+      "prim": {
+        "element": "physical",
+        "primitive": "shockwave"
+      },
+      "family": {
+        "family": "mirrorImage",
+        "model": "mirrorimagecaster",
+        "w3aId": "A0IS",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectLocBJ"
+      }
+    },
+    "godie-u00n.r": {
+      "prim": {
+        "element": "physical",
+        "primitive": "shockwave"
+      },
+      "family": {
+        "family": "mirrorImage",
+        "model": "mirrorimagecaster",
+        "w3aId": "A0RZ",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectLocBJ"
+      }
+    },
+    "godie-u00n.w": {
+      "prim": {
+        "element": "physical",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0IP",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectTargetUnitBJ",
+        "anchor": "hand"
+      }
+    },
+    "godie-u00o.e": {
+      "family": {
+        "family": "burst",
+        "model": "steamtankimpact",
+        "w3aId": "A0IV",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectTargetUnitBJ",
+        "anchor": "chest",
+        "tint": [
+          255,
+          170,
+          170
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-u00o.ex": {
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0ZK",
+        "provenance": "stock-inherited",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-u00o.passive": {
+      "family": {
+        "family": "flamePillar",
+        "model": "flamestriketarget",
+        "w3aId": "A0IR",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectLocBJ",
+        "scale": 1.1,
+        "tint": [
+          255,
+          0,
+          0
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-u00o.q": {
+      "family": {
+        "family": "mirrorImage",
+        "model": "mirrorimagecaster",
+        "w3aId": "A0IS",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectLocBJ"
+      }
+    },
+    "godie-u00o.r": {
+      "family": {
+        "family": "mirrorImage",
+        "model": "mirrorimagecaster",
+        "w3aId": "A0RZ",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectLocBJ"
+      }
+    },
+    "godie-u00o.w": {
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0IP",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectTargetUnitBJ",
+        "anchor": "hand"
+      }
+    },
+    "godie-u00v.e": {
+      "prim": {
+        "element": "ki",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "tornado",
+        "model": "tornadoelemental",
+        "w3aId": "A0L2",
+        "provenance": "jass-spawn",
+        "via": "jass.unitSpawn",
+        "scale": 3,
+        "tint": [
+          200,
+          100,
+          100
+        ],
+        "flyHeight": -900,
+        "paramSource": "ref"
+      }
+    },
+    "godie-u00v.ex": {
+      "prim": {
+        "element": "physical",
+        "primitive": "pulse"
+      }
+    },
+    "godie-u00v.q": {
+      "prim": {
+        "element": "physical",
+        "primitive": "beam"
+      }
+    },
+    "godie-u00v.r": {
+      "prim": {
+        "element": "physical",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0L6",
+        "provenance": "w3a-override",
+        "via": "ability.targetArt",
+        "anchor": "chest"
+      },
+      "promoted": {
+        "family": "boomnl",
+        "w3aId": "A0L6",
+        "provenance": "jass-literal",
+        "via": "jass:effectLoc",
+        "primary": "fx.w3x.locust.boomnl.p01",
+        "extra": [
+          "fx.w3x.locust.boomnl.p00",
+          "fx.w3x.locust.boomnl.p02",
+          "fx.w3x.locust.boomnl.p03",
+          "fx.w3x.locust.boomnl.p04"
+        ]
+      }
+    },
+    "godie-u00v.w": {
+      "prim": {
+        "element": "earth",
+        "primitive": "shockwave"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0L4",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectLocBJ"
+      }
+    },
+    "godie-u010.e": {
+      "prim": {
+        "element": "void",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A09I",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "anchor": "weapon"
+      },
+      "promoted": {
+        "family": "tectonicfury",
+        "w3aId": "A09I",
+        "provenance": "w3a-override",
+        "via": "art:missile",
+        "primary": "godie-tectonicfury-p0",
+        "extra": [
+          "godie-tectonicfury-p1"
+        ]
+      }
+    },
+    "godie-u010.ex": {
+      "prim": {
+        "element": "void",
+        "primitive": "explosion"
+      }
+    },
+    "godie-u010.q": {
+      "prim": {
+        "element": "fire",
+        "primitive": "slash"
+      },
+      "promoted": {
+        "family": "flamessmoke",
+        "w3aId": "A0OG",
+        "provenance": "w3a-override",
+        "via": "art:caster+art:effect",
+        "primary": "fx.w3x.particle.flamessmoke.p01",
+        "extra": [
+          "fx.w3x.particle.flamessmoke.p00",
+          "fx.w3x.particle.flamessmoke.p02",
+          "fx.w3x.particle.flamessmoke.p03"
+        ]
+      }
+    },
+    "godie-u010.r": {
+      "prim": {
+        "element": "void",
+        "primitive": "pulse"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A09K",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectTargetUnitBJ",
+        "anchor": "chest"
+      },
+      "promoted": {
+        "family": "flamessmoke",
+        "w3aId": "A09K",
+        "provenance": "w3a-override",
+        "via": "art:caster",
+        "primary": "fx.w3x.particle.flamessmoke.p01",
+        "extra": [
+          "fx.w3x.particle.flamessmoke.p00",
+          "fx.w3x.particle.flamessmoke.p02",
+          "fx.w3x.particle.flamessmoke.p03"
+        ]
+      }
+    },
+    "godie-u010.w": {
+      "prim": {
+        "element": "fire",
+        "primitive": "explosion"
+      },
+      "promoted": {
+        "family": "fireblast",
+        "w3aId": "A09H",
+        "provenance": "w3a-override",
+        "via": "art:missile",
+        "primary": "godie-fireblast-p3",
+        "extra": [
+          "godie-fireblast-p0",
+          "godie-fireblast-p1",
+          "godie-fireblast-p2"
+        ]
+      }
+    },
+    "godie-u01u.e": {
+      "prim": {
+        "element": "void",
+        "primitive": "slash"
+      },
+      "family": {
+        "family": "mirrorImage",
+        "model": "mirrorimagecaster",
+        "w3aId": "A06P",
+        "provenance": "w3a-override",
+        "via": "ability.missileArt"
+      }
+    },
+    "godie-u01u.ex": {
+      "prim": {
+        "element": "void",
+        "primitive": "pulse"
+      },
+      "family": {
+        "family": "mark",
+        "model": "markofchaostarget",
+        "w3aId": "A10N",
+        "provenance": "w3a-override",
+        "via": "ability.missileArt",
+        "tint": [
+          255,
+          100,
+          0
+        ],
+        "flyHeight": 150,
+        "paramSource": "model"
+      }
+    },
+    "godie-u01u.q": {
+      "prim": {
+        "element": "fire",
+        "primitive": "slash"
+      },
+      "promoted": {
+        "family": "lavabreathdamage",
+        "w3aId": "A0BC",
+        "provenance": "w3a-override",
+        "via": "art:target",
+        "primary": "fx.w3x.particle.lavabreathdamage.p00",
+        "extra": []
+      }
+    },
+    "godie-u01u.r": {
+      "prim": {
+        "element": "physical",
+        "primitive": "slash"
+      },
+      "family": {
+        "family": "mirrorImage",
+        "model": "mirrorimagecaster",
+        "w3aId": "A0MQ",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectLocBJ"
+      }
+    },
+    "godie-u01u.w": {
+      "prim": {
+        "element": "physical",
+        "primitive": "slash"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A06N",
+        "provenance": "stock-inherited",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-u034.e": {
+      "prim": {
+        "element": "earth",
+        "primitive": "pulse",
+        "size": "sm"
+      }
+    },
+    "godie-u034.ex": {
+      "prim": {
+        "element": "blood",
+        "primitive": "pulse"
+      }
+    },
+    "godie-u034.passive": {
+      "family": {
+        "family": "burst",
+        "model": "steamtankimpact",
+        "w3aId": "A08Y",
+        "provenance": "w3a-override",
+        "via": "ability.missileArt",
+        "tint": [
+          255,
+          170,
+          170
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-u034.q": {
+      "prim": {
+        "element": "ki",
+        "primitive": "pulse",
+        "size": "sm"
+      }
+    },
+    "godie-u034.r": {
+      "prim": {
+        "element": "fire",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "uncategorised",
+        "model": "boomnl",
+        "w3aId": "A0Y1",
+        "provenance": "w3h-override",
+        "via": "buff.targetArt",
+        "anchor": "chest",
+        "scale": 1,
+        "paramSource": "model"
+      },
+      "promoted": {
+        "family": "boomnl",
+        "w3aId": "A0Y1",
+        "provenance": "w3h-override",
+        "via": "buff:B04R/target",
+        "primary": "fx.w3x.locust.boomnl.p01",
+        "extra": [
+          "fx.w3x.locust.boomnl.p00",
+          "fx.w3x.locust.boomnl.p02",
+          "fx.w3x.locust.boomnl.p03",
+          "fx.w3x.locust.boomnl.p04"
+        ]
+      }
+    },
+    "godie-u034.w": {
+      "prim": {
+        "element": "ki",
+        "primitive": "pulse",
+        "size": "sm"
+      }
+    },
+    "godie-ubal.e": {
+      "prim": {
+        "element": "void",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0KC",
+        "provenance": "w3h-override",
+        "via": "buff.effectArt"
+      }
+    },
+    "godie-ubal.ex": {
+      "prim": {
+        "element": "void",
+        "primitive": "explosion"
+      }
+    },
+    "godie-ubal.q": {
+      "prim": {
+        "element": "void",
+        "primitive": "beam"
+      }
+    },
+    "godie-ubal.r": {
+      "prim": {
+        "element": "void",
+        "primitive": "pulse"
+      }
+    },
+    "godie-ubal.w": {
+      "prim": {
+        "element": "void",
+        "primitive": "shockwave"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0KC",
+        "provenance": "w3h-override",
+        "via": "buff.effectArt"
+      }
+    },
+    "godie-ucrl.e": {
+      "prim": {
+        "element": "earth",
+        "primitive": "pulse",
+        "size": "sm"
+      }
+    },
+    "godie-ucrl.ex": {
+      "prim": {
+        "element": "blood",
+        "primitive": "pulse"
+      }
+    },
+    "godie-ucrl.passive": {
+      "family": {
+        "family": "burst",
+        "model": "steamtankimpact",
+        "w3aId": "A08Y",
+        "provenance": "w3a-override",
+        "via": "ability.missileArt",
+        "tint": [
+          255,
+          170,
+          170
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-ucrl.q": {
+      "prim": {
+        "element": "ki",
+        "primitive": "pulse",
+        "size": "sm"
+      }
+    },
+    "godie-ucrl.r": {
+      "prim": {
+        "element": "fire",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "uncategorised",
+        "model": "boomnl",
+        "w3aId": "A0Y1",
+        "provenance": "w3h-override",
+        "via": "buff.targetArt",
+        "anchor": "chest",
+        "scale": 1,
+        "paramSource": "model"
+      },
+      "promoted": {
+        "family": "boomnl",
+        "w3aId": "A0Y1",
+        "provenance": "w3h-override",
+        "via": "buff:B04R/target",
+        "primary": "fx.w3x.locust.boomnl.p01",
+        "extra": [
+          "fx.w3x.locust.boomnl.p00",
+          "fx.w3x.locust.boomnl.p02",
+          "fx.w3x.locust.boomnl.p03",
+          "fx.w3x.locust.boomnl.p04"
+        ]
+      }
+    },
+    "godie-ucrl.w": {
+      "prim": {
+        "element": "ki",
+        "primitive": "pulse",
+        "size": "sm"
+      }
+    },
+    "godie-udea.e": {
+      "prim": {
+        "element": "arcane",
+        "primitive": "explosion"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0CH",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-udea.ex": {
+      "prim": {
+        "element": "arcane",
+        "primitive": "pulse"
+      }
+    },
+    "godie-udea.q": {
+      "prim": {
+        "element": "arcane",
+        "primitive": "pulse",
+        "size": "sm"
+      },
+      "family": {
+        "family": "blink",
+        "model": "blinkcaster",
+        "w3aId": "A04G",
+        "provenance": "stock-inherited",
+        "via": "ability.specialArt"
+      }
+    },
+    "godie-udea.r": {
+      "prim": {
+        "element": "holy",
+        "primitive": "nova"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "thunderclapcaster",
+        "w3aId": "A04C",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "tint": [
+          0,
+          255,
+          255
+        ],
+        "paramSource": "model"
+      },
+      "owner": {
+        "family": "lightColumn",
+        "why": "owner 2026-08-19：「立起來的光柱也有其他技能會用到 例如飛鼠天譴」。65-04 天譴＝立起來的光柱，⛔ 不是貼地衝擊環。第〇·六守則：新版說明(第1層) > w3a 原始設定(第5層)。被取代的原作值原封留在隔壁的 family 格（shockwaveRing / thunderclapcaster / A04C），另存 docs/legacy/_w3x-fidelity-superseded.md。青色 tint [0,255,255] 沿用證據，⛔ 沒有另外指定。"
+      }
+    },
+    "godie-udea.w": {
+      "prim": {
+        "element": "ice",
+        "primitive": "nova"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "thunderclapcaster",
+        "w3aId": "A05S",
+        "provenance": "w3a-override",
+        "via": "ability.specialArt",
+        "tint": [
+          0,
+          255,
+          255
+        ],
+        "paramSource": "model"
+      }
+    },
+    "godie-udre.e": {
+      "prim": {
+        "element": "void",
+        "primitive": "slash"
+      },
+      "family": {
+        "family": "mirrorImage",
+        "model": "mirrorimagecaster",
+        "w3aId": "A06P",
+        "provenance": "w3a-override",
+        "via": "ability.missileArt"
+      }
+    },
+    "godie-udre.ex": {
+      "prim": {
+        "element": "void",
+        "primitive": "pulse"
+      },
+      "family": {
+        "family": "mark",
+        "model": "markofchaostarget",
+        "w3aId": "A10N",
+        "provenance": "w3a-override",
+        "via": "ability.missileArt",
+        "tint": [
+          255,
+          100,
+          0
+        ],
+        "flyHeight": 150,
+        "paramSource": "model"
+      }
+    },
+    "godie-udre.q": {
+      "prim": {
+        "element": "fire",
+        "primitive": "slash"
+      },
+      "promoted": {
+        "family": "lavabreathdamage",
+        "w3aId": "A0BC",
+        "provenance": "w3a-override",
+        "via": "art:target",
+        "primary": "fx.w3x.particle.lavabreathdamage.p00",
+        "extra": []
+      }
+    },
+    "godie-udre.r": {
+      "prim": {
+        "element": "physical",
+        "primitive": "slash"
+      },
+      "family": {
+        "family": "mirrorImage",
+        "model": "mirrorimagecaster",
+        "w3aId": "A0MQ",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectLocBJ"
+      }
+    },
+    "godie-udre.w": {
+      "prim": {
+        "element": "physical",
+        "primitive": "slash"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A06N",
+        "provenance": "stock-inherited",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-umal.e": {
+      "prim": {
+        "element": "physical",
+        "primitive": "swarm"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A0HV",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
+      }
+    },
+    "godie-umal.ex": {
+      "prim": {
+        "element": "physical",
+        "primitive": "shockwave"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A10Y",
+        "provenance": "w3a-override",
+        "via": "ability.effectArt"
+      }
+    },
+    "godie-umal.q": {
+      "prim": {
+        "element": "physical",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "burst",
+        "model": "abominationexplosion",
+        "w3aId": "A0AF",
+        "provenance": "jass-spawn",
+        "via": "jass.unitSpawn",
+        "scale": 1.1,
+        "paramSource": "ref"
+      }
+    },
+    "godie-umal.r": {
+      "prim": {
+        "element": "physical",
+        "primitive": "pulse"
+      },
+      "family": {
+        "family": "boltStrike",
+        "model": "monsoonbolttarget",
+        "w3aId": "A0HW",
+        "provenance": "jass-spawn",
+        "via": "jass.unitSpawn",
+        "scale": 10,
+        "paramSource": "ref"
+      }
+    },
+    "godie-umal.w": {
+      "prim": {
+        "element": "physical",
+        "primitive": "pulse",
+        "size": "sm"
+      }
+    },
+    "godie-uvng.e": {
+      "prim": {
+        "element": "void",
+        "primitive": "beam"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A09I",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt",
+        "anchor": "weapon"
+      },
+      "promoted": {
+        "family": "tectonicfury",
+        "w3aId": "A09I",
+        "provenance": "w3a-override",
+        "via": "art:missile",
+        "primary": "godie-tectonicfury-p0",
+        "extra": [
+          "godie-tectonicfury-p1"
+        ]
+      }
+    },
+    "godie-uvng.ex": {
+      "prim": {
+        "element": "void",
+        "primitive": "explosion"
+      }
+    },
+    "godie-uvng.q": {
+      "prim": {
+        "element": "fire",
+        "primitive": "slash"
+      },
+      "promoted": {
+        "family": "flamessmoke",
+        "w3aId": "A0OG",
+        "provenance": "w3a-override",
+        "via": "art:caster+art:effect",
+        "primary": "fx.w3x.particle.flamessmoke.p01",
+        "extra": [
+          "fx.w3x.particle.flamessmoke.p00",
+          "fx.w3x.particle.flamessmoke.p02",
+          "fx.w3x.particle.flamessmoke.p03"
+        ]
+      }
+    },
+    "godie-uvng.r": {
+      "prim": {
+        "element": "void",
+        "primitive": "pulse"
+      },
+      "family": {
+        "family": "shockwaveRing",
+        "model": "warstompcaster",
+        "w3aId": "A09K",
+        "provenance": "jass-literal",
+        "via": "jass.AddSpecialEffectTargetUnitBJ",
+        "anchor": "chest"
+      },
+      "promoted": {
+        "family": "flamessmoke",
+        "w3aId": "A09K",
+        "provenance": "w3a-override",
+        "via": "art:caster",
+        "primary": "fx.w3x.particle.flamessmoke.p01",
+        "extra": [
+          "fx.w3x.particle.flamessmoke.p00",
+          "fx.w3x.particle.flamessmoke.p02",
+          "fx.w3x.particle.flamessmoke.p03"
+        ]
+      }
+    },
+    "godie-uvng.w": {
+      "prim": {
+        "element": "fire",
+        "primitive": "explosion"
+      },
+      "promoted": {
+        "family": "fireblast",
+        "w3aId": "A09H",
+        "provenance": "w3a-override",
+        "via": "art:missile",
+        "primary": "godie-fireblast-p3",
+        "extra": [
+          "godie-fireblast-p0",
+          "godie-fireblast-p1",
+          "godie-fireblast-p2"
+        ]
+      }
+    },
+    "godie-zombiex.e": {
+      "prim": {
+        "element": "void",
+        "primitive": "shockwave"
+      }
+    },
+    "godie-zombiex.ex": {
+      "prim": {
+        "element": "blood",
+        "primitive": "pulse"
+      }
+    },
+    "godie-zombiex.q": {
+      "prim": {
+        "element": "void",
+        "primitive": "nova"
+      }
+    },
+    "godie-zombiex.r": {
+      "prim": {
+        "element": "void",
+        "primitive": "nova"
+      }
+    },
+    "godie-zombiex.w": {
+      "prim": {
+        "element": "void",
+        "primitive": "dash"
+      }
+    }
+  }
+}

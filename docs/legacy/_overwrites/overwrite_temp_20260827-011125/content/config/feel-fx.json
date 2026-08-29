@@ -1,0 +1,27 @@
+{
+  "id": "feel-fx",
+  "schema": "config.feel-fx@1",
+  "note": "爽度特效（GH#494，owner 2026-08-21）。殭屍死掉掉小金幣 → 停 1 秒 → 貝茲曲線加速吸回擊殺者 + 輕音效；連擊音階升高；施法光柱的上升粒子壽命砍半。⛔ 這份文件裡沒有一格會改變任何人拿到的金幣 —— 賞金在 sim 的 MobSystem 早就發完了，這裡只決定那一刻看得到、聽得到什麼。goldPickup.enabled=false ⇒ 逐位元回到這一版之前。 ⭐ 2026-08-27 GH#788 castCharge：owner「所有吟唱時間超過0.3秒以上都要有蓄力特效（粒子特效從外往身體內縮多道小光束像集氣一樣如圖但顏色是隊伍顏色光芒）」——一個通用模組掛在施法窗口事件上（castBegin/castEnd/castInterrupt，與施法光柱同一條授權流），⛔ 不逐技能加 effects；隊色從 wire 的 teamId 解析（⛔ 不寫死紅藍）；門檻量的是 cast-time 夾完之後的最終吟唱窗口。castCharge.enabled=false ⇒ 逐位元回到 GH#788 之前。消費端 apps/client/src/vfx/CastChargeFx.ts。",
+  "goldPickup": {
+    "enabled": true,
+    "hoverSeconds": 1,
+    "flightSeconds": 0.42,
+    "easePower": 3,
+    "arcHeight": 1.9,
+    "maxConcurrent": 32,
+    "sfxThrottleMs": 55,
+    "sfxVolume": 0.32
+  },
+  "comboPitch": {
+    "enabled": true,
+    "semitonesPerStep": 1,
+    "maxSteps": 12,
+    "resetAfterSeconds": 5
+  },
+  "castMotes": {
+    "lifetimeMinSec": 0.175,
+    "lifetimeMaxSec": 0.35,
+    "gravityY": 3,
+    "drag": 0.7
+  }
+}

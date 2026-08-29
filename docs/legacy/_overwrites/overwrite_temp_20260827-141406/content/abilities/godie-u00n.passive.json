@@ -1,0 +1,51 @@
+{
+  "id": "godie-u00n.passive",
+  "schema": "ability@1",
+  "name": "76-00 二檔",
+  "icon": "assets/icons/abilities/godie-u00n.passive.webp",
+  "provenance": "w3x-import",
+  "description": "[變化]\n{{cd}}秒冷卻時間\n\n讓身體像幫浦一樣加壓，加速血液流動增加攻擊速度100%和移動速度100點，使用一二招傷害會增加(50% [AP])點，但每秒減少生命10點，持續20秒。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "cooldownTier": "中",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "championForm",
+      "to": "alternate",
+      "durationSec": 20.0
+    },
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 1.0
+        },
+        {
+          "stat": "ms",
+          "op": "flat",
+          "value": 1.94
+        },
+        {
+          "stat": "healthRegen",
+          "op": "flat",
+          "value": 0.0
+        }
+      ],
+      "duration": 20.0
+    }
+  ],
+  "vfxKey": "fx.prim.blood.pulse-lg",
+  "sfxKey": "wc3.trollwoodworkswhat1",
+  "castTimeSec": 0.267
+}

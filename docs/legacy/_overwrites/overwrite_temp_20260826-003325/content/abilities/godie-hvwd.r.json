@@ -1,0 +1,58 @@
+{
+  "id": "godie-hvwd.r",
+  "name": "02-04 死魂蟲",
+  "icon": "assets/icons/abilities/godie-hvwd.r.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n放出6隻死魂蟲，吸取附近敵軍部隊的生命能量。當他們回到身邊時，他們會將從犧牲者身上吸取的生命能量，用於補充生命值 。持續時間8秒。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "cooldownTier": "極大",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.7
+          }
+        ]
+      }
+    },
+    {
+      "kind": "spawnVfx",
+      "vfxId": "godie-aquaspikeversion2-p0",
+      "at": "self"
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "imported.aquaspikeversion2",
+      "clip": "idle",
+      "soundKey": "wc3.nagabuildingcancel",
+      "scale": 3.0,
+      "lifeSec": 6.0
+    }
+  ],
+  "vfxKey": "fx.prim.void.swarm-lg",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "castTimeSec": 1.233,
+  "rangeTier": "極大",
+  "range": 12
+}

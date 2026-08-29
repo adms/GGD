@@ -1,4 +1,11 @@
 #!/usr/bin/env tsx
+// ⭐ 戶籍（GH#771 的執行期對帳閘會讀它）—— ⛔ 不要手寫 sync-io.json 的 steps。
+//   這支腳本重建**每一個集合**的索引 ＋ bundle/manifest。
+//   ⚠️ 在此之前它一格戶籍都沒有 ⇒ `content/vfx-scripts/_index.json` 這種
+//   **沒有別人認領**的集合會被對帳閘判成「全戶籍都沒有人認領」。
+// ggd:writes content/*/_index.json
+// ggd:writes content/bundle.json
+// ggd:writes content/manifest.json
 /**
  * (Re)build every content/<collection>/_index.json + content/manifest.json +
  * content/bundle.json (the one-file transport bundle).

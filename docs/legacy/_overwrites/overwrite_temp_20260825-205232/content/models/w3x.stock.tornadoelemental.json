@@ -1,0 +1,16 @@
+{
+  "id": "w3x.stock.tornadoelemental",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/tornadoelemental.glb",
+  "scale": 0.0839,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand Walk",
+    "run": "Stand Walk",
+    "attack": "Stand Walk",
+    "cast": "Stand Walk",
+    "hurt": "Stand Walk",
+    "death": "Death"
+  },
+  "fxLongAxis": "y"
+}

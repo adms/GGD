@@ -1,0 +1,26 @@
+import { describe, expect, it } from "vitest";
+import { Encoder } from "@colyseus/schema";
+import { MatchController } from "/Users/Takuro/GGD/apps/game-server/src/match/MatchController";
+import { projectSnapshot } from "/Users/Takuro/GGD/apps/game-server/src/net/snapshot";
+import { MatchState } from "@ggd/shared/protocol/schema";
+import { DEFAULT_MOB_WAVES_CONFIG } from "@ggd/shared/content/schema/config";
+import { mobRulesFromConfig, spawnMob } from "@ggd/shared/sim/mobs";
+import { beginCombatMobs } from "@ggd/shared/sim/systems/MobSystem";
+const FAST = { champSelectTicks: 5, intermissionTicks: 30, combatMaxTicks: 1200, resolutionTicks: 5 };
+describe("dbg", () => { it("zones", () => {
+  const ctl = new MatchController("z", 3, Array.from({length:12},(_,i)=>({seatId:i,teamId:Math.floor(i/3),isBot:true})), FAST);
+  while (ctl.phase.phase !== "combat") ctl.tick();
+  ctl.tick();
+  const zones = ctl.pairings.map(p=>p.zone);
+  console.log("pairings zones", zones);
+  const rules = mobRulesFromConfig(DEFAULT_MOB_WAVES_CONFIG, 1/30, DEFAULT_MOB_WAVES_CONFIG.fromRound);
+  ctl.world.mobRules = rules;
+  beginCombatMobs(ctl.world, rules, zones);
+  for (const z of zones) for (let i=0;i<15;i++) spawnMob(ctl.world, z, rules, 1, i);
+  const state = new MatchState();
+  projectSnapshot(ctl, state, new Map());
+  const byZone = new Map<number, number>();
+  state.entities.forEach((es)=> byZone.set(es.zone, (byZone.get(es.zone)??0)+1));
+  console.log("byZone", [...byZone.entries()]);
+  expect(true).toBe(true);
+}); });

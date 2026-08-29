@@ -1,0 +1,44 @@
+{
+  "schema": "ggd-stock-vfx-owner-named@1",
+  "task": "GH#699",
+  "why": "extract_stock_vfx.py 的 --min-refs 是一道 BLAST-RADIUS 閘（見那支檔的 DEFAULT_MIN_REFS 註解）：把它調低會讓**每一個**低於舊門檻的家族一起拿到原作 emitter，實測 40 就讓 burst 家族每次施放多 3 支。這份清單是**另一條**入口：owner 逐支點名掃描過的 stock 模型，即使 refCount 低於 floor 也允許抽取——⛔ 但它不放寬 family 那一道門，所以 family=None 的模型仍然抽不出來（抽了也沒有任何東西播得到它，那是死內容）。",
+  "source": "docs/_reports/locust_scan/mdl-params.md —— owner 點名的 7 支 stock 模型，PRE2/RIBB 參數逐支讀自 MPQ 的 .mdx 二進位",
+  "notAnExemption": "這裡的每一列都要寫得出**為什麼是 owner 點名的**（一個能被反駁的理由），⛔ 不是「想加就加」。加一列的成本是：那一族從此播它的原作 emitter。",
+  "models": [
+    {
+      "stem": "warstompcaster",
+      "reason": "owner MDL 掃描 #1。refCount 150 已經自己過 floor —— 列在這裡只是為了讓這份清單是完整的 7 支，⛔ 它不需要這條入口。",
+      "family": "shockwaveRing"
+    },
+    {
+      "stem": "thunderclapcaster",
+      "reason": "owner MDL 掃描 #3。refCount 123，同上自己過 floor。",
+      "family": "shockwaveRing"
+    },
+    {
+      "stem": "markofchaostarget",
+      "reason": "owner MDL 掃描 #7，七支裡最重（PRE2×6 + RIBB×8）。⭐ **有 family（mark）但 refCount 24 < 100**——只差 min-refs 這一道門，而降 floor 會連帶動到另外 8 個家族。這條入口就是為它開的：只讓 mark 一族拿到原作 emitter。",
+      "family": "mark"
+    },
+    {
+      "stem": "earthquaketarget",
+      "reason": "owner MDL 掃描 #2（PRE2×2）。⛔ census family=None ⇒ 目前**沒有任何家族宣告它**，抽出來也沒有東西播得到 ⇒ 這條入口放行不了它。要它先給它一個 family（w3xArtFamilies.ts）。",
+      "family": null
+    },
+    {
+      "stem": "revivehuman",
+      "reason": "owner MDL 掃描 #4（PRE2×3）。同上：family=None。",
+      "family": null
+    },
+    {
+      "stem": "awaken",
+      "reason": "owner MDL 掃描 #5（PRE2×3）。同上：family=None。",
+      "family": null
+    },
+    {
+      "stem": "fragdriller",
+      "reason": "owner MDL 掃描 #6（PRE2×1）。同上：family=None。",
+      "family": null
+    }
+  ]
+}

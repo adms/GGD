@@ -1,0 +1,221 @@
+{
+  "//": [
+    "w3a ↔ GGD 落差的**裁決帳本** —— ⛔ 這是人編的來源檔,⛔ 不是產物。",
+    "",
+    "兩節,兩個工作:",
+    "  · axisVocabulary —— 一個 w3x 傷害軸翻到 GGD 的哪一格,或者它根本沒有落點(要去實作)。",
+    "    ⭐ 產生器對每一列做**雙向 probe**:說 supported 而引擎沒有 → 硬錯;",
+    "    說 missing 而引擎已經有了 → 一樣硬錯(要求刪掉那一列)。",
+    "  · rulings —— 每一個落差類別由**哪一層**贏了(第〇·六守則的五層階梯),外加一個能被反駁的理由。",
+    "    ⭐ `max` 是**棘輪**:只准變小。修好一筆之後 `pnpm w3a:build` 會讓數字降,",
+    "    守衛就要求你把 `max` 跟著降 —— ⛔ 沒有人可以靜靜地讓它變大。",
+    "",
+    "layer 的合法值(前五個就是第〇·六守則的階梯):",
+    "  L1-owner-spec · L2-editor-json · L3-jass · L4-w3x-tooltip · L5-w3x-objdata",
+    "  GGD-tier-table          —— owner 已裁決的五級距取代了原作數字",
+    "  engine-vocab-missing    —— 引擎沒有這個名詞(⇒ owner:「JSON 沒支援的標籤或邏輯則去實作」)",
+    "  ⚫無主                   —— **指不出哪一層贏了**。這一列一定要帶 followUp。"
+  ],
+  "axisVocabulary": {
+    "str": {
+      "status": "supported",
+      "landing": "Scaling.attrRatios[{attr:\"str\"}]",
+      "evidence": "`common.ts` 的 `attrRatios` 收 str/agi/int;`sim/effects/effect.ts::resolveScaling` 第 4 個參數(必填)就是三圍讀取器,而 damage/damageLine/damageArea/dot/chainLightning/heal/shield 七個消費端全部傳 `casterAttrs(ctx)`",
+      "probe": {
+        "kind": "attr",
+        "id": "str"
+      }
+    },
+    "agi": {
+      "status": "supported",
+      "landing": "Scaling.attrRatios[{attr:\"agi\"}]",
+      "evidence": "同 `str` —— 同一個列舉、同一條 `resolveScaling`",
+      "probe": {
+        "kind": "attr",
+        "id": "agi"
+      }
+    },
+    "int": {
+      "status": "supported",
+      "landing": "Scaling.attrRatios[{attr:\"int\"}]",
+      "evidence": "同 `str` —— 同一個列舉、同一條 `resolveScaling`",
+      "probe": {
+        "kind": "attr",
+        "id": "int"
+      }
+    },
+    "maxMana": {
+      "status": "supported",
+      "landing": "Scaling.ratios[{stat:\"maxMana\"}]",
+      "evidence": "`sim/stats/statTypes.ts` 的 `Stat.MaxMana = \"maxMana\"` —— 本來就在詞彙裡,20-03 的「魔力×0.4」翻得過去,只是沒人翻",
+      "probe": {
+        "kind": "stat",
+        "id": "maxMana"
+      }
+    },
+    "maxHealth": {
+      "status": "supported",
+      "landing": "Scaling.ratios[{stat:\"maxHealth\"}]",
+      "evidence": "`Stat.MaxHealth = \"maxHealth\"`",
+      "probe": {
+        "kind": "stat",
+        "id": "maxHealth"
+      }
+    },
+    "ad": {
+      "status": "supported",
+      "landing": "Scaling.ratios[{stat:\"ad\"}]",
+      "evidence": "`Stat.AttackDamage = \"ad\"`",
+      "probe": {
+        "kind": "stat",
+        "id": "ad"
+      }
+    },
+    "missingHealth": {
+      "status": "supported",
+      "landing": "damage.resourcePct{subject:\"self\",resource:\"health\",basis:\"missing\"}",
+      "evidence": "`effects/_shared.ts::zResourcePctTerm` 的 basis 收 `missing`(= 最大 − 現存);出貨的 虛哭神去 godie-i007「自身已損失的生命百分比」走的就是這一格",
+      "probe": {
+        "kind": "resourcePct",
+        "subject": "self",
+        "resource": "health",
+        "basis": "missing"
+      }
+    },
+    "heroLevel": {
+      "status": "missing",
+      "landing": "（無）",
+      "evidence": "`Stat` 列舉裡沒有「等級」這個名詞,`attrRatios` 只收 str/agi/int,`resourcePct` 只讀 health/mana ⇒ 「英雄等級×N」在三個住處都寫不出來",
+      "probe": {
+        "kind": "absent",
+        "token": "heroLevel"
+      }
+    },
+    "gold": {
+      "status": "missing",
+      "landing": "（無）",
+      "evidence": "經濟狀態不在 `Scaling` 的任何讀法裡(`ratios` 讀 `Stat`、`attrRatios` 讀三圍、`resourcePct` 只讀 health/mana)",
+      "probe": {
+        "kind": "absent",
+        "token": "gold"
+      }
+    }
+  },
+  "rulings": [
+    {
+      "key": "cooldown:tier",
+      "max": 156,
+      "layer": "GGD-tier-table",
+      "reason": "owner 2026-08-19 裁定冷卻走五級距(表住 `content/config/cooldown-tiers.json`,單體/範圍兩條曲線)。這一支出貨文件帶著 `cooldownTier` ⇒ 它的秒數是**級距解出來的**,原作值被**刻意取代**。⛔ 這裡不重打級距數字(那會變成第四個住處)。"
+    },
+    {
+      "key": "cooldown:ggd-zero",
+      "max": 11,
+      "layer": "⚫無主",
+      "reason": "出貨側冷卻是 0 而且**沒有** `cooldownTier` ⇒ 級距表沒有覆蓋它,那個 0 是逐支手填的自由值。⚠️ 其中 5 支是 EX、4 支是天生技(結構上可能真的不吃冷卻),⛔ 但另外 2 支是 W/E —— 混在一起就指不出哪一層贏了。",
+      "followUp": "逐支問「這一支是刻意不吃冷卻,還是漏了 cooldownTier?」;前者請在文件裡留下理由,後者補上級距欄。"
+    },
+    {
+      "key": "mana:tier",
+      "max": 170,
+      "layer": "GGD-tier-table",
+      "reason": "owner 的五級距魔耗表(`content/config/mana-tiers.json`)取代原作值;出貨文件帶著 `manaCostTier` ⇒ 有主。"
+    },
+    {
+      "key": "mana:ggd-zero",
+      "max": 76,
+      "layer": "⚫無主",
+      "reason": "出貨魔耗 0 且**沒有** `manaCostTier`,而 w3a 那一支是要錢的。⚠️ 只有 17 支是天生技 —— 另外 **59 支是 Q/W/E/R/EX 主動技**,一個免費的主動技不是級距裁決的結果,是一個沒有出處的數字。",
+      "followUp": "把它們分成兩堆:真的設計成免費的(留下理由)與漏填 manaCostTier 的(補級距欄)。"
+    },
+    {
+      "key": "range:tier",
+      "max": 99,
+      "layer": "GGD-tier-table",
+      "reason": "owner 2026-08-19 的射程級距(`content/config/range-tiers.json`)取代原作的 WC3 世界單位;出貨文件帶著 `rangeTier`。"
+    },
+    {
+      "key": "range:ggd-zero",
+      "max": 30,
+      "layer": "⚫無主",
+      "reason": "出貨 `range` 是 0(＝近身/自身)而 w3a 給了施法距離,且**沒有** `rangeTier`。⚠️ 8 支天生技合理,⛔ 但 7 支 R 與 7 支 EX 是主動指向技 —— 0 距離的指向技在場上是放不出去的形狀。",
+      "followUp": "先驗那 14 支主動技在真的一場比賽裡放不放得出去(castType 是不是 self/none),再決定補 rangeTier 還是改 castType。"
+    },
+    {
+      "key": "radius:tier",
+      "max": 51,
+      "layer": "GGD-tier-table",
+      "reason": "owner 2026-08-11「原則上不寫範圍數字」⇒ AOE 走級距(`content/config/aoe-tiers.json`);出貨文件帶著 `radiusTier`。"
+    },
+    {
+      "key": "radius:free-number",
+      "max": 5,
+      "layer": "⚫無主",
+      "reason": "出貨半徑是一個字面數字而**沒有** `radiusTier` ⇒ 它繞過了 owner 的「不寫範圍數字」裁決,而繞過的理由沒有寫在任何地方。",
+      "followUp": "補 `radiusTier`,或在文件裡寫下為什麼這一支必須是字面值(第〇·四守則的豁免要帶理由)。"
+    },
+    {
+      "key": "radius:ggd-absent",
+      "max": 91,
+      "layer": "⚫無主",
+      "reason": "w3a 有 `area`(範圍技)而出貨側**整棵效果樹找不到任何 radius**。⚠️ 這一批混了兩種:重製時刻意改成單體的,以及**漏接範圍**的 —— 而兩種在 JSON 裡長得一模一樣。",
+      "followUp": "逐支對 owner 的新版技能說明(階梯第 1 層):說明寫[範圍]而 JSON 沒有 radius ⇒ 漏接;說明就是單體 ⇒ 在文件裡記一行,這一列的 max 跟著降。"
+    },
+    {
+      "key": "duration:free-number",
+      "max": 31,
+      "layer": "⚫無主",
+      "reason": "出貨的 `durationSec` 與 w3a 的持續秒數不同,而**五級距裡根本沒有 duration 這一軸**(damage/cooldown/mana/range/aoe 五張表都沒有它),`config/skill-normalize.json` 的決策點也不含它 ⇒ 每一支的秒數都是逐支手填的自由數字。",
+      "followUp": "這一軸要嘛給它一張級距表(⇒ 變成 GGD-tier-table),要嘛承認它是逐支設計值並在文件裡留下出處。⛔ 現況是兩者皆非。"
+    },
+    {
+      "key": "duration:ggd-absent",
+      "max": 195,
+      "layer": "⚫無主",
+      "reason": "w3a 宣告了持續時間而出貨側**整棵效果樹沒有任何 durationSec**。⚠️ 同 `radius:ggd-absent`:混了「重製成瞬發」與「漏接持續效果」兩種,而 JSON 裡分不出來。⭐ 另外 w3a 還有 `hero_duration`(對英雄減時)這一格,GGD **一格都沒有** —— 那是一個缺的機制,不只是漏翻。",
+      "followUp": "先做「對英雄/對雜兵分開的持續時間」那一格(w3a 573 支帶值),再逐支對說明分堆。"
+    },
+    {
+      "key": "scaling:translatable:str",
+      "max": 26,
+      "layer": "⚫無主",
+      "reason": "w3x 的傷害公式以**力量**為分母,而出貨側用別的軸(多半是 ap)或完全沒有軸。⭐ `Scaling.attrRatios[{attr:\"str\"}]` **今天就寫得出來**(七個消費端都傳 `casterAttrs`)⇒ 這不是缺口,是**沒人翻**。⛔ 而換掉一條 scaling 軸引用不到 owner 的任何一句原話。",
+      "followUp": "翻:把 `attrRatios:[{attr:\"str\",coeff:…}]` 補進那一支的傷害節點。⚠️ 係數要照第一守則走 —— 傷害**大小**歸五級距,這裡只補**分母**。"
+    },
+    {
+      "key": "scaling:translatable:agi",
+      "max": 23,
+      "layer": "⚫無主",
+      "reason": "同 `str`,分母是**敏捷**。`attrRatios` 的 attr 列舉收 agi。",
+      "followUp": "同 `str`:補 `attrRatios:[{attr:\"agi\",…}]`。"
+    },
+    {
+      "key": "scaling:translatable:int",
+      "max": 15,
+      "layer": "⚫無主",
+      "reason": "同 `str`,分母是**智慧**。`attrRatios` 的 attr 列舉收 int。",
+      "followUp": "同 `str`:補 `attrRatios:[{attr:\"int\",…}]`。"
+    },
+    {
+      "key": "scaling:translatable:maxMana",
+      "max": 1,
+      "layer": "⚫無主",
+      "reason": "20-03 約束與勝利之劍:w3x ubertip 逐字「魔力*0.4」,出貨是 `ap×1.0`。`Stat.MaxMana` **本來就在詞彙裡** ⇒ 翻得過去,只是沒人翻。",
+      "followUp": "把 `ratios` 的 `stat` 從 `ap` 換成 `maxMana` 並帶上原作係數;⛔ 傷害級距那一半不動。"
+    },
+    {
+      "key": "scaling:missing:heroLevel",
+      "max": 5,
+      "layer": "engine-vocab-missing",
+      "reason": "w3x 用**英雄等級**當分母(例 45-03 千鳥「英雄等級*20+400」)。`Stat` 列舉沒有等級,`attrRatios` 只收三圍,`resourcePct` 只讀 health/mana ⇒ ⛔ 三個住處都寫不出來。owner:「JSON 沒支援的標籤或邏輯則**去實作**」。",
+      "followUp": "實作 `Scaling.levelRatios[{coeff}]`(或把等級收進 Stat)。形狀建議見 `docs/_reports/W3ALAND_temp_20260826-1500.md` 的缺標籤清單。"
+    },
+    {
+      "key": "scaling:missing:gold",
+      "max": 1,
+      "layer": "engine-vocab-missing",
+      "reason": "w3x 用**現有金錢**當分母。`Scaling` 的三種讀法(`ratios` 讀 Stat、`attrRatios` 讀三圍、`resourcePct` 讀 health/mana)都碰不到經濟狀態。",
+      "followUp": "擋住 1 支 ⇒ 優先序最低。要做的話是 `resourcePct` 家族多一個 `resource:\"gold\"`,⛔ 不是新 effect kind。"
+    }
+  ]
+}

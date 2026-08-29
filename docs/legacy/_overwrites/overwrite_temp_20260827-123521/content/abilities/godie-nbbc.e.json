@@ -1,0 +1,62 @@
+{
+  "id": "godie-nbbc.e",
+  "name": "08-03 龍鬥氣砲咒文",
+  "icon": "assets/icons/abilities/godie-nbbc.e.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n龍騎士的得意技之一，發動龍紋章之力使出咒文迫擊砲，造成攻擊線地面部隊{{dmg}}點傷害。",
+  "slot": "E",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "cooldownTier": "極大",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave.fire",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-beam-roll",
+      "scale": 1.0,
+      "onArrive": [
+        {
+          "kind": "spawnVfx",
+          "vfxId": "fx.prim.fire.explosion-lg",
+          "at": "point"
+        }
+      ],
+      "modelKey": "w3x.stock.reddragonmissile",
+      "count": 10,
+      "spacing": 1.2,
+      "arriveSoundKey": "explosion"
+    }
+  ],
+  "vfxKey": "fx.prim.fire.beam",
+  "sfxKey": "wc3.thunderclapcaster",
+  "schema": "ability@1",
+  "castTimeSec": 0.833,
+  "rangeTier": "極大",
+  "range": 12
+}

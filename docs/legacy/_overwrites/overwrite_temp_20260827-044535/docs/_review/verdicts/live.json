@@ -1,0 +1,14 @@
+{
+  "schema": "review-verdicts@1",
+  "source": "live",
+  "note": "🧑‍⚖️ 批核結果（來源：live）—— **owner** 按下去的東西。⛔ 我不手改這個檔。 登記材料在 docs/_review/material/。同步：`bash scripts/review-sync.sh`。",
+  "verdicts": {
+    "beam_visual-proof_20260824-2240": {
+      "verdict": "veto",
+      "verdictHash": "93e66830974a4dd34659d01463d34808da461362",
+      "reason": "[端到端測試] 這一筆是 Claude 的煙霧測試，會在幾秒後刪掉",
+      "verdictAt": "2026-08-26T20:44:06.421Z",
+      "source": "live"
+    }
+  }
+}

@@ -1,0 +1,507 @@
+/**
+ * `content/config/*.json` 的**後台入口覆蓋率** —— 下一份漏接不可以是靜默的。
+ *
+ * ════════════════════════════════════════════════════════════════════════════
+ * 為什麼需要這一支
+ * ════════════════════════════════════════════════════════════════════════════
+ * `config/item-card.json` 是 owner 2026-08-02 剛下過排版指示的一份文件，而它從
+ * 出生到 2026-08-02 為止，`apps/admin/src` 全樹對它**零引用** —— 想把
+ * `[On-Hit]` 從主動改成被動，只能編 repo、跑 `pnpm content:build`、重新部署。
+ * 沒有任何測試會紅，因為「少一頁後台」不是任何一條斷言的反面。
+ *
+ * 所以判準必須反過來寫：**每一份 config 文件都要嘛有後台入口、要嘛在下面這張
+ * 明示的豁免表上**，而豁免表的每一列都要寫得出「為什麼」與「什麼時候該失效」。
+ *
+ * ════════════════════════════════════════════════════════════════════════════
+ * 三個刻意的設計決定
+ * ════════════════════════════════════════════════════════════════════════════
+ * **① 內容覆蓋層不算入口。** `ui/ContentOverlayPage` 的 `COMMON_COLLECTIONS` 含
+ * `"config"`，技術上可以貼整份 JSON 進去改**任何一份**文件。把它算成入口的話 32
+ * 份全部通過，這條守衛當場歸零。理由用 `configForms.ts` 自己的檔頭：從 Zod 自動
+ * 長出來的表單都已經「不叫可調，叫 JSON 編輯器」了，一個貼整份 JSON 的文字框只會
+ * 更遠 —— 沒有中文標籤、沒有「它影響什麼」、沒有上下界。
+ *
+ * **② 豁免的證據是資料結構，不是原始碼裡出現過那串字**（失敗形態 ⑥）。
+ * `OWN_PAGE` 那一族帶的是**那一頁的模組真的匯出的 docId 常數**（下面 import 進來
+ * 的那些）與**後台路由 key**；測試直接問 `pageRequiresSession(page)`，不是去
+ * grep App.tsx。常數被改名 → 這個檔案編譯不過；常數的值被改掉 → 測試紅；那一頁
+ * 從 session 表上被拿掉 → 測試紅。註解做不到這三件事。
+ *
+ * **③ 豁免表不可以自己長大。** `kind` 是四選一的封閉 union（打一個新字串進去
+ * 編譯就不過），而且 `configDocCoverage.test.ts` 把**列數與每一類的列數都釘死**：
+ * 加一列必須同時去改那個數字，也就是必須是一個看得見的決定。順手加一列偷渡一份
+ * 新文件這件事，做得到，但做不到「沒有人注意到」。
+ */
+import { readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
+import { CONFIG_DOC_SPECS } from "./configForms";
+// ── 專屬頁模組真的匯出的 docId 常數。**值**被拿來當證據（見檔頭 ②）。
+import { BONUS_DOC_ID } from "./baseBonus";
+import { COMBAT_FEEL_DOC_ID } from "./combatFeel";
+import { FORM_VISUALS_DOC_ID } from "./formVisuals";
+import { MATCH_DOC_ID } from "./matchConfig";
+import { ROSTER_DOC_ID } from "./roster";
+import { CAPS_DOC_ID } from "./statCaps";
+import { STORE_DOC_ID } from "./storeEconomy";
+import { VFX_FAMILIES_DOC_ID } from "./vfxForge";
+import { BARCODE_DOC_ID } from "./voxelBarcode";
+import { BODY_DOC_ID } from "./voxelBody";
+
+/**
+ * 一份文件為什麼可以沒有通用引擎的頁。**四選一**，不是自由字串 —— 一個自由字串
+ * 的分類欄位等於沒有分類，而分類正是「這一列該用哪一種方式驗」的答案。
+ */
+export type ConfigDocExemptionKind =
+  /** 有自己手刻的專屬頁（證據：路由 key + 那個模組匯出的 docId 常數） */
+  | "OWN_PAGE"
+  /** 它不是參數表：建置產物、保真度台帳、或走訪出來零個可調純量 */
+  | "NOT_TUNABLE"
+  /** 今天做了是自我一致的謊言（沒有消費端／要配合另一條產線），綁一個到期條件 */
+  | "DEFERRED"
+  /** **確認是缺口**，只是還沒做。不是免死金牌，是一張帳單 */
+  | "KNOWN_GAP";
+
+export interface ConfigDocExemption {
+  docId: string;
+  kind: ConfigDocExemptionKind;
+  /** 為什麼它現在不必走通用引擎。留白 = 三個月後沒有人知道這一列還算不算數。 */
+  why: string;
+  /** **這個豁免什麼時候該自己失效。** 沒有到期條件的豁免＝把它從稽核範圍刪掉。 */
+  expiresWhen: string;
+  /** `OWN_PAGE` 專用：後台路由 key（測試會問 `pageRequiresSession`）。 */
+  page?: string;
+  /**
+   * `OWN_PAGE` 專用：那一頁的模組匯出的 docId 常數**的值**。
+   * 這裡填的是 import 進來的常數本人，不是重打一次字串 —— 重打一次就是第二份會
+   * drift 的知識，而 drift 的症狀正好是這條守衛要抓的那個（豁免還在、頁沒了）。
+   */
+  docIdConstant?: string;
+  /**
+   * `NOT_TUNABLE` 專用：出貨文件裡真的存在的**出處欄位**名稱（`source` /
+   * `provenance` / `contentDigest`…）。它是「這份文件記的是查到什麼，不是我們想要
+   * 什麼」的機器可驗版本；那個欄位消失時，這個豁免的理由也就消失了。
+   */
+  provenanceKey?: string;
+  /** `DEFERRED` / `KNOWN_GAP` 專用：帳單掛在哪一張 issue 上。 */
+  issue?: string;
+}
+
+/**
+ * 豁免表。**加一列要同時改 `configDocCoverage.test.ts` 裡釘死的那幾個數字。**
+ *
+ * ⚠️ 列的順序沒有意義；分類有。
+ */
+export const CONFIG_DOC_EXEMPTIONS: readonly ConfigDocExemption[] = [
+  {
+    docId: "damage-tier-exemptions",
+    kind: "OWN_PAGE",
+    page: "damageTierWarnings",
+    docIdConstant: "damage-tier-exemptions",
+    why: "「不吃五級距的傷害節點」有自己的**唯讀**頁（⚠️ 那一頁）。⛔ 它不走通用引擎有兩個理由：① 這份文件的 `rules` 是一個**會長大的陣列**，而通用引擎畫得動的是固定形狀的純量葉；② ⭐ 它的用途是**警告**不是編輯 —— owner #534：「①②③ 作為例外在後台**跳出警告就好**」。把它做成可編輯欄位，等於讓操作者用手打一條謂詞去豁免任意節點，而那正是這份表要防的東西。",
+    expiresWhen: "⚠️ 通用引擎長出「陣列型欄位（新增/刪除列 + 每列一組子欄位）」的那一天，如果 owner 同時決定豁免表**可以在後台編輯**，這一列才該退場。⛔ 只長出欄位型別而語意仍是「警告」的話，這一列繼續成立。",
+  },
+  {
+    docId: "arena-pool",
+    kind: "OWN_PAGE",
+    page: "arenaPool",
+    docIdConstant: "arena-pool",
+    why: "場地輪替有自己的頁（🎲 場地輪替）。⛔ 它不走通用引擎：那個引擎畫的是**固定形狀的純量葉**，而這裡要的是「一份會長大的場地清單 × 勾選」——硬套會變成一格要手打 id 的文字框，而打錯一個字的後果是那張圖**靜靜地不出現**（正是這一頁在修的那個缺陷）。",
+    expiresWhen: "⚠️ 通用引擎長出「從某個集合挑多個 id」的欄位型別的那一天，這一列該退場。⭐ `config.roster@1`（英雄上下架）是同一個形狀，兩份會一起解鎖。",
+  },
+  {
+    docId: "map-report",
+    kind: "OWN_PAGE",
+    page: "mapReport",
+    docIdConstant: "map-report",
+    why: "地圖驗證報告有自己的**唯讀**頁（📋 地圖驗證報告）。⛔ 它刻意不走通用引擎：那個引擎的存在意義是**可編輯**，而這份文件是 `pnpm map:gen` 的輸出 —— 在後台改它只會讓後台與線上實際載入的場地靜默分岔（owner 2026-08-14 確認的界線）。",
+    expiresWhen: "⚠️ 這一列在「後台可以直接編輯地圖幾何」的那一天才該退場，而那需要把產生器搬進線上服務（另一個量級，且會把 `map:check` 這個閘打掉）。⛔ 在那之前把它接上通用引擎就是製造一條靜默分岔的路。",
+  },
+  {
+    docId: "per-level-bonus",
+    kind: "OWN_PAGE",
+    page: "perLevelBonus",
+    docIdConstant: "per-level-bonus",
+    why: "📈 每級加成有自己的專頁（`ui/PerLevelBonusPage.tsx`，GH#790）。⭐ 它為什麼不是通用引擎：`perLevel` 是 **`z.record`**（鍵＝屬性 id，不是固定欄位），通用引擎列不出「有哪些鍵」⇒ 畫出來是**一頁空的**。⚠️ 而那正是 owner 2026-08-27 撞到的：「後台 每級加成 這頁無法顯示」—— 在此之前 NAV/store/session-gate 三處都有它，只有 spec 沒有，於是 `specForPage` 回 null 而畫面靜默空白。專頁用出貨 `ALL_STATS` 下拉新增/刪除鍵，⛔ 不硬編屬性清單。",
+    expiresWhen: "⚠️ 通用引擎長出 record 型欄位支援的那一天，這一頁可以退回通用引擎（⭐ `config.stat-caps@1` 的 `caps` 與 `vfx-ability-art` 的 `bindings` 是同一個形狀，三份會一起解鎖）。⛔ 在那之前拿掉專頁 = 回到那一頁空白。",
+  },
+  {
+    docId: "vfx-ability-art",
+    kind: "KNOWN_GAP",
+    why: "⚠️ GH#384 把 617 筆「這支技能畫哪一組特效」從三張 TypeScript 常數表搬進 `content/`，所以它**現在才第一次有可能被後台編到** —— 在那之前連缺口都談不上（改一格要重建 client 映像）。它的 `bindings` 是一個 **`z.record`**（鍵是技能 doc id），而且每一列底下還有三個各自形狀不同的子物件（`prim` / `family` / `promoted`），通用表單引擎只走得動固定形狀的純量葉，畫出來會是一頁空的 —— 和 `per-level-bonus` 同一個引擎缺口。⭐ 它**確實有真的消費端**（`ContentDb.load()` → `setAbilityArtBindings`），所以⛔ 不是 DEFERRED（那一族的判準是「今天掛上去就是自我一致的謊言」），它是一張帳單。",
+    expiresWhen: "⚠️ 通用引擎長出「record 型欄位」支援（新增/刪除鍵 + 每個鍵一組子欄位）的那一天，這一列就該退場 —— ⭐ `per-level-bonus` 與 `config.stat-caps@1` 的 `caps` 是同一個形狀，三份會一起解鎖。⛔ 在那之前也不要拿 🎨 特效鑄造所（vfxForge）那一頁充數：那一頁編的是 `config.vfx-families@1` 的**覆寫層**，這一份是**證據層**，把兩者混成一頁會讓「清空一格」再也回不到原作的值。",
+  },
+  // ── ① OWN_PAGE：有專屬頁。會腐爛，所以每一列都被機器驗兩件事 ────────────
+  // ── ⭐ arena-rules 的豁免在 2026-08-20 被**刪掉**了（GH#410）。
+  //    它以前是 OWN_PAGE（三頁專屬頁各編一塊），而那正是這張表最危險的一種列：
+  //    **文件層**的豁免一旦成立，欄位層就再也沒有任何守衛在數 —— 於是 rounds /
+  //    overflow / flowers / reviveCircles / guardianTower / goldDrop /
+  //    ultUnlockRound / exUnlockRound 八個頂層區塊一格都調不到，而 3,500+ 條
+  //    測試全綠。現在它走通用引擎（`ARENA_RULES_SPEC`），已經有專屬頁的區塊逐列
+  //    宣告在 `ConfigDocSpec.elsewhere`，於是「每一個葉節點都有標籤」開始管它。
+  //    ⚠️ 這是這張表**最健康**的移動方向：帳單被付掉，而且總列數少一列。
+  {
+    docId: "base-bonus",
+    kind: "OWN_PAGE",
+    page: "baseBonus",
+    docIdConstant: BONUS_DOC_ID,
+    why: "專屬頁 ui/BaseBonusPage.tsx（出貨值副本 baseBonus.ts 的 SHIPPED_*，baseBonusShippedCopy.test.ts 在守）。",
+    expiresWhen: "那一頁被刪、路由被拔、或 BONUS_DOC_ID 改成別的文件時，這一列當場失效。",
+  },
+  {
+    docId: "combat-feel",
+    kind: "OWN_PAGE",
+    page: "combatFeel",
+    docIdConstant: COMBAT_FEEL_DOC_ID,
+    why: "專屬頁 ui/CombatFeelPage.tsx；欄位由 deriveFields(zConfigCombatFeelDoc) 從 schema 推導，掛載由 configPagesRegistered.test.ts 釘住（import + 導覽列 + 路由三層）。",
+    expiresWhen:
+      "ui/CombatFeelPage.tsx 被刪、combatFeel 從 session 表上消失、或 COMBAT_FEEL_DOC_ID 指到別份文件時失效。",
+  },
+  {
+    docId: "config.match",
+    kind: "OWN_PAGE",
+    page: "matchConfig",
+    docIdConstant: MATCH_DOC_ID,
+    why: "專屬頁 ui/MatchConfigPage.tsx 的 MATCH_FIELDS（tick / match / economy / progression / draft，每格帶 realHome 指出真正生效的常數）。",
+    expiresWhen:
+      "ui/MatchConfigPage.tsx 被刪、matchConfig 從 session 表上消失、或 MATCH_DOC_ID 指到別份文件時失效。⚠️ 那一頁自己標了 19 格「沒有消費端」的唯讀欄位，那是另一張帳，這一列不涵蓋它們。",
+  },
+  {
+    docId: "form-visuals",
+    kind: "OWN_PAGE",
+    page: "formVisuals",
+    docIdConstant: FORM_VISUALS_DOC_ID,
+    why: "專屬頁 ui/FormVisualsPage.tsx（#249 GH#288：26 對變身裡 21 對前後同一個模型，靠顏色/大小/掛件才看得出來）。",
+    expiresWhen:
+      "ui/FormVisualsPage.tsx 被刪、formVisuals 從 session 表上消失、或 FORM_VISUALS_DOC_ID 指到別份文件時失效。",
+  },
+  {
+    docId: "stat-caps",
+    kind: "OWN_PAGE",
+    page: "statCaps",
+    docIdConstant: CAPS_DOC_ID,
+    why: "專屬頁 ui/StatCapsPage.tsx（屬性天花板 + 技能能把天花板抬到哪）。",
+    expiresWhen:
+      "ui/StatCapsPage.tsx 被刪、statCaps 從 session 表上消失、或 CAPS_DOC_ID 指到別份文件時失效。",
+  },
+  {
+    docId: "store",
+    kind: "OWN_PAGE",
+    page: "storeEconomy",
+    docIdConstant: STORE_DOC_ID,
+    why: "專屬頁 ui/StoreEconomyPage.tsx（championUnlockCost / freeChampionIds / mcoinRewards）。",
+    expiresWhen:
+      "ui/StoreEconomyPage.tsx 被刪、storeEconomy 從 session 表上消失、或 STORE_DOC_ID 指到別份文件時失效。",
+  },
+  {
+    docId: "roster",
+    kind: "OWN_PAGE",
+    page: "roster",
+    docIdConstant: ROSTER_DOC_ID,
+    why: "英雄上下架有自己的頁（🎭 英雄上下架，GH#336）：retiredChampions（手動與隨機兩條路都擋）與 hiddenChampions（彩蛋 —— 隨機抽得到、手動選不到）兩張 id 清單。⛔ 它不走通用引擎，理由與 arena-pool 完全相同：那個引擎畫的是**固定形狀的純量葉**，而這裡是兩份會長大的英雄 id 清單。⚠️ 2026-08-17 之前這一列是 KNOWN_GAP，理由逐字是「apps/admin/src 對 roster / retiredChampions 零引用」—— 那張帳單現在付掉了，而 roster.json 那句「不用改程式、不用重新部署」也跟著從謊話變成真話（入口就是這一頁）。",
+    expiresWhen:
+      "ui/RosterPage.tsx 被刪、roster 從 session 表上消失、或 ROSTER_DOC_ID 指到別份文件時失效。⭐ 通用引擎長出「從某個集合挑多個 id」的欄位型別那一天，這一列與 arena-pool 會一起解鎖退場。",
+  },
+  {
+    docId: "vfx-families",
+    kind: "OWN_PAGE",
+    page: "vfxForge",
+    docIdConstant: VFX_FAMILIES_DOC_ID,
+    why: "專屬頁 ui/VfxForgePage.tsx（鑄技工坊：每支技能綁哪一個家族原型 + per-invocation 參數）。",
+    expiresWhen:
+      "ui/VfxForgePage.tsx 被刪、vfxForge 從 session 表上消失、或 VFX_FAMILIES_DOC_ID 指到別份文件時失效。",
+  },
+  {
+    docId: "voxel-barcodes",
+    kind: "OWN_PAGE",
+    page: "voxelBarcode",
+    docIdConstant: BARCODE_DOC_ID,
+    why: "專屬頁 ui/VoxelBarcodePage.tsx —— 文件自己的 note 就寫「後台『體素條碼』頁寫進來的那一層」。",
+    expiresWhen:
+      "ui/VoxelBarcodePage.tsx 被刪、voxelBarcode 從 session 表上消失、或 BARCODE_DOC_ID 指到別份文件時失效。",
+  },
+  {
+    docId: "voxel-bodies",
+    kind: "OWN_PAGE",
+    page: "voxelBody",
+    docIdConstant: BODY_DOC_ID,
+    why: "專屬頁 ui/VoxelBodyPage.tsx（體素鑄造廠）。bodies 目前是空物件＝沒有人被覆寫，那是預期狀態不是缺口。",
+    expiresWhen:
+      "ui/VoxelBodyPage.tsx 被刪、voxelBody 從 session 表上消失、或 BODY_DOC_ID 指到別份文件時失效。",
+  },
+  {
+    docId: "combat-env",
+    kind: "OWN_PAGE",
+    page: "combatEnv",
+    // ⚠️ 沒有 docIdConstant：這一頁**不寫內容覆蓋層**，見下面的 why。
+    why: "專屬頁 ui/CombatEnvPage.tsx，但它寫的是平台自己的表（GET/PUT /admin/combat-env），不是 content overlay。所以 content/config/combat-env.json 是「內容預設值」，線上真正生效的那一份住在平台 —— 「入口存在但不寫這個檔」是一種合法的豁免形態。",
+    expiresWhen: "那一頁被刪、或 combatEnv 從 session 表上消失時失效。⚠️ 也在平台開始改讀 content overlay 的那一天失效 —— 到時這一列的整段理由都不再成立。",
+  },
+
+  // ── ② NOT_TUNABLE：它不是參數表 ─────────────────────────────────────────
+  {
+    docId: "icon-plan",
+    kind: "NOT_TUNABLE",
+    provenanceKey: "provenance",
+    why: "建置產物不是參數表：整份由 tools/icon-gen/src/plan.py 覆寫（它自己填 id/schema），欄位是 contentDigest / counts / provenance / dropped / blocked —— 全部是「這次掃描算出什麼」。後台 ui/IconTrackingPage.tsx 只讀它做進度顯示，不寫。給它一張編輯表單的話，操作者填的值會在下一次跑 plan.py 時被無聲蓋掉。",
+    expiresWhen: "plan.py 不再覆寫整份、或 schema 長出一格「人來決定」的參數時失效。",
+  },
+  {
+    docId: "unit-tints",
+    kind: "NOT_TUNABLE",
+    provenanceKey: "source",
+    why: "保真度台帳不是偏好表：53 個 unit + 24 筆 transient，每一格都帶 source（w3u-static）與 evidence（指名 war3map.w3u 的 entry 與 trigger 行號）。開一頁讓人手改 RGB＝把一份可稽核的移植紀錄變成沒有出處的偏好，而 evidence 欄位會繼續宣稱有出處（第三守則）。要改顏色的正確路徑是改 importer 或改英雄文件。",
+    expiresWhen: "每一格的 source/evidence 不再是必填、或 owner 明說要在後台手調顏色時失效。",
+  },
+  {
+    docId: "victory-taunts",
+    kind: "NOT_TUNABLE",
+    provenanceKey: "voices",
+    why: "108KB 幾乎全是 VO 文案（113 位英雄的 roundWin 池 + fallback + matchWin + 創作簡報）。唯二長得像參數的 voices / rate，schema 自己寫死了它們不是參數 ——「record the cast and speaking rate the clips were rendered WITH: provenance for a re-render, not playback parameters」。每一句都是預錄 mp3，後台把 rate 185 改成 200 而不重跑產線，畫面與耳朵一點變化都沒有。",
+    expiresWhen: "播放端開始真的讀 rate（＝它變成播放參數）、或文案編輯搬進後台時失效。owner 會改的是文案，入口是 tools/tts-gen + content/audio-manifests/taunts.json。",
+  },
+
+  {
+    docId: "ability-vfx-bindings",
+    kind: "NOT_TUNABLE",
+    provenanceKey: "unmatched",
+    why: "產生器擁有的**推導表**（GH#529）：`tools/vfx-bind/scan.py --check` 逐位元組比對，整份由它覆寫。每一列的存在理由都住在證據裡（`source` 指名 JASS 呼叫點或 provenance 的 rawcode），而 `unmatched` 那一半記的是「這一份原作特效**為什麼**不接」——那是一個能被反駁的理由，⛔ 不是一個偏好。開一頁讓人手改綁定＝把一份可稽核的對照變成沒有出處的猜測，而下一次跑產生器又會把它無聲蓋掉（＝ icon-plan 那一列的形狀）。要改綁定的正確路徑是改證據（抽取器／provenance）再重跑。",
+    expiresWhen: "產生器不再覆寫整份、或 schema 長出一格「人來決定」的參數（例如一格 owner 手動覆寫的白名單）時失效。",
+  },
+  {
+    docId: "combo-strikes",
+    kind: "NOT_TUNABLE",
+    provenanceKey: "source",
+    why: "產生器擁有的**JASS 逐字抄本**（GH#541）：`python3 tools/jass-combo/extract.py --check` 逐位元組比對。29 列的 `steps` 是從 `war3map.j` 的 `TriggerSleepAction` 序列**一秒不差抄下來**的（owner 2026-08-22：「⭐ 間隔就是動畫節奏的來源」），每一列都帶 `jassFunc`/`jassLine` 當證據。後台改一格 = 那支技能的節奏不再等於原作，而 `source` 欄位會**繼續宣稱**它抄自 war3map.j:33799（第三守則）。要改節奏的正確路徑是在技能文件上覆寫 `steps`（`family` 之外的顯式值），⛔ 不是改這張抄本。",
+    expiresWhen: "owner 明說要在後台微調原作節奏（＝這份文件從「抄本」變成「參數表」）、或 extract.py 不再覆寫整份時失效。",
+  },
+
+  {
+    docId: "owner-knobs",
+    kind: "NOT_TUNABLE",
+    provenanceKey: "knobs",
+    why: "⛔ **它不是一份設定，是一張授權表** —— 引擎一個字都不讀它。每一列記著一格系統倍率的出貨值 ＋ owner 說出那個值的**逐字原話**（owner 2026-08-22：「對 我說過**這是我人工的旋鈕**，並沒有放在公式裡，我們上次已經釐清過，**為何你要再犯**？」）。⭐ 給它一張編輯表單就徹底顛倒了它的用途：那等於讓操作者**替 owner 補一句他沒說過的話**，而這份文件存在的唯一理由就是防止那件事。要改倍率的正確路徑是改 `combat-env`（戰鬥系統那一頁），然後把 owner 的原話補進這一份。",
+    expiresWhen: "owner 明說他要在後台自己維護這張授權表時失效。⛔ 引擎開始讀它（＝它變成一份真的設定）也要當場重新分類。",
+  },
+
+  // ⚠️ `toggle-ability` 那一列 KNOWN_GAP 在 2026-08-22 **到期並被刪掉** ——
+  // `TOGGLE_ABILITY_SPEC` 進了 `CONFIG_DOC_SPECS`（通用引擎），而
+  // 「同時在註冊表與豁免表上」會被 `verdict.duplicated` 抓到。
+  // ⛔ 這一列的帳單**沒有全部付清**：`ContentDb.load()` 那一行
+  // `applyToggleAbilityDoc(...)` 還沒接，所以那一頁目前是「存了不生效」。
+  // 那筆帳現在記在 `TOGGLE_ABILITY_SPEC.consumer` 與 `intro` 上（操作者看得到），
+  // ⛔ 不是記在這張只有工程師會讀的豁免表上。
+
+  // ── ③ DEFERRED：今天做了會是一句自我一致的謊言，綁到期條件 ──────────────
+  {
+    docId: "screen-fx",
+    kind: "DEFERRED",
+    issue: "GH#549",
+    why: "畫面閃爍／震動／特效文字的**上限與無障礙**（`config.screen-fx@1`）。刻意不掛，理由是 configForms.ts 檔頭第 1 條（只掛有真消費端的文件）：`apps/client/src/vfx/ScreenFxLayer.ts` 的 `setLimits()` 在整個 repo 只有測試在呼叫，沒有任何一條 production 路徑把這份文件餵給它。掛上去就是製造「操作者存了值、重整讀得回來、遊戲一輩子看不到」的自我一致謊言 —— 與 `round-grade` 那一列同型。⭐ 出貨值先落進 `content/config/screen-fx.json` 是有意義的：它把上限從**客戶端常數**（改一次 = 一次完整部署）搬進了內容層，而 `reducedMotionMode` 那一格的三選一正在等 owner 裁決。",
+    expiresWhen:
+      "`ScreenFxLayer.setLimits()` 有第一個 production 呼叫端的那一刻（＝ `ContentDb.load()` 或 `RoundFx` 把 `resolveScreenFx(doc)` 餵進去）—— 那時這一列必須當場被刪掉並補一頁。`configDocCoverage.test.ts` 的 `productionCallSites` 真的去數呼叫端，所以它會自己紅。",
+  },
+  {
+    docId: "round-grade",
+    kind: "DEFERRED",
+    issue: "GH#232",
+    why: "刻意不掛，理由是 configForms.ts 檔頭第 1 條（只掛有真消費端的文件）：roundGradeFromDoc 在整個 repo 沒有 production 呼叫端。掛上去就是製造「操作者存了值、重整讀得回來、遊戲一輩子看不到」的自我一致謊言。",
+    expiresWhen:
+      "GH#232（每回合進商店顯示 S~D 評價）落地的那一刻 —— 那時 roundGradeFromDoc 會有第一個 production 呼叫端，這一列必須當場被刪掉並補一頁。configDocCoverage.test.ts 真的去數呼叫端，所以它會自己紅。",
+  },
+  {
+    docId: "champion-voices",
+    kind: "DEFERRED",
+    issue: "#142",
+    why: "119 個英雄 key，每格是 { select: [資產路徑], source, soundset } —— 走訪出來零個純量葉節點，通用表單引擎畫出來會是一堆讓人打錯字的檔案路徑輸入框。值確實會變（owner 會換「誰講什麼」），但變的形狀是「丟新檔進 content/assets + 重跑產線」，入口是語音產線頁 ui/VoiceGenPage.tsx。",
+    expiresWhen: "語音產線頁真的能寫這份 doc 的那一天（或 schema 長出可調純量時）失效。",
+  },
+  // ── 2026-08-02 收尾：三個 lane 的欄位,落點 1+2 接完了,落點 3 卡在客戶端 ──
+  //
+  // 這兩份是同一個形狀,也和上面 `round-grade` 是同一個形狀:文件有了、Zod 有了、
+  // schema tag 進了 union（那一步是**必要**的,不做才會炸 —— 見 config.ts 的註解），
+  // 但**客戶端還在讀寫死的 `DEFAULT_*` 常數,沒有人讀這份文件**。
+  //
+  // 所以今天替它們開後台頁,就是 configForms.ts 檔頭第 1 條講的那句自我一致的
+  // 謊言:操作者存了值、重整讀得回自己填的數字、遊戲一輩子看不到。兩列 DEFERRED
+  // 是誠實的那一版,而且到期條件是**機器數出來的**（`productionCallSites`），
+  // 不是一句「之後會做」。
+  //
+  // ⚠️ 原本是**三**列。`victory-podium` 那一列在 2026-08-03 到期並被刪掉 ——
+  // `RoundWinnerStage.victoryPodiumPolicy()` 去 Configs 登錄表讀那份文件，
+  // `resolveVictoryPodium` 的呼叫端從 0 變成 1，`configDocCoverage.test.ts` 當場紅，
+  // 於是 `configForms.ts` 有了 `VICTORY_PODIUM_SPEC`、`store.ts` 有了那個 Page、
+  // App.tsx 有了導覽列那一列。**這就是「到期條件是機器數出來的」長什麼樣**：
+  // 沒有人需要記得回來看這一列。
+  {
+    docId: "lobby-layout",
+    kind: "DEFERRED",
+    issue: "GH#255",
+    why: "大廳左欄上下分割政策（friendsShare / splitMinHeightPx / minSlotHeightPx / stackBelowWidthPx）。內容文件與 Zod 都接好了,但唯一的消費端 apps/client/src/ui/platform/LobbyScreen.tsx 讀的是 lobbyLayout.ts 的 DEFAULT_LOBBY_LAYOUT 常數,不是這份文件 —— 今天開一頁後台,操作者改完存檔、重整讀得回來,而大廳一格都不會動。",
+    expiresWhen:
+      "`resolveLobbyLayout` 出現第一個 production 呼叫端的那一刻（＝有人把 ContentDb 的文件推進 LobbyScreen）。configDocCoverage.test.ts 真的去數呼叫端,所以那天它會自己紅,逼人刪掉這一列並註冊一個 ConfigDocSpec。",
+  },
+  {
+    docId: "valhalla-sandbox",
+    kind: "DEFERRED",
+    issue: "GH#254",
+    why: "英靈殿技能試放空間的七格規則（含 owner 明說的假人 10,000 血與 3 秒補滿）。內容文件與 Zod 都接好了,但 valhallaSandbox.ts 的建構子吃的是 `opts.rules ?? DEFAULT_VALHALLA_SANDBOX`,沒有任何人把這份文件餵進 opts.rules —— 開後台頁一樣是存了不生效。",
+    expiresWhen:
+      "`resolveValhallaSandbox` 出現第一個 production 呼叫端的那一刻。同上,守衛自己會紅。",
+  },
+
+  // ── ④ KNOWN_GAP：確認是缺口，只是還沒做。這是帳單不是免死金牌 ───────────
+  {
+    docId: "origin-routes",
+    kind: "KNOWN_GAP",
+    issue: "owner 2026-08-12 指名要一頁「新英雄轉生設計」，這一份是它的資料基礎",
+    why: "10 個出身 × 一句話 + 32 條路線 × 三句 = **110 個文案葉節點**，而通用長表單畫出來會是 110 個沒有上下界的文字框 —— 那不叫可調。⚠️ 而且 owner 一定會改：那 32 個路線名是 Claude 取的提案，他還沒定稿。⛔ 它也**不是** NOT_TUNABLE —— 內容確實該由人編輯，只是形狀應該是「一頁出身卡＋路線卡」，不是 Zod 走訪出來的欄位清單。今天的入口是內容編輯器（貼整份 JSON）。",
+    expiresWhen: "「新英雄轉生設計」那一頁做出來的那一天 —— 它本來就要顯示出身與路線來推薦技能組合，順手就是這一份的編輯入口。做出來之後這一列會被守衛強迫刪掉。",
+  },
+];
+
+// ─────────────────────────────────────────────────────────────── 掃描 ─────
+
+/** 掃出來的一份文件。 */
+export interface ScannedConfigDoc {
+  /** 檔名去掉 `.json` */
+  file: string;
+  /** 文件自己的 `id` 欄位 */
+  id: string;
+  /** 文件自己的 `schema` 欄位 */
+  schema: string;
+}
+
+/**
+ * 掃 `content/config/` 下每一份**真的文件**。
+ *
+ * 跳過兩種檔案，而且兩種都是明著跳過的：
+ *   · `_` 開頭 —— `_index.json`（打包索引）與 `_purchase-lines.json`（沒有
+ *     id/schema 的裸資料）。
+ *
+ * ⚠️ **GUARD-THE-GUARD：一份都沒掃到就丟例外，不是回空陣列。** 這個 repo 有前科：
+ * `bundle.test.ts` 驗的是打包器而不是出貨的那一份，759 條全綠的情況下推了一份過期
+ * 的 bundle 上線，客戶端整個選人畫面空掉。一條「對零份文件都通過」的覆蓋率守衛
+ * 是同一個形狀的東西 —— 路徑打錯、目錄搬家、glob 壞掉，它會安靜地全綠。
+ */
+export function scanConfigDocs(dir: string): ScannedConfigDoc[] {
+  const out: ScannedConfigDoc[] = [];
+  for (const name of readdirSync(dir).sort()) {
+    if (!name.endsWith(".json") || name.startsWith("_")) continue;
+    const raw = JSON.parse(readFileSync(join(dir, name), "utf8")) as Record<string, unknown>;
+    out.push({
+      file: name.slice(0, -".json".length),
+      id: typeof raw["id"] === "string" ? raw["id"] : "",
+      schema: typeof raw["schema"] === "string" ? raw["schema"] : "",
+    });
+  }
+  if (out.length === 0) {
+    throw new Error(
+      `GUARD-THE-GUARD：在 ${dir} 一份 config 文件都沒掃到。這條覆蓋率守衛對零份文件會全綠，` +
+        `所以它寧可在這裡爆炸也不要安靜地通過。`,
+    );
+  }
+  return out;
+}
+
+// ───────────────────────────────────────────────────────────── 判決 ───────
+
+export interface CoverageVerdict {
+  /** 走通用引擎（`CONFIG_DOC_SPECS`）的 */
+  covered: string[];
+  /** 在豁免表上的 */
+  exempt: string[];
+  /** **缺口** —— 兩邊都不在。這一條非空就是紅 */
+  unresolved: string[];
+  /** 同時在註冊表與豁免表上（做完了卻沒把豁免刪掉）。這一條非空就是紅 */
+  duplicated: string[];
+  /** 豁免表上有、`content/config/` 裡沒有（文件被刪了，豁免變成一段死註解） */
+  stale: string[];
+}
+
+/**
+ * 每一份文件的去向。
+ *
+ * `duplicated` 是**讓豁免自己到期**的那個機制：`audio-map` 的頁做出來、spec 被
+ * 註冊進 `CONFIG_DOC_SPECS` 的那一刻，那一列 KNOWN_GAP 就從「帳單」變成「謊言」，
+ * 而這條守衛會紅，逼人把它刪掉。
+ */
+export function coverageVerdict(
+  scanned: readonly ScannedConfigDoc[],
+  coveredDocIds: readonly string[],
+  exemptions: readonly ConfigDocExemption[],
+): CoverageVerdict {
+  const covered = new Set(coveredDocIds);
+  const exempt = new Set(exemptions.map((e) => e.docId));
+  const onDisk = new Set(scanned.map((d) => d.id));
+  const verdict: CoverageVerdict = {
+    covered: [],
+    exempt: [],
+    unresolved: [],
+    duplicated: [],
+    stale: [],
+  };
+  for (const doc of scanned) {
+    const c = covered.has(doc.id);
+    const e = exempt.has(doc.id);
+    if (c && e) verdict.duplicated.push(doc.id);
+    else if (c) verdict.covered.push(doc.id);
+    else if (e) verdict.exempt.push(doc.id);
+    else verdict.unresolved.push(doc.id);
+  }
+  for (const e of exemptions) if (!onDisk.has(e.docId)) verdict.stale.push(e.docId);
+  return verdict;
+}
+
+/** 走通用引擎的那幾份的 docId（給呼叫端省一行 map）。 */
+export function registeredConfigDocIds(): string[] {
+  return CONFIG_DOC_SPECS.map((s) => s.docId);
+}
+
+// ───────────────────────────────────── DEFERRED 的到期條件（呼叫端計數）──
+
+const SOURCE_ROOTS = ["apps", "packages"] as const;
+
+/** 把註解剝掉 —— 這個 repo 的長註解裡什麼字都有，不能讓散文算成一個呼叫端。 */
+function stripComments(src: string): string {
+  return src.replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|[^:])\/\/[^\n]*/g, "$1");
+}
+
+/**
+ * 一個函式在 **production 原始碼**裡有幾個呼叫端（排除註解、測試、自己的宣告，
+ * 以及這個檔案自己）。
+ *
+ * 這是 `round-grade` 那一列 DEFERRED 的到期條件：它的理由是
+ * 「`roundGradeFromDoc` 沒有 production 呼叫端」，而理由要是一條**會自己失效**的
+ * 斷言，不是一句註解。GH#232 落地那天呼叫端出現，這個數字變成 1，守衛紅。
+ *
+ * ⚠️ 誠實地說清楚它**不是**什麼：它數的是剝掉註解之後的 `符號(` 字面出現次數，
+ * 不是真的 import graph。它證明得了「沒有人呼叫它」，證明不了「有人呼叫 ⇒ 那條路
+ * 真的跑得到」。對「豁免該不該到期」這個問題，前者剛好就是要的那一半。
+ *
+ * ⚠️ `excludePaths` 必須包含**這個檔案自己**：上面那張豁免表在字串裡寫著
+ * 「roundGradeFromDoc 沒有呼叫端」，一支會數到自己那份文書作業的守衛永遠不會綠。
+ */
+export function productionCallSites(
+  repoRoot: string,
+  symbol: string,
+  excludePaths: readonly string[],
+): number {
+  const needle = `${symbol}(`;
+  let count = 0;
+  const walk = (dir: string): void => {
+    for (const ent of readdirSync(dir, { withFileTypes: true })) {
+      if (ent.name === "node_modules" || ent.name === "dist" || ent.name.startsWith(".")) continue;
+      const full = join(dir, ent.name);
+      if (ent.isDirectory()) {
+        walk(full);
+        continue;
+      }
+      if (!/\.tsx?$/.test(ent.name) || /\.test\.tsx?$/.test(ent.name)) continue;
+      if (excludePaths.some((p) => full.endsWith(p))) continue;
+      const src = stripComments(readFileSync(full, "utf8"));
+      for (let i = src.indexOf(needle); i !== -1; i = src.indexOf(needle, i + 1)) count++;
+    }
+  };
+  for (const root of SOURCE_ROOTS) walk(join(repoRoot, root));
+  return count;
+}

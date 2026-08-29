@@ -1,0 +1,60 @@
+{
+  "id": "godie-e008.q",
+  "name": "21-02 拔焰刀",
+  "icon": "assets/icons/abilities/godie-e008.q.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n拔抽覆蓋火焰的刀斬擊敵人造成{{dmg}}傷害，同時可以打昏目標0.5秒。同時熾熱的刀身能造成普攻附加額外75點火焰擴散傷害4秒。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    15,
+    15,
+    15
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    72,
+    72,
+    72
+  ],
+  "manaCostTier": "極小",
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 0.5,
+      "moveSpeedMult": 0.6
+    }
+  ],
+  "vfxKey": "fx.prim.fire.slash",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.w3x.orb.minitypeflame.p00"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.minitypeflame.p01",
+      "attachTo": "point",
+      "delayMs": 90
+    }
+  ],
+  "sfxKey": "wc3.flaretarget3",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "castTimeSec": 0.5,
+  "rangeTier": "小",
+  "range": 4.5
+}

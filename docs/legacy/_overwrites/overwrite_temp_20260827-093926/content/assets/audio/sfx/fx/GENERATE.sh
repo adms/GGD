@@ -1,0 +1,566 @@
+#!/usr/bin/env bash
+# Procedurally generate the neutral "mechanical" combat SFX (fx/*.mp3).
+#
+# WHY: the 21 imported w3x clips (../*.mp3) are ALL Chinese voice quips — great
+# for kills/deaths/announces, useless for the high-frequency combat events
+# (swing / hit / damage tick / projectile / cast). This script synthesises a
+# small set of short, band-limited, non-verbal clips for those.
+#
+# ── WHY .mp3 (GH#744; this header used to claim .wav and it was a lie) ───────
+# For roughly a year this file opened with "WHY .wav and not .mp3: MP3 carries
+# encoder delay/padding that browsers apply inconsistently through
+# decodeAudioData; on a 40 ms transient that reads as a late, mushy hit."
+#
+# MEASURED 2026-08-27, and every clause of that sentence is now false here:
+#   · The directory holds 32 .mp3 and ZERO .wav. `content/config/audio-map.json`
+#     names `.mp3` paths. So re-running the old script emitted 27 .wav files that
+#     no code path can ever load — 27 silent 404s dressed up as a regeneration.
+#   · Every shipped clip in here is mp3 / 44100 Hz / MONO / CBR 128 kbps, i.e.
+#     exactly what `synth_mp3` already produced and what
+#     `tools/audio-optimize/optimize.sh` caps at.
+#   · The delay/padding worry is answered by the container itself: every file
+#     here carries a LAME `Info` (Xing) frame, which is where the encoder writes
+#     its delay and padding counts. That is the gapless metadata browsers read;
+#     it is present, so the transient is not smeared by an unknown offset.
+#     (Verified per file: `head -c 200 <f>.mp3 | strings | grep Info`.)
+#
+# ⚠️ The old header was not merely stale — it was the *reason* the drift was
+# invisible: a rationale reads as a decision, so nobody re-measured it. Its 第三
+# 守則 shape is why the honest numbers above are written down instead of a claim.
+#
+# MONO is still load-bearing and is NOT a container question: WebAudio's
+# PannerNode only spatialises a mono source.
+#
+# Deterministic: same ffmpeg -> same bytes (anoisesrc seeds are pinned).
+# Every clip is peak-normalised to -3.0 dBFS; relative loudness between events
+# is set by `gain` in content/config/audio-map.json, NOT by the file.
+#
+#   bash content/assets/audio/sfx/fx/GENERATE.sh
+set -euo pipefail
+
+OUT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TMP="$(mktemp -d)"
+trap 'rm -rf "$TMP"' EXIT
+
+# synth <name> <ffmpeg-args...> -> peak-normalised MONO 44.1 kHz 128 kbps mp3
+#
+# ONE function, not two. `synth` and `synth_mp3` were byte-identical apart from
+# the final encoder line, which is the 第〇·七守則 "重複" shape — and the copy is
+# what let the two halves drift into disagreeing about the container. The four
+# `synth_mp3 …` call sites now call this.
+synth() {
+  local name="$1"; shift
+  ffmpeg -y -v error -nostdin "$@" -ac 1 -ar 44100 -c:a pcm_f32le "$TMP/$name.wav"
+  # measure peak, then apply the gain that lands it on -3.0 dBFS.
+  # NOTE: volumedetect reports at ffmpeg's *info* level — `-v error` would eat
+  # the line and silently skip normalisation, so keep -hide_banner/-nostats.
+  local peak
+  peak="$(ffmpeg -hide_banner -nostats -nostdin -i "$TMP/$name.wav" -af volumedetect -f null - 2>&1 \
+          | sed -n 's/.*max_volume: \(-*[0-9.]*\) dB.*/\1/p')"
+  [ -n "$peak" ] || { echo "FATAL: no peak measured for $name" >&2; exit 1; }
+  local gain
+  gain="$(awk -v p="$peak" 'BEGIN{printf "%.4f", -3.0 - p}')"
+  ffmpeg -y -v error -nostdin -i "$TMP/$name.wav" -af "volume=${gain}dB" \
+    -ac 1 -ar 44100 -c:a libmp3lame -b:a 128k "$OUT/$name.mp3"
+  echo "$name.mp3: peak ${peak} dBFS -> -3.0 dBFS (applied ${gain} dB)"
+}
+
+# --- basicAttack: air swing (pink-noise whoosh, swells then drops) -----------
+synth swing \
+  -f lavfi -i "anoisesrc=r=44100:c=pink:d=0.20:a=1:seed=11" \
+  -af "highpass=f=650,highpass=f=650,lowpass=f=6000,afade=t=in:st=0:d=0.045:curve=qsin,afade=t=out:st=0.045:d=0.155:curve=exp"
+
+# --- attackWindup: soft low "tk" tell just before the swing ------------------
+synth windup \
+  -f lavfi -i "anoisesrc=r=44100:c=brown:d=0.09:a=1:seed=12" \
+  -af "lowpass=f=1100,afade=t=in:st=0:d=0.004,afade=t=out:st=0.004:d=0.086:curve=exp"
+
+# --- basicAttackHit: meaty thud (150->60 Hz body + bright transient) ---------
+synth thud \
+  -f lavfi -i "aevalsrc='sin(2*PI*(150*t-250*t*t))':d=0.24:s=44100" \
+  -f lavfi -i "anoisesrc=r=44100:c=pink:d=0.05:a=0.55:seed=13" \
+  -filter_complex "[0:a]afade=t=in:st=0:d=0.003,afade=t=out:st=0.003:d=0.237:curve=exp[body];\
+[1:a]highpass=f=900,lowpass=f=4500,afade=t=out:st=0:d=0.05:curve=exp[snap];\
+[body][snap]amix=inputs=2:duration=longest:normalize=0[a]" -map "[a]"
+
+# --- damage: tiny high tick (fires on EVERY damage packet: must be small) ----
+synth tick \
+  -f lavfi -i "anoisesrc=r=44100:c=white:d=0.04:a=1:seed=14" \
+  -af "highpass=f=1600,lowpass=f=5200,afade=t=in:st=0:d=0.002,afade=t=out:st=0.002:d=0.038:curve=exp"
+
+# --- projectileSpawn: descending "pew" (1200 -> 300 Hz in 120 ms) ------------
+synth launch \
+  -f lavfi -i "aevalsrc='0.7*sin(2*PI*(1200*t-3750*t*t))':d=0.14:s=44100" \
+  -f lavfi -i "anoisesrc=r=44100:c=white:d=0.03:a=0.3:seed=15" \
+  -filter_complex "[0:a]afade=t=in:st=0:d=0.004,afade=t=out:st=0.05:d=0.09:curve=exp[b];\
+[1:a]highpass=f=2000,afade=t=out:st=0:d=0.03:curve=exp[c];\
+[b][c]amix=inputs=2:duration=longest:normalize=0[a]" -map "[a]"
+
+# --- projectileHit: splat (band-passed burst + short 260 Hz body) ------------
+synth impact \
+  -f lavfi -i "anoisesrc=r=44100:c=pink:d=0.14:a=1:seed=16" \
+  -f lavfi -i "aevalsrc='0.5*sin(2*PI*260*t)':d=0.14:s=44100" \
+  -filter_complex "[0:a]highpass=f=350,lowpass=f=4800,afade=t=out:st=0:d=0.14:curve=exp[n];\
+[1:a]afade=t=out:st=0:d=0.12:curve=exp[b];\
+[n][b]amix=inputs=2:duration=longest:normalize=0[a]" -map "[a]"
+
+# --- castBegin: rising chirp 300 -> 900 Hz (+ octave shimmer) ----------------
+synth cast_begin \
+  -f lavfi -i "aevalsrc='0.6*sin(2*PI*(300*t+857*t*t))+0.22*sin(4*PI*(300*t+857*t*t))':d=0.36:s=44100" \
+  -af "afade=t=in:st=0:d=0.05:curve=qsin,afade=t=out:st=0.24:d=0.12:curve=qsin"
+
+# --- castEnd: bright release ping (A5 + E6) ---------------------------------
+synth cast_end \
+  -f lavfi -i "aevalsrc='0.6*sin(2*PI*880*t)+0.3*sin(2*PI*1320*t)':d=0.28:s=44100" \
+  -af "afade=t=in:st=0:d=0.004,afade=t=out:st=0.004:d=0.276:curve=exp"
+
+# --- castInterrupt: down-sweep 700 -> 150 Hz + muffled thump ----------------
+synth cast_break \
+  -f lavfi -i "aevalsrc='0.65*sin(2*PI*(700*t-1100*t*t))':d=0.25:s=44100" \
+  -f lavfi -i "anoisesrc=r=44100:c=brown:d=0.12:a=0.5:seed=17" \
+  -filter_complex "[0:a]afade=t=in:st=0:d=0.005,afade=t=out:st=0.005:d=0.245:curve=exp[s];\
+[1:a]lowpass=f=1400,afade=t=out:st=0:d=0.12:curve=exp[n];\
+[s][n]amix=inputs=2:duration=longest:normalize=0[a]" -map "[a]"
+
+# --- flowerSpawn: soft two-note chime (E5 + B5), quiet + slow attack --------
+synth chime_soft \
+  -f lavfi -i "aevalsrc='0.5*sin(2*PI*659.25*t)+0.3*sin(2*PI*987.77*t)':d=0.60:s=44100" \
+  -af "afade=t=in:st=0:d=0.03:curve=qsin,afade=t=out:st=0.03:d=0.57:curve=exp"
+
+# --- flowerBurst: brighter three-note bloom (A5 + E6 + A6) + sparkle -------
+synth chime_burst \
+  -f lavfi -i "aevalsrc='0.45*sin(2*PI*880*t)+0.3*sin(2*PI*1318.5*t)+0.2*sin(2*PI*1760*t)':d=0.80:s=44100" \
+  -f lavfi -i "anoisesrc=r=44100:c=white:d=0.25:a=0.18:seed=18" \
+  -filter_complex "[0:a]afade=t=in:st=0:d=0.012:curve=qsin,afade=t=out:st=0.012:d=0.788:curve=exp[b];\
+[1:a]highpass=f=6000,afade=t=out:st=0:d=0.25:curve=exp[s];\
+[b][s]amix=inputs=2:duration=longest:normalize=0[a]" -map "[a]"
+
+# ===========================================================================
+# COMBAT-JUICE clips (task #3): distinct 物理/魔法/防禦/破防 + crit/whiff/
+# knockdown/footstep voices for the per-frame combat-feedback layer. The
+# type-differentiated HIT voice is driven by the enriched `damage` event.
+# ===========================================================================
+
+# --- hitMagic (魔法): arcane "fzzt" — descending hi sine + bandpassed noise ---
+synth hit_magic \
+  -f lavfi -i "aevalsrc='0.5*sin(2*PI*(900*t-1500*t*t))':d=0.16:s=44100" \
+  -f lavfi -i "anoisesrc=r=44100:c=white:d=0.10:a=0.4:seed=21" \
+  -filter_complex "[0:a]afade=t=in:st=0:d=0.004,afade=t=out:st=0.02:d=0.14:curve=exp[b];\
+[1:a]highpass=f=1800,lowpass=f=7000,afade=t=out:st=0:d=0.10:curve=exp[n];\
+[b][n]amix=inputs=2:duration=longest:normalize=0[a]" -map "[a]"
+
+# --- hitTrue (true dmg): clean bright bell ping (D6 + high fifth) -----------
+synth hit_true \
+  -f lavfi -i "aevalsrc='0.55*sin(2*PI*1200*t)+0.3*sin(2*PI*1800*t)':d=0.20:s=44100" \
+  -af "afade=t=in:st=0:d=0.002,afade=t=out:st=0.004:d=0.196:curve=exp"
+
+# --- block (防禦): short metallic guard clank (hi noise + mid ring) ---------
+synth guard \
+  -f lavfi -i "anoisesrc=r=44100:c=white:d=0.12:a=0.8:seed=22" \
+  -f lavfi -i "aevalsrc='0.4*sin(2*PI*520*t)+0.25*sin(2*PI*780*t)':d=0.12:s=44100" \
+  -filter_complex "[0:a]highpass=f=1200,lowpass=f=6000,afade=t=in:st=0:d=0.002,afade=t=out:st=0.01:d=0.11:curve=exp[n];\
+[1:a]afade=t=out:st=0:d=0.10:curve=exp[b];\
+[n][b]amix=inputs=2:duration=longest:normalize=0[a]" -map "[a]"
+
+# --- guardBreak (破防): glassy shatter — descending sweep + bright burst -----
+synth guard_break \
+  -f lavfi -i "aevalsrc='0.6*sin(2*PI*(1100*t-1800*t*t))':d=0.34:s=44100" \
+  -f lavfi -i "anoisesrc=r=44100:c=white:d=0.28:a=0.5:seed=23" \
+  -filter_complex "[0:a]afade=t=in:st=0:d=0.004,afade=t=out:st=0.05:d=0.29:curve=exp[b];\
+[1:a]highpass=f=2500,afade=t=out:st=0:d=0.28:curve=exp[n];\
+[b][n]amix=inputs=2:duration=longest:normalize=0[a]" -map "[a]"
+
+# --- crit: sharp bright "shing" — fast up-chirp + hi transient --------------
+synth crit \
+  -f lavfi -i "aevalsrc='0.6*sin(2*PI*(700*t+3000*t*t))':d=0.22:s=44100" \
+  -f lavfi -i "anoisesrc=r=44100:c=white:d=0.05:a=0.4:seed=24" \
+  -filter_complex "[0:a]afade=t=in:st=0:d=0.003,afade=t=out:st=0.04:d=0.18:curve=exp[b];\
+[1:a]highpass=f=3000,afade=t=out:st=0:d=0.05:curve=exp[n];\
+[b][n]amix=inputs=2:duration=longest:normalize=0[a]" -map "[a]"
+
+# --- whiff: airy over-commit miss — highpassed pink whoosh (higher/airier) --
+synth whiff \
+  -f lavfi -i "anoisesrc=r=44100:c=pink:d=0.22:a=1:seed=25" \
+  -af "highpass=f=900,highpass=f=900,lowpass=f=8000,afade=t=in:st=0:d=0.06:curve=qsin,afade=t=out:st=0.06:d=0.16:curve=exp"
+
+# --- knockdown: heavy body-fall "whump" — low sine thump + brown debris -----
+synth knockdown \
+  -f lavfi -i "aevalsrc='sin(2*PI*(110*t-90*t*t))':d=0.40:s=44100" \
+  -f lavfi -i "anoisesrc=r=44100:c=brown:d=0.22:a=0.6:seed=26" \
+  -filter_complex "[0:a]afade=t=in:st=0:d=0.004,afade=t=out:st=0.05:d=0.35:curve=exp[b];\
+[1:a]lowpass=f=1600,afade=t=out:st=0:d=0.22:curve=exp[n];\
+[b][n]amix=inputs=2:duration=longest:normalize=0[a]" -map "[a]"
+
+# --- footstep: soft short low "tp" (very quiet; local player only) ----------
+synth footstep \
+  -f lavfi -i "anoisesrc=r=44100:c=brown:d=0.07:a=1:seed=27" \
+  -af "lowpass=f=900,afade=t=in:st=0:d=0.003,afade=t=out:st=0.008:d=0.062:curve=exp"
+
+# ===========================================================================
+# WEIGHT-TIERED HIT VOICES (hit-feel audit P1: the audible 收尾精準).
+# One ImpactProfile.tier drives every impact channel; the SFX channel needs a
+# matching light / medium / heavy / crit voice so a 12-dmg jab and a 400-dmg
+# smash do NOT play the identical thud (audit finding: "one identical thud for
+# every physical hit"). The client channel agent plays these by the key
+# convention hit-light / hit-medium / hit-heavy / hit-crit / block-hit.
+#
+# The recipe grammar is the reference `thud` envelope (a descending sine BODY +
+# a band-passed noise TRANSIENT, both exp-decayed): the SHARED shape keeps the
+# four tiers reading as one family, while three knobs scale the WEIGHT:
+#   1. body fundamental drops with weight (220 -> 155 -> 120 Hz): heavier = lower.
+#   2. sub-150 Hz energy grows (light none, heavy adds a 62 Hz octave-down layer).
+#   3. length + snap darkness grow, but the exp tail always dies to silence well
+#      before the file ends — a hit is a POP, never a ring (收尾精準, tail < ~0.35s).
+# crit is the medium body plus a bright up-chirp "shing" so a lucky hit reads as
+# sharper, not merely louder. seeds 51-55 (unused elsewhere) keep this det.
+
+# hit-light: quick jab — high body, no sub, thin bright snap (~0.14s)
+synth hit-light \
+  -f lavfi -i "aevalsrc='sin(2*PI*(220*t-380*t*t))':d=0.14:s=44100" \
+  -f lavfi -i "anoisesrc=r=44100:c=pink:d=0.04:a=0.5:seed=51" \
+  -filter_complex "[0:a]afade=t=in:st=0:d=0.002,afade=t=out:st=0.003:d=0.137:curve=exp[body];\
+[1:a]highpass=f=1200,lowpass=f=5200,afade=t=out:st=0:d=0.04:curve=exp[snap];\
+[body][snap]amix=inputs=2:duration=longest:normalize=0[a]" -map "[a]"
+
+# hit-medium: solid connect — mid body + fuller snap (~0.20s)
+synth hit-medium \
+  -f lavfi -i "aevalsrc='sin(2*PI*(155*t-300*t*t))':d=0.20:s=44100" \
+  -f lavfi -i "anoisesrc=r=44100:c=pink:d=0.05:a=0.55:seed=52" \
+  -filter_complex "[0:a]afade=t=in:st=0:d=0.003,afade=t=out:st=0.004:d=0.196:curve=exp[body];\
+[1:a]highpass=f=950,lowpass=f=4600,afade=t=out:st=0:d=0.05:curve=exp[snap];\
+[body][snap]amix=inputs=2:duration=longest:normalize=0[a]" -map "[a]"
+
+# hit-heavy: 破碎 smash — low body + a 62 Hz sub power layer + dark snap (~0.30s,
+# tail exp-dead by ~60%). The one tier that carries real sub-150 Hz weight.
+synth hit-heavy \
+  -f lavfi -i "aevalsrc='sin(2*PI*(120*t-150*t*t))':d=0.30:s=44100" \
+  -f lavfi -i "aevalsrc='0.6*sin(2*PI*(62*t-40*t*t))':d=0.30:s=44100" \
+  -f lavfi -i "anoisesrc=r=44100:c=pink:d=0.06:a=0.5:seed=53" \
+  -filter_complex "[0:a]afade=t=in:st=0:d=0.003,afade=t=out:st=0.006:d=0.294:curve=exp[body];\
+[1:a]afade=t=in:st=0:d=0.004,afade=t=out:st=0.006:d=0.294:curve=exp[sub];\
+[2:a]highpass=f=750,lowpass=f=4000,afade=t=out:st=0:d=0.06:curve=exp[snap];\
+[body][sub][snap]amix=inputs=3:duration=longest:normalize=0[a]" -map "[a]"
+
+# hit-crit: sharp read — medium body + a bright up-chirp shing + hi transient
+# (~0.24s). Distinct from heavy by BRIGHTNESS, not weight.
+synth hit-crit \
+  -f lavfi -i "aevalsrc='sin(2*PI*(150*t-220*t*t))':d=0.24:s=44100" \
+  -f lavfi -i "aevalsrc='0.5*sin(2*PI*(900*t+2600*t*t))':d=0.20:s=44100" \
+  -f lavfi -i "anoisesrc=r=44100:c=white:d=0.04:a=0.4:seed=54" \
+  -filter_complex "[0:a]afade=t=in:st=0:d=0.003,afade=t=out:st=0.005:d=0.235:curve=exp[body];\
+[1:a]afade=t=in:st=0:d=0.003,afade=t=out:st=0.04:d=0.16:curve=exp[shing];\
+[2:a]highpass=f=3000,afade=t=out:st=0:d=0.04:curve=exp[snap];\
+[body][shing][snap]amix=inputs=3:duration=longest:normalize=0[a]" -map "[a]"
+
+# block-hit: CRISP guard clank — front-loaded metal transient + a fast-dying mid
+# ring (~0.12s). Re-cut of the audit's RINGING block voice (lab/block-clash +
+# block-shield lingered to ~0.5-0.66s): here the peak is in the first ~1% and the
+# whole clip is silent by ~0.12s — a clean deflect, NOT mush (收尾精準).
+synth block-hit \
+  -f lavfi -i "anoisesrc=r=44100:c=white:d=0.10:a=0.85:seed=55" \
+  -f lavfi -i "aevalsrc='0.42*sin(2*PI*560*t)+0.26*sin(2*PI*840*t)':d=0.10:s=44100" \
+  -filter_complex "[0:a]highpass=f=1400,lowpass=f=6800,afade=t=in:st=0:d=0.001,afade=t=out:st=0.006:d=0.094:curve=exp[n];\
+[1:a]afade=t=in:st=0:d=0.001,afade=t=out:st=0:d=0.08:curve=exp[ring];\
+[n][ring]amix=inputs=2:duration=longest:normalize=0[a]" -map "[a]"
+
+# ===========================================================================
+# CHAMP-SELECT COUNTDOWN clips (task #30): the last-5-seconds ticks and the
+# final-second cue. These fire OVER the champSelect BGM bed, so both are
+# deliberately narrow-band and tonal (a noise transient would be swallowed by
+# the music); the rising loudness across 5→2 s is the per-call `volume` on
+# playSfx, NOT a different render — both files are peak-normalised like the
+# rest of the set.
+# ===========================================================================
+
+# --- countTick / countFinal: recipes moved -----------------------------------
+# The ORIGINAL beeps (880 Hz tick / 1320 Hz rising GO) that used to live here
+# were REJECTED by the user and replaced by the ringside-bell tick (330 Hz,
+# inharmonic partials) and the race-start trill (1180 Hz) — see the current
+# recipes further down (search "ringside" / "race-start"). The dead originals
+# were DELETED, not kept: a sequential script overwrites earlier outputs with
+# later ones, so two same-named recipes in one file means the first is silent
+# dead code — and it cost task #86's verifier a full false alarm ("count-tick
+# was rewritten!") because it read the first block as the intended state.
+# One name, one recipe. If a countdown sound changes again, EDIT the live
+# block; never add a second.
+
+# ⚠️ GH#744 — a `echo "generated:"; ls -l "$OUT"/*.wav` summary used to sit HERE,
+# in the MIDDLE of the file. It was written when this was the last line; every
+# recipe below was appended after it and nobody moved it. Under `set -e` that
+# stale `ls` is not cosmetic — once the directory stopped holding .wav files the
+# `ls` returned non-zero and ABORTED the run at this line, so the last 7 clips
+# (ui-hover-cyber, draft-confirm, count-tick, count-final, crowd-cheer,
+# crowd-cheer-big, boss-horror, boss-jackpot) were never regenerated at all.
+# Measured 2026-08-27: 24 of 31 emitted, exit 1, and the failure looked like a
+# tidy "generated:" report. The summary now lives at the END of the file and
+# lists what this script actually writes.
+
+# --- uiHoverCyber: ELECTRIC ZAP  咻咻電流  (task #86, redone) ----------------
+# User (2026-07-22): 「按鈕 hover 聲音變成鼓聲非常奇怪，應該是科技感咻咻電流才有賽博味」.
+# The previous #86 recipe was a 1.55 s LOW craft-flyby; its falling low body read
+# as a DRUM (鼓聲) — measured centroid 906 Hz, 100% of energy under 500 Hz. The
+# ask is the opposite: a short, BRIGHT, electric zap-swoosh — 咻咻 (two quick
+# swooshes) + 電流 (electric buzz).
+#
+# HOW: a rising saw-ish carrier (1500->3800 Hz sweep, so it ZAPS up not floats
+# up) shaped by TWO Gaussian bumps at 28 ms and 118 ms = 咻咻; amplitude-
+# modulated at 88 Hz = the 電流 buzz; a sub-octave term adds body so it is a zap
+# with weight, not a thin hiss. An airy band-passed noise layer (850 Hz-8 kHz)
+# under the same two bumps is the swoosh air. A SHORT bright echo tail keeps a
+# hint of the Akira ring the user liked, low-passed to 6 kHz so it does not
+# smear. Total 0.45 s (was 1.55 s) so it fits a 55 ms-cooldown hover cleanly.
+#
+# MEASURED (why it can never be the drum again): centroid ~6.8 kHz, 0% under
+# 500 Hz, 61% in the 2-6 kHz zap band, 12% mid body. NEVER PLAYED — the user
+# tests on this machine (task #62); judged by spectrum only. Peak-normalised to
+# -3.0 dBFS below.
+ffmpeg -y -v error -nostdin \
+  -f lavfi -i "aevalsrc='st(0,2*PI*(1500+2300*(t/0.22))*t);st(1,0.5+0.5*sin(2*PI*88*t));st(2,exp(-pow((t-0.028)/0.020,2))+0.9*exp(-pow((t-0.118)/0.026,2)));0.85*ld(2)*ld(1)*(0.45*sin(0.5*ld(0))+sin(ld(0))+0.5*sin(2*ld(0))+0.3*sin(3*ld(0))+0.16*sin(4*ld(0)))':d=0.45:s=44100" \
+  -f lavfi -i "anoisesrc=r=44100:c=white:d=0.45:a=1:seed=311" \
+  -f lavfi -i "aevalsrc='exp(-pow((t-0.026)/0.022,2))+0.85*exp(-pow((t-0.118)/0.030,2))':d=0.45:s=44100" \
+  -filter_complex "[1:a]highpass=f=850:p=2,lowpass=f=8000:p=2[nzf];[nzf][2:a]amultiply,volume=1.4[air];[0:a][air]amix=inputs=2:normalize=0:duration=longest[body];[body]aeval=exprs='tanh(1.1*val(0))/1.1'[sat];[sat]asplit=2[dry][wet];[wet]aecho=0.85:0.35:41|73:0.32|0.18,aecho=0.85:0.30:131|191:0.15|0.08,lowpass=f=6000:p=2,volume=0.8[tail];[dry][tail]amix=inputs=2:normalize=0:duration=longest,afade=t=in:st=0:d=0.004:curve=qsin,afade=t=out:st=0.30:d=0.15:curve=exp,highpass=f=140:p=2,aformat=channel_layouts=stereo[out]" \
+  -map "[out]" \
+  -t 0.45 -ac 2 -ar 44100 -c:a pcm_f32le "$TMP/uihc_raw.wav"
+
+# peak-normalise to -3.0 dBFS (astats on the FLOAT samples — see note above)
+PEAK="$(ffmpeg -hide_banner -nostats -nostdin -i "$TMP/uihc_raw.wav" \
+        -af astats=measure_perchannel=none -f null - 2>&1 \
+        | sed -n 's/.*Peak level dB: *\(-*[0-9.]*\).*/\1/p' | head -1)"
+[ -n "$PEAK" ] || { echo "FATAL: no peak measured for ui-hover-cyber" >&2; exit 1; }
+UIHC_GAIN="$(awk -v p="$PEAK" 'BEGIN{printf "%.4f", -3.0 - p}')"
+ffmpeg -y -v error -nostdin -i "$TMP/uihc_raw.wav" -af "volume=${UIHC_GAIN}dB" \
+  -ac 2 -ar 44100 -c:a pcm_s16le "$OUT/ui-hover-cyber.mp3"
+echo "ui-hover-cyber.mp3: peak ${PEAK} dBFS -> -3.0 dBFS (applied ${UIHC_GAIN} dB)"
+
+# --- countTick / countFinal: RINGSIDE BELL --------------------------------
+# User (2026-07-22): 「戰鬥選擇英雄倒數應該用擂台的中低音鐘聲比較適合氣氛」.
+# Replaces the first cut's plain 880 Hz / 1364 Hz beeps — correct pitches, wrong
+# WORLD. This is a boxing-ring bell: an arena announcing that time is running out.
+#
+# What makes a struck bell read as a BELL and not as a sine beep, in order of
+# importance:
+#   1. INHARMONIC PARTIALS. A bell's overtones are NOT integer multiples — the
+#      classic strike spectrum is roughly f, 2.0f, 2.4f, 3.0f, 4.2f (hum, prime,
+#      tierce, quint, nominal). The 2.4f minor-third partial is the single most
+#      identifiable "bell" ingredient; drop it and this becomes an organ.
+#   2. PER-PARTIAL DECAY. High partials must die FASTER than the fundamental —
+#      that is the shimmer collapsing into a hum. One shared envelope sounds
+#      synthetic no matter how good the spectrum is.
+#   3. A HARD STRIKE. ~2 ms attack; a bell is hit, not faded in. (Deliberately
+#      the OPPOSITE of the uiHoverCyber cue above, which must never read as a
+#      transient — different jobs, different envelopes.)
+# 中低音 per the request: fundamental 330 Hz (E4) for the tick, 247 Hz (B3) for
+# the final, so the last beat lands lower and heavier rather than higher.
+
+synth count-tick \
+  -f lavfi -i "aevalsrc='0.50*exp(-3.2*t)*sin(2*PI*330*t) + 0.30*exp(-4.6*t)*sin(2*PI*660*t) + 0.26*exp(-5.4*t)*sin(2*PI*792*t) + 0.16*exp(-7.0*t)*sin(2*PI*990*t) + 0.10*exp(-9.5*t)*sin(2*PI*1386*t)':d=1.20:s=44100" \
+  -af "highpass=f=180,lowpass=f=7000,afade=t=in:st=0:d=0.002:curve=qsin,afade=t=out:st=0.85:d=0.35:curve=exp"
+
+# THE FINAL BEAT — A RACE-START BELL, NOT A RING BELL.
+# User (2026-07-22): 「開始的鐘聲最後三下很奇怪，應該是賽馬起跑的高音結尾」.
+# The first cut went LOWER on the last beat (247 Hz B3) reasoning that heavier =
+# more final. Wrong instinct for a countdown: a boxing bell says "stop", a
+# racetrack bell says "GO", and it says it HIGH and FAST. It also muddied the
+# tail — a 1.2 s low ring under another low double-clang is three overlapping
+# low tones, which is what read as 很奇怪.
+# So: fundamental jumps UP to ~1180 Hz, and instead of one struck note it is a
+# rapid TRILL (a clapper bouncing on the bell) — 14 strikes over 0.9 s, each a
+# short bright inharmonic ping, decaying as a group. Urgent, not heavy.
+synth count-final \
+  -f lavfi -i "aevalsrc='(0.42*exp(-26*mod(t,0.064))*sin(2*PI*1180*t) + 0.24*exp(-30*mod(t,0.064))*sin(2*PI*2832*t) + 0.16*exp(-34*mod(t,0.064))*sin(2*PI*3540*t) + 0.09*exp(-40*mod(t,0.064))*sin(2*PI*4956*t))*exp(-1.9*t)':d=1.05:s=44100" \
+  -af "highpass=f=700,lowpass=f=11000,afade=t=in:st=0:d=0.002:curve=qsin,afade=t=out:st=0.72:d=0.32:curve=exp"
+
+# ===========================================================================
+# DRAFT-CONFIRM cue (task #110): the 3-choose-1 card "lock-in". User asked for
+# a 厲害的科技音效 on picking a card. It must sit in the SAME low, weighty,
+# mechanical world as the #86 cyber hover (a low craft flyby) — NOT bright or
+# bubbly — and be unmistakably distinct from BOTH the hover and the two
+# countdown bells it shares the intermission/select flow with.
+#
+# The falsifiable difference (measure, never describe — see GATE-draft-confirm.py):
+#   HARD onset (~6 ms) vs the hover's 34 ms SWELL; a LOW ~405 Hz spectral
+#   centroid vs the hover's 1860 Hz and count-final's 2678 Hz; ~0.85 of the
+#   energy under 500 Hz (weighty) ; ~0.6 s — decisive, half the length of
+#   count-tick (1.2 s) / count-final (1.05 s) / hover (1.6 s).
+#
+# Three layers strike TOGETHER at t=0 (a mechanism seating, not a beep):
+#   chunk : brown-noise transient band-limited 150-1300 Hz  — CONTACT (loudest,
+#           so the onset reads as a machined strike rather than a tone).
+#   body  : sub sine dropping 140->55 Hz + an octave-down 70->28 Hz power layer
+#           — the WEIGHT; exp-decayed so it rings down cleanly.
+#   lock  : two DETUNED descending resonators (520->300, 660->380 Hz) + a fast
+#           metallic 1560->860 partial — DESCENDING = terminal/confirm (tech).
+# Finished with ONE short 55 ms echo tap (a small chamber, deliberately NOT the
+# hover's long Akira ring-out) and a dark master (hp 42, lp 5000) to keep it low.
+synth draft-confirm \
+  -f lavfi -i "anoisesrc=r=44100:c=brown:d=0.10:a=1:seed=41" \
+  -f lavfi -i "aevalsrc='0.92*exp(-6.5*t)*sin(2*PI*(140*t-85*t*t))+0.40*exp(-5.5*t)*sin(2*PI*(70*t-42*t*t))':d=0.55:s=44100" \
+  -f lavfi -i "aevalsrc='0.58*exp(-4.0*t)*sin(2*PI*(520*t-220*t*t))+0.42*exp(-4.4*t)*sin(2*PI*(660*t-280*t*t))+0.15*exp(-8.0*t)*sin(2*PI*(1560*t-700*t*t))':d=0.55:s=44100" \
+  -filter_complex "[0:a]highpass=f=150,lowpass=f=1300,afade=t=in:st=0:d=0.0008,afade=t=out:st=0.008:d=0.092:curve=exp,volume=1.35[chunk];\
+[1:a]afade=t=in:st=0:d=0.0015,afade=t=out:st=0.34:d=0.21:curve=exp[body];\
+[2:a]afade=t=in:st=0:d=0.0015,afade=t=out:st=0.32:d=0.23:curve=exp[lock];\
+[chunk][body][lock]amix=inputs=3:duration=longest:normalize=0,\
+aecho=0.85:0.30:55:0.26,highpass=f=42,lowpass=f=5000[a]" -map "[a]"
+
+# ===========================================================================
+# CROWD CHEER (task #234): 周圍觀眾歡呼 on a kill.
+#
+# WHY PROCEDURAL. The 効果音ラボ ledger (../lab/MANIFEST.json, 33 clips) covers
+# buttons/system, money, 対戦演出, 剣・斬撃, 弓矢, 銃, 格闘, 魔法, 爆発 — and
+# nothing crowd / 歓声 / 拍手 / 観客. The two "ambience" names in that pack are
+# decoys: arenaAmbience is 「風に揺れる草木」(wind in grass) and merchantAmbience
+# is a market bed. So this is synthesised here from lavfi sources only — own
+# work, effectively CC0 — and therefore is NOT an entry in ../lab/MANIFEST.json
+# or content/assets/CREDITS.md: nothing was downloaded.
+#
+# WHAT MAKES NOISE READ AS A CROWD RATHER THAN AS HISS, most important first:
+#   1. THE 200-3500 Hz BAND. Massed human voices put nearly all their energy
+#      where speech formants live. Real wind (lab/arenaAmbience) sits at a
+#      5704 Hz centroid with only 32% in that band; these clips are 63-73%
+#      in-band at a ~2.5 kHz centroid. That is the whole difference between
+#      "wind" and "people". MEASURED, never judged by ear — background agents
+#      must not make sound on this machine (task #62).
+#   2. TWO DECORRELATED VOICE LAYERS. One noise bed is one throat. A second
+#      pink bed pitch-shifted via asetrate (0.82 / 0.78) and band-limited
+#      differently decorrelates the two, so the result reads as MANY.
+#   3. A BREATHING MODULATOR. The vox bed is multiplied by a sum of three
+#      incommensurate low sines (5.7 / 9.3 / 14.1 Hz) — the surge and fall of a
+#      crowd rather than a steady wash.
+#   4. DISCRETE CLAP TRANSIENTS. A high (2-9 kHz) bed multiplied by sharp
+#      pow(abs(sin),n) spike trains at incommensurate rates → individual claps
+#      and whistles scattered across the swell (14 / 22 spikes measured).
+#   5. AN EVENT ENVELOPE, NOT A BED. ~0.10-0.13 s swell, peak at ~0.3-0.4 s,
+#      exponential decay to 7-10% of peak by the tail. arenaAmbience holds at
+#      42% forever because it IS the room; a cheer is a REACTION and must die.
+#   6. ROOM. Two/three short echo taps (57-211 ms) put the crowd AROUND the
+#      arena instead of in the listener's face — that is what buys the
+#      "positional-ish / clearly ambient" quality with no PannerNode. Kept MONO
+#      so a future PannerNode can still spatialise it.
+#
+# TWO clips, not one, because the escalation has to be LONGER as well as louder
+# (owner: one cheer per kill, never N overlapping copies). crowd-cheer is the
+# 1.60 s single-kill 歓声; crowd-cheer-big is the 2.80 s ROAR for first blood /
+# triple+ / unstoppable and additionally carries a 90-420 Hz brown-noise body
+# layer (the mass of a big crowd). WHICH one plays, and at what per-call volume,
+# is decided by the pure apps/client/src/audio/crowdCheer.ts — never by a random
+# pool pick, so a pentakill can never draw the small cheer.
+# ===========================================================================
+
+# --- crowdCheer: the standard 歓声 (a single kill) ---------------------------
+synth crowd-cheer \
+  -f lavfi -i "anoisesrc=r=44100:c=pink:d=1.60:a=1:seed=61" \
+  -f lavfi -i "anoisesrc=r=44100:c=pink:d=2.10:a=1:seed=62" \
+  -f lavfi -i "anoisesrc=r=44100:c=white:d=1.60:a=1:seed=63" \
+  -f lavfi -i "aevalsrc='(0.70+0.30*(0.5*sin(2*PI*5.7*t)+0.3*sin(2*PI*9.3*t)+0.2*sin(2*PI*14.1*t)))*min(1,t/0.13)*exp(-1.7*max(0,t-0.40))':d=1.60:s=44100" \
+  -f lavfi -i "aevalsrc='(0.40*pow(abs(sin(2*PI*7.3*t)),26)+0.32*pow(abs(sin(2*PI*5.1*t+0.9)),30)+0.24*pow(abs(sin(2*PI*11.7*t+2.1)),34))*min(1,t/0.09)*exp(-2.4*max(0,t-0.28))':d=1.60:s=44100" \
+  -filter_complex "\
+[0:a]highpass=f=280:p=2,lowpass=f=3200:p=2[v1];\
+[1:a]asetrate=44100*0.82,aresample=44100,atrim=0:1.60,asetpts=N/SR/TB,highpass=f=380:p=2,lowpass=f=2400:p=2,volume=0.8[v2];\
+[v1][v2]amix=inputs=2:duration=first:normalize=0[vox];\
+[vox][3:a]amultiply[voxenv];\
+[2:a]highpass=f=2200:p=2,lowpass=f=9000:p=2[clapraw];\
+[clapraw][4:a]amultiply,volume=1.7[claps];\
+[voxenv][claps]amix=inputs=2:duration=first:normalize=0[dry];\
+[dry]aecho=0.9:0.35:57|113:0.30|0.18,lowpass=f=6800:p=2,highpass=f=180:p=2[out]" \
+  -map "[out]" -t 1.60
+
+# --- crowdCheerBig: the ROAR (first blood / triple+ / unstoppable) -----------
+synth crowd-cheer-big \
+  -f lavfi -i "anoisesrc=r=44100:c=pink:d=2.80:a=1:seed=64" \
+  -f lavfi -i "anoisesrc=r=44100:c=pink:d=3.60:a=1:seed=65" \
+  -f lavfi -i "anoisesrc=r=44100:c=white:d=2.80:a=1:seed=66" \
+  -f lavfi -i "anoisesrc=r=44100:c=brown:d=2.80:a=1:seed=67" \
+  -f lavfi -i "aevalsrc='(0.66+0.34*(0.5*sin(2*PI*4.3*t)+0.3*sin(2*PI*7.9*t)+0.2*sin(2*PI*12.7*t)))*min(1,t/0.11)*exp(-1.05*max(0,t-0.85))':d=2.80:s=44100" \
+  -f lavfi -i "aevalsrc='(0.42*pow(abs(sin(2*PI*8.9*t)),22)+0.34*pow(abs(sin(2*PI*6.3*t+0.7)),26)+0.28*pow(abs(sin(2*PI*13.1*t+1.9)),30)+0.22*pow(abs(sin(2*PI*17.3*t+2.8)),34))*min(1,t/0.08)*exp(-1.35*max(0,t-0.55))':d=2.80:s=44100" \
+  -filter_complex "\
+[0:a]highpass=f=260:p=2,lowpass=f=3400:p=2[v1];\
+[1:a]asetrate=44100*0.78,aresample=44100,atrim=0:2.80,asetpts=N/SR/TB,highpass=f=340:p=2,lowpass=f=2600:p=2,volume=0.85[v2];\
+[3:a]highpass=f=90:p=2,lowpass=f=420:p=2,volume=0.55[body];\
+[v1][v2][body]amix=inputs=3:duration=first:normalize=0[vox];\
+[vox][4:a]amultiply[voxenv];\
+[2:a]highpass=f=2000:p=2,lowpass=f=9500:p=2[clapraw];\
+[clapraw][5:a]amultiply,volume=1.8[claps];\
+[voxenv][claps]amix=inputs=2:duration=first:normalize=0[dry];\
+[dry]aecho=0.9:0.4:71|139|211:0.32|0.20|0.12,lowpass=f=7200:p=2,highpass=f=110:p=2[out]" \
+  -map "[out]" -t 2.80
+
+# ===========================================================================
+# 殭屍王 (task #262 / GH #190) — THE TWO CUES THE OWNER ASKED FOR BY LENGTH.
+#
+#   owner, 2026-07-28: 「要播放恐怖音效3~5秒，打贏要播放中獎慶祝音效5~7秒」.
+#
+# The LENGTH is part of the requirement, not a detail: a 0.4 s sting is not a
+# 3-5 second horror cue, and it is exactly the kind of thing that ships "done"
+# and is wrong. So the durations are pinned by the `-t` below AND re-measured
+# off the shipped mp3 by apps/client/src/audio/bossSfxDuration.test.ts — the
+# guard reads the FILE, not this comment.
+#
+# WHY PROCEDURAL AND NOT 効果音ラボ. Two sources were allowed; this is the
+# second (「我所有 AI 生成都是本地端」 — nothing downloaded, nothing third-party,
+# lavfi sources only). That also means NEITHER clip is an entry in
+# ../lab/MANIFEST.json or content/assets/CREDITS.md: the standing 効果音ラボ
+# authorisation's one condition (every downloaded clip listed on the credits
+# page) simply does not apply to own work. Same footing as crowd-cheer above.
+#
+# THE TWO MUST BE UNMISTAKABLE FOR EACH OTHER — one says 「跑」, the other says
+# 「你發財了」 — so they are built to sit at opposite ends of the spectrum, and
+# that is MEASURED, never judged by ear (background agents must not make sound
+# on this machine, task #62):
+#   boss-horror  centroid ~360 Hz, ~79% of energy under 500 Hz, one slow swell
+#                peaking at ~3.0 s, silent by 4.4 s.
+#   boss-jackpot centroid ~5.2 kHz, ~1% under 500 Hz, TWO peaks (the 0 s
+#                fanfare and the ~3.3 s jackpot chord), silent by 6.0 s.
+
+# --- bossHorror (降臨): 4.40 s of dread ------------------------------------
+# Five layers, slowest first, because dread is an ARRIVAL and not a hit:
+#   1. sub drone 36 / 37.7 Hz — two close sines BEAT at 1.7 Hz, which is the
+#      un-nerving part; a single sub sine reads as a hum.
+#   2. a tritone (110 / 155.6 Hz = A2 / D#3) under a slow Gaussian swell. The
+#      tritone is the interval; take it out and this is a heroic entrance.
+#   3. a rising sweep 150 Hz upward — "something is coming up out of the floor".
+#   4. a low brown-noise GROWL, tremolo'd at 23 Hz (a throat, not a hiss).
+#   5. an impact at 3.05 s with a downward 55 Hz body — the king LANDS.
+# Long echo taps (97/181/307 ms) put it in a big empty room.
+synth boss-horror \
+  -f lavfi -i "aevalsrc='(0.95*(1-exp(-1.2*t))*(sin(2*PI*36*t)+0.85*sin(2*PI*37.7*t)))*min(1,(4.40-t)/0.6)':d=4.40:s=44100" \
+  -f lavfi -i "aevalsrc='exp(-pow((t-3.05)/1.55,2))*(0.55*sin(2*PI*110*t)+0.50*sin(2*PI*155.6*t)+0.20*sin(2*PI*233.1*t))':d=4.40:s=44100" \
+  -f lavfi -i "aevalsrc='0.34*min(1,t/1.0)*exp(-pow((t-3.10)/1.9,2))*sin(2*PI*(150*t+62*t*t))':d=4.40:s=44100" \
+  -f lavfi -i "anoisesrc=r=44100:c=brown:d=4.40:a=1:seed=71" \
+  -f lavfi -i "aevalsrc='(0.55+0.45*(0.6*sin(2*PI*23*t)+0.4*sin(2*PI*7.3*t)))*min(1,t/0.8)*min(1,(4.40-t)/1.0)':d=4.40:s=44100" \
+  -f lavfi -i "aevalsrc='1.15*exp(-7.0*max(0,t-3.05))*gt(t,3.05)*sin(2*PI*(55*t-3.2*t*t))':d=4.40:s=44100" \
+  -filter_complex "\
+[3:a]lowpass=f=420:p=2,highpass=f=55:p=2[growlraw];\
+[growlraw][4:a]amultiply,volume=1.5[growl];\
+[0:a][1:a][2:a][growl][5:a]amix=inputs=5:duration=first:normalize=0[dry];\
+[dry]aecho=0.9:0.45:97|181|307:0.34|0.22|0.14,lowpass=f=5200:p=2,highpass=f=28:p=2,\
+afade=t=in:st=0:d=0.05:curve=qsin,afade=t=out:st=4.05:d=0.35:curve=exp[out]" \
+  -map "[out]" -t 4.40
+
+# --- bossJackpot (擊殺分紅): 6.00 s of 中獎 ---------------------------------
+# A slot machine paying out, not a victory fanfare: the money has to be AUDIBLE.
+#   1. a 7-note F-major-pentatonic bell arpeggio (F4→F6) over the first second,
+#      each note struck with an inharmonic 2.4f partial so it reads as a BELL.
+#   2. a COIN CASCADE: 2.2-9 kHz noise gated by four incommensurate spike trains
+#      (13.9 / 17.3 / 23.7 / 31.1 Hz, high exponents) = discrete coins, not hiss.
+#      Its envelope SWELLS back up around 3.1 s so the payout builds instead of
+#      sagging into a hole in the middle.
+#   3. the JACKPOT chord at 3.20 s (F5-A5-C6-F6-C7) with a 1 s ring-down —
+#      the second peak, and the reason this is 6 s rather than 2.
+#   4. a low kick at 0 s and 3.20 s so the two beats have weight.
+synth boss-jackpot \
+  -f lavfi -i "aevalsrc='0.54*(gt(t,0.00)*exp(-4.2*(t-0.00))*(sin(2*PI*349.23*t)+0.40*sin(2*PI*698.46*t)+0.24*sin(2*PI*838.15*t))+gt(t,0.16)*exp(-4.2*(t-0.16))*(sin(2*PI*440.00*t)+0.40*sin(2*PI*880.00*t)+0.24*sin(2*PI*1056.00*t))+gt(t,0.32)*exp(-4.2*(t-0.32))*(sin(2*PI*523.25*t)+0.40*sin(2*PI*1046.50*t)+0.24*sin(2*PI*1255.80*t))+gt(t,0.48)*exp(-4.2*(t-0.48))*(sin(2*PI*698.46*t)+0.40*sin(2*PI*1396.91*t)+0.24*sin(2*PI*1676.30*t))+gt(t,0.64)*exp(-4.2*(t-0.64))*(sin(2*PI*880.00*t)+0.40*sin(2*PI*1760.00*t)+0.24*sin(2*PI*2112.00*t))+gt(t,0.80)*exp(-4.2*(t-0.80))*(sin(2*PI*1046.50*t)+0.40*sin(2*PI*2093.00*t)+0.24*sin(2*PI*2511.60*t))+gt(t,0.96)*exp(-3.4*(t-0.96))*(sin(2*PI*1396.91*t)+0.40*sin(2*PI*2793.83*t)+0.24*sin(2*PI*3352.60*t)))':d=6.00:s=44100" \
+  -f lavfi -i "aevalsrc='0.64*gt(t,3.20)*exp(-1.00*(t-3.20))*(sin(2*PI*698.46*t)+0.70*sin(2*PI*880.00*t)+0.60*sin(2*PI*1046.50*t)+0.34*sin(2*PI*1396.91*t)+0.20*sin(2*PI*2093.00*t))':d=6.00:s=44100" \
+  -f lavfi -i "aevalsrc='0.85*exp(-6.0*t)*sin(2*PI*(92*t-42*t*t))+0.85*gt(t,3.20)*exp(-4.6*(t-3.20))*sin(2*PI*72*(t-3.20))':d=6.00:s=44100" \
+  -f lavfi -i "anoisesrc=r=44100:c=white:d=6.00:a=1:seed=81" \
+  -f lavfi -i "aevalsrc='(0.50*pow(abs(sin(2*PI*17.3*t)),18)+0.42*pow(abs(sin(2*PI*23.7*t+0.7)),22)+0.38*pow(abs(sin(2*PI*31.1*t+1.9)),26)+0.30*pow(abs(sin(2*PI*13.9*t+2.7)),20))*min(1,t/0.10)*exp(-0.42*max(0,t-0.50))*(1+1.7*exp(-pow((t-3.10)/0.80,2)))':d=6.00:s=44100" \
+  -filter_complex "\
+[3:a]highpass=f=2200:p=2,lowpass=f=9000:p=2[coinraw];\
+[coinraw][4:a]amultiply,volume=0.95[coins];\
+[0:a][1:a][2:a][coins]amix=inputs=4:duration=first:normalize=0[dry];\
+[dry]aecho=0.9:0.32:83|151|229:0.28|0.18|0.11,highpass=f=60:p=2,lowpass=f=13000:p=2,\
+afade=t=in:st=0:d=0.004:curve=qsin,afade=t=out:st=5.40:d=0.60:curve=exp[out]" \
+  -map "[out]" -t 6.00
+
+# --- summary (keep this LAST; see the GH#744 note above) ---------------------
+echo "generated:"
+ls -l "$OUT"/*.mp3

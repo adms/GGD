@@ -1,0 +1,67 @@
+{
+  "schema": "feature-verdicts@1",
+  "batches": {
+    "beam_visual-proof_20260824-2240": {
+      "title": "光束砲一族：原地開火（path:static）",
+      "family": "beam-roll 橫放光束砲",
+      "issues": [
+        673,
+        649
+      ],
+      "abilities": [
+        "godie-e002.e",
+        "godie-e00l.e",
+        "godie-e00r.r",
+        "godie-n01c.e",
+        "godie-nbbc.e",
+        "godie-o00x.r",
+        "godie-ogrh.r"
+      ],
+      "commit": "57bad55d",
+      "sequenceDir": "docs/_reports/beam_visual-proof_20260824-2240",
+      "rollback": {
+        "configId": "tpl-beam-roll",
+        "field": "params.path.default",
+        "liveValue": "static",
+        "rollbackValue": "forward",
+        "note": "四支經典一起回到舊的位移演出，⛔ 不必動任何一支技能的 JSON（七份 ability doc 一格 path 都不寫）"
+      },
+      "registeredAt": "2026-08-25T03:31:19.429Z",
+      "verdict": null,
+      "verdictHash": null,
+      "reason": "",
+      "verdictAt": null
+    },
+    "goku_visual-proof_20260825-0200": {
+      "title": "蝗蟲群/光束帶：沿線 N 具一次擺好（count 6 × spacing 2）",
+      "family": "beam-roll 沿線陣列（原作 dummy 群）",
+      "issues": [
+        688,
+        673
+      ],
+      "abilities": [
+        "godie-e002.e",
+        "godie-e00l.e",
+        "godie-e00r.r",
+        "godie-n01c.e",
+        "godie-nbbc.e",
+        "godie-o00x.r",
+        "godie-ogrh.r"
+      ],
+      "commit": "a3bc9838",
+      "sequenceDir": "docs/_reports/goku_visual-proof_20260825-0200",
+      "rollback": {
+        "configId": "tpl-beam-roll",
+        "field": "params.count.default",
+        "liveValue": 6,
+        "rollbackValue": 1,
+        "note": "整族回到單具（原地一團），⛔ 不必動任何一支技能的 JSON —— count:6 是本 lane 照原作 A03S 的 i×200 挑的預設，開關存在是為了回頭"
+      },
+      "registeredAt": "2026-08-25T03:31:36.327Z",
+      "verdict": null,
+      "verdictHash": null,
+      "reason": "",
+      "verdictAt": null
+    }
+  }
+}

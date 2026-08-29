@@ -1,0 +1,24 @@
+{
+  "id": "godie-h020.e",
+  "schema": "vfx-script@1",
+  "abilityId": "godie-h020.e",
+  "notes": "GH#838 pilot（04-03 龍破斬，JASS A04R）。施法提交（castStart）：DoomTarget 魔法陣＋h013 聚氣陣（原作 SetUnitScalePercent 230%）——出處 docs/_reports/vfx-editor-jass3_temp_20260828-0042.md §2-5（war3map.j 29886–30160）。⚠️ 火球本體與詠唱五句已在 ability JSON（tpl-line-blast＋delayed floatingText），⛔ 不在這裡重複（第〇·四）。爆炸 18×WarStomp 環要等 modelFxArrive 觸發器（機制缺口，#838 M 批）。",
+  "segments": [
+    {
+      "kind": "vfx",
+      "on": "castStart",
+      "vfxId": "fx.w3x.stock.markofchaostarget.p00",
+      "at": "self",
+      "durationSec": 1.2
+    },
+    {
+      "kind": "modelFx",
+      "on": "castStart",
+      "modelKey": "imported.doom",
+      "path": "static",
+      "anchor": "self",
+      "lifeSec": 1.5,
+      "scale": 2.3
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "id": "roster",
+  "schema": "config.roster@1",
+  "note": "已下架的英雄。這一格是內容事實,不是營運狀態 —— 它擋在白名單之外,所以平台連不上(客戶端 NO_FILTER / 伺服器 bypass)時照樣擋得住,而一次手滑的後台勾選也放不回來。技能補完(或變身重新開放)之後把 id 從這裡拿掉就是重新上架。⭐ 入口是後台『英雄上下架』那一頁:它寫進耐久覆蓋層,存檔就生效、不用改程式也不用重新部署。⛔ 直接編這個檔案不行 —— 那要 pnpm content:build 加一次完整部署,而且線上只要存過一次覆蓋層,這個檔案就再也不是玩家看到的那一份。(這句話在 2026-08-17 以前寫的是「把 id 拿掉就不用改程式、不用重新部署」,而當時 apps/admin/src 對這份文件零引用 —— 那是第三守則說的那種謊話,現在那一頁真的做出來了。) ⭐ hiddenChampions = 隱藏角色(彩蛋,owner 2026-08-17「隱藏角色可以隨機到 但不能選到」):**隨機抽得到、手動選不到**。與 retiredChampions 的差別是後者手動與隨機兩條路都擋,前者只擋手動那一條,所以一位隱藏英雄仍然會出現在別人的隨機結果裡 —— 那正是彩蛋的定義。⚠️ 同一個 id 不可以同時放進兩張清單。前兩隻 godie-e00u / godie-u01f 各有 4 支 name:\"none\" 的空技能(QWER 全空),owner 2026-07-30 說下架、2026-08-02 再確認「預設不應該再有」。第三隻 godie-e007 是 12 天地志狼的第二形態,owner 2026-08-12「是的,我刻意減少變身的技能,減少額外設定開銷」—— 12-03 重製成 [被動][暴擊] 之後那個變身已經沒有入口,這一格讓它連 fail-open 的路徑也進不來。⚠️ 兩半的 transform 區塊刻意留著:那是 w3x 的 Eme1/Emeu 事實,被 championForms.ts 與它的抽取器 fixture 釘住,不是可浮動的設計偏好。 ⭐ 2026-08-16 owner 再下架四位：戰國刺客Azumi-安云(godie-e00k)、不死之身-無-藤井八雲(godie-hpal)、慈悲的王者-賈修貝爾(godie-hblm)、通靈人-麻倉葉(godie-nplh)。⚠️ 安云有變身態 godie-e00z，它本來就不在白名單上（變身態一律不可選），下架本體之後那個形態連 fail-open 的路徑也進不來。⚠️ 賈修貝爾是**硬輔出身裡唯一的遠程**，下架後硬輔只剩哆拉A夢一位、且全為近戰 —— 攻擊距離雙階梯的『混合出身』案例因此暫時沒有活體樣本（機制與守衛都保留）。 ⭐ 2026-08-20 owner 指定隱藏名單(GH#469)，逐字：「預設是**死之王、飛鼠先生、喪標麥可、黑人牙膏、黑化Saber(待補)**」⇒ 邪惡意念集合體-死之王(godie-u00k)、至尊學長-飛鼠先生(godie-udea)、聖杯黑泥醬-喪標麥可(godie-zombiex)、美白大法師-黑人牙膏(godie-ogld)。⏸ **黑化Saber 被 owner 自己標『待補』，所以這一版刻意留空**：內容樹裡兩份 Saber 文件都叫『亞瑟王 - Saber』(godie-e002／godie-e00l)，而 e00l 是 e002 的變身態＝`isTransformedBody` 永遠不可選，所以那一格要填哪一個 id 只有 owner 答得出來，⛔ 我不替他挑。⚠️⚠️ 這四位**必須留在上架白名單上**(apps/platform/internal/curation/starter.go 的 starterChampions，四位都在)——「隱藏」不是「下架」：隨機池是『有模型 ∩ 白名單』(MatchController.randomChampionPool)，把他們從白名單拿掉就是把彩蛋做成下架，整條路徑又會逐位元組等於不存在，而那正是 #469 開票時的病。⚠️ 線上若已經存過一次 roster 的耐久覆蓋層，覆蓋層是**整份取代**(contentOverlay 的 docs 是逐份蓋)，改這個檔案不會生效 —— 部署後要到後台『英雄上下架』那一頁確認這四位真的在隱藏欄裡。 ⭐⭐ 2026-08-22 owner 下架**五個變身態**(GH#552),逐字:「**變身帶來許多問題**,因此我想要開啟變身態盡可能**下架**項目群組如下 godie-e007 龍之子-天地志狼 / godie-h020 黑魔導士-莉娜因巴斯 / godie-h02u 草泥馬 / godie-n01c 勇者小呆 / godie-u010 邪眼師-飛影 => **沒有變更 3d model,效果及增益可以用效果狀態及增益狀態完美替換**」(godie-e007 早在 2026-08-12 就在這張清單上,所以這一版新增的是後面四個。) ⭐ owner 的前提**量過了,⛔ 不是假設**:五對的 modelKey 逐對相同(herolingtong / linainvers / horse / sd2 / herohehi)⇒「沒有變更 3d model」五對全部成立,⛔ 沒有一位要被排除。⚠️⚠️ **下架一個變身態 ≠ 下架一位英雄**:這五格的卡片**必須留在 content/champions/**,⛔ 不可以搬進 content/_legacy/ —— packages/shared/testkit/formPairShipping.ts 的 halfMigrated 規定一對變身要搬就**整組**搬,而這五位的本體(godie-ewar / godie-hjai / godie-h02v / godie-nbbc / godie-uvng)全都是上架英雄。同理**也不可以**把本體的 transform.counterpartId 拿掉:championForms.test.ts 與 championFormsResolve.test.ts 逐對釘死 base.transform.counterpartId === 那個變身態。⇒ 退場的是**入口**,⛔ 不是檔案,而且入口**沒有一條純內容的路**。 ⏸ **入口那一半還沒接線**(GH#552 第二段):今天這五格只擋住 fail-open 那條路(平台連不上 ⇒ 客戶端 NO_FILTER / 伺服器 bypass),⛔ championForm 入口仍然開著。接線點只有一處、一行 —— packages/shared/src/sim/systems/ChampionFormSystem.ts 的 destinationFor():目的地在**這張清單**上就回 undefined ⇒ 走既有的 castRejected(\"no-form\")、**一個位元都不寫**,而同一支技能裡的 applyStatus / applyBuff 照常執行 —— 那正是 owner 說的「效果及增益可以用效果狀態及增益狀態完美替換」。⭐ 一張表 + 一條規則,⛔ 不是五段 if(第零守則⑨);而且 owner 想回頭時是後台一格勾選,⛔ 不是一次部署。⚠️ 五支入口技能各自還缺哪些替代增益(莉娜的 5000 魔力/int+100、小呆的三圍 +15 與魔抗 28→50、飛影的移速與射程、草泥馬的天生技 92-00),量在 docs/_reports/552_temp_20260822-2300.md;守衛 packages/shared/src/ops/transformRetireGate.test.ts。",
+  "retiredChampions": [
+    "godie-e00u",
+    "godie-u01f",
+    "godie-e007",
+    "godie-e00k",
+    "godie-hpal",
+    "godie-hblm",
+    "godie-nplh",
+    "godie-h020",
+    "godie-h02u",
+    "godie-n01c",
+    "godie-u010",
+    "godie-e00x"
+  ],
+  "hiddenChampions": [
+    "godie-ogld",
+    "godie-u00k",
+    "godie-udea",
+    "godie-zombiex"
+  ],
+  "hiddenChampionsInMobPool": false
+}

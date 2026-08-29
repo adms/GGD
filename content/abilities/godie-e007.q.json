@@ -13,12 +13,14 @@
     6.0,
     6.0
   ],
+  "cooldownTier": "極小",
   "manaCost": [
     72.0,
     72.0,
     72.0,
     72.0
   ],
+  "manaCostTier": "極小",
   "range": 4.5,
   "targetsEnemies": true,
   "effects": [
@@ -45,8 +47,6 @@
   ],
   "icon": "assets/icons/abilities/godie-e007.q.webp",
   "vfxKey": "fx.prim.ki.pulse-sm",
-  "cooldownTier": "極小",
-  "manaCostTier": "極小",
   "rangeTier": "小",
   "castTimeSec": 0.233
 }

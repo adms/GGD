@@ -1,0 +1,624 @@
+/**
+ * modelFxRig —— `spawnModelFx` 的 BABYLON 那一半:**一隻 .glb 沿路徑移動**。
+ *
+ * ⚠️ 這是 GGD 第一個「模型即特效」的通道。既有的三條通道全部是粒子/幾何:
+ *   · `vfx/particleFactory` + `render/vfx/W3xEmitterRig` —— PRE2 粒子
+ *   · `vfx/RibbonTrail` —— 刀光
+ *   · `vfx/Telegraph` / `castBeam` —— 程序生成的幾何
+ * 沒有任何一個能演「一顆會滾的球體從 A 飛到 B」,因為那在原作裡是一隻**單位**。
+ *
+ * ── 這個檔案為什麼**不**自己造一套池子的規矩 ──────────────────────────────
+ * #131(卡在角落的白色爆光)的根因是一個**沒有主人**的連續發射器:掛著它的骨頭被
+ * 模型置換 dispose 掉,Babylon 把它重新掛回 WORLD 的 (0,0,0),於是它在場中央一直
+ * 燒到整場結束。`W3xEmitterRig` 為此立了三條規矩,這裡逐條照抄(⛔ 不是重寫):
+ *   ① **每一個活著的實例都有硬壽命上限**(`maxEffectSec`),忘了收也會自己死;
+ *   ② **free-list 而不是 dispose/new**,所以重複施放不配置記憶體;
+ *   ③ **`dispose()` 走一份登錄表**,⛔ 不是只收「我記得的那幾個」。
+ *
+ * ⭐ 而且 free-list 有**上界**(`maxPooledPerModel`)。一個沒有上界的池子在
+ * 「一場 20 分鐘、十幾支技能各生 20 顆」之後就是一份永遠不還的記憶體 ——
+ * 它不會像 #131 那樣被看見,所以更難查。
+ *
+ * ── ⛔ 這裡不算傷害,也不排落點特效 ────────────────────────────────────────
+ * 約定介面上的 `onArrive` / `onTouch` 帶的是 `EffectDef[]`,那是**引擎**(L1)在
+ * 權威側解算的。客戶端自己解算命中 = 失敗形態⑤,⛔ 永遠不做。
+ *
+ * ⭐ **落點爆炸也不在這裡**（2026-08-23 移除,GH#606）。舊版有一個 `onArriveFx`
+ * 視覺回呼,而唯一的呼叫端讀的是 `ev.data.arriveVfxKey` —— **零個寫入端的幽靈
+ * 欄位**,所以那條回呼從第一天起就沒有響過一次。⛔ 修法不是補上那個欄位:
+ * 落點特效寫在技能 JSON 的 `onArrive: [{ kind: "spawnVfx", … }]` 就好,它走
+ * sim 的延遲班表 ⇒ **特效與傷害在同一 tick 同一點**。客戶端再排一次是第二個
+ * 住處,而且會跟傷害差幾幀（第〇·四／第〇·五守則）。
+ */
+import type { ModelDoc } from "@ggd/shared/content";
+import type { Scene } from "@babylonjs/core/scene";
+import type { AssetContainer } from "@babylonjs/core/assetContainer";
+import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
+import {
+  modelFxAxisCorrection,
+  modelFxPoseFromWire,
+  modelFxWireLifeSec,
+  type ModelFxLongAxis,
+  type ModelFxSpawnEvent,
+  type ModelFxSpawnInstance,
+} from "./modelFxPath";
+
+/** 一個 `model@1` 文件裡這個 rig 需要的三格。 */
+export interface ModelFxModelDoc {
+  glbPath: string;
+  scale?: number;
+  /**
+   * ⭐ 這一份 .glb 的長軸烘在哪一軸（`model@1.fxLongAxis`）。缺席 ⇒ ⛔ 不修正。
+   * ⚠️ 它是**模型**的性質不是技能的：同一份 `netherstrike.glb` 被兩支技能引用，
+   * 兩邊必須拿到同一個答案（第〇·四守則）。
+   */
+  fxLongAxis?: ModelFxLongAxis;
+  /** ⭐ 移動特效離地多高（`model@1.fxSpawnHeight`）。缺席 ⇒ 0 ＝ 今天的行為。 */
+  fxSpawnHeight?: number;
+  /**
+   * ⭐ 這一份外觀的頂點著色（`model@1.fxTint`，線性 RGB 各 0…1）。缺席 ⇒ ⛔ 不著色。
+   * ⚠️ 原作把它掛在 locust dummy 的**單位型別**上（w3u `Art - Vertex Colour`
+   * ＋ `SetUnitVertexColor`），而 GGD 這一側在 2026-08-23 之前**整格不存在** ——
+   * 於是 38-002 究極暴走黑龍波的兩具 dummy（原作 `[0,0,0]` 純黑）以素材原色出場。
+   */
+  fxTint?: readonly [number, number, number];
+  /**
+   * ⭐ 這一份外觀的透明度（`model@1.fxAlpha`，0…1）。缺席 ⇒ 1 ＝ 今天的行為。
+   * 原作只存在 runtime（57 個 `SetUnitVertexColorBJ` 呼叫點，w3u 無此欄）——
+   * 這一格是**模型級恆定半透明**那一半（GH#688 Phase 4 機制②）。
+   */
+  fxAlpha?: number;
+  /**
+   * ⭐ 這一份 .glb 的**邏輯狀態 → 軌名**對照（`model@1.clipMap`）。
+   *
+   * ⚠️ 它**本來就存在**（英雄動畫走的就是它），所以 `spawnModelFx.clip` ⛔ 不開
+   * 第二份對照表（第〇·四守則）：`clip:"death"` 在 `flamestrike1` 解成 `death`、
+   * 在 `darkraor` 解成 `Death` —— 大小寫與命名慣例是**這份 .glb 的**性質，
+   * ⛔ 不是引用它的技能該知道的事。
+   */
+  clipMap?: ModelDoc["clipMap"];
+}
+
+/**
+ * ⭐ 這個 rig 對一條 `AnimationGroup` 需要的**四格**（GH#689）。
+ *
+ * ⚠️ 刻意是結構型別而 ⛔ 不 import `AnimationGroup`：這個檔對 Babylon 的具體依賴
+ * 只有 `TransformNode`（其餘全是 `import type`），而守衛餵進來的是**真的**
+ * Babylon 物件 —— 結構型別讓「真物件」與「量測探針」共用同一條路，
+ * ⛔ 不是讓測試可以塞一份假的（那是失敗形態⑤）。
+ */
+export interface ModelFxAnimGroup {
+  name: string;
+  speedRatio: number;
+  play(loop?: boolean): unknown;
+  stop(): unknown;
+  dispose(): unknown;
+}
+
+/**
+ * ⭐【剪輯解名】`spawnModelFx.clip` → 這一具實例上**要播的那幾條軌**（GH#689）。
+ *
+ * 兩段，順序有意義：
+ *  ① **先查 `clipMap`** —— 那是「這份 .glb 把 idle/death 叫做什麼」的唯一住處。
+ *  ② 查不到才把 `clip` 當**軌名逐字**（WC3 的 `birth` 這種不在六格裡的一次性序列）。
+ *
+ * ⚠️ ⭐ **比對必須容忍前綴**（量到的，⛔ 不是推測）：`instantiateModelsToScene`
+ * 把每一條軌 clone 成 `nameFunction(原名)`，所以場上那條叫
+ * `modelfx-7-death`，⛔ 不叫 `death` —— 逐字比對一條都不會中，而那會是
+ * 「填了 clip、畫面上沒動、沒有任何錯誤」的失敗形態②（`ChampionView` 的掛件
+ * 動畫踩過同一個坑，GH#392）。⇒ 完全相同 → 不分大小寫的字尾，兩段。
+ *
+ * ⛔ 名字對不上就**一條都不播** —— 不猜一條給它（與 `attachment@1.anim` 同規矩）。
+ */
+export function fxClipTargets<T extends { name: string }>(
+  groups: readonly T[],
+  clip: string,
+  clipMap?: ModelDoc["clipMap"],
+): T[] {
+  const mapped = (clipMap as Record<string, string | undefined> | undefined)?.[clip];
+  const want = mapped ?? clip;
+  const exact = groups.filter((g) => g.name === want);
+  if (exact.length > 0) return exact;
+  const lower = want.toLowerCase();
+  return groups.filter((g) => g.name.toLowerCase().endsWith(lower));
+}
+
+/**
+ * 把 `fxTint` 乘進這一棵子樹上每一份素材的**漫反射/反照率**。
+ *
+ * ⚠️ ⭐ **一定要先 clone 素材。** `instantiateModelsToScene({doNotInstantiate:true})`
+ * 複製的是節點，⛔ 不是素材 —— 同一個 `AssetContainer` 出來的每一具共用同一個
+ * `Material` 物件。⛔ 就地改它 = 這個 modelKey 的**每一具**（含未來別的技能引用它時）
+ * 一起變色，而且 `dispose()` 之後那份污染還留在容器裡。
+ *
+ * ⚠️ ⭐ **⛔ 不動自發光（emissive）與 alpha。** 原作的 `SetUnitVertexColor` 在
+ * 純黑（`[0,0,0]`）時畫出來的是**黑色剪影**，⛔ 不是「消失」。把 0 乘進加法混合的
+ * 自發光層會讓整具模型從畫面上不見 —— 那是失敗形態①（算出來了但畫在看不見的地方），
+ * 而且它與「顏色正確」在測試上長得一模一樣。
+ *
+ * ⚠️ 斷言要讀**最終**物件：這裡把 clone 指回 `mesh.material`，所以任何對**原始**
+ * 素材物件寫的斷言，不管有沒有生效都會過（見 `views/mobTint.test.ts` 的檔頭）。
+ */
+export function applyFxTint(
+  root: TransformNode,
+  tint: readonly [number, number, number],
+  alpha?: number,
+): number {
+  let painted = 0;
+  for (const mesh of root.getChildMeshes(false)) {
+    const mat = (mesh as { material?: unknown }).material as
+      | { clone?: (n: string) => unknown; name?: string }
+      | null
+      | undefined;
+    if (!mat || typeof mat.clone !== "function") continue;
+    const copy = mat.clone(`${mat.name ?? "mat"}-fxtint`) as
+      | (Record<string, unknown> & { name?: string })
+      | null;
+    if (!copy) continue;
+    // ⭐ 兩種素材各自的漫反射欄位名（StandardMaterial / PBRMaterial）。⛔ 不碰
+    //    `emissiveColor` 與（無 fxAlpha 時的）`alpha` —— 見上面的註解。
+    for (const key of ["diffuseColor", "albedoColor"] as const) {
+      const c = copy[key] as { r: number; g: number; b: number } | undefined;
+      if (!c) continue;
+      c.r *= tint[0];
+      c.g *= tint[1];
+      c.b *= tint[2];
+    }
+    // ⭐【模型級透明度】`model@1.fxAlpha`（GH#688 Phase 4 機制②）——
+    //    **材質 alpha 乘法**，⛔ 不是 visibility 開關：0.5 的幻影要看得到後面的
+    //    地板。乘法（⛔ 不是覆寫）保住素材自己已有的半透明層次。
+    // ⚠️ glTF 載入器把不透明素材鎖成 `transparencyMode: OPAQUE`（PBR）——
+    //    只改 `alpha` 那一格是**寫了但不會發生**（第一·五守則的形狀），
+    //    所以 <1 時一併解鎖成 ALPHABLEND（=2，PBRMaterial.PBRMATERIAL_ALPHABLEND）。
+    if (alpha !== undefined && alpha < 1) {
+      const a = copy["alpha"];
+      copy["alpha"] = (typeof a === "number" ? a : 1) * alpha;
+      if ("transparencyMode" in copy) copy["transparencyMode"] = 2;
+    }
+    (mesh as { material?: unknown }).material = copy;
+    painted++;
+  }
+  return painted;
+}
+
+/**
+ * ⛔⛔ **出貨路徑上「`model@1` → 這個 rig」的唯一接縫**（GH#607）。
+ *
+ * ── 它為什麼是一個具名函式而不是一段 inline lambda ──────────────────────────
+ * 2026-08-23 量到：`GameApp.ts` 的 `modelDocFor` 接縫**手挑欄位**
+ * （`{ glbPath: doc.glbPath, scale: doc.scale }`）⇒ `fxLongAxis` /
+ * `fxSpawnHeight` 在那一行被丟掉。於是 owner 逐字要的「**90 度橫放的 beam**」
+ * 軸修正**從第一天起就沒有生效過**，而且每一具移動模型都貼在 y=0 拖行。
+ *
+ * ⚠️ **每一個零件都是對的**（第一·五守則的形狀）：`model@1` 兩格都存了
+ * （`imported.netherstrike` 宣告 `fxLongAxis:"y"`、`imported.fireblast` 宣告
+ * `"x"`）、`spawn()` 兩格都讀了、`modelFxAxis.test.ts` 兩格都驗了 ——
+ * 缺的只有**中間那一段**，而它是一個沒有人測過的投影（失敗形態⑧）。
+ *
+ * ⭐ 所以修法⛔ 不是「把那兩格補進那個字面值」——下一格照樣會漏。
+ * 修法是**不要投影**：整份文件走過去，「rig 讀得到哪幾格」由
+ * {@link ModelFxModelDoc} 這個**子集型別**說了算，⛔ 不由呼叫端各自抄一份。
+ * ⇒ 之後在 `model@1` 上加第三格 fx 欄位時，**零行接線**。
+ */
+export function modelFxDocFor(doc: ModelDoc | null | undefined): ModelFxModelDoc | null {
+  return doc ?? null;
+}
+
+export interface ModelFxRigOptions {
+  /** modelKey → model@1 文件（GameApp 從 contentDb 餵）。null = 這個 key 沒有模型 */
+  resolveModel(modelKey: string): ModelFxModelDoc | null;
+  /** glb 載入（出貨是 `AssetManager.load`；測試注入 stub，headless 不解碼） */
+  loadContainer(glbPath: string): Promise<AssetContainer | null>;
+  /** 同時最多幾個實例（含所有技能）。超過就不生 —— ⛔ 不排隊，排隊會遲到 */
+  maxLive?: number;
+  /** 每個 modelKey 的 free-list 上界 */
+  maxPooledPerModel?: number;
+  /** ⭐ 所有 free-list 加起來的上界（⛔ 沒有它，per-key 上限乘上無界的 key 數 = 無界） */
+  maxPooledTotal?: number;
+  /** 任何實例的硬壽命上限（秒）。忘了收也會死 */
+  maxEffectSec?: number;
+}
+
+/** 出貨預設 —— ⚠️ 這幾格是**預算**不是平衡值，所以住這裡是對的（第〇·四守則的豁免）。 */
+const DEFAULT_MAX_LIVE = 48;
+const DEFAULT_MAX_POOLED_PER_MODEL = 12;
+/**
+ * ⭐ free-list 的**全域**上界（GH#429）。
+ *
+ * ⚠️ `maxPooledPerModel` 看起來像一個上界，⛔ 但它不是 —— 那正是 GH#270 逐字
+ * 記下來的教訓（`VfxSystem.resetForRound` 的註解）：
+ * 「**per-key 上限只有在 key 的數量有上界時才構成上界**」。
+ * 而 modelKey 的數量在一場比賽裡是**一直增加**的：英雄升級解鎖 R/EX、第 3 回合起
+ * 殭屍加入、每回合換地圖（#145）。實測（`modelFxRoundGrowth.test.ts` 的前身探針，
+ * 每回合 3 個新 modelKey、8 個回合）：場景裡的 `modelfx-*` TransformNode 是
+ * **72 → 144 → 216 → … → 576**，逐回合 +72，而且回合邊界一個都沒還回去。
+ */
+const DEFAULT_MAX_POOLED_TOTAL = 48;
+const DEFAULT_MAX_EFFECT_SEC = 8;
+
+/**
+ * 一個實例的**兩層**節點。
+ *
+ * ⭐ 兩層是必要的，⛔ 不是潔癖：`root` 演「它在哪、往哪走、滾多快」，
+ * `axis` 演「這份網格當初朝哪一軸建」。掛成父子之後合成順序是
+ * `Ry(yaw) ∘ Rz(roll) ∘ A` —— 翻滾繞的是**已經橫放好的長軸**。
+ * ⛔ 併成一層（把修正加進 `rotation`）做不到這件事：Babylon 的 euler 是
+ * yaw∘pitch∘roll 固定順序，修正只能擠在 roll **外面**，於是每滾一圈光束就
+ * 甩離航線一次。
+ */
+interface ModelFxNodes {
+  root: TransformNode;
+  axis: TransformNode;
+}
+
+/**
+ * ⭐【這一發的外觀】節點級 `tint`／`alpha` 蓋過 `model@1` 的 `fxTint`／`fxAlpha`
+ * （GH#693）。⛔ **不相乘** —— 原作的 `SetUnitVertexColor` 是覆寫語意，相乘會讓
+ * 「把一具紅 dummy 染成藍」得到黑。
+ */
+interface ModelFxAppearance {
+  tint?: readonly [number, number, number];
+  alpha?: number;
+}
+
+/**
+ * free-list 的 key。⚠️ ⭐ **外觀要進 key**，⛔ 不可以只用 `modelKey`：
+ * 著色是在 `fillGeometry` 把材質 **clone 之後烘進去**的，所以一個染成紅色的節點
+ * 回到池子裡之後，下一發（可能是同一份 glb 的**白色**版本）撈到它就會拿到紅的
+ * —— 而畫面上那是「顏色偶爾不對」，⛔ 沒有任何錯誤訊息（失敗形態①）。
+ * ⛔ 也不可以「重用時再套一次」：`applyFxTint` 是**乘進現有材質**，重套會複利。
+ */
+function poolKeyOf(modelKey: string, look: ModelFxAppearance): string {
+  if (look.tint === undefined && look.alpha === undefined) return modelKey;
+  return `${modelKey}|${look.tint ? look.tint.join(",") : ""}|${look.alpha ?? ""}`;
+}
+
+interface LiveModelFx {
+  root: TransformNode;
+  axis: TransformNode;
+  modelKey: string;
+  /** ⭐ 回收要放回**同一個外觀**的 free-list（見 {@link poolKeyOf}）。 */
+  poolKey: string;
+  /** ⭐ 容器晚到時的回填要用同一份外觀，⛔ 不是模型文件的預設色。 */
+  look: ModelFxAppearance;
+  /** ⭐ sim 解算完的**這一具**（⛔ 不是整發的 spec —— 客戶端不再自己算路徑，GH#606） */
+  inst: ModelFxSpawnInstance;
+  y: number;
+  spinDegPerSec?: number;
+  /**
+   * ⭐ 這一發要播的剪輯與速率（GH#689）。⚠️ 它必須存在**這裡**而不是只在
+   * `spawn()` 的區域變數裡：容器晚到時的回填（`ensureContainer` 的①c）是在
+   * 幾百毫秒之後才拿到 `AnimationGroup` 的，那一刻只剩下 `live` 這一份資料
+   * —— 少了它，**每一支技能的第一次施放**都會有模型但不播動畫（而第二次以後
+   * 正常，所以它看起來像「偶爾沒動」，⛔ 不像缺陷）。
+   */
+  clip?: string;
+  clipTimeScale?: number;
+  ageSec: number;
+  lifeSec: number;
+}
+
+export class ModelFxRig {
+  /** modelKey → 閒置的實例節點對 */
+  private readonly pool = new Map<string, ModelFxNodes[]>();
+  /** 這個 rig 造過的**每一個**節點（dispose 走這一份，⛔ 不是走 live） */
+  private readonly born: TransformNode[] = [];
+  private readonly live: LiveModelFx[] = [];
+  private readonly containers = new Map<string, AssetContainer | null>();
+  private readonly loading = new Set<string>();
+  private disposed = false;
+
+  private readonly maxLive: number;
+  private readonly maxPooledPerModel: number;
+  private readonly maxPooledTotal: number;
+  private readonly maxEffectSec: number;
+  /** ⚠️ 單調遞增的流水號。⛔ 不可以用 `born.length` —— 回收會把它縮回去，於是
+   *  兩個同時活著的節點會拿到**同一個名字**，而守衛正是照名字在場景上數的。 */
+  private serial = 0;
+
+  constructor(
+    private readonly scene: Scene,
+    private readonly opts: ModelFxRigOptions,
+  ) {
+    this.maxLive = opts.maxLive ?? DEFAULT_MAX_LIVE;
+    this.maxPooledPerModel = opts.maxPooledPerModel ?? DEFAULT_MAX_POOLED_PER_MODEL;
+    this.maxPooledTotal = opts.maxPooledTotal ?? DEFAULT_MAX_POOLED_TOTAL;
+    this.maxEffectSec = opts.maxEffectSec ?? DEFAULT_MAX_EFFECT_SEC;
+  }
+
+  /** 目前活著的實例數（守衛量這個 —— 池子不長大的證據）。 */
+  get liveCount(): number {
+    return this.live.length;
+  }
+
+  /** 所有 free-list 加起來（守衛量這個 —— 回收真的有發生的證據）。 */
+  get pooledCount(): number {
+    let n = 0;
+    for (const list of this.pool.values()) n += list.length;
+    return n;
+  }
+
+  /**
+   * 放一支 `spawnModelFx`。回傳實際生出來的實例數（0 = 沒模型 / 撞預算）。
+   *
+   * ⚠️ 撞到 `maxLive` 時**直接不生**,⛔ 不排隊 —— 一個遲到的特效比沒有更糟
+   * (它會在事情結束之後才出現)。這與 `emitterBudget` 的 fail-fast 同一個立場。
+   */
+  /**
+   * ⭐ 吃 **`modelFxSpawn` 的線路酬載**（GH#606）。
+   *
+   * ⛔ 舊簽章是 `spawn(spec, at)` —— 而**出貨路徑從來沒有那樣呼叫過它**：
+   * sim 送的是 `{ caster, modelKey, instances, … }`，客戶端讀的是 `ev.data.spec`，
+   * 兩邊從第一天起就對不上。⚠️ 而 `modelFxRig.test.ts` 一直是綠的，因為
+   * **它自己造了一個 spec 餵進來**（第二守則失敗形態⑤：被測的不是出貨的那個）。
+   */
+  spawn(ev: ModelFxSpawnEvent): number {
+    if (this.disposed) return 0;
+    const doc = this.opts.resolveModel(ev.modelKey);
+    if (!doc) return 0;
+    this.ensureContainer(ev.modelKey, doc.glbPath);
+
+    const room = Math.max(0, this.maxLive - this.live.length);
+    const n = Math.min(ev.instances.length, room);
+    const lifeSec = modelFxWireLifeSec(ev.instances, this.maxEffectSec);
+
+    // ⭐ 初始姿態:把這份網格烘出來的長軸擺到行進軸上(owner 的「90 度橫放的 beam」)。
+    // ⚠️ 它掛在**內**層,所以 `spinDegPerSec` 的翻滾繞的是已經橫放好的那根長軸。
+    const axisEuler = modelFxAxisCorrection(doc.fxLongAxis);
+
+    // ⭐ GH#693 —— 這一發的外觀：節點級 `tint`/`alpha` **取代** `model@1` 的那兩格。
+    //    ⛔ 不相乘（`SetUnitVertexColor` 是覆寫語意），⛔ 也不是「有 tint 就連 alpha
+    //    一起換掉」—— 兩格各自獨立退回模型的預設。
+    const look: ModelFxAppearance = {
+      ...(ev.tint !== undefined ? { tint: ev.tint } : {}),
+      ...(ev.alpha !== undefined ? { alpha: ev.alpha } : {}),
+    };
+    const poolKey = poolKeyOf(ev.modelKey, look);
+
+    let made = 0;
+    for (let i = 0; i < n; i++) {
+      const inst = ev.instances[i];
+      if (!inst) break;
+      const nodes = this.acquire(ev.modelKey, doc, poolKey, look);
+      if (!nodes) break;
+      const { root, axis } = nodes;
+      root.scaling.setAll((doc.scale ?? 1) * (ev.scale ?? 1));
+      axis.rotation.set(axisEuler.x, axisEuler.y, axisEuler.z);
+      root.setEnabled(true);
+      const item: LiveModelFx = {
+        root,
+        axis,
+        modelKey: ev.modelKey,
+        poolKey,
+        look,
+        inst,
+        // ⭐ GH#673-③ —— 離地**跟施放縮放連動**,⛔ 不是絕對值:埋掉的量 ∝ 渲染尺寸。
+        //    Peer session 量到的兩個點就在同一條比例線上（ev.scale 2.5 ⇒ 半高 2.62 要
+        //    抬 ~2.7;08-03 的 4.5 ⇒ 半高 ~4.7）⇒ fxSpawnHeight 定義為「施放縮放 1 時
+        //    的離地」,這裡乘上 ev.scale。⚠️ 這個語意變更是免費的:fieldAdoption 普查
+        //    證明 netherstrike 是**第一個**採用者,沒有別的消費端要遷移。
+        y: (doc.fxSpawnHeight ?? 0) * (ev.scale ?? 1),
+        ...(ev.spinDegPerSec !== undefined ? { spinDegPerSec: ev.spinDegPerSec } : {}),
+        ageSec: 0,
+        lifeSec,
+      };
+      this.applyPose(item);
+      this.live.push(item);
+      made++;
+    }
+    return made;
+  }
+
+  /**
+   * 推進每一個活著的實例。
+   *
+   * ⚠️ 走**倒序**,因為回收會就地移除 —— 正序 splice 會跳過下一個
+   * (那正是 GH#270 孤兒發射器盤點時抓到的形狀)。
+   */
+  tick(dtMs: number): void {
+    if (this.disposed) return;
+    const dt = dtMs / 1000;
+    for (let k = this.live.length - 1; k >= 0; k--) {
+      const item = this.live[k]!;
+      item.ageSec += dt;
+      this.applyPose(item);
+      if (item.ageSec >= item.lifeSec) {
+        this.live.splice(k, 1);
+        this.release(item);
+      }
+    }
+  }
+
+  /**
+   * 每一具活著的實例**現在**在哪（測試用）。
+   *
+   * ⭐ 它存在的理由是 GH#606：守衛必須問「模型有沒有真的出現在 sim 算的那條線上」，
+   * 而那個答案只在 Babylon 節點上。⛔ 讀 `spec` 之類的輸入回答不了 ——
+   * 那正是舊守衛全綠的方式（失敗形態⑤）。
+   */
+  livePositions(): { x: number; y: number; z: number }[] {
+    return this.live.map((i) => ({ x: i.root.position.x, y: i.root.position.y, z: i.root.position.z }));
+  }
+
+  /** 回合邊界:全部收回 free-list（⛔ 不 dispose —— 下一回合還要用）。 */
+  resetForRound(): void {
+    for (const item of this.live) this.release(item);
+    this.live.length = 0;
+  }
+
+  /**
+   * 回合邊界:把**所有** free-list 加起來修剪到 `cap`（GH#429）。
+   *
+   * ⭐ 這是 `AmbientVfx.drainPools()` 與 `VfxSystem` 的 `pool.clear()` 同一件事:
+   * 「只會長不會縮的池子在回合邊界整個還回去」。⛔ 少了它，上一回合那幾支技能的
+   * modelKey 會**永遠**各留 `maxPooledPerModel` 個帶著 glb 幾何的隱藏節點在場上。
+   *
+   * `cap` 由呼叫端從 `vfxCleanupPolicy` 推導（`Infinity` = 完全不修剪，止血閥），
+   * ⛔ 不在這裡讀 config —— 這一層不知道內容從哪來（同 `resolveModel` 的立場）。
+   */
+  trimPoolTo(cap: number): void {
+    if (this.disposed || Number.isNaN(cap)) return;
+    for (const [key, free] of [...this.pool]) {
+      while (this.pooledCount > cap && free.length > 0) this.retire(free.pop()!.root);
+      // ⛔ 空的 free-list 也要除名:`pool` 的 key 數本身就是那個無界的東西。
+      if (free.length === 0) this.pool.delete(key);
+    }
+  }
+
+  /** 收掉這個 rig 造過的**每一個**節點與容器。 */
+  dispose(): void {
+    if (this.disposed) return;
+    this.disposed = true;
+    this.live.length = 0;
+    this.pool.clear();
+    for (const root of this.born) root.dispose(false, true);
+    this.born.length = 0;
+    for (const c of this.containers.values()) c?.dispose();
+    this.containers.clear();
+  }
+
+  // ── 內部 ──────────────────────────────────────────────────────────────────
+
+  private applyPose(item: LiveModelFx): ReturnType<typeof modelFxPoseFromWire> {
+    const pose = modelFxPoseFromWire(
+      item.inst,
+      { y: item.y, ...(item.spinDegPerSec !== undefined ? { spinDegPerSec: item.spinDegPerSec } : {}) },
+      item.ageSec,
+    );
+    item.root.position.set(pose.x, pose.y, pose.z);
+    // yaw 繞世界 Y,roll 繞模型自己的前方軸(Babylon 的 Z)。
+    // ⭐ 長軸修正住在**子**節點(`axis`)上,所以這裡的 roll 繞的是**已經橫放好的**
+    //    那根長軸 —— 翻滾光束會沿著自己滾,⛔ 不是每滾一圈甩離航線一次。
+    item.root.rotation.set(0, pose.yawRad, pose.rollRad);
+    return pose;
+  }
+
+  private ensureContainer(modelKey: string, glbPath: string): void {
+    if (this.containers.has(modelKey) || this.loading.has(modelKey)) return;
+    this.loading.add(modelKey);
+    void this.opts
+      .loadContainer(glbPath)
+      .then((c) => {
+        this.loading.delete(modelKey);
+        if (this.disposed) {
+          c?.dispose();
+          return;
+        }
+        this.containers.set(modelKey, c);
+        // ⭐ GH#673-①c —— 首發那幾具是在容器**之前**生的空殼,現在補幾何。
+        //    ⛔ 不補的話「第一次施放沒有特效」,而那正是玩家最會注意的那一次
+        //    (acquire 檔頭的承諾在此之前沒有任何人兌現)。
+        if (c) {
+          for (const item of this.live) {
+            if (item.modelKey !== modelKey || item.axis.getChildren().length > 0) continue;
+            const doc = this.opts.resolveModel(modelKey);
+            // ⭐ GH#693 —— 回填要用**這一發**的外觀（`item.look`），⛔ 不是模型的預設色:
+            //    首發那幾具正是玩家最會注意的那一次，用錯色比晚幾幀更明顯。
+            if (doc) this.fillGeometry(modelKey, item.axis, doc, item.look);
+          }
+        }
+      })
+      .catch(() => {
+        this.loading.delete(modelKey);
+        this.containers.set(modelKey, null);
+      });
+  }
+
+  /**
+   * 拿一個實例根節點:先掏 free-list,空了才造。
+   *
+   * ⚠️ glb 還在串流時**照樣**回一個空的 root —— 特效於是準時出現在正確的位置上,
+   * 幾何晚幾幀補進來。⛔ 反過來(等載入完再生)會讓技能的第一次施放沒有特效,
+   * 而那正是玩家最會注意的那一次。
+   */
+  /**
+   * ⭐ GH#673-① —— 把容器的幾何灌進一個(還)空的實例。
+   *
+   * 三個呼叫端,三種時機同一份程式:
+   *   a. `acquire` 造新節點且容器已載 —— 原本唯一會發生的那條路
+   *   b. `acquire` 從池子撈到**空殼** —— 首發造出的空節點被 release 進池子之後,
+   *      每一次重用都還是空的(⚠️ 2026-08-24 量到:第 2 發、glb 已載 6 秒,照樣整發
+   *      看不見)。「幾何晚幾幀補進來」那句註解在此之前**是假的** —— 沒有任何
+   *      程式碼做補這件事(第三守則)。
+   *   c. 容器**載完的當下**回填還活著的空實例 —— 首發那一具就是在這裡補的。
+   */
+  private fillGeometry(
+    modelKey: string,
+    axis: TransformNode,
+    doc: ModelFxModelDoc,
+    look: ModelFxAppearance = {},
+  ): boolean {
+    const container = this.containers.get(modelKey);
+    if (!container) return false;
+    const serial = this.serial++;
+    const inst = container.instantiateModelsToScene(
+      (n) => `modelfx-${serial}-${n}`,
+      false,
+      { doNotInstantiate: true },
+    );
+    for (const node of inst.rootNodes) node.parent = axis;
+    // ⭐ fxTint／fxAlpha 共用同一個入口（clone-材質那一套規矩只寫一份）：
+    //    只有 fxAlpha 時 tint 用 [1,1,1]（乘 1 ＝ 不著色）。
+    // ⭐ GH#693 —— **這一發**的 tint／alpha 取代模型文件的那兩格（⛔ 不相乘）。
+    const tint = look.tint ?? doc.fxTint;
+    const alpha = look.alpha ?? doc.fxAlpha;
+    if (tint || alpha !== undefined) applyFxTint(axis, tint ?? [1, 1, 1], alpha);
+    return true;
+  }
+
+  private acquire(
+    modelKey: string,
+    doc: ModelFxModelDoc,
+    poolKey: string = modelKey,
+    look: ModelFxAppearance = {},
+  ): ModelFxNodes | null {
+    const free = this.pool.get(poolKey);
+    const reused = free?.pop();
+    if (reused) {
+      // ⭐ GH#673-①b —— 池子裡的可能是首發留下的空殼:現在容器到了就補。
+      if (reused.axis.getChildren().length === 0)
+        this.fillGeometry(modelKey, reused.axis, doc, look);
+      return reused;
+    }
+
+    const serial = this.serial++;
+    const root = new TransformNode(`modelfx-${modelKey}-${serial}`, this.scene);
+    this.born.push(root);
+    // ⭐ 內層 = 長軸修正。⚠️ 它是**節點**不是一次性的旋轉:實例會被回收重用,
+    // 而下一次施放的模型可能是另一份 .glb(另一個 free-list),所以修正要跟著節點走。
+    // 名字帶 `axis-` 是刻意的 —— 守衛從**出貨的場景樹**上把它撈出來量,
+    // ⛔ 不是靠一個只有測試會呼叫的存取器(失敗形態⑤)。
+    const axis = new TransformNode(`modelfx-axis-${modelKey}-${serial}`, this.scene);
+    axis.parent = root;
+    // 容器還在串流時 fillGeometry 回 false —— 空節點照樣回去(特效準時出現在
+    // 正確位置),⭐ 但幾何**真的**會晚幾幀補進來:容器載完的 callback 會回填(①c)。
+    this.fillGeometry(modelKey, axis, doc, look);
+    return { root, axis };
+  }
+
+  private release(item: LiveModelFx): void {
+    item.root.setEnabled(false);
+    let free = this.pool.get(item.poolKey);
+    if (!free) {
+      free = [];
+      this.pool.set(item.poolKey, free);
+    }
+    // ⭐ 上界:free-list 滿了就**真的收掉**這一個,並且從 `born` 裡除名。
+    // ⛔ 不可以只是「不放回池子」—— 那個節點會變成沒有人指得到的孤兒,
+    //    活到 dispose() 為止,而一場 20 分鐘的比賽會積出幾百個(#131 的慢動作版)。
+    // ⭐ **兩**道閘。⚠️ 只有 per-model 那一道是不夠的（GH#429）——
+    //    見 `DEFAULT_MAX_POOLED_TOTAL` 的註解與量到的 72/回合。
+    if (free.length < this.maxPooledPerModel && this.pooledCount < this.maxPooledTotal) {
+      free.push({ root: item.root, axis: item.axis });
+      return;
+    }
+    this.retire(item.root);
+  }
+
+  /** 真的收掉一個實例節點並從 `born` 除名（⛔ 不可以只是「不放回池子」—— 那是孤兒）。 */
+  private retire(root: TransformNode): void {
+    const at = this.born.indexOf(root);
+    if (at >= 0) this.born.splice(at, 1);
+    root.dispose(false, true);
+  }
+}

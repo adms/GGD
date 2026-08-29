@@ -13,6 +13,7 @@
     60.0,
     60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
     0.0,
     0.0,
@@ -44,6 +45,5 @@
   ],
   "icon": "assets/icons/abilities/godie-e007.w.webp",
   "vfxKey": "fx.prim.nature.pulse",
-  "cooldownTier": "極大",
   "castTimeSec": 0.067
 }

@@ -1,0 +1,172 @@
+{
+  "id": "godie-hart.r",
+  "name": "01-04 超究武神霸斬",
+  "icon": "assets/icons/abilities/godie-hart.r.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n克勞德的奧義招式，連斬七次的超必殺攻擊，每一次斬擊皆造成極大傷害，總傷害630+30% [AP]點。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "cooldownTier": "極大",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "statusId": "omnislash-lock",
+      "duration": 3.5,
+      "stun": true
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "omnislash-perform",
+      "duration": 3.5,
+      "applyTo": "self",
+      "stun": true
+    },
+    {
+      "kind": "invulnerable",
+      "durationSec": 3.5,
+      "applyTo": "self",
+      "blocksDamage": "all",
+      "blocksTrueDamage": false,
+      "blocksControl": false
+    },
+    {
+      "kind": "comboStrikes",
+      "shape": "single",
+      "family": "superff7",
+      "perStrike": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "極小"
+          }
+        },
+        {
+          "kind": "spawnVfx",
+          "vfxId": "fx.w3x.stock.thunderclapcaster.p00",
+          "at": "target"
+        },
+        {
+          "kind": "floatingText",
+          "shape": "single",
+          "text": "{{i}}Hit",
+          "applyTo": "victim",
+          "colorRgb": [
+            255,
+            255,
+            255
+          ],
+          "sizeScale": 1.2,
+          "riseSpeed": 1.6,
+          "durationSec": 1.1
+        }
+      ],
+      "finisher": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.3
+              }
+            ]
+          }
+        },
+        {
+          "kind": "spawnVfx",
+          "vfxId": "fx.w3x.stock.warstompcaster.p00",
+          "at": "target"
+        },
+        {
+          "kind": "spawnVfx",
+          "vfxId": "godie-herocloudkfksword-p0",
+          "at": "bone",
+          "attach": "weapon"
+        },
+        {
+          "kind": "floatingText",
+          "shape": "single",
+          "text": "{{i}}Hit",
+          "applyTo": "victim",
+          "colorRgb": [
+            255,
+            236,
+            168
+          ],
+          "sizeScale": 1.8,
+          "riseSpeed": 1.6,
+          "durationSec": 1.4
+        },
+        {
+          "kind": "screenFlash",
+          "shape": "single",
+          "colorRgb": [
+            217,
+            235,
+            255
+          ],
+          "peakAlpha": 0.5,
+          "durationSec": 0.3,
+          "applyTo": "all"
+        },
+        {
+          "kind": "screenShake",
+          "shape": "single",
+          "amplitude": 0.55,
+          "durationSec": 0.45,
+          "applyTo": "all"
+        }
+      ]
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "modelKey": "imported.herocloudstrife",
+      "alpha": 0.6,
+      "path": "toTarget",
+      "speed": 30.0,
+      "onArrive": [
+        {
+          "kind": "spawnVfx",
+          "vfxId": "fx.prim.physical.explosion-lg",
+          "at": "point"
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.w3x.orb.herocloudkfksword.p00",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "castTimeSec": 1.833,
+  "hitFeel": {
+    "hitstopTicks": 5,
+    "hitstunTicks": 9,
+    "shakeMag": 0.614,
+    "shakeStyle": "directional",
+    "sparkKind": "heavy",
+    "flashColor": [
+      0.85,
+      0.92,
+      1.0
+    ],
+    "flashMs": 211,
+    "camKick": 0.526
+  },
+  "rangeTier": "大",
+  "range": 8
+}

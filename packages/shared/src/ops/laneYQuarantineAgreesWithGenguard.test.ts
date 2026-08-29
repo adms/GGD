@@ -107,7 +107,7 @@ describe("隔離區 × genguard：同一個檔只准有一種說法", () => {
     const normalizes = (step: string, f: string): boolean => {
       if (!NORM_SCOPE.has(step)) return false;
       const only = NORM_SCOPE.get(step);
-      return only === null || only.has(f);
+      return only === null || only === undefined || only.has(f);
     };
     const claimants = new Map<string, Set<string>>();
     for (const s of (JSON.parse(read("tools/parallel-gates/sync-io.json")) as {
