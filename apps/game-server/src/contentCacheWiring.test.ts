@@ -59,12 +59,19 @@ describe("② 沒生效的時候**說得出來** (fail-open 沒錯，靜默才�
     expect(contentCacheHealth().backend).toBe("none");
     expect(contentCacheHealth().reason).toContain("Redis");
 
-    // ⭐ 最重要的一種：**一句 note 都沒有的 miss**。正式環境的
-    // `CONTENT_DIR=/srv/content` 就是這一種 —— 快取層原封不動退回，⛔ 一個字都不說。
-    // 少了這一格，「整層沒接上」在外面看起來跟「快取正常」一模一樣。
+    // ⭐ 最重要的一種：正式環境的 `CONTENT_DIR=/srv/content` 認不出出貨樹。
+    // ⚠️ 2026-08-30 之前快取層對這一種**一個字都不說**，所以這裡只能用猜的
+    //（「空 notes ＋ miss ⇒ 大概是 CONTENT_DIR」）—— 而猜的東西不是證據。
+    // 現在它是一句真的 note，⇒ 這一條改成驗**它有沒有原樣被轉述出去**。
+    recordCacheLoad(
+      report({ hit: "miss", notes: ["rootDir 不是宣告過的內容樹 ⇒ 直接讀內容樹（CONTENT_DIR=）"] }),
+      480,
+      {},
+    );
+    expect(contentCacheHealth().reason).toContain("CONTENT_DIR");
+    // ⛔ 而**沒有** note 的 miss 仍然不准留白（那才是「靜默」本身）。
     recordCacheLoad(report({ hit: "miss" }), 480, {});
     expect(contentCacheHealth().reason).toBeTruthy();
-    expect(contentCacheHealth().reason).toContain("CONTENT_DIR");
 
     // 命中就 ⛔ 不准留著上一次的藉口。
     recordCacheLoad(report({ hit: "redis" }), 170, {});

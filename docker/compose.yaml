@@ -194,6 +194,24 @@ services:
       GGD_CONTENT_BUS: "${GGD_CONTENT_BUS:-}" # 0 = no live 後台 propagation; edits wait for the cache TTL
       GGD_CONTENT_CACHE_RUNTIME: "${GGD_CONTENT_CACHE_RUNTIME:-}"
       GGD_CONTENT_CACHE_TTL_S: "${GGD_CONTENT_CACHE_TTL_S:-}"
+      # ------------------------------------- GH#717 內容快取（容器那條路）----
+      # ⚠️ 這三格是 packages/shared/src/content/cache/** 讀的，所以
+      # knob_reachability_test.go 掃不到它們（它只掃 apps/game-server/src/**.ts）
+      # —— 而「掃不到」正是它們在此之前不在這裡的原因。GGD_CONTENT_CACHE 是
+      # 整層的 off 開關，也就是這張票唯一的一鍵 rollback：不列在這裡就等於
+      # 不存在（#816 那條規則：a rollback you cannot reach is not a rollback）。
+      GGD_CONTENT_CACHE: "${GGD_CONTENT_CACHE:-}" # off = 整層關掉（GH#717 的 rollback）; file / redis / auto
+      # read-all = 回到逐份讀出來雜湊；manifest = 即使有 git 也走 manifest 摘要
+      # （＝ 2026-08-30 第一版的行為，複驗把預設收緊成「只有真的沒有 git 才走」）。
+      GGD_CONTENT_CACHE_FINGERPRINT: "${GGD_CONTENT_CACHE_FINGERPRINT:-}"
+      # ⚠️ ⭐ 這一格不能留空：in-code 預設是 <REPO_ROOT>/node_modules/.cache/ggd-content，
+      # 而映像裡 REPO_ROOT 解析成 **/app/node_modules**（模組住 node_modules/@ggd/shared
+      # 底下，往上五層；⚠️ 2026-08-30 複驗更正，⛔ 不是 /app）⇒ 那個預設會落在
+      # /app/node_modules/node_modules/.cache/…，而 `COPY --from=build /out/ ./` 是 root
+      # 擁有的、行程是 `USER node` ⇒ mkdir EACCES ⇒ 檔案層**永遠不存在**（而且在
+      # 2026-08-30 之前那個失敗是被 catch 吞掉的，外面看起來跟「這次沒命中」一模一樣）。
+      # /tmp 是 1777 ⇒ 寫得動。⚠️ 它跟著容器走，跨 recreate 的命中靠 Redis。
+      GGD_CONTENT_CACHE_DIR: "${GGD_CONTENT_CACHE_DIR:-/tmp/ggd-content-cache}"
       GGD_REPLAY_ENABLED: "${GGD_REPLAY_ENABLED:-}" # 0 = stop recording without touching the content doc
       GGD_REPLAY_REQUIRED: "${GGD_REPLAY_REQUIRED:-}"
       GGD_REPLAY_UNHEALTHY_AFTER: "${GGD_REPLAY_UNHEALTHY_AFTER:-}"
