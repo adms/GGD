@@ -11,11 +11,16 @@
  *
  * drift 的語意與 `batch1.py --check` 同一條（GH#319）：出貨檔與產生器輸出
  * 不一致 ⇒ 下一次 `skills:sync` 會把它無聲改回去 —— 所以這裡先標紅。
+ *
+ * ⭐ GH#832 —— 這一頁**改得動的那一半**在最下面那個 Panel：冷卻／施法距離
+ * 五級距表（`TierGrid`）。對照表兩欄本身仍唯讀（理由住 datasets/skill90.mjs），
+ * ⛔ 但那兩欄的數字不住在它們身上 —— 它們在載入時查那兩張表（第〇·四守則）。
  */
 import { useEffect, useMemo, useState } from "react";
 import { Panel, TextInput } from "../widgets";
 import { DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
 import { ReviewStrip } from "./ReviewStrip";
+import { LiveEditCell } from "./LiveEditCell";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
@@ -54,12 +59,28 @@ interface SkillRow {
   effectKinds: string[];
 }
 
+/** 一張可編輯的五級距表（datasets/skill90.mjs 的 `tiers.<axis>`）。 */
+interface TierAxis {
+  path: string;
+  enabled: boolean | null;
+  error: string | null;
+  /** 冷卻是巢狀（形狀→級別→秒），距離是平的（級別→距離）。 */
+  table: Record<string, number | Record<string, number>> | null;
+  /** 這 90 支裡有幾支**真的**從這張表解析（現算）。 */
+  skills: number;
+  bounds: { min: number | null; max: number | null; declaredMin: number; declaredMax: number; src: string };
+  mismatch: boolean;
+  autoShape?: boolean | null;
+}
+
 interface Skill90Data {
   total: number;
   driftSkills: number;
   missingShipped: number;
   heroes: { num: string; cid: string; count: number; driftCount: number }[];
   skills: SkillRow[];
+  tiers: { cooldown: TierAxis; range: TierAxis };
+  readonlySides: string;
   note: string;
   _live?: { computedAt: string; ms: number };
 }
@@ -237,6 +258,81 @@ function ExpandedRow(props: { s: SkillRow }): React.JSX.Element {
   );
 }
 
+/**
+ * ✏️ 可編輯的那一半（GH#832）—— **冷卻／施法距離五級距表**。
+ *
+ * 上面那張對照表兩欄都是唯讀的（規格側是 python、出貨側是 skillremake:json 的產物），
+ * ⭐ 但那兩欄的**數字**不住在它們身上：技能文件存的是級別名（`cooldownTier` /
+ * `rangeTier`），秒數與距離在載入時才查這兩張表（第〇·四守則）。
+ * ⇒ 改一格，這一頁上落在那一格的每一支技能同時跟著變。
+ *
+ * 列的鍵（形狀／級別名）一律**從資料讀**，⛔ 頁面裡零份名單副本。
+ */
+function TierGrid(props: {
+  axis: TierAxis;
+  title: string;
+  unit: string;
+  /** 把（列鍵, 級別）翻成 JSON pointer —— 兩張表形狀不同，只有這一行不一樣。 */
+  pointerFor: (row: string | null, tier: string) => string;
+  onSaved: () => void;
+}): React.JSX.Element {
+  const { axis } = props;
+  if (axis.error !== null || axis.table === null)
+    return <div style={{ color: DANGER, fontSize: 12 }}>{axis.path} 讀不到：{axis.error ?? "沒有表"}</div>;
+  const first = Object.values(axis.table)[0];
+  const nested = typeof first === "object" && first !== null;
+  const rows: { key: string | null; label: string; cells: Record<string, number> }[] = nested
+    ? Object.entries(axis.table).map(([k, v]) => ({ key: k, label: k, cells: v as Record<string, number> }))
+    : [{ key: null, label: props.unit, cells: axis.table as Record<string, number> }];
+  const tiers = Object.keys(rows[0]?.cells ?? {});
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+      <div style={{ fontSize: 12, color: GOLD, fontWeight: "bold" }}>
+        {props.title}
+        <span style={{ color: TEXT_DIM, fontWeight: "normal" }}>
+          {" "}— 這 90 支裡 <b style={{ color: axis.skills > 0 ? OK : WARN }}>{axis.skills}</b> 支從它解析
+          {axis.enabled === false && <b style={{ color: DANGER }}> ⛔ 級距總開關是關的（這張表現在不生效）</b>}
+        </span>
+      </div>
+      {axis.mismatch && (
+        <div style={{ fontSize: 12, color: DANGER }}>
+          ⛔ 宣告的上下界（{axis.bounds.declaredMin}–{axis.bounds.declaredMax}）與出貨 schema（
+          {String(axis.bounds.min)}–{String(axis.bounds.max)}，{axis.bounds.src}）對不上 —— 存會被擋下。
+        </div>
+      )}
+      <table style={{ borderCollapse: "collapse" }}>
+        <thead>
+          <tr>
+            <Th>{nested ? "形狀" : ""}</Th>
+            {tiers.map((t) => (
+              <Th key={t}>{t}</Th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr key={r.label}>
+              <Td color={TEXT_DIM}>{r.label}</Td>
+              {tiers.map((t) => (
+                <Td key={t} mono>
+                  <LiveEditCell
+                    dataset="skill90"
+                    path={axis.path}
+                    pointer={props.pointerFor(r.key, t)}
+                    current={r.cells[t] ?? null}
+                    type="number"
+                    onSaved={props.onSaved}
+                  />
+                </Td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 /** 📐 90支技能重製對照（GET /__live/skill90，實時計算）。 */
 export function Skill90Page(): React.JSX.Element {
   const [data, setData] = useState<Skill90Data | null>(null);
@@ -390,6 +486,55 @@ export function Skill90Page(): React.JSX.Element {
           )}
           <div style={{ fontSize: 11, color: TEXT_DIM, textAlign: "right" }}>
             這一頁算於 {data._live?.computedAt ?? "？"}（{data._live?.ms ?? "？"} ms，md5 快取：deps bytes 沒變就不重算）
+          </div>
+        </div>
+      </Panel>
+
+      <Panel title="✏️ 這一頁改得動的那一半 — 冷卻／施法距離五級距">
+        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          <div style={{ fontSize: 12, color: TEXT_DIM, lineHeight: 1.6 }}>
+            上面那張對照表的兩欄都是唯讀的：{data.readonlySides}
+            ⭐ 但那兩欄的<b style={{ color: TEXT_MAIN }}>數字</b>不住在它們身上 —— 技能文件存的是
+            <b style={{ color: TEXT_MAIN }}>級別名</b>（
+            <code style={{ fontFamily: MONO }}>cooldownTier</code> /
+            <code style={{ fontFamily: MONO }}>rangeTier</code>），秒數與距離在載入時才查下面這兩張表。
+            改一格，落在那一格的每一支技能同時跟著變。
+          </div>
+          <TierGrid
+            axis={data.tiers.cooldown}
+            title="冷卻五級距（卡面秒）"
+            unit="秒"
+            pointerFor={(row, tier) => `/seconds/${row ?? ""}/${tier}`}
+            onSaved={() => setReloadKey((k) => k + 1)}
+          />
+          <TierGrid
+            axis={data.tiers.range}
+            title="施法距離五級距（GGD 單位）"
+            unit="距離"
+            pointerFor={(_row, tier) => `/range/${tier}`}
+            onSaved={() => setReloadKey((k) => k + 1)}
+          />
+          <div style={{ fontSize: 11, color: TEXT_DIM, lineHeight: 1.7 }}>
+            ⚠️ 這裡的秒數是<b style={{ color: TEXT_MAIN }}>卡面秒</b> —— 玩家實際等到的還要乘「戰鬥系統」頁的
+            <code style={{ fontFamily: MONO }}>cooldown</code> 係數再夾一次地板。
+            <br />
+            ⚠️{" "}
+            <b style={{ color: WARN }}>
+              後台設定頁存的是 <code style={{ fontFamily: MONO }}>data/</code> 的耐久覆蓋層，而覆蓋層會蓋掉{" "}
+              <code style={{ fontFamily: MONO }}>content/config/*.json</code>
+            </b>{" "}
+            —— 線上存過一次之後，這裡改檔案不會生效。
+            <br />
+            ⚠️ 改完要 <code style={{ fontFamily: MONO }}>pnpm content:build</code> 並把產物一起 commit；
+            三個住處的另外兩個（Zod <code style={{ fontFamily: MONO }}>DEFAULT_*</code> 與 admin
+            <code style={{ fontFamily: MONO }}> SHIPPED_*</code>）由 drift 測試點名。
+            <br />
+            ⛔ <b style={{ color: TEXT_MAIN }}>耗魔級距刻意沒開</b>：它的上界是算出來的（
+            <code style={{ fontFamily: MONO }}>Math.floor(medianFinalMana(…))</code>），這裡宣告任何數字都會是
+            第二個住處而且會無聲過期。
+            <br />
+            ↩️ rollback：把那一格改回原值（或把該表的
+            <code style={{ fontFamily: MONO }}> enabled</code> 關掉 → 技能退回自己手寫的陣列）。
           </div>
         </div>
       </Panel>
