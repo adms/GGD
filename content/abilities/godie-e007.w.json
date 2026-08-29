@@ -1,11 +1,11 @@
 {
   "id": "godie-e007.w",
+  "schema": "ability@1",
   "name": "12-02 仙氣．採藥",
-  "icon": "assets/icons/abilities/godie-e007.w.webp",
   "provenance": "w3x-import",
-  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n利用身體小周天循環恢復生命持續250點，並且除去身上任何附加法術狀態。",
+  "description": "[主動][輔助][治療][淨化]\n{{cd}}秒冷卻，吟唱{{cast}}秒\n消耗MP{{mp}}\n\n「OGC 身體好」\n利用身體小周天循環[治療]自己[回復] 5/7/9/11%[最大生命]，並且除去身上任何附加法術狀態([淨化])。",
   "slot": "W",
-  "castType": "targeted",
+  "castType": "self",
   "maxRank": 4,
   "cooldown": [
     60.0,
@@ -13,36 +13,37 @@
     60.0,
     60.0
   ],
-  "cooldownTier": "極大",
   "manaCost": [
     0.0,
     0.0,
     0.0,
     0.0
   ],
+  "range": 0.0,
+  "targetsEnemies": false,
   "effects": [
     {
-      "kind": "heal",
-      "amount": {
-        "perRank": [
-          250,
-          500,
-          750,
-          1000
-        ],
-        "ratios": [
-          {
-            "stat": "ap",
-            "coeff": 1.0
-          }
-        ]
+      "kind": "restore",
+      "healthPct": [
+        0.05,
+        0.07,
+        0.09,
+        0.11
+      ],
+      "applyTo": "self"
+    },
+    {
+      "kind": "dispel",
+      "shape": "single",
+      "pools": {
+        "status": true,
+        "dot": true,
+        "buffs": true
       }
     }
   ],
+  "icon": "assets/icons/abilities/godie-e007.w.webp",
   "vfxKey": "fx.prim.nature.pulse",
-  "targetsEnemies": false,
-  "schema": "ability@1",
-  "castTimeSec": 0.067,
-  "rangeTier": "極大",
-  "range": 12
+  "cooldownTier": "極大",
+  "castTimeSec": 0.067
 }

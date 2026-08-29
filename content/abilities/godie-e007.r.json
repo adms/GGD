@@ -1,43 +1,58 @@
 {
   "id": "godie-e007.r",
+  "schema": "ability@1",
   "name": "12-04 龍氣爆發",
   "provenance": "w3x-import",
-  "description": "[主動傷害]\n{{cd}}秒冷卻時間\n\n凝聚體內的龍氣造成{{dmg}}點傷害，集氣每秒增加(130% [AP])傷害，最多集氣3秒。\n(建築傷害25%)",
+  "description": "[主動][範圍][淨化][AP加成]\n{{cd}}秒冷卻，吟唱{{cast}}秒\n消耗MP{{mp}}\n\n「使命創造命運」\n凝聚體內的龍氣造成[周圍][大範圍]敵方單位 550/750/950 + 200% [AP] 傷害，附帶[淨化]效果。",
   "slot": "R",
-  "castType": "targeted",
+  "castType": "self",
   "maxRank": 3,
   "cooldown": [
     60.0,
     60.0,
     60.0
   ],
-  "cooldownTier": "極大",
   "manaCost": [
-    144.0,
-    144.0,
-    144.0
+    288.0,
+    288.0,
+    288.0
   ],
-  "manaCostTier": "小",
+  "range": 0.0,
+  "radiusTier": "中",
+  "targetsEnemies": true,
   "effects": [
     {
-      "kind": "damage",
+      "kind": "damageArea",
       "damageType": "magic",
       "amount": {
-        "damageTier": "大",
+        "damageTier": "中",
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 1.3
+            "coeff": 2.0
           }
         ]
-      }
+      },
+      "radius": 6.0,
+      "radiusTier": "中",
+      "includeOrigin": true
+    },
+    {
+      "kind": "dispel",
+      "shape": "circle",
+      "radius": 8.0,
+      "radiusTier": "大",
+      "side": "enemies",
+      "pools": {
+        "status": true,
+        "buffs": true
+      },
+      "polarity": "buff",
+      "count": 2
     }
   ],
   "vfxKey": "fx.w3x.particle.supershinythingy.p00",
-  "targetsEnemies": true,
-  "schema": "ability@1",
   "icon": "assets/icons/abilities/godie-e007.r.png",
-  "castTimeSec": 2.033,
   "hitFeel": {
     "hitstopTicks": 4,
     "hitstunTicks": 7,
@@ -52,6 +67,7 @@
     "flashMs": 178,
     "camKick": 0.446
   },
-  "rangeTier": "極大",
-  "range": 12
+  "cooldownTier": "中",
+  "manaCostTier": "中",
+  "castTimeSec": 1
 }

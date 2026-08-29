@@ -53,14 +53,12 @@
     "Q": {
       "id": "godie-e007.q",
       "name": "12-01 鬥仙術",
-      "icon": "assets/icons/abilities/godie-e007.q.webp",
       "provenance": "w3x-import",
-      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n將武道融入仙道而創出來所謂的不敗的武術，以念體攻擊敵人，造成{{dmg}}傷害的同時可以迷惑目標1秒。",
+      "description": "[主動][指定][混亂][AP加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n施法距離：{{range}}\n\n「我一個人無聊的時候，喜歡跟自己打麻將」\n以念體攻擊敵人，造成{{dmg}}+60% [AP]傷害的同時可以[混亂]目標1秒。",
       "slot": "Q",
       "castType": "targeted",
-      "maxRank": 5,
+      "maxRank": 4,
       "cooldown": [
-        6.0,
         6.0,
         6.0,
         6.0,
@@ -70,15 +68,16 @@
         72.0,
         72.0,
         72.0,
-        72.0,
         72.0
       ],
+      "range": 4.5,
+      "targetsEnemies": true,
       "effects": [
         {
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "damageTier": "小",
+            "damageTier": "極小",
             "ratios": [
               {
                 "stat": "ap",
@@ -89,27 +88,26 @@
         },
         {
           "kind": "applyStatus",
-          "statusId": "slow40",
+          "statusId": "confusion",
           "duration": 1.0,
-          "moveSpeedMult": 0.6
+          "berserk": true,
+          "targetsAllies": true
         }
       ],
+      "icon": "assets/icons/abilities/godie-e007.q.webp",
       "vfxKey": "fx.prim.ki.pulse-sm",
-      "targetsEnemies": true,
-      "castTimeSec": 0.233,
-      "rangeTier": "小",
-      "range": 4.5,
       "cooldownTier": "極小",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "rangeTier": "小",
+      "castTimeSec": 0.233
     },
     "W": {
       "id": "godie-e007.w",
       "name": "12-02 仙氣．採藥",
-      "icon": "assets/icons/abilities/godie-e007.w.webp",
       "provenance": "w3x-import",
-      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n利用身體小周天循環恢復生命持續250點，並且除去身上任何附加法術狀態。",
+      "description": "[主動][輔助][治療][淨化]\n{{cd}}秒冷卻，吟唱{{cast}}秒\n消耗MP{{mp}}\n\n「OGC 身體好」\n利用身體小周天循環[治療]自己[回復] 5/7/9/11%[最大生命]，並且除去身上任何附加法術狀態([淨化])。",
       "slot": "W",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 4,
       "cooldown": [
         60.0,
@@ -123,31 +121,33 @@
         0.0,
         0.0
       ],
+      "range": 0.0,
+      "targetsEnemies": false,
       "effects": [
         {
-          "kind": "heal",
-          "amount": {
-            "perRank": [
-              250,
-              500,
-              750,
-              1000
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 1.0
-              }
-            ]
+          "kind": "restore",
+          "healthPct": [
+            0.05,
+            0.07,
+            0.09,
+            0.11
+          ],
+          "applyTo": "self"
+        },
+        {
+          "kind": "dispel",
+          "shape": "single",
+          "pools": {
+            "status": true,
+            "dot": true,
+            "buffs": true
           }
         }
       ],
+      "icon": "assets/icons/abilities/godie-e007.w.webp",
       "vfxKey": "fx.prim.nature.pulse",
-      "targetsEnemies": false,
-      "castTimeSec": 0.067,
-      "rangeTier": "極大",
-      "range": 12,
-      "cooldownTier": "極大"
+      "cooldownTier": "極大",
+      "castTimeSec": 0.067
     },
     "E": {
       "id": "godie-e007.e",
@@ -197,9 +197,9 @@
       "id": "godie-e007.r",
       "name": "12-04 龍氣爆發",
       "provenance": "w3x-import",
-      "description": "[主動傷害]\n{{cd}}秒冷卻時間\n\n凝聚體內的龍氣造成{{dmg}}點傷害，集氣每秒增加(130% [AP])傷害，最多集氣3秒。\n(建築傷害25%)",
+      "description": "[主動][範圍][淨化][AP加成]\n{{cd}}秒冷卻，吟唱{{cast}}秒\n消耗MP{{mp}}\n\n「使命創造命運」\n凝聚體內的龍氣造成[周圍][大範圍]敵方單位 550/750/950 + 200% [AP] 傷害，附帶[淨化]效果。",
       "slot": "R",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 3,
       "cooldown": [
         60.0,
@@ -207,29 +207,46 @@
         60.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0
+        288.0,
+        288.0,
+        288.0
       ],
+      "range": 0.0,
+      "radiusTier": "中",
+      "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
+          "kind": "damageArea",
           "damageType": "magic",
           "amount": {
-            "damageTier": "大",
+            "damageTier": "中",
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1.3
+                "coeff": 2.0
               }
             ]
-          }
+          },
+          "radius": 6.0,
+          "radiusTier": "中",
+          "includeOrigin": true
+        },
+        {
+          "kind": "dispel",
+          "shape": "circle",
+          "radius": 8.0,
+          "radiusTier": "大",
+          "side": "enemies",
+          "pools": {
+            "status": true,
+            "buffs": true
+          },
+          "polarity": "buff",
+          "count": 2
         }
       ],
       "vfxKey": "fx.w3x.particle.supershinythingy.p00",
-      "targetsEnemies": true,
       "icon": "assets/icons/abilities/godie-e007.r.png",
-      "castTimeSec": 2.033,
       "hitFeel": {
         "hitstopTicks": 4,
         "hitstunTicks": 7,
@@ -244,10 +261,9 @@
         "flashMs": 178,
         "camKick": 0.446
       },
-      "rangeTier": "極大",
-      "range": 12,
-      "cooldownTier": "極大",
-      "manaCostTier": "小"
+      "cooldownTier": "中",
+      "manaCostTier": "中",
+      "castTimeSec": 1
     }
   },
   "skillOrder": [
