@@ -1,0 +1,79 @@
+{
+  "schema": "champion-card-skill-line-naming@1",
+  "ticket": "GH#814",
+  "note": [
+    "⭐ 這是 champion 卡面「(可學習的)技能：」行 ↔ 實際技能名 對不上的**命名帳本**。",
+    "",
+    "⛔ 它**不是**一張 45 列的豁免表。GH#814 的票文逐字警告過那件事:",
+    "   「今天直接開閘 ＝ 29 列棘輪,而訊號會被雜訊完全埋掉」。",
+    "⭐ 所以 45 格裡有 39 格是**推導**的,只有推導不出來的 6 格住這裡:",
+    "",
+    "   29 格 `w3x-self-inconsistent` —— GGD 的技能名**就是原作那支技能自己的名字**,",
+    "                                   對不上的是**原作的英雄卡面清單**。⛔ 不是 GGD 造成的。",
+    "   10 格 `owner-spec`            —— `provenance == owner-spec` ⇒ 階梯第 1 層贏第 4 層。",
+    "    6 格 `ledger`                —— 就是下面這幾列。",
+    "",
+    "⭐ 每一列都要有一個**能被反駁的理由**,⛔ 不是「還沒收」。",
+    "⭐ `w3x` 欄由閘逐字比對 `tools/w3x-import/out/GoDieEX22s/parsed/abilities.json`",
+    "   ⇒ 編一個原作名字進來會**當場紅**(這一欄讓理由 falsifiable,⛔ 不是裝飾)。",
+    "⭐ 棘輪**只准變短**:一格不再需要登記(修好了、或改標 owner-spec)⇒ 那一列要刪掉,",
+    "   留著也會紅。加一列請先讀 `tools/champion-cards/skill_line_audit.py::classify()`。",
+    "",
+    "⚠️ ⛔ **不要**因為這幾列而去改英雄的技能名 —— 記憶 `ggd-naming-layer`:",
+    "   GGD 有自己的命名層,**改名不是缺陷**,數值/行為/**編號**才是。",
+    "   下面 6 格的**編號與機制**都與原作逐句相同(見每一列的 `mechanicsIdentical`)。",
+    "",
+    "查:  python3 tools/champion-cards/skill_line_audit.py",
+    "閘:  python3 tools/champion-cards/skill_line_audit.py --check"
+  ],
+  "entries": [
+    {
+      "id": "godie-hvwd.R",
+      "code": "02-04",
+      "ggd": "死魂蟲",
+      "w3x": "02-04 百鬼夜行",
+      "mechanicsIdentical": true,
+      "reason": "改成《犬夜叉》桔梗的正式招式名。原作說明「招換6位式神…吸取生命…持續8秒」與 GGD 的「放出6隻死魂蟲…吸取生命…持續8秒」逐項相同(6 具/吸血/8 秒)⇒ 這是命名層,⛔ 不是接錯。可反駁:拿得出 owner 說要保留「百鬼夜行」的一句原話,這一列就該撤並改回名字。"
+    },
+    {
+      "id": "godie-osam.Q",
+      "code": "34-01",
+      "ggd": "毒華爪",
+      "w3x": "34-01 風華之爪",
+      "mechanicsIdentical": true,
+      "reason": "改成《犬夜叉》殺生丸的正式招式名(毒華爪)。原作說明「殺生丸以風華之爪攻擊,導致這一擊之中10%的傷害會擊穿對方」與 GGD 只差招式名那幾個字,10% 擊穿與範圍傷害都相同。可反駁:同上。"
+    },
+    {
+      "id": "godie-osam.W",
+      "code": "34-02",
+      "ggd": "閃光鞭",
+      "w3x": "34-02 合氣斬",
+      "mechanicsIdentical": true,
+      "reason": "同上(殺生丸的光鞭)。⭐ 這一格的原作說明「攻擊時有10%的機率造成1.5倍的傷害」與 GGD **一字不差** ⇒ 差異純粹在名字。可反駁:同上。"
+    },
+    {
+      "id": "godie-osam.E",
+      "code": "34-03",
+      "ggd": "爆碎牙",
+      "w3x": "34-03 爆碎丸",
+      "mechanicsIdentical": true,
+      "reason": "原作把殺生丸的刀「爆碎牙」誤寫成角色名的「丸」。GGD 用正字。原作說明「新生的爆碎丸,有15%的機會…90點額外傷害…擊昏0.5秒」與 GGD 除招式名外逐字相同。可反駁:同上。"
+    },
+    {
+      "id": "godie-u00h.Q",
+      "code": "39-01",
+      "ggd": "無明神風流-白虎",
+      "w3x": "39-01 無名神風流-白虎",
+      "mechanicsIdentical": true,
+      "reason": "⭐ **原作在同一筆記錄裡自相矛盾**:`A0DG` 的 `name` 寫「無**名**」,而它自己的 `description` 內文寫「無**明**神風流-白虎」。GGD 取內文的寫法(第〇·六守則細則①:內文 > 標籤),而且三格一致(39-03 原作 name 也寫無名、內文寫無明)。可反駁:去讀 w3x abilities.json 的 A0DG.description —— 內文若其實寫「無名」,這一列就是錯的。"
+    },
+    {
+      "id": "godie-u00h.W",
+      "code": "39-02",
+      "ggd": "無明神風流-朱雀",
+      "w3x": "39-02 無名神風流-朱雀",
+      "mechanicsIdentical": true,
+      "reason": "同上(`A0Z4` 的內文寫「無明神風流-朱雀」而 name 寫無名)。⚠️ 卡面那一行自己也不一致 —— 它列了兩個「無名」＋一個「無明」,⇒ 拿卡面當基準會逼出三格互相矛盾的名字。可反駁:同 39-01。"
+    }
+  ]
+}
