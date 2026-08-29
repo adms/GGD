@@ -137,19 +137,28 @@ cmd_deploy() {
   git -C "$REPO" diff --quiet HEAD 2>/dev/null \
     || warn "⚠️ 工作區有未提交的改動 —— ⭐ 它們**不會**被部署"
 
-  # 第一次:clone。之後:fetch + checkout。
+  # ⭐⭐ 第一次：**就地**加上 `.git`，⛔ 不是 clone。
+  #
+  # ⛔⛔ 2026-08-29 我原本寫的是「把舊目錄改名 → clone → 把 data 搬回來」，
+  #   而 clone 失敗在**改名之後** ⇒ `~/GGD` 消失、容器的 bind mount 指向一個不存在的路徑。
+  #   ⭐ 站沒掛只是因為 **bind mount 綁的是 inode，⛔ 不是路徑** —— 那是運氣，
+  #     ⚠️ 而**下一次重啟就會全毀**。
+  #
+  # ⭐ 判準：**永遠不要搬動一個正在服務的目錄。**
+  #   `git init` + `remote add` + `fetch` + `reset --mixed` 把版本庫**長在原地**，
+  #   ⛔ 全程不搬動、不刪除任何一個檔案 —— `reset --mixed` 只更新索引與 HEAD。
   if ! r "test -d $REMOTE_REPO/.git"; then
-    info "mini 上還沒有 .git ⇒ clone（一次性,repo 約 650 MB）"
+    info "mini 上還沒有 .git ⇒ ⭐ **就地**建立（⛔ 不搬動任何東西）"
     local url; url=$(git -C "$REPO" remote get-url origin)
-    r "rm -rf ${REMOTE_REPO}.old && ([ -d $REMOTE_REPO ] && mv $REMOTE_REPO ${REMOTE_REPO}.old || true) \
-       && git clone -q '$url' $REMOTE_REPO" || die "clone 失敗。
+    r "cd $REMOTE_REPO && git init -q && git remote add origin '$url' 2>/dev/null; \
+       git fetch -q --depth=50 origin main && git reset -q --mixed FETCH_HEAD" \
+      || die "就地建立 .git 失敗。
    ⚠️ 若訊息是「correct access rights / repository exists」——
-   ⭐ 那**通常不是權限問題**,是 **SSH agent 轉發沒過去**（CLAUDE.md 記過的誤導訊息）。
-   ⇒ 確認本機 \`ssh-add -l\` 有 GitHub 的金鑰,且這支腳本用 \`ssh -A\`。"
-    # ⭐ 把不在 git 裡、但服務要的東西搬回來（⛔ 漏一個站就起不來）
-    r "for d in data docker/.env; do [ -e ${REMOTE_REPO}.old/\$d ] && cp -a ${REMOTE_REPO}.old/\$d $REMOTE_REPO/\$(dirname \$d)/ || true; done" || true
-    ok "clone 完成,並搬回 data/ 與 docker/.env"
+   ⭐ 那**通常不是權限問題**，是 **SSH agent 轉發沒過去**（CLAUDE.md 記過的誤導訊息）。
+   ⇒ 確認本機 \`ssh-add -l\` 有 GitHub 的金鑰。"
+    ok "版本庫已就地建立（⭐ data/ 與 docker/.env 一個位元組都沒動）"
   fi
+
   r "cd $REMOTE_REPO && git fetch -q --all --tags && git checkout -q $head_local" \
     || die "checkout $head_local 失敗"
   local remote_head; remote_head=$(r "cd $REMOTE_REPO && git rev-parse HEAD" 2>/dev/null)
