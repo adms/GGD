@@ -2,6 +2,7 @@
  * `EffectVariant` 的一格 —— 分片自 `sim/effects/effect.ts`（#467 ②）。
  * ⚠️ 對 `../effect` 的 import **一律 `import type`**（見同資料夾其他成員）。
  */
+import type { FloatingTextDriftSpec } from "../floatingText";
 
 /**
  * ⭐【特效文字】`floatingText`（#549）。owner 2026-08-22 點名「**別忘了還有特效文字**」。
@@ -19,8 +20,15 @@
  * 值在載入／執行時解析，⛔ 不烘進每一份文件）。
  * 段號來自 `EffectContext.sequenceIndex`（由 `delayedSystem` 填）；
  * 不在序列裡時解析成 **1** —— 一發單獨的效果就是它自己的第一段。
+ *
+ * ── ⭐ GH#853 方向 ────────────────────────────────────────────────────────
+ * `drift*` 那四格**不在這裡逐格重打一次** —— 它們 `extends FloatingTextDriftSpec`
+ * （`sim/effects/floatingText.ts`），⛔ 因為那正是第〇·四守則說的第二個住處：
+ * 這個介面與 Zod 的 `zFloatingText` 已經是同一份知識的兩份抄本，而 CLAUDE.md
+ * 逐字記著「TS 的結構指派**兩個方向都放行**」⇒ 抄漏一格**不會有東西紅**。
+ * ⇒ 共用同一個介面，抄漏就變成 `tsc` 的紅。
  */
-export interface FloatingTextVariant {
+export interface FloatingTextVariant extends FloatingTextDriftSpec {
   kind: "floatingText";
   /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。`applyTo:"victim"` 時它決定名單。 */
   shape: "single" | "circle";

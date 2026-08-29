@@ -471,7 +471,9 @@ export function WorldAnchorLayer(): React.JSX.Element {
           for (const e of layer.entries) {
             // alpha 0 = 還在錯開的等待中（`delayMs`）或已經淡完 ⇒ 不佔節點
             if (!e.active || e.alpha <= 0) continue;
-            const pose = project(e.x, e.y + e.lift, e.z);
+            // ⭐ GH#853 —— `driftX`／`driftZ` 是地面平面的累積位移（原作
+            //    `SetTextTagVelocityBJ` 的那一半）。⛔ 少了這兩項，字只會直升。
+            const pose = project(e.x + e.driftX, e.y + e.lift, e.z + e.driftZ);
             if (!pose.visible) continue;
             let node = ftNodes[ftUsed];
             if (!node) {

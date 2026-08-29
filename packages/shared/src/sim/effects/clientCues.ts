@@ -38,6 +38,7 @@ import type { EntityId } from "../../ids";
 import type { EffectContext, EffectDef } from "./effect";
 import type { EffectKindSpec } from "./effectKind";
 import { shapeTargets } from "./shapeTargets";
+import { type FloatingTextDrift, resolveFloatingTextDrift } from "./floatingText";
 import {
   FLOATING_TEXT_MAX_RISE,
   FLOATING_TEXT_MAX_SEC,
@@ -160,7 +161,17 @@ export interface FloatingTextEvent {
   sizeScale?: number;
   riseSpeed?: number;
   durationSec?: number;
+  /**
+   * ⭐ GH#853 —— **地面平面**的飄移（原作 `SetTextTagVelocityBJ`）。
+   * 缺席 ＝ 只走既有的垂直 `riseSpeed` ＝ 逐位元組同以前。
+   * ⚠️ 客戶端要**真的讀它**（失敗形態⑧：schema 有了而消費端讀不到）——
+   * 消費端是 `apps/client/src/vfx/FloatingTextFx.ts` 的 `spawn()`／`tick()`。
+   */
+  drift?: FloatingTextDrift;
 }
+
+/** ⭐ 兩端 import 同一份型別（⛔ 不是各自 `as` 一個形狀出來）。 */
+export type { FloatingTextDrift };
 
 export const screenFlashEffect: EffectKindSpec<"screenFlash"> = {
   apply(e, ctx) {
@@ -220,6 +231,7 @@ export const floatingTextEffect: EffectKindSpec<"floatingText"> = {
       .filter((s): s is { id: EntityId; t: NonNullable<typeof s.t> } => s.t !== undefined)
       .map((s) => ({ id: s.id, x: s.t.pos.x, z: s.t.pos.z }));
     if (anchored.length === 0) return;
+    const drift = resolveFloatingTextDrift(e, ctx);
     const payload: FloatingTextEvent = {
       text: resolveCueText(e.text, ctx),
       ...(e.colorRgb !== undefined ? { colorRgb: [...e.colorRgb] } : {}),
@@ -232,6 +244,9 @@ export const floatingTextEffect: EffectKindSpec<"floatingText"> = {
       ...(e.durationSec !== undefined
         ? { durationSec: clamp(e.durationSec, 0, FLOATING_TEXT_MAX_SEC) }
         : {}),
+      // ⭐ GH#853 —— 缺 `driftSpeed` ⇒ `undefined` ⇒ 這一格根本不出現在 payload 上
+      //    ⇒ 既有內容送出的位元組與以前**逐位元相同**（票的 rollback 條件）。
+      ...(drift !== undefined ? { drift } : {}),
       subjects: anchored,
       caster: ctx.caster,
       zone: world.transform.get(ctx.caster)?.zone ?? 0,

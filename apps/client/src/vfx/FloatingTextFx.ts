@@ -26,6 +26,8 @@
  * 字串**送進來。理由是第〇·四守則的同一個形狀:一個模板兩個代入點 = 兩份會漂的真相。
  */
 
+import type { FloatingTextDrift } from "@ggd/shared/sim/effects/clientCues";
+
 /** 一個活著的文字實例。⚠️ 這是**池子的元素**，⛔ 不要在外面 new 它。 */
 export interface FloatingTextEntry {
   active: boolean;
@@ -40,6 +42,18 @@ export interface FloatingTextEntry {
   z: number;
   /** 目前的抬升高度（世界單位，疊加在 y 上） */
   lift: number;
+  /**
+   * ⭐ GH#853 —— 目前累積的**地面平面**位移（疊加在 `x`／`z` 上）。
+   *
+   * ⚠️ 為什麼是分開的兩格而不是直接改 `x`／`z`：`spawn()` 拿 `x`／`z` 判
+   * 「這一發是不是落在同一個錨點上」（分道與錯開）。⭐ `x`／`z` 是**出生快照**，
+   * 一旦讓它漂走，第七刀就會判成「新的錨點」⇒ 七個字疊成一堆（原作是錯開的）。
+   */
+  driftX: number;
+  driftZ: number;
+  /** 地面平面速度（世界單位/秒）—— 出生時由 {@link FloatingTextDrift} 一次算好 */
+  driftVx: number;
+  driftVz: number;
   r: number;
   g: number;
   b: number;
@@ -68,6 +82,37 @@ export interface FloatingTextSpawn {
   /** 世界單位／秒 */
   riseSpeed?: number;
   durationSec?: number;
+  /**
+   * ⭐ GH#853 —— 地面平面的飄移（原作 `SetTextTagVelocityBJ`）。
+   * ⛔ 缺席 ⇒ 只有垂直 `riseSpeed` ⇒ 與這一格出現之前逐位元相同。
+   */
+  drift?: FloatingTextDrift;
+}
+
+/**
+ * ⭐ **這裡就是 BJ 的那一行**（`sim/effects/floatingText.ts` ⑤ 的另一半）。
+ *
+ * ```
+ * call SetTextTagVelocity(tt, vel * Cos(angle * bj_DEGTORAD),
+ *                             vel * Sin(angle * bj_DEGTORAD))
+ * ```
+ *
+ * sim 送來的是「基準向量 ＋ 要轉幾度」（它不准碰三角函式，見 `sim/purity.test.ts`），
+ * 所以旋轉在這裡做：基準 `(1,0)` 轉 θ 度就**逐字**是 `(cos θ, sin θ)`；
+ * 基準 = 施法者面向時，轉 0 度就是「往他面對的方向飛」（＝ `GetUnitFacing(u)`）。
+ *
+ * ⚠️ 基準先正規化：`Transform.facing` 的長度沒有任何一條閘在保證，而一個
+ * 長度 1.4 的面向會讓同一支技能**比作者寫的快 40%**（而且只在斜著站的時候）。
+ * 退化成零向量 ⇒ 退回 `(1,0)`，⛔ 不是回 `(0,0)`（那會讓字靜默地不飄）。
+ */
+export function driftVelocity(d: FloatingTextDrift): { vx: number; vz: number } {
+  const len = Math.sqrt(d.basisX * d.basisX + d.basisZ * d.basisZ);
+  const bx = len > 0 ? d.basisX / len : 1;
+  const bz = len > 0 ? d.basisZ / len : 0;
+  const rad = (d.deg * Math.PI) / 180;
+  const c = Math.cos(rad);
+  const s = Math.sin(rad);
+  return { vx: (bx * c - bz * s) * d.speed, vz: (bx * s + bz * c) * d.speed };
 }
 
 /**
@@ -161,6 +206,10 @@ export class FloatingTextFx {
         y: 0,
         z: 0,
         lift: 0,
+        driftX: 0,
+        driftZ: 0,
+        driftVx: 0,
+        driftVz: 0,
         r: 255,
         g: 255,
         b: 255,
@@ -224,6 +273,19 @@ export class FloatingTextFx {
     slot.y = s.y;
     slot.z = s.z;
     slot.lift = 0;
+    slot.driftX = 0;
+    slot.driftZ = 0;
+    // ⭐ GH#853 —— 角度只解一次(出生時),⛔ 不是每幀重算:原作的 texttag 也是
+    //    `SetTextTagVelocity` 設一次就固定,而每幀重算會讓一個轉身的施法者把
+    //    已經飛出去的字**拖回來**。
+    if (s.drift !== undefined && s.drift.speed > 0) {
+      const v = driftVelocity(s.drift);
+      slot.driftVx = v.vx;
+      slot.driftVz = v.vz;
+    } else {
+      slot.driftVx = 0;
+      slot.driftVz = 0;
+    }
     slot.r = r;
     slot.g = g;
     slot.b = b;
@@ -257,6 +319,10 @@ export class FloatingTextFx {
         continue;
       }
       e.lift += (e.riseSpeed * dtMs) / 1000;
+      // ⭐ GH#853 —— 地面平面那一半。與 `lift` 同一個節拍、同一個積分式，
+      //    ⛔ 不是第二套運動系統（`riseSpeed` 是垂直軸,這兩格是水平軸）。
+      e.driftX += (e.driftVx * dtMs) / 1000;
+      e.driftZ += (e.driftVz * dtMs) / 1000;
       const t = e.ageMs / e.lifeMs;
       e.alpha = t <= FADE_FROM ? 1 : 1 - (t - FADE_FROM) / (1 - FADE_FROM);
     }
