@@ -1714,6 +1714,27 @@ git add -- a.ts b.ts c.json && git commit     # ⛔ 別人 staged 的東西全�
 session-gate + 導覽列 ⇒ 新增 `content/config/*.json` **一定**會動到
 `apps/admin/src/store.ts` 與 `ui/App.tsx` **各一行**。那兩行是共用的，其餘都可以並行。
 
+#### ⛔⛔ ⑤ **lane 的 commit 要真的進 main** —— 量到 85 個擱在 69 條分支上
+
+`isolation: "worktree"` 給每條 lane 一條 `worktree-wf_*` 分支，
+lane 在裡面 commit —— ⛔ **而沒有任何一步把它合回 main**。
+
+⇒ ⭐ 這是 owner 2026-08-30「**重複做已經做好的**」那句話的**機制**：
+① lane commit 進 worktree 分支（✅ 對）② 我讀回報就關票（✅ 回報誠實）
+③ 下一輪讀 main ⇒ 那個檔還是原樣 ⇒ ⛔ ⭐ **再做一次**。
+⚠️ 三步各自都對，⛔ 而它們之間沒有任何東西在比對。
+
+```bash
+npx vitest run packages/shared/src/ops/noStrandedLaneCommits.test.ts   # ⭐ 收工必跑
+git cherry-pick -x <sha>     # 收回來
+git branch -D <分支>          # ⭐ 真的不要了 —— 那才叫「決定丟掉」,⛔ 不是忘記
+```
+
+⚠️ ⭐ **衝突落在追加式帳本上時,⛔ 不可以用 `--ours` / `--theirs`** ——
+`--ours` 吃掉對方的列、`--theirs` 吃掉我的列,⭐ **兩個都是錯的**,正解是取聯集。
+⛔ 而它不會有任何東西紅（統計區跟著變小,看起來完全自洽）——
+2026-08-30 我就是這樣吃掉自己的 5 列,抓到它的是 `rule-slip.sh --check` 的**計數**。
+
 #### ⛔ 一個結構性的、加速不了的序列點
 
 `pnpm skills:sync` 寫 `bundle.json` ⇒ **全域只能有一條工作流跑它**。
