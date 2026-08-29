@@ -1197,10 +1197,20 @@ export class VfxSystem {
    *   1. 掛點字串正規化＋WC3 fallback 鏈（`resolveAttachment`）命中節點 → 節點位置
    *   2. 模型在、鏈上一根都沒有（替身骨架）→ **模型根 + 胸口高度**，log 一次
    *   3. 連 `champ-<id>` 節點都沒有（體素替身、模型還在載）→ 事件座標 + 胸口高度，log 一次
+   *
+   * ⭐ GH#809 —— 錨定單位**不再必然是施法者**：sim 送 `attachTo` 時它是受擊者。
+   * 第 3 格退路因此也跟著對 —— sim 在那個模式下送的 `x/z` 是**受擊者腳下**，
+   * ⛔ 不是施法者腳下（見 `sim/effects/spawnVfx.ts`）。
    */
   private boneSpawnPos(
     attach: string,
-    casterId: number | undefined,
+    /**
+     * ⭐ GH#809 —— **錨定單位**的 entity id，⛔ 不再必然是施法者：
+     * sim 送 `attachTo` 時（`boneOn:"victim"`）它是**受擊者**。
+     * ⚠️ 節點名是 `champ-<id>`，而 `EntityViewRegistry` 對殭屍也是走
+     * `ChampionView` ⇒ 受擊者是殭屍時一樣找得到骨頭。
+     */
+    anchorId: number | undefined,
     fallbackX: number,
     fallbackZ: number,
   ): { x: number; y: number; z: number } {
@@ -1209,9 +1219,9 @@ export class VfxSystem {
       this.boneFallbackWarned.add(key);
       console.warn(`[vfx] bone anchor "${attach}": ${msg}`);
     };
-    const root = casterId !== undefined ? this.scene.getTransformNodeByName(`champ-${casterId}`) : null;
+    const root = anchorId !== undefined ? this.scene.getTransformNodeByName(`champ-${anchorId}`) : null;
     if (!root || root.isDisposed()) {
-      warnOnce(`${attach}|no-model`, "施法者無模型節點（替身/載入中）→ 退回胸口高度");
+      warnOnce(`${attach}|no-model`, "錨定單位無模型節點（替身/載入中）→ 退回胸口高度");
       return { x: fallbackX, y: ARC_BODY_Y, z: fallbackZ };
     }
     const nodes = root.getChildTransformNodes(false);
@@ -2318,9 +2328,13 @@ export class VfxSystem {
         //    心跳會既拖曳、又每 0.25 秒噴一顆火花。
         if (this.moveTrail.mark(vfxId, data.caster, nowMs, data.durationSec)) break;
         const doc = this.doc(vfxId);
+        // ⭐ GH#809 —— 骨頭掛在**哪一具模型**上：`attachTo`（sim 在
+        //    `boneOn:"victim"` 時送受擊者的 entity id），缺席才退回 `caster`
+        //    ⇒ 既有內容逐位元同以前。⛔ `caster` 不可以被覆寫：底下的
+        //    `moveTrail.mark`、瞄準向量、反彈電弧種子三個消費端都在讀它。
         const anchor =
           typeof data.attach === "string"
-            ? this.boneSpawnPos(data.attach, data.caster, x, z)
+            ? this.boneSpawnPos(data.attach, data.attachTo ?? data.caster, x, z)
             : { x, y: 1.0, z };
         // ⭐ GH#641 —— 一次性特效也認 `orient.yawFrom:"aim"`。在此之前只有施法
         //    階梯那條路會走 `applyAimYaw`，於是 hook／道具觸發的 spawnVfx 一律朝

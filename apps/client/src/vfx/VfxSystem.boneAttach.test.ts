@@ -18,6 +18,15 @@
  * ⚠️ 三格退路**每一格都要畫**（差別只有落點）—— 替身骨架沒有對應骨的時候
  * 「不畫」比「畫錯位置」糟得多，所以第 2、3 格也各斷言一顆發射器真的生出來，
  * 並且各記一次 `console.warn`（⛔ 不吞）。
+ *
+ * ⭐ @visual-proof —— GH#809 修的缺陷**不是不可見**，是「特效長在**錯的身體**上」：
+ * 兩種情況畫面都一樣亮 ⇒ readPixels 的 A/B **分不出來**（量尺在這個軸上是瞎的）。
+ * ⇒ 終端量是三個一起讀：① 真的有一顆發射器 ② 它 `isStarted()` 且
+ * `manualEmitCount > 0`（⛔ **不可以量 `emitRate`** —— `frontLoadDoc` 把這一族壓成
+ * 單幀爆發，出貨的 `emitRate` **恆為 0**；實跑驗過拿它當尺六格全紅）
+ * ③ 它的**世界座標**落在受擊者骨頭上（夾具讓兩具模型相距 40 單位 ⇒ 掛錯人量得出來）。
+ * ⛔ 誠實邊界：⛔ 不證明那份 vfx 文件畫得出亮像素（那是 `vfxDocsBirthVisibility`
+ * 與 audition 的事）；本檔用的是既有出貨文件，⛔ 本批沒動它。
  */
 import { describe, it, expect, beforeAll, afterAll, vi } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
@@ -50,6 +59,11 @@ const EV_X = 3;
 const EV_Z = 7;
 /** 客戶端這邊模型根節點的世界位置（刻意**不等於** sim 座標，才分得出誰贏）。 */
 const MODEL = new Vector3(10, 0, 20);
+/** ⭐ GH#809 —— 受擊者在 sim 裡的腳下座標（刻意**不等於**施法者的）。 */
+const VICTIM_X = 30;
+const VICTIM_Z = 40;
+/** 受擊者模型根的世界位置（三個位置兩兩不等 ⇒ 錨錯人一定看得出來）。 */
+const VICTIM_MODEL = new Vector3(50, 0, 60);
 
 let engine: NullEngine;
 let scene: Scene;
@@ -66,15 +80,22 @@ afterAll(() => {
  * 真的 Zod → 真的 SimWorld → 真的 effectRunner → 真的事件 → 出貨接縫。
  * 回傳值就是客戶端在一場真比賽裡收到的那一則（`ev.data` 原樣）。
  */
-function shippedEvent(at: "self" | "bone", attach?: string): { msg: EventMessage; caster: number } {
+function shippedEvent(
+  at: "self" | "bone",
+  attach?: string,
+  /** ⭐ GH#809 —— 省略＝施法者（今天的行為）；`"victim"` ＝ 掛在受擊者身上。 */
+  boneOn?: "victim",
+): { msg: EventMessage; caster: number; victim: number } {
   const parsed = zEffectDef.parse({
     kind: "spawnVfx",
     vfxId: VFX_ID,
     at,
     ...(attach !== undefined ? { attach } : {}),
+    ...(boneOn !== undefined ? { boneOn } : {}),
   }) as EffectDef;
   const world = new SimWorld(SKELETON_ARENA, 42);
   const caster = world.spawn();
+  const victim = world.spawn();
   world.transform.set(caster, {
     pos: { x: EV_X, z: EV_Z },
     vel: { x: 0, z: 0 },
@@ -82,24 +103,31 @@ function shippedEvent(at: "self" | "bone", attach?: string): { msg: EventMessage
     radius: 0.5,
     zone: 0,
   });
+  world.transform.set(victim, {
+    pos: { x: VICTIM_X, z: VICTIM_Z },
+    vel: { x: 0, z: 0 },
+    facing: { x: -1, z: 0 },
+    radius: 0.5,
+    zone: 0,
+  });
   runEffects([parsed], {
     world,
     caster,
     rank: 1,
-    targets: [],
+    targets: [victim],
     point: { x: -99, z: -99 },
     origin: "ability:test.bone",
     rng: world.rng,
   });
   const ev = world.events.find((e) => e.type === "vfxSpawn");
   expect(ev, "sim 沒有發出 vfxSpawn").toBeDefined();
-  return { msg: { type: ev!.type, tick: 0, data: ev!.data } as unknown as EventMessage, caster };
+  return { msg: { type: ev!.type, tick: 0, data: ev!.data } as unknown as EventMessage, caster, victim };
 }
 
 /** 一個「有模型的施法者」：`champ-<id>` 根節點，外加零或一根骨。 */
-function spawnModel(caster: number, bone: string | null): TransformNode {
+function spawnModel(caster: number, bone: string | null, at: Vector3 = MODEL): TransformNode {
   const root = new TransformNode(`champ-${caster}`, scene);
-  root.position.copyFrom(MODEL);
+  root.position.copyFrom(at);
   if (bone !== null) {
     const j = new TransformNode(bone, scene);
     j.parent = root;
@@ -120,7 +148,17 @@ function playAndReadBack(msg: EventMessage): { pos: Vector3; warns: number } {
   const warns = spy.mock.calls.length;
   spy.mockRestore();
   expect(made, "這一格退路一顆發射器都沒生 —— 「不畫」比「畫錯位置」糟").toHaveLength(1);
-  return { pos: (made[0]!.emitter as Vector3).clone(), warns };
+  // ⭐ @visual-proof 的**終端量**：一顆**真的在噴**的發射器，而且它的世界座標就是
+  //    玩家會看到那團粒子的地方。⛔ 只斷言「物件被建出來」不夠 —— 一顆停著的、
+  //    emitRate 0 的發射器停在正確的位置上，畫面上與「什麼都沒發生」一模一樣。
+  const ps = made[0]!;
+  expect(ps.isStarted(), "發射器沒有 start ⇒ 位置對了也是零像素").toBe(true);
+  // ⚠️ ⭐ 量的是 `manualEmitCount` ⛔ 不是 `emitRate`：這條路上的每一份 doc 都被
+  //    `frontLoadDoc` 壓成「所有粒子誕生在同一幀」⇒ **出貨的 `emitRate` 就是 0**
+  //    （`VfxSystem.play()` 寫的是 `ps.manualEmitCount = max(1, …)`）。
+  //    ⛔ 拿 emitRate 當量尺 ＝ 一把在這一族上恆為 0 的尺（實跑：六格全紅）。
+  expect(ps.manualEmitCount, "這一發一顆粒子都不生 ⇒ 位置對了也是零像素").toBeGreaterThan(0);
+  return { pos: (ps.emitter as Vector3).clone(), warns };
 }
 
 describe('spawnVfx at:"bone" —— 出貨鏈上真的掛到骨頭 (GH#649/#565)', () => {
@@ -166,5 +204,35 @@ describe('spawnVfx at:"bone" —— 出貨鏈上真的掛到骨頭 (GH#649/#565)
     expect(pos.z).toBeCloseTo(EV_Z, 5);
     expect(warns).toBe(0);
     root.dispose(false, true);
+  });
+
+  /**
+   * ⭐ GH#809 —— **錨定單位是受擊者**（原作 92 次量到的另一半）。這一批的**承重線**：
+   * ⚠️ 兩具模型同時在場，所以「掛錯人」與「掛對人」量起來**不一樣** ——
+   * 一具模型的夾具對兩種實作會**同時**通過（失敗形態④）。
+   * 突變（實跑）：客戶端 `data.attachTo ?? data.caster` → `data.caster` ⇒ 本條紅（落在施法者手上）。
+   */
+  it("⑤ boneOn:\"victim\" → 掛在**受擊者**模型的骨頭上，⛔ 不是施法者的", () => {
+    const { msg, caster, victim } = shippedEvent("bone", "hand,right", "victim");
+    expect(msg.data.attachTo, "sim 沒送 attachTo ⇒ 客戶端只能掛回施法者").toBe(victim);
+    expect(msg.data.caster, "caster 不可以被覆寫（拖曳心跳/瞄準/電弧種子都讀它）").toBe(caster);
+    const cRoot = spawnModel(caster, `${caster}-Hand Right Ref`);
+    const vRoot = spawnModel(victim, `${victim}-Hand Right Ref`, VICTIM_MODEL);
+    const { pos, warns } = playAndReadBack(msg);
+    expect(pos.x).toBeCloseTo(VICTIM_MODEL.x + 0.5, 5);
+    expect(pos.z).toBeCloseTo(VICTIM_MODEL.z + 0.2, 5);
+    expect(warns).toBe(0);
+    cRoot.dispose(false, true);
+    vRoot.dispose(false, true);
+  });
+
+  it("⑥ 受擊者還沒有模型 → 退回**受擊者腳下** + 胸口高度（⛔ 不是施法者腳下）", () => {
+    const { msg, caster } = shippedEvent("bone", "chest", "victim");
+    const cRoot = spawnModel(caster, `${caster}-Chest Ref`);
+    const { pos } = playAndReadBack(msg);
+    expect(pos.x).toBeCloseTo(VICTIM_X, 5);
+    expect(pos.z).toBeCloseTo(VICTIM_Z, 5);
+    expect(pos.y).toBeCloseTo(ARC_BODY_Y, 5);
+    cRoot.dispose(false, true);
   });
 });

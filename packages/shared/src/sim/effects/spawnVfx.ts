@@ -4,9 +4,14 @@
  * Moved out of the effectRunner switch by GH#289; body unchanged.
  *
  * ⭐ GH#649/#565 —— `at:"bone"`：payload 多帶 `attach`（WC3 掛點字串），
- * 客戶端解析到施法者模型的骨頭節點。座標仍然送（施法者腳下）——
+ * 客戶端解析到**錨定單位**模型的骨頭節點。座標仍然送（錨定單位腳下）——
  * 那是「替身骨架／模型還在載」時客戶端**退回胸口**用的世界座標，
  * ⛔ 不是不畫（見 `VfxSystem` 的 vfxSpawn case）。
+ *
+ * ⭐ GH#809 —— 錨定單位可以是**受擊者**（`boneOn:"victim"`，payload 多帶
+ * `attachTo`）。在此之前這一行寫的是「錨定單位是施法者」而那是**恆真**的，
+ * 於是原作 317 次 `AddSpecialEffectTargetUnitBJ` 裡明確掛在受擊者身上的
+ * **92 次**（`GetEnumUnit()` 83 ＋ `GetSpellTargetUnit()` 9）表達不出來。
  */
 import type { EntityId } from "../../ids";
 import type { EffectKindSpec } from "./effectKind";
@@ -25,13 +30,31 @@ import type { EffectKindSpec } from "./effectKind";
  */
 export type VfxSpawnEvent = {
   vfxId: string;
-  /** world point — `at:"bone"` 時是施法者腳下（客戶端無模型可掛時的退路） */
+  /**
+   * world point — `at:"bone"` 時是**錨定單位**腳下（客戶端無模型可掛時的退路）。
+   * ⭐ GH#809：錨定單位預設是施法者，`boneOn:"victim"` 時是受擊者。
+   */
   x: number;
   z: number;
   caster: EntityId;
   durationSec?: number;
   /** ⭐ `at:"bone"` 才有：WC3 掛點字串（chest / hand,right / weapon / …） */
   attach?: string;
+  /**
+   * ⭐ GH#809 —— 骨頭要掛在**哪一個單位**的模型上（entity id）。
+   *
+   * ⚠️ 它**不是** `caster` 的別名，兩格都要在：`caster` 仍然是「誰放的這一招」，
+   * 而客戶端有三個消費端各自讀它 ——【移動拖曳光束】的心跳
+   * （`moveTrail.mark(vfxId, data.caster, …)`）、瞄準向量
+   * （施法者 → 落點，`orient.yawFrom:"aim"` 讀它）、反彈電弧的種子。
+   * ⛔ 把 `caster` 覆寫成受擊者會**同時**弄壞那三條（第八條：轉換不可以帶走
+   * 一個玩家看得到的東西）。
+   *
+   * 缺席 ⇒ 客戶端退回 `caster` ⇒ 逐位元組同這一格出現之前。
+   * ⭐ 而 sim 只在 `boneOn:"victim"` 真的解到人時才寫它 ——
+   * ⛔ 沒有「送了一個客戶端讀不到的欄位」或反過來（失敗形態⑧）。
+   */
+  attachTo?: EntityId;
   /**
    * ⭐【這一發的連續參數覆寫】GH#838（owner 2026-08-28「用 silder 調大小、透明度、
    * 顏色、轉向、高度、動畫速度」）。詞彙是 `AbilityVfxLayerOverride`
@@ -55,6 +78,19 @@ export const spawnVfxEffect: EffectKindSpec<"spawnVfx"> = {
     // client's VfxSystem. No world mutation, no rng → deterministic (two
     // seeded runs emit identical events from identical transforms).
     const at = e.at ?? "self";
+    // ⭐ GH#809 —— 錨定單位。`at:"bone"` 在此之前**恆為施法者**，於是原作那
+    //    92 次「掛在受擊者身上」（`GetEnumUnit()` 83 ＋ `GetSpellTargetUnit()` 9）
+    //    表達不出來。⛔ 這裡不重解一次圓：受擊者就是上游解好的 `ctx.targets[0]`
+    //    （與 `at:"target"`、`delayed.who:"victim"` 同一份詞彙）。
+    const boneOnVictim = at === "bone" && e.boneOn === "victim";
+    const victim = ctx.targets[0];
+    // ⭐ 一個受擊者都沒有 ⇒ **什麼都不發**，⛔ 不是退回施法者。
+    //    這是逐字的翻譯：原作那一族是 `ForGroup` 的迴圈體，群組空的時候
+    //    `AddSpecialEffectTargetUnitBJ` 一次都不會跑。⛔ 退回施法者會讓
+    //    「血從被打的人身上噴」在沒打中時變成「血從自己身上噴」——
+    //    一個比不畫糟得多的畫面，而且它與正常長得一模一樣。
+    if (boneOnVictim && victim === undefined) return;
+    const anchor = boneOnVictim ? victim! : ctx.caster;
     let pos: { x: number; z: number } | undefined;
     if (at === "point") {
       pos = ctx.point;
@@ -62,8 +98,11 @@ export const spawnVfxEffect: EffectKindSpec<"spawnVfx"> = {
       const tid = ctx.targets[0];
       pos = (tid !== undefined ? world.transform.get(tid)?.pos : undefined) ?? ctx.point;
     }
-    // `at:"bone"` 與 `self` 同路：錨定單位是施法者，骨頭在客戶端才解析。
-    if (!pos) pos = world.transform.get(ctx.caster)?.pos;
+    // `at:"bone"` 與 `self` 同路：骨頭在客戶端才解析，這裡只送**錨定單位腳下**的
+    // 世界座標（客戶端沒有那具模型時的退路）。⭐ 錨定單位預設是施法者，
+    // `boneOn:"victim"` 時是受擊者 —— 落點必須跟著換，否則模型還沒載入的那一格
+    // 退路會把特效丟回施法者腳下（＝這張票要修的那個病，只是換一格發生）。
+    if (!pos) pos = world.transform.get(anchor)?.pos;
     if (!pos) return;
     const payload: VfxSpawnEvent = {
       vfxId: e.vfxId,
@@ -72,6 +111,8 @@ export const spawnVfxEffect: EffectKindSpec<"spawnVfx"> = {
       caster: ctx.caster,
       ...(e.durationSec !== undefined ? { durationSec: e.durationSec } : {}),
       ...(at === "bone" && e.attach !== undefined ? { attach: e.attach } : {}),
+      // ⭐ 只有真的換了錨定單位才多這一格 ⇒ 既有內容送出的位元組逐位元不變。
+      ...(boneOnVictim ? { attachTo: anchor } : {}),
     };
     world.emit("vfxSpawn", payload);
   },

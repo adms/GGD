@@ -91,6 +91,40 @@ describe("spawnVfx effectRunner (do-runner-emit)", () => {
     });
   });
 
+  /**
+   * ⭐ GH#809 —— 錨定單位可以是**受擊者**（原作 317 次 `AddSpecialEffectTargetUnitBJ`
+   * 裡明確掛在受擊者身上的 92 次）。四個方向一起驗，⛔ 少一個都還原得出一個壞：
+   * `attachTo` 過線 · **落點也換成受擊者腳下**（模型還在載那一格退路才不會丟回施法者）
+   * · 沒有受擊者 ⇒ **一則都不發**（原作那個 ForGroup 的迴圈體不會跑）
+   * · 省略 `boneOn` ⇒ `attachTo` 根本不出現 ＝ 票的 rollback 條件。
+   * 突變（實跑）：`anchor` 改回 `ctx.caster` → 紅（座標退回 3,7）。
+   */
+  it('at:"bone" + boneOn:"victim" anchors on the victim; omitted = byte-identical', async () => {
+    cover("do-runner-emit");
+    const { zEffectDef } = await import("../../content/schema/effect");
+    const eff = zEffectDef.parse({
+      kind: "spawnVfx", vfxId: "v", at: "bone", attach: "chest", boneOn: "victim",
+    }) as EffectDef;
+    // `boneOn` 沒有 `at:"bone"` 就是一格「說了但不會發生」的欄位（第一·五守則）
+    expect(zEffectDef.safeParse({ kind: "spawnVfx", vfxId: "v", boneOn: "victim" }).success).toBe(false);
+    const { world, caster, target } = makeWorld();
+    runEffects([eff], ctxOf(world, caster, target));
+    // 受擊者的 entity id ＋ 受擊者腳下（11,-4），⛔ 不是施法者的 (3,7)
+    expect(world.events.find((e) => e.type === "vfxSpawn")!.data)
+      .toMatchObject({ attachTo: target, x: 11, z: -4, caster });
+    // 一個受擊者都沒有 ⇒ 什麼都不發（⛔ 不是退回施法者身上）
+    const none = makeWorld();
+    runEffects([eff], { ...ctxOf(none.world, none.caster, none.target), targets: [] });
+    expect(none.world.events.filter((e) => e.type === "vfxSpawn")).toHaveLength(0);
+    // 省略 boneOn ⇒ 錨定單位仍是施法者，且 `attachTo` 這一格**根本不出現**
+    const old = makeWorld();
+    runEffects([{ kind: "spawnVfx", vfxId: "v", at: "bone", attach: "chest" } as EffectDef],
+      ctxOf(old.world, old.caster, old.target));
+    const d = old.world.events.find((e) => e.type === "vfxSpawn")!.data;
+    expect(d).toMatchObject({ x: 3, z: 7 });
+    expect("attachTo" in d).toBe(false);
+  });
+
   it("defaults `at` to self and forwards durationSec only when present", () => {
     cover("do-runner-emit");
     const { world, caster, target } = makeWorld();
