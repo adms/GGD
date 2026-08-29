@@ -21,6 +21,7 @@ import { installLiveAuthFetch } from "../../liveAuth";
 import { browserTokenStorage } from "../../session";
 
 installLiveAuthFetch(() => browserTokenStorage.load()?.accessToken ?? null);
+import { LiveFreshnessBar } from "./LiveFreshnessBar";
 import { MdlFamiliesPage } from "./MdlFamiliesPage";
 import { ParallelBoardPage } from "./ParallelBoardPage";
 import { JassVfxPage } from "./JassVfxPage";
@@ -64,7 +65,32 @@ export const LIVE_ROUTES: readonly LiveRoute[] = [
   { page: "liveSkill90", label: "90支重製對照", emoji: "📐", Component: Skill90Page },
 ];
 
+/**
+ * `liveMdlFamilies` → `mdl-families`（⭐ **推導**，⛔ 不是手寫 14 行對照表）。
+ *
+ * ⚠️ 只在**大寫字母**前面切，⛔ 不在數字前面 —— 否則 `liveSkill90` 會變成
+ * `skill-90` 而資料集叫 `skill90`。
+ *
+ * ⚠️ 推導可能靜默出錯（新頁面取了不合這個規則的名字）⇒ 閘：
+ * `packages/shared/src/ops/liveRouteDatasetNames.test.ts` 逐條比對
+ * 每個推導出來的名字**真的有一個 `tools/admin-live/datasets/<name>.mjs`**。
+ */
+export function datasetOf(page: string): string {
+  return page
+    .replace(/^live/, "")
+    .replace(/([a-z])([A-Z])/g, "$1-$2")
+    .toLowerCase();
+}
+
 export function renderLivePage(page: string): React.JSX.Element | null {
   const r = LIVE_ROUTES.find((x) => x.page === page);
-  return r ? <r.Component /> : null;
+  if (!r) return null;
+  // ⭐ 一條共用的「這份資料多新」列 —— 包在**唯一的**渲染入口外面
+  //   ⇒ ⛔ 不用改 14 個頁面元件，而且**下一個新增的 live 頁自動就有**。
+  return (
+    <>
+      <LiveFreshnessBar dataset={datasetOf(r.page)} />
+      <r.Component />
+    </>
+  );
 }

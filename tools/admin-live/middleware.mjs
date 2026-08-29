@@ -232,7 +232,13 @@ async function handleSave(repoRoot, mode, entry, dsName, body, res) {
 export function createAdminLiveMiddleware(repoRoot, options = {}) {
   const mode = options.mode ?? "local";
   return async (req, res, next) => {
-    const url = (req.url ?? "").split("?")[0];
+    const rawUrl = req.url ?? "";
+    const url = rawUrl.split("?")[0];
+    // ⭐ `?fresh=1` —— **強制重算**，繞過快取（owner 2026-08-29：
+    //   「我怎麼知道是即時算的還是 cache? 請每一頁都加一個重新計算載入按鈕」）
+    // ⚠️ 它**不只是不讀 cache**，還要**把新結果寫回去** ——
+    //   ⛔ 否則按完按鈕，下一個人看到的仍是舊的那一份。
+    const forceFresh = /[?&]fresh=1(&|$)/.test(rawUrl);
     if (!url.startsWith("/__live/")) return next();
     const name = url.slice("/__live/".length);
     if (name === "_list") return sendJson(res, 200, { datasets: listDatasets() });
@@ -287,14 +293,14 @@ export function createAdminLiveMiddleware(repoRoot, options = {}) {
       // key = 來源檔 bytes 的 md5 ＋ dataset 模組自己（程式變了結果就可能變）
       const sum = sourcesChecksum(repoRoot, depList, [join(DATASETS, `${name}.mjs`)]);
       const key8 = sum.key.slice(0, 8);
-      if (entry.cache && entry.cache.key === sum.key) {
+      if (!forceFresh && entry.cache && entry.cache.key === sum.key) {
         res.setHeader("X-Live-Cache", `hit key=${key8} store=memory`);
         return sendJsonText(res, 200, entry.cache.text);
       }
       const store = getCacheStore();
       let storeLabel = store.label;
       try {
-        const cached = await store.get(sum.key);
+        const cached = forceFresh ? null : await store.get(sum.key);
         if (cached != null) {
           entry.cache = { key: sum.key, text: cached };
           res.setHeader("X-Live-Cache", `hit key=${key8} store=${store.label}`);
@@ -311,6 +317,10 @@ export function createAdminLiveMiddleware(repoRoot, options = {}) {
         ms: Date.now() - t0,
         cacheKey: key8,
         sourceFiles: sum.files,
+        // ⭐ 讓前端分得出「剛算的」與「從快取拿的」——
+        //   ⛔ 沒有這一格,使用者無法判斷畫面上的數字有多新（owner 的原始問題）。
+        fresh: forceFresh ? "forced" : "computed",
+        store: storeLabel,
       };
       const text = JSON.stringify(body);
       entry.cache = { key: sum.key, text };
