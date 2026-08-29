@@ -90,7 +90,14 @@ const LITERAL_90 = 94;
  */
 const UNTRANSLATED = [
   "04-03|29895", "04-03|29901", "04-03|29907", "04-03|29913", "04-03|29919",
-  "01-04|33809", "01-04|33857",
+  // ⭐ **01-04 超究武神霸斬翻好了**（2026-08-29）—— 棘輪只准變少，這兩筆拿掉：
+  //   · `j:33809` 速度 **64.00** 沿 `GetUnitFacing(GetTriggerUnit())`（裸面向 ⇒ 角度 0）
+  //     ⇒ finisher 節點：`driftSpeed:0.64` · `driftFrom:"casterFacing"` · `driftAngleDeg:0`
+  //   · `j:33857` 速度 **100.00** 沿 `udg_superAngle`，而 `j:33850` 每一刀 `+270.00`
+  //     ⇒ perStrike 節點：`driftSpeed:1.0` · `driftAngleStepDeg:270` · `driftFrom:"casterFacing"`
+  // ⚠️ `driftSpeed` 的數字是**速度比例**（原作 8…350）⇒ 64→0.64 / 100→1.0 是**比例翻譯**，
+  //   ⛔ 不是像素換算 —— 那一格的絕對觀感要一次視覺驗收才定得下來（票上已記）。
+  // ⭐ standalone 與 `content/champions/godie-hart.json` 的內嵌版**兩份都動了**。
 ] as const;
 
 const DRIFT_KEYS = ["driftSpeed", "driftAngleDeg", "driftAngleStepDeg", "driftFrom"] as const;

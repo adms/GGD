@@ -373,7 +373,11 @@
               ],
               "sizeScale": 1.2,
               "riseSpeed": 1.6,
-              "durationSec": 1.1
+              "durationSec": 1.1,
+              "driftSpeed": 1.0,
+              "driftAngleDeg": 0,
+              "driftAngleStepDeg": 270,
+              "driftFrom": "casterFacing"
             }
           ],
           "finisher": [
@@ -413,7 +417,10 @@
               ],
               "sizeScale": 1.8,
               "riseSpeed": 1.6,
-              "durationSec": 1.4
+              "durationSec": 1.4,
+              "driftSpeed": 0.64,
+              "driftAngleDeg": 0,
+              "driftFrom": "casterFacing"
             },
             {
               "kind": "screenFlash",
