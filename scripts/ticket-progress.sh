@@ -78,6 +78,7 @@ EOF
 )
   gh issue comment "$N" --body "$BODY" >/dev/null || die "寫不進 #$N"
   echo "✓ #$N 進度標記已寫（$STATE）"
+  exit 0    # ⭐ 明確回 0 —— ⚠️ 沒有它,case 會落到最後一個指令的離開碼
   ;;
 check)
   [ $# -gt 0 ] || die "用法: check <票號…>"
