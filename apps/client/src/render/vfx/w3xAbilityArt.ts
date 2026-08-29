@@ -216,22 +216,82 @@ let promotedCache: Readonly<Record<string, W3xAbilityArt>> | null = null;
  * ⚠️ 這裡**不查內容庫**（這個模組是純資料，不能讀 `ContentDb`），所以它產出
  * 的是**候選** id。真正播放的 `VfxSystem.playCastVfx` 對每一個 id 做
  * `this.doc(id)`，查不到就跳過 —— 也就是說沒被抽取的模型逐位元不影響行為。
- * 上界 3 = 目前任何一個原作模型抽出來的最多 emitter 數（stampedemissiledeath）；
- * 抽取器印出的 doc 數超過它時，多的那幾個不會被播 —— ⛔ 這是刻意的上界，
- * 不是「剛好夠」：一次施法多幾十個粒子系統是 `emitterBudget` 在擋的東西。
  */
-const MAX_STOCK_EMITTERS_PER_MODEL = 3;
+
+/**
+ * GH#699 / GH#753 —— 候選窗的寬度。⭐ **一格可調**，⛔ 不再是寫死的 3。
+ *
+ * 在此之前這裡是 `const MAX_STOCK_EMITTERS_PER_MODEL = 3`，辯護詞逐字是
+ * 「3 = 目前任何一個原作模型抽出來的最多 emitter 數（stampedemissiledeath）」。
+ * ⚠️ 那句話在 `markofchaostarget` 出貨的那一天就過期了（PRE2×**6**），
+ * 而**沒有任何東西變紅** —— 第三守則的形狀：一句被散文守著的數字活過了它的
+ * 保存期限。量到的後果是 `fx.w3x.stock.markofchaostarget.p03/p04/p05`
+ * 三份**出貨的**文件在結構上永遠播不到（做了但玩家拿不到）。
+ *
+ * ⭐ 這一格是**候選**的寬度，⛔ 不是成本上界。成本上界是 `emitterBudget`
+ * （一次施法幾個粒子系統）＋ `MAX_FRONT_LOAD_BURST`（每層幾顆），兩者都在
+ * 這一層之下。開大它多付的是「幾次查不到的 `VfxDefs` 查表」——
+ * 今天 `warstompcaster.p01/p02`（那顆模型只有 PRE2×1）就已經是這樣了。
+ *
+ * 預設 16 是**量出來的**，⛔ 不是挑的：`tools/w3x-import/out/stock-vfx/
+ * STOCK_VFX.json` 的 `markofchaostarget` 是這張表最重的一支 ——
+ * `pre2Count: 6`，而 owner 自己的理由欄逐字寫著「PRE2×6 + **RIBB×8**」
+ * （2026-08-29 直接解 MDX 複驗過：PRE2×6 / RIBB×8）⇒ 同一個 id 命名空間
+ * 的最壞情況是 **14**，16 留兩格餘裕。
+ * ⭐ 而它不會再默默過期：`stockEmitterWindow.test.ts` 從**出貨的 `content/vfx/`**
+ * 反推「今天需要多寬」，抽出第 17 份的那一刻它會紅並且印出該有的數字。
+ *
+ * ROLLBACK（owner 常設指令：自己判斷，但留一格一鍵回頭）——
+ * 填 **3** 就是逐位元組的舊行為：
+ *   · client bundle：`VITE_GGD_STOCK_EMITTER_WINDOW=3`
+ *   · Node 側（產生器 / 測試 / 普查）：`GGD_STOCK_EMITTER_WINDOW=3`
+ */
+export const STOCK_EMITTER_WINDOW_ENV = "VITE_GGD_STOCK_EMITTER_WINDOW";
+export const STOCK_EMITTER_WINDOW_NODE_ENV = "GGD_STOCK_EMITTER_WINDOW";
+export const DEFAULT_STOCK_EMITTER_WINDOW = 16;
+
+/**
+ * 純函式、可注入 —— 與 `config/fullAssets.ts` 的 `resolveFullAssets` 同一個形狀，
+ * 所以「這格旋鈕會不會動」不必靠一次 build 才驗得到。
+ * 讀不懂／不是正整數 ⇒ 回預設（⛔ 一個打錯的環境變數不可以把特效關掉）。
+ */
+export function resolveStockEmitterWindow(explicit: string | number | undefined): number {
+  const n = typeof explicit === "number" ? explicit : Number(String(explicit ?? "").trim());
+  if (!Number.isFinite(n) || n < 1) return DEFAULT_STOCK_EMITTER_WINDOW;
+  return Math.floor(n);
+}
+
+/**
+ * 兩條通道各讀一次。⚠️ `import.meta.env` 在 vitest 的純 node 下**存取就擲例外**，
+ * 而 `process` 在瀏覽器裡不存在 —— 包起來是這個 repo 的既有慣例
+ * （見 `apps/client/src/config/fullAssets.ts` 的 `viteEnv`）。
+ */
+function stockEmitterWindowOverride(): string | undefined {
+  try {
+    const env = (import.meta as unknown as { env?: Record<string, string | undefined> }).env;
+    const v = env?.[STOCK_EMITTER_WINDOW_ENV];
+    if (v !== undefined && v !== "") return String(v);
+  } catch {
+    /* not a vite bundle */
+  }
+  const proc = (globalThis as { process?: { env?: Record<string, string | undefined> } }).process;
+  const v = proc?.env?.[STOCK_EMITTER_WINDOW_NODE_ENV];
+  return v !== undefined && v !== "" ? v : undefined;
+}
 
 function stockEmitterIds(family: W3xArtFamily): readonly string[] {
-  const cached = stockIdCache.get(family);
+  // ⭐ 窗寬進 cache key，⛔ 不另外做一條作廢路徑：換了窗就是換一份候選清單。
+  const win = resolveStockEmitterWindow(stockEmitterWindowOverride());
+  const key = `${win}:${family}`;
+  const cached = stockIdCache.get(key);
   if (cached) return cached;
   const out: string[] = [];
   for (const model of W3X_ART_FAMILIES[family]?.models ?? []) {
-    for (let i = 0; i < MAX_STOCK_EMITTERS_PER_MODEL; i++) {
+    for (let i = 0; i < win; i++) {
       out.push(`fx.w3x.stock.${model}.p${String(i).padStart(2, "0")}`);
     }
   }
-  stockIdCache.set(family, out);
+  stockIdCache.set(key, out);
   return out;
 }
 const stockIdCache = new Map<string, readonly string[]>();
