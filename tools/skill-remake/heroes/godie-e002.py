@@ -168,6 +168,28 @@ A("20-03", "20-03 約束與勝利之劍", "ground", [60, 60, 60, 60], [250, 350,
        #    ⇒ 卡面上的射程與畫面上的長度不會互相說謊（第一·五守則）。
        # ⭐ 一鍵 rollback ＝ 把這一格拿掉（缺席 ⇒ [1,1,1] ⇒ 逐位元回到 2026-08-25）。
        "scaleAxis": [1, 1, 3.12],
+       # ⭐⭐ GH#721 · 2026-08-30【槍口偏移 —— 這一格是**翻譯**，⛔ 不是演出決定】
+       #    war3map.j:32315 逐字：
+       #        set udg_LocPoint3 = PolarProjectionBJ(udg_LocPoint1, **150.00**,
+       #                              AngleBetweenPoints(udg_LocPoint1, udg_LocPoint2))
+       #    而這一支的**每一個**生成點都吃 `udg_LocPoint3`，⛔ 不是施法者腳下：
+       #      j:32319 AddSpecialEffectLocBJ(LocPoint3, NEDeathSmall)
+       #      j:32321 AddSpecialEffectLocBJ(LocPoint3, NeutralBuildingExplosion)
+       #      j:32324 CreateNUnitsAtLoc(1,'h00S', …, **LocPoint3**, …)   ← 光束本體
+       #      j:32327 CreateNUnitsAtLoc(1,'h008', …, **LocPoint3**, …)   ← 爆殼（下面那一層）
+       #    換算 `GGD_PER_WC3 = 11/600`（templates/expand.ts:50）⇒ 150 × 11/600 = **2.75**。
+       # ⛔⛔ 為什麼它在 2026-08-30 之前不在這裡：GH#838 N1 把 `offsetForwardU` 這個
+       #    標籤做出來了，**卻只填了 09-04 龜派氣功**（`godie-{ogrh,o00x}.r` 三個節點）
+       #    —— 而 `Trig_Turtle_Power`(j:31898) 與 `Trig_Excalibur`(j:32315) 是**逐行同型**
+       #    的兩支觸發器，同一個 150.00。⇒ 那正是 CLAUDE.md 規矩 4 逐字說的
+       #    「逐支覆寫只證明了那一支，而預設仍在服務其他每一支」——⭐ 這一次那個
+       #    「預設」是**缺席 ⇒ 0**（`modelFxPlacement.ts:127` 的 `?? 0`）。
+       # ⚠️ 這一格**進不了家族預設**：`offsetForwardU` 不在 `tpl-beam-roll.params`，
+       #    也不在 `modelFxPreset.ts` 的 `PRESET_FIELDS` —— 而且家族母體本來就不一致
+       #    （59-04 `Trig_ElecPower`(j:47757) 是 `GetUnitLoc(caster)` ⇒ **真的是 0**）。
+       #    ⇒ 逐支是**對的**住處；不漏掉任何一支由 `beamMuzzleOffset.test.ts` 守。
+       # ⭐ 一鍵 rollback ＝ 把這一格拿掉（缺席 ⇒ 0 ⇒ 逐位元回到 2026-08-29）。
+       "offsetForwardU": 2.75,
        # ⭐ 2026-08-26 —— `arriveSoundKey` **從家族預設搬到節點上**：那個預設
        #    （"explosion"）沒有 JASS 出處，而 13 個引用節點裡有 6 個沒有落點畫面
        #    ⇒ 它們變成「聲音說爆炸、螢幕上什麼都沒有」（第一·五守則，閘
@@ -190,8 +212,12 @@ A("20-03", "20-03 約束與勝利之劍", "ground", [60, 60, 60, 60], [250, 350,
       #    可見 · 動畫 Birth · 記錄在 tools/w3x-import/out/stock/convert-fragdriller.json）。
       # ⚠️ 這一層**不帶 onArrive**：落點只炸一次（第一層已經有了），兩份 = 兩次爆炸。
       # ⚠️ 也**不帶 scaleAxis**：它是槍口的爆殼，⛔ 不是光束本體 —— 缺席 ⇒ 等向。
+      # ⭐ GH#721 —— `offsetForwardU` 同上一層：j:32327 的 `h008` 生成點逐字也是
+      #    `udg_LocPoint3`（＝施法者前方 150 wc3u）。⚠️ 兩層**同點疊加**是這一招
+      #    「很粗、多層」的來源 —— 只推一層會把疊加拆成前後兩處，比兩層都不推更糟。
       {"kind": "spawnModelFx", "shape": "single", "preset": "tpl-beam-roll",
-       "modelKey": "w3x.stock.fragdriller", "scale": 3.65, "clipTimeScale": 0.15},
+       "modelKey": "w3x.stock.fragdriller", "scale": 3.65, "clipTimeScale": 0.15,
+       "offsetForwardU": 2.75},
   ])
 
 A("20-04", "20-04 Avalon-永恆的理想鄉", "self", [60, 60, 60], [150, 250, 350], 0,

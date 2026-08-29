@@ -433,6 +433,7 @@
             1,
             3.12
           ],
+          "offsetForwardU": 2.75,
           "arriveSoundKey": "explosion",
           "onArrive": [
             {
@@ -455,7 +456,8 @@
           "preset": "tpl-beam-roll",
           "modelKey": "w3x.stock.fragdriller",
           "scale": 3.65,
-          "clipTimeScale": 0.15
+          "clipTimeScale": 0.15,
+          "offsetForwardU": 2.75
         },
         {
           "kind": "spawnVfx",
