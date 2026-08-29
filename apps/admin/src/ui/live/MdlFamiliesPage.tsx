@@ -12,19 +12,43 @@
  *
  * 樹狀表：MDL → dummy 單位（rawcode/scale）→ 生成點（j:行號）→ 原作技能 → GGD 落點
  * （出貨 abilityId + vfxKey / spawnModelFx.modelKey）＋推導的清算狀態。
+ *
+ * 💾 **可存**（GH#822）：「GGD 落點」那一欄底下四格走共用 `LiveEditCell`
+ * （顏色／大小／主 emitter／owner 縮放 → `content/config/vfx-ability-art.json`）。
+ * ⛔ 其餘每一欄都是 w3x 普查產物的推導值，⛔ 沒有鉛筆是刻意的；
+ * 而「有 family／promoted 證據」的那幾列連 prim 兩格都不畫 —— 改了玩家看不到
+ * （第一·五守則），伺服器端 `check()` 用同一條規則再擋一次。
  */
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import { Panel, TextInput } from "../widgets";
 import { DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
 import { ReviewStrip } from "./ReviewStrip";
+import { LiveEditCell } from "./LiveEditCell";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
+/**
+ * 💾 GH#822 —— 落點技能的**可編輯**四格（住 `content/config/vfx-ability-art.json`）。
+ * ⚠️ `deadPrim` 不是樣式旗標：有 family／promoted 證據的那幾列，改 prim 逐位等於
+ * 不存在（第一·五守則）⇒ 這裡**不畫鉛筆**，而伺服器端 check() 用同一條規則再擋一次。
+ */
+type Art = {
+  element: string | null;
+  size: string | null;
+  hasPrim: boolean;
+  deadPrim: "promoted" | "family" | null;
+  promotedPrimary: string | null;
+  ownerScale: number | null;
+  hasOwner: boolean;
+  ownerWhy: string | null;
+  family: string | null;
+};
 type ShippedRef = {
   id: string;
   name: string | null;
   vfxKey: string | null;
   modelKeys: string[];
+  art: Art | null;
   stale?: boolean;
 };
 type SkillJoin = {
@@ -130,8 +154,118 @@ function Td(props: {
   );
 }
 
+/** 一格：可編輯就畫 LiveEditCell，不可編輯就畫**為什麼**（⛔ 不是靜靜地不畫）。 */
+function ArtSlot(props: {
+  label: string;
+  children: React.ReactNode;
+}): React.JSX.Element {
+  return (
+    <span style={{ fontSize: 11, whiteSpace: "nowrap" }}>
+      <span style={{ color: TEXT_DIM }}>{props.label} </span>
+      {props.children}
+    </span>
+  );
+}
+
+/**
+ * 落點技能的四格編輯器 —— 全部走共用寫入端（POST /__live/mdl-families/save），
+ * 存完 `onSaved()` 重抓 ⇒ ⭐ 頁上看到的是**重讀後**的值，⛔ 不是「有呼叫 POST」。
+ */
+function ArtCells({
+  id,
+  art,
+  onSaved,
+}: {
+  id: string;
+  art: Art;
+  onSaved: () => void;
+}): React.JSX.Element {
+  const ptr = (tail: string): string => `/bindings/${id}/${tail}`;
+  const dim = (t: string) => <span style={{ color: TEXT_DIM }}>{t}</span>;
+  const primClosed =
+    art.deadPrim !== null
+      ? `⛔ ${art.deadPrim} 證據贏過 prim（改了玩家看不到）`
+      : !art.hasPrim
+        ? "⛔ 這一列沒有 prim 格"
+        : null;
+  return (
+    <div
+      style={{
+        display: "flex",
+        gap: 14,
+        flexWrap: "wrap",
+        marginLeft: 14,
+        marginTop: 3,
+        alignItems: "baseline",
+      }}
+    >
+      <ArtSlot label="顏色">
+        {primClosed !== null ? (
+          dim(`${art.element ?? "—"} ${primClosed}`)
+        ) : (
+          <LiveEditCell
+            dataset="mdl-families"
+            path="content/config/vfx-ability-art.json"
+            pointer={ptr("prim/element")}
+            current={art.element}
+            type="string"
+            onSaved={onSaved}
+          />
+        )}
+      </ArtSlot>
+      <ArtSlot label="大小">
+        {primClosed !== null ? (
+          dim(art.size ?? "—")
+        ) : (
+          <LiveEditCell
+            dataset="mdl-families"
+            path="content/config/vfx-ability-art.json"
+            pointer={ptr("prim/size")}
+            current={art.size}
+            type="string"
+            nullable
+            onSaved={onSaved}
+          />
+        )}
+      </ArtSlot>
+      {art.promotedPrimary !== null && (
+        <ArtSlot label="主 emitter">
+          <LiveEditCell
+            dataset="mdl-families"
+            path="content/config/vfx-ability-art.json"
+            pointer={ptr("promoted/primary")}
+            current={art.promotedPrimary}
+            type="string"
+            onSaved={onSaved}
+          />
+        </ArtSlot>
+      )}
+      <ArtSlot label="owner 縮放">
+        {art.hasOwner ? (
+          <LiveEditCell
+            dataset="mdl-families"
+            path="content/config/vfx-ability-art.json"
+            pointer={ptr("owner/scale")}
+            current={art.ownerScale}
+            type="number"
+            onSaved={onSaved}
+          />
+        ) : (
+          dim("⛔ 這一列還沒有 owner 覆寫格（要先在 JSON 補 owner{why}）")
+        )}
+      </ArtSlot>
+    </div>
+  );
+}
+
 /** 一列 dummy 的「原作技能 → GGD 落點」欄。 */
-function SkillCell({ skills }: { skills: SkillJoin[] }): React.JSX.Element {
+function SkillCell({
+  skills,
+  onSaved,
+}: {
+  skills: SkillJoin[];
+  onSaved: () => void;
+}): React.JSX.Element {
   if (skills.length === 0) {
     return <span style={{ color: TEXT_DIM, fontSize: 12 }}>⚪ 零生成點證據（w3a 通道待查）</span>;
   }
@@ -149,22 +283,25 @@ function SkillCell({ skills }: { skills: SkillJoin[] }): React.JSX.Element {
             <span style={{ color: WARN }}> ⚠️ 未對上出貨名冊</span>
           ) : (
             s.shipped.map((sh) => (
-              <span key={sh.id}>
-                {" → "}
-                <span style={{ fontFamily: MONO, color: sh.stale ? DANGER : GOLD }}>
-                  {sh.id}
-                  {sh.stale ? "（已不在出貨）" : ""}
-                </span>
-                {sh.vfxKey && (
-                  <span style={{ fontFamily: MONO, color: TEXT_DIM }}> {sh.vfxKey}</span>
-                )}
-                {sh.modelKeys.length > 0 && (
-                  <span style={{ fontFamily: MONO, color: TEXT_DIM }}>
-                    {" "}
-                    ⟨{sh.modelKeys.join(", ")}⟩
+              <Fragment key={sh.id}>
+                <span>
+                  {" → "}
+                  <span style={{ fontFamily: MONO, color: sh.stale ? DANGER : GOLD }}>
+                    {sh.id}
+                    {sh.stale ? "（已不在出貨）" : ""}
                   </span>
-                )}
-              </span>
+                  {sh.vfxKey && (
+                    <span style={{ fontFamily: MONO, color: TEXT_DIM }}> {sh.vfxKey}</span>
+                  )}
+                  {sh.modelKeys.length > 0 && (
+                    <span style={{ fontFamily: MONO, color: TEXT_DIM }}>
+                      {" "}
+                      ⟨{sh.modelKeys.join(", ")}⟩
+                    </span>
+                  )}
+                </span>
+                {sh.art !== null && <ArtCells id={sh.id} art={sh.art} onSaved={onSaved} />}
+              </Fragment>
             ))
           )}
         </div>
@@ -173,7 +310,7 @@ function SkillCell({ skills }: { skills: SkillJoin[] }): React.JSX.Element {
   );
 }
 
-function FamilyBlock({ fam }: { fam: Family }): React.JSX.Element {
+function FamilyBlock({ fam, onSaved }: { fam: Family; onSaved: () => void }): React.JSX.Element {
   const [open, setOpen] = useState(fam.dummyCount >= 4);
   return (
     <div style={{ border: PANEL_BORDER, borderRadius: 8, overflow: "hidden" }}>
@@ -245,7 +382,7 @@ function FamilyBlock({ fam }: { fam: Family }): React.JSX.Element {
                     )}
                   </Td>
                   <Td>
-                    <SkillCell skills={d.skills} />
+                    <SkillCell skills={d.skills} onSaved={onSaved} />
                   </Td>
                 </tr>
               ))}
@@ -264,22 +401,22 @@ export function MdlFamiliesPage(): React.JSX.Element {
   const [onlyMulti, setOnlyMulti] = useState(true);
   const [statusFilter, setStatusFilter] = useState<"all" | Family["status"]>("all");
 
-  useEffect(() => {
-    let dead = false;
-    fetch("/__live/mdl-families")
-      .then(async (r) => {
-        const body = (await r.json()) as Payload;
-        if (dead) return;
-        if (!r.ok || body.error) setError(body.error ?? `HTTP ${r.status}`);
-        else setData(body);
-      })
-      .catch((err) => {
-        if (!dead) setError(String(err));
-      });
-    return () => {
-      dead = true;
-    };
+  /** ⭐ 存完要重抓 —— 驗的是**重讀後**的值（LiveEditCell 的契約），⛔ 不是本地樂觀更新。 */
+  const load = useCallback(async () => {
+    setError(null);
+    try {
+      const r = await fetch("/__live/mdl-families");
+      const body = (await r.json()) as Payload;
+      if (!r.ok || body.error) setError(body.error ?? `HTTP ${r.status}`);
+      else setData(body);
+    } catch (err) {
+      setError(String(err));
+    }
   }, []);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
 
   const rows = useMemo(() => {
     if (!data) return [];
@@ -350,6 +487,16 @@ export function MdlFamiliesPage(): React.JSX.Element {
             引用出貨值，⛔ 零重算）。狀態欄是「落點對上幾成」的機器推導；
             人工清算裁決（刻意不轉等）看 docs/MDL特效家族總表.md。
           </div>
+          <div style={{ fontSize: 12, color: TEXT_MAIN, lineHeight: 1.6 }}>
+            💾 <b>可存的只有「GGD 落點」底下那四格</b>（顏色／大小／主 emitter／owner 縮放）——
+            存回{" "}
+            <code style={{ fontFamily: MONO }}>content/config/vfx-ability-art.json</code>
+            ，那份文件的 <code style={{ fontFamily: MONO }}>prim／owner／promoted</code>{" "}
+            三格<b>沒有上游</b>（產生器只重寫 <code style={{ fontFamily: MONO }}>family</code>{" "}
+            那一格）。⛔ 有 family／promoted 證據的列不畫顏色／大小的鉛筆 —— 那是死改動；
+            要推翻原作請改 <code style={{ fontFamily: MONO }}>owner</code> 那一格
+            （schema 要求逐格附 <code style={{ fontFamily: MONO }}>why</code>）。
+          </div>
           <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
             {statCell("MDL 總數", st.mdlCount)}
             {statCell("多 dummy 家族", st.multiDummyMdl)}
@@ -409,7 +556,7 @@ export function MdlFamiliesPage(): React.JSX.Element {
       </Panel>
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
         {rows.map((f) => (
-          <FamilyBlock key={f.stem} fam={f} />
+          <FamilyBlock key={f.stem} fam={f} onSaved={() => void load()} />
         ))}
       </div>
       <div style={{ fontSize: 11, color: TEXT_DIM, fontFamily: MONO }}>
