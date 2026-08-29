@@ -48,6 +48,11 @@ RE_TYPE='\[(breaking change|fix|improve|feature|refactor|perf|docs|test|chore|bu
 # ⚠️ lint **不強制**它（⛔ 我判斷不出一張既有票當初是誰決定的），
 #   ⭐ 但它**驗位置**：有的話要在**最前面** —— owner 掃的是標題開頭。
 RE_AUTO='\[自動\]' 
+# ⭐ 「這個數字還住在哪裡？」（2026-08-29 立，一天中六次）——
+#   ⚠️ lint **只警告**：⛔ 不是每一張票都在寫入一個值（infra/docs 票就沒有）。
+#   ⭐ 而它出現在**警告清單**裡就夠了 —— 開票的人會看到那一行。
+RE_HOME='第二個住處|還住在哪裡'
+
 RE_STRAT='\[思考策略\]|##[[:space:]]*思考策略'
 RE_TPL='\[解決模板\]|##[[:space:]]*解決模板'
 
@@ -176,6 +181,10 @@ lint_text() { # $1=標籤 $2=標題 $3=內文
   echo "$3" | grep -qiE "$RE_DEPS"     || advisory+=("Dependencies")
   echo "$3" | grep -qiE "$RE_NONGOALS" || advisory+=("Non-goals")
   echo "$3" | grep -qiE "$RE_RISKS"    || advisory+=("Known risks")
+  # ⭐「這個數字還住在哪裡？」—— 2026-08-29 一天中**六次**（鏡射／vfxKey／上下界／
+  #   卡面／claims 兩個消費端／契約說明）。⚠️ 每一次症狀都不一樣,⛔ 讀起來像六個病。
+  #   ⚠️ 只警告:⛔ 不是每張票都在寫入一個值（infra／docs 票就沒有）。
+  echo "$3" | grep -qE "$RE_HOME"      || advisory+=("第二個住處（這個值還住在哪裡？）")
   if [ ${#advisory[@]} -gt 0 ] && [ ${#missing[@]} -eq 0 ]; then
     local aj=""; for a in "${advisory[@]}"; do aj="${aj}${aj:+ · }${a}"; done
     echo "ℹ️ $1 建議補(⛔ 不擋):${aj}"
