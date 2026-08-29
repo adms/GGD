@@ -60,7 +60,18 @@ BUNDLE="$OUT/ggd-export_temp_$STAMP"
 #   已壓縮   → ⭐ owner 2026-08-28:「已經有壓縮檔就不要搬遷原檔」
 #              ⇒ log 這一類:壓一份進包,**原檔留在原地**
 CARRY=(accounts matches match-stats rankings walletmeta friends invites
-       admin-audit curation content-overlay history review-verdicts)
+       admin-audit curation content-overlay history review-verdicts config)
+# ⛔⛔ `config` 是 2026-08-30 **複驗**補上的 —— ⭐ 而漏掉它的代價比漏掉別的都大。
+#   ① 它是 `scope.go:120` 的 `colConfig`（== opsenv == ai），真的住在 `data/config/`，
+#      而 `scope.go:258-269` 的 ZIP 路徑**刻意**枚舉並匯出 combat-env / server-ops。
+#   ② ⭐ 那兩份就是**後台 override** —— CLAUDE.md 逐字：
+#      「後台的 override **會蓋掉 `content/` 的檔案**」
+#      ⇒ 丟掉它 ＝ 部署成功、煙霧全綠、⛔ **而玩家那一場的數值悄悄變回檔案值**。
+#   ③ ⚠️ 而它在**這台筆電**上不存在（本機沒跑過 platform）⇒ 上面新增的反方向掃描
+#      在這裡是綠的，⛔ 而在正式機／mini 上會 **die** —— ⭐ 一條 fail-closed 的閘
+#      用**開發機的目錄清單**當母體，會在**真正要用它的那一天**才第一次說話。
+#   ⇒ ⭐ 判準：反方向掃描的**宣告清單**要從「這份資料在哪裡被定義」推導
+#      （`scope.go` 的 rules），⛔ 不是從「我這台機器的 `ls data/`」。
 # ⭐ `journal` 是一格**開關**（2026-08-30）—— 預設**不帶**，理由見 LEAVE_BEHIND。
 #   ⛔⛔ 在此之前它無條件在 CARRY 裡，而**三份出貨的東西都說不要帶它**：
 #     · `scope.go:161` 的 ExcludedItems（ZIP 那條路）

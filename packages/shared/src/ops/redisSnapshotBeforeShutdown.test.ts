@@ -60,7 +60,28 @@ function recreatesRedis(line: string): boolean {
 
 /** 一行程式碼（⛔ 註解與 warn/die 字串裡的示範指令不算「會執行」）。 */
 function codeLines(src: string): { n: number; text: string }[] {
-  return src.split("\n").map((text, i) => ({ n: i + 1, text })).filter(
+  // ⛔⛔ **續行要先接起來**（2026-08-30 複驗抓到的，突變存活）——
+  //   `mini-deploy.sh` 的 tunnel 那條路寫成：
+  //       r "cd $REPO && docker compose -f a.yaml \
+  //            -f b.yaml --env-file … up -d --scale caddy=0"
+  //   ⇒ 逐行看的話 **`docker compose` 與 `up -d` 落在不同行**，兩行都不匹配
+  //   ⇒ ⭐ 把那條路的快照呼叫**整行刪掉，這條守衛照樣綠**。
+  //
+  // ⚠️ ⭐ 而校準當時是綠的 —— 因為校準用的是**我自己編的單行字串**
+  //   （`recreatesRedis("docker compose up -d --scale caddy=0")`），
+  //   ⛔ 不是出貨的那一行（失敗形態⑤：被測的不是出貨的那個）。
+  //   ⇒ 下面的 CALIBRATION 現在改成從**出貨檔案**取真的那幾行。
+  const joined: { n: number; text: string }[] = [];
+  const raw = src.split("\n");
+  for (let i = 0; i < raw.length; i++) {
+    let text = raw[i] ?? "";
+    const start = i + 1;
+    while (/\\\s*$/.test(text) && i + 1 < raw.length) {
+      text = text.replace(/\\\s*$/, " ") + (raw[++i] ?? "").trim();
+    }
+    joined.push({ n: start, text });
+  }
+  return joined.filter(
     (l) => !/^\s*#/.test(l.text) && !/^\s*(warn|info|say|die|ok)\s/.test(l.text),
   );
 }

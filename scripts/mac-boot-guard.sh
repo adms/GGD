@@ -152,6 +152,15 @@ cmd_start() {
   fi
 
   head_ "啟動"
+  # ⭐⭐ 先快照（GH#860，2026-08-30 **複驗**才抓到的第三條路）——
+  #   ⚠️ 下面那行 `up -d` **不指名服務** ⇒ 它會重建**每一個**服務，含 redis。
+  #   而 redis 裡住的是**排行榜與 M幣錢包**（⛔ 不是快取）。
+  #   ⛔⛔ 為什麼這一條在此之前是隱形的：偵測器**逐行**比對，而這個指令
+  #     拆成**續行**（`… compose -f a -f b \` ／ `--env-file … up -d`）
+  #     ⇒ 兩行都不匹配 ⇒ ⭐ 守衛對它結構性失明。
+  #   ⇒ 這條路特別危險：它是**開機守衛**，也就是「機器重開之後自動跑的那一支」——
+  #     ⭐ 一次沒人在看的重開機，就是資料消失而沒有人按下任何按鈕。
+    bash "$REPO/scripts/redis-snapshot.sh" || warn "快照失敗 —— 仍然繼續啟動（⛔ 不讓備份擋住復站）"
   ( cd "$REPO" && docker compose -f docker/compose.yaml -f docker/compose.family.yaml \
       --env-file docker/.env up -d ) || { announce failed "compose up 失敗"; return 1; }
 
