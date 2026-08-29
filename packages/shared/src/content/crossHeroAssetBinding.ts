@@ -20,10 +20,12 @@
  * 重跑一次、對**它真的檢查過的 1,259 個參照**做欄位直方圖：
  *
  *     775  圖示（`abilities.icon` 420 ＋ 各槽 icon ＋ `champions.icon`）
- *     ...  其餘全是 ability-id 交叉引用（`exAbility` / `passiveAbility` /
- *          `counterpartId` / `skins.championId` …）
- *       0  ⛔ **語音**
- *       0  ⛔ **音效／特效綁定**
+ *     484  ability-id 交叉引用（`champions.abilities.{Q,W,E,R}.id` 284 ·
+ *          `exAbility` 68 · `passiveAbility` 68 · `counterpartId` 40 ·
+ *          `vfx-scripts.abilityId` 10 · `skins.championId` 5 · `projectileId` 4 · 增益 5）
+ *       0  ⛔ **語音**（⭐ 一筆都沒有）
+ *       0  ⛔ **音效資產**（`ability-vfx-bindings.json` / `audio-map.json` /
+ *          `champion-voices.json` —— ⭐ **整份文件被跳過**，⛔ 不是「掃了但沒中」）
  *
  * ⇒ 它是一條**圖示 ＋ ability-id** 守衛。兩個結構性的原因，兩個都在這裡修掉：
  *
@@ -43,12 +45,31 @@
  *    ⚠️ 「開頭」是承重的：`champ.sela` / `imported.heropikachu` / `fx.*` 靠它留在
  *    共用池（`sela` 在 `champ.` **後面**）。實測 roster **零組**英雄 id 互為邊界前綴。
  *
- * ⭐ 修完之後量到的覆蓋（同一棵樹）：**1,259 → 1,827** 個參照，其中
- *     **語音 479**（`taunts[].out` 204 ＋ `champ-names.ja-JP[].out` 71 ＋
- *                   `victory-taunts.roundWin.<英雄>.lines[].file` 204）
- *     **音效/特效綁定 57**（`ability-vfx-bindings.bindings[].abilityId`）
- * ⛔ 兩者在上一版都是 **0**。而**跨家族違規今天是 0 筆** ⇒ ⛔ 不會一上線就紅一片
- * （票的 Known risks 逐字要求先全量跑過再開紅）。
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⭐ 修完之後的覆蓋 —— ⚠️ **兩個分母，刻意分開列**
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⚠️ 量法：把**兩版的實作各複製一份**、拿掉家族早退（⇒ `out` 收下每一筆被檢查的），
+ * 對同一棵出貨樹跑。⭐ 校準：舊版量到 **1,259** —— 與稽核留言獨立數出的數字**逐位相同**，
+ * ⇒ 這把尺對得上一個**已知值**（⛔ 不是只驗單邊）。舊版 **1,259 → 新版 2,411**，而
+ * ⛔ **那 1,152 的差不是同一種東西**：
+ *
+ *   **① 資產綁定（票要的那個面）＋479**，全部是**語音**，上一版**一筆都沒有**：
+ *        204  `audio-manifests/taunts[].out`
+ *        204  `config/victory-taunts.roundWin.<英雄>.lines[].file`
+ *         71  `audio-manifests/champ-names.ja-JP[].out`
+ *   **② 宣告一致性 ＋673**（同層/自身的 `id` 對上更強的宣告 —— ＝「複製一筆、改了 key
+ *      卻忘了改裡面的 id」）：`abilities.id` 420 · `victory-taunts…lines[].id` 204 ·
+ *      `champions.id` 71 · `vfx-scripts.id` 10 · `vfx`/`models`/`projectiles`.id 8。
+ *
+ * ⚠️⚠️ ⭐ **而「音效」這一面今天是誠實的零**：`ability-vfx-bindings.json` 上一版**整份
+ * 被跳過**，這一版**掃得到**（57 筆 `bindings[].abilityId` 解析得出綁定端）——
+ * ⛔ 但它的 `vfxKeys` 今天 **134 筆裡 0 筆**帶英雄名（全是 `fx.w3x.*` 共用池），
+ * ⇒ **覆蓋是真的，被裁決的資產參照是 0**。⛔ 不要把它讀成「音效面已經驗過了」；
+ * ⭐ 它的意思是「音效面**接上了**，哪天有人往那裡塞一個英雄專屬 key 才會有話講」。
+ * （同理 `config/champion-voices.json` 也已納入掃描，其 13 個 clip 路徑今天 0 筆帶英雄名。）
+ *
+ * ⭐ 而**跨家族違規今天是 0 筆** ⇒ ⛔ 不會一上線就紅一片（票的 Known risks 逐字要求
+ * 先全量跑過再開紅）。掃描母體：**1,771 份**出貨文件。
  *
  * ─────────────────────────────────────────────────────────────────────────────
  * ⭐ 家族**從出貨的變身態關係推導**，⛔ 不是手寫一張表
