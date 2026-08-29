@@ -291,6 +291,18 @@ cmd_verify() {
   #     hunting for missing files that are not missing. Measured 2026-08-28 on
   #     arm64 while rehearsing the Mac mini move (GH#861).
   #
+  # ⚠️ THE SIGN WAS THE BUG — THE WORD WAS NOT (GH#864). Splitting the branches
+  #    also dropped "short by" from the shortfall arm, and the boot gate
+  #    (blizzardOverlayBoot.test.ts, "names HOW MANY are wrong") pins exactly
+  #    that phrase — so from 2026-08-28 it failed on every correct checkout.
+  #    ⭐ A gate nobody has seen green is the same as no gate at all, and the
+  #    thing it guards is a family deploy silently booting a third of the
+  #    roster as generic stand-ins. So the shortfall arm says "short by N"
+  #    again — truthfully, because in THIS branch N is positive by
+  #    construction — while a surplus keeps its own EXTRA wording.
+  #    ⛔ Do not merge these two arms back together to save a line: one message
+  #    for both directions is what printed "short by -61".
+  #
   # ⭐ Why a SURPLUS must still fail: the manifest is a byte-exact contract, and
   #    an unexpected file in the tree means the copy is not the thing that was
   #    signed. The comparison was always right; only the wording lied.
@@ -301,7 +313,7 @@ cmd_verify() {
   #    are surpluses. So name them — the fix is `find … -delete`, not a re-ship.
   if [ "$got_files" != "$want_files" ]; then
     if [ "$got_files" -lt "$want_files" ]; then
-      echo "$SELF: FAIL — '$set_name' has $got_files files, manifest says $want_files (MISSING $((want_files - got_files)))." >&2
+      echo "$SELF: FAIL — '$set_name' has $got_files files, manifest says $want_files (short by $((want_files - got_files)) — files MISSING from the copy)." >&2
     else
       echo "$SELF: FAIL — '$set_name' has $got_files files, manifest says $want_files (EXTRA $((got_files - want_files)) — the copy has files the manifest never signed)." >&2
       # The actionable half: show what the extras actually are.

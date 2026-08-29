@@ -17,8 +17,32 @@ import { useHud } from "../../net/RoomStore";
 import { HUD_STAMP_BAND, HUD_Z } from "./hudLayout";
 import { selfStatusRows, statusColor, type SelfStatusRow } from "./selfStatusModel";
 
+/**
+ * REACT KEYS — ⛔ 不可以是裸的 `statusId`（GH#837）。
+ *
+ * 線上的 `statusIds` / `statusRemainTicks` 是**逐層**的兩條對齊陣列，⛔ 不是一個
+ * 集合：兩個來源各給一層 30% 減速 ⇒ 陣列裡真的有**兩筆 `slow30`**，而
+ * `selfStatusRows()` 刻意保留兩列（兩層 = 兩顆圖示，玩家要看得到自己疊了幾層）。
+ * ⇒ 拿 `r.id` 當 key 就是**兩個 child 同一把 key**：戰鬥中每幀刷 React 警告，
+ * 而 React 的語意是重複 key 的 child **可能被吃掉** —— 少畫的那一顆正是
+ * 「我身上疊了第二層」這個資訊。
+ *
+ * ⭐ 用**同 id 的第幾次出現**當後綴，⛔ 不是陣列 index：上面插進一列不相干的
+ * 狀態時，index 會讓後面每一列的 key 全部位移（整批重掛），而出現序不會動。
+ * 第一次出現保持裸 id，所以最常見的「每個狀態各一層」逐字元不變。
+ */
+export function selfStatusRowKeys(rows: readonly SelfStatusRow[]): string[] {
+  const seen = new Map<string, number>();
+  return rows.map((r) => {
+    const nth = (seen.get(r.id) ?? 0) + 1;
+    seen.set(r.id, nth);
+    return nth === 1 ? r.id : `${r.id}#${nth}`;
+  });
+}
+
 export function SelfStatusBarView({ rows }: { rows: readonly SelfStatusRow[] }): React.JSX.Element | null {
   if (rows.length === 0) return null;
+  const keys = selfStatusRowKeys(rows);
   return (
     <div
       data-self-status="root"
@@ -40,11 +64,11 @@ export function SelfStatusBarView({ rows }: { rows: readonly SelfStatusRow[] }):
       role="status"
       aria-live="polite"
     >
-      {rows.map((r) => {
+      {rows.map((r, i) => {
         const c = statusColor(r);
         return (
           <div
-            key={r.id}
+            key={keys[i]}
             data-status-id={r.id}
             data-status-polarity={r.polarity}
             style={{
