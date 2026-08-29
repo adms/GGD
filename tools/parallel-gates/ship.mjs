@@ -46,7 +46,7 @@
  * ⛔ 認不得的包名一律回非零,⛔ 不靜默略過(那會變成「我以為它跑了」)。
  */
 import { execFileSync, spawn } from "node:child_process";
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { cpus } from "node:os";
 import { packagesWithVitest, suitesForPaths } from "./packages.mjs";
 import { planFromPaths } from "./syncPlan.mjs";
@@ -348,31 +348,140 @@ mkdirSync(LOGDIR, { recursive: true });
  * ⏲️ **逐 suite 看門狗**（owner 2026-08-24：「工作流跑超過5分鐘,你應該要去看
  * 是不會陷入loop了」）—— 2026-08-23 實測 `packages/shared` 的 vitest 在併行負載下
  * **worker 卡死（0% CPU）**,而沒有看門狗的那一版等了 11 分鐘。
- * 逾時 = max(5 分鐘, 帳本估時×3) → SIGKILL → 記成紅並在訊息裡寫「hung」,
- * ⛔ 不是永遠等。被殺的那一支單獨重跑幾乎都會過（單獨跑沒有撞車）。
+ *
+ * ⛔⛔ **GH#858 —— 這隻看門狗在 2026-08-30 之前有三個缺陷,而它們合起來的症狀
+ * 正是「卡死看起來像綠燈」。三個都是量到的,⛔ 不是推測：**
+ *
+ *   ① ⭐ **`estMs` 是死參數。** 兩個呼叫點都只傳三個引數
+ *      （`run(s,"pnpm",[s])` / `run(job.name,job.cmd[0],job.cmd[1])`）
+ *      ⇒ `estMs` 永遠是預設的 0 ⇒ `limit` 永遠 = 5 分鐘的地板。
+ *      檔頭寫的「帳本估時×3」**一次都沒有發生過**。
+ *      而帳本量到 `packages/shared` 正常要 **225–283s**（且在長大）——
+ *      距離 300s 的地板只剩 6% 餘裕。2026-08-28 11:40–12:18 **連續四次**
+ *      shared 與 client 一起在 300s 被砍,記成 `hung`。
+ *      ⇒ ⭐ 那是**假紅**,而且它**蓋掉了真紅** —— 同一支在 05:37／05:46／06:56
+ *        本來是 `code 1`（真的有測試在紅）,被砍之後永遠跑不到它自己的結論。
+ *
+ *   ② ⭐ **`p.kill()` 只殺得到直屬子行程。** 2026-08-30 在真的跑裡量到的行程樹是
+ *      `node ship.mjs` → **`npm exec vitest …`（直屬子）** → `node (vitest)` → `node (vitest N)` fork。
+ *      SIGKILL 打在 `npm exec` 上,孫、曾孫**全部活著**,而它們握著 stdout/stderr 的 pipe
+ *      ⇒ ⭐ **`'close'` 事件永遠不來** ⇒ 這個 Promise 永遠不 resolve
+ *      ⇒ `Promise.all(workers)` 永遠不 resolve ⇒ **看門狗「開火」之後 ship.mjs 靜靜卡死**。
+ *      （最小重現驗過：SIGKILL 直屬子之後 `exit` 有來、`close` 沒來。）
+ *      ⚠️ 帳本上那四次之所以還記得到,是因為孤兒 vitest **剛好自己跑完了** ——
+ *        「300s 開火」與記錄到的 310–347s 之間那 10–47 秒,就是孤兒的指紋。
+ *        孤兒**真的**卡在 0% CPU 時,那個差就是無限大。
+ *
+ *   ③ ⭐ **開火的當下終端上一個字都沒有。** 那句 hung 訊息被推進 `out[]`,
+ *      而 `out[]` 只有在 `close` 時才寫進 log ⇒ 卡死期間「還在跑」與「已經被判死」
+ *      **長得一模一樣** ⇒ 人 Ctrl-C 掉它,而 Ctrl-C 掉的那一次**帳本上什麼都沒有**。
+ *
+ * ── ⭐ 修法（三個都修,⛔ 不是只修最上面那個）──────────────────────────────
+ *   ① 估時**真的**從帳本讀（`estimateMs`,同一份 `deploy-timings.json`）並傳進來;
+ *      地板抬到 10 分鐘 —— 一支正常 283s 的 suite ⛔ 不可以被判死。
+ *   ② `detached:true` 讓子行程自成一個 **process group**,逾時殺 `-pid`（**整組**）,
+ *      SIGTERM → 寬限 → SIGKILL。⇒ 孤兒不再握著 pipe,也不再繼續吃 CPU 拖垮同儕。
+ *   ③ ⭐⭐ **無論如何都會 settle**：`close` 沒來就靠 `exit`＋寬限計時器收尾,
+ *      再不行就在硬上限收尾。⛔ **這支腳本再也不會「等下去」。**
+ *      而且開火的當下**立刻印到 stderr**,⛔ 不是只寫進 log。
+ *   ⇒ 逾時 = **非零離開碼（124）** ＋ 名字帶 `（hung,看門狗殺的）` ＋ 進最後那張失敗表。
+ *
+ * 🔙 **rollback（這支腳本自己的慣例就是環境變數:`GGD_SHIP_CONCURRENCY`／`GGD_SYNC_CONVERGE`）**
+ *   `GGD_SHIP_WATCHDOG_FLOOR_MS=300000` 退回舊地板 · `GGD_SHIP_WATCHDOG_MULT=0` 退回「只看地板」
+ *   `GGD_SHIP_WATCHDOG_OFF=1` 整隻關掉（⚠️ 那就回到「等 11 分鐘」的那一版）
  */
-const WATCHDOG_FLOOR_MS = 5 * 60 * 1000;
+const WATCHDOG_FLOOR_MS = Number(process.env.GGD_SHIP_WATCHDOG_FLOOR_MS ?? 10 * 60 * 1000);
+const WATCHDOG_MULT = Number(process.env.GGD_SHIP_WATCHDOG_MULT ?? 3);
+// 送出 SIGKILL（或看到 exit）之後,還等多久 `close` —— 等不到就自己收尾。
+const WATCHDOG_GRACE_MS = Number(process.env.GGD_SHIP_WATCHDOG_GRACE_MS ?? 20000);
+
+/**
+ * ⭐ 這一支上一次跑了多久 —— 從**同一份**帳本讀中位數（⛔ 不是另開一份估時表）。
+ * ⚠️ 被看門狗殺過的那幾筆名字帶著「（hung,看門狗殺的）」⇒ 它們是**不同的 key**,
+ *    ⭐ 自動不會污染中位數（⛔ 拿被砍的長度去算下一次的上限 = 上限每次自己長高）。
+ * ⚠️ 讀不到／沒有歷史 ⇒ 回 0 ⇒ 落到地板（fail-safe:寧可等久一點,⛔ 不要誤殺）。
+ */
+const LEDGER_PATH = `${REPO}docs/_data/deploy-timings.json`;
+function estimateMs(name) {
+  try {
+    const led = JSON.parse(readFileSync(LEDGER_PATH, "utf8"));
+    const xs = [];
+    for (const r of led.runs ?? []) for (const st of r.stages ?? []) if (st.name === `ship:${name}`) xs.push(st.ms);
+    if (!xs.length) return 0;
+    xs.sort((a, b) => a - b);
+    return xs[Math.floor(xs.length / 2)];
+  } catch {
+    return 0;
+  }
+}
+
+/** ⭐ 還活著的子行程群組 —— Ctrl-C 時要把它們一起帶走（`detached` 讓它們不再自動跟著死）。 */
+const LIVE_GROUPS = new Set();
+const killGroup = (pid, sig) => {
+  try { process.kill(-pid, sig); } catch { /* 已經走了 */ }
+};
+for (const sig of ["SIGINT", "SIGTERM", "SIGHUP"]) {
+  process.on(sig, () => {
+    for (const pid of LIVE_GROUPS) killGroup(pid, "SIGKILL");
+    process.exit(130);
+  });
+}
+process.on("exit", () => { for (const pid of LIVE_GROUPS) killGroup(pid, "SIGKILL"); });
 
 function run(name, bin, args, estMs = 0) {
   return new Promise((res) => {
     const t = Date.now();
     const log = `${LOGDIR}/${name.replace(/[^a-z0-9]+/gi, "_")}.log`;
     const out = [];
-    const p = spawn(bin, args, { cwd: REPO, env: process.env });
-    const limit = Math.max(WATCHDOG_FLOOR_MS, estMs * 3);
+    // ⭐ `detached:true` ⇒ 子行程自成 process group ⇒ 逾時殺得掉**整棵樹**
+    //    （`npm exec` → `node (vitest)` → fork）。⛔ 沒有它,SIGKILL 只殺得到最上面那一層。
+    const p = spawn(bin, args, { cwd: REPO, env: process.env, detached: true });
+    if (p.pid) LIVE_GROUPS.add(p.pid);
+    const est = Number.isFinite(estMs) ? estMs : 0;
+    const limit = process.env.GGD_SHIP_WATCHDOG_OFF === "1"
+      ? Number.POSITIVE_INFINITY
+      : Math.max(WATCHDOG_FLOOR_MS, est * WATCHDOG_MULT);
     let hung = false;
-    const dog = setTimeout(() => {
-      hung = true;
-      out.push(Buffer.from(`\n⏲️ 看門狗:${name} 超過 ${(limit / 60000).toFixed(1)} 分鐘 —— 判定 hung,SIGKILL。單獨重跑通常會過(併行撞車)。\n`));
-      p.kill("SIGKILL");
-    }, limit);
+    let settled = false;
+    let grace = null;
+    const settle = (code, note) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(dog);
+      if (grace) clearTimeout(grace);
+      if (p.pid) { LIVE_GROUPS.delete(p.pid); killGroup(p.pid, "SIGKILL"); }
+      if (note) out.push(Buffer.from(note));
+      try { writeFileSync(log, Buffer.concat(out)); } catch { /* log 寫不出來不擋收尾 */ }
+      res({ name: hung ? `${name}（hung,看門狗殺的）` : name, code, ms: Date.now() - t, log });
+    };
+    const dog = Number.isFinite(limit)
+      ? setTimeout(() => {
+          hung = true;
+          const msg =
+            `\n⏲️ 看門狗:${name} 超過 ${(limit / 60000).toFixed(1)} 分鐘` +
+            `（帳本估 ${(est / 1000).toFixed(0)}s × ${WATCHDOG_MULT},地板 ${(WATCHDOG_FLOOR_MS / 60000).toFixed(0)}m）` +
+            ` —— 判定 hung,殺**整個 process group**。單獨重跑通常會過(併行撞車)。\n`;
+          out.push(Buffer.from(msg));
+          // ③ ⭐ **立刻印到終端** —— ⛔ 不是只寫進 log（不然卡死期間看起來就是「還在跑」）。
+          process.stderr.write(msg);
+          if (p.pid) { killGroup(p.pid, "SIGTERM"); setTimeout(() => killGroup(p.pid, "SIGKILL"), 2000); }
+          // ⭐⭐ 硬收尾：`close` 不來也要 settle（⛔ 這支腳本不再「等下去」）。
+          grace = setTimeout(
+            () => settle(124, `\n⛔ 看門狗殺完之後 ${(WATCHDOG_GRACE_MS / 1000).toFixed(0)}s 內 'close' 沒來（孤兒還握著 pipe）—— 強制收尾。\n`),
+            WATCHDOG_GRACE_MS,
+          );
+        }, limit)
+      : null;
     p.stdout.on("data", (d) => out.push(d));
     p.stderr.on("data", (d) => out.push(d));
-    p.on("close", (code) => {
-      clearTimeout(dog);
-      writeFileSync(log, Buffer.concat(out));
-      res({ name: hung ? `${name}（hung,看門狗殺的）` : name, code: hung ? 1 : (code ?? 1), ms: Date.now() - t, log });
+    // ⚠️ `error`（bin 不存在之類）也要 settle,⛔ 不然那一格也是永遠不回來。
+    p.on("error", (e) => settle(127, `\n⛔ 起不來: ${String(e)}\n`));
+    // ⭐ `exit` 比 `close` 早（`close` 要等 stdio 全關）—— 開一個寬限,等不到 close 就自己收。
+    p.on("exit", (code) => {
+      if (settled) return;
+      grace ??= setTimeout(() => settle(hung ? 124 : (code ?? 1)), WATCHDOG_GRACE_MS);
     });
+    p.on("close", (code) => settle(hung ? 124 : (code ?? 1)));
   });
 }
 
@@ -394,7 +503,7 @@ if (!noSync) {
   });
   for (const s of SERIAL) {
     process.stdout.write(`🔒 ${s} …`);
-    const r = await run(s, "pnpm", [s]);
+    const r = await run(s, "pnpm", [s], estimateMs(s)); // ⭐ GH#858:估時**真的**傳進去
     results.push({ ...r, phase: "serial" });
     process.stdout.write(` ${(r.ms / 1000).toFixed(1)}s ${r.code === 0 ? "✓" : "✗"}\n`);
     // ⛔ 序列段紅了就停:下游全部會拿到過期的產物,再跑只是製造誤導的紅燈。
@@ -417,7 +526,7 @@ if (!onlySync) {
     for (;;) {
       const job = queue.shift();
       if (!job) return;
-      const r = await run(job.name, job.cmd[0], job.cmd[1]);
+      const r = await run(job.name, job.cmd[0], job.cmd[1], estimateMs(job.name)); // ⭐ GH#858
       results.push({ ...r, phase: "parallel" });
       process.stdout.write(`   ${r.code === 0 ? "✓" : "✗"} ${job.name} ${(r.ms / 1000).toFixed(1)}s\n`);
     }
@@ -433,8 +542,14 @@ if (!onlySync) {
 const wall = (Date.now() - T0) / 1000;
 const serialMs = results.filter((r) => r.phase === "serial").reduce((s, r) => s + r.ms, 0);
 const parMs = results.filter((r) => r.phase === "parallel").reduce((s, r) => s + r.ms, 0);
-for (const r of results) appendStage(`ship:${r.name}`, r.ms, r.code, { phase: r.phase });
-appendStage("ship:total", Math.round(wall * 1000), results.some((r) => r.code !== 0) ? 1 : 0, {
+// ⛔ `GGD_SHIP_NO_LEDGER=1` —— **乾跑不要寫帳本**。
+//    ⚠️ 這是 GH#858 的守衛逼出來的：那條守衛把 `ship.mjs` **真的**跑起來（失敗形態⑤：
+//    ⛔ 不自己重寫一份 `run()`），於是它每跑一次就往帳本塞 7 筆假的時間,
+//    而 `KEEP_RUNS=60` ⇒ ⭐ **每跑一次守衛就擠掉一筆真的部署紀錄**。
+//    ⇒ 乾跑關掉寫入。⛔ 正常出貨不要設它（那會讓下一次的看門狗估時失去依據）。
+const noLedger = process.env.GGD_SHIP_NO_LEDGER === "1";
+for (const r of results) if (!noLedger) appendStage(`ship:${r.name}`, r.ms, r.code, { phase: r.phase });
+if (!noLedger) appendStage("ship:total", Math.round(wall * 1000), results.some((r) => r.code !== 0) ? 1 : 0, {
   phase: "summary",
   serialSec: Number((serialMs / 1000).toFixed(1)),
   parallelCpuSec: Number((parMs / 1000).toFixed(1)),
