@@ -13,6 +13,13 @@ that whole family, one missing conversion step and not 135 content problems.
     python3 tools/w3x-import/convert_stock_model.py monsoonbolttarget
     python3 tools/w3x-import/convert_stock_model.py --list
     python3 tools/w3x-import/convert_stock_model.py monsoonbolttarget --dry-run
+    python3 tools/w3x-import/convert_stock_model.py --inventory       # GH#753 盤點
+
+⭐ GH#753 —— 這個入口以前對 **RIBB（緞帶發射器）完全失明**（`grep -ic ribb`
+= 0），所以一顆帶 8 條緞帶的模型轉進來之後，轉檔紀錄**看起來是完整的**而少了
+一整族 emitter。現在每一次轉檔都附 `ribbons`（陷阱②的同一條判準：看峰值），
+而 `--inventory` 是唯讀的盤點表（PRE2 條數 × RIBB 條數 × 畫不畫得出像素），
+供 `extract_particles.py` 的 `ribbon@1` 出口按「擋住幾支」排序。
 
 ⭐ Why a table and not one invocation per model (第零守則⑨): every stock model
 needs the identical four steps (locate in the MPQ chain → drop the .mdx into a
@@ -110,7 +117,19 @@ STOCK_MODELS: dict[str, str] = {
     #    ⇒ 它從寫下的那天起就不可重現(第三守則:一句被散文守著的宣稱活過了保存期限)。
     #    真值取自 OBJECTS.json.units.h007.model,與 war3map.j 的 dummy 完全一致。
     "revivehuman": "Abilities\\Spells\\Human\\ReviveHuman\\ReviveHuman.mdl",
-    "flamestrike1": "Abilities\\Spells\\Other\\Doom\\FlameStrike1.mdl",
+    # ⚠️ GH#753 —— 這一列的路徑在 2026-08-29 之前是
+    #    `Abilities\\Spells\\Other\\Doom\\FlameStrike1.mdl`,而**四個 MPQ 裡都沒有它**
+    #    ⇒ 這一列跑起來永遠是 `not-in-mpq`。⭐ 與上面 GH#702 那一列**完全同型**
+    #    （第三守則:一句被散文守著的路徑活過了它的保存期限,而沒有任何東西變紅 ——
+    #    `--check` 只從「紀錄」走向「.glb」,⛔ 走不回來,所以一列**沒有紀錄**的
+    #    死路由結構上量不到）。真值 2026-08-29 逐個 MPQ 探測到:War3x.mpq。
+    "flamestrike1": "Abilities\\Spells\\Human\\FlameStrike\\FlameStrike1.mdl",
+    # GH#753 —— 緞帶最重的那一支。⛔ 在此之前它只活在 `extract_stock_vfx.py` 的
+    #    普查工作單裡（PRE2 那條路),而這張表看不到它 ⇒ `--inventory` 數不到它的
+    #    RIBB。owner 的 MDL 掃描逐字稱它「七支裡最重（PRE2×6 + RIBB×8）」,
+    #    2026-08-29 直接解 MDX 複驗:PRE2×6 / RIBB×8,八條 KRVS 都是 1.0→0.0（畫得出來）。
+    "markofchaostarget":
+        "Abilities\\Spells\\Human\\MarkOfChaos\\MarkOfChaosTarget.mdl",
     # GH#688 Phase 6 · TORNADO lane — the census's single largest suggestion
     # family: 9 dummies (e00Y/e013/e016/h01S/h027/o01H/o01P/u00A/u00Z) all wear
     # this one stock model, tinted per-skill at spawn time.
@@ -225,6 +244,111 @@ def emitter_alpha_report(raw: bytes) -> list[dict]:
                     "birth": seg[0], "peak": max(seg),
                     "verdict": "visible-at-peak" if max(seg) > 0 else "never-visible"})
     return out
+
+
+def ribbon_report(raw: bytes) -> list[dict]:
+    """GH#753 —— **RIBB（緞帶）那一半**，與 `emitter_alpha_report` 同一個形狀。
+
+    ⚠️ 在此之前這支腳本 `grep -ic ribb` = **0**：解析器那一半早就在
+    （`w3xlib.particles._parse_ribb`；`content/vfx/` 底下 56 份出貨 `ribbon@1`
+    文件就是它的產物），⛔ 缺的只是**這個轉換入口從來沒問過它**。於是一顆帶
+    8 條緞帶的 stock 模型（`MarkOfChaosTarget`）轉進來以後，轉檔紀錄上一個字
+    都沒提到那 8 條 —— #699 的 Non-goals 說「RIBB 另票」，而那張票直到 #753
+    才存在。
+
+    ⭐ 判準沿用陷阱②：**看峰值，⛔ 不看出生值**。緞帶「畫不出像素」有**三種
+    互相獨立**的死法，三種各自回答（⛔ 不要只答一種就說它可見）：
+
+      · `alphaPeak == 0` —— KRAL 動軌（有的話）或固定塊的 alpha
+      · `visibilityPeak == 0` —— KRVS 把整條緞帶關掉
+      · `width == 0`（heightAbove + heightBelow）—— ⭐ PRE2 **沒有**的第三種：
+        一條零寬的緞帶是一條**零面積**的帶子，alpha 再高也畫不出東西。
+
+    ⛔ 這裡不出 `ribbon@1` 文件（那是 `extract_particles.py` 的出口，#753 Scope ②）
+    —— 這一層負責的是**讓轉換入口看得見它們**，並且把「哪幾條值得出」量出來。
+    """
+    from w3xlib.particles import parse_particles
+    out = []
+    for rb in parse_particles(raw).ribbons:
+        def peak(tag: str, fallback: float) -> tuple[float, float, bool]:
+            tr = rb.tracks.get(tag)
+            keys = [v for _, v in tr.keys] if tr is not None and tr.keys else []
+            if not keys:
+                return fallback, fallback, False
+            return keys[0], max(keys), True
+
+        birth_a, peak_a, animated_a = peak("KRAL", float(rb.alpha))
+        _, peak_v, animated_v = peak("KRVS", 1.0)
+        width = float(rb.height_above) + float(rb.height_below)
+        reasons = []
+        if peak_a <= 0:
+            reasons.append("alpha 峰值 0")
+        if peak_v <= 0:
+            reasons.append("KRVS 可見度峰值 0")
+        if width <= 0:
+            reasons.append("寬度 0（heightAbove+heightBelow）")
+        out.append({
+            "ribbon": rb.name,
+            "alphaBirth": round(birth_a, 4), "alphaPeak": round(peak_a, 4),
+            "alphaAnimated": animated_a,
+            "visibilityPeak": round(peak_v, 4), "visibilityAnimated": animated_v,
+            "width": round(width, 4),
+            "lifespanSec": round(float(rb.lifespan), 4),
+            "emissionRate": rb.emission_rate,
+            "textureSlot": rb.texture_slot, "materialId": rb.material_id,
+            "rows": rb.rows, "cols": rb.cols,
+            "trackTags": sorted(rb.tracks.keys()),
+            **({"parseNote": rb.parse_note} if rb.parse_note else {}),
+            "verdict": "visible-at-peak" if not reasons else "never-visible: " + " / ".join(reasons),
+        })
+    return out
+
+
+def emitter_inventory(names: list[str]) -> int:
+    """`--inventory` —— #753 Scope ① 的**盤點表**：每一顆 stock 模型有幾條
+    PRE2、幾條 RIBB，以及每一條緞帶畫不畫得出像素。
+
+    ⭐ 唯讀：⛔ 一個位元組都不寫（同 GH#769 的立場 —— 一份「沒發生過的事實」
+    寫進紀錄，比沒有紀錄更糟）。它也**不做幾何轉換**，所以盤點 20 列只要幾秒，
+    ⛔ 不必為了數一數緞帶而跑一次 `convert_all`。
+
+    ⭐ 判準是「按擋住幾支排序」（第〇·五守則）：先數出每一顆模型各有幾條
+    RIBB，再決定 `extract_particles.py` 的 `ribbon@1` 出口先接哪一顆 ——
+    ⛔ 不是逐顆硬寫。
+    """
+    from w3xlib.particles import parse_particles
+    rows: list[dict] = []
+    for name in names:
+        got = read_stock(STOCK_MODELS[name])
+        if got is None:
+            rows.append({"name": name, "verdict": "not-in-mpq",
+                         "path": STOCK_MODELS[name]})
+            continue
+        archive, raw = got
+        m = parse_particles(raw)
+        ribbons = ribbon_report(raw)
+        rows.append({
+            "name": name, "archive": archive, "mdxBytes": len(raw),
+            "path": STOCK_MODELS[name],
+            "pre2Count": len(m.emitters2), "ribbCount": len(m.ribbons),
+            "ribbVisible": sum(1 for r in ribbons if r["verdict"] == "visible-at-peak"),
+            "emitterAlpha": emitter_alpha_report(raw),
+            "ribbons": ribbons,
+            **({"parseNotes": m.notes} if m.notes else {}),
+        })
+    print(json.dumps(rows, ensure_ascii=False, indent=1))
+    print(f"\n{'模型':24} {'PRE2':>5} {'RIBB':>5} {'RIBB 畫得出來':>13}")
+    for r in rows:
+        if r.get("verdict") == "not-in-mpq":
+            print(f"{r['name']:24} {'—':>5} {'—':>5} {'not-in-mpq':>13}")
+            continue
+        print(f"{r['name']:24} {r['pre2Count']:>5} {r['ribbCount']:>5} "
+              f"{r['ribbVisible']:>13}")
+    missing = [r["name"] for r in rows if r.get("verdict") == "not-in-mpq"]
+    if missing:
+        print(f"\n⛔ 讀不到（零售 MPQ 不在 W3X_STOCK_MPQ_DIR）：{missing}",
+              file=sys.stderr)
+    return 1 if missing else 0
 
 
 def gltf_json_bytes(b: bytes) -> dict:
@@ -378,6 +502,8 @@ def main() -> int:
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--check", action="store_true",
                     help="對帳:每一筆轉檔紀錄都要對得上磁碟上的 .glb（GH#769）")
+    ap.add_argument("--inventory", action="store_true",
+                    help="盤點 PRE2/RIBB 條數（唯讀,不轉檔,不寫任何檔）—— GH#753")
     args = ap.parse_args()
 
     if args.check:
@@ -389,7 +515,7 @@ def main() -> int:
               "同架構的 Pillow 再跑一次。", file=sys.stderr)
         return 2
 
-    if args.list or not args.names:
+    if args.list or (not args.names and not args.inventory):
         for k, v in STOCK_MODELS.items():
             print(f"{k:24} {v}")
         return 0
@@ -398,6 +524,11 @@ def main() -> int:
     if unknown:
         print(f"unknown slug(s): {unknown}; see --list", file=sys.stderr)
         return 2
+
+    # GH#753 —— ⭐ 唯讀盤點，⛔ 不落到底下那條會寫檔的轉換路徑。
+    # 沒點名 slug 就盤點整張表（`--inventory` 的預設分母是「全部」）。
+    if args.inventory:
+        return emitter_inventory(list(args.names) or list(STOCK_MODELS))
 
     tmp = tempfile.mkdtemp(prefix="ggd-stock-convert-")
     raw_dir = os.path.join(tmp, "raw")
@@ -420,7 +551,11 @@ def main() -> int:
         rows.append({"name": name, "archive": archive, "mdxBytes": len(raw),
                      "path": STOCK_MODELS[name],
                      "textures": texture_shape_report(raw),
-                     "emitterAlpha": emitter_alpha_report(raw)})
+                     "emitterAlpha": emitter_alpha_report(raw),
+                     # GH#753 —— 緞帶那一半。⛔ 在此之前這個入口對 RIBB 完全
+                     # 失明（`grep -ic ribb` = 0）,轉檔紀錄因此**看起來完整**
+                     # 而少了一整族 emitter。
+                     "ribbons": ribbon_report(raw)})
 
     if not wanted:
         print("nothing extracted", file=sys.stderr)
