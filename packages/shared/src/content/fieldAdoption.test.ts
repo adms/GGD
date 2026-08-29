@@ -1864,13 +1864,17 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   //    ⇒ 一條每跑必吼、而吼給誰聽沒有人說得出來的債。順帶：舊 why 寫的「662 支技能」
   //    也早就過期（今天是 421 份 ability doc · 71 份 champion doc）——
   //    第三守則的形狀：一個被散文守著的數字活過了保存期限，而沒有東西變紅。
+  // ⭐ 2026-08-29（GH#757）—— 兩列從 `debt` 改判 `superseded`。⛔ 這不是「把債藏起來」：
+  //    改判的**理由是量到的**（餵它會讓 338 張卡印出 `{{cd}}`，見下），而且它**能被反駁**
+  //    —— `semanticRoleMarkup.test.ts` 就是那個反駁窗口，它會在前提消失的那一天變紅。
+  //    ⚠️ 兩列的到期條件寫在各自的 `why` 裡，而**三條都是閘，⛔ 沒有一條是「要記得」**。
   "field:abilities.descriptionRoles": {
-    status: "debt",
-    why: "GH#757（接手已關的 #114）—— 語意色彩鏈**有渲染沒有輸入**：schema 開了欄位、`abilityText.ts::parseRoleMarkup` → Tooltip / Codex 四個消費端全部活著，而 2026-08-27 實查 `content/abilities`（**421** 份）與 `content/champions`（**71** 份）採用數仍是 **0**，importer 的產出函式 `tools/w3x-import/w3xlib/wts.py::to_role_markup` **零呼叫者** ⇒ 重跑 importer 也產不出東西。⭐ #757 要的是**收乾淨（拆或餵，選一條）**，⛔ 不是把這一列改成 landing 讓它安靜。⚠️ 選『餵』之前必須先修 `abilityText.ts` 兩條正則與 `parseRoleMarkup` 的呼叫順序（先 rescale 再 parse ⇒ 插入 `[/c]` 之後冷卻/傷害數字不再被乘倍率，卡面會直接說謊）。⚠️ 兩條出路**都動不了只有 schema 的一半**：拿掉這個欄位會讓 `content/editor-target-profile.json`（skillremake:json）、`docs/editor-contract/ggd-runtime-capabilities.{md,json}`（caps:export）、`docs/技能標記機制與效果規則.md`（spec:build）四份產物同時過期。",
+    status: "superseded",
+    why: "GH#757（接手已關的 #114）—— ⭐ 2026-08-29 在兩條出路（拆／餵）之中**選了拆**，而理由不是「沒人排到」，是**跑出貨載入路徑量到的**：技能說明今天是**推導**的（`content` 寫佔位符 `{{cd}}`/`{{dmg}}`/`{{mp}}`，421 份 ability doc 裡 **338 份**帶著它們），載入時由 `registries.ts::withProse` 代入 —— ⚠️ 而它**只代進 `description` 一格**；客戶端讀卡面的唯一入口 `abilityText.ts::docDescription` 則**優先回傳 `descriptionRoles`**。⇒ 一份填了這個欄位的文件，卡面上直接印出 `{{cd}}`。⭐ 這正是第〇·四守則的病（**同一句話的第二個住處，而寫入端只寫第一個**）⇒ 「採用它」就是缺陷 —— 逐字是本檔 :126 的 `superseded` 定義。⭐ **取代它的是佔位符詞彙本身**（`{{dmg}}`＝`[c=damage]`、`{{cd}}`＝`[c=duration]`、`{{mp}}`＝`[c=mana]`）：語意角色沒被放棄，它換到**唯一**的住處並在載入時算繪；真要色彩就從佔位符推導（零內容改動、零第二住處）。⭐ **退役的知識另存**在 `docs/legacy/_semantic-role-markup-superseded.md`（角色詞彙／hex→role 分類規則與閾值／`[c=role]` 文法／七個正規化色碼），⛔ 不是無聲消失。⭐ **能被反駁的窗口＋三個到期條件，三條都是閘**：① 任何文件填了它 ⇒ 本檔的 STALE 測試當場紅並要求刪掉這一列；② 載入期的算繪哪天也涵蓋 `descriptionRoles` ⇒ 前提消失、「餵」重新可行 ⇒ `packages/shared/src/content/semanticRoleMarkup.test.ts` 紅並指名回來重評；③ schema 欄位真的被拿掉（拆的最後一段）⇒ 這個 key 從普查消失 ⇒ 同一條 STALE 測試以「no longer a registered key at all」紅。⚠️ **拆還沒走完的那一段（誠實列出）**：`schema/ability.ts` 的欄位、`apps/client` 的 `classifyRole`/`ROLE_COLOR`/`parseRoleMarkup` 與四個消費端、`tools/w3x-import/w3xlib/wts.py::to_role_markup`（全 repo 零呼叫者）仍在 —— 拿掉 schema 欄位會讓 `content/editor-target-profile.json`（skillremake:json）、`docs/editor-contract/ggd-runtime-capabilities.{md,json}`（caps:export）、`docs/技能標記機制與效果規則.md`（spec:build）四份產物同時過期 ⇒ 那要一條**同時吃 packages/shared + apps/client + tools/ + 產生器**的 lane，⛔ 不是拆給多條柵欄。⚠️ **順帶更正一個過期前提**（第三守則）：舊 why 寫「選餵之前必須先修兩條正則與呼叫順序」—— 那件事早就做完了（`MARKUP` 已烘進 `COOLDOWN_PROSE_RE`/`DAMAGE_PROSE_RE`），⛔ 它不是擋路的東西。",
   },
   "field:champions.abilities.*.descriptionRoles": {
-    status: "debt",
-    why: "GH#757 —— 上面那一列的 champion-embedded 鏡像（STRICT 鏡像規則 ⇒ 兩邊一起動、一起收）。2026-08-27 實查 71 份 champion doc 採用數 0。⛔ 不要單獨處置這一列：只收一邊就是把鏡像規則破掉。",
+    status: "superseded",
+    why: "GH#757 —— 上面那一列的 champion-embedded 鏡像（STRICT 鏡像規則 ⇒ 兩邊一起動、一起收）。⭐ 這一半**不是類推**：`semanticRoleMarkup.test.ts` 對 `expandEmbedded` 那條路**也真的跑過**，量到完全一樣的結果（`description` 被算繪、`descriptionRoles` 沒有）⇒ 填它同樣會讓英雄卡印出 `{{cd}}`。到期條件與反駁窗口與上面那一列**逐條相同**（STALE ×2 ＋ `semanticRoleMarkup.test.ts`），知識另存同樣在 `docs/legacy/_semantic-role-markup-superseded.md`。⛔ 不要單獨處置這一列：只收一邊就是把鏡像規則破掉。",
   },
   // `field:champions.abilities.*.hitFeel` was exempt here as "a MIRROR GAP, not a
   // plain zero" — 30 standalone ability docs carried hitFeel and 0 of their
