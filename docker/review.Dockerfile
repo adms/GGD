@@ -19,7 +19,24 @@
 # 建置的 context 是 repo 根：docker build -f docker/review.Dockerfile .
 
 FROM node:22-alpine
-RUN apk add --no-cache tini
+# ⛔⛔ `python3` 是**必要**的,⛔ 不是可選 —— 而它在 2026-08-29 之前一直缺席。
+#
+# `tools/admin-live/datasets/` 底下有三支資料集 **spawn python3** 產生資料：
+#   · skill90.mjs      —— import `tools/skill-remake/batch1.py` 的 T 表跑 drift 稽核
+#   · jass-vfx.mjs     —— 讀 w3x 匯入的普查
+#   · treasures.mjs    —— `tools/economy/gen_treasure_csv.py`
+#
+# ⚠️ 沒有它的症狀是後台那三頁回 **HTTP 500：`spawn python3 ENOENT`** ——
+#   ⭐ 而**其餘 11 個資料集完全正常**,所以它看起來像「後台一堆服務壞了」
+#     而不是「這個映像少一個套件」。
+#
+# ⚠️⚠️ 這**不是**搬遷造成的:2026-08-29 實測 **GCP 的 review 容器也沒有 python3**
+#   ⇒ 那三頁在舊站上一樣壞,只是沒有人去點。
+#   ⭐ 教訓:一個「只有某幾頁會用到」的執行期相依,可以在出貨映像裡缺席很久
+#     而沒有任何東西變紅 —— 因為**沒有人點的頁面不會失敗**。
+#
+# ⭐ 那些腳本**只用標準庫**（相對 import 的是 repo 自己的模組）⇒ ⛔ 不需要 pip。
+RUN apk add --no-cache tini python3
 ENV NODE_ENV=production \
     GGD_REVIEW_MODE=live \
     GGD_REVIEW_PORT=8790 \
