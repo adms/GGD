@@ -86,10 +86,24 @@ describe("執行期對帳 (sync-io-runtime-reconcile)", () => {
     const pending = join(root, "pending.json");
     const norms = join(root, "normalizers.json");
     writeFileSync(pending, JSON.stringify({ pending: [] }));
-    writeFileSync(io, JSON.stringify({ steps: [{ name: "N", writes: ["content/n.json"] }, { name: "B", writes: ["content/b.json"] }] }));
+    writeFileSync(io, JSON.stringify({ steps: [{ name: "N", writes: ["content/n.json"] }, { name: "B", writes: ["content/b.json"] }, { name: "W", writes: ["content/w.json"] }] }));
     // N 是 B 那份產物的**正規化器**（只覆寫其中幾格）—— 與 apconv:build ↔ 技能檔同一個形狀。
-    writeFileSync(norms, JSON.stringify({ normalizers: [{ step: "N", only: ["content/b.json"], reason: "夾具" }] }));
-    for (const f of ["n.json", "b.json", "orphan.json"]) writeFileSync(join(root, "content", f), "{}");
+    // ⚠️ ⭐ **兩個**正規化器，⛔ 不是一個（2026-08-29 對抗性複驗抓到）：
+    //   只有帶 `only` 的那一個時，`normalizesPath("N","content/orphan.json")` **本來就 false**
+    //   ⇒ `classify()` 裡 `owners.length && normalizesPath(...)` 的**前半段從來沒被執行到**
+    //   ⇒ 把那一半拿掉，這條測試**照樣綠**（第二守則：那就不是守衛）。
+    // ⭐ `W` 沒有 `only` ⇒ 它對**每一條**路徑都算正規化器，
+    //   於是 `orphan.json`（全戶籍零認領）真的會走到那個 `&&`，那一半才承重。
+    writeFileSync(
+      norms,
+      JSON.stringify({
+        normalizers: [
+          { step: "N", only: ["content/b.json"], reason: "夾具：帶 only（就地改 B 的產物）" },
+          { step: "W", reason: "夾具：**無 only** ⇒ 對所有路徑都算正規化器（承重的那一格）" },
+        ],
+      }),
+    );
+    for (const f of ["n.json", "b.json", "w.json", "orphan.json"]) writeFileSync(join(root, "content", f), "{}");
     const before = join(root, "before.json");
     const common = ["--root", root, "--io", io, "--pending", pending, "--normalizers", norms, "--step", "N", "--before", before];
     run(["snapshot", "--root", root, "--io", io, "--out", before]);
@@ -101,8 +115,11 @@ describe("執行期對帳 (sync-io-runtime-reconcile)", () => {
     expect(okRun.stderr).toContain("就地改了");
 
     // ② ⭐ 零認領的仍然紅 —— 最強的訊號⛔ 不可以被正規化器身分吃掉
+    //   ⚠️ 用 **W**（無 `only`）跑：它對 `orphan.json` 也算正規化器 ⇒
+    //   ⭐ 只有這樣才真的執行到 `owners.length && normalizesPath(...)` 的前半段。
     writeFileSync(join(root, "content/orphan.json"), '{"x":1}');
-    const red = run(["verify", ...common]);
+    const red = run(["verify", "--root", root, "--io", io, "--pending", pending,
+                     "--normalizers", norms, "--step", "W", "--before", before]);
     expect(red.status, "⛔ 正規化器身分把「全戶籍零認領」也放行了").toBe(1);
     expect(red.stderr).toContain("content/orphan.json");
   });
