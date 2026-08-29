@@ -112,3 +112,36 @@ after:  <量到的數字／行為>
 ⇒ 閘：`bash scripts/lane-close.sh <workflow-output.json>` ——
 一個指令讀 workflow 的結果，逐張註解＋關閉，⛔ 不是每輪手寫一段腳本。
 `--check` 列出「複驗通過但仍開著」的票並回非零。
+
+---
+
+## ⭐ 第七條：**schema 驗證跑在註冊之前** —— 寫內容時 tier 不能取代字面值
+
+⚠️ 2026-08-30 踩到（#648）：一條 lane 寫了 `delayed{shape:"circle", radiusTier:"中"}`
+⇒ ⭐ **那支技能連載入都載入不了**，還弄紅 14 個測試檔。
+
+原因：`_shared.ts:286` 的 schema 逐字要求
+`shape:"circle"` **一定要有字面 `radius`**（訊息：「沒有半徑的圓在執行期會直接
+return，技能放得出來但什麼都不會發生」），⛔ 而 `resolveRadiusTier` 跑在
+**schema 驗證之後**（`registries.ts` 的 `withTiers`）。
+
+⇒ ⭐ **兩者不矛盾**：tier 是**載入時**解析的（第〇·四守則），
+⛔ 但 schema 是**更早**的一道 —— 它要的是那一格今天就存在。
+⇒ 寫內容時**兩個都要有**，或去看那個 effect 的 schema 到底要哪一個。
+
+⚠️ ⭐ 判準：**動內容之前跑一次 `validateDoc`**（或那個集合的載入測試）——
+⛔ 「schema 應該收得下」是判準，而它今天錯了。
+
+---
+
+## ⭐ 第八條：**你的轉換有沒有帶走一個玩家看得到的東西？**
+
+⚠️ 2026-08-30 踩到（#401，⭐ **而且它已經通過了一次複驗**）：
+把兩支技能從投射物翻成 `damageLine` ⇒ ⭐ **施法指示器畫不出來了**
+（`skillshot` 的走廊靠 `projectile.maxRange` 推導）。
+
+⭐ 那條測試的檔頭逐字寫著它為什麼存在：
+> **a player cannot dodge what is not drawn**
+
+⇒ ⭐ **轉換正確 ≠ 沒有損失**。判準：
+「我拿掉的那個東西，**有沒有別人在讀它**？」（`grep` 那個欄位名）
