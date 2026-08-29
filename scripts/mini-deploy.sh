@@ -283,11 +283,41 @@ cmd_deploy() {
     warn "⚠️ 沒設 GGD_PUBLIC_HOST ⇒ **沒有從外部驗過** —— ⛔ 這一段是這次停機沒抓到的那一段"
     info "⇒ GGD_PUBLIC_HOST=ggd.adms.ai bash $0 deploy"
   fi
-    r 'curl -fsS -m 5 http://127.0.0.1:2567/healthz' 2>/dev/null | python3 -c '
-import json,sys
-d=json.load(sys.stdin); c=d.get("content",{}); rp=d.get("replay",{})
-print(f"  {\"OK\" if c.get(\"ok\") else \"BAD\"} content.ok={c.get(\"ok\")} champions={c.get(\"champions\")}")
-print(f"  {\"OK\" if rp.get(\"ok\") else \"BAD\"} replay.ok={rp.get(\"ok\")}")' 2>/dev/null
+    # ══ 6. ⭐ 煙霧測試（部署協定第 6 步）——⛔ 這一段在 2026-08-30 之前是**靜默跳過**的
+    #   ⛔⛔ 兩個缺陷疊在一起：
+    #     ① 那段 python 用 `\"` 在 f-string 的**運算式**裡 ⇒ 舊版 python 直接 SyntaxError
+    #     ② 而它後面接著 `2>/dev/null` ⇒ ⭐ **錯誤被吞掉，輸出是空的**
+    #   ⇒ 部署每一次都「跑過」這一段而**什麼都沒驗**，⛔ 而它看起來跟通過一模一樣。
+    #   ⚠️ 這正是 CLAUDE.md 記的「fail-open 沒錯，**靜默**才是缺陷」。
+    head_ "6. ⭐ 煙霧測試（content.ok / champions / replay.ok）"
+    local hz
+    hz=$(r 'curl -fsS -m 5 http://127.0.0.1:2567/healthz' 2>/dev/null || true)
+    if [ -z "$hz" ]; then
+      bad "⛔ /healthz 一個位元組都沒回 —— ⛔ 這一段在此之前是**靜默跳過**的"
+    else
+      # ⭐ 用 python 讀,⛔ 但**不吞錯誤** —— 讀不出來要出聲
+      local hzsum
+      hzsum=$(printf '%s' "$hz" | python3 -c '
+import json, sys
+d = json.load(sys.stdin)
+c = d.get("content") or {}
+rp = d.get("replay") or {}
+ok = bool(c.get("ok")) and bool(rp.get("ok")) and int(c.get("champions") or 0) > 2
+print(("OK" if ok else "BAD"), c.get("ok"), c.get("champions"), rp.get("ok"))
+') || hzsum="PYFAIL"
+      case "$hzsum" in
+        OK*)   ok "content.ok / champions / replay.ok —— $hzsum" ;;
+        PYFAIL) bad "⛔ /healthz 解析失敗 —— ⛔ 而在此之前這個錯誤是被 2>/dev/null 吞掉的" ;;
+        *)     bad "⛔ 煙霧測試不過：$hzsum"
+               info "⭐ champions ≤ 2 ⇒ 內容載入失敗退回骨架（2026-08-01 事故的形狀）" ;;
+      esac
+    fi
+    # ⭐⭐ **明確回 0** —— ⛔ 沒有它,函式會落到最後一個指令的離開碼
+    #   ⇒ 2026-08-30 實測:每一項檢查都綠、HTTP 200,⭐ 而 `mini-deploy.sh deploy` 回 **1**
+    #     ⇒ `ship-it.sh` 逐字印出「⚠️ 部署失敗（要 VPN／區網才連得到 mini）」——
+    #     ⛔ 一句**指著完全錯誤方向**的訊息（網路是好的,壞的是離開碼）。
+    #   ⚠️ 今天同型的第二次（`ticket-progress.sh` 的 `$STATE` 那一個是第一次）。
+    return 0
   else
     bad "⛔ 容器起來了但站沒有回應"
     info "已退出：$(r "cd $REMOTE_REPO && docker ps -a --filter 'name=ggd-' --filter 'status=exited' --format '{{.Names}}'" 2>/dev/null | tr '\n' ' ')"
