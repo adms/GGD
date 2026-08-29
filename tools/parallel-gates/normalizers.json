@@ -5,14 +5,29 @@
     "有一族步驟是**就地改欄位**的正規化器：它們讀既有檔、只覆寫其中幾格、⛔ 不產生那個檔。",
     "把正規化器當成作者的後果是**封死唯一的合法路** —— 訊息叫人「改來源」，而那些檔自己就是來源。",
     "⛔ 每一格都要寫得出**能被反駁的理由**（逐行讀過那支程式），⛔ 不是「看起來像」。",
-    "⛔ 名字只准放 sync-io.json 真的有的步驟名 —— 幽靈名永遠比不中，掛在這裡只是一句看起來有防的散文。"
+    "⛔ 名字只准放 sync-io.json 真的有的步驟名 —— 幽靈名永遠比不中，掛在這裡只是一句看起來有防的散文。",
+    "⭐ 2026-08-29（GH#815 複驗）：分類是**逐檔**的，⛔ 不是逐步驟 —— 一支可以對 A 檔是正規化器、",
+    "對 B 檔是作者（apconv:build 就是：它就地改 content/abilities/*.json，而 docs/_data/",
+    "ap-conversion-applied.json 是它自己整份 emit 的清單）。⇒ 選填 `only`（路徑 glob 陣列）：",
+    "有 `only` 時**只有**比中的路徑算正規化器，其餘路徑照樣是作者。⛔ 沒有 `only` = 全部路徑。"
   ],
   "$consumers": [
     "scripts/genguard.sh —— 查詢用（AUTHOR ⇒ exit 1；NORMALIZER ⇒ exit 0 + 提醒）",
     "scripts/preserve-before-overwrite.py —— PreToolUse hook 的同一套裁決",
     "scripts/product-quarantine.sh —— ⭐ GH#707：只被正規化器認領的檔**不上鎖**（它們是手編檔）"
   ],
-  "$gate": "packages/shared/src/ops/normalizerListIsReal.test.ts（名字要真）+ laneYQuarantineAgreesWithGenguard.test.ts（三個消費端不可以各自硬寫一份）",
+  "$gate": "packages/shared/src/ops/normalizerListIsReal.test.ts（名字要真）+ laneYQuarantineAgreesWithGenguard.test.ts（三個消費端不可以各自硬寫一份）+ ⭐ quarantineOrphansAndEntrypoints.test.ts（GH#815 ③：`product-quarantine.sh --doctor` 的兩個訊號命中而**兩張表都沒有**它 ⇒ 紅）",
+  "$rejected-note": [
+    "⭐ GH#815 ③ —— 這一節**不是註腳,是閘的一半**。`--doctor` 的**三個**推導訊號",
+    "（A「glob 灌大」:一條 glob 認領 N 份 · B「讀寫重疊」:它讀的正是它寫的那些 ·",
+    "⭐ C「共寫」:它寫的每一份**別的步驟也寫**,而且不只一份）",
+    "命中的每一支,要嘛在上面的 normalizers 裡,要嘛在這裡帶著**能被反駁的理由**（≥20 字）。",
+    "⛔ 兩張表都沒有它 ⇒ 紅。與 skillsSyncCoversGenerators 的豁免表同一個形狀。",
+    "⚠️ C 是 2026-08-29 對抗性複驗逼出來的:A 與 B 對 `tiers:apply` **結構上失明**",
+    "（它的 writes 是 402 條**明確路徑**⇒ A=0;而 merge-io.mjs:108 把「自己也寫過的」從",
+    " reads 濾掉 ⇒ B=0）—— 而拿掉它會讓下一次 lock 把 387 份手編技能檔 chmod 444。",
+    "⭐ C 問的是**關係**(誰跟誰共寫同一份),⛔ 不是名詞,所以 glob 與明確路徑都看得見。"
+  ],
   "normalizers": [
     {
       "step": "tiers:apply",
@@ -20,7 +35,8 @@
     },
     {
       "step": "apconv:build",
-      "reason": "AP 換算欄位的就地重算 —— 與 tiers:apply 同型：它只覆寫換算那幾格，⛔ 不產生那些技能文件。"
+      "only": ["content/abilities/*.json"],
+      "reason": "AP 換算欄位的就地重算 —— 與 tiers:apply 同型：它只覆寫換算那幾格，⛔ 不產生那些技能文件（tools/ap-conversion/apply.py:449-476 逐行讀過：讀 raw → 只改 description 與係數那幾格 → 寫回原路徑）。⭐ 2026-08-29 加 `only`：它在 sync-io 裡**唯一量到的 write 是 docs/_data/ap-conversion-applied.json**（apply.py:478-487 的 manifest，它整份 emit、而且是唯一寫入者）⇒ 那一份是它的**產物**，在此之前這一格讓 genguard 對一份真產物說「不擋你」、隔離區還主動把它放行成 644（＝ apdmg:build 當初被踢出去的同一個誤導）。技能檔那一半沒被量到是 GH#771 的量測洞（條件寫入端在已同步的樹上寫 0 個檔），⛔ 不是它不寫。"
     },
     {
       "step": "skillremake:provenance",
@@ -36,6 +52,18 @@
     }
   ],
   "$rejected": [
+    {
+      "step": "content:build",
+      "why-not": "⭐ 新訊號 C「共寫」命中它（21 份 writes 全部也被別人寫）—— ⛔ 但它是**作者**：它寫的是 bundle.json / manifest.json ＋ 每個集合的 _index.json，⭐ 每一份都是**整份重算**（打包器把 content/ 掃一遍再 emit），⛔ 不是讀既有檔只覆寫幾格。C=21/21 的原因是**索引檔被共寫**：每一支集合產生器（skillremake:json 那一族）跑完也會重寫自己那一份 _index.json ⇒ 同一份檔兩個整份重算的作者，⛔ 不是「它在改別人的欄位」。⇒ 可被反駁的方式：若 build_indexes 改成從磁碟讀回 _index.json 再逐格 merge，這一格就要搬到 normalizers。2026-08-29 加入。"
+    },
+    {
+      "step": "skillremake:json",
+      "why-not": "⭐ 新訊號 C「共寫」命中它（126 份 writes **全部**也被別人寫）—— ⛔ 但它是**作者**：CLAUDE.md 逐字「skillremake:json 擁有的是 91 份完整的 ability JSON ＋ 16 份完整的 champion JSON，**每一個欄位**都是產物（effects / vfxKey / flat / statusId 全部）」，來源是 tools/skill-remake/batch1.py 的那張表，⛔ 不是就地改欄位。⭐ 它 C=100% 的**原因**正好相反：三支正規化器（skillremake:provenance / castderive:build:raw / tiers:apply）的 glob 蓋過同一批檔 ⇒ 是**別人來改它的產物**，⛔ 不是它去改別人的。⇒ 可被反駁的方式：若哪天 batch1.py 改成讀既有 JSON 再只覆寫幾格（而不是從規格表整份 emit），這一格就要搬到 normalizers。2026-08-29 加入。"
+    },
+    {
+      "step": "msgledger:build",
+      "why-not": "⭐ GH#815 ③ 的訊號 A 命中它（一條 glob `docs/_daily/????-??-??.md` 認領 11 份當日帳本，而它每一趟只寫「今天」那一份）—— ⛔ 但它是**作者**，⛔ 不是就地改欄位：逐行讀 scripts/message-ledger.sh:19「輸出路徑是日期相依的」＝ 它整份產生今天那一頁。glob 是 merge-io.mjs 的 DATE_FAMILIES 刻意放寬的（⛔ 不然昨天那一份隔天就變成「無主又鎖著」的孤兒）。⭐ 而它沒有造成 GH#707 的死路，因為**寫入點自解鎖**：scripts/ledger_table.py:129-144 的 _unlock() 在 append 前 chmod 0o644（我逐行讀過那支，⛔ 不是信檔頭）。⇒ 可被反駁的方式：若哪天 message-ledger.sh 改成只覆寫帳本裡的幾格、或 _unlock() 被拿掉，這一格就要搬到 normalizers。2026-08-29 加入。"
+    },
     {
       "step": "apdmg:build",
       "why-not": "2026-08-26 量到它的 2 份 writes **共有 0 份**（content/config/ap-damage-scaling.json 它是唯一寫入者）⇒ 它是**作者**。CLAUDE.md 明文把那一份列在「⛔ 不可手改」的 7 份 config 產物裡；留在清單裡＝這支腳本對一份禁改產物說「不擋你」還教人手改（誤導源 T0）。"

@@ -45,9 +45,14 @@ import { readFileSync } from 'node:fs';
 //    ⇒ 唯一住處 + 三個消費端一起讀(第〇·四守則)。每一格的理由住在那份 JSON 裡。
 //    ⚠️ 讀不到那份 JSON ⇒ 印 ERROR 並讓這支回非零,⛔ 不可以靜默當成「沒有正規化器」
 //    (那會讓 387 份手編檔全部被判 AUTHOR,而輸出看起來完全正常)。
+// ⭐⭐ 2026-08-29（GH#815 複驗）—— 分類是**逐檔**的,⛔ 不是逐步驟。
+//    normalizers.json 的每一格可以帶選填的 only:[路徑 glob] ——「只有這些路徑算正規化器」。
+//    ⚠️ 為什麼要有:apconv:build 就地改 content/abilities/*.json(正規化器),
+//    ⛔ 而 docs/_data/ap-conversion-applied.json 是它自己整份 emit 的清單(作者)。
+//    在此之前這一支對那份**真產物**回 NORMALIZER ＝「不擋你」,而隔離區還主動放行成 644。
 let NORMALIZERS, io;
 try {
-  NORMALIZERS = new Set(JSON.parse(readFileSync('tools/parallel-gates/normalizers.json','utf8')).normalizers.map((n) => n.step));
+  NORMALIZERS = new Map(JSON.parse(readFileSync('tools/parallel-gates/normalizers.json','utf8')).normalizers.map((n) => [n.step, Array.isArray(n.only) ? n.only : null]));
   io = JSON.parse(readFileSync('tools/parallel-gates/sync-io.json','utf8'));
 } catch (e) {
   console.log('ERROR\t' + String((e && e.message) || e).split('\n')[0]);
@@ -66,13 +71,34 @@ for (const s of io.steps ?? []) {
     if (m) { if(!hit.includes(s.name)) hit.push(s.name); break; }
   }
 }
+const normalizes=(n)=>{ if(!NORMALIZERS.has(n)) return false; const only=NORMALIZERS.get(n); return !only || only.some((g)=>g2re(g).test(p)); };
+// ⭐ GH#827 —— **欄位級**:這一份裡有哪幾欄不是它的擁有者算得出來的。
+//    量出來的(field-io.mts 呼叫產生器自己的推導函式),⛔ 這裡沒有一張手抄的欄位表。
+//    ⚠️ 只對 field-io 真的量到的節做宣稱 —— 沒量到的節**不當成「全部自由」**。
+let fieldNote='';
+try {
+  const fio=JSON.parse(readFileSync('tools/parallel-gates/field-io.json','utf8'));
+  const ent=(fio.files ?? []).find((f) => f.path === p);
+  if (ent) {
+    const doc=JSON.parse(readFileSync(p,'utf8'));
+    const parts=[];
+    for (const [sect, own] of Object.entries(ent.owned ?? {})) {
+      const rows = sect === '$top' ? null : doc[sect.slice(0, -3)];
+      const present = rows === null ? Object.keys(doc) : [...new Set(Object.values(rows ?? {}).flatMap((r) => Object.keys(r ?? {})))];
+      const un = present.filter((k) => !own.includes(k)).sort();
+      if (un.length) parts.push(sect + ': ' + un.join(' '));
+    }
+    if (parts.length) fieldNote = parts.join(' / ');
+  }
+} catch (e) { fieldNote=''; }
 if (hit.length) {
-  const authors = hit.filter((n) => !NORMALIZERS.has(n));
-  console.log((authors.length ? 'AUTHOR' : 'NORMALIZER') + '\t' + (authors[0] ?? hit[0]));
+  const authors = hit.filter((n) => !normalizes(n));
+  console.log((authors.length ? 'AUTHOR' : 'NORMALIZER') + '\t' + (authors[0] ?? hit[0]) + '\t' + fieldNote);
 }
 " "$p" 2>/dev/null)
-  KIND=${OWNER%%$'\t'*}
-  NAME=${OWNER#*$'\t'}
+  KIND=$(printf '%s' "$OWNER" | cut -f1)
+  NAME=$(printf '%s' "$OWNER" | cut -f2)
+  FNOTE=$(printf '%s' "$OWNER" | cut -f3)
   if [ "$KIND" = "ERROR" ]; then
     # ⚠️ 表讀不到 ⇒ **大聲**,⛔ 不是靜默放行。這支腳本的整個裁決都建立在那兩份表上。
     echo "🚫 genguard 自己壞了 —— 讀不到擁有者表:$NAME"
@@ -86,6 +112,16 @@ if (hit.length) {
     echo "   ⇒ 改它的**來源**,然後 \`bash scripts/genrun.sh $NAME\` 重生成"
     echo "     (genrun = 解鎖該支的產物→跑→重新上鎖;⚠️ 看它**最後一行**判成敗,⛔ 不要接管道)。"
     echo "   ⇒ 找來源: grep -rl --exclude-dir=node_modules \"\$(basename \"$p\")\" tools/ scripts/ | head"
+    # ⭐⭐ GH#827 —— 上面那一行對**一部分欄位是謊話**:擁有者**逐格保留**它們,
+    #    重跑它不會把那幾欄「重生成」回來,而那幾欄也沒有來源可以改。
+    #    ⇒ 欄位級的量測結果在這裡說出來(⛔ 不然使用者會照著一條走不通的路走)。
+    if [ -n "$FNOTE" ]; then
+      echo "   ⚠️⚠️ **但這幾欄不是 $NAME 的**（量出來的,見 tools/parallel-gates/field-io.json）:"
+      echo "        $FNOTE"
+      echo "      ⇒ 重跑 $NAME **不會**動它們,也沒有「來源」可以改 —— 它們的寫入端寫在"
+      echo "        tools/parallel-gates/field-probes.json 的 fieldAuthors（有些是後台,有些是不在鏈上的腳本）。"
+      echo "      ⚠️ 而整份現在是一個產物 ⇒ 那幾欄今天**沒有任何合法寫入端**（GH#827）。"
+    fi
     RC=1
   elif [ "$KIND" = "NORMALIZER" ]; then
     echo "⚠️ $p 會被**正規化器** $NAME 就地改欄位,⛔ 但它不是那支的產物 ⇒ 這一支不擋你。"

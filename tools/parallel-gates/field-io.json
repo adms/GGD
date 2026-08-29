@@ -1,0 +1,31 @@
+{
+  "note": "⭐ 量出來的（field-io.mts 呼叫產生器自己的推導函式）—— ⛔ 不要手改。重量測: node_modules/.bin/tsx tools/parallel-gates/field-io.mts",
+  "files": [
+    {
+      "path": "content/config/vfx-families.json",
+      "fileOwner": "vfxfam:build",
+      "recipe": "vfx-families",
+      "module": "apps/client/src/render/vfx/generateFamilyContent.ts",
+      "owned": {
+        "$top": [
+          "abilities",
+          "enabled",
+          "families",
+          "id",
+          "scaleGain",
+          "scaleMax",
+          "scaleMin",
+          "schema"
+        ],
+        "families[*]": [
+          "alpha",
+          "element",
+          "heightY",
+          "primitive",
+          "scale",
+          "timeScale"
+        ]
+      }
+    }
+  ]
+}

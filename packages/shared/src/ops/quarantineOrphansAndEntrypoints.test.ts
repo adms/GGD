@@ -1,119 +1,156 @@
 /**
- * 🔒 **隔離區的兩個反方向** —— GH#815（owner 2026-08-27：「請你尋找污染源、根因有哪些」）。
+ * 🔒 **隔離區的三段污染,一個指令問完**（GH#815，owner 2026-08-27：「請你尋找污染源」）。
  *
- * ## 這一條為什麼是新的
- * `laneYQuarantineAgreesWithGenguard.test.ts` ④ 已經在問
- * 「每一個**被宣告**的檔鎖得對不對」。⭐ 而它的迴圈是 `for (const [f, owners] of claimants)`
- * ⇒ 一個 **444 而沒有人宣告**的檔**永遠不會進 `claimants`**
- * ⇒ ⛔ 它結構上問不出「每一個**被鎖**的檔有沒有人宣告」。
+ * ⭐ 這條閘**不自己推導** —— 它跑出貨的 `product-quarantine.sh --doctor`。
+ * 在此之前入口與孤兒的推導**同時住在這個測試裡和腳本裡**（第〇·四守則：第二個住處），
+ * 而兩份會各自漂。⇒ 唯一住處＝那支腳本，這裡只驗它的**結論**與**它量得到東西**。
  *
- * ⚠️ 那正是本 repo 記錄過的「只驗名詞、不驗兩個名詞的關係」的**反方向**：
- * 兩個名詞（鎖 · 戶籍）各自都對，壞的是**配對**。
- * 量到 2 份孤兒（`content/config/move-speed-tiers.json` ·
- * `content/ability-templates/tpl-beam-roll.json`）—— ⭐ **永久唯讀**：
- * 沒有 `genrun <step>` 解得開（`product-quarantine.sh` 從 `writes` 推導要解哪些），
- * 也沒有產生器會重生成它們。
+ * ── 三段各自關掉一個結構性盲區 ────────────────────────────────────────────
+ * ① 入口：26/40 產生器 script 曾經裸跑 ⇒ `pnpm content:build` 必 EACCES
+ *    （⚠️ 而 CLAUDE.md 自己叫人打它 3 次）——「要記得走 genrun」是判準，這裡變成閘。
+ * ② 孤兒：`laneY…④` 的迴圈是 `for (const [f,owners] of claimants)` ⇒ **444 而無人宣告**的檔
+ *    永遠進不了 `claimants` ⇒ 它結構上問不出反方向。
+ * ③ 分類：`normalizerListIsReal` 四條只問「名字真不真」⇒ 拿掉 `speedtiers:build`
+ *    **兩支既有守衛一起是綠的**（2026-08-29 對抗性複驗逐行證過），而下一次 lock
+ *    會把 55 份手編英雄卡 chmod 444。現在 doctor 的兩個訊號會指名它。
  *
- * ## 第二條：入口
- * 量到 **26/40** 產生器 script **裸跑**（自帶解鎖的是 **0** 支）⇒
- * ⭐ 打 `pnpm content:build` 必然 EACCES ——
- * ⚠️ 而 **CLAUDE.md 自己在硬性技術約束裡叫人打它（3 次）**。
- * ⇒ 「要記得走 genrun」是**判準**，而這份 repo 記錄過五次判準失效。這一條把它變成閘。
+ * ④ 欄位級（GH#827）：`vfxfam:build` 擁有整份 `config/vfx-families.json`，⛔ 而它
+ *    **逐格保留** `sound*` / `groundDecal` / 後台旋鈕 ⇒ 那幾欄產生器不寫、genguard 擋、
+ *    隔離區 444 ⇒ ⭐ **沒有任何合法寫入端**，而三個閘一起是綠的。
  *
- * ⛔ `*:check` **刻意不包**（它們本來就唯讀；包了會讓一個唯讀的檢查變成會寫檔的東西）。
+ * ⚠️ **AC⑤「三段今天都印得出非零」今天做不到** —— ①② 已於 `c4e9f551` 修好（＝ 0）。
+ * ⭐ 誠實的等價物是 `calibrate()`：出貨樹上量到 0（已知沒有的量不到）＋
+ * 沙盒裡四段各自量到（已知有的量得到）。⛔ 單邊校準的尺會在最需要說話時沉默。
  *
- * ── 突變紀錄（一批一條）────────────────────────────────────────────────
- *  · `chmod 444 content/config/move-speed-tiers.json` → ① 紅並逐檔指名。實測過。
+ * ── 突變紀錄（一批一條）──────────────────────────────────────────────────
+ *  · 把 `tiers:apply` 從 normalizers.json 拿掉 → ③ 紅並指名它（C=402/402）。實測過。
+ *    ⚠️ 那正是 2026-08-29 對抗性複驗逐行證明「A 與 B 一起是瞎的」的那一支：
+ *    它的 writes 是 402 條**明確路徑**（A=0），而 merge-io 把自寫的讀從 reads 濾光（B=0）。
+ *  · 前一輪的突變（拿掉 `speedtiers:build` → A=72 B=71）仍然成立，⛔ 但它證明不了 C。
  */
 import { describe, expect, it } from "vitest";
-import { chmodSync, readFileSync, statSync } from "node:fs";
-import { globSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { chmodSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
-const read = (p: string): string => readFileSync(join(REPO, p), "utf8");
 
-/** `sync-io.json` 的 `writes` 展開成實體檔路徑。 */
-function claimed(): Set<string> {
-  const io = JSON.parse(read("tools/parallel-gates/sync-io.json")) as {
-    steps: { name: string; writes?: string[] }[];
-  };
-  const out = new Set<string>();
-  for (const s of io.steps)
-    for (const w of s.writes ?? [])
-      for (const f of /[*?[]/.test(w) ? globSync(w, { cwd: REPO }) : [w]) out.add(f);
-  return out;
+/** ⭐ 真的跑出貨那一支 —— ⛔ 不是在測試裡重寫一份推導。 */
+function run(args: string[], env: NodeJS.ProcessEnv = {}): { out: string; code: number } {
+  try {
+    const out = execFileSync("bash", ["scripts/product-quarantine.sh", ...args], {
+      cwd: REPO,
+      encoding: "utf8",
+      env: { ...process.env, ...env },
+    });
+    return { out, code: 0 };
+  } catch (e) {
+    const err = e as { stdout?: string; stderr?: string; status?: number };
+    return { out: (err.stdout ?? "") + (err.stderr ?? ""), code: err.status ?? -1 };
+  }
 }
 
-describe("隔離區的兩個反方向 (quarantine-orphans-and-entrypoints)", () => {
-  it("⭐ ① 每一個被鎖的 `content/` 檔都要有人宣告（⛔ 反方向：⛔ 不是「被宣告的鎖得對嗎」）", () => {
-    const owned = claimed();
-    const all = globSync("content/**/*.json", { cwd: REPO }).filter((p) => !p.includes("/_legacy/"));
-    expect(all.length, "掃不到任何 content json —— 母體壞了").toBeGreaterThan(100);
-
-    const orphans = all.filter(
-      (p) => !owned.has(p) && (statSync(join(REPO, p)).mode & 0o200) === 0,
-    );
-    expect(
-      orphans.join("\n"),
-      "⛔ 這些檔是 **444 而沒有任何 step 宣告寫它** ⇒ ⭐ **永久唯讀的孤兒**：\n" +
-        "   · 沒有 `genrun <step>` 解得開（product-quarantine 從 writes 推導要解哪些）\n" +
-        "   · 也沒有產生器會重生成它們\n" +
-        "   ⇒ 二選一：**補進 sync-io.json 的 writes**（它真的是產物）／**chmod 644**（它是手編檔）。\n",
-    ).toBe("");
+describe("隔離區體檢 --doctor (quarantine-orphans-and-entrypoints)", () => {
+  it("① 出貨態：入口 · 孤兒 · 未分類正規化器 三段都是 0", () => {
+    const { out, code } = run(["--doctor"]);
+    expect(out, "⛔ 隔離區還有污染 —— 修法逐段印在上面\n").toContain("總計 0");
+    expect(code, "doctor 要 fail-loud：有污染就回非零").toBe(0);
   });
 
-  it("⭐ ② 寫產物的產生器入口要自帶解鎖，⛔ 而 `*:check` 一支都不准被包", () => {
-    const pkg = JSON.parse(read("package.json")) as { scripts: Record<string, string> };
-    const io = JSON.parse(read("tools/parallel-gates/sync-io.json")) as {
-      steps: { name: string; writes?: string[] }[];
-    };
-    const writers = new Set(io.steps.filter((s) => (s.writes ?? []).length > 0).map((s) => s.name));
-
-    // ⭐ **兩個獨立的推導** —— ⛔ 一個不夠（實測：第一個漏了 10 支）。
-    //  ① `sync-io.json` 宣告寫產物的步驟
-    //  ② ⭐ 存在 `X:check` 的那些 —— `--check` 逐位元組比對的**前提**就是「有一份產物」，
-    //     ⇒ 產它的那一支必然寫產物。⚠️ 這一條抓到了 ① 漏掉的 `spec:build`
-    //     （它的輸出 `docs/editor-contract/ggd-ability-prose.json` 在 sync-io 裡
-    //     掛在 **skillremake:json** 名下 ⇒ ① 看不見它，而它照樣 EACCES）。
-    const SUF = ["build", "apply", "json", "export", "csv", "audit", "numbers",
-                 "docs", "provenance", "wishes", "plan", "readme", "status", "roll"];
-    const producers = new Set(writers);
-    for (const k of Object.keys(pkg.scripts))
-      if (k.endsWith(":check"))
-        for (const suf of SUF) {
-          const p = `${k.slice(0, -":check".length)}:${suf}`;
-          if (pkg.scripts[p] !== undefined) producers.add(p);
-        }
-
-    const bare = [...producers].filter(
-      (k) => pkg.scripts[k] !== undefined && !k.endsWith(":raw") && !pkg.scripts[k]!.includes("genrun.sh"),
+  it("② calibrate：沙盒裡三段各自量得到（⛔ 一個永遠印 0 的 doctor 是空殼）", () => {
+    const d = mkdtempSync(join(tmpdir(), "pq-doc-"));
+    mkdirSync(join(d, "content"));
+    mkdirSync(join(d, "many"));
+    const orphan = join(d, "content", "orphan.json");
+    writeFileSync(orphan, "{}\n");
+    for (const f of ["a", "b"]) writeFileSync(join(d, "many", `${f}.json`), "{}\n");
+    const io = join(d, "io.json");
+    const pkg = join(d, "package.json");
+    const norm = join(d, "normalizers.json");
+    const fam = join(d, "content", "fam.json");
+    const fio = join(d, "field-io.json");
+    const fpr = join(d, "field-probes.json");
+    // `fake:build` 一條 glob 認領 2 份（訊號 A）且入口沒包 genrun ⇒ ①③ 各一。
+    // ⭐ `co:a` / `co:b` 各自用**明確路徑**寫同一批 —— A=0 B=0，只有 C 看得見
+    //   （＝ `tiers:apply` 的形狀，2026-08-29 複驗證明舊的兩個訊號對它是瞎的）。
+    //   `co:b` 進 $rejected 帶理由 ⇒ 同時驗「豁免表真的關得掉一格」。
+    const co = [`${d}/many/a.json`, `${d}/many/b.json`];
+    writeFileSync(
+      io,
+      JSON.stringify({
+        steps: [
+          { name: "fake:build", writes: [`${d}/many/*.json`] },
+          { name: "co:a", writes: co },
+          { name: "co:b", writes: co },
+        ],
+      }),
     );
-    expect(
-      bare.map((k) => `pnpm ${k}`).join("\n"),
-      "⛔ 這些入口**裸跑** —— 打下去會直接寫 444 產物 ⇒ **EACCES**。\n" +
-        "   ⭐ 而 CLAUDE.md 自己在「硬性技術約束」裡叫人打其中幾支。\n" +
-        "   → 包成 `bash scripts/genrun.sh <step> <step>:raw`，真正的指令搬到 `<step>:raw`。\n",
-    ).toBe("");
-
-    const wrongly = Object.keys(pkg.scripts).filter(
-      (k) => k.endsWith(":check") && pkg.scripts[k]!.includes("genrun.sh"),
+    writeFileSync(pkg, JSON.stringify({ scripts: { "fake:build": "node fake.js" } }));
+    writeFileSync(
+      norm,
+      JSON.stringify({
+        normalizers: [],
+        // ⚠️ 理由 <20 字 ⇒ 豁免表**不算數**（與出貨判準逐字一致）。夾具刻意寫足。
+        $rejected: [{ step: "co:b", "why-not": "夾具：逐行看過它了，它是整份 emit 的作者，⛔ 不是就地改欄位。" }],
+      }),
     );
-    expect(
-      wrongly.join("\n"),
-      "⛔ `*:check` 是**唯讀**的檢查，包進解鎖會讓它變成一個會寫檔的東西。",
-    ).toBe("");
+    // ④ 欄位級孤兒：擁有者算得出 `primitive`，而 `soundLaunch` 沒有人認領。
+    writeFileSync(fam, JSON.stringify({ families: { r1: { primitive: "x", soundLaunch: "s" } } }));
+    writeFileSync(fio, JSON.stringify({ files: [{ path: fam, fileOwner: "fake:build", owned: { "families[*]": ["primitive"] } }] }));
+    writeFileSync(fpr, JSON.stringify({ probes: [{ path: fam, fieldAuthors: {} }] }));
+    chmodSync(orphan, 0o444); // ② 444 而 io 零命中 ⇒ 孤兒
+
+    const { out, code } = run(["--doctor"], {
+      GGD_QUARANTINE_IO: io,
+      GGD_QUARANTINE_NORMALIZERS: norm,
+      GGD_QUARANTINE_PKG: pkg,
+      GGD_QUARANTINE_SCAN: join(d, "content"),
+      GGD_QUARANTINE_FIELDIO: fio,
+      GGD_QUARANTINE_FIELDPROBES: fpr,
+    });
+    chmodSync(orphan, 0o644);
+    expect(out, "⛔ 已知有污染而 doctor 量不到 —— 這把尺在它最需要說話時是瞎的").toContain(
+      "入口 1 · 孤兒 1 · 未分類 2 · 欄位級孤兒 1 · 總計 5",
+    );
+    expect(out, "⛔ C 訊號看不見『明確路徑的共寫』⇒ tiers:apply 那個 387 份死路照樣不會紅").toContain("co:a");
+    expect(code, "有污染要回非零").not.toBe(0);
   });
 
-  it("③ 巢狀防護真的在：`sync.mjs` 宣告已解鎖，`genrun.sh` 看得懂", () => {
-    expect(read("tools/parallel-gates/sync.mjs"), "⛔ sync.mjs 沒宣告已解鎖").toContain(
-      "GGD_QUARANTINE_UNLOCKED",
+  it("⑤ 欄位級擁有權是**量出來的**（field-io.json 過期就紅 —— GH#827）", () => {
+    // ⭐ 它呼叫產生器自己的推導函式（`shippedFamilyConfig({})` / `ownedRowFields`），
+    //   ⛔ 不是一張手抄的欄位表 —— 產生器多算一格少算一格，這一條會跟著紅。
+    let out = "";
+    let code = 0;
+    try {
+      out = execFileSync("node_modules/.bin/tsx", ["tools/parallel-gates/field-io.mts", "--check"], {
+        cwd: REPO,
+        encoding: "utf8",
+      });
+    } catch (e) {
+      const err = e as { stdout?: string; stderr?: string; status?: number };
+      out = (err.stdout ?? "") + (err.stderr ?? "");
+      code = err.status ?? -1;
+    }
+    expect(out + `\n(exit ${code})`, "⛔ 過期 ⇒ node_modules/.bin/tsx tools/parallel-gates/field-io.mts").toContain(
+      "是最新的",
     );
-    expect(
-      read("scripts/genrun.sh"),
-      "⛔ genrun 不認得已解鎖上下文 ⇒ 鏈上第一支跑完就把產物鎖回去，\n" +
-        "   後面寫同一批檔的步驟吃 EACCES —— 而每一支單獨跑都是綠的。",
-    ).toContain("GGD_QUARANTINE_UNLOCKED");
+  });
+
+  it("③ 不認得的模式要出聲，⛔ 不是靜靜跑 unlock（打錯字與成功長得一模一樣）", () => {
+    const { out, code } = run(["lokc"]);
+    expect(code, "⛔ 未知模式回 0 ⇒ 一個打錯字的指令會把整個隔離區解鎖而沒有人知道").not.toBe(0);
+    expect(out).toContain("不認得的模式");
+  });
+
+  it("④ 巢狀防護真的在：`sync.mjs` 宣告已解鎖，`genrun.sh` 看得懂", () => {
+    const read = (p: string): string => readFileSync(join(REPO, p), "utf8");
+    for (const f of ["tools/parallel-gates/sync.mjs", "scripts/genrun.sh"])
+      expect(
+        read(f),
+        `⛔ ${f} 不認得已解鎖上下文 ⇒ 鏈上第一支跑完就把產物鎖回去，\n` +
+          "   後面寫同一批檔的步驟吃 EACCES —— 而每一支單獨跑都是綠的。",
+      ).toContain("GGD_QUARANTINE_UNLOCKED");
   });
 });

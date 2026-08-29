@@ -280,18 +280,61 @@ def _takeover_ids(text: str) -> set[int]:
     return {int(n) for grp in rx.findall(txt) for n in re.findall(r"\d+", grp)}
 
 
-def _normalizer_steps() -> frozenset[str]:
+def _normalizer_steps() -> dict[str, list[str] | None]:
     """正規化器清單 —— ⛔ 不快取（hook 是一次性行程，而 lane 的樹可能有不同的表）。
 
-    ⚠️ 讀不到就回**空集合**：那讓每一個被認領的檔都判成 AUTHOR ＝ **擋**。
+    值是選填的 `only`（路徑 glob 陣列）＝ ⭐ **這一支只對這些路徑算正規化器**；
+    `None` ＝ 全部路徑。⚠️ 分類是**逐檔**的，⛔ 不是逐步驟：apconv:build 就地改
+    `content/abilities/*.json`（正規化器），而 `docs/_data/ap-conversion-applied.json`
+    是它自己整份 emit 的清單（作者）—— 在此之前 hook 對那份**真產物**放行。
+
+    ⚠️ 讀不到就回**空表**：那讓每一個被認領的檔都判成 AUTHOR ＝ **擋**。
     hook 這一側刻意 fail-**closed**（擋一個該放的，代價是一句話；
     放一個該擋的，代價是 owner 記錄過上百次的那個事故）。
     """
     try:
         data = json.loads(_NORMALIZERS_JSON.read_text(encoding="utf-8"))
-        return frozenset(str(n["step"]) for n in data.get("normalizers", []))
+        return {
+            str(n["step"]): (list(n["only"]) if isinstance(n.get("only"), list) else None)
+            for n in data.get("normalizers", [])
+        }
     except Exception:
-        return frozenset()
+        return {}
+
+
+def _unowned_fields(p: Path) -> str:
+    """⭐ GH#827 —— 這一份裡有哪幾欄**不是它的擁有者算得出來的**（量出來的）。
+
+    住處是 `tools/parallel-gates/field-io.json`（`field-io.mts` 呼叫產生器自己的
+    推導函式產生）⇒ ⛔ 這裡沒有一張手抄的欄位表。讀不到就回空字串（這是**訊息**
+    的一半，⛔ 不是裁決 —— 裁決仍然是「擋」）。
+
+    ⚠️ 表**先讀 `p` 自己那棵樹**（lane 可能剛加了一支探針），沒有才退回主樹；
+    而文件一定讀 `p` 本人 —— 讀主樹那一份會拿別人的內容算這一份的欄位。
+    """
+    try:
+        root = tree_root(p)
+        rel = str(p.resolve()).replace(str(root) + "/", "")
+        fio_path = root / "tools/parallel-gates/field-io.json"
+        if not fio_path.exists():
+            fio_path = REPO / "tools/parallel-gates/field-io.json"
+        fio = json.loads(fio_path.read_text(encoding="utf-8"))
+        ent = next((f for f in fio.get("files", []) if f.get("path") == rel), None)
+        if not ent:
+            return ""
+        doc = json.loads(p.read_text(encoding="utf-8"))
+        parts = []
+        for sect, own in (ent.get("owned") or {}).items():
+            if sect == "$top":
+                present = set(doc.keys())
+            else:
+                present = {k for r in (doc.get(sect[:-3]) or {}).values() if isinstance(r, dict) for k in r}
+            un = sorted(present - set(own))
+            if un:
+                parts.append(f"{sect}: {' '.join(un)}")
+        return " / ".join(parts)
+    except Exception:
+        return ""
 
 
 def _generator_owner(p: Path) -> tuple[str, bool] | None:
@@ -320,7 +363,14 @@ def _generator_owner(p: Path) -> tuple[str, bool] | None:
         if not claimants:
             return None
         normalizer_steps = _normalizer_steps()
-        authors = [c for c in claimants if c not in normalizer_steps]
+
+        def _normalizes(step: str) -> bool:
+            if step not in normalizer_steps:
+                return False
+            only = normalizer_steps[step]
+            return True if not only else any(_fn.fnmatch(rel, g) for g in only)
+
+        authors = [c for c in claimants if not _normalizes(c)]
         if authors:
             return (authors[0], False)
         return (claimants[0], True)
@@ -547,6 +597,18 @@ def main() -> int:
                         file=sys.stderr,
                     )
                     continue
+                # ⭐⭐ GH#827:下面那句「改它的來源再重生成」對**一部分欄位是謊話** ——
+                #    擁有者逐格保留它們,重跑不會動到,也沒有來源可以改。⇒ 先說出來。
+                _un = _unowned_fields(p)
+                if _un:
+                    print(
+                        f"⚠️⚠️ genguard:{p} 裡**這幾欄不是 {owner} 的**"
+                        f"(量出來的,見 tools/parallel-gates/field-io.json):\n   {_un}\n"
+                        f"   ⇒ 重跑 {owner} 不會動它們,也沒有「來源」可以改;寫入端寫在\n"
+                        f"     tools/parallel-gates/field-probes.json 的 fieldAuthors。\n"
+                        f"   ⚠️ 而整份是一個產物 ⇒ 那幾欄今天沒有任何合法寫入端(GH#827)。",
+                        file=sys.stderr,
+                    )
                 print(
                     f"🚫 genguard:{p} 是產生器 **{owner}** 的產物 —— 手改會在下一次 "
                     f"skills:sync 被打回來(2026-08-23 一晚中三次的錯)。\n"
