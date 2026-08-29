@@ -408,9 +408,39 @@ def do_check(explicit_ledger):
                  "produced by this generator")
     page_total = int(m.group(1))
     if page_total != res["total"]:
-        sys.exit(f"gen_status --check: STATUS PAGE UNDERCOUNTS. page says {page_total} tasks, "
-                 f"the ledger has {res['total']} ({res['source']}). This is exactly the drift the "
-                 f"generator exists to prevent — re-run `python3 tools/status/gen_status.py`.")
+        # ─────────────────────────────────────────────────────────────────────
+        # ⭐ 兩種「對不上」，⛔ 而它們的正解是相反的（GH#870）
+        # ─────────────────────────────────────────────────────────────────────
+        # 這條閘在 2026-08-29 之前對兩種一律說「re-run 產生器」，
+        # ⛔ 而在**第二種**情況下照做會**砍掉 281 列**（＝資料毀損）。
+        #
+        # ① ledger **比頁面多**  ⇒ 真的漂了、真的該重跑（保留原行為，仍然 exit 1）
+        # ② ledger **比頁面少**  ⇒ ⭐ 這一頁**來自一個已經不存在的 ledger**。
+        #
+        # ⚠️ 為什麼②會發生（實測 2026-08-29）：任務帳本住
+        #   `~/.claude/tasks/<session-id>/` —— 它是 **session 專屬且會自我刪除**的。
+        #   這一頁 2026-08-28 21:17 由 `1fc1e42e-…`（**286 筆**）產生，
+        #   而那個目錄在 23:48 就被清掉了；今天整台機器只剩 `c1013162-…`（**5 筆**，08-16）。
+        #   ⇒ ⭐ **這道閘結構上不可能再綠** —— CLAUDE.md 失敗形態⑨逐字：
+        #     「一個永遠不會綠的閘」＋「錯誤訊息**指著錯方向**，
+        #      於是每個人都以為是自己的環境壞了，⛔ 而不是那條閘壞了」。
+        #
+        # ⭐ ②的正解是**大聲說、⛔ 不要毀資料**（fail-open 沒錯，靜默才是缺陷）：
+        #   這一頁自己就是那份知識的**唯一存活副本**。
+        # 逃生口：GGD_STATUS_STRICT=1 ⇒ ②也回非零（⭐ 一鍵回到舊行為）。
+        if res["total"] > page_total or os.environ.get("GGD_STATUS_STRICT") == "1":
+            sys.exit(f"gen_status --check: STATUS PAGE UNDERCOUNTS. page says {page_total} tasks, "
+                     f"the ledger has {res['total']} ({res['source']}). This is exactly the drift the "
+                     f"generator exists to prevent — re-run `python3 tools/status/gen_status.py`.")
+        print(
+            f"gen_status --check: ⚠️ 這一頁（{page_total} 筆）比今天找得到的任務帳本"
+            f"（{res['total']} 筆 · {res['source']}）**多** —— "
+            f"⭐ 它來自一個**已經不存在**的 session 帳本。\n"
+            f"  ⛔ **不要**重跑產生器：那會把 {page_total - res['total']} 列砍掉（GH#870）。\n"
+            f"  ⭐ 這一頁本身就是那份知識的唯一存活副本 ⇒ 視為通過。\n"
+            f"  （要回到嚴格模式：`GGD_STATUS_STRICT=1`。長期正解是讓任務真相來自 GitHub issues。）"
+        )
+        return
 
     # ignore only the timestamp line: everything else must match byte-for-byte
     if STAMP_RE.sub("", current) != STAMP_RE.sub("", res["text"]):
