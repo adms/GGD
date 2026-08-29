@@ -104,8 +104,102 @@ def _layer_rid(model, layer) -> int:
 TEAM_GLOW_POLICIES = ("drop", "lit")
 
 
+# --- WC3 材質層 filter mode → glTF（GH#841） --------------------------------
+#: ⭐ MDX `MTLS/LAYS` 的 filter mode 有 **7 種**，這張表**每一種都有一列**。
+#: ⛔ 在此之前這裡沒有表，只有 `if fm >= 3 / elif fm == 1 / elif fm == 2` 四條分支
+#: ⇒ fm 5（Modulate）與 fm 6（Modulate2x）**掉進 `fm >= 3`**，
+#: 於是「相乘／變暗」被畫成「相加／發光」——**語意反向**。
+#:
+#: ⚠️ **出處逐條可查（⛔ 不是我記得的）**：
+#:  · 列舉本身 —— `tools/w3x-import/extract_emitters.py:73-74` 的 `MAT_BLEND`
+#:    「0 none · 1 transparent · 2 blend · 3 additive · 4 addAlpha ·
+#:     5 modulate · 6 modulate2x」。⚠️ 那個檔案的**上一格**（`:70-71`）是
+#:    **PRE2 粒子**那張只有 5 格、而且編號完全不同的表 —— 兩張長得很像，
+#:    ⛔ 不要拿錯（`w3xlib/particles.py:39` 與 `:85` 的註解就是這兩張表）。
+#:  · 「fm1 是**硬切**不是混色」—— `tools/w3x-import/extract_particles.py:107`
+#:    把 fm1 對到 `"alphaKey"`（⛔ 不是 `"alpha"`）。
+#:  · 「fm5/6 是**相乘**」—— 同檔 `:108` 兩者都對到 `"modulate"`。
+#:  · Modulate2x 的取捨 —— `apps/client/src/render/vfx/w3xEmitter.ts:572-573`
+#:    對同一個 filter mode 的結論逐字是「MULTIPLY keeps the darkening and
+#:    loses only the 2× brightening」⇒ ⭐ 這裡沿用**同一個**取捨與**同一句話**，
+#:    ⛔ 不要再發明第二種說法。
+#:
+#: ⭐ **量到的**（132 份地圖來源 MDX / 377 份來源材質，`out/GoDieEX22s{,-src}/raw`）——
+#: 這一票改動了 **51 份來源材質**，⛔ 其餘逐位元不動：
+#:   · fm1 而貼圖 alpha 平坦不透明  **23** 份：MASK（切不掉任何像素）→ OPAQUE
+#:   · fm2 同上                      **1** 份：BLEND（混不出東西）→ OPAQUE
+#:   · fm5 Modulate                  **6** 份：BLEND＋emissive（＝相加）→ 相乘
+#:     （`DeathWave` ×1 · `NetherStrike` ×5）
+#:   · 疊加層回來                    **21** 份材質 / +21 個 primitive
+#:   · fm6 Modulate2x                **0** 份 —— 今天沒有人用它，⭐ 所以它的分支
+#:     由 `w3xlib/filter_mode_probe.py` 的合成模型驗，⛔ 不是「沒用到就不做」。
+#: ⚠️ 這些數字說的是**轉檔器**；出貨的 `.glb` 要重跑產線才會變（⛔ 本票沒有重跑）。
+#:
+#: `kind` 是**翻譯後**的類別，`gl` 是 WC3 算的那條式子（留著才驗得了翻譯對不對）。
+@dataclass(frozen=True)
+class FilterMode:
+    fm: int
+    name: str      # WC3 世界編輯器裡的名字
+    gl: str        # WC3 renderer 實際算的混色式
+    kind: str      # 翻譯類別：opaque / cutout / blend / additive / multiply(2x)
+    why: str       # 為什麼翻成這一種（⛔ 沒有理由的格子＝一個推測）
+
+
+MDX_FILTER_MODES: dict[int, FilterMode] = {
+    0: FilterMode(
+        0, "None", "blending OFF", "opaque",
+        "⛔ 連 alpha test 都沒有 ⇒ 貼圖就算帶 1-bit alpha 也**切不掉** ⇒ 一律 OPAQUE。",
+    ),
+    1: FilterMode(
+        1, "Transparent", "alpha test; blending OFF", "cutout",
+        "硬切（`extract_particles.py:107` 叫它 alphaKey）⇒ glTF MASK。"
+        "⭐ 貼圖**沒有可用 alpha**（平坦不透明）時測試處處通過 ⇒ 等價 OPAQUE，"
+        "⛔ 不是一個切不掉任何東西的 MASK。",
+    ),
+    2: FilterMode(
+        2, "Blend", "(SRC_ALPHA, 1-SRC_ALPHA)", "blend",
+        "標準 alpha 混色 ⇒ glTF BLEND。⭐ alpha 平坦不透明時混不出任何東西 ⇒ OPAQUE。",
+    ),
+    3: FilterMode(
+        3, "Additive", "(ONE, ONE)", "additive",
+        "相加（WC3 這一格**不看** src alpha）。glTF 核心沒有相加混色 ⇒ "
+        "emissive + BLEND，alpha 從 luma 推（GH#649 那條路）。",
+    ),
+    4: FilterMode(
+        4, "AddAlpha", "(SRC_ALPHA, ONE)", "additive",
+        "相加，但由 src alpha 加權 ⇒ 與 fm3 同一條輸出路徑，"
+        "差別是**貼圖有 alpha 時用貼圖的**（fm3 的 alpha 被 WC3 忽略）。",
+    ),
+    5: FilterMode(
+        5, "Modulate", "(ZERO, SRC_COLOR)", "multiply",
+        "⭐ **相乘（變暗）**：out = dst × src。glTF BLEND 是 "
+        "out = C×A + dst×(1−A) ⇒ 令 C=黑、A=1−src 就**逐位元等於**相乘"
+        "（src 為灰階時精確；有彩度時 scalar alpha 只能取亮度）。"
+        "⛔ 不可以走 emissive —— 那是相加，方向相反。",
+    ),
+    6: FilterMode(
+        6, "Modulate2x", "(DEST_COLOR, SRC_COLOR)", "multiply2x",
+        "out = 2 × dst × src ⇒ A = max(0, 1−2·src)。"
+        "⭐ 變暗那一半精確；**>0.5 的「變亮」那一半 glTF 核心表達不了**，"
+        "逐支 note 列名（同 `w3xEmitter.ts:573` 的取捨）。",
+    ),
+}
+
+#: ⛔ 表以外的值**不靜默**：翻成最保守的 BLEND，並在 `res.notes` 裡**指名**它。
+#: （fail-open 沒錯，靜默才是缺陷 —— CLAUDE.md）
+UNKNOWN_FILTER_MODE = FilterMode(
+    -1, "unknown", "?", "blend",
+    "⛔ 不在 MDX 的 0–6 裡。退回 BLEND 並列名 —— ⛔ 不要假裝翻譯過了。",
+)
+
+
+def filter_mode_info(fm: int) -> FilterMode:
+    return MDX_FILTER_MODES.get(fm, UNKNOWN_FILTER_MODE)
+
+
 def _material_effect_kind(model, mid: int, team_glow: str = "drop") -> str:
-    """Classify how material `mid` renders (mirrors gltf_material()'s branches):
+    """Classify how material `mid` renders — 這支決定的是 **GEOSET 要不要剔**，
+    ⛔ 不是那一份材質怎麼畫（畫法在 `_layer_material()`）：
       ""            solid body/skin or team-colour → keep
       "team_glow"   replaceableId-2 billboard → rendered INVISIBLE in-game, so
                     dropping its geometry is a visual no-op (safe to prune)
@@ -115,6 +209,13 @@ def _material_effect_kind(model, mid: int, team_glow: str = "drop") -> str:
     ⭐ `team_glow="lit"` ⇒ rid-2 也是真的會發光的加法幾何 ⇒ 回報 `"additive"`，
     這樣它就吃**比較保守**的那條剔除規則（只有明顯離開身體才剔），⛔ 不會再被
     「隊伍發光反正看不見，寬的就剔掉」那一條順手砍掉。
+
+    ⚠️ GH#841：`_layer_material()` 已經改成**逐層**，而這裡**刻意**維持
+    「整份材質一個判決」—— 它餵的是英雄身高正規化（`classify_geosets`），
+    一份幾何只能剔或不剔，⛔ 沒有「剔掉一層」這回事。
+    ⭐ 但 `fm >= 3` 這個魔數換成查表：fm 5/6 是**相乘**不是相加，
+    它們仍然吃保守剔除規則（＝今天的行為），而未知的 fm 現在回 `""`
+    ——「看不懂就不要剔幾何」⛔ 比「猜它是特效然後剔掉」安全。
     """
     layers = model.materials[mid].layers if 0 <= mid < len(model.materials) else []
     if not layers:
@@ -129,7 +230,9 @@ def _material_effect_kind(model, mid: int, team_glow: str = "drop") -> str:
             return ""
         return "additive" if team_glow == "lit" else "team_glow"
     disp = next((l for l in real if l.filter_mode == 0), real[0])
-    return "additive" if (disp.filter_mode >= 3 and not has_opaque_base) else ""
+    non_solid = filter_mode_info(disp.filter_mode).kind in (
+        "additive", "multiply", "multiply2x")
+    return "additive" if (non_solid and not has_opaque_base) else ""
 
 
 def _material_is_effect(model, mid: int) -> bool:
@@ -433,85 +536,124 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
         luma_to_gltf[tex_id] = len(gltf["textures"]) - 1
         return luma_to_gltf[tex_id]
 
-    mat_index: dict[int, int] = {}
+    mult_to_gltf: dict[tuple[int, bool], int] = {}
+
+    def gltf_texture_multiply(tex_id: int, doubling: bool) -> int:
+        """WC3 Modulate / Modulate2x（fm 5 / 6）→ 一張**會讓底下變暗**的貼圖。
+
+        代數（⛔ 不是近似，見 `MDX_FILTER_MODES[5].why`）：
+            WC3   out = dst × src
+            glTF  out = C × A + dst × (1 − A)
+          令 C = 黑、A = 1 − src  ⇒  out = dst × src ✅
+        Modulate2x 是 `out = 2 × dst × src` ⇒ A = max(0, 1 − 2·src)：
+        變暗那一半精確，⛔ **變亮那一半 glTF 核心做不到**（呼叫端會 note 出來）。
+
+        ⚠️ `src` 取 `max(R,G,B)`（與 `gltf_texture_luma` **同一把尺**，⛔ 不要
+        在同一個檔裡養第二種亮度定義）；貼圖自己的 alpha **刻意不看** ——
+        WC3 的 `(ZERO, SRC_COLOR)` 一個 alpha 都不讀。
+        """
+        key = (tex_id, doubling)
+        if key in mult_to_gltf:
+            return mult_to_gltf[key]
+        from PIL import Image, ImageChops
+        png = textures_png.get(tex_id)
+        if png is not None:
+            img = Image.open(io.BytesIO(png)).convert("RGBA")
+        else:
+            # 貼圖解不到 ⇒ 退回**恆等**（白 ⇒ A=0 ⇒ 什麼都不變暗），
+            # ⛔ 不是灰（那會在畫面上蓋一層沒有人要的黑紗）。呼叫端會列名。
+            img = Image.new("RGBA", (8, 8), (255, 255, 255, 255))
+        r, g, b, _a = img.split()
+        lum = ImageChops.lighter(ImageChops.lighter(r, g), b)
+        if doubling:
+            lum = lum.point(lambda v: 255 if v * 2 > 255 else v * 2)
+        black = Image.new("L", img.size, 0)
+        out_img = Image.merge("RGBA", (black, black, black,
+                                       ImageChops.invert(lum)))
+        out = io.BytesIO()
+        out_img.save(out, "PNG")
+        view = buf.add_blob(out.getvalue())
+        gltf["images"].append({"bufferView": view, "mimeType": "image/png"})
+        gltf["textures"].append(
+            {"source": len(gltf["images"]) - 1, "sampler": 0}
+        )
+        mult_to_gltf[key] = len(gltf["textures"]) - 1
+        return mult_to_gltf[key]
+
+    mat_index: dict[int, list[int]] = {}
 
     def _rid(l) -> int:
         return (model.textures[l.texture_id].replaceable_id
                 if 0 <= l.texture_id < len(model.textures) else 0)
 
-    def gltf_material(mid: int) -> int:
-        if mid in mat_index:
-            return mat_index[mid]
-        layers = model.materials[mid].layers if mid < len(model.materials) else []
-        real = [l for l in layers if _rid(l) == 0]
-        repl = [l for l in layers if _rid(l) in (1, 2)]
-        # a fm0 layer anywhere is a solid base: overlays composite over it, so
-        # the material as a whole is opaque (fixes weapons/armour that carry a
-        # team-colour base + a blended detail layer rendering see-through).
-        has_opaque_base = any(l.filter_mode == 0 for l in layers)
+    def _layer_alpha_mode(layer) -> str:
+        """這一層翻出來會是哪一種 glTF alphaMode。
+
+        ⭐ 這是**唯一**一份判準 —— `_layer_material()` 自己也呼叫它，
+        `gltf_materials()` 用它決定「哪幾層被後面的不透明層蓋住了」。
+        ⛔ 不要抄第二份（第〇·四守則：同一個知識只有一個住處）。
+        """
+        rid = _rid(layer)
+        if rid == 2:
+            return "BLEND"       # 隊伍發光：lit 與 drop 兩條路都是 BLEND
+        if rid != 0:
+            return "OPAQUE"      # 隊伍色 / 其它 replaceableId → 實心
+        info = filter_mode_info(layer.filter_mode)
+        if info.kind in ("additive", "multiply", "multiply2x"):
+            return "BLEND"
+        hint = tex_alpha.get(layer.texture_id, "opaque")
+        if info.kind == "opaque" or hint == "opaque":
+            # ⭐ GH#841 —— alpha 平坦不透明（或根本沒有 alpha 通道）時
+            # WC3 的 alpha test 處處通過、alpha 混色混不出東西 ⇒ 就是不透明。
+            return "OPAQUE"
+        if info.kind == "cutout":
+            return "BLEND" if hint == "blend" else "MASK"
+        return "MASK" if hint == "mask" else "BLEND"
+
+    def _layer_material(mid: int, li: int, layer, n_emitted: int) -> dict:
+        """⭐ GH#841 —— **一個 MDX 層 = 一份 glTF 材質**（＋一個 primitive）。
+
+        ⛔ 在此之前這裡是「整份材質只挑**一層** `disp` 來畫」＋
+        `has_opaque_base` 一票否決：材質裡只要有一層 fm0，整份就變 OPAQUE，
+        而其餘每一層**逐位元不存在**。量到 **33 份來源材質**（`[0,2]` 30、
+        `[0,1]` / `[0,2,3]` / `[3,0]` 各 1）在出貨樹上少了一層。
+        ⚠️ 而那個否決本身是有理由的（它修的是「隊伍色底＋混色細節」畫成半透明
+        鬼影）—— ⭐ 逐層輸出**同時**保住那個理由：底層自己就是不透明的。
+        """
+        rid = _rid(layer)
+        fm = layer.filter_mode
+        info = filter_mode_info(fm)
+        # ⭐ 只發一份材質時名字**保持原樣**（`mat3` / `TeamGlow1`）——
+        # 下游 `strip_teamglow.py`、`invisible_prim_census.py`、稽核報告都按名字認人。
+        sfx = "" if n_emitted <= 1 else f"_l{li}"
         pbr = {"metallicFactor": 0.0, "roughnessFactor": 1.0}
-        mat: dict = {"name": f"mat{mid}", "pbrMetallicRoughness": pbr,
-                     "doubleSided": bool(any(
-                         l.shading_flags & 0x10 or l.filter_mode >= 2
-                         for l in layers))}
+        mat: dict = {
+            "name": f"mat{mid}{sfx}", "pbrMetallicRoughness": pbr,
+            "doubleSided": bool(layer.shading_flags & 0x10 or fm >= 2),
+            # ⭐ 來源事實跟著位元組走：翻譯是有損的（glTF 核心沒有相加/相乘混色），
+            # ⛔ 但**來源說了什麼**不可以在轉檔時消失。
+            "extras": {"w3x": {"material": mid, "layer": li, "filterMode": fm,
+                               "blend": info.name, "replaceableId": rid}},
+        }
 
         def set_mask():
             mat["alphaMode"] = "MASK"
             mat["alphaCutoff"] = 0.5
 
-        if real:
-            # display the "detail" layer: an opaque (fm0) real layer wins as the
-            # solid base, else the first real layer.
-            disp = next((l for l in real if l.filter_mode == 0), real[0])
-            fm = disp.filter_mode
-            hint = tex_alpha.get(disp.texture_id, "opaque")
-            if fm >= 3 and not has_opaque_base:
-                # glow GEOMETRY (energy blade / orb): emissive so it reads as
-                # light, never an opaque black quad.
-                if hint == "opaque":
-                    # solid bright-on-black glow: no alpha channel to key on.
-                    # Derive one from luminance instead of dropping the quad —
-                    # the drop policy made 28 shipped effect .glbs (beam
-                    # cannons, novas, auras) draw zero pixels (GH#649).
-                    tix = gltf_texture_luma(disp.texture_id)
-                    res.notes.append(
-                        f"mat{mid}: additive glow w/o alpha → luma-keyed")
-                else:
-                    tix = gltf_texture(disp.texture_id)
-                mat["emissiveTexture"] = {"index": tix}
-                mat["emissiveFactor"] = [1.0, 1.0, 1.0]
-                mat["extensions"] = {"KHR_materials_emissive_strength":
-                                     {"emissiveStrength": 2.0}}
-                used_ext.add("KHR_materials_emissive_strength")
-                mat["alphaMode"] = "BLEND"
-                pbr["baseColorTexture"] = {"index": tix}
-            else:
-                pbr["baseColorTexture"] = {"index": gltf_texture(disp.texture_id)}
-                if has_opaque_base:
-                    pass  # OPAQUE (glTF default)
-                elif fm == 1:
-                    if hint == "blend":
-                        mat["alphaMode"] = "BLEND"
-                    else:
-                        set_mask()
-                elif fm == 2:
-                    if hint == "mask":
-                        set_mask()
-                    else:
-                        mat["alphaMode"] = "BLEND"
-                elif fm == 0 and hint == "mask":
-                    set_mask()  # fm0 texture with genuine 1-bit cut-out
-        elif any(_rid(l) == 1 for l in repl):
+        if info.fm < 0:
+            res.notes.append(
+                f"mat{mid}{sfx}: ⛔ 未知 filterMode {fm} → 退回 BLEND（未翻譯）")
+
+        if rid == 1:
             # TEAM COLOUR body region → neutral opaque tint the CLIENT recolours
             # (flagged in teamTintMaterials). Opaque = no see-through gray ghost.
-            mat["name"] = f"TeamColor{mid}"
+            mat["name"] = f"TeamColor{mid}{sfx}"
             res.team_color_materials.append(mat["name"])
             pbr["baseColorFactor"] = list(NEUTRAL_TEAM)
             mat["alphaMode"] = "OPAQUE"
-        elif repl:
+        elif rid == 2:
             # TEAM GLOW (replaceableId 2): coloured additive billboard.
-            glow = next((l for l in repl if _rid(l) == 2
-                         and l.texture_id in textures_png), None)
+            glow = layer if layer.texture_id in textures_png else None
             if team_glow == "lit" and glow is not None:
                 # ⭐ GH#767 —— 這一片**不是**一塊沒有美術的色塊：rid-2 的美術
                 # 就是 `ReplaceableTextures\TeamGlow\TeamGlow00.blp`，而它是
@@ -519,7 +661,7 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
                 # ⇒ 走**同一條** luma-key 路徑（alpha := max(R,G,B)），⛔ 不要
                 # 再發明第二種處理方式。
                 tix = gltf_texture_luma(glow.texture_id)
-                mat["name"] = f"TeamGlow{mid}"
+                mat["name"] = f"TeamGlow{mid}{sfx}"
                 res.lit_glow_materials.append(mat["name"])
                 mat["emissiveTexture"] = {"index": tix}
                 mat["emissiveFactor"] = [1.0, 1.0, 1.0]
@@ -529,19 +671,118 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
                 mat["alphaMode"] = "BLEND"
                 pbr["baseColorTexture"] = {"index": tix}
                 res.notes.append(
-                    f"mat{mid}: team glow (rid2) → luma-keyed VISIBLE (GH#767)")
+                    f"mat{mid}{sfx}: team glow (rid2) → luma-keyed VISIBLE (GH#767)")
             else:
                 # we cannot tint it — drop it (fully transparent) so there is
                 # no gray blob.
-                mat["name"] = f"TeamGlow{mid}"
+                mat["name"] = f"TeamGlow{mid}{sfx}"
                 res.dropped_glow_materials.append(mat["name"])
                 pbr["baseColorFactor"] = [0, 0, 0, 0]
                 mat["alphaMode"] = "BLEND"
-        else:
+        elif rid != 0:
+            # 其它 replaceableId（地形/懸崖那一族）—— 我們沒有它的美術。
             pbr["baseColorFactor"] = [0.5, 0.5, 0.5, 1.0]
-        gltf["materials"].append(mat)
-        mat_index[mid] = len(gltf["materials"]) - 1
-        return mat_index[mid]
+        elif info.kind == "additive":
+            # glow GEOMETRY (energy blade / orb): emissive so it reads as
+            # light, never an opaque black quad.
+            hint = tex_alpha.get(layer.texture_id, "opaque")
+            if hint == "opaque":
+                # solid bright-on-black glow: no alpha channel to key on.
+                # Derive one from luminance instead of dropping the quad —
+                # the drop policy made 28 shipped effect .glbs (beam
+                # cannons, novas, auras) draw zero pixels (GH#649).
+                tix = gltf_texture_luma(layer.texture_id)
+                res.notes.append(
+                    f"mat{mid}{sfx}: {info.name} glow w/o alpha → luma-keyed")
+            else:
+                # ⚠️ fm3 的 alpha 在 WC3 是**被忽略**的，⛔ 但這裡刻意仍然用它：
+                # 「形狀住 alpha、RGB 平坦亮」的那一族（CartoonCloud / Dust5A —
+                # `convert_stock_model.py::texture_shape_report` 的
+                # `LUMA-KEY-NEEDED` 判決）改用 luma 會變成一塊亮方塊。
+                # ⇒ 兩個方向都要活得下來：有 alpha 就用 alpha，沒有才推 luma。
+                tix = gltf_texture(layer.texture_id)
+            mat["emissiveTexture"] = {"index": tix}
+            mat["emissiveFactor"] = [1.0, 1.0, 1.0]
+            mat["extensions"] = {"KHR_materials_emissive_strength":
+                                 {"emissiveStrength": 2.0}}
+            used_ext.add("KHR_materials_emissive_strength")
+            mat["alphaMode"] = "BLEND"
+            pbr["baseColorTexture"] = {"index": tix}
+        elif info.kind in ("multiply", "multiply2x"):
+            # ⭐ 相乘（變暗），⛔ 不是相加（發光）。代數見 gltf_texture_multiply。
+            two_x = info.kind == "multiply2x"
+            pbr["baseColorTexture"] = {
+                "index": gltf_texture_multiply(layer.texture_id, two_x)}
+            pbr["baseColorFactor"] = [0.0, 0.0, 0.0, 1.0]
+            mat["alphaMode"] = "BLEND"
+            if layer.texture_id not in textures_png:
+                res.notes.append(
+                    f"mat{mid}{sfx}: {info.name} 貼圖解不到 → 恆等（不變暗）")
+            elif two_x:
+                res.notes.append(
+                    f"mat{mid}{sfx}: {info.name} → MULTIPLY；"
+                    "變暗那一半精確，⛔ 2× 變亮那一半 glTF 核心表達不了")
+            else:
+                res.notes.append(f"mat{mid}{sfx}: {info.name} → MULTIPLY（變暗）")
+        else:
+            hint = tex_alpha.get(layer.texture_id, "opaque")
+            pbr["baseColorTexture"] = {"index": gltf_texture(layer.texture_id)}
+            mode = _layer_alpha_mode(layer)
+            if mode == "MASK":
+                set_mask()
+            elif mode == "BLEND":
+                mat["alphaMode"] = "BLEND"
+            elif info.kind != "opaque" and hint == "opaque":
+                # ⭐ GH#841 —— 貼圖的 alpha 平坦不透明（或根本沒有 alpha 通道）：
+                # WC3 的 alpha test 處處通過、alpha 混色混不出任何東西
+                # ⇒ **結果就是不透明**。⛔ 在此之前這裡發的是一個
+                # 「切不掉任何一個像素的 MASK」—— 一句說了但不會發生的話。
+                res.notes.append(
+                    f"mat{mid}{sfx}: {info.name} 但 alpha 平坦不透明 → OPAQUE"
+                    "（⛔ 不是切不掉東西的 MASK）")
+        return mat
+
+    def gltf_materials(mid: int) -> list[int]:
+        """這份 MDX 材質要畫的**每一層**，各一個 glTF 材質 index（依 MDX 層序）。"""
+        if mid in mat_index:
+            return mat_index[mid]
+        layers = (model.materials[mid].layers
+                  if 0 <= mid < len(model.materials) else [])
+        # ⛔ 被丟掉的隊伍發光層（`baseColorFactor [0,0,0,0]`）**必不可見** ⇒
+        # 材質裡還有別的層時就不要再發一個空 primitive。⭐ 但整份材質都是它時
+        # 仍然要發（下游 `strip_teamglow.py` / `invisible_prim_census.py` 靠
+        # `TeamGlow*` 這個名字認人）。
+        keep = [i for i, l in enumerate(layers)
+                if not (_rid(l) == 2 and not (team_glow == "lit"
+                                              and l.texture_id in textures_png))]
+        if not keep:
+            keep = list(range(len(layers)))
+        # ⭐ MDX **依序**疊圖 ⇒ 最後一層不透明的層把它**前面**的每一層完全蓋住
+        # （WC3 自己就是這樣畫的）。⛔ 不要輸出那些畫了也看不到的層：它們除了
+        # 白花 draw call，還是「兩個同深度的不透明 primitive」——
+        # 誰贏取決於 renderer 的 depthFunc 是 LEQUAL 還是 LESS，
+        # ⚠️ 而那是一個我們**驗不到**的變數（headless 沒有像素）。
+        last_opaque = 0
+        for pos, li in enumerate(keep):
+            if _layer_alpha_mode(layers[li]) == "OPAQUE":
+                last_opaque = pos
+        keep = keep[last_opaque:]
+        out: list[int] = []
+        if not layers:
+            gltf["materials"].append({
+                "name": f"mat{mid}",
+                "pbrMetallicRoughness": {"metallicFactor": 0.0,
+                                         "roughnessFactor": 1.0,
+                                         "baseColorFactor": [0.5, 0.5, 0.5, 1.0]},
+                "doubleSided": False,
+            })
+            out.append(len(gltf["materials"]) - 1)
+        for li in keep:
+            gltf["materials"].append(
+                _layer_material(mid, li, layers[li], len(keep)))
+            out.append(len(gltf["materials"]) - 1)
+        mat_index[mid] = out
+        return out
 
     # ---- skin ---------------------------------------------------------------
     skin_index = None
@@ -635,11 +876,15 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
         indices = buf.add(idx, 34963, {
             "componentType": 5123, "count": len(g.faces), "type": "SCALAR",
         })
-        prims.append({
-            "attributes": attrs,
-            "indices": indices,
-            "material": gltf_material(g.material_id),
-        })
+        # ⭐ GH#841 —— 一層一個 primitive（共用同一批 accessor，⛔ 不複製頂點）。
+        # MDX 的層是**依序疊上去**的；glTF 沒有多層材質，唯一表達得出來的形狀
+        # 就是同一份幾何畫 N 次。⛔ 在此之前只畫 `disp` 那一層。
+        for mi in gltf_materials(g.material_id):
+            prims.append({
+                "attributes": attrs,
+                "indices": indices,
+                "material": mi,
+            })
     if prims:
         gltf["meshes"].append({"name": model.name or model_name, "primitives": prims})
         mesh_node = {"name": "mesh", "mesh": 0}
