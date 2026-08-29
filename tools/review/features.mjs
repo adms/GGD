@@ -337,7 +337,31 @@ export function buildFeatureQueue(repoRoot) {
     /** GH#797 —— 錨對不對**判不了**（沒登記 commit／sha 解析不到／推導不出宣稱檔案）。 */
     fixAnchorUndeterminable: 0,
   };
-  for (const seq of scanSequences(repoRoot)) {
+  // ⭐ **兩頭都要走**（GH#842／#868，CLAUDE.md 失敗形態⑫）。
+  //
+  // ⚠️ 在此之前這個迴圈只走 `scanSequences()` ＝ **只有圖片序列**
+  //   ⇒ 用 `--evidence` 登記的「閘證據」批次**登記成功了、而永遠不會出現在頁面上**
+  //   ⇒ ⭐ owner 按不到任何鈕 —— 而**沒有任何東西會喊**（登記那一步回 200）。
+  //   那正是我在 #868 打開非視覺登記時留下的洞：一頭的入口開了，另一頭的出口沒開。
+  //
+  // ⇒ 現在的母體 = 圖片序列 ∪ **帳本裡沒有序列的登記**。
+  const seqs = scanSequences(repoRoot);
+  const seqIds = new Set(seqs.map((s) => s.id));
+  const gateOnly = Object.entries(ledger.batches)
+    .filter(([id]) => !seqIds.has(id))
+    .map(([id, reg]) => ({
+      id,
+      title: reg.title ?? id,
+      dir: reg.sequenceDir ?? null,
+      // ⭐ 閘證據沒有影格；hash 用**登記內容**算 —— 登記一改，owner 的舊裁決就過期
+      //   （與圖片那一頭的 `seq.hash` 同一個語意，⛔ 不是永遠 pending）。
+      hash: sha1(canonical({ evidence: reg.evidence ?? null, commit: reg.commit ?? null, rollback: reg.rollback ?? null })),
+      frames: [],
+      evidenceKind: "gate",
+      evidence: reg.evidence ?? null,
+    }));
+
+  for (const seq of [...seqs, ...gateOnly]) {
     counts.total++;
     const reg = ledger.batches[seq.id];
     if (reg === undefined) {

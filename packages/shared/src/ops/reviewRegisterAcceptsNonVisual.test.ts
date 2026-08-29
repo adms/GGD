@@ -71,6 +71,36 @@ describe("批次驗收頁收得下非視覺成果（GH#868）", () => {
     ).toThrow(/這個檔不存在/);
   });
 
+  /**
+   * ⭐ **登記成功 ≠ 上得了那一頁**（GH#842／#868，失敗形態⑧＋⑫）。
+   *
+   * ⚠️ 我在 #868 打開非視覺登記時只開了**入口**：`buildFeatureQueue()` 的迴圈
+   * 仍然只走 `scanSequences()`（＝圖片序列那一頭）
+   * ⇒ 用 `--evidence` 登記的批次**登記回 200、而永遠不出現在頁面上**
+   * ⇒ ⭐ owner 按不到任何鈕，⛔ 而沒有任何東西會喊。
+   *
+   * ⇒ 這一條驗的是**接縫**：登記完之後，它**在佇列裡**。
+   */
+  it("⭐ 登記完之後，它真的出現在 owner 那一頁的佇列裡（⛔ 不只是登記成功）", async () => {
+    const t = sandbox();
+    const mod = (await import(/* @vite-ignore */ ("../../../../tools/review/features.mjs" as string))) as {
+      registerBatch: RegisterBatch;
+      buildFeatureQueue: (root: string) => { batches: { id: string }[] };
+    };
+    mod.registerBatch(t, {
+      id: "gate_only_batch",
+      title: "t",
+      evidence: "docs/_reports/note.md",
+      rollback: rb("demo", "active"),
+    });
+    const ids = mod.buildFeatureQueue(t).batches.map((b) => b.id);
+    expect(
+      ids,
+      "⛔ 登記成功了，而它**不在 owner 那一頁的佇列裡** —— " +
+        "⭐ 入口開了、出口沒開，⛔ 而登記那一步回的是 200（失敗形態⑧）。",
+    ).toContain("gate_only_batch");
+  });
+
   it("⛔ 拒：完全沒有證據", () => {
     const t = sandbox();
     expect(() => registerBatch(t, { id: "b", title: "t", rollback: rb("demo", "active") })).toThrow(
