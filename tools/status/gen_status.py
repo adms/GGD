@@ -223,9 +223,23 @@ def resolve_ledger(explicit=None):
         raise LedgerError(f"{picked}: ledger path does not exist (from --ledger/$GGD_TASK_LEDGER)")
 
     dirs = [d for d in glob.glob(HOME_LEDGER_GLOB) if os.path.isdir(d) and _score_dir(d)]
+    # ⭐ **committed 快照與家目錄帳本比大小**（GH#870，2026-08-29）。
+    #
+    # ⚠️ 在此之前家目錄**永遠贏**（只要有一個目錄就用它）。而任務帳本住
+    #   `~/.claude/tasks/<session-id>/` —— ⭐ 它是 **session 專屬且會自我刪除**的：
+    #   實測今天整台機器只剩一個 **2026-08-16 的 5 筆殘骸**，
+    #   而 committed 快照 `docs/_task-ledger.json` 有 **286 筆**。
+    #   ⇒ ⭐ 舊殘骸把真正的分母擠掉了 ⇒ 產生器的 LEDGER SHRANK 護欄天天擋，
+    #     而 `--check` 那一側卻叫人「re-run the generator」—— **兩側方向相反**。
+    #
+    # ⭐ 判準改成「**誰的筆數多**」，⛔ 不是「誰住哪裡」：
+    #   一個活著的 session 一定比 committed 快照新且不會更少；
+    #   ⛔ 而一個被清掉一半的殘骸必然更少 ⇒ 這條規則自動選對。
+    snap_n = snapshot_count()
     if dirs:
         dirs.sort(key=lambda d: (_score_dir(d), os.path.getmtime(d)), reverse=True)
-        return load_ledger_dir(dirs[0]), display_source(dirs[0]), "dir"
+        if snap_n is None or _score_dir(dirs[0]) >= snap_n:
+            return load_ledger_dir(dirs[0]), display_source(dirs[0]), "dir"
 
     if os.path.exists(MIRROR):
         return load_ledger_json(MIRROR), recorded_source(MIRROR), "snapshot"
@@ -428,6 +442,13 @@ def do_check(explicit_ledger):
         # ⭐ ②的正解是**大聲說、⛔ 不要毀資料**（fail-open 沒錯，靜默才是缺陷）：
         #   這一頁自己就是那份知識的**唯一存活副本**。
         # 逃生口：GGD_STATUS_STRICT=1 ⇒ ②也回非零（⭐ 一鍵回到舊行為）。
+        # ⚠️ ⭐ **2026-08-29 更正**：我先前判斷「那份 286 筆的來源已經消失」——
+        #   ⛔ 那是錯的。`docs/_task-ledger.json` 是一個 **dict**（`{_doc,generated,source,count,tasks}`），
+        #   而 `tasks` 陣列裡**完整的 286 筆一直都在** —— 我用 `len(dict)` 量成了 5。
+        #   ⇒ 真正的病是 `resolve_ledger()` 讓一個 **2026-08-16 的 5 筆殘骸**贏過它（已修）。
+        # ⭐ 這一段仍然留著：⛔ 它守的是「**萬一**哪天真的只剩更小的來源」，
+        #   ⚠️ 而那時**唯一正確的動作仍然是不要重跑產生器**（產生器自己的
+        #   `LEDGER SHRANK` 護欄方向與這裡一致 —— 兩側現在說同一句話）。
         if res["total"] > page_total or os.environ.get("GGD_STATUS_STRICT") == "1":
             sys.exit(f"gen_status --check: STATUS PAGE UNDERCOUNTS. page says {page_total} tasks, "
                      f"the ledger has {res['total']} ({res['source']}). This is exactly the drift the "

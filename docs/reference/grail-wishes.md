@@ -7,7 +7,7 @@
 > 設計母規則：[`docs/聖杯願望三選一-設計規則.md`](../聖杯願望三選一-設計規則.md)。
 > 每個效果的參數與上下界：[`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 
-contentVersion `cv_76b237dbd7e3`
+contentVersion `cv_c58b18324fe5`
 
 ---
 
