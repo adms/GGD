@@ -990,8 +990,69 @@ defineTypes(MatchState, {
  * `MatchRoom`（依 duel zone 收窄）與 `ReplayRoom`（一律全部可見）。
  * 剔除規則本身、以及「為什麼客戶端結構上看不到別區」的證明寫在
  * `apps/game-server/src/net/zoneView.ts`；旋鈕是 `GGD_SNAPSHOT_ZONE_CULL=0`。
+ *
+ * ⛔⛔ **而上面那一句只寫了一半，那半句在 2026-08-27 讓 HEAD 完全進不了遊戲**
+ * （GH#760 → GH#816）。缺的另一半是：
+ *
+ * > ⭐ **view 有、但 view 裡一個實體都沒有的時候，這一格也不會上線。**
+ * > 客戶端讀到的是 **`undefined`**，⛔ 不是 `size === 0` 的空 `MapSchema`。
+ *
+ * ⚠️ 而那正好就是**選人畫面**（champSelect 期間一隻實體都還沒生出來），
+ * 也就是**每一場比賽的第一段**。當時客戶端 6 個讀端無條件 deref 這一格：
+ * `onStatePatch` 的閘把每一份快照丟掉（HUD 永遠停在「Connecting to match…」），
+ * `collectEntities` 每一幀擲 `TypeError`（`renderFrame` 死在第 4 步）。
+ *
+ * ⭐ 為什麼「空 vs 缺席」在客戶端上有差別，而在這個檔上沒有：伺服器端的
+ * `new MatchState()` 會把 `entities` 初始化成一個真的 `MapSchema`，⛔ 而客戶端
+ * **沒有這個類別** —— `apps/client/src/net/RoomConnection.ts` 刻意不傳
+ * `rootSchema`，colyseus.js 從握手的 `Reflection` **動態**造出自己的類別，
+ * 而動態造出來的那一份**不會預先初始化集合欄位**：它要等第一次真的解碼到
+ * 這一格才會存在。⇒ ⭐ 這條差異**只在解碼側**看得到，所以任何在伺服器端
+ * `new MatchState()` 上跑的夾具都證明不了它（失敗形態⑤）。
+ *
+ * ⇒ 兩條落地規矩：
+ *   ① 客戶端**唯一**的讀法是 `apps/client/src/net/viewGatedEntities.ts` 的
+ *      `entitiesOf(state)`；閘是 `apps/client/src/net/viewGatedReads.test.ts`
+ *      （掃出貨原始碼，新增第 N 處直讀就紅並指名該檔該行）。
+ *   ② 這一段散文本身的閘是 `viewGatedDelivery.test.ts` —— 它用**真的**
+ *      `Encoder` + **真的** `Reflection` 握手 + **真的**解碼跑一次空 view，
+ *      ⛔ 不是自造 payload。哪天 Colyseus 改成「空集合也送」，它會紅，
+ *      而要改的是**這一段**，⛔ 不是那條測試。
+ *
+ * ⚠️ ⭐ 再標任何一格 `view()` 之前先讀這一段：**每一個 view-gated 欄位都繼承
+ * 這個陷阱**，⛔ 不是只有 `entities`。上面那兩條閘的欄位名單都是**從這個檔的
+ * metadata tag 推導**的，所以新標一格會自動被守住 —— ⛔ 但只有在你把讀端
+ * 也收進 `entitiesOf()` 那一族之後它才會綠。
  */
 view()(MatchState.prototype, "entities");
+
+/**
+ * ⭐ 「`MatchState` 上哪幾格是 view-gated」的**唯一**答案 —— 從 metadata 推導。
+ *
+ * ⛔ **不可以改成一份手抄的 `["entities"]`。** 兩條閘（`viewGatedDelivery.test.ts`
+ * 與 `apps/client/src/net/viewGatedReads.test.ts`）都拿這一份當分母；抄一份字面值
+ * 就是第〇·四守則說的「同一個事實的第二個住處」——而它會在**下一次有人多標一格
+ * `view()`** 的時候靜靜過期，⛔ 且兩條閘都不會紅（它們仍然對舊那一格是綠的）。
+ *
+ * 判準是 `MetadataField.tag !== undefined`（`@colyseus/schema` 的 `Metadata.ts`：
+ * `view()` 走 `Metadata.setTag`，⛔ 而 `tag` 可以是自訂數字，⛔ 不一定是
+ * `DEFAULT_VIEW_TAG (-1)`）—— 所以問的是「**有沒有 tag**」，⛔ 不是「tag 等不等於 -1」。
+ */
+export function viewGatedFieldNames(): string[] {
+  const md = (MatchState as unknown as Record<symbol, unknown>)[Symbol.metadata] as
+    | Record<string, { name?: string; tag?: number }>
+    | undefined;
+  if (!md) return [];
+  const out: string[] = [];
+  for (const key of Object.keys(md)) {
+    const field = md[key];
+    // 索引鍵（"0","1",…）才是欄位定義；名字鍵（"entities" → 14）是反向表。
+    if (field && typeof field === "object" && typeof field.name === "string" && field.tag !== undefined) {
+      out.push(field.name);
+    }
+  }
+  return [...new Set(out)].sort();
+}
 
 /**
  * EntityState.kind values. Flowers (kind 2) are neutral server entities with
