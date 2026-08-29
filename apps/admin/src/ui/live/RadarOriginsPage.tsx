@@ -17,6 +17,7 @@ import { Panel, Btn, TextInput } from "../widgets";
 import { ACCENT, DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
 import { useApp } from "../../store";
 import { ReviewStrip } from "./ReviewStrip";
+import { LiveEditCell } from "./LiveEditCell";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
@@ -46,6 +47,8 @@ type Payload = {
   originCounts: Record<string, number>;
   champions: Champ[];
   unmatched: { id: string; name: string; origin: string | null }[];
+  /** 可編輯的那幾格存回哪個檔 —— ⭐ 由 dataset 給，⛔ 頁面不抄第二份路徑。 */
+  writeTargets: { norm: string };
   sources: Record<string, string>;
   _live?: { computedAt: string; ms: number };
 };
@@ -133,14 +136,34 @@ function RadarSVG(props: {
   );
 }
 
-function TierText(props: { cell: TierCell | undefined }): React.JSX.Element {
+/**
+ * ✏️ A/B 表的一格 —— 級距名**可改**（GH#828：這一頁從唯讀變成可存）。
+ * 存回 config.stat-normalization@1 的 `byOrigin/<屬性>/<出身>`（共用寫入端，寫前過 genguard；
+ * 合法級名由伺服器端從同一份檔的 bands 推導 ⇒ 打錯不會落盤）。⭐ 出身決定形狀，所以改一格
+ * ＝改**整個出身**（同出身的每一位英雄雷達一起動），⛔ 不是改這一位。
+ * 小字是該級距在 L{referenceLevel} 的**值** —— 那是平衡梯子，⛔ 不在這裡改。
+ */
+function TierEdit(props: {
+  path: string;
+  origin: string | null;
+  stat: string;
+  cell: TierCell | undefined;
+  onSaved: () => void;
+}): React.JSX.Element {
   const c = props.cell;
-  if (!c || c.tier == null) return <span style={{ color: TEXT_DIM }}>—</span>;
+  if (props.origin == null) return <span style={{ color: TEXT_DIM }}>—</span>;
   return (
-    <span style={{ color: ORD_COLOR[c.ord ?? 3] ?? TEXT_MAIN }}>
-      {c.tier}
-      <span style={{ color: TEXT_DIM, fontFamily: MONO, marginLeft: 4, fontSize: 11 }}>
-        {c.value ?? "?"}
+    <span style={{ whiteSpace: "nowrap" }}>
+      <LiveEditCell
+        dataset="radar-origins"
+        path={props.path}
+        pointer={`/byOrigin/${props.stat}/${props.origin}`}
+        current={c?.tier ?? null}
+        type="string"
+        onSaved={props.onSaved}
+      />
+      <span style={{ color: ORD_COLOR[c?.ord ?? 3] ?? TEXT_MAIN, fontFamily: MONO, marginLeft: 2, fontSize: 11 }}>
+        {c?.value ?? "?"}
       </span>
     </span>
   );
@@ -155,6 +178,8 @@ export function RadarOriginsPage(): React.JSX.Element {
   const [aId, setAId] = useState("");
   const [bId, setBId] = useState("");
   const [reloadKey, setReloadKey] = useState(0);
+  /** 存檔後重抓：⭐ 頁上看到的是**重讀後**的值，⛔ 不是我送出去的那個。 */
+  const reload = (): void => setReloadKey((k) => k + 1);
 
   useEffect(() => {
     let dead = false;
@@ -248,7 +273,15 @@ export function RadarOriginsPage(): React.JSX.Element {
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           <div style={{ fontSize: 12, color: TEXT_DIM, lineHeight: 1.7 }}>
             半徑＝五級距的<b style={{ color: TEXT_MAIN }}>序</b>（極小=1 · 小=2 · 中=3 · 大=4 ·
-            極大=5，⛔ 不是屬性絕對值）；小字是該級距在 L{data.referenceLevel ?? "?"}
+            極大=5，⛔ 不是屬性絕對值）；小字是該級距在 L
+            <LiveEditCell
+              dataset="radar-origins"
+              path={data.writeTargets.norm}
+              pointer="/referenceLevel"
+              current={data.referenceLevel}
+              type="number"
+              onSaved={reload}
+            />{" "}
             的級距值（射程走近戰／遠程雙階梯，由出身選）。出身決定形狀 ——
             同出身的英雄雷達相同；卡上專屬的是三圍（初始＝個性、成長＝定位）。
             來源：<code style={{ fontFamily: MONO }}>{data.sources.tiers}</code>。
@@ -338,15 +371,46 @@ export function RadarOriginsPage(): React.JSX.Element {
                       {STAT_ZH[s] ?? s}
                     </td>
                     <td style={{ padding: "4px 10px", borderTop: PANEL_BORDER }}>
-                      <TierText cell={aTiers[s]} />
+                      <TierEdit path={data.writeTargets.norm} origin={a?.origin ?? null} stat={s} cell={aTiers[s]} onSaved={reload} />
                     </td>
                     <td style={{ padding: "4px 10px", borderTop: PANEL_BORDER }}>
-                      <TierText cell={bTiers[s]} />
+                      <TierEdit path={data.writeTargets.norm} origin={b?.origin ?? null} stat={s} cell={bTiers[s]} onSaved={reload} />
                     </td>
                   </tr>
                 ))}
+                <tr>
+                  <td
+                    style={{ padding: "4px 10px", borderTop: PANEL_BORDER, color: TEXT_DIM }}
+                    title="射程是雙階梯：這一格決定該出身讀近戰還是遠程那一把（⛔ 不是卡上的 attackType）"
+                  >
+                    射程階梯
+                  </td>
+                  {[a, b].map((c, i) => (
+                    <td key={i} style={{ padding: "4px 10px", borderTop: PANEL_BORDER }}>
+                      {c ? (
+                        <LiveEditCell
+                          dataset="radar-origins"
+                          path={data.writeTargets.norm}
+                          pointer={`/scaleByOrigin/range/${c.origin}`}
+                          current={data.origins[c.origin]?.rangeScale ?? null}
+                          type="string"
+                          onSaved={reload}
+                        />
+                      ) : (
+                        <span style={{ color: TEXT_DIM }}>—</span>
+                      )}
+                    </td>
+                  ))}
+                </tr>
               </tbody>
             </table>
+            <div style={{ fontSize: 11, color: TEXT_DIM, lineHeight: 1.7 }}>
+              ✏️ 這三格（級距名 · 射程階梯 · 參考等級）經共用寫入端存回{" "}
+              <code style={{ fontFamily: MONO }}>{data.writeTargets.norm}</code>
+              （GH#828；寫前過 genguard，合法值由伺服器端從同一份檔推導 —— 打錯會把錯誤原文攤在格子底下）。
+              ⛔ 級距<b>值</b>（bands / 五級距梯子）不在這裡改：那是平衡表，走右上角「英雄屬性正規化」。
+              改完存檔 ⇒ 這一頁與每英雄雷達當場重畫（同出身的英雄一起動）。
+            </div>
           </div>
           <div>
             <RadarSVG
