@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "1a8450ee2f7e",
+  "hash": "e4d56195ab5a",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -347,8 +347,14 @@
     {
       "id": "imported.heroichigo",
       "path": "models/imported.heroichigo.json",
-      "hash": "10ec3184d1c6",
-      "size": 1065
+      "hash": "831346cd4b68",
+      "size": 1100
+    },
+    {
+      "id": "imported.heroichigo-bankai",
+      "path": "models/imported.heroichigo-bankai.json",
+      "hash": "a6eed80c63d6",
+      "size": 1115
     },
     {
       "id": "imported.herokunoichi",

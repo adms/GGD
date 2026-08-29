@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_0043810223f9",
+    "contentVersion": "cv_aba9f467014e",
     "collections": {
       "champions": {
-        "hash": "b0589d9ed811",
+        "hash": "c5738fb7ca86",
         "count": 71
       },
       "abilities": {
-        "hash": "b9f3f2a3f190",
+        "hash": "e1eac30b312c",
         "count": 421
       },
       "items": {
@@ -46,8 +46,8 @@
         "count": 91
       },
       "models": {
-        "hash": "1a8450ee2f7e",
-        "count": 148
+        "hash": "e4d56195ab5a",
+        "count": 149
       },
       "vfx": {
         "hash": "c34d7961a306",
@@ -58,7 +58,7 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "d097227c0c17",
+        "hash": "7e925a382680",
         "count": 46
       },
       "vfx-scripts": {
@@ -93,7 +93,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "74a4cffd",
+    "fingerprint": "f3f4185c",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -253,6 +253,7 @@
       "blocksDamage",
       "blocksTrueDamage",
       "body",
+      "boneOn",
       "bountyGold",
       "branches",
       "breakOnDamage",
@@ -839,6 +840,7 @@
       "on-attack",
       "on-hit-react",
       "orbit-array",
+      "periodic-field",
       "proxy-cast",
       "proxy-fanout",
       "radial-burst",
@@ -3245,12 +3247,12 @@
         {
           "id": "tpl-periodic-field",
           "family": "periodic-field",
-          "status": "draft",
+          "status": "enabled",
           "params": {
             "intervalSec": {
               "type": "number",
               "default": 1,
-              "min": 0.034,
+              "min": 0.2,
               "max": 10,
               "unit": "s"
             },
@@ -3824,8 +3826,8 @@
         }
       ],
       "templateStatus": {
-        "draft": 21,
-        "enabled": 25
+        "draft": 20,
+        "enabled": 26
       },
       "innateKinds": [
         "active",
@@ -4160,12 +4162,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "74a4cffd",
+    "engineFingerprint": "f3f4185c",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 74a4cffd —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 f3f4185c —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -4954,5 +4956,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "6e4845cca285"
+  "profileDigest": "43e78175f29d"
 }
