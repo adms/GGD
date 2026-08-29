@@ -474,6 +474,14 @@ const DERIVATION_IMPORT = /from\s+["'][^"']*\/(shippedSurface|balancePopulation)
  * 會 → 它該走推導模組，⛔ 不該進這張表。
  */
 const WHOLE_TREE_BY_DESIGN: Record<string, string> = {
+  // ── 2026-08-30 GH#648 —— 週期領域模板的**阻塞點**掃全樹 ────────────────────
+  "packages/shared/src/content/periodicFieldAdoptionBlocker.test.ts":
+    "問的是「**今天有沒有任何內容引用 `tpl-periodic-field`**」—— 那是**引擎接線有沒有" +
+    "被人用**的性質，⛔ 不是玩家側的曝光。⭐ 這條閘的整個用途就是「零支引用 **或** " +
+    "說明側讀得到 `mult`」二選一 —— 而**一件今天關著的道具引用了它**，卡面照樣會說謊" +
+    "（`abilityProse` 不看上架面）⇒ 用上架面過濾它會讓那個謊話**在它上架的那一天**才第一次出現。" +
+    "反駁方式：如果哪天 `abilityProse.damageRanks` 乘上 `Scaling.mult`（＝這條閘存在的理由消失），" +
+    "整條閘就該刪掉，⛔ 不是改走 shippedItemIds()。",
   // ── 2026-08-27 GH#789 —— 逐階曲線被級距壓平的回歸閘掃全樹 ─────────────────
   "packages/shared/src/content/perRankNotTierified.test.ts":
     "問的是「**產生器有沒有把一條升階曲線量化成級別**」—— 那是**資料形狀**的性質，" +

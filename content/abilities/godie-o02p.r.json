@@ -34,6 +34,7 @@
       "kind": "delayed",
       "shape": "circle",
       "radiusTier": "中",
+      "radius": 6.0,
       "side": "enemies",
       "anchor": "caster",
       "targetMode": "reresolve",
