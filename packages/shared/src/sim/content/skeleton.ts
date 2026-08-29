@@ -372,7 +372,13 @@ export const THORNE: ChampionDef = {
   },
   skillOrder: ["E", "Q", "W", "R"],
   buildPriority: [id<ItemId>("serrated-edge"), id<ItemId>("ironhide-vest")],
-  tags: ["bruiser", "engage", "melee"],
+  // `sword` is the WEAPON tag (systems/BasicAttackSystem WEAPON_TAGS), same deal
+  // as SELA's `magic` above: without it THORNE falls to `weaponClassOf`'s melee
+  // default, which happens to also be `sword` — so the sound never changes, but
+  // "nobody answered" stops being indistinguishable from "sword was chosen"
+  // (GH#817). This literal must stay byte-equal to content/champions/thorne.json
+  // (loader.test.ts round-trip), so the two homes move in the same commit.
+  tags: ["bruiser", "engage", "melee", "sword"],
 };
 
 // ---------- items ----------

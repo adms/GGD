@@ -30,40 +30,34 @@ const CHAMPIONS = join(dirname(fileURLToPath(import.meta.url)), "../../../../con
 
 /**
  * 出貨詞彙表**表達不了**這一隻的武器 —— 值 = 缺的那個類別名。
- * 全部是徒手/獸類：出貨的 7 類裡沒有一個描述得了「拳」或「爪牙」。
+ *
+ * ⭐ **2026-08-29（GH#817）：空了。** 這張表曾經有 17 列，逐列指名同兩個不存在的
+ * 類別（`fist` 12 · `claw` 5）；`WEAPON_TAGS` 長出那兩個字串的那一刻，下面第二條
+ * 斷言把 17 列一次點名，17 隻各補一個字串就結束。⭐ 那正是這張表的設計目的：
+ * 它是一份**會過期的**帳，⛔ 不是一段辯護。
+ *
+ * ⚠️ 空了**不代表可以刪掉這張表** —— 下一隻詞彙表描述不了的近戰英雄（鞭、鎖鏈、
+ * 徒手持盾⋯）進來時，第一條斷言會逼人在「補一列並指名缺的類別」與「硬塞一個錯的
+ * 類別」之間做選擇，而那個選擇本身就是這條守衛存在的理由。
  */
-const NEEDS_CLASS: Readonly<Record<string, string>> = {
-  "godie-ewar": "fist", // 天地志狼 — 鬥仙術/破凰之心，全是拳法
-  "godie-h02k": "fist", // 熊貓 — 憤怒的頭槌
-  "godie-huth": "fist", // 魔人普烏 — 吃掉你/變餅乾
-  "godie-o00x": "fist", // 超級賽亞人悟空
-  "godie-ogrh": "fist", // 賽亞人悟空（同一位的另一形態）
-  "godie-u00l": "fist", // 拳四郎 — 北斗百裂拳
-  "godie-umal": "fist", // 拳四郎（另一形態）
-  "godie-u00n": "fist", // 魯夫 — 橡膠槍亂打
-  "godie-u00o": "fist", // 魯夫（另一形態）
-  "godie-u00v": "fist", // 基廉列克 — 斬鐵拳/廬山昇龍破/肘擊
-  "godie-u034": "fist", // 傑富力士 — 山形修煉（念）
-  "godie-ucrl": "fist", // 傑富力士（另一形態）
-  "godie-h02r": "claw", // 妙蛙花 — 藤鞭
-  "godie-hgam": "claw", // 妙蛙種子（同族）
-  "godie-h02u": "claw", // 草泥馬 — 啃咬/吐消化液
-  "godie-h02v": "claw", // 草泥馬（另一形態）
-  "godie-zombiex": "claw", // 喪標麥可 — 殭屍爪牙
-};
+const NEEDS_CLASS: Readonly<Record<string, string>> = {};
 
-/** 武器已經判定得出來，⛔ 但那份檔今天改不動 —— 值 = 擋住的東西。 */
-const BLOCKED: Readonly<Record<string, string>> = {
-  // sync-io.json 把 batch1.py 的 champion 那一半誤列成「作者」，而它其實是
-  // 正規化器（batch1.py:358–368 read-modify-write，只換 abilities[QWER]）。
-  // ⇒ genguard 擋下 + 隔離區 chmod 444。分類修好之後這三隻各是一行。
-  "godie-e00r": "sync-io:skillremake:json 誤分類（初號機 → sword，高週波短刀）",
-  "godie-edem": "sync-io:skillremake:json 誤分類（佐助 → katana，草薙劍）",
-  "godie-h01u": "sync-io:skillremake:json 誤分類（呂布 → greatsword，方天畫戟）",
-  // skeleton.ts 的 THORNE 字面值必須與這份逐位元一致（loader.test.ts round-trip）,
-  // 而 skeleton.ts 不在這條 lane 的柵欄內。thorne 也不在上架名單上。
-  thorne: "skeleton.ts THORNE 字面值要同步（Bramble Knight → sword）",
-};
+/**
+ * 武器已經判定得出來，⛔ 但那份檔今天改不動 —— 值 = 擋住的東西。
+ *
+ * ⭐ **2026-08-29（GH#817）：也空了。** 曾經有四列，而**每一列的理由都已經過期**：
+ *  · `godie-e00r` / `edem` / `h01u` 被「sync-io.json 把 batch1.py 的 champion 那一半
+ *    誤列成作者 ⇒ 隔離區 chmod 444」擋著。那個誤分類修掉之後（genguard 今天對這三份
+ *    回「不擋你」、檔案是 644），三隻各是一行：sword / katana / greatsword。
+ *  · `thorne` 被「skeleton.ts 不在那條 lane 的柵欄內」擋著 —— 那是**柵欄**的性質，
+ *    ⛔ 不是這份資料的性質。兩個住處（`sim/content/skeleton.ts` 的 THORNE 字面值與
+ *    這份 JSON）在同一個 commit 裡一起加 `sword`。
+ *
+ * ⚠️ ⭐ 這四列示範了豁免表最危險的失效方式：**理由過期了，而豁免還在**。
+ * 所以每一列的值都必須是一個**可以被反駁的事實**（「那個檔 chmod 444」查得到、
+ * 「那個檔不在柵欄內」查得到），⛔ 不可以是「還沒排到」這種永遠不會過期的句子。
+ */
+const BLOCKED: Readonly<Record<string, string>> = {};
 
 const weaponSet = new Set<string>(WEAPON_TAGS);
 

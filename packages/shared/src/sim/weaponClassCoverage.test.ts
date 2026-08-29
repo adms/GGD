@@ -106,6 +106,7 @@ interface Doc {
 }
 
 let ranged: Doc[] = [];
+let melee: Doc[] = [];
 let whitelist: Set<string> | null = null;
 
 beforeAll(async () => {
@@ -114,11 +115,11 @@ beforeAll(async () => {
   const res = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load();
   registerAll(res.store);
   for (const def of Champions.all()) {
-    if (def.attackType === "ranged") {
-      ranged.push({ id: def.id, name: def.name, attackType: def.attackType, tags: def.tags });
-    }
+    const row = { id: def.id, name: def.name, attackType: def.attackType, tags: def.tags };
+    (def.attackType === "ranged" ? ranged : melee).push(row);
   }
   ranged = ranged.sort((a, b) => a.id.localeCompare(b.id));
+  melee = melee.sort((a, b) => a.id.localeCompare(b.id));
   // The curation whitelist is live operator state and `.gitignore`d, so it is
   // absent in a fresh checkout / CI. Its only use here is to LABEL the report;
   // nothing is asserted on it, so absence degrades the log, never the guard.
@@ -231,5 +232,28 @@ describe("weapon class coverage (recipe S8: a total function whose default is wr
     const archer = ranged.find((d) => d.tags.map((t) => t.toLowerCase()).includes("bow"));
     expect(archer, "no bow-tagged champion left in the roster").toBeDefined();
     expect(observedWeaponClass(archer!.id)).toBe("bow");
+  });
+
+  /**
+   * GH#817 — the MELEE half of the same beat. `fist` and `claw` were added to the
+   * vocabulary so the 拳/爪 champions stop answering a punch with a blade slash;
+   * the load-bearing line is those two rows in WEAPON_TAGS. Delete either one and
+   * every champion carrying it silently collapses to the melee default `sword` —
+   * the exact failure this file exists to catch, one class over.
+   *
+   * ⛔ No champion id and no count is written down here: the witness is picked out
+   * of the loaded roster by its tag, so this reds when the MECHANISM is gone, not
+   * when someone renames or retires one hero.
+   */
+  it.each(["fist", "claw"])("a real %s champion puts that class on the wire", (cls) => {
+    cover("juice-sfx-key");
+    const witness = melee.find((d) => d.tags.map((t) => t.toLowerCase()).includes(cls));
+    expect(witness, `no ${cls}-tagged champion in the roster — the class is empty`).toBeDefined();
+    const observed = observedWeaponClass(witness!.id);
+    expect(observed, `${witness!.id} (${witness!.name}) never emitted a basicAttack`).toBeDefined();
+    // Both directions: it must BE the class, and it must not have fallen to the
+    // melee default — asserting only the first would pass if `sword` were renamed.
+    expect(observed, `${witness!.id} is still swinging a ${observed}`).toBe(cls);
+    expect(observed).not.toBe("sword");
   });
 });

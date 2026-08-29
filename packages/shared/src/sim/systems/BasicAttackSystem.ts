@@ -104,11 +104,41 @@ export function reachTo(sc: StatsComp, selfR: number, tgtR: number): number {
  * relying on it. The default only decides how wrong a champion nobody tagged is,
  * and "unnamed ranged hero" is far more often a caster than an archer here.
  *
+ * ---------------------------------------------------------------------------
+ * WHY `fist` AND `claw` EXIST (GH#817, 2026-08-29) — the melee half of the same
+ * hole
+ * ---------------------------------------------------------------------------
+ * The paragraph above describes the RANGED half of this defect and closes it.
+ * The MELEE half stayed open for another month, in exactly the same shape: the
+ * melee default is `sword`, so 拳四郎 / 悟空 / 魯夫 threw a BLADE SLASH with
+ * every punch, and 妙蛙花 / 草泥馬 / 喪標麥可 did the same with tendrils and
+ * teeth. Once again tagging could not have fixed it — there was nothing to tag
+ * them AS, and `sword` would only have promoted an accident into a decision.
+ *
+ * `sim/../content/laneFMeleeWeaponTags.test.ts` (GH#745) held that measurement
+ * as a RATCHET: every untagged melee champion had to name the class the shipped
+ * vocabulary was missing. It named `fist` 12 times and `claw` 5 times, and it
+ * was written to go red the moment those strings appeared here — which is what
+ * landing these two rows does. The 17 exemptions become 17 one-string content
+ * edits; ⛔ this is the mechanism, ⛔ not a per-champion fix.
+ *
+ *   unarmed / martial arts (北斗百裂拳, 龜派, 橡膠槍亂打) → `fist`   (12)
+ *   beast tendrils, teeth and talons (藤鞭, 啃咬, 殭屍爪牙) → `claw`   (5)
+ *
+ * ⚠️ Both sit BEFORE `sword` in this list because the list is a PRIORITY order:
+ * `sword` is the coarse catch-all that a doubly-tagged champion would otherwise
+ * collapse into. (`weaponClassCoverage.test.ts` forbids double tags outright, so
+ * the ordering is a second line rather than the only one.)
+ *
  * TWO-FILE CONTRACT. Every member here must have a decided outcome in
  * `apps/client/src/audio/combatSfx.ts` WEAPON_SFX — a dedicated clip, or the
  * generic swing NAMED explicitly (that is what `thrown` does). A member with no
  * row there falls back by accident instead of by decision, which is the same
  * silent-default failure this comment exists to describe.
+ * ⭐ `fist` and `claw` take the `thrown` route ON PURPOSE: the audio pack has no
+ * punch or rend clip, and the honest sound for a bare fist is the neutral whoosh
+ * — NOT a blade. Acquiring a real clip later changes ONE row there; it is
+ * content, not a mechanism, and this vocabulary does not move for it.
  * `content/fieldAdoption.ts` censuses these strings as a TAG VOCABULARY, so a
  * member no champion carries fails the S8 guard rather than quietly meaning
  * nothing.
@@ -120,6 +150,8 @@ export const WEAPON_TAGS = [
   "bow",
   "magic",
   "thrown",
+  "fist",
+  "claw",
   "sword",
 ] as const;
 

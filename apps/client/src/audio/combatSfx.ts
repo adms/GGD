@@ -146,6 +146,17 @@ const GENERIC_SWING = "basicAttack";
  *     bespoke clip in the pack, and the honest sound for a hurled object is the
  *     neutral whoosh — NOT a bow draw, which is what they got before. If a
  *     dedicated 投擲 clip is ever acquired, this row is where it lands.
+ *   • `fist` / `claw` → the generic swing, same reasoning, same precedent
+ *     (GH#817). These two classes are the MELEE half of the `magic` story: until
+ *     2026-08-29 the vocabulary could not describe a bare fist or a set of
+ *     talons, so 拳四郎 / 悟空 / 魯夫 (12) and 妙蛙花 / 草泥馬 / 喪標麥可 (5)
+ *     landed on the melee default and answered a punch with a BLADE SLASH.
+ *     Tagging them `sword` would only have promoted that accident into a
+ *     decision. The pack has no punch or rend clip, so the honest answer is the
+ *     neutral whoosh — stated here rather than reached by falling through
+ *     `?? null` below, which is the whole point of the two-file contract. A real
+ *     打撃 / 斬撃 clip later changes THESE TWO ROWS and nothing else; that is
+ *     content, not a mechanism.
  */
 const WEAPON_SFX: Readonly<Record<string, string>> = {
   greatsword: "attackGreatsword",
@@ -154,6 +165,8 @@ const WEAPON_SFX: Readonly<Record<string, string>> = {
   gun: "gunshot",
   magic: "magicBolt",
   thrown: GENERIC_SWING,
+  fist: GENERIC_SWING,
+  claw: GENERIC_SWING,
 };
 
 /**
