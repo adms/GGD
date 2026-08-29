@@ -36,7 +36,11 @@ FROM node:22-alpine
 #     而沒有任何東西變紅 —— 因為**沒有人點的頁面不會失敗**。
 #
 # ⭐ 那些腳本**只用標準庫**（相對 import 的是 repo 自己的模組）⇒ ⛔ 不需要 pip。
-RUN apk add --no-cache tini python3
+# ⭐ `git` 也是必要的:`tools/skill-remake/common.py` 用 `git ls-tree HEAD content/abilities/`
+#   決定出貨的技能編號 ⇒ 沒有它,`skill90` 在**裝了 python3 之後**才會露出下一個錯
+#   （2026-08-29 就是這樣一次修一個 —— ⛔ 而 CLAUDE.md 記過「請盡量批次錯」）。
+# ⚠️ 它同時需要 `/srv/repo` 底下**真的有 `.git`** —— 而那是切到 git 部署流程之後才成立的。
+RUN apk add --no-cache tini python3 git
 ENV NODE_ENV=production \
     GGD_REVIEW_MODE=live \
     GGD_REVIEW_PORT=8790 \
