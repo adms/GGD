@@ -24,6 +24,7 @@ from __future__ import annotations
 import io
 import json
 import math
+import os
 import struct
 from dataclasses import dataclass, field
 
@@ -82,26 +83,185 @@ def _layer_rid(model, layer) -> int:
             if 0 <= tid < len(model.textures) else 0)
 
 
-#: ⭐ GH#767 —— replaceableId-2（隊伍發光）的**兩種政策**。
+#: ⭐ replaceableId-2（隊伍發光）的政策 —— GH#767 開了 `lit`，GH#770 開了 `cull`
+#: 並把 `drop` 改成「去讀旋鈕」。⇒ **生效的值只有三種**：`keep` / `lit` / `cull`。
 #:
-#: `"drop"`  出貨至今的行為：`baseColorFactor [0,0,0,0]` ⇒ 那一片幾何**必不可見**。
-#:           ⚠️ 它對**角色**是對的（隊伍發光在角色身上是肩膀/腳下的色塊，
-#:           GGD 沒有隊伍色可以套，畫成白光會變成一團不屬於那個角色的亮斑）。
+#: ⚠️⚠️ **這四個值不是同一個入口的四個選項**（2026-08-29 更正，⛔ 這一點踩過）：
+#:   · **呼叫端引數**（這一組）收 `drop` / `keep` / `lit` / `cull`；
+#:   · **旋鈕**（`characterTeamGlow`）只收 `CHARACTER_TEAM_GLOW_VALUES` ——
+#:     ⛔ **`"lit"` 不在裡面**，因為角色那條路把它靜默退化成 `keep`
+#:     （成因與反駁條件逐條寫在 `CHARACTER_TEAM_GLOW_EXCLUDED`）。
+#:
+#: `"drop"`  ⭐ **「沒有選」的訊號**（⛔ 不是一種畫法）—— 生效的值由
+#:           `invisible_prim_policy.json` 的 `characterTeamGlow` 決定，見下面
+#:           `resolve_team_glow()`。全樹**唯一刻意選過**的呼叫端是
+#:           `convert_stock_model.py`（`"lit"`）；其餘每一條路都只是繼承
+#:           `models.py::convert_all` 的預設值 —— 那不是一個決定。
+#: `"keep"`  GH#770 之前 `"drop"` 的**實際**行為：`baseColorFactor [0,0,0,0]`
+#:           ⇒ 那一片幾何**必不可見，而且照樣發一個 primitive**。
+#:           ⚠️ 它對**角色**只對了一半（隊伍發光在角色身上是肩膀/腳下的色塊，
+#:           GGD 沒有隊伍色可以套，畫成白光會變成一團不屬於那個角色的亮斑）——
+#:           ⛔ 但「畫一個看不見的東西」是**兩邊都不是**（第一·五守則）。
 #: `"lit"`   ⭐ 對**純特效模型**才對：ReviveHuman / Awaken 這一族的**主體本身**
 #:           就是一片 rid-2 的加法發光柱（`Textures` 之外的美術在
-#:           `ReplaceableTextures\TeamGlow\TeamGlow00.blp`，**MPQ 裡真的有**，
+#:           `ReplaceableTextures\TeamGlow\TeamGlow00.blp`，**零售 MPQ 裡真的有**
+#:           —— ⚠️ ⛔ **repo 裡沒有**，所以沒有零售封包的 checkout 上這條路
+#:           也產不出像素，只會把它列進 `missing_textures`；
 #:           32×32、形狀住 RGB、alpha 平坦 255 ⇒ 正是 GH#649 那個
 #:           「亮在黑底上、沒有 alpha 可以 key」的家族）。
 #:           ⇒ 用**同一條** luma-key 路徑把它變成 emissive 加法發光。
+#:           ⚠️ **它只在呼叫端一路傳下去時才活**：`models._convert_all` 要看到
+#:           `"lit"` 才會去載那張貼圖，而它比的是**未解析**的引數 ——
+#:           ⇒ ⛔ 從旋鈕走進來的 `"lit"` 到不了那裡（`CHARACTER_TEAM_GLOW_EXCLUDED`）。
 #:
 #: ⚠️ 為什麼**不是**全域改成 `"lit"`：量到 51 份地圖模型帶 rid-2 材質，其中
 #: **49 份是角色**（heroSaber / goku / cloud …）。全域打開＝替 49 個角色加上
-#: 一團沒有人裁決過的白光。⇒ 政策由**呼叫端**選：`import_w3x.py`（地圖角色）維持
-#: `"drop"`，`convert_stock_model.py`（表格裡每一列都是 `Abilities\Spells\…`
+#: 一團沒有人裁決過的白光。⇒ 政策由**呼叫端**選：`import_w3x.py`（地圖角色）走
+#: `"drop"`（＝ GH#770 之後「去讀 `characterTeamGlow` 旋鈕」，出貨值 `cull`），
+#: `convert_stock_model.py`（表格裡每一列都是 `Abilities\Spells\…`
 #: 的**特效**模型）用 `"lit"`。
 #: ⭐ 可反駁：哪天 `STOCK_MODELS` 收進一具真的角色模型，這個分界線就不成立 ——
 #: 到時候要改成逐列的旗標，⛔ 不是繼續假設「stock ⇒ 特效」。
-TEAM_GLOW_POLICIES = ("drop", "lit")
+#: `"cull"` ⭐ **GH#770** —— 那一片幾何**一個 primitive 都不發**。
+#:           量到的病灶：463 份出貨 glb 裡 **44 個 `TeamGlow*` 面 / 25 份模型**
+#:           `baseColorFactor[3] == 0` —— 畫不出任何一個像素，而 draw call、
+#:           頂點緩衝、bufferView 一樣都沒少；`ChampionView.ts:1691` 還得
+#:           **另外寫一段**擋它們在挨打閃白時被畫成實心色塊。
+#:           ⭐ 它們是**轉檔器自己造的**：下面 `gltf_materials()` 的
+#:           「整份材質都是 rid-2 時仍然要發」那個回退 —— 存在的理由只是讓
+#:           `strip_teamglow.py` 事後**按名字**找得到它們。而那支事後掃描
+#:           只涵蓋**英雄身體＋皮膚**，所以這 25 份（怪物/守衛/暴雪原生單位）
+#:           永遠沒有人來收。⇒ 與其發一個佔位面再叫第二支程式來刪，
+#:           ⛔ 不如一開始就不要發（第〇·四守則：一個決定一個住處）。
+TEAM_GLOW_POLICIES = ("drop", "keep", "lit", "cull")
+
+#: ⭐ `characterTeamGlow` 旋鈕的合法值 → 這個值**宣稱**會發生的事。
+#: ⛔ **不含 `"drop"`**：`"drop"` 是「去讀這個旋鈕」的訊號，把它寫進旋鈕會變成
+#: 指向自己的解析。
+#:
+#: ⭐⭐ **每一格的右邊是一個會被守衛逐值驗證的宣稱**（⛔ 不是註解）——
+#: `teamGlowCullPolicy.test.ts` 拿**出貨那條路**（`convert(…, team_glow="drop")`
+#: ＋ 上游 `textures_png` 裡**沒有** rid-2，因為 `models.py` 在 `"drop"` 下不載它）
+#: 逐值跑一遍，比對這裡宣稱的形狀。⇒ 加一個值就必須在這裡寫下它宣稱什麼，
+#: 而那個宣稱**當場就要成立** —— ⛔ 一個做不到自己宣稱的旋鈕值比沒有更糟
+#: （第一·五守則：說了但不會發生），因為它讓人以為有一條退路。
+CHARACTER_TEAM_GLOW_CLAIMS = {
+    #: 發一個 `TeamGlow*` primitive，而它 `baseColorFactor[3] == 0`
+    #: ＝ GH#770 之前的行為（⭐ owner 的一鍵 rollback 目標）。
+    "keep": "emit-invisible",
+    #: 一個 primitive 都不發（⭐ 出貨值）。
+    "cull": "no-prim",
+}
+CHARACTER_TEAM_GLOW_VALUES = tuple(CHARACTER_TEAM_GLOW_CLAIMS)
+
+#: ⛔ **被排除的值 → 為什麼，以及要怎麼反駁它。**
+#:
+#: ⚠️ `"lit"` 在 GH#770 的第一版裡是旋鈕的第三個值，而票／政策檔／commit 訊息
+#: **各宣稱了一次**「翻成 `lit` 就是把原作的隊色光暈畫出來 —— ⛔ 不必改一行程式，
+#: 只要重跑產線」。⭐ **那句話是假的**，2026-08-29 用**出貨那條路**量到
+#: （`import_w3x.py:108` → `models.convert_all(raw, glb, tex)`，⛔ 沒有 `team_glow`）：
+#:   `HeroCloudStrife` / `Bahamut`：knob=keep 與 knob=lit 的 `TeamGlow*` 面
+#:   **逐欄相同**（2 個面 · `bcf [0,0,0,0]` · `emissive False` · accessors 379/623）；
+#:   只有 knob=cull 真的變（0 個面 · accessors 367/617 · 身高仍 1.7）。
+#: ⇒ ⭐ `lit` 在角色那條路上**靜默退化成 `keep`** —— 也就是 #770 的病灶本身。
+#:
+#: ⭐ 三個**各自獨立**的成因（⛔ 修一個不夠），與各自的反駁條件：
+#:  ① **接線**：`w3xlib/models.py:571` 是 `if tex.replaceable_id == 2 and
+#:     team_glow == "lit"`，而它比的是**未解析**的字串；`import_w3x.py:108`
+#:     一個 `team_glow` 都沒傳 ⇒ models.py 永遠只看到 `"drop"` ⇒
+#:     `TEAM_GLOW_STOCK_TEXTURE` 從來不會進 `textures_png` ⇒ 下面
+#:     `gltf_materials()` 的 keep 濾鏡要求 `team_glow == "lit" **and**
+#:     l.texture_id in textures_png`，後半 False ⇒ 那一層被丟掉。
+#:     ⭐ **反駁它**：讓 `models._convert_all` 也走 `resolve_team_glow()`
+#:     （或讓 `import_w3x.py` 把旋鈕一路傳下去）。
+#:  ② **美術**：`ReplaceableTextures\TeamGlow\TeamGlow00.blp` 住零售 `war3.mpq`，
+#:     ⛔ **不在 repo 裡**。量到：連**明確**傳 `team_glow="lit"` 的那條路
+#:     （`convert_stock_model.py` 用的）在這個 checkout 上也產出 `bcf [0,0,0,0]`，
+#:     只是它至少把該檔列進 `missing_textures`（旋鈕那條路連列都不會列）。
+#:     ⭐ **反駁它**：`W3X_STOCK_MPQ_DIR` 指得到零售封包的環境。
+#:  ③ **語意**：就算①②都補上，這條路產出的是 `emissiveFactor [1,1,1]` 而且
+#:     **不會**進 `res.team_color_materials`（只有 rid-1 會）⇒ 畫出來是**白光**，
+#:     ⛔ 不是隊色。而 GH#767 對同一題的逐字結論是「全域打開＝替 49 個角色加上
+#:     一團沒有人裁決過的白光」。⇒ 那個值宣稱的「原作的隊色光暈」**三個軸都不成立**。
+#:     ⭐ **反駁它**：rid-2 長出隊色通道（客戶端今天只認 `model@1.teamTintMaterials`）。
+#:
+#: ⚠️ ⭐ 拿掉它**沒有拿掉 rollback**：owner 的一鍵回頭目標是 `"keep"`
+#: （＝ #770 之前逐位元的行為），而 `"lit"` 從來不是「回頭」，它是一個**前進**的
+#: 改動 —— 一個沒有人裁決過、而且今天做不到的前進。
+#: ⚠️ 而 `"lit"` 仍然留在 `TEAM_GLOW_POLICIES` 裡：它是**呼叫端引數**時是真的
+#: （`convert_stock_model.py:569` 一路傳到 `convert_all(team_glow="lit")`，
+#: models.py 因此真的會去載那張貼圖）。⇒ ⭐ 被排除的是**旋鈕**這個入口，
+#: ⛔ 不是那條機制。
+CHARACTER_TEAM_GLOW_EXCLUDED = {
+    "lit": ("角色那條路上 lit 會靜默退化成 keep（models.py:571 比的是未解析的字串、"
+            "import_w3x.py:108 沒有傳），而且 TeamGlow00.blp 不在 repo、"
+            "產出也是白光不是隊色 —— 見 gltf.CHARACTER_TEAM_GLOW_EXCLUDED 的三個成因。"
+            "⭐ 純特效模型要點亮請走呼叫端引數（convert_stock_model.py 的 team_glow=\"lit\"），"
+            "⛔ 不是這一格。"),
+}
+
+
+def validate_character_team_glow(val: str, where: str = "characterTeamGlow") -> str:
+    """旋鈕值的**唯一**一份判準 —— `character_team_glow_policy()` 與
+    `invisible_prim_census.load_policy()` 都呼叫它（⛔ 不要各自抄一份比對）。
+
+    ⭐ 被排除的值有**自己的訊息**：一句「must be one of (…)」會讓下一個人以為
+    是打錯字，而真相是「那個值曾經在，因為它做不到自己宣稱的事而被拿掉」。
+
+    ⚠️ **被接受的那張表先問**（⛔ 不是排除表先問）：哪天有人照上面那句訊息把值
+    搬回 `CHARACTER_TEAM_GLOW_CLAIMS` 卻忘了從排除表刪掉，這裡**放行**，
+    由守衛 `teamGlowCullPolicy.test.ts` ③ 用「同時在兩張表裡」把它指名 ——
+    ⛔ 而不是在這裡擲一個看起來像「你打錯字」的例外。
+    """
+    if val in CHARACTER_TEAM_GLOW_VALUES:
+        return val
+    if val in CHARACTER_TEAM_GLOW_EXCLUDED:
+        raise ValueError(
+            f"{where}: {val!r} 已經被拿掉 —— {CHARACTER_TEAM_GLOW_EXCLUDED[val]}")
+    raise ValueError(
+        f"{where} must be one of {CHARACTER_TEAM_GLOW_VALUES}, got {val!r}")
+
+#: ⚠️ 政策檔**不見**時的回退值 ＝ **出貨至今的行為**，⛔ 不是我挑的那個。
+#: ⭐ 出貨的選擇只住 `invisible_prim_policy.json` **一份**（第〇·四守則）——
+#: 這裡再寫一次 `"cull"` 就是第二個住處，而它會在旋鈕被翻掉之後繼續說謊。
+#: ⚠️ 而回退到「保留」也是刻意的：設定檔缺席**不是**「可以刪幾何」的證據
+#: （同 `cullWithoutMdxProof: false`）。
+DEFAULT_CHARACTER_TEAM_GLOW = "keep"
+
+#: 旋鈕的住處。⚠️ 它與 `invisible_prim_census.py` 讀的是**同一個檔**。
+TEAM_GLOW_POLICY_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "invisible_prim_policy.json")
+
+
+def character_team_glow_policy(path: str | None = None) -> str:
+    """`invisible_prim_policy.json` 的 `characterTeamGlow` —— 角色/地圖那條路的旋鈕。
+
+    ⭐ 這是**唯一**讀它的地方。⛔ 不要在別處再 `json.load` 一次那個檔然後自己
+    比對字串 —— 那會是第二個住處，而兩份判準漂掉的時候沒有東西會紅。
+    """
+    try:
+        with open(path or TEAM_GLOW_POLICY_PATH, encoding="utf-8") as fh:
+            val = json.load(fh).get("characterTeamGlow",
+                                    DEFAULT_CHARACTER_TEAM_GLOW)
+    except FileNotFoundError:
+        return DEFAULT_CHARACTER_TEAM_GLOW
+    return validate_character_team_glow(
+        val, "invisible_prim_policy.json: characterTeamGlow")
+
+
+def resolve_team_glow(team_glow: str, path: str | None = None) -> str:
+    """呼叫端傳進來的值 → **生效**的值。`"drop"` ＝ 沒有選 ⇒ 去讀旋鈕。
+
+    ⛔ 回傳值永遠不會是 `"drop"`，所以下游只要分辨 keep / lit / cull 三種。
+    ⚠️ 但 `"lit"` **只可能**從呼叫端引數回來（旋鈕不收它，見
+    `CHARACTER_TEAM_GLOW_EXCLUDED`）—— 而那是刻意的：只有明確傳它的呼叫端
+    才會讓 `models.py` 去把 rid-2 的貼圖載進 `textures_png`。
+    """
+    if team_glow not in TEAM_GLOW_POLICIES:
+        raise ValueError(
+            f"team_glow must be one of {TEAM_GLOW_POLICIES}: {team_glow!r}")
+    return character_team_glow_policy(path) if team_glow == "drop" else team_glow
 
 
 # --- WC3 材質層 filter mode → glTF（GH#841） --------------------------------
@@ -197,7 +357,7 @@ def filter_mode_info(fm: int) -> FilterMode:
     return MDX_FILTER_MODES.get(fm, UNKNOWN_FILTER_MODE)
 
 
-def _material_effect_kind(model, mid: int, team_glow: str = "drop") -> str:
+def _material_effect_kind(model, mid: int, team_glow: str = "keep") -> str:
     """Classify how material `mid` renders — 這支決定的是 **GEOSET 要不要剔**，
     ⛔ 不是那一份材質怎麼畫（畫法在 `_layer_material()`）：
       ""            solid body/skin or team-colour → keep
@@ -205,6 +365,12 @@ def _material_effect_kind(model, mid: int, team_glow: str = "drop") -> str:
                     dropping its geometry is a visual no-op (safe to prune)
       "additive"    emissive glow quad (additive real-texture, no opaque base)
                     → VISIBLE, so only drop it when it clearly leaves the body
+
+    ⭐ GH#770：`"cull"` 與 `"keep"` 在這裡**回報同一件事**（`"team_glow"`）——
+    ⛔ 刻意的。這一支餵的是**英雄身高正規化**的 body bbox，而 body bbox 從來就
+    不含 effect 材質 ⇒ 剔或不剔，算出來的身高**逐位元相同**。
+    ⚠️ 如果讓 `"cull"` 在這裡回別的東西，44 個看不見的面會連帶把 25 份模型的
+    縮放挪一次，而那是一個**沒有人要求過**的改動（失敗形態①）。
 
     ⭐ `team_glow="lit"` ⇒ rid-2 也是真的會發光的加法幾何 ⇒ 回報 `"additive"`，
     這樣它就吃**比較保守**的那條剔除規則（只有明顯離開身體才剔），⛔ 不會再被
@@ -252,7 +418,7 @@ def _geoset_bbox(geoset, scale: float):
     return mins, maxs
 
 
-def classify_geosets(model, scale: float = 1.0, team_glow: str = "drop"):
+def classify_geosets(model, scale: float = 1.0, team_glow: str = "keep"):
     """Split a model's geosets into character BODY vs stray EFFECT geometry.
 
     Returns ``(info, (body_min, body_max))`` where ``info[i]`` is a dict with
@@ -316,6 +482,14 @@ def classify_geosets(model, scale: float = 1.0, team_glow: str = "drop"):
             # invisible anyway, so a wide ground ring may also be pruned.
             if x["effect_kind"] == "team_glow" and wide:
                 reasons.append(f"reaches |xz| {gxz:.2f} >> body {body_xz:.2f}")
+        # ⭐ GH#770 —— `characterTeamGlow: "cull"`：整份材質都是 rid-2 的 geoset
+        # 一個 primitive 都不發。⚠️ 這一條**刻意站在上面那個 `body_h > 1e-6`
+        # 之外**：它與幾何形狀無關（⛔ 不是「它太寬/太高所以像特效」），
+        # 它是「這一片**畫不出任何一個像素**」——一個沒有身體的模型也一樣。
+        # ⭐ 這是 cull 的**唯一**住處：剔在這裡，accessor / bufferView / draw call
+        # 三樣一起省掉；剔在 `gltf_materials()` 只省得掉最後一樣。
+        if team_glow == "cull" and x["effect_kind"] == "team_glow":
+            reasons.append("team-glow billboard (characterTeamGlow=cull)")
         x["drop"] = bool(reasons)
         x["reason"] = "; ".join(reasons)
     return geos, (bmin, bmax)
@@ -441,9 +615,11 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
     """textures_png: MDX texture index -> PNG bytes (placeholders included).
     tex_alpha:  MDX texture index -> 'opaque'|'mask'|'blend' (from the decoded
     image's alpha channel), used to choose glTF alphaMode MASK vs BLEND.
-    team_glow:  see TEAM_GLOW_POLICIES — "drop" (角色) or "lit" (純特效模型)."""
-    if team_glow not in TEAM_GLOW_POLICIES:
-        raise ValueError(f"team_glow must be one of {TEAM_GLOW_POLICIES}: {team_glow!r}")
+    team_glow:  see TEAM_GLOW_POLICIES. ⭐ 預設 `"drop"` ＝「**沒有選**」⇒
+    生效的值由 `invisible_prim_policy.json` 的 `characterTeamGlow` 決定
+    （GH#770）。`convert_stock_model.py` 傳的 `"lit"` 是全樹唯一刻意的選擇，
+    ⛔ 這條路一個位元都沒有動到。"""
+    team_glow = resolve_team_glow(team_glow)
     tex_alpha = tex_alpha or {}
     used_ext: set[str] = set()
     res = ConvertResult(glb=b"")
@@ -749,9 +925,14 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
         layers = (model.materials[mid].layers
                   if 0 <= mid < len(model.materials) else [])
         # ⛔ 被丟掉的隊伍發光層（`baseColorFactor [0,0,0,0]`）**必不可見** ⇒
-        # 材質裡還有別的層時就不要再發一個空 primitive。⭐ 但整份材質都是它時
-        # 仍然要發（下游 `strip_teamglow.py` / `invisible_prim_census.py` 靠
-        # `TeamGlow*` 這個名字認人）。
+        # 材質裡還有別的層時就不要再發一個空 primitive。
+        # ⚠️ 下面那個「整份材質都是它時仍然要發」的回退，是 GH#770 的**病灶本身**：
+        # 它存在的唯一理由是讓事後掃描（`strip_teamglow.py` /
+        # `invisible_prim_census.py`）**按名字**找得到那一片再刪掉它 ——
+        # 而那支掃描只涵蓋英雄身體＋皮膚，於是 25 份別的模型永遠沒人來收。
+        # ⭐ `characterTeamGlow: "cull"` 走**不到**這裡：那種 geoset 在
+        # `classify_geosets()` 就整個被剔掉了（cull 的唯一住處在那裡）。
+        # ⇒ 這個回退只服務 `"keep"`（＝ GH#770 之前的行為，一鍵 rollback）。
         keep = [i for i, l in enumerate(layers)
                 if not (_rid(l) == 2 and not (team_glow == "lit"
                                               and l.texture_id in textures_png))]
