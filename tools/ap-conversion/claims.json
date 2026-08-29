@@ -1,25 +1,4 @@
 {
-  "godie-e007.r": {
-    "amounts": [
-      {
-        "attrRatios": null,
-        "ratios": [
-          {
-            "coeff": 0.7,
-            "stat": "ap"
-          }
-        ]
-      }
-    ],
-    "claims": [
-      {
-        "attr": "agi",
-        "coeff": 5.0,
-        "stacking": "base"
-      }
-    ],
-    "description": "[主動傷害]\n{{cd}}秒冷卻時間\n\n凝聚體內的龍氣造成{{dmg}}點傷害，集氣每秒增加(敏捷*5)傷害，最多集氣3秒。\n(建築傷害25%)"
-  },
   "godie-e00s.q": {
     "amounts": [
       {

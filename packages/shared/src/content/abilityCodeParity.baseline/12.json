@@ -1,13 +1,4 @@
 [
-  "12-00|targetsEnemies",
-  "12-01|cooldown",
-  "12-01|effects",
-  "12-01|manaCost",
-  "12-01|maxRank",
-  "12-02|castType",
-  "12-02|effects",
-  "12-02|range",
-  "12-02|rangeTier",
   "12-03|castTimeSec",
   "12-03|castType",
   "12-03|cooldown",
@@ -18,14 +9,5 @@
   "12-03|passive",
   "12-03|range",
   "12-03|rangeTier",
-  "12-03|targetsEnemies",
-  "12-04|castTimeSec",
-  "12-04|castType",
-  "12-04|cooldownTier",
-  "12-04|effects",
-  "12-04|manaCost",
-  "12-04|manaCostTier",
-  "12-04|radiusTier",
-  "12-04|range",
-  "12-04|rangeTier"
+  "12-03|targetsEnemies"
 ]
