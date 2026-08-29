@@ -51,7 +51,7 @@ function sandbox(): string {
   writeFileSync(
     join(t, "content/champions/hero-x.json"),
     JSON.stringify(
-      { id: "hero-x", schema: "champion@1", abilities: { q: { id: "hero-x.q", cooldownTier: "中", vfxKey: "fx.old" } } },
+      { id: "hero-x", schema: "champion@1", abilities: { Q: { id: "hero-x.q", cooldownTier: "中", vfxKey: "fx.old" } } },
       null,
       2,
     ),
@@ -59,9 +59,12 @@ function sandbox(): string {
   return t;
 }
 
+// ⚠️ ⭐ 出貨的真實長相：**檔名是小寫** `hero-x.q.json`，**副本的鍵是大寫** `Q`（GH#872）。
+//   ⛔ 夾具一開始兩邊都寫小寫 ⇒ 它在「鏡射對 71 隻英雄全部 no-op」時**照樣是綠的**
+//   —— 一把只驗過自己造的世界的尺（失敗形態⑤）。
 const champ = (t: string): Record<string, unknown> =>
   (JSON.parse(readFileSync(join(t, "content/champions/hero-x.json"), "utf8")).abilities as Record<string, Record<string, unknown>>)
-    .q!;
+    .Q!;
 
 describe("存技能欄位時英雄副本跟著動（GH#822/#823/#829）", () => {
   it("⭐ 改一格 → 副本拿到同一個值", async () => {

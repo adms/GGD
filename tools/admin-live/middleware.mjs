@@ -208,9 +208,16 @@ export function mirrorAbilityIntoChampion(repoRoot, path, pointer, value) {
     return { error: `讀不了 ${champRel}:${e.message}` };
   }
   const ab = doc?.abilities;
-  if (ab === undefined || ab === null || typeof ab !== "object" || !(slot in ab)) return { wrote: null };
-  const r = setAtPointerOnDisk(champAbs, `/abilities/${slot}${pointer}`, value);
-  if (r.error) return { error: `${champRel} 的 /abilities/${slot}${pointer}:${r.error}` };
+  if (ab === undefined || ab === null || typeof ab !== "object") return { wrote: null };
+  // ⚠️ ⭐ **大小寫對不起來**（GH#872）：出貨的檔名是小寫 `godie-xxx.**q**.json`，
+  //   而英雄副本的鍵是**大寫** `abilities.**Q**` —— 71 隻英雄全部如此。
+  //   ⛔ 直接 `slot in ab` ⇒ 永遠 false ⇒ 這整支對出貨內容是 **no-op**，
+  //   ⭐ 而它會**靜默地**成功（回 `{wrote:null}` ＝「這不是技能檔」）。
+  // ⇒ 用**副本自己的鍵**去比對（⛔ 不是猜它的大小寫規則）。
+  const key = Object.keys(ab).find((k) => k.toLowerCase() === slot.toLowerCase());
+  if (key === undefined) return { wrote: null };
+  const r = setAtPointerOnDisk(champAbs, `/abilities/${key}${pointer}`, value);
+  if (r.error) return { error: `${champRel} 的 /abilities/${key}${pointer}:${r.error}` };
   return { wrote: champRel };
 }
 
