@@ -2,7 +2,14 @@
   "schema": "invisible-prim-policy@1",
   "_doc": "Task #233 / B3 — what the mdx->glb pipeline does with primitives whose resolved glTF material is fully transparent (baseColorFactor[3] == 0). Editable WITHOUT touching code; invisible_prim_census.py reads this file. See docs/invisible-primitive-audit.md for the measurement this default is based on.",
 
+  "characterTeamGlow": "cull",
+  "_characterTeamGlow": "⭐ GH#770 —— 角色/地圖模型那條路 (import_w3x.py → models.convert_all → gltf.convert) 拿 replaceableId-2『隊伍發光』怎麼辦。⭐ 這是一鍵 rollback 的那一格 (owner 常設指令:『沒做完以前別問我了自己判斷 但是留後台開關可以簡易 rollback』)。 | 'cull' = 一個 primitive 都不發 (⭐ 出貨預設,我挑的)。 | 'keep' = GH#770 之前逐位元的行為:發一個 baseColorFactor[3]==0 的 TeamGlow* 佔位面 (⛔ 畫不出像素卻照付 draw call —— 這就是 #770 的病灶) ⇒ ⭐ **這一個就是 rollback 目標**。 ⚠️ 這一格是 **build 時**的旋鈕:改它之後要**重跑 import 產線** (tools/w3x-import/import_w3x.py) 出貨的 .glb 才會變,⛔ 它不會自己追上已經烘好的檔。census 會把落差印成 PENDING RE-BAKE 一行。 ⚠️ ⛔ 不要在旋鈕裡寫 'drop':那是 gltf.convert() 用來表示『呼叫端沒有選』的訊號,會變成指向自己的解析。 ⚠️ convert_stock_model.py 明確傳 'lit',⛔ 不吃這一格。 ⭐ 合法值的**唯一住處**是 gltf.CHARACTER_TEAM_GLOW_CLAIMS,而每一個值**宣稱**的結果由 teamGlowCullPolicy.test.ts 拿出貨那條路逐值驗過 —— ⛔ 這裡不抄第二份清單。",
+  "_characterTeamGlow_no_lit": "⛔⛔ 2026-08-29 更正:這一格**曾經有第三個值 'lit'**,而它的說明(這個檔、票 #770、commit 訊息各一次)寫著『翻成 lit 就是把原作的隊色光暈畫出來 —— 不必改一行程式,只要重跑產線』。⭐ **那句話是假的**,拿出貨那條路量到:knob=keep 與 knob=lit 產出的 TeamGlow* 面**逐欄相同**(HeroCloudStrife / Bahamut:2 個面 · bcf [0,0,0,0] · emissive false · accessors 379/623),只有 knob=cull 真的變(0 個面 · accessors 367/617)。⇒ 'lit' 從旋鈕進來會**靜默退化成 keep**,也就是 #770 的病灶本身。⭐ 一個做不到自己宣稱的旋鈕值比沒有更糟——它讓人以為有一條退路(第一·五守則)。⇒ 已拿掉;三個成因與**各自的反駁條件**逐條寫在 w3xlib/gltf.py 的 CHARACTER_TEAM_GLOW_EXCLUDED(① models.py:571 比未解析字串+import_w3x.py:108 沒傳 ② TeamGlow00.blp 不在 repo,住零售 MPQ ③ 產出是白光不是隊色,而 GH#767 已逐字否決過白光)。⚠️ 拿掉它**沒有拿掉 rollback**:回頭的目標是 'keep'(#770 之前的行為),而 'lit' 從來不是回頭,是一個沒有人裁決過、且今天做不到的前進。⭐ 純特效模型要點亮仍然走呼叫端引數(convert_stock_model.py 的 team_glow='lit'),那條路是真的。",
+  "_characterTeamGlow_why_cull": "⭐ 為什麼預設挑 'cull' 而不是 'keep':① 'cull' 的畫面結果與今天**逐像素相同**(兩者都是 0 個像素),⇒ 改動的風險面只有『少了 draw call』這一側。② 客戶端本來就畫自己的隊伍讀數(ChampionView 的隊色環＋落影,見 strip_teamglow.py 檔頭),那一片是**多餘的**。③ 原作那一片是**隊伍顏色**,而 GGD 的 rid-2 沒有隊色通道可以套 —— 客戶端只認 model@1.teamTintMaterials(rid-1 那條路);GH#767 已逐字裁決過同一題:『全域打開＝替 49 個角色加上一團沒有人裁決過的白光』⇒ 角色維持不亮。",
+
   "cull": "off",
+  "_cull_vs_characterTeamGlow": "⚠️ 這兩格**不是同一件事**,⛔ 不要把它們當成一個開關的兩半。`characterTeamGlow` 是**轉檔器**的旋鈕(下一次重跑產線時,那一片幾何要不要**被造出來**);`cull` 是**事後**的旋鈕(已經烘好的 .glb 裡那些 alpha-0 面要不要被 `--apply` 刪掉,而且它同時管 additiveGlowNoAlpha 那 79 個)。⭐ 兩者相容:characterTeamGlow='cull' 重跑之後,teamGlow 這一族在事後掃描裡會**變成空的**(沒有東西可刪),⛔ 不會互相打架。",
+
   "_cull": "off = ship them as today (alpha-0 geometry, still costs draw calls); safe = remove ONLY primitives proven invisible in every WC3 sequence; all = remove every transparent primitive (DESTRUCTIVE — the 2026-07-30 audit found 54% of them are geometry WC3 animates VISIBLE, so 'all' deletes real content).",
 
   "reasons": {

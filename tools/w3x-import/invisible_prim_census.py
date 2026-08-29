@@ -38,6 +38,16 @@ So the cull is a POLICY, not a behaviour: ``invisible_prim_policy.json`` holds
 the switch, it defaults to ``cull: "off"``, and ``"safe"`` still refuses to
 touch anything with a visibility animation or without MDX proof.
 
+⭐ GH#770 —— 上面那 44 個 ``TeamGlow*`` 面**不必**走這條事後刪除的路了。
+同一份政策檔多了一格 ``characterTeamGlow``（``keep`` / ``cull``，出貨值 ``cull``；
+⚠️ ⛔ **沒有 ``lit``** —— 它在角色那條路上會靜默退化成 ``keep``，成因與反駁條件
+逐條寫在 ``w3xlib.gltf.CHARACTER_TEAM_GLOW_EXCLUDED``）：那是**轉檔器**的旋鈕，
+它讓那一片幾何**一開始就不要被造出來**
+（``w3xlib.gltf.resolve_team_glow``）。⚠️ 兩格**不是同一件事** ——
+``cull`` 管「已經烘好的檔要不要動」，``characterTeamGlow`` 管「下一次烘的時候
+要不要造」。⇒ 旋鈕翻了而產線還沒重跑的那段期間，這支 CLI 會印一行
+``PENDING RE-BAKE`` 說出落差（⛔ 不會靜默）。
+
 Usage
 -----
     python3 invisible_prim_census.py                     # census + verdict
@@ -78,9 +88,20 @@ GLB_ROOTS = [
 REASON_TEAM_GLOW = "teamGlow"
 REASON_ADDITIVE_GLOW = "additiveGlowNoAlpha"
 
+# ⭐ GH#770 —— `characterTeamGlow` 的合法值、回退值與**判準**只有**一個住處**
+# (`w3xlib.gltf`),這裡**引用**它。⛔ 不要在這裡抄一份字串或自己寫一次比對:
+# 那會變成第二個住處,而兩份漂掉的時候沒有任何東西會紅(第〇·四守則)。
+# ⚠️ 2026-08-29:被排除的值(`lit`)要回一句**指名原因**的訊息,⛔ 不是
+# 「must be one of (…)」—— 後者會讓下一個人以為自己打錯字。
+from w3xlib.gltf import (                                          # noqa: E402
+    DEFAULT_CHARACTER_TEAM_GLOW,
+    validate_character_team_glow,
+)
+
 DEFAULT_POLICY = {
     "schema": "invisible-prim-policy@1",
     "cull": "off",                              # off | safe | all
+    "characterTeamGlow": DEFAULT_CHARACTER_TEAM_GLOW,   # keep | cull
     "reasons": {REASON_TEAM_GLOW: True, REASON_ADDITIVE_GLOW: True},
     "skipGeosetsWithVisibilityAnimation": True,
     "visibleAlphaThreshold": 0.01,
@@ -104,6 +125,8 @@ def load_policy(path: str | None = None) -> dict:
                 pol[key] = val
     if pol["cull"] not in ("off", "safe", "all"):
         raise ValueError(f"policy.cull must be off|safe|all, got {pol['cull']!r}")
+    validate_character_team_glow(pol["characterTeamGlow"],
+                                 "policy.characterTeamGlow")
     return pol
 
 
@@ -444,6 +467,7 @@ def main() -> int:
 
     blizzard.close()
     print(f"policy               : cull={policy['cull']} "
+          f"characterTeamGlow={policy['characterTeamGlow']} "
           f"blizzardMdx={'yes' if blizzard.available else 'NO (retail MPQs absent)'} "
           f"guard={policy['skipGeosetsWithVisibilityAnimation']} "
           f"noProof={policy['cullWithoutMdxProof']}")
@@ -456,9 +480,29 @@ def main() -> int:
     would = sum(1 for r in rows if r["wouldCull"])
     print(f"\nwould cull under this policy: {would}")
 
+    # ⭐ GH#770 —— **fail-loud**。`characterTeamGlow` 是 **build 時**的旋鈕:
+    # 它只在**下一次重跑 import 產線**時生效。⇒ 旋鈕翻了而產線沒跑的那段期間,
+    # 出貨的 .glb 仍然帶著那些面,而**每一條既有的閘都是綠的** ——
+    # 那正是「fail-open 沒錯,靜默才是缺陷」的形狀,所以這裡要有人說話。
+    stale = ([r for r in rows if r["reason"] == REASON_TEAM_GLOW]
+             if policy["characterTeamGlow"] != "keep" else [])
+    pending = {"characterTeamGlow": policy["characterTeamGlow"],
+               "shippedTeamGlowPrims": len(stale),
+               "models": sorted({r["file"] for r in stale})}
+    if stale:
+        print(f"\n⚠️  PENDING RE-BAKE — characterTeamGlow={policy['characterTeamGlow']} "
+              f"但出貨樹還有 {len(stale)} 個 TeamGlow* 面 / {len(pending['models'])} "
+              "份模型。⛔ 這個旋鈕不會自己追上已經烘好的 .glb ——\n"
+              "    要它們消失,得重跑**產生那幾顆 glb 的那條轉檔路**\n"
+              "    (content/assets/models/imported/ 那半 = tools/w3x-import/import_w3x.py;\n"
+              "     data/blizzard-overlay/models/ 那半是本機專屬的暴雪覆蓋層,#10/#177)。")
+        for f in pending["models"]:
+            print(f"      · {f}")
+
     if args.json:
         with open(args.json, "w", encoding="utf-8") as fh:
-            json.dump({"policy": policy, "rows": rows}, fh, indent=1, ensure_ascii=False)
+            json.dump({"policy": policy, "pendingRebake": pending, "rows": rows},
+                      fh, indent=1, ensure_ascii=False)
         print(f"wrote {args.json}", file=sys.stderr)
     return 0
 
