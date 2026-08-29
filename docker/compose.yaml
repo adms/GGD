@@ -144,6 +144,85 @@ services:
       # SUBSCRIBE when a password is present (redisSubscriber.ts:208). Same
       # fail-fast ${VAR:?...} form platform uses at line 61.
       REDIS_PASSWORD: "${REDIS_PASSWORD:?set REDIS_PASSWORD in docker/.env}"
+      # ------------------------------------- GH#816 AC3 OPERATOR KNOBS ------
+      # PASS-THROUGH, NOT DEFAULTS — the game-server half of the platform block
+      # above (#724). Every entry is `${VAR:-}`: unset on the host ⇒ the
+      # container receives an EMPTY STRING ⇒ the read site returns the in-code
+      # default. That property was checked read-site by read-site, not assumed:
+      # `raw === undefined || raw === ""` (wsCompression / eventBatch /
+      # snapshotRate / snapshot / zoneView / replayHealth / analytics envInt),
+      # `(x ?? "").trim()` + an `=== ""` branch (cluster / contentBus /
+      # contentCacheHealth / damageBoard), `=== "1"` / `!== "0"` booleans
+      # (combatEnv / serverOps / matchHeartbeat / whitelist / eventFanout /
+      # cheatGate), `Number("") === 0` rejected by the same bound that rejects
+      # NaN (roomRegistry.clampCapacity, contentCacheHealth.cacheTtlHours,
+      # damageBoard.positiveInt), and a falsy `?.trim()` (replay/fingerprint).
+      # ⇒ this block changes NOTHING about how the game runs today. What it
+      # changes is whether an operator can change it TOMORROW.
+      #
+      # WHY IT HAD TO EXIST. #760 shipped server-side zone culling with
+      # `GGD_SNAPSHOT_ZONE_CULL=0` documented as its one-key rollback — and
+      # compose passes ONLY what is listed under `environment:`, so on the one
+      # deploy we actually run there was NO way to set it. Measured 2026-08-29:
+      # 46 GGD_* knobs read by shipping game-server code, 3 reachable, 43 not.
+      # ⭐ A rollback you cannot reach is not a rollback.
+      # Guard: apps/platform/internal/config/knob_reachability_test.go.
+      #
+      # ⚠️ GGD_MATCH_STATS_DIR is the ONE that cannot take an empty string:
+      # analytics/store.ts:94 is `process.env.GGD_MATCH_STATS_DIR ?? join(...)`,
+      # so "" would survive as a real (empty) path and `mkdir("")` would throw.
+      # The literal below is BYTE-IDENTICAL to what that `join` produces inside
+      # this image — store.ts sits at /app/src/analytics, REPO_ROOT is `../../../..`
+      # ⇒ "/", so the in-code default already IS /data/match-stats.
+      GGD_SNAPSHOT_ZONE_CULL: "${GGD_SNAPSHOT_ZONE_CULL:-}" # 0 = every client gets the everything-view (pre-#760 wire bytes)
+      GGD_SNAPSHOT_HZ: "${GGD_SNAPSHOT_HZ:-}"
+      GGD_SNAPSHOT_BUFFER_KB: "${GGD_SNAPSHOT_BUFFER_KB:-}"
+      GGD_WS_COMPRESSION: "${GGD_WS_COMPRESSION:-}" # 0 = no permessage-deflate at all
+      GGD_WS_COMPRESSION_THRESHOLD: "${GGD_WS_COMPRESSION_THRESHOLD:-}"
+      GGD_WS_COMPRESSION_LEVEL: "${GGD_WS_COMPRESSION_LEVEL:-}"
+      GGD_WS_COMPRESSION_MEMLEVEL: "${GGD_WS_COMPRESSION_MEMLEVEL:-}"
+      GGD_WS_COMPRESSION_WINDOW_BITS: "${GGD_WS_COMPRESSION_WINDOW_BITS:-}"
+      GGD_WS_COMPRESSION_SERVER_NO_CONTEXT: "${GGD_WS_COMPRESSION_SERVER_NO_CONTEXT:-}" # 0 ⇒ THRESHOLD goes inert
+      GGD_WS_COMPRESSION_CLIENT_NO_CONTEXT: "${GGD_WS_COMPRESSION_CLIENT_NO_CONTEXT:-}"
+      GGD_WS_COMPRESSION_CONCURRENCY: "${GGD_WS_COMPRESSION_CONCURRENCY:-}"
+      GGD_EVENT_BATCH: "${GGD_EVENT_BATCH:-}" # 0 = one message per event (pre-batching wire shape)
+      GGD_EVENT_BATCH_MIN: "${GGD_EVENT_BATCH_MIN:-}"
+      GGD_EVENT_BATCH_MAX: "${GGD_EVENT_BATCH_MAX:-}"
+      GGD_EVENT_BATCH_PRIVATE: "${GGD_EVENT_BATCH_PRIVATE:-}"
+      GGD_PRIVATE_EVENT_FANOUT: "${GGD_PRIVATE_EVENT_FANOUT:-}" # 0 = broadcast every event to the whole room
+      GGD_MAX_ROOMS: "${GGD_MAX_ROOMS:-}" # boot FLOOR; the platform's stored maxRooms still overrides per match
+      GGD_CONTENT_BUS: "${GGD_CONTENT_BUS:-}" # 0 = no live 後台 propagation; edits wait for the cache TTL
+      GGD_CONTENT_CACHE_RUNTIME: "${GGD_CONTENT_CACHE_RUNTIME:-}"
+      GGD_CONTENT_CACHE_TTL_S: "${GGD_CONTENT_CACHE_TTL_S:-}"
+      GGD_REPLAY_ENABLED: "${GGD_REPLAY_ENABLED:-}" # 0 = stop recording without touching the content doc
+      GGD_REPLAY_REQUIRED: "${GGD_REPLAY_REQUIRED:-}"
+      GGD_REPLAY_UNHEALTHY_AFTER: "${GGD_REPLAY_UNHEALTHY_AFTER:-}"
+      GGD_REPLAY_HEALTHZ_STATUS: "${GGD_REPLAY_HEALTHZ_STATUS:-}" # ⚠️ 503 here can let a liveness probe kill a live shard
+      GGD_MATCH_STATS: "${GGD_MATCH_STATS:-}" # 0 = write no per-match analytics at all
+      GGD_MATCH_STATS_DIR: "${GGD_MATCH_STATS_DIR:-/data/match-stats}" # ⚠️ see the note above — "" is NOT unset here
+      GGD_MATCH_STATS_MAX_FILES: "${GGD_MATCH_STATS_MAX_FILES:-}"
+      GGD_MATCH_STATS_MAX_AGE_DAYS: "${GGD_MATCH_STATS_MAX_AGE_DAYS:-}"
+      GGD_DAMAGE_BOARD: "${GGD_DAMAGE_BOARD:-}"
+      GGD_DAMAGE_BOARD_CAP: "${GGD_DAMAGE_BOARD_CAP:-}"
+      GGD_DAMAGE_BOARD_TOP: "${GGD_DAMAGE_BOARD_TOP:-}"
+      GGD_GAME_PROCESSES: "${GGD_GAME_PROCESSES:-}" # >1 also needs MATCHMAKER_PRESENCE=redis + a varying ADDRESS_TEMPLATE
+      GGD_GAME_PUBLIC_ADDRESS_TEMPLATE: "${GGD_GAME_PUBLIC_ADDRESS_TEMPLATE:-}"
+      GGD_MATCHMAKER_PRESENCE: "${GGD_MATCHMAKER_PRESENCE:-}"
+      GGD_GAME_IPC_TIMEOUT_MS: "${GGD_GAME_IPC_TIMEOUT_MS:-}"
+      GGD_GAME_STARTUP_STAGGER_MS: "${GGD_GAME_STARTUP_STAGGER_MS:-}"
+      # ⛔ NOT an operator knob: the supervisor forks each child with an explicit
+      #    GGD_GAME_PROCESS_INDEX (cluster/supervisor.ts:54), so this line only
+      #    ever reaches the supervisor itself, where "" means "I am the parent".
+      #    It is listed because the guard scans READ SITES, and a knob that is
+      #    read but absent here is exactly what the guard is for.
+      GGD_GAME_PROCESS_INDEX: "${GGD_GAME_PROCESS_INDEX:-}"
+      GGD_BUILD_STAMP: "${GGD_BUILD_STAMP:-}" # stamps replay fingerprints; empty ⇒ .git, then "dev"
+      # --- bypasses. All four are `=== "1"`, i.e. OFF unless spelled exactly. --
+      GGD_COMBAT_ENV_BYPASS: "${GGD_COMBAT_ENV_BYPASS:-}"
+      GGD_SERVER_OPS_BYPASS: "${GGD_SERVER_OPS_BYPASS:-}"
+      GGD_MATCH_HEARTBEAT_BYPASS: "${GGD_MATCH_HEARTBEAT_BYPASS:-}"
+      GGD_WHITELIST_BYPASS: "${GGD_WHITELIST_BYPASS:-}"
+      GGD_DEV_CHEATS: "${GGD_DEV_CHEATS:-}" # only "0" does anything; prod is already shut by the shared secret
     ports:
       - "127.0.0.1:2567:2567"
     volumes:
