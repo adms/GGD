@@ -655,6 +655,24 @@
         "note": "docker/.env 設 GGD_LIVE_FRESHNESS_BAR=0 ＋ 重啟 review ⇒ 整條列不畫。⛔ 不必重建映像。"
       },
       "registeredAt": "2026-08-29T01:46:18.461Z"
+    },
+    "anim-three-second-clock_20260829": {
+      "title": "三秒碼表的主詞＝一次演出（四個池重新點燃 ⇒ 碼表歸零）",
+      "family": "vfx-hard-cap 三秒鐵則",
+      "issues": [
+        842
+      ],
+      "abilities": [],
+      "commit": "0efe64ed",
+      "sequenceDir": null,
+      "rollback": {
+        "configId": "env:GGD_VFX_REFIRE_CLOCK",
+        "field": "env",
+        "liveValue": "performance",
+        "rollbackValue": "emitter",
+        "note": "網址加 ?vfxRefireClock=emitter（或 globalThis.__GGD_VFX_REFIRE_CLOCK__=\"emitter\" / GGD_VFX_REFIRE_CLOCK=emitter / build 旗標 VITE_GGD_VFX_REFIRE_CLOCK=emitter）⇒ noteVfxRefired() 變 no-op ⇒ 碼表逐位元組回到「這顆 emitter 連續活了多久」＝ 2026-08-28 之前的行為（打一打動畫又會消失）。⭐ 四個池（VfxSystem.play · vfxPresets.fireBurst · W3xEmitterRig · modelFxRig.spawn）全部從那一行走，所以這一格一翻就全部回頭。⛔ 不必重建 client（前兩條通道是 runtime 的）。⚠️ 這一格 ⛔ 不放寬三秒鐵則 —— 它只切「碼表從哪一刻起算」；要整支關掉走 config.vfx-cleanup@1.vfxHardCapScope=\"off\"。開關本體：apps/client/src/vfx/vfxCleanupPolicy.ts 的 VFX_REFIRE_CLOCKS/vfxRefireClock()；行為守衛：apps/client/src/vfx/refireClockRollback.test.ts（翻過去 ⇒ 舊行為真的回來，突變驗過）。"
+      },
+      "registeredAt": "2026-08-29T03:31:03.192Z"
     }
   }
 }
