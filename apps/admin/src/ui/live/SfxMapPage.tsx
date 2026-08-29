@@ -1,7 +1,19 @@
 /**
- * 🔊 技能音效對照 —— 技能 → 施放音／特效發射音／命中音／落點音 的 live join；
- * 施放音欄可存（POST /__live/sfx-map/save → 技能文件的 sfxKey，GH#821 —— 產物由
- * genguard 在寫入端擋，訊息指名擁有者）。
+ * 🔊 技能音效對照 —— 技能 → 施放音／特效發射音／命中音／落點音 的 live join。
+ *
+ * 💾 **可存的兩欄**（POST /__live/sfx-map/save，共用寫入端；產物由 genguard 在寫入端擋，
+ * 訊息指名擁有者）：
+ *   · 施放音 → 技能文件的 `sfxKey`（GH#821）
+ *   · ⭐ **模型音的施放／落點** → `/effects/<i>/soundKey` 與 `/arriveSoundKey`（GH#827）——
+ *     owner 2026-08-20 點名的「**特效音效綁定**」的可寫那一半：`audio/modelFxSound.ts:69`
+ *     逐字寫著「`soundKey` = 施放那一刻 ⇒ **特效發射**；`arriveSoundKey` = 落點 ⇒ **特效命中**」。
+ *     ⭐ **空的那一格也能填** —— 資料側送的是每一個 spawnModelFx 節點的 pointer，
+ *     ⛔ 不是只送已經填了的值（在此之前那 103 格空的連地址都沒有 ⇒「改不動」）。
+ *
+ * 🔒 **改不動的四欄**（發射／命中／循環／消散）：落點是 `content/config/vfx-families.json`，
+ * 而 genguard 判它是 `vfxfam:build` 的產物 ⇒ 照第〇·六守則**擋下來並指名**，
+ * ⛔ 不畫一格永遠存不進去的 ✏️（那就是卡片上說了但不會發生的字）。
+ * ⭐ 鎖不鎖是**資料側當場問 genguard** 的答案，⛔ 不是這裡寫死的一句散文。
  *
  * owner 2026-08-26（逐字）：「這些後台頁面的內容都要 **script 實時動態產生**，
  * **不是靜態內容**喔」⇒ 這一頁 mount 時 fetch `/__live/sfx-map`（dev-only vite
@@ -45,15 +57,31 @@ interface SfxRow {
   loop: SoundHit | null;
   dissipate: SoundHit | null;
   model: { when: "launch" | "arrive"; key: string }[];
+  /** ⭐ GH#827 —— 每一個 spawnModelFx 節點**連同它的 JSON pointer**（空的兩格也在）。 */
+  modelFx: { ptr: string; model: string | null; launch: string | null; arrive: string | null }[];
   sug: { key: string | null; tier: string | null; applicable: boolean; needsCueDeclaration: boolean } | null;
   bad: string[];
   silent: boolean;
 }
 
+/** 逐欄「這一格的家在哪、改不改得動」—— 資料側算的（vfx 那一列是 genguard 當場答的）。 */
+interface SoundHome {
+  path: string;
+  pointers: string[];
+  editable: boolean;
+  note: string;
+  asked?: boolean;
+  owner?: string | null;
+  genguard?: string;
+}
+
 interface SfxMapData {
   id: string;
+  soundHomes?: { model: SoundHome; vfx: SoundHome };
   stats: {
     abilities: number;
+    modelFxNodes?: number;
+    modelFxEmptySlots?: number;
     cast: number;
     vfxLaunch: number;
     vfxImpact: number;
@@ -224,6 +252,14 @@ export function SfxMapPage(): React.JSX.Element {
   }
 
   const st = data.stats;
+  // ⭐ 「特效家族那四欄鎖不鎖」由**資料側的 genguard 裁決**決定，⛔ 不是這裡寫死一句話。
+  const vfxHome = data.soundHomes?.vfx ?? null;
+  const vfxLocked = vfxHome !== null && !vfxHome.editable;
+  const lock = vfxLocked ? " 🔒" : "";
+  const lockTitle =
+    vfxHome !== null && vfxLocked
+      ? `🔒 這一欄的落點是 ${vfxHome.path}，genguard 判它是產生器 ${vfxHome.owner ?? "?"} 的產物 ⇒ 這一頁不給 ✏️（存下去等於沒存）。\n\n${vfxHome.genguard ?? ""}\n\n${vfxHome.note}`
+      : undefined;
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14, maxWidth: 1420 }}>
       <Panel title={`🔊 技能音效對照（${st.abilities} 支技能）`}>
@@ -238,6 +274,39 @@ export function SfxMapPage(): React.JSX.Element {
             每個 key 都對 audio-map（{st.audioMapKeys} 個）驗存在；施放音另對 cues 名單（
             {st.declaredCues} 個）驗。<span style={{ color: DANGER }}>紅列＝零綁定</span>
             （只發通用池聲音）。音量／冷卻設定住 content/config/audio-map.json（後台目前沒有它的表單頁）。
+          </div>
+          {/* ⭐ GH#827 —— 哪幾欄改得動、哪幾欄被誰擋住。⛔ 不畫一格永遠存不進去的 ✏️。 */}
+          <div style={{ fontSize: 12, color: TEXT_DIM, lineHeight: 1.7, borderTop: PANEL_BORDER, paddingTop: 8 }}>
+            ✏️ <b style={{ color: GOLD }}>改得動的</b>：施放音（技能文件 <code style={{ fontFamily: MONO }}>sfxKey</code>）
+            ·{" "}
+            <b style={{ color: GOLD }}>模型音的施放／落點</b>（
+            <code style={{ fontFamily: MONO }}>/effects/&lt;i&gt;/soundKey</code> ／{" "}
+            <code style={{ fontFamily: MONO }}>arriveSoundKey</code> —— modelFxSound.ts 把它們讀成
+            <b>特效發射層</b>／<b>特效命中層</b>）。空格也能填：出貨內容有{" "}
+            <b style={{ color: TEXT_MAIN }}>{st.modelFxNodes ?? "?"}</b> 個 spawnModelFx 節點、其中{" "}
+            <b style={{ color: WARN }}>{st.modelFxEmptySlots ?? "?"}</b> 格是空的。
+            {vfxHome !== null && (
+              <>
+                {" "}
+                ·{" "}
+                <span style={{ color: vfxLocked ? DANGER : OK }}>
+                  {vfxLocked ? "🔒 改不動的" : "✏️ 也改得動"}
+                </span>
+                ：發射／命中／循環／消散（<code style={{ fontFamily: MONO }}>{vfxHome.path}</code>）
+                {vfxLocked && (
+                  <>
+                    {" "}
+                    —— genguard 說它是產生器{" "}
+                    <b style={{ color: DANGER }}>{vfxHome.owner ?? "（訊息裡沒有步驟名）"}</b>{" "}
+                    的產物{vfxHome.asked === false ? "（⚠️ 其實是 genguard 沒問到，保守當成鎖住）" : ""}。
+                    <span title={vfxHome.genguard ?? ""} style={{ textDecoration: "underline dotted", cursor: "help" }}>
+                      （游標停在這裡看 genguard 原文）
+                    </span>
+                  </>
+                )}
+                <div style={{ marginTop: 2 }}>{vfxHome.note}</div>
+              </>
+            )}
           </div>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap", fontSize: 12.5 }}>
             <span>
@@ -303,19 +372,19 @@ export function SfxMapPage(): React.JSX.Element {
             <span style={{ fontSize: 12, color: TEXT_DIM }}>顯示 {rows.length} 列</span>
           </div>
           <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 1240 }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 1680 }}>
               <thead>
                 <tr>
                   <Th>技能 id</Th>
                   <Th>技能名</Th>
                   <Th>英雄</Th>
                   <Th>格</Th>
-                  <Th>施放音</Th>
+                  <Th>施放音 ✏️</Th>
                   <Th>特效家族</Th>
-                  <Th>發射音</Th>
-                  <Th>命中音</Th>
-                  <Th>循環/消散</Th>
-                  <Th>模型音（施放/落點）</Th>
+                  <Th>{`發射音${lock}`}</Th>
+                  <Th>{`命中音${lock}`}</Th>
+                  <Th>{`循環/消散${lock}`}</Th>
+                  <Th>模型音（施放/落點）✏️</Th>
                   <Th>建議 cue</Th>
                 </tr>
               </thead>
@@ -355,13 +424,14 @@ export function SfxMapPage(): React.JSX.Element {
                       <Td mono color={TEXT_DIM}>
                         {r.fam ?? "—"}
                       </Td>
-                      <Td>
+                      {/* 🔒 特效家族音四欄 —— 落點是產生器產物 ⇒ 擋下來並指名（title 帶 genguard 原文）。 */}
+                      <Td title={lockTitle}>
                         <KeyCell hit={r.launch} badKeys={bads} />
                       </Td>
-                      <Td>
+                      <Td title={lockTitle}>
                         <KeyCell hit={r.impact} badKeys={bads} />
                       </Td>
-                      <Td>
+                      <Td title={lockTitle}>
                         {r.loop === null && r.dissipate === null ? (
                           <span style={{ color: TEXT_DIM }}>—</span>
                         ) : (
@@ -372,20 +442,51 @@ export function SfxMapPage(): React.JSX.Element {
                           </span>
                         )}
                       </Td>
+                      {/*
+                        ⭐ GH#827 —— 模型音兩格**可存也可補**（owner 2026-08-20 點名的
+                        「特效音效綁定」：modelFxSound.ts 把 soundKey 讀成特效發射層、
+                        arriveSoundKey 讀成特效命中層）。⛔ 在此之前這一欄是純文字。
+                        寫入端是共用的那一條（genguard 逐檔裁決：產物 409 指名擁有者）。
+                      */}
                       <Td>
-                        {r.model.length === 0 ? (
+                        {r.modelFx.length === 0 ? (
                           <span style={{ color: TEXT_DIM }}>—</span>
                         ) : (
-                          <span style={{ fontFamily: MONO, fontSize: 11.5 }}>
-                            {r.model.map((m, i) => (
-                              <span key={`${m.when}-${m.key}-${i}`}>
-                                {i > 0 && " · "}
-                                <span style={{ color: TEXT_DIM }}>
-                                  {m.when === "arrive" ? "落點:" : "施放:"}
+                          <span style={{ display: "inline-flex", flexDirection: "column", gap: 2 }}>
+                            {r.modelFx.map((m) => (
+                              <span key={m.ptr} style={{ fontFamily: MONO, fontSize: 11.5 }}>
+                                <span
+                                  style={{ color: TEXT_DIM }}
+                                  title={`${m.ptr}（模型 ${m.model ?? "—"}）`}
+                                >
+                                  {m.ptr.replace("/effects/", "#")}{" "}
                                 </span>
-                                <span style={{ color: bads.has(m.key) ? DANGER : TEXT_MAIN }}>
-                                  {m.key}
-                                </span>
+                                <span style={{ color: TEXT_DIM }}>施放:</span>
+                                <LiveEditCell
+                                  dataset="sfx-map"
+                                  path={`content/abilities/${r.id}.json`}
+                                  pointer={`${m.ptr}/soundKey`}
+                                  current={m.launch}
+                                  type="string"
+                                  nullable
+                                  onSaved={() => setReloadTick((t) => t + 1)}
+                                />
+                                {m.launch !== null && bads.has(m.launch) && (
+                                  <span style={{ color: DANGER }}>⚠</span>
+                                )}
+                                <span style={{ color: TEXT_DIM }}> 落點:</span>
+                                <LiveEditCell
+                                  dataset="sfx-map"
+                                  path={`content/abilities/${r.id}.json`}
+                                  pointer={`${m.ptr}/arriveSoundKey`}
+                                  current={m.arrive}
+                                  type="string"
+                                  nullable
+                                  onSaved={() => setReloadTick((t) => t + 1)}
+                                />
+                                {m.arrive !== null && bads.has(m.arrive) && (
+                                  <span style={{ color: DANGER }}>⚠</span>
+                                )}
                               </span>
                             ))}
                           </span>
