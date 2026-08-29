@@ -53,7 +53,12 @@ function tierNamesOf(node, out) {
  * ⭐ GH#821 寫入宣告 —— POST /__live/radar-abilities/save。
  * 四個**級距名**欄住 content/abilities（混編目錄 —— 寫入端逐次 spawn genguard 裁決）；
  * 級距**值**表是 anchors:build 家族的產物，⛔ 這裡永遠不寫它們。
- * ⚠️ 編輯 UI 尚未接在這一頁上（逐頁票）—— 端點本身已可用且被覆蓋率閘點名。
+ * ⭐ GH#829：編輯格已接在 RadarAbilitiesPage 的英雄疊圖表上（共用 LiveEditCell）。
+ *
+ * ⚠️ **上界不是只有值域**：合法級名由出貨表推導（＝ schema 的 `z.enum(SKILL_TIER_NAMES)`
+ *    那五格，⛔ 不抄字面值），⭐ 但 `zAbilityDoc` 還有一條**跨欄互斥**
+ *    （`refineUnlimitedRange`：`rangeUnlimited` ⊥ `rangeTier`）—— 少了它，
+ *    後台**存得下**而內容驗證**拒收**（＝ ex-roots offerCount 那一型的缺陷）。
  */
 export const write = {
   kind: "source",
@@ -63,12 +68,27 @@ export const write = {
       pointers: Object.keys(AXIS_TABLE),
       value: { type: "string", maxLen: 8 },
       why: "四軸級距名（值由載入時從共用表解析，⛔ 不烘數字）",
-      check(repoRoot, { pointer, value }) {
+      check(repoRoot, { path, pointer, value }) {
         const rel = AXIS_TABLE[pointer];
         const names = new Set();
         tierNamesOf(JSON.parse(readFileSync(join(repoRoot, rel), "utf8")), names);
         if (names.size === 0) return `讀不到 ${rel} 的級名 —— ⛔ 不要把「讀不到」當成「合法」`;
-        return names.has(value) ? null : `「${value}」不在 ${rel} 的級名（${[...names].join("/")}）`;
+        if (!names.has(value)) return `「${value}」不在 ${rel} 的級名（${[...names].join("/")}）`;
+        // ⭐ 跨欄互斥（zAbilityDoc.refineUnlimitedRange，GH#602）：兩格都填時 schema 拒收整份文件。
+        if (pointer === "/rangeTier") {
+          let doc;
+          try {
+            doc = JSON.parse(readFileSync(join(repoRoot, path), "utf8"));
+          } catch (err) {
+            return `讀不到 ${path}：${err}`;
+          }
+          if (doc.rangeUnlimited === true)
+            return (
+              `${path} 的 rangeUnlimited=true —— 它與 rangeTier **互斥**（schema 的 refineUnlimitedRange），` +
+              "存得下但內容驗證會整份拒收。要給距離級別就先把 rangeUnlimited 拿掉"
+            );
+        }
+        return null;
       },
     },
   ],

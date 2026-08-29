@@ -1,5 +1,5 @@
 /**
- * 📡 技能四軸級距雷達（/__live/radar-abilities）—— 唯讀 LIVE 頁。
+ * 📡 技能四軸級距雷達（/__live/radar-abilities）—— LIVE 頁（**級距名可改**，級距表唯讀）。
  *
  * owner 2026-08-26（逐字）：
  * > 「這些後台頁面的內容都要 **script 實時動態產生**，**不是靜態內容**喔」
@@ -12,14 +12,21 @@
  *（極小=1 … 極大=5），支援挑英雄把 Q/W/E/R 四技能疊在同一張圖上。
  * 解析後的值（秒/點/格）全部來自出貨的 tier 表 —— dataset 只查表不重算公式。
  *
- * ⚠️ 唯讀。要改哪一軸的表，去左欄既有 config 頁：
+ * ⚠️ 級距**表**（哪一級是幾秒／幾點／幾格）在這一頁**唯讀** —— 要改表去左欄既有 config 頁：
  *    💥 傷害五級距 · ⏲ 冷卻五級距 · 🔷 耗魔五級距 · ➶ 施法距離五級距 · ◎ AoE 範圍五級距。
  *    這裡⛔不放第二份表單（同 tierOverview 的理由：兩處可編＝互相蓋掉）。
+ *
+ * ⭐ GH#829 —— 而**每支技能用哪一級**是這一頁自己的資料，所以它可以改：英雄疊圖表上
+ *    冷卻／耗魔／距離／範圍四格是共用的 LiveEditCell（POST /__live/radar-abilities/save
+ *    → 寫回 content/abilities/<id>.json，寫前過 dataset 的 check 與 genguard）。
+ *    ⛔ 傷害那一格**刻意不開**：damageTier 埋在 effects 樹裡（一支可能有多個節點），
+ *    沒有固定 pointer ⇒ 寫入規則不收它，這裡就不可以畫一支存不了的筆。
  */
 import { useEffect, useMemo, useState } from "react";
 import { Panel, TextInput } from "../widgets";
 import { ACCENT, DANGER, GOLD, OK, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
 import { ReviewStrip } from "./ReviewStrip";
+import { LiveEditCell } from "./LiveEditCell";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
@@ -209,6 +216,49 @@ function TierCell(props: { tier: TierName | null; resolved: number | null; unit:
   );
 }
 
+/**
+ * 可編輯的四軸 → JSON pointer（與 datasets/radar-abilities.mjs 的 `write.rules` 同一組）。
+ * ⛔ damage 不在裡面 —— 見檔頭：它沒有固定 pointer，寫入端不收。
+ */
+const POINTER_BY_AXIS: Record<"cooldown" | "manaCost" | "range" | "radius", string> = {
+  cooldown: "/cooldownTier",
+  manaCost: "/manaCostTier",
+  range: "/rangeTier",
+  radius: "/radiusTier",
+};
+
+/**
+ * ✏️ 一格「級別（解析值＋單位）」，級別的部分可改（GH#829）。
+ * 存下去之後由 `onSaved` 重抓整份 —— ⭐ 頁上看到的是**重讀後**的值（含重新解析的秒/點/格），
+ * ⛔ 不是我在前端猜的。合法級名由伺服器端 check 從出貨 tier 表推導，打錯字會回原文錯誤。
+ */
+function TierEditCell(props: {
+  abilityId: string;
+  axis: keyof typeof POINTER_BY_AXIS;
+  tier: TierName | null;
+  resolved: number | null;
+  unit: string;
+  onSaved: () => void;
+}): React.JSX.Element {
+  return (
+    <span>
+      <LiveEditCell
+        dataset="radar-abilities"
+        path={`content/abilities/${props.abilityId}.json`}
+        pointer={POINTER_BY_AXIS[props.axis]}
+        current={props.tier}
+        type="string"
+        onSaved={props.onSaved}
+      />
+      {props.tier !== null && (
+        <span style={{ color: TEXT_DIM, fontSize: 11 }}>
+          {props.resolved !== null ? `（${props.resolved}${props.unit}）` : "（表無此格）"}
+        </span>
+      )}
+    </span>
+  );
+}
+
 const SLOT_COLORS: Record<string, string> = { Q: GOLD, W: ACCENT, E: OK, R: DANGER };
 const SLOT_ORDER = ["Q", "W", "E", "R"];
 
@@ -223,6 +273,9 @@ export function RadarAbilitiesPage(): React.JSX.Element {
   const [err, setErr] = useState<string | null>(null);
   const [q, setQ] = useState("");
   const [champ, setChamp] = useState("");
+  /** 存檔後 +1 ⇒ 重抓（⭐ 驗的是重讀後的值，⛔ 不是「有呼叫 POST」）。 */
+  const [reloadTick, setReloadTick] = useState(0);
+  const reload = (): void => setReloadTick((t) => t + 1);
 
   useEffect(() => {
     let alive = true;
@@ -243,7 +296,7 @@ export function RadarAbilitiesPage(): React.JSX.Element {
     return () => {
       alive = false;
     };
-  }, []);
+  }, [reloadTick]);
 
   const filtered = useMemo(() => {
     if (!data) return [];
@@ -297,9 +350,11 @@ export function RadarAbilitiesPage(): React.JSX.Element {
             距離 rangeTier · 範圍 radiusTier），極小=1 ⋯ 極大=5；括號裡的解析值查
             content/config 的五張 tier 表（冷卻依形狀查 單體/範圍/變身 那三欄）。
             資料由 <code style={{ fontFamily: MONO }}>/__live/radar-abilities</code> 每次請求時現讀
-            content/ 計算，⛔ 不是烘進頁面的靜態內容。要改表 → 左欄
+            content/ 計算，⛔ 不是烘進頁面的靜態內容。要改<b>表</b>（哪一級是幾秒／幾點／幾格）→ 左欄
             「💥 傷害五級距 · ⏲ 冷卻五級距 · 🔷 耗魔五級距 · ➶ 施法距離五級距 · ◎ AoE 範圍五級距」
-            （這裡不放第二份表單）。
+            （這裡不放第二份表單）。✏️ 要改<b>某一支技能用哪一級</b>→ 下面「挑英雄」那張表，
+            冷卻／耗魔／距離／範圍四格可以直接存回{" "}
+            <code style={{ fontFamily: MONO }}>content/abilities/&lt;id&gt;.json</code>。
           </div>
           <div style={{ fontSize: 12, color: TEXT_DIM }}>
             各軸有級距的技能數：
@@ -375,19 +430,56 @@ export function RadarAbilitiesPage(): React.JSX.Element {
                           <TierCell tier={a.tiers.damage} resolved={a.resolved.damage} unit="點" />
                         </Td>
                         <Td>
-                          <TierCell tier={a.tiers.cooldown} resolved={a.resolved.cooldownSec} unit="秒" />
+                          <TierEditCell
+                            abilityId={a.id}
+                            axis="cooldown"
+                            tier={a.tiers.cooldown}
+                            resolved={a.resolved.cooldownSec}
+                            unit="秒"
+                            onSaved={reload}
+                          />
                           {a.tiers.cooldown && (
                             <span style={{ color: TEXT_DIM, fontSize: 11 }}>｛{a.cooldownShape}｝</span>
                           )}
                         </Td>
                         <Td>
-                          <TierCell tier={a.tiers.manaCost} resolved={a.resolved.manaCost} unit="點" />
+                          <TierEditCell
+                            abilityId={a.id}
+                            axis="manaCost"
+                            tier={a.tiers.manaCost}
+                            resolved={a.resolved.manaCost}
+                            unit="點"
+                            onSaved={reload}
+                          />
                         </Td>
                         <Td>
-                          <TierCell tier={a.tiers.range} resolved={a.resolved.range} unit="格" />
+                          <TierEditCell
+                            abilityId={a.id}
+                            axis="range"
+                            tier={a.tiers.range}
+                            resolved={a.resolved.range}
+                            unit="格"
+                            onSaved={reload}
+                          />
                         </Td>
                         <Td>
-                          <TierCell tier={a.tiers.radius} resolved={a.resolved.radius} unit="格" />
+                          {a.radiusFromNested ? (
+                            <>
+                              <TierCell tier={a.tiers.radius} resolved={a.resolved.radius} unit="格" />
+                              <span style={{ color: WARN, fontSize: 11 }} title="這一格的級距住在 effects 樹裡，頂層 /radiusTier 改不到它 —— 開了只會多出第二個住處">
+                                ｛內嵌·唯讀｝
+                              </span>
+                            </>
+                          ) : (
+                            <TierEditCell
+                              abilityId={a.id}
+                              axis="radius"
+                              tier={a.tiers.radius}
+                              resolved={a.resolved.radius}
+                              unit="格"
+                              onSaved={reload}
+                            />
+                          )}
                         </Td>
                       </tr>
                     ))}
@@ -396,6 +488,17 @@ export function RadarAbilitiesPage(): React.JSX.Element {
                 <div style={{ fontSize: 11, color: TEXT_DIM, marginTop: 6 }}>
                   疊圖只畫 Q/W/E/R（{overlayRows.filter(Boolean).length} 支）；天生/EX 只列表。
                   冷卻秒數＝卡面秒（不含系統倍率）。
+                  <br />
+                  ✏️ 冷卻／耗魔／距離／範圍四格可改（填五級距名：{order.join(" / ")}）——
+                  存回 <code style={{ fontFamily: MONO }}>content/abilities/&lt;id&gt;.json</code> 的
+                  對應級距欄，寫前過 genguard 與 schema 互斥檢查，存完這一頁重抓。
+                  <b>傷害</b>那一格唯讀（damageTier 埋在 effects 樹裡，沒有固定 pointer）；
+                  範圍標｛內嵌·唯讀｝的同理。改完出貨前記得 <code style={{ fontFamily: MONO }}>pnpm content:build</code>。
+                  <br />
+                  ⚠️ <code style={{ fontFamily: MONO }}>content/abilities</code> 是**混編**目錄：
+                  產生器（<code style={{ fontFamily: MONO }}>skillremake:json</code>）擁有的那幾支會被
+                  genguard 擋下並在格子裡印出**它的原文**（指名擁有者與「改來源再 genrun」）——
+                  ⛔ 不是靜默失敗；其餘的存得進去，存完會提示要補跑哪一支正規化器。
                 </div>
               </div>
             </div>
