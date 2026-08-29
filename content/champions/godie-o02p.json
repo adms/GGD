@@ -225,6 +225,26 @@
               350.0
             ]
           }
+        },
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radiusTier": "中",
+          "side": "enemies",
+          "anchor": "caster",
+          "targetMode": "reresolve",
+          "delaySec": 1.0,
+          "count": 4,
+          "intervalSec": 1.0,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "flat": 100.0
+              }
+            }
+          ]
         }
       ],
       "vfxKey": "fx.prim.holy.nova-lg",
