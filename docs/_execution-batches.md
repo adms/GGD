@@ -1803,4 +1803,10 @@ watchdog 後代 CPU 修復。
   - ⭐ 判準換對了產出就出來了：「做完了沒」問三輪產出 0；「**現況在哪個環境還成立**」問一輪產出 90 筆
 - 🧩 #244 技能模板群組貼上模板族總表 —— ⭐ 共同形狀是「**詞彙／機制只做了一半**」
   （#809 只有施法者錨定而原作 124 次是受擊者 · #699/#753 被寫死常數 `MAX_STOCK_EMITTERS_PER_MODEL=3` 擋住）
+- ✅ **DEPLOY v0.31.1**（2026-08-29 09:28）· mini 對到 `51754bdf` · 版本戳 `v0.31.1`（⭐ 乾淨版號）
+  - 煙霧：console `content loaded: **71 champions** (cv_e839901bccb8) via bundle`（⛔ 不是 skeleton）
+  - 白名單 **49** · `content.ok=true` · `replay.ok=true` · 徽章 `v0.31.1`
+  - ⭐ 新鮮度列的三個徽章字串**確認在出貨的 admin JS 裡**
+- ⚠️ `skills:check` 紅**一項**：#870 `docs:status:check` 是**永遠不會綠**的閘
+  （頁面 286 筆 vs 三個 ledger 全 5 筆；ledger 目錄 mtime **2026-08-16** ⇒ ⛔ 與本次改動無關）
 
