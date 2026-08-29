@@ -96,7 +96,8 @@ export const damageLineEffect: EffectKindSpec<"damageLine"> = {
     const dir = lineDir(e, ctx);
     if (!dir) return;
 
-    // Both bounded by the SAME ceiling a spread radius is (12 GGD units): the
+    // Both bounded by the SAME ceiling a spread radius is (`SPREAD_MAX_RADIUS`,
+    // 24 today — ⛔ 不要在這裡抄一個字面值，這句話寫「12」的時候常數已經是 24 了): the
     // failure being guarded is identical — a raw w3x `Area` column (200/300/450)
     // pasted in unconverted, which at 54.5 units-per-GGD-unit would be a lash
     // longer than the whole 24-unit duel zone.
