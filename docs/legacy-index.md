@@ -23,11 +23,11 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 2994 個檔案**，分佈在 2 個隔離區。
+**目前共 3167 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
-| [`docs/legacy/`](legacy-index.md#docslegacy) | 2554 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
+| [`docs/legacy/`](legacy-index.md#docslegacy) | 2727 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
 | [`content/_legacy/`](legacy-index.md#contentlegacy) | 440 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
@@ -35,7 +35,7 @@ owner 2026-08-13：
 
 ---
 
-## `docs/legacy/` —— 2554 檔
+## `docs/legacy/` —— 2727 檔
 
 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）
 
@@ -65,6 +65,7 @@ owner 2026-08-13：
 | `_proportionality-owner-cell-20260819.md` | 退休：owner 2026-08-19 手填的相稱性那一格（範圍・極小 →「大」） —— owner 2026-08-20（GH#465 逐字裁決）： | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_range-tier-writeback.md` | 施法距離級距寫回前的原始 `range` 值（GH#414 / GH#438） —— owner 2026-08-19：「先把已有的那軸寫回去」。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_release-note-v0.18.1-superseded.md` | v0.18.1 release note —— **被取代的原始版本** —— ⚠️ **這一份是被取代的舊 body，⛔ 不是現行的 release note。** | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_semantic-role-markup-superseded.md` | 語意色彩標記（`descriptionRoles` / `[c=role]…[/c]`）—— 被取代的那一份知識 —— GH#757**（接手已關的 **#114**）· 定案 **2026-08-29** · 決定：**(a) 拆** | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_session-handoff-2026-07-24.md` | session 交接（07-24，系列最舊） | 接到 20 天前、11 個次版號以前的 v0.4.1 現場 |
 | `_session-handoff-20260725.md` | session 交接（07-25） | 自陳是 temp/過渡文件。⚠️ §7 明文寫著兩個外洩憑證的值 —— 搬檔**不改變資安態勢**，真正的修法是輪替（GH#181） |
 | `_session-handover-0731.md` | session 交接（07-31） | 以為部署卡在 ssh 私鑰、線上是 v0.9.15。⚠️ 搬移時已把 `_execution-batches.md` 的轉介路徑改掉 |
@@ -2559,6 +2560,178 @@ owner 2026-08-13：
 | `_overwrites/overwrite_temp_20260830-011714/.claude/worktrees/wf_d6c1056a-bf8-1/content/abilities/godie-o02p.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260830-011729/.claude/worktrees/wf_d6c1056a-bf8-1/content/abilities/godie-o02p.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260830-011913/.claude/worktrees/wf_d6c1056a-bf8-1/packages/shared/src/content/periodicFieldContentWiring.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-020714/docs/_execution-batches.md` | GGD 執行批次計畫（Execution Batches） —— ⚠️ 2026-07-30 全面重寫。** 上一版寫著「main = `a6b1609d`，線上 **v0.7.0**」—— | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-020814/scripts/mpndd.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-024543/.claude/worktrees/wf_fccc16ff-f23-6/packages/shared/src/content/schema/effects/spawnVfx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-024623/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-024637/.claude/worktrees/wf_fccc16ff-f23-6/packages/shared/src/sim/effects/spawnVfx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-024641/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-024647/.claude/worktrees/wf_fccc16ff-f23-6/packages/shared/src/sim/effects/spawnVfx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-024654/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-024658/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-024711/.claude/worktrees/wf_fccc16ff-f23-6/apps/client/src/vfx/VfxSystem.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-024716/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-024719/.claude/worktrees/wf_fccc16ff-f23-6/apps/client/src/vfx/VfxSystem.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-024820/.claude/worktrees/wf_fccc16ff-f23-6/apps/client/src/vfx/VfxSystem.boneAttach.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-024828/.claude/worktrees/wf_fccc16ff-f23-6/apps/client/src/vfx/VfxSystem.boneAttach.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-024845/.claude/worktrees/wf_fccc16ff-f23-6/apps/client/src/vfx/VfxSystem.boneAttach.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-024901/.claude/worktrees/wf_fccc16ff-f23-3/apps/client/src/input/allyTargetPaths.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-024907/.claude/worktrees/wf_fccc16ff-f23-3/apps/client/src/input/allyTargetPaths.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-024910/.claude/worktrees/wf_fccc16ff-f23-3/apps/client/src/input/allyTargetPaths.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-024926/.claude/worktrees/wf_fccc16ff-f23-6/apps/client/src/vfx/VfxSystem.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-024929/.claude/worktrees/wf_fccc16ff-f23-6/apps/client/src/vfx/VfxSystem.ts.bak` | （.bak 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-024945/.claude/worktrees/wf_fccc16ff-f23-1/packages/shared/src/content/templates/expand.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-024952/.claude/worktrees/wf_fccc16ff-f23-6/packages/shared/src/sim/effects/spawnVfx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025000/.claude/worktrees/wf_fccc16ff-f23-6/packages/shared/src/sim/effects/spawnVfx.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025001/.claude/worktrees/wf_fccc16ff-f23-5/tools/skill-remake/heroes/godie-e002.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025003/.claude/worktrees/wf_fccc16ff-f23-6/packages/shared/src/sim/effects/spawnVfx.ts.bak` | （.bak 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025016/.claude/worktrees/wf_fccc16ff-f23-3/apps/client/src/input/allyTargetPaths.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025018/.claude/worktrees/wf_fccc16ff-f23-3/apps/client/src/input/allyTargetPaths.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025125/.claude/worktrees/wf_fccc16ff-f23-3/apps/client/src/input/allyTargets.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025130/.claude/worktrees/wf_fccc16ff-f23-3/apps/client/src/input/allyTargets.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025133/.claude/worktrees/wf_fccc16ff-f23-1/content/ability-templates/tpl-periodic-field.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025148/.claude/worktrees/wf_fccc16ff-f23-4/apps/client/src/render/views/hiddenPrimitives.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025149/.claude/worktrees/wf_fccc16ff-f23-3/apps/client/src/input/GamepadInput.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025152/.claude/worktrees/wf_fccc16ff-f23-1/content/ability-templates/tpl-periodic-field.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025159/.claude/worktrees/wf_fccc16ff-f23-1/content/ability-templates/tpl-periodic-field.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025200/.claude/worktrees/wf_fccc16ff-f23-3/apps/client/src/input/GamepadInput.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025201/.claude/worktrees/wf_fccc16ff-f23-4/apps/client/src/render/views/hiddenPrimitives.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025202/.claude/worktrees/wf_fccc16ff-f23-3/apps/client/src/input/GamepadInput.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025218/.claude/worktrees/wf_fccc16ff-f23-4/apps/client/src/render/views/hiddenPrimitives.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025224/.claude/worktrees/wf_fccc16ff-f23-3/apps/client/src/input/TouchInput.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025225/.claude/worktrees/wf_fccc16ff-f23-4/apps/client/src/render/views/hiddenPrimitives.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025229/.claude/worktrees/wf_fccc16ff-f23-4/apps/client/src/render/views/hiddenPrimitives.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025244/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025249/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025252/.claude/worktrees/wf_fccc16ff-f23-1/packages/shared/src/content/periodicFieldTemplateWiring.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025304/.claude/worktrees/wf_fccc16ff-f23-6/apps/client/src/vfx/VfxSystem.boneAttach.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025307/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025317/.claude/worktrees/wf_fccc16ff-f23-1/packages/shared/src/content/periodicFieldTemplateWiring.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025322/.claude/worktrees/wf_fccc16ff-f23-6/apps/client/src/vfx/VfxSystem.boneAttach.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025333/.claude/worktrees/wf_fccc16ff-f23-1/packages/shared/src/content/templates/expand.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025335/.claude/worktrees/wf_fccc16ff-f23-3/apps/game-server/src/ai/Tier0Brain.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025337/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025345/.claude/worktrees/wf_fccc16ff-f23-1/packages/shared/src/content/templates/expand.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025353/.claude/worktrees/wf_fccc16ff-f23-3/apps/game-server/src/ai/Tier0Brain.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025356/.claude/worktrees/wf_fccc16ff-f23-4/apps/client/src/render/views/hiddenPrimitives.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025359/.claude/worktrees/wf_fccc16ff-f23-6/apps/client/src/vfx/VfxSystem.boneAttach.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025407/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/fingerprint.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025407/.claude/worktrees/wf_fccc16ff-f23-6/apps/client/src/vfx/VfxSystem.boneAttach.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025416/.claude/worktrees/wf_fccc16ff-f23-4/apps/client/src/render/views/hiddenPrimitives.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025443/.claude/worktrees/wf_fccc16ff-f23-4/apps/client/src/render/views/hiddenPrimitives.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025444/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/fingerprint.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025457/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/fingerprint.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025516/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/fingerprint.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025524/.claude/worktrees/wf_fccc16ff-f23-6/packages/shared/src/sim/effects/spawnVfx.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025527/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/fingerprint.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025527/.claude/worktrees/wf_fccc16ff-f23-4/apps/client/src/render/views/hiddenPrimitives.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025531/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/fingerprint.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025539/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/fingerprint.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025543/.claude/worktrees/wf_fccc16ff-f23-6/apps/client/src/vfx/VfxSystem.boneAttach.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025546/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025555/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025601/.claude/worktrees/wf_fccc16ff-f23-6/apps/client/src/vfx/VfxSystem.boneAttach.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025603/.claude/worktrees/wf_fccc16ff-f23-4/content/models/imported.heroichigo.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025607/.claude/worktrees/wf_fccc16ff-f23-4/content/models/imported.heroichigo-bankai.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025612/.claude/worktrees/wf_fccc16ff-f23-6/packages/shared/src/sim/effects/spawnVfx.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025617/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025619/.claude/worktrees/wf_fccc16ff-f23-1/packages/shared/src/content/periodicFieldTemplateWiring.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025626/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025630/scripts/host-deploy.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025633/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025648/.claude/worktrees/wf_fccc16ff-f23-1/packages/shared/src/content/periodicFieldTemplateWiring.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025649/.claude/worktrees/wf_fccc16ff-f23-2/apps/game-server/src/contentCacheHealth.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025657/.claude/worktrees/wf_fccc16ff-f23-5/packages/shared/src/sim/effects/modelFxPlacement.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025704/.claude/worktrees/wf_fccc16ff-f23-1/packages/shared/src/content/periodicFieldTemplateWiring.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025707/.claude/worktrees/wf_fccc16ff-f23-2/apps/game-server/src/contentCacheHealth.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025709/.claude/worktrees/wf_fccc16ff-f23-1/packages/shared/src/content/periodicFieldTemplateWiring.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025717/.claude/worktrees/wf_fccc16ff-f23-1/packages/shared/src/content/periodicFieldTemplateWiring.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025726/.claude/worktrees/wf_fccc16ff-f23-2/apps/game-server/src/contentCacheHealth.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025737/apps/game-server/src/rooms/MatchRoom.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025738/.claude/worktrees/wf_fccc16ff-f23-2/docker/compose.yaml` | （.yaml 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025832/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/ops/contentCacheShippedPath.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025903/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025948/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/ops/contentCacheShippedPath.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-025952/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/ops/contentCacheShippedPath.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030004/apps/game-server/src/rooms/MatchRoom.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030007/apps/game-server/src/rooms/ReplayRoom.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030011/apps/game-server/src/rooms/MutationThirdRoom.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030021/scripts/redis-snapshot.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030026/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030046/.claude/worktrees/wf_fccc16ff-f23-1/packages/shared/src/content/templates/expand.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030050/.claude/worktrees/wf_fccc16ff-f23-1/content/ability-templates/tpl-periodic-field.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030057/packages/shared/src/content/regenOutlierOrigin.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030059/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030114/packages/shared/src/content/regenOutlierOrigin.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030118/scripts/site-export.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030126/scripts/site-export.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030146/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/contentCache.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030200/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/ops/contentCacheShippedPath.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030221/tools/deploy/ggd-assets.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030304/tools/deploy/ggd-assets.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030308/tools/deploy/ggd-assets.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030324/tools/deploy/ggd-assets.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030337/scripts/message-ledger.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030349/.claude/worktrees/wf_fccc16ff-f23-1/packages/shared/src/content/periodicFieldTemplateWiring.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030404/.claude/worktrees/wf_fccc16ff-f23-1/packages/shared/src/content/periodicFieldTemplateWiring.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030404/.claude/worktrees/wf_fccc16ff-f23-4/apps/client/src/render/views/hiddenPrimitives.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030409/tools/parallel-gates/ship.mjs` | （.mjs 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030422/.claude/worktrees/wf_fccc16ff-f23-4/apps/client/src/render/views/hiddenPrimitives.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030422/packages/shared/src/ops/redisSnapshotBeforeShutdown.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030429/.claude/worktrees/wf_fccc16ff-f23-1/packages/shared/src/content/periodicFieldTemplateWiring.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030433/.claude/worktrees/wf_fccc16ff-f23-1/packages/shared/src/content/periodicFieldTemplateWiring.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030433/.claude/worktrees/wf_fccc16ff-f23-4/apps/client/src/render/views/hiddenPrimitives.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030440/tools/w3x-import/measure_weapon_type_authority.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030442/scripts/mini-deploy.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030457/.claude/worktrees/wf_fccc16ff-f23-2/packages/shared/src/content/cache/fingerprint.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030506/.claude/worktrees/wf_fccc16ff-f23-1/packages/shared/src/content/periodicFieldTemplateWiring.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030513/packages/shared/src/ops/redisSnapshotBeforeShutdown.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030514/.claude/worktrees/wf_fccc16ff-f23-1/packages/shared/src/content/periodicFieldTemplateWiring.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030519/scripts/mini-deploy.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030524/scripts/ledger_table.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030538/scripts/message-ledger.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030546/.claude/worktrees/wf_fccc16ff-f23-1/packages/shared/src/content/periodicFieldTemplateWiring.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030546/scripts/message-ledger.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030552/.claude/worktrees/wf_fccc16ff-f23-5/packages/shared/src/content/beamMuzzleOffset.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030559/packages/shared/src/ops/redisSnapshotBeforeShutdown.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030616/packages/shared/src/ops/redisSnapshotBeforeShutdown.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030618/.claude/worktrees/wf_fccc16ff-f23-4/docs/_reports/ichigo-form-bodies_visual-proof_20260830-0305/frames.md` | ichigo-form-bodies — 連續圖片驗收（GH#____） —— 📅 **證據的時間身分（GH#795）**：`HEAD=26c74bad` 工作樹 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030634/scripts/host-deploy.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030634/scripts/mini-deploy.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030710/packages/shared/src/ops/redisSnapshotBeforeShutdown.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030716/scripts/host-deploy.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030731/tools/parallel-gates/ship.mjs` | （.mjs 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030732/tools/board/gen_board.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030738/tools/board/gen_board.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030740/scripts/site-export.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030750/tools/board/gen_board.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030811/docs/_release/ggd-board.html` | （.html 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030906/apps/game-server/src/rooms/MatchRoom.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030916/.claude/worktrees/wf_fccc16ff-f23-3/apps/client/src/input/allyTargetPaths.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030941/apps/game-server/src/rooms/ReplayRoom.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-030953/scripts/message-ledger.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-031012/scripts/message-ledger.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-031023/apps/game-server/src/rooms/ReplayRoom.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-031131/packages/shared/src/content/regenOutlierOrigin.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-031200/packages/shared/src/content/regenOutlierOrigin.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-031200/packages/shared/src/content/regenOutlierOrigin.test.ts.bak` | （.bak 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-031311/scripts/site-export.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-031317/scripts/site-export.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-031332/tools/deploy/ggd-assets.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-031349/scripts/site-export.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-031419/tools/deploy/ggd-assets.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-032111/scripts/ledger_table.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-032128/scripts/message-ledger.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-032144/scripts/message-ledger.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-032233/tools/parallel-gates/ship.mjs` | （.mjs 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-032317/scripts/mini-deploy.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-032409/scripts/mini-deploy.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-032433/scripts/site-export.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-032508/scripts/host-deploy.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-032523/scripts/host-deploy.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-032527/scripts/host-deploy.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-040824/tools/parallel-gates/sync-io.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-041110/docs/_release/ggd-board.html` | （.html 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/04.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/06.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/08.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |

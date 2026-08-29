@@ -120,7 +120,7 @@ const KNOWN_LYING: ReadonlySet<string> = new Set([
   "godie-h01o.ex", "godie-h020.w", "godie-h02r.passive", "godie-h02r.q",
   "godie-h02u.q", "godie-h02u.r", "godie-hgam.passive", "godie-hgam.q",
   "godie-hjai.w", "godie-n00p.r", "godie-n00p.w", "godie-nsjs.r",
-  "godie-nsjs.w", "godie-o00x.q", "godie-o02p.r", "godie-o030.e",
+  "godie-nsjs.w", "godie-o00x.q", "godie-o030.e",
   "godie-o030.w", "godie-ogld.w", "godie-ogrh.q", "godie-orkn.e",
   "godie-orkn.w", "godie-u034.ex", "godie-ubal.w", "godie-ucrl.ex",
 ]);

@@ -180,6 +180,38 @@ interface Exemption {
  * Sorted by key, matching the census output order.
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
+  // ── 2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）──────────
+  "field:abilities.effects[]#spawnVfx.boneOn": {
+    status: "landing", since: "2026-08-30",
+    why:
+      "GH#809 —— ⭐ 這是一個**今天剛接上的機制**：`spawnVfx` 的骨頭錨定單位可以是**受擊者**。" +
+      "在此之前 `at:\"bone\"` 與 `self` 同路（錨定單位恆為施法者）⇒ 原作 316 次呼叫裡" +
+      "**施法者 124 : 受擊者 124**，出貨機制正好覆蓋一半。" +
+      "⇒ 這裡的零是「機制先落地，內容還沒翻過去」——⛔ 不是「做了沒人要」。" +
+      "⭐ 30 天到期是對的：如果那 124 次一支都沒翻過來，那要問的是**翻譯這件事卡在哪**" +
+      "（GH#674 的 9/11 就是等它），⛔ 而不是把這一格刪掉。",
+  },
+  "field:vfx-scripts.segments[]#floatingText.driftSpeed": {
+    status: "landing", since: "2026-08-30",
+    why:
+      "GH#853 的 `drift*` 四格 —— ⭐ 它們在 **ability JSON 那一側今天已經有採用**" +
+      "（`godie-hart.r` 與英雄卡鏡像，值逐格翻自 JASS j:33809/33850/33857）。" +
+      "這裡的零是 `vfx-script@1` **第二個作者面**才剛開，六招的腳本還沒用到它 ——" +
+      "⛔ 不是「做了沒人用」。⭐ 30 天到期是對的：屆時若腳本側仍零採用，" +
+      "那就要問這一格該不該存在於腳本面，⛔ 不是硬塞一個沒有 JASS 出處的飄移。",
+  },
+  "field:vfx-scripts.segments[]#floatingText.driftAngleDeg": {
+    status: "landing", since: "2026-08-30",
+    why: "GH#853 —— 與 `driftSpeed` 同一組四格，理由同上（ability 側已採用，腳本面才剛開）。",
+  },
+  "field:vfx-scripts.segments[]#floatingText.driftAngleStepDeg": {
+    status: "landing", since: "2026-08-30",
+    why: "GH#853 —— 與 `driftSpeed` 同一組四格，理由同上（ability 側已採用，腳本面才剛開）。",
+  },
+  "field:vfx-scripts.segments[]#floatingText.driftFrom": {
+    status: "landing", since: "2026-08-30",
+    why: "GH#853 —— 與 `driftSpeed` 同一組四格，理由同上（ability 側已採用，腳本面才剛開）。",
+  },
   // ── GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）────────────────
   "variant:vfx-scripts.segments[]#screenFlash": {
     status: "landing", since: "2026-08-28",
@@ -553,17 +585,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "把「哪幾具 dummy 是恆定半透明」從 JASS 撈出來 —— ⛔ 不要為了讓它變綠自己挑一具調透明。",
   },
   // ═══ 週期領域機制落地 2026-08-23 ══════════════════════════════════════════
-  "field:abilities.effects[]#delayed.anchor": {
-    status: "landing",
-    since: "2026-08-23",
-    why:
-      "「圈跟著人走」那一格（`tpl-periodic-field` 的機制那一半）。⭐ 機制**這一批才落地**，" +
-      "而內容那一半刻意留給下一輪：全技能形狀掃描量到 **44 支技能的說明宣稱「迴圈」** " +
-      "而 JSON 一格迴圈機制都沒有 ⇒ 那 44 支是這一格的採用者。\n" +
-      "⛔ **一次改 44 支而機制沒被玩過是最貴的錯法** —— 先用兩三支驗過再推廣。\n" +
-      "⭐ 可反駁：那 44 支接上去之後這一列就會有採用而自動失效；" +
-      "⛔ 而如果三個月後它還在 0 筆，那代表那個機制沒有人要，該刪的是機制不是這一列。",
-  },
   // ═══ GH#606 移動特效離地高度 2026-08-23 ═══════════════════════════════════
   // ⚠️ 前綴 `#chainLightning.amount.*` 會騙人 —— `amount` 是共用的 `zScaling`，
   //    普查給共用子樹的命名是「字母序第一個宣告它的 effect kind」。理由完整
@@ -1766,7 +1787,15 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // to end. These are its two OTHER direction values, and both are waiting on
   // content that is deliberately not in the first batch:
   "enum:abilities.effects[]#championForm.to=base": {
-    status: "landing",
+    // ⭐ 2026-08-30：`landing` 過期（filed 07-29，超過 30 天）⇒ 誠實改成 `debt`。
+    //   ⚠️ 而改的理由不是「時間到了」——⭐ 是這一列**本來就不該是 landing**：
+    //   它自己的理由逐字寫著「what is missing is a DESIGN decision」，
+    //   而 `landing` 的語意是「內容遷移即將完成」。
+    //   ⇒ 一個等**設計裁決**的東西，⛔ 永遠不會被一次內容遷移解掉。
+    //   ⭐ `debt` 每次跑都會出現在橫幅上 —— 那正是它該有的能見度
+    //   （檔頭逐字：「a debt you have to look at is a debt you might pay；
+    //     a debt that is silent is the pathology itself」）。
+    status: "debt",
     since: "2026-07-29",
     why: "`to: \"base\"` is a MANUAL cancel — 'drop the form now, before it expires'. No w3x ability asks for one: all 26 metamorphoses either time out on `ahdu` or are toggles, and the automatic reverts (expiry, death, combat end) go through `revertToBaseForm` in ChampionFormSystem, not through an authored effect. It is exercised by championFormContent.test.ts on all 26 pairs, so the direction works; what is missing is a DESIGN decision that some hero should be able to cancel early. Resolve by authoring it on that hero, or reclassify to \"runtime-authored\" once the owner rules that no hero ever will.",
   },
@@ -2558,20 +2587,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // 在樹上是寫不進去的。
   // ⛔ 不是 default-live：省略不是在吃一個好用的預設值，是這份文件根本不准有它。
   // 第一發圓形的 delayed / devour 上架的那天，這六筆會自己變 stale 而被刪掉。
-  "field:abilities.effects[]#delayed.radius": {
-    status: "schema-impossible",
-    why:
-      "`refineDispelShape` 的反向檢查：`shape:\"single\"` 填了這一格就是**載入時**的解析錯誤，" +
-      "而出貨的 3 份 delayed 全部是 single。所以零採用不是「沒有人需要」，是「沒有人寫得進去」——這一格要跟 `shape:\"circle\"` 一起出現才合法。" +
-      "⛔ 不要把它降級成 default-live：那會把一條「填了就紅」的規則講成「留白剛好」，下一個作者就會以為自己可以填。",
-  },
-  "field:abilities.effects[]#delayed.side": {
-    status: "schema-impossible",
-    why:
-      "`refineDispelShape` 的反向檢查：`shape:\"single\"` 填了這一格就是**載入時**的解析錯誤，" +
-      "而出貨的 3 份 delayed 全部是 single。所以零採用不是「沒有人需要」，是「沒有人寫得進去」——這一格要跟 `shape:\"circle\"` 一起出現才合法。" +
-      "⛔ 不要把它降級成 default-live：那會把一條「填了就紅」的規則講成「留白剛好」，下一個作者就會以為自己可以填。",
-  },
   "field:abilities.effects[]#delayed.maxTargets": {
     status: "schema-impossible",
     why:
@@ -2593,28 +2608,12 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   //    radiusTier + side + maxTargets 全部有人用），也就是這五筆當初寫的
   //    「反駁方式」逐字發生了。⛔ 不要因為 delayed 那一族還在就把它們留著 ——
   //    豁免是**逐 kind** 的，而 devour 這一族已經沒有東西要豁免了。
-  "field:abilities.effects[]#delayed.radiusTier": {
-    status: "landing",
-    since: "2026-08-12",
-    why:
-      "AoE 級距落在共用的幾何欄位群上，普查在每一個 AoE-shaped kind 各看到一次。⚠️ 與同族的 radius/side/maxTargets **不同**：`refineDispelShape` 的反向迴圈只列了那三格，" +
-      "`radiusTier` 不在其中，所以 `shape:\"single\"` 寫它會載入成功而沒有人讀。零採用的真正原因是出貨的 3 份 delayed 一支都不是圓形 —— 它會與 `enum:…#delayed.shape=circle` 同一天變綠。" +
-      "⛔ 30 天後它再紅一次是對的：如果那時仍然沒有圓形的 delayed，該做的是補上那道 refine，不是續發豁免。",
-  },
 
   // ── ③ 兩個 kind 的 `shape` 只被選了一半 ──────────────────────────────────
   // `shape` 這一格本身是 100% 採用（它是必填），零的是 `circle` 這個**成員**。
   // 圓形那一支的引擎路徑不是死的 —— 同一支 `shapeTargets` 被 dispel / weightedBranch
   // 等 kind 以 circle 走過（`godie-h02v.ex` 的 weightedBranch 就是 `shape:"circle"`
   // + `side:"allies"`），所以這是**內容還沒選**，不是機制缺席。
-  "enum:abilities.effects[]#delayed.shape=circle": {
-    status: "landing",
-    since: "2026-08-12",
-    why:
-      "`shape` 是必填所以欄位本身 100%，零的是 circle 這個成員：出貨的 3 份 delayed 全部是單體。" +
-      "⭐ 圓形那一支不是死路 —— 同一支 `shapeTargets` 已經被別的 kind 以 circle 走過（`godie-h02v.ex` 的 weightedBranch 是 circle + side:\"allies\"）" +
-      "，所以缺的是內容不是引擎。它變綠的那一天，上面 ① 的三格幾何與 ② 的 radiusTier 會一起解禁。",
-  },
 
   // ── ④ 四個新 kind 上的 `condition`：併進既有的 19 筆那一族 ────────────────
   // 這四筆與檔案上方那 19 筆 `…#<kind>.condition` 是**同一格** schema
@@ -3018,31 +3017,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   //    兩個 commit：這一批只做**機制**（schema＋sim＋客戶端消費），逐支填角度是
   //    內容側的下一步。⚠️ 出處逐格可引用（`sim/effects/floatingText.ts` 檔頭的
   //    120 次呼叫普查），⛔ 沒有一格是「看起來比較像」挑出來的。
-  "field:abilities.effects[]#floatingText.driftSpeed": {
-    status: "landing",
-    since: "2026-08-29",
-    why:
-      "⭐ 機制剛落地（GH#853），內容逐支翻譯是下一步。⚠️ 要反駁它很容易："
-      + "原作 120 次 `SetTextTagVelocityBJ` 裡 26 次（22%）不是直升 —— 超究武神霸斬的 "
-      + "`1Hit…7Hit`（`war3map.j:33857`）就是其中之一。⇒ 那 26 次翻進 `content/` 的那一天這一列就該刪。",
-  },
-  "field:abilities.effects[]#floatingText.driftAngleDeg": {
-    status: "landing",
-    since: "2026-08-29",
-    why: "⭐ 同上（GH#853 機制批）。出處：BJ 的第二個參數，字面度數 94/120。",
-  },
-  "field:abilities.effects[]#floatingText.driftAngleStepDeg": {
-    status: "landing",
-    since: "2026-08-29",
-    why:
-      "⭐ 同上（GH#853 機制批）。出處：`war3map.j:33850` 的 "
-      + "`set udg_superAngle = udg_superAngle + 270.00` —— 超究武神霸斬**每一刀轉一次**。",
-  },
-  "field:abilities.effects[]#floatingText.driftFrom": {
-    status: "landing",
-    since: "2026-08-29",
-    why: "⭐ 同上（GH#853 機制批）。出處：`GetUnitFacing(<unit>)` 18/120 次。",
-  },
   // ⚠️ `driftFrom` 的**兩個臂**刻意沒有列在這裡：`driftFrom` 目前 reach 0
   //    （< `MIN_REACH` 3）⇒ 普查對它**不作任何主張** ⇒ 替它寫豁免會被判 STALE
   //    （量到的，⛔ 不是推測）。內容側填滿之後它們才會浮出來。
