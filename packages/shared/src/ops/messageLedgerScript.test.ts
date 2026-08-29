@@ -72,4 +72,60 @@ describe("逐則對票 scripts/message-ledger.sh", () => {
     writeFileSync(p, readFileSync(p, "utf8").replace("⏸ 未對票", "#222"));
     expect(run(dir, "--check").status, "填了票號就該綠").toBe(0);
   });
+
+  /**
+   * GH#876 —— 失敗形態⑨：**一個永遠不會綠的閘**。
+   *
+   * transcript 在 session 進行中一直長 ⇒ owner 每講一句就多一則「沒有列」的訊息，
+   * 而補列進去的票號是 `⏸ 未對票`（＝第二種紅）⇒ ⭐ **沒有任何動作能讓它綠**。
+   * ⇒ 分母改成「**已經結束的每一天**」（今天只印不擋）。
+   * ⛔ 這不是放寬比對：每一天最終都會被硬檢查一次 —— 在它結束的隔天。
+   *
+   * 突變紀錄（跑過）：`message-ledger.sh` 的
+   * `hard, live = [yesterday(TODAY)], (None if STRICT_TODAY else TODAY)`
+   * 改回 `hard, live = [yesterday(TODAY), TODAY], None`（＝退回「今天也硬檢查」）
+   * → 第二條斷言紅（今天還有漏列，卻擋下了）。
+   */
+  it("🔴 今天（進行中）漏列不擋，昨天的「⏸ 未對票」才擋", () => {
+    const day = (d: number) =>
+      new Date(Date.now() + 8 * 3600e3 + d * 864e5).toISOString().slice(0, 10);
+    const [today, yest] = [day(0), day(-1)];
+    const TABLE = "| 時間 | owner 說了什麼（逐字） | 票 |\n|---|---|---|\n";
+    const SAID = "這是昨天那一則指示,長度要夠讓比對窗吃得到它。";
+
+    const dir = mkdtempSync(join(tmpdir(), "ggd-msgledger-live-"));
+    writeFileSync(join(dir, `${yest}.md`), `## 逐則對票\n\n${TABLE}| 09:00 | ${SAID} | ⏸ 未對票 |\n`);
+    writeFileSync(join(dir, `ledger-source_temp_${yest.replaceAll("-", "")}.md`), `## 09:00\n\n${SAID}\n`);
+    writeFileSync(join(dir, `${today}.md`), `## 逐則對票\n\n${TABLE}`); // ⇒ 今天那一則沒有列
+    writeFileSync(join(dir, `ledger-source_temp_${today.replaceAll("-", "")}.md`), `## 10:30\n\n今天這一則還在 transcript 裡,帳本還沒有它。\n`);
+    const live = (...a: string[]) =>
+      spawnSync("bash", [join(REPO, "scripts/message-ledger.sh"), "--check", ...a], {
+        cwd: REPO,
+        encoding: "utf8",
+        env: { ...process.env, GGD_LEDGER_DIR: dir, GGD_TRANSCRIPT_DIR: dir, GGD_LEDGER_STRICT_TODAY: "" },
+      });
+
+    const before = live();
+    expect(before.status, "昨天還有『⏸ 未對票』卻是綠的").toBe(1);
+    expect(before.stdout, "今天的漏列要印出來（fail-open ⛔ 不靜默）").toContain("⏳ 漏了 10:30");
+
+    // ⭐ 帳本平時 chmod 444 + genguard 擋 Edit ⇒ 填票號**只有這一條合法路徑**（GH#876 一起補的）
+    const mapped = spawnSync(
+      "python3",
+      [join(REPO, "scripts/ledger_table.py"), "--map", join(dir, `${yest}.md`), "09:00", "— 不需開票"],
+      { cwd: REPO, encoding: "utf8" },
+    );
+    expect(mapped.status, mapped.stderr).toBe(0);
+
+    const after = live();
+    expect(after.status, "今天還有漏列就擋下 ⇒ 這條閘又變成永遠不會綠（GH#876）").toBe(0);
+    expect(after.stdout).toContain("⏳ 漏了 10:30");
+
+    const strict = spawnSync("bash", [join(REPO, "scripts/message-ledger.sh"), "--check"], {
+      cwd: REPO,
+      encoding: "utf8",
+      env: { ...process.env, GGD_LEDGER_DIR: dir, GGD_TRANSCRIPT_DIR: dir, GGD_LEDGER_STRICT_TODAY: "1" },
+    });
+    expect(strict.status, "逃生口 GGD_LEDGER_STRICT_TODAY=1 要能把今天拉回硬檢查").toBe(1);
+  });
 });

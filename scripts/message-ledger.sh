@@ -10,7 +10,7 @@
 # ⇒ 唯一可靠的來源是 session transcript(它不會忘),對帳交給程式。
 #
 #   bash scripts/message-ledger.sh              # 回填今天缺的列
-#   bash scripts/message-ledger.sh --check      # 閘:漏了 or 還有「⏸ 未對票」就回非零
+#   bash scripts/message-ledger.sh --check      # 閘(語意見下)
 #   bash scripts/message-ledger.sh --date 2026-08-19
 #
 # ⛔ 產物**不含時鐘欄位**:列上的 HH:MM 是**訊息**的時間(來自 transcript,固定),
@@ -22,6 +22,36 @@
 # ⛔ 不是量測那天的字面路徑。⇒ 改輸出路徑**家族**(搬目錄、改檔名格式)時,
 # 要**同步那張 DATE_FAMILIES 表** —— 不然隔天的產物就變成「無主又鎖著」
 # (2026-08-26 真的發生過:2026-08-26.md 鎖著而戶籍記著 2026-08-25.md,GH#771)。
+#
+# ══════════════════════════════════════════════════════════════════════════
+# ⛔⛔ GH#876：`--check` 為什麼**不再**硬檢查「今天」
+# ══════════════════════════════════════════════════════════════════════════
+# 這支閘在 2026-08-30 之前只檢查**今天**,而今天的 transcript 在 session
+# 進行中會**一直長大** ⇒ owner 每講一句話就多一則「沒有列」的訊息 ⇒ 閘紅。
+# ⭐ 跑 `msgledger:build` 也救不了:補進去的列票號是 `⏸ 未對票`,而那是**第二種紅**。
+# ⇒ ⭐ **在一條還在跑的 session 裡,沒有任何動作能讓它綠。**
+#
+# 量到的基線(2026-08-30 01:4x,GH#876):連跑兩次 `pnpm msgledger:check`,
+# 兩次都 exit 1、輸出**逐位元組相同**:3 則漏列(01:12/01:28/01:36 ＝ 這條 session
+# 自己的訊息)＋ 1 列 `⏸ 未對票`。⇒ 失敗形態⑨「**一個永遠不會綠的閘**」。
+# ⚠️ 它的代價不是這一條紅,是**它讓「skills:check 紅了」失去意義** ——
+# 36 支閘裡只要有一支永遠紅,其餘 35 支的紅就沒有人會分辨。
+#
+# ⭐ 判準改成一個**答得出來**的問題:
+#
+#   | 日子 | `--check` 做什麼 | 為什麼 |
+#   |---|---|---|
+#   | **已經結束的每一天** | 硬檢查(紅) | 它的 transcript 已經凍結 ⇒ 這一題有終局答案 |
+#   | **今天(進行中)** | 印出來但**不擋**(exit 0) | 它還在長大 ⇒ 這一題今天沒有終局答案 |
+#
+# ⛔ 這**不是**「放寬成模糊比對」:比對本身一個字都沒有放寬,
+# 改的是**分母**(檢查哪幾天),而每一天最終**都會**被硬檢查一次 —— 在它結束的隔天。
+#
+# ⭐ 逃生口(＝一鍵回頭的開關,這是開發閘不是玩家設定,所以住環境變數):
+#   GGD_LEDGER_STRICT_TODAY=1 bash scripts/message-ledger.sh --check   # 今天也硬檢查
+#   bash scripts/message-ledger.sh --check --date "$(date +%F)"        # 同上,收工/發版時跑
+# ⚠️ **明確指定 `--date` 一律是硬檢查**(⛔ 不看它是不是今天)——
+# 部署協定第 1 步(逐句對票)要的就是這一條。
 set -uo pipefail
 cd "$(dirname "$0")/.."
 
@@ -40,23 +70,47 @@ WINDOW = 24                                                   # 判定「已經�
 
 argv = sys.argv[1:]
 CHECK = "--check" in argv
-DAY = next((argv[i + 1] for i, a in enumerate(argv) if a == "--date"), None) \
-      or datetime.datetime.now(TZ).strftime("%Y-%m-%d")
+EXPLICIT = next((argv[i + 1] for i, a in enumerate(argv) if a == "--date"), None)
+TODAY = datetime.datetime.now(TZ).strftime("%Y-%m-%d")
+DAY = EXPLICIT or TODAY
 DIR = Path(os.environ.get("GGD_LEDGER_DIR", "docs/_daily"))     # 測試用;出貨一律 docs/_daily
-LEDGER = DIR / f"{DAY}.md"
-ARCHIVE = DIR / f"ledger-source_temp_{DAY.replace('-', '')}.md"
+STRICT_TODAY = os.environ.get("GGD_LEDGER_STRICT_TODAY", "").strip() not in ("", "0", "false")
 
 SKIP = ("<", "[Request interrupted", "This session is being continued", "Caveat:")
 
 
-def from_transcript():
-    """最新的 session jsonl → 這一天的 owner 真人訊息。濾法照 CLAUDE.md 部署協定第 1 步。"""
+def ledger_of(day: str) -> Path:
+    return DIR / f"{day}.md"
+
+
+def archive_of(day: str) -> Path:
+    return DIR / f"ledger-source_temp_{day.replace('-', '')}.md"
+
+
+LEDGER = ledger_of(DAY)
+ARCHIVE = archive_of(DAY)
+
+
+def yesterday(day: str) -> str:
+    return (datetime.date.fromisoformat(day) - datetime.timedelta(days=1)).isoformat()
+
+
+def from_transcript(days) -> dict:
+    """最新的 session jsonl → 這幾天各自的 owner 真人訊息。濾法照 CLAUDE.md 部署協定第 1 步。
+
+    ⭐ **一趟掃完全部要的日子**,⛔ 不是每天掃一次 —— 出貨那份 transcript 是 **14GB**,
+    實測掃一趟 ≈ 26 秒。一天一趟的寫法會讓「今天 + 昨天」變成 52 秒(GH#876 量的)。
+    """
+    days = set(days)
+    # ⚠️ jsonl 的 timestamp 是 **UTC**,而我們按 GMT+8 分日 ⇒ 粗篩要連**前一天**的
+    # UTC 前綴一起要(GMT+8 的 01:12 是 UTC 的前一天 17:12)。
+    probe = days | {yesterday(d) for d in days}
+    want = tuple(f'"{d}T'.encode() for d in sorted(probe))
     files = sorted(PROJ.glob("*.jsonl"), key=lambda q: q.stat().st_mtime, reverse=True) \
         if PROJ.is_dir() else []
-    prev = (datetime.date.fromisoformat(DAY) - datetime.timedelta(days=1)).isoformat()
+    out = {d: [] for d in days}
+    seen = set()
     # ⚠️ transcript 是 GB 級的,所以先用 bytes 粗篩再 json.loads(否則一次對帳要幾分鐘)。
-    want = (f'"{DAY}T'.encode(), f'"{prev}T'.encode())
-    out, seen = [], set()
     for src in files:
         with src.open("rb") as f:
             for raw in f:
@@ -79,26 +133,28 @@ def from_transcript():
                 if not ts:
                     continue
                 lo = datetime.datetime.fromisoformat(ts.replace("Z", "+00:00")).astimezone(TZ)
-                if lo.strftime("%Y-%m-%d") != DAY:
+                day = lo.strftime("%Y-%m-%d")
+                if day not in days:
                     continue
-                key = (lo.strftime("%H:%M"), t[:80])
+                key = (day, lo.strftime("%H:%M"), t[:80])
                 if key in seen:
                     continue
                 seen.add(key)
-                out.append((lo.strftime("%H:%M"), t))
-    return sorted(out)
+                out[day].append((lo.strftime("%H:%M"), t))
+    return {d: sorted(v) for d, v in out.items()}
 
 
-def from_archive():
+def from_archive(day: str):
     """transcript 不在這台機器上(CI / host)時的來源 —— 已進版控的全文存檔。
 
     ⭐ fail-open 但**不靜默**:退回存檔時會印出來,而且閘仍然驗得到
     「存檔裡的每一則都有列」。⛔ 直接 exit 0 才是靜默。
     """
-    if not ARCHIVE.exists():
+    path = archive_of(day)
+    if not path.exists():
         return []
     out, cur, buf = [], None, []
-    for ln in ARCHIVE.read_text(encoding="utf-8").split("\n"):
+    for ln in path.read_text(encoding="utf-8").split("\n"):
         m = re.match(r"^## (\d{1,2}:\d{2})$", ln)
         if m:
             if cur:
@@ -129,6 +185,50 @@ def covered(text: str, hay: str) -> bool:
     return any(n[i:i + w] in hay for i in range(len(n) - w + 1))
 
 
+def unmapped_rows(day: str):
+    """票號那一格還沒被決定的列。⭐ **只讀帳本**,⛔ 不碰 transcript ⇒ 便宜到可以全掃。
+
+    ⭐ 「算不算已決定」的規則住 `LT.decided()` **一處**(第〇·四守則)——
+    `ledger_table.py --map`(填票號那支)問的是同一支,⛔ 不是各帶一份會漂掉的正則。
+    """
+    return [(n, c) for n, c in LT.canonical_rows(ledger_of(day)) if not LT.decided(c[-1])]
+
+
+def evaluate(day: str, tx: dict):
+    """回傳 (訊息數, 漏掉的, 未對票的, 來源是不是 transcript)。"""
+    msgs = tx.get(day) or []
+    from_tx = bool(msgs)
+    if not from_tx:
+        msgs = from_archive(day)
+    led = ledger_of(day)
+    hay = norm(led.read_text(encoding="utf-8")) if led.exists() else ""
+    # ⭐ 2026-08-21 修：⛔ 只比文字窗會漏掉整則訊息。
+    # `scripts/ruling.sh` 把 owner 的原話**逐字**寫進帳本當「裁決」列 ⇒ 那一則的 24 字窗
+    # 在帳本裡找得到（藏在裁決列裡），於是閘以為「它有列了」——
+    # ⛔ **把「這段文字出現在某處」誤認成「這則訊息有自己的列」。**
+    # 實測漏掉 2026-08-21 的 12:52 / 12:56 / 13:06 / 14:48 四則，而 13:06 是 #486–#490 五張票的來源。
+    # ⇒ 現在**兩個條件都要成立**：文字窗命中，**而且**該時間戳真的有一列。
+    row_times = {c[0].strip() for _, c in LT.canonical_rows(led)}
+    missing = [(t, m) for t, m in msgs if not (covered(m, hay) and t in row_times)]
+    return msgs, missing, unmapped_rows(day), from_tx
+
+
+def report(day: str, missing, bad, prefix: str = "⛔") -> None:
+    # ⚠️ 「漏了 <HH:MM>」這個字串是守衛在斷言的（messageLedgerScript.test.ts），
+    # ⇒ 日期補在**後面**,⛔ 不是插在中間把它切斷。
+    for t, m in missing:
+        print(f"{prefix} 漏了 {t} · {day}  {re.sub(chr(10), ' ', m)[:70]}…")
+    for n, c in bad:
+        print(f"{prefix} 未對票 {ledger_of(day)}:{n}  {c[0]}  {c[1][:60]}…")
+
+
+HOWTO = (
+    "→ 漏列：跑 `pnpm msgledger:build` 補上\n"
+    "→ 未對票：`python3 scripts/ledger_table.py --map <帳本.md> <HH:MM> '<票號 或 — 理由>'`\n"
+    f"   （⛔ 不要手動 chmod、⛔ 不要直接編那份 444 的帳本；對不到票就寫 `— <為什麼不需要開票>`，"
+    f"⛔ 不要留空也不要留 {LT.UNMAPPED}）")
+
+
 def tickets_in(text: str) -> str:
     seen, out = set(), []
     for n in re.findall(r"#(\d{2,4})\b", text):
@@ -138,40 +238,63 @@ def tickets_in(text: str) -> str:
     return " ".join(out) or LT.UNMAPPED
 
 
-msgs = from_transcript()
-FROM_TX = bool(msgs)
-if not FROM_TX:
-    msgs = from_archive()
-    if msgs:
-        print(f"⚠️ transcript 撈不到 {DAY} 的訊息 —— 退回已版控的 {ARCHIVE}（{len(msgs)} 則）")
-
-hay = norm(LEDGER.read_text(encoding="utf-8")) if LEDGER.exists() else ""
-# ⭐ 2026-08-21 修：⛔ 只比文字窗會漏掉整則訊息。
-# `scripts/ruling.sh` 把 owner 的原話**逐字**寫進帳本當「裁決」列 ⇒ 那一則的 24 字窗
-# 在帳本裡找得到（藏在裁決列裡），於是閘以為「它有列了」——
-# ⛔ **把「這段文字出現在某處」誤認成「這則訊息有自己的列」。**
-# 實測漏掉 2026-08-21 的 12:52 / 12:56 / 13:06 / 14:48 四則，而 13:06 是 #486–#490 五張票的來源。
-# ⇒ 現在**兩個條件都要成立**：文字窗命中，**而且**該時間戳真的有一列。
-_row_times = {c[0].strip() for _, c in LT.canonical_rows(LEDGER)} if LEDGER.exists() else set()
-missing = [(t, m) for t, m in msgs if not (covered(m, hay) and t in _row_times)]
-
+# ── check ──────────────────────────────────────────────────────────────────
 if CHECK:
-    # ⭐ 票號那一格只有兩種合法值：`#123`（對到票）或 `— <理由>`（明說不需要開票）。
-    # ⛔ 留空**不算已處理** —— 空白看起來像「處理過了」,而那正是要防的東西。
-    bad = [(n, c) for n, c in LT.canonical_rows(LEDGER)
-           if not re.search(r"#\d{2,4}", c[-1]) and not c[-1].lstrip().startswith(("—", "–"))]
-    if not missing and not bad:
-        print(f"✓ 逐則對票 {DAY}：{len(msgs)} 則訊息全部有列、全部對到票")
-        sys.exit(0)
-    for t, m in missing:
-        print(f"⛔ 漏了 {t}  {re.sub(chr(10), ' ', m)[:70]}…")
-    for n, c in bad:
-        print(f"⛔ 未對票 {LEDGER}:{n}  {c[0]}  {c[1][:60]}…")
-    print(f"→ 跑 `pnpm msgledger:build` 補列,再把每一列的票號填上"
-          f"（對不到票就寫 `— <為什麼不需要開票>`,⛔ 不要留空也不要留 {LT.UNMAPPED}）")
-    sys.exit(1)
+    # ⭐ 硬檢查的分母:明確指定 `--date` ⇒ 就那一天;否則 ⇒ **最近一個已經結束的日子**。
+    # 「今天」只在 GGD_LEDGER_STRICT_TODAY=1 時進硬檢查(見檔頭的逃生口)。
+    if EXPLICIT:
+        hard, live = [EXPLICIT], None
+    else:
+        hard, live = [yesterday(TODAY)], (None if STRICT_TODAY else TODAY)
+        if STRICT_TODAY:
+            hard.append(TODAY)
+    tx = from_transcript(set(hard) | ({live} if live else set()))
+
+    failed = False
+    for day in hard:
+        msgs, missing, bad, from_tx = evaluate(day, tx)
+        if not from_tx and msgs:
+            print(f"⚠️ transcript 撈不到 {day} 的訊息 —— 退回已版控的 {archive_of(day)}（{len(msgs)} 則）")
+        if missing or bad:
+            failed = True
+            report(day, missing, bad)
+        else:
+            print(f"✓ 逐則對票 {day}：{len(msgs)} 則訊息全部有列、全部對到票")
+
+    # ⭐ 再便宜地全掃一次**每一份已結束**帳本的票號欄（⛔ 不碰 transcript,所以幾乎免費）。
+    # 這一條是永久的棘輪:一列 `⏸ 未對票` 不會因為那一天過去了就被忘掉。
+    for path in sorted(DIR.glob("????-??-??.md")):
+        day = path.stem
+        if day >= TODAY or day in hard:
+            continue
+        bad = unmapped_rows(day)
+        if bad:
+            failed = True
+            report(day, [], bad)
+
+    # ⭐ 今天:印出來但**不擋**（失敗形態⑨ —— 見檔頭。⛔ fail-open 但不靜默）。
+    if live:
+        _, missing, bad, _ = evaluate(live, tx)
+        if missing or bad:
+            report(live, missing, bad, prefix="⏳")
+            print(f"⏳ 上面 {len(missing)} 則漏列 + {len(bad)} 列未對票是**今天（{live}）**的 —— "
+                  "這條 session 還在跑,transcript 還在長 ⇒ ⛔ **不擋**。")
+            print("   收工/發版時硬檢查它：`bash scripts/message-ledger.sh --check --date "
+                  f"{live}`（或 GGD_LEDGER_STRICT_TODAY=1）")
+        else:
+            print(f"✓ 今天（{live}）目前也全部有列、全部對到票")
+
+    if failed:
+        print(HOWTO)
+        sys.exit(1)
+    sys.exit(0)
 
 # ── build ──────────────────────────────────────────────────────────────────
+tx = from_transcript({DAY})
+msgs, missing, _bad, FROM_TX = evaluate(DAY, tx)
+if not FROM_TX and msgs:
+    print(f"⚠️ transcript 撈不到 {DAY} 的訊息 —— 退回已版控的 {ARCHIVE}（{len(msgs)} 則）")
+
 # ⭐ 全文**另存**,⛔ 不是把原話壓縮取代掉(第一·五守則:撞到字數上限時另存)。
 # ⚠️ 這個檔名 `ledger-source_temp_*` 是 `scripts/asked-before.sh` 已經在 grep 的那個。
 if FROM_TX:

@@ -137,6 +137,18 @@ def shipped_version() -> str:
     tag 只在**真的發版**時才變（一天一次），⛔ 不是每 commit 一次。
     所以 `--check` 在發版後到重生之間會紅一次 —— 那是**對的**：
     板本來就該跟著新版重生，而 `board:build` 就在 `skills:sync` 裡。
+
+    ⚠️⚠️ **GH#876 量到的但書**（⛔ 不要把上面那句讀成「所以沒事」）：
+    tag **不在工作樹裡** ⇒ `release.sh --tag` 打完的那一刻，
+    ⛔ **沒有任何來源檔改動**，而這份產物當場 stale。
+    量到（2026-08-30）：`board:check` 唯一的 diff 就是這一格（`v0.31.9` → `v0.32.2`），
+    ⭐ 其餘 38 行逐位元組相同。而清掉它要跑 `board:build` —— 那支在 `skills:sync` 裡，
+    ⛔ **併行 lane 一律禁止跑 sync** ⇒ 對一條 lane 來說這一格是**修不掉的紅**。
+    ⇒ ⭐ 結構解在**發版那一步**：`scripts/release.sh --tag` 打完 tag 之後要接
+    `bash scripts/genrun.sh board:build`（⛔ 那支不在 GH#876 的柵欄內，留給下一手）。
+    ⇒ 在那之前，下面的 `--check` 至少要**指名**是這一格 stale，
+    ⛔ 不是丟一句看不出原因的 STALE（那會讓人去翻來源文件找不存在的漂移）。
+    ⛔ **⛔ 不可以**改成「版號那一格不比對」—— 一條被放寬的閘等於沒有閘。
     """
     v = sh("git", "describe", "--tags", "--abbrev=0")
     return v or "（未打 tag）"
@@ -186,7 +198,9 @@ def meta(body: str, dailies: list) -> str:
 CSS = (ROOT / "tools/board/board.css").read_text(encoding="utf-8")
 
 
-def build() -> str:
+def build(version: str | None = None) -> str:
+    """`version` 只給 `--check` 的**歸因**用（拿產物裡那一格重算一次）——
+    ⛔ 產生時一律 None（＝真的去問 git），⛔ 這不是一個可以外部覆寫的旋鈕。"""
     # ⭐ **所有**日期的帳本都要進來,⛔ 不是只有最新那一份 ——
     # 2026-08-20 的補登紀錄與 2026-08-19 的原始帳本**互補**,只讀一份就是又一次「漏掉後面的」。
     dailies = sorted((ROOT / "docs/_daily").glob("2026-*.md"), key=lambda q: q.name)
@@ -210,7 +224,7 @@ def build() -> str:
         for t, md in blocks if md.strip()
     )
     return (f"<title>GGD 戰情版 · {data_asof(dailies)}</title>\n<style>{CSS}</style>\n"
-            f'<div class="wrap"><header><p class="eyebrow">線上 {html.escape(shipped_version())} · 資料截至 {html.escape(data_asof(dailies))}</p>'
+            f'<div class="wrap"><header><p class="eyebrow">線上 {html.escape(version or shipped_version())} · 資料截至 {html.escape(data_asof(dailies))}</p>'
             f"<h1>GGD 戰情版 · {html.escape(data_asof(dailies))}</h1>{meta(body, dailies)}</header>\n{body}\n"
             f'<footer>由 <code>tools/board/gen_board.py</code> 從 docs/_daily · docs/_release 產生（⛔ 不含 git 狀態:那是時鐘欄位） —— '
             f'⛔ 不要手改這份 HTML</footer></div>\n')
@@ -253,7 +267,18 @@ if __name__ == "__main__":
     if "--check" in sys.argv:
         cur = OUT.read_text(encoding="utf-8") if OUT.exists() else ""
         if cur != page:
-            print("ggd-board.html is STALE — rerun: python3 tools/board/gen_board.py")
+            # ⭐ 歸因：把**產物裡**那一格版號抓出來重算一次 —— 如果這樣就一致了，
+            # 代表 stale 的來源是 `release.sh --tag`（⛔ 工作樹裡沒有任何來源檔改動），
+            # ⛔ 不是來源文件漂掉。⚠️ 兩種都仍然 exit 1（⛔ 不放寬，只是說清楚）。
+            was = re.search(r'線上 ([^<·]+?) ·', cur)
+            if was and build(was.group(1).strip()) == cur:
+                print(f"ggd-board.html is STALE —— ⭐ **只有版號那一格**："
+                      f"{was.group(1).strip()} → {shipped_version()}")
+                print("   ⇒ 這是 `release.sh --tag` 打完 tag 的必然狀態"
+                      "（tag ⛔ 不在工作樹裡，所以沒有任何來源檔改動）。")
+            else:
+                print("ggd-board.html is STALE —— 來源文件（docs/_daily · docs/_release）變了。")
+            print("   ⇒ 重生成：bash scripts/genrun.sh board:build")
             sys.exit(1)
         print("ggd-board.html is current")
     else:

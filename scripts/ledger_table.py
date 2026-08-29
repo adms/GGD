@@ -157,6 +157,70 @@ def insert(path: Path, rows: list[tuple[str, str, str]]) -> int:
     return len(rows)
 
 
+def decided(ticket_cell: str) -> bool:
+    """票號那一格「有沒有人決定過」。⭐ 兩種合法值：對到票的號碼，或 `— <理由>`。
+
+    ⭐ **唯一住處**（第〇·四守則）：`scripts/message-ledger.sh --check` 與下面的
+    `map_ticket()` 都問這一支，⛔ 不各自帶一份會漂掉的正則。
+
+    ⚠️ 這條規則在 2026-08-30 之前寫在 `message-ledger.sh` 裡且是 `#\\d{2,4}` ——
+    **強制要有 `#`**，而 `#` 是排版⛔ 不是語意。實測 5 列**已經對到票**的列被誤報成
+    「未對票」（2026-08-20 的 `447` × 3、2026-08-28 的 `860` / `863`）。
+    ⭐ 之前沒有人發現，是因為那道閘只看**今天**；一旦開始掃已結束的日子，
+    那 5 個假紅就會淹掉真紅（GH#876）。
+    ⛔ 仍然拒絕：留空、`⏸ 未對票`（兩者都沒有數字）。
+    """
+    s = ticket_cell.strip()
+    return bool(re.search(r"(?<!\d)#?\d{2,4}(?!\d)", s)) or s.startswith(("—", "–"))
+
+
+def _pipes(line: str) -> list[int]:
+    """一列裡**沒有被跳脫**的 `|` 的位置（與 `split_cells()` 同一套規則）。"""
+    out, esc = [], False
+    for i, ch in enumerate(line):
+        if esc:
+            esc = False
+        elif ch == "\\":
+            esc = True
+        elif ch == "|":
+            out.append(i)
+    return out
+
+
+def map_ticket(path: Path, when: str, ticket: str) -> int:
+    """把某一列的**票號那一格**填掉。回傳改到的列數（0 ＝ 找不到那個時間戳）。
+
+    ⭐ 為什麼非有這支不可（GH#876）：帳本平時 chmod **444**，而 genguard 也擋
+    Write／Edit ⇒ 在此之前 `--check` 印的那句修法指示（「再把每一列的票號填上」）
+    **沒有任何合法路徑做得到** —— 只剩手動 chmod（CLAUDE.md 逐字禁止）或繞過 genguard。
+    ⇒ 一條「紅了而修不了」的閘，與「永遠不會綠的閘」是同一個病的兩半。
+
+    ⚠️ 只動**最後一格**：其餘位元組（含內容裡跳脫過的 `\\|`）一個都不碰 ——
+    重建整列會把跳脫吃掉（`cells()` 是解跳脫的，2026-08-22 作戰板炸掉那次的形狀）。
+    """
+    if not decided(ticket):
+        raise SystemExit(
+            f"⛔ `{ticket}` 填了也還是「未對票」—— 票號那一格只有兩種合法值："
+            f"票號（`#877` 或 `877`）或 `— <為什麼不需要開票>`")
+    lines = path.read_text(encoding="utf-8").split("\n")
+    hit = 0
+    for i, ln in enumerate(lines):
+        if not ln.startswith("|"):
+            continue
+        c = cells(ln)
+        if len(c) < 3 or not re.fullmatch(r"\d{1,2}:\d{2}", c[0]) or c[0] != when:
+            continue
+        p = _pipes(ln)
+        if len(p) < 2:
+            continue
+        lines[i] = ln[:p[-2] + 1] + f" {cell(ticket)} " + ln[p[-1]:]
+        hit += 1
+    if hit:
+        _unlock(path)
+        path.write_text("\n".join(lines).rstrip("\n") + "\n", encoding="utf-8")
+    return hit
+
+
 def canonical_rows(path: Path) -> list[tuple[int, list[str]]]:
     """帳本裡由腳本維護的那些列（第一格是 HH:MM）。給 `--check` 用。"""
     if not path.exists():
@@ -171,8 +235,19 @@ def canonical_rows(path: Path) -> list[tuple[int, list[str]]]:
 
 
 if __name__ == "__main__":
+    # ⭐ 兩個動作：`--map` 填某一列的票號（⛔ 不新增列），其餘是插入新列。
+    if len(sys.argv) >= 2 and sys.argv[1] == "--map":
+        if len(sys.argv) < 5:
+            sys.exit(f"用法: {sys.argv[0]} --map <帳本.md> <HH:MM> <票號 或 「— 理由」>")
+        p, when, tk = Path(sys.argv[2]), sys.argv[3], " ".join(sys.argv[4:])
+        n = map_ticket(p, when, tk)
+        if not n:
+            sys.exit(f"⛔ {p} 裡找不到 {when} 那一列 —— 先跑 `pnpm msgledger:build` 補列")
+        print(f"  ✓ {p} {when} → `{tk}`（{n} 列）")
+        sys.exit(0)
     if len(sys.argv) < 4:
-        sys.exit(f"用法: {sys.argv[0]} <帳本.md> <HH:MM> <票號>  # 原話走 stdin")
+        sys.exit(f"用法: {sys.argv[0]} <帳本.md> <HH:MM> <票號>  # 原話走 stdin\n"
+                 f"      {sys.argv[0]} --map <帳本.md> <HH:MM> <票號 或 「— 理由」>")
     day, when, tickets = Path(sys.argv[1]), sys.argv[2], sys.argv[3]
     body = cell(sys.stdin.read(), limit=int(sys.argv[4]) if len(sys.argv) > 4 else 0)
     insert(day, [(when, body, tickets or UNMAPPED)])
