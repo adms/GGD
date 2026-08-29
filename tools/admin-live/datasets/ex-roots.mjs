@@ -42,7 +42,7 @@ export const write = {
     {
       paths: [CONFIG],
       pointers: ["/offerCount"],
-      value: { type: "number", integer: true, min: 1, max: 6 },
+      value: { type: "number", integer: true, min: 1, max: 5 },
       why: "三選一的張數（config.arena-rules@1.offerCount）",
     },
     {

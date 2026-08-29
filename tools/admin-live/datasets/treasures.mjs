@@ -56,7 +56,10 @@ export const write = {
     {
       paths: ["content/loot-tables/*.json"],
       pointers: ["/entries/*/weight"],
-      value: { type: "number", min: 0, max: 1000 },
+        // ⚠️ 下界是**大於 0**：出貨 schema 是 `z.number().positive()`（`lootTable.ts:27`）。
+        //   ⛔ 這裡曾寫 `min: 0` —— 存 0 進去，內容驗證會拒收**整份**文件。
+        //   閘：`packages/shared/src/ops/liveWriteBoundsMatchSchema.test.ts`（GH#830）。
+      value: { type: "number", min: 0.0001, max: 1000 },
       why: "獎池逐件權重（sharePct 由它推導）",
     },
   ],
