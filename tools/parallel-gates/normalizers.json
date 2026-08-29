@@ -14,7 +14,8 @@
   "$consumers": [
     "scripts/genguard.sh —— 查詢用（AUTHOR ⇒ exit 1；NORMALIZER ⇒ exit 0 + 提醒）",
     "scripts/preserve-before-overwrite.py —— PreToolUse hook 的同一套裁決",
-    "scripts/product-quarantine.sh —— ⭐ GH#707：只被正規化器認領的檔**不上鎖**（它們是手編檔）"
+    "scripts/product-quarantine.sh —— ⭐ GH#707：只被正規化器認領的檔**不上鎖**（它們是手編檔）",
+    "tools/parallel-gates/reconcile.mjs —— ⭐ GH#771 執行期對帳：正規化器的**就地改欄位**⛔ 不算越界寫入。量到的（2026-08-29）：apconv:build 戶籍只有 1 份而它就地重算 422 份 content/abilities/*.json ⇒ 少了這一格，`pnpm apconv:build` 單獨跑會紅在一次**完全合法**的執行上，而一條會誤報的閘會被人放寬。⛔ 零認領（🔴）那一堆不受影響。"
   ],
   "$gate": "packages/shared/src/ops/normalizerListIsReal.test.ts（名字要真）+ laneYQuarantineAgreesWithGenguard.test.ts（三個消費端不可以各自硬寫一份）+ ⭐ quarantineOrphansAndEntrypoints.test.ts（GH#815 ③：`product-quarantine.sh --doctor` 的兩個訊號命中而**兩張表都沒有**它 ⇒ 紅）",
   "$rejected-note": [

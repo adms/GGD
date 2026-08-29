@@ -61,7 +61,10 @@ RC=$?
 #   但擺在這裡讀起來就是「跑完 → 對帳 → 收工」）。
 if [ -n "$SNAP" ]; then
   if [ "$RC" -eq 0 ]; then
-    node tools/parallel-gates/reconcile.mjs verify --step "$STEP" --before "$SNAP" || RC=3
+    # ⭐ `--run` 是 wrapper 分離的另一半:sync-io 量到的可能是 **raw 名**
+    #   (`castderive:build:raw`,宣告 492 份),而 `$STEP` 是公開名 ⇒ 只傳公開名會「查無此步」
+    #   而**整支從來沒有被對帳過**。⇒ 兩個名字都給它,由它挑戶籍表上真的有的那一個。
+    node tools/parallel-gates/reconcile.mjs verify --step "$STEP" --run "$RUN" --before "$SNAP" || RC=3
   fi
   rm -f "$SNAP"
 fi
