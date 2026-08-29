@@ -26,7 +26,13 @@
  * merely incomplete but CORRECT about what it excludes — see `unrenderable` in
  * `content/assets/vfx/w3x-ability-provenance.json`.
  *
- * THE RENDERABILITY GATE — why only 34 of 668. Three filters, in order:
+ * THE RENDERABILITY GATE — why only a small minority of the roster is promoted.
+ * ⛔ The live count is NOT quoted here. This line used to read "why only 34 of
+ * 668" and BOTH halves had rotted (GH#818): the promotions are read out of
+ * `content/config/vfx-ability-art.json` now, and the shipped roster is nowhere
+ * near 668. Count it — `Object.keys(w3xAbilityArtRows()).length` — or read the
+ * derivation's own tally from `python3 tools/vfx-bind/scan.py --report`.
+ * Three filters, in order:
  *   1. the art must be a MAP-IMPORTED model (`IN_REPO_*`). 1305 of the 1529
  *      resolved art entries are retail Blizzard `.mdl` paths we cannot ship
  *      (#81/#116) — those abilities keep the primitive.
@@ -95,10 +101,16 @@ export interface W3xAbilityArt {
    * `config.vfx-families@1.abilities.<id>.alpha` / `.timeScale` were dead knobs
    * — validated by the console, stored in the overlay, read by nobody.
    *
-   * Absent on every `w3xAbilityArtRows()` row (the 34 promotions) and on
-   * any family row the operator has not touched, and an absent value plays the
-   * doc UNCHANGED (`applyVfxOverrides` returns the same object), so shipped
-   * content is bit-identical to before.
+   * Absent on every `w3xAbilityArtRows()` row and on any family row the
+   * operator has not touched, and an absent value plays the doc UNCHANGED
+   * (`applyVfxOverrides` returns the same object), so shipped content is
+   * bit-identical to before.
+   *
+   * ⚠️ GH#818 gave the promotions the three SPATIAL fields below; α / 時間倍率
+   * are deliberately NOT among them. Those two are folded into the minted
+   * `fx.fam.*` doc, and a promotion does not play that doc — it plays the map's
+   * own extracted emitters, so borrowing the family's opacity would tint art
+   * the operator never pointed the knob at.
    */
   readonly alpha?: number;
   readonly timeScale?: number;
@@ -112,10 +124,19 @@ export interface W3xAbilityArt {
    * 91 支 `shockwaveRing` → 105 個 emitter）世界 Y 的直方圖是單獨一格 `{1.0}`，
    * 而 config 要的是 0.15：**貼地的環全部浮在胸口**。
    *
-   * `w3xAbilityArtRows()` 那 34 支晉升沒有這一格（它們沒有家族原型，也就沒有
-   * 「應該多高」這個答案），`familyCastHeightY` 對 absent 一律回平面高度。
+   * ⭐ **GH#818 更正**：在此之前這一段寫著「晉升那幾支沒有這一格（它們沒有家族
+   * 原型）」—— ⛔ 那句話是假的，而它正好描述了缺陷本身。量到（2026-08-29）：
+   * 出貨的 25 列 `promoted` 裡 **15 列同一列上就有 `family` 證據格**，而
+   * `w3xArtFor` 是 `w3xAbilityArtRows()[id] ?? familyRow(id)` ⇒ ⭐ 晉升**短路**
+   * 掉家族列，於是那 15 支**今天已經**在掉高度（10 支連 `anchor` 一起掉）。
+   * 而 `vfxbind:check` 還有 **34 列**待補的 `promoted`，其中 **25 列**今天正靠
+   * 家族列拿到高度 —— ⛔ 補上去的那一刻它們會一起掉（失敗形態②）。
    *
-   * `anchor` 仍然是死的 —— 見 `DEAD_FAMILY_KNOBS`。
+   * ⇒ 晉升列現在**借**家族層解出來的空間三格（見 `promotedSpatialFields`）。
+   * ⚠️ 借的是**已經解得出來的同一個值**，⛔ 不是一個新公式：那 25 支今天拿到的
+   * 就是這個數，這一格只是讓它**不要在晉升那一行蒸發**。
+   * 真的沒有家族列的那幾支仍然 absent，`familyCastHeightY` 對 absent 一律回
+   * 平面高度（⛔ 不是 0 —— 0 是埋進地板，第①號故障）。
    */
   readonly heightY?: number;
   /**
@@ -126,8 +147,8 @@ export interface W3xAbilityArt {
    * 印子逐位元組相同，「地面震裂」在畫面上因此不存在。
    *
    * ABSENT 的兩種來源都走出貨焦痕（＝這一版之前一位元不差的行為）：
-   * ①`w3xAbilityArtRows()` 那 34 支晉升（沒有家族原型，也就沒有「這一族留什麼
-   * 痕跡」這個答案）②操作者沒碰過那個家族。
+   * ①這一支**真的**沒有家族列（晉升列自 GH#818 起會借家族層那一格，⛔ 所以
+   * 「晉升 ⇒ 一律 absent」不再成立）②操作者沒碰過那個家族。
    */
   readonly groundDecal?: VfxGroundDecal;
   /**
@@ -172,10 +193,47 @@ export function w3xAbilityArtRows(): Readonly<Record<string, W3xAbilityArt>> {
       via: p.via,
       primary: p.primary,
       extra: p.extra,
+      // ⭐ GH#818 —— 空間三格。⛔ 少了這一行,晉升列會把同一支技能**今天已經
+      // 拿得到**的高度／掛點／地面痕跡短路掉(`w3xArtFor` 是
+      // `w3xAbilityArtRows()[id] ?? familyRow(id)`)—— 見 `promotedSpatialFields`。
+      ...promotedSpatialFields(abilityId),
     };
   }
   promotedCache = out;
   return out;
+}
+
+/**
+ * 晉升列的**空間三格**（`heightY` / `anchor` / `groundDecal`），⭐ 借自這一支
+ * 技能**自己的家族層**。
+ *
+ * ⚠️ 為什麼它們不能住 `zVfxPromotedBinding`：晉升那一格回答的是「播**哪一組
+ * emitter**」（`primary` + `extra`），⛔ 它從來不回答「播在**哪裡**」。而空間
+ * 那個問題對同一支技能**已經有答案了** —— 就在同一列的 `family` / `owner`
+ * 兩格上，`resolveFamilyArt()` 每一支都算得出來。把它抄進晉升那一格會是第〇·四
+ * 守則的第二個住處（而且是一個**沒有守衛**的住處）。
+ *
+ * ⭐ 所以這裡**不是新公式，是不要把已有的值丟掉**：
+ * `w3xArtFor` 的 `?? ` 讓晉升列**取代**家族列，而取代掉的那一份帶著三個
+ * 純空間的欄位 —— 它們與「播哪一組 emitter」正交，⛔ 沒有一個理由要一起消失。
+ *
+ * ⛔ 刻意**不**借 `alpha` / `timeScale`：那兩個是烘進 `fx.fam.*` 文件的家族
+ * 外觀參數，而晉升列播的是原圖自己抽出來的 emitter ——
+ * 借過來等於替操作者沒指過的一組美術調透明度。
+ *
+ * 真的沒有家族列（也沒有後台覆寫）的那幾支回空物件 ⇒ 三格 absent ⇒
+ * 下游走出貨預設，**逐位元組等於這一版之前**。
+ */
+function promotedSpatialFields(
+  abilityId: string,
+): Partial<Pick<W3xAbilityArt, "heightY" | "anchor" | "groundDecal">> {
+  const resolved = resolveFamilyArt(abilityId, activeFamilyTuning);
+  if (!resolved) return {};
+  return {
+    heightY: resolved.heightY,
+    ...(resolved.anchor !== undefined ? { anchor: resolved.anchor } : {}),
+    ...(resolved.groundDecal !== undefined ? { groundDecal: resolved.groundDecal } : {}),
+  };
 }
 
 let promotedCache: Readonly<Record<string, W3xAbilityArt>> | null = null;
@@ -184,7 +242,9 @@ let promotedCache: Readonly<Record<string, W3xAbilityArt>> | null = null;
  * THE SECOND SOURCE — evidence-bound FAMILY PROTOTYPES (`w3xFamilyArt.ts`).
  *
  * `w3xAbilityArtRows()` above can only promote an ability whose art SHIPPED as
- * emitter docs, which is 34 of 668. The other proven abilities point at
+ * emitter docs, which is a small minority of the roster (⛔ the "34 of 668"
+ * that stood on this line was stale on both halves — see the gate comment at
+ * the top of the file). The other proven abilities point at
  * Blizzard stock models this repo does not have, so they get the family
  * PROTOTYPE the owner asked for — the same shape, rescaled/recoloured with the
  * map's own per-call-site numbers — instead of a shape guessed from their name.
@@ -478,6 +538,10 @@ function playableFamilyKey(r: ResolvedFamilyArt): string {
 export function setFamilyTuning(doc: ConfigVfxFamiliesDoc | null): void {
   activeFamilyTuning = doc;
   familyRowCache = null;
+  // ⭐ GH#818 —— 晉升列現在也讀家族層(空間三格),所以它的快取跟著這一格作廢。
+  // ⛔ 只清一個 = 操作者改了掛點/地面痕跡而那 25 支晉升技能還播舊值,
+  // 而那種漂移在畫面上看起來完全正常(失敗形態⑤)。
+  promotedCache = null;
   snapWarned.clear();
   mintTunedFamilyDocs(doc);
 }

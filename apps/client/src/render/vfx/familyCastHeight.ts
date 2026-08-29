@@ -95,8 +95,14 @@ export function castHeightSource(): CastHeightSource {
 /**
  * 這一次施法要播在哪個世界高度。
  *
- * `art` 沒有 `heightY`（`w3xAbilityArtRows()` 那 34 支晉升、或根本沒晉升的技能）
- * 一律走平面高度 —— 那些列沒有家族原型，也就沒有「這一招應該多高」這個答案。
+ * `art` 沒有 `heightY` 的一律走平面高度 —— 那些列沒有家族原型，也就沒有
+ * 「這一招應該多高」這個答案。
+ *
+ * ⚠️ GH#818 更正：這一段原本寫著「`w3xAbilityArtRows()` 那 34 支晉升」都沒有
+ * 這一格 —— ⛔ 那是**在描述缺陷**，不是在描述設計。晉升列裡有一半同一列上就帶
+ * 家族證據，而 `w3xArtFor` 的 `??` 把它們短路掉了；現在晉升列會借那一格
+ * （`w3xAbilityArt.promotedSpatialFields`）。⇒ absent 的判準是
+ * 「**這一支真的沒有家族**」，⛔ 不是「它有沒有被晉升」。
  */
 export function familyCastHeightY(art: W3xAbilityArt | undefined): number {
   const want = art?.heightY;
