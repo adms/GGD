@@ -147,14 +147,14 @@ export const zVfxScriptText = zFloatingText
     sizeScale: true,
     riseSpeed: true,
     durationSec: true,
-    // ⭐ 方向（GH#853）—— ⛔ 少了這四格，走 vfx script 段寫的浮字**表達不出方向**，
-    //   而它不會壞（沒 drift ⇒ undefined ⇒ 舊行為）⇒ ⚠️ 那正是最難發現的一種缺口：
-    //   「schema→sim→client 整條接上了」這句話會是**半真的**。
-    //   （2026-08-29 對抗性複驗找到的第二個作者面。）
     driftSpeed: true,
     driftAngleDeg: true,
     driftAngleStepDeg: true,
     driftFrom: true,
+    // ⭐ 方向（GH#853）—— ⛔ 少了這四格，走 vfx script 段寫的浮字**表達不出方向**，
+    //   而它不會壞（沒 drift ⇒ undefined ⇒ 舊行為）⇒ ⚠️ 那正是最難發現的一種缺口：
+    //   「schema→sim→client 整條接上了」這句話會是**半真的**。
+    //   （2026-08-29 對抗性複驗找到的第二個作者面。）
   })
   .extend({
     kind: z.literal("floatingText"),
