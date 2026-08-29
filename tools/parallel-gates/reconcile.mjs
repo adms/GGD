@@ -23,6 +23,10 @@
  *   ⇒ 這一支只在 `genrun.sh` 的**單獨跑**那條路上出手（`GGD_QUARANTINE_UNLOCKED` 未設時），
  *   而 `package.json` 的每一支 `*:build` 公開名**都是** `bash scripts/genrun.sh <step>`。
  * · ⛔ 不驗**內容對不對** —— 那是各家 `*:check` 的事。這一支只問「**誰寫了它**」。
+ * · ⛔ **正規化器的就地改欄位不算越界** —— 它們讀既有檔、只覆寫其中幾格，⛔ 沒有產生那份檔，
+ *   所以「undeclared」對它們是**預期的**（清單的唯一住處是 `normalizers.json`）。
+ *   ⚠️ 代價誠實寫出來：一支登記過的正規化器，在**已經有戶籍**的路徑上寫什麼都不會被這一支叫。
+ *   ⭐ 但零認領（🔴）那一堆**不受影響** —— 最強的訊號⛔ 不可以被正規化器身分吃掉。
  *
  * ── 用法 ────────────────────────────────────────────────────────────────
  *   node tools/parallel-gates/reconcile.mjs snapshot --out <檔>
@@ -78,6 +82,30 @@ export function ownersOf(path, io) {
   return [...declaredWrites(io)]
     .filter(([, globs]) => globs.some((g) => g === path || matchesGlob(g, path)))
     .map(([name]) => name);
+}
+
+/**
+ * ⭐ **正規化器 ↔ 作者** —— 判準與 `genguard.sh:74` 逐字同一個，而清單的**唯一住處**是
+ * `normalizers.json`（⛔ 這裡不可以有第二份 —— 那正是第〇·四守則在說的事）。
+ *
+ * 一支 step 對**某一條路徑**是正規化器 ⇔ 它在清單裡，且（沒有 `only`）或（`only` 比中它）。
+ * ⚠️ 逐**檔**，⛔ 不是逐步驟：`apconv:build` 對 `content/abilities/*.json` 是正規化器
+ * （只覆寫換算那幾格），對它自己整份 emit 的 `docs/_data/ap-conversion-applied.json` 是**作者**。
+ */
+export function normalizesPath(step, path, norms) {
+  const n = (norms ?? []).find((x) => x.step === step);
+  if (!n) return false;
+  return !Array.isArray(n.only) || n.only.some((g) => matchesGlob(g, path));
+}
+
+/** 正規化器清單（讀不到 ⇒ 全部當作者 ⇒ 閘變嚴 —— ⛔ 但要**大聲**，與 `loadPending` 同一個形狀）。 */
+export function loadNormalizers(path) {
+  try {
+    return JSON.parse(readFileSync(path, "utf8")).normalizers ?? [];
+  } catch (e) {
+    console.error(`⚠️ 讀不到正規化器清單 ${path}（${String(e)}）—— 這一輪把「就地改欄位」也當成越界寫入。`);
+    return [];
+  }
 }
 
 const IGNORED = Object.keys(NOT_A_PRODUCT);
@@ -156,20 +184,32 @@ export function changedBetween(before, after) {
  * ⭐ 而一條**紅著出貨**的閘會被忽略，被忽略的閘等於沒有閘。
  * ⛔ 棘輪只收 `unowned` 那一類，而且它會**自己到期**（守衛在 `syncIoRuntimeReconcile.test.ts`）。
  */
-export function classify(changed, io, step, pending = []) {
+export function classify(changed, io, step, pending = [], norms = []) {
   const mine = declaredWrites(io).get(step) ?? [];
   const isMine = (p) => mine.some((g) => g === p || matchesGlob(g, p));
   const ratcheted = (p) => pending.some((r) => r.step === step && r.path === p);
   const foreign = [];
   const unowned = [];
   const known = [];
+  const normalized = [];
   for (const p of changed) {
     if (isMine(p)) continue;
-    if (ownersOf(p, io).length) foreign.push(p);
+    const owners = ownersOf(p, io);
+    // ⭐ 第五堆 `normalized`：**就地改欄位**的正規化器沒有「產生」這份檔，只覆寫其中幾格 ⇒
+    //   它 undeclared 是**預期的**，⛔ 不是宣告缺漏。量到的（2026-08-29）：`apconv:build`
+    //   戶籍只有 1 份，而它就地重算 **422 份** `content/abilities/*.json` ⇒ 少了這一堆，
+    //   `pnpm apconv:build` 單獨跑會**紅在一次完全合法的執行上**，而閘一誤報就會被放寬
+    //   （這支檔頭自己記著這條理由：「一條會誤報的閘會被人放寬」）。
+    // ⚠️ 只放行**已經有戶籍**的路徑：零認領那一堆（🔴）是最強的訊號，⛔ 不可以被正規化器身分吃掉。
+    if (owners.length && normalizesPath(step, p, norms)) {
+      normalized.push(p);
+      continue;
+    }
+    if (owners.length) foreign.push(p);
     else if (ratcheted(p)) known.push(p);
     else unowned.push(p);
   }
-  return { foreign, unowned, pending: known, ok: !foreign.length && !unowned.length };
+  return { foreign, unowned, pending: known, normalized, ok: !foreign.length && !unowned.length };
 }
 
 /** 棘輪的列（讀不到就當空 —— ⛔ 但要大聲，靜默地少一張表 = 閘變嚴而訊息不知所云）。 */
@@ -200,10 +240,20 @@ if (process.argv[1] && import.meta.url === `file://${process.argv[1]}`) {
     process.exit(2);
   }
 
-  const step = flag("--step", "");
+  // ⭐ GH#815 的 **wrapper 名字分離**：`package.json` 的公開名（`castderive:build`）包著真正的
+  //   指令（`castderive:build:raw`），而 **sync-io 量到的是後者** ⇒ 只查公開名會「查無此步」
+  //   而靜靜跳過。量到的（2026-08-29）：47 個 genrun 入口裡有 11 個查無此步，
+  //   ⭐ 其中 `castderive:build` 是純粹的公開名↔raw 名落差 —— 而它宣告 **492 份**，
+  //   是正規化器裡 footprint 最大的一支 ⇒ 在此之前它**整支從來沒有被對帳過**。
+  //   ⇒ 兩個名字都問一次，取戶籍表上真的有的那一個。
+  const asked = flag("--step", "");
+  const step = [asked, flag("--run", ""), `${asked}:raw`].find(
+    (n) => n && (io.steps ?? []).some((s) => s.name === n),
+  );
+  const NORMS = loadNormalizers(resolve(flag("--normalizers", join(ROOT, "tools/parallel-gates/normalizers.json"))));
   // ⭐ 名字不在戶籍表裡 ⇒ **出聲**，⛔ 不是靜默通過（`product-quarantine.sh` 的同一個判準）。
-  if (!(io.steps ?? []).some((s) => s.name === step)) {
-    console.error(`⚠️ 對帳跳過：'${step}' 不在 sync-io 的 ${(io.steps ?? []).length} 步裡（⛔ 沒有戶籍可以對）。`);
+  if (!step) {
+    console.error(`⚠️ 對帳跳過：'${asked}' 不在 sync-io 的 ${(io.steps ?? []).length} 步裡（⛔ 沒有戶籍可以對）。`);
     process.exit(0);
   }
   const res = classify(
@@ -211,10 +261,31 @@ if (process.argv[1] && import.meta.url === `file://${process.argv[1]}`) {
     io,
     step,
     loadPending(resolve(flag("--pending", join(ROOT, "tools/parallel-gates/reconcile-pending.json")))),
+    NORMS,
   );
   const { foreign, unowned, ok } = res;
 
   const list = (xs) => xs.slice(0, 20).map((p) => `     · ${p}`).join("\n") + (xs.length > 20 ? `\n     …還有 ${xs.length - 20} 份` : "");
+  /**
+   * ⭐ 認領者要**逐一標明是作者還是正規化器** —— 少了這半句，一份「只被正規化器認領」的
+   * 手編來源檔讀起來會跟「別人的產物」一模一樣（CLAUDE.md：一個被 glob 灌大的統計，
+   * 讀起來跟真的一模一樣）。量到的：387 份只被正規化器認領 ⇒ 它們**沒有作者**。
+   */
+  const listOwned = (xs) =>
+    xs
+      .slice(0, 20)
+      .map((p) => {
+        const who = ownersOf(p, io).map((o) => (normalizesPath(o, p, NORMS) ? `${o}(正規化器)` : `${o}(作者)`));
+        return `     · ${p}  ← ${who.join(", ")}`;
+      })
+      .join("\n") + (xs.length > 20 ? `\n     …還有 ${xs.length - 20} 份` : "");
+  // ⚠️ 正規化器那一堆**不擋**，⛔ 但要印 —— 一個安靜的放行讀起來就是「它什麼都沒寫」。
+  if (res.normalized.length)
+    console.error(
+      `\n🧾 對帳：\`${step}\` **就地改了** ${res.normalized.length} 份別人擁有的檔 ——\n` +
+        `   它是這些路徑的**正規化器**（只覆寫其中幾格，⛔ 沒有產生它們）⇒ ⛔ 不擋。\n` +
+        `   ⚠️ 這不是「宣告缺漏」：修法⛔ 不是把它們加進 writes（那會讓隔離區把手編來源鎖成 444）。\n`,
+    );
   // ⚠️ 棘輪那一堆**不擋**，⛔ 但每一次都要印 —— 一個安靜的已知洞讀起來就是「沒有洞」。
   if (res.pending.length)
     console.error(
@@ -231,8 +302,11 @@ if (process.argv[1] && import.meta.url === `file://${process.argv[1]}`) {
     );
   if (foreign.length)
     console.error(
-      `  🟠 ${foreign.length} 份**別人認領、⛔ 這一支沒宣告**:\n${list(foreign)}\n` +
-        `     ⇒ \`bash scripts/genrun.sh ${step}\` 解不開它們 ⇒ 下一次單獨跑吃 **EACCES**\n`,
+      `  🟠 ${foreign.length} 份**別人認領、⛔ 這一支沒宣告**:\n${listOwned(foreign)}\n` +
+        `     ⇒ 認領者若有**作者** ⇒ 這一支在覆蓋別人的產物，或它該把這幾份加進自己的 writes\n` +
+        `     ⇒ 認領者**全是正規化器** ⇒ 那幾份是**手編來源**（沒有作者）——\n` +
+        `        ⛔ 不要把它們加進 writes（隔離區會把它們鎖成 444，＝ GH#707 擋掉三條 lane 的形狀）；\n` +
+        `        ⭐ 要問的是「這一支對它們是不是也該登記成正規化器（normalizers.json）」\n`,
     );
   console.error(
     `  ⇒ 修的是**宣告**，⛔ 不是在寫入端補一把自解鎖的鑰匙（那是 #771 記著的「治症狀」）：\n` +
