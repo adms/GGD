@@ -8,12 +8,12 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | verdict | cells | meaning |
 | --- | ---: | --- |
-| ✅ OK | 215 | shape derived from the ability's own authored data |
+| ✅ OK | 217 | shape derived from the ability's own authored data |
 | 🟡 AMBIGUOUS | 17 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
-| ❌ MISSING | 2 | no derivable shape — **fails the test** |
+| ❌ MISSING | 0 | no derivable shape — **fails the test** |
 | 🟣 PASSIVE | 59 | permanent WC3 passive, never cast, nothing to warn about |
 
-**232 / 234 castable cells telegraph honestly (99.1 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
+**234 / 234 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
 
 ## By castType
 
@@ -148,7 +148,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | Q | 90-01 飛葉快刀 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
 | 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | W | 90-02 麻痺粉 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
 | 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | E | 90-03 藤鞭 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | R | 90-04 陽光烈焰 | `skillshot` | — | ❌ MISSING | NOT DERIVABLE from content |
+| 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | R | 90-04 陽光烈焰 | `skillshot` | line 11.67×1.40u | ✅ OK | damageLine length 11.67 × width 1.4 (sim applies no abilityRange) — the capsule the damage query tests |
 | 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | EX | 90-002 超進化! 妙蛙花 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 黑魔導士 - 莉娜因巴斯 `godie-hjai` | PASSIVE | 04-00 翔封界 | `—` | — | 🟣 PASSIVE | never cast |
 | 黑魔導士 - 莉娜因巴斯 `godie-hjai` | Q | 04-01 火球術 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
@@ -237,7 +237,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 賽亞人 - 悟空 `godie-ogrh` | Q | 09-01 界王拳 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 賽亞人 - 悟空 `godie-ogrh` | W | 09-02 瞬間移動 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
 | 賽亞人 - 悟空 `godie-ogrh` | E | 09-03 超級賽亞人 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 賽亞人 - 悟空 `godie-ogrh` | R | 09-04 龜派氣功 | `skillshot` | — | ❌ MISSING | NOT DERIVABLE from content |
+| 賽亞人 - 悟空 `godie-ogrh` | R | 09-04 龜派氣功 | `skillshot` | line 14.00×2.00u | ✅ OK | damageLine length 14 × width 2 (sim applies no abilityRange) — the capsule the damage query tests |
 | 賽亞人 - 悟空 `godie-ogrh` | EX | 09-002 十倍龜派氣功 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 電車癡漢 - 臭作 `godie-orkn` | PASSIVE | 30-00 攝影機 | `ground` | circle r=6.40u | ✅ OK | radius 8 × abilityRange 0.8 |
 | 電車癡漢 - 臭作 `godie-orkn` | Q | 30-01 綁架 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |

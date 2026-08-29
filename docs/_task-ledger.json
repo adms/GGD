@@ -1,6 +1,6 @@
 {
   "_doc": "帳本快照，由 tools/status/gen_status.py 產生。手改無效（下次執行就被覆蓋），要改請改任務帳本本身。CI 上沒有帳本目錄時，這份就是 --check 的資料來源。",
-  "generated": "2026-08-30 00:59",
+  "generated": "2026-08-30 04:10",
   "source": "~/.claude/tasks/1fc1e42e-e26b-4bec-88ef-ca25238c0f4c",
   "count": 286,
   "tasks": [

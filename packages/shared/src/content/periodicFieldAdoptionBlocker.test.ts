@@ -100,6 +100,15 @@ describe("週期領域的採用阻塞點 (periodic-field adoption blocker)", () 
         `  · referencedBy 變大 ⇒ 有人先套了內容。⛔ 引擎還沒接上時那些技能會在註冊時爆 ——\n` +
         `    先接引擎，⛔ 不是放寬這條閘。\n` +
         `⚠️ ⛔ 不要把票文的「內容批還沒套用」讀成「只差內容」：那句話指錯了一側。`,
-    ).toEqual({ engineReady: false, referencedBy: 0 });
+    // ⭐ 2026-08-30：`engineReady` 翻成 **true** —— 第八批的 lane 把
+    //   `FAMILIES["periodic-field"]` 接上了（commit `2f4cca1a5`），
+    //   模板 status draft → enabled。⇒ 這一格照它自己的訊息更新。
+    // ⚠️ ⭐ 而 `referencedBy` **仍然是 0，那是刻意的**：
+    //   量到**第五個阻塞點** —— `abilityProse.ts:525` 的 `damageRanks` 只讀
+    //   `flat`/`perRank`、⛔ 完全不看 `Scaling.mult`
+    //   ⇒ 一支接上這份模板的技能，卡面 `{{dmg}}` 會印**整段**預算而引擎每發只打
+    //     `整段÷發數`（卡面寫「每秒 500」、實際 250）＝ 一句新的謊話（第一·五守則）。
+    //   ⇒ ⭐ 下一條 lane 的柵欄**必須包含 `abilityProse.ts`**，否則又是 0 支。
+    ).toEqual({ engineReady: true, referencedBy: 0 });
   });
 });

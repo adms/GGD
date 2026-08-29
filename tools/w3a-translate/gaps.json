@@ -18,9 +18,9 @@
   "mana:tier": 169,
   "mana:w3a-absent": 181,
   "radius:free-number": 5,
-  "radius:ggd-absent": 90,
+  "radius:ggd-absent": 88,
   "radius:same": 4,
-  "radius:tier": 52,
+  "radius:tier": 54,
   "radius:w3a-absent": 301,
   "range:ggd-zero": 30,
   "range:same": 7,
@@ -6817,26 +6817,6 @@
   {
    "axis": "radius",
    "key": "radius:ggd-absent",
-   "w3a": "A11C",
-   "ggd": "godie-o02p.r",
-   "name": "99-04 世界第一的公主殿下",
-   "w3aValue": 225.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:ggd-absent",
-   "w3a": "A11D",
-   "ggd": "godie-o02p.r",
-   "name": "99-04a 甩蔥歌",
-   "w3aValue": 400.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:ggd-absent",
    "w3a": "A10I",
    "ggd": "godie-o030.ex",
    "name": "30-002 EX變態針刺",
@@ -7462,6 +7442,26 @@
    "name": "99-01 甩蔥歌",
    "w3aValue": 400.0,
    "ggdValue": 400.0,
+   "verdict": "tier"
+  },
+  {
+   "axis": "radius",
+   "key": "radius:tier",
+   "w3a": "A11C",
+   "ggd": "godie-o02p.r",
+   "name": "99-04 世界第一的公主殿下",
+   "w3aValue": 225.0,
+   "ggdValue": 6.0,
+   "verdict": "tier"
+  },
+  {
+   "axis": "radius",
+   "key": "radius:tier",
+   "w3a": "A11D",
+   "ggd": "godie-o02p.r",
+   "name": "99-04a 甩蔥歌",
+   "w3aValue": 400.0,
+   "ggdValue": 6.0,
    "verdict": "tier"
   },
   {

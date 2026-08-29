@@ -1,12 +1,12 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "74a4cffd",
+  "capabilityFingerprint": "f3f4185c",
   "counts": {
     "effectKinds": 46,
     "hookEvents": 33,
     "conditionLeafKinds": 5,
-    "templateFamilies": 25,
-    "effectFields": 259,
+    "templateFamilies": 26,
+    "effectFields": 260,
     "stats": 23,
     "combatEnvKeys": 39
   },
@@ -400,7 +400,7 @@
     "rows": [
       {
         "key": "AoE 半徑樣本（技能＋道具）",
-        "value": "176 個　最小 3 / 中位 6 / 最大 513.5",
+        "value": "177 個　最小 3 / 中位 6 / 最大 513.5",
         "from": "shipped"
       },
       {
@@ -419,7 +419,7 @@
       {
         "label": "中",
         "range": "4.5 – 8",
-        "count": 73
+        "count": 74
       },
       {
         "label": "大",
@@ -595,6 +595,7 @@
       "on-attack",
       "on-hit-react",
       "orbit-array",
+      "periodic-field",
       "proxy-cast",
       "proxy-fanout",
       "radial-burst",
