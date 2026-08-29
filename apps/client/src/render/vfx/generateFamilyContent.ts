@@ -53,8 +53,9 @@ import {
   W3X_ART_FAMILIES,
   W3X_ART_FAMILY_IDS,
   type W3xArtFamily,
+  type W3xFamilyPrototype,
 } from "./w3xArtFamilies";
-import { w3xFamilyArtRows } from "./w3xFamilyArt";
+import { w3xFamilyArtRows, type W3xFamilyArtRow } from "./w3xFamilyArt";
 import { requiredFamilyDocs } from "./familyTuning";
 import { loadAbilityArtFromDisk } from "./loadAbilityArtFromDisk";
 
@@ -94,18 +95,25 @@ function existingFamilyConfig(): Record<string, unknown> {
  * ⛔ 也不含 `sound*` / `groundDecal`：那兩組的主人是
  * `tools/w3x-import/build_vfx_sound_bindings.py` 與後台（GH#390 / GH#439）。
  */
+const FAMILY_MIRROR: Readonly<Record<string, (p: W3xFamilyPrototype) => unknown>> = {
+  primitive: (p) => p.primitive,
+  element: (p) => p.element,
+  scale: (p) => p.scale,
+  alpha: (p) => p.alpha,
+  timeScale: (p) => p.timeScale,
+  heightY: (p) => p.heightY,
+};
+
 export function familyArtRows(): Record<string, Record<string, unknown>> {
   const rows: Record<string, Record<string, unknown>> = {};
   for (const id of W3X_ART_FAMILY_IDS) {
     const p = W3X_ART_FAMILIES[id];
-    rows[id] = {
-      primitive: p.primitive,
-      element: p.element,
-      scale: p.scale,
-      alpha: p.alpha,
-      timeScale: p.timeScale,
-      heightY: p.heightY,
-    };
+    const out: Record<string, unknown> = {};
+    for (const [k, pick] of Object.entries(FAMILY_MIRROR)) {
+      const v = pick(p);
+      if (v !== undefined) out[k] = v;
+    }
+    rows[id] = out;
   }
   return rows;
 }
@@ -137,33 +145,60 @@ function shippedAbilityIds(): Set<string> | null {
   return ids.length > 0 ? new Set(ids) : null;
 }
 
+/**
+ * 證據列 → `abilities[<id>]` 鏡像列的**投影**。
+ *
+ * ⭐⭐ GH#835 —— 這是「產生器在那一層擁有哪幾格」的**唯一住處**：鏡像列由它產生，
+ * 所有權也由它的鍵集合推導 ⇒ 兩者不可能有兩個互相矛盾的答案（第〇·四守則）。
+ *
+ * ⛔ **不可以改回「這一輪產出的欄位聯集」**（`ownedRowFields(abilityArtRows())`，
+ * 2026-08-29 之前的形狀）—— 那是一個**代理值**：所有權被**資料多寡**決定。
+ * 量到的（2026-08-29，169 列證據）：`flyHeight` 只出現在 **15** 列、`w3xScale` 34 列、
+ * `anchor` 42 列。普查再跑一次而某一類歸零時，那一格整類掉出所有權，於是
+ *
+ *   ① `mergeRow()` 把每一列的**過期值永遠保留**（它以為那是別人的旋鈕），
+ *   ② 鏡像↔證據那條閘的**反方向同時停止看它**（`mirrored` 是同一個集合），
+ *
+ * ⇒ ⭐ **兩條閘在同一瞬間對同一類一起失明**，而畫面上全綠 —— 這正是那兩條閘
+ * 「意見相反」的結構性根因（同一個事實有兩個住處，而兩個都是**抽樣**得來的）。
+ */
+const ABILITY_MIRROR: Readonly<Record<string, (r: W3xFamilyArtRow) => unknown>> = {
+  family: (r) => r.family as W3xArtFamily,
+  w3xScale: (r) => r.scale,
+  tint: (r) => (r.tint ? ([r.tint[0], r.tint[1], r.tint[2]] as [number, number, number]) : undefined),
+  flyHeight: (r) => r.flyHeight,
+  anchor: (r) => r.anchor,
+};
+
 export function abilityArtRows(): Record<string, Record<string, unknown>> {
   const rows: Record<string, Record<string, unknown>> = {};
   const shipped = shippedAbilityIds();
   for (const [abilityId, row] of Object.entries(w3xFamilyArtRows()).sort(([a], [b]) => a.localeCompare(b))) {
     // ⭐ 技能檔不存在的那一列一律不進證據（見 shippedAbilityIds 的檔頭）。
     if (shipped !== null && !shipped.has(abilityId)) continue;
-    rows[abilityId] = {
-      family: row.family as W3xArtFamily,
-      ...(row.scale !== undefined ? { w3xScale: row.scale } : {}),
-      ...(row.tint ? { tint: [row.tint[0], row.tint[1], row.tint[2]] as [number, number, number] } : {}),
-      ...(row.flyHeight !== undefined ? { flyHeight: row.flyHeight } : {}),
-      ...(row.anchor ? { anchor: row.anchor } : {}),
-    };
+    const out: Record<string, unknown> = {};
+    for (const [k, pick] of Object.entries(ABILITY_MIRROR)) {
+      const v = pick(row);
+      if (v !== undefined) out[k] = v;
+    }
+    rows[abilityId] = out;
   }
   return rows;
 }
 
 /**
- * 一張逐列表裡，**產生器擁有的欄位** = 它在任何一列寫得出來的每一個鍵。
+ * `families[<id>]` / `abilities[<id>]` 那兩層，**產生器擁有的欄位**。
  *
- * ⭐ 由產出**推導**，⛔ 不是第二張手抄的白名單 —— 守衛拿同一支函式算同一個集合，
- * 所以「產生器擁有哪幾格」不可能有兩個互相矛盾的答案。
+ * ⭐ 由**投影**推導（產生器自己那張「哪一格怎麼算」的表），⛔ 不是由**產出**推導 ——
+ * 差別在資料變薄的時候才看得見，而那正是它會失效的時候（見 {@link ABILITY_MIRROR}）。
+ * 守衛拿的是同一支函式，所以「產生器擁有哪幾格」只有一個答案。
  */
-export function ownedRowFields(rows: Record<string, Record<string, unknown>>): ReadonlySet<string> {
-  const owned = new Set<string>();
-  for (const row of Object.values(rows)) for (const k of Object.keys(row)) owned.add(k);
-  return owned;
+export function ownedFamilyFields(): ReadonlySet<string> {
+  return new Set(Object.keys(FAMILY_MIRROR));
+}
+
+export function ownedAbilityFields(): ReadonlySet<string> {
+  return new Set(Object.keys(ABILITY_MIRROR));
 }
 
 /**
@@ -213,11 +248,11 @@ export function shippedFamilyConfig(
 ): ConfigVfxFamiliesDoc {
   const existingFamilies = (existing.families ?? {}) as Record<string, Record<string, unknown>>;
   const familyArt = familyArtRows();
-  const ownedFamilyFields = ownedRowFields(familyArt);
+  const ownedFam = ownedFamilyFields();
   const families: ConfigVfxFamiliesDoc["families"] = {};
   for (const id of [...Object.keys(familyArt), ...Object.keys(existingFamilies)]) {
     if (families[id as W3xArtFamily]) continue;
-    const row = mergeRow(existingFamilies[id], familyArt[id] ?? {}, ownedFamilyFields);
+    const row = mergeRow(existingFamilies[id], familyArt[id] ?? {}, ownedFam);
     // `enabled` 是操作者的「這一族整個關掉」開關 —— 只在**建立新列**時 seed 成 true。
     families[id as W3xArtFamily] = ("enabled" in row ? row : { enabled: true, ...row }) as never;
   }
@@ -227,7 +262,7 @@ export function shippedFamilyConfig(
   // "unbound" in the UI when it is in fact bound with no overrides.
   const existingAbilities = (existing.abilities ?? {}) as Record<string, Record<string, unknown>>;
   const abilityArt = abilityArtRows();
-  const ownedAbilityFields = ownedRowFields(abilityArt);
+  const ownedAb = ownedAbilityFields();
   const abilities: ConfigVfxFamiliesDoc["abilities"] = {};
   const abilityIds = [...new Set([...Object.keys(existingAbilities), ...Object.keys(abilityArt)])].sort((a, b) =>
     a.localeCompare(b),
@@ -235,12 +270,20 @@ export function shippedFamilyConfig(
   // ⚠️ 死列的判準住在 `abilityArtRows()`（見 `shippedAbilityIds` 的檔頭）——
   //    ⛔ 這裡**不要**再放一份，兩份判準會各自漂（第〇·四守則）。
   for (const id of abilityIds) {
-    // ⚠️ GH#835 —— 2026-08-27 試過「整列缺席時保留人工旋鈕」，⛔ 而它與**另一條**閘
-    //   （`vfx-families` 鏡像必須與 `vfx-ability-art` 的證據逐格一致）**直接衝突**：
-    //   那一條逐字說「`abilities.godie-orkn.ex.tint` —— 證據已經不再有這一格」。
-    //   ⇒ ⭐ 「**人工旋鈕能不能活得比證據久**」是一個**設計題**，⛔ 不是收尾時能決定的事
-    //     —— 它住 GH#835。⚠️ 被丟掉的值**逐字記在那張票裡**（⛔ 不是無聲消失）。
-    const row = mergeRow(existingAbilities[id], abilityArt[id] ?? {}, ownedAbilityFields);
+    // ⭐⭐ GH#835 定案（2026-08-29，量到的）—— 「人工旋鈕能不能活得比證據久」是一個
+    //   **假問題**：`ABILITY_MIRROR` 的那五格（`family` `w3xScale` `tint` `flyHeight`
+    //   `anchor`）**全部是證據**，⛔ 沒有一格是旋鈕 —— `deriveW3xFamilyArt()` 從
+    //   `MODEL_USAGE.json` 的 `params.tint` / `params.flyHeight` / `refs[].anchor` 推導它們
+    //   （＝原作 `uclr/uclg/uclb`、`SetUnitFlyHeight`、`SetUnitScalePercent` 的逐次呼叫值）。
+    //   ⚠️ 票裡當成「owner 手調」的 `godie-orkn.ex` `tint:[255,100,0]`／`flyHeight:150`
+    //   量過了：它們在 `8cdee22e~1` 與**證據那一份逐位元組相同**，而且是 `cba64c28`
+    //   由產生器寫進來的（`model:markofchaostarget` `w3aId:A0YT` `provenance:w3a-override`）
+    //   ⇒ ⭐ 那是一份**跟著證據走的鏡像**，⛔ 不是一個活得比證據久的旋鈕。
+    //   ⇒ 兩條閘都對，`3c3ab5aa` 的回退也對：這一列就該跟著證據走。
+    //   ⭐ 真正要修的是**所有權從哪裡推導**（見 `ABILITY_MIRROR` 的檔頭）——
+    //   真正的旋鈕（`pitchDeg` `facingDeg` `alpha` `timeScale` `enabled` `sound*`）
+    //   本來就不在投影裡，`mergeRow()` 逐位保留它們，⛔ 不必為它們開特例。
+    const row = mergeRow(existingAbilities[id], abilityArt[id] ?? {}, ownedAb);
     // 證據不再點名這一支、而它身上又沒有任何別人的覆寫 = 這一列該走了
     // （⛔ 留一個空物件在 UI 上會讀成「未綁定」）。
     if (Object.keys(row).length > 0) abilities[id] = row as never;

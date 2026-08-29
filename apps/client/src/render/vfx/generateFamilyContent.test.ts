@@ -24,17 +24,35 @@
  * ⭐ 「哪幾格是產生器的」由 `shippedFamilyConfig({})` **推導**，⛔ 沒有手抄清單：
  * 之後有人加一格新的後台旋鈕（lane R 正在加），它自動被這條守衛保護。
  *
- * 突變紀錄（2026-08-18，跑過）：
- *   · 把 `{ ...existing, ...owned }` 改回 `owned` → 這條紅，並指名
+ * ⭐⭐ GH#835（2026-08-29）—— 這一份裡的**兩條閘曾經意見相反**，而根因不是任何一條
+ * 閘錯了，是它們共用的那個「產生器擁有哪幾格」是**抽樣**來的
+ * （`ownedRowFields(abilityArtRows())` = 這一輪產出的欄位聯集）。
+ * 現在兩條都讀 `ownedAbilityFields()`（從 `ABILITY_MIRROR` 的**投影**推導）——
+ * 一個住處，⛔ 不可能有兩個答案。第三條 `it()` 就是守這件事的：
+ * 把**整類**證據抽掉，那一格必須仍然被收回。
+ *
+ * ⚠️ 順帶記下量到的事實（票文的假前提）：`tint`/`flyHeight`/`anchor`/`w3xScale`
+ * **全部是證據**（`deriveW3xFamilyArt()` 從 `MODEL_USAGE.json` 推導），
+ * ⛔ 沒有一格是「活得比證據久的人工旋鈕」。
+ *
+ * 突變紀錄：
+ *   · （2026-08-18）把 `{ ...existing, ...owned }` 改回 `owned` → 第一條紅，並指名
  *     六格 `maxAbilityVfxLayers …` 被吃掉 ✅
+ *   · （2026-08-29）把 `ownedAbilityFields()` 改回 `ownedRowFields(abilityArtRows())`
+ *     → 第三條紅，並指名那一格過期值留在出貨檔上 ✅
  */
 import { describe, it, expect } from "vitest";
 import { execFileSync } from "node:child_process";
-import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { abilityArtRows, familyArtRows, ownedRowFields, shippedFamilyConfig } from "./generateFamilyContent";
+import {
+  abilityArtRows,
+  ownedAbilityFields,
+  ownedFamilyFields,
+  shippedFamilyConfig,
+} from "./generateFamilyContent";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "../../../../..");
@@ -61,8 +79,8 @@ describe("vfx 家族產生器（GH#378 / GH#427）", () => {
       //    頂層 = `shippedFamilyConfig({})` 的鍵，逐列那兩層 = 產生器算得出來的那幾格。
       //    之後有人加一格新的後台旋鈕，它自動被這條守衛保護。
       const ownedTop = new Set(Object.keys(shippedFamilyConfig({})));
-      const ownedFam = ownedRowFields(familyArtRows());
-      const ownedAb = ownedRowFields(abilityArtRows());
+      const ownedFam = ownedFamilyFields();
+      const ownedAb = ownedAbilityFields();
       // ⚠️ 帶著取值函式而不是一個點分字串 —— 技能 id 自己就含點（`godie-e002.q`），
       //    `split(".")` 會把它切成兩層然後永遠取到 undefined（＝這條守衛永遠紅）。
       const unowned: { label: string; pick: (d: Doc) => unknown }[] = [];
@@ -115,7 +133,10 @@ describe("vfx 家族產生器（GH#378 / GH#427）", () => {
     // 那份證據），⛔ 沒有第二張手抄的對照表 —— 之後鏡像多一格或少一格，這條自動跟上。
     const shipped = (JSON.parse(readFileSync(SHIPPED, "utf8")) as Doc).abilities;
     const expected = abilityArtRows();
-    const mirrored = ownedRowFields(expected);
+    // ⭐ GH#835 —— 反方向的分母是**投影**（`ownedAbilityFields()`），⛔ 不是
+    //   `ownedRowFields(expected)`（這一輪的產出聯集）。上面那條保留閘讀的是同一支
+    //   函式 ⇒ 兩條閘不可能對「哪幾格歸產生器」給出兩個答案。
+    const mirrored = ownedAbilityFields();
     const drift: string[] = [];
     for (const [id, want] of Object.entries(expected)) {
       const got = shipped[id];
@@ -143,4 +164,53 @@ describe("vfx 家族產生器（GH#378 / GH#427）", () => {
         "然後 `git add content/`：\n  " + drift.slice(0, 20).join("\n  "),
     ).toEqual([]);
   });
+
+  it("🔴 一整類證據歸零時，那一格**仍然**歸產生器管（GH#835 —— 所有權⛔不是抽樣）", () => {
+    // ⭐ 上面兩條閘共用一個「產生器擁有哪幾格」的集合。它在 2026-08-29 之前是
+    //   **這一輪產出的欄位聯集** —— 一個代理值：某一類證據歸零的那一刻，那一格
+    //   同時①掉出保留閘的管轄（過期值被永遠當成「別人的旋鈕」留著）②掉出鏡像閘
+    //   反方向的分母（沒有人再比對它）⇒ **兩條閘對同一類一起失明，而全綠**。
+    //   ⛔ 數字（哪一格、幾列）不寫進斷言 —— 每次重跑普查都會變（就是本票的成因）。
+    const evidence = abilityArtRows();
+    const count = new Map<string, number>();
+    for (const row of Object.values(evidence)) {
+      for (const k of Object.keys(row)) if (k !== "family") count.set(k, (count.get(k) ?? 0) + 1);
+    }
+    const thinnest = [...count].sort((a, b) => a[1] - b[1] || a[0].localeCompare(b[0]))[0]?.[0];
+    expect(thinnest, "證據裡除了 family 一格可選欄位都沒有 —— 這條守衛在測空氣").toBeTruthy();
+
+    const before = JSON.parse(readFileSync(SHIPPED, "utf8")) as Doc;
+    const victim = Object.keys(evidence).find((id) => thinnest! in evidence[id]! && before.abilities?.[id]);
+    expect(victim, `沒有一列同時在證據與鏡像上帶著 ${thinnest} —— 這條守衛在測空氣`).toBeTruthy();
+
+    const sandbox = mkdtempSync(join(tmpdir(), "ggd-vfxfam-thin-"));
+    try {
+      mkdirSync(join(sandbox, "config"), { recursive: true });
+      cpSync(SHIPPED, join(sandbox, "config/vfx-families.json"));
+      // 把**整類**證據抽掉（⛔ 不是抽掉一列）：那一格從此在產出裡出現零次。
+      // ⚠️ 直接 write（⛔ 不 cpSync）—— 出貨產物是 444，複製過去照樣鎖著。
+      const art = JSON.parse(readFileSync(ABILITY_ART, "utf8")) as {
+        bindings: Record<string, { family?: Record<string, unknown> }>;
+      };
+      for (const row of Object.values(art.bindings)) if (row.family) delete row.family[thinnest!];
+      writeFileSync(join(sandbox, "config/vfx-ability-art.json"), JSON.stringify(art, null, 2));
+
+      execFileSync("npx", ["tsx", SCRIPT], {
+        cwd: REPO,
+        env: { ...process.env, GGD_CONTENT_DIR: sandbox },
+        encoding: "utf8",
+        stdio: "pipe",
+      });
+
+      const after = JSON.parse(readFileSync(join(sandbox, "config/vfx-families.json"), "utf8")) as Doc;
+      expect(
+        after.abilities?.[victim!]?.[thinnest!],
+        `⛔ 證據整類消失之後 abilities.${victim}.${thinnest} 還留在出貨檔上 —— ` +
+          "那是一格沒有出處的過期值，而**兩條閘都不會再看它**。" +
+          "所有權要從 `ABILITY_MIRROR` 的投影推導，⛔ 不是從這一輪的產出聯集。",
+      ).toBeUndefined();
+    } finally {
+      rmSync(sandbox, { recursive: true, force: true });
+    }
+  }, 120_000);
 });
