@@ -68,22 +68,48 @@ WEAPON_MAP = {
     "sides1": "dmg_sides",
     "dmgplus1": "dmg_base",
     "rangeN1": "attack_range",
-    # ⭐ GH#745 —— 「這位英雄揮的是什麼」的**保真權威**。
+    # ⭐ GH#745 加了這一欄；⛔⛔ GH#874（2026-08-30）**收回它的宣稱**。
     #
-    # 普攻音效的武器類別在 2026-08-26 之前是「看角色的中文名猜」,而 29 位近戰
-    # 一個 tag 都沒有 ⇒ 全部落回 `weaponClassOf` 自認的 LAST RESORT（`sword`）
-    # ⇒ 拳四郎、悟空、魯夫、草泥馬都在**揮劍**。
+    # 這裡在 2026-08-30 之前逐字寫著「『這位英雄揮的是什麼』的**保真權威**」——
+    # ⛔ **量出來它不是**,而且沒有任何東西會紅（第三守則:一個零消費端的欄位
+    # 被一段散文守著）。⇒ 那句話換成一個**跑得起來的指令**:
     #
-    # ⚠️ 這張表**本來就已經讀進來了**（cool1/dice1/… 都出自同一份
-    # `UnitWeapons.slk` 的同一列）—— ⛔ 少的只是這一欄沒被留下來,於是每一次要問
-    # 「他揮什麼」都得重寫一支一次性探針。⇒ 第〇·四守則:值住共用表,
-    # ⛔ 不是每次現算一遍。
+    #     python3 tools/w3x-import/measure_weapon_type_authority.py
     #
+    # ⭐ 它今天回答的是 **base 那一隻的武器**,⛔ 不是這位 GoDie 英雄的 ——
+    # 每一個結論旁邊都要帶著這個限定詞,⛔ 不可以只寫在標題的括號裡
+    # （CLAUDE.md:一份報告的欄位表頭會靜靜地定義它量了什麼）。
+    #
+    # 量到的（HEAD,⛔ 不是估;⭐ 重跑上面那一行就會重印）:
+    #   · 這一欄的**消費端**: **0** —— 只有寫入的這支與它寫出的 `STOCK_UNITS.json`
+    #   · stock 側帶這一欄的列: **305 / 838**
+    #   · `OBJECTS.json` 裡帶 `weapon_type` 的**自訂英雄**: **0 / 127**（單位 0 / 461）
+    #     ⇒ 地圖側抽取器從來沒有讀過這一欄 ⇒ 只能走 `base` 進 stock 表
+    #   · 拿它去驗**已經有 tag** 的 25 隻近戰（24 隻解析得出來）:
+    #     一致 **13** · ⛔ 矛盾 **11**（`h00l` sword;`h01n` `h01o` `u00h` `u00j`
+    #     `u010` `u01u` `udre` `uvng` katana;`hart` `hpb1` greatsword）
+    #     ⇒ ⛔ **46% 矛盾率** —— 一把這樣的尺不能拿來判「這一隻的 tag 對不對」。
+    #     例:`godie-ogrh` 悟空 base=Ogrh → `MetalHeavySlice`（那是**格羅姆的斧**）。
+    #
+    # ⚠️⚠️ **(a)「讓地圖側也讀這一欄」走完了,而它變不成權威**（⛔ 不是只推翻,
+    # 是走完它原本要走的那條路）:SLK 的 `weapType1` 在 w3u 裡叫 **`ucs1`**
+    # （Attack 1 - Weapon *Sound*）,⛔ **不是 `ua1t`** —— 那是 Attack *Type*,
+    # 值域 pierce/hero/chaos/unknown。⭐ 照 `ua1t` 去做 (a) 會把**整條錯的欄位**
+    # 匯進一個叫 `weapon_type` 的格子裡。而真的讀 `ucs1` 量到:
+    # 地圖自己設了值的英雄只有 **18 / 127**,25 隻近戰裡只有 **3** 隻有
+    # ⇒ 矛盾 11 → 10（只修好 `godie-hart`）。⭐ **變準一點,⛔ 變不成權威。**
+    #
+    # ⇒ ⭐ **近戰那一半今天沒有逐英雄的權威表**（遠程那一半有:
+    # `Units/*UnitFunc.txt` 的 `Missileart=`,記在 `BasicAttackSystem.ts` 的
+    # WEAPON_TAGS 檔頭）。⛔ 不要把那個**空白**讀成「還沒查」—— 查過了,
+    # 出處就是上面那支腳本。
+    #
+    # ⭐ 欄位**留著**(知識不可以無聲消失):它對 **stock 側**仍然是對的答案,
+    # 而且它本來就已經讀進來了（cool1/dice1/… 出自 `UnitWeapons.slk` 的同一列）。
     # 值域（838 列實測）:`MetalHeavySlice` · `MetalMediumChop` · `WoodHeavyBash`
     # · `RockHeavyBash` … 三段式 `<材質><重量><動作>`,而**決定音效的是第三段**
     # （Slice/Chop = 刃器,Bash = 鈍器）。⚠️ 遠程單位這一欄是 `_`（＝ MISSING
-    # ⇒ 這一格自動不寫入）,所以它天然只回答近戰那一半 —— 遠程那半的權威是
-    # `Units/*UnitFunc.txt` 的 `Missileart=`（已經在 WEAPON_TAGS 的檔頭記著）。
+    # ⇒ 這一格自動不寫入）,所以它天然只回答近戰那一半。
     "weapType1": "weapon_type",
 }
 DATA_MAP = {"race": "race"}

@@ -322,12 +322,24 @@ cmd_verify() {
         echo "$SELF:   ⇒ $mac_junk of them are macOS metadata (.DS_Store / ._*). Remove them, do NOT re-ship:" >&2
         echo "$SELF:     find '$dir' \\( -name .DS_Store -o -name '._*' \\) -type f -delete" >&2
       fi
-      find "$dir" -type f ! -name 'SHIP.sha256' ! -name 'SHIP.txt' -print 2>/dev/null \
-        | sed "s|^$dir/||" | sort > "$tmp_got" 2>/dev/null || true
-      sed 's/^[0-9a-f]*  //' "$lst" 2>/dev/null | sort > "$tmp_want" 2>/dev/null || true
+      # ⛔⛔ THE TWO SIDES OF THIS `comm` ARE JOINED BY FILENAME, AND THE KEY USED
+      #     TO BE SPELLED DIFFERENTLY ON EACH SIDE (GH#871, measured 2026-08-30).
+      #     listing_of() hashes from INSIDE the set (`cd "$dir" && find .`), so
+      #     every SHIP.sha256 line reads `<hash>  ./a.bin` — with the `./`.
+      #     This side used to run `find "$dir"` and strip only `"$dir/"`, giving
+      #     `a.bin`. Two lists with ZERO keys in common ⇒ `comm -23` calls EVERY
+      #     file an extra: a clean 3-file set plus one .DS_Store printed all four
+      #     names under "first extras".
+      #     ⭐ That is the 第〇·六守則 shape — a join whose KEY had drifted, where
+      #     both halves looked right on their own. So do not "also strip ./" on
+      #     one side; build BOTH sides the way listing_of() does, so the key is
+      #     the same by construction and cannot drift again.
+      ( cd "$dir" 2>/dev/null && find . -type f ! -name 'SHIP.sha256' ! -name 'SHIP.txt' -print 2>/dev/null ) \
+        | LC_ALL=C sort > "$tmp_got" 2>/dev/null || true
+      sed 's/^[0-9a-f]*  //' "$lst" 2>/dev/null | LC_ALL=C sort > "$tmp_want" 2>/dev/null || true
       if [ -s "$tmp_got" ] && [ -s "$tmp_want" ]; then
         echo "$SELF:   ⇒ first extras:" >&2
-        comm -23 "$tmp_got" "$tmp_want" 2>/dev/null | head -10 | sed "s|^|$SELF:     |" >&2
+        comm -23 "$tmp_got" "$tmp_want" 2>/dev/null | sed 's|^\./||' | head -10 | sed "s|^|$SELF:     |" >&2
       fi
     fi
     rc=1
