@@ -37,7 +37,7 @@
  * ⚠️ dev-only：由 vite `configureServer` 掛載（apply:"serve"），production build
  *    不含這一段 —— 與 tools/review/middleware.mjs 同一個形狀。
  */
-import { readdirSync, statSync, existsSync } from "node:fs";
+import { readdirSync, statSync, existsSync, readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { spawnSync } from "node:child_process";
@@ -178,6 +178,43 @@ function setAtPointerOnDisk(abs, pointer, value) {
 }
 
 /**
+ * ⭐ 把剛寫進 `content/abilities/<cid>.<slot>.json` 的那一格,同步到
+ * `content/champions/<cid>.json` 的 `abilities[<slot>]`（GH#822/#823/#829）。
+ *
+ * ⚠️ 為什麼一定要做：`registries.ts` 的 `auditAbilityMirrorDrift()` 比對**兩份鍵的聯集**
+ * （只跳過 `schema`）,而 `registry.ts` 的 `fillGaps()` 會把標準檔**缺席**的欄位從副本補回來
+ * ⇒ ⛔ 只寫標準檔的話:閘會紅,**而且「清空一格」在遊戲裡靜默無效**。
+ *
+ * 方向永遠是 **standalone → embedded**（owner 選定的 STRICT 模型）,⛔ 不反向、⛔ 不合併。
+ *
+ * 回傳 `{ wrote: 相對路徑|null, error?: string }`。
+ * ⭐ 不是技能檔 / 找不到對應英雄或槽位 ⇒ `{ wrote: null }`（⛔ 不是錯誤）。
+ */
+export function mirrorAbilityIntoChampion(repoRoot, path, pointer, value) {
+  const m = /^content\/abilities\/(.+)\.([a-z0-9]+)\.json$/.exec(path);
+  if (m === null) return { wrote: null };
+  const [, cid, slot] = m;
+  const champRel = `content/champions/${cid}.json`;
+  const champAbs = join(repoRoot, champRel);
+  if (!existsSync(champAbs)) return { wrote: null };
+  // ⭐ 英雄檔也可能是產生器的產物 —— 那就**不要偷偷寫它**（同一套 genguard 裁決）。
+  const gg = spawnSync("bash", ["scripts/genguard.sh", champRel], { cwd: repoRoot, encoding: "utf8", timeout: 20000 });
+  if (gg.status !== 0)
+    return { error: `${champRel} 是產生器的產物（genguard 擋下）—— 副本要靠重跑產生器同步,⛔ 不是這裡寫。` };
+  let doc;
+  try {
+    doc = JSON.parse(readFileSync(champAbs, "utf8"));
+  } catch (e) {
+    return { error: `讀不了 ${champRel}:${e.message}` };
+  }
+  const ab = doc?.abilities;
+  if (ab === undefined || ab === null || typeof ab !== "object" || !(slot in ab)) return { wrote: null };
+  const r = setAtPointerOnDisk(champAbs, `/abilities/${slot}${pointer}`, value);
+  if (r.error) return { error: `${champRel} 的 /abilities/${slot}${pointer}:${r.error}` };
+  return { wrote: champRel };
+}
+
+/**
  * POST /__live/<name>/save 的處理。⭐ 每一步都會**大聲**失敗（fail-open 沒錯，靜默才是缺陷）：
  * 405 沒宣告寫入端（附 readonlyWhy）· 403 live 模式寫材料側 · 400 規則/規格/check 不過 ·
  * 409 genguard 擋（產生器產物 —— 指名擁有者與正確修法）。
@@ -222,11 +259,25 @@ async function handleSave(repoRoot, mode, entry, dsName, body, res) {
   if (!existsSync(abs)) return sendJson(res, 404, { error: `找不到 ${path}（這個端點只改既有檔，⛔ 不創檔）` });
   const applied = setAtPointerOnDisk(abs, pointer, value);
   if (applied.error) return sendJson(res, 400, { error: applied.error });
+  // ⭐ **鏡射**：Q/W/E/R 技能同時住兩份（GH#822/#823/#829，2026-08-29 對抗性複驗抓到）。
+  //   `content/abilities/<cid>.<slot>.json` 是**權威**、
+  //   `content/champions/<cid>.json` 的 `abilities[<slot>]` 是**副本**。
+  //   ⛔ 在此之前這個寫入端**只寫前者** ⇒ 每一次成功的存檔都讓出貨閘
+  //   `abilityMirror.test.ts` 從綠變紅；而 `registry.ts` 的 `fillGaps()` 會把
+  //   標準檔**缺席**的欄位從副本補回來 ⇒ ⭐ 「清空一格」在比賽裡**靜默無效**。
+  //   同步方向照 owner 選定的 STRICT 模型：**永遠 standalone → embedded**。
+  const mirrored = mirrorAbilityIntoChampion(repoRoot, path, pointer, value);
+  if (mirrored.error)
+    return sendJson(res, 500, {
+      error: `鏡射失敗：${mirrored.error}`,
+      note: "⚠️ 標準檔已改、副本沒跟上 ⇒ 兩份不同步，請跑 abilityMirror 對帳",
+    });
   entry.cache = null; // build() 的 mtime 快取立即失效 —— 重讀就看到新值
   const notes = [];
+  if (mirrored.wrote) notes.push(`🪞 同步了英雄副本 ${mirrored.wrote}（⭐ 兩份不同步 abilityMirror 閘會紅）`);
   if (ggOut.includes("正規化器")) notes.push(ggOut.split("\n")[0]);
   if (path.startsWith("content/")) notes.push("⚠️ 改了 content/ —— 出貨前要跑 pnpm content:build 並 commit 產物（bundle/_index）。");
-  return sendJson(res, 200, { ok: true, path, pointer, old: applied.old, value, kind: w.kind, notes });
+  return sendJson(res, 200, { ok: true, path, pointer, old: applied.old, value, kind: w.kind, mirroredInto: mirrored.wrote ?? null, notes });
 }
 
 export function createAdminLiveMiddleware(repoRoot, options = {}) {
