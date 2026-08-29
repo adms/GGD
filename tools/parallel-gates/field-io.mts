@@ -11,7 +11,8 @@
  *
  * ── ⭐ 它為什麼不是一張手抄的豁免表 ───────────────────────────────────────
  * CLAUDE.md 逐字：擁有者表是**量出來的**。⇒ 這一支**呼叫產生器自己**用來推導
- * 「我擁有哪幾格」的那組函式（`shippedFamilyConfig({})` / `ownedRowFields(...)`），
+ * 「我擁有哪幾格」的那組函式（`shippedFamilyConfig({})` / `ownedFamilyFields()` /
+ * `ownedAbilityFields()`），
  * 產生器多算一格少算一格，這裡自動跟著走。`field-probes.json` 只登記**去哪裡問**。
  *
  * ⚠️ 產出**刻意只記「產生器擁有哪幾欄」** —— ⛔ 不記「出貨檔裡有哪幾欄」：
@@ -48,32 +49,33 @@ type Probe = {
  * 執行到才看得見。每一支 recipe 都要指名它呼叫了產生器的哪幾個 export。
  */
 const RECIPES: Record<string, (m: Record<string, unknown>) => Record<string, string[]>> = {
-  // vfxfam:build —— 與 `generateFamilyContent.test.ts:63-65` 呼叫**同一組**函式。
+  // vfxfam:build —— 與 `generateFamilyContent.test.ts:82-83` 呼叫**同一組**函式。
   "vfx-families": (m) => {
     const shipped = m.shippedFamilyConfig as (e: Record<string, unknown>) => Record<string, unknown>;
-    const ownedRowFields = m.ownedRowFields as (r: Record<string, Record<string, unknown>>) => ReadonlySet<string>;
-    const familyArtRows = m.familyArtRows as () => Record<string, Record<string, unknown>>;
-    const abilityArtRows = m.abilityArtRows as () => Record<string, Record<string, unknown>>;
-    for (const [n, f] of Object.entries({ shipped, ownedRowFields, familyArtRows, abilityArtRows })) {
+    // ⭐⭐ GH#835（2026-08-29）：所有權從**產出**推導改成從**投影**推導，兩支
+    //   零參數的 export 取代了舊的 `ownedRowFields(rows)`。⛔ 這裡沒跟著改 ⇒ recipe
+    //   在**每一次正確的 checkout 上**擲「產生器少了 export」＝ 一個永遠不會綠的閘
+    //   （CLAUDE.md 第二守則⑨）。⭐ 更新引用時要走完它原本要走的那條路 —— 見下面
+    //   `abilities[*]` 那一段：舊的碎片化前提也跟著消失了。
+    const ownedFamilyFields = m.ownedFamilyFields as () => ReadonlySet<string>;
+    const ownedAbilityFields = m.ownedAbilityFields as () => ReadonlySet<string>;
+    for (const [n, f] of Object.entries({ shipped, ownedFamilyFields, ownedAbilityFields })) {
       if (typeof f !== "function") throw new Error(`產生器少了 export ${n} —— recipe 對不上它了`);
     }
     // ⭐⭐ **校準：已知有的要量得到**（CLAUDE.md：單邊校準的尺會在最需要說話時沉默）。
     //   一個空的 owned 集合會讓消費端說「這一節每一欄都自由」—— ⛔ 那是**危險的那個方向**
     //   （放行一個該擋的）。⇒ 量到空的一律當成**量壞了**，⛔ 不是當成事實。
+    // ⭐ `abilities[*]` 現在量得到了：舊版的 owned 是 `ownedRowFields(abilityArtRows())`
+    //   ＝**這一輪產出的欄位聯集**，於是 `abilityArtRows()` 回 0 列時 owned = ∅ ⇒ 量尺瞎掉
+    //   ⇒ 當時的正解是「量不到就不宣稱」。⭐ 而 GH#835 把分母換成 `ABILITY_MIRROR` 的鍵
+    //   （一張**與資料多寡無關**的投影表）⇒ 那個前提沒有了，⛔ 不必再留白。
     const out: Record<string, string[]> = {
       $top: Object.keys(shipped({})).sort(),
-      "families[*]": [...ownedRowFields(familyArtRows())].sort(),
+      "families[*]": [...ownedFamilyFields()].sort(),
+      "abilities[*]": [...ownedAbilityFields()].sort(),
     };
     for (const [k, v] of Object.entries(out)) {
       if (v.length === 0) throw new Error(`⛔ ${k} 量到 0 個產生器擁有的欄位 —— 這把尺壞了,⛔ 不是「它什麼都不擁有」`);
-    }
-    // ⚠️ `abilities[*]` **今天刻意不量**：`abilityArtRows()` 在乾淨的 checkout 上回 0 列
-    //   （`shippedAbilityIds()` 與 w3x 證據的 id 對不起來）⇒ owned = ∅ ⇒ 消費端會說
-    //   「169 列每一欄都自由」。⛔ 那不是量到的事實,是量尺瞎掉 —— **量不到就不宣稱**。
-    //   ⚠️ 這件事本身值得追（abilityArtRows() 回 0 列 ⇒ 跑 vfxfam:build 會不會把
-    //   169 列的 family/w3xScale/tint 一起落掉?）—— 順手缺陷開票,⛔ 不在這裡順手修。
-    if (Object.keys(abilityArtRows()).length > 0) {
-      out["abilities[*]"] = [...ownedRowFields(abilityArtRows())].sort();
     }
     return out;
   },

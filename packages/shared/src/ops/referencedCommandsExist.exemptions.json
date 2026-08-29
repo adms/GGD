@@ -14,6 +14,13 @@
         "tools/parallel-gates/normalizers.json"
       ],
       "reason": "歷史紀錄，⛔ 不是指令：NORM lane 2026-08-25 修掉幽靈名 prose:apply（真名 prose:build）時，在這兩個檔留下「為什麼拿掉」的註解，引用的是幽靈名本身。註解若被改寫或刪除，這一列會被棘輪要求刪掉。⭐ 2026-08-27（GH#707）：那份知識從**兩份手寫副本**（genguard ＋ hook）搬進單一住處 `tools/parallel-gates/normalizers.json` —— ⭐ **歷史紀錄跟著搬家**，所以這一列的 files 多一個。⛔ 這不是新的幽靈，是同一個幽靈換了住處。"
+    },
+    {
+      "ref": "r2:ggd-backups",
+      "files": [
+        "scripts/offsite-backup.sh"
+      ],
+      "reason": "⭐ **另一個命名空間**，⛔ 不是步驟名：rclone remote 的形狀是 `<remote>:<path>`，與 pnpm 步驟名 `<a>:<b>` 逐字元同形，而抽取器分不出來（同 `node:fs` 是 builtin specifier 的道理，只是 remote 名字沒有固定前綴可以結構性排除）。這一格是 offsite-backup.sh:95 註解裡的**示例**，它就在腳本自己那句「它與 `user@host:/path` 都含冒號,但傳輸方式完全不同」旁邊 —— ⇒ 修法①（改成真名）不成立（package.json 不該有這個 script），修法②（改產生器）也不成立（這支腳本是手寫的，genguard 對它回無主）。⛔ 刻意**不**放寬 BARE_RE：放鬆到能濾掉 rclone remote，同一條規則就會連真的 pnpm 幽靈一起放掉。⚠️ 這一列本身是那個字面值的**第二個住處**，煞車是棘輪：註解一改寫，這一列就不再罩到活的幽靈 ⇒ 棘輪那條測試會紅並要求刪列。"
     }
   ]
 }
