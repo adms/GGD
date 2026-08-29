@@ -78,4 +78,61 @@ describe("💬 技能浮字：畫面上真的有那兩個字 (@visual-proof)", (
     step();
     expect(n.style.display).toBe("none");
   });
+
+  /**
+   * ⭐ **最後一跳**（GH#853）：drift 有沒有真的動到 **DOM 的 x**。
+   *
+   * ⚠️ 這條是對抗性複驗點名補的：#853 的守衛「跑到池子為止」——
+   * 它證明了 `driftX` 被算出來，⛔ 沒有證明 `WorldAnchorLayer` 把它投影進 transform。
+   * ⭐ 而那正是「算出來了但玩家看不到」（失敗形態①/⑧）最常見的落點。
+   *
+   * 突變紀錄：把 `WorldAnchorLayer.tsx` 的 `project(e.x + e.driftX, …)` 改回
+   * `project(e.x, …)` ⇒ 這一條紅（兩顆字的 x 變成一樣）。
+   */
+  it("⭐ 有 drift 的字，DOM 的 x 真的跟著偏（⛔ 不是只有池子裡的數字動）", () => {
+    const host = document.createElement("div");
+    document.body.appendChild(host);
+    frameBus.project = (x, y, z) => ({ sx: 640 + x * 8, sy: 360 - y * 8 - z, visible: true });
+    root = createRoot(host);
+    act(() => root!.render(createElement(WorldAnchorLayer)));
+
+    /** 放**一顆**字，回傳它的螢幕 x 在 400ms 之間移動了多少。 */
+    const shiftOf = (drift?: { speed: number; deg: number; basisX: number; basisZ: number }): number => {
+      const f = new FloatingTextFx();
+      try {
+        // ⚠️ ⭐ **一次只放一顆** —— 同幀多顆會走「分道與錯開」（`FloatingTextFx` 的
+        //   onAnchor 分道 ＋ delayMs），那會讓量尺量到的不是 drift。
+        f.spawn({ text: "字", x: 0, y: 2, z: 0, colorRgb: [255, 255, 255], ...(drift ? { drift } : {}) });
+        f.tick(120);
+        step();
+        const read = (): number => {
+          const n = [...host.querySelectorAll<HTMLDivElement>('[data-role="floating-text"]')].find(
+            (e) => e.style.display === "block" && e.style.transform !== "",
+          );
+          expect(n, "⛔ 畫面上沒有任何一顆可見的浮字").toBeTruthy();
+          const m = /translate\((-?[\d.]+)px/.exec(n!.style.transform);
+          expect(m, `⛔ transform 讀不到 x：${n!.style.transform}`).toBeTruthy();
+          return Number(m![1]);
+        };
+        const a = read();
+        f.tick(400);
+        step();
+        return Math.abs(read() - a);
+      } finally {
+        f.dispose();
+        step();
+      }
+    };
+
+    // ⭐ **兩個方向一起讀**（⛔ 一把只驗過單邊的尺不算自證過）
+    expect(
+      shiftOf(),
+      "⛔ 沒有 drift 的字**自己動了** ⇒ 這把量尺量到的不是 drift（可能是 rise 或相機）",
+    ).toBeLessThan(0.5);
+    expect(
+      shiftOf({ speed: 6, deg: 0, basisX: 1, basisZ: 0 }),
+      "⛔ 有 drift 的字螢幕 x **沒有動** ⇒ drift 沒有走到 DOM —— " +
+        "池子裡的 driftX 算對了，⭐ 而玩家看到的仍然是直升的字（失敗形態①）。",
+    ).toBeGreaterThan(1);
+  });
 });
