@@ -240,8 +240,11 @@ function mergeRow(
  * | 層 | 產生器擁有 | ⛔ 別人的（逐格保留） |
  * |---|---|---|
  * | 頂層 | `id` `schema` `enabled` `scaleGain` `scaleMin` `scaleMax` `families` `abilities` | `maxAbilityVfxLayers` `oneShotMaxLifeSec` `castHeightSource` `projectileArtFromDoc` `projectileRadiusGain` `projectileFlyHeightY` `familyPitchDefaults` `*PitchDeg` `*AngleDeg` `soundEnabled` |
- * | `families[<id>]` | `primitive` `element` `scale` `alpha` `timeScale` `heightY` | `enabled`（後台開關，只在建列時 seed）· `sound*` `soundGain` `soundLoopMs` `soundLoopMaxMs`（`build_vfx_sound_bindings.py`）· `groundDecal`（GH#439） |
- * | `abilities[<id>]` | `family` `w3xScale` `tint` `flyHeight` `anchor` | `pitchDeg`（`build_vfx_orient.py` / `build_slash_pitch.py`）· `facingDeg` `alpha` `timeScale` `enabled`（後台）· `sound*` `soundGain`（`build_vfx_sound_bindings.py`）· **證據沒點到的整列** |
+ * | `families[<id>]` | ⭐ {@link FAMILY_MIRROR} 的鍵（**唯一住處**，⛔ 這裡不抄第二份） | `enabled`（後台開關，只在建列時 seed）· `sound*` `soundGain` `soundLoopMs` `soundLoopMaxMs`（`build_vfx_sound_bindings.py`）· `groundDecal`（GH#439） |
+ * | `abilities[<id>]` | ⭐ {@link ABILITY_MIRROR} 的鍵（**唯一住處**，⛔ 這裡不抄第二份） | `pitchDeg`（`build_vfx_orient.py` / `build_slash_pitch.py`）· `facingDeg` `alpha` `timeScale` `enabled`（後台）· `sound*` `soundGain`（`build_vfx_sound_bindings.py`）· **證據沒點到的整列** |
+ *
+ * ⚠️ 逐列那兩層的「產生器擁有」欄以前是**手抄**的一串欄位名（GH#835 之前）——
+ * 而那是同一個事實的第二個住處：投影多一格時，這張表不會有東西紅。
  */
 export function shippedFamilyConfig(
   existing: Record<string, unknown> = existingFamilyConfig(),
