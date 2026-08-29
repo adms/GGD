@@ -483,13 +483,72 @@ function effectDocMaps(kind: string): Map<string, string>[] {
  * 看起來「有說明」而人讀不懂。所以機器標記也要被 TSDoc 蓋掉 —— 但**保留在括號裡**，
  * 因為「這是一個軟參照」本身是作者要知道的事。
  */
+/**
+ * 共用分片的說明，**配不配得上這一格的型別**？（GH#877）
+ *
+ * ⭐ 只問一件事：說明裡列舉的**值**，出現在這一格的型別欄裡嗎？
+ * ⛔ 不做語意分析 —— 那把尺會自己說謊。這裡只擋**看得出來**的不配。
+ *
+ * ⚠️ 保守方向是**留 `—`**：漏採一句對的說明，代價是「去看 schema」；
+ * 誤採一句錯的，代價是外部編輯器**照著寫出被 schema 拒絕的內容**。
+ */
+function sharedDocFits(f: Field, doc: string): boolean {
+  // 說明裡以 `"x"` 或 `x / y / z` 形式列舉的候選值
+  const quoted = [...doc.matchAll(/[「"`']([a-zA-Z][\w-]{1,20})["`'」]/g)].map((m) => m[1]!);
+  if (quoted.length === 0) return true; // 沒有列舉值 ⇒ 沒有可檢查的矛盾
+  const type = f.type ?? "";
+  // ⭐ 型別欄若是數字／布林，而說明在列舉字串值 ⇒ ⛔ 不配
+  if (/數字|number|布林|boolean/.test(type) && !/enum|字串|string/.test(type)) return false;
+  // ⭐ 型別欄是列舉時，說明列的值**至少要有一個**真的在型別欄裡
+  if (/enum|\/|「/.test(type)) return quoted.some((q) => type.includes(q));
+  return true;
+}
+
+/**
+ * ⭐ enum 欄位的說明**必須提到它自己的值**（GH#877 第二半）。
+ *
+ * ⚠️ `sharedDocFits` 用「說明裡引號括起來的候選值」比對 —— ⛔ 而
+ * `_shared.ts` 的 `basis` 說明是**中文**（「現存 / 最大 / 已損失」），
+ * 一個引號都沒有 ⇒ 那把尺對它是瞎的，於是它被掛到
+ * `extendBuff.basis`（`raw`/`mitigated`/`hpLost`）與
+ * `modifyCooldown.basis`（`remaining`/`base`）上 —— ⭐ **列舉了三個不存在的值**。
+ *
+ * ⇒ 這一條反過來問：**這一格的每一個合法值，說明裡提到了嗎？**
+ * 一個都沒提 ⇒ 那句話講的是**別的欄位** ⇒ ⛔ 不採用（留 `—`）。
+ */
+function enumDocMentionsOwnValues(f: Field, doc: string): boolean {
+  const vals = [...(f.type ?? "").matchAll(/`([a-zA-Z][\w-]*)`/g)].map((m) => m[1]!);
+  if (vals.length < 2) return true; // ⛔ 不是列舉 ⇒ 這一條不適用
+  return vals.some((v) => doc.includes(v));
+}
+
 function withDocs(fields: Field[], ...maps: Map<string, string>[]): Field[] {
   return fields.map((f) => {
     const machineTag = /^ref\??:/.test(f.desc);
     if (f.desc && !machineTag) return f;
-    for (const m of maps) {
+    // ⭐ **第一份是自己的分片**（`effectDocFiles` 保證），其餘是共用分片。
+    //   自己那一份是**同一個欄位**，⇒ 無條件採用。
+    const [own, ...shared] = maps;
+    const take = (d: string): Field =>
+      machineTag ? { ...f, desc: `${oneLine(d)}（\`${f.desc}\`）` } : { ...f, desc: oneLine(d) };
+    const mine = own?.get(f.name);
+    if (mine) return take(mine);
+
+    // ⚠️ ⭐ **共用分片是名字對名字的後備 —— 而那只驗名詞，⛔ 不驗關係**（GH#877）。
+    //
+    // 2026-08-29 對抗性複驗量到三格**假說明**（比 `—` 更糟，第一·五守則）：
+    //   · `spawnModelFx.scale`（`z.number().max(20)`）拿到了 `_shared.ts` 的
+    //     `zResourcePctTerm.scale`（一個 **enum**）的說明
+    //     ⇒ ⭐ 那一列**自己跟自己打架**：型別欄寫「數字 ≤20」，說明欄叫人填 `"points"`。
+    //   · `extendBuff.basis` / `modifyCooldown.basis` 拿到 `_shared.ts` 另一個 `basis`
+    //     的說明 ⇒ 列舉了**三個這個欄位根本不存在的值**。
+    //
+    // ⭐ 判準：共用分片的說明只在**型別欄對得上**時才採用 ——
+    //   ⛔ 一個 enum 的說明不可以掛到 number 上。
+    //   ⚠️ 對不上就**留 `—`**：`—` 說「去看 schema」，而一句錯的說明說「不用看了」。
+    for (const m of shared) {
       const d = m.get(f.name);
-      if (d) return { ...f, desc: machineTag ? `${oneLine(d)}（\`${f.desc}\`）` : oneLine(d) };
+      if (d !== undefined && sharedDocFits(f, d) && enumDocMentionsOwnValues(f, d)) return take(d);
     }
     return f;
   });

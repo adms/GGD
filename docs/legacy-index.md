@@ -23,11 +23,11 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 2847 個檔案**，分佈在 2 個隔離區。
+**目前共 2871 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
-| [`docs/legacy/`](legacy-index.md#docslegacy) | 2407 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
+| [`docs/legacy/`](legacy-index.md#docslegacy) | 2431 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
 | [`content/_legacy/`](legacy-index.md#contentlegacy) | 440 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
@@ -35,7 +35,7 @@ owner 2026-08-13：
 
 ---
 
-## `docs/legacy/` —— 2407 檔
+## `docs/legacy/` —— 2431 檔
 
 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）
 
@@ -2412,6 +2412,30 @@ owner 2026-08-13：
 | `_overwrites/overwrite_temp_20260829-221556/.claude/worktrees/wf_1f72ad0e-1c3-2/packages/shared/src/ops/teamGlowCullPolicy.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260829-221601/.claude/worktrees/wf_1f72ad0e-1c3-2/packages/shared/src/ops/teamGlowCullPolicy.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260829-224515/docs/_release/ggd-board.html` | （.html 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-225919/.claude/worktrees/wf_7d528f9e-e28-1/tools/skill-spec/gen_spec.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-230106/.claude/worktrees/wf_7d528f9e-e28-1/tools/skill-spec/gen_spec.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-230158/.claude/worktrees/wf_7d528f9e-e28-1/packages/shared/src/ops/laneDOCSContractSilence.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-230255/.claude/worktrees/wf_7d528f9e-e28-1/tools/skill-spec/gen_spec.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-230257/.claude/worktrees/wf_7d528f9e-e28-2/content/abilities/godie-e007.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-230259/.claude/worktrees/wf_7d528f9e-e28-1/packages/shared/src/ops/laneDOCSContractSilence.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-230259/.claude/worktrees/wf_7d528f9e-e28-2/content/abilities/godie-e007.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-230304/.claude/worktrees/wf_7d528f9e-e28-1/packages/shared/src/ops/laneDOCSContractSilence.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-230306/.claude/worktrees/wf_7d528f9e-e28-2/content/champions/godie-e007.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-230309/.claude/worktrees/wf_7d528f9e-e28-2/content/champions/godie-e007.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-230418/.claude/worktrees/wf_7d528f9e-e28-1/tools/skill-spec/gen_spec.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-230442/.claude/worktrees/wf_7d528f9e-e28-1/tools/skill-spec/gen_spec.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-230500/.claude/worktrees/wf_7d528f9e-e28-5/packages/shared/src/content/templates/expand.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-230722/.claude/worktrees/wf_7d528f9e-e28-1/packages/shared/src/ops/contractEffectDocAnchors.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-230728/.claude/worktrees/wf_7d528f9e-e28-1/packages/shared/src/ops/laneDOCSContractSilence.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-230740/.claude/worktrees/wf_7d528f9e-e28-1/packages/shared/src/ops/laneDOCSContractSilence.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-230746/.claude/worktrees/wf_7d528f9e-e28-1/packages/shared/src/ops/laneDOCSContractSilence.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-230900/.claude/worktrees/wf_7d528f9e-e28-4/content/abilities/godie-o00x.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-230944/.claude/worktrees/wf_7d528f9e-e28-1/packages/shared/src/ops/contractEffectDocAnchors.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-231126/.claude/worktrees/wf_7d528f9e-e28-2/content/abilities/godie-e007.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-231146/.claude/worktrees/wf_7d528f9e-e28-2/content/abilities/godie-e007.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-232021/.claude/worktrees/wf_7d528f9e-e28-4/packages/shared/src/content/lineSweepRegistryProbe.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-232147/.claude/worktrees/wf_7d528f9e-e28-4/packages/shared/src/sim/effects/damageLine.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260829-234416/packages/shared/src/ops/contractSharedDocFits.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/04.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/06.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/08.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |

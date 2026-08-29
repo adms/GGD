@@ -48,6 +48,26 @@ function rowsOf(contract: string, kind: string): Map<string, string> {
   return out;
 }
 
+/**
+ * ⭐ **共用分片裡有這個「名字」，⛔ 不代表那是同一個「欄位」**（GH#877，2026-08-29）。
+ *
+ * ⚠️ 這條閘的判準是「`_*.ts` 有這個名字 ⇒ 契約就該有說明」——
+ * ⭐ 而**那正是造成三句假話的同一個假設**（只驗名詞，⛔ 不驗關係）：
+ *   · `spawnModelFx.scale`（`z.number().max(20)`）曾拿到 `_shared.ts` 的
+ *     `zResourcePctTerm.scale`（一個 **enum**）的說明 ⇒ 型別欄寫「數字 ≤20」、
+ *     說明欄叫人填 `"points"` —— ⭐ **那一列自己跟自己打架**
+ *   · `extendBuff.basis` / `modifyCooldown.basis` 曾拿到另一個 `basis` 的說明
+ *     ⇒ 列舉了**三個這個欄位根本不存在的值**
+ *
+ * ⇒ 這三格的 `—` 是**正確的結果**：`—` 說「去看 schema」，
+ * 而一句錯的說明說「不用看了」（第一·五守則：⛔ 不放任何無效說明）。
+ *
+ * ⭐ **到期條件**：哪一天有人替這三格寫**自己的** TSDoc（在它們各自的分片裡），
+ * 這一列當場作廢 —— ⛔ 那時它們不該再是 `—`。
+ */
+const NOT_THE_SAME_FIELD = new Set(["spawnModelFx.scale", "extendBuff.basis", "modifyCooldown.basis"]);
+
+
 describe("📘 每一個 effect 分片的說明都到得了契約（GH#877）", () => {
   it("⛔ 分片 → 契約：TSDoc 寫過的欄位，說明欄不可以是 `—`", () => {
     const contract = read(CONTRACT);
@@ -59,7 +79,8 @@ describe("📘 每一個 effect 分片的說明都到得了契約（GH#877）", 
       if (rows.size === 0) continue; // 不在出貨聯集裡 —— 那是 effectShardWiring 的事
       const known = new Set([...docNames(`${DIR}/${file}`), ...shared]);
       for (const [name, desc] of rows)
-        if (known.has(name) && ["—", "-", ""].includes(desc)) silent.push(`${kind}.${name}`);
+        if (known.has(name) && ["—", "-", ""].includes(desc) && !NOT_THE_SAME_FIELD.has(`${kind}.${name}`))
+            silent.push(`${kind}.${name}`);
     }
     expect(
       silent,

@@ -115,17 +115,6 @@
       "pctOfMedianHp30": 0.6
     },
     {
-      "abilityId": "godie-e007.r",
-      "abilityName": "12-04 龍氣爆發",
-      "apPct": 130,
-      "conditionalPct": [],
-      "beforeLv30": 65.1,
-      "afterLv30": 120.9,
-      "growth": 1.86,
-      "overBiggestTier": false,
-      "pctOfMedianHp30": 0.5
-    },
-    {
       "abilityId": "godie-hvsh.r",
       "abilityName": "48-04 騎英之疆繩",
       "apPct": 80,
@@ -554,44 +543,6 @@
     }
   ],
   "rows": [
-    {
-      "abilityId": "godie-e007.r",
-      "abilityName": "12-04 龍氣爆發",
-      "championId": "godie-e007",
-      "inPopulation": true,
-      "owner": "json",
-      "generatorFile": null,
-      "attr": "agi",
-      "coeff": 5.0,
-      "stacking": "base",
-      "claimIndex": 0,
-      "damageSlots": 1,
-      "payload": "damage",
-      "damageTypes": [
-        "magic"
-      ],
-      "rawPct": 125.0,
-      "apPct": 130,
-      "apCoeff": 1.3,
-      "currentRatios": [
-        {
-          "stat": "ap",
-          "coeff": 0.7
-        }
-      ],
-      "currentHasAd": false,
-      "currentHasAp": true,
-      "currentHasNone": false,
-      "attrDamageLv30": 120.0,
-      "apDamageLv30": 120.9,
-      "deltaLv30": 0.9,
-      "attrDamageLv50": 120.0,
-      "apDamageLv50": 146.9,
-      "deltaLv50": 26.9,
-      "attrDamageLv99": 120.0,
-      "apDamageLv99": 210.6,
-      "deltaLv99": 90.6
-    },
     {
       "abilityId": "godie-e00s.q",
       "abilityName": "70-01 伸卡球",
