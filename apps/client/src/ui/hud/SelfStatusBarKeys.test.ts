@@ -3,24 +3,16 @@
  *
  * 兩層同名狀態 ⇒ 兩顆圖示，兩把不同的 key（GH#837）。
  *
- * ⭐⭐ 2026-08-29 —— 這條守衛改成**真的把它掛進 React 調和器**，因為票的第一條
- * AC 逐字是「零警告」，⛔ 而「零警告」是 React **自己**才說得出口的話。
- *
- * ⚠️ 在此之前它讀的是 view 交給 React 的 `.key` 陣列。那證明得了「key 不撞」，
- * ⛔ 證明不了「React 不會叫」——⭐ 而票是被那句話卡著的（上一輪因此只能回
- * 「鏈路已接上，⛔ 未驗收」）。
- *
- * ⛔⛔ **`renderToStaticMarkup` 在這一題上是瞎的** —— 這是量到的，⛔ 不是推測：
- * 拿一對**手工做的重複 key** 餵給它，`console.error` 被呼叫 **0 次**。
- * ⇒ 拿 SSR 寫「零警告」會得到一條**對的與壞的實作都會綠**的守衛（失敗形態④，
- * 天譴那次的 d 洞：一把在特定方向上是瞎的尺）。所以這裡是 jsdom ＋
- * `createRoot`＋`flushSync`：那才是瀏覽器裡真的印出那串警告的同一條路。
- *
- * ⭐ 兩個方向都校準過（`calibrate`）：已知**壞**的量得到、已知**好**的量不到。
- *
- * ── 突變（2026-08-29）：`SelfStatusBar.tsx` 的 `key={keys[i]}` 改回 `key={r.id}`
- *    → 本檔第一條紅，訊息逐字帶回 React 的
- *    `Encountered two children with the same key`。改回即綠。
+ * ⛔⛔ 這一題上**有兩把尺是瞎的**，兩把都是量到的，⛔ 不是推測：
+ * ① `renderToStaticMarkup` 餵手工重複 key ⇒ `console.error` **0 次** ⇒ 拿 SSR
+ *    寫「零警告」＝對的與壞的實作都會綠。⇒ 改用 jsdom＋`createRoot`＋`flushSync`
+ *    （瀏覽器真的印出那串警告的同一條路），並用「自證」那條把尺自己驗一遍。
+ * ② ⭐ **「畫面上有幾顆圖示」要在**更新之後**數才有意義** —— 兩次都量過：
+ *    · **首次掛載**：突變體照樣畫 3 顆 ⇒ 這個位置的 `plates` 是瞎的（把斷言
+ *      順序對調驗過，紅的只有警告那一條）。React 不會少畫 child。
+ *    · ⭐ **更新之後**：突變體畫出 **5 顆**（而 rows 只有 4 列）—— React 把撞
+ *      key 的舊節點留在 DOM 裡（警告原文的 "duplicated" 那一半）
+ *      ⇒ ⛔ **玩家看到一顆不存在的減速圖示**。那才是這張票的驗收標準。
  */
 import { describe, expect, it, vi } from "vitest";
 import { createElement, type ReactNode } from "react";
@@ -37,35 +29,44 @@ const row = (id: string, secondsLeft: number): SelfStatusRow => ({
   disabling: false,
 });
 
-/** 真的掛進 DOM，回傳 React 印出的**重複 key** 警告與畫出來的圖示數。 */
-function mount(el: ReactNode): { dupKeyWarnings: string[]; plates: number } {
+const view = (rows: SelfStatusRow[]): ReactNode => createElement(SelfStatusBarView, { rows });
+
+/** 掛進真 DOM；給 `next` 就再走一次**更新**，`survivors` 數同一顆節點活過幾個。 */
+function mount(el: ReactNode, next?: ReactNode): { dupKeyWarnings: string[]; plates: number; survivors: number } {
   const spy = vi.spyOn(console, "error").mockImplementation(() => {});
   const host = document.createElement("div");
   document.body.appendChild(host);
   (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
   const root = createRoot(host);
   flushSync(() => root.render(el));
+  const before = [...host.querySelectorAll("[data-status-id]")];
+  if (next) flushSync(() => root.render(next));
+  const after = [...host.querySelectorAll("[data-status-id]")];
   // ⛔ 只留重複 key 那一種：`act(...)` 是測試腳手架的噪音，⛔ 不是產品警告。
   const dupKeyWarnings = spy.mock.calls
     .map((c) => String(c[0]))
     .filter((m) => m.includes("two children with the same key"));
-  const plates = host.querySelectorAll("[data-status-id]").length;
+  const survivors = before.filter((n) => after.includes(n)).length;
   spy.mockRestore();
   root.unmount();
   host.remove();
-  return { dupKeyWarnings, plates };
+  return { dupKeyWarnings, plates: after.length, survivors };
 }
 
 describe("SelfStatusBar 的 React key", () => {
-  it("⭐ 兩層同名狀態：零重複-key 警告，而且兩顆圖示都在（AC1）", () => {
+  it("⭐ 兩層同名狀態：兩顆圖示各自活過一次更新，且零重複-key 警告（AC1）", () => {
     // 兩個來源各給一層 30% 減速 —— 線上真的會送兩筆同 id（#819 驗收時量到）。
-    const r = mount(
-      createElement(SelfStatusBarView, {
-        rows: [row("slow30", 4), row("slow30", 9), row("burnstun", 2)],
-      }),
-    );
+    const twoLayers = [row("slow30", 4), row("slow30", 9), row("burnstun", 2)];
+    // 一個暈眩進場：`selfStatusRows()` 把 disabling 排最前 ⇒ 整排位置位移，
+    // ⭐ 那才是 React 走 map 路徑、讓撞 key 的後者覆蓋前者的那一刻。
+    const stunArrives = [
+      { ...row("stun", 2), disabling: true }, row("slow30", 3), row("slow30", 8), row("burnstun", 1),
+    ];
+    const r = mount(view(twoLayers), view(stunArrives));
+    // ⭐ 承重的那一條：更新後多一顆 = 玩家身上掛著一個他沒有的狀態。
+    expect(r.plates, "更新後畫面上的圖示數 ≠ rows 列數 —— 有幽靈圖示").toBe(4);
+    expect(r.survivors, "兩層的圖示都該原地留著,⛔ 不是被銷毀重建").toBe(3);
     expect(r.dupKeyWarnings, `React 仍在叫：${r.dupKeyWarnings[0] ?? ""}`).toEqual([]);
-    expect(r.plates, "少畫了一顆 —— 兩層 slow 只剩一顆圖示").toBe(3);
   });
 
   it("⭐ 這把尺的自證：同一條路餵手工重複 key ⇒ 它**真的**會叫", () => {
