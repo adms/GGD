@@ -9,8 +9,19 @@
  * （packages/shared/src/content/modelFxPreset.ts 的欄位表，當場剖 ⛔ 不抄副本）：
  * effective = 節點覆寫 ?? 模板 params[*].default。
  *
- * 設定不在這裡改（⛔ 不複製第二份表單）：粒子家族連 🔮 鑄技工坊 · 特效綁定，
- * 技能節點連 ✨ 技能編輯器，模板／模型文件連 🗃 內容管理。
+ * 💾 GH#826 —— 這一頁**不再是唯讀**（owner 2026-08-27「全部都要即時動態資料讀取及儲存
+ * （by JSON），不是唯讀」）。可存的是**模板家族的預設**（寫回 content/ability-templates/
+ * tpl-*.json，改一格＝引用這張模板的每一個節點一起變）：
+ *   · 數字格（scale／alpha／lifeSec…）—— 共用 TplParamCells
+ *   · ⭐ 綁定格 modelKey／soundKey／arriveSoundKey —— owner 2026-08-20 逐字點名的
+ *     「球體綁定位置」「特效音效綁定」那一族；存在性由 dataset 的 check 擋
+ *     （出貨 schema 只有 z.string().min(1)，打錯字它**不會**擋 ⇒ 遊戲裡什麼都不生／不出聲）。
+ * ⛔ **origin（出處）刻意不開成格子**：tplOriginRule 的 maxLen 是 400，而出貨模板裡有
+ * 6 格 origin 超過它（最長 565 字）—— 開了就是一個「讀得進來、存不回去」的陷阱，
+ * 而且小輸入框編一段 500 字的考證紀錄＝知識無聲消失。⇒ 改完值請直接編 JSON 補 owner:…。
+ *
+ * 其餘仍唯讀（⛔ 不複製第二份表單）：粒子家族連 🔮 鑄技工坊 · 特效綁定，
+ * 技能節點連 ✨ 技能編輯器，模型文件連 🗃 內容管理。
  */
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Panel, TextInput } from "../widgets";
@@ -18,6 +29,7 @@ import { DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../th
 import { useApp } from "../../store";
 import { ReviewStrip } from "./ReviewStrip";
 import { TplParamCells, type NumericParam } from "./TplParamCells";
+import { LiveEditCell } from "./LiveEditCell";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
@@ -43,6 +55,18 @@ interface Member {
   model: MemberModel | null;
 }
 
+/** 🔗 可存的綁定格（dataset 的 bindingParamRows —— 形狀與 NumericParam 同構）。 */
+interface BindingParam {
+  key: string;
+  label: string;
+  ref: string;
+  default: string | null;
+  origin: string | null;
+  optional: boolean;
+  /** false ＝ 這一格刻意沒有家族預設（逐支填）—— ⛔ 頁上不開編輯。 */
+  editable: boolean;
+}
+
 interface TemplateRow {
   id: string;
   file: string;
@@ -54,6 +78,7 @@ interface TemplateRow {
   inert: string[];
   paramCount: number;
   numericParams: NumericParam[];
+  bindingParams: BindingParam[];
   model: {
     id: string;
     glbPath: string | null;
@@ -100,6 +125,8 @@ interface Payload {
   noPreset: Member[];
   models: ModelRow[];
   particles: { knobs: Record<string, unknown>; families: ParticleFamily[] };
+  /** 兩格音效鍵的**總開關**（audio-map 的 modelFxSound）—— 關著就是存得下去但不會播。 */
+  audio: { modelFxSoundEnabled: boolean; arriveEnabled: boolean; sfxKeys: number };
   honest: string[];
   _live?: { computedAt: string; ms: number };
 }
@@ -206,7 +233,61 @@ function NavLink(props: { page: string; children: React.ReactNode }): React.JSX.
   );
 }
 
-function TemplateBlock(props: { t: TemplateRow; filter: string; onSaved: () => void }): React.JSX.Element | null {
+/**
+ * 🔗 綁定預設的三格（modelKey／soundKey／arriveSoundKey）—— 存回 tpl-*.json。
+ * 打錯字擋在 dataset 的 check（出貨 schema 是 z.string().min(1)，⛔ 它不驗存在性）；
+ * 「留白」＝刻意沒有家族預設（逐支填），⛔ 不在這裡創造（新增 default 而沒有 origin
+ * 會讓 templateDefaultsHaveOrigin ① 當場紅）。
+ */
+function BindingCells(props: {
+  t: TemplateRow;
+  audio: Payload["audio"];
+  onSaved: () => void;
+}): React.JSX.Element | null {
+  const { t, audio } = props;
+  if (t.bindingParams.length === 0) return null;
+  return (
+    <div style={{ fontSize: 12, color: TEXT_DIM, display: "flex", gap: "4px 14px", flexWrap: "wrap", alignItems: "baseline" }}>
+      <span>
+        🔗 綁定預設（存回 <code style={{ fontFamily: MONO }}>{t.file}</code>，這張模板的 {t.members.length} 個節點一起換）：
+      </span>
+      {t.bindingParams.map((b) => {
+        const soundOff = b.key !== "modelKey" && !audio.modelFxSoundEnabled;
+        return (
+          <span
+            key={b.key}
+            style={{ whiteSpace: "nowrap" }}
+            title={`${b.ref}${b.optional ? "（optional）" : ""}\n${b.origin ? `出處：${b.origin}` : "出處：（這一格在 templateOriginBaseline 豁免表上）"}`}
+          >
+            <span>
+              {b.label}（{b.key}）=
+            </span>
+            {b.editable ? (
+              <LiveEditCell
+                dataset="vfx-templates"
+                path={t.file}
+                pointer={`/params/${b.key}/default`}
+                current={b.default}
+                type="string"
+                onSaved={props.onSaved}
+              />
+            ) : (
+              <span title="刻意沒有家族預設（逐支填）—— 要新增預設請在 JSON 連 origin 一起補">留白</span>
+            )}
+            {soundOff && b.editable ? (
+              <span style={{ color: WARN }} title="audio-map 的 modelFxSound.enabled 是關的 —— 這一格存得下去但一聲都不會播">
+                {" "}
+                🔇
+              </span>
+            ) : null}
+          </span>
+        );
+      })}
+    </div>
+  );
+}
+
+function TemplateBlock(props: { t: TemplateRow; filter: string; audio: Payload["audio"]; onSaved: () => void }): React.JSX.Element | null {
   const { t, filter } = props;
   const members = useMemo(() => {
     const needle = filter.trim().toLowerCase();
@@ -230,10 +311,8 @@ function TemplateBlock(props: { t: TemplateRow; filter: string; onSaved: () => v
     >
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         <div style={{ fontSize: 12, color: TEXT_DIM, fontFamily: MONO, lineHeight: 1.8 }}>
-          家族預設：modelKey=<b style={{ color: TEXT_MAIN }}>{String(d.modelKey ?? "—")}</b>
-          {" · "}clip={String(d.clip ?? "—")}
+          家族預設：clip={String(d.clip ?? "—")}
           {" · "}path={String(d.path ?? "—")}
-          {" · "}soundKey={String(d.soundKey ?? "—")}
           {t.inert.length > 0 ? (
             <span style={{ color: WARN }}>
               {" "}
@@ -241,6 +320,7 @@ function TemplateBlock(props: { t: TemplateRow; filter: string; onSaved: () => v
             </span>
           ) : null}
         </div>
+        <BindingCells t={t} audio={props.audio} onSaved={props.onSaved} />
         {t.numericParams.length > 0 && (
           <div style={{ fontSize: 12, color: TEXT_DIM, display: "flex", gap: 10, alignItems: "baseline", flexWrap: "wrap" }}>
             <span>
@@ -375,14 +455,32 @@ export function VfxTemplatesPage(): React.JSX.Element {
             <span>暗色</span>）—— 欄位表當場剖自出貨解析器 modelFxPreset.ts（
             {data.fieldSources.presetFields.length}＋{data.fieldSources.soundFields.length}＋
             {data.fieldSources.touchFields.length} 格）。⛔ 標記＝模板標 inert（現行 path 下讀不到）。
-            設定請走右上角的既有頁面，這一頁唯讀。
           </div>
+          <div style={{ fontSize: 12, color: TEXT_MAIN }}>
+            💾 <b>模板家族的預設在這一頁存得動</b>（寫回 content/ability-templates/tpl-*.json）：
+            🔗 綁定格（模型／施放音／落點音）與數字格 —— 改一格，引用那張模板的每一個節點一起變。
+            <span style={{ color: TEXT_DIM }}>
+              {" "}
+              逐支節點的覆寫值、模型文件、粒子家族仍走右上角的既有頁面（⛔ 不複製第二份表單）。
+            </span>
+          </div>
+          {!data.audio.modelFxSoundEnabled && (
+            <div style={{ fontSize: 12, color: WARN }}>
+              🔇 audio-map 的 <code style={{ fontFamily: MONO }}>modelFxSound.enabled</code> 是<b>關的</b>
+              —— soundKey／arriveSoundKey 兩格存得下去，但遊戲裡一聲都不會播（存了就是一句謊話）。
+            </div>
+          )}
+          {data.audio.modelFxSoundEnabled && !data.audio.arriveEnabled && (
+            <div style={{ fontSize: 12, color: WARN }}>
+              🔇 <code style={{ fontFamily: MONO }}>modelFxSound.arrive</code> 是關的 —— 落點音（arriveSoundKey）不會播。
+            </div>
+          )}
           <TextInput value={q} onChange={setQ} placeholder="過濾：技能 id / 名 / modelKey…" />
         </div>
       </Panel>
 
       {data.templates.map((t) => (
-        <TemplateBlock key={t.id} t={t} filter={q} onSaved={load} />
+        <TemplateBlock key={t.id} t={t} filter={q} audio={data.audio} onSaved={load} />
       ))}
 
       {data.noPreset.length > 0 && q.trim() === "" ? (
