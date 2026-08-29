@@ -179,9 +179,10 @@
     },
     {
       "key": "radius:tier",
-      "max": 52,
+      "max": 54,
       "layer": "GGD-tier-table",
-      "reason": "owner 2026-08-11「原則上不寫範圍數字」⇒ AOE 走級距(`content/config/aoe-tiers.json`);出貨文件帶著 `radiusTier`。⭐ 2026-08-28 +1：08-04 阿邦快速劍X 變身態（godie-nbbc.r）拿掉空模板殼之後，落點 AoE（j:28918 `GetUnitsInRangeOfLocAll(250)` = 4.58→級距 4.5「小」）第一次進到出貨形狀 ——⛔ 不是漂移，是它本來就該有而以前被 `tpl-single-strike` 蓋住了。"
+      "reason": "owner 2026-08-11「原則上不寫範圍數字」⇒ AOE 走級距(`content/config/aoe-tiers.json`);出貨文件帶著 `radiusTier`。⭐ 2026-08-28 +1：08-04 阿邦快速劍X 變身態（godie-nbbc.r）拿掉空模板殼之後，落點 AoE（j:28918 `GetUnitsInRangeOfLocAll(250)` = 4.58→級距 4.5「小」）第一次進到出貨形狀 ——⛔ 不是漂移，是它本來就該有而以前被 `tpl-single-strike` 蓋住了。",
+      "why": "⭐ 2026-08-30 從 52 → 54，而**變多是有出處的**：`godie-o02p` 的 `delayed{shape:\"circle\"}` 節點補上了 `radiusTier`＋字面 `radius`（技能檔與英雄卡鏡像各一 ⇒ **正好 +2**）。⚠️ 補它的理由是 schema 的 refine 跑在 `resolveRadiusTier` **之前** ⇒ 沒有字面 radius 的圓**連載入都載不了**（`content:build` 當場 EXIT=1）。⇒ 這一格變多**不是漂移**，是一支技能從『載不了』變成『載得了』。"
     },
     {
       "key": "radius:free-number",
@@ -192,10 +193,11 @@
     },
     {
       "key": "radius:ggd-absent",
-      "max": 90,
+      "max": 88,
       "layer": "⚫無主",
       "reason": "w3a 有 `area`(範圍技)而出貨側**整棵效果樹找不到任何 radius**。⚠️ 這一批混了兩種:重製時刻意改成單體的,以及**漏接範圍**的 —— 而兩種在 JSON 裡長得一模一樣。⭐ 2026-08-28 −1：同上一列的另一半（nbbc.r 從『沒有半徑』變成『有半徑』）。",
-      "followUp": "逐支對 owner 的新版技能說明(階梯第 1 層):說明寫[範圍]而 JSON 沒有 radius ⇒ 漏接;說明就是單體 ⇒ 在文件裡記一行,這一列的 max 跟著降。"
+      "followUp": "逐支對 owner 的新版技能說明(階梯第 1 層):說明寫[範圍]而 JSON 沒有 radius ⇒ 漏接;說明就是單體 ⇒ 在文件裡記一行,這一列的 max 跟著降。",
+      "why": "⭐ 2026-08-30 從 90 → 88 —— **修好了兩支**（#401 的直線分段掃擊改走 `damageLine`、以及 `godie-o02p` 補上圈）。⇒ 照守衛的指示把 max 調降成量到的數字。"
     },
     {
       "key": "duration:free-number",

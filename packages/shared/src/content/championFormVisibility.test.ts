@@ -100,7 +100,6 @@ const ART_DEBT: ReadonlySet<string> = new Set([
   // 一筆沒有人會看到的美術債不是債，所以它從帳本上離開的方式是「不再 reachable」，
   // 不是「有人畫了 form-visuals」。⚠️ 這一格由下面「the ledger is exact」把關：
   // 12 的變身若哪天重新接上入口，它會立刻要求把這個 id 放回來。
-  "godie-h01o", // 79 黑崎一護 卍解
   "godie-h02u", // 92 草泥馬 臥草
   "godie-h02r", // 90 妙蛙花
   "godie-h020", // 04 莉娜因巴斯
