@@ -1,7 +1,7 @@
 /**
  * ⭐【回血/回魔的離群值要說得出出處】—— GH#766（接手 #177）。
  *
- * `content/config/stat-caps.json` 的 `healthRegen 1366` / `manaRegen 1711` 是**防
+ * `content/config/stat-caps.json`（⚠️⚠️ 改之前先查那一份是誰的：`bash scripts/genguard.sh content/config/stat-caps.json` ⇒ ⭐ 它是 **`statcaps:build`** 的產物，來源在 `tools/stat-caps/gen_stat_caps.ts` —— 改**來源**再 `bash scripts/genrun.sh statcaps:build`。⛔ 直接改出貨 JSON 會被下一次 sync 打回來，而那個「又紅了」看起來像**新的**錯）的 `healthRegen 1366` / `manaRegen 1711` 是**防
  * mis-parse 的柵欄**，⛔ 不是平衡上限：出貨最極端的一位是 12（`godie-huth`），
  * 餘裕約 **106 倍** ⇒ 那兩格逐位元等於不存在。#177 關票時把「欄位存在」讀成
  * 「上限已補」—— 第一·五守則點名的形狀（同 `ad` 的 cap 21200）。
