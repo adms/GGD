@@ -39,10 +39,38 @@ fi
 #   ⇒ 與 `sync.mjs` 的行為逐字相同 —— 而那條路已經穩定運作。
 bash scripts/product-quarantine.sh unlock
 trap 'bash scripts/product-quarantine.sh lock >/dev/null 2>&1 || true' EXIT
+
+# 🧾 GH#771 Scope③ —— **執行期對帳**：跑之前拍一張快照，跑完問
+#   「這一支寫出去的每一份檔，戶籍表上是不是它自己的？」
+#   ⭐ 這裡是**唯一**歸得了因的地方：單獨跑 = 同一個時間窗只有這一支在寫。
+#      （`skills:sync` 那一趟是 8–12 支並行 ⇒ mtime 互相汙染 ⇒ 刻意不對帳。）
+#   ⚠️ 快照拍不出來就**說出來再跳過** —— 靜默的跳過與「全過」長得一模一樣。
+SNAP=""
+if [ "${GGD_RECONCILE_OFF:-0}" != "1" ]; then
+  # ⚠️ 一定要帶 `XXXXXX` 的完整模板 —— BSD 的 `mktemp -t <前綴>` 會自己補亂數，
+  #   ⛔ 而 GNU 的同一寫法會死在「too few X's in template」⇒ 那條路上對帳會**靜默消失**。
+  SNAP="$(mktemp "${TMPDIR:-/tmp}/ggd-genrun-snap.XXXXXX")"
+  node tools/parallel-gates/reconcile.mjs snapshot --out "$SNAP" ||
+    { echo "⚠️ 對帳快照拍不出來 —— 這一輪**沒有對帳**（⛔ 不是通過）。" >&2; rm -f "$SNAP"; SNAP=""; }
+fi
+
 GGD_QUARANTINE_UNLOCKED=1 pnpm "$RUN"
 RC=$?
+
+# ⭐ 在**重新上鎖之前**對帳（chmod 只動權限位，⛔ 不動 mtime/size，兩邊順序都安全，
+#   但擺在這裡讀起來就是「跑完 → 對帳 → 收工」）。
+if [ -n "$SNAP" ]; then
+  if [ "$RC" -eq 0 ]; then
+    node tools/parallel-gates/reconcile.mjs verify --step "$STEP" --before "$SNAP" || RC=3
+  fi
+  rm -f "$SNAP"
+fi
+
 bash scripts/product-quarantine.sh lock
-if [ "$RC" -ne 0 ]; then
+if [ "$RC" -eq 3 ]; then
+  echo "✗✗ genrun: $STEP **跑完了但戶籍對不上**（見上面的對帳報告）—— GH#771。" >&2
+  echo "✗✗ genrun: $STEP **跑完了但戶籍對不上**（見上面的對帳報告）—— GH#771。"
+elif [ "$RC" -ne 0 ]; then
   echo "✗✗ genrun: \`pnpm $STEP\` 失敗（exit $RC）—— ⛔ 產物**沒有**重新產生。" >&2
   echo "✗✗ genrun: \`pnpm $STEP\` 失敗（exit $RC）—— ⛔ 產物**沒有**重新產生。"
 else

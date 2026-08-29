@@ -1,0 +1,18 @@
+{
+  "_readme": [
+    "🧾 執行期對帳的**棘輪** —— GH#771。⭐ 只能變短。",
+    "一列 = 「這個 step 會寫這份檔，⛔ 而全戶籍沒有人認領它」——也就是一個今天就存在的洞。",
+    "⛔ 只收 `unowned`（全戶籍零認領）那一類；`foreign`（別人認領、自己沒宣告）⛔ 不可以進來 ——",
+    "那一類的修法是在寫入端檔頭補 `// ggd:writes <glob>`，成本是一行。",
+    "⭐ 這張表**會自己到期**：`syncIoRuntimeReconcile.test.ts` 驗每一列的 path 今天仍然零認領。",
+    "重量測 sync-io 之後它有了主人 ⇒ 那一列變成幽靈 ⇒ 測試紅 ⇒ 刪掉它。",
+    "⛔ 不可以為了讓閘變綠而加一列 —— 加之前要寫得出 why（能被反駁的證據）。"
+  ],
+  "pending": [
+    {
+      "step": "content:build",
+      "path": "content/vfx-scripts/_index.json",
+      "why": "GH#838 的 `vfx-scripts` 集合是**上一次量測 sync-io 之後**才出現的。`packages/shared/scripts/buildIndexes.ts` 對 manifest 裡**每一個**集合重建 `_index.json`（⛔ 不是一張寫死的清單）⇒ `content:build` 一定會寫它；而 `bash scripts/genguard.sh content/vfx-scripts/_index.json` 今天逐字回「沒有產生器擁有者，而且沒有被隔離區鎖過」。⇒ 它是真的洞（沒有隔離區保護），⛔ 而修它要重量測 sync-io ＝ 走 `skills:sync` 那一趟 ＝ **全域鎖**，⛔ 平行 lane 不可以跑。⭐ 到期條件：重量測之後 `content:build` 的 writes 會含它 ⇒ 這一列當場變幽靈而測試紅。"
+    }
+  ]
+}
