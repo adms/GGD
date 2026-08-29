@@ -2457,6 +2457,10 @@ export class VfxSystem {
             sizeScale: p.sizeScale,
             riseSpeed: p.riseSpeed,
             durationSec: p.durationSec,
+            // ⭐ GH#853 —— 地面平面的飄移（原作 `SetTextTagVelocityBJ`）。
+            //    ⛔ 少了這一行，schema 收得下、sim 送得出、池子算得對，
+            //    而畫面上每一個字仍然直升（失敗形態⑧）。
+            drift: p.drift,
           });
         }
         break;

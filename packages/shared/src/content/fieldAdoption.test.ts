@@ -3010,6 +3010,38 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
       + "的真實需求 —— ⚠️⚠️ 2026-08-28 更新:同族的 `radius` 與 `shape=circle` **已經被反駁掉了**(GH#838 N3 `applyTo:nearby`,那兩列已刪)。⭐ 但這一格還沒有:`nearby` 的語意是「圓內**敵我都算**」⇒ 它刻意**不讀** `side`／`maxTargets`(`side:enemies` 正好會漏掉施法者自己)。要反駁這一列,要拿出一個「只有某一邊看得到」或「只給最近 N 個人」的真實需求。",
   },
+  // ⭐ GH#853 —— `SetTextTagVelocityBJ` 的四格（喊招字沿角度飛）。機制與內容是
+  //    兩個 commit：這一批只做**機制**（schema＋sim＋客戶端消費），逐支填角度是
+  //    內容側的下一步。⚠️ 出處逐格可引用（`sim/effects/floatingText.ts` 檔頭的
+  //    120 次呼叫普查），⛔ 沒有一格是「看起來比較像」挑出來的。
+  "field:abilities.effects[]#floatingText.driftSpeed": {
+    status: "landing",
+    since: "2026-08-29",
+    why:
+      "⭐ 機制剛落地（GH#853），內容逐支翻譯是下一步。⚠️ 要反駁它很容易："
+      + "原作 120 次 `SetTextTagVelocityBJ` 裡 26 次（22%）不是直升 —— 超究武神霸斬的 "
+      + "`1Hit…7Hit`（`war3map.j:33857`）就是其中之一。⇒ 那 26 次翻進 `content/` 的那一天這一列就該刪。",
+  },
+  "field:abilities.effects[]#floatingText.driftAngleDeg": {
+    status: "landing",
+    since: "2026-08-29",
+    why: "⭐ 同上（GH#853 機制批）。出處：BJ 的第二個參數，字面度數 94/120。",
+  },
+  "field:abilities.effects[]#floatingText.driftAngleStepDeg": {
+    status: "landing",
+    since: "2026-08-29",
+    why:
+      "⭐ 同上（GH#853 機制批）。出處：`war3map.j:33850` 的 "
+      + "`set udg_superAngle = udg_superAngle + 270.00` —— 超究武神霸斬**每一刀轉一次**。",
+  },
+  "field:abilities.effects[]#floatingText.driftFrom": {
+    status: "landing",
+    since: "2026-08-29",
+    why: "⭐ 同上（GH#853 機制批）。出處：`GetUnitFacing(<unit>)` 18/120 次。",
+  },
+  // ⚠️ `driftFrom` 的**兩個臂**刻意沒有列在這裡：`driftFrom` 目前 reach 0
+  //    （< `MIN_REACH` 3）⇒ 普查對它**不作任何主張** ⇒ 替它寫豁免會被判 STALE
+  //    （量到的，⛔ 不是推測）。內容側填滿之後它們才會浮出來。
   "enum:abilities.effects[]#floatingText.shape=circle": {
     status: "landing",
     since: "2026-08-22",
