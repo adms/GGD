@@ -20,6 +20,12 @@ import type { MatchState } from "@ggd/shared/protocol/schema";
 import { ENTITY_KIND, formIndexFromFlags } from "@ggd/shared/protocol/schema";
 import type { EventMessage, MatchSettlement } from "@ggd/shared/protocol/messages";
 import type { MarkView } from "../ui/hud/markModel";
+// ⛔⛔ GH#816 —— `state.entities` 是 **view-gated**，view 裡一個實體都沒有的時候
+// Colyseus **整格不送** ⇒ 客戶端讀到 `undefined`（⛔ 不是 size 0 的空 map）。
+// 本檔在 2026-08-29 之前有 5 處無條件 `state.entities.get/forEach`，它們沒有一起
+// 爆掉純粹是因為外圈剛好都有 `entityId > 0` 的 if —— 那是**巧合，⛔ 不是保證**。
+// ⇒ 唯一入口是 `entitiesOf()`；閘是 `viewGatedReads.test.ts`（掃出貨原始碼）。
+import { entitiesOf } from "./viewGatedEntities";
 
 export interface OfferView {
   offerId: string;
@@ -865,7 +871,7 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
     let zone = -1;
     let formIndex = 0;
     if (ss.entityId > 0) {
-      const es = state.entities.get(String(ss.entityId));
+      const es = entitiesOf(state).get(String(ss.entityId));
       if (es) {
         hp = Math.round(es.hp);
         maxHp = Math.round(es.maxHp);
@@ -1010,7 +1016,7 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
       shield: 0,
     };
     if (entityId !== null) {
-      const es = state.entities.get(String(entityId));
+      const es = entitiesOf(state).get(String(entityId));
       if (es) {
         lp.hp = Math.round(es.hp);
         lp.maxHp = Math.round(es.maxHp);
@@ -1035,10 +1041,10 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
   // the minimap (#67) — the other arena's wave is not coming for you.
   let mobsAlive = 0;
   if (localEntityId !== null) {
-    const me = state.entities.get(String(localEntityId));
+    const me = entitiesOf(state).get(String(localEntityId));
     if (me) {
       const myZone = me.zone;
-      state.entities.forEach((es) => {
+      entitiesOf(state).forEach((es) => {
         if (es.kind === ENTITY_KIND.MOB && es.alive && es.zone === myZone) mobsAlive++;
       });
     }
@@ -1047,7 +1053,7 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
 
   // ---- local resource bars (integers to bound update rate) ----
   if (localEntityId !== null) {
-    const es = state.entities.get(String(localEntityId));
+    const es = entitiesOf(state).get(String(localEntityId));
     if (es) {
       const hp = Math.round(es.hp);
       const maxHp = Math.round(es.maxHp);
