@@ -1809,4 +1809,7 @@ watchdog 後代 CPU 修復。
   - ⭐ 新鮮度列的三個徽章字串**確認在出貨的 admin JS 裡**
 - ⚠️ `skills:check` 紅**一項**：#870 `docs:status:check` 是**永遠不會綠**的閘
   （頁面 286 筆 vs 三個 ledger 全 5 筆；ledger 目錄 mtime **2026-08-16** ⇒ ⛔ 與本次改動無關）
+- ✅ **DEPLOY v0.31.2**（09:32）—— #866 補上 rollback 開關 `GGD_LIVE_FRESHNESS_BAR=0`
+  （慣例跟著同模組的 `GGD_LIVE_CACHE=0`；rollback ＝ `.env` 一行 ＋ 重啟 review，⛔ 不重建映像）
+  - 煙霧（**全新分頁**）：`content loaded: 71 champions (cv_e839901bccb8) via bundle` · 徽章 `v0.31.2`
 
