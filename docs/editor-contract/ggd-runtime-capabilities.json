@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "74a4cffd",
+  "fingerprint": "f3f4185c",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -160,6 +160,7 @@
     "blocksDamage",
     "blocksTrueDamage",
     "body",
+    "boneOn",
     "bountyGold",
     "branches",
     "breakOnDamage",
@@ -746,6 +747,7 @@
     "on-attack",
     "on-hit-react",
     "orbit-array",
+    "periodic-field",
     "proxy-cast",
     "proxy-fanout",
     "radial-burst",

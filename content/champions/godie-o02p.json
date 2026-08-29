@@ -242,7 +242,7 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "flat": 100.0
+                "damageTier": "極小"
               }
             }
           ]
@@ -250,7 +250,7 @@
       ],
       "vfxKey": "fx.prim.holy.nova-lg",
       "castTimeSec": 0.067,
-      "cooldownTier": "極大"
+      "cooldownTier": "中"
     }
   },
   "skillOrder": [
