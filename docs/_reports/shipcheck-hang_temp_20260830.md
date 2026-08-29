@@ -134,3 +134,37 @@
 ⭐ 地板要**大於帳本裡最慢的一支健康 suite**（從帳本推導，⛔ 不抄字面值）。
 
 🚨 **突變**：拿掉 `run()` 裡看門狗開火後的寬限收尾 ⇒ `close` 不來 ⇒ 第 1 條逾時而紅。
+
+---
+
+## 6. ⭐⭐ 票文的主張，在 log 裡拿到實物證據
+
+2026-08-30 那一次現場跑（`--no-sync`）的兩份 log —— **兩支都被標成 `（hung,看門狗殺的）`**：
+
+| suite | 標籤 | log 裡**實際**是什麼 |
+|---|---|---|
+| `vitest packages/shared` | ✗ hung，416.0s | ⭐ **4 條真的 `FAIL`**：`fieldAdoption.test.ts` ×3 · `legacyIndexFresh.test.ts` · `variantMirrorsSchema.test.ts`（`floatingText`：`driftSpeed` / `driftAngleDeg` / `driftAngleStepDeg` / `driftFrom` —— Zod 收得下而 variant 看不到，第〇·四守則） |
+| `vitest apps/client` | ✗ hung，426.0s | ⭐ **`Test Files 670 passed (670)` · `Tests 5912 passed \| 1 skipped`** —— **完全是綠的** |
+
+⇒ ⭐⭐ **同一隻壞掉的看門狗，同時做了兩件相反的壞事**：
+- 把**全綠**的 `apps/client` 報成 ✗（**假紅**）
+- 把 `packages/shared` 的 **4 條真紅**寫成一句「hung，單獨重跑通常會過」（**真紅被遮住**）
+
+⚠️ 而「hung」這個標籤本身就是**叫人不要看**的意思 —— 腳本的訊息逐字寫著
+「單獨重跑通常會過(併行撞車)」。⇒ 沒有人會去打開那份 log。
+
+⭐ 這就是票文那句「**卡死遮住過真紅**」，⛔ 不是推測，是兩份 log。
+
+⚠️ ⛔ 那 4 條 `FAIL` **不在這條 lane 的柵欄內**（`packages/shared/src/content/**`、`src/ops/legacyIndexFresh`），
+這一輪**一個字都沒有動**。⭐ 它們需要有人接。
+
+---
+
+## 7. 下一步（⭐ 結構解，⛔ 這一票沒做）
+
+`scripts/watchdog.sh` 已經有**兩樣這裡沒有的東西**：整棵樹的 BFS `kill_tree`，
+以及 ⭐ **90 秒 0% CPU 偵測器** —— 那才是真正分得開「卡死」與「只是慢」的尺
+（這一次量到孤兒是 **10–74% CPU** ⇒ 它們是**慢**，⛔ 不是卡死；wall 上限分不出這件事）。
+
+⇒ ⭐ 讓 `ship.mjs` 的每一格走 `scripts/watchdog.sh`，殺樹邏輯就收成**一個住處**。
+⛔ 這一票沒做：它比驗收條件大，而且 `run()` 仍然需要自己保證 settle（那是 `watchdog.sh` 給不了的性質）。
