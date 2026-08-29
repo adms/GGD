@@ -1813,3 +1813,15 @@ watchdog 後代 CPU 修復。
   （慣例跟著同模組的 `GGD_LIVE_CACHE=0`；rollback ＝ `.env` 一行 ＋ 重啟 review，⛔ 不重建映像）
   - 煙霧（**全新分頁**）：`content loaded: 71 champions (cv_e839901bccb8) via bundle` · 徽章 `v0.31.2`
 
+## v0.31.3（2026-08-29 上午）—— ⭐ 換模式：把票**做掉**，⛔ 不是再稽核一次
+
+- 🧹 **關掉 8 張**（#822 #823 #826 #828 #829 #832 #818 #864）· 6 張帶進度註解 —— 11 條平行 lane（各自 worktree）＋ 對抗性複驗，23 個 agent
+- ⭐⭐ **四個推翻裡三個是同一件事**：共用寫入端只寫 `content/abilities/*.json`，⛔ 不同步英雄副本
+  - ① 每存一格 `abilityMirror` 從綠變紅　② ⭐ `fillGaps()` 把刪掉的欄位補回來 ⇒ **「清空一格」在比賽裡靜默無效**
+  - ⚠️ 第二條嚴重得多 —— **紅測試會被看到，⭐ 靜默無效不會**
+  - ⇒ 修**機制**（`mirrorAbilityIntoChampion`，standalone → embedded），⛔ 不逐支補 ⇒ 三條 lane 前提一次消失
+- ⭐ 複驗又量到**兩個真缺陷**：① `offerCount max:6` / loot `weight min:0` 比出貨 schema 寬（後台存得下、驗證拒收）② `promoted/primary` 的 check 只驗名詞 ⇒ 存下去打紅兩條出貨守衛且**場上兩個家族的碎片**
+- 🔓 #699/#753 固定窗 → 一格可調（⭐ 預設 16 是量的：PRE2×6＋RIBB×8=14）；RIBB 盤點 18 條裡 16 條畫得出來，`aivitarget` 是 **PRE2×0 / RIBB×3**
+- ✅ DEPLOY v0.31.3 · 煙霧（全新分頁）`71 champions (cv_e839901bccb8)` · 徽章 `v0.31.3`
+- ⚠️ **#853 未合併**（複驗說沒做完，留在分支）· `skills:check` 仍紅一項 #870（⛔ 與本次無關）
+
