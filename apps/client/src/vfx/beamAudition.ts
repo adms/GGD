@@ -31,9 +31,21 @@
  *      12 秒 0 幀）—— 而「0 幀」與「這個特效不會動」量起來一模一樣；
  *   ⑤ ⭐ **縮視窗之後 canvas 的背後緩衝沒跟著變**（同上）—— 於是 `readPixels` 讀的是
  *      一塊與畫面對不起來的舊尺寸緩衝。
- *   ⇒ 頁面載入時 `calibrate()` 量**兩個方向**（見 `auditionCalibrate.ts`）：
+ *   ⑥ ⭐ **池化的那一具已經到期** —— 於是 A/B 的「改前」那張圖是全黑的，
+ *      而它會被讀成「改前完全看不見」。⚠️ 這一坑**量尺自己分不出來**：
+ *      「畫不出來」與「台上根本沒東西」在像素上一模一樣。
+ *   ⇒ `calibrate()` 量**兩個方向**（見 `auditionCalibrate.ts`）：
  *      已知**亮** ⇒ 量得到；把它拿掉 ⇒ 量到的**嚴格變少**。
  *      ⛔ 只驗前者的尺不算自證過 —— 一支永遠回大數字的壞尺會通過它（GH#768）。
+ *
+ * ⭐⭐ GH#768 AC#1 —— **自證發生在出讀數的那一刻**，⛔ 不是頁面載入時那一次。
+ * 坑④⑤⑥全部是**中途才發生**的（分頁被切走、視窗縮過、那一具回池了），
+ * 所以一次開頁校準證明不了三分鐘後那一個讀數。⇒ `measure()` 每一次都先跑
+ * `calibrate()`，證不過就**擲例外**（⛔ 不是回 0 繼續跑 —— 一個回得出來的 0
+ * 會被讀成「看不見」，而一個例外不會）。`probeDocs()` 同理：它整批走 `readRaw()`，
+ * 所以在拍對照幀**之前**先自證一次。
+ * ⭐ 坑⑥寫進**讀數本身**：每一次 `measure()` 一起回 `liveBeams` / `liveVertices`
+ * ⇒ 「`lit:0` ＋ `liveBeams:0`」＝台上沒東西，「`lit:0` ＋ `liveBeams>0`」＝真的畫不出來。
  */
 import { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
@@ -95,6 +107,72 @@ export interface DocProbeReading {
   particles: number;
 }
 
+/** 一次**自證過**的讀數（GH#768）。⛔ 沒有自證過的讀數不會被交出來 —— 它會擲例外。 */
+export interface BeamMeasurement {
+  w: number;
+  h: number;
+  /** 「亮」的像素數 —— ⭐ 門檻**只住 `countBright()`**（⛔ 這裡不抄那個數字）。 */
+  bright: number;
+  /** 「有顏色」的像素數 —— 同上，門檻在 `countBright()`。 */
+  lit: number;
+  /**
+   * ⭐ 坑⑥的分母：這一幀台上**還活著**的 beam 根節點數。
+   * `lit:0 ＋ liveBeams:0` = 台上沒東西（⛔ 不是「畫不出來」）。
+   */
+  liveBeams: number;
+  /** 同上的頂點總數。`liveBeams>0 ＋ liveVertices:0` = 空節點（幾何從來沒接上）。 */
+  liveVertices: number;
+}
+
+/** `pumpTicks` 的三個階段 —— 拆開只為了讓守衛驗得到**順序**（⛔ 這一支不吃 Babylon）。 */
+export interface TickPump {
+  /** 推進 sim 一格。⚠️ `SimWorld.step()` 的**第一行**是 `this.events.length = 0`。 */
+  readonly step: () => void;
+  /** 把**這一 tick 的**整份 `events` 餵進出貨消費端，回傳其中幾則是 `modelFxSpawn`。 */
+  readonly drain: () => number;
+  /** 這一 tick 收尾（`vfx.update(clockMs)`）。 */
+  readonly settle: () => void;
+}
+
+/**
+ * ⭐ GH#715 **第五道縫** —— 施法的事件不會被下一個 `step()` 的清空吃掉。
+ *
+ * `SimWorld.step()` 的第一行就清空 `events` ⇒ 一則事件只在**它自己那一 tick**
+ * 存在。把 `drain()` 移到迴圈**外面**（或拿一個游標去索引）⇒ 除了最後一 tick
+ * 以外**每一則都會消失** —— 而 09-04 的 `abilityCast`（家族藝術／`vfxKey`／`sfxKey`
+ * 唯一的載體）在第一個 tick 內、`modelFxSpawn` 在 cast resolve ≈37 tick，
+ * ⭐ 兩則都落在中間。⇒ 頁面量到 0，⚠️ 而那個 0 看起來就是「這支技能沒有視覺」。
+ *
+ * ⚠️ 這是**承重**的那一道：另外四道縫（`setAbilityArtBindings` ⊕
+ * `setAbilityVfxBindings` ⊕ `setFamilyTuning` ⊕ ctx 帶 `vfxDoc`）全部補齊時，
+ * 這一道破掉仍然讓整頁每一個讀數都是 0，⛔ 而沒有任何東西會紅。
+ */
+export function pumpTicks(ticks: number, p: TickPump): number {
+  let got = 0;
+  for (let i = 0; i < ticks; i++) {
+    p.step();
+    got += p.drain(); // ⛔ 這一行**必須**在迴圈裡 —— 移出去就是上面整段的病
+    p.settle();
+  }
+  return got;
+}
+
+/**
+ * ⭐ GH#768 AC#1 —— **一次讀數 = 一次自證 ＋ 那一幀**，⛔ 順序不可以顛倒。
+ *
+ * 票文的病逐字是「`engine.readPixels()` 在滿版亮幀回 0，**而結論照樣被採信**」。
+ * ⇒ 自證失敗時**呼叫端一個數字都拿不到**：一個回得出來的 0 會被讀成「看不見」，
+ * 而一個例外不會。⛔ 所以這裡是 `await certify()` **在前**、`read()` 在後 ——
+ * 顛倒過來就等於「先量了再說，量完才發現尺是瞎的」，而那個數字已經被寫進報告了。
+ */
+export async function certifiedRead<T>(
+  certify: () => Promise<unknown>,
+  read: () => Promise<T>,
+): Promise<T> {
+  await certify();
+  return read();
+}
+
 export interface BeamAuditionHandle {
   /** 施放一次 09-04（重置冷卻與魔力 —— 只有這一頁這樣做）。 */
   cast(): Promise<void>;
@@ -107,8 +185,12 @@ export interface BeamAuditionHandle {
     /** 場上 beam 根節點（活的 + 池子裡的） */
     beams: BeamMeshStat[];
   };
-  /** ⭐ render ×2 → readPixels → 數亮像素。beam 出現的幀要遠大於基線。 */
-  measure(): Promise<{ w: number; h: number; bright: number; lit: number }>;
+  /**
+   * ⭐ **先自證，再讀那一幀**（GH#768 AC#1）。自證不過 ⇒ **擲例外**，⛔ 不是回 0。
+   * @param opts.certify `false` ⇒ 跳過這一次的自證（⭐ 連拍時的 rollback 開關；
+   *   預設 `true`，⛔ 這一頁是 dev-only 台子所以開關住參數，不是後台三個住處）。
+   */
+  measure(opts?: { certify?: boolean }): Promise<BeamMeasurement>;
   /** ⭐ 量尺校準（同 chainLightningAudition —— 量不到已知亮的 control ⇒ 一切作廢）。 */
   calibrate(): Promise<number>;
   /**
@@ -328,14 +410,43 @@ export async function startBeamAudition(
     return { bright, lit };
   };
 
-  const measure = async (): Promise<{ w: number; h: number; bright: number; lit: number }> => {
-    // ⚠️ 坑②：readPixels 讀到上一幀 ⇒ 先 render 兩次再讀。
+  /**
+   * ⛔ **沒有自證過的**引擎讀數 —— 只給 `calibrate()` 當「尺 A」用。
+   * ⚠️ 坑②：readPixels 讀到上一幀 ⇒ 先 render 兩次再讀。
+   */
+  const readEngine = async (): Promise<{ w: number; h: number; bright: number; lit: number }> => {
     scene.render();
     scene.render();
     const w = engine.getRenderWidth();
     const h = engine.getRenderHeight();
     const buf = (await engine.readPixels(0, 0, w, h)) as Uint8Array;
     return { w, h, ...countBright(buf) };
+  };
+
+  /** ⭐ 坑⑥（池化的那一具已經到期）寫進讀數本身，⛔ 不是寫進註解。 */
+  const liveCensus = (): { liveBeams: number; liveVertices: number } => {
+    let liveBeams = 0;
+    let liveVertices = 0;
+    for (const b of beamStats()) {
+      if (!b.enabled) continue;
+      liveBeams++;
+      liveVertices += b.vertices;
+    }
+    return { liveBeams, liveVertices };
+  };
+
+  /**
+   * ⭐ GH#768 AC#1：**先自證，再讀那一幀**。量不到已知亮的 control ⇒ 擲例外
+   * （訊息逐字含「這台量尺的一切結論作廢」），⛔ 不是回 0 讓呼叫端當成「看不見」。
+   */
+  const measure = async (opts?: { certify?: boolean }): Promise<BeamMeasurement> => {
+    const read = async (): Promise<BeamMeasurement> => ({
+      ...(await readEngine()),
+      ...liveCensus(),
+    });
+    // ⭐ 預設啟動（第〇·六守則：優先權大的更新後都是預設啟動）；
+    //    `{certify:false}` 是連拍時的一鍵回頭。
+    return opts?.certify === false ? read() : certifiedRead(calibrate, read);
   };
 
   /**
@@ -351,8 +462,9 @@ export async function startBeamAudition(
       scene,
       camera,
       rulers: {
-        // 尺 A：`measure()` —— A/B 亮像素比較用的那把
-        "engine.readPixels": () => measure(),
+        // 尺 A：`readEngine()` —— `measure()` 出 A/B 亮像素讀數用的那把
+        // ⛔ 這裡**不可以**放 `measure()`：它自己會先跑 `calibrate()` ⇒ 無窮遞迴。
+        "engine.readPixels": () => readEngine(),
         // 尺 B：`readRaw()` —— ⭐ `probeDocs()` 每一份 vfx@1 文件的讀數用的那把
         "gl.readPixels": () => {
           const r = readRaw();
@@ -389,6 +501,10 @@ export async function startBeamAudition(
     const backdrop = opts?.backdrop ?? "void";
     const frames = opts?.frames ?? 24;
     const { toParticleSystem, burstNow } = await import("./particleFactory");
+    // ⭐ GH#768 AC#1 —— **出讀數的那一刻**才自證，⛔ 不是開頁時那一次。
+    // 這一整批差分讀數全部走 `readRaw()`；尺瞎掉的話每一份都會被讀成
+    // 「這份 vfx@1 文件是空的」，而那正是 #711 已經發生過一次的誤判。
+    await calibrate();
     const prevConstDelta = scene.useConstantAnimationDeltaTime;
     scene.useConstantAnimationDeltaTime = true;
     let curtain: ReturnType<typeof MeshBuilder.CreatePlane> | null = null;
@@ -508,13 +624,16 @@ export async function startBeamAudition(
       castOnce();
     },
     step(ticks: number): number {
-      let got = 0;
-      for (let i = 0; i < ticks; i++) {
-        world.step(new Map());
-        clockMs += 1000 / 30;
-        got += drainEvents();
-        vfx.update(clockMs);
-      }
+      // ⭐ GH#715 第五道縫走 `pumpTicks`（唯一住處，⛔ 這裡不再自己寫迴圈）——
+      //    drain **每一 tick 都要跑**，⛔ 不是整段跑完再讀一次。
+      const got = pumpTicks(ticks, {
+        step: () => {
+          world.step(new Map());
+          clockMs += 1000 / 30;
+        },
+        drain: drainEvents,
+        settle: () => vfx.update(clockMs),
+      });
       scene.render();
       return got;
     },

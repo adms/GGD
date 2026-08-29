@@ -4,6 +4,8 @@
  * ⛔ 這裡**不做像素斷言**（那是各批 visual-proof 的事）。它問的是兩件靜態可判的事：
  *   ① 校準的**判準**真的問了兩個方向（拿掉「暗」那一半 ⇒ 這裡紅）；
  *   ② 台子真的裝了**出貨組合根**的那四道縫（少任一道 ⇒ 這裡紅並指名）。
+ *      ⚠️ #715 的 Scope 有**五**道 —— 第五道（施法不會被 `step()` 的清空吃掉）
+ *      是**行為**驗得到的，所以它住 `beamAuditionWiring.test.ts`，⛔ 不在這裡。
  * ⚠️ 手法照 `GameApp.roundFxWiring.test.ts`：headless 建構不起來 ⇒ `stripComments`
  * ＋ 文字比對，所以**註解裡提到這些名字不算數**。
  */
@@ -12,6 +14,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { stripComments } from "@ggd/shared/testkit/stripComments";
 import { assertTwoWay } from "./auditionCalibrate";
+import { certifiedRead } from "./beamAudition";
 
 const read = (rel: string): string =>
   stripComments(readFileSync(fileURLToPath(new URL(rel, import.meta.url)), "utf8"));
@@ -56,6 +59,34 @@ describe("GH#768 audition 的量尺要**兩個方向**都自證", () => {
       expect(src, `${f} 沒有走 calibrateTwoWay`).toContain("calibrateTwoWay");
       expect(src, `${f} 還留著手寫的 calib-quad ⇒ 那是第二個住處`).not.toContain("calib-quad");
     }
+  });
+});
+
+describe("GH#768 AC#1 —— 自證在**出讀數的那一刻**，⛔ 不是開頁時那一次", () => {
+  it("自證擲例外 ⇒ 呼叫端一個數字都拿不到（⛔ 不是回 0 讓人讀成「看不見」）", async () => {
+    let reads = 0;
+    const lie = (): Promise<never> => Promise.reject(new Error("這台量尺的一切結論作廢"));
+    await expect(
+      certifiedRead(lie, async () => {
+        reads++;
+        return R(0);
+      }),
+    ).rejects.toThrow(/作廢/);
+    expect(reads, "自證失敗了還是去讀了那一幀 ⇒ 那個 0 會被當成證據寫進報告").toBe(0);
+  });
+
+  it("出讀數的**兩支**都在讀之前自證（measure ⊕ probeDocs）", () => {
+    const src = read("./beamAudition.ts");
+    const m = src.indexOf("const measure = async");
+    expect(m, "找不到 measure()").toBeGreaterThan(0);
+    expect(src.slice(m, m + 500), "measure() 沒有走 certifiedRead ⇒ 它又回到「開頁校準一次」").toContain(
+      "certifiedRead(calibrate",
+    );
+    const p = src.indexOf("const probeDocs = async");
+    expect(
+      src.slice(p, p + 600),
+      "probeDocs 沒有在拍對照幀之前自證 —— 它整批走 readRaw()，尺瞎掉時每一份都會被讀成「空的」",
+    ).toContain("await calibrate()");
   });
 });
 
