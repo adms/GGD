@@ -1,11 +1,12 @@
 {
-  "id": "imported.heroichigo",
+  "id": "imported.heroichigo-bankai",
   "schema": "model@1",
   "glbPath": "assets/models/imported/heroichigo.glb",
   "scale": 1.0,
   "collisionRadius": 0.55,
   "hiddenPrimitives": [
-    2
+    1,
+    3
   ],
   "clipMap": {
     "idle": "stand",

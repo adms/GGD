@@ -58,6 +58,7 @@ import type { AssetContainer } from "@babylonjs/core/assetContainer";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import type { ModelDoc } from "@ggd/shared/content";
 import { EntityViewRegistry, type EntityViewState } from "../EntityViewRegistry";
+import { gltfPrimitiveIndexOf } from "./hiddenPrimitives";
 import type { AssetManager } from "../AssetManager";
 
 const REPO = resolve(__dirname, "../../../../..");
@@ -128,8 +129,15 @@ function readAccessor(gltf: Gltf, bin: Buffer, index: number): number[][] {
 const GORE_MARKER = "gutz";
 const GORE_SHARE = 0.5;
 
-/** Primitive indices whose skin weight is ≥50% on a `gutz*` joint. */
-function gorePrimitivesOf(path: string): number[] {
+/**
+ * Primitive indices whose skin weight is ≥50% on a joint whose name contains
+ * `marker`.
+ *
+ * ⚠️ 標記是**參數**而不是常數,因為 GH#742 需要同一把尺量另一個標記:一護的
+ * 卍解身體綁在 `Object2Nwan` / `bone_ribbonwan` 那一族骨頭上(`wan` = 卍)。
+ * ⛔ 抄第二份解析器就是第二個住處(第〇·四守則),而兩份 glb 解析器一定會漂。
+ */
+function markerPrimitivesOf(path: string, marker: string): number[] {
   const { gltf, bin } = readGlb(path);
   const names = (gltf.nodes ?? []).map((n) => n.name ?? "");
   const out: number[] = [];
@@ -151,7 +159,7 @@ function gorePrimitivesOf(path: string): number[] {
           const w = W[v]![k]! / norm;
           if (w <= 1e-4) continue;
           total += w;
-          if (names[joints[J[v]![k]!]!]!.toLowerCase().includes(GORE_MARKER)) gore += w;
+          if (names[joints[J[v]![k]!]!]!.toLowerCase().includes(marker)) gore += w;
         }
       }
       if (total > 0 && gore / total >= GORE_SHARE) out.push(pi);
@@ -159,6 +167,9 @@ function gorePrimitivesOf(path: string): number[] {
   }
   return out.sort((a, b) => a - b);
 }
+
+/** Primitive indices whose skin weight is ≥50% on a `gutz*` joint. */
+const gorePrimitivesOf = (path: string): number[] => markerPrimitivesOf(path, GORE_MARKER);
 
 // ────────────────────────────────────────────────────────────────────────────
 // A. 出貨樹 —— 每次都從真的位元組重解
@@ -172,6 +183,30 @@ const shippedDocs = readdirSync(MODELS_DIR)
   .map((f) => JSON.parse(readFileSync(join(MODELS_DIR, f), "utf8")) as ModelDocOnDisk)
   .map((d) => ({ doc: d, abs: join(REPO, "content", d.glbPath) }))
   .filter((e) => existsSync(e.abs));
+
+/**
+ * ⭐ 第二個**合法的**隱藏理由:形態互斥的身體(GH#742,黑崎一護)。
+ *
+ * 在此之前只認「它是血泥」一種理由,而 `heroichigo.glb` 一顆 `gutz*` 骨頭都沒有
+ * (量到的:5 片圖元 goreShare 全 0.000),它要藏的正是**身體** ⇒ 下面那條斷言會把
+ * 一護的修復擋在門外。⚠️ 這是這條 lane 量到的真正阻礙(lane 契約第三條)。
+ *
+ * ⛔ 放行不可以放成「藏什麼都行」⇒ 判準是**關係**:同一顆 `glbPath` 被**另一份**
+ * 文件用一組**不相交且非空**的索引切開 ⇒ 兩份文件各畫一半。單獨一份文件把身體
+ * 藏掉(打錯索引、漏掉搭檔)**仍然紅**。⚠️ 量過今天不誤放行任何既有文件:148 份裡
+ * 只有 `imported.hero-turtle` 有宣告,而它的 glbPath 沒有第二份文件。
+ */
+function formSplitPartnerOf(doc: ModelDocOnDisk): ModelDocOnDisk | null {
+  const mine = new Set(doc.hiddenPrimitives ?? []);
+  if (mine.size === 0) return null;
+  for (const { doc: other } of shippedDocs) {
+    if (other.id === doc.id || other.glbPath !== doc.glbPath) continue;
+    const theirs = other.hiddenPrimitives ?? [];
+    if (theirs.length === 0 || theirs.some((p) => mine.has(p))) continue;
+    return other;
+  }
+  return null;
+}
 
 describe("A · 出貨的 content/assets/models —— 血泥圖元必須被宣告", () => {
   it("每一份 model@1 的 gutz 圖元都在 hiddenPrimitives 裡", () => {
@@ -199,12 +234,22 @@ describe("A · 出貨的 content/assets/models —— 血泥圖元必須被宣�
       const { gltf } = readGlb(abs);
       const total = Math.max(...(gltf.meshes ?? []).map((m) => m.primitives.length), 0);
       const gore = new Set(gorePrimitivesOf(abs));
+      const partner = formSplitPartnerOf(doc);
       for (const p of declared) {
         expect(p, `${doc.id} 的 hiddenPrimitives 有 prim${p},但這個 glb 只有 ${total} 個圖元`).toBeLessThan(total);
         expect(
-          gore.has(p),
-          `${doc.id} 藏了 prim${p},但那不是血泥圖元 —— 藏到身體會讓英雄整塊消失`,
+          gore.has(p) || partner !== null,
+          `${doc.id} 藏了 prim${p},但那既不是血泥圖元、也沒有一份共用同一顆 glb 的` +
+            `互補文件 —— 藏到身體會讓英雄整塊消失`,
         ).toBe(true);
+      }
+      if (partner) {
+        const union = new Set([...declared, ...(partner.hiddenPrimitives ?? [])]);
+        expect(
+          union.size,
+          `${doc.id} 與 ${partner.id} 合起來藏光了 ${total} 個圖元 —— ` +
+            `形態切分至少要留下共用的那幾片(腳底座、頭),否則兩態都是空的`,
+        ).toBeLessThan(total);
       }
     }
   });
@@ -367,8 +412,11 @@ const settle = async (): Promise<void> => {
 };
 
 /** 真的把出貨文件 + 出貨 glb 跑過 registry,回傳最終的網格清單。 */
-async function mountTurtle(doc: ModelDoc): Promise<{ reg: EntityViewRegistry; meshes: AbstractMesh[] }> {
-  const container = await realContainer(TURTLE);
+async function mountModel(
+  rel: string,
+  doc: ModelDoc,
+): Promise<{ reg: EntityViewRegistry; meshes: AbstractMesh[] }> {
+  const container = await realContainer(rel);
   const assets = { load: () => Promise.resolve(container) } as unknown as AssetManager;
   const reg = new EntityViewRegistry(scene, assets, { modelDocFor: () => doc });
   reg.sync({
@@ -379,6 +427,9 @@ async function mountTurtle(doc: ModelDoc): Promise<{ reg: EntityViewRegistry; me
   await settle();
   return { reg, meshes: reg.getChampionView(ID)!.root.getChildMeshes(false) };
 }
+
+const mountTurtle = (doc: ModelDoc): Promise<{ reg: EntityViewRegistry; meshes: AbstractMesh[] }> =>
+  mountModel(TURTLE, doc);
 
 /** 出貨的那一份文件本身 —— 不是手捏的(失敗形態 ⑤)。 */
 const shippedTurtleDoc = JSON.parse(readFileSync(join(REPO, TURTLE_DOC), "utf8")) as ModelDocOnDisk;
@@ -521,5 +572,107 @@ describe("overlayModelDoc 把宣告注入合成出來的 ModelDoc", () => {
       {},
     );
     expect(doc.hiddenPrimitives).toBeUndefined();
+  });
+});
+
+// ────────────────────────────────────────────────────────────────────────────
+// E. @visual-proof —— 黑崎一護的兩個形態各只畫一套身體(GH#742 / #34)
+//
+// 缺陷:`heroichigo.glb` 把**常態**與**卍解**兩套身體烘在同一顆 mesh 的 5 片圖元
+// 裡。WC3 用 GEOA/KGAO 的 sequence 分族把另一套關掉,而 #59 已確認 mdx→glb
+// **把 geoset 可見度動畫整個丟掉** ⇒ 兩隻一護同時穿著兩套身體。
+//
+// ⭐ 驗的是**終點**(玩家看得到那一層):真的 Babylon(NullEngine)+ 真的 glTF
+// loader + 真的出貨 .glb + 真的出貨 model 文件 + 真的 `EntityViewRegistry`,
+// 斷言 `isEnabled()` 與 `getVerticesData("position")`。
+//
+// ⚠️ 分族**每一次都從出貨位元組重解**(⛔ 沒有凍結的指紋 —— 失敗形態 ⑤),而且是
+// 兩條**互不相干**的軸:①骨架(卍解身體綁在 `Object2Nwan`/`bone_ribbonwan`,
+// `wan` = 卍) ②材質(唯一掛第二個 material 的圖元)。重烘 renumber ⇒ 這裡紅。
+// ────────────────────────────────────────────────────────────────────────────
+const ICHIGO_GLB = "content/assets/models/imported/heroichigo.glb";
+const ICHIGO_LODS = ["heroichigo.glb", "heroichigo-mid.glb", "heroichigo-small.glb"];
+const readDoc = (rel: string): ModelDocOnDisk =>
+  JSON.parse(readFileSync(join(REPO, rel), "utf8")) as ModelDocOnDisk;
+
+/** 這顆 glb 裡「只屬於卍解態」的圖元 —— 兩個軸各算一次,必須相等。 */
+function bankaiPrimitivesOf(abs: string): number[] {
+  const bySkin = markerPrimitivesOf(abs, "wan");
+  const { gltf } = readGlb(abs);
+  const mats = (gltf.meshes![0]!.primitives as { material?: number }[]).map((p) => p.material ?? 0);
+  const byMaterial = mats.map((m, i) => [m, i] as const).filter(([m]) => m !== 0).map(([, i]) => i);
+  expect(byMaterial.length, "一護的 glb 應該只有一片圖元掛在第二個 material 上").toBe(1);
+  expect(byMaterial, "骨架與材質兩個軸對卍解身體的判定不一致").toEqual(bySkin);
+  return bySkin;
+}
+
+describe("E · 一護的兩個形態各只畫一套身體 (@visual-proof)", () => {
+  const base = readDoc("content/models/imported.heroichigo.json");
+  const bankai = readDoc("content/models/imported.heroichigo-bankai.json");
+
+  it("三階 LOD 的圖元切分一致,而且宣告來自那份切分(⛔ 不是手打的索引)", () => {
+    const splits = ICHIGO_LODS.map((f) => {
+      const abs = join(REPO, "content/assets/models/imported", f);
+      expect(existsSync(abs), `${f} 不在出貨樹裡`).toBe(true);
+      return { f, alt: bankaiPrimitivesOf(abs), total: readGlb(abs).gltf.meshes![0]!.primitives.length };
+    });
+    // 三階共用**一份**索引宣告 ⇒ 它們的切分必須逐格相同,否則遠景會換一套身體。
+    for (const s of splits) {
+      expect(s.total, `${s.f} 的圖元數與最高階不同`).toBe(splits[0]!.total);
+      expect(s.alt, `${s.f} 的卍解圖元與最高階不同`).toEqual(splits[0]!.alt);
+    }
+    // 常態文件藏的,就是量出來的卍解身體;卍解文件藏的是剩下的常態專屬圖元。
+    expect(base.hiddenPrimitives, "常態一護要藏的是卍解身體").toEqual(splits[0]!.alt);
+    expect(bankai.hiddenPrimitives?.length, "卍解一護要藏常態身體與常態配件").toBeGreaterThan(0);
+    expect(
+      bankai.hiddenPrimitives!.some((p) => splits[0]!.alt.includes(p)),
+      "卍解文件把自己的身體也藏掉了",
+    ).toBe(false);
+    expect(bankai.glbPath, "兩份文件必須共用同一顆 glb —— ⛔ 不要多烘一份二進位檔").toBe(base.glbPath);
+
+    // 兩隻一護各自指到其中一份 —— ⛔ 共用一份就必然畫同一套身體(這張票的缺陷)。
+    const ch = (id: string): { modelKey: string; transform?: { role: string; counterpartId: string } } =>
+      JSON.parse(readFileSync(join(REPO, `content/champions/${id}.json`), "utf8"));
+    const [n, o] = [ch("godie-h01n"), ch("godie-h01o")];
+    expect([n.transform?.role, o.transform?.counterpartId]).toEqual(["base", "godie-h01n"]);
+    expect([n.modelKey, o.modelKey], "兩隻一護沒有各自指到自己的形態文件").toEqual([base.id, bankai.id]);
+  });
+
+  it("渲染端:常態畫不出卍解身體,卍解畫不出常態身體,而兩邊都還有身體可畫", async () => {
+    const drawn = async (doc: ModelDocOnDisk): Promise<Map<number, { on: boolean; verts: number }>> => {
+      const { reg, meshes } = await mountModel(ICHIGO_GLB, doc as ModelDoc);
+      const out = new Map<number, { on: boolean; verts: number }>();
+      for (const m of meshes) {
+        const i = gltfPrimitiveIndexOf(m.name);
+        if (i < 0) continue;
+        out.set(i, { on: m.isEnabled(false), verts: (m.getVerticesData("position")?.length ?? 0) / 3 });
+      }
+      reg.dispose();
+      return out;
+    };
+
+    const asBase = await drawn(base);
+    const asBankai = await drawn(bankai);
+    expect(asBase.size, "Babylon 應該把 5 片圖元各拆成一個網格").toBe(5);
+
+    const visible = (m: Map<number, { on: boolean; verts: number }>): number[] =>
+      [...m].filter(([, v]) => v.on).map(([i]) => i);
+    const verts = (m: Map<number, { on: boolean; verts: number }>): number =>
+      [...m.values()].filter((v) => v.on).reduce((s, v) => s + v.verts, 0);
+
+    for (const p of base.hiddenPrimitives!) {
+      expect(asBase.get(p)!.on, `常態一護還畫著卍解身體 prim${p}`).toBe(false);
+      expect(asBankai.get(p)!.on, `卍解一護沒有畫出自己的身體 prim${p}`).toBe(true);
+    }
+    for (const p of bankai.hiddenPrimitives!) {
+      expect(asBankai.get(p)!.on, `卍解一護還畫著常態身體 prim${p}`).toBe(false);
+      expect(asBase.get(p)!.on, `常態一護沒有畫出自己的身體 prim${p}`).toBe(true);
+    }
+    // ⛔「兩邊都關光了」也會讓上面全綠 —— 這兩行是那個對照(失敗形態 ④)。
+    expect(verts(asBase), "常態一護畫出來是空的").toBeGreaterThan(400);
+    expect(verts(asBankai), "卍解一護畫出來是空的").toBeGreaterThan(400);
+    // 兩態共用的那幾片(腳底座 + 頭)必須兩邊都在。
+    const shared = visible(asBase).filter((i) => visible(asBankai).includes(i));
+    expect(shared.length, "兩態之間一片共用圖元都沒有 —— 切分把整具身體切斷了").toBeGreaterThan(0);
   });
 });
