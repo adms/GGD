@@ -50,6 +50,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import tag_gate  # noqa: E402  —— A-3 標籤閘（同目錄）
+import form_counterparts  # noqa: E402  —— GH#854 變身態作者閘（同目錄）
 import common  # noqa: E402  —— 機制側（模板 / 閘 / build），⛔ 裡面沒有任何一位英雄的資料
 from common import (  # noqa: E402
     AB,
@@ -257,6 +258,18 @@ def main():
               + "、".join(orphan))
     print(f"championForm：{len(FORMS_EMITTED)} 支（w3x 觸發技 {len(FORM_TRIGGERS)} 支，"
           f"明示放掉 {len(FORM_TAG_WAIVED)} 支）")
+    # ── GH#854 的閘：**變身態的技能檔有沒有一個作者** ─────────────────────────
+    # ⭐ 這一支產生器只擁有**本體**（`HERO` 的註解逐字說「一律取本體」），而
+    #    15 位裡有 6 位是變身對子的本體 ⇒ 那 6 個變身態**沒有任何人寫**。
+    #    ⛔ 那不是「還沒做」，它是一個**半個**的狀態：本體被規格重寫、變身態停在
+    #    w3x 匯入值，而 `deriveCastTimes.ts` 照兩份各自的機制算 castTimeSec
+    #    ⇒ 每跑一次推開一點，且沒有任何東西會紅（2026-08-29 量到 14/36 vs 5/84）。
+    # ⇒ 每一個變身態必須**二選一**地宣告作者，理由與兩個方向的閘住 form_counterparts.py。
+    bad = form_counterparts.audit(set(HERO.values()), CH)
+    assert not bad, (
+        "變身態的技能檔沒有作者（GH#854）：\n  " + "\n  ".join(bad)
+    )
+    print(form_counterparts.report(set(HERO.values()), CH))
     # ── A-5 的閘 ────────────────────────────────────────────────────────────
     # ⚠️ 讀的是**最終要寫出去的那份 doc**，不是 carry_mechanisms 的暫存 ——
     #    所以「接上了但被後面某一步蓋掉」也會紅（第二守則失敗形態②）。
