@@ -5,11 +5,13 @@ units tall (other models: uniform 1/36); the per-unit Scaling Value ('usca')
 is then applied by the model doc's `scale` (see drafts.model_scale) so the map
 author's size intent is preserved without touching the collision radius.
 Materials: BLP alpha + WC3 filter mode drive glTF alphaMode; team-colour
-(replaceableId 1) → neutral opaque + teamTint, additive glow → emissive.
+(replaceableId 1) → neutral opaque + teamTint, additive glow → emissive,
+modulate → multiply (see gltf.MDX_FILTER_MODES —— 七種 filter mode 逐條翻譯,
+GH#841). ⭐ 一個 MDX 材質層 = 一份 glTF 材質 + 一個 primitive, ⛔ 不再只畫一層.
 Team glow (replaceableId 2) follows `convert_all(team_glow=…)`: "drop" (the
 default — 角色) blanks it, "lit" (GH#767 — 純特效模型) resolves the stock
 TeamGlow art and luma-keys it like any other additive glow (see
-gltf.TEAM_GLOW_POLICIES / gltf.gltf_material).
+gltf.TEAM_GLOW_POLICIES / gltf._layer_material).
 Attachments: separate models referenced by ATCH nodes are baked into the
 parent at the attach-node transform. Particle emitters (PREM/PRE2/RIBB) and
 GEOA per-sequence visibility are skipped — geometry/bones/animations only.
