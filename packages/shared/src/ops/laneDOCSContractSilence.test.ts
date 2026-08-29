@@ -26,23 +26,47 @@
  * 「偵測器壞了」與「契約修好了」量起來一模一樣。校準那一條是為了這個而存在的。
  */
 import { describe, expect, it } from "vitest";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
+const EFFECTS = "packages/shared/src/content/schema/effects";
 const CONTRACT = "docs/技能標記機制與效果規則.md";
 
 /**
  * ⭐ 2026-08-27 量到的沉默格數。**只能往下**。
  * 351 格有明確定義檔的空說明格裡，213 格的定義檔（或它繼承的 `_shared`/`_hook`）
  * 真的有 TSDoc —— 也就是「我們寫過，但沒送出去」。
+ *
+ * ⭐ **2026-08-29（GH#877）收窄到 0**：根因量到了 —— §5 那 40 個 kind
+ * **一個錨點都沒有**（`gen_spec.ts` 從來沒對 effect 分片呼叫過 `withDocs()`，
+ * 而 `tsdocFields` 的檔頭還寫著「effect.ts 那一族用 `.describe()`」——
+ * 那句話在 GH#467 分片之後就過期了，⛔ 而沒有任何東西變紅）。
+ * ⇒ 接上之後沉默是 **0**，所以基準線就是 0：⛔ 再多一格都要紅。
  */
-const BASELINE = 213;
+const BASELINE = 0;
 
-const TSDOC = /\/\*\*([\s\S]*?)\*\/\s*(?:\/\/[^\n]*\n\s*)*([A-Za-z_]\w*)\s*:/g;
+/**
+ * ⚠️ ⭐ GH#877 —— 與 `gen_spec.ts::tsdocIn` **逐字相同**的正則
+ * （`contractEffectDocAnchors.test.ts` 的第二條驗這件事，⛔ 不靠人記得）。
+ * ⭐ 內文不可以跨過一個 `*\/`：惰性的 `[\s\S]*?` 會把「不是在說欄位」的註解
+ * 往後吞到下一個 `*\/`，於是 `zTaunt` 的檔頭被當成 `durationSec` 的說明。
+ */
+const TSDOC = /\/\*\*((?:(?!\*\/)[\s\S])*)\*\/\s*(?:\/\/[^\n]*\n\s*)*([A-Za-z_][A-Za-z0-9_]*)\s*:/g;
 const docNames = (src: string): Set<string> =>
   new Set([...src.matchAll(TSDOC)].map((m) => m[2]!));
+
+/**
+ * ⭐ GH#877 —— 共用形狀那一份清單**當場列目錄**（`gen_spec.ts::effectSharedDocFiles`
+ * 用同一個推導）。在此之前這裡寫死 `_shared` / `_hook` 兩行 ⇒ 新開第三個共用檔時，
+ * 它展開到的每一格都會變成「空白但不算沉默」＝ 棘輪對它**結構上失明**。
+ */
+const sharedDocFiles = (): string[] =>
+  readdirSync(join(REPO, EFFECTS))
+    .filter((f) => f.startsWith("_") && f.endsWith(".ts") && !f.includes(".test."))
+    .sort()
+    .map((f) => `${EFFECTS}/${f}`);
 
 /** 契約表裡說明欄空白、而定義檔的 TSDoc 有話說的那些格。 */
 function silentCells(contract: string, tsdocOf: (file: string) => Set<string>): string[] {
@@ -62,10 +86,7 @@ function silentCells(contract: string, tsdocOf: (file: string) => Set<string>): 
     const desc = cells[cells.length - 1]!;
     if (desc !== "—" && desc !== "-" && desc !== "") continue;
     const name = cells[0]!.replace(/`/g, "");
-    const known =
-      tsdocOf(def).has(name) ||
-      tsdocOf("packages/shared/src/content/schema/effects/_shared.ts").has(name) ||
-      tsdocOf("packages/shared/src/content/schema/effects/_hook.ts").has(name);
+    const known = tsdocOf(def).has(name) || sharedDocFiles().some((f) => tsdocOf(f).has(name));
     if (known) out.push(`${sec}.${name}`);
   }
   return out;

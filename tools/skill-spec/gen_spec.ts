@@ -381,11 +381,41 @@ function fieldsOf(obj: z.ZodTypeAny, skip: readonly string[] = []): Field[] {
 }
 
 /**
+ * `/** … *\/` 後面（可能隔幾行 `//` 註解）緊跟著 `欄位名:` 的那一段就是它的說明。
+ *
+ * ⚠️ ⭐ 內文寫成 `(?:(?!\*\/)[\s\S])*`（**不可以跨過一個 `*\/`**），⛔ 不是 `[\s\S]*?`。
+ * 惰性版看起來一樣，但它在「這個註解**不是**在說一個欄位」時會**繼續往後吞**到下一個
+ * `*\/`，於是把兩段黏起來掛到後面那個欄位上 —— 2026-08-29 接上 effect 分片的當下就中：
+ * `zTaunt` 那段講整支技能的檔頭被掛到了 `durationSec` 上，而契約上它讀起來完全正常。
+ * ⭐ `vfx.ts` 那一族沒中，只因為 `from` 錨點剛好把檔頭切掉了 —— ⛔ 那是運氣，不是設計。
+ */
+function tsdocIn(seg: string): Map<string, string> {
+  const out = new Map<string, string>();
+  const re = /\/\*\*((?:(?!\*\/)[\s\S])*)\*\/\s*(?:\/\/[^\n]*\n\s*)*([A-Za-z_][A-Za-z0-9_]*)\s*:/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(seg)) !== null) {
+    const body = m[1]!
+      .split("\n")
+      .map((l) => l.replace(/^\s*\*\s?/, "").trimEnd())
+      .join("\n")
+      .replace(/\{@link\s+([^}]+)\}/g, "`$1`")
+      .trim();
+    if (body && !out.has(m[2]!)) out.set(m[2]!, body);
+  }
+  return out;
+}
+
+/**
  * 從 schema 原始碼抽欄位的 TSDoc。
  *
- * ⚠️ 為什麼需要這一支：`effect.ts` 那一族用 `.describe()`（內省讀得到），
- * 但 `vfx.ts` / `abilityVfx.ts` 用的是 `/** … *\/` 註解 —— 那些字**不在 Zod 物件裡**，
- * 所以 {@link fieldsOf} 對特效那一面會回一整欄空白的「說明」。
+ * ⚠️ 為什麼需要這一支：`.describe()` 內省讀得到，但 `vfx.ts` / `abilityVfx.ts` /
+ * `schema/effects/*.ts` 用的是 `/** … *\/` 註解 —— 那些字**不在 Zod 物件裡**，
+ * 所以 {@link fieldsOf} 對那幾面會回一整欄空白的「說明」。
+ *
+ * ⚠️ **這段檔頭自己過期過**（GH#877）：GH#467 把 `effect.ts` 那個 4,754 行的 union
+ * 拆成一個 kind 一個檔之後，effect 那一族也改用 TSDoc —— 而這裡還寫著
+ * 「`effect.ts` 那一族用 `.describe()`（內省讀得到）」。⭐ 於是**沒有人替 §5 接線**，
+ * 40 個 kind 的說明欄整片空白（量到 **217 格**），而每一條閘都是綠的（第三守則）。
  *
  * ⛔ 解法不是在這裡手抄一份說明（那就是第二個真相來源，而且它會安靜地與 schema
  * 漂開）。這一支跟 {@link hookDocs} 是同一個做法：**去讀那份原始碼**。
@@ -403,21 +433,47 @@ function tsdocFields(file: string, from: string, to: string): Map<string, string
     );
   }
   const j = src.indexOf(to, i);
-  const seg = src.slice(i, j < 0 ? undefined : j);
-  const out = new Map<string, string>();
-  // `/** … */` 後面（可能隔幾行 `//` 註解）緊跟著 `欄位名:` 的那一段就是它的說明。
-  const re = /\/\*\*([\s\S]*?)\*\/\s*(?:\/\/[^\n]*\n\s*)*([A-Za-z_][A-Za-z0-9_]*)\s*:/g;
-  let m: RegExpExecArray | null;
-  while ((m = re.exec(seg)) !== null) {
-    const body = m[1]!
-      .split("\n")
-      .map((l) => l.replace(/^\s*\*\s?/, "").trimEnd())
-      .join("\n")
-      .replace(/\{@link\s+([^}]+)\}/g, "`$1`")
-      .trim();
-    if (body && !out.has(m[2]!)) out.set(m[2]!, body);
-  }
-  return out;
+  return tsdocIn(src.slice(i, j < 0 ? undefined : j));
+}
+
+/** effect 分片住的目錄（{@link KIND_SHARD_DIRS} 的第一格，⛔ 不是第二份路徑）。 */
+const EFFECT_SHARD_DIR = KIND_SHARD_DIRS[0]![1];
+
+/**
+ * ⭐ GH#877 —— effect 分片的**共用**欄位形狀住哪幾個檔。
+ *
+ * ⛔ 不是一張手寫清單：`EFFECT_COMMON_SHAPE`（`_shared.ts`）與 hook 那一族
+ * （`_hook.ts`）之外**還會再長出第三個**，而一張手寫的表不會有任何東西提醒你。
+ * ⇒ 去磁碟上問「底線開頭的分片有哪些」，⛔ 不猜。
+ */
+function effectSharedDocFiles(): string[] {
+  return readdirSync(join(REPO, EFFECT_SHARD_DIR))
+    .filter((f) => f.startsWith("_") && f.endsWith(".ts") && !f.includes(".test."))
+    .sort()
+    .map((f) => `${EFFECT_SHARD_DIR}/${f}`);
+}
+
+/**
+ * ⭐ GH#877 —— 一個 effect kind 的說明來源檔：**自己的分片 ＋ 全部共用分片**。
+ *
+ * ⚠️ 為什麼**不用** `from`/`to` 錨點（`vfx.ts` 那一族用的那種）：GH#467 之後
+ * 「一個檔 == 一個 kind」，⛔ 同一個檔裡不可能有第二個 `radius` 的語意 ——
+ * 夾在一段裡買不到任何東西，而**代價是 40 個要逐一手寫、會逐一腐爛的錨點**
+ * （第零守則⑨：N 個同型 = K 個模板 + 一張表，⛔ 不是 N 行）。
+ *
+ * ⭐ 反方向的閘（失敗形態⑫）：`contractEffectDocAnchors.test.ts` 從**磁碟**走回來，
+ * 問「每一個分片都被這一支解析得到嗎」—— 新增一個 kind／一個 `_共用檔` 而它沒有
+ * 接上 ⇒ 紅並指名。⛔ 沒有那一條，下一個新 effect 會靜靜地把沉默基準線推高。
+ */
+function effectDocFiles(kind: string): string[] {
+  const own = `${EFFECT_SHARD_DIR}/${kind}.ts`;
+  const shared = effectSharedDocFiles().filter((f) => f !== own);
+  return existsSync(join(REPO, own)) ? [own, ...shared] : shared;
+}
+
+/** {@link effectDocFiles} 的每一份，讀成 {@link withDocs} 吃的說明表。 */
+function effectDocMaps(kind: string): Map<string, string>[] {
+  return effectDocFiles(kind).map((f) => tsdocIn(readFileSync(join(REPO, f), "utf8")));
 }
 
 /**
@@ -1599,7 +1655,8 @@ export function buildSpecMarkdown(): string {
     if (where) p();
     p(`**出貨內容用量**：${usageCell(usage.effectKinds.get(kind))}`);
     p();
-    p(...fieldTable(fieldsOf(arm, ["kind", "condition"])));
+    // ⭐ GH#877 —— 說明欄從**那一格自己的分片**讀（＋共用形狀），⛔ 不是留一整欄 `—`。
+    p(...fieldTable(withDocs(fieldsOf(arm, ["kind", "condition"]), ...effectDocMaps(kind))));
     p(...exampleBlock(usage.effectKinds.get(kind)));
   }
 
