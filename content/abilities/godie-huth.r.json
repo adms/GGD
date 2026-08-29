@@ -34,6 +34,22 @@
       }
     },
     {
+      "kind": "dot",
+      "damageType": "magic",
+      "amountPerTick": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.7
+          }
+        ]
+      },
+      "intervalSec": 1.0,
+      "durationSec": 5.0,
+      "stacking": "refresh"
+    },
+    {
       "kind": "applyStatus",
       "statusId": "slow35",
       "duration": 5.0,
