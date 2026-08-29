@@ -13,9 +13,14 @@
     "⭐ 與 normalizers.json 的 $rejected 同一個形狀：每一族「產生器不擁有」的欄位，",
     "要嘛寫得出**誰才是它的寫入端**（≥20 字、可被反駁），要嘛被 --doctor ④ 判成孤兒而紅。",
     "⛔ 「還沒收」不是理由。",
-    "⚠️⚠️ `abilities[*]/…` 那幾格今天**沒有被量到**（field-io.mts 的 recipe 校準不過：",
-    "`abilityArtRows()` 在乾淨的 checkout 上回 0 列 ⇒ owned=∅ ⇒ 會宣稱「169 列每一欄都自由」，",
-    "而那是危險的那個方向）⇒ ⛔ 不要把那幾行讀成「已查證」，它們是**等那把尺修好之後**要用的。"
+    "⭐ 2026-08-30 更正：`abilities[*]/…` 那幾格**現在真的被量到了**，那幾行是活的。",
+    "在此之前它們是留白的（field-io.mts 的舊 recipe 用 `ownedRowFields(abilityArtRows())`",
+    "＝**這一輪產出的欄位聯集** ⇒ `abilityArtRows()` 回 0 列時 owned=∅ ⇒ 會宣稱",
+    "「每一欄都自由」，而那是危險的那個方向 ⇒ 當時的正解是「量不到就不宣稱」）。",
+    "⭐ GH#835 把分母換成 `ABILITY_MIRROR` 的鍵（**與資料多寡無關**的投影表）⇒ 前提消失。",
+    "⚠️ 量到的（2026-08-30，221 列）：owned = anchor/family/flyHeight/tint/w3xScale，",
+    "而 pitchDeg · soundGain · soundImpact · soundLaunch 四格**靠下面那幾行認領才不算孤兒**",
+    "—— ⛔ 刪掉其中一行，`product-quarantine.sh --doctor` ④ 會當場指名它。"
   ],
   "probes": [
     {
@@ -23,7 +28,7 @@
       "fileOwner": "vfxfam:build",
       "recipe": "vfx-families",
       "module": "apps/client/src/render/vfx/generateFamilyContent.ts",
-      "why": "vfxfam:build 的 TSDoc（generateFamilyContent.ts:191-210「所有權是三層的」）逐字說它逐格保留一族欄位，而 shippedFamilyConfig({}) / ownedRowFields() 正是**它自己**用來推導『我擁有哪幾格』的函式（generateFamilyContent.test.ts:63-65 用同一組）⇒ 這裡呼叫同一組，⛔ 不抄它的結論。",
+      "why": "vfxfam:build 的 TSDoc（generateFamilyContent.ts「所有權是三層的」那張表）逐字說它逐格保留一族欄位，而 shippedFamilyConfig({}) / ownedFamilyFields() / ownedAbilityFields() 正是**它自己**用來推導『我擁有哪幾格』的函式（generateFamilyContent.test.ts 的保留閘用同一組）⇒ 這裡呼叫同一組，⛔ 不抄它的結論。",
       "fieldAuthors": {
         "families[*]/soundLaunch": "tools/w3x-import/build_vfx_sound_bindings.py:143 的 CUE_FIELDS —— 它直接寫 vfx-families.json 的 families[].sound*（檔頭:10 逐字），⚠️ 而它**不在 sync 鏈上**（package.json 零 script、sync-io 零步驟）⇒ 它的產出沒有任何 --check 在守，改了也不會有東西紅。",
         "families[*]/soundImpact": "同上（CUE_FIELDS 四個時機之一）。",

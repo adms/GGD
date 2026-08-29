@@ -119,8 +119,12 @@ describe("隔離區體檢 --doctor (quarantine-orphans-and-entrypoints)", () => 
   });
 
   it("⑤ 欄位級擁有權是**量出來的**（field-io.json 過期就紅 —— GH#827）", () => {
-    // ⭐ 它呼叫產生器自己的推導函式（`shippedFamilyConfig({})` / `ownedRowFields`），
-    //   ⛔ 不是一張手抄的欄位表 —— 產生器多算一格少算一格，這一條會跟著紅。
+    // ⭐ 它呼叫產生器自己的推導函式（`shippedFamilyConfig({})` / `ownedFamilyFields()`
+    //   / `ownedAbilityFields()`），⛔ 不是一張手抄的欄位表 —— 產生器多算一格少算一格，
+    //   這一條會跟著紅。⚠️ 2026-08-30：recipe 引用的是**舊名** `ownedRowFields`（GH#835
+    //   改成投影推導時沒跟著動）⇒ 它在每一次正確的 checkout 上都擲例外 ＝ 一個**永遠
+    //   不會綠的閘**（第二守則⑨）。⭐ 所以這一條的價值不在「產物新不新」，在**recipe
+    //   接不接得上產生器** —— 一個接不上的量尺與一個不存在的量尺沒有差別。
     let out = "";
     let code = 0;
     try {
