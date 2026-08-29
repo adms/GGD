@@ -31,8 +31,9 @@
  *    → `CLUSTER_RESIDUAL` 紅並指名 `844x390/equipment×attack = 88×38`。改回來即綠。
  */
 import { describe, it, expect } from "vitest";
-import { hudSlotRect, type HudRect, type HudViewport } from "./hudLayout";
+import { HUD_SLOTS, hudSlotRect, type HudRect, type HudSlotId, type HudViewport } from "./hudLayout";
 import { touchControlsRect } from "./touchControlsRect";
+import { shouldShowRotateOverlay } from "../../input/mobileDetect";
 
 /** ⭐ 844×390 是 `028aa3bf` 量到的那一組，⛔ 不可以為了讓未來的排版變綠而刪掉。 */
 const VIEWPORTS: readonly (HudViewport & { note: string })[] = [
@@ -107,8 +108,38 @@ describe("GH#765 觸控攻擊鈕 × 裝備欄 —— 真矩形，⛔ 不是 `dis
    * ⭐ 它同時是這把尺的**自證**：一本量得到真重疊的帳，比一條「什麼都沒量到」
    * 的綠燈可信（天譴那次的 d 洞）。⛔ 只能變短。
    */
-  const TOP_RIGHT_TOUCH = ["leave", "scoreboard", "audio-toggle", "settings", "cheats", "equipment"] as const;
+  /**
+   * ⭐⭐ 2026-08-29 —— **分母從一張手挑的名單換成「每一個 slot」**，而那一換
+   * 當場多出三列：`gold-level×attack = 88×86`（三個橫向 viewport 全中）。
+   *
+   * ⚠️ 在此之前這裡寫的是
+   * `["leave","scoreboard","audio-toggle","settings","cheats","equipment"]`
+   * —— 也就是**只量 top-right 那一疊**。⛔ 而 `gold-level` 在觸控下**留在
+   * bottom-right**（`touchWidth:120` / `touchHeight:116`，⛔ 沒有 `touchCorner`），
+   * 也就是攻擊鈕正下方那一格 ⇒ 它**結構上進不了這本帳**。
+   * ⭐ 兩本帳（`KNOWN` 只掃 `equipment`、這一本只掃六個手挑的）**都**看不見它，
+   * 於是它比票上那個 88×38 大一倍，而**沒有任何東西紅過**（失敗形態⑫：
+   * 只驗被宣告的那一頭；以及「這一欄的分母是什麼」）。
+   *
+   * ⭐ 現在分母是 `HUD_SLOTS` 本身 —— ⛔ 沒有手挑名單可以再漏掉下一個。
+   *
+   * ⚠️ viewport 的分母同樣是**推導**的：直立觸控整片蓋著 `RotateOverlay`
+   * （`hudBottomCluster.test.ts` 有那個豁免的完整自證），所以這裡讀**出貨的
+   * 那支 predicate**，⛔ 不是一張寫死的清單。
+   */
   const CLUSTER_RESIDUAL = new Map<string, string>([
+    // ⭐⭐ 攻擊鈕（88×88）被右下角的金錢/等級/頭像面板蓋掉 **88×86 = 97.7%**。
+    // `HUD_Z.slot`(25) > TouchControls 根節點的 `zIndex:20`，而兩者同在 `#hud-root`
+    // （z-index:10，**開一個 stacking context**）⇒ 面板**畫在攻擊鈕上面**，
+    // 底色 `PANEL_BG = rgba(12,16,26,0.88)` ⇒ 88% 不透明。
+    // ⚠️ ⛔ 它**不吃觸控**：`pointer-events` 是可繼承屬性，`#hud-root` 宣告了
+    // `none` 而 `hudSlotStyle()`／`GoldLevel` 兩邊都沒有覆寫 ⇒ 按得到、看不到。
+    // ⇒ 搬它是**版面決策**（換角落／收起／縮小），照票的 Implementation
+    // constraints 要一格三住處後台開關 ⇒ ⛔ 不是只准動 `apps/client/**` 的
+    // lane 做得完的。**記在這裡，⛔ 不偷偷搬。**
+    ["844x390/gold-level×attack", "88×86"],
+    ["852x393/gold-level×attack", "88×86"],
+    ["780x360/gold-level×attack", "88×86"],
     ["844x390/scoreboard×recall", "44×16"],
     ["844x390/audio-toggle×R", "55×7"],
     ["844x390/audio-toggle×recall", "44×20"],
@@ -126,14 +157,24 @@ describe("GH#765 觸控攻擊鈕 × 裝備欄 —— 真矩形，⛔ 不是 `dis
     ["780x360/cheats×R", "45×13"],
   ]);
 
-  it("⭐ top-right 整疊 × 觸控叢集：⛔ 沒有新的，而帳本仍然逐列為真", () => {
+  /** 玩家真的到得了 HUD 的 viewport（⛔ 直立整片蓋著 RotateOverlay）。 */
+  const reachable = VIEWPORTS.filter(
+    (vp) => !shouldShowRotateOverlay({ touch: true, width: vp.width, height: vp.height }),
+  );
+
+  it("⭐ **每一個** HUD slot × 觸控叢集：⛔ 沒有新的，而帳本仍然逐列為真", () => {
+    // 非空洞：兩個分母都要真的有東西，否則這條守衛是空的
+    expect(reachable.length, "每個 viewport 都被豁免了").toBeGreaterThan(0);
+    expect(reachable.length, "沒有 viewport 走到豁免那條路").toBeLessThan(VIEWPORTS.length);
     const now = new Map<string, string>();
-    for (const vp of VIEWPORTS) {
-      for (const slot of TOP_RIGHT_TOUCH) {
-        const sr = hudSlotRect(slot, vp, true);
+    for (const vp of reachable) {
+      for (const spec of HUD_SLOTS) {
+        // `HUD_SLOTS` 的靜態型別是 `HudSlotSpec[]`（`id: string`）—— 這一個
+        // cast 是型別加寬的代價,⛔ 不是在繞過什麼:分母**就是**這張登記表本身。
+        const sr = hudSlotRect(spec.id as HudSlotId, vp, true);
         for (const { id, rect } of touchControlsRect(vp).buttons) {
           const hit = intersection(rect, sr);
-          if (hit) now.set(`${vp.width}x${vp.height}/${slot}×${id}`, `${hit.w}×${hit.h}`);
+          if (hit) now.set(`${vp.width}x${vp.height}/${spec.id}×${id}`, `${hit.w}×${hit.h}`);
         }
       }
     }
