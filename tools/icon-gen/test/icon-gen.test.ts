@@ -93,8 +93,19 @@ describe.runIf(pyOk)("icon-gen planner", () => {
     const surfaces = [
       "apps/platform/internal/curation/starter.go",
       "content/loot-tables/legendary-weapons.json",
-      "content/loot-tables/quest-rewards.json",
-      "content/loot-tables/round-reward.json",
+      // ⭐ owner 2026-08-18 的三階寶具池 —— `ex-*` 是同一天新增的兩張。
+      "content/loot-tables/ex-release-weapons.json",
+      "content/loot-tables/ex-origin-weapons.json",
+      // ⛔⛔ `quest-rewards` / `round-reward` 在 2026-08-18 **整張搬進 `_legacy/`**。
+      //   ⭐ 這裡改指 `_legacy/` 的那一份,⛔ 不是把它們從清單裡刪掉 ——
+      //   因為這條測試問的是「**否決集合有沒有變窄**」:一張退休的池子裡的 id
+      //   如果今天仍然被別的地方引用,把它從否決集合拿掉就會讓 icon-gen 丟掉它的圖。
+      //   ⇒ ⭐ 保守的做法是**繼續保護它們**,直到有人量到「零個引用」。
+      //   ⚠️ 而這份清單**刻意**與 `plan.py` 的 `LIVE_SURFACE_FILES` 分開維護
+      //   (見上面那段註解:它要獨立於 planner 自己的抓取)——
+      //   ⛔ 所以不要改成從 `plan.py` 推導,那會讓交叉驗證變成自己驗自己。
+      "content/_legacy/loot-tables/quest-rewards.json",
+      "content/_legacy/loot-tables/round-reward.json",
       "content/config/store.json",
       "packages/shared/src/sim/content/skeleton.ts",
     ];

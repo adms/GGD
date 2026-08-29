@@ -120,6 +120,28 @@ describe("effect kind 的兩個住處要對得起來（GH#608）", () => {
      * ⛔ 這是一條**從原始碼推導**的規則，不是豁免：介面不再 extends 的那一天，
      * 這裡也就自動不再放行。
      */
+    /**
+     * ⭐ 在 `sim/` 樹裡找一個 `export interface <名字>` 的 body。
+     * ⛔ 刻意**不**寫死路徑或名字 —— 寫死正是上一版只認得 `SourceGrantFields` 的原因。
+     */
+    const findInterfaceBodies = (name: string): string[] => {
+      const out: string[] = [];
+      const re = new RegExp(
+        "export interface " + name + "(?:\\s+extends\\s+[\\w, ]+)?\\s*\\{([\\s\\S]*?)\\n\\}",
+      );
+      const walk = (dir: string): void => {
+        for (const e of readdirSync(dir, { withFileTypes: true })) {
+          const full = join(dir, e.name);
+          if (e.isDirectory()) { walk(full); continue; }
+          if (!e.name.endsWith(".ts") || e.name.includes(".test.")) continue;
+          const hit = re.exec(readFileSync(full, "utf8"));
+          if (hit?.[1] !== undefined) out.push(hit[1]);
+        }
+      };
+      walk(join(SIM_EFFECTS, ".."));
+      return out;
+    };
+
     const inherited = new Map<string, Set<string>>();
     for (const f of readdirSync(VARIANTS_DIR)) {
       if (!f.endsWith(".ts") || f.includes(".test.")) continue;
@@ -130,17 +152,32 @@ describe("effect kind 的兩個住處要對得起來（GH#608）", () => {
       if (!kind) continue;
       const extra = new Set<string>();
       for (const base of (m[1] ?? "").split(",").map((x) => x.trim())) {
-        if (base !== "SourceGrantFields") continue;
-        const gs = readFileSync(join(SIM_EFFECTS, "../stats/sourceGrants.ts"), "utf8");
-        const gb = /export interface SourceGrantFields\s*\{([\s\S]*?)\n\}/.exec(gs)?.[1] ?? "";
-        const cg = gb.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/[^\n]*/g, "");
-        let d = 0;
-        for (const line of cg.split("\n")) {
-          if (d === 0) {
-            const pp = /^\s*(?:readonly\s+)?(\w+)\??\s*:/.exec(line);
-            if (pp?.[1]) extra.add(pp[1]);
+        // ⛔⛔ **⛔ 不可以寫死被繼承那一份的名字**（2026-08-30 踩到）——
+        //   上一版只跟 `SourceGrantFields` 走,於是
+        //   `FloatingTextVariant extends FloatingTextDriftSpec` 帶進來的 4 格 `drift*`
+        //   掃不到 ⇒ 報「Zod 收得下但 variant 看不到」,
+        //   ⛔ **而 variant 是對的** —— 它刻意 extends,正是為了不要第二個住處。
+        //   ⇒ ⭐ 這條閘當時在**指控一份照著第〇·四守則寫的程式碼**。
+        //
+        // ⭐ 改成通用解析。⚠️ 判準是「**掃不到就紅**」,⛔ 不是「掃不到就放行」——
+        //   後者會讓一個打錯字的 base 名字靜默通過,而那正是這條閘要擋的東西。
+        const bodies = findInterfaceBodies(base);
+        expect(
+          bodies.length,
+          "⛔ 掃不到被繼承的介面 `" + base + "`（" + f + "）—— 它搬家了,或名字打錯了。" +
+            "⭐ 修法:把它移回 sim/ 樹底下,或更正 extends 的名字。" +
+            "⛔ 不要在這裡加豁免 —— 掃不到就代表這條閘對那幾格是瞎的。",
+        ).toBeGreaterThan(0);
+        for (const body of bodies) {
+          const cg = body.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/[^\n]*/g, "");
+          let d = 0;
+          for (const line of cg.split("\n")) {
+            if (d === 0) {
+              const pp = /^\s*(?:readonly\s+)?(\w+)\??\s*:/.exec(line);
+              if (pp?.[1]) extra.add(pp[1]);
+            }
+            d += (line.match(/\{/g)?.length ?? 0) - (line.match(/\}/g)?.length ?? 0);
           }
-          d += (line.match(/\{/g)?.length ?? 0) - (line.match(/\}/g)?.length ?? 0);
         }
       }
       inherited.set(kind, extra);
