@@ -576,6 +576,24 @@
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
     {
+      "id": "fx.wave.physical",
+      "kind": "vfx",
+      "hash": "79dd15debbd023cdd66a8321ee99a1319a63ae25",
+      "risk": 9,
+      "reasons": [
+        "6 支上架技能引用（R/EX ×2 加權後 risk 9）",
+        "未審"
+      ],
+      "refs": [
+        "godie-e002.e",
+        "godie-e00l.e",
+        "godie-h01u.r",
+        "godie-h01u.w",
+        "godie-h02r.r",
+        "godie-hgam.r"
+      ]
+    },
+    {
       "id": "fx.avalon.reflect-burst",
       "kind": "vfx",
       "hash": "ede2bc583a25afec13bb0c476649cb7891374cf0",
@@ -1158,6 +1176,21 @@
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
     {
+      "id": "fx.wave.ki",
+      "kind": "vfx",
+      "hash": "7ccfe6f7fc4a39544c1a51adbcdcfdd075a0aa41",
+      "risk": 6,
+      "reasons": [
+        "3 支上架技能引用（R/EX ×2 加權後 risk 6）",
+        "未審"
+      ],
+      "refs": [
+        "godie-e00r.r",
+        "godie-o00x.r",
+        "godie-ogrh.r"
+      ]
+    },
+    {
       "id": "godie-lightningtornado-p0",
       "kind": "vfx",
       "hash": "9d65997bca7168ada32e12ef0699ef1fb5980eb5",
@@ -1557,22 +1590,6 @@
         "godie-n00b.q"
       ],
       "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
-    },
-    {
-      "id": "fx.wave.physical",
-      "kind": "vfx",
-      "hash": "79dd15debbd023cdd66a8321ee99a1319a63ae25",
-      "risk": 5,
-      "reasons": [
-        "4 支上架技能引用（R/EX ×2 加權後 risk 5）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e002.e",
-        "godie-e00l.e",
-        "godie-h01u.r",
-        "godie-h01u.w"
-      ]
     },
     {
       "id": "imported.crescent",
@@ -3782,19 +3799,6 @@
       ],
       "refs": [
         "godie-hart.r"
-      ]
-    },
-    {
-      "id": "fx.wave.ki",
-      "kind": "vfx",
-      "hash": "7ccfe6f7fc4a39544c1a51adbcdcfdd075a0aa41",
-      "risk": 2,
-      "reasons": [
-        "1 支上架技能引用（R/EX ×2 加權後 risk 2）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e00r.r"
       ]
     },
     {

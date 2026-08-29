@@ -10,8 +10,8 @@
   "cooldown:tier": 155,
   "cooldown:w3a-absent": 172,
   "duration:free-number": 27,
-  "duration:ggd-absent": 199,
-  "duration:same": 3,
+  "duration:ggd-absent": 198,
+  "duration:same": 4,
   "duration:w3a-absent": 223,
   "mana:ggd-zero": 77,
   "mana:same": 25,
@@ -8821,16 +8821,6 @@
    "ggd": "godie-huth.ex",
    "name": "28-002 無限分裂",
    "w3aValue": 0.01,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:ggd-absent",
-   "w3a": "A08U",
-   "ggd": "godie-huth.r",
-   "name": "28-04 破滅能量彈",
-   "w3aValue": 5.0,
    "ggdValue": null,
    "verdict": "ggd-absent"
   },

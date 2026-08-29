@@ -18,7 +18,7 @@
 | `mana` | 25 | 169 | 77 | 181 |
 | `range` | 7 | 99 | 30 | 316 |
 | `radius` | 4 | 52 | 95 | 301 |
-| `duration` | 3 | 0 | 226 | 223 |
+| `duration` | 4 | 0 | 225 | 223 |
 
 ## 2. 裁決帳本(逐列 —— ⭐ 棘輪:`max` 只准變小)
 
@@ -40,7 +40,7 @@
 | `radius:ggd-absent` | 90 | ⚫無主 | w3a 有 `area`(範圍技)而出貨側**整棵效果樹找不到任何 radius**。⚠️ 這一批混了兩種:重製時刻意改成單體的,以及**漏接範圍**的 —— 而兩種在 JSON 裡長得一模一樣。⭐ 2026-08-28 −1：同上一列的另一半（nbbc.r 從『沒有半徑』變成『有半徑』）。 |
 | `radius:tier` | 52 | GGD-tier-table | owner 2026-08-11「原則上不寫範圍數字」⇒ AOE 走級距(`content/config/aoe-tiers.json`);出貨文件帶著 `radiusTier`。⭐ 2026-08-28 +1：08-04 阿邦快速劍X 變身態（godie-nbbc.r）拿掉空模板殼之後，落點 AoE（j:28918 `GetUnitsInRangeOfLocAll(250)` = 4.58→級距 4.5「小」）第一次進到出貨形狀 ——⛔ 不是漂移，是它本來就該有而以前被 `tpl-single-strike` 蓋住了。 |
 | `duration:free-number` | 27 | ⚫無主 | 出貨的 `durationSec` 與 w3a 的持續秒數不同,而**五級距裡根本沒有 duration 這一軸**(damage/cooldown/mana/range/aoe 五張表都沒有它),`config/skill-normalize.json` 的決策點也不含它 ⇒ 每一支的秒數都是逐支手填的自由數字。⭐ 2026-08-28 −4：`_walk_numbers` 開始跳過 cue kinds —— `screenShake.durationSec`（震多久）以前被讀成**技能的持續時間**。⛔ 那 4 筆從來不是技能時長。 |
-| `duration:ggd-absent` | 199 | ⚫無主 | w3a 宣告了持續時間而出貨側**整棵效果樹沒有任何 durationSec**。⚠️ 同 `radius:ggd-absent`:混了「重製成瞬發」與「漏接持續效果」兩種,而 JSON 裡分不出來。⭐ 另外 w3a 還有 `hero_duration`(對英雄減時)這一格,GGD **一格都沒有** —— 那是一個缺的機制,不只是漏翻。⚠️ 2026-08-28 +4：上一列的鏡像。⭐ 這 4 支**本來就沒有**時長，只是以前被 cue 的 `durationSec` 冒名頂替 ⇒ 195 是**低報**，199 才是真的缺口。 |
+| `duration:ggd-absent` | 198 | ⚫無主 | w3a 宣告了持續時間而出貨側**整棵效果樹沒有任何 durationSec**。⚠️ 同 `radius:ggd-absent`:混了「重製成瞬發」與「漏接持續效果」兩種,而 JSON 裡分不出來。⭐ 另外 w3a 還有 `hero_duration`(對英雄減時)這一格,GGD **一格都沒有** —— 那是一個缺的機制,不只是漏翻。⚠️ 2026-08-28 +4：上一列的鏡像。⭐ 這 4 支**本來就沒有**時長，只是以前被 cue 的 `durationSec` 冒名頂替 ⇒ 195 是**低報**，199 才是真的缺口。 |
 
 ⚠️ 一列的 `max` 是**上一次量到的數字**。修好一筆 ⇒ 這一份重生成 ⇒ 守衛要求把 `max` 調降;
 ⛔ 沒有人可以靜靜地讓它變大。
@@ -50,7 +50,7 @@
 ⛔ 這一節**不是提案**。它只是把「w3x 說 A、我們出貨 B、而沒有任何一層贏」擺到同一列上 ——
 第一守則:出貨數值的每一次改動要能引用到 owner 的一句原話,而這裡一句都引不到。
 
-共 **504** 筆。
+共 **503** 筆。
 
 | # | 軸 | 類別 | w3a | 技能 | GGD id | w3x | GGD |
 |--:|---|---|---|---|---|---|---|
@@ -452,112 +452,111 @@
 | 396 | `duration` | `ggd-absent` | `A0SJ` | 28-002 無限分裂 | `godie-huth.ex` | 25.0 | None |
 | 397 | `duration` | `ggd-absent` | `A0SK` | 28-0021 分身 | `godie-huth.ex` | 15.0 | None |
 | 398 | `duration` | `ggd-absent` | `A0T5` | 28-002 無限分裂 | `godie-huth.ex` | 0.01 | None |
-| 399 | `duration` | `ggd-absent` | `A08U` | 28-04 破滅能量彈 | `godie-huth.r` | 5.0 | None |
-| 400 | `duration` | `ggd-absent` | `A0CK` | 28-02 把你變成餅乾 | `godie-huth.w` | 0.01 | None |
-| 401 | `duration` | `ggd-absent` | `A00J` | 48-03 魔法枷鎖 | `godie-hvsh.e` | 3.0 | None |
-| 402 | `duration` | `ggd-absent` | `A06C` | 48-03 鮮血神殿 | `godie-hvsh.e` | 10.0 | None |
-| 403 | `duration` | `ggd-absent` | `A0RN` | 48-00-00 Rider石化之眼 | `godie-hvsh.passive` | 4.0 | None |
-| 404 | `duration` | `ggd-absent` | `A0S6` | 02-002 神通眼 | `godie-hvwd.ex` | 2.0 | None |
-| 405 | `duration` | `ggd-absent` | `Aprg` | 02-00 淨化 | `godie-hvwd.passive` | 4.0 | None |
-| 406 | `duration` | `ggd-absent` | `A0CE` | 02-01-r 破魔之箭 | `godie-hvwd.q` | 0.01 | None |
-| 407 | `duration` | `ggd-absent` | `A0Z6` | 02-04 百鬼夜行 | `godie-hvwd.r` | 8.0 | None |
-| 408 | `duration` | `ggd-absent` | `A11I` | 02-04-02 顯示 | `godie-hvwd.r` | 5.0 | None |
-| 409 | `duration` | `ggd-absent` | `A059` | 42-00 魔法障壁 | `godie-n003.passive` | 9.0 | None |
-| 410 | `duration` | `ggd-absent` | `A05B` | 42-01 凍結的大地 | `godie-n003.q` | 2.0 | None |
-| 411 | `duration` | `ggd-absent` | `A05D` | 42-04 世界終結 | `godie-n003.r` | 0.01 | None |
-| 412 | `duration` | `ggd-absent` | `A0P6` | 42-04-01 世界終結 | `godie-n003.r` | 3.0 | None |
-| 413 | `duration` | `ggd-absent` | `A0D1` | 57-02 縮小燈 | `godie-n00b.e` | 10.0 | None |
-| 414 | `duration` | `ggd-absent` | `A0JN` | 57-04 竹蜻蜓 | `godie-n00b.r` | 1.0 | None |
-| 415 | `duration` | `ggd-absent` | `A0NE` | 57-03 複製鏡 | `godie-n00b.w` | 20.0 | None |
-| 416 | `duration` | `ggd-absent` | `A00N` | 18-03-01 召喚毒蕈 | `godie-n00p.e` | 20.0 | None |
-| 417 | `duration` | `ggd-absent` | `A0IH` | 18-03 妖狐變化 | `godie-n00p.e` | 0.0 | None |
-| 418 | `duration` | `ggd-absent` | `A0IO` | 18-01 風華圓舞陣 | `godie-n00p.q` | 8.0 | None |
-| 419 | `duration` | `ggd-absent` | `A00O` | 18-04-02 老樹盤根 | `godie-n00p.r` | 4.0 | None |
-| 420 | `duration` | `ggd-absent` | `A0P7` | 18-04 億年樹 | `godie-n00p.r` | 0.01 | None |
-| 421 | `duration` | `ggd-absent` | `A0PA` | 18-04-0x 老樹盤根 | `godie-n00p.r` | 1.0 | None |
-| 422 | `duration` | `ggd-absent` | `A00B` | 18-02 寄生種子 | `godie-n00p.w` | 0.01 | None |
-| 423 | `duration` | `ggd-absent` | `A0RV` | 18-02 寄生種子 | `godie-n00p.w` | 5.0 | None |
-| 424 | `duration` | `ggd-absent` | `A0CF` | 08-01 雙龍紋 | `godie-n01c.q` | 9.0 | None |
-| 425 | `duration` | `ggd-absent` | `A0C0` | 86-04 打雷絕招 | `godie-o00k.r` | 0.5 | None |
-| 426 | `duration` | `ggd-absent` | `A07T` | 53-03 破法對咒 | `godie-o00l.e` | 0.01 | None |
-| 427 | `duration` | `ggd-absent` | `A0DS` | 53-03-x 破法對咒 | `godie-o00l.e` | 6.0 | None |
-| 428 | `duration` | `ggd-absent` | `A0K1` | 53-01 獸王牙操彈 | `godie-o00l.q` | 0.01 | None |
-| 429 | `duration` | `ggd-absent` | `A0DT` | 53-04 暴爆咒 | `godie-o00l.r` | 0.0 | None |
-| 430 | `duration` | `ggd-absent` | `A0UE` | 53-04 暴爆咒 | `godie-o00l.r` | 5.0 | None |
-| 431 | `duration` | `ggd-absent` | `A0DQ` | 53-02 強化炸彈陣 | `godie-o00l.w` | 0.98 | None |
-| 432 | `duration` | `ggd-absent` | `A09E` | 09-03 超級賽亞人 | `godie-o00x.e` | 0.0 | None |
-| 433 | `duration` | `ggd-absent` | `A0C3` | 58-03 就決定是你了!小智 | `godie-o02l.e` | 0.5 | None |
-| 434 | `duration` | `ggd-absent` | `A0SL` | 58-002 打雷絕招 | `godie-o02l.ex` | 0.5 | None |
-| 435 | `duration` | `ggd-absent` | `A040` | 58-04 瘋狂皮卡丘 | `godie-o02l.r` | 0.0 | None |
-| 436 | `duration` | `ggd-absent` | `A04U` | 58-02 鋼鐵尾巴 | `godie-o02l.w` | 0.01 | None |
-| 437 | `duration` | `ggd-absent` | `A11A` | 99-03a 初音戰意 | `godie-o02p.e` | 15.0 | None |
-| 438 | `duration` | `ggd-absent` | `A11B` | 99-03 初音未來的消失 | `godie-o02p.e` | 0.0 | None |
-| 439 | `duration` | `ggd-absent` | `A11F` | 99-002 把你給MikuMiku掉 | `godie-o02p.ex` | 15.0 | None |
-| 440 | `duration` | `ggd-absent` | `A11C` | 99-04 世界第一的公主殿下 | `godie-o02p.r` | 4.0 | None |
-| 441 | `duration` | `ggd-absent` | `ANso` | 30-03 痴漢火焰 | `godie-o030.e` | 7.0 | None |
-| 442 | `duration` | `ggd-absent` | `A0YT` | 30-002 變態紳士 | `godie-o030.ex` | 0.0 | None |
-| 443 | `duration` | `ggd-absent` | `A10I` | 30-002 EX變態針刺 | `godie-o030.ex` | 0.11 | None |
-| 444 | `duration` | `ggd-absent` | `A09L` | 30-01 綁架 | `godie-o030.q` | 1.0 | None |
-| 445 | `duration` | `ggd-absent` | `A01P` | 30-04 電車之狼衝擊 | `godie-o030.r` | 0.01 | None |
-| 446 | `duration` | `ggd-absent` | `ANdh` | 30-02 酒精灌腸 | `godie-o030.w` | 9.0 | None |
-| 447 | `duration` | `ggd-absent` | `Afae` | 72-03 超亮白 | `godie-ogld.e` | 8.0 | None |
-| 448 | `duration` | `ggd-absent` | `A09B` | 72-002 億萬星殞落 | `godie-ogld.ex` | 30.0 | None |
-| 449 | `duration` | `ggd-absent` | `ANmo` | 72-01洗刷刷 | `godie-ogld.q` | 4.0 | None |
-| 450 | `duration` | `ggd-absent` | `A0CO` | 72-04 黑化 | `godie-ogld.r` | 0.2 | None |
-| 451 | `duration` | `ggd-absent` | `A0BN` | 72-02 黑人牙菌斑 | `godie-ogld.w` | 8.0 | None |
-| 452 | `duration` | `ggd-absent` | `ACpa` | 72-02 黑人牙菌斑 | `godie-ogld.w` | 10.0 | None |
-| 453 | `duration` | `ggd-absent` | `A0F5` | 34-03 爆碎丸 | `godie-osam.e` | 0.5 | None |
-| 454 | `duration` | `ggd-absent` | `ACdr` | 34-00 靈魂吞噬 | `godie-osam.passive` | 5.0 | None |
-| 455 | `duration` | `ggd-absent` | `A0DO` | 39-03 無名神風流-蛟龍 | `godie-u00h.e` | 0.01 | None |
-| 456 | `duration` | `ggd-absent` | `A07C` | 39-00 無名神風流-玄武 | `godie-u00h.passive` | 12.0 | None |
-| 457 | `duration` | `ggd-absent` | `A0DG` | 39-01 無名神風流-白虎 | `godie-u00h.q` | 1.0 | None |
-| 458 | `duration` | `ggd-absent` | `A0DJ` | 39-04 祕奧義．金色的神風 | `godie-u00h.r` | 1.0 | None |
-| 459 | `duration` | `ggd-absent` | `A0Z4` | 39-02 無名神風流-朱雀 | `godie-u00h.w` | 0.01 | None |
-| 460 | `duration` | `ggd-absent` | `A00T` | 74-03 -x 闇之天使 | `godie-u00j.e` | 0.3 | None |
-| 461 | `duration` | `ggd-absent` | `A011` | 74-03-x 流星雨 | `godie-u00j.e` | 0.01 | None |
-| 462 | `duration` | `ggd-absent` | `A0F4` | 74-03 闇之天使 | `godie-u00j.e` | 3.0 | None |
-| 463 | `duration` | `ggd-absent` | `A0SW` | 74-03-x 流星雨 | `godie-u00j.e` | 1.0 | None |
-| 464 | `duration` | `ggd-absent` | `A0S3` | 74-002 超新星 | `godie-u00j.ex` | 1.0 | None |
-| 465 | `duration` | `ggd-absent` | `A0G5` | 74-04 最終殞落星 | `godie-u00j.r` | 0.9 | None |
-| 466 | `duration` | `ggd-absent` | `A0HJ` | 71-03 厄夜靈魂 | `godie-u00k.e` | 3.0 | None |
-| 467 | `duration` | `ggd-absent` | `A03L` | 71-01 死亡隕落 | `godie-u00k.q` | 0.0 | None |
-| 468 | `duration` | `ggd-absent` | `A095` | 71-01-x 死亡隕落 | `godie-u00k.q` | 2.0 | None |
-| 469 | `duration` | `ggd-absent` | `A0HG` | 71-01 屍靈裂 | `godie-u00k.q` | 0.05 | None |
-| 470 | `duration` | `ggd-absent` | `A0HK` | 71-04 萬惡歸宗 | `godie-u00k.r` | 2.0 | None |
-| 471 | `duration` | `ggd-absent` | `A08T` | 71-02 靈魂吸取 | `godie-u00k.w` | 0.01 | None |
-| 472 | `duration` | `ggd-absent` | `A0HV` | 25-03 北斗百裂拳 | `godie-u00l.e` | 0.5 | None |
-| 473 | `duration` | `ggd-absent` | `A10Y` | 25-002 喔拉喔拉喔拉喔拉 | `godie-u00l.ex` | 0.2 | None |
-| 474 | `duration` | `ggd-absent` | `A07H` | 25-00 北斗暗殺拳 | `godie-u00l.passive` | 12.0 | None |
-| 475 | `duration` | `ggd-absent` | `A0HW` | 25-04 ChangeDNA | `godie-u00l.r` | 0.0 | None |
-| 476 | `duration` | `ggd-absent` | `A0IV` | 76-03 伸縮自如的槍亂打 | `godie-u00n.e` | 1.5 | None |
-| 477 | `duration` | `ggd-absent` | `A0ZJ` | 76-002-00 霸王色效果 | `godie-u00n.ex` | 10.0 | None |
-| 478 | `duration` | `ggd-absent` | `A0ZK` | 76-002 霸王色 | `godie-u00n.ex` | 0.01 | None |
-| 479 | `duration` | `ggd-absent` | `A0IS` | 76-01 伸縮自如的橡膠戰斧 | `godie-u00n.q` | 0.01 | None |
-| 480 | `duration` | `ggd-absent` | `A0IP` | 76-02 伸縮自如的橡膠火箭砲 | `godie-u00n.w` | 1.0 | None |
-| 481 | `duration` | `ggd-absent` | `A0L2` | 78-03 廬山昇龍破 | `godie-u00v.e` | 0.01 | None |
-| 482 | `duration` | `ggd-absent` | `A0L5` | 78-01 斬鐵拳 | `godie-u00v.q` | 1.0 | None |
-| 483 | `duration` | `ggd-absent` | `A0L6` | 78-04 死亡噴射肘擊 | `godie-u00v.r` | 1.0 | None |
-| 484 | `duration` | `ggd-absent` | `A0OH` | 38-00 邪眼全開 | `godie-u010.passive` | 0.0 | None |
-| 485 | `duration` | `ggd-absent` | `A09K` | 38-04 黑龍波吸收 | `godie-u010.r` | 10.0 | None |
-| 486 | `duration` | `ggd-absent` | `A09H` | 38-02 邪王炎殺煉獄焦 | `godie-u010.w` | 0.0 | None |
-| 487 | `duration` | `ggd-absent` | `A06P` | 11-03 鬼氣九刀流-阿修羅壹霧銀 | `godie-u01u.e` | 1.0 | None |
-| 488 | `duration` | `ggd-absent` | `A0CN` | 11-00x 三刀流效果 | `godie-u01u.passive` | 15.0 | None |
-| 489 | `duration` | `ggd-absent` | `A0OU` | 11-00 三刀流 | `godie-u01u.passive` | 0.5 | None |
-| 490 | `duration` | `ggd-absent` | `A0CC` | 11-01 燒鬼斬 | `godie-u01u.q` | 1.0 | None |
-| 491 | `duration` | `ggd-absent` | `A0MQ` | 11-04 三千世界 | `godie-u01u.r` | 0.1 | None |
-| 492 | `duration` | `ggd-absent` | `A06N` | 11-02 虎狩獵 | `godie-u01u.w` | 0.5 | None |
-| 493 | `duration` | `ggd-absent` | `A08Y` | 06-00 猜猜拳 | `godie-u034.passive` | 0.01 | None |
-| 494 | `duration` | `ggd-absent` | `A0NP` | 06-00x 剪刀出血 | `godie-u034.passive` | 8.0 | None |
-| 495 | `duration` | `ggd-absent` | `A0SN` | 06-00x 石頭暈 | `godie-u034.passive` | 1.0 | None |
-| 496 | `duration` | `ggd-absent` | `A0Y1` | 06-04 傑桑變化 | `godie-u034.r` | 0.0 | None |
-| 497 | `duration` | `ggd-absent` | `A08W` | 06-02 山形修煉-變 | `godie-u034.w` | 0.0 | None |
-| 498 | `duration` | `ggd-absent` | `A0ZV` | 37-002 真‧黑核晶 | `godie-ubal.ex` | 0.01 | None |
-| 499 | `duration` | `ggd-absent` | `S001` | 37-00 鬼眼 | `godie-ubal.passive` | 5.0 | None |
-| 500 | `duration` | `ggd-absent` | `A01Z` | 37-04 魔界之王 | `godie-ubal.r` | 35.0 | None |
-| 501 | `duration` | `ggd-absent` | `A0OT` | 37-04-01 魔力操控 | `godie-ubal.r` | 3.0 | None |
-| 502 | `duration` | `ggd-absent` | `A0KD` | 37-03-00 災難之牆火燄 | `godie-ubal.w` | 0.1 | None |
-| 503 | `duration` | `ggd-absent` | `A0CH` | 65-03 魔法膨脹 | `godie-udea.e` | 1.0 | None |
-| 504 | `duration` | `ggd-absent` | `A0FF` | 65-002 永恆的愚蠢鄉 | `godie-udea.ex` | 0.01 | None |
+| 399 | `duration` | `ggd-absent` | `A0CK` | 28-02 把你變成餅乾 | `godie-huth.w` | 0.01 | None |
+| 400 | `duration` | `ggd-absent` | `A00J` | 48-03 魔法枷鎖 | `godie-hvsh.e` | 3.0 | None |
+| 401 | `duration` | `ggd-absent` | `A06C` | 48-03 鮮血神殿 | `godie-hvsh.e` | 10.0 | None |
+| 402 | `duration` | `ggd-absent` | `A0RN` | 48-00-00 Rider石化之眼 | `godie-hvsh.passive` | 4.0 | None |
+| 403 | `duration` | `ggd-absent` | `A0S6` | 02-002 神通眼 | `godie-hvwd.ex` | 2.0 | None |
+| 404 | `duration` | `ggd-absent` | `Aprg` | 02-00 淨化 | `godie-hvwd.passive` | 4.0 | None |
+| 405 | `duration` | `ggd-absent` | `A0CE` | 02-01-r 破魔之箭 | `godie-hvwd.q` | 0.01 | None |
+| 406 | `duration` | `ggd-absent` | `A0Z6` | 02-04 百鬼夜行 | `godie-hvwd.r` | 8.0 | None |
+| 407 | `duration` | `ggd-absent` | `A11I` | 02-04-02 顯示 | `godie-hvwd.r` | 5.0 | None |
+| 408 | `duration` | `ggd-absent` | `A059` | 42-00 魔法障壁 | `godie-n003.passive` | 9.0 | None |
+| 409 | `duration` | `ggd-absent` | `A05B` | 42-01 凍結的大地 | `godie-n003.q` | 2.0 | None |
+| 410 | `duration` | `ggd-absent` | `A05D` | 42-04 世界終結 | `godie-n003.r` | 0.01 | None |
+| 411 | `duration` | `ggd-absent` | `A0P6` | 42-04-01 世界終結 | `godie-n003.r` | 3.0 | None |
+| 412 | `duration` | `ggd-absent` | `A0D1` | 57-02 縮小燈 | `godie-n00b.e` | 10.0 | None |
+| 413 | `duration` | `ggd-absent` | `A0JN` | 57-04 竹蜻蜓 | `godie-n00b.r` | 1.0 | None |
+| 414 | `duration` | `ggd-absent` | `A0NE` | 57-03 複製鏡 | `godie-n00b.w` | 20.0 | None |
+| 415 | `duration` | `ggd-absent` | `A00N` | 18-03-01 召喚毒蕈 | `godie-n00p.e` | 20.0 | None |
+| 416 | `duration` | `ggd-absent` | `A0IH` | 18-03 妖狐變化 | `godie-n00p.e` | 0.0 | None |
+| 417 | `duration` | `ggd-absent` | `A0IO` | 18-01 風華圓舞陣 | `godie-n00p.q` | 8.0 | None |
+| 418 | `duration` | `ggd-absent` | `A00O` | 18-04-02 老樹盤根 | `godie-n00p.r` | 4.0 | None |
+| 419 | `duration` | `ggd-absent` | `A0P7` | 18-04 億年樹 | `godie-n00p.r` | 0.01 | None |
+| 420 | `duration` | `ggd-absent` | `A0PA` | 18-04-0x 老樹盤根 | `godie-n00p.r` | 1.0 | None |
+| 421 | `duration` | `ggd-absent` | `A00B` | 18-02 寄生種子 | `godie-n00p.w` | 0.01 | None |
+| 422 | `duration` | `ggd-absent` | `A0RV` | 18-02 寄生種子 | `godie-n00p.w` | 5.0 | None |
+| 423 | `duration` | `ggd-absent` | `A0CF` | 08-01 雙龍紋 | `godie-n01c.q` | 9.0 | None |
+| 424 | `duration` | `ggd-absent` | `A0C0` | 86-04 打雷絕招 | `godie-o00k.r` | 0.5 | None |
+| 425 | `duration` | `ggd-absent` | `A07T` | 53-03 破法對咒 | `godie-o00l.e` | 0.01 | None |
+| 426 | `duration` | `ggd-absent` | `A0DS` | 53-03-x 破法對咒 | `godie-o00l.e` | 6.0 | None |
+| 427 | `duration` | `ggd-absent` | `A0K1` | 53-01 獸王牙操彈 | `godie-o00l.q` | 0.01 | None |
+| 428 | `duration` | `ggd-absent` | `A0DT` | 53-04 暴爆咒 | `godie-o00l.r` | 0.0 | None |
+| 429 | `duration` | `ggd-absent` | `A0UE` | 53-04 暴爆咒 | `godie-o00l.r` | 5.0 | None |
+| 430 | `duration` | `ggd-absent` | `A0DQ` | 53-02 強化炸彈陣 | `godie-o00l.w` | 0.98 | None |
+| 431 | `duration` | `ggd-absent` | `A09E` | 09-03 超級賽亞人 | `godie-o00x.e` | 0.0 | None |
+| 432 | `duration` | `ggd-absent` | `A0C3` | 58-03 就決定是你了!小智 | `godie-o02l.e` | 0.5 | None |
+| 433 | `duration` | `ggd-absent` | `A0SL` | 58-002 打雷絕招 | `godie-o02l.ex` | 0.5 | None |
+| 434 | `duration` | `ggd-absent` | `A040` | 58-04 瘋狂皮卡丘 | `godie-o02l.r` | 0.0 | None |
+| 435 | `duration` | `ggd-absent` | `A04U` | 58-02 鋼鐵尾巴 | `godie-o02l.w` | 0.01 | None |
+| 436 | `duration` | `ggd-absent` | `A11A` | 99-03a 初音戰意 | `godie-o02p.e` | 15.0 | None |
+| 437 | `duration` | `ggd-absent` | `A11B` | 99-03 初音未來的消失 | `godie-o02p.e` | 0.0 | None |
+| 438 | `duration` | `ggd-absent` | `A11F` | 99-002 把你給MikuMiku掉 | `godie-o02p.ex` | 15.0 | None |
+| 439 | `duration` | `ggd-absent` | `A11C` | 99-04 世界第一的公主殿下 | `godie-o02p.r` | 4.0 | None |
+| 440 | `duration` | `ggd-absent` | `ANso` | 30-03 痴漢火焰 | `godie-o030.e` | 7.0 | None |
+| 441 | `duration` | `ggd-absent` | `A0YT` | 30-002 變態紳士 | `godie-o030.ex` | 0.0 | None |
+| 442 | `duration` | `ggd-absent` | `A10I` | 30-002 EX變態針刺 | `godie-o030.ex` | 0.11 | None |
+| 443 | `duration` | `ggd-absent` | `A09L` | 30-01 綁架 | `godie-o030.q` | 1.0 | None |
+| 444 | `duration` | `ggd-absent` | `A01P` | 30-04 電車之狼衝擊 | `godie-o030.r` | 0.01 | None |
+| 445 | `duration` | `ggd-absent` | `ANdh` | 30-02 酒精灌腸 | `godie-o030.w` | 9.0 | None |
+| 446 | `duration` | `ggd-absent` | `Afae` | 72-03 超亮白 | `godie-ogld.e` | 8.0 | None |
+| 447 | `duration` | `ggd-absent` | `A09B` | 72-002 億萬星殞落 | `godie-ogld.ex` | 30.0 | None |
+| 448 | `duration` | `ggd-absent` | `ANmo` | 72-01洗刷刷 | `godie-ogld.q` | 4.0 | None |
+| 449 | `duration` | `ggd-absent` | `A0CO` | 72-04 黑化 | `godie-ogld.r` | 0.2 | None |
+| 450 | `duration` | `ggd-absent` | `A0BN` | 72-02 黑人牙菌斑 | `godie-ogld.w` | 8.0 | None |
+| 451 | `duration` | `ggd-absent` | `ACpa` | 72-02 黑人牙菌斑 | `godie-ogld.w` | 10.0 | None |
+| 452 | `duration` | `ggd-absent` | `A0F5` | 34-03 爆碎丸 | `godie-osam.e` | 0.5 | None |
+| 453 | `duration` | `ggd-absent` | `ACdr` | 34-00 靈魂吞噬 | `godie-osam.passive` | 5.0 | None |
+| 454 | `duration` | `ggd-absent` | `A0DO` | 39-03 無名神風流-蛟龍 | `godie-u00h.e` | 0.01 | None |
+| 455 | `duration` | `ggd-absent` | `A07C` | 39-00 無名神風流-玄武 | `godie-u00h.passive` | 12.0 | None |
+| 456 | `duration` | `ggd-absent` | `A0DG` | 39-01 無名神風流-白虎 | `godie-u00h.q` | 1.0 | None |
+| 457 | `duration` | `ggd-absent` | `A0DJ` | 39-04 祕奧義．金色的神風 | `godie-u00h.r` | 1.0 | None |
+| 458 | `duration` | `ggd-absent` | `A0Z4` | 39-02 無名神風流-朱雀 | `godie-u00h.w` | 0.01 | None |
+| 459 | `duration` | `ggd-absent` | `A00T` | 74-03 -x 闇之天使 | `godie-u00j.e` | 0.3 | None |
+| 460 | `duration` | `ggd-absent` | `A011` | 74-03-x 流星雨 | `godie-u00j.e` | 0.01 | None |
+| 461 | `duration` | `ggd-absent` | `A0F4` | 74-03 闇之天使 | `godie-u00j.e` | 3.0 | None |
+| 462 | `duration` | `ggd-absent` | `A0SW` | 74-03-x 流星雨 | `godie-u00j.e` | 1.0 | None |
+| 463 | `duration` | `ggd-absent` | `A0S3` | 74-002 超新星 | `godie-u00j.ex` | 1.0 | None |
+| 464 | `duration` | `ggd-absent` | `A0G5` | 74-04 最終殞落星 | `godie-u00j.r` | 0.9 | None |
+| 465 | `duration` | `ggd-absent` | `A0HJ` | 71-03 厄夜靈魂 | `godie-u00k.e` | 3.0 | None |
+| 466 | `duration` | `ggd-absent` | `A03L` | 71-01 死亡隕落 | `godie-u00k.q` | 0.0 | None |
+| 467 | `duration` | `ggd-absent` | `A095` | 71-01-x 死亡隕落 | `godie-u00k.q` | 2.0 | None |
+| 468 | `duration` | `ggd-absent` | `A0HG` | 71-01 屍靈裂 | `godie-u00k.q` | 0.05 | None |
+| 469 | `duration` | `ggd-absent` | `A0HK` | 71-04 萬惡歸宗 | `godie-u00k.r` | 2.0 | None |
+| 470 | `duration` | `ggd-absent` | `A08T` | 71-02 靈魂吸取 | `godie-u00k.w` | 0.01 | None |
+| 471 | `duration` | `ggd-absent` | `A0HV` | 25-03 北斗百裂拳 | `godie-u00l.e` | 0.5 | None |
+| 472 | `duration` | `ggd-absent` | `A10Y` | 25-002 喔拉喔拉喔拉喔拉 | `godie-u00l.ex` | 0.2 | None |
+| 473 | `duration` | `ggd-absent` | `A07H` | 25-00 北斗暗殺拳 | `godie-u00l.passive` | 12.0 | None |
+| 474 | `duration` | `ggd-absent` | `A0HW` | 25-04 ChangeDNA | `godie-u00l.r` | 0.0 | None |
+| 475 | `duration` | `ggd-absent` | `A0IV` | 76-03 伸縮自如的槍亂打 | `godie-u00n.e` | 1.5 | None |
+| 476 | `duration` | `ggd-absent` | `A0ZJ` | 76-002-00 霸王色效果 | `godie-u00n.ex` | 10.0 | None |
+| 477 | `duration` | `ggd-absent` | `A0ZK` | 76-002 霸王色 | `godie-u00n.ex` | 0.01 | None |
+| 478 | `duration` | `ggd-absent` | `A0IS` | 76-01 伸縮自如的橡膠戰斧 | `godie-u00n.q` | 0.01 | None |
+| 479 | `duration` | `ggd-absent` | `A0IP` | 76-02 伸縮自如的橡膠火箭砲 | `godie-u00n.w` | 1.0 | None |
+| 480 | `duration` | `ggd-absent` | `A0L2` | 78-03 廬山昇龍破 | `godie-u00v.e` | 0.01 | None |
+| 481 | `duration` | `ggd-absent` | `A0L5` | 78-01 斬鐵拳 | `godie-u00v.q` | 1.0 | None |
+| 482 | `duration` | `ggd-absent` | `A0L6` | 78-04 死亡噴射肘擊 | `godie-u00v.r` | 1.0 | None |
+| 483 | `duration` | `ggd-absent` | `A0OH` | 38-00 邪眼全開 | `godie-u010.passive` | 0.0 | None |
+| 484 | `duration` | `ggd-absent` | `A09K` | 38-04 黑龍波吸收 | `godie-u010.r` | 10.0 | None |
+| 485 | `duration` | `ggd-absent` | `A09H` | 38-02 邪王炎殺煉獄焦 | `godie-u010.w` | 0.0 | None |
+| 486 | `duration` | `ggd-absent` | `A06P` | 11-03 鬼氣九刀流-阿修羅壹霧銀 | `godie-u01u.e` | 1.0 | None |
+| 487 | `duration` | `ggd-absent` | `A0CN` | 11-00x 三刀流效果 | `godie-u01u.passive` | 15.0 | None |
+| 488 | `duration` | `ggd-absent` | `A0OU` | 11-00 三刀流 | `godie-u01u.passive` | 0.5 | None |
+| 489 | `duration` | `ggd-absent` | `A0CC` | 11-01 燒鬼斬 | `godie-u01u.q` | 1.0 | None |
+| 490 | `duration` | `ggd-absent` | `A0MQ` | 11-04 三千世界 | `godie-u01u.r` | 0.1 | None |
+| 491 | `duration` | `ggd-absent` | `A06N` | 11-02 虎狩獵 | `godie-u01u.w` | 0.5 | None |
+| 492 | `duration` | `ggd-absent` | `A08Y` | 06-00 猜猜拳 | `godie-u034.passive` | 0.01 | None |
+| 493 | `duration` | `ggd-absent` | `A0NP` | 06-00x 剪刀出血 | `godie-u034.passive` | 8.0 | None |
+| 494 | `duration` | `ggd-absent` | `A0SN` | 06-00x 石頭暈 | `godie-u034.passive` | 1.0 | None |
+| 495 | `duration` | `ggd-absent` | `A0Y1` | 06-04 傑桑變化 | `godie-u034.r` | 0.0 | None |
+| 496 | `duration` | `ggd-absent` | `A08W` | 06-02 山形修煉-變 | `godie-u034.w` | 0.0 | None |
+| 497 | `duration` | `ggd-absent` | `A0ZV` | 37-002 真‧黑核晶 | `godie-ubal.ex` | 0.01 | None |
+| 498 | `duration` | `ggd-absent` | `S001` | 37-00 鬼眼 | `godie-ubal.passive` | 5.0 | None |
+| 499 | `duration` | `ggd-absent` | `A01Z` | 37-04 魔界之王 | `godie-ubal.r` | 35.0 | None |
+| 500 | `duration` | `ggd-absent` | `A0OT` | 37-04-01 魔力操控 | `godie-ubal.r` | 3.0 | None |
+| 501 | `duration` | `ggd-absent` | `A0KD` | 37-03-00 災難之牆火燄 | `godie-ubal.w` | 0.1 | None |
+| 502 | `duration` | `ggd-absent` | `A0CH` | 65-03 魔法膨脹 | `godie-udea.e` | 1.0 | None |
+| 503 | `duration` | `ggd-absent` | `A0FF` | 65-002 永恆的愚蠢鄉 | `godie-udea.ex` | 0.01 | None |
 
 ## 4. ⛔ 這一份改了什麼
 

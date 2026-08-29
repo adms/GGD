@@ -5,6 +5,20 @@
   "castTimeMaxSec": 1,
   "cast": [
     {
+      "id": "godie-huth.r",
+      "name": "28-04 破滅能量彈",
+      "champion": "godie-huth",
+      "championName": "超級普烏 - 魔人普烏",
+      "slot": "R",
+      "castTimeSec": 2.267,
+      "effectiveSec": 1,
+      "deltaSec": 1.267,
+      "clamped": true,
+      "castType": "targeted",
+      "interruptOn": "none",
+      "rootWhileCasting": true
+    },
+    {
       "id": "godie-o00k.e",
       "name": "86-03 神鳴",
       "champion": "godie-o00k",
@@ -225,20 +239,6 @@
       "deltaSec": 0.433,
       "clamped": true,
       "castType": "ground",
-      "interruptOn": "none",
-      "rootWhileCasting": true
-    },
-    {
-      "id": "godie-huth.r",
-      "name": "28-04 破滅能量彈",
-      "champion": "godie-huth",
-      "championName": "超級普烏 - 魔人普烏",
-      "slot": "R",
-      "castTimeSec": 1.433,
-      "effectiveSec": 1,
-      "deltaSec": 0.433,
-      "clamped": true,
-      "castType": "targeted",
       "interruptOn": "none",
       "rootWhileCasting": true
     },

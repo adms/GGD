@@ -23,11 +23,11 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 2871 個檔案**，分佈在 2 個隔離區。
+**目前共 2931 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
-| [`docs/legacy/`](legacy-index.md#docslegacy) | 2431 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
+| [`docs/legacy/`](legacy-index.md#docslegacy) | 2491 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
 | [`content/_legacy/`](legacy-index.md#contentlegacy) | 440 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
@@ -35,7 +35,7 @@ owner 2026-08-13：
 
 ---
 
-## `docs/legacy/` —— 2431 檔
+## `docs/legacy/` —— 2491 檔
 
 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）
 
@@ -2436,6 +2436,66 @@ owner 2026-08-13：
 | `_overwrites/overwrite_temp_20260829-232021/.claude/worktrees/wf_7d528f9e-e28-4/packages/shared/src/content/lineSweepRegistryProbe.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260829-232147/.claude/worktrees/wf_7d528f9e-e28-4/packages/shared/src/sim/effects/damageLine.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260829-234416/packages/shared/src/ops/contractSharedDocFits.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-000104/.claude/worktrees/wf_dbfffabe-0ec-1/tools/parallel-gates/field-io.mts` | （.mts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-000237/.claude/worktrees/wf_dbfffabe-0ec-1/tools/parallel-gates/field-probes.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-000604/.claude/worktrees/wf_dbfffabe-0ec-4/packages/shared/src/ops/regenOutlierRegister.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-000609/.claude/worktrees/wf_dbfffabe-0ec-4/packages/shared/src/ops/regenOutlierRegister.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-000627/.claude/worktrees/wf_dbfffabe-0ec-4/packages/shared/src/ops/regenOutlierRegister.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-000631/.claude/worktrees/wf_dbfffabe-0ec-4/packages/shared/src/ops/regenOutlierRegister.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-000946/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/content/crossHeroAssetBinding.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-000950/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/content/crossHeroAssetBinding.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001016/.claude/worktrees/wf_dbfffabe-0ec-2/content/abilities/godie-o00x.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001017/.claude/worktrees/wf_dbfffabe-0ec-2/content/abilities/godie-ogrh.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001026/.claude/worktrees/wf_dbfffabe-0ec-2/content/abilities/godie-h02r.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001027/.claude/worktrees/wf_dbfffabe-0ec-2/content/abilities/godie-hgam.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001038/.claude/worktrees/wf_dbfffabe-0ec-2/content/champions/godie-o00x.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001040/.claude/worktrees/wf_dbfffabe-0ec-2/content/champions/godie-ogrh.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001048/.claude/worktrees/wf_dbfffabe-0ec-2/content/champions/godie-h02r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001050/.claude/worktrees/wf_dbfffabe-0ec-2/content/champions/godie-hgam.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001050/.claude/worktrees/wf_dbfffabe-0ec-4/packages/shared/src/ops/regenOutlierRegister.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001053/.claude/worktrees/wf_dbfffabe-0ec-4/packages/shared/src/ops/regenOutlierRegister.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001121/.claude/worktrees/wf_dbfffabe-0ec-4/packages/shared/src/ops/regenOutlierRegister.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001122/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/content/crossHeroAssetBinding.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001148/.claude/worktrees/wf_dbfffabe-0ec-2/packages/shared/src/content/lineSweepIsDamageLine.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001156/.claude/worktrees/wf_dbfffabe-0ec-2/packages/shared/src/content/lineSweepIsDamageLine.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001200/.claude/worktrees/wf_dbfffabe-0ec-2/packages/shared/src/content/lineSweepIsDamageLine.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001212/.claude/worktrees/wf_dbfffabe-0ec-2/packages/shared/src/content/lineSweepIsDamageLine.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001306/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/ops/crossheroAssetMisbind.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001415/.claude/worktrees/wf_dbfffabe-0ec-3/packages/shared/src/content/periodicClaimHasMechanism.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001455/.claude/worktrees/wf_dbfffabe-0ec-2/content/abilities/godie-o00x.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001513/.claude/worktrees/wf_dbfffabe-0ec-2/content/abilities/godie-o00x.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001519/.claude/worktrees/wf_dbfffabe-0ec-2/docs/_castability-128.md` | 技能 in-game 可施放覆蓋矩陣 — Task #128 —— 生成於 `packages/shared/src/sim/castabilitySweep.test.ts`（每次跑測試即重算）。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001523/.claude/worktrees/wf_dbfffabe-0ec-3/packages/shared/src/content/periodicClaimHasMechanism.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001554/.claude/worktrees/wf_dbfffabe-0ec-3/packages/shared/src/content/periodicClaimHasMechanism.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001558/.claude/worktrees/wf_dbfffabe-0ec-3/content/abilities/godie-huth.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001606/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/ops/crossheroAssetMisbind.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001620/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/ops/crossheroAssetMisbind.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001622/.claude/worktrees/wf_dbfffabe-0ec-3/content/abilities/godie-huth.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001625/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/ops/crossheroAssetMisbind.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001629/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/ops/crossheroAssetMisbind.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001638/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/ops/crossheroAssetMisbind.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001701/.claude/worktrees/wf_dbfffabe-0ec-3/packages/shared/src/content/periodicClaimHasMechanism.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001706/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/ops/crossheroAssetMisbind.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001720/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/ops/crossheroAssetMisbind.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001724/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/ops/crossheroAssetMisbind.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-001843/.claude/worktrees/wf_dbfffabe-0ec-3/content/abilities/godie-huth.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-002000/.claude/worktrees/wf_dbfffabe-0ec-3/packages/shared/src/content/periodicClaimHasMechanism.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-002023/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/content/crossHeroAssetBinding.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-002028/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/content/crossHeroAssetBinding.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-002040/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/content/crossHeroAssetBinding.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-002047/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/content/crossHeroAssetBinding.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-002054/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/ops/crossheroAssetMisbind.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-002103/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/ops/crossheroAssetMisbind.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-002142/.claude/worktrees/wf_dbfffabe-0ec-2/docs/_castability-128.md` | 技能 in-game 可施放覆蓋矩陣 — Task #128 —— 生成於 `packages/shared/src/sim/castabilitySweep.test.ts`（每次跑測試即重算）。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-002228/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/ops/crossheroAssetMisbind.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-002237/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/ops/crossheroAssetMisbind.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-002244/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/ops/crossheroAssetMisbind.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-002358/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/ops/crossheroAssetMisbind.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-002403/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/ops/crossheroAssetMisbind.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-002501/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/ops/crossheroAssetMisbind.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-003105/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/content/crossHeroAssetBinding.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-003115/.claude/worktrees/wf_dbfffabe-0ec-5/packages/shared/src/content/crossHeroAssetBinding.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260830-005949/docs/_release/ggd-board.html` | （.html 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/04.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/06.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/08.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |

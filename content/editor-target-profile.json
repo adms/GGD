@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_c58b18324fe5",
+    "contentVersion": "cv_0043810223f9",
     "collections": {
       "champions": {
-        "hash": "7e28d8a403af",
+        "hash": "b0589d9ed811",
         "count": 71
       },
       "abilities": {
-        "hash": "4907a5fa79fc",
+        "hash": "b9f3f2a3f190",
         "count": 421
       },
       "items": {
@@ -1387,7 +1387,7 @@
     "note": "出貨內容**實際用了**哪些值。⚠️ 與 runtimeCapabilities 不同：那一份說引擎做得到什麼，這一份說內容裡有哪些合法的 id。⛔ 填一個不在這裡的 vfxKey，技能照放但畫面上什麼都不會出現。",
     "ability": {
       "count": 421,
-      "fromTemplate": 85,
+      "fromTemplate": 84,
       "templates": [
         {
           "id": "tpl-barrier-domain",
@@ -4954,5 +4954,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "e0a52be2d6fa"
+  "profileDigest": "6e4845cca285"
 }

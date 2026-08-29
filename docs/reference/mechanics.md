@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_c58b18324fe5`
+contentVersion `cv_0043810223f9`
 
 ---
 
@@ -25,14 +25,14 @@ contentVersion `cv_c58b18324fe5`
 | `comboStrikes` | 連段（多次獨立斬擊＋可選收尾） | 1 | `godie-hart.r` |
 | `convertTeam` | 陣營轉換（把一個既有單位借到自己這一隊） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `cycleBuff` | 輪替增益 | 1 | `godie-efur.passive` |
-| `damage` | 傷害 | 155 | `godie-e001.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e002.w`、`godie-e007.e`、`godie-e007.ex`、`godie-e007.q`、`godie-e008.e`、`godie-e008.ex`、`godie-e008.q`、`godie-e00l.ex`、`godie-e00l.r` …（共 155） |
+| `damage` | 傷害 | 152 | `godie-e001.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e002.w`、`godie-e007.e`、`godie-e007.ex`、`godie-e007.q`、`godie-e008.e`、`godie-e008.ex`、`godie-e008.q`、`godie-e00l.ex`、`godie-e00l.r` …（共 152） |
 | `damageArea` | 範圍傷害 | 45 | `godie-e001.passive`、`godie-e002.w`、`godie-e007.r`、`godie-e008.ex`、`godie-e00n.passive`、`godie-e00s.e`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00s.w`、`godie-e00w.ex`、`godie-e00w.q`、`godie-e00w.r` …（共 45） |
-| `damageLine` | 直線傷害 | 15 | `godie-e002.e`、`godie-e002.ex`、`godie-e00l.e`、`godie-e00l.ex`、`godie-e00r.r`、`godie-edem.e`、`godie-emfr.q`、`godie-h01n.e`、`godie-h01u.e`、`godie-h02u.e`、`godie-h02v.e`、`godie-n00p.passive` …（共 15） |
+| `damageLine` | 直線傷害 | 19 | `godie-e002.e`、`godie-e002.ex`、`godie-e00l.e`、`godie-e00l.ex`、`godie-e00r.r`、`godie-edem.e`、`godie-emfr.q`、`godie-h01n.e`、`godie-h01u.e`、`godie-h02r.r`、`godie-h02u.e`、`godie-h02v.e` …（共 19） |
 | `dash` | 衝刺（腳不離地） | 8 | `godie-edem.e`、`godie-h01n.q`、`godie-h01u.e`、`godie-hapm.r`、`godie-u00j.w`、`godie-udea.r`、`godie-zombiex.w`、`thorne.q` |
 | `delayed` | 延遲落地／排程 | 17 | `godie-e002.ex`、`godie-e00l.ex`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-h020.e`、`godie-h02v.ex`、`godie-h02v.q`、`godie-hapm.ex`、`godie-hapm.passive`、`godie-hjai.e`、`godie-n003.r`、`godie-n01c.r` …（共 17） |
 | `devour` | 吞噬 | 4 | `godie-e00r.q`、`godie-h02u.w`、`godie-h02v.w`、`grail-ex-13` |
 | `dispel` | 淨化／驅散 | 12 | `godie-e007.r`、`godie-e007.w`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-ewar.r`、`godie-ewar.w`、`godie-h00l.passive`、`grail-c-01`、`grail-c-08`、`grail-a-06`、`grail-a-15`、`grail-ex-14` |
-| `dot` | 持續傷害（燃燒／流血／中毒） | 4 | `godie-edem.ex`、`godie-edem.q`、`godie-h02u.e`、`godie-h02v.e` |
+| `dot` | 持續傷害（燃燒／流血／中毒） | 5 | `godie-edem.ex`、`godie-edem.q`、`godie-h02u.e`、`godie-h02v.e`、`godie-huth.r` |
 | `evasion` | 迴避 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `eventValueConversion` | 把事件的數值換算成別的 | 5 | `godie-emfr.ex`、`grail-c-04`、`grail-a-02`、`grail-ex-12`、`grail-ex-18` |
 | `extendBuff` | 延長既有增益 | 1 | `godie-hapm.q` |
@@ -55,8 +55,8 @@ contentVersion `cv_c58b18324fe5`
 | `shield` | 吸收（護盾） | 10 | `godie-e00l.passive`、`godie-e00r.e`、`godie-h00l.ex`、`godie-o00l.e`、`sela.w`、`thorne.w`、`grail-c-17`、`grail-a-16`、`aegis-surge`、`guardian-ward` |
 | `shieldBreak` | 破盾 | 2 | `grail-c-09`、`grail-ex-14` |
 | `spawnModelFx` | 模型特效（帶模型的單位沿路徑移動 —— 光束／砲擊／衝擊波） | 55 | `godie-e002.e`、`godie-e002.r`、`godie-e008.r`、`godie-e00l.e`、`godie-e00l.r`、`godie-e00r.r`、`godie-e00w.q`、`godie-e00w.r`、`godie-e00x.q`、`godie-e00x.r`、`godie-edem.e`、`godie-edem.ex` …（共 55） |
-| `spawnProjectile` | 投射物 | 25 | `godie-e008.e`、`godie-e010.q`、`godie-h02r.r`、`godie-n003.e`、`godie-n003.r`、`godie-n00p.w`、`godie-n01c.e`、`godie-n01g.e`、`godie-n01g.r`、`godie-nbbc.e`、`godie-nsjs.w`、`godie-o00l.q` …（共 25） |
-| `spawnVfx` | 純演出（特效／音效） | 50 | `godie-e002.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e00l.e`、`godie-e00l.ex`、`godie-e00l.r`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.r`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00x.r` …（共 50） |
+| `spawnProjectile` | 投射物 | 22 | `godie-e008.e`、`godie-e010.q`、`godie-n003.e`、`godie-n003.r`、`godie-n00p.w`、`godie-n01c.e`、`godie-n01g.e`、`godie-n01g.r`、`godie-nbbc.e`、`godie-nsjs.w`、`godie-o00l.q`、`godie-o030.r` …（共 22） |
+| `spawnVfx` | 純演出（特效／音效） | 52 | `godie-e002.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e00l.e`、`godie-e00l.ex`、`godie-e00l.r`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.r`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00x.r` …（共 52） |
 | `spendMana` | 燒魔 | 4 | `godie-e00l.w`、`godie-emfr.passive`、`godie-u00k.passive`、`godie-udea.r` |
 | `summon` | 召喚 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `swapResource` | 資源互換 | 1 | `godie-emns.ex` |
