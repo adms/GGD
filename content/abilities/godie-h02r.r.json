@@ -21,17 +21,15 @@
   "manaCostTier": "小",
   "effects": [
     {
-      "kind": "spawnProjectile",
-      "projectileId": "imported.wave",
-      "onHit": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "大"
-          }
-        }
-      ]
+      "kind": "damageLine",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "大"
+      },
+      "length": 11.67,
+      "width": 1.4,
+      "aim": "facing",
+      "fromCaster": true
     },
     {
       "kind": "spawnModelFx",
@@ -45,11 +43,16 @@
         1,
         3.54
       ]
+    },
+    {
+      "kind": "spawnVfx",
+      "vfxId": "fx.wave.physical",
+      "at": "self"
     }
   ],
   "vfxKey": "fx.w3x.particle.supershinythingy.p00",
   "schema": "ability@1",
-  "castTimeSec": 2.233,
+  "castTimeSec": 0.833,
   "hitFeel": {
     "hitstopTicks": 4,
     "hitstunTicks": 7,

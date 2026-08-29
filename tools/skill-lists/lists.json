@@ -19,20 +19,6 @@
       "rootWhileCasting": true
     },
     {
-      "id": "godie-hgam.r",
-      "name": "90-04 陽光烈焰",
-      "champion": "godie-hgam",
-      "championName": "種子神奇寶貝 - 妙蛙種子",
-      "slot": "R",
-      "castTimeSec": 2.233,
-      "effectiveSec": 1,
-      "deltaSec": 1.233,
-      "clamped": true,
-      "castType": "skillshot",
-      "interruptOn": "none",
-      "rootWhileCasting": true
-    },
-    {
       "id": "godie-osam.ex",
       "name": "34-002 冥道殘月破",
       "champion": "godie-osam",
@@ -407,20 +393,6 @@
       "deltaSec": 0.233,
       "clamped": true,
       "castType": "targeted",
-      "interruptOn": "none",
-      "rootWhileCasting": true
-    },
-    {
-      "id": "godie-ogrh.r",
-      "name": "09-04 龜派氣功",
-      "champion": "godie-ogrh",
-      "championName": "賽亞人 - 悟空",
-      "slot": "R",
-      "castTimeSec": 1.233,
-      "effectiveSec": 1,
-      "deltaSec": 0.233,
-      "clamped": true,
-      "castType": "skillshot",
       "interruptOn": "none",
       "rootWhileCasting": true
     },

@@ -203,23 +203,21 @@
       ],
       "effects": [
         {
-          "kind": "spawnProjectile",
-          "projectileId": "imported.wave.ki",
-          "onHit": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "ratios": [
-                  {
-                    "stat": "ap",
-                    "coeff": 0.5
-                  }
-                ]
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.5
               }
-            }
-          ]
+            ]
+          },
+          "length": 14,
+          "width": 2.0,
+          "aim": "facing",
+          "fromCaster": true
         },
         {
           "kind": "spawnModelFx",
@@ -264,10 +262,15 @@
           "applyTo": "nearby",
           "amplitude": 0.3,
           "durationSec": 2.0
+        },
+        {
+          "kind": "spawnVfx",
+          "vfxId": "fx.wave.ki",
+          "at": "self"
         }
       ],
       "vfxKey": "fx.prim.ki.beam-lg",
-      "castTimeSec": 1.233,
+      "castTimeSec": 0.833,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
