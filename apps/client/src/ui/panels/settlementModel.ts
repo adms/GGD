@@ -112,11 +112,32 @@ export function buildStatBreakdown(stats: PlayerMatchStats): StatRow[] {
     { key: "damageDealt", label: "傷害輸出", value: formatInt(stats.damageDealt) },
     { key: "damageTaken", label: "承受傷害", value: formatInt(stats.damageTaken) },
     { key: "damageBlocked", label: "抵擋傷害", value: formatInt(stats.damageBlocked) },
+    // ⭐ GH#729 —— 守護塔是**中立目標物**，所以拆塔的輸出刻意不併進 `damageDealt`
+    // （那一格的語意是「對敵方英雄的輸出」，而 rating.ts 就是照那個語意打分）。
+    // ⚠️ 代價是：整場專心拆塔的人在此之前結算頁上**一個數字都沒有** —— sim 早就
+    // 在數了（matchStats.guardianDamage / guardiansSlain），只是沒有人把它畫出來
+    // （失敗形態⑧：算出來了但從沒送到玩家眼前）。⇒ 自己兩列。
+    // ⚠️ 兩列相鄰且落在偶數索引：兩個消費端的格線都是 2 欄，所以它們會排在同一
+    // 橫列上被一起讀到（「打了多少」與「打掉幾座」分開看沒有意義）。
+    { key: "guardianDamage", label: "守護塔輸出", value: formatInt(stats.guardianDamage) },
+    { key: "guardiansSlain", label: "守護塔擊破", value: formatInt(stats.guardiansSlain) },
     { key: "healingDone", label: "治療量", value: formatInt(stats.healingDone) },
     { key: "cc", label: "控制時間", value: `${ticksToSeconds(stats.ccAppliedTicks)}s` },
     { key: "accuracy", label: "技能命中率", value: formatAccuracy(stats) },
     { key: "basic", label: "普攻命中", value: formatInt(stats.basicAttackHits) },
-    { key: "gold", label: "取得金錢", value: formatInt(stats.goldEarned) },
+    // ⭐ GH#729 —— 首殺賞金（`bountyGold`）**已經含在** `goldEarned` 裡
+    // （`grantGold` 一律走 `recordGold`），所以它是括號裡的**子行**，⛔ 不是第二列：
+    // 另開一列會讓玩家把同一筆錢加兩次。⚠️「含」這個字是那個語意的唯一載體 ——
+    // 拿掉它，卡面就在說一件不會發生的事（第一·五守則）。
+    // 沒吃到賞金就不長括號，與下面的「救援復活」同一個慣例。
+    {
+      key: "gold",
+      label: "取得金錢",
+      value:
+        stats.bountyGold > 0
+          ? `${formatInt(stats.goldEarned)} (含賞金 ${formatInt(stats.bountyGold)})`
+          : formatInt(stats.goldEarned),
+    },
     { key: "largest", label: "最大單次傷害", value: formatInt(stats.largestSingleHit) },
     { key: "flowers", label: "治療花", value: formatInt(stats.flowersEaten) },
     // task #84: a rescue never erases a death, so it needs its own row or it
