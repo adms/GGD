@@ -8,6 +8,14 @@
  *   · `content/abilities/<cid>.<slot>.json` —— **權威**
  *   · `content/champions/<cid>.json` 的 `abilities[<slot>]` —— **副本**
  *
+ * ⚠️⚠️ **改之前先查那一份是誰的**：`bash scripts/genguard.sh <路徑>`
+ *   · 產生器的產物 ⇒ 改**來源**（`tools/…`）再 `bash scripts/genrun.sh <step>`。
+ *     ⛔ 直接改出貨 JSON 會被下一次 sync 打回來，而那個「又紅了」看起來像**新的**錯。
+ *   ⭐ ⛔ 不要記路徑 —— 這兩個目錄是**混的**（產物與手編檔肉眼分不出來），
+ *     ⭐ 判準只有 genguard 的**輸出**。
+ *   ⚠️ 而這支測的寫入端**自己會 spawn genguard**（沙盒裡那支替身回 0 ＝「可以寫」）
+ *     ⇒ 產物那一格在 live 頁上吃 **409**，⛔ 不是「存進去了再被下一次 sync 打回來」。
+ *
  * ⛔ 共用寫入端在此之前**只寫前者**，兩個後果：
  *
  * | | |
