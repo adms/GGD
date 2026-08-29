@@ -61,6 +61,7 @@ if (args.has("rollback-note")) rollback.note = args.get("rollback-note");
 
 try {
   const entry = registerBatch(repoRoot, {
+  evidence: args.get("evidence") ?? null,
     id: args.get("id"),
     title: args.get("title"),
     family: args.get("family"),

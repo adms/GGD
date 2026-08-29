@@ -103,6 +103,30 @@ function findSwitchDoc(repoRoot, configId) {
  * ⛔ 「有一個叫 rollback 的物件」不算數 —— 那一格要**真的存在於出貨文件裡**，
  *    否則帳本上的 rollback 只是一句沒有人驗過的散文（第三守則：註解會說謊）。
  */
+/**
+ * 在出貨原始碼裡找「**誰讀**這個環境變數」。⭐ 回傳第一個命中的檔（相對路徑）。
+ * ⛔ 找不到 ⇒ 那不是開關,是散文。
+ */
+function grepEnvSwitch(repoRoot, name) {
+  const out = [];
+  const walk = (rel, depth) => {
+    if (depth > 8 || out.length > 0) return;
+    let ents;
+    try { ents = readdirSync(join(repoRoot, rel), { withFileTypes: true }); } catch { return; }
+    for (const e of ents) {
+      if (out.length > 0) return;
+      if (e.name === "node_modules" || e.name === "dist" || e.name.startsWith(".")) continue;
+      const r = `${rel}/${e.name}`;
+      if (e.isDirectory()) walk(r, depth + 1);
+      else if (/\.(ts|tsx|mjs|js|py|sh|ya?ml)$/.test(e.name) || e.name.startsWith("Dockerfile") || e.name === ".env.example") {
+        try { if (readFileSync(join(repoRoot, r), "utf8").includes(name)) out.push(r); } catch { /* 讀不到就跳過 */ }
+      }
+    }
+  };
+  for (const r of ["apps", "packages", "tools", "scripts", "docker"]) walk(r, 0);
+  return out;
+}
+
 export function resolveRollback(repoRoot, rollback) {
   if (rollback === null || typeof rollback !== "object")
     return { ok: false, error: "缺 rollback 開關（要 { configId, field, rollbackValue }）" };
@@ -111,9 +135,33 @@ export function resolveRollback(repoRoot, rollback) {
     return { ok: false, error: "rollback 需要非空的 configId 與 field（config id ＋ 欄位名）" };
   if (!("rollbackValue" in rollback))
     return { ok: false, error: `rollback 缺 rollbackValue —— 「翻成什麼」沒寫出來就不是一鍵還原` };
+  // ⭐ `env:GGD_XXX` —— 環境變數形的開關（GH#868）。
+  //
+  // ⚠️ 為什麼要有這一種：owner 定義這一頁時說的是「**一批功能成果**」，而這個 repo
+  //   有一整層（後台工具／live 頁／edge）的開關**慣例就是 env**
+  //   （例 `tools/admin-live/cache.mjs` 的 `GGD_LIVE_CACHE`）。
+  //   ⇒ 只認 config 文件 ＝ 那一層的成果**結構上登記不了**
+  //     ⇒ owner 的事後否決權在那一層一直是空的。
+  //
+  // ⭐ 而它**沒有被放寬**：這一格仍然要**在出貨原始碼裡查得到** ——
+  //   ⛔「帳本上寫著一個 env 名字」不算數（第三守則：註解會說謊）。
+  if (configId.startsWith("env:")) {
+    const name = configId.slice(4);
+    if (!/^[A-Z][A-Z0-9_]*$/.test(name))
+      return { ok: false, error: `env 開關名要全大寫底線（收到「${name}」）` };
+    const hits = grepEnvSwitch(repoRoot, name);
+    if (hits.length === 0)
+      return {
+        ok: false,
+        error:
+          `解析不到 env 開關「${name}」—— 出貨原始碼裡沒有任何一行讀它。\n` +
+          `  ⭐ 一個沒有人讀的環境變數不是 rollback 開關,是一句散文。`,
+      };
+    return { ok: true, docRel: hits[0], current: `env:${name}`, drifted: false };
+  }
   const hit = findSwitchDoc(repoRoot, configId);
   if (hit === null)
-    return { ok: false, error: `解析不到 rollback.configId「${configId}」（找過 ${SWITCH_DIRS.join(" / ")}）` };
+    return { ok: false, error: `解析不到 rollback.configId「${configId}」（找過 ${SWITCH_DIRS.join(" / ")}；env 形寫成 env:GGD_XXX）` };
   const got = dotGet(hit.doc, field);
   if (!got.found)
     return { ok: false, error: `${hit.rel} 裡沒有欄位「${field}」—— 這一格開關不存在` };
@@ -367,17 +415,37 @@ export function registerBatch(repoRoot, batch) {
   const rb = resolveRollback(repoRoot, rollback);
   if (!rb.ok) throw new Error(`拒絕登記「${id}」：${rb.error}`);
   const seq = scanSequences(repoRoot).find((s) => s.id === id);
-  if (seq === undefined) throw new Error(`拒絕登記「${id}」：找不到連續圖片序列 ${SEQUENCE_ROOT_REL}/${id}/`);
+  // ⭐ 非視覺成果的證據（GH#868）。
+  //
+  // ⚠️ 在此之前**唯一**被接受的證據是「連續圖片序列」⇒ 帳本 21 批**全部**是
+  //   `*_visual-proof_*`,而手把操作、後台頁、部署這些成果**結構上登記不了**
+  //   ⇒ owner 的事後否決權在那些層一直是空的（⛔ 不是「沒有人記得登記」）。
+  //
+  // ⭐ 一般化的方式是**換一種證據**,⛔ 不是不要證據:
+  //   `--evidence <路徑>` 要指到一個**真的存在的**檔（報告 / 測試）。指不到 ⇒ 一樣拒絕。
+  if (seq === undefined) {
+    const ev = typeof batch.evidence === "string" ? batch.evidence.trim() : "";
+    if (ev === "")
+      throw new Error(
+        `拒絕登記「${id}」：找不到連續圖片序列 ${SEQUENCE_ROOT_REL}/${id}/\n` +
+          `  ⭐ 非視覺的成果用 --evidence <檔案路徑>（報告或測試）,⛔ 但那個檔要真的存在。`,
+      );
+    if (!existsSync(join(repoRoot, ev)))
+      throw new Error(`拒絕登記「${id}」：--evidence「${ev}」這個檔不存在 —— ⛔ 指不到的證據不是證據。`);
+  }
   // ⭐ 只讀**材料**（⛔ 不讀裁決）—— 登記這條路徑結構上碰不到 owner 的裁決欄位。
   const material = loadMaterial(repoRoot);
   const prev = material.batches[id] ?? {};
   material.batches[id] = {
-    title: batch.title ?? seq.title,
+    title: batch.title ?? seq?.title ?? id,
     family: batch.family ?? prev.family ?? null,
     issues: batch.issues ?? prev.issues ?? [],
     abilities: batch.abilities ?? prev.abilities ?? [],
     commit: batch.commit ?? prev.commit ?? null,
-    sequenceDir: sequenceDir ?? seq.dir,
+    // ⭐ 兩種證據**刻意分得開**（⛔ 不要讓讀的人以為每一批都有圖）
+    evidenceKind: seq === undefined ? "gate" : "visual",
+    sequenceDir: sequenceDir ?? seq?.dir ?? null,
+    evidence: seq === undefined ? batch.evidence : null,
     rollback,
     registeredAt: prev.registeredAt ?? new Date().toISOString(),
   };

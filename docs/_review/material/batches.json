@@ -619,6 +619,42 @@
         "note": "關掉＝十份演出腳本全部停播、有腳本的技能退回預設演出（逐位元同腳本不存在）。⛔ 不影響傷害／行為。"
       },
       "registeredAt": "2026-08-28T05:10:24.604Z"
+    },
+    "controller-v4_20260829": {
+      "title": "手把操作 v4（自動清怪／玩家專注／自動貼近）—— 設為預設",
+      "family": "手把操作方案",
+      "issues": [
+        863
+      ],
+      "abilities": [],
+      "commit": "b8e36279",
+      "sequenceDir": null,
+      "rollback": {
+        "configId": "controller-scheme",
+        "field": "active",
+        "liveValue": "v4",
+        "rollbackValue": "v3-shipped",
+        "note": "切回 2026-07-27 起的出貨配置。⚠️ client 重整即可，sim 那一半要重啟 game shard。"
+      },
+      "registeredAt": "2026-08-29T01:46:16.927Z"
+    },
+    "live-freshness-bar_20260829": {
+      "title": "後台 14 頁的「這份資料多新 ＋ 重新計算」列",
+      "family": "後台 live 頁",
+      "issues": [
+        866
+      ],
+      "abilities": [],
+      "commit": "dd8d4943",
+      "sequenceDir": null,
+      "rollback": {
+        "configId": "env:GGD_LIVE_FRESHNESS_BAR",
+        "field": "env",
+        "liveValue": 1,
+        "rollbackValue": 0,
+        "note": "docker/.env 設 GGD_LIVE_FRESHNESS_BAR=0 ＋ 重啟 review ⇒ 整條列不畫。⛔ 不必重建映像。"
+      },
+      "registeredAt": "2026-08-29T01:46:18.461Z"
     }
   }
 }
