@@ -44,7 +44,25 @@ VC=${GGD_REDIS_VERIFY_CONTAINER:-ggd-redis-restoretest}
 #   —— 既有呼叫端傳的都是路徑，而路徑不會等於 `verify` ⇒ 向後相容。
 MODE=snapshot; SNAPARG=""
 if [ "${1:-}" = verify ]; then MODE=verify; SNAPARG="${2:-}"; set --; fi
-DEST=${1:-${GGD_REDIS_SNAPSHOT_DIR:-/data/redis-snapshots}}
+# ⛔⛔ **落點不可以寫死一台機器對的路徑**（2026-08-30 在 mini 上實測炸掉）——
+#   在此之前預設是 `/data/redis-snapshots`：在 GCP 上 `/data` 是那顆 295G 的碟（可寫），
+#   ⛔ 而 GGD 2026-08-29 搬到 **Mac mini** 之後 `/data` 是**唯讀**的
+#   ⇒ 單獨跑這支腳本必得 `mkdir: /data: Read-only file system`。
+#   ⚠️ ⭐ 而 `mini-deploy.sh` 走的是 `GGD_MINI_REDIS_SNAPSHOT_DIR` ⇒ 它是綠的
+#     ⇒ **「部署時有快照」與「單獨跑得起來」是兩件事**，而只有前者被驗過。
+#     （⭐ 這正是 #860 的進度標記寫的「成功路徑從沒跑過」。）
+#
+# ⭐ 改成**探測**：第一個寫得進去的落點。⛔ 判準不是「哪台機器」，是「哪裡寫得進去」。
+_pick_dest() {
+  for d in "${GGD_REDIS_SNAPSHOT_DIR:-}" /data/redis-snapshots "$HOME/ggd-redis-snapshots"; do
+    [ -n "$d" ] || continue
+    # ⭐ 真的試著建一個目錄 —— ⛔ `[ -w ]` 對不存在的父目錄會說謊
+    if mkdir -p "$d" 2>/dev/null && [ -w "$d" ]; then printf '%s\n' "$d"; return 0; fi
+  done
+  return 1
+}
+DEST=${1:-$(_pick_dest)} || true
+[ -n "${DEST:-}" ] || die "找不到任何寫得進去的快照落點 —— 用 GGD_REDIS_SNAPSHOT_DIR 指一個"
 TS=$(date -u +%Y%m%dT%H%M%SZ)
 
 say() { printf '  %s\n' "$1"; }
@@ -189,7 +207,14 @@ docker cp "$C:/data/dump.rdb" "$OUT/dump.rdb" >/dev/null 2>&1 || die "dump.rdb �
 docker cp "$C:/data/appendonlydir" "$OUT/appendonlydir" >/dev/null 2>&1 || true
 
 # ⭐ 驗證落點真的有東西（⛔ 「指令沒報錯」不算）
-SZ=$(du -sb "$OUT" | cut -f1)
+# ⛔⛔ **`du -sb` 是 GNU 專屬的** —— BSD/macOS 的 `du` 沒有 `-b`（2026-08-30 實測）。
+#   而 GGD 在 2026-08-29 搬到 **Mac mini** ⇒ 這一行在**主力部署路徑上**必定失敗
+#   ⇒ `die` ⇒ 部署流程逐字印出「⛔ Redis 快照失敗 —— 這一次的排行榜與 M幣**沒有保護**」，
+#   ⭐ **而快照其實已經落地了**（`rdb_last_bgsave_status=ok`、檔案真的在）。
+#   ⇒ ⭐ 這是最糟的一種假警報：它讓一次**成功**的備份看起來像失敗，
+#     而下一個人的合理反應是「備份壞了，先繞過它」。
+# ⭐ 改用 `find -print0 | wc -c` 之外最可攜的一招：`wc -c` 逐檔加總（POSIX）。
+SZ=$(find "$OUT" -type f -exec wc -c {} + 2>/dev/null | awk '$2!="total"{s+=$1} END{print s+0}')
 [ "$SZ" -gt 1024 ] || die "快照只有 $SZ bytes —— ⛔ 那不是一份備份"
 printf '%s\n' "dbsize=$BEFORE" "takenAt=$TS" "source=$SRC" > "$OUT/MANIFEST.txt"
 
