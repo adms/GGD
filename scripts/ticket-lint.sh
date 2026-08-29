@@ -43,6 +43,11 @@ RE_DEPS='Dependencies|相依票|依賴'
 RE_NONGOALS='Non-goals|非目標|不做什麼'
 RE_RISKS='Known risks|已知風險'
 RE_TYPE='\[(breaking change|fix|improve|feature|refactor|perf|docs|test|chore|bug|infra)\]'
+# ⭐ `[自動]` —— **誰決定這張票該存在**（owner 2026-08-29：
+#   「AI 開的票跟人(我)要求開的票 tag 要不一樣，AI 多一個 [自動]」）。
+# ⚠️ lint **不強制**它（⛔ 我判斷不出一張既有票當初是誰決定的），
+#   ⭐ 但它**驗位置**：有的話要在**最前面** —— owner 掃的是標題開頭。
+RE_AUTO='\[自動\]' 
 RE_STRAT='\[思考策略\]|##[[:space:]]*思考策略'
 RE_TPL='\[解決模板\]|##[[:space:]]*解決模板'
 
@@ -152,6 +157,11 @@ PY
 lint_text() { # $1=標籤 $2=標題 $3=內文
   local missing=()
   echo "$2" | grep -qE  "$RE_TAG"   || missing+=("標題缺 [緊急]/[重要]/[優先]/[一般]")
+  # ⭐ `[自動]` 有的話要在**最前面**（owner 掃的是標題開頭）——
+  #   ⛔ lint 不強制「該不該有」（那要知道當初是誰決定的），只驗**位置**。
+  if echo "$2" | grep -qE "$RE_AUTO" && ! echo "$2" | grep -qE "^\[自動\]"; then
+    missing+=("[自動] 要放在標題**最前面**（owner 掃的是開頭；排第三個等於要他讀完整行）")
+  fi
   echo "$2" | grep -qiE "$RE_TYPE"  || missing+=("標題缺 [fix]/[feature]/[improve]/[breaking change] 類型 tag")
   echo "$3" | grep -qiE "$RE_AC"      || missing+=("驗收標準(acceptance criteria)")
   echo "$3" | grep -qiE "$RE_OBJ"     || missing+=("Objective")
