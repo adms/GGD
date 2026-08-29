@@ -10,13 +10,6 @@
   },
   "abilities": [
     {
-      "abilityId": "godie-e007.r",
-      "owner": "json",
-      "apPct": 130,
-      "conditionalPct": [],
-      "damageType": "magic"
-    },
-    {
       "abilityId": "godie-e00s.q",
       "owner": "generator",
       "apPct": 80,

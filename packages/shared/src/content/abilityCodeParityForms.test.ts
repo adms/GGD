@@ -153,6 +153,12 @@ describe("變身對子的技能同步", () => {
   // ⭐ GH#836：`12-04` 於 2026-08-29 離開這張表 —— ⛔ 不是「手填了一個值」，是**機制對齊**
   //    （變身態的 castType／effects／cooldown／描述鏡射了本體的 owner 規格）⇒
   //    `deriveCastTime()` 對兩份文件讀到同一組輸入，自然給出同一個答案（2.033 → 1）。
+  // ⛔⛔ 而它**回來過一次**（GH#854，同一天）：`ddbd65199` 對齊、33 分鐘後
+  //    `936cda27b`（產物重生成）把說明與 `ap` 係數**還原成 w3x 匯入版** ⇒ 又變成 1.233。
+  //    ⭐ 兇手是 `tools/ap-conversion/claims.json` 裡 `godie-e007.r` 的**換算前凍結快照**：
+  //    `apply.py::apply_doc()` 第一行就是 `out["description"] = entry["description"]`
+  //    ⇒ 那兩個欄位的作者是 **apconv**，⛔ 不是內容樹。刪掉那筆過期條目才是修好
+  //    （⛔ 改 content 只會撐到下一次 sync；逐支理由見 form_counterparts.py）。
   // ⚠️ `12-03` 刻意留著：那一格是 w3x 的 Metamorphosis 本身（`A02W`, base=`AEIl`），
   //    owner 2026-08-12 明說 B-4 不裁決 ⇒ 兩形態的機制**現在**就不該一樣。
   const CAST_TIME_DRIFT = [
