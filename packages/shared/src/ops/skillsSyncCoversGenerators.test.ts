@@ -106,6 +106,58 @@ const GENERATOR_NO_CHECK: Record<string, string> = {
   //    下一個人讀到的是「這裡沒事」——而那正是這張表要防的東西。
 };
 
+/**
+ * ⭐⭐ GH#804 —— **反方向**。CLAUDE.md 失敗形態⑫逐字：
+ * 「這條掃描**從哪一頭走**？從『宣告』走 ⇒ 一定漏掉『有實體而無宣告』的
+ *  ⇒ ⭐ **兩頭都要走**，⛔ 一頭不算。」
+ *
+ * 上面三條全部從 **`*:check` 那一頭**（或產物那一頭）走 ⇒
+ * 一支「**在 `skills:sync` 裡跑、卻沒有任何 `*:check`**」的產生器對它們是**隱形的**。
+ *
+ * ⭐ 量到的實例 `vfxfam:build`（2026-08-29）—— 它同時繞開了**兩條**既有掃描：
+ *   · 它沒有 `vfxfam:check` ⇒ 第一條（列舉 `*:check`）看不到它
+ *   · 它的原始碼住 `apps/client/src/render/vfx/` ⇒ 第三條（只掃 `tools/`）也看不到它
+ * ⇒ 它寫 **68 份**產物（`content/vfx/fx.fam.*.json` ＋ `content/config/vfx-families.json`），
+ *   而「它過期了」在這個檔裡**沒有任何東西會紅**。
+ *
+ * ⇒ 這張表的語意：「這一支在鏈裡跑，⛔ 而它的新鮮度**不是**由一支 `*:check` 守的 ——
+ *   守它的是**這一條具體的東西**」。⛔ 「還沒做」不是理由；理由要能被反駁。
+ *
+ * ── 突變紀錄 ─────────────────────────────────────────────────────────────
+ *  · 把下面那條 `!(step in SYNC_STEP_NO_CHECK)` 換成空表 → 新的那一條紅，並**逐名**列出
+ *    `quarantine:unlock` · `castderive:build:raw` · `vfxfam:build` · `content:build` ·
+ *    `quarantine:lock`（＝正好是今天沒有 `*:check` 的那五支）。實測過。
+ */
+const SYNC_STEP_NO_CHECK: Record<string, string> = {
+  "quarantine:unlock":
+    "它只 chmod —— **產物零份**，「過期」對權限位不成立（`syncIoDeclaresWrites.test.ts` 的 " +
+    "`READ_ONLY_BY_DESIGN` 用同一個理由豁免它）。守它的是 `productQuarantine.test.ts`" +
+    "（真的 chmod、真的用檔案 API 寫、真的吃 EACCES）。",
+  "quarantine:lock": "同上",
+  "castderive:build:raw":
+    "⭐ 它的新鮮度閘是一條 **vitest**，⛔ 不是 `*:check` 腳本：" +
+    "`packages/shared/src/content/castTimeCoverage.test.ts` 逐支比對 " +
+    "`d.castTimeSec !== deriveCastTime(d, cdMult).castTimeSec` ⇒ 內容一漂就紅（＝逐值對帳）。" +
+    "另外 `packages/shared/scripts/contentValidate.ts` 的 3d 段做同一件事並印出修法指令，" +
+    "而「安靜地跳過一位英雄」那一半由 `deriveCastTimesFailsLoud.test.ts` 守（GH#708）。" +
+    "⇒ 到期條件：哪一天那條 vitest 不再逐支比對，這一列當場作廢。",
+  "content:build":
+    "它是**三支子產生器的聚合**，而三支各自的 `*:check` 都在 `skills:check` 裡" +
+    "（`spec:check` · `overview:check` · `tiers:check`）。它自己多做的那一半是打包 —— " +
+    "守它的是 `shippedBundleIsCurrent.test.ts`（比對 repo 裡**被 commit 的**那一份）＋ " +
+    "`shippedBundleHasTrackedSources.test.ts`（比對 `git ls-files`）。" +
+    "⛔ 給它一支 `content:check` 會變成第四份重複的新鮮度比對。",
+  "vfxfam:build":
+    "⭐ 它的 68 份產物**兩半各有一條會紅的 vitest**，⛔ 只是沒有包成 `*:check` 腳本：" +
+    "① `content/vfx/fx.fam.*.json`（67 份）—— `apps/client/src/render/vfx/familyArtCoverage.test.ts` " +
+    "的「every shipped fx.fam doc is byte-identical to what the generator produces now」" +
+    "**逐位元組**比對磁碟上那一份與現在跑出來的（外加 missing / orphan 兩個方向）；" +
+    "② `content/config/vfx-families.json`（1 份，兩個寫入端）—— `pitch:check` 在 `skills:check` 裡驗它，" +
+    "而「產生器不可以刪掉它不擁有的欄位」由 `generateFamilyContent.test.ts` 真的跑產生器守著（GH#378/#427）。" +
+    "⇒ 到期條件：哪一天那條逐位元組斷言被拿掉或放寬，這一列當場作廢 —— " +
+    "那時正解是給 `generateFamilyContent.ts` 一個 `--check` 並接進 `skills:check`。",
+};
+
 const EXEMPT: Record<string, string> = {
   "voxel:check": "體素**角色身體**產生器 —— 讀的是英雄外觀，不讀 abilities/vfx/級距",
   "voxel:build:check": "同上，只是驗產物",
@@ -283,6 +335,37 @@ describe("skills:sync / skills:check 涵蓋所有產生器", () => {
     expect(
       unbuildable,
       `這幾支驗得到卻**重生成不了** —— 閘紅了沒有人知道要跑什麼:\n  ${unbuildable.join("\n  ")}`,
+    ).toEqual([]);
+  });
+
+  // ⭐⭐ GH#804 —— 反方向（見 {@link SYNC_STEP_NO_CHECK} 的檔頭）。
+  it("⭐ `skills:sync` 跑的每一支,新鮮度都有東西在守（一支 *:check,或帶理由的豁免）", () => {
+    const s = scripts();
+    const sync = s["skills:sync"] ?? "";
+    const aggregate = s["skills:check"] ?? "";
+    expect(sync, "skills:sync 不見了").toBeTruthy();
+
+    const steps = [...sync.matchAll(/pnpm ([A-Za-z0-9_:.-]+)/g)].map((m) => m[1]!);
+    expect(steps.length, "sync 鏈解析回空的 —— 偵測壞了,⛔ 不是真的沒有步驟").toBeGreaterThan(20);
+
+    // sentinel：豁免表只能指向**真的在鏈裡**的步驟（幽靈列 = 一句看起來有防的散文）。
+    expect(
+      Object.keys(SYNC_STEP_NO_CHECK).filter((n) => !steps.includes(n)),
+      "SYNC_STEP_NO_CHECK 指向不在 skills:sync 裡的步驟",
+    ).toEqual([]);
+
+    const blind = steps
+      .filter((step) => !step.endsWith(":check") && !(step in SYNC_STEP_NO_CHECK))
+      // ⭐ 候選名兩個：`<step>:check`，以及把最後一段換成 `check`
+      //   （`pitch:build`→`pitch:check` · `board:build`→`board:check` · `caps:export`→`caps:check`）。
+      .filter((step) => ![`${step}:check`, `${step.replace(/:[^:]+$/, "")}:check`].some((c) => aggregate.includes(c)));
+
+    expect(
+      blind,
+      `這幾支在 skills:sync 裡跑,而**沒有任何 *:check 在 skills:check 裡驗它們的產物**:\n` +
+        blind.map((n) => `  ${n}`).join("\n") +
+        `\n→ 給它一支 *:check 並接進 package.json 的 skills:check,` +
+        `\n  或在 SYNC_STEP_NO_CHECK 裡寫下**是哪一條具體的東西在守它的新鮮度**（要能被反駁）。`,
     ).toEqual([]);
   });
 
