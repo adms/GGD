@@ -59,8 +59,43 @@ BUNDLE="$OUT/ggd-export_temp_$STAMP"
 #   可重建   → ⛔ 不搬（映像、build cache、TLS 憑證都在這一格）
 #   已壓縮   → ⭐ owner 2026-08-28:「已經有壓縮檔就不要搬遷原檔」
 #              ⇒ log 這一類:壓一份進包,**原檔留在原地**
-CARRY=(accounts matches rankings walletmeta friends invites journal
+CARRY=(accounts matches match-stats rankings walletmeta friends invites
        admin-audit curation content-overlay history review-verdicts)
+# ⭐ `journal` 是一格**開關**（2026-08-30）—— 預設**不帶**，理由見 LEAVE_BEHIND。
+#   ⛔⛔ 在此之前它無條件在 CARRY 裡，而**三份出貨的東西都說不要帶它**：
+#     · `scope.go:161` 的 ExcludedItems（ZIP 那條路）
+#     · `docs/runbooks/offsite-backup.md:43` 與 `:93`（兩處）
+#   而三份的理由是同一句：「結算 WAL；帶去新主機會**重播舊結算**」。
+#   ⇒ ⭐ 一條備份路徑帶它、另一條刻意不帶 —— ⛔ 而沒有任何東西會紅。
+#   ⚠️ `site-import.sh` 全檔沒有 journal 的特別處理 ⇒ 它會**照樣還原**
+#     ⇒ 新主機開機時重播沒有 commit marker 的 intent（＝重複結算）。
+#   ⭐ 開關保留「我就是要那份 WAL 做鑑識」的路：`GGD_EXPORT_CARRY_JOURNAL=1`。
+[ "${GGD_EXPORT_CARRY_JOURNAL:-0}" = 1 ] && CARRY+=(journal)
+# ⛔⛔ `match-stats` 是 2026-08-30 補上的 —— 在此之前它**靜默地留在舊機**。
+#   量到的證據有三份，而三份都說它該被帶走：
+#     ① `docs/runbooks/offsite-backup.md:37` 逐字把它列為 **❌ 不可再生**
+#        （「後台覆盤帳本空白」）
+#     ② `apps/platform/internal/platformarchive/scope.go:318` **刻意**帶
+#        `match-stats/<YYYY>/<MM>`（#207 的逐場分析帳本）
+#     ③ 本機量到 **14 MB** 真的躺在 `data/match-stats/`
+#   ⇒ ⭐ ZIP 那條路帶它、runbook 說不可再生、而**真正用來搬機器的這支腳本沒帶** ——
+#     兩條備份路徑對同一份資料給出相反的答案，⛔ 而沒有任何東西會紅。
+
+# ⭐⭐ **刻意不帶**的清單（名字＋理由）—— #857 的核心修法。
+# owner 的問題是「有沒有**包含到所有資料**」，而在此之前這支腳本回答不了它：
+#   `data/` 底下只要出現一個不在 CARRY/BULK/CRITICAL_BULK 裡的目錄，
+#   它就會**安靜地**不進包 —— ⛔ 而「我刻意不帶它」與「我忘了它」長得一模一樣。
+#
+# ⭐ 判準（與 `scope.go` 的 `ExcludedItems()` 同一條）：
+#   **「它不在備份裡」永遠不可以和「我忘了」長得一樣。**
+#   ⇒ 每一格都要寫得出一個**可以被反駁的**理由，⛔ 不是「還沒收」。
+LEAVE_BEHIND=(
+  "content-backups|dev content-api 的本機備份，正式主機根本沒跑（scope.go 的 ExcludedItems 同一個理由）"
+  "icon-src-original|本機素材產線的存檔，來源在 repo 的 tools/ 裡，可重新產生"
+  "redis-snapshots|Redis 快照落點；它自己就是備份，⛔ 不該再被備份一次（而且落點預設在 data/ 外）"
+  "backup-status.json|離站備份的心跳，描述的是**這台機器**的狀態 —— 搬過去會謊報新機器備份過"
+  "journal|結算 WAL：沒有 commit marker 的 intent 會在新主機開機時重播舊結算（scope.go:161 與 runbook 逐字同一句）。要帶：GGD_EXPORT_CARRY_JOURNAL=1"
+)
 # ⛔⛔ blizzard-overlay **不是**「可接受損失」—— 它是 edge 的**開機必要條件**。
 #   2026-08-28 在 arm64 上實測:overlay 短少 ⇒ edge 逐字說
 #   「refusing to start nginx — a full-asset deploy that is not full」⇒ exit 1
@@ -102,6 +137,56 @@ info "合計 ≈ $((TOTAL/1024)) MB（⛔ 不含映像 9.4G —— arm64 一定�
 [ "$TOTAL" -gt 0 ] || die "⛔ 一個目錄都沒找到（repo=$REPO）—— 這不是「沒有資料」,是**路徑錯了**。
    ⇒ 確認 $REPO/data/ 底下真的有 accounts/ matches/ 等目錄。"
 info "repo = $REPO"
+
+# ═══════════════════════ 1.2 ⭐⭐ 反方向再掃一次（#857 的核心修法）
+# ⛔⛔ 上面那個迴圈是從**清單**那一頭走的：「CARRY 上的每一格，實體在不在？」
+#   ⇒ 它**結構上**看不到反方向的那一種缺陷：**實體在，而清單上沒有它**。
+#   ⚠️ 那正是 CLAUDE.md 的失敗形態⑫：
+#     「從『宣告』走 ⇒ 一定漏掉『有實體而無宣告』的。⇒ ⭐ **兩頭都要走**。」
+#
+# ⭐ 2026-08-30 第一次跑這一段就抓到 **3 個**（本機 `data/` 13 個目錄）：
+#     match-stats（14 MB，⭐ 真的該帶 ⇒ 已補進 CARRY）
+#     icon-src-original（16 MB）· content-backups（16 K）（⇒ 已進 LEAVE_BEHIND）
+#   ⇒ 也就是說，在這一段之前，**每一次搬遷都靜默漏掉一份覆盤帳本**。
+#
+# ⚠️ 為什麼是 `die` 而不是 `warn`：這支腳本的產出會被拿去**退役舊主機**。
+#   一個「不知道自己漏了什麼」的備份，在對面會**還原成功**
+#   —— ⛔ 那比失敗更糟（fail-open 沒錯，**靜默**才是缺陷）。
+#   ⭐ 逃生口 `GGD_EXPORT_ALLOW_UNDECLARED=1`（會印出來，⛔ 不靜默）。
+head_ "1.2 ⭐ 反方向：data/ 底下有沒有**沒人宣告**的東西"
+DECLARED=" ${CARRY[*]} ${BULK[*]} ${CRITICAL_BULK[*]} "
+for e in "${LEAVE_BEHIND[@]}"; do DECLARED="$DECLARED${e%%|*} "; done
+UNDECLARED=""
+for p in "$REPO"/data/*; do
+  [ -e "$p" ] || continue
+  n=$(basename "$p")
+  # `_` 開頭的一律不是合法 collection（jsonstore 的規則，scope.go 同款）
+  case "$n" in _*|.*) continue;; esac
+  case "$DECLARED" in *" $n "*) continue;; esac
+  UNDECLARED="$UNDECLARED$n "
+  printf "  %s✗%s %-20s %8s  ⛔ 不在任何清單裡\n" "$RED" "$RST" "$n" \
+    "$(du -sh "$p" 2>/dev/null | cut -f1)"
+done
+if [ -n "$UNDECLARED" ]; then
+  [ "${GGD_EXPORT_ALLOW_UNDECLARED:-0}" = 1 ] \
+    && warn "⚠️ GGD_EXPORT_ALLOW_UNDECLARED=1 ⇒ 照樣產出，⛔ 但這幾格**不會**在包裡：$UNDECLARED" \
+    || die "⛔ data/ 底下有 $(printf '%s' "$UNDECLARED" | wc -w | tr -d ' ') 個目錄不在任何清單裡：$UNDECLARED
+   ⭐ 這一包會**安靜地**把它們留在舊機上，而對面會「還原成功」。
+   ⇒ 二選一，⛔ 沒有第三條路：
+     ① 它該被帶走      ⇒ 加進 CARRY（或 BULK）
+     ② 它刻意不帶      ⇒ 加進 LEAVE_BEHIND 並**寫下一個可以被反駁的理由**
+   （真的要先產出：GGD_EXPORT_ALLOW_UNDECLARED=1，⚠️ 它會被記進 MANIFEST）"
+else
+  ok "data/ 底下每一個目錄都被宣告過（帶走 或 寫明為什麼不帶）"
+fi
+for e in "${LEAVE_BEHIND[@]}"; do
+  n=${e%%|*}
+  # ⚠️ 開關可能把某一格拉回 CARRY（例：GGD_EXPORT_CARRY_JOURNAL=1）——
+  #   ⛔ 那時候不可以還印「刻意不帶」，⭐ 否則報告會同時說兩句相反的話。
+  case " ${CARRY[*]} " in *" $n "*) continue;; esac
+  [ -e "$REPO/data/$n" ] && info "⛔ 刻意不帶  $n —— ${e#*|}"
+done
+true
 
 # ═══════════════════════════════════════ 1.5 ⭐⭐ 讀得到嗎（⛔ 在寫任何東西之前）
 # 2026-08-29 在正式機上量到：`data/` 底下的檔案**全部屬於 65532:65532**
@@ -294,6 +379,14 @@ head_ "6. manifest（⭐ 這才是搬遷成功的判準）"
   # ⚠️ `set -u` 下,空陣列展開會噴 unbound variable（bash 4.3 以前的語意,
   #   而 macOS 內建的 bash 是 3.2）⇒ 用 ${ARR[@]+"${ARR[@]}"} 的慣用法。
   echo "absent_at_source=$(printf '%s,' ${ABSENT[@]+"${ABSENT[@]}"})"
+  # ⭐ **刻意不帶**的要逐格寫進來（#857）。⛔ 沒有這幾行，匯入端只看得到
+  #   「這個 collection 不在包裡」—— 而那與「路上掉了」長得一模一樣。
+  for e in ${LEAVE_BEHIND[@]+"${LEAVE_BEHIND[@]}"}; do
+    echo "left_behind.${e%%|*}=${e#*|}"
+  done
+  # ⭐ 逃生口用過就要留下痕跡 —— 一個「我知道我漏了什麼」的包，
+  #   與一個「我不知道」的包，⛔ 不可以長得一樣。
+  echo "undeclared_at_source=${UNDECLARED:-}"
   echo "env_keys=$(sed -n 's/^\([A-Z_][A-Z0-9_]*\)=.*/\1/p' "$REPO/docker/.env" 2>/dev/null | sort | tr '\n' ',')"
   echo "# ── 逐項計數（import 端要逐條對上）──"
   for d in "${PRESENT[@]}"; do

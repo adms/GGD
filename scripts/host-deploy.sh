@@ -232,6 +232,37 @@ if [ "$MODE" = full ]; then
   ok "$DOCKER_ROOT 可用 ${FREE_GB}G（≥ ${MIN_FREE_GB}G）"
 fi
 
+# ── 0.9 💾 Redis 停機前快照（GH#860）────────────────────────────────────────
+# owner 2026-08-28：「Redis 要停機時也要有備份機制，**不要等待暖開機**，
+#                     因為我還有**排行榜等資料**在上面**不只快取**」
+#
+# ⚠️ 這一步在 `compose up`（會重建/重啟容器）**之前**是承重的：`up -d` 對有變更的
+# 服務是「停掉重建」，而 Redis 上面有 `lb:*`（排行榜）與 `wallet:*`（M幣）——
+# ⛔ 那些掉了不是「重新暖機就好」。
+#
+# ⭐ 2026-08-28 的 containerd 搬遷資料沒掉，⚠️ 而那是**運氣**（AOF 剛好開著）——
+# 一個靠設定湊巧正確而活下來的流程，與一個有保護的流程，在成功的那一天長得一模一樣。
+#
+# ⚠️ fail-open 但**不靜默**：快照失敗不擋部署（擋住的話一次 redis 異常就沒有人能出貨），
+# ⛔ 但一定要用 `warn` 喊出來 —— 一行沒有人讀的 log 不算（CLAUDE.md）。
+#
+# ⛔⛔ **這一塊必須留在「回滾」段的上面** —— ⛔ 不要把它搬回去。
+#   2026-08-30 量到：在此之前它在回滾段**下面** 19 行，而回滾自己有一個
+#   `docker compose … up -d`（＝停掉重建 Redis）⇒ ⭐ **回滾那條路上的快照發生在
+#   Redis 已經被重建之後**，等於沒有。
+#   ⚠️ 而它看起來完全正確：腳本裡有快照、順序在「部署」那條路上也對
+#     ⇒ 失敗形態⑪「兩條各自對的路，接縫沒有人站著」。
+#   ⭐ 而回滾正是**事情已經在出錯**的那一刻 —— 最需要那份保險的時候。
+#   閘：packages/shared/src/ops/redisSnapshotBeforeShutdown.test.ts
+if docker inspect ggd-redis-1 >/dev/null 2>&1; then
+  say "Redis 停機前快照（排行榜與錢包不是快取）"
+  if bash "$(dirname "$0")/redis-snapshot.sh" >/dev/null 2>&1; then
+    ok "Redis 已快照到 /data/redis-snapshots/"
+  else
+    warn "⛔ Redis 快照失敗 —— 這一次部署的 redis 資料沒有保護（見 scripts/redis-snapshot.sh）"
+  fi
+fi
+
 # ── 回滾 ─────────────────────────────────────────────────────────────────────
 # 映像回滾靠上一次部署留下的 `:prev` 標籤；content/ 靠記下來的 commit。
 # ⛔ 一個字都不碰 `data/`。
@@ -257,28 +288,6 @@ if [ "$MODE" = rollback ]; then
   fi
   docker compose "${COMPOSE_FILES[@]}" --env-file "$ENV_FILE" up -d
   MODE=verify   # 落到下面同一套後置驗證
-fi
-
-# ── 0.9 💾 Redis 停機前快照（GH#860）────────────────────────────────────────
-# owner 2026-08-28：「Redis 要停機時也要有備份機制，**不要等待暖開機**，
-#                     因為我還有**排行榜等資料**在上面**不只快取**」
-#
-# ⚠️ 這一步在 `compose up`（會重建/重啟容器）**之前**是承重的：`up -d` 對有變更的
-# 服務是「停掉重建」，而 Redis 上面有 `lb:*`（排行榜）與 `wallet:*`（M幣）——
-# ⛔ 那些掉了不是「重新暖機就好」。
-#
-# ⭐ 2026-08-28 的 containerd 搬遷資料沒掉，⚠️ 而那是**運氣**（AOF 剛好開著）——
-# 一個靠設定湊巧正確而活下來的流程，與一個有保護的流程，在成功的那一天長得一模一樣。
-#
-# ⚠️ fail-open 但**不靜默**：快照失敗不擋部署（擋住的話一次 redis 異常就沒有人能出貨），
-# ⛔ 但一定要用 `warn` 喊出來 —— 一行沒有人讀的 log 不算（CLAUDE.md）。
-if docker inspect ggd-redis-1 >/dev/null 2>&1; then
-  say "Redis 停機前快照（排行榜與錢包不是快取）"
-  if bash "$(dirname "$0")/redis-snapshot.sh" >/dev/null 2>&1; then
-    ok "Redis 已快照到 /data/redis-snapshots/"
-  else
-    warn "⛔ Redis 快照失敗 —— 這一次部署的 redis 資料沒有保護（見 scripts/redis-snapshot.sh）"
-  fi
 fi
 
 # ── 1. 拉 ────────────────────────────────────────────────────────────────────

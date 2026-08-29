@@ -55,6 +55,44 @@ SSH=(ssh -A -o BatchMode=yes -o ConnectTimeout=10 "$USER_@$HOST")
 REMOTE_PATH='export PATH="$HOME/.orbstack/bin:/usr/local/bin:/opt/homebrew/bin:$PATH"; '
 r(){ "${SSH[@]}" "$REMOTE_PATH$*"; }
 
+# ═══════════════ 💾 Redis 停機前快照（GH#860）—— ⭐ 每一條停機路徑都要叫它
+# owner 2026-08-28（逐字）：「Redis 要停機時也要有備份機制，**不要等待暖開機**，
+#                            因為我還有**排行榜等資料**在上面**不只快取**」
+#
+# ⛔⛔ 2026-08-30 量到：這件事在此之前**整條 mini 路線上都不存在**。
+#   `redis-snapshot.sh` 的呼叫端是 host-deploy / host-migrate / site-export
+#   —— ⭐ **全部是 GCP 那條路**。而 GGD 在 2026-08-29 搬到了 mini，
+#     於是「有保護」這件事**留在了已經不是主力的那個環境裡**。
+#   ⚠️ 這正是 CLAUDE.md 的「『它沒有在跑』與『**它在哪一個環境**沒有在跑』是兩件事」：
+#     程式在、閘也在，⛔ 但都不在我今天走的那條路上。
+#
+# ⭐ 為什麼寫成**函式**而不是在 deploy 裡插一段：這支腳本有 **3 條**會 `up -d` 的路
+#   （deploy / tunnel / direct），而 `up -d` 對有變更的服務是**停掉重建**。
+#   ⇒ 第〇·七守則的「一行接線」病：正解是**一個住處、每條路叫它**，
+#     ⛔ 不是把同一段抄三次（抄三次＝下一次只有兩份會被更新）。
+#
+# ⭐ 落點刻意**不在 `data/` 底下**：`data/` 是 platform 的 bind mount，
+#   而它把底下每一個目錄當成一個 collection 枚舉 ⇒ 一個 `data/redis-snapshots/`
+#   會變成一個假的 collection（`scope.go` 的 ExcludedItems 只排除了 `redis`，
+#   ⛔ 沒有 `redis-snapshots`）。⇒ 預設 `~/ggd-redis-snapshots`。
+#
+# ⚠️ fail-open 但**不靜默**（同 host-deploy.sh）：快照失敗**不擋**部署
+#   —— 擋住的話一次 redis 異常就沒有人能出貨 —— ⛔ 但一定要 `warn` 喊出來。
+MINI_SNAPDIR="${GGD_MINI_REDIS_SNAPSHOT_DIR:-\$HOME/ggd-redis-snapshots}"
+redis_snapshot_before_shutdown() {
+  r "docker inspect ggd-redis-1 >/dev/null 2>&1" || {
+    info "（mini 上沒有 ggd-redis-1 在跑 ⇒ 沒有東西要快照）"; return 0; }
+  head_ "💾 Redis 停機前快照（排行榜 lb:* 與 M幣 wallet:* 不是快取）"
+  # ⭐ 落點**位置參數與環境變數一起給** —— 2026-08-29 掉過一次 Redis，
+  #   就是因為呼叫端用環境變數傳而腳本只認位置參數（docs/守則犯錯.md）。
+  if r "cd $REMOTE_REPO && GGD_REDIS_SNAPSHOT_DIR=\"$MINI_SNAPDIR\" \
+        bash scripts/redis-snapshot.sh \"$MINI_SNAPDIR\"" 2>&1 | tail -3 | sed 's/^/    /'; then
+    ok "Redis 已快照到 mini 的 $MINI_SNAPDIR"
+  else
+    warn "⛔ Redis 快照失敗 —— 這一次的排行榜與 M幣**沒有保護**（見 scripts/redis-snapshot.sh）"
+  fi
+}
+
 # ═══════════════════════════════════════ check
 cmd_check() {
   head_ "1. 走得到嗎（⭐ 以及走的是哪一條）"
@@ -203,6 +241,9 @@ cmd_deploy() {
   r "cd $REMOTE_REPO && docker image inspect ggd-edge --format '{{.Architecture}}'" 2>/dev/null \
     | grep -q arm64 && ok "映像是 arm64" || warn "⛔ 映像不是 arm64?"
 
+  # ⭐ `up -d` 對有變更的服務是**停掉重建** ⇒ 快照必須在它**之前**
+  redis_snapshot_before_shutdown
+
   head_ "3. up"
   r "cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env up -d" \
     2>&1 | tail -4 | sed 's/^/    /'
@@ -267,6 +308,9 @@ cmd_tunnel() {
     || die "⛔ mini 的 docker/.env 裡沒有 CLOUDFLARE_TUNNEL_TOKEN
    ⇒ Cloudflare 後台 → Zero Trust → Networks → Tunnels → 建一個 → 複製 token,然後：
      ssh $USER_@$HOST 'echo \"CLOUDFLARE_TUNNEL_TOKEN=<token>\" >> $REMOTE_REPO/docker/.env'"
+
+  # ⭐ 換一組 compose 檔 ⇒ 設定變了的服務會被**重建** ⇒ 先快照（GH#860）
+  redis_snapshot_before_shutdown
 
   head_ "1. 起 tunnel（edge 改為零發佈埠）"
   r "cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml \
