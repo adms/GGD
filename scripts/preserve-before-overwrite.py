@@ -126,6 +126,24 @@ def preserve(p: Path, why: str, stamp: str, actor: str) -> str:
 _HEREDOC_START = re.compile(r"<<-?\s*(?:'([^']*)'|\"([^\"]*)\"|\\?([A-Za-z_][A-Za-z0-9_]*))")
 
 
+# ── ⭐⭐ 結束符規則只有**一個住處**（GH#663,2026-08-29）────────────────────────
+#
+# ⚠️ 在此之前這份知識有**兩份**,而它們**不一樣**:
+#   · `_strip_heredocs()`  → `(probe.lstrip("\t") if dash else probe).rstrip() == delim`
+#   · `_heredocs()`        → `lines[i].strip() != delim`   ⇐ ⛔ **無條件 strip**
+# ⇒ 第二份會被**縮排的** `EOF` 終止,而 bash ⛔ 不會 —— 於是 commit 訊息裡任何一段
+#   引用 heredoc 慣用法的 markdown 程式碼區塊,都會讓閘讀到一份**被截斷**的訊息,
+#   而截斷點**之後**的違規**完全看不到**,且**一個字都不印**。
+#
+# ⭐ 下面兩條是**跑出來的**(2026-08-29,`bash` 5.x),⛔ 不是推論:
+#   · plain `<<` : `EOF ` (尾隨一個空格) ⇒ **不終止**(量到 3 行,⛔ 不是 1 行)
+#   · `<<-`      : tab 縮排 ⇒ 終止(1 行);**空格**縮排 ⇒ **不終止**(3 行)
+# ⇒ 所以 `<<-` 只可以剝**前導 tab**,而**兩種都不可以** rstrip/strip。
+def _is_heredoc_end(line: str, delim: str, dash: bool) -> bool:
+    """這一行是不是 heredoc 的結束符 —— ⭐ 照 bash 的規則,兩個解析器共用這一份。"""
+    return (line.lstrip("\t") if dash else line) == delim
+
+
 def _strip_heredocs(cmd: str) -> str:
     """把每一段 heredoc 的**內文**整段丟掉,只留下真正的命令行。
 
@@ -149,7 +167,7 @@ def _strip_heredocs(cmd: str) -> str:
             while i < len(lines):
                 probe = lines[i]
                 i += 1
-                if (probe.lstrip("\t") if dash else probe).rstrip() == delim:
+                if _is_heredoc_end(probe, delim, dash):
                     break
             # 內文整段**不 append** —— 它不是命令
     return "\n".join(out)
@@ -400,6 +418,165 @@ def lane_marker(cwd: Path) -> Path | None:
     return m if root != REPO and m.exists() else None
 
 
+# ── 🏷️ commit 訊息住**兩個地方**,而閘只讀過一個（GH#663 的洞,2026-08-29 量到）──
+#
+# ⛔ 2026-08-27 `0ea4c6df` 掛上這道閘之後 **2 小時 08 分**,`98189e4f` 照樣落地 ——
+#    而它的訊息裡逐字寫著 `#A5`(lint 判硬紅的形狀)。直接跑 lint 是 **exit 1**。
+#    ⇒ 閘沒有壞,**是訊息從來沒送到它手上**。
+#
+# ⭐ 根因:`-F <檔>` 在 **PreToolUse 當下還不存在** —— 它與 commit 在**同一個 Bash 呼叫**裡:
+#       cat > /private/tmp/m663.txt <<'EOF'
+#       …訊息…
+#       EOF
+#       git commit -F /private/tmp/m663.txt -- <檔>
+#    舊碼 `except OSError: _msg = None  # 它可能是 heredoc 剛要建的檔` ——
+#    ⚠️ **註解指名了這個案例,然後放它過去**。而訊息**就在指令字串裡**。
+#
+# ⇒ ⭐ 這正是「同一個值有第二個住處,而讀端只讀一個」:磁碟上的檔 vs 指令字串裡的 heredoc。
+#    修法是**兩個住處都讀**,⛔ 不是換一個猜法。
+def _heredocs(cmd: str) -> list[tuple[str | None, str]]:
+    """`[(重導目標 or None, 內文)]` —— 指令字串裡的每一個 heredoc。
+
+    ⚠️ `(?<!<)<<(?!<)` 是刻意的:`<<<` 是 herestring,⛔ 不是 heredoc
+    （`foo <<<'EOF'` 會被一個天真的正則讀成一份空訊息 ⇒ 靜默放行）。
+    """
+    out: list[tuple[str | None, str]] = []
+    opener = re.compile(r"(?<!<)<<(?!<)(-?)\s*(['\"]?)([A-Za-z_][A-Za-z0-9_]*)\2")
+    lines = cmd.split("\n")
+    i = 0
+    while i < len(lines):
+        m = opener.search(lines[i])
+        if not m:
+            i += 1
+            continue
+        dash, delim = m.group(1) == "-", m.group(3)
+        # 同一行的重導目標(`> 檔` / `tee 檔`);沒有 ⇒ 它餵的是 stdin
+        tgt = None
+        t = re.search(r">>?\s*([^\s;|&<>]+)", lines[i]) or re.search(
+            r"\btee\s+(?:-[a-zA-Z]+\s+)*([^\s;|&<>]+)", lines[i]
+        )
+        if t:
+            tgt = t.group(1).strip("\"'")
+        body: list[str] = []
+        i += 1
+        # ⭐ 結束符規則與 `_strip_heredocs()` **共用同一個** `_is_heredoc_end()`。
+        #    ⛔ 在此之前這裡是 `lines[i].strip() != delim` —— 無條件 strip ⇒
+        #    一段引用 heredoc 慣用法的 markdown 程式碼區塊(縮排的 `EOF`)會**提早終止**,
+        #    而 bash ⛔ 不會 ⇒ 閘讀到截斷的訊息、截斷點之後的違規靜默通過。
+        while i < len(lines) and not _is_heredoc_end(lines[i], delim, dash):
+            body.append(lines[i])
+            i += 1
+        i += 1
+        out.append((tgt, "\n".join(body)))
+    return out
+
+
+#: ⭐ 這一次的指令**自己**會寫到那個路徑嗎（重導 / tee / cp / mv）。
+#: ⛔ 吃的是**剝掉 heredoc 內文**的指令 —— 訊息**內文**裡的 `>` 不是一道重導。
+_WRITERS = (
+    re.compile(r">>?\s*([^\s;|&()<>]+)"),
+    re.compile(r"\btee\s+(?:-[a-zA-Z]+\s+)*([^\s;|&()<>]+)"),
+    re.compile(r"\b(?:cp|mv)\s+(?:-[a-zA-Z]+\s+)*\S+\s+([^\s;|&()<>]+)"),
+)
+
+
+def _command_writes_to(cmd_nohd: str, target: Path, cwd: Path) -> bool:
+    for pat in _WRITERS:
+        for m in pat.finditer(cmd_nohd):
+            tok = m.group(1).strip("\"'")
+            if tok.startswith("$"):
+                continue
+            p = Path(tok) if tok.startswith("/") else cwd / tok
+            try:
+                if p.resolve() == target.resolve():
+                    return True
+            except OSError:
+                pass
+    return False
+
+
+def commit_message_of(cmd: str, cwd: Path) -> tuple[str, bool] | None:
+    """`(訊息, 確定嗎)`;找不到回 None。
+
+    `確定嗎=False` 只用在一個**啟發式**的分支(見下),⇒ 呼叫端只警告⛔ 不擋。
+
+    ⚠️⚠️ **順序是這個函式最重要的一件事**（GH#663,2026-08-29 對抗性複驗量到）。
+    在此之前它是「**先讀磁碟**,讀不到才去 heredoc 找」,而 CLAUDE.md 逐字規定的
+    併行 commit 形狀是往一個**固定路徑**寫:
+
+        printf '%s\n' "$MSG" > /private/tmp/msg.txt
+        git commit -F /private/tmp/msg.txt -- <檔>
+
+    ⇒ 那個路徑上很可能還躺著**上一條 lane 的訊息**。PreToolUse 跑在寫入**之前**,
+      於是舊碼讀到的是**別人的位元組**,lint 它、標 `sure=True`、`rc=0`、**零輸出**
+      —— ⭐ 一次**靜默的假驗證**:閘跑了,而它驗的不是要送出的那份訊息。
+    ⇒ 修法是**先問「這一次的指令自己會不會寫那個檔」**:
+        · 會,而 heredoc 給得出內文 ⇒ ⭐ 用 heredoc(那才是要送出的那份)
+        · 會,但內文取不到(`$MSG` 展不開) ⇒ ⛔ **不可以拿磁碟上那份頂替** ⇒ 說「沒驗到」
+        · ⛔ 不會 ⇒ 磁碟上那份就是訊息(前一個呼叫寫好的)⇒ 讀它
+    """
+    m = re.search(r"(?:-F|--file)[=\s]+(\S+)", _strip_heredocs(cmd))
+    if m:
+        raw = m.group(1).strip("\"'")
+        p: Path | None = None
+        if raw != "-":
+            p = Path(raw)
+            if not p.is_absolute():
+                p = cwd / p
+        hds = _heredocs(cmd)
+        for tgt, body in hds:
+            if p is None:                       # `-F -` ⇒ 訊息直接餵 stdin
+                if tgt is None:
+                    return (body, True)
+            elif tgt is not None:
+                t = Path(tgt)
+                if not t.is_absolute():
+                    t = cwd / t
+                if t == p:
+                    return (body, True)         # 這個 heredoc 寫的就是那個 `-F` 檔
+        # ⭐⭐ heredoc 對不上。⇒ 先問「這一次的指令自己會不會寫那個檔」——
+        #    會 ⇒ 磁碟上那份是**還沒被覆蓋的舊訊息**,⛔ 不可以拿它當這一次的訊息。
+        if p is not None and not _command_writes_to(_strip_heredocs(cmd), p, cwd):
+            try:
+                return (p.read_text(encoding="utf-8", errors="replace"), True)
+            except OSError:
+                pass   # 檔不存在而指令也不寫它 ⇒ 往下走推論／「沒驗到」
+        # ⭐ 對不到目標但**全指令只有一個 heredoc** ⇒ 幾乎一定是它
+        #    (CLAUDE.md 自己的寫法 `MSG=$(cat <<'EOF' … )` 就落在這裡 —— 那一行沒有重導)。
+        #    ⚠️ 只**警告** ⛔ 不擋:這一步是推論,而一個會誤擋的 hook 會被關掉。
+        if len(hds) == 1:
+            return (hds[0][1], False)
+        return None
+    # ⭐ `-m` 要收**每一個**(`-m 主旨 -m 內文` 的第二段以前完全沒被驗到)
+    #   ⛔ 掃的是**剝掉 heredoc 內文**的指令:一段引用 `git commit -m "…"` 的訊息內文
+    #   ⛔ 不是這一次要送出的訊息(它會同時造成誤擋與擋錯對象)。
+    parts = [g[1:-1] for g in re.findall(
+        r"(?:-m|--message)[=\s]+(\"(?:[^\"\\]|\\.)*\"|'[^']*')", _strip_heredocs(cmd))]
+    return ("\n\n".join(parts), True) if parts else None
+
+
+# ── ⭐⭐ `git` 與 `commit` **中間可以有東西**（GH#663,2026-08-29 對抗性複驗量到）──
+#
+# 舊的偵測式是 `\bgit\s+commit\b` ⇒ 只要中間插一個全域旗標就**整段跳過**,
+# ⛔ 而且**一個字都不印** —— 實測 `git -C <dir> commit -m "…#A5…"` 與
+# `git -c user.name=x commit …` 都是 `rc=0` 全靜。⭐ 那正是 `5c81bbec4` 這一批
+# 逐字要消滅的形狀（「安靜的跳過與全過長得一樣」），而它在同一支 hook 裡還活著。
+#
+# ⚠️ 有趣的是 `git --git-dir=<…>/.git commit` **當時是擋得住的** —— ⛔ 不是設計,
+#    是路徑尾巴的 `.git commit` 剛好餵飽了那個正則。⭐ 一條靠巧合綠的閘 ⇒ 不算閘。
+_GIT_GLOBAL_OPT = (
+    r"(?:-[cC]\s+\S+"                                    # -C <path> / -c <k=v>
+    r"|--(?:git-dir|work-tree|namespace|exec-path|config-env)[=\s]\S+"
+    r"|--[a-z][a-z-]*"                                   # --no-pager / --bare / --paginate…
+    r"|-[a-zA-Z])"
+)
+_GIT_COMMIT = re.compile(r"\bgit\b(?:\s+" + _GIT_GLOBAL_OPT + r")*\s+commit\b")
+#: ⭐ 兜底網:長得像 commit 但上面那條沒認出來 ⇒ ⛔ 不擋,但**要出聲**。
+#: 要求同時出現訊息旗標,免得 `git log … | grep commit` 這種唯讀指令也在喊。
+_GIT_COMMIT_LOOSE = re.compile(r"\bgit\b[^\n;|&]*\bcommit\b")
+_MSG_FLAG = re.compile(r"(?:-F|--file|-m|--message)\b")
+
+
 def main() -> int:
     try:
         ev = json.load(sys.stdin)
@@ -437,22 +614,44 @@ def main() -> int:
     #   逃生口 `GGD_COMMITREF_OFF=1`（commit 訊息裡說為什麼）。
     if tool == "Bash" and os.environ.get("GGD_COMMITREF_OFF") != "1":
         _cmd = ti.get("command") or ""
-        if re.search(r"\bgit\s+commit\b", _cmd):
-            _msg = None
-            # `-F <檔>` / `--file <檔>` —— ⭐ CLAUDE.md 規定的併行 commit 形狀就是這個
-            _m = re.search(r"(?:-F|--file)[=\s]+(\S+)", _cmd)
-            if _m:
-                _p = Path(_m.group(1).strip("\"'"))
-                if not _p.is_absolute():
-                    _p = cwd / _p
-                try:
-                    _msg = _p.read_text(encoding="utf-8", errors="replace")
-                except OSError:
-                    _msg = None  # 讀不到 ⇒ ⛔ 不擋（它可能是 heredoc 剛要建的檔）
-            else:
-                _m = re.search(r"-m\s+(\"(?:[^\"\\]|\\.)*\"|'[^']*')", _cmd)
-                if _m:
-                    _msg = _m.group(1)[1:-1]
+        _cmd_nohd = _strip_heredocs(_cmd)
+        if not _GIT_COMMIT.search(_cmd_nohd) and (
+            _GIT_COMMIT_LOOSE.search(_cmd_nohd) and _MSG_FLAG.search(_cmd_nohd)
+        ):
+            # ⭐ 兜底網:它長得像一個帶訊息的 commit,而上面那條精確式沒認出來
+            #    ⇒ ⛔ 不擋(我可能只是解析不了這個 shell 寫法),⭐ 但**要出聲**。
+            print(
+                "🏷️ ⚠️ commit 訊息**沒驗到**(GH#663,⛔ 不擋)——\n"
+                "   這看起來是一個帶訊息的 `git commit`,而我解析不出它的形狀。\n"
+                "   ⇒ 票號/lane 代號那道閘**這一次沒有跑**。要自己驗:\n"
+                "      bash scripts/commit-ref-lint.sh --message-file <你的訊息檔>",
+                file=sys.stderr,
+            )
+        if _GIT_COMMIT.search(_cmd_nohd):
+            # ⭐ 訊息有**兩個住處**:磁碟上的 `-F` 檔,與指令字串裡的 heredoc。
+            #    `commit_message_of()` 兩個都讀 —— 只讀前者就是 GH#663 的洞
+            #    （98189e4f 的訊息與 commit 在同一個 Bash 呼叫裡,檔當下還不存在）。
+            _found = commit_message_of(_cmd, cwd)
+            _msg, _sure = _found if _found else (None, True)
+            if not _msg and _MSG_FLAG.search(_cmd_nohd):
+                # ⭐ 有帶訊息旗標卻**取不到內容**。兩種都落在這裡,而**兩種以前都是靜默的**:
+                #    ① `printf '%s' "$MSG" > f && commit -F f` —— `$MSG` 在前一個呼叫
+                #       就設好了,hook 展不開 shell 變數 ⇒ 結構上取不到。
+                #    ② ⭐ 同上,而 `f` 那個固定路徑上**還躺著上一條 lane 的訊息** ——
+                #       在此之前 hook 會把**那份舊位元組**拿去 lint 並標 `sure=True`
+                #       ⇒ `rc=0`、零輸出 ⇒ 一次**假的驗證**(閘跑了,驗的不是這一份)。
+                # ⛔ 兩種都**不擋**(它們完全合法),但也 ⛔ **不可以安靜地跳過** ——
+                #    CLAUDE.md 逐字:「安靜的跳過與全過長得一樣」。⇒ 說出「沒驗到」。
+                print(
+                    "🏷️ ⚠️ commit 訊息**沒驗到**(GH#663,⛔ 不擋)——\n"
+                    "   取不到**這一次要送出的**訊息內容。常見的兩種:\n"
+                    "     · `printf '%s' \"$MSG\" > 檔` ＋ `-F 檔` —— hook 展不開 shell 變數,\n"
+                    "       而磁碟上那一份是**還沒被覆蓋的舊訊息** ⇒ 拿它來驗等於沒驗;\n"
+                    "     · 訊息從 stdin 進來而不是 heredoc(herestring、管道…)。\n"
+                    "   ⇒ 票號/lane 代號那道閘**這一次沒有跑**。要自己驗:\n"
+                    "      bash scripts/commit-ref-lint.sh --message-file <你的訊息檔>",
+                    file=sys.stderr,
+                )
             if _msg:
                 try:
                     import subprocess as _sp
@@ -460,7 +659,18 @@ def main() -> int:
                         ["bash", "scripts/commit-ref-lint.sh", "--message-file", "/dev/stdin"],
                         input=_msg, capture_output=True, text=True, cwd=str(REPO), timeout=30,
                     )
-                    if _r.returncode == 1:
+                    if _r.returncode == 1 and not _sure:
+                        # ⭐ 訊息是**推論**出來的（唯一的 heredoc,但它沒寫進那個 `-F` 檔）
+                        #    ⇒ 出聲但⛔ 不擋 —— 一個會誤擋的 hook 會被關掉,
+                        #      而被關掉的閘等於沒有閘。
+                        print(
+                            "🏷️ ⚠️ **commit 訊息疑似違規**(GH#663,⛔ 不擋 —— 這一份是推論的)——\n"
+                            + (_r.stderr or "").rstrip() + "\n"
+                            "   ⇒ 我讀的是指令裡**唯一的 heredoc**,而它沒有寫進那個 `-F` 檔。\n"
+                            "      若它就是訊息,請先改掉再送出（落地之後 ⛔ 不可 `--amend`）。",
+                            file=sys.stderr,
+                        )
+                    elif _r.returncode == 1:
                         print(
                             "🏷️ **commit 訊息擋下**(GH#663)——\n"
                             + (_r.stderr or "").rstrip() + "\n"
