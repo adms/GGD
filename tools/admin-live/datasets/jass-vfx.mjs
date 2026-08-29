@@ -21,29 +21,68 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 /**
- * ⭐ GH#821 寫入宣告 —— POST /__live/jass-vfx/save。
- * GGD 側的頂層 `vfxKey` 是技能文件自己的欄位（家在 content/abilities —— 混編目錄，
+ * ⭐ GH#821 寫入宣告 —— POST /__live/jass-vfx/save（GH#823 從 1 格擴到 4 格）。
+ * GGD 側的特效綁定都是技能文件自己的欄位（家在 content/abilities —— 混編目錄，
  * 寫入端逐次 spawn genguard 裁決；skillremake:json 的產物會 409 指名擁有者）。
- * check：key 要在 content/vfx/_index.json 的 entries 裡（zRef("vfx") 的名冊）——
- * 存一個查不到的 key = 卡上宣稱了不會發生的特效（第一·五守則）。
+ *
+ * 開放四個 pointer、三條規則（第零守則⑨：兩個同型的 `vfxKey` 陣列共用一條規則，
+ * ⛔ 不抄第二份 check）—— ⚠️ 用 `<i>` 寫索引位，pointer 樣式的 `*` 加 `/`
+ * 寫進區塊註解會**提早關掉註解**（middleware.mjs 的 pointerHit 上面記過同一件事）：
+ *   · `/vfxKey`                  —— 施法主特效（null＝移除綁定）
+ *   · `/vfxLayers/<i>/vfxKey`    —— 特效堆疊第 i 層播什麼
+ *   · `/persistentVfx/<i>/vfxKey`—— 常駐特效（莉娜 EX 腳下魔法陣那一族）掛什麼
+ *   · `/vfxLayers/<i>/delayMs`   —— 第 i 層延遲幾毫秒（蓄力→爆炸→餘燼的時間軸）
+ *
+ * ⭐ 上下界一律抄**出貨 schema**，⛔ 不自己挑一個看起來合理的：
+ *   · vfxKey 是 `zRef("vfx", {soft:true})` ＝ `zId` ＝ `.max(64)`
+ *     （packages/shared/src/content/schema/common.ts）。
+ *     ⚠️ 這一格在 GH#823 之前寫 `maxLen: 80` —— 比出貨 schema **寬 16 個字**，
+ *     也就是「後台存得下、內容驗證拒收」的那個形狀（與 ex-roots 的 offerCount 同型）。
+ *   · delayMs 是 `z.number().min(0).max(8000)`
+ *     （packages/shared/src/content/schema/abilityVfx.ts 的 zAbilityVfxLayer）。
+ *
+ * check：key 要在 content/vfx/_index.json 的 entries 裡（zRef("vfx") 的名冊 ——
+ * 粒子 `vfx@1` / 緞帶 `ribbon@1` / 掛件 `attachment@1` 三種都住那個集合，量過
+ * 649 筆涵蓋現行全部 vfxKey / vfxLayers / persistentVfx）—— 存一個查不到的 key
+ * = 卡上宣稱了不會發生的特效（第一·五守則）。
+ *
+ * ⛔ 陣列元素的 `vfxKey` **不可為 null**：它在 schema 裡是必填，刪掉那一格會讓整份
+ * 文件驗不過（而且 middleware 的寫入器對陣列元素本來就拒絕 null-delete）。
  * effects 樹裡巢狀的 spawn 節點**刻意不開**：單格 pointer 表達不了一個節點的編輯，
  * 那屬於技能編輯器（skill-authoring 的骨架路線）。
  */
+const VFX_ID_MAX_LEN = 64; // = zId 的 .max(64)（schema/common.ts）——⛔ 不要在這裡放一個更寬的數字
+
+/** 一個 vfx id 在不在 zRef("vfx") 的名冊裡。回 null = 過（與 rule.check 同一個約定）。 */
+function vfxIdError(repoRoot, value) {
+  const idx = JSON.parse(readFileSync(join(repoRoot, "content/vfx/_index.json"), "utf8"));
+  return (idx.entries ?? []).some((e) => e.id === value)
+    ? null
+    : `「${value}」不在 content/vfx/_index.json —— 存了也畫不出來（第一·五守則）`;
+}
+
 export const write = {
   kind: "source",
   rules: [
     {
       paths: ["content/abilities/*.json"],
       pointers: ["/vfxKey"],
-      value: { type: "string", maxLen: 80, nullable: true },
+      value: { type: "string", maxLen: VFX_ID_MAX_LEN, nullable: true },
       why: "技能頂層 vfxKey（null＝移除）",
-      check(repoRoot, { value }) {
-        if (value === null) return null;
-        const idx = JSON.parse(readFileSync(join(repoRoot, "content/vfx/_index.json"), "utf8"));
-        return (idx.entries ?? []).some((e) => e.id === value)
-          ? null
-          : `「${value}」不在 content/vfx/_index.json —— 存了也畫不出來（第一·五守則）`;
-      },
+      check: (repoRoot, { value }) => (value === null ? null : vfxIdError(repoRoot, value)),
+    },
+    {
+      paths: ["content/abilities/*.json"],
+      pointers: ["/vfxLayers/*/vfxKey", "/persistentVfx/*/vfxKey"],
+      value: { type: "string", maxLen: VFX_ID_MAX_LEN },
+      why: "特效堆疊／常駐特效第 i 格播什麼（⛔ 不可 null —— schema 裡它是必填）",
+      check: (repoRoot, { value }) => vfxIdError(repoRoot, value),
+    },
+    {
+      paths: ["content/abilities/*.json"],
+      pointers: ["/vfxLayers/*/delayMs"],
+      value: { type: "number", min: 0, max: 8000, nullable: true },
+      why: "特效堆疊第 i 層延遲毫秒（null＝移除欄位＝0，與主特效同一幀）",
     },
   ],
 };
@@ -212,8 +251,18 @@ export async function build(repoRoot) {
     // ---- GGD 側 ----
     const fxEffects = [];
     collectFxEffects(doc.effects ?? [], fxEffects);
-    const vfxLayers = (doc.vfxLayers ?? []).map((l) => l.vfxKey).filter(Boolean);
-    const persistent = (doc.persistentVfx ?? []).map((p) => p.vfxKey).filter(Boolean);
+    // ⭐ 帶**陣列索引**出去 —— 頁面拿它組 JSON pointer（`/vfxLayers/<i>/vfxKey`）。
+    // ⛔ 不 filter：濾掉一格就讓這裡的索引與磁碟上那份 JSON 錯開，而寫入端是照索引寫的
+    //   ——「照一把沒驗過的鑰匙 join」正是第〇·六守則記過的資料毀損形狀。
+    const vfxLayers = (doc.vfxLayers ?? []).map((l, i) => ({
+      i,
+      vfxKey: typeof l?.vfxKey === "string" ? l.vfxKey : null,
+      delayMs: typeof l?.delayMs === "number" ? l.delayMs : null,
+    }));
+    const persistent = (doc.persistentVfx ?? []).map((p, i) => ({
+      i,
+      vfxKey: typeof p?.vfxKey === "string" ? p.vfxKey : null,
+    }));
     const cfgBindings = cfgByDoc.get(docId) ?? [];
     const ggd = {
       vfxKey: doc.vfxKey ?? null,
@@ -228,8 +277,8 @@ export async function build(repoRoot) {
     const ggdBlob = norm(
       [
         ggd.vfxKey,
-        ...vfxLayers,
-        ...persistent,
+        ...vfxLayers.map((l) => l.vfxKey),
+        ...persistent.map((p) => p.vfxKey),
         ...fxEffects.map((e) => e.key),
         ...ggd.cfgVfxKeys,
       ].join("|"),

@@ -13,14 +13,24 @@
  * spawnModelFx / spawnVfx / spawnProjectile、vfxKey / vfxLayers / persistentVfx、
  * config 綁定）。「⛔ 缺實作」（原作有特效、GGD 零表達）整列標紅。
  *
- * 「設定」半邊住在既有的 鑄技工坊 · 特效綁定 頁（vfxForge）——這裡只連過去，
- * ⛔ 不複製第二份表單。fetch 失敗畫出錯誤（fail-open 沒錯，靜默才是缺陷）。
+ * ⭐ GH#823 —— 這一頁**不再是唯讀的**。owner 2026-08-27（逐字）：
+ * > 「我說過**全部都要即時動態資料讀取及儲存（by JSON）, 不是唯讀**，你這樣怎麼算驗收呢」
+ *
+ * GGD 側那一格開了四個編輯點（共用 LiveEditCell → POST /__live/jass-vfx/save →
+ * 寫回 `content/abilities/<id>.json`，寫前過規格 + vfx 名冊 check + genguard）：
+ * `vfxKey` · `vfxLayers[i].vfxKey` · `vfxLayers[i].delayMs` · `persistentVfx[i].vfxKey`。
+ * ⭐「⛔ 缺實作」那幾列的修法就在原地：那一列的 vfxKey 是空的，填一個就補上了。
+ * ⛔ 巢狀 effects / config 綁定仍然唯讀（一個是技能編輯器的事，一個是產生器的產物）。
+ *
+ * 「設定」半邊（家族原型、pitch/scale/色）住在既有的 鑄技工坊 · 特效綁定 頁（vfxForge）
+ * ——這裡只連過去，⛔ 不複製第二份表單。fetch 失敗畫出錯誤（fail-open 沒錯，靜默才是缺陷）。
  */
 import { useEffect, useMemo, useState } from "react";
 import { useApp } from "../../store";
 import { Panel, TextInput } from "../widgets";
 import { ACCENT, DANGER, DANGER_BG, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "../theme";
 import { ReviewStrip } from "./ReviewStrip";
+import { LiveEditCell } from "./LiveEditCell";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
@@ -47,10 +57,16 @@ interface GgdFxEffect {
   count?: number;
   preset?: string;
 }
+/** 一格陣列成員 —— `i` 是**磁碟上那份 JSON 的索引**，寫入端拿它組 pointer。 */
+interface GgdVfxSlot {
+  i: number;
+  vfxKey: string | null;
+  delayMs?: number | null;
+}
 interface GgdSide {
   vfxKey: string | null;
-  vfxLayers: string[];
-  persistentVfx: string[];
+  vfxLayers: GgdVfxSlot[];
+  persistentVfx: GgdVfxSlot[];
   effects: GgdFxEffect[];
   cfgVfxKeys: string[];
   cfgSources: string[];
@@ -162,48 +178,64 @@ function JassCell(props: { jass: JassSide[] }): React.JSX.Element {
   );
 }
 
-/** GGD 側一格：vfxKey / vfxLayers / persistentVfx / effects / config 綁定。 */
-function GgdCell(props: { ggd: GgdSide | undefined }): React.JSX.Element {
+/**
+ * GGD 側一格：vfxKey / vfxLayers / persistentVfx / effects / config 綁定。
+ *
+ * ⭐ 前三種是**可編輯**的（共用 LiveEditCell，存回 content/abilities/<id>.json）；
+ * effects 是巢狀節點（單格 pointer 表達不了，屬於技能編輯器）、cfg 是 skills:sync
+ * 的產物（改它下一次 sync 打回來）—— 那兩種**刻意留唯讀**。
+ */
+function GgdCell(props: { id: string; ggd: GgdSide | undefined; onSaved: () => void }): React.JSX.Element {
   const g = props.ggd;
   if (g === undefined) return <span style={{ color: TEXT_DIM }}>—</span>;
-  const lines: React.ReactNode[] = [];
-  if (g.vfxKey !== null)
-    lines.push(
-      <div key="vk" style={{ fontFamily: MONO, fontSize: 11.5 }}>
-        vfxKey: {g.vfxKey}
-      </div>,
-    );
-  g.vfxLayers.forEach((k, i) =>
-    lines.push(
-      <div key={`vl${i}`} style={{ fontFamily: MONO, fontSize: 11.5, color: TEXT_DIM }}>
-        layer: {k}
-      </div>,
-    ),
+  const path = `content/abilities/${props.id}.json`;
+  const cell = (pointer: string, current: string | number | null, type: "string" | "number", nullable: boolean) => (
+    <LiveEditCell
+      dataset="jass-vfx"
+      path={path}
+      pointer={pointer}
+      current={current}
+      type={type}
+      nullable={nullable}
+      onSaved={props.onSaved}
+    />
   );
-  g.persistentVfx.forEach((k, i) =>
-    lines.push(
-      <div key={`pv${i}`} style={{ fontFamily: MONO, fontSize: 11.5, color: TEXT_DIM }}>
-        persistent: {k}
-      </div>,
-    ),
+  const empty =
+    g.vfxKey === null &&
+    g.vfxLayers.length === 0 &&
+    g.persistentVfx.length === 0 &&
+    g.effects.length === 0 &&
+    g.cfgVfxKeys.length === 0;
+  return (
+    <div>
+      {empty && (
+        <div style={{ color: DANGER, fontSize: 11.5 }}>（零特效表達 —— ✏️ 填一個 vfxKey 就是這一列的修法）</div>
+      )}
+      <div style={{ fontFamily: MONO, fontSize: 11.5 }}>vfxKey: {cell("/vfxKey", g.vfxKey, "string", true)}</div>
+      {g.vfxLayers.map((l) => (
+        <div key={`vl${l.i}`} style={{ fontFamily: MONO, fontSize: 11.5, color: TEXT_DIM }}>
+          layer{l.i}: {cell(`/vfxLayers/${l.i}/vfxKey`, l.vfxKey, "string", false)} · +
+          {cell(`/vfxLayers/${l.i}/delayMs`, l.delayMs ?? null, "number", true)}ms
+        </div>
+      ))}
+      {g.persistentVfx.map((p) => (
+        <div key={`pv${p.i}`} style={{ fontFamily: MONO, fontSize: 11.5, color: TEXT_DIM }}>
+          persistent{p.i}: {cell(`/persistentVfx/${p.i}/vfxKey`, p.vfxKey, "string", false)}
+        </div>
+      ))}
+      {g.effects.map((e, i) => (
+        <div key={`e${i}`} style={{ fontFamily: MONO, fontSize: 11.5 }}>
+          {e.kind}: {e.key ?? e.preset ?? "?"}
+          {e.count !== undefined ? ` ×${e.count}` : ""}
+        </div>
+      ))}
+      {g.cfgVfxKeys.map((k, i) => (
+        <div key={`c${i}`} style={{ fontFamily: MONO, fontSize: 11.5, color: TEXT_DIM }}>
+          cfg: {k}
+        </div>
+      ))}
+    </div>
   );
-  g.effects.forEach((e, i) =>
-    lines.push(
-      <div key={`e${i}`} style={{ fontFamily: MONO, fontSize: 11.5 }}>
-        {e.kind}: {e.key ?? e.preset ?? "?"}
-        {e.count !== undefined ? ` ×${e.count}` : ""}
-      </div>,
-    ),
-  );
-  g.cfgVfxKeys.forEach((k, i) =>
-    lines.push(
-      <div key={`c${i}`} style={{ fontFamily: MONO, fontSize: 11.5, color: TEXT_DIM }}>
-        cfg: {k}
-      </div>,
-    ),
-  );
-  if (lines.length === 0) return <span style={{ color: DANGER }}>（零特效表達）</span>;
-  return <div>{lines}</div>;
 }
 
 export function JassVfxPage(): React.JSX.Element {
@@ -212,6 +244,8 @@ export function JassVfxPage(): React.JSX.Element {
   const [err, setErr] = useState<string | null>(null);
   const [q, setQ] = useState("");
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
+  /** ✏️ 存完就 +1 ⇒ 重抓 —— ⭐ 頁上看到的是**重讀後**的值，⛔ 不是我本地猜的。 */
+  const [reloadTick, setReloadTick] = useState(0);
 
   useEffect(() => {
     let alive = true;
@@ -228,7 +262,7 @@ export function JassVfxPage(): React.JSX.Element {
     return () => {
       alive = false;
     };
-  }, []);
+  }, [reloadTick]);
 
   const rows = useMemo(() => {
     if (data === null) return [];
@@ -279,15 +313,24 @@ export function JassVfxPage(): React.JSX.Element {
             <code style={{ fontFamily: MONO }}> VFX_BINDINGS.json</code>）對照 GGD 側（
             <code style={{ fontFamily: MONO }}>spawnModelFx / spawnVfx / vfxKey</code> 等）。
             <span style={{ color: DANGER }}>「⛔ 缺實作」＝原作有特效、GGD 零表達</span>
-            ；「已替換」＝兩邊都有但模型不同（GGD 重製，不一定是錯）。特效綁定的
-            <b>設定</b>在
+            ；「已替換」＝兩邊都有但模型不同（GGD 重製，不一定是錯）。
+          </div>
+          <div style={{ fontSize: 12, color: TEXT_DIM, lineHeight: 1.6 }}>
+            ✏️ GGD 側的 <code style={{ fontFamily: MONO }}>vfxKey</code>、
+            <code style={{ fontFamily: MONO }}>layer&lt;i&gt;</code> 的模板與延遲毫秒、
+            <code style={{ fontFamily: MONO }}>persistent&lt;i&gt;</code> 這四格
+            <b>當場可改</b>，經共用寫入端存回 <code style={{ fontFamily: MONO }}>content/abilities/&lt;id&gt;.json</code>
+            （GH#823；寫前驗 vfx 名冊＋過 genguard，存完重抓 —— 看到的是重讀後的值）。
+            ⛔ <code style={{ fontFamily: MONO }}>spawnModelFx</code> 等巢狀節點與{" "}
+            <code style={{ fontFamily: MONO }}>cfg:</code>（skills:sync 的產物）仍唯讀。
+            特效的<b>外觀設定</b>（家族原型 · pitch/scale/色）在
             <a
               style={{ color: ACCENT, cursor: "pointer", textDecoration: "underline" }}
               onClick={() => navigate("vfxForge")}
             >
               鑄技工坊 · 特效綁定
             </a>
-            （這裡唯讀，不放第二份表單）。
+            （⛔ 這裡不放第二份表單）。⚠️ 改完 content/ 出貨前要跑 pnpm content:build 並 commit 產物。
           </div>
           <div style={{ fontSize: 12, color: WARN }}>
             ⚠️ 普查快照：{drift.censusDocs} 份文件（2026-08-02），現行 {drift.currentDocs} 份 ——
@@ -350,7 +393,7 @@ export function JassVfxPage(): React.JSX.Element {
                         <JassCell jass={r.jass ?? []} />
                       </Td>
                       <Td>
-                        <GgdCell ggd={r.ggd} />
+                        <GgdCell id={r.id} ggd={r.ggd} onSaved={() => setReloadTick((t) => t + 1)} />
                       </Td>
                       <Td color={meta.color} nowrap>
                         {meta.label}
