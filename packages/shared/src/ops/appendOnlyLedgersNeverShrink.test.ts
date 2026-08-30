@@ -32,7 +32,21 @@ const LEDGERS: { path: string; row: RegExp; why: string }[] = [
   },
   {
     path: "docs/legacy/_overwrites/_ledger.tsv",
-    row: /^\d{8}-\d{6}\t/,
+    // ⛔⛔ **這一條 regex 在 2026-08-30 被抓到是瞎的**（對抗式分診找到的）：
+    //   它只認得**裸時間戳**開頭的列（`20260830-020846\t…`），
+    //   ⛔ 而檔案裡絕大多數是 `overwrite_temp_20260830-024428\t…` 開頭。
+    //
+    // ⭐ 量到的代價：那一次 `--theirs` 讓檔案從 **5,106 行掉到 4,968 行**（−138），
+    //   而這條閘讀到的是 **22 → 30（變多 ⇒ 綠）**。
+    //   ⇒ ⭐⭐ **一條專門為了防止這件事而做的閘，對 98% 的檔案是瞎的。**
+    //
+    // ⚠️ ⭐ 而它綠得**很有說服力**：計數是真的、比較是對的、訊息也對 ——
+    //   ⛔ 錯的只有「它數的是哪些列」。⇒ 這正是 CLAUDE.md 的
+    //   「⭐ 讀一張表之前先問：**這一欄的分母是什麼**」。
+    //
+    // ⭐ 修法：兩種開頭都收。⛔ 而下面那條量尺自證會盯著它 ——
+    //   它要求「讀到的列數 ≥ 全檔非空行的一半」，⇒ 再挑一次錯 regex 就會紅。
+    row: /^(?:overwrite_temp_)?\d{8}-\d{6}\t/,
     why: "覆寫留底的帳本 —— 少一列 ＝ 一份備份**存在於磁碟卻查不到**。",
   },
 ];
@@ -48,10 +62,21 @@ describe("追加式帳本只能變長（2026-08-30 一天被吃掉兩次）", ()
     for (const L of LEDGERS) {
       const p = join(REPO, L.path);
       if (!existsSync(p)) continue;
+      const text = readFileSync(p, "utf8");
+      const seen = countRows(text, L.row);
+      expect(seen, `${L.path} 一列都數不到 ⇒ 列的樣式過期了，⛔ 不是「帳本空了」`).toBeGreaterThan(0);
+
+      // ⛔⛔ **「數得到 > 0」不夠** —— 2026-08-30 量到：這條閘讀到 22 列，
+      //   ⭐ 而檔案有 **5,106 行**（0.4%）⇒ 它對 99.6% 的檔案是瞎的，
+      //   於是那個檔掉了 138 行而閘讀數 **22 → 30（變多，綠）**。
+      // ⇒ ⭐ 一把只看得見 0.4% 的尺，在它最需要說話的時候一定沉默。
+      const nonEmpty = text.split("\n").filter((l) => l.trim() !== "").length;
       expect(
-        countRows(readFileSync(p, "utf8"), L.row),
-        `${L.path} 一列都數不到 ⇒ 列的樣式過期了，⛔ 不是「帳本空了」`,
-      ).toBeGreaterThan(0);
+        seen,
+        `${L.path}：只數得到 ${seen} 列，而全檔有 ${nonEmpty} 行非空 —— ` +
+          "⭐ 這把尺看得見的不到一半 ⇒ ⛔ `row` 的樣式漏掉了某一種列。\n" +
+          "   ⚠️ 實例：`/^\\d{8}-\\d{6}\\t/` 認得裸時間戳，⛔ 認不得 `overwrite_temp_…` 開頭那一種。",
+      ).toBeGreaterThanOrEqual(Math.floor(nonEmpty / 2));
     }
   });
 
