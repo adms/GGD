@@ -44,6 +44,7 @@
 import importlib.util
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -195,21 +196,65 @@ def finalize_content():
                 "  ⛔ 不要 commit：現在 content/ 的來源檔是新的、產物是舊的。"
             )
 
+    # ⭐⭐ 2026-08-30（GH#879）—— **一趟 derive 不是定點**，⛔ 而在此之前這裡只跑一趟。
+    #   量到的形狀（乾淨的 HEAD 上逐步重現）：
+    #     ① `{{cast}}` 佔位在**註冊時**就被渲染進 `description`（registries.ts），
+    #        而 `castTimeFormula.authoredCastSec()` 讀的正是**渲染後**的那一段
+    #        ⇒ ⭐ 公式把**自己上一次的輸出**當成「規格寫的吟唱秒數」讀回來。
+    #     ② 這一支照 RETIRED 先把 castTimeSec 丟掉再 derive ⇒ 第一趟看到「沒有這一格」
+    #        ⇒ 走 scored 階梯（實測 godie-ewar.r = 1.233、.ex = 1.133、
+    #        godie-emns.ex / godie-hapm.ex = 1.033）。
+    #     ③ 第二趟看到 1.233 ⇒ `{{cast}}` 渲染成 `min(1.233, castTimeMaxSec=1)` = 1
+    #        ⇒ 走 authored ⇒ 寫回 **1**（= 出貨值）。
+    #   ⇒ ⭐ **出貨的那一份是「兩趟」的結果** —— `skills:sync` 的下一步
+    #     `castderive:build:raw` 剛好又跑了一趟。而 `bash scripts/genrun.sh skillremake:json`
+    #     只跑一趟 ⇒ 乾淨的 HEAD 上跑一次就把那 4 支推開，`abilityCodeParity` 與
+    #     `abilityCodeParityForms` 兩條閘同時紅（變身態 godie-e007 不在這 90 支裡，
+    #     它的 castTimeSec 沒被丟掉 ⇒ 只有本體那一邊動了 ⇒ 「⛔ 單邊」），
+    #     而產物隔離區擋著、還原不了 ⇒ lane 沒有出口。
+    #   ⇒ ⭐ 修法是**跑到定點**：derive → build，重複到 derive 一個位元組都沒改為止。
+    #   ⚠️ ⛔ 不是「不要丟掉舊值」—— 那會讓每一支帶 `{{cast}}` 的技能**永遠釘在舊值**上，
+    #     機制改了也不會重算（RETIRED 那一格存在的理由）。
+    #   ⚠️ ⛔ 也不是把夾子搬進公式 —— `castTimeMaxSec` 是 owner 的止血閥（#787），
+    #     它**刻意**夾在載入時（`castTimeRules.ts`），烘進資料就轉不回去了
+    #     （`castTimeProse.test.ts` ③ 正是在驗那一格轉得動）。
+    #   ⚠️ 收斂性（為什麼 4 趟夠）：s 缺席 → L（階梯值）；s = L → min(L, 夾)；
+    #     s = min(L, 夾) → 自己。⇒ **最多兩趟會寫**，第三趟就是 0。
+    #     ⛔ 沒收斂就非零離開並指名，⛔ 不要安靜地留下一棵「半新」的樹。
+    MAX_CAST_PASSES = 4
     build("① 先讓 config.cast-time 新鮮 —— 公式要讀它")
-    print("→ deriveCastTimes --write（castTimeSec 由公式重算，含英雄卡鏡像）")
-    rc = subprocess.run(
-        [pnpm, "--filter", "@ggd/shared", "exec", "tsx", "scripts/deriveCastTimes.ts", "--write"],
-        cwd=ROOT, env=env,
-    ).returncode
-    if rc != 0:
-        sys.exit(f"✖ deriveCastTimes 失敗（exit {rc}）—— castTimeSec 沒有補上，⛔ 不要 commit。")
-    print("→ pnpm content:build（② 把重算後的 castTimeSec 烘進 _index / manifest / bundle）")
-    rc = subprocess.run([pnpm, "content:build"], cwd=ROOT, env=env).returncode
-    if rc != 0:
+    for _pass in range(1, MAX_CAST_PASSES + 1):
+        print(f"→ deriveCastTimes --write（第 {_pass} 趟；castTimeSec 由公式重算，含英雄卡鏡像）")
+        proc = subprocess.run(
+            [pnpm, "--filter", "@ggd/shared", "exec", "tsx", "scripts/deriveCastTimes.ts", "--write"],
+            cwd=ROOT, env=env, capture_output=True, text=True,
+        )
+        # ⛔ 一行都不吞：這支腳本的 `skips` / `對帳` 是它唯一的說話管道。
+        sys.stdout.write(proc.stdout)
+        sys.stderr.write(proc.stderr)
+        sys.stdout.flush()
+        if proc.returncode != 0:
+            sys.exit(
+                f"✖ deriveCastTimes 失敗（exit {proc.returncode}，第 {_pass} 趟）"
+                "—— castTimeSec 沒有補上，⛔ 不要 commit。"
+            )
+        m = re.search(r"WROTE (\d+) ability docs, (\d+) champion docs", proc.stdout)
+        if m is None:
+            sys.exit(
+                "✖ deriveCastTimes 沒有印出 `WROTE … ability docs, … champion docs` —— \n"
+                "  ⛔ 不要當成「收斂了」：那一行是這個迴圈**唯一**的定點判準。\n"
+                "  它改了格式就要一起改這裡（⇒ packages/shared/scripts/deriveCastTimes.ts）。"
+            )
+        if int(m.group(1)) + int(m.group(2)) == 0:
+            print(f"✓ castTimeSec 已收斂（第 {_pass} 趟一個位元組都沒改 ⇒ 產物已是新鮮的）")
+            break
+        build(f"② 第 {_pass} 趟：把重算後的 castTimeSec 烘進 _index / manifest / bundle")
+    else:
         sys.exit(
-            f"✖ pnpm content:build 失敗（exit {rc}）—— 索引與 bundle **沒有**重建。\n"
-            "  上面那幾行已經指名出問題的檔與欄位（buildIndexes.ts 是先驗再寫）。\n"
-            "  ⛔ 不要 commit：現在 content/ 的來源檔是新的、產物是舊的。"
+            f"✖ castTimeSec 跑了 {MAX_CAST_PASSES} 趟仍然沒有收斂 —— ⛔ 不要 commit。\n"
+            "  ⭐ 這代表公式的輸入裡有一格是它自己的輸出（`{{cast}}` 渲染進 description，\n"
+            "     `authoredCastSec()` 又把它讀回去），而這一次不是 2-循環而是更長的循環。\n"
+            "  ⇒ 去看 packages/shared/src/content/castTimeFormula.ts::authoredCastSec()。"
         )
     # 2026-08-02 事故的另一半：content:build 讀的是**工作區**，看得到未追蹤的來源檔，
     # 於是「產物進了 git、來源檔沒進」的組合會被 push 出去（deploy 走 git pull）。
@@ -365,6 +410,14 @@ def main():
             #    在這支寫完之後才蓋上去（見 main() 尾端）。把它算進來的話，
             #    這條閘會在**每一次乾淨的重跑**都紅（實測 50/90 份），
             #    那就是一個永遠紅的守衛 = 一個沒有人會看的守衛。
+            # ⛔⛔ 但要知道**這一格因此量不到什麼**（GH#879，2026-08-30）：
+            #    `--check` 回 0 **不代表**「跑一次不會改東西」—— 它對 castTimeSec
+            #    ⭐ 結構上失明，而 castTimeSec 正是這支腳本會改的東西之一。
+            #    ⇒ 2026-08-30 量到的正是這個組合：`--check` EXIT 0（樹是同步的），
+            #      而 `genrun.sh skillremake:json` 跑下去改了 4 支的 castTimeSec
+            #      ⇒ 兩條 parity 閘同時紅。⭐ 一把只驗過單邊的尺。
+            #    ⇒ 「跑一次是不是 no-op」的閘不在這裡，在 `finalize_content()` 的
+            #      **收斂迴圈**（derive → build 跑到一個位元組都不動為止）。
             if {k: v for k, v in have.items() if k != "castTimeSec"} != {
                 k: v for k, v in d.items() if k != "castTimeSec"
             }:
