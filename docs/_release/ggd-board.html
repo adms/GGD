@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-08-30 01:36 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-08-31 03:01 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.32.2 · 資料截至 2026-08-30 01:36 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-30 01:36 (GMT+8)</h1><div class="meta"><span>帳本 <b>12</b> 份</span><span>點名票號 <b>332</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.32.12 · 資料截至 2026-08-31 03:01 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-31 03:01 (GMT+8)</h1><div class="meta"><span>帳本 <b>13</b> 份</span><span>點名票號 <b>332</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -825,6 +825,22 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>01:12</td><td>我接下來還會多一個給玩家看的 release note 要發佈在 discord ，請問要怎麼設定</td><td>⏸ 未對票</td></tr>
 <tr><td>01:28</td><td>你自動發版就發玩家discord 公告就好 但記得不要講實作細節</td><td>⏸ 未對票</td></tr>
 <tr><td>01:36</td><td>算了 太複雜 我們把目前的票處理完就好</td><td>⏸ 未對票</td></tr>
+<tr><td>14:23</td><td>如果沒有對玩家有差別的改版你還是要發 系統優化更新</td><td>869</td></tr>
+<tr><td>15:11</td><td>我的傾向是 開放讓玩家自己設計 英雄、技能、特效，不是靠 AI 無止境的逼近太沒效率</td><td>838 244</td></tr>
+<tr><td>15:13</td><td>所以後台編輯器的抽象化、完整性、視覺化可操作性很重要，因為所有功能都要可JSON操作設定，並且也有 no code 遊戲引擎等級的操作介面</td><td>838 820</td></tr>
+<tr><td>16:01</td><td>我的建議是我們現在的 main 為主，查看那些沒有合併的 commit or branch 差異的地方(包含 app/editor)，看懂有什麼功能邏輯是優於目前的列成一張表來判斷是否合併，這種手術級的合併，動手之前都要跟我詳細逐項確認才執行 codex 的部分可以等我們處理完，寫一份開發計畫給他來追平配合就好</td><td>869</td></tr>
+</table></div>
+<p># 2026-08-31</p>
+<blockquote>⭐ 這張表由 <code>scripts/message-ledger.sh</code> 從 session transcript <b>逐則</b>撈出來對帳，</blockquote>
+<blockquote><code>scripts/ruling.sh</code> 收到裁決時也寫進同一張表。</blockquote>
+<blockquote>表格那一格是<b>截斷</b>過的；⛔ 全文沒有被壓縮取代，它在 <code>ledger-source_temp_*.md</code>。</blockquote>
+<blockquote>票號那一格 ⛔ 不可以留空：對不到票就寫 <code>⏸ 未對票</code>，<code>--check</code> 會紅。</blockquote>
+<div class="scroll"><table><tr><th>時間</th><th>owner 說了什麼（逐字）</th><th>票</th></tr>
+<tr><td>02:33</td><td>不用管 codex branch，以遊戲主程式 main 為主，我再讓 codex 配合</td><td>869 244</td></tr>
+<tr><td>02:41</td><td>feat/ability-review-authoring 是 codex 的 branch ，你可以參考思路，但獨立編輯器 桌面版 Electron 還是 codex 的獨立工作喔</td><td>869 838</td></tr>
+<tr><td>01:33</td><td>回來了</td><td>⏸ 未對票</td></tr>
+<tr><td>02:26</td><td>docs/未合併改動決策表_20260830.md 有影響到編輯器的嗎？</td><td>⏸ 未對票</td></tr>
+<tr><td>03:01</td><td>codex 正在做專案轉移給另一個 codex 新專案，即將 &quot;下一次要從 GitHub 在新 Codex 專案接手，先完成一件必要事項：目前遷移 commit 還沒有 push 到 GitHub。 這次先推送分支 feat/ability-review-authoring push 到 origin，不動 main&quot; =&gt; 這是 codex 跟我說他要做的事情，不是我要你作的</td><td>⏸ 未對票</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

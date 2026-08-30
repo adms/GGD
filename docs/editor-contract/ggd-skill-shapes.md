@@ -326,6 +326,7 @@ CLAUDE.md 第〇·五守則：「⛔ **不要逐支實作。** 按**擋住的支
 | `floatingText.driftSpeed` | 2 |
 | `floatingText.driftAngleDeg` | 2 |
 | `floatingText.driftFrom` | 2 |
+| `spawnVfx.boneOn` | 1 |
 | `floatingText.driftAngleStepDeg` | 1 |
 | `delayed.anchor` | 1 |
 | `delayed.targetMode` | 1 |

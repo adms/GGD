@@ -181,15 +181,21 @@ interface Exemption {
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // ── 2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）──────────
-  "field:abilities.effects[]#spawnVfx.boneOn": {
-    status: "landing", since: "2026-08-30",
-    why:
-      "GH#809 —— ⭐ 這是一個**今天剛接上的機制**：`spawnVfx` 的骨頭錨定單位可以是**受擊者**。" +
-      "在此之前 `at:\"bone\"` 與 `self` 同路（錨定單位恆為施法者）⇒ 原作 316 次呼叫裡" +
-      "**施法者 124 : 受擊者 124**，出貨機制正好覆蓋一半。" +
-      "⇒ 這裡的零是「機制先落地，內容還沒翻過去」——⛔ 不是「做了沒人要」。" +
-      "⭐ 30 天到期是對的：如果那 124 次一支都沒翻過來，那要問的是**翻譯這件事卡在哪**" +
-      "（GH#674 的 9/11 就是等它），⛔ 而不是把這一格刪掉。",
+  "enum:abilities.provenance=editor-json": {
+    status: "landing", since: "2026-08-31",
+    why: "第〇·六守則優先序階梯的第 2 層。2026-08-31 把 provenance 從兩層擴成五層,好讓一份說明說得出自己是**哪一層**的。這一格要等**外部編輯器真的產出內容**才會有第一份採用者(Codex 的 Electron 編輯器,見 docs/editor-contract/CODEX_COORDINATION_20260831.md)。⛔ 不可以先填 —— 填了等於宣稱一份 owner 手寫的說明是編輯器產的。",
+  },
+  "enum:abilities.provenance=jass-verified": {
+    status: "landing", since: "2026-08-31",
+    why: "階梯第 3 層(JASS 實際效果)。今天 492 份的 provenance 只有 owner-spec 與 w3x-import 兩種,因為在此之前**沒有第三個值可選**。這一格的第一份採用者會是下一支「逐行讀 JASS 驗過」的技能 —— ⭐ 而那正是這一層存在的理由:程式不會說謊,它要排在 w3x 文案前面。",
+  },
+  "enum:abilities.provenance=w3x-tooltip": {
+    status: "landing", since: "2026-08-31",
+    why: "階梯第 4 層(w3x 的**文案**,排在 JASS 後面)。⚠️ 今天的 421 份 w3x-import 是**混的** —— 有些來自 JASS、有些來自 tooltip,而在此之前它們**沒有辦法分開**。這一格要等一次逐支回填才會有採用者;⛔ 不可以整批改名(那會宣稱我們知道每一份的出處,而我們不知道)。",
+  },
+  "field:abilities.template|0.cards[].contentSha256": {
+    status: "landing", since: "2026-08-31",
+    why: "模板引用的**精確鎖**(JCS+sha256)。⭐ 刻意是**選填**:出貨的 84 個引用一格都沒填,而守衛 templateRefPinIsHonest.test.ts **今天不要求任何一格** —— 它只在有人填了之後才對帳。第一份採用者會是外部編輯器(它需要「我當時看到的模板長這樣」這個保證)。⛔ 先幫全部填上等於把一個會過期的快照烘進 84 個地方(第〇·四守則)。",
   },
   "field:vfx-scripts.segments[]#floatingText.driftSpeed": {
     status: "landing", since: "2026-08-30",
@@ -1535,8 +1541,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   },
 
   "field:items.auras[].lingerSec": {
-    status: "landing",
-    since: "2026-07-30",
+    status: "debt",
     why: "WC3's aura buff-tail. There is NO number to port — `Dur`/`HeroDur` is 0 on all 32 stock aura rows (see zAuraDef.lingerSec), so an authored value is a design choice or the anti-flicker knob. The three item auras shipped today are all pure in/out, which is the intended resting state.",
   },
 
@@ -1555,8 +1560,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // was measured against the retail MPQ `AbilityData.slk` plus the map's own
   // w3a — not against the schema comments, which disagreed with it.
   "field:abilities.passive.ranks[].auras[].lingerSec": {
-    status: "landing",
-    since: "2026-07-30",
+    status: "debt",
     why: "MEASURED, there is no number to port: `Dur1`/`HeroDur1` is 0 on all 32 stock aura rows AND on both imported auras (`A0GM`, `A0ID`). WC3's tail is ENGINE behaviour; authoring one would be inventing content. If we ever want it, it is uniform across every aura and belongs in a 後台-tunable default, not per-doc.",
   },
   // ⭐ 2026-08-19 —— `field:abilities.passive.ranks[].auras[].hooks` 的豁免**刪掉了**：
@@ -1576,8 +1580,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why: "同上，三選一增益卡那一面。「這一場剩下的時間，敵人陣亡處留下一圈治療」是一張顯而易見的卡，而它零程式；今天沒有任何一張三選一卡用它。與上面那一格同進退。",
   },
   "enum:abilities.passive.ranks[].auras[].affects=all": {
-    status: "landing",
-    since: "2026-07-30",
+    status: "debt",
     why: "A DECISION, not a migration. No teamless unit can receive an aura under any value of `affects` (`world.stats.set` is called only in spawnChampion.ts / auraCarrier.ts), and 0 of the 86 aura-derived map abilities target friend and enemy together. Either author the first friend-and-foe aura or DELETE the member together with `AuraAffects` and the `affects === \"all\"` early-return in `affectsTarget`.",
   },
   // --- 批 1 · Hook 詞彙加寬（稜彩卡計畫，2026-08-04）-----------------------
@@ -1653,13 +1656,11 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // `blocksDamage:"physical"` has no known case in this map at all; if the
   // 30 days expire with it still empty, `debt` or deletion is the honest call.
   "enum:abilities.effects[]#invulnerable.applyTo=target": {
-    status: "landing",
-    since: "2026-07-30",
+    status: "debt",
     why: "Has REAL JASS provenance — war3map.j:51731 (52-02 蹂躪編年史) and :52065 (52-002 射殺百頭) both add 'Avul' to the spell TARGET — plus the AoE form 29-03 有功夫無懦夫「統統進入無敵狀態」. Not bound yet because in the source the victim's Avul is a mechanic shield removed (:51835) before the ability's own damage lands; porting it literally would make the skill refuse its own damage. Needs an owner decision (fidelity vs. the simpler self-window), which is why the 30-day clock is the right pressure here.",
   },
   "enum:abilities.effects[]#invulnerable.blocksDamage=physical": {
-    status: "landing",
-    since: "2026-07-30",
+    status: "debt",
     why: "No 物理免疫-only ability is known in this map; the enum member exists for symmetry. If this is still empty when the grace expires, the honest outcome is `debt` or removing the member.",
   },
 
@@ -2052,8 +2053,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // not move a number — aura.ts now resolves 「self」 through
   // `world.auraCarrier`. Guarded end-to-end by sim/auraIncludeSelf.test.ts.
   "variant:abilities.effects[]#evasion": {
-    status: "landing",
-    since: "2026-07-30",
+    status: "debt",
     why: "GH#289 lane P5 landed the MECHANISM (sim/effects/evasion.ts + the DECISION-5 ability channel in combat/evasion.ts); the content half is a separate lane and content/ is a single-threaded domain this session. NOT 'nobody needs it' — the source map has named abilities waiting: the timed-dodge shape is 12-00 感應意脈 (+20% 迴避), 74-00 JENOVA (15%), 92-00 憂鬱的眼神 (18%). Note the STAT half is already adopted (13 content files author `stat: evasion` on 3 champion docs, 8 ability docs and the phantom-step augment), so what is unadopted is specifically the TIMED-GRANT effect variant, not the evasion axis. Resolve by porting one of those three onto an `evasion` effect with an explicit durationSec; the 30-day expiry is the reminder, because 'the primitive landed, the content did not' is exactly the S8 this census exists to catch.",
   },
   // ══ 2026-08-22 · #541【連段】與 #147【吸引】═══════════════════════════════
@@ -2065,8 +2065,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why: "#147 落地的是**機制**（sim/effects/pull.ts：destination 三檔 caster / point / anchorRing，等分錨點環用單位旋轉常數表因為 sim/** 禁三角函式），內容那一半由主 session 接。⛔ NOT 「沒有人需要」：A091 05-03 及喀爾度（godie-h021.e / godie-hblm.e）的 JASS 白紙黑字是 `2×等級` 個錨點 + `250+100×等級` 半徑（war3map.j:28224-28233），而它今天寫不出來 —— `knockback` 的 from:\"pull\" 只推得動一段長度而且會走 GH#193 的距離減法（對拉是反過來的）。`content/ability-templates/tpl-pull-throw.json` 也還掛著 status:\"draft\" 等這一格。接內容的做法寫在報告的『需要主 session 接線』。機制由 sim/effects/comboAndPull.test.ts 釘住（兩具身體真的被搬到環上、而且去的是不同的錨點）。",
   },
   "variant:abilities.effects[]#summon": {
-    status: "landing",
-    since: "2026-07-30",
+    status: "debt",
     why: "GH#289 lane P2 landed the MECHANISM (sim/effects/summon.ts + sim/summons.ts: real bodies through the SHARED mobs.spawnUnitBody, the champion stat pipeline via the SummonComp level seam, formation/lifetime/team/cap/owner-death as content fields, and summonSystem at step slot 9d″); the content half is a separate lane and content/ is a single-threaded domain this session. NOT 'nobody needs it', and that is MEASURED not asserted: docs/ability-templates.md classifies 52 map abilities as 「召喚代理」 — the largest single behaviour family in the game — and the TRUE-summon subset among them is named and sourced. 96-04 獨孤九劍 spawns 9 sword spirits 'o02X' with a 10 s timed life (j:44907-44930); 91-002 亡靈大軍 rings 8 ghouls 'u031' at 450u and orders them at the target point (j:53391); 18-04 億年樹 summons 'n010' for 9 s × level (j:28040-28106); 37-02 黑核晶 caps concurrent crystals at 7 and 「超過殺最舊」 (j:44592-44657) — which is literally where `maxAlive` + `onCap: \"replaceOldest\"` come from; 35-00 召喚佩 is a persistent pet (j:42909-42915); 33-01 放山雞 spawns 'n000'. Today every one of those is text-only. Resolve by porting 96-04 or 91-002 onto a `summon` effect (both are `formation: \"ring\"` + `durationSec`, i.e. no new mechanism needed). The mechanism itself is proven end to end by sim/effects/summon.test.ts, which runs a real SimWorld.step() and reads the bodies back off world.transform / world.health / world.team, with recorded mutations on expiry, cap, eviction and owner-death. The 30-day expiry is the reminder, because 'the primitive landed, the content did not' is exactly the S8 this census exists to catch.",
   },
   // ══ 2026-07-31 技能批次:條件系統 + 擊退 + 變身天生技一起落地 ══════════════
