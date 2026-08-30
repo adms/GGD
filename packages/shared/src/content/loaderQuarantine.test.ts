@@ -103,6 +103,35 @@ describe("內容載入:一份壞文件不會殺掉整份內容 (GH#326)", () => 
     await expect(load).rejects.toThrow(/maxQuarantined/);
   });
 
+  /**
+   * ⭐⭐ **上面那一條的反面** —— ⛔ 「數量多」不等於「映像不相容」。
+   *
+   * 2026-08-30 對抗式稽核指出：`maxQuarantined` 分不出兩件事，
+   * ⇒ ⭐ **51 份壞文件**也能讓全站退回骨架
+   * ⇒ ⭐⭐ **為了防止一份壞文件殺全站而做的隔離機制，自己是第二個攻擊面。**
+   * ⚠️ 而 UGC 一開放，「送 51 份壞文件」是任何人都做得到的事。
+   *
+   * ⭐ 判準改成**分辨兩者**（⛔ 不是把數字調大 —— 那只是把門檻挪一格）：
+   * · **不相容** ＝ 失敗**集中**（映像不認得那幾個新 schema tag ⇒ 整片倒）⇒ fail-closed
+   * · **壞文件** ＝ 失敗**散落**在多個 collection ⇒ ⭐ 逐份隔離，好的照樣載入
+   */
+  it("★ 散落在多個 collection 的一堆壞文件 ⇒ ⭐ **逐份隔離**（⛔ 不是退回 fail-closed）", async () => {
+    const result = await new ContentLoader(
+      new FakeSource({
+        config: [policyDoc({ maxQuarantined: 1 }), brokenConfig("a")],
+        // ⭐ 散在**第二、第三個** collection 上 ⇒ 集中度不足 ⇒ ⛔ 不該判成不相容
+        skins: [{ id: "x" }, { id: "y" }] as unknown as Doc[],
+        arenas: [{ id: "z" }] as unknown as Doc[],
+      }),
+    ).load();
+
+    // ⭐ 承重：它**沒有** throw（⛔ 在此之前這裡會因為「4 > 1」直接退回 fail-closed）
+    expect(result.policyUsed).toBe("quarantine");
+    // ⭐ 而好的那一份仍然進得來 —— 那就是「壞文件只毀掉它自己」
+    expect(result.store.has("config", "content-load")).toBe(true);
+    expect(result.quarantined.length).toBeGreaterThan(1);
+  });
+
   it("⭐ 隔離會傳染:硬參照斷掉的文件自己也被拿掉,⛔ 不留半個世界", async () => {
     const orphanSkin: Doc = {
       id: "ghost-skin",

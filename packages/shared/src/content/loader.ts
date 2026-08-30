@@ -209,7 +209,32 @@ export class ContentLoader {
     // ⚠️ 也涵蓋「隔離太多」:少四份設定與「內容整份跟這個映像不相容」是兩件事,
     //    而後者隔離出來的結果是一個**空的遊戲** —— 那比誠實地退回骨架更糟,
     //    因為骨架至少會讓 `/healthz` 的 `content.ok` 變 false。
-    const overBudget = quarantined.length > maxQuarantined;
+    // ⛔⛔ **`maxQuarantined` 分不出「映像不相容」與「有人送了一堆壞文件」。**
+    //
+    // ⭐ 這個上限的理由是對的（見下面那則訊息）：50+ 份被隔離**通常**代表
+    //   `content/` 與這個映像不相容 —— ⛔ 而那時候一個「只缺 50 份」的世界
+    //   比誠實地退回骨架更糟。
+    //
+    // ⚠️ ⭐ 但 2026-08-30 的對抗式稽核指出它的反面：**51 份壞文件**也會觸發它
+    //   ⇒ ⭐⭐ **為了防止一份壞文件殺全站而做的隔離機制，自己是第二個攻擊面。**
+    //   而 UGC 一開放，「送 51 份壞文件」是任何人都做得到的事。
+    //
+    // ⇒ ⭐ 修法是**分辨那兩件事**，⛔ 不是把數字調大（調大只是把門檻挪一格）：
+    //   · **不相容**的簽名 ＝ 失敗**集中**（映像的 Zod union 不認得那幾個新
+    //     schema tag ⇒ 用到它們的那一個集合整片倒）
+    //   · **壞文件**的簽名 ＝ 失敗**散落**在很多不同的 collection 上
+    //
+    // ⭐ 判準：被隔離的文件**集中在 ≤2 個 collection 且占比 ≥80%** ⇒ 不相容 ⇒ 照舊 fail-closed。
+    //   否則是內容品質問題 ⇒ ⭐ **逐份隔離**，⛔ 不要因為「數量多」就把好的那些一起丟掉。
+    const concentrated = ((): boolean => {
+      if (quarantined.length === 0) return false;
+      const byCollection = new Map<string, number>();
+      for (const q of quarantined) byCollection.set(q.collection, (byCollection.get(q.collection) ?? 0) + 1);
+      const top = [...byCollection.values()].sort((a, b) => b - a).slice(0, 2);
+      const share = top.reduce((a, b) => a + b, 0) / quarantined.length;
+      return byCollection.size <= 2 && share >= 0.8;
+    })();
+    const overBudget = quarantined.length > maxQuarantined && concentrated;
     if (policy === "fail-closed" || overBudget) {
       const refs = validateReferences(store);
       errors.push(...refs.errors);
