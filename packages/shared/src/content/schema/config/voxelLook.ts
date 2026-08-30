@@ -18,6 +18,12 @@
  * · 全部詞彙：武器 7 種（54 筆）· 來源（`godie`/`wc3-import`/`original`/`voxel-standin`）
  *   · 玩法（`magic`/`tank`/`mage`…）—— ⛔ **沒有一個是描述外觀的**
  *
+ * ⚠️ ⭐ **`content/champions/*.json` 是產物** —— 它的寫入端是
+ * `skillremake:json` · `castderive:build:raw` · `tiers:apply` · `content:build`
+ * （量法：`bash scripts/genguard.sh content/champions/<id>.json`）。
+ * ⇒ ⛔ 上面那些逐檔統計是**讀**它得到的，⛔ 而任何「去那裡改一個 tag」的修法
+ *   都要先問 genguard 是哪一支在寫 —— 手改會被下一次 sync 逐位元組打回來。
+ *
  * ── ⛔ 為什麼是 config doc，⛔ 不是 `models/_voxel-skins.json` 的一格 ──────
  * ⭐ `voxelBodies.ts:18` 已經逐字記過同一個問題的答案：
  * > 「That file is a sidecar **baked into the image**. Had the console written to it,

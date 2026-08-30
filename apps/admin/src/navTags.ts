@@ -213,6 +213,7 @@ export const NAV_TAGS: Record<string, readonly NavTag[]> = {
   rangeGuide: ["演出", "技能", "可調"], // 打之前地板上那一圈
   toggleAbility: ["演出", "技能", "可調"], // 開著與冷卻好了長不一樣
   hudLayout: ["介面", "可調"], // 底部那一叢東西的位置
+  voxelLook: ["介面", "可調"], // 哪些 tag 可以決定英雄外觀（GH#881）
   uiCues: ["演出", "可調"], // 事情發生了畫面有沒有說出來
   worldCues: ["演出", "可調"], // 世界裡那一團，不是螢幕那一層
   audioMix: ["音效", "可調"], // 其他角色語音是自己的一半

@@ -2,7 +2,8 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { zAbilityDoc } from "@ggd/shared/content/schema/ability";
-import { walkZod, type UINode } from "./walk";
+import { walkZod } from "./walk";
+import type { UINode } from "./uiSchema";
 
 /**
  * ⭐⭐ **契約說引擎做得到的每一種 effect，表單產生器都要走得出來。**

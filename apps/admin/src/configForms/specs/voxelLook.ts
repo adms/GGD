@@ -26,20 +26,32 @@ export const VOXEL_LOOK_SPEC: ConfigDocSpec<"voxelLook"> = {
     "apps/client/src/content/ContentDb.ts 的 load() 把 ignoredLookTags 交給 " +
     "packages/shared/src/content/voxelSkin/generate.ts 的 generateVoxelSkin(opts.ignoredLookTags) " +
     "→ haystackOf() 把清單裡的 tag 從關鍵字輸入濾掉 → matchRules() 因此看不到它們",
-  // ⭐ 唯一那一格是**陣列**，但它是純字串陣列（⛔ 沒有物件分支）⇒ 沒有要保留的子欄位。
-  //   ⚠️ 而 preserved **必填**：閘 configForms.test.ts 逐字說「少宣告 ＝ 儲存時把它弄不見」。
+  // ⭐ 這份文件唯一那一格是**字串清單** ⇒ 它走 `tables` 的 `stringList`
+  //   （與 `audio.castLayerCap.whitelist` 同型），⛔ 不是 `fields`（那是純量葉）、
+  //   ⛔ 也不是 `preserved`（那是「引擎畫不出來、原封不動帶著走」的東西）。
+  //   ⚠️ 我前兩版各猜錯一次，兩次都是閘指名的。
   preserved: [],
   effect:
     "玩家**下一次重新整理遊戲頁面**時生效（外觀在客戶端載內容時重新推導）。已經在場上的英雄不會中途換衣服。",
-  fields: [
+  fields: [],
+  tables: [
     {
       path: "ignoredLookTags",
-      zh: "外觀規則看不到的 tag",
-      note:
-        "⭐ 判準：這個 tag 回答的是「**它拿什麼／它怎麼玩**」還是「**它是誰**」？前者就該在這裡。" +
-        "出貨的 7 個是 `content/champions` 裡**全部**的武器詞彙（逐檔統計：katana 13 · sword 12 · fist 12 · claw 5 · greatsword 4 · bow 4 · thrown 4）。" +
-        "⚠️ ⭐ 量到的事實：濾掉它們與**完全不讀 tags** 的結果**逐格相同** —— 也就是說 tags 對外觀除了這個缺陷之外**零貢獻**。" +
-        "⛔ 拿掉某一個 ＝ 讓那個武器詞彙重新有權決定英雄的上衣。",
+      shape: "stringList",
+      title: "外觀規則看不到的 tag",
+      intro: [
+        "⭐ 判準：這個 tag 回答的是「**它拿什麼／它怎麼玩**」還是「**它是誰**」？前者就該列在這裡。",
+        "出貨的 7 個是 `content/champions/*.json` 的 `tags` 裡**全部**的武器詞彙（2026-08-31 逐檔統計：katana 13 · sword 12 · fist 12 · claw 5 · greatsword 4 · bow 4 · thrown 4）。",
+        "⚠️ ⭐ 量到的事實：濾掉它們與**完全不讀 tags** 的結果**逐格相同** —— 也就是說 `tags` 對外觀除了 GH#881 那個缺陷之外**零貢獻**。",
+        "⛔ **拿掉某一列 ＝ 讓那個武器詞彙重新有權決定英雄的上衣。** 清空整張 ＝ rollback 回 9 隻穿和服的舊行為。",
+      ],
+      key: {
+        zh: "標籤（tag）字串",
+        note: "`champion@1` 的 `tags` 裡逐字出現的字串（例：`katana`）。⛔ 大小寫要一致 —— 填錯的那一列不會報錯，它只是不生效，而那隻英雄會繼續穿錯衣服。",
+        maxLen: 32,
+      },
+      minRows: 0,
+      maxRows: 64,
     },
   ],
 };

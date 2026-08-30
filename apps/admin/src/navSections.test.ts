@@ -365,6 +365,7 @@ describe("分類重編一頁都沒有掉", () => {
   //   ⇒ ⭐ 一格轉不到的旋鈕不是 rollback 開關（owner 常設：「留後台開關可以簡易 rollback」）。
   //   ⭐ 基準線跟著 NAV 在**同一個 commit** 裡動，那正是這條守衛要的東西。
   "hudLayout",
+  "voxelLook",
   "uiCues",
       // 2026-08-23 GH#610 第二批：場地天氣（`config/weather.json`）—— 逐場地的
       // 濕地面／積水／閃電打光／霧濃度，以及 owner 2026-08-23「有些場景是**室內**，

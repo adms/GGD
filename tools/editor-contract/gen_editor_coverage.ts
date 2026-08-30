@@ -1,3 +1,4 @@
+// ggd:writes docs/editor-contract/ggd-editor-coverage.json
 /**
  * ⭐⭐ **編輯器必須實作什麼** —— 從出貨註冊表推導的**機器可讀清單**。
  *
@@ -48,7 +49,21 @@ export function buildEditorCoverage(): {
   schema: string;
   fingerprint: string;
   required: CoverageItem[];
-  /** ⭐ 宣告 unsupported 的，編輯器**刻意不必**實作 —— 帶理由，⛔ 不是靜默省略 */
+  /**
+   * ⭐ **今天的引擎做不到的** —— 帶理由，⛔ 不是靜默省略。
+   *
+   * ⛔⛔ **「notRequired」⛔ 不是「永遠不做」**（owner 2026-08-31 逐字更正）：
+   * > 「另有 15 項明確不要求實作⋯ **=> 之後會實作**」
+   *
+   * ⇒ ⭐ 這一欄的正確讀法是「**這一版不要做，因為引擎還沒有那個機制**」——
+   * 每一筆的 `why` 說的都是**今天缺的是什麼機制**（例：「傷害佇列今天只認得
+   * 一個承受者」「sim 沒有保存任何歷史狀態」），⛔ 而不是「這個功能被否決了」。
+   * ⚠️ ⭐ 而那正是**反駁方式**：機制做出來的那一天，這一筆會自動離開這張清單。
+   *
+   * ⛔ 外部編輯器**不要**先做它們 —— 做出來的內容上線就是死的（第一·五守則）。
+   * ⭐ 但也**不要**把它們當成永久的範圍外：它們是 main 的待辦，⛔ 不是 Codex 的。
+   */
+  notRequiredMeaning: string;
   notRequired: { name: string; why: string }[];
   counts: Record<string, number>;
 } {
@@ -84,7 +99,9 @@ export function buildEditorCoverage(): {
     if (e.expected !== "unsupported") continue;
     notRequired.push({
       name: e.key,
-      why: (e as unknown as { reason?: string }).reason ?? "契約宣告 unsupported（⛔ 引擎今天做不到）",
+      why:
+        (e as unknown as { reason?: string }).reason ??
+        "⛔ **今天的**引擎做不到（⭐ 之後會實作 —— owner 2026-08-31）",
     });
   }
 
@@ -95,6 +112,13 @@ export function buildEditorCoverage(): {
 
   return {
     schema: "ggd-editor-coverage@1",
+    /**
+     * ⭐ 給讀這份 JSON 的人：`notRequired` ⛔ **不是「永遠不做」**。
+     * owner 2026-08-31 逐字：「另有 15 項明確不要求實作⋯**=> 之後會實作**」。
+     */
+    notRequiredMeaning:
+      "⛔ 今天的引擎做不到，所以**這一版**不要實作（做出來的內容上線就是死的）。" +
+      "⭐ 它們是 main 的待辦，⛔ 不是永久的範圍外 —— 機制做出來的那一天，該筆會自動離開這張清單。",
     fingerprint: String(m["fingerprint"] ?? ""),
     required: required.sort((a, b) => (a.group + a.name).localeCompare(b.group + b.name)),
     notRequired: notRequired.sort((a, b) => a.name.localeCompare(b.name)),

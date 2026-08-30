@@ -1,5 +1,6 @@
 {
   "schema": "ggd-editor-coverage@1",
+  "notRequiredMeaning": "⛔ 今天的引擎做不到，所以**這一版**不要實作（做出來的內容上線就是死的）。⭐ 它們是 main 的待辦，⛔ 不是永久的範圍外 —— 機制做出來的那一天，該筆會自動離開這張清單。",
   "fingerprint": "f3f4185c",
   "required": [
     {
