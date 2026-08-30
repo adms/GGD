@@ -48,9 +48,18 @@ SINCE_DATE=$(date -j -v-1d -f %Y-%m-%d "$SINCE_DATE" +%Y-%m-%d 2>/dev/null \
 #   #401 是 PARTIAL、票還開著，⛔ 而它的修復**已經隨版本出貨** —— 玩家看得到它。
 #   ⇒ 只掃 closed 會漏掉每一個「做了一半但那一半已經上線」的改動。
 # ⭐ 改成看**進度標記裡的 commit 有沒有落在這一段**（`SINCE..NOW`）。
+# ⭐ `GGD_PLAYERNOTE_NO_GH=1` —— 跳過 gh 查詢（票清單為空）。
+#   ⚠️ ⭐ 它**不是**一個假的通道：後面的 fallback 走的是**同一段出貨程式碼**，
+#     而這裡唯一被跳過的是「去 GitHub 撈票」這個 I/O。
+#   ⇒ 存在的理由是**閘**：`playerNoteNeverEmpty.test.ts` 要驗「沒有任何玩家句時仍然出一行」，
+#     ⛔ 而真的打 gh 要 2 分鐘 —— 一條會 timeout 的閘等於一條永遠會過的閘（2026-08-30 實測）。
+if [ "${GGD_PLAYERNOTE_NO_GH:-0}" = 1 ]; then
+  CLOSED=""
+else
 CLOSED=$(gh issue list --state all --limit 300 --json number,updatedAt \
           -q ".[] | select(.updatedAt >= \"${SINCE_DATE}\") | .number" 2>/dev/null) || {
   echo "⚠️ gh 連不上 —— **沒有產生草稿**（⛔ 這不是「這一版沒有玩家可見的改動」）" >&2; exit 1; }
+fi
 
 LINES=""; MISSING=""; UNSCOPED=""
 for N in $CLOSED; do
@@ -96,7 +105,21 @@ for N in $CLOSED; do
 done
 
 if [ -z "$LINES" ]; then
-  echo "  （這一版沒有任何票寫了玩家那一句）"
+  # ⭐⭐ owner 2026-08-30（逐字，⭐ 常設指令）：
+  #
+  #   > 「如果沒有對玩家有差別的改版你還是要發 **系統優化更新**」
+  #
+  # ⚠️ ⭐ 為什麼這條是必要的：**不發 ＝ 讓玩家以為沒動靜**。
+  #   一個持續在更新的專案，如果只在「有新東西」那幾天出聲，
+  #   ⛔ 其餘每一天看起來都像停擺 —— 而那與真的停擺**長得一模一樣**。
+  #   ⇒ ⭐ 判準不是「這一版有沒有新東西」，是「**這一版有沒有出貨**」。出貨就要說。
+  #
+  # ⛔ 而它**不可以**寫成「這一版沒有玩家可見的改動」——那是給我自己看的話。
+  #   ⭐ 玩家要的是「它有沒有變好」，⛔ 不是「有沒有東西給我玩」。
+  LINES="- 系統優化更新：穩定性與速度的例行維護。
+"
+  echo "  （這一版沒有任何票寫了玩家那一句 ⇒ ⭐ 發**系統優化更新**，owner 2026-08-30）"
+  printf '%s' "$LINES"
 else
   printf '%s' "$LINES"
 fi
