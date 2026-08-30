@@ -181,6 +181,37 @@ export const zAbilityTemplateCard = z
     params: z.record(z.string(), z.unknown()),
     /** §5 breaking-migration hook — P1 only STORES it and re-expands on load */
     version: z.number().int().min(1).optional(),
+    /**
+     * ⭐⭐ **精確引用鎖** —— 這一格記下「我當初綁的是**哪一份**模板」。
+     *
+     * ── ⛔ 為什麼 `ref` 不夠 ────────────────────────────────────────────
+     * `ref` 只說「哪一個模板」，⛔ 不說「**哪一版**」。而模板是會改的
+     * （`content/ability-templates/` 47 份，家族預設一改，**84 支**引用它的技能
+     * 全部跟著動 —— ⭐ 那是 `expand.ts` 刻意的設計，⛔ 不是缺陷）。
+     *
+     * ⚠️ ⭐ 而那個設計有一個代價：**作者不知道自己綁的那一版變了**。
+     * 2026-08-26 的實例：`tpl-beam-roll.params.count.default` 從一個**憑空來的 6**
+     * 服務了七支技能，而逐支覆寫 `count:1` 只證明了被檢查的那一支
+     * —— ⛔ 家族預設繼續服務另外六支。
+     *
+     * ⇒ ⭐ 這一格讓「模板變了」變成**看得見**的：填了它的引用，在模板內容改變時
+     * 對得出來；⛔ 沒填的照舊（**永遠跟著最新的**）。
+     *
+     * ── ⭐ 它刻意是**選填**的 ────────────────────────────────────────
+     * · 出貨的 84 支一格都沒填 ⇒ ⛔ 必填會讓內容驗證整份失敗
+     * · ⭐ 而「跟著最新的」是**多數情況下對的行為** —— 這一格是給
+     *   「我就是要釘住這一版」那些用的（例：外部編輯器產出的封包）
+     *
+     * ⚠️ ⭐ **它本身不做驗證** —— 對帳是 `templateRefPinIsHonest` 那條閘的事。
+     * ⛔ 一格存了雜湊卻沒有人對它，比沒有這一格更糟（它會讓人以為釘住了）。
+     *
+     * 格式：`sha256:` ＋ 64 個小寫 hex（⭐ 與 `content/import` 的 wire format 同一種，
+     * ⛔ 不要在這裡發明第二種）。
+     */
+    contentSha256: z
+      .string()
+      .regex(/^sha256:[0-9a-f]{64}$/, "格式是 `sha256:` ＋ 64 個小寫 hex")
+      .optional(),
   })
   .strict();
 export type AbilityTemplateCard = z.infer<typeof zAbilityTemplateCard>;
