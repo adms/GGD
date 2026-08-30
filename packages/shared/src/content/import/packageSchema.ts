@@ -52,10 +52,37 @@ export const IMPORT_LIMITS = Object.freeze({
 
 const zShort = z.string().min(1).max(IMPORT_LIMITS.maxShortString);
 
-/** 64 位小寫十六進位 = SHA-256。`contentSha256` 一律用這個（規格 §1）。 */
+/**
+ * `contentSha256` 的 wire format：**`sha256:` ＋ 64 位小寫十六進位**。
+ *
+ * ⛔⛔ **這一格在 2026-08-31 之前是「裸 hex」，而那讓產生端與驗證端對不上。**
+ *
+ * ⭐ 量到的（⛔ 不是推測）：
+ * ```
+ * contentSha256({...})  ⇒ "sha256:9420d195be4a…"   （jcs.ts:104，檔頭逐字「規格 §1」）
+ * zSha256Hex.safeParse(那個值)  ⇒ 🔴 **拒**        （這裡，檔頭也逐字「規格 §1」）
+ * ```
+ * ⇒ ⭐⭐ **產生端的輸出過不了自己的驗證器** —— 而兩邊的註解都說自己照著同一節規格。
+ *
+ * ⚠️ ⭐ 這是「**配對式後置條件**」那一族（CLAUDE.md 記過的 2026-08-02 事故同型）：
+ * 兩個名詞**各自都對**，⛔ 而它們的**關係**是壞的 ——
+ * 而 main 在此之前**沒有任何一條測試問那個關係**。
+ *
+ * ── ⭐ 為什麼統一成**帶前綴**，⛔ 而不是拿掉前綴 ────────────────────────
+ * · 產生端（`jcs.ts`）已經帶前綴，而規格 §2.1.1.1 的 manifest 範例也是 `"sha256:078be7…"`
+ * · ⭐ `contentSha256` 是 **exact ref 的比對鍵** —— 那是**字串相等**比對
+ *   ⇒ ⛔ 收兩種拼法等於同一份內容有兩個 id（第〇·四守則的第二個住處）
+ * · ⚠️ 而帶前綴自我描述：⭐ 哪天換演算法（`blake3:`）時**舊值仍然讀得懂**
+ *
+ * ⚠️ ⭐ 而 `zDigest`（activation／authoring）**刻意仍然兩種都收** ——
+ * 它的檔頭寫著「規格對它們的字面格式**沒有規定**」⇒ ⛔ 收緊它會擋掉合法的既有資料。
+ */
 export const zSha256Hex = z
   .string()
-  .regex(/^[0-9a-f]{64}$/, "contentSha256 必須是 64 位小寫十六進位 SHA-256");
+  .regex(
+    /^sha256:[0-9a-f]{64}$/,
+    "contentSha256 必須是 `sha256:` ＋ 64 位小寫十六進位（⭐ 與 `jcs.ts` 的 `contentSha256()` 產出的同一種）",
+  );
 
 /**
  * activation／authoring／migration 這一類 digest。

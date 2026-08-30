@@ -8,7 +8,10 @@ import { describe, expect, it } from "vitest";
 import { IMPORT_DIAGNOSTICS } from "./diagnostics";
 import { isRawRuntimeDocument, zPackageManifest } from "./packageSchema";
 
-const SHA = "a".repeat(64);
+// ⭐ 2026-08-31：wire format 統一成帶前綴（`sha256:` ＋ 64 hex）——
+//   ⛔ 在此之前這個夾具是裸 hex，而它在格式改掉之後**靜默地變成不合法**
+//   （那幾條測試只斷言某一格的錯誤路徑，⇒ 多一個錯誤不會讓它們紅）。
+const SHA = "sha256:" + "a".repeat(64);
 const hasPath = (r: ReturnType<typeof zPackageManifest.safeParse>, p: string) =>
   r.success === false && r.error.issues.some((i) => i.path.join(".") === p);
 
