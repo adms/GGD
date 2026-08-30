@@ -67,6 +67,59 @@ import {
 
 export type HudCorner = "top-left" | "top-right" | "bottom-left" | "bottom-right";
 
+/* ═══════════════════════════════════════════════════════════════════════════
+ * ⭐⭐ GH#873 —— 觸控下 `gold-level` 的**形狀**，一格可以一鍵回頭的開關。
+ *
+ * ⚠️ 為什麼它是一個開關而不是一個常數（第一守則：決策點也要可調）：把金錢/等級
+ * 讀數從「右下角的一疊」壓成「攻擊鈕底下的一條」是一個**取捨** —— 條狀讀得快、
+ * 不擋按鈕，但它裝不下 xp 與 skill-point 那兩行。owner 哪天想要回原本的一疊，
+ * 成本必須是**翻一格**，⛔ 不是一次 PR。
+ *
+ * ⚠️ **住處只有這裡一個**：`hudLayout` 用它算保留矩形、`components/GoldLevel.tsx`
+ * 用它決定畫成一行還是一疊。⛔ 兩邊都不可以再抄一份高度（第〇·四守則）。
+ *
+ * ⚠️ 出貨的**三個住處**還缺兩個（`config.hud-layout@1` 的 Zod ＋ admin 欄位）——
+ * 那份 config 文件今天還不存在，狀態逐字記在 `hud/hudBottomCluster.ts` 的模組
+ * 檔頭（WIRING STATUS）。這裡先把**開關本身**與它的 runtime seam 落地，形狀照抄
+ * 隔壁的 `applyHudOverflowPolicy` / `applyHudClusterOverride`。
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/**
+ * `strip`  —— 攻擊鈕**底下**的一條（出貨預設，GH#873 的新排法）。
+ * `column` —— 2026-08-29 以前那一疊（回頭用；⛔ 它與攻擊鈕重疊 88×86）。
+ */
+export type GoldLevelTouchLayout = "strip" | "column";
+
+/**
+ * 兩種形狀各自保留的高度（px）。
+ *
+ * ⭐ **30 是算出來的上界，⛔ 不是挑一個好看的數字**：觸控攻擊鈕的近緣距畫面底部
+ * `attackCenter(84) − attackSize/2(44) = 40` px（`touchControlsRect`），而槽位從
+ * `HUD_EDGE(10)` 起算 ⇒ 條狀的高度上界正好是 **40 − 10 = 30**。
+ * ⚠️ 再高一格就重新壓到攻擊鈕上，而 `touchControlsCollision.test.ts` 會指名它。
+ *
+ * 116 是舊值（44 頭像 ＋ 8 ＋ 文字塊），留著是為了讓 `column` 真的回得去。
+ */
+export const GOLD_LEVEL_TOUCH_H = { strip: 30, column: 116 } as const;
+
+/** 條狀模式下頭像的邊長：30 的條扣掉 3px 上下內距 = 24。 */
+export const GOLD_LEVEL_STRIP_PORTRAIT_PX = 24;
+
+/** 出貨值 —— ⛔ 只有一個住處；`hudBottomCluster.SHIPPED_HUD_CLUSTER` 讀這一個。 */
+export const GOLD_LEVEL_TOUCH_LAYOUT_DEFAULT: GoldLevelTouchLayout = "strip";
+
+let goldLevelTouch: GoldLevelTouchLayout = GOLD_LEVEL_TOUCH_LAYOUT_DEFAULT;
+
+/** 覆寫觸控形狀（`null` / 未知值 = 回到出貨預設 `strip`）。 */
+export function applyGoldLevelTouchLayout(v: GoldLevelTouchLayout | null | undefined): void {
+  goldLevelTouch = v === "column" ? "column" : GOLD_LEVEL_TOUCH_LAYOUT_DEFAULT;
+}
+
+/** 現在正在排版的觸控形狀。 */
+export function goldLevelTouchLayout(): GoldLevelTouchLayout {
+  return goldLevelTouch;
+}
+
 export const HUD_CORNERS: readonly HudCorner[] = [
   "top-left",
   "top-right",
@@ -498,8 +551,26 @@ const SLOTS = [
     // (hudSurfaces.test.ts + roundReportLayout.test.ts both went red, measured).
     // So GoldLevel renders a column on touch: 44 portrait + 8 + the same text
     // block = 116 tall inside the same 120 px.
+    //
+    // ⭐⭐ GH#873 —— **那一疊整顆住在攻擊鈕裡。** 量到（`hudSlotRect` ×
+    // `touchControlsRect`，2026-08-29，三個橫向守衛 viewport 全中）：
+    // `gold-level × attack = 88×86` ＝ 攻擊鈕 88×88 的 **97.7%**。而
+    // `HUD_Z.slot`(25) > TouchControls 根節點的 `zIndex:20`，底色 `PANEL_BG`
+    // 是 88% 不透明 ⇒ ⭐ **按得到、看不到**（⛔ 它不吃觸控：`pointer-events`
+    // 從 `#hud-root` 繼承 `none`，兩邊都沒有覆寫）。
+    //
+    // ⚠️ 上面那句「**height is free**」就是唯一錯的地方：minimap 與 equipment
+    // **正是為了讓開觸控技能叢集**才搬走的（`touchControlsRect.ts` 檔頭逐字：
+    // 「bottom-right IS the ability arc」）—— 而這一格沒有跟著搬。
+    // ⇒ 它獨占了一個**已經被讓出來給別人**的角落。
+    //
+    // ⭐ 修法是**縮成一條**，⛔ 不是換一個角落：四個角落在 780×360 上全滿
+    //   （top-left 跑到 350／350 · top-right 300 · bottom-left 被 top-left 的
+    //   350 從上面吃掉 · bottom-right 是叢集）—— ⛔ 沒有空位可以搬。
+    //   高度上界是**算出來的**：見 `GOLD_LEVEL_TOUCH_H`。
+    //   回頭的那一格：`applyGoldLevelTouchLayout("column")`。
     touchWidth: 120,
-    touchHeight: 116,
+    touchHeight: GOLD_LEVEL_TOUCH_H.strip,
     /**
      * ACCEPTS BEING PAINTED OVER — and making the slot managed is what forced
      * this to be said out loud. When the shop docks left, the ☰ RELOCATES into
@@ -640,10 +711,14 @@ function ambientViewport(): HudViewport | null {
 
 /** A slot's declared (pre-scale) reserve for this pointer type. */
 function baseSize(spec: HudSlotSpec, touch: boolean): { w: number; h: number } {
-  return {
+  const size = {
     w: touch ? (spec.touchWidth ?? spec.width) : spec.width,
     h: touch ? (spec.touchHeight ?? spec.height) : spec.height,
   };
+  // ⭐ GH#873 —— 觸控形狀是一格開關,而**保留矩形必須跟著它動**。
+  // ⛔ 只翻元件不翻保留 = 失敗形態①(畫的跟量的不是同一件事)。
+  if (touch && spec.id === "gold-level") size.h = GOLD_LEVEL_TOUCH_H[goldLevelTouch];
+  return size;
 }
 
 function scaledSize(id: HudSlotId, touch: boolean, tier: HudScaleTier): { w: number; h: number } {

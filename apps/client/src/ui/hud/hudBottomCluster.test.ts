@@ -53,6 +53,10 @@ import {
   hudRectInViewport,
   hudRectsOverlap,
   hudSlotRect,
+  // ⭐ GH#873 —— 觸控 `gold-level` 的形狀開關與它的兩個保留高度。
+  GOLD_LEVEL_STRIP_PORTRAIT_PX,
+  GOLD_LEVEL_TOUCH_H,
+  applyGoldLevelTouchLayout,
   type HudRect,
   type HudSlotId,
   type HudViewport,
@@ -724,6 +728,78 @@ describe("bottom-right hero portrait (client-28)", () => {
   });
 });
 
+/**
+ * ⭐⭐ GH#873 —— 觸控下的 `gold-level`：**攻擊鈕底下的一條**。
+ *
+ * ⚠️ 在此之前它是一疊 120×116，整顆住在攻擊鈕裡：三個橫向守衛 viewport 上
+ * `gold-level × attack = 88×86` ＝ 攻擊鈕 88×88 的 **97.7%**。`HUD_Z.slot`(25)
+ * > TouchControls 根節點的 `zIndex:20` 且底色 88% 不透明 ⇒ **按得到、看不到**。
+ *
+ * ⭐ 這裡驗的是**兩件事的關係**，⛔ 不是一個數字：
+ *   ① 保留矩形真的讓開了叢集（⚠️ 而且**兩個方向都量** —— 翻回 `column`
+ *      這把尺必須量得到那個已知的壞，否則它綠了不代表任何事）；
+ *   ② **畫的東西跟著縮了** —— 只縮保留不縮畫面是失敗形態①，
+ *      而那正是「量的跟畫的不是同一件事」。
+ */
+describe("GH#873 觸控 gold-level 是一條，⛔ 不是一疊", () => {
+  const LANDSCAPE: readonly HudViewport[] = [
+    { width: 844, height: 390 },
+    { width: 852, height: 393 },
+    { width: 780, height: 360 },
+  ];
+  /** 這個形狀下，`gold-level` 壓到哪幾顆觸控按鈕（key → 「w×h」）。 */
+  function hits(): string[] {
+    const out: string[] = [];
+    for (const vp of LANDSCAPE) {
+      const g = hudSlotRect("gold-level", vp, true);
+      for (const { id, rect } of touchControlsRect(vp).buttons) {
+        const x = Math.max(g.x, rect.x);
+        const y = Math.max(g.y, rect.y);
+        const w = Math.min(g.x + g.w, rect.x + rect.w) - x;
+        const h = Math.min(g.y + g.h, rect.y + rect.h) - y;
+        if (w > 0 && h > 0) out.push(`${vp.width}x${vp.height}/${id}=${w}×${h}`);
+      }
+    }
+    return out;
+  }
+
+  it("⭐ 條狀讓開整個叢集 —— 而翻回一疊，這把尺量得到那個已知的 88×86", () => {
+    cover("hud-bottom-cluster");
+    expect(hits(), "出貨形狀還壓在觸控按鈕上").toEqual([]);
+    // ⛔ 反證：沒有這一段，「零重疊」可能只是這把尺在這個方向上是瞎的
+    applyGoldLevelTouchLayout("column");
+    try {
+      expect(hits()).toEqual([
+        "844x390/attack=88×86",
+        "852x393/attack=88×86",
+        "780x360/attack=88×86",
+      ]);
+    } finally {
+      applyGoldLevelTouchLayout(null);
+    }
+  });
+
+  it("⭐ 畫的東西真的裝得進 30px —— ⛔ 不是只把保留改小", () => {
+    cover("hud-bottom-cluster");
+    const g = globalThis as { __ggdForceTouch?: boolean };
+    g.__ggdForceTouch = true;
+    let html: string;
+    try {
+      html = renderCombatHud();
+    } finally {
+      delete g.__ggdForceTouch;
+    }
+    const box = findMarked(html, 'data-hud-slot="gold-level"');
+    expect(box, "觸控下 gold-level 沒有畫出來").not.toBeNull();
+    expect(box!.attrs).toContain('data-hud-gold-shape="strip"');
+    // 一行,⛔ 不是一疊 —— 這一格改回 column 而保留留在 30 就會紅
+    expect(box!.style["flex-direction"]).toBe("row");
+    // 頭像 ＋ 上下內距 = 保留高度。⛔ 兩邊都不抄字面值。
+    expect(GOLD_LEVEL_STRIP_PORTRAIT_PX + 3 + 3).toBe(GOLD_LEVEL_TOUCH_H.strip);
+    expect(box!.style.padding).toBe("3px 6px");
+  });
+});
+
 describe("cluster tuning is a validated field table (client-28)", () => {
   it("every field has BOTH bounds, or is an enum/boolean", () => {
     cover("hud-bottom-cluster");
@@ -772,5 +848,24 @@ describe("cluster tuning is a validated field table (client-28)", () => {
     expect(after.cluster.h).toBe(before.cluster.h + 6);
     applyHudClusterOverride(null);
     expect(hudClusterRects(vp, false, BOTH_ROWS).cluster.h).toBe(before.cluster.h);
+  });
+
+  /**
+   * ⭐ GH#873 —— 失敗形態⑧的守衛：`goldLevelTouchLayout` 的**消費端在 hudLayout**
+   * （它算 `gold-level` 的保留高度），所以 `applyHudClusterOverride` 必須**轉發**
+   * 出去。⛔ 只存進 `active` 而不轉發 ＝ 欄位在、後台改得動、而版面一格都不動。
+   */
+  it("⭐ 觸控 gold-level 的形狀真的傳到了排版，⛔ 不是只存在 tuning 裡", () => {
+    cover("hud-bottom-cluster");
+    const phone = { width: 844, height: 390 };
+    const shipped = hudSlotRect("gold-level", phone, true).h;
+    applyHudClusterOverride({ goldLevelTouchLayout: "column" });
+    try {
+      expect(hudClusterTuning().goldLevelTouchLayout).toBe("column");
+      expect(hudSlotRect("gold-level", phone, true).h).toBeGreaterThan(shipped);
+    } finally {
+      applyHudClusterOverride(null);
+    }
+    expect(hudSlotRect("gold-level", phone, true).h).toBe(shipped);
   });
 });

@@ -28,6 +28,7 @@ import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
 import { hudClusterRects } from "../hud/hudBottomCluster";
 import {
+  applyGoldLevelTouchLayout,
   HUD_CORNERS,
   HUD_EDGE,
   HUD_STAMP_BAND,
@@ -162,10 +163,30 @@ describe("the round report's box (rr-10..rr-14)", () => {
         ).toBe(true);
       }
     }
-    // …and the one case where it legitimately cannot: a 375px PORTRAIT phone,
-    // where the shop card, the corner stacks and the champion's own HP bars
-    // leave nothing. (That viewport also shows the rotate-me overlay.)
-    expect(roundReportPlacement({ width: 375, height: 667 }, true).visible).toBe(false);
+    /**
+     * ⭐⭐ GH#873 —— 這一格**翻邊了，而那是好事**：在 2026-08-30 之前，375px
+     * 直立機上這張卡是**畫不出來的**（`visible === false`），因為 `gold-level`
+     * 的觸控保留高度 116 px 把右欄吃光。把它縮成攻擊鈕底下的 30 px 之後，
+     * 空出來的 86 px 讓這張卡在同一個 viewport 上**放得下了**。
+     * ⚠️ 它仍然通過上一條「要嘛裝得下、要嘛不畫」—— 也就是它現在畫的是一張
+     * ⛔ 不小於 `MIN_RENDER_*` 的卡，⛔ 不是一張擠爛的。
+     */
+    expect(roundReportPlacement({ width: 375, height: 667 }, true).visible).toBe(true);
+    /**
+     * ⭐ 而「藏起來」那條逃生路**仍然是活的，⛔ 不是死碼** —— 這是這一條的
+     * 非空洞自證：把 `gold-level` 翻回出貨可回頭的那一格（`column`，也就是
+     * 2026-08-29 的排法）就會重現它。
+     * ⛔ 沒有這一段，`visible === false` 那條路就變成沒有人量過的分支。
+     */
+    applyGoldLevelTouchLayout("column");
+    try {
+      expect(
+        roundReportPlacement({ width: 375, height: 667 }, true).visible,
+        "把 gold-level 翻回 `column` 之後這張卡還畫得出來 —— 那代表上面那句「空出 86px」是假的",
+      ).toBe(false);
+    } finally {
+      applyGoldLevelTouchLayout(null);
+    }
   });
 
   it("never enters the reserved build-stamp band (#245)", () => {

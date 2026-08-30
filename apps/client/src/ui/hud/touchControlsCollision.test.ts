@@ -128,18 +128,26 @@ describe("GH#765 觸控攻擊鈕 × 裝備欄 —— 真矩形，⛔ 不是 `dis
    * 那支 predicate**，⛔ 不是一張寫死的清單。
    */
   const CLUSTER_RESIDUAL = new Map<string, string>([
-    // ⭐⭐ 攻擊鈕（88×88）被右下角的金錢/等級/頭像面板蓋掉 **88×86 = 97.7%**。
-    // `HUD_Z.slot`(25) > TouchControls 根節點的 `zIndex:20`，而兩者同在 `#hud-root`
-    // （z-index:10，**開一個 stacking context**）⇒ 面板**畫在攻擊鈕上面**，
-    // 底色 `PANEL_BG = rgba(12,16,26,0.88)` ⇒ 88% 不透明。
-    // ⚠️ ⛔ 它**不吃觸控**：`pointer-events` 是可繼承屬性，`#hud-root` 宣告了
-    // `none` 而 `hudSlotStyle()`／`GoldLevel` 兩邊都沒有覆寫 ⇒ 按得到、看不到。
-    // ⇒ 搬它是**版面決策**（換角落／收起／縮小），照票的 Implementation
-    // constraints 要一格三住處後台開關 ⇒ ⛔ 不是只准動 `apps/client/**` 的
-    // lane 做得完的。**記在這裡，⛔ 不偷偷搬。**
-    ["844x390/gold-level×attack", "88×86"],
-    ["852x393/gold-level×attack", "88×86"],
-    ["780x360/gold-level×attack", "88×86"],
+    // ⭐⭐ GH#873 —— `gold-level×attack` 那**三列已經刪掉了，而且是真的歸零**。
+    //
+    // 在此之前這裡有三列 `88×86`（＝攻擊鈕 88×88 的 **97.7%**，三個橫向 viewport
+    // 全中）：`HUD_Z.slot`(25) > TouchControls 根節點的 `zIndex:20`，兩者同在
+    // `#hud-root`（z-index:10，**開一個 stacking context**）⇒ 面板畫在攻擊鈕
+    // 上面，底色 `PANEL_BG = rgba(12,16,26,0.88)` ⇒ 88% 不透明。
+    // ⚠️ ⛔ 它**不吃觸控**（`pointer-events` 從 `#hud-root` 繼承 `none`）——
+    // 所以症狀是**按得到、看不到**，⛔ 不是 `028aa3bf` 那種吃觸控的缺陷。
+    //
+    // ⭐ 修法：`gold-level` 的觸控保留高度 116 → **30**（`GOLD_LEVEL_TOUCH_H`），
+    // 也就是**縮成攻擊鈕底下的一條**。30 是**算出來的上界**：攻擊鈕的近緣距底
+    // `attackCenter(84) − attackSize/2(44) = 40`，槽位從 `HUD_EDGE(10)` 起算
+    // ⇒ 40 − 10 = 30。⛔ **量法一個字都沒改**（`touchControlsRect.ts` 與
+    // `hudSlotRect` 在這次的 diff 裡是零改動）—— 動的是 `hudLayout.ts` 的保留高度
+    // 與 `components/GoldLevel.tsx` 畫的東西，⭐ 兩邊一起動（⛔ 只翻一邊 = 失敗
+    // 形態①：畫的跟量的不是同一件事）。
+    // ⚠️ 換角落**不是可行解**：780×360 上四個角落全滿（top-left 350/350 ·
+    // top-right 300 · bottom-left 被 top-left 的 350 從上面吃光 · bottom-right
+    // 就是叢集本身）—— 這是量到的，⛔ 不是印象。
+    // 回頭的那一格：`applyGoldLevelTouchLayout("column")`。
     ["844x390/scoreboard×recall", "44×16"],
     ["844x390/audio-toggle×R", "55×7"],
     ["844x390/audio-toggle×recall", "44×20"],

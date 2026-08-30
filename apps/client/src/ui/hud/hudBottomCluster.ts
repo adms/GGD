@@ -77,12 +77,20 @@
  *     + `DEFAULT_HUD_LAYOUT` (mirror {@link SHIPPED_HUD_CLUSTER} verbatim);
  *   · `content/config/hud-layout.json` + `pnpm content:build`;
  *   · `ContentDb.load()` — `applyHudClusterOverride(this.configDoc(…))`.
+ *
+ * ⚠️ GH#873 在這張表上加了 `goldLevelTouchLayout`（手機橫向右下角讀數的形狀）。
+ * 它的**回頭成本**因此與上面三行綁在一起：今天翻它要 `applyHudClusterOverride`
+ * ／`applyGoldLevelTouchLayout`（⛔ 還不是後台一格）。⭐ 出貨預設是新排法
+ * （`strip`），也就是第〇·六守則的「優先權大的更新後都是預設啟動」。
  */
 import {
+  GOLD_LEVEL_TOUCH_LAYOUT_DEFAULT,
   HUD_EDGE,
   HUD_GAP,
   HUD_SLOTS,
+  applyGoldLevelTouchLayout,
   hudSlotRect,
+  type GoldLevelTouchLayout,
   type HudRect,
   type HudSlotId,
   type HudViewport,
@@ -168,6 +176,14 @@ export interface HudClusterTuning {
   heroPortrait: HeroPortraitMode;
   /** square edge of that portrait, px. */
   heroPortraitPx: number;
+  /**
+   * ⭐ GH#873 —— 觸控下右下角讀數的形狀。
+   * `strip` = 攻擊鈕**底下**的一條（出貨）；`column` = 2026-08-29 以前那一疊，
+   * ⛔ 而那一疊與攻擊鈕重疊 88×86（＝攻擊鈕的 97.7%，玩家按得到、看不到）。
+   * ⚠️ 值本身住 `hudLayout`（那裡要用它算保留矩形，⛔ 而反向 import 會成環），
+   * 這一列讓它跟著同一張欄位表進後台 —— 見 {@link applyHudClusterOverride}。
+   */
+  goldLevelTouchLayout: GoldLevelTouchLayout;
 }
 
 /** One row of the field table: the bounds a value must satisfy. */
@@ -230,6 +246,11 @@ export const HUD_CLUSTER_FIELDS: readonly HudClusterFieldSpec[] = [
     max: 36,
     label: "右下角頭像的邊長",
   },
+  {
+    key: "goldLevelTouchLayout",
+    values: ["strip", "column"],
+    label: "手機橫向時右下角金錢/等級的形狀：一條（不擋攻擊鈕）／一疊（舊排法，會蓋住攻擊鈕 97.7%）",
+  },
 ] as const;
 
 /**
@@ -258,6 +279,8 @@ export const SHIPPED_HUD_CLUSTER: HudClusterTuning = {
   keepClearOfCorners: true,
   heroPortrait: "current-form",
   heroPortraitPx: 36,
+  // ⛔ 不抄字面值：出貨值住 `hudLayout`，那裡是它真正被用來算保留矩形的地方。
+  goldLevelTouchLayout: GOLD_LEVEL_TOUCH_LAYOUT_DEFAULT,
 };
 
 /** What {@link resolveClusterTuning} had to change to make a value legal. */
@@ -359,6 +382,9 @@ export function applyHudClusterOverride(
 ): ClusterTuningProblem[] {
   const { tuning, problems } = resolveClusterTuning(partial);
   active = tuning;
+  // ⭐ GH#873 —— 這一格的**消費端在 hudLayout**（它算 `gold-level` 的保留高度）。
+  // ⛔ 只存進 `active` 不轉發 = 失敗形態⑧：欄位在、後台改得動、而版面不動。
+  applyGoldLevelTouchLayout(tuning.goldLevelTouchLayout);
   return problems;
 }
 

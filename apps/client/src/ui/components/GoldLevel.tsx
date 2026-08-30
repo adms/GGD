@@ -42,7 +42,11 @@
 import { counterpartFormId } from "@ggd/shared/content";
 import { useHud } from "../../net/RoomStore";
 import { hudTouch } from "../hud/HudSlot";
-import { hudSlotStyle } from "../hud/hudLayout";
+import {
+  GOLD_LEVEL_STRIP_PORTRAIT_PX,
+  goldLevelTouchLayout,
+  hudSlotStyle,
+} from "../hud/hudLayout";
 import { heroPortraitChampionId, hudClusterTuning } from "../hud/hudBottomCluster";
 import { championIconUrl } from "../icons";
 import { GlyphTile } from "./GlyphTile";
@@ -64,24 +68,42 @@ export function GoldLevel(): React.JSX.Element | null {
     tuning,
   );
   const def = shownId ? Champions.tryGet(shownId as ChampionId) : null;
+  /**
+   * ⭐⭐ GH#873 —— 觸控下的**條狀**（出貨預設）。
+   *
+   * ⚠️ 那一疊（`column`）在三個橫向守衛 viewport 上與攻擊鈕重疊 **88×86 =
+   * 攻擊鈕的 97.7%**,而它 z 序贏 ＋ 88% 不透明 ⇒ 玩家**按得到、看不到**。
+   * ⭐ 條狀的高度上界是算出來的（`GOLD_LEVEL_TOUCH_H`,30 px）,所以這裡畫的
+   * 東西必須真的裝得進 30 px:一行、24px 頭像、⛔ 沒有 xp 與 skill-pt 那兩行。
+   *
+   * ⛔ 高度**只有一個住處**（`hudLayout.GOLD_LEVEL_TOUCH_H`）—— 這裡不抄數字,
+   * 頭像邊長也從 `GOLD_LEVEL_STRIP_PORTRAIT_PX` 來。
+   */
+  const strip = touch && goldLevelTouchLayout() === "strip";
+  const portraitPx = strip ? GOLD_LEVEL_STRIP_PORTRAIT_PX : tuning.heroPortraitPx;
   return (
     <div
       data-hud-slot="gold-level"
+      data-hud-gold-shape={touch ? (strip ? "strip" : "column") : "desktop"}
       style={{
         ...hudSlotStyle("gold-level", touch),
         display: "flex",
         // coarse pointers stack it — see the `touchWidth` note on the slot row:
         // the touch bottom-right corner has height to spare and no width.
-        flexDirection: touch ? "column" : "row",
-        alignItems: touch ? "flex-end" : "center",
-        gap: 8,
-        padding: "8px 10px",
+        // ⭐ GH#873: …except in `strip`, where it has WIDTH to spare and 30 px
+        //    of height, so it goes back to a single row.
+        flexDirection: touch && !strip ? "column" : "row",
+        alignItems: touch && !strip ? "flex-end" : "center",
+        gap: strip ? 5 : 8,
+        padding: strip ? "3px 6px" : "8px 10px",
         background: PANEL_BG,
         border: PANEL_BORDER,
         borderRadius: 8,
         color: TEXT_MAIN,
         fontSize: 12,
         textAlign: "right",
+        whiteSpace: strip ? "nowrap" : undefined,
+        overflow: strip ? "hidden" : undefined,
       }}
     >
       {shownId && (
@@ -92,20 +114,34 @@ export function GoldLevel(): React.JSX.Element | null {
             seed={shownId}
             src={championIconUrl(shownId)}
             label={def?.name ?? shownId}
-            size={tuning.heroPortraitPx}
+            size={portraitPx}
           />
         </span>
       )}
-      <div style={{ minWidth: 0 }}>
-        <div style={{ color: GOLD, fontSize: 15, fontWeight: "bold" }}>{seat.gold} g</div>
-        <div>
-          Lv {seat.level}
-          <span style={{ color: TEXT_DIM }}> · {seat.xp} xp</span>
+      {strip ? (
+        <>
+          <span style={{ color: GOLD, fontSize: 12, fontWeight: "bold" }}>{seat.gold}g</span>
+          <span style={{ fontSize: 11 }}>
+            Lv{seat.level}
+            {/* ⭐ 未用技能點在 30px 裡只放得下一個記號,⛔ 不是一整行 ——
+                而它必須還在:它是「現在可以升技能」的唯一提示。 */}
+            {seat.unspentPoints > 0 && (
+              <span style={{ color: GOLD, fontWeight: "bold" }}>+{seat.unspentPoints}</span>
+            )}
+          </span>
+        </>
+      ) : (
+        <div style={{ minWidth: 0 }}>
+          <div style={{ color: GOLD, fontSize: 15, fontWeight: "bold" }}>{seat.gold} g</div>
+          <div>
+            Lv {seat.level}
+            <span style={{ color: TEXT_DIM }}> · {seat.xp} xp</span>
+          </div>
+          {seat.unspentPoints > 0 && (
+            <div style={{ color: GOLD, fontSize: 10 }}>+{seat.unspentPoints} skill pt</div>
+          )}
         </div>
-        {seat.unspentPoints > 0 && (
-          <div style={{ color: GOLD, fontSize: 10 }}>+{seat.unspentPoints} skill pt</div>
-        )}
-      </div>
+      )}
     </div>
   );
 }
