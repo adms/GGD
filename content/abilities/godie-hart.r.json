@@ -56,7 +56,9 @@
         {
           "kind": "spawnVfx",
           "vfxId": "fx.w3x.stock.thunderclapcaster.p00",
-          "at": "target"
+          "at": "bone",
+          "attach": "chest",
+          "boneOn": "victim"
         },
         {
           "kind": "floatingText",
