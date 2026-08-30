@@ -34,7 +34,22 @@ if gh release view "$TAG" >/dev/null 2>&1; then
   echo "✓ $TAG 已有 release note"
 else
   echo "⚠️ $TAG **還沒有 release note** —— ⛔ 這一步不能自動生（內容要人寫）"
-  echo "   ⇒ gh release create $TAG --title … --notes-file <檔>"
+  # ⭐⭐ **但可以把草稿生好** —— 2026-08-30 owner 揪到 **v0.32.0–v0.32.5 六個 tag 一個 note 都沒有**。
+  #   ⚠️ ⭐ 而根因**不是這支腳本沒說** —— 它每一次都印了上面那一行並記了 FAIL。
+  #     ⛔ 沒有處理它的是人。⇒ 這裡把「做對」的成本壓到最低：草稿寫好，只差把理由填進去。
+  _PREV=$(git tag -l "v*" --sort=-creatordate | grep -v "^${TAG}$" | head -1)
+  _DRAFT="/private/tmp/release-note-${TAG}.md"
+  {
+    printf '## %s\n\n' "$TAG"
+    printf '⚠️ ⭐ 這是**從 commit 生成的草稿** —— ⛔ 直接發出去等於一份很貴的摘要。\n'
+    printf '   ⭐ 要填的是**為什麼**：哪一條守則、量到什麼、突變驗過沒有、誠實的界線在哪。\n\n'
+    printf '### %s → %s（%s 個 commit）\n\n' "${_PREV:-起點}" "$TAG" \
+      "$(git rev-list --count "${_PREV:+${_PREV}..}${TAG}" 2>/dev/null)"
+    git log --format='- %s' "${_PREV:+${_PREV}..}${TAG}" 2>/dev/null | head -40
+  } > "$_DRAFT"
+  echo "   ⭐ 草稿已生成：$_DRAFT（$(git rev-list --count "${_PREV:+${_PREV}..}${TAG}" 2>/dev/null) 個 commit）"
+  echo "   ⇒ 填完理由再跑：gh release create $TAG --title … --notes-file $_DRAFT"
+  echo "   ⛔ 而**零個 commit** 的 tag 不該存在 —— 那種版號答不出「這一版做了什麼」"
   FAIL="${FAIL}note "
 fi
 
