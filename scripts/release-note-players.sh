@@ -52,7 +52,7 @@ CLOSED=$(gh issue list --state all --limit 300 --json number,updatedAt \
           -q ".[] | select(.updatedAt >= \"${SINCE_DATE}\") | .number" 2>/dev/null) || {
   echo "⚠️ gh 連不上 —— **沒有產生草稿**（⛔ 這不是「這一版沒有玩家可見的改動」）" >&2; exit 1; }
 
-LINES=""; MISSING=""
+LINES=""; MISSING=""; UNSCOPED=""
 for N in $CLOSED; do
   # ⚠️ ⭐ 只讀**最新一則進度標記**，⛔ 不是「所有留言裡第一個命中的」：
   #   2026-08-30 量到 —— 我把 #866 的玩家那一句**清空**（它是後台的事，玩家無感），
@@ -68,6 +68,17 @@ for N in $CLOSED; do
     if [ -n "$SHA" ] && git cat-file -e "$SHA" 2>/dev/null; then
       git merge-base --is-ancestor "$SHA" "$NOW" 2>/dev/null || P=""      # 還沒進這一版
       [ -n "$P" ] && { git merge-base --is-ancestor "$SHA" "$SINCE" 2>/dev/null && P=""; }  # 上一版就有了
+    else
+      # ⛔⛔ **沒有 commit ⇒ 這一句無法定位到任何一版** —— 2026-08-30 量到的實際後果:
+      #   同一天發了 **9 個版本**,而 #742/#722/#721/#866 的標記都沒帶 `--commit`
+      #   ⇒ 祖先過濾整段被跳過 ⇒ ⭐ **同樣八行被排進每一版的公告**。
+      #   ⚠️ 而它看起來完全正常 —— 一份「這一版做了什麼」的清單,
+      #     ⛔ 而它其實是「這一天做了什麼」。
+      # ⇒ ⭐ **不可以靜默收進去**(玩家收到重複公告 ＝ 噪音),
+      #   ⛔ 也不可以靜默丟掉(一個真的改動會消失)⇒ **移到 fail-loud 那一欄**。
+      UNSCOPED="${UNSCOPED}  · #$N ${P}
+"
+      P=""
     fi
   fi
   T=$(gh issue view "$N" --json title -q .title 2>/dev/null | sed 's/\[[^]]*\]//g' | sed 's/^ *//')
@@ -90,7 +101,16 @@ else
   printf '%s' "$LINES"
 fi
 
-# ⚠️ ⭐ fail-loud：漏掉的要**說出來**，⛔ 不是靜默省略（安靜的跳過與全過長得一樣）
+# ⚠️ ⭐ fail-loud（一）：**定位不到版本**的那幾句 —— ⛔ 它們不會進公告
+if [ -n "$UNSCOPED" ]; then
+  echo
+  echo "⚠️ 這幾句**定位不到版本**（進度標記沒帶 \`--commit\`）——⛔ 不發，避免每一版重複："
+  printf '%s' "$UNSCOPED"
+  echo "  ⭐ 修法：bash scripts/ticket-progress.sh write <票號> … --commit <sha>"
+  echo "     ⚠️ 沒有 sha 的那一句，永遠答不出「它是哪一版出貨的」⇒ 只能每一版都發或都不發。"
+fi
+
+# ⚠️ ⭐ fail-loud（二）：漏掉的要**說出來**，⛔ 不是靜默省略（安靜的跳過與全過長得一樣）
 if [ -n "$MISSING" ]; then
   echo
   echo "⚠️ 這幾張是 feature/fix/improve 卻**沒寫玩家那一句** —— ⛔ 它們不會出現在公告裡："
