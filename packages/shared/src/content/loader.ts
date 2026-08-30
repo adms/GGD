@@ -140,6 +140,47 @@ export class ContentLoader {
               detail: issues.map((i) => `${i.path}: ${i.message}`).join("; "),
               issues,
             });
+            } else if (e instanceof RangeError) {
+              // ⛔⛔ **一份深度巢狀的文件會讓 `parse` 自己爆掉，而它擲的不是 `ZodError`。**
+              //
+              // ⭐ 2026-08-30 量到（對抗式稽核）：`zEffectDef` 是 `z.lazy` 遞迴且
+              //   **沒有深度上界** ⇒ 深度 100 通過驗證、深度 **600 就擲
+              //   `RangeError: Maximum call stack size exceeded`**。
+              //
+              // ⚠️ ⭐ 而在此之前這裡走 `throw e` ⇒ 那個 RangeError **逃出隔離**
+              //   ⇒ 整份內容載入死掉 ⇒ 每個玩家退回 **2 隻骨架英雄**。
+              //   ⭐ 那正是 2026-08-01 事故的形狀：網站打得開、看起來完全正常，
+              //   ⛔ 而唯一的破綻只有 console 那一行。
+              //
+              // ⇒ ⭐ **一份壞文件只能毀掉它自己** —— 那是隔離機制的整個重點，
+              //   ⛔ 而「壞」不可以只定義成「Zod 說不合法」。
+              //
+              // ⚠️ ⭐ 這**不是** UGC 的未來問題：`ContentPage.tsx` 的 edit/save
+              //   今天就寫得進 `content/`，而這條路在每個玩家與每台 game shard 的開機路徑上。
+              // ⚠️⚠️ ⭐ **這一段刻意沒有行為守衛，而理由要寫下來**（⛔ 不是忘了寫）：
+              //   `EFFECT_MAX_NESTING_DEPTH` 裝上去之後，深度計數器在**遞迴之前**就 return
+              //   ⇒ ⭐ 效果巢狀這條路**再也產生不出 RangeError** —— 它會是一個誠實的 ZodError。
+              //   ⇒ 我寫過一條測試想驗這裡，⛔ 而它是**假的**（夾具被 `.strict()` 先以
+              //     ZodError 擋掉，根本走不到這個分支）⇒ 突變（把這個分支拿掉）不會紅
+              //     ⇒ **刪掉了**（⛔ 不出貨一個非守衛，第二守則）。
+              //
+              // ⭐ 它仍然留著，因為它守的是**下一個**遞迴 schema：
+              //   今天 `zEffectDef` 有上界了，⛔ 而 `z.lazy` 不只它一個，
+              //   而且新的遞迴欄位不會自動帶上界。
+              //   ⇒ ⭐ 這一段的價值是「**下一次**有人加了沒有上界的遞迴時，
+              //     壞的只毀掉它自己」——⛔ 而那一天沒有人會記得回來加這個 catch。
+              //
+              // ⭐ 到期條件：哪天有一條路真的能產生 RangeError 且測得到 ⇒ 補上守衛。
+              const detail = `文件太深或太大 —— 解析時堆疊爆掉（${e.message}）`;
+              const issues: FieldIssue[] = [{ path: "(root)", message: detail, code: "custom" }];
+              errors.push(new SchemaValidationError(name, entry.id, issues));
+              quarantined.push({
+                collection: name,
+                id: entry.id,
+                reason: "schema",
+                detail,
+                issues,
+              });
           } else {
             throw e;
           }

@@ -62,6 +62,32 @@ export const CONVERT_BUFF_MAX_SEC = 60;
  * 的文件」—— 而它同時是**決定性預算**的上界：一發落點吃 2 次 rng draw，
  * 所以一次施放最多推進亂數流 64 步，這個數字必須是**看得到**的。
  */
+/**
+ * ⭐⭐ **一份效果文件可以巢狀多深。**
+ *
+ * ⛔⛔ 在此之前**沒有上界**：`zEffectDef` 是 `z.lazy` 遞迴（`spawnProjectile.onHit`
+ * / `delayed.effects` / `randomArea.effects` / `dash.onEnd` / `damageArea.onHitTargets`
+ * 全部會回到 `EffectDef[]`）。
+ *
+ * ⭐ 2026-08-30 對抗式稽核量到的：
+ * · 深度 **100** ⇒ **通過驗證**（⇒ `delayed.count:32` 巢狀 100 層 ＝ 32^100 波）
+ * · 深度 **600** ⇒ `safeParse` 擲 **`RangeError: Maximum call stack size exceeded`**
+ *
+ * ⚠️ ⭐ 而 `RangeError` **不是 `ZodError`** ⇒ 它在此之前**逃出 `ContentLoader` 的隔離**
+ * ⇒ 整份內容載入死掉 ⇒ 每個玩家退回 **2 隻骨架英雄**（＝ 2026-08-01 事故的形狀）。
+ *
+ * ⇒ ⭐ **兩道防線缺一不可**：
+ * ① 這一格（**上界** —— 深的文件被 Zod **誠實地拒絕**並隔離）
+ * ② `loader.ts` 的 `RangeError` 分支（**兜底** —— 極深的文件連 parse 都撐不到這裡）
+ * ⛔ 只有②等於「靠爆掉來擋」，⛔ 只有①擋不住比它更深的。
+ *
+ * ⭐ 為什麼是 12：出貨內容量到的**最大深度是 3**
+ * （`spawnProjectile.onHit → damageArea.onHitTargets → applyStatus`），
+ * 而 `EFFECT_CHAIN_MAX_STEPS` 是 8 —— ⇒ 12 給了 4 倍餘裕，
+ * ⛔ 而它離「32^N 會爆掉」還很遠。⚠️ 要放寬**先量出貨內容今天最深幾層**。
+ */
+export const EFFECT_MAX_NESTING_DEPTH = 12;
+
 export const RANDOM_AREA_MAX_COUNT = 32;
 /**
  * `randomArea.intervalSec` 的上界。

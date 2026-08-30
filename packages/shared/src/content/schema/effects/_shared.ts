@@ -15,7 +15,7 @@
 import { z } from "zod";
 import { RESOURCE_PCT_POINTS_MAX, RESOURCE_PCT_RATIO_MAX, RESOURCE_PCT_RATIO_SELF_MAX } from "../../../sim/effects/dynamicTerms";
 import type { EffectDef } from "../../../sim/effects/effect";
-import { EFFECT_CHAIN_MAX_STEPS, TYPE_STREAK_MAX_THRESHOLD, TYPE_STREAK_MAX_TIMEOUT_SEC } from "../../../sim/effects/kindLimits";
+import { EFFECT_CHAIN_MAX_STEPS, EFFECT_MAX_NESTING_DEPTH, TYPE_STREAK_MAX_THRESHOLD, TYPE_STREAK_MAX_TIMEOUT_SEC } from "../../../sim/effects/kindLimits";
 import { FLIGHT_MAX_HOVER_HEIGHT } from "../../../sim/flight";
 import { RANK_SCALAR_MAX_COLUMNS } from "../../../sim/perRank";
 import { ATTR_GRANT_MAX, ATTR_GRANT_MIN } from "../../../sim/stats/attributes";
@@ -51,6 +51,19 @@ export function registerEffectDefSchema(schema: z.ZodTypeAny): void {
   effectDefHolder.schema = schema;
 }
 
+/**
+ * ⭐ 遞迴深度計數 —— ⛔ **不是**一個可以省略的護欄。
+ *
+ * `z.lazy` 每往下一層就會再呼叫一次這個 thunk ⇒ ⭐ 在這裡數，就等於數了
+ * **每一條**回到 `EffectDef[]` 的路（`delayed.effects` · `randomArea.effects` ·
+ * `spawnProjectile.onHit` · `dash.onEnd` · `damageArea.onHitTargets` …）——
+ * ⛔ 不必逐個 kind 去加，⭐ 也不會漏掉下一個新增的遞迴欄位。
+ *
+ * ⚠️ ⭐ 它是**同步**的：Zod 的 parse 是同步遞迴，所以一個模組級的計數器是安全的
+ * （⛔ 沒有交錯的 parse）。`finally` 保證即使中途擲錯也會還原。
+ */
+let effectDepth = 0;
+
 /** Recursive knot: spawnProjectile.onHit is EffectDef[] again. */
 export const zEffectDef: z.ZodType<EffectDef, z.ZodTypeDef, unknown> = z.lazy(() => {
   if (effectDefHolder.schema === null) {
@@ -59,7 +72,27 @@ export const zEffectDef: z.ZodType<EffectDef, z.ZodTypeDef, unknown> = z.lazy(()
         "content/schema/effects/index.ts（⛔ 不可以只 import 單一 kind 檔）",
     );
   }
-  return effectDefHolder.schema;
+  const inner = effectDefHolder.schema;
+  return z.any().superRefine((val, ctx) => {
+    if (effectDepth >= EFFECT_MAX_NESTING_DEPTH) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message:
+          `效果巢狀太深（超過 ${EFFECT_MAX_NESTING_DEPTH} 層）。` +
+          "⭐ 出貨內容最深是 3 層 —— ⛔ 這一份多半是產生器跑掉了，或是一份惡意文件。" +
+          "⚠️ 沒有這個上界時，深度 600 會讓解析器堆疊爆掉，而那個錯誤**逃得出隔離**" +
+          "（整份內容載入失敗 ⇒ 每個玩家退回 2 隻骨架）。",
+      });
+      return;
+    }
+    effectDepth++;
+    try {
+      const r = inner.safeParse(val);
+      if (!r.success) for (const i of r.error.issues) ctx.addIssue(i);
+    } finally {
+      effectDepth--;
+    }
+  }) as unknown as z.ZodTypeAny;
 }) as unknown as z.ZodType<EffectDef, z.ZodTypeDef, unknown>;
 
 // AoE 四級距（owner 2026-08-11）。⛔ 不要在這裡重打一份字串陣列。
