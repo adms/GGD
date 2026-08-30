@@ -13,6 +13,7 @@ import {
   zodIssues,
   type FieldIssue,
 } from "./errors";
+import { findNonFiniteNumbers, nonFiniteDetail } from "./finiteNumbers";
 import { validateReferences } from "./refs";
 import { validateRetiredLootTables } from "./retiredLootTables";
 import { COLLECTIONS, isCollectionName, type CollectionName } from "./schema/index";
@@ -115,6 +116,22 @@ export class ContentLoader {
           continue;
         }
         try {
+            // ⭐⭐ **非有限的數字要在 Zod 之前擋** —— ⛔ 因為 Zod 擋不住它。
+            //   實測：`Infinity` 過得了 `z.number()`／`.positive()`／`.min(0)`，
+            //   ⭐ 只有 `.max()` 擋得住 —— 而出貨 schema **245/861 格沒有它**。
+            //   ⚠️ 而 JSON 送得進來：`1e400` 解析出來就是 `Infinity`。
+            const nf = findNonFiniteNumbers(raw);
+            if (nf.length > 0) {
+              const detail = nonFiniteDetail(nf);
+              const nfIssues: FieldIssue[] = nf.slice(0, 5).map((h) => ({
+                path: h.path,
+                message: `非有限的數字（${h.value}）`,
+                code: "custom",
+              }));
+              errors.push(new SchemaValidationError(name, entry.id, nfIssues));
+              quarantined.push({ collection: name, id: entry.id, reason: "schema", detail, issues: nfIssues });
+              continue;
+            }
           const doc = spec.schema.parse(raw) as { id: string; schema: string };
           if (doc.id !== entry.id) {
             const issues = [idMismatchIssue(doc.id, entry.id)];
@@ -307,6 +324,19 @@ export function validateDoc(
   collection: CollectionName,
   raw: unknown,
 ): { ok: true; doc: unknown } | { ok: false; issues: FieldIssue[] } {
+  // ⭐ 與 `load()` **同一道**檢查 —— ⛔ 兩道門要用同一個機制，
+  //   否則 content-api 寫得進去的東西，載入時才被隔離（⚠️ 而作者以為存好了）。
+  const nf = findNonFiniteNumbers(raw);
+  if (nf.length > 0) {
+    return {
+      ok: false,
+      issues: nf.slice(0, 5).map((h) => ({
+        path: h.path,
+        message: `非有限的數字（${h.value}）—— ${nonFiniteDetail(nf)}`,
+        code: "custom" as const,
+      })),
+    };
+  }
   const res = COLLECTIONS[collection].schema.safeParse(raw);
   if (res.success) return { ok: true, doc: res.data };
   return { ok: false, issues: zodIssues(res.error) };
