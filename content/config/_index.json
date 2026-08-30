@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "de1411a877e5",
+  "hash": "353a2f977da0",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -235,6 +235,12 @@
       "path": "config/gore.json",
       "hash": "89daaf3c38c9",
       "size": 415
+    },
+    {
+      "id": "hud-layout",
+      "path": "config/hud-layout.json",
+      "hash": "76d6078a7b9a",
+      "size": 1498
     },
     {
       "id": "icon-plan",

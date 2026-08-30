@@ -1,0 +1,13 @@
+{
+  "id": "hud-layout",
+  "schema": "config.hud-layout@1",
+  "note": "HUD 底部叢集的版面旋鈕（GH#873）。⭐ 這份文件存在的理由是一條被複驗推翻的宣稱：「開關 goldLevelTouchLayout 滿足 #873 的 AC3 一格後台開關」—— ⛔ 2026-08-30 量到那不成立：applyHudClusterOverride 的**生產呼叫端是零**，而 content/config/ 底下沒有任何 hud 的 JSON。⇒ ⭐ **一格轉不到的旋鈕不是 rollback 開關**，它只是一個 export。⚠️ owner 常設指令逐字：「別問我了自己判斷 但是留後台開關可以簡易 rollback」——⭐「留開關」是那條指令唯一能成立的理由：我挑錯的成本必須是「他改一格下拉選單」。⚠️ goldLevelTouchLayout 的 column 是 **rollback ⛔ 不是對等選項**：量到那一疊與攻擊鈕重疊 88×86 ＝ 攻擊鈕的 97.7%（三個橫向 viewport 全中）⇒ 玩家按得到、看不到。⭐ 而 strip 只在預設 HUD 縮放（中／100%）下完全歸零 —— gold-level 不在 SCALED_SLOTS 裡（hudLayout.ts:662 只有 enemy-team），保留高度固定 30px 而觸控矩形跟著縮放走⇒ 小尺寸下仍有殘留（small 70.4×8 · xsmall 44×20 · min 44×30），⛔ 但每一格都比 column 少。",
+  "goldLevelTouchLayout": "strip",
+  "barsToAbilitiesGapPx": 6,
+  "clusterBottomPx": 34,
+  "clusterTouchBottomPx": 128,
+  "castNoticeGapPx": 8,
+  "keepClearOfCorners": true,
+  "heroPortrait": "current-form",
+  "heroPortraitPx": 36
+}

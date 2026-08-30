@@ -83,6 +83,7 @@ import { CAMERA_SPEC, MAP_SPEC_SPEC, MITIGATION_SPEC } from "./configForms/specs
 import { AUDIO_MIX_SPEC, GAMEPAD_SPEC, ICON_STYLE_SPEC, PRACTICE_SPEC, RANKING_SPEC } from "./configForms/specs/ops";
 import { DISPLACEMENT_TIERS_SPEC, RANGE_GUIDE_SPEC, TOGGLE_ABILITY_SPEC, UI_LEXICON_SPEC } from "./configForms/specs/ui";
 import { ARENA_RULES_SPEC } from "./configForms/specs/arenaRules";
+import { HUD_LAYOUT_SPEC } from "./configForms/specs/hudLayout";
 import { ADMIN_FRIEND_SPEC, CAST_APPROACH_SPEC, LOBBY_RALLY_SPEC, UI_CUES_SPEC } from "./configForms/specs/lobby";
 import { AUDIO_MAP_SPEC } from "./configForms/specs/audio";
 
@@ -217,6 +218,7 @@ export const CONFIG_DOC_SPECS = [
   // 畫面提示（GH#576 / GH#573，owner 2026-08-23 三則 [優先]）。⚠️ 這一列要跟三件事
   // 一起才到得了操作者手上：store.ts 的 `Page` union + `SESSION_REQUIRED_PAGES`、
   // App.tsx 的導覽列一列、以及 `content/config/ui-cues.json` 出貨檔。
+  HUD_LAYOUT_SPEC,
   UI_CUES_SPEC,
   // 世界演出（2026-08-23 稽核）。⚠️ 同 AUDIO_MIX_SPEC 那一段：這一列要跟 store.ts 的
   // `Page` union + `SESSION_REQUIRED_PAGES`、App.tsx 的導覽列一列，以及

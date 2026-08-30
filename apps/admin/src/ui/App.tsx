@@ -395,6 +395,9 @@ export const NAV: NavItem[] = [
   { page: "toggleAbility", label: "開關型技能外觀", emoji: "🌀", section: SEC_SYS },
   // 畫面提示 (GH#576/#573) —— 緊接在 範圍指引與預告 後面，因為兩頁都在回答
   // 「畫面有沒有把剛剛發生的事說出來」。同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  // HUD 底部版面 (GH#873) —— 緊接在 畫面提示 前面：兩頁都在管「玩家眼睛看到什麼」，
+  // 而這一頁管的是**位置**（另一頁管的是**有沒有說出來**）。
+  { page: "hudLayout", label: "HUD 底部版面", emoji: "📐", section: SEC_SYS },
   { page: "uiCues", label: "畫面提示", emoji: "💬", section: SEC_SYS },
   // 世界演出 (2026-08-23 稽核) —— 緊接在 畫面提示 後面，因為兩頁問的是同一類問題：
   // 「那一刻，畫面上出現什麼」。這一頁管的是**世界裡**那一團（誰出現了、誰消失了、
