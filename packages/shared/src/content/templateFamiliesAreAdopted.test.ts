@@ -28,7 +28,12 @@ const CONSUMERS = ["content/abilities", "content/items", "content/augments"];
  */
 const AWAITING_CONTENT: Record<string, string> = {
   // ── 有票在等，⭐ 接上內容就是那張票的第一步 ──────────────────────────
-  "tpl-periodic-field": "#648 —— 43 支「說明宣稱迴圈、JSON 無機制」的內容批還沒套用",
+  // ⭐ 2026-08-30：**機器側全部做完了，只剩內容批**。⛔ 不要再重做引擎／說明那兩半 ——
+  //    `FAMILIES["periodic-field"]`（expand.ts，2f4cca1a5）＋ `damageRanks` 讀 `Scaling.mult`
+  //    （abilityProse.ts，GH#648）都已落地並各自帶著突變驗過的守衛。
+  //    ⇒ 這一列現在等的是**唯一**剩下的那一步：38 支技能改成 `template.ref`。
+  //    ⭐ 反駁方式：接上任何一支，這一列就要刪掉（棘輪只能變短）。
+  "tpl-periodic-field": "#648 —— 引擎與說明側都通了；38 支「說明宣稱迴圈、JSON 無機制」的內容批還沒套用",
   "tpl-dragon-quake": "#672 龍虎亂舞 —— 家族指認（哪幾支屬於這一族）是第一步，還沒做",
   "tpl-dragon-serpent": "#672 同上",
   "tpl-dragon-shockwave": "#672 同上",

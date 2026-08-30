@@ -14,7 +14,7 @@
  * 與 `descriptionClaims.test.ts` 用同一份推導。
  */
 import { describe, it, expect, beforeAll } from "vitest";
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ContentLoader } from "./loader";
@@ -277,5 +277,68 @@ describe("算繪與轉檔（純函式）", () => {
     expect(next).toContain("「在35秒後\n宣布勝利吧」");
     expect(next).toContain("（GGD 註記 2026-08-11）45秒冷卻。");
     expect(next).toContain("造成{{dmg}}點傷害");
+  });
+
+  /**
+   * ⭐ **承重的那一條**（GH#648）：`{{dmg}}` 印的必須是引擎**真的會打出來**的量，
+   * 而 `Scaling.mult` 是 `resolveScaling` 的最後一乘（`sim/effects/effect.ts:469`）。
+   *
+   * ⚠️ ⛔ **不要拿 `periodicFieldTemplateWiring` 的守衛③代替這一條** —— 它寫成
+   * `adopters.length === 0 || proseSeesMult`，而今天 adopters **是 0** ⇒ 它**恆真**，
+   * 拿掉 `* mult` 也不會紅（🟢 假綠燈⑩：一條靠前提才綠的守衛）。這一條沒有那個前提。
+   *
+   * ── 突變紀錄 ──────────────────────────────────────────────────────────────
+   *  · `abilityProse.ts::damageRanks` 的 `* mult` 兩處都拿掉 → 這一條紅
+   *    （"100" ≠ "50"、"1000/2000" ≠ "100/200"）。
+   */
+  it("⭐ mult 乘進 {{dmg}} —— 卡面印的是**每一發**的量，⛔ 不是整段預算", () => {
+    const dmgOf = (amount: unknown): readonly string[] =>
+      abilityQuantities({ effects: [{ kind: "damage", damageType: "magic", amount }] }).dmg;
+    // 週期領域的形狀：整段 500 ÷ 5 發 ⇒ 每發 100。
+    expect(dmgOf({ flat: 500, mult: 1 / 5 })).toEqual(["100"]);
+    expect(dmgOf({ flat: 100, mult: 0.5 })).toEqual(["50"]);
+    // 逐階也要乘（perRank 與 flat 先相加，再乘整份酬載）。
+    expect(dmgOf({ perRank: [1000, 2000], mult: 0.1 })).toEqual(["100/200"]);
+    // 缺席 ⇒ ×1，⭐ 逐位元同這一格出現之前（⛔ 不可以把沒有 mult 的技能也改掉）。
+    expect(dmgOf({ flat: 100 })).toEqual(["100"]);
+    // 非正數沒有過 schema（positive().max(20)）⇒ 當成缺席，⛔ 不是當成 ×0。
+    expect(dmgOf({ flat: 100, mult: 0 })).toEqual(["100"]);
+  });
+});
+
+/**
+ * ⛔ **`mult` 不可以和 `ratios`/`attrRatios` 同一格**（GH#648）。
+ *
+ * `damageRanks` 乘得到 `{{dmg}}` 印出來的那個數字，⛔ 乘不到卡面上**手打**的
+ * 「+180% [AP]」那一段 —— 那一段沒有佔位符，全專案沒有任何東西代得了它。
+ * ⇒ 一格同時帶兩者，卡面的係數那半就會**少乘一個 mult** 而看起來完全正常
+ * （第一·五守則：說了但不會發生的字）。
+ *
+ * ⭐ 這條閘量的是**關係**（哪一種欄位組合），⛔ 不是一張技能 id 名單。
+ * 出貨語料今天是 **0 個**（4 個 mult 節點全部只帶 `damageTier`）。
+ * ⭐ 反駁方式：真的需要那個組合時，把係數那一段也做成佔位符，然後刪掉這條閘。
+ */
+describe("mult 的射程 (mult-vs-ratios)", () => {
+  it("⛔ 出貨語料裡沒有任何一格同時帶 mult 與係數", () => {
+    const bad: string[] = [];
+    for (const dir of ["abilities", "champions"]) {
+      const d = join(CONTENT, dir);
+      for (const f of readdirSync(d).filter((x) => x.endsWith(".json") && !x.startsWith("_"))) {
+        const walk = (n: unknown, path: string): void => {
+          if (Array.isArray(n)) return n.forEach((v, i) => walk(v, `${path}[${i}]`));
+          if (n === null || typeof n !== "object") return;
+          const rec = n as Record<string, unknown>;
+          if (typeof rec["mult"] === "number" && (rec["ratios"] ?? rec["attrRatios"]) !== undefined)
+            bad.push(`  ${dir}/${f}${path}`);
+          for (const [k, v] of Object.entries(rec)) walk(v, `${path}.${k}`);
+        };
+        walk(JSON.parse(readFileSync(join(d, f), "utf8")), "");
+      }
+    }
+    expect(
+      bad.join("\n"),
+      `⛔ 這幾格同時帶 mult 與係數 ⇒ 卡面手打的「+N% [AP]」少乘了一個 mult，` +
+        `而 {{dmg}} 那半是對的 ⇒ 一張**半真**的卡（第一·五守則）。\n${bad.join("\n")}`,
+    ).toBe("");
   });
 });

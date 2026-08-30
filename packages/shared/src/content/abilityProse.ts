@@ -521,17 +521,43 @@ const pos = (v: unknown): number | undefined =>
  * 的 `Scaling` 就是這樣結算的），⛔ 不是二選一。
  * ⚠️ `ratios` / `attrRatios` 是**成長**不是基礎值，刻意不進來 —— 卡面上它們
  * 本來就寫成「+50% [AP]」那種文字，⛔ 沒有一個數字可以代它。
+ *
+ * ── ⭐ `mult` 進得來，而 `ratios` 進不來 —— 這**不是**同一種取捨（GH#648）────
+ *
+ * `Scaling.mult` 是**整份酬載的倍率**，`resolveScaling` 的**最後一行**才乘
+ * （`sim/effects/effect.ts:469`：`sc.mult !== undefined ? v * sc.mult : v`）。
+ * ⇒ 它與 `ratios` 的差別是**方向**的：
+ *   · `ratios` 是這一格**印不出來**的東西（一個係數，沒有數字代得了它）；
+ *   · `mult` 是這一格**印出來的那個數字自己**要乘的東西。
+ *     ⛔ 不乘它 ＝ 印出一個引擎從來不會打出來的量 —— 一句新的謊話（第一·五守則）。
+ *
+ * ⭐ 為什麼這一格是承重的（⛔ 不是「順手補齊」）：【週期領域】家族
+ * （`templates/expand.ts` 的 `FAMILIES["periodic-field"]`）把「`damageTier` 名的是
+ * **整段**預算」這個平衡決策寫成 `mult: 1 / ticks` —— 一個**運算子**，⛔ 不是一個
+ * 算好的數字（第〇·四守則）。⇒ 少了這一行，一片跳 5 發的領域卡面會印**整段**的
+ * 500，而每一發只打 100，⭐ **而既有的閘全綠**（這一支的姊妹閘只問「佔位符綁到
+ * 葉子沒」，⛔ 不問「綁到的數字對不對」）。
+ *
+ * ⚠️ **它今天只修得到印得出來的那一半。** 一格若**同時**帶 `mult` 與
+ * `ratios`/`attrRatios`，卡面手打的「+180% [AP]」那段文字**不會**跟著乘 ——
+ * 而那一段沒有佔位符，這一支代不了它。⇒ 出貨語料裡那樣的節點必須是 **0 個**，
+ * 閘在 `abilityProse.test.ts`（「⑨ `mult` 不可以和 `ratios` 同一格」）。
  */
 function damageRanks(v: unknown): number[] | undefined {
   if (typeof v === "number") return Number.isFinite(v) ? [v] : undefined;
   if (v === null || typeof v !== "object") return undefined;
-  const o = v as { flat?: unknown; perRank?: unknown };
+  const o = v as { flat?: unknown; perRank?: unknown; mult?: unknown };
+  // 缺席 ⇒ ×1（逐位元同這一格出現之前）。schema 已經把它收成 positive().max(20)，
+  // 所以非正數只可能來自**沒有過 schema** 的草稿 ⇒ 當成缺席，⛔ 不是當成 0。
+  const mult = pos(o.mult) ?? 1;
   const flat = typeof o.flat === "number" ? o.flat : 0;
   if (Array.isArray(o.perRank)) {
-    const rs = o.perRank.filter((n): n is number => typeof n === "number").map((n) => n + flat);
+    const rs = o.perRank
+      .filter((n): n is number => typeof n === "number")
+      .map((n) => (n + flat) * mult);
     return rs.length > 0 ? rs : undefined;
   }
-  return typeof o.flat === "number" ? [o.flat] : undefined;
+  return typeof o.flat === "number" ? [o.flat * mult] : undefined;
 }
 
 /**
