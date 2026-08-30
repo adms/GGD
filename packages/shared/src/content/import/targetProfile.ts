@@ -195,6 +195,23 @@ export interface UnavailableField {
 
 export interface TargetProfile {
   readonly schema: typeof TARGET_PROFILE_SCHEMA;
+  /**
+   * ⚠️⚠️ **⛔ 不要把這一格改成選填** —— 我 2026-08-31 幹過，而理由是假的。
+   *
+   * ⭐ 陷阱：**有兩個 schema tag，名字只差一個詞**，而它們是**不同的文件**：
+   *
+   * | tag | 誰產生 | 有 `generatedAt` 嗎 |
+   * |---|---|---|
+   * | `ggd-**content**-target-profile@1` ← **這一個** | live 端點 `/active/target-profile` | ✅ 呼叫端灌 `now().toISOString()` |
+   * | `ggd-**editor**-target-profile@1` | `scripts/buildEditorTargetProfile.ts` → `content/editor-target-profile.json` | ⛔ **沒有**（GH#389：留著每次 build 就髒一次） |
+   *
+   * ⇒ 看到那份**出貨檔沒有 `generatedAt`** 不代表這一格錯了 ——
+   * ⭐ 那份檔**根本不是這個型別**（17 個鍵裡有 9 個必填欄位它一個都沒有）。
+   * ⚠️ 兩份文件的**形狀完全不同**，只有名字像。
+   *
+   * ⭐ 那一份的閘另外有兩支：`shippedEditorProfileIsCurrent`（新鮮度）與
+   * `generatedArtifactsAreClockFree`（真的跑兩次產生器逐位元組比對）。⛔ 不要在這裡管它。
+   */
   readonly generatedAt: string;
   readonly gameVersion: string | null;
   /** 走到計畫 §12 的哪一階段。對方靠它判斷哪些 route 是真的。 */
