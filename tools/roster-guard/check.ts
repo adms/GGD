@@ -474,6 +474,14 @@ const DERIVATION_IMPORT = /from\s+["'][^"']*\/(shippedSurface|balancePopulation)
  * 會 → 它該走推導模組，⛔ 不該進這張表。
  */
 const WHOLE_TREE_BY_DESIGN: Record<string, string> = {
+  // ── 2026-08-31 —— 模板的精確引用鎖掃全樹 ────────────────────────────────
+  "packages/shared/src/content/templateRefPinIsHonest.test.ts":
+    "問的是「**今天有沒有任何文件釘住了一份已經變了的模板**」—— 那是**資料一致性**的" +
+    "性質，⛔ 不是玩家側的曝光。⭐ 一件**今天關著**的道具如果釘錯了模板，" +
+    "它**明天上架**時壞的就是它（`expand.ts` 不看上架面）⇒ 只掃上架面等於把缺陷排到未來。" +
+    "⚠️ 而這條閘今天**什麼都不擋**（出貨 84 支模板引用一格都沒填 `contentSha256`）——" +
+    "它在有人填了之後才開始說話。" +
+    "反駁方式：如果哪天 `expand.ts` 改成只展開上架面的技能，這一列就該改走 shippedItemIds()。",
   // ── 2026-08-30 GH#648 —— 週期領域模板的**阻塞點**掃全樹 ────────────────────
   "packages/shared/src/content/periodicFieldAdoptionBlocker.test.ts":
     "問的是「**今天有沒有任何內容引用 `tpl-periodic-field`**」—— 那是**引擎接線有沒有" +
