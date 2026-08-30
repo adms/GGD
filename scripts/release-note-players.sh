@@ -73,7 +73,17 @@ for N in $CLOSED; do
   P=$(printf '%s' "$B" | grep -m1 '🎮 玩家看得到的' | sed 's/.*）\*\*：//')
   # ⭐ 那一句對應的 commit 有沒有**落在這一段**？（⛔ 不然舊版的會一直重發）
   if [ -n "$P" ]; then
-    SHA=$(printf '%s' "$B" | grep -m1 -oE '\| \*\*commit\*\* \| `[0-9a-f]{7,40}`' | grep -oE '[0-9a-f]{7,40}' || true)
+    # ⛔⛔ **寫入端與消費端的格式對不上**（2026-08-30 量到，⭐ 同一天第二次）：
+    #   `ticket-progress.sh:70` 寫的是 `| **commit** | fe252e8aa |`（⛔ **沒有**反引號），
+    #   而這裡在此之前找的是 `` | **commit** | `fe252e8aa` | ``（要反引號）
+    #   ⇒ ⭐ **永遠對不上** ⇒ 每一張票都被判成「定位不到版本」⇒ 玩家公告永遠是空的。
+    #
+    # ⚠️ ⭐ 而它看起來完全正常：正則沒錯、欄位在、標記也寫進去了 ——
+    #   ⛔ 錯的只有「兩端對同一個格式的想像不一樣」。
+    #   （第一次是進度欄：寫入端是**表格** `| **狀態** | \`完成\` |`，而我找 `狀態:`。）
+    #
+    # ⇒ ⭐ 反引號改成**可有可無**，⛔ 而 sha 本身仍然嚴格（7–40 個 hex）。
+    SHA=$(printf '%s' "$B" | grep -m1 -oE '\| \*\*commit\*\* \| `?[0-9a-f]{7,40}`?' | grep -oE '[0-9a-f]{7,40}' || true)
     if [ -n "$SHA" ] && git cat-file -e "$SHA" 2>/dev/null; then
       git merge-base --is-ancestor "$SHA" "$NOW" 2>/dev/null || P=""      # 還沒進這一版
       [ -n "$P" ] && { git merge-base --is-ancestor "$SHA" "$SINCE" 2>/dev/null && P=""; }  # 上一版就有了
