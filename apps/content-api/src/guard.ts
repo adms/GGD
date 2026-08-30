@@ -90,10 +90,70 @@ export function isLoopbackHost(host: string | undefined | null): boolean {
   return isLoopbackAddress(h);
 }
 
+/**
+ * ⭐ 呼叫端可以**追加**的 dev origin（例：編輯器跑在別的埠上）。
+ *
+ * ⛔⛔ **每一個追加的 origin 都必須是 loopback。**
+ *
+ * ⚠️ ⭐ 2026-08-31 對抗式稽核在一個外部分支上量到這一格的**錯誤做法**：
+ * 它把呼叫端傳進來的字串**直接**併進白名單 ⇒ 傳 `https://evil.com` 進去就是白名單。
+ *
+ * ⭐ 而那正好**打穿這個檔案存在的理由** —— 檔頭第 3 條逐字說明的攻擊是
+ * 「dev 機器上的瀏覽器**＝ loopback peer**」：位址那一層擋不住它，
+ * ⇒ `Origin` 是**唯一**能分辨「我的編輯器」與「我剛好打開的一個惡意網頁」的東西。
+ *
+ * ⇒ ⭐ 追加的一律過 `isLoopbackHost`，⛔ 不合的**靜默丟掉**（⚠️ 而呼叫端拿得到回報）。
+ */
+export function filterLoopbackOrigins(
+  candidates: readonly string[],
+): { accepted: string[]; rejected: string[] } {
+  const accepted: string[] = [];
+  const rejected: string[] = [];
+  for (const raw of candidates) {
+    const o = raw.trim();
+    if (o === "") continue;
+    let host: string;
+    try {
+      const u = new URL(o);
+      // ⛔ 只收 http/https —— `file://` 之類沒有 host，`javascript:` 更不用說
+      if (u.protocol !== "http:" && u.protocol !== "https:") {
+        rejected.push(o);
+        continue;
+      }
+      host = u.hostname;
+    } catch {
+      rejected.push(o);
+      continue;
+    }
+    if (isLoopbackHost(host)) accepted.push(o);
+    else rejected.push(o);
+  }
+  return { accepted, rejected };
+}
+
+/** 執行期追加的 origin（⭐ 只放得進 loopback —— 見 {@link filterLoopbackOrigins}）。 */
+const extraOrigins = new Set<string>();
+
+/**
+ * ⭐ 追加 dev origin。回傳**被拒絕的那些**（⛔ 不是靜默丟掉 ——
+ * 一個安靜的過濾與一個通過的過濾長得一樣）。
+ */
+export function addAllowedOrigins(candidates: readonly string[]): { rejected: string[] } {
+  const { accepted, rejected } = filterLoopbackOrigins(candidates);
+  for (const o of accepted) extraOrigins.add(o);
+  return { rejected };
+}
+
+/** ⭐ 只給測試用：把追加的清空。 */
+export function resetAllowedOrigins(): void {
+  extraOrigins.clear();
+}
+
 /** `Origin` is optional; when present it must be a known local dev origin. */
 export function isAllowedOrigin(origin: string | undefined | null): boolean {
   if (origin === undefined || origin === null || origin === "") return true;
-  return ALLOWED_ORIGINS.includes(origin.trim());
+  const o = origin.trim();
+  return ALLOWED_ORIGINS.includes(o) || extraOrigins.has(o);
 }
 
 export interface GuardInput {

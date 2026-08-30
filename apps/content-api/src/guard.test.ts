@@ -26,7 +26,7 @@ import type { FastifyInstance } from "fastify";
 import { cover } from "@ggd/shared/testkit/cover";
 import { rebuildAllIndexes, writeDocAtomic } from "@ggd/shared/content/node";
 import { buildServer } from "./server";
-import { guardVerdict, isAllowedOrigin, isLoopbackAddress, isLoopbackHost } from "./guard";
+import { ALLOWED_ORIGINS, addAllowedOrigins, guardVerdict, isAllowedOrigin, isLoopbackAddress, isLoopbackHost, resetAllowedOrigins } from "./guard";
 import { listSnapshots, readSnapshot, snapshotTime, snapshotStem } from "./backup";
 
 const ITEM = {
@@ -439,5 +439,53 @@ describe("proxy laundering is why reachability, not detection (content-api-dev-w
     expect(res.body).toContain(LAN);
     // nothing was written
     expect(JSON.parse(readFileSync(join(root, "items", "ember-rod.json"), "utf8")).cost).toBe(900);
+  });
+});
+
+/**
+ * ⭐⭐ **追加的 dev origin 一律只收 loopback。**
+ *
+ * ⚠️ ⭐ 2026-08-31 對抗式稽核在一個外部分支上量到這一格的**錯誤做法**：
+ * 它把呼叫端傳進來的字串**直接**併進白名單 ⇒ 傳 `https://evil.com` 進去就是白名單。
+ *
+ * ⭐ 而那正好**打穿這個檔案存在的理由** —— 檔頭第 3 條逐字說明的攻擊是
+ * 「dev 機器上的瀏覽器**＝ loopback peer**」：位址那一層擋不住它，
+ * ⇒ `Origin` 是**唯一**能分辨「我的編輯器」與「我剛好打開的一個惡意網頁」的東西。
+ *
+ * ⚠️ ⭐ 而稽核同時指出：分支那版的測試**只有一行正向斷言** ——
+ * ⭐ 那是一把**單邊校準的尺**（它證明得了「收得進去」，⛔ 證明不了「擋得下來」）。
+ * ⇒ 這裡**兩個方向都驗**。
+ */
+describe("追加的 dev origin 只收 loopback（2026-08-31）", () => {
+  beforeEach(() => {
+    resetAllowedOrigins();
+  });
+
+  it("⭐ 正方向：loopback 的追加進得去", () => {
+    const { rejected } = addAllowedOrigins(["http://127.0.0.1:9999", "http://localhost:4321"]);
+    expect(rejected).toEqual([]);
+    expect(isAllowedOrigin("http://127.0.0.1:9999")).toBe(true);
+    expect(isAllowedOrigin("http://localhost:4321")).toBe(true);
+  });
+
+  it("⛔⛔ 反方向：非 loopback 的**擋下來，而且說得出是哪一個**", () => {
+    const bad = [
+      "https://evil.com",
+      "http://evil.com:60721", // ⚠️ ⭐ 埠號長得像我們的白名單 —— ⛔ 仍然要擋
+      "http://169.254.169.254", // ⚠️ 雲端 metadata 端點
+      "http://[::1].evil.com", // ⚠️ 看起來像 IPv6 loopback 的網域
+      "file:///etc/passwd",
+      "not-a-url",
+    ];
+    const { rejected } = addAllowedOrigins(bad);
+    expect(rejected.sort(), "⛔ 有非 loopback 的 origin 被放行了").toEqual([...bad].sort());
+    for (const o of bad) {
+      expect(isAllowedOrigin(o), `⛔ ${o} 被當成合法 origin`).toBe(false);
+    }
+  });
+
+  it("⭐ 出貨的白名單不受影響（⛔ 追加不可以蓋掉既有的）", () => {
+    addAllowedOrigins(["http://127.0.0.1:9999"]);
+    for (const o of ALLOWED_ORIGINS) expect(isAllowedOrigin(o)).toBe(true);
   });
 });

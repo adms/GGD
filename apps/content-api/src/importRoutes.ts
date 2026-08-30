@@ -227,6 +227,23 @@ export function registerImportRoutes(app: FastifyInstance, opts: ImportRoutesOpt
       reply.send(buildAuthoringRules((id) => Configs.tryGet(id))),
     );
 
+    /**
+     * ⭐ 短路徑別名 —— `/content-api/authoring-rules`（⛔ 不帶 `/content-import`）。
+     *
+     * ⚠️ ⭐ 為什麼值得有：創作規則是**編輯器每一次開啟技能都會問**的東西，
+     * ⛔ 而它跟「匯入」在語意上沒有關係 —— 匯入前綴只是它今天的**住址**。
+     * ⇒ 一個外部作者照著 `/content-api/...` 的其他路由推測，會打到短路徑而拿到 404。
+     *
+     * ⭐ 它是**同一個 handler**（⛔ 不是第二份實作 —— 那會是第〇·四守則的第二個住處）。
+     * ⚠️ 只在 `/content-api` 那一個前綴底下掛（⛔ 不掛在 `/api/v1/...` 上，
+     * 那是對外的版本化路徑，⭐ 而別名是給本機開發用的便利）。
+     */
+    if (prefix.endsWith("/content-import") && prefix.startsWith("/content-api")) {
+      app.get("/content-api/authoring-rules", async (_req, reply) =>
+        reply.send(buildAuthoringRules((id) => Configs.tryGet(id))),
+      );
+    }
+
     app.get(`${prefix}/active/target-profile`, async (_req, reply) => {
       const content = await readContentFacts(root);
       return reply.send(
