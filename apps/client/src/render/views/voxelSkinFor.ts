@@ -30,6 +30,7 @@ import {
   type VoxelSkinOverride,
   type VoxelSkinRecipe,
 } from "@ggd/shared/content/voxelSkin";
+import { ignoredLookTags } from "./voxelLookTags";
 
 /**
  * The generated skin for `championId`.
@@ -44,5 +45,9 @@ export function voxelSkinForId(
   if (!championId) return undefined;
   const def = Champions.tryGet(championId as ChampionId);
   if (!def) return undefined; // content still loading
-  return generateVoxelSkin(voxelSkinInputOf(def), { override: override ?? null });
+  return generateVoxelSkin(voxelSkinInputOf(def), {
+    override: override ?? null,
+    // ⭐ GH#881 —— 機制 tag（`katana`…）不可以決定上衣。清單由後台可調。
+    ignoredLookTags: ignoredLookTags(),
+  });
 }

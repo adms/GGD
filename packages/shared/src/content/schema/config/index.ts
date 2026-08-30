@@ -134,6 +134,7 @@ import { zConfigVictoryFxDoc } from "./victoryFx";
 import { zConfigItemCardDoc } from "./itemCard";
 import { zConfigUiLexiconDoc } from "./uiLexicon";
 import { zConfigHudLayoutDoc } from "./hudLayout";
+import { zConfigVoxelLookDoc } from "./voxelLook";
 import { zConfigUiCuesDoc } from "./uiCues";
 import { zConfigWorldCuesDoc } from "./worldCues";
 // GH#610 第二批 —— 逐場地的天氣觀感（濕地面／積水／霧濃度）。⚠️ 漏掉這一行 =
@@ -215,6 +216,7 @@ export * from "./stealth";
 export * from "./store";
 export * from "./taunt";
 export * from "./hudLayout";
+export * from "./voxelLook";
 export * from "./uiCues";
 export * from "./uiLexicon";
 export * from "./unitTints";
@@ -349,6 +351,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   // ⚠️ 漏掉這一行 = 一份 ui-cues.json 進了 content/ 之後整份內容驗證失敗
   // → 退回 2 隻骨架英雄，而網站看起來完全正常（2026-08-02 的形狀）。
   zConfigHudLayoutDoc,
+  zConfigVoxelLookDoc,
   zConfigUiCuesDoc,
   // 世界演出（2026-08-23 稽核）：六則「某個東西在某個座標出現／消失／掃過」的
   // 事件合成兩個模板 + 一張表。⚠️ 漏掉這一行 = 一份 world-cues.json 進了 content/

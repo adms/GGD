@@ -356,7 +356,7 @@ describe("voxel skin — the rule table does not converge", () => {
 
   it("every rule is reachable — none is dead weight in the table", () => {
     cover("voxel-skin-rules");
-    const haystacks = INPUTS.map(haystackOf);
+    const haystacks = INPUTS.map((c) => haystackOf(c));
     const unusedButIntentional = new Set<string>();
     for (const rule of SKIN_RULES) {
       const fires = haystacks.some((h) => rule.re.test(h));
@@ -461,6 +461,31 @@ describe("voxel skin — the committed roster snapshot", () => {
    *   ⚠️ 照本檔自己的判準先問「部件也變了嗎？」——
    *   `shaved-band|closed|vest|skirt|arrow|brim-hat|epaulets|scarf-tail` **逐字未變**。
    *   ⇒ 這是一個好改動的正確後果，⛔ 不是規則出事。漂移 1 位，其餘逐字相同。
+   *
+   * ── ⭐ 2026-08-31 的第四次刻意重生成 —— **一個機制詞彙污染了外觀**（GH#881）──
+   * `#817`（`f8622ec56`）為了**武器機制**在英雄的 `tags` 加了 `katana` 等詞，
+   * 而 `rules.ts:96` 的 `top` 軸正則逐字含 `katana`
+   * ⇒ ⭐ **宇智波佐助（忍者）當場被換上和服。**
+   *
+   * ⚠️ ⭐ 而這個快照**是說實話的那一方**：它記著 `godie-edem: …|vest|…`
+   *   —— 也就是 `#817` 之前的樣子。⇒ 這條閘從 08-29 起就是紅的，
+   *   ⛔ 而它讀起來像「有人改壞了外觀」，⭐ 真相是「有人加了一個武器 tag」。
+   *
+   * 照本檔自己的判準先問「**部件也變了嗎？**」——⭐ **變了，而且只有 `top` 一軸。**
+   *   ⇒ 那不是配色漂移，是規則的**輸入**被污染了 ⇒ 修輸入，⛔ 不是重生成了事。
+   *
+   * ⭐ 逐檔量過（全 71 位）：受影響 **9 隻**，全部由 `katana` 造成；
+   *   而「濾掉武器 tag」與「完全不讀 tags」的結果**逐格相同**
+   *   ⇒ `tags` 對外觀除了這個缺陷之外**零貢獻**。
+   *
+   * 修法：`config.voxel-look@1` 的 `ignoredLookTags`（後台可調，⭐ 清空 ＝ rollback）。
+   * ⭐ 而**和服本來就對**的三位（黑崎一護 ×2 的死霸裝、殺生丸的羽織）改住 **L1**
+   *   （`content/models/_voxel-skins.json`）—— ⚠️ 這份快照**不含 L1**，
+   *   所以他們在這裡是 jacket / robe / bare-chest，而**遊戲裡**仍然是和服
+   *   （`championBody.ts:338` 傳 `voxelSkinOverrideFor()`）。
+   *   ⇒ ⭐ 差別是：以前那件和服是**武器 tag 的副作用**，現在是**刻意的一列資料**。
+   *
+   * ⭐ `godie-edem` **不在這次的 diff 裡** —— 因為修法讓他回到快照原本就記著的 `vest`。
    */
   it("matches every champion's committed look signature", () => {
     cover("voxel-skin-snapshot");

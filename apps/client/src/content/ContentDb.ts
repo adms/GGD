@@ -23,6 +23,7 @@ import type {
   ConfigVfxFamiliesDoc,
   ConfigVfxAbilityArtDoc,
   ConfigVoxelBodiesDoc,
+  ConfigVoxelLookDoc,
   ConfigFormVisualsDoc,
   ConfigVictoryFxDoc,
   ConfigAudioMixDoc,
@@ -50,6 +51,7 @@ import { VOXEL_SKINS_SCHEMA, type VoxelSkinOverride } from "@ggd/shared/content/
 import { applyGoreDoc } from "../vfx/goreConfig";
 import type { ConfigHudLayoutDoc } from "@ggd/shared/content/schema/config";
 import { applyHudClusterOverride } from "../ui/hud/hudBottomCluster";
+import { setIgnoredLookTags } from "../render/views/voxelLookTags";
 import { applyPredictionHoldDoc } from "../predict/predictionHold";
 // 隱形原語 —— 同一條縫、同一個理由:沒有這一行,`content/config/stealth.json` 就是
 // 一份沒人讀的檔案,後台改了兩個不透明度/血條開關,場上完全不會變(第②號故障)。
@@ -308,6 +310,13 @@ export class ContentDb {
     //   ⚠️ ⭐ 而複驗指出的正是這一點：「一格轉不到的旋鈕，不是 rollback 開關」。
     applyHudClusterOverride(
       this.configDoc<ConfigHudLayoutDoc>("hud-layout", "config.hud-layout@1") as never,
+    );
+
+    // GH#881 —— 哪些 tag 不可以決定英雄的外觀。⚠️ 文件缺席 ⇒ 回到出貨清單
+    // （⛔ 一次載入失誤不可以靜默把 9 隻英雄換上和服）；`[]` 才是 owner 按的 rollback。
+    setIgnoredLookTags(
+      this.configDoc<ConfigVoxelLookDoc>("voxel-look", "config.voxel-look@1")
+        ?.ignoredLookTags ?? null,
     );
     // ⭐ GH#370 —— 預測影子的扣留旗標。⛔ 少了這一行，`content/config/combat-feel.json`
     // 的 `predictionHold` 就是一份沒人讀的設定：後台把某一顆關掉，場上完全不會變

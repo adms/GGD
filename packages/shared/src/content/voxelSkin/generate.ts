@@ -24,6 +24,7 @@
  *     render time, so feeding it in here would tint the 20 tinted champions
  *     twice. It is an OUTPUT-side channel, never an input.
  */
+import { SHIPPED_LOOK_IGNORED_TAGS } from "../schema/config/voxelLook";
 import { channel, frac, pick } from "./hash";
 import {
   ELEMENT_BANDS,
@@ -97,12 +98,25 @@ export function splitName(name: string | undefined): { title: string; proper: st
  * (The 稱號 is the motif-dense string anyway: 「七夜怪談 - 貞子」 carries the
  * ghost, 「白木老樹精」 carries the tree.)
  */
-export function haystackOf(input: VoxelSkinInput): string {
+export function haystackOf(input: VoxelSkinInput, ignoredTags?: readonly string[]): string {
   const { title, proper } = splitName(input.name);
+  const ignore = new Set(ignoredTags ?? SHIPPED_LOOK_IGNORED_TAGS);
   return [
     title,
     proper,
-    (input.tags ?? []).join(" "),
+    // ⭐⭐ GH#881 —— **機制詞彙看不到這裡。**
+    // `#817`（`f8622ec56`）為了武器機制在宇智波佐助（**忍者**）的 tags 加了
+    // `"katana"` ⇒ `rules.ts:96` 的 `/…|katana|…/` 命中 ⇒ ⭐ 他被換上和服。
+    // ⇒ ⭐ 一個詞彙被兩個系統當成不同的意思：機制側是「他拿刀」，
+    //    外觀側被讀成「他是武士」—— ⚠️ 而 `tags` 只有**一個**陣列在服務兩者。
+    //
+    // ⭐ 量到的（2026-08-31，全 71 位）：受影響 **9 隻**，全部由 `katana` 造成，
+    //    且**只動 `top` 一軸**；⭐「濾掉武器 tag」與「完全不讀 tags」**逐格相同**
+    //    ⇒ `tags` 對外觀除了這個缺陷之外**零貢獻**。
+    // ⛔ 那為什麼不乾脆不讀 tags？—— 因為那會把「哪些詞彙算外觀」這個**決定**
+    //    燒進程式，而 owner 的常設指令是「留後台開關可以簡易 rollback」。
+    //    ⇒ 清單住 `config.voxel-look@1`，清空它就 rollback 回舊行為。
+    (input.tags ?? []).filter((t) => !ignore.has(t)).join(" "),
     input.modelHint ?? silhouetteHint(input.id),
   ].join(" ");
 }
@@ -119,11 +133,23 @@ export interface VoxelSkinTrace {
  */
 export function generateVoxelSkin(
   input: VoxelSkinInput,
-  opts: { salt?: number; override?: VoxelSkinOverride | null; trace?: { out?: VoxelSkinTrace } } = {},
+  opts: {
+    salt?: number;
+    override?: VoxelSkinOverride | null;
+    trace?: { out?: VoxelSkinTrace };
+    /**
+     * ⭐ `config.voxel-look@1` 的 `ignoredLookTags`（GH#881）。
+     * ⚠️ 由**呼叫端**交進來，⛔ 這一支不讀全域 —— 它的檔頭承諾
+     * 「同一個 input 永遠得到同一個 recipe，在 node、在瀏覽器、跨 build」，
+     * ⭐ 而一個讀全域狀態的純函式做不到那件事。
+     * 省略 ⇒ 用出貨清單（`SHIPPED_LOOK_IGNORED_TAGS`）。
+     */
+    ignoredLookTags?: readonly string[];
+  } = {},
 ): VoxelSkinRecipe {
   const id = input.id;
   const salt = opts.salt ?? 1;
-  const haystack = haystackOf(input);
+  const haystack = haystackOf(input, opts.ignoredLookTags);
   const { forced, hits } = matchRules(haystack);
   if (opts.trace) opts.trace.out = { haystack, hits };
 

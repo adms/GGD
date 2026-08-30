@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "353a2f977da0",
+  "hash": "0139793bcada",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -529,6 +529,12 @@
       "path": "config/voxel-bodies.json",
       "hash": "2c4008f4c7ac",
       "size": 598
+    },
+    {
+      "id": "voxel-look",
+      "path": "config/voxel-look.json",
+      "hash": "584bed02ff43",
+      "size": 447
     },
     {
       "id": "weakness",

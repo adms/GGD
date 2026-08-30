@@ -398,6 +398,7 @@ export const NAV: NavItem[] = [
   // HUD 底部版面 (GH#873) —— 緊接在 畫面提示 前面：兩頁都在管「玩家眼睛看到什麼」，
   // 而這一頁管的是**位置**（另一頁管的是**有沒有說出來**）。
   { page: "hudLayout", label: "HUD 底部版面", emoji: "📐", section: SEC_SYS },
+  { page: "voxelLook", label: "外觀關鍵字", emoji: "👕", section: SEC_SYS },
   { page: "uiCues", label: "畫面提示", emoji: "💬", section: SEC_SYS },
   // 世界演出 (2026-08-23 稽核) —— 緊接在 畫面提示 後面，因為兩頁問的是同一類問題：
   // 「那一刻，畫面上出現什麼」。這一頁管的是**世界裡**那一團（誰出現了、誰消失了、

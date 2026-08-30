@@ -55,6 +55,7 @@ export type NavTag = (typeof TAG_VOCAB)[number];
  */
 export const TAG_WHY: Record<NavTag, string> = {
   營運: "玩家帳號、比賽、獎勵、公告 —— 人的事在哪裡處理？",
+  介面: "畫面上的東西**擺在哪、多大** —— 版面／外觀推導在哪裡調？",
   運維: "伺服器、備份搬遷、錄影、稽核 —— 機器的事在哪裡看？",
   內容: "哪些英雄／技能／道具存在、上不上架？",
   資產: "模型／圖示／體素／語音是怎麼被產出來的？",
@@ -72,6 +73,7 @@ export const TAG_WHY: Record<NavTag, string> = {
 /** 標籤屬於哪一個 facet 軸 —— UI 用它把按鈕排成兩列，⛔ 不是一排 13 顆。 */
 export const TAG_FACET: Record<NavTag, "機能" | "性質"> = {
   營運: "機能",
+  介面: "機能",
   運維: "機能",
   內容: "機能",
   資產: "機能",
