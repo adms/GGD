@@ -108,9 +108,25 @@ except Exception: print('')" 2>/dev/null)
   head_ "2. SSH"
   if r true 2>/dev/null; then ok "免密碼登入 OK（$USER_@$HOST）"
   else
-    bad "SSH 登不進去"
-    info "⇒ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER_@$HOST"
-    info "  （它會問 mini 的密碼 —— ⛔ 那一步只能你自己跑）"
+      # ⛔⛔ **在此之前這裡一律說「跑 ssh-copy-id」，而那常常指著錯的方向。**
+      #   2026-08-30 實測：兩把鑰匙都在 agent 裡、`ssh-copy-id` 早就跑過，
+      #   ⭐ 而真正的原因是 **mini 根本連不到**（port 22 逾時 —— 它睡了／不在同一個網段）。
+      #   ⇒ 照那句話做會去重跑一個沒有問題的步驟，⛔ 而且它會**卡在密碼提示**。
+      #
+      # ⭐ 判準：**先分辨「連不到」與「連得到但登不進去」** —— 那是兩個名詞的關係，
+      #   ⛔ 不是同一件事。連不到 ⇒ 是網路；連得到而被拒 ⇒ 才是鑰匙。
+      if ! nc -z -G 4 "$HOST" 22 2>/dev/null; then
+        bad "⛔ 連不到 $HOST:22 —— ⭐ 這是**網路**，⛔ 不是鑰匙"
+        info "  · mini 睡著了？（caffeinate ／ 系統設定 → 節能）"
+        info "  · 不在同一個網段？（要區網或 VPN）"
+        info "  · IP 變了？（DHCP）"
+        info "⛔ **不要**跑 ssh-copy-id —— 它跟這個問題無關，而且會卡在密碼提示。"
+      else
+        bad "SSH 登不進去（⭐ port 22 通得到 ⇒ 這一次真的是鑰匙）"
+        info "⇒ 先看 agent：ssh-add -l（空的話 ssh-add --apple-load-keychain）"
+        info "⇒ 仍然不行才：ssh-copy-id -i ~/.ssh/id_rsa.pub $USER_@$HOST"
+        info "  （它會問 mini 的密碼 —— ⛔ 那一步只能你自己跑）"
+      fi
     return 1
   fi
 
