@@ -15,7 +15,7 @@
 import { z } from "zod";
 import { RESOURCE_PCT_POINTS_MAX, RESOURCE_PCT_RATIO_MAX, RESOURCE_PCT_RATIO_SELF_MAX } from "../../../sim/effects/dynamicTerms";
 import type { EffectDef } from "../../../sim/effects/effect";
-import { EFFECT_CHAIN_MAX_STEPS, EFFECT_MAX_NESTING_DEPTH, TYPE_STREAK_MAX_THRESHOLD, TYPE_STREAK_MAX_TIMEOUT_SEC } from "../../../sim/effects/kindLimits";
+import { EFFECT_CHAIN_MAX_STEPS, TYPE_STREAK_MAX_THRESHOLD, TYPE_STREAK_MAX_TIMEOUT_SEC } from "../../../sim/effects/kindLimits";
 import { FLIGHT_MAX_HOVER_HEIGHT } from "../../../sim/flight";
 import { RANK_SCALAR_MAX_COLUMNS } from "../../../sim/perRank";
 import { ATTR_GRANT_MAX, ATTR_GRANT_MIN } from "../../../sim/stats/attributes";
@@ -52,19 +52,24 @@ export function registerEffectDefSchema(schema: z.ZodTypeAny): void {
 }
 
 /**
- * ⭐ 遞迴深度計數 —— ⛔ **不是**一個可以省略的護欄。
+ * Recursive knot: spawnProjectile.onHit is EffectDef[] again.
  *
- * `z.lazy` 每往下一層就會再呼叫一次這個 thunk ⇒ ⭐ 在這裡數，就等於數了
- * **每一條**回到 `EffectDef[]` 的路（`delayed.effects` · `randomArea.effects` ·
- * `spawnProjectile.onHit` · `dash.onEnd` · `damageArea.onHitTargets` …）——
- * ⛔ 不必逐個 kind 去加，⭐ 也不會漏掉下一個新增的遞迴欄位。
+ * ⛔⛔ **⛔ 不要在這裡包一層 `superRefine` 做深度檢查。**
  *
- * ⚠️ ⭐ 它是**同步**的：Zod 的 parse 是同步遞迴，所以一個模組級的計數器是安全的
- * （⛔ 沒有交錯的 parse）。`finally` 保證即使中途擲錯也會還原。
+ * ⭐ 2026-08-31 我這樣做過，而它**當場弄壞了編輯器**：
+ * 把這個 `z.lazy` 的回傳包成 `z.any().superRefine(...)` 之後，
+ * schema 的**可內省型別**從 `discriminatedUnion` 變成 `unknown`
+ * ⇒ ⭐⭐ `apps/editor` 的 `walkZod()` **看不見那 46 種 effect kind 了**
+ * ⇒ 表單產生器產不出任何一格（`union.variants` 是 `undefined`）。
+ *
+ * ⚠️ ⭐ 而那正好打在 owner 最在意的那一點上：
+ * 「**後台編輯器的抽象化、完整性、視覺化可操作性很重要**」——
+ * ⛔ 一個為了安全而做的改動，把「no code 介面」的地基抽掉了。
+ *
+ * ⇒ ⭐ **深度檢查住在門口**（`content/finiteNumbers.ts` 的 `findDocProblems`），
+ *   與非有限數字同一處、同一個時機（Zod **之前**）——
+ *   ⭐ 那裡不碰 schema 的型別，⛔ 所以內省不受影響。
  */
-let effectDepth = 0;
-
-/** Recursive knot: spawnProjectile.onHit is EffectDef[] again. */
 export const zEffectDef: z.ZodType<EffectDef, z.ZodTypeDef, unknown> = z.lazy(() => {
   if (effectDefHolder.schema === null) {
     throw new Error(
@@ -72,27 +77,7 @@ export const zEffectDef: z.ZodType<EffectDef, z.ZodTypeDef, unknown> = z.lazy(()
         "content/schema/effects/index.ts（⛔ 不可以只 import 單一 kind 檔）",
     );
   }
-  const inner = effectDefHolder.schema;
-  return z.any().superRefine((val, ctx) => {
-    if (effectDepth >= EFFECT_MAX_NESTING_DEPTH) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message:
-          `效果巢狀太深（超過 ${EFFECT_MAX_NESTING_DEPTH} 層）。` +
-          "⭐ 出貨內容最深是 3 層 —— ⛔ 這一份多半是產生器跑掉了，或是一份惡意文件。" +
-          "⚠️ 沒有這個上界時，深度 600 會讓解析器堆疊爆掉，而那個錯誤**逃得出隔離**" +
-          "（整份內容載入失敗 ⇒ 每個玩家退回 2 隻骨架）。",
-      });
-      return;
-    }
-    effectDepth++;
-    try {
-      const r = inner.safeParse(val);
-      if (!r.success) for (const i of r.error.issues) ctx.addIssue(i);
-    } finally {
-      effectDepth--;
-    }
-  }) as unknown as z.ZodTypeAny;
+  return effectDefHolder.schema;
 }) as unknown as z.ZodType<EffectDef, z.ZodTypeDef, unknown>;
 
 // AoE 四級距（owner 2026-08-11）。⛔ 不要在這裡重打一份字串陣列。

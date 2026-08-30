@@ -86,3 +86,76 @@ export function nonFiniteDetail(hits: readonly NonFiniteHit[]): string {
     "⚠️ JSON 送得進來：`1e400` 解析出來就是 `Infinity`。"
   );
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * ⭐ 深度 —— ⛔ 與上面同一道門，⛔ 不是包在 schema 上
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/**
+ * ⛔⛔ **⛔ 不要把深度檢查包成 `zEffectDef` 的 `superRefine`。**
+ *
+ * ⭐ 2026-08-31 我這樣做過，而它**當場弄壞了編輯器**：
+ * 包成 `z.any().superRefine(...)` 之後，schema 的**可內省型別**
+ * 從 `discriminatedUnion` 變成 `unknown`
+ * ⇒ ⭐⭐ `apps/editor` 的 `walkZod()` **看不見那 46 種 effect kind**
+ * ⇒ 表單產生器產不出任何一格。
+ *
+ * ⚠️ ⭐ 而那正好打在 owner 最在意的那一點上：
+ * 「後台編輯器的**抽象化、完整性、視覺化可操作性**很重要」——
+ * ⛔ 一個為了安全而做的改動，把「no code 介面」的地基抽掉了。
+ *
+ * ⇒ ⭐ 判準：**保護內容的檢查放在門口，⛔ 不放在 schema 裡** ——
+ * schema 是**兩個消費端**共用的（引擎驗證 ＋ 編輯器內省），
+ * ⛔ 而包一層 refine 只有前者看得見。
+ *
+ * ── ⭐ 它擋的是什麼（量到的）──────────────────────────────────────────
+ * `zEffectDef` 是 `z.lazy` 遞迴（`delayed.effects` / `randomArea.effects` /
+ * `spawnProjectile.onHit` / `dash.onEnd` / `damageArea.onHitTargets` 都會回到
+ * `EffectDef[]`）。深度 **600** 會讓 `safeParse` 擲 `RangeError`，
+ * ⚠️ ⭐ 而 `RangeError` **不是 `ZodError`** ⇒ 它逃得出隔離 ⇒ 全站退回 2 隻骨架。
+ *
+ * ⭐ 出貨內容今天最深 **4 層**（`godie-n01c.r`）⇒ 上界 12 有 **3 倍餘裕**。
+ */
+export const MAX_DOC_NESTING_DEPTH = 12;
+
+/** 文件巢狀多深（⭐ 只數帶 `kind` 的節點 —— 那是效果樹的骨架）。 */
+export function maxEffectDepth(doc: unknown): number {
+  let deepest = 0;
+  const walk = (n: unknown, d: number): void => {
+    if (d > 200) {
+      deepest = Math.max(deepest, d); // ⭐ 夠深就停,⛔ 不必數到爆
+      return;
+    }
+    if (Array.isArray(n)) {
+      for (const v of n) walk(v, d);
+      return;
+    }
+    if (n === null || typeof n !== "object") return;
+    const rec = n as Record<string, unknown>;
+    const next = typeof rec["kind"] === "string" ? d + 1 : d;
+    deepest = Math.max(deepest, next);
+    for (const v of Object.values(rec)) walk(v, next);
+  };
+  walk(doc, 0);
+  return deepest;
+}
+
+/** ⭐ 門口的**一道**檢查：非有限數字 ＋ 巢狀過深。 */
+export function findDocProblems(doc: unknown): { path: string; message: string }[] {
+  const out: { path: string; message: string }[] = [];
+  for (const h of findNonFiniteNumbers(doc)) {
+    out.push({ path: h.path, message: `非有限的數字（${h.value}）` });
+  }
+  const depth = maxEffectDepth(doc);
+  if (depth > MAX_DOC_NESTING_DEPTH) {
+    out.push({
+      path: "(root)",
+      message:
+        `效果巢狀太深（${depth} 層，上限 ${MAX_DOC_NESTING_DEPTH}）。` +
+        "⭐ 出貨內容最深是 4 層 —— ⛔ 這一份多半是產生器跑掉了，或是一份惡意文件。" +
+        "⚠️ 沒有這個上界時，深度 600 會讓解析器堆疊爆掉，而那個錯誤**逃得出隔離**" +
+        "（整份內容載入失敗 ⇒ 每個玩家退回 2 隻骨架）。",
+    });
+  }
+  return out;
+}
