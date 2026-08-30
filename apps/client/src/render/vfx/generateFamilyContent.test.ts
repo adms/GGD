@@ -47,6 +47,13 @@ import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } f
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+// ⭐⭐ GH#875 —— **這一行漏了四天**，而它的症狀完全指錯方向。
+// `abilityArtRows()` 走的是**執行期註冊表**（瀏覽器那端由 `ContentDb` 灌）；
+// Node 測試沒有 `ContentDb` ⇒ ⛔ 不 import 這支 testkit 就拿到**空的**證據
+// ⇒ 下面反方向那條迴圈把出貨檔的**每一格**都報成「證據已經不再有這一格」
+// ⇒ ⭐ 讀起來像「08-27 那次普查刪光了藝術證據」，⛔ 而證據 357 格一格都沒少。
+// ⚠️ 同資料夾另外 **21 個**測試檔都有這一行 —— 只有這一個漏掉（逐檔量過）。
+import "./shippedAbilityArt.testkit";
 import {
   abilityArtRows,
   ownedAbilityFields,
@@ -133,6 +140,14 @@ describe("vfx 家族產生器（GH#378 / GH#427）", () => {
     // 那份證據），⛔ 沒有第二張手抄的對照表 —— 之後鏡像多一格或少一格，這條自動跟上。
     const shipped = (JSON.parse(readFileSync(SHIPPED, "utf8")) as Doc).abilities;
     const expected = abilityArtRows();
+    // ⭐ 量尺先自證（失敗形態⑨ —— 一個指著錯方向的錯誤訊息）：
+    // 證據空的時候，下面每一條 drift 都是**假的**，而它們讀起來跟真的漂移一模一樣。
+    // ⇒ 先把「註冊表沒載入」這件事講出來，⛔ 不要讓它偽裝成 221 列資料不見了。
+    expect(
+      Object.keys(expected).length,
+      "證據是空的 ⇒ ⛔ 註冊表沒載入（少了 `import \"./shippedAbilityArt.testkit\"`）。" +
+        "⚠️ 這**不是**資料遺失 —— 下面任何 drift 都不可信。",
+    ).toBeGreaterThan(0);
     // ⭐ GH#835 —— 反方向的分母是**投影**（`ownedAbilityFields()`），⛔ 不是
     //   `ownedRowFields(expected)`（這一輪的產出聯集）。上面那條保留閘讀的是同一支
     //   函式 ⇒ 兩條閘不可能對「哪幾格歸產生器」給出兩個答案。
