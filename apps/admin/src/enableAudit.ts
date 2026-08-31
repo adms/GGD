@@ -62,3 +62,81 @@ const LABEL: Record<Kind, string> = {
   items: "道具",
   abilities: "技能",
 };
+
+// ──────────────────────────────────────────────────────────────────────────
+// ⭐⭐ GH#473 —— **啟用的當下真的把稽核結果拿回來**
+// ──────────────────────────────────────────────────────────────────────────
+
+/** 稽核的一列（`tools/review/enable-audit.mjs` 的 `auditPlan` 產出）。 */
+export interface EnableAuditRow {
+  readonly id: string;
+  readonly kind?: string;
+  readonly finding: string;
+  readonly severity?: string;
+}
+
+/**
+ * ⭐ 稽核結果的**三態**，⛔ 不是兩態。
+ *
+ * ⚠️⚠️ **這是整段的重點**：`/__review` 是 **dev-only** 的 vite middleware
+ * （CLAUDE.md GH#794 記過：`/__review` 與 `/__live` 在本機活著而**線上沒有**）。
+ * ⇒ ⛔ 在正式後台按下「啟用」時，這個端點會 404。
+ *
+ * ⭐ 而「稽核跑不到」**必須看起來與「稽核通過」不一樣** ——
+ * ⛔ 否則操作者會把一個沒有跑過的稽核讀成一張乾淨的成績單。
+ * （CLAUDE.md：「fail-open 沒錯，**靜默**才是缺陷」。）
+ */
+export type EnableAuditResult =
+  /** ⭐ 跑過了，這是結果（`rows` 可能是空的 ＝ 真的沒問題）。 */
+  | { readonly state: "ran"; readonly rows: readonly EnableAuditRow[] }
+  /** ⛔ 這個環境跑不到（端點不在／不通）—— ⭐ 要**說出來**。 */
+  | { readonly state: "unavailable"; readonly why: string }
+  /** ⭐ 這一次沒有新啟用任何東西 ⇒ ⛔ 一支稽核都不跑（「不啟用就不花錢」）。 */
+  | { readonly state: "skipped" };
+
+/** dev middleware 的端點。⚠️ 正式 build 沒有它 —— 那是刻意的，見上面的三態。 */
+export const ENABLE_AUDIT_URL = "/__review/enable-audit";
+
+/**
+ * ⭐ 把「這一次新啟用的 id」送去跑稽核。
+ *
+ * ⚠️ ⭐ 空清單**不打網路**（⛔ 也不回 `ran`）—— 票文逐字的成本斷言
+ * 「不啟用就不花錢」。
+ */
+export async function fetchEnableAudit(
+  ids: readonly string[],
+  fetchFn: typeof fetch = fetch,
+): Promise<EnableAuditResult> {
+  if (ids.length === 0) return { state: "skipped" };
+  try {
+    const res = await fetchFn(`${ENABLE_AUDIT_URL}?ids=${encodeURIComponent(ids.join(","))}`);
+    if (!res.ok) {
+      return {
+        state: "unavailable",
+        why: `稽核端點回 ${res.status}（⭐ 正式 build 沒有 /__review —— 這是預期的）`,
+      };
+    }
+    const body = (await res.json()) as { rows?: EnableAuditRow[] };
+    return { state: "ran", rows: body.rows ?? [] };
+  } catch (err) {
+    return {
+      state: "unavailable",
+      why: `稽核端點連不上（${err instanceof Error ? err.message : String(err)}）`,
+    };
+  }
+}
+
+/**
+ * ⭐ 一行給操作者看的字。
+ *
+ * ⚠️ ⭐ 三態各有**不同的字**，⛔ 而 `unavailable` 那一行刻意用 `⚠️` 開頭：
+ * 它與「⭐ 稽核通過」在畫面上**必須長得不一樣**。
+ */
+export function enableAuditResultText(r: EnableAuditResult): string {
+  if (r.state === "skipped") return "";
+  if (r.state === "unavailable") return `　⚠️ **稽核沒有跑**：${r.why}`;
+  if (r.rows.length === 0) return "　⭐ 稽核通過（0 個發現）";
+  const head = r.rows.slice(0, 5).map((x) => `${x.id}：${x.finding}`).join("；");
+  const more = r.rows.length > 5 ? `⋯共 ${r.rows.length} 項` : "";
+  return `　⚠️ 稽核 ${r.rows.length} 個發現 —— ${head}${more}`;
+}

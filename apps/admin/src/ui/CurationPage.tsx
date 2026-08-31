@@ -27,7 +27,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getStarterSet, getWhitelist, saveWhitelist } from "../api";
 import { contentAssetUrl, loadCollection } from "../content";
-import { enableAuditSummary } from "../enableAudit";
+import {
+  enableAuditSummary,
+  newlyEnabledIds,
+  fetchEnableAudit,
+  enableAuditResultText,
+} from "../enableAudit";
 import {
   EMPTY_SELECTION,
   FILTER_LABEL,
@@ -282,12 +287,22 @@ export function CurationPage(): React.JSX.Element {
       if (verify.ok) {
           // ⭐ GH#473：`null` = 這一次沒有新啟用任何東西 ⇒ ⛔ 一個字都不多說、
           //    一支稽核都不跑（票文逐字的成本斷言：「不啟用就不花錢」）。
-        setFlash({
-          ok: true,
-          text:
+          const base =
             `✓ 已儲存並回讀驗證（${via === "bulk" ? "bulk" : "replace"}）：英雄 ${doc.champions.length}、道具 ${doc.items.length}、技能 ${doc.abilities.length}` +
-            (enableAuditSummary(before, doc) ?? ""),
-        });
+            (enableAuditSummary(before, doc) ?? "");
+          setFlash({ ok: true, text: base });
+          // ⭐⭐ GH#473 —— **啟用的當下真的把稽核跑出來**。
+          //
+          // ⚠️ 在此之前這裡只說得出「你剛啟用了哪幾支」（`enableAuditSummary`），
+          //   ⛔ 說不出「而它們有這幾個問題」—— 而票文要的是後者。
+          //
+          // ⭐ 三態（⛔ 不是兩態）：`/__review` 是 **dev-only** 的 vite middleware
+          //   ⇒ 正式後台按下去會 404。而「稽核跑不到」**必須看起來與「稽核通過」
+          //   不一樣** —— ⛔ 否則操作者會把沒跑過讀成一張乾淨的成績單。
+          void fetchEnableAudit(newlyEnabledIds(before, doc)).then((r) => {
+            const extra = enableAuditResultText(r);
+            if (extra !== "") setFlash({ ok: r.state !== "unavailable", text: base + extra });
+          });
       } else {
         const detail = verify.mismatches
           .map((m) => `${KIND_LABEL[m.kind]} 缺 ${m.missing.length} / 多 ${m.extra.length}`)
