@@ -1,0 +1,63 @@
+{
+  "id": "glb-postprocess-chain",
+  "schema": "ops.glb-postprocess@1",
+  "note": "⭐ GH#841 Scope④ —— 出貨 .glb 的**後處理鏈**。⛔ 這不是「再跑一次轉檔器」的清單，而是「轉檔器之後還有誰改寫過它」的清單。⚠️ 裸重跑 convert_stock_model.py ＝ 把下面每一層全部丟掉，而 glb 仍然合法、載得進去、畫得出來 —— ⛔ 沒有東西會報錯。⭐ 唯一可量的訊號是 TeamGlow 變少（棘輪 glbRegenRatchet.test.ts）。",
+  "order": [
+    {
+      "step": 1,
+      "script": "tools/w3x-import/convert_stock_model.py",
+      "what": "mdx → glb（唯一的產生者）",
+      "inputs": "per-model",
+      "task": "—"
+    },
+    {
+      "step": 2,
+      "script": "tools/w3x-import/strip_geoset_prims.py",
+      "what": "拿掉 GEOA 藏起來的特效 primitive",
+      "task": "#59",
+      "inputs": [
+        "heromusashimiyamoto.glb",
+        "herohehi.glb",
+        "linkstik.glb"
+      ]
+    },
+    {
+      "step": 3,
+      "script": "tools/w3x-import/rebake_stripped.py",
+      "what": "重烘過特效 geoset 閘",
+      "task": "#17/#32",
+      "inputs": [
+        "niya",
+        "bulbasaur",
+        "gumdam",
+        "linkstik",
+        "negi",
+        "pika",
+        "hero-turtle"
+      ]
+    },
+    {
+      "step": 4,
+      "script": "tools/w3x-import/rebake_textures.py",
+      "what": "換掉內嵌的 8×8 灰色佔位貼圖",
+      "task": "#33",
+      "inputs": "derived: --list 會自己算出受影響的那些（⛔ 沒有手寫名單）"
+    },
+    {
+      "step": 5,
+      "script": "tools/w3x-import/flatten_root_float.py",
+      "what": "殺掉 root-motion 浮空",
+      "task": "#162",
+      "inputs": [
+        "heroichigo"
+      ]
+    },
+    {
+      "step": 6,
+      "script": "npx vitest run packages/shared/src/ops/glbRegenRatchet.test.ts",
+      "what": "⭐ 棘輪：TeamGlow 只能變多",
+      "inputs": "—",
+      "task": "#841"
+    }
+  ]
+}

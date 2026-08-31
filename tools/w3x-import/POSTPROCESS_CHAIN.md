@@ -51,6 +51,21 @@ GH#841 這一輪量到：重跑 129 份裡 **10 份掉 TeamGlow**、16 份 prim 
 
 ---
 
+## ⭐ 那四張手寫表**收成一份了**（Scope④ 完成，2026-09-01）
+
+`tools/w3x-import/postprocess-chain.json` —— 六步、11 筆手寫輸入。
+
+⚠️ ⭐ 而它**不能漂**：`glbPostprocessChain.test.ts` 逐步比對清單裡的 `inputs`
+與那支 `.py` 裡 `JOBS` 的頂層 key ——
+⇒ ⭐ 有人往 `JOBS` 加一支英雄而沒更新清單 ⇒ **紅並指名**
+（⛔ 否則下一個重跑的人會漏掉它，而 glb 仍然合法、⛔ 沒有東西會報錯）。
+
+```bash
+python3 -c "import json;[print(s['step'],s['script'],s['inputs']) for s in json.load(open('tools/w3x-import/postprocess-chain.json'))['order']]"
+```
+
+---
+
 ## ⭐ 判準（下一輪動它之前先問）
 
 | ⛔ 不要問 | ⭐ 要問 |
