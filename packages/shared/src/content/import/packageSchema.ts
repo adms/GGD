@@ -24,6 +24,8 @@
  *    由 capabilities 那一層負責，兩者不要混。
  */
 import { z } from "zod";
+import type { ImportDiagnostic } from "./diagnostics";
+import { parseWithUnknownFieldReport } from "./unknownFields";
 import { zImportDiagnostic } from "./diagnostics";
 
 /** Schema 的硬天花板。營運配額走 capabilities 的 `limits`，見檔頭第 2 點。 */
@@ -400,6 +402,33 @@ export const zEditorImportPackage = z
   })
   .passthrough();
 export type EditorImportPackage = z.infer<typeof zEditorImportPackage>;
+
+/**
+ * ⭐⭐ GH#327 —— 整包解析的**唯一入口**，而且它會回報**未知欄位**。
+ *
+ * ── ⛔ 為什麼要有這一支 ────────────────────────────────────────────────────
+ * `unknownFields()` / `parseWithUnknownFieldReport()` 上一輪落地了，
+ * ⛔ **而它們一個非測試呼叫端都沒有** —— ⭐ 那正是失敗形態⑧的形狀：
+ * 函式在、測試綠、⛔ 而真的匯入流程從來不會走到它。
+ * （票文的進度標記逐字寫著「⛔ 不要讓它爛在那裡」。）
+ *
+ * ── ⭐ 為什麼未知欄位是**診斷**而不是**錯誤** ──────────────────────────────
+ * 整包 schema 是 `.passthrough()` 的（外部編輯器會帶自己的欄位，⭐ 那是刻意的）
+ * ⇒ ⛔ 未知欄位**不該擋下匯入**。
+ * ⭐ 但它必須**說出來** —— 一個「我以為我設定了而它被忽略」的欄位，
+ * 是玩家投稿最常見的困惑來源，⛔ 而靜默忽略答不出「為什麼沒生效」。
+ *
+ * ⚠️ ⭐ 掃的是**原始輸入**，⛔ 不是 parse 的產物：一個 `.strict()` 的子節點
+ * 會在 parse 時就把未知 key 丟掉 ⇒ 掃產物會**漏報**那一種。
+ */
+export function parseImportPackage(raw: unknown): {
+  readonly ok: boolean;
+  readonly value: EditorImportPackage | null;
+  readonly diagnostics: readonly ImportDiagnostic[];
+} {
+  const r = parseWithUnknownFieldReport(zEditorImportPackage, raw);
+  return { ok: r.ok, value: (r.value as EditorImportPackage | null) ?? null, diagnostics: r.diagnostics };
+}
 
 // ──────────────────────────────────────────────────────────────────────────
 // 結果格式 `ggd-content-import-result@1`（規格 §12）
