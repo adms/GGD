@@ -1,6 +1,7 @@
 import type { VfxScriptDoc, VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
 import { zVfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
 import type { EventMessage } from "@ggd/shared/protocol/messages";
+import type { PreviewActorPose, PreviewTraceEvent } from "../preview/PreviewController";
 import { eventOriginBelongsToAbility } from "../preview/eventOwnership";
 
 export type AssetDrop = { collection: "models" | "vfx"; id: string };
@@ -20,6 +21,7 @@ export type ForgeReactionTrigger = "reflectSuccess";
 export interface ScheduledSimEvent {
   atMs: number;
   event: EventMessage;
+  actorPose?: PreviewActorPose;
 }
 
 export interface TriggerCue {
@@ -34,17 +36,27 @@ export interface TriggerCue {
  * is recomputed here: if the sim did not emit an event, Forge cannot play it.
  */
 export function scheduleSimEvents(
-  events: readonly { type: string; tick: number; data: Record<string, unknown> }[],
+  events: readonly PreviewTraceEvent[],
   abilityId: string,
 ): ScheduledSimEvent[] {
   const cast = events.find((event) => event.type === "abilityCast" && event.data["abilityId"] === abilityId);
   const reaction = events.find((event) => event.type === "reflectSuccess");
   const baseTick = cast?.tick ?? reaction?.tick ?? events.reduce((min, event) => Math.min(min, event.tick), Number.POSITIVE_INFINITY);
   if (!Number.isFinite(baseTick)) return [];
-  return events.map((event) => ({
-    atMs: Math.max(0, event.tick - baseTick) * SIM_TICK_MS,
-    event: event as EventMessage,
-  }));
+  // Reactive previews first cast a separate enabler, then inject one incoming
+  // hit so the selected passive can react through the real SimWorld path.  The
+  // enabler is not part of the selected ability's presentation.  Clamping its
+  // earlier ticks to zero made every setup telegraph, pillar and arc explode in
+  // one white frame at the start of the EX timeline.  Start the schedule at the
+  // selected cast/reaction instead; everything from that point onward remains
+  // the exact event order emitted by SimWorld.
+  return events
+    .filter((event) => event.tick >= baseTick)
+    .map((event) => ({
+      atMs: (event.tick - baseTick) * SIM_TICK_MS,
+      event: event as EventMessage,
+      ...(event.actorPose ? { actorPose: event.actorPose } : {}),
+    }));
 }
 
 export function triggerCuesFromSim(

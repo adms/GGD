@@ -51,6 +51,10 @@ export function VfxForgePreview({
     actors: { caster: "替身", target: "替身" },
   });
   const [calibration, setCalibration] = useState("量尺未校準");
+  const firstPose = schedule.find((item) => item.actorPose)?.actorPose;
+  const homePoseKey = firstPose
+    ? `${firstPose.caster.x},${firstPose.caster.z}/${firstPose.target.x},${firstPose.target.z}`
+    : "pending-pose";
 
   useEffect(() => { playheadRef.current = playheadMs; }, [playheadMs]);
 
@@ -66,9 +70,10 @@ export function VfxForgePreview({
     const resize = new ResizeObserver(() => stage.resize());
     resize.observe(canvas);
     return () => { resize.disconnect(); stage.dispose(); stageRef.current = null; };
-    // Stage ownership follows the selected ability. Draft changes use setContent below.
+    // Stage ownership follows the selected ability and the real Sim home pose.
+    // Draft changes that keep the same world frame use setContent below.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ability.id, caster?.id, mode, target?.id]);
+  }, [ability.id, caster?.id, homePoseKey, mode, target?.id]);
 
   useEffect(() => {
     const stage = stageRef.current;

@@ -45,6 +45,7 @@ import { resolveClip } from "../preview3d/clips";
 import { burstNow, toParticleSystem } from "../preview3d/particles";
 import { projectileIdsOf, type ForgeAbility, type ScheduledSimEvent } from "./model";
 import { calibrateTwoWay } from "../../../client/src/vfx/auditionCalibrate";
+import type { PreviewActorPose } from "../preview/PreviewController";
 
 const STEP_MS = 1000 / 60;
 const CASTER_POS = { x: 0, z: 0 };
@@ -52,6 +53,29 @@ const CASTER_POS = { x: 0, z: 0 };
 // render stage on that same axis means point/direction payloads can pass to
 // VfxSystem unchanged instead of inventing a second coordinate transform.
 const TARGET_POS = { x: 0, z: 3 };
+
+function homePoseOf(schedule: readonly ScheduledSimEvent[]): PreviewActorPose {
+  const pose = schedule.find((item) => item.actorPose)?.actorPose;
+  return pose
+    ? { caster: { ...pose.caster }, target: { ...pose.target } }
+    : { caster: { ...CASTER_POS }, target: { ...TARGET_POS } };
+}
+
+function castFocusOf(
+  schedule: readonly ScheduledSimEvent[],
+  home: PreviewActorPose,
+): { x: number; z: number } | null {
+  for (const item of schedule) {
+    if (item.event.type !== "abilityCast") continue;
+    const point = item.event.data.point;
+    if (point === null || typeof point !== "object") continue;
+    const x = Number((point as Record<string, unknown>).x);
+    const z = Number((point as Record<string, unknown>).z);
+    if (!Number.isFinite(x) || !Number.isFinite(z)) continue;
+    return { x: (home.caster.x + x) / 2, z: (home.caster.z + z) / 2 };
+  }
+  return null;
+}
 
 export type VfxForgeStageMode = "script" | "runtime";
 
@@ -114,6 +138,8 @@ export class VfxForgeStage {
   private generation = 0;
   private textSerial = 0;
   private disposed = false;
+  private homePose: PreviewActorPose;
+  private castFocus: { x: number; z: number } | null;
   private flash: ForgeOverlay["flash"] = null;
   private readonly actorStatus = { caster: "替身", target: "替身" };
   private flashUntilMs = 0;
@@ -147,6 +173,8 @@ export class VfxForgeStage {
     this.script = script;
     this.ability = ability;
     this.schedule = schedule;
+    this.homePose = homePoseOf(schedule);
+    this.castFocus = castFocusOf(schedule, this.homePose);
     this.fetchDoc = opts.fetchDoc ?? ((collection, id) => api.doc(collection, id));
     this.onOverlay = opts.onOverlay ?? (() => undefined);
     this.engine = new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: false }, true);
@@ -159,18 +187,24 @@ export class VfxForgeStage {
     const hemi = new HemisphericLight("vfx-forge-hemi", new Vector3(0.3, 1, 0.2), this.scene);
     hemi.intensity = 0.75;
     new DirectionalLight("vfx-forge-sun", new Vector3(-0.4, -1, 0.35), this.scene).intensity = 1.05;
-    const ground = buildZoneGround(this.scene, root, { center: { x: 0, z: 0 }, boundaryRadius: 24 }, 0, "stone");
+    const ground = buildZoneGround(
+      this.scene,
+      root,
+      { center: { ...this.homePose.caster }, boundaryRadius: 24 },
+      0,
+      "stone",
+    );
     this.groundFloor = ground.floor;
     this.groundFloor.isPickable = true;
     this.actors = {
-      caster: this.makeActor("caster", "施法者", CASTER_POS, { x: 0, z: 1 }, new Color3(0.24, 0.55, 0.95), opts.actors?.caster ?? null),
-      target: this.makeActor("target", "目標", TARGET_POS, { x: 0, z: -1 }, new Color3(0.92, 0.28, 0.24), opts.actors?.target ?? null),
+      caster: this.makeActor("caster", "施法者", this.homePose.caster, { x: 0, z: 1 }, new Color3(0.24, 0.55, 0.95), opts.actors?.caster ?? null),
+      target: this.makeActor("target", "目標", this.homePose.target, { x: 0, z: -1 }, new Color3(0.92, 0.28, 0.24), opts.actors?.target ?? null),
     };
 
-    this.cameraRig = new CameraRig(this.scene, { x: 0, z: 1.5 });
+    this.cameraRig = new CameraRig(this.scene, this.cameraFocus());
     this.cameraRig.update({
       dtMs: STEP_MS,
-      localPos: { x: 0, z: 1.5 },
+      localPos: this.cameraFocus(),
       cursor: null,
       panKeys: null,
       viewportWidth: canvas.clientWidth || 960,
@@ -226,6 +260,8 @@ export class VfxForgeStage {
     this.script = script;
     this.ability = ability;
     this.schedule = schedule;
+    this.homePose = homePoseOf(schedule);
+    this.castFocus = castFocusOf(schedule, this.homePose);
     this.player.invalidate();
     this.runtimeVfx?.invalidateVfxScripts();
     this.emitOverlay("預載角色與腳本素材…");
@@ -254,7 +290,7 @@ export class VfxForgeStage {
       this.advanceFrame(true, target - this.nowMs, false);
       rendered = true;
     }
-    if (!rendered) this.scene.render();
+    if (!rendered) this.renderScene();
     this.emitOverlay("已定位");
   }
 
@@ -272,13 +308,13 @@ export class VfxForgeStage {
     this.cameraRig.zoomBy(wheelDeltaY);
     this.cameraRig.update({
       dtMs: STEP_MS,
-      localPos: { x: 0, z: 1.5 },
+      localPos: this.cameraFocus(),
       cursor: null,
       panKeys: null,
       viewportWidth: this.engine.getRenderWidth(),
       viewportHeight: this.engine.getRenderHeight(),
     });
-    this.scene.render();
+    this.renderScene();
     this.emitOverlay(wheelDeltaY < 0 ? "鏡頭拉近" : "鏡頭拉遠");
   }
 
@@ -288,17 +324,23 @@ export class VfxForgeStage {
     if (!point) return undefined;
     // Preview caster faces +z. Player semantics are z += forward, x += side.
     return {
-      forwardU: Math.round((point.z - CASTER_POS.z) * 10) / 10,
-      sideU: Math.round((point.x - CASTER_POS.x) * 10) / 10,
+      forwardU: Math.round((point.z - this.actors.caster.position.z) * 10) / 10,
+      sideU: Math.round((point.x - this.actors.caster.position.x) * 10) / 10,
     };
   }
 
   /** Two-way bright/dark self-certification before any visual proof reading. */
   async calibrate(): Promise<number> {
+    // Parallel shader compilation can make the first post-probe render keep
+    // the bright calibration framebuffer even though the probe mesh is gone.
+    // Warm the actual scene first, then restore a fully ready scene before any
+    // screenshot is allowed to count as evidence.
+    await this.scene.whenReadyAsync();
+    this.renderScene();
     const measure = document.createElement("canvas");
     const ctx = measure.getContext("2d", { willReadFrequently: true });
     const read = () => {
-      this.scene.render();
+      this.renderScene();
       const w = this.canvas.width;
       const h = this.canvas.height;
       measure.width = w;
@@ -315,7 +357,10 @@ export class VfxForgeStage {
       }
       return { w, h, bright, lit };
     };
-    return calibrateTwoWay({ scene: this.scene, camera: this.cameraRig.camera, rulers: { canvas: read } });
+    const control = await calibrateTwoWay({ scene: this.scene, camera: this.cameraRig.camera, rulers: { canvas: read } });
+    await this.scene.whenReadyAsync();
+    this.renderScene();
+    return control;
   }
 
   dispose(): void {
@@ -349,7 +394,7 @@ export class VfxForgeStage {
     return {
       role,
       fallback: mesh,
-      position,
+      position: { ...position },
       facing,
       champion,
       container: null,
@@ -522,6 +567,7 @@ export class VfxForgeStage {
       actor.fallback.setEnabled(actor.bodyRoot === null);
       this.playActor(actor, "idle", true);
     }
+    this.setActorPose(this.homePose);
     // Timeline replay keeps preloaded GLB containers and reuses pooled geometry;
     // clearing the container map here makes the first scrub frame an empty shell.
     this.modelRig.resetForRound();
@@ -531,7 +577,7 @@ export class VfxForgeStage {
     this.consumeEvents();
     if (this.mode === "runtime") this.runtimeVfx?.update(0);
     else this.player.update(0);
-    this.scene.render();
+    this.renderScene();
     this.emitOverlay("已重播");
   }
 
@@ -540,7 +586,7 @@ export class VfxForgeStage {
       scriptFor: (id) => (id === this.script.abilityId ? this.script : undefined),
       allScripts: () => [this.script],
       projectileIdsOf: (id) => id === this.ability.id ? projectileIdsOf(this.ability) : new Set(),
-      entityPos: (id) => id === this.casterEntityId() ? CASTER_POS : TARGET_POS,
+      entityPos: (id) => this.actorForEntity(id).position,
       dispatch: (ev, nowMs) => this.dispatch(ev, nowMs),
       enabled: () => true,
       pulseAnim: (id, kind, pulse) => this.pulseActor(id, kind, pulse?.clipWindowMs),
@@ -562,14 +608,14 @@ export class VfxForgeStage {
     }
     this.cameraRig.update({
       dtMs,
-      localPos: { x: 0, z: 1.5 },
+      localPos: this.cameraFocus(),
       cursor: null,
       panKeys: null,
       viewportWidth: this.engine.getRenderWidth(),
       viewportHeight: this.engine.getRenderHeight(),
     });
     this.reap();
-    if (render) this.scene.render();
+    if (render) this.renderScene();
     if (notify) this.emitOverlay("播放中");
   }
 
@@ -579,6 +625,7 @@ export class VfxForgeStage {
       this.schedule[this.nextEvent]!.atMs <= this.nowMs + 0.001
     ) {
       const item = this.schedule[this.nextEvent++]!;
+      if (item.actorPose) this.setActorPose(item.actorPose);
       if (this.mode === "runtime") {
         this.pulseActorsFromRuntimeEvent(item.event);
         this.runtimeVfx?.handleEvent(item.event, item.atMs);
@@ -614,10 +661,58 @@ export class VfxForgeStage {
     if (Number.isFinite(victim)) this.pulseActor(victim, "hurt", 520);
   }
 
+  private setActorPose(pose: PreviewActorPose): void {
+    const caster = this.actors.caster;
+    const target = this.actors.target;
+    this.moveActor(caster, pose.caster.x, pose.caster.z);
+    this.moveActor(target, pose.target.x, pose.target.z);
+    const dx = target.position.x - caster.position.x;
+    const dz = target.position.z - caster.position.z;
+    const len = Math.hypot(dx, dz);
+    if (len > 0.0001) {
+      caster.facing.x = dx / len;
+      caster.facing.z = dz / len;
+      target.facing.x = -dx / len;
+      target.facing.z = -dz / len;
+      if (caster.bodyRoot) caster.bodyRoot.rotation.y = facingToYaw(caster.facing.x, caster.facing.z);
+      if (target.bodyRoot) target.bodyRoot.rotation.y = facingToYaw(target.facing.x, target.facing.z);
+    }
+  }
+
+  private moveActor(actor: ForgeActor, x: number, z: number): void {
+    actor.position.x = x;
+    actor.position.z = z;
+    actor.bodyRoot?.position.set(x, 0, z);
+    actor.fallback.position.set(x, 0.85, z);
+  }
+
+  private cameraFocus(): { x: number; z: number } {
+    if (this.castFocus) return this.castFocus;
+    return {
+      x: (this.actors.caster.position.x + this.actors.target.position.x) / 2,
+      z: (this.actors.caster.position.z + this.actors.target.position.z) / 2,
+    };
+  }
+
+  private renderScene(): void {
+    this.scene.render();
+  }
+
   private casterEntityId(): number | undefined {
     for (const item of this.schedule) {
       if (item.event.type !== "abilityCast" || item.event.data.abilityId !== this.ability.id) continue;
       return Number(item.event.data.caster);
+    }
+    for (const item of this.schedule) {
+      const data = item.event.data;
+      if (
+        item.event.type === "reflectSuccess" &&
+        abilityIdOfAuthoredOrigin(String(data.origin ?? "")) === this.ability.id
+      ) return Number(data.reflector);
+      if (
+        item.event.type === "comboStrike" &&
+        abilityIdOfAuthoredOrigin(String(data.origin ?? "")) === this.ability.id
+      ) return Number(data.caster);
     }
     return undefined;
   }

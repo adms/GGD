@@ -7,6 +7,7 @@ import { zProjectileDoc } from "@ggd/shared/content/schema/projectile";
 import { zSkinDoc } from "@ggd/shared/content/schema/skin";
 import { zVfxDoc } from "@ggd/shared/content/schema/vfx";
 import { zVfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
+import { zConfigDoc } from "@ggd/shared/content/schema/config";
 import {
   CONDITION_EDITOR_LEAF_FIELDS,
   CONDITION_EDITOR_LEAF_KINDS,
@@ -106,6 +107,27 @@ function visualSurface(group: string, schema: unknown, owner: string): CoverageI
   return [...new Set(names)].map((name) => ({ group, name, owner }));
 }
 
+function configSurface(): CoverageItem[] {
+  const contract = JSON.parse(
+    readFileSync(join(REPO, "docs/editor-contract/ggd-editor-coverage.json"), "utf8"),
+  ) as { ownerOnly?: { name: string; owner: string }[] };
+  const ownerOnly = new Set(
+    (contract.ownerOnly ?? []).map((item) => `${item.owner}\u0000${item.name}`),
+  );
+  const options = (zConfigDoc as unknown as { options?: unknown[] }).options ?? [];
+  const out: CoverageItem[] = [];
+  for (const option of options) {
+    const shape = (option as { shape?: Record<string, { value?: unknown }> }).shape;
+    const tag = shape?.["schema"]?.value;
+    const owner = typeof tag === "string" ? tag : undefined;
+    if (!owner) continue;
+    out.push(...visualSurface("configField", option, owner).filter(
+      (item) => !ownerOnly.has(`${owner}\u0000${item.name}`),
+    ));
+  }
+  return out;
+}
+
 function abilitySurface(): CoverageItem[] {
   const root = walkZod(zAbilityDoc as never, "", "ability@1");
   if (root.kind !== "object") return [];
@@ -178,6 +200,7 @@ function editorSurface(): CoverageItem[] {
     ...visualSurface("projectileField", zProjectileDoc, "projectile@1"),
     ...visualSurface("skinField", zSkinDoc, "skin@1"),
     ...visualSurface("vfxScriptField", zVfxScriptDoc, "vfx-script@1"),
+    ...configSurface(),
   ];
   return editorSurfaceCache;
 }

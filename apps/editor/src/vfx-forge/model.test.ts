@@ -20,7 +20,12 @@ describe("VFX Forge authoring core", () => {
       { type: "castBegin", tick: 100, data: { abilityId: ability.id, caster: 1 } },
       { type: "projectileSpawn", tick: 102, data: { projectileId: "projectile.a", owner: 1 } },
       { type: "castEnd", tick: 103, data: { abilityId: ability.id, caster: 1 } },
-      { type: "comboStrike", tick: 110, data: { origin: `ability:${ability.id}`, index: 1, caster: 1 } },
+      {
+        type: "comboStrike",
+        tick: 110,
+        data: { origin: `ability:${ability.id}`, index: 1, caster: 1 },
+        actorPose: { caster: { x: 1.2, z: 2.4 }, target: { x: 0, z: 3 } },
+      },
       { type: "projectileHit", tick: 112, data: { projectileId: "projectile.a", owner: 1 } },
     ], ability.id);
     const cues = triggerCuesFromSim(schedule, ability);
@@ -30,6 +35,10 @@ describe("VFX Forge authoring core", () => {
     expect(cues.filter((c) => c.on === "strike").map((c) => [c.strikeIndex, Math.round(c.atMs)])).toEqual([
       [1, 333],
     ]);
+    expect(schedule.find(({ event }) => event.type === "comboStrike")?.actorPose?.caster).toEqual({
+      x: 1.2,
+      z: 2.4,
+    });
   });
 
   it("takes passive reflect and strike timing from a real reaction trace without inventing a cast", () => {
@@ -44,6 +53,10 @@ describe("VFX Forge authoring core", () => {
     ], ability.id);
     const cues = triggerCuesFromSim(schedule, ability);
     expect(reactionTriggerOf(ability)).toBe("reflectSuccess");
+    expect(
+      schedule.some(({ event }) => event.type === "abilityCast"),
+      "反彈前的啟用技不可以被壓到被動時間軸第 0 幀",
+    ).toBe(false);
     expect(cues.map((cue) => [cue.on, Math.round(cue.atMs), cue.strikeIndex])).toEqual([
       ["reflectSuccess", 0, undefined],
       ["strike", 133, 1],

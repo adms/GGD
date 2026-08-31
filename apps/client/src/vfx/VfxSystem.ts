@@ -1681,6 +1681,12 @@ export class VfxSystem {
     switch (ev.type) {
       case "abilityCast": {
         const abilityId = ev.data.abilityId as string | undefined;
+        // A script is the authored cast presentation.  Universal truth cues
+        // (telegraph/cast bar) and explicit ability effects still run, but the
+        // default binding/family art must yield or every authored layer is
+        // drawn twice.  This reads the player's live rollback switch so
+        // enabled:false restores the exact pre-script path.
+        const scriptedCast = abilityId !== undefined && this.scriptPlayer.hasScript(abilityId);
         const def = abilityId ? Abilities.tryGet(abilityId as AbilityId) : undefined;
         const point = ev.data.point as { x: number; z: number } | undefined;
         const caster = ev.data.caster as number | undefined;
@@ -1737,7 +1743,7 @@ export class VfxSystem {
         // 會在畫面上脫開。這個後果不是我發現的:`familyCastOnScreen.test.ts`
         // 的檔頭在 2026-07-30 就寫下「接 heightY 的那個 PR 要一起處理
         // layeredPop 的高度」—— 這裡就是那一行。
-        if (isEx) {
+        if (isEx && !scriptedCast) {
           this.layeredPop(
             pos.x,
             pos.z,
@@ -1758,18 +1764,20 @@ export class VfxSystem {
         const layers = isLegacySingleVfx(vfxSrc)
           ? null
           : castLayersFor(def as AbilityVfxSource | undefined, maxAbilityVfxLayers(), def?.id);
-        this.playCastVfx(
-          def?.id,
-          doc,
-          pos,
-          nowMs,
-          isEx ? EX_BURST_BOOST : 1,
-          layers,
-          point,
-          aimYawDeg,
-          // GH#392 —— 施法者。帶掛點的技能靠它找到 `champ-<id>` 節點。
-          typeof caster === "number" ? caster : undefined,
-        );
+        if (!scriptedCast) {
+          this.playCastVfx(
+            def?.id,
+            doc,
+            pos,
+            nowMs,
+            isEx ? EX_BURST_BOOST : 1,
+            layers,
+            point,
+            aimYawDeg,
+            // GH#392 —— 施法者。帶掛點的技能靠它找到 `champ-<id>` 節點。
+            typeof caster === "number" ? caster : undefined,
+          );
+        }
         // ⚡⚡ GH#571 —— **雷神之槌／皮卡丘那一族的閃電**。
         //
         // 上一輪接上的是「鏈」那一種（`case "chainLightning"`），而**只有兩支**
@@ -1790,13 +1798,15 @@ export class VfxSystem {
         const arcKeys: (string | null | undefined)[] = layers ? layers.map((l) => l.vfxKey) : [];
         arcKeys.push(vfxSrc?.vfxKey);
         const arcSeed = ((ev.tick | 0) * 131 + (typeof caster === "number" ? caster : 0) * 17) | 0;
-        for (const req of arcCastPlan(arcKeys, pos, point, arcSeed, ARC_BODY_Y)) {
-          this.strikeArc(req.from, req.to, nowMs, {
-            tint: req.tint,
-            power: req.power,
-            forks: req.forks,
-            seed: req.seed,
-          });
+        if (!scriptedCast) {
+          for (const req of arcCastPlan(arcKeys, pos, point, arcSeed, ARC_BODY_Y)) {
+            this.strikeArc(req.from, req.to, nowMs, {
+              tint: req.tint,
+              power: req.power,
+              forks: req.forks,
+              seed: req.seed,
+            });
+          }
         }
         // GROUND SCORCH (task #147): stamp a fading dark mark where the ability
         // lands (its ground `point` when it targets the floor) or, failing that,
@@ -1809,7 +1819,7 @@ export class VfxSystem {
         const markX = point && isFinitePos(point) ? point.x : pos.x;
         const markZ = point && isFinitePos(point) ? point.z : pos.z;
         const decal = castScorchSpec(def?.radius ?? CAST_SCORCH_RADIUS, art?.groundDecal);
-        if (decal) this.castDecals.spawn(markX, markZ, decal, nowMs);
+        if (!scriptedCast && decal) this.castDecals.spawn(markX, markZ, decal, nowMs);
         break;
       }
       // ---- CAST TELEGRAPH: the 0.6 s light pillar ------------------------

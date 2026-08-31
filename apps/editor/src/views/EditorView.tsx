@@ -6,6 +6,7 @@ import { api, ApiValidationError } from "../api/client";
 import { collectionEntry } from "../collections";
 import { FormRenderer } from "../form/FormRenderer";
 import { walkZod } from "../form/walk";
+import { ownerOnlyReasons } from "../form/ownerOnly";
 import { issuesToErrorMap, useEditorStore, type ErrorMap } from "../store";
 import { authorWarnings } from "../authorWarnings";
 import { PreviewPanel } from "../preview/PreviewPanel";
@@ -46,6 +47,14 @@ export function EditorView() {
 
   const entry = collection ? collectionEntry(collection) : null;
   const ui = useMemo(() => (entry ? walkZod(entry.schema, "", entry.label) : null), [entry]);
+  const readOnlyReasons = useMemo(
+    () => ownerOnlyReasons(
+      collection === "config" && draft && typeof draft === "object"
+        ? String((draft as Record<string, unknown>)["schema"] ?? "")
+        : undefined,
+    ),
+    [collection, draft],
+  );
   const source = useQuery({
     queryKey: ["editor-source", collection, docId],
     queryFn: () => api.editorSource(collection!, docId!),
@@ -140,7 +149,14 @@ export function EditorView() {
           </section>
         ) : null}
         <AiFillProvider>
-          <FormRenderer node={ui} value={draft} dataPath="" errors={errors} onChange={update} />
+          <FormRenderer
+            node={ui}
+            value={draft}
+            dataPath=""
+            errors={errors}
+            onChange={update}
+            readOnlyReasons={readOnlyReasons}
+          />
         </AiFillProvider>
       </div>
       <PreviewPanel collection={collection} doc={draft} />

@@ -531,3 +531,14 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .forge-sim-event-list li.active { background: rgba(96, 156, 244, 0.14); }
 .forge-sim-event-list button { width: 100%; padding: 3px 5px; border: 0; background: none; color: #aab6cb; text-align: left; }
 .forge-sim-event-list code { color: #8fb7ff; }
+
+.owner-only-field {
+  margin: 0.45rem 0;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid #9b7a3b;
+  border-radius: 8px;
+  background: rgba(155, 122, 59, 0.1);
+  opacity: 0.86;
+}
+.owner-only-field > legend { color: #f0c66b; font-weight: 700; }
+.owner-only-field > p { margin: 0.35rem 0 0; color: #c8b88f; font-size: 0.78rem; }

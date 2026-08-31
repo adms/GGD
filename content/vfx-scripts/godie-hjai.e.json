@@ -2,7 +2,7 @@
   "id": "godie-hjai.e",
   "schema": "vfx-script@1",
   "abilityId": "godie-hjai.e",
-  "notes": "GH#838 三招之一（JASS A04R，war3map.j 29886–30160；底稿 §2）。castStart：DoomTarget 胸口魔法陣（heightU 1.1）＋h013 聚氣陣 230%。火球本體/詠唱五句在 ability JSON（tpl-line-blast＋delayed），⛔ 不重複。缺口：M11 拖尾、到達觸發器（爆炸環 18×WarStomp 等 modelFxArrive）。",
+  "notes": "GH#838 三招之一（JASS A04R，war3map.j 29886–30160；底稿 §2）。castStart：DoomTarget 胸口魔法陣（heightU 1.1）＋h013 聚氣陣 230%。行為火球與詠唱五句仍只住 ability JSON（tpl-line-blast＋delayed）。castEffect 的 alpha:0 fireblast 是純演出拖尾載體：不畫第二具火球、不碰傷害/碰觸/到達，只沿同一條 12u 航線補回瀏覽器 GLB 缺掉的原作粒子半邊。到達爆炸仍由 ability JSON 的 onArrive 在權威 tick 觸發，⛔ script 不另排一次。",
   "segments": [
     {
       "kind": "modelFx",
@@ -20,6 +20,20 @@
       "vfxId": "fx.w3x.stock.markofchaostarget.p00",
       "at": "self",
       "durationSec": 1.2
+    },
+    {
+      "kind": "modelFx",
+      "on": "castEffect",
+      "modelKey": "imported.fireblast",
+      "path": "forward",
+      "speed": 27.5,
+      "distance": 12,
+      "spinDegPerSec": 360,
+      "scale": 4.5,
+      "alpha": 0,
+      "lifeSec": 0.44,
+      "trailVfxId": "fx.prim.fire.bolt",
+      "trailIntervalSec": 0.04
     }
   ]
 }

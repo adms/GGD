@@ -112,6 +112,26 @@ export interface CastPreviewOptions {
   point?: Vec2;
 }
 
+export interface PreviewActorPose {
+  readonly caster: Vec2;
+  readonly target: Vec2;
+}
+
+export interface PreviewTraceEvent {
+  readonly type: string;
+  readonly tick: number;
+  readonly data: Record<string, unknown>;
+  /**
+   * The real SimWorld transforms after this event's tick has settled.
+   *
+   * VFX Forge must not reconstruct combo repositioning from ability JSON: the
+   * server already resolved collision, arena bounds and the configured ring
+   * slot. Keeping the resolved pose beside the event lets the embedded client
+   * render the same result without creating a second movement implementation.
+   */
+  readonly actorPose?: PreviewActorPose;
+}
+
 /** 一次試放之後，**世界真的發生了什麼**。⛔ 不是把 effects 陣列覆述一遍。 */
 export interface CastPreviewTrace {
   /** sim 收下了這一發嗎。⚠️ 由 `abilityCast` 事件判定，⛔ 不是「我送出去了」。 */
@@ -123,7 +143,7 @@ export interface CastPreviewTrace {
   /** 送出那一刻起算的冷卻（tick）。0 而 `accepted` 為 true = 這支技能沒有冷卻。 */
   cooldownTicks: number;
   /** 這幾個 tick 內 `world.events` 排出來的東西，照順序。⭐ 3D 面板照它播特效。 */
-  events: readonly { type: string; tick: number; data: Record<string, unknown> }[];
+  events: readonly PreviewTraceEvent[];
 }
 
 /**
@@ -140,7 +160,7 @@ export interface ReactionPreviewTrace {
   manaBefore: number;
   manaAfter: number;
   cooldownTicks: number;
-  events: readonly { type: string; tick: number; data: Record<string, unknown> }[];
+  events: readonly PreviewTraceEvent[];
 }
 
 /**
@@ -234,6 +254,16 @@ function sandbox(
     level,
   });
   return { world, id, dummyId };
+}
+
+function actorPoseOf(world: SimWorld, caster: EntityId, target: EntityId | null): PreviewActorPose | undefined {
+  const casterTransform = world.transform.get(caster);
+  const targetTransform = target === null ? undefined : world.transform.get(target);
+  if (!casterTransform || !targetTransform) return undefined;
+  return {
+    caster: { x: casterTransform.pos.x, z: casterTransform.pos.z },
+    target: { x: targetTransform.pos.x, z: targetTransform.pos.z },
+  };
 }
 
 /**
@@ -1180,10 +1210,11 @@ export function createSimPreviewController(): PreviewController {
         [seat, { commands: [{ kind: "castAbility", slot, target }] }],
       ]);
 
-      const events: { type: string; tick: number; data: Record<string, unknown> }[] = [];
+      const events: PreviewTraceEvent[] = [];
       const drain = (): void => {
+        const actorPose = actorPoseOf(sb.world, sb.id, sb.dummyId);
         for (const e of sb.world.events) {
-          events.push({ type: e.type, tick: e.tick, data: e.data });
+          events.push({ type: e.type, tick: e.tick, data: e.data, ...(actorPose ? { actorPose } : {}) });
         }
       };
 
@@ -1220,10 +1251,16 @@ export function createSimPreviewController(): PreviewController {
       const hp = sb.world.health.get(sb.id)!;
       const ab = sb.world.abilities.get(sb.id)!;
       const reacting = Abilities.tryGet(abilityId);
-      const events: { type: string; tick: number; data: Record<string, unknown> }[] = [];
+      const events: PreviewTraceEvent[] = [];
       const drain = (): void => {
+        const actorPose = actorPoseOf(sb.world, sb.id, sb.dummyId);
         for (const event of sb.world.events) {
-          events.push({ type: event.type, tick: event.tick, data: event.data });
+          events.push({
+            type: event.type,
+            tick: event.tick,
+            data: event.data,
+            ...(actorPose ? { actorPose } : {}),
+          });
         }
       };
       const fail = (reason: string): ReactionPreviewTrace => ({

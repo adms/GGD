@@ -106,6 +106,11 @@ describe("GH#174 鑄技工坊的試放走玩家那條路", () => {
     expect(cues.filter((cue) => cue.on === "strike").map((cue) => cue.strikeIndex)).toEqual([
       1, 2, 3, 4, 5, 6, 7,
     ]);
+    const casterStops = schedule
+      .filter(({ event }) => event.type === "comboStrike")
+      .map(({ actorPose }) => actorPose && `${actorPose.caster.x.toFixed(3)},${actorPose.caster.z.toFixed(3)}`)
+      .filter((value): value is string => value !== undefined);
+    expect(new Set(casterStops).size, "逐刀瞬移要保存 SimWorld 已解算的角色座標").toBeGreaterThan(1);
     c.dispose();
   });
 
@@ -123,6 +128,11 @@ describe("GH#174 鑄技工坊的試放走玩家那條路", () => {
     expect(cues.filter((cue) => cue.on === "strike").map((cue) => cue.strikeIndex)).toEqual([
       1, 2, 3, 4, 5, 6, 7,
     ]);
+    const victimStops = schedule
+      .filter(({ event }) => event.type === "comboStrike")
+      .map(({ actorPose }) => actorPose && `${actorPose.target.x.toFixed(3)},${actorPose.target.z.toFixed(3)}`)
+      .filter((value): value is string => value !== undefined);
+    expect(new Set(victimStops).size, "理想鄉的受害者位移要保存真 SimWorld 座標").toBeGreaterThan(1);
     c.dispose();
   });
 });
