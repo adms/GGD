@@ -53,6 +53,7 @@ interface GlbJson {
   textures?: { source?: number }[];
   materials?: {
     name?: string;
+    alphaMode?: "OPAQUE" | "MASK" | "BLEND";
     emissiveFactor?: number[];
     pbrMetallicRoughness?: { baseColorTexture?: { index?: number } };
   }[];
@@ -136,7 +137,6 @@ export class AssetSafetyGate implements VfxScriptAssetGuard {
     const decoded = new Map<number, Promise<DecodedRaster>>();
     let measured = 0;
     for (const [materialIndex, material] of (json.materials ?? []).entries()) {
-      if (Math.max(...(material.emissiveFactor ?? [0])) <= 0) continue;
       const textureIndex = material.pbrMetallicRoughness?.baseColorTexture?.index;
       if (textureIndex === undefined) continue;
       const imageIndex = json.textures?.[textureIndex]?.source;
@@ -158,6 +158,16 @@ export class AssetSafetyGate implements VfxScriptAssetGuard {
       });
       const count = pixelCount(pixels);
       if (background / count < MIN_BACKGROUND_SHARE) continue;
+      if ((material.alphaMode ?? "OPAQUE") === "OPAQUE") {
+        return {
+          asset,
+          safe: false,
+          code: "MODEL_TEXTURE_BACKDROP",
+          summary: "3D Model 的透明貼圖被當成不透明材質，動畫時會露出整片底板",
+          detail: `mat${materialIndex}:${material.name ?? "?"} · 透明背景 ${(background / count * 100).toFixed(2)}% · alphaMode OPAQUE`,
+        };
+      }
+      if (Math.max(...(material.emissiveFactor ?? [0])) <= 0) continue;
       if (brightBackground / count >= MAX_BRIGHT_BACKGROUND_SHARE) {
         return {
           asset,
@@ -168,7 +178,7 @@ export class AssetSafetyGate implements VfxScriptAssetGuard {
         };
       }
     }
-    return safe(asset, measured ? `GLB 內嵌發光貼圖 ${measured} 份去背通過` : "GLB 沒有需檢查的發光 cut-out 材質");
+    return safe(asset, measured ? `GLB 內嵌貼圖 ${measured} 份去背／透明材質通過` : "GLB 沒有需檢查的內嵌貼圖材質");
   }
 }
 

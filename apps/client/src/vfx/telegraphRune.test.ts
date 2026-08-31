@@ -43,6 +43,10 @@ describe("預告圈的白色魔法陣 (GH#576 / owner 2026-08-23)", () => {
       const ring = created.find((m) => m.name === "telegraph-ring")!;
       const fill = created.find((m) => m.name === "telegraph-fill")!;
 
+      // Texture alpha is not the only backdrop guard: even if it is ignored,
+      // the carrier is a disc and can never expose a square image card.
+      expect(fill.getTotalVertices()).toBeGreaterThan(4);
+
       const f = emissive(fill);
       expect([f.r, f.g, f.b]).toEqual([1, 1, 1]);
 

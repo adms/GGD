@@ -422,10 +422,22 @@ export class Telegraph {
     }
     this.fill =
       this.shared.fills.pop() ??
-      MeshBuilder.CreatePlane("telegraph-fill", { size: 1, sideOrientation: 2 /* DOUBLESIDE */ }, scene);
+      // Keep the fill circular in geometry as well as in the texture alpha.
+      // If a browser/GPU/material regression ever ignores the PNG alpha, a
+      // plane exposes a giant square card in actual play.  A disc degrades to
+      // a plain circle, which is still a truthful telegraph and never leaks a
+      // texture backdrop.
+      MeshBuilder.CreateDisc(
+        "telegraph-fill",
+        { radius: 0.5, tessellation: 48, sideOrientation: 2 /* DOUBLESIDE */ },
+        scene,
+      );
     if (!this.fill.material) {
       const mat = emissiveMat("telegraph-fill", scene, this.fillTint);
-      mat.emissiveTexture = this.shared.circleTex;
+      // The rune is an opacity mask, not the emitted colour.  Binding the PNG
+      // to emissiveTexture as well makes its square RGB sheet visible before
+      // alpha shaping, which becomes a huge grey/purple card for large AoE
+      // previews.  Colour stays in emissiveColor; only the rune alpha cuts it.
       mat.opacityTexture = this.shared.circleTex;
       this.fill.material = mat;
     }

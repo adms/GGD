@@ -571,7 +571,7 @@ export class CastPillarFx {
     return this.shaftTex;
   }
 
-  private material(name: string, tex: BaseTexture | null): StandardMaterial {
+  private material(name: string, opacityMask: BaseTexture | null): StandardMaterial {
     const mat = new StandardMaterial(name, this.scene);
     mat.disableLighting = true;
     mat.backFaceCulling = false;
@@ -605,10 +605,13 @@ export class CastPillarFx {
     // vertex ramp + angular flutes, their colour is `emissiveColor`, and that
     // is the only combination that renders AND stays element-coloured. The
     // ground flare keeps its rune texture: it is a shape, not an identity.
-    if (tex) {
-      mat.emissiveTexture = tex;
-      mat.opacityTexture = tex;
-    }
+    // A mask is never the emitted colour.  Binding the same RGBA sheet as an
+    // emissive texture makes Babylon draw the texture's RGB rectangle before
+    // the opacity pass has shaped it; on the arena that leaked as a giant
+    // grey/pink card around every caster.  The ground rune needs only the
+    // alpha mask.  The two shafts pass `null` and get their shape from their
+    // mesh + baked vertex-alpha ramp, exactly as documented above.
+    if (opacityMask) mat.opacityTexture = opacityMask;
     return mat;
   }
 
@@ -644,9 +647,14 @@ export class CastPillarFx {
     const core = column("cast-pillar-core", 0.85, 0);
     const shellRamp = rampOf(shell);
     const coreRamp = rampOf(core);
-    const ground = MeshBuilder.CreatePlane(
+    // Geometry is the final backdrop fail-safe.  An RGBA mask can still lose
+    // its alpha interpretation on a material/import regression; on a plane
+    // that failure exposes the whole square texture card in live play.  The
+    // flare is circular by design, so carry it on a disc: even a broken mask
+    // can only reveal a round glow, never an asset backdrop.
+    const ground = MeshBuilder.CreateDisc(
       "cast-pillar-base",
-      { size: 1, sideOrientation: 2 },
+      { radius: 0.5, tessellation: 48, sideOrientation: 2 },
       scene,
     );
     ground.rotation.x = Math.PI / 2;
@@ -654,8 +662,8 @@ export class CastPillarFx {
     ground.isPickable = false;
     ground.parent = pivot;
 
-    const shellMat = this.material("cast-pillar-shell-mat", this.shaftTexture());
-    const coreMat = this.material("cast-pillar-core-mat", this.shaftTexture());
+    const shellMat = this.material("cast-pillar-shell-mat", null);
+    const coreMat = this.material("cast-pillar-core-mat", null);
     const groundMat = this.material("cast-pillar-base-mat", this.groundTex);
     shell.material = shellMat;
     core.material = coreMat;

@@ -308,7 +308,9 @@ class FilterMode:
 MDX_FILTER_MODES: dict[int, FilterMode] = {
     0: FilterMode(
         0, "None", "blending OFF", "opaque",
-        "⛔ 連 alpha test 都沒有 ⇒ 貼圖就算帶 1-bit alpha 也**切不掉** ⇒ 一律 OPAQUE。",
+        "WC3 關閉 blending；但 GGD 禁止把帶透明背景的角色／特效 atlas 當成"
+        "不透明方片。貼圖有可用 alpha 時以 alpha 安全政策升級為 MASK／BLEND；"
+        "只有 alpha 平坦不透明才保留 OPAQUE。",
     ),
     1: FilterMode(
         1, "Transparent", "alpha test; blending OFF", "cutout",
@@ -823,10 +825,17 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
         if info.kind in ("additive", "multiply", "multiply2x"):
             return "BLEND"
         hint = tex_alpha.get(layer.texture_id, "opaque")
-        if info.kind == "opaque" or hint == "opaque":
+        if hint == "opaque":
             # ⭐ GH#841 —— alpha 平坦不透明（或根本沒有 alpha 通道）時
             # WC3 的 alpha test 處處通過、alpha 混色混不出東西 ⇒ 就是不透明。
             return "OPAQUE"
+        if info.kind == "opaque":
+            # GGD visual-safety policy: an atlas with real transparency may
+            # never be emitted as glTF OPAQUE.  OPAQUE ignores PNG alpha and
+            # turns hair cards, capes and effect planes into full rectangles
+            # during animation.  Preserve the decoded alpha shape even when
+            # the legacy WC3 layer said FilterMode=None.
+            return "MASK" if hint == "mask" else "BLEND"
         if info.kind == "cutout":
             return "BLEND" if hint == "blend" else "MASK"
         return "MASK" if hint == "mask" else "BLEND"

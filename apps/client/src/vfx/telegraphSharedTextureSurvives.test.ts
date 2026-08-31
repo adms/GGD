@@ -92,7 +92,7 @@ describe("回合邊界回收後，預告圈仍畫得出來 (telegraph-shared-tex
 
     let now = playRound(layer, 5, 1_000);
     const r1 = firstFillMaterial();
-    expect(r1.emissiveTexture?.isReadyOrNotBlocking()).toBe(true);
+    expect(r1.emissiveTexture).toBeNull();
     expect(r1.opacityTexture?.isReadyOrNotBlocking()).toBe(true);
 
     // 回合邊界：出貨預設就是 cap 0（purgeSharedPoolsOnRoundEnd: true）
@@ -102,7 +102,7 @@ describe("回合邊界回收後，預告圈仍畫得出來 (telegraph-shared-tex
     now = playRound(layer, 3, now + 5_000);
     const r2 = firstFillMaterial();
     // ⛔ 這兩行就是這條守衛的全部。改壞 disposeButKeepSharedTextures 就會紅。
-    expect(r2.emissiveTexture?.isReadyOrNotBlocking()).toBe(true);
+    expect(r2.emissiveTexture).toBeNull();
     expect(r2.opacityTexture?.isReadyOrNotBlocking()).toBe(true);
 
     layer.dispose();
@@ -115,7 +115,7 @@ describe("回合邊界回收後，預告圈仍畫得出來 (telegraph-shared-tex
     for (let round = 0; round < 4; round++) {
       now = playRound(layer, 3, now + 5_000);
       const mat = firstFillMaterial();
-      expect(mat.emissiveTexture?.isReadyOrNotBlocking(), `第 ${round + 1} 回合`).toBe(true);
+      expect(mat.emissiveTexture, `第 ${round + 1} 回合`).toBeNull();
       layer.clear();
       trimTelegraphPools(scene, 0);
     }
