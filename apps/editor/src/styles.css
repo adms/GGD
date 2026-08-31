@@ -457,3 +457,36 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .forge-effect-chain-node code { color: #8fb7ff; }
 .forge-effect-chain-node span { white-space: normal; color: #e4e9f7; }
 .forge-effect-chain-node small { color: #8fa0bf; }
+
+.forge-sim-timeline {
+  margin: 12px 0 16px; padding: 11px 12px;
+  border: 1px solid #3d4e70; border-radius: 8px; background: #111722;
+}
+.forge-sim-timeline > header {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+}
+.forge-sim-timeline h4 { margin: 0; color: #dce7ff; }
+.forge-sim-timeline > header strong { white-space: nowrap; color: #8fb7ff; font: 11px ui-monospace, monospace; }
+.forge-sim-controls { display: grid; grid-template-columns: auto auto auto auto minmax(100px, 1fr); gap: 6px; align-items: center; }
+.forge-sim-controls input[type="range"] { width: 100%; }
+.forge-sim-ruler {
+  position: relative; height: 15px; margin: 9px 5px;
+  border-top: 2px solid #33425e;
+}
+.forge-sim-ruler span {
+  position: absolute; top: -5px; width: 3px; height: 9px; border-radius: 2px;
+  background: #6d7f9f; transform: translateX(-1px);
+}
+.forge-sim-ruler span.past { background: #4f83d8; }
+.forge-sim-ruler span.active { height: 13px; background: #8ff0c0; box-shadow: 0 0 6px #6edba7; }
+.forge-sim-current { display: grid; gap: 5px; min-height: 24px; color: #7f8ca4; font-size: 11px; }
+.forge-sim-current article { display: grid; grid-template-columns: minmax(100px, auto) 1fr; gap: 8px; padding: 5px 7px; background: #182235; }
+.forge-sim-current article b { color: #8ff0c0; }
+.forge-sim-current code { overflow-wrap: anywhere; color: #c7d3e9; }
+.forge-sim-timeline details { margin-top: 9px; font-size: 11px; }
+.forge-sim-timeline summary { cursor: pointer; color: #9db6ee; }
+.forge-sim-event-list { max-height: 210px; margin: 7px 0 0; padding-left: 24px; overflow-y: auto; }
+.forge-sim-event-list li::marker { color: #65728b; }
+.forge-sim-event-list li.active { background: rgba(96, 156, 244, 0.14); }
+.forge-sim-event-list button { width: 100%; padding: 3px 5px; border: 0; background: none; color: #aab6cb; text-align: left; }
+.forge-sim-event-list code { color: #8fb7ff; }

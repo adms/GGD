@@ -24,7 +24,7 @@
  * renderless stub — and the UI says so rather than implying a shot that does not
  * happen.
  */
-import { useEffect, useMemo, useRef, useState, type DragEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type DragEvent } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   paramsSchemaFor,
@@ -78,6 +78,7 @@ import {
   insertTemplateCard,
   moveTemplateCard,
 } from "./stackDnd";
+import { SimEventTimeline } from "./SimEventTimeline";
 
 /**
  * GH#174 —— 工坊第 3 步從此有**畫面**。同一個 `PreviewController` 介面，
@@ -125,6 +126,8 @@ export function ForgeStudio({
   const [dragOverSlot, setDragOverSlot] = useState<number | null>(null);
   /** 最近一次【真的放一次】之後，sim 真的發生了什麼（GH#174）。 */
   const [trace, setTrace] = useState<CastPreviewTrace | null>(null);
+  /** 只有操作者親手試放過的同一支技能，後續改參數才會所見即所得地自動重播。 */
+  const auditionedAbilityRef = useRef<string | null>(null);
 
   /**
    * 3D 舞台。⚠️ `mount(null)` 一定要在 unmount 時呼叫 —— `controller` 是**模組層**
@@ -308,6 +311,29 @@ export function ForgeStudio({
       return { error: String(e) } as const;
     }
   }, [after, champions]);
+
+  const runCurrentCast = useCallback((remember: boolean): void => {
+    if (!preview || !("champ" in preview)) return;
+    if (remember) auditionedAbilityRef.current = abilityId;
+    try {
+      setTrace(controller.castAbility(preview.champ, preview.slot, { level: 1 }));
+      setStatus(null);
+    } catch (e) {
+      setTrace(null);
+      setStatus(`試放失敗：${String(e)}`);
+    }
+  }, [abilityId, preview]);
+
+  useEffect(() => {
+    auditionedAbilityRef.current = null;
+    setTrace(null);
+  }, [abilityId]);
+
+  // WYSIWYG：先手動試放一次取得意圖後，修改模板／特效參數便用真 Sim 立即重播。
+  useEffect(() => {
+    if (auditionedAbilityRef.current !== abilityId) return;
+    runCurrentCast(false);
+  }, [abilityId, after, runCurrentCast]);
 
   const championDoc = useMemo(() => {
     if (!abilityId) return null;
@@ -630,15 +656,7 @@ export function ForgeStudio({
               type="button"
               data-field="stack.cast"
               disabled={!preview || !("champ" in preview)}
-              onClick={() => {
-                if (!preview || !("champ" in preview)) return;
-                try {
-                  setTrace(controller.castAbility(preview.champ, preview.slot, { level: 1 }));
-                } catch (e) {
-                  setTrace(null);
-                  setStatus(`試放失敗：${String(e)}`);
-                }
-              }}
+              onClick={() => runCurrentCast(true)}
             >
               真的放一次
             </button>
@@ -650,6 +668,7 @@ export function ForgeStudio({
               </span>
             ) : null}
           </div>
+          {trace ? <SimEventTimeline events={trace.events} /> : null}
           {!expansion.ok ? <p className="error">展開失敗：{expansion.error}</p> : null}
           {expansion.ok ? (
             <>
