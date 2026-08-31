@@ -72,7 +72,15 @@ export interface AbilityPassiveRank extends SourceGrantFields {
    * The whole wiring is one forward in `abilities/abilityPassives.ts rankBlock`.
    *
    * 20-00 銀色甲胄 (Saber 天生技, 「30%機率格擋 100% 魔法傷害」) and 79-002 虛化
-   * (卍解 狀態下的物理格擋, so `whileForm: "alternate"`) are the two users.
+   * (卍解 狀態下的物理格擋, so `whileForm: "alternate"`) were the first two users.
+   *
+   * ⚠️ ⭐ 2026-09-01 更正 —— 這一句在此之前寫著「are **the two** users」，⛔ 而那已經
+   * 過期了（第三守則：註解會說謊）：**59-03 AT力場**（`godie-e00r.e`，⭐ **E 槽**，
+   * `chance` 10/15/20/25%）也是使用者，而它正是 GH#650 那張票的主角。
+   * ⇒ ⭐ 那句話害我在 2026-09-01 花了一輪去懷疑「E 槽的 passive 到底掛不掛得上」——
+   *   ⭐ 答案是**掛得上**（`abilityPassives.ts:293` 逐字走 Q/W/E/R）。
+   * ⛔ 不要在這裡再列一次使用者名單 —— 它只會再過期一次。
+   *   查法：`grep -rl '"block"' content/abilities/`。
    */
   block?: import("../combat/block").BlockGrant;
   /**
