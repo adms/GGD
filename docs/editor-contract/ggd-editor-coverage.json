@@ -1,7 +1,8 @@
 {
   "schema": "ggd-editor-coverage@1",
   "notRequiredMeaning": "⛔ 今天的引擎做不到，所以**這一版**不要實作（做出來的內容上線就是死的）。⭐ 它們是 main 的待辦，⛔ 不是永久的範圍外 —— 機制做出來的那一天，該筆會自動離開這張清單。",
-  "fingerprint": "f3f4185c",
+  "fingerprint": "60ddb509bf66",
+  "capabilityFingerprint": "f3f4185c",
   "required": [
     {
       "group": "abilityField",
@@ -1700,6 +1701,261 @@
       "name": "victim"
     },
     {
+      "group": "modelField",
+      "name": "attachPoints",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "clipMap",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "clipMap.attack",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "clipMap.cast",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "clipMap.death",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "clipMap.hurt",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "clipMap.idle",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "clipMap.run",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "collisionRadius",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "fxAlpha",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "fxLongAxis",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "fxSpawnHeight",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "fxTint",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "glbPath",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "hiddenPrimitives",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "id",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "scale",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "schema",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "teamTintMaterials",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "voxel",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "voxel.archetype",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "voxel.clipRate",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "voxel.collisionRadius",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "voxel.jointOffset",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "voxel.jointScale",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "voxel.palette",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "voxel.poseBias",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "voxel.props",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "voxel.teamTint",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
+      "name": "yawOffsetDeg",
+      "owner": "model@1"
+    },
+    {
+      "group": "projectileField",
+      "name": "flight",
+      "owner": "projectile@1"
+    },
+    {
+      "group": "projectileField",
+      "name": "flight.pitchDeg",
+      "owner": "projectile@1"
+    },
+    {
+      "group": "projectileField",
+      "name": "flight.rollDegPerUnit",
+      "owner": "projectile@1"
+    },
+    {
+      "group": "projectileField",
+      "name": "flight.yawOffsetDeg",
+      "owner": "projectile@1"
+    },
+    {
+      "group": "projectileField",
+      "name": "hitRadius",
+      "owner": "projectile@1"
+    },
+    {
+      "group": "projectileField",
+      "name": "id",
+      "owner": "projectile@1"
+    },
+    {
+      "group": "projectileField",
+      "name": "maxRange",
+      "owner": "projectile@1"
+    },
+    {
+      "group": "projectileField",
+      "name": "meshShape",
+      "owner": "projectile@1"
+    },
+    {
+      "group": "projectileField",
+      "name": "pierce",
+      "owner": "projectile@1"
+    },
+    {
+      "group": "projectileField",
+      "name": "schema",
+      "owner": "projectile@1"
+    },
+    {
+      "group": "projectileField",
+      "name": "speed",
+      "owner": "projectile@1"
+    },
+    {
+      "group": "projectileField",
+      "name": "vfxKey",
+      "owner": "projectile@1"
+    },
+    {
+      "group": "skinField",
+      "name": "alpha",
+      "owner": "skin@1"
+    },
+    {
+      "group": "skinField",
+      "name": "championId",
+      "owner": "skin@1"
+    },
+    {
+      "group": "skinField",
+      "name": "description",
+      "owner": "skin@1"
+    },
+    {
+      "group": "skinField",
+      "name": "id",
+      "owner": "skin@1"
+    },
+    {
+      "group": "skinField",
+      "name": "mcoinPrice",
+      "owner": "skin@1"
+    },
+    {
+      "group": "skinField",
+      "name": "modelKey",
+      "owner": "skin@1"
+    },
+    {
+      "group": "skinField",
+      "name": "name",
+      "owner": "skin@1"
+    },
+    {
+      "group": "skinField",
+      "name": "schema",
+      "owner": "skin@1"
+    },
+    {
+      "group": "skinField",
+      "name": "tint",
+      "owner": "skin@1"
+    },
+    {
       "group": "templateFamily",
       "name": "beam-roll"
     },
@@ -1802,6 +2058,231 @@
     {
       "group": "templateFamily",
       "name": "traveling-wave"
+    },
+    {
+      "group": "vfxField",
+      "name": "ambient",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "anchorBone",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "blendMode",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "burstCount",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "color",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "color.end",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "color.start",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "colorStops",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "emitter",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "emitter.shape=cone.angleDeg",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "emitter.shape=cone.radius",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "emitter.shape=ring.fill",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "emitter.shape=ring.radius",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "emitter.shape=ring.spread",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "emitter.shape=ring.thickness",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "emitter.shape=sphere.radius",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "gore",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "gravityY",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "id",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "lifetimeSec",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "lifetimeSec.max",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "lifetimeSec.min",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "mode",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "orient",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "orient.pitchDeg",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "orient.swirlDegPerSec",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "orient.yawDeg",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "orient.yawFrom",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "rate",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "schema",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "size",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "size.end",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "size.start",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "sizeStops",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "speed",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "speed.max",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "speed.min",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "spriteSheet",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "spriteSheet.cols",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "spriteSheet.cycleSec",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "spriteSheet.randomStartCell",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "spriteSheet.rows",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "stretched",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tailLength",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "texture",
+      "owner": "vfx@1"
     }
   ],
   "notRequired": [
@@ -1876,7 +2357,11 @@
     "templateFamily": 26,
     "conditionLeaf": 5,
     "conditionLeafField": 13,
-    "_total": 450,
+    "vfxField": 45,
+    "modelField": 30,
+    "projectileField": 12,
+    "skinField": 9,
+    "_total": 546,
     "_notRequired": 15
   }
 }

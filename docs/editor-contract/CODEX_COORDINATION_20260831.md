@@ -37,9 +37,9 @@
 | 契約 | 產生 | 回答什麼 | 新鮮度閘 |
 |---|---|---|---|
 | `docs/editor-contract/ggd-runtime-capabilities.md` | `pnpm caps:export` | 「**這個名字存不存在**」 | `caps:check` |
-| `docs/editor-contract/ggd-editor-coverage.json` | `tools/editor-contract/gen_editor_coverage.ts` | 「**編輯器要蓋到哪些欄位**」<br>⭐ `required` **450** 筆 · `notRequired` **15** 筆 · `fingerprint: f3f4185c` | `editorCoverageFresh.test.ts` |
+| `docs/editor-contract/ggd-editor-coverage.json` | `tools/editor-contract/gen_editor_coverage.ts` | 「**編輯器要蓋到哪些欄位**」<br>⭐ `required` **546** 筆 · `notRequired` **15** 筆 · `fingerprint: 60ddb509bf66` | `editorCoverageFresh.test.ts` |
 
-⭐ **Codex 的驗收就是這兩份**：`fingerprint` 對得上 ＋ `required` 的 450 格都畫得出來。
+⭐ **Codex 的驗收就是這兩份**：`fingerprint` 對得上 ＋ `required` 的 **546** 格都畫得出來。
 ⛔ 不是「看起來都在」。
 
 ⚠️ ⭐ **兩份都是產物** —— Codex ⛔ 不可以手改它們來讓自己過關。
