@@ -91,7 +91,18 @@ import { RedisSubscriber, type SubscriberState } from "./redisSubscriber";
 export const CONTENT_CHANNEL = "chan:content";
 
 /** The document kinds the platform announces. Mirrors redisx.ContentKind*. */
-export const CONTENT_KINDS = ["curation", "combat-env", "server-ops"] as const;
+export const CONTENT_KINDS = [
+  "curation",
+  "combat-env",
+  "server-ops",
+  // ⭐⭐ GH#736 —— **線上內容編輯全鏈路**的第二段（admin 編 → server 熱載 → client 看得到）。
+  //
+  // ⚠️ ⭐ 在此之前這個 kind **不在這張表裡**，而 Go 端 `redisx/contentbus.go:64` 的
+  //   `ContentKindContentOverlay = "content-overlay"` **早就在 publish**
+  //   ⇒ 每一則都掉進 `unknownKinds`（⭐ 好消息：它**不是靜默丟掉**，會上 `/healthz`）。
+  //   ⇒ ⛔ 但沒有任何人做事：owner 在後台改一支技能，這一台 shard **到重啟為止**都用舊的。
+  "content-overlay",
+] as const;
 export type ContentKind = (typeof CONTENT_KINDS)[number];
 
 /** The wire payload published on CONTENT_CHANNEL. */
@@ -175,6 +186,25 @@ const defaultRefreshers: Record<ContentKind, Refresher> = {
   "server-ops": {
     run: async () => ({ ok: (await sharedServerOpsCache().refresh()).ok }),
     consequence: "your 系統運維 maxRooms / snapshotHz are NOT in force",
+  },
+  // ⭐⭐ GH#736 —— **內容覆蓋層**（admin 編輯的技能／英雄／道具）。
+  //
+  // ── ⛔ 為什麼這一支今天 `ok: false`，⭐ 而那是**誠實**不是偷懶 ────────────────
+  // 覆蓋層是在 `index.ts` 的 `loadContent()` 裡讀的，⭐ 而那一支**只在開機跑一次**：
+  // 它 `registerAll()` 整棵內容樹，而**正在進行的比賽**握著那些定義的參照。
+  // ⇒ 熱換整棵樹**不是一次 refresh**，它是一段有自己風險的工程（下一批）。
+  //
+  // ⭐ 那為什麼還要有這一格？因為在此之前這個 kind **不在 `CONTENT_KINDS` 裡**：
+  // 每一則公告都掉進 `unknownKinds` ⇒ ⛔ 讀 `/healthz` 的人看到的是「版本歪了」，
+  // 而真相是「**這一台知道有東西變了，而它做不到**」。⭐ 兩者要分得出來。
+  //
+  // ⚠️ `ok: false` ⇒ 匯流排會把它記成一次失敗並帶著下面那句 `consequence`
+  //   —— ⭐ 那正是 fail-loud：⛔ 一行沒有人讀的 log 不算。
+  "content-overlay": {
+    run: async () => ({ ok: false }),
+    consequence:
+      "你在後台編輯的內容（技能／英雄／道具）**這一台 shard 到重啟為止都不會用** —— " +
+      "覆蓋層只在開機讀一次（index.ts 的 loadContent）。⭐ 熱換整棵內容樹是 GH#736 的下一段。",
   },
 };
 

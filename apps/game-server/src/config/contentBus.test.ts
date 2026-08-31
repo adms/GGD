@@ -19,6 +19,7 @@ import {
   parseRedisAddr,
   contentBusStatus,
   platformStatusWithContent,
+  CONTENT_KINDS,
 } from "./contentBus";
 import { WhitelistCache, type WhitelistDoc } from "../curation/whitelist";
 import { CombatEnvCache } from "./combatEnv";
@@ -406,7 +407,10 @@ describe("Redis is optional (the owner runs this on a laptop)", () => {
     const st = contentBusStatus();
     expect(st.enabled).toBe(false);
     expect(st.state).toBe("disabled");
-    expect(Object.keys(st.documents).sort()).toEqual(["combat-env", "curation", "server-ops"]);
+    // ⭐ 從 `CONTENT_KINDS` 推導，⛔ 不抄一份字面清單 —— 那會是這個值的**第四個住處**
+    //   （第零守則：出貨值住在測試裡必然過期，而且會用**錯誤的訊息**紅）。
+    //   ⚠️ 實測：2026-08-31 加 `content-overlay` 時，這一行原本的字面清單就是這樣紅的。
+    expect(Object.keys(st.documents).sort()).toEqual([...CONTENT_KINDS].sort());
   });
 
   it("REDIS_ADDR parses the same way the Go platform reads it", () => {
