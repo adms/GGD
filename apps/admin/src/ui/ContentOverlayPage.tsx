@@ -52,6 +52,7 @@ import {
   type OverlayStatus,
   type OverlayStatusEntry,
 } from "../contentOverlay";
+import { decideOverlayWrite } from "../contentOverlayEdit";
 import { Badge, Btn, ConfirmDialog, ErrorBanner, Panel, TextInput } from "./widgets";
 import { ACCENT, DANGER, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "./theme";
 
@@ -260,12 +261,31 @@ export function ContentOverlayPage(): React.JSX.Element {
       setError(parsed.error);
       return;
     }
+    // ⭐⭐ GH#730 —— **寫進去之前先驗**。
+    //
+    // ⚠️ `validateOverlayDoc` 從它被寫下的那天起就**一個呼叫端都沒有**
+    //   （2026-08-31 量到：`grep validateOverlayDoc` 全 repo 只有定義那一行）。
+    //   ⭐ 而它的檔頭逐字寫著 `packages/shared/src/content/overlay.ts` 承諾了
+    //   「… and **BY THE ADMIN CONSOLE BEFORE IT EVER WRITES**」——
+    //   ⛔ 那句話當時就是假的（第一·五守則：說了但不會發生）。
+    //
+    // ⚠️ 代價是具體的：`data/content-overlay/overlay.json` **同時**餵給 shard
+    //   與**每一個瀏覽器** ⇒ 一份壞文件會讓兩邊一起走退路。
+    //   ⭐ 退路是保險，⛔ 不是驗證 —— 操作者要的是「一開始就不要壞」。
+    const v = decideOverlayWrite(collection.trim(), docId.trim(), parsed.value);
+    if (!v.write) {
+      setError(v.error);
+      return;
+    }
     setBusy(true);
     try {
       const head = await putOverlayDoc(collection.trim(), docId.trim(), parsed.value);
       setNotice(
         `已寫入耐久覆蓋層（generation ${head.generation}）。` +
-          "重開容器、重建 image、git pull 都不會消失。",
+          "重開容器、重建 image、git pull 都不會消失。" +
+          // ⭐ `validated: false` 要**說出來**，⛔ 不可以靜靜當成通過 ——
+          //   那正是那份註解逐字交代的（「呼叫端要把它顯示出來」）。
+          (v.unvalidatedReason !== null ? `\n⚠️ ${v.unvalidatedReason}` : ""),
       );
       setError(null);
       await refresh();

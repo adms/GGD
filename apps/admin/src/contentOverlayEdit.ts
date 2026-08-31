@@ -26,6 +26,7 @@
  *   ⇒ 這裡**逐份寫、逐份回報**，⛔ 不假裝它是一次交易。
  */
 import { putOverlayDoc, deleteOverlayDoc } from "./api";
+import { validateOverlayDoc, type OverlayValidation } from "./contentOverlay";
 import type { EditCollection, WritePlanStep } from "@ggd/shared/content/editModel";
 
 export interface OverlayWriteResult {
@@ -52,6 +53,54 @@ export interface OverlaySaveOutcome {
  * 中途停下來會留下一個「一半舊一半新」的狀態，⛔ 而使用者看不出來停在哪。
  * ⇒ 全部試完、逐份回報，⭐ 讓「哪幾份沒進去」是**看得見的**。
  */
+/**
+ * ⭐⭐ GH#730 —— **寫進覆蓋層之前的那一道決定**，抽成純函式。
+ *
+ * ── 為什麼它必須是一個可以單獨跑的函式 ─────────────────────────────────────
+ * `validateOverlayDoc` 從它被寫下的那天起**一個呼叫端都沒有**
+ * （2026-08-31 量到：全 repo 只有定義那一行），⭐ 而它的檔頭記著
+ * `packages/shared/src/content/overlay.ts` 對外承諾過
+ * 「… and **BY THE ADMIN CONSOLE BEFORE IT EVER WRITES**」
+ * ⇒ ⛔ 那句話當時就是假的（第一·五守則：說了但不會發生）。
+ *
+ * ⚠️ 而後台**沒有 React 測試環境**（`apps/admin` 沒有 testing-library）
+ * ⇒ 把判斷留在 `.tsx` 裡等於**驗不到**，唯一驗得到的方式是掃原始碼字串（形態⑥）。
+ * ⇒ ⭐ 決定住這裡，頁面只呼叫它一行。
+ *
+ * ── 三種結果，⛔ 不是兩種 ─────────────────────────────────────────────────
+ * | 回傳 | 意思 | UI 要做什麼 |
+ * |---|---|---|
+ * | `{ok:false}` | schema 不過 / id 對不上 / 不是物件 | ⛔ **不要寫**，顯示 `error` |
+ * | `{ok:true, validated:false}` | 這個 collection **沒有 schema**（例：手打的 `experiments`） | ⭐ 寫，⛔ 但要把 `reason` **顯示出來** |
+ * | `{ok:true, validated:true}` | 驗過了 | 寫 |
+ *
+ * ⚠️ ⭐ 中間那一格是重點：**靜靜當成通過**與**通過**長得一模一樣
+ * （CLAUDE.md：「fail-open 沒錯，**靜默**才是缺陷」）。
+ */
+export interface OverlayWriteDecision {
+  /** 可不可以寫。 */
+  readonly write: boolean;
+  /** `write:false` 時給 UI 的一行；否則 `null`。 */
+  readonly error: string | null;
+  /** ⭐ 寫了但**沒驗到**時的理由 —— UI 必須顯示它，⛔ 不可以吞掉。 */
+  readonly unvalidatedReason: string | null;
+}
+
+export function decideOverlayWrite(
+  collection: string,
+  id: string,
+  doc: unknown,
+  validate: (c: string, i: string, d: unknown) => OverlayValidation = validateOverlayDoc,
+): OverlayWriteDecision {
+  const v = validate(collection, id, doc);
+  if (!v.ok) return { write: false, error: v.error, unvalidatedReason: null };
+  return {
+    write: true,
+    error: null,
+    unvalidatedReason: v.validated === false ? v.reason : null,
+  };
+}
+
 export async function saveDocsToOverlay(
   steps: readonly WritePlanStep[],
 ): Promise<OverlaySaveOutcome> {
