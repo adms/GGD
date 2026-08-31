@@ -13,7 +13,7 @@
  */
 import { describe, it, expect } from "vitest";
 import { z } from "zod";
-import { unknownFields } from "./unknownFields";
+import { unknownFields, parseWithUnknownFieldReport } from "./unknownFields";
 import { zExactRef } from "./packageSchema";
 import { IMPORT_DIAGNOSTICS } from "./diagnostics";
 
@@ -60,7 +60,7 @@ describe("GH#327 ① 未知欄位", () => {
   });
 
   it("⭐ 跑**出貨的** schema（`zExactRef`）—— ⛔ 不是只跑我造的那一份", () => {
-    const good = { kind: "ability" as const, id: "a", contentSha256: "0".repeat(64) };
+    const good = { kind: "ability" as const, id: "a", contentSha256: `sha256:${"0".repeat(64)}` };
     expect(unknownFields(zExactRef, good), "⛔ 合法的 ref 被報成未知").toEqual([]);
     expect(unknownFields(zExactRef, { ...good, revisionn: 1 })).toEqual([
       { path: "/", fields: ["revisionn"] },
@@ -72,5 +72,37 @@ describe("GH#327 ① 未知欄位", () => {
     expect(d.severity).toBe("warning");
     expect(d.failClosed, "⛔ fail-closed 會擋掉合法的未來版本").toBe(false);
     expect(d.message, "⛔ 訊息沒說「位元組被保留」= 對方會以為要重寫").toContain("位元組");
+  });
+});
+
+describe("GH#327 ① 組合入口 —— ⛔ 拿不到「只 parse 沒掃描」的結果", () => {
+  it("★ ⭐ 一次呼叫同時給出 parse 結果**與**未知欄位診斷", () => {
+    const r = parseWithUnknownFieldReport(zExactRef, {
+      kind: "ability",
+      id: "a",
+      contentSha256: `sha256:${"0".repeat(64)}`,
+      revisionn: 1,
+    });
+    expect(r.ok, "⛔ 未知欄位**不該**讓它失敗（規格 §10「至少包含」）").toBe(true);
+    expect(r.diagnostics).toHaveLength(1);
+    expect(r.diagnostics[0]!.code).toBe("UNKNOWN_FIELDS_NOT_UNDERSTOOD");
+    expect(r.diagnostics[0]!.severity, "⛔ error 會擋掉合法的未來版本").toBe("warning");
+    expect(r.diagnostics[0]!.message).toContain("revisionn");
+  });
+
+  it("⭐ parse 失敗 ⇒ ⛔ 不報未知欄位（那會蓋掉真正的錯誤）", () => {
+    const r = parseWithUnknownFieldReport(zExactRef, { kind: "ability" });
+    expect(r.ok).toBe(false);
+    expect(r.diagnostics, "⛔ 一堆「沒看懂」會把 schema 錯誤淹掉").toEqual([]);
+  });
+
+  it("⭐ 乾淨的輸入 ⇒ **零診斷**（⛔ 誤報讓人學會忽略它）", () => {
+    const r = parseWithUnknownFieldReport(zExactRef, {
+      kind: "ability",
+      id: "a",
+      contentSha256: `sha256:${"0".repeat(64)}`,
+    });
+    expect(r.ok).toBe(true);
+    expect(r.diagnostics).toEqual([]);
   });
 });

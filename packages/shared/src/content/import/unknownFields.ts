@@ -17,6 +17,7 @@
  * （一個剛加的合法欄位被報成「沒看懂」）⇒ 操作者學會忽略這個警告 ⇒ 它就死了。
  */
 import type { z } from "zod";
+import { diagnostic, type ImportDiagnostic } from "./diagnostics";
 
 /** 一處未知欄位。`path` 是 JSON pointer 風格（`/base/kind`）。 */
 export interface UnknownFieldHit {
@@ -94,4 +95,45 @@ export function unknownFields(
     );
   }
   return out;
+}
+
+/**
+ * ⭐⭐ **組合入口** —— parse ＋「我沒看懂哪幾格」一次做完。
+ *
+ * ── 為什麼要有這一支（⛔ 不是「兩個函式各自叫」）──────────────────────────
+ * ⚠️ 一個「先 `safeParse`、再記得叫 `unknownFields`」的介面，
+ * ⭐ **第二步一定會有人漏掉** —— 而漏掉的樣子是**靜默通過**，
+ * ⛔ 與正常長得一模一樣（CLAUDE.md 失敗形態⑧的形狀）。
+ *
+ * ⇒ ⭐ 把它做成**一次呼叫**：接線的人拿不到「只 parse 沒掃描」的結果。
+ *
+ * ⚠️ ⭐ 它**不會**因為未知欄位而失敗（`ok` 仍是 parse 的結果）——
+ * 規格 §10 的用語是「至少包含」，⇒ 未來版本多帶欄位是**合法**的。
+ * 未知欄位走 `diagnostics`（warning），由操作者用 `acceptedWarnings[]` 明示接受。
+ */
+export function parseWithUnknownFieldReport<T extends z.ZodTypeAny>(
+  schema: T,
+  raw: unknown,
+): {
+  readonly ok: boolean;
+  readonly value: z.infer<T> | null;
+  readonly diagnostics: readonly ImportDiagnostic[];
+} {
+  const parsed = schema.safeParse(raw);
+  if (!parsed.success) return { ok: false, value: null, diagnostics: [] };
+  // ⭐ 掃的是**原始輸入**，⛔ 不是 parse 的產物 —— Zod 的 `.passthrough()` 會保留
+  //   未知 key，⚠️ 但一個 `.strict()` 的子節點會在這裡就把它丟掉，
+  //   ⇒ 掃產物會**漏報**那一種。
+  const hits = unknownFields(schema, raw);
+  return {
+    ok: true,
+    value: parsed.data as z.infer<T>,
+    diagnostics: hits.map((h) =>
+      diagnostic(
+        "UNKNOWN_FIELDS_NOT_UNDERSTOOD",
+        { path: h.path, fields: h.fields.join(", ") },
+        { path: h.path, details: { fields: [...h.fields] } },
+      ),
+    ),
+  };
 }
