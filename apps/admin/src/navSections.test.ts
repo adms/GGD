@@ -157,6 +157,37 @@ const navPages = (): Page[] => NAV.map((n) => n.page);
 
 /** owner 2026-08-02 核准的四個新分類，以及他點名要搬進去的成員。 */
 const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
+  {
+    // ── ⭐ GH#775 AC3「無一組 > 20」—— 2026-08-31 第三次拆組 ───────────────────
+    //   拆之前「系統」**30 列**。⛔ 一頁都沒刪,只搬。
+    //   ⭐ 判準是**職責**,⛔ 不是「切成兩半」:這 20 列回答的是
+    //   「**這一發看起來/聽起來怎麼樣**」(特效·演出·音訊·HUD·配色),
+    //   而留在「系統」的是「**這台機器怎麼跑**」(運維·錄影·搬遷·練習·手把·導覽)。
+    //   ⚠️ `itemCard` 刻意**不在這裡** —— 它是道具卡的排版,家在「武器道具」。
+    section: "畫面·演出",
+    pages: [
+      "formVisuals",
+      "modelLod",
+      "weather",
+      "vfxCleanup",
+      "vfxScripts",
+      "vfxBudget",
+      "feelFx",
+      "gore",
+      "damageColors",
+      "rangeGuide",
+      "toggleAbility",
+      "hudLayout",
+      "voxelLook",
+      "uiCues",
+      "worldCues",
+      "audioMix",
+      "audioMap",
+      "arenaFire",
+      "victoryFx",
+      "victoryPodium",
+    ],
+  },
   // 戰鬥系統 · 基礎加成 · 屬性上限 · 戰鬥手感 · 對戰設定 · 體型與射程
   // ⚠️ 2026-08-10 加入 cooldownRules —— 它刻意排在 statCaps 旁邊：owner 那一句
   //「cdr 天花板 0.99，但卡最低 0.1 秒」是**兩個**旋鈕，比率那一半在 statCaps，
@@ -201,7 +232,9 @@ const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
     ],
   },
   // 商店經濟 · 傳說武器池
-  { section: "武器道具", pages: ["storeEconomy", "itemDraft"] },
+  // ⭐ GH#775 AC3（2026-08-31）:itemCard 從「系統」搬來 —— 它是**道具卡的排版**,
+  //   家在道具,⛔ 不是泛用的畫面設定。
+  { section: "武器道具", pages: ["storeEconomy", "itemDraft", "itemCard"] },
   // 小怪波設定 · 殭屍王
   { section: "肉鴿殭屍", pages: ["mobWaves", "bossIntro"] },
   // 鑄技工坊（admin 裡的特效綁定那一頁；/editor/ 的本體是外部入口，見下面）

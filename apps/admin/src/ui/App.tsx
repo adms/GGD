@@ -148,6 +148,14 @@ const SEC_STATUS = "狀態規則";
 const SEC_ITEMS = "武器道具";
 const SEC_MOBS = "肉鴿殭屍";
 const SEC_FORGE = "鑄技工坊";
+// ── ⭐ GH#775 AC3「無一組 > 20」—— 2026-08-31 拆第三組 ──────────────────────
+// 拆之前：系統 **30 列**（owner 2026-08-26「目前後台左測有些分類已經過長」）。
+// ⛔ 一頁都不刪，只搬（`navSections.test.ts` 的 APPROVED_MOVES 逐一比對）。
+// ⭐ 判準是**職責**，⛔ 不是「切成兩半」：30 列裡有 17 列回答的是
+//   「**這一發看起來/聽起來怎麼樣**」（特效 · 演出 · 音訊 · HUD · 配色），
+//   而其餘是「**這台機器怎麼跑**」（運維 · 錄影 · 搬遷 · 練習 · 手把 · 導覽）。
+// ⚠️ 兩族的使用者心裡都有名字 —— ⭐ 掃 30 列是浪費他的眼睛。
+const SEC_PRESENT = "畫面·演出";
 const SEC_SYS = "系統";
 
 /**
@@ -166,6 +174,7 @@ export const SECTION_ORDER: readonly string[] = [
   SEC_STATUS,
   SEC_ITEMS,
   SEC_MOBS,
+  SEC_PRESENT,
   SEC_FORGE,
   SEC_SYS,
   // 🔴 dev-only LIVE 對照·視覺化（GH#775 的 13 頁 —— chunk 自帶 label）
@@ -355,7 +364,7 @@ export const NAV: NavItem[] = [
   { page: "featureReview", label: "批次驗收（連續圖片）", emoji: "🧑‍⚖️", section: SEC_OPS },
   // 變身外觀 (#249 GH#288) —— 26 對變身裡有 21 對前後同一個模型,所以「看不看得
   // 出來」全靠顏色/大小/球體掛件這三樣,而它們在 w3x 裡是空的。
-  { page: "formVisuals", label: "變身外觀", emoji: "✨", section: SEC_SYS },
+  { page: "formVisuals", label: "變身外觀", emoji: "✨", section: SEC_PRESENT },
   // E2 —— 四份原本完全沒有後台入口的 config。共用 ui/ConfigDocPage 一個元件，
   // 欄位從 Zod schema 長出來、中文說明逐格手寫在 ../configForms。標籤寫在這裡
   // （eager shell）而不是隨元件走，理由和 體素鑄造廠 那一行一樣：這樣它才活得過
@@ -365,55 +374,55 @@ export const NAV: NavItem[] = [
   // 對戰錄影 (owner 2026-08-02「請幫我預設打開」)。放在系統設定區,因為它和
   // 畫質分級/特效回收一樣是「一份 config 文件 = 一頁」的同一個引擎。
   { page: "replayPolicy", label: "對戰錄影", emoji: "🎬", section: SEC_SYS },
-  { page: "modelLod", label: "畫質分級", emoji: "🪄", section: SEC_SYS },
+  { page: "modelLod", label: "畫質分級", emoji: "🪄", section: SEC_PRESENT },
   // 場地天氣 (GH#610 第二批, owner 2026-08-23「do it, 但有開關」／「有些場景是
   // 室內，請不要下雨」) —— 緊接在 畫質分級 後面，因為兩頁問的是同一類問題：
   // 「這台機器／這張圖，畫面上該出現多少東西」。⛔ 這一頁沒有一格會改變碰撞或視野。
-  { page: "weather", label: "場地天氣", emoji: "🌧️", section: SEC_SYS },
+  { page: "weather", label: "場地天氣", emoji: "🌧️", section: SEC_PRESENT },
   // 手把操作版本（GH#863）。⚠️ 這一列是**唯一**還要手加的接線 ——
   // store.ts 的 `Page` union 早就從 CONFIG_DOC_SPECS 推導了（store.ts:35）。
   { page: "controllerScheme", label: "手把操作版本", emoji: "🎮", section: SEC_SYS },
-  { page: "vfxCleanup", label: "特效回收", emoji: "🧹", section: SEC_SYS },
+  { page: "vfxCleanup", label: "特效回收", emoji: "🧹", section: SEC_PRESENT },
   // GH#838 特效工坊的 rollback 開關（演出腳本要不要播）。編輯本體是 dev 頁
   // （client 的 vfx-script-studio），這一頁只有那一格開關。
-  { page: "vfxScripts", label: "演出腳本", emoji: "🎬", section: SEC_SYS },
+  { page: "vfxScripts", label: "演出腳本", emoji: "🎬", section: SEC_PRESENT },
   // GH#838 —— 單個特效的粒子密度天花板（出貨前端與特效工坊共用同一份）。
-  { page: "vfxBudget", label: "粒子密度上限", emoji: "🎚️", section: SEC_SYS },
+  { page: "vfxBudget", label: "粒子密度上限", emoji: "🎚️", section: SEC_PRESENT },
   // 爽度特效 (GH#494, owner 2026-08-21「提高爽度 模仿肉鴿遊戲的氛圍感」) —— 緊接在
   // 特效回收 後面，因為它是同一個引擎的另一半：一個管「留多少在記憶體裡」，
   // 一個管「那一瞬間看得到、聽得到什麼」。⛔ 這一頁沒有一格會改變任何人的金幣。
-  { page: "feelFx", label: "爽度特效", emoji: "🪙", section: SEC_SYS },
+  { page: "feelFx", label: "爽度特效", emoji: "🪙", section: SEC_PRESENT },
   // 濺血程度 —— 調性決定，不是效能決定。放在它們後面而不是中間。
-  { page: "gore", label: "濺血程度", emoji: "🩸", section: SEC_SYS },
+  { page: "gore", label: "濺血程度", emoji: "🩸", section: SEC_PRESENT },
   // 傷害數字配色 (owner 2026-08-01) —— 物理紅／魔法紫／真實白／治療綠。緊接在
   // 濺血程度 後面，因為兩頁問的是同一類問題：「打中的那一瞬間畫面上出現什麼」。
-  { page: "damageColors", label: "傷害數字配色", emoji: "🎨", section: SEC_SYS },
+  { page: "damageColors", label: "傷害數字配色", emoji: "🎨", section: SEC_PRESENT },
   // 範圍指引與預告 (GH#376) —— 緊接在 傷害數字配色 後面，因為三頁問的是同一類
   // 問題：「打之前／打中的那一瞬間，地板與畫面上出現什麼」。這一頁管的是**打之前**
   // （我瞄得到多遠、那一圈是誰放的）。同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  { page: "rangeGuide", label: "範圍指引與預告", emoji: "🎯", section: SEC_SYS },
-  { page: "toggleAbility", label: "開關型技能外觀", emoji: "🌀", section: SEC_SYS },
+  { page: "rangeGuide", label: "範圍指引與預告", emoji: "🎯", section: SEC_PRESENT },
+  { page: "toggleAbility", label: "開關型技能外觀", emoji: "🌀", section: SEC_PRESENT },
   // 畫面提示 (GH#576/#573) —— 緊接在 範圍指引與預告 後面，因為兩頁都在回答
   // 「畫面有沒有把剛剛發生的事說出來」。同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   // HUD 底部版面 (GH#873) —— 緊接在 畫面提示 前面：兩頁都在管「玩家眼睛看到什麼」，
   // 而這一頁管的是**位置**（另一頁管的是**有沒有說出來**）。
-  { page: "hudLayout", label: "HUD 底部版面", emoji: "📐", section: SEC_SYS },
-  { page: "voxelLook", label: "外觀關鍵字", emoji: "👕", section: SEC_SYS },
-  { page: "uiCues", label: "畫面提示", emoji: "💬", section: SEC_SYS },
+  { page: "hudLayout", label: "HUD 底部版面", emoji: "📐", section: SEC_PRESENT },
+  { page: "voxelLook", label: "外觀關鍵字", emoji: "👕", section: SEC_PRESENT },
+  { page: "uiCues", label: "畫面提示", emoji: "💬", section: SEC_PRESENT },
   // 世界演出 (2026-08-23 稽核) —— 緊接在 畫面提示 後面，因為兩頁問的是同一類問題：
   // 「那一刻，畫面上出現什麼」。這一頁管的是**世界裡**那一團（誰出現了、誰消失了、
   // 哪一條被掃過），⛔ 不是螢幕上的那一層。
-  { page: "worldCues", label: "世界演出", emoji: "✨", section: SEC_SYS },
+  { page: "worldCues", label: "世界演出", emoji: "✨", section: SEC_PRESENT },
   // 混音 (owner 2026-08-17「其他角色語音應該是自己的一半」) —— 緊接在 傷害數字配色
   // 後面，因為兩頁問的是同一類問題的兩個感官：「打中的那一瞬間**看到**什麼／**聽到**
   // 什麼」。同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
-  { page: "audioMix", label: "混音", emoji: "🎚️", section: SEC_SYS },
+  { page: "audioMix", label: "混音", emoji: "🎚️", section: SEC_PRESENT },
   // 🔊 音訊對照表 (GH#806) —— 緊接在 混音 後面是刻意的：那一頁調的是**匯流排**
   //（「不是我」那一整族整體壓多少），這一頁調的是**逐一顆音**（哪一個場景放哪一首、
   // 哪一個事件出哪一顆、多大聲、多密集）。要調音量的人會先想到其中一個，相鄰他就不會找錯。
   // ⭐ 在它之前 `config/audio-map.json` 的每一格參數在後台**一格都轉不到** ——
   // 第一守則的三個住處對整條音訊線只湊得出兩個。
-  { page: "audioMap", label: "音訊對照表", emoji: "🔊", section: SEC_SYS },
+  { page: "audioMap", label: "音訊對照表", emoji: "🔊", section: SEC_PRESENT },
   // 練習模式 (GH#343)：選場地 + 選角色進場、不對戰、可用測試碼與即時生怪。
   // 六格開關（總開關／無限戰鬥／自動生怪／火圈／自動復活／一次生幾隻）。
   // 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
@@ -467,21 +476,21 @@ export const NAV: NavItem[] = [
   // 場地環境火焰 (GH#251 · owner 2026-08-01「場地天空火焰很礙眼 請全部場地都去
   // 掉」) —— 出貨已經關掉，這一頁是「改主意的時候不用再改程式」的那把開關。
   // 排在 濺血程度 / 傷害數字配色 這些「畫面上出現什麼」的隔壁而不是效能三頁旁邊。
-  { page: "arenaFire", label: "場地環境火焰", emoji: "🔥", section: SEC_SYS },
+  { page: "arenaFire", label: "場地環境火焰", emoji: "🔥", section: SEC_PRESENT },
   // 勝利煙火 (#93 / #235 · owner 2026-08-02「請你直接取消煙火(變成後台開關)」)
   // —— 出貨已經關掉,這一頁同樣是「改主意的時候不用再改程式」的那把開關。
   // 緊接在 場地環境火焰 後面,因為兩頁問的是同一種問題:場上該不該有這團火。
-  { page: "victoryFx", label: "勝利煙火", emoji: "🎆", section: SEC_SYS },
+  { page: "victoryFx", label: "勝利煙火", emoji: "🎆", section: SEC_PRESENT },
   // 回合頒獎台 (GH#257 / GH#256 · owner 2026-08-03「回合勝利出現的 3d model 是勝利
   // 角色 但現在不是」) —— 站幾個人／誰站正中間／誰在慶祝／第一名說什麼。緊接在
   // 勝利煙火 後面，因為兩頁問的是同一個時刻：贏了那一秒畫面上發生什麼事。
-  { page: "victoryPodium", label: "回合頒獎台", emoji: "🏆", section: SEC_SYS },
+  { page: "victoryPodium", label: "回合頒獎台", emoji: "🏆", section: SEC_PRESENT },
   // 道具卡片排版 (owner 2026-08-02「卡片道具的排版連在一起不好閱讀，關於效果及數值
   // 的部分應該要特殊顏色表示」)。⚠️ 這一頁不改 owner 手寫的 description 一個字：
   // 排版是渲染時解析出來的（`legendary49OwnerText.test.ts` 逐位元組守著那些原文）。
   // ⚠️ 它留在「系統」而不是搬進「武器道具」，因為 owner 2026-08-02 核准的分類表
   // 只點名了 商店經濟 與 傳說武器池 兩項；把沒被點名的東西一起搬走是替他決定。
-  { page: "itemCard", label: "道具卡片排版", emoji: "🃏", section: SEC_SYS },
+  { page: "itemCard", label: "道具卡片排版", emoji: "🃏", section: SEC_ITEMS },
   { page: "serverOps", label: "系統運維", emoji: "🛠️", section: SEC_SYS },
   // #243 — 一鍵打包 ZIP 匯出／匯入平台資料，無痛移機. Session-gated (see
   // store.ts) and PRESENT IN THE PRODUCTION BUNDLE, because a migration tool
