@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "0d745485c04b",
+  "hash": "ca5099fae03e",
   "entries": [
     {
       "id": "attach.ex.midchilder-aura",
@@ -223,6 +223,12 @@
       "path": "vfx/fx.fam.flame-pillar.w3x-ff0000.s115.json",
       "hash": "c536de0a01b0",
       "size": 1109
+    },
+    {
+      "id": "fx.fam.ground-dust.arcane.s120",
+      "path": "vfx/fx.fam.ground-dust.arcane.s120.json",
+      "hash": "ea450cbe0f7a",
+      "size": 1144
     },
     {
       "id": "fx.fam.ground-dust.ki.s120",

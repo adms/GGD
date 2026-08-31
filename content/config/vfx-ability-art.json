@@ -407,6 +407,13 @@
       "prim": {
         "element": "arcane",
         "primitive": "nova"
+      },
+      "family": {
+        "family": "groundDust",
+        "model": "earthquaketarget",
+        "w3aId": "A0GN",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
       }
     },
     "godie-e00s.w": {
@@ -505,6 +512,13 @@
       "prim": {
         "element": "arcane",
         "primitive": "nova"
+      },
+      "family": {
+        "family": "groundDust",
+        "model": "earthquaketarget",
+        "w3aId": "A0GN",
+        "provenance": "w3a-override",
+        "via": "ability.casterArt"
       }
     },
     "godie-e010.w": {

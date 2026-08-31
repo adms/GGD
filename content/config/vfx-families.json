@@ -90,6 +90,28 @@
       "soundLaunch": "magicLightning",
       "soundImpact": "hit-heavy"
     },
+    "resurrect": {
+      "enabled": true,
+      "primitive": "column",
+      "element": "holy",
+      "scale": 1,
+      "alpha": 1,
+      "timeScale": 1.4,
+      "heightY": 0.1,
+      "soundLaunch": "reviveChannel",
+      "soundImpact": "reviveComplete"
+    },
+    "groundDust": {
+      "enabled": true,
+      "primitive": "shockwave",
+      "element": "earth",
+      "scale": 0.8,
+      "alpha": 0.7,
+      "timeScale": 1.15,
+      "heightY": 0.1,
+      "soundLaunch": "footstep",
+      "soundImpact": "knockdown"
+    },
     "tornado": {
       "enabled": true,
       "primitive": "tornado",
@@ -102,17 +124,6 @@
       "soundImpact": "hit-medium",
       "soundLoop": "fireRingLoop",
       "soundDissipate": "castEnd"
-    },
-    "groundDust": {
-      "enabled": true,
-      "primitive": "shockwave",
-      "element": "earth",
-      "scale": 0.8,
-      "alpha": 0.7,
-      "timeScale": 1.15,
-      "heightY": 0.1,
-      "soundLaunch": "footstep",
-      "soundImpact": "knockdown"
     },
     "flamePillar": {
       "enabled": true,
@@ -137,17 +148,6 @@
       "heightY": 1,
       "soundLaunch": "castCircle",
       "soundDissipate": "castEnd"
-    },
-    "resurrect": {
-      "enabled": true,
-      "primitive": "column",
-      "element": "holy",
-      "scale": 1,
-      "alpha": 1,
-      "timeScale": 1.4,
-      "heightY": 0.1,
-      "soundLaunch": "reviveChannel",
-      "soundImpact": "reviveComplete"
     },
     "mark": {
       "enabled": true,
@@ -360,6 +360,9 @@
       ],
       "soundLaunch": "wc3.treantready1"
     },
+    "godie-e00s.r": {
+      "family": "groundDust"
+    },
     "godie-e00w.e": {
       "family": "resurrect",
       "w3xScale": 0.9
@@ -377,6 +380,9 @@
       "family": "shockwaveRing",
       "soundLaunch": "wc3.darksummoninglaunch1",
       "pitchDeg": 80
+    },
+    "godie-e010.r": {
+      "family": "groundDust"
     },
     "godie-edem.e": {
       "family": "shockwaveRing",
