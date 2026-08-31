@@ -43,12 +43,16 @@
           "kind": "damageArea",
           "damageType": "magic",
           "amount": {
-            "damageTier": "小",
             "ratios": [
               {
                 "stat": "ap",
                 "coeff": 0.3
               }
+            ],
+            "damageTierPerRank": [
+              "極小",
+              "小",
+              "小"
             ]
           },
           "radius": 3.0,
@@ -59,12 +63,16 @@
           "kind": "damageArea",
           "damageType": "magic",
           "amount": {
-            "damageTier": "小",
             "ratios": [
               {
                 "stat": "ap",
                 "coeff": 0.3
               }
+            ],
+            "damageTierPerRank": [
+              "極小",
+              "小",
+              "小"
             ]
           },
           "radius": 3.0,

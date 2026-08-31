@@ -82,7 +82,12 @@
           "kind": "damageArea",
           "damageType": "physical",
           "amount": {
-            "damageTier": "小",
+            "damageTierPerRank": [
+              "極小",
+              "極小",
+              "小",
+              "小"
+            ],
             "ratios": [
               {
                 "stat": "ap",
@@ -336,7 +341,11 @@
               "kind": "damageArea",
               "damageType": "magic",
               "amount": {
-                "damageTier": "小",
+                "damageTierPerRank": [
+                  "極小",
+                  "小",
+                  "小"
+                ],
                 "ratios": [
                   {
                     "stat": "ap",
@@ -352,7 +361,11 @@
               "kind": "damageArea",
               "damageType": "magic",
               "amount": {
-                "damageTier": "小",
+                "damageTierPerRank": [
+                  "極小",
+                  "小",
+                  "小"
+                ],
                 "ratios": [
                   {
                     "stat": "ap",

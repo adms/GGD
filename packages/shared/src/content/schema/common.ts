@@ -12,6 +12,7 @@ import { Stat } from "../../sim/stats/statTypes";
 import { ModOp } from "../../sim/stats/modifiers";
 // 傷害五級距（GH#447）。⛔ 不要在這裡重打一份級距名 —— 五個字全專案只有一份。
 import { DAMAGE_TIER_NAMES } from "../damageTiers";
+import { RANK_SCALAR_MAX_COLUMNS } from "../../sim/perRank";
 import { MS_BONUS_OPS, MS_BONUS_TIER_NAMES } from "../moveSpeedTiers";
 
 /** filename stem == id; dots allowed for namespaced ids like "sela.q". */
@@ -567,6 +568,28 @@ export const zScaling = z
      * 各一份：一個機制服務全部（第零守則⑨）。
      */
     damageTier: z.enum(DAMAGE_TIER_NAMES).optional(),
+    /**
+     * ⭐⭐ **逐級的**傷害級別（GH#892）—— `["中","大","極大"]`。
+     *
+     * ── ⛔ 為什麼需要它（⭐ 量到的，⛔ 不是推測）────────────────────────
+     * `damageTier` 與 `perRank` **互斥**（上一格逐字寫著「填了這一格就**不要**填
+     * `flat` 或 `perRank`」）⇒ ⭐ 用級距寫的技能在結構上**表達不出「升級變強」**。
+     *
+     * ⚠️ 2026-09-01 量到的母體（⛔ 不是估計）：
+     *   · 帶 `damageTier` 的技能 **145**
+     *   · 其中 `maxRank > 1` 的 **130**
+     *   · ⭐ 其中**整支 effects 完全不隨等級變**的 **106**
+     * ⇒ owner 的「初號機 R 升級似乎傷害沒有提升」⛔ **不是一支的問題**。
+     *
+     * ⛔ **不要**改填 `perRank: [2000, 3400, 4800]` —— 那是第〇·四守則的第二個
+     * 住處：級距表一改那 106 支全部過期，⭐ 而且**沒有東西會紅**。
+     * ⇒ 這一格讓**級別本身**逐級，值仍然在載入時由 `resolveDamageTier` 從表解析。
+     */
+    damageTierPerRank: z
+      .array(z.enum(DAMAGE_TIER_NAMES))
+      .min(1)
+      .max(RANK_SCALAR_MAX_COLUMNS)
+      .optional(),
     flat: z.number().optional(),
     perRank: z.array(z.number()).optional(),
     ratios: z.array(z.object({ stat: zStat, coeff: z.number() }).strict()).optional(),

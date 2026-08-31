@@ -231,7 +231,12 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "damageTier": "小",
+                "damageTierPerRank": [
+                  "極小",
+                  "極小",
+                  "小",
+                  "小"
+                ],
                 "ratios": [
                   {
                     "stat": "ap",
@@ -464,7 +469,11 @@
           "kind": "damageArea",
           "damageType": "physical",
           "amount": {
-            "damageTier": "大"
+            "damageTierPerRank": [
+              "小",
+              "中",
+              "大"
+            ]
           },
           "radius": 6.0,
           "radiusTier": "中",

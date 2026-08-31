@@ -24,12 +24,16 @@
       "kind": "damage",
       "damageType": "physical",
       "amount": {
-        "damageTier": "小",
         "ratios": [
           {
             "stat": "ad",
             "coeff": 0.6
           }
+        ],
+        "damageTierPerRank": [
+          "極小",
+          "小",
+          "小"
         ]
       }
     },

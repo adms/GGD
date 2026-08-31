@@ -428,6 +428,37 @@ export function resolveDamageTier<T extends object>(def: T, tiers: DamageTiers):
         delete out["perRank"];
       }
     }
+    // ⭐⭐ GH#892 —— **逐級的**級距（`["中","大","極大"]`）。
+    //
+    // ── ⛔ 為什麼這是一道機制而不是「那一支填 perRank 就好」──────────────
+    // `damageTier` 與 `perRank` 在 schema 上**刻意互斥**（`common.ts`：「填了這一格
+    // 就不要填 `flat` 或 `perRank`」）—— 級距會**取代**那兩格。
+    // ⇒ ⭐ 於是「用級距寫的技能」在結構上**表達不出「升級變強」**。
+    //
+    // ⚠️ 量到的母體（2026-09-01，⛔ 不是估計）：
+    //   · 帶 `damageTier` 的技能 **145**
+    //   · 其中 `maxRank > 1` 的 **130**
+    //   · ⭐ 其中**整支 effects 完全不隨等級變**的 **106**
+    // ⇒ ⭐⭐ owner 的「初號機 R 升級似乎傷害沒有提升」⛔ 不是一支的問題。
+    //
+    // ⛔ 而**不可以**叫作者改填 `perRank: [2000, 3400, 4800]` —— 那是第〇·四守則的
+    //   第二個住處：級距表一改，那 106 支就全部過期，而且**沒有東西會紅**。
+    // ⇒ ⭐ 正解是讓**級別本身**可以逐級 —— 值仍然在載入時從表解析。
+    const perTier = rec["damageTierPerRank"];
+    if (Array.isArray(perTier) && perTier.length > 0) {
+      const cols: number[] = [];
+      let allKnown = true;
+      for (const t of perTier) {
+        const v = typeof t === "string" ? tiers.damage[t as DamageTierName] : undefined;
+        if (typeof v !== "number") { allKnown = false; break; }
+        cols.push(v);
+      }
+      // ⛔ 有一格查不到就**整格不動** —— 一半解析一半沒解析比完全沒解析更難查。
+      if (allKnown) {
+        out["perRank"] = cols;
+        delete out["flat"];
+      }
+    }
     return out;
   }
 }
@@ -462,6 +493,11 @@ export const DAMAGE_TIER_EXEMPTIONS_DOC_ID = "damage-tier-exemptions";
  */
 const SCALING_KEYS: ReadonlySet<string> = new Set([
   "damageTier",
+  // ⭐ GH#892 —— ⛔ 漏了這一格，用逐級級距寫的節點就**不會被結構認成 Scaling**
+  //   ⇒ 整族靜默逃過 #534 的 exclusive 閘（正是上面那行註解在防的事）。
+  // ⚠️ 這一行在 2026-09-01 被我自己的一次 `cp` 還原洗掉過一次，⭐ 而
+  //   `damageTierPerRank.test.ts` 的 sentinel **當場抓到它** —— 那條測試存在的理由。
+  "damageTierPerRank",
   "flat",
   "perRank",
   "ratios",
@@ -481,6 +517,9 @@ export interface ScalingNode {
   readonly kind: string;
   readonly flat?: number;
   readonly damageTier?: string;
+  /** ⭐ GH#892 —— 逐級的級別。與 `damageTier`／`flat`／`perRank` 全部互斥。 */
+  readonly damageTierPerRank?: readonly string[];
+  readonly perRank?: readonly number[];
   /**
    * ⭐ 這一格**一次施法會發生幾次**？`true` = 掛在 `hooks` / `passive` 底下 ——
    * 法球、每次普攻追加、每次命中的 proc。
@@ -515,6 +554,11 @@ export function scanScalingNodes(collection: string, file: string, doc: unknown)
         kind: k,
         flat: typeof rec["flat"] === "number" ? (rec["flat"] as number) : undefined,
         damageTier: typeof rec["damageTier"] === "string" ? (rec["damageTier"] as string) : undefined,
+        // ⭐ GH#892 —— 收集端也要帶上，⛔ 否則 `hasTierAndFlat` 永遠看不到它。
+        damageTierPerRank: Array.isArray(rec["damageTierPerRank"])
+          ? (rec["damageTierPerRank"] as string[])
+          : undefined,
+        perRank: Array.isArray(rec["perRank"]) ? (rec["perRank"] as number[]) : undefined,
         perTrigger,
       });
     }
@@ -587,10 +631,21 @@ export function exemptionRuleFor(
 
 /** 需要一條豁免的節點：**只有** `flat`、沒有級別。 */
 export function needsExemption(n: ScalingNode): boolean {
-  return typeof n.flat === "number" && n.damageTier === undefined;
+  return typeof n.flat === "number" && n.damageTier === undefined && n.damageTierPerRank === undefined;
 }
 
-/** ⛔ 兩個住處：級別**和**算好的值一起寫進同一格。 */
+/**
+ * ⛔ 兩個住處：級別**和**算好的值一起寫進同一格。
+ *
+ * ⭐ GH#892 —— 逐級級距（`damageTierPerRank`）是**同一族**的第三個成員：
+ * 它與 `damageTier` / `flat` / `perRank` 三者**全部互斥**。
+ * ⛔ 漏掉任何一組配對，那一組就是一個沒有守衛的第二住處。
+ */
 export function hasTierAndFlat(n: ScalingNode): boolean {
-  return n.damageTier !== undefined && typeof n.flat === "number";
+  const tiered = n.damageTier !== undefined || n.damageTierPerRank !== undefined;
+  const baked = typeof n.flat === "number" || Array.isArray(n.perRank);
+  // ⛔ 兩種級別**自己也不可以並存** —— 並存時「哪一個贏」在 resolver 裡是順序決定的，
+  //   ⭐ 而一個由程式碼順序決定的語意是下一輪的謎題。
+  const bothTiers = n.damageTier !== undefined && n.damageTierPerRank !== undefined;
+  return bothTiers || (tiered && baked);
 }

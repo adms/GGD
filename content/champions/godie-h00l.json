@@ -81,7 +81,12 @@
           "kind": "damageArea",
           "damageType": "physical",
           "amount": {
-            "damageTier": "小",
+            "damageTierPerRank": [
+              "極小",
+              "極小",
+              "小",
+              "小"
+            ],
             "ratios": [
               {
                 "stat": "ad",
@@ -145,7 +150,12 @@
               "kind": "damage",
               "damageType": "physical",
               "amount": {
-                "damageTier": "小"
+                "damageTierPerRank": [
+                  "極小",
+                  "極小",
+                  "小",
+                  "小"
+                ]
               }
             }
           ]

@@ -27,12 +27,16 @@
       "kind": "damageArea",
       "damageType": "magic",
       "amount": {
-        "damageTier": "中",
         "ratios": [
           {
             "stat": "ap",
             "coeff": 2.0
           }
+        ],
+        "damageTierPerRank": [
+          "小",
+          "中",
+          "中"
         ]
       },
       "radius": 6.0,

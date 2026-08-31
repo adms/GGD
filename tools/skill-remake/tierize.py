@@ -555,10 +555,63 @@ def _rewrite_scaling(amount, tier):
     改動因此變成 199 個節點重寫 + 12 支下游產生器 + 4 份棘輪基準線 ≈ 一小時。
     現在值只在載入時由 `resolveDamageTier()` 解析 ⇒ 改公式表 = 全改完。
     """
-    rest = {k: v for k, v in amount.items() if k not in ("damageTier", "flat", "perRank")}
+    # ⭐⭐ GH#892 —— owner 有**兩則互相衝突**的裁決，⭐ 而新的那則贏（第〇·六守則）：
+    #
+    #   · 2026-08-21：「除了冷卻以外 傷害跟耗魔是一起變動的⋯
+    #                   應該是比較接近 **B 全轉，接受升階只剩 ratios 成長**」
+    #   · 2026-09-01：「**初號機 R技能升級似乎傷害沒有提升**」
+    #
+    # ⇒ ⭐ 08-21 那則的結果**正是** 09-01 抱怨的東西：「B 全轉」把逐階那一維收掉，
+    #   於是升階只剩 `ratios`（吃裝備）在漲 —— ⛔ 而卡面沒有任何地方說「升階不加傷害」。
+    #
+    # ⚠️ 量到的規模（2026-09-01，⛔ 不是估計）：帶 `damageTier` 且 `maxRank>1` 的
+    #   **130** 支裡，**106 支整支 effects 完全不隨等級變**。
+    #
+    # ⭐ 照第〇·六守則的出路：**做成開關，預設走優先權高的那一則**（新的）。
+    #   ⛔ 而開關**不可以**是「回頭填 perRank 數字」—— 那是第〇·四守則的第二個住處。
+    #   ⇒ 用 `damageTierPerRank`：**級別本身**逐級，值仍然在載入時從表解析。
+    #
+    # ⛔ 逐階曲線**不是**憑空編的：它是作者原本寫的 `perRank` 的**形狀**
+    #   （首階/滿階的比例）投影到級距名稱上 —— ⭐ 一個能被反駁的映射，
+    #   ⛔ 不是「我覺得中大極大比較好看」。
+    ladder = _rank_tier_ladder(amount, tier) if RANK_DAMAGE_GROWTH else None
+    rest = {k: v for k, v in amount.items() if k not in ("damageTier", "damageTierPerRank", "flat", "perRank")}
     amount.clear()
-    amount["damageTier"] = tier
+    if ladder is not None:
+        amount["damageTierPerRank"] = ladder
+    else:
+        amount["damageTier"] = tier
     amount.update(rest)
+
+
+#: ⭐ 開關：升階要不要提升基礎傷害。
+#: **預設 True** ＝ owner 2026-09-01 那則（優先權大的更新後都是預設啟動，第〇·六守則）。
+#: ⛔ 一鍵 rollback ＝ 設成 False 並重跑 `tiers:apply`／`skillremake:json` ⇒ 逐位元回到 08-21 的行為。
+RANK_DAMAGE_GROWTH = os.environ.get("GGD_RANK_DAMAGE_GROWTH", "1") != "0"
+
+
+def _rank_tier_ladder(amount, tier):
+    """作者原本的 `perRank` 形狀 → 一串級距名稱。⛔ 沒有形狀就回 None（維持單一級別）。
+
+    ⭐ 判準：只有**真的在漲**的曲線才變成階梯。
+    ⛔ 三格同值（例：59-04 的 `resourcePct.perRank [0.1,0.1,0.1]` —— owner 只給了
+       一個數字）維持原樣，⛔ 我不替他編一條成長曲線。
+    """
+    per = amount.get("perRank")
+    if not isinstance(per, list) or len(per) < 2:
+        return None
+    vals = [float(x) for x in per]
+    if len(set(vals)) < 2 or any(b < a for a, b in zip(vals, vals[1:])):
+        return None  # 同值 或 不是遞增 ⇒ ⛔ 不動
+    # 滿階落在 `tier`，其餘按比例往下投影到最近的級距名稱。
+    top = vals[-1]
+    top_v = _tier_value(tier)
+    out = []
+    for v in vals:
+        want = top_v * (v / top) if top else top_v
+        out.append(min(TIER_NAMES, key=lambda t: abs(_tier_value(t) - want)))
+    # ⛔ 投影完之後如果全部落在同一格，那就沒有階梯可言 ⇒ 回單一級別（⛔ 不留一個假的階梯）。
+    return out if len(set(out)) > 1 else None
 
 
 def preview_mirror_radius(doc):

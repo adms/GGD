@@ -152,7 +152,12 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "damageTier": "小",
+            "damageTierPerRank": [
+              "極小",
+              "極小",
+              "小",
+              "小"
+            ],
             "ratios": [
               {
                 "stat": "ap",
@@ -260,7 +265,12 @@
           "kind": "damageLine",
           "damageType": "magic",
           "amount": {
-            "damageTier": "中"
+            "damageTierPerRank": [
+              "小",
+              "小",
+              "中",
+              "中"
+            ]
           },
           "length": 11,
           "width": 2.0,

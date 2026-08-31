@@ -507,7 +507,11 @@
           "kind": "damageLine",
           "damageType": "true",
           "amount": {
-            "damageTier": "大"
+            "damageTierPerRank": [
+              "小",
+              "中",
+              "大"
+            ]
           },
           "length": 8.25,
           "width": 2.2,
