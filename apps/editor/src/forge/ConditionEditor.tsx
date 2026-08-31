@@ -78,6 +78,8 @@ import { useMemo } from "react";
 import {
   COMPARE_OPS,
   CONDITION_ABSOLUTE_MAX,
+  CONDITION_SCALE_MAX,
+  CONDITION_SCALE_MIN,
   CONDITION_ENTITY_KINDS,
   CONDITION_MAX_CHILDREN,
   CONDITION_STATS,
@@ -93,6 +95,7 @@ import {
   type CompareOp,
   type ConditionEntityKind,
   type ConditionLeaf,
+  type ConditionOperand,
   type ConditionStat,
   type ConditionSubject,
   type EffectCondition,
@@ -152,6 +155,32 @@ const CLAUSE_LABEL: Record<ClauseKind, string> = {
   status: "狀態標記（某一份 / 某一類：[暈眩] / [燃燒] / [致盲] …）",
   equipment: "裝備了道具（某一件 / 某一類）",
 };
+
+/**
+ * Machine-readable authoring surface for the editor-contract gate.
+ *
+ * Keep this next to the controls rather than copying the list into a test:
+ * removing a clause kind/field from the widget must also remove it here and
+ * make the two-way coverage test red against ggd-editor-coverage.json.
+ */
+export const CONDITION_EDITOR_LEAF_KINDS = Object.freeze(
+  Object.keys(CLAUSE_LABEL) as ClauseKind[],
+);
+export const CONDITION_EDITOR_LEAF_FIELDS = Object.freeze([
+  "is",
+  "itemId",
+  "kind",
+  "minStacks",
+  "mode",
+  "op",
+  "other",
+  "p",
+  "stat",
+  "statusId",
+  "subject",
+  "tag",
+  "value",
+] as const);
 
 /** 「某一件」還是「某一類」—— 這一列右邊要畫哪一個輸入框。 */
 type EquipmentMatch = "item" | "tag";
@@ -937,6 +966,14 @@ function StatFields({
 }) {
   const percentOk = statSupportsPercent(leaf.stat);
   const mode = leaf.mode ?? "absolute";
+  const comparableStats = CONDITION_STATS.filter(
+    (stat) => statSupportsPercent(stat) === statSupportsPercent(leaf.stat),
+  );
+
+  const setOther = (other: ConditionOperand<ConditionStat> | undefined): void => {
+    const { other: _drop, ...withoutOther } = leaf;
+    onChange((other === undefined ? withoutOther : { ...withoutOther, other }) as ConditionLeaf);
+  };
 
   /**
    * Both transitions delegate to SHARED, TESTED helpers — the mode/value repair
@@ -1036,6 +1073,81 @@ function StatFields({
           }}
         />
       )}
+
+      <label className="cond-other-toggle">
+        <input
+          type="checkbox"
+          aria-label="與另一個讀數比較"
+          data-field={`${path}.other.enabled`}
+          checked={leaf.other !== undefined}
+          onChange={(e) =>
+            setOther(
+              e.target.checked
+                ? { subject: leaf.subject === "self" ? "target" : "self" }
+                : undefined,
+            )
+          }
+        />
+        與另一個讀數比較
+      </label>
+
+      {leaf.other !== undefined ? (
+        <span className="cond-other-fields" data-field={`${path}.other`}>
+          <span className="cond-fixed">＋</span>
+          <select
+            aria-label="另一個讀數的主體"
+            data-field={`${path}.other.subject`}
+            value={leaf.other.subject}
+            onChange={(e) =>
+              setOther({ ...leaf.other!, subject: e.target.value as ConditionSubject })
+            }
+          >
+            {CONDITION_SUBJECTS.map((subject) => (
+              <option key={subject} value={subject}>
+                {SUBJECT_LABEL[subject]}
+              </option>
+            ))}
+          </select>
+          <select
+            aria-label="另一個讀數的屬性"
+            data-field={`${path}.other.stat`}
+            value={leaf.other.stat ?? ""}
+            onChange={(e) => {
+              const { stat: _oldStat, ...rest } = leaf.other!;
+              setOther(
+                e.target.value === ""
+                  ? rest
+                  : { ...rest, stat: e.target.value as ConditionStat },
+              );
+            }}
+          >
+            <option value="">同左側屬性</option>
+            {comparableStats.map((stat) => (
+              <option key={stat} value={stat}>
+                {STAT_LABEL[stat]}
+              </option>
+            ))}
+          </select>
+          <span className="cond-fixed">×</span>
+          <input
+            aria-label="另一個讀數的倍率"
+            data-field={`${path}.other.scale`}
+            type="number"
+            min={CONDITION_SCALE_MIN}
+            max={CONDITION_SCALE_MAX}
+            step={0.05}
+            value={leaf.other.scale ?? 1}
+            onChange={(e) => {
+              const value = Number(e.target.value);
+              if (!Number.isFinite(value)) return;
+              setOther({
+                ...leaf.other!,
+                scale: Math.min(CONDITION_SCALE_MAX, Math.max(CONDITION_SCALE_MIN, value)),
+              });
+            }}
+          />
+        </span>
+      ) : null}
     </>
   );
 }

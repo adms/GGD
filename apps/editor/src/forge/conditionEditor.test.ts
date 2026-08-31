@@ -468,6 +468,53 @@ describe("ConditionEditor — read-only is EXPLICIT, not a silent degrade", () =
   });
 });
 
+describe("ConditionEditor — comparing against another live stat", () => {
+  it("builds value + scale × other through controls and still parses", () => {
+    const h = open({
+      kind: "stat",
+      subject: "self",
+      stat: "hp",
+      mode: "percent",
+      op: "<",
+      value: 0,
+    });
+
+    h.check(h.field("cond.g0.c0.other.enabled"), true);
+    expect(bus.value).toEqual({
+      kind: "stat",
+      subject: "self",
+      stat: "hp",
+      mode: "percent",
+      op: "<",
+      value: 0,
+      other: { subject: "target" },
+    });
+
+    h.enter(h.field("cond.g0.c0.other.stat"), "mp");
+    h.enter(h.field("cond.g0.c0.other.scale"), "0.8");
+    expect(bus.value).toHaveProperty("other", { subject: "target", stat: "mp", scale: 0.8 });
+    expect(zEffectCondition.safeParse(bus.value).success).toBe(true);
+    expect(derivedSentence(h)).toContain("×0.8");
+  });
+
+  it("does not offer a cross-family stat and can remove the operand without residue", () => {
+    const h = open({
+      kind: "stat",
+      subject: "self",
+      stat: "ad",
+      op: ">=",
+      value: 10,
+      other: { subject: "target", stat: "armor", scale: 1.2 },
+    });
+
+    expect(optionValues(h.field("cond.g0.c0.other.stat"))).not.toContain("hp");
+    expect(optionValues(h.field("cond.g0.c0.other.stat"))).toContain("armor");
+    h.check(h.field("cond.g0.c0.other.enabled"), false);
+    expect(bus.value).not.toHaveProperty("other");
+    expect(zEffectCondition.safeParse(bus.value).success).toBe(true);
+  });
+});
+
 describe("flatten / unflatten round-trip", () => {
   /**
    * `unflatten(flatten(x))` must EQUAL x for every tree the form can draw.

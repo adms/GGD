@@ -27,6 +27,7 @@ import {
 } from "@ggd/shared/content/templates/resolve";
 import type { TemplateDoc } from "@ggd/shared/content/schema/template";
 import { api, WRITES_ENABLED } from "../api/client";
+import { generatedAbilityBlockers } from "../sourcePolicy";
 
 /**
  * The members a template-authored ability owns — the ONLY ones we splice.
@@ -112,12 +113,7 @@ export interface ForgePlan {
  * ⛔ 這裡是**擋下**不是警告：一個「存了但會消失」的存檔比存不下去更糟。
  */
 export function generatorOwnedBlockers(after: Record<string, unknown>): string[] {
-  if (after["provenance"] !== "owner-spec") return [];
-  return [
-    `這一支是「90 支重製技能」之一，由 tools/skill-remake/batch1.py 產生 —— ` +
-      `在這裡存下去會成功，但下一次有人重跑產生器時**會被無聲覆寫**。` +
-      `要改請改產生器那張表，然後跑 \`python3 tools/skill-remake/batch1.py\`。`,
-  ];
+  return generatedAbilityBlockers(after);
 }
 
 /**

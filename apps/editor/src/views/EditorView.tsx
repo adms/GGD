@@ -1,6 +1,6 @@
 /** Editing view: schema-generated form + save/revert + inline & server errors. */
 import { useEffect, useMemo, useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { zodIssues, type FieldIssue } from "@ggd/shared/content";
 import { api, ApiValidationError } from "../api/client";
 import { collectionEntry } from "../collections";
@@ -10,6 +10,7 @@ import { issuesToErrorMap, useEditorStore, type ErrorMap } from "../store";
 import { authorWarnings } from "../authorWarnings";
 import { PreviewPanel } from "../preview/PreviewPanel";
 import { AiFillProvider } from "../ai/AiFillContext";
+import { sourceWriteBlockers } from "../sourcePolicy";
 // NOTE: the AI icon panel (../ai/AiIconPanel) is deliberately NOT rendered here.
 // The owner does not want CLOUD image generation — 「我不追求雲端生圖，只留本機端
 // SD 生圖」 — and this panel's Generate button is the one UI surface that POSTs to
@@ -45,6 +46,12 @@ export function EditorView() {
 
   const entry = collection ? collectionEntry(collection) : null;
   const ui = useMemo(() => (entry ? walkZod(entry.schema, "", entry.label) : null), [entry]);
+  const source = useQuery({
+    queryKey: ["editor-source", collection, docId],
+    queryFn: () => api.editorSource(collection!, docId!),
+    enabled: collection === "abilities" && docId !== null,
+    retry: false,
+  });
 
   // inline validation with the SAME shared Zod schema on every draft change
   const inlineErrors: ErrorMap = useMemo(() => {
@@ -58,6 +65,10 @@ export function EditorView() {
    * ⛔ 它**不**進 `errorCount`，所以 save 照樣按得下去（owner：「只是個警告標記，並不會擋」）。
    */
   const warnings = useMemo(() => authorWarnings(collection, docId, draft), [collection, docId, draft]);
+  const writeBlockers = useMemo(
+    () => collection ? sourceWriteBlockers(collection, draft, source.data ?? null) : [],
+    [collection, draft, source.data],
+  );
 
   if (!collection || !docId || !entry || !ui || draft === null) {
     return <main className="editor-empty">Pick a document.</main>;
@@ -70,6 +81,10 @@ export function EditorView() {
   const errorCount = Object.keys(errors).length;
 
   const save = async () => {
+    if (writeBlockers.length > 0) {
+      setSaveState(`blocked: ${writeBlockers[0]}`);
+      return;
+    }
     setSaveState("saving…");
     try {
       const res = await api.put(collection, docId, draft);
@@ -103,7 +118,7 @@ export function EditorView() {
             <button type="button" disabled={!dirty} onClick={() => useEditorStore.getState().select(collection, docId, useEditorStore.getState().original)}>
               revert
             </button>
-            <button type="button" disabled={!dirty || errorCount > 0} onClick={() => void save()}>
+            <button type="button" disabled={!dirty || errorCount > 0 || writeBlockers.length > 0} onClick={() => void save()}>
               save
             </button>
           </div>
@@ -117,6 +132,12 @@ export function EditorView() {
               </li>
             ))}
           </ul>
+        ) : null}
+        {writeBlockers.length > 0 ? (
+          <section className="source-write-blockers" role="alert">
+            <b>⛔ 來源安全保護</b>
+            <ul>{writeBlockers.map((blocker) => <li key={blocker}>{blocker}</li>)}</ul>
+          </section>
         ) : null}
         <AiFillProvider>
           <FormRenderer node={ui} value={draft} dataPath="" errors={errors} onChange={update} />

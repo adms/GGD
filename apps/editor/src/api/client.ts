@@ -1,5 +1,6 @@
 /** Thin fetch wrapper over the dev content-api (same-origin via Vite proxy / nginx). */
 import type { CollectionIndex, CollectionName, FieldIssue, Manifest } from "@ggd/shared/content";
+import type { EditorSourceDescriptor } from "../sourcePolicy";
 
 const BASE = "/content-api";
 
@@ -61,6 +62,13 @@ async function request<T>(url: string, init?: RequestInit): Promise<T> {
   return (await res.json()) as T;
 }
 
+async function requestOptional<T>(url: string): Promise<T | null> {
+  const res = await fetch(url);
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`GET ${url} -> ${res.status}: ${await res.text()}`);
+  return (await res.json()) as T;
+}
+
 export interface WriteResult {
   id: string;
   hash: string;
@@ -74,6 +82,15 @@ export const api = {
     request<CollectionIndex>(`${BASE}/${collection}/_index`),
   doc: <T = unknown>(collection: CollectionName, id: string) =>
     request<T>(`${BASE}/${collection}/${id}`),
+  /**
+   * Main-owned source lookup. `null` is the compatibility state while an older
+   * content-api has not shipped the route; policy then fails safe from the
+   * document provenance instead of guessing generator paths.
+   */
+  editorSource: (collection: CollectionName, id: string) =>
+    requestOptional<EditorSourceDescriptor>(
+      `${BASE}/editor-source?collection=${encodeURIComponent(collection)}&id=${encodeURIComponent(id)}`,
+    ),
   put: (collection: CollectionName, id: string, doc: unknown) => {
     assertWritable();
     return request<WriteResult>(`${BASE}/${collection}/${id}`, {

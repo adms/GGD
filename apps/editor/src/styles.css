@@ -404,3 +404,19 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .author-warnings { list-style: none; margin: 6px 0; padding: 8px 10px; border-left: 3px solid #d9a441; background: rgba(217, 164, 65, 0.08); font-size: 12px; }
 .author-warnings li { margin: 3px 0; }
 .author-warnings em { opacity: 0.7; font-style: normal; }
+
+.source-write-blockers {
+  margin: 8px 0; padding: 9px 11px;
+  border: 1px solid #9d4954; border-radius: 6px;
+  background: rgba(157, 73, 84, 0.16); color: #ffd8dc; font-size: 12px;
+}
+.source-write-blockers ul { margin: 5px 0 0; padding-left: 18px; }
+
+.cond-other-toggle {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; color: #9db6ee;
+}
+.cond-other-fields {
+  display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px;
+  padding: 4px 6px; border: 1px dashed #46577a; border-radius: 5px;
+}

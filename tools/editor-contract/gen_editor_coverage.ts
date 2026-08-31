@@ -191,6 +191,16 @@ export function buildEditorCoverage(): {
       }
     } else if ("item" in node && node.item) {
       flatten(node.item as UINode, out);
+    } else if (node.kind === "tuple") {
+      // Tuple members are independently editable controls. Skipping them makes
+      // the contract claim the parent exists while silently omitting every
+      // value the author can actually change.
+      for (const item of node.items) flatten(item, out);
+    } else if (node.kind === "record") {
+      // GH#888 — model@1.attachPoints is a record of Vec3 values. The editor
+      // has always rendered x/y/z, but the contract walker stopped at `*`, so
+      // the two-way gate reported three live controls as contract-unknown.
+      flatten(node.value, out);
     } else if (node.kind === "discriminatedUnion") {
       // ⚠️ ⭐ `variants` 是 `{ tag, fields }`，⛔ **不是** UINode ——
       //   第一版把它當 UINode 走 ⇒ `vfx@1` 的 emitter **4 個變體一格都沒進去**
