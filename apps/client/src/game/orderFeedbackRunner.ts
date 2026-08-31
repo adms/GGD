@@ -31,6 +31,29 @@ import type { Order } from "@ggd/shared/sim/intents";
 import { orderFeedbackFor, orderFeedbackPolicy, type OrderCue } from "../input/orderFeedback";
 import { playContextualVoice } from "../audio/contextualVoice";
 
+/**
+ * ⭐⭐ cue → **今天真的存在**的語音類別（`contextualVoice.policyFor` 的 17 個）。
+ *
+ * ⚠️⚠️ ⭐ 我第一版寫的是 `` `order-${cue}` `` —— ⛔ 而 `order-move` /
+ * `order-stop` / `order-cancel` **一個都不在那 17 個裡** ⇒ 它們會掉進
+ * `policyFor` 的 `default`，然後 `packClips()` 查不到任何 clip，
+ * ⭐ **靜靜回 `false`** ⇒ ⛔ 一個「說了但不會發生」的回饋（第一·五守則）。
+ *
+ * ⭐ ⇒ 只有 `attack` 有家（`attack-light` —— 與 WINDUP 那一支**同一個**池，
+ * 而它自己帶著節流 ⇒ ⛔ 連點右鍵不會變成一串疊在一起的吼叫）。
+ * ⛔ 其餘三格**明確是 `null`**，⭐ 而不是一個查不到的名字：
+ * ⚠️ 兩者在畫面上一樣安靜，⛔ 但只有前者說得出「它今天沒有聲音」。
+ *
+ * ⇒ ⭐ 要補那三個聲音，是**錄音／配類別**那一層的工作（GH#441 語音普查那一族），
+ * ⛔ 不是在這裡編一個名字。
+ */
+const ORDER_CUE_CATEGORY: Readonly<Record<OrderCue, string | null>> = {
+  attack: "attack-light",
+  move: null,
+  stop: null,
+  cancel: null,
+};
+
 /** 指令環閃多久（毫秒）。⭐ 一次心跳的長度 —— ⛔ 不是一個要調的數字。 */
 export const ORDER_FLASH_MS = 320;
 
@@ -54,10 +77,11 @@ export class OrderFeedbackRunner {
    * （`playContextualVoice` 的 policy）⇒ ⛔ 連點右鍵不會變成一串疊在一起的吼叫。
    */
   private playCue(cue: OrderCue): void {
-    playContextualVoice(
-      this.casterId(),
-      cue === "attack" ? "attack-light" : `order-${cue}`,
-    );
+    const category = ORDER_CUE_CATEGORY[cue];
+    // ⛔ `null` = 這一格今天**沒有**對得上的語音類別 ⇒ 什麼都不播。
+    // ⭐ 而那是**誠實的**：`playContextualVoice` 對認不得的類別會靜靜回 `false`，
+    //   ⇒ ⛔ 寫一個不存在的類別名等於「說了但不會發生」（第一·五守則）。
+    if (category !== null) playContextualVoice(this.casterId(), category);
   }
 
   /** 玩家剛下了一個指令。⭐ 本地零延遲：⛔ 不等 ack、⛔ 不讀 snapshot。 */

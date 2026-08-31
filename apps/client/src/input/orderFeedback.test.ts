@@ -138,3 +138,41 @@ describe("GH#734 接縫 —— `onOrder` 的每一個呼叫點都接上了", () 
     );
   });
 });
+
+/**
+ * ⭐⭐ **cue → 語音類別的對照不可以編一個名字**（第一·五守則）。
+ *
+ * ⚠️ 我第一版寫的是 `` `order-${cue}` `` —— ⛔ 而 `order-move` / `order-stop` /
+ * `order-cancel` **一個都不在** `contextualVoice.policyFor` 認得的 17 個類別裡
+ * ⇒ 它們掉進 `default`、`packClips()` 查不到 clip、⭐ **靜靜回 `false`**。
+ * ⇒ ⛔ 一個「說了但不會發生」的回饋，⭐ 而它與「這一格今天沒有聲音」在畫面上
+ * 一模一樣 —— ⛔ 只有後者說得出自己沒有聲音。
+ */
+describe("GH#734 語音類別的對照", () => {
+  const VOICE = readFileSync(resolve(__dirname, "../audio/contextualVoice.ts"), "utf8");
+  const RUNNER = readFileSync(resolve(__dirname, "../game/orderFeedbackRunner.ts"), "utf8");
+  /** `policyFor` 的 `case "x":` —— ⭐ 出貨真的認得的那一份。 */
+  const known = new Set([...VOICE.matchAll(/case "([a-z-]+)":/g)].map((m) => m[1]!));
+
+  it("量尺先自證：讀得到那份類別清單（⛔ 空的會讓下面空過）", () => {
+    expect(known.size, "⛔ 一個類別都沒解析到").toBeGreaterThan(10);
+    expect(known, "⛔ 已知存在的那一個不見了 ⇒ 解析壞了").toContain("attack-light");
+  });
+
+  it("★ ⭐ 對照表裡的每一個**非 null** 類別，`policyFor` 都認得", () => {
+    const mapped = [...RUNNER.matchAll(/^\s+(\w+): "([a-z-]+)",$/gm)].map((m) => m[2]!);
+    expect(mapped.length, "⛔ 一格都沒解析到 ⇒ 這條測試證明不了任何事").toBeGreaterThan(0);
+    const ghosts = mapped.filter((c) => !known.has(c));
+    expect(
+      ghosts,
+      "⛔ 編了一個不存在的類別名 —— 它會靜靜回 false，而那與「沒有聲音」長得一樣",
+    ).toEqual([]);
+  });
+
+  it("⭐ ⛔ 不可以再用樣板字串組類別名（那正是第一版的錯）", () => {
+    // ⭐ 剝掉註解再看 —— ⚠️ 註解裡**要**提到那個錯誤寫法（那是它存在的理由），
+    //   ⛔ 而我第一版直接掃全檔，於是它抓到自己的說明文字。
+    const code = RUNNER.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+    expect(code, "⛔ `order-${cue}` 組出來的名字沒有人認得").not.toContain("`order-${");
+  });
+});
