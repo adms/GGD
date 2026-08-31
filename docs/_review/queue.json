@@ -2,9 +2,9 @@
   "schema": "review-queue@1",
   "counts": {
     "assets": 1193,
-    "tier0": 852,
+    "tier0": 851,
     "reviewed": 0,
-    "pending": 341,
+    "pending": 342,
     "voice": {
       "champions": 51,
       "status": "measurement-stale",
@@ -744,6 +744,25 @@
         "godie-u00l.passive",
         "godie-u010.passive",
         "godie-umal.passive"
+      ]
+    },
+    {
+      "id": "godie-bloodbreathstream-p0",
+      "kind": "vfx",
+      "hash": "0afd37e5f6346ba60d79e9a987eac4d6f8f31391",
+      "risk": 8,
+      "reasons": [
+        "7 支上架技能引用（R/EX ×2 加權後 risk 8）",
+        "未審"
+      ],
+      "refs": [
+        "godie-h01n.e",
+        "godie-h01n.w",
+        "godie-h01o.e",
+        "godie-h01o.w",
+        "godie-n00p.w",
+        "godie-nsjs.w",
+        "godie-u00v.r"
       ]
     },
     {
