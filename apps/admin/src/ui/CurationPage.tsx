@@ -27,6 +27,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getStarterSet, getWhitelist, saveWhitelist } from "../api";
 import { contentAssetUrl, loadCollection } from "../content";
+import { enableAuditSummary } from "../enableAudit";
 import {
   EMPTY_SELECTION,
   FILTER_LABEL,
@@ -268,15 +269,24 @@ export function CurationPage(): React.JSX.Element {
   const onSave = async (): Promise<void> => {
     setBusy(true);
     setApiErr(null);
+      // ⭐⭐ GH#473 —— 「啟用上架」的當下要跑稽核，而「這一次新啟用了什麼」是
+      //    **存檔前的伺服器狀態**與存檔結果的差。⛔ 一定要在 `setServer(doc)` **之前**
+      //    抓它：那一行之後 `server` 已經等於新狀態，拿它自己減自己**永遠是空集合**
+      //    ⇒ ⭐ 一個永遠不會叫的閘（失敗形態⑨）。
+      const before = server;
     try {
       const { doc, verify, via } = await saveWhitelist(server, draft);
       setServer(doc);
       setDraft(doc);
       setSel(EMPTY_SELECTION);
       if (verify.ok) {
+          // ⭐ GH#473：`null` = 這一次沒有新啟用任何東西 ⇒ ⛔ 一個字都不多說、
+          //    一支稽核都不跑（票文逐字的成本斷言：「不啟用就不花錢」）。
         setFlash({
           ok: true,
-          text: `✓ 已儲存並回讀驗證（${via === "bulk" ? "bulk" : "replace"}）：英雄 ${doc.champions.length}、道具 ${doc.items.length}、技能 ${doc.abilities.length}`,
+          text:
+            `✓ 已儲存並回讀驗證（${via === "bulk" ? "bulk" : "replace"}）：英雄 ${doc.champions.length}、道具 ${doc.items.length}、技能 ${doc.abilities.length}` +
+            (enableAuditSummary(before, doc) ?? ""),
         });
       } else {
         const detail = verify.mismatches
