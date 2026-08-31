@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_6a08a82c1c97",
+    "contentVersion": "cv_809602415a4b",
     "collections": {
       "champions": {
         "hash": "3e07926efa17",
         "count": 71
       },
       "abilities": {
-        "hash": "156f8e5bf7e3",
+        "hash": "2aa240bf88c7",
         "count": 421
       },
       "items": {
@@ -26,8 +26,8 @@
         "count": 21
       },
       "status-effects": {
-        "hash": "081fc140dc22",
-        "count": 45
+        "hash": "acf7f8dd8253",
+        "count": 46
       },
       "loot-tables": {
         "hash": "50b52195cd4a",
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "c78f66e70c65",
+        "hash": "05a84aef4443",
         "count": 93
       },
       "models": {
@@ -50,7 +50,7 @@
         "count": 151
       },
       "vfx": {
-        "hash": "736566f3f2b8",
+        "hash": "0c49d44b90f4",
         "count": 661
       },
       "skins": {
@@ -93,7 +93,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "9d43feef",
+    "fingerprint": "553408c5",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -977,7 +977,8 @@
         "spriteSheet",
         "stretched",
         "tailLength",
-        "texture"
+        "texture",
+        "tracks"
       ],
       "vfx@1.orient": [
         "pitchDeg",
@@ -4583,12 +4584,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "9d43feef",
+    "engineFingerprint": "553408c5",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 9d43feef —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 553408c5 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -5377,5 +5378,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "80ce481c4d50"
+  "profileDigest": "4d3c9f7a3fa1"
 }
