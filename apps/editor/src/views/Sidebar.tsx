@@ -8,13 +8,17 @@ import { useEditorStore } from "../store";
 export function Sidebar({
   active,
   forgeActive,
+  vfxForgeActive,
   onPick,
   onPickForge,
+  onPickVfxForge,
 }: {
   active: CollectionName | null;
   forgeActive?: boolean;
+  vfxForgeActive?: boolean;
   onPick(collection: CollectionName): void;
   onPickForge?(): void;
+  onPickVfxForge?(): void;
 }) {
   return (
     <nav className="sidebar">
@@ -29,6 +33,15 @@ export function Sidebar({
           onClick={onPickForge}
         >
           🔨 鑄技工坊
+        </button>
+      ) : null}
+      {onPickVfxForge ? (
+        <button
+          type="button"
+          className={`sidebar-vfx-forge${vfxForgeActive ? " active" : ""}`}
+          onClick={onPickVfxForge}
+        >
+          ✨ 特效工坊
         </button>
       ) : null}
       <h2>Collections</h2>

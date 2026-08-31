@@ -1,0 +1,52 @@
+import { useMemo } from "react";
+import { zVfxScriptSegment, type VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
+import { FormRenderer } from "../form/FormRenderer";
+import { walkZod } from "../form/walk";
+import { setIn, type ErrorMap } from "../store";
+import { newSegment } from "./model";
+
+export function SegmentInspector({
+  segment,
+  index,
+  count,
+  errors,
+  onChange,
+  onDelete,
+  onMove,
+}: {
+  segment: VfxScriptSegment;
+  index: number;
+  count: number;
+  errors: ErrorMap;
+  onChange(segment: VfxScriptSegment): void;
+  onDelete(): void;
+  onMove(delta: -1 | 1): void;
+}) {
+  const ui = useMemo(() => walkZod(zVfxScriptSegment, "", "演出段"), []);
+  return (
+    <aside className="vfx-inspector">
+      <header>
+        <div><h2>段落 {index + 1}</h2><code>{segment.kind}</code></div>
+        <div>
+          <button type="button" disabled={index === 0} onClick={() => onMove(-1)}>↑</button>
+          <button type="button" disabled={index === count - 1} onClick={() => onMove(1)}>↓</button>
+          <button type="button" disabled={count <= 1} onClick={onDelete}>刪除</button>
+        </div>
+      </header>
+      <p className="vfx-help">slider 的界線直接來自 `vfx-script@1` schema；旁邊數字可精確輸入。</p>
+      <FormRenderer
+        node={ui}
+        value={segment}
+        dataPath=""
+        errors={errors}
+        onChange={(path, value) => {
+          if (path === "" && value && typeof value === "object" && "kind" in value) {
+            onChange(newSegment((value as VfxScriptSegment).kind));
+            return;
+          }
+          onChange(setIn(segment, path, value) as VfxScriptSegment);
+        }}
+      />
+    </aside>
+  );
+}

@@ -102,14 +102,16 @@ function renderWidget(props: FieldProps): ReactElement {
       return (
         <fieldset className="field field-tuple">
           <legend>{node.label}</legend>
-          {node.items.map((item, i) =>
-            renderNode({
-              ...props,
-              node: item,
-              value: Array.isArray(props.value) ? props.value[i] : undefined,
-              dataPath: props.dataPath ? `${props.dataPath}.${i}` : String(i),
-            }),
-          )}
+          {node.items.map((item, i) => (
+            <div key={`${item.path}:${i}`}>
+              {renderNode({
+                ...props,
+                node: item,
+                value: Array.isArray(props.value) ? props.value[i] : undefined,
+                dataPath: props.dataPath ? `${props.dataPath}.${i}` : String(i),
+              })}
+            </div>
+          ))}
         </fieldset>
       );
     case "object":

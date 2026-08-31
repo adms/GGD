@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { CollectionName } from "@ggd/shared/content";
 import { Sidebar, DocList } from "./views/Sidebar";
@@ -6,12 +6,16 @@ import { EditorView } from "./views/EditorView";
 import { ForgePage } from "./forge/ForgePage";
 import { useEditorStore } from "./store";
 
+const VfxForgePage = lazy(() =>
+  import("./vfx-forge/VfxForgePage").then((m) => ({ default: m.VfxForgePage })),
+);
+
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 1, refetchOnWindowFocus: false } },
 });
 
-/** The editor has two top-level modes: per-doc CRUD, and the 鑄技工坊 flow. */
-type Mode = { kind: "collection"; collection: CollectionName | null } | { kind: "forge" };
+/** Top-level authoring flows. VFX Forge owns only content/vfx-scripts. */
+type Mode = { kind: "collection"; collection: CollectionName | null } | { kind: "forge" } | { kind: "vfx-forge" };
 
 export function App() {
   const [mode, setMode] = useState<Mode>({ kind: "collection", collection: "champions" });
@@ -23,6 +27,7 @@ export function App() {
         <Sidebar
           active={mode.kind === "collection" ? mode.collection : null}
           forgeActive={mode.kind === "forge"}
+          vfxForgeActive={mode.kind === "vfx-forge"}
           onPick={(c) => {
             setMode({ kind: "collection", collection: c });
             clearSelection();
@@ -31,8 +36,16 @@ export function App() {
             setMode({ kind: "forge" });
             clearSelection();
           }}
+          onPickVfxForge={() => {
+            setMode({ kind: "vfx-forge" });
+            clearSelection();
+          }}
         />
-        {mode.kind === "forge" ? (
+        {mode.kind === "vfx-forge" ? (
+          <Suspense fallback={<main className="editor-empty">載入特效工坊…</main>}>
+            <VfxForgePage />
+          </Suspense>
+        ) : mode.kind === "forge" ? (
           <ForgePage />
         ) : (
           <>
