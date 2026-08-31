@@ -40,6 +40,26 @@
 
 name: ggd
 
+# ── ⭐⭐ GH#862 —— **log 上限**（2026-08-31）────────────────────────────────────
+#
+# ⚠️ ⭐ 這個洞在搬到 Mac mini 之後**重新打開了**，而票上記著它「已關」：
+#   `scripts/host-migrate.sh` 寫的是 `/etc/docker/daemon.json` ＋ systemd
+#   （15 處 systemd / **0 處 macOS**）⇒ ⭐ 它是 **Linux 專用**的。
+#   ⇒ mini 上沒有跑過它，而 `mini-deploy.sh` / `mac-boot-guard.sh`
+#     對 `max-size` / `log-opts` **零命中** ⇒ ⛔ **出貨機上沒有任何 log 上限**。
+#
+# ⭐ 修在 **compose** 而不是 daemon.json：一個住處管全部容器，
+#   ⛔ 而且它**跟著 repo 走** —— 換一台機器不會再掉一次。
+#
+# ⚠️ 100m × 3 = 每個容器最多 300 MB。⭐ 那是「查得到昨天發生什麼」與
+#   「碟不會被塞爆」之間的取捨，⛔ 不是一個隨便挑的數字：
+#   game shard 在一場比賽裡寫得出數 MB，300 MB ≈ 一週的量。
+x-logging: &ggd-logging
+  driver: json-file
+  options:
+    max-size: "100m"
+    max-file: "3"
+
 services:
   redis:
     # EXPLICIT re-pin. Do not remove. See the exposure note above (#117).
@@ -49,11 +69,13 @@ services:
     # automatically for the evening. (edge is the ONLY service left on "no", by
     # design — see its block.)
     restart: unless-stopped
+    logging: *ggd-logging
 
   platform:
     # Auto-recover from a crash so a mid-evening blip doesn't strand the family
     # at the login wall. `unless-stopped` keeps it down after `make family-down`.
     restart: unless-stopped
+    logging: *ggd-logging
     environment:
       # --- the declaration -------------------------------------------------
       GGD_DEPLOY_TIER: "family"
@@ -88,6 +110,7 @@ services:
     # Auto-recover from a crash — a dead game server strands every family member
     # at champ-select/in-match with no way to start or finish a round.
     restart: unless-stopped
+    logging: *ggd-logging
     environment:
       GGD_DEPLOY_TIER: "family"
       # Match replay recording (#175) is the whole POINT of the family playtest —
@@ -192,6 +215,7 @@ services:
     image: caddy:2-alpine
     container_name: ggd-caddy-1
     restart: unless-stopped
+    logging: *ggd-logging
     command: caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
     environment:
       ACME_EMAIL: ${ACME_EMAIL:-adms@mobagel.com}
@@ -214,6 +238,7 @@ services:
       - edge
 
   edge:
+    logging: *ggd-logging
     build:
       context: ..
       dockerfile: docker/edge.Dockerfile
@@ -253,6 +278,11 @@ services:
     # failure into a crash-loop nobody reads, which is the silent-degradation
     # failure mode this whole task exists to remove.
     restart: "no"
+
+  # ⭐ GH#862 —— `review` 住在 `compose.yaml`（⛔ 這份 overlay 原本沒有它），
+  #   而它同樣會寫 log。⇒ 這裡只補 log 上限，⛔ 不覆蓋它的任何其他設定。
+  review:
+    logging: *ggd-logging
 
 volumes:
   # ⭐ `name:` 就足以「有就重用」—— 正式機上這兩個 volume 已經裝著**已簽發的 TLS 憑證**,
