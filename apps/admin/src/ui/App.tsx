@@ -616,7 +616,14 @@ function useLiveSuite(): LiveSuite | null {
 function useContentSuite(): ContentSuite | null {
   const [loaded, setLoaded] = useState<ContentSuite | null>(null);
   useEffect(() => {
-    if (!import.meta.env.DEV) return;
+    // ⭐⭐ GH#730 —— ⛔ **這裡在此之前有一行 `if (!import.meta.env.DEV) return;`**，
+    // 而它讓 rollup 證明整個 chunk 到不了 ⇒ ⭐ 正式 build **不含**那 9 頁
+    //（⛔ 不是隱藏，是不存在）⇒ 它只在那台從來不需要它的機器上可用。
+    //
+    // ⭐ owner 2026-09-01：「do it quick, 這是你少數分配要做好的事情，專心做好」
+    // ⇒ chunk **一律載入**，⛔ 而「能不能寫」由 `contentApi.ts` 的部署時旗標
+    //   （`VITE_GGD_CONTENT_EDIT`）決定，關著時每一頁給的是**一句說得出原因的話**。
+    // ⚠️ ⭐ fail-loud ⛔ 不是 fail-absent：一個看不見的頁面答不出「為什麼看不見」。
     let alive = true;
     void import("./ContentPage").then(
       (m) => {

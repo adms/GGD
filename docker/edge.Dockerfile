@@ -88,6 +88,20 @@ COPY tools/skill-lists/lists.json tools/skill-lists/
 # actually issues the request. Read that file's header before changing this.
 ARG VITE_GGD_FULL_ASSETS=""
 ENV VITE_GGD_FULL_ASSETS=$VITE_GGD_FULL_ASSETS
+# ---- 內容編輯（GH#730）-------------------------------------------------------
+# ⭐ owner 2026-09-01：「do it quick, 這是你少數分配要做好的事情，專心做好」
+#
+# ⛔ 在此之前那 9 頁**不在正式 build 裡** —— `App.tsx` 的一行
+# `if (!import.meta.env.DEV) return;` 讓 rollup 證明整個 chunk 到不了
+# ⇒ ⭐ 它只在**那台從來不需要它的機器**上可用。
+#
+# ⭐ 現在 chunk 一律進 bundle，⛔ 而**能不能寫**由這個旗標決定。
+# ⚠️ 預設**空**（＝關）—— ⛔ 一個預設開著的寫入端等於把 content 目錄交出去。
+# ⚠️ ⭐ 而它只是第一道閘：寫入端打的是 `content-api`，而它在 compose 裡是
+#   `profiles: ["dev"]`（⛔ 正式站沒部署）⇒ 開了旗標而 API 不在時，
+#   畫面上是**一句說得出原因的話**，⛔ 不是一個看不見的頁面。
+ARG VITE_GGD_CONTENT_EDIT=""
+ENV VITE_GGD_CONTENT_EDIT=$VITE_GGD_CONTENT_EDIT
 # ---- THE BUILD STAMP (task #66, defect P0-6(a)) ------------------------------
 # THIS IMAGE CANNOT COMPUTE ITS OWN VERSION, and that is not fixable here:
 #   • .dockerignore excludes `.git` (deliberately — it is 116 MB of context);

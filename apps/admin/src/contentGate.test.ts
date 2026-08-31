@@ -197,17 +197,42 @@ describe("B: the admin console binds loopback and refuses --host", () => {
 });
 
 // ---------------------------------------------------------------------------
-// C. the editor cannot exist in a production build
+// C. ⭐ 內容編輯**進得了正式 build**，而預設是關的（GH#730）
+//
+// ⚠️ ⭐ **2026-09-01 這一節整個換了立場。** 在此之前它叫
+// 「the editor cannot exist in a production build」，而它釘的是
+// `const ENABLED = isDevBuild();` —— ⭐ 那讓 rollup 證明整個 chunk 到不了
+// ⇒ ⛔ 正式 build **不含**那 9 頁（⛔ 不是隱藏，是不存在）
+// ⇒ ⭐ 它只在**那台從來不需要它的機器**上可用。
+//
+// owner 2026-09-01：「**do it quick, 這是你少數分配要做好的事情，專心做好**」
+// ⇒ ⭐ chunk 一律進 bundle，旗標從 **build 時**變成**部署時**
+//   （`VITE_GGD_CONTENT_EDIT`，⛔ 正式 build 預設關）。
+//
+// ⭐ 照第〇·六守則：**預設變了就測新的預設**，⛔ 不是把功能改回去遷就斷言。
+// ⭐ 而被守的性質**一個字都沒改**：⛔ 每一個寫入端仍然第一件事就檢查旗標。
 // ---------------------------------------------------------------------------
 
-describe("C: the write module is dev-build gated", () => {
-  it("uses the repo's guarded import.meta.env.DEV shape (safe under plain node)", () => {
+describe("C: 內容編輯進得了正式 build，而預設是關的（GH#730）", () => {
+  it("★ ⭐ 旗標是**部署時**的（⛔ 不再是 build 時 dead-fold）", () => {
     cover("content-admin-gate");
     const src = code(CONTENT_API_SRC);
+    // dev 仍然自動開 —— ⛔ 本機行為一格沒變
     expect(src).toMatch(/function isDevBuild\(\)\s*:\s*boolean\s*\{/);
-    expect(src).toMatch(/import\.meta as unknown as \{ env\?: \{ DEV\?: boolean \} \}/);
     expect(src).toMatch(/catch\s*\{\s*return false;\s*\}/);
-    expect(src).toMatch(/const ENABLED = isDevBuild\(\);/);
+    // ⭐ 而正式 build 讀的是一個 env，⛔ 不是被折掉的常數
+    expect(src, "⛔ 旗標又變回 build 時的了 —— 那會讓 9 頁再次從正式 build 消失").toMatch(
+      /const ENABLED = contentEditEnabled\(\);/,
+    );
+    expect(src).toMatch(/VITE_GGD_CONTENT_EDIT/);
+  });
+
+  it("★ ⭐ 關著的時候給的是**一句說得出原因的話**（⛔ 不是一個看不見的頁面）", () => {
+    cover("content-admin-gate");
+    const src = code(CONTENT_API_SRC);
+    // fail-loud ⛔ 不是 fail-absent —— 一個看不見的頁面答不出「為什麼看不見」。
+    expect(src).toMatch(/VITE_GGD_CONTENT_EDIT=1/);
+    expect(src, "⛔ 沒有說 content-api 也要跑 —— 那是第二道獨立的閘").toMatch(/content-api/);
   });
 
   it("EVERY exported async function short-circuits on the gate as its first branch", () => {
@@ -263,14 +288,22 @@ describe("C: the write module is dev-build gated", () => {
     expect(offenders).toEqual([]);
   });
 
-  it("guards the page's dynamic import with a BARE import.meta.env.DEV early return", () => {
+  it("★ ⭐ 那個動態 import **不再被 DEV 閘擋住**（⇒ chunk 進得了正式 build）", () => {
     cover("content-admin-gate");
     const src = code(APP_SRC);
     const at = src.indexOf('import("./ContentPage")');
     expect(at, "App must load ./ContentPage dynamically").toBeGreaterThan(0);
-    const before = src.slice(Math.max(0, at - 400), at);
-    // bare, statically substitutable form — NOT a runtime hostname/env lookup
-    expect(before).toMatch(/if \(!import\.meta\.env\.DEV\) return;/);
+    const before = src.slice(Math.max(0, at - 600), at);
+    // ⭐ 這一條在 2026-09-01 之前是 `expect(before).toMatch(/if \(!import\.meta\.env\.DEV\) return;/)`
+    //   —— ⛔ 而那一行正是讓 rollup 證明整個 chunk 到不了的東西
+    //   ⇒ 正式 build **不含**那 9 頁（⛔ 不是隱藏，是不存在）。
+    // owner 2026-09-01：「do it quick, 這是你少數分配要做好的事情，專心做好」
+    expect(
+      before,
+      "⛔ DEV 閘回來了 —— 那會讓 9 頁再次從正式 build 消失（GH#730）",
+    ).not.toMatch(/if \(!import\.meta\.env\.DEV\) return;/);
+    // ⭐ 而**判準沒有變鬆**：仍然⛔不可以用 runtime 的 hostname／localStorage 當閘 ——
+    //   那種閘改一個網址就繞得過去。真正的閘是 `contentApi.ts` 的部署時旗標。
     expect(before).not.toMatch(/location\.hostname|window\.location|localStorage/);
   });
 

@@ -245,6 +245,11 @@ services:
       args:
         # THE ONE THAT DECIDES THE OUTCOME. See the header, item 3.
         VITE_GGD_FULL_ASSETS: "1"
+        # ⭐ GH#730 —— 內容編輯的 9 頁。⛔ 空字串＝關（出貨預設）。
+        # ⚠️ 要打開：這裡填 "1" **並且**讓 content-api 跑起來
+        #   （它今天是 `profiles: ["dev"]`，正式站沒部署）。
+        # ⭐ 兩道閘都過才寫得成 —— ⛔ 只開一道會得到「一句說得出原因的話」。
+        VITE_GGD_CONTENT_EDIT: ""
         # Build identity (task #66 / P0-6(a)). compose merges `args` MAPS
         # key-wise (unlike `ports`, a sequence, which needed `!override`), so
         # the base file's value would already carry — it is restated because

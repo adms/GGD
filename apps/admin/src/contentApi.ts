@@ -61,8 +61,40 @@ function isDevBuild(): boolean {
   }
 }
 
-/** Dead-folds to `false` in a production build; every writer below checks it. */
-const ENABLED = isDevBuild();
+/**
+ * ⭐⭐ GH#730 —— 內容編輯在正式 build 裡**開得起來**（owner 2026-09-01：
+ * 「do it quick, 這是你少數分配要做好的事情，專心做好」）。
+ *
+ * ── ⛔ 在此之前 ────────────────────────────────────────────────────────────
+ * `const ENABLED = isDevBuild()` ⇒ ⭐ vite 把它折成 `false`、rollup 證明整個
+ * chunk 到不了 ⇒ ⛔ 正式 build **不含**那 9 頁（⛔ 不是隱藏，是不存在）。
+ * ⇒ 它只在**那台從來不需要它的機器**上可用。
+ *
+ * ── ⭐ 改成什麼 ────────────────────────────────────────────────────────────
+ * 旗標從 **build 時**變成**部署時**：`VITE_GGD_CONTENT_EDIT`。
+ *   · dev ⇒ 仍然自動開（⛔ 行為一格沒變）
+ *   · 正式 build ⇒ ⭐ **預設關**，⛔ 但 chunk **進得了 bundle** ——
+ *     部署時給一個 env 就開得起來，⛔ 不必重寫程式、⛔ 不必改建置設定
+ *
+ * ⚠️ ⭐ 而「開了之後寫得成嗎」是**第二道獨立的閘**：寫入端打的是
+ * `content-api`，而它今天在 compose 裡是 `profiles: ["dev"]`（⛔ 沒部署）。
+ * ⇒ ⭐ 開起來但 API 不在時，玩家看到的是**一句說得出原因的話**（{@link OFF_MESSAGE}），
+ * ⛔ 不是一個看不見的頁面 —— fail-loud ⛔ 不是 fail-absent。
+ */
+function contentEditEnabled(): boolean {
+  if (isDevBuild()) return true;
+  try {
+    const v = (import.meta as unknown as { env?: Record<string, unknown> }).env?.[
+      "VITE_GGD_CONTENT_EDIT"
+    ];
+    return v === "1" || v === "true" || v === true;
+  } catch {
+    return false;
+  }
+}
+
+/** ⛔ 預設 `false`（正式 build）；每一個寫入端都檢查它。 */
+const ENABLED = contentEditEnabled();
 
 export interface EditIssue {
   readonly path: string;
@@ -95,7 +127,10 @@ export interface BackupEntry {
 }
 
 const OFF_MESSAGE =
-  "內容編輯只存在於本機開發版本（此版本未內含）。請用 pnpm dev:all 後開 http://127.0.0.1:60721/admin/";
+  "內容編輯目前是關著的。⭐ 這一版**含有**這幾頁（GH#730）——" +
+  "要打開請在部署時給 `VITE_GGD_CONTENT_EDIT=1`，" +
+  "並確認 `content-api` 有跑（它在 compose 裡是 `profiles: [\"dev\"]`，正式站預設沒部署）。" +
+  "⛔ 本機開發版一律自動開：`pnpm dev:all` 後開 http://127.0.0.1:60721/admin/";
 
 const OFF: SaveOutcome = {
   ok: false,
