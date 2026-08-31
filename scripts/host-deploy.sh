@@ -638,6 +638,54 @@ if [ -n "${DEPLOY_T0:-}" ] && [ "$MODE" != verify ]; then
   fi
 fi
 
+# ── ⭐⭐ 最後一條，而它是所有後置條件裡**唯一**問「關係」的那一條 ─────────────
+#
+# 2026-08-31 量到（v0.33.0）：這支腳本的**九項後置條件全部是綠的** ——
+#   ✓ content bundle 71 隻 · ✓ 白名單 49 隻 · ✓ 登錄表 71 隻（不是骨架）
+#   ✓ 錄影可寫 · ✓ 版本身分 v0.33.0-1 · ✓ 13 頁 401 · ✓ 批核頁 · ✓ 帳號 213→213
+# ⛔ **而玩家一個位元組都沒收到。**
+#
+# 根因：`ggd.adms.ai` 解析到 **122.116.95.244**（HiNet），
+#       而這支腳本跑在 **34.81.104.163**（GCP）。⭐ 兩台不同的機器。
+#       證據：玩家那邊的 client 是 `index-CwUFBwTw.js`，⭐ 而那個檔在這台上
+#       **find 不到** —— 它不是快取，是另一台在服務。
+#       兩邊的 contentVersion 也不同（cv_736640f5dba5 vs cv_d5ea5872fdff）。
+#
+# ⭐ 為什麼九項全綠：**每一項都在驗一個名詞** —— 這台的內容、這台的映像、
+#   這台的帳號、這台的埠。⛔ 沒有一項在問「**玩家連到的是不是這一台**」。
+#   ⇒ 這正是檔頭 2026-08-02 那一段記著的同一個病，而那一段就寫在這支腳本裡。
+#
+# ⚠️ 它**回非零**，⛔ 不是 warn：一次部署到錯的機器，與一次沒有部署，
+#   對玩家是同一件事 —— ⭐ 而它看起來完全成功。
+if [ "${GGD_SKIP_PUBLIC_HOST_CHECK:-0}" = 1 ]; then
+  warn "⚠️ 跳過「玩家連到的是不是這一台」—— GGD_SKIP_PUBLIC_HOST_CHECK=1"
+else
+PUBLIC_HOST="${GGD_PUBLIC_HOST:-ggd.adms.ai}"
+DNS_IPS=$(getent ahostsv4 "$PUBLIC_HOST" 2>/dev/null | awk '{print $1}' | sort -u | tr '\n' ' ')
+SELF_IPS=$( { hostname -I 2>/dev/null; curl -s -m 5 https://api.ipify.org 2>/dev/null; echo; } | tr ' ' '\n' | grep -E '^[0-9.]+$' | sort -u | tr '\n' ' ')
+if [ -z "$DNS_IPS" ]; then
+  unknown "⚠️ 解析不到 $PUBLIC_HOST —— ⛔ 這一項**沒有驗到**（不是通過）"
+elif [ -z "$SELF_IPS" ]; then
+  unknown "⚠️ 問不出這台的對外 IP —— ⛔ 這一項**沒有驗到**"
+else
+  HIT=0
+  for d in $DNS_IPS; do for m in $SELF_IPS; do [ "$d" = "$m" ] && HIT=1; done; done
+  if [ "$HIT" = 1 ]; then
+    ok "玩家連到的就是這一台（$PUBLIC_HOST → $DNS_IPS）"
+  else
+    die "⛔⛔ **部署到了玩家連不到的機器。**
+       $PUBLIC_HOST 解析到 : $DNS_IPS
+       而這一台是          : $SELF_IPS
+     ⇒ ⭐ 上面每一項後置條件都是綠的，**而它們驗的是這一台** ——
+        玩家拿到的仍然是另一台上的舊版本。
+     ⚠️ 這一項刻意回非零：一次部署到錯的機器，與一次沒有部署，對玩家是同一件事。
+     ⇒ 修法二選一：① 到 DNS 指向的那一台上跑這支腳本
+                    ② 確認 DNS 應該改指向這一台，改完再跑
+     逃生口（⛔ 要在 commit 訊息裡說為什麼）：GGD_SKIP_PUBLIC_HOST_CHECK=1"
+  fi
+fi
+fi
+
 printf '\n\033[32m✓ 部署驗證通過\033[0m\n'
 if [ -f "$PREV_FILE" ]; then
   printf '  回滾指令：\033[1mbash scripts/host-deploy.sh --rollback\033[0m  （回到 %s）\n' "$(cut -c1-8 "$PREV_FILE")"
