@@ -288,7 +288,12 @@ describe("per-team elimination settlement (elimination-settlement, task #193 / G
     //    **4201 / 4203 / 4234 / 4242 / 4244 / 4245 / 4251 / 4256**，取最小的。
     //    ⭐ 判準不變：如果哪天掃 200 個 seed 一個都不重現，那就不是換 seed 的
     //    問題，是**淘汰這條路整個死了**。
-    const run = runFullMatch("elim1", 4201, matchDocWithCard(false));
+    // ⚠️ ⭐ **2026-08-31 又換一次：4201 → 4203**（GH#330）。
+    //    `autoSpendSkillPoints` 出貨開著之後，每個座位在回合開始就照 `skillOrder`
+    //    各點一點 ⇒ ⭐ **技能等級變了 ⇒ 傷害變了 ⇒ 誰先被打光變了**，
+    //    而 4201 那一場的冠軍不再被打光過。掃 4202 起：**4203 第一個重現**。
+    //    ⛔ 這不是把測試調鬆 —— 被守的性質一個字都沒改。
+    const run = runFullMatch("elim1", 4203, matchDocWithCard(false));
     // 這一條測的是 OFF 那一側 —— 而且是**經由內容文件**到達控制器的。
     expect(run.ctl.settlementCardOnHealthSpent).toBe(false);
 
@@ -315,7 +320,7 @@ describe("per-team elimination settlement (elimination-settlement, task #193 / G
   it("後台打開就退回舊行為 —— 這個功能是被關掉,不是被刪掉", () => {
     cover("elimination-settlement");
     // 同上，與 OFF 那一側用同一個 seed 才比得出「打開的代價」。
-    const run = runFullMatch("elim1", 4201, matchDocWithCard(true));
+    const run = runFullMatch("elim1", 4203, matchDocWithCard(true));
     expect(run.ctl.settlementCardOnHealthSpent).toBe(true);
 
     // 血歸零的隊伍**當場**拿到一張卡:不多不少就是那些隊伍，各一張。

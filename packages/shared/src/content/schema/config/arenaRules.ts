@@ -881,6 +881,23 @@ export const zConfigArenaRulesDoc = z
      */
     exUnlockRound: z.number().int().min(1).optional(),
     /** choices per offer (augment + weapon offers) */
+    /**
+     * ⭐ GH#330 —— 升級拿到的技能點**自動照 `skillOrder` 花掉**。
+     *
+     * owner 2026-08-14 回報「悟空變身超級賽亞人**沒有任何效果、甚至沒有進入 CD**」
+     * ——⭐ 逐項查證之後引擎與內容都是好的，唯一的成因是 `rank: 0`（沒加點）。
+     * ⇒ 一個沒注意到技能上那顆 `+` 的玩家，整場只有 Q 能用，
+     * 而他得到的體驗與「這個技能壞了」**完全一樣**。
+     *
+     * ⭐ bot 早就走這條路（`Tier0Brain.ts:274`），⛔ 人只是沒接上。
+     * ⚠️ **預設開**（票文逐字：「自動加點⋯應該是**預設開的開關**而不是寫死」）——
+     * ⛔ 關掉＝回到玩家自己按 `+`（一鍵 rollback）。
+     *
+     * ⚠️ ⭐ 為什麼住這裡而不是 `config.match@1` 的 `progression`：
+     * ⛔ **那一整段今天零個消費端**（`grep levelCap` 在 sim/server 都是空的），
+     * 而 `arena-rules` 的 `this.rules` 就在需要它的那個迴圈手上。
+     */
+    autoSpendSkillPoints: z.boolean().optional(),
     offerCount: z.number().int().min(1).max(5),
     /**
      * ⭐ **聖杯顯現規則**（聖杯願望三選一 §15 · §16）。省略 = 出貨的

@@ -3,6 +3,7 @@
   "schema": "config.arena-rules@1",
   "ultUnlockRound": 3,
   "exUnlockRound": 7,
+  "autoSpendSkillPoints": true,
   "offerCount": 3,
   "finalRound": 10,
   "bothDraftsExtraSec": 10,

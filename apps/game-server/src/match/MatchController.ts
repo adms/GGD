@@ -1956,6 +1956,40 @@ export class MatchController {
     if (grant) {
       for (const [, , entity] of this.activeSeats()) {
         if (grant.grantLevels) grantLevels(this.world, entity, grant.grantLevels);
+        // ⭐ GH#330 —— 升級拿到的技能點自動照 `skillOrder` 花掉。
+        // owner 2026-08-14 因為沒加點而回報「技能壞了」；⭐ bot 早就走這條路
+        // （`Tier0Brain.ts:274`），⛔ 人只是沒接上。⚠️ 旋鈕預設開，關掉＝手動加點。
+        if (this.rules.autoSpendSkillPoints !== false) {
+          const ab = this.world.abilities.get(entity);
+          const champ = this.world.champion.get(entity);
+          // ⛔⛔ R **不可以**在解鎖回合之前被自動點掉 —— ⚠️ 那是這一格最容易犯的錯：
+          // `rankUpAbility` 只認 WC3 的**等級**閘（6/11/16），⛔ 而競技場另外有一道
+          // **回合**閘（`ultUnlockRound` → `world.ultGateOverride`）。登場等級是 6
+          // ⇒ 等級閘一開賽就開著 ⇒ ⭐ 自動加點會在第 1 回合就把點丟進 R，
+          // 而那是**玩家自己按 `+` 也做不到**的事（`arenaRules.test.ts:328` 逐字
+          // 「ult still locked in round 1」）。
+          // ⇒ ⭐ 自動加點只能做**玩家做得到**的事，⛔ 不是「引擎沒擋就做」。
+          const ultOpen =
+            this.rules.ultUnlockRound === null || round >= this.rules.ultUnlockRound;
+          const order = (champ ? (Champions.tryGet(champ.championId)?.skillOrder ?? []) : []).filter(
+            (sl) => ultOpen || sl !== "R",
+          );
+          // ⭐ **一輪 `skillOrder` 各一點**，⛔ 不是把點全灌進第一格 ——
+          // 這與 bot 走的是同一條路（`Tier0Brain.ts:274` 每次 intermission 對
+          // 每個 slot 各推一次 `rankUpAbility`）。
+          // ⚠️ 我第一版寫成「貪婪：找第一個升得動的，重複到點花完」⇒ ⭐ 五點全進 Q，
+          // 而 `arenaRules.test.ts:327` 當場紅了（E 還是 0）。⛔ `skillOrder` 是
+          // **整局的優先序**，⛔ 不是「先把第一格點滿」。
+          // ⭐ **整輪重複**直到一點都花不掉為止。三種寫法我試過兩種錯的：
+          //   ⛔ 貪婪（找第一個升得動的、重複）⇒ 五點全灌進 Q（`arenaRules.test.ts:327` 紅）
+          //   ⛔ 只跑一輪 ⇒ 第 3 回合還剩 2 點堆著（＝玩家仍然少了兩階）
+          //   ⭐ 重複整輪 ⇒ 照 `skillOrder` 平均分配，而且真的花完
+          for (let pass = 0; pass < 32; pass += 1) {
+            let progressed = false;
+            for (const sl of order) if (rankUpAbility(this.world, entity, sl)) progressed = true;
+            if (!progressed) break; // 全滿級或都升不動 ⇒ 停，⛔ 不要空轉
+          }
+        }
         if (grant.autoLearn) {
           for (const slot of grant.autoLearn) {
             const ab = this.world.abilities.get(entity);

@@ -159,7 +159,17 @@ describe("config doc + rules resolution (arena-06)", () => {
         ctl.world.champion.get(seat.entityId!)!.level,
         "沒有規則文件卻長了等級 —— 有 grant 漏進來了",
       ).toBe(startLevel());
-      expect(ctl.world.abilities.get(seat.entityId!)!.slots.W.rank).toBe(0); // Q-only start
+      // ⭐ GH#330（2026-08-31）—— 這一行原本是 `toBe(0)`「Q-only start」，
+      // ⛔ 而那個預設**變了**：`autoSpendSkillPoints` 出貨開著（owner 2026-08-14
+      // 因為沒加點而回報「技能壞了」），⇒ 沒有規則文件時 `DEFAULT_ARENA_RULES`
+      // 也會照 `skillOrder` 各點一點。
+      // ⭐ 這一格真正要守的是**「⛔ 沒有 grant 漏進來」**（上面那條等級斷言），
+      // ⛔ 不是「W 一定是 0」—— 後者只是舊預設的側影。
+      // ⚠️ 照第〇·六守則：預設改變 ⇒ 測**新的預設**，⛔ 不為了舊斷言把功能關掉。
+      expect(
+        ctl.world.abilities.get(seat.entityId!)!.slots.R.rank,
+        "⛔ 沒有規則文件（ultUnlockRound = null）時 R 由 WC3 等級閘管，⛔ 自動加點不可以繞過它",
+      ).toBeLessThanOrEqual(1);
     }
     // ⚠️ GH#357 —— 排定的 `silver` 現在是**地板**：`augmentTiers` 會照劣勢值把它
     // 往上升級，平手方也有 basePct 的機率摸到高階。所以這裡驗的是「⛔ 沒有掉到
@@ -311,6 +321,23 @@ describe("weapon-draft loot tables (arena-07)", () => {
 });
 
 describe("arena round grants (arena-01, arena-04, arena-05)", () => {
+  it("★ ⭐ GH#330 自動加點：⛔ 玩家不必找那顆 `+`，第 3 回合技能點不再堆著", () => {
+    // ⚠️ ⭐ **第 1 回合驗不出來**：`grant.autoLearn` 本來就給 Q/W/E 各一階，
+    // 而自動加點跑在它前面 ⇒ 兩者在第 1 回合的結果**一模一樣**。
+    // ⇒ 要在**還有點可花而 autoLearn 已經不適用**的回合看（失敗形態④：
+    // 一條對缺陷不敏感的斷言）。
+    const ctl = makeArenaMatch(1234);
+    runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 3);
+    for (const seat of ctl.seats.values()) {
+      const ab = ctl.world.abilities.get(seat.entityId!)!;
+      const spent = ab.slots.Q.rank + ab.slots.W.rank + ab.slots.E.rank + ab.slots.R.rank;
+      // ⭐ 第 1 回合的 autoLearn 只給得出 Q+W+E = 3 階（R 鎖著）。
+      // ⇒ 大於 3 就證明**後續回合的點真的被花掉了**，⛔ 而那只有自動加點做得到。
+      expect(spent, "⛔ 技能點堆在手上沒花 —— 自動加點沒生效").toBeGreaterThan(3);
+      expect(ab.unspentPoints, "⛔ 還有一堆點沒花").toBeLessThanOrEqual(1);
+    }
+  });
+
   it("round 1: 登場等級 + grantLevels, Q+W+E auto-learned rank 1, R locked, silver augment offer", () => {
     cover("arena-round1-qwe");
     const ctl = makeArenaMatch(1234);

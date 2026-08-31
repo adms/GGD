@@ -91,6 +91,13 @@ export interface ArenaRules {
   /** round from which champions with an exAbility unlock EX; null = never */
   exUnlockRound: number | null;
   /** choices per offer (augment + weapon offers) */
+  /**
+   * ⭐ GH#330 —— 升級拿到的技能點自動照 `skillOrder` 花掉（⭐ 預設開）。
+   * ⛔ 關掉＝回到玩家自己按技能上那顆 `+`（一鍵 rollback）。
+   * ⚠️ 刻意 optional：舊房間／舊錄影沒有這一格，⭐ 而消費端寫 `!== false`
+   * ⇒ 缺席＝開著（＝出貨行為），⛔ 不是關著。
+   */
+  autoSpendSkillPoints?: boolean;
   offerCount: number;
   /**
    * 傳說武器卡的補抽規則 (GH#249). NEVER null: an absent block resolves to
@@ -245,6 +252,7 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
   ultUnlockRound: null,
   exUnlockRound: null,
   offerCount: 3,
+  autoSpendSkillPoints: true,
   itemDraft: DEFAULT_ITEM_DRAFT_POLICY,
   grailDraft: DEFAULT_GRAIL_DRAFT,
   // ⭐ 出貨的寶具貨架（owner 2026-08-17）。引用 shared 的那一份，⛔ 不重打 ——
@@ -338,6 +346,7 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
     ultUnlockRound: doc.ultUnlockRound ?? null,
     exUnlockRound: doc.exUnlockRound ?? null,
     offerCount: doc.offerCount,
+    autoSpendSkillPoints: doc.autoSpendSkillPoints ?? true,
     // Absent block = the shipped policy, NOT null. See the field's doc comment.
     // A RETIRED fallback pool is emptied to "" — the authored 「沒有備援」 value,
     // which `economy/draft.ts` already handles as "then just deal a short card".
