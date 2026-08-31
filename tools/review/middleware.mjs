@@ -26,6 +26,7 @@
  *   在 live 模式下回 403 並指出「這件事要在本機做，然後 git push」。
  */
 import { buildInventory, buildQueue, saveVerdict } from "./triage.mjs";
+import { auditPlan } from "./enable-audit.mjs";
 import { buildFeatureQueue, saveFeatureVerdict, SEQUENCE_ROOT_REL } from "./features.mjs";
 import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, normalize } from "node:path";
@@ -59,6 +60,29 @@ export function createReviewMiddleware(repoRoot, options = {}) {
     if (req.method === "GET" && url === "/__review/queue") {
       try {
         sendJson(res, 200, { items: buildQueue(repoRoot).items });
+      } catch (err) {
+        sendJson(res, 500, { error: String(err) });
+      }
+      return;
+    }
+    // ⭐⭐ GH#473 —— **啟用上架的當下自動跑稽核**（owner 2026-08-18：
+    //    「你應該是要**設計啟用的時候才做自動跑測試 script**，測試結果再排入是否修理」）。
+    //
+    // ⚠️ ⭐ 為什麼要一條 route：`auditPlan` 讀 **repo 的檔案**（`content/` 與
+    //    判準模組的原始碼）—— ⛔ 而後台是**瀏覽器**，它碰不到檔案系統。
+    //    ⇒ 這一條就是那道縫；⛔ 沒有它，admin 算得出「要驗誰」卻**驗不了**。
+    //
+    // ⭐ 只對**傳進來的 id** 跑（票文逐字的成本斷言：「不啟用就不花錢」）。
+    if (req.method === "GET" && url === "/__review/enable-audit") {
+      try {
+        const q = (req.url ?? "").split("?")[1] ?? "";
+        const ids = new URLSearchParams(q).get("ids");
+        const list = (ids ?? "").split(",").map((s2) => s2.trim()).filter(Boolean);
+        // ⛔ 空清單就是空清單 —— ⭐ 回一個空計畫，⛔ 不是掃全部
+        //    （那正是「不啟用不花錢」的實作，⛔ 不是一句註解）。
+        sendJson(res, 200, list.length === 0
+          ? { schema: "enable-audit-plan@1", ids: [], counts: {}, rows: [] }
+          : auditPlan(repoRoot, list));
       } catch (err) {
         sendJson(res, 500, { error: String(err) });
       }
