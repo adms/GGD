@@ -53,7 +53,8 @@
    "verdict": "visible-at-peak"
   }
  ],
- "glbSize": 9044,
+ "ribbons": [],
+ "glbSize": 9232,
  "rawHeight": 200.0,
  "scaleFactor": 0.02778,
  "height": 5.556,
@@ -77,6 +78,7 @@
  "visibleLongAxis": "x",
  "longAxisVisibleFrac": 1.0,
  "basisAgrees": true,
+ "baseline@HEAD": "2/2 visible prims, 0 anims",
  "verdict": "ok",
  "installed": "content/assets/models/imported/volcanodeath.glb"
 }

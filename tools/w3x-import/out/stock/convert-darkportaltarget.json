@@ -77,7 +77,8 @@
    "verdict": "visible-at-peak"
   }
  ],
- "glbSize": 54796,
+ "ribbons": [],
+ "glbSize": 55076,
  "rawHeight": 245.2,
  "scaleFactor": 0.02778,
  "height": 6.811,
@@ -103,6 +104,7 @@
  "visibleLongAxis": "y",
  "longAxisVisibleFrac": 1.0,
  "basisAgrees": true,
+ "baseline@HEAD": "3/3 visible prims, 1 anims",
  "verdict": "ok",
  "installed": "content/assets/models/imported/darkportaltarget.glb"
 }

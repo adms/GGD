@@ -30,7 +30,8 @@
    "verdict": "visible-at-peak"
   }
  ],
- "glbSize": 10620,
+ "ribbons": [],
+ "glbSize": 10712,
  "rawHeight": 15.0,
  "scaleFactor": 0.02778,
  "height": 0.417,
@@ -56,6 +57,7 @@
  "visibleLongAxis": "x",
  "longAxisVisibleFrac": 1.0,
  "basisAgrees": true,
+ "baseline@HEAD": "1/1 visible prims, 1 anims",
  "verdict": "ok",
  "installed": "content/assets/models/imported/humanbloodpeasant.glb"
 }

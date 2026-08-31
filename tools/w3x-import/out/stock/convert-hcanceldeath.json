@@ -145,7 +145,8 @@
    "verdict": "visible-at-peak"
   }
  ],
- "glbSize": 97172,
+ "ribbons": [],
+ "glbSize": 97736,
  "rawHeight": 196.0,
  "scaleFactor": 0.02778,
  "height": 5.445,
@@ -169,6 +170,7 @@
  "visibleLongAxis": "y",
  "longAxisVisibleFrac": 1.0,
  "basisAgrees": true,
+ "baseline@HEAD": "6/6 visible prims, 0 anims",
  "verdict": "ok",
  "installed": "content/assets/models/imported/hcanceldeath.glb"
 }

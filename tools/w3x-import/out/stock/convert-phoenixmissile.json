@@ -110,7 +110,47 @@
    "verdict": "visible-at-peak"
   }
  ],
- "glbSize": 11724,
+ "ribbons": [
+  {
+   "ribbon": "BlizRibbon04",
+   "alphaBirth": 0.8,
+   "alphaPeak": 0.8,
+   "alphaAnimated": false,
+   "visibilityPeak": 0.0,
+   "visibilityAnimated": true,
+   "width": 50.0,
+   "lifespanSec": 0.4,
+   "emissionRate": 25,
+   "textureSlot": 0,
+   "materialId": 0,
+   "rows": 1,
+   "cols": 1,
+   "trackTags": [
+    "KRVS"
+   ],
+   "verdict": "never-visible: KRVS 可見度峰值 0"
+  },
+  {
+   "ribbon": "BlizRibbon05",
+   "alphaBirth": 0.8,
+   "alphaPeak": 0.8,
+   "alphaAnimated": false,
+   "visibilityPeak": 0.0,
+   "visibilityAnimated": true,
+   "width": 60.0,
+   "lifespanSec": 0.6,
+   "emissionRate": 25,
+   "textureSlot": 0,
+   "materialId": 0,
+   "rows": 1,
+   "cols": 1,
+   "trackTags": [
+    "KRVS"
+   ],
+   "verdict": "never-visible: KRVS 可見度峰值 0"
+  }
+ ],
+ "glbSize": 11816,
  "rawHeight": 85.09,
  "scaleFactor": 0.02778,
  "height": 2.364,
@@ -145,6 +185,7 @@
  "visibleLongAxis": "z",
  "longAxisVisibleFrac": 1.0,
  "basisAgrees": true,
+ "baseline@HEAD": "1/1 visible prims, 3 anims",
  "verdict": "ok",
  "installed": "content/assets/models/imported/phoenixmissile.glb"
 }

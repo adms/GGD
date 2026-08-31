@@ -133,7 +133,8 @@
    "verdict": "visible-at-peak"
   }
  ],
- "glbSize": 170072,
+ "ribbons": [],
+ "glbSize": 170544,
  "rawHeight": 168.7,
  "scaleFactor": 0.02778,
  "height": 4.686,
@@ -157,6 +158,7 @@
  "visibleLongAxis": "x",
  "longAxisVisibleFrac": 1.0,
  "basisAgrees": true,
+ "baseline@HEAD": "5/5 visible prims, 0 anims",
  "verdict": "ok",
  "installed": "content/assets/models/imported/steamtankimpact.glb"
 }

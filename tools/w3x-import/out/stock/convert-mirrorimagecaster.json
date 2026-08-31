@@ -42,7 +42,8 @@
    "verdict": "visible-at-peak"
   }
  ],
- "glbSize": 153368,
+ "ribbons": [],
+ "glbSize": 153464,
  "rawHeight": 168.54,
  "scaleFactor": 0.02778,
  "height": 4.682,
@@ -68,6 +69,7 @@
  "visibleLongAxis": "y",
  "longAxisVisibleFrac": 1.0,
  "basisAgrees": true,
+ "baseline@HEAD": "1/1 visible prims, 1 anims",
  "verdict": "ok",
  "installed": "content/assets/models/imported/mirrorimagecaster.glb"
 }

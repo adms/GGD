@@ -64,7 +64,8 @@
    "verdict": "visible-at-peak"
   }
  ],
- "glbSize": 35848,
+ "ribbons": [],
+ "glbSize": 36036,
  "rawHeight": 136.3,
  "scaleFactor": 0.02778,
  "height": 3.786,
@@ -90,6 +91,7 @@
  "visibleLongAxis": "x",
  "longAxisVisibleFrac": 1.0,
  "basisAgrees": true,
+ "baseline@HEAD": "2/2 visible prims, 1 anims",
  "verdict": "ok",
  "installed": "content/assets/models/imported/stampedemissiledeath.glb"
 }

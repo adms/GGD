@@ -121,7 +121,8 @@
    "verdict": "visible-at-peak"
   }
  ],
- "glbSize": 155592,
+ "ribbons": [],
+ "glbSize": 155968,
  "rawHeight": 173.1,
  "scaleFactor": 0.02778,
  "height": 4.808,
@@ -145,6 +146,7 @@
  "visibleLongAxis": "x",
  "longAxisVisibleFrac": 1.0,
  "basisAgrees": true,
+ "baseline@HEAD": "4/4 visible prims, 0 anims",
  "verdict": "ok",
  "installed": "content/assets/models/imported/neutralbuildingexplosion.glb"
 }

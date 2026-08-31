@@ -76,7 +76,8 @@
    "verdict": "visible-at-peak"
   }
  ],
- "glbSize": 185572,
+ "ribbons": [],
+ "glbSize": 185668,
  "rawHeight": 422.02,
  "scaleFactor": 0.02778,
  "height": 11.723,
@@ -97,6 +98,22 @@
  },
  "missingTextures": [],
  "droppedGlowMaterials": [],
+ "litGlowMaterials": [],
+ "fullExtents": [
+  3.4451,
+  11.7228,
+  3.4451
+ ],
+ "visibleExtents": [
+  3.4451,
+  11.7228,
+  3.4451
+ ],
+ "fullLongAxis": "y",
+ "visibleLongAxis": "y",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "baseline@HEAD": "1/1 visible prims, 4 anims",
  "verdict": "ok",
  "installed": "content/assets/models/imported/forgottenonetent.glb"
 }

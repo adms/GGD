@@ -66,7 +66,8 @@
    "verdict": "visible-at-peak"
   }
  ],
- "glbSize": 51624,
+ "ribbons": [],
+ "glbSize": 52096,
  "rawHeight": 603.26,
  "scaleFactor": 0.02778,
  "height": 16.757,
@@ -101,7 +102,7 @@
  "visibleLongAxis": "y",
  "longAxisVisibleFrac": 1.0,
  "basisAgrees": true,
- "baseline@HEAD": "3/4 visible prims, 1 anims",
+ "baseline@HEAD": "5/5 visible prims, 1 anims",
  "verdict": "ok",
  "installed": "content/assets/models/imported/revivehuman.glb"
 }

@@ -77,7 +77,8 @@
    "verdict": "visible-at-peak"
   }
  ],
- "glbSize": 30524,
+ "ribbons": [],
+ "glbSize": 30808,
  "rawHeight": 438.32,
  "scaleFactor": 0.02778,
  "height": 12.175,
@@ -88,6 +89,22 @@
  "clipMap": null,
  "missingTextures": [],
  "droppedGlowMaterials": [],
+ "litGlowMaterials": [],
+ "fullExtents": [
+  11.0108,
+  12.1754,
+  11.0108
+ ],
+ "visibleExtents": [
+  11.0108,
+  12.1754,
+  11.0108
+ ],
+ "fullLongAxis": "y",
+ "visibleLongAxis": "y",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "baseline@HEAD": "3/3 visible prims, 1 anims",
  "verdict": "ok",
  "installed": "content/assets/models/imported/tomeofretrainingcaster.glb"
 }

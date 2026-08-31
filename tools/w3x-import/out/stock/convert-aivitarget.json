@@ -66,7 +66,66 @@
   }
  ],
  "emitterAlpha": [],
- "glbSize": 79492,
+ "ribbons": [
+  {
+   "ribbon": "BlizRibbon02",
+   "alphaBirth": 0.7,
+   "alphaPeak": 0.7,
+   "alphaAnimated": false,
+   "visibilityPeak": 1.0,
+   "visibilityAnimated": true,
+   "width": 36.0,
+   "lifespanSec": 0.4,
+   "emissionRate": 30,
+   "textureSlot": 0,
+   "materialId": 6,
+   "rows": 1,
+   "cols": 1,
+   "trackTags": [
+    "KRVS"
+   ],
+   "verdict": "visible-at-peak"
+  },
+  {
+   "ribbon": "BlizRibbon01",
+   "alphaBirth": 0.7,
+   "alphaPeak": 0.7,
+   "alphaAnimated": false,
+   "visibilityPeak": 1.0,
+   "visibilityAnimated": true,
+   "width": 36.0,
+   "lifespanSec": 0.4,
+   "emissionRate": 30,
+   "textureSlot": 0,
+   "materialId": 6,
+   "rows": 1,
+   "cols": 1,
+   "trackTags": [
+    "KRVS"
+   ],
+   "verdict": "visible-at-peak"
+  },
+  {
+   "ribbon": "BlizRibbon03",
+   "alphaBirth": 0.7,
+   "alphaPeak": 0.7,
+   "alphaAnimated": false,
+   "visibilityPeak": 1.0,
+   "visibilityAnimated": true,
+   "width": 36.0,
+   "lifespanSec": 0.4,
+   "emissionRate": 30,
+   "textureSlot": 0,
+   "materialId": 6,
+   "rows": 1,
+   "cols": 1,
+   "trackTags": [
+    "KRVS"
+   ],
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 80056,
  "rawHeight": 380.84,
  "scaleFactor": 0.02778,
  "height": 10.579,
@@ -99,6 +158,7 @@
  "visibleLongAxis": "x",
  "longAxisVisibleFrac": 1.0,
  "basisAgrees": true,
+ "baseline@HEAD": "6/6 visible prims, 1 anims",
  "verdict": "ok",
  "installed": "content/assets/models/imported/aivitarget.glb"
 }

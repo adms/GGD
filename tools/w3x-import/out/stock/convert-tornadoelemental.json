@@ -99,7 +99,104 @@
    "verdict": "visible-at-peak"
   }
  ],
- "glbSize": 212512,
+ "ribbons": [
+  {
+   "ribbon": "BlizRibbon03",
+   "alphaBirth": 0.5,
+   "alphaPeak": 0.5,
+   "alphaAnimated": false,
+   "visibilityPeak": 1.0,
+   "visibilityAnimated": true,
+   "width": 36.0,
+   "lifespanSec": 1.0,
+   "emissionRate": 30,
+   "textureSlot": 0,
+   "materialId": 3,
+   "rows": 1,
+   "cols": 1,
+   "trackTags": [
+    "KRVS"
+   ],
+   "verdict": "visible-at-peak"
+  },
+  {
+   "ribbon": "BlizRibbon04",
+   "alphaBirth": 0.5,
+   "alphaPeak": 0.5,
+   "alphaAnimated": false,
+   "visibilityPeak": 1.0,
+   "visibilityAnimated": true,
+   "width": 100.0,
+   "lifespanSec": 2.0,
+   "emissionRate": 30,
+   "textureSlot": 0,
+   "materialId": 3,
+   "rows": 1,
+   "cols": 1,
+   "trackTags": [
+    "KRVS"
+   ],
+   "verdict": "visible-at-peak"
+  },
+  {
+   "ribbon": "BlizRibbon10",
+   "alphaBirth": 0.5,
+   "alphaPeak": 0.5,
+   "alphaAnimated": false,
+   "visibilityPeak": 1.0,
+   "visibilityAnimated": true,
+   "width": 36.0,
+   "lifespanSec": 1.0,
+   "emissionRate": 30,
+   "textureSlot": 0,
+   "materialId": 3,
+   "rows": 1,
+   "cols": 1,
+   "trackTags": [
+    "KRVS"
+   ],
+   "verdict": "visible-at-peak"
+  },
+  {
+   "ribbon": "BlizRibbon12",
+   "alphaBirth": 0.5,
+   "alphaPeak": 0.5,
+   "alphaAnimated": false,
+   "visibilityPeak": 1.0,
+   "visibilityAnimated": true,
+   "width": 36.0,
+   "lifespanSec": 1.0,
+   "emissionRate": 30,
+   "textureSlot": 0,
+   "materialId": 3,
+   "rows": 1,
+   "cols": 1,
+   "trackTags": [
+    "KRVS"
+   ],
+   "verdict": "visible-at-peak"
+  },
+  {
+   "ribbon": "BlizRibbon13",
+   "alphaBirth": 0.5,
+   "alphaPeak": 0.5,
+   "alphaAnimated": false,
+   "visibilityPeak": 1.0,
+   "visibilityAnimated": true,
+   "width": 100.0,
+   "lifespanSec": 2.0,
+   "emissionRate": 30,
+   "textureSlot": 0,
+   "materialId": 3,
+   "rows": 1,
+   "cols": 1,
+   "trackTags": [
+    "KRVS"
+   ],
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 212784,
  "rawHeight": 429.13,
  "scaleFactor": 0.02778,
  "height": 11.92,

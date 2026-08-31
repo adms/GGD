@@ -66,7 +66,8 @@
    "verdict": "visible-at-peak"
   }
  ],
- "glbSize": 38064,
+ "ribbons": [],
+ "glbSize": 38248,
  "rawHeight": 11.11,
  "scaleFactor": 0.02778,
  "height": 0.309,
@@ -77,6 +78,22 @@
  "clipMap": null,
  "missingTextures": [],
  "droppedGlowMaterials": [],
+ "litGlowMaterials": [],
+ "fullExtents": [
+  0.569,
+  1.4039,
+  0.569
+ ],
+ "visibleExtents": [
+  0.569,
+  1.4039,
+  0.569
+ ],
+ "fullLongAxis": "y",
+ "visibleLongAxis": "y",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "baseline@HEAD": "2/2 visible prims, 1 anims",
  "verdict": "ok",
  "installed": "content/assets/models/imported/fragdriller.glb"
 }

@@ -65,7 +65,8 @@
    "verdict": "visible-at-peak"
   }
  ],
- "glbSize": 38032,
+ "ribbons": [],
+ "glbSize": 38220,
  "rawHeight": 297.25,
  "scaleFactor": 0.02778,
  "height": 8.257,
@@ -100,6 +101,7 @@
  "visibleLongAxis": "x",
  "longAxisVisibleFrac": 1.0,
  "basisAgrees": true,
+ "baseline@HEAD": "2/2 visible prims, 3 anims",
  "verdict": "ok",
  "installed": "content/assets/models/imported/flamestriketarget.glb"
 }

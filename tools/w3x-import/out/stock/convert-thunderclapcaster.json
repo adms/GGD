@@ -54,7 +54,8 @@
    "verdict": "visible-at-peak"
   }
  ],
- "glbSize": 49308,
+ "ribbons": [],
+ "glbSize": 49496,
  "rawHeight": 138.64,
  "scaleFactor": 0.02778,
  "height": 3.851,
@@ -73,6 +74,22 @@
  },
  "missingTextures": [],
  "droppedGlowMaterials": [],
+ "litGlowMaterials": [],
+ "fullExtents": [
+  10.0809,
+  3.8511,
+  10.0809
+ ],
+ "visibleExtents": [
+  10.0809,
+  3.8511,
+  10.0809
+ ],
+ "fullLongAxis": "x",
+ "visibleLongAxis": "x",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "baseline@HEAD": "2/2 visible prims, 2 anims",
  "verdict": "ok",
  "installed": "content/assets/models/imported/thunderclapcaster.glb"
 }

@@ -1,0 +1,164 @@
+{
+ "name": "flamestrike1",
+ "archive": "War3x.mpq",
+ "mdxBytes": 25948,
+ "path": "Abilities\\Spells\\Human\\FlameStrike\\FlameStrike1.mdl",
+ "textures": [
+  {
+   "texture": "Textures\\Clouds8x8.blp",
+   "size": [
+    256,
+    256
+   ],
+   "lumMean": 63.2,
+   "lumStd": 78.8,
+   "alphaMean": 44.7,
+   "alphaStd": 63.4,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Clouds8x8ModFire.blp",
+   "size": [
+    256,
+    256
+   ],
+   "lumMean": 241.4,
+   "lumStd": 24.4,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Shockwave1.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 17.1,
+   "lumStd": 24.1,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\MegaBlast.blp",
+   "size": [
+    256,
+    256
+   ],
+   "lumMean": 64.1,
+   "lumStd": 59.4,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "abilities\\Spells\\Human\\FlameStrike\\White1_star5tga.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 255.0,
+   "lumStd": 0.0,
+   "alphaMean": 42.9,
+   "alphaStd": 78.6,
+   "verdict": "LUMA-KEY-NEEDED"
+  }
+ ],
+ "emitterAlpha": [
+  {
+   "emitter": "BlizParticleLowFire",
+   "segmentAlpha": [
+    255,
+    255,
+    200
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticleLowSmoke",
+   "segmentAlpha": [
+    255,
+    255,
+    200
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticleShockWave1",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticleShockWave02",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticleFlash",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "ribbons": [],
+ "glbSize": 200396,
+ "rawHeight": 707.58,
+ "scaleFactor": 0.02778,
+ "height": 19.655,
+ "visiblePrims": "5/5",
+ "animations": [
+  "birth",
+  "stand",
+  "death"
+ ],
+ "clipMap": {
+  "idle": "stand",
+  "run": "stand",
+  "attack": "stand",
+  "cast": "stand",
+  "hurt": "stand",
+  "death": "death"
+ },
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "litGlowMaterials": [],
+ "fullExtents": [
+  17.2257,
+  19.6549,
+  17.2257
+ ],
+ "visibleExtents": [
+  17.2257,
+  19.6549,
+  17.2257
+ ],
+ "fullLongAxis": "y",
+ "visibleLongAxis": "y",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "baseline@HEAD": "5/5 visible prims, 3 anims",
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/flamestrike1.glb"
+}

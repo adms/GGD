@@ -125,7 +125,8 @@
    "verdict": "visible-at-peak"
   }
  ],
- "glbSize": 70400,
+ "ribbons": [],
+ "glbSize": 71060,
  "rawHeight": 1606.69,
  "scaleFactor": 0.02778,
  "height": 44.63,
@@ -143,6 +144,22 @@
  },
  "missingTextures": [],
  "droppedGlowMaterials": [],
+ "litGlowMaterials": [],
+ "fullExtents": [
+  11.8985,
+  44.6304,
+  4.1193
+ ],
+ "visibleExtents": [
+  11.8985,
+  44.6304,
+  4.1193
+ ],
+ "fullLongAxis": "y",
+ "visibleLongAxis": "y",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "baseline@HEAD": "8/8 visible prims, 1 anims",
  "verdict": "ok",
  "installed": "content/assets/models/imported/monsoonbolttarget.glb"
 }

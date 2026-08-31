@@ -1,0 +1,354 @@
+{
+ "name": "markofchaostarget",
+ "archive": "War3x.mpq",
+ "mdxBytes": 25418,
+ "path": "Abilities\\Spells\\Human\\MarkOfChaos\\MarkOfChaosTarget.mdl",
+ "textures": [
+  {
+   "texture": "Textures\\GenericGlow2b.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 29.7,
+   "lumStd": 39.6,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Clouds8x8Mod.blp",
+   "size": [
+    256,
+    256
+   ],
+   "lumMean": 241.5,
+   "lumStd": 23.7,
+   "alphaMean": 44.7,
+   "alphaStd": 63.4,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\star6.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 56.1,
+   "lumStd": 75.7,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\CartoonCloud.blp",
+   "size": [
+    32,
+    32
+   ],
+   "lumMean": 255.0,
+   "lumStd": 0.0,
+   "alphaMean": 136.2,
+   "alphaStd": 124.4,
+   "verdict": "LUMA-KEY-NEEDED"
+  },
+  {
+   "texture": "Textures\\Red_Glow3.blp",
+   "size": [
+    32,
+    32
+   ],
+   "lumMean": 15.1,
+   "lumStd": 19.5,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Shockwave1.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 17.1,
+   "lumStd": 24.1,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\GenericGlowFaded.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 53.5,
+   "lumStd": 55.2,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\firering1A.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 88.6,
+   "lumStd": 90.6,
+   "alphaMean": 84.7,
+   "alphaStd": 88.9,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [
+  {
+   "emitter": "BlizParticle05white02",
+   "segmentAlpha": [
+    255,
+    255,
+    255
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle05white03",
+   "segmentAlpha": [
+    255,
+    255,
+    255
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle022222",
+   "segmentAlpha": [
+    0,
+    200,
+    0
+   ],
+   "birth": 0,
+   "peak": 200,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlastFlareStreamers",
+   "segmentAlpha": [
+    128,
+    128,
+    0
+   ],
+   "birth": 128,
+   "peak": 128,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle08shockwaves02",
+   "segmentAlpha": [
+    255,
+    151,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle08shockwavesYellow",
+   "segmentAlpha": [
+    135,
+    85,
+    0
+   ],
+   "birth": 135,
+   "peak": 135,
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "ribbons": [
+  {
+   "ribbon": "BlizRibbon04",
+   "alphaBirth": 1.0,
+   "alphaPeak": 1.0,
+   "alphaAnimated": false,
+   "visibilityPeak": 1.0,
+   "visibilityAnimated": true,
+   "width": 36.0,
+   "lifespanSec": 0.4,
+   "emissionRate": 30,
+   "textureSlot": 0,
+   "materialId": 0,
+   "rows": 1,
+   "cols": 1,
+   "trackTags": [
+    "KRVS"
+   ],
+   "verdict": "visible-at-peak"
+  },
+  {
+   "ribbon": "BlizRibbon06",
+   "alphaBirth": 1.0,
+   "alphaPeak": 1.0,
+   "alphaAnimated": false,
+   "visibilityPeak": 1.0,
+   "visibilityAnimated": true,
+   "width": 36.0,
+   "lifespanSec": 0.4,
+   "emissionRate": 30,
+   "textureSlot": 0,
+   "materialId": 0,
+   "rows": 1,
+   "cols": 1,
+   "trackTags": [
+    "KRVS"
+   ],
+   "verdict": "visible-at-peak"
+  },
+  {
+   "ribbon": "BlizRibbon07",
+   "alphaBirth": 1.0,
+   "alphaPeak": 1.0,
+   "alphaAnimated": false,
+   "visibilityPeak": 1.0,
+   "visibilityAnimated": true,
+   "width": 36.0,
+   "lifespanSec": 0.4,
+   "emissionRate": 30,
+   "textureSlot": 0,
+   "materialId": 0,
+   "rows": 1,
+   "cols": 1,
+   "trackTags": [
+    "KRVS"
+   ],
+   "verdict": "visible-at-peak"
+  },
+  {
+   "ribbon": "BlizRibbon09",
+   "alphaBirth": 1.0,
+   "alphaPeak": 1.0,
+   "alphaAnimated": false,
+   "visibilityPeak": 1.0,
+   "visibilityAnimated": true,
+   "width": 36.0,
+   "lifespanSec": 0.4,
+   "emissionRate": 30,
+   "textureSlot": 0,
+   "materialId": 0,
+   "rows": 1,
+   "cols": 1,
+   "trackTags": [
+    "KRVS"
+   ],
+   "verdict": "visible-at-peak"
+  },
+  {
+   "ribbon": "BlizRibbon10",
+   "alphaBirth": 1.0,
+   "alphaPeak": 1.0,
+   "alphaAnimated": false,
+   "visibilityPeak": 1.0,
+   "visibilityAnimated": true,
+   "width": 36.0,
+   "lifespanSec": 0.4,
+   "emissionRate": 30,
+   "textureSlot": 0,
+   "materialId": 0,
+   "rows": 1,
+   "cols": 1,
+   "trackTags": [
+    "KRVS"
+   ],
+   "verdict": "visible-at-peak"
+  },
+  {
+   "ribbon": "BlizRibbon12",
+   "alphaBirth": 1.0,
+   "alphaPeak": 1.0,
+   "alphaAnimated": false,
+   "visibilityPeak": 1.0,
+   "visibilityAnimated": true,
+   "width": 36.0,
+   "lifespanSec": 0.4,
+   "emissionRate": 30,
+   "textureSlot": 0,
+   "materialId": 0,
+   "rows": 1,
+   "cols": 1,
+   "trackTags": [
+    "KRVS"
+   ],
+   "verdict": "visible-at-peak"
+  },
+  {
+   "ribbon": "BlizRibbon02",
+   "alphaBirth": 1.0,
+   "alphaPeak": 1.0,
+   "alphaAnimated": false,
+   "visibilityPeak": 1.0,
+   "visibilityAnimated": true,
+   "width": 36.0,
+   "lifespanSec": 0.4,
+   "emissionRate": 30,
+   "textureSlot": 0,
+   "materialId": 0,
+   "rows": 1,
+   "cols": 1,
+   "trackTags": [
+    "KRVS"
+   ],
+   "verdict": "visible-at-peak"
+  },
+  {
+   "ribbon": "BlizRibbon03",
+   "alphaBirth": 1.0,
+   "alphaPeak": 1.0,
+   "alphaAnimated": false,
+   "visibilityPeak": 1.0,
+   "visibilityAnimated": true,
+   "width": 36.0,
+   "lifespanSec": 0.4,
+   "emissionRate": 30,
+   "textureSlot": 0,
+   "materialId": 0,
+   "rows": 1,
+   "cols": 1,
+   "trackTags": [
+    "KRVS"
+   ],
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 30824,
+ "rawHeight": 69.65,
+ "scaleFactor": 0.02778,
+ "height": 1.935,
+ "visiblePrims": "2/2",
+ "animations": [
+  "Birth"
+ ],
+ "clipMap": null,
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "litGlowMaterials": [],
+ "fullExtents": [
+  13.3113,
+  1.9347,
+  13.3114
+ ],
+ "visibleExtents": [
+  13.3113,
+  1.9347,
+  13.3114
+ ],
+ "fullLongAxis": "z",
+ "visibleLongAxis": "z",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/markofchaostarget.glb"
+}
