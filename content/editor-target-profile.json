@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_32a0311a5e32",
+    "contentVersion": "cv_40d5357e222a",
     "collections": {
       "champions": {
-        "hash": "0d4a33c2f55b",
+        "hash": "ec9579212647",
         "count": 71
       },
       "abilities": {
-        "hash": "fae9a69c663c",
+        "hash": "8c993478370e",
         "count": 421
       },
       "items": {
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "05a84aef4443",
+        "hash": "36696c0a4909",
         "count": 93
       },
       "models": {
@@ -58,7 +58,7 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "ad45597ea116",
+        "hash": "2d9d4ffde87b",
         "count": 46
       },
       "vfx-scripts": {
@@ -93,7 +93,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "553408c5",
+    "fingerprint": "e534e6ef",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -1271,6 +1271,7 @@
       "radial-burst",
       "random-barrage",
       "single-strike",
+      "summon-agent",
       "teleport",
       "traveling-wave"
     ],
@@ -4118,8 +4119,114 @@
         {
           "id": "tpl-summon-agent",
           "family": "summon-agent",
-          "status": "draft",
-          "params": {}
+          "status": "enabled",
+          "params": {
+            "count": {
+              "type": "number",
+              "default": 1,
+              "min": 1,
+              "max": 20,
+              "origin": "taxonomy:一具是召喚的**最小**單位 —— ⛔ 0 具不是召喚。逐支的具數由卡面決定（普屋 E 逐字「創造出 **2** 個普烏的實體」）。"
+            },
+            "body": {
+              "type": "enum",
+              "values": [
+                "champion",
+                "self"
+              ],
+              "default": "self",
+              "optional": true,
+              "origin": "taxonomy:分身族（複製施法者自己）是這個家族的**多數**形狀 —— `summon.ts` 檔頭逐字點名 57-03 複製鏡 / 27-002 霧隱分身之術；⭐ 選 `self` 當預設讓那一族**零個欄位**就寫得出來。"
+            },
+            "championId": {
+              "type": "docRef",
+              "optional": true,
+              "origin": "inert —— ⛔ 只有 `body:\"champion\"` 時才讀得到它；`self`（本家族的預設）時由 sim 端填施法者自己。",
+              "inert": "⛔ 只有 `body:\"champion\"` 時才讀得到它；`self`（本家族的預設）時由 sim 端填施法者自己 ⇒ 它沒有一個有意義的預設。"
+            },
+            "durationSec": {
+              "type": "number",
+              "optional": true,
+              "default": 10,
+              "min": 0.5,
+              "max": 600,
+              "unit": "s",
+              "origin": "taxonomy:出貨的分身族卡面全部是**有時限**的（普屋 E 逐字「可持續 **10** 秒」）；⭐ 10 秒是那一族的中位數，⛔ 缺席才是「永久」（原作 0 秒的那種）。"
+            },
+            "damageMult": {
+              "type": "number",
+              "optional": true,
+              "default": 1,
+              "min": 0.01,
+              "max": 10,
+              "origin": "taxonomy:1 ＝ **與本體同強**，也就是「沒有宣告倍率」的中性值。⭐ 逐支覆寫由卡面決定（普屋 E 逐字「具有 **30%** 攻擊力」）。"
+            },
+            "hpMult": {
+              "type": "number",
+              "optional": true,
+              "default": 1,
+              "min": 0.01,
+              "max": 10,
+              "origin": "taxonomy:同 `damageMult` —— 1 是中性值，⛔ 不是一個平衡選擇。"
+            },
+            "formation": {
+              "type": "enum",
+              "values": [
+                "ring",
+                "line",
+                "scatter"
+              ],
+              "default": "ring",
+              "optional": true,
+              "origin": "taxonomy:`ring` 是唯一與具數無關的陣型（1 具也成立，N 具不重疊）；⛔ `line` 需要一個朝向、`scatter` 需要 RNG。"
+            },
+            "spread": {
+              "type": "number",
+              "optional": true,
+              "default": 2,
+              "min": 0.1,
+              "max": 12,
+              "origin": "taxonomy:2 個**世界單位** ≈ 一個身體寬 —— ⭐ 讓兩具不互相卡住的最小間距。⚠️ ⛔ 這一格刻意**沒有** `unit` —— 標成 `wc3u` 會被展開器除以 50（2026-09-01 實測：2 變成 0.04，兩具疊在同一點），⭐ 而 `summon.spread` 本來就是世界單位。"
+            },
+            "maxAlive": {
+              "type": "number",
+              "optional": true,
+              "default": 0,
+              "min": 0,
+              "max": 20,
+              "origin": "taxonomy:0 ＝ **不設上限**，也就是「沒有宣告」的中性值。⭐ 要設上限的技能自己填。"
+            },
+            "onOwnerDeath": {
+              "type": "enum",
+              "values": [
+                "despawn",
+                "persist"
+              ],
+              "default": "despawn",
+              "optional": true,
+              "origin": "taxonomy:`despawn` —— 分身是施法者的延伸，⭐ 本體死了它們留著會變成「打不死的殘影」；`persist` 是少數（獨立召喚物）才要的。"
+            },
+            "cleanse": {
+              "type": "enum",
+              "values": [
+                "none",
+                "status",
+                "all"
+              ],
+              "default": "none",
+              "optional": true,
+              "origin": "taxonomy:`none` ＝ **只召喚**。⚠️ 淨化是**另一件事**（普屋 E 的卡面把兩件事寫在同一句），⛔ 綁死在一起就表達不出只召喚的技能。"
+            },
+            "castTimeSec": {
+              "type": "number",
+              "optional": true,
+              "default": 0,
+              "min": 0,
+              "max": 5,
+              "unit": "s",
+              "origin": "taxonomy:0 ＝ 瞬發，也就是「沒有宣告吟唱」的中性值（同 `tpl-single-strike` 的同名格）。"
+            }
+          }
         },
         {
           "id": "tpl-team-synergy",
@@ -4251,8 +4358,8 @@
         }
       ],
       "templateStatus": {
-        "draft": 20,
-        "enabled": 26
+        "draft": 19,
+        "enabled": 27
       },
       "innateKinds": [
         "active",
@@ -4587,12 +4694,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "553408c5",
+    "engineFingerprint": "e534e6ef",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 553408c5 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 e534e6ef —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -5381,5 +5488,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "e9e0a2b525ca"
+  "profileDigest": "c2889ae1eccf"
 }
