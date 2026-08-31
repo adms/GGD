@@ -142,6 +142,31 @@ export const zVfxOrient = z
   .strict();
 export type VfxOrient = z.infer<typeof zVfxOrient>;
 
+/**
+ * ⭐ 一條 WC3 的浮點動畫軌（KP2\*）——**與渲染層的 `W3xFloatTrack` 同一個形狀**。
+ *
+ * ⚠️ ⭐ 這裡刻意逐欄對齊 `apps/client/src/render/vfx/w3xEmitter.ts:113`，
+ * ⛔ 不是重新設計：⭐ 兩邊形狀一致才可能「編輯器寫得出來的東西，執行期照樣播」。
+ * ⛔ 形狀一分岔，schema 就會收下一份執行期讀不懂的軌。
+ */
+const zVfxFloatTrack = z
+  .object({
+    /**
+     * `[frame（模型時間軸上的毫秒）, value]`，⭐ **依 frame 升序**。
+     * ⚠️ 上限 256 個 key —— ⛔ 一條逐幀的軌在 30fps 下八秒就到頂，
+     * 而超過那個量的「動畫」應該是**兩個特效**，⛔ 不是一條軌。
+     */
+    keys: z
+      .array(z.tuple([z.number(), z.number()]))
+      .min(1)
+      .max(256),
+    /** 0 none(step) · 1 linear · 2 hermite · 3 bezier（後兩者執行期線性重取樣）。 */
+    interp: z.number().int().min(0).max(3).optional(),
+    /** global-sequence id；⛔ 跑在模型時間軸上時是 -1。 */
+    globalSeq: z.number().int().optional(),
+  })
+  .strict();
+
 const zVfxDocBase = z
   .object({
     id: zId,
@@ -150,6 +175,44 @@ const zVfxDocBase = z
     mode: z.enum(["continuous", "burst"]),
     /** particles/sec (continuous mode) */
     rate: z.number().positive().optional(),
+    /**
+     * ⭐⭐ GH#761 AC③ —— **KP2\* 軌**（原作 `ParticleEmitter2` 的逐幀動畫軌）。
+     *
+     * ── ⛔ 在此之前 ────────────────────────────────────────────────────────
+     * 這幾條軌**已經被出貨的執行期驅動**（`W3xEmitterRig` 每幀重播 `emissionTrack`
+     * 到 `ps.emitRate`），⛔ 而它們的型別住在**渲染層的 TS**
+     *（`apps/client/src/render/vfx/w3xEmitter.ts:113`）
+     * ⇒ ⭐ `vfx@1` 表達不了 ⇒ **編輯器碰不到這個角落**。
+     * ⚠️ 那個檔的對照表逐字寫著「`KP2*` tracks — **NO equivalent**」。
+     *
+     * ⇒ ⭐ 這正是 main 的職責①：「引擎的每一個功能都可 JSON 操作 ——
+     *   ⛔ 沒有只能改程式才碰得到的角落」。
+     *
+     * ── ⭐ 為什麼是 optional ────────────────────────────────────────────────
+     * 599 份出貨 `vfx@1` 沒有一份帶它（軌道今天由 mdx 匯入器直接餵進執行期）
+     * ⇒ ⛔ 必填會讓每一份當場失效。⭐ 缺席 ＝ 今天的行為。
+     */
+    tracks: z
+      .object({
+        /** KP2E —— 每秒噴幾顆隨時間變（⭐ 出貨執行期已經在重播它）。 */
+        emission: zVfxFloatTrack.optional(),
+        /** KP2V —— 可見性 0/1，把 emitter 綁在動畫上（⭐ 一段動畫裡只有幾幀在噴）。 */
+        visibility: zVfxFloatTrack.optional(),
+        /** KP2W —— 寬度。 */
+        width: zVfxFloatTrack.optional(),
+        /** KP2N —— 長度。 */
+        length: zVfxFloatTrack.optional(),
+        /** KP2S —— 速度。 */
+        speed: zVfxFloatTrack.optional(),
+        /** KP2R —— 重力。 */
+        gravity: zVfxFloatTrack.optional(),
+        /** KP2L —— 壽命。 */
+        lifespan: zVfxFloatTrack.optional(),
+        /** KP2G —— 潛伏（latitude）。 */
+        latitude: zVfxFloatTrack.optional(),
+      })
+      .strict()
+      .optional(),
     /** particles per burst (burst mode) */
     burstCount: z.number().int().positive().optional(),
     lifetimeSec: z

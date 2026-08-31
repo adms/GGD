@@ -400,7 +400,7 @@ export function segmentStopTimes(timeMiddle: number): [number, number, number] {
  * | node `xYQuad`              | `ps.isBillboardBased = false`                     |
  * | node `unshaded`            | no-op — Babylon particles are already unlit       |
  * | `priorityPlane`            | NO equivalent; forwarded, not applied             |
- * | `KP2*` tracks              | NO equivalent; driven per-frame by `W3xEmitterRig`|
+ * | `KP2*` tracks              | ⭐ `vfx@1` 的 `tracks.*`（GH#761 AC③）；執行期由 `W3xEmitterRig` 逐幀重播 |
  */
 export function w3xEmitterToVfxDoc(em: W3xParticleEmitter, opts: W3xMappingOptions): W3xEmitterMapping {
   const notes: W3xMappingNote[] = [];

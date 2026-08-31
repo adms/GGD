@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "9d43feef",
+  "fingerprint": "553408c5",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -884,7 +884,8 @@
       "spriteSheet",
       "stretched",
       "tailLength",
-      "texture"
+      "texture",
+      "tracks"
     ],
     "vfx@1.orient": [
       "pitchDeg",

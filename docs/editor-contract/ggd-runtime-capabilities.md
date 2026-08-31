@@ -1,6 +1,6 @@
 # GGD 遊戲端執行期能力清單（`ggd-runtime-capabilities@1`）
 
-**指紋 `9d43feef`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
+**指紋 `553408c5`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
 
 ## 這份文件是什麼
 
@@ -157,7 +157,7 @@
 
 | 寫在哪 | 欄位 |
 |---|---|
-| `vfx@1` | `ambient` · `anchorBone` · `blendMode` · `burstCount` · `color` · `colorStops` · `emitter` · `gore` · `gravityY` · `id` · `lifetimeSec` · `mode` · `orient` · `rate` · `schema` · `size` · `sizeStops` · `speed` · `spriteSheet` · `stretched` · `tailLength` · `texture` |
+| `vfx@1` | `ambient` · `anchorBone` · `blendMode` · `burstCount` · `color` · `colorStops` · `emitter` · `gore` · `gravityY` · `id` · `lifetimeSec` · `mode` · `orient` · `rate` · `schema` · `size` · `sizeStops` · `speed` · `spriteSheet` · `stretched` · `tailLength` · `texture` · `tracks` |
 | `vfx@1.orient` | `pitchDeg` · `swirlDegPerSec` · `yawDeg` · `yawFrom` |
 | `ribbon@1` | `anchorBone` · `blendMode` · `color` · `id` · `lifespanSec` · `schema` · `texture` · `uvScrollPerSec` · `widthAbove` · `widthBelow` |
 | `attachment@1` | `anim` · `animLoop` · `follow` · `id` · `modelKey` · `note` · `offsetY` · `points` · `scale` · `schema` |

@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "7e330a37f224",
-  "capabilityFingerprint": "9d43feef",
+  "fingerprint": "f0074eb4509b",
+  "capabilityFingerprint": "553408c5",
   "required": [
     {
       "group": "abilityField",
@@ -22975,6 +22975,171 @@
       "owner": "vfx@1"
     },
     {
+      "group": "vfxField",
+      "name": "tracks",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.emission",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.emission.globalSeq",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.emission.interp",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.emission.keys",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.gravity",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.gravity.globalSeq",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.gravity.interp",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.gravity.keys",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.latitude",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.latitude.globalSeq",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.latitude.interp",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.latitude.keys",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.length",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.length.globalSeq",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.length.interp",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.length.keys",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.lifespan",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.lifespan.globalSeq",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.lifespan.interp",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.lifespan.keys",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.speed",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.speed.globalSeq",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.speed.interp",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.speed.keys",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.visibility",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.visibility.globalSeq",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.visibility.interp",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.visibility.keys",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.width",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.width.globalSeq",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.width.interp",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "tracks.width.keys",
+      "owner": "vfx@1"
+    },
+    {
       "group": "vfxScriptField",
       "name": "abilityId",
       "owner": "vfx-script@1"
@@ -23608,14 +23773,14 @@
     "conditionLeaf": 5,
     "conditionLeafField": 13,
     "effectFieldPath": 417,
-    "vfxField": 53,
+    "vfxField": 86,
     "modelField": 42,
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 112,
     "configField": 3741,
     "_notRequired": 15,
-    "_total": 4840,
+    "_total": 4873,
     "_ownerOnly": 39
   }
 }
