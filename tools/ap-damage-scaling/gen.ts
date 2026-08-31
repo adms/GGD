@@ -214,7 +214,20 @@ function contractMd(): string {
   L.push("");
   L.push("⛔⛔ **`加成率` 那一格刻意不在這份契約裡**（owner 2026-08-23 · 2026-08-31，兩次）：");
   L.push("> 「編輯器只編輯**原始資料**（五級距），**根本不需要知道**⋯避免雙重編輯」");
-  L.push("> 「契約中**不應該考慮**⋯ 0.005」");
+  // ⚠️⚠️ ⛔ **這裡刻意不印那個數字**（owner 2026-08-31 第三次指名,逐字:
+  //   「**系統參數⋯不應該提到 那是我人工旋鈕**」)。
+  // ⭐ 印出來它就有了第二個住處(第〇·四守則),⭐ 而第二個住處必然過期。
+  // ⇒ 唯一的住處是 `content/config/ap-damage-scaling.json` 的 `rate`,
+  //   ⭐ 而它只有 owner 調(閘:`content/config/owner-knobs.json` + `ownerKnobs.test.ts`)。
+  L.push("> 「契約中**不應該考慮**⋯（那一格的值）」");
+  L.push("");
+  L.push("⚠️ ⭐ owner 2026-08-31 第三次指名同一件事，逐字：");
+  L.push("> 「**系統參數⋯不應該提到 那是我人工旋鈕**」");
+  L.push("");
+  L.push("⇒ ⭐ **所以這份文件連引用他的話時都不印那個數字** —— ⛔ 印出來它就有了第二個住處");
+  L.push("（第〇·四守則），⭐ 而第二個住處必然過期。唯一的住處是");
+  L.push("`content/config/ap-damage-scaling.json` 的 `rate`，⭐ 而它只有 owner 調");
+  L.push("（閘：`content/config/owner-knobs.json` ＋ `ownerKnobs.test.ts`）。");
   L.push("");
   L.push("⇒ ⭐ 編輯器要編的是**技能自己的資料**（級距、係數、目標）。");
   L.push("這一層是**全域的、owner 專屬的**，它在**每一發傷害之後**才乘上去 ——");

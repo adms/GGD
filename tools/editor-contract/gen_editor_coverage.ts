@@ -164,7 +164,9 @@ export function buildEditorCoverage(): {
   pushDocFields("projectileField", zProjectileDoc, "projectile@1");
   pushDocFields("skinField", zSkinDoc, "skin@1");
 
-  // ⭐ 宣告 unsupported 的**不必**實作 —— 而理由要寫得出來（⛔ 不是靜默省略）
+  // ⭐ 宣告 unsupported 的**這一版**不做 —— 而理由要寫得出來（⛔ 不是靜默省略）
+  // ⚠️⚠️ ⛔ **不是「不必實作」**（owner 2026-08-31 逐字:「⋯**=> 之後會實作**」）——
+  //   ⭐ 它們是 main 的**待辦**,機制做出來的那一天該筆自動離開這張清單。
   const notRequired: { name: string; why: string }[] = [];
   for (const e of PLANNED_CAPABILITIES) {
     if (e.expected !== "unsupported") continue;
