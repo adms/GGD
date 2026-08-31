@@ -171,15 +171,54 @@ export function loadLedger(repoRoot) {
   return existsSync(p) ? readJson(p) : { schema: "review-approvals@1", entries: {} };
 }
 
+/**
+ * ⭐⭐ GH#664 Phase 2 —— **渲染層指紋**（「人審一次，機器守永遠」缺的那一軸）。
+ *
+ * ── 為什麼 `hash` 那一軸不夠 ─────────────────────────────────────────────
+ * 今天的過期判準是「**這份資產的內容**變了嗎」。⛔ 而一個資產的**畫面**可以在
+ * 內容位元組一個都沒動的情況下改變 —— 渲染層改了就會。
+ *
+ * ⭐ 2026-08-31 就發生了兩次，兩次都沒有動任何 `content/vfx/*.json`：
+ *   · GH#803 `model@1.fxEmitters` —— 模型出生時多放它自己的粒子
+ *   · GH#761 `families[*].models` —— 一族播哪幾顆原作模型變成可調
+ * ⇒ ⭐ 那些資產的綠燈是**對舊的畫面**發的，⛔ 而帳本不會知道。
+ *
+ * ── 用哪一個數字當指紋 ──────────────────────────────────────────────────
+ * `docs/editor-contract/ggd-editor-coverage.json` 的 `fingerprint` ——
+ * ⭐ 它是**產生的**（`editorcov:build`），涵蓋的正是 vfx / model / projectile /
+ * skin / vfx-script 的欄位面：那一面動了，畫面就可能動。
+ *
+ * ⚠️ ⭐ 它**偏保守**（渲染無關的 schema 改動也會讓它動）⇒ 誤判的方向是
+ * **多審一次**，⛔ 不是漏掉漂移 —— 而在可見性這一族，缺陷通常長成
+ * 「沒生效、沒送到、沒畫出來」，⭐ 所以偏保守是對的那一邊。
+ */
+export function rendererFingerprint(repoRoot) {
+  const p = join(repoRoot, "docs/editor-contract/ggd-editor-coverage.json");
+  if (!existsSync(p)) return null;
+  try {
+    const d = readJson(p);
+    return typeof d.fingerprint === "string" ? d.fingerprint : null;
+  } catch {
+    // ⛔ 讀不出來回 null ＝「這一軸今天不判斷」，⛔ 不是「通過」——
+    //   呼叫端因此不會把「量不到」誤讀成「沒有漂移」。
+    return null;
+  }
+}
+
 /** 寫一筆裁決進帳本（middleware 的 POST /__review/verdict 走這裡）。 */
 export function saveVerdict(repoRoot, { kind, id, hash, verdict, note }) {
   const ledger = loadLedger(repoRoot);
+  const rf = rendererFingerprint(repoRoot);
   ledger.entries[`${kind}:${id}`] = {
     hash,
     verdict,
     note: note ?? "",
     reviewedAt: new Date().toISOString(),
     reviewer: "owner",
+    // ⭐ GH#664 Phase 2 —— 這一格綠燈是**對哪一版渲染層**發的。
+    // ⚠️ 量不到就**不寫**（⛔ 不寫 `null`）：沒有這一格的舊條目在下面被當成
+    //   「這一軸未知」而⛔ 不判它過期 —— 逐位元同這一格出現以前。
+    ...(rf !== null ? { renderer: rf } : {}),
   };
   mkdirSync(join(repoRoot, "docs/_review"), { recursive: true });
   writeFileSync(join(repoRoot, LEDGER_REL), `${JSON.stringify(ledger, null, 2)}\n`);
@@ -194,6 +233,7 @@ export function buildQueue(repoRoot) {
   const voice = voiceHitl(repoRoot);
   const inventory = buildInventory(repoRoot, voice);
   const entries = loadLedger(repoRoot).entries ?? {};
+  const rf = rendererFingerprint(repoRoot);
   const items = [];
   let tier0 = 0;
   let reviewed = 0;
@@ -201,16 +241,29 @@ export function buildQueue(repoRoot) {
     const e = entries[`${a.kind}:${a.id}`];
     // ⭐ 「人審一次，機器守永遠」的另一半：**核准過而內容變了**的資產一律回佇列，
     //    ⛔ 不論 risk —— 那一格綠燈是對**舊位元組**發的（#664 Phase 2 的核心語意）。
-    const staleApproval = e !== undefined && e.hash !== a.hash;
+    // ⭐⭐ GH#664 Phase 2 —— **兩軸**，⛔ 不是一軸：
+    //   ① 內容變了（`hash`）② **渲染層變了**（`renderer`）。
+    // ⚠️ 舊條目沒有 `renderer` ⇒ 這一軸**未知** ⇒ ⛔ 不判它過期
+    //   （一次 schema 改動不會把整本帳洗掉）。
+    const staleRenderer =
+      e !== undefined && rf !== null && e.renderer !== undefined && e.renderer !== rf;
+    const staleApproval = (e !== undefined && e.hash !== a.hash) || staleRenderer;
     if (a.risk <= 0 && !staleApproval) {
       tier0++;
       continue;
     }
-    if (e && e.hash === a.hash) {
+    if (e && e.hash === a.hash && !staleRenderer) {
       reviewed++;
       continue;
     }
-    const reasons = [...a.reasons, e ? "內容已變 —— 先前的裁決 hash 過期" : "未審"];
+    const reasons = [
+      ...a.reasons,
+      e === undefined
+        ? "未審"
+        : staleRenderer && e.hash === a.hash
+          ? "⭐ **渲染層變了** —— 這一格綠燈是對舊的畫面發的（內容位元組沒動）"
+          : "內容已變 —— 先前的裁決 hash 過期",
+    ];
     const item = { id: a.id, kind: a.kind, hash: a.hash, risk: a.risk, reasons, refs: a.refs };
     if (a.spec !== undefined) item.spec = a.spec;
     items.push(item);
