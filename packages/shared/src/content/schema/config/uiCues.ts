@@ -142,6 +142,29 @@ export const zConfigUiCuesDoc = z
      *
      * ⚠️ **optional 是刻意的**：舊的後台 override 少這一格不該整份被 strict Zod 拒。
      */
+    /**
+     * ⭐⭐ GH#896 —— 大廳上方那顆 **Store**（模組商店）要不要出現。
+     *
+     * owner 2026-09-01（逐字）：
+     * > 「關閉模組商店(大廳上面可選到的 store)，**這個根本還沒做好不開放**」
+     *
+     * ⛔ **不刪程式碼** —— 它之後要做完再打開。⇒ 一格開關，⛔ 不是一次刪除。
+     *
+     * ⚠️ ⭐ 票文自己點出了陷阱：「『關掉入口』與『關掉功能』是兩件事 ——
+     * 只藏按鈕而路由還在，知道網址的人照樣進得去」⇒ **兩邊都讀這一格**：
+     * 按鈕不畫，⭐ 而且 `lobbyView === "store"` 的那一支也退回大廳
+     * （⛔ 否則一份存著 `lobbyView:"store"` 的舊瀏覽器狀態就繞過去了）。
+     *
+     * ⚠️ **optional 是刻意的**（同下面 `commsWheel`）：舊的後台 override 少這一格
+     * ⛔ 不該讓整份被 strict Zod 拒掉。缺席 ＝ 用 `DEFAULT_UI_CUES` 的值。
+     */
+    lobbyStore: z
+      .object({
+        /** 出貨值 **false** ＝ owner 說的「還沒做好不開放」。⭐ 做完了把它改成 true。 */
+        enabled: z.boolean(),
+      })
+      .strict()
+      .optional(),
     commsWheel: z
       .object({
         /** 總開關。⛔ 關掉＝一鍵 rollback（輪盤打不開，那 5 格回到啞的）。 */
@@ -191,6 +214,8 @@ export type UiCuesDoc = Omit<ConfigUiCuesDoc, "id" | "schema" | "note">;
  * `apps/admin/src/laneConfigDocs.test.ts` 那一族的 drift 守衛在比對。
  */
 export const DEFAULT_UI_CUES: UiCuesDoc = {
+  // ⭐ GH#896 —— owner：「這個根本還沒做好不開放」。⛔ 預設關。
+  lobbyStore: { enabled: false },
   telegraphRune: true,
   // ⭐ 預設就是「畫真的會打到人的那個形狀」（第〇·六守則：優先權大的更新預設啟動）。
   telegraphGroundShape: "line",

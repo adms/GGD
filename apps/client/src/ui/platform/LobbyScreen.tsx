@@ -37,6 +37,7 @@
  * gutter the cluster publishes (`../chromeReserve`) instead of hard-coding a
  * width, and wraps rather than compressing into it.
  */
+import { uiCues } from "../uiCuesConfig";
 import { useState } from "react";
 import { useApp } from "./store";
 import { SettingsScreen } from "../SettingsScreen";
@@ -494,6 +495,8 @@ export function LobbyScreen(): React.JSX.Element {
   const wallet = useApp((s) => s.wallet);
   const wsStatus = useApp((s) => s.wsStatus);
   const lobbyView = useApp((s) => s.lobbyView);
+  // ⭐ GH#896 —— 模組商店的總開關（出貨 false）。⛔ 缺席 = 用 `DEFAULT_UI_CUES` 的 false。
+  const storeOpen = uiCues().lobbyStore?.enabled === true;
   const setLobbyView = useApp((s) => s.setLobbyView);
   const room = useApp((s) => s.room);
   const doLogout = useApp((s) => s.doLogout);
@@ -557,9 +560,14 @@ export function LobbyScreen(): React.JSX.Element {
           {account?.username}
           <span style={{ color: TEXT_DIM, fontSize: 11 }}> · MMR {account?.mmr ?? "—"}</span>
         </div>
-        <Btn small kind={lobbyView === "store" ? "primary" : "ghost"} onClick={() => setLobbyView(lobbyView === "store" ? "play" : "store")}>
-          {lobbyView === "store" ? "Back to lobby" : "Store"}
-        </Btn>
+          {/* ⭐⭐ GH#896 —— owner 2026-09-01：「關閉模組商店(大廳上面可選到的 store)，
+              **這個根本還沒做好不開放**」。⛔ 程式碼一行都沒刪 —— 一格開關
+              (`config.ui-cues@1` 的 `lobbyStore.enabled`，出貨 false)。 */}
+          {storeOpen && (
+            <Btn small kind={lobbyView === "store" ? "primary" : "ghost"} onClick={() => setLobbyView(lobbyView === "store" ? "play" : "store")}>
+            {lobbyView === "store" ? "Back to lobby" : "Store"}
+            </Btn>
+          )}
         {announcement && (
           <Btn small onClick={openAnnouncement} title={`最新公告：${announcement.title}`}>
             📢 公告
@@ -582,7 +590,11 @@ export function LobbyScreen(): React.JSX.Element {
       {passwordOpen && <ChangePasswordDialog onClose={() => setPasswordOpen(false)} />}
 
       {/* body */}
-      {lobbyView === "store" ? (
+        {/* ⭐ GH#896 的第二半 —— ⚠️ 票文自己點出的陷阱：「『關掉入口』與『關掉功能』
+            是兩件事 —— 只藏按鈕而路由還在，知道網址的人照樣進得去」。
+            ⇒ ⭐ 這裡**也**讀同一格：一份存著 `lobbyView:"store"` 的舊瀏覽器狀態
+            會退回大廳，⛔ 而不是繞過那顆藏起來的按鈕。 */}
+        {storeOpen && lobbyView === "store" ? (
         <StoreScreen />
       ) : (
         // .ggd-lobby-body / .ggd-lobby-col let platform/ranking.css stack these
