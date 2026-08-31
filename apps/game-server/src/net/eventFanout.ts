@@ -65,6 +65,11 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   "screenShake",
   "floatingText", // 原作 CreateTextTagUnitBJ —— 克勞德每一刀的 "1Hit"…"7Hit"
   "comboStrike", // GH#838 逐段演出錨（strikeCue wave 才發）—— VfxScriptPlayer 的 strike 觸發器
+    // ⭐⭐ GH#885 —— 反彈成功的**演出錨**。⚠️ 在此之前 `onReflectSuccess` 只走
+    //    `fireHooks`（＝內容的效果鏈），⛔ **零 emit** ⇒ 客戶端不知道有這一刻發生過
+    //    ⇒ ⭐ owner 指名的 20-002 理想鄉EX（由反彈成功觸發）在 `vfx-script@1` 裡**寫不出來**。
+    //    cadence：一次反彈一則（由 `reflectDepth` 與 `DAMAGE_QUEUE_MAX_PASSES` 夾住，⛔ 沒有新迴圈）。
+    "reflectSuccess",
   "damage",
   "death",
   "projectileSpawn",

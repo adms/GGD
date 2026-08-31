@@ -40,6 +40,25 @@ export const VFX_SCRIPT_TRIGGERS = [
   "strike",
   "projectileSpawn",
   "projectileHit",
+  /**
+   * ⭐⭐ **反彈成功**（GH#885）—— ⭐ owner 指名的驗收三招之一 **20-002 理想鄉EX**
+   * 就是由這一刻觸發的，⛔ 而在 2026-08-31 之前它在 schema 層**寫不出來**。
+   *
+   * ⭐ **歸屬乾淨**：反彈封包的 `source` 就是**防禦者**，而封包的 provenance
+   * （`combat/damage.ts:61` 的 `` `ability:${id}` ``）指的正是**他自己那支反彈技能**
+   * ⇒ ⛔ 播放器不需要新的 dep，用既有的 `scriptFor()`。
+   *
+   * ── ⛔⛔ 為什麼**沒有** `blockSuccess`（⭐ 量過才決定的，⛔ 不是漏掉）──────
+   * ⚠️ 格擋的訊號**早就到客戶端了**（`combat/block.ts:65` 逐字「照常
+   * `emit("damage", { amount: 0, blocked: true })`」）—— ⛔ 但**歸屬是錯的**：
+   * 那個事件的 `origin` 是**攻擊者的**技能，而格擋特效屬於**防禦者的**技能。
+   * ⭐ 而 `blockCutFor()`（`block.ts:315`）只回一個 `number` ⇒ 拿不到是哪一格 grant 擋的。
+   * ⇒ ⭐ 加一格 `blockSuccess` 而作者填了卻掛在錯的人身上 ＝ **一格「說了但不會發生」的欄位**
+   *   （第一·五守則）。⛔ 所以這一輪不加它。
+   * ⭐ 它的正解住 **GH#650**（BlockGrant 缺一道特效軸）：那張票要讓 `blockCutFor`
+   *   說得出**是誰擋的**，⇒ 那一天 `blockSuccess` 才有正確的歸屬。
+   */
+  "reflectSuccess",
 ] as const;
 
 const SEG_COMMON = {

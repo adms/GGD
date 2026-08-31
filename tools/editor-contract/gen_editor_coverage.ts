@@ -47,6 +47,12 @@ import {
   zProjectileDoc,
   zSkinDoc,
 } from "../../packages/shared/src/content/schema";
+// ⭐⭐ **演出腳本**（GH#838 特效工坊寫的就是這一份，GH#885 補了 `reflectSuccess`）。
+// ⚠️ ⭐ 2026-08-31 量到:它**不在契約裡** —— 而它是 Codex 的編輯器**唯一**能寫的集合
+//   （`content/abilities/*.json` 是產生器的產物,genguard 會擋）。
+// ⇒ ⭐ 少了它,「引擎長出新觸發器 ⇒ 契約自動變長 ⇒ 編輯器那邊自動變紅」這條鏈**斷在第一步**:
+//   我今天加了 `reflectSuccess`,而 `required` 一格都沒動。
+import { zVfxScriptDoc } from "../../packages/shared/src/content/schema/vfxScript";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../..");
 const OUT = join(REPO, "docs/editor-contract/ggd-editor-coverage.json");
@@ -129,6 +135,17 @@ export function buildEditorCoverage(): {
   // ⚠️ ⭐ 走**整棵樹**（含巢狀物件與陣列元素），⛔ 不是只有頂層 ——
   //   `vfx@1` 的參數大半住在巢狀節點裡（emitter / 顏色 / 生命週期）。
   const flatten = (node: UINode, out: string[]): void => {
+    // ⭐⭐ **列舉的值也算「編輯器要讓作者填得到」的東西**（2026-08-31）。
+    // ⚠️ 在此之前只收欄位**路徑** ⇒ 契約說得出「有一格 `on`」，
+    //   ⛔ 說不出「它收 `castStart` / `strike` / `reflectSuccess`…」
+    //   ⇒ ⭐ Codex 畫不出那格下拉選單,而「完整性」正是 owner 點名的三個詞之一。
+    // ⭐ 而它同時修好了一條**斷掉的鏈**:引擎長出一個新觸發器 ⇒ 契約自動變長。
+    if (node.kind === "enum" && Array.isArray((node as { options?: unknown[] }).options)) {
+      const path = (node as { path?: string }).path ?? "";
+      for (const opt of (node as { options: unknown[] }).options) {
+        if (typeof opt === "string" || typeof opt === "number") out.push(`${path}=${String(opt)}`);
+      }
+    }
     if (node.kind === "object") {
       for (const f of (node as UIObject).fields) {
         out.push(f.path);
@@ -163,6 +180,7 @@ export function buildEditorCoverage(): {
   pushDocFields("modelField", zModelDoc, "model@1");
   pushDocFields("projectileField", zProjectileDoc, "projectile@1");
   pushDocFields("skinField", zSkinDoc, "skin@1");
+  pushDocFields("vfxScriptField", zVfxScriptDoc, "vfx-script@1");
 
   // ⭐ 宣告 unsupported 的**這一版**不做 —— 而理由要寫得出來（⛔ 不是靜默省略）
   // ⚠️⚠️ ⛔ **不是「不必實作」**（owner 2026-08-31 逐字:「⋯**=> 之後會實作**」）——

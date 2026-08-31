@@ -212,6 +212,30 @@ export class VfxScriptPlayer {
         }
         return;
       }
+      // ⭐⭐ GH#885 —— **反彈成功**（owner 指名的 20-002 理想鄉EX 就是這一刻）。
+      //
+      // ⭐ **歸屬乾淨,⛔ 零新 dep**:`origin` 是那一發反彈封包自己的 provenance
+      //   （`combat/damage.ts:61` 的 `ability:<id>`）—— 而反彈封包的來源是**防禦者**,
+      //   所以它指的正是**他自己那支反彈技能**。剝掉前綴就走既有的 `scriptFor()`。
+      //
+      // ⚠️ ⛔ 不是每一發反彈都有腳本 —— 查不到就是零成本路（與其他觸發器同形）。
+      case "reflectSuccess": {
+        const reflector = d.reflector as number | undefined;
+        const origin = d.origin as string | undefined;
+        if (reflector === undefined || !origin?.startsWith("ability:")) return;
+        const script = this.deps.scriptFor(origin.slice("ability:".length));
+        if (!script) return;
+        const attacker = d.attacker as number | undefined;
+        const frame: TriggerFrame = {
+          caster: reflector,
+          tick: ev.tick | 0,
+          // ⭐ 反彈的「目標」是**攻擊者**（傷害被送回去的那一方）。
+          targetPos:
+            attacker !== undefined ? (this.deps.entityPos(attacker) ?? undefined) : undefined,
+        };
+        this.schedule(script, "reflectSuccess", frame, nowMs);
+        return;
+      }
       default:
         return;
     }

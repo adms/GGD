@@ -73,5 +73,27 @@ export function reflectHookSystem(world: SimWorld): void {
     // early-return，於是 20-002「每次造成 7 倍[反彈]傷害」整條靜默變成 0 ——
     // 一個做了但玩家拿不到的功能（失敗形態 ②）。
     fireHooks(world, ev.reflector, "onReflectSuccess", ev.attacker, undefined, ev.incoming);
+
+    // ⭐⭐ GH#885 —— **演出軸**。在此之前 `onReflectSuccess` 只走 `fireHooks`
+    //    （＝內容的效果鏈），⛔ **零 emit** ⇒ 客戶端完全不知道有這一刻發生過
+    //    ⇒ ⭐ owner 指名的驗收三招之一「20-002 理想鄉EX」（由反彈成功觸發）
+    //      在 `vfx-script@1` 裡**寫不出來**。
+    //
+    // ⚠️ ⭐ **歸屬**：`ev.incoming.origin` 是那一發**反彈封包自己的** provenance
+    //    （`combat/damage.ts:61` 的 `` `ability:${id}` ``）—— 而反彈封包的來源是
+    //    **防禦者**，所以它指的正是**他自己那支反彈技能**。
+    //    ⇒ ⛔ 播放器不需要新的 dep，用既有的 `scriptFor(abilityId)`。
+    //
+    // ⛔ 這裡**不加任何新的迴圈或佇列** —— 它就跟在既有的 `fireHooks` 後面，
+    //    由同一組界（`reflectDepth` ＋ `DAMAGE_QUEUE_MAX_PASSES`）夾住。
+    const rt = world.transform.get(ev.reflector);
+    world.emit("reflectSuccess", {
+      reflector: ev.reflector,
+      attacker: ev.attacker,
+      origin: ev.incoming.origin,
+      amount: ev.incoming.hpLost,
+      x: rt?.pos.x ?? 0,
+      z: rt?.pos.z ?? 0,
+    });
   }
 }

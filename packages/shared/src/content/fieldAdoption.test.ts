@@ -181,6 +181,10 @@ interface Exemption {
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // ── 2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）──────────
+  "enum:vfx-scripts.segments[]#anim.on=reflectSuccess": {
+    status: "landing", since: "2026-08-31",
+    why: "GH#885 —— **反彈成功**的演出錨。⭐ 這一格今天是 0 是**對的**:它的第一份採用者會是 owner 指名的驗收三招之一 **20-002 理想鄉EX**,而那一招是**由外部編輯器（Codex 的特效工坊）產出**的內容(owner 2026-08-31:「給 codex 編輯器做,你到時候參考就好」)。⛔ 我不先填它 —— 填了就是替 owner 決定那一招長什麼樣,而這張票的目的正好相反:**讓他做得出來**。⚠️ 機制側四段接縫全通並有守衛(reflectSuccessTrigger.test.ts,兩個突變驗過):schema 列舉 · ReflectHookSystem 的 emit · eventFanout 放行 · VfxScriptPlayer 的 case。",
+  },
   "enum:abilities.provenance=editor-json": {
     status: "landing", since: "2026-08-31",
     why: "第〇·六守則優先序階梯的第 2 層。2026-08-31 把 provenance 從兩層擴成五層,好讓一份說明說得出自己是**哪一層**的。這一格要等**外部編輯器真的產出內容**才會有第一份採用者(Codex 的 Electron 編輯器,見 docs/editor-contract/CODEX_COORDINATION_20260831.md)。⛔ 不可以先填 —— 填了等於宣稱一份 owner 手寫的說明是編輯器產的。",
