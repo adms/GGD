@@ -68,6 +68,43 @@ export const IMPORT_DIAGNOSTICS = {
     origin: "ggd-extension",
   }),
 
+  /**
+   * ⭐⭐ GH#327 ① —— **importer 沒看懂的欄位**（計畫 §3.3）。
+   *
+   * ── 票文說「schema 預設方向反了」，⭐ 而它漏了一個真理由 ───────────────
+   * `packageSchema.ts` 的檔頭逐字寫著為什麼是 passthrough：
+   * 「`packageDigest` 是對**原始 JSON** 的 projection 取 hash，
+   *   parse 後把未知欄位吃掉會讓下游重算 digest 時對不上」。
+   * ⇒ ⛔ 把那 19 個 `.passthrough()` 翻成 `.strict()` 會**弄壞 digest**。
+   *
+   * ⭐ 而計畫 §3.3 自己就調和了這兩件事：
+   * 「`.passthrough()` 可用於**保留未知 bytes 供重新輸出**，
+   *   ⛔ 但**絕不代表 importer 已理解或接受其語意**」。
+   *
+   * ⇒ ⭐ 缺的**不是** strict，是**「我沒看懂這幾格」這條訊號**。
+   * 在這個碼出現以前，未知欄位是**靜默通過**的 ——
+   * ⚠️ 而「靜默通過」與「看懂了並接受」在對面的作者眼裡長得一模一樣
+   * （CLAUDE.md：「fail-open 沒錯，**靜默**才是缺陷」）。
+   *
+   * ── ⭐ 為什麼是 warning 而不是 error ──────────────────────────────────
+   * 規格 §10 的用語是「至少包含」⇒ 未來版本的 Editor 多帶欄位是**合法**的。
+   * ⭐ 而 `failClosed: false` 讓操作者可以用 `acceptedWarnings[]` 明示接受 ——
+   * ⛔ 那正是「明示的 extensions 通道」該有的樣子：**一個要簽名的動作**，
+   * ⛔ 不是一個沒有人看到的沉默。
+   */
+  UNKNOWN_FIELDS_NOT_UNDERSTOOD: def({
+    code: "UNKNOWN_FIELDS_NOT_UNDERSTOOD",
+    message:
+      "{path} 帶了 importer 沒有宣告的欄位：{fields}。⭐ 它們的**位元組被保留**" +
+      "（digest 因此仍然對得上），⛔ 但 importer **沒有理解也沒有接受它們的語意**。" +
+      "⇒ 若這是刻意的擴充，請放進版本化的 `extensions` 命名空間並宣告 capability；" +
+      "否則請移除，或用 `acceptedWarnings[]` 明示接受這一次。",
+    spec: "計畫 §3.3",
+    failClosed: false,
+    severity: "warning",
+    origin: "contract",
+  }),
+
   // ── 規格／計畫書點名的六個碼 ──────────────────────────────────────────
   RAW_RUNTIME_DOCUMENT_NOT_A_PACKAGE: def({
     code: "RAW_RUNTIME_DOCUMENT_NOT_A_PACKAGE",
