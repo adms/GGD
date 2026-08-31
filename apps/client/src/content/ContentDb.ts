@@ -90,6 +90,7 @@ import { resolveFamilyArt } from "../render/vfx/familyTuning";
 import { setMaxAbilityVfxLayers } from "../render/vfx/abilityLayers";
 import { setOneShotMaxLifeSec } from "../vfx/oneShotLife";
 import { setParticleDensityCaps } from "../vfx/particleFactory";
+import { setAdditiveBudget } from "../vfx/additiveBudget";
 import { setFxTintEmissiveFloor, setStockGlowAdditive } from "../render/modelFxRig";
 import { setBlockFlashMode } from "../render/combatFeedback";
 import { setExDimTuning } from "../render/screenFx";
@@ -427,6 +428,17 @@ export class ContentDb {
         | { maxParticlesPerSystem?: number; maxRatePerSystem?: number }
         | undefined,
     );
+      // ⭐⭐ GH#900 —— 「太多亮光束特效 太誇張了 **變成全白戰鬥**」（owner 2026-09-01）。
+      //    出貨 662 份 vfx 裡 **581 份（88%）是 additive** ⇒ 團戰中每個像素被加 N 次。
+      // ⭐ 兩格（票文逐字要求「兩者都做成欄位，⛔ 不要在程式裡選一個」）：
+      //    `maxConcurrentAdditive` = **限量**、`additiveOverflowBrightness` = **調暗**。
+      // ⛔ 一鍵 rollback = 亮度設 1（或上限設 0）⇒ 逐位元回到今天的行為。
+      {
+        const ab = Configs.tryGet("vfx-budget") as
+          | { maxConcurrentAdditive?: number; additiveOverflowBrightness?: number }
+          | undefined;
+        setAdditiveBudget(ab?.maxConcurrentAdditive ?? 6, ab?.additiveOverflowBrightness ?? 0.35);
+      }
     // 🎨 GH#697 —— 染色下限（黑剪影退路）。同一條路:後台存檔 ⇒ 下一次載入生效。
     setFxTintEmissiveFloor(
       (Configs.tryGet("vfx-cleanup") as { fxTintEmissiveFloor?: number } | undefined)

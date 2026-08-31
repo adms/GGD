@@ -44,6 +44,7 @@
  * cap is hit the least-recently-used instance is stolen (its particles are
  * the oldest on screen).
  */
+import { additiveGain, beginAdditiveFrame } from "./additiveBudget";
 import type { Scene } from "@babylonjs/core/scene";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
@@ -1123,8 +1124,15 @@ export class VfxSystem {
     //    那一發**做 stop()+reset()。那正是 owner 說的「打一打動畫就消失沒播完」。
     //    ⛔ 這不是放寬鐵則：一發真的播超過三秒的仍然會被回收。
     noteVfxRefired(ps);
+    // ⭐⭐ GH#900 —— 「太多亮光束特效⋯**變成全白戰鬥**」（owner 2026-09-01）。
+    //    出貨 662 份 vfx 裡 **581 份（88%）是 additive**，而 additive 在算術上
+    //    只會**加**（`out = dst + src`）⇒ 團戰中每個像素被加 N 次 ⇒ 飽和成純白。
+    // ⭐ `additiveGain` 回 1 = 照常、<1 = 減光、0 = ⛔ 這一發不播。
+    //    ⚠️ 只有 additive 佔預算 —— alpha／modulate 在算術上不會把畫面推向白。
+    const gain = additiveGain(doc.blendMode === "additive");
+    if (gain <= 0) return null;
     // ALL of the burst lands on this frame — that IS the impact
-    ps.manualEmitCount = Math.max(1, Math.round(scaledBurstCount(doc, scale) * boost));
+    ps.manualEmitCount = Math.max(1, Math.round(scaledBurstCount(doc, scale) * boost * gain));
     return ps;
   }
 
@@ -2728,6 +2736,9 @@ export class VfxSystem {
   }
 
   update(nowMs: number): void {
+    // ⭐ GH#900 —— additive 預算**每 frame 歸零**。
+    //    ⛔ 少了這一行，第二場戰鬥開始時預算早就用完了（而畫面上看起來像特效壞了）。
+    beginAdditiveFrame();
     // ⭐ GH#650 —— 這一格是 **frame-scoped**：`blockVfx` 與 `hitImpact` 在同一批
     //    事件裡（同一 tick），⛔ 而跨幀留著會讓下一次的泛用火花被錯誤地擋掉。
     this.blockVfxThisFrame.clear();

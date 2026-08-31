@@ -3,5 +3,7 @@
   "schema": "config.vfx-budget@1",
   "note": "GH#838 粒子密度上限（owner 2026-08-28）。單個特效的顆數與每秒噴發上限——出貨前端 particleFactory.capacityFor()/rateFor() 與特效工坊 studio 讀同一份，所以編輯器看到的密度就是上線的密度。缺這份文件＝出貨預設 1200/600（⛔ 不是 0）。",
   "maxParticlesPerSystem": 1200,
-  "maxRatePerSystem": 600
+  "maxRatePerSystem": 600,
+  "maxConcurrentAdditive": 6,
+  "additiveOverflowBrightness": 0.35
 }

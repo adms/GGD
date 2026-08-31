@@ -46,6 +46,33 @@ export const zConfigVfxBudgetDoc = z
       .int()
       .min(MIN_MAX_RATE_PER_SYSTEM)
       .max(MAX_MAX_RATE_PER_SYSTEM),
+    /**
+     * ⭐⭐ GH#900 —— **同一 frame 最多幾發 `additive` 特效**照全亮播。
+     *
+     * owner 2026-09-01（逐字）：
+     * > 「太多亮光束特效 太誇張了 **變成全白戰鬥** 克制一下特效使用量好嗎」
+     *
+     * ⭐ 量到的根因：出貨 **662 份 vfx 裡 581 份（88%）是 `additive`**。
+     * additive 在算術上是 `out = dst + src` ⇒ ⭐ **它只會變亮，而且會疊** ——
+     * 團戰中每個像素被加 N 次 ⇒ 飽和成純白，⛔ 角色／血條／地形全部被蓋掉。
+     *
+     * ⚠️ 上面那兩格管的是**單個特效有多密**，⛔ 管不到「同時有幾發」——
+     * ⭐ 而全白是**後者**造成的。這是它們刻意分開的理由。
+     *
+     * ⛔ **0 = 不限**（逐位元回到 2026-09-01 之前的行為）。
+     */
+    maxConcurrentAdditive: z.number().int().min(0).max(64).optional(),
+    /**
+     * ⭐ 超過上限之後那幾發的**亮度倍率**（0–1）。
+     *
+     * ⚠️ 票文逐字要求兩格都要有，理由是它們的效果**不同**：
+     * > 「『調暗』與『限量』是兩種解法⋯調暗會讓單一特效看起來弱，
+     * >   限量會讓第 N 個特效不出現。⇒ **兩者都做成欄位**，⛔ 不要在程式裡選一個」
+     *
+     * ⭐ **0** ＝ 純限量（第 N+1 發**不出現**）· **1** ＝ 不減光（＝關掉這個機制）。
+     * 出貨 **0.35** ＝ 超出的那幾發仍然看得見，⛔ 但不再把畫面推白。
+     */
+    additiveOverflowBrightness: z.number().min(0).max(1).optional(),
   })
   .strict();
 export type ConfigVfxBudgetDoc = z.infer<typeof zConfigVfxBudgetDoc>;
