@@ -52,6 +52,19 @@ export class SpatialHash {
     return Math.floor(x / this.cellSize);
   }
 
+  /**
+   * ⚠️ ⭐ **2026-09-01 試過「重用陣列」並撤回** —— 量到的結果推翻了假設。
+   *
+   * 想法：`cells.clear()` 把每一個格子的陣列一起丟掉 ⇒ 下一 tick 逐格 `arr = []`
+   * 重新配置 ⇒ 保留 Map 的鍵、只把 `length = 0` 應該更快。
+   *
+   * ⛔ **實測反而慢 4%**（2000 tick 的重建＋查詢：0.102ms → 0.106ms/tick）。
+   * ⭐ 合理的解釋：V8 對「短命的小陣列」極度優化（分代 GC 的年輕代幾乎免費），
+   * ⛔ 而留著上百個空陣列讓每一次 `cells.values()` 迭代都變長。
+   *
+   * ⇒ ⭐ **量到再說**：這一格看起來像穩賺的優化，⛔ 而它不是。
+   * （同族前科：GH#629 票文自己量過「用 Go 重寫在出貨規模上反而慢 40%」。）
+   */
   clear(): void {
     this.cells.clear();
     this.entityBounds.clear();
