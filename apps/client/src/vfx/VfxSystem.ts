@@ -247,6 +247,16 @@ export interface VfxContext {
    * so a preview flash cannot cover the whole editor.
    */
   screenFxHost?: HTMLElement | null;
+  /**
+   * Optional authoring override for the pure-presentation script source.
+   *
+   * The shipped game omits these callbacks and reads the registered content
+   * collection. VFX Forge supplies its in-memory draft so the complete runtime
+   * preview shows unsaved edits instead of silently replaying the last saved
+   * script.
+   */
+  vfxScriptFor?(abilityId: string): VfxScriptDoc | undefined;
+  allVfxScripts?(): readonly VfxScriptDoc[];
 }
 
 // ---------------------------------------------------------------------------
@@ -850,8 +860,9 @@ export class VfxSystem {
     //    —— 全是出貨消費端，⛔ 沒有第二條渲染路）。沒有 script 的技能與
     //    開關關掉的世界都是零成本路（`scriptFor` 查不到就 return）。
     this.scriptPlayer = new VfxScriptPlayer({
-      scriptFor: (abilityId) => this.vfxScriptIndex().get(abilityId),
-      allScripts: () => VfxScripts.all(),
+      scriptFor: (abilityId) =>
+        this.ctx.vfxScriptFor?.(abilityId) ?? this.vfxScriptIndex().get(abilityId),
+      allScripts: () => this.ctx.allVfxScripts?.() ?? VfxScripts.all(),
       projectileIdsOf: (abilityId) => this.abilityProjectileIds(abilityId),
       entityPos: (id) => this.ctx.entityPos(id),
       dispatch: (sev, t) => this.handleEvent(sev, t),

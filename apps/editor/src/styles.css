@@ -280,6 +280,9 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .vfx-script-meta textarea { display: block; width: 100%; margin-top: 5px; resize: vertical; }
 .vfx-script-meta > div { display: flex; align-content: flex-start; gap: 5px; flex-wrap: wrap; font-size: 11px; }
 .vfx-script-meta code { padding: 2px 5px; border: 1px solid #343b4e; border-radius: 3px; font-size: 9px; }
+.vfx-preview-mode { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid #31384a; border-radius: 6px; background: #151925; }
+.vfx-preview-mode button.active { border-color: #6ea8ff; background: #203a63; color: #eaf3ff; }
+.vfx-preview-mode span { color: #9da9bd; font-size: 11px; }
 .vfx-loading { padding: 24px; color: #8e98aa; }
 
 @media (max-width: 1180px) {

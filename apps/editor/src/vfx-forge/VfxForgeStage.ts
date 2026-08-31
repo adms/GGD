@@ -15,7 +15,7 @@ import type { EventMessage } from "@ggd/shared/protocol/messages";
 import type { ModelDoc, VfxDoc } from "@ggd/shared/content";
 import { Models, VfxDefs, VfxScripts } from "@ggd/shared/content/registries";
 import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
-import type { ChampionDef } from "@ggd/shared/sim";
+import { abilityIdOfAuthoredOrigin, type ChampionDef } from "@ggd/shared/sim";
 import type { AbilityVfxLayerOverride } from "@ggd/shared/content/schema/abilityVfx";
 import type { ModelFxSpawnEvent } from "../../../client/src/render/modelFxPath";
 import { ModelFxRig } from "../../../client/src/render/modelFxRig";
@@ -196,6 +196,11 @@ export class VfxForgeStage {
           pulseAnim: (id, kind, pulse) => this.pulseActor(id, kind, pulse?.clipWindowMs),
           hideBody: (id, ms) => this.hideActor(id, ms),
           screenFxHost: canvas.parentElement,
+          // Runtime preview must render the unsaved authoring draft. The
+          // shipped game leaves these callbacks absent and still reads the
+          // registered content collection.
+          vfxScriptFor: (id) => id === this.script.abilityId ? this.script : undefined,
+          allVfxScripts: () => [this.script],
         })
       : null;
     this.runtimeVfx?.installShakeSink((amplitude, durationMs) => {
@@ -574,9 +579,39 @@ export class VfxForgeStage {
       this.schedule[this.nextEvent]!.atMs <= this.nowMs + 0.001
     ) {
       const item = this.schedule[this.nextEvent++]!;
-      if (this.mode === "runtime") this.runtimeVfx?.handleEvent(item.event, item.atMs);
+      if (this.mode === "runtime") {
+        this.pulseActorsFromRuntimeEvent(item.event);
+        this.runtimeVfx?.handleEvent(item.event, item.atMs);
+      }
       else this.player.onEvent(item.event, item.atMs);
     }
+  }
+
+  /**
+   * Character animation is owned by the shipped entity-view layer, not by
+   * VfxSystem. The embedded Forge has no EntityViewRegistry, so it must bridge
+   * the same real Sim events to the two preview actors or the models remain in
+   * idle while the effects fire around them.
+   */
+  private pulseActorsFromRuntimeEvent(ev: EventMessage): void {
+    const data = ev.data;
+    if (ev.type === "abilityCast" && data.abilityId === this.ability.id) {
+      const caster = Number(data.caster);
+      if (Number.isFinite(caster)) {
+        this.pulseActor(
+          caster,
+          "cast",
+          Math.max(600, Math.round(Math.max(0, this.ability.castTimeSec ?? 0) * 1000)),
+        );
+      }
+      return;
+    }
+    if (ev.type !== "comboStrike") return;
+    if (abilityIdOfAuthoredOrigin(String(data.origin ?? "")) !== this.ability.id) return;
+    const caster = Number(data.caster);
+    const victim = Number(data.victim);
+    if (Number.isFinite(caster)) this.pulseActor(caster, "attack", 420);
+    if (Number.isFinite(victim)) this.pulseActor(victim, "hurt", 520);
   }
 
   private casterEntityId(): number | undefined {

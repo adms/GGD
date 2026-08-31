@@ -36,6 +36,7 @@ import { ensurePreviewContentReady } from "../preview/previewContent";
 import { writeVfxScript } from "./writeback";
 import { VfxAssetPalette } from "./VfxAssetPalette";
 import { VfxForgePreview } from "./VfxForgePreview";
+import type { VfxForgeStageMode } from "./VfxForgeStage";
 import { VfxTimeline } from "./VfxTimeline";
 import { SegmentInspector } from "./SegmentInspector";
 
@@ -61,6 +62,7 @@ export function VfxForgePage() {
   const [selected, setSelected] = useState(0);
   const [playheadMs, setPlayheadMs] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [previewMode, setPreviewMode] = useState<VfxForgeStageMode>("runtime");
   const [status, setStatus] = useState("載入中…");
   const [serverErrors, setServerErrors] = useState<ErrorMap>({});
   const [trace, setTrace] = useState<CastPreviewTrace | ReactionPreviewTrace | null>(null);
@@ -272,6 +274,29 @@ export function VfxForgePage() {
         </section>
       ) : null}
 
+      <section className="vfx-preview-mode" aria-label="特效預覽模式">
+        <b>預覽模式</b>
+        <button
+          type="button"
+          className={previewMode === "runtime" ? "active" : ""}
+          onClick={() => { setPlaying(false); setPlayheadMs(0); setPreviewMode("runtime"); }}
+        >
+          完整技能演出
+        </button>
+        <button
+          type="button"
+          className={previewMode === "script" ? "active" : ""}
+          onClick={() => { setPlaying(false); setPlayheadMs(0); setPreviewMode("script"); }}
+        >
+          只看腳本層
+        </button>
+        <span>
+          {previewMode === "runtime"
+            ? "真 Sim 事件＋ability JSON＋目前未儲存的 VFX Script draft"
+            : "隔離檢查目前 VFX Script；不代表技能視覺驗收通過"}
+        </span>
+      </section>
+
       {trace && "runtimeCompatible" in trace && !trace.runtimeCompatible ? (
         <section className="vfx-blocker" role="alert">
           <b>⛔ 主程式 provenance 接縫尚未通過</b>
@@ -299,6 +324,7 @@ export function VfxForgePage() {
                 playing={playing}
                 caster={runtimeChampion}
                 target={runtimeTarget}
+                mode={previewMode}
                 onTime={onTime}
                 onStop={stop}
                 onDropAsset={addAsset}
