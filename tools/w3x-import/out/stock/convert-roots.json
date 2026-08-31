@@ -1,0 +1,59 @@
+{
+ "name": "roots",
+ "archive": "war3.mpq",
+ "mdxBytes": 34295,
+ "path": "Abilities\\Spells\\NightElf\\EntangleMine\\Roots.mdl",
+ "textures": [
+  {
+   "texture": "abilities\\Spells\\NightElf\\EntangleMine\\Roots.blp",
+   "size": [
+    256,
+    64
+   ],
+   "lumMean": 73.3,
+   "lumStd": 32.0,
+   "alphaMean": 228.5,
+   "alphaStd": 72.8,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [],
+ "ribbons": [],
+ "glbSize": 258968,
+ "rawHeight": 179.12,
+ "scaleFactor": 0.02778,
+ "height": 4.976,
+ "visiblePrims": "1/1",
+ "animations": [
+  "Birth",
+  "Stand",
+  "Death"
+ ],
+ "clipMap": {
+  "idle": "Stand",
+  "run": "Stand",
+  "attack": "Stand",
+  "cast": "Stand",
+  "hurt": "Stand",
+  "death": "Death"
+ },
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "litGlowMaterials": [],
+ "fullExtents": [
+  6.7605,
+  4.9756,
+  6.3846
+ ],
+ "visibleExtents": [
+  6.7605,
+  4.9756,
+  6.3846
+ ],
+ "fullLongAxis": "x",
+ "visibleLongAxis": "x",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/roots.glb"
+}

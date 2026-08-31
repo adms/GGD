@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "c25a3581718d",
+  "hash": "ec63704f41d9",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -673,6 +673,12 @@
       "path": "models/imported.ritsu.json",
       "hash": "b6d24e33c529",
       "size": 1025
+    },
+    {
+      "id": "imported.roots",
+      "path": "models/imported.roots.json",
+      "hash": "0b341e051ced",
+      "size": 294
     },
     {
       "id": "imported.sd2",

@@ -86,6 +86,11 @@ OUT = os.path.join(HERE, "out", "stock")
 # slug → in-archive path.  The census reports `.mdl`; the archives carry `.mdx`,
 # so both spellings are tried.  Rows are added as each Phase-6 batch lands.
 STOCK_MODELS: dict[str, str] = {
+    # ── GH#423 千年練成樹精（70-04）—— ⭐ 這一顆是**召喚物的身體**，⛔ 不是特效。
+    # 路徑取自 `OBJECTS.json` 的 `n00Q.model`（⛔ 不是票文寫的
+    # `Doodads\Cinematic\Roots\Roots.mdl` —— 那個路徑在四份 MPQ 裡**都不存在**）。
+    # ⚠️ 而 `n00Q`（一般）與 `n01M`（EX）**共用同一顆模型**，差別只在數值。
+    "roots": "Abilities\\Spells\\NightElf\\EntangleMine\\Roots.mdl",
     # ── GH#838 三招驗收批 —— 12 顆 JASS 逐行點名、GGD 零 key 的 stock 特效 ──
     # 路徑逐字取自 docs/_reports/vfx-editor-jass3_temp_20260828-0042.md 的
     # AddSpecialEffect* 原文（⛔ 不是猜的）。超究（血濺/鳳凰彈/鏡像殘影/中立爆炸）、
