@@ -7,6 +7,7 @@
  */
 import { describe, it, expect, beforeAll, afterAll, vi } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
+import { impactRecipe } from "./vfxPresets";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 
 // the QualityController singleton touches localStorage at import time (Node
@@ -106,7 +107,8 @@ describe("VfxSystem flower events (flower-vfx-events)", () => {
     expect(fire).toHaveBeenCalledTimes(1);
     expect(fire.mock.calls[0]!.slice(0, 3)).toEqual(["heavy", 1, 2]);
     const used = fire.mock.results[0]!.value as { emitter: Vector3 }[];
-    expect(used.length).toBe(3); // flash + sparks + smoke
+    // ⭐ 從 recipe 推導，⛔ 不抄字面值 —— GH#725 AC⑤ 之後多了 `debris`（後台可關）。
+    expect(used.length).toBe(3 + (impactRecipe("heavy", [1, 1, 1]).debris ? 1 : 0));
     for (const ps of used) {
       expect(ps.emitter.x).toBe(1);
       expect(ps.emitter.z).toBe(2);

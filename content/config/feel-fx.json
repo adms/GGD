@@ -34,6 +34,13 @@
     "startRadius": 2.4
   },
   "impactSmokeLifeScale": 1,
+  "impactDebris": {
+    "enabled": true,
+    "count": 10,
+    "lifeSec": 0.9,
+    "size": 0.12,
+    "speed": 5.5
+  },
   "exDim": {
     "enabled": true,
     "peakAlpha": 0.34,

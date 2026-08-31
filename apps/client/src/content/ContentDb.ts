@@ -95,7 +95,12 @@ import { setBlockFlashMode } from "../render/combatFeedback";
 import { setExDimTuning } from "../render/screenFx";
 import { setCooldownPredictTuning } from "../ui/cooldownPredict";
 import { setCastArcsEnabled, setMaxConcurrentArcs } from "../vfx/arcBolt";
-import { setImpactRingScale, setImpactRingTiers, setImpactSmokeLifeScale } from "../vfx/vfxPresets";
+import {
+  setImpactDebris,
+  setImpactRingScale,
+  setImpactRingTiers,
+  setImpactSmokeLifeScale,
+} from "../vfx/vfxPresets";
 import { damageTiersFromDoc } from "@ggd/shared/content/damageTiers";
 import { setCastHeightSource } from "../render/vfx/familyCastHeight";
 import { setFamilyPitchDefaults } from "../render/vfx/familyOrient";
@@ -443,12 +448,21 @@ export class ContentDb {
           impactSmokeLifeScale?: number;
           exDim?: { enabled: boolean; peakAlpha: number; saturate: number; durationMs: number };
           cooldownPredict?: { enabled: boolean; graceMs: number };
+          // ⭐ GH#725 AC⑤ 體素碎塊（同一份文件、同一條路）。
+          impactDebris?: {
+            enabled: boolean;
+            count: number;
+            lifeSec: number;
+            size: number;
+            speed: number;
+          };
         }
       | undefined;
     setBlockFlashMode(
       (Configs.tryGet("damage-colors") as { blockFlashMode?: string } | undefined)?.blockFlashMode,
     );
     setImpactSmokeLifeScale(feelFxDoc?.impactSmokeLifeScale);
+    setImpactDebris(feelFxDoc?.impactDebris);
     setExDimTuning(feelFxDoc?.exDim);
     setCooldownPredictTuning(feelFxDoc?.cooldownPredict);
     // ⚡ GH#571 —— 施法電弧的總開關（同一份文件、同一條路）。

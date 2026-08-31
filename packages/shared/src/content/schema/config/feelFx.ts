@@ -195,6 +195,32 @@ export const zConfigFeelFxDoc = z
      */
     impactSmokeLifeScale: z.number().min(0.1).max(4).optional(),
     /** EX 施放時的**畫面壓暗／去飽和**（GH#725 舊 #42）。⛔ 缺席 = 完全不畫。 */
+    /**
+     * ⭐⭐ GH#725 AC⑤ —— 命中／死亡的**體素碎塊**層。
+     *
+     * ⚠️ ⭐ 它與火花是兩件事：火花是**光**（additive、亮、瞬間），
+     * 碎塊是**物質**（standard blend、被重力拉下去、看得出是方的）。
+     * ⛔ 把它調成 additive 就只是多一層火花 —— 那是這一層存在的反面。
+     *
+     * ⭐ 顆數**跟著打擊重量走**（乘上該 tier 的火花數比例）——
+     * ⛔ 每一擊都噴同樣多會讓「這一下重不重」整個訊息消失。
+     *
+     * `enabled: false` ＝ 整層不生（＝這張票之前的行為，⭐ 一鍵 rollback）。
+     */
+    impactDebris: z
+      .object({
+        enabled: z.boolean(),
+        /** 幾顆（heavy 級的基準；其他 tier 按火花數比例縮放）。 */
+        count: z.number().int().min(1).max(64),
+        /** 活多久（秒）。⚠️ 太長會讓地上一直有東西在跳。 */
+        lifeSec: z.number().min(0.1).max(4),
+        /** 方塊多大（世界單位）。 */
+        size: z.number().min(0.02).max(1),
+        /** 噴多快。 */
+        speed: z.number().min(0.5).max(24),
+      })
+      .strict()
+      .optional(),
     exDim: z
       .object({
         /** 總開關。false ＝ 回到「只有推鏡、沒有壓暗」的今天。 */

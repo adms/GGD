@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "867f6d7df696",
+  "fingerprint": "fe95f24def08",
   "capabilityFingerprint": "9d43feef",
   "required": [
     {
@@ -11162,6 +11162,36 @@
       "group": "configField",
       "name": "ignoredLookTags",
       "owner": "config.voxel-look@1"
+    },
+    {
+      "group": "configField",
+      "name": "impactDebris",
+      "owner": "config.feel-fx@1"
+    },
+    {
+      "group": "configField",
+      "name": "impactDebris.count",
+      "owner": "config.feel-fx@1"
+    },
+    {
+      "group": "configField",
+      "name": "impactDebris.enabled",
+      "owner": "config.feel-fx@1"
+    },
+    {
+      "group": "configField",
+      "name": "impactDebris.lifeSec",
+      "owner": "config.feel-fx@1"
+    },
+    {
+      "group": "configField",
+      "name": "impactDebris.size",
+      "owner": "config.feel-fx@1"
+    },
+    {
+      "group": "configField",
+      "name": "impactDebris.speed",
+      "owner": "config.feel-fx@1"
     },
     {
       "group": "configField",
@@ -23548,9 +23578,9 @@
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 112,
-    "configField": 3728,
+    "configField": 3734,
     "_notRequired": 15,
-    "_total": 4827,
+    "_total": 4833,
     "_ownerOnly": 39
   }
 }

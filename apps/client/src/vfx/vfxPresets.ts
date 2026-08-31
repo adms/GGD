@@ -605,6 +605,16 @@ export interface ImpactRecipe {
   smoke: BurstSpec;
   /** layer 4: expanding ground shockwave ring (heavy/ex only) */
   ring?: RingSpec;
+  /**
+   * ⭐ layer 5（GH#725 AC⑤）：**體素碎塊** —— 打中／死亡時噴出去的方塊。
+   *
+   * ⚠️ ⭐ 它與 `sparks` 是兩件事：火花是**光**（additive、亮、瞬間），
+   * 碎塊是**物質**（standard blend、被重力拉下去、看得出是方的）。
+   * ⛔ 把碎塊調成 additive 就等於多加一層火花 —— 那是這一層存在的反面。
+   *
+   * ABSENT ＝ 後台把它關掉了（`feel-fx.impactDebris.enabled = false`）。
+   */
+  debris?: BurstSpec;
 }
 
 /** Convenience impact tints (dmgType colors mirror VfxSystem's spark map). */
@@ -770,6 +780,53 @@ export function setImpactSmokeLifeScale(scale: number | undefined): void {
   smokeLifeScale = typeof scale === "number" && Number.isFinite(scale) && scale > 0 ? scale : 1;
 }
 
+/**
+ * ⭐ GH#725 AC⑤ —— 體素碎塊層的旋鈕（後台四格）。
+ * ⛔ `enabled: false` ＝ 整層不生（＝這張票之前的行為，一鍵 rollback）。
+ */
+export interface ImpactDebrisTuning {
+  readonly enabled: boolean;
+  /** 幾顆（會再乘上該 tier 的火花數比例 —— ⛔ 輕擊不該噴一地）。 */
+  readonly count: number;
+  /** 活多久（秒）。 */
+  readonly lifeSec: number;
+  /** 方塊多大。 */
+  readonly size: number;
+  /** 噴多快。 */
+  readonly speed: number;
+}
+
+/** ⭐ 出貨值（我挑的 —— owner 不在時自己判斷，而它是一格開關）。 */
+export const SHIPPED_IMPACT_DEBRIS: ImpactDebrisTuning = {
+  enabled: true,
+  count: 10,
+  lifeSec: 0.9,
+  size: 0.12,
+  speed: 5.5,
+};
+
+let debrisTuning: ImpactDebrisTuning = SHIPPED_IMPACT_DEBRIS;
+
+/** 由 `ContentDb.load()` 呼叫（樣板逐字照 {@link setImpactSmokeLifeScale}）。 */
+export function setImpactDebris(next: Partial<ImpactDebrisTuning> | undefined): void {
+  // ⚠️ 認不得的值一律退回**出貨值**，⛔ 不是 0 —— 0 顆會讓這一層靜靜消失
+  // 而看起來像「壞了」（與 smokeLifeScale 同一個理由）。
+  const num = (v: unknown, dflt: number): number =>
+    typeof v === "number" && Number.isFinite(v) && v > 0 ? v : dflt;
+  debrisTuning = {
+    enabled: typeof next?.enabled === "boolean" ? next.enabled : SHIPPED_IMPACT_DEBRIS.enabled,
+    count: num(next?.count, SHIPPED_IMPACT_DEBRIS.count),
+    lifeSec: num(next?.lifeSec, SHIPPED_IMPACT_DEBRIS.lifeSec),
+    size: num(next?.size, SHIPPED_IMPACT_DEBRIS.size),
+    speed: num(next?.speed, SHIPPED_IMPACT_DEBRIS.speed),
+  };
+}
+
+/** 現在生效的那一格（守衛用）。 */
+export function impactDebris(): ImpactDebrisTuning {
+  return debrisTuning;
+}
+
 /** 現在生效的那一格（守衛用）。 */
 export function impactSmokeLifeScale(): number {
   return smokeLifeScale;
@@ -843,6 +900,35 @@ export function impactRecipe(
       emitterRadius: 0.35,
       texture: "assets/textures/particles/smoke_05.png",
     },
+    // ⭐ GH#725 AC⑤ —— 體素碎塊。ABSENT ＝ 後台關掉了。
+    // ⚠️ ⭐ 顆數**跟著 tier 的火花數比例走**，⛔ 不是每一擊都噴同樣多：
+    //    輕擊噴一地碎塊會讓「重不重」這個訊息整個消失（AC②③ 剛建立的分層）。
+    debris: debrisTuning.enabled
+      ? {
+          count: Math.max(1, Math.round(debrisTuning.count * (t.sparkN / IMPACT_TUNING.heavy.sparkN))),
+          // ⭐⭐ 碎塊壽命**被該級的收尾預算夾住**（`IMPACT_TAIL_BUDGET_MS`）——
+          // ⚠️ 同一張票的 AC③ 逐字寫著「**輕擊總尾巴 ≤ 0.35s**」，
+          // ⛔ 而我第一版寫死 0.9s ⇒ 輕擊的尾巴變成 0.9s，**當場破了自己那條 AC**。
+          // ⭐ 抓到它的是既有的池子重用測試（它假設 700ms 後所有層都退場了），
+          // ⛔ 不是我。
+          lifetimeSec: (() => {
+            const cap = (IMPACT_TAIL_BUDGET_MS[intensity] ?? 900) / 1000;
+            const max = Math.min(debrisTuning.lifeSec, cap);
+            return { min: max * 0.6, max };
+          })(),
+          speed: { min: debrisTuning.speed * 0.4, max: debrisTuning.speed },
+          // ⭐ 碎塊**不縮小**（它是物質不是光）—— 只有末端一點點收，避免硬切。
+          sizeStops: popShrinkStops(debrisTuning.size, { popT: 0.02, endFrac: 0.85 }),
+          colorStops: softBodyColorStops(tint, 1),
+          // ⛔ **必須是 alpha**：additive 的碎塊就只是第二層火花（見型別的註解）。
+          blend: "alpha",
+          // ⭐ 負重力＝往下掉。火花是 additive 的光、飄；碎塊是物質、落地。
+          gravityY: -9.8,
+          drag: 0.6,
+          emitterRadius: 0.2,
+          texture: "assets/textures/particles/flare_01.png",
+        }
+      : undefined,
     // ⭐ GH#617 —— 三格倍率在**這裡**套用（⛔ 不在 `fireRing()`）:
     //    recipe 是**唯一**產生 ring 規格的地方,而 `fireRing()` 有第二個呼叫端
     //    （池子重用）。⛔ 套在呼叫端 = 下一個入口出現時它就漏掉了。
@@ -912,6 +998,10 @@ export class ImpactComposer {
       this.pool.fireAt(`${keyBase}/sparks`, recipe.sparks, x, z, y, nowMs, scale),
       this.pool.fireAt(`${keyBase}/smoke`, recipe.smoke, x, z, y, nowMs, scale),
     ];
+    // ⭐ GH#725 AC⑤ —— 碎塊層。⛔ 後台關掉時 `recipe.debris` 是 undefined ⇒ 不生。
+    if (recipe.debris) {
+      used.push(this.pool.fireAt(`${keyBase}/debris`, recipe.debris, x, z, y, nowMs, scale));
+    }
     if (recipe.ring) this.fireRing(x, z, nowMs, recipe.ring, tint);
     return used;
   }

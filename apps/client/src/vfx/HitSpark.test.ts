@@ -7,7 +7,8 @@
  * ramp (color identity preserved), and heavy/ex hits add the expanding
  * shockwave ring. Runs on NullEngine.
  */
-import { describe, it, expect, beforeAll, afterAll, vi } from "vitest";
+import {
+  impactRecipe, describe, it, expect, beforeAll, afterAll, vi } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 
@@ -35,6 +36,12 @@ afterAll(() => {
   engine.dispose();
 });
 
+/** ⭐ 一次命中生幾層 —— 從 recipe 推導（⛔ 這個數字有唯一的住處）。 */
+const declaredLayers = (): number => {
+  const r = impactRecipe("light", [1, 1, 1]);
+  return 3 + (r.debris ? 1 : 0);
+};
+
 describe("legacy call-shape → intensity mapping (impact-sparks-retune)", () => {
   it("basic=light, big=heavy, guard-break cool-white=ex, passthrough", () => {
     cover("impact-sparks-retune");
@@ -52,14 +59,15 @@ describe("legacy call-shape → intensity mapping (impact-sparks-retune)", () =>
 });
 
 describe("layered pooled impact kit (impact-sparks-retune)", () => {
-  it("a basic hit fires the 3-layer burst kit — no per-hit cube mesh", () => {
+  it("a basic hit fires every declared burst layer — no per-hit cube mesh", () => {
     cover("impact-sparks-retune");
     const meshesBefore = scene.meshes.length;
     const systemsBefore = scene.particleSystems.length;
     const spark = new HitSpark(scene, 1, 2, 1000);
     expect(spark.intensity).toBe("light");
-    expect(spark.systems).toHaveLength(3); // flash + sparks + smoke
-    expect(scene.particleSystems.length).toBe(systemsBefore + 3);
+    // ⭐ 從 recipe 推導，⛔ 不抄字面值 —— GH#725 AC⑤ 之後多了 `debris`（後台可關）。
+    expect(spark.systems).toHaveLength(declaredLayers());
+    expect(scene.particleSystems.length).toBe(systemsBefore + declaredLayers());
     expect(scene.meshes.length).toBe(meshesBefore); // the old cube is gone
     for (const ps of spark.systems) {
       expect((ps.emitter as Vector3).x).toBe(1);
@@ -152,7 +160,7 @@ describe("layered pooled impact kit (impact-sparks-retune)", () => {
     const other = new Scene(engine);
     expect(impactComposerFor(other)).not.toBe(impactComposerFor(scene));
     new HitSpark(other, 0, 0, 1000, "ex");
-    expect(other.particleSystems.length).toBe(3);
+    expect(other.particleSystems.length).toBe(declaredLayers());
     other.dispose(); // scene teardown disposes the shared composer + rings
     expect(other.particleSystems.length).toBe(0);
     expect(scene.particleSystems.length).toBeGreaterThan(0); // main untouched
