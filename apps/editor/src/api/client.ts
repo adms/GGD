@@ -82,6 +82,11 @@ export const api = {
     request<CollectionIndex>(`${BASE}/${collection}/_index`),
   doc: <T = unknown>(collection: CollectionName, id: string) =>
     request<T>(`${BASE}/${collection}/${id}`),
+  externalTargetProfile: (url: string) =>
+    request<Record<string, unknown>>(`${BASE}/external-target-profile`, {
+      method: "POST",
+      body: JSON.stringify({ url }),
+    }),
   /**
    * Main-owned source lookup. `null` is the compatibility state while an older
    * content-api has not shipped the route; policy then fails safe from the

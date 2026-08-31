@@ -36,6 +36,13 @@ together; writes remain local. The API guard rejects non-loopback mutation.
   actual GLB presentation path: facing correction, hidden primitives, body
   normalization, ground placement, animation clips, tint and alpha. Champion
   preview can switch between the base body and all compatible skins.
+- **匯出中心** — reads the published target profile through a bounded,
+  allow-listed loopback bridge and derives `bootstrap` / `full` / `delta`
+  availability from that receipt. A saved `ability@1` or `item@1` can be
+  validated and downloaded as the contract-approved compiled-only single JSON.
+  Package JSON/ZIP remains visibly blocked while the target has no compiler
+  receipt, exact authoring base, or activation importer; the UI never labels a
+  local file bundle as a production package.
 - **Collections** — schema-driven controls cover every current authorable field
   for abilities, VFX, models, projectiles, skins, templates and the remaining
   registered content collections. Bounded numbers render sliders and references
@@ -59,6 +66,22 @@ Before changing a content path, use `bash scripts/genguard.sh <path>`.
 
 Upstream source-adapter work is tracked by
 [#887](https://github.com/adms/GGD/issues/887).
+
+## Published target profile
+
+The Export Center defaults to
+`https://ggd.adms.ai/content/editor-target-profile.json`. The site currently
+does not opt into browser CORS, so the local content sidecar performs the read.
+It is not an open proxy: only HTTPS, standard port, a bounded UTF-8 JSON body,
+and recognized target-profile schemas are accepted. The default hostname
+allow-list contains only `ggd.adms.ai`; a local operator can replace it with a
+comma-separated `GGD_EDITOR_PROFILE_HOSTS` value.
+
+The three package modes stay present even when blocked so later main-side work
+does not require redesigning the editor. The current published profile only
+supports `bootstrap`, has no compiler receipt, and has no active authoring store;
+the main importer still reports G1 and returns 501 for validate/apply/rollback.
+Consequently only single runtime JSON is honestly exportable today.
 
 ## Contract gates
 

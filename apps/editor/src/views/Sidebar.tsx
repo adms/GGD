@@ -10,16 +10,20 @@ export function Sidebar({
   active,
   forgeActive,
   vfxForgeActive,
+  exportActive,
   onPick,
   onPickForge,
   onPickVfxForge,
+  onPickExport,
 }: {
   active: CollectionName | null;
   forgeActive?: boolean;
   vfxForgeActive?: boolean;
+  exportActive?: boolean;
   onPick(collection: CollectionName): void;
   onPickForge?(): void;
   onPickVfxForge?(): void;
+  onPickExport?(): void;
 }) {
   return (
     <nav className="sidebar">
@@ -43,6 +47,15 @@ export function Sidebar({
           onClick={onPickVfxForge}
         >
           ✨ 特效工坊
+        </button>
+      ) : null}
+      {onPickExport ? (
+        <button
+          type="button"
+          className={`sidebar-export${exportActive ? " active" : ""}`}
+          onClick={onPickExport}
+        >
+          📦 匯出中心
         </button>
       ) : null}
       <h2>Collections</h2>

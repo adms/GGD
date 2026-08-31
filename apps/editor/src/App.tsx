@@ -9,13 +9,20 @@ import { useEditorStore } from "./store";
 const VfxForgePage = lazy(() =>
   import("./vfx-forge/VfxForgePage").then((m) => ({ default: m.VfxForgePage })),
 );
+const ExportCenterPage = lazy(() =>
+  import("./export-center/ExportCenterPage").then((m) => ({ default: m.ExportCenterPage })),
+);
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 1, refetchOnWindowFocus: false } },
 });
 
 /** Top-level authoring flows. VFX Forge owns only content/vfx-scripts. */
-type Mode = { kind: "collection"; collection: CollectionName | null } | { kind: "forge" } | { kind: "vfx-forge" };
+type Mode =
+  | { kind: "collection"; collection: CollectionName | null }
+  | { kind: "forge" }
+  | { kind: "vfx-forge" }
+  | { kind: "export" };
 
 export function App() {
   const [mode, setMode] = useState<Mode>({ kind: "collection", collection: "champions" });
@@ -28,6 +35,7 @@ export function App() {
           active={mode.kind === "collection" ? mode.collection : null}
           forgeActive={mode.kind === "forge"}
           vfxForgeActive={mode.kind === "vfx-forge"}
+          exportActive={mode.kind === "export"}
           onPick={(c) => {
             setMode({ kind: "collection", collection: c });
             clearSelection();
@@ -40,8 +48,16 @@ export function App() {
             setMode({ kind: "vfx-forge" });
             clearSelection();
           }}
+          onPickExport={() => {
+            setMode({ kind: "export" });
+            clearSelection();
+          }}
         />
-        {mode.kind === "vfx-forge" ? (
+        {mode.kind === "export" ? (
+          <Suspense fallback={<main className="editor-empty">載入匯出中心…</main>}>
+            <ExportCenterPage />
+          </Suspense>
+        ) : mode.kind === "vfx-forge" ? (
           <Suspense fallback={<main className="editor-empty">載入特效工坊…</main>}>
             <VfxForgePage />
           </Suspense>

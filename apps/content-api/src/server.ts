@@ -15,6 +15,7 @@
  *   POST   /content-api/:collection/:id/restore    restore a snapshot (itself undoable)
  *   GET    /content-api/events                     SSE content:changed (chokidar)
  *   GET    /content-api/assets/*                   binary assets (glb/textures) for editor previews
+ *   POST   /content-api/external-target-profile    bounded allow-listed HTTPS profile bridge
  *
  * Every write validates with the SAME Zod schemas the game loader uses, then
  * writes atomically (tmp+rename) and incrementally reindexes (collection
@@ -68,6 +69,11 @@ import {
   registerEditorSourceRoutes,
   registerProductWriteGuard,
 } from "./editorSourceRoutes";
+import {
+  ExternalProfileError,
+  fetchExternalTargetProfile,
+  parseEditorProfileHosts,
+} from "./externalProfile";
 
 export interface ContentApiOptions {
   contentDir: string;
@@ -82,6 +88,10 @@ export interface ContentApiOptions {
    * OUTSIDE content/ so backups never reach the deployable tree or an image.
    */
   backupDir?: string;
+  /** HTTPS hosts the local editor may use as published target-profile bases. */
+  externalProfileHosts?: readonly string[];
+  /** test seam; production code uses the platform fetch implementation. */
+  externalProfileFetch?: typeof fetch;
 }
 
 interface Params {
@@ -127,6 +137,20 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   // expose for tests / index.ts
   app.decorate("sseHub", hub);
   app.decorate("backupDir", backupRoot);
+
+  app.post("/content-api/external-target-profile", async (req, reply) => {
+    const body = req.body as { url?: unknown } | null;
+    try {
+      return reply.send(await fetchExternalTargetProfile(body?.url, {
+        allowedHosts: opts.externalProfileHosts ?? parseEditorProfileHosts(process.env.GGD_EDITOR_PROFILE_HOSTS),
+        ...(opts.externalProfileFetch ? { fetchImpl: opts.externalProfileFetch } : {}),
+      }));
+    } catch (error) {
+      if (error instanceof ExternalProfileError) return err(reply, error.statusCode, error.message);
+      req.log.warn({ err: error }, "external target profile fetch failed");
+      return err(reply, 502, `target profile 讀取失敗：${String(error)}`);
+    }
+  });
 
   const backupWarn = (e: unknown): void => {
     app.log.warn({ err: e }, "content-api: could not write an undo snapshot");
