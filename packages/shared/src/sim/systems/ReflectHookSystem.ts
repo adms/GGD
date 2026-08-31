@@ -79,10 +79,11 @@ export function reflectHookSystem(world: SimWorld): void {
     //    ⇒ ⭐ owner 指名的驗收三招之一「20-002 理想鄉EX」（由反彈成功觸發）
     //      在 `vfx-script@1` 裡**寫不出來**。
     //
-    // ⚠️ ⭐ **歸屬**：`ev.incoming.origin` 是那一發**反彈封包自己的** provenance
-    //    （`combat/damage.ts:61` 的 `` `ability:${id}` ``）—— 而反彈封包的來源是
-    //    **防禦者**，所以它指的正是**他自己那支反彈技能**。
-    //    ⇒ ⛔ 播放器不需要新的 dep，用既有的 `scriptFor(abilityId)`。
+    // ⚠️ ⭐ **歸屬**：`ev.incoming.origin` 是那一發**反彈封包自己的** provenance。
+    //    直接效果會是 `ability:<id>`；反彈掛在限時 buff 的 hook 裡時，真實形狀是
+    //    `hook:buff:ability:<id>#<instance>`。兩者都仍指向防禦者那支 authored
+    //    ability，但播放器必須走 shared `abilityIdOfAuthoredOrigin` 解容器，⛔ 不能
+    //    只切 `ability:` 前綴（那會讓事件發出去了，腳本卻整條不播放）。
     //
     // ⛔ 這裡**不加任何新的迴圈或佇列** —— 它就跟在既有的 `fireHooks` 後面，
     //    由同一組界（`reflectDepth` ＋ `DAMAGE_QUEUE_MAX_PASSES`）夾住。

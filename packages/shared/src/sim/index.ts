@@ -5,6 +5,7 @@ export { Rng } from "./math/rng";
 export * from "./intents";
 export * from "./components";
 export { SimWorld, type SimEvent } from "./SimWorld";
+export { abilityIdOfAuthoredOrigin } from "./authoredOrigin";
 
 export * from "./collision/shapes";
 export * from "./collision/intersect";

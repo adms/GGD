@@ -118,7 +118,7 @@ describe("GH#174 鑄技工坊的試放走玩家那條路", () => {
     const cues = triggerCuesFromSim(schedule, ability);
 
     expect(trace.accepted, JSON.stringify(trace.events.slice(0, 80), null, 2)).toBe(true);
-    expect(trace.runtimeCompatible, "真 Sim 使用 hook provenance；main Player 尚只接受 ability:").toBe(false);
+    expect(trace.runtimeCompatible, "真 Sim 的 hook provenance 必須能回到 EX 腳本").toBe(true);
     expect(trace.events.some((event) => event.type === "reflectSuccess")).toBe(true);
     expect(cues.filter((cue) => cue.on === "strike").map((cue) => cue.strikeIndex)).toEqual([
       1, 2, 3, 4, 5, 6, 7,

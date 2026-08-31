@@ -25,6 +25,7 @@
  * ⚠️ 純客戶端、純演出：這裡沒有任何傷害/狀態/資源 —— 那些住 ability JSON。
  */
 import type { EventMessage } from "@ggd/shared/protocol/messages";
+import { abilityIdOfAuthoredOrigin } from "@ggd/shared/sim";
 import { ABILITY_VFX_LAYER_OVERRIDE_FIELDS } from "@ggd/shared/content/schema/abilityVfx";
 import type { VfxScriptDoc, VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
 import { modelFxInstancesFromFrame } from "@ggd/shared/sim/effects/modelFxPlacement";
@@ -178,11 +179,13 @@ export class VfxScriptPlayer {
       }
       case "comboStrike": {
         // GH#838 逐段演出錨（sim 的 delayed/comboStrikes 每一段發一則）。
-        // 歸屬走 origin "ability:<id>"（sim 解算完的落點也在 payload 裡）。
+        // 主動連段走 `ability:<id>`；被動／限時增益連段則保留自己的 hook
+        // provenance。兩者都由 shared parser 回到唯一的 authored ability，
+        // ⛔ 不可以只收 ability:，否則 20-002 理想鄉 EX 的七刀全是死軌。
         const origin = d.origin as string | undefined;
         const caster = d.caster as number | undefined;
-        if (!origin?.startsWith("ability:") || caster === undefined) return;
-        const abilityId = origin.slice("ability:".length);
+        const abilityId = abilityIdOfAuthoredOrigin(origin);
+        if (!abilityId || caster === undefined) return;
         const script = this.deps.scriptFor(abilityId);
         if (!script) return;
         const index = (d.index as number | undefined) ?? 0;
@@ -224,16 +227,18 @@ export class VfxScriptPlayer {
       }
       // ⭐⭐ GH#885 —— **反彈成功**（owner 指名的 20-002 理想鄉EX 就是這一刻）。
       //
-      // ⭐ **歸屬乾淨,⛔ 零新 dep**:`origin` 是那一發反彈封包自己的 provenance
-      //   （`combat/damage.ts:61` 的 `ability:<id>`）—— 而反彈封包的來源是**防禦者**,
-      //   所以它指的正是**他自己那支反彈技能**。剝掉前綴就走既有的 `scriptFor()`。
+      // ⭐ **歸屬乾淨**：`origin` 是那一發反彈封包自己的 provenance。
+      //   主動技能直接打出的反彈是 `ability:<id>`；限時 buff 裡的 hook 則是
+      //   `hook:buff:ability:<id>#<instance>`。shared parser 只解已知容器，回到
+      //   防禦者那支 authored ability 後再走既有的 `scriptFor()`，⛔ 不掃子字串猜。
       //
       // ⚠️ ⛔ 不是每一發反彈都有腳本 —— 查不到就是零成本路（與其他觸發器同形）。
       case "reflectSuccess": {
         const reflector = d.reflector as number | undefined;
         const origin = d.origin as string | undefined;
-        if (reflector === undefined || !origin?.startsWith("ability:")) return;
-        const script = this.deps.scriptFor(origin.slice("ability:".length));
+        const abilityId = abilityIdOfAuthoredOrigin(origin);
+        if (reflector === undefined || !abilityId) return;
+        const script = this.deps.scriptFor(abilityId);
         if (!script) return;
         const attacker = d.attacker as number | undefined;
         const frame: TriggerFrame = {

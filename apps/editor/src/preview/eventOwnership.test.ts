@@ -14,8 +14,9 @@ describe("VFX event provenance ownership", () => {
     expect(abilityIdOfEventOrigin("item:godie-e002.ex")).toBeNull();
   });
 
-  it("keeps the current player limitation explicit until GH#885 fixes main", () => {
+  it("matches the shipped player for direct and hook-authored origins", () => {
     expect(currentPlayerCanResolveEventOrigin("ability:godie-hart.r")).toBe(true);
-    expect(currentPlayerCanResolveEventOrigin("hook:abilityPassive:godie-e002.ex")).toBe(false);
+    expect(currentPlayerCanResolveEventOrigin("hook:abilityPassive:godie-e002.ex")).toBe(true);
+    expect(currentPlayerCanResolveEventOrigin("hook:item:legendary-blade")).toBe(false);
   });
 });

@@ -1,3 +1,5 @@
+import { abilityIdOfAuthoredOrigin } from "@ggd/shared/sim";
+
 /**
  * Resolve the ability that owns a real SimWorld event provenance.
  *
@@ -7,25 +9,14 @@
  * reading a trace, but never rewrites the event before runtime sees it.
  */
 export function abilityIdOfEventOrigin(origin: unknown): string | null {
-  if (typeof origin !== "string") return null;
-  if (origin.startsWith("ability:")) return origin.slice("ability:".length) || null;
-  if (origin.startsWith("hook:abilityPassive:")) {
-    return origin.slice("hook:abilityPassive:".length) || null;
-  }
-  const buffPrefix = "hook:buff:ability:";
-  if (origin.startsWith(buffPrefix)) {
-    const source = origin.slice(buffPrefix.length);
-    const instance = source.lastIndexOf("#");
-    return (instance < 0 ? source : source.slice(0, instance)) || null;
-  }
-  return null;
+  return abilityIdOfAuthoredOrigin(origin) ?? null;
 }
 
 export function eventOriginBelongsToAbility(origin: unknown, abilityId: string): boolean {
   return abilityIdOfEventOrigin(origin) === abilityId;
 }
 
-/** Current main VfxScriptPlayer only accepts this narrower provenance. */
+/** The shipped player and editor both consume the shared provenance parser. */
 export function currentPlayerCanResolveEventOrigin(origin: unknown): boolean {
-  return typeof origin === "string" && origin.startsWith("ability:");
+  return abilityIdOfAuthoredOrigin(origin) !== undefined;
 }

@@ -1328,7 +1328,7 @@ export function createSimPreviewController(): PreviewController {
         ...(accepted ? {} : { reason: "reflect-success-hook-produced-no-owned-event" }),
         runtimeCompatible,
         ...(runtimeCompatible ? {} : {
-          runtimeIssue: "GH#885：真事件使用 hook provenance，但目前 VfxScriptPlayer 只接受 ability: 前綴",
+          runtimeIssue: "事件 provenance 無法解析回 authored ability，VfxScriptPlayer 不會猜測腳本歸屬",
         }),
         manaBefore,
         manaAfter: hp.mana,

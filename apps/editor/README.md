@@ -118,11 +118,12 @@ without a real control is red, and an editor control outside the contract is red
 | --- | --- | --- |
 | `godie-hart.r` — 01-04 超究武神霸斬 | Real cast trace and 12 script tracks load without a blocker. | Playable through the current event path. |
 | `godie-hjai.e` — 04-03 龍破斬 | Real cast trace and 2 script tracks load without a blocker. | Playable; asset-fidelity gaps remain documented in the shipped script notes. |
-| `godie-e002.ex` — 20-002 理想鄉EX | The Forge performs the real reflect setup, enemy magic hit, passive hook and seven-strike schedule; all 17 tracks are editable. | **Blocked upstream:** formal events use hook provenance that `VfxScriptPlayer` still rejects for the seven `comboStrike` events. The UI shows this blocker rather than synthesizing success. |
+| `godie-e002.ex` — 20-002 理想鄉EX | The Forge performs the real reflect setup, enemy magic hit, passive hook and seven-strike schedule; all 17 tracks are editable. | **Passed:** the editor and shipped `VfxScriptPlayer` share one strict authored-origin parser, so the real `hook:abilityPassive:godie-e002.ex` strikes select the EX script without rewriting the event. A shipped-content → real Sim → real player guard covers the seam. |
 
-The remaining Ideal EX join is tracked, with real-Sim evidence, by
-[#885](https://github.com/adms/GGD/issues/885). Do not work around it by changing
-the visual timing or using a similar existing trigger.
+The former Ideal EX join from [#885](https://github.com/adms/GGD/issues/885) is
+now guarded through the real shipped chain. Unknown provenance still fails
+closed; do not work around it by changing visual timing or using a similar
+existing trigger.
 
 ## Feature branch handoff
 

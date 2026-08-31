@@ -315,6 +315,18 @@ describe("GH#838 演出腳本的出貨鏈（真 content → 真施放 → 真 Vf
     // 20-04 Avalon 開反射窗
     expect(castAbility(world, saber, "R", { type: "self" })).toBe("ok");
     const strikes: EventMessage[] = [];
+    const scriptDispatches: EventMessage[] = [];
+    const player = new VfxScriptPlayer({
+      scriptFor: (id) => VfxScripts.tryGet(id),
+      allScripts: () => VfxScripts.all(),
+      projectileIdsOf: () => new Set(),
+      entityPos: (id) => {
+        const pos = world.transform.get(id)?.pos;
+        return pos ? { x: pos.x, z: pos.z } : null;
+      },
+      dispatch: (event) => scriptDispatches.push(event),
+      enabled: () => true,
+    });
     for (let t = 0; t < 220; t++) {
       // ⚠️ 時機承重：Avalon 是**有吟唱**的技能，反彈 buff 要等 `castEnd` 才落地
       //    ⇒ 太早打進來的那一發**沒有東西可以反彈**（首版守衛就是這樣紅的，
@@ -331,7 +343,12 @@ describe("GH#838 演出腳本的出貨鏈（真 content → 真施放 → 真 Vf
         });
       }
       world.step(new Map());
-      for (const e of world.events) if (e.type === "comboStrike") strikes.push({ ...e } as EventMessage);
+      for (const e of world.events) {
+        const event = { ...e } as EventMessage;
+        if (e.type === "comboStrike") strikes.push(event);
+        player.onEvent(event, t * (1000 / 30));
+      }
+      player.update(t * (1000 / 30));
     }
     expect(
       strikes.length,
@@ -343,6 +360,10 @@ describe("GH#838 演出腳本的出貨鏈（真 content → 真施放 → 真 Vf
       [...origins].some((o) => o.includes(".ex")),
       `錨的 origin 是 ${[...origins].join(" / ")} —— 沒有一則來自 EX`,
     ).toBe(true);
+    expect(
+      scriptDispatches.length,
+      "⛔ 真 comboStrike 已到客戶端，但 hook provenance 沒認領 godie-e002.ex 腳本",
+    ).toBeGreaterThan(0);
   });
 
   it("⑥ 前後偏移只套**一次**（⛔ 不是 placement 與 player 各推一次）", () => {

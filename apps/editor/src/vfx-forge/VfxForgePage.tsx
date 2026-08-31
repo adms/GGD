@@ -275,7 +275,7 @@ export function VfxForgePage() {
       {trace && "runtimeCompatible" in trace && !trace.runtimeCompatible ? (
         <section className="vfx-blocker" role="alert">
           <b>⛔ 主程式 provenance 接縫尚未通過</b>
-          <span>{trace.runtimeIssue ?? "真事件已發生，但目前遊戲播放器尚無法把它歸屬到這份腳本。"}；已追加真 Sim 證據至 GH#885。</span>
+          <span>{trace.runtimeIssue ?? "真事件已發生，但目前遊戲播放器尚無法把它歸屬到這份腳本。"}；請擴充 shared provenance 契約，工坊不會合成假事件。</span>
         </section>
       ) : null}
 

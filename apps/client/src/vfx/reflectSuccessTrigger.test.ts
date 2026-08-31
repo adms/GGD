@@ -41,14 +41,14 @@ describe("GH#885 反彈成功 → 演出軸（四段接縫）", () => {
     expect(src).toContain('"reflectSuccess"');
   });
 
-  it("★ ④ 播放器拿真的事件形狀 fire 得出來 —— ⭐ 而歸屬走 `ability:` provenance", () => {
+  it("★ ④ 播放器拿真的事件形狀 fire 得出來 —— 限時反彈保留 buff hook provenance", () => {
     const doc = {
-      id: "godie-e002.ex", schema: "vfx-script@1", abilityId: "godie-e002.ex",
+      id: "godie-e002.r", schema: "vfx-script@1", abilityId: "godie-e002.r",
       segments: [{ kind: "floatingText", on: "reflectSuccess", text: "AVALON" }],
     } as unknown as VfxScriptDoc;
     const fired: string[] = [];
     const player = new VfxScriptPlayer({
-      scriptFor: (id) => (id === "godie-e002.ex" ? doc : undefined),
+      scriptFor: (id) => (id === "godie-e002.r" ? doc : undefined),
       allScripts: () => [doc],
       projectileIdsOf: () => new Set(),
       entityPos: () => ({ x: 1, z: 2 }),
@@ -58,11 +58,34 @@ describe("GH#885 反彈成功 → 演出軸（四段接縫）", () => {
     // ⭐ payload 的形狀逐欄抄自 `ReflectHookSystem` 的 emit 站。
     player.onEvent(
       { type: "reflectSuccess", tick: 7,
-        data: { reflector: 11, attacker: 22, origin: "ability:godie-e002.ex", amount: 300, x: 1, z: 2 } } as never,
+        data: { reflector: 11, attacker: 22, origin: "hook:buff:ability:godie-e002.r#20", amount: 300, x: 1, z: 2 } } as never,
       0,
     );
     player.update(0);
-    expect(fired, "⛔ 反彈成功沒有 fire ⇒ 理想鄉EX 的演出軸仍然是死的").toEqual(["AVALON"]);
+    expect(fired, "⛔ 反彈成功沒有 fire ⇒ 反彈技能自己的演出軸仍然是死的").toEqual(["AVALON"]);
+  });
+
+  it("★ 理想鄉 EX 的七刀用 passive hook provenance 認領自己的 strike 腳本", () => {
+    const doc = {
+      id: "godie-e002.ex", schema: "vfx-script@1", abilityId: "godie-e002.ex",
+      segments: [{ kind: "floatingText", on: "strike", text: "SLASH" }],
+    } as unknown as VfxScriptDoc;
+    const fired: string[] = [];
+    const player = new VfxScriptPlayer({
+      scriptFor: (id) => (id === "godie-e002.ex" ? doc : undefined),
+      allScripts: () => [doc], projectileIdsOf: () => new Set(),
+      entityPos: () => ({ x: 1, z: 2 }),
+      dispatch: (ev) => fired.push((ev.data as { text?: string }).text ?? ev.type),
+      enabled: () => true,
+    });
+    player.onEvent(
+      { type: "comboStrike", tick: 8,
+        data: { caster: 11, victim: 22, index: 1,
+          origin: "hook:abilityPassive:godie-e002.ex", x: 1, z: 2 } } as never,
+      0,
+    );
+    player.update(0);
+    expect(fired, "⛔ hook provenance 未回到 EX ⇒ 七刀腳本不會播放").toEqual(["SLASH"]);
   });
 
   it("⑤ 沒有腳本的反彈是**零成本路**（⛔ 不可以擲例外）", () => {
