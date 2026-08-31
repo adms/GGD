@@ -1909,5 +1909,23 @@
     "status": "landing",
     "since": "2026-08-21",
     "why": "五格共用 `resolveSpeedGrowthTiers` 同一段查表，而其中一格（ms「極小」）當天就有 **49 位**在走 —— 路是通的，⛔ 不是機制沒接上。零的那四格是**設計空間**：這一版宣告零平衡改動（49 位一律填「值等於他今天成長」的那一格），把任何一位移出去都是在改他跑多快。⛔ 不要為了讓這一列變綠去動任何一張英雄卡 —— 到期條件是 owner 的速度平衡盤，不是這條測試。⚠️ `as` 的那五格在同一天**退場**了（交給出身表，見上面 `field:champions.asGrowthTier`）。"
+  },
+  "field:abilities.effects[]#spawnModelFx.attach": {
+    "status": "landing",
+    "since": "2026-09-01",
+    "why": "⭐ GH#761 AC② —— `spawnModelFx` 今天**表達不出「掛在誰的哪一根骨頭上」**（`anchor` 只有腳下三選一）⇒ 原作那一族「劍掛在手上、光環掛在胸口」寫不出來。⛔ 而零採用**不是忘了填**：量到出貨的 66 個 `spawnModelFx` 節點**全部**走 `preset` 模板，而模板有一條等價棘輪（`locustTemplates.test.ts`：「套模板前後逐格相同」）⇒ ⭐ 改任何一個節點的 anchor 都會**正確地**讓它紅 —— 那不是 retrofit，是行為改變。⇒ ⭐ 採用它要嘛**編一支新技能**、要嘛**改模板本身**，⛔ 不是編輯一個既有節點。⚠️ 而那是 Codex 特效工坊的工作面（owner 2026-09-01 把特效內容批整批移交）。",
+    "group": "2026-09-01 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
+  },
+  "field:abilities.effects[]#spawnModelFx.boneOn": {
+    "status": "landing",
+    "since": "2026-09-01",
+    "why": "⭐ GH#761 AC② —— `spawnModelFx` 今天**表達不出「掛在誰的哪一根骨頭上」**（`anchor` 只有腳下三選一）⇒ 原作那一族「劍掛在手上、光環掛在胸口」寫不出來。⛔ 而零採用**不是忘了填**：量到出貨的 66 個 `spawnModelFx` 節點**全部**走 `preset` 模板，而模板有一條等價棘輪（`locustTemplates.test.ts`：「套模板前後逐格相同」）⇒ ⭐ 改任何一個節點的 anchor 都會**正確地**讓它紅 —— 那不是 retrofit，是行為改變。⇒ ⭐ 採用它要嘛**編一支新技能**、要嘛**改模板本身**，⛔ 不是編輯一個既有節點。⚠️ 而那是 Codex 特效工坊的工作面（owner 2026-09-01 把特效內容批整批移交）。",
+    "group": "2026-09-01 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
+  },
+  "enum:abilities.effects[]#spawnModelFx.anchor=bone": {
+    "status": "landing",
+    "since": "2026-09-01",
+    "why": "⭐ GH#761 AC② —— `spawnModelFx` 今天**表達不出「掛在誰的哪一根骨頭上」**（`anchor` 只有腳下三選一）⇒ 原作那一族「劍掛在手上、光環掛在胸口」寫不出來。⛔ 而零採用**不是忘了填**：量到出貨的 66 個 `spawnModelFx` 節點**全部**走 `preset` 模板，而模板有一條等價棘輪（`locustTemplates.test.ts`：「套模板前後逐格相同」）⇒ ⭐ 改任何一個節點的 anchor 都會**正確地**讓它紅 —— 那不是 retrofit，是行為改變。⇒ ⭐ 採用它要嘛**編一支新技能**、要嘛**改模板本身**，⛔ 不是編輯一個既有節點。⚠️ 而那是 Codex 特效工坊的工作面（owner 2026-09-01 把特效內容批整批移交）。",
+    "group": "2026-09-01 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
   }
 }

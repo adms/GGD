@@ -79,7 +79,14 @@ export interface SpawnModelFxVariant {
    * **省略 = `self`**。⛔ 只有 `static` 讀得到 —— 移動路徑的起點永遠是施法者
    * （`zSpawnModelFx` 的 refine 在載入時擋）。
    */
-  anchor?: "self" | "point" | "target";
+  anchor?: "self" | "point" | "target" | "bone";
+  /**
+   * ⭐ GH#761 AC② —— 骨頭掛點（WC3 attach 字串）。⛔ 只在 `anchor:"bone"` 時生效。
+   * ⚠️ 詞彙**逐字照抄 `spawnVfx`**（GH#809 定案的那一組），⛔ 不是第二套。
+   */
+  attach?: string;
+  /** ⭐ 骨頭掛在誰身上：`caster`（預設）或 `victim`。⛔ 只在 `anchor:"bone"` 時生效。 */
+  boneOn?: "caster" | "victim";
   /** 世界單位/秒。 */
   speed?: number;
   /**

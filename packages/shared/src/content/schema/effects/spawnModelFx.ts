@@ -78,10 +78,37 @@ export const zSpawnModelFx = z
      * ⛔ 不新開 effect kind —— 那會讓「一具 3D 模型的演出」有兩個住處（第〇·五）。
      */
     anchor: z
-      .enum(["self", "point", "target"])
+      .enum(["self", "point", "target", "bone"])
       .optional()
       .describe(
-        'path:"static" 的錨點：self＝施法者腳下／point＝施放的地板點／target＝目標腳下（解不到就退化 point→self）。省略 = self。⛔ 只有 static 讀得到。',
+        'path:"static" 的錨點：self＝施法者腳下／point＝施放的地板點／target＝目標腳下（解不到就退化 point→self）／⭐ bone＝掛在某個模型的骨頭上（GH#761 AC②，要配 attach＋boneOn）。省略 = self。⛔ 只有 static 讀得到。',
+      ),
+    /**
+     * ⭐⭐ GH#761 AC② —— **掛在骨頭上的模型**（原作的 `attachedModels`）。
+     *
+     * ── ⛔ 在此之前 ────────────────────────────────────────────────────────
+     * `spawnModelFx` 表達得出「生幾具、多大、走什麼路徑」，
+     * ⛔ **而表達不出「掛在誰的哪一根骨頭上」** —— `anchor` 只有腳下三選一。
+     * ⇒ ⭐ 原作那一族「劍掛在手上、光環掛在胸口」的模型特效**寫不出來**，
+     * ⛔ 而它只能靠 `attachment@1` 的**常駐**綁定去逼近（⇒ 它一直亮著）。
+     *
+     * ── ⭐ 詞彙**逐字照抄 `spawnVfx`**，⛔ 不發明第二套 ────────────────────
+     * `at:"bone"` / `attach` / `boneOn` 那一組在 GH#809 就定案了。
+     * ⛔ 兩套骨頭詞彙 ＝ 編輯器要問兩次「掛哪裡」，而它們遲早會分岔。
+     */
+    attach: z
+      .string()
+      .min(1)
+      .max(64)
+      .optional()
+      .describe(
+        '骨頭掛點（WC3 attach 字串，如 chest / hand,right / weapon）。⛔ 只在 anchor:"bone" 時生效。',
+      ),
+    boneOn: z
+      .enum(["caster", "victim"])
+      .optional()
+      .describe(
+        '骨頭掛在誰身上：caster（預設）或 victim（這次解出來的第一個目標）。⛔ 只在 anchor:"bone" 時生效。⚠️ 與 spawnVfx 的同名欄位**同一個語意** —— GH#809 量到原作 316 次呼叫裡施法者 124 : 受擊者 124。',
       ),
     speed: z
       .number()

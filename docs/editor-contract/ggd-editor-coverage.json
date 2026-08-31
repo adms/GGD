@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "f0074eb4509b",
+  "fingerprint": "3202c767b979",
   "capabilityFingerprint": "553408c5",
   "required": [
     {
@@ -23166,6 +23166,11 @@
     },
     {
       "group": "vfxScriptField",
+      "name": "segments[].anchor=bone",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
       "name": "segments[].anchor=point",
       "owner": "vfx-script@1"
     },
@@ -23777,10 +23782,10 @@
     "modelField": 42,
     "projectileField": 15,
     "skinField": 9,
-    "vfxScriptField": 112,
+    "vfxScriptField": 113,
     "configField": 3741,
     "_notRequired": 15,
-    "_total": 4873,
+    "_total": 4874,
     "_ownerOnly": 39
   }
 }

@@ -24,7 +24,15 @@ const clamp = (v: number, lo: number, hi: number): number => (v < lo ? lo : v > 
 export interface ModelFxPlacementParams {
   /** optional 同 sim 的 effect def（preset 補值前可能缺席 —— 缺席走直線分支，語意同舊碼）。 */
   path?: "forward" | "toTarget" | "orbit" | "radial" | "static";
-  anchor?: "self" | "point" | "target";
+  /**
+   * ⚠️ ⭐ **`"bone"` 也收得下**（GH#761 AC②）—— ⛔ 而擺位這一層**不處理它**：
+   * 骨頭掛點是**渲染層**的事（模型掛到 joint 上），⛔ 不是「算一個世界座標」。
+   * ⇒ 這裡把它當成 `self`（實例仍然生在施法者身上），
+   * ⭐ 而真正的掛載由 `modelFxRig` 讀 `attach`/`boneOn` 完成 ——
+   * 與 `spawnVfx` 的 `at:"bone"` 同一條路。
+   * ⛔ 型別上少收它會讓 `spawnModelFx` 的 def 指派不進來（實際踩到過）。
+   */
+  anchor?: "self" | "point" | "target" | "bone";
   distance?: number;
   count?: number;
   spacing?: number;
