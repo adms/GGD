@@ -104,6 +104,8 @@ export function buildEditorCoverage(): {
    * ⭐ 但也**不要**把它們當成永久的範圍外：它們是 main 的待辦，⛔ 不是 Codex 的。
    */
   notRequiredMeaning: string;
+  ownerOnlyMeaning: string;
+  ownerOnly: { name: string; owner: string; why: string }[];
   notRequired: { name: string; why: string }[];
   counts: Record<string, number>;
 } {
@@ -244,10 +246,39 @@ export function buildEditorCoverage(): {
       const lit = shape?.["schema"] as { value?: unknown } | undefined;
       const tag = typeof lit?.value === "string" ? lit.value : undefined;
       if (tag === undefined) continue; // ⛔ 讀不出 tag 就不假裝走過（下面 sanity 會叫）
-      pushDocFields("configField", opt, tag);
+        pushDocFields("configField", opt, tag);
+      }
     }
-  }
 
+    // ⭐⭐ GH#889 AC④ —— **owner 的旋鈕不可以標成「可編輯」**。
+    //
+    // ── owner 2026-08-22（逐字，本 repo 的常設指令）─────────────────────────
+    // 「對 我說過**這是我人工的旋鈕**，並沒有放在公式裡，我們上次已經釐清過，
+    //  **為何你要再犯**？」
+    //
+    // ⚠️ ⭐ 上面那一段把 `config.combat-env@1.multipliers` 的 **39 格**當成
+    //   一般 config 欄位送進契約 ⇒ 外部編輯器讀起來是「這 39 格可以讓玩家轉」。
+    // ⛔ 而那是**這個 repo 最明確的一條禁令**：那一族只有 owner 動。
+    //
+    // ⭐ 名單**從 `owner-knobs.json` 推導**，⛔ 不手寫 ——
+    //   手寫的清單在他加第 40 格的那天就過期，而**沒有任何東西會紅**。
+    const ownerOnly: { name: string; owner: string; why: string }[] = [];
+    try {
+      const knobs = JSON.parse(
+        readFileSync(join(REPO, "content/config/owner-knobs.json"), "utf8"),
+      ) as { knobs?: Record<string, { quote?: string; on?: string }> };
+      for (const [k, v] of Object.entries(knobs.knobs ?? {})) {
+        ownerOnly.push({
+          name: `multipliers.${k}`,
+          owner: "config.combat-env@1",
+          // ⭐ 理由帶著 owner 的**原話**（⛔ 不是我的摘要）——
+          //   引用不到原話的格子就不該在這張表裡（第一守則）。
+          why: v.quote ? `owner ${v.on ?? ""}：「${v.quote}」` : "owner 的人工旋鈕",
+        });
+      }
+    } catch {
+      // ⛔ 讀不到就**留空**，⛔ 不是假裝沒有 owner 旋鈕 —— 下面的 sanity 會叫。
+    }
   // ⭐ 宣告 unsupported 的**這一版**不做 —— 而理由要寫得出來（⛔ 不是靜默省略）
   // ⚠️⚠️ ⛔ **不是「不必實作」**（owner 2026-08-31 逐字:「⋯**=> 之後會實作**」）——
   //   ⭐ 它們是 main 的**待辦**,機制做出來的那一天該筆自動離開這張清單。
@@ -262,10 +293,25 @@ export function buildEditorCoverage(): {
     });
   }
 
+  // ⭐⭐ GH#889 AC④ —— owner 的旋鈕**從 `required` 剔除**。
+  //
+  // ⚠️ 守衛抓到的真缺陷：那 39 格在此之前**同時**出現在 `required` 與
+  //   `ownerOnly` 裡 ⇒ ⛔ 契約對同一格說了**兩種相反的話**
+  //   （「編輯器要做這一格」與「這一格別碰」）。
+  // ⭐ 而讀的人只會讀到其中一份 —— 那是「一份看起來已經量過的東西，
+  //   量的不是你以為的那個」（CLAUDE.md）。
+  const ownerOnlyKeys = new Set(ownerOnly.map((o) => `${o.owner} ${o.name}`));
+  for (let i = required.length - 1; i >= 0; i--) {
+    const r = required[i]!;
+    if (ownerOnlyKeys.has(`${r.owner ?? ""} ${r.name}`)) required.splice(i, 1);
+  }
+  // ⭐ counts **在剔除之後**算 —— ⛔ 算在前面 = 統計說 4,849 而清單只有 4,810。
+  //   ⚠️ 那正是「統計自己一份」的形狀（守衛第 5 條抓到的就是它）。
   const counts: Record<string, number> = {};
   for (const r of required) counts[r.group] = (counts[r.group] ?? 0) + 1;
-  counts["_total"] = required.length;
   counts["_notRequired"] = notRequired.length;
+  counts["_total"] = required.length;
+  counts["_ownerOnly"] = ownerOnly.length;
 
   return {
     schema: "ggd-editor-coverage@1",
@@ -273,9 +319,23 @@ export function buildEditorCoverage(): {
      * ⭐ 給讀這份 JSON 的人：`notRequired` ⛔ **不是「永遠不做」**。
      * owner 2026-08-31 逐字：「另有 15 項明確不要求實作⋯**=> 之後會實作**」。
      */
-    notRequiredMeaning:
+      notRequiredMeaning:
       "⛔ 今天的引擎做不到，所以**這一版**不要實作（做出來的內容上線就是死的）。" +
       "⭐ 它們是 main 的待辦，⛔ 不是永久的範圍外 —— 機制做出來的那一天，該筆會自動離開這張清單。",
+    /**
+     * ⭐⭐ GH#889 AC④ —— **owner 的人工旋鈕**（`ownerOnly`）。
+     *
+     * ⚠️ 這幾格與 `notRequired` **完全相反**：引擎做得到、後台也有欄位，
+     * ⛔ **而它們不屬於編輯器的使用者**。owner 2026-08-22 逐字：
+     * 「對 我說過**這是我人工的旋鈕**，並沒有放在公式裡⋯**為何你要再犯**？」
+     *
+     * ⇒ ⭐ 編輯器**可以顯示它們的值**（那是遊戲平衡的一部分），
+     * ⛔ 但**不可以做成玩家/作者調得動的控制項**。
+     */
+    ownerOnlyMeaning:
+      "⛔ 這些欄位**只有 owner 動** —— 引擎做得到、後台有欄位，⭐ 而它們不屬於編輯器的使用者。" +
+      "⭐ 可以唯讀顯示，⛔ 不可以做成可調的控制項。每一格的 `why` 帶著 owner 的原話。",
+    ownerOnly,
     /**
      * ⭐⭐ **這一份自己的指紋** —— ⛔ 不是 capability manifest 的那一個。
      *

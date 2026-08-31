@@ -28,6 +28,7 @@ const COV = JSON.parse(
 ) as {
   counts: Record<string, number>;
   required: { group: string; name: string; owner?: string }[];
+  ownerOnly?: { name: string; owner: string; why: string }[];
 };
 
 const cfg = COV.required.filter((r) => r.group === "configField");
@@ -76,6 +77,34 @@ describe("GH#889 契約涵蓋 config.*", () => {
     //   照著它寫的編輯器會產出一份引擎讀不懂的 JSON。
     const doubled = [...names].filter((n) => n.includes(".*.*.") || n.includes(".*.families."));
     expect(doubled, "⛔ 路徑多了一段（我兩版都犯過）").toEqual([]);
+  });
+
+  it("★ ⭐⭐ **owner 的旋鈕不可以標成可編輯** —— 39 格全在 `ownerOnly`", () => {
+    /**
+     * owner 2026-08-22（逐字，本 repo 最明確的一條禁令）：
+     * 「對 我說過**這是我人工的旋鈕**，並沒有放在公式裡⋯**為何你要再犯**？」
+     *
+     * ⚠️ ⭐ 把 `config.combat-env@1.multipliers` 當成一般 config 欄位送進契約
+     * ⇒ 外部編輯器讀起來是「這 39 格可以讓玩家轉」。
+     * ⭐ 而名單**從 `owner-knobs.json` 推導** —— ⛔ 手寫的清單在他加第 40 格
+     * 那天就過期，而**沒有任何東西會紅**。
+     */
+    const knobs = JSON.parse(
+      readFileSync(resolve(__dirname, "../../../../content/config/owner-knobs.json"), "utf8"),
+    ) as { knobs: Record<string, unknown> };
+    const want = Object.keys(knobs.knobs).map((k) => `multipliers.${k}`).sort();
+    const got = (COV.ownerOnly ?? []).map((o) => o.name).sort();
+    expect(want.length, "量尺自證：旋鈕表不是空的").toBeGreaterThan(30);
+    expect(got, "⛔ 契約沒把 owner 的旋鈕標出來 ⇒ 編輯器會做成可調的控制項").toEqual(want);
+
+    // ⭐ 每一格都要引用得到**他的原話**（第一守則）—— ⛔ 引用不到就不該在這張表裡
+    const noQuote = (COV.ownerOnly ?? []).filter((o) => !o.why.includes("「"));
+    expect(noQuote.map((o) => o.name), "⛔ 沒有原話的格子").toEqual([]);
+
+    // ⛔ 而它們**不可以同時**出現在 `required` 裡（那等於兩種相反的宣稱）
+    const req = new Set(COV.required.map((r) => `${r.owner}\\u0000${r.name}`));
+    const both = (COV.ownerOnly ?? []).filter((o) => req.has(`${o.owner}\\u0000${o.name}`));
+    expect(both.map((o) => o.name), "⛔ 同一格同時說「要做」與「別碰」").toEqual([]);
   });
 
   it("⭐ counts 有 `configField` 且與清單一致（⛔ 統計不可以自己一份）", () => {

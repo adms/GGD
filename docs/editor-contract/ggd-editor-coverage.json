@@ -1,7 +1,205 @@
 {
   "schema": "ggd-editor-coverage@1",
   "notRequiredMeaning": "⛔ 今天的引擎做不到，所以**這一版**不要實作（做出來的內容上線就是死的）。⭐ 它們是 main 的待辦，⛔ 不是永久的範圍外 —— 機制做出來的那一天，該筆會自動離開這張清單。",
-  "fingerprint": "90b7bf606904",
+  "ownerOnlyMeaning": "⛔ 這些欄位**只有 owner 動** —— 引擎做得到、後台有欄位，⭐ 而它們不屬於編輯器的使用者。⭐ 可以唯讀顯示，⛔ 不可以做成可調的控制項。每一格的 `why` 帶著 owner 的原話。",
+  "ownerOnly": [
+    {
+      "name": "multipliers.maxHealth",
+      "owner": "config.combat-env@1",
+      "why": "owner 2026-08-23：「生命倍率調整至9」"
+    },
+    {
+      "name": "multipliers.cooldown",
+      "owner": "config.combat-env@1",
+      "why": "owner 2026-08-23：「我說錯了請你還原1x，我說的是冷卻時間0.3」"
+    },
+    {
+      "name": "multipliers.damageDealt",
+      "owner": "config.combat-env@1",
+      "why": "owner 2026-08-22：「對 我說過這是我人工的旋鈕，並沒有放在公式裡，我們上次已經釐清過」"
+    },
+    {
+      "name": "multipliers.attackDamage",
+      "owner": "config.combat-env@1",
+      "why": "owner 2026-08-22：「attackDamage可以調回 1.0」"
+    },
+    {
+      "name": "multipliers.abilityPower",
+      "owner": "config.combat-env@1",
+      "why": "owner —：「（出貨中性值，owner 從未改過）」"
+    },
+    {
+      "name": "multipliers.defense",
+      "owner": "config.combat-env@1",
+      "why": "owner —：「（出貨中性值，owner 從未改過）」"
+    },
+    {
+      "name": "multipliers.healing",
+      "owner": "config.combat-env@1",
+      "why": "owner —：「（出貨中性值，owner 從未改過）」"
+    },
+    {
+      "name": "multipliers.shield",
+      "owner": "config.combat-env@1",
+      "why": "owner —：「（出貨中性值，owner 從未改過）」"
+    },
+    {
+      "name": "multipliers.moveSpeed",
+      "owner": "config.combat-env@1",
+      "why": "owner —：「（出貨中性值，owner 從未改過）」"
+    },
+    {
+      "name": "multipliers.attackSpeed",
+      "owner": "config.combat-env@1",
+      "why": "owner —：「（出貨中性值，owner 從未改過）」"
+    },
+    {
+      "name": "multipliers.strToCritChance",
+      "owner": "config.combat-env@1",
+      "why": "owner 2026-08-22：「每點力量 +0.25% 暴擊率\t\"strToCritChance\"」"
+    },
+    {
+      "name": "multipliers.agiToEvasion",
+      "owner": "config.combat-env@1",
+      "why": "owner 2026-08-22：「每點敏捷 +0.2% 迴避率\t\"agiToEvasion\"」"
+    },
+    {
+      "name": "multipliers.healthRegen",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值是中性值,owner 從未提過這一格。⚠️ 這一列是**基準線**,⛔ 不是授權：改動它就要先補上他的逐字原話。」"
+    },
+    {
+      "name": "multipliers.maxMana",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值是中性值,owner 從未提過這一格。⚠️ 這一列是**基準線**,⛔ 不是授權：改動它就要先補上他的逐字原話。」"
+    },
+    {
+      "name": "multipliers.manaRegen",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。」"
+    },
+    {
+      "name": "multipliers.critChance",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值是中性值,owner 從未提過這一格。⚠️ 這一列是**基準線**,⛔ 不是授權：改動它就要先補上他的逐字原話。」"
+    },
+    {
+      "name": "multipliers.critDamage",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值是中性值,owner 從未提過這一格。⚠️ 這一列是**基準線**,⛔ 不是授權：改動它就要先補上他的逐字原話。」"
+    },
+    {
+      "name": "multipliers.lifesteal",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值是中性值,owner 從未提過這一格。⚠️ 這一列是**基準線**,⛔ 不是授權：改動它就要先補上他的逐字原話。」"
+    },
+    {
+      "name": "multipliers.attackRange",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。」"
+    },
+    {
+      "name": "multipliers.abilityRange",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。」"
+    },
+    {
+      "name": "multipliers.itemCooldown",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值是中性值,owner 從未提過這一格。⚠️ 這一列是**基準線**,⛔ 不是授權：改動它就要先補上他的逐字原話。」"
+    },
+    {
+      "name": "multipliers.strToMaxHealth",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。」"
+    },
+    {
+      "name": "multipliers.strToHealthRegen",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。」"
+    },
+    {
+      "name": "multipliers.strToAttackDamage",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。」"
+    },
+    {
+      "name": "multipliers.agiToArmor",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。」"
+    },
+    {
+      "name": "multipliers.agiToAttackSpeed",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。」"
+    },
+    {
+      "name": "multipliers.intToMaxMana",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。」"
+    },
+    {
+      "name": "multipliers.intToManaRegen",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。」"
+    },
+    {
+      "name": "multipliers.intToAbilityPower",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。」"
+    },
+    {
+      "name": "multipliers.intToMagicResist",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。」"
+    },
+    {
+      "name": "multipliers.goldRoundPayout",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值是中性值,owner 從未提過這一格。⚠️ 這一列是**基準線**,⛔ 不是授權：改動它就要先補上他的逐字原話。」"
+    },
+    {
+      "name": "multipliers.goldMobKill",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。」"
+    },
+    {
+      "name": "multipliers.goldEliteKill",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。」"
+    },
+    {
+      "name": "multipliers.goldHeroKill",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值是中性值,owner 從未提過這一格。⚠️ 這一列是**基準線**,⛔ 不是授權：改動它就要先補上他的逐字原話。」"
+    },
+    {
+      "name": "multipliers.goldQuest",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值是中性值,owner 從未提過這一格。⚠️ 這一列是**基準線**,⛔ 不是授權：改動它就要先補上他的逐字原話。」"
+    },
+    {
+      "name": "multipliers.moveSpeedMelee",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。」"
+    },
+    {
+      "name": "multipliers.moveSpeedRanged",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。」"
+    },
+    {
+      "name": "multipliers.magicResistMult",
+      "owner": "config.combat-env@1",
+      "why": "owner 未授權：「⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。」"
+    },
+    {
+      "name": "multipliers.abilityDamage",
+      "owner": "config.combat-env@1",
+      "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
+    }
+  ],
+  "fingerprint": "dc98cdcb4f04",
   "capabilityFingerprint": "29235222",
   "required": [
     {
@@ -12937,201 +13135,6 @@
     },
     {
       "group": "configField",
-      "name": "multipliers.abilityDamage",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.abilityPower",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.abilityRange",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.agiToArmor",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.agiToAttackSpeed",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.agiToEvasion",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.attackDamage",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.attackRange",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.attackSpeed",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.cooldown",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.critChance",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.critDamage",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.damageDealt",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.defense",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.goldEliteKill",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.goldHeroKill",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.goldMobKill",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.goldQuest",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.goldRoundPayout",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.healing",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.healthRegen",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.intToAbilityPower",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.intToMagicResist",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.intToManaRegen",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.intToMaxMana",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.itemCooldown",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.lifesteal",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.magicResistMult",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.manaRegen",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.maxHealth",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.maxMana",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.moveSpeed",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.moveSpeedMelee",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.moveSpeedRanged",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.shield",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.strToAttackDamage",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.strToCritChance",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.strToHealthRegen",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
-      "name": "multipliers.strToMaxHealth",
-      "owner": "config.combat-env@1"
-    },
-    {
-      "group": "configField",
       "name": "nav",
       "owner": "config.map-spec@1"
     },
@@ -23462,8 +23465,9 @@
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 112,
-    "configField": 3752,
-    "_total": 4849,
-    "_notRequired": 15
+    "configField": 3713,
+    "_notRequired": 15,
+    "_total": 4810,
+    "_ownerOnly": 39
   }
 }
