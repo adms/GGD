@@ -16,7 +16,7 @@
    "unitOnly": 124,
    "w3aOnly": 170,
    "shared": 208,
-   "converted": 92,
+   "converted": 93,
    "zeroChannelUnits": 47
   }
  },
@@ -14265,7 +14265,9 @@
    "paths": [
     "Abilities\\Spells\\NightElf\\EntangleMine\\Roots.mdl"
    ],
-   "ggdModelIds": [],
+   "ggdModelIds": [
+    "imported.roots"
+   ],
    "counts": {
     "units": 3,
     "sites": 3,
