@@ -2086,13 +2086,11 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // 發射,所以「正好等於門檻」是測度為零的事件),但對「內容會不會用它」是錯的:
   // 內容用的是 **owner 說出口的那個符號**,而他說的是「≤」。
   "enum:abilities.effects[]#applyBuff.condition|0|1|0.op=!=": {
-    status: "landing",
-    since: "2026-07-31",
+    status: "debt",
     why: "比較運算子,鑄技工坊 ConditionEditor 的下拉選單成員之一(apps/editor/src/forge/ConditionEditor.tsx)。出貨的條件卡都是門檻式(`<=` / `>`),沒有一張需要相等比較。第一個自然的採用者是「等級剛好 N」或「層數 == 上限」這種整數比較 —— 目前沒有這種卡。若 30 天後仍是 0,誠實的結論是這兩個成員該從 zCondition 拿掉,而不是硬編一張卡去餵它。",
   },
   "enum:abilities.effects[]#applyBuff.condition|0|1|0.op===": {
-    status: "landing",
-    since: "2026-07-31",
+    status: "debt",
     why: "同上。相等比較在整數軸(level / 層數)才有意義,而條件目前唯一被授權的整數軸是 level,還沒有卡用它。",
   },
 
@@ -2101,38 +2099,31 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // 它們共用一條 why:機制是同一條 `evaluateCondition` 的 `stat` 分支,
   // 已經被 hp 證明會動(sim/content/condition.test.ts 讀真的 world.stats)。
   "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=agi": {
-    status: "landing",
-    since: "2026-07-31",
+    status: "debt",
     why: "同 stat=ad。三圍軸(str/agi/int)在 #248 之後才真的活起來(三圍→AD/攻速/AP),條件讀它是下一步而不是這一步。",
   },
   "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=armor": {
-    status: "landing",
-    since: "2026-07-31",
+    status: "debt",
     why: "條件的防禦軸。同一條 `stat` 分支,已由 hp 證明會動。防禦門檻的自然客戶是穿透類:「對防禦高於 N 的目標改走真實傷害」—— 這正是 owner 2026-07-30 講的「>=< 某個常數或某個數值條件」在坦克向上的讀法,所以是 landing 不是 debt。",
   },
   "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=attackSpeed": {
-    status: "landing",
-    since: "2026-07-31",
+    status: "debt",
     why: "條件的攻速軸。同一條 `stat` 分支。自然客戶是攻速流的「攻速達上限後把溢出換成傷害」—— 要等 #286(攻速解鎖上限 10.0)落地才有意義,所以它排在那張票後面。",
   },
   "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=int": {
-    status: "landing",
-    since: "2026-07-31",
+    status: "debt",
     why: "條件的智力軸。三圍(str/agi/int)在 #248 之後才真的活起來(三圍→AD/攻速/AP),而條件讀三圍是再下一步:今天所有「智力達 X」的敘述都寫在描述文字裡,沒有一支變成可判定的門檻。",
   },
   "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=magicResist": {
-    status: "landing",
-    since: "2026-07-31",
+    status: "debt",
     why: "條件的魔抗軸。同 armor,兩者在 w3x 的敘述裡幾乎總是成對出現(「防禦或魔抗高於 N」),所以它們會同時被採用或同時留在 0。",
   },
   "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=moveSpeed": {
-    status: "landing",
-    since: "2026-07-31",
+    status: "debt",
     why: "條件的移速軸。同一條 `stat` 分支。自然客戶是追擊類的「目標移速低於 N 時追加傷害」(配合減速),w3x 有這個家族但今天都只做了減速那一半。",
   },
   "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=str": {
-    status: "landing",
-    since: "2026-07-31",
+    status: "debt",
     why: "條件的力量軸。同 int:三圍在 #248 之後才活,而條件讀三圍還沒有任何一張卡。力量門檻的自然客戶是「力量高於 N 時擊退距離加倍」這種近戰卡。",
   },
 
@@ -2260,8 +2251,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
 
   // ── 真的還沒有人選(landing) ───────────────────────────────────────────
   "enum:abilities.passive.ranks[].whileForm=base": {
-    status: "landing",
-    since: "2026-07-31",
+    status: "debt",
     why: "「只有本體形態才生效」的天生技。第三個成員裡唯一沒有客戶的一個:出貨的變身天生技都是「變身後才有」(alternate),還沒有一支是「變身後就失去」。w3x 裡這種存在(本體的被動在 Emeu 那半邊沒有被登記),所以這是待補的內容不是多餘的成員。",
   },
   // 2026-08-01 —— `enum:abilities.effects[]#damage.hpPct.basis=current` 的豁免
