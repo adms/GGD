@@ -25,14 +25,12 @@ import {
 import { api } from "../api/client";
 import { loadGlbContainer } from "../preview3d/loadGlb";
 import { burstNow, toParticleSystem } from "../preview3d/particles";
-import type { ForgeAbility, TriggerCue } from "./model";
+import { projectileIdsOf, type ForgeAbility, type ScheduledSimEvent } from "./model";
 import { calibrateTwoWay } from "../../../client/src/vfx/auditionCalibrate";
 
 const STEP_MS = 1000 / 60;
-const CASTER = 101;
-const TARGET = 202;
-const CASTER_POS = { x: -2.5, z: 0 };
-const TARGET_POS = { x: 2.5, z: 0 };
+const CASTER_POS = { x: 0, z: 0 };
+const TARGET_POS = { x: 3, z: 0 };
 
 export interface ForgeOverlay {
   flash: { color: readonly [number, number, number]; alpha: number } | null;
@@ -62,9 +60,9 @@ export class VfxForgeStage {
 
   private script: VfxScriptDoc;
   private ability: ForgeAbility;
-  private cues: readonly TriggerCue[];
+  private schedule: readonly ScheduledSimEvent[];
   private nowMs = 0;
-  private nextCue = 0;
+  private nextEvent = 0;
   private generation = 0;
   private textSerial = 0;
   private flash: ForgeOverlay["flash"] = null;
@@ -84,13 +82,13 @@ export class VfxForgeStage {
     canvas: HTMLCanvasElement,
     script: VfxScriptDoc,
     ability: ForgeAbility,
-    cues: readonly TriggerCue[],
+    schedule: readonly ScheduledSimEvent[],
     opts: VfxForgeStageOptions = {},
   ) {
     this.canvas = canvas;
     this.script = script;
     this.ability = ability;
-    this.cues = cues;
+    this.schedule = schedule;
     this.fetchDoc = opts.fetchDoc ?? ((collection, id) => api.doc(collection, id));
     this.onOverlay = opts.onOverlay ?? (() => undefined);
     this.engine = new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: false }, true);
@@ -109,10 +107,10 @@ export class VfxForgeStage {
     this.makeActor("施法者", CASTER_POS.x, CASTER_POS.z, new Color3(0.24, 0.55, 0.95));
     this.makeActor("目標", TARGET_POS.x, TARGET_POS.z, new Color3(0.92, 0.28, 0.24));
 
-    this.cameraRig = new CameraRig(this.scene, { x: 0, z: 0 });
+    this.cameraRig = new CameraRig(this.scene, { x: 1.5, z: 0 });
     this.cameraRig.update({
       dtMs: STEP_MS,
-      localPos: { x: 0, z: 0 },
+      localPos: { x: 1.5, z: 0 },
       cursor: null,
       panKeys: null,
       viewportWidth: canvas.clientWidth || 960,
@@ -133,10 +131,10 @@ export class VfxForgeStage {
     return this.nowMs;
   }
 
-  setContent(script: VfxScriptDoc, ability: ForgeAbility, cues: readonly TriggerCue[]): void {
+  setContent(script: VfxScriptDoc, ability: ForgeAbility, schedule: readonly ScheduledSimEvent[]): void {
     this.script = script;
     this.ability = ability;
-    this.cues = cues;
+    this.schedule = schedule;
     this.player.invalidate();
   }
 
@@ -215,15 +213,14 @@ export class VfxForgeStage {
   private reset(): void {
     this.generation++;
     this.nowMs = 0;
-    this.nextCue = 0;
+    this.nextEvent = 0;
     this.flash = null;
     this.flashUntilMs = 0;
     this.texts = [];
     this.modelRig.hardReset();
     this.disposeParticles();
     this.player = this.makePlayer();
-    this.fireInitialCast();
-    this.consumeCues();
+    this.consumeEvents();
     this.player.update(0);
     this.scene.render();
     this.emitOverlay("已重播");
@@ -233,8 +230,8 @@ export class VfxForgeStage {
     return new VfxScriptPlayer({
       scriptFor: (id) => (id === this.script.abilityId ? this.script : undefined),
       allScripts: () => [this.script],
-      projectileIdsOf: () => new Set(),
-      entityPos: (id) => (id === CASTER ? CASTER_POS : id === TARGET ? TARGET_POS : null),
+      projectileIdsOf: (id) => id === this.ability.id ? projectileIdsOf(this.ability) : new Set(),
+      entityPos: (id) => id === this.casterEntityId() ? CASTER_POS : TARGET_POS,
       dispatch: (ev, nowMs) => this.dispatch(ev, nowMs),
       enabled: () => true,
       pulseAnim: (_id, kind) => this.emitOverlay(`動畫脈衝：${kind}`),
@@ -246,27 +243,14 @@ export class VfxForgeStage {
     });
   }
 
-  private fireInitialCast(): void {
-    const data = {
-      abilityId: this.ability.id,
-      caster: CASTER,
-      point: TARGET_POS,
-      direction: { x: 1, z: 0 },
-    };
-    this.player.onEvent({ type: "abilityCast", tick: 0, data }, 0);
-    if ((this.ability.castTimeSec ?? 0) > 0) {
-      this.player.onEvent({ type: "castBegin", tick: 0, data }, 0);
-    }
-  }
-
   private advanceFrame(render: boolean, dtMs = STEP_MS): void {
     this.nowMs += dtMs;
-    this.consumeCues();
+    this.consumeEvents();
     this.player.update(this.nowMs);
     this.modelRig.tick(dtMs);
     this.cameraRig.update({
       dtMs,
-      localPos: { x: 0, z: 0 },
+      localPos: { x: 1.5, z: 0 },
       cursor: null,
       panKeys: null,
       viewportWidth: this.engine.getRenderWidth(),
@@ -277,32 +261,22 @@ export class VfxForgeStage {
     this.emitOverlay("播放中");
   }
 
-  private consumeCues(): void {
-    while (this.nextCue < this.cues.length && this.cues[this.nextCue]!.atMs <= this.nowMs + 0.001) {
-      const cue = this.cues[this.nextCue++]!;
-      if (cue.on === "castEffect" && (this.ability.castTimeSec ?? 0) > 0) {
-        this.player.onEvent(
-          { type: "castEnd", tick: Math.round(cue.atMs / SIM_TICK_MS), data: { abilityId: this.ability.id, caster: CASTER } },
-          cue.atMs,
-        );
-      } else if (cue.on === "strike") {
-        this.player.onEvent(
-          {
-            type: "comboStrike",
-            tick: Math.round(cue.atMs / SIM_TICK_MS),
-            data: {
-              caster: CASTER,
-              victim: TARGET,
-              origin: `ability:${this.ability.id}`,
-              index: cue.strikeIndex,
-              x: TARGET_POS.x,
-              z: TARGET_POS.z,
-            },
-          },
-          cue.atMs,
-        );
-      }
+  private consumeEvents(): void {
+    while (
+      this.nextEvent < this.schedule.length &&
+      this.schedule[this.nextEvent]!.atMs <= this.nowMs + 0.001
+    ) {
+      const item = this.schedule[this.nextEvent++]!;
+      this.player.onEvent(item.event, item.atMs);
     }
+  }
+
+  private casterEntityId(): number | undefined {
+    for (const item of this.schedule) {
+      if (item.event.type !== "abilityCast" || item.event.data.abilityId !== this.ability.id) continue;
+      return Number(item.event.data.caster);
+    }
+    return undefined;
   }
 
   private dispatch(ev: EventMessage, nowMs: number): void {
@@ -403,5 +377,3 @@ export class VfxForgeStage {
     this.onOverlay({ flash: this.flash, texts: this.texts, status });
   }
 }
-
-const SIM_TICK_MS = 1000 / 30;

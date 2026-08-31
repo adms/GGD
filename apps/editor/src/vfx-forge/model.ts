@@ -1,7 +1,6 @@
 import type { VfxScriptDoc, VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
 import { zVfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
-import { normalizeComboTable, resolveComboFamilies } from "@ggd/shared/sim/effects/comboFamilies";
-import { comboStrikeOffsets } from "@ggd/shared/sim/effects/comboStrikes";
+import type { EventMessage } from "@ggd/shared/protocol/messages";
 
 export type AssetDrop = { collection: "models" | "vfx"; id: string };
 export type AssetPlacement = { forwardU: number; sideU: number };
@@ -9,8 +8,14 @@ export type AssetPlacement = { forwardU: number; sideU: number };
 export interface ForgeAbility {
   id: string;
   name?: string;
+  slot?: string;
   castTimeSec?: number;
   effects?: unknown[];
+}
+
+export interface ScheduledSimEvent {
+  atMs: number;
+  event: EventMessage;
 }
 
 export interface TriggerCue {
@@ -20,65 +25,75 @@ export interface TriggerCue {
   label: string;
 }
 
-const SIM_DT_SEC = 1 / 30;
-
-function firstCombo(node: unknown): Record<string, unknown> | null {
-  if (Array.isArray(node)) {
-    for (const child of node) {
-      const found = firstCombo(child);
-      if (found) return found;
-    }
-    return null;
-  }
-  if (node === null || typeof node !== "object") return null;
-  const rec = node as Record<string, unknown>;
-  if (rec.kind === "comboStrikes") return rec;
-  for (const child of Object.values(rec)) {
-    const found = firstCombo(child);
-    if (found) return found;
-  }
-  return null;
+/**
+ * Convert the actual SimWorld event trace to a frame clock. No ability timing
+ * is recomputed here: if the sim did not emit an event, Forge cannot play it.
+ */
+export function scheduleSimEvents(
+  events: readonly { type: string; tick: number; data: Record<string, unknown> }[],
+  abilityId: string,
+): ScheduledSimEvent[] {
+  const cast = events.find((event) => event.type === "abilityCast" && event.data["abilityId"] === abilityId);
+  const baseTick = cast?.tick ?? events.reduce((min, event) => Math.min(min, event.tick), Number.POSITIVE_INFINITY);
+  if (!Number.isFinite(baseTick)) return [];
+  return events.map((event) => ({
+    atMs: Math.max(0, event.tick - baseTick) * SIM_TICK_MS,
+    event: event as EventMessage,
+  }));
 }
 
-/**
- * Build the preview clock from the same ability + combo-family truth used by
- * the sim. VFX script data never invents damage cadence or strike count.
- */
-export function deriveTriggerCues(ability: ForgeAbility, comboConfig: unknown): TriggerCue[] {
-  const castMs = Math.max(0, ability.castTimeSec ?? 0) * 1000;
-  const cues: TriggerCue[] = [
-    { on: "castStart", atMs: 0, label: "施法提交" },
-    { on: "castEffect", atMs: castMs, label: castMs > 0 ? "吟唱完成" : "立即結算" },
-  ];
-
-  const resolved = resolveComboFamilies(
-    ability as unknown as Record<string, unknown>,
-    normalizeComboTable(comboConfig),
+export function triggerCuesFromSim(
+  schedule: readonly ScheduledSimEvent[],
+  ability: ForgeAbility,
+): TriggerCue[] {
+  const projectileIds = projectileIdsOf(ability);
+  const cast = schedule.find(
+    ({ event }) => event.type === "abilityCast" && event.data.abilityId === ability.id,
   );
-  const combo = firstCombo(resolved);
-  if (!combo) return cues;
-
-  const offsets = comboStrikeOffsets(combo as never, SIM_DT_SEC);
-  offsets.forEach((ticks, i) => {
+  if (!cast) return [];
+  const caster = cast.event.data.caster;
+  const began = schedule.some(
+    ({ event }) => event.type === "castBegin" && event.data.abilityId === ability.id && event.data.caster === caster,
+  );
+  const end = schedule.find(
+    ({ event }) => event.type === "castEnd" && event.data.abilityId === ability.id && event.data.caster === caster,
+  );
+  const cues: TriggerCue[] = [{ on: "castStart", atMs: cast.atMs, label: "施法提交" }];
+  if (!began || end) {
     cues.push({
-      on: "strike",
-      atMs: castMs + ticks * SIM_DT_SEC * 1000,
-      strikeIndex: i + 1,
-      label: `第 ${i + 1} 段`,
+      on: "castEffect",
+      atMs: end?.atMs ?? cast.atMs,
+      label: end ? "吟唱完成" : "立即結算",
     });
-  });
-  if (Array.isArray(combo.finisher) && combo.finisher.length > 0 && offsets.length > 0) {
-    const gapTicks = Math.round(Math.max(0, Number(combo.finisherDelaySec ?? 0)) / SIM_DT_SEC);
-    if (gapTicks > 0) {
-      cues.push({
-        on: "strike",
-        atMs: castMs + (offsets[offsets.length - 1]! + gapTicks) * SIM_DT_SEC * 1000,
-        strikeIndex: offsets.length + 1,
-        label: `收尾第 ${offsets.length + 1} 段`,
-      });
+  }
+  for (const item of schedule) {
+    const data = item.event.data;
+    if (item.event.type === "comboStrike" && data.origin === `ability:${ability.id}`) {
+      const strikeIndex = Number(data.index ?? 0);
+      cues.push({ on: "strike", atMs: item.atMs, strikeIndex, label: `第 ${strikeIndex} 段` });
+    } else if (
+      (item.event.type === "projectileSpawn" || item.event.type === "projectileHit") &&
+      projectileIds.has(String(data.projectileId ?? ""))
+    ) {
+      cues.push({ on: item.event.type, atMs: item.atMs, label: item.event.type === "projectileSpawn" ? "彈道生成" : "彈道命中" });
     }
   }
   return cues.sort((a, b) => a.atMs - b.atMs || (a.strikeIndex ?? 0) - (b.strikeIndex ?? 0));
+}
+
+export function projectileIdsOf(ability: ForgeAbility): ReadonlySet<string> {
+  const ids = new Set<string>();
+  const visit = (node: unknown): void => {
+    if (Array.isArray(node)) { for (const child of node) visit(child); return; }
+    if (node === null || typeof node !== "object") return;
+    const record = node as Record<string, unknown>;
+    if (record["kind"] === "spawnProjectile" && typeof record["projectileId"] === "string") {
+      ids.add(record["projectileId"]);
+    }
+    for (const child of Object.values(record)) visit(child);
+  };
+  visit(ability.effects);
+  return ids;
 }
 
 export function segmentTimes(
@@ -201,3 +216,5 @@ export function decodeAssetDrag(raw: string): AssetDrop | null {
   }
   return null;
 }
+
+const SIM_TICK_MS = 1000 / 30;

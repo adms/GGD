@@ -16,6 +16,7 @@ export function VfxTimeline({
   onSeek,
   onTogglePlay,
   onRestart,
+  onStep,
   onAddKind,
   onDropAsset,
 }: {
@@ -29,6 +30,7 @@ export function VfxTimeline({
   onSeek(ms: number): void;
   onTogglePlay(): void;
   onRestart(): void;
+  onStep(frames: -1 | 1): void;
   onAddKind(kind: VfxScriptSegment["kind"]): void;
   onDropAsset(asset: AssetDrop): void;
 }) {
@@ -46,7 +48,9 @@ export function VfxTimeline({
       <header className="vfx-timeline-head">
         <div>
           <button type="button" onClick={onRestart}>↺</button>
+          <button type="button" onClick={() => onStep(-1)} title="後退一個 1/60 秒畫格">−1f</button>
           <button type="button" onClick={onTogglePlay}>{playing ? "❚❚" : "▶"}</button>
+          <button type="button" onClick={() => onStep(1)} title="前進一個 1/60 秒畫格">+1f</button>
           <strong>{(playheadMs / 1000).toFixed(2)}s</strong>
         </div>
         <div className="vfx-add-kinds">

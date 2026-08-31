@@ -52,6 +52,7 @@ import { api, WRITES_ENABLED } from "../api/client";
 import { FormRenderer } from "../form/FormRenderer";
 import { walkZod } from "../form/walk";
 import { setIn, type ErrorMap } from "../store";
+import { sameJson, useUndoHistory } from "../history";
 import { createBabylonPreviewController } from "../preview/BabylonPreviewController";
 import type { CastPreviewTrace } from "../preview/PreviewController";
 import { badgeFor } from "./badge";
@@ -85,6 +86,12 @@ const CONFLICT_LABELS: Readonly<Record<TemplateConflictPolicy, string>> = {
   lastWins: "後蓋前 — 讓後面的卡片覆蓋前面的值",
 };
 
+interface ForgeDraft {
+  cards: AbilityTemplateCard[];
+  onConflict: TemplateConflictPolicy;
+  layers: VfxLayerDraft[] | null;
+}
+
 export function ForgeStudio({
   template,
   catalog = [],
@@ -97,15 +104,13 @@ export function ForgeStudio({
   onBack(): void;
 }) {
   const [abilityId, setAbilityId] = useState<string>("");
-  const [cards, setCards] = useState<AbilityTemplateCard[]>(() => [
-    { ref: template.id, params: defaultParamsFor(template) },
-  ]);
-  const [onConflict, setOnConflict] = useState<TemplateConflictPolicy>(DEFAULT_TEMPLATE_CONFLICT);
-  /**
-   * 特效堆疊。`null` = 還沒從 host doc 種下去（技能還沒選，或正在載）。
-   * 種子在下面的 effect 裡下，這樣切換技能時會跟著換成那一支自己的層。
-   */
-  const [layers, setLayers] = useState<VfxLayerDraft[] | null>(null);
+  const editHistory = useUndoHistory<ForgeDraft>({
+    cards: [{ ref: template.id, params: defaultParamsFor(template) }],
+    onConflict: DEFAULT_TEMPLATE_CONFLICT,
+    // `null` = 還沒從 host doc 種下去（技能還沒選，或正在載）。
+    layers: null,
+  }, sameJson);
+  const { cards, onConflict, layers } = editHistory.value;
   const [status, setStatus] = useState<string | null>(null);
   const [plan, setPlan] = useState<ForgePlan | null>(null);
   const [signedOff, setSignedOff] = useState(false);
@@ -122,6 +127,19 @@ export function ForgeStudio({
     controller.mount(stageRef.current);
     return () => controller.mount(null);
   }, []);
+
+  useEffect(() => {
+    if (typeof globalThis.addEventListener !== "function") return;
+    const onKeyDown = (event: KeyboardEvent): void => {
+      if (!(event.ctrlKey || event.metaKey) || event.altKey) return;
+      const key = event.key.toLowerCase();
+      if (key === "z" && event.shiftKey) { event.preventDefault(); editHistory.redo(); }
+      else if (key === "z") { event.preventDefault(); editHistory.undo(); }
+      else if (key === "y") { event.preventDefault(); editHistory.redo(); }
+    };
+    globalThis.addEventListener("keydown", onKeyDown);
+    return () => globalThis.removeEventListener("keydown", onKeyDown);
+  }, [editHistory.redo, editHistory.undo]);
 
   /**
    * Every template the studio can resolve a `ref` against. The picked one is
@@ -212,8 +230,8 @@ export function ForgeStudio({
   useEffect(() => {
     if (hostId === "" || seededFor.current === hostId) return;
     seededFor.current = hostId;
-    setLayers(draftsFromDoc(host.data ?? null));
-  }, [hostId, host.data]);
+    editHistory.reset({ ...editHistory.value, layers: draftsFromDoc(host.data ?? null) });
+  }, [hostId, host.data, editHistory.reset, editHistory.value]);
 
   const after = useMemo(() => {
     if (!host.data || !expansion.ok) return null;
@@ -287,26 +305,36 @@ export function ForgeStudio({
 
   // ---- stack editing ------------------------------------------------------
   const setCardParams = (i: number, next: Record<string, unknown>): void =>
-    setCards((cs) => cs.map((c, j) => (j === i ? { ...c, params: next } : c)));
+    editHistory.commit((draft) => ({
+      ...draft,
+      cards: draft.cards.map((c, j) => (j === i ? { ...c, params: next } : c)),
+    }));
 
   const addCard = (id: string): void => {
     const t = docs.get(id);
     if (t === undefined || cards.length >= TEMPLATE_STACK_MAX_CARDS) return;
-    setCards((cs) => [...cs, { ref: t.id, params: defaultParamsFor(t) }]);
+    editHistory.commit((draft) => ({
+      ...draft,
+      cards: [...draft.cards, { ref: t.id, params: defaultParamsFor(t) }],
+    }));
   };
 
   const removeCard = (i: number): void =>
     // The floor is 1: an EMPTY stack is a doc that claims to be templated and
     // expands to nothing, which is the silent no-op the Forge exists to prevent.
-    setCards((cs) => (cs.length <= 1 ? cs : cs.filter((_, j) => j !== i)));
+    editHistory.commit((draft) => ({
+      ...draft,
+      cards: draft.cards.length <= 1 ? draft.cards : draft.cards.filter((_, j) => j !== i),
+    }));
 
   const moveCard = (i: number, delta: number): void =>
-    setCards((cs) => {
+    editHistory.commit((draft) => {
+      const cs = draft.cards;
       const j = i + delta;
-      if (j < 0 || j >= cs.length) return cs;
+      if (j < 0 || j >= cs.length) return draft;
       const next = cs.slice();
       [next[i], next[j]] = [next[j]!, next[i]!];
-      return next;
+      return { ...draft, cards: next };
     });
 
   const buildPlan = () => {
@@ -349,6 +377,10 @@ export function ForgeStudio({
         <button type="button" className="forge-back" onClick={onBack}>
           ← 回模板選擇
         </button>
+        <div className="forge-history">
+          <button type="button" disabled={!editHistory.canUndo} onClick={editHistory.undo} title="復原（Ctrl/Cmd+Z）">↶ 復原</button>
+          <button type="button" disabled={!editHistory.canRedo} onClick={editHistory.redo} title="重做（Ctrl/Cmd+Shift+Z）">↷ 重做</button>
+        </div>
         <h1>
           鑄技工坊 · {resolved.map((r) => r.template.name).join(" ＋ ")}
           <span className={`forge-badge ${badgeFor(template.gapScore).tone}`}>
@@ -410,7 +442,10 @@ export function ForgeStudio({
               data-field="stack.onConflict"
               aria-label="衝突處理"
               value={onConflict}
-              onChange={(e) => setOnConflict(e.target.value as TemplateConflictPolicy)}
+              onChange={(e) => editHistory.commit((draft) => ({
+                ...draft,
+                onConflict: e.target.value as TemplateConflictPolicy,
+              }))}
             >
               {(Object.keys(CONFLICT_LABELS) as TemplateConflictPolicy[]).map((k) => (
                 <option key={k} value={k}>
@@ -458,10 +493,22 @@ export function ForgeStudio({
             <VfxLayerPanel
               layers={layers}
               vfxIds={vfxIds}
-              onPatch={(i, patch) => setLayers((ls) => (ls ? patchLayer(ls, i, patch) : ls))}
-              onMove={(i, d) => setLayers((ls) => (ls ? moveLayer(ls, i, d) : ls))}
-              onRemove={(i) => setLayers((ls) => (ls ? removeLayer(ls, i) : ls))}
-              onAdd={() => setLayers((ls) => (ls ? addLayer(ls) : ls))}
+              onPatch={(i, patch) => editHistory.commit((draft) => ({
+                ...draft,
+                layers: draft.layers ? patchLayer(draft.layers, i, patch) : draft.layers,
+              }))}
+              onMove={(i, d) => editHistory.commit((draft) => ({
+                ...draft,
+                layers: draft.layers ? moveLayer(draft.layers, i, d) : draft.layers,
+              }))}
+              onRemove={(i) => editHistory.commit((draft) => ({
+                ...draft,
+                layers: draft.layers ? removeLayer(draft.layers, i) : draft.layers,
+              }))}
+              onAdd={() => editHistory.commit((draft) => ({
+                ...draft,
+                layers: draft.layers ? addLayer(draft.layers) : draft.layers,
+              }))}
             />
           ) : null}
         </section>

@@ -23,12 +23,25 @@ import { AiFillProvider } from "../ai/AiFillContext";
 
 export function EditorView() {
   const qc = useQueryClient();
-  const { collection, docId, draft, dirty, serverErrors, update, markSaved, setServerErrors } =
+  const { collection, docId, draft, dirty, serverErrors, past, future, update, undo, redo, markSaved, setServerErrors } =
     useEditorStore();
   const [saveState, setSaveState] = useState<string | null>(null);
 
   // the status line belongs to ONE doc — clear it when the selection changes
   useEffect(() => setSaveState(null), [collection, docId]);
+
+  useEffect(() => {
+    if (typeof globalThis.addEventListener !== "function") return;
+    const onKeyDown = (event: KeyboardEvent): void => {
+      if (!(event.ctrlKey || event.metaKey) || event.altKey) return;
+      const key = event.key.toLowerCase();
+      if (key === "z" && event.shiftKey) { event.preventDefault(); redo(); }
+      else if (key === "z") { event.preventDefault(); undo(); }
+      else if (key === "y") { event.preventDefault(); redo(); }
+    };
+    globalThis.addEventListener("keydown", onKeyDown);
+    return () => globalThis.removeEventListener("keydown", onKeyDown);
+  }, [redo, undo]);
 
   const entry = collection ? collectionEntry(collection) : null;
   const ui = useMemo(() => (entry ? walkZod(entry.schema, "", entry.label) : null), [entry]);
@@ -85,6 +98,8 @@ export function EditorView() {
           </h2>
           <div className="editor-actions">
             <span className="save-state">{saveState}</span>
+            <button type="button" disabled={past.length === 0} onClick={undo} title="復原（Ctrl/Cmd+Z）">undo</button>
+            <button type="button" disabled={future.length === 0} onClick={redo} title="重做（Ctrl/Cmd+Shift+Z）">redo</button>
             <button type="button" disabled={!dirty} onClick={() => useEditorStore.getState().select(collection, docId, useEditorStore.getState().original)}>
               revert
             </button>

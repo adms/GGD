@@ -5,14 +5,14 @@ import {
   type AssetDrop,
   type AssetPlacement,
   type ForgeAbility,
-  type TriggerCue,
+  type ScheduledSimEvent,
 } from "./model";
 import { VfxForgeStage, type ForgeOverlay } from "./VfxForgeStage";
 
 export function VfxForgePreview({
   script,
   ability,
-  cues,
+  schedule,
   durationMs,
   playheadMs,
   playing,
@@ -22,7 +22,7 @@ export function VfxForgePreview({
 }: {
   script: VfxScriptDoc;
   ability: ForgeAbility;
-  cues: readonly TriggerCue[];
+  schedule: readonly ScheduledSimEvent[];
   durationMs: number;
   playheadMs: number;
   playing: boolean;
@@ -41,7 +41,7 @@ export function VfxForgePreview({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const stage = new VfxForgeStage(canvas, script, ability, cues, { onOverlay: setOverlay });
+    const stage = new VfxForgeStage(canvas, script, ability, schedule, { onOverlay: setOverlay });
     stageRef.current = stage;
     const resize = new ResizeObserver(() => stage.resize());
     resize.observe(canvas);
@@ -53,9 +53,9 @@ export function VfxForgePreview({
   useEffect(() => {
     const stage = stageRef.current;
     if (!stage) return;
-    stage.setContent(script, ability, cues);
+    stage.setContent(script, ability, schedule);
     stage.seek(playheadRef.current);
-  }, [ability, cues, script]);
+  }, [ability, schedule, script]);
 
   useEffect(() => {
     if (!playing) return;
@@ -106,7 +106,7 @@ export function VfxForgePreview({
       <canvas ref={canvasRef} />
       {overlay.flash ? <div className="vfx-flash" style={{ background: `rgba(${overlay.flash.color.join(",")},${overlay.flash.alpha})` }} /> : null}
       <div className="vfx-floating-texts">{overlay.texts.map((t) => <b key={t.id}>{t.text}</b>)}</div>
-      <div className="vfx-stage-badge">真 CameraRig · 真地板 · 1/60 frame-step</div>
+      <div className="vfx-stage-badge">真 IntentFrame · 真 CameraRig · 真地板 · 1/60 frame-step</div>
       <div className="vfx-stage-status">{overlay.status}</div>
       <button
         type="button"

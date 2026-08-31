@@ -3,14 +3,25 @@
  * `world.step(intents)`：換成空 intent 之後第一條 `it` 立刻紅（突變驗過）。
  * ⛔ 刻意不驗數字（傷害/冷卻是後台在調的），只驗「這一發有沒有發生」。
  */
-import { describe, it, expect } from "vitest";
+import { beforeAll, describe, it, expect } from "vitest";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { cover } from "@ggd/shared/testkit/cover";
 import { Stat, type AbilityDef, type ChampionDef } from "@ggd/shared/sim";
 import type { AbilityId, ChampionId, ItemId } from "@ggd/shared/ids";
-import { zVfxDoc, type VfxDoc } from "@ggd/shared/content";
+import { ContentLoader, registerAll, zVfxDoc, type VfxDoc } from "@ggd/shared/content";
+import { FsContentSource } from "@ggd/shared/content/node";
 import { createSimPreviewController } from "./PreviewController";
 import { createBabylonPreviewController } from "./BabylonPreviewController";
+import { scheduleSimEvents, triggerCuesFromSim } from "../vfx-forge/model";
+import { Champions } from "@ggd/shared/sim";
+
+const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
+
+beforeAll(async () => {
+  registerAll((await new ContentLoader(new FsContentSource(CONTENT)).load({ policy: "fail-closed" })).store);
+});
 
 const ab = (slot: "Q" | "W" | "E" | "R"): AbilityDef => ({
   id: `test.cast.${slot}` as AbilityId,
@@ -79,5 +90,22 @@ describe("GH#174 鑄技工坊的試放走玩家那條路", () => {
     c.dispose();
     expect(c.scene).toBeNull();
     expect(c.liveParticleSystems).toBe(0);
+  });
+
+  it("VFX Forge 從正式超究武神霸斬 trace 收到施法與七段演出錨", () => {
+    const champion = Champions.get("godie-hart" as ChampionId);
+    const ability = champion.abilities.R;
+    const c = createSimPreviewController();
+    const trace = c.castAbility(champion, "R", { level: 18, rank: 1, ticks: 650 });
+    const schedule = scheduleSimEvents(trace.events, ability.id);
+    const cues = triggerCuesFromSim(schedule, ability);
+
+    expect(trace.accepted, JSON.stringify(trace.events.slice(0, 20), null, 2)).toBe(true);
+    expect(cues.filter((cue) => cue.on === "castStart")).toHaveLength(1);
+    expect(cues.filter((cue) => cue.on === "castEffect")).toHaveLength(1);
+    expect(cues.filter((cue) => cue.on === "strike").map((cue) => cue.strikeIndex)).toEqual([
+      1, 2, 3, 4, 5, 6, 7,
+    ]);
+    c.dispose();
   });
 });

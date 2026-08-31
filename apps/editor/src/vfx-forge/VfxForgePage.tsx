@@ -10,18 +10,24 @@ import {
   type VfxScriptDoc,
   type VfxScriptSegment,
 } from "@ggd/shared/content/schema/vfxScript";
+import { Abilities, Champions, type CastableSlot } from "@ggd/shared/sim";
+import type { AbilityId, ChampionId } from "@ggd/shared/ids";
 import { api, ApiValidationError } from "../api/client";
 import { issuesToErrorMap, type ErrorMap } from "../store";
+import { sameJson, useUndoHistory } from "../history";
 import {
-  deriveTriggerCues,
   newScript,
   newSegment,
+  scheduleSimEvents,
   segmentFromAsset,
   timelineDurationMs,
+  triggerCuesFromSim,
   type AssetDrop,
   type AssetPlacement,
   type ForgeAbility,
 } from "./model";
+import { createSimPreviewController, type CastPreviewTrace } from "../preview/PreviewController";
+import { ensurePreviewContentReady } from "../preview/previewContent";
 import { writeVfxScript } from "./writeback";
 import { VfxAssetPalette } from "./VfxAssetPalette";
 import { VfxForgePreview } from "./VfxForgePreview";
@@ -34,14 +40,16 @@ const ACCEPTANCE = [
   ["godie-e002.ex", "20-002 理想鄉EX"],
 ] as const;
 
+const simPreview = createSimPreviewController();
+
 export function VfxForgePage() {
   const qc = useQueryClient();
   const indexes = useForgeIndexes();
-  const combo = useQuery({ queryKey: ["vfx-forge-combo"], queryFn: () => api.doc("config", "combo-strikes") });
   const [abilityId, setAbilityId] = useState("godie-hart.r");
   const [abilityInput, setAbilityInput] = useState("godie-hart.r");
   const [ability, setAbility] = useState<ForgeAbility | null>(null);
-  const [draft, setDraft] = useState<VfxScriptDoc | null>(null);
+  const draftHistory = useUndoHistory<VfxScriptDoc | null>(null, sameJson);
+  const draft = draftHistory.value;
   const [original, setOriginal] = useState<VfxScriptDoc | null>(null);
   const [isNew, setIsNew] = useState(false);
   const [selected, setSelected] = useState(0);
@@ -49,6 +57,28 @@ export function VfxForgePage() {
   const [playing, setPlaying] = useState(false);
   const [status, setStatus] = useState("載入中…");
   const [serverErrors, setServerErrors] = useState<ErrorMap>({});
+  const [trace, setTrace] = useState<CastPreviewTrace | null>(null);
+  const [traceError, setTraceError] = useState<string | null>(null);
+
+  const championId = abilityId.includes(".") ? abilityId.slice(0, abilityId.lastIndexOf(".")) : "";
+  const previewContent = useQuery({
+    queryKey: ["preview-runtime-content"],
+    queryFn: ensurePreviewContentReady,
+    staleTime: Number.POSITIVE_INFINITY,
+    gcTime: Number.POSITIVE_INFINITY,
+  });
+  const runtimeChampion = useMemo(
+    () => previewContent.data && championId
+      ? Champions.tryGet(championId as ChampionId) ?? null
+      : null,
+    [championId, previewContent.data],
+  );
+  const runtimeAbility = useMemo(
+    () => previewContent.data
+      ? Abilities.tryGet(abilityId as AbilityId) as ForgeAbility | undefined
+      : undefined,
+    [abilityId, previewContent.data],
+  );
 
   const existingIds = useMemo(
     () => new Set(indexes.scripts.data?.entries.map((e) => e.id) ?? []),
@@ -68,7 +98,7 @@ export function VfxForgePage() {
         const script = exists ? await api.doc<VfxScriptDoc>("vfx-scripts", abilityId) : newScript(abilityId);
         if (!live) return;
         setAbility(abilityDoc);
-        setDraft(script);
+        draftHistory.reset(script);
         setOriginal(script);
         setIsNew(!exists);
         setSelected(0);
@@ -76,12 +106,47 @@ export function VfxForgePage() {
       } catch (e) {
         if (!live) return;
         setAbility(null);
-        setDraft(null);
+        draftHistory.reset(null);
         setStatus(`載入失敗：${String(e)}`);
       }
     })();
     return () => { live = false; };
-  }, [abilityId, existingIds]);
+  }, [abilityId, existingIds, draftHistory.reset]);
+
+  useEffect(() => {
+    setTrace(null);
+    setTraceError(null);
+    // This EX is a passive reaction, not a button press. Until main exposes
+    // defenseSuccess/onReflectSuccess as a VFX-script trigger, sending a cast
+    // Intent would only produce the unrelated "not-learned" verdict and imply
+    // that authors can audition it by pressing EX. The explicit blocker below
+    // is the truthful preview state.
+    if (abilityId === "godie-e002.ex") return;
+    if (!ability || !runtimeChampion || !ability.slot || !previewContent.data) return;
+    try {
+      const ticks = Math.ceil((Math.max(0, ability.castTimeSec ?? 0) + 20) * 30);
+      setTrace(simPreview.castAbility(runtimeChampion, ability.slot as CastableSlot, {
+        level: PREVIEW_AUTHOR_LEVEL,
+        rank: 1,
+        ticks,
+      }));
+    } catch (error) {
+      setTraceError(String(error));
+    }
+  }, [ability, abilityId, previewContent.data, runtimeChampion]);
+
+  useEffect(() => {
+    if (typeof globalThis.addEventListener !== "function") return;
+    const onKeyDown = (event: KeyboardEvent): void => {
+      if (!(event.ctrlKey || event.metaKey) || event.altKey) return;
+      const key = event.key.toLowerCase();
+      if (key === "z" && event.shiftKey) { event.preventDefault(); draftHistory.redo(); }
+      else if (key === "z") { event.preventDefault(); draftHistory.undo(); }
+      else if (key === "y") { event.preventDefault(); draftHistory.redo(); }
+    };
+    globalThis.addEventListener("keydown", onKeyDown);
+    return () => globalThis.removeEventListener("keydown", onKeyDown);
+  }, [draftHistory.redo, draftHistory.undo]);
 
   const dirty = useMemo(() => JSON.stringify(draft) !== JSON.stringify(original), [draft, original]);
   const inlineErrors: ErrorMap = useMemo(() => {
@@ -91,14 +156,21 @@ export function VfxForgePage() {
   }, [draft]);
   const errors = useMemo(() => mergeErrors(inlineErrors, serverErrors), [inlineErrors, serverErrors]);
   const errorCount = Object.keys(errors).length;
-  const cues = useMemo(() => (ability ? deriveTriggerCues(ability, combo.data) : []), [ability, combo.data]);
+  const schedule = useMemo(
+    () => trace ? scheduleSimEvents(trace.events, abilityId) : [],
+    [abilityId, trace],
+  );
+  const cues = useMemo(
+    () => ability ? triggerCuesFromSim(schedule, runtimeAbility ?? ability) : [],
+    [ability, runtimeAbility, schedule],
+  );
   const durationMs = useMemo(() => (draft ? timelineDurationMs(draft, cues) : 1000), [cues, draft]);
   const selectedIndex = draft ? Math.min(selected, draft.segments.length - 1) : 0;
   const stop = useCallback(() => setPlaying(false), []);
   const onTime = useCallback((ms: number) => setPlayheadMs(ms), []);
 
   const mutate = (fn: (doc: VfxScriptDoc) => VfxScriptDoc): void => {
-    setDraft((doc) => (doc ? fn(doc) : doc));
+    draftHistory.commit((doc) => (doc ? fn(doc) : doc));
     setServerErrors({});
   };
   const addAsset = (asset: AssetDrop, placement?: AssetPlacement): void => {
@@ -141,7 +213,9 @@ export function VfxForgePage() {
         </div>
         <div className="vfx-forge-save">
           <span className={errorCount ? "error" : ""}>{status}{dirty ? " · 未儲存" : ""}</span>
-          <button type="button" disabled={!dirty} onClick={() => { if (original) setDraft(original); }}>還原</button>
+          <button type="button" disabled={!draftHistory.canUndo} onClick={draftHistory.undo} title="復原（Ctrl/Cmd+Z）">↶ 復原</button>
+          <button type="button" disabled={!draftHistory.canRedo} onClick={draftHistory.redo} title="重做（Ctrl/Cmd+Shift+Z）">↷ 重做</button>
+          <button type="button" disabled={!dirty} onClick={() => { if (original) draftHistory.commit(original); }}>還原存檔版</button>
           <button type="button" disabled={!dirty || errorCount > 0} onClick={() => void save()}>儲存腳本</button>
         </div>
       </header>
@@ -160,6 +234,12 @@ export function VfxForgePage() {
         </section>
       ) : null}
 
+      {traceError ? <section className="vfx-blocker" role="alert"><b>⛔ SimWorld 試放失敗</b><span>{traceError}</span></section> : null}
+      {previewContent.error ? <section className="vfx-blocker" role="alert"><b>⛔ Runtime 內容圖載入失敗</b><span>{String(previewContent.error)}</span></section> : null}
+      {trace && !trace.accepted ? (
+        <section className="vfx-blocker" role="alert"><b>⛔ 真 IntentFrame 被拒</b><span>{trace.reason ?? "unknown"}；工坊不會自行合成成功事件。</span></section>
+      ) : null}
+
       {draft && ability ? (
         <>
           <div className="vfx-forge-workspace">
@@ -168,7 +248,7 @@ export function VfxForgePage() {
               <VfxForgePreview
                 script={draft}
                 ability={ability}
-                cues={cues}
+                schedule={schedule}
                 durationMs={durationMs}
                 playheadMs={playheadMs}
                 playing={playing}
@@ -187,6 +267,10 @@ export function VfxForgePage() {
                 onSeek={(ms) => { setPlaying(false); setPlayheadMs(ms); }}
                 onTogglePlay={() => setPlaying((v) => !v)}
                 onRestart={() => { setPlaying(false); setPlayheadMs(0); }}
+                onStep={(frames) => {
+                  setPlaying(false);
+                  setPlayheadMs((ms) => Math.max(0, Math.min(durationMs, ms + frames * PREVIEW_FRAME_MS)));
+                }}
                 onAddKind={addKind}
                 onDropAsset={addAsset}
               />
@@ -214,13 +298,21 @@ export function VfxForgePage() {
           </div>
           <section className="vfx-script-meta">
             <label>JASS 出處／換算備註<textarea rows={4} value={draft.notes ?? ""} onChange={(e) => mutate((doc) => ({ ...doc, notes: e.target.value || undefined }))} /></label>
-            <div><b>實際觸發班表</b>{cues.map((c, i) => <code key={i}>{(c.atMs / 1000).toFixed(3)}s {c.label}</code>)}</div>
+            <div>
+              <b>實際觸發班表</b>
+              <small>{previewContent.data ? `${previewContent.data.contentVersion} · ${trace?.events.length ?? 0} events · ${cues.length} triggers` : "載入 Runtime 內容圖…"}</small>
+              {cues.map((c, i) => <code key={i}>{(c.atMs / 1000).toFixed(3)}s {c.label}</code>)}
+            </div>
           </section>
         </>
       ) : <p className="vfx-loading">{status}</p>}
     </main>
   );
 }
+
+/** High enough to legally learn every ordinary slot; rank-up rules still run. */
+const PREVIEW_AUTHOR_LEVEL = 18;
+const PREVIEW_FRAME_MS = 1000 / 60;
 
 function useForgeIndexes(): Record<"scripts" | "abilities" | "models" | "vfx", ReturnType<typeof useIndex>> {
   return {

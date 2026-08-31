@@ -1,21 +1,33 @@
 import { describe, expect, it, vi } from "vitest";
-import { deriveTriggerCues, newSegment, segmentFromAsset, timelineDurationMs } from "./model";
+import {
+  newSegment,
+  scheduleSimEvents,
+  segmentFromAsset,
+  timelineDurationMs,
+  triggerCuesFromSim,
+} from "./model";
 import { writeVfxScript } from "./writeback";
 
 describe("VFX Forge authoring core", () => {
-  it("derives combo strike timing from ability + config, including the finisher", () => {
+  it("takes cast, strike and projectile timing only from the real SimWorld event trace", () => {
     const ability = {
       id: "godie-hart.r",
-      effects: [{ kind: "comboStrikes", family: "superff7", perStrike: [], finisher: [{}] }],
+      effects: [{ kind: "spawnProjectile", projectileId: "projectile.a", onHit: [] }],
     };
-    const cues = deriveTriggerCues(ability, {
-      families: [{ key: "superff7", steps: [0, 0.9, 1.1], finisherDelaySec: 1.8 }],
-    });
+    const schedule = scheduleSimEvents([
+      { type: "abilityCast", tick: 100, data: { abilityId: ability.id, caster: 1 } },
+      { type: "castBegin", tick: 100, data: { abilityId: ability.id, caster: 1 } },
+      { type: "projectileSpawn", tick: 102, data: { projectileId: "projectile.a", owner: 1 } },
+      { type: "castEnd", tick: 103, data: { abilityId: ability.id, caster: 1 } },
+      { type: "comboStrike", tick: 110, data: { origin: `ability:${ability.id}`, index: 1, caster: 1 } },
+      { type: "projectileHit", tick: 112, data: { projectileId: "projectile.a", owner: 1 } },
+    ], ability.id);
+    const cues = triggerCuesFromSim(schedule, ability);
+    expect(cues.map((cue) => cue.on)).toEqual([
+      "castStart", "projectileSpawn", "castEffect", "strike", "projectileHit",
+    ]);
     expect(cues.filter((c) => c.on === "strike").map((c) => [c.strikeIndex, Math.round(c.atMs)])).toEqual([
-      [1, 0],
-      [2, 900],
-      [3, 1100],
-      [4, 2900],
+      [1, 333],
     ]);
   });
 
