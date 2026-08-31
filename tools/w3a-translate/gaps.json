@@ -22,9 +22,9 @@
   "radius:same": 4,
   "radius:tier": 55,
   "radius:w3a-absent": 301,
-  "range:ggd-zero": 30,
+  "range:ggd-zero": 31,
   "range:same": 7,
-  "range:tier": 99,
+  "range:tier": 98,
   "range:w3a-absent": 316,
   "scaling:missing:gold": 1,
   "scaling:missing:heroLevel": 5,
@@ -5166,6 +5166,16 @@
   },
   {
    "axis": "range",
+   "key": "range:ggd-zero",
+   "w3a": "A04C",
+   "ggd": "godie-udea.r",
+   "name": "65-04 天譴",
+   "w3aValue": 450.0,
+   "ggdValue": 0.0,
+   "verdict": "ggd-zero"
+  },
+  {
+   "axis": "range",
    "key": "range:tier",
    "w3a": "AEsh",
    "ggd": "godie-e001.e",
@@ -6132,16 +6142,6 @@
    "name": "65-03 魔法膨脹",
    "w3aValue": 550.0,
    "ggdValue": 12.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "range",
-   "key": "range:tier",
-   "w3a": "A04C",
-   "ggd": "godie-udea.r",
-   "name": "65-04 天譴",
-   "w3aValue": 450.0,
-   "ggdValue": 8.0,
    "verdict": "tier"
   },
   {

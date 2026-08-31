@@ -225,6 +225,31 @@ export const zConfigFeelFxDoc = z
       })
       .strict()
       .optional(),
+    /**
+     * ⭐⭐ GH#734 —— **右鍵指令按下去的那一刻的回饋**。
+     *
+     * owner 2026-07-29 逐字：「點右鍵攻擊會讓目標物**閃紅圈圈** 並且玩家角色
+     * 發出**攻擊語音**；取消...等其他動作也是播對應音效」
+     *
+     * ⚠️ ⭐ 在此之前 `GameApp.ts` 的 `onOrder` **三個呼叫點都是直通**
+     * `setOrder(order)` —— ⛔ 零個回饋呼叫，而 `resolveTargetMarker()` 那一套環
+     * 早就存在、⛔ 只有**手把**那條路在用。
+     *
+     * ⭐ **兩個軸分開**（⛔ 不是一個總開關）：有人只想要環、有人只想要聲。
+     * ⭐ 出貨三格全 true —— ⛔ 一個預設關著的回饋等於沒做（第〇·六守則：
+     * 「優先權大的更新後都是預設啟動」）。
+     */
+    orderFeedback: z
+      .object({
+        /** 總開關。false ＝ 逐位元回到「按下去什麼都不發生」的今天。 */
+        enabled: z.boolean(),
+        /** 目標腳下閃一下（複用 `targetMarker` 那套 decal，⛔ 不新做一層）。 */
+        ring: z.boolean(),
+        /** 指令當下的語音/音效（選既有池，⛔ 不錄新的）。 */
+        voice: z.boolean(),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 /** 爽度特效（`content/config/feel-fx.json`，GH#494）。 */
@@ -278,4 +303,7 @@ export const DEFAULT_FEEL_FX: ConfigFeelFxDoc = {
     brightness: 1,
     startRadius: 2.4,
   },
+  // ⭐ GH#734 —— 三格全 true。⛔ 一個預設關著的回饋等於沒做
+  //   （第〇·六守則：「優先權大的更新後都是預設啟動」）。
+  orderFeedback: { enabled: true, ring: true, voice: true },
 };

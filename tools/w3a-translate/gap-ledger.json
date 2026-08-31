@@ -166,15 +166,15 @@
     },
     {
       "key": "range:tier",
-      "max": 99,
+      "max": 98,
       "layer": "GGD-tier-table",
-      "reason": "owner 2026-08-19 的射程級距(`content/config/range-tiers.json`)取代原作的 WC3 世界單位;出貨文件帶著 `rangeTier`。"
+      "reason": "owner 2026-08-19 的射程級距(`content/config/range-tiers.json`)取代原作的 WC3 世界單位;出貨文件帶著 `rangeTier`。 ⭐ GH#840/#734（2026-08-31）—— 65-04 天譴的 `castType` 從 `dash` 改成 `self`（JASS `Trig_MoriyaBYEBYE` 逐行**0 個位移呼叫**），⇒ `range` 從 8 變 **0**：`self` 的圓心就是施法者，⛔ 宣告一段到不了的距離會被 #268 那條閘擋下。⭐ 與 GH#635 **同一個形狀**：一個改動同時讓 `range:tier` 少一筆、`range:ggd-zero` 多一筆 —— ⛔ 不是兩次獨立漂移。"
     },
     {
       "key": "range:ggd-zero",
-      "max": 30,
+      "max": 31,
       "layer": "⚫無主",
-      "reason": "出貨 `range` 是 0(＝近身/自身)而 w3a 給了施法距離,且**沒有** `rangeTier`。⚠️ 8 支天生技合理,⛔ 但 7 支 R 與 7 支 EX 是主動指向技 —— 0 距離的指向技在場上是放不出去的形狀。",
+      "reason": "出貨 `range` 是 0(＝近身/自身)而 w3a 給了施法距離,且**沒有** `rangeTier`。⚠️ 8 支天生技合理,⛔ 但 7 支 R 與 7 支 EX 是主動指向技 —— 0 距離的指向技在場上是放不出去的形狀。 ⭐ GH#840/#734（2026-08-31）—— 65-04 天譴的 `castType` 從 `dash` 改成 `self`（JASS `Trig_MoriyaBYEBYE` 逐行**0 個位移呼叫**），⇒ `range` 從 8 變 **0**：`self` 的圓心就是施法者，⛔ 宣告一段到不了的距離會被 #268 那條閘擋下。⭐ 與 GH#635 **同一個形狀**：一個改動同時讓 `range:tier` 少一筆、`range:ggd-zero` 多一筆 —— ⛔ 不是兩次獨立漂移。",
       "followUp": "先驗那 14 支主動技在真的一場比賽裡放不放得出去(castType 是不是 self/none),再決定補 rangeTier 還是改 castType。"
     },
     {

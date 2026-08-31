@@ -26,7 +26,7 @@ import {
 } from "@ggd/shared/sim/combatEnv";
 import type { ModelDoc } from "@ggd/shared/content";
 import type { ChampionId, ItemId, ProjectileId } from "@ggd/shared/ids";
-import type { CastableSlot } from "@ggd/shared/sim/intents";
+import type { CastableSlot, Order } from "@ggd/shared/sim/intents";
 import type { Room } from "colyseus.js";
 import type { MatchState } from "@ggd/shared/protocol/schema";
 import { ENTITY_FLAG, teamOverrideFromFlags } from "@ggd/shared/protocol/schema";
@@ -87,7 +87,7 @@ import {
 } from "./input/TouchInput";
 import { Renderer } from "./render/Renderer";
 import { AimIndicator } from "./render/AimIndicator";
-import { resolvePadTargetMarker } from "./render/views/targetMarker";
+import { resolvePadTargetMarker, resolveTargetMarker } from "./render/views/targetMarker";
 import type { TelegraphRelation } from "./vfx/telegraphChannel";
 import { setupLighting, type LightingHandle } from "./render/Lighting";
 import { buildArena, dressArena, disposeArena, type ArenaHandles } from "./render/ArenaScene";
@@ -157,6 +157,7 @@ import { RoundPurgeCoordinator, bindRoundPurge, sceneCounts } from "./render/rou
 import { buildRoundInventory } from "./game/roundInventory";
 import { IdleHum } from "./game/idleHum";
 import { resolveLocalChampionModel, type LocalChampionModel } from "./game/localChampionModel";
+import { OrderFeedbackRunner, pickTargetRing, withOrderFeedback } from "./game/orderFeedbackRunner";
 import { footstepRelationOf, makeScriptFxBridges } from "./game/appBridges";
 import { showRoundLoadOverlay, hideRoundLoadOverlay } from "./render/roundLoadOverlay";
 import { roundPurgeModeOf } from "./vfx/vfxCleanupPolicy";
@@ -588,6 +589,8 @@ export class GameApp {
    * (a) 校正路徑補上 —— 兩條路互補。
    */
   private attackOrderTargetId: number | null = null;
+  private readonly orderFeedback = new OrderFeedbackRunner(localChampionId);
+
   /**
    * `LocalFacingMode.authoritative` 的 render pose —— 預測位置 + 權威面向。
    * 每幀重複使用同一個物件（`poseFor` 一秒被呼叫上千次，per-frame 配置在這條
@@ -1068,7 +1071,7 @@ export class GameApp {
       getAbility: (slot) => localAbility(slot),
       pickEnemy: (ground) => this.pickEnemyAt(ground),
       pickSelf: (ground) => this.pickSelfAt(ground),
-      onOrder: (order) => this.sender.setOrder(order),
+      onOrder: withOrderFeedback(this.orderFeedback, (o) => this.sender.setOrder(o)),
       onCommand: (cmd) => this.sender.pushCommand(cmd, performance.now()),
       onSelectSelf: () => {
         const champ = localChampionId();
@@ -1122,7 +1125,7 @@ export class GameApp {
           ability: (slot) => localAbility(slot),
           enemyUnits: () => this.enemyUnitsFor(playerTeam(0)),
         }),
-        onOrder: (order) => this.sender.setOrder(order),
+        onOrder: withOrderFeedback(this.orderFeedback, (o) => this.sender.setOrder(o)),
         onCommand: (cmd) => this.sender.pushCommand(cmd, performance.now()),
         isJoystickArea: (clientX) => {
           const rect = this.canvas.getBoundingClientRect();
@@ -1853,10 +1856,7 @@ export class GameApp {
       // 放開技能鍵 → 暫存器清空 → 回 null → 環自己收掉；滑鼠/觸控玩家永遠是 null。
       this.aimIndicator.update(
         indicator,
-        resolvePadTargetMarker(
-          (id) => this.entityPos(id),
-          (id) => this.padTargetRelation(id),
-        ),
+        pickTargetRing(this.orderFeedback, (id) => this.entityPos(id), (id) => this.padTargetRelation(id), resolveTargetMarker, resolvePadTargetMarker),
       );
     }
 
