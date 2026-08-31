@@ -20,6 +20,34 @@ import { canonicalizeJcs, compareUtf8Bytes, SHA256_PREFIX } from "./jcs";
 import { sha256Hex } from "../sha256";
 
 /**
+ * ⭐⭐ **checksum 政策**（GH#327 ③）—— owner 2026-08-14 逐字：
+ * 「請一定要檢查合法性（包含 **check sum & MD5** & 內容沒有 injection）」
+ *
+ * ⭐ 他點名了 MD5，⛔ 而 MD5 **不可以是准不准的依據**：
+ * 碰撞可以在一台筆電上構造出來（Wang 2004 起，今天是秒級），
+ * ⇒ 一個攻擊者可以做出**兩份 MD5 相同**的匯入包 ——
+ *   一份給你審、一份給玩家。
+ *
+ * | 用途 | 演算法 | 為什麼 |
+ * |---|---|---|
+ * | **准不准的依據**（防篡改） | ⭐ **SHA-256**（RFC 8785 JCS ＋ 完整 SHA-256） | 這是 `packageDigest` 走的路 |
+ * | **有沒有傳壞**（transport） | `archiveSha256` | 同上，⛔ 沒有第二套 |
+ * | MD5 | ⛔ **不採用** | ⭐ 而「不採用」要寫下來，⛔ 不是靜默省略 —— 否則下一輪會有人「補上」它 |
+ *
+ * ⚠️ ⭐ 若哪天真要保留 MD5 當「快篩」，它**只能是一個提示**：
+ * ⛔ 不可以出現在任何 `if (ok)` 的條件裡，⛔ 也不可以出現在契約的
+ * 「這個包合法」那一段 —— 一個被當成證據的弱雜湊比沒有雜湊更糟，
+ * ⭐ 因為它讓讀的人**以為驗過了**。
+ */
+export const CHECKSUM_POLICY = {
+  /** ⭐ 唯一的防篡改依據。 */
+  authority: "sha256",
+  /** ⛔ 明確**不採用**的（⭐ 寫下來，⛔ 不是靜默省略）。 */
+  rejected: ["md5", "sha1", "crc32"],
+  why: "MD5/SHA-1 的碰撞可在一般硬體上構造 ⇒ ⛔ 對防篡改無效；CRC32 只防傳輸雜訊。",
+} as const;
+
+/**
  * ① 不進 semantic projection 的 top-level manifest key。
  *
  * `packageDigest` 自己顯然不能參與（遞迴）；`transport` 是 ZIP 專屬，留著 JSON 與 ZIP
