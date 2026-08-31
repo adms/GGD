@@ -305,10 +305,20 @@ describe("skills:sync / skills:check 涵蓋所有產生器", () => {
     const s = scripts();
     // ⭐ 只驗「有沒有對應的重生成路徑」,⛔ 不驗指令字串長什麼樣(那會變成第二個住處)
     const aggregate = s["skills:check"] ?? "";
+    /**
+     * ⭐ 一支 `*:check` 有沒有**真的被聚合指令跑到**。
+     *
+     * ⚠️⚠️ ⭐ **必須比對整個 token，⛔ 不可以用 `includes`** —— 這個病發生過**兩次**：
+     * · `skills:check` 含 `"docs:readme:check"` ⇒ `"docs:readme"` 是它的子字串
+     * · ⭐ **2026-08-31**：新加的 `jasstplmap:check` 含 `"map:check"`
+     *   （`tools/anime-arena-map` 的那一支）⇒ 那一支被誤判成「在聚合指令裡」
+     *   ⇒ 閘接著問它的 build 在哪 ⇒ 紅，⛔ **而訊息指著一支完全無辜的 script**。
+     * ⇒ ⭐ 切成 token 再逐一比對；⛔ 子字串比對治不了它，只會換一個名字再中一次。
+     */
+    const runsIn = (agg: string, name: string): boolean =>
+      agg.split("&&").some((seg) => seg.trim().replace(/^pnpm\s+/, "").split(/\s/)[0] === name);
     const checked = Object.keys(s).filter(
-      // ⚠️ 一定要先篩 `:check` —— `skills:check` 的字串裡含有 "docs:readme:check",
-      // 而 "docs:readme" 是它的**子字串**,少了這一道 `docs:readme` 自己會被當成一支 check。
-      (k) => k.endsWith(":check") && k !== "skills:check" && aggregate.includes(k),
+      (k) => k.endsWith(":check") && k !== "skills:check" && runsIn(aggregate, k),
     );
     const unbuildable = checked.filter((k) => {
       const base = k.slice(0, -":check".length);
