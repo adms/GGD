@@ -1279,7 +1279,9 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     // different things (one skips the curve, the other rides it).
     bountyXp: 1200,
     // GH#206 owner 2026-07-29 「殭屍王 獎勵 金錢+30,000 等級提升+50」.
-    bountyLevels: 50,
+    // ⭐ owner 2026-09-01（逐字）：「殭屍王獎勵等級太多(**減半**)」⇒ 50 → 25。
+    //    ⚠️ 原值 50 來自 owner 2026-07-29「殭屍王 獎勵 金錢+30,000 等級提升+50」。
+    bountyLevels: 25,
     lastHitMultiplier: 2,
     // GH#206 — see the schema note above. `"bonus"` is the owner's ruling and
     // deliberately lets the payout exceed `bountyGold` (200% at the extreme).

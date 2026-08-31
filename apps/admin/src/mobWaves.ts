@@ -234,7 +234,8 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     levelCurve: { perRoundSq: 1, perRound: 0, flat: 10 },
     bountyGold: 30000,
     bountyXp: 1200,
-    bountyLevels: 50,
+    // ⭐ owner 2026-09-01：「殭屍王獎勵等級太多(**減半**)」
+    bountyLevels: 25,
     lastHitMultiplier: 2,
     lastHitMode: "bonus",
     countOverkill: false,
