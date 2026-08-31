@@ -1,8 +1,8 @@
 {
   "schema": "review-queue@1",
   "counts": {
-    "assets": 1193,
-    "tier0": 851,
+    "assets": 1207,
+    "tier0": 865,
     "reviewed": 0,
     "pending": 342,
     "voice": {
@@ -2893,7 +2893,7 @@
     {
       "id": "imported.monsoonbolttarget",
       "kind": "model",
-      "hash": "ba4ec16c4c318820fa394c3e683a5b9fcb8f28d2",
+      "hash": "2f09646c0756d930de400a077a5faa18ba80031b",
       "risk": 4,
       "reasons": [
         "抱怨族「閃電/雷電」+4",
@@ -2917,7 +2917,7 @@
     {
       "id": "imported.thunderclapcaster",
       "kind": "model",
-      "hash": "2cdd8716af21dbdb108ae86fb7da1cb36eb70843",
+      "hash": "731bec6f4aaf1f589abec66d0d346c32396fe689",
       "risk": 4,
       "reasons": [
         "抱怨族「閃電/雷電」+4",

@@ -35,13 +35,66 @@ from typing import Any
 # sits near ECAPA's p97, so it flags almost nothing.
 ECAPA_HIGH = 0.78
 ECAPA_REVIEW = 0.68
-# campplus 0.50 is the likelihood-ratio crossover derived against a 29-actor WC3
-# control corpus (content/assets/audio/voices/_separation-baseline.json).
-# 0.40 is the target for newly cast pairs. Never apply these to ECAPA output.
-CAMPPLUS_CONFUSABLE = 0.50
-CAMPPLUS_TARGET = 0.40
-# Register gate, held SEPARATELY from either cosine because campplus is nearly
-# blind to register. Same register AND same embedding is the worst case.
+# ⭐⭐ GH#756 AC2+AC4 —— campplus 的三個門檻**從閘的 JSON 讀**，⛔ 不是字面常數。
+#
+# 在此之前這三行寫死著 n=1 那一列（0.50 / 0.40 / 2.0），而閘自己的階梯有 **7 列**
+# （n = 1,2,3,4,5,6,8）—— ⇒ ⭐ 語料從每人 1 段長到 8 段之後，這支工具仍然拿 n=1 的
+# 門檻在判，而**沒有任何東西會紅**（第〇·四守則：同一個數字的第二個住處必然過期）。
+#
+# ⚠️ 門檻**隨 n 變嚴**（n=1 confusable 0.50 → n=8 更高）：拿 n=1 的門檻去判 n=8 的
+# 材料 ⇒ ⭐ 幾乎什麼都不會被標記出來，而報告讀起來跟「全部通過」一模一樣。
+#
+# ⭐ 這一段同時是 AC2 的答案：在此之前 `separation-qc-gate` 這個名字
+# **一個程式檔都沒有引用**（只有規格自己＋文件＋報告）⇒ 零執行者。
+SEPARATION_GATE_PATH = (
+    Path(__file__).resolve().parents[2]
+    / "content/assets/audio/voices/_separation-qc-gate.json"
+)
+
+
+def _load_separation_ladder(clips_per_champion: int) -> dict[str, float]:
+    """閘的階梯裡挑**不超過** n 的最後一列（⛔ 不外插）。
+
+    ⚠️ 階梯是離散的（1,2,3,4,5,6,8）—— n=7 要用 n=6 那一列，⭐ 因為往下取是
+    **保守**的（門檻較鬆 ⇒ 標記較多 ⇒ 人會看到），⛔ 往上取會漏掉該標的對子。
+    """
+    gate = json.loads(SEPARATION_GATE_PATH.read_text(encoding="utf-8"))
+    rows = gate["thresholdLadder"]["rows"]
+    usable = [r for r in rows if int(r["clipsPerChampion"]) <= max(1, clips_per_champion)]
+    row = max(usable, key=lambda r: int(r["clipsPerChampion"])) if usable else rows[0]
+    return {
+        "confusable": float(row["confusableAdopted"]),
+        "target": float(row["targetForNewCast"]),
+        "hard_ceiling": float(row["hardCeiling"]),
+        "pair_budget": float(row["pairBudget"]),
+        "n": int(row["clipsPerChampion"]),
+    }
+
+
+# ⭐ 模組層的預設是**最保守的 n=1 列**（門檻最鬆 ⇒ 標記最多 ⇒ 人會看到）。
+# ⚠️ `build()` 會依**實際語料**（每位英雄幾段）重算一次 —— ⛔ 讀不到語料時
+# 不可以退回一個「比較嚴」的門檻，那會靜默地讓該標的對子消失。
+LADDER: dict[str, float] = {}
+
+
+def _clips_per_champion(inventory: list[dict[str, str]]) -> int:
+    """每位英雄**至少**有幾段可用 clip。⭐ 取 min，⛔ 不是平均。
+
+    ⚠️ 階梯的 n 是「每人幾段」而不是「總共幾段」—— 一位只有 1 段的英雄會把
+    整批的判斷力拉回 n=1，⭐ 而平均值會把他藏起來。
+    """
+    per: dict[str, int] = {}
+    for row in inventory:
+        rid = row.get("id") or ""
+        if rid and (row.get("processed_path") or ""):
+            per[rid] = per.get(rid, 0) + 1
+    return min(per.values()) if per else 1
+
+
+# ⭐ 註冊音域閘的語意來源也在同一份 JSON 的 `passRule` 裡
+# （「|dF0| >= 2 semitones OR cosine <= target(n)」）。⚠️ 它今天是**散文**，
+# ⛔ 不是一個欄位 —— 所以這一格仍是字面值，⭐ 但它現在**指得到出處**，
+# 而上面那三個不再是。（⇒ 下一步是讓閘把它表達成欄位。）
 F0_GATE_SEMITONES = 2.0
 
 NONHUMAN_METRIC = "acoustic_descriptor"
@@ -142,6 +195,15 @@ def build(pack: Path, out: Path, bitrate: str) -> dict[str, Any]:
     separation = read_csv(reports / "separation_report.csv")
     instructs = read_csv(reports / "cosyvoice_instructs.csv")
 
+    # ⭐ GH#756 AC4 —— 門檻**依實際語料**從閘的階梯挑一列（⛔ 不是寫死 n=1）。
+    LADDER.update(_load_separation_ladder(_clips_per_champion(inventory)))
+    print(
+        f"[audition] 分離度門檻讀自 _separation-qc-gate.json 的 n={LADDER['n']} 列："
+        f"confusable={LADDER['confusable']} target={LADDER['target']} "
+        f"hardCeiling={LADDER['hard_ceiling']}",
+        file=sys.stderr,
+    )
+
     comparison_path = reports / "encoder_comparison.csv"
     comparison = read_csv(comparison_path) if comparison_path.exists() else []
 
@@ -217,7 +279,7 @@ def build(pack: Path, out: Path, bitrate: str) -> dict[str, Any]:
         # Normalise each encoder against ITS OWN threshold, then take the worse.
         # This surfaces a pair flagged by either encoder without ever mixing the
         # two scales into a single number that gets judged by one bar.
-        return max(p["ecapa"] / ECAPA_HIGH, p["campplus"] / CAMPPLUS_CONFUSABLE)
+        return max(p["ecapa"] / ECAPA_HIGH, p["campplus"] / LADDER["confusable"])
 
     for key in pairs_by_id:
         pairs_by_id[key].sort(key=rank_key, reverse=True)
@@ -323,8 +385,11 @@ def build(pack: Path, out: Path, bitrate: str) -> dict[str, Any]:
         "thresholds": {
             "ecapa_high": ECAPA_HIGH,
             "ecapa_review": ECAPA_REVIEW,
-            "campplus_confusable": CAMPPLUS_CONFUSABLE,
-            "campplus_target": CAMPPLUS_TARGET,
+            "campplus_confusable": LADDER["confusable"],
+            "campplus_hard_ceiling": LADDER["hard_ceiling"],
+            "campplus_pair_budget": LADDER["pair_budget"],
+            "separation_ladder_n": LADDER["n"],
+            "campplus_target": LADDER["target"],
             "f0_gate": F0_GATE_SEMITONES,
         },
         "bitrate": bitrate,
