@@ -2033,6 +2033,19 @@ hosted 頁面**可以累積成歷史紀錄**，同一份計畫改版時重發同
 
 ## 🚀 部署協定（owner 2026-07-25 立，六步，缺一不可）
 
+> ⛔⛔ **先讀這一格再往下讀。**
+>
+> | 要部署到玩家 | ⭐ `bash scripts/mini-deploy.sh deploy` —— **Mac mini M4**（`192.168.0.133`），⭐ 玩家連到的就是這台 |
+> |---|---|
+> | 要操作回滾機 | `scripts/host-deploy.sh` —— GCP `34.81.104.163`，**觀察期到 2026-09-05** |
+>
+> ⚠️ ⭐ 底下**大部分歷史事故註記提到的是 `host-deploy.sh`**（那一支服務了很久）——
+> ⛔ 那些不是「部署指令」，是**事故紀錄**。完整的部署指令在本節的「⭐ 部署（唯一入口）」。
+>
+> ⭐ 而**部署之前先跑一行**（⛔ 不是回想）：`bash scripts/asked-before.sh 搬遷 部署`
+> —— 搬遷是 owner 在對話裡決定的，⛔ **這份文件不會自己知道**。
+> 閘：`packages/shared/src/ops/deployTargetIsCurrent.test.ts`
+
 1. code-cut → commit（要有真的說明）→ 起草 release note
    ⭐ **release note 必須含一張「逐句對票」表**（owner 2026-08-19：
    「這是**很好的開發守則**，避免遺漏又可以揭露足夠版本更新資訊」）——
@@ -2176,33 +2189,61 @@ deploy 完打開 `https://ggd.adms.ai` 的瀏覽器 console，**第一件事就�
 
 ### 🤖 部署指令只有一條 —— 不要憑記憶重打
 
-⛔⛔ **而 2026-08-31 量到：這一行指著的機器，已經不是玩家連到的那一台。**
+⛔⛔ **正式站在 2026-08-29 搬到 Mac mini M4 了（#861）。⭐ 部署指令換了一支。**
 
-| | |
-|---|---|
-| `ggd.adms.ai` 解析到 | **122.116.95.244**（反解 `hinet-ip.hinet.net` ⇒ HiNet 台灣） |
-| 這一行指的 | **34.81.104.163**（GCP） |
-| 證據 | 玩家那邊的 client 是 `index-CwUFBwTw.js`，⭐ 而那個檔在 GCP 那台上 **`find` 不到**；兩邊 `contentVersion` 也不同（`cv_736640f5dba5` vs `cv_d5ea5872fdff`） |
+| | 機器 | 角色 | 指令 |
+|---|---|---|---|
+| ⭐ **正式站** | `192.168.0.133`（LAN）· 對外 `122.116.95.244` HiNet | **玩家連到的就是這台** | ⭐ `scripts/mini-deploy.sh` |
+| 舊 GCP | `34.81.104.163` | **回滾機**（觀察期到 **2026-09-05**） | `scripts/host-deploy.sh` |
 
-⇒ ⭐ **v0.33.0 被部署到了玩家連不到的機器**，而 `host-deploy.sh` 的**九項後置條件全部是綠的**
-（英雄數 · 白名單 · 登錄表 · 錄影 · 版本身分 · 13 頁 · 批核頁 · 帳號數 · wall-clock）。
-⚠️ 根因：**每一項都在驗一個名詞**（這台的內容、這台的映像、這台的帳號），
-⛔ 沒有一項在問「**玩家連到的是不是這一台**」—— ⭐ 與 2026-08-02 那次是同一個病。
-
-⭐ **閘已補**（`host-deploy.sh` 收尾）：解析 `ggd.adms.ai` 比對本機 IP，不符 ⇒ **die 並指名兩個 IP**。
-⛔ 它刻意回非零而不是 warn：**一次部署到錯的機器，與一次沒有部署，對玩家是同一件事。**
-
-⚠️ ⭐ **所以下面那一行在 owner 確認新的部署目標之前，⛔ 不可以照著跑。**
-（`GGD_PUBLIC_HOST` / `GGD_SKIP_PUBLIC_HOST_CHECK=1` 是逃生口，用了要在 commit 訊息裡說為什麼。）
+### ⭐ 部署（唯一入口）
 
 ```bash
-# ⚠️ 舊的 GCP —— CLAUDE.md 自己記著「GCP 要撐到 2026-09-05」，⭐ 那句話現在讀起來就是「它是舊的」
+GGD_PUBLIC_HOST=ggd.adms.ai GGD_SITE_HOSTS="ggd.adms.ai test.adms.ai" \
+GGD_MINI_USER=genieacceler GGD_MINI_HOST=192.168.0.133 \
+bash scripts/mini-deploy.sh deploy
+```
+
+⚠️ ⭐ **mini 會換網路**（owner 逐字：「這台 mac mini **有時候**會放在同一個區網 (maybe 192.168.0.x)」）
+⇒ ⛔ 連不上先 `nc -z 192.168.0.133 22`，⛔ 不要假設那個 IP 永遠對。
+金鑰 `~/.ssh/ggd_mini`（ed25519，密碼短語在鑰匙圈）。
+
+⭐ 這支腳本自己驗六段，第 5 段逐字是「**前門（caddy）—— ⛔ edge 通不代表玩家連得到**」
+（`https://ggd.adms.ai/ → HTTP 200`）⇒ ⭐ 它問的是**關係**，⛔ 不是名詞。
+
+### ⛔⛔ 2026-08-31 的事故：**我把 v0.33.0 部署到了回滾機**
+
+| 段 | 發生了什麼 |
+|---|---|
+| ① | 讀 CLAUDE.md 這一節 ⇒ 它當時寫的是 **GCP ＋ `host-deploy.sh`**（搬遷後**沒有更新**） |
+| ② | ⛔ **沒去查三天前的搬遷** —— 而 `bash scripts/asked-before.sh 搬遷 部署` 一行就查得到 |
+| ③ | 部署到 GCP，⭐ 而**九項後置條件全綠**（英雄數 · 白名單 · 登錄表 · 錄影 · 版本身分 · 13 頁 · 批核頁 · 帳號數 · wall-clock） |
+| ④ | 玩家那邊 **一個位元組都沒變**（版本徽章停在 v0.32.12、`ignoredLookTags` 0 命中） |
+
+⇒ ⭐ **根因不是記錯，是「這份文件比世界舊了三天，而沒有任何東西會紅」** ——
+第三守則的形狀，而它發生在**大家先讀的那份文件**上。
+
+⭐ **兩條規矩（都可以當場檢查，⛔ 不是「要記得」）：**
+
+1. ⭐ **部署之前先跑一次 `bash scripts/asked-before.sh 搬遷 部署`。**
+   ⛔ 不是「回想一下有沒有搬過」——搬遷是 owner 在對話裡決定的，
+   而**這份文件不會自己知道**。
+2. ⭐ **任何「部署到 X」的動作，收尾要驗 `ggd.adms.ai` 解析到的就是 X。**
+   `host-deploy.sh` 已補上這條（不符 ⇒ **die 並指名兩個 IP**）；
+   `mini-deploy.sh` 的第 5 段本來就在驗。
+   ⛔ 刻意回非零而不是 warn：**一次部署到錯的機器，與一次沒有部署，對玩家是同一件事。**
+
+### ⚠️ 回滾機（GCP）—— ⛔ 09-05 之前不要關
+
+```bash
+# ⚠️ 這是**回滾**用的,⛔ 不是正式部署
 ssh -A can@34.81.104.163 'cd /home/can/GGD && bash scripts/host-deploy.sh'
 ```
 
 只改 `content/` 的話加 `--content-only`（`content/` 是 live bind-mount，
 client 每次載入都重抓 `bundle.json`，所以不必重建映像，只要重啟 game shard）。
 想單獨重跑煙霧測試就 `--verify-only`。
+（`GGD_PUBLIC_HOST` / `GGD_SKIP_PUBLIC_HOST_CHECK=1` 是逃生口，用了要在 commit 訊息裡說為什麼。）
 
 **這支腳本會驗證自己的後置條件並在失敗時回非零**：content bundle 的英雄數、
 白名單的英雄數、以及**版本身分不是 `UNSTAMPED-BUILD`**。守衛在
