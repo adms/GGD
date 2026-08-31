@@ -328,6 +328,32 @@ print(("OK" if ok else "BAD"), c.get("ok"), c.get("champions"), rp.get("ok"))
                info "⭐ champions ≤ 2 ⇒ 內容載入失敗退回骨架（2026-08-01 事故的形狀）" ;;
       esac
     fi
+    # ⭐⭐ 7. GH#862 —— **log 上限真的落在跑著的容器上了嗎**
+    #
+    # ⚠️ 這一條刻意量 `docker inspect` 的 **HostConfig.LogConfig**,⛔ 不是 compose 檔:
+    #   ① compose 的 `logging:` 只在**建立容器的那一刻**寫進 HostConfig
+    #      ⇒ 一個**沒有被重建**的舊容器會帶著舊的（無上限）設定繼續跑,
+    #      ⭐ 而 compose 檔看起來完全正確。
+    #   ② 票文的驗收條件逐字是「**量它,⛔ 不是看設定**」。
+    #
+    # ⭐ 這是「配對式後置條件」:它問的是**兩個名詞的關係**
+    #   （compose 說的 vs 容器真的帶著的）—— ⛔ 而分別檢查每一半永遠是綠的。
+    head_ "7. ⭐ log 上限落在**跑著的容器**上（GH#862）"
+    local nocap
+    nocap=$(r "docker ps --filter 'name=ggd-' --format '{{.Names}}' | while read -r n; do
+                 [ -n \"\$n\" ] || continue
+                 v=\$(docker inspect -f '{{index .HostConfig.LogConfig.Config \"max-size\"}}' \"\$n\" 2>/dev/null)
+                 [ -n \"\$v\" ] || printf '%s ' \"\$n\"
+               done" 2>/dev/null || true)
+    if [ -z "${nocap// /}" ]; then
+      ok "每一個跑著的容器都帶著 max-size（⇒ caddy 的 2.37G 不會再長）"
+    else
+      bad "⛔ 這幾個容器**沒有** log 上限：${nocap}"
+      info "⭐ 它們是**沒被重建**的舊容器 —— compose 的 logging: 只在建立那一刻生效"
+      info "   修法：docker compose -f docker/compose.yaml -f docker/compose.family.yaml \\"
+      info "         --env-file docker/.env up -d --force-recreate ${nocap}"
+    fi
+
     # ⭐⭐ **明確回 0** —— ⛔ 沒有它,函式會落到最後一個指令的離開碼
     #   ⇒ 2026-08-30 實測:每一項檢查都綠、HTTP 200,⭐ 而 `mini-deploy.sh deploy` 回 **1**
     #     ⇒ `ship-it.sh` 逐字印出「⚠️ 部署失敗（要 VPN／區網才連得到 mini）」——
