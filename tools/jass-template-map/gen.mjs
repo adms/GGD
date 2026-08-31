@@ -40,12 +40,19 @@ function shippedByNumber() {
 }
 
 export function buildMap() {
-  const REAL_SUMMON = /召喚|summon|'n0|olddie|生命週期/i;
+  // ⚠️⚠️ ⭐ **順序是承重的：dummy 先問**。
+  //   第一版把「真召喚」的正則排前面 ⇒ `59-04 野戰型陽電子砲` 被判成真召喚，
+  //   ⛔ 而它的 notes 逐字是「純**召喚砲擊 dummy** ＋ 演出」——
+  //   ⭐ 「召喚」兩個字騙了正則，而那正是 dummy 載體的標準寫法。
+  //   ⇒ 判準是「**有沒有生一隻活著的單位**」，⛔ 不是「有沒有出現召喚兩個字」。
   const DUMMY_CARRIER = /dummy/i;
+  /** ⭐ 真召喚的證據：生出來的東西**有自己的生命週期**（死亡/清理配對觸發、單位 id）。 */
+  const REAL_SUMMON = /'n0[0-9a-z]{2}'|olddie|生命週期|死亡\s*\d*\s*s?\s*後|清理配對/i;
   const shapeOf = (s) => {
     const t = `${s.evidence ?? ""} ${s.notes ?? ""}`;
     if (REAL_SUMMON.test(t)) return "真召喚";
     if (DUMMY_CARRIER.test(t)) return "dummy 載體";
+    if (/召喚|summon/i.test(t)) return "判不出來"; // ⭐ 只有「召喚」兩個字 ⇒ ⛔ 不算證據
     return "判不出來";
   };
 
