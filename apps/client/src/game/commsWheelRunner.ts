@@ -8,6 +8,7 @@
  * 這個檔裡沒有任何一句寫著「retreat 要播哪一句」。
  */
 import { playContextualVoice } from "../audio/contextualVoice";
+import { recordCommsWheel } from "../net/RoomStore";
 import { uiCues } from "../ui/uiCuesConfig";
 import { CommsWheelState, type CommsWheelConfig } from "./commsWheel";
 
@@ -19,6 +20,7 @@ export interface CommsWheelRunner {
     onCommsKeyDown: (code: string, at: { x: number; y: number }) => boolean;
     onCommsKeyUp: (code: string) => void;
     onCommsCancel: () => void;
+    onCommsPointerMove: (x: number, y: number) => void;
   };
   /** 給 HUD 畫用。 */
   readonly state: CommsWheelState;
@@ -36,18 +38,42 @@ export function commsWheelRunner(champId: () => string | null): CommsWheelRunner
     state.setConfig(uiCues().commsWheel ?? FALLBACK);
     return state;
   };
+  // ⭐ 把「畫它需要的那幾個數字」推進 HUD store —— ⛔ 讓 HUD 不必 import GameApp。
+  // ⚠️ ⭐ `centre` 用**同一個物件參考**（開一次只建一次）——
+  // `recordCommsWheel` 靠參考相等判斷「沒變」，⛔ 每次新建一個 {x,y} 會讓它每幀都寫。
+  let centreRef: { x: number; y: number } | null = null;
+  const publish = (): void => {
+    const c = state.centre;
+    if (c === null) centreRef = null;
+    else if (centreRef === null || centreRef.x !== c.x || centreRef.y !== c.y) centreRef = c;
+    recordCommsWheel(
+      centreRef ? { centre: centreRef, entries: state.entries, hovered: state.hoveredIndex } : null,
+    );
+  };
   return {
     state,
     pointerMove: (x, y) => state.pointerMove(x, y),
     inputDeps: {
-      onCommsKeyDown: (code, at) => sync().keyDown(code, at),
+      onCommsKeyDown: (code, at) => {
+        const taken = sync().keyDown(code, at);
+        publish();
+        return taken;
+      },
       onCommsKeyUp: (code) => {
         const picked = state.keyUp(code);
         const id = champId();
         // ⛔ 死區＝null＝取消，⛔ 沒有英雄＝沒有語音包 —— 兩種都靜靜不播。
         if (picked && id) playContextualVoice(id, picked.voiceCategory as never);
+        publish();
       },
-      onCommsCancel: () => state.cancel(),
+      onCommsCancel: () => {
+        state.cancel();
+        publish();
+      },
+      onCommsPointerMove: (x, y) => {
+        state.pointerMove(x, y);
+        publish();
+      },
     },
   };
 }

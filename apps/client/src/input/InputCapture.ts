@@ -135,6 +135,8 @@ export interface InputDeps {
   onCommsKeyUp?: (code: string) => void;
   /** ⭐ 失焦／換場：關掉且不送出。 */
   onCommsCancel?: () => void;
+  /** ⭐ 指標移動 —— ⛔ 缺了它輪盤指不到任何一格（見 `trackCursor` 的註解）。 */
+  onCommsPointerMove?: (x: number, y: number) => void;
   /** cursor → ground plane (from the camera rig); null when off-world */
   screenToGround(clientX: number, clientY: number): Vec2 | null;
   /** local champion's current (predicted) position */
@@ -335,6 +337,11 @@ export class InputCapture {
     const tag = (ev.target as HTMLElement | null)?.tagName;
     if (tag === "INPUT" || tag === "TEXTAREA") return;
 
+    // ⭐ GH#731 通訊輪盤 —— 按住開。⚠️ 它**先於技能鍵**判斷：輪盤的鍵不在
+    // `SLOT_BY_CODE` 裡，⛔ 但它必須吃掉自己的那一下（`repeat` 也吃 ——
+    // ⛔ 否則按住不放會每一幀重開一次而把指向重設成 null）。
+    if (this.deps.onCommsKeyDown?.(ev.code, { x: this.cursor.x, y: this.cursor.y })) return;
+
     const slot = SLOT_BY_CODE[ev.code];
     if (slot && !ev.repeat) {
       // 鍵盤 quick-cast 立即出手 ⇒ 任何還掛著的滑鼠二段瞄準就過時了 (GH#639)。
@@ -436,6 +443,10 @@ export class InputCapture {
     this.cursor.x = ev.clientX - rect.left;
     this.cursor.y = ev.clientY - rect.top;
     this.cursor.inside = true;
+    // ⭐⭐ GH#731 —— ⛔ **沒有這一行，輪盤永遠送不出東西**：`hovered` 一直是 null
+    // ⇒ `keyUp` 一律當成「死區＝取消」。⭐ 這正是失敗形態⑧（消費端存在，
+    // 而它消費不到）—— 狀態機、config、UI 標籤、守衛全部齊了，⛔ 而**沒有人餵它座標**。
+    this.deps.onCommsPointerMove?.(this.cursor.x, this.cursor.y);
   }
 
   private ground(ev: MouseEvent): Vec2 | null {

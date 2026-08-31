@@ -11,6 +11,7 @@ import { hudTouch } from "./hud/HudSlot";
 import { hudSlotHeight, hudSlotStyle } from "./hud/hudLayout";
 import { useHudSlotHidden } from "./hud/useHudPanels";
 import { RoundOverPill } from "./hud/RoundOverPill";
+import { CommsWheelOverlay } from "./hud/CommsWheelOverlay";
 import { EquipmentBar } from "./hud/EquipmentBar";
 import { ControlLegend } from "./ControlLegend";
 import { CouchHudGrid } from "./components/CouchHudGrid";
@@ -217,6 +218,7 @@ const HUD_LABELS: HudBoundaryLabels = new Map<unknown, string>([
   [PrepClock, "商店倒數"],
   [ReadyButton, "準備按鈕"],
   [RoundOverPill, "回合結束提示"],
+  [CommsWheelOverlay, "通訊輪盤"],
   [RoundVictoryPanel, "回合勝利畫面"],
   [HumanRosterPanel, "真人玩家名冊"],
   [MatchEndPanel, "結算畫面"],

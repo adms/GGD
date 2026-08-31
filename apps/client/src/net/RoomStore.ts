@@ -516,6 +516,16 @@ export interface HudState {
    * `null` = 還沒收到第一則（比賽剛開始）。
    */
   roundScore: RoundScoreView | null;
+  /**
+   * ⭐ GH#731 通訊輪盤的**畫面狀態**（圓心／格子／指到誰）。
+   * `null` ＝ 沒開。⛔ 它不是輸入狀態 —— 真正的狀態機住 `game/commsWheel.ts`，
+   * 這裡只是**畫它需要的那幾個數字**（⭐ 讓 HUD 不必 import GameApp）。
+   */
+  commsWheel: {
+    centre: { x: number; y: number };
+    entries: readonly { id: string; zh: string; voiceCategory: string }[];
+    hovered: number | null;
+  } | null;
 }
 
 /**
@@ -713,6 +723,7 @@ const initial: HudState = {
   mobBossLive: [],
   marks: [],
   roundScore: null,
+  commsWheel: null,
 };
 
 let shopEventSeq = 0;
@@ -1237,6 +1248,23 @@ export function recordRoundSettlement(ev: EventMessage, localSeatId: number | nu
       final: data?.final === true,
     },
   });
+}
+
+/**
+ * ⭐ GH#731 —— 輪盤畫面狀態的唯一寫入端。
+ *
+ * ⚠️ ⭐ **它必須住這個檔**：`client architecture gate (client-08)` 逐字禁止
+ * 「`net/RoomStore.ts` 以外的 zustand setState」與「逐幀寫入」。
+ * ⇒ 呼叫端只給值，⛔ 它自己決定要不要寫。
+ *
+ * ⭐ **同值就不寫** —— 指標每動一個 px 都會叫它，⛔ 而只有「指到的格子換了」
+ * 才是一次真的狀態改變。⇒ 逐幀 setState 會讓整個 HUD 每幀重繪。
+ */
+export function recordCommsWheel(next: HudState["commsWheel"]): void {
+  const prev = hudStore.getState().commsWheel;
+  if (prev === next) return;
+  if (prev && next && prev.hovered === next.hovered && prev.centre === next.centre) return;
+  hudStore.setState({ commsWheel: next });
 }
 
 export function recordMarkEvent(
