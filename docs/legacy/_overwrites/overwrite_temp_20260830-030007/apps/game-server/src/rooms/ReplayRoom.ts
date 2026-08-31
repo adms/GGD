@@ -1,0 +1,335 @@
+/**
+ * ReplayRoom — the viewer's end of a recorded match.
+ *
+ * WHY A ROOM AND NOT A NEW VIEWER. The client already has a renderer, an
+ * interpolation buffer, a HUD and a full projection of `MatchState`. Re-running
+ * the recorded match here and publishing it through the SAME schema means a
+ * replay is, to the client, just a match whose seats nobody controls — so the
+ * owner watches it with the exact renderer his family played on, and a second
+ * renderer (which would drift out of sync with the first the moment either
+ * changed) never has to exist.
+ *
+ * WHAT MAKES IT A REPLAY AND NOT A VIDEO: the sim really re-runs, so the viewer
+ * can pause, change speed, jump to a round, or scrub to any tick, and the camera
+ * and HUD stay live throughout. Seeking rebuilds from tick 0 and fast-forwards
+ * (there is no mid-match state snapshot to jump into — driver latches and the
+ * input mailbox live outside the sim), which at ~0.1 ms/tick is a second or two
+ * for a whole match, chunked so it never pins the event loop.
+ *
+ * INPUT IS REFUSED. A replay room registers no INPUT / SELECT_CHAMPION / CHEAT
+ * handler, so a viewer cannot influence the match being replayed — the only
+ * channel is the transport control below.
+ */
+import { Room, type Client } from "colyseus";
+import { MatchState } from "@ggd/shared/protocol/schema";
+import { MSG, SETTLEMENT_EVENT } from "@ggd/shared/protocol/messages";
+import {
+  REPLAY_MSG,
+  type ReplayControlAction,
+  type ReplayDivergedMessage,
+  type ReplayRefusedMessage,
+  type ReplayStatusMessage,
+} from "@ggd/shared/protocol/replay";
+import { TICK_MS } from "@ggd/shared/constants";
+import type { HumanDriver } from "../seat/HumanDriver";
+import { projectSnapshot } from "../net/snapshot";
+import { ZoneViewSync } from "../net/zoneView";
+import { isFannedOutEvent } from "../net/eventFanout";
+import { EventBatcher, resolveEventBatch } from "../net/eventBatch";
+import { ReplayPlayer, type ReplayRefusal } from "../replay/Player";
+import { verifyReplayTicket } from "../replay/access";
+
+export interface ReplayRoomOptions {
+  /** Recording id (== matchId). */
+  replayId?: string;
+  /**
+   * Admin-minted, short-lived proof that the viewer is allowed to watch. Only
+   * enforced when a shared secret is configured; recordings carry player names,
+   * so on a real deploy they are never viewable without one.
+   */
+  ticket?: string;
+}
+
+const SHARED_SECRET = process.env.PLATFORM_GAME_SHARED_SECRET ?? "";
+/** Speed clamp: slow enough to study a trade, fast enough to skim a round. */
+const MIN_SPEED = 0.25;
+const MAX_SPEED = 8;
+/** Ticks per fast-forward slice while seeking (bounded event-loop work). */
+const SEEK_SLICE = 400;
+
+/** 回放沒有座位也沒有 duel ⇒ 兩個查詢都是空的（`cull: false` 其實不會問它）。 */
+const REPLAY_VIEW_SOURCE = {
+  ownZonesBySession: () => new Map<string, number[]>(),
+  liveZones: () => [] as number[],
+};
+
+export class ReplayRoom extends Room<MatchState> {
+  private player: ReplayPlayer | null = null;
+  private refusal: ReplayRefusal | null = null;
+  private playing = false;
+  private speed = 1;
+  private seeking = false;
+  private accumulator = 0;
+  /** Guards against emitting the settlement screen more than once. */
+  private settlementSent = false;
+  /** A replay has no live humans; projectSnapshot wants the map regardless. */
+  private readonly noDrivers = new Map<number, HumanDriver>();
+  /**
+   * Same per-tick batching as the live room (net/eventBatch). The whitelist is
+   * shared so the two rooms forward the identical SET of events; the batcher is
+   * shared so they also forward them on the identical CHANNEL — a replay whose
+   * events arrived one-per-message while the live match batched would be a
+   * second wire nobody exercises. The replay has no single-recipient events, so
+   * there is no private-flush case here.
+   */
+  private readonly batcher = new EventBatcher(resolveEventBatch(), {
+    one: (payload) => this.broadcast(MSG.EVENT, payload),
+    batch: (payload) => this.broadcast(MSG.EVENT_BATCH, payload),
+  });
+
+  override async onAuth(_client: Client, options: Record<string, unknown>): Promise<boolean> {
+    if (!SHARED_SECRET) return true; // dev/LAN: the whole box is the operator's
+    const ticket = typeof options.ticket === "string" ? options.ticket : "";
+    const replayId = typeof options.replayId === "string" ? options.replayId : "";
+    return verifyReplayTicket(SHARED_SECRET, ticket, replayId);
+  }
+
+  override async onCreate(options: ReplayRoomOptions): Promise<void> {
+    // Same 15 s default, same failure: a viewer opening a replay downloads the
+    // whole asset set before connecting. See MatchRoom.onCreate for the full
+    // reasoning behind 120.
+    this.setSeatReservationTime(120);
+    this.maxClients = 4; // the owner, maybe someone looking over his shoulder
+    this.autoDispose = true;
+    this.setState(new MatchState());
+
+    const opened = await ReplayPlayer.open(String(options.replayId ?? ""));
+    if ("refusal" in opened) {
+      // REFUSE, LOUDLY AND EARLY. Nothing is simulated and nothing is projected:
+      // a viewer must never see a single frame of a match this recording does not
+      // actually describe.
+      this.refusal = opened.refusal;
+      console.warn(`[replay] refused to play ${options.replayId}: ${opened.refusal.code}`);
+      return;
+    }
+    this.player = opened.player;
+    this.state.matchId = this.player.header.matchId;
+    this.state.seed = this.player.header.seed;
+    this.state.contentVersion = this.player.header.contentVersion;
+    this.state.combatEnvJson = JSON.stringify(this.player.header.combatEnv);
+    // 基礎加成 —— the controller resolved it from content (config.base-bonus@1);
+    // publishing the SAME object is what keeps the champ-profile / shop preview
+    // from disagreeing with the health bar. Never re-read the doc here: two
+    // readers is how the two numbers drift apart.
+    this.state.baseBonusJson = JSON.stringify(this.player.ctl.world.baseBonus);
+    // 屬性上限 (GH#286) —— 同上,同一份物件。
+    this.state.statCapsJson = JSON.stringify(this.player.ctl.world.statCaps);
+    projectSnapshot(this.player.ctl, this.state, this.noDrivers);
+    this.syncViews();
+
+    this.onMessage(REPLAY_MSG.CONTROL, (client, msg: ReplayControlAction) => {
+      void this.control(client, msg);
+    });
+    this.setSimulationInterval((dt) => this.loop(dt), TICK_MS / 2);
+  }
+
+  /**
+   * ⭐ GH#760 —— 回放觀眾看的是**整場**，⛔ 沒有「自己那一區」可言，所以這一間房
+   * 一律用「全部可見」那條路（`cull: false`）。
+   *
+   * ⚠️ 它**不是**可有可無：`MatchState.entities` 帶著 `view: true`，而
+   * `SchemaSerializer` 對 `client.view == null` 的客戶端送的是不含 view-tagged
+   * 欄位的共用編碼 ⇒ ⛔ 少了這一支，回放畫面上一個實體都不會出現。
+   */
+  private readonly zoneViews = new ZoneViewSync(false);
+
+  override onJoin(client: Client): void {
+    // GH#760 —— 先給 view，⛔ 在任何 `send` / full state 之前（見欄位說明）。
+    // The refusal / status is pushed on join so a viewer arriving late (or a
+    // reconnect) always learns the current state without asking.
+    if (this.refusal) {
+      client.send(REPLAY_MSG.REFUSED, this.refusal satisfies ReplayRefusedMessage);
+      return;
+    }
+    this.zoneViews.onJoin(client); // MUTATION-816-B (temporary): moved after the early return
+    this.sendStatus(client);
+    if (this.player?.divergence) client.send(REPLAY_MSG.DIVERGED, this.player.divergence);
+  }
+
+  private async control(client: Client, msg: ReplayControlAction): Promise<void> {
+    const p = this.player;
+    if (!p || !msg || this.seeking) return;
+    switch (msg.action) {
+      case "play":
+        // Refuse to resume a diverged replay: everything past the divergence is
+        // a match that never happened, and showing it is the exact failure this
+        // feature exists to prevent.
+        if (!p.divergence && !p.finished) this.playing = true;
+        break;
+      case "pause":
+        this.playing = false;
+        break;
+      case "speed":
+        this.speed = Math.min(MAX_SPEED, Math.max(MIN_SPEED, Number(msg.speed) || 1));
+        break;
+      case "restart":
+        await this.seekTo(0);
+        break;
+      case "seekTick":
+        await this.seekTo(Math.max(0, Math.floor(Number(msg.tick) || 0)));
+        break;
+      case "seekRound": {
+        const tick = p.roundStartTick(Math.floor(Number(msg.round) || 1));
+        if (tick !== null) await this.seekTo(tick);
+        break;
+      }
+    }
+    this.broadcastStatus();
+  }
+
+  /**
+   * Rebuild-and-fast-forward. Digests are verified for every intermediate tick
+   * exactly as during normal playback, so a seek can (and should) surface a
+   * divergence that lies before the destination.
+   */
+  private async seekTo(targetTick: number): Promise<void> {
+    const p = this.player;
+    if (!p) return;
+    const wasPlaying = this.playing;
+    this.playing = false;
+    this.seeking = true;
+    this.settlementSent = false; // rebuilding from 0 — the end screen can show again
+    this.broadcastStatus();
+    p.reset();
+    while (p.tick < targetTick && !p.stopped) {
+      p.runSlice(Math.min(SEEK_SLICE, targetTick - p.tick));
+      await new Promise<void>((r) => setImmediate(r));
+    }
+    this.seeking = false;
+    this.accumulator = 0;
+    projectSnapshot(p.ctl, this.state, this.noDrivers);
+    this.syncViews();
+    if (p.divergence) this.reportDivergence(p.divergence);
+    else this.playing = wasPlaying && !p.finished;
+    this.broadcastStatus();
+  }
+
+  /**
+   * 把每個觀眾的 view 對齊「全部實體」。⭐ 共用**一份** `StateView`，所以 N 個
+   * 觀眾只編碼一次（`SchemaSerializer` 用 view 物件當 cache key）。
+   */
+  private syncViews(): void {
+    this.zoneViews.sync(this.state, this.clients, REPLAY_VIEW_SOURCE);
+  }
+
+  private loop(dtMs: number): void {
+    const p = this.player;
+    if (!p || !this.playing || this.seeking) return;
+    this.accumulator += dtMs * this.speed;
+    // Bound the per-frame burst the same way the live room does, so an 8x replay
+    // cannot starve the snapshot broadcast (or a live match sharing the loop).
+    let steps = Math.min(Math.floor(this.accumulator / TICK_MS), Math.ceil(MAX_SPEED * 2));
+    this.accumulator -= steps * TICK_MS;
+    let stepped = false;
+    while (steps-- > 0) {
+      if (!p.step()) {
+        this.playing = false;
+        if (p.divergence) this.reportDivergence(p.divergence);
+        else {
+          // Reached the end cleanly — show the same victory-settlement screen the
+          // live match ended on (assembled deterministically by the re-run ctl).
+          this.emitSettlement();
+          this.broadcastStatus();
+        }
+        break;
+      }
+      // Fan out this tick's combat events BEFORE the next step overwrites
+      // world.events — otherwise a batched (>1x / 8x) frame would forward only
+      // the final step's events and the replay would go partly combat-mute at
+      // speed. Same whitelist as the live MatchRoom (net/eventFanout).
+      this.fanOutEvents(p);
+      stepped = true;
+    }
+    if (stepped) {
+      projectSnapshot(p.ctl, this.state, this.noDrivers);
+      this.syncViews();
+      // Cheap heartbeat so the viewer's scrub bar tracks without a message per
+      // tick: once every ~half second of playback.
+      if (p.tick % 15 === 0) this.broadcastStatus();
+    }
+  }
+
+  /**
+   * Forward the sim events the just-run tick produced, so the replay renders the
+   * exact same damage numbers, animations, hit sparks, projectiles and shop
+   * feedback the live match did. The re-run sim regenerates `world.events`
+   * deterministically each tick; without this the viewer would see HP bars drain
+   * with no combat visuals at all.
+   */
+  private fanOutEvents(p: ReplayPlayer): void {
+    for (const ev of p.ctl.world.events) {
+      if (isFannedOutEvent(ev)) {
+        this.batcher.push({ type: ev.type, tick: ev.tick, data: ev.data });
+      }
+    }
+    // Flush inside the per-step loop, not after it: at 8x playback this method
+    // runs once per replayed TICK, and a batch must never span two of them.
+    this.batcher.flush();
+  }
+
+  /** Broadcast the victory-settlement screen once, at clean end of playback. */
+  private emitSettlement(): void {
+    const p = this.player;
+    if (!p || this.settlementSent || !p.ctl.settlement) return;
+    this.settlementSent = true;
+    this.broadcast(MSG.EVENT, {
+      type: SETTLEMENT_EVENT,
+      tick: p.ctl.world.tick,
+      data: p.ctl.settlement,
+    });
+  }
+
+  /** STOP and say exactly where and why. Never a warning, never a continue. */
+  private reportDivergence(d: ReplayDivergedMessage): void {
+    this.playing = false;
+    console.error(
+      `[replay ${this.player?.header.matchId}] DIVERGED at tick ${d.tick} (${d.kind}): ` +
+        `world expected ${d.expectedWorld} got ${d.actualWorld}, ` +
+        `host expected ${d.expectedHost} got ${d.actualHost}`,
+    );
+    this.broadcast(REPLAY_MSG.DIVERGED, d);
+    this.broadcastStatus();
+  }
+
+  private status(): ReplayStatusMessage {
+    const p = this.player!;
+    return {
+      matchId: p.header.matchId,
+      startedAt: p.header.startedAt,
+      tick: p.tick,
+      lastTick: p.lastRecordedTick,
+      playing: this.playing,
+      speed: this.speed,
+      seeking: this.seeking,
+      finished: p.finished,
+      truncated: p.truncated,
+      rounds: p.rounds,
+      contentVersion: p.header.contentVersion,
+      buildStamp: p.header.buildStamp,
+      seats: p.header.seats.map((s) => ({
+        seatId: s.seatId,
+        teamId: s.teamId,
+        displayName: s.displayName,
+        isBot: s.isBot,
+      })),
+    };
+  }
+
+  private sendStatus(client: Client): void {
+    if (this.player) client.send(REPLAY_MSG.STATUS, this.status());
+  }
+
+  private broadcastStatus(): void {
+    if (this.player) this.broadcast(REPLAY_MSG.STATUS, this.status());
+  }
+}

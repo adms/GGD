@@ -1,0 +1,1482 @@
+/**
+ * hudLayout — the ONE source of truth for in-match HUD corner real estate.
+ *
+ * WHY THIS EXISTS (task #42): the ☰ pause button, the FPS pill and the
+ * team-lives bar each hard-coded `position:absolute; left:10; top:10` in three
+ * unrelated files, so they rendered on top of each other, and the expanded perf
+ * panel pinned itself at a magic `top:40` that landed under the team bar. HUD
+ * chrome is mounted from SEVERAL different React parents (HudRoot, AppRoot's
+ * MatchOverlay, a <body> portal for the audio toggle), so a plain flex
+ * container can never own the stacking — the corner geometry has to be a shared
+ * DECLARATION instead.
+ *
+ * THE MODEL
+ *   - Four corners. Each corner is a stack that grows INWARD from its edge:
+ *     top-* stack downward, bottom-* stack upward.
+ *   - Every piece of HUD chrome that claims corner space declares a slot here
+ *     (corner + order + the height it reserves). It NEVER writes its own
+ *     top/left/right/bottom.
+ *   - Offsets are computed from the declared heights, not measured from the
+ *     DOM: a hidden slot (e.g. the team bar before teams exist) simply leaves
+ *     its gap empty. Deterministic, testable in node, and immune to the mount
+ *     order of the components.
+ *   - `order` is unique per corner and enforced by hudLayout.test.ts, so the
+ *     "two components silently claim the same corner" bug cannot come back.
+ *
+ * SAFE AREA (do not regress): the notch / home-indicator inset is owned ONCE by
+ * `#hud-root` in ui/mobile.css (`@media (pointer: coarse)`), which insets the
+ * whole HUD layer. Slots therefore use PLAIN px offsets — adding env() here
+ * would double-count the inset. The one exception is chrome that escapes
+ * #hud-root (the <body>-portaled audio toggle, position:fixed): it composes its
+ * own `calc(env(safe-area-inset-*) + offset)` from the raw number this module
+ * returns.
+ *
+ * TOUCH: slots that hold a tappable control declare `touchHeight` >= 44px
+ * (Apple HIG). Components size their control from `hudSlotHeight()`, so the
+ * touch target and the reserved space can never drift apart.
+ *
+ * A slot may also live in a DIFFERENT CORNER on coarse pointers
+ * (`touchCorner` + `touchOrder`). Phone landscape is ~375-430px tall: a corner
+ * that is comfortable on a 720p desktop can be physically impossible there, and
+ * the honest fix is to re-home the panel, not to shave pixels off it. The
+ * minimap does exactly this (desktop bottom-right, like LoL; touch top-left,
+ * like Wild Rift / Mobile Legends, because bottom-right is the ability arc).
+ *
+ * WIDTH: every slot also RESERVES a width. Same contract as the height — a
+ * declared upper bound on what the component paints, not a DOM measurement — so
+ * `hudSlotRect()` can hand the layout tests a real rectangle per viewport and
+ * the minimap guard can prove the map lands on empty screen.
+ */
+import type { CSSProperties } from "react";
+// task #245: the build stamp's reserved bottom strip. Imported rather than
+// re-stated so the badge's own geometry and this contract cannot disagree.
+import { VERSION_BADGE_BAND_PX, VERSION_BADGE_BAND_W_PX } from "@ggd/shared/versionBadge";
+// owner 2026-08-10: the player picks a HUD scale tier. ⚠️ This is a DELIBERATE
+// import cycle — hudScale reads HUD_TOUCH_TARGET back from here — and it is
+// safe in exactly one direction: neither module may touch the other at module
+// LOAD time. Everything below is called from inside a function. ⛔ Do not hoist
+// any of these into a module-level const.
+import {
+  DEFAULT_HUD_SCALE_TIER,
+  HUD_SCALE_TIERS,
+  hudScale,
+  hudScaleMult,
+  hudScaleTier,
+  type HudScaleTier,
+} from "../hudScale";
+
+export type HudCorner = "top-left" | "top-right" | "bottom-left" | "bottom-right";
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * ⭐⭐ GH#873 —— 觸控下 `gold-level` 的**形狀**，一格可以一鍵回頭的開關。
+ *
+ * ⚠️ 為什麼它是一個開關而不是一個常數（第一守則：決策點也要可調）：把金錢/等級
+ * 讀數從「右下角的一疊」壓成「攻擊鈕底下的一條」是一個**取捨** —— 條狀讀得快、
+ * 不擋按鈕，但它裝不下 xp 與 skill-point 那兩行。owner 哪天想要回原本的一疊，
+ * 成本必須是**翻一格**，⛔ 不是一次 PR。
+ *
+ * ⚠️ **住處只有這裡一個**：`hudLayout` 用它算保留矩形、`components/GoldLevel.tsx`
+ * 用它決定畫成一行還是一疊。⛔ 兩邊都不可以再抄一份高度（第〇·四守則）。
+ *
+ * ⚠️ 出貨的**三個住處**還缺兩個（`config.hud-layout@1` 的 Zod ＋ admin 欄位）——
+ * 那份 config 文件今天還不存在，狀態逐字記在 `hud/hudBottomCluster.ts` 的模組
+ * 檔頭（WIRING STATUS）。這裡先把**開關本身**與它的 runtime seam 落地，形狀照抄
+ * 隔壁的 `applyHudOverflowPolicy` / `applyHudClusterOverride`。
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/**
+ * `strip`  —— 攻擊鈕**底下**的一條（出貨預設，GH#873 的新排法）。
+ * `column` —— 2026-08-29 以前那一疊（回頭用；⛔ 它與攻擊鈕重疊 88×86）。
+ */
+export type GoldLevelTouchLayout = "strip" | "column";
+
+/**
+ * 兩種形狀各自保留的高度（px）。
+ *
+ * ⭐ **30 是算出來的上界，⛔ 不是挑一個好看的數字**：觸控攻擊鈕的近緣距畫面底部
+ * `attackCenter(84) − attackSize/2(44) = 40` px（`touchControlsRect`），而槽位從
+ * `HUD_EDGE(10)` 起算 ⇒ 條狀的高度上界正好是 **40 − 10 = 30**。
+ * ⚠️ 再高一格就重新壓到攻擊鈕上，而 `touchControlsCollision.test.ts` 會指名它。
+ *
+ * 116 是舊值（44 頭像 ＋ 8 ＋ 文字塊），留著是為了讓 `column` 真的回得去。
+ */
+export const GOLD_LEVEL_TOUCH_H = { strip: 30, column: 116 } as const;
+
+/** 條狀模式下頭像的邊長：30 的條扣掉 3px 上下內距 = 24。 */
+export const GOLD_LEVEL_STRIP_PORTRAIT_PX = 24;
+
+/** 出貨值 —— ⛔ 只有一個住處；`hudBottomCluster.SHIPPED_HUD_CLUSTER` 讀這一個。 */
+export const GOLD_LEVEL_TOUCH_LAYOUT_DEFAULT: GoldLevelTouchLayout = "strip";
+
+let goldLevelTouch: GoldLevelTouchLayout = GOLD_LEVEL_TOUCH_LAYOUT_DEFAULT;
+
+/** 覆寫觸控形狀（`null` / 未知值 = 回到出貨預設 `strip`）。 */
+export function applyGoldLevelTouchLayout(v: GoldLevelTouchLayout | null | undefined): void {
+  goldLevelTouch = v === "column" ? "column" : GOLD_LEVEL_TOUCH_LAYOUT_DEFAULT;
+}
+
+/** 現在正在排版的觸控形狀。 */
+export function goldLevelTouchLayout(): GoldLevelTouchLayout {
+  return goldLevelTouch;
+}
+
+export const HUD_CORNERS: readonly HudCorner[] = [
+  "top-left",
+  "top-right",
+  "bottom-left",
+  "bottom-right",
+];
+
+/** px from the viewport edge to the first slot of a corner (both axes). */
+export const HUD_EDGE = 10;
+
+/** px of breathing room between two stacked slots in the same corner. */
+export const HUD_GAP = 8;
+
+/** Minimum interactive target on coarse pointers (Apple HIG). */
+export const HUD_TOUCH_TARGET = 44;
+
+/**
+ * HUD stacking order (inside #hud-root, which is z-index 10):
+ *   slot     — corner chrome; above the touch-control layer (z 20)
+ *   expanded — a panel opened FROM a slot (scoreboard list, cheat console), so
+ *              it paints over the slots stacked below it
+ *   screen   — full-screen settings sheet (ui/SettingsScreen)
+ *   focus    — a modal CHOICE that must be answered before the screen behind it
+ *              is useful again (the intermission 三選一 draft), plus its scrim.
+ *              Above `screen` because it demotes the shop card, BELOW the audio
+ *              cluster's Z_TOP because it is a choice inside a phase, not a
+ *              screen — the priority order and its scrim live in
+ *              ui/panels/intermissionLayout.ts (task #107, playtest P2).
+ *   modal    — blocking full-screen overlays (pause menu, codex, asset console)
+ *
+ * THE AUDIO TOGGLE portals to <body> at z-index 2147483000 (AudioToggle.tsx
+ * Z_TOP) so it rides over the in-match HUD. But a BLOCKING MODAL must out-rank
+ * it, or the toggle's invisible top-right box sits over the modal's ✕ 關閉 and
+ * the modal cannot be closed — the "關閉不掉" bug the user hit on the credits
+ * page. So `modal` is deliberately ABOVE Z_TOP. A covered audio toggle while a
+ * full-screen modal is open is the correct trade; an un-closable modal is not.
+ */
+export const HUD_Z = {
+  slot: 25,
+  expanded: 30,
+  screen: 40,
+  focus: 45,
+  modal: 2147483600,
+} as const;
+
+export interface HudSlotSpec {
+  /** stable id used by the component that renders the slot */
+  id: string;
+  corner: HudCorner;
+  /** 0 hugs the corner; each higher order stacks one step further inward */
+  order: number;
+  /** px of stack space this slot reserves on fine pointers */
+  height: number;
+  /** px reserved on coarse pointers (defaults to `height`) */
+  touchHeight?: number;
+  /** px of horizontal space this slot reserves (upper bound, see module doc) */
+  width: number;
+  /** px of width reserved on coarse pointers (defaults to `width`) */
+  touchWidth?: number;
+  /** corner this slot moves to on coarse pointers (defaults to `corner`) */
+  touchCorner?: HudCorner;
+  /** stack order in `touchCorner` (defaults to `order`) */
+  touchOrder?: number;
+  /** the file that renders it — kept honest by hudLayout.test.ts */
+  owner: string;
+  /** false = still positions itself; the slot is RESERVED so nothing else takes it */
+  managed: boolean;
+  /**
+   * true = only present behind a dev/settings toggle. Panels sizing themselves
+   * against a corner reserve space for the PERSISTENT chrome only, so a
+   * dev-only overlay never shrinks the real UI (`skipTransient`).
+   */
+  transient?: boolean;
+  /**
+   * true = a CONTENT panel parked in a corner, not chrome. A full-size panel
+   * docking against the corner (the shop) may take its space and paint over
+   * it — see `hudStackEnd({ skipOverlay })`. Without this, the touch minimap
+   * (a 116px block in the top-left stack) would push the shop panel down to a
+   * ~60px sliver on a 375px-tall phone.
+   *
+   * `overlay` ALSO means "accepts being painted over by an open panel": it is
+   * exempt from the panel-cover guard (§ HUD_PANELS) the same way it opts into
+   * being covered here. The minimap is the only one.
+   */
+  overlay?: boolean;
+  /**
+   * true = this slot escapes #hud-root entirely (a <body> portal at Z_TOP), so
+   * it deliberately rides ABOVE every panel and never needs to yield. Exempt
+   * from the panel-cover guard for that reason, not by accident. The audio
+   * toggle is the only one.
+   */
+  portal?: boolean;
+  /**
+   * HOW THIS SLOT YIELDS when an open panel (HUD_PANELS) covers its corner.
+   * Mirrors the `touchCorner`/`touchOrder` re-home mechanism that is already
+   * guard-proven. Default `"inset"`.
+   *   hide     — vanish while covered (dev telemetry, or wide status bars for
+   *              which there is no room beside a 45vw dock).
+   *   relocate — move to `displacedCorner` (below that corner's whole stack).
+   *              For chrome that MUST stay reachable, e.g. the ☰ menu.
+   *   inset    — stay put (the default). Only valid for a slot a panel never
+   *              actually covers; the guard rejects `inset` on a covered slot.
+   */
+  displaced?: "hide" | "relocate" | "inset";
+  /** target corner for `displaced: "relocate"` (defaults to `corner`) */
+  displacedCorner?: HudCorner;
+  /** stack order in `displacedCorner` — documentation; the resolver docks past the whole stack */
+  displacedOrder?: number;
+  note?: string;
+}
+
+/**
+ * THE REGISTRY. Adding HUD chrome = adding a row here (and the guard test will
+ * reject a corner+order that is already taken).
+ */
+const SLOTS = [
+  // ── top-left ── gameplay chrome only; dev telemetry lives bottom-left ──────
+  {
+    id: "menu",
+    corner: "top-left",
+    order: 0,
+    height: 38,
+    touchHeight: HUD_TOUCH_TARGET,
+    width: 44,
+    owner: "ui/PauseMenu.tsx",
+    managed: true,
+    // The ☰ is ESSENTIAL: hiding it under a left-docked shop would trap the
+    // player. It cannot inset either — beside a 45vw dock on a 375px phone
+    // there is no horizontal room. So it RE-HOMES to the top-right column
+    // (which the left dock never reaches) and stacks below the whole top-right
+    // group; on the shortest 375px viewport that lands at ~296px, well inside.
+    displaced: "relocate",
+    displacedCorner: "top-right",
+    displacedOrder: 5,
+    note: "☰ pause button (Esc); relocates top-right under a left-docked panel",
+  },
+  {
+    id: "team-lives",
+    corner: "top-left",
+    order: 1,
+    height: 44,
+    width: 240,
+    owner: "ui/components/TeamLivesBar.tsx",
+    managed: true,
+    // A 240px left-reading bar cannot inset beside the dock (it kisses the
+    // right column on a 667px phone) and reads wrong dropped into the narrow
+    // right control column. It simply hides while the shop covers the corner —
+    // in intermission the shared-lives count is static and shopping is the
+    // point; in combat the shop is up only for a defeated spectator.
+    //
+    // ⚠️ GH#126 CONTESTS THE INTERMISSION HALF, and it is right to: commit
+    // 97944609「取消淘汰」turned team health into the scoreboard that
+    // `finalStandings()` ranks 2nd/3rd/4th by, and a 0-life team still shops and
+    // still spends. `relocate` is NOT the fix — `hudDisplacedOffset` docks past
+    // the target corner's whole stack without knowing about OTHER displaced
+    // slots, and the ☰ menu already relocates into top-right whenever this same
+    // shop covers the corner, so both would land on the same band. So this row
+    // stays `hide` and the SHOP half needs a home inside the shop card itself
+    // (panels/MerchantShop.tsx), i.e. a #107 layout call, not a flag flip here.
+    // ⭐ The SETTLEMENT half is closed elsewhere and deliberately: the
+    // `match-end` panel below covers all four corners, so this slot can never be
+    // the answer there — `panels/MatchEndPanel` prints the lives itself.
+    displaced: "hide",
+    note: "team colours + shared lives; single row, height is content-independent",
+  },
+  {
+    id: "minimap",
+    corner: "bottom-right",
+    order: 1,
+    height: 208,
+    width: 208,
+    // phone landscape: bottom-right IS the ability arc (attack button + Q/W/E/R
+    // ring reach ~300px up from the corner), and 244+152 overflowed a 375px
+    // viewport outright. Re-homed to the top-left stack under ☰ + team lives —
+    // the mobile-MOBA convention (Wild Rift / Mobile Legends) — and shrunk.
+    touchCorner: "top-left",
+    touchOrder: 2,
+    // ⭐ GH#759 —— 116 → 110。⚠️ 這 6px **不是**隨手調的：觸控 780×360（#151
+    // breakpoint）的 top-left 疊起來是
+    //   10 ＋ 44(menu) ＋8＋ 44(team-lives) ＋8＋ **116(minimap)** ＋8＋ 44(revive)
+    //   ＋8＋ 66(enemy-team) = **356**，而預算是 350（`HUD_STAMP_BAND` 保留給版本
+    // 徽章的 10px）⇒ `enemy-team` 侵入下緣保留帶**恰好 6px**。
+    //
+    // ⛔ **禁止的作弊法是把 `enemy-team` 的 66 偷改成 60**（#759 逐字點名）——
+    // 那會讓登記表變綠而元件照樣畫 66px。這裡動的是**真的縮得下去**的那一個：
+    // Minimap.tsx:462 `hudSlotWidth("minimap", touch)` 就是它的畫布邊長，
+    // 6px 是一張 110×110 的地圖與一張 116×116 的地圖 —— ⛔ 不是一個說謊的數字。
+    // ⚠️ 高寬**一起**動：地圖是正方形，只縮一邊會把世界拉扁。
+    touchHeight: 110,
+    touchWidth: 110,
+    owner: "ui/hud/Minimap.tsx",
+    managed: true,
+    overlay: true,
+    note: "LoL-spec minimap: baked terrain + champion portraits + camera viewport box",
+  },
+  {
+    id: "revive",
+    corner: "top-left",
+    order: 2,
+    height: 52,
+    width: 250,
+    // touch: the minimap already owns top-left order 2, so the banner stacks
+    // under it rather than fighting it.
+    touchOrder: 3,
+    touchHeight: 44,
+    touchWidth: 190,
+    owner: "ui/components/ReviveBanner.tsx",
+    managed: true,
+    // NOT `transient`: that flag means "opt-in dev/settings overlay that may
+    // paint over the corner stacks". This is gameplay chrome that is simply
+    // absent most of the time — same shape as the team bar before teams exist —
+    // so it reserves real space and must never overlap anything.
+    // Combat only, and the defeated player it is for is exactly the one whose
+    // left-docked shop covers it — same reasoning as team-lives: hide.
+    displaced: "hide",
+    note: "revive-circle status (task #84): shown while YOUR team has a live circle — the dead player must SEE it exists and that a teammate is channelling",
+  },
+  {
+    id: "enemy-team",
+    corner: "top-left",
+    order: 3,
+    height: 156,
+    width: 184,
+    // touch: a compact HP-only strip. It stacks LAST in the top-left column,
+    // below the re-homed minimap (order 2) and the revive banner (order 3), so
+    // re-homing the map still wins the room it needs on a phone. HP-only keeps
+    // it thin enough to clear even the 375px-tall landscape viewport.
+    touchOrder: 4,
+    touchHeight: 66,
+    touchWidth: 150,
+    owner: "ui/components/EnemyTeamPanel.tsx",
+    managed: true,
+    // The left-docked shop covers the top-left corner in intermission and for a
+    // defeated spectator in combat. This panel is combat-only for a LIVING
+    // player, so it simply hides while the shop owns the corner — same reasoning
+    // as team-lives / revive, and it keeps the shopCollisions guard satisfied.
+    displaced: "hide",
+    note: "current duel's 3 enemies — champion + HP/MP + level; below the team-lives/revive stack",
+  },
+
+  /* ── top-right ───────────────────────────────────────────────────────────
+   * ⭐⭐ GH#800 —— 觸控時這一疊的**排序是量出來的**，⛔ 不是抄桌機的 order。
+   *
+   * ⚠️ 量到的事實（`touchControlsRect` × `hudSlotRect`，2026-08-27）：觸控的
+   * 右下角整塊是 TouchControls，攻擊鈕的上緣落在 `height − 128`
+   * （= `ATTACK_CENTER 84 + ATTACK_SIZE/2 44`）—— 780×360 上是 **y 232**。
+   * 而這一疊（leave 26 · scoreboard 44 · audio-toggle 44 · settings 44 ·
+   * cheats 44 · equipment 48 ＋ 五個 8px 間隙 ＋ 10px 邊）＝ **300**。
+   * ⇒ ⭐ **這一疊在矮的橫向螢幕上一定有 ~68px 落在攻擊鈕那一列** ——
+   * 這是**欄位預算**的問題，⛔ 不是某一個 slot 宣告錯了角落。
+   *
+   * ⇒ 兩件事這裡就決定得了（⛔ 而它們都不需要新的機制）：
+   *   ① **最寬的那一個排最上面**。`equipment` 150 寬，右對齊之後與攻擊鈕的
+   *      水平交集是**滿的 88px** —— 那正是 `028aa3bf` 量到的「88×38」。
+   *      把它排到 `touchOrder: 0`（10..58）之後，它在四個守衛 viewport 上
+   *      **一格都不碰攻擊鈕**。
+   *   ② **最窄的那一個排最下面**。右對齊寬度 w 的 slot 與攻擊鈕的水平交集是
+   *      `min(w − 30, 88)` ⇒ settings(44) = **14** · leave(80) = 50 ·
+   *      cheats(90) = 60 · audio(100) = 70 · scoreboard(110) = 80。
+   *      所以 `settings` 排最後。
+   *
+   * ⭐ 這個順序是**窮舉 6! = 720 種排法量出來的**（目標函式：先最小化與**攻擊鈕**
+   * 的交集面積，再最小化與整個叢集的交集面積）——⛔ 不是「看起來比較順」：
+   *
+   * | 排法 | 與攻擊鈕的交集 | 與整個叢集 |
+   * |---|---:|---:|
+   * | 出貨前（leave·scoreboard·audio·settings·cheats·**equipment**） | **11,368 px²** | 18,822 px² |
+   * | 現在（**equipment**·scoreboard·audio·cheats·leave·settings） | **2,438 px²** | 14,594 px² |
+   *
+   * ⚠️⚠️ **這只把傷害壓到 21%，⛔ 沒有歸零。** 歸零的算術做不到：觸控叢集的
+   * `recall` 上緣在 y≈94，而這一疊有 300px —— 也就是**右欄真正空著的只有 84px**，
+   * 放得下**一個** slot。⇒ 歸零＝手機上少一顆控制項，那是 owner 看得到的取捨
+   * （第一守則：一格後台開關，而開關要落三個住處 ⇒ ⛔ 不是只准動 `apps/client` 的
+   * lane 做得完的）。殘量記在 `touchControlsCollision.test.ts` 的
+   * `CLUSTER_RESIDUAL`，**#800 不關**。⛔ 那本帳不是垃圾桶：它只能變短。
+   * ────────────────────────────────────────────────────────────────────────── */
+  {
+    id: "leave",
+    corner: "top-right",
+    order: 0,
+    touchOrder: 4, // #800
+    height: 26,
+    width: 80,
+    owner: "ui/platform/AppRoot.tsx",
+    managed: true,
+    note: "the in-match Leave control; re-homed off its hard-coded right:10/top:10 when the safe-area contract (#107) reached the platform screens",
+  },
+  {
+    id: "scoreboard",
+    corner: "top-right",
+    order: 1,
+    touchOrder: 1, // #800
+    height: 26,
+    touchHeight: HUD_TOUCH_TARGET,
+    width: 110,
+    owner: "ui/components/Scoreboard.tsx",
+    managed: true,
+    note: "expands a K/D list downward — uses HUD_Z.expanded while open",
+  },
+  {
+    id: "audio-toggle",
+    corner: "top-right",
+    order: 2,
+    touchOrder: 2, // #800
+    height: HUD_TOUCH_TARGET,
+    width: 100,
+    owner: "ui/AudioToggle.tsx",
+    managed: true,
+    // Portaled to <body> at Z_TOP: it rides above every panel by design, so it
+    // is exempt from the panel-cover guard rather than a false collision.
+    portal: true,
+    note: "portaled to <body> (position:fixed) — consumes the raw offset and adds its own safe-area calc; rides above every panel",
+  },
+  {
+    id: "settings",
+    corner: "top-right",
+    order: 3,
+    // #800: 觸控時排**最後** —— 44px 是這一疊裡最窄的,與攻擊鈕的水平交集只有 14px
+    touchOrder: 5,
+    height: 30,
+    touchHeight: HUD_TOUCH_TARGET,
+    width: 44,
+    owner: "ui/SettingsCorner.tsx",
+    managed: true,
+    // The left dock never reaches the top-right column; only a `full` terminal
+    // panel (match-end) covers it, and that panel provides its own navigation,
+    // so the gear simply hides under it instead of floating over the settlement.
+    displaced: "hide",
+  },
+  {
+    id: "cheats",
+    corner: "top-right",
+    order: 4,
+    touchOrder: 3, // #800
+    height: 32,
+    touchHeight: HUD_TOUCH_TARGET,
+    width: 90,
+    owner: "ui/CheatConsole.tsx",
+    managed: true,
+    displaced: "hide",
+    note: "offline dev tool; last in the corner so its 320px panel covers nothing else; hides under a full terminal panel",
+  },
+
+  // ── bottom-left ── dev telemetry, out of the gameplay corners ─────────────
+  {
+    id: "gamepad",
+    corner: "bottom-left",
+    order: 0,
+    height: 24,
+    width: 130,
+    owner: "ui/HudRoot.tsx",
+    managed: true,
+    // dev telemetry, no gameplay stakes: hide it under a docked panel rather
+    // than clutter the free half with a relocated chip.
+    displaced: "hide",
+    note: "gamepad-connected chip",
+  },
+  {
+    id: "fps",
+    corner: "bottom-left",
+    order: 1,
+    height: 24,
+    width: 96,
+    owner: "ui/PerfOverlay.tsx",
+    managed: true,
+    // THE reported offender (task #107): it painted over the left-docked shop
+    // card. Dev telemetry with zero gameplay stakes → hide while covered.
+    displaced: "hide",
+    note: "FPS pill — dev telemetry, moved out of the top-left gameplay corner",
+  },
+  {
+    id: "perf-panel",
+    corner: "bottom-left",
+    order: 2,
+    height: 168,
+    width: 214,
+    owner: "ui/PerfOverlay.tsx",
+    managed: true,
+    transient: true,
+    // settings-gated dev overlay; likewise hides under a docked panel.
+    displaced: "hide",
+    note: "expanded perf overlay (settings-gated): LAST in the corner, so it opens past the whole stack instead of a fixed offset. Grows upward; the reserved height is informational.",
+  },
+
+  // ── bottom-right ── the minimap corner (its slot is declared up top, beside
+  // the other panel it shares a stack with) ─────────────────────────────────
+  {
+    id: "gold-level",
+    corner: "bottom-right",
+    order: 0,
+    // MEASURED, not guessed (2026-07-24, live client at 1546x900, the app's own
+    // font stack): the box is 61.0px tall with the "+N skill pt" line and
+    // 49.5px without; 106.1px wide. The old row said 56 while the component
+    // hard-pinned bottom:14 instead of HUD_EDGE (10) — so the real far edge sat
+    // at 14+61 = 75px while this row's band ended at 66 and put the minimap at
+    // 74. That is a 1px overlap, live, whenever the player holds an unspent
+    // skill point, and the guard could not see it because the slot was
+    // `managed: false`. 64 = the measured 61 plus headroom for font-metric
+    // variance across platforms (heights are reservations, i.e. upper bounds).
+    height: 64,
+    // 120 → 170 (owner 2026-07-30: 「英雄 icon 要顯示在右下角等級金錢區域」).
+    // The portrait is a 36 px tile INSIDE this box, so only the width moves:
+    // 36 (tile) + 8 (gap) + 106.1 (the measured text column) + 20 (padding) =
+    // 170.1 → 170.
+    //
+    // ⚠️ 170 IS A CEILING SOMEONE ELSE SET. 190 was tried first (matching the
+    // equipment row above it) and it broke two panels that nobody would think
+    // to re-run: the #219 inward surfaces resolve against the rects really
+    // painted in a corner, so a wider box shrank the free interval and the
+    // intermission 評價 card stopped painting at 667×375 while the scoreboard
+    // drawer lost its room at 667×375 touch (roundReportLayout.test.ts and
+    // hudSurfaces.test.ts, both measured red at 176-190 and green at 170).
+    //
+    // ⚠️ THE HEIGHT DELIBERATELY DID NOT MOVE. On the #151 breakpoint (780×360)
+    // this corner's stack already runs 10 → 348 of 360 available px; a portrait
+    // stacked ABOVE the numbers instead of beside them would need ~+56, and the
+    // equipment bar at the top of the stack would land at y −44 — painted off
+    // the screen, i.e. failure shape ① with no guard able to see it, because the
+    // corner's own band check only compares neighbours and never the viewport.
+    // `hudBottomCluster.test.ts` asserts the whole bottom-right column fits at
+    // 780×360, which is the assertion that would have caught it.
+    width: 170,
+    // TOUCH STACKS INSTEAD OF WIDENING, and that is a measured constraint, not
+    // a preference. On coarse pointers this is the ONLY slot left in the
+    // bottom-right corner (the minimap re-homes top-left, the equipment bar
+    // top-right), so height is free — while WIDTH is not: `hudCornerColumnWidth`
+    // feeds the #219 inward surfaces, and taking the corner from 120 to 190 px
+    // squeezed the scoreboard drawer off a 667×375 phone entirely
+    // (hudSurfaces.test.ts + roundReportLayout.test.ts both went red, measured).
+    // So GoldLevel renders a column on touch: 44 portrait + 8 + the same text
+    // block = 116 tall inside the same 120 px.
+    //
+    // ⭐⭐ GH#873 —— **那一疊整顆住在攻擊鈕裡。** 量到（`hudSlotRect` ×
+    // `touchControlsRect`，2026-08-29，三個橫向守衛 viewport 全中）：
+    // `gold-level × attack = 88×86` ＝ 攻擊鈕 88×88 的 **97.7%**。而
+    // `HUD_Z.slot`(25) > TouchControls 根節點的 `zIndex:20`，底色 `PANEL_BG`
+    // 是 88% 不透明 ⇒ ⭐ **按得到、看不到**（⛔ 它不吃觸控：`pointer-events`
+    // 從 `#hud-root` 繼承 `none`，兩邊都沒有覆寫）。
+    //
+    // ⚠️ 上面那句「**height is free**」就是唯一錯的地方：minimap 與 equipment
+    // **正是為了讓開觸控技能叢集**才搬走的（`touchControlsRect.ts` 檔頭逐字：
+    // 「bottom-right IS the ability arc」）—— 而這一格沒有跟著搬。
+    // ⇒ 它獨占了一個**已經被讓出來給別人**的角落。
+    //
+    // ⭐ 修法是**縮成一條**，⛔ 不是換一個角落：四個角落在 780×360 上全滿
+    //   （top-left 跑到 350／350 · top-right 300 · bottom-left 被 top-left 的
+    //   350 從上面吃掉 · bottom-right 是叢集）—— ⛔ 沒有空位可以搬。
+    //   高度上界是**算出來的**：見 `GOLD_LEVEL_TOUCH_H`。
+    //   回頭的那一格：`applyGoldLevelTouchLayout("column")`。
+    touchWidth: 120,
+    touchHeight: GOLD_LEVEL_TOUCH_H.strip,
+    /**
+     * ACCEPTS BEING PAINTED OVER — and making the slot managed is what forced
+     * this to be said out loud. When the shop docks left, the ☰ RELOCATES into
+     * the top-right column (it is essential; it must never be trapped). On a
+     * 667x375 landscape phone that column already runs 10→300, so the displaced
+     * ☰ lands at y 308-352 — on top of this readout's 301-365 band. Measured,
+     * not guessed: neither right-hand column has 44px of slack at that height
+     * (top-left is full to 356 as well), so on the shortest phones SOMETHING
+     * has to give, and between an escape hatch and a number the shop card
+     * already prints in its own header ({seat.gold} g), the number gives.
+     *
+     * This is exactly what `overlay` means ("accepts being painted over"). It
+     * costs nothing on the panel-cover side: the left dock's rect never reaches
+     * the bottom-right corner on any guard viewport, which
+     * `goldLevelExemptionIsVacuous` (hudLayout.test.ts) asserts so the flag can
+     * never quietly start hiding a real collision. The BAND math below is
+     * unaffected by the flag — that is what keeps the minimap off this box.
+     *
+     * NOT the right long-term answer: a 375px-tall landscape phone is
+     * over-subscribed on both sides once the shop takes the left half. Shedding
+     * a slot there is a #107 layout call, not a drive-by.
+     */
+    overlay: true,
+    owner: "ui/components/GoldLevel.tsx",
+    managed: true,
+    note: "local seat gold / level / xp (+ unspent skill points). Content-sized; the reserved height is the measured worst case (skill-point line showing).",
+  },
+  {
+    id: "equipment",
+    corner: "bottom-right",
+    order: 2,
+    height: 50,
+    // desktop: the LoL item-bar corner, stacked one step ABOVE the minimap so it
+    // never perturbs the map's offset (order 2 > minimap's 1). Width stays under
+    // the shop's narrowest reach (45vw of a 375px viewport = 169px) so a
+    // right-anchored bar clears the left dock on every guard viewport — the slot
+    // is never covered and needs no `displaced` policy.
+    width: 190,
+    // touch: bottom-right IS the ability arc (the exact reason the minimap
+    // re-homes on coarse pointers), so the item bar moves to the top-right —
+    // another right-edge corner the left shop never reaches — and shrinks.
+    touchCorner: "top-right",
+    // ⭐ #800: 5 → **0**。150 寬的它右對齊之後與攻擊鈕的水平交集是**滿的 88px**,
+    // 所以它是這一疊裡唯一**絕對不能**排在下面的。排到最上面 (10..58) 之後,
+    // 四個守衛 viewport 上 attack × equipment 全部歸零(原本 844x390 是 88x38)。
+    touchOrder: 0,
+    touchHeight: 48,
+    touchWidth: 150,
+    owner: "ui/hud/EquipmentBar.tsx",
+    managed: true,
+    note: "persistent in-match equipment bar (task #44): the champion's owned items, six visible slots; display-only (selling stays in the shop)",
+  },
+] as const;
+
+export type HudSlotId = (typeof SLOTS)[number]["id"];
+
+export const HUD_SLOTS: readonly HudSlotSpec[] = SLOTS;
+
+const BY_ID = new Map<string, HudSlotSpec>(HUD_SLOTS.map((s) => [s.id, s]));
+
+/** Look up a slot spec (throws on an unknown id — typos fail loudly). */
+export function hudSlot(id: HudSlotId): HudSlotSpec {
+  const spec = BY_ID.get(id);
+  if (!spec) throw new Error(`hudLayout: unknown HUD slot "${id}"`);
+  return spec;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * HUD SCALE (owner 2026-08-10) — the registry's half of the player-chosen
+ * scale tiers. The operator itself lives in ui/hudScale.ts; this block is only
+ * about WHICH slots follow it and what happens when a 300% panel no longer
+ * fits on the screen.
+ *
+ * ⚠️ The reserved geometry MUST follow the tier. A panel that paints 3× larger
+ * while reserving its 100% rectangle is failure form ① (it draws over its
+ * neighbour, or off-screen) with every layout test still green — the reserve
+ * is what the tests read, and the reserve never moved.
+ *
+ * SAFE AREA: unchanged. The notch inset is still owned once by #hud-root
+ * (module doc); scaling multiplies plain px and never introduces an env().
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/**
+ * Slots whose reserved geometry follows the scale tier. owner named exactly
+ * two things — the ability icons (bottom cluster, a different module) and
+ * 對手角色的資訊, this panel — so every other slot keeps its shipped size and a
+ * scale change can never move chrome nobody asked to move.
+ */
+const SCALED_SLOTS: ReadonlySet<string> = new Set(["enemy-team"]);
+
+/**
+ * What to do when the chosen tier no longer fits the viewport.
+ *   clamp — step down to the largest tier that still fits (never below 中).
+ *   allow — paint it anyway, even partly off-screen.
+ * A decision point, so it is a field (第一守則). Default `clamp`: a panel the
+ * player cannot see is strictly worse than a slightly smaller one, and 中 is
+ * the floor precisely because 中 is today's behaviour — a viewport too small
+ * for the shipped size is a pre-existing condition, not something scaling did.
+ * ⚠️ Clamping must be VISIBLE in the settings screen ("此螢幕最多 XXX%"), or it
+ * becomes "he picked it, we showed it selected, and it did nothing".
+ */
+export type HudOverflowPolicy = "clamp" | "allow";
+
+let overflowPolicy: HudOverflowPolicy = "clamp";
+
+/** Override the overflow policy (`null` = back to the shipped `clamp`). */
+export function applyHudOverflowPolicy(p: HudOverflowPolicy | null): void {
+  overflowPolicy = p === "allow" || p === "clamp" ? p : "clamp";
+}
+
+export function hudOverflowPolicy(): HudOverflowPolicy {
+  return overflowPolicy;
+}
+
+let viewportOverride: HudViewport | null = null;
+
+/**
+ * Pin the viewport the clamp measures against (`null` = read the real window).
+ * Tests pass one so the maths is deterministic; the client needs no wiring —
+ * see `ambientViewport()`.
+ */
+export function applyHudViewport(vp: HudViewport | null): void {
+  viewportOverride = vp;
+}
+
+/**
+ * The viewport to clamp against when a caller did not name one. Reading
+ * `window` LAZILY (never at module load) keeps this module node-pure: in node
+ * there is no window, so there is no clamp, so every existing test sees the
+ * unclamped registry it has always seen.
+ */
+function ambientViewport(): HudViewport | null {
+  if (viewportOverride) return viewportOverride;
+  const w = (globalThis as { window?: { innerWidth?: number; innerHeight?: number } }).window;
+  if (!w || typeof w.innerWidth !== "number" || typeof w.innerHeight !== "number") return null;
+  return { width: w.innerWidth, height: w.innerHeight };
+}
+
+/** A slot's declared (pre-scale) reserve for this pointer type. */
+function baseSize(spec: HudSlotSpec, touch: boolean): { w: number; h: number } {
+  const size = {
+    w: touch ? (spec.touchWidth ?? spec.width) : spec.width,
+    h: touch ? (spec.touchHeight ?? spec.height) : spec.height,
+  };
+  // ⭐ GH#873 —— 觸控形狀是一格開關,而**保留矩形必須跟著它動**。
+  // ⛔ 只翻元件不翻保留 = 失敗形態①(畫的跟量的不是同一件事)。
+  return size;
+}
+
+function scaledSize(id: HudSlotId, touch: boolean, tier: HudScaleTier): { w: number; h: number } {
+  const base = baseSize(hudSlot(id), touch);
+  if (!SCALED_SLOTS.has(id)) return base;
+  return { w: hudScale(base.w, tier), h: hudScale(base.h, tier) };
+}
+
+/**
+ * Would this slot still be fully on screen at `tier`?
+ * ⚠️ `hudSlotOffset` only ever sums the slots BEFORE this one (it breaks at
+ * its own order), so this can never recurse back into the slot being measured.
+ */
+function fitsViewport(
+  id: HudSlotId,
+  touch: boolean,
+  tier: HudScaleTier,
+  vp: HudViewport,
+): boolean {
+  const { w, h } = scaledSize(id, touch, tier);
+  const { vertical, horizontal } = cornerAxes(hudSlotCorner(id, touch));
+  const offset = hudSlotOffset(id, touch);
+  return hudRectInViewport(
+    {
+      x: horizontal === "left" ? HUD_EDGE : vp.width - HUD_EDGE - w,
+      y: vertical === "top" ? offset : vp.height - offset - h,
+      w,
+      h,
+    },
+    vp,
+  );
+}
+
+/**
+ * The tier this slot is actually laid out at — the player's choice, stepped
+ * down until it fits (see `HudOverflowPolicy`). Slots that do not follow the
+ * scale always answer 中, which the operator guarantees is a bit-for-bit
+ * no-op, so their geometry is untouched.
+ *
+ * The component that paints the slot must ask for THIS tier, not the raw
+ * `hudScaleTier()`, or the paint and the reserve disagree exactly when the
+ * clamp fires.
+ */
+export function hudSlotScaleTier(
+  id: HudSlotId,
+  touch = false,
+  viewport?: HudViewport | null,
+): HudScaleTier {
+  if (!SCALED_SLOTS.has(id)) return DEFAULT_HUD_SCALE_TIER;
+  const chosen = hudScaleTier();
+  // 中 and below always stand: shrinking never overflows, and clamping UP
+  // would change the default tier's pixels.
+  if (overflowPolicy !== "clamp" || hudScaleMult(chosen) <= 1) return chosen;
+  const vp = viewport === undefined ? ambientViewport() : viewport;
+  if (!vp || vp.width <= 0 || vp.height <= 0) return chosen;
+  for (const t of HUD_SCALE_TIERS) {
+    // HUD_SCALE_TIERS is ordered large → small; skip past the player's choice
+    if (hudScaleMult(t.id) > hudScaleMult(chosen)) continue;
+    if (hudScaleMult(t.id) <= 1) break; // never clamp below 中
+    if (fitsViewport(id, touch, t.id, vp)) return t.id;
+  }
+  return DEFAULT_HUD_SCALE_TIER;
+}
+
+/**
+ * The corner a slot occupies for the current pointer type. A slot may declare
+ * `touchCorner` to move on coarse pointers (see the module doc — phone
+ * landscape is a different layout problem, not a smaller desktop).
+ */
+export function hudSlotCorner(id: HudSlotId, touch = false): HudCorner {
+  const spec = hudSlot(id);
+  return touch ? (spec.touchCorner ?? spec.corner) : spec.corner;
+}
+
+/** Stack order of a slot within its effective corner. */
+export function hudSlotOrder(id: HudSlotId, touch = false): number {
+  const spec = hudSlot(id);
+  return touch ? (spec.touchOrder ?? spec.order) : spec.order;
+}
+
+/** Slots of one corner for this pointer type, ordered from the corner inward. */
+export function hudSlotsInCorner(corner: HudCorner, touch = false): HudSlotSpec[] {
+  return HUD_SLOTS.filter((s) => hudSlotCorner(s.id as HudSlotId, touch) === corner).sort(
+    (a, b) => hudSlotOrder(a.id as HudSlotId, touch) - hudSlotOrder(b.id as HudSlotId, touch),
+  );
+}
+
+/** Which CSS edges a corner pins to. */
+export function cornerAxes(corner: HudCorner): {
+  vertical: "top" | "bottom";
+  horizontal: "left" | "right";
+} {
+  return {
+    vertical: corner.startsWith("top") ? "top" : "bottom",
+    horizontal: corner.endsWith("left") ? "left" : "right",
+  };
+}
+
+/**
+ * Reserved height of a slot for the current pointer type, at the scale tier it
+ * is really laid out at. Pass `viewport` to pin the overflow clamp (rect maths
+ * does); omit it and the clamp reads the live window.
+ */
+export function hudSlotHeight(
+  id: HudSlotId,
+  touch = false,
+  viewport?: HudViewport | null,
+): number {
+  return scaledSize(id, touch, hudSlotScaleTier(id, touch, viewport)).h;
+}
+
+/** Reserved width of a slot for the current pointer type. See `hudSlotHeight`. */
+export function hudSlotWidth(
+  id: HudSlotId,
+  touch = false,
+  viewport?: HudViewport | null,
+): number {
+  return scaledSize(id, touch, hudSlotScaleTier(id, touch, viewport)).w;
+}
+
+/**
+ * Distance (px) from the corner's edge to the slot's NEAR edge — i.e. the
+ * value for `top` (top-* corners) or `bottom` (bottom-* corners).
+ */
+export function hudSlotOffset(id: HudSlotId, touch = false): number {
+  const order = hudSlotOrder(id, touch);
+  let offset = HUD_EDGE;
+  for (const s of hudSlotsInCorner(hudSlotCorner(id, touch), touch)) {
+    if (hudSlotOrder(s.id as HudSlotId, touch) >= order) break;
+    offset += hudSlotHeight(s.id as HudSlotId, touch) + HUD_GAP;
+  }
+  return offset;
+}
+
+/** The [near, far] band a slot occupies, measured from its corner's edge. */
+export function hudSlotBand(id: HudSlotId, touch = false): { start: number; end: number } {
+  const start = hudSlotOffset(id, touch);
+  return { start, end: start + hudSlotHeight(id, touch) };
+}
+
+/**
+ * Where a corner's stack ends — the docking point for panels that must sit
+ * clear of the whole corner (e.g. the shop panel under the top-left stack).
+ * `skipTransient` ignores dev/settings-gated slots, so an opt-in overlay never
+ * shrinks the real UI; `skipOverlay` ignores content panels (the minimap),
+ * which a docking panel is allowed to cover rather than be squeezed by.
+ */
+export function hudStackEnd(
+  corner: HudCorner,
+  touch = false,
+  opts: { skipTransient?: boolean; skipOverlay?: boolean } = {},
+): number {
+  let end = HUD_EDGE;
+  for (const s of hudSlotsInCorner(corner, touch)) {
+    if (opts.skipTransient && s.transient) continue;
+    if (opts.skipOverlay && s.overlay) continue;
+    const band = hudSlotBand(s.id as HudSlotId, touch);
+    if (band.end > end) end = band.end;
+  }
+  return end;
+}
+
+/**
+ * The absolute-position style for a slot. Spread it into the element that IS
+ * the slot (or use the <HudSlot> wrapper in ./HudSlot.tsx).
+ */
+export function hudSlotStyle(id: HudSlotId, touch = false, z: number = HUD_Z.slot): CSSProperties {
+  const { vertical, horizontal } = cornerAxes(hudSlotCorner(id, touch));
+  const offset = hudSlotOffset(id, touch);
+  const style: CSSProperties = { position: "absolute", zIndex: z };
+  if (vertical === "top") style.top = offset;
+  else style.bottom = offset;
+  if (horizontal === "left") style.left = HUD_EDGE;
+  else style.right = HUD_EDGE;
+  return style;
+}
+
+/** A slot's reserved rectangle in viewport px (origin top-left). */
+export interface HudRect {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+export interface HudViewport {
+  width: number;
+  height: number;
+}
+
+/**
+ * Resolve a slot's reserved rect against a concrete viewport. This is what
+ * turns the registry into something a layout test can assert on: "does the
+ * minimap fit on a 812x375 phone, and does it touch anything else?".
+ *
+ * NOTE the safe-area caveat from the module doc: on coarse pointers #hud-root
+ * is itself inset by env(safe-area-inset-*), so these rects are relative to the
+ * HUD layer. Passing the RAW viewport is the conservative reading (the real
+ * layer is never larger).
+ */
+export function hudSlotRect(id: HudSlotId, viewport: HudViewport, touch = false): HudRect {
+  const { vertical, horizontal } = cornerAxes(hudSlotCorner(id, touch));
+  // the rect knows its viewport, so the overflow clamp measures against THAT
+  // one rather than the ambient window — this is what makes the guard honest
+  // on the two viewports we measured as tight (375-tall touch, 780x360).
+  const w = hudSlotWidth(id, touch, viewport);
+  const h = hudSlotHeight(id, touch, viewport);
+  const offset = hudSlotOffset(id, touch);
+  return {
+    x: horizontal === "left" ? HUD_EDGE : viewport.width - HUD_EDGE - w,
+    y: vertical === "top" ? offset : viewport.height - offset - h,
+    w,
+    h,
+  };
+}
+
+/** Do two reserved rects share any area? (touching edges do NOT overlap.) */
+export function hudRectsOverlap(a: HudRect, b: HudRect): boolean {
+  return a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
+}
+
+/** Is a reserved rect fully inside the viewport? */
+export function hudRectInViewport(r: HudRect, viewport: HudViewport): boolean {
+  return r.x >= 0 && r.y >= 0 && r.x + r.w <= viewport.width && r.y + r.h <= viewport.height;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * PANEL EDGES (task #107) — the second half of the corner contract.
+ *
+ * `SLOTS` lets a piece of CHROME declare the corner it owns, so two pieces of
+ * chrome cannot collide (task #42). It has no vocabulary for a PANEL to declare
+ * the EDGE it occupies — so a docked panel (the shop) and the chrome it covers
+ * were invisible to each other and painted in an undeclared z-order. This is
+ * that vocabulary, built from the same machinery: static declarations, rects
+ * resolved in node, and a guard whose failure names the collision.
+ *
+ * THE PRECEDENCE RULE, stated once:
+ *   A docked panel owns its declared edge outright. Any managed slot whose
+ *   reserved rect intersects an open panel's rect must VACATE those pixels —
+ *   it never paints under the panel and never fights it for space. The panel
+ *   never moves for chrome; chrome always yields (per the slot's `displaced`).
+ *   The only chrome exempt is chrome declared to ride ABOVE the panel (the
+ *   <body>-portaled audio toggle) or to ACCEPT being painted over (`overlay`
+ *   slots, e.g. the minimap).
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/** Which screen edge a panel docks to (or a full-screen / centred box). */
+export type HudEdge = "left" | "right" | "top" | "bottom" | "full" | "center";
+
+/** A viewport-relative extent: min(fraction·axis, maxPx), matching CSS min(45vw, 560px). */
+export interface HudExtent {
+  fraction: number;
+  maxPx: number;
+}
+
+export interface HudPanelSpec {
+  id: string;
+  /** which screen edge it docks to (or full/center); drives which corners it covers */
+  edge: HudEdge;
+  /** thickness along the docked axis; omitted for full/center (they self-size) */
+  size?: HudExtent;
+  /** for "center": its own box, so the guard can prove it clears the corners */
+  box?: { width: HudExtent; height: HudExtent };
+  /**
+   * the corners this panel's rect is DECLARED to cover. Cross-checked against
+   * the resolved rect: a corner the rect really hits but you did not list FAILS.
+   */
+  covers: readonly HudCorner[];
+  /** match phases the panel is open in (documentation + guard slot-population) */
+  phases: readonly string[];
+  /** paints at this layer; must sit at/above HUD_Z.slot or it is a declared bug */
+  z: number;
+  /**
+   * true = the panel carries its own way out (match-end 返回大廳), so essential
+   * chrome (the ☰) may HIDE under it without trapping the player. Default false.
+   */
+  providesExit?: boolean;
+  owner: string;
+  /** false = the panel still positions itself; RESERVED + allowlisted, like a slot */
+  managed: boolean;
+  note?: string;
+}
+
+/**
+ * THE PANEL REGISTRY. Adding a docked/full-screen panel = adding a row here.
+ * The shop row MIRRORS geometry owned by another task (panels/MerchantShop.tsx,
+ * #106) exactly as the SLOTS table already reserves `leave`/`gold-level` for
+ * files it does not own — this module declares the EDGE so covered chrome can
+ * see it and yield; the panel's own file owns the pixels.
+ */
+const PANELS = [
+  {
+    id: "shop",
+    edge: "left",
+    // === CARD_WIDTH in panels/MerchantShop.tsx: min(45vw, 560px). Side pinned
+    // by render/intermission SHOP_CARD_SIDE (left) + its layout.test.ts.
+    size: { fraction: 0.45, maxPx: 560 },
+    covers: ["top-left", "bottom-left"],
+    // auto-open prep + defeated-player combat/resolution (shopGate.mounted);
+    // HudRoot mounts MerchantShop in all three and the gate returns null for
+    // everyone else.
+    // ⚠️ #289：`resolution` 原本不在這一列，所以 owner 2026-08-06 讓陣亡者在結算
+    // 時能買之後，**版面守衛的場景掃描從來沒掃過「結算 + 商店掛著」那一格** ——
+    // 那正是回合評價卡與「Round over」也在畫面上的時候。
+    phases: ["intermission", "combat", "resolution"],
+    // ABOVE slots (25) and expanded (30) — and the panel really PAINTS there:
+    // MerchantShop sets `zIndex: INTERMISSION_Z.panel` (= this number) on both
+    // its card and its collapsed rail. It used to set none at all, which made
+    // this row a fiction the guard could not catch: the guard proves that
+    // RECTANGLES clear, so a panel painting under the slots it "covers" reads
+    // as clean. `panelDeclaredZIsPainted` (hudLayout.test.ts) now scans the
+    // owner sources so the two cannot drift apart again.
+    z: HUD_Z.screen,
+    owner: "ui/panels/MerchantShop.tsx",
+    managed: false,
+    note: "RESERVED: full-height left card, min(45vw,560px). Geometry owned by #106; this row declares the EDGE so covered chrome yields.",
+  },
+  {
+    id: "match-end",
+    edge: "full",
+    covers: ["top-left", "top-right", "bottom-left", "bottom-right"],
+    phases: ["matchEnd"],
+    z: HUD_Z.screen,
+    providesExit: true,
+    owner: "ui/panels/MatchEndPanel.tsx",
+    managed: false,
+    note: "RESERVED: full-screen settlement (inset:0, own backdrop + 返回大廳). Owned by the victory-presentation task; declared here so persistent chrome hides under it instead of floating over it.",
+  },
+  {
+    id: "champ-select",
+    edge: "center",
+    // width:440 / maxWidth:92vw, vertically centred, content height (roster grid
+    // maxHeight 48vh). Bounded generously; the guard only needs it to CLEAR the
+    // corners, which a horizontally-centred box does on every landscape viewport.
+    box: { width: { fraction: 0.92, maxPx: 440 }, height: { fraction: 0.9, maxPx: 660 } },
+    covers: [],
+    phases: ["champSelect"],
+    z: HUD_Z.slot,
+    owner: "ui/panels/ChampSelectPanel.tsx",
+    managed: false,
+    note: "RESERVED: centred roster picker; covers no corner (guard proves it).",
+  },
+  {
+    id: "augment-draft",
+    edge: "center",
+    // width:460, BOTH-AXIS centred; short content (one 三選一 offer). Bounded;
+    // clears the corners on every landscape viewport.
+    //
+    // It used to pin `top: 90` while declaring `edge: "center"` — so this row
+    // resolved a rect the panel never occupied, and at top:90 the card stack
+    // landed straight on the merchant tip box's band (playtest P2). The panel
+    // now really centres, which is what this row always said.
+    box: { width: { fraction: 0.92, maxPx: 460 }, height: { fraction: 0.6, maxPx: 300 } },
+    covers: [],
+    phases: ["intermission"],
+    // a modal CHOICE: it out-ranks the shop card and carries its own scrim.
+    // Order + scrim: ui/panels/intermissionLayout.ts.
+    z: HUD_Z.focus,
+    owner: "ui/panels/AugmentDraftPanel.tsx",
+    managed: false,
+    note: "RESERVED: centred 三選一 draft; covers no corner (guard proves it). FOCUS surface — see intermissionLayout.",
+  },
+] as const;
+
+export type HudPanelId = (typeof PANELS)[number]["id"];
+
+export const HUD_PANELS: readonly HudPanelSpec[] = PANELS;
+
+const PANEL_BY_ID = new Map<string, HudPanelSpec>(HUD_PANELS.map((p) => [p.id, p]));
+
+/** Look up a panel spec (throws on an unknown id — typos fail loudly). */
+export function hudPanel(id: HudPanelId): HudPanelSpec {
+  const spec = PANEL_BY_ID.get(id);
+  if (!spec) throw new Error(`hudLayout: unknown HUD panel "${id}"`);
+  return spec;
+}
+
+/** Resolve a viewport-relative extent to px: min(fraction·axis, maxPx). */
+export function hudExtentPx(e: HudExtent, axis: number): number {
+  return Math.min(e.fraction * axis, e.maxPx);
+}
+
+/**
+ * A panel's rect against a concrete viewport. Like `hudSlotRect`, this is what
+ * turns the declaration into something the guard can assert on. Raw viewport is
+ * the conservative reading (the real HUD layer is never larger — same safe-area
+ * caveat as the slots).
+ */
+export function hudPanelRect(id: HudPanelId, viewport: HudViewport): HudRect {
+  const p = hudPanel(id);
+  const { width: W, height: H } = viewport;
+  switch (p.edge) {
+    case "left": {
+      const w = p.size ? hudExtentPx(p.size, W) : W;
+      return { x: 0, y: 0, w, h: H };
+    }
+    case "right": {
+      const w = p.size ? hudExtentPx(p.size, W) : W;
+      return { x: W - w, y: 0, w, h: H };
+    }
+    case "top": {
+      const h = p.size ? hudExtentPx(p.size, H) : H;
+      return { x: 0, y: 0, w: W, h };
+    }
+    case "bottom": {
+      const h = p.size ? hudExtentPx(p.size, H) : H;
+      return { x: 0, y: H - h, w: W, h };
+    }
+    case "full":
+      return { x: 0, y: 0, w: W, h: H };
+    case "center": {
+      const w = p.box ? hudExtentPx(p.box.width, W) : W;
+      const h = p.box ? hudExtentPx(p.box.height, H) : H;
+      return { x: (W - w) / 2, y: (H - h) / 2, w, h };
+    }
+  }
+}
+
+/** The anchor point (edge-inset origin) of a corner in a viewport. */
+export function hudCornerAnchor(corner: HudCorner, viewport: HudViewport): { x: number; y: number } {
+  const { vertical, horizontal } = cornerAxes(corner);
+  return {
+    x: horizontal === "left" ? HUD_EDGE : viewport.width - HUD_EDGE,
+    y: vertical === "top" ? HUD_EDGE : viewport.height - HUD_EDGE,
+  };
+}
+
+/** The corners a panel's RESOLVED rect actually reaches (contains the anchor of). */
+export function hudPanelCovers(id: HudPanelId, viewport: HudViewport): HudCorner[] {
+  const r = hudPanelRect(id, viewport);
+  return HUD_CORNERS.filter((c) => {
+    const a = hudCornerAnchor(c, viewport);
+    return a.x >= r.x && a.x <= r.x + r.w && a.y >= r.y && a.y <= r.y + r.h;
+  });
+}
+
+/** A slot that opts out of yielding: it rides above panels, or accepts cover. */
+export function isPanelExempt(spec: HudSlotSpec): boolean {
+  return !!spec.portal || !!spec.overlay;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * A PANEL THAT OPENS *FROM* A SLOT (the third shape, and the smallest).
+ *
+ * `SLOTS` is persistent corner chrome. `HUD_PANELS` is a docked/full-screen
+ * panel that OWNS an edge and makes chrome yield. Neither describes the thing
+ * the scoreboard has always done: a transient drawer that belongs to one slot,
+ * appears while the player is interacting with it, paints at `HUD_Z.expanded`,
+ * and is gone the moment they stop. Those must NOT join either registry —
+ *
+ *   · as a SLOT it would take stack space it does not permanently occupy, and
+ *     `hudLayout.test.ts` pins the exact slot list of the bottom corners
+ *     (adding one to bottom-right fails 「gold-level, minimap, equipment」);
+ *   · as a PANEL it would declare `covers: ["bottom-right"]`, and the
+ *     panel-cover guard then rejects `equipment`'s default `inset` policy —
+ *     a red test describing a collision that only exists while a mouse is
+ *     resting on one 170×64 box.
+ *
+ * So the geometry is a FUNCTION of the anchor slot instead of a new row. That
+ * is the whole contribution: the drawer's offset is DERIVED from the registry
+ * (`hudSlotBand` / `hudStackEnd`), so moving the anchor moves the drawer, and a
+ * guard can resolve its rect in node exactly like a slot's.
+ *
+ * `HudSlotPanelOpen` IS A DECISION, therefore a parameter and not a constant:
+ *   anchor — start one gap past the ANCHOR's own band. Always has room, and
+ *            paints over the rest of that corner's stack (at `HUD_Z.expanded`,
+ *            which is what that layer is for).
+ *   stack  — start one gap past the corner's WHOLE stack, covering nothing.
+ *            Honest, and on a 360px-tall viewport the bottom-right stack already
+ *            ends at 348, so this leaves 2px — i.e. the drawer would never be
+ *            visible at all. That is failure shape ① with a straight face, which
+ *            is why it is not the default.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+export type HudSlotPanelOpen = "anchor" | "stack";
+
+/**
+ * Distance (px) from the corner's edge to the NEAR edge of a drawer opened from
+ * `anchor` — i.e. its `bottom` (bottom-* corners) or `top` (top-* corners).
+ */
+export function hudSlotPanelOffset(
+  anchor: HudSlotId,
+  touch = false,
+  open: HudSlotPanelOpen = "anchor",
+): number {
+  if (open === "stack") {
+    // skipTransient: an opt-in dev overlay must never push real UI around —
+    // the same reading `hudStackEnd`'s other production caller uses.
+    return hudStackEnd(hudSlotCorner(anchor, touch), touch, { skipTransient: true }) + HUD_GAP;
+  }
+  return hudSlotBand(anchor, touch).end + HUD_GAP;
+}
+
+/**
+ * The tallest a drawer may be before it runs off the far edge of the viewport.
+ * Callers cap their own content with this; it is never negative.
+ */
+export function hudSlotPanelMaxHeight(
+  anchor: HudSlotId,
+  viewport: HudViewport,
+  touch = false,
+  open: HudSlotPanelOpen = "anchor",
+): number {
+  return Math.max(0, viewport.height - hudSlotPanelOffset(anchor, touch, open) - HUD_EDGE);
+}
+
+/**
+ * A drawer's rect against a concrete viewport, with BOTH axes clamped to stay
+ * on screen. `want` is what the content would like; the returned `w`/`h` are
+ * what it gets.
+ */
+export function hudSlotPanelRect(
+  anchor: HudSlotId,
+  viewport: HudViewport,
+  want: { w: number; h: number },
+  touch = false,
+  open: HudSlotPanelOpen = "anchor",
+): HudRect {
+  const { vertical, horizontal } = cornerAxes(hudSlotCorner(anchor, touch));
+  const offset = hudSlotPanelOffset(anchor, touch, open);
+  const w = Math.max(0, Math.min(want.w, viewport.width - HUD_EDGE * 2));
+  const h = Math.max(0, Math.min(want.h, hudSlotPanelMaxHeight(anchor, viewport, touch, open)));
+  return {
+    x: horizontal === "left" ? HUD_EDGE : viewport.width - HUD_EDGE - w,
+    y: vertical === "top" ? offset : viewport.height - offset - h,
+    w,
+    h,
+  };
+}
+
+/**
+ * The absolute-position style for a drawer opened from `anchor`. Defaults to
+ * `HUD_Z.expanded` — the layer whose whole purpose is 「a panel opened FROM a
+ * slot, painting over the slots stacked below it」.
+ */
+export function hudSlotPanelStyle(
+  anchor: HudSlotId,
+  touch = false,
+  open: HudSlotPanelOpen = "anchor",
+  z: number = HUD_Z.expanded,
+): CSSProperties {
+  const { vertical, horizontal } = cornerAxes(hudSlotCorner(anchor, touch));
+  const offset = hudSlotPanelOffset(anchor, touch, open);
+  const style: CSSProperties = { position: "absolute", zIndex: z };
+  if (vertical === "top") style.top = offset;
+  else style.bottom = offset;
+  if (horizontal === "left") style.left = HUD_EDGE;
+  else style.right = HUD_EDGE;
+  return style;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * THE BUILD-STAMP BAND (task #245, inside the #107 contract).
+ *
+ * The version badge (ui/VersionBadge.tsx) is the one piece of chrome that must
+ * be visible on EVERY screen — lobby, champion select, battle, shop,
+ * settlement, replay — because the owner's whole use for it is 「以利擷圖回報」:
+ * a screenshot has to name the build it came from. #66 satisfied that by
+ * putting it at `z-index: 1` UNDER everything, which meant it was covered on
+ * exactly the screens most often screenshotted (the settlement panel and the
+ * shop card both paint an opaque box at z 40 over it).
+ *
+ * So it now paints ABOVE everything, and the thing that keeps it from covering
+ * gameplay is not its z-index but this DECLARATION: it may only ever occupy a
+ * CENTRED strip `HUD_STAMP_BAND` px tall and `HUD_STAMP_BAND_W` px wide at the
+ * bottom edge. `versionBadgeBand.test.ts` proves the strip stays empty for every
+ * SLOT (both pointer types, both displaced and normal placement) at every guard
+ * viewport — every corner stack starts `HUD_EDGE` in from its edges, the desktop
+ * ability bar sits at `bottom: 14`, the touch attack button at `bottom: 40`.
+ *
+ * "EMPTY BY CONSTRUCTION" IS NOT A CLAIM THIS MODULE GETS TO MAKE, and saying it
+ * anyway is how the band shipped with something already in it: `HUD_SLOTS` is
+ * the registry of CORNER chrome, and the thing that was sitting in the band was
+ * `ui/panels/ChampSelectPanel.tsx`'s bottom-centre status line at `bottom: 6`
+ * inside a full-screen `inset:0` layer — centred, 4px deep, invisible to a guard
+ * that enumerates slots. The guard therefore ALSO enumerates every `bottom:`
+ * declaration under `apps/client/src/ui` and requires each one to either clear
+ * the band arithmetically or carry a written reason. Chrome that wants the last
+ * 10px has to say so out loud; this comment cannot vouch for it.
+ *
+ * CENTRED, not full width, because that is the honest claim: on a 780x360
+ * landscape phone the shop legitimately displaces the ☰ menu to the end of the
+ * top-right stack, 8px off the bottom edge — a full-width reservation would
+ * report a collision with a badge sitting 400px away in the middle of the
+ * screen.
+ *
+ * A PANEL's rect may span the band and that is not a collision: the badge is
+ * MEANT to paint over the settlement wash and the shop card's background, or
+ * those screenshots carry no version, which is the whole defect. The line is
+ * chrome vs. content — the badge may cover a panel's background, never a slot
+ * or a control.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/** Height (px) of the bottom strip reserved for the build stamp. */
+export const HUD_STAMP_BAND = VERSION_BADGE_BAND_PX;
+
+/** Width (px) of that strip — it is centred, so this is not the viewport width. */
+export const HUD_STAMP_BAND_W = VERSION_BADGE_BAND_W_PX;
+
+/** The reserved band's rect in a concrete viewport (centred, bottom edge). */
+export function hudStampBandRect(viewport: HudViewport): HudRect {
+  const w = Math.min(viewport.width, HUD_STAMP_BAND_W);
+  return {
+    x: (viewport.width - w) / 2,
+    y: viewport.height - HUD_STAMP_BAND,
+    w,
+    h: HUD_STAMP_BAND,
+  };
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * THE PING BAND (task #272) — the same 10px strip, LEFT of the build stamp.
+ *
+ * 「請你顯示玩家 ping 值在跟版本號一樣都一直畫面上」. "As permanent as the
+ * version number" is a claim about UBIQUITY, and this project already knows
+ * exactly one way to make that true without covering anything: paint inside the
+ * bottom `HUD_STAMP_BAND` gutter, with `pointer-events: none`, from a <body>
+ * portal so no stacking context can bury it. So the ping chip does not invent a
+ * mechanism — it takes the OTHER end of the strip the badge already reserved.
+ *
+ * WHY THE LEFT END, MEASURED RATHER THAN PREFERRED:
+ *   • The stamp band is CENTRED and `HUD_STAMP_BAND_W` (280px) wide, so both
+ *     ends of the bottom edge are genuinely free.
+ *   • The RIGHT end is not usable. When the shop docks left, the ☰ menu
+ *     RELOCATES to the end of the top-right stack; on a 780x360 landscape phone
+ *     that stack already runs to 300, so the displaced ☰ lands at y 308-352 —
+ *     8px off the bottom edge. A chip there would sit on the player's only
+ *     escape hatch. (`hudDisplacedRect("menu", …)`; the guard proves it.)
+ *   • The LEFT end is clear: the lowest bottom-left slot is `gamepad`, whose
+ *     rect ends exactly at the band's top edge (offset HUD_EDGE = the band
+ *     height), and `hudRectsOverlap` treats touching edges as clear.
+ *
+ * ⛔ AND WHY IT IS NOT A HUD SLOT. Two reasons, both hard:
+ *   1. `hudLayout.test.ts` asserts `hudStackEnd("bottom-left", …, {skipTransient})`
+ *      equals `hudSlotBand("fps").end` — any new non-transient slot with
+ *      order > 1 in that corner fails it;
+ *   2. slots only exist DURING A MATCH (they are rendered by MatchOverlay), and
+ *      "always on screen" has to include the lobby and the replay page.
+ * It is chrome in the badge's sense, so it is declared here as a BAND and
+ * mounted from GlobalChrome, exactly as the badge is.
+ *
+ * THE 375px CONSTRAINT IS REAL AND IS WHY THE WIDTH IS COMPUTED, NOT CHOSEN.
+ * On the narrowest guard viewport (375 wide) the centred 280px stamp band
+ * leaves (375−280)/2 = 47.5px on each side. That is the entire budget — box,
+ * padding and text. The chip therefore caps at whichever is smaller, that free
+ * gap or `HUD_PING_BAND_W`, and its label shrinks through a tier ladder to fit
+ * (ui/pingChip.ts) instead of being clipped mid-number.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/**
+ * Widest the ping chip may ever be, INCLUDING its padding. Comfortably fits the
+ * long form (「順暢 42 ms · 抖動 6 ms」 ≈ 118px at the 10px monospace this band
+ * uses) with headroom for a 3-digit ping, and small enough that it reads as a
+ * corner stamp rather than a bar across the bottom of the screen.
+ */
+export const HUD_PING_BAND_W = 150;
+
+/** Horizontal padding inside the chip (each side). Deliberately half the
+ * badge's 8px: at 375 wide the whole box gets 47.5px, and padding is the one
+ * part of that budget which shows nothing. */
+export const HUD_PING_CHIP_PAD_X = 4;
+
+/**
+ * The chip's outer width in a concrete viewport: the free gap left of the
+ * centred stamp band, capped at HUD_PING_BAND_W. Zero on a viewport too narrow
+ * to have a gap at all (< HUD_STAMP_BAND_W), which is the honest answer — there
+ * is nowhere to put it that does not sit on the build stamp.
+ */
+export function hudPingChipBoxPx(viewportWidth: number): number {
+  const stamp = Math.min(viewportWidth, HUD_STAMP_BAND_W);
+  return Math.max(0, Math.min(HUD_PING_BAND_W, (viewportWidth - stamp) / 2));
+}
+
+/** Content width available to the chip's TEXT (box minus both paddings). */
+export function hudPingChipContentPx(viewportWidth: number): number {
+  return Math.max(0, hudPingChipBoxPx(viewportWidth) - HUD_PING_CHIP_PAD_X * 2);
+}
+
+/** The ping chip's reserved rect: same row as the stamp band, hard left. */
+export function hudPingBandRect(viewport: HudViewport): HudRect {
+  return {
+    x: 0,
+    y: viewport.height - HUD_STAMP_BAND,
+    w: hudPingChipBoxPx(viewport.width),
+    h: HUD_STAMP_BAND,
+  };
+}
+
+/**
+ * Near-offset of a slot when it RELOCATES to its `displacedCorner`: docked one
+ * gap past that corner's whole existing stack (its `displacedOrder`, but robust
+ * to the exact numbers). Reuses `hudStackEnd`, which this finally makes a real
+ * production consumer of.
+ */
+export function hudDisplacedOffset(id: HudSlotId, touch = false): number {
+  const spec = hudSlot(id);
+  const corner = spec.displacedCorner ?? spec.corner;
+  return hudStackEnd(corner, touch) + HUD_GAP;
+}
+
+/** The absolute-position style for a RELOCATED slot (see `displaced: "relocate"`). */
+export function hudDisplacedStyle(id: HudSlotId, touch = false, z: number = HUD_Z.slot): CSSProperties {
+  const spec = hudSlot(id);
+  const corner = spec.displacedCorner ?? spec.corner;
+  const { vertical, horizontal } = cornerAxes(corner);
+  const offset = hudDisplacedOffset(id, touch);
+  const style: CSSProperties = { position: "absolute", zIndex: z };
+  if (vertical === "top") style.top = offset;
+  else style.bottom = offset;
+  if (horizontal === "left") style.left = HUD_EDGE;
+  else style.right = HUD_EDGE;
+  return style;
+}
+
+/** The reserved rect of a RELOCATED slot, for the guard. */
+export function hudDisplacedRect(id: HudSlotId, viewport: HudViewport, touch = false): HudRect {
+  const spec = hudSlot(id);
+  const corner = spec.displacedCorner ?? spec.corner;
+  const { vertical, horizontal } = cornerAxes(corner);
+  const w = hudSlotWidth(id, touch);
+  const h = hudSlotHeight(id, touch);
+  const offset = hudDisplacedOffset(id, touch);
+  return {
+    x: horizontal === "left" ? HUD_EDGE : viewport.width - HUD_EDGE - w,
+    y: vertical === "top" ? offset : viewport.height - offset - h,
+    w,
+    h,
+  };
+}
+
+/** What a slot does under a set of currently-open panels. Pure — the guard and
+ * the runtime hook both resolve through this, so they can never disagree. */
+export interface HudSlotPlacement {
+  hidden: boolean;
+  relocated: boolean;
+}
+
+export function resolveSlotUnderPanels(
+  slotId: HudSlotId,
+  touch: boolean,
+  panels: readonly HudPanelSpec[],
+): HudSlotPlacement {
+  const spec = hudSlot(slotId);
+  if (isPanelExempt(spec)) return { hidden: false, relocated: false };
+  const corner = hudSlotCorner(slotId, touch);
+  const covering = panels.filter((p) => p.covers.includes(corner));
+  if (covering.length === 0) return { hidden: false, relocated: false };
+
+  const policy = spec.displaced ?? "inset";
+  if (policy === "hide") return { hidden: true, relocated: false };
+  if (policy === "relocate") {
+    const target = spec.displacedCorner ?? spec.corner;
+    // if the relocate target is ALSO covered (a full terminal panel), there is
+    // nowhere to go — hide instead. The guard only lets this happen when a
+    // covering panel `providesExit`, so an essential control is never trapped.
+    const targetCovered = panels.some((p) => p.covers.includes(target));
+    return targetCovered ? { hidden: true, relocated: false } : { hidden: false, relocated: true };
+  }
+  // "inset" (default): our covered slots never use it — the guard forbids the
+  // combination — so treat it as "stay put" and let the guard flag it.
+  return { hidden: false, relocated: false };
+}
