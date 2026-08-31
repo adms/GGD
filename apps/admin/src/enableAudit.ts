@@ -103,6 +103,47 @@ export const ENABLE_AUDIT_URL = "/__review/enable-audit";
  * ⚠️ ⭐ 空清單**不打網路**（⛔ 也不回 `ran`）—— 票文逐字的成本斷言
  * 「不啟用就不花錢」。
  */
+/**
+ * ⭐⭐ GH#473 —— dev 的 `/__review` 不在時的**退路：build 期預算的那一份**。
+ *
+ * ⛔ 在此之前正式後台按下「啟用」看到的是「⚠️ 稽核沒有跑」。⭐ 那是**誠實的**
+ *（三態刻意分開），⛔ 但不是最終狀態 —— ⭐ 而它其實**算得出來**。
+ *
+ * ⭐ 為什麼不必開一條 platform API：`auditPlan()` 只讀「那個 id 屬於哪個集合」
+ * 與「稽核實作檔有沒有匯出進入點」⇒ ⭐ **零個執行期狀態**
+ * ⇒ build 的那一刻就完全決定了。⛔ 開一條 API 去算一個常數，
+ * 是把靜態檔案偽裝成服務。
+ *
+ * ⚠️ 產物住 `content/assets/review/`（跟著 `content/` bind-mount）
+ * ⇒ ⭐ 正式站**不必重建映像**就拿得到 —— 與 bundle 同一條路。
+ *
+ * ⚠️ ⭐ 連這一份都拿不到、或裡面沒有這幾個 id 時**仍然回 `unavailable`**
+ * —— ⛔ 不可以假裝跑過了。
+ */
+const PRECOMPUTED_URL = "/content/assets/review/enable-audit.json";
+
+async function fromPrecomputed(
+  ids: readonly string[],
+  fetchFn: typeof fetch,
+  liveWhy: string,
+): Promise<EnableAuditResult> {
+  try {
+    const res = await fetchFn(PRECOMPUTED_URL);
+    if (!res.ok) return { state: "unavailable", why: `${liveWhy}；預算檔也回 ${res.status}` };
+    const body = (await res.json()) as { rows?: EnableAuditRow[] };
+    const want = new Set(ids);
+    const rows = (body.rows ?? []).filter((r) => want.has(r.id));
+    // ⚠️ ⭐ 預算檔在而這幾個 id 一列都沒有 ⇒ 它們是**新內容**（產物還沒重跑）
+    //   ⇒ ⛔ 回「跑過了、零列」會是謊話。
+    if (rows.length === 0) {
+      return { state: "unavailable", why: `${liveWhy}；預算檔裡沒有這幾個 id（⭐ 內容比產物新）` };
+    }
+    return { state: "ran", rows };
+  } catch {
+    return { state: "unavailable", why: `${liveWhy}；預算檔也拿不到` };
+  }
+}
+
 export async function fetchEnableAudit(
   ids: readonly string[],
   fetchFn: typeof fetch = fetch,
@@ -110,19 +151,15 @@ export async function fetchEnableAudit(
   if (ids.length === 0) return { state: "skipped" };
   try {
     const res = await fetchFn(`${ENABLE_AUDIT_URL}?ids=${encodeURIComponent(ids.join(","))}`);
-    if (!res.ok) {
-      return {
-        state: "unavailable",
-        why: `稽核端點回 ${res.status}（⭐ 正式 build 沒有 /__review —— 這是預期的）`,
-      };
-    }
+    if (!res.ok) return fromPrecomputed(ids, fetchFn, `稽核端點回 ${res.status}`);
     const body = (await res.json()) as { rows?: EnableAuditRow[] };
     return { state: "ran", rows: body.rows ?? [] };
   } catch (err) {
-    return {
-      state: "unavailable",
-      why: `稽核端點連不上（${err instanceof Error ? err.message : String(err)}）`,
-    };
+    return fromPrecomputed(
+      ids,
+      fetchFn,
+      `稽核端點連不上（${err instanceof Error ? err.message : String(err)}）`,
+    );
   }
 }
 
