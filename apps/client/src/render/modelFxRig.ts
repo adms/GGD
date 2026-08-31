@@ -57,6 +57,11 @@ export interface ModelFxModelDoc {
   /** ⭐ 移動特效離地多高（`model@1.fxSpawnHeight`）。缺席 ⇒ 0 ＝ 今天的行為。 */
   fxSpawnHeight?: number;
   /**
+   * ⭐ GH#803 —— 這顆模型自己帶的粒子發射器（`model@1.fxEmitters`,vfx doc id）。
+   * 缺席 ⇒ ⛔ 不生 ＝ 今天的行為（逐位元不變）。
+   */
+  fxEmitters?: readonly string[];
+  /**
    * ⭐ 這一份外觀的頂點著色（`model@1.fxTint`，線性 RGB 各 0…1）。缺席 ⇒ ⛔ 不著色。
    * ⚠️ 原作把它掛在 locust dummy 的**單位型別**上（w3u `Art - Vertex Colour`
    * ＋ `SetUnitVertexColor`），而 GGD 這一側在 2026-08-23 之前**整格不存在** ——
@@ -397,6 +402,12 @@ export interface ModelFxRigOptions {
    * 缺席 ⇒ 拖尾是 no-op（headless 測試的樣子，⛔ 不是整支功能不生效）。
    */
   spawnTrail?(vfxId: string, x: number, y: number, z: number): void;
+  /**
+   * ⭐ GH#803 一鍵 rollback —— `model@1.fxEmitters` 要不要播。
+   * 缺席 ⇒ **true**（第〇·六守則：「優先權大的更新後都是預設啟動」）。
+   * 出貨那一格住 `content/config/vfx-tuning.json` 的 `modelFxEmitters.enabled`。
+   */
+  modelFxEmittersEnabled?: boolean;
 }
 
 /** 出貨預設 —— ⚠️ 這幾格是**預算**不是平衡值，所以住這裡是對的（第〇·四守則的豁免）。 */
@@ -543,6 +554,8 @@ export class ModelFxRig {
   private readonly maxPooledPerModel: number;
   private readonly maxPooledTotal: number;
   private readonly maxEffectSec: number;
+  /** ⭐ GH#803 —— `fxEmitters` 的一鍵 rollback（預設 on）。 */
+  private readonly emittersEnabled: boolean;
   /** ⚠️ 單調遞增的流水號。⛔ 不可以用 `born.length` —— 回收會把它縮回去，於是
    *  兩個同時活著的節點會拿到**同一個名字**，而守衛正是照名字在場景上數的。 */
   private serial = 0;
@@ -555,6 +568,8 @@ export class ModelFxRig {
     this.maxPooledPerModel = opts.maxPooledPerModel ?? DEFAULT_MAX_POOLED_PER_MODEL;
     this.maxPooledTotal = opts.maxPooledTotal ?? DEFAULT_MAX_POOLED_TOTAL;
     this.maxEffectSec = opts.maxEffectSec ?? DEFAULT_MAX_EFFECT_SEC;
+    // ⭐ GH#803 —— 缺席 ⇒ true（預設啟動）。⛔ 不是 `?? false`：那會讓整條線出貨即死。
+    this.emittersEnabled = opts.modelFxEmittersEnabled ?? true;
   }
 
   /** 目前活著的實例數（守衛量這個 —— 池子不長大的證據）。 */
@@ -676,7 +691,24 @@ export class ModelFxRig {
         ageSec: 0,
         lifeSec,
       };
-      this.applyPose(item);
+      const birthPose = this.applyPose(item);
+      // ⭐⭐ GH#803 —— **這顆模型自己帶的粒子**（`model@1.fxEmitters`）。
+      //
+      // ⚠️ 原作的一顆 .mdx 是「geoset ＋ 它自己的 PRE2」,而 `convert_stock_model.py`
+      //    **只轉 geoset** ⇒ 出貨 .glb 是那顆模型的**一半**。ReviveHuman 的 5 張貼圖
+      //    4 張 sat 0.000–0.066,⭐ 而金色住在 PRE2 的
+      //    `segment_color[0] = (1.000, 0.890, 0.459)`（sat **0.541**,2026-08-31 直接解
+      //    MPQ 的 .mdx 量到）⇒ ⛔ 沒有任何 tint 參數補得回來 —— 缺的是**另外那一半**。
+      //
+      // ⭐ 為什麼掛在**出生**而不是每幀:這幾顆是模型的**組成零件**,⛔ 不是拖尾。
+      //    一發一次,活多久由 vfx 文件自己的 `lifetimeSec`/`mode` 決定。
+      // ⭐ 走與拖尾**同一條** `spawnTrail` 注入 —— ⛔ 不另開第二條路徑
+      //    (第二條路徑 = 第二個要記得餵的接縫,而 GH#607 就是那樣掉了兩格)。
+      if (this.opts.spawnTrail && this.emittersEnabled) {
+        for (const vid of doc.fxEmitters ?? []) {
+          this.opts.spawnTrail(vid, birthPose.x, birthPose.y, birthPose.z);
+        }
+      }
       // ⭐ 幾何已經在（重用／容器早就載好）⇒ 現在就起播；還沒到的那幾具由
       //    `ensureContainer` 的回填在容器落地的當下補播（同一支 `startClip`）。
       this.startClip(item, doc);

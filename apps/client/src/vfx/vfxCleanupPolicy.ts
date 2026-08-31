@@ -220,6 +220,16 @@ export function vfxHardMaxLifeSec(policy: ConfigVfxCleanupDoc = vfxCleanupPolicy
   return Math.min(VFX_HARD_MAX_LIFE_SEC_BOUNDS.max, Math.max(VFX_HARD_MAX_LIFE_SEC_BOUNDS.min, v));
 }
 
+/**
+ * ⭐ GH#803 —— `model@1.fxEmitters`（模型自己帶的原作粒子）要不要播。
+ * 缺席 ⇒ **true**（第〇·六守則：優先權大的更新後都是預設啟動）。
+ */
+export function modelFxEmittersEnabled(
+  policy: ConfigVfxCleanupDoc = vfxCleanupPolicy(),
+): boolean {
+  return policy.modelFxEmittersEnabled ?? DEFAULT_VFX_CLEANUP.modelFxEmittersEnabled ?? true;
+}
+
 // ---------------------------------------------------------------------------
 // 🖼 GH#561 —— 地面貼圖跨回合快取的上限
 // ---------------------------------------------------------------------------

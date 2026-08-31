@@ -87,6 +87,7 @@ import {
   emitterSweepMs,
   purgeImpactPoolOnRoundEnd,
   vfxHardMaxLifeSec,
+  modelFxEmittersEnabled,
 } from "./vfxCleanupPolicy";
 import { resetVfxHardCapClocks, sweepVfxHardCap, noteVfxRefired} from "./vfxHardCap";
 import { TelegraphLayer } from "./TelegraphLayer";
@@ -770,6 +771,10 @@ export class VfxSystem {
             // （它自己的出貨預設是 8 秒）。⛔ 不要在 `modelFxRig` 裡再抄一個
             // 數字：那就是第〇·四守則說的第二個住處。
             maxEffectSec: vfxHardMaxLifeSec(),
+            // ⭐ GH#803 一鍵 rollback —— 模型自己帶的原作粒子要不要播（預設 on）。
+            //    ⛔ 不在 rig 裡自己讀 config：那是第〇·四守則的第二個住處，
+            //    而 `maxEffectSec` 上面那三行註解就是為了同一件事寫的。
+            modelFxEmittersEnabled: modelFxEmittersEnabled(),
             // ⭐ GH#838 M11 —— 沿路拖尾走 **VfxSystem 自己的 `play`**：同一個
             //    文件查詢、同一套壽命夾限、同一份粒子密度上限、同一個池。
             //    ⛔ 不另開一條渲染路（那會是第二個腐爛速度）。

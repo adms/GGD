@@ -13,5 +13,8 @@
     "death": "Birth"
   },
   "fxLongAxis": "y",
-  "fxSpawnHeight": 0.55
+  "fxSpawnHeight": 0.55,
+  "fxEmitters": [
+    "fx.w3x.stock.fragdriller.p00"
+  ]
 }

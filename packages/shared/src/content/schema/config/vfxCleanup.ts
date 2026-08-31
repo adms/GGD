@@ -374,6 +374,21 @@ export const zConfigVfxCleanupDoc = z
       .optional(),
 
     /**
+     * ⭐⭐ GH#803 —— `model@1.fxEmitters`（模型自己帶的粒子）要不要播。
+     *
+     * ── 它關掉什麼 ────────────────────────────────────────────────────────
+     * 原作的一顆 .mdx 是「geoset ＋ 它自己的 PRE2 粒子」，而
+     * `convert_stock_model.py` **只轉 geoset** ⇒ 出貨 .glb 是那顆模型的**一半**。
+     * ReviveHuman 的 5 張貼圖 **4 張 sat 0.000–0.066**（灰/白），⭐ 而金色住在
+     * PRE2 的 `segment_color[0] = (1.000, 0.890, 0.459)` ⇒ **sat 0.541**
+     * （2026-08-31 直接解 MPQ 的 .mdx 量到）⇒ ⛔ 沒有任何 tint 參數補得回來。
+     * 這一格 = false ⇒ 逐位元回到「只有 geoset」的今天。
+     *
+     * ⭐ 出貨 **true**（第〇·六守則：「優先權大的更新後都是預設啟動」）。
+     */
+    modelFxEmittersEnabled: z.boolean().optional(),
+
+    /**
      * 兜底掃描涵蓋到哪裡。⭐ 出貨 `"scene"` ＝ owner 的「**不管什麼特效**」。
      *
      *   · `"scene"`   場景裡**每一個**粒子系統（含 `ArenaScene` 的場地火把這種
@@ -556,6 +571,10 @@ export const DEFAULT_VFX_CLEANUP: ConfigVfxCleanupDoc = {
   // ⏳ owner 2026-08-23 GH#570 —— 「產生後生命週期最多維持三秒，三秒後一律強制
   // 清理回收」。出貨值就是他說的那個數字，⛔ 不是我挑的。
   vfxHardMaxLifeSec: 5,
+    // ⭐ GH#803 —— 我挑的（owner 2026-08-23 常設指令：「沒做完以前別問我了自己判斷
+    //    **但是留後台開關可以簡易 rollback**」）。預設**啟動**（第〇·六守則：優先權大的
+    //    更新後都是預設啟動）。關掉 ⇒ 逐位元回到「只有 geoset、沒有原作粒子」的今天。
+    modelFxEmittersEnabled: true,
   // 🧹 owner 2026-08-27 GH#819 —— 「既然做成開關 那就請你**預設是會清理完重新
   // 盤點必要物件載入後 再進入戰鬥回合**」⇒ 預設就是他點名的 full，⛔ 不是我挑的。
   roundPurgeMode: "full",

@@ -13,5 +13,9 @@
     "death": "Stand"
   },
   "fxLongAxis": "y",
-  "fxSpawnHeight": 0.55
+  "fxSpawnHeight": 0.55,
+  "fxEmitters": [
+    "fx.w3x.stock.awaken.p00",
+    "fx.w3x.stock.awaken.p01"
+  ]
 }
