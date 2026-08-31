@@ -62,7 +62,7 @@ RE_TPL='\[解決模板\]|##[[:space:]]*解決模板'
 #   ⛔ 不是「有寫這個詞就算數」（第三守則：註解會說謊，票文也會）。
 lint_deep() { # $1=標籤 $2=標題 $3=內文 —— 回 1 = 有硬缺
   python3 - "$1" "$2" "$3" <<'PY'
-import json, os, re, sys
+import json, os, re, subprocess, sys
 label, title, body = sys.argv[1], sys.argv[2], sys.argv[3]
 hard: list[str] = []
 soft: list[str] = []
@@ -120,6 +120,81 @@ for m in re.finditer(rf"`((?:{ROOTS})/[^`\s]+)`", body):
                     "（⛔ 先確認是不是換了集合／換了住處，再改票文）")
     elif not claims_absent and not os.path.exists(path) and not re.search(r"新|new|要加|預計", before + after):
         soft.append(f"票文點名的 `{path}` 今天**不存在**（新檔的話請在旁邊註明「新」）")
+
+# ── ⭐⭐ ④-b 前提回驗的**另外兩種形狀**（2026-08-31 W0 量到的）──────────────────
+# ⚠️ 上面那一段只驗**路徑存在性**。而 2026-08-31 的 W0（五條 lane 逐票回驗 54 張）
+#   量到:**37% 的前提已經不成立**,⭐ 而失效的形狀不只一種:
+#     · **行數漂移** —— #626 票文寫 `configForms.ts` 5,665 行,今天 **243**（已拆 17 檔）
+#     · **「零命中」過期** —— #756 票文寫 grep 零命中,今天 **17 命中**
+#     · 數量漂移 —— #648 43→37 · #722 5→4 · #664 322→340
+# ⇒ ⭐ 前兩種**一行指令就驗得掉**,所以它們變成閘;⛔ 第三種要領域知識,留給人。
+#
+# ⛔ 全部是 soft（警告不擋）—— 同這支腳本的哲學:一支會擋人的 lint 會被關掉。
+
+# (i) 行數宣稱 ⇒ 今天真的是 N 行嗎（容許 ±10%,⛔ 不是逐位元）
+#
+# ⚠️ ⭐ **兩種寫法都要收** —— 2026-08-31 實測:第一版只認散文形（「… N 行」),
+#   拿已知過期的 #626 試 ⇒ **沒抓到**,因為那張票的行數住在**表格欄位**裡:
+#       | `apps/admin/src/configForms.ts` | 4,978 | 16.7% |
+#   ⭐ 那正是量尺自證的價值:一把只認一種寫法的尺,在它最該說話的那張票上沉默。
+LINE_CLAIMS = [
+    rf"`((?:{ROOTS})/[^`\s]+)`[^\n]{{0,40}}?([\d,]{{3,}})\s*行",   # 散文形
+    rf"`((?:{ROOTS})/[^`\s]+)`\s*\|\s*([\d,]{{3,}})\s*\|",       # 表格形
+]
+for m in [mm for pat in LINE_CLAIMS for mm in re.finditer(pat, body)]:
+    path = re.sub(r":[\d/,\-–]+$", "", m.group(1)).rstrip("/")
+    if any(c in path for c in "*{<>") or not os.path.isfile(path):
+        continue
+    claimed = int(m.group(2).replace(",", ""))
+    try:
+        actual = sum(1 for _ in open(path, encoding="utf-8", errors="replace"))
+    except OSError:
+        continue
+    if claimed > 0 and abs(actual - claimed) / claimed > 0.10:
+        soft.append(f"⭐ **前提過期**：票文說 `{path}` 有 **{claimed:,}** 行，"
+                    f"今天是 **{actual:,}** 行（差 {abs(actual-claimed)/claimed:.0%}）"
+                    "—— ⛔ 先確認結論還成不成立，再改票文")
+
+# (ii-a) ⭐⭐ 票文**貼了整條 grep 指令**並宣稱零命中 ⇒ **直接重跑它**。
+#
+# ⭐ 這是最強的一種前提回驗:票文自己給了可執行的判準,⛔ 我不必猜它的意思。
+#   實例(#756):`| \`grep -ni voice tools/review/triage.mjs\` | ⛔ **零命中** |`
+#   ⇒ 2026-08-31 重跑得到 **17 命中** ⇒ 那一段票文已經過期。
+# ⛔ 只跑 `grep`(白名單),⛔ 不跑任何別的指令 —— 票文是資料,⛔ 不是可信的腳本。
+for m in re.finditer(r"`(grep\s[^`]{4,160})`[^\n]{0,60}?(零命中|0 命中|沒有命中)", body):
+    cmd = m.group(1)
+    if any(ch in cmd for ch in ";|&$><`\n"):
+        continue  # ⛔ 帶管道/重導/替換的一律不跑
+    try:
+        r = subprocess.run(cmd.split(), capture_output=True, text=True, timeout=20, cwd=os.getcwd())
+    except Exception:
+        continue
+    hits = [l for l in r.stdout.splitlines() if l.strip()]
+    if hits:
+        soft.append(f"⭐ **前提過期**：票文說 `{cmd}` 零命中，"
+                    f"而今天重跑得到 **{len(hits)}** 行（例：`{hits[0][:80]}`）"
+                    "—— ⛔ 先確認是不是有人做掉了，再改票文")
+
+# (ii-b) 「零命中」宣稱:票文說某個字在某處 0 命中 ⇒ 今天還是嗎
+for m in re.finditer(r"`([A-Za-z_][A-Za-z0-9_.\|]{2,60})`[^\n]{0,50}?(?:零命中|0 命中|沒有命中|全 src \*\*0\*\*)", body):
+    needle = m.group(1)
+    # ⛔ 正則字元／太短的字會誤報 —— 一支會誤報的閘下一輪就被整段忽略。
+    if any(c in needle for c in "*?[](){}^$+") or len(needle) < 4:
+        continue
+    try:
+        hit = subprocess.run(
+            ["grep", "-rl", "--include=*.ts", "--include=*.tsx", "--include=*.py",
+             "--exclude-dir=node_modules", "--exclude-dir=.git", needle,
+             "apps", "packages", "tools"],
+            capture_output=True, text=True, timeout=20,
+        )
+    except Exception:
+        continue
+    files = [f for f in hit.stdout.splitlines() if f.strip()]
+    if files:
+        soft.append(f"⭐ **前提過期**：票文說 `{needle}` 零命中，"
+                    f"而今天有 **{len(files)}** 個檔命中（例：`{files[0]}`）"
+                    "—— ⛔ 先確認是不是有人做掉了，再改票文")
 
 # ── GH#821 Scope ③：**AC 不可以比 owner 的原話窄**（引言動詞覆蓋，警告⛔不擋）────
 # 根因（#775 的反省）：owner 說「讀取**及儲存**」，我開的票把 AC 寫成只有讀的方向 ——
