@@ -59,6 +59,36 @@ write)
   esac
   [ -n "$BASE" ] || die "--baseline 必填 —— ⭐ 「動手之前它今天的行為是什麼」，⛔ 不是複述票文"
   [ -n "$NEXT" ] || die "--next 必填 —— ⭐ 「下一個人從哪裡接」，⛔ 留空等於下一輪從零開始"
+  # ⭐⭐ 2026-09-01 —— `--player` **缺席時保留舊的**，⛔ 不是清空。
+  #
+  # ⚠️ 根因（量到的）：這支腳本是**整段覆寫**進度標記的。⇒ 第一次帶 `--player`
+  # 寫進去、⭐ 而**第二次不帶就把它抹掉了** —— 而我在一次 BMPNDD 收尾時用
+  # 迴圈對 8 張票各寫一次「已部署」，⛔ 全部沒帶 `--player`
+  # ⇒ ⭐ **九張票的玩家那一句同時消失**，於是 `release-note-players.sh` 找不到
+  #   任何一句，玩家公告七版全部退化成「系統優化更新」。
+  #
+  # ⭐ 判準與 config 表單的 `preserved:` 逐字相同：**這一頁不編輯它，
+  # 但每一次儲存都必須原封不動帶著走**。⛔ 沒有這一行，一次無心的覆寫
+  # 就讓玩家那一句靜靜消失，而**沒有任何東西會紅**。
+  if [ -z "${PLAYER:-}" ]; then
+    # ⚠️ ⭐ 讀**留言**，⛔ 不是 body —— 進度標記是 append 成留言的。
+    #   （第一版我寫成 `--json body` ⇒ 永遠讀不到 ⇒ 沿用等於沒做，
+    #     ⭐ 而它看起來完全正常。與消費端 `release-note-players.sh` 走同一條路。）
+    PLAYER=$(gh issue view "$N" --json comments -q '[.comments[].body] | reverse | .[]' 2>/dev/null \
+      | awk '/🧭 進度標記/{f=1} f{print} f&&/^---$/{exit}' \
+      | grep -m1 '🎮 玩家看得到的' | sed 's/.*）\*\*：//') || PLAYER=""
+    [ -n "$PLAYER" ] && echo "ℹ️ 沿用票裡原本的玩家那一句（⛔ 沒有 --player ≠ 要清空）" >&2
+  fi
+  # ⭐ 同一個病的第二格：`--commit` 缺席也**沿用舊的**。
+  # ⚠️ 沒有 sha 的那一句，`release-note-players.sh` 答不出「它是哪一版出貨的」
+  # ⇒ ⛔ 只能每一版都發或都不發 —— 而它選了不發。
+  if [ -z "${SHA:-}" ]; then
+    SHA=$(gh issue view "$N" --json comments -q '[.comments[].body] | reverse | .[]' 2>/dev/null \
+      | awk '/🧭 進度標記/{f=1} f{print} f&&/^---$/{exit}' \
+      | grep -m1 -oE '\| \*\*commit\*\* \| `?[0-9a-f]{7,40}`?' | grep -oE '[0-9a-f]{7,40}') || SHA=""
+    [ "$SHA" = "—" ] && SHA=""
+    [ -n "$SHA" ] && echo "ℹ️ 沿用票裡原本的 commit sha（⛔ 沒有 --commit ≠ 要清空）" >&2
+  fi
   TS=$(date "+%Y-%m-%d %H:%M")
   BODY=$(cat <<EOF
 ## $MARK

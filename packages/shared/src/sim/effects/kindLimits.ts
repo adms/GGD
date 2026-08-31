@@ -178,7 +178,21 @@ export const DELAYED_MAX_DELAY_SEC = 10;
  * 並知道自己在做什麼（同 ggd-faithful-import-over-rescale：明知地抬高守衛，
  * ⛔ 不要偷偷把內容 rescale 成 32）。
  */
-export const DELAYED_MAX_COUNT = 32;
+/**
+ * ⭐⭐ owner 2026-09-01（逐字，⛔ 這一格以後不要再問他）：
+ *
+ * > 「放寬到 **1000** 都可以，雖然我不知道這是什麼但看起來不重要，
+ * >  ⛔ **就不要再問我**做後台開關設定數值就好了」
+ *
+ * ⇒ ⭐ 32 → **1000**。它擋住的是龍破斬（70 段）與神通眼（40 段）——
+ * ⭐ 那是**內容**，⛔ 而一個把內容 rescale 成 32 的守衛是在改設計
+ *（`ggd-faithful-import-over-rescale`：明知地抬高守衛，⛔ 不要偷偷改內容）。
+ *
+ * ⚠️ ⭐ 這是**上界**，⛔ 不是預設值：沒有任何一支技能因為它變大而變強，
+ * 只是**寫得出來的東西變多了**。真正的成本在排程器（一次施放推進 N 個未來 tick），
+ * 而 1000 段 × 30Hz ＝ 33 秒的班表，⛔ 遠低於任何一場比賽的長度。
+ */
+export const DELAYED_MAX_COUNT = 1000;
 /**
  * `delayed.intervalSec` 的上界。10 秒同 {@link RANDOM_AREA_MAX_INTERVAL_SEC}。
  * ⚠️ 下界不在這裡：schema 用 `.positive()`，執行期再夾成**至少 1 tick** ——

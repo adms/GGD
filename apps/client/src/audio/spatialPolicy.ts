@@ -237,11 +237,8 @@ export const VOICE_CATEGORY_POLICY: Readonly<Record<string, VoicePolicyRow>> = {
   "poison": {
     policy: "world",
     reason: "status line — same family as stun/slow/bind",
-    dispatched: false,
-    dormant: {
-      cause: "no-signal",
-      note: "⭐ 2026-08-27 重量：出貨的 44 份 status-effect 裡**仍然沒有中毒**。唯一帶 `dot` 的是 `burn`，而它的標籤是 `fire`/`elemental` —— ⛔ 「有 dot」≠「有毒」。把「中毒的咳嗽／作嘔」掛在火焰上，等於用聲音說一件沒發生的事。⇒ 補它要先有一份 `content/status-effects/poison.json` 與用它的技能，⛔ 不是接一條線",
-    },
+    dispatched: true,
+    statusIds: ["poison"],
   },
   "blind": {
     policy: "world",

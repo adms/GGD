@@ -1,6 +1,6 @@
 {
   "collection": "status-effects",
-  "hash": "081fc140dc22",
+  "hash": "acf7f8dd8253",
   "entries": [
     {
       "id": "aban-x-mark",
@@ -181,6 +181,12 @@
       "path": "status-effects/paralysis.json",
       "hash": "92ac23eff891",
       "size": 720
+    },
+    {
+      "id": "poison",
+      "path": "status-effects/poison.json",
+      "hash": "b8d3b7ba9ecd",
+      "size": 408
     },
     {
       "id": "rage",

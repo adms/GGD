@@ -189,6 +189,9 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
       // 【癱瘓】(2026-08-08) —— 89-02 憤怒的菊花「造成 [癱瘓] 及 [詛咒]」。
       // 同【麻痺】,見上面那一段。
       "paralysis",
+      // ⭐ GH#441 —— 最後一格 no-signal 的語音（中毒的咳嗽）缺的就是這份狀態。
+      //    ⛔ 與【燃燒】刻意分開：那是 fire/elemental，這是 poison/toxic。
+      "poison",
       "rage",
       "red-comet",
       "root",
