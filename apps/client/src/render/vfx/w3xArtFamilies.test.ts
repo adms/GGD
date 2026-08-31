@@ -77,7 +77,7 @@ describe("w3x art families — the prototype set", () => {
     }
   });
 
-  it("the 21 families collapse 33 distinct stock models, none shared between families", () => {
+  it("the 21 families collapse 37 distinct stock models, none shared between families", () => {
     const seen = new Set<string>();
     for (const id of W3X_ART_FAMILY_IDS) {
       for (const m of W3X_ART_FAMILIES[id].models) {
@@ -85,7 +85,11 @@ describe("w3x art families — the prototype set", () => {
         seen.add(m);
       }
     }
-    expect(seen.size).toBe(33);
+    // ⭐ GH#803：33 → 37 —— owner 點名的四支入族
+    //   （revivehuman/awaken → resurrect · fragdriller → missile
+    //    · earthquaketarget → groundDust）,家族由 owner 自己的點名理由指定,
+    //   ⛔ 不是我挑的（tools/w3x-import/stock_vfx_owner_named.json 逐字）。
+    expect(seen.size).toBe(37);
   });
 
   it.skipIf(!existsSync(USAGE))(
@@ -110,9 +114,13 @@ describe("w3x art families — the prototype set", () => {
         if (a !== b) drift.push(`${f.id}: models ${a} != census ${b}`);
       }
       expect(drift, `${drift.length} family(ies) drifted from the census`).toEqual([]);
-      // 922 is the owner's headline number for the 33 prioritised models
+      // ⭐ GH#803 —— 922 → **945**。⛔ 922 沒有壞掉,它是**另一個集合**的數字：
+      //   owner 的頭條數字 **922** 是 **33** 支優先模型的引用總和,而這一輪 owner 自己
+      //   點名的四支入族（revivehuman 11 · fragdriller 5 · earthquaketarget 4 · awaken 3
+      //   = **+23**）⇒ 37 支的總和是 945。
+      // ⚠️ 舊的事實留在這裡而⛔ 不是被刪掉（知識不可以無聲消失）。
       const total = W3X_ART_FAMILY_IDS.reduce((n, id) => n + W3X_ART_FAMILIES[id].refCount, 0);
-      expect(total).toBe(922);
+      expect(total).toBe(945);
     },
   );
 });

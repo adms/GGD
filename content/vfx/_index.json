@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "c34d7961a306",
+  "hash": "0d745485c04b",
   "entries": [
     {
       "id": "attach.ex.midchilder-aura",
@@ -2109,6 +2109,42 @@
       "size": 1017
     },
     {
+      "id": "fx.w3x.stock.awaken.p00",
+      "path": "vfx/fx.w3x.stock.awaken.p00.json",
+      "hash": "1b76688d2c72",
+      "size": 990
+    },
+    {
+      "id": "fx.w3x.stock.awaken.p01",
+      "path": "vfx/fx.w3x.stock.awaken.p01.json",
+      "hash": "aeb6c4768f5b",
+      "size": 992
+    },
+    {
+      "id": "fx.w3x.stock.awaken.p02",
+      "path": "vfx/fx.w3x.stock.awaken.p02.json",
+      "hash": "7c78dcf18cb6",
+      "size": 1015
+    },
+    {
+      "id": "fx.w3x.stock.earthquaketarget.p00",
+      "path": "vfx/fx.w3x.stock.earthquaketarget.p00.json",
+      "hash": "28b82f385e03",
+      "size": 1026
+    },
+    {
+      "id": "fx.w3x.stock.earthquaketarget.p01",
+      "path": "vfx/fx.w3x.stock.earthquaketarget.p01.json",
+      "hash": "9036e95cf94e",
+      "size": 1025
+    },
+    {
+      "id": "fx.w3x.stock.fragdriller.p00",
+      "path": "vfx/fx.w3x.stock.fragdriller.p00.json",
+      "hash": "d6a2f8fd883a",
+      "size": 1016
+    },
+    {
       "id": "fx.w3x.stock.markofchaostarget.p00",
       "path": "vfx/fx.w3x.stock.markofchaostarget.p00.json",
       "hash": "2ab5a503b566",
@@ -2143,6 +2179,24 @@
       "path": "vfx/fx.w3x.stock.markofchaostarget.p05.json",
       "hash": "21983afb0eeb",
       "size": 1033
+    },
+    {
+      "id": "fx.w3x.stock.revivehuman.p00",
+      "path": "vfx/fx.w3x.stock.revivehuman.p00.json",
+      "hash": "657a6e0b5592",
+      "size": 1078
+    },
+    {
+      "id": "fx.w3x.stock.revivehuman.p01",
+      "path": "vfx/fx.w3x.stock.revivehuman.p01.json",
+      "hash": "2084f84891d6",
+      "size": 1084
+    },
+    {
+      "id": "fx.w3x.stock.revivehuman.p02",
+      "path": "vfx/fx.w3x.stock.revivehuman.p02.json",
+      "hash": "1309c2d5463d",
+      "size": 995
     },
     {
       "id": "fx.w3x.stock.thunderclapcaster.p00",

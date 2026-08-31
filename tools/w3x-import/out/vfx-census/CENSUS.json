@@ -6,7 +6,7 @@
   "families": "content/assets/vfx/w3x-families.json",
   "abilityDocs": 421,
   "championDocs": 71,
-  "vfxDocs": 661
+  "vfxDocs": 649
  },
  "joinContract": {
   "method": "ggdDocs proposes; an exact name decides, else the HERO NUMBER decides",
@@ -17672,7 +17672,7 @@
      "emitterCount": 0
     }
    ],
-   "currentVfxKey": "fx.prim.holy.nova-lg",
+   "currentVfxKey": "fx.prim.lightning.nova-lg",
    "best": null,
    "candidates": [],
    "status": "PRIMITIVE-NECESSARY",

@@ -1,0 +1,85 @@
+{
+  "id": "fx.w3x.stock.revivehuman.p00",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.001,
+    "angleDeg": 1.0
+  },
+  "mode": "continuous",
+  "rate": 40.0,
+  "lifetimeSec": {
+    "min": 0.75,
+    "max": 0.75
+  },
+  "size": {
+    "start": 0.094,
+    "end": 0.061
+  },
+  "color": {
+    "start": [
+      1.0,
+      0.89,
+      0.459,
+      1.0
+    ],
+    "end": [
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        0.89,
+        0.459,
+        1.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.945,
+        0.835,
+        0.388,
+        0.784
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.094
+    ],
+    [
+      0.5,
+      0.361
+    ],
+    [
+      1,
+      0.061
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/star_09.png",
+  "stretched": true,
+  "tailLength": 1.7,
+  "speed": {
+    "min": 1.6333,
+    "max": 1.7
+  },
+  "anchorBone": "Dummy07"
+}

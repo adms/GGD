@@ -75,10 +75,10 @@
    "unit.attack1Missile": 11,
    "unit.specialArt": 7
   },
-  "priorityModelsFound": 33,
-  "priorityModelsTotal": 33,
+  "priorityModelsFound": 37,
+  "priorityModelsTotal": 37,
   "priorityModelsMissing": [],
-  "priorityReferencePoints": 922,
+  "priorityReferencePoints": 945,
   "jass": {
    "spawnCalls": 406
   }
@@ -485,9 +485,48 @@
      "anchors": {
       "weapon": 1
      }
+    },
+    {
+     "stem": "fragdriller",
+     "found": true,
+     "refCount": 5,
+     "paths": [
+      "Abilities\\Weapons\\FragDriller\\FragDriller.mdl"
+     ],
+     "scale": {
+      "n": 4,
+      "distinct": 1,
+      "min": 2.0,
+      "max": 2.0,
+      "values": [
+       2.0
+      ]
+     },
+     "effectiveScale": {
+      "n": 3,
+      "distinct": 2,
+      "min": 7.0,
+      "max": 8.0,
+      "values": [
+       7.0,
+       8.0
+      ]
+     },
+     "scalePercent": {
+      "n": 3,
+      "distinct": 2,
+      "min": 350.0,
+      "max": 400.0,
+      "values": [
+       350.0,
+       400.0
+      ]
+     },
+     "tintVariants": 1,
+     "anchors": {}
     }
    ],
-   "refCount": 43,
+   "refCount": 48,
    "missing": []
   },
   {
@@ -506,9 +545,24 @@
      "scalePercent": null,
      "tintVariants": 0,
      "anchors": {}
+    },
+    {
+     "stem": "earthquaketarget",
+     "found": true,
+     "refCount": 4,
+     "paths": [
+      "Abilities\\Spells\\Orc\\EarthQuake\\EarthQuakeTarget.mdl"
+     ],
+     "scale": null,
+     "effectiveScale": null,
+     "scalePercent": null,
+     "tintVariants": 0,
+     "anchors": {
+      "origin": 2
+     }
     }
    ],
-   "refCount": 28,
+   "refCount": 32,
    "missing": []
   },
   {
@@ -714,9 +768,94 @@
      "anchors": {
       "origin": 1
      }
+    },
+    {
+     "stem": "revivehuman",
+     "found": true,
+     "refCount": 11,
+     "paths": [
+      "Abilities\\Spells\\Human\\ReviveHuman\\ReviveHuman.mdl"
+     ],
+     "scale": {
+      "n": 11,
+      "distinct": 4,
+      "min": 0.2,
+      "max": 3.0,
+      "values": [
+       0.2,
+       1.25,
+       2.0,
+       3.0
+      ]
+     },
+     "effectiveScale": {
+      "n": 6,
+      "distinct": 5,
+      "min": 0.5,
+      "max": 5.4,
+      "values": [
+       0.5,
+       0.7,
+       2.5,
+       3.125,
+       5.4
+      ]
+     },
+     "scalePercent": {
+      "n": 6,
+      "distinct": 4,
+      "min": 180.0,
+      "max": 350.0,
+      "values": [
+       180.0,
+       200.0,
+       250.0,
+       350.0
+      ]
+     },
+     "tintVariants": 4,
+     "anchors": {}
+    },
+    {
+     "stem": "awaken",
+     "found": true,
+     "refCount": 3,
+     "paths": [
+      "Abilities\\Spells\\Other\\Awaken\\Awaken.mdl"
+     ],
+     "scale": {
+      "n": 3,
+      "distinct": 2,
+      "min": 1.0,
+      "max": 1.25,
+      "values": [
+       1.0,
+       1.25
+      ]
+     },
+     "effectiveScale": {
+      "n": 1,
+      "distinct": 1,
+      "min": 1.2,
+      "max": 1.2,
+      "values": [
+       1.2
+      ]
+     },
+     "scalePercent": {
+      "n": 1,
+      "distinct": 1,
+      "min": 120.0,
+      "max": 120.0,
+      "values": [
+       120.0
+      ]
+     },
+     "tintVariants": 2,
+     "anchors": {}
     }
    ],
-   "refCount": 25,
+   "refCount": 39,
    "missing": []
   },
   {
@@ -10552,8 +10691,8 @@
     "Abilities\\Spells\\Other\\Awaken\\Awaken.mdl"
    ],
    "form": "blizzard-stock",
-   "family": null,
-   "isPriority": false,
+   "family": "resurrect",
+   "isPriority": true,
    "refCount": 3,
    "byProvenance": {
     "jass-spawn": 1,
@@ -31360,8 +31499,8 @@
     "Abilities\\Spells\\Orc\\EarthQuake\\EarthQuakeTarget.mdl"
    ],
    "form": "blizzard-stock",
-   "family": null,
-   "isPriority": false,
+   "family": "groundDust",
+   "isPriority": true,
    "refCount": 4,
    "byProvenance": {
     "jass-literal": 1,
@@ -36743,8 +36882,8 @@
     "Abilities\\Weapons\\FragDriller\\FragDriller.mdl"
    ],
    "form": "blizzard-stock",
-   "family": null,
-   "isPriority": false,
+   "family": "missile",
+   "isPriority": true,
    "refCount": 5,
    "byProvenance": {
     "jass-spawn": 3,
@@ -77721,8 +77860,8 @@
     "Abilities\\Spells\\Human\\ReviveHuman\\ReviveHuman.mdl"
    ],
    "form": "blizzard-stock",
-   "family": null,
-   "isPriority": false,
+   "family": "resurrect",
+   "isPriority": true,
    "refCount": 11,
    "byProvenance": {
     "jass-spawn": 7,

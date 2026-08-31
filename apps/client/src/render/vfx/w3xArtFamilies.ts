@@ -172,8 +172,10 @@ export const W3X_ART_FAMILIES: Readonly<Record<W3xArtFamily, W3xFamilyPrototype>
     id: "missile",
     label: "飛彈",
     slug: "missile",
-    models: ["phoenix_missile", "ancientprotectormissile"],
-    refCount: 43,
+    // ⭐ GH#803 —— owner 逐字：「owner MDL 掃描 #6 —— 飛彈命中瞬間的碎焰（death 段才噴）,
+    //   **飛彈家族**唯一的原作爆焰樣本。」
+    models: ["phoenix_missile", "ancientprotectormissile", "fragdriller"],
+    refCount: 48,
     primitive: "bolt",
     element: "fire",
     scale: 1,
@@ -214,8 +216,10 @@ export const W3X_ART_FAMILIES: Readonly<Record<W3xArtFamily, W3xFamilyPrototype>
     id: "groundDust",
     label: "地面塵土",
     slug: "ground-dust",
-    models: ["impaletargetdust"],
-    refCount: 28,
+    // ⭐ GH#803 —— owner 逐字：「owner MDL 掃描 #2 —— 地震：塵團 + 拋物噴岩,
+    //   是「**持續地面災害**」唯一的原作樣本。」⇒ 落在塵土這一族。
+    models: ["impaletargetdust", "earthquaketarget"],
+    refCount: 32,
     primitive: "shockwave",
     element: "earth",
     scale: 0.8,
@@ -256,8 +260,20 @@ export const W3X_ART_FAMILIES: Readonly<Record<W3xArtFamily, W3xFamilyPrototype>
     id: "resurrect",
     label: "復活光",
     slug: "resurrect",
-    models: ["resurrecttarget", "resurrectcaster"],
-    refCount: 25,
+    // ⭐⭐ GH#803 —— `revivehuman` / `awaken` 進來,⭐ 而**家族是 owner 自己指定的**,
+    //   ⛔ 不是我挑的（`tools/w3x-import/stock_vfx_owner_named.json` 逐字）：
+    //     · revivehuman：「owner MDL 掃描 #4 —— **復活家族**的金色版：雙螺旋星屑 + 上升星柱。」
+    //     · awaken    ：「owner MDL 掃描 #5 —— **復活家族**的紫色版,與 #4 同結構不同配色。」
+    //
+    // ⚠️ 在此之前這兩支卡在 `extract_stock_vfx.py` 的 family 那道門
+    //   （逐字：「owner-named but no family claims it — no doc id can reach it」）
+    //   ⇒ ⛔ 它們的 PRE2 從來沒有被抽出來過。
+    // ⭐ 而金色**就在那裡**（2026-08-31 直接解 MPQ 的 .mdx 量到）：
+    //   `revivehuman` pre2#0 `segment_color[0] = (1.000, 0.890, 0.459)` ⇒ **sat 0.541**
+    //   —— #803 記的「原作 0.47–0.54」逐位命中,⭐ 而出貨 .glb 的 5 張貼圖 4 張 sat 0.000。
+    //   ⇒ 顏色不在 mesh 裡,它在**粒子**裡。
+    models: ["resurrecttarget", "resurrectcaster", "revivehuman", "awaken"],
+    refCount: 39,
     primitive: "column",
     element: "holy",
     scale: 1,

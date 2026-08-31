@@ -967,6 +967,30 @@
       "why": "原作地圖裡**沒有任何技能**引用模型 `sonicbreathstream`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
     },
     {
+      "vfxKey": "fx.w3x.stock.awaken.p00",
+      "why": "零售 MPQ 抽出來的 `awaken`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.awaken.p01",
+      "why": "零售 MPQ 抽出來的 `awaken`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.awaken.p02",
+      "why": "零售 MPQ 抽出來的 `awaken`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.earthquaketarget.p00",
+      "why": "零售 MPQ 抽出來的 `earthquaketarget`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 2 支在**身上**的通道點名它(godie-e00s.r:art:caster, godie-e010.r:art:caster);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.earthquaketarget.p01",
+      "why": "零售 MPQ 抽出來的 `earthquaketarget`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 2 支在**身上**的通道點名它(godie-e00s.r:art:caster, godie-e010.r:art:caster);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.fragdriller.p00",
+      "why": "零售 MPQ 抽出來的 `fragdriller`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。"
+    },
+    {
       "vfxKey": "fx.w3x.stock.markofchaostarget.p00",
       "why": "零售 MPQ 抽出來的 `markofchaostarget`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 7 支在**身上**的通道點名它(godie-h01n.ex:art:caster, godie-h01o.ex:art:caster, godie-hapm.r:jass:effectTargetUnit, godie-n003.ex:art:missile, godie-n01c.ex:art:missile, godie-n01g.ex:art:missile…);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
     },
@@ -989,6 +1013,18 @@
     {
       "vfxKey": "fx.w3x.stock.markofchaostarget.p05",
       "why": "零售 MPQ 抽出來的 `markofchaostarget`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 7 支在**身上**的通道點名它(godie-h01n.ex:art:caster, godie-h01o.ex:art:caster, godie-hapm.r:jass:effectTargetUnit, godie-n003.ex:art:missile, godie-n01c.ex:art:missile, godie-n01g.ex:art:missile…);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.revivehuman.p00",
+      "why": "零售 MPQ 抽出來的 `revivehuman`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.revivehuman.p01",
+      "why": "零售 MPQ 抽出來的 `revivehuman`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.revivehuman.p02",
+      "why": "零售 MPQ 抽出來的 `revivehuman`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。"
     }
   ]
 }

@@ -37,7 +37,7 @@
 | `unit.model` | 588 |
 | `unit.specialArt` | 451 |
 
-## owner 指定的 21 個家族（33/33 個模型有引用）
+## owner 指定的 21 個家族（37/37 個模型有引用）
 
 ### 衝擊波環 `shockwaveRing` — 273 個引用點
 
@@ -72,12 +72,13 @@
 | `hcanceldeath` | 24 | 4 種 0.7–3.0 | 2 | chest×2, origin×1 |
 | `undeaddissipate` | 20 | — | 0 | chest×13, origin×1 |
 
-### 飛彈 `missile` — 43 個引用點
+### 飛彈 `missile` — 48 個引用點
 
 | 模型 | 引用點 | scale 分佈 | tint 變體 | 錨點 |
 | --- | ---: | --- | ---: | --- |
 | `phoenix_missile` | 21 | 1 種 4.0–4.0 | 1 | chest×3, hand,right×2, weapon×5 |
 | `ancientprotectormissile` | 22 | 4 種 1.0–10.0 | 2 | weapon×1 |
+| `fragdriller` | 5 | 1 種 2.0–2.0 · 實效 2 種 7.0–8.0 | 1 | — |
 
 ### 雷擊 `boltStrike` — 42 個引用點
 
@@ -85,18 +86,28 @@
 | --- | ---: | --- | ---: | --- |
 | `monsoonbolttarget` | 42 | 4 種 2.0–10.0 · 實效 1 種 30.0–30.0 | 3 | chest×5 |
 
+### 復活光 `resurrect` — 39 個引用點
+
+| 模型 | 引用點 | scale 分佈 | tint 變體 | 錨點 |
+| --- | ---: | --- | ---: | --- |
+| `resurrecttarget` | 14 | 1 種 3.0–3.0 | 1 | chest×3, weapon×3 |
+| `resurrectcaster` | 11 | 1 種 0.9–0.9 | 1 | origin×1 |
+| `revivehuman` | 11 | 4 種 0.2–3.0 · 實效 5 種 0.5–5.4 | 4 | — |
+| `awaken` | 3 | 2 種 1.0–1.25 · 實效 1 種 1.2–1.2 | 2 | — |
+
+### 地面塵土 `groundDust` — 32 個引用點
+
+| 模型 | 引用點 | scale 分佈 | tint 變體 | 錨點 |
+| --- | ---: | --- | ---: | --- |
+| `impaletargetdust` | 28 | — | 0 | — |
+| `earthquaketarget` | 4 | — | 0 | origin×2 |
+
 ### 龍捲 `tornado` — 32 個引用點
 
 | 模型 | 引用點 | scale 分佈 | tint 變體 | 錨點 |
 | --- | ---: | --- | ---: | --- |
 | `tornadoelemental` | 22 | 4 種 1.0–4.0 · 實效 1 種 7.2–7.2 | 7 | left,hand×1 |
 | `tornadoelementalsmall` | 10 | — | 0 | — |
-
-### 地面塵土 `groundDust` — 28 個引用點
-
-| 模型 | 引用點 | scale 分佈 | tint 變體 | 錨點 |
-| --- | ---: | --- | ---: | --- |
-| `impaletargetdust` | 28 | — | 0 | — |
 
 ### 火柱 `flamePillar` — 27 個引用點
 
@@ -109,13 +120,6 @@
 | 模型 | 引用點 | scale 分佈 | tint 變體 | 錨點 |
 | --- | ---: | --- | ---: | --- |
 | `mirrorimagecaster` | 25 | — | 0 | chest×6, origin×1 |
-
-### 復活光 `resurrect` — 25 個引用點
-
-| 模型 | 引用點 | scale 分佈 | tint 變體 | 錨點 |
-| --- | ---: | --- | ---: | --- |
-| `resurrecttarget` | 14 | 1 種 3.0–3.0 | 1 | chest×3, weapon×3 |
-| `resurrectcaster` | 11 | 1 種 0.9–0.9 | 1 | origin×1 |
 
 ### 印記 `mark` — 24 個引用點
 

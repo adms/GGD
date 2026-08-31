@@ -1,0 +1,82 @@
+{
+  "id": "fx.w3x.stock.awaken.p02",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 1.667,
+    "angleDeg": 1.0
+  },
+  "mode": "continuous",
+  "rate": 35.0,
+  "lifetimeSec": {
+    "min": 3.0,
+    "max": 3.0
+  },
+  "size": {
+    "start": 0.35,
+    "end": 0.108
+  },
+  "color": {
+    "start": [
+      1.0,
+      1.0,
+      1.0,
+      0.275
+    ],
+    "end": [
+      0.757,
+      0.173,
+      0.973,
+      0.149
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.275
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.969,
+        0.776,
+        0.0,
+        0.996
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.757,
+        0.173,
+        0.973,
+        0.149
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.35
+    ],
+    [
+      0.5,
+      0.314
+    ],
+    [
+      1,
+      0.108
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/star_08.png",
+  "speed": {
+    "min": 1.9361,
+    "max": 7.5083
+  }
+}
