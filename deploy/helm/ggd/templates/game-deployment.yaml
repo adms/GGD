@@ -36,6 +36,19 @@ spec:
           env:
             - name: PORT
               value: {{ .Values.game.port | quote }}
+            # ⭐⭐ GH#813 C —— **rollback 開關必須在線上轉得到**。
+            #
+            # ⚠️ 2026-08-31 量到：compose 有 **74** 個 env key 是 helm 轉不到的，
+            #   ⭐ 而其中 **6 個是 `*_ENABLED` / `*_BYPASS` 形狀的 rollback 開關**
+            #   ⇒ ⛔ 它們存在的理由就是「線上出事時一鍵回頭」，
+            #     而在線上轉不到**等於沒有**（第一守則：留開關的成本必須是改一格）。
+            #
+            # ⭐ `with` ＋ `default` ⇒ 沒設就**不送這個 env**（⛔ 不是送一個空字串）：
+            #   容器那一側的預設值仍然是唯一的住處（第〇·四守則）。
+            {{- range $k, $v := .Values.game.rollbackEnv }}
+            - name: {{ $k }}
+              value: {{ $v | quote }}
+            {{- end }}
           # CONTRACT: apps/game-server is in flight; a /healthz HTTP route is
           # planned but not guaranteed yet, so probe the WS port itself.
           readinessProbe:

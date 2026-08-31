@@ -24,6 +24,23 @@ platform:
   resources: {}
 
 game:
+  # ⭐⭐ GH#813 C —— **可以在線上一鍵回頭的那幾格**。
+  #
+  # ⚠️ 這裡**只放 rollback 開關**（`*_ENABLED` / `*_BYPASS`）——
+  # ⛔ 不是把 compose 的 74 個 env 全抄過來：那 74 個大多是**開發旋鈕**
+  #（`GGD_CONTENT_CACHE_DIR` 那一族），⭐ 抄過去只會造出 74 個沒有人讀的欄位。
+  #
+  # ⭐ 判準（`composeHelmEnvParity.test.ts` 的第三條在守）：
+  #   一個開關**存在的理由**如果是「線上出事時回頭」⇒ 它**必須**在這裡。
+  #
+  # ⚠️ 留空 ⇒ **不送這個 env** ⇒ 容器自己的預設值生效（⛔ 不是送空字串）。
+  rollbackEnv: {}
+    # GGD_REPLAY_ENABLED: "0"          # 錄影出問題時關掉（⛔ 不影響比賽）
+    # GGD_COMBAT_ENV_BYPASS: "1"       # 系統倍率整層繞過
+    # GGD_SERVER_OPS_BYPASS: "1"
+    # GGD_MATCH_HEARTBEAT_BYPASS: "1"
+    # GGD_WHITELIST_BYPASS: "1"        # ⚠️ 白名單繞過 —— ⛔ 只在白名單被洗掉時用
+    # GGD_SLACK_NOTIFY_ENABLED: "0"    # 通知洗版時關掉
   image: ggd-game:dev
   port: 2567
   replicas: 1             # WS sticky: single replica + sessionAffinity ClientIP
