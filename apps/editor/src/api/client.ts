@@ -69,6 +69,12 @@ async function requestOptional<T>(url: string): Promise<T | null> {
   return (await res.json()) as T;
 }
 
+async function requestBytes(url: string): Promise<ArrayBuffer> {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`GET ${url} -> ${res.status}: ${await res.text()}`);
+  return res.arrayBuffer();
+}
+
 export interface WriteResult {
   id: string;
   hash: string;
@@ -82,6 +88,13 @@ export const api = {
     request<CollectionIndex>(`${BASE}/${collection}/_index`),
   doc: <T = unknown>(collection: CollectionName, id: string) =>
     request<T>(`${BASE}/${collection}/${id}`),
+  /** Raw content asset used by preview and the blend-mode-aware backdrop gate. */
+  assetBytes: (contentPath: string) => {
+    if (!contentPath.startsWith("assets/")) {
+      return Promise.reject(new Error(`asset path must start with "assets/": ${contentPath}`));
+    }
+    return requestBytes(`${BASE}/${contentPath}`);
+  },
   externalTargetProfile: (url: string) =>
     request<Record<string, unknown>>(`${BASE}/external-target-profile`, {
       method: "POST",

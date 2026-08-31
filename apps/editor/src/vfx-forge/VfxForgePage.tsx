@@ -39,6 +39,13 @@ import { VfxForgePreview } from "./VfxForgePreview";
 import type { VfxForgeStageMode } from "./VfxForgeStage";
 import { VfxTimeline } from "./VfxTimeline";
 import { SegmentInspector } from "./SegmentInspector";
+import {
+  AssetSafetyGate,
+  UnsafeVfxAssetError,
+  assetKey,
+  assetRefsFromScript,
+  type AssetSafetyResult,
+} from "./assetSafety";
 
 const ACCEPTANCE = [
   ["godie-hjai.e", "04-03 龍破斬"],
@@ -56,6 +63,7 @@ const simPreview = createSimPreviewController();
 export function VfxForgePage() {
   const qc = useQueryClient();
   const indexes = useForgeIndexes();
+  const assetSafetyGate = useMemo(() => new AssetSafetyGate(api), []);
   const [abilityId, setAbilityId] = useState("godie-hart.r");
   const [abilityInput, setAbilityInput] = useState("godie-hart.r");
   const [targetChampionId, setTargetChampionId] = useState("sela");
@@ -72,6 +80,7 @@ export function VfxForgePage() {
   const [serverErrors, setServerErrors] = useState<ErrorMap>({});
   const [trace, setTrace] = useState<CastPreviewTrace | ReactionPreviewTrace | null>(null);
   const [traceError, setTraceError] = useState<string | null>(null);
+  const [assetSafety, setAssetSafety] = useState<Map<string, AssetSafetyResult | "checking">>(new Map());
 
   const championId = abilityId.includes(".") ? abilityId.slice(0, abilityId.lastIndexOf(".")) : "";
   const previewContent = useQuery({
@@ -181,6 +190,15 @@ export function VfxForgePage() {
   }, [draft]);
   const errors = useMemo(() => mergeErrors(inlineErrors, serverErrors), [inlineErrors, serverErrors]);
   const errorCount = Object.keys(errors).length;
+  const draftAssetRefs = useMemo(() => draft ? assetRefsFromScript(draft) : [], [draft]);
+  const scriptSafety = useQuery({
+    queryKey: ["vfx-script-asset-safety", ...draftAssetRefs.map(assetKey)],
+    queryFn: () => draft ? assetSafetyGate.checkScript(draft) : Promise.resolve([]),
+    enabled: draft !== null,
+    staleTime: Number.POSITIVE_INFINITY,
+  });
+  const assetBlockers = (scriptSafety.data ?? []).filter((result) => !result.safe);
+  const assetAuditPending = draftAssetRefs.length > 0 && scriptSafety.isPending;
   const schedule = useMemo(
     () => trace ? scheduleSimEvents(trace.events, abilityId) : [],
     [abilityId, trace],
@@ -194,13 +212,39 @@ export function VfxForgePage() {
   const stop = useCallback(() => setPlaying(false), []);
   const onTime = useCallback((ms: number) => setPlayheadMs(ms), []);
 
+  useEffect(() => {
+    if (!scriptSafety.data) return;
+    setAssetSafety((previous) => {
+      const next = new Map(previous);
+      for (const result of scriptSafety.data) next.set(assetKey(result.asset), result);
+      return next;
+    });
+  }, [scriptSafety.data]);
+
   const mutate = (fn: (doc: VfxScriptDoc) => VfxScriptDoc): void => {
     draftHistory.commit((doc) => (doc ? fn(doc) : doc));
     setServerErrors({});
   };
-  const addAsset = (asset: AssetDrop, placement?: AssetPlacement): void => {
+  const probeAsset = (asset: AssetDrop): void => {
+    const key = assetKey(asset);
+    if (assetSafety.has(key)) return;
+    setAssetSafety((previous) => new Map(previous).set(key, "checking"));
+    void assetSafetyGate.check(asset).then((result) => {
+      setAssetSafety((previous) => new Map(previous).set(key, result));
+    });
+  };
+  const addAsset = async (asset: AssetDrop, placement?: AssetPlacement): Promise<void> => {
+    const key = assetKey(asset);
+    setAssetSafety((previous) => new Map(previous).set(key, "checking"));
+    const result = await assetSafetyGate.check(asset);
+    setAssetSafety((previous) => new Map(previous).set(key, result));
+    if (!result.safe) {
+      setStatus(`⛔ 已阻擋 ${asset.id}：${result.summary}${result.detail ? ` · ${result.detail}` : ""}`);
+      return;
+    }
     mutate((doc) => ({ ...doc, segments: [...doc.segments, segmentFromAsset(asset, placement)] }));
     setSelected(draft?.segments.length ?? 0);
+    setStatus(`素材去背通過：${asset.id}`);
   };
   const addKind = (kind: VfxScriptSegment["kind"]): void => {
     mutate((doc) => ({ ...doc, segments: [...doc.segments, newSegment(kind)] }));
@@ -208,10 +252,10 @@ export function VfxForgePage() {
   };
 
   const save = async (): Promise<void> => {
-    if (!draft || errorCount > 0) return;
+    if (!draft || errorCount > 0 || assetAuditPending || assetBlockers.length > 0) return;
     setStatus("驗證並寫回中…");
     try {
-      const result = await writeVfxScript(draft, api, isNew ? "create" : "put");
+      const result = await writeVfxScript(draft, assetSafetyGate, api, isNew ? "create" : "put");
       setOriginal(draft);
       setIsNew(false);
       setStatus(`已儲存 content/vfx-scripts/${draft.id}.json · ${result.hash}`);
@@ -220,6 +264,8 @@ export function VfxForgePage() {
       if (e instanceof ApiValidationError) {
         setServerErrors(issuesToErrorMap(e.issues));
         setStatus(`伺服器拒絕：${e.issues.length} 個欄位錯誤`);
+      } else if (e instanceof UnsafeVfxAssetError) {
+        setStatus(`⛔ 素材去背守衛拒絕儲存：${e.message}`);
       } else setStatus(`儲存失敗：${String(e)}`);
     }
   };
@@ -237,11 +283,13 @@ export function VfxForgePage() {
           <p>只編輯純演出腳本；傷害、段數與結算時序仍以 ability JSON 為真相。</p>
         </div>
         <div className="vfx-forge-save">
-          <span className={errorCount ? "error" : ""}>{status}{dirty ? " · 未儲存" : ""}</span>
+          <span className={errorCount || assetBlockers.length ? "error" : ""}>{status}{dirty ? " · 未儲存" : ""}</span>
           <button type="button" disabled={!draftHistory.canUndo} onClick={draftHistory.undo} title="復原（Ctrl/Cmd+Z）">↶ 復原</button>
           <button type="button" disabled={!draftHistory.canRedo} onClick={draftHistory.redo} title="重做（Ctrl/Cmd+Shift+Z）">↷ 重做</button>
           <button type="button" disabled={!dirty} onClick={() => { if (original) draftHistory.commit(original); }}>還原存檔版</button>
-          <button type="button" disabled={!dirty || errorCount > 0} onClick={() => void save()}>儲存腳本</button>
+          <button type="button" disabled={!dirty || errorCount > 0 || assetAuditPending || assetBlockers.length > 0} onClick={() => void save()}>
+            {assetAuditPending ? "檢查貼圖中…" : "儲存腳本"}
+          </button>
         </div>
       </header>
 
@@ -297,7 +345,7 @@ export function VfxForgePage() {
         </button>
         <span>
           {previewMode === "runtime"
-            ? "真 Sim 事件＋ability JSON＋目前未儲存的 VFX Script draft"
+            ? "真 Sim 事件＋ability JSON＋目前已存檔的 VFX Script；未儲存 draft 請用「只看腳本層」"
             : "隔離檢查目前 VFX Script；不代表技能視覺驗收通過"}
         </span>
       </section>
@@ -315,10 +363,26 @@ export function VfxForgePage() {
         <section className="vfx-blocker" role="alert"><b>⛔ 真 IntentFrame 被拒</b><span>{trace.reason ?? "unknown"}；工坊不會自行合成成功事件。</span></section>
       ) : null}
 
+      {assetBlockers.length > 0 ? (
+        <section className="vfx-blocker" role="alert">
+          <b>⛔ 去背守衛禁止儲存／匯出</b>
+          <span>{assetBlockers.map((item) => `${item.asset.id}：${item.summary}${item.detail ? `（${item.detail}）` : ""}`).join("；")}</span>
+        </section>
+      ) : null}
+      {scriptSafety.error ? (
+        <section className="vfx-blocker" role="alert"><b>⛔ 素材安全檢查失敗</b><span>{String(scriptSafety.error)}</span></section>
+      ) : null}
+
       {draft && ability ? (
         <>
           <div className="vfx-forge-workspace">
-            <VfxAssetPalette models={indexes.models.data} vfx={indexes.vfx.data} onAdd={addAsset} />
+            <VfxAssetPalette
+              models={indexes.models.data}
+              vfx={indexes.vfx.data}
+              onAdd={addAsset}
+              safety={assetSafety}
+              onProbe={probeAsset}
+            />
             <section className="vfx-forge-center">
               <VfxForgePreview
                 script={draft}

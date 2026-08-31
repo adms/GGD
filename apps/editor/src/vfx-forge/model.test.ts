@@ -96,6 +96,7 @@ describe("VFX Forge authoring core", () => {
   it("has one write destination and validates before calling it", async () => {
     const put = vi.fn(async () => ({ id: "x", hash: "h", collectionHash: "c", contentVersion: "v" }));
     const create = vi.fn(async () => ({ id: "x", hash: "h2", collectionHash: "c", contentVersion: "v" }));
+    const assetGuard = { assertScriptSafe: vi.fn(async () => undefined) };
     await writeVfxScript(
       {
         id: "x",
@@ -103,16 +104,19 @@ describe("VFX Forge authoring core", () => {
         abilityId: "x",
         segments: [{ kind: "floatingText", on: "castStart", text: "x" }],
       },
+      assetGuard,
       { put, create },
     );
     expect(put).toHaveBeenCalledWith("vfx-scripts", "x", expect.objectContaining({ abilityId: "x" }));
-    await expect(writeVfxScript({ id: "bad" }, { put })).rejects.toThrow();
+    await expect(writeVfxScript({ id: "bad" }, assetGuard, { put })).rejects.toThrow();
     expect(put).toHaveBeenCalledTimes(1);
     await writeVfxScript(
       { id: "x", schema: "vfx-script@1", abilityId: "x", segments: [{ kind: "floatingText", on: "castStart", text: "x" }] },
+      assetGuard,
       { put, create },
       "create",
     );
     expect(create).toHaveBeenCalledWith("vfx-scripts", "x", expect.anything());
+    expect(assetGuard.assertScriptSafe).toHaveBeenCalledTimes(2);
   });
 });

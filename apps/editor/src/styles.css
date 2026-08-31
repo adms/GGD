@@ -202,9 +202,13 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .vfx-assets > input { width: 100%; }
 .vfx-help { color: #7f899c; font-size: 10px; line-height: 1.5; }
 .vfx-asset-list { display: flex; flex-direction: column; gap: 3px; margin-top: 8px; }
-.vfx-asset { display: flex; gap: 6px; width: 100%; min-width: 0; align-items: center; text-align: left; padding: 5px 7px; }
+.vfx-asset { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 6px; width: 100%; min-width: 0; align-items: center; text-align: left; padding: 5px 7px; }
 .vfx-asset code { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; }
 .vfx-asset span { color: #bd8cff; }
+.vfx-asset small { grid-column: 2; color: #8892a5; font-size: 8px; }
+.vfx-asset.safe small { color: #77c995; }
+.vfx-asset.unsafe { border-color: #9b3434; background: #2a1719; cursor: not-allowed; }
+.vfx-asset.unsafe span, .vfx-asset.unsafe small { color: #ff918b; }
 .vfx-forge-center { min-width: 0; display: grid; grid-template-rows: minmax(410px, 58vh) minmax(280px, auto); }
 .vfx-stage { position: relative; min-height: 380px; overflow: hidden; contain: paint; transform: translateZ(0); background: #080a10; }
 .vfx-stage.focused { position: fixed; inset: 0; width: 100vw; height: 100vh; min-height: 0; max-height: none; margin: 0; border-radius: 0; z-index: 10000; }
