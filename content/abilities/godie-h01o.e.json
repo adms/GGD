@@ -41,6 +41,13 @@
       "at": "target"
     },
     {
+      "kind": "spawnVfx",
+      "vfxId": "godie-bloodbreathstream-p0",
+      "at": "bone",
+      "attach": "hand",
+      "boneOn": "victim"
+    },
+    {
       "kind": "spawnModelFx",
       "shape": "single",
       "preset": "tpl-locust-orb",

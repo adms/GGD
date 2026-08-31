@@ -378,6 +378,18 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "landing", since: "2026-08-24",
     why: "augment 指名屬性的那一格 —— 首發的 op=damageCoeffAp 自帶屬性語意不需要它;stat 型 op(modifierValue)的採用者到位時這格一起活。",
   },
+  "enum:abilities.effects[]#spawnVfx.boneOn=caster": {
+    status: "default-live",
+    since: "2026-08-31",
+    why:
+      "`caster` 是 `boneOn` **預設值的顯式拼法** —— 省略 ⇒ `spawnVfx.ts` 的 " +
+      "`boneOnVictim` 是 false ⇒ 錨定單位就是施法者，逐位元組同這一格出現之前" +
+      "（GH#809 的 rollback 條件就寫成這個樣子）。⇒ 明寫它與省略它是**同一份位元組的兩種拼法**，" +
+      "永遠不會有內容需要它。它留在 enum 是為了讓「掛在施法者身上」可以被**明說**（編輯器的下拉要有兩格）。" +
+      "⭐ 姊妹格 `victim` 有採用者（GH#809 內容批：79-02／79-03／78-04／18-02 共 7 支＋01-04），" +
+      "所以這一列**不是**「整個機制沒人用」——那一種是 S8，這一種不是。" +
+      "⭐ 可反駁：哪天預設改成 victim，這一列就該刪、`caster` 就該有採用者。",
+  },
   "enum:vfx#vfx@1.orient.yawFrom=world": {
     status: "default-live",
     since: "2026-08-24",
@@ -1369,11 +1381,10 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-10",
     why: "同 damageArea.runOnEmptyHit —— 一個人都沒打到時要不要照樣跑下游。省略 = 不跑 = 今天什麼都不會發生的那個語意。",
   },
-  "field:abilities.effects[]#damageLine.onHitTargetsMode": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "batch（預設，下一段收到整群人一次）還是 perTarget（一個一個分開跑）。⛔ 兩個 kind 在這一族上必須同名同語意：欄位名一旦分岔，編輯器上長得一樣的兩格就會是兩件事，那是最難查的一種缺陷。⭐ 圓形那一半（damageArea）已於 2026-08-18 落地並拿掉豁免；膠囊這一半還沒有內容需要它。",
-  },
+  // ⭐ 2026-08-31 · `damageLine.onHitTargetsMode` **落地了**（GH#809 內容批，
+  //    `abilities/godie-h01n.e` 79-03 月牙天衝：原作 j:37573 那一段是 `ForGroup`
+  //    的迴圈體 ⇒ 線上每一個被打到的人各噴一發血）。照這份清單自己的規矩，
+  //    landing 豁免因此被刪掉 —— ⛔ 不是放寬，是它不再需要。
   "field:abilities.effects[]#applyBuff.modifiers[].scopeSlot": {
     status: "landing",
     since: "2026-08-10",

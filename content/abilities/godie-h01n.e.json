@@ -67,8 +67,16 @@
               }
             ]
           }
+        },
+        {
+          "kind": "spawnVfx",
+          "vfxId": "godie-bloodbreathstream-p0",
+          "at": "bone",
+          "attach": "hand",
+          "boneOn": "victim"
         }
-      ]
+      ],
+      "onHitTargetsMode": "perTarget"
     },
     {
       "kind": "spawnModelFx",

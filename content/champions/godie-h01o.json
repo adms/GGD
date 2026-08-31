@@ -162,6 +162,13 @@
               }
             ]
           }
+        },
+        {
+          "kind": "spawnVfx",
+          "vfxId": "godie-bloodbreathstream-p0",
+          "at": "bone",
+          "attach": "chest",
+          "boneOn": "victim"
         }
       ],
       "vfxKey": "fx.prim.arcane.slash",
@@ -267,6 +274,13 @@
           "kind": "spawnVfx",
           "vfxId": "godie-deathwave-p0",
           "at": "target"
+        },
+        {
+          "kind": "spawnVfx",
+          "vfxId": "godie-bloodbreathstream-p0",
+          "at": "bone",
+          "attach": "hand",
+          "boneOn": "victim"
         },
         {
           "kind": "spawnModelFx",

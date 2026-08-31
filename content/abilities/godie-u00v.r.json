@@ -46,6 +46,13 @@
           }
         },
         {
+          "kind": "spawnVfx",
+          "vfxId": "godie-bloodbreathstream-p0",
+          "at": "bone",
+          "attach": "chest",
+          "boneOn": "victim"
+        },
+        {
           "kind": "knockback",
           "distanceTier": "極大",
           "speed": 16.0,

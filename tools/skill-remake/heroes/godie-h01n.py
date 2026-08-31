@@ -46,7 +46,16 @@ A("79-01", "79-01 瞬步", "ground", [30, 30, 30, 30], [60, 80, 100, 120], 9.17,
 #    寫 2.0 會被 `tierize()` 收成「極小」——⛔ 那正是裁決要推翻的那一格。
 A("79-02", "79-02 月牙斬擊", "targeted", [60, 60, 60, 60], [80, 160, 240, 320], TIER_RANGE["小"],
   "[主動][AP加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n\n「月牙。斬魄刀」\n給予目標額外200/350/500/650傷害。\n(若對方在 [破魔] 狀態，則額外造成 100% [AP] 傷害)\n(卍解 [變身] 狀態下傷害額外追加 200% [AP])",
-  effects=[dmg("magic", per=[200, 350, 500, 650], ap=0.5)],
+  # ⭐ GH#809 —— 掛件錨在**受擊者**身上，⛔ 不是施法者。逐行翻譯 j:37475
+  #    `AddSpecialEffectTargetUnitBJ( "chest", udg_BleachTarget, "BloodBreathStream.mdx" )`
+  #    ，而 `udg_BleachTarget` 在**前三行**（j:37472）逐字是 `GetAttackedUnitBJ()`
+  #    ⇒ 第二個參數是被打的那個人。⛔ 在 `boneOn` 出現之前 `at:"bone"` 恆錨施法者，
+  #    所以這一支在此之前只有兩條路：掛錯人，或者不掛 —— 兩條都不是翻譯。
+  # ⚠️ 這是**單體**技能（castType targeted）⇒ `ctx.targets[0]` 就是那一個人，
+  #    ⛔ 不需要 perTarget 扇出（那是 79-03 的線才需要的東西）。
+  effects=[dmg("magic", per=[200, 350, 500, 650], ap=0.5),
+           {"kind": "spawnVfx", "vfxId": "godie-bloodbreathstream-p0",
+            "at": "bone", "attach": "chest", "boneOn": "victim"}],
   # ⭐ 兩個括號子句是**同一階的兩條 hook**，⛔ 不是兩個 rank。
   #    ⚠️ `abilityPassives.ts::rankBlock` 一次只掛**一格**
   #    （`p.ranks[min(rank, len(ranks)) - 1]`）。上一版把破魔放 ranks[0]、卍解放
@@ -82,7 +91,19 @@ A("79-03", "79-03 月牙天衝", "ground", [55, 55, 55, 55], [250, 350, 450, 550
   #    commit a34e87c8）。同編號＝同一支技能 ⇒ 本體要鏡射**既有的那一份**,
   #    ⛔ 不是把我挑的模型塞進來再逼另一邊跟上。
   model_fx=[static_model("imported.deathwave", "point", 1.0, preset="tpl-locust-orb", soundKey="wc3.crushingwavecaster1")],
-  effects=[line("magic", length=11, width=2.0, per=[450, 600, 750, 900],
+  # ⭐ GH#809 —— 逐行翻譯 j:37573
+  #    `AddSpecialEffectTargetUnitBJ( "hand", GetEnumUnit(), "BloodBreathStream.mdx" )`。
+  #    它住在 `Trig_Bleach_Moon_Effect_Func001Func016A` 的 `ForGroup` 迴圈體裡，
+  #    緊接在 `UnitDamageTargetBJ(…, GetEnumUnit(), …)` 之後 ⇒ **線上每一個被打到的人
+  #    各一發**，錨在**那個人**的 `hand` 上（⛔ 不是 chest —— 79-02 才是 chest）。
+  #    ⚠️ 觸發鏈：`Bleach_Moon`(A0LL) 在 j:37523 `EnableTrigger( gg_trg_Bleach_Moon_Effect )`
+  #    ⇒ 那個 Effect 觸發器是 A0LL 的，⛔ 不是別支技能的。
+  # ⭐ `onHitTargetsMode:"perTarget"` 是「每個人各一發」的**既有機制**
+  #    （`victimFilter.ts::runOnHitChain` 逐字 `for (const id of struck) runList(chain, {…targets:[id]})`）。
+  #    ⛔ 不要回頭在 spawnVfx 裡加扇出 —— 那是同一個決定的第二個住處（第〇·四守則）。
+  # ⚠️ 兩顆既有的條件傷害**行為不變**：`gateOnCondition` 本來就逐個過濾 targets，
+  #    batch 與 perTarget 對它們給出同一組人（條件是 status，⛔ 不吃 RNG）。
+  effects=[dict(line("magic", length=11, width=2.0, per=[450, 600, 750, 900],
                 onhit=[dict(dmg("magic", ap=0.6),
                             condition={"kind": "status", "subject": "target",
                                        "statusId": "magic-break"}),
@@ -91,7 +112,10 @@ A("79-03", "79-03 月牙天衝", "ground", [55, 55, 55, 55], [250, 350, 450, 550
                        #    破魔問「敵人」，卍解問「我自己」。
                        dict(dmg("magic", ap=1.2),
                             condition={"kind": "status", "subject": "self",
-                                       "statusId": "bankai"})])])
+                                       "statusId": "bankai"}),
+                       {"kind": "spawnVfx", "vfxId": "godie-bloodbreathstream-p0",
+                        "at": "bone", "attach": "hand", "boneOn": "victim"}]),
+                onHitTargetsMode="perTarget")])
 
 A("79-04", "79-04 卍解", "self", [90, 90, 90], [100, 200, 300], 0,
   "[主動][輔助][變身]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n\n「卍解。天鎖斬月」\n壓縮全部力量並進入 [卍解] 狀態，[攻擊速度]提升100/150/200%，[瞬步] 冷卻縮短 50%，持續8秒。",

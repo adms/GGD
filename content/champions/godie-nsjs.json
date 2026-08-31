@@ -130,6 +130,13 @@
               "amount": {
                 "damageTier": "小"
               }
+            },
+            {
+              "kind": "spawnVfx",
+              "vfxId": "godie-bloodbreathstream-p0",
+              "at": "bone",
+              "attach": "chest",
+              "boneOn": "victim"
             }
           ]
         }
