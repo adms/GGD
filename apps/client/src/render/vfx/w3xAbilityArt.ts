@@ -345,8 +345,19 @@ function stockEmitterIds(family: W3xArtFamily): readonly string[] {
   const key = `${win}:${family}`;
   const cached = stockIdCache.get(key);
   if (cached) return cached;
+  // ⭐⭐ GH#761 —— 「這一族播哪幾顆模型」現在是**內容**（`config.vfx-families@1`
+  //   的 `families[f].models`），⛔ 不再只是 TS 常數。
+  // ⚠️ 這一格在此之前是那張表**唯一**還鎖在程式裡的欄位：其餘 10 格
+  //   （enabled / primitive / element / scale / alpha / timeScale / heightY /
+  //    音效 / groundDecal）早就可調 ⇒ 後台調得到「它長什麼樣」，
+  //   ⛔ 調不到「它到底播哪幾顆」—— 而那正是 GH#761 逐字說的
+  //   「該由內容表達的資料被寫死在渲染層」。
+  // ⭐ ABSENT ⇒ 退回出貨原型 ＝ 今天的行為（逐位元不變）；
+  //   ⚠️ `[]` 與 ABSENT **不同** —— `[]` 是「這一族不要原作 emitter」的決定。
+  const tuned = activeFamilyTuning?.families?.[family]?.models;
+  const models = tuned ?? W3X_ART_FAMILIES[family]?.models ?? [];
   const out: string[] = [];
-  for (const model of W3X_ART_FAMILIES[family]?.models ?? []) {
+  for (const model of models) {
     for (let i = 0; i < win; i++) {
       out.push(`fx.w3x.stock.${model}.p${String(i).padStart(2, "0")}`);
     }
@@ -363,6 +374,12 @@ let familyRowCache: Map<string, W3xAbilityArt> | null = null;
 onAbilityArtBindingsChanged(() => {
   promotedCache = null;
   familyRowCache = null;
+  // ⭐⭐ GH#761 —— 這一行在此之前**不存在**，而它從 GH#761 起是必要的：
+  //   `stockEmitterIds()` 的結果現在取決於
+  //   `config.vfx-families@1.families[f].models` ⇒ 後台換一份 tuning 而這個快取
+  //   不清 ⇒ ⭐ **後台改了、畫面不動**，⛔ 而每一條既有測試都會是綠的
+  //   （那一格是「可調」的，只是調了沒用 —— 第一·五守則的形狀）。
+  stockIdCache.clear();
 });
 
 function familyRow(abilityId: string): W3xAbilityArt | undefined {
@@ -542,6 +559,12 @@ export function setFamilyTuning(doc: ConfigVfxFamiliesDoc | null): void {
   // ⛔ 只清一個 = 操作者改了掛點/地面痕跡而那 25 支晉升技能還播舊值,
   // 而那種漂移在畫面上看起來完全正常(失敗形態⑤)。
   promotedCache = null;
+  // ⭐⭐ GH#761 —— 這一行在此之前**不存在**，而它從這張票起是必要的：
+  //   `stockEmitterIds()` 現在讀 `families[f].models` ⇒ 這個快取變成**內容相依**。
+  // ⛔ 少了它 = 操作者在後台換掉「這一族播哪幾顆」，存檔成功、**畫面一顆都不換**
+  //   —— 而每一條既有測試都是綠的（那一格是「可調」的，只是調了沒用）。
+  //   ⚠️ 與上面 `promotedCache` 那一段（GH#818）是**同一個**第②號故障。
+  stockIdCache.clear();
   snapWarned.clear();
   mintTunedFamilyDocs(doc);
 }

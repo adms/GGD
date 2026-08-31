@@ -434,6 +434,9 @@ export const FAMILY_FIELDS = [
   "soundLoopMaxMs",
   // GH#439 —— 地面痕跡。同樣在**家族原型**上：填一次 21 個原型就覆蓋 258 支技能。
   "groundDecal",
+  // ⭐⭐ GH#761 —— 「這一族播哪幾顆原作模型」。⚠️ 它在此之前是這張表**唯一**
+  // 還鎖在 TS 常數裡的欄位 ⇒ 後台調得到「它長什麼樣」，⛔ 調不到「它播哪幾顆」。
+  "models",
 ] as const;
 export type FamilyField = (typeof FAMILY_FIELDS)[number];
 
@@ -496,6 +499,7 @@ export const FIELD_LABEL: Readonly<Record<string, string>> = {
   timeScale: "家族基準時間倍率",
   heightY: "家族基準高度",
   groundDecal: "地面痕跡",
+  models: "原作模型（決定播幾顆發射器）",
   family: "家族原型",
   w3xScale: "原圖縮放",
   tintR: "紅",
@@ -653,6 +657,14 @@ export const FIELD_HINT: Readonly<Record<string, string>> = {
     "衝擊波／跺地／落石那一族選「地面震裂」，衝鋒與位移選「揚土」，" +
     "純空中或純增益的技能可以選「不留痕跡」。" +
     "⚠️ 這一格在此之前根本不存在，661 支技能蓋的是逐位元組相同的同一張焦痕",
+  models:
+    "⭐ 這一族宣告哪幾顆**原作模型**（模型 stem，例：warstompcaster），逗號分隔。" +
+    "「一次施法有幾個發射器」的答案就在這裡：每一顆模型展開成 " +
+    "fx.w3x.stock.<模型>.p00…p02（窗寬 3）⇒ 兩顆模型 = 最多 6 顆發射器。" +
+    "⚠️ **留白 ≠ 空的**：留白 = 用出貨原型那一份（今天的行為，逐位元不變）；" +
+    "填一個空的才是「這一族不要任何原作 emitter」（止血閥）。" +
+    "⚠️ 這一格在此之前根本不存在 —— 它是這張表唯一還鎖在程式裡的欄位，" +
+    "所以後台調得到這一族「長什麼樣」，⛔ 調不到它「到底播哪幾顆」（GH#761）",
   family: "這一招要播哪一個家族原型。留白 = 沿用出貨的綁定",
   w3xScale:
     "原圖給這個呼叫點的 usca / SetUnitScalePercent。留白 = 原圖沒說，用家族基準；填了才會走上面的壓縮曲線",
@@ -865,6 +877,10 @@ export function familyDraftFrom(t: VfxFamilyTuning): FamilyDraft {
     // GH#439 —— optional，⛔ 沒有就留白（同 OPTIONAL_GLOBAL_FIELDS 那個坑：
     // 幫它填一個預設會讓「打開來看一眼」變成 dirty）。
     groundDecal: t.groundDecal ?? "",
+    // ⭐ GH#761 —— 陣列 ⇄ 逗號分隔。⚠️ **三態**，⛔ 不是兩態：
+    //   ABSENT → ""（用出貨原型）· `[]` → "-"（明說不要）· 有值 → "a, b"
+    //   ⛔ 若把 `[]` 也編成 ""，「這一族不要 emitter」這個決定就存不下來。
+    models: t.models === undefined ? "" : t.models.length === 0 ? "-" : t.models.join(", "),
   };
 }
 
@@ -997,6 +1013,15 @@ export function validateFamilyField(field: FamilyField, text: string): string {
     if (t === "") return "";
     return GROUND_DECAL_IDS.includes(t) ? "" : "不是一種引擎認得的地面痕跡";
   }
+  // ⭐ GH#761 —— 留白 = 沿用出貨原型；"-" = 明說不要；其餘逐個 stem 檢查。
+  if (field === "models") {
+    if (t === "" || t === "-") return "";
+    const parts = t.split(",").map((x) => x.trim()).filter((x) => x !== "");
+    if (parts.length === 0) return "填「-」代表這一族不要任何原作 emitter";
+    if (parts.length > 12) return "最多 12 顆模型";
+    const bad = parts.find((x) => !/^[a-z0-9_.-]+$/.test(x));
+    return bad === undefined ? "" : `「${bad}」不像一個模型 stem（小寫、⛔ 不要副檔名）`;
+  }
   const b = FAMILY_BOUNDS[field];
   // ⚠️ 音效那三個數字是 optional（留白 = 用引擎預設），其餘家族欄位都是必填 ——
   // 混在一起用 `false` 會讓「沒填循環間隔」變成一個擋住存檔的錯。
@@ -1070,6 +1095,10 @@ function soundPatch(d: Record<string, string>): Record<string, unknown> {
   // `groundDecal: ""` 會被 z.enum 拒絕 → 整份 tuning 回 null）。
   const gd = (d.groundDecal ?? "").trim();
   if (gd !== "") out.groundDecal = gd;
+  // ⭐ GH#761 —— 同一個規則的**三態**版本（見 familyDraftFrom 的註解）。
+  const md = (d.models ?? "").trim();
+  if (md === "-") out.models = [];
+  else if (md !== "") out.models = md.split(",").map((x) => x.trim()).filter((x) => x !== "");
   return out;
 }
 

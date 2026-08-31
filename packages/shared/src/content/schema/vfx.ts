@@ -1016,6 +1016,32 @@ export const zVfxFamilyTuning = z
      * key，設成必填會讓那些 overlay 整份 `safeParse` 失敗 → 整個家族層一起消失。
      */
     groundDecal: z.enum(VFX_GROUND_DECALS).optional(),
+
+    /**
+     * ⭐⭐ GH#761 —— **這一族宣告哪幾顆原作模型**（模型 stem，⛔ 不是路徑）。
+     *
+     * ── 這一格為什麼是整張票的核心 ─────────────────────────────────────────
+     * 「一次施法有幾個發射器」的答案是
+     *   `family.models × p00..p{窗寬-1}` ⇒ `fx.w3x.stock.<model>.p<NN>`
+     * （`w3xAbilityArt.stockEmitterIds()`，⭐ 那是一條**規則**⛔ 不是逐支的表）。
+     *
+     * ⚠️ 而在這一格出現以前，`models` 是這張表**唯一**還鎖在 TS 常數裡的欄位：
+     * 其餘 10 格（enabled / primitive / element / scale / alpha / timeScale /
+     * heightY / 音效 / groundDecal）**全部**已經在這份 config 裡可調，
+     * ⛔ 只有「到底播哪幾顆」不行 ⇒ 後台特效編輯器與普查看不到它，
+     * 而那正是 GH#761 逐字說的「該由內容表達的資料被寫死在渲染層」。
+     *
+     * ⭐ 為什麼**不**把 id 烘進 421 份 ability 文件（票的 AC① 字面）：
+     * 那會是第〇·四守則的第二個住處 —— N 支技能 × 每次美術改動 = 一次完整的
+     * 重新產生鏈。⭐ 規則本身沒有錯，錯的是**規則的輸入不可編輯**。
+     * ⇒ 讓輸入變成內容，⛔ 不是把輸出攤平。
+     *
+     * ── ABSENT 的語意 ──────────────────────────────────────────────────────
+     * 省略 ⇒ 用 `W3X_ART_FAMILIES[family].models`（出貨原型）＝ **今天的行為**，
+     * 逐位元不變。⚠️ 空陣列 `[]` 與省略**不同**：`[]` 是「這一族不要任何原作
+     * emitter」，⭐ 那是一個可以被表達的決定（止血閥）。
+     */
+    models: z.array(z.string().min(1)).max(12).optional(),
   })
   .strict();
 export type VfxFamilyTuning = z.infer<typeof zVfxFamilyTuning>;
