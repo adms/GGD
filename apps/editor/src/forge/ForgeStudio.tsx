@@ -24,7 +24,7 @@
  * renderless stub — and the UI says so rather than implying a shot that does not
  * happen.
  */
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type DragEvent } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   paramsSchemaFor,
@@ -71,6 +71,13 @@ import {
 } from "./vfxLayerModel";
 import { ConditionEditor } from "./ConditionEditor";
 import type { EffectCondition } from "@ggd/shared/sim/content/condition";
+import {
+  TEMPLATE_STACK_DRAG_MIME,
+  decodeTemplateStackDrag,
+  encodeTemplateStackDrag,
+  insertTemplateCard,
+  moveTemplateCard,
+} from "./stackDnd";
 
 /**
  * GH#174 —— 工坊第 3 步從此有**畫面**。同一個 `PreviewController` 介面，
@@ -114,6 +121,8 @@ export function ForgeStudio({
   const [status, setStatus] = useState<string | null>(null);
   const [plan, setPlan] = useState<ForgePlan | null>(null);
   const [signedOff, setSignedOff] = useState(false);
+  const [paletteQuery, setPaletteQuery] = useState("");
+  const [dragOverSlot, setDragOverSlot] = useState<number | null>(null);
   /** 最近一次【真的放一次】之後，sim 真的發生了什麼（GH#174）。 */
   const [trace, setTrace] = useState<CastPreviewTrace | null>(null);
 
@@ -157,6 +166,11 @@ export function ForgeStudio({
     () => [...docs.values()].filter((t) => t.status === "enabled").sort((a, b) => (a.id < b.id ? -1 : 1)),
     [docs],
   );
+  const visibleAddable = useMemo(() => {
+    const q = paletteQuery.trim().toLowerCase();
+    if (q === "") return addable;
+    return addable.filter((t) => `${t.name} ${t.id} ${t.family}`.toLowerCase().includes(q));
+  }, [addable, paletteQuery]);
 
   const resolved = useMemo(
     () =>
@@ -319,6 +333,20 @@ export function ForgeStudio({
     }));
   };
 
+  const insertCard = (id: string, at: number): void => {
+    const t = docs.get(id);
+    if (t === undefined || t.status !== "enabled") return;
+    editHistory.commit((draft) => ({
+      ...draft,
+      cards: insertTemplateCard(
+        draft.cards,
+        { ref: t.id, params: defaultParamsFor(t) },
+        at,
+        TEMPLATE_STACK_MAX_CARDS,
+      ),
+    }));
+  };
+
   const removeCard = (i: number): void =>
     // The floor is 1: an EMPTY stack is a doc that claims to be templated and
     // expands to nothing, which is the silent no-op the Forge exists to prevent.
@@ -336,6 +364,21 @@ export function ForgeStudio({
       [next[i], next[j]] = [next[j]!, next[i]!];
       return { ...draft, cards: next };
     });
+
+  const dropCard = (event: DragEvent<HTMLElement>, at: number): void => {
+    event.preventDefault();
+    setDragOverSlot(null);
+    const payload = decodeTemplateStackDrag(event.dataTransfer.getData(TEMPLATE_STACK_DRAG_MIME));
+    if (!payload) return;
+    if (payload.kind === "catalog-template") {
+      insertCard(payload.templateId, at);
+      return;
+    }
+    editHistory.commit((draft) => ({
+      ...draft,
+      cards: moveTemplateCard(draft.cards, payload.index, at),
+    }));
+  };
 
   const buildPlan = () => {
     if (!host.data || !after) return;
@@ -436,6 +479,37 @@ export function ForgeStudio({
             「衝突處理」決定誰說了算。上限 {TEMPLATE_STACK_MAX_CARDS} 張。
           </p>
 
+          <details className="forge-template-palette" open>
+            <summary>模板資源池 · 拖入效果鏈或按一下加入</summary>
+            <input
+              aria-label="搜尋模板資源"
+              placeholder="搜尋名稱、id、family"
+              value={paletteQuery}
+              onChange={(e) => setPaletteQuery(e.target.value)}
+            />
+            <div className="forge-template-palette-items">
+              {visibleAddable.map((t) => (
+                <button
+                  type="button"
+                  key={t.id}
+                  draggable={cards.length < TEMPLATE_STACK_MAX_CARDS}
+                  disabled={cards.length >= TEMPLATE_STACK_MAX_CARDS}
+                  title={`拖入效果鏈，或按一下加入：${t.description}`}
+                  onDragStart={(event) => {
+                    event.dataTransfer.effectAllowed = "copy";
+                    event.dataTransfer.setData(
+                      TEMPLATE_STACK_DRAG_MIME,
+                      encodeTemplateStackDrag({ kind: "catalog-template", templateId: t.id }),
+                    );
+                  }}
+                  onClick={() => addCard(t.id)}
+                >
+                  <b>{t.name}</b><code>{t.family}</code>
+                </button>
+              ))}
+            </div>
+          </details>
+
           <label className="forge-conflict">
             <span>衝突處理</span>
             <select
@@ -455,19 +529,41 @@ export function ForgeStudio({
             </select>
           </label>
 
-          {resolved.map((r, i) => (
-            <CardPanel
-              key={`${r.card.ref}-${i}`}
-              index={i}
-              total={resolved.length}
-              template={r.template}
-              params={r.card.params}
-              errors={paramErrors[i] ?? {}}
-              onParams={(next) => setCardParams(i, next)}
-              onMove={(d) => moveCard(i, d)}
-              onRemove={() => removeCard(i)}
+          <div className="forge-stack-canvas" aria-label="效果模板成品鏈">
+            {resolved.map((r, i) => (
+              <div key={`${r.card.ref}-${i}`} className="forge-stack-slot">
+                <StackDropZone
+                  slot={i}
+                  active={dragOverSlot === i}
+                  onEnter={setDragOverSlot}
+                  onDrop={dropCard}
+                />
+                <CardPanel
+                  index={i}
+                  total={resolved.length}
+                  template={r.template}
+                  params={r.card.params}
+                  errors={paramErrors[i] ?? {}}
+                  onParams={(next) => setCardParams(i, next)}
+                  onMove={(d) => moveCard(i, d)}
+                  onRemove={() => removeCard(i)}
+                  onDragStart={(event) => {
+                    event.dataTransfer.effectAllowed = "move";
+                    event.dataTransfer.setData(
+                      TEMPLATE_STACK_DRAG_MIME,
+                      encodeTemplateStackDrag({ kind: "stack-card", index: i }),
+                    );
+                  }}
+                />
+              </div>
+            ))}
+            <StackDropZone
+              slot={resolved.length}
+              active={dragOverSlot === resolved.length}
+              onEnter={setDragOverSlot}
+              onDrop={dropCard}
             />
-          ))}
+          </div>
 
           <div className="forge-stack-add">
             <select
@@ -557,6 +653,7 @@ export function ForgeStudio({
           {!expansion.ok ? <p className="error">展開失敗：{expansion.error}</p> : null}
           {expansion.ok ? (
             <>
+              <EffectChain trace={expansion.value.trace} />
               <ConflictPanel trace={expansion.value.trace} blocks={conflictBlocks} />
               <ExpansionSummary result={expansion.value.result} />
               <OriginTable trace={expansion.value.trace} />
@@ -633,6 +730,7 @@ function CardPanel({
   onParams,
   onMove,
   onRemove,
+  onDragStart,
 }: {
   index: number;
   total: number;
@@ -642,6 +740,7 @@ function CardPanel({
   onParams(next: Record<string, unknown>): void;
   onMove(delta: number): void;
   onRemove(): void;
+  onDragStart(event: DragEvent<HTMLButtonElement>): void;
 }) {
   const paramsSchema = useMemo(() => paramsSchemaFor(template), [template]);
   /**
@@ -671,6 +770,16 @@ function CardPanel({
   return (
     <section className="forge-card-panel" data-card={index}>
       <header className="forge-card-panel-head">
+        <button
+          type="button"
+          className="forge-card-drag"
+          draggable
+          aria-label={`拖曳第 ${index + 1} 張模板卡`}
+          title="拖曳重排"
+          onDragStart={onDragStart}
+        >
+          ⠿
+        </button>
         <span className="forge-card-order" data-field={`stack.card${index}.order`}>
           第 {index + 1} 張
         </span>
@@ -734,6 +843,60 @@ function CardPanel({
       ))}
       <UnitHints template={template} params={params} />
       <InertSlots template={template} />
+    </section>
+  );
+}
+
+function StackDropZone({
+  slot,
+  active,
+  onEnter,
+  onDrop,
+}: {
+  slot: number;
+  active: boolean;
+  onEnter(slot: number | null): void;
+  onDrop(event: DragEvent<HTMLElement>, slot: number): void;
+}) {
+  return (
+    <div
+      className={`forge-stack-drop${active ? " active" : ""}`}
+      data-field={`stack.drop.${slot}`}
+      aria-label={`放到效果鏈第 ${slot + 1} 格`}
+      onDragEnter={(event) => { event.preventDefault(); onEnter(slot); }}
+      onDragOver={(event) => { event.preventDefault(); event.dataTransfer.dropEffect = "move"; }}
+      onDragLeave={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) onEnter(null);
+      }}
+      onDrop={(event) => onDrop(event, slot)}
+    >
+      <span>拖到這裡</span>
+    </div>
+  );
+}
+
+/** Visualises template products in merge order; it is deliberately not a fake time axis. */
+function EffectChain({ trace }: { trace: ExpandStackTrace }) {
+  return (
+    <section className="forge-effect-chain" aria-label="效果模板成品鏈預覽">
+      <h4>效果模板成品鏈</h4>
+      <p className="forge-note">由左至右是展開與合併順序；時間與觸發時機仍由卡片產出的 effect / hook 決定。</p>
+      <div className="forge-effect-chain-row">
+        {trace.cards.map((card, i) => {
+          const effects = trace.effects.filter((effect) => effect.cardIndex === card.index);
+          return (
+            <div className="forge-effect-chain-part" key={card.index}>
+              {i > 0 ? <span className="forge-effect-chain-arrow" aria-hidden="true">→</span> : null}
+              <article className="forge-effect-chain-node" data-card={card.index}>
+                <b>第 {card.index + 1} 張 · {card.family}</b>
+                <code>{card.templateId}</code>
+                <span>{effects.length > 0 ? effects.map((effect) => effect.kind).join(" → ") : "無頂層 effect"}</span>
+                <small>effect {card.effectCount} · hook {card.hookCount} · mark {card.markCount}</small>
+              </article>
+            </div>
+          );
+        })}
+      </div>
     </section>
   );
 }
