@@ -411,20 +411,6 @@
       "rootWhileCasting": true
     },
     {
-      "id": "godie-orkn.passive",
-      "name": "30-00 攝影機",
-      "champion": "godie-orkn",
-      "championName": "電車癡漢 - 臭作",
-      "slot": "PASSIVE",
-      "castTimeSec": 1.233,
-      "effectiveSec": 1,
-      "deltaSec": 0.233,
-      "clamped": true,
-      "castType": "ground",
-      "interruptOn": "none",
-      "rootWhileCasting": true
-    },
-    {
       "id": "godie-u00h.w",
       "name": "39-02 無明神風流-朱雀",
       "champion": "godie-u00h",
@@ -1023,6 +1009,20 @@
       "deltaSec": 0.033,
       "clamped": true,
       "castType": "self",
+      "interruptOn": "none",
+      "rootWhileCasting": true
+    },
+    {
+      "id": "godie-orkn.passive",
+      "name": "30-00 攝影機",
+      "champion": "godie-orkn",
+      "championName": "電車癡漢 - 臭作",
+      "slot": "PASSIVE",
+      "castTimeSec": 1.033,
+      "effectiveSec": 1,
+      "deltaSec": 0.033,
+      "clamped": true,
+      "castType": "targeted",
       "interruptOn": "none",
       "rootWhileCasting": true
     },

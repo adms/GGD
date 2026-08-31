@@ -20,9 +20,9 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | castType | cells | shape language |
 | --- | ---: | --- |
 | `self` | 94 | self marker at the caster's feet |
-| `targeted` | 70 | lock (arc at the victim + tether to the caster) — walking does not help |
+| `targeted` | 71 | lock (arc at the victim + tether to the caster) — walking does not help |
 | `—` | 59 | not cast |
-| `ground` | 54 | circle — the real `enemiesInCircle` disc; you can walk out. ⭐ WITH a `damageLine` node: line — the capsule the damage query tests (step sideways) |
+| `ground` | 53 | circle — the real `enemiesInCircle` disc; you can walk out. ⭐ WITH a `damageLine` node: line — the capsule the damage query tests (step sideways) |
 | `skillshot` | 15 | line — the projectile's corridor; step sideways |
 | `dash` | 1 | line — the sweep of the dash body |
 
@@ -239,7 +239,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 賽亞人 - 悟空 `godie-ogrh` | E | 09-03 超級賽亞人 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 賽亞人 - 悟空 `godie-ogrh` | R | 09-04 龜派氣功 | `skillshot` | line 14.00×2.00u | ✅ OK | damageLine length 14 × width 2 (sim applies no abilityRange) — the capsule the damage query tests |
 | 賽亞人 - 悟空 `godie-ogrh` | EX | 09-002 十倍龜派氣功 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 電車癡漢 - 臭作 `godie-orkn` | PASSIVE | 30-00 攝影機 | `ground` | circle r=6.40u | ✅ OK | radius 8 × abilityRange 0.8 |
+| 電車癡漢 - 臭作 `godie-orkn` | PASSIVE | 30-00 攝影機 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 電車癡漢 - 臭作 `godie-orkn` | Q | 30-01 綁架 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 電車癡漢 - 臭作 `godie-orkn` | W | 30-02 酒精灌腸 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 電車癡漢 - 臭作 `godie-orkn` | E | 30-03 痴漢火焰 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
