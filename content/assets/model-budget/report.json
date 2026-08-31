@@ -1,12 +1,12 @@
 {
  "schema": "model-budget@1",
- "sourcesDigest": "db0d21d1dd322f5f",
+ "sourcesDigest": "b220a98396e4a254",
  "generatedBy": "tools/model-budget/emit_report.ts (task #99)",
  "sources": [
   {
    "path": "content/models/_index.json",
-   "sha256": "3c3e2f9bcf051168",
-   "bytes": 19686
+   "sha256": "a9135c196fe9393c",
+   "bytes": 22038
   },
   {
    "path": "content/arenas/_index.json",
@@ -15,7 +15,7 @@
   },
   {
    "path": "content/champions/_index.json",
-   "sha256": "979e4196f923b3e0",
+   "sha256": "ef6d301f45af5b07",
    "bytes": 9386
   },
   {
@@ -483,7 +483,7 @@
    "drawCalls": 254,
    "animChannels": 75,
    "textureBytes": 467304,
-   "vramBytes": 66934097,
+   "vramBytes": 16602452,
    "limits": [
     {
      "key": "triangles",
@@ -526,7 +526,7 @@
     "triangles": "ok",
     "drawCalls": "over",
     "animChannels": "ok",
-    "vramBytes": "over"
+    "vramBytes": "ok"
    },
    "variants": []
   },
@@ -628,7 +628,7 @@
    "drawCalls": 193,
    "animChannels": 216,
    "textureBytes": 1448335,
-   "vramBytes": 76222449,
+   "vramBytes": 30085109,
    "limits": [
     {
      "key": "triangles",
@@ -671,7 +671,7 @@
     "triangles": "ok",
     "drawCalls": "warn",
     "animChannels": "ok",
-    "vramBytes": "over"
+    "vramBytes": "ok"
    },
    "variants": [
     {
@@ -681,12 +681,12 @@
      "drawCalls": 181,
      "animChannels": 216,
      "textureBytes": 1267556,
-     "vramBytes": 64841038,
+     "vramBytes": 20101798,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
       "animChannels": "ok",
-      "vramBytes": "over"
+      "vramBytes": "ok"
      }
     },
     {
@@ -696,12 +696,12 @@
      "drawCalls": 157,
      "animChannels": 96,
      "textureBytes": 1155818,
-     "vramBytes": 64318116,
+     "vramBytes": 19578876,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "over"
+      "vramBytes": "ok"
      }
     }
    ]
@@ -800,7 +800,7 @@
    "drawCalls": 219,
    "animChannels": 216,
    "textureBytes": 3073699,
-   "vramBytes": 81814854,
+   "vramBytes": 41269919,
    "limits": [
     {
      "key": "triangles",
@@ -843,7 +843,7 @@
     "triangles": "ok",
     "drawCalls": "warn",
     "animChannels": "ok",
-    "vramBytes": "over"
+    "vramBytes": "warn"
    },
    "variants": [
     {
@@ -853,12 +853,12 @@
      "drawCalls": 207,
      "animChannels": 216,
      "textureBytes": 2892920,
-     "vramBytes": 70433443,
+     "vramBytes": 31286608,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
       "animChannels": "ok",
-      "vramBytes": "over"
+      "vramBytes": "ok"
      }
     },
     {
@@ -868,12 +868,12 @@
      "drawCalls": 183,
      "animChannels": 96,
      "textureBytes": 2781182,
-     "vramBytes": 69910521,
+     "vramBytes": 30763686,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
       "animChannels": "ok",
-      "vramBytes": "over"
+      "vramBytes": "ok"
      }
     }
    ]
@@ -972,7 +972,7 @@
    "drawCalls": 209,
    "animChannels": 216,
    "textureBytes": 924469,
-   "vramBytes": 70628680,
+   "vramBytes": 24491340,
    "limits": [
     {
      "key": "triangles",
@@ -1015,7 +1015,7 @@
     "triangles": "ok",
     "drawCalls": "warn",
     "animChannels": "ok",
-    "vramBytes": "over"
+    "vramBytes": "ok"
    },
    "variants": [
     {
@@ -1025,12 +1025,12 @@
      "drawCalls": 197,
      "animChannels": 216,
      "textureBytes": 743690,
-     "vramBytes": 59247269,
+     "vramBytes": 14508029,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
       "animChannels": "ok",
-      "vramBytes": "over"
+      "vramBytes": "ok"
      }
     },
     {
@@ -1040,12 +1040,12 @@
      "drawCalls": 173,
      "animChannels": 96,
      "textureBytes": 631952,
-     "vramBytes": 58724347,
+     "vramBytes": 13985107,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
       "animChannels": "ok",
-      "vramBytes": "over"
+      "vramBytes": "ok"
      }
     }
    ]
@@ -1152,7 +1152,7 @@
    "drawCalls": 190,
    "animChannels": 216,
    "textureBytes": 3187658,
-   "vramBytes": 69233307,
+   "vramBytes": 34280778,
    "limits": [
     {
      "key": "triangles",
@@ -1195,7 +1195,7 @@
     "triangles": "ok",
     "drawCalls": "warn",
     "animChannels": "ok",
-    "vramBytes": "over"
+    "vramBytes": "warn"
    },
    "variants": [
     {
@@ -1205,12 +1205,12 @@
      "drawCalls": 178,
      "animChannels": 216,
      "textureBytes": 3006879,
-     "vramBytes": 57851896,
+     "vramBytes": 24297467,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
       "animChannels": "ok",
-      "vramBytes": "over"
+      "vramBytes": "ok"
      }
     },
     {
@@ -1220,12 +1220,12 @@
      "drawCalls": 154,
      "animChannels": 96,
      "textureBytes": 2895141,
-     "vramBytes": 57328974,
+     "vramBytes": 23774545,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "over"
+      "vramBytes": "ok"
      }
     }
    ]
@@ -1300,7 +1300,7 @@
    "drawCalls": 226,
    "animChannels": 244,
    "textureBytes": 2811696,
-   "vramBytes": 31745353,
+   "vramBytes": 27551051,
    "limits": [
     {
      "key": "triangles",
@@ -1353,7 +1353,7 @@
      "drawCalls": 214,
      "animChannels": 244,
      "textureBytes": 2630917,
-     "vramBytes": 20363942,
+     "vramBytes": 17567740,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
@@ -1368,7 +1368,7 @@
      "drawCalls": 190,
      "animChannels": 124,
      "textureBytes": 2519179,
-     "vramBytes": 19841020,
+     "vramBytes": 17044818,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
@@ -1484,7 +1484,7 @@
    "drawCalls": 176,
    "animChannels": 219,
    "textureBytes": 4727766,
-   "vramBytes": 91863705,
+   "vramBytes": 54114973,
    "limits": [
     {
      "key": "triangles",
@@ -1537,12 +1537,12 @@
      "drawCalls": 164,
      "animChannels": 219,
      "textureBytes": 4546987,
-     "vramBytes": 80482294,
+     "vramBytes": 44131662,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "over"
+      "vramBytes": "warn"
      }
     },
     {
@@ -1552,12 +1552,12 @@
      "drawCalls": 140,
      "animChannels": 99,
      "textureBytes": 4435249,
-     "vramBytes": 79959372,
+     "vramBytes": 43608740,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "over"
+      "vramBytes": "warn"
      }
     }
    ]
@@ -1648,7 +1648,7 @@
    "drawCalls": 190,
    "animChannels": 216,
    "textureBytes": 712061,
-   "vramBytes": 45464222,
+   "vramBytes": 31483211,
    "limits": [
     {
      "key": "triangles",
@@ -1691,7 +1691,7 @@
     "triangles": "ok",
     "drawCalls": "warn",
     "animChannels": "ok",
-    "vramBytes": "warn"
+    "vramBytes": "ok"
    },
    "variants": [
     {
@@ -1701,12 +1701,12 @@
      "drawCalls": 178,
      "animChannels": 216,
      "textureBytes": 531282,
-     "vramBytes": 34082811,
+     "vramBytes": 21499900,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
       "animChannels": "ok",
-      "vramBytes": "warn"
+      "vramBytes": "ok"
      }
     },
     {
@@ -1716,12 +1716,12 @@
      "drawCalls": 154,
      "animChannels": 96,
      "textureBytes": 419544,
-     "vramBytes": 33559889,
+     "vramBytes": 20976978,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "warn"
+      "vramBytes": "ok"
      }
     }
    ]
@@ -1836,7 +1836,7 @@
    "drawCalls": 233,
    "animChannels": 232,
    "textureBytes": 2161701,
-   "vramBytes": 68098715,
+   "vramBytes": 33146186,
    "limits": [
     {
      "key": "triangles",
@@ -1879,7 +1879,7 @@
     "triangles": "ok",
     "drawCalls": "warn",
     "animChannels": "ok",
-    "vramBytes": "over"
+    "vramBytes": "ok"
    },
    "variants": [
     {
@@ -1889,12 +1889,12 @@
      "drawCalls": 221,
      "animChannels": 232,
      "textureBytes": 1980922,
-     "vramBytes": 56717304,
+     "vramBytes": 23162875,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
       "animChannels": "ok",
-      "vramBytes": "over"
+      "vramBytes": "ok"
      }
     },
     {
@@ -1904,12 +1904,12 @@
      "drawCalls": 197,
      "animChannels": 112,
      "textureBytes": 1869184,
-     "vramBytes": 56194382,
+     "vramBytes": 22639953,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
       "animChannels": "ok",
-      "vramBytes": "over"
+      "vramBytes": "ok"
      }
     }
    ]
@@ -2020,7 +2020,7 @@
    "drawCalls": 198,
    "animChannels": 219,
    "textureBytes": 3447132,
-   "vramBytes": 72291653,
+   "vramBytes": 42931528,
    "limits": [
     {
      "key": "triangles",
@@ -2063,7 +2063,7 @@
     "triangles": "ok",
     "drawCalls": "warn",
     "animChannels": "ok",
-    "vramBytes": "over"
+    "vramBytes": "warn"
    },
    "variants": [
     {
@@ -2073,12 +2073,12 @@
      "drawCalls": 186,
      "animChannels": 219,
      "textureBytes": 3266353,
-     "vramBytes": 60910242,
+     "vramBytes": 32948217,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
       "animChannels": "ok",
-      "vramBytes": "over"
+      "vramBytes": "ok"
      }
     },
     {
@@ -2088,12 +2088,12 @@
      "drawCalls": 162,
      "animChannels": 99,
      "textureBytes": 3154615,
-     "vramBytes": 60387320,
+     "vramBytes": 32425295,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "over"
+      "vramBytes": "ok"
      }
     }
    ]
@@ -2168,7 +2168,7 @@
    "drawCalls": 129,
    "animChannels": 216,
    "textureBytes": 1811159,
-   "vramBytes": 34279412,
+   "vramBytes": 27288907,
    "limits": [
     {
      "key": "triangles",
@@ -2211,7 +2211,7 @@
     "triangles": "ok",
     "drawCalls": "ok",
     "animChannels": "ok",
-    "vramBytes": "warn"
+    "vramBytes": "ok"
    },
    "variants": [
     {
@@ -2221,7 +2221,7 @@
      "drawCalls": 117,
      "animChannels": 216,
      "textureBytes": 1630380,
-     "vramBytes": 22898001,
+     "vramBytes": 17305596,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
@@ -2236,7 +2236,7 @@
      "drawCalls": 93,
      "animChannels": 96,
      "textureBytes": 1518642,
-     "vramBytes": 22375079,
+     "vramBytes": 16782674,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
@@ -2352,7 +2352,7 @@
    "drawCalls": 196,
    "animChannels": 219,
    "textureBytes": 1280463,
-   "vramBytes": 66699249,
+   "vramBytes": 34542922,
    "limits": [
     {
      "key": "triangles",
@@ -2395,7 +2395,7 @@
     "triangles": "ok",
     "drawCalls": "warn",
     "animChannels": "ok",
-    "vramBytes": "over"
+    "vramBytes": "warn"
    },
    "variants": [
     {
@@ -2405,12 +2405,12 @@
      "drawCalls": 184,
      "animChannels": 219,
      "textureBytes": 1099684,
-     "vramBytes": 55317838,
+     "vramBytes": 24559611,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
       "animChannels": "ok",
-      "vramBytes": "over"
+      "vramBytes": "ok"
      }
     },
     {
@@ -2420,12 +2420,12 @@
      "drawCalls": 160,
      "animChannels": 99,
      "textureBytes": 987946,
-     "vramBytes": 54794916,
+     "vramBytes": 24036689,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "over"
+      "vramBytes": "ok"
      }
     }
    ]
@@ -2512,7 +2512,7 @@
    "drawCalls": 133,
    "animChannels": 216,
    "textureBytes": 1509877,
-   "vramBytes": 56647667,
+   "vramBytes": 27287542,
    "limits": [
     {
      "key": "triangles",
@@ -2555,7 +2555,7 @@
     "triangles": "ok",
     "drawCalls": "ok",
     "animChannels": "ok",
-    "vramBytes": "over"
+    "vramBytes": "ok"
    },
    "variants": [
     {
@@ -2565,12 +2565,12 @@
      "drawCalls": 121,
      "animChannels": 216,
      "textureBytes": 1329098,
-     "vramBytes": 45266256,
+     "vramBytes": 17304231,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "warn"
+      "vramBytes": "ok"
      }
     },
     {
@@ -2580,12 +2580,12 @@
      "drawCalls": 97,
      "animChannels": 96,
      "textureBytes": 1217360,
-     "vramBytes": 44743334,
+     "vramBytes": 16781309,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "warn"
+      "vramBytes": "ok"
      }
     }
    ]
@@ -2696,7 +2696,7 @@
    "drawCalls": 200,
    "animChannels": 219,
    "textureBytes": 1303729,
-   "vramBytes": 69494087,
+   "vramBytes": 34541557,
    "limits": [
     {
      "key": "triangles",
@@ -2739,7 +2739,7 @@
     "triangles": "ok",
     "drawCalls": "warn",
     "animChannels": "ok",
-    "vramBytes": "over"
+    "vramBytes": "warn"
    },
    "variants": [
     {
@@ -2749,12 +2749,12 @@
      "drawCalls": 188,
      "animChannels": 219,
      "textureBytes": 1122950,
-     "vramBytes": 58112676,
+     "vramBytes": 24558246,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
       "animChannels": "ok",
-      "vramBytes": "over"
+      "vramBytes": "ok"
      }
     },
     {
@@ -2764,12 +2764,12 @@
      "drawCalls": 164,
      "animChannels": 99,
      "textureBytes": 1011212,
-     "vramBytes": 57589754,
+     "vramBytes": 24035324,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "over"
+      "vramBytes": "ok"
      }
     }
    ]
@@ -2868,7 +2868,7 @@
    "drawCalls": 209,
    "animChannels": 216,
    "textureBytes": 924469,
-   "vramBytes": 70628680,
+   "vramBytes": 24491340,
    "limits": [
     {
      "key": "triangles",
@@ -2911,7 +2911,7 @@
     "triangles": "ok",
     "drawCalls": "warn",
     "animChannels": "ok",
-    "vramBytes": "over"
+    "vramBytes": "ok"
    },
    "variants": []
   }
@@ -2940,7 +2940,8 @@
      "w": 16,
      "h": 16,
      "format": "png",
-     "diskBytes": 1108
+     "diskBytes": 1108,
+     "digest": "82ffa0a45b025665"
     }
    ],
    "fileBytes": 52124,
@@ -2991,7 +2992,8 @@
      "w": 16,
      "h": 16,
      "format": "png",
-     "diskBytes": 1108
+     "diskBytes": 1108,
+     "digest": "9fb1911fefad7ebf"
     }
    ],
    "fileBytes": 52088,
@@ -3036,7 +3038,8 @@
      "w": 16,
      "h": 16,
      "format": "png",
-     "diskBytes": 1108
+     "diskBytes": 1108,
+     "digest": "e7963a16e2a33c85"
     }
    ],
    "fileBytes": 52120,
@@ -3081,7 +3084,8 @@
      "w": 16,
      "h": 16,
      "format": "png",
-     "diskBytes": 1108
+     "diskBytes": 1108,
+     "digest": "fb0ad82257738420"
     }
    ],
    "fileBytes": 52120,
@@ -3132,7 +3136,8 @@
      "w": 16,
      "h": 16,
      "format": "png",
-     "diskBytes": 1108
+     "diskBytes": 1108,
+     "digest": "e8230ee9edaddff9"
     }
    ],
    "fileBytes": 52584,
@@ -3177,7 +3182,8 @@
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 16516
+     "diskBytes": 16516,
+     "digest": "086bc78f036a5ae9"
     }
    ],
    "fileBytes": 67796,
@@ -3210,7 +3216,8 @@
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 16516
+     "diskBytes": 16516,
+     "digest": "82490282fd8e0328"
     }
    ],
    "fileBytes": 67792,
@@ -3243,7 +3250,8 @@
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 16516
+     "diskBytes": 16516,
+     "digest": "b639c65b08bd3f0d"
     }
    ],
    "fileBytes": 67800,
@@ -3302,7 +3310,8 @@
      "w": 2,
      "h": 2,
      "format": "png",
-     "diskBytes": 97
+     "diskBytes": 97,
+     "digest": "9d202a6ecdb59976"
     }
    ],
    "fileBytes": 301924,
@@ -3361,7 +3370,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 15093
+     "diskBytes": 15093,
+     "digest": "1e671e9b176b290a"
     }
    ],
    "fileBytes": 24412,
@@ -3394,7 +3404,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 15783
+     "diskBytes": 15783,
+     "digest": "5301a06866ba3be6"
     }
    ],
    "fileBytes": 19816,
@@ -3451,7 +3462,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 15783
+     "diskBytes": 15783,
+     "digest": "5301a06866ba3be6"
     }
    ],
    "fileBytes": 18872,
@@ -3508,7 +3520,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 15783
+     "diskBytes": 15783,
+     "digest": "5301a06866ba3be6"
     }
    ],
    "fileBytes": 18656,
@@ -3607,7 +3620,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 15783
+     "diskBytes": 15783,
+     "digest": "5301a06866ba3be6"
     }
    ],
    "fileBytes": 335200,
@@ -3652,7 +3666,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 15783
+     "diskBytes": 15783,
+     "digest": "5301a06866ba3be6"
     }
    ],
    "fileBytes": 335192,
@@ -3697,7 +3712,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 15783
+     "diskBytes": 15783,
+     "digest": "5301a06866ba3be6"
     }
    ],
    "fileBytes": 20800,
@@ -3754,7 +3770,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 15783
+     "diskBytes": 15783,
+     "digest": "5301a06866ba3be6"
     }
    ],
    "fileBytes": 74488,
@@ -3811,7 +3828,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 15783
+     "diskBytes": 15783,
+     "digest": "5301a06866ba3be6"
     }
    ],
    "fileBytes": 49144,
@@ -3868,7 +3886,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 15783
+     "diskBytes": 15783,
+     "digest": "5301a06866ba3be6"
     }
    ],
    "fileBytes": 20048,
@@ -3931,16 +3950,73 @@
      "w": 64,
      "h": 128,
      "format": "png",
-     "diskBytes": 19211
+     "diskBytes": 19211,
+     "digest": "0011bddf74803c33"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1310
+     "diskBytes": 1310,
+     "digest": "a3492e23e28b2762"
     }
    ],
    "fileBytes": 42756,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "w3x.stock.aivitarget",
+   "path": "assets/models/imported/aivitarget.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 44,
+   "vertices": 88,
+   "drawCalls": 6,
+   "materials": 6,
+   "skins": 1,
+   "joints": 32,
+   "clips": 1,
+   "animChannels": 45,
+   "textureCount": 4,
+   "textureBytes": 29205,
+   "vramBytes": 218452,
+   "maxTextureEdge": 128,
+   "textures": [
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 6417,
+     "digest": "14052edd6f33d7ce"
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 4771,
+     "digest": "14cebf94215c6229"
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 6917,
+     "digest": "bf7cde5148fa195f"
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 11100,
+     "digest": "842bb07bb473ea55"
+    }
+   ],
+   "fileBytes": 80056,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -3970,7 +4046,8 @@
      "w": 64,
      "h": 128,
      "format": "png",
-     "diskBytes": 18883
+     "diskBytes": 18883,
+     "digest": "8e144296f6117521"
     }
    ],
    "fileBytes": 32064,
@@ -4003,22 +4080,25 @@
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 741
+     "diskBytes": 741,
+     "digest": "64d8074641287485"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 2571
+     "diskBytes": 2571,
+     "digest": "59cec01eeaa136e6"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 2614
+     "diskBytes": 2614,
+     "digest": "6a58e5c780c16a4b"
     }
    ],
-   "fileBytes": 42672,
+   "fileBytes": 43048,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -4048,7 +4128,8 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 10054
+     "diskBytes": 10054,
+     "digest": "588deaeaf4f3813a"
     }
    ],
    "fileBytes": 21340,
@@ -4081,13 +4162,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 211697
+     "diskBytes": 211697,
+     "digest": "ee985f5d1a7e8d7a"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 46881
+     "diskBytes": 46881,
+     "digest": "13e11df6c2d834e9"
     }
    ],
    "fileBytes": 450664,
@@ -4120,7 +4203,8 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 26245
+     "diskBytes": 26245,
+     "digest": "e773bc7121f8c4b6"
     }
    ],
    "fileBytes": 28124,
@@ -4153,7 +4237,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 149926
+     "diskBytes": 149926,
+     "digest": "cf7c922abded0201"
     }
    ],
    "fileBytes": 432296,
@@ -4186,7 +4271,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 107700
+     "diskBytes": 107700,
+     "digest": "093e43ab73fd1626"
     }
    ],
    "fileBytes": 233452,
@@ -4219,31 +4305,36 @@
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1540
+     "diskBytes": 1540,
+     "digest": "71eebdeb0257ccac"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 10673
+     "diskBytes": 10673,
+     "digest": "a79b86e4f4f4cefb"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 11718
+     "diskBytes": 11718,
+     "digest": "1becac98cbbcc02d"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1762
+     "diskBytes": 1762,
+     "digest": "13d13017b5c2cb15"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 72798
+     "diskBytes": 72798,
+     "digest": "9f2108c9451ea745"
     }
    ],
    "fileBytes": 118820,
@@ -4276,13 +4367,15 @@
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 10174
+     "diskBytes": 10174,
+     "digest": "3b488e061a6bda1c"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 4510
+     "diskBytes": 4510,
+     "digest": "8109e36803ea98a8"
     }
    ],
    "fileBytes": 39492,
@@ -4315,19 +4408,22 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 10005
+     "diskBytes": 10005,
+     "digest": "ba9f240b7c4f85c9"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1394
+     "diskBytes": 1394,
+     "digest": "e7630e18eade5465"
     },
     {
      "w": 8,
      "h": 8,
      "format": "png",
-     "diskBytes": 77
+     "diskBytes": 77,
+     "digest": "e5cf79b95cd47912"
     }
    ],
    "fileBytes": 37292,
@@ -4360,7 +4456,8 @@
      "w": 16,
      "h": 16,
      "format": "png",
-     "diskBytes": 845
+     "diskBytes": 845,
+     "digest": "edc52d059b032ee4"
     }
    ],
    "fileBytes": 4008,
@@ -4393,7 +4490,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 72798
+     "diskBytes": 72798,
+     "digest": "9f2108c9451ea745"
     }
    ],
    "fileBytes": 76352,
@@ -4426,13 +4524,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 154674
+     "diskBytes": 154674,
+     "digest": "142147fd85bb1763"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 3081
+     "diskBytes": 3081,
+     "digest": "99ffbdf3d125bee6"
     }
    ],
    "fileBytes": 174828,
@@ -4465,19 +4565,22 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 143952
+     "diskBytes": 143952,
+     "digest": "6521cb9cbc718011"
     },
     {
      "w": 256,
      "h": 128,
      "format": "png",
-     "diskBytes": 86252
+     "diskBytes": 86252,
+     "digest": "f4ce7aa1547d4c23"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 14499
+     "diskBytes": 14499,
+     "digest": "0c4217254ae027a1"
     }
    ],
    "fileBytes": 450824,
@@ -4522,7 +4625,8 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 9860
+     "diskBytes": 9860,
+     "digest": "2b9d95a2a6e78625"
     }
    ],
    "fileBytes": 21144,
@@ -4555,7 +4659,8 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 182241
+     "diskBytes": 182241,
+     "digest": "84a1bfd0b50ba1e1"
     }
    ],
    "fileBytes": 209168,
@@ -4588,25 +4693,29 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 58213
+     "diskBytes": 58213,
+     "digest": "15a8658b57082a6e"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 96156
+     "diskBytes": 96156,
+     "digest": "b17f66bc559b8c3e"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 60275
+     "diskBytes": 60275,
+     "digest": "797d736890e12d4f"
     },
     {
      "w": 256,
      "h": 128,
      "format": "png",
-     "diskBytes": 78981
+     "diskBytes": 78981,
+     "digest": "4b4966d137ddb1e3"
     }
    ],
    "fileBytes": 711880,
@@ -4677,25 +4786,29 @@
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 8716
+     "diskBytes": 8716,
+     "digest": "248366ad06a16ee9"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 166693
+     "diskBytes": 166693,
+     "digest": "007a797d1a8d8cdf"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1665
+     "diskBytes": 1665,
+     "digest": "8d664aa1cf22687c"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 973
+     "diskBytes": 973,
+     "digest": "6a03b9581c8cc401"
     }
    ],
    "fileBytes": 203172,
@@ -4728,7 +4841,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 102155
+     "diskBytes": 102155,
+     "digest": "0c58d22e155e6fd2"
     }
    ],
    "fileBytes": 104040,
@@ -4737,6 +4851,54 @@
    "broken": "near-zero",
    "verdicts": {},
    "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
+  },
+  {
+   "id": "w3x.stock.darkportaltarget",
+   "path": "assets/models/imported/darkportaltarget.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 64,
+   "vertices": 126,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 11,
+   "clips": 1,
+   "animChannels": 10,
+   "textureCount": 3,
+   "textureBytes": 36528,
+   "vramBytes": 196607,
+   "maxTextureEdge": 128,
+   "textures": [
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 10599,
+     "digest": "9c9ff912d650e94f"
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 8675,
+     "digest": "e486cc82ca48476c"
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 17254,
+     "digest": "dc7af922033e40cd"
+    }
+   ],
+   "fileBytes": 55076,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "imported.darkraor",
@@ -4761,19 +4923,22 @@
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 9128
+     "diskBytes": 9128,
+     "digest": "0de4e0ca6cc01cac"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 5511
+     "diskBytes": 5511,
+     "digest": "a610413d50dae426"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 19262
+     "diskBytes": 19262,
+     "digest": "e17bec07732d83ad"
     }
    ],
    "fileBytes": 117624,
@@ -4806,13 +4971,15 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 6258
+     "diskBytes": 6258,
+     "digest": "bdf2c7a1d97199c2"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1540
+     "diskBytes": 1540,
+     "digest": "71eebdeb0257ccac"
     }
    ],
    "fileBytes": 26008,
@@ -4845,19 +5012,22 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 115815
+     "diskBytes": 115815,
+     "digest": "8808d8159128f0ca"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 51279
+     "diskBytes": 51279,
+     "digest": "90232bbd36d177d5"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 15236
+     "diskBytes": 15236,
+     "digest": "1dfa5a30dff1eafc"
     }
    ],
    "fileBytes": 188036,
@@ -4890,19 +5060,22 @@
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 3022
+     "diskBytes": 3022,
+     "digest": "ef84547b1ecb9dbc"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1980
+     "diskBytes": 1980,
+     "digest": "d7f5b067120612c6"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1878
+     "diskBytes": 1878,
+     "digest": "74b00e5da9f8efd6"
     }
    ],
    "fileBytes": 26264,
@@ -4935,7 +5108,8 @@
      "w": 128,
      "h": 64,
      "format": "png",
-     "diskBytes": 11265
+     "diskBytes": 11265,
+     "digest": "c77a0e091e56727f"
     }
    ],
    "fileBytes": 18308,
@@ -4968,13 +5142,15 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 10005
+     "diskBytes": 10005,
+     "digest": "ba9f240b7c4f85c9"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 9189
+     "diskBytes": 9189,
+     "digest": "da0f67667a7aa533"
     }
    ],
    "fileBytes": 39000,
@@ -5007,7 +5183,8 @@
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 7742
+     "diskBytes": 7742,
+     "digest": "40f833481a4b9f77"
     }
    ],
    "fileBytes": 18292,
@@ -5040,7 +5217,8 @@
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1863
+     "diskBytes": 1863,
+     "digest": "7a7401704bf6d6c1"
     }
    ],
    "fileBytes": 22460,
@@ -5073,7 +5251,8 @@
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1744
+     "diskBytes": 1744,
+     "digest": "ab2d884afe57a1aa"
     }
    ],
    "fileBytes": 32768,
@@ -5106,7 +5285,8 @@
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 2012
+     "diskBytes": 2012,
+     "digest": "f6b68ae25fcc0038"
     }
    ],
    "fileBytes": 5164,
@@ -5139,15 +5319,57 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 151671
+     "diskBytes": 151671,
+     "digest": "2f03f2f9c3fe59e5"
     }
    ],
-   "fileBytes": 199924,
+   "fileBytes": 200396,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
    "verdicts": {},
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "w3x.stock.flamestriketarget",
+   "path": "assets/models/imported/flamestriketarget.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 12,
+   "vertices": 24,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 1,
+   "joints": 1,
+   "clips": 3,
+   "animChannels": 1,
+   "textureCount": 2,
+   "textureBytes": 31877,
+   "vramBytes": 174762,
+   "maxTextureEdge": 128,
+   "textures": [
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 10710,
+     "digest": "1754ce280e6b3296"
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 21167,
+     "digest": "fbcf24ec178e871b"
+    }
+   ],
+   "fileBytes": 38220,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "near-zero",
+   "verdicts": {},
+   "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
   },
   {
    "id": "assets/models/imported/flash.glb",
@@ -5172,19 +5394,22 @@
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1878
+     "diskBytes": 1878,
+     "digest": "74b00e5da9f8efd6"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 8166
+     "diskBytes": 8166,
+     "digest": "0e0f87957a6e3fe2"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 6918
+     "diskBytes": 6918,
+     "digest": "d4d5f2466de7d0ad"
     }
    ],
    "fileBytes": 23980,
@@ -5217,10 +5442,11 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 133897
+     "diskBytes": 133897,
+     "digest": "e9b0189d7632a11e"
     }
    ],
-   "fileBytes": 185572,
+   "fileBytes": 185668,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -5250,13 +5476,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 79235
+     "diskBytes": 79235,
+     "digest": "9292d27ff7cf2c91"
     },
     {
      "w": 64,
      "h": 128,
      "format": "png",
-     "diskBytes": 280
+     "diskBytes": 280,
+     "digest": "7fd2f1f69ce38f2d"
     }
    ],
    "fileBytes": 204752,
@@ -5301,13 +5529,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 92421
+     "diskBytes": 92421,
+     "digest": "65fd4960518cf36a"
     },
     {
      "w": 64,
      "h": 128,
      "format": "png",
-     "diskBytes": 1715
+     "diskBytes": 1715,
+     "digest": "90ca0fc523bf5ea3"
     }
    ],
    "fileBytes": 219376,
@@ -5352,16 +5582,18 @@
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 11710
+     "diskBytes": 11710,
+     "digest": "1062168d592ab736"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 9504
+     "diskBytes": 9504,
+     "digest": "03089c91e91b9a68"
     }
    ],
-   "fileBytes": 38064,
+   "fileBytes": 38248,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -5391,7 +5623,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 71440
+     "diskBytes": 71440,
+     "digest": "8350c06f0fcf3595"
     }
    ],
    "fileBytes": 74864,
@@ -5424,13 +5657,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 95236
+     "diskBytes": 95236,
+     "digest": "622c7b2426b14cb9"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 22734
+     "diskBytes": 22734,
+     "digest": "3dd4a7943a38185f"
     }
    ],
    "fileBytes": 251648,
@@ -5475,7 +5710,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 44391
+     "diskBytes": 44391,
+     "digest": "6239f357a805a40c"
     }
    ],
    "fileBytes": 118544,
@@ -5508,7 +5744,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 22734
+     "diskBytes": 22734,
+     "digest": "3dd4a7943a38185f"
     }
    ],
    "fileBytes": 42064,
@@ -5541,25 +5778,29 @@
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 11347
+     "diskBytes": 11347,
+     "digest": "29084023fbd9e113"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 74331
+     "diskBytes": 74331,
+     "digest": "ee9fbc3f4ff83ade"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 108
+     "diskBytes": 108,
+     "digest": "30a5faf4033e50a9"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 105166
+     "diskBytes": 105166,
+     "digest": "1a547d88dee94306"
     }
    ],
    "fileBytes": 206048,
@@ -5592,25 +5833,29 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 115815
+     "diskBytes": 115815,
+     "digest": "8808d8159128f0ca"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 164461
+     "diskBytes": 164461,
+     "digest": "289d1662c560f825"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 108
+     "diskBytes": 108,
+     "digest": "30a5faf4033e50a9"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 164461
+     "diskBytes": 164461,
+     "digest": "289d1662c560f825"
     }
    ],
    "fileBytes": 459972,
@@ -5643,13 +5888,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 98967
+     "diskBytes": 98967,
+     "digest": "2b2d74b18d74177c"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1097
+     "diskBytes": 1097,
+     "digest": "15f3fbe029188bad"
     }
    ],
    "fileBytes": 284592,
@@ -5682,13 +5929,15 @@
      "w": 128,
      "h": 64,
      "format": "png",
-     "diskBytes": 1775
+     "diskBytes": 1775,
+     "digest": "452c61c9c7b76b94"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1540
+     "diskBytes": 1540,
+     "digest": "71eebdeb0257ccac"
     }
    ],
    "fileBytes": 14284,
@@ -5721,13 +5970,15 @@
      "w": 128,
      "h": 64,
      "format": "png",
-     "diskBytes": 1775
+     "diskBytes": 1775,
+     "digest": "452c61c9c7b76b94"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1540
+     "diskBytes": 1540,
+     "digest": "71eebdeb0257ccac"
     }
    ],
    "fileBytes": 14300,
@@ -5736,6 +5987,75 @@
    "broken": "near-zero",
    "verdicts": {},
    "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
+  },
+  {
+   "id": "w3x.stock.hcanceldeath",
+   "path": "assets/models/imported/hcanceldeath.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 36,
+   "vertices": 72,
+   "drawCalls": 6,
+   "materials": 6,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 6,
+   "textureBytes": 87827,
+   "vramBytes": 405502,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 72798,
+     "digest": "9f2108c9451ea745"
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 3933,
+     "digest": "98eb8fdef912e273"
+    },
+    {
+     "w": 16,
+     "h": 16,
+     "format": "png",
+     "diskBytes": 739,
+     "digest": "95e43c1b58b62a73"
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 2737,
+     "digest": "4c567593e8c5cec7"
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1078,
+     "digest": "db6980482bf5599e"
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 6542,
+     "digest": "36e5044d4c37506b"
+    }
+   ],
+   "fileBytes": 97736,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "imported.hero-turtle",
@@ -5760,13 +6080,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 115170
+     "diskBytes": 115170,
+     "digest": "2b39a6a7cb479504"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 49124
+     "diskBytes": 49124,
+     "digest": "ebca5a4d236dc4c7"
     }
    ],
    "fileBytes": 422020,
@@ -5799,7 +6121,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 76082
+     "diskBytes": 76082,
+     "digest": "bdff29dfabc08366"
     }
    ],
    "fileBytes": 217568,
@@ -5844,7 +6167,8 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 113516
+     "diskBytes": 113516,
+     "digest": "67da1b010f13b6d9"
     }
    ],
    "fileBytes": 226920,
@@ -5889,7 +6213,8 @@
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 6045
+     "diskBytes": 6045,
+     "digest": "dae177cf06da4da8"
     }
    ],
    "fileBytes": 11336,
@@ -5922,7 +6247,8 @@
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 9363
+     "diskBytes": 9363,
+     "digest": "188033d9d8ae0ede"
     }
    ],
    "fileBytes": 13292,
@@ -5955,7 +6281,8 @@
      "w": 512,
      "h": 256,
      "format": "png",
-     "diskBytes": 179943
+     "diskBytes": 179943,
+     "digest": "a1314a694b77e6e5"
     }
    ],
    "fileBytes": 389500,
@@ -5988,7 +6315,8 @@
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 3182
+     "diskBytes": 3182,
+     "digest": "54583930830bd83c"
     }
    ],
    "fileBytes": 8468,
@@ -6021,7 +6349,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 69791
+     "diskBytes": 69791,
+     "digest": "ba1b1726269c9106"
     }
    ],
    "fileBytes": 330916,
@@ -6032,7 +6361,7 @@
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
-   "id": "assets/models/imported/herofatezemberform.glb",
+   "id": "imported.herofatezemberform",
    "path": "assets/models/imported/herofatezemberform.glb",
    "group": "imported",
    "shipping": true,
@@ -6054,13 +6383,15 @@
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1778
+     "diskBytes": 1778,
+     "digest": "59ac40267f72f64f"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 26565
+     "diskBytes": 26565,
+     "digest": "54a3766e912150f5"
     }
    ],
    "fileBytes": 51584,
@@ -6093,13 +6424,15 @@
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1778
+     "diskBytes": 1778,
+     "digest": "59ac40267f72f64f"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 26565
+     "diskBytes": 26565,
+     "digest": "54a3766e912150f5"
     }
    ],
    "fileBytes": 51584,
@@ -6132,13 +6465,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 87904
+     "diskBytes": 87904,
+     "digest": "49130463eab3140f"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 11910
+     "diskBytes": 11910,
+     "digest": "272639458936cb9a"
     }
    ],
    "fileBytes": 272392,
@@ -6171,13 +6506,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 117897
+     "diskBytes": 117897,
+     "digest": "66dffd5abf8507d1"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 11910
+     "diskBytes": 11910,
+     "digest": "272639458936cb9a"
     }
    ],
    "fileBytes": 262864,
@@ -6210,13 +6547,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 70392
+     "diskBytes": 70392,
+     "digest": "37be87736685f4f8"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 11910
+     "diskBytes": 11910,
+     "digest": "272639458936cb9a"
     }
    ],
    "fileBytes": 226252,
@@ -6261,25 +6600,29 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 80311
+     "diskBytes": 80311,
+     "digest": "2d4ce24298113b07"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 11910
+     "diskBytes": 11910,
+     "digest": "272639458936cb9a"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 11910
+     "diskBytes": 11910,
+     "digest": "272639458936cb9a"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 11910
+     "diskBytes": 11910,
+     "digest": "272639458936cb9a"
     }
    ],
    "fileBytes": 345644,
@@ -6312,7 +6655,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 80776
+     "diskBytes": 80776,
+     "digest": "65edf98243db2217"
     }
    ],
    "fileBytes": 479956,
@@ -6322,7 +6666,13 @@
      "kind": "COMBAT",
      "label": "英雄",
      "count": 12,
-     "detail": "2 位英雄使用：開外掛的死神 - 黑崎一護、外掛開很大的死神 - 黑崎一護"
+     "detail": "1 位英雄使用：開外掛的死神 - 黑崎一護"
+    },
+    {
+     "kind": "COMBAT",
+     "label": "英雄",
+     "count": 12,
+     "detail": "1 位英雄使用：外掛開很大的死神 - 黑崎一護"
     }
    ],
    "broken": "",
@@ -6357,13 +6707,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 81021
+     "diskBytes": 81021,
+     "digest": "5d1b1b0deb9bc302"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 11910
+     "diskBytes": 11910,
+     "digest": "272639458936cb9a"
     }
    ],
    "fileBytes": 265512,
@@ -6396,19 +6748,22 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 85337
+     "diskBytes": 85337,
+     "digest": "34667b1e4ff09358"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 11910
+     "diskBytes": 11910,
+     "digest": "272639458936cb9a"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 15599
+     "diskBytes": 15599,
+     "digest": "ad943d01a891712c"
     }
    ],
    "fileBytes": 263584,
@@ -6453,7 +6808,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 44160
+     "diskBytes": 44160,
+     "digest": "3bf8af83947c2882"
     }
    ],
    "fileBytes": 148276,
@@ -6498,7 +6854,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 120278
+     "diskBytes": 120278,
+     "digest": "7bd874c095baed9b"
     }
    ],
    "fileBytes": 280824,
@@ -6543,7 +6900,8 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 17561
+     "diskBytes": 17561,
+     "digest": "2cc8dfd8d4c8e4b3"
     }
    ],
    "fileBytes": 45632,
@@ -6576,13 +6934,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 107121
+     "diskBytes": 107121,
+     "digest": "564c66592d7e560b"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 104720
+     "diskBytes": 104720,
+     "digest": "0987985a000a5a8d"
     }
    ],
    "fileBytes": 474288,
@@ -6627,13 +6987,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 84377
+     "diskBytes": 84377,
+     "digest": "c003ebb72c6ed850"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 11910
+     "diskBytes": 11910,
+     "digest": "272639458936cb9a"
     }
    ],
    "fileBytes": 264104,
@@ -6678,7 +7040,8 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 15541
+     "diskBytes": 15541,
+     "digest": "db330c7906dc5a45"
     }
    ],
    "fileBytes": 23192,
@@ -6711,7 +7074,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 88565
+     "diskBytes": 88565,
+     "digest": "70dbde68c16ca7b9"
     }
    ],
    "fileBytes": 238616,
@@ -6756,13 +7120,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 37517
+     "diskBytes": 37517,
+     "digest": "77694710ad5dc894"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 38469
+     "diskBytes": 38469,
+     "digest": "814f3d8167ed1bae"
     }
    ],
    "fileBytes": 285172,
@@ -6807,7 +7173,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 7174
+     "diskBytes": 7174,
+     "digest": "82d9739ee80061fa"
     }
    ],
    "fileBytes": 80760,
@@ -6852,7 +7219,8 @@
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 3182
+     "diskBytes": 3182,
+     "digest": "54583930830bd83c"
     }
    ],
    "fileBytes": 8468,
@@ -6885,7 +7253,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 41992
+     "diskBytes": 41992,
+     "digest": "ebe30047c32c2a1b"
     }
    ],
    "fileBytes": 186736,
@@ -6930,19 +7299,22 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 72484
+     "diskBytes": 72484,
+     "digest": "188a8e32eb59e182"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 3814
+     "diskBytes": 3814,
+     "digest": "521b71234eeec003"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 4977
+     "diskBytes": 4977,
+     "digest": "dd5efba1f49df4bf"
     }
    ],
    "fileBytes": 220712,
@@ -6975,7 +7347,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 96422
+     "diskBytes": 96422,
+     "digest": "b36afaf83c3b4280"
     }
    ],
    "fileBytes": 252312,
@@ -7020,7 +7393,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 103915
+     "diskBytes": 103915,
+     "digest": "b8c81601fa9193c7"
     }
    ],
    "fileBytes": 286084,
@@ -7065,19 +7439,22 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 106871
+     "diskBytes": 106871,
+     "digest": "02752169a484b4d2"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 11910
+     "diskBytes": 11910,
+     "digest": "272639458936cb9a"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 19402
+     "diskBytes": 19402,
+     "digest": "2adea55ad1c303ab"
     }
    ],
    "fileBytes": 273060,
@@ -7122,13 +7499,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 55133
+     "diskBytes": 55133,
+     "digest": "db093d965d3d0ba7"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 11910
+     "diskBytes": 11910,
+     "digest": "272639458936cb9a"
     }
    ],
    "fileBytes": 240920,
@@ -7173,7 +7552,8 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 17002
+     "diskBytes": 17002,
+     "digest": "22f574efa3818cee"
     }
    ],
    "fileBytes": 28292,
@@ -7218,13 +7598,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 74384
+     "diskBytes": 74384,
+     "digest": "fde1ac2280b3e0c4"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 11910
+     "diskBytes": 11910,
+     "digest": "272639458936cb9a"
     }
    ],
    "fileBytes": 252412,
@@ -7269,7 +7651,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 69974
+     "diskBytes": 69974,
+     "digest": "9e5477edaca1cfc4"
     }
    ],
    "fileBytes": 238712,
@@ -7314,13 +7697,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 271650
+     "diskBytes": 271650,
+     "digest": "67e7edffe0eab4f7"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 57796
+     "diskBytes": 57796,
+     "digest": "f488111fa2d2328a"
     }
    ],
    "fileBytes": 445372,
@@ -7353,13 +7738,15 @@
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1778
+     "diskBytes": 1778,
+     "digest": "59ac40267f72f64f"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 8675
+     "diskBytes": 8675,
+     "digest": "e486cc82ca48476c"
     }
    ],
    "fileBytes": 30808,
@@ -7392,7 +7779,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 99405
+     "diskBytes": 99405,
+     "digest": "22e3085a0f322b6e"
     }
    ],
    "fileBytes": 271228,
@@ -7437,7 +7825,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 99405
+     "diskBytes": 99405,
+     "digest": "22e3085a0f322b6e"
     }
    ],
    "fileBytes": 108052,
@@ -7458,6 +7847,40 @@
     "animChannels": "ok"
    },
    "note": ""
+  },
+  {
+   "id": "w3x.stock.humanbloodpeasant",
+   "path": "assets/models/imported/humanbloodpeasant.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 6,
+   "vertices": 12,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 1,
+   "joints": 2,
+   "clips": 1,
+   "animChannels": 3,
+   "textureCount": 1,
+   "textureBytes": 845,
+   "vramBytes": 1365,
+   "maxTextureEdge": 16,
+   "textures": [
+    {
+     "w": 16,
+     "h": 16,
+     "format": "png",
+     "diskBytes": 845,
+     "digest": "edc52d059b032ee4"
+    }
+   ],
+   "fileBytes": 10712,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "near-zero",
+   "verdicts": {},
+   "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
   },
   {
    "id": "imported.hzyn",
@@ -7482,7 +7905,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 110842
+     "diskBytes": 110842,
+     "digest": "61b2dbd62d28acb3"
     }
    ],
    "fileBytes": 360952,
@@ -7515,13 +7939,15 @@
      "w": 128,
      "h": 256,
      "format": "png",
-     "diskBytes": 43834
+     "diskBytes": 43834,
+     "digest": "3ac0d27caf47d752"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 44765
+     "diskBytes": 44765,
+     "digest": "d5066d105083cf2a"
     }
    ],
    "fileBytes": 101128,
@@ -7596,7 +8022,8 @@
      "w": 256,
      "h": 512,
      "format": "png",
-     "diskBytes": 168559
+     "diskBytes": 168559,
+     "digest": "7bb502a78352b735"
     }
    ],
    "fileBytes": 173752,
@@ -7629,7 +8056,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 76841
+     "diskBytes": 76841,
+     "digest": "5313f0234ae03a94"
     }
    ],
    "fileBytes": 205672,
@@ -7674,13 +8102,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 155002
+     "diskBytes": 155002,
+     "digest": "01dd7c4db1933fd7"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 10457
+     "diskBytes": 10457,
+     "digest": "916c9e80c42ffb3c"
     }
    ],
    "fileBytes": 389636,
@@ -7713,37 +8143,43 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 10381
+     "diskBytes": 10381,
+     "digest": "2352118b4279afac"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 9683
+     "diskBytes": 9683,
+     "digest": "d9b36cbdc03a1a2a"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 3472
+     "diskBytes": 3472,
+     "digest": "7da55a6db104ecc3"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 2012
+     "diskBytes": 2012,
+     "digest": "f6b68ae25fcc0038"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 10156
+     "diskBytes": 10156,
+     "digest": "d80d85ff84015bce"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 4771
+     "diskBytes": 4771,
+     "digest": "14cebf94215c6229"
     }
    ],
    "fileBytes": 50664,
@@ -7776,7 +8212,8 @@
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1863
+     "diskBytes": 1863,
+     "digest": "7a7401704bf6d6c1"
     }
    ],
    "fileBytes": 3744,
@@ -7809,7 +8246,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 78388
+     "diskBytes": 78388,
+     "digest": "b933abb6486f06b2"
     }
    ],
    "fileBytes": 211932,
@@ -7842,13 +8280,15 @@
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 10599
+     "diskBytes": 10599,
+     "digest": "9c9ff912d650e94f"
     },
     {
      "w": 256,
      "h": 64,
      "format": "png",
-     "diskBytes": 27395
+     "diskBytes": 27395,
+     "digest": "c9c2c060de07b667"
     }
    ],
    "fileBytes": 56144,
@@ -7881,13 +8321,15 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 10005
+     "diskBytes": 10005,
+     "digest": "ba9f240b7c4f85c9"
     },
     {
      "w": 128,
      "h": 64,
      "format": "png",
-     "diskBytes": 14557
+     "diskBytes": 14557,
+     "digest": "49db8f5a6f3e9302"
     }
    ],
    "fileBytes": 43600,
@@ -7920,7 +8362,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 113975
+     "diskBytes": 113975,
+     "digest": "7eb23627020091f3"
     }
    ],
    "fileBytes": 229008,
@@ -7965,19 +8408,22 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 27646
+     "diskBytes": 27646,
+     "digest": "345ae295f881cdcd"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 27646
+     "diskBytes": 27646,
+     "digest": "345ae295f881cdcd"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 23103
+     "diskBytes": 23103,
+     "digest": "6110e1fcca3eb624"
     }
    ],
    "fileBytes": 206392,
@@ -8022,7 +8468,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 66509
+     "diskBytes": 66509,
+     "digest": "5a92cba5358e5421"
     }
    ],
    "fileBytes": 228556,
@@ -8067,7 +8514,8 @@
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1533
+     "diskBytes": 1533,
+     "digest": "55def236bd79df04"
     }
    ],
    "fileBytes": 5024,
@@ -8100,13 +8548,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 298321
+     "diskBytes": 298321,
+     "digest": "85b7c9a8d0bafb08"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 84729
+     "diskBytes": 84729,
+     "digest": "f777c8dd21c8971e"
     }
    ],
    "fileBytes": 577624,
@@ -8151,7 +8601,8 @@
      "w": 512,
      "h": 256,
      "format": "png",
-     "diskBytes": 239022
+     "diskBytes": 239022,
+     "digest": "9408cc1c07938617"
     }
    ],
    "fileBytes": 242944,
@@ -8184,7 +8635,8 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 133274
+     "diskBytes": 133274,
+     "digest": "73a2b3cfd46b1d1d"
     }
    ],
    "fileBytes": 314236,
@@ -8229,7 +8681,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 148220
+     "diskBytes": 148220,
+     "digest": "f6e7c992832850ab"
     }
    ],
    "fileBytes": 269500,
@@ -8262,10 +8715,52 @@
      "w": 256,
      "h": 512,
      "format": "png",
-     "diskBytes": 168559
+     "diskBytes": 168559,
+     "digest": "7bb502a78352b735"
     }
    ],
    "fileBytes": 195192,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/imported/markofchaostarget.glb",
+   "path": "assets/models/imported/markofchaostarget.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 36,
+   "vertices": 72,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 1,
+   "joints": 42,
+   "clips": 1,
+   "animChannels": 10,
+   "textureCount": 2,
+   "textureBytes": 10274,
+   "vramBytes": 92842,
+   "maxTextureEdge": 128,
+   "textures": [
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1599,
+     "digest": "02c79435b1ae7f23"
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 8675,
+     "digest": "e486cc82ca48476c"
+    }
+   ],
+   "fileBytes": 30824,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -8295,25 +8790,29 @@
      "w": 128,
      "h": 256,
      "format": "png",
-     "diskBytes": 54481
+     "diskBytes": 54481,
+     "digest": "708b6c44740f2ba5"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1599
+     "diskBytes": 1599,
+     "digest": "02c79435b1ae7f23"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 963
+     "diskBytes": 963,
+     "digest": "a3b5047bcd8bc7bc"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 54816
+     "diskBytes": 54816,
+     "digest": "648fccbe33453d80"
     }
    ],
    "fileBytes": 141960,
@@ -8346,7 +8845,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 77297
+     "diskBytes": 77297,
+     "digest": "e76a462de67035d2"
     }
    ],
    "fileBytes": 260044,
@@ -8391,13 +8891,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 109306
+     "diskBytes": 109306,
+     "digest": "4a44792d3d5febab"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 31018
+     "diskBytes": 31018,
+     "digest": "d6e26b11ce236157"
     }
    ],
    "fileBytes": 154872,
@@ -8430,22 +8932,59 @@
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 6521
+     "diskBytes": 6521,
+     "digest": "cb22249ad36b80c0"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 9468
+     "diskBytes": 9468,
+     "digest": "0b66a8b368bcfe9a"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 5598
+     "diskBytes": 5598,
+     "digest": "20ffb2f88f1f835b"
     }
    ],
    "fileBytes": 36612,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "w3x.stock.mirrorimagecaster",
+   "path": "assets/models/imported/mirrorimagecaster.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 179,
+   "vertices": 180,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 1,
+   "joints": 1,
+   "clips": 1,
+   "animChannels": 1,
+   "textureCount": 1,
+   "textureBytes": 139179,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 139179,
+     "digest": "7c811d5c0b04929d"
+    }
+   ],
+   "fileBytes": 153464,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -8475,40 +9014,46 @@
      "w": 64,
      "h": 128,
      "format": "png",
-     "diskBytes": 13432
+     "diskBytes": 13432,
+     "digest": "e6afc6deb821b5c1"
     },
     {
      "w": 64,
      "h": 128,
      "format": "png",
-     "diskBytes": 7236
+     "diskBytes": 7236,
+     "digest": "89ec38d56d4a1752"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 8088
+     "diskBytes": 8088,
+     "digest": "eb794d58e176b31c"
     },
     {
      "w": 64,
      "h": 128,
      "format": "png",
-     "diskBytes": 16421
+     "diskBytes": 16421,
+     "digest": "520a3a7ff86ec170"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 2077
+     "diskBytes": 2077,
+     "digest": "3651e151d318042c"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1506
+     "diskBytes": 1506,
+     "digest": "7f1be085957221c0"
     }
    ],
-   "fileBytes": 70400,
+   "fileBytes": 71060,
    "worstCount": 1,
    "usedBy": [],
    "broken": "near-zero",
@@ -8538,10 +9083,45 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 132837
+     "diskBytes": 132837,
+     "digest": "c15e6373dc5612c3"
     }
    ],
    "fileBytes": 143988,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "w3x.stock.nedeathsmall",
+   "path": "assets/models/imported/nedeathsmall.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 70,
+   "vertices": 108,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 1,
+   "joints": 5,
+   "clips": 1,
+   "animChannels": 8,
+   "textureCount": 1,
+   "textureBytes": 4771,
+   "vramBytes": 21845,
+   "maxTextureEdge": 64,
+   "textures": [
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 4771,
+     "digest": "14cebf94215c6229"
+    }
+   ],
+   "fileBytes": 20212,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -8571,19 +9151,22 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 52472
+     "diskBytes": 52472,
+     "digest": "11f0557d6acd52cd"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 7919
+     "diskBytes": 7919,
+     "digest": "afcccd37483bd33a"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 8786
+     "diskBytes": 8786,
+     "digest": "0eb51c8714dc6820"
     }
    ],
    "fileBytes": 323992,
@@ -8628,10 +9211,66 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 72727
+     "diskBytes": 72727,
+     "digest": "30bb0640d225ea95"
     }
    ],
    "fileBytes": 117224,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "w3x.stock.neutralbuildingexplosion",
+   "path": "assets/models/imported/neutralbuildingexplosion.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 36,
+   "vertices": 72,
+   "drawCalls": 4,
+   "materials": 4,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 4,
+   "textureBytes": 148390,
+   "vramBytes": 398676,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 6542,
+     "digest": "36e5044d4c37506b"
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1078,
+     "digest": "db6980482bf5599e"
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 3933,
+     "digest": "98eb8fdef912e273"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 136837,
+     "digest": "30cb135c766359ef"
+    }
+   ],
+   "fileBytes": 155968,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -8661,7 +9300,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 78715
+     "diskBytes": 78715,
+     "digest": "3269c0e5a9674289"
     }
    ],
    "fileBytes": 338552,
@@ -8694,13 +9334,15 @@
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 6688
+     "diskBytes": 6688,
+     "digest": "2918d5e51889063c"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 46895
+     "diskBytes": 46895,
+     "digest": "52efde43be4b037d"
     }
    ],
    "fileBytes": 78668,
@@ -8709,6 +9351,40 @@
    "broken": "near-zero",
    "verdicts": {},
    "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
+  },
+  {
+   "id": "w3x.stock.phoenixmissile",
+   "path": "assets/models/imported/phoenixmissile.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 150,
+   "vertices": 93,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 1,
+   "joints": 4,
+   "clips": 3,
+   "animChannels": 1,
+   "textureCount": 1,
+   "textureBytes": 1599,
+   "vramBytes": 5461,
+   "maxTextureEdge": 32,
+   "textures": [
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1599,
+     "digest": "02c79435b1ae7f23"
+    }
+   ],
+   "fileBytes": 11816,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "imported.picacugy",
@@ -8733,7 +9409,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 52685
+     "diskBytes": 52685,
+     "digest": "39d3bc100431a051"
     }
    ],
    "fileBytes": 169972,
@@ -8778,25 +9455,29 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 69796
+     "diskBytes": 69796,
+     "digest": "20b993f58f62e377"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 7919
+     "diskBytes": 7919,
+     "digest": "afcccd37483bd33a"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 9349
+     "diskBytes": 9349,
+     "digest": "ded5a8e439087f96"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 69796
+     "diskBytes": 69796,
+     "digest": "20b993f58f62e377"
     }
    ],
    "fileBytes": 315848,
@@ -8841,7 +9522,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 118555
+     "diskBytes": 118555,
+     "digest": "81ce8aa5628b763d"
     }
    ],
    "fileBytes": 134732,
@@ -8874,7 +9556,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 53462
+     "diskBytes": 53462,
+     "digest": "d1ada5354d0fe920"
     }
    ],
    "fileBytes": 172036,
@@ -8919,16 +9602,18 @@
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 7427
+     "diskBytes": 7427,
+     "digest": "1753f4258acca1d9"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1599
+     "diskBytes": 1599,
+     "digest": "02c79435b1ae7f23"
     }
    ],
-   "fileBytes": 23264,
+   "fileBytes": 23452,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -8958,7 +9643,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 61689
+     "diskBytes": 61689,
+     "digest": "ac4a8c04589c4a99"
     }
    ],
    "fileBytes": 217528,
@@ -9003,28 +9689,32 @@
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 741
+     "diskBytes": 741,
+     "digest": "64d8074641287485"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1816
+     "diskBytes": 1816,
+     "digest": "c33803f51f3ef4ab"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 2571
+     "diskBytes": 2571,
+     "digest": "59cec01eeaa136e6"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 2614
+     "diskBytes": 2614,
+     "digest": "6a58e5c780c16a4b"
     }
    ],
-   "fileBytes": 51624,
+   "fileBytes": 52096,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -9054,10 +9744,45 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 174739
+     "diskBytes": 174739,
+     "digest": "f3e8da958c39f8c4"
     }
    ],
    "fileBytes": 351792,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "imported.roots",
+   "path": "assets/models/imported/roots.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 162,
+   "vertices": 247,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 1,
+   "joints": 34,
+   "clips": 3,
+   "animChannels": 58,
+   "textureCount": 1,
+   "textureBytes": 30493,
+   "vramBytes": 87381,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 30493,
+     "digest": "4c2adab4336836dc"
+    }
+   ],
+   "fileBytes": 258968,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -9087,13 +9812,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 101236
+     "diskBytes": 101236,
+     "digest": "9d955140b9d78ab2"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 22734
+     "diskBytes": 22734,
+     "digest": "3dd4a7943a38185f"
     }
    ],
    "fileBytes": 265128,
@@ -9138,19 +9865,22 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 68975
+     "diskBytes": 68975,
+     "digest": "3f7ef5606323a751"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 68975
+     "diskBytes": 68975,
+     "digest": "3f7ef5606323a751"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 75327
+     "diskBytes": 75327,
+     "digest": "1710214e5311c710"
     }
    ],
    "fileBytes": 333424,
@@ -9195,7 +9925,8 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 7968
+     "diskBytes": 7968,
+     "digest": "53ee8bf01b597009"
     }
    ],
    "fileBytes": 11316,
@@ -9204,6 +9935,109 @@
    "broken": "near-zero",
    "verdicts": {},
    "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
+  },
+  {
+   "id": "w3x.stock.stampedemissiledeath",
+   "path": "assets/models/imported/stampedemissiledeath.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 18,
+   "vertices": 36,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 1,
+   "joints": 2,
+   "clips": 1,
+   "animChannels": 1,
+   "textureCount": 2,
+   "textureBytes": 29643,
+   "vramBytes": 174762,
+   "maxTextureEdge": 128,
+   "textures": [
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 19262,
+     "digest": "e17bec07732d83ad"
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 10381,
+     "digest": "2352118b4279afac"
+    }
+   ],
+   "fileBytes": 36036,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "near-zero",
+   "verdicts": {},
+   "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
+  },
+  {
+   "id": "w3x.stock.steamtankimpact",
+   "path": "assets/models/imported/steamtankimpact.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 36,
+   "vertices": 72,
+   "drawCalls": 5,
+   "materials": 5,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 5,
+   "textureBytes": 161774,
+   "vramBytes": 469673,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 136837,
+     "digest": "30cb135c766359ef"
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 11625,
+     "digest": "718dda70e742b75a"
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 9683,
+     "digest": "d9b36cbdc03a1a2a"
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1878,
+     "digest": "74b00e5da9f8efd6"
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1751,
+     "digest": "3aa95a83056c0d74"
+    }
+   ],
+   "fileBytes": 170544,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "imported.student",
@@ -9228,7 +10062,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 59782
+     "diskBytes": 59782,
+     "digest": "221fec674bb2bb81"
     }
    ],
    "fileBytes": 154372,
@@ -9261,25 +10096,29 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 6417
+     "diskBytes": 6417,
+     "digest": "14052edd6f33d7ce"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 4771
+     "diskBytes": 4771,
+     "digest": "14cebf94215c6229"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 6917
+     "diskBytes": 6917,
+     "digest": "bf7cde5148fa195f"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1759
+     "diskBytes": 1759,
+     "digest": "b30ccb002bce5473"
     }
    ],
    "fileBytes": 70192,
@@ -9312,13 +10151,15 @@
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 12795
+     "diskBytes": 12795,
+     "digest": "6b35259133887d8d"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 29066
+     "diskBytes": 29066,
+     "digest": "6789577bc6a43fca"
     }
    ],
    "fileBytes": 55528,
@@ -9351,16 +10192,18 @@
      "w": 64,
      "h": 128,
      "format": "png",
-     "diskBytes": 13432
+     "diskBytes": 13432,
+     "digest": "e6afc6deb821b5c1"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 10599
+     "diskBytes": 10599,
+     "digest": "9c9ff912d650e94f"
     }
    ],
-   "fileBytes": 49308,
+   "fileBytes": 49496,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -9390,16 +10233,18 @@
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 4941
+     "diskBytes": 4941,
+     "digest": "27ddef081126799c"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 4771
+     "diskBytes": 4771,
+     "digest": "14cebf94215c6229"
     }
    ],
-   "fileBytes": 30524,
+   "fileBytes": 30808,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -9429,10 +10274,11 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 158101
+     "diskBytes": 158101,
+     "digest": "f0b233fb7263c117"
     }
    ],
-   "fileBytes": 212512,
+   "fileBytes": 212784,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -9462,7 +10308,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 35110
+     "diskBytes": 35110,
+     "digest": "94d4dfb03c891c30"
     }
    ],
    "fileBytes": 163060,
@@ -9471,6 +10318,47 @@
    "broken": "",
    "verdicts": {},
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "w3x.stock.volcanodeath",
+   "path": "assets/models/imported/volcanodeath.glb",
+   "group": "imported",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 12,
+   "vertices": 24,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 5684,
+   "vramBytes": 27306,
+   "maxTextureEdge": 64,
+   "textures": [
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 3933,
+     "digest": "98eb8fdef912e273"
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1751,
+     "digest": "3aa95a83056c0d74"
+    }
+   ],
+   "fileBytes": 9232,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "near-zero",
+   "verdicts": {},
+   "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
   },
   {
    "id": "imported.war3mapimported-poweraura",
@@ -9495,7 +10383,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 72672
+     "diskBytes": 72672,
+     "digest": "4e28016d35aab6fb"
     }
    ],
    "fileBytes": 268524,
@@ -9528,13 +10417,15 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 8675
+     "diskBytes": 8675,
+     "digest": "e486cc82ca48476c"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1429
+     "diskBytes": 1429,
+     "digest": "bcedb139cf0dba34"
     }
    ],
    "fileBytes": 28316,
@@ -9567,13 +10458,15 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 23722
+     "diskBytes": 23722,
+     "digest": "e056773d6d806a27"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 13376
+     "diskBytes": 13376,
+     "digest": "a2c826b3113d6221"
     }
    ],
    "fileBytes": 50924,
@@ -9606,13 +10499,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 231659
+     "diskBytes": 231659,
+     "digest": "2b390aaeac5ce6ea"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 131012
+     "diskBytes": 131012,
+     "digest": "84f40465ba28d701"
     }
    ],
    "fileBytes": 554028,
@@ -9645,7 +10540,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 62290
+     "diskBytes": 62290,
+     "digest": "9a757c9dcc26421a"
     }
    ],
    "fileBytes": 221780,
@@ -9678,7 +10574,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 152021
+     "diskBytes": 152021,
+     "digest": "8d295528377ce4ae"
     }
    ],
    "fileBytes": 447428,
@@ -9711,25 +10608,29 @@
      "w": 1024,
      "h": 1024,
      "format": "webp",
-     "diskBytes": 173804
+     "diskBytes": 173804,
+     "digest": "e1cfcd6e3bbac873"
     },
     {
      "w": 1024,
      "h": 1024,
      "format": "webp",
-     "diskBytes": 606460
+     "diskBytes": 606460,
+     "digest": "4dd74f2f5b85c8ff"
     },
     {
      "w": 1024,
      "h": 1024,
      "format": "webp",
-     "diskBytes": 177712
+     "diskBytes": 177712,
+     "digest": "cb0137663e252b8e"
     },
     {
      "w": 1024,
      "h": 1024,
      "format": "webp",
-     "diskBytes": 35202
+     "diskBytes": 35202,
+     "digest": "c19eaffb2dc4cd6a"
     }
    ],
    "fileBytes": 4349884,
@@ -9774,7 +10675,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 15794
+     "diskBytes": 15794,
+     "digest": "f9ae182518f908bd"
     }
    ],
    "fileBytes": 55104,
@@ -9843,7 +10745,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 15794
+     "diskBytes": 15794,
+     "digest": "f9ae182518f908bd"
     }
    ],
    "fileBytes": 55104,
@@ -9900,7 +10803,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 15794
+     "diskBytes": 15794,
+     "digest": "f9ae182518f908bd"
     }
    ],
    "fileBytes": 55104,
@@ -9963,7 +10867,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 15794
+     "diskBytes": 15794,
+     "digest": "f9ae182518f908bd"
     }
    ],
    "fileBytes": 55104,
@@ -10020,7 +10925,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 15794
+     "diskBytes": 15794,
+     "digest": "f9ae182518f908bd"
     }
    ],
    "fileBytes": 32060,
@@ -10089,7 +10995,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 15794
+     "diskBytes": 15794,
+     "digest": "f9ae182518f908bd"
     }
    ],
    "fileBytes": 81412,
@@ -10158,7 +11065,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 15794
+     "diskBytes": 15794,
+     "digest": "f9ae182518f908bd"
     }
    ],
    "fileBytes": 103704,
@@ -10239,7 +11147,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 15794
+     "diskBytes": 15794,
+     "digest": "f9ae182518f908bd"
     }
    ],
    "fileBytes": 28100,
@@ -10320,7 +11229,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 15794
+     "diskBytes": 15794,
+     "digest": "f9ae182518f908bd"
     }
    ],
    "fileBytes": 20740,
@@ -10353,7 +11263,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 17037
+     "diskBytes": 17037,
+     "digest": "15741a25c53e04fa"
     }
    ],
    "fileBytes": 1036516,
@@ -10386,7 +11297,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 15794
+     "diskBytes": 15794,
+     "digest": "f9ae182518f908bd"
     }
    ],
    "fileBytes": 25552,
@@ -10467,7 +11379,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 15794
+     "diskBytes": 15794,
+     "digest": "f9ae182518f908bd"
     }
    ],
    "fileBytes": 29380,
@@ -10572,7 +11485,8 @@
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 15794
+     "diskBytes": 15794,
+     "digest": "f9ae182518f908bd"
     }
    ],
    "fileBytes": 33220,
@@ -10653,7 +11567,8 @@
      "w": 16,
      "h": 16,
      "format": "png",
-     "diskBytes": 1108
+     "diskBytes": 1108,
+     "digest": "a7ac586e0643e6c4"
     }
    ],
    "fileBytes": 6724,
@@ -10716,7 +11631,8 @@
      "w": 16,
      "h": 16,
      "format": "png",
-     "diskBytes": 1108
+     "diskBytes": 1108,
+     "digest": "a3a6ed93552378c0"
     }
    ],
    "fileBytes": 8396,
@@ -10767,7 +11683,8 @@
      "w": 16,
      "h": 16,
      "format": "png",
-     "diskBytes": 1108
+     "diskBytes": 1108,
+     "digest": "93c7f40057c92ec8"
     }
    ],
    "fileBytes": 6720,
@@ -10818,7 +11735,8 @@
      "w": 16,
      "h": 16,
      "format": "png",
-     "diskBytes": 1108
+     "diskBytes": 1108,
+     "digest": "cdea4fbd25bcfede"
     }
    ],
    "fileBytes": 9252,
@@ -10881,7 +11799,8 @@
      "w": 16,
      "h": 16,
      "format": "png",
-     "diskBytes": 1108
+     "diskBytes": 1108,
+     "digest": "31fff2b54dc9c6ca"
     }
    ],
    "fileBytes": 6716,
@@ -10932,7 +11851,8 @@
      "w": 16,
      "h": 16,
      "format": "png",
-     "diskBytes": 1108
+     "diskBytes": 1108,
+     "digest": "84260f107438eb0c"
     }
    ],
    "fileBytes": 7568,
@@ -10977,7 +11897,8 @@
      "w": 16,
      "h": 16,
      "format": "png",
-     "diskBytes": 1108
+     "diskBytes": 1108,
+     "digest": "7a884c6205f4057e"
     }
    ],
    "fileBytes": 15948,
@@ -11034,7 +11955,8 @@
      "w": 16,
      "h": 16,
      "format": "png",
-     "diskBytes": 1108
+     "diskBytes": 1108,
+     "digest": "8394df86c22df09b"
     }
    ],
    "fileBytes": 5880,
@@ -11085,7 +12007,8 @@
      "w": 16,
      "h": 16,
      "format": "png",
-     "diskBytes": 1108
+     "diskBytes": 1108,
+     "digest": "6d6eaab78497beb0"
     }
    ],
    "fileBytes": 7560,
@@ -11154,7 +12077,8 @@
      "w": 16,
      "h": 16,
      "format": "png",
-     "diskBytes": 1108
+     "diskBytes": 1108,
+     "digest": "239e29298ec7e27a"
     }
    ],
    "fileBytes": 6720,
@@ -11205,7 +12129,8 @@
      "w": 16,
      "h": 16,
      "format": "png",
-     "diskBytes": 1108
+     "diskBytes": 1108,
+     "digest": "94927e6e3aa8360b"
     }
    ],
    "fileBytes": 9240,
@@ -11256,7 +12181,8 @@
      "w": 16,
      "h": 16,
      "format": "png",
-     "diskBytes": 1108
+     "diskBytes": 1108,
+     "digest": "71c4ced333adaae7"
     }
    ],
    "fileBytes": 9244,
@@ -11319,7 +12245,8 @@
      "w": 16,
      "h": 16,
      "format": "png",
-     "diskBytes": 1108
+     "diskBytes": 1108,
+     "digest": "4c035c58993db1b8"
     }
    ],
    "fileBytes": 7568,
@@ -11376,7 +12303,8 @@
      "w": 16,
      "h": 16,
      "format": "png",
-     "diskBytes": 1108
+     "diskBytes": 1108,
+     "digest": "5b9db2eedd8f5842"
     }
    ],
    "fileBytes": 7560,
@@ -11433,7 +12361,8 @@
      "w": 16,
      "h": 16,
      "format": "png",
-     "diskBytes": 1108
+     "diskBytes": 1108,
+     "digest": "16026a1097ccfc25"
     }
    ],
    "fileBytes": 9224,
@@ -11490,7 +12419,8 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 43222
+     "diskBytes": 43222,
+     "digest": "e61ea24fd84a1c88"
     }
    ],
    "fileBytes": 45072,
@@ -11535,13 +12465,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 112985
+     "diskBytes": 112985,
+     "digest": "4d6ef380e52383e1"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 27903
+     "diskBytes": 27903,
+     "digest": "ceac0d356b99db85"
     }
    ],
    "fileBytes": 159024,
@@ -11586,7 +12518,8 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 112985
+     "diskBytes": 112985,
+     "digest": "4d6ef380e52383e1"
     }
    ],
    "fileBytes": 116532,
@@ -11631,7 +12564,8 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 112985
+     "diskBytes": 112985,
+     "digest": "4d6ef380e52383e1"
     }
    ],
    "fileBytes": 122576,
@@ -11676,13 +12610,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 115399
+     "diskBytes": 115399,
+     "digest": "e344bfe0bcd8c12c"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 184176
+     "diskBytes": 184176,
+     "digest": "d28577022f9a7b61"
     }
    ],
    "fileBytes": 335944,
@@ -11727,7 +12663,8 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 8164
+     "diskBytes": 8164,
+     "digest": "985dac31507d0126"
     }
    ],
    "fileBytes": 24252,
@@ -11778,7 +12715,8 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 115399
+     "diskBytes": 115399,
+     "digest": "e344bfe0bcd8c12c"
     }
    ],
    "fileBytes": 264680,
@@ -11823,7 +12761,8 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 115399
+     "diskBytes": 115399,
+     "digest": "e344bfe0bcd8c12c"
     }
    ],
    "fileBytes": 239216,
@@ -11856,7 +12795,8 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 115399
+     "diskBytes": 115399,
+     "digest": "e344bfe0bcd8c12c"
     }
    ],
    "fileBytes": 130688,
@@ -11889,7 +12829,8 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 115399
+     "diskBytes": 115399,
+     "digest": "e344bfe0bcd8c12c"
     }
    ],
    "fileBytes": 132004,
@@ -11922,7 +12863,8 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 115399
+     "diskBytes": 115399,
+     "digest": "e344bfe0bcd8c12c"
     }
    ],
    "fileBytes": 132008,
@@ -11967,7 +12909,8 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 115399
+     "diskBytes": 115399,
+     "digest": "e344bfe0bcd8c12c"
     }
    ],
    "fileBytes": 132004,
@@ -12012,13 +12955,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 115399
+     "diskBytes": 115399,
+     "digest": "e344bfe0bcd8c12c"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 184176
+     "diskBytes": 184176,
+     "digest": "d28577022f9a7b61"
     }
    ],
    "fileBytes": 308308,
@@ -12051,19 +12996,22 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 115399
+     "diskBytes": 115399,
+     "digest": "e344bfe0bcd8c12c"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 62789
+     "diskBytes": 62789,
+     "digest": "8c489b324fab703f"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 184176
+     "diskBytes": 184176,
+     "digest": "d28577022f9a7b61"
     }
    ],
    "fileBytes": 520872,
@@ -12096,13 +13044,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 184176
+     "diskBytes": 184176,
+     "digest": "d28577022f9a7b61"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 115399
+     "diskBytes": 115399,
+     "digest": "e344bfe0bcd8c12c"
     }
    ],
    "fileBytes": 357272,
@@ -12147,13 +13097,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 115399
+     "diskBytes": 115399,
+     "digest": "e344bfe0bcd8c12c"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 184176
+     "diskBytes": 184176,
+     "digest": "d28577022f9a7b61"
     }
    ],
    "fileBytes": 419276,
@@ -12198,13 +13150,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 184176
+     "diskBytes": 184176,
+     "digest": "d28577022f9a7b61"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 115399
+     "diskBytes": 115399,
+     "digest": "e344bfe0bcd8c12c"
     }
    ],
    "fileBytes": 375460,
@@ -12237,13 +13191,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 115399
+     "diskBytes": 115399,
+     "digest": "e344bfe0bcd8c12c"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 184176
+     "diskBytes": 184176,
+     "digest": "d28577022f9a7b61"
     }
    ],
    "fileBytes": 326356,
@@ -12288,13 +13244,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 115399
+     "diskBytes": 115399,
+     "digest": "e344bfe0bcd8c12c"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 184176
+     "diskBytes": 184176,
+     "digest": "d28577022f9a7b61"
     }
    ],
    "fileBytes": 311468,
@@ -12339,13 +13297,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 115399
+     "diskBytes": 115399,
+     "digest": "e344bfe0bcd8c12c"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 184176
+     "diskBytes": 184176,
+     "digest": "d28577022f9a7b61"
     }
    ],
    "fileBytes": 313728,
@@ -12390,13 +13350,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 346753
+     "diskBytes": 346753,
+     "digest": "a8f25bc1a13c1304"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 423753
+     "diskBytes": 423753,
+     "digest": "c5fb450167917390"
     }
    ],
    "fileBytes": 779992,
@@ -12429,19 +13391,22 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 221143
+     "diskBytes": 221143,
+     "digest": "e59db4eecf63ed48"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 346753
+     "diskBytes": 346753,
+     "digest": "a8f25bc1a13c1304"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 423753
+     "diskBytes": 423753,
+     "digest": "c5fb450167917390"
     }
    ],
    "fileBytes": 1009288,
@@ -12486,13 +13451,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 422462
+     "diskBytes": 422462,
+     "digest": "6962e8189b601cca"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 423753
+     "diskBytes": 423753,
+     "digest": "c5fb450167917390"
     }
    ],
    "fileBytes": 857940,
@@ -12537,19 +13504,22 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 423753
+     "diskBytes": 423753,
+     "digest": "c5fb450167917390"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 371182
+     "diskBytes": 371182,
+     "digest": "3e32370b09c60312"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 422462
+     "diskBytes": 422462,
+     "digest": "6962e8189b601cca"
     }
    ],
    "fileBytes": 1236928,
@@ -12582,19 +13552,22 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 346753
+     "diskBytes": 346753,
+     "digest": "a8f25bc1a13c1304"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 371182
+     "diskBytes": 371182,
+     "digest": "3e32370b09c60312"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 422462
+     "diskBytes": 422462,
+     "digest": "6962e8189b601cca"
     }
    ],
    "fileBytes": 1149660,
@@ -12639,7 +13612,8 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 342225
+     "diskBytes": 342225,
+     "digest": "52a3359696ea9630"
     }
    ],
    "fileBytes": 349492,
@@ -12684,19 +13658,22 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 422462
+     "diskBytes": 422462,
+     "digest": "6962e8189b601cca"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 346753
+     "diskBytes": 346753,
+     "digest": "a8f25bc1a13c1304"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 371182
+     "diskBytes": 371182,
+     "digest": "3e32370b09c60312"
     }
    ],
    "fileBytes": 1156364,
@@ -12729,13 +13706,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 346753
+     "diskBytes": 346753,
+     "digest": "a8f25bc1a13c1304"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 371182
+     "diskBytes": 371182,
+     "digest": "3e32370b09c60312"
     }
    ],
    "fileBytes": 729028,
@@ -12780,19 +13759,22 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 346753
+     "diskBytes": 346753,
+     "digest": "a8f25bc1a13c1304"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 371182
+     "diskBytes": 371182,
+     "digest": "3e32370b09c60312"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 422462
+     "diskBytes": 422462,
+     "digest": "6962e8189b601cca"
     }
    ],
    "fileBytes": 1149004,
@@ -12837,19 +13819,22 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 346753
+     "diskBytes": 346753,
+     "digest": "a8f25bc1a13c1304"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 371182
+     "diskBytes": 371182,
+     "digest": "3e32370b09c60312"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 422462
+     "diskBytes": 422462,
+     "digest": "6962e8189b601cca"
     }
    ],
    "fileBytes": 1167384,
@@ -12882,13 +13867,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 342840
+     "diskBytes": 342840,
+     "digest": "71c97fc2a6e30e11"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 117521
+     "diskBytes": 117521,
+     "digest": "4952e85cf6600d64"
     }
    ],
    "fileBytes": 475648,
@@ -12933,13 +13920,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 342840
+     "diskBytes": 342840,
+     "digest": "71c97fc2a6e30e11"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 117521
+     "diskBytes": 117521,
+     "digest": "4952e85cf6600d64"
     }
    ],
    "fileBytes": 475700,
@@ -12984,13 +13973,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 342840
+     "diskBytes": 342840,
+     "digest": "71c97fc2a6e30e11"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 117521
+     "diskBytes": 117521,
+     "digest": "4952e85cf6600d64"
     }
    ],
    "fileBytes": 472380,
@@ -13023,13 +14014,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 342840
+     "diskBytes": 342840,
+     "digest": "71c97fc2a6e30e11"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 117521
+     "diskBytes": 117521,
+     "digest": "4952e85cf6600d64"
     }
    ],
    "fileBytes": 472380,
@@ -13062,19 +14055,22 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 117521
+     "diskBytes": 117521,
+     "digest": "4952e85cf6600d64"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 423753
+     "diskBytes": 423753,
+     "digest": "c5fb450167917390"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 342840
+     "diskBytes": 342840,
+     "digest": "71c97fc2a6e30e11"
     }
    ],
    "fileBytes": 915184,
@@ -13107,25 +14103,29 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 422462
+     "diskBytes": 422462,
+     "digest": "6962e8189b601cca"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 346753
+     "diskBytes": 346753,
+     "digest": "a8f25bc1a13c1304"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 371182
+     "diskBytes": 371182,
+     "digest": "3e32370b09c60312"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 423753
+     "diskBytes": 423753,
+     "digest": "c5fb450167917390"
     }
    ],
    "fileBytes": 1574432,
@@ -13170,13 +14170,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 422462
+     "diskBytes": 422462,
+     "digest": "6962e8189b601cca"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 342225
+     "diskBytes": 342225,
+     "digest": "52a3359696ea9630"
     }
    ],
    "fileBytes": 791028,
@@ -13221,7 +14223,8 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 371182
+     "diskBytes": 371182,
+     "digest": "3e32370b09c60312"
     }
    ],
    "fileBytes": 373460,
@@ -13266,7 +14269,8 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 371182
+     "diskBytes": 371182,
+     "digest": "3e32370b09c60312"
     }
    ],
    "fileBytes": 375104,
@@ -13311,13 +14315,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 346753
+     "diskBytes": 346753,
+     "digest": "a8f25bc1a13c1304"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 371182
+     "diskBytes": 371182,
+     "digest": "3e32370b09c60312"
     }
    ],
    "fileBytes": 726328,
@@ -13350,13 +14356,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 371182
+     "diskBytes": 371182,
+     "digest": "3e32370b09c60312"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 422462
+     "diskBytes": 422462,
+     "digest": "6962e8189b601cca"
     }
    ],
    "fileBytes": 799656,
@@ -13389,37 +14397,43 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 278576
+     "diskBytes": 278576,
+     "digest": "4f323ee20ed8ade0"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 344306
+     "diskBytes": 344306,
+     "digest": "925132f47baf2253"
     },
     {
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 355270
+     "diskBytes": 355270,
+     "digest": "dc826a339bf86f2e"
     },
     {
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 675148
+     "diskBytes": 675148,
+     "digest": "a76ac70962fe2789"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 118791
+     "diskBytes": 118791,
+     "digest": "23952caefbf1b39f"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 194445
+     "diskBytes": 194445,
+     "digest": "caaeabecac31afe6"
     }
    ],
    "fileBytes": 2033676,
@@ -13470,25 +14484,29 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 189061
+     "diskBytes": 189061,
+     "digest": "36552d05f18338cc"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 118791
+     "diskBytes": 118791,
+     "digest": "23952caefbf1b39f"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 194445
+     "diskBytes": 194445,
+     "digest": "caaeabecac31afe6"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 71533
+     "diskBytes": 71533,
+     "digest": "3081cd87bec61804"
     }
    ],
    "fileBytes": 612264,
@@ -13539,43 +14557,50 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 118791
+     "diskBytes": 118791,
+     "digest": "23952caefbf1b39f"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 194445
+     "diskBytes": 194445,
+     "digest": "caaeabecac31afe6"
     },
     {
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 355270
+     "diskBytes": 355270,
+     "digest": "dc826a339bf86f2e"
     },
     {
      "w": 1024,
      "h": 1024,
      "format": "png",
-     "diskBytes": 675148
+     "diskBytes": 675148,
+     "digest": "a76ac70962fe2789"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 71533
+     "diskBytes": 71533,
+     "digest": "3081cd87bec61804"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 152313
+     "diskBytes": 152313,
+     "digest": "5c9cab60629ff5d7"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 88481
+     "diskBytes": 88481,
+     "digest": "4eacab2b18700955"
     }
    ],
    "fileBytes": 1837788,
@@ -13608,13 +14633,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 82238
+     "diskBytes": 82238,
+     "digest": "47c626c016d15007"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 120903
+     "diskBytes": 120903,
+     "digest": "24af14785a63b2d9"
     }
    ],
    "fileBytes": 216684,
@@ -13647,13 +14674,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 235166
+     "diskBytes": 235166,
+     "digest": "2f7b4cdcb1036fca"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 400709
+     "diskBytes": 400709,
+     "digest": "5d3f9cda7e0bebb2"
     }
    ],
    "fileBytes": 639856,
@@ -13686,13 +14715,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 235166
+     "diskBytes": 235166,
+     "digest": "2f7b4cdcb1036fca"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 400709
+     "diskBytes": 400709,
+     "digest": "5d3f9cda7e0bebb2"
     }
    ],
    "fileBytes": 648860,
@@ -13737,31 +14768,36 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 145593
+     "diskBytes": 145593,
+     "digest": "54c86aa2688d3840"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 196868
+     "diskBytes": 196868,
+     "digest": "3574be13be793a8c"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 77403
+     "diskBytes": 77403,
+     "digest": "ebcdbc97ab982f5a"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 264295
+     "diskBytes": 264295,
+     "digest": "e765c515207aa609"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 510623
+     "diskBytes": 510623,
+     "digest": "00ff8898c2fd61a6"
     }
    ],
    "fileBytes": 1203516,
@@ -13806,13 +14842,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 282746
+     "diskBytes": 282746,
+     "digest": "d2479d7c79441d66"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 401116
+     "diskBytes": 401116,
+     "digest": "7e29675dc0323345"
     }
    ],
    "fileBytes": 687264,
@@ -13845,13 +14883,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 282746
+     "diskBytes": 282746,
+     "digest": "d2479d7c79441d66"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 401116
+     "diskBytes": 401116,
+     "digest": "7e29675dc0323345"
     }
    ],
    "fileBytes": 687752,
@@ -13914,49 +14954,57 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 235307
+     "diskBytes": 235307,
+     "digest": "d4126bba8ef2758c"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 147945
+     "diskBytes": 147945,
+     "digest": "8040f2fd17f719bb"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 282746
+     "diskBytes": 282746,
+     "digest": "d2479d7c79441d66"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 401116
+     "diskBytes": 401116,
+     "digest": "7e29675dc0323345"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 205932
+     "diskBytes": 205932,
+     "digest": "b5c5d9f70a3545a6"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 304214
+     "diskBytes": 304214,
+     "digest": "dbc278de35815672"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 270134
+     "diskBytes": 270134,
+     "digest": "b351b893e5dd4308"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 27660
+     "diskBytes": 27660,
+     "digest": "987ddc0a361745f6"
     }
    ],
    "fileBytes": 1882444,
@@ -13989,37 +15037,43 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 270134
+     "diskBytes": 270134,
+     "digest": "b351b893e5dd4308"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 27660
+     "diskBytes": 27660,
+     "digest": "987ddc0a361745f6"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 282746
+     "diskBytes": 282746,
+     "digest": "d2479d7c79441d66"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 401116
+     "diskBytes": 401116,
+     "digest": "7e29675dc0323345"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 235307
+     "diskBytes": 235307,
+     "digest": "d4126bba8ef2758c"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 147945
+     "diskBytes": 147945,
+     "digest": "8040f2fd17f719bb"
     }
    ],
    "fileBytes": 1370592,
@@ -14052,13 +15106,15 @@
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 207949
+     "diskBytes": 207949,
+     "digest": "df03163476ce8a58"
     },
     {
      "w": 512,
      "h": 512,
      "format": "png",
-     "diskBytes": 227461
+     "diskBytes": 227461,
+     "digest": "905361c834a55506"
     }
    ],
    "fileBytes": 437352,
@@ -14229,13 +15285,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 172261
+     "diskBytes": 172261,
+     "digest": "0e7351e26591b670"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 49124
+     "diskBytes": 49124,
+     "digest": "ebca5a4d236dc4c7"
     }
    ],
    "fileBytes": 755940,
@@ -14280,19 +15338,22 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 161131
+     "diskBytes": 161131,
+     "digest": "f069cff86461de62"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1778
+     "diskBytes": 1778,
+     "digest": "59ac40267f72f64f"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 9811
+     "diskBytes": 9811,
+     "digest": "1bab595875c9ece8"
     }
    ],
    "fileBytes": 2513016,
@@ -14337,7 +15398,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 142795
+     "diskBytes": 142795,
+     "digest": "8f4aab03ae5b17b3"
     }
    ],
    "fileBytes": 779896,
@@ -14382,13 +15444,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 160366
+     "diskBytes": 160366,
+     "digest": "a0db9c0101e9366b"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 49124
+     "diskBytes": 49124,
+     "digest": "ebca5a4d236dc4c7"
     }
    ],
    "fileBytes": 719896,
@@ -14433,13 +15497,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 147657
+     "diskBytes": 147657,
+     "digest": "0186c5a97fbdcc05"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 49124
+     "diskBytes": 49124,
+     "digest": "ebca5a4d236dc4c7"
     }
    ],
    "fileBytes": 975148,
@@ -14484,7 +15550,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 137488
+     "diskBytes": 137488,
+     "digest": "bd85ed206b7f6b64"
     }
    ],
    "fileBytes": 1617752,
@@ -14529,13 +15596,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 189905
+     "diskBytes": 189905,
+     "digest": "1f1c37b1f470e750"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 13869
+     "diskBytes": 13869,
+     "digest": "2505ef5ad7e7a618"
     }
    ],
    "fileBytes": 1892444,
@@ -14580,7 +15649,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 145984
+     "diskBytes": 145984,
+     "digest": "54d852548ab2a5ab"
     }
    ],
    "fileBytes": 1213392,
@@ -14625,25 +15695,29 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 162212
+     "diskBytes": 162212,
+     "digest": "1a4a4b2ba0f7ce59"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 150788
+     "diskBytes": 150788,
+     "digest": "07a07068018ef398"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 49124
+     "diskBytes": 49124,
+     "digest": "ebca5a4d236dc4c7"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 26410
+     "diskBytes": 26410,
+     "digest": "5c388ffb192dd347"
     }
    ],
    "fileBytes": 2813348,
@@ -14688,19 +15762,22 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 84167
+     "diskBytes": 84167,
+     "digest": "b089eff7de157070"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 8786
+     "diskBytes": 8786,
+     "digest": "0eb51c8714dc6820"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 7919
+     "diskBytes": 7919,
+     "digest": "afcccd37483bd33a"
     }
    ],
    "fileBytes": 1708808,
@@ -14745,13 +15822,15 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 39612
+     "diskBytes": 39612,
+     "digest": "7322475c93184622"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 49124
+     "diskBytes": 49124,
+     "digest": "ebca5a4d236dc4c7"
     }
    ],
    "fileBytes": 287288,
@@ -14796,7 +15875,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 123825
+     "diskBytes": 123825,
+     "digest": "6fe035124ccaee67"
     }
    ],
    "fileBytes": 1103624,
@@ -14841,7 +15921,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 147390
+     "diskBytes": 147390,
+     "digest": "0f03a588d48a018c"
     }
    ],
    "fileBytes": 751528,
@@ -14886,13 +15967,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 135443
+     "diskBytes": 135443,
+     "digest": "899b635ea8a73df8"
     },
     {
      "w": 64,
      "h": 256,
      "format": "png",
-     "diskBytes": 26085
+     "diskBytes": 26085,
+     "digest": "ebdce811f7c19568"
     }
    ],
    "fileBytes": 909688,
@@ -14937,7 +16020,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 135214
+     "diskBytes": 135214,
+     "digest": "a47138b2751450dd"
     }
    ],
    "fileBytes": 742328,
@@ -14982,13 +16066,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 135443
+     "diskBytes": 135443,
+     "digest": "899b635ea8a73df8"
     },
     {
      "w": 64,
      "h": 256,
      "format": "png",
-     "diskBytes": 26085
+     "diskBytes": 26085,
+     "digest": "ebdce811f7c19568"
     }
    ],
    "fileBytes": 909688,
@@ -15033,13 +16119,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 173142
+     "diskBytes": 173142,
+     "digest": "b0f6acd4be8b0cd2"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 49124
+     "diskBytes": 49124,
+     "digest": "ebca5a4d236dc4c7"
     }
    ],
    "fileBytes": 513492,
@@ -15084,7 +16172,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 147390
+     "diskBytes": 147390,
+     "digest": "0f03a588d48a018c"
     }
    ],
    "fileBytes": 751528,
@@ -15129,13 +16218,15 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 39612
+     "diskBytes": 39612,
+     "digest": "7322475c93184622"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 49124
+     "diskBytes": 49124,
+     "digest": "ebca5a4d236dc4c7"
     }
    ],
    "fileBytes": 287288,
@@ -15180,31 +16271,36 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 166095
+     "diskBytes": 166095,
+     "digest": "213df15b40a01914"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 108
+     "diskBytes": 108,
+     "digest": "30a5faf4033e50a9"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 2353
+     "diskBytes": 2353,
+     "digest": "c320a0e9c7dab47f"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 3922
+     "diskBytes": 3922,
+     "digest": "aed1c552330c4737"
     },
     {
      "w": 128,
      "h": 64,
      "format": "png",
-     "diskBytes": 14557
+     "diskBytes": 14557,
+     "digest": "49db8f5a6f3e9302"
     }
    ],
    "fileBytes": 2627792,
@@ -15249,19 +16345,22 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 43307
+     "diskBytes": 43307,
+     "digest": "c48228a3f3ca295a"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 9349
+     "diskBytes": 9349,
+     "digest": "ded5a8e439087f96"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1429
+     "diskBytes": 1429,
+     "digest": "bcedb139cf0dba34"
     }
    ],
    "fileBytes": 885684,
@@ -15306,13 +16405,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 146674
+     "diskBytes": 146674,
+     "digest": "a142657ad55990be"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1394
+     "diskBytes": 1394,
+     "digest": "e7630e18eade5465"
     }
    ],
    "fileBytes": 663616,
@@ -15357,19 +16458,22 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 154478
+     "diskBytes": 154478,
+     "digest": "a2c179868e92b672"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 6564
+     "diskBytes": 6564,
+     "digest": "060ba05384b38a3f"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1665
+     "diskBytes": 1665,
+     "digest": "8d664aa1cf22687c"
     }
    ],
    "fileBytes": 766120,
@@ -15414,13 +16518,15 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 42865
+     "diskBytes": 42865,
+     "digest": "b9f862536e343ce5"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 163029
+     "diskBytes": 163029,
+     "digest": "52c50ea8ccbb1bad"
     }
    ],
    "fileBytes": 1008492,
@@ -15465,13 +16571,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 165158
+     "diskBytes": 165158,
+     "digest": "87493dbeed630c4f"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 49124
+     "diskBytes": 49124,
+     "digest": "ebca5a4d236dc4c7"
     }
    ],
    "fileBytes": 875732,
@@ -15516,13 +16624,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 153133
+     "diskBytes": 153133,
+     "digest": "57d266076b3d27d3"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 49124
+     "diskBytes": 49124,
+     "digest": "ebca5a4d236dc4c7"
     }
    ],
    "fileBytes": 803064,
@@ -15567,13 +16677,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 140026
+     "diskBytes": 140026,
+     "digest": "e6ce2fd26de6475d"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 49124
+     "diskBytes": 49124,
+     "digest": "ebca5a4d236dc4c7"
     }
    ],
    "fileBytes": 580896,
@@ -15618,7 +16730,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 165051
+     "diskBytes": 165051,
+     "digest": "8434670f17d23c11"
     }
    ],
    "fileBytes": 965652,
@@ -15663,25 +16776,29 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 140425
+     "diskBytes": 140425,
+     "digest": "534163b4ee1cb610"
     },
     {
      "w": 8,
      "h": 8,
      "format": "png",
-     "diskBytes": 79
+     "diskBytes": 79,
+     "digest": "553bb5137f43a5c0"
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1770
+     "diskBytes": 1770,
+     "digest": "a6bf5766b6a2700d"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 1903
+     "diskBytes": 1903,
+     "digest": "89c5c8d9adf82bfe"
     }
    ],
    "fileBytes": 457960,
@@ -15726,13 +16843,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 159241
+     "diskBytes": 159241,
+     "digest": "d07dfb293ce5f007"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 49124
+     "diskBytes": 49124,
+     "digest": "ebca5a4d236dc4c7"
     }
    ],
    "fileBytes": 551760,
@@ -15777,13 +16896,15 @@
      "w": 512,
      "h": 256,
      "format": "png",
-     "diskBytes": 285648
+     "diskBytes": 285648,
+     "digest": "520ead3e3f81e69f"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 9349
+     "diskBytes": 9349,
+     "digest": "ded5a8e439087f96"
     }
    ],
    "fileBytes": 990532,
@@ -15828,7 +16949,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 99853
+     "diskBytes": 99853,
+     "digest": "0480386a1b082cb3"
     }
    ],
    "fileBytes": 687456,
@@ -15873,7 +16995,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 149945
+     "diskBytes": 149945,
+     "digest": "de679ca9cde53450"
     }
    ],
    "fileBytes": 1287484,
@@ -15918,13 +17041,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 155808
+     "diskBytes": 155808,
+     "digest": "765cd9e8ae0cc3ee"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 49124
+     "diskBytes": 49124,
+     "digest": "ebca5a4d236dc4c7"
     }
    ],
    "fileBytes": 690888,
@@ -15969,13 +17094,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 135498
+     "diskBytes": 135498,
+     "digest": "ddcbbd8e54e98c65"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 49124
+     "diskBytes": 49124,
+     "digest": "ebca5a4d236dc4c7"
     }
    ],
    "fileBytes": 1043520,
@@ -16020,13 +17147,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 150343
+     "diskBytes": 150343,
+     "digest": "d80df5bdf305c30f"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 49124
+     "diskBytes": 49124,
+     "digest": "ebca5a4d236dc4c7"
     }
    ],
    "fileBytes": 817928,
@@ -16071,13 +17200,15 @@
      "w": 512,
      "h": 256,
      "format": "png",
-     "diskBytes": 284478
+     "diskBytes": 284478,
+     "digest": "a396cecfb60ab52d"
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 9349
+     "diskBytes": 9349,
+     "digest": "ded5a8e439087f96"
     }
    ],
    "fileBytes": 989360,
@@ -16122,13 +17253,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 108532
+     "diskBytes": 108532,
+     "digest": "339e924e2e0bf409"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 49124
+     "diskBytes": 49124,
+     "digest": "ebca5a4d236dc4c7"
     }
    ],
    "fileBytes": 881924,
@@ -16173,13 +17306,15 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 152871
+     "diskBytes": 152871,
+     "digest": "a182984c0f60def6"
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 49124
+     "diskBytes": 49124,
+     "digest": "ebca5a4d236dc4c7"
     }
    ],
    "fileBytes": 433144,
@@ -16224,7 +17359,8 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 149339
+     "diskBytes": 149339,
+     "digest": "09f3776a1172fef6"
     }
    ],
    "fileBytes": 811960,
@@ -16335,14 +17471,14 @@
   }
  },
  "totals": {
-  "files": 285,
-  "shipping": 245,
-  "triangles": 200599,
-  "shippingTriangles": 176483,
-  "textureBytes": 52986140,
-  "vramBytes": 418471121,
+  "files": 299,
+  "shipping": 259,
+  "triangles": 201460,
+  "shippingTriangles": 177344,
+  "textureBytes": 53704229,
+  "vramBytes": 421095280,
   "zeroGeometry": 1,
-  "nearZero": 40,
-  "unused": 127
+  "nearZero": 44,
+  "unused": 141
  }
 }

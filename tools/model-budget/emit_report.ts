@@ -99,6 +99,11 @@ interface Img {
   h: number;
   format: string;
   diskBytes: number;
+  /**
+   * ⭐ GH#382 —— 圖片**內容**的 sha256（前 16 碼）。出貨的
+   * `shareDuplicateTextures()` 就是照它共用 GPU 記憶體，⛔ 不是照 URL。
+   */
+  digest?: string;
 }
 
 interface Glb {
@@ -231,7 +236,12 @@ function analyse(file: string, url: string, group: string, shipping: boolean): G
     if (!v) continue;
     const slice = bin.subarray(v.byteOffset ?? 0, (v.byteOffset ?? 0) + v.byteLength);
     const s = sniff(slice);
-    images.push(s ?? { w: 0, h: 0, format: String(im.mimeType ?? "?"), diskBytes: slice.length });
+    // ⭐ GH#382 —— 內容 digest：出貨的去重照它走（`textureDedup.glbImageDigests()`）。
+    const digest = createHash("sha256").update(slice).digest("hex").slice(0, 16);
+    images.push({
+      ...(s ?? { w: 0, h: 0, format: String(im.mimeType ?? "?"), diskBytes: slice.length }),
+      digest,
+    });
   }
 
   const skins: any[] = g.skins ?? [];
@@ -419,6 +429,27 @@ const RECORDED = {
 
 // ------------------------------------------------------------- assemble ----
 
+/**
+ * ⭐ GH#382 —— 一組 glb 一起上場時**真正**佔的 VRAM（同一個 digest 只算一次）。
+ *
+ * ⚠️ Babylon 自己的 URL 快取對這個情境是**瞎的**：glTF 載入器給每一份 .glb
+ * 各自唯一的 dataUrl（`glTFLoader.js:1948`）⇒ 內容相同也不會命中。
+ * 我們的去重是**內容定址**的，所以這裡也要照 digest 算。
+ */
+function vramDeduped(models: readonly { images: readonly Img[] }[]): number {
+  const seen = new Set<string>();
+  let total = 0;
+  for (const m of models) {
+    for (const i of m.images) {
+      const key = i.digest ?? `${i.w}x${i.h}:${i.format}:${i.diskBytes}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      total += vramOf(i);
+    }
+  }
+  return total;
+}
+
 function sha256(p: string): string {
   return createHash("sha256").update(fs.readFileSync(p)).digest("hex").slice(0, 16);
 }
@@ -587,8 +618,11 @@ function main(): void {
   const sortedChamps = champModels.map((p) => byPath.get(p)!).sort((a, b) => a.triangles - b.triangles);
   const medianChamp = sortedChamps[Math.floor(sortedChamps.length / 2)]!;
   const bestChamp = sortedChamps.find((g) => g.triangles > 0)!;
-  // texture does NOT dedupe across distinct glbs, so its worst case is the 12
-  // heaviest DISTINCT champion models
+  // ⭐⭐ GH#382 —— 這裡原本寫著「texture does NOT dedupe across distinct glbs」，
+  // ⛔ **而那句話從去重出貨那天起就不成立了**（第三守則：註解會說謊）。
+  // 出貨的 `AssetManager` 每載一份 .glb 就跑 `shareDuplicateTextures()`，照**內容
+  // digest** 共用 InternalTexture ⇒ 同一張 `dungeon_texture` 內嵌在 12 份 prop 裡，
+  // 今天只上傳**一次**。⇒ 場景 VRAM 用 `vramDeduped()`，⛔ 不是逐 glb 相加。
   const worstTexDraft = champModels
     .map((p) => byPath.get(p)!)
     .sort((a, b) => b.vramBytes - a.vramBytes)
@@ -750,6 +784,9 @@ function main(): void {
     let textureBytes = 0;
     let vramBytes = s.extraVram?.bytes ?? 0;
     const seen = new Set<string>();
+    // ⭐ GH#382 —— 收這一場用得到的**相異 .glb**，最後照**圖片內容**去重加總
+    // （⛔ 不是逐 glb 相加 —— 出貨的 `shareDuplicateTextures()` 早就這樣做了）。
+    const distinctGlbs: Glb[] = [];
     for (const m of models) {
       const g = byPath.get(m.path);
       if (!g) continue;
@@ -759,9 +796,10 @@ function main(): void {
       if (!seen.has(g.path)) {
         seen.add(g.path);
         textureBytes += g.textureDiskBytes;
-        vramBytes += g.vramBytes;
+        distinctGlbs.push(g);
       }
     }
+    vramBytes += vramDeduped(distinctGlbs);
     for (const p of s.procedural) {
       triangles += p.triangles;
       drawCalls += p.meshes;
@@ -769,31 +807,16 @@ function main(): void {
     if (s.id.startsWith("combat-") || s.id === "settlement") {
       // the ground set is 4 × 512² PNG per style and lives in no .glb at all
       vramBytes += 4 * 512 * 512 * 4 * (4 / 3);
-      // ⚠️⚠️ THIS PARAGRAPH DESCRIBES A CLIENT DEFECT THAT IS NOW FIXED, and the
-      // arithmetic below has NOT yet been updated to match — GH#382. Until it is,
-      // every `vramBytes` this file prints is an OVER-COUNT, and the 13 scene
-      // entries in baseline.json's accepted list are that over-count, not debt.
+      // ⭐ GH#382 已修：貼圖照**內容 digest** 去重（見上面的 `vramDeduped`）。
+      // 在此之前這裡有一段散文說「本檔印的每一個 vramBytes 都是 OVER-COUNT」，
+      // ⛔ 而它就這樣活了下來 —— baseline 那 13 筆 scene 豁免全是那個 over-count，
+      // ⛔ 不是真債。⭐ 這正是第三守則的形狀：一句自己宣告過期的註解，而沒有東西會紅。
       //
-      // What was true, and why: byte-identical atlases in two .glb used to be two
-      // GPU uploads. Babylon dedupes InternalTextures by `url`, but the glTF
-      // loader builds `data:<rootUrl><file>#image<n>` — unique per .glb — so a
-      // hit was structurally impossible. Measured: KayKit's one 15.4 KB
-      // `dungeon_texture` is embedded in TWELVE shipping props at 5.33 MB VRAM
-      // each. `apps/client/src/render/textureDedup.ts` now re-points duplicates
-      // at one InternalTexture by CONTENT digest, so the real cost is per
-      // distinct IMAGE, not per distinct .glb. Correcting the sum below drops
-      // every combat scene by 26–48 MB and clears 11 of the 13 accepted entries.
-      //
-      // ⛔ Not done here because regenerating report.json writes outside this
-      // lane's fence; the reasons in baseline.json name this ticket.
-      //
-      // The draft that maximises texture is therefore NOT the one that maximises
-      // geometry: 12 copies of one model is one upload, 12 distinct models is
-      // twelve. Only the worst-case row swaps in the 12 heaviest distinct
-      // champion models; the median/best rows keep their own honest cost.
+      // ⭐ 最吃貼圖的陣容**不是**最吃幾何的那一套：12 份同一個模型只上傳一次，
+      // 12 份相異模型才是十二次。所以只有 worst-case 那一列換成 12 個最重的
+      // **相異**英雄模型；median/best 保留自己誠實的成本。
       if (worstCase) {
-        const distinct = worstTexDraft.reduce((n, g) => n + g.vramBytes, 0);
-        vramBytes += distinct - (byPath.get(models[models.length - 1]!.path)?.vramBytes ?? 0);
+        vramBytes += vramDeduped(worstTexDraft.filter((g) => !seen.has(g.path)));
       }
     }
     return { triangles, drawCalls, animChannels, textureBytes, vramBytes: Math.round(vramBytes) };
