@@ -2,9 +2,9 @@
   "schema": "review-queue@1",
   "counts": {
     "assets": 1193,
-    "tier0": 853,
+    "tier0": 852,
     "reviewed": 0,
-    "pending": 340,
+    "pending": 341,
     "voice": {
       "champions": 51,
       "status": "measurement-stale",
@@ -4283,6 +4283,19 @@
       ],
       "refs": [
         "godie-efur.q"
+      ]
+    },
+    {
+      "id": "fx.fam.burst.physical.s100",
+      "kind": "vfx",
+      "hash": "4c393351497bc5dd013bb5743d6de6a2892772d7",
+      "risk": 1,
+      "reasons": [
+        "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
+        "未審"
+      ],
+      "refs": [
+        "godie-e00r.e"
       ]
     },
     {

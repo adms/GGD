@@ -523,3 +523,23 @@ owner 2026-08-18 那份 **15 件 [EX∅ 根源]** 清單的第 3 件。它與另
 獨佔。謂詞 `carryBlocksAbilityAoe` 已經在 `sim/carry.ts` 匯出，接上只要一行。
 ⚠️ 出貨的這張卡填的是 `false`（＝今天的行為），所以**卡面沒有說謊**；
 但一份把它填成 `true` 的 JSON 現在是一格空欄位。
+
+
+---
+
+## 晨曦之光 (godie-i00j) — `content/items/godie-i00j.json`
+
+> ⭐ 2026-08-31 溢位：GH#650 在 `BlockGrant` 加了三根特效軸，軸名把 `authoringNote` 推到
+> **2,021 字**（上限 2,000）。⛔ 照 owner 2026-08-18 的裁決**另存**，⛔ 不壓縮取代。
+> JSON 裡留的是摘要 ＋ 指向這裡的一行。
+
+【格擋機制】四支 [格擋] 共用 sim/combat/block.ts 的 BlockGrant（item@1.block）：damageTypes / chance / fraction / lethalOnly / lethalBasis / internalCooldown / vfxId / vfxScale / vfxTint **九根軸**，不是四個 bespoke 分支。（⚠️ 原本寫「五根軸」，漏掉後補的 internalCooldown —— 本件與 黃金聖鬥衣 沒有冷卻，晨曦之光 / 殺豬刀 出貨都是 1 秒。軸數會腐爛，所以 content/blockNoteTruth.test.ts 拿 zItemBlockGrant 的鍵數對這個字。）閘點在 combat/damage.ts 的佇列裡、mitigate() 之後、護盾池之前 —— 所以「擋掉一半」擋的是玩家真的會吃的量，而格擋不吃你的護盾；applyImpact 收到的仍是**擋之前**的 impact，所以一發被完全擋下的重擊照樣有硬直與擋格火花（跟護盾吃滿一發完全同一條路）。
+它**沒有**新事件：blocked=true 已經是客戶端「擋下了」的完整通道 —— combatText 的 guard 文字、hitFeel 的 sparkKind:"block"、GameApp 的 playContextualVoice(blocker,"block") 格擋語音。所以 net/eventFanout.ts 不用動。
+
+### ⭐ 2026-08-31（GH#650）追記
+
+新增 `vfxId` / `vfxScale` / `vfxTint` 三根軸（**擋下的那一瞬間放什麼特效**）。
+
+⛔ **本件與黃金聖鬥衣刻意不填** —— 留空 = 維持泛用格擋火花，對它們是**嚴格的 no-op**
+（逐位元同以前）。⭐ 第一個填它的是 **59-03 AT力場**
+（owner 說過兩次：「初號機 AT力場應該要有特效 **這個之前回報過了啊**」）。
