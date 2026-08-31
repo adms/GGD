@@ -49,7 +49,7 @@ export function EditorView() {
   const source = useQuery({
     queryKey: ["editor-source", collection, docId],
     queryFn: () => api.editorSource(collection!, docId!),
-    enabled: collection === "abilities" && docId !== null,
+    enabled: (collection === "abilities" || collection === "champions") && docId !== null,
     retry: false,
   });
 

@@ -11,7 +11,19 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { AssetContainer } from "@babylonjs/core/assetContainer";
 import type { AnimationGroup } from "@babylonjs/core/Animations/animationGroup";
 import type { Mesh } from "@babylonjs/core/Meshes/mesh";
+import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { zModelDoc } from "@ggd/shared/content";
+import {
+  applyModelTint,
+  releaseModelTint,
+  type ModelTint,
+} from "../../../client/src/render/views/modelTint";
+import { glbYawOffset } from "../../../client/src/render/views/glbFacing";
+import {
+  applyHiddenPrimitives,
+  ENABLED_ONLY,
+} from "../../../client/src/render/views/hiddenPrimitives";
+import { normalizedModelScale } from "../../../client/src/render/views/modelSizing";
 import { BabylonCanvas, type BabylonStage } from "./BabylonCanvas";
 import { loadGlbContainer } from "./loadGlb";
 import { clipMapStatus, resolveClip, CLIP_STATES, type ClipState } from "./clips";
@@ -26,9 +38,14 @@ interface ModelPanelProps {
   doc: unknown;
   /** clipMap state to auto-play once the GLB is in (champion embed: "idle") */
   autoPlay?: ClipState;
+  /** Champion/Skin preview uses the same appearance composition as the game. */
+  appearance?: ModelTint & {
+    normalizeBody?: boolean;
+    relativeScale?: number;
+  };
 }
 
-export function ModelPanel({ doc, autoPlay = "idle" }: ModelPanelProps) {
+export function ModelPanel({ doc, autoPlay = "idle", appearance }: ModelPanelProps) {
   // memoized on doc identity: a stable draft must yield a stable parsed value,
   // otherwise the debounce below re-fires forever on unrelated re-renders
   const parsedDoc = useMemo(() => {
@@ -39,6 +56,7 @@ export function ModelPanel({ doc, autoPlay = "idle" }: ModelPanelProps) {
 
   const stageRef = useRef<BabylonStage | null>(null);
   const containerRef = useRef<AssetContainer | null>(null);
+  const displayRootRef = useRef<TransformNode | null>(null);
   const cylinderRef = useRef<Mesh | null>(null);
   const loadSeq = useRef(0);
 
@@ -54,8 +72,11 @@ export function ModelPanel({ doc, autoPlay = "idle" }: ModelPanelProps) {
     createGroundGrid(stage.scene, 8, 1);
     cylinderRef.current = createCollisionCylinder(stage.scene, 0.6);
     return () => {
+      if (displayRootRef.current) releaseModelTint(displayRootRef.current);
       containerRef.current?.dispose();
       containerRef.current = null;
+      displayRootRef.current?.dispose(false, false);
+      displayRootRef.current = null;
       stageRef.current = null;
     };
   }, []);
@@ -78,6 +99,7 @@ export function ModelPanel({ doc, autoPlay = "idle" }: ModelPanelProps) {
 
   // ---- GLB (re)load when the path changes ----
   const glbPath = debouncedDoc?.glbPath ?? null;
+  const hiddenKey = JSON.stringify(debouncedDoc?.hiddenPrimitives ?? []);
   useEffect(() => {
     const stage = stageRef.current;
     if (!stage || !glbPath) return;
@@ -89,12 +111,18 @@ export function ModelPanel({ doc, autoPlay = "idle" }: ModelPanelProps) {
           container.dispose();
           return;
         }
+        if (displayRootRef.current) releaseModelTint(displayRootRef.current);
         containerRef.current?.dispose();
+        displayRootRef.current?.dispose(false, false);
         containerRef.current = container;
         container.addAllToScene();
+        const root = new TransformNode("editor-model-root", stage.scene);
+        for (const node of container.rootNodes) node.parent = root;
+        applyHiddenPrimitives(root.getChildMeshes(false), debouncedDoc?.hiddenPrimitives);
+        displayRootRef.current = root;
         stopAll(container.animationGroups);
         setGroups([...container.animationGroups]);
-        applyScale(container, debouncedDoc?.scale ?? 1);
+        applyPresentation(root, debouncedDoc!, appearance);
         const wanted = debouncedDoc?.clipMap[autoPlay];
         const started = wanted
           ? resolveClip(container.animationGroups, wanted)
@@ -111,12 +139,24 @@ export function ModelPanel({ doc, autoPlay = "idle" }: ModelPanelProps) {
       },
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [glbPath]);
+  }, [glbPath, hiddenKey]);
 
-  // ---- live scale ----
+  // ---- live game-facing orientation / body size / tint / alpha ----
   useEffect(() => {
-    if (containerRef.current && debouncedDoc) applyScale(containerRef.current, debouncedDoc.scale);
-  }, [debouncedDoc?.scale, debouncedDoc]);
+    if (displayRootRef.current && debouncedDoc) {
+      applyPresentation(displayRootRef.current, debouncedDoc, appearance);
+    }
+  }, [
+    debouncedDoc?.scale,
+    debouncedDoc?.yawOffsetDeg,
+    appearance?.normalizeBody,
+    appearance?.relativeScale,
+    appearance?.alpha,
+    appearance?.tint?.[0],
+    appearance?.tint?.[1],
+    appearance?.tint?.[2],
+    debouncedDoc,
+  ]);
 
   // ---- live collision radius + toggle ----
   useEffect(() => {
@@ -203,10 +243,30 @@ export function ModelPanel({ doc, autoPlay = "idle" }: ModelPanelProps) {
   );
 }
 
-function applyScale(container: AssetContainer, scale: number): void {
-  for (const root of container.rootNodes) {
-    if ("scaling" in root) {
-      (root as unknown as Mesh).scaling.setAll(scale);
-    }
+function applyPresentation(
+  root: TransformNode,
+  doc: NonNullable<ReturnType<typeof zModelDoc.safeParse>["data"]>,
+  appearance: ModelPanelProps["appearance"],
+): void {
+  root.position.setAll(0);
+  root.rotation.y = glbYawOffset(doc);
+  root.scaling.setAll(1);
+  root.computeWorldMatrix(true);
+
+  if (appearance?.normalizeBody) {
+    const native = root.getHierarchyBoundingVectors(true, ENABLED_ONLY);
+    root.scaling.setAll(
+      normalizedModelScale(native.max.y - native.min.y, doc.scale, appearance.relativeScale),
+    );
+    // Same grounding law as the arena/store: hidden gore cannot lift the body.
+    root.computeWorldMatrix(true);
+    const rendered = root.getHierarchyBoundingVectors(true, ENABLED_ONLY);
+    if (Number.isFinite(rendered.min.y)) root.position.y = -rendered.min.y;
+  } else {
+    root.scaling.setAll(doc.scale);
   }
+
+  // Releasing first is what makes clearing a tint/alpha live and non-compounding.
+  releaseModelTint(root);
+  applyModelTint(root, appearance ?? null);
 }

@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { generatedAbilityBlockers, sourceWriteBlockers } from "./sourcePolicy";
+import {
+  generatedAbilityBlockers,
+  generatedChampionBlockers,
+  sourceWriteBlockers,
+} from "./sourcePolicy";
 
 describe("editor source safety", () => {
   it("blocks generated ability output when the main descriptor route is absent", () => {
@@ -38,7 +42,24 @@ describe("editor source safety", () => {
     expect(blockers[0]).toContain("tools/skill-remake/batch1.py");
   });
 
-  it("does not apply the ability-source rule to other collections", () => {
+  it("fails safe for generated champions until main supplies source ownership", () => {
+    expect(generatedChampionBlockers()[0]).toContain("content/champions");
+    expect(sourceWriteBlockers("champions", { id: "godie-e002" }, null)).toHaveLength(1);
+  });
+
+  it("lets an authoritative hand-authored champion descriptor unlock direct writes", () => {
+    expect(sourceWriteBlockers("champions", { id: "custom-hero" }, {
+      schema: "ggd-editor-source@1",
+      collection: "champions",
+      id: "custom-hero",
+      outputPath: "content/champions/custom-hero.json",
+      ownership: { kind: "hand-authored", sourcePaths: ["content/champions/custom-hero.json"] },
+      writePolicy: "document",
+    })).toEqual([]);
+  });
+
+  it("does not apply generated-source rules to hand-authored collections", () => {
     expect(sourceWriteBlockers("vfx-scripts", { provenance: "owner-spec" }, null)).toEqual([]);
+    expect(sourceWriteBlockers("skins", { id: "skin.custom" }, null)).toEqual([]);
   });
 });

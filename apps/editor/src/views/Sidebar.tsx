@@ -4,6 +4,7 @@ import type { CollectionName } from "@ggd/shared/content";
 import { api, ApiValidationError } from "../api/client";
 import { collectionEntry, collectionRegistry } from "../collections";
 import { useEditorStore } from "../store";
+import { sourceWriteBlockers } from "../sourcePolicy";
 
 export function Sidebar({
   active,
@@ -130,10 +131,23 @@ export function DocList({ collection }: { collection: CollectionName }) {
                 title="delete"
                 onClick={() => {
                   void (async () => {
-                    if (!confirm(`delete ${collection}/${e.id}?`)) return;
-                    await api.remove(collection, e.id);
-                    if (store.docId === e.id) store.clearSelection();
-                    refresh();
+                    try {
+                      const src = await api.doc<Record<string, unknown>>(collection, e.id);
+                      const source = collection === "abilities" || collection === "champions"
+                        ? await api.editorSource(collection, e.id)
+                        : null;
+                      const blockers = sourceWriteBlockers(collection, src, source);
+                      if (blockers.length > 0) {
+                        alert(`⛔ ${blockers.join("\n")}`);
+                        return;
+                      }
+                      if (!confirm(`delete ${collection}/${e.id}?`)) return;
+                      await api.remove(collection, e.id);
+                      if (store.docId === e.id) store.clearSelection();
+                      refresh();
+                    } catch (error) {
+                      alert(`⛔ delete blocked: ${String(error)}`);
+                    }
                   })();
                 }}
               >

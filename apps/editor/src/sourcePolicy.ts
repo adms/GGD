@@ -25,13 +25,21 @@ export function generatedAbilityBlockers(doc: Record<string, unknown>): string[]
   ];
 }
 
+/** champion@1 output has no per-doc provenance today, so absence must fail safe. */
+export function generatedChampionBlockers(): string[] {
+  return [
+    "英雄文件由 tools/skill-remake 的來源資料產生，不能直接改 content/champions 產物；" +
+      "在 editor-source 回報可寫來源或來源轉接器以前，編輯器已停止直接寫入。",
+  ];
+}
+
 /** One source-of-truth decision shared by every editor save surface. */
 export function sourceWriteBlockers(
   collection: CollectionName,
   doc: unknown,
   source: EditorSourceDescriptor | null,
 ): string[] {
-  if (collection !== "abilities" || typeof doc !== "object" || doc === null || Array.isArray(doc)) {
+  if (typeof doc !== "object" || doc === null || Array.isArray(doc)) {
     return [];
   }
   if (source) {
@@ -46,5 +54,7 @@ export function sourceWriteBlockers(
         : `這支技能目前唯讀${owner}；不能直接改產物。${paths}`,
     ];
   }
-  return generatedAbilityBlockers(doc as Record<string, unknown>);
+  if (collection === "abilities") return generatedAbilityBlockers(doc as Record<string, unknown>);
+  if (collection === "champions") return generatedChampionBlockers();
+  return [];
 }
