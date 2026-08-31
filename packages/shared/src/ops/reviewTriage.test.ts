@@ -10,13 +10,9 @@ import { mkdtempSync, mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 // @ts-expect-error —— repo 工具腳本（.mjs，無型別宣告）；測的就是出貨的那一支
-import {
-  buildQueue,
-  saveVerdict,
-  rendererFingerprint,
-  buildInventory,
-} from "../../../../tools/review/triage.mjs";
-
+// ⚠️ ⭐ 這一行**必須貼著 `from` 那一行**（TS 把錯誤報在 specifier 上）——
+//   拆成多行 import 之後指令就失效了，而症狀是**兩個**錯誤（未使用的指令 ＋ 隱含 any）。
+import { buildQueue, saveVerdict, rendererFingerprint, buildInventory } from "../../../../tools/review/triage.mjs";
 function seedRepo(): string {
   const r = mkdtempSync(join(tmpdir(), "review-triage-"));
   for (const d of [

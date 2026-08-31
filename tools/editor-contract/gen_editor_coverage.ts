@@ -46,6 +46,8 @@ import {
   zModelDoc,
   zProjectileDoc,
   zSkinDoc,
+  // ⭐ GH#889 —— `config.*` 的 93 個 union 成員（`content/config/` 89 份文件的 schema）。
+  zConfigDoc,
 } from "../../packages/shared/src/content/schema";
 // ⭐⭐ **演出腳本**（GH#838 特效工坊寫的就是這一份，GH#885 補了 `reflectSuccess`）。
 // ⚠️ ⭐ 2026-08-31 量到:它**不在契約裡** —— 而它是 Codex 的編輯器**唯一**能寫的集合
@@ -157,6 +159,34 @@ export function buildEditorCoverage(): {
         out.push(f.path);
         flatten(f, out);
       }
+    } else if (node.kind === "record") {
+      // ⭐⭐ GH#889 —— **記錄的值型別也要展開**。
+      //
+      // ⚠️ 在此之前 `flatten` 只下鑽 `object` / `item` / `discriminatedUnion`
+      //   ⇒ 一個 `z.record(k, v)` 只留下**它自己的名字** ——
+      //   ⭐ 而編輯器要編的東西**全部住在 `v` 裡**。
+      //
+      // 量到的實例（2026-08-31）：`config.vfx-families@1.families` 是
+      //   `z.record(家族名, zVfxFamilyTuning)` ⇒ 契約只說得出「有一格 families」，
+      //   ⛔ 說不出它底下有 `primitive` / `element` / `scale` / `groundDecal` /
+      //   `models`（GH#761 剛做的那一格）—— ⭐ 一共 12 格全部看不到。
+      //
+      // ⭐ 路徑用 `*` 當萬用鍵（`families.*.models`）：⛔ 不是列舉今天有哪 21 個
+      //   家族名 —— 那會把**內容**烘進契約（第〇·四守則），而它一定會漂。
+      const v = (node as { value?: UINode }).value;
+      if (v) {
+        const base = (node as { path?: string }).path ?? "";
+        const sub: string[] = [];
+        flatten(v, sub);
+          // ⚠️⚠️ ⭐ `walkZod` 的 record 節點**自己就把萬用鍵放進子路徑了**
+          //   （`families.*.alpha`）—— ⛔ 再接一次 `${base}.*.` 會得到
+          //   `families.*.*.alpha`，而更早那一版是 `families.*.families.*.alpha`。
+          // ⚠️ ⭐ 兩版都「有東西而且看起來合理」—— 那正是它難發現的原因：
+          //   一份**多了一段路徑**的契約，讀起來跟真的一模一樣，
+          //   ⛔ 而照著它寫的編輯器會產出一份引擎讀不懂的 JSON。
+          // ⇒ ⭐ 原樣推出去，⛔ 不要自己再組一次路徑。
+          for (const s of sub) out.push(s);
+      }
     } else if ("item" in node && node.item) {
       flatten(node.item as UINode, out);
     } else if (node.kind === "discriminatedUnion") {
@@ -187,6 +217,36 @@ export function buildEditorCoverage(): {
   pushDocFields("projectileField", zProjectileDoc, "projectile@1");
   pushDocFields("skinField", zSkinDoc, "skin@1");
   pushDocFields("vfxScriptField", zVfxScriptDoc, "vfx-script@1");
+
+  // ⭐⭐ GH#889 —— **`config.*` 這一整片**。
+  //
+  // ── 為什麼它在此之前是空的 ─────────────────────────────────────────────
+  // 2026-08-31 量到：這份契約的 `config.` 出現 **0 次**，而 `content/config/`
+  // 有 **89 份**文件、`zConfigDoc` 有 **93 個** union 成員。
+  // ⇒ ⭐ 外部編輯器**查不到任何一格 config 欄位** —— 而那是 GGD 最大的一片
+  //   JSON 面（owner：「所有功能都要可 JSON 操作設定」）。
+  //
+  // ⚠️ 它與「契約說謊」不同 —— ⭐ **它沒有說謊，它沉默**。
+  //   而沉默與「這裡沒有東西」在讀的人眼裡長得一模一樣。
+  //
+  // ── ⛔ 為什麼**逐個分支**走，不是把整個 union 丟給 `walkZod` ────────────
+  // `walkZod` 對 `discriminatedUnion` 會產出 `schema=<tag>.<field>` 的合成路徑
+  // （上面 `flatten` 的 variants 那一段），⭐ 那對**一份文件裡的**判別聯集是對的，
+  // ⛔ 但 config 的 union 是「**93 種不同的文件**」——
+  //   把它們壓成一個欄位名前綴會得到一份讀不出「哪一格屬於哪一份設定」的清單。
+  // ⇒ 每一個分支自己一個 `owner`（＝它的 schema tag），⭐ 那正是編輯器要的粒度。
+  {
+    const opts = (zConfigDoc as unknown as { options?: unknown[] }).options ?? [];
+    for (const opt of opts) {
+      // schema tag 從那一支自己的 `schema` literal 讀 —— ⛔ 不另外維護一張表
+      //   （那會是第〇·四守則的第二個住處，而它一定會漂）。
+      const shape = (opt as { shape?: Record<string, unknown> }).shape;
+      const lit = shape?.["schema"] as { value?: unknown } | undefined;
+      const tag = typeof lit?.value === "string" ? lit.value : undefined;
+      if (tag === undefined) continue; // ⛔ 讀不出 tag 就不假裝走過（下面 sanity 會叫）
+      pushDocFields("configField", opt, tag);
+    }
+  }
 
   // ⭐ 宣告 unsupported 的**這一版**不做 —— 而理由要寫得出來（⛔ 不是靜默省略）
   // ⚠️⚠️ ⛔ **不是「不必實作」**（owner 2026-08-31 逐字:「⋯**=> 之後會實作**」）——
