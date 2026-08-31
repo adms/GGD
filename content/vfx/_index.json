@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "ca5099fae03e",
+  "hash": "736566f3f2b8",
   "entries": [
     {
       "id": "attach.ex.midchilder-aura",
@@ -15,10 +15,22 @@
       "size": 489
     },
     {
+      "id": "attach.godie-ntin.herofatezemberform",
+      "path": "vfx/attach.godie-ntin.herofatezemberform.json",
+      "hash": "eda6e12ab56c",
+      "size": 567
+    },
+    {
       "id": "attach.godie-o00x.hands",
       "path": "vfx/attach.godie-o00x.hands.json",
       "hash": "722f74526bf0",
       "size": 783
+    },
+    {
+      "id": "attach.godie-o02w.1hswd-01",
+      "path": "vfx/attach.godie-o02w.1hswd-01.json",
+      "hash": "af926a9e3324",
+      "size": 536
     },
     {
       "id": "attach.godie-u01u.poweraura",

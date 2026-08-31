@@ -1,0 +1,10 @@
+{
+  "id": "attach.godie-o02w.1hswd-01",
+  "schema": "attachment@1",
+  "note": "令狐沖劍 godie-o02w 的球體 = w3a A0XT，掛點 hand,right 與份數 1 都是 w3x 自己記的（SPHERE_ATTACHMENTS.json，decision=BAKEABLE-NOW）。scale 0.4273 = 0.01187 / 0.02778 —— models_report.json 記的兩份轉檔倍率之比（hzyn.mdx / 1hswd-01.mdx），⛔ 不是挑的；⛔ 預設 1 會讓掛件有角色的 2.3 倍大（同 GH#432）。",
+  "modelKey": "imported.1hswd-01",
+  "points": [
+    "hand,right"
+  ],
+  "scale": 0.4273
+}

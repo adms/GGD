@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "29cff72d2cd4",
+  "hash": "c25a3581718d",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -60,7 +60,7 @@
       "id": "imported.1hswd-01",
       "path": "models/imported.1hswd-01.json",
       "hash": "21ae24a8f1c2",
-      "size": 298
+      "size": 299
     },
     {
       "id": "imported.aquaspikeversion2",
@@ -319,6 +319,12 @@
       "path": "models/imported.herofate.json",
       "hash": "866be19f796e",
       "size": 1047
+    },
+    {
+      "id": "imported.herofatezemberform",
+      "path": "models/imported.herofatezemberform.json",
+      "hash": "880165d253da",
+      "size": 320
     },
     {
       "id": "imported.herogirl",
