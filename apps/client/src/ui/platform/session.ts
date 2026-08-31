@@ -118,10 +118,33 @@ export class ApiClient {
     return this.tokens?.refreshToken ?? null;
   }
 
-  setTokens(tokens: TokenPair | null): void {
+  /**
+   * ⭐⭐ GH#813 B —— **長效憑證⛔不落 localStorage**（照 admin 已驗證過的形狀）。
+   *
+   * ⛔ 在此之前：`refreshToken` 與 `accessToken` 一起被寫進 localStorage。
+   * ⭐ 而長效的那一顆才是有價值的目標（access 幾分鐘就過期，refresh 是**整個帳號**）。
+   *
+   * ⭐ 判準與 `apps/admin/src/session.ts:186` **逐字相同**：
+   *   · 伺服器說它把 refresh 種成 cookie 了（`refreshCookie: true`）
+   *     ⇒ ⭐ **磁碟上那一份**抽掉 refresh，記憶體裡仍然完整
+   *   · 伺服器**沒說**（舊版／cookie 種不起來）⇒ ⛔ **一個位元組都不改**
+   *     —— 降級要是「照舊」，⛔ 不是「當場壞掉」
+   *
+   * ⚠️ ⭐ 記憶體那一份保持完整是**必要**的：cookie 沒種成功時，這個分頁照舊能換發。
+   */
+  setTokens(tokens: TokenPair | null, refreshInCookie = false): void {
     this.tokens = tokens;
+    if (tokens && refreshInCookie) {
+      this.serverHoldsRefresh = true;
+      this.storage.save({ ...tokens, refreshToken: "" } as TokenPair);
+      return;
+    }
+    if (!tokens) this.serverHoldsRefresh = false;
     this.storage.save(tokens);
   }
+
+  /** 伺服器有沒有說「refresh 在我這（cookie）」。⛔ 只有帶 token 的回應才算數。 */
+  private serverHoldsRefresh = false;
 
   /** One raw call (no refresh logic). */
   private async rawRequest(path: string, opts: RequestOptions): Promise<Response> {
@@ -157,8 +180,9 @@ export class ApiClient {
             this.onSessionExpired?.();
             return false;
           }
-          const body = (await res.json()) as { tokens: TokenPair };
-          this.setTokens(body.tokens);
+          const body = (await res.json()) as { tokens: TokenPair; refreshCookie?: unknown };
+          // ⭐ 伺服器說它收下 refresh 了（種成 cookie）⇒ 磁碟上不再留一份（GH#813 B）。
+          this.setTokens(body.tokens, body.refreshCookie === true);
           return true;
         } catch {
           return false; // network error: keep tokens, caller surfaces the error
