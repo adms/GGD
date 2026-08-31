@@ -39,10 +39,18 @@ export {
   policyFor,
   resolveDisplacementEnd,
   wallBlockFromDoc,
+} from "./movement/wallBlock";
+export {
   wallObstacles,
   type WallBlockPolicy,
   type WallBlockRules,
 } from "./movement/wallBlock";
+// ⭐ GH#448 「標記→順移」—— `markedBlinkFromDoc` 也是 `MatchController` 的入口。
+export {
+  DEFAULT_MARKED_BLINK,
+  markedBlinkFromDoc,
+  type MarkedBlinkRules,
+} from "./movement/markedBlink";
 
 export * from "./stats/statTypes";
 export * from "./stats/modifiers";

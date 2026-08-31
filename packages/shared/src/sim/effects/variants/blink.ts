@@ -4,6 +4,7 @@
  *    所以「variant ↔ effect.ts」這個環在執行期**不存在**，⛔ 不是一個要靠
  *    載入順序活下來的循環。
  */
+import type { StatusId } from "../../../ids";
 import type { EffectDef } from "../effect";
 
 /**
@@ -51,8 +52,20 @@ export interface BlinkVariant {
    *     27-04 飛燕閃）
    *   · `"point"`      指向點（82-02 虛空瞬動，讀 `GetOrderPointLoc`）
    *   · `"caster"`     集結到施法者身邊（3 支，配 `applyTo:"target"`）
+   *   · ⭐ `"markedUnit"` **被我標記的那個人**（GH#448，owner 2026-08-19：
+   *     「給予指定敵方英雄標記，之後施展若無指定敵方英雄單位代表順移至敵方身邊」）
    */
-  to: "point" | "targetUnit" | "caster";
+  to: "point" | "targetUnit" | "caster" | "markedUnit";
+  /**
+   * ⭐ `to: "markedUnit"` 專用 —— 哪一個標記（`status-effect@1` 的 id）。
+   *
+   * ⭐ 「被我標記的」＝ 帶著這個 `statusId` **且** `sourceId === ctx.origin`
+   *（＝這支技能）的敵人 —— `sim/effects/applyStatus.ts:204` 存的就是它。
+   * ⛔ 不必新增一份「誰標了誰」的表（第〇·四守則的第二個住處）。
+   *
+   * ⚠️ 找不到 ⇒ **什麼都不做**（⛔ 不瞬移到隨便一個敵人）。
+   */
+  markStatusId?: StatusId;
   /**
    * ⭐【固定距離】GH#838 —— 落點＝從施法者朝目的地方向走這麼遠（JASS
    * `PolarProjectionBJ` ＋ `SetUnitPositionLoc`）。與 `stopShortUnits` 互斥。

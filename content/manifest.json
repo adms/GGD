@@ -1,5 +1,5 @@
 {
-  "contentVersion": "cv_4461b76cb24a",
+  "contentVersion": "cv_2ab3569c7b89",
   "collections": {
     "champions": {
       "hash": "3e07926efa17",
@@ -7,7 +7,7 @@
       "path": "champions/_index.json"
     },
     "abilities": {
-      "hash": "b1dfe5375049",
+      "hash": "156f8e5bf7e3",
       "count": 421,
       "path": "abilities/_index.json"
     },
@@ -27,8 +27,8 @@
       "path": "projectiles/_index.json"
     },
     "status-effects": {
-      "hash": "301dacc87752",
-      "count": 44,
+      "hash": "081fc140dc22",
+      "count": 45,
       "path": "status-effects/_index.json"
     },
     "loot-tables": {
@@ -47,7 +47,7 @@
       "path": "maps/_index.json"
     },
     "config": {
-      "hash": "8f45194e26d1",
+      "hash": "a9f0cc094650",
       "count": 93,
       "path": "config/_index.json"
     },

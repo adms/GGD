@@ -55,5 +55,9 @@
     "leap": "clamp",
     "pillarsBlock": false,
     "flightExempt": true
+  },
+  "markedBlink": {
+    "enabled": true,
+    "requireOwnMark": true
   }
 }

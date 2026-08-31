@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "29235222",
+  "fingerprint": "9d43feef",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -257,6 +257,7 @@
     "lifestealMult",
     "manaPct",
     "manualTargetable",
+    "markStatusId",
     "maxAlive",
     "maxAttribute",
     "maxAttributeBasis",
@@ -612,6 +613,7 @@
     "lifestealMult",
     "manaPct",
     "manualTargetable",
+    "markStatusId",
     "maxAlive",
     "maxAttribute",
     "maxAttributeBasis",

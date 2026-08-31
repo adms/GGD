@@ -939,11 +939,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-17",
     why: "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
   },
-  "field:abilities.effects[]#blink.condition": {
-    status: "landing",
-    since: "2026-08-17",
-    why: "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-  },
   "field:abilities.effects[]#blink.maxTargets": {
     status: "landing",
     since: "2026-08-17",

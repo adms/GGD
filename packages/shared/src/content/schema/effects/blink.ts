@@ -1,5 +1,7 @@
 import { z } from "zod";
+import type { StatusId } from "../../../ids";
 import type { EffectDef } from "../../../sim/effects/effect";
+import { zRef } from "../common";
 import {
   EFFECT_COMMON_SHAPE,
   refineDispelShape,
@@ -34,8 +36,31 @@ z
     side: z.enum(["allies", "enemies"]).optional(),
     maxTargets: z.number().int().positive().max(24).optional(),
     to: z
-      .enum(["point", "targetUnit", "caster"])
-      .describe("目的地：指定的地點 / 目標身上 / 集結到施法者身邊。"),
+      .enum(["point", "targetUnit", "caster", "markedUnit"])
+      .describe(
+        "目的地：指定的地點 / 目標身上 / 集結到施法者身邊 / " +
+          "⭐ **被我標記的那個人**（`markedUnit`）。",
+      ),
+    /**
+     * ⭐⭐ `to: "markedUnit"` 專用 —— **哪一個標記**（`status-effect@1` 的 id）。
+     *
+     * ── owner 2026-08-19（逐字，GH#448）─────────────────────────────────────
+     * 「30-00 攝影機 => 因為**已經不是 dota 大地圖**，請你幫我這招改成
+     *  **給予指定敵方英雄標記**，之後施展**若無指定敵方英雄單位代表順移至敵方身邊**」
+     *
+     * ⇒ ⭐ 同一個按鍵**兩段行為**：有指定目標 ⇒ 標記它；沒有 ⇒ 瞬移到被標記的人。
+     *
+     * ── ⭐ 「被我標記的」怎麼認得出來 ────────────────────────────────────────
+     * `StatusEffect.sourceId` 存的是 `ctx.origin`（＝**這支技能的 id**，
+     * `sim/effects/applyStatus.ts:204`）⇒ ⭐ 一個施法者只有一支這技能
+     * ⇒ 「這個 statusId ＋ 這支技能」就唯一決定了「我標的那個人」。
+     * ⛔ 不必新增一份「誰標了誰」的表（那會是第〇·四守則的第二個住處）。
+     *
+     * ⚠️ ⭐ 找不到被標記的人 ⇒ **什麼都不做**（⛔ 不是瞬移到隨便一個敵人、
+     * ⛔ 也不是原地不動地假裝成功）—— 玩家按下去沒有反應時，
+     * 卡面要說得出「你還沒標記任何人」。
+     */
+    markStatusId: zRef<StatusId>("status-effects", { soft: true }).optional(),
     applyTo: z.enum(["self", "target"]).optional(),
     /**
      * 落在目的地前面多少單位（27-04 飛燕閃在 JASS 裡落在目標前 150 wc3 ≈

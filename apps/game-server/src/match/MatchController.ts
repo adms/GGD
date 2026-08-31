@@ -27,6 +27,7 @@ import {
   type BaseBonusTable,
 } from "@ggd/shared/sim/baseBonus";
 import { statCapsFromDoc, type StatCapTable } from "@ggd/shared/sim/statCaps";
+import { markedBlinkFromDoc } from "@ggd/shared/sim/movement/markedBlink";
 import { wallBlockFromDoc } from "@ggd/shared/sim/movement/wallBlock";
 import {
   COMBAT_FEEL_DOC_ID,
@@ -1275,6 +1276,7 @@ export class MatchController {
     //   （schema 有、後台編得到、sim 讀不到）。走 `Configs.tryGet` 是刻意的：
     //   和 `per-level-bonus` 同一條路，已知限制也一樣（後台改了要重啟 shard）。
     this.world.wallBlock = wallBlockFromDoc(Configs.tryGet("displacement-tiers"));
+    this.world.markedBlink = markedBlinkFromDoc(Configs.tryGet("displacement-tiers"));
     // 屬性上限 (`config.stat-caps@1`, GH#286) —— 一般上限 / 解鎖上限。
     //
     // ⚠️ 走**建構子參數**,和 baseBonus 同一條路,不是在這裡讀 `Configs`。

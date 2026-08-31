@@ -1,6 +1,6 @@
 {
   "collection": "status-effects",
-  "hash": "301dacc87752",
+  "hash": "081fc140dc22",
   "entries": [
     {
       "id": "aban-x-mark",
@@ -49,6 +49,12 @@
       "path": "status-effects/burnstun.json",
       "hash": "2892a4ea8556",
       "size": 340
+    },
+    {
+      "id": "camera-mark",
+      "path": "status-effects/camera-mark.json",
+      "hash": "ff26f27f472d",
+      "size": 424
     },
     {
       "id": "charmed",

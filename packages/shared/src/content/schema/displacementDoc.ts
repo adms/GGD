@@ -118,6 +118,26 @@ export const zConfigDisplacementTiersDoc = z
      * 整份載入失敗 ⇒ fail-open 退回骨架 2 隻英雄（2026-08-02 事故形態）。
      * 缺席時 `wallBlockFromDoc` 回**出貨值**（＝修好的那一邊），⛔ 不是關掉。
      */
+    /**
+     * ⭐ GH#448 「標記→順移」的旋鈕。**必須 `.optional()`**，理由與 `wallBlock`
+     * 逐字相同：缺席時 `markedBlinkFromDoc` 回**出貨值**（＝功能開著），⛔ 不是關掉。
+     */
+    markedBlink: z
+      .object({
+        enabled: z
+          .boolean()
+          .describe(
+            "⭐ **rollback 開關**：關掉之後 30-00 攝影機的第二段（順移到被標記的人）一律不發生，施法者原地不動。⚠️ ⛔ 關掉會讓卡面第二句變成謊話 —— 這是**應急**用的，⛔ 不是長期形狀。",
+          )
+          .optional(),
+        requireOwnMark: z
+          .boolean()
+          .describe(
+            "只認**自己這支技能**打的標記。⛔ 關掉之後兩位臭作會互相搶對方標記的目標（同一個 statusId 但不同施法者）。⭐ 出貨值開著。",
+          )
+          .optional(),
+      })
+      .optional(),
     wallBlock: z
       .object({
         enabled: z

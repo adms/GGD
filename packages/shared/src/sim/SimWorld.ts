@@ -40,6 +40,7 @@ import {
   type ControllerSchemeEntry,
 } from "../content/schema/config/controllerScheme";
 import { DEFAULT_COMBAT_FEEL, type CombatFeelRules } from "./combatFeel";
+import { DEFAULT_MARKED_BLINK, type MarkedBlinkRules } from "./movement/markedBlink";
 import { DEFAULT_WALL_BLOCK, type WallBlockRules } from "./movement/wallBlock";
 import { DEFAULT_SHIELD_RULES, type ShieldRules } from "./shieldRules";
 import { DEFAULT_BLOCK_RULES, type BlockRules } from "./blockRules";
@@ -853,6 +854,13 @@ export class SimWorld {
    * 預設是**出貨表**（＝修好的那一邊），不是空表 —— 空表等於缺陷回來。
    */
   wallBlock: WallBlockRules = DEFAULT_WALL_BLOCK;
+
+  /**
+   * ⭐ GH#448 「標記→順移」規則（`config.displacement-tiers@1` 的 `markedBlink`）——
+   * 30-00 攝影機那一族。和 `wallBlock` 同一條規矩：開賽前指派一次,之後不再動。
+   * 預設是**出貨值**（＝功能開著），⛔ 不是關掉。
+   */
+  markedBlink: MarkedBlinkRules = DEFAULT_MARKED_BLINK;
 
   /**
    * 護盾規則 (see shieldRules.ts) —— 目前只有「多個護盾池誰先被吃掉」一格

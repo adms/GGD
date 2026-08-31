@@ -60,12 +60,43 @@ import { teleportBody } from "../movement/blink";
  * `null` = 這一格沒有目的地可言，跳過。
  */
 function destinationOf(
-  e: { to: "point" | "targetUnit" | "caster" },
+  e: { to: "point" | "targetUnit" | "caster" | "markedUnit"; markStatusId?: string },
   ctx: EffectContext,
   mover: EntityId,
   resolved: readonly EntityId[],
 ): Vec2 | null {
   const { world } = ctx;
+  if (e.to === "markedUnit") {
+    // ⭐⭐ GH#448 —— **瞬移到被我標記的那個人**（owner 2026-08-19：
+    //   「給予指定敵方英雄標記，之後施展若無指定敵方英雄單位代表順移至敵方身邊」）。
+    //
+    // ⭐ 「被我標記的」＝ 帶著這個 `statusId` **且** `sourceId === ctx.origin`
+    //   的實體 —— `sim/effects/applyStatus.ts:204` 存的就是 `ctx.origin`
+    //   （＝這支技能的 id）⇒ ⛔ 不必新增一份「誰標了誰」的表。
+    //
+    // ⚠️ ⭐ 找不到 ⇒ 回 `null` ＝ **什麼都不做** ——
+    //   ⛔ 不是瞬移到隨便一個敵人、⛔ 也不是原地不動地假裝成功
+    //   （同上面那兩格的理由：0 距離的瞬移與壞掉的瞬移在畫面上一模一樣）。
+    // ⭐ rollback 開關（`config.displacement-tiers@1` 的 `markedBlink`，GH#448）——
+    // ⛔ 關掉之後這一段一律不發生，⭐ 施法者原地不動。
+    if (!world.markedBlink.enabled) return null;
+    if (e.markStatusId === undefined) return null;
+    // ⚠️ ⭐ 迭代要**先排序**（`sim/purity.test.ts` 在守：Map 的迭代序不保證）。
+    let best: EntityId | null = null;
+    for (const id of [...world.status.keys()].sort((a, b) => a - b)) {
+      if (id === mover) continue;
+      const list = world.status.get(id);
+      if (!list) continue;
+      if (list.effects.some((st) => st.statusId === e.markStatusId &&
+            (!world.markedBlink.requireOwnMark || st.sourceId === ctx.origin))) {
+        best = id;
+        break;
+      }
+    }
+    if (best === null) return null;
+    const m = world.transform.get(best);
+    return m ? { x: m.pos.x, z: m.pos.z } : null;
+  }
   if (e.to === "caster") {
     const c = world.transform.get(ctx.caster);
     return c ? { x: c.pos.x, z: c.pos.z } : null;

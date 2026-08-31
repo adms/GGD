@@ -73,6 +73,16 @@ export const DISPLACEMENT_TIERS_SPEC: ConfigDocSpec<"displacementTiers"> = {
     // ⭐ owner 2026-08-21「我發現**有許多地圖的牆 瞬移過去** 例如**無限城**等」。
     //    ⛔ 這**不是**上面那一格的重複：「夾住位移速度」修的是穿隧（一步跨太遠），
     //    這四格修的是「終點就在牆的另一邊」。瞬移沒有速度，夾它是沒有意義的。
+    {
+      path: "markedBlink.enabled",
+      zh: "「標記→順移」總開關（30-00 攝影機）",
+      note: "⭐ **這是 GH#448 的 rollback 開關**（owner 2026-08-19「給予指定敵方英雄標記，之後施展若無指定敵方英雄單位代表順移至敵方身邊」）。⛔ 關掉之後 `to: \"markedUnit\"` 的瞬移**一律不發生**，施法者原地不動 —— ⚠️ 而卡面第二句會變成謊話，所以這是**應急**用的，⛔ 不是長期形狀。",
+    },
+    {
+      path: "markedBlink.requireOwnMark",
+      zh: "只認自己這支技能打的標記",
+      note: "比對 `StatusEffect.sourceId === ctx.origin`（＝這支技能的 id）。⛔ 關掉之後兩位臭作會互相搶對方標記的目標（同一個 statusId、不同施法者）。⭐ 出貨值開著。",
+    },
     { path: "wallBlock.enabled", zh: "位移不可以穿牆（總開關）", note: "⭐ **這是 owner 2026-08-21 那則回報的修復本體**：瞬移／跳躍的**終點**必須落在牆的這一邊。⛔ 關掉＝回到 2026-08-21 之前（無限城的 16 道牆對位移完全不存在）。⚠️ 它與「夾住位移速度」是**兩個不同的缺陷**，兩格都要開著。" },
     {
       path: "wallBlock.blink",

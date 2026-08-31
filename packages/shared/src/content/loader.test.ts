@@ -130,6 +130,10 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
       "blind",
       "burn",
       "burnstun",
+      // ⭐ GH#448（owner 2026-08-19）—— 30-00 攝影機的「標記→順移」錨點：
+      //    指定敵方英雄留下它，下一次**不指定任何人**施展就順移到他身邊。
+      //    純標記（⛔ 不痛不慢），它只是一條回去的路。
+      "camera-mark",
       // ⭐ 2026-08-18 [EX∅ 根源]：親熱天堂的【魅惑】—— 一份牽引＋交不出操作的
       //    控制狀態（機制是 `knockback{from:"pull", uncontrollable:true}`，這裡只是身分）。
       "charmed",

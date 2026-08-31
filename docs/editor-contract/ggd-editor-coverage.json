@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "18d1b90a8687",
-  "capabilityFingerprint": "29235222",
+  "fingerprint": "57869d5e50e7",
+  "capabilityFingerprint": "9d43feef",
   "required": [
     {
       "group": "abilityField",
@@ -11835,6 +11835,21 @@
     },
     {
       "group": "configField",
+      "name": "markedBlink",
+      "owner": "config.displacement-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "markedBlink.enabled",
+      "owner": "config.displacement-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "markedBlink.requireOwnMark",
+      "owner": "config.displacement-tiers@1"
+    },
+    {
+      "group": "configField",
       "name": "markers",
       "owner": "config.item-card@1"
     },
@@ -19553,6 +19568,10 @@
     },
     {
       "group": "effectField",
+      "name": "markStatusId"
+    },
+    {
+      "group": "effectField",
       "name": "maxAlive"
     },
     {
@@ -20602,6 +20621,10 @@
     {
       "group": "effectFieldPath",
       "name": "manualTargetable"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "markStatusId"
     },
     {
       "group": "effectFieldPath",
@@ -23471,7 +23494,7 @@
   ],
   "counts": {
     "effectKind": 46,
-    "effectField": 260,
+    "effectField": 261,
     "hookEvent": 33,
     "hookField": 21,
     "abilityField": 38,
@@ -23479,15 +23502,15 @@
     "templateFamily": 26,
     "conditionLeaf": 5,
     "conditionLeafField": 13,
-    "effectFieldPath": 416,
+    "effectFieldPath": 417,
     "vfxField": 53,
     "modelField": 42,
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 112,
-    "configField": 3717,
+    "configField": 3720,
     "_notRequired": 15,
-    "_total": 4814,
+    "_total": 4819,
     "_ownerOnly": 39
   }
 }
