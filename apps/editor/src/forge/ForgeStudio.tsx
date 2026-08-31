@@ -36,6 +36,7 @@ import {
   type TemplateDoc,
   type TemplateConflictPolicy,
   type AbilityTemplateCard,
+  type AbilityTemplateBinding,
 } from "@ggd/shared/content";
 import {
   expandStack,
@@ -45,6 +46,11 @@ import {
 } from "@ggd/shared/content/templates/expand";
 import { embeddedSlotOf } from "@ggd/shared/content/editModel";
 import type { AbilityDef, ChampionDef, CoreAbilitySlot } from "@ggd/shared/sim";
+import type { AbilityId, ChampionId } from "@ggd/shared/ids";
+import {
+  Abilities as RuntimeAbilities,
+  Champions as RuntimeChampions,
+} from "@ggd/shared/sim/content/registry";
 import { VfxScripts } from "@ggd/shared/content/registries";
 import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
 import { api, WRITES_ENABLED } from "../api/client";
@@ -81,6 +87,7 @@ import {
   moveTemplateCard,
 } from "./stackDnd";
 import { SimEventTimeline } from "./SimEventTimeline";
+import { runtimePreviewDoc } from "./runtimePreviewDoc";
 import { useChampionDocs } from "../preview/useChampionDocs";
 import { VfxForgePreview } from "../vfx-forge/VfxForgePreview";
 import {
@@ -246,7 +253,7 @@ export function ForgeStudio({
   const conflictBlocks = onConflict === "reject" && conflicts.length > 0;
 
   const binding = useMemo(
-    () => denormalizeTemplateBinding(cards, onConflict),
+    () => denormalizeTemplateBinding(cards, onConflict) as AbilityTemplateBinding,
     [cards, onConflict],
   );
 
@@ -295,17 +302,32 @@ export function ForgeStudio({
 
   // ---- the live try-in-preview: real sim, real stats ----
   const preview = useMemo(() => {
-    if (!after || !previewContent.data) return null;
-    const parsed = zAbilityDoc.safeParse(after);
+    if (!after || !previewContent.data || !expansion.ok) return null;
+    const id = String(after["id"] ?? "") as AbilityId;
+    const registeredAbility = RuntimeAbilities.tryGet(id);
+    if (!registeredAbility) {
+      return { error: `正式 Runtime 註冊表找不到技能 ${id}` } as const;
+    }
+    const runtimeDoc = runtimePreviewDoc(
+      after,
+      registeredAbility as unknown as Record<string, unknown>,
+      expansion.value.result,
+      binding,
+    );
+    const parsed = zAbilityDoc.safeParse(runtimeDoc);
     if (!parsed.success) return { error: "展開結果尚未通過 zAbilityDoc 校驗" } as const;
     const ability = parsed.data as unknown as AbilityDef;
     const owner = champions.find((c) =>
       (["Q", "W", "E", "R"] as const).some((s) => c.abilities[s].id === ability.id),
     );
     if (!owner || ability.slot === "EX") return { lines: null } as const;
+    const runtimeOwner = RuntimeChampions.tryGet(owner.id as ChampionId);
+    if (!runtimeOwner) {
+      return { error: `正式 Runtime 註冊表找不到英雄 ${owner.id}` } as const;
+    }
     const champ: ChampionDef = {
-      ...(owner as unknown as ChampionDef),
-      abilities: { ...(owner as unknown as ChampionDef).abilities, [ability.slot]: ability },
+      ...runtimeOwner,
+      abilities: { ...runtimeOwner.abilities, [ability.slot]: ability },
     };
     try {
       return {
@@ -319,7 +341,7 @@ export function ForgeStudio({
     } catch (e) {
       return { error: String(e) } as const;
     }
-  }, [after, champions, previewContent.data]);
+  }, [after, binding, champions, expansion, previewContent.data]);
 
   const runCurrentCast = useCallback((remember: boolean): void => {
     if (!preview || !("champ" in preview)) return;

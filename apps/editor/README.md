@@ -25,8 +25,11 @@ together; writes remain local. The API guard rejects non-loopback mutation.
   Forge's shipped `CameraRig`, arena ground, dual champion GLBs and real
   `VfxSystem`; the 3D stage and event ruler use the same playhead and 1/60 frame
   step. After the first manual cast, changing a card or VFX parameter reruns the
-  real cast automatically. Ability behaviour is never reproduced in a second
-  preview-only rules engine.
+  real cast automatically. The draft is overlaid on the already-registered
+  runtime ability, so model presets, tier values and combo families are resolved
+  exactly as they are in the game while writeback still preserves the authoring
+  shape. Ability behaviour is never reproduced in a second preview-only rules
+  engine.
 - **特效工坊** — model/VFX resource palette, drop placement, the real
   `CameraRig` and ground, segment sliders, WYSIWYG replay, 1/60 frame step,
   timeline scrub/play, undo/redo, and middleware writeback. The stage uses the
