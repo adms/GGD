@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_156b6989cf19`
+contentVersion `cv_4f26f001c66c`
 
 ---
 
@@ -111,7 +111,7 @@ contentVersion `cv_156b6989cf19`
 | `stat` | 屬性門檻（血量低於 X%…） | 9 | `godie-e002.w`、`godie-e00l.w`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-emfr.passive`、`godie-h00l.ex`、`godie-h02u.w`、`godie-h02v.w`、`grail-ex-13` |
 | `status` | 身上有某狀態時 | 27 | `godie-e00r.q`、`godie-edem.r`、`godie-efur.ex`、`godie-emns.e`、`godie-emns.r`、`godie-ewar.e`、`godie-h00l.e`、`godie-h01n.e`、`godie-h01n.w`、`godie-h01o.w`、`godie-h01u.e`、`godie-h02k.ex` …（共 27） |
 
-## 狀態標籤 —— 111 個
+## 狀態標籤 —— 113 個
 
 開放詞彙（自由字串）。條件葉 `status` 的**類別分支**查的就是它。
 
@@ -146,10 +146,10 @@ contentVersion `cv_156b6989cf19`
 | `counter` | `grief-seed-charge`、`triforce-courage` |
 | `curse` | `curse` |
 | `damage-bank` | `light-wand-banked`、`nen-banked` |
-| `debuff` | `aban-x-mark`、`alcohol-enema`、`armor-break`、`blind`、`burn`、`burnstun`、`camera-mark`、`charmed`、`confusion`、`curse`、`fang-stun`、`fear`、`grievous-wounds`、`ingredient`、`magic-break`、`no-heal`、`numbness`、`omnislash-lock`、`paralysis`、`root`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60`、`stun`、`trial-stun` |
+| `debuff` | `aban-x-mark`、`alcohol-enema`、`armor-break`、`blind`、`burn`、`burnstun`、`camera-mark`、`charmed`、`confusion`、`curse`、`fang-stun`、`fear`、`grievous-wounds`、`ingredient`、`magic-break`、`no-heal`、`numbness`、`omnislash-lock`、`paralysis`、`poison`、`root`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60`、`stun`、`trial-stun` |
 | `devour-cooldown` | `devour-cooldown` |
 | `disable` | `burnstun`、`fang-stun`、`fear`、`ingredient`、`numbness`、`omnislash-lock`、`omnislash-perform`、`paralysis`、`root`、`stun`、`trial-stun` |
-| `dot` | `burn` |
+| `dot` | `burn`、`poison` |
 | `drunk` | `alcohol-enema` |
 | `elemental` | `burn` |
 | `empowered` | `millennium-plot-armor` |
@@ -199,6 +199,7 @@ contentVersion `cv_156b6989cf19`
 | `omnislash-perform` | `omnislash-perform` |
 | `paralysis` | `paralysis` |
 | `physical` | `armor-break` |
+| `poison` | `poison` |
 | `projectile` | `grail-strengthened-projection` |
 | `rage` | `rage` |
 | `recall-anchor` | `camera-mark` |
@@ -222,6 +223,7 @@ contentVersion `cv_156b6989cf19`
 | `stat-up` | `rage` |
 | `stun` | `burnstun`、`fang-stun`、`ingredient`、`omnislash-lock`、`omnislash-perform`、`stun`、`trial-stun` |
 | `timed-window` | `moon-combo`、`octuple-slash-window`、`witch-form` |
+| `toxic` | `poison` |
 | `trial-stun` | `trial-stun` |
 | `triforce-courage` | `triforce-courage` |
 | `uncontrollable` | `berserk`、`confusion`、`fear` |
