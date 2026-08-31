@@ -30,6 +30,19 @@ describe("GH#244 JASS 模板對照表", () => {
     expect(out).toContain("新鮮的");
   });
 
+  it("★ ⭐⭐ 「召喚代理」被**拆成兩種機制** —— ⛔ 那個數字不可以被讀成「N 支在等 summon」", () => {
+    const md = execFileSync("cat", ["docs/editor-contract/jass-template-map.md"], {
+      cwd: REPO, encoding: "utf8",
+    });
+    // ⭐ 2026-08-31 逐支讀 evidence 量到：58 支裡真召喚 13 · dummy 載體 32 · 判不出來 13。
+    //   ⚠️ 少了這一節，「擋住 19 支」會讓下一個人去做一個**沒有那麼多支在等**的機制。
+    expect(md, "⛔ 少了這一節 ⇒ 排序表的數字會誤導下一批").toContain("是**兩種機制**");
+    expect(md).toContain("dummy 載體");
+    // ⭐ dummy 載體那一列必須說「今天表達得出來」—— ⛔ 否則它看起來也在等機制
+    const seg = md.slice(md.indexOf("dummy 載體"), md.indexOf("dummy 載體") + 200);
+    expect(seg).toMatch(/spawnVfx|damageArea|delayed/);
+  });
+
   it("⭐ 量尺自證：join key 對得上**一大批**，⛔ 不是個位數", () => {
     const md = execFileSync("cat", ["docs/editor-contract/jass-template-map.md"], {
       cwd: REPO, encoding: "utf8",

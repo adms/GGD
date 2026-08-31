@@ -40,6 +40,15 @@ function shippedByNumber() {
 }
 
 export function buildMap() {
+  const REAL_SUMMON = /召喚|summon|'n0|olddie|生命週期/i;
+  const DUMMY_CARRIER = /dummy/i;
+  const shapeOf = (s) => {
+    const t = `${s.evidence ?? ""} ${s.notes ?? ""}`;
+    if (REAL_SUMMON.test(t)) return "真召喚";
+    if (DUMMY_CARRIER.test(t)) return "dummy 載體";
+    return "判不出來";
+  };
+
   const skills = JSON.parse(readFileSync(JASS, "utf8")).skills;
   const ship = shippedByNumber();
   const rows = [];
@@ -52,8 +61,18 @@ export function buildMap() {
       jassTemplate: s.template ?? "(無)",
       shippedId: hit?.id ?? null,
       shippedTemplate: hit?.template ?? null,
+      shape: shapeOf(s),
     });
   }
+  // ⭐⭐ **「召喚代理」這個 JASS 分類把兩種機制混在一起了**（2026-08-31 逐支讀 evidence）：
+  //   · **真召喚** —— `18-04 億年樹` 生 `'n010'` ＋ `OldTreeDie` 生命週期 ⇒ ⭐ 需要 `summon` effect
+  //   · **dummy 載體** —— `65-04 天譴` 的 `per-unit dummy`、`42-04 世界終結` 的 `12 隻 u013 clap`
+  //     ⇒ ⭐ 那是**特效／傷害的搬運工**，GGD 今天用 `spawnVfx` / `damageArea` / `delayed` 表達得出來
+  //   量到：58 支裡 **真召喚 13 · dummy 載體 32 · 判不出來 13**
+  //
+  // ⚠️ ⭐ 少了這一層，「擋住 19 支」會被讀成「19 支需要召喚機制」——
+  //   ⛔ 而那會讓下一個人去做一個**沒有那麼多支在等**的機制（第〇·五守則的反面）。
+
   // ⭐ 按「擋住幾支」排序 —— ⛔ 不是按技能順序
   const blocked = new Map();
   for (const r of rows) {
@@ -93,6 +112,23 @@ export function render() {
   L.push("");
   L.push("⭐ 判準逐字：「**按擋住的支數做機制，⛔ 不是按技能順序做技能**」。");
   L.push("");
+  // ⭐ 「召喚代理」的分解 —— ⛔ 沒有它,那個 19 會被讀成「19 支需要召喚機制」
+  const summonRows = rows.filter((r) => r.jassTemplate === "召喚代理");
+  if (summonRows.length > 0) {
+    const byShape = new Map();
+    for (const r of summonRows) byShape.set(r.shape, (byShape.get(r.shape) ?? 0) + 1);
+    L.push("## ⚠️⭐ 「召喚代理」是**兩種機制**，⛔ 不是一種");
+    L.push("");
+    L.push("| 形狀 | 支數 | GGD 今天表達得出來嗎 |");
+    L.push("|---|---:|---|");
+    L.push(`| **真召喚**（生一隻有生命週期的單位） | **${byShape.get("真召喚") ?? 0}** | ⛔ 需要 \`summon\` effect（schema 有、**內容零份在用**） |`);
+    L.push(`| **dummy 載體**（特效／傷害的搬運工） | **${byShape.get("dummy 載體") ?? 0}** | ⭐ **可以** —— \`spawnVfx\` / \`damageArea\` / \`delayed\` |`);
+    L.push(`| 判不出來 | ${byShape.get("判不出來") ?? 0} | ⚠️ 要逐支讀 JASS |`);
+    L.push("");
+    L.push("⚠️ ⭐ 上面那張「擋住幾支」的表裡，`召喚代理` 的數字**含這三種**——");
+    L.push("⛔ 它 ⛔ 不等於「這麼多支在等 `summon` 機制」。");
+    L.push("");
+  }
   L.push("## 逐支");
   L.push("");
   L.push("| 編號 | 技能 | 英雄 | JASS 行為類 | 出貨 id | 出貨模板 |");
