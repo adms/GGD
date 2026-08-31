@@ -82,6 +82,8 @@ import sys
 import zlib
 from collections import OrderedDict
 
+from PIL import Image
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from w3xlib.particles import parse_particles  # noqa: E402
 
@@ -106,6 +108,16 @@ P2_BLEND = {0: "alpha", 1: "additive", 2: "modulate", 3: "modulate", 4: "alphaKe
 # 4 addAlpha,5 modulate,6 modulate2x)
 MAT_BLEND = {0: "alpha", 1: "alphaKey", 2: "alpha", 3: "additive", 4: "additive",
              5: "modulate", 6: "modulate"}
+
+# A transparent texel can still paint a solid rectangle under WC3 additive
+# compositing: ONE+ONE ignores source alpha, so only RGB=0 is neutral.  Map
+# archive PNG conversion may preserve bright RGB under alpha=0 (babyface.png is
+# the shipped example: a white matte under a transparent cut-out).  Treat it as
+# a backdrop only when it occupies a material portion of the image; tiny
+# antialias fringes are not a reason to rewrite an artist texture.
+TRANSPARENT_BACKDROP_ALPHA_MAX = 5
+TRANSPARENT_BACKDROP_RGB_MIN = 8
+TRANSPARENT_BACKDROP_SHARE = 0.02
 
 
 def slug(name: str) -> str:  # same rule as models.slug (copied, not imported)
@@ -339,8 +351,37 @@ class TextureResolver:
             if f.endswith(".png")
         }
         self.copied: dict[str, str] = {}  # slug -> doc path
+        self.sanitized: dict[str, int] = {}  # slug -> neutralized texels
         self.substitutions: dict[str, str] = OrderedDict()  # wc3 path -> sprite
         self.sub_count: dict[str, int] = {}
+
+    def _copy_map_texture(self, slug_name: str, src: str, dst: str) -> None:
+        """Copy one map PNG, clearing only a proven transparent bright matte.
+
+        Alpha/alphaKey rendering is bit-for-bit equivalent at those texels;
+        additive rendering becomes safe because RGB black is its identity.  We
+        deliberately do not luma-key opaque black-background WC3 art here —
+        that family is already correct under additive and changing its alpha
+        would alter the original brightness curve.
+        """
+        with Image.open(src) as opened:
+            image = opened.convert("RGBA")
+        pixels = list(image.getdata())
+        backdrop = [
+            i for i, (r, g, b, a) in enumerate(pixels)
+            if a <= TRANSPARENT_BACKDROP_ALPHA_MAX
+            and max(r, g, b) > TRANSPARENT_BACKDROP_RGB_MIN
+        ]
+        if len(backdrop) / max(1, len(pixels)) < TRANSPARENT_BACKDROP_SHARE:
+            if not os.path.exists(dst):
+                shutil.copyfile(src, dst)
+            return
+        for i in backdrop:
+            _r, _g, _b, a = pixels[i]
+            pixels[i] = (0, 0, 0, a)
+        image.putdata(pixels)
+        image.save(dst, "PNG")
+        self.sanitized[slug_name] = len(backdrop)
 
     def resolve(self, wc3_path: str, replaceable_id: int = 0) -> tuple[str, bool]:
         """-> (doc texture path under assets/, from_map_archive)."""
@@ -359,8 +400,7 @@ class TextureResolver:
                 dst = os.path.join(self.tex_out, s + ".png")
                 if not self.dry_run:
                     os.makedirs(self.tex_out, exist_ok=True)
-                    if not os.path.exists(dst):
-                        shutil.copyfile(self.map_pngs[s], dst)
+                    self._copy_map_texture(s, self.map_pngs[s], dst)
                 self.copied[s] = f"assets/textures/particles/wc3/{s}.png"
             return self.copied[s], True
         sprite = kenney_substitute(stem)  # Blizzard stock texture: substitute
@@ -1100,6 +1140,8 @@ def main() -> int:
               "(content/config/ambient-vfx.json)")
     md.append(f"- map-archive textures copied to "
               f"content/assets/textures/particles/wc3/: {len(tex.copied)}")
+    md.append(f"- transparent bright backdrops neutralized for additive-safe "
+              f"composition: {len(tex.sanitized)}")
     md.append(f"- Blizzard stock textures substituted with CC0 sprites: "
               f"{len(tex.substitutions)}")
     md.append("- scale: per-model `scale_factor` from models_report.json "

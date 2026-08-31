@@ -389,6 +389,23 @@ coverage freshness 只證明管線可讀，不能替代畫面判讀。
 missing-texture、巨大遮罩 primitive、材質透明度與 bounds 的載入前守衛，資產未通過時
 Forge 必須把「技能腳本」與「基礎模型資產」分開判責，不得把破圖算成腳本通過。
 
+### 9.3 貼圖去背必須按實際合成式驗證
+
+不能只檢查 PNG「有沒有 alpha」。例如透明區仍保留白色 RGB 時，標準 alpha 混合會
+去背，但 `additive = ONE+ONE` 不讀 source alpha，實際遊玩仍會把整張白色矩形加進
+framebuffer；反過來，沒有 alpha 的黑底光效在 additive 下是安全的，因為黑色加零。
+因此 importer／CI 必須用「VFX 文件的 blendMode × 貼圖真實像素 × authored color」
+計算 compositing-neutral 覆蓋率，並同時驗證引用檔存在且可解碼。禁止用副檔名、
+`hasAlpha` 或壞檔名豁免清單代替。
+
+目前來源抽取器會對大面積「透明但 RGB 明亮」的 map-archive matte 清除透明區 RGB；
+`vfxTextureBackdrop.test.ts` 會掃描所有出貨 `vfx@1`／`ribbon@1` 與真 PNG。任何新增
+素材若在它實際的合成模式下幾乎沒有可消失背景，內容建置必須失敗，不能進 ZIP。
+Editor 可以在資源池顯示中文診斷，但遊戲端不得顯示 checker／debug 貼圖作為退路：
+貼圖缺失或未通過 receipt 時應跳過該 emitter 並一次性記錄 asset id；模型則只隱藏
+已由 audit 證實的 primitive，若角色本體不可用則退回乾淨的程序替身。GLB 的 UV atlas
+不可整張自動去背，否則透明未使用區與角色本體會一起被破壞。
+
 ## 10. 驗證矩陣與完成條件
 
 ### Contract／transport

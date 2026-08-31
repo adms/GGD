@@ -4,6 +4,7 @@
 - vfx@1 docs (PRE2): 228; ribbon@1 docs (RIBB): 54; total docs: 282
 - hero models with ambient bindings: 4 (content/config/ambient-vfx.json)
 - map-archive textures copied to content/assets/textures/particles/wc3/: 8
+- transparent bright backdrops neutralized for additive-safe composition: 2
 - Blizzard stock textures substituted with CC0 sprites: 71
 - scale: per-model `scale_factor` from models_report.json (heroes normalized to 1.7 world units tall; props 1/36); applied to width/speed/gravity/segmentScaling/ribbon heights
 - latitude found stored in DEGREES in this map's v800 files (values 0..180) — used as angleDeg directly, clamped [1,180]
