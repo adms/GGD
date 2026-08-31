@@ -15,10 +15,27 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
 
-/** GameApp source with comments stripped, so prose can't satisfy the assertions. */
-const SRC = readFileSync(fileURLToPath(new URL("./GameApp.ts", import.meta.url)), "utf8")
-  .replace(/\/\*[\s\S]*?\*\//g, "")
-  .replace(/\/\/[^\n]*/g, "");
+/**
+ * GameApp source with comments stripped, so prose can't satisfy the assertions.
+ *
+ * ⚠️ ⭐ **兩個檔一起讀**（2026-08-31）：`dispatchContextualVoice` 那 148 行搬到
+ * `game/contextualVoiceDispatch.ts` 了（`GameApp.ts` 的 <4,000 行棘輪逼的），
+ * ⇒ 只讀 `GameApp.ts` 會讓這幾條**因為程式搬家而紅**，⛔ 而功能一個位元組都沒變。
+ *
+ * ⭐ 而搬過去之後 `this.` 變成 `deps.` ⇒ 斷言裡的 `this\.` 也一起放寬成
+ * `(this|deps)\.` —— ⛔ 這不是放寬判準，是同一個接線的兩種寫法。
+ *
+ * ⚠️ ⭐ 這正是失敗形態⑥（用掃原始碼字串代替行為）的成本：一次無害的搬家讓
+ * 7 條守衛紅了。⛔ 但改成跑真的東西是另一張票的範圍，這裡先讓它指對地方。
+ */
+const strip = (rel: string): string =>
+  readFileSync(fileURLToPath(new URL(rel, import.meta.url)), "utf8")
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/\/\/[^\n]*/g, "");
+const SRC = (strip("./GameApp.ts") + "\n" + strip("./game/contextualVoiceDispatch.ts")).replace(
+  /\bdeps\./g,
+  "this.",
+);
 
 describe("#223 hurt / defeat are no longer gated to the local hero (voice-audience-223)", () => {
   it("the damage branch feeds damageVoiceCandidate for EVERY victim", () => {

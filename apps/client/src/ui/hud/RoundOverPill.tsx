@@ -37,6 +37,7 @@
 import type { HudRect } from "./hudLayout";
 import { hudSurfaceStyle } from "./hudSurfaces";
 import { useHudSurface } from "./useHudSurface";
+import { useHud } from "../../net/RoomStore";
 import { PANEL_BG, PANEL_BORDER, TEXT_MAIN } from "../theme";
 
 /**
@@ -45,8 +46,27 @@ import { PANEL_BG, PANEL_BORDER, TEXT_MAIN } from "../theme";
  * precisely the bug #219 exists to close, and `hudSurfacePaint.test.ts` reads
  * the rendered style back to prove it did not happen.
  */
-export function RoundOverPillView({ rect }: { rect: HudRect | null }): React.JSX.Element | null {
+/**
+ * ⭐ GH#737 —— 回合結束的**排名變化提示**。
+ *
+ * ⚠️ ⭐ 它畫在既有的 `round-over` 面裡，⛔ 不是一個新的 HUD slot ——
+ * `MapCornerLabel` 的檔頭量過：**每一個角都已經有預算了**，而這一行字不值得
+ * 從任何既有功能手上拿走空間。這塊面本來就只寫著「Round over」四個字。
+ *
+ * ⛔ 分數與排名**一個都不在這裡算**：`score` 是伺服器 `rankScore` 的輸出，
+ * 與結算頁逐位元同一條路（第〇·四守則）。
+ */
+export function RoundOverPillView({
+  rect,
+  score,
+}: {
+  rect: HudRect | null;
+  score?: { score: number; rank: number; prevRank: number | null } | null;
+}): React.JSX.Element | null {
   if (!rect) return null;
+  // ⭐ 名次**越小越好**：prevRank 5 → rank 2 是「上升 3」。
+  const delta = score && score.prevRank !== null ? score.prevRank - score.rank : 0;
+  const arrow = delta > 0 ? `▲${delta}` : delta < 0 ? `▼${-delta}` : "";
   return (
     <div
       data-hud-surface="round-over"
@@ -66,7 +86,7 @@ export function RoundOverPillView({ rect }: { rect: HudRect | null }): React.JSX
         pointerEvents: "none",
       }}
     >
-      Round over
+      {score ? `第 ${score.rank} 名 · ${score.score} 分${arrow ? ` ${arrow}` : ""}` : "Round over"}
     </div>
   );
 }
@@ -74,5 +94,7 @@ export function RoundOverPillView({ rect }: { rect: HudRect | null }): React.JSX
 /** The shipped component: the registry's answer for this viewport + scene. */
 export function RoundOverPill(): React.JSX.Element | null {
   const rect = useHudSurface("round-over");
-  return <RoundOverPillView rect={rect} />;
+  // ⭐ 只有回合結算那一則（`final`）才畫名次 —— ⛔ 戰鬥中每秒抖一次沒有意義。
+  const rs = useHud((s) => s.roundScore);
+  return <RoundOverPillView rect={rect} score={rs?.final ? rs : null} />;
 }

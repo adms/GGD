@@ -505,6 +505,17 @@ export interface HudState {
    * 試煉不是這一格要回答的問題。
    */
   marks: MarkView[];
+  /**
+   * ⭐ GH#737 —— 這一場我的分數／排名（伺服器 1 Hz 送，回合結束再送一則 `final`）。
+   *
+   * ⚠️ ⭐ **客戶端刻意不自己算**：`score` 是 `rankScore` 那個式子的輸出，
+   * 與結算頁 `SettlementPlayer.score` **逐位元同一條路**。
+   * ⛔ 在這裡再算一次 = 兩個式子，而它們遲早會漂 —— 而玩家會相信比較大的那個
+   * （第〇·四守則：一個值一個住處）。
+   *
+   * `null` = 還沒收到第一則（比賽剛開始）。
+   */
+  roundScore: RoundScoreView | null;
 }
 
 /**
@@ -701,6 +712,7 @@ const initial: HudState = {
   mobBoss: null,
   mobBossLive: [],
   marks: [],
+  roundScore: null,
 };
 
 let shopEventSeq = 0;
@@ -1186,6 +1198,47 @@ export function localMarkUpdate(
 }
 
 /** 記下一顆已 drain 的標記事件（由 GameApp 的事件 drain 呼叫）。 */
+/** ⭐ GH#737 —— HUD 上的分數列。⛔ 全部由伺服器給，客戶端一個數字都不算。 */
+export interface RoundScoreView {
+  /** `rankScore` 的輸出 —— ⛔ 與結算頁同一個值。 */
+  score: number;
+  /** 其中屬於「活下來」的那一半。 */
+  survivalBonus: number;
+  /** 1..N 全場排名。 */
+  rank: number;
+  /**
+   * 上一次**回合結算**時的排名。⭐ 只有回合結束那一則帶它 ——
+   * ⛔ 戰鬥中每秒抖一次的箭頭沒有意義。`null` = 第一回合或還沒結算過。
+   */
+  prevRank: number | null;
+  /** 這一則是不是回合結算的那一次（⇒ 要不要演排名變化）。 */
+  final: boolean;
+}
+
+/**
+ * ⭐ GH#737 —— 收下伺服器的回合分數。
+ *
+ * 在此之前 `MatchRoom.ts:889` 每 tick 廣播 `roundSettlement`，⛔ **而客戶端零個收端**
+ * ⇒ 玩家在戰鬥中看不到自己的分數與排名（失敗形態②：算出來了但從沒送到畫面）。
+ *
+ * ⚠️ ⭐ 只取**自己那一格**：payload 帶全場每一個座位，⛔ 而 HUD 只畫自己的。
+ */
+export function recordRoundSettlement(ev: EventMessage, localSeatId: number | null): void {
+  if (localSeatId === null) return;
+  const data = ev.data as { final?: boolean; entries?: readonly Record<string, number>[] } | undefined;
+  const mine = data?.entries?.find((e) => e["seatId"] === localSeatId);
+  if (!mine) return;
+  hudStore.setState({
+    roundScore: {
+      score: Number(mine["score"] ?? 0),
+      survivalBonus: Number(mine["survivalBonus"] ?? 0),
+      rank: Number(mine["rank"] ?? 0),
+      prevRank: typeof mine["prevRank"] === "number" ? mine["prevRank"] : null,
+      final: data?.final === true,
+    },
+  });
+}
+
 export function recordMarkEvent(
   ev: EventMessage,
   localEntityId: number | null,

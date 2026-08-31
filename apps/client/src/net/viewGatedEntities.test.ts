@@ -42,6 +42,8 @@ function patchHost(): Record<string, unknown> {
     connStats: { noteSnapshot: () => {}, noteAck: () => {} },
     timeSync: { noteServerTick: () => {} },
     teamBySeat: new Map<number, number>(),
+    // GH#737/#743 —— 這個夾具是**手寫的 `this`**，所以每加一個 GameApp 欄位都要補一格。
+    statusVoice: { tickSeats: () => 0 },
     conn: { accountId: "lane-lag" },
     refreshVisibleZones: () => {},
     visibleZones: { has: () => true },
