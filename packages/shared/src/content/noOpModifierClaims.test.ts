@@ -38,6 +38,13 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join, dirname, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Stat } from "../sim/stats/statTypes";
+// ⭐⭐ GH#473 —— **判準與 runtime import 同一份**（⛔ 不是複製一份）。
+//   在此之前 `walk` / `raisableStats` / `Claim` 只活在這個 .test.ts 裡
+//   ⇒ `tools/review/enable-audit.mjs` 逐字說「runtime 叫不到」
+//   ⇒ ⭐ owner 要的「啟用當下自動跑」對這一條**永遠不會發生**。
+// ⚠️ ⭐ 抽走之後這裡**必須 import**，⛔ 不可以留一份副本:同一個判準兩個住處
+//   一定會漂開,⭐ 而漂開時**兩邊都是綠的**（第〇·四守則）。
+import { walkForNoOpClaims as walk, raisableStats as raisableStatsFrom, type Claim } from "./noOpModifierClaims";
 import { ModOp } from "../sim/stats/modifiers";
 import type { StatusEffect } from "../sim/components";
 import { zEffectDefUnion } from "./schema/effect";
@@ -131,31 +138,6 @@ function eachContentDoc(
  * ⛔ 加新的加成型 Stat 時要記得補進來 —— 判準是「它的預設值是不是 0，而 0 的意思是
  * 『不動』而不是『歸零』」。
  */
-const ADDEND_STATS: readonly Stat[] = [
-  Stat.OutputDamagePct,
-  Stat.OutputHealingPct,
-  Stat.OutputShieldPct,
-];
-
-/** 從**出貨的 config** 推導「哪幾條屬性真的解得開」。⛔ 不抄字面值。 */
-function raisableStats(): Set<string> {
-  const caps = JSON.parse(readFileSync(join(CONTENT, "config/stat-caps.json"), "utf8")) as {
-    caps: Record<string, { base: number; unlocked: number }>;
-  };
-  const out = new Set<string>();
-  for (const [stat, c] of Object.entries(caps.caps)) {
-    if (Number.isFinite(c.unlocked) && Number.isFinite(c.base) && c.unlocked > c.base) out.add(stat);
-  }
-  return out;
-}
-
-interface Claim {
-  doc: string;
-  path: string;
-  stat: string;
-  op: string;
-  why: string;
-}
 
 /** 這份文件裡有沒有一條**抬高移速上限**的 modifier。 */
 function raisesMoveSpeedCap(doc: unknown): boolean {
@@ -183,37 +165,6 @@ function grantsFlight(doc: unknown): boolean {
   return Object.values(o).some(grantsFlight);
 }
 
-function walk(node: unknown, path: string, doc: string, raisable: Set<string>, out: Claim[]): void {
-  if (Array.isArray(node)) {
-    node.forEach((v, i) => walk(v, `${path}[${i}]`, doc, raisable, out));
-    return;
-  }
-  if (node === null || typeof node !== "object") return;
-  const n = node as Record<string, unknown>;
-  const stat = typeof n.stat === "string" ? n.stat : undefined;
-  const op = typeof n.op === "string" ? n.op : undefined;
-  if (stat !== undefined && op !== undefined) {
-    if ((op === ModOp.CapRaise || op === ModOp.CapRaisePct) && !raisable.has(stat)) {
-      out.push({
-        doc,
-        path,
-        stat,
-        op,
-        why: `「${stat}」在 config.stat-caps@1 裡 unlocked === base（沒有解鎖空間）→ effectiveCap 會把它夾回去，這條 modifier 逐位元等於不存在`,
-      });
-    }
-    if (op === ModOp.PercentMult && (ADDEND_STATS as readonly string[]).includes(stat)) {
-      out.push({
-        doc,
-        path,
-        stat,
-        op,
-        why: `「${stat}」是**加成型**（base 0），而管線是 (base+Σflat)×(1+ΣpctAdd)×Π(1+pctMult) → 0×任何東西=0。只有 flat 動得了它`,
-      });
-    }
-  }
-  for (const [k, v] of Object.entries(n)) walk(v, `${path}.${k}`, doc, raisable, out);
-}
 
 /**
  * ⭐ 機制欄位的名字**從 `sim/components.ts` 的 `StatusEffect` 推導**（`keyof`）。
@@ -322,7 +273,7 @@ function scanFakeStatuses(
 }
 
 function scan(): Claim[] {
-  const raisable = raisableStats();
+  const raisable = raisableStatsFrom(CONTENT);
   const out: Claim[] = [];
   // ⭐ 只掃**上架面**：這一條問的是「卡片上的字會不會騙到玩家」，
   //    而玩家拿不到的卡上面寫什麼都不會發生在任何一場比賽裡（GH#472）。
@@ -523,7 +474,7 @@ describe("⛔ 卡片上不可以有「說了但不會發生」的字（owner 202
   });
 
   it("⭐ 而且它讀的是 config，不是寫死的名單", () => {
-    const raisable = raisableStats();
+    const raisable = raisableStatsFrom(CONTENT);
     expect(raisable.size, "config.stat-caps@1 一條解鎖空間都沒有 —— 那整族機制是死的").toBeGreaterThan(0);
     // 有空間的那一條配 capRaise **不可以**被判成無效。
     const someRaisable = [...raisable][0]!;

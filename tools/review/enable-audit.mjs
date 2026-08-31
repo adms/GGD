@@ -44,10 +44,12 @@ export const AUDITS = [
   {
     id: "noOpModifierClaims",
     zh: "空頭宣稱：這條 modifier 在出貨設定下改得動任何數字嗎",
-    module: `${SHARED}/noOpModifierClaims.test.ts`,
-    symbol: null, // ⚠️ 判準全部是該檔的**模組私有函式**（walk / raisableStats …）
+    // ⭐ 2026-08-31 抽出來了（GH#473）：判準原本只活在 `.test.ts` 裡 ⇒ runtime 叫不到。
+    //   ⚠️ ⭐ 抽走之後那支測試**import 這一份**（⛔ 不是留一份副本）——
+    //     同一個判準兩個住處一定會漂開,⭐ 而漂開時**兩邊都是綠的**（第〇·四守則）。
+    module: `${SHARED}/noOpModifierClaims.ts`,
+    symbol: "noOpClaimsOf",
     collections: ["items", "abilities", "augments", "champions"],
-    extractTo: `${SHARED}/noOpModifierClaims.ts`,
   },
   {
     id: "castability",
