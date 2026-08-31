@@ -182,6 +182,32 @@ BODY=$(printf '## 🎮 %s 更新\n\n%s' "$NOW" "$LINES")
 JSON=$(python3 -c 'import json,sys; print(json.dumps({"content": sys.stdin.read()[:1900]}))' <<< "$BODY")
 CODE=$(curl -s -o /tmp/dc.out -w '%{http_code}' -H 'Content-Type: application/json' -d "$JSON" "$HOOK")
 case "$CODE" in
-  20*) echo "✓ 已發到 Discord（HTTP $CODE）";;
+  20*)
+    echo "✓ 已發到 Discord（HTTP $CODE）"
+    # ⭐⭐ 發成功就**自己記帳** —— ⛔ 這一行在 2026-09-01 之前不存在。
+    #
+    # ⚠️ 而缺它的形狀正是失敗形態⑪（兩條對的守衛，組合是空的）：
+    #   · 這支腳本**真的發得出去**（HTTP 204）           ✅
+    #   · `everyTagAnnounced.test.ts` **真的讀得到帳本**   ✅
+    #   ⇒ ⛔ 而**沒有人寫那個帳本** ⇒ 閘只能靠人手打滿足
+    #     ＝ 一個「要記得」的判準，⛔ 不是閘（元規則：判準 0/4 全破）。
+    #
+    # ⭐ 記的是 `SINCE`（不含）到 `NOW`（含）之間**每一個** tag ——
+    # ⛔ 不是只記 `NOW`：一次補發常常涵蓋好幾個版號（這一次就是 v0.34.11＋v0.34.12），
+    #   只記最新那一個會讓中間的版號永遠留在帳本外，而閘會**一直紅**。
+    # ⭐ 路徑可注入,⛔ 只為了讓守衛跑得起來(它要在**真的 repo** 上跑真的這一支,
+    #   而 ⛔ 不可以動到出貨的帳本)。出貨時它就是預設那一份。
+    LEDGER="${GGD_ANNOUNCE_LEDGER:-docs/_release/_announced.tsv}"
+    if [ -f "$LEDGER" ]; then
+      TODAY=$(date +%Y-%m-%d)
+      FIRSTLINE=$(printf '%s' "$LINES" | sed -n '1s/^[[:space:]·]*//p' | cut -c1-60)
+      for T in $(git tag --sort=v:refname | awk -v a="$SINCE" -v b="$NOW" '
+            $0==a{seen=1; next} seen{print} $0==b{exit}'); do
+        grep -q "^${T}	" "$LEDGER" || printf '%s\t%s\t%s\n' "$T" "$TODAY" "${FIRSTLINE:-玩家公告}" >> "$LEDGER"
+      done
+      grep -q "^${NOW}	" "$LEDGER" || printf '%s\t%s\t%s\n' "$NOW" "$TODAY" "${FIRSTLINE:-玩家公告}" >> "$LEDGER"
+      echo "  ✓ 已記進 $LEDGER"
+    fi
+    ;;
   *)   echo "⛔ 發布失敗 HTTP $CODE：$(head -c 200 /tmp/dc.out)" >&2; exit 1;;
 esac
