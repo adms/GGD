@@ -227,6 +227,18 @@ export function VfxForgePage() {
         {ACCEPTANCE.map(([id, label]) => <button type="button" className={abilityId === id ? "active" : ""} key={id} onClick={() => choose(id)}>{label}</button>)}
       </section>
 
+      {previewContent.data ? (
+        <section className="vfx-effective-limits" aria-label="實際生效的 VFX 上限">
+          <b>實際生效上限</b>
+          <span>單系統 {previewContent.data.limits.maxParticlesPerSystem} 顆</span>
+          <span>每秒 {previewContent.data.limits.maxRatePerSystem} 顆</span>
+          <span>Ribbon {previewContent.data.limits.maxActiveRibbons} 條／停止後 ≤ {previewContent.data.limits.ribbonFadeBudgetSec}s</span>
+          <span>場景 VFX ≤ {previewContent.data.limits.hardMaxLifeSec}s</span>
+          <span>一次性發射器 {Number.isFinite(previewContent.data.limits.maxOneShotEmitters) ? previewContent.data.limits.maxOneShotEmitters : "無上限"}</span>
+          <span>回合清理 {previewContent.data.limits.roundPurgeMode}</span>
+        </section>
+      ) : null}
+
       {abilityId === "godie-e002.ex" ? (
         <section className="vfx-blocker" role="alert">
           <b>⛔ 主程式前置：缺少 `defenseSuccess` 觸發器</b>

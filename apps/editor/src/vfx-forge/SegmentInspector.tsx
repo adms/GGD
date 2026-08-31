@@ -33,7 +33,7 @@ export function SegmentInspector({
           <button type="button" disabled={count <= 1} onClick={onDelete}>刪除</button>
         </div>
       </header>
-      <p className="vfx-help">slider 的界線直接來自 `vfx-script@1` schema；旁邊數字可精確輸入。</p>
+      <p className="vfx-help">slider 的可填界線來自 `vfx-script@1`；上方另列主程式目前真正會套用的 Runtime 上限。</p>
       <FormRenderer
         node={ui}
         value={segment}

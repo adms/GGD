@@ -4,11 +4,13 @@ import {
   registerAll,
   type LoadResult,
 } from "@ggd/shared/content";
+import { applyVfxRuntimeLimits, type EffectiveVfxLimits } from "../vfx-forge/runtimeLimits";
 
 export interface PreviewContentReady {
   contentVersion: string;
   warnings: number;
   quarantined: number;
+  limits: EffectiveVfxLimits;
 }
 
 let active: Promise<PreviewContentReady> | null = null;
@@ -38,6 +40,7 @@ export function ensurePreviewContentReady(): Promise<PreviewContentReady> {
         contentVersion: result.manifest.contentVersion,
         warnings: result.warnings.length,
         quarantined: result.quarantined.length,
+        limits: applyVfxRuntimeLimits(),
       };
     })
     .catch((error: unknown) => {
