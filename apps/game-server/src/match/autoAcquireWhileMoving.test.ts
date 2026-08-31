@@ -580,11 +580,44 @@ describe("#274 auto-acquire survives a live move order (real match, real human s
 
   // GH#216 修好 → 翻回 `it`。一次點到場外，身體被夾在邊界上永遠到不了，
   // 而玩家已經放手（之後沒有任何新指令）——接敵接手，整場從 0 命中變成 20。
+  //
+  // ⭐⭐ GH#878 —— **這一條套上 GH#334 的同一個結論**（就在上面 55 行）：
+  //   「承重的那一條是 `autoHeldUnderMoveTicks`，⛔ 不是 `hits`。」
+  //
+  // ⚠️ ⭐ 量到的（GH#722 lane，2026-08-30，逐字 A/B **只翻 `Tier0Brain.ts` 一行**）：
+  //
+  //   | | hits | autoHeldUnderMove | hijacked | alive |
+  //   |---|---:|---:|---|---:|
+  //   | 修好 bot 友方技能**之前** | **9** | 1333 | 1333/1758 | 1758 |
+  //   | 修好之後 | **0** | **1410（更好）** | 1410/1835 | 1835 |
+  //
+  // ⇒ ⭐ **這條測試名字裡的機制全部完好** —— 壞掉的只有 `hits`，
+  //   而它要玩家真的**走到打得到的距離**，取決於另外 11 個 bot 這一場站在哪裡。
+  // ⛔ 也就是說：這條斷言在 GH#722 修好一個**真的缺陷**之後會紅，
+  //   ⭐ 而那不是回歸 —— 是**這條斷言原本就靠那個缺陷才綠**（CLAUDE.md 失敗形態⑩）。
+  //
+  // ⚠️ ⛔ 而「把 `hits > 0` 拿掉」不是答案 —— 那會讓這條測試對「接敵整個關掉」失明。
+  // ⭐ 正解與 GH#334 一樣：**先斷言機制本身，再把後果降級成一個會出聲的觀察**。
   it("ONE right-click OUTSIDE the zone — one misclick must not disarm the match", () => {
     const r = runMatch("clickOutside");
     console.log(report(r));
-    expect(r.hits).toBeGreaterThan(0);
+    // ⭐ 承重：一次誤點之後，**自動攻擊在移動指令底下沒有被關掉**。
+    //   ⛔ 這一條與對手站哪裡無關 —— 它量的正是這條測試名字說的那件事。
+    expect(
+      r.autoHeldUnderMoveTicks,
+      "⛔ 一次點到場外把整場的自動攻擊關掉了（GH#216 的回歸）",
+    ).toBeGreaterThan(0);
     expect(r.heldTicks).toBeGreaterThan(0);
+    // ⭐ 後果：**有沒有真的打到**取決於這一場 11 個 bot 站在哪裡 ⇒ ⛔ 不當作閘，
+    //   ⭐ 但它變 0 的時候要**出聲**（⛔ 一個沉默的降級等於把它刪掉）。
+    if (r.hits === 0) {
+      console.warn(
+        `⚠️ GH#878 —— clickOutside 這一場 hits=0（windups=${r.windups}）。` +
+          `⭐ 機制是好的（autoHeldUnderMove=${r.autoHeldUnderMoveTicks}），` +
+          `⛔ 但沒有走到打得到的距離。連續幾版都是 0 ⇒ 去看 bot 的站位，` +
+          `⛔ 不要放寬上面那兩條。`,
+      );
+    }
   }, 300_000);
 
   // GH#216 修好 → 翻回 `it`。
