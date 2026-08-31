@@ -42,6 +42,30 @@ beforeAll(async () => {
 });
 
 /** 放一次天生技，步進到吟唱與淡出都結束為止。 */
+/**
+ * ⭐ GH#448 之後 30-00 是**指定敵方英雄**的技能 ⇒ 場上要有一個敵人可以指。
+ * ⛔ 其餘（吟唱、步進 150 tick、不釘 tick 數）與 {@link castInnate} 逐字相同。
+ */
+function castInnateAtEnemy(championId: string): { world: SimWorld; caster: EntityId } {
+  const world = new SimWorld(SKELETON_ARENA, 4242);
+  const mk = (seat: number, dx: number): EntityId =>
+    spawnChampion(world, {
+      championId: championId as ChampionId,
+      seatId: asSeatId(seat),
+      teamId: asTeamId(seat),
+      pos: { x: Z0.center.x + dx, z: Z0.center.z },
+      zone: 0,
+    });
+  const caster = mk(0, 0);
+  const foe = mk(1, 4);
+  world.rebuildGrid();
+  world.step(new Map());
+  world.health.get(caster)!.mana = world.health.get(caster)!.maxMana;
+  expect(castAbility(world, caster, INNATE_SLOT, { type: "entity", entityId: foe })).toBe("ok");
+  for (let i = 0; i < 150; i++) world.step(new Map());
+  return { world, caster };
+}
+
 function castInnate(championId: string, target: CastTarget): { world: SimWorld; caster: EntityId } {
   const world = new SimWorld(SKELETON_ARENA, 4242);
   const caster = spawnChampion(world, {
@@ -65,11 +89,13 @@ describe("GH#373 — 限時 applyBuff 授予得了隱形／真視", () => {
     expect(world.stealth.has(caster), "應該有一份隱形狀態掛在施法者身上").toBe(true);
   });
 
-  it("30-00 攝影機：放下去之後身上真的有一份真視", () => {
-    const { world, caster } = castInnate("godie-orkn", {
-      type: "point",
-      point: { x: Z0.center.x + 3, z: Z0.center.z },
-    });
+  it("30-00 攝影機：架在敵人身上之後，自己身上真的有一份真視", () => {
+    // ⚠️ ⭐ **2026-09-01 改成指定施放**（GH#448，owner 2026-08-19 裁決把這一招
+    // 改成「給予指定敵方英雄標記」）⇒ `castType` 從 `ground` 變成 `targeted`，
+    // 而用 `type: "point"` 施放現在回 `bad-target`。
+    // ⭐ 照第〇·六守則：預設變了就**測新的預設**，⛔ 不是把功能改回去遷就斷言。
+    // ⭐ 被守的性質一個字都沒改：**限時 `applyBuff` 授予得了真視**。
+    const { world, caster } = castInnateAtEnemy("godie-orkn");
     expect((world.trueSight.get(caster)?.radius ?? 0) > 0, "應該有一份真視半徑").toBe(true);
   });
 });

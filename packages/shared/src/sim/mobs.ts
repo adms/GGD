@@ -345,6 +345,14 @@ export const MONSTER_TEAM: TeamId = asTeamId(255);
 
 /** Mob-wave rules in TICKS / squared-distances (converted from the config doc). */
 export interface MobRules {
+  /**
+   * ⭐ GH#747 AC① —— 這一批小怪讀**誰的**屬性表（`mobWaves.mob.championId`，
+   * 出貨值 `godie-zombiex`）。`mobRulesFromConfig` 一定會寫它。
+   *
+   * ⚠️ **optional**：手搭的 fixture（跳過 `mobRulesFromConfig`）缺席 ⇒ 不建
+   * `StatsComp` ⇒ **這張票之前的行為** —— 缺席永遠退回今天，⛔ 不是報錯。
+   */
+  championId?: string;
   /** 1-based round from which waves spawn (>= this round) */
   fromRound: number;
   /** mobTicks at which wave k=1 fires (round(firstWaveSec/dt)) */
@@ -1052,6 +1060,11 @@ export function mobLedgerRule(
  * is exactly how a boss ends up hitting for a zombie's 1.2 damage.
  */
 export interface MobProfile {
+  /**
+   * ⭐ GH#747 AC① —— 這一批小怪讀**誰的**屬性表。
+   * ⛔ absent ＝ 手搭的 fixture ⇒ 不建 `StatsComp` ⇒ 這張票之前的行為。
+   */
+  championId?: string;
   maxHp: number;
   attackDamage: number;
   moveSpeed: number;
@@ -1082,6 +1095,7 @@ export function mobProfile(rules: MobRules, kind: MobKind): MobProfile {
       attackCdTicks: b.attackCdTicks,
       radius: b.radius,
       modelKey: b.modelKey,
+      championId: b.championId,
       // ×THE NORMAL MOB, for the same reason the special's is — 10 means
       // 「王是一般殭屍的 10 倍高」, which is what the owner said, and it stays
       // true if the normal mob is ever resized.
@@ -1101,6 +1115,7 @@ export function mobProfile(rules: MobRules, kind: MobKind): MobProfile {
     attackCdTicks: rules.attackCdTicks,
     radius: rules.radius,
     modelKey: rules.modelKey,
+    championId: rules.championId,
     sizeMult: rules.sizeMult,
     rewardMult: 1,
   };
@@ -2053,6 +2068,8 @@ export function mobRulesFromConfig(
     // GH#647 —— 普通殭屍腳下影子。ABSENT ⇒ 出貨值 false(不畫),不是「舊行為」:
     // 一份沒有這一格的舊 config 拿到的是 owner 現在要的行為。
     normalMobShadow: cfg.normalMobShadow ?? DEFAULT_NORMAL_MOB_SHADOW,
+    // ⭐ GH#747 AC① —— 小怪的屬性表（`recomputeStats` 要它才折算得出 buff／debuff）。
+    championId,
     level,
     maxHp,
     hpRegenPerSec,
@@ -3076,5 +3093,22 @@ function spawnMobBody(
    * `spawnMobBody` 裡，不是放在共用的那支，避免同一顆身體被寫兩次。
    */
   world.status.set(id, { effects: [] });
+  /**
+   * ── ⭐⭐ 屬性欄（GH#747 AC①）—— owner 2026-08-04「建 StatsComp 吧」的**第二段** ──
+   *
+   * ⚠️ 上面那一大段註解逐字寫著這個缺口：「【破甲】【易傷】【凋零】的**屬性**那一半
+   * 對殭屍仍然無效，那是明示的取捨」。⇒ ⭐ **這一行把它關掉。**
+   *
+   * ── ⛔ 2026-09-01 第一次嘗試量到的代價（7 條紅），以及窄路長什麼樣 ──────────
+   * 讓小怪走**完整**的 `recomputeStats` ⇒ 它會從英雄卡算出 `maxHealth` 並寫進
+   * `world.health` ⇒ ⛔ **覆蓋掉 `mobWaves` 逐回合算好的血量曲線**。
+   * ⇒ `statPipeline` 因此長出一條窄路（`mb && !champ && !sm`）：
+   * **折 modifier，⛔ 不取血量 base**。【破甲】【易傷】【凋零】要的是 armor／
+   * 受傷倍率／衰減 —— ⛔ 沒有一個是 `maxHealth`。
+   *
+   * ⚠️ `championId` 缺席（手搭的 fixture 跳過 `mobRulesFromConfig`）⇒ **不建**
+   * ⇒ 這張票之前的行為。⭐ 缺席永遠退回今天，⛔ 不是報錯。
+   * ⭐ `dirty: false` 與王那一格同一個理由：沒有東西掛上來之前不必每 tick 白跑。
+   */
   return id;
 }
