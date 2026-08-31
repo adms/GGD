@@ -1,6 +1,7 @@
 import type { VfxScriptDoc, VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
 import { zVfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
 import type { EventMessage } from "@ggd/shared/protocol/messages";
+import { eventOriginBelongsToAbility } from "../preview/eventOwnership";
 
 export type AssetDrop = { collection: "models" | "vfx"; id: string };
 export type AssetPlacement = { forwardU: number; sideU: number };
@@ -11,7 +12,10 @@ export interface ForgeAbility {
   slot?: string;
   castTimeSec?: number;
   effects?: unknown[];
+  passive?: unknown;
 }
+
+export type ForgeReactionTrigger = "reflectSuccess";
 
 export interface ScheduledSimEvent {
   atMs: number;
@@ -34,7 +38,8 @@ export function scheduleSimEvents(
   abilityId: string,
 ): ScheduledSimEvent[] {
   const cast = events.find((event) => event.type === "abilityCast" && event.data["abilityId"] === abilityId);
-  const baseTick = cast?.tick ?? events.reduce((min, event) => Math.min(min, event.tick), Number.POSITIVE_INFINITY);
+  const reaction = events.find((event) => event.type === "reflectSuccess");
+  const baseTick = cast?.tick ?? reaction?.tick ?? events.reduce((min, event) => Math.min(min, event.tick), Number.POSITIVE_INFINITY);
   if (!Number.isFinite(baseTick)) return [];
   return events.map((event) => ({
     atMs: Math.max(0, event.tick - baseTick) * SIM_TICK_MS,
@@ -50,25 +55,29 @@ export function triggerCuesFromSim(
   const cast = schedule.find(
     ({ event }) => event.type === "abilityCast" && event.data.abilityId === ability.id,
   );
-  if (!cast) return [];
-  const caster = cast.event.data.caster;
-  const began = schedule.some(
-    ({ event }) => event.type === "castBegin" && event.data.abilityId === ability.id && event.data.caster === caster,
-  );
-  const end = schedule.find(
-    ({ event }) => event.type === "castEnd" && event.data.abilityId === ability.id && event.data.caster === caster,
-  );
-  const cues: TriggerCue[] = [{ on: "castStart", atMs: cast.atMs, label: "施法提交" }];
-  if (!began || end) {
-    cues.push({
-      on: "castEffect",
-      atMs: end?.atMs ?? cast.atMs,
-      label: end ? "吟唱完成" : "立即結算",
-    });
+  const cues: TriggerCue[] = [];
+  if (cast) {
+    const caster = cast.event.data.caster;
+    const began = schedule.some(
+      ({ event }) => event.type === "castBegin" && event.data.abilityId === ability.id && event.data.caster === caster,
+    );
+    const end = schedule.find(
+      ({ event }) => event.type === "castEnd" && event.data.abilityId === ability.id && event.data.caster === caster,
+    );
+    cues.push({ on: "castStart", atMs: cast.atMs, label: "施法提交" });
+    if (!began || end) {
+      cues.push({
+        on: "castEffect",
+        atMs: end?.atMs ?? cast.atMs,
+        label: end ? "吟唱完成" : "立即結算",
+      });
+    }
   }
   for (const item of schedule) {
     const data = item.event.data;
-    if (item.event.type === "comboStrike" && data.origin === `ability:${ability.id}`) {
+    if (item.event.type === "reflectSuccess" && eventOriginBelongsToAbility(data.origin, ability.id)) {
+      cues.push({ on: "reflectSuccess", atMs: item.atMs, label: "反彈成功" });
+    } else if (item.event.type === "comboStrike" && eventOriginBelongsToAbility(data.origin, ability.id)) {
       const strikeIndex = Number(data.index ?? 0);
       cues.push({ on: "strike", atMs: item.atMs, strikeIndex, label: `第 ${strikeIndex} 段` });
     } else if (
@@ -79,6 +88,18 @@ export function triggerCuesFromSim(
     }
   }
   return cues.sort((a, b) => a.atMs - b.atMs || (a.strikeIndex ?? 0) - (b.strikeIndex ?? 0));
+}
+
+/** Map shipped hook vocabulary to the VFX-script trigger without skill IDs. */
+export function reactionTriggerOf(ability: ForgeAbility): ForgeReactionTrigger | null {
+  const visit = (value: unknown): boolean => {
+    if (Array.isArray(value)) return value.some(visit);
+    if (value === null || typeof value !== "object") return false;
+    const record = value as Record<string, unknown>;
+    if (record["on"] === "onReflectSuccess") return true;
+    return Object.values(record).some(visit);
+  };
+  return visit(ability.passive) || visit(ability.effects) ? "reflectSuccess" : null;
 }
 
 export function projectileIdsOf(ability: ForgeAbility): ReadonlySet<string> {

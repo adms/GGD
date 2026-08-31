@@ -43,12 +43,17 @@ import {
   type EffectDef,
   type Vec2,
 } from "@ggd/shared/sim";
+import { learnEx } from "@ggd/shared/sim/abilities/abilitySystem";
 import { Abilities } from "@ggd/shared/sim/content/registry";
 import { rankScalar } from "@ggd/shared/sim/perRank";
 import { attachItemSource } from "@ggd/shared/sim/economy/itemSource";
 import { liveAttribute } from "@ggd/shared/sim/stats/attrSources";
 import type { AttrLookup } from "@ggd/shared/sim";
-import { asSeatId, asTeamId, type EntityId } from "@ggd/shared/ids";
+import { asSeatId, asTeamId, type AbilityId, type EntityId } from "@ggd/shared/ids";
+import {
+  currentPlayerCanResolveEventOrigin,
+  eventOriginBelongsToAbility,
+} from "./eventOwnership";
 
 export interface ChampionPreview {
   level: number;
@@ -122,6 +127,23 @@ export interface CastPreviewTrace {
 }
 
 /**
+ * A real reactive-event audition.  Unlike `CastPreviewTrace`, `accepted` means
+ * the requested reaction produced an event owned by `abilityId`; no cast
+ * command is invented for passive abilities.
+ */
+export interface ReactionPreviewTrace {
+  accepted: boolean;
+  reason?: string;
+  /** False means the editor saw the event but current main would discard it. */
+  runtimeCompatible: boolean;
+  runtimeIssue?: string;
+  manaBefore: number;
+  manaAfter: number;
+  cooldownTicks: number;
+  events: readonly { type: string; tick: number; data: Record<string, unknown> }[];
+}
+
+/**
  * 試放預設跑滿一秒。⚠️ 這個數字是**決策點**（第一守則）所以它是一個具名常數 +
  * 一格 `opts.ticks`，⛔ 不是散在函式裡的字面值：投射物飛得到、`dot` 至少跳一拍，
  * 而作者要看一個八秒的持續傷害走完時，改的是呼叫端的那一格。
@@ -143,6 +165,17 @@ export interface PreviewController {
     slot: CastableSlot,
     opts?: CastPreviewOptions,
   ): CastPreviewTrace;
+  /**
+   * Produce a real `reflectSuccess` by casting the champion's shipped reflect
+   * enabler, receiving a magic hit, then letting SimWorld dispatch the passive
+   * hook.  This is the preview path for abilities such as 20-002; it never
+   * pretends that a passive EX is a pressable button.
+   */
+  triggerReflectSuccess(
+    champion: ChampionDef,
+    abilityId: AbilityId,
+    opts?: Pick<CastPreviewOptions, "level" | "rank" | "ticks">,
+  ): ReactionPreviewTrace;
   previewItem(item: ItemDef, on: ChampionDef, opts?: { level?: number }): StatDelta[];
   previewAugment(aug: AugmentDef, on: ChampionDef, opts?: { level?: number }): StatDelta[];
   /** stub: records the request; Babylon impl plays the ParticleSystem */
@@ -240,6 +273,32 @@ function castTargetFor(
       // ⛔ 而那句話正是我們要讓作者看到的，不是一個被我們吞掉的例外。
       return dummyId === null ? { type: "self" } : { type: "entity", entityId: dummyId };
   }
+}
+
+/** Find a castable shipped ability that can actually create reflected damage. */
+function reflectEnablerSlot(champion: ChampionDef): CoreAbilitySlot | null {
+  const containsIncomingReflect = (value: unknown): boolean => {
+    if (Array.isArray(value)) return value.some(containsIncomingReflect);
+    if (value === null || typeof value !== "object") return false;
+    const record = value as Record<string, unknown>;
+    if (record["kind"] === "damage" && record["incomingPct"] !== undefined) return true;
+    return Object.values(record).some(containsIncomingReflect);
+  };
+  for (const slot of ["Q", "W", "E", "R"] as const) {
+    if (containsIncomingReflect(champion.abilities[slot].effects)) return slot;
+  }
+  return null;
+}
+
+function abilityHasReflectSuccessHook(ability: AbilityDef | undefined): boolean {
+  const visit = (value: unknown): boolean => {
+    if (Array.isArray(value)) return value.some(visit);
+    if (value === null || typeof value !== "object") return false;
+    const record = value as Record<string, unknown>;
+    if (record["on"] === "onReflectSuccess") return true;
+    return Object.values(record).some(visit);
+  };
+  return ability !== undefined && visit(ability);
 }
 
 function effectLines(
@@ -1147,6 +1206,130 @@ export function createSimPreviewController(): PreviewController {
         //    前者是「CommandSystem 的每一道閘都放行了」，後者只是我有打字。
         accepted: events.some((e) => e.type === "abilityCast"),
         ...(rejected ? { reason: String(rejected.data["reason"] ?? "unknown") } : {}),
+        manaBefore,
+        manaAfter: hp.mana,
+        cooldownTicks,
+        events,
+      };
+    },
+
+    triggerReflectSuccess(champion, abilityId, opts) {
+      const level = opts?.level ?? 18;
+      const sb = sandbox(champion, level, { dummy: true });
+      world = sb.world;
+      const hp = sb.world.health.get(sb.id)!;
+      const ab = sb.world.abilities.get(sb.id)!;
+      const reacting = Abilities.tryGet(abilityId);
+      const events: { type: string; tick: number; data: Record<string, unknown> }[] = [];
+      const drain = (): void => {
+        for (const event of sb.world.events) {
+          events.push({ type: event.type, tick: event.tick, data: event.data });
+        }
+      };
+      const fail = (reason: string): ReactionPreviewTrace => ({
+        accepted: false,
+        reason,
+        runtimeCompatible: false,
+        manaBefore: hp.mana,
+        manaAfter: hp.mana,
+        cooldownTicks: 0,
+        events,
+      });
+
+      if (!abilityHasReflectSuccessHook(reacting)) return fail("ability-has-no-reflect-success-hook");
+      if (sb.dummyId === null) return fail("missing-preview-attacker");
+
+      // Passive EX abilities become active through the real unlock path.  A
+      // non-EX reactive ability may already be attached by spawnChampion.
+      const exSlot = ab.exSlot;
+      if (exSlot?.abilityId === abilityId && exSlot.rank === 0 && !learnEx(sb.world, sb.id)) {
+        return fail("ex-unlock-failed");
+      }
+
+      const setupSlot = reflectEnablerSlot(champion);
+      if (setupSlot === null) return fail("no-reflect-enabler");
+      const setupDef = champion.abilities[setupSlot];
+      const setupInst = ab.slots[setupSlot];
+      const wantRank = Math.max(1, opts?.rank ?? 1);
+      while (setupInst.rank < wantRank) {
+        ab.unspentPoints = Math.max(ab.unspentPoints, 1);
+        if (!rankUpAbility(sb.world, sb.id, setupSlot)) break;
+      }
+
+      const selfPos = sb.world.transform.get(sb.id)!;
+      const attackerPos = sb.world.transform.get(sb.dummyId)!;
+      const target = castTargetFor(
+        setupDef,
+        { x: selfPos.pos.x, z: selfPos.pos.z },
+        { x: attackerPos.pos.x, z: attackerPos.pos.z },
+        sb.dummyId,
+      );
+      const manaBefore = hp.mana;
+      const seat = asSeatId(0);
+      const intents = new Map<ReturnType<typeof asSeatId>, IntentFrame>([
+        [seat, { commands: [{ kind: "castAbility", slot: setupSlot, target }] }],
+      ]);
+      sb.world.step(intents);
+      drain();
+      const cooldownTicks = setupInst.cooldownRemainingTicks;
+      const empty = new Map<ReturnType<typeof asSeatId>, IntentFrame>();
+
+      // Let the real cast-time system finish and install the reflect buff.
+      const setupTicks = Math.max(1, Math.ceil((setupDef.castTimeSec ?? 0) * 30) + 2);
+      for (let i = 0; i < setupTicks; i++) {
+        sb.world.step(empty);
+        drain();
+      }
+      const setupAccepted = events.some(
+        (event) => event.type === "abilityCast" && event.data["abilityId"] === setupDef.id,
+      );
+      if (!setupAccepted) {
+        const rejected = events.find((event) => event.type === "castRejected");
+        return {
+          accepted: false,
+          reason: String(rejected?.data["reason"] ?? "reflect-setup-rejected"),
+          runtimeCompatible: false,
+          manaBefore,
+          manaAfter: hp.mana,
+          cooldownTicks,
+          events,
+        };
+      }
+
+      // The only artificial input is the opponent's hit.  Reflection, passive
+      // dispatch, delayed strikes and their timing all remain real SimWorld
+      // output; the editor never fabricates any VFX cue.
+      sb.world.damageQueue.push({
+        source: sb.dummyId,
+        target: sb.id,
+        amount: 60,
+        type: "magic",
+        crit: false,
+        origin: "ability:vfx-forge.reflect-probe",
+      });
+      const ticks = Math.max(1, opts?.ticks ?? 150);
+      for (let i = 0; i < ticks; i++) {
+        sb.world.step(empty);
+        drain();
+      }
+
+      const accepted = events.some((event) =>
+        (event.type === "reflectSuccess" || event.type === "comboStrike") &&
+        eventOriginBelongsToAbility(event.data["origin"], abilityId),
+      );
+      const ownedEvents = events.filter((event) =>
+        (event.type === "reflectSuccess" || event.type === "comboStrike") &&
+        eventOriginBelongsToAbility(event.data["origin"], abilityId),
+      );
+      const runtimeCompatible =
+        ownedEvents.length > 0 && ownedEvents.every((event) => currentPlayerCanResolveEventOrigin(event.data["origin"]));
+      return {
+        accepted,
+        ...(accepted ? {} : { reason: "reflect-success-hook-produced-no-owned-event" }),
+        runtimeCompatible,
+        ...(runtimeCompatible ? {} : {
+          runtimeIssue: "GH#885：真事件使用 hook provenance，但目前 VfxScriptPlayer 只接受 ability: 前綴",
+        }),
         manaBefore,
         manaAfter: hp.mana,
         cooldownTicks,

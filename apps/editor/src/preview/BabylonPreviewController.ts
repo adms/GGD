@@ -61,6 +61,7 @@ import {
   type CastPreviewOptions,
   type CastPreviewTrace,
   type PreviewController,
+  type ReactionPreviewTrace,
 } from "./PreviewController";
 
 /** 舞台的可調旋鈕。⚠️ 每一格都是決策點，所以它們有名字，⛔ 不散在函式裡。 */
@@ -194,6 +195,15 @@ export function createBabylonPreviewController(
     );
   };
 
+  const renderTraceVfx = (trace: Pick<CastPreviewTrace, "accepted" | "events">): void => {
+    if (!scene || !trace.accepted) return;
+    const at = new Vector3(0, 1, 0);
+    for (const event of trace.events) {
+      const id = event.data["vfxId"] ?? event.data["vfxKey"];
+      if (typeof id === "string" && id !== "") playVfxById(id, at);
+    }
+  };
+
   return {
     get scene() {
       return scene;
@@ -264,12 +274,13 @@ export function createBabylonPreviewController(
      */
     castAbility(champion, slot, o?: CastPreviewOptions): CastPreviewTrace {
       const trace = data.castAbility(champion, slot, o);
-      if (!scene || !trace.accepted) return trace;
-      const at = new Vector3(0, 1, 0);
-      for (const e of trace.events) {
-        const id = e.data["vfxId"] ?? e.data["vfxKey"];
-        if (typeof id === "string" && id !== "") playVfxById(id, at);
-      }
+      renderTraceVfx(trace);
+      return trace;
+    },
+
+    triggerReflectSuccess(champion, abilityId, o): ReactionPreviewTrace {
+      const trace = data.triggerReflectSuccess(champion, abilityId, o);
+      renderTraceVfx(trace);
       return trace;
     },
 

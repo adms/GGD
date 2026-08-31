@@ -15,7 +15,7 @@ import { FsContentSource } from "@ggd/shared/content/node";
 import { createSimPreviewController } from "./PreviewController";
 import { createBabylonPreviewController } from "./BabylonPreviewController";
 import { scheduleSimEvents, triggerCuesFromSim } from "../vfx-forge/model";
-import { Champions } from "@ggd/shared/sim";
+import { Abilities, Champions } from "@ggd/shared/sim";
 
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
 
@@ -103,6 +103,23 @@ describe("GH#174 鑄技工坊的試放走玩家那條路", () => {
     expect(trace.accepted, JSON.stringify(trace.events.slice(0, 20), null, 2)).toBe(true);
     expect(cues.filter((cue) => cue.on === "castStart")).toHaveLength(1);
     expect(cues.filter((cue) => cue.on === "castEffect")).toHaveLength(1);
+    expect(cues.filter((cue) => cue.on === "strike").map((cue) => cue.strikeIndex)).toEqual([
+      1, 2, 3, 4, 5, 6, 7,
+    ]);
+    c.dispose();
+  });
+
+  it("VFX Forge 以正式反彈路徑觸發理想鄉 EX，而不是把被動偽裝成按鍵", () => {
+    const champion = Champions.get("godie-e002" as ChampionId);
+    const ability = Abilities.get("godie-e002.ex" as AbilityId);
+    const c = createSimPreviewController();
+    const trace = c.triggerReflectSuccess(champion, ability.id, { level: 18, rank: 1, ticks: 180 });
+    const schedule = scheduleSimEvents(trace.events, ability.id);
+    const cues = triggerCuesFromSim(schedule, ability);
+
+    expect(trace.accepted, JSON.stringify(trace.events.slice(0, 80), null, 2)).toBe(true);
+    expect(trace.runtimeCompatible, "真 Sim 使用 hook provenance；main Player 尚只接受 ability:").toBe(false);
+    expect(trace.events.some((event) => event.type === "reflectSuccess")).toBe(true);
     expect(cues.filter((cue) => cue.on === "strike").map((cue) => cue.strikeIndex)).toEqual([
       1, 2, 3, 4, 5, 6, 7,
     ]);

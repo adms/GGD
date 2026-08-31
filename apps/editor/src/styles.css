@@ -187,6 +187,9 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .vfx-blocker { display: flex; gap: 10px; align-items: baseline; margin: 8px 16px 0; padding: 9px 12px; border: 1px solid #9b3434; border-left-width: 4px; background: #2a1719; color: #efc7c7; }
 .vfx-blocker b { color: #ff918b; white-space: nowrap; }
 .vfx-blocker span { font-size: 12px; }
+.vfx-reaction-info { display: flex; gap: 10px; align-items: baseline; margin: 8px 16px 0; padding: 9px 12px; border: 1px solid #2d6e9c; border-left-width: 4px; background: #122334; color: #c8e7ff; }
+.vfx-reaction-info b { color: #72c8ff; white-space: nowrap; }
+.vfx-reaction-info span { font-size: 12px; }
 .vfx-forge-workspace { display: grid; grid-template-columns: 220px minmax(520px, 1fr) 330px; min-height: 720px; flex: 1; }
 .vfx-assets, .vfx-inspector { min-width: 0; padding: 12px; background: #151821; overflow-y: auto; }
 .vfx-assets { border-right: 1px solid #292e3b; }

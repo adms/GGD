@@ -18,6 +18,7 @@ import { sameJson, useUndoHistory } from "../history";
 import {
   newScript,
   newSegment,
+  reactionTriggerOf,
   scheduleSimEvents,
   segmentFromAsset,
   timelineDurationMs,
@@ -26,7 +27,11 @@ import {
   type AssetPlacement,
   type ForgeAbility,
 } from "./model";
-import { createSimPreviewController, type CastPreviewTrace } from "../preview/PreviewController";
+import {
+  createSimPreviewController,
+  type CastPreviewTrace,
+  type ReactionPreviewTrace,
+} from "../preview/PreviewController";
 import { ensurePreviewContentReady } from "../preview/previewContent";
 import { writeVfxScript } from "./writeback";
 import { VfxAssetPalette } from "./VfxAssetPalette";
@@ -57,7 +62,7 @@ export function VfxForgePage() {
   const [playing, setPlaying] = useState(false);
   const [status, setStatus] = useState("載入中…");
   const [serverErrors, setServerErrors] = useState<ErrorMap>({});
-  const [trace, setTrace] = useState<CastPreviewTrace | null>(null);
+  const [trace, setTrace] = useState<CastPreviewTrace | ReactionPreviewTrace | null>(null);
   const [traceError, setTraceError] = useState<string | null>(null);
 
   const championId = abilityId.includes(".") ? abilityId.slice(0, abilityId.lastIndexOf(".")) : "";
@@ -78,6 +83,10 @@ export function VfxForgePage() {
       ? Abilities.tryGet(abilityId as AbilityId) as ForgeAbility | undefined
       : undefined,
     [abilityId, previewContent.data],
+  );
+  const reactionTrigger = useMemo(
+    () => runtimeAbility ? reactionTriggerOf(runtimeAbility) : null,
+    [runtimeAbility],
   );
 
   const existingIds = useMemo(
@@ -116,24 +125,26 @@ export function VfxForgePage() {
   useEffect(() => {
     setTrace(null);
     setTraceError(null);
-    // This EX is a passive reaction, not a button press. Until main exposes
-    // defenseSuccess/onReflectSuccess as a VFX-script trigger, sending a cast
-    // Intent would only produce the unrelated "not-learned" verdict and imply
-    // that authors can audition it by pressing EX. The explicit blocker below
-    // is the truthful preview state.
-    if (abilityId === "godie-e002.ex") return;
-    if (!ability || !runtimeChampion || !ability.slot || !previewContent.data) return;
+    if (!ability || !runtimeChampion || !previewContent.data) return;
     try {
       const ticks = Math.ceil((Math.max(0, ability.castTimeSec ?? 0) + 20) * 30);
-      setTrace(simPreview.castAbility(runtimeChampion, ability.slot as CastableSlot, {
-        level: PREVIEW_AUTHOR_LEVEL,
-        rank: 1,
-        ticks,
-      }));
+      if (reactionTrigger === "reflectSuccess") {
+        setTrace(simPreview.triggerReflectSuccess(runtimeChampion, ability.id as AbilityId, {
+          level: PREVIEW_AUTHOR_LEVEL,
+          rank: 1,
+          ticks,
+        }));
+      } else if (ability.slot) {
+        setTrace(simPreview.castAbility(runtimeChampion, ability.slot as CastableSlot, {
+          level: PREVIEW_AUTHOR_LEVEL,
+          rank: 1,
+          ticks,
+        }));
+      }
     } catch (error) {
       setTraceError(String(error));
     }
-  }, [ability, abilityId, previewContent.data, runtimeChampion]);
+  }, [ability, previewContent.data, reactionTrigger, runtimeChampion]);
 
   useEffect(() => {
     if (typeof globalThis.addEventListener !== "function") return;
@@ -239,10 +250,17 @@ export function VfxForgePage() {
         </section>
       ) : null}
 
-      {abilityId === "godie-e002.ex" ? (
+      {reactionTrigger === "reflectSuccess" ? (
+        <section className="vfx-reaction-info" aria-label="被動反應試放方式">
+          <b>真實反彈試放</b>
+          <span>工坊會先用玩家施法路徑開啟正式反彈技能，再注入一發敵方魔法攻擊；反彈、被動鉤子、七段班表與時序全部取自 SimWorld 事件。</span>
+        </section>
+      ) : null}
+
+      {trace && "runtimeCompatible" in trace && !trace.runtimeCompatible ? (
         <section className="vfx-blocker" role="alert">
-          <b>⛔ 主程式前置：缺少 `defenseSuccess` 觸發器</b>
-          <span>理想鄉EX由反彈成功觸發；目前 schema 無法誠實表達。工坊不會拿 cast/strike 近似，需由 GGD main 補觸發器後再完成。</span>
+          <b>⛔ 主程式 provenance 接縫尚未通過</b>
+          <span>{trace.runtimeIssue ?? "真事件已發生，但目前遊戲播放器尚無法把它歸屬到這份腳本。"}；已追加真 Sim 證據至 GH#885。</span>
         </section>
       ) : null}
 

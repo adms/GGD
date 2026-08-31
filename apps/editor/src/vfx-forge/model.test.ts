@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import {
   newSegment,
+  reactionTriggerOf,
   scheduleSimEvents,
   segmentFromAsset,
   timelineDurationMs,
@@ -28,6 +29,24 @@ describe("VFX Forge authoring core", () => {
     ]);
     expect(cues.filter((c) => c.on === "strike").map((c) => [c.strikeIndex, Math.round(c.atMs)])).toEqual([
       [1, 333],
+    ]);
+  });
+
+  it("takes passive reflect and strike timing from a real reaction trace without inventing a cast", () => {
+    const ability = {
+      id: "godie-e002.ex",
+      passive: { ranks: [{ hooks: [{ on: "onReflectSuccess", effects: [] }] }] },
+    };
+    const schedule = scheduleSimEvents([
+      { type: "abilityCast", tick: 100, data: { abilityId: "godie-e002.r", caster: 1 } },
+      { type: "reflectSuccess", tick: 130, data: { origin: "ability:godie-e002.ex", reflector: 1 } },
+      { type: "comboStrike", tick: 134, data: { origin: "ability:godie-e002.ex", index: 1 } },
+    ], ability.id);
+    const cues = triggerCuesFromSim(schedule, ability);
+    expect(reactionTriggerOf(ability)).toBe("reflectSuccess");
+    expect(cues.map((cue) => [cue.on, Math.round(cue.atMs), cue.strikeIndex])).toEqual([
+      ["reflectSuccess", 0, undefined],
+      ["strike", 133, 1],
     ]);
   });
 
