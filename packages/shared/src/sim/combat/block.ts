@@ -249,6 +249,22 @@ export interface BlockGrant {
    * 冷卻閘在骰子之前,而且只有真的擋中才記時間 —— 兩者的理由與先例見檔頭 ⑥。
    */
   internalCooldown?: number;
+  /**
+   * ⭐ GH#650 —— **擋下的那一瞬間放什麼特效**（掛在被擋的那個人身上）。
+   *
+   * owner 說過**兩次**：「初號機 AT力場應該要有特效 **這個之前回報過了啊**」。
+   * ⚠️ ⭐ 在此之前這條鏈**沒有出口**：施法者側的特效走 `spawnVfx` / `spawnModelFx`
+   * （掛在**技能施放**上），⛔ 而「這一發被擋下」發生在**減傷鏈的中途** ——
+   * 那裡一個內容驅動的特效欄位都沒有 ⇒ **所有格擋長一模一樣**。
+   *
+   * ⛔ 省略 = 維持泛用的格擋火花（逐位元同今天）。
+   * ⚠️ 有值時它**取代**泛用火花，⛔ 不是疊在上面。
+   */
+  vfxId?: string;
+  /** 上面那份特效的縮放。省略 = 1。 */
+  vfxScale?: number;
+  /** 上面那份特效的染色 `[r,g,b]` 0–255。省略 = 不染色。 */
+  vfxTint?: readonly [number, number, number];
 }
 
 /**
@@ -312,6 +328,30 @@ function blockOnCooldown(world: SimWorld, src: ModifierSource, b: BlockGrant): b
  * 則剩餘傷害真的還會致死)的來源數;一個都沒有時 **0 次**(檔頭 ⑦ ZERO
  * GUARANTEE)。`best` 模式下永遠是 0 或 1 次。
  */
+/**
+ * ⭐⭐ GH#650 —— **擋下的那一瞬間**（owner 說過**兩次**：
+ * 「初號機 AT力場應該要有特效 **這個之前回報過了啊**」）。
+ *
+ * ⚠️ ⭐ 為什麼發在這裡而不是在 `damage.ts` 的 `emit("damage", { blocked })` 那一格：
+ * 那個事件的 `origin` 是**攻擊者的**技能，⛔ 而格擋特效屬於**防禦者的那一格 grant**
+ * ⇒ 在那裡發，特效會掛在錯的人的技能上。⭐ 這裡是**唯一**知道「是哪一格 grant 擋的」的地方。
+ *
+ * ⛔ **沒有 `vfxId` 就一則都不發** —— 出貨的兩支平擋道具（晨曦之光 / 殺豬刀）
+ * 都沒填，所以這一段對它們是**嚴格的 no-op**（逐位元同今天，維持泛用火花）。
+ */
+function emitBlockVfx(world: SimWorld, target: EntityId, b: BlockGrant): void {
+  if (b.vfxId === undefined) return;
+  const t = world.transform.get(target);
+  world.emit("blockVfx", {
+    target,
+    vfxId: b.vfxId,
+    scale: b.vfxScale ?? 1,
+    tint: b.vfxTint,
+    x: t?.pos.x ?? 0,
+    z: t?.pos.z ?? 0,
+  });
+}
+
 export function blockCutFor(
   world: SimWorld,
   target: EntityId,
@@ -325,8 +365,8 @@ export function blockCutFor(
   if (!sc) return 0; // 建築/花/投射物沒有 StatsComp —— 依構造沒有格擋
   const stacking: BlockStacking = world.blockRules.stacking;
   return stacking === "best"
-    ? bestBlockCut(world, sc.sources, type, impact, currentHp, eligibleShield)
-    : chainBlockCut(world, sc.sources, type, impact, currentHp, eligibleShield);
+    ? bestBlockCut(world, target, sc.sources, type, impact, currentHp, eligibleShield)
+    : chainBlockCut(world, target, sc.sources, type, impact, currentHp, eligibleShield);
 }
 
 /**
@@ -337,6 +377,7 @@ export function blockCutFor(
  */
 function chainBlockCut(
   world: SimWorld,
+  target: EntityId,
   sources: readonly ModifierSource[],
   type: DamageType,
   impact: number,
@@ -366,6 +407,7 @@ function chainBlockCut(
     if (blockOnCooldown(world, src, b)) continue;
     if (!world.rng.chance(chance)) continue; // 抽輸不重置冷卻
     src.blockLastFired = world.tick; // 只有真的擋中才記時間,而且是絕對 tick
+    emitBlockVfx(world, target, b); // ⭐ GH#650 —— 擋中的那一瞬間
     remaining -= remaining * fraction;
     // 整發都被擋光了,鏈就到此為止 —— 沒有「剩餘」可以繼續算,而讓後面的來源
     // 對 0 傷害抽籤只會白燒它們的冷卻與一次 draw。
@@ -385,6 +427,7 @@ function chainBlockCut(
  */
 function bestBlockCut(
   world: SimWorld,
+  target: EntityId,
   sources: readonly ModifierSource[],
   type: DamageType,
   impact: number,
@@ -421,6 +464,7 @@ function bestBlockCut(
 
   if (!world.rng.chance(bestChance)) return 0;
   winner.blockLastFired = world.tick;
+  emitBlockVfx(world, target, winner.block!); // ⭐ GH#650 —— 擋中的那一瞬間
   // `bestFraction` is already clamped to [0,1] by {@link clamp01}, so this
   // product can never exceed `impact` and there is deliberately NO second clamp
   // here — see the note on `clamp01` for the mutation run that proved one was

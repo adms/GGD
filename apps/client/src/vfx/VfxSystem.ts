@@ -845,6 +845,11 @@ export class VfxSystem {
     });
   }
 
+  /**
+   * ⭐ GH#650 —— 這一 frame 已經有**內容指定的格擋演出**的受害者。
+   * ⚠️ 存在的唯一理由是「⛔ 不疊加」：泛用火花讀它就讓位。
+   */
+  private readonly blockVfxThisFrame = new Set<number>();
   private scriptIndexCache: Map<string, VfxScriptDoc> | null = null;
   private projectileIdsCache = new Map<string, ReadonlySet<string>>();
 
@@ -1970,6 +1975,8 @@ export class VfxSystem {
                 ? "magic"
                 : "hit";
         const isBlock = kind === "block" || Boolean(ev.data.blocked);
+        // ⭐ GH#650 —— 內容已經替這一擋指定了特效 ⇒ **泛用火花讓位**（⛔ 不疊加）。
+        if (isBlock && target !== undefined && this.blockVfxThisFrame.has(target)) break;
         const { tint, intensity } = sparkStyleFor(kind, dmgType);
         this.sparks.push(
           // 🔵 GH#617 —— **最後那個 `amount` 是承重的**:少了它,五級距加速逐位元
@@ -2313,6 +2320,35 @@ export class VfxSystem {
       //    載）沒有對應骨 ⇒ **退回胸口高度並記 log**，⛔ 不是不畫。
       //    payload 型別＝sim emit 站旁邊的 `VfxSpawnEvent`（GH#608），
       //    ⛔ 這裡不 `as` 任何 sim 沒送過的欄位（失敗形態⑧）。
+      // ⭐⭐ GH#650 —— **擋下的那一瞬間**（owner 說過**兩次**：
+      //    「初號機 AT力場應該要有特效 **這個之前回報過了啊**」）。
+      //
+      // ⚠️ ⭐ 它**取代**泛用格擋火花，⛔ 不是疊在上面 —— 疊起來畫面上像「擋了兩次」。
+      //    做法：登記這一 frame 這個人已經有內容指定的格擋演出，⭐ 而 `hitImpact`
+      //    那一格讀它就讓位。順序是保證的：`blockVfx` 發在**減傷鏈中途**
+      //    （`combat/block.ts` 真的擋中的那一行），而 `hitImpact` 發在 `applyImpact`
+      //    ⇒ ⭐ 同一 tick、⛔ 一定在它之後。
+      case "blockVfx": {
+        const bd = ev.data as {
+          target?: number; vfxId?: string; scale?: number;
+          tint?: readonly [number, number, number]; x?: number; z?: number;
+        };
+        if (bd.target === undefined || !bd.vfxId) break;
+        const bx = bd.x ?? 0;
+        const bz = bd.z ?? 0;
+        if (!isFinitePos({ x: bx, z: bz })) break;
+        const bdoc = this.doc(bd.vfxId);
+        // ⛔ 查不到就**什麼都不做**，⭐ 而且⛔ 不登記 —— 讓泛用火花留著
+        //    （否則玩家看到的是「什麼都沒有」，而那比舊行為更糟）。
+        if (!bdoc) break;
+        this.blockVfxThisFrame.add(bd.target);
+        const bov =
+          bd.scale !== undefined || bd.tint !== undefined
+            ? { scale: bd.scale, tint: bd.tint }
+            : undefined;
+        this.play(bov ? applyVfxOverrides(bdoc, bov as never) : bdoc, bx, bz, nowMs, CONTACT_Y);
+        break;
+      }
       case "vfxSpawn": {
         const data = ev.data as Partial<VfxSpawnEvent>;
         const x = data.x;
@@ -2687,6 +2723,9 @@ export class VfxSystem {
   }
 
   update(nowMs: number): void {
+    // ⭐ GH#650 —— 這一格是 **frame-scoped**：`blockVfx` 與 `hitImpact` 在同一批
+    //    事件裡（同一 tick），⛔ 而跨幀留著會讓下一次的泛用火花被錯誤地擋掉。
+    this.blockVfxThisFrame.clear();
     // The rig advances on dt (KP2 tracks, effect durations, drains) — never on
     // wall clock, so a paused match or a hand-stepped replay stays in step. A
     // backgrounded tab returns with a huge dt, which RELEASES the live effects

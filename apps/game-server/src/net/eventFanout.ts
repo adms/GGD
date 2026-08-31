@@ -70,6 +70,10 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
     //    ⇒ ⭐ owner 指名的 20-002 理想鄉EX（由反彈成功觸發）在 `vfx-script@1` 裡**寫不出來**。
     //    cadence：一次反彈一則（由 `reflectDepth` 與 `DAMAGE_QUEUE_MAX_PASSES` 夾住，⛔ 沒有新迴圈）。
     "reflectSuccess",
+    // ⭐⭐ GH#650 —— 擋下的那一瞬間（owner 說過**兩次**）。
+    //    ⚠️ ⭐ 只有 grant 真的填了 `vfxId` 才發（出貨兩支平擋道具都沒填 ⇒ 嚴格 no-op）
+    //    ⇒ cadence 由內容決定，⛔ 不是每一發格擋都一則。
+    "blockVfx",
   "damage",
   "death",
   "projectileSpawn",

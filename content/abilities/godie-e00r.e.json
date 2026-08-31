@@ -48,7 +48,14 @@
             "physical"
           ],
           "chance": 0.1,
-          "fraction": 0.5
+          "fraction": 0.5,
+          "vfxId": "fx.fam.burst.physical.s100",
+          "vfxScale": 1.6,
+          "vfxTint": [
+            255,
+            140,
+            40
+          ]
         }
       },
       {
@@ -74,7 +81,14 @@
             "physical"
           ],
           "chance": 0.15,
-          "fraction": 0.5
+          "fraction": 0.5,
+          "vfxId": "fx.fam.burst.physical.s100",
+          "vfxScale": 1.6,
+          "vfxTint": [
+            255,
+            140,
+            40
+          ]
         }
       },
       {
@@ -100,7 +114,14 @@
             "physical"
           ],
           "chance": 0.2,
-          "fraction": 0.5
+          "fraction": 0.5,
+          "vfxId": "fx.fam.burst.physical.s100",
+          "vfxScale": 1.6,
+          "vfxTint": [
+            255,
+            140,
+            40
+          ]
         }
       },
       {
@@ -126,7 +147,14 @@
             "physical"
           ],
           "chance": 0.25,
-          "fraction": 0.5
+          "fraction": 0.5,
+          "vfxId": "fx.fam.burst.physical.s100",
+          "vfxScale": 1.6,
+          "vfxTint": [
+            255,
+            140,
+            40
+          ]
         }
       }
     ]

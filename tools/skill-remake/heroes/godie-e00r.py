@@ -363,7 +363,19 @@ A("59-03", "59-03 AT力場", "self", [0], [0], 0,
       {"hooks": [{"on": "onInterval", "internalCooldown": 8.0, "target": "self",
                   "effects": [{"kind": "shield", "amount": amt(flat=v),
                                "duration": 8.0, "absorbs": "magic"}]}],
-       "block": {"damageTypes": ["physical"], "chance": c, "fraction": 0.5}}
+       "block": {"damageTypes": ["physical"], "chance": c, "fraction": 0.5,
+                 # ⭐⭐ GH#650 —— owner 說過**兩次**：「初號機 AT力場應該要有特效
+                 #    **這個之前回報過了啊**」。在此之前這條鏈**沒有出口**：格擋發生在
+                 #    減傷鏈中途，那裡一個內容驅動的特效欄位都沒有 ⇒ 所有格擋長一樣。
+                 # ⚠️ ⭐ 為什麼是 burst 家族 ＋ 橘色染色，⛔ 而不是一份新的六角力場面：
+                 #    `content/vfx/` 650 份裡**沒有**任何 hex/force-field 資產
+                 #    （`ls | grep -iE "field|hex|barrier"` ⇒ 0）。
+                 #    ⭐ 用既有家族 ＋ tint 是**做得到的那一半**（第一·五守則：⛔ 不放
+                 #    「說了但不會發生」的東西）；六角面本體要一份新美術 ⇒ 那是資產批。
+                 # ⛔ 一鍵 rollback ＝ 刪掉這三行 ⇒ 逐位元回到泛用火花。
+                 "vfxId": "fx.fam.burst.physical.s100",
+                 "vfxScale": 1.6,
+                 "vfxTint": [255, 140, 40]}}
       for v, c in zip((150, 250, 350, 450), (0.10, 0.15, 0.20, 0.25))]})
 
 A("59-04", "59-04 野戰型陽電子砲", "ground", [90, 90, 90], [350, 500, 650], 8.25,
