@@ -682,6 +682,51 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
 
     luma_to_gltf: dict[int, int] = {}
 
+    additive_to_gltf: dict[int, int] = {}
+
+    def gltf_texture_additive(tex_id: int) -> int:
+        """Embed an explicit-alpha texture that is also safe under ONE+ONE.
+
+        Warcraft additive materials ignore source alpha.  The client preserves
+        that behaviour for glowing model-FX materials, so an otherwise normal
+        PNG whose transparent texels retain a white/red matte draws that matte
+        as a solid card in game.  Alpha/alpha-key rendering is unchanged when
+        RGB below alpha=0 is cleared; additive rendering gains the required
+        identity value (black).
+
+        Keep this as a separate cache from :func:`gltf_texture`: the same MDX
+        texture may also be used by an opaque body layer, which must retain its
+        original pixels byte-for-byte.
+        """
+        if tex_id in additive_to_gltf:
+            return additive_to_gltf[tex_id]
+        from PIL import Image
+        png = textures_png.get(tex_id)
+        if png is None:
+            # Match gltf_texture's unresolved-texture fallback.  The source
+            # problem is still reported by the importer; do not pretend a
+            # missing texture is transparent.
+            png = _gray_png()
+        img = Image.open(io.BytesIO(png)).convert("RGBA")
+        pixels = list(img.getdata())
+        changed = False
+        for i, (r, g, b, a) in enumerate(pixels):
+            if a <= 5 and (r != 0 or g != 0 or b != 0):
+                pixels[i] = (0, 0, 0, a)
+                changed = True
+        if changed:
+            img.putdata(pixels)
+            out = io.BytesIO()
+            img.save(out, "PNG")
+            png = out.getvalue()
+        view = buf.add_blob(png)
+        gltf["images"].append({"bufferView": view, "mimeType": "image/png"})
+        gltf["textures"].append(
+            {"source": len(gltf["images"]) - 1, "sampler": 0}
+        )
+        additive_to_gltf[tex_id] = len(gltf["textures"]) - 1
+        return additive_to_gltf[tex_id]
+
     def gltf_texture_luma(tex_id: int) -> int:
         """Additive-glow art with no alpha channel gets one derived from its
         own luminance (alpha := max(R,G,B)): black background -> transparent,
@@ -876,7 +921,7 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
                 # `convert_stock_model.py::texture_shape_report` 的
                 # `LUMA-KEY-NEEDED` 判決）改用 luma 會變成一塊亮方塊。
                 # ⇒ 兩個方向都要活得下來：有 alpha 就用 alpha，沒有才推 luma。
-                tix = gltf_texture(layer.texture_id)
+                tix = gltf_texture_additive(layer.texture_id)
             mat["emissiveTexture"] = {"index": tix}
             mat["emissiveFactor"] = [1.0, 1.0, 1.0]
             mat["extensions"] = {"KHR_materials_emissive_strength":

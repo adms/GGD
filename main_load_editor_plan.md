@@ -401,10 +401,21 @@ framebuffer；反過來，沒有 alpha 的黑底光效在 additive 下是安全�
 目前來源抽取器會對大面積「透明但 RGB 明亮」的 map-archive matte 清除透明區 RGB；
 `vfxTextureBackdrop.test.ts` 會掃描所有出貨 `vfx@1`／`ribbon@1` 與真 PNG。任何新增
 素材若在它實際的合成模式下幾乎沒有可消失背景，內容建置必須失敗，不能進 ZIP。
-Editor 可以在資源池顯示中文診斷，但遊戲端不得顯示 checker／debug 貼圖作為退路：
-貼圖缺失或未通過 receipt 時應跳過該 emitter 並一次性記錄 asset id；模型則只隱藏
-已由 audit 證實的 primitive，若角色本體不可用則退回乾淨的程序替身。GLB 的 UV atlas
-不可整張自動去背，否則透明未使用區與角色本體會一起被破壞。
+
+同一條規則也要套到模型內嵌貼圖。遊戲會把 emissive model-FX 材質轉成 Babylon
+`ALPHA_ONEONE`，所以 `modelFxTextureBackdrop.test.ts` 必須掃描 Editor 資源池全部
+`model@1`，沿 `model document → glbPath → material → texture → embedded image` 讀真實
+像素；含 cut-out 背景的 emissive 材質若在 `alpha≈0` 處仍保留亮 RGB，內容建置同樣
+失敗。修正必須由 MDX／BLP 轉檔來源重生 GLB，只清理該 additive 材質的透明背景；
+禁止用 model id 白名單、runtime 特判或把整張 UV atlas 自動去背，否則可能連角色本體
+一起破壞。舊 GLB 若重新轉檔會改變幾何，只能採用由其自身 glTF material graph 定位
+圖片、保留所有非圖片資料的 image-only sanitizer，並由 geometry ratchet 證明未漂移。
+
+Editor 的資源池、拖放、儲存與包含 VFX Script 的 ZIP 匯出共用同一個 asset-safety
+gate；`unknown`、缺檔、不可解碼或不安全一律 fail closed，顯示中文原因，不能靠使用者
+略過。只有通過「真 blend mode × 真像素」檢查的資源才能寫入腳本。遊戲端仍要作最後
+防守：貼圖缺失或未通過 receipt 時跳過該 emitter 並一次性記錄 asset id，不得顯示
+checker／debug 貼圖；模型若角色本體不可用才退回乾淨的程序替身。
 
 ## 10. 驗證矩陣與完成條件
 

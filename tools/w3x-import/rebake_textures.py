@@ -32,6 +32,7 @@ Run:  python3 rebake_textures.py --list          # what would change
 from __future__ import annotations
 
 import argparse
+import io
 import json
 import os
 import struct
@@ -50,10 +51,12 @@ from w3xlib.models import (  # noqa: E402
     classify,
     close_stock_archives,
 )
+from PIL import Image
 
 RAW = os.path.join(HERE, "out/GoDieEX22s/raw")
 REPORT = os.path.join(HERE, "out/GoDieEX22s/models_report.json")
-GLB_DIR = "/Users/Takuro/GGD/content/assets/models/imported"
+GLB_DIR = os.path.join(os.path.normpath(os.path.join(HERE, "..", "..")),
+                       "content", "assets", "models", "imported")
 PLACEHOLDER_MAX = 8  # the exporter's fallback is an 8x8 solid grey PNG
 
 
@@ -87,6 +90,86 @@ def placeholders(facts: dict) -> int:
 
 def geometry_key(facts: dict) -> tuple:
     return (tuple(facts["bounds"]), facts["materials"], facts["animations"])
+
+
+def sanitize_existing_additive_backdrops(data: bytes) -> tuple[bytes, int]:
+    """Clear bright RGB below alpha=0 while preserving every non-image byte.
+
+    This is the safe fallback for an old GLB whose current importer would also
+    change geometry.  Future full rebuilds get the same rule from
+    `gltf_texture_additive`; the shipped file is patched through its own glTF
+    material graph so no model-name exemption or hand-edited binary is needed.
+    """
+    jlen = struct.unpack_from("<I", data, 12)[0]
+    doc = json.loads(data[20:20 + jlen])
+    bin_start = 20 + jlen + 8
+    blob = data[bin_start:]
+    views = doc.get("bufferViews", [])
+    textures = doc.get("textures", [])
+    images = doc.get("images", [])
+    image_indices: set[int] = set()
+    for material in doc.get("materials", []):
+        if max(material.get("emissiveFactor", [0])) <= 0:
+            continue
+        ti = material.get("pbrMetallicRoughness", {}).get(
+            "baseColorTexture", {}).get("index")
+        if isinstance(ti, int) and ti < len(textures):
+            si = textures[ti].get("source")
+            if isinstance(si, int):
+                image_indices.add(si)
+
+    replacements: dict[int, bytes] = {}
+    cleared = 0
+    for image_index in image_indices:
+        if image_index >= len(images):
+            continue
+        vi = images[image_index].get("bufferView")
+        if not isinstance(vi, int) or vi >= len(views):
+            continue
+        view = views[vi]
+        at = view.get("byteOffset", 0)
+        raw = blob[at:at + view["byteLength"]]
+        image = Image.open(io.BytesIO(raw)).convert("RGBA")
+        pixels = list(image.getdata())
+        changed = False
+        for i, (r, g, b, a) in enumerate(pixels):
+            if a <= 5 and (r != 0 or g != 0 or b != 0):
+                pixels[i] = (0, 0, 0, a)
+                cleared += 1
+                changed = True
+        if not changed:
+            continue
+        image.putdata(pixels)
+        out = io.BytesIO()
+        image.save(out, "PNG")
+        replacements[vi] = out.getvalue()
+
+    if not replacements:
+        return data, 0
+
+    parts: list[bytes] = []
+    offset = 0
+    new_views = []
+    for i, view in enumerate(views):
+        at = view.get("byteOffset", 0)
+        chunk = replacements.get(i, blob[at:at + view["byteLength"]])
+        new_views.append({**view, "byteOffset": offset, "byteLength": len(chunk)})
+        parts.append(chunk)
+        offset += len(chunk)
+        pad = (-offset) % 4
+        if pad:
+            parts.append(b"\0" * pad)
+            offset += pad
+    out_doc = {**doc, "bufferViews": new_views,
+               "buffers": [{"byteLength": offset}]}
+    json_raw = json.dumps(out_doc, separators=(",", ":")).encode("utf8")
+    json_raw += b" " * ((-len(json_raw)) % 4)
+    bin_raw = b"".join(parts)
+    bin_raw += b"\0" * ((-len(bin_raw)) % 4)
+    total = 12 + 8 + len(json_raw) + 8 + len(bin_raw)
+    head = struct.pack("<III", 0x46546C67, 2, total)
+    return (head + struct.pack("<II", len(json_raw), 0x4E4F534A) + json_raw
+            + struct.pack("<II", len(bin_raw), 0x004E4942) + bin_raw), cleared
 
 
 # ---- re-bake ----------------------------------------------------------------
@@ -170,11 +253,21 @@ def main() -> int:
             note += "  ** GEOMETRY CHANGED **"
         if missing:
             note += f"  unresolved={missing}"
-        if after >= before and not moved:
-            print(f"  same {stem:34s} {note}")
+        if new == old:
+            print(f"  same {stem:34s} {note}  byte-identical")
             skipped += 1
             continue
         if moved and not args.allow_geometry_change:
+            safe, cleared = sanitize_existing_additive_backdrops(old)
+            if cleared > 0:
+                if not args.dry_run:
+                    with open(path, "wb") as f:
+                        f.write(safe)
+                print(f"  {'would-sanitize' if args.dry_run else 'sanitized'} "
+                      f"{stem:25s} {note}  geometry held · "
+                      f"{cleared} transparent-bright texels cleared")
+                fixed += 1
+                continue
             print(f"  HOLD {stem:34s} {note}")
             drift += 1
             continue

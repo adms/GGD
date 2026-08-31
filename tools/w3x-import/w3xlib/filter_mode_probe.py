@@ -42,6 +42,10 @@ PROBES: list[tuple[str, list[tuple[int, str]]]] = [
     ("fm1-transparent-cutout", [(1, "cutout")]),
     ("fm2-blend-smooth", [(2, "smooth")]),
     ("fm3-additive", [(3, "glow")]),
+    # The transparent half retains bright RGB in the source PNG.  This is safe
+    # in ordinary alpha blending and a solid rectangle under ONE+ONE unless the
+    # converter clears RGB below alpha=0.
+    ("fm3-additive-cutout", [(3, "cutout")]),
     ("fm4-addalpha", [(4, "smooth")]),
     ("fm5-modulate-black", [(5, "black")]),
     ("fm5-modulate-white", [(5, "white")]),
@@ -86,16 +90,22 @@ def _glb_parts(glb: bytes) -> tuple[dict, bytes]:
     return doc, glb[bin_start:]
 
 
-def _alpha_stats(doc: dict, blob: bytes, tex_index: int) -> dict:
+def _texture_stats(doc: dict, blob: bytes, tex_index: int) -> dict:
     from PIL import Image
     src = doc["textures"][tex_index]["source"]
     bv = doc["bufferViews"][doc["images"][src]["bufferView"]]
     off = bv.get("byteOffset", 0)
     png = blob[off:off + bv["byteLength"]]
-    a = Image.open(io.BytesIO(png)).convert("RGBA").getchannel("A")
-    data = list(a.getdata())
-    return {"min": min(data), "max": max(data),
-            "mean": round(sum(data) / len(data), 1)}
+    rgba = list(Image.open(io.BytesIO(png)).convert("RGBA").getdata())
+    alpha = [p[3] for p in rgba]
+    transparent = [p for p in rgba if p[3] <= 5]
+    bright_transparent = [p for p in transparent if max(p[:3]) > 1]
+    return {
+        "min": min(alpha), "max": max(alpha),
+        "mean": round(sum(alpha) / len(alpha), 1),
+        "transparent": len(transparent),
+        "brightTransparent": len(bright_transparent),
+    }
 
 
 def run() -> dict:
@@ -132,7 +142,7 @@ def run() -> dict:
                 "extras": m.get("extras"),
             }
             if "baseColorTexture" in pbr:
-                entry["textureAlpha"] = _alpha_stats(
+                entry["textureAlpha"] = _texture_stats(
                     doc, blob, pbr["baseColorTexture"]["index"])
             mats.append(entry)
         out["probes"][label] = mats
