@@ -22,7 +22,10 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
-MODEL_DIR = ROOT / "content" / "assets" / "models" / "imported"
+# This is a shipped-asset invariant, not an importer-folder invariant. Models
+# in champions/, props/, effects/ and their LOD variants can carry the same
+# embedded transparent atlas and are loaded by the exact same renderer.
+MODEL_DIR = ROOT / "content" / "assets" / "models"
 ALPHA_BACKGROUND_MAX = 5
 MIN_BACKGROUND_SHARE = 0.02
 
@@ -105,14 +108,14 @@ def main() -> int:
     mode.add_argument("--write", action="store_true")
     args = parser.parse_args()
     bad = 0
-    for path in sorted(MODEL_DIR.glob("*.glb")):
+    for path in sorted(MODEL_DIR.rglob("*.glb")):
         data = path.read_bytes()
         doc, binary = chunks(data)
         changed = repairs(doc, binary)
         if not changed:
             continue
         bad += len(changed)
-        print(f"{path.name}: " + "; ".join(changed))
+        print(f"{path.relative_to(MODEL_DIR)}: " + "; ".join(changed))
         if args.write:
             path.write_bytes(encode(doc, binary))
     if args.check and bad:

@@ -4,16 +4,151 @@
   "abilityId": "godie-e002.ex",
   "notes": "20-002 理想鄉EX（原作參考 KwAlIYfmV48@83–100，兩招合併）。反彈成功先爆開防禦光，接七段黃藍動畫斬擊，最後向敵人釋放寬廣聖光砲；傷害、反彈與七段時序仍住 ability JSON。",
   "segments": [
-    { "kind": "floatingText", "on": "reflectSuccess", "text": "AVALON · 理想鄉", "colorRgb": [255, 232, 160], "sizeScale": 1.55, "durationSec": 1.1 },
-    { "kind": "beam", "on": "reflectSuccess", "at": "caster", "lengthU": 3.8, "widthU": 0.75, "heightU": 1, "yawOffsetDeg": 52, "pitchDeg": 0, "durationSec": 0.45, "colorRgb": [255, 220, 122], "alpha": 1 },
-    { "kind": "beam", "on": "reflectSuccess", "at": "caster", "lengthU": 3.8, "widthU": 0.65, "heightU": 1, "yawOffsetDeg": -52, "pitchDeg": 0, "durationSec": 0.45, "colorRgb": [125, 194, 255], "alpha": 0.95 },
-    { "kind": "anim", "on": "strike", "at": "caster", "pulse": "attack", "clipWindowMs": 300 },
-    { "kind": "anim", "on": "strike", "at": "target", "pulse": "hurt", "clipWindowMs": 600 },
-    { "kind": "modelFx", "on": "strike", "modelKey": "imported.herosaber", "path": "toTarget", "speed": 32, "lifeSec": 0.22, "clip": "attack", "clipTimeScale": 3.2, "scale": 1, "alpha": 0.92 },
-    { "kind": "beam", "on": "strike", "at": "target", "lengthU": 3.6, "widthU": 0.3, "heightU": 1, "yawOffsetDeg": 58, "pitchDeg": 0, "durationSec": 0.22, "colorRgb": [255, 209, 82], "alpha": 1 },
-    { "kind": "beam", "on": "strike", "atMs": 35, "at": "target", "lengthU": 3.3, "widthU": 0.24, "heightU": 1, "yawOffsetDeg": -61, "pitchDeg": 0, "durationSec": 0.2, "colorRgb": [75, 166, 255], "alpha": 0.95 },
-    { "kind": "beam", "on": "strike", "strikeIndex": 7, "at": "caster", "lengthU": 14, "widthU": 2.25, "heightU": 1, "pitchDeg": 0, "durationSec": 1.1, "colorRgb": [255, 205, 80], "alpha": 1 },
-    { "kind": "beam", "on": "strike", "strikeIndex": 7, "atMs": 45, "at": "caster", "lengthU": 14, "widthU": 0.72, "heightU": 1, "pitchDeg": 0, "durationSec": 1.02, "colorRgb": [238, 250, 255], "alpha": 1 },
-    { "kind": "screenShake", "on": "strike", "strikeIndex": 7, "amplitude": 0.58, "durationSec": 0.7 }
+    {
+      "text": "AVALON · 理想鄉",
+      "colorRgb": [
+        255,
+        232,
+        160
+      ],
+      "sizeScale": 1.55,
+      "durationSec": 1.1,
+      "kind": "floatingText",
+      "on": "reflectSuccess",
+      "atMs": 0
+    },
+    {
+      "vfxId": "fx.prim.holy.slash-lg",
+      "at": "self",
+      "durationSec": 0.45,
+      "kind": "vfx",
+      "on": "reflectSuccess",
+      "atMs": 0,
+      "w3xScale": 1.8,
+      "flyHeight": 128,
+      "alpha": 1,
+      "facingDeg": 52
+    },
+    {
+      "vfxId": "fx.prim.lightning.slash",
+      "at": "self",
+      "durationSec": 0.45,
+      "kind": "vfx",
+      "on": "reflectSuccess",
+      "atMs": 0,
+      "w3xScale": 1.7,
+      "flyHeight": 128,
+      "alpha": 0.95,
+      "facingDeg": -52
+    },
+    {
+      "kind": "anim",
+      "on": "strike",
+      "at": "caster",
+      "pulse": "attack",
+      "clipWindowMs": 300
+    },
+    {
+      "kind": "anim",
+      "on": "strike",
+      "at": "target",
+      "pulse": "hurt",
+      "clipWindowMs": 600
+    },
+    {
+      "modelKey": "imported.herosaber",
+      "path": "toTarget",
+      "speed": 32,
+      "clip": "attack",
+      "clipTimeScale": 3.2,
+      "scale": 1,
+      "alpha": 0.92,
+      "lifeSec": 0.22,
+      "kind": "modelFx",
+      "on": "strike"
+    },
+    {
+      "vfxId": "fx.prim.holy.slash-lg",
+      "at": "target",
+      "durationSec": 0.22,
+      "kind": "vfx",
+      "on": "strike",
+      "atMs": 0,
+      "offsetForwardU": 0,
+      "offsetSideU": 0,
+      "w3xScale": 1.5,
+      "flyHeight": 128,
+      "alpha": 1,
+      "timeScale": 1,
+      "facingDeg": 58,
+      "pitchDeg": 0
+    },
+    {
+      "vfxId": "fx.prim.lightning.slash",
+      "at": "target",
+      "durationSec": 0.2,
+      "kind": "vfx",
+      "on": "strike",
+      "atMs": 35,
+      "offsetForwardU": 0,
+      "offsetSideU": 0,
+      "w3xScale": 1.5,
+      "flyHeight": 128,
+      "alpha": 0.95,
+      "timeScale": 1,
+      "facingDeg": -61,
+      "pitchDeg": 0
+    },
+    {
+      "vfxId": "fx.prim.holy.beam-flat",
+      "at": "self",
+      "durationSec": 1.1,
+      "kind": "vfx",
+      "on": "strike",
+      "atMs": 0,
+      "strikeIndex": 7,
+      "offsetForwardU": 2.5,
+      "offsetSideU": 0,
+      "w3xScale": 1.8,
+      "tint": [
+        255,
+        205,
+        70
+      ],
+      "flyHeight": 128,
+      "alpha": 1,
+      "timeScale": 1,
+      "facingDeg": 0,
+      "pitchDeg": 0
+    },
+    {
+      "vfxId": "fx.prim.lightning.beam-flat",
+      "at": "self",
+      "durationSec": 1.02,
+      "kind": "vfx",
+      "on": "strike",
+      "atMs": 45,
+      "strikeIndex": 7,
+      "offsetForwardU": 2.5,
+      "offsetSideU": 0,
+      "w3xScale": 1.15,
+      "tint": [
+        80,
+        170,
+        255
+      ],
+      "flyHeight": 128,
+      "alpha": 1,
+      "timeScale": 1,
+      "facingDeg": 0,
+      "pitchDeg": 0
+    },
+    {
+      "amplitude": 0.58,
+      "durationSec": 0.7,
+      "kind": "screenShake",
+      "on": "strike",
+      "strikeIndex": 7
+    }
   ]
 }

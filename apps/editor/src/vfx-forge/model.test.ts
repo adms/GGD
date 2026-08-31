@@ -80,7 +80,7 @@ describe("VFX Forge authoring core", () => {
       offsetForwardU: 3.2,
       offsetSideU: -1.4,
     });
-    for (const kind of ["floatingText", "screenFlash", "screenShake", "sound", "anim", "hideBody", "beam"] as const) {
+    for (const kind of ["floatingText", "screenFlash", "screenShake", "sound", "anim", "hideBody"] as const) {
       expect(newSegment(kind).kind).toBe(kind);
     }
   });

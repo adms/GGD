@@ -60,7 +60,6 @@ import { Configs as ContentConfigs, VfxScripts } from "@ggd/shared/content/regis
 import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
 import { DEFAULT_VFX_SCRIPTS } from "@ggd/shared/content/schema/config/vfxScripts";
 import { VfxScriptPlayer } from "./VfxScriptPlayer";
-import { ScriptBeamFx, type ScriptBeamEvent } from "./ScriptBeamFx";
 import { TICK_MS } from "@ggd/shared/constants";
 // GH#649/#565 —— WC3 掛點字串 → glb 骨頭節點（正規化＋fallback 鏈，#98 的那一半）
 import { resolveAttachment } from "../render/vfx/attachment";
@@ -116,9 +115,11 @@ import {
   applyVfxOverrides,
   abilityVfxSourceFor,
   castLayersFor,
+  DEFAULT_LAYER_HEIGHT_Y,
   layerHeightY,
   layerPosition,
   maxAbilityVfxLayers,
+  WC3_UNITS_PER_WORLD_UNIT,
   type ResolvedVfxLayer,
 } from "../render/vfx/abilityLayers";
 import { applyAimYaw } from "../render/vfx/artParams";
@@ -179,6 +180,17 @@ export interface VfxContext {
   entityPos(id: number): { x: number; z: number } | null;
   /** authored vfx doc for a vfxKey, or null (docs are optional content) */
   vfxDoc?(key: string): VfxDoc | null;
+  /**
+   * Optional content-path resolver for particle textures.
+   *
+   * The game serves authored assets below `/content/` and therefore omits
+   * this hook. Embedded authoring tools use their own content middleware
+   * (`/content-api/`, including a remote reference profile), so forcing the
+   * game URL here makes a valid particle system exist with an unloaded
+   * texture and zero visible particles. Keep the source decision injected at
+   * the composition root instead of teaching VfxSystem about editor routes.
+   */
+  resolveTextureUrl?(contentPath: string): string;
   /**
    * OPTIONAL championId of an entity, used ONLY to resolve the per-champion
    * gore override (mechanical/undead champions spray sparks/ichor, never
@@ -682,8 +694,6 @@ export class VfxSystem {
    * 建構它不配置任何東西：沒有人請求過弧的那一場，池子是空的。
    */
   private readonly arcs: ArcBoltFx;
-  /** VFX-script authored horizontal beams; cosmetic geometry only. */
-  private readonly scriptBeams: ScriptBeamFx;
   /** ⭐ GH#551 —— 移動中的**模型**特效（翻滾光束／圓周冰塊／直線火球）。null = 沒有內容接縫。 */
   private readonly modelFx: ModelFxRig | null;
   /** GH#838 特效工坊的演出腳本播放器（constructor 尾建）。 */
@@ -786,8 +796,11 @@ export class VfxSystem {
     private readonly scene: Scene,
     private readonly ctx: VfxContext,
   ) {
-    this.blood = new BloodFx(scene);
-    this.moveTrail = new MoveTrailFx(scene);
+    const textureOpts = ctx.resolveTextureUrl
+      ? { resolveTextureUrl: ctx.resolveTextureUrl }
+      : {};
+    this.blood = new BloodFx(scene, textureOpts);
+    this.moveTrail = new MoveTrailFx(scene, undefined, textureOpts);
     // ⭐ GH#551/#549 —— 三個「演出」層。⚠️ `modelFx` 只在**兩個內容接縫都在**時才建：
     //    缺任一個就整條靜靜不生（⛔ 不是崩潰）—— 測試環境與早期開機沒有 AssetManager。
     this.modelFx =
@@ -824,10 +837,10 @@ export class VfxSystem {
       capacity: cue.floatingTextMaxOnScreen,
       scaleMult: cue.floatingTextScale,
     });
-    this.feedback = new CombatFeedbackFx(scene);
-    this.status = new StatusAuraFx(scene);
-    this.shadows = new ShadowLayer(scene);
-    this.castDecals = new GroundDecalPool(scene, { maxDecals: MAX_CAST_DECALS });
+    this.feedback = new CombatFeedbackFx(scene, textureOpts);
+    this.status = new StatusAuraFx(scene, textureOpts);
+    this.shadows = new ShadowLayer(scene, textureOpts);
+    this.castDecals = new GroundDecalPool(scene, { maxDecals: MAX_CAST_DECALS, ...textureOpts });
     this.pillars = new CastPillarFx(
       scene,
       {
@@ -844,17 +857,19 @@ export class VfxSystem {
         // ⚠️ 少了這一行整層線上不存在，而畫面上與「還沒做」長得一模一樣（失敗形態⑧）。
         teamOf: (id) => this.ctx.teamOf?.(id) ?? null,
       },
-      { getScale: () => this.budgetScale() },
+      { getScale: () => this.budgetScale(), ...textureOpts },
     );
     this.arcs = new ArcBoltFx(scene);
-    this.scriptBeams = new ScriptBeamFx(scene);
     this.guardianVolley = new GuardianVolleyFx(scene);
     // ⭐ GH#494 掉錢 → 停 1 秒 → 貝茲加速吸回擊殺者 + 輕音效（連擊音階升高）。
     this.gold = new GoldPickupFx(scene, {
       entityPos: (id) => this.ctx.entityPos(id),
       playSfx: (event, opts) => this.ctx.playSfx?.(event, opts) ?? false,
     });
-    this.w3xCast = new W3xCastFx(scene, { getQualityScale: () => this.budgetScale() });
+    this.w3xCast = new W3xCastFx(scene, {
+      getQualityScale: () => this.budgetScale(),
+      ...textureOpts,
+    });
     this.telegraphLayer = new TelegraphLayer(scene, {
       entityPos: (id) => this.ctx.entityPos(id),
       castProgress: (id, nowMs) => this.ctx.castProgress?.(id, nowMs) ?? null,
@@ -1102,6 +1117,35 @@ export class VfxSystem {
   }
 
   /**
+   * Allocate the shipped pooled ParticleSystems without emitting anything.
+   * VFX Forge awaits Babylon texture readiness after this call, so a
+   * deterministic seek can replay the authored burst on the requested frame
+   * instead of losing it while a newly-created texture is still decoding.
+   * Production callers do not need this; normal gameplay grows the same pool
+   * lazily through {@link play}.
+   */
+  warmVfxDocs(rawDocs: readonly VfxDoc[]): void {
+    const scale = particleBudgetScale(qualityController.getParams().particleDensity);
+    for (const rawDoc of rawDocs) {
+      if (!goreDocPlayable(rawDoc)) continue;
+      const doc = this.shapeOf(rawDoc);
+      let list = this.pool.get(doc.id);
+      if (!list) {
+        list = [];
+        this.pool.set(doc.id, list);
+      }
+      if (list.length > 0) continue;
+      list.push({
+        ps: toParticleSystem(doc, this.scene, {
+          scale,
+          resolveTextureUrl: this.ctx.resolveTextureUrl,
+        }),
+        lastUsedMs: -Infinity,
+      });
+    }
+  }
+
+  /**
    * Fire a vfx doc at a world position, front-loaded (see frontLoadDoc).
    * Pooled per doc id with a small free-list so the same doc can play several
    * times in the same frame; when all instances are busy the least-recently-
@@ -1134,7 +1178,13 @@ export class VfxSystem {
     let entry = list.find((e) => nowMs - e.lastUsedMs >= this.busyWindowMs(doc));
     // 2) grow the free-list up to the cap
     if (!entry && list.length < MAX_POOL_PER_DOC) {
-      entry = { ps: toParticleSystem(doc, this.scene, { scale }), lastUsedMs: -Infinity };
+      entry = {
+        ps: toParticleSystem(doc, this.scene, {
+          scale,
+          resolveTextureUrl: this.ctx.resolveTextureUrl,
+        }),
+        lastUsedMs: -Infinity,
+      };
       list.push(entry);
     }
     // 3) steal the least-recently-used (oldest particles on screen)
@@ -2424,10 +2474,21 @@ export class VfxSystem {
         //    `boneOn:"victim"` 時送受擊者的 entity id），缺席才退回 `caster`
         //    ⇒ 既有內容逐位元同以前。⛔ `caster` 不可以被覆寫：底下的
         //    `moveTrail.mark`、瞄準向量、反彈電弧種子三個消費端都在讀它。
+        const flyHeight = data.overrides?.flyHeight;
         const anchor =
           typeof data.attach === "string"
             ? this.boneSpawnPos(data.attach, data.attachTo ?? data.caster, x, z)
-            : { x, y: 1.0, z };
+            : {
+                x,
+                // `flyHeight` is a spatial parameter: applyVfxOverrides only
+                // changes the document/pool signature and cannot move the
+                // emitter.  Script-authored vfxSpawn used to accept this field
+                // and silently keep y=1, so the Forge slider lied.
+                y: typeof flyHeight === "number"
+                  ? flyHeight / WC3_UNITS_PER_WORLD_UNIT
+                  : DEFAULT_LAYER_HEIGHT_Y,
+                z,
+              };
         // ⭐ GH#641 —— 一次性特效也認 `orient.yawFrom:"aim"`。在此之前只有施法
         //    階梯那條路會走 `applyAimYaw`，於是 hook／道具觸發的 spawnVfx 一律朝
         //    世界方向噴 ——「受傷角色**背後**大量噴血」在文件裡寫不出來。
@@ -2467,27 +2528,6 @@ export class VfxSystem {
         }
         break;
       }
-      case "vfxScriptBeam": {
-        const beam = ev.data as unknown as ScriptBeamEvent;
-        if (
-          ![
-            beam.x,
-            beam.z,
-            beam.dx,
-            beam.dz,
-            beam.lengthU,
-            beam.widthU,
-            beam.heightU,
-            beam.pitchDeg,
-            beam.travelU,
-            beam.durationSec,
-            beam.alpha,
-          ].every(Number.isFinite)
-        ) break;
-        this.scriptBeams.spawn(beam, nowMs);
-        break;
-      }
-
       /**
        * ⚡ 一段電弧的**通用**要求（和上面的 `vfxSpawn` 是同一個形狀：引擎送
        * 世界座標，客戶端畫）。差別只有一個 —— 弧有**兩端**。
@@ -2872,7 +2912,6 @@ export class VfxSystem {
     // ⚡ 電弧：推進亮度,壽命到的還回 free-list。**一跳一閃**,所以絕大多數幀
     // 這一圈走的是空陣列。
     this.arcs.update(nowMs);
-    this.scriptBeams.update(nowMs);
     // ⭐ GH#494 金幣：停留 → 貝茲加速 → 到站播音效並 `dispose()` 那一枚 instance。
     // ⚠️ 放在 `syncGroundEntities` **之後**，這樣目標讀到的是這一幀的英雄位置
     // （英雄邊打邊跑，用上一幀的位置會讓金幣永遠差一格）。
@@ -2950,7 +2989,11 @@ export class VfxSystem {
    * 遇到新的 tint。血/打擊回饋的 key 是有限的列舉，那兩個確實有界；
    * **打擊感不是**，所以現在它也在回合邊界被還回去（後台可切）。
    */
-  resetForRound(): void {
+  resetForRound(
+    edgeOrOpts?: "entry" | "enter" | "leave" | "exit" | { preserveOneShotPool?: boolean },
+  ): void {
+    const preserveOneShotPool =
+      typeof edgeOrOpts === "object" && edgeOrOpts.preserveOneShotPool === true;
     // ⭐ GH#838 —— 上一輪尚未到期的 script segment／等待 castEnd 的 frame
     // 不能活進下一輪。Forge 的 scrub 也走這條正式重置路，少這行會讓每次重播
     // 都多疊一份延遲演出。
@@ -2963,7 +3006,6 @@ export class VfxSystem {
     this.telegraphLayer.clear(); // 每個施法者的地面預告圈
     this.pillars.clear(); // 向天光束（#233）
     this.arcs.clear(); // ⚡ 上一回合最後一跳的電，⛔ 不可以跟著進商店（#216 / #259）
-    this.scriptBeams.clear();
     // ⭐ GH#567 —— 還在飛的守衛砲彈與還在演的伸縮動作都不跨回合（同上一行的理由）。
     this.guardianVolley.resetForRound();
     clearGuardianRecoils();
@@ -2980,8 +3022,22 @@ export class VfxSystem {
     this.pendingLayers = [];
 
     // 2) 只會長不會縮的池子：整個還回去
-    for (const list of this.pool.values()) for (const e of list) e.ps.dispose();
-    this.pool.clear();
+    if (preserveOneShotPool) {
+      // Authoring scrub only: keep decoded textures and allocated systems, but
+      // erase every live particle and make every slot immediately reusable.
+      // The shipped round-boundary caller omits this option and still disposes
+      // the complete pool exactly as before.
+      for (const list of this.pool.values()) {
+        for (const entry of list) {
+          entry.ps.stop();
+          entry.ps.reset();
+          entry.lastUsedMs = -Infinity;
+        }
+      }
+    } else {
+      for (const list of this.pool.values()) for (const e of list) e.ps.dispose();
+      this.pool.clear();
+    }
     this.w3xCast.resetForRound();
     // ⛔ 回合邊界不清 = 上一回合的光束／閃爍／文字活過來（#131 孤兒發射器的形狀）。
     this.modelFx?.resetForRound();
@@ -3039,7 +3095,6 @@ export class VfxSystem {
     this.castDecals.dispose();
     this.pillars.dispose();
     this.arcs.dispose();
-    this.scriptBeams.dispose();
     // ⭐ GH#567 —— 來源網格 + 共用材質（instance 在 resetForRound 裡已經丟了）。
     this.guardianVolley.dispose();
     clearGuardianRecoils();

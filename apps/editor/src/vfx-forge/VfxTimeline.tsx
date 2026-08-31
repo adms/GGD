@@ -2,7 +2,7 @@ import type { VfxScriptDoc, VfxScriptSegment } from "@ggd/shared/content/schema/
 import { decodeAssetDrag, segmentTimes, type AssetDrop, type TriggerCue } from "./model";
 
 const KINDS: VfxScriptSegment["kind"][] = [
-  "modelFx", "vfx", "beam", "floatingText", "screenFlash", "screenShake", "sound", "anim", "hideBody",
+  "modelFx", "vfx", "floatingText", "screenFlash", "screenShake", "sound", "anim", "hideBody",
 ];
 
 export function VfxTimeline({

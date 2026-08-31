@@ -74,6 +74,7 @@ export function VfxForgePage() {
   const [isNew, setIsNew] = useState(false);
   const [selected, setSelected] = useState(0);
   const [playheadMs, setPlayheadMs] = useState(0);
+  const [seekRevision, setSeekRevision] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [previewMode, setPreviewMode] = useState<VfxForgeStageMode>("runtime");
   const [status, setStatus] = useState("載入中…");
@@ -390,6 +391,7 @@ export function VfxForgePage() {
                 schedule={schedule}
                 durationMs={durationMs}
                 playheadMs={playheadMs}
+                seekRevision={seekRevision}
                 playing={playing}
                 caster={runtimeChampion}
                 target={runtimeTarget}
@@ -406,7 +408,14 @@ export function VfxForgePage() {
                 playing={playing}
                 selected={selectedIndex}
                 onSelect={setSelected}
-                onSeek={(ms) => { setPlaying(false); setPlayheadMs(ms); }}
+                onSeek={(ms) => {
+                  setPlaying(false);
+                  setPlayheadMs(ms);
+                  // Repaint even when the author enters the same timestamp:
+                  // layout/fullscreen may have cleared WebGL while the logical
+                  // playhead stayed unchanged.
+                  setSeekRevision((revision) => revision + 1);
+                }}
                 onTogglePlay={() => setPlaying((v) => !v)}
                 onRestart={() => { setPlaying(false); setPlayheadMs(0); }}
                 onStep={(frames) => {
@@ -423,6 +432,7 @@ export function VfxForgePage() {
               count={draft.segments.length}
               errors={stripSegmentErrorPrefix(errors, selectedIndex)}
               onChange={(segment) => mutate((doc) => ({ ...doc, segments: doc.segments.map((s, i) => i === selectedIndex ? segment : s) }))}
+              onSelect={setSelected}
               onDelete={() => {
                 mutate((doc) => ({ ...doc, segments: doc.segments.filter((_, i) => i !== selectedIndex) }));
                 setSelected(Math.max(0, selectedIndex - 1));

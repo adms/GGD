@@ -36,6 +36,38 @@ describe("VFX Forge asset backdrop gate", () => {
     expect((await gate.check({ collection: "vfx", id: "good" })).safe).toBe(true);
   });
 
+  it("does not mistake one transparent speck for a removed particle backdrop", async () => {
+    const docs = new Map<string, unknown>([
+      ["speck", { id: "speck", schema: "vfx@1", texture: "assets/speck.png", blendMode: "alpha", color: [1, 1, 1, 1] }],
+      ["sprite", { id: "sprite", schema: "vfx@1", texture: "assets/sprite.png", blendMode: "alpha", color: [1, 1, 1, 1] }],
+    ]);
+    const source = {
+      doc: async <T,>(_collection: "models" | "vfx", id: string): Promise<T> => docs.get(id) as T,
+      assetBytes: async (path: string): Promise<ArrayBuffer> => new TextEncoder().encode(path).buffer,
+    };
+    const decode = async (bytes: ArrayBuffer): Promise<DecodedRaster> => {
+      const path = new TextDecoder().decode(bytes);
+      const out = raster([255, 255, 255, 255]);
+      if (path.includes("speck")) {
+        out.rgba.set([255, 255, 255, 0], 0);
+      } else {
+        for (let y = 0; y < out.height; y++) {
+          for (let x = 0; x < out.width; x++) {
+            if (x === 0 || y === 0 || x === out.width - 1 || y === out.height - 1) {
+              out.rgba.set([255, 255, 255, 0], (y * out.width + x) * 4);
+            }
+          }
+        }
+      }
+      return out;
+    };
+    const gate = new AssetSafetyGate(source, decode);
+    const speck = await gate.check({ collection: "vfx", id: "speck" });
+    expect(speck.code).toBe("TEXTURE_BACKDROP");
+    expect(speck.detail).toContain("邊緣可消失");
+    expect((await gate.check({ collection: "vfx", id: "sprite" })).safe).toBe(true);
+  });
+
   it("collects model, particle and model-trail refs once, then guards the sole write seam", async () => {
     const script: VfxScriptDoc = {
       id: "skill.a",

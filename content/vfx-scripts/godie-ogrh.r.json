@@ -4,10 +4,64 @@
   "abilityId": "godie-ogrh.r",
   "notes": "09-04 龜派氣功（原作參考 XkFlhrLaHeA@68）。雙手聚氣後打出橘金、寬而連續的橫向氣功砲；damageLine、命中與傷害仍住 ability JSON。",
   "segments": [
-    { "kind": "floatingText", "on": "castStart", "text": "龜 · 派 · 氣 · 功", "colorRgb": [255, 166, 48], "sizeScale": 1.5, "durationSec": 0.9 },
-    { "kind": "anim", "on": "castStart", "at": "caster", "pulse": "cast", "clipWindowMs": 900 },
-    { "kind": "beam", "on": "castEffect", "at": "caster", "lengthU": 14, "widthU": 2.3, "heightU": 1, "pitchDeg": 0, "durationSec": 1.05, "colorRgb": [255, 103, 9], "alpha": 1 },
-    { "kind": "beam", "on": "castEffect", "atMs": 45, "at": "caster", "lengthU": 14, "widthU": 0.76, "heightU": 1, "pitchDeg": 0, "durationSec": 1, "colorRgb": [255, 238, 192], "alpha": 1 },
-    { "kind": "screenShake", "on": "castEffect", "amplitude": 0.38, "durationSec": 0.9 }
+    {
+      "text": "龜 · 派 · 氣 · 功",
+      "colorRgb": [
+        255,
+        166,
+        48
+      ],
+      "sizeScale": 1.5,
+      "durationSec": 0.9,
+      "kind": "floatingText",
+      "on": "castStart"
+    },
+    {
+      "kind": "anim",
+      "on": "castStart",
+      "at": "caster",
+      "pulse": "cast",
+      "clipWindowMs": 900
+    },
+    {
+      "vfxId": "fx.prim.holy.beam-flat",
+      "at": "self",
+      "durationSec": 1.05,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 0,
+      "offsetForwardU": 2.5,
+      "w3xScale": 2.2,
+      "tint": [
+        255,
+        105,
+        20
+      ],
+      "flyHeight": 128,
+      "alpha": 1
+    },
+    {
+      "vfxId": "fx.prim.holy.beam-flat",
+      "at": "self",
+      "durationSec": 1,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 45,
+      "offsetForwardU": 2.5,
+      "w3xScale": 1.1,
+      "tint": [
+        255,
+        230,
+        140
+      ],
+      "flyHeight": 128,
+      "alpha": 1
+    },
+    {
+      "amplitude": 0.38,
+      "durationSec": 0.9,
+      "kind": "screenShake",
+      "on": "castEffect"
+    }
   ]
 }

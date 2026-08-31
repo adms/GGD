@@ -2,6 +2,12 @@ import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
 import type { AssetDrop } from "./model";
 
 const MIN_NEUTRAL_SHARE = 0.001;
+// A single transparent speck is not a removed background. Particle sprites are
+// rendered on camera-facing quads, so their OUTER EDGE must mostly disappear
+// under the authored blend equation or the rectangular carrier is visible in
+// actual play. Keep this separate from the total-share floor: tightly cropped
+// beams may touch two sides while still having clean corners/other edges.
+const MIN_NEUTRAL_EDGE_SHARE = 0.25;
 const NEUTRAL_CODE_VALUE = 1 / 255;
 const ALPHA_BACKGROUND_MAX = 5;
 const BRIGHT_MATTE_MIN = 8;
@@ -114,20 +120,28 @@ export class AssetSafetyGate implements VfxScriptAssetGuard {
     const raster = await this.decode(await this.source.assetBytes(doc.texture), "image/png");
     const colors = colorsOf(doc);
     let neutral = 0;
-    forEachPixel(raster, (pixel) => {
-      if (isCompositingNeutral(doc.blendMode!, colors, pixel)) neutral++;
+    let neutralEdge = 0;
+    let edgePixels = 0;
+    forEachPixel(raster, (pixel, x, y) => {
+      const isNeutral = isCompositingNeutral(doc.blendMode!, colors, pixel);
+      if (isNeutral) neutral++;
+      if (isEdgePixel(raster, x, y)) {
+        edgePixels++;
+        if (isNeutral) neutralEdge++;
+      }
     });
     const share = neutral / pixelCount(raster);
-    if (share < MIN_NEUTRAL_SHARE) {
+    const edgeShare = edgePixels > 0 ? neutralEdge / edgePixels : 0;
+    if (share < MIN_NEUTRAL_SHARE || edgeShare < MIN_NEUTRAL_EDGE_SHARE) {
       return {
         asset,
         safe: false,
         code: "TEXTURE_BACKDROP",
         summary: "貼圖在實際混合模式下會畫出整張底板",
-        detail: `${doc.texture} · ${doc.blendMode} · 可消失背景 ${(share * 100).toFixed(3)}%`,
+        detail: `${doc.texture} · ${doc.blendMode} · 可消失背景 ${(share * 100).toFixed(3)}% · 邊緣可消失 ${(edgeShare * 100).toFixed(1)}%`,
       };
     }
-    return safe(asset, `去背通過 · ${doc.blendMode} · 可消失背景 ${(share * 100).toFixed(2)}%`);
+    return safe(asset, `去背通過 · ${doc.blendMode} · 可消失背景 ${(share * 100).toFixed(2)}% · 邊緣 ${(edgeShare * 100).toFixed(1)}%`);
   }
 
   private async checkModel(asset: AssetDrop): Promise<AssetSafetyResult> {
@@ -303,11 +317,23 @@ function pixelCount(raster: DecodedRaster): number {
   return raster.width * raster.height;
 }
 
-function forEachPixel(raster: DecodedRaster, visit: (pixel: Rgba) => void): void {
+function forEachPixel(
+  raster: DecodedRaster,
+  visit: (pixel: Rgba, x: number, y: number) => void,
+): void {
   pixelCount(raster);
   for (let i = 0; i < raster.rgba.length; i += 4) {
-    visit([raster.rgba[i]!, raster.rgba[i + 1]!, raster.rgba[i + 2]!, raster.rgba[i + 3]!]);
+    const pixel = i / 4;
+    visit(
+      [raster.rgba[i]!, raster.rgba[i + 1]!, raster.rgba[i + 2]!, raster.rgba[i + 3]!],
+      pixel % raster.width,
+      Math.floor(pixel / raster.width),
+    );
   }
+}
+
+function isEdgePixel(raster: DecodedRaster, x: number, y: number): boolean {
+  return x === 0 || y === 0 || x === raster.width - 1 || y === raster.height - 1;
 }
 
 function toOwnedArrayBuffer(bytes: Uint8Array): ArrayBuffer {

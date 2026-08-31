@@ -33,7 +33,6 @@ import { modelFxInstancesFromFrame } from "@ggd/shared/sim/effects/modelFxPlacem
 import type { ModelFxSpawnEvent } from "@ggd/shared/sim/effects/spawnModelFx";
 import type { FloatingTextEvent, ScreenFlashEvent, ScreenShakeEvent } from "@ggd/shared/sim/effects/clientCues";
 import type { VfxSpawnEvent } from "@ggd/shared/sim/effects/spawnVfx";
-import type { ScriptBeamEvent } from "./ScriptBeamFx";
 
 /**
  * 面向座標系的位移（JASS PolarProjectionBJ 的翻譯；＋side＝面向的右手邊）。
@@ -555,41 +554,6 @@ export class VfxScriptPlayer {
         //    其他觸發器解不到人就退回施法者，⛔ 不是靜靜跳過（失敗形態②）。
         const id = seg.at === "caster" ? frame.caster : (frame.victim ?? frame.caster);
         this.deps.pulseAnim?.(id, seg.pulse, seg.clipWindowMs !== undefined ? { clipWindowMs: seg.clipWindowMs } : undefined);
-        return;
-      }
-      case "beam": {
-        const anchored = this.anchorPos(seg.at ?? "caster", frame);
-        if (!anchored) return;
-        let dx = frame.direction?.x ?? 0;
-        let dz = frame.direction?.z ?? 0;
-        if (Math.hypot(dx, dz) < 1e-6 && frame.targetPos) {
-          dx = frame.targetPos.x - anchored.x;
-          dz = frame.targetPos.z - anchored.z;
-        }
-        const len = Math.hypot(dx, dz);
-        if (len < 1e-6) { dx = 0; dz = 1; }
-        else { dx /= len; dz /= len; }
-        const yaw = ((seg.yawOffsetDeg ?? 0) * Math.PI) / 180;
-        const cos = Math.cos(yaw);
-        const sin = Math.sin(yaw);
-        const payload: ScriptBeamEvent = {
-          x: anchored.x,
-          z: anchored.z,
-          dx: dx * cos - dz * sin,
-          dz: dx * sin + dz * cos,
-          lengthU: seg.lengthU,
-          widthU: seg.widthU,
-          heightU: seg.heightU,
-          pitchDeg: seg.pitchDeg,
-          travelU: seg.travelU ?? 0,
-          durationSec: seg.durationSec,
-          colorRgb: seg.colorRgb,
-          alpha: seg.alpha,
-        };
-        this.deps.dispatch(
-          { type: "vfxScriptBeam", tick: frame.tick, data: payload as unknown as Record<string, unknown> },
-          nowMs,
-        );
         return;
       }
     }

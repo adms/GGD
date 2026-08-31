@@ -209,7 +209,7 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .vfx-asset.safe small { color: #77c995; }
 .vfx-asset.unsafe { border-color: #9b3434; background: #2a1719; cursor: not-allowed; }
 .vfx-asset.unsafe span, .vfx-asset.unsafe small { color: #ff918b; }
-.vfx-forge-center { min-width: 0; display: grid; grid-template-rows: minmax(410px, 58vh) minmax(280px, auto); }
+.vfx-forge-center { min-width: 0; display: grid; grid-template-rows: minmax(410px, 58vh) minmax(400px, auto); }
 .vfx-stage { position: relative; min-height: 380px; overflow: hidden; contain: paint; transform: translateZ(0); background: #080a10; }
 .vfx-stage.focused { position: fixed; inset: 0; width: 100vw; height: 100vh; min-height: 0; max-height: none; margin: 0; border-radius: 0; z-index: 10000; }
 .vfx-stage canvas { display: block; width: 100%; height: 100%; touch-action: none; }
@@ -268,7 +268,16 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .vfx-scrubber { width: 100%; margin: 8px 0 2px; accent-color: #bd8cff; }
 .vfx-ruler { position: relative; height: 9px; border-top: 1px solid #42495b; }
 .vfx-ruler span { position: absolute; top: -3px; width: 1px; height: 8px; background: #e4a74e; }
-.vfx-tracks { display: flex; flex-direction: column; gap: 3px; }
+.vfx-tracks {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  max-height: 360px;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
 .vfx-track { display: grid; grid-template-columns: 130px 130px 1fr; gap: 8px; align-items: center; width: 100%; padding: 4px 7px; text-align: left; border-color: transparent; background: #181d28; }
 .vfx-track:hover, .vfx-track.active { border-color: #9e72d2; background: #211a2e; }
 .vfx-track b { font-size: 11px; }

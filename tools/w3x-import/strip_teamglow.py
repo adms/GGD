@@ -46,10 +46,10 @@ Usage:
 """
 from __future__ import annotations
 
+import argparse
 import glob
 import json
 import os
-import sys
 
 from strip_geoset_prims import read_glb, write_glb, strip, GLB_DIR
 
@@ -112,17 +112,38 @@ def teamglow_drops(gltf: dict) -> dict[int, str]:
     return drop
 
 
-def main() -> int:
-    if "--list-models" in sys.argv:
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Remove shipped champion TeamGlow billboard primitives.",
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="report matching primitives without rewriting GLBs",
+    )
+    parser.add_argument(
+        "--only",
+        metavar="GLB_NAME",
+        help="limit the sweep to GLB filenames containing this text",
+    )
+    parser.add_argument(
+        "--list-models",
+        action="store_true",
+        help="print the exact shipped champion-body corpus and exit",
+    )
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+    if args.list_models:
         # The set this sweep actually judges, as DATA. The guard reads this
         # rather than grepping the source (CLAUDE.md 失敗形態 ⑥).
         for mk, name in champion_model_glbs():
             print(f"{mk}\t{name}")
         return 0
-    dry = "--dry-run" in sys.argv
-    only = None
-    if "--only" in sys.argv:
-        only = sys.argv[sys.argv.index("--only") + 1]
+    dry = args.dry_run
+    only = args.only
     total = 0
     for mk, name in champion_model_glbs():
         if only and only not in name:

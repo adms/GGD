@@ -4,13 +4,84 @@
   "abilityId": "godie-hart.r",
   "notes": "01-04 超究武神霸斬（原作參考 9X6LCjFgAiA）。逐刀由真 comboStrike 驅動黃藍交叉斬痕與角色動畫；第七段升起黃藍直立光束砲。傷害與七段時序仍只住 ability JSON。",
   "segments": [
-    { "kind": "floatingText", "on": "castStart", "text": "超究武神霸斬", "colorRgb": [255, 212, 90], "sizeScale": 1.8, "durationSec": 1.2 },
-    { "kind": "anim", "on": "strike", "at": "caster", "pulse": "attack", "clipWindowMs": 320 },
-    { "kind": "anim", "on": "strike", "at": "target", "pulse": "hurt", "clipWindowMs": 520 },
-    { "kind": "beam", "on": "strike", "at": "target", "lengthU": 4.2, "widthU": 0.34, "heightU": 1.1, "yawOffsetDeg": 52, "pitchDeg": 0, "durationSec": 0.24, "colorRgb": [255, 194, 42], "alpha": 1 },
-    { "kind": "beam", "on": "strike", "atMs": 35, "at": "target", "lengthU": 3.8, "widthU": 0.26, "heightU": 1.1, "yawOffsetDeg": -58, "pitchDeg": 0, "durationSec": 0.22, "colorRgb": [36, 145, 255], "alpha": 0.95 },
-    { "kind": "beam", "on": "strike", "strikeIndex": 7, "at": "target", "lengthU": 12, "widthU": 2.2, "heightU": 0, "pitchDeg": -90, "durationSec": 1.35, "colorRgb": [255, 190, 28], "alpha": 0.95 },
-    { "kind": "beam", "on": "strike", "strikeIndex": 7, "atMs": 70, "at": "target", "lengthU": 10.5, "widthU": 1.1, "heightU": 0, "pitchDeg": -90, "durationSec": 1.2, "colorRgb": [26, 132, 255], "alpha": 1 },
-    { "kind": "screenShake", "on": "strike", "strikeIndex": 7, "amplitude": 0.55, "durationSec": 0.6 }
+    {
+      "text": "超究武神霸斬",
+      "colorRgb": [
+        255,
+        212,
+        90
+      ],
+      "sizeScale": 1.8,
+      "durationSec": 1.2,
+      "kind": "floatingText",
+      "on": "castStart"
+    },
+    {
+      "kind": "anim",
+      "on": "strike",
+      "at": "caster",
+      "pulse": "attack",
+      "clipWindowMs": 320
+    },
+    {
+      "kind": "anim",
+      "on": "strike",
+      "at": "target",
+      "pulse": "hurt",
+      "clipWindowMs": 520
+    },
+    {
+      "vfxId": "fx.prim.holy.slash-lg",
+      "at": "target",
+      "durationSec": 0.24,
+      "kind": "vfx",
+      "on": "strike",
+      "atMs": 0,
+      "w3xScale": 1.6,
+      "flyHeight": 141,
+      "alpha": 1,
+      "facingDeg": 52
+    },
+    {
+      "vfxId": "fx.prim.lightning.slash",
+      "at": "target",
+      "durationSec": 0.22,
+      "kind": "vfx",
+      "on": "strike",
+      "atMs": 35,
+      "w3xScale": 1.5,
+      "flyHeight": 141,
+      "alpha": 0.95,
+      "facingDeg": -58
+    },
+    {
+      "vfxId": "fx.fam.light-column.holy.s150",
+      "at": "target",
+      "durationSec": 1.35,
+      "kind": "vfx",
+      "on": "strike",
+      "atMs": 0,
+      "strikeIndex": 7,
+      "w3xScale": 2.2,
+      "alpha": 0.95
+    },
+    {
+      "vfxId": "fx.fam.light-column.w3x-00ffff.s150",
+      "at": "target",
+      "durationSec": 1.2,
+      "kind": "vfx",
+      "on": "strike",
+      "atMs": 70,
+      "strikeIndex": 7,
+      "w3xScale": 1.3,
+      "alpha": 1
+    },
+    {
+      "amplitude": 0.55,
+      "durationSec": 0.6,
+      "kind": "screenShake",
+      "on": "strike",
+      "strikeIndex": 7
+    }
   ]
 }

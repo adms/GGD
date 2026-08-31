@@ -160,6 +160,8 @@ export interface W3xCastFxOptions {
   budget?: W3xEmitterRigOptions["budget"];
   /** test seam: NullEngine tests inject a stub texture factory */
   createTexture?: W3xEmitterRigOptions["createTexture"];
+  /** content path resolver supplied by an embedded authoring host */
+  resolveTextureUrl?: W3xEmitterRigOptions["resolveTextureUrl"];
 }
 
 interface LiveCast {
@@ -414,6 +416,7 @@ export class W3xCastFx {
         maxEffectSec: W3X_CAST_MAX_SEC,
         ...(this.opts.budget ? { budget: this.opts.budget } : {}),
         ...(this.opts.createTexture ? { createTexture: this.opts.createTexture } : {}),
+        ...(this.opts.resolveTextureUrl ? { resolveTextureUrl: this.opts.resolveTextureUrl } : {}),
       });
     } catch {
       // A rig we cannot build must never take the cast down with it: the caller

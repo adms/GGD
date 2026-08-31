@@ -4,12 +4,90 @@
   "abilityId": "godie-nbbc.r",
   "notes": "08-04 阿邦快速劍X（原作參考 QE9RrCjt428@157）。A 式藍白衝擊波先行，B 式小呆高速 dash 斬穿並留下橘白終結斬；damageLine、mark、blink 與真傷仍住 ability JSON。",
   "segments": [
-    { "kind": "floatingText", "on": "castStart", "text": "阿邦快速劍X", "colorRgb": [120, 218, 255], "sizeScale": 1.45, "durationSec": 1 },
-    { "kind": "beam", "on": "castEffect", "at": "caster", "lengthU": 12, "widthU": 0.9, "heightU": 1, "pitchDeg": 0, "durationSec": 0.48, "colorRgb": [48, 176, 255], "alpha": 0.95 },
-    { "kind": "hideBody", "on": "castEffect", "atMs": 420, "at": "caster", "durationMs": 560 },
-    { "kind": "modelFx", "on": "castEffect", "atMs": 420, "modelKey": "imported.sd2", "path": "toTarget", "speed": 28, "lifeSec": 0.56, "clip": "attack", "clipTimeScale": 3.2, "scale": 1, "tint": [0.2, 0.58, 1], "alpha": 1 },
-    { "kind": "beam", "on": "castEffect", "atMs": 430, "at": "caster", "lengthU": 12, "widthU": 0.34, "heightU": 1, "pitchDeg": 0, "durationSec": 0.52, "colorRgb": [255, 220, 124], "alpha": 1 },
-    { "kind": "beam", "on": "castEffect", "atMs": 680, "at": "target", "lengthU": 3.6, "widthU": 0.42, "heightU": 1, "yawOffsetDeg": 62, "pitchDeg": 0, "durationSec": 0.36, "colorRgb": [255, 151, 30], "alpha": 1 },
-    { "kind": "screenShake", "on": "castEffect", "atMs": 680, "amplitude": 0.46, "durationSec": 0.38 }
+    {
+      "text": "阿邦快速劍X",
+      "colorRgb": [
+        120,
+        218,
+        255
+      ],
+      "sizeScale": 1.45,
+      "durationSec": 1,
+      "kind": "floatingText",
+      "on": "castStart"
+    },
+    {
+      "vfxId": "fx.prim.lightning.beam-flat",
+      "at": "self",
+      "durationSec": 0.48,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 0,
+      "offsetForwardU": 2,
+      "w3xScale": 1.6,
+      "tint": [
+        130,
+        210,
+        255
+      ],
+      "flyHeight": 128,
+      "alpha": 0.95
+    },
+    {
+      "kind": "hideBody",
+      "on": "castEffect",
+      "atMs": 420,
+      "at": "caster",
+      "durationMs": 560
+    },
+    {
+      "modelKey": "imported.sd2",
+      "path": "toTarget",
+      "speed": 28,
+      "clip": "attack",
+      "clipTimeScale": 3.2,
+      "scale": 1,
+      "tint": [
+        0.2,
+        0.58,
+        1
+      ],
+      "alpha": 1,
+      "lifeSec": 0.56,
+      "kind": "modelFx",
+      "on": "castEffect",
+      "atMs": 420
+    },
+    {
+      "vfxId": "fx.prim.holy.slash-lg",
+      "at": "self",
+      "durationSec": 0.52,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 430,
+      "offsetForwardU": 1,
+      "w3xScale": 1.2,
+      "flyHeight": 128,
+      "alpha": 1
+    },
+    {
+      "vfxId": "fx.prim.fire.explosion",
+      "at": "target",
+      "durationSec": 0.36,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 680,
+      "w3xScale": 1.5,
+      "flyHeight": 128,
+      "alpha": 1,
+      "facingDeg": 62
+    },
+    {
+      "amplitude": 0.46,
+      "durationSec": 0.38,
+      "kind": "screenShake",
+      "on": "castEffect",
+      "atMs": 680
+    }
   ]
 }

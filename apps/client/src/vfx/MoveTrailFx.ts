@@ -52,7 +52,7 @@
 import type { Scene } from "@babylonjs/core/scene";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { RibbonDefs, type RibbonDoc } from "@ggd/shared/content";
-import { RibbonBudget, RibbonTrail } from "./RibbonTrail";
+import { RibbonBudget, RibbonTrail, type RibbonTrailOptions } from "./RibbonTrail";
 
 /**
  * 錨點高度（世界單位）—— 緞帶的寬度是**沿世界 Y** 展開的
@@ -110,6 +110,8 @@ export class MoveTrailFx {
     /** 注入點：出貨走真的登錄表，守衛可以餵一份文件進來而不啟動整個 registry */
     private readonly lookup: (id: string) => RibbonDoc | null = (id) =>
       RibbonDefs.tryGet(id) ?? null,
+    /** Embedded tools resolve the same authored texture through their middleware. */
+    private readonly textureOpts: Pick<RibbonTrailOptions, "resolveTextureUrl" | "createTexture"> = {},
   ) {}
 
   /** 現在有幾具身體在拖（守衛讀這個）。 */
@@ -149,7 +151,10 @@ export class MoveTrailFx {
     if (!t) {
       const node = new TransformNode(`movetrail-${entityId}`, this.scene);
       const trail =
-        this.pool.get(vfxId)?.pop() ?? new RibbonTrail(this.scene, doc, { budget: this.budget });
+        this.pool.get(vfxId)?.pop() ?? new RibbonTrail(this.scene, doc, {
+          budget: this.budget,
+          ...this.textureOpts,
+        });
       // ⭐ 承重的一行：**⛔ 不傳 reference** ⇒ 緞帶量的是**絕對**世界速度，
       //    也就是「這具身體移動得多快」。傳了 root 就會變回刀光（走路 = 沒有）。
       trail.attachTo(node, nowMs);

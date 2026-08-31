@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "af02bf978ba8",
+  "fingerprint": "71b5be5a4f57",
   "capabilityFingerprint": "111434fa",
   "required": [
     {
@@ -23541,71 +23541,6 @@
     },
     {
       "group": "vfxScriptField",
-      "name": "segments[].kind=beam.alpha",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=beam.at",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=beam.atMs",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=beam.colorRgb",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=beam.durationSec",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=beam.heightU",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=beam.lengthU",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=beam.on",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=beam.pitchDeg",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=beam.strikeIndex",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=beam.travelU",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=beam.widthU",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=beam.yawOffsetDeg",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
       "name": "segments[].kind=bodyMove.at",
       "owner": "vfx-script@1"
     },
@@ -24187,10 +24122,10 @@
     "modelField": 42,
     "projectileField": 15,
     "skinField": 9,
-    "vfxScriptField": 138,
+    "vfxScriptField": 125,
     "configField": 3793,
     "_notRequired": 15,
-    "_total": 4956,
+    "_total": 4943,
     "_ownerOnly": 39
   }
 }

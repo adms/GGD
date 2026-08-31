@@ -34,14 +34,16 @@ import {
 import { normalizedModelScale } from "../../../client/src/render/views/modelSizing";
 import { VfxScriptPlayer } from "../../../client/src/vfx/VfxScriptPlayer";
 import { VfxSystem } from "../../../client/src/vfx/VfxSystem";
-import { ScriptBeamFx, type ScriptBeamEvent } from "../../../client/src/vfx/ScriptBeamFx";
 import { vfxHardMaxLifeSec } from "../../../client/src/vfx/vfxCleanupPolicy";
 import {
   applyVfxOverrides,
   WC3_UNITS_PER_WORLD_UNIT,
 } from "../../../client/src/render/vfx/abilityLayers";
+import { applyAimYaw } from "../../../client/src/render/vfx/artParams";
+import { yawDegToward } from "../../../client/src/vfx/orient";
 import { api } from "../api/client";
 import { loadGlbContainer } from "../preview3d/loadGlb";
+import { assetUrl } from "../preview3d/assetUrl";
 import { resolveClip } from "../preview3d/clips";
 import { burstNow, toParticleSystem } from "../preview3d/particles";
 import { projectileIdsOf, type ForgeAbility, type ScheduledSimEvent } from "./model";
@@ -153,7 +155,6 @@ export class VfxForgeStage {
   private readonly fetchDoc: NonNullable<VfxForgeStageOptions["fetchDoc"]>;
   private readonly onOverlay: NonNullable<VfxForgeStageOptions["onOverlay"]>;
   private readonly modelRig: ModelFxRig;
-  private readonly scriptBeams: ScriptBeamFx;
   private readonly groundFloor: ReturnType<typeof buildZoneGround>["floor"];
   private readonly actors: { caster: ForgeActor; target: ForgeActor };
   private actorReady: Promise<void> = Promise.resolve();
@@ -194,7 +195,14 @@ export class VfxForgeStage {
       root,
       { center: { ...this.homePose.caster }, boundaryRadius: 24 },
       0,
-      "stone",
+      // VFX Forge can read a local workspace or a remote reference profile via
+      // `/content-api/`; ArenaGround's shipped texture loader intentionally
+      // targets the game's `/content/` mount. Asking it for `stone` here makes
+      // a failed editor-route request settle to Babylon's opaque white texture
+      // a moment later, washing the WHOLE arena out and looking exactly like
+      // every particle/model forgot its alpha. Keep the real floor geometry
+      // and lighting but use ArenaGround's textureless stone fallback.
+      undefined,
     );
     this.groundFloor = ground.floor;
     this.groundFloor.isPickable = true;
@@ -219,15 +227,18 @@ export class VfxForgeStage {
       spawnTrail: (id, x, y, z) => void this.spawnVfx(id, x, z, y),
       maxEffectSec: vfxHardMaxLifeSec(),
     });
-    this.scriptBeams = new ScriptBeamFx(this.scene);
     this.player = this.makePlayer();
-    this.runtimeVfx = this.mode === "runtime"
-      ? new VfxSystem(this.scene, {
+    // Both preview modes use the shipped VfxSystem for particle lifetime and
+    // pooling.  "script" only changes who supplies the trigger events; it must
+    // not fall back to a disposable one-off ParticleSystem path whose texture
+    // is still loading every time the playhead seeks.
+    this.runtimeVfx = new VfxSystem(this.scene, {
           entityPos: (id) => this.actorForEntity(id).position,
           championIdOf: (id) => this.actorForEntity(id).champion?.id ?? null,
           localEntityId: () => this.casterEntityId() ?? null,
           teamOf: (id) => id === this.casterEntityId() ? 0 : 1,
           vfxDoc: (id) => VfxDefs.tryGet(id) ?? this.vfx.get(id) ?? null,
+          resolveTextureUrl: assetUrl,
           modelDocFor: (id) => Models.tryGet(id) ?? this.models.get(id) ?? null,
           loadModelContainer: (path) => this.loadModelFxContainer(path),
           pulseAnim: (id, kind, pulse) => this.pulseActor(id, kind, pulse?.clipWindowMs),
@@ -238,8 +249,7 @@ export class VfxForgeStage {
           // registered content collection.
           vfxScriptFor: (id) => id === this.script.abilityId ? this.script : undefined,
           allVfxScripts: () => [this.script],
-        })
-      : null;
+        });
     this.runtimeVfx?.installShakeSink((amplitude, durationMs) => {
       this.cameraRig.addShake(amplitude, durationMs);
     });
@@ -274,6 +284,15 @@ export class VfxForgeStage {
         ? this.preloadRuntimeAssets(ability)
         : this.preloadScriptAssets(script),
     ]);
+    const warmDocs = script.segments.flatMap((segment) => {
+      if (segment.kind !== "vfx") return [];
+      const doc = this.vfx.get(segment.vfxId) ?? VfxDefs.tryGet(segment.vfxId);
+      return doc ? [doc] : [];
+    });
+    this.runtimeVfx?.warmVfxDocs(warmDocs);
+    // `warmVfxDocs` creates the exact shipped textures but emits nothing.
+    // Wait once here; deterministic seeks below must never race image decode.
+    await this.scene.whenReadyAsync();
     return !this.disposed && seq === this.prepareSeq;
   }
 
@@ -304,6 +323,13 @@ export class VfxForgeStage {
 
   resize(): void {
     this.engine.resize();
+    // Resizing clears WebGL's drawing buffer.  ResizeObserver also fires when
+    // the inspector width or preview mode changes, not only in fullscreen, so
+    // relying on a later timeline seek leaves a perfectly healthy scene as an
+    // all-black canvas until the author touches the playhead.  Repaint the
+    // current deterministic frame immediately; do not reset/replay here (the
+    // observer may fire several times during one layout transition).
+    this.renderScene();
   }
 
   /** Inspect framing through the shipped, config-backed camera clamps. */
@@ -373,7 +399,6 @@ export class VfxForgeStage {
     for (const actor of Object.values(this.actors)) this.disposeActor(actor);
     this.runtimeVfx?.dispose();
     this.modelRig.dispose();
-    this.scriptBeams.dispose();
     for (const container of this.ownedModelFxContainers) container.dispose();
     this.ownedModelFxContainers.clear();
     this.modelFxContainerPromises.clear();
@@ -576,13 +601,15 @@ export class VfxForgeStage {
     // Timeline replay keeps preloaded GLB containers and reuses pooled geometry;
     // clearing the container map here makes the first scrub frame an empty shell.
     this.modelRig.resetForRound();
-    this.scriptBeams.clear();
-    this.runtimeVfx?.resetForRound();
+    this.runtimeVfx?.resetForRound({ preserveOneShotPool: true });
     this.disposeParticles();
     this.player = this.makePlayer();
     this.consumeEvents();
     if (this.mode === "runtime") this.runtimeVfx?.update(0);
-    else this.player.update(0);
+    else {
+      this.player.update(0);
+      this.runtimeVfx?.update(0);
+    }
     this.renderScene();
     this.emitOverlay("已重播");
   }
@@ -611,7 +638,7 @@ export class VfxForgeStage {
     else {
       this.player.update(this.nowMs);
       this.modelRig.tick(dtMs);
-      this.scriptBeams.update(this.nowMs);
+      this.runtimeVfx?.update(this.nowMs);
     }
     this.cameraRig.update({
       dtMs,
@@ -761,6 +788,14 @@ export class VfxForgeStage {
   private dispatch(ev: EventMessage, nowMs: number): void {
     const data = ev.data;
     if (ev.type === "modelFxSpawn") {
+      if (this.runtimeVfx) {
+        // The shipped ModelFxRig already owns model pooling, trail cadence and
+        // the pre-warmed particle pool. Keeping a second Forge-only rig here
+        // made the moving model visible while every trail burst raced a fresh
+        // texture decode and disappeared during deterministic scrubbing.
+        this.runtimeVfx.handleEvent(ev, nowMs);
+        return;
+      }
       const payload = data as unknown as ModelFxSpawnEvent;
       const generation = this.generation;
       const spawn = (): void => {
@@ -776,16 +811,21 @@ export class VfxForgeStage {
       return;
     }
     if (ev.type === "vfxSpawn") {
+      if (this.mode === "script" && this.runtimeVfx) {
+        // Render through the exact shipped pool/factory.  The Forge player
+        // still owns the authored schedule; VfxSystem owns only presentation.
+        this.runtimeVfx.handleEvent(ev, nowMs);
+        return;
+      }
       const id = String(data.vfxId ?? "");
       const x = Number(data.x ?? 0);
       const z = Number(data.z ?? 0);
       const overrides = (data.overrides ?? {}) as AbilityVfxLayerOverride;
       const y = (overrides.flyHeight ?? 128) / WC3_UNITS_PER_WORLD_UNIT;
-      void this.spawnVfx(id, x, z, y, overrides, Number(data.durationSec ?? 0) || undefined);
-      return;
-    }
-    if (ev.type === "vfxScriptBeam") {
-      this.scriptBeams.spawn(data as unknown as ScriptBeamEvent, nowMs);
+      const caster = Number(data.caster);
+      const casterPos = Number.isFinite(caster) ? this.actorForEntity(caster).position : null;
+      const aimYaw = casterPos ? yawDegToward(x - casterPos.x, z - casterPos.z) : null;
+      void this.spawnVfx(id, x, z, y, overrides, Number(data.durationSec ?? 0) || undefined, aimYaw);
       return;
     }
     if (ev.type === "screenShake") {
@@ -820,6 +860,7 @@ export class VfxForgeStage {
     y = 1,
     overrides: AbilityVfxLayerOverride = {},
     durationSec?: number,
+    aimYaw?: number | null,
   ): Promise<void> {
     if (!id) return;
     const generation = this.generation;
@@ -830,9 +871,15 @@ export class VfxForgeStage {
         this.vfx.set(id, doc);
       }
       if (generation !== this.generation) return;
-      const rendered = applyVfxOverrides(doc, overrides);
+      const rendered = applyAimYaw(applyVfxOverrides(doc, overrides), aimYaw ?? null);
       const ps = toParticleSystem(rendered, this.scene);
       ps.emitter = new Vector3(x, y, z);
+      // Babylon does not simulate a freshly constructed ParticleSystem until
+      // start() is called.  `manualEmitCount` only queues the burst; it does
+      // not start the system.  The shipped VfxSystem does both, and the Forge
+      // script-only adapter must preserve that behaviour or every authored
+      // particle segment is silently invisible despite a valid timeline.
+      ps.start();
       burstNow(ps, rendered);
       this.particles.push({ ps, untilMs: this.nowMs + (durationSec ?? vfxHardMaxLifeSec()) * 1000 });
     } catch (e) {
@@ -870,8 +917,14 @@ export class VfxForgeStage {
   private emitOverlay(status: string): void {
     const eye = this.cameraRig?.eye;
     const visible = this.scene.getActiveMeshes().length;
+    // Count the whole scene, including the shipped VfxSystem pool used by both
+    // preview modes (not only the legacy direct-adapter systems).
+    const particleCount = this.scene.particleSystems.reduce(
+      (sum, system) => sum + system.getActiveCount(),
+      0,
+    );
     const view = eye
-      ? `${status} · ${visible}/${this.scene.meshes.length} meshes · eye ${eye.x.toFixed(1)},${eye.y.toFixed(1)},${eye.z.toFixed(1)}`
+      ? `${status} · ${visible}/${this.scene.meshes.length} meshes · ${particleCount}/${this.scene.particleSystems.length} particles/systems · eye ${eye.x.toFixed(1)},${eye.y.toFixed(1)},${eye.z.toFixed(1)}`
       : status;
     this.onOverlay({ flash: this.flash, texts: this.texts, status: view, actors: { ...this.actorStatus } });
   }

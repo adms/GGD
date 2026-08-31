@@ -4,12 +4,106 @@
   "abilityId": "godie-hvsh.r",
   "notes": "48-04 騎英之手綱／出貨名『騎英之疆繩』（原作參考 KwAlIYfmV48@446）。Rider／天馬高速 dash 後帶出寬橫向藍白光砲；傷害仍由 ability JSON 決定。",
   "segments": [
-    { "kind": "floatingText", "on": "castStart", "text": "騎英之手綱 · BELLEROPHON", "colorRgb": [108, 202, 255], "sizeScale": 1.45, "durationSec": 1.1 },
-    { "kind": "anim", "on": "castStart", "at": "caster", "pulse": "cast", "clipWindowMs": 1200 },
-    { "kind": "hideBody", "on": "castEffect", "at": "caster", "durationMs": 1000 },
-    { "kind": "modelFx", "on": "castEffect", "modelKey": "imported.herorider", "path": "toTarget", "speed": 14, "lifeSec": 1, "heightU": 1, "clip": "attack", "clipTimeScale": 2.2, "scale": 1.25, "tint": [0.2, 0.58, 1], "alpha": 1, "heightKeys": [{ "t": 0, "h": 0 }, { "t": 0.3, "h": 2.2 }, { "t": 0.62, "h": 1.3 }, { "t": 0.9, "h": 0 }] },
-    { "kind": "beam", "on": "castEffect", "at": "caster", "lengthU": 12, "widthU": 2.25, "heightU": 1, "pitchDeg": 0, "durationSec": 0.92, "colorRgb": [24, 137, 255], "alpha": 1 },
-    { "kind": "beam", "on": "castEffect", "atMs": 40, "at": "caster", "lengthU": 12, "widthU": 0.7, "heightU": 1, "pitchDeg": 0, "durationSec": 0.86, "colorRgb": [220, 247, 255], "alpha": 1 },
-    { "kind": "screenShake", "on": "castEffect", "amplitude": 0.45, "durationSec": 0.9 }
+    {
+      "text": "騎英之手綱 · BELLEROPHON",
+      "colorRgb": [
+        108,
+        202,
+        255
+      ],
+      "sizeScale": 1.45,
+      "durationSec": 1.1,
+      "kind": "floatingText",
+      "on": "castStart"
+    },
+    {
+      "kind": "anim",
+      "on": "castStart",
+      "at": "caster",
+      "pulse": "cast",
+      "clipWindowMs": 1200
+    },
+    {
+      "kind": "hideBody",
+      "on": "castEffect",
+      "at": "caster",
+      "durationMs": 1000
+    },
+    {
+      "modelKey": "imported.herorider",
+      "path": "toTarget",
+      "speed": 14,
+      "clip": "attack",
+      "clipTimeScale": 2.2,
+      "scale": 1.25,
+      "tint": [
+        0.2,
+        0.58,
+        1
+      ],
+      "alpha": 1,
+      "lifeSec": 1,
+      "kind": "modelFx",
+      "on": "castEffect",
+      "heightU": 1,
+      "heightKeys": [
+        {
+          "t": 0,
+          "h": 0
+        },
+        {
+          "t": 0.3,
+          "h": 2.2
+        },
+        {
+          "t": 0.62,
+          "h": 1.3
+        },
+        {
+          "t": 0.9,
+          "h": 0
+        }
+      ]
+    },
+    {
+      "vfxId": "fx.prim.lightning.beam-flat",
+      "at": "self",
+      "durationSec": 0.92,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 0,
+      "offsetForwardU": 2.2,
+      "w3xScale": 2,
+      "tint": [
+        70,
+        140,
+        255
+      ],
+      "flyHeight": 128,
+      "alpha": 1
+    },
+    {
+      "vfxId": "fx.prim.holy.beam-flat",
+      "at": "self",
+      "durationSec": 0.86,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 40,
+      "offsetForwardU": 2.2,
+      "w3xScale": 1,
+      "tint": [
+        210,
+        240,
+        255
+      ],
+      "flyHeight": 128,
+      "alpha": 1
+    },
+    {
+      "amplitude": 0.45,
+      "durationSec": 0.9,
+      "kind": "screenShake",
+      "on": "castEffect"
+    }
   ]
 }

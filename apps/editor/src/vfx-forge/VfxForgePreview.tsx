@@ -20,6 +20,7 @@ export function VfxForgePreview({
   schedule,
   durationMs,
   playheadMs,
+  seekRevision = 0,
   playing,
   caster,
   target,
@@ -33,6 +34,8 @@ export function VfxForgePreview({
   schedule: readonly ScheduledSimEvent[];
   durationMs: number;
   playheadMs: number;
+  /** Increments for an explicit seek even when the numeric playhead is equal. */
+  seekRevision?: number;
   playing: boolean;
   caster: ChampionDef | null;
   target: ChampionDef | null;
@@ -82,9 +85,26 @@ export function VfxForgePreview({
       onOverlay: setOverlay,
     });
     stageRef.current = stage;
-    const resize = new ResizeObserver(() => stage.resize());
+    let resizeFrame = 0;
+    const resize = new ResizeObserver(() => {
+      // CSS layout settles after the observer callback.  Replaying in the same
+      // task can therefore paint the old backing size and then be cleared by
+      // the browser's final resize.  Coalesce to the next frame and restore the
+      // exact authored playhead, so changing panels/modes never leaves a black
+      // but otherwise live scene.
+      cancelAnimationFrame(resizeFrame);
+      resizeFrame = requestAnimationFrame(() => {
+        stage.resize();
+        stage.seek(playheadRef.current);
+      });
+    });
     resize.observe(canvas);
-    return () => { resize.disconnect(); stage.dispose(); stageRef.current = null; };
+    return () => {
+      resize.disconnect();
+      cancelAnimationFrame(resizeFrame);
+      stage.dispose();
+      stageRef.current = null;
+    };
     // Stage ownership follows the selected ability and the real Sim home pose.
     // Draft changes that keep the same world frame use setContent below.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -132,9 +152,18 @@ export function VfxForgePreview({
 
   useEffect(() => {
     if (playing) return;
-    const stage = stageRef.current;
-    if (stage && Math.abs(stage.timeMs - playheadMs) > 1) stage.seek(playheadMs);
-  }, [playheadMs, playing]);
+    // Paint on the next browser frame even when Babylon is already at this
+    // exact timestamp.  CSS/layout can clear the backing buffer without
+    // changing `stage.timeMs`; the old `> 1ms` shortcut then mistook a black
+    // canvas for an up-to-date frame until the author clicked ±1f.
+    const frame = requestAnimationFrame(() => {
+      const stage = stageRef.current;
+      if (!stage) return;
+      stage.resize();
+      stage.seek(playheadMs);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [playheadMs, playing, seekRevision]);
 
   return (
     <div

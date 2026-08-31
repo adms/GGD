@@ -284,37 +284,6 @@ export const zVfxScriptSound = z
   })
   .strict();
 
-/**
- * 純演出的定向水平光束。傷害長度／碰撞寬度仍只住 ability JSON；這裡的長寬
- * 是玩家看見的畫面尺寸，不能反推命中。用 emissive 幾何而不是拉長舊 WC3 模型，
- * 才能讓藍／橘／黃藍等角色辨識色真正生效，也不會露出缺貼圖棋盤格。
- */
-export const zVfxScriptBeam = z
-  .object({
-    kind: z.literal("beam"),
-    ...SEG_COMMON,
-    /** 光束起點；省略＝caster。 */
-    at: z.enum(["caster", "target", "point"]).optional(),
-    /** 視覺長度（世界單位），不參與命中。 */
-    lengthU: z.number().min(0.5).max(40),
-    /** 視覺直徑（世界單位），不參與命中。 */
-    widthU: z.number().min(0.1).max(6),
-    heightU: z.number().min(0).max(10).default(1),
-    yawOffsetDeg: z.number().min(-360).max(360).optional(),
-    /** 0＝沿地面，-90／90＝直立光柱。 */
-    pitchDeg: z.number().min(-90).max(90).default(0),
-    /** 整段發光幾何沿瞄準方向移動的距離；省略＝定點。 */
-    travelU: z.number().min(0).max(40).optional(),
-    durationSec: z.number().min(0.05).max(5),
-    colorRgb: z.tuple([
-      z.number().int().min(0).max(255),
-      z.number().int().min(0).max(255),
-      z.number().int().min(0).max(255),
-    ]),
-    alpha: z.number().min(0).max(1).default(1),
-  })
-  .strict();
-
 export const zVfxScriptSegment = z.discriminatedUnion("kind", [
   zVfxScriptModelFx,
   zVfxScriptVfx,
@@ -325,7 +294,6 @@ export const zVfxScriptSegment = z.discriminatedUnion("kind", [
   zVfxScriptAnim,
   zVfxScriptHideBody,
   zVfxScriptBodyMove,
-  zVfxScriptBeam,
 ]);
 export type VfxScriptSegment = z.infer<typeof zVfxScriptSegment>;
 
