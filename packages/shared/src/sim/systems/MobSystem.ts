@@ -146,6 +146,35 @@ export function mobSystem(world: SimWorld): void {
     }
   }
 
+  /**
+   * ⭐⭐ GH#629 —— **候選索引，每 tick 算一次**（⛔ 不是每隻小怪算一次）。
+   *
+   * ── ⛔ 在此之前 ──────────────────────────────────────────────────────────
+   * 下面那個瞄準迴圈走的是 `world.team`，⭐ **而 `world.team` 裝著場上每一具身體
+   * —— 包含那 1000 隻殭屍自己**。
+   * ⇒ N=1000 時是 **1000 × 1024 次迭代/tick** 去找 ~12 個人。
+   * ⭐ 量到的槓桿：**80×**（2.98 → 0.038 ms，GH#629 的 benchmark）。
+   *
+   * ── ⭐ 為什麼是「一次」而不是「換一個 store」──────────────────────────────
+   * ⛔ 改成走 `world.champion` 會漏掉**召喚物**（它刻意沒有 ChampionComp，
+   * 見下面 `isMobTargetable` 的註解），而那正是召喚物曾經整批打不到的成因。
+   * ⇒ ⭐ 仍然走 `world.team`，⛔ 但**只走一次**，把結果留給每一隻小怪重用。
+   *
+   * ⚠️ ⭐ **順序一個位元組都沒變**：`world.team` 是 Map，插入序＝升序 id
+   *（`sim/purity.test.ts` 在守），而這裡照樣序推進陣列 ⇒ 下面的
+   * 「strict `<` ＋ 升序迭代 ＝ 同距離取最小 id」逐位元組成立。
+   *
+   * ⚠️ 這一份**只做便宜的過濾**（不是怪、隊伍可能是敵方）——
+   * ⛔ `isMobTargetable`（隱形／可否被鎖）與 zone／距離仍留在內迴圈：
+   * 前者要傳**這一隻小怪**當 seeker，後者逐隻不同。
+   */
+  const aggroCandidates: EntityId[] = [];
+  for (const [cid, cteam] of world.team) {
+    if (cteam.teamId === MONSTER_TEAM) continue; // 殭屍自己（含被捕的）不是目標
+    if (world.mob.has(cid)) continue; // ⭐ 那 1000 隻就是在這裡被剔掉的
+    aggroCandidates.push(cid);
+  }
+
   // 3) AI TARGET PICK — each mob (ascending id) aims at the nearest enemy
   //    champion in its zone. Every champion is an enemy (team !== MONSTER), so
   //    this is champion-blind aggro with no per-team logic.
@@ -206,8 +235,10 @@ export function mobSystem(world: SimWorld): void {
     const preferHumans = kingPrefersHumans(rules, mob.kind);
     for (const pass of preferHumans ? [true, false] : [false]) {
     if (pass === false && target !== -1) break; // 第一趟已經找到真人了
-    for (const [cid, cteam] of world.team) {
-      if (cteam.teamId === myTeam) continue; // never target its own side
+    // ⭐ GH#629 —— 走**候選索引**（上面每 tick 算一次），⛔ 不是整張 world.team。
+      for (const cid of aggroCandidates) {
+      const cteam = world.team.get(cid);
+      if (!cteam || cteam.teamId === myTeam) continue; // never target its own side
       // 第一趟：**只有真人座位**。`humanSeats` 由 host 每一場戰鬥開始交進規則表
       // （`MobRules.humanSeats`）—— sim 自己沒有「誰是 bot」這個概念，理由寫在那裡。
       if (pass && !isHumanSeatId(rules, cteam.seatId)) continue;
