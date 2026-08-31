@@ -12,18 +12,18 @@
     60.0,
     60.0
   ],
-  "cooldownTier": "極大",
+  "cooldownTier": "中",
   "manaCost": [
     144.0,
     144.0,
     144.0
   ],
   "manaCostTier": "小",
-  "effects": [],
-  "template": {
-    "ref": "tpl-single-strike",
-    "params": {
-      "damage": {
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
         "damageTier": "小",
         "ratios": [
           {
@@ -31,11 +31,27 @@
             "coeff": 0.7
           }
         ]
-      },
-      "damageType": "magic",
-      "castTimeSec": 1.233
+      }
+    },
+    {
+      "kind": "delayed",
+      "shape": "circle",
+      "radius": 6,
+      "radiusTier": "中",
+      "side": "allies",
+      "delaySec": 1.0,
+      "count": 8,
+      "intervalSec": 1.0,
+      "targetMode": "reresolve",
+      "anchor": "caster",
+      "effects": [
+        {
+          "kind": "restore",
+          "healthPct": 0.04
+        }
+      ]
     }
-  },
+  ],
   "vfxKey": "fx.prim.nature.nova-lg",
   "targetsEnemies": true,
   "schema": "ability@1",

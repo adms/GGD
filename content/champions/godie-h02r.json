@@ -69,21 +69,7 @@
         72.0
       ],
       "range": 0.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.6
-              }
-            ]
-          }
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.nature.slash",
       "vfxLayers": [
         {
@@ -112,10 +98,23 @@
       ],
       "targetsEnemies": true,
       "radius": 4.5,
-      "castTimeSec": 1.133,
+      "castTimeSec": 0.667,
       "cooldownTier": "極小",
-      "manaCostTier": "極小",
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "template": {
+        "ref": "tpl-periodic-field",
+        "params": {
+          "intervalSec": 1,
+          "durationSec": 2,
+          "radiusTier": "小",
+          "anchor": "caster",
+          "applyTo": "enemies",
+          "damageTier": "小",
+          "damageType": "magic",
+          "castTimeSec": 0.667
+        }
+      },
+      "manaCostTier": "極小"
     },
     "W": {
       "id": "godie-h02r.w",

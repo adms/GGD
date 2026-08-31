@@ -36,6 +36,17 @@
           }
         ]
       }
+    },
+    {
+      "kind": "dot",
+      "damageType": "true",
+      "applyTo": "self",
+      "amountPerTick": {
+        "flat": 10.0
+      },
+      "intervalSec": 1.0,
+      "durationSec": 10.0,
+      "stacking": "refresh"
     }
   ],
   "vfxKey": "fx.prim.ki.pulse",

@@ -34,12 +34,28 @@
           }
         ]
       }
+    },
+    {
+      "kind": "dot",
+      "damageType": "magic",
+      "amountPerTick": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      },
+      "intervalSec": 1.0,
+      "durationSec": 7.0,
+      "stacking": "refresh"
     }
   ],
   "vfxKey": "fx.prim.fire.explosion",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.667,
+  "castTimeSec": 1.133,
   "rangeTier": "極大",
   "range": 12
 }

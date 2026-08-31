@@ -344,6 +344,20 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "GH#838 —— 這一格的**預設值就是它**（省略＝caster），所以沒有一份腳本會顯式寫它。⭐ 這與「機制沒發生」相反：它每一份腳本都在發生，只是不需要寫出來。⚠️ 30 天到期仍是對的 —— 若屆時仍為零，該問的是「這個 enum 值需不需要存在」。",
   },
 
+  // ⭐ GH#648（2026-08-31）：`anchor="point"` 是**寫不出來**的，⛔ 不是沒有人要它。
+  //    `templates/expand.ts` 的 `FAMILIES["periodic-field"]` 逐字是
+  //    `...(anchor === "caster" ? { anchor } : {})` —— 釘在地上那一半**整格省略**，
+  //    因為 `sim/effects/delayed.ts` 的讀法是 `e.anchor === "caster" ? followCaster : 釘住`
+  //    ⇒ 省略與 `"point"` **逐位元同義**，而省略才是 4 份出貨文件真正長的樣子
+  //      （04-02 炸彈陣 ×2、37-03 災難之牆 走的正是這一條 point 分支）。
+  //    ⇒ 這一格是 `default-live` 的教科書形狀：行為由程式預設出貨，欄位只是覆寫。
+  //    ⛔ 不要為了讓這一列變綠而去某份技能上手寫 `"anchor": "point"` ——
+  //       那是一格**引擎不會讀**的裝飾（第一·五守則的反面：JSON 說了而引擎不看）。
+  "enum:abilities.effects[]#delayed.anchor=point": {
+    status: "default-live",
+    since: "2026-08-31",
+    why: "省略 anchor ＝ 釘住 ＝ point（sim/effects/delayed.ts 只認 \"caster\"）,而 periodic-field 展開器對 point 刻意不寫這一格。⇒ 零採用代表「沒有人需要覆寫」,⛔ 不是機制死的:04-02 炸彈陣 ×2 與 37-03 災難之牆今天走的就是這條分支。",
+  },
   "enum:abilities.effects[]#applyBuff.modifiers[].msBonusTier=極大": {
     status: "landing", since: "2026-08-27",
     why:
@@ -1291,11 +1305,12 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // 零採用因此是**內容決定**而不是機制缺席：content/abilities/ 這一輪由 owner
   // 手動重製，那 90 支還沒寫進樹裡（⛔ 不可以由我代寫，見 CLAUDE.md）。
   // 每一筆的「哪一支技能會用它」寫在 why 裡，那一支落地時這一筆就該刪掉。
-  "field:abilities.effects[]#dot.applyTo": {
-    status: "landing",
-    since: "2026-08-09",
-    why: "同 damage.applyTo 的另一個 kind:一段燒在**自己**身上的持續傷害（獻祭型代價）。dot 的 handler 與 damage 走同一條 subjects 選擇,所以兩者行為對得起來,不是第二套語意。零採用同上:owner 手寫的那批技能還沒進樹。",
-  },
+  // ⭐ GH#648（2026-08-31）：`dot.applyTo` 的 landing 豁免**刪掉了** —— 它落地了。
+  //    09-01 界王拳（`godie-o00x.q` / `godie-ogrh.q`）的卡面逐字寫著
+  //    「可增加55點的額外傷害，但是**將會每秒消耗生命10點**。持續10秒。」
+  //    ⇒ 正是這一列預言的「獻祭型代價」：`dot{applyTo:"self", damageType:"true"}`，
+  //      而 `sim/effects/dot.ts:213` 的 `e.applyTo === "self" ? [ctx.caster] : ctx.targets`
+  //      早就在那裡等著 —— ⛔ 零新機制。
   // ⭐ GH#459（2026-08-19）：`heal.applyTo` 的 landing 豁免**刪掉了** —— 它落地了。
   //    48-03 鮮血神殿（godie-hvsh.e）的「每有一名敵人被結界扣血，Rider 回復自身
   //    1% 最大生命」走的就是 `damageArea.onHitTargets` 裡的 `heal{applyTo:"self"}`。

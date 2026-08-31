@@ -145,6 +145,20 @@
       "rootWhileCasting": true
     },
     {
+      "id": "godie-hgam.passive",
+      "name": "90-00 寄生種子",
+      "champion": "godie-hgam",
+      "championName": "種子神奇寶貝 - 妙蛙種子",
+      "slot": "PASSIVE",
+      "castTimeSec": 1.7,
+      "effectiveSec": 1,
+      "deltaSec": 0.7,
+      "clamped": true,
+      "castType": "targeted",
+      "interruptOn": "none",
+      "rootWhileCasting": true
+    },
+    {
       "id": "godie-hvsh.passive",
       "name": "48-00 石化之眼",
       "champion": "godie-hvsh",
@@ -523,38 +537,10 @@
       "rootWhileCasting": true
     },
     {
-      "id": "godie-hgam.q",
-      "name": "90-01 飛葉快刀",
-      "champion": "godie-hgam",
-      "championName": "種子神奇寶貝 - 妙蛙種子",
-      "slot": "Q",
-      "castTimeSec": 1.133,
-      "effectiveSec": 1,
-      "deltaSec": 0.133,
-      "clamped": true,
-      "castType": "ground",
-      "interruptOn": "none",
-      "rootWhileCasting": true
-    },
-    {
       "id": "godie-hgam.w",
       "name": "90-02 麻痺粉",
       "champion": "godie-hgam",
       "championName": "種子神奇寶貝 - 妙蛙種子",
-      "slot": "W",
-      "castTimeSec": 1.133,
-      "effectiveSec": 1,
-      "deltaSec": 0.133,
-      "clamped": true,
-      "castType": "ground",
-      "interruptOn": "none",
-      "rootWhileCasting": true
-    },
-    {
-      "id": "godie-hjai.w",
-      "name": "04-02 炸彈陣",
-      "champion": "godie-hjai",
-      "championName": "黑魔導士 - 莉娜因巴斯",
       "slot": "W",
       "castTimeSec": 1.133,
       "effectiveSec": 1,
@@ -631,6 +617,20 @@
       "deltaSec": 0.133,
       "clamped": true,
       "castType": "ground",
+      "interruptOn": "none",
+      "rootWhileCasting": true
+    },
+    {
+      "id": "godie-orkn.e",
+      "name": "30-03 痴漢火焰",
+      "champion": "godie-orkn",
+      "championName": "電車癡漢 - 臭作",
+      "slot": "E",
+      "castTimeSec": 1.133,
+      "effectiveSec": 1,
+      "deltaSec": 0.133,
+      "clamped": true,
+      "castType": "targeted",
       "interruptOn": "none",
       "rootWhileCasting": true
     },
@@ -785,6 +785,20 @@
       "deltaSec": 0.033,
       "clamped": true,
       "castType": "self",
+      "interruptOn": "none",
+      "rootWhileCasting": true
+    },
+    {
+      "id": "godie-hjai.w",
+      "name": "04-02 炸彈陣",
+      "champion": "godie-hjai",
+      "championName": "黑魔導士 - 莉娜因巴斯",
+      "slot": "W",
+      "castTimeSec": 1.033,
+      "effectiveSec": 1,
+      "deltaSec": 0.033,
+      "clamped": true,
+      "castType": "ground",
       "interruptOn": "none",
       "rootWhileCasting": true
     },
@@ -1079,6 +1093,20 @@
       "deltaSec": 0.033,
       "clamped": true,
       "castType": "self",
+      "interruptOn": "none",
+      "rootWhileCasting": true
+    },
+    {
+      "id": "godie-ubal.w",
+      "name": "37-03 災難之牆",
+      "champion": "godie-ubal",
+      "championName": "魔界霸主 - 巴恩大魔王",
+      "slot": "W",
+      "castTimeSec": 1.033,
+      "effectiveSec": 1,
+      "deltaSec": 0.033,
+      "clamped": true,
+      "castType": "ground",
       "interruptOn": "none",
       "rootWhileCasting": true
     },

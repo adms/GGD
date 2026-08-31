@@ -84,6 +84,20 @@
             }
           ],
           "duration": 3.0
+        },
+        {
+          "kind": "delayed",
+          "shape": "single",
+          "delaySec": 1.0,
+          "count": 10,
+          "intervalSec": 1.0,
+          "effects": [
+            {
+              "kind": "restore",
+              "healthPct": 0.03,
+              "applyTo": "self"
+            }
+          ]
         }
       ],
       "vfxKey": "fx.prim.physical.shockwave",

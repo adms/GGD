@@ -33,7 +33,7 @@ owner 2026-08-19（GH#438，這一份要涵蓋的**全部**軸）：
 | 軸 | JSON 欄位 | 出貨 config | 幾支技能填了 | 開關 |
 |---|---|---|---:|---|
 | 施法距離 | `rangeTier` | `range-tiers.json` | 187 (44.4%) | `enabled: true` |
-| 施法範圍 | `radiusTier` | `aoe-tiers.json` | 96 (22.8%) | `enabled: true` |
+| 施法範圍 | `radiusTier` | `aoe-tiers.json` | 99 (23.5%) | `enabled: true` |
 | 位移 | `distanceTier` | `displacement-tiers.json` | 2 (0.5%) | `enabled: true` |
 | **傷害** | `damageTier` | `damage-tiers.json` | 201 (47.7%) | `enabled: true` |
 | **耗魔** | `manaCostTier` | `mana-tiers.json` | 200 (47.5%) | `enabled: true` |
@@ -448,7 +448,7 @@ owner 2026-08-19：「**JASS 的部分優先權大於 w3x 技能設定**，因�
 | 37-00 鬼眼 | `godie-ubal.passive` | — | — | 12 | 極大 | — | 12 | 極大 |
 | 37-01 凱薩之鷹 | `godie-ubal.q` | w3a | 200 | — | — | 350 | 6 | 中 |
 | 37-04 魔界之王 | `godie-ubal.r` | — | — | — | — | — | 12 | 極大 |
-| 37-03 災難之牆 | `godie-ubal.w` | w3a | 1 | — | — | 500 | 8 | 大 |
+| 37-03 災難之牆 | `godie-ubal.w` | w3a | 1 | 6 | 中 | 500 | 8 | 大 |
 | 06-03 山形修煉-強 | `godie-ucrl.e` | — | — | — | — | — | 12 | 極大 |
 | 06-00 猜猜拳 | `godie-ucrl.passive` | JASS | 270 | — | — | — | 4.5 | 小 |
 | 65-03 魔法膨脹 | `godie-udea.e` | w3a | — | — | — | 550 | 12 | 極大 |

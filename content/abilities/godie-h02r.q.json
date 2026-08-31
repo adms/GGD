@@ -20,21 +20,7 @@
   ],
   "manaCostTier": "極小",
   "range": 0.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
-        "damageTier": "小",
-        "ratios": [
-          {
-            "stat": "ap",
-            "coeff": 0.6
-          }
-        ]
-      }
-    }
-  ],
+  "effects": [],
   "vfxKey": "fx.prim.nature.slash",
   "vfxLayers": [
     {
@@ -64,6 +50,19 @@
   "targetsEnemies": true,
   "radius": 4.5,
   "schema": "ability@1",
-  "castTimeSec": 1.133,
-  "radiusTier": "小"
+  "castTimeSec": 0.667,
+  "radiusTier": "小",
+  "template": {
+    "ref": "tpl-periodic-field",
+    "params": {
+      "intervalSec": 1,
+      "durationSec": 2,
+      "radiusTier": "小",
+      "anchor": "caster",
+      "applyTo": "enemies",
+      "damageTier": "小",
+      "damageType": "magic",
+      "castTimeSec": 0.667
+    }
+  }
 }

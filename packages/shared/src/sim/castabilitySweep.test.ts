@@ -362,6 +362,37 @@ function leapWindow(effects: readonly EffectDef[]): number {
   return extra;
 }
 /**
+ * ⭐ GH#648 —— 第三種**作者填的延後**：`delayed` 的第一發。
+ *
+ * ⚠️ 與 {@link castWindow}／{@link leapWindow} **完全同一條原理**（那兩段檔頭逐字寫過
+ * 兩次）：「效果被一段作者填的時間延後」時，觀察窗要涵蓋那一段，
+ * ⛔ 否則量到的是**窗口長度**，不是技能。
+ *
+ * ⛔ 這**不是**把地板調低：一格仍然要在窗口內產生可量測的效果才算 PASS。
+ * ⭐ 而且只加**第一發**（`delaySec`），⛔ 不是整段 `count × intervalSec` ——
+ *    看得到第一發就證明了這條路是活的，多看沒有增加任何證據。
+ *
+ * ── 為什麼是今天才需要它（⛔ 不是順手補齊）────────────────────────────────
+ * 【週期領域】家族（`tpl-periodic-field`）的展開結果**只有一個 `delayed` 節點**，
+ * 而它的第一發刻意等一個間隔（＝「每秒」的第一秒，`expand.ts` 逐字）。
+ * ⇒ 90-01 飛葉快刀 · 04-02 炸彈陣 · 37-03 災難之牆 接上模板之後，
+ *   施放**被接受**、冷卻**真的付了**、而窗口在第一發之前 26 tick 就關了
+ *   ⇒ 判成 `no measurable effect (no-op)` ⇒ ⭐ **三格假 FAIL**。
+ * ⚠️ 那正是 2026-08-13 那次「120 格假 ❌」的形狀（見 {@link castWindow} 檔頭），
+ *    只是換了一個延後的來源。
+ */
+function delayedWindow(effects: readonly EffectDef[]): number {
+  let extra = 0;
+  for (const e of effects) {
+    if (e.kind === "delayed") {
+      extra = Math.max(extra, Math.round(e.delaySec * TICK_HZ) + 1);
+    } else if (e.kind === "spawnProjectile") {
+      extra = Math.max(extra, delayedWindow(e.onHit));
+    }
+  }
+  return extra;
+}
+/**
  * ⭐ GH#46 —— **這一支技能要看幾格**，一個公式，普查與守衛讀同一份。
  *
  * ⚠️ 在此之前這條算式只以一個行內表達式活在 `measureSlot()` 裡（`WINDOW +
@@ -371,7 +402,9 @@ function leapWindow(effects: readonly EffectDef[]): number {
  * 抽成具名函式之後，下面那條守衛真的讀得到它（⛔ 不是掃原始碼字串）。
  */
 function observationWindow(def: AbilityDef): number {
-  return WINDOW + leapWindow(def.effects) + castWindow(def.castTimeSec);
+  return (
+    WINDOW + leapWindow(def.effects) + delayedWindow(def.effects) + castWindow(def.castTimeSec)
+  );
 }
 
 /**

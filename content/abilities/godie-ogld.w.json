@@ -19,11 +19,24 @@
     72.0
   ],
   "manaCostTier": "極小",
-  "effects": [],
-  "template": {
-    "ref": "tpl-single-strike",
-    "params": {
-      "damage": {
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    },
+    {
+      "kind": "dot",
+      "damageType": "magic",
+      "amountPerTick": {
         "damageTier": "小",
         "ratios": [
           {
@@ -32,10 +45,11 @@
           }
         ]
       },
-      "damageType": "magic",
-      "castTimeSec": 0.567
+      "intervalSec": 1.0,
+      "durationSec": 10.0,
+      "stacking": "refresh"
     }
-  },
+  ],
   "vfxKey": "fx.prim.void.swarm",
   "targetsEnemies": true,
   "schema": "ability@1",

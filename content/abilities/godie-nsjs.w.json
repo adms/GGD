@@ -39,6 +39,16 @@
           "at": "bone",
           "attach": "chest",
           "boneOn": "victim"
+        },
+        {
+          "kind": "dot",
+          "damageType": "magic",
+          "amountPerTick": {
+            "flat": 60.0
+          },
+          "intervalSec": 1.0,
+          "durationSec": 2.0,
+          "stacking": "refresh"
         }
       ]
     }

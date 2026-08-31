@@ -111,18 +111,44 @@ const hasLoopMechanism = (doc: unknown): boolean =>
   );
 
 /**
- * ⭐ 今天卡面在說謊的 24 支。⛔ **只能刪，不能加。**
- * 前置（⛔ 都在 GH#648 的柵欄外）：`tpl-periodic-field` 的家族接線缺在
- * `content/templates/expand.ts`（`FAMILIES` 裡 `"periodic-field"` 出現 0 次），
- * 而 30/39 是變身對子 ⇒ 動它們要重生成 `abilityCodeParityForms.baseline.json`。
+ * ⭐ 今天卡面在說謊的 4 支。⛔ **只能刪，不能加。**
+ *
+ * ── 2026-08-31：23 → 4（GH#648 內容批）─────────────────────────────────────
+ * 前一輪的 23 支裡 **19 支補上了節奏**，⛔ 而它們**不是**同一種修法 ——
+ * 逐支判斷的結論是**四個形狀**，每一個都有出貨前例（⛔ 沒有一個是新機制）：
+ * | 形狀 | 幾支 | 怎麼修 | 前例 |
+ * |---|---:|---|---|
+ * | 領域（圈裡每隔 N 秒重算一次） | 6 | `template: tpl-periodic-field` | 模板說明自己點名的 exemplar |
+ * | 單體持續傷害 | 7 | `effects += dot` | `godie-huth.r`（`d4f631012`） |
+ * | 自身每秒回復／自傷 | 4 | `delayed`+`restore` · `healthRegen` · `dot{applyTo:self}` | `godie-h02v.q` · `godie-huth.passive` |
+ * | 友方治療場 | 2 | `delayed{targetMode:reresolve, side:allies}` | `sim/effects/delayed.ts:315` |
+ *
+ * ⚠️ ⭐ **「43 支等 tpl-periodic-field」始終是假前提**（`periodicFieldAdoptionBlocker`
+ * 的檔頭在 2026-08-29 就量到了）：真正套得上那份模板的**只有 6 支**，
+ * 其餘 13 支的正解是引擎**早就有**的 `dot` / `delayed` / `healthRegen`。
+ * ⇒ 這一輪擋住它們的從來不是機制，是**沒有人逐支讀過卡面**。
+ *
+ * ── 剩下這 4 支為什麼**不是**「還沒排到」（⛔ 每一條都要駁得倒）──────────────
+ * · `godie-o030.w` / `godie-orkn.w`（30-02 酒精灌腸）——「當…**再受到火焰類攻擊時**，
+ *   它們會著火並不斷受到灼傷」⇒ 那是一道**條件閘**，⛔ 不是一支自己會跳的節奏。
+ *   要它成真需要「承受某一種傷害類型時」的**條件葉**（`condition.*` 家族今天沒有
+ *   `damageType` 這一格）⇒ 第〇·五守則：先做機制，⛔ 不是替這一支寫一個 if。
+ * · `godie-u034.ex` / `godie-ucrl.ex`（06-002 殺意）——「**剪刀**：…每秒損失60點生命，
+ *   持續8秒」⇒ 那一句掛在**另一支技能的一個分支**上（猜猜拳三選一），
+ *   要的是 `ability-augment@1` 的逐分支追加，⛔ 不是這一支自己的 effects。
+ * · ⭐ `godie-h02u.r`（92-04 馬勒戈壁）——**做過又收回來的**，而收回的理由是階梯：
+ *   這一格套上 `tpl-periodic-field` 之後，`abilityCodeParity` 當場紅並逐字說
+ *   「⛔ 不要把它加進 baseline 了事，拿去給 owner 裁決哪一邊是對的」——
+ *   因為**同編號的本體 `godie-h02v.r` 帶的是 owner 的新版說明**（階梯第 1 層：
+ *   「將周圍敵人附加[緩慢]及[致盲]，持續6秒」——⛔ **一句每秒都沒有**），
+ *   而「每秒奪取黃金並造成傷害」只活在變身態的 **w3x 文案**（階梯第 4 層）上。
+ *   ⇒ 第〇·六守則：1 > 4 ⇒ 要修的是**那張卡**，⛔ 不是照著低層級的文案補機制。
+ *   ⚠️ 而 92-04 屬於 `godie-h02u`（草泥馬）——CLAUDE.md 逐字記著這一對
+ *   「⛔ 永遠不可以被自動鏡射」（W/E 編號互換造成消化液整支消失，GH#635/#764）
+ *   ⇒ ⛔ 也不可以反過來把本體改成變身態的樣子。
  */
 const KNOWN_LYING: ReadonlySet<string> = new Set([
-  "godie-h01o.ex", "godie-h020.w", "godie-h02r.passive", "godie-h02r.q",
-  "godie-h02u.q", "godie-h02u.r", "godie-hgam.passive", "godie-hgam.q",
-  "godie-hjai.w", "godie-n00p.r", "godie-n00p.w", "godie-nsjs.r",
-  "godie-nsjs.w", "godie-o00x.q", "godie-o030.e",
-  "godie-o030.w", "godie-ogld.w", "godie-ogrh.q", "godie-orkn.e",
-  "godie-orkn.w", "godie-u034.ex", "godie-ubal.w", "godie-ucrl.ex",
+  "godie-h02u.r", "godie-o030.w", "godie-orkn.w", "godie-u034.ex", "godie-ucrl.ex",
 ]);
 
 describe("卡面宣稱「每 N 秒…持續 M 秒」的技能，JSON 裡要有節奏（GH#648）", () => {

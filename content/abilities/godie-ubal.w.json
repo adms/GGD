@@ -13,7 +13,7 @@
     30.0,
     30.0
   ],
-  "cooldownTier": "中",
+  "cooldownTier": "極小",
   "manaCost": [
     288.0,
     288.0,
@@ -23,26 +23,23 @@
   "manaCostTier": "中",
   "effects": [],
   "template": {
-    "ref": "tpl-single-strike",
+    "ref": "tpl-periodic-field",
     "params": {
-      "damage": {
-        "damageTier": "小",
-        "ratios": [
-          {
-            "stat": "ap",
-            "coeff": 0.6
-          }
-        ]
-      },
+      "intervalSec": 1,
+      "durationSec": 3,
+      "radiusTier": "中",
+      "anchor": "point",
+      "applyTo": "enemies",
+      "damageTier": "小",
       "damageType": "magic",
-      "castTimeSec": 0.667
+      "castTimeSec": 1.033
     }
   },
   "vfxKey": "fx.prim.void.shockwave",
   "sfxKey": "wc3.trollbatriderpissed2",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.667,
+  "castTimeSec": 1.033,
   "rangeTier": "大",
   "range": 8
 }

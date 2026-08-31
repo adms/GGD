@@ -26,6 +26,17 @@
         }
       ],
       "duration": 6.0
+    },
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "healthRegen",
+          "op": "flat",
+          "value": 60
+        }
+      ],
+      "duration": 15.0
     }
   ],
   "vfxKey": "fx.prim.nature.pulse-lg",

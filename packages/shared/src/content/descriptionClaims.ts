@@ -186,6 +186,39 @@ const numbersUnder = (v: unknown, out: Set<number>): void => {
   }
 };
 
+/**
+ * 一格**傷害量**底下的數字 —— ⭐ 乘上 `Scaling.mult` 之後才是引擎真的會打出來的量。
+ *
+ * `mult` 是**整份酬載**的倍率，`resolveScaling` 的最後一行才乘
+ * （`sim/effects/effect.ts:469`：`sc.mult !== undefined ? v * sc.mult : v`）
+ * ⇒ 這一格印在卡面上的數字自己要乘它。
+ *
+ * ⛔ 不乘的後果是**誤報**，⛔ 不是漏報：【週期領域】家族
+ * （`templates/expand.ts` 的 `FAMILIES["periodic-field"]`）把「`damageTier` 名的是
+ * **整段**預算」這個平衡決策寫成 `mult: 1 / ticks` —— 於是一片跳 2 發的領域，
+ * 卡面（`abilityProse`）印 250，而這裡量到的是 `{0.5, 500}` ⇒ 一支**正確**的技能
+ * 被判成「說了但不會發生」。⚠️ 而誤報會逼下一個人把它塞進 baseline ＝ 把守衛關掉。
+ *
+ * ⚠️ 這與 `abilityProse.ts::damageRanks` 是**同一個決策的兩半**（印出來的那一半、
+ * 對帳的那一半），⛔ 只修一半會讓兩支閘互相矛盾。
+ */
+const damageNumbersUnder = (v: unknown, out: Set<number>): void => {
+  const mult =
+    v !== null && typeof v === "object" && !Array.isArray(v)
+      ? (v as { mult?: unknown }).mult
+      : undefined;
+  if (typeof mult !== "number" || !Number.isFinite(mult) || mult <= 0) {
+    numbersUnder(v, out);
+    return;
+  }
+  // ⛔ `mult` 自己**不是**一個傷害量 —— 它是運算子，所以它不進集合。
+  const raw = new Set<number>();
+  for (const [k, x] of Object.entries(v as Record<string, unknown>)) {
+    if (k !== "mult") numbersUnder(x, raw);
+  }
+  for (const n of raw) out.add(Math.round(n * mult * 100) / 100);
+};
+
 /** 帶「一段時間」語意的欄位名（`duration` / `durationSec` / `slowDuration` …）。 */
 const isDurationKey = (k: string): boolean => /duration/i.test(k);
 
@@ -264,7 +297,7 @@ export function abilityNumbers(def: AbilityDef): Numbers {
       if (node.exclusiveGroup !== undefined) faces.add("field:exclusiveGroup");
       for (const [k, v] of Object.entries(node)) {
         if (isDurationKey(k)) numbersUnder(v, duration);
-        if ((DAMAGE_KEYS as readonly string[]).includes(k)) numbersUnder(v, damage);
+        if ((DAMAGE_KEYS as readonly string[]).includes(k)) damageNumbersUnder(v, damage);
         if (v !== undefined && (MAX_HP_PCT_KEYS as readonly string[]).includes(k)) hasMaxHpPct = true;
         if (v !== undefined && (MANA_GAIN_KEYS as readonly string[]).includes(k)) hasManaGain = true;
       }

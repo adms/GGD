@@ -9,18 +9,18 @@
   "cooldown:same": 113,
   "cooldown:tier": 155,
   "cooldown:w3a-absent": 172,
-  "duration:free-number": 27,
-  "duration:ggd-absent": 198,
-  "duration:same": 4,
+  "duration:free-number": 32,
+  "duration:ggd-absent": 188,
+  "duration:same": 9,
   "duration:w3a-absent": 223,
   "mana:ggd-zero": 77,
   "mana:same": 25,
   "mana:tier": 169,
   "mana:w3a-absent": 181,
   "radius:free-number": 5,
-  "radius:ggd-absent": 88,
+  "radius:ggd-absent": 87,
   "radius:same": 4,
-  "radius:tier": 54,
+  "radius:tier": 55,
   "radius:w3a-absent": 301,
   "range:ggd-zero": 30,
   "range:same": 7,
@@ -6697,16 +6697,6 @@
   {
    "axis": "radius",
    "key": "radius:ggd-absent",
-   "w3a": "A0P7",
-   "ggd": "godie-n00p.r",
-   "name": "18-04 億年樹",
-   "w3aValue": 450.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:ggd-absent",
    "w3a": "A0RV",
    "ggd": "godie-n00p.w",
    "name": "18-02 寄生種子",
@@ -7367,6 +7357,16 @@
   {
    "axis": "radius",
    "key": "radius:tier",
+   "w3a": "A0P7",
+   "ggd": "godie-n00p.r",
+   "name": "18-04 億年樹",
+   "w3aValue": 450.0,
+   "ggdValue": 6.0,
+   "verdict": "tier"
+  },
+  {
+   "axis": "radius",
+   "key": "radius:tier",
    "w3a": "A0EZ",
    "ggd": "godie-n01c.r",
    "name": "08-04 阿邦快速劍X",
@@ -7697,6 +7697,16 @@
   {
    "axis": "duration",
    "key": "duration:free-number",
+   "w3a": "A0VC",
+   "ggd": "godie-h02r.q",
+   "name": "90-01 保護色獵殺",
+   "w3aValue": 12.0,
+   "ggdValue": 2.0,
+   "verdict": "free-number"
+  },
+  {
+   "axis": "duration",
+   "key": "duration:free-number",
    "w3a": "A0U5",
    "ggd": "godie-hapm.ex",
    "name": "52-002 射殺百頭",
@@ -7807,11 +7817,41 @@
   {
    "axis": "duration",
    "key": "duration:free-number",
+   "w3a": "A00B",
+   "ggd": "godie-n00p.w",
+   "name": "18-02 寄生種子",
+   "w3aValue": 0.01,
+   "ggdValue": 2.0,
+   "verdict": "free-number"
+  },
+  {
+   "axis": "duration",
+   "key": "duration:free-number",
+   "w3a": "A0RV",
+   "ggd": "godie-n00p.w",
+   "name": "18-02 寄生種子",
+   "w3aValue": 5.0,
+   "ggdValue": 2.0,
+   "verdict": "free-number"
+  },
+  {
+   "axis": "duration",
+   "key": "duration:free-number",
    "w3a": "A0T1",
    "ggd": "godie-n01c.ex",
    "name": "08-002 龍魔人",
    "w3aValue": 0.0,
    "ggdValue": 20.0,
+   "verdict": "free-number"
+  },
+  {
+   "axis": "duration",
+   "key": "duration:free-number",
+   "w3a": "A0BN",
+   "ggd": "godie-ogld.w",
+   "name": "72-02 黑人牙菌斑",
+   "w3aValue": 8.0,
+   "ggdValue": 10.0,
    "verdict": "free-number"
   },
   {
@@ -7892,6 +7932,16 @@
    "name": "11-002 武裝色霸氣",
    "w3aValue": 0.0,
    "ggdValue": 15.0,
+   "verdict": "free-number"
+  },
+  {
+   "axis": "duration",
+   "key": "duration:free-number",
+   "w3a": "A0KD",
+   "ggd": "godie-ubal.w",
+   "name": "37-03-00 災難之牆火燄",
+   "w3aValue": 0.1,
+   "ggdValue": 3.0,
    "verdict": "free-number"
   },
   {
@@ -8567,16 +8617,6 @@
   {
    "axis": "duration",
    "key": "duration:ggd-absent",
-   "w3a": "A021",
-   "ggd": "godie-h020.w",
-   "name": "04-02 炸彈陣",
-   "w3aValue": 5.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:ggd-absent",
    "w3a": "A0TU",
    "ggd": "godie-h02k.ex",
    "name": "89-002 俄羅斯輪盤",
@@ -8621,36 +8661,6 @@
    "ggd": "godie-h02r.ex",
    "name": "90-002 超進化! 妙蛙花",
    "w3aValue": 0.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:ggd-absent",
-   "w3a": "A0KV",
-   "ggd": "godie-h02r.passive",
-   "name": "90-00 寄生種子",
-   "w3aValue": 5.1,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:ggd-absent",
-   "w3a": "A0VC",
-   "ggd": "godie-h02r.q",
-   "name": "90-01 保護色獵殺",
-   "w3aValue": 12.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:ggd-absent",
-   "w3a": "AOww",
-   "ggd": "godie-h02r.q",
-   "name": "90-01 飛葉快刀",
-   "w3aValue": 2.0,
    "ggdValue": null,
    "verdict": "ggd-absent"
   },
@@ -9047,26 +9057,6 @@
   {
    "axis": "duration",
    "key": "duration:ggd-absent",
-   "w3a": "A00B",
-   "ggd": "godie-n00p.w",
-   "name": "18-02 寄生種子",
-   "w3aValue": 0.01,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:ggd-absent",
-   "w3a": "A0RV",
-   "ggd": "godie-n00p.w",
-   "name": "18-02 寄生種子",
-   "w3aValue": 5.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:ggd-absent",
    "w3a": "A0CF",
    "ggd": "godie-n01c.q",
    "name": "08-01 雙龍紋",
@@ -9237,16 +9227,6 @@
   {
    "axis": "duration",
    "key": "duration:ggd-absent",
-   "w3a": "ANso",
-   "ggd": "godie-o030.e",
-   "name": "30-03 痴漢火焰",
-   "w3aValue": 7.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:ggd-absent",
    "w3a": "A0YT",
    "ggd": "godie-o030.ex",
    "name": "30-002 變態紳士",
@@ -9331,26 +9311,6 @@
    "ggd": "godie-ogld.r",
    "name": "72-04 黑化",
    "w3aValue": 0.2,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:ggd-absent",
-   "w3a": "A0BN",
-   "ggd": "godie-ogld.w",
-   "name": "72-02 黑人牙菌斑",
-   "w3aValue": 8.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:ggd-absent",
-   "w3a": "ACpa",
-   "ggd": "godie-ogld.w",
-   "name": "72-02 黑人牙菌斑",
-   "w3aValue": 10.0,
    "ggdValue": null,
    "verdict": "ggd-absent"
   },
@@ -9841,16 +9801,6 @@
    "ggd": "godie-ubal.r",
    "name": "37-04-01 魔力操控",
    "w3aValue": 3.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:ggd-absent",
-   "w3a": "A0KD",
-   "ggd": "godie-ubal.w",
-   "name": "37-03-00 災難之牆火燄",
-   "w3aValue": 0.1,
    "ggdValue": null,
    "verdict": "ggd-absent"
   },

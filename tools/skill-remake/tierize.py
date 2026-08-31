@@ -86,23 +86,46 @@ DAMAGE_KINDS = frozenset(
     {"damage", "damageArea", "damageLine", "dot", "damageOverTime", "chainLightning"}
 )
 
-#: 會產出傷害的模板（`content/ability-templates/`）。⚠️ 模板技的傷害住在
-#: `template.params.damage`（一個 `zScaling`），⛔ 不在 `effects` 裡 ——
-#: 只掃 effects 會讓 95 支模板技全部被判成「沒有傷害」而免魔（⑦ 誤傷）。
-DAMAGE_TEMPLATES = frozenset(
-    {
-        "tpl-single-strike",
-        "tpl-instant-blast",
-        "tpl-line-sweep",
-        "tpl-ground-nova",
-        "tpl-orbit-array",
-        "tpl-traveling-wave",
-        "tpl-proxy-cast",
-    }
-)
-
 #: `template.params` 裡屬於「傷害」的參數名。
-TEMPLATE_DAMAGE_PARAMS = ("damage", "hitDamage", "tickDamage")
+#: ⚠️ `damageTier` 也算 —— 五級距家族（tpl-periodic-field）的傷害住在**級別**那一格，
+#:    ⛔ 不是一個 `zScaling`（第〇·四守則：算得出來的值不進文件）。
+TEMPLATE_DAMAGE_PARAMS = ("damage", "hitDamage", "tickDamage", "damageTier")
+
+
+def _derive_damage_templates():
+    """會產出傷害的模板 —— ⭐ **從出貨的模板自己推導**，⛔ 不是一張手寫的表。
+
+    ⚠️ 模板技的傷害住在 `template.params`（`damage` 是一個 `zScaling`、
+    `damageTier` 是一格級別），⛔ 不在 `effects` 裡 ⇒ 只掃 effects 會讓模板技
+    全部被判成「沒有傷害」而免魔（owner ⑦ 的誤傷）。
+
+    ── ⛔ 為什麼這裡**不可以**是一個 frozenset 字面值（2026-08-31 量到，GH#648）──
+    在此之前它是手寫的 7 個名字，而出貨模板裡符合條件的有 **15 個** ⇒ 少了 8 個。
+    ⭐ 而它**不會有任何東西紅**：那 8 個當時零採用，所以這張表是「對的」——
+    直到有人接上第一支。GH#648 就是那一次：5 支技能接上 `tpl-periodic-field`，
+    ⑦ 當場把它們的 `manaCost` 從 288/72 抹成 **0** 並拔掉 `manaCostTier`
+    ⇒ ⭐ **五支免費的大絕**，而 `content:build` 全綠、schema 全綠。
+    （CLAUDE.md 逐字：「一份手寫的表會過期而且不會有東西紅」——
+      同族前科：`SIM_CAPABILITIES` 自己記錄它撒過兩次謊。）
+
+    ⭐ 推導在**換上去的當下**與手寫表逐名比對過：15 ⊃ 原本 7，⛔ 一個都沒少；
+    多出來的 8 個（含 periodic-field）今天的採用者是 **0 支**（periodic-field 除外），
+    ⇒ 這次替換**改不了任何一支既有技能的耗魔**。
+    """
+    d = os.path.join(ROOT, "content", "ability-templates")
+    out = set()
+    for name in sorted(os.listdir(d)):
+        if not name.endswith(".json") or name.startswith("_"):
+            continue
+        with open(os.path.join(d, name), encoding="utf-8") as f:
+            doc = json.load(f)
+        params = doc.get("params") or {}
+        if any(k in params for k in TEMPLATE_DAMAGE_PARAMS):
+            out.add(doc["id"])
+    return frozenset(out)
+
+
+DAMAGE_TEMPLATES = _derive_damage_templates()
 
 
 def _load(name):
@@ -253,6 +276,21 @@ def damage_leaves(doc):
             if b is not None and b > CARRIER_BASE_MAX:
                 out.append((b, params[key]))
     return out
+
+
+def template_damage_tier(doc):
+    """模板技把傷害寫成**一格級別字串**時的那一格（`tpl-periodic-field.damageTier`）。
+
+    ⭐ 它刻意**不**走 `damage_leaves()`：那個回傳值的每一筆都會被 `_rewrite_scaling`
+    就地改寫，而一個級別字串**已經是**級距了 —— 沒有東西要換算，
+    ⛔ 而且 str 沒有 `.get`（2026-08-31 真的當場炸過一次）。
+    ⇒ 它只回答「這支技能有多重」，給冷卻／耗魔當參照那一格用。
+    """
+    tpl = doc.get("template")
+    if not isinstance(tpl, dict) or tpl.get("ref") not in DAMAGE_TEMPLATES:
+        return None
+    t = (tpl.get("params") or {}).get("damageTier")
+    return t if t in TIER_NAMES else None
 
 
 #: 螢幕回饋三兄弟 —— 它們的 `radius` 是**觀眾**半徑，⛔ 不是命中半徑。
@@ -723,9 +761,13 @@ def tierize(doc, grids=None, log=None):
         base = max(b for b, _ in leaves)
         idx = nearest_index(base, dgrid)
     else:
+        # ⭐ 模板技把傷害寫成一格**級別**時（tpl-periodic-field），那一格就是答案 ——
+        #    ⛔ 不要落進下面的 0：那會讓一支「極大」的領域技拿到**極小**的冷卻／耗魔
+        #    參照階，而 JSON 的傷害那一格看起來完全正常（同 `_scaling_base` 檔頭記的坑）。
+        t = template_damage_tier(doc)
         # 沒有可換算的葉子 ⇒ 用它**有沒有傷害**決定 i_d：純 ratios 的傷害技仍是
         # 傷害技，但它的卡面基礎是 0 ⇒ 落在最低那一格。
-        idx = 0
+        idx = TIER_NAMES.index(t) if t is not None else 0
 
     # ── ①③：冷卻。⛔ 只有真的有冷卻的才填級別（62 支 cd=0 的被動不憑空長冷卻）──
     cd = doc.get("cooldown")

@@ -126,31 +126,27 @@
       ],
       "effects": [],
       "template": {
-        "ref": "tpl-instant-blast",
+        "ref": "tpl-periodic-field",
         "params": {
-          "radius": 300,
-          "damage": {
-            "damageTier": "小",
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.6
-              }
-            ]
-          },
+          "intervalSec": 1,
+          "durationSec": 5,
+          "radiusTier": "中",
+          "anchor": "point",
+          "applyTo": "enemies",
+          "damageTier": "小",
           "damageType": "magic",
-          "castTimeSec": 1.133
+          "castTimeSec": 1.033
         }
       },
       "vfxKey": "fx.prim.fire.bolt",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 1.133,
+      "castTimeSec": 1.033,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",
-      "manaCostTier": "極小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "manaCostTier": "極小"
     },
     "E": {
       "id": "godie-hjai.e",

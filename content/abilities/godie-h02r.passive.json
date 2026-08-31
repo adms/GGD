@@ -37,10 +37,26 @@
       "amount": {
         "flat": 50.0
       }
+    },
+    {
+      "kind": "dot",
+      "damageType": "magic",
+      "amountPerTick": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      },
+      "intervalSec": 1.0,
+      "durationSec": 5.0,
+      "stacking": "refresh"
     }
   ],
   "vfxKey": "fx.prim.nature.pulse",
-  "castTimeSec": 0.667,
+  "castTimeSec": 1.7,
   "rangeTier": "大",
   "range": 8
 }
