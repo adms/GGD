@@ -28,10 +28,10 @@ import { markCount } from "../sim/marks";
 import { recomputeStats } from "../sim/stats/statPipeline";
 import { Stat } from "../sim/stats/statTypes";
 import { lethalSaveFor } from "../sim/combat/lethalSave";
-import { asSeatId, asTeamId, type ChampionId, type EntityId, type MarkId } from "../ids";
+import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../ids";
 
 const BERSERKER = "godie-hapm" as ChampionId;
-const TRIAL = "trial" as MarkId;
+const TRIAL = "trial" as never;
 const Z0 = SKELETON_ARENA.zones[0]!;
 
 beforeAll(() => {
@@ -59,7 +59,7 @@ describe("GH#899 十二道試煉：失一層 ⇒ 真的加 AD 與最大生命", 
     const world = new SimWorld(SKELETON_ARENA, 20260901);
     const id = spawnBerserker(world);
     expect(
-      markCount(world, id, TRIAL),
+      markCount(world, id, TRIAL as never),
       "⛔ 出貨的 `godie-hapm.passive` 宣告了 `marks[].initial: 12`，而生出來一層都沒有\n" +
         "⇒ ⭐ 卡面寫「初始擁有十二層試煉」而遊戲裡零層（第一·五守則）。",
     ).toBe(12);
@@ -68,14 +68,14 @@ describe("GH#899 十二道試煉：失一層 ⇒ 真的加 AD 與最大生命", 
   it("★ ② 挨一發致命傷害 ⇒ 燒一層**而且** AD／最大生命的來源真的掛上來", () => {
     const world = new SimWorld(SKELETON_ARENA, 20260901);
     const id = spawnBerserker(world);
-    const before = markCount(world, id, TRIAL);
+    const before = markCount(world, id, TRIAL as never);
     const hp = world.health.get(id)!;
     // ⭐ 走**出貨的**免死路徑（`combat/damage.ts` 用的就是這一支），⛔ 不是自己造一個。
     const saved = lethalSaveFor(world, id, "physical", hp.hp + 9999, hp.hp);
     expect(saved, "⛔ 致命傷害沒有觸發免死 ⇒ 十二道試煉整支是死的").toBeDefined();
-    expect(markCount(world, id, TRIAL), "⛔ 沒有燒層").toBe(before - 1);
+    expect(markCount(world, id, TRIAL as never), "⛔ 沒有燒層").toBe(before - 1);
 
-    const src = world.stats.get(id)!.sources.find((s) => s.id === `mark:${TRIAL}`);
+    const src = world.stats.get(id)!.sources.find((s) => s.id === `mark:trial`);
     expect(
       src,
       "⛔⛔ 燒了一層而 `StatsComp` 上**沒有** `mark:trial` 這份來源\n" +

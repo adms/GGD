@@ -16,7 +16,9 @@
 import { describe, it, expect } from "vitest";
 import { ApiClient, type TokenPair, type TokenStorage } from "./session";
 
-const PAIR: TokenPair = { accessToken: "acc-1", refreshToken: "ref-1" };
+// ⚠️ `expiresIn` 是必填 —— ⛔ 這份夾具在 GH#813 B 那一輪漏了它,而 vitest 是綠的
+//   (型別匯入在執行期不存在)⇒ 只有 `tsc` 抓得到。
+const PAIR: TokenPair = { accessToken: "acc-1", refreshToken: "ref-1", expiresIn: 900 };
 
 function memStorage(init: TokenPair | null): TokenStorage & { current: TokenPair | null } {
   let cur = init;

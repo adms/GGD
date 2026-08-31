@@ -109,6 +109,22 @@ export function MarkBarView({ rows }: { rows: readonly MarkRow[] }): React.JSX.E
                   我們不是。 */}
               {`×${r.count}`}
             </span>
+              {/* ⭐⭐ GH#899 —— 「已經失去的層數換來了多少」。owner 逐字：
+                  「Berserker 12試煉 **復活12次沒有加12次攻擊力與生命力**」——
+                  ⭐ 伺服器**真的有加**（四條守衛驗過），⛔ 而玩家在任何地方都看不到它：
+                  右下角那張全屬性面板是**英雄卡**視角，任何 live modifier 都不顯示。
+                  ⇒ ⭐ 畫在標記本人旁邊，⛔ 而不是再開一條「客戶端重算全部屬性」的路
+                  （那會是第〇·四守則的第二個住處，而且它一定會跟伺服器漂）。
+                  ⛔ 沒有 `perStackLost` 的標記這一格是 null ⇒ 逐位元不變。 */}
+              {r.bonus !== null && (
+                <span
+                  data-mark-bonus={r.markId}
+                  style={{ fontSize: 10, fontWeight: 700, color: c, opacity: 0.85,
+                           whiteSpace: "nowrap", textShadow: "0 1px 3px rgba(0,0,0,0.9)" }}
+                >
+                  {r.bonus}
+                </span>
+              )}
           </div>
         );
       })}

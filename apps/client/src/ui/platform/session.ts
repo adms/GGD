@@ -7,6 +7,9 @@
  * fetch + storage are injectable so the refresh logic is unit-testable.
  */
 import type { TokenPair } from "./types";
+// ⭐ 轉出 —— `refreshNotInStorage.test.ts` 要拿它當型別，⛔ 而 GH#813 B 那一輪
+//   只 import 沒 export ⇒ `tsc` 紅（⚠️ 而 vitest 是綠的：型別匯入在執行期不存在）。
+export type { TokenPair };
 
 const STORAGE_KEY = "ggd.session.v1";
 

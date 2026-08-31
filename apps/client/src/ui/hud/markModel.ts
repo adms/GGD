@@ -67,8 +67,90 @@ export function markIdentity(markId: string): MarkIdentity {
   if (ability) return { label: ability.name, icon: ability.icon ?? null, known: true };
   const status = StatusEffects.tryGet(markId);
   if (status) return { label: status.name, icon: status.iconKey ?? null, known: true };
+  // ⭐⭐ GH#899 —— **宣告它的那支技能**。⛔ 在這一行之前，出貨唯一的那個標記
+  //    （十二道試煉的 `trial`）在 `Abilities` 與 `StatusEffects` 裡**都查不到**
+  //    ⇒ HUD 把內部英文 id **`trial`** 原封不動畫給玩家看。
+  // ⚠️ 它是機制級的：`markId` 的身分本來就是「借來的」（`marks.ts` ②），
+  //    ⛔ 而那份註解漏掉了第三種借法 —— **技能自己宣告的名字**。
+  const owner = markOwners().get(markId);
+  if (owner) return { label: owner.name, icon: owner.icon ?? null, known: true };
   return { label: markId, icon: null, known: false };
 }
+
+/** `markId` → 宣告它的那支技能。⭐ 從**出貨註冊表**推導，⛔ 不是一張手寫對照表。 */
+let markOwnerCache: Map<string, { name: string; icon: string | null; spec: MarkSpecLite }> | null = null;
+
+/** 這一格只讀我們**畫得出來**的兩樣：初始層數與每層加成。 */
+export interface MarkSpecLite {
+  readonly initial: number;
+  readonly perStackLost: readonly { readonly stat: string; readonly op: string; readonly value: number }[];
+}
+
+export function markOwners(): Map<string, { name: string; icon: string | null; spec: MarkSpecLite }> {
+  if (markOwnerCache) return markOwnerCache;
+  const out = new Map<string, { name: string; icon: string | null; spec: MarkSpecLite }>();
+  for (const a of Abilities.all() as unknown as {
+    name?: string;
+    icon?: string;
+    marks?: { markId?: string; initial?: number; perStackLost?: MarkSpecLite["perStackLost"] }[];
+  }[]) {
+    for (const m of a.marks ?? []) {
+      if (!m.markId || out.has(m.markId)) continue;
+      out.set(m.markId, {
+        name: a.name ?? m.markId,
+        icon: a.icon ?? null,
+        spec: { initial: m.initial ?? 0, perStackLost: m.perStackLost ?? [] },
+      });
+    }
+  }
+  markOwnerCache = out;
+  return out;
+}
+
+/** 測試用 —— 換了內容註冊表就要作廢。 */
+export function resetMarkOwnerCache(): void {
+  markOwnerCache = null;
+}
+
+/**
+ * ⭐⭐ GH#899 —— 「已經失去的層數換來了多少永久加成」的**一句話**。
+ *
+ * owner 逐字：「Berserker 12試煉 **復活12次沒有加12次攻擊力與生命力**」——
+ * ⭐ 而伺服器**真的有加**（`sim/marks.ts::syncPerStackSource`，四條守衛驗過）。
+ * ⛔ 玩家看不到它，因為右下角那張全屬性面板是**英雄卡**視角
+ * （`ChampionSheetContext` 只吃 `level` 與 `attrBonus`）⇒ 任何 live modifier 都不顯示。
+ *
+ * ⇒ ⭐ 這裡把它畫在**標記本人**旁邊 —— ⛔ 不是再開一條「重算一次全部屬性」的路
+ *   （那會是第〇·四守則的第二個住處，而且它一定會跟伺服器漂）。
+ *   這一格只複述**一個乘法**：`perStackLost.value × 已失層數`。
+ *
+ * ⛔ 沒有 `perStackLost` 的標記回 `null`（出貨的純計數標記絕大多數是這種）。
+ */
+export function markBonusLabel(markId: string, count: number): string | null {
+  const owner = markOwners().get(markId);
+  if (!owner || owner.spec.perStackLost.length === 0) return null;
+  const spent = Math.max(0, owner.spec.initial - Math.trunc(count));
+  if (spent <= 0) return null;
+  const parts: string[] = [];
+  for (const m of owner.spec.perStackLost) {
+    const label = MARK_STAT_LABELS[m.stat] ?? m.stat;
+    const v = m.value * spent;
+    parts.push(m.op === "pctAdd" || m.op === "pctMult" ? `${label}+${Math.round(v * 100)}%` : `${label}+${Math.round(v)}`);
+  }
+  return parts.join(" · ");
+}
+
+/** ⛔ 只列**標記真的用得到**的那幾條 —— 缺的一律退回原始 key（⛔ 不是空字串）。 */
+const MARK_STAT_LABELS: Record<string, string> = {
+  ad: "攻擊力",
+  ap: "法術強度",
+  maxHealth: "最大生命",
+  maxMana: "最大魔力",
+  armor: "護甲",
+  mr: "魔抗",
+  as: "攻速",
+  ms: "移速",
+};
 
 /** HUD 上真的畫出來的一列。 */
 export interface MarkRow {
@@ -82,6 +164,8 @@ export interface MarkRow {
   /** 一層都不剩了：下一次致命傷就是真的死 */
   empty: boolean;
   seq: number;
+  /** ⭐ GH#899 —— 已失去的層數換來的永久加成（沒有就是 null）。 */
+  bonus: string | null;
 }
 
 /**
@@ -142,6 +226,7 @@ export function markRows(marks: readonly MarkView[], nowMs: number): MarkRow[] {
       saving: age >= 0 && age < MARK_SAVE_FLASH_MS,
       empty: m.count <= 0,
       seq: m.seq,
+      bonus: markBonusLabel(m.markId, m.count),
     });
   }
   rows.sort((a, b) => (a.count !== b.count ? a.count - b.count : a.markId < b.markId ? -1 : 1));
