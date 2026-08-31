@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "f3f4185c",
+  "fingerprint": "29235222",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -950,6 +950,7 @@
       "enabled",
       "groundDecal",
       "heightY",
+      "models",
       "primitive",
       "scale",
       "soundDissipate",
