@@ -2,7 +2,7 @@ import type { VfxScriptDoc, VfxScriptSegment } from "@ggd/shared/content/schema/
 import { decodeAssetDrag, segmentTimes, type AssetDrop, type TriggerCue } from "./model";
 
 const KINDS: VfxScriptSegment["kind"][] = [
-  "modelFx", "vfx", "floatingText", "screenFlash", "screenShake", "sound", "anim", "hideBody",
+  "modelFx", "vfx", "beam", "floatingText", "screenFlash", "screenShake", "sound", "anim", "hideBody",
 ];
 
 export function VfxTimeline({
@@ -52,6 +52,17 @@ export function VfxTimeline({
           <button type="button" onClick={onTogglePlay}>{playing ? "❚❚" : "▶"}</button>
           <button type="button" onClick={() => onStep(1)} title="前進一個 1/60 秒畫格">+1f</button>
           <strong>{(playheadMs / 1000).toFixed(2)}s</strong>
+          <label className="vfx-exact-time">
+            精確秒數
+            <input
+              type="number"
+              min={0}
+              max={durationMs / 1000}
+              step={1 / 60}
+              value={(Math.min(durationMs, playheadMs) / 1000).toFixed(3)}
+              onChange={(e) => onSeek(Math.max(0, Math.min(durationMs, Number(e.target.value) * 1000)))}
+            />
+          </label>
         </div>
         <div className="vfx-add-kinds">
           {KINDS.map((kind) => <button type="button" key={kind} onClick={() => onAddKind(kind)}>+ {kind}</button>)}

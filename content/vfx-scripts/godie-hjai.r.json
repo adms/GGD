@@ -1,0 +1,15 @@
+{
+  "id": "godie-hjai.r",
+  "schema": "vfx-script@1",
+  "abilityId": "godie-hjai.r",
+  "notes": "04-04 神滅斬（原作參考 cFz1d48fvN8）。黑紫光刀蓄力後，莉娜本體高速穿越目標並留下斬痕；script 只負責 dash 斬擊演出。",
+  "segments": [
+    { "kind": "floatingText", "on": "castStart", "text": "神滅斬 · RAGNA BLADE", "colorRgb": [188, 92, 255], "sizeScale": 1.45, "durationSec": 1.25 },
+    { "kind": "anim", "on": "castStart", "at": "caster", "pulse": "cast", "clipWindowMs": 1800 },
+    { "kind": "hideBody", "on": "castEffect", "at": "caster", "durationMs": 650 },
+    { "kind": "modelFx", "on": "castEffect", "modelKey": "imported.linainvers", "path": "toTarget", "speed": 24, "lifeSec": 0.65, "clip": "attack", "clipTimeScale": 2.8, "scale": 1, "tint": [0.42, 0.08, 0.58], "alpha": 1 },
+    { "kind": "beam", "on": "castEffect", "atMs": 120, "at": "caster", "lengthU": 5, "widthU": 0.55, "heightU": 1, "yawOffsetDeg": 8, "pitchDeg": 0, "durationSec": 0.42, "colorRgb": [170, 42, 255], "alpha": 1 },
+    { "kind": "beam", "on": "castEffect", "atMs": 280, "at": "target", "lengthU": 3.2, "widthU": 0.35, "heightU": 1, "yawOffsetDeg": -55, "pitchDeg": 0, "durationSec": 0.38, "colorRgb": [255, 146, 255], "alpha": 0.95 },
+    { "kind": "screenShake", "on": "castEffect", "atMs": 280, "amplitude": 0.38, "durationSec": 0.32 }
+  ]
+}

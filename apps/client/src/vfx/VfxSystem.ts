@@ -51,6 +51,7 @@ import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import type { ParticleSystem } from "@babylonjs/core/Particles/particleSystem";
 import type { EventMessage } from "@ggd/shared/protocol/messages";
 import { Abilities, Projectiles } from "@ggd/shared/sim/content/registry";
+import { abilityIdOfAuthoredOrigin } from "@ggd/shared/sim";
 import type { AbilityId, ProjectileId } from "@ggd/shared/ids";
 import type { VfxDoc } from "@ggd/shared/content";
 // ⭐ GH#649/#565 —— vfxSpawn 的酬載型別住在 sim 的 emit 站旁邊（GH#608 的規矩）
@@ -59,6 +60,7 @@ import { Configs as ContentConfigs, VfxScripts } from "@ggd/shared/content/regis
 import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
 import { DEFAULT_VFX_SCRIPTS } from "@ggd/shared/content/schema/config/vfxScripts";
 import { VfxScriptPlayer } from "./VfxScriptPlayer";
+import { ScriptBeamFx, type ScriptBeamEvent } from "./ScriptBeamFx";
 import { TICK_MS } from "@ggd/shared/constants";
 // GH#649/#565 —— WC3 掛點字串 → glb 骨頭節點（正規化＋fallback 鏈，#98 的那一半）
 import { resolveAttachment } from "../render/vfx/attachment";
@@ -680,6 +682,8 @@ export class VfxSystem {
    * 建構它不配置任何東西：沒有人請求過弧的那一場，池子是空的。
    */
   private readonly arcs: ArcBoltFx;
+  /** VFX-script authored horizontal beams; cosmetic geometry only. */
+  private readonly scriptBeams: ScriptBeamFx;
   /** ⭐ GH#551 —— 移動中的**模型**特效（翻滾光束／圓周冰塊／直線火球）。null = 沒有內容接縫。 */
   private readonly modelFx: ModelFxRig | null;
   /** GH#838 特效工坊的演出腳本播放器（constructor 尾建）。 */
@@ -843,6 +847,7 @@ export class VfxSystem {
       { getScale: () => this.budgetScale() },
     );
     this.arcs = new ArcBoltFx(scene);
+    this.scriptBeams = new ScriptBeamFx(scene);
     this.guardianVolley = new GuardianVolleyFx(scene);
     // ⭐ GH#494 掉錢 → 停 1 秒 → 貝茲加速吸回擊殺者 + 輕音效（連擊音階升高）。
     this.gold = new GoldPickupFx(scene, {
@@ -2400,6 +2405,8 @@ export class VfxSystem {
       }
       case "vfxSpawn": {
         const data = ev.data as Partial<VfxSpawnEvent>;
+        const authoredAbilityId = abilityIdOfAuthoredOrigin(data.origin);
+        if (authoredAbilityId && this.scriptPlayer.hasScript(authoredAbilityId)) break;
         const x = data.x;
         const z = data.z;
         if (x === undefined || z === undefined || !isFinitePos({ x, z })) break; // #131
@@ -2460,6 +2467,26 @@ export class VfxSystem {
         }
         break;
       }
+      case "vfxScriptBeam": {
+        const beam = ev.data as unknown as ScriptBeamEvent;
+        if (
+          ![
+            beam.x,
+            beam.z,
+            beam.dx,
+            beam.dz,
+            beam.lengthU,
+            beam.widthU,
+            beam.heightU,
+            beam.pitchDeg,
+            beam.travelU,
+            beam.durationSec,
+            beam.alpha,
+          ].every(Number.isFinite)
+        ) break;
+        this.scriptBeams.spawn(beam, nowMs);
+        break;
+      }
 
       /**
        * ⚡ 一段電弧的**通用**要求（和上面的 `vfxSpawn` 是同一個形狀：引擎送
@@ -2490,6 +2517,13 @@ export class VfxSystem {
       case "modelFxSpawn": {
         if (!this.modelFx) break;
         const p = ev.data as unknown as ModelFxSpawnEvent;
+        // A vfx-script owns presentation, while the ability JSON keeps damage,
+        // targets and timing. Inline spawnModelFx is presentation-only and does
+        // carry authored origin, so let the script replace it instead of drawing
+        // both versions. Script-synthesized modelFx deliberately has no origin
+        // and therefore continues through this same consumer.
+        const authoredAbilityId = abilityIdOfAuthoredOrigin(p.origin);
+        if (authoredAbilityId && this.scriptPlayer.hasScript(authoredAbilityId)) break;
         // ⚠️ 只擋「線路上真的沒有實例」這一種（sim 的 `instances.length===0`
         // 早退場路徑）。⛔ 不要再加「防禦性」的欄位存在檢查 —— 那正是舊碼
         // 靜靜吃掉整族的方式。
@@ -2525,6 +2559,10 @@ export class VfxSystem {
       // 所以「受害者畫面變紅」從來沒有對過人。
       case "screenFlash":
       case "screenShake": {
+        const authoredAbilityId = abilityIdOfAuthoredOrigin(
+          typeof ev.data.origin === "string" ? ev.data.origin : undefined,
+        );
+        if (authoredAbilityId && this.scriptPlayer.hasScript(authoredAbilityId)) break;
         const cue = ev.data as unknown as ScreenCueRecipients;
         const me = this.ctx.localEntityId?.() ?? null;
         if (!screenCueIsForViewer(cue as never, me)) break;
@@ -2545,6 +2583,8 @@ export class VfxSystem {
       //    生一個（`entityPos` 還要客戶端自己查，而 sim 已經把座標算好送來了）。
       case "floatingText": {
         const p = ev.data as unknown as FloatingTextEvent;
+        const authoredAbilityId = abilityIdOfAuthoredOrigin(p.origin);
+        if (authoredAbilityId && this.scriptPlayer.hasScript(authoredAbilityId)) break;
         if (!p.text || !p.subjects?.length) break;
         for (const s of p.subjects) {
           this.floatingText.spawn({
@@ -2832,6 +2872,7 @@ export class VfxSystem {
     // ⚡ 電弧：推進亮度,壽命到的還回 free-list。**一跳一閃**,所以絕大多數幀
     // 這一圈走的是空陣列。
     this.arcs.update(nowMs);
+    this.scriptBeams.update(nowMs);
     // ⭐ GH#494 金幣：停留 → 貝茲加速 → 到站播音效並 `dispose()` 那一枚 instance。
     // ⚠️ 放在 `syncGroundEntities` **之後**，這樣目標讀到的是這一幀的英雄位置
     // （英雄邊打邊跑，用上一幀的位置會讓金幣永遠差一格）。
@@ -2922,6 +2963,7 @@ export class VfxSystem {
     this.telegraphLayer.clear(); // 每個施法者的地面預告圈
     this.pillars.clear(); // 向天光束（#233）
     this.arcs.clear(); // ⚡ 上一回合最後一跳的電，⛔ 不可以跟著進商店（#216 / #259）
+    this.scriptBeams.clear();
     // ⭐ GH#567 —— 還在飛的守衛砲彈與還在演的伸縮動作都不跨回合（同上一行的理由）。
     this.guardianVolley.resetForRound();
     clearGuardianRecoils();
@@ -2997,6 +3039,7 @@ export class VfxSystem {
     this.castDecals.dispose();
     this.pillars.dispose();
     this.arcs.dispose();
+    this.scriptBeams.dispose();
     // ⭐ GH#567 —— 來源網格 + 共用材質（instance 在 resetForRound 裡已經丟了）。
     this.guardianVolley.dispose();
     clearGuardianRecoils();

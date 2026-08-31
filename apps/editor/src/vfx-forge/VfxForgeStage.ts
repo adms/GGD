@@ -34,6 +34,7 @@ import {
 import { normalizedModelScale } from "../../../client/src/render/views/modelSizing";
 import { VfxScriptPlayer } from "../../../client/src/vfx/VfxScriptPlayer";
 import { VfxSystem } from "../../../client/src/vfx/VfxSystem";
+import { ScriptBeamFx, type ScriptBeamEvent } from "../../../client/src/vfx/ScriptBeamFx";
 import { vfxHardMaxLifeSec } from "../../../client/src/vfx/vfxCleanupPolicy";
 import {
   applyVfxOverrides,
@@ -152,6 +153,7 @@ export class VfxForgeStage {
   private readonly fetchDoc: NonNullable<VfxForgeStageOptions["fetchDoc"]>;
   private readonly onOverlay: NonNullable<VfxForgeStageOptions["onOverlay"]>;
   private readonly modelRig: ModelFxRig;
+  private readonly scriptBeams: ScriptBeamFx;
   private readonly groundFloor: ReturnType<typeof buildZoneGround>["floor"];
   private readonly actors: { caster: ForgeActor; target: ForgeActor };
   private actorReady: Promise<void> = Promise.resolve();
@@ -217,6 +219,7 @@ export class VfxForgeStage {
       spawnTrail: (id, x, y, z) => void this.spawnVfx(id, x, z, y),
       maxEffectSec: vfxHardMaxLifeSec(),
     });
+    this.scriptBeams = new ScriptBeamFx(this.scene);
     this.player = this.makePlayer();
     this.runtimeVfx = this.mode === "runtime"
       ? new VfxSystem(this.scene, {
@@ -331,23 +334,20 @@ export class VfxForgeStage {
 
   /** Two-way bright/dark self-certification before any visual proof reading. */
   async calibrate(): Promise<number> {
-    // Parallel shader compilation can make the first post-probe render keep
-    // the bright calibration framebuffer even though the probe mesh is gone.
-    // Warm the actual scene first, then restore a fully ready scene before any
-    // screenshot is allowed to count as evidence.
+    // Use the renderer's real framebuffer, not canvas.drawImage(). Safari and
+    // Chromium can expose an opaque/composited WebGL canvas to 2D drawImage,
+    // which made an actually dark scene look 100% bright to the ruler. This is
+    // the same calibrated readback path used by the shipped feature-proof
+    // audition: render twice (readPixels may otherwise return the prior frame),
+    // then count the GPU pixels directly.
     await this.scene.whenReadyAsync();
     this.renderScene();
-    const measure = document.createElement("canvas");
-    const ctx = measure.getContext("2d", { willReadFrequently: true });
-    const read = () => {
+    const read = async () => {
       this.renderScene();
-      const w = this.canvas.width;
-      const h = this.canvas.height;
-      measure.width = w;
-      measure.height = h;
-      if (!ctx) return { w, h, bright: 0, lit: 0 };
-      ctx.drawImage(this.canvas, 0, 0);
-      const px = ctx.getImageData(0, 0, w, h).data;
+      this.renderScene();
+      const w = this.engine.getRenderWidth();
+      const h = this.engine.getRenderHeight();
+      const px = (await this.engine.readPixels(0, 0, w, h)) as Uint8Array;
       let bright = 0;
       let lit = 0;
       for (let i = 0; i + 2 < px.length; i += 4) {
@@ -357,7 +357,11 @@ export class VfxForgeStage {
       }
       return { w, h, bright, lit };
     };
-    const control = await calibrateTwoWay({ scene: this.scene, camera: this.cameraRig.camera, rulers: { canvas: read } });
+    const control = await calibrateTwoWay({
+      scene: this.scene,
+      camera: this.cameraRig.camera,
+      rulers: { "engine.readPixels": read },
+    });
     await this.scene.whenReadyAsync();
     this.renderScene();
     return control;
@@ -369,6 +373,7 @@ export class VfxForgeStage {
     for (const actor of Object.values(this.actors)) this.disposeActor(actor);
     this.runtimeVfx?.dispose();
     this.modelRig.dispose();
+    this.scriptBeams.dispose();
     for (const container of this.ownedModelFxContainers) container.dispose();
     this.ownedModelFxContainers.clear();
     this.modelFxContainerPromises.clear();
@@ -571,6 +576,7 @@ export class VfxForgeStage {
     // Timeline replay keeps preloaded GLB containers and reuses pooled geometry;
     // clearing the container map here makes the first scrub frame an empty shell.
     this.modelRig.resetForRound();
+    this.scriptBeams.clear();
     this.runtimeVfx?.resetForRound();
     this.disposeParticles();
     this.player = this.makePlayer();
@@ -605,6 +611,7 @@ export class VfxForgeStage {
     else {
       this.player.update(this.nowMs);
       this.modelRig.tick(dtMs);
+      this.scriptBeams.update(this.nowMs);
     }
     this.cameraRig.update({
       dtMs,
@@ -775,6 +782,10 @@ export class VfxForgeStage {
       const overrides = (data.overrides ?? {}) as AbilityVfxLayerOverride;
       const y = (overrides.flyHeight ?? 128) / WC3_UNITS_PER_WORLD_UNIT;
       void this.spawnVfx(id, x, z, y, overrides, Number(data.durationSec ?? 0) || undefined);
+      return;
+    }
+    if (ev.type === "vfxScriptBeam") {
+      this.scriptBeams.spawn(data as unknown as ScriptBeamEvent, nowMs);
       return;
     }
     if (ev.type === "screenShake") {

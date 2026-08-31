@@ -51,12 +51,27 @@ export function VfxForgePreview({
     actors: { caster: "替身", target: "替身" },
   });
   const [calibration, setCalibration] = useState("量尺未校準");
+  const [focusPreview, setFocusPreview] = useState(false);
   const firstPose = schedule.find((item) => item.actorPose)?.actorPose;
   const homePoseKey = firstPose
     ? `${firstPose.caster.x},${firstPose.caster.z}/${firstPose.target.x},${firstPose.target.z}`
     : "pending-pose";
 
   useEffect(() => { playheadRef.current = playheadMs; }, [playheadMs]);
+
+  // CSS fullscreen changes the canvas backing size after the current frame has
+  // already been drawn. ResizeObserver updates Babylon's buffer, but resizing
+  // clears WebGL; replay the selected frame once so visual-proof screenshots do
+  // not capture a correctly resized yet completely black canvas.
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      const stage = stageRef.current;
+      if (!stage) return;
+      stage.resize();
+      stage.seek(playheadRef.current);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [focusPreview]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -123,7 +138,7 @@ export function VfxForgePreview({
 
   return (
     <div
-      className="vfx-stage"
+      className={`vfx-stage${focusPreview ? " focused" : ""}`}
       onDragOver={onDropAsset ? (e) => { e.preventDefault(); e.dataTransfer.dropEffect = "copy"; } : undefined}
       onDrop={(e) => {
         if (!onDropAsset) return;
@@ -147,6 +162,9 @@ export function VfxForgePreview({
       <div className="vfx-stage-status">{overlay.status}</div>
       <div className="vfx-actor-status">施法者：{overlay.actors.caster}<br />目標：{overlay.actors.target}</div>
       <div className="vfx-stage-tools">
+        <button type="button" onClick={() => setFocusPreview((current) => !current)}>
+          {focusPreview ? "返回編輯" : "全螢幕預覽"}
+        </button>
         <button type="button" onClick={() => stageRef.current?.zoomBy(-100)}>鏡頭拉近</button>
         <button type="button" onClick={() => stageRef.current?.zoomBy(100)}>鏡頭拉遠</button>
         <button

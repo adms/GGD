@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_8e0ba5078c33",
+    "contentVersion": "cv_bad40ea662a1",
     "collections": {
       "champions": {
         "hash": "3d0922cecbf5",
@@ -62,8 +62,8 @@
         "count": 46
       },
       "vfx-scripts": {
-        "hash": "aff67fd40c11",
-        "count": 10
+        "hash": "7192bfbce0e8",
+        "count": 13
       }
     },
     "collectionCount": 15
@@ -5472,10 +5472,10 @@
     ]
   },
   "curation": {
-    "championDigest": "e39f1147b9e7",
-    "itemDigest": "9943a99f7205",
-    "championCount": 49,
-    "itemCount": 101,
+    "championDigest": null,
+    "itemDigest": null,
+    "championCount": null,
+    "itemCount": null,
     "liveEndpoint": "/api/v1/curation/whitelist"
   },
   "assetManifestDigest": "d82a2968ae3a",
@@ -5555,9 +5555,13 @@
   ],
   "unavailable": [
     {
+      "field": "curation.*",
+      "reason": "data/curation/whitelist.json 不在（它是平台的執行期狀態，不進版控）。要即時的開放清單請打 GET /api/v1/curation/whitelist。"
+    },
+    {
       "field": "deltaExportAllowed",
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "5c202f60e0a9"
+  "profileDigest": "1cefe919aea7"
 }

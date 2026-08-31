@@ -2,38 +2,14 @@
   "id": "godie-hjai.e",
   "schema": "vfx-script@1",
   "abilityId": "godie-hjai.e",
-  "notes": "GH#838 三招之一（JASS A04R，war3map.j 29886–30160；底稿 §2）。castStart：DoomTarget 胸口魔法陣（heightU 1.1）＋h013 聚氣陣 230%。行為火球與詠唱五句仍只住 ability JSON（tpl-line-blast＋delayed）。castEffect 的 alpha:0 fireblast 是純演出拖尾載體：不畫第二具火球、不碰傷害/碰觸/到達，只沿同一條 12u 航線補回瀏覽器 GLB 缺掉的原作粒子半邊。到達爆炸仍由 ability JSON 的 onArrive 在權威 tick 觸發，⛔ script 不另排一次。",
+  "notes": "04-03 龍破斬（原作參考 cFz1d48fvN8）。赤黑蓄力後發射火球，飛過一段距離才在遠端爆炸；傷害、命中與爆炸時點仍以 ability JSON 為真相。",
   "segments": [
-    {
-      "kind": "modelFx",
-      "on": "castStart",
-      "modelKey": "imported.doom",
-      "path": "static",
-      "anchor": "self",
-      "heightU": 1.1,
-      "lifeSec": 1.5,
-      "scale": 1.6
-    },
-    {
-      "kind": "vfx",
-      "on": "castStart",
-      "vfxId": "fx.w3x.stock.markofchaostarget.p00",
-      "at": "self",
-      "durationSec": 1.2
-    },
-    {
-      "kind": "modelFx",
-      "on": "castEffect",
-      "modelKey": "imported.fireblast",
-      "path": "forward",
-      "speed": 27.5,
-      "distance": 12,
-      "spinDegPerSec": 360,
-      "scale": 4.5,
-      "alpha": 0,
-      "lifeSec": 0.44,
-      "trailVfxId": "fx.prim.fire.bolt",
-      "trailIntervalSec": 0.04
-    }
+    { "kind": "floatingText", "on": "castStart", "text": "龍破斬 · DRAGON SLAVE", "colorRgb": [255, 88, 32], "sizeScale": 1.45, "durationSec": 1.1 },
+    { "kind": "anim", "on": "castStart", "at": "caster", "pulse": "cast", "clipWindowMs": 1250 },
+    { "kind": "beam", "on": "castEffect", "at": "caster", "lengthU": 1.3, "widthU": 1.4, "heightU": 1, "pitchDeg": 0, "travelU": 12, "durationSec": 1.25, "colorRgb": [255, 48, 8], "alpha": 1 },
+    { "kind": "beam", "on": "castEffect", "atMs": 1180, "at": "target", "lengthU": 3.4, "widthU": 1.2, "heightU": 1, "pitchDeg": 0, "durationSec": 0.5, "colorRgb": [255, 38, 8], "alpha": 1 },
+    { "kind": "beam", "on": "castEffect", "atMs": 1180, "at": "target", "lengthU": 3.4, "widthU": 1, "heightU": 1, "yawOffsetDeg": 120, "pitchDeg": 0, "durationSec": 0.5, "colorRgb": [255, 118, 15], "alpha": 0.9 },
+    { "kind": "beam", "on": "castEffect", "atMs": 1180, "at": "target", "lengthU": 3.4, "widthU": 1, "heightU": 1, "yawOffsetDeg": -120, "pitchDeg": 0, "durationSec": 0.5, "colorRgb": [255, 201, 72], "alpha": 0.9 },
+    { "kind": "screenShake", "on": "castEffect", "atMs": 1180, "amplitude": 0.42, "durationSec": 0.45 }
   ]
 }

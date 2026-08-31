@@ -1,12 +1,12 @@
 {
   "collection": "vfx-scripts",
-  "hash": "aff67fd40c11",
+  "hash": "7192bfbce0e8",
   "entries": [
     {
       "id": "godie-e002.ex",
       "path": "vfx-scripts/godie-e002.ex.json",
-      "hash": "e4edec42414d",
-      "size": 4539
+      "hash": "add5e026da0e",
+      "size": 2225
     },
     {
       "id": "godie-e00l.ex",
@@ -23,14 +23,26 @@
     {
       "id": "godie-hart.r",
       "path": "vfx-scripts/godie-hart.r.json",
-      "hash": "9b1af8fd531f",
-      "size": 4526
+      "hash": "8a379286d973",
+      "size": 1595
     },
     {
       "id": "godie-hjai.e",
       "path": "vfx-scripts/godie-hjai.e.json",
-      "hash": "655fe3834e5c",
-      "size": 819
+      "hash": "c449b3496d9b",
+      "size": 1474
+    },
+    {
+      "id": "godie-hjai.r",
+      "path": "vfx-scripts/godie-hjai.r.json",
+      "hash": "f88aade5f111",
+      "size": 1374
+    },
+    {
+      "id": "godie-hvsh.r",
+      "path": "vfx-scripts/godie-hvsh.r.json",
+      "hash": "0834912b5998",
+      "size": 1453
     },
     {
       "id": "godie-n01c.r",
@@ -39,10 +51,16 @@
       "size": 1992
     },
     {
+      "id": "godie-nbbc.e",
+      "path": "vfx-scripts/godie-nbbc.e.json",
+      "hash": "06dc19bd0b75",
+      "size": 980
+    },
+    {
       "id": "godie-nbbc.r",
       "path": "vfx-scripts/godie-nbbc.r.json",
-      "hash": "fff26c131b41",
-      "size": 2080
+      "hash": "2ed96660b73f",
+      "size": 1486
     },
     {
       "id": "godie-o00x.r",
@@ -53,8 +71,8 @@
     {
       "id": "godie-ogrh.r",
       "path": "vfx-scripts/godie-ogrh.r.json",
-      "hash": "c2f67c69c2a9",
-      "size": 1635
+      "hash": "70de01bc7604",
+      "size": 998
     },
     {
       "id": "godie-udea.r",

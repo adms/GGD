@@ -2,38 +2,14 @@
   "id": "godie-nbbc.r",
   "schema": "vfx-script@1",
   "abilityId": "godie-nbbc.r",
-  "notes": "08-04 阿邦快速劍X（JASS A0EZ，war3map.j 28874-28940；底稿 docs/_reports/vfx-editor-jass3b_temp_20260828-0312.md §2）。段落對應：e003 RedDragonMissile 擺在出發點朝施法者面向、活 1 秒（j:28906 j:28909 j:28911，w3u usca 4.0，⛔ 觸發器沒有 SetUnitScalePercent）；出發點地板的 ImpaleTargetDust（j:28914）—— ⚠️ 該資產不在庫，這裡用 fx.fam.ground-dust.nature.s80 代打；落點每個受害者腳下的 ThunderClapCaster 活 1 秒（j:28884 j:28885 RemoveEffectSP 1.00）。⚠️ 原作的 TriggerSleepAction 是 1.00 秒，GGD 的 castTimeSec 是 0.667 ⇒ 這裡把 e003 的 lifeSec 壓到 0.7 對齊詠唱窗。⛔ 28921-28925 的喊招 TextTag 在原作裡是**被註解掉的** ⇒ 這裡沒有 floatingText。⛔ MISSING N6：ShowUnitHide（本體消失 1 秒）今天沒有任何標籤表達得出來 —— 那是這一招的招牌。 ⚠️ 本檔是 godie-n01c.r 的雙生鏡像（對帳守衛要求兩邊一起動）。 ⭐ N6 已落地：`ShowUnitHide(GetTriggerUnit())`（j:28905）＝小呆本人消失 1 秒、畫面上只有那道劍氣 —— 這是這一招的招牌。⚠️ 它走客戶端自己的 alpha 覆寫，⛔ **不是** ENTITY_FLAG.INVISIBLE（那是權威隱身，借來做演出等於偷加無敵窗）。",
+  "notes": "08-04 阿邦快速劍X（原作參考 QE9RrCjt428@157）。A 式藍白衝擊波先行，B 式小呆高速 dash 斬穿並留下橘白終結斬；damageLine、mark、blink 與真傷仍住 ability JSON。",
   "segments": [
-    {
-      "kind": "hideBody",
-      "on": "castStart",
-      "at": "caster",
-      "durationMs": 1000
-    },
-    {
-      "kind": "modelFx",
-      "on": "castStart",
-      "modelKey": "w3x.stock.reddragonmissile",
-      "path": "static",
-      "anchor": "self",
-      "scale": 4,
-      "clip": "idle",
-      "lifeSec": 0.7
-    },
-    {
-      "kind": "vfx",
-      "on": "castStart",
-      "atMs": 600,
-      "vfxId": "fx.fam.ground-dust.nature.s80",
-      "at": "self",
-      "durationSec": 0.8
-    },
-    {
-      "kind": "vfx",
-      "on": "castEffect",
-      "vfxId": "fx.w3x.stock.thunderclapcaster.p00",
-      "at": "target",
-      "durationSec": 1
-    }
+    { "kind": "floatingText", "on": "castStart", "text": "阿邦快速劍X", "colorRgb": [120, 218, 255], "sizeScale": 1.45, "durationSec": 1 },
+    { "kind": "beam", "on": "castEffect", "at": "caster", "lengthU": 12, "widthU": 0.9, "heightU": 1, "pitchDeg": 0, "durationSec": 0.48, "colorRgb": [48, 176, 255], "alpha": 0.95 },
+    { "kind": "hideBody", "on": "castEffect", "atMs": 420, "at": "caster", "durationMs": 560 },
+    { "kind": "modelFx", "on": "castEffect", "atMs": 420, "modelKey": "imported.sd2", "path": "toTarget", "speed": 28, "lifeSec": 0.56, "clip": "attack", "clipTimeScale": 3.2, "scale": 1, "tint": [0.2, 0.58, 1], "alpha": 1 },
+    { "kind": "beam", "on": "castEffect", "atMs": 430, "at": "caster", "lengthU": 12, "widthU": 0.34, "heightU": 1, "pitchDeg": 0, "durationSec": 0.52, "colorRgb": [255, 220, 124], "alpha": 1 },
+    { "kind": "beam", "on": "castEffect", "atMs": 680, "at": "target", "lengthU": 3.6, "widthU": 0.42, "heightU": 1, "yawOffsetDeg": 62, "pitchDeg": 0, "durationSec": 0.36, "colorRgb": [255, 151, 30], "alpha": 1 },
+    { "kind": "screenShake", "on": "castEffect", "atMs": 680, "amplitude": 0.46, "durationSec": 0.38 }
   ]
 }

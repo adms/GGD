@@ -1,8 +1,8 @@
 # 遊戲主程式載入 Editor JSON／ZIP 的修改建議
 
-狀態：**Revision 2.1 — 已對 `origin/main@555e5726`、正式站公開 profile 與目前機器 schema 做第二次逆向審查**
+狀態：**Revision 2.2 — 已對 `origin/main@007d9ffc`、正式站公開 profile、VFX Forge 與目前機器 schema 做第三次接縫審查**
 
-最後驗證：2026-08-14
+最後驗證：2026-09-01 02:13（Asia/Taipei）
 
 適用範圍：GGD 遊戲主程式、後台與 Content Import API；不是 Editor UI 實作說明。
 
@@ -347,7 +347,47 @@ Combat／VFX events 逐步加入 castId、abilityId／itemId、ProductRef／comp
 
 Editor 的 `IntentFrame → world.step()` 可證明數值與主要機制終態；Babylon 只呈現同一份結果。在 render bridge、secondary targets、projectile／impact timing 與 asset authority 對齊前，只能標示 degraded preview，不能聲稱 production renderer parity。
 
-V1 只匯入 Host／Product 對既有 VFX 的 binding；target profile 未宣告 `vfx-document-authoring@1` 時拒絕 `authoring/vfx`。Importer 自己重建 manifest、bundle、indexes 與 generated files。
+`vfx-script@1` 已是目前 VFX Forge 的唯一可寫演出文件，寫入位置只允許
+`content/vfx-scripts/<abilityId>.json`。`content/abilities/*.json` 保留傷害、次數、
+命中與權威時序，Editor 不得以演出操作回寫它；Importer 自己重建 manifest、bundle、
+indexes 與 generated files。
+
+目前腳本演出面包含 `modelFx`、`vfx`、`floatingText`、`screenFlash`、
+`screenShake`、`sound`、`anim`、`hideBody` 與 `beam`。其中 `beam` 的長、寬、
+高度、俯仰、偏航、移動距離、持續、顏色與透明度全是 presentation 值，不得反推命中
+或傷害；遊戲端也不得在此套用或暴露全域 AP 傷害倍率。
+
+`reflectSuccess`、`strike`、`castStart`、`castEffect`、`projectileSpawn` 與
+`projectileHit` 必須從真實事件來源驅動。`spawnVfx`、螢幕 cue、浮動文字與
+`modelFxSpawn` 要保留 authored `origin`，使有腳本的技能可以**取代**能力預設演出；
+腳本合成的事件仍走同一個 VfxSystem consumer，但不帶 authored origin，因此不會被
+自己的 replacement guard 擋掉。禁止同一刀同時播放預設綁定與腳本綁定。
+
+### 9.1 VFX 有效上限必須來自系統變數
+
+Editor 與 importer 都不可把 schema 最大值當成實際生效值。Target profile／runtime
+config receipt 應公開並版本化至少下列變數：單粒子系統存量、每秒發射量、同時 Ribbon
+數、Ribbon 停止後清除期限、場景特效強制回收期限、一次性 emitter 上限，以及回合間
+清理／重新盤點／預載政策。Editor 顯示與驗證一律使用：
+
+```text
+effective value = min(schema bound, runtime config, device/profile clamp)
+```
+
+欄位未公開或 receipt 過期時標示「無法證明實際生效值」，不可退回 UI 常數。這些值由
+同一份 config registry 驅動 runtime、Forge slider 與 importer diagnostics；參數變更後
+coverage／profile fingerprint 必須一起變紅。
+
+### 9.2 視覺驗收不是 schema 驗收
+
+VFX 交付至少保留：雙向 framebuffer 校準結果、真 Sim 觸發班表、1/60 秒決定性重播、
+起手／中段／收尾關鍵影格，以及原作參考與逐招 verdict。通過 schema、typecheck 或
+coverage freshness 只證明管線可讀，不能替代畫面判讀。
+
+2026-09-01 的 8 招驗收也揭露 imported GLB 的貼圖／隱藏 primitive 品質會直接污染
+結果；`imported.herosaber` 等資產可在 0 秒就出現棋盤材質。遊戲端資產管線應加入
+missing-texture、巨大遮罩 primitive、材質透明度與 bounds 的載入前守衛，資產未通過時
+Forge 必須把「技能腳本」與「基礎模型資產」分開判責，不得把破圖算成腳本通過。
 
 ## 10. 驗證矩陣與完成條件
 

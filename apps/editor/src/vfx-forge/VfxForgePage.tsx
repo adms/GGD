@@ -41,9 +41,14 @@ import { VfxTimeline } from "./VfxTimeline";
 import { SegmentInspector } from "./SegmentInspector";
 
 const ACCEPTANCE = [
-  ["godie-hart.r", "01-04 超究武神霸斬"],
   ["godie-hjai.e", "04-03 龍破斬"],
+  ["godie-hjai.r", "04-04 神滅斬"],
+  ["godie-hart.r", "01-04 超究武神霸斬"],
+  ["godie-nbbc.r", "08-04 阿邦快速劍X"],
+  ["godie-nbbc.e", "08-03 龍鬥氣砲咒文"],
+  ["godie-ogrh.r", "09-04 龜派氣功"],
   ["godie-e002.ex", "20-002 理想鄉EX"],
+  ["godie-hvsh.r", "48-04 騎英之手綱"],
 ] as const;
 
 const simPreview = createSimPreviewController();

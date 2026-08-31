@@ -207,6 +207,7 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .vfx-asset span { color: #bd8cff; }
 .vfx-forge-center { min-width: 0; display: grid; grid-template-rows: minmax(410px, 58vh) minmax(280px, auto); }
 .vfx-stage { position: relative; min-height: 380px; overflow: hidden; contain: paint; transform: translateZ(0); background: #080a10; }
+.vfx-stage.focused { position: fixed; inset: 0; width: 100vw; height: 100vh; min-height: 0; max-height: none; margin: 0; border-radius: 0; z-index: 10000; }
 .vfx-stage canvas { display: block; width: 100%; height: 100%; touch-action: none; }
 .vfx-flash { position: absolute; inset: 0; pointer-events: none; }
 .vfx-floating-texts { position: absolute; left: 50%; top: 35%; display: flex; flex-direction: column; align-items: center; gap: 3px; pointer-events: none; transform: translateX(-50%); }
@@ -256,6 +257,8 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .vfx-timeline-head { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; }
 .vfx-timeline-head > div { display: flex; align-items: center; gap: 5px; }
 .vfx-timeline-head strong { min-width: 54px; color: #d8c7ef; font-variant-numeric: tabular-nums; }
+.vfx-exact-time { display: inline-flex; gap: 4px; align-items: center; color: #9da8bf; font-size: 10px; }
+.vfx-exact-time input { width: 68px; padding: 3px 5px; font-variant-numeric: tabular-nums; }
 .vfx-add-kinds { flex-wrap: wrap; justify-content: flex-end; }
 .vfx-add-kinds button { padding: 2px 5px; font-size: 9px; }
 .vfx-scrubber { width: 100%; margin: 8px 0 2px; accent-color: #bd8cff; }

@@ -168,6 +168,7 @@ function segmentTailMs(segment: VfxScriptSegment): number {
       return Math.max(segment.lifeSec ?? 0, curveEnd, travel, 0.25) * 1000;
     }
     case "vfx": return (segment.durationSec ?? 1) * 1000;
+    case "beam": return segment.durationSec * 1000;
     case "floatingText": return (segment.durationSec ?? 1) * 1000;
     case "screenFlash": return segment.durationSec * 1000;
     case "screenShake": return segment.durationSec * 1000;
@@ -214,6 +215,7 @@ export function newSegment(kind: VfxScriptSegment["kind"]): VfxScriptSegment {
     sound: { kind, on: "castEffect", soundKey: "ability.cast" },
     anim: { kind, on: "castEffect", at: "caster", pulse: "cast" },
     hideBody: { kind, on: "castEffect", at: "caster", durationMs: 500 },
+    beam: { kind, on: "castEffect", at: "caster", lengthU: 12, widthU: 1.6, heightU: 1, pitchDeg: 0, durationSec: 0.9, colorRgb: [80, 180, 255], alpha: 1 },
   };
   return checked(seeds[kind]);
 }

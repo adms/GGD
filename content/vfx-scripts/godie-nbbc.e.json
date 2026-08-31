@@ -1,0 +1,13 @@
+{
+  "id": "godie-nbbc.e",
+  "schema": "vfx-script@1",
+  "abilityId": "godie-nbbc.e",
+  "notes": "08-03 龍鬥氣砲咒文。胸前聚氣後沿地面打出清楚、連續的藍白橫向氣功砲；命中、傷害與範圍仍以 ability JSON 為真相。",
+  "segments": [
+    { "kind": "floatingText", "on": "castStart", "text": "龍鬥氣砲咒文", "colorRgb": [94, 202, 255], "sizeScale": 1.4, "durationSec": 1 },
+    { "kind": "anim", "on": "castStart", "at": "caster", "pulse": "cast", "clipWindowMs": 900 },
+    { "kind": "beam", "on": "castEffect", "at": "caster", "lengthU": 12, "widthU": 2.15, "heightU": 1, "pitchDeg": 0, "durationSec": 1, "colorRgb": [34, 150, 255], "alpha": 1 },
+    { "kind": "beam", "on": "castEffect", "atMs": 40, "at": "caster", "lengthU": 12, "widthU": 0.72, "heightU": 1, "pitchDeg": 0, "durationSec": 0.95, "colorRgb": [222, 248, 255], "alpha": 1 },
+    { "kind": "screenShake", "on": "castEffect", "amplitude": 0.34, "durationSec": 0.9 }
+  ]
+}
