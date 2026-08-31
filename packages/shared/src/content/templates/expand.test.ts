@@ -216,7 +216,11 @@ describe("golden per family (template + exemplar params → EffectDef shape)", (
   });
 
   it("draft family has no expand path (throws)", () => {
-    const t = loadTemplate("tpl-summon-agent");
+    // ⚠️ ⭐ 這裡在 2026-09-01 之前是 `tpl-summon-agent` —— 而 GH#898 把它**做完了**
+    //   （`status: "draft"` → `"enabled"`，`FAMILIES` 長出 `summon-agent`）。
+    // ⇒ ⭐ 這條測試要的是「**任何一支還是草稿的**模板沒有展開路徑」，
+    //   ⛔ 不是「那一支特定的模板」—— 換一支還在草稿的（19 支裡的一支）。
+    const t = loadTemplate("tpl-barrier-domain");
     expect(() => expand(t, {})).toThrow(/no P1 expand path/);
   });
 

@@ -35,7 +35,7 @@ owner 2026-08-19（GH#438，這一份要涵蓋的**全部**軸）：
 | 施法距離 | `rangeTier` | `range-tiers.json` | 186 (44.2%) | `enabled: true` |
 | 施法範圍 | `radiusTier` | `aoe-tiers.json` | 99 (23.5%) | `enabled: true` |
 | 位移 | `distanceTier` | `displacement-tiers.json` | 2 (0.5%) | `enabled: true` |
-| **傷害** | `damageTier` | `damage-tiers.json` | 174 (41.3%) | `enabled: true` |
+| **傷害** | `damageTier` | `damage-tiers.json` | 173 (41.1%) | `enabled: true` |
 | **耗魔** | `manaCostTier` | `mana-tiers.json` | 200 (47.5%) | `enabled: true` |
 | **冷卻** | `cooldownTier` (+`cooldownShape`) | `cooldown-tiers.json` | 342 (81.2%) | `enabled: true` |
 

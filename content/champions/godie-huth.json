@@ -175,19 +175,16 @@
       ],
       "effects": [],
       "template": {
-        "ref": "tpl-single-strike",
+        "ref": "tpl-summon-agent",
         "params": {
-          "damage": {
-            "damageTier": "小",
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.6
-              }
-            ]
-          },
-          "damageType": "magic",
-          "castTimeSec": 0.667
+          "count": 2,
+          "body": "self",
+          "damageMult": 0.3,
+          "durationSec": 10,
+          "cleanse": "all",
+          "formation": "ring",
+          "spread": 2,
+          "castTimeSec": 0.267
         }
       },
       "vfxKey": "fx.prim.arcane.swarm",

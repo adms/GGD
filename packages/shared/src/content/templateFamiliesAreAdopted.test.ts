@@ -45,7 +45,6 @@ const AWAITING_CONTENT: Record<string, string> = {
   "tpl-dragon-serpent": "#672 同上",
   "tpl-dragon-shockwave": "#672 同上",
   "tpl-combo-finisher": "#672 —— owner 說的「龍虎亂舞」本體（放招後自動連打＋收尾大招）；家族指認未做",
-  "tpl-summon-agent": "#423 —— 千年練成／樹海降臨要不要真的召喚樹精，卡在 owner 的平衡裁決（需要一具身體）",
   // ── 機制模板：機器做好了，內容側**還沒有人挑它** ──────────────────
   // ⭐ 這一族的共同狀態：`#244` 的模板總類表把 JASS 分群產出的家族，
   //    引擎機制與 paramsSchema 都在，⛔ 但沒有任何一支出貨技能改成引用它。

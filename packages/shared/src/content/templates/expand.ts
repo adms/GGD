@@ -719,7 +719,82 @@ const modelFxFamily: Family = (t, p) => {
   };
 };
 
+/**
+ * ⭐ `body:"self"` 的 `championId` 佔位。
+ * ⚠️ `summon` 的 schema 是 soft ref（⛔ 不驗存在），⭐ 而它是 `min(1)` ⇒ 空字串會炸。
+ * ⛔ 這個 id 刻意**指不到任何文件** —— 它是「這一格不該被讀」的宣告，
+ *    ⛔ 不是一個真的英雄；`self` 那條路在 sim 端一個字都不讀它。
+ */
+const SUMMON_SELF_PLACEHOLDER = "self";
+
 const FAMILIES: Readonly<Record<string, Family>> = {
+  /**
+   * ⭐⭐ **召喚代理**（GH#898 / GH#903）—— 生出 N 具會自己打的身體。
+   *
+   * ── ⛔ 在此之前 ─────────────────────────────────────────────────────────
+   * `tpl-summon-agent.json` 是一份 **`status: "draft"` 的空殼**（`params: {}`），
+   * ⇒ ⭐ 引擎有 `summon` 機制（`schema/effects/summon.ts`，20 個決策點全部是資料），
+   * ⛔ 而**沒有任何一支出貨技能用得到它** —— 因為沒有模板把它組起來。
+   * ⇒ 於是 9 支召喚／分身技能被丟進**別的**模板：普屋 E 拿到的是
+   *   `tpl-single-strike`（⭐ **單體打擊**）⇒ 卡面說「創造出 2 個實體」而它只打一下。
+   *
+   * ── ⭐ 為什麼每一格都是參數 ────────────────────────────────────────────
+   * `summon` 的 schema 檔頭逐字寫著：那 20 個 enum「是 52 個召喚代理**互相不同意**
+   * 的地方，所以沒有一個可以是程式裡的分支」。⇒ 這裡**一個 `if` 都沒有**：
+   * 有沒有宣告那一格，決定它出不出現（同 `radial-burst` 的 `count` 判準）。
+   *
+   * ⭐ `body: "self"` 是**分身**那一族的答案（複製施法者自己的身體）——
+   * ⛔ 那些文件不必再指名一次自己的英雄 id。
+   *
+   * ⚠️ `cleanse` 是**獨立的一格**：卡面上「並除掉身上的所有法術效果」與召喚是
+   * 兩件事，⛔ 綁死在一起就表達不出「只召喚、不淨化」那一半的技能。
+   */
+  "summon-agent": (t, p) => {
+    const self = has(t, p, "body") && str(t, p, "body") === "self";
+    const summon: Record<string, unknown> = {
+      kind: "summon",
+      count: has(t, p, "count") ? num(t, p, "count") : 1,
+      // ⭐ `body:"self"` 時 `championId` 由 sim 端填施法者自己 —— ⛔ 這裡不編一個 id。
+      // ⭐ `body:"self"` 時 sim 端用施法者自己的身體 —— ⛔ 而 `summon` 的 schema 仍然
+      //   要一格 `championId`（soft ref）。⇒ 填**施法者自己的技能所屬英雄**表達不出來，
+      //   所以這裡填一個**明說是佔位**的 id：`self` 那條路一個字都不讀它。
+      //   ⚠️ ⛔ 不可以填空字串 —— `zRef` 是 `min(1)`，⭐ 而那會讓整個模板展開失敗
+      //   （2026-09-01 實測：整支技能被降級成「完全沒有效果」，而畫面上看不出來）。
+      ...(self
+        ? { body: "self", championId: SUMMON_SELF_PLACEHOLDER }
+        : { championId: str(t, p, "championId") }),
+      ...(has(t, p, "durationSec") ? { durationSec: num(t, p, "durationSec") } : {}),
+      ...(has(t, p, "damageMult") ? { damageMult: num(t, p, "damageMult") } : {}),
+      ...(has(t, p, "hpMult") ? { hpMult: num(t, p, "hpMult") } : {}),
+      ...(has(t, p, "formation") ? { formation: str(t, p, "formation") } : {}),
+      ...(has(t, p, "spread") ? { spread: num(t, p, "spread") } : {}),
+      ...(has(t, p, "maxAlive") ? { maxAlive: num(t, p, "maxAlive") } : {}),
+      ...(has(t, p, "onOwnerDeath") ? { onOwnerDeath: str(t, p, "onOwnerDeath") } : {}),
+    };
+    const cleanse = has(t, p, "cleanse") && str(t, p, "cleanse") !== "none";
+    return {
+      castType: "self",
+      targetsEnemies: false,
+      ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+      effects: [
+        summon as never,
+        ...(cleanse
+          ? [
+              {
+                kind: "dispel",
+                // ⭐ `single` ＝ 只清施法者自己（卡面：「除掉**身上**的所有法術效果」）。
+                // ⚠️ ⛔ 不可以加 `side` —— Zod 逐字：「`shape:"single"` 讀不到 `side`⋯
+                //    否則這一格是一個看起來有設、其實沒有人讀的數字」（第一·五守則）。
+                // ⚠️ ⛔ 也沒有 `applyTo` —— `dispel` 的 schema 是 `.strict()` 而它不收那一格。
+                shape: "single",
+                pools: { status: true, dot: str(t, p, "cleanse") === "all" },
+              } as never,
+            ]
+          : []),
+      ],
+    };
+  },
+
   // 1. 單體斬擊 — one targeted magic strike. IMPURE-EXEMPLAR: 菲特 23-04 also
   // self-buffs + execute-gates; only the numeric core is seeded here.
   "single-strike": (t, p) => ({
