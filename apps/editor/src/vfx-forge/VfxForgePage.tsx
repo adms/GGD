@@ -52,6 +52,7 @@ export function VfxForgePage() {
   const indexes = useForgeIndexes();
   const [abilityId, setAbilityId] = useState("godie-hart.r");
   const [abilityInput, setAbilityInput] = useState("godie-hart.r");
+  const [targetChampionId, setTargetChampionId] = useState("sela");
   const [ability, setAbility] = useState<ForgeAbility | null>(null);
   const draftHistory = useUndoHistory<VfxScriptDoc | null>(null, sameJson);
   const draft = draftHistory.value;
@@ -83,6 +84,12 @@ export function VfxForgePage() {
       ? Abilities.tryGet(abilityId as AbilityId) as ForgeAbility | undefined
       : undefined,
     [abilityId, previewContent.data],
+  );
+  const runtimeTarget = useMemo(
+    () => previewContent.data
+      ? Champions.tryGet(targetChampionId as ChampionId) ?? null
+      : null,
+    [previewContent.data, targetChampionId],
   );
   const reactionTrigger = useMemo(
     () => runtimeAbility ? reactionTriggerOf(runtimeAbility) : null,
@@ -235,6 +242,14 @@ export function VfxForgePage() {
         <label>技能 ID <input list="vfx-ability-ids" value={abilityInput} onChange={(e) => setAbilityInput(e.target.value)} /></label>
         <datalist id="vfx-ability-ids">{indexes.abilities.data?.entries.map((e) => <option key={e.id} value={e.id} />)}</datalist>
         <button type="button" onClick={() => choose(abilityInput.trim())}>載入</button>
+        <label>
+          驗收目標
+          <select value={targetChampionId} onChange={(event) => setTargetChampionId(event.target.value)}>
+            {indexes.champions.data?.entries.map((entry) => (
+              <option key={entry.id} value={entry.id}>{entry.id}</option>
+            ))}
+          </select>
+        </label>
         {ACCEPTANCE.map(([id, label]) => <button type="button" className={abilityId === id ? "active" : ""} key={id} onClick={() => choose(id)}>{label}</button>)}
       </section>
 
@@ -282,6 +297,8 @@ export function VfxForgePage() {
                 durationMs={durationMs}
                 playheadMs={playheadMs}
                 playing={playing}
+                caster={runtimeChampion}
+                target={runtimeTarget}
                 onTime={onTime}
                 onStop={stop}
                 onDropAsset={addAsset}
@@ -344,16 +361,17 @@ export function VfxForgePage() {
 const PREVIEW_AUTHOR_LEVEL = 18;
 const PREVIEW_FRAME_MS = 1000 / 60;
 
-function useForgeIndexes(): Record<"scripts" | "abilities" | "models" | "vfx", ReturnType<typeof useIndex>> {
+function useForgeIndexes(): Record<"scripts" | "abilities" | "champions" | "models" | "vfx", ReturnType<typeof useIndex>> {
   return {
     scripts: useIndex("vfx-scripts"),
     abilities: useIndex("abilities"),
+    champions: useIndex("champions"),
     models: useIndex("models"),
     vfx: useIndex("vfx"),
   };
 }
 
-function useIndex(collection: "vfx-scripts" | "abilities" | "models" | "vfx") {
+function useIndex(collection: "vfx-scripts" | "abilities" | "champions" | "models" | "vfx") {
   return useQuery<CollectionIndex>({ queryKey: ["index", collection], queryFn: () => api.index(collection) });
 }
 

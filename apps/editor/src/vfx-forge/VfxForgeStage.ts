@@ -8,14 +8,29 @@ import { DirectionalLight } from "@babylonjs/core/Lights/directionalLight";
 import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import type { ParticleSystem } from "@babylonjs/core/Particles/particleSystem";
+import type { AssetContainer } from "@babylonjs/core/assetContainer";
+import type { AnimationGroup } from "@babylonjs/core/Animations/animationGroup";
+import type { Mesh } from "@babylonjs/core/Meshes/mesh";
 import type { EventMessage } from "@ggd/shared/protocol/messages";
 import type { ModelDoc, VfxDoc } from "@ggd/shared/content";
 import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
+import type { ChampionDef } from "@ggd/shared/sim";
 import type { AbilityVfxLayerOverride } from "@ggd/shared/content/schema/abilityVfx";
 import type { ModelFxSpawnEvent } from "../../../client/src/render/modelFxPath";
 import { ModelFxRig } from "../../../client/src/render/modelFxRig";
 import { CameraRig } from "../../../client/src/render/CameraRig";
 import { buildZoneGround } from "../../../client/src/render/ArenaGround";
+import { facingToYaw } from "../../../client/src/render/math/motion";
+import { glbYawOffset } from "../../../client/src/render/views/glbFacing";
+import {
+  applyHiddenPrimitives,
+  ENABLED_ONLY,
+} from "../../../client/src/render/views/hiddenPrimitives";
+import {
+  applyModelTint,
+  releaseModelTint,
+} from "../../../client/src/render/views/modelTint";
+import { normalizedModelScale } from "../../../client/src/render/views/modelSizing";
 import { VfxScriptPlayer } from "../../../client/src/vfx/VfxScriptPlayer";
 import { vfxHardMaxLifeSec } from "../../../client/src/vfx/vfxCleanupPolicy";
 import {
@@ -24,6 +39,7 @@ import {
 } from "../../../client/src/render/vfx/abilityLayers";
 import { api } from "../api/client";
 import { loadGlbContainer } from "../preview3d/loadGlb";
+import { resolveClip } from "../preview3d/clips";
 import { burstNow, toParticleSystem } from "../preview3d/particles";
 import { projectileIdsOf, type ForgeAbility, type ScheduledSimEvent } from "./model";
 import { calibrateTwoWay } from "../../../client/src/vfx/auditionCalibrate";
@@ -36,16 +52,36 @@ export interface ForgeOverlay {
   flash: { color: readonly [number, number, number]; alpha: number } | null;
   texts: readonly { id: number; text: string; x: number; z: number; untilMs: number }[];
   status: string;
+  actors: { caster: string; target: string };
 }
 
 export interface VfxForgeStageOptions {
   fetchDoc?<T>(collection: "models" | "vfx", id: string): Promise<T>;
   onOverlay?(overlay: ForgeOverlay): void;
+  actors?: {
+    caster?: ChampionDef | null;
+    target?: ChampionDef | null;
+  };
 }
 
 interface LiveParticle {
   ps: ParticleSystem;
   untilMs: number;
+}
+
+interface ForgeActor {
+  readonly role: "caster" | "target";
+  readonly fallback: Mesh;
+  readonly position: { x: number; z: number };
+  readonly facing: { x: number; z: number };
+  champion: ChampionDef | null;
+  container: AssetContainer | null;
+  bodyRoot: TransformNode | null;
+  glbRoot: TransformNode | null;
+  groups: AnimationGroup[];
+  clipMap: ModelDoc["clipMap"] | null;
+  idleAfterMs: number;
+  hiddenUntilMs: number;
 }
 
 /**
@@ -65,16 +101,23 @@ export class VfxForgeStage {
   private nextEvent = 0;
   private generation = 0;
   private textSerial = 0;
+  private disposed = false;
   private flash: ForgeOverlay["flash"] = null;
+  private readonly actorStatus = { caster: "替身", target: "替身" };
   private flashUntilMs = 0;
   private texts: { id: number; text: string; x: number; z: number; untilMs: number }[] = [];
   private particles: LiveParticle[] = [];
   private readonly models = new Map<string, ModelDoc>();
   private readonly vfx = new Map<string, VfxDoc>();
+  private readonly modelFxContainerPromises = new Map<string, Promise<AssetContainer>>();
+  private readonly ownedModelFxContainers = new Set<AssetContainer>();
   private readonly fetchDoc: NonNullable<VfxForgeStageOptions["fetchDoc"]>;
   private readonly onOverlay: NonNullable<VfxForgeStageOptions["onOverlay"]>;
   private readonly modelRig: ModelFxRig;
   private readonly groundFloor: ReturnType<typeof buildZoneGround>["floor"];
+  private readonly actors: { caster: ForgeActor; target: ForgeActor };
+  private actorReady: Promise<void> = Promise.resolve();
+  private prepareSeq = 0;
   private player: VfxScriptPlayer;
   private readonly canvas: HTMLCanvasElement;
 
@@ -104,8 +147,10 @@ export class VfxForgeStage {
     const ground = buildZoneGround(this.scene, root, { center: { x: 0, z: 0 }, boundaryRadius: 24 }, 0, "stone");
     this.groundFloor = ground.floor;
     this.groundFloor.isPickable = true;
-    this.makeActor("施法者", CASTER_POS.x, CASTER_POS.z, new Color3(0.24, 0.55, 0.95));
-    this.makeActor("目標", TARGET_POS.x, TARGET_POS.z, new Color3(0.92, 0.28, 0.24));
+    this.actors = {
+      caster: this.makeActor("caster", "施法者", CASTER_POS, { x: 1, z: 0 }, new Color3(0.24, 0.55, 0.95), opts.actors?.caster ?? null),
+      target: this.makeActor("target", "目標", TARGET_POS, { x: -1, z: 0 }, new Color3(0.92, 0.28, 0.24), opts.actors?.target ?? null),
+    };
 
     this.cameraRig = new CameraRig(this.scene, { x: 1.5, z: 0 });
     this.cameraRig.update({
@@ -119,32 +164,54 @@ export class VfxForgeStage {
 
     this.modelRig = new ModelFxRig(this.scene, {
       resolveModel: (id) => this.models.get(id) ?? null,
-      loadContainer: (path) => loadGlbContainer(this.scene, path),
+      loadContainer: (path) => this.loadModelFxContainer(path),
       spawnTrail: (id, x, y, z) => void this.spawnVfx(id, x, z, y),
       maxEffectSec: vfxHardMaxLifeSec(),
     });
     this.player = this.makePlayer();
     this.reset();
+    this.actorReady = Promise.all([
+      this.loadActor(this.actors.caster),
+      this.loadActor(this.actors.target),
+    ]).then(() => undefined);
   }
 
   get timeMs(): number {
     return this.nowMs;
   }
 
-  setContent(script: VfxScriptDoc, ability: ForgeAbility, schedule: readonly ScheduledSimEvent[]): void {
+  async setContent(
+    script: VfxScriptDoc,
+    ability: ForgeAbility,
+    schedule: readonly ScheduledSimEvent[],
+  ): Promise<boolean> {
+    const seq = ++this.prepareSeq;
     this.script = script;
     this.ability = ability;
     this.schedule = schedule;
     this.player.invalidate();
+    this.emitOverlay("預載角色與腳本素材…");
+    await Promise.all([this.actorReady, this.preloadScriptAssets(script)]);
+    return !this.disposed && seq === this.prepareSeq;
   }
 
   /** Rebuild and deterministically replay from frame zero to the requested time. */
   seek(targetMs: number): void {
     const target = Math.max(0, targetMs);
     this.reset();
-    while (this.nowMs + STEP_MS < target) this.advanceFrame(false);
-    if (target > this.nowMs) this.advanceFrame(false, target - this.nowMs);
-    this.scene.render();
+    let rendered = false;
+    // Babylon animation groups advance on render. Replaying events without
+    // rendering made scrubbed model clips stay on their first frame even though
+    // the event timeline said otherwise.
+    while (this.nowMs + STEP_MS < target) {
+      this.advanceFrame(true, STEP_MS, false);
+      rendered = true;
+    }
+    if (target > this.nowMs) {
+      this.advanceFrame(true, target - this.nowMs, false);
+      rendered = true;
+    }
+    if (!rendered) this.scene.render();
     this.emitOverlay("已定位");
   }
 
@@ -155,6 +222,21 @@ export class VfxForgeStage {
 
   resize(): void {
     this.engine.resize();
+  }
+
+  /** Inspect framing through the shipped, config-backed camera clamps. */
+  zoomBy(wheelDeltaY: number): void {
+    this.cameraRig.zoomBy(wheelDeltaY);
+    this.cameraRig.update({
+      dtMs: STEP_MS,
+      localPos: { x: 1.5, z: 0 },
+      cursor: null,
+      panKeys: null,
+      viewportWidth: this.engine.getRenderWidth(),
+      viewportHeight: this.engine.getRenderHeight(),
+    });
+    this.scene.render();
+    this.emitOverlay(wheelDeltaY < 0 ? "鏡頭拉近" : "鏡頭拉遠");
   }
 
   /** Translate a canvas drop point through the shipped camera into script facing offsets. */
@@ -194,20 +276,192 @@ export class VfxForgeStage {
   }
 
   dispose(): void {
+    this.disposed = true;
     this.generation++;
+    for (const actor of Object.values(this.actors)) this.disposeActor(actor);
     this.modelRig.dispose();
+    for (const container of this.ownedModelFxContainers) container.dispose();
+    this.ownedModelFxContainers.clear();
+    this.modelFxContainerPromises.clear();
     this.disposeParticles();
     this.scene.dispose();
     this.engine.dispose();
   }
 
-  private makeActor(name: string, x: number, z: number, color: Color3): void {
+  private makeActor(
+    role: ForgeActor["role"],
+    name: string,
+    position: { x: number; z: number },
+    facing: { x: number; z: number },
+    color: Color3,
+    champion: ChampionDef | null,
+  ): ForgeActor {
     const mesh = MeshBuilder.CreateCapsule(name, { height: 1.7, radius: 0.38 }, this.scene);
-    mesh.position.set(x, 0.85, z);
+    mesh.position.set(position.x, 0.85, position.z);
     const mat = new StandardMaterial(`${name}-mat`, this.scene);
     mat.diffuseColor = color;
     mat.emissiveColor = color.scale(0.12);
     mesh.material = mat;
+    return {
+      role,
+      fallback: mesh,
+      position,
+      facing,
+      champion,
+      container: null,
+      bodyRoot: null,
+      glbRoot: null,
+      groups: [],
+      clipMap: null,
+      idleAfterMs: 0,
+      hiddenUntilMs: 0,
+    };
+  }
+
+  /** Replace the coloured fallback with the same champion GLB presentation used in game. */
+  private async loadActor(actor: ForgeActor): Promise<void> {
+    const champion = actor.champion;
+    if (!champion) return;
+    this.actorStatus[actor.role] = `載入 ${champion.name}…`;
+    this.emitOverlay("載入 3D 角色…");
+    try {
+      const doc = await this.fetchDoc<ModelDoc>("models", champion.modelKey);
+      const container = await loadGlbContainer(this.scene, doc.glbPath);
+      if (this.disposed || this.scene.isDisposed) {
+        container.dispose();
+        return;
+      }
+      container.addAllToScene();
+      const bodyRoot = new TransformNode(`forge-${actor.role}-body`, this.scene);
+      bodyRoot.position.set(actor.position.x, 0, actor.position.z);
+      bodyRoot.rotation.y = facingToYaw(actor.facing.x, actor.facing.z);
+      const glbRoot = new TransformNode(`forge-${actor.role}-glb`, this.scene);
+      glbRoot.parent = bodyRoot;
+      glbRoot.rotation.y = glbYawOffset(doc);
+      for (const node of container.rootNodes) node.parent = glbRoot;
+      const visible = applyHiddenPrimitives(glbRoot.getChildMeshes(false), doc.hiddenPrimitives);
+      if (visible.length === 0) {
+        container.dispose();
+        bodyRoot.dispose(false, false);
+        return;
+      }
+      glbRoot.computeWorldMatrix(true);
+      const native = glbRoot.getHierarchyBoundingVectors(true, ENABLED_ONLY);
+      const finalScale = normalizedModelScale(
+        native.max.y - native.min.y,
+        doc.scale,
+        champion.bodyScale,
+      );
+      glbRoot.scaling.setAll(finalScale);
+      glbRoot.computeWorldMatrix(true);
+      const rendered = glbRoot.getHierarchyBoundingVectors(true, ENABLED_ONLY);
+      if (Number.isFinite(rendered.min.y)) glbRoot.position.y = -rendered.min.y;
+      applyModelTint(glbRoot, champion);
+      actor.container = container;
+      actor.bodyRoot = bodyRoot;
+      actor.glbRoot = glbRoot;
+      actor.groups = [...container.animationGroups];
+      actor.clipMap = doc.clipMap;
+      actor.fallback.setEnabled(false);
+      this.playActor(actor, "idle", true);
+      const height = rendered.max.y - rendered.min.y;
+      const centerX = (rendered.min.x + rendered.max.x) / 2;
+      const centerZ = (rendered.min.z + rendered.max.z) / 2;
+      this.actorStatus[actor.role] =
+        `${champion.name} · ${champion.modelKey} · ${visible.length} meshes · ` +
+        `h${height.toFixed(2)} · ×${finalScale.toFixed(3)} · @${centerX.toFixed(1)},${centerZ.toFixed(1)}`;
+      // The script may already be scrubbed past a pulse while this GLB loaded.
+      this.seek(this.nowMs);
+    } catch (error) {
+      this.actorStatus[actor.role] = `${champion.name} · 替身（載入失敗）`;
+      this.emitOverlay(`${champion.name} 3D 載入失敗，保留碰撞替身：${String(error)}`);
+    }
+  }
+
+  private disposeActor(actor: ForgeActor): void {
+    if (actor.glbRoot) releaseModelTint(actor.glbRoot);
+    actor.container?.dispose();
+    actor.bodyRoot?.dispose(false, false);
+    actor.container = null;
+    actor.bodyRoot = null;
+    actor.glbRoot = null;
+    actor.groups = [];
+  }
+
+  private loadModelFxContainer(path: string): Promise<AssetContainer> {
+    const cached = this.modelFxContainerPromises.get(path);
+    if (cached) return cached;
+    const pending = loadGlbContainer(this.scene, path).then((container) => {
+      if (this.disposed) {
+        container.dispose();
+        throw new Error("VFX Forge stage was disposed during model preload");
+      }
+      this.ownedModelFxContainers.add(container);
+      return container;
+    });
+    this.modelFxContainerPromises.set(path, pending);
+    return pending;
+  }
+
+  /** Resolve every referenced doc and GLB before the first deterministic replay. */
+  private async preloadScriptAssets(script: VfxScriptDoc): Promise<void> {
+    const modelKeys = [...new Set(script.segments.flatMap((segment) =>
+      segment.kind === "modelFx" ? [segment.modelKey] : [],
+    ))];
+    const vfxIds = [...new Set(script.segments.flatMap((segment) =>
+      segment.kind === "vfx" ? [segment.vfxId] : [],
+    ))];
+    await Promise.all(modelKeys.map(async (key) => {
+      if (this.models.has(key)) return;
+      try {
+        this.models.set(key, await this.fetchDoc<ModelDoc>("models", key));
+      } catch (error) {
+        this.emitOverlay(`模型文件載入失敗：${key} · ${String(error)}`);
+      }
+    }));
+    this.modelRig.warm(modelKeys);
+    await Promise.all(modelKeys.flatMap((key) => {
+      const doc = this.models.get(key);
+      return doc
+        ? [this.loadModelFxContainer(doc.glbPath).catch((error) => {
+            this.emitOverlay(`模型資產預載失敗：${key} · ${String(error)}`);
+          })]
+        : [];
+    }));
+    await Promise.all(vfxIds.map(async (id) => {
+      if (this.vfx.has(id)) return;
+      try {
+        this.vfx.set(id, await this.fetchDoc<VfxDoc>("vfx", id));
+      } catch (error) {
+        this.emitOverlay(`粒子文件載入失敗：${id} · ${String(error)}`);
+      }
+    }));
+  }
+
+  private playActor(actor: ForgeActor, clip: "idle" | "attack" | "cast" | "hurt", loop: boolean): void {
+    if (!actor.clipMap) return;
+    for (const group of actor.groups) group.stop();
+    const group = resolveClip(actor.groups, actor.clipMap[clip]);
+    if (group) group.start(loop, 1);
+  }
+
+  private actorForEntity(id: number): ForgeActor {
+    return id === this.casterEntityId() ? this.actors.caster : this.actors.target;
+  }
+
+  private pulseActor(id: number, kind: "attack" | "cast" | "hurt", clipWindowMs = 600): void {
+    const actor = this.actorForEntity(id);
+    this.playActor(actor, kind, false);
+    actor.idleAfterMs = this.nowMs + clipWindowMs;
+    this.emitOverlay(`動畫脈衝：${kind}`);
+  }
+
+  private hideActor(id: number, durationMs: number): void {
+    const actor = this.actorForEntity(id);
+    actor.hiddenUntilMs = this.nowMs + durationMs;
+    actor.bodyRoot?.setEnabled(false);
+    actor.fallback.setEnabled(false);
+    this.emitOverlay(`隱藏本體 ${durationMs}ms`);
   }
 
   private reset(): void {
@@ -217,7 +471,16 @@ export class VfxForgeStage {
     this.flash = null;
     this.flashUntilMs = 0;
     this.texts = [];
-    this.modelRig.hardReset();
+    for (const actor of Object.values(this.actors)) {
+      actor.idleAfterMs = 0;
+      actor.hiddenUntilMs = 0;
+      actor.bodyRoot?.setEnabled(true);
+      actor.fallback.setEnabled(actor.bodyRoot === null);
+      this.playActor(actor, "idle", true);
+    }
+    // Timeline replay keeps preloaded GLB containers and reuses pooled geometry;
+    // clearing the container map here makes the first scrub frame an empty shell.
+    this.modelRig.resetForRound();
     this.disposeParticles();
     this.player = this.makePlayer();
     this.consumeEvents();
@@ -234,8 +497,8 @@ export class VfxForgeStage {
       entityPos: (id) => id === this.casterEntityId() ? CASTER_POS : TARGET_POS,
       dispatch: (ev, nowMs) => this.dispatch(ev, nowMs),
       enabled: () => true,
-      pulseAnim: (_id, kind) => this.emitOverlay(`動畫脈衝：${kind}`),
-      hideBody: (_id, ms) => this.emitOverlay(`隱藏本體 ${ms}ms`),
+      pulseAnim: (id, kind, pulse) => this.pulseActor(id, kind, pulse?.clipWindowMs),
+      hideBody: (id, ms) => this.hideActor(id, ms),
       playSfx: (key) => {
         this.emitOverlay(`音效：${key}`);
         return true;
@@ -243,7 +506,7 @@ export class VfxForgeStage {
     });
   }
 
-  private advanceFrame(render: boolean, dtMs = STEP_MS): void {
+  private advanceFrame(render: boolean, dtMs = STEP_MS, notify = true): void {
     this.nowMs += dtMs;
     this.consumeEvents();
     this.player.update(this.nowMs);
@@ -258,7 +521,7 @@ export class VfxForgeStage {
     });
     this.reap();
     if (render) this.scene.render();
-    this.emitOverlay("播放中");
+    if (notify) this.emitOverlay("播放中");
   }
 
   private consumeEvents(): void {
@@ -366,6 +629,17 @@ export class VfxForgeStage {
     }
     this.texts = this.texts.filter((t) => t.untilMs > this.nowMs);
     if (this.flashUntilMs <= this.nowMs) this.flash = null;
+    for (const actor of Object.values(this.actors)) {
+      if (actor.hiddenUntilMs > 0 && actor.hiddenUntilMs <= this.nowMs) {
+        actor.hiddenUntilMs = 0;
+        actor.bodyRoot?.setEnabled(true);
+        actor.fallback.setEnabled(actor.bodyRoot === null);
+      }
+      if (actor.idleAfterMs > 0 && actor.idleAfterMs <= this.nowMs) {
+        actor.idleAfterMs = 0;
+        this.playActor(actor, "idle", true);
+      }
+    }
   }
 
   private disposeParticles(): void {
@@ -374,6 +648,11 @@ export class VfxForgeStage {
   }
 
   private emitOverlay(status: string): void {
-    this.onOverlay({ flash: this.flash, texts: this.texts, status });
+    const eye = this.cameraRig?.eye;
+    const visible = this.scene.getActiveMeshes().length;
+    const view = eye
+      ? `${status} · ${visible}/${this.scene.meshes.length} meshes · eye ${eye.x.toFixed(1)},${eye.y.toFixed(1)},${eye.z.toFixed(1)}`
+      : status;
+    this.onOverlay({ flash: this.flash, texts: this.texts, status: view, actors: { ...this.actorStatus } });
   }
 }

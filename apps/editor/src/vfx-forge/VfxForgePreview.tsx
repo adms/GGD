@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
+import type { ChampionDef } from "@ggd/shared/sim";
 import {
   decodeAssetDrag,
   type AssetDrop,
@@ -16,6 +17,8 @@ export function VfxForgePreview({
   durationMs,
   playheadMs,
   playing,
+  caster,
+  target,
   onTime,
   onStop,
   onDropAsset,
@@ -26,6 +29,8 @@ export function VfxForgePreview({
   durationMs: number;
   playheadMs: number;
   playing: boolean;
+  caster: ChampionDef | null;
+  target: ChampionDef | null;
   onTime(ms: number): void;
   onStop(): void;
   onDropAsset(asset: AssetDrop, placement?: AssetPlacement): void;
@@ -33,7 +38,12 @@ export function VfxForgePreview({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stageRef = useRef<VfxForgeStage | null>(null);
   const playheadRef = useRef(playheadMs);
-  const [overlay, setOverlay] = useState<ForgeOverlay>({ flash: null, texts: [], status: "準備中" });
+  const [overlay, setOverlay] = useState<ForgeOverlay>({
+    flash: null,
+    texts: [],
+    status: "準備中",
+    actors: { caster: "替身", target: "替身" },
+  });
   const [calibration, setCalibration] = useState("量尺未校準");
 
   useEffect(() => { playheadRef.current = playheadMs; }, [playheadMs]);
@@ -41,20 +51,31 @@ export function VfxForgePreview({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const stage = new VfxForgeStage(canvas, script, ability, schedule, { onOverlay: setOverlay });
+    const stage = new VfxForgeStage(canvas, script, ability, schedule, {
+      actors: { caster, target },
+      onOverlay: setOverlay,
+    });
     stageRef.current = stage;
     const resize = new ResizeObserver(() => stage.resize());
     resize.observe(canvas);
     return () => { resize.disconnect(); stage.dispose(); stageRef.current = null; };
     // Stage ownership follows the selected ability. Draft changes use setContent below.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ability.id]);
+  }, [ability.id, caster?.id, target?.id]);
 
   useEffect(() => {
     const stage = stageRef.current;
     if (!stage) return;
-    stage.setContent(script, ability, schedule);
-    stage.seek(playheadRef.current);
+    let live = true;
+    void stage.setContent(script, ability, schedule)
+      .then((ready) => {
+        if (live && ready) stage.seek(playheadRef.current);
+      })
+      .catch((error) => {
+        if (!live) return;
+        setOverlay((current) => ({ ...current, status: `⛔ 預載失敗：${String(error)}` }));
+      });
+    return () => { live = false; };
   }, [ability, schedule, script]);
 
   useEffect(() => {
@@ -106,20 +127,25 @@ export function VfxForgePreview({
       <canvas ref={canvasRef} />
       {overlay.flash ? <div className="vfx-flash" style={{ background: `rgba(${overlay.flash.color.join(",")},${overlay.flash.alpha})` }} /> : null}
       <div className="vfx-floating-texts">{overlay.texts.map((t) => <b key={t.id}>{t.text}</b>)}</div>
-      <div className="vfx-stage-badge">真 IntentFrame · 真 CameraRig · 真地板 · 1/60 frame-step</div>
+      <div className="vfx-stage-badge">真 IntentFrame · 雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step</div>
       <div className="vfx-stage-status">{overlay.status}</div>
-      <button
-        type="button"
-        className={`vfx-calibrate${calibration.startsWith("⛔") ? " failed" : ""}`}
-        onClick={() => {
-          setCalibration("校準中…");
-          void stageRef.current?.calibrate()
-            .then((bright) => setCalibration(`雙向校準通過 · control ${bright}`))
-            .catch((e) => setCalibration(`⛔ 校準失敗：${String(e)}`));
-        }}
-      >
-        {calibration}
-      </button>
+      <div className="vfx-actor-status">施法者：{overlay.actors.caster}<br />目標：{overlay.actors.target}</div>
+      <div className="vfx-stage-tools">
+        <button type="button" onClick={() => stageRef.current?.zoomBy(-100)}>鏡頭拉近</button>
+        <button type="button" onClick={() => stageRef.current?.zoomBy(100)}>鏡頭拉遠</button>
+        <button
+          type="button"
+          className={`vfx-calibrate${calibration.startsWith("⛔") ? " failed" : ""}`}
+          onClick={() => {
+            setCalibration("校準中…");
+            void stageRef.current?.calibrate()
+              .then((bright) => setCalibration(`雙向校準通過 · control ${bright}`))
+              .catch((e) => setCalibration(`⛔ 校準失敗：${String(e)}`));
+          }}
+        >
+          {calibration}
+        </button>
+      </div>
     </div>
   );
 }

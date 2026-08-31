@@ -25,7 +25,11 @@ together; writes remain local. The API guard rejects non-loopback mutation.
   reproduced in a second preview-only rules engine.
 - **特效工坊** — model/VFX resource palette, drop placement, the real
   `CameraRig` and ground, segment sliders, WYSIWYG replay, 1/60 frame step,
-  timeline scrub/play, undo/redo, and middleware writeback. It writes only
+  timeline scrub/play, undo/redo, and middleware writeback. The stage uses the
+  selected ability owner's actual champion GLB plus a selectable target GLB,
+  including the shipped facing, hidden-primitive, normalization, tint and clip
+  rules. Script assets are preloaded before deterministic replay; framing can be
+  inspected through the config-backed `CameraRig` zoom clamps. It writes only
   `content/vfx-scripts/`; a script replaces the default binding instead of
   stacking with it.
 - **Champions / Skins** — complete schema forms plus live final stats and the
@@ -101,5 +105,5 @@ the visual timing or using a similar existing trigger.
 
 Implementation lives on `feat/vfx-forge-codex`, based on
 `origin/main@65944460`. It is intentionally not merged or pushed to `main`.
-Review the eight feature commits in order; each authoring layer has its own
+Review the commits after that base in order; each authoring layer has its own
 commit so GGD can cherry-pick or rollback it independently.

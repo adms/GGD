@@ -212,7 +212,11 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .vfx-stage-badge, .vfx-stage-status { position: absolute; padding: 4px 7px; background: #0a0d14c7; color: #b7c0d5; font-size: 10px; border: 1px solid #343c4f; border-radius: 4px; }
 .vfx-stage-badge { left: 8px; top: 8px; }
 .vfx-stage-status { right: 8px; top: 8px; }
-.vfx-calibrate { position: absolute; left: 8px; bottom: 8px; font-size: 10px; background: #0a0d14d9; border-color: #427450; color: #8fe0a6; }
+.vfx-actor-status { position: absolute; right: 8px; top: 36px; max-width: 48%; padding: 4px 7px; border: 1px solid #343c4f; border-radius: 4px; background: #0a0d14c7; color: #9eabc2; font-size: 9px; line-height: 1.45; text-align: right; }
+.vfx-stage-tools { position: absolute; left: 8px; bottom: 8px; display: flex; gap: 5px; align-items: center; }
+.vfx-stage-tools button { font-size: 10px; background: #0a0d14d9; }
+.vfx-stage-tools > button:not(.vfx-calibrate) { border-color: #475f85; color: #a8c8ff; }
+.vfx-calibrate { border-color: #427450; color: #8fe0a6; }
 .vfx-calibrate.failed { border-color: #9b3434; color: #ff918b; max-width: 75%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .vfx-timeline { min-width: 0; padding: 9px 12px 14px; border-top: 1px solid #343b4e; background: #11151e; overflow-y: auto; }
 .vfx-timeline-head { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; }
