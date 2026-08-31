@@ -12,5 +12,36 @@
     60
   ],
   "coinThrowButtonMode": "always-enabled",
-  "mouseTwoStageCast": true
+  "mouseTwoStageCast": true,
+  "commsWheel": {
+    "enabled": true,
+    "holdKey": "KeyV",
+    "entries": [
+      {
+        "id": "retreat",
+        "zh": "撤退！",
+        "voiceCategory": "retreat"
+      },
+      {
+        "id": "watch",
+        "zh": "小心！",
+        "voiceCategory": "watch"
+      },
+      {
+        "id": "love",
+        "zh": "幹得好",
+        "voiceCategory": "love"
+      },
+      {
+        "id": "puzzled",
+        "zh": "？？？",
+        "voiceCategory": "puzzled"
+      },
+      {
+        "id": "hum",
+        "zh": "哼歌",
+        "voiceCategory": "hum"
+      }
+    ]
+  }
 }

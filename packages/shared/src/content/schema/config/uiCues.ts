@@ -129,6 +129,53 @@ export const zConfigUiCuesDoc = z
      * ⚠️ **optional 是刻意的**：舊的後台 override 少這一格不該整份被 strict Zod 拒。
      */
     mouseTwoStageCast: z.boolean().optional(),
+    /**
+     * ⭐⭐ GH#731 —— 通訊／表情輪盤。
+     *
+     * ⚠️ ⭐ **一個機制解 5 格死語音**：`retreat` / `watch` / `love` / `puzzled`
+     * 在 `spatialPolicy` 裡全部標著 `dormant: "no-signal"`，⭐ 而它們的理由
+     * **是同一句** ——「沒有隊友指令／表情輪」。⇒ 逐格接線是 5 次，做一個輪盤是 1 次
+     * （第〇·五守則：⛔ 不要為每一格寫一個 if）。
+     *
+     * ⭐ **每一格都是資料**（id / 中文 / 語音類別）——
+     * ⛔ 沒有一格需要改程式才碰得到。⇒ 想加第六格、換一句語音、改按鍵，全在這裡。
+     *
+     * ⚠️ **optional 是刻意的**：舊的後台 override 少這一格不該整份被 strict Zod 拒。
+     */
+    commsWheel: z
+      .object({
+        /** 總開關。⛔ 關掉＝一鍵 rollback（輪盤打不開，那 5 格回到啞的）。 */
+        enabled: z.boolean(),
+        /**
+         * 按住哪一顆鍵叫出輪盤（`KeyboardEvent.code`）。
+         * ⚠️ ⭐ 用 `code` ⛔ 不是 `key`：`key` 會被輸入法與鍵盤配置改寫。
+         */
+        holdKey: z.string().min(1).max(24),
+        /**
+         * 輪盤上的格子。⭐ 順序就是畫在圓上的順序（12 點鐘起、順時針）。
+         * ⚠️ 上限 8 格：再多就分不清指向誰（⛔ 這是可用性上界，不是技術上界）。
+         */
+        entries: z
+          .array(
+            z
+              .object({
+                id: z.string().min(1).max(32),
+                /** 畫在格子上的字。 */
+                zh: z.string().min(1).max(12),
+                /**
+                 * 播哪一類語音。⚠️ ⭐ 必須是 `contextualVoice` 認得的類別 ——
+                 * ⛔ 打錯字會**靜靜地什麼都不播**（`playContextualVoice` 回 false），
+                 * 而那正是 GH#734 踩過的形狀。守衛在對這份清單。
+                 */
+                voiceCategory: z.string().min(1).max(32),
+              })
+              .strict(),
+          )
+          .min(1)
+          .max(8),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 
@@ -156,6 +203,18 @@ export const DEFAULT_UI_CUES: UiCuesDoc = {
   coinThrowButtonMode: "always-enabled",
   // GH#639 純滑鼠二段施放（第〇·六守則：優先權大的更新預設啟動）。false = rollback。
   mouseTwoStageCast: true,
+  // ⭐ GH#731 通訊輪盤 —— 5 格死語音的唯一出口（第〇·六守則：預設啟動）。
+  commsWheel: {
+    enabled: true,
+    holdKey: "KeyV",
+    entries: [
+      { id: "retreat", zh: "撤退！", voiceCategory: "retreat" },
+      { id: "watch", zh: "小心！", voiceCategory: "watch" },
+      { id: "love", zh: "幹得好", voiceCategory: "love" },
+      { id: "puzzled", zh: "？？？", voiceCategory: "puzzled" },
+      { id: "hum", zh: "哼歌", voiceCategory: "hum" },
+    ],
+  },
 };
 
 /**

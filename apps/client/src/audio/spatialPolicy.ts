@@ -264,30 +264,18 @@ export const VOICE_CATEGORY_POLICY: Readonly<Record<string, VoicePolicyRow>> = {
   "retreat": {
     policy: "self",
     reason: "a call YOU make",
-    dispatched: false,
-    dormant: {
-      cause: "no-signal",
-      note: "沒有隊友指令／撤退輸入。⚠️ 這是 46 格裡**唯一一格連選角點擊都碰不到**的自己人語音（不在 manifest 的 selectSourceCategories 裡）",
-    },
+    dispatched: true,
   },
   "free-move": { policy: "self", reason: "GH#441 —— shopPerformVoice 的 pose 表演已在播；你自己的英雄，置中", dispatched: true },
   "love": {
     policy: "self",
     reason: "emote — yours",
-    dispatched: false,
-    dormant: {
-      cause: "no-signal",
-      note: "沒有表情輪。⭐ 但這一格**不是啞的** —— manifest 的 selectSourceCategories 拿它當選角點擊的來源之一",
-    },
+    dispatched: true,
   },
   "puzzled": {
     policy: "self",
     reason: "emote — yours",
-    dispatched: false,
-    dormant: {
-      cause: "no-signal",
-      note: "同 love：沒有表情輪，但選角點擊會抽到它",
-    },
+    dispatched: true,
   },
   "thanks": { policy: "self", reason: "GH#441 —— shopPerformVoice 的 talk/nod 表演已在播；你自己的英雄，置中", dispatched: true },
   "thumbs-up": { policy: "self", reason: "GH#441 —— shopPerformVoice 的 celebrate 表演已在播；你自己的英雄，置中", dispatched: true },
@@ -295,11 +283,7 @@ export const VOICE_CATEGORY_POLICY: Readonly<Record<string, VoicePolicyRow>> = {
   "respond.ok": {
     policy: "self",
     reason: "ping response — yours",
-    dispatched: false,
-    dormant: {
-      cause: "no-signal",
-      note: "沒有 ping／隊友指令，所以沒有東西可以被「回應」。⭐ 選角點擊仍然抽得到它",
-    },
+    dispatched: true,
   },
   "respond.no": {
     policy: "self",

@@ -255,6 +255,16 @@ export const UI_CUES_SPEC: ConfigDocSpec<"uiCues"> = {
       note: "owner 的「冷卻剩多少」那一半：技能格底部一條紫色底條 + 剩餘秒數。⚠️ 它是**客戶端推算的估計值**（見上面的說明），刻意畫得和伺服器送來的冷卻掃描不一樣，免得一個估計值冒充權威值。關掉＝只閃不畫冷卻。",
     },
     {
+      path: "commsWheel.enabled",
+      zh: "通訊輪盤（按住叫出、放開送出）",
+      note: "⭐ **這是 GH#731 的 rollback 開關**。開著＝按住一顆鍵叫出一圈訊號，放開就喊出去。⛔ 關掉＝輪盤打不開，而 `retreat`／`watch`／`love`／`puzzled` 那四類語音**回到啞的** —— ⚠️ 它們在此之前從來沒有任何觸發點（`spatialPolicy` 標著 `no-signal`），⭐ 而四格的理由是同一句「沒有表情輪」⇒ 一個輪盤解四格。",
+    },
+    {
+      path: "commsWheel.holdKey",
+      zh: "叫出輪盤的按鍵（KeyboardEvent.code）",
+      note: "⚠️ ⭐ 填的是 `code` ⛔ 不是 `key`：`KeyV` / `KeyZ` / `Backquote` 這種。⭐ 用 `code` 的理由是 `key` 會被輸入法與鍵盤配置改寫（注音下按 V 拿到的 `key` 不是 v）。⛔ 填一個不存在的 code 不會報錯，它只是永遠打不開。",
+    },
+    {
       path: "mouseTwoStageCast",
       zh: "純滑鼠二段施放",
       note: "GH#639 owner「純滑鼠操作直接按技能按鈕應該要能二段選擇後施放才對」。開（出貨）＝點技能格進瞄準（地板圈釘住）、點場景施放、再點同格或右鍵取消。關＝一鍵回到 #639 之前：技能格按下只亮範圍圈，滑鼠不能從格子直接施放。⚠️ 只管滑鼠 —— 鍵盤快捷、觸控、手把的施放路完全不受這一格影響。",
@@ -270,6 +280,10 @@ export const UI_CUES_SPEC: ConfigDocSpec<"uiCues"> = {
     },
   ],
   preserved: [
+    {
+      path: "commsWheel.entries",
+      why: "⭐ 輪盤上有哪幾格、每一格叫什麼、播哪一類語音 —— **整份是資料**（`content/config/ui-cues.json`）。要加第六格就在那裡加一個 `{id, zh, voiceCategory}`，⛔ 不必改任何程式。⚠️ 今天在後台編不到，理由與 `rallyExtendSeconds` 同型：通用引擎畫得動的是固定形狀的純量葉，而這是一份會長大的清單。⚠️ ⭐ `voiceCategory` 打錯字**不會報錯，它只是靜靜不播**（`playContextualVoice` 回 false）—— 那正是 GH#734 踩過的形狀。",
+    },
     {
       path: "rallyExtendSeconds",
       why: "主揪倒數條上「再等一下」的那幾顆按鈕（owner:「還可以選多等 1 分鐘」）。⭐ **「有幾個選項」本身就是這個陣列** —— 要再加一個 5 秒的按鈕就在 `content/config/ui-cues.json` 裡加一個 `5`，按鈕上的字由秒數推導（⛔ 沒有第二欄可以打錯）。⚠️ 今天在後台編不到，理由與 `arena-pool` 同型：通用引擎畫得動的是固定形狀的純量葉，而這是一份會長大的清單。通用引擎長出陣列型欄位的那一天這一列該退場。上界 120 = 伺服器的 `rallyWaitMaxSec`，再長會被夾掉而畫面上的秒數就變成謊話。",

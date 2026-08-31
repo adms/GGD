@@ -125,6 +125,16 @@ export interface PanKeys {
 }
 
 export interface InputDeps {
+  /**
+   * ⭐ GH#731 通訊輪盤 —— 按住開。回 **true ＝ 這一下被輪盤吃掉了**
+   * （⇒ `InputCapture` 不再拿它去 quick-cast）。
+   * ⚠️ optional：⛔ 沒接線的呼叫端（測試替身、幕間場景）不該被逼著實作它。
+   */
+  onCommsKeyDown?: (code: string, at: { x: number; y: number }) => boolean;
+  /** ⭐ 放開＝送出那一格（死區內＝取消）。 */
+  onCommsKeyUp?: (code: string) => void;
+  /** ⭐ 失焦／換場：關掉且不送出。 */
+  onCommsCancel?: () => void;
   /** cursor → ground plane (from the camera rig); null when off-world */
   screenToGround(clientX: number, clientY: number): Vec2 | null;
   /** local champion's current (predicted) position */
@@ -245,12 +255,16 @@ export class InputCapture {
 
     on(window, "keydown", (ev: KeyboardEvent) => this.onKeyDown(ev));
     on(window, "keyup", (ev: KeyboardEvent) => {
+      // ⭐ GH#731 —— 放開＝送出（死區內＝取消）。
+      this.deps.onCommsKeyUp?.(ev.code);
       this.setPanKey(ev.code, false);
       // 放開技能鍵 → 收掉範圍指引 (GH#367)
       const slot = SLOT_BY_CODE[ev.code];
       if (slot) this.releaseHeldKey(slot);
     });
     on(window, "blur", () => {
+      // ⭐ GH#731 —— alt-tab 會吃掉 keyup，⛔ 沒有這一行輪盤會永遠開著。
+      this.deps.onCommsCancel?.();
       this.panKeys.up = this.panKeys.down = this.panKeys.left = this.panKeys.right = false;
       // Alt-tabbing away eats the keyup, so without this the range guide would
       // stay painted on the floor for the rest of the match.
