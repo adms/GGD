@@ -172,6 +172,70 @@ describe("#189 客戶端內容覆蓋層 (client-content-overlay)", () => {
     expect(doc.bonus.maxHealth, "後台的值沒有蓋過出貨值 —— overlay 沒被套用").toBe(777);
   });
 
+  it("★ ⭐⭐ GH#736 AC —— 後台改一支**技能**，玩家端的 `Abilities` 註冊表真的變了", async () => {
+    cover("client-content-overlay");
+    /**
+     * ⚠️ 上面那一條驗的是 **config** doc。⭐ 而 GH#736 的 AC 逐字是
+     * 「線上 admin 新增/修改一支**技能** → 不重啟容器 → 新開一場，
+     *  玩家的**卡面與技能行為**反映改動」——
+     * ⛔ 那是**另一個集合**（`abilities`），走**另一個註冊表**（`Abilities`）。
+     *
+     * ⭐ 而它接手的 #127 逐字說的正是「新技能在玩家端**不存在**」。
+     * ⇒ ⛔ 拿 config 那一條當作技能也通，是「兩條對的守衛、組合是空的」（形態⑪）。
+     */
+    const EDITED = "mockchamp.q";
+    const shipped = { ...ability("Q"), schema: "ability@1", name: "出貨的名字" };
+    const edited = { ...shipped, name: "操作者改過的名字", cooldown: [9, 9, 9, 9, 9] };
+    const bundle = {
+      schema: "content-bundle@1",
+      contentVersion: "cv_overlayabil0",
+      collections: {
+        champions: { hash: HASH, entries: [{ id: "mockchamp", hash: HASH, doc: CHAMPION }] },
+        abilities: {
+          hash: HASH,
+          entries: (["Q", "W", "E", "R"] as const).map((sl) => ({
+            id: `mockchamp.${sl.toLowerCase()}`,
+            hash: HASH,
+            doc: sl === "Q" ? shipped : { ...ability(sl), schema: "ability@1" },
+          })),
+        },
+        models: { hash: HASH, entries: [{ id: "mock.model", hash: HASH, doc: MODEL }] },
+        config: { hash: HASH, entries: [] },
+      },
+    };
+    globalThis.fetch = vi.fn((input: unknown) => {
+      const url = String(input);
+      if (url === OVERLAY_BUNDLE_URL) {
+        return Promise.resolve({
+          ok: true,
+          json: () =>
+            // ⭐ key 的形狀與 config 那一條一樣：`<collection>/<id>`。
+            Promise.resolve({ generation: 11, docs: { [`abilities/${EDITED}`]: edited }, deleted: {} }),
+        } as unknown as Response);
+      }
+      if (url.split("?")[0] === "/content/bundle.json") {
+        const body = JSON.stringify(bundle);
+        return Promise.resolve({
+          ok: true, status: 200,
+          text: () => Promise.resolve(body),
+          json: () => Promise.resolve(bundle as unknown),
+        } as unknown as Response);
+      }
+      return Promise.resolve({ ok: false, status: 404 } as Response);
+    }) as unknown as typeof fetch;
+
+    const res = await loadAllContent();
+    expect(res.ok, res.error).toBe(true);
+    expect(res.overlayGeneration).toBe(11);
+    const got = Abilities.tryGet(EDITED as never) as unknown as {
+      name: string; cooldown: number[];
+    };
+    // ⭐ 量尺先自證：這一支真的在註冊表裡（⛔ 不然 undefined 會讓斷言變成空過）
+    expect(got, "⛔ 那支技能根本不在玩家端的註冊表裡 —— #127 逐字的症狀").toBeTruthy();
+    expect(got.name, "⛔ 卡面沒變 ⇒ overlay 對 abilities 這個集合沒有生效").toBe("操作者改過的名字");
+    expect(got.cooldown[0], "⛔ **行為**沒變（AC 要的是卡面 **與** 技能行為兩者）").toBe(9);
+  });
+
   it("壞掉的 overlay **不會**把客戶端打到骨架內容 —— 退回出貨樹", async () => {
     cover("client-content-overlay");
     // ⚠️ 這條補的是一個非對稱:game-server 從 #189 起就有這個退路
