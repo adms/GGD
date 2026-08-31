@@ -183,6 +183,48 @@ export const zConfigAmbientVfxDoc = z
     /** modelKey -> ambient attachments applied while an entity uses the model */
     bindings: z.record(z.string().min(1), z.array(zAmbientVfxBinding)),
     /** 場地布景道具的常駐火焰（GH#251）。缺席 = 用 `DEFAULT_ARENA_FIRE`。 */
+    /**
+     * ⭐⭐ GH#725 AC⑥（舊 #39）—— 揮擊殘影**由攻擊事件觸發**。
+     *
+     * ── ⛔ 在此之前的形狀 ──────────────────────────────────────────────────
+     * 上面那份 `bindings` 有 22 筆，⛔ 而它們是 **model-keyed 的 ambient**
+     * （常駐掛在模型上）—— ⛔ 不是「揮劍的那一刻放一道刀光」。
+     * 票文逐字：「**大多數英雄揮劍仍無殘影**」。
+     *
+     * ── ⭐ 判準是**武器 tag**，⛔ 不是一張 model key 名單 ────────────────────
+     * 英雄卡上早就有（量到：`katana` 13 · `sword` 12 · `greatsword` 4 · `claw` 5）
+     * ⇒ 覆蓋率從「有人手動綁的 22 個」變成「**有武器 tag 的都有**」，
+     * ⭐ 而新英雄上架時**不必再有人記得去加一列**。
+     */
+    attackTrail: z
+      .object({
+        /** ⛔ 關掉＝回到只有 ambient 綁定（一鍵 rollback）。 */
+        enabled: z.boolean(),
+        /**
+         * 兩道殘影之間至少隔多久（毫秒）。
+         * ⚠️ ⭐ 攻速上限是 **10** ⇒ 沒有節流的話一秒十道刀光疊在一起，
+         * 而那比完全沒有更難讀 —— ⛔ 這不是體感微調，是承重的。
+         */
+        minGapMs: z.number().int().min(0).max(2000),
+        /** 武器 tag → 殘影。⭐ **順序＝優先序**（第一個對上的贏）。 */
+        byWeaponTag: z
+          .array(
+            z
+              .object({
+                /** 英雄卡 `tags` 上的那個字（`katana` / `sword` / …）。 */
+                tag: z.string().min(1).max(32),
+                /** 放哪一份 `vfx@1`。 */
+                vfxId: z.string().min(1).max(64),
+                /** 揮擊的高度（世界單位）。 */
+                y: z.number().min(0).max(6).optional(),
+              })
+              .strict(),
+          )
+          .min(1)
+          .max(16),
+      })
+      .strict()
+      .optional(),
     arenaFire: zArenaFire.optional(),
     /** 圓盤外的 2D 景深背景政策（GH#324）。缺席 = 用 `DEFAULT_ARENA_BACKDROP`。 */
     backdrop: zArenaBackdrop.optional(),

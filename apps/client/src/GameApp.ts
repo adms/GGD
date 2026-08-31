@@ -161,6 +161,7 @@ import { resolveLocalChampionModel, type LocalChampionModel } from "./game/local
 import { OrderFeedbackRunner, pickTargetRing, withOrderFeedback } from "./game/orderFeedbackRunner";
 import { StatusVoiceRunner } from "./game/statusVoiceRunner";
 import { commsWheelRunner } from "./game/commsWheelRunner";
+import { AttackTrailThrottle, trailForTags } from "./game/attackTrail";
 import { footstepRelationOf, makeScriptFxBridges } from "./game/appBridges";
 import { showRoundLoadOverlay, hideRoundLoadOverlay } from "./render/roundLoadOverlay";
 import { roundPurgeModeOf } from "./vfx/vfxCleanupPolicy";
@@ -596,6 +597,7 @@ export class GameApp {
   private readonly orderFeedback = new OrderFeedbackRunner(localChampionId);
   private readonly statusVoice = new StatusVoiceRunner();
   private readonly comms = commsWheelRunner(() => localChampionId());
+  private readonly attackTrail = new AttackTrailThrottle();
 
   /**
    * `LocalFacingMode.authoritative` 的 render pose —— 預測位置 + 權威面向。
@@ -2834,6 +2836,10 @@ export class GameApp {
       if (isLocal && Math.random() < 0.5) cc("curse");
       else cc("bind");
     }
+    // ⭐ GH#725 AC⑥ —— 揮擊殘影。⚠️ 它對**每一具身體**都放（⛔ 不只自己）：
+    // 刀光是**世界可見**的東西，⛔ 不是只講給你自己聽的語音。
+    if (rose & ENTITY_FLAG.WINDUP) this.spawnAttackTrail(entityId, champ);
+
     // T1 self-only movement/attack lines: only YOUR champion narrates its own
     // basic-attack windup and dash, on the flag's rising edge (never per frame).
     if (isLocal) {
@@ -2842,6 +2848,24 @@ export class GameApp {
       if (rose & ENTITY_FLAG.WINDUP) playContextualVoice(champ, "attack-light");
       if (rose & ENTITY_FLAG.DASHING) playContextualVoice(champ, "sprint");
     }
+  }
+
+  /**
+   * ⭐ GH#725 AC⑥ —— 揮擊那一刻的殘影（決策住 `game/attackTrail.ts`）。
+   *
+   * ⚠️ ⭐ 判準是**武器 tag**，⛔ 不是 modelKey —— 舊做法是 22 筆手綁的 ambient，
+   * 而它擋住了其餘每一位揮劍的英雄。
+   */
+  private spawnAttackTrail(entityId: number, champId: string): void {
+    const cfg = this.contentDb.attackTrailConfig();
+    if (!cfg) return;
+    const pick = trailForTags(cfg, Champions.tryGet(champId as ChampionId)?.tags);
+    if (!pick) return;
+    const now = performance.now();
+    if (!this.attackTrail.allow(entityId, now, cfg.minGapMs)) return;
+    const at = this.entityPos(entityId);
+    if (!at) return;
+    this.vfx.play(this.contentDb.vfxFor(pick.vfxId), at.x, at.z, now, pick.y ?? 1.1);
   }
 
   /** Mark the local player active NOW, resetting the hum idle latch (voice §三). */

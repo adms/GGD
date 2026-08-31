@@ -170,6 +170,32 @@
       }
     ]
   },
+  "attackTrail": {
+    "enabled": true,
+    "minGapMs": 220,
+    "byWeaponTag": [
+      {
+        "tag": "greatsword",
+        "vfxId": "fx.prim.physical.slash-lg",
+        "y": 1.1
+      },
+      {
+        "tag": "katana",
+        "vfxId": "fx.prim.physical.slash",
+        "y": 1.1
+      },
+      {
+        "tag": "sword",
+        "vfxId": "fx.prim.physical.slash",
+        "y": 1.1
+      },
+      {
+        "tag": "claw",
+        "vfxId": "fx.prim.blood.slash",
+        "y": 1.0
+      }
+    ]
+  },
   "arenaFire": {
     "enabled": false,
     "models": [

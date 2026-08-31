@@ -170,6 +170,16 @@ export const ARENA_FIRE_SPEC: ConfigDocSpec<"arenaFire"> = {
     "玩家**下一次重新整理遊戲頁面**、而且**下一次換場地**（dressArena 重跑）時生效。已經蓋好的場地不會中途點火或熄火 —— 那是刻意的：dressArena 是一次性的布景 pass，不是每幀跑的東西。",
   fields: [
     {
+      path: "attackTrail.enabled",
+      zh: "揮擊殘影（刀光）",
+      note: "⭐ **這是 GH#725 AC⑥ 的 rollback 開關**。開著＝有武器 tag 的英雄揮擊那一刻放一道殘影。⚠️ ⭐ 判準是**武器 tag**（`katana` / `sword` / `greatsword` / `claw`）⛔ 不是上面那張逐模型的 `bindings` —— 舊做法是 22 筆手綁的**常駐**特效，而票文逐字說「大多數英雄揮劍仍無殘影」。⇒ 覆蓋率變成「有武器 tag 的都有」，⭐ 新英雄上架不必再有人記得加一列。",
+    },
+    {
+      path: "attackTrail.minGapMs",
+      zh: "兩道殘影至少隔多久（毫秒）",
+      note: "⚠️ ⭐ **這是承重的，⛔ 不是體感微調**：攻速上限是 10，沒有節流的話一秒十道刀光疊在一起，而那比完全沒有更難讀。⭐ 節流是**逐身體**的 —— 兩位英雄同時揮劍不會互相擋掉。",
+    },
+    {
       path: "arenaFire.enabled",
       zh: "場地要不要有環境火焰",
       note: "關（出貨值）＝ 所有場地的火把一團火都不冒，也就是 owner 要的結果；開＝ 命中的布景道具每一支都掛一團常駐的加色火焰。這是唯一決定「場上有沒有火」的一格，下面三格只有在它開著時才有意義。",
@@ -226,6 +236,10 @@ export const ARENA_FIRE_SPEC: ConfigDocSpec<"arenaFire"> = {
     },
   ],
   preserved: [
+    {
+      path: "attackTrail.byWeaponTag",
+      why: "⭐ 哪一個武器 tag 放哪一道殘影 —— **整份是資料**（`content/config/ambient-vfx.json`）。⭐ **順序＝優先序**（大劍贏過劍）。要加一個新武器類型就在那裡加一列 `{tag, vfxId, y}`，⛔ 不必改任何程式。⚠️ 今天在後台編不到，理由與 `bindings` 同型：通用引擎畫得動的是固定形狀的純量葉，而這是一份會長大的清單。⚠️ ⭐ `vfxId` 打錯字**不會報錯，它只是靜靜什麼都不放** —— 守衛 `attackTrail.test.ts` 在對這份清單與 `content/vfx/_index.json`。",
+    },
     {
       path: "bindings",
       why: "逐模型的**環境特效綁定表**（英雄身上的常駐光暈／餘燼尾巴／緞帶翅膀，9 個模型共 17 條）。這一頁不編輯它，但每次儲存都必須原封不動帶著走 —— 掉了的話那 9 位角色身上的常駐特效會全部消失，而畫面上沒有任何錯誤訊息。",

@@ -6,8 +6,7 @@
  * and the impact composer layers flash+sparks+smoke(+ring) from one call.
  * Runs on NullEngine (createTexture: () => null skips image decode).
  */
-import {
-  impactRecipe, describe, it, expect, beforeAll, afterAll } from "vitest";
+import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
@@ -320,7 +319,7 @@ describe("impact recipes hit the AAA target ranges (vfx-preset-recipe)", () => {
  * ⭐ 一次 `fire()` 會生幾層 —— **從 recipe 推導**，⛔ 不抄字面值。
  * GH#725 AC⑤ 加了 `debris`（後台可關）⇒ 這個數字**會變**，而它有一個唯一的住處。
  */
-const declaredLayers = (i: "light" | "medium" | "heavy" | "ex"): number => {
+const declaredLayers = (i: ImpactIntensity): number => {
   const r = impactRecipe(i, [1, 1, 1]);
   return 3 + (r.debris ? 1 : 0);
 };

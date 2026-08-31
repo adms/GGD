@@ -95,6 +95,7 @@ import { setBlockFlashMode } from "../render/combatFeedback";
 import { setExDimTuning } from "../render/screenFx";
 import { setCooldownPredictTuning } from "../ui/cooldownPredict";
 import { setCastArcsEnabled, setMaxConcurrentArcs } from "../vfx/arcBolt";
+import type { AttackTrailConfig } from "../game/attackTrail";
 import {
   setImpactDebris,
   setImpactRingScale,
@@ -704,6 +705,19 @@ export class ContentDb {
   /** Ambient attachment bindings for a modelKey ([] when none authored). */
   ambientBindingsFor(modelKey: string): readonly AmbientVfxBinding[] {
     return this.ambientVfx?.bindings[modelKey] ?? NO_BINDINGS;
+  }
+
+  /**
+   * ⭐ GH#725 AC⑥ —— 揮擊殘影的對照表（`config.ambient-vfx@1` 的 `attackTrail`）。
+   *
+   * `null` ＝ 文件缺席／沒有這個區塊／後台關掉了 ⇒ ⛔ 什麼都不放
+   * （＝這張票之前的行為，⭐ 一鍵 rollback）。
+   * ⚠️ 與 `arenaFire()` 刻意不同：那一格缺席時要回**關著的預設**（owner 明說拿掉火），
+   * ⭐ 而這一格缺席就是「沒設定」⇒ 也是關著 —— 兩者同向，⛔ 但理由不一樣。
+   */
+  attackTrailConfig(): AttackTrailConfig | null {
+    const t = (this.ambientVfx as { attackTrail?: AttackTrailConfig } | null)?.attackTrail;
+    return t && t.enabled ? t : null;
   }
 
   /**

@@ -7,8 +7,7 @@
  * ramp (color identity preserved), and heavy/ex hits add the expanding
  * shockwave ring. Runs on NullEngine.
  */
-import {
-  impactRecipe, describe, it, expect, beforeAll, afterAll, vi } from "vitest";
+import { describe, it, expect, beforeAll, afterAll, vi } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 

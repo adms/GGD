@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "fe95f24def08",
+  "fingerprint": "7e330a37f224",
   "capabilityFingerprint": "9d43feef",
   "required": [
     {
@@ -937,6 +937,41 @@
       "group": "configField",
       "name": "attackSpeedMult",
       "owner": "config.weakness@1"
+    },
+    {
+      "group": "configField",
+      "name": "attackTrail",
+      "owner": "config.ambient-vfx@1"
+    },
+    {
+      "group": "configField",
+      "name": "attackTrail.byWeaponTag",
+      "owner": "config.ambient-vfx@1"
+    },
+    {
+      "group": "configField",
+      "name": "attackTrail.byWeaponTag[].tag",
+      "owner": "config.ambient-vfx@1"
+    },
+    {
+      "group": "configField",
+      "name": "attackTrail.byWeaponTag[].vfxId",
+      "owner": "config.ambient-vfx@1"
+    },
+    {
+      "group": "configField",
+      "name": "attackTrail.byWeaponTag[].y",
+      "owner": "config.ambient-vfx@1"
+    },
+    {
+      "group": "configField",
+      "name": "attackTrail.enabled",
+      "owner": "config.ambient-vfx@1"
+    },
+    {
+      "group": "configField",
+      "name": "attackTrail.minGapMs",
+      "owner": "config.ambient-vfx@1"
     },
     {
       "group": "configField",
@@ -23578,9 +23613,9 @@
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 112,
-    "configField": 3734,
+    "configField": 3741,
     "_notRequired": 15,
-    "_total": 4833,
+    "_total": 4840,
     "_ownerOnly": 39
   }
 }
