@@ -23,7 +23,14 @@
     144.0
   ],
   "manaCostTier": "小",
-  "effects": [],
+  "effects": [
+    {
+      "kind": "dash",
+      "mode": "forward",
+      "speed": 9.17,
+      "maxDistance": 3.67
+    }
+  ],
   "template": {
     "ref": "tpl-single-strike",
     "params": {

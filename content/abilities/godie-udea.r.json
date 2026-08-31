@@ -3,7 +3,7 @@
   "name": "65-04 天譴",
   "icon": "assets/icons/abilities/godie-udea.r.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n怒氣凝聚為閃電，向前衝鋒，同時朝周圍的敵人放電。範圍內的敵人（最多20名）各自引爆一條獨立的連鎖閃電：第一發造成{{dmg}}點傷害，之後每隔0.05秒隨機跳向附近還沒被這條鏈打到過的敵人，一條鏈最多打到16個敵人（含起點），每跳一次傷害只剩前一次的九成。凡是被閃電打到的敵人都會被削去250點魔力。另外對最靠近的一名敵人再造成{{dmg2}}點額外傷害。聚集越多敵人則威力越強。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n怒氣凝聚為閃電，朝周圍的敵人放電並奪取魔力。範圍內的敵人（最多20名）各自引爆一條獨立的連鎖閃電：第一發造成{{dmg}}點傷害，之後每隔0.05秒隨機跳向附近還沒被這條鏈打到過的敵人，一條鏈最多打到16個敵人（含起點），每跳一次傷害只剩前一次的九成。凡是被閃電打到的敵人都會被削去250點魔力。另外對最靠近的一名敵人再造成{{dmg2}}點額外傷害。聚集越多敵人則威力越強。",
   "slot": "R",
   "castType": "dash",
   "maxRank": 3,
@@ -20,12 +20,6 @@
   ],
   "manaCostTier": "中",
   "effects": [
-    {
-      "kind": "dash",
-      "mode": "forward",
-      "speed": 16,
-      "maxDistance": 8.25
-    },
     {
       "kind": "chainLightning",
       "shape": "circle",
@@ -68,7 +62,7 @@
   ],
   "vfxKey": "fx.prim.lightning.nova-lg",
   "schema": "ability@1",
-  "castTimeSec": 0.067,
+  "castTimeSec": 0.667,
   "rangeTier": "大",
   "range": 8
 }
