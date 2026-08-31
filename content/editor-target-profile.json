@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_459d4714c202",
+    "contentVersion": "cv_1cf7a9fc5aa3",
     "collections": {
       "champions": {
-        "hash": "57e5659498c5",
+        "hash": "3edded613f4b",
         "count": 71
       },
       "abilities": {
-        "hash": "e9abdd46cd5b",
+        "hash": "84b1321dec9f",
         "count": 421
       },
       "items": {
@@ -58,7 +58,7 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "7e925a382680",
+        "hash": "ad45597ea116",
         "count": 46
       },
       "vfx-scripts": {
@@ -2781,7 +2781,7 @@
               "min": 3,
               "max": 20,
               "unit": "count",
-              "inert": "分段時序未支援：6 段掃擊折算為單發穿透投射，命中集合等價但逐段推進不表現"
+              "origin": "j:32335 —— `exitwhen udg_WinSwordCounter > 6`，而 j:32333 是 `set udg_WinSwordCounter = 1` ⇒ 正好 **6 段**（⛔ 不是 7：它從 **1** 起算，⛔ 不是 0）"
             },
             "stepSize": {
               "type": "number",
@@ -2789,7 +2789,7 @@
               "min": 100,
               "max": 300,
               "unit": "wc3u",
-              "inert": "分段時序未支援：6 段掃擊折算為單發穿透投射，命中集合等價但逐段推進不表現"
+              "origin": "j:32336 —— `PolarProjectionBJ(udg_LocPoint1, I2R(udg_WinSwordCounter) * 200.00, …)` ⇒ 每段 **200 wc3u**"
             },
             "segmentAoe": {
               "type": "number",
@@ -2797,7 +2797,7 @@
               "min": 100,
               "max": 900,
               "unit": "wc3u",
-              "inert": "分段時序未支援：6 段掃擊折算為單發穿透投射，命中集合等價但逐段推進不表現"
+              "origin": "j:32337 —— `GetUnitsInRangeOfLocMatching(400.00, udg_LocPoint3, …)` ⇒ 每段半徑 **400 wc3u**"
             },
             "damage": {
               "type": "scaling",
@@ -5375,5 +5375,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "457c8e5246b5"
+  "profileDigest": "c0901320c259"
 }

@@ -2,7 +2,7 @@
   "id": "tpl-line-sweep",
   "schema": "template@1",
   "name": "直線分段掃擊",
-  "description": "沿直線分段的掃擊，P1 以單一 wave 投射體近似（同 godie-e002.e）。",
+  "description": "沿直線分段的掃擊：每一段各自在自己的落點結算一次（`delayed` + `advance`，GH#393 的機制）。⭐ 同一個目標整串只被打一次（`hitOncePerTarget`）—— 那是原作的規則，卡片寫的是**一次**的數字。",
   "family": "line-sweep",
   "status": "enabled",
   "params": {
@@ -12,7 +12,7 @@
       "min": 3,
       "max": 20,
       "unit": "count",
-      "inert": "分段時序未支援：6 段掃擊折算為單發穿透投射，命中集合等價但逐段推進不表現"
+      "origin": "j:32335 —— `exitwhen udg_WinSwordCounter > 6`，而 j:32333 是 `set udg_WinSwordCounter = 1` ⇒ 正好 **6 段**（⛔ 不是 7：它從 **1** 起算，⛔ 不是 0）"
     },
     "stepSize": {
       "type": "number",
@@ -20,7 +20,7 @@
       "min": 100,
       "max": 300,
       "unit": "wc3u",
-      "inert": "分段時序未支援：6 段掃擊折算為單發穿透投射，命中集合等價但逐段推進不表現"
+      "origin": "j:32336 —— `PolarProjectionBJ(udg_LocPoint1, I2R(udg_WinSwordCounter) * 200.00, …)` ⇒ 每段 **200 wc3u**"
     },
     "segmentAoe": {
       "type": "number",
@@ -28,7 +28,7 @@
       "min": 100,
       "max": 900,
       "unit": "wc3u",
-      "inert": "分段時序未支援：6 段掃擊折算為單發穿透投射，命中集合等價但逐段推進不表現"
+      "origin": "j:32337 —— `GetUnitsInRangeOfLocMatching(400.00, udg_LocPoint3, …)` ⇒ 每段半徑 **400 wc3u**"
     },
     "damage": {
       "type": "scaling",

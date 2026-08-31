@@ -126,11 +126,32 @@ describe("golden per family (template + exemplar params → EffectDef shape)", (
     expect(ex.radius).toBe(toLen(530));
   });
 
-  it("line-sweep → skillshot wave projectile", () => {
+  // ⚠️ 這一條在 GH#401 之前斷言 `spawnProjectile` —— 那是**折算**的形狀：
+  // 6 段掃擊被壓成一顆 wave 投射體，而模板的三格（`segmentCount`/`stepSize`/
+  // `segmentAoe`）掛著 `inert` 逐字寫「逐段推進不表現」。
+  // ⭐ 機制早在 GH#393 就有了（`delayed`+`advance`），只是這一族沒跟上。
+  it("line-sweep → 逐段推進的 delayed（⛔ 不再是一顆投射體）", () => {
     const t = loadTemplate("tpl-line-sweep");
     const ex = expand(t, { damage: { perRank: [150] }, damageType: "magic" });
     expect(ex.castType).toBe("skillshot");
-    expect(ex.effects[0]).toMatchObject({ kind: "spawnProjectile", projectileId: "imported.wave" });
+    const d = ex.effects[0] as {
+      kind: string;
+      count: number;
+      radius: number;
+      hitOncePerTarget?: boolean;
+      advance?: { stepDist: number; dir?: string };
+    };
+    expect(d.kind, "⛔ 又被折算成一顆投射體了").toBe("delayed");
+    // ⭐ 每一格都指得到 JASS 的一行（`tpl-line-sweep.json` 的 `origin`）：
+    //   j:32333 counter=1 · j:32335 `> 6` ⇒ **6 段**
+    expect(d.count).toBe(6);
+    //   j:32336 每段 200 wc3u ÷ 54.545 ⇒ ⛔ 忘了換算會是 54 倍長的線
+    // ⭐ 引用**出貨的** `toLen`，⛔ 不抄第二個分母（那會是第〇·四守則的第二個住處）
+    expect(d.advance?.stepDist).toBe(toLen(200));
+    //   j:32337 每段半徑 400 wc3u
+    expect(d.radius).toBe(toLen(400));
+    // ⭐ 原作自己帶去重表 ⇒ 站在線上的人整串只被打一次（卡片寫的是一次的數字）
+    expect(d.hitOncePerTarget).toBe(true);
   });
 
   // ⚠️ 這一條在 GH#393 之前斷言 `ex.radius === toLen(450)` —— 那是**折算**的

@@ -19,6 +19,26 @@ import type { EffectDef, DamageType, Scaling } from "../../sim/effects/effect";
 import type { HookDef, HookEvent, StatModifier } from "../../sim/stats/modifiers";
 import type { AbilityId, ProjectileId, StatusId, VfxId } from "../../ids";
 import { DELAYED_MAX_COUNT } from "../../sim/effects/kindLimits";
+
+
+/**
+ * ⭐ 直線分段掃擊的**每段間隔**（秒）。
+ *
+ * ⚠️ 模板的 `params` 裡**沒有**這一格（`tpl-line-sweep.json` 只有
+ * `segmentCount`/`stepSize`/`segmentAoe`/`damage`/`damageType`/`castTimeSec`），
+ * ⛔ 而 `delayed` 需要一個節奏。
+ *
+ * ⭐ 0.05 秒的出處：`traveling-wave` 家族的出貨卡片用的就是這個量級
+ * （`godie-e002.e` 的 `jumpIntervalSec: 0.05`），⭐ 而原作的分段推進是
+ * **逐 tick 硬推**（`PolarProjection(pos, i×step, angle)`）—— 一個 WC3 tick 是
+ * 0.04 秒（GH#840 逐行讀到的 `TriggerRegisterTimerEventPeriodic(…, 0.04)`）。
+ * ⇒ 0.05 是「一段一 tick」的最近可用值，⛔ 不是一個好看的數字。
+ *
+ * ⚠️ ⭐ 它**該不該變成模板參數**是一個真的問題（第一守則：可調 > 寫死）——
+ * ⛔ 但那要動 `tpl-line-sweep.json` 的 schema 與所有引用它的卡，
+ * ⭐ 而這一輪的範圍是「把 inert 那三格接上」。⇒ 留一格 TODO，⛔ 不順手擴。
+ */
+const LINE_SWEEP_STEP_SEC = 0.05;
 import type {
   TemplateDoc,
   ParamSlot,
@@ -752,21 +772,68 @@ const FAMILIES: Readonly<Record<string, Family>> = {
     effects: [damageEffect(damageType(t, p, "damageType"), scaling(t, p, "damage"))],
   }),
 
-  // 4. 直線分段掃擊 — segmented line sweep approximated by one wave projectile
-  // (matches godie-e002.e). SABER 20-03 約束與勝利之劍.
-  "line-sweep": (t, p) => ({
-    castType: "skillshot",
-    targetsEnemies: true,
-    ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
-    effects: [
-      {
-        kind: "spawnProjectile",
-        projectileId: "imported.wave" as ProjectileId,
-        onHit: [damageEffect(damageType(t, p, "damageType"), scaling(t, p, "damage"))],
-      },
-    ],
-  }),
-
+  // 4. 直線分段掃擊 — segmented line sweep.
+  //
+  // ⭐⭐ GH#401 ① —— 這一族的三格（`segmentCount`/`stepSize`/`segmentAoe`）
+  // 在 2026-08-31 之前掛著 `inert`，逐字寫著：
+  //
+  //     「分段時序未支援：6 段掃擊折算為單發穿透投射，命中集合等價但逐段推進不表現」
+  //
+  // ⚠️ ⭐ 那不是一句 caveat，那是**整個家族被折算掉了**：一顆投射體的命中集合與
+  // 「6 段各自結算一次」在紙上等價，⛔ 在畫面上完全不同 ——
+  // 而且它會被碰撞與地形影響，⛔ 原作的 `PolarProjection(pos, i×step, angle)` 不會。
+  //
+  // ⭐ 而**機制早在 GH#393 就做出來了**（`delayed` + `advance`），
+  // 只是這一族沒有跟上 ⇒ ⛔ 這裡沒有新引擎工作，⭐ 也沒有為任何一支技能寫一行 if
+  //（第〇·五守則）：段數、步距、每段半徑全部是這張卡的參數。
+  //
+  // ⭐ 與 `traveling-wave` 走**同一條路**（⛔ 不是第二份實作）——
+  // 兩族的差別只在參數名（`segmentCount` vs `stepCount`）與有沒有終點爆發。
+  //
+  // ⚠️ 單位：模板的 `stepSize`/`segmentAoe` 是 **wc3u**（模板 JSON 的 `unit` 逐字寫著），
+  // 而 `advance.stepDist` 與 `delayed.radius` 吃 **GGD 單位** —— ⭐ 而 `num()` 在
+  // `slot.unit === "wc3u"` 時**已經**跑過 `toLen()`（:387）⇒ ⛔ 這裡**不可以再除一次**。
+  // ⚠️ 我第一版自己定義了一個 `WC3U_PER_GGD = 54.545` 又除了一遍 —— 那同時是
+  //   **第二個住處**（`GGD_PER_WC3` 早就存在，第〇·四守則）**與**一次雙重換算
+  //   ⇒ 半徑 0.067 而不是 7.33，⭐ 而畫面上「有東西在動」。
+  // ⛔ 忘了換算會得到一條 54 倍長的線（而它「有東西在動」，看起來像對的）。
+  "line-sweep": (t, p) => {
+    const segments = num(t, p, "segmentCount");
+    // ⛔ 大聲擋下，⛔ 不靜默夾掉（同 `traveling-wave` 的理由）。
+    if (segments > DELAYED_MAX_COUNT) {
+      throw new ExpandError(
+        `template ${t.id}: segmentCount=${segments} 超過模擬器一次施放能排的段數 ` +
+          `(DELAYED_MAX_COUNT=${DELAYED_MAX_COUNT})。把段數調低、或把 stepSize 加大 ` +
+          `換取同樣的總射程；真的需要更多段要先改 sim/effects/kindLimits.ts 的上界。`,
+      );
+    }
+    return {
+      castType: "skillshot",
+      targetsEnemies: true,
+      ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+      effects: [
+        {
+          kind: "delayed",
+          shape: "circle",
+          // ⚠️⚠️ ⛔ **這裡不可以再除一次** —— `num()` 在 `slot.unit === "wc3u"`
+          //   時**已經**跑過 `toLen()`（`expand.ts:387`）。
+          // ⭐ 我第一版寫了 `/ WC3U_PER_GGD` ⇒ 除了兩次 ⇒ 半徑 0.067 而不是 7.33，
+          //   而畫面上「有東西在動」—— ⭐ 抓到它的是 golden 那一條的數字斷言。
+          radius: num(t, p, "segmentAoe"),
+          side: "enemies",
+          delaySec: LINE_SWEEP_STEP_SEC,
+          count: segments,
+          intervalSec: LINE_SWEEP_STEP_SEC,
+          targetMode: "reresolve",
+          // ⭐ 原作的規則，⛔ 不是我的偏好：站在線上的人被 N 段各打一次，
+          //   而卡片寫的是**一次**的數字（同 `traveling-wave` 的註解）。
+          hitOncePerTarget: true,
+          advance: { stepDist: num(t, p, "stepSize"), dir: "facing" },
+          effects: [damageEffect(damageType(t, p, "damageType"), scaling(t, p, "damage"))],
+        },
+      ],
+    };
+  },
   // 5. 行進波動 — travelling wave. 莉娜 04-03 龍破斬 (design canonical example).
   //
   // ⭐ GH#393（owner 2026-08-19，34-04 蒼龍破）：「JASS 應該有安排**位置移動**
