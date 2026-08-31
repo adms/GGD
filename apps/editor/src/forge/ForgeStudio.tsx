@@ -32,11 +32,9 @@ import {
   toLen,
   toApex,
   zAbilityDoc,
-  zChampionDoc,
   DEFAULT_TEMPLATE_CONFLICT,
   TEMPLATE_STACK_MAX_CARDS,
   type TemplateDoc,
-  type ChampionDoc,
   type TemplateConflictPolicy,
   type AbilityTemplateCard,
 } from "@ggd/shared/content";
@@ -79,6 +77,7 @@ import {
   moveTemplateCard,
 } from "./stackDnd";
 import { SimEventTimeline } from "./SimEventTimeline";
+import { useChampionDocs } from "../preview/useChampionDocs";
 
 /**
  * GH#174 —— 工坊第 3 步從此有**畫面**。同一個 `PreviewController` 介面，
@@ -195,7 +194,11 @@ export function ForgeStudio({
     queryFn: () => api.index("abilities"),
     staleTime: 30_000,
   });
-  const champions = useChampionDocs();
+  const {
+    champions,
+    isLoading: championsLoading,
+    error: championsError,
+  } = useChampionDocs();
 
   /**
    * `content/vfx/` 的全部 id。這張表就是 #230 的入口：491 支從原作抽出來的
@@ -678,8 +681,10 @@ export function ForgeStudio({
               <OriginTable trace={expansion.value.trace} />
             </>
           ) : null}
+          {championsLoading ? <p className="forge-note">正在載入技能所屬英雄…</p> : null}
+          {championsError ? <p className="error">英雄索引讀取失敗：{championsError.message}</p> : null}
           {preview && "error" in preview ? <p className="error">{preview.error}</p> : null}
-          {preview && "lines" in preview && preview.lines === null ? (
+          {!championsLoading && !championsError && preview && "lines" in preview && preview.lines === null ? (
             <p className="forge-note">這支技能沒有英雄持有，無法算等級縮放。</p>
           ) : null}
           {preview && "lines" in preview && preview.lines ? (
@@ -1174,20 +1179,4 @@ function ConfirmDialog({
       </div>
     </div>
   );
-}
-
-function useChampionDocs(): ChampionDoc[] {
-  const { data } = useQuery({
-    queryKey: ["preview-champions"],
-    queryFn: async () => {
-      const index = await api.index("champions");
-      const docs = await Promise.all(index.entries.map((e) => api.doc("champions", e.id)));
-      return docs
-        .map((d) => zChampionDoc.safeParse(d))
-        .filter((r) => r.success)
-        .map((r) => (r as { success: true; data: ChampionDoc }).data);
-    },
-    staleTime: 10_000,
-  });
-  return data ?? [];
 }

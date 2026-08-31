@@ -5,19 +5,17 @@
  * through the actual resolveScaling with those stats.
  */
 import { Suspense, lazy, useMemo, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import {
   zChampionDoc,
   zItemDoc,
   zAugmentDoc,
   zAbilityDoc,
   type CollectionName,
-  type ChampionDoc,
 } from "@ggd/shared/content";
 import type { CoreAbilitySlot, ChampionDef, ItemDef, AugmentDef, AbilityDef } from "@ggd/shared/sim";
-import { api } from "../api/client";
 import { createSimPreviewController } from "./PreviewController";
 import { has3DPreview } from "../preview3d/which";
+import { useChampionDocs } from "./useChampionDocs";
 
 // Babylon + loaders live in a lazy chunk; non-3D collections never pay for it
 const Preview3D = lazy(() => import("../preview3d/Preview3D"));
@@ -25,22 +23,6 @@ const Preview3D = lazy(() => import("../preview3d/Preview3D"));
 const controller = createSimPreviewController();
 
 const fmt = (n: number): string => (Number.isInteger(n) ? String(n) : n.toFixed(2));
-
-function useChampionDocs(): ChampionDoc[] {
-  const { data } = useQuery({
-    queryKey: ["preview-champions"],
-    queryFn: async () => {
-      const index = await api.index("champions");
-      const docs = await Promise.all(index.entries.map((e) => api.doc("champions", e.id)));
-      return docs
-        .map((d) => zChampionDoc.safeParse(d))
-        .filter((r) => r.success)
-        .map((r) => (r as { success: true; data: ChampionDoc }).data);
-    },
-    staleTime: 10_000,
-  });
-  return data ?? [];
-}
 
 function StatTable({ rows }: { rows: { label: string; value: string }[] }) {
   return (
@@ -90,7 +72,7 @@ function ChampionPreview({ doc }: { doc: unknown }) {
 
 function AbilityPreview({ doc }: { doc: unknown }) {
   const parsed = zAbilityDoc.safeParse(doc);
-  const champions = useChampionDocs();
+  const { champions, isLoading, error: championsError } = useChampionDocs();
   const [level, setLevel] = useState(1);
 
   const result = useMemo(() => {
@@ -115,6 +97,8 @@ function AbilityPreview({ doc }: { doc: unknown }) {
   }, [doc, champions, level, parsed.success]);
 
   if (!parsed.success) return <p className="preview-note">Fix validation errors to preview.</p>;
+  if (isLoading) return <p className="preview-note">Loading champion owner…</p>;
+  if (championsError) return <p className="preview-note">Champion owner index failed: {championsError.message}</p>;
   if (!result) return null;
   if ("error" in result) return <p className="preview-note">Preview error: {result.error}</p>;
   if (!("lines" in result) || result.lines === null) {
@@ -149,7 +133,7 @@ function AbilityPreview({ doc }: { doc: unknown }) {
 }
 
 function DeltaPreview({ doc, mode }: { doc: unknown; mode: "item" | "augment" }) {
-  const champions = useChampionDocs();
+  const { champions, isLoading, error: championsError } = useChampionDocs();
   const [champIdx, setChampIdx] = useState(0);
   const parsed = mode === "item" ? zItemDoc.safeParse(doc) : zAugmentDoc.safeParse(doc);
 
@@ -166,6 +150,8 @@ function DeltaPreview({ doc, mode }: { doc: unknown; mode: "item" | "augment" })
   }, [doc, champions, champIdx, mode, parsed.success]);
 
   if (!parsed.success) return <p className="preview-note">Fix validation errors to preview.</p>;
+  if (isLoading) return <p className="preview-note">Loading champions…</p>;
+  if (championsError) return <p className="preview-note">Champion index failed: {championsError.message}</p>;
   if (!result) return <p className="preview-note">Loading champions…</p>;
   if ("error" in result) return <p className="preview-note">Preview error: {String(result.error)}</p>;
   return (
