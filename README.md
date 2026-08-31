@@ -417,7 +417,7 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 
 其餘 **18** 項是 1.0（不動）：`abilityDamage`、`abilityPower`、`attackDamage`、`attackSpeed`、`critChance`、`critDamage`、`damageDealt`、`defense`、`goldHeroKill`、`goldQuest`、`goldRoundPayout`、`healing`、`healthRegen`、`itemCooldown`、`lifesteal`、`maxMana`、`moveSpeed`、`shield`。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_4461b76cb24a` 產生。 倍率讀 `content/config/combat-env.json`（version 9）。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_b8827ae796ba` 產生。 倍率讀 `content/config/combat-env.json`（version 9）。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:combat-env -->
 
 倍率表在 tick 0 之前注入模擬並隨快照下發，兩邊用同一支正規化函式，所以預測與伺服器永遠對得上。技能卡面上的冷卻／距離／傷害怎麼過這張表，見 [⭐ 技能五級距](#-技能五級距)。
@@ -453,7 +453,7 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 | `arena.skeleton` | 新手競技場 | 🔁 | 24 | 2 | 4 | 12 | `stone` | — | 24+20 | — |
 | `arena.world-tree` | 世界樹核心 | 🔁 | 30 | 2 | 28 | 12 | `grass` | ✅ | 29+36 | 區域×10、互動×16、機關門 |
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_4461b76cb24a` 產生。 輪替 12 / 全 13 張。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_b8827ae796ba` 產生。 輪替 12 / 全 13 張。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:arenas -->
 
 ### 設定陷阱（改了不會生效）
@@ -668,7 +668,7 @@ make lan-probe
 >
 > ⚠️ 所以調 `combat-env` 的 `intToAbilityPower` **不會**讓法強終值變高 —— 它只改「等級 1 拿到多少」，反解把差額從每級成長裡等量扣掉，等級 99 逐位元不變。要改法強終值只有一格：上表的 `bands.ap`。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_4461b76cb24a` 產生。 級距與 `appliesTo` 讀 `content/config/stat-normalization.json`、上限讀 `stat-caps.json`、成長現況現場數 `content/champions/`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_b8827ae796ba` 產生。 級距與 `appliesTo` 讀 `content/config/stat-normalization.json`、上限讀 `stat-caps.json`、成長現況現場數 `content/champions/`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:stat-bands -->
 
 **49 位可選英雄的逐隻對照**（出身 / 普攻距離 / 核心玩法 / 選角說明）在
@@ -832,7 +832,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 >
 > 逐格推導、三個錨點（LV30 hard / LV50 soft / LV99 極限）的達成率、以及兩個「空間」（純基礎 ↔ 引擎最終）的對照表在 [`docs/平衡錨點量測.md`](./docs/平衡錨點量測.md)；與 w3x 的逐支對照與梯子推導在 [`docs/editor-contract/ggd-skill-tiers.md`](./docs/editor-contract/ggd-skill-tiers.md)。兩份都是產生的。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_4461b76cb24a` 產生。 級距讀 `content/config/*-tiers.json`（8 張表）、母體讀 `docs/平衡錨點量測.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_b8827ae796ba` 產生。 級距讀 `content/config/*-tiers.json`（8 張表）、母體讀 `docs/平衡錨點量測.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:tiers -->
 
 ### 開放清單（以下預設展開，不用點）
@@ -1164,7 +1164,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 **`godie-orkn` 臭作**（電車癡漢 · marksman · 遠程） — 傳說中的變態色魔老頭，身懷眾多變態絕技，是去死團裡強大的怨念支柱，興趣是偷窺以…
 
-- **天生·主動** 30-00 攝影機：為了看到許多的糟糕畫面，以及方便搜尋肛人的目標，放攝影機前往附近的…
+- **天生·主動** 30-00 攝影機：[輔助][指定]
 - **Q** 30-01 綁架：因為想非常想要肛人而起了綁架人的念頭，導致不分敵我的胡亂綁架來肛，…
 - **W** 30-02 酒精灌腸：把敵人肛門泡在酒精中，讓他們的移動速度降低10%，而且有20%的機…
 - **E** 30-03 痴漢火焰：讓一個敵方單位身陷痴漢火焰之中，造成每秒500點的持續性的傷害，並…
@@ -1290,7 +1290,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **完整 71 名英雄**（含 22 名未開放）與逐欄資料（開放旗標、技能 id、攻擊類型…）在 [`docs/reference/roster.md`](./docs/reference/roster.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_4461b76cb24a` 產生。 開放 49 / 全 71 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_b8827ae796ba` 產生。 開放 49 / 全 71 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:roster -->
 
 <!-- BEGIN GENERATED:abilities -->
@@ -1306,7 +1306,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **全 421 個技能的逐欄表**（id、名稱、slot、型態、編號、擁有英雄、開放旗標、完整短效果）在 [`docs/reference/abilities.md`](./docs/reference/abilities.md)；互動版在 <http://localhost:39527/#codex>。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_4461b76cb24a` 產生。 開放英雄技能 293 / 全 421 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_b8827ae796ba` 產生。 開放英雄技能 293 / 全 421 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:abilities -->
 
 <!-- BEGIN GENERATED:items -->
@@ -1482,7 +1482,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 > 📖 **全 142 件道具依 craftRole 的完整分類表**（component 16 / token 0 / none 24 …）在 [`docs/reference/items.md`](./docs/reference/items.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_4461b76cb24a` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_b8827ae796ba` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:items -->
 
 <!-- BEGIN GENERATED:grail -->
@@ -1571,7 +1571,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 逐張的完整 JSON（每一格參數、每一個 hook、每一條條件）在 [`docs/reference/grail-wishes.md`](docs/reference/grail-wishes.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_4461b76cb24a` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_b8827ae796ba` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:grail -->
 
 ### ⭐ 2026-08-17／18 這一批新加的機制（GH#354）
@@ -1626,7 +1626,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 | 效果 | 用它的內容 | 效果 | 用它的內容 | 效果 | 用它的內容 |
 |---|--:|---|--:|---|--:|
-| `applyBuff` | 105 | `applyStatus` | 99 | `blink` | 15 |
+| `applyBuff` | 103 | `applyStatus` | 101 | `blink` | 17 |
 | `carry` | 0 | `chainLightning` | 2 | `championForm` | 23 |
 | `comboStrikes` | 1 | `convertTeam` | 0 | `cycleBuff` | 1 |
 | `damage` | 155 | `damageArea` | 45 | `damageLine` | 19 |
@@ -1689,13 +1689,13 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 | `equipment` | 0 |
 | `kind` | 1 |
 | `stat` | 9 |
-| `status` | 25 |
+| `status` | 27 |
 
-### 狀態標籤 —— 109 個（`content/status-effects/*.json` 逐檔數出來）
+### 狀態標籤 —— 111 個（`content/status-effects/*.json` 逐檔數出來）
 
 標籤是**開放**詞彙（自由字串），條件葉 `status` 的類別分支就是查它：
 
-`aban-x-mark`×1 `accuracy-down`×2 `ai-override`×3 `alcohol-enema`×1 `antiheal`×2 `armor-break`×1 `armor-down`×1 `attack-debuff`×2 `attack-denied`×8 `auto-target`×1 `bankai`×1 `banked`×2 `berserk`×1 `blind`×1 `buff`×15 `burn`×1 `burnstun`×1 `cast-denied`×7 `cc`×21 `channel`×1 `charmed`×1 `combo`×2 `combo-mark`×1 `confusion`×1 `cooldown`×1 `counter`×2 `curse`×1 `damage-bank`×2 `debuff`×28 `devour-cooldown`×1 `disable`×11 `dot`×1 `drunk`×1 `elemental`×1 `empowered`×1 `empowered-next`×1 `fang-stun`×1 `fear`×1 `fire`×2 `flee`×1 `form`×2 `frenzy`×1 `friendly-fire`×1 `generic`×1 `grail-strengthened-projection`×1 `grail-wish`×1 `grief-seed-charge`×1 `grievous-wounds`×1 `hard-cc`×6 `haste`×2 `heal-block`×1 `heal-down`×2 `immobilize`×1 `ingredient`×1 `internal-cooldown`×1 `lifesteal-down`×2 `lifesteal-up`×1 `light-wand-banked`×1 `magic-break`×1 `magic-resist-down`×1 `magical`×1 `mana-banked`×2 `mark`×1 `marker`×3 `mechanism-on-card`×4 `millennium-plot-armor`×1 `miss`×2 `moon-combo`×1 `move-denied`×9 `move-speed-down`×7 `named-variant`×6 `nen-banked`×1 `next-attack`×1 `no-heal`×1 `no-stat-change`×1 `numbness`×1 `octuple-slash-window`×1 `omnislash-lock`×1 `omnislash-perform`×1 `paralysis`×1 `physical`×1 `projectile`×1 `rage`×1 `red-comet`×1 `regen-down`×2 `resist-down`×2 `root`×1 `self`×1 `self-lock`×1 `shred`×2 `slow`×8 `slow20`×1 `slow25`×1 `slow30`×1 `slow35`×1 `slow40`×1 `slow50`×1 `slow60`×1 `soft-cc`×9 `stat-down`×9 `stat-up`×1 `stun`×7 `timed-window`×3 `trial-stun`×1 `triforce-courage`×1 `uncontrollable`×3 `united-states-of-smash`×1 `witch-form`×1 `wound`×2
+`aban-x-mark`×1 `accuracy-down`×2 `ai-override`×3 `alcohol-enema`×1 `antiheal`×2 `armor-break`×1 `armor-down`×1 `attack-debuff`×2 `attack-denied`×8 `auto-target`×1 `bankai`×1 `banked`×2 `berserk`×1 `blind`×1 `buff`×15 `burn`×1 `burnstun`×1 `camera-mark`×1 `cast-denied`×7 `cc`×21 `channel`×1 `charmed`×1 `combo`×2 `combo-mark`×1 `confusion`×1 `cooldown`×1 `counter`×2 `curse`×1 `damage-bank`×2 `debuff`×29 `devour-cooldown`×1 `disable`×11 `dot`×1 `drunk`×1 `elemental`×1 `empowered`×1 `empowered-next`×1 `fang-stun`×1 `fear`×1 `fire`×2 `flee`×1 `form`×2 `frenzy`×1 `friendly-fire`×1 `generic`×1 `grail-strengthened-projection`×1 `grail-wish`×1 `grief-seed-charge`×1 `grievous-wounds`×1 `hard-cc`×6 `haste`×2 `heal-block`×1 `heal-down`×2 `immobilize`×1 `ingredient`×1 `internal-cooldown`×1 `lifesteal-down`×2 `lifesteal-up`×1 `light-wand-banked`×1 `magic-break`×1 `magic-resist-down`×1 `magical`×1 `mana-banked`×2 `mark`×2 `marker`×3 `mechanism-on-card`×4 `millennium-plot-armor`×1 `miss`×2 `moon-combo`×1 `move-denied`×9 `move-speed-down`×7 `named-variant`×6 `nen-banked`×1 `next-attack`×1 `no-heal`×1 `no-stat-change`×1 `numbness`×1 `octuple-slash-window`×1 `omnislash-lock`×1 `omnislash-perform`×1 `paralysis`×1 `physical`×1 `projectile`×1 `rage`×1 `recall-anchor`×1 `red-comet`×1 `regen-down`×2 `resist-down`×2 `root`×1 `self`×1 `self-lock`×1 `shred`×2 `slow`×8 `slow20`×1 `slow25`×1 `slow30`×1 `slow35`×1 `slow40`×1 `slow50`×1 `slow60`×1 `soft-cc`×9 `stat-down`×9 `stat-up`×1 `stun`×7 `timed-window`×3 `trial-stun`×1 `triforce-courage`×1 `uncontrollable`×3 `united-states-of-smash`×1 `witch-form`×1 `wound`×2
 
 ### 特效（vfx）—— 661 份
 
@@ -1711,7 +1711,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 完整的參數與上下界（每個效果每一格能填什麼）在 [`docs/技能標記機制與效果規則.md`](docs/技能標記機制與效果規則.md)，同樣是產生的。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_4461b76cb24a` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_b8827ae796ba` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:mechanics -->
 
 

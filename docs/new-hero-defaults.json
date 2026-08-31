@@ -88,7 +88,7 @@
       },
       "range": {
         "value": 12,
-        "sample": 127,
+        "sample": 126,
         "basis": "corpus"
       },
       "radius": {
@@ -119,7 +119,7 @@
       },
       "range": {
         "value": 12,
-        "sample": 127,
+        "sample": 126,
         "basis": "corpus"
       },
       "radius": {
@@ -150,7 +150,7 @@
       },
       "range": {
         "value": 12,
-        "sample": 127,
+        "sample": 126,
         "basis": "corpus"
       },
       "radius": {
@@ -210,7 +210,7 @@
       },
       "range": {
         "value": 12,
-        "sample": 127,
+        "sample": 126,
         "basis": "corpus"
       },
       "radius": {
@@ -726,7 +726,7 @@
       },
       "range": {
         "value": 12,
-        "sample": 23,
+        "sample": 22,
         "basis": "slot"
       },
       "radius": {
@@ -756,7 +756,7 @@
       },
       "range": {
         "value": 12,
-        "sample": 23,
+        "sample": 22,
         "basis": "slot"
       },
       "radius": {
@@ -776,7 +776,7 @@
       "description": "對自身，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
       "cooldown": {
         "value": 60,
-        "sample": 19,
+        "sample": 20,
         "basis": "slot+castType"
       },
       "manaCost": {
@@ -816,7 +816,7 @@
       },
       "range": {
         "value": 12,
-        "sample": 23,
+        "sample": 22,
         "basis": "slot"
       },
       "radius": {

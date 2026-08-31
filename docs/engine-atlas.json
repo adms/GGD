@@ -1,12 +1,12 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "f3f4185c",
+  "capabilityFingerprint": "9d43feef",
   "counts": {
     "effectKinds": 46,
     "hookEvents": 33,
     "conditionLeafKinds": 5,
     "templateFamilies": 26,
-    "effectFields": 260,
+    "effectFields": 261,
     "stats": 23,
     "combatEnvKeys": 39
   },
@@ -477,6 +477,7 @@
     ],
     "疊層與標記": [
       "exclusiveOnExisting",
+      "markStatusId",
       "maxStacks",
       "onExisting",
       "stackKey",

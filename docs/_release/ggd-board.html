@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-08-31 13:31 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-08-31 21:54 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.33.0 · 資料截至 2026-08-31 13:31 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-31 13:31 (GMT+8)</h1><div class="meta"><span>帳本 <b>13</b> 份</span><span>點名票號 <b>334</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.33.0 · 資料截至 2026-08-31 21:54 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-31 21:54 (GMT+8)</h1><div class="meta"><span>帳本 <b>13</b> 份</span><span>點名票號 <b>341</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -864,6 +864,13 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>13:28</td><td>好 那 codex 編輯器那邊的 goal 呢</td><td>⏸ 未對票</td></tr>
 <tr><td>13:28</td><td>我說了 給我要寫的 goal 指令</td><td>⏸ 未對票</td></tr>
 <tr><td>13:31</td><td>太少了吧 我要你做完目前 緊急 重要 優先的票，並且能讓 codex 編輯器獨立作業為最優先 目標是 開放讓玩家自己設計 英雄、技能、特效，不是靠 AI 無止境的逼近太沒效率 所以後台編輯器的抽象化、完整性、視覺化可操作性很重要，因為所有功能都要可JSON操作設定，並且也有 no code 遊戲引擎等級的操作介面 這個前提大目標方向呢 請你考量之後重新修這 codex 跟你自己的 goal</td><td>⏸ 未對票</td></tr>
+<tr><td>17:16</td><td>[#862] log 上限：票寫「已關」而出貨機上 6 個容器一個都沒有 —— 關它的腳本是 Linux 專用，搬家後沒人跑過。修在 compose（跟著 repo 走）⇒ 688ae853a</td><td>862</td></tr>
+<tr><td>17:46</td><td>[#803] 金色一直都在 —— 它卡在一格 family:null。PRE2 早就轉得出來,luma-key 洗不掉彩度。量到 sat 0.541（原作 0.47–0.54）。機制 model@1.fxEmitters：原作一顆 .mdx 是「geoset ＋ 它自己的粒子」而我們只出貨了一半 ⇒ d35b6fb9c + 6d7f78ab7</td><td>803</td></tr>
+<tr><td>17:58</td><td>[#761] 家族表 11 格只有 models 調不到 —— 而它正是「播幾顆發射器」。⛔ 不烘進 421 份技能（第〇·四），改成讓規則的輸入可編輯。順帶關掉兩個「後台改了畫面不動」的快取洞 ⇒ 0c259fe35。新缺口：契約對 config.* 零涵蓋 ⇒ GH#889</td><td>761</td></tr>
+<tr><td>18:41</td><td>[#889] 契約對 config.* 零涵蓋 —— 它沒有說謊，它沉默。3,752 格補上（_total 1094→4849）。順帶修好 z.record 的下鑽（在此之前只留下它自己的名字）⇒ bbfb900f0。⛔ ownerOnly 那一條未做</td><td>889</td></tr>
+<tr><td>19:07</td><td>[#327] ②tokenizer（允許清單在形狀不在詞彙）＋③SHA-256 唯一/md5 拒絕。①⛔ 不翻 strict —— 票文漏了 digest 對原始 JSON 取 hash 這個理由，改成補「我沒看懂這幾格」的訊號 ⇒ c9250791a + 8a00f6879</td><td>327</td></tr>
+<tr><td>21:26</td><td>[#813] WS handshake 的 token 逐次進 access_log（#724 只關了 REST 那一半）⇒ 遮蔽而非關閉，真的跑 nginx 驗過。compose↔helm 74 個旋鈕轉不到，其中 <b>6 格是 rollback 開關</b> ⇒ helm 長出 rollbackEnv ⇒ 816a74ff9</td><td>813</td></tr>
+<tr><td>21:54</td><td>#448 落地（commit 43a587a2e）：blink 長出 <code>to:&amp;quot;markedUnit&amp;quot;</code> + <code>markStatusId</code>，兩段行為由內容的 <code>not(目標帶標記)</code> 表達（零新機制）。rollback 開關 <code>displacement-tiers.markedBlink</code>（三個住處）。契約 4814→4819。⛔ 未驗收、未 push。</td><td>448</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

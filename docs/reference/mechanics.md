@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_4461b76cb24a`
+contentVersion `cv_b8827ae796ba`
 
 ---
 
@@ -16,9 +16,9 @@ contentVersion `cv_4461b76cb24a`
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
-| `applyBuff` | 增益／減益（改屬性） | 105 | `godie-e001.passive`、`godie-e001.q`、`godie-e001.r`、`godie-e002.r`、`godie-e008.w`、`godie-e00l.r`、`godie-e00n.ex`、`godie-e00n.passive`、`godie-e00n.q`、`godie-e00n.r`、`godie-e00r.ex`、`godie-e00r.passive` …（共 105） |
-| `applyStatus` | 掛狀態 | 99 | `godie-e001.e`、`godie-e001.passive`、`godie-e007.q`、`godie-e008.e`、`godie-e008.q`、`godie-e00n.e`、`godie-e00n.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.q`、`godie-e00s.e`、`godie-e00w.passive` …（共 99） |
-| `blink` | 瞬移 | 15 | `godie-efur.q`、`godie-h01o.q`、`godie-n00b.e`、`godie-n01c.r`、`godie-n01c.w`、`godie-nbbc.r`、`godie-nbbc.w`、`godie-o00k.w`、`godie-o00x.w`、`godie-o02l.passive`、`godie-ofar.passive`、`godie-ogrh.w` …（共 15） |
+| `applyBuff` | 增益／減益（改屬性） | 103 | `godie-e001.passive`、`godie-e001.q`、`godie-e001.r`、`godie-e002.r`、`godie-e008.w`、`godie-e00l.r`、`godie-e00n.ex`、`godie-e00n.passive`、`godie-e00n.q`、`godie-e00n.r`、`godie-e00r.ex`、`godie-e00r.passive` …（共 103） |
+| `applyStatus` | 掛狀態 | 101 | `godie-e001.e`、`godie-e001.passive`、`godie-e007.q`、`godie-e008.e`、`godie-e008.q`、`godie-e00n.e`、`godie-e00n.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.q`、`godie-e00s.e`、`godie-e00w.passive` …（共 101） |
+| `blink` | 瞬移 | 17 | `godie-efur.q`、`godie-h01o.q`、`godie-n00b.e`、`godie-n01c.r`、`godie-n01c.w`、`godie-nbbc.r`、`godie-nbbc.w`、`godie-o00k.w`、`godie-o00x.w`、`godie-o02l.passive`、`godie-o030.passive`、`godie-ofar.passive` …（共 17） |
 | `carry` | 背負（帶著隊友移動 + 不可被選取） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `chainLightning` | 連鎖閃電 | 2 | `godie-o00k.r`、`godie-udea.r` |
 | `championForm` | 變身／切換形態 | 23 | `godie-e001.r`、`godie-e002.w`、`godie-e00l.w`、`godie-e00s.passive`、`godie-e00w.e`、`godie-e010.passive`、`godie-h01n.r`、`godie-h02v.q`、`godie-hgam.ex`、`godie-hjai.ex`、`godie-n003.ex`、`godie-n01c.ex` …（共 23） |
@@ -109,9 +109,9 @@ contentVersion `cv_4461b76cb24a`
 | `equipment` | 裝備了某道具時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `kind` | 對象是誰（小兵／英雄／BOSS） | 1 | `godie-h02k.ex` |
 | `stat` | 屬性門檻（血量低於 X%…） | 9 | `godie-e002.w`、`godie-e00l.w`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-emfr.passive`、`godie-h00l.ex`、`godie-h02u.w`、`godie-h02v.w`、`grail-ex-13` |
-| `status` | 身上有某狀態時 | 25 | `godie-e00r.q`、`godie-edem.r`、`godie-efur.ex`、`godie-emns.e`、`godie-emns.r`、`godie-ewar.e`、`godie-h00l.e`、`godie-h01n.e`、`godie-h01n.w`、`godie-h01o.w`、`godie-h01u.e`、`godie-h02k.ex` …（共 25） |
+| `status` | 身上有某狀態時 | 27 | `godie-e00r.q`、`godie-edem.r`、`godie-efur.ex`、`godie-emns.e`、`godie-emns.r`、`godie-ewar.e`、`godie-h00l.e`、`godie-h01n.e`、`godie-h01n.w`、`godie-h01o.w`、`godie-h01u.e`、`godie-h02k.ex` …（共 27） |
 
-## 狀態標籤 —— 109 個
+## 狀態標籤 —— 111 個
 
 開放詞彙（自由字串）。條件葉 `status` 的**類別分支**查的就是它。
 
@@ -134,6 +134,7 @@ contentVersion `cv_4461b76cb24a`
 | `buff` | `bankai`、`berserk`、`grail-strengthened-projection`、`grief-seed-charge`、`light-wand-banked`、`millennium-plot-armor`、`moon-combo`、`nen-banked`、`octuple-slash-window`、`omnislash-perform`、`rage`、`red-comet`、`triforce-courage`、`united-states-of-smash`、`witch-form` |
 | `burn` | `burn` |
 | `burnstun` | `burnstun` |
+| `camera-mark` | `camera-mark` |
 | `cast-denied` | `burnstun`、`fang-stun`、`ingredient`、`omnislash-lock`、`omnislash-perform`、`stun`、`trial-stun` |
 | `cc` | `blind`、`burnstun`、`charmed`、`confusion`、`curse`、`fang-stun`、`fear`、`ingredient`、`numbness`、`omnislash-lock`、`paralysis`、`root`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60`、`stun`、`trial-stun` |
 | `channel` | `omnislash-perform` |
@@ -145,7 +146,7 @@ contentVersion `cv_4461b76cb24a`
 | `counter` | `grief-seed-charge`、`triforce-courage` |
 | `curse` | `curse` |
 | `damage-bank` | `light-wand-banked`、`nen-banked` |
-| `debuff` | `aban-x-mark`、`alcohol-enema`、`armor-break`、`blind`、`burn`、`burnstun`、`charmed`、`confusion`、`curse`、`fang-stun`、`fear`、`grievous-wounds`、`ingredient`、`magic-break`、`no-heal`、`numbness`、`omnislash-lock`、`paralysis`、`root`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60`、`stun`、`trial-stun` |
+| `debuff` | `aban-x-mark`、`alcohol-enema`、`armor-break`、`blind`、`burn`、`burnstun`、`camera-mark`、`charmed`、`confusion`、`curse`、`fang-stun`、`fear`、`grievous-wounds`、`ingredient`、`magic-break`、`no-heal`、`numbness`、`omnislash-lock`、`paralysis`、`root`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60`、`stun`、`trial-stun` |
 | `devour-cooldown` | `devour-cooldown` |
 | `disable` | `burnstun`、`fang-stun`、`fear`、`ingredient`、`numbness`、`omnislash-lock`、`omnislash-perform`、`paralysis`、`root`、`stun`、`trial-stun` |
 | `dot` | `burn` |
@@ -179,7 +180,7 @@ contentVersion `cv_4461b76cb24a`
 | `magic-resist-down` | `magic-break` |
 | `magical` | `magic-break` |
 | `mana-banked` | `light-wand-banked`、`nen-banked` |
-| `mark` | `aban-x-mark` |
+| `mark` | `aban-x-mark`、`camera-mark` |
 | `marker` | `alcohol-enema`、`burn`、`devour-cooldown` |
 | `mechanism-on-card` | `bankai`、`numbness`、`paralysis`、`triforce-courage` |
 | `millennium-plot-armor` | `millennium-plot-armor` |
@@ -200,6 +201,7 @@ contentVersion `cv_4461b76cb24a`
 | `physical` | `armor-break` |
 | `projectile` | `grail-strengthened-projection` |
 | `rage` | `rage` |
+| `recall-anchor` | `camera-mark` |
 | `red-comet` | `red-comet` |
 | `regen-down` | `grievous-wounds`、`no-heal` |
 | `resist-down` | `armor-break`、`magic-break` |

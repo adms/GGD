@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_4461b76cb24a",
+    "contentVersion": "cv_b8827ae796ba",
     "collections": {
       "champions": {
         "hash": "3e07926efa17",
         "count": 71
       },
       "abilities": {
-        "hash": "b1dfe5375049",
+        "hash": "156f8e5bf7e3",
         "count": 421
       },
       "items": {
@@ -26,8 +26,8 @@
         "count": 21
       },
       "status-effects": {
-        "hash": "301dacc87752",
-        "count": 44
+        "hash": "081fc140dc22",
+        "count": 45
       },
       "loot-tables": {
         "hash": "50b52195cd4a",
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "8f45194e26d1",
+        "hash": "a9f0cc094650",
         "count": 93
       },
       "models": {
@@ -93,7 +93,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "29235222",
+    "fingerprint": "9d43feef",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -350,6 +350,7 @@
       "lifestealMult",
       "manaPct",
       "manualTargetable",
+      "markStatusId",
       "maxAlive",
       "maxAttribute",
       "maxAttributeBasis",
@@ -705,6 +706,7 @@
       "lifestealMult",
       "manaPct",
       "manualTargetable",
+      "markStatusId",
       "maxAlive",
       "maxAttribute",
       "maxAttributeBasis",
@@ -4581,12 +4583,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "29235222",
+    "engineFingerprint": "9d43feef",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 29235222 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 9d43feef —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -5375,5 +5377,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "32b6478c1ef0"
+  "profileDigest": "27ac21d65b9f"
 }
