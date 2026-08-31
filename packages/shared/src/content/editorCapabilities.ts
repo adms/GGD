@@ -185,6 +185,12 @@ export interface CapabilityProbeInput {
    */
   readonly effectFields: ReadonlySet<string>;
   /**
+   * ⭐ GH#886 —— **巢狀欄位的路徑**（`block.vfxId` / `hitFeel.sparkKind` …），深度上限 2。
+   * ⚠️ ⭐ 與 {@link effectFields} **刻意分開**：那一格是**裸名字**且被十幾條 probe 讀，
+   * ⛔ 改它會讓一批 capability 靜靜地宣告「引擎沒有」。這一格只有契約產生器消費。
+   */
+  readonly effectFieldPaths: ReadonlySet<string>;
+  /**
    * 靈氣定義（`zAuraDef`）的欄位名，從出貨的 Zod 物件推導。
    *
    * ⚠️ 為什麼上面五格都不夠：**靈氣不在 `zEffectDefUnion` 裡**。它掛在
@@ -1639,6 +1645,12 @@ export interface RuntimeCapabilityManifest {
    */
   readonly effectFields: readonly string[];
   /**
+   * ⭐ GH#886 —— **巢狀欄位的路徑**（`block.vfxId` / `hitFeel.sparkKind` …），深度上限 2。
+   * ⚠️ ⭐ 與 `effectFields` 分開：那一格是裸名字且被十幾條 probe 讀。
+   * ⛔ 選填 —— 舊的 manifest JSON 讀得回來（`?? []`）。
+   */
+  readonly effectFieldPaths?: readonly string[];
+  /**
    * 靈氣定義（`zAuraDef`）的欄位名 —— 靈氣**不在** effect union 裡，
    * 所以「這一圈能不能隨人數變強」這種能力只有這一格看得到。
    */
@@ -1893,6 +1905,53 @@ function leafFieldsOf(schema: unknown, out: Set<string>): void {
   }
 }
 
+/**
+ * ⭐⭐ GH#886 —— **巢狀欄位的路徑**（`block.vfxId` / `block.chance` …）。
+ *
+ * ── ⛔ 為什麼不是改 {@link leafFieldsOf} ────────────────────────────────────
+ * `effectFields` 被**十幾條 probe** 用（`f.effectFields.has("onHitTargets")`），
+ * 而那些 probe 期待的是**裸名字**。⇒ 改它的內容會讓一批 capability 靜靜地宣告
+ * 「引擎沒有」——⭐ 那正是這個檔的檔頭記著要防的事。
+ * ⇒ ⭐ 所以這是**另一個**集合，只有契約產生器消費它。
+ *
+ * ── ⚠️ 為什麼一定要有深度上限 ──────────────────────────────────────────────
+ * ⭐ 2026-08-31 量到：`walkZod(zAbilityDoc)` 走得到 **1,091,791 格** ——
+ * 因為 `effects[].onHitTargets[].onHitTargets[]…` 是**遞迴**的。
+ * ⇒ 上限 **2** 是刻意的：它讓 `block.vfxId` 這種「一個結構欄位裡的一格」進得來，
+ * ⛔ 而不讓遞迴的 effect union 展開（那一層由 `effectKinds` 這一軸表達）。
+ *
+ * ⛔ 遇到 union / lazy 就**停** —— 那是遞迴的入口。
+ */
+function nestedFieldPathsOf(schema: unknown, out: Set<string>, prefix = "", depth = 0): void {
+  const MAX_DEPTH = 2;
+  if (depth > MAX_DEPTH) return;
+  const node = schema as
+    | {
+        _def?: { typeName?: string; schema?: unknown; innerType?: unknown; type?: unknown };
+        options?: readonly unknown[];
+        shape?: Record<string, unknown>;
+      }
+    | undefined;
+  const t = node?._def?.typeName;
+  if (t === "ZodEffects") return nestedFieldPathsOf(node?._def?.schema, out, prefix, depth);
+  if (t === "ZodOptional" || t === "ZodNullable" || t === "ZodDefault") {
+    return nestedFieldPathsOf(node?._def?.innerType, out, prefix, depth);
+  }
+  if (t === "ZodArray") return nestedFieldPathsOf(node?._def?.type, out, prefix, depth);
+  if (t === "ZodUnion" || t === "ZodDiscriminatedUnion") {
+    // ⭐ 頂層的 union 是 effect kinds ⇒ 逐個走（那是入口，⛔ 不是遞迴）；
+    //   ⛔ 但**只在 depth 0** —— 更深的 union 就是 `onHitTargets` 那條遞迴路。
+    if (depth === 0) for (const o of node?.options ?? []) nestedFieldPathsOf(o, out, prefix, depth);
+    return;
+  }
+  if (t !== "ZodObject") return;
+  for (const [k, v] of Object.entries(node?.shape ?? {})) {
+    const path = prefix ? `${prefix}.${k}` : k;
+    out.add(path);
+    nestedFieldPathsOf(v, out, path, depth + 1);
+  }
+}
+
 /** FNV-1a over the derived facts. 純函式、無時鐘、無 I/O。 */
 function fingerprintOf(parts: readonly string[]): string {
   let h = 0x811c9dc5;
@@ -2036,6 +2095,9 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
   const effectFieldSet = new Set<string>();
   leafFieldsOf(zEffectDefUnion, effectFieldSet);
   const effectFields = [...effectFieldSet].sort();
+  // ⭐ GH#886 —— 巢狀路徑（`block.vfxId` …）。⛔ 與上面那一格分開,見 nestedFieldPathsOf 的檔頭。
+  const effectFieldPathSet = new Set<string>();
+  nestedFieldPathsOf(zEffectDefUnion, effectFieldPathSet);
   // 靈氣不在 effect union 裡（見 `CapabilityProbeInput.auraFields`）。
   // ⚠️ `zAuraDef` 是 `z.object(…).superRefine(…)` ⇒ ZodEffects，`.shape` 拿不到，
   //    要先剝一層 `.innerType()`。⛔ 它只剝**一層** —— 哪天有人在 `zAuraDef` 上再加
@@ -2083,6 +2145,7 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
     conditionLeafFields: conditionFieldSet,
     hookFields: new Set(hookFields),
     effectFields: effectFieldSet,
+    effectFieldPaths: effectFieldPathSet,
     auraFields: auraFieldSet,
     vfxFields: new Set(Object.values(vfxSurface).flat()),
   };
@@ -2139,6 +2202,10 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
     conditionLeafFields,
     hookFields,
     effectFields,
+    // ⭐ GH#886 —— 巢狀路徑進 manifest（契約產生器消費它）。
+    // ⛔ **刻意不進指紋**：它與 `effectFields` 是同一批事實的兩種投影 ——
+    //    真的多一格欄位時 `effectFields` 已經動了,指紋不必被同一件事推兩次。
+    effectFieldPaths: [...effectFieldPathSet].sort(),
     auraFields,
     abilityFields,
     vfxSurface,
@@ -2206,6 +2273,7 @@ export function probeCapability(e: CapabilityEntry): boolean {
     conditionLeafFields: new Set(m.conditionLeafFields),
     hookFields: new Set(m.hookFields),
     effectFields: new Set(m.effectFields),
+    effectFieldPaths: new Set(m.effectFieldPaths ?? []),
     auraFields: new Set(m.auraFields),
     vfxFields: new Set(Object.values(m.vfxSurface).flat()),
   });

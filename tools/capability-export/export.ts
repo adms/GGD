@@ -577,6 +577,12 @@ export function renderMarkdown(m: RuntimeCapabilityManifest): string {
   L.push("");
   const NAME_FAMILIES: readonly { label: string; names: readonly string[] }[] = [
     { label: "effect 參數（所有 kind 的聯集）", names: m.effectFields },
+      // ⭐⭐ GH#886 —— **巢狀欄位的路徑**（`block.vfxId` / `hitFeel.sparkKind` …）。
+      // ⚠️ ⭐ 在此之前這一份只印**裸名字** ⇒ 讀 Markdown 的作者看得到「有一格 `block`」，
+      //   ⛔ 看不到它裡面能填什麼 —— 而那正是 owner 點名的「**完整性**」。
+      // ⭐ 深度上限 2；走整棵 `zAbilityDoc` 會是 1,091,791 格（`onHitTargets[]` 遞迴），
+      //   這一份是 416 格 ⇒ **人看得完**。
+      { label: "巢狀 effect 參數的完整路徑（深度 ≤ 2）", names: m.effectFieldPaths ?? [] },
     { label: "條件葉種類", names: m.conditionLeafKinds },
     { label: "條件葉參數", names: m.conditionLeafFields },
     { label: "hook 參數", names: m.hookFields },

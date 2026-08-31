@@ -1,7 +1,7 @@
 {
   "schema": "ggd-editor-coverage@1",
   "notRequiredMeaning": "⛔ 今天的引擎做不到，所以**這一版**不要實作（做出來的內容上線就是死的）。⭐ 它們是 main 的待辦，⛔ 不是永久的範圍外 —— 機制做出來的那一天，該筆會自動離開這張清單。",
-  "fingerprint": "e6a728ede16d",
+  "fingerprint": "d2b00c5a49ca",
   "capabilityFingerprint": "f3f4185c",
   "required": [
     {
@@ -939,6 +939,1670 @@
     {
       "group": "effectField",
       "name": "path"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "abilityId"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "absorbs"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "addSec"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "advance"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "advance.dir"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "advance.startDist"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "advance.stepDist"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "aim"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "alpha"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amount"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amount.attrRatios"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amount.attrRatios.attr"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amount.attrRatios.basis"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amount.attrRatios.coeff"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amount.damageTier"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amount.flat"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amount.mult"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amount.perRank"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amount.ratios"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amount.ratios.coeff"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amount.ratios.stat"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amountPerTick"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amountPerTick.attrRatios"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amountPerTick.attrRatios.attr"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amountPerTick.attrRatios.basis"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amountPerTick.attrRatios.coeff"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amountPerTick.damageTier"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amountPerTick.flat"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amountPerTick.mult"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amountPerTick.perRank"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amountPerTick.ratios"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amountPerTick.ratios.coeff"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amountPerTick.ratios.stat"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amplitude"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "anchor"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "anchorCount"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "anchorRadius"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "apexHeight"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "applyTo"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "arriveSoundKey"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "at"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "attach"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "attackType"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "attr"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "attributes"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "attributes.agi"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "attributes.int"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "attributes.str"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "autoTargetable"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "bankAs"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "bankAs.durationSec"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "bankAs.statusId"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "bankedBonus"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "bankedBonus.coeff"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "bankedBonus.max"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "bankedBonus.statusId"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "basis"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "berserk"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "block"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "block.chance"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "block.damageTypes"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "block.fraction"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "block.internalCooldown"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "block.lethalBasis"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "block.lethalOnly"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "block.vfxId"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "block.vfxScale"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "block.vfxTint"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "blocksControl"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "blocksDamage"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "blocksTrueDamage"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "body"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "boneOn"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "bountyGold"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "branches"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "branches.effects"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "branches.weight"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "breakOnDamage"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "breakOnDamageMin"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "buff"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "buff.durationSec"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "buff.ratio"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "buff.stat"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "burnsInFireRing"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "canCrit"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "capScope"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "centre"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "championId"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "chance"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "clampMin"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "clip"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "clipTimeScale"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "colorRgb"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "comboBonus"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "comboBonus.amount"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "comboBonus.amount.attrRatios"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "comboBonus.amount.damageTier"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "comboBonus.amount.flat"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "comboBonus.amount.mult"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "comboBonus.amount.perRank"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "comboBonus.amount.ratios"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "comboBonus.statusId"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "condition"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "count"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "countsForOriginalTeam"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "critStrike"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "critStrike.chance"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "critStrike.damageMult"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "critStrike.empowers"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "critStrike.lifestealFraction"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "critStrike.lifestealMode"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "cycleKey"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "damageMult"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "damageType"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "damageTypeOverride"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "damageTypeOverride.applyAt"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "damageTypeOverride.becomes"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "damageTypeOverride.impactType"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "damageTypeOverride.scope"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "damageTypes"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "deathWard"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "deathWard.beneficiary"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "deathWard.maxPerZone"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "deathWard.modelKey"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "deathWard.modifiers"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "deathWard.modifiers.from"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "deathWard.modifiers.fromResource"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "deathWard.modifiers.msBonusTier"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "deathWard.modifiers.op"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "deathWard.modifiers.scopeAbilityId"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "deathWard.modifiers.scopeSlot"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "deathWard.modifiers.stat"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "deathWard.modifiers.value"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "deathWard.radius"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "deathWard.stacking"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "decay"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "delaySec"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "destination"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "disarmed"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "dispellable"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "distance"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "distanceScale"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "distanceScale.atRange"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "distanceScale.far"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "distanceScale.near"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "distanceTier"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "distanceUnits"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "dodgesAbilities"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "dodgesTrueDamage"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "dragToCaster"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "driftAngleDeg"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "driftAngleStepDeg"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "driftFrom"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "driftSpeed"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "dropDeadTargets"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "duration"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "durationSec"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "effects"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "emitCastEvents"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "everyNth"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "exclusiveGroup"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "exclusiveOnExisting"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "fallbackLevel"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "falloff"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "family"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "feared"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "finalEffects"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "finisher"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "finisherDelaySec"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "firstAtCast"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "fixedRank"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "flat"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "flight"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "flight.hoverHeight"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "flight.ignoreObstacles"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "flight.ignoreUnits"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "flight.stayInsideBoundary"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "forcedTarget"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "formation"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "from"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "fromCaster"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "getupTicks"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "healingTakenMult"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "healPct"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "healthPct"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "hitOncePerTarget"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "hookKey"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "hooks"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "hookScope"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "hpBasis"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "hpMult"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "hpPct"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "hpPct.basis"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "hpPct.perRank"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "immobile"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "impactPower"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "includeNeutrals"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "includeOrigin"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "incomingPct"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "incomingPct.applyGlobalDamageMult"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "incomingPct.basis"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "incomingPct.maxChainDepth"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "incomingPct.negateOriginal"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "incomingPct.perRank"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "incomingPct.whenTooLate"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "intervalSec"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "jumpIntervalSec"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "jumpRange"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "jumps"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "killCredit"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "kind"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "landRadius"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "launchDistance"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "launchHeight"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "length"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "level"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "lifeSec"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "lifestealMult"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "manaPct"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "manualTargetable"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "maxAlive"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "maxAttribute"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "maxAttributeBasis"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "maxDepth"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "maxDistance"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "maxHeld"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "maxRemainingSec"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "maxSources"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "maxSourceTotal"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "maxStacks"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "maxStat"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "maxStat.basis"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "maxStat.stat"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "maxStat.value"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "maxTargets"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "maxTargetsCounts"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "maxTotalJumps"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "minManaReserve"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "missChance"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "mobLevelSource"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "mobTargetable"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "mode"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "modelKey"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "modifiers"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "modifiers.from"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "modifiers.fromResource"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "modifiers.msBonusTier"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "modifiers.op"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "modifiers.scopeAbilityId"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "modifiers.scopeSlot"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "modifiers.stat"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "modifiers.value"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "moveSpeedMult"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "offsetForwardU"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "onArrive"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "onCap"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "onCarrierDeath"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "onCasterDeath"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "oncePerRoundPerVictim"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "onDevour"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "onDevourPer"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "onEnd"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "onEndOn"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "onEndWhenDead"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "onExisting"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "onHit"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "onHitTargets"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "onHitTargetsMode"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "onInvalidTarget"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "onLand"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "onOwnerDeath"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "onTouch"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "order"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "path"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "payCosts"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "pctCurrentMana"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "pctMaxMana"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "peakAlpha"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "penetration"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "penetration.armorFlat"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "penetration.armorPct"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "penetration.mrFlat"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "penetration.mrPct"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "penetration.scope"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "perDamageFlat"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "perDamagePctOfMaxHealth"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "perMana"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "permanent"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "permanentScope"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "perRank"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "perRank.duration"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "perRank.modifiers"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "perRank.modifiers.from"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "perRank.modifiers.fromResource"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "perRank.modifiers.msBonusTier"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "perRank.modifiers.op"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "perRank.modifiers.scopeAbilityId"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "perRank.modifiers.scopeSlot"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "perRank.modifiers.stat"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "perRank.modifiers.value"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "perStrike"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "perTargetLevel"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "polarity"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "pools"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "pools.buffs"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "pools.dot"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "pools.shields"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "pools.status"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "preset"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "primaryAttribute"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "projectileId"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "radius"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "radiusTier"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "rankMode"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "ratio"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "refresh"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "refund"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "refund.basis"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "refund.pct"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "refund.resource"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "regenMult"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "requireLearned"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "resource"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "resourcePct"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "resourcePct.basis"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "resourcePct.perRank"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "resourcePct.resource"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "resourcePct.scale"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "resourcePct.subject"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "resourcePctPhase"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "respectCooldown"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "revisit"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "riseSpeed"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "root"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "runOnEmptyHit"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "scale"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "scaleAxis"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "scatterRadius"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "scripted"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "shape"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "side"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "silenced"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "sizeScale"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "slot"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "soundKey"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "source"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "spacing"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "speed"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "spinDegPerSec"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "spread"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "stacking"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "stackKey"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "stacks"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "stackVisual"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "statusId"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "statusImmunity"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "statusImmunity.tags"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "steps"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "steps.duration"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "steps.modifiers"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "steps.modifiers.from"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "steps.modifiers.fromResource"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "steps.modifiers.msBonusTier"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "steps.modifiers.op"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "steps.modifiers.scopeAbilityId"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "steps.modifiers.scopeSlot"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "steps.modifiers.stat"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "steps.modifiers.value"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "stopDistance"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "stopOnCasterDeath"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "stopShortUnits"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "store"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "strikeReposition"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "strikeReposition.distU"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "strikeReposition.ringN"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "strikeReposition.stepPerStrike"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "strikeReposition.who"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "strikes"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "stun"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "subtractGap"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "target"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "targetMode"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "targetPriority"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "targetsAllies"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "team"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "teamCharge"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "text"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "thresholdPctOfMax"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "throughShields"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "throwDistance"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "tickOnApply"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "tint"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "to"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "touchOncePerTarget"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "touchRadius"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "touchSide"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "typeStreakImmunity"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "typeStreakImmunity.damageTypes"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "typeStreakImmunity.resetMode"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "typeStreakImmunity.streakTimeoutSec"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "typeStreakImmunity.threshold"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "uncontrollable"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "untargetable"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "untargetable.abilityAoe"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "untargetable.autoAcquire"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "untargetable.manualTarget"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "untargetable.mobAggro"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "until"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "vfxId"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "victim"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "victimCondition"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "vision"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "vision.stealthFadeDelaySec"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "vision.trueSightRadius"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "who"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "width"
     },
     {
       "group": "effectField",
@@ -3012,12 +4676,13 @@
     "templateFamily": 26,
     "conditionLeaf": 5,
     "conditionLeafField": 13,
+    "effectFieldPath": 416,
     "vfxField": 53,
     "modelField": 38,
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 112,
-    "_total": 677,
+    "_total": 1093,
     "_notRequired": 15
   }
 }

@@ -130,6 +130,12 @@ export function buildEditorCoverage(): {
   push("templateFamily", m["templateFamilies"]);
   push("conditionLeaf", m["conditionLeafKinds"]);
   push("conditionLeafField", m["conditionLeafFields"]);
+  // ⭐⭐ GH#886 —— **巢狀欄位的路徑**（`block.vfxId` / `hitFeel.sparkKind` …）。
+  // ⚠️ ⭐ 在此之前契約說得出「有一格 `block`」，⛔ **說不出它裡面能填什麼**
+  //   ⇒ Codex 知道那一欄存在,而畫不出它的表單。而 owner 點名的三個詞之一就是「**完整性**」。
+  // ⭐ 深度上限 2（`editorCapabilities.nestedFieldPathsOf`）—— 量到的:走整棵
+  //   `zAbilityDoc` 是 **1,091,791 格**（`onHitTargets[]` 遞迴），而這一份是 **416 格**。
+  push("effectFieldPath", m["effectFieldPaths"]);
 
   // ── ⭐ 視覺特效面（從 Zod schema 推導，⛔ 不是手寫清單）────────────────────
   // ⚠️ ⭐ 走**整棵樹**（含巢狀物件與陣列元素），⛔ 不是只有頂層 ——
