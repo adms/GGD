@@ -235,7 +235,52 @@ cmd_deploy() {
    ⇒ 先人工確認那幾個檔是什麼：ssh $USER_@$HOST 'cd $REMOTE_REPO && git diff --stat HEAD -- data/'"
     info "⭐ 沒有一個在 data/ 底下 ⇒ 強制還原是安全的"
   fi
-  r "cd $REMOTE_REPO && git checkout -f -q $head_local" || die "checkout $head_local 失敗"
+    # ⭐⭐⭐ GH#884 —— **未追蹤檔在 `checkout -f` 底下會被靜靜毀掉**。
+    #
+    # ⚠️ 票文說的是 `git pull` 的形狀（它**中止**並指名檔案）。
+    # ⭐ 而這一條路用 `checkout -f`，2026-08-31 **實測**過它的行為**相反**：
+    #
+    #     echo HOST-LOCAL > newfile.txt        # 未追蹤，與目標 commit 的同名檔衝突
+    #     git checkout -f other  ⇒ EXIT 0，檔案內容變成 commit 的版本
+    #
+    # ⇒ ⛔ **它不停，它毀** —— 而 owner 的常設規矩逐字是
+    #   「你要做**取代**這種事情以前都要**備份**」。
+    #
+    # ⭐ 所以在 checkout **之前**先問：目標 commit 會不會蓋到任何未追蹤檔？
+    #   會 ⇒ **先備份**（⛔ 不是 `rm`、⛔ 也不是自動搬走：那是同一個動詞的兩個名字）。
+    local clash
+    clash=$(r "cd $REMOTE_REPO && git ls-tree -r --name-only $head_local | while read -r f; do
+                 [ -f \"\$f\" ] && ! git ls-files --error-unmatch \"\$f\" >/dev/null 2>&1 && printf '%s\n' \"\$f\"
+               done" 2>/dev/null || true)
+    if [ -n "${clash// /}" ]; then
+      local n_clash bdir
+      n_clash=$(printf '%s\n' "$clash" | grep -c .)
+      bdir="~/host-overwrite-backups/overwrite_temp_$(date +%Y%m%d-%H%M%S)"
+      warn "⚠️ mini 上有 $n_clash 個**未追蹤**檔會被這次 checkout 覆蓋："
+      printf '%s\n' "$clash" | sed 's/^/     · /'
+      # ⭐ 先備份 —— ⛔ 而且用 `cp`，⛔ 不是 `mv`（owner 的規矩：
+      #   「記得要使用 cp 而不是 mv 避免用戶終端後的資料不完整」）。
+      r "mkdir -p $bdir && cd $REMOTE_REPO && printf '%s\n' '$clash' | while read -r f; do
+           [ -n \"\$f\" ] || continue
+           mkdir -p \"$bdir/\$(dirname \"\$f\")\" && cp -p \"\$f\" \"$bdir/\$f\" 2>/dev/null \
+             || printf 'UNREADABLE %s\n' \"\$f\" >> $bdir/_failed.txt
+         done" || die "⛔ 備份失敗 —— ⛔ 不在沒有退路的情況下 checkout"
+      # ⚠️ ⭐ root 所有的檔 `cp` 會失敗 ⇒ **指名它並停下來**，⛔ 不是靜默繼續。
+      local failed
+      failed=$(r "cat $bdir/_failed.txt 2>/dev/null" || true)
+      [ -z "${failed// /}" ] || die "⛔ 這幾份備份不起來（多半是 root 所有，**需要 sudo**）：
+  $failed
+     ⇒ 請在 mini 上先處理它們，⛔ 這一次不部署。"
+      ok "已備份 $n_clash 份到 $bdir（⭐ 帳本：`ls $bdir`）"
+    fi
+    r "cd $REMOTE_REPO && git checkout -f -q $head_local" || die "checkout $head_local 失敗"
+    # ⭐ **後置條件**：備份還在（⛔ 「備份了」與「備份成功了」是兩件事）。
+    if [ -n "${clash// /}" ]; then
+      local kept
+      kept=$(r "find ${bdir} -type f ! -name _failed.txt | wc -l" 2>/dev/null | tr -d ' ')
+      [ "${kept:-0}" -ge 1 ] || die "⛔ checkout 之後備份目錄是空的 —— 那幾份檔**已經沒有了**"
+      ok "備份複驗：$kept 份還在"
+    fi
   local remote_head; remote_head=$(r "cd $REMOTE_REPO && git rev-parse HEAD" 2>/dev/null)
   [ "$remote_head" = "$head_local" ] \
     && ok "mini 對到 $(echo "$head_local" | cut -c1-8)（⭐ git,有 .git ⇒ 版本戳自己算得出來）" \
