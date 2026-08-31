@@ -158,6 +158,7 @@ import { buildRoundInventory } from "./game/roundInventory";
 import { IdleHum } from "./game/idleHum";
 import { resolveLocalChampionModel, type LocalChampionModel } from "./game/localChampionModel";
 import { OrderFeedbackRunner, pickTargetRing, withOrderFeedback } from "./game/orderFeedbackRunner";
+import { StatusVoiceRunner } from "./game/statusVoiceRunner";
 import { footstepRelationOf, makeScriptFxBridges } from "./game/appBridges";
 import { showRoundLoadOverlay, hideRoundLoadOverlay } from "./render/roundLoadOverlay";
 import { roundPurgeModeOf } from "./vfx/vfxCleanupPolicy";
@@ -590,6 +591,7 @@ export class GameApp {
    */
   private attackOrderTargetId: number | null = null;
   private readonly orderFeedback = new OrderFeedbackRunner(localChampionId);
+  private readonly statusVoice = new StatusVoiceRunner();
 
   /**
    * `LocalFacingMode.authoritative` 的 render pose —— 預測位置 + 權威面向。
@@ -1621,6 +1623,7 @@ export class GameApp {
 
     this.teamBySeat.clear();
     state.seats.forEach((ss) => this.teamBySeat.set(ss.seatId, ss.teamId));
+    this.statusVoice.tickSeats(state.seats, (c, k) => playContextualVoice(c, k as never));
 
     // ORDER MATTERS (L3). `syncHudFromState` is what refreshes
     // `hudStore.localEntityId`, and `refreshVisibleZones` resolves player 0's own

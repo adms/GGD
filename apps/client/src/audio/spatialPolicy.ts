@@ -246,32 +246,20 @@ export const VOICE_CATEGORY_POLICY: Readonly<Record<string, VoicePolicyRow>> = {
   "blind": {
     policy: "world",
     reason: "status line",
-    dispatched: false,
+    dispatched: true,
     statusIds: ["blind"],
-    dormant: {
-      cause: "no-wiring",
-      note: "【致盲】今天就在線上（SeatState.statusIds，⭐ 全座位都送）。上升緣已經做好在 `statusVoiceEdges.ts`，剩下的是一個呼叫端 —— ⛔ 不要順手把【詛咒】也算進來，那是另一格語音(curse=咒罵)",
-    },
   },
   "paralyzed": {
     policy: "world",
     reason: "status line",
-    dispatched: false,
+    dispatched: true,
     statusIds: ["paralysis", "numbness"],
-    dormant: {
-      cause: "no-wiring",
-      note: "【癱瘓】與【麻痺】都出貨了，兩份都是 disable+cc，共用這一句。上升緣同上",
-    },
   },
   "confused": {
     policy: "world",
     reason: "status line",
-    dispatched: false,
+    dispatched: true,
     statusIds: ["confusion"],
-    dormant: {
-      cause: "no-wiring",
-      note: "【混亂】出貨了。上升緣同上。⛔ 同樣掛 `ai-override` 的【暴走】【恐懼】【魅惑】各自是別的東西，沒有自己的語音格",
-    },
   },
   "retreat": {
     policy: "self",
