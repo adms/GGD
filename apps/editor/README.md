@@ -21,8 +21,12 @@ together; writes remain local. The API guard rejects non-loopback mutation.
 
 - **鑄技工坊** — visual template-product stack, drag-and-drop ordering,
   structured condition leaves, bounded controls, undo/redo, and a scrub/play
-  timeline built from real `SimWorld` events. Ability behaviour is never
-  reproduced in a second preview-only rules engine.
+  timeline built from real `SimWorld` events. Its preview now shares the VFX
+  Forge's shipped `CameraRig`, arena ground, dual champion GLBs and real
+  `VfxSystem`; the 3D stage and event ruler use the same playhead and 1/60 frame
+  step. After the first manual cast, changing a card or VFX parameter reruns the
+  real cast automatically. Ability behaviour is never reproduced in a second
+  preview-only rules engine.
 - **特效工坊** — model/VFX resource palette, drop placement, the real
   `CameraRig` and ground, segment sliders, WYSIWYG replay, 1/60 frame step,
   timeline scrub/play, undo/redo, and middleware writeback. The stage uses the
@@ -31,7 +35,9 @@ together; writes remain local. The API guard rejects non-loopback mutation.
   rules. Script assets are preloaded before deterministic replay; framing can be
   inspected through the config-backed `CameraRig` zoom clamps. It writes only
   `content/vfx-scripts/`; a script replaces the default binding instead of
-  stacking with it.
+  stacking with it. Scene reset also clears not-yet-fired script segments and
+  cast-end waiters, so scrub/replay cannot accumulate delayed effects from an
+  earlier run.
 - **Champions / Skins** — complete schema forms plus live final stats and the
   actual GLB presentation path: facing correction, hidden primitives, body
   normalization, ground placement, animation clips, tint and alpha. Champion
@@ -128,6 +134,6 @@ existing trigger.
 ## Feature branch handoff
 
 Implementation lives on `feat/vfx-forge-codex`, based on
-`origin/main@65944460`. It is intentionally not merged or pushed to `main`.
+`origin/main@de7006c6`. It is intentionally not merged or pushed to `main`.
 Review the commits after that base in order; each authoring layer has its own
 commit so GGD can cherry-pick or rollback it independently.

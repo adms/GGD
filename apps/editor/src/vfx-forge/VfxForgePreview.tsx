@@ -8,7 +8,11 @@ import {
   type ForgeAbility,
   type ScheduledSimEvent,
 } from "./model";
-import { VfxForgeStage, type ForgeOverlay } from "./VfxForgeStage";
+import {
+  VfxForgeStage,
+  type ForgeOverlay,
+  type VfxForgeStageMode,
+} from "./VfxForgeStage";
 
 export function VfxForgePreview({
   script,
@@ -19,6 +23,7 @@ export function VfxForgePreview({
   playing,
   caster,
   target,
+  mode = "script",
   onTime,
   onStop,
   onDropAsset,
@@ -31,9 +36,10 @@ export function VfxForgePreview({
   playing: boolean;
   caster: ChampionDef | null;
   target: ChampionDef | null;
+  mode?: VfxForgeStageMode;
   onTime(ms: number): void;
   onStop(): void;
-  onDropAsset(asset: AssetDrop, placement?: AssetPlacement): void;
+  onDropAsset?(asset: AssetDrop, placement?: AssetPlacement): void;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stageRef = useRef<VfxForgeStage | null>(null);
@@ -53,6 +59,7 @@ export function VfxForgePreview({
     if (!canvas) return;
     const stage = new VfxForgeStage(canvas, script, ability, schedule, {
       actors: { caster, target },
+      mode,
       onOverlay: setOverlay,
     });
     stageRef.current = stage;
@@ -61,7 +68,7 @@ export function VfxForgePreview({
     return () => { resize.disconnect(); stage.dispose(); stageRef.current = null; };
     // Stage ownership follows the selected ability. Draft changes use setContent below.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ability.id, caster?.id, target?.id]);
+  }, [ability.id, caster?.id, mode, target?.id]);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -112,8 +119,9 @@ export function VfxForgePreview({
   return (
     <div
       className="vfx-stage"
-      onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = "copy"; }}
+      onDragOver={onDropAsset ? (e) => { e.preventDefault(); e.dataTransfer.dropEffect = "copy"; } : undefined}
       onDrop={(e) => {
+        if (!onDropAsset) return;
         e.preventDefault();
         const asset = decodeAssetDrag(e.dataTransfer.getData("application/x-ggd-vfx-asset"));
         if (!asset) return;
@@ -127,7 +135,10 @@ export function VfxForgePreview({
       <canvas ref={canvasRef} />
       {overlay.flash ? <div className="vfx-flash" style={{ background: `rgba(${overlay.flash.color.join(",")},${overlay.flash.alpha})` }} /> : null}
       <div className="vfx-floating-texts">{overlay.texts.map((t) => <b key={t.id}>{t.text}</b>)}</div>
-      <div className="vfx-stage-badge">真 IntentFrame · 雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step</div>
+      <div className="vfx-stage-badge">
+        {mode === "runtime" ? "真 Sim → 真 VfxSystem" : "真 IntentFrame → VFX Script"}
+        {" · "}雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step
+      </div>
       <div className="vfx-stage-status">{overlay.status}</div>
       <div className="vfx-actor-status">施法者：{overlay.actors.caster}<br />目標：{overlay.actors.target}</div>
       <div className="vfx-stage-tools">

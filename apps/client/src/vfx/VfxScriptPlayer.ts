@@ -277,6 +277,19 @@ export class VfxScriptPlayer {
     this.scriptsClaimingCache = null;
   }
 
+  /**
+   * 清掉這一輪尚未播放的演出排程。
+   *
+   * 這不是 `invalidate()`：熱更新只讓「彈道屬於哪支技能」的索引失效；
+   * round reset／Forge scrub 則必須連尚未到期的 segment 與等待 castEnd 的 frame
+   * 一起丟掉。否則把時間軸拉回 0 再播一次，上一輪 800ms 的餘燼會在新一輪
+   * 800ms 疊播，畫面會隨重播次數愈來愈亮。
+   */
+  reset(): void {
+    this.pending.length = 0;
+    this.awaitingEnd.clear();
+  }
+
   private scriptsClaiming(projectileId: string): VfxScriptDoc[] {
     // 快取「彈道 id → 認領它的 scripts」。分母小（script 數 ≪ 技能數）。
     if (this.scriptsClaimingCache === null) this.scriptsClaimingCache = new Map();

@@ -91,6 +91,8 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .preview3d-clipmap .clip-ok { border-color: #3f7b4f; }
 .preview3d-clipmap .clip-missing { border-color: var(--error); color: var(--error); opacity: 0.8; }
 .preview3d-error { color: var(--error); }
+.forge-runtime-loading { display: grid; place-items: center; color: var(--muted); }
+.forge-col > .vfx-stage { min-height: 360px; height: 46vh; max-height: 560px; margin-bottom: 8px; border: 1px solid var(--line); border-radius: 6px; }
 
 /* ---- 地圖版面面板 (GH#324) —— 九項驗證指標就地顯示 ---- */
 .map-tools { display: flex; gap: 6px; margin: 8px 0 6px; flex-wrap: wrap; }
@@ -204,7 +206,7 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .vfx-asset code { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; }
 .vfx-asset span { color: #bd8cff; }
 .vfx-forge-center { min-width: 0; display: grid; grid-template-rows: minmax(410px, 58vh) minmax(280px, auto); }
-.vfx-stage { position: relative; min-height: 380px; overflow: hidden; background: #080a10; }
+.vfx-stage { position: relative; min-height: 380px; overflow: hidden; contain: paint; transform: translateZ(0); background: #080a10; }
 .vfx-stage canvas { display: block; width: 100%; height: 100%; touch-action: none; }
 .vfx-flash { position: absolute; inset: 0; pointer-events: none; }
 .vfx-floating-texts { position: absolute; left: 50%; top: 35%; display: flex; flex-direction: column; align-items: center; gap: 3px; pointer-events: none; transform: translateX(-50%); }

@@ -1,88 +1,88 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import {
   simTimelineEventSummary,
   simTimelineEventsAt,
-  simTimelineMaxTick,
   type SimTimelineEvent,
 } from "./simTimeline";
 
-const SIM_TICKS_PER_SECOND = 30;
+const SIM_TICK_MS = 1000 / 30;
+const FRAME_MS = 1000 / 60;
 
-export function SimEventTimeline({ events }: { events: readonly SimTimelineEvent[] }) {
-  const maxTick = useMemo(() => simTimelineMaxTick(events), [events]);
-  const [playhead, setPlayhead] = useState(0);
-  const [playing, setPlaying] = useState(false);
-
-  useEffect(() => {
-    setPlayhead(0);
-    setPlaying(false);
-  }, [events]);
-
-  useEffect(() => {
-    if (!playing) return;
-    const timer = globalThis.setInterval(() => {
-      setPlayhead((tick) => {
-        if (tick >= maxTick) {
-          setPlaying(false);
-          return maxTick;
-        }
-        return tick + 1;
-      });
-    }, 1000 / SIM_TICKS_PER_SECOND);
-    return () => globalThis.clearInterval(timer);
-  }, [maxTick, playing]);
-
-  const current = useMemo(() => simTimelineEventsAt(events, playhead), [events, playhead]);
-  const step = (delta: number): void => {
-    setPlaying(false);
-    setPlayhead((tick) => Math.max(0, Math.min(maxTick, tick + delta)));
+/**
+ * Controlled timeline shared with the Babylon stage. Scrubbing, playback and
+ * frame stepping therefore move the real 3D replay, not a second data-only
+ * cursor that can drift away from what the author sees.
+ */
+export function SimEventTimeline({
+  events,
+  durationMs,
+  playheadMs,
+  playing,
+  onSeek,
+  onTogglePlay,
+}: {
+  events: readonly SimTimelineEvent[];
+  durationMs: number;
+  playheadMs: number;
+  playing: boolean;
+  onSeek(ms: number): void;
+  onTogglePlay(): void;
+}) {
+  const boundedDuration = Math.max(FRAME_MS, durationMs);
+  const boundedPlayhead = Math.max(0, Math.min(boundedDuration, playheadMs));
+  const simTick = Math.max(0, Math.round(boundedPlayhead / SIM_TICK_MS));
+  const current = useMemo(() => simTimelineEventsAt(events, simTick), [events, simTick]);
+  const step = (frames: number): void => {
+    onSeek(Math.max(0, Math.min(boundedDuration, boundedPlayhead + frames * FRAME_MS)));
   };
 
   return (
-    <section className="forge-sim-timeline" aria-label="真 Sim 事件時間軸">
+    <section className="forge-sim-timeline" aria-label="真 Sim 與 3D 共用時間軸">
       <header>
         <div>
-          <h4>真 Sim 事件時間軸</h4>
-          <p className="forge-note">只顯示 SimWorld 真正 emit 的事件；目前是資料 scrub，3D 場景倒帶仍等共用 render bridge。</p>
+          <h4>真 Sim × 3D 共用時間軸</h4>
+          <p className="forge-note">只播放 SimWorld 真正 emit 的事件；scrub、1/60 逐格與畫面使用同一個 playhead。</p>
         </div>
-        <strong>{playhead} tick · {(playhead / SIM_TICKS_PER_SECOND).toFixed(2)}s</strong>
+        <strong>{boundedPlayhead.toFixed(0)}ms · Sim tick {simTick}</strong>
       </header>
       <div className="forge-sim-controls">
-        <button type="button" onClick={() => { setPlaying(false); setPlayhead(0); }}>↺</button>
-        <button type="button" onClick={() => step(-1)} disabled={playhead <= 0}>−1 tick</button>
+        <button type="button" onClick={() => onSeek(0)}>↺</button>
+        <button type="button" onClick={() => step(-1)} disabled={boundedPlayhead <= 0}>−1 frame</button>
         <button
           type="button"
           onClick={() => {
-            if (playhead >= maxTick) setPlayhead(0);
-            setPlaying((value) => !value);
+            if (boundedPlayhead >= boundedDuration) onSeek(0);
+            onTogglePlay();
           }}
-          disabled={maxTick <= 0}
         >
           {playing ? "❚❚" : "▶"}
         </button>
-        <button type="button" onClick={() => step(1)} disabled={playhead >= maxTick}>+1 tick</button>
+        <button type="button" onClick={() => step(1)} disabled={boundedPlayhead >= boundedDuration}>+1 frame</button>
         <input
           type="range"
           min={0}
-          max={Math.max(1, maxTick)}
-          step={1}
-          value={playhead}
-          aria-label="Sim 事件播放位置"
-          onChange={(event) => { setPlaying(false); setPlayhead(Number(event.target.value)); }}
+          max={boundedDuration}
+          step={FRAME_MS}
+          value={boundedPlayhead}
+          aria-label="Sim 與 3D 播放位置"
+          onChange={(event) => onSeek(Number(event.target.value))}
         />
       </div>
       <div className="forge-sim-ruler" aria-label="事件分布">
-        {events.map((event, index) => (
-          <span
-            key={`${event.tick}-${event.type}-${index}`}
-            className={event.tick === playhead ? "active" : event.tick < playhead ? "past" : ""}
-            style={{ left: `${maxTick === 0 ? 0 : (event.tick / maxTick) * 100}%` }}
-            title={`${event.tick} · ${event.type} · ${simTimelineEventSummary(event)}`}
-          />
-        ))}
+        {events.map((event, index) => {
+          const atMs = event.tick * SIM_TICK_MS;
+          return (
+            <span
+              key={`${event.tick}-${event.type}-${index}`}
+              className={event.tick === simTick ? "active" : atMs < boundedPlayhead ? "past" : ""}
+              style={{ left: `${Math.min(100, (atMs / boundedDuration) * 100)}%` }}
+              title={`${atMs.toFixed(0)}ms · ${event.type} · ${simTimelineEventSummary(event)}`}
+            />
+          );
+        })}
       </div>
       <div className="forge-sim-current" aria-live="polite">
-        {current.length === 0 ? <span>這一 tick 沒有事件</span> : current.map((event, index) => (
+        {current.length === 0 ? <span>這一個 Sim tick 沒有事件</span> : current.map((event, index) => (
           <article key={`${event.type}-${index}`}>
             <b>{event.type}</b>
             <code>{simTimelineEventSummary(event)}</code>
@@ -93,8 +93,8 @@ export function SimEventTimeline({ events }: { events: readonly SimTimelineEvent
         <summary>全部 {events.length} 筆事件</summary>
         <ol className="forge-sim-event-list">
           {events.map((event, index) => (
-            <li key={`${event.tick}-${event.type}-${index}`} className={event.tick === playhead ? "active" : ""}>
-              <button type="button" onClick={() => { setPlaying(false); setPlayhead(event.tick); }}>
+            <li key={`${event.tick}-${event.type}-${index}`} className={event.tick === simTick ? "active" : ""}>
+              <button type="button" onClick={() => onSeek(event.tick * SIM_TICK_MS)}>
                 <code>{event.tick}</code> <b>{event.type}</b> {simTimelineEventSummary(event)}
               </button>
             </li>

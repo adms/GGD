@@ -20,7 +20,7 @@ import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
 import { spawnChampion } from "@ggd/shared/sim/spawnChampion";
 import { castAbility } from "@ggd/shared/sim/abilities/abilitySystem";
 import { syncAbilityPassives } from "@ggd/shared/sim/abilities/abilityPassives";
-import { asSeatId, asTeamId, type ChampionId } from "@ggd/shared/ids";
+import { asSeatId, asTeamId, type ChampionId, type EntityId } from "@ggd/shared/ids";
 import { ContentLoader } from "@ggd/shared/content/loader";
 import { shippedContentSource } from "@ggd/shared/content/__fixtures__/shippedContent";
 import {
@@ -321,7 +321,7 @@ describe("GH#838 演出腳本的出貨鏈（真 content → 真施放 → 真 Vf
       allScripts: () => VfxScripts.all(),
       projectileIdsOf: () => new Set(),
       entityPos: (id) => {
-        const pos = world.transform.get(id)?.pos;
+        const pos = world.transform.get(id as EntityId)?.pos;
         return pos ? { x: pos.x, z: pos.z } : null;
       },
       dispatch: (event) => scriptDispatches.push(event),

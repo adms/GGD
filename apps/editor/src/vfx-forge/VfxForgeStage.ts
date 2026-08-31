@@ -13,6 +13,7 @@ import type { AnimationGroup } from "@babylonjs/core/Animations/animationGroup";
 import type { Mesh } from "@babylonjs/core/Meshes/mesh";
 import type { EventMessage } from "@ggd/shared/protocol/messages";
 import type { ModelDoc, VfxDoc } from "@ggd/shared/content";
+import { Models, VfxDefs, VfxScripts } from "@ggd/shared/content/registries";
 import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
 import type { ChampionDef } from "@ggd/shared/sim";
 import type { AbilityVfxLayerOverride } from "@ggd/shared/content/schema/abilityVfx";
@@ -32,6 +33,7 @@ import {
 } from "../../../client/src/render/views/modelTint";
 import { normalizedModelScale } from "../../../client/src/render/views/modelSizing";
 import { VfxScriptPlayer } from "../../../client/src/vfx/VfxScriptPlayer";
+import { VfxSystem } from "../../../client/src/vfx/VfxSystem";
 import { vfxHardMaxLifeSec } from "../../../client/src/vfx/vfxCleanupPolicy";
 import {
   applyVfxOverrides,
@@ -46,7 +48,12 @@ import { calibrateTwoWay } from "../../../client/src/vfx/auditionCalibrate";
 
 const STEP_MS = 1000 / 60;
 const CASTER_POS = { x: 0, z: 0 };
-const TARGET_POS = { x: 3, z: 0 };
+// PreviewController's real sandbox places the opponent on +z. Keeping the
+// render stage on that same axis means point/direction payloads can pass to
+// VfxSystem unchanged instead of inventing a second coordinate transform.
+const TARGET_POS = { x: 0, z: 3 };
+
+export type VfxForgeStageMode = "script" | "runtime";
 
 export interface ForgeOverlay {
   flash: { color: readonly [number, number, number]; alpha: number } | null;
@@ -62,6 +69,11 @@ export interface VfxForgeStageOptions {
     caster?: ChampionDef | null;
     target?: ChampionDef | null;
   };
+  /**
+   * script: author the pure VFX script in isolation.
+   * runtime: feed the real Sim trace through the shipped VfxSystem.
+   */
+  mode?: VfxForgeStageMode;
 }
 
 interface LiveParticle {
@@ -119,6 +131,8 @@ export class VfxForgeStage {
   private actorReady: Promise<void> = Promise.resolve();
   private prepareSeq = 0;
   private player: VfxScriptPlayer;
+  private readonly mode: VfxForgeStageMode;
+  private readonly runtimeVfx: VfxSystem | null;
   private readonly canvas: HTMLCanvasElement;
 
   constructor(
@@ -129,6 +143,7 @@ export class VfxForgeStage {
     opts: VfxForgeStageOptions = {},
   ) {
     this.canvas = canvas;
+    this.mode = opts.mode ?? "script";
     this.script = script;
     this.ability = ability;
     this.schedule = schedule;
@@ -148,14 +163,14 @@ export class VfxForgeStage {
     this.groundFloor = ground.floor;
     this.groundFloor.isPickable = true;
     this.actors = {
-      caster: this.makeActor("caster", "施法者", CASTER_POS, { x: 1, z: 0 }, new Color3(0.24, 0.55, 0.95), opts.actors?.caster ?? null),
-      target: this.makeActor("target", "目標", TARGET_POS, { x: -1, z: 0 }, new Color3(0.92, 0.28, 0.24), opts.actors?.target ?? null),
+      caster: this.makeActor("caster", "施法者", CASTER_POS, { x: 0, z: 1 }, new Color3(0.24, 0.55, 0.95), opts.actors?.caster ?? null),
+      target: this.makeActor("target", "目標", TARGET_POS, { x: 0, z: -1 }, new Color3(0.92, 0.28, 0.24), opts.actors?.target ?? null),
     };
 
-    this.cameraRig = new CameraRig(this.scene, { x: 1.5, z: 0 });
+    this.cameraRig = new CameraRig(this.scene, { x: 0, z: 1.5 });
     this.cameraRig.update({
       dtMs: STEP_MS,
-      localPos: { x: 1.5, z: 0 },
+      localPos: { x: 0, z: 1.5 },
       cursor: null,
       panKeys: null,
       viewportWidth: canvas.clientWidth || 960,
@@ -169,6 +184,23 @@ export class VfxForgeStage {
       maxEffectSec: vfxHardMaxLifeSec(),
     });
     this.player = this.makePlayer();
+    this.runtimeVfx = this.mode === "runtime"
+      ? new VfxSystem(this.scene, {
+          entityPos: (id) => this.actorForEntity(id).position,
+          championIdOf: (id) => this.actorForEntity(id).champion?.id ?? null,
+          localEntityId: () => this.casterEntityId() ?? null,
+          teamOf: (id) => id === this.casterEntityId() ? 0 : 1,
+          vfxDoc: (id) => VfxDefs.tryGet(id) ?? this.vfx.get(id) ?? null,
+          modelDocFor: (id) => Models.tryGet(id) ?? this.models.get(id) ?? null,
+          loadModelContainer: (path) => this.loadModelFxContainer(path),
+          pulseAnim: (id, kind, pulse) => this.pulseActor(id, kind, pulse?.clipWindowMs),
+          hideBody: (id, ms) => this.hideActor(id, ms),
+          screenFxHost: canvas.parentElement,
+        })
+      : null;
+    this.runtimeVfx?.installShakeSink((amplitude, durationMs) => {
+      this.cameraRig.addShake(amplitude, durationMs);
+    });
     this.reset();
     this.actorReady = Promise.all([
       this.loadActor(this.actors.caster),
@@ -190,8 +222,14 @@ export class VfxForgeStage {
     this.ability = ability;
     this.schedule = schedule;
     this.player.invalidate();
+    this.runtimeVfx?.invalidateVfxScripts();
     this.emitOverlay("預載角色與腳本素材…");
-    await Promise.all([this.actorReady, this.preloadScriptAssets(script)]);
+    await Promise.all([
+      this.actorReady,
+      this.mode === "runtime"
+        ? this.preloadRuntimeAssets(ability)
+        : this.preloadScriptAssets(script),
+    ]);
     return !this.disposed && seq === this.prepareSeq;
   }
 
@@ -229,7 +267,7 @@ export class VfxForgeStage {
     this.cameraRig.zoomBy(wheelDeltaY);
     this.cameraRig.update({
       dtMs: STEP_MS,
-      localPos: { x: 1.5, z: 0 },
+      localPos: { x: 0, z: 1.5 },
       cursor: null,
       panKeys: null,
       viewportWidth: this.engine.getRenderWidth(),
@@ -243,10 +281,10 @@ export class VfxForgeStage {
   placementAt(canvasX: number, canvasY: number): { forwardU: number; sideU: number } | undefined {
     const point = this.scene.pick(canvasX, canvasY, (mesh) => mesh === this.groundFloor).pickedPoint;
     if (!point) return undefined;
-    // Preview caster faces +x. Player semantics are x += forward, z -= side.
+    // Preview caster faces +z. Player semantics are z += forward, x += side.
     return {
-      forwardU: Math.round((point.x - CASTER_POS.x) * 10) / 10,
-      sideU: Math.round((CASTER_POS.z - point.z) * 10) / 10,
+      forwardU: Math.round((point.z - CASTER_POS.z) * 10) / 10,
+      sideU: Math.round((point.x - CASTER_POS.x) * 10) / 10,
     };
   }
 
@@ -279,6 +317,7 @@ export class VfxForgeStage {
     this.disposed = true;
     this.generation++;
     for (const actor of Object.values(this.actors)) this.disposeActor(actor);
+    this.runtimeVfx?.dispose();
     this.modelRig.dispose();
     for (const container of this.ownedModelFxContainers) container.dispose();
     this.ownedModelFxContainers.clear();
@@ -481,10 +520,12 @@ export class VfxForgeStage {
     // Timeline replay keeps preloaded GLB containers and reuses pooled geometry;
     // clearing the container map here makes the first scrub frame an empty shell.
     this.modelRig.resetForRound();
+    this.runtimeVfx?.resetForRound();
     this.disposeParticles();
     this.player = this.makePlayer();
     this.consumeEvents();
-    this.player.update(0);
+    if (this.mode === "runtime") this.runtimeVfx?.update(0);
+    else this.player.update(0);
     this.scene.render();
     this.emitOverlay("已重播");
   }
@@ -509,11 +550,14 @@ export class VfxForgeStage {
   private advanceFrame(render: boolean, dtMs = STEP_MS, notify = true): void {
     this.nowMs += dtMs;
     this.consumeEvents();
-    this.player.update(this.nowMs);
-    this.modelRig.tick(dtMs);
+    if (this.mode === "runtime") this.runtimeVfx?.update(this.nowMs);
+    else {
+      this.player.update(this.nowMs);
+      this.modelRig.tick(dtMs);
+    }
     this.cameraRig.update({
       dtMs,
-      localPos: { x: 1.5, z: 0 },
+      localPos: { x: 0, z: 1.5 },
       cursor: null,
       panKeys: null,
       viewportWidth: this.engine.getRenderWidth(),
@@ -530,7 +574,8 @@ export class VfxForgeStage {
       this.schedule[this.nextEvent]!.atMs <= this.nowMs + 0.001
     ) {
       const item = this.schedule[this.nextEvent++]!;
-      this.player.onEvent(item.event, item.atMs);
+      if (this.mode === "runtime") this.runtimeVfx?.handleEvent(item.event, item.atMs);
+      else this.player.onEvent(item.event, item.atMs);
     }
   }
 
@@ -540,6 +585,40 @@ export class VfxForgeStage {
       return Number(item.event.data.caster);
     }
     return undefined;
+  }
+
+  /** Warm every model referenced by the draft ability or its shipped script. */
+  private async preloadRuntimeAssets(ability: ForgeAbility): Promise<void> {
+    const keys = new Set<string>();
+    const visit = (value: unknown): void => {
+      if (Array.isArray(value)) {
+        for (const child of value) visit(child);
+        return;
+      }
+      if (value === null || typeof value !== "object") return;
+      const record = value as Record<string, unknown>;
+      if (typeof record["modelKey"] === "string") keys.add(record["modelKey"]);
+      for (const child of Object.values(record)) visit(child);
+    };
+    visit(ability.effects);
+    visit(ability.passive);
+    const shippedScript = VfxScripts.tryGet(ability.id);
+    if (shippedScript) visit(shippedScript.segments);
+    for (const key of keys) {
+      const doc = Models.tryGet(key);
+      if (doc) this.models.set(key, doc);
+    }
+    const modelKeys = [...keys].filter((key) => this.models.has(key));
+    this.runtimeVfx?.warmModelFx(modelKeys);
+    await Promise.all(modelKeys.map(async (key) => {
+      const doc = this.models.get(key);
+      if (!doc) return;
+      try {
+        await this.loadModelFxContainer(doc.glbPath);
+      } catch (error) {
+        this.emitOverlay(`Runtime 模型資產預載失敗：${key} · ${String(error)}`);
+      }
+    }));
   }
 
   private dispatch(ev: EventMessage, nowMs: number): void {

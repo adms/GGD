@@ -18,11 +18,10 @@
  *     operator can see that card 2 was actually consumed, and the same trace is
  *     what `stack.test.ts` asserts on.
  *
- * The preview is the REAL sim: `expandStack()` → merge onto the host ability doc
- * → `previewAbility` on a sandbox SimWorld through the real statPipeline and
- * resolveScaling. It is NOT a 3D cast — `PreviewController.mount()` is still a
- * renderless stub — and the UI says so rather than implying a shot that does not
- * happen.
+ * The preview is the REAL sim and the REAL render bridge: `expandStack()` →
+ * merge onto the host ability doc → IntentFrame through sandbox SimWorld → the
+ * shipped `VfxSystem` in a dual-model CameraRig arena. The timeline and stage
+ * share one playhead, so scrub/frame-step can never become a data-only fiction.
  */
 import { useCallback, useEffect, useMemo, useRef, useState, type DragEvent } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -46,13 +45,18 @@ import {
 } from "@ggd/shared/content/templates/expand";
 import { embeddedSlotOf } from "@ggd/shared/content/editModel";
 import type { AbilityDef, ChampionDef, CoreAbilitySlot } from "@ggd/shared/sim";
+import { VfxScripts } from "@ggd/shared/content/registries";
+import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
 import { api, WRITES_ENABLED } from "../api/client";
 import { FormRenderer } from "../form/FormRenderer";
 import { walkZod } from "../form/walk";
 import { setIn, type ErrorMap } from "../store";
 import { sameJson, useUndoHistory } from "../history";
-import { createBabylonPreviewController } from "../preview/BabylonPreviewController";
-import type { CastPreviewTrace } from "../preview/PreviewController";
+import {
+  createSimPreviewController,
+  type CastPreviewTrace,
+} from "../preview/PreviewController";
+import { ensurePreviewContentReady } from "../preview/previewContent";
 import { badgeFor } from "./badge";
 import { degradeNotes, satisfiedCaps } from "./degrade";
 import { planForgeWrite, runForgeWrite, type ForgePlan } from "./ForgeWriteback";
@@ -78,14 +82,19 @@ import {
 } from "./stackDnd";
 import { SimEventTimeline } from "./SimEventTimeline";
 import { useChampionDocs } from "../preview/useChampionDocs";
+import { VfxForgePreview } from "../vfx-forge/VfxForgePreview";
+import {
+  scheduleSimEvents,
+  type ForgeAbility,
+} from "../vfx-forge/model";
 
 /**
- * GH#174 —— 工坊第 3 步從此有**畫面**。同一個 `PreviewController` 介面，
- * 資料那一半原封不動（它內部就持有 `createSimPreviewController()`），
- * 多出來的只有 `mount(canvas)` 之後的那顆 Engine/Scene。
+ * One authoritative Sim controller. Rendering consumes its emitted trace via
+ * the same VfxSystem used by the shipped game.
  */
-const controller = createBabylonPreviewController();
+const controller = createSimPreviewController();
 const fmt = (n: number): string => (Number.isInteger(n) ? String(n) : n.toFixed(2));
+const SIM_TICK_MS = 1000 / 30;
 
 /** 衝突處理 labels — the wording an operator has to be able to choose between. */
 const CONFLICT_LABELS: Readonly<Record<TemplateConflictPolicy, string>> = {
@@ -125,19 +134,10 @@ export function ForgeStudio({
   const [dragOverSlot, setDragOverSlot] = useState<number | null>(null);
   /** 最近一次【真的放一次】之後，sim 真的發生了什麼（GH#174）。 */
   const [trace, setTrace] = useState<CastPreviewTrace | null>(null);
+  const [playheadMs, setPlayheadMs] = useState(0);
+  const [playing, setPlaying] = useState(false);
   /** 只有操作者親手試放過的同一支技能，後續改參數才會所見即所得地自動重播。 */
   const auditionedAbilityRef = useRef<string | null>(null);
-
-  /**
-   * 3D 舞台。⚠️ `mount(null)` 一定要在 unmount 時呼叫 —— `controller` 是**模組層**
-   * 的單例（工坊開開關關共用同一顆），少了這一行，離開頁面之後 Engine 還在
-   * `runRenderLoop` 裡轉，而畫面上完全看不出來。
-   */
-  const stageRef = useRef<HTMLCanvasElement | null>(null);
-  useEffect(() => {
-    controller.mount(stageRef.current);
-    return () => controller.mount(null);
-  }, []);
 
   useEffect(() => {
     if (typeof globalThis.addEventListener !== "function") return;
@@ -199,6 +199,12 @@ export function ForgeStudio({
     isLoading: championsLoading,
     error: championsError,
   } = useChampionDocs();
+  const previewContent = useQuery({
+    queryKey: ["preview-runtime-content"],
+    queryFn: ensurePreviewContentReady,
+    staleTime: Number.POSITIVE_INFINITY,
+    gcTime: Number.POSITIVE_INFINITY,
+  });
 
   /**
    * `content/vfx/` 的全部 id。這張表就是 #230 的入口：491 支從原作抽出來的
@@ -289,7 +295,7 @@ export function ForgeStudio({
 
   // ---- the live try-in-preview: real sim, real stats ----
   const preview = useMemo(() => {
-    if (!after) return null;
+    if (!after || !previewContent.data) return null;
     const parsed = zAbilityDoc.safeParse(after);
     if (!parsed.success) return { error: "展開結果尚未通過 zAbilityDoc 校驗" } as const;
     const ability = parsed.data as unknown as AbilityDef;
@@ -313,16 +319,20 @@ export function ForgeStudio({
     } catch (e) {
       return { error: String(e) } as const;
     }
-  }, [after, champions]);
+  }, [after, champions, previewContent.data]);
 
   const runCurrentCast = useCallback((remember: boolean): void => {
     if (!preview || !("champ" in preview)) return;
     if (remember) auditionedAbilityRef.current = abilityId;
     try {
-      setTrace(controller.castAbility(preview.champ, preview.slot, { level: 1 }));
+      const next = controller.castAbility(preview.champ, preview.slot, { level: 18 });
+      setTrace(next);
+      setPlayheadMs(0);
+      setPlaying(next.accepted);
       setStatus(null);
     } catch (e) {
       setTrace(null);
+      setPlaying(false);
       setStatus(`試放失敗：${String(e)}`);
     }
   }, [abilityId, preview]);
@@ -330,6 +340,8 @@ export function ForgeStudio({
   useEffect(() => {
     auditionedAbilityRef.current = null;
     setTrace(null);
+    setPlayheadMs(0);
+    setPlaying(false);
   }, [abilityId]);
 
   // WYSIWYG：先手動試放一次取得意圖後，修改模板／特效參數便用真 Sim 立即重播。
@@ -337,6 +349,41 @@ export function ForgeStudio({
     if (auditionedAbilityRef.current !== abilityId) return;
     runCurrentCast(false);
   }, [abilityId, after, runCurrentCast]);
+
+  const stageAbility = useMemo<ForgeAbility | null>(() => {
+    if (!preview || !("champ" in preview)) return null;
+    return preview.champ.abilities[preview.slot] as ForgeAbility;
+  }, [preview]);
+  const schedule = useMemo(
+    () => trace && stageAbility ? scheduleSimEvents(trace.events, stageAbility.id) : [],
+    [stageAbility, trace],
+  );
+  const timelineEvents = useMemo(
+    () => schedule.map(({ atMs, event }) => ({
+      type: event.type,
+      tick: Math.round(atMs / SIM_TICK_MS),
+      data: event.data,
+    })),
+    [schedule],
+  );
+  const previewDurationMs = useMemo(
+    () => Math.max(1000, schedule.reduce((last, event) => Math.max(last, event.atMs), 0) + 1000),
+    [schedule],
+  );
+  const stageScript = useMemo<VfxScriptDoc | null>(() => {
+    if (!stageAbility) return null;
+    return VfxScripts.tryGet(stageAbility.id) ?? {
+      id: stageAbility.id,
+      schema: "vfx-script@1",
+      abilityId: stageAbility.id,
+      segments: [],
+    };
+  }, [previewContent.data, stageAbility]);
+  const targetChampion = useMemo(
+    () => (champions.find((champion) => champion.id !== (preview && "champ" in preview ? preview.champ.id : ""))
+      ?? (preview && "champ" in preview ? preview.champ : null)) as ChampionDef | null,
+    [champions, preview],
+  );
 
   const championDoc = useMemo(() => {
     if (!abilityId) return null;
@@ -647,12 +694,28 @@ export function ForgeStudio({
             所以「編輯器放得出來、遊戲裡按下去沒反應」不可能發生。
           </p>
           <p className="forge-note">
-            ⚠️ 舞台目前只有<b>地面格線 + 英雄模型 + 技能自己的粒子特效</b>
-            （走與遊戲同一支 <code>toParticleSystem</code>）。
-            預告圈、投射物飛行、命中特效還沒接上（那要重用 client 的{" "}
-            <code>render/*</code> 與 <code>vfx/*</code>）。
+            舞台直接重用遊戲的 <b>CameraRig、ArenaGround、雙方 3D Model 與 VfxSystem</b>；
+            預告圈、投射物、命中、腳本演出與清理上限全部走正式消費端。
           </p>
-          <canvas ref={stageRef} className="preview3d-canvas" style={{ height: 240 }} />
+          {previewContent.error ? (
+            <p className="error">Runtime 內容圖載入失敗：{String(previewContent.error)}</p>
+          ) : stageAbility && stageScript && preview && "champ" in preview ? (
+            <VfxForgePreview
+              script={stageScript}
+              ability={stageAbility}
+              schedule={schedule}
+              durationMs={previewDurationMs}
+              playheadMs={playheadMs}
+              playing={playing}
+              caster={preview.champ}
+              target={targetChampion}
+              mode="runtime"
+              onTime={(ms) => setPlayheadMs(Math.min(previewDurationMs, ms))}
+              onStop={() => setPlaying(false)}
+            />
+          ) : (
+            <div className="preview3d-canvas forge-runtime-loading">載入正式 Runtime 舞台…</div>
+          )}
           {/* `preview3d-controls` 是既有的 flex 列樣式 —— ⛔ 不為了一顆按鈕新增一條 CSS。 */}
           <div className="preview3d-controls">
             <button
@@ -671,7 +734,16 @@ export function ForgeStudio({
               </span>
             ) : null}
           </div>
-          {trace ? <SimEventTimeline events={trace.events} /> : null}
+          {trace ? (
+            <SimEventTimeline
+              events={timelineEvents}
+              durationMs={previewDurationMs}
+              playheadMs={playheadMs}
+              playing={playing}
+              onSeek={(ms) => { setPlaying(false); setPlayheadMs(ms); }}
+              onTogglePlay={() => setPlaying((value) => !value)}
+            />
+          ) : null}
           {!expansion.ok ? <p className="error">展開失敗：{expansion.error}</p> : null}
           {expansion.ok ? (
             <>

@@ -241,6 +241,12 @@ export interface VfxContext {
     durationMs: number,
     arc: boolean,
   ): void;
+  /**
+   * Optional composition root for screen-space effects. The game omits this
+   * and keeps the full-viewport overlay; embedded tools pass their stage host
+   * so a preview flash cannot cover the whole editor.
+   */
+  screenFxHost?: HTMLElement | null;
 }
 
 // ---------------------------------------------------------------------------
@@ -798,7 +804,7 @@ export class VfxSystem {
     //    是 0.55 —— 少了這一段，那個上界一次都沒有被套用過。
     //    ⚠️ 解析**一次**（第〇·四守則）：⛔ 不是每一發特效都去查一次登錄表。
     const cue = screenCuePolicyFromContent();
-    this.screenFx = new ScreenFxLayer();
+    this.screenFx = new ScreenFxLayer({ host: ctx.screenFxHost });
     this.screenFx.setLimits(cue.limits);
     this.floatingText = new FloatingTextFx({
       capacity: cue.floatingTextMaxOnScreen,
@@ -2883,6 +2889,10 @@ export class VfxSystem {
    * **打擊感不是**，所以現在它也在回合邊界被還回去（後台可切）。
    */
   resetForRound(): void {
+    // ⭐ GH#838 —— 上一輪尚未到期的 script segment／等待 castEnd 的 frame
+    // 不能活進下一輪。Forge 的 scrub 也走這條正式重置路，少這行會讓每次重播
+    // 都多疊一份延遲演出。
+    this.scriptPlayer.reset();
     // 1) 一次性效果：就地結束（dispose 會把 pooled mesh 還回 free-list）
     for (const t of this.telegraphs) t.dispose();
     this.telegraphs = [];
