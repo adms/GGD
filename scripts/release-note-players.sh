@@ -200,7 +200,11 @@ case "$CODE" in
     LEDGER="${GGD_ANNOUNCE_LEDGER:-docs/_release/_announced.tsv}"
     if [ -f "$LEDGER" ]; then
       TODAY=$(date +%Y-%m-%d)
-      FIRSTLINE=$(printf '%s' "$LINES" | sed -n '1s/^[[:space:]·]*//p' | cut -c1-60)
+      # ⚠️ ⭐ `cut -c` 在這裡切的是**位元組** ⇒ 中文會被切在半個字元中間
+      #   （2026-09-01 實際發生：帳本第三欄留下一個壞掉的 UTF-8 序列）。
+      #   ⇒ 用 python3 切**字元**（這支腳本本來就依賴 python3 做 JSON）。
+      FIRSTLINE=$(printf '%s' "$LINES" | sed -n '1s/^[[:space:]·*-]*//p' \
+        | python3 -c 'import sys;print(sys.stdin.read().replace("\t"," ")[:60].strip())')
       for T in $(git tag --sort=v:refname | awk -v a="$SINCE" -v b="$NOW" '
             $0==a{seen=1; next} seen{print} $0==b{exit}'); do
         grep -q "^${T}	" "$LEDGER" || printf '%s\t%s\t%s\n' "$T" "$TODAY" "${FIRSTLINE:-玩家公告}" >> "$LEDGER"
