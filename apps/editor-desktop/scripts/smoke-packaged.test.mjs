@@ -13,8 +13,8 @@ afterAll(() => rmSync(root, { recursive: true, force: true }));
 describe("packaged smoke runner", () => {
   it("locates the universal macOS app before the architecture-specific fallback", () => {
     const [universal, fallback] = packagedExecutableCandidates("darwin", root);
-    expect(universal).toContain("mac-universal");
-    expect(fallback).toContain("/mac/");
+    expect(universal).toBe(join(root, "mac-universal", `${product}.app`, "Contents", "MacOS", product));
+    expect(fallback).toBe(join(root, "mac", `${product}.app`, "Contents", "MacOS", product));
     mkdirSync(join(root, "mac-universal", `${product}.app`, "Contents", "MacOS"), { recursive: true });
     writeFileSync(universal, "fixture");
     expect(resolvePackagedExecutable({ platform: "darwin", distDir: root })).toBe(universal);
