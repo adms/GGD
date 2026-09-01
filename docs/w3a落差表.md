@@ -39,8 +39,8 @@
 | `radius:free-number` | 5 | ⚫無主 | 出貨半徑是一個字面數字而**沒有** `radiusTier` ⇒ 它繞過了 owner 的「不寫範圍數字」裁決,而繞過的理由沒有寫在任何地方。 |
 | `radius:ggd-absent` | 87 | ⚫無主 | w3a 有 `area`(範圍技)而出貨側**整棵效果樹找不到任何 radius**。⚠️ 這一批混了兩種:重製時刻意改成單體的,以及**漏接範圍**的 —— 而兩種在 JSON 裡長得一模一樣。⭐ 2026-08-28 −1：同上一列的另一半（nbbc.r 從『沒有半徑』變成『有半徑』）。 |
 | `radius:tier` | 55 | GGD-tier-table | owner 2026-08-11「原則上不寫範圍數字」⇒ AOE 走級距(`content/config/aoe-tiers.json`);出貨文件帶著 `radiusTier`。⭐ 2026-08-28 +1：08-04 阿邦快速劍X 變身態（godie-nbbc.r）拿掉空模板殼之後，落點 AoE（j:28918 `GetUnitsInRangeOfLocAll(250)` = 4.58→級距 4.5「小」）第一次進到出貨形狀 ——⛔ 不是漂移，是它本來就該有而以前被 `tpl-single-strike` 蓋住了。 |
-| `duration:free-number` | 32 | ⚫無主 | 出貨的 `durationSec` 與 w3a 的持續秒數不同,而**五級距裡根本沒有 duration 這一軸**(damage/cooldown/mana/range/aoe 五張表都沒有它),`config/skill-normalize.json` 的決策點也不含它 ⇒ 每一支的秒數都是逐支手填的自由數字。⭐ 2026-08-28 −4：`_walk_numbers` 開始跳過 cue kinds —— `screenShake.durationSec`（震多久）以前被讀成**技能的持續時間**。⛔ 那 4 筆從來不是技能時長。 |
-| `duration:ggd-absent` | 187 | ⚫無主 | w3a 宣告了持續時間而出貨側**整棵效果樹沒有任何 durationSec**。⚠️ 同 `radius:ggd-absent`:混了「重製成瞬發」與「漏接持續效果」兩種,而 JSON 裡分不出來。⭐ 另外 w3a 還有 `hero_duration`(對英雄減時)這一格,GGD **一格都沒有** —— 那是一個缺的機制,不只是漏翻。⚠️ 2026-08-28 +4：上一列的鏡像。⭐ 這 4 支**本來就沒有**時長，只是以前被 cue 的 `durationSec` 冒名頂替 ⇒ 195 是**低報**，199 才是真的缺口。 |
+| `duration:free-number` | 33 | ⚫無主 | 出貨的 `durationSec` 與 w3a 的持續秒數不同,而**五級距裡根本沒有 duration 這一軸**(damage/cooldown/mana/range/aoe 五張表都沒有它),`config/skill-normalize.json` 的決策點也不含它 ⇒ 每一支的秒數都是逐支手填的自由數字。⭐ 2026-08-28 −4：`_walk_numbers` 開始跳過 cue kinds —— `screenShake.durationSec`（震多久）以前被讀成**技能的持續時間**。⛔ 那 4 筆從來不是技能時長。 |
+| `duration:ggd-absent` | 186 | ⚫無主 | w3a 宣告了持續時間而出貨側**整棵效果樹沒有任何 durationSec**。⚠️ 同 `radius:ggd-absent`:混了「重製成瞬發」與「漏接持續效果」兩種,而 JSON 裡分不出來。⭐ 另外 w3a 還有 `hero_duration`(對英雄減時)這一格,GGD **一格都沒有** —— 那是一個缺的機制,不只是漏翻。⚠️ 2026-08-28 +4：上一列的鏡像。⭐ 這 4 支**本來就沒有**時長，只是以前被 cue 的 `durationSec` 冒名頂替 ⇒ 195 是**低報**，199 才是真的缺口。 |
 
 ⚠️ 一列的 `max` 是**上一次量到的數字**。修好一筆 ⇒ 這一份重生成 ⇒ 守衛要求把 `max` 調降;
 ⛔ 沒有人可以靜靜地讓它變大。
@@ -332,60 +332,60 @@
 | 276 | `radius` | `ggd-absent` | `A0KD` | 37-03-00 災難之牆火燄 | `godie-ubal.w` | 150.0 | None |
 | 277 | `radius` | `ggd-absent` | `A05S` | 65-02 寒冰破碎 | `godie-udea.w` | 200.0 | None |
 | 278 | `duration` | `free-number` | `A02Q` | 22-04 雛見澤症候群L5 | `godie-e001.r` | 0.0 | 7.0 |
-| 279 | `duration` | `free-number` | `A102` | 45-002 天照 | `godie-edem.ex` | 0.01 | 10.0 |
-| 280 | `duration` | `free-number` | `A0M7` | 45-01 火遁-豪火龍之術 | `godie-edem.q` | 0.01 | 3.0 |
-| 281 | `duration` | `free-number` | `A0ZT` | 15-002-00 風花武裝解除BUFF | `godie-emfr.ex` | 4.0 | 5.0 |
-| 282 | `duration` | `free-number` | `A0ZU` | 15-002 風花-武裝解除 | `godie-emfr.ex` | 0.01 | 5.0 |
-| 283 | `duration` | `free-number` | `A0BP` | 60-02 鎖鏈槍 | `godie-h00l.w` | 1.0 | 0.4 |
-| 284 | `duration` | `free-number` | `A0LN` | 79-04 卍解 | `godie-h01n.r` | 0.0 | 8.0 |
-| 285 | `duration` | `free-number` | `A0VC` | 90-01 保護色獵殺 | `godie-h02r.q` | 12.0 | 2.0 |
-| 286 | `duration` | `free-number` | `A0U5` | 52-002 射殺百頭 | `godie-hapm.ex` | 1.0 | 1.5 |
-| 287 | `duration` | `free-number` | `A019` | 52-02 狂暴怒吼 | `godie-hapm.w` | 1.0 | 1.05 |
-| 288 | `duration` | `free-number` | `A072` | 01-01 凶斬 | `godie-hart.q` | 1.0 | 0.2 |
-| 289 | `duration` | `free-number` | `A0AZ` | 01-01r 囧斬 | `godie-hart.q` | 1.0 | 0.2 |
-| 290 | `duration` | `free-number` | `A077` | 01-04 超究武神霸斬 | `godie-hart.r` | 13.0 | 3.5 |
-| 291 | `duration` | `free-number` | `A0B1` | 01-04r 超究武神霸斬 - 改 | `godie-hart.r` | 13.0 | 3.5 |
-| 292 | `duration` | `free-number` | `A0G7` | 01-02 破光擊 | `godie-hart.w` | 0.01 | 0.82 |
-| 293 | `duration` | `free-number` | `A0GY` | 01-02 破光擊 auto | `godie-hart.w` | 0.01 | 0.82 |
-| 294 | `duration` | `free-number` | `A0UX` | 01-02 隕石擊 | `godie-hart.w` | 0.0 | 0.82 |
-| 295 | `duration` | `free-number` | `A0UY` | 01-02-x 隕石擊 | `godie-hart.w` | 0.1 | 0.82 |
-| 296 | `duration` | `free-number` | `A06K` | 42-002 魔力印章 | `godie-n003.ex` | 0.0 | 7.0 |
-| 297 | `duration` | `free-number` | `A00B` | 18-02 寄生種子 | `godie-n00p.w` | 0.01 | 2.0 |
-| 298 | `duration` | `free-number` | `A0RV` | 18-02 寄生種子 | `godie-n00p.w` | 5.0 | 2.0 |
-| 299 | `duration` | `free-number` | `A0T1` | 08-002 龍魔人 | `godie-n01c.ex` | 0.0 | 20.0 |
-| 300 | `duration` | `free-number` | `A0BN` | 72-02 黑人牙菌斑 | `godie-ogld.w` | 8.0 | 10.0 |
-| 301 | `duration` | `free-number` | `A0S4` | 74-01 獄門 | `godie-u00j.q` | 0.01 | 0.3 |
-| 302 | `duration` | `free-number` | `A0IR` | 76-00 二檔 | `godie-u00n.passive` | 0.1 | 20.0 |
-| 303 | `duration` | `free-number` | `A0IQ` | 76-04 三檔 | `godie-u00n.r` | 12.0 | 0.84 |
-| 304 | `duration` | `free-number` | `A0IU` | 76-04-00 三檔副作用 | `godie-u00n.r` | 5.0 | 0.84 |
-| 305 | `duration` | `free-number` | `A0RZ` | 76-04 三檔.巨人迴旋彈 | `godie-u00n.r` | 0.0 | 0.84 |
-| 306 | `duration` | `free-number` | `A0S2` | 76-04-x 震地 | `godie-u00n.r` | 2.0 | 0.84 |
-| 307 | `duration` | `free-number` | `A10M` | 11-002 武裝色霸氣 | `godie-u01u.ex` | 0.01 | 15.0 |
-| 308 | `duration` | `free-number` | `A10N` | 11-002 武裝色霸氣 | `godie-u01u.ex` | 0.0 | 15.0 |
-| 309 | `duration` | `free-number` | `A0KD` | 37-03-00 災難之牆火燄 | `godie-ubal.w` | 0.1 | 3.0 |
-| 310 | `duration` | `ggd-absent` | `AEsh` | 22-03 五吋釘 | `godie-e001.e` | 5.0 | None |
-| 311 | `duration` | `ggd-absent` | `A0SU` | 22-002 月光下的決鬥者 | `godie-e001.ex` | 0.3 | None |
-| 312 | `duration` | `ggd-absent` | `A0SV` | 22-002 月光下的決鬥者 | `godie-e001.ex` | 0.3 | None |
-| 313 | `duration` | `ggd-absent` | `A0CL` | 22-00 嗚鎖打! | `godie-e001.passive` | 0.5 | None |
-| 314 | `duration` | `ggd-absent` | `A007` | 22-01 鬼隱之擊 | `godie-e001.q` | 12.0 | None |
-| 315 | `duration` | `ggd-absent` | `A0CT` | 20-04 Avalon-永恆的理想鄉 | `godie-e002.r` | 0.01 | None |
-| 316 | `duration` | `ggd-absent` | `A0DZ` | 20-01 風王結界 | `godie-e002.w` | 0.0 | None |
-| 317 | `duration` | `ggd-absent` | `A02W` | 12-03 破凰之心-徒手空破山 | `godie-e007.e` | 0.0 | None |
-| 318 | `duration` | `ggd-absent` | `A04Y` | 12-01 鬥仙術 | `godie-e007.q` | 1.0 | None |
-| 319 | `duration` | `ggd-absent` | `A04X` | 12-04 龍氣爆發 | `godie-e007.r` | 3.0 | None |
-| 320 | `duration` | `ggd-absent` | `A0BF` | 21-03 赤焰爆發 | `godie-e008.e` | 1.0 | None |
-| 321 | `duration` | `ggd-absent` | `A0UO` | 21-002 天破壤碎 | `godie-e008.ex` | 0.01 | None |
-| 322 | `duration` | `ggd-absent` | `A0V9` | 21-002-03-x 天破 | `godie-e008.ex` | 0.01 | None |
-| 323 | `duration` | `ggd-absent` | `A0BD` | 21-02 拔焰刀 | `godie-e008.q` | 0.5 | None |
-| 324 | `duration` | `ggd-absent` | `A0HB` | 21-04 討滅封絕 | `godie-e008.r` | 0.01 | None |
-| 325 | `duration` | `ggd-absent` | `A0BH` | 21-01 火羽 | `godie-e008.w` | 6.0 | None |
-| 326 | `duration` | `ggd-absent` | `A0O5` | 59-01 吞噬 | `godie-e00r.q` | 9.0 | None |
-| 327 | `duration` | `ggd-absent` | `A0GF` | 59-02 高週波短刀 | `godie-e00r.w` | 0.5 | None |
-| 328 | `duration` | `ggd-absent` | `A0GR` | 70-03 木束縛之術 | `godie-e00s.e` | 0.0 | None |
-| 329 | `duration` | `ggd-absent` | `A0GS` | 70-03-01 木束縛 | `godie-e00s.e` | 1.5 | None |
-| 330 | `duration` | `ggd-absent` | `A0O6` | 70-00 紮根 | `godie-e00s.passive` | 0.0 | None |
-| 331 | `duration` | `ggd-absent` | `A0GP` | 70-01 伸卡球 | `godie-e00s.q` | 1.0 | None |
-| 332 | `duration` | `ggd-absent` | `A0ZO` | 70-04 樹海降臨 | `godie-e00s.r` | 0.0 | None |
+| 279 | `duration` | `free-number` | `A0ZO` | 70-04 樹海降臨 | `godie-e00s.r` | 0.0 | 8.0 |
+| 280 | `duration` | `free-number` | `A102` | 45-002 天照 | `godie-edem.ex` | 0.01 | 10.0 |
+| 281 | `duration` | `free-number` | `A0M7` | 45-01 火遁-豪火龍之術 | `godie-edem.q` | 0.01 | 3.0 |
+| 282 | `duration` | `free-number` | `A0ZT` | 15-002-00 風花武裝解除BUFF | `godie-emfr.ex` | 4.0 | 5.0 |
+| 283 | `duration` | `free-number` | `A0ZU` | 15-002 風花-武裝解除 | `godie-emfr.ex` | 0.01 | 5.0 |
+| 284 | `duration` | `free-number` | `A0BP` | 60-02 鎖鏈槍 | `godie-h00l.w` | 1.0 | 0.4 |
+| 285 | `duration` | `free-number` | `A0LN` | 79-04 卍解 | `godie-h01n.r` | 0.0 | 8.0 |
+| 286 | `duration` | `free-number` | `A0VC` | 90-01 保護色獵殺 | `godie-h02r.q` | 12.0 | 2.0 |
+| 287 | `duration` | `free-number` | `A0U5` | 52-002 射殺百頭 | `godie-hapm.ex` | 1.0 | 1.5 |
+| 288 | `duration` | `free-number` | `A019` | 52-02 狂暴怒吼 | `godie-hapm.w` | 1.0 | 1.05 |
+| 289 | `duration` | `free-number` | `A072` | 01-01 凶斬 | `godie-hart.q` | 1.0 | 0.2 |
+| 290 | `duration` | `free-number` | `A0AZ` | 01-01r 囧斬 | `godie-hart.q` | 1.0 | 0.2 |
+| 291 | `duration` | `free-number` | `A077` | 01-04 超究武神霸斬 | `godie-hart.r` | 13.0 | 3.5 |
+| 292 | `duration` | `free-number` | `A0B1` | 01-04r 超究武神霸斬 - 改 | `godie-hart.r` | 13.0 | 3.5 |
+| 293 | `duration` | `free-number` | `A0G7` | 01-02 破光擊 | `godie-hart.w` | 0.01 | 0.82 |
+| 294 | `duration` | `free-number` | `A0GY` | 01-02 破光擊 auto | `godie-hart.w` | 0.01 | 0.82 |
+| 295 | `duration` | `free-number` | `A0UX` | 01-02 隕石擊 | `godie-hart.w` | 0.0 | 0.82 |
+| 296 | `duration` | `free-number` | `A0UY` | 01-02-x 隕石擊 | `godie-hart.w` | 0.1 | 0.82 |
+| 297 | `duration` | `free-number` | `A06K` | 42-002 魔力印章 | `godie-n003.ex` | 0.0 | 7.0 |
+| 298 | `duration` | `free-number` | `A00B` | 18-02 寄生種子 | `godie-n00p.w` | 0.01 | 2.0 |
+| 299 | `duration` | `free-number` | `A0RV` | 18-02 寄生種子 | `godie-n00p.w` | 5.0 | 2.0 |
+| 300 | `duration` | `free-number` | `A0T1` | 08-002 龍魔人 | `godie-n01c.ex` | 0.0 | 20.0 |
+| 301 | `duration` | `free-number` | `A0BN` | 72-02 黑人牙菌斑 | `godie-ogld.w` | 8.0 | 10.0 |
+| 302 | `duration` | `free-number` | `A0S4` | 74-01 獄門 | `godie-u00j.q` | 0.01 | 0.3 |
+| 303 | `duration` | `free-number` | `A0IR` | 76-00 二檔 | `godie-u00n.passive` | 0.1 | 20.0 |
+| 304 | `duration` | `free-number` | `A0IQ` | 76-04 三檔 | `godie-u00n.r` | 12.0 | 0.84 |
+| 305 | `duration` | `free-number` | `A0IU` | 76-04-00 三檔副作用 | `godie-u00n.r` | 5.0 | 0.84 |
+| 306 | `duration` | `free-number` | `A0RZ` | 76-04 三檔.巨人迴旋彈 | `godie-u00n.r` | 0.0 | 0.84 |
+| 307 | `duration` | `free-number` | `A0S2` | 76-04-x 震地 | `godie-u00n.r` | 2.0 | 0.84 |
+| 308 | `duration` | `free-number` | `A10M` | 11-002 武裝色霸氣 | `godie-u01u.ex` | 0.01 | 15.0 |
+| 309 | `duration` | `free-number` | `A10N` | 11-002 武裝色霸氣 | `godie-u01u.ex` | 0.0 | 15.0 |
+| 310 | `duration` | `free-number` | `A0KD` | 37-03-00 災難之牆火燄 | `godie-ubal.w` | 0.1 | 3.0 |
+| 311 | `duration` | `ggd-absent` | `AEsh` | 22-03 五吋釘 | `godie-e001.e` | 5.0 | None |
+| 312 | `duration` | `ggd-absent` | `A0SU` | 22-002 月光下的決鬥者 | `godie-e001.ex` | 0.3 | None |
+| 313 | `duration` | `ggd-absent` | `A0SV` | 22-002 月光下的決鬥者 | `godie-e001.ex` | 0.3 | None |
+| 314 | `duration` | `ggd-absent` | `A0CL` | 22-00 嗚鎖打! | `godie-e001.passive` | 0.5 | None |
+| 315 | `duration` | `ggd-absent` | `A007` | 22-01 鬼隱之擊 | `godie-e001.q` | 12.0 | None |
+| 316 | `duration` | `ggd-absent` | `A0CT` | 20-04 Avalon-永恆的理想鄉 | `godie-e002.r` | 0.01 | None |
+| 317 | `duration` | `ggd-absent` | `A0DZ` | 20-01 風王結界 | `godie-e002.w` | 0.0 | None |
+| 318 | `duration` | `ggd-absent` | `A02W` | 12-03 破凰之心-徒手空破山 | `godie-e007.e` | 0.0 | None |
+| 319 | `duration` | `ggd-absent` | `A04Y` | 12-01 鬥仙術 | `godie-e007.q` | 1.0 | None |
+| 320 | `duration` | `ggd-absent` | `A04X` | 12-04 龍氣爆發 | `godie-e007.r` | 3.0 | None |
+| 321 | `duration` | `ggd-absent` | `A0BF` | 21-03 赤焰爆發 | `godie-e008.e` | 1.0 | None |
+| 322 | `duration` | `ggd-absent` | `A0UO` | 21-002 天破壤碎 | `godie-e008.ex` | 0.01 | None |
+| 323 | `duration` | `ggd-absent` | `A0V9` | 21-002-03-x 天破 | `godie-e008.ex` | 0.01 | None |
+| 324 | `duration` | `ggd-absent` | `A0BD` | 21-02 拔焰刀 | `godie-e008.q` | 0.5 | None |
+| 325 | `duration` | `ggd-absent` | `A0HB` | 21-04 討滅封絕 | `godie-e008.r` | 0.01 | None |
+| 326 | `duration` | `ggd-absent` | `A0BH` | 21-01 火羽 | `godie-e008.w` | 6.0 | None |
+| 327 | `duration` | `ggd-absent` | `A0O5` | 59-01 吞噬 | `godie-e00r.q` | 9.0 | None |
+| 328 | `duration` | `ggd-absent` | `A0GF` | 59-02 高週波短刀 | `godie-e00r.w` | 0.5 | None |
+| 329 | `duration` | `ggd-absent` | `A0GR` | 70-03 木束縛之術 | `godie-e00s.e` | 0.0 | None |
+| 330 | `duration` | `ggd-absent` | `A0GS` | 70-03-01 木束縛 | `godie-e00s.e` | 1.5 | None |
+| 331 | `duration` | `ggd-absent` | `A0O6` | 70-00 紮根 | `godie-e00s.passive` | 0.0 | None |
+| 332 | `duration` | `ggd-absent` | `A0GP` | 70-01 伸卡球 | `godie-e00s.q` | 1.0 | None |
 | 333 | `duration` | `ggd-absent` | `A0GQ` | 70-02 大怒石 | `godie-e00s.w` | 0.4 | None |
 | 334 | `duration` | `ggd-absent` | `A0JG` | 77-03 GLADIARIA ALAT | `godie-e00w.e` | 0.0 | None |
 | 335 | `duration` | `ggd-absent` | `A10G` | 77-002 御雷劍 | `godie-e00w.ex` | 15.0 | None |

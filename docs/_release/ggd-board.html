@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-09-01 14:20 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-09-02 00:46 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.34.25 · 資料截至 2026-09-01 14:20 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-01 14:20 (GMT+8)</h1><div class="meta"><span>帳本 <b>14</b> 份</span><span>點名票號 <b>351</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.35.1 · 資料截至 2026-09-02 00:46 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-02 00:46 (GMT+8)</h1><div class="meta"><span>帳本 <b>15</b> 份</span><span>點名票號 <b>351</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -930,6 +930,22 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>13:30</td><td>不是故意的，請你開票</td><td>⏸ 未對票</td></tr>
 <tr><td>13:37</td><td>新增第十一回合 生存模式 如果整場所有回合戰鬥中 累計打敗三次殭屍王則展開第十一回合 時限10分鐘 不會出現火圈 以活下來為目標 每30秒出現一波殭屍組合 這個殭屍組合你可以建議 難度指數增加 組合項目可以包含 殭屍 特殊殭屍 殭屍王 的不同英雄組合 甚至加入場景效果 例如特定區域 BR 大轟炸 目前是討論先不開票</td><td>⏸ 未對票</td></tr>
 <tr><td>14:05</td><td>普通殭屍依然可以 2秒一波</td><td>⏸ 未對票</td></tr>
+<tr><td>15:23</td><td>（進度）責任①：打擊手感 13 個數字搬進 config.combat-feel@1 的 impactFeel。⭐ 而這一輪最重要的不是搬家，是<b>量尺第四次被抓到灌大</b>：KDA_REF 那一族其實碰得到（config.match@1 的 rating.*）⇒ 補「只當 fallback 用」的豁免。⛔⛔ 而放寬規則的當下就是它最可能開始說謊的時刻 —— 量過：改成「任意連續片段」母體 129→39，因為 MANA_FLOOR 的 floor 在七份不相干設定檔裡都是欄位名，⭐ 而那個方向的錯看起來像進度。⇒ 測試③ 現在同時釘住「已知碰得到的不可以在母體裡」與「已知碰不到的必須還在」。</td><td>908</td></tr>
+<tr><td>23:14</td><td>owner 2026-09-01（回答票內的待決項）： &gt; 「<b>都要</b>，另外再新增<b>擊中多少敵人</b>」 ⇒ ⭐ <b>三個新欄位</b>（⛔ 不是一個）：<code>matchId</code> · <b>等級</b> · <b>擊中敵人數</b>。 ## ⭐ 成本分三級（量到的，⛔ 不是估計） | 新欄位 | 資料在哪 | 成本 | |---|---|---| | <code>matchId</code> | ⭐ <b><code>DamageBoardEntry</code> 已經有這一格</b> | 只改顯示 | | <b>擊中敵人數</b> | ⭐ <b>ledger 已經在算</b> —— <code>apps/game-server/src/match/MatchController.ts</code> 的 <code>damage</code> 事件每一發都 <code>creditCast({ heroHits, mobHits, … })</code> | 只要<b>搬進</b> <code>DamageBoardEntry</code> | | <b>等級</b> | ⛔ <b>完全沒有</b> —— 要在開 cast 的當下讀一次 | 改寫入端 ＋ 舊資料無此格 | ## ⭐⭐ 而「擊中敵人數」比看起來重要：它讓這張榜第一次<b>可比</b> 今天的 <code>damage</code> 是<b>一次施放的總傷害</b>（票文原句：「一發 = 一次施放打出的總傷害」）。 ⇒ ⛔ 一發打中 8 隻的 AoE 和一發打中 1 個人的爆發，在同一欄裡<b>根本不能比</b>。 ⭐ 有了擊中數就能同時給出<b>每目標傷害</b>（<code>damage ÷ 擊中數</code>）—— ⚠️ 那才是平衡分析真正要看的數字，而今天這張榜給不出來。 ⇒ ⭐ 建議把「每目標傷害」也做成一欄（<b>推導欄，⛔ 不用存</b>），並且<b>可排序</b>。 ## ⚠️ 兩個要分開的計數 <code>heroHits</code> 與 <code>mobHits</code> 是<b>兩個獨立的數字</b>，⛔ 不要加起來變成一個「擊中數」—— ⭐ 一發掃過 30 隻殭屍與一發打中 3 個英雄，是完全不同的事件。 ⇒ 建議<b>兩欄</b>（或一欄顯示 <code>3 英雄 / 12 小怪</code>），⛔ 而排序要能分別對兩者排。 ## ⚠️ 舊資料 <code>等級</code> 與 <code>擊中數</code> 在<b>這次改動之前的每一筆都不存在</b> ⇒ ⭐ 顯示端要吃得下 <code>undefined</code>，並且<b>顯示成 <code>—</code></b>（同「佔目標血量」的既有慣例）， ⛔ 不可以顯示成 0 —— 那會讓舊資料看起來像「一個人都沒打中」。 ## 追加驗收 7. <code>matchId</code> · <b>等級</b> · <b>擊中敵人數</b>（英雄／小怪分開）四欄顯示得出來且可排序 8. ⭐ <b>每目標傷害</b>推導欄存在且可排序 9. ⭐ 改動之前寫入的舊資料，<code>等級</code>／<code>擊中數</code> 顯示為 <b><code>—</code></b>，⛔ 不是 0，而且排序時排在最後 10. 寫入端新增欄位之後，<code>apps/game-server/src/stats/damageBoard.ts</code> 的既有寫入路徑不因缺欄而壞</td><td>914</td></tr>
+<tr><td>23:20</td><td>盡量特效模組化 像JASS一樣可以呼叫設定 來拼湊組合 並非每個技能都一個特定特效，[後台編輯器及codex編輯器] 是堆積木的角色 要充分了解有哪些積木, 而 main 遊戲主程式 是做出積木供使用的角色 =&gt; 你覺得這張票哪些是積木 哪些是拼積木? 如果都有就要拆票 你來判斷後續</td><td>244 547</td></tr>
+<tr><td>23:22</td><td>owner 2026-09-01： &gt; 「那你要另外列出 <b>命中敵人數量</b> <b>命中所有敵人累積總傷害</b> 額外兩個欄位」 ## ⛔ 更正一個前提：「命中所有敵人累積總傷害」<b>就是現有的「傷害」欄</b> <code>apps/game-server/src/stats/damageBoard.ts</code> 的欄位註解逐字： &gt; <code>/<b> 這一次施放打出的</b>總傷害**(對英雄 + 對小怪) */</code> &gt; <code>damage: number;</code> ⇒ ⭐ 再加一欄會讓<b>同一個數字有兩個住處</b>（第〇·四守則）。 ⛔ 不加，⭐ 改成把現有那一欄的<b>標題講清楚</b>（例如「總傷害（全目標）」）。 ## ⭐ 而真正缺的是<b>反方向</b>的那個數字 <code>victimDamage</code> 的註解逐字： &gt; <code>/<b> ⭐ GH#658 —— 這一次施放打在</b>單一英雄**身上的最大一擊。 */</code> ⇒ ⭐ <b>它在 entry 裡，而畫面沒有顯示它</b> —— 今天只被拿去算「佔目標血量」的百分比。 ⚠️ 那個百分比藏住了絕對值：<b>「佔 40%」在一個 3,000 血的人與 30,000 血的人身上差十倍</b>。 ## ⇒ 定案的欄位表 | 欄 | 是什麼 | 資料在哪 | 成本 | |---|---|---|---| | <b>傷害（全目標累積）</b> | 一次施放對所有目標的總和 | ⭐ <b>已有</b> <code>damage</code> | 只改標題 | | ⭐ <b>命中敵人數量</b> | <code>heroHits</code> / <code>mobHits</code> —— ⚠️ <b>兩個分開</b> | ledger 有（<code>MatchController.ts</code> 的 <code>creditCast</code>），entry ⛔ 沒有 | 搬進 entry | | ⭐ <b>單體最大一擊</b> | 打在單一英雄身上最多的那一下 | ⭐ <b>entry 已有</b> <code>victimDamage</code>，⛔ 畫面沒顯示 | 只改顯示 | | ⭐ <b>每目標傷害</b> | <code>傷害 ÷ 命中數</code> | 推導 | ⛔ 不存 | | <code>matchId</code> | 同場識別 | ⭐ entry 已有 | 只改顯示 | | <b>等級</b> | 施放當下的等級 | ⛔ 完全沒有 | 改寫入端 | ## ⭐ 這四個合起來才第一次讓這張榜<b>可比</b> 今天只有一個「總傷害」⇒ ⛔ <b>一發掃 30 隻殭屍</b>與<b>一發打爆一個英雄</b>在同一欄裡分不開。 有了「命中數 × 單體最大一擊 × 每目標傷害」，兩者才是兩種不同的東西。 ## 追加驗收（取代前一則的第 7 條） 7. 六欄齊備且<b>每一欄可排序</b>：總傷害 · 命中數（英雄／小怪分開）· 單體最大一擊 · 每目標傷害 · <code>matchId</code> · 等級 8. ⛔ <b>不新增</b>「累積總傷害」欄 —— 那是現有的「傷害」欄，⭐ 只把標題改清楚 9. <code>victimDamage</code> 缺席的舊資料，「單體最大一擊」顯示 <code>—</code>（⛔ 不是 0），排序排最後 10. 「每目標傷害」在命中數為 0 或缺席時顯示 <code>—</code>（⛔ 不可以除以 0）</td><td>914</td></tr>
+</table></div>
+<p># 2026-09-02</p>
+<blockquote>⭐ 這張表由 <code>scripts/message-ledger.sh</code> 從 session transcript <b>逐則</b>撈出來對帳，</blockquote>
+<blockquote><code>scripts/ruling.sh</code> 收到裁決時也寫進同一張表。</blockquote>
+<blockquote>表格那一格是<b>截斷</b>過的；⛔ 全文沒有被壓縮取代，它在 <code>ledger-source_temp_*.md</code>。</blockquote>
+<blockquote>票號那一格 ⛔ 不可以留空：對不到票就寫 <code>⏸ 未對票</code>，<code>--check</code> 會紅。</blockquote>
+<div class="scroll"><table><tr><th>時間</th><th>owner 說了什麼（逐字）</th><th>票</th></tr>
+<tr><td>00:04</td><td>遊戲結束會是 所有隊伍全滅 無法復活的局面結算 因為無法復活的隊伍會很無聊 所以不能讓他們等太久 他們的屍體除了會轉化成殭屍王以外 應該還要有其他增幅手段</td><td>⏸ 未對票</td></tr>
+<tr><td>00:12</td><td>強度＝場上&quot;累積&quot;已生成殭屍數 =&gt; 你的企劃書還沒改 分數公式 存活秒數佔大比例，但混到最後的人分數也不會高，所以 50/50 王的強度上限 給你建議，總之不要一擊必殺 也不要打了都不損血或是幾秒內又回到滿的絕望 三支王的出生位置 原地生成 但是倒數10秒可以逃跑 有個腐爛生成的動畫圈圈提示 ⭐ 移動式危險區 ⛔ 全遊戲只有火圈一個 hazard，而火圈是收縮圓，⛔ 不是定點／移動轟炸 =&gt; 生成一個一次性的中立物件自爆該範圍 但自爆前紅色範圍指示倒數10秒</td><td>⏸ 未對票</td></tr>
+<tr><td>00:18</td><td>你的提議很好 死去的玩家 雖然變成殭屍王 但還是能操作 只是分數不會再計算增加 再死一次就真的徹底離開戰場 但還是要等最後結算畫面</td><td>⏸ 未對票</td></tr>
+<tr><td>00:22</td><td>* ⏸ 王的目標分數凍結之後，開王的玩家要追什麼？⭐ 建議：結算多一行獨立統計（「殭屍王擊倒 N 人」）—— ⛔ 不碰生存分數、⛔ 不改平衡，但給那個玩家一個數字。=&gt; ok, 並且每擊倒一次，獎勵生命回滿 * ⏸ 「無法復活」的定義特殊殭屍死會生復活圈 ⇒ 只要還有隊友活著能讀條就不算無法復活⭐ 建議：同隊零存活英雄才算，⛔ 不是「目前場上沒有復活圈」 =&gt; ok * ⏸ 各項數值強度係數、上下夾限、預警圈半徑、自爆傷害、事件表⛔ 這些等機制落地之後量，⛔ 不要現在猜 =&gt; ok</td><td>⏸ 未對票</td></tr>
+<tr><td>00:46</td><td>把打6隻就升級先設定為關閉 特殊殭屍 + lv3, 殭屍王 + lv10 這樣可以大幅避免掉直接升級被省略的xp</td><td>⏸ 未對票</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

@@ -9,8 +9,8 @@
   "cooldown:same": 113,
   "cooldown:tier": 155,
   "cooldown:w3a-absent": 172,
-  "duration:free-number": 32,
-  "duration:ggd-absent": 187,
+  "duration:free-number": 33,
+  "duration:ggd-absent": 186,
   "duration:same": 10,
   "duration:w3a-absent": 223,
   "mana:ggd-zero": 78,
@@ -7637,6 +7637,16 @@
   {
    "axis": "duration",
    "key": "duration:free-number",
+   "w3a": "A0ZO",
+   "ggd": "godie-e00s.r",
+   "name": "70-04 樹海降臨",
+   "w3aValue": 0.0,
+   "ggdValue": 8.0,
+   "verdict": "free-number"
+  },
+  {
+   "axis": "duration",
+   "key": "duration:free-number",
    "w3a": "A102",
    "ggd": "godie-edem.ex",
    "name": "45-002 天照",
@@ -8161,16 +8171,6 @@
    "ggd": "godie-e00s.q",
    "name": "70-01 伸卡球",
    "w3aValue": 1.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:ggd-absent",
-   "w3a": "A0ZO",
-   "ggd": "godie-e00s.r",
-   "name": "70-04 樹海降臨",
-   "w3aValue": 0.0,
    "ggdValue": null,
    "verdict": "ggd-absent"
   },

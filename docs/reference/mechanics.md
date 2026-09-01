@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_d91ed3475829`
+contentVersion `cv_88cbb6486bf2`
 
 ---
 
@@ -59,7 +59,7 @@ contentVersion `cv_d91ed3475829`
 | `spawnProjectile` | 投射物 | 22 | `godie-e008.e`、`godie-e010.q`、`godie-n003.e`、`godie-n003.r`、`godie-n00p.w`、`godie-n01c.e`、`godie-n01g.e`、`godie-n01g.r`、`godie-nbbc.e`、`godie-nsjs.w`、`godie-o00l.q`、`godie-o030.r` …（共 22） |
 | `spawnVfx` | 純演出（特效／音效） | 57 | `godie-e002.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e00l.e`、`godie-e00l.ex`、`godie-e00l.r`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.r`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00x.r` …（共 57） |
 | `spendMana` | 燒魔 | 4 | `godie-e00l.w`、`godie-emfr.passive`、`godie-u00k.passive`、`godie-udea.r` |
-| `summon` | 召喚 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `summon` | 召喚 | 2 | `godie-e00s.r`、`godie-e010.r` |
 | `swapResource` | 資源互換 | 1 | `godie-emns.ex` |
 | `taunt` | 嘲諷 | 2 | `godie-n00b.passive`、`godie-o00k.passive` |
 | `weightedBranch` | 加權分支（隨機挑一段） | 5 | `godie-e00s.ex`、`godie-h02k.ex`、`godie-h02v.ex`、`godie-n00b.passive`、`grail-ex-08` |
