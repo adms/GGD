@@ -89,6 +89,7 @@ import { specForPage } from "../configForms";
 import { PerLevelBonusPage } from "./PerLevelBonusPage";
 // 🧑‍⚖️ GH#669/#785 —— 一頁批次後台驗收（連續圖片＋一鍵否決＋必填原因）。
 import { FeatureReviewPage } from "./FeatureReviewPage";
+import { SubmissionsReviewPage } from "./SubmissionsReviewPage";
 import { VfxForgePage } from "./VfxForgePage";
 import { HeroForgePage } from "./HeroForgePage";
 import { MCoinGrantPage } from "./MCoinGrantPage";
@@ -362,6 +363,10 @@ export const NAV: NavItem[] = [
   // 🧑‍⚖️ owner 2026-08-27:「你還是沒告訴我去後台哪裡審查 [一頁批次後台驗收]」
   //    ⇒ 在此之前它**不在後台**（只活在 client dev server）。現在是真的一頁。
   { page: "featureReview", label: "批次驗收（連續圖片）", emoji: "🧑‍⚖️", section: SEC_OPS },
+  // 📥 owner 2026-09-01：「所有技能效果機制動畫特效由 AI 來調整變更都要經過
+  //    **後台一頁批核審查頁 通過才能套用**」⇒ ⭐ 這一頁的預設與上面那一頁**相反**：
+  //    那一頁「先上線、事後否決」，這一頁「先不上線、通過才套用」。
+  { page: "submissionsReview", label: "投稿批核（AI／玩家）", emoji: "📥", section: SEC_OPS },
   // 變身外觀 (#249 GH#288) —— 26 對變身裡有 21 對前後同一個模型,所以「看不看得
   // 出來」全靠顏色/大小/球體掛件這三樣,而它們在 w3x 裡是空的。
   { page: "formVisuals", label: "變身外觀", emoji: "✨", section: SEC_PRESENT },
@@ -1240,6 +1245,7 @@ export function Console(): React.JSX.Element {
             {page === "statCaps" && <StatCapsPage />}
             {page === "perLevelBonus" && <PerLevelBonusPage />}
             {page === "featureReview" && <FeatureReviewPage />}
+            {page === "submissionsReview" && <SubmissionsReviewPage />}
             {page === "combatFeel" && <CombatFeelPage />}
             {page === "matchConfig" && <MatchConfigPage />}
             {page === "storeEconomy" && <StoreEconomyPage />}

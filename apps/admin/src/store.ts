@@ -184,6 +184,7 @@ export type Page =
    * ⛔ 不進 SESSION_REQUIRED_PAGES：帳本是本機檔，dev middleware 直接供應。
    */
   | "featureReview"
+  | "submissionsReview"
   | "liveMdlFamilies"
   | "liveParallelBoard"
   | "liveJassVfx"
