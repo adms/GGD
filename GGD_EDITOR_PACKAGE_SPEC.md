@@ -1,5 +1,69 @@
 # GGD Editor JSON／ZIP 匯入契約
 
+---
+
+## §0·1 ⭐⭐ **runtime-direct**（2026-09-02）—— 本規格的 Draft 0.4 四層 compiler **不適用於 GGD**
+
+> ⚠️ ⭐ **先讀這一節再往下讀。** 底下 §2 起描述的四層模型
+> （Definition → Product → Chain → compiled expansion）是為**多作者世界**寫的。
+> ⛔ GGD 不走那條路，而在 2026-09-02 之前**這份文件沒有說**，於是同一套契約
+> 有三份 receipt 在說不同的話 —— 整整 **17 天**。
+
+### ⛔ 量到的矛盾
+
+| 誰 | 說什麼 |
+|---|---|
+| `content/editor-target-profile.json` | `compiler.* = null`，理由逐字：「⭐ **砍掉編譯器那一層**」（owner 2026-08-15，commit `5406c4ce7` / GH#327） |
+| `zPackageManifest` | `compiler: { contractVersion, fingerprint }` —— ⛔ **必填、非空** |
+| **本文件**（Draft 0.4） | 描述四層 compiler ＋ `expectedCompiled` 比對 |
+
+⇒ ⭐ 照 profile 做（不產 compiled）⇒ **manifest 過不了 schema**；
+照 schema 做 ⇒ 只能填一個**假指紋**，⛔ 而那個假指紋會叫對面去實作
+「重編比對」—— 一件我們這一側**不會做**的事。
+⚠️ 於是他們每一包都比對失敗，⛔ 而失敗訊息看起來像**格式問題**。
+
+### ⭐ 定案：問「**是哪一種處理器**」，⛔ 不是「有沒有編譯器」
+
+```jsonc
+"authoringProcessor": {
+  "kind": "runtime-direct",
+  "contractVersion": "runtime-direct@1",
+  "fingerprint": "<12 hex>"          // ⭐ 量出來的,⛔ 不是手寫版本字串
+}
+```
+
+| | |
+|---|---|
+| **canonical authority** | ⭐ 包裡的 `ability@1` / `item@1` **本身** |
+| **第二份 compiled 表示法** | ⛔ **不建立** |
+| `expectedCompiled` | ⛔ **不強制**（schema 已改成選填，預設 `[]`） |
+| `compiler` 那一格 | ⭐ **留著**，⛔ 但留給**未來真的需要 compile 的表示法** —— ⛔ 不塞假的 `"none"` |
+| **Importer 仍要做** | staging validation · ref closure · capability/rules 驗證 · derived rebuild ⇒ ⭐ 這些**一項都沒少** |
+
+### ⛔ `fingerprint` 為什麼不可以是手寫的版本字串
+
+它的**唯一**用途是讓對面知道「我上次驗過的那套規則還是不是這一套」。
+⚠️ 一個 `"runtime-direct@1.0.3"` 會在 schema 改了而版本沒 bump 時
+**靜靜地繼續說「一樣」**。
+
+⇒ ⭐ 它是**七個共用實作面**的位元組雜湊（`packages/shared/src/content/import/authoringProcessor.ts`）：
+
+| # | surface | 為什麼算它 |
+|---:|---|---|
+| 1 | `ability-item-zod-schemas` | canonical authority 本身的驗證器 |
+| 2 | `exact-ref-collector` | 「一包要帶哪些東西才算封閉」 |
+| 3 | `capability-applicability` | 「這個標籤引擎認不認得」 |
+| 4 | `authoring-rules` | schema 收得下但**我們不接受**的那一層 |
+| 5 | `runtime-loader` | ⭐ 出貨**真的會跑**的那條路（⛔ 不是 schema） |
+| 6 | `derived-rebuild-rules` | 哪些欄位是**重算得出來**的 |
+| 7 | `golden-vectors` | JCS · 未知欄位政策 · ZIP 安全 —— 兩邊必須逐位元一致 |
+
+⭐ **閘**：`authoringProcessor.test.ts` ② 逐面改一個位元組，指紋沒動就 🔴；
+`twoProfilesAgree.test.ts` 比對 **static 與 runtime 兩份 profile 的指紋逐字相同**。
+
+---
+
+
 狀態：**Draft 0.4 — 供 editor 與遊戲 importer 共同實作，尚未開始程式開發；Product 預設 host-local 與 V1 安全 typed `effect-graph-v1` 已由 owner 裁決**
 
 基線：`GGD main@81826f9ffc8f1561fe99dbd5628576645f321664`
@@ -493,8 +557,10 @@ Editor MAY 為方便現有人工／legacy 流程，另行輸出一份當前 vali
 - `migrationFingerprint`：bootstrap 必填
 - `selectionRoots[]`：使用者在 Editor Export Center 明示選取的 Definition／Product／Ability／Item root exact refs；bootstrap／full 以完整 snapshot root 表示，delta 不得為空。
 - `changes[]`：實際將套用的 authoring upserts，每筆含 kind／id／path／op=`upsert`、before exact revision／contentSha256（新增為 null）、after revision／contentSha256、`reason: selected | required-dependency | explicit-ref-adoption`。
-- `compiler.contractVersion`
-- `compiler.fingerprint`
+- `authoringProcessor.kind` = `runtime-direct`（⭐ 2026-09-02 取代下面兩格）
+- `authoringProcessor.contractVersion` = `runtime-direct@1`
+- `authoringProcessor.fingerprint`（⭐ **量出來的** —— 七個共用實作面的位元組雜湊）
+- ~~`compiler.contractVersion`~~ · ~~`compiler.fingerprint`~~ ⇒ ⛔ **runtime-direct 一律省略**（見 §0·1）
 - `requiredCapabilities[]`
 - `entries[]`：path、role (`authoring | compiled | validation | report`)、contentSha256、contentSize（JCS canonical bytes）；content entries 另有 collection、id、schema、op、revision
 - `transport`（ZIP only）：format／policy 與非 manifest entries 的 path、rawSha256、rawSize；不參與 packageDigest

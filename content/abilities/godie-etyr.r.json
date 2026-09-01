@@ -8,9 +8,9 @@
   "castType": "targeted",
   "maxRank": 3,
   "cooldown": [
-    6.0,
-    6.0,
-    6.0
+    30.0,
+    30.0,
+    30.0
   ],
   "cooldownTier": "極小",
   "manaCost": [

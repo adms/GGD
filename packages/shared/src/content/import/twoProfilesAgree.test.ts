@@ -23,6 +23,7 @@ import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { buildTargetProfile } from "./targetProfile";
+import { buildAuthoringProcessor } from "./authoringProcessor";
 
 const ROOT = resolve(__dirname, "../../../../..");
 const STATIC = JSON.parse(
@@ -37,8 +38,12 @@ const runtime = buildTargetProfile({
 
 describe("⭐ 靜態 profile 與 runtime profile 對同一件事的說法", () => {
   it("★★ ⭐ **編譯器那一層**：兩份都說「不會有」（⛔ 不是一份說『還沒做』）", () => {
-    const s = STATIC["authoringModel"] as { accepts?: string[]; notRequired?: string[] } | undefined;
-    expect(s, "⛔ 靜態 profile 沒有 authoringModel（它從 2026-08-15 起就該有）").toBeDefined();
+    const s = STATIC["authoringModel"] as
+      { accepts?: string[]; notRequired?: string[] } | undefined;
+    expect(
+      s,
+      "⛔ 靜態 profile 沒有 authoringModel（它從 2026-08-15 起就該有）",
+    ).toBeDefined();
     expect(
       runtime.authoringModel.accepts,
       "⛔⛔ runtime profile 與靜態 profile 對「編輯器該產什麼」說法不同 ⇒ 對面會做相反的事",
@@ -49,15 +54,65 @@ describe("⭐ 靜態 profile 與 runtime profile 對同一件事的說法", () =
   });
 
   it("⭐ `compiler` 兩格仍然是 null —— 而理由**不可以**再寫「尚未實作」", () => {
-    expect(runtime.compiler).toEqual({ contractVersion: null, fingerprint: null });
+    expect(runtime.compiler).toEqual({
+      contractVersion: null,
+      fingerprint: null,
+    });
     const reason =
-      runtime.unavailable.find((u) => u.field.startsWith("compiler."))?.reason ?? "";
-    expect(reason, "⛔ 一個 null 沒有出處，跟「忘了填」長得一模一樣").not.toBe("");
+      runtime.unavailable.find((u) => u.field.startsWith("compiler."))
+        ?.reason ?? "";
+    expect(reason, "⛔ 一個 null 沒有出處，跟「忘了填」長得一模一樣").not.toBe(
+      "",
+    );
     expect(
       reason.includes("尚未實作"),
       "⛔⛔ 理由仍然寫著「尚未實作」—— 而 owner 2026-08-15 裁決的是「**這條路上不會有編譯器**」。\n" +
         "⭐ 兩者讓對面做相反的事：等 vs 直出。",
     ).toBe(false);
     expect(reason).toContain("砍掉");
+  });
+});
+
+describe("⭐ §1 runtime-direct：兩份 profile 的處理器宣告必須是**同一個**", () => {
+  const rt = buildTargetProfile({
+    generatedAt: "2026-09-02T00:00:00.000Z",
+    gameVersion: null,
+    content: null,
+    authoringProcessor: buildAuthoringProcessor(ROOT),
+  });
+
+  it("★★ ⭐ 靜態 profile 帶得出 `authoringProcessor`，⛔ 不是只有 compiler:null", () => {
+    const s = STATIC["authoringProcessor"] as
+      | { kind?: string; contractVersion?: string; fingerprint?: string }
+      | undefined;
+    expect(
+      s,
+      "⛔⛔ 靜態 profile 沒有 `authoringProcessor` ⇒ 對面只看得到 `compiler:null`，\n" +
+        "⭐ 而 `null` 讀起來是「還沒做」，⛔ 不是「這條路上不會有」。",
+    ).toBeDefined();
+    expect(s?.kind).toBe("runtime-direct");
+    expect(s?.contractVersion).toBe("runtime-direct@1");
+  });
+
+  it("★★ ⭐⭐ 兩份的**指紋逐字相同** —— ⛔ 不是「都有一個指紋」", () => {
+    const s = STATIC["authoringProcessor"] as
+      { fingerprint?: string } | undefined;
+    expect(
+      rt.authoringProcessor?.fingerprint,
+      "⛔⛔ runtime 與靜態 profile 的處理器指紋不同 ⇒ ⭐ 對面驗哪一份都會失敗，\n" +
+        "   而失敗訊息看起來像「你的包過期了」——⛔ 實際上是我們兩份 receipt 在打架。\n" +
+        "   ⚠️ 靜態那份過期 ⇒ 跑 `pnpm content:build` 再 `git add content/`。",
+    ).toBe(s?.fingerprint);
+  });
+
+  it("★ ⭐ `compiler` 那一格的理由要**指得出替代欄位**（⛔ 不是只給理由）", () => {
+    const reason =
+      rt.unavailable.find((u) => u.field.startsWith("compiler."))?.reason ?? "";
+    expect(reason).not.toBe("");
+    // ⛔ 一個 null 只說「不會有」還不夠 —— 對面要知道**改看哪一格**。
+    expect(
+      rt.authoringProcessor,
+      "⛔ compiler 是 null 而**沒有**替代欄位 ⇒ 對面只能猜",
+    ).not.toBeNull();
   });
 });

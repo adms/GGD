@@ -61,6 +61,15 @@ function run(cmd: string): void {
     cwd: REPO,
     stdio: "pipe",
     timeout: 10 * 60_000,
+    // ⛔⛔ `GGD_RECONCILE_OFF=1` —— ⭐ 理由是**具體的**，⛔ 不是「它很吵」：
+    //   `genrun.sh` 的執行期對帳把「這一支跑的期間**檔案系統上變動的每一份**」
+    //   歸給那一支。⚠️ 而這條測試在 vitest 裡跑 —— 同一個 repo 上任何**別的**東西
+    //   （帳本追加、另一條 lane、編輯器存檔）在那幾分鐘裡寫了檔，就會被算到
+    //   `skillremake:json` 頭上 ⇒ ⭐ 這條守衛會用**別人的**錯誤紅掉，
+    //   而它要驗的東西（來源改動撐不撐得過重生成）根本沒被量到。
+    //   ⚠️ 實測 2026-09-02：它把 `docs/_daily/2026-09-02.md` 算給了 skillremake:json。
+    // ⚠️ ⛔ 這**不是**把對帳關掉：`pnpm skills:sync` 與 `ship:check` 上它照跑。
+    env: { ...process.env, GGD_RECONCILE_OFF: "1" },
   });
 }
 

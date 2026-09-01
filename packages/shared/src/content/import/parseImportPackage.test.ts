@@ -35,7 +35,11 @@ const base = (): Record<string, unknown> => ({
     migrationFingerprint: "mf-1",
     selectionRoots: [],
     changes: [],
-    compiler: { contractVersion: "1", fingerprint: "abc" },
+    authoringProcessor: {
+      kind: "runtime-direct",
+      contractVersion: "runtime-direct@1",
+      fingerprint: "abc",
+    },
     requiredCapabilities: [],
     entries: [],
     requires: [],

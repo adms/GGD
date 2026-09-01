@@ -35,6 +35,7 @@
  * 兩格都在，而且只有內容真的變了才會變。⛔ 不要把時間戳加回來。
  */
 import { effectiveVfxLimits } from "../src/content/import/effectiveVfxLimits";
+import { buildAuthoringProcessor } from "../src/content/import/authoringProcessor";
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { writeProduct } from "../src/ops/writeProduct";
@@ -93,7 +94,8 @@ function readCollection<T extends { id?: string }>(name: string): T[] {
   return out;
 }
 
-const sortedUnique = (xs: readonly string[]): string[] => [...new Set(xs)].sort();
+const sortedUnique = (xs: readonly string[]): string[] =>
+  [...new Set(xs)].sort();
 
 /**
  * ⭐【內容詞彙表】—— owner 2026-08-16：「技能對應 技能標籤 效果 機制 **特效**
@@ -120,18 +122,35 @@ function buildVocabulary(): Record<string, unknown> {
     innateKind?: unknown;
     template?: { ref?: unknown };
   };
-  type Item = { id?: string; tags?: unknown; craftRole?: unknown; modifiers?: unknown };
-  type Template = { id?: string; family?: unknown; status?: unknown; params?: unknown };
+  type Item = {
+    id?: string;
+    tags?: unknown;
+    craftRole?: unknown;
+    modifiers?: unknown;
+  };
+  type Template = {
+    id?: string;
+    family?: unknown;
+    status?: unknown;
+    params?: unknown;
+  };
 
   const abilities = readCollection<Ability>("abilities");
   const items = readCollection<Item>("items");
   const templates = readCollection<Template>("ability-templates");
-  const vfxIds = new Set(readCollection<{ id?: string }>("vfx").map((v) => v.id!));
+  const vfxIds = new Set(
+    readCollection<{ id?: string }>("vfx").map((v) => v.id!),
+  );
 
-  const str = (v: unknown): string | null => (typeof v === "string" && v !== "" ? v : null);
+  const str = (v: unknown): string | null =>
+    typeof v === "string" && v !== "" ? v : null;
 
-  const vfxKeys = sortedUnique(abilities.map((a) => str(a.vfxKey)).filter((x): x is string => x !== null));
-  const sfxKeys = sortedUnique(abilities.map((a) => str(a.sfxKey)).filter((x): x is string => x !== null));
+  const vfxKeys = sortedUnique(
+    abilities.map((a) => str(a.vfxKey)).filter((x): x is string => x !== null),
+  );
+  const sfxKeys = sortedUnique(
+    abilities.map((a) => str(a.sfxKey)).filter((x): x is string => x !== null),
+  );
   // ⛔ 這一格必須是**量出來的**，不是宣稱的：dangling 一旦 > 0，
   //   代表出貨內容自己就有壞掉的綁定，而對方會照著抄。
   const dangling = vfxKeys.filter((k) => !vfxIds.has(k));
@@ -139,14 +158,18 @@ function buildVocabulary(): Record<string, unknown> {
   const modifierStats = sortedUnique(
     items.flatMap((i) =>
       Array.isArray(i.modifiers)
-        ? (i.modifiers as { stat?: unknown }[]).map((m) => str(m?.stat)).filter((x): x is string => x !== null)
+        ? (i.modifiers as { stat?: unknown }[])
+            .map((m) => str(m?.stat))
+            .filter((x): x is string => x !== null)
         : [],
     ),
   );
   const modifierOps = sortedUnique(
     items.flatMap((i) =>
       Array.isArray(i.modifiers)
-        ? (i.modifiers as { op?: unknown }[]).map((m) => str(m?.op)).filter((x): x is string => x !== null)
+        ? (i.modifiers as { op?: unknown }[])
+            .map((m) => str(m?.op))
+            .filter((x): x is string => x !== null)
         : [],
     ),
   );
@@ -154,7 +177,9 @@ function buildVocabulary(): Record<string, unknown> {
   const legendary = readJson<{ entries?: { itemId?: string }[] }>(
     join(CONTENT, "loot-tables", "legendary-weapons.json"),
   );
-  const legendaryIds = sortedUnique((legendary?.entries ?? []).map((e) => e.itemId ?? "").filter(Boolean));
+  const legendaryIds = sortedUnique(
+    (legendary?.entries ?? []).map((e) => e.itemId ?? "").filter(Boolean),
+  );
   const itemById = new Map(items.map((i) => [i.id!, i]));
 
   return {
@@ -165,7 +190,8 @@ function buildVocabulary(): Record<string, unknown> {
     ability: {
       count: abilities.length,
       /** 用模板組出來的支數（其餘是逐支寫的 effects）。 */
-      fromTemplate: abilities.filter((a) => str(a.template?.ref) !== null).length,
+      fromTemplate: abilities.filter((a) => str(a.template?.ref) !== null)
+        .length,
       /**
        * ⭐ 模板家族 + **它們吃的參數（含型別與上下界）** ——
        * 這就是「技能 = JSON 模板組合，沒有例外」那條守則的機器可讀版。
@@ -188,8 +214,13 @@ function buildVocabulary(): Record<string, unknown> {
         return acc;
       }, {}),
       /** 天生技的兩種形態。⛔ 不是 castType —— 它講的是「被動還是主動」。 */
-      innateKinds: sortedUnique(abilities.map((a) => str(a.innateKind)).filter((x): x is string => x !== null)),
-      effectKindsSource: "runtimeCapabilities.effectKinds（⛔ 不在這裡重複一份）",
+      innateKinds: sortedUnique(
+        abilities
+          .map((a) => str(a.innateKind))
+          .filter((x): x is string => x !== null),
+      ),
+      effectKindsSource:
+        "runtimeCapabilities.effectKinds（⛔ 不在這裡重複一份）",
     },
     // ── 特效鏈 ────────────────────────────────────────────────────────────
     vfx: {
@@ -205,8 +236,18 @@ function buildVocabulary(): Record<string, unknown> {
     // ── 道具鏈：道具 → 角色/標籤 → 效果 ─────────────────────────────────
     item: {
       count: items.length,
-      craftRoles: sortedUnique(items.map((i) => str(i.craftRole)).filter((x): x is string => x !== null)),
-      tags: sortedUnique(items.flatMap((i) => (Array.isArray(i.tags) ? (i.tags as unknown[]).map(str) : [])).filter((x): x is string => x !== null)),
+      craftRoles: sortedUnique(
+        items
+          .map((i) => str(i.craftRole))
+          .filter((x): x is string => x !== null),
+      ),
+      tags: sortedUnique(
+        items
+          .flatMap((i) =>
+            Array.isArray(i.tags) ? (i.tags as unknown[]).map(str) : [],
+          )
+          .filter((x): x is string => x !== null),
+      ),
       modifierStats,
       modifierOps,
     },
@@ -277,14 +318,19 @@ export function buildEditorTargetProfile(): Record<string, unknown> {
   //    ⛔ 不然它會照一份過期的標籤裁決產 JSON，而沒有任何東西叫。
   const tagPath = join(REPO, "skill-tag-manifest.json");
   const tagRaw = existsSync(tagPath) ? readFileSync(tagPath, "utf8") : null;
-  const tag = tagRaw === null ? null : (JSON.parse(tagRaw) as Record<string, unknown>);
+  const tag =
+    tagRaw === null ? null : (JSON.parse(tagRaw) as Record<string, unknown>);
   if (tag === null) {
-    unavailable.push({ field: "tagManifest", reason: "skill-tag-manifest.json 不存在。" });
+    unavailable.push({
+      field: "tagManifest",
+      reason: "skill-tag-manifest.json 不存在。",
+    });
   }
   const tagEngine = (tag?.["engine"] ?? {}) as Record<string, unknown>;
-  const declaredFp = typeof tagEngine["contractFingerprint"] === "string"
-    ? (tagEngine["contractFingerprint"] as string)
-    : null;
+  const declaredFp =
+    typeof tagEngine["contractFingerprint"] === "string"
+      ? (tagEngine["contractFingerprint"] as string)
+      : null;
 
   // ── ② packageSpec 的 digest（計畫 §1.2 路障三）──────────────────────────
   const specPath = join(REPO, PACKAGE_SPEC_FILE);
@@ -442,7 +488,8 @@ export function buildEditorTargetProfile(): Record<string, unknown> {
        * ⭐ 這一格是整份文件最重要的一行之一：tag manifest 宣稱的引擎指紋
        * 跟引擎**現在**算出來的一不一樣。false ⇒ 那份標籤裁決是對舊引擎做的。
        */
-      matchesEngine: declaredFp === null ? null : declaredFp === caps.fingerprint,
+      matchesEngine:
+        declaredFp === null ? null : declaredFp === caps.fingerprint,
       /** 引擎**現在**的指紋，讓對方不必自己去別的地方查。 */
       engineFingerprint: caps.fingerprint,
       /**
@@ -503,7 +550,12 @@ export function buildEditorTargetProfile(): Record<string, unknown> {
       /** 送進來的文件形狀。 */
       accepts: ["ability@1", "item@1"],
       /** ⛔ 這些**不再**是必要的（規格四層模型的上三層）。 */
-      notRequired: ["effect-template@1", "effect-product@1", "effect-chain@1", "expectedCompiled"],
+      notRequired: [
+        "effect-template@1",
+        "effect-product@1",
+        "effect-chain@1",
+        "expectedCompiled",
+      ],
       /** 驗證靠這三樣,⛔ 沒有重編比對。 */
       validatedBy: [
         "zod:collection-schema",
@@ -531,7 +583,8 @@ export function buildEditorTargetProfile(): Record<string, unknown> {
        *   `content/config/*.json` 推導，owner 在後台改一格，端點下一秒就變。
        */
       pricingEndpoint: "/api/v1/content-import/authoring-rules",
-      pricingSource: "packages/shared/src/content/authoringRules.ts（推導，⛔ 不是散文）",
+      pricingSource:
+        "packages/shared/src/content/authoringRules.ts（推導，⛔ 不是散文）",
       /** ⭐ 內嵌一份，讓對方一個 GET 就拿得到（profile 本身就在 CDN 上）。 */
       rules: buildAuthoringRules(readShippedConfig),
       /** ⛔ 這幾條是 normative，見 PACKAGE_SPEC。列在這裡是為了讓對方不必翻文件。 */
@@ -555,13 +608,17 @@ export function buildEditorTargetProfile(): Record<string, unknown> {
     },
 
     // ⑦ ⭐ 完整 manifest 的 canonical digest（⛔ 不再是那份 LOD 表）
-    assetManifestDigest: assetManifest === null ? null : sha12(JSON.stringify(assetManifest)),
+    assetManifestDigest:
+      assetManifest === null ? null : sha12(JSON.stringify(assetManifest)),
     assetManifest:
       assetManifest === null
         ? null
         : {
             path: "assets-manifest.json",
-            entries: assetManifest.counts?.entries ?? assetManifest.entries?.length ?? 0,
+            entries:
+              assetManifest.counts?.entries ??
+              assetManifest.entries?.length ??
+              0,
             totalBytes: assetManifest.counts?.totalBytes ?? 0,
           },
     // ⭐ P1-2 —— **實際生效**的 VFX 限制（⛔ 不是 schema 上界）。與客戶端
@@ -570,6 +627,12 @@ export function buildEditorTargetProfile(): Record<string, unknown> {
       readJson(join(CONTENT, "config", "vfx-budget.json")) as never,
       readJson(join(CONTENT, "config", "vfx-cleanup.json")) as never,
     ),
+
+    // ⑧ ⭐⭐ runtime-direct 處理器宣告（規格 §1）——
+    //    ⛔ 取代 `compiler.{contractVersion,fingerprint}` 那一對 null。
+    //    ⚠️ 指紋是**量出來的**（七個共用實作面的位元組），⛔ 不是手寫版本字串：
+    //      一個手寫的版本會在 schema 改了而版本沒 bump 時**靜靜地繼續說「一樣」**。
+    authoringProcessor: buildAuthoringProcessor(REPO),
 
     // ⑨
     deltaExportAllowed,
@@ -601,8 +664,16 @@ export function writeEditorTargetProfile(): string {
 }
 
 // 直接執行時才寫檔（被 import 當函式庫時不要有副作用）。
-if (process.argv[1] !== undefined && process.argv[1].endsWith("buildEditorTargetProfile.ts")) {
+if (
+  process.argv[1] !== undefined &&
+  process.argv[1].endsWith("buildEditorTargetProfile.ts")
+) {
   const t = writeEditorTargetProfile();
-  const p = JSON.parse(t) as { profileDigest: string; content: { contentVersion: string | null } };
-  console.log(`editor-target-profile.json  cv=${p.content.contentVersion}  digest=${p.profileDigest}`);
+  const p = JSON.parse(t) as {
+    profileDigest: string;
+    content: { contentVersion: string | null };
+  };
+  console.log(
+    `editor-target-profile.json  cv=${p.content.contentVersion}  digest=${p.profileDigest}`,
+  );
 }

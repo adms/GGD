@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_385f45e0afb8",
+    "contentVersion": "cv_17d1d6911e32",
     "collections": {
       "champions": {
-        "hash": "b51db1b51a3e",
+        "hash": "e0d8bd956cb1",
         "count": 71
       },
       "abilities": {
-        "hash": "dbc6c0194060",
+        "hash": "027fae8c3e29",
         "count": 421
       },
       "items": {
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "120a0394c5b8",
+        "hash": "a7b9c5b0db6d",
         "count": 93
       },
       "models": {
@@ -82,8 +82,8 @@
     "capabilitiesSchema": "ggd-runtime-capabilities@1",
     "packageSpec": {
       "file": "GGD_EDITOR_PACKAGE_SPEC.md",
-      "digest": "91a2bab45117",
-      "bytes": 47880,
+      "digest": "6f12718afecb",
+      "bytes": 51463,
       "label": "Draft 0.4"
     },
     "compiler": {
@@ -5494,6 +5494,41 @@
     "maxOneShotEmitters": 96,
     "roundPurgeMode": "full"
   },
+  "authoringProcessor": {
+    "kind": "runtime-direct",
+    "contractVersion": "runtime-direct@1",
+    "fingerprint": "e46d097c114b",
+    "surfaces": [
+      {
+        "surface": "ability-item-zod-schemas",
+        "digest": "9a8573a3aabc"
+      },
+      {
+        "surface": "exact-ref-collector",
+        "digest": "a49be1d31d15"
+      },
+      {
+        "surface": "capability-applicability",
+        "digest": "32f91e4ba6ad"
+      },
+      {
+        "surface": "authoring-rules",
+        "digest": "11d88a3875f1"
+      },
+      {
+        "surface": "runtime-loader",
+        "digest": "74e29290a6ab"
+      },
+      {
+        "surface": "derived-rebuild-rules",
+        "digest": "88ea703a37ce"
+      },
+      {
+        "surface": "golden-vectors",
+        "digest": "a33d0d04b7ec"
+      }
+    ]
+  },
   "deltaExportAllowed": false,
   "supportedModes": [
     "bootstrap"
@@ -5504,5 +5539,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "40b52b3a2fe1"
+  "profileDigest": "8cddce000195"
 }

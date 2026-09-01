@@ -30,7 +30,11 @@ const pkg = (gameRevision = "r1"): Record<string, unknown> => ({
     base: { gameRevision, contentVersion: "cv_1", activationDigest: null, authoringDigest: null },
     migrationFingerprint: "mf-1",
     selectionRoots: [], changes: [],
-    compiler: { contractVersion: "1", fingerprint: "abc" },
+    authoringProcessor: {
+      kind: "runtime-direct",
+      contractVersion: "runtime-direct@1",
+      fingerprint: "abc",
+    },
     requiredCapabilities: [], entries: [], requires: [],
     expectedCompiled: [], expectedDerived: [],
     validationPolicy: {}, requiredScenarios: [],

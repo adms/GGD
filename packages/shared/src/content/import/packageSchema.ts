@@ -24,6 +24,11 @@
  *    由 capabilities 那一層負責，兩者不要混。
  */
 import { z } from "zod";
+
+import {
+  AUTHORING_PROCESSOR_CONTRACT_VERSION,
+  AUTHORING_PROCESSOR_KIND,
+} from "./authoringProcessor";
 import type { ImportDiagnostic } from "./diagnostics";
 import { parseWithUnknownFieldReport } from "./unknownFields";
 import { zImportDiagnostic } from "./diagnostics";
@@ -291,9 +296,31 @@ const zManifestShape = z
     migrationFingerprint: zShort.nullable().optional(),
     selectionRoots: z.array(zExactRef).max(IMPORT_LIMITS.maxChangeRows),
     changes: z.array(zManifestChange).max(IMPORT_LIMITS.maxChangeRows),
+    /**
+     * ⭐⭐ **runtime-direct**（2026-09-02，取代 Draft 0.4 的四層 compiler receipt）。
+     *
+     * ⚠️ 在此之前這一格是 `compiler: { contractVersion, fingerprint }` —— **必填非空**，
+     * ⛔ 而 `content/editor-target-profile.json` 早已裁決 `compiler.* = null`
+     * （理由逐字：「⭐ 砍掉編譯器那一層」）。⇒ ⭐ **兩份 receipt 互相打架 17 天**：
+     * 照 profile 做 ⇒ manifest 過不了 schema；照 schema 做 ⇒ 只能填一個**假指紋**，
+     * 而那個假指紋會叫對面去實作一件我們這條路上不做的事（重編比對）。
+     *
+     * ⇒ ⭐ 改成問「**是哪一種處理器**」，⛔ 不是「有沒有編譯器」：
+     * canonical authority 就是包裡的 `ability@1`/`item@1` 本身。
+     * ⛔ `compiler` 這一格**留給未來真的需要 compile 的表示法**，⛔ 不塞假的 `none`。
+     */
+    authoringProcessor: z
+      .object({
+        kind: z.literal(AUTHORING_PROCESSOR_KIND),
+        contractVersion: z.literal(AUTHORING_PROCESSOR_CONTRACT_VERSION),
+        fingerprint: zShort,
+      })
+      .passthrough(),
+    /** ⛔ 舊欄位：**只在**真的有 compile 表示法時才出現。runtime-direct 一律省略。 */
     compiler: z
       .object({ contractVersion: zShort, fingerprint: zShort })
-      .passthrough(),
+      .passthrough()
+      .optional(),
     requiredCapabilities: z.array(zShort).max(IMPORT_LIMITS.maxReviewRows),
     entries: z.array(zManifestEntry).max(IMPORT_LIMITS.maxManifestRows),
     /** ZIP only；不參與 packageDigest（規格 §10）。 */
@@ -317,7 +344,16 @@ const zManifestShape = z
       .passthrough()
       .optional(),
     requires: z.array(zManifestRequire).max(IMPORT_LIMITS.maxManifestRows),
-    expectedCompiled: z.array(zExpectedCompiled).max(IMPORT_LIMITS.maxManifestRows),
+    /**
+     * ⛔ runtime-direct **不強制**它（規格 §1）——
+     * ⭐ 因為「第二份 compiled 表示法」在這條路上不存在，
+     * ⚠️ 而一個永遠是空陣列的必填欄位，讀起來像「我們比對過了」。
+     */
+    expectedCompiled: z
+      .array(zExpectedCompiled)
+      .max(IMPORT_LIMITS.maxManifestRows)
+      .optional()
+      .default([]),
     expectedDerived: z.array(zExpectedDerived).max(IMPORT_LIMITS.maxManifestRows),
     /** ⚠️ 規格沒有給 shape，見回報的歧義清單。 */
     validationPolicy: z.record(z.unknown()),

@@ -21,11 +21,20 @@ const bootstrap = () => ({
   mode: "bootstrap",
   gameId: "ggd",
   packageDigest: SHA,
-  base: { gameRevision: "r1", contentVersion: "cv_1", activationDigest: null, authoringDigest: null },
+  base: {
+    gameRevision: "r1",
+    contentVersion: "cv_1",
+    activationDigest: null,
+    authoringDigest: null,
+  },
   migrationFingerprint: "mf-1",
   selectionRoots: [],
   changes: [],
-  compiler: { contractVersion: "1", fingerprint: "fp" },
+  authoringProcessor: {
+    kind: "runtime-direct",
+    contractVersion: "runtime-direct@1",
+    fingerprint: "fp",
+  },
   requiredCapabilities: [],
   entries: [],
   requires: [],
@@ -42,7 +51,9 @@ describe("zPackageManifest", () => {
     expect(zPackageManifest.safeParse(bootstrap()).success).toBe(true);
     const omitted = bootstrap();
     delete (omitted.base as Record<string, unknown>).activationDigest;
-    expect(hasPath(zPackageManifest.safeParse(omitted), "base.activationDigest")).toBe(true);
+    expect(
+      hasPath(zPackageManifest.safeParse(omitted), "base.activationDigest"),
+    ).toBe(true);
   });
 
   it("changes[].op 只能是 upsert —— delete 會被拒（V1 禁止刪除）", () => {
@@ -65,18 +76,82 @@ describe("zPackageManifest", () => {
 
   it("acceptedWarnings[] 不得夾帶 ignoreAll", () => {
     const warn = { code: "X", reviewer: "owner", note: "ok", ignoreAll: true };
-    expect(zPackageManifest.safeParse({ ...bootstrap(), acceptedWarnings: [warn] }).success).toBe(false);
+    expect(
+      zPackageManifest.safeParse({ ...bootstrap(), acceptedWarnings: [warn] })
+        .success,
+    ).toBe(false);
   });
 });
 
 it("一份真的出貨 ability@1 會被認出是 raw runtime 文件（不是手刻夾具）", () => {
   const root = join(__dirname, "..", "..", "..", "..", "..");
-  const doc = JSON.parse(readFileSync(join(root, "content/abilities/godie-e001.q.json"), "utf8"));
+  const doc = JSON.parse(
+    readFileSync(join(root, "content/abilities/godie-e001.q.json"), "utf8"),
+  );
   expect(doc.schema).toBe("ability@1");
   expect(isRawRuntimeDocument(doc)).toBe(true);
   expect(isRawRuntimeDocument({ schema: "ggd-editor-import@1" })).toBe(false);
 });
 
 it("診斷碼登錄表的 key 與 code 必須一致（對面靠 code 字串比對）", () => {
-  for (const [key, d] of Object.entries(IMPORT_DIAGNOSTICS)) expect(d.code).toBe(key);
+  for (const [key, d] of Object.entries(IMPORT_DIAGNOSTICS))
+    expect(d.code).toBe(key);
+});
+
+describe("⭐ runtime-direct 契約（規格 §1）", () => {
+  it("★★ ⭐ 沒有 `authoringProcessor` ⇒ **拒**（⛔ 它不是選填的）", () => {
+    const { authoringProcessor: _drop, ...without } = bootstrap() as Record<
+      string,
+      unknown
+    > & {
+      authoringProcessor: unknown;
+    };
+    expect(
+      zPackageManifest.safeParse(without).success,
+      "⛔ 少了處理器宣告還放行 ⇒ 對面可以送一包**沒說自己是哪一種**的包進來",
+    ).toBe(false);
+  });
+
+  it("★★ ⭐ `kind` 必須逐字是 `runtime-direct` —— ⛔ 不收「看起來像」的值", () => {
+    for (const bad of [
+      "none",
+      "compiler",
+      "runtime_direct",
+      "runtime-direct@1",
+    ]) {
+      expect(
+        zPackageManifest.safeParse({
+          ...bootstrap(),
+          authoringProcessor: { ...bootstrap().authoringProcessor, kind: bad },
+        }).success,
+        `⛔ 收下了 kind=${bad} ⇒ ⭐「塞一個假的 none」正是這一節要禁止的事`,
+      ).toBe(false);
+    }
+  });
+
+  it("★★ ⭐ `expectedCompiled` **可以整格省略**（runtime-direct 沒有第二份表示法）", () => {
+    const { expectedCompiled: _drop, ...without } = bootstrap() as Record<
+      string,
+      unknown
+    > & {
+      expectedCompiled: unknown;
+    };
+    const r = zPackageManifest.safeParse(without);
+    expect(
+      r.success,
+      "⛔ 還在要求 compiled 清單 ⇒ 對面只能送一個永遠是空的陣列",
+    ).toBe(true);
+    if (r.success) expect(r.data.expectedCompiled).toEqual([]);
+  });
+
+  it("★ ⭐ `compiler` 這一格**留白**，⛔ 但留著（未來真的要 compile 的表示法用）", () => {
+    const r = zPackageManifest.safeParse({
+      ...bootstrap(),
+      compiler: { contractVersion: "some-future@1", fingerprint: "abc" },
+    });
+    expect(
+      r.success,
+      "⛔ 把 compiler 整格刪掉了 ⇒ 未來要加回來就是一次 breaking change",
+    ).toBe(true);
+  });
 });

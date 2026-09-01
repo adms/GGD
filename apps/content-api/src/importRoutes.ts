@@ -39,7 +39,11 @@ import type { FastifyInstance, FastifyReply } from "fastify";
 import { buildCapabilityManifest } from "@ggd/shared/content/editorCapabilities";
 import { buildAuthoringRules } from "@ggd/shared/content/authoringRules";
 import { Configs } from "@ggd/shared/content";
-import { IMPORT_DIAGNOSTICS, formatDiagnostic } from "@ggd/shared/content/import/diagnostics";
+import {
+  IMPORT_DIAGNOSTICS,
+  formatDiagnostic,
+} from "@ggd/shared/content/import/diagnostics";
+import { buildAuthoringProcessor } from "@ggd/shared/content/import/authoringProcessor";
 import {
   IMPLEMENTED_STAGE,
   IMPORT_ERROR_SCHEMA,
@@ -68,6 +72,13 @@ export interface ImportRoutesOptions {
   reloadMode?: ReloadMode;
   /** 建置戳記；拿不到就是 null（⛔ 不要填佔位字串）。 */
   gameVersion?: string | null;
+  /**
+   * ⭐ repo 根目錄 —— `authoringProcessor` 指紋要讀那七個實作面的位元組。
+   * ⛔ 預設 `resolve(contentDir, "..")` 是**假設**（出貨佈局是 `<repo>/content`）；
+   * ⚠️ 佈局不同時要明示傳入，⭐ 否則指紋算不出來 ⇒ profile 標 null 並附理由
+   * （⛔ 不是靜靜地產出一個涵蓋不到東西的假指紋）。
+   */
+  repoRoot?: string;
   /** 注入時鐘，讓守衛拿得到穩定的 `generatedAt`。 */
   now?: () => Date;
 }
@@ -133,7 +144,11 @@ async function readContentFacts(root: string): Promise<ContentFacts | null> {
       contentVersion?: unknown;
       collections?: Record<string, { hash?: unknown }>;
     };
-    if (typeof m.contentVersion !== "string" || typeof m.collections !== "object" || m.collections === null) {
+    if (
+      typeof m.contentVersion !== "string" ||
+      typeof m.collections !== "object" ||
+      m.collections === null
+    ) {
       return null;
     }
     const collectionHashes: Record<string, string> = {};
@@ -160,11 +175,20 @@ async function readContentFacts(root: string): Promise<ContentFacts | null> {
  * 一個宣稱是 result 卻不合 result schema 的東西，讓對方分不出
  * 「我解析錯了」與「你們還沒做」—— 而那兩者的處置完全相反。
  */
-function unsupported(reply: FastifyReply, path: string, stage: string, why: string): FastifyReply {
+function unsupported(
+  reply: FastifyReply,
+  path: string,
+  stage: string,
+  why: string,
+): FastifyReply {
   const envelope: ImportErrorEnvelope = {
     schema: IMPORT_ERROR_SCHEMA,
     code: IMPORT_DIAGNOSTICS.OPERATION_NOT_IMPLEMENTED.code,
-    message: formatDiagnostic("OPERATION_NOT_IMPLEMENTED", { path, stage, why }),
+    message: formatDiagnostic("OPERATION_NOT_IMPLEMENTED", {
+      path,
+      stage,
+      why,
+    }),
     path,
     plannedStage: stage,
     implementedStage: IMPLEMENTED_STAGE,
@@ -181,7 +205,9 @@ function unsupported(reply: FastifyReply, path: string, stage: string, why: stri
  * ⭐ 一份**拿不到**的 asset manifest 與一份**空的** asset manifest 是兩件事 ——
  * 後者會讓外部編輯器以為「這個 Base 沒有任何二進位資產」而放行一包引用 GLB 的內容。
  */
-async function readAssetManifest(root: string): Promise<AssetManifestFacts | null> {
+async function readAssetManifest(
+  root: string,
+): Promise<AssetManifestFacts | null> {
   const file = join(root, "assets-manifest.json");
   if (!existsSync(file)) return null;
   try {
@@ -195,13 +221,38 @@ async function readAssetManifest(root: string): Promise<AssetManifestFacts | nul
 
 /** ⭐ P1-2 —— 兩份 vfx 設定（缺席 ⇒ `undefined`，由 resolver 用出貨預設）。 */
 function vfxDocs(): { budget: unknown; cleanup: unknown } {
-  return { budget: Configs.tryGet("vfx-budget"), cleanup: Configs.tryGet("vfx-cleanup") };
+  return {
+    budget: Configs.tryGet("vfx-budget"),
+    cleanup: Configs.tryGet("vfx-cleanup"),
+  };
 }
 
-export function registerImportRoutes(app: FastifyInstance, opts: ImportRoutesOptions): void {
+export function registerImportRoutes(
+  app: FastifyInstance,
+  opts: ImportRoutesOptions,
+): void {
   const root = resolve(opts.contentDir);
   const prefixes = opts.prefixes ?? DEFAULT_IMPORT_PREFIXES;
   const now = opts.now ?? (() => new Date());
+  /**
+   * ⭐ 規格 §1 —— runtime-direct 處理器宣告，**註冊時算一次**。
+   *
+   * ⚠️ ⛔ 不在每次請求算：它讀十幾個檔案的位元組，⭐ 而那幾個檔在行程活著的時候不會變。
+   * ⚠️ ⛔ 也不讓它在請求裡擲例外（那會 500 掉一個純讀取的端點）——
+   *   ⭐ 算不出來就是 `null`，⛔ 而 null **必須說得出理由**（profile 的 `unavailable`）。
+   */
+  const repoRoot = opts.repoRoot ?? resolve(root, "..");
+  let authoringProcessor: ReturnType<typeof buildAuthoringProcessor> | null =
+    null;
+  try {
+    authoringProcessor = buildAuthoringProcessor(repoRoot);
+  } catch (e) {
+    app.log.warn(
+      { err: e, repoRoot },
+      "content-import: 算不出 authoringProcessor 指紋 —— profile 會標成 null 並附理由",
+    );
+  }
+
   const { limits, clamped } = clampImportLimits(opts.limits);
   if (clamped.length > 0) {
     app.log.warn({ clamped }, "content-import: 匯入預算超出允許範圍，已夾回");
@@ -215,7 +266,10 @@ export function registerImportRoutes(app: FastifyInstance, opts: ImportRoutesOpt
         gameVersion: opts.gameVersion ?? null,
         content,
         limits: opts.limits,
-        ...(opts.reloadMode !== undefined ? { reloadMode: opts.reloadMode } : {}),
+        authoringProcessor,
+        ...(opts.reloadMode !== undefined
+          ? { reloadMode: opts.reloadMode }
+          : {}),
       });
       // capabilities 是 target-profile 的子集合，**由同一次建構得出** ——
       // 兩邊各算一次就會 drift，而 drift 的那一天沒有人會發現。
@@ -263,7 +317,10 @@ export function registerImportRoutes(app: FastifyInstance, opts: ImportRoutesOpt
      * ⚠️ 只在 `/content-api` 那一個前綴底下掛（⛔ 不掛在 `/api/v1/...` 上，
      * 那是對外的版本化路徑，⭐ 而別名是給本機開發用的便利）。
      */
-    if (prefix.endsWith("/content-import") && prefix.startsWith("/content-api")) {
+    if (
+      prefix.endsWith("/content-import") &&
+      prefix.startsWith("/content-api")
+    ) {
       app.get("/content-api/authoring-rules", async (_req, reply) =>
         reply.send(buildAuthoringRules((id) => Configs.tryGet(id))),
       );
@@ -280,7 +337,11 @@ export function registerImportRoutes(app: FastifyInstance, opts: ImportRoutesOpt
           vfxBudget: vfxDocs().budget,
           vfxCleanup: vfxDocs().cleanup,
           limits: opts.limits,
-          ...(opts.reloadMode !== undefined ? { reloadMode: opts.reloadMode } : {}),
+          // ⭐ 與上面 `capabilities` **同一個**物件 ⇒ ⛔ 兩份 receipt 不可能漂。
+          authoringProcessor,
+          ...(opts.reloadMode !== undefined
+            ? { reloadMode: opts.reloadMode }
+            : {}),
         }),
       );
     });
@@ -306,7 +367,12 @@ export function registerImportRoutes(app: FastifyInstance, opts: ImportRoutesOpt
     for (const route of UNIMPLEMENTED) {
       const full = `${prefix}${route.path}`;
       app[route.method](full, async (_req, reply) =>
-        unsupported(reply, `${prefixes[0]}${route.path}`, route.stage, route.why),
+        unsupported(
+          reply,
+          `${prefixes[0]}${route.path}`,
+          route.stage,
+          route.why,
+        ),
       );
     }
   }

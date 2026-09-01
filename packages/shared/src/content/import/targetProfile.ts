@@ -37,7 +37,11 @@
  *
  * ③ 這支是純函式：不讀檔、不看時鐘。事實由呼叫端（route）注入。
  */
-import { effectiveVfxLimits, type EffectiveVfxLimits } from "./effectiveVfxLimits";
+import {
+  effectiveVfxLimits,
+  type EffectiveVfxLimits,
+} from "./effectiveVfxLimits";
+import type { AuthoringProcessorDeclaration } from "./authoringProcessor";
 import { sha256Hex } from "../sha256";
 import { stableStringify } from "../hash";
 import {
@@ -128,7 +132,9 @@ export interface ImportLimits {
   readonly maxScenarios: number;
 }
 
-const LIMIT_BOUNDS: Readonly<Record<keyof ImportLimits, readonly [number, number]>> = {
+const LIMIT_BOUNDS: Readonly<
+  Record<keyof ImportLimits, readonly [number, number]>
+> = {
   maxArchiveBytes: [1024, 64 * 1024 * 1024],
   maxEntryBytes: [1024, 16 * 1024 * 1024],
   maxEntries: [1, 20000],
@@ -153,7 +159,9 @@ export function clampImportLimits(input: Partial<ImportLimits> | undefined): {
 } {
   const out: Record<string, number> = { ...DEFAULT_IMPORT_LIMITS };
   const clamped: string[] = [];
-  for (const key of Object.keys(LIMIT_BOUNDS).sort() as (keyof ImportLimits)[]) {
+  for (const key of Object.keys(
+    LIMIT_BOUNDS,
+  ).sort() as (keyof ImportLimits)[]) {
     const raw = input?.[key];
     if (raw === undefined) continue;
     const [lo, hi] = LIMIT_BOUNDS[key];
@@ -191,6 +199,8 @@ export interface TargetProfileInput {
    * ⛔ 這一支**不讀檔** —— 呼叫端給，理由與 `content` 那一格逐字相同（可測性 + 決定性）。
    */
   readonly assetManifest?: AssetManifestFacts | null;
+  /** ⭐ 規格 §1 —— 由 `buildAuthoringProcessor(repoRoot)` 量出來的宣告。 */
+  readonly authoringProcessor?: AuthoringProcessorDeclaration | null;
   /** ⭐ P1-2 —— 兩份 vfx 設定（缺席 ⇒ 出貨預設，⛔ 不是 0）。 */
   readonly vfxBudget?: unknown;
   readonly vfxCleanup?: unknown;
@@ -200,7 +210,10 @@ export interface TargetProfileInput {
 export interface AssetManifestFacts {
   readonly schema: string;
   readonly counts: { readonly entries: number; readonly totalBytes: number };
-  readonly entries: readonly { readonly path: string; readonly sha256: string }[];
+  readonly entries: readonly {
+    readonly path: string;
+    readonly sha256: string;
+  }[];
 }
 
 /** 一格「現在拿不到」的東西：欄位名 + **為什麼** + 對方該怎麼辦。 */
@@ -244,6 +257,14 @@ export interface TargetProfile {
   readonly supportedModes: readonly PackageMode[];
   /** ⭐ 對方最該先讀的一行：現在能不能產 production-ready delta。 */
   readonly deltaExportAllowed: boolean;
+  /**
+   * ⭐⭐ **runtime-direct 處理器宣告**（規格 §1，2026-09-02）。
+   * ⛔ 這一格取代了「有沒有編譯器」那個問法 —— 它問的是「**是哪一種**」。
+   * ⚠️ `fingerprint` 是**量出來的**（七個共用實作面的位元組雜湊），
+   * ⛔ 不是手寫版本字串：schema 改了而版本沒 bump ⇒ 它會靜靜地繼續說「一樣」。
+   */
+  readonly authoringProcessor: AuthoringProcessorDeclaration | null;
+  /** ⛔ 保留給**未來真的需要 compile 的表示法**；runtime-direct 一律 null。 */
   readonly compiler: {
     readonly contractVersion: string | null;
     readonly fingerprint: string | null;
@@ -326,6 +347,9 @@ export function buildTargetProfile(input: TargetProfileInput): TargetProfile {
     },
     {
       field: "compiler.contractVersion / compiler.fingerprint",
+      // ⭐ 2026-09-02：這一格的**替代品**已經落地 —— 見 `authoringProcessor`。
+      //   ⚠️ 在此之前它只說「不會有編譯器」，⛔ 而沒說「那要看哪一格」
+      //   ⇒ 對面只能猜。⭐ 一個 null 要指得出它的**替代欄位**，⛔ 不是只給理由。
       reason:
         "⭐ owner 2026-08-15 裁決：**砍掉編譯器那一層**（commit 5406c4ce7 / GH#327）。" +
         "⛔ 這兩格是 null 的理由**不是「還沒做」，是「這條路上不會有編譯器」** —— " +
@@ -370,15 +394,24 @@ export function buildTargetProfile(input: TargetProfileInput): TargetProfile {
       activationDigest: null,
       authoringDigest: null,
       contentVersion: input.content?.contentVersion ?? null,
-      contentDigest: input.content === null ? null : digestOf(input.content.collectionHashes),
+      contentDigest:
+        input.content === null
+          ? null
+          : digestOf(input.content.collectionHashes),
     },
     authoringStoreState,
     supportedModes: ["bootstrap"] as readonly PackageMode[],
     deltaExportAllowed: false,
+    authoringProcessor: input.authoringProcessor ?? null,
     compiler: { contractVersion: null, fingerprint: null },
     authoringModel: {
       accepts: ["ability@1", "item@1"],
-      notRequired: ["effect-template@1", "effect-product@1", "effect-chain@1", "expectedCompiled"],
+      notRequired: [
+        "effect-template@1",
+        "effect-product@1",
+        "effect-chain@1",
+        "expectedCompiled",
+      ],
       validatedBy: [
         "zod:collection-schema",
         "capabilities:ggd-runtime-capabilities@1",
@@ -395,7 +428,8 @@ export function buildTargetProfile(input: TargetProfileInput): TargetProfile {
       championCurationDigest: null,
       itemCurationDigest: null,
     },
-    assetManifestDigest: input.assetManifest == null ? null : digestOf(input.assetManifest),
+    assetManifestDigest:
+      input.assetManifest == null ? null : digestOf(input.assetManifest),
     assetManifest:
       input.assetManifest == null
         ? null
