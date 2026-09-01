@@ -1,4 +1,6 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { packageModeBlockers, readTargetProfileFacts, rawRuntimeSchemaFor } from "./exportPolicy";
 
 describe("Export Center target-profile policy", () => {
@@ -24,12 +26,14 @@ describe("Export Center target-profile policy", () => {
       deltaExportAllowed: true,
       authoringStoreState: "ready",
       base: {
+        gameRevision: "rev-b",
         contentVersion: "cv_b",
         activationDigest: "sha256:a",
         authoringDigest: "sha256:b",
       },
       compiler: { contractVersion: "v1", fingerprint: "fp" },
       runtimeCapabilities: { fingerprint: "caps2" },
+      authoringModel: { accepts: ["ability@1", "item@1"] },
     });
     expect(packageModeBlockers(live, "delta")).toEqual([]);
   });
@@ -46,12 +50,26 @@ describe("Export Center target-profile policy", () => {
     expect(packageModeBlockers(facts, "delta")).toEqual(expect.arrayContaining([
       "缺少 base.activationDigest",
       "缺少 base.authoringDigest",
-      "目標 importer 仍在 G1，validate／apply／rollback 尚未落地",
+      "目標未宣告 importer G2",
     ]));
   });
 
   it("only labels the two contract-approved raw runtime schemas", () => {
     expect(rawRuntimeSchemaFor("abilities")).toBe("ability@1");
     expect(rawRuntimeSchemaFor("items")).toBe("item@1");
+  });
+
+  it("keeps every package mode blocked against the actually shipped static profile", () => {
+    const root = join(__dirname, "..", "..", "..", "..");
+    const facts = readTargetProfileFacts(JSON.parse(readFileSync(join(root, "content", "editor-target-profile.json"), "utf8")));
+    for (const mode of ["bootstrap", "full", "delta"] as const) {
+      expect(packageModeBlockers(facts, mode), mode).not.toEqual([]);
+    }
+    expect(packageModeBlockers(facts, "bootstrap")).toEqual(expect.arrayContaining([
+      "目標未宣告 importer G2",
+      "目標沒有可 pin 的 compiler contractVersion／fingerprint",
+      "缺少 base.gameRevision",
+      "缺少 migrationFingerprint",
+    ]));
   });
 });

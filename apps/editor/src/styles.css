@@ -24,6 +24,13 @@ code { color: var(--accent); }
 .sidebar { border-right: 1px solid var(--line); padding: 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; }
 .sidebar h2 { font-size: 13px; text-transform: uppercase; color: var(--muted); margin: 4px 0 8px; }
 .sidebar button { text-align: left; }
+.desktop-source { margin-top: auto; padding: 9px; border: 1px solid var(--line); border-radius: 6px; display: flex; flex-direction: column; gap: 3px; font-size: 11px; background: #11151d; }
+.desktop-source b { color: #77d49a; font-size: 12px; }
+.desktop-source span, .desktop-source small { color: var(--muted); overflow-wrap: anywhere; }
+.desktop-source code { font-size: 10px; }
+.desktop-source em { color: #ffbd66; font-style: normal; }
+.desktop-source-merged-with-conflicts, .desktop-source-offline-cache { border-color: #a96643; }
+.desktop-source-merged-with-conflicts b, .desktop-source-offline-cache b { color: #ffbd66; }
 
 .doc-list { border-right: 1px solid var(--line); padding: 10px; overflow-y: auto; }
 .doc-list-head { display: flex; justify-content: space-between; align-items: center; }
@@ -272,11 +279,16 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .export-mode-grid article p, .export-mode-grid article li { color: #a7afbf; font-size: 11px; line-height: 1.45; }
 .export-mode-grid article ul { min-height: 78px; padding-left: 18px; }
 .export-mode-grid article button { width: 100%; }
+.export-package-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.export-base-row { display: grid; grid-template-columns: minmax(280px, auto) 1fr; gap: 12px; align-items: center; margin: 10px 0 14px; padding: 9px; border: 1px solid #30384a; border-radius: 6px; background: #111620; }
+.export-base-row label { display: flex; flex-direction: column; gap: 5px; color: #cbd3e4; font-size: 11px; }
+.export-base-row input { max-width: 340px; font-size: 11px; }
 .export-mode-grid .ready-text { min-height: 78px; color: #86c99c; }
 .export-panel details { margin-top: 12px; color: #b7bfd0; font-size: 11px; }
 @media (max-width: 980px) {
   .export-mode-grid { grid-template-columns: 1fr; }
   .export-profile-row, .export-runtime-row { align-items: stretch; flex-direction: column; }
+  .export-base-row { grid-template-columns: 1fr; }
   .export-profile-row input, .export-runtime-row select:nth-child(2) { min-width: 0; width: 100%; }
 }
 .vfx-timeline { min-width: 0; padding: 9px 12px 14px; border-top: 1px solid #343b4e; background: #11151e; overflow-y: auto; }

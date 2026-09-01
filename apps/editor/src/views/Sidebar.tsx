@@ -5,6 +5,7 @@ import { api, ApiValidationError } from "../api/client";
 import { collectionEntry, collectionRegistry } from "../collections";
 import { useEditorStore } from "../store";
 import { sourceWriteBlockers } from "../sourcePolicy";
+import type { EditorDesktopSourceInfo } from "@ggd/shared/editorDesktop";
 
 export function Sidebar({
   active,
@@ -69,7 +70,37 @@ export function Sidebar({
           {c.label}
         </button>
       ))}
+      <DesktopSourceBadge />
     </nav>
+  );
+}
+
+const SOURCE_LABEL: Record<EditorDesktopSourceInfo["state"], string> = {
+  local: "本機專案",
+  current: "線上 Base 已同步",
+  "local-changes": "有本機修改",
+  "merged-with-conflicts": "合併有衝突",
+  "offline-cache": "離線快取",
+};
+
+function DesktopSourceBadge() {
+  const { data, error } = useQuery({
+    queryKey: ["desktop-source"],
+    queryFn: () => api.desktopSource(),
+    refetchInterval: 5_000,
+    retry: false,
+  });
+  if (error || !data) return null;
+  const warningCount = data.compatibilityWarnings.length;
+  return (
+    <section className={`desktop-source desktop-source-${data.state}`} title={data.workspacePath}>
+      <b>{data.kind === "remote" ? "🌐" : "💻"} {SOURCE_LABEL[data.state]}</b>
+      <span>{data.sourceUrl ?? "本機資料夾"}</span>
+      <code>{data.workingContentVersion ?? "版本未知"}</code>
+      {data.conflicts.length > 0 ? <em>衝突 {data.conflicts.length}</em> : null}
+      {warningCount > 0 ? <em>相容警告 {warningCount}</em> : null}
+      <small>{data.message}</small>
+    </section>
   );
 }
 

@@ -378,6 +378,24 @@ export interface BootOptions {
   devDropIn?: boolean;
 }
 
+/** Desktop query routing is a one-entry allowlist, never an arbitrary Page cast. */
+export function desktopLandingPage(search: string, desktopEnabled: boolean): Page | null {
+  if (!desktopEnabled) return null;
+  try {
+    return new URLSearchParams(search).get("desktopPage") === "aiChangeReview" ? "aiChangeReview" : null;
+  } catch {
+    return null;
+  }
+}
+
+function desktopModeEnabled(): boolean {
+  try {
+    return (import.meta as unknown as { env?: { VITE_DESKTOP?: string } }).env?.VITE_DESKTOP === "1";
+  } catch {
+    return false;
+  }
+}
+
 export interface AppState {
   screen: Screen;
   page: Page;
@@ -589,7 +607,10 @@ export const appStore = createStore<AppState>()((set, get) => ({
     const devDropIn = opts?.devDropIn ?? contentEditorDropInEnabled();
     // Where a session-less console lands: the content editor in dev, otherwise
     // the hub (only reached post-login in a production build).
-    const landing: Page = devDropIn ? "champions" : "hub";
+    const search = typeof globalThis.location?.search === "string" ? globalThis.location.search : "";
+    const landing: Page = devDropIn
+      ? desktopLandingPage(search, desktopModeEnabled()) ?? "champions"
+      : "hub";
     set({ devDropIn });
 
     if (!api.hasSession) {

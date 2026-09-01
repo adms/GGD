@@ -1,8 +1,9 @@
 # 給 GGD main：Editor 完工所需接縫（可直接交給 Codex）
 
-狀態：2026-09-02 01:17（Asia/Taipei）  
-Editor 分支：`feat/vfx-forge-codex`（禁止推到 `main`）  
-目前公開 Base：`cv_cf9e53948752` · capability `111434fa` · profile `c20315afd90b`
+狀態：2026-09-02 01:49（Asia/Taipei）
+Editor 分支：`feat/vfx-forge-codex`（禁止推到 `main`）
+正式站實測：`cv_88cbb6486bf2` · capability `111434fa` · profile `3f8d4687566f`
+最新 `origin/main@b8420abe` 產物：`cv_385f45e0afb8` · profile `99ef62b583c5`
 
 請只實作 **main 擁有的接縫**。不要重做 Electron／Editor UI、VFX Forge、八招 fixture，
 也不要把 AI 候選直接寫進 `content/`。完整語意見 `main_load_editor_plan.md` 與
@@ -44,7 +45,52 @@ GET /content-api/editor-source?collection=<collection>&id=<id>
 直接 PUT/PATCH。不能只靠前端隱藏按鈕。驗收必須證明修改經 `pnpm skills:sync` 後仍存在，
 Owner 文案 bytes 未被 JSON round-trip 改寫。
 
-## P0-2：Package importer G2（目前 validate/apply/rollback 明確回 501）
+## P0-2：先消除 Package machine contract 的自相矛盾
+
+目前 profile 已明示：
+
+```json
+{
+  "authoringModel": {
+    "accepts": ["ability@1", "item@1"],
+    "notRequired": ["effect-template@1", "effect-product@1", "effect-chain@1", "expectedCompiled"],
+    "note": "砍掉編譯器那一層"
+  },
+  "contract": { "compiler": { "contractVersion": null, "fingerprint": null } }
+}
+```
+
+但 shared 的 `zPackageManifest` 仍強制每包都有非空
+`compiler.contractVersion`／`compiler.fingerprint`，而 `GGD_EDITOR_PACKAGE_SPEC.md` 仍是
+Draft 0.4 四層 compiler 模型。這三份 machine truth 不能同時成立；Editor 不會用
+`none`／假 fingerprint 騙過 schema。
+
+請在 G2 之前選定並只保留一套 machine contract。建議是 runtime-direct authoring：
+
+```ts
+authoringProcessor: {
+  kind: "runtime-direct";
+  contractVersion: "runtime-direct@1";
+  fingerprint: string; // shared Zod + ref validator + authoring-rules 的 canonical receipt
+}
+```
+
+`compiler` 只在真的需要 compile 的 representation 出現；runtime-direct 的 importer 對
+`ability@1`／`item@1` 做相同 Zod、ref closure、capability、authoring-rules 與 full staging
+驗證，不建立假的第二表示法。請同步修改 spec、shared Zod、target profile、importer tests。
+
+此外 target profile 必須公開建包不可猜的欄位：
+
+- `implementedStage: "G2"`（真的完成才宣告）。
+- `base.gameRevision`。
+- bootstrap 的 `migrationFingerprint`。
+- full/delta 的 `base.activationDigest`／`base.authoringDigest`。
+- machine-readable importer endpoints，至少 validate／apply／active runtime bundle；Editor 不從 URL 字串猜 route。
+
+Editor 端 JSON／ZIP builder 已完成並自我驗證；上述 receipt 缺任何一格就 fail closed。full／delta
+另支援人工載入 exact active runtime bundle 作 fallback，等 endpoints 回交後再改成一鍵抓取。
+
+## P0-3：Package importer G2（目前 validate/apply/rollback 明確回 501）
 
 請依 `GGD_EDITOR_PACKAGE_SPEC.md` 實作：
 
@@ -64,7 +110,7 @@ ACTIVE pointer、health read-back、rollback 與 operation audit。禁止用逐�
 在能力真的完成前，`supportedModes`／`deltaExportAllowed` 必須維持目前誠實值；不要為了讓
 Editor 按鈕變亮而提前宣告 full/delta。
 
-## P0-3：AI 先審後上要成為 main 的授權邊界
+## P0-4：AI 先審後上要成為 main 的授權邊界
 
 正式環境請把 proposal、verdict、Promote 分權：
 

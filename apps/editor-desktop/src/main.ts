@@ -5,6 +5,10 @@ import { extname, join, resolve, sep } from "node:path";
 import { buildServer } from "../../content-api/src/server";
 import { addAllowedOrigins } from "../../content-api/src/guard";
 import {
+  EDITOR_DESKTOP_SOURCE_SCHEMA,
+  type EditorDesktopSourceInfo,
+} from "@ggd/shared/editorDesktop";
+import {
   contentDirForRemoteWorkspace,
   normalizeRemoteSource,
   remoteWorkspaceKey,
@@ -207,19 +211,59 @@ async function start(): Promise<void> {
   let contentDir: string;
   let dataRoot: string;
   let remoteContentBaseUrl: string | null = null;
+  let sourceInfo: EditorDesktopSourceInfo;
   if (config.kind === "remote") {
-    const source = await syncRemoteWorkspace({
+    sourceInfo = await syncRemoteWorkspace({
       sourceInput: config.sourceUrl,
       workspaceRoot: config.workspacePath,
       policy,
     });
-    remoteContentBaseUrl = source.contentBaseUrl;
+    remoteContentBaseUrl = sourceInfo.contentBaseUrl;
     contentDir = contentDirForRemoteWorkspace(config.workspacePath);
     dataRoot = join(config.workspacePath, "data");
   } else {
     contentDir = join(config.workspacePath, "content");
     dataRoot = join(config.workspacePath, "data");
+    const manifest = JSON.parse(readFileSync(join(contentDir, "manifest.json"), "utf8")) as { contentVersion?: unknown };
+    const version = typeof manifest.contentVersion === "string" ? manifest.contentVersion : null;
+    sourceInfo = {
+      schema: EDITOR_DESKTOP_SOURCE_SCHEMA,
+      kind: "local",
+      state: "local",
+      sourceUrl: null,
+      contentBaseUrl: null,
+      workspacePath: config.workspacePath,
+      pinnedContentVersion: version,
+      latestRemoteContentVersion: version,
+      workingContentVersion: version,
+      offline: false,
+      conflicts: [],
+      compatibilityWarnings: [],
+      contractStatus: "local-content-api",
+      targetProfileDigest: null,
+      message: "使用本機 GGD 專案",
+    };
   }
+
+  const initialWorkingContentVersion = sourceInfo.workingContentVersion;
+  const currentSourceInfo = (): EditorDesktopSourceInfo => {
+    let workingContentVersion = sourceInfo.workingContentVersion;
+    try {
+      const manifest = JSON.parse(readFileSync(join(contentDir, "manifest.json"), "utf8")) as { contentVersion?: unknown };
+      workingContentVersion = typeof manifest.contentVersion === "string" ? manifest.contentVersion : null;
+    } catch {
+      // Keep the last verified value; the content-api will report the actual read error elsewhere.
+    }
+    const locallyChanged = sourceInfo.kind === "remote"
+      && sourceInfo.state === "current"
+      && workingContentVersion !== initialWorkingContentVersion;
+    return {
+      ...sourceInfo,
+      workingContentVersion,
+      state: locallyChanged ? "local-changes" : sourceInfo.state,
+      message: locallyChanged ? "線上 Base 已固定；目前有尚未匯出的本機修改" : sourceInfo.message,
+    };
+  };
 
   const server = buildServer({
     contentDir,
@@ -229,6 +273,7 @@ async function start(): Promise<void> {
     allowProduction: true,
     reviewDir: join(dataRoot, "editor-review"),
     externalProfileHosts: policy.allowedHosts,
+    desktopSource: currentSourceInfo,
     ...(remoteContentBaseUrl ? {
       remoteAssets: {
         contentBaseUrl: remoteContentBaseUrl,
@@ -297,7 +342,7 @@ async function start(): Promise<void> {
       webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true },
     });
     reviewWindow.on("closed", () => { reviewWindow = null; });
-    void reviewWindow.loadURL(`${origin}/admin/`);
+    void reviewWindow.loadURL(`${origin}/admin/?desktopPage=aiChangeReview`);
   };
   const relaunch = (choose = false): void => {
     const args = process.argv.slice(1).filter((arg) => arg !== "--choose-source");

@@ -16,6 +16,10 @@ export interface TargetProfileFacts {
   compilerFingerprint: string | null;
   activationDigest: string | null;
   authoringDigest: string | null;
+  gameRevision: string | null;
+  migrationFingerprint: string | null;
+  authoringAccepts: readonly string[];
+  authoringNotRequired: readonly string[];
   unavailable: readonly string[];
 }
 
@@ -47,6 +51,7 @@ export function readTargetProfileFacts(profile: unknown): TargetProfileFacts {
   const base = record(root["base"]);
   const contract = record(root["contract"]);
   const compiler = record(root["compiler"]) ?? record(contract?.["compiler"]);
+  const authoringModel = record(root["authoringModel"]);
   const unavailable = Array.isArray(root["unavailable"])
     ? root["unavailable"].map((item) => {
         const row = record(item);
@@ -68,6 +73,14 @@ export function readTargetProfileFacts(profile: unknown): TargetProfileFacts {
     compilerFingerprint: stringOrNull(compiler?.["fingerprint"]),
     activationDigest: stringOrNull(base?.["activationDigest"]),
     authoringDigest: stringOrNull(base?.["authoringDigest"]),
+    gameRevision: stringOrNull(base?.["gameRevision"]) ?? stringOrNull(root["gameRevision"]),
+    migrationFingerprint: stringOrNull(base?.["migrationFingerprint"]) ?? stringOrNull(root["migrationFingerprint"]),
+    authoringAccepts: Array.isArray(authoringModel?.["accepts"])
+      ? authoringModel["accepts"].filter((value): value is string => typeof value === "string")
+      : [],
+    authoringNotRequired: Array.isArray(authoringModel?.["notRequired"])
+      ? authoringModel["notRequired"].filter((value): value is string => typeof value === "string")
+      : [],
     unavailable,
   };
 }
@@ -75,17 +88,21 @@ export function readTargetProfileFacts(profile: unknown): TargetProfileFacts {
 export function packageModeBlockers(facts: TargetProfileFacts, mode: PackageMode): readonly string[] {
   const blockers: string[] = [];
   if (!facts.supportedModes.includes(mode)) blockers.push(`目標未宣告支援 ${mode}`);
+  if (!facts.contentVersion) blockers.push("缺少 base.contentVersion");
+  if (!facts.gameRevision) blockers.push("缺少 base.gameRevision");
+  if (facts.implementedStage !== "G2") blockers.push("目標未宣告 importer G2");
+  if (!facts.authoringAccepts.includes("ability@1") || !facts.authoringAccepts.includes("item@1")) {
+    blockers.push("目標未宣告接受 ability@1／item@1 authoring");
+  }
   if (!facts.compilerContractVersion || !facts.compilerFingerprint) {
     blockers.push("目標沒有可 pin 的 compiler contractVersion／fingerprint");
   }
+  if (mode === "bootstrap" && !facts.migrationFingerprint) blockers.push("缺少 migrationFingerprint");
   if (mode !== "bootstrap") {
     if (!facts.activationDigest) blockers.push("缺少 base.activationDigest");
     if (!facts.authoringDigest) blockers.push("缺少 base.authoringDigest");
   }
   if (mode === "delta" && !facts.deltaExportAllowed) blockers.push("目標禁止 delta export");
-  if (facts.implementedStage === "G1") {
-    blockers.push("目標 importer 仍在 G1，validate／apply／rollback 尚未落地");
-  }
   return [...new Set(blockers)];
 }
 

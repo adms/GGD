@@ -75,6 +75,7 @@ import {
   parseEditorProfileHosts,
 } from "./externalProfile";
 import { AiReviewStore, type AiProposalPurpose, type AiVerdict } from "./aiReview";
+import type { EditorDesktopSourceInfo } from "@ggd/shared/editorDesktop";
 
 export interface ContentApiOptions {
   contentDir: string;
@@ -110,6 +111,8 @@ export interface ContentApiOptions {
     /** test seam; desktop uses the platform fetch implementation. */
     fetchImpl?: typeof fetch;
   };
+  /** Packaged desktop shell status. Omitted by ordinary dev/web servers. */
+  desktopSource?: EditorDesktopSourceInfo | (() => EditorDesktopSourceInfo);
 }
 
 interface Params {
@@ -418,6 +421,12 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
     if (!existsSync(p)) return err(reply, 404, "manifest.json not found — run content:build");
     return reply.type("application/json").send(await readFile(p, "utf8"));
   });
+
+  if (opts.desktopSource) {
+    app.get("/content-api/desktop-source", async (_req, reply) => reply.send(
+      typeof opts.desktopSource === "function" ? opts.desktopSource() : opts.desktopSource,
+    ));
+  }
 
   app.get<{ Params: { collection: string } }>(
     "/content-api/:collection/_index",

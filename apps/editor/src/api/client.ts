@@ -1,6 +1,7 @@
 /** Thin fetch wrapper over the dev content-api (same-origin via Vite proxy / nginx). */
 import type { CollectionIndex, CollectionName, FieldIssue, Manifest } from "@ggd/shared/content";
 import type { EditorSourceDescriptor } from "../sourcePolicy";
+import type { EditorDesktopSourceInfo } from "@ggd/shared/editorDesktop";
 
 const BASE = "/content-api";
 
@@ -102,6 +103,8 @@ export interface AiVisualEvidence {
 
 export const api = {
   manifest: () => request<Manifest>(`${BASE}/manifest`),
+  /** Present only in the packaged desktop shell; ordinary web/dev Editor returns null. */
+  desktopSource: () => requestOptional<EditorDesktopSourceInfo>(`${BASE}/desktop-source`),
   index: (collection: CollectionName) =>
     request<CollectionIndex>(`${BASE}/${collection}/_index`),
   doc: <T = unknown>(collection: CollectionName, id: string) =>

@@ -1,8 +1,8 @@
 # 遊戲主程式載入 Editor JSON／ZIP 的修改建議
 
-狀態：**Revision 2.4 — AI 技能變更先審後上；八招改為永久非上線 Editor fixtures**
+狀態：**Revision 2.5 — runtime-direct 契約對齊；AI 技能變更先審後上**
 
-最後驗證：2026-09-01 22:50（Asia/Taipei）
+最後驗證：2026-09-02 01:49（Asia/Taipei）
 
 適用範圍：GGD 遊戲主程式、後台與 Content Import API；不是 Editor UI 實作說明。
 
@@ -20,9 +20,9 @@
 遊戲端最終要能：
 
 1. 明確辨識 Package JSON、Package ZIP 與 raw Runtime JSON，不依副檔名猜測。
-2. 在隔離 staging 中驗 authoring truth，以遊戲端 compiler 重編並比對 expected compiled。
+2. 在隔離 staging 中以和 runtime 共用的 authoring processor 驗 `ability@1`／`item@1`、exact refs、capability 與 authoring rules；目前不建立假的第二份 compiled representation。
 3. 重建 indexes、bundle、distribution 與 champion mirrors，不信任 package 內的 derived files。
-4. 將 authoring、compiled runtime 與 derived projections 寫成同一個 immutable activation。
+4. 將 canonical runtime documents、derived projections 與完整 receipts 寫成同一個 immutable activation。
 5. 用 verified plan、CAS 與 ACTIVE pointer 原子啟用，支援 health read-back、冪等重試與 rollback。
 6. 對不支援、無法機器判定、known-broken、過期或不一致的 contract fail closed。
 
@@ -40,7 +40,7 @@
 | Curation／可取得性 | platform curation service 與 distribution receipt | Markdown 白名單、starter seed |
 | Presentation | tag manifest＋全域 palette | Gameplay mechanics |
 
-這些來源必須互相一致，不存在「高順位內容自動覆蓋低順位內容」。只要 schema、spec、profile、compiler 或 receipt 彼此矛盾，就停止 validate／apply 並回報 contract drift。
+這些來源必須互相一致，不存在「高順位內容自動覆蓋低順位內容」。只要 schema、spec、profile、authoring processor 或 receipt 彼此矛盾，就停止 validate／apply 並回報 contract drift。
 
 ### 1.2 目前真正的 blockers
 
@@ -49,15 +49,19 @@
 | Blocker | 現況 | 影響 |
 |---|---|---|
 | Managed authoring／activation store | 尚不存在；只允許 `bootstrap` proposal | 不可產 production `full`／`delta` |
-| Public compiler receipt | contract／fingerprint 仍為 `null` | 不可宣稱 Editor 與 production compiler parity |
-| Public package contract | profile 仍指向舊 Draft 文字 | importer 無法安全協商 exact schema／spec |
+| Runtime-direct receipt | profile 宣告 compiler 已移除，但 package schema 仍強制 compiler 欄位 | Editor 不會填假 `none`／fingerprint；三份 machine truth 對齊前不可建 production package |
+| G2 Base receipts | 缺 `implementedStage=G2`、`base.gameRevision`、bootstrap migration fingerprint，full/delta 另缺 activation／authoring digests | 無法安全 pin Base 或判斷匯入模式 |
+| Machine endpoints | 未公告 validate／apply／active runtime bundle 等版本化端點 | Editor 不從 URL 字串猜 route |
+| Public package contract | profile 與 Draft 0.4 四層 compiler 文字不一致 | importer 無法安全協商 exact schema／spec |
 | Tag engine 對帳 | `matchesEngine=false` | 不可用該 manifest 證明 canonical tag 與 mechanics 一致 |
 | Authoring rules | 公開 pricing endpoint 為 `null` | MP／冷卻等規則只能當本機建議，不能當 production contract |
 | Write API | validate／apply／rollback 仍回 501 | 目前只能讀 profile、離線建包與本機自驗 |
 
 版本、數量、短 digest 與 capability 明細都只從 live receipt 讀取，不再抄入本文或程式常數。
 
-三個環境不可再用一句「目前 G1」混稱：repo／local 已有 package schema 與 compiler 實作；public static profile 仍缺 compiler receipt 且宣告舊 spec；production private importer 尚未提供 validate／apply／rollback。 `implementedStage` 只供 roadmap 顯示，Editor 必須讀每個 operation 的明確 `supported／unsupported` 狀態，不能從 `G1` 字串推算功能。
+三個環境不可再用一句「目前 G1」混稱：repo／local 有 package schema，但它仍殘留強制 compiler 欄位；public static profile 已宣告 runtime-direct authoring 並移除 compiler；production private importer 尚未提供 validate／apply／rollback。`implementedStage` 是必要的能力收據，不可由 Editor 猜測；每個 operation 仍須有明確 `supported／unsupported` 狀態，不能只從階段字串推算功能。
+
+Editor 端已完成 deterministic Package JSON／STORE ZIP builder、JCS/hash、自我 reopen 與 ZIP safety preflight，也完成 Desktop 遠端唯讀 Base、三方合併與來源狀態顯示。上述 receipt 未對齊前，Export Center 會保留模式但停用 production 匯出，不把本機 bundle 冒充可套用 package。
 
 ### 1.3 Public descriptor 與 active receipt 必須分開
 
@@ -67,7 +71,7 @@
 
 `base.contentVersion` 必須 pin 正式站完整 public Base；Editor 將 maps 或其他非編輯集合排除後得到的本機 working-set hash，不得回填成 public Base。Editor package 仍不得因此夾帶 map-authoring entries。
 
-G0 應讓 profile 明示 digest algorithm、完整 SHA-256、package schema version／digest、spec digest、compiler contract／fingerprint。公開 descriptor 可在 HTTPS 下只作 discovery；production plan／activation receipt 必須來自 authenticated endpoint，離開該信任通道時還要有 `keyId`／signature。
+G0 應讓 profile 明示 digest algorithm、完整 SHA-256、package schema version／digest、spec digest，以及 `authoringProcessor` 的 contract version／fingerprint。只有 representation 真的需要 compile 時才另外帶 compiler receipt；runtime-direct 不得用假 compiler 填欄。公開 descriptor 可在 HTTPS 下只作 discovery；production plan／activation receipt 必須來自 authenticated endpoint，離開該信任通道時還要有 `keyId`／signature。
 
 | Receipt | 用途 | 可否作 CAS Base | 是否代表已啟用 |
 |---|---|---:|---:|
@@ -82,10 +86,10 @@ G0 應讓 profile 明示 digest algorithm、完整 SHA-256、package schema vers
 
 下列不可用開關、warning acknowledgement 或管理員勾選繞過：
 
-- schema／exact ref／JCS digest／compiler receipt 不符。
+- schema／exact ref／JCS digest／authoring-processor receipt 不符。
 - unknown、unsupported、無法機器判定的 partial，或命中 applicable known-broken。
 - ZIP safety 超限、stale base／profile／plan、CAS 失敗。
-- 遊戲端重編結果與 expected compiled 不同。
+- staging processor 的 canonical result、依賴 closure 或 derived rebuild 與 receipt 不同。
 - required scenario、strict refs、full-tree loader 或 candidate health 失敗。
 - AI 產生或 AI 調整的技能效果、機制、動畫與 VFX 尚未完成上線前人工批核。
 - 人工核准的 candidate hash 與實際 Promote 內容不同，或目標 Base 在送審後已漂移。
@@ -128,7 +132,7 @@ writer，都不能算 HITL 權限邊界。
 | 階段 | 依賴 | 主要交付物 | 允許的結果 |
 |---|---|---|---|
 | G0 Contract alignment | 無 | 同版 schema／spec／profile、穩定 requirement IDs、golden fixtures | 讀取、離線 proposal；不可 production validate/apply |
-| G1 Read-only validate | G0 | bounded upload、staging、game recompile、derived rebuild、verified plan | 可驗證；ACTIVE 不變 |
+| G1 Read-only validate | G0 | bounded upload、runtime-direct staging validation、derived rebuild、verified plan | 可驗證；ACTIVE 不變 |
 | G2 Atomic activation | G1 | immutable store、operation state machine、CAS、health、rollback | 僅能啟用不需要 G3/G4/G5 的 package |
 | G3 Distribution／curation | G2 | distribution index、pickability、獨立 curation transaction | 才能啟用 item／curation 影響的 package |
 | G4 Gameplay capability closure | G2 | 將 partial／unsupported 逐項變成可機器驗證的 supported | 才能啟用依賴該能力的 package |
@@ -145,12 +149,12 @@ Raw runtime JSON 永遠只供檢視／除錯，不屬於上述 production apply 
 Target profile 至少要 pin：
 
 - package schema version／digest 與 spec digest。
-- compiler contract version／fingerprint。
+- authoring processor contract version／fingerprint；只有非 runtime-direct representation 才另帶 compiler receipt。
 - runtime capability fingerprint。
 - authoring rules、tag manifest、asset manifest、curation 與 distribution receipts。
 - supported package modes、reload mode、effective limits 與 verification method。
 
-建議將它們收斂成一份 machine-readable `contractReceipt`，再加入 diagnostics registry、ZIP policy、JCS algorithm 與 validation build digests。Compiler fingerprint 至少覆蓋 compiler contract schema、primitive registry、runtime output schema、ability／item patch 規則與 golden-vector set；只 hash 一小份 surface object 不能證明 parity，遊戲端重編仍不可省略。
+建議將它們收斂成一份 machine-readable `contractReceipt`，再加入 diagnostics registry、ZIP policy、JCS algorithm 與 validation build digests。Runtime-direct `authoringProcessor.fingerprint` 至少覆蓋 shared Zod、exact-ref collector、capability applicability、authoring rules、runtime loader、derived rebuild 規則與 golden-vector set；只 hash 一小份 surface object不能證明 parity。
 
 `runtimeCapabilities.planned[]` 的散文 `caveat` 只可顯示給人，不可讓 importer 解析。每項能力應改成：
 
@@ -183,11 +187,11 @@ V1 只允許 upsert，不支援顯式或隱式 delete。若未來要支援「部
 Machine contract 必須補齊下列 exact projection；只寫「做一個 hash」不足以互通：
 
 - `authoringDigest`：完整 managed authoring store 的 JCS membership＋document digests。
-- `compiledDigest`：遊戲端重編後 runtime collections／bundle 的 canonical digest。
+- `runtimeDigest`：staging 驗證後 canonical runtime collections／bundle 的 digest。
 - `derivedDigest`：mirrors、indexes 與其他 importer 重建結果。
 - `distributionDigest`：可取得性 projection 與其 curation inputs。
-- `activationDigest`：以上 digests，加上 compiler、runtime capability、authoring policy、tag、asset、curation receipts 的 canonical record。
-- `planDigest`：package、candidate activation、完整 Base/profile/compiler/capability/policy receipts、selection roots、validation build 與 evidence 的 deterministic semantic projection。
+- `activationDigest`：以上 digests，加上 authoring processor、runtime capability、authoring policy、tag、asset、curation receipts 的 canonical record。
+- `planDigest`：package、candidate activation、完整 Base/profile/authoring-processor/capability/policy receipts、selection roots、validation build 與 evidence 的 deterministic semantic projection。
 
 Package digest 繼續採 RFC 8785 JCS 與完整 SHA-256。短版 public profile digest 不得當 package／plan／activation digest，也不得作安全簽章。
 
@@ -197,7 +201,7 @@ Actor、environment、issuedAt／expiresAt、一次性 consumed state 不塞進 
 
 ### 3.4 Raw JSON 與「單檔匯入」
 
-Package endpoint 收到 `ability@1`／`item@1` 必須回 `RAW_RUNTIME_DOCUMENT_NOT_A_PACKAGE`。不再建議伺服器猜測並包裝 raw document，因為 raw runtime JSON 沒有 Product authoring truth、Base、dependency closure 與 expected compiled。
+Package endpoint 收到裸 `ability@1`／`item@1` 必須回 `RAW_RUNTIME_DOCUMENT_NOT_A_PACKAGE`。Runtime-direct 是 package 內 canonical document 的 authority，並不表示可以省略 manifest、Base、dependency closure、receipts 與 operation contract；伺服器不得猜測並包裝 raw document。
 
 若後台要提供「單檔 JSON 匯入」，Editor 應輸出一個只選一個 root、但仍含完整 closure 與 manifest 的 **Package JSON**。使用者看到的是一個 JSON 檔，系統仍走同一條安全 pipeline。
 
@@ -279,15 +283,15 @@ Target profile 只宣告最後的 effective limits；`packageSchema`、`targetPr
 
 必查 zip-slip、absolute path、backslash、non-UTF-8、symlink／device、duplicate path／case collision、entry／archive／expanded size、compression ratio、path length 與 depth。解壓到隔離、不可執行且不可跟隨連結的暫存區；每份 entry 驗 raw bytes hash、JCS canonical hash 與 manifest size。
 
-Payload 與 manifest 必須雙向一對一：每份文件恰有一筆 entry、每筆 entry 恰有一份文件，ZIP 不得夾帶未列 JSON；path、role、kind、id、schema、raw／canonical hash 與 size 必須相符。Package JSON／ZIP 的 authoring、compiled、validation、reports 映射一致，並得到同一 semantic package digest。
+Payload 與 manifest 必須雙向一對一：每份文件恰有一筆 entry、每筆 entry 恰有一份文件，ZIP 不得夾帶未列 JSON；path、role、kind、id、schema、raw／canonical hash 與 size 必須相符。Package JSON／ZIP 的 documents、validation、reports 映射一致，並得到同一 semantic package digest。
 
 ### 4.3 Validate pipeline
 
 1. 驗身分、Content-Type、upload checksum 與 transport safety。
 2. 驗 package schema、mode／Base invariants、JCS hash、membership 與 dependency closure。
-3. 對 live profile、compiler、capability、tag／authoring policy、curation 與 asset receipts。
-4. 建 isolated authoring staging tree，以遊戲端 compiler 重編兩次。
-5. 比對 expected compiled，重建 mirrors／indexes／bundle／distribution。
+3. 對 live profile、authoring processor、capability、tag／authoring policy、curation 與 asset receipts。
+4. 建 isolated runtime-direct staging tree，以 shared processor 驗 Zod、exact refs、closure、capability、rules 與 loader。
+5. 重建 mirrors／indexes／bundle／distribution，並和 candidate receipts 比對。
 6. 跑 strict loader／refs／registries、required scenarios 與 candidate health。
 7. 產生有期限、綁定 actor 與所有輸入 receipt 的 verified plan；ACTIVE 不變。
 
@@ -295,24 +299,26 @@ Validate 不得寫 production store、修改 curation、占用 ACTIVE 名稱或�
 
 ### 4.4 Plan、冪等與 operation state
 
-Server-side verified-plan record 至少綁定 actor、environment／gameId、packageDigest、candidate activationDigest、selection roots、Base profile 與 active generation、compiler/capability/tag/policy/asset/curation digests、validation build、issuedAt／expiresAt 與 required health set。任一 pin 漂移，plan 失效。
+Server-side verified-plan record 至少綁定 actor、environment／gameId、packageDigest、candidate activationDigest、selection roots、Base profile 與 active generation、authoring-processor/capability/tag/policy/asset/curation digests、validation build、issuedAt／expiresAt 與 required health set。任一 pin 漂移，plan 失效。
 
 Idempotency key 的 scope 是 actor＋environment＋route。相同 key／相同 request digest 的 concurrent retry 合併並回同一 operation；相同 key／不同 digest 回 409 `IDEMPOTENCY_KEY_REUSE_MISMATCH`。紀錄需跨 restart，至少保存到 plan／operation TTL 結束；client timeout 後以 operationId 查詢，不得重做第二次 activation。Plan 成功 apply 後不可被拿來產第二個 activation，但相同冪等重試可讀回第一次結果。
 
 Operation 至少有：`VALIDATING → VALIDATED → PREPARING → PREPARED → ACTIVATING → ACTIVE`，以及 `FAILED`、`ROLLBACK_REQUIRED`、`ROLLED_BACK`。每個狀態要定義可重試性、terminal 條件與 audit event，不能只回模糊的 success／failed。
 
-## 5. Shared compiler、Product 與效果鏈
+## 5. Shared authoring processor、Product 與效果鏈
 
-Editor 與遊戲端必須共用實作，或以雙向 golden fixtures 鎖定：
+目前 production authoring authority 是 runtime-direct `ability@1`／`item@1`。Editor、Importer 與遊戲端必須共用 shared Zod、exact refs、capability applicability、authoring rules 與 loader，並以雙向 golden fixtures 鎖定。不要為了沿用舊 manifest 欄位建立假的 compiler 或第二份 authority。
+
+若未來 profile 再明示支援 effect-template／effect-product／effect-chain，才加入下列 authoring representations：
 
 - effect-template、effect-product、ability／item authoring 與 embedded effect-chain。
 - package manifest、diagnostics、scenario 與 fidelity decision。
 - RFC 8785 JCS、exact refs、scope／revision 規則。
 - `effect-graph-v1` closed AST、finite-number／rounding、primitive registry 與 budgets。
 
-禁止 arbitrary script、expression string、clock／network／filesystem I/O、compile-time RNG、unknown param 忽略、host-local 跨 host ref、ready revision 原地改寫，以及用 tooltip／顯示名稱當 exact ref。
+禁止 arbitrary script、expression string、clock／network／filesystem I/O、authoring-time RNG、unknown param 忽略、host-local 跨 host ref、ready revision 原地改寫，以及用 tooltip／顯示名稱當 exact ref。
 
-Legacy `template.cards` 只適合同一 resolve phase、同一 target context 的 flat stack。`onHit`、`onLand`、`onTick`、`onTargets`、dash completion 等有時序或 target-set dependency 的行為必須保留 typed child edge。Graph 已編譯為 native effects 後，compiled `ability@1` 必須移除 legacy `ability.template`；兩種 authority 同時存在要回 `COMPILED_AUTHORITY_CONFLICT`。
+Legacy `template.cards` 只適合同一 resolve phase、同一 target context 的 flat stack。`onHit`、`onLand`、`onTick`、`onTargets`、dash completion 等有時序或 target-set dependency 的行為必須保留 typed child edge。若未來重新引入 graph-to-runtime compiler，compiled `ability@1` 必須移除 legacy `ability.template`；兩種 authority 同時存在要回 `COMPILED_AUTHORITY_CONFLICT`。目前 profile 宣告這些層 `notRequired`，Importer 不得要求 Editor 填它們。
 
 Multi-card 最低守衛：
 
@@ -320,7 +326,7 @@ Multi-card 最低守衛：
 2. 任一 card 失敗時整組失敗，不保留前面 card。
 3. 真實 `ContentLoader` 與 SimWorld 都看到每張 contribution。
 4. `onLand`／`onHit` child 不被 hoist 到 cast tick。
-5. JSON／ZIP reopen 後，遊戲端重編的 trace／digest 一致。
+5. JSON／ZIP reopen 後，shared processor 與 runtime loader 的 trace／digest 一致。
 6. 移除第二 card、只讀第一 ref、吞 unknown param 或提前 child edge 的 mutation 會變紅。
 
 ## 6. G2：Atomic activation、health 與 rollback
@@ -329,7 +335,7 @@ Multi-card 最低守衛：
 
 ```text
 VALIDATED
-  → 寫 immutable candidate（authoring＋compiled＋derived＋receipts）
+  → 寫 immutable candidate（runtime documents＋derived＋receipts）
   → fsync／object verification
   → PREPARED：目標 game shards 預載並驗 candidate
   → CAS ACTIVE（expected old → candidate）
@@ -468,15 +474,15 @@ checker／debug 貼圖；模型若角色本體不可用才退回乾淨的程序�
 
 ### Contract／transport
 
-- JSON 與 ZIP 對同一 semantic package 得到相同 package／authoring／compiled／plan digests。
+- JSON 與 ZIP 對同一 semantic package 得到相同 package／runtime／derived／plan digests。
 - Node／Go／macOS／Windows 的 JCS、Unicode、路徑與 ZIP golden fixtures 一致。
 - JSON／ZIP parser、tokenizer、dependency collector 有 fuzz／property tests。
-- 篡改 manifest／authoring／compiled／scenario／report entry 全部拒絕。
+- 篡改 manifest／document／scenario／report entry 全部拒絕。
 - Content-Type mismatch、raw runtime package、oversize、zip bomb、case collision 與 path traversal 有穩定中文診斷碼。
 
-### Compiler／gameplay
+### Authoring processor／gameplay
 
-- 遊戲端重編與 expected compiled byte-identical，unknown params／refs／capabilities 不 silent ignore。
+- Shared processor、Importer staging 與 runtime loader 對同一 runtime-direct corpus 得到相同 digest；unknown params／refs／capabilities 不 silent ignore。
 - Multi-card 每份 contribution 與 nested child timing 在真實 SimWorld 發生。
 - 相同 seed 的 RNG draws、targets、events 與 digest 一致。
 - Partial／known-broken 只有 machine applicability 可證明未命中時才可能通過。
@@ -486,9 +492,9 @@ checker／debug 貼圖；模型若角色本體不可用才退回乾淨的程序�
 
 - concurrent apply、相同／不同 idempotency key、stale plan／Base／curation 都有測試。
 - 在 immutable write、fsync、PREPARED、CAS 與 shard ack 各點做 crash／failure injection。
-- Crash 後只看到舊完整版或新完整版；不會出現混合 authoring／runtime／distribution。
-- Rollback 不重編、不逐檔覆寫，且不覆蓋較新的合法 activation。
-- Schema／compiler downgrade、unsupported major version 與 receipt negotiation fail closed。
+- Crash 後只看到舊完整版或新完整版；不會出現混合 runtime documents／derived／distribution。
+- Rollback 不重算、不逐檔覆寫，且不覆蓋較新的合法 activation。
+- Schema／authoring-processor downgrade、unsupported major version 與 receipt negotiation fail closed。
 
 ### Distribution／presentation
 
@@ -500,7 +506,7 @@ checker／debug 貼圖；模型若角色本體不可用才退回乾淨的程序�
 
 - 地形繪製、單位擺放、region、trigger 或完整地圖編輯。
 - Binary asset upload、arbitrary script 或 package 自訂 HTML／CSS。
-- 信任 Editor validation report 而略過遊戲端重編／重驗。
+- 信任 Editor validation report 而略過遊戲端 staging 重驗。
 - 用整站搬遷 ZIP importer、逐文件 PUT 或 raw runtime JSON 模擬 atomic apply。
 - 讓 game runtime 反向依賴 Electron／React／Editor UI。
 
@@ -514,16 +520,16 @@ Public Base 可包含 maps、map-spec 或 arena schema，但 Editor package scop
 | Runtime capabilities | `packages/shared/src/content/editorCapabilities.ts` |
 | Target profile | `packages/shared/src/content/import/targetProfile.ts` 與 public profile builder |
 | Import routes／operation contract | `apps/content-api/src/importRoutes.ts` |
-| Authoring／graph compiler | `packages/shared/src/content/authoring/` |
+| Runtime-direct authoring processor | shared runtime Zod、ref collector、authoring-rules、capability applicability 與 loader；由 main 匯出單一版本化入口 |
 | Legacy template resolution | `packages/shared/src/content/templates/` |
 | Runtime effect／hook／combat | `packages/shared/src/sim/` |
 | Content indexes／bundle | `packages/shared/src/content/node/` |
 | Platform auth／curation／audit orchestration | `apps/platform/` |
 | Client render／VFX seam | `apps/client/src/render/`、`apps/client/src/vfx/` |
 
-Importer／authoring store 應是獨立 module，不拼進平台搬遷 ZIP route。TypeScript shared 層擁有 schema、compiler 與 semantic validation；Go platform 負責權限、upload、operation／audit 與部署編排，不重寫第二套 compiler。
+Importer／authoring store 應是獨立 module，不拼進平台搬遷 ZIP route。TypeScript shared 層擁有 schema、runtime-direct authoring processor 與 semantic validation；Go platform 負責權限、upload、operation／audit 與部署編排，不重寫第二套 validator 或偷偷改寫文件。
 
-外部管理員請求先由 Go platform 認證、限流並建立 operation，再呼叫內部 Content API 做 staging／compile／validate；game shards 只回 candidate preload 與 activation health。三層都使用同一 operationId／receipt，不讓外部 request 直接碰 production content filesystem。
+外部管理員請求先由 Go platform 認證、限流並建立 operation，再呼叫內部 Content API 做 staging／validate／derived rebuild；game shards 只回 candidate preload 與 activation health。三層都使用同一 operationId／receipt，不讓外部 request 直接碰 production content filesystem。
 
 ## 13. 部署決策表
 

@@ -52,11 +52,15 @@ together; writes remain local. The API guard rejects non-loopback mutation.
   preview can switch between the base body and all compatible skins.
 - **匯出中心** — reads the published target profile through a bounded,
   allow-listed loopback bridge and derives `bootstrap` / `full` / `delta`
-  availability from that receipt. A saved `ability@1` or `item@1` can be
-  validated and downloaded as the contract-approved compiled-only single JSON.
-  Package JSON/ZIP remains visibly blocked while the target has no compiler
-  receipt, exact authoring base, or activation importer; the UI never labels a
-  local file bundle as a production package.
+  availability from that receipt. It now builds deterministic, self-validating
+  `ggd-editor-import@1` Package JSON and byte-stable STORE ZIP, including JCS
+  document hashes, exact Base hashes, dependency closure, reports, semantic
+  package digest, transport digest and its own ZIP safety preflight. Full export
+  refuses implicit deletion and delta requires one selected root plus exact Base
+  documents. Production buttons remain visibly blocked until main aligns the
+  runtime-direct authoring receipt, G2 Base receipts and importer endpoints; the
+  UI never fills a fake compiler fingerprint or labels a local file bundle as an
+  applicable production package.
 - **Collections** — schema-driven controls cover every current authorable field
   for abilities, VFX, models, projectiles, skins, templates and the remaining
   registered content collections. Bounded numbers render sliders and references
@@ -79,6 +83,11 @@ Before changing a content path, use `bash scripts/genguard.sh <path>`.
   the content API writes it.
 - Save and delete share the same source policy. Network or provenance lookup
   failures block deletion instead of falling through.
+- The desktop shell separately exposes `ggd-editor-desktop-source@1` from
+  `GET /content-api/desktop-source`. The sidebar therefore reports whether the
+  Base is local or remote and whether the local working tree is current, changed,
+  conflicted, offline, or carrying compatibility warnings. This status contract
+  is deliberately not overloaded onto the per-document ownership schema.
 
 Upstream source-adapter work is tracked by
 [#887](https://github.com/adms/GGD/issues/887).
@@ -95,9 +104,23 @@ comma-separated `GGD_EDITOR_PROFILE_HOSTS` value.
 
 The three package modes stay present even when blocked so later main-side work
 does not require redesigning the editor. The current published profile only
-supports `bootstrap`, has no compiler receipt, and has no active authoring store;
-the main importer still reports G1 and returns 501 for validate/apply/rollback.
-Consequently only single runtime JSON is honestly exportable today.
+supports `bootstrap`, declares runtime-direct `ability@1` / `item@1` authoring,
+and has no active authoring store. However, the package manifest schema still
+requires a compiler receipt while the profile deliberately publishes none, and
+the main importer returns 501 for validate/apply/rollback. The editor reports
+that contract drift and fails closed instead of inventing a `none` compiler.
+
+The desktop app can use either a local GGD directory or an HTTPS remote Base such
+as `https://ggd.adms.ai`. Remote manifest, bundle, target profile and individual
+document hashes are validated before the snapshot is pinned. Local edits stay in
+the desktop working tree and are three-way merged on refresh; conflicts are
+preserved for review. Binary assets are local-first and fetched through a bounded,
+allow-listed cache bridge. Per-file asset hash verification will become mandatory
+as soon as main publishes the complete asset manifest requested by the handshake.
+
+Current feature work is based on `origin/main@b8420abe`; live and repository
+profile digests are treated as volatile receipts and are never compiled into the
+Editor as constants.
 
 ## Contract gates
 

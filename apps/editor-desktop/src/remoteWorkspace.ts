@@ -22,13 +22,17 @@ import {
 } from "@ggd/shared/content";
 import type { RuntimeCapabilityManifest } from "@ggd/shared/content/editorCapabilities";
 import {
+  EDITOR_DESKTOP_SOURCE_SCHEMA,
+  type EditorDesktopConflict,
+  type EditorDesktopSourceInfo,
+} from "@ggd/shared/editorDesktop";
+import {
   fileJson,
   rebuildAllIndexes,
   writeDocAtomic,
 } from "@ggd/shared/content/node";
 
 export const REMOTE_WORKSPACE_SCHEMA = "ggd-editor-remote-workspace@1" as const;
-export const EDITOR_SOURCE_SCHEMA = "ggd-editor-source@1" as const;
 
 export interface RemoteWorkspacePolicy {
   /** HTTPS hosts accepted as immutable read-only bases. Loopback is always accepted for development. */
@@ -86,14 +90,7 @@ export function remoteWorkspacePolicy(env: NodeJS.ProcessEnv = process.env): Rem
   };
 }
 
-export interface RemoteConflict {
-  readonly collection: CollectionName;
-  readonly id: string;
-  readonly reason:
-    | "both-modified"
-    | "remote-added-local-added"
-    | "remote-deleted-local-modified";
-}
+export type RemoteConflict = EditorDesktopConflict;
 
 export interface RemoteWorkspaceMetadata {
   readonly schema: typeof REMOTE_WORKSPACE_SCHEMA;
@@ -105,25 +102,6 @@ export interface RemoteWorkspaceMetadata {
   readonly conflicts: readonly RemoteConflict[];
   readonly compatibilityWarnings: readonly string[];
   readonly targetProfileDigest: string | null;
-}
-
-export interface EditorSourceInfo {
-  readonly schema: typeof EDITOR_SOURCE_SCHEMA;
-  readonly kind: "local" | "remote";
-  readonly state: "local" | "current" | "local-changes" | "merged-with-conflicts" | "offline-cache";
-  readonly sourceUrl: string | null;
-  readonly contentBaseUrl: string | null;
-  readonly workspacePath: string;
-  readonly pinnedContentVersion: string | null;
-  readonly latestRemoteContentVersion: string | null;
-  readonly workingContentVersion: string | null;
-  readonly offline: boolean;
-  readonly conflicts: readonly RemoteConflict[];
-  readonly compatibilityWarnings: readonly string[];
-  /** How this workspace obtained its authoring contract. */
-  readonly contractStatus: "local-content-api" | "remote-target-profile" | "static-content-only";
-  readonly targetProfileDigest: string | null;
-  readonly message: string;
 }
 
 export interface NormalizedRemoteSource {
@@ -594,12 +572,12 @@ function sourceInfo(
   root: string,
   normalized: NormalizedRemoteSource,
   metadata: RemoteWorkspaceMetadata,
-  state: EditorSourceInfo["state"],
+  state: EditorDesktopSourceInfo["state"],
   offline: boolean,
   message: string,
-): EditorSourceInfo {
+): EditorDesktopSourceInfo {
   return {
-    schema: EDITOR_SOURCE_SCHEMA,
+    schema: EDITOR_DESKTOP_SOURCE_SCHEMA,
     kind: "remote",
     state,
     sourceUrl: normalized.sourceUrl,
@@ -617,7 +595,7 @@ function sourceInfo(
   };
 }
 
-export async function syncRemoteWorkspace(options: SyncRemoteWorkspaceOptions): Promise<EditorSourceInfo> {
+export async function syncRemoteWorkspace(options: SyncRemoteWorkspaceOptions): Promise<EditorDesktopSourceInfo> {
   const fetchImpl = options.fetchImpl ?? fetch;
   const now = options.now ?? (() => new Date());
   const policy = options.policy ?? remoteWorkspacePolicy();
