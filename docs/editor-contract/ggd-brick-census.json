@@ -48,7 +48,7 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 3,
-      "abilities": 24,
+      "abilities": 23,
       "terminal": false
     },
     {
@@ -79,6 +79,15 @@
       "terminal": false
     },
     {
+      "id": "tpl-summon-agent",
+      "family": "summon-agent",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 12,
+      "abilities": 2,
+      "terminal": false
+    },
+    {
       "id": "tpl-line-sweep",
       "family": "line-sweep",
       "engineKnows": true,
@@ -93,15 +102,6 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 7,
-      "abilities": 1,
-      "terminal": false
-    },
-    {
-      "id": "tpl-summon-agent",
-      "family": "summon-agent",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 12,
       "abilities": 1,
       "terminal": false
     },

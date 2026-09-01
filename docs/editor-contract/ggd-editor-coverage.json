@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "8dec65b891b7",
+  "fingerprint": "71b5be5a4f57",
   "capabilityFingerprint": "111434fa",
   "required": [
     {
@@ -12340,6 +12340,11 @@
     },
     {
       "group": "configField",
+      "name": "maxActiveRibbons",
+      "owner": "config.vfx-cleanup@1"
+    },
+    {
+      "group": "configField",
       "name": "maxApproachDistance",
       "owner": "config.cast-approach@1"
     },
@@ -16037,6 +16042,11 @@
       "group": "configField",
       "name": "reviveCircles.revivesPerTeamPerRound",
       "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "ribbonFadeBudgetSec",
+      "owner": "config.vfx-cleanup@1"
     },
     {
       "group": "configField",
@@ -24113,9 +24123,9 @@
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 125,
-    "configField": 3791,
+    "configField": 3793,
     "_notRequired": 15,
-    "_total": 4941,
+    "_total": 4943,
     "_ownerOnly": 39
   }
 }
