@@ -21,7 +21,12 @@ vi.mock("../render/QualityController", () => ({
 import { Scene } from "@babylonjs/core/scene";
 import type { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import type { Texture } from "@babylonjs/core/Materials/Textures/texture";
-import { TelegraphLayer, FLASH_HOLD_MS } from "./TelegraphLayer";
+import {
+  CORRIDOR_EDGE_MAX_WIDTH,
+  CORRIDOR_EDGE_MIN_WIDTH,
+  TelegraphLayer,
+  FLASH_HOLD_MS,
+} from "./TelegraphLayer";
 import { FULL_TIER_CAP, TOTAL_TIER_CAP } from "./telegraphChannel";
 import type { TelegraphShape } from "./telegraphShape";
 
@@ -175,7 +180,9 @@ describe("the corridor SWEEPS over the wind-up so its timing is readable", () =>
     const { scene, layer, progress } = rig();
     progress.set(7, 0.25);
     layer.begin(7, line(), "enemy", 800, 0);
-    const quad = scene.meshes.find((m) => m.name === "telegraph-corridor")!;
+    const quads = scene.meshes.filter((m) => m.name === "telegraph-corridor");
+    expect(quads).toHaveLength(2);
+    const quad = quads[0]!;
     const material = quad.material as StandardMaterial;
     // A large transparent corridor is a UI overlay. Babylon's default white
     // diffuse channel would add to the emissive channel and turn it into a
@@ -185,11 +192,16 @@ describe("the corridor SWEEPS over the wind-up so its timing is readable", () =>
     layer.update(10);
     const quarter = quad.scaling.y;
     expect(quarter).toBeCloseTo(8 * 0.25, 5);
+    for (const edge of quads) {
+      expect(edge.scaling.x).toBeGreaterThanOrEqual(CORRIDOR_EDGE_MIN_WIDTH);
+      expect(edge.scaling.x).toBeLessThanOrEqual(CORRIDOR_EDGE_MAX_WIDTH);
+    }
+    expect(quads[0]!.position.x).not.toBeCloseTo(quads[1]!.position.x, 5);
     progress.set(7, 1);
     layer.update(20);
     expect(quad.scaling.y).toBeCloseTo(8, 5);
     // …and it is aimed, not axis-locked
-    expect(quad.scaling.x).toBeCloseTo(1, 5);
+    expect(quad.scaling.x).toBeLessThanOrEqual(CORRIDOR_EDGE_MAX_WIDTH);
     layer.dispose();
     scene.dispose();
   });

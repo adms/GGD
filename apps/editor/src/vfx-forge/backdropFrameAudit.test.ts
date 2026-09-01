@@ -36,6 +36,23 @@ describe("VFX Forge rendered-frame backdrop guard", () => {
     expect(auditBackdropFrame(rgba, 20, 20).unsafe).toBe(false);
   });
 
+  it("rejects a large brown telegraph plane even though it is not bright or white", () => {
+    const width = 100;
+    const height = 100;
+    const rgba = solid(width, height, [20, 24, 32, 255]);
+    for (let y = 30; y < 70; y++) {
+      for (let x = 18; x < 82; x++) {
+        const offset = (y * width + x) * 4;
+        rgba[offset] = 112;
+        rgba[offset + 1] = 82;
+        rgba[offset + 2] = 48;
+      }
+    }
+    const result = auditBackdropFrame(rgba, width, height);
+    expect(result.unsafe).toBe(true);
+    expect(result.reason).toContain("預告幾何");
+  });
+
   it("rejects a small solid white texture card even when whole-frame coverage is tiny", () => {
     const width = 100;
     const height = 100;

@@ -563,6 +563,7 @@ export class VfxForgeStage {
         brightShare: 0,
         nearWhiteShare: 0,
         dominantBrightShare: 0,
+        dominantNonBackgroundShare: 0,
         localWhiteCardShare: 0,
         unsafe: false,
       };
@@ -678,8 +679,8 @@ export class VfxForgeStage {
           }
         }
         sampledFrames++;
-        const score = Math.max(result.nearWhiteShare, result.brightShare, result.dominantBrightShare, result.localWhiteCardShare);
-        const worstScore = Math.max(worst.nearWhiteShare, worst.brightShare, worst.dominantBrightShare, worst.localWhiteCardShare);
+        const score = Math.max(result.nearWhiteShare, result.brightShare, result.dominantBrightShare, result.dominantNonBackgroundShare, result.localWhiteCardShare);
+        const worstScore = Math.max(worst.nearWhiteShare, worst.brightShare, worst.dominantBrightShare, worst.dominantNonBackgroundShare, worst.localWhiteCardShare);
         if (score > worstScore || result.unsafe) {
           worst = result;
           worstAtMs = this.nowMs;

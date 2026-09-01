@@ -69,6 +69,9 @@ const CORRIDOR_Y = 0.052;
 const TETHER_Y = 0.068;
 /** Width of the `lock` tether — thin: it is a pointer, not a hit area. */
 const TETHER_WIDTH = 0.16;
+/** Minimum/maximum width of each line-telegraph boundary strip. */
+export const CORRIDOR_EDGE_MIN_WIDTH = 0.07;
+export const CORRIDOR_EDGE_MAX_WIDTH = 0.18;
 /** Fade of the corridor / tether after the cast resolves (ms). */
 const CORRIDOR_FADE_MS = 160;
 /**
@@ -101,8 +104,10 @@ interface Live {
   tier: Exclude<TelegraphTier, "drop">;
   /** the circle/arc half (every shape except `line` has one) */
   circle: Telegraph | null;
-  /** corridor quad for `line`, tether quad for `lock` */
+  /** first boundary strip for `line`, tether quad for `lock` */
   quad: Mesh | null;
+  /** opposite boundary strip for `line`; null for every other shape */
+  quadAlt: Mesh | null;
   /** caster whose live position re-anchors a caster-anchored shape */
   caster: number;
   /** instant casts are born resolved: flash + fade, never a filling ring */
@@ -181,6 +186,7 @@ export class TelegraphLayer {
       tier,
       circle: null,
       quad: null,
+      quadAlt: null,
       caster,
       instant,
       t: instant ? 1 : 0,
@@ -208,6 +214,7 @@ export class TelegraphLayer {
     }
     if (shape.kind === "line" || shape.kind === "lock") {
       rec.quad = this.acquireQuad(palette);
+      if (shape.kind === "line") rec.quadAlt = this.acquireQuad(palette);
     }
     this.live.set(caster, rec);
     this.applyMeshes(rec, nowMs);
@@ -320,7 +327,36 @@ export class TelegraphLayer {
       // the real wind-up, so "how long until it covers me" is readable from the
       // shape itself, not only from the bar over the caster's head.
       const len = shape.length * Math.max(0.02, rec.t);
-      placeGroundQuad(rec.quad, fx, fz, shape.dirX, shape.dirZ, len, shape.width, CORRIDOR_Y);
+      const edgeWidth = Math.min(
+        CORRIDOR_EDGE_MAX_WIDTH,
+        Math.max(CORRIDOR_EDGE_MIN_WIDTH, shape.width * 0.06),
+      );
+      const offset = Math.max(0, shape.width / 2 - edgeWidth / 2);
+      const sideX = -shape.dirZ;
+      const sideZ = shape.dirX;
+      placeGroundQuad(
+        rec.quad,
+        fx + sideX * offset,
+        fz + sideZ * offset,
+        shape.dirX,
+        shape.dirZ,
+        len,
+        edgeWidth,
+        CORRIDOR_Y,
+      );
+      if (rec.quadAlt) {
+        (rec.quadAlt.material as StandardMaterial).alpha = alpha;
+        placeGroundQuad(
+          rec.quadAlt,
+          fx - sideX * offset,
+          fz - sideZ * offset,
+          shape.dirX,
+          shape.dirZ,
+          len,
+          edgeWidth,
+          CORRIDOR_Y,
+        );
+      }
     } else if (shape.kind === "lock") {
       const dx = shape.x - shape.fromX;
       const dz = shape.z - shape.fromZ;
@@ -380,6 +416,11 @@ export class TelegraphLayer {
       rec.quad.setEnabled(false);
       this.quadPool.push(rec.quad);
       rec.quad = null;
+    }
+    if (rec.quadAlt) {
+      rec.quadAlt.setEnabled(false);
+      this.quadPool.push(rec.quadAlt);
+      rec.quadAlt = null;
     }
   }
 }

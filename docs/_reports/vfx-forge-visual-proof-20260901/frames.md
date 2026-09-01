@@ -1,18 +1,18 @@
 # VFX Forge 八招視覺驗收 — 2026-09-01
 
-- 驗證時間：2026-09-01 02:13（Asia/Taipei）
+- 驗證時間：2026-09-01 23:09（Asia/Taipei）
 - 分支：`feat/vfx-forge-codex`（未推送）
 - 模式：真 Sim trace → 出貨 `VfxSystem`、真 `CameraRig`、雙方 3D actor、1/60 秒 frame-step
 - 驗收目標：`thorne`（避免把其他 imported hero 的缺貼圖誤判成技能缺陷）
 
 ## 契約與自證
 
-- runtime capability fingerprint：`9d43feef`
-- editor coverage fingerprint：`bbc5f1c27654`
-- coverage：4,853 格；owner-only 39 格
-- contentVersion：`cv_38480627d11d`
+- runtime capability fingerprint：`111434fa`
+- editor coverage fingerprint：`557b813e510e`
+- coverage：4,925 格；owner-only 39 格；not-required 15 格
+- contentVersion：`cv_9ecfa37e8698`
 - framebuffer 雙向校準：一般 7 招 `control 739612`；隔離重載的理想鄉 EX `control 739600`
-- focused tests：28/28；coverage freshness：2/2
+- 最新關鍵檢查：Editor／Client typecheck 通過；VFX Forge、八招 fixture 與 Telegraph 窄測 39/39，底板／Telegraph 回歸窄測 15/15
 
 ## 現行裁決邊界（2026-09-01 22:50 更新）
 
@@ -21,6 +21,13 @@
 - Owner 必須在後台同一頁逐招填 0～10 肉眼分數與中文原因，再按 pass／fail。
 - 即使 pass，也只證明 Editor 表達能力；八招永久不可 Promote，不會寫回遊戲主程式。
 - Owner 目前整體肉眼基準約 0～4／10，自動截圖審查約 2～6／10；兩者都不能自動建立 verdict。
+
+## 底板回歸（2026-09-01 23:09）
+
+- 阿邦快速劍X 的 0.867 秒真 CameraRig 影格曾出現覆蓋大半畫面的棕色矩形。來源不是技能貼圖，而是 `TelegraphLayer` 用整片 quad 表示直線命中寬度。
+- 單純把透明度降至 0.12 會讓 framebuffer 門檻通過，但肉眼仍看得出一整張色板，因此不接受該做法。
+- 現已改成兩條窄邊界帶呈現左右命中邊界，保留掃掠進度與實際寬度，不再填滿中間地面；同一時間點重播已無矩形底板，35 格 framebuffer audit 通過。
+- 這個自動通過只代表「沒有偵測到底板」，不代表阿邦快速劍X 的動畫品質通過；Owner 後台 verdict 仍為 pending。
 
 ## AI 預審尺度
 
@@ -35,7 +42,7 @@
 | 1 | 莉娜 04-03 龍破斬 · [YouTube](https://www.youtube.com/watch?v=cFz1d48fvN8) | 1.000s 吟唱完成；1.15／1.75s 投射移動；2.22s 爆炸 | 紅橘投射物確實向前移動，抵達後換成三向爆裂；爆炸仍偏幾何，缺火焰體積與餘燼 | **待人工審查** |
 | 2 | 莉娜 04-04 神滅斬 · [YouTube](https://www.youtube.com/watch?v=cFz1d48fvN8) | 1.000s 吟唱完成；1.12–1.58s dash／斬擊 | 施法者本體隱藏、替身高速到目標、紫色 dash 軌與交叉斬都有出現；角色位移的剪影仍不夠醒目 | **待人工審查** |
 | 3 | 克勞德 01-04 超究武神霸斬 · [YouTube](https://www.youtube.com/watch?v=9X6LCjFgAiA) | 1.0–4.5s 七段；2.10／2.55s 連斬；4.55s 收尾 | 每刀有黃藍交叉斬與雙方動畫脈衝，第七段出現黃色直立光柱與藍色收尾層 | **待人工審查** |
-| 4 | 小呆 08-04 阿邦快速劍X · [YouTube @157s](https://youtu.be/QE9RrCjt428?t=157) | 0.833s 吟唱完成；0.94s A；1.38／1.62s B | A 為藍色衝擊波；B 隱藏本體後由角色替身 dash，接黃色軌跡與橘色斬擊 | **待人工審查** |
+| 4 | 小呆 08-04 阿邦快速劍X · [YouTube @157s](https://youtu.be/QE9RrCjt428?t=157) | 0.833s 吟唱完成；0.94s A；1.38／1.62s B | A 為藍色衝擊波；直線命中預告已由整片棕色底板改成兩側邊界；B 隱藏本體後由角色替身 dash，接黃色軌跡與橘色斬擊 | **待人工審查** |
 | 5 | 小呆 08-03 龍鬥氣砲咒文 | 0.833s 吟唱完成；0.94–1.72s | 寬藍色橫向砲有白色核心、起點光球及持續段，與傷害線方向一致 | **待人工審查** |
 | 6 | 悟空 09-04 龜派氣功 · [YouTube @68s](https://youtu.be/XkFlhrLaHeA?t=68) | 0.833s 吟唱完成；0.94–1.76s | 橘色寬砲、白色核心與起點光球都可辨識；沒有誤用向天光柱 | **待人工審查** |
 | 7 | Saber 20-002 理想鄉 EX · [YouTube 83–100s](https://youtu.be/KwAlIYfmV48?t=83) | 0.133–0.933s 反彈＋七段；0.18／0.54／0.98／1.42s | 防禦十字光、黃藍七斬與最後聖光砲皆出現；但 `imported.herosaber` 在 0s 就有棋盤／錯誤 primitive，角色動畫無法乾淨核准 | **待人工審查（資產阻塞）** |
