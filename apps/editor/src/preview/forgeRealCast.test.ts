@@ -114,6 +114,23 @@ describe("GH#174 鑄技工坊的試放走玩家那條路", () => {
     c.dispose();
   });
 
+  it("技能投射物的三個演出事件都保留精確 ability origin，script 才能完整取代預設綁定", () => {
+    const champion = Champions.get("godie-nbbc" as ChampionId);
+    const ability = champion.abilities.E;
+    const c = createSimPreviewController();
+    const trace = c.castAbility(champion, "E", { level: 18, rank: 4, ticks: 180 });
+    const projectileEvents = trace.events.filter((event) =>
+      event.type === "projectileSpawn" || event.type === "projectileHit" || event.type === "projectileEnd"
+    );
+
+    expect(trace.accepted, JSON.stringify(trace.events.slice(0, 30), null, 2)).toBe(true);
+    expect(projectileEvents.length).toBeGreaterThan(0);
+    for (const event of projectileEvents) {
+      expect(event.data.origin, `${event.type} 漏掉演出 ownership`).toBe(`ability:${ability.id}`);
+    }
+    c.dispose();
+  });
+
   it("VFX Forge 以正式反彈路徑觸發理想鄉 EX，而不是把被動偽裝成按鍵", () => {
     const champion = Champions.get("godie-e002" as ChampionId);
     const ability = Abilities.get("godie-e002.ex" as AbilityId);

@@ -47,13 +47,10 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
     for (const id of IDS) expect(docs.get(id)!.abilityId).toBe(id);
   });
 
-  it("腳本 modelFx 不與 ability 已有模型重複疊畫", () => {
+  it("每份腳本內的 modelFx 主體不重複；ability 同名演出由 replacement guard 取代", () => {
     for (const id of IDS) {
-      const abilityModels = collectAbilityModelKeys(loadJson("abilities", id));
-      const duplicates = kinds(id, "modelFx")
-        .map((segment) => segment.modelKey)
-        .filter((modelKey) => abilityModels.has(modelKey));
-      expect(duplicates, `${id} 同一具模型被 ability 與 script 畫了兩次`).toEqual([]);
+      const scriptModels = kinds(id, "modelFx").map((segment) => segment.modelKey);
+      expect(new Set(scriptModels).size, `${id} 腳本自己重複放同一具模型`).toBe(scriptModels.length);
     }
   });
 
@@ -77,21 +74,20 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
   });
 
   it("龍破斬先飛行，飛行結束後才在遠端爆炸", () => {
-    const travel = kinds("godie-hjai.e", "vfx").filter(
-      (s) => s.kind === "vfx" && s.vfxId === "fx.prim.fire.bolt",
+    const travel = kinds("godie-hjai.e", "modelFx").find(
+      (s) => s.modelKey === "imported.fireblast",
     );
-    expect(travel.length).toBeGreaterThanOrEqual(7);
-    expect(Math.max(...travel.map((s) => s.offsetForwardU ?? 0))).toBeGreaterThanOrEqual(6);
-    expect(Math.max(...travel.map((s) => s.atMs ?? 0))).toBeGreaterThanOrEqual(1000);
-    // RedDragonMissile and imported.bahamut both failed the real compositor:
-    // one exposed a card and the other polluted the scene with white geometry.
+    expect(travel).toMatchObject({ path: "forward", speed: 27.5, distance: 12, scale: 4.5 });
+    expect(travel?.trailVfxId).toBe("fx.prim.fire.bolt");
+    // RedDragonMissile and imported.bahamut failed the real compositor: one
+    // exposed a card and the other polluted the scene with white geometry.
     expect(segs("godie-hjai.e").some((s) => s.kind === "modelFx" && s.modelKey === "w3x.stock.reddragonmissile")).toBe(false);
     expect(segs("godie-hjai.e").some((s) => s.kind === "modelFx" && s.modelKey === "imported.bahamut")).toBe(false);
     const remote = kinds("godie-hjai.e", "vfx").filter(
-      (s) => s.kind === "vfx" && s.at === "self" && (s.offsetForwardU ?? 0) >= 6 && s.vfxId !== "fx.prim.fire.bolt",
+      (s) => s.at === "self" && (s.offsetForwardU ?? 0) >= 12,
     );
     expect(remote.length).toBeGreaterThanOrEqual(2);
-    expect(Math.min(...remote.map((s) => s.atMs ?? 0))).toBeGreaterThanOrEqual(1150);
+    expect(Math.min(...remote.map((s) => s.atMs ?? 0))).toBeGreaterThanOrEqual(430);
   });
 
   it("神滅斬保留隱藏本體、衝向目標、落點收刀三段", () => {
@@ -100,11 +96,13 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
     expect(kinds("godie-hjai.r", "vfx").some((s) => s.kind === "vfx" && s.at === "target")).toBe(true);
   });
 
-  it("阿邦快速劍X 用真小呆本體做 B 式衝刺，不用會變白的替身", () => {
-    expect(kinds("godie-nbbc.r", "hideBody")).toHaveLength(0);
-    expect(kinds("godie-nbbc.r", "modelFx")).toHaveLength(0);
-    expect(kinds("godie-nbbc.r", "bodyMove").some((segment) => segment.mode === "teleport" && segment.offset.z >= 3)).toBe(true);
-    expect(kinds("godie-nbbc.r", "anim").some((segment) => segment.on === "castEffect" && segment.at === "caster")).toBe(true);
+  it("阿邦快速劍X 用同一份小呆模型做純演出 B 式衝刺，不疊加權威位移", () => {
+    expect(kinds("godie-nbbc.r", "hideBody")).toHaveLength(1);
+    expect(kinds("godie-nbbc.r", "modelFx")).toContainEqual(expect.objectContaining({
+      modelKey: "imported.sd2", path: "toTarget", atMs: 330,
+    }));
+    expect(kinds("godie-nbbc.r", "bodyMove")).toHaveLength(0);
+    expect(kinds("godie-nbbc.r", "anim").some((segment) => segment.on === "castEffect" && segment.at === "target")).toBe(true);
   });
 
   it("騎英之手綱用真 Rider 本體做可見的突進，不靠白色模型替身", () => {
@@ -119,11 +117,14 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
       const modelKeys = collectAbilityModelKeys(loadJson("abilities", id));
       for (const segment of kinds(id, "modelFx")) modelKeys.add(segment.modelKey);
       expect(modelKeys.has("w3x.stock.revivehuman"), `${id} 必須用 90° 橫放 MDL 當主體`).toBe(true);
+      const core = kinds(id, "modelFx").find((segment) => segment.modelKey === "w3x.stock.revivehuman");
+      expect(core).toMatchObject({ path: "static", anchor: "self" });
+      expect(core?.scaleAxis?.[2]).toBeGreaterThan(core?.scaleAxis?.[0] ?? Number.POSITIVE_INFINITY);
       const beams = kinds(id, "vfx").filter((s) => s.kind === "vfx" && s.vfxId.includes("beam"));
-      expect(beams.length).toBeGreaterThanOrEqual(8);
+      expect(beams).toHaveLength(4);
       expect(beams.every((s) => (s.durationSec ?? 0) >= 0.5)).toBe(true);
       const starts = [...new Set(beams.map((s) => s.atMs ?? 0))];
-      expect(Math.max(...starts) - Math.min(...starts), `${id} 不可退回單幀光束`).toBeGreaterThanOrEqual(700);
+      expect(Math.max(...starts) - Math.min(...starts), `${id} 不可退回單幀光束`).toBeGreaterThanOrEqual(400);
       expect(new Set(beams.map((s) => JSON.stringify(s.tint))).size).toBeGreaterThanOrEqual(2);
       for (const beam of beams) {
         const resource = loadJson("vfx", beam.vfxId);

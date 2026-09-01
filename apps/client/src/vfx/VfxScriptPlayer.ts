@@ -238,9 +238,14 @@ export class VfxScriptPlayer {
         const projectileId = d.projectileId as string | undefined;
         const owner = d.owner as number | undefined;
         if (!projectileId || owner === undefined) return;
-        // 歸屬：owner 的哪一份 script 認領這顆彈道 —— 由技能 JSON 推導
+        // New wire events carry exact authored provenance.  Keep the old
+        // projectileId deep-scan as a backward-compatible fallback for stale
+        // hosts, but never fan one event into every script when origin exists.
         const target = d.target as number | undefined;
-        for (const script of this.scriptsClaiming(projectileId)) {
+        const exactAbilityId = abilityIdOfAuthoredOrigin(d.origin);
+        const exactScript = exactAbilityId ? this.deps.scriptFor(exactAbilityId) : undefined;
+        const scripts = exactScript ? [exactScript] : this.scriptsClaiming(projectileId);
+        for (const script of scripts) {
           const frame: TriggerFrame = {
             caster: owner,
             tick: ev.tick | 0,

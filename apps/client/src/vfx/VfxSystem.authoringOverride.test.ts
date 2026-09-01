@@ -89,6 +89,37 @@ describe("VfxSystem authoring script override", () => {
     vfx.dispose();
   });
 
+  it("suppresses default projectile presentation when exact origin belongs to a script", () => {
+    engine = new NullEngine();
+    scene = new Scene(engine);
+    const draft: VfxScriptDoc = {
+      id: "forge.scripted-projectile",
+      schema: "vfx-script@1",
+      abilityId: "forge.scripted-projectile",
+      segments: [{ kind: "floatingText", on: "castStart", text: "CUSTOM", durationSec: 1 }],
+    };
+    const vfx = new VfxSystem(scene, {
+      entityPos: () => ({ x: 0, z: 0 }),
+      vfxScriptFor: (id) => id === draft.abilityId ? draft : undefined,
+      allVfxScripts: () => [draft],
+    });
+
+    vfx.handleEvent({
+      type: "projectileSpawn",
+      tick: 0,
+      data: {
+        id: 9,
+        owner: 1,
+        projectileId: "shared.projectile",
+        origin: `ability:${draft.abilityId}`,
+      },
+    }, 0);
+
+    expect(vfx.feedbackFx.countFor("muzzle/physical/1/flash")).toBe(0);
+    expect(vfx.feedbackFx.countFor("muzzle/physical/1/streaks")).toBe(0);
+    vfx.dispose();
+  });
+
   it("applies a script vfxSpawn flyHeight to the real emitter, not only to the pool key", () => {
     engine = new NullEngine();
     scene = new Scene(engine);

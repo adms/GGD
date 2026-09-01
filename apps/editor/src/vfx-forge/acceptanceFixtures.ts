@@ -1,4 +1,8 @@
-import { zVfxScriptDoc, type VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
+import {
+  zVfxScriptDoc,
+  type VfxScriptDoc,
+  type VfxScriptSegment,
+} from "@ggd/shared/content/schema/vfxScript";
 import hjaiE from "./acceptance-fixtures/godie-hjai.e.json";
 import hjaiR from "./acceptance-fixtures/godie-hjai.r.json";
 import hartR from "./acceptance-fixtures/godie-hart.r.json";
@@ -7,6 +11,7 @@ import nbbcE from "./acceptance-fixtures/godie-nbbc.e.json";
 import ogrhR from "./acceptance-fixtures/godie-ogrh.r.json";
 import e002Ex from "./acceptance-fixtures/godie-e002.ex.json";
 import hvshR from "./acceptance-fixtures/godie-hvsh.r.json";
+import { buildVfxForgeRecipe } from "./recipes";
 
 /**
  * These eight scripts test whether VFX Forge can express the requested scenes.
@@ -38,7 +43,60 @@ export const VFX_FORGE_ACCEPTANCE = [
 export function acceptanceFixtureFor(abilityId: string): VfxScriptDoc | null {
   const raw = FIXTURES[abilityId];
   if (raw === undefined) return null;
-  // A fresh copy keeps undo/history mutations from changing the imported
-  // module singleton when switching between skills.
-  return zVfxScriptDoc.parse(structuredClone(raw));
+  const base = zVfxScriptDoc.parse(structuredClone(raw));
+  // Fixtures deliberately expand the same reusable recipe helpers exposed by
+  // the Forge UI. This proves the scenes are composed from bricks rather than
+  // maintained as eight unrelated, hand-written effects.
+  return zVfxScriptDoc.parse({ ...base, segments: compose(abilityId, base.segments) });
+}
+
+function withoutKinds(
+  segments: readonly VfxScriptSegment[],
+  kinds: readonly VfxScriptSegment["kind"][],
+): VfxScriptSegment[] {
+  return segments.filter((segment) => !kinds.includes(segment.kind));
+}
+
+function compose(abilityId: string, base: readonly VfxScriptSegment[]): VfxScriptSegment[] {
+  switch (abilityId) {
+    case "godie-hjai.e":
+      return [...withoutKinds(base, ["modelFx", "vfx", "screenShake"]), ...buildVfxForgeRecipe("line-blast-fire")];
+    case "godie-hjai.r":
+      return [
+        ...base.filter((segment) => segment.on === "castStart"),
+        ...buildVfxForgeRecipe("dash-slash-void"),
+      ];
+    case "godie-nbbc.r":
+      return [
+        ...base.filter((segment) => segment.on === "castStart"),
+        ...buildVfxForgeRecipe("shockwave-dash-light", { dashModelKey: "imported.sd2" }),
+      ];
+    case "godie-hart.r":
+      return [...withoutKinds(base, ["anim", "vfx", "modelFx"]), ...buildVfxForgeRecipe("combo-slash-holy")];
+    case "godie-nbbc.e":
+    case "godie-ogrh.r":
+    case "godie-hvsh.r": {
+      const recipe = abilityId === "godie-ogrh.r" ? "classic-beam-fire" : "classic-beam-blue";
+      return [...withoutKinds(base, ["modelFx", "vfx"]), ...buildVfxForgeRecipe(recipe)];
+    }
+    case "godie-e002.ex":
+      return [
+        ...withoutKinds(base, ["anim", "modelFx", "vfx"]),
+        ...buildVfxForgeRecipe("reflect-counter-open"),
+        ...buildVfxForgeRecipe("combo-slash-holy", { includeFinalColumn: false }),
+        ...buildVfxForgeRecipe("classic-beam-fire", {
+          trigger: { on: "strike", strikeIndex: 7, atMs: 220 },
+          beamAnchor: "target",
+          beamYawOffsetDeg: 180,
+        }),
+        ...buildVfxForgeRecipe("classic-beam-blue", {
+          includeModelCore: false,
+          trigger: { on: "strike", strikeIndex: 7, atMs: 245 },
+          beamAnchor: "target",
+          beamYawOffsetDeg: 180,
+        }),
+      ];
+    default:
+      return [...base];
+  }
 }

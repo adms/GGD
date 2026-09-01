@@ -1945,6 +1945,8 @@ export class VfxSystem {
       // so a ranged auto arrived with no arrival at all (task #60).
       case "projectileHit":
       case "basicAttackHit": {
+        const authoredAbilityId = abilityIdOfAuthoredOrigin(ev.data.origin);
+        if (authoredAbilityId && this.scriptPlayer.hasScript(authoredAbilityId)) break;
         const target = ev.data.target as number | undefined;
         const pos = target !== undefined ? this.ctx.entityPos(target) : null;
         if (!isFinitePos(pos)) break; // #131
@@ -1962,6 +1964,8 @@ export class VfxSystem {
       // same event ends a projectile that already connected — that one keeps
       // its impact fx and gets nothing extra here.
       case "projectileEnd": {
+        const authoredAbilityId = abilityIdOfAuthoredOrigin(ev.data.origin);
+        if (authoredAbilityId && this.scriptPlayer.hasScript(authoredAbilityId)) break;
         if (ev.data.hit) break;
         const x = ev.data.x as number | undefined;
         const z = ev.data.z as number | undefined;
@@ -2142,6 +2146,8 @@ export class VfxSystem {
       // out of thin air. The payload carries no direction, so the owner's last
       // committed aim (ability direction / basic-attack target) supplies it.
       case "projectileSpawn": {
+        const authoredAbilityId = abilityIdOfAuthoredOrigin(ev.data.origin);
+        if (authoredAbilityId && this.scriptPlayer.hasScript(authoredAbilityId)) break;
         const owner = ev.data.owner as number | undefined;
         const pos = owner !== undefined ? this.ctx.entityPos(owner) : null;
         if (!pos) break;
