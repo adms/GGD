@@ -122,6 +122,15 @@ export const COMBAT_FEEL_GROUPS: readonly FeelGroup[] = [
       "並在頭上冒「掙脫」。硬控（暈眩／定身／施法自鎖）是設計，保險絲**不**碰它們。",
   },
   {
+    key: "moveFeel",
+    title: "走起來／貼上去",
+    intro:
+      "**移動與接敵的手感。** 在 2026-09-01 之前這五格是 sim 裡的程式常數 —— ⛔ 想調就得改程式。 " +
+      "⚠️ ⭐ 而**轉身速度刻意不在這裡**：客戶端的預測影子共用同一支轉身函式，而它沒有設定通道 " +
+      "⇒ 做成可調 = 伺服器與預測用不同的轉身速度，⛔ 那是一個**不會報錯**的 desync。 " +
+      "⭐ 要開放它，要先做「客戶端收得到設定」這件事。",
+  },
+  {
     key: "impactFeel",
     title: "一發有多重",
     intro:
@@ -289,6 +298,26 @@ export const COMBAT_FEEL_LABELS: Readonly<Record<string, FeelLabel>> = Object.fr
   "impactFeel.exFreezeTicks": {
     zh: "EX：演出凍結 tick",
     note: "EX 命中時客戶端額外凍結幾 tick（出貨 8）。⭐ **純演出**，⛔ 不影響 sim 判定與網路同步。",
+  },
+  "moveFeel.accelTicks": {
+    zh: "加速到全速要幾 tick",
+    note: "從站定到全速的斜坡長度（出貨 3 ≈ 0.1 秒）。⭐ 大 = 起步更「重」，⛔ 太大會讓走位變得黏。",
+  },
+  "moveFeel.avoidMargin": {
+    zh: "繞障礙物留多少餘裕",
+    note: "繞過柱子時離它多遠（世界單位，出貨 0.3）。⭐ 小 = 貼著牆走，⛔ 太小會一直被推出來。",
+  },
+  "moveFeel.autoRangeBuffer": {
+    zh: "自動攻擊的射程緩衝",
+    note: "普攻判定比帳面射程多出這麼多（出貨 4）—— ⭐ 少了它，目標一走動就打空。",
+  },
+  "moveFeel.whiffLungeDist": {
+    zh: "近戰揮空往前踉蹌多遠",
+    note: "打空的時候身體往前衝的距離（出貨 0.8）。⭐ 純手感，⛔ 不影響判定。",
+  },
+  "moveFeel.holdFraction": {
+    zh: "追擊停在射程的幾成",
+    note: "追人時停在射程的這個比例（出貨 0.9）——⭐ 留一點餘裕，⛔ 否則一抖就掉出射程重追。",
   },
   "hitstop.scale": {
     zh: "定格時長倍率",

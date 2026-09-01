@@ -143,6 +143,7 @@ import { Configs, Models } from "@ggd/shared/content";
 import { spawnChampion } from "@ggd/shared/sim/spawnChampion";
 import { createMatchStats, type PlayerMatchStats } from "@ggd/shared/sim/stats/matchStats";
 import { grade, perMatchRanks, rankScore, survivalBonus, type RankEntry, type RatingRefs } from "@ggd/shared/sim/stats/rating";
+import { normalizeEconomyRules } from "@ggd/shared/sim/economy/economyRules";
 import {
   MatchLedger,
   createRoundPlayerRecord,
@@ -1288,6 +1289,13 @@ export class MatchController {
     // 戰鬥手感 (`config.combat-feel@1`, GH#193) —— 擊退法則 + 打就站定開關。
     // 同樣在 tick 0 之前定格,比賽中途不會變。
     this.world.combatFeel = combatFeel;
+    // ⭐ 商店與頂點路線的四個量值（`config.match@1` 的 `economy.*`，2026-09-01）——
+    //   ⛔ 在此之前 `STAT_TICK_TARGET` / `CAPSTONE_ROUND_GATE` 是寫死的常數，
+    //   而 CLAUDE.md 逐字記著它們的代價（「兩個常數乘起來變成不可能，
+    //   而且後台一個都改不到」）。同樣在 tick 0 之前定格。
+    this.world.economy = normalizeEconomyRules(
+      (Configs.tryGet(MATCH_CONFIG_DOC_ID) as { economy?: unknown } | undefined)?.economy,
+    );
     // 手把操作方案 (`config.controller-scheme@1`, GH#863) —— 同樣在 tick 0 之前定格。
     this.world.controllerScheme = controllerScheme;
     // 護盾規則 (`config.shield@1`, GH#289 lane P6) —— 同樣在 tick 0 之前定格。

@@ -33,6 +33,7 @@
  * order — no wall-clock, no Math.random, so same seed + same intents = same
  * three cards.
  */
+import { economyRules } from "./economyRules";
 import type { EntityId, ItemId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import { Items, LootTables } from "../content/registry";
@@ -160,7 +161,7 @@ export function buyLegendaryOrb(world: SimWorld, id: EntityId, count = 3): OrbRo
   if (!champ) return { result: "no-champion", choices: [] };
   // ⭐ 這位英雄的售價倍率（見 `itemTiers.shopChargeFor`）。owner 2026-08-18 的
   // 「bot 一樣花錢買隨機寶具，只是消耗金錢是半價」走的就是這一顆寶玉 + 這一格。
-  const price = shopChargeFor(champ.shopPriceMult, LEGENDARY_ORB_PRICE);
+  const price = shopChargeFor(champ.shopPriceMult, economyRules(world).legendaryOrbPrice);
   if (champ.gold < price) return { result: "no-gold", choices: [] };
   // The roll has to land somewhere. Checking BEFORE charging means a full
   // inventory is a refusal, never a 2400g no-op — and the check counts slots

@@ -32,6 +32,7 @@ import {
   type PerLevelBonusTable,
 } from "./baseBonus";
 import { DEFAULT_STAT_CAPS, type StatCapTable } from "./statCaps";
+import { DEFAULT_ECONOMY, type EconomyRules } from "./economy/economyRules";
 import { DEFAULT_BODY_SCALE_RULES, type BodyScaleRules } from "./bodyScale";
 import { DEFAULT_REGEN_RULES, type RegenRules } from "./regenRules";
 import { DEFAULT_MANA_ECONOMY, type ManaEconomy } from "./manaEconomy";
@@ -796,6 +797,16 @@ export class SimWorld {
    * 預設是**出貨表**,不是空表:空表會讓解鎖靜默失效。
    */
   statCaps: StatCapTable = DEFAULT_STAT_CAPS;
+
+  /**
+   * ⭐ 一場比賽的錢怎麼流（`config.match@1` 的 `economy`，2026-09-01）——
+   * 寶玉價 · 精粹價 · 幾次解鎖頂點 · 第幾回合起解鎖。
+   *
+   * ⚠️ 後兩格在 CLAUDE.md 裡是**被逐字點名的寫死前科**（「兩個常數乘起來
+   * 變成不可能，而且後台一個都改不到」）。和 `statCaps` 同一條規矩：
+   * 開賽前指派一次，之後整場不變。讀的時候一律走 `economyRules(world)`。
+   */
+  economy: EconomyRules = DEFAULT_ECONOMY;
 
   /**
    * 身體放大倍數 → 攻擊距離 (see bodyScale.ts, `config.body-scale@1`, GH#252)。

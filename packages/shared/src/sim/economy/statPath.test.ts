@@ -24,7 +24,10 @@ import { baseBonusFor } from "../baseBonus";
 import { Stat } from "../stats/statTypes";
 import { asSeatId, asTeamId, type ChampionId, type EntityId, type ItemId } from "../../ids";
 import { buyItem, grantItemFree } from "./shop";
-import { buyStatUpgrade, grantCapstone, statPathLive, statTicksRemaining, CAPSTONE_ROUND_GATE } from "./statPath";
+import { buyStatUpgrade, grantCapstone, statPathLive, statTicksRemaining } from "./statPath";
+// ⭐ 從**出貨預設**推導，⛔ 不抄字面值（抄一份就是第四個住處，第〇·四守則）。
+import { DEFAULT_ECONOMY } from "./economyRules";
+const CAPSTONE_ROUND_GATE = DEFAULT_ECONOMY.capstoneRoundGate;
 import { applyAttrPick, parseAttrChoice } from "./attrDraft";
 import { ATTR_KEYS } from "../stats/attributes";
 import { deathSystem } from "../systems/DeathSystem";

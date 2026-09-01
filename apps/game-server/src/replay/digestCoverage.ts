@@ -104,6 +104,7 @@ export const SIM_WORLD_DIGEST_EXEMPT: Readonly<Record<string, string>> = {
   baseBonus: CONFIG,
   perLevelBonus: CONFIG,
   statCaps: CONFIG,
+  economy: CONFIG,
   bodyScaleRules: CONFIG,
   regenRules: CONFIG,
   // 回魔地板（GH#446）—— 和 `regenRules` 完全同一條路：`MatchController` 在

@@ -3,6 +3,7 @@
  * navigation state (moveTarget / attackTarget). Runs before MovementSystem.
  * Deterministic: seats are applied in ascending seat id order.
  */
+import { moveFeelRules } from "../moveFeel";
 import type { EntityId, SeatId } from "../../ids";
 import type { IntentFrame } from "../intents";
 import type { SimWorld } from "../SimWorld";
@@ -33,13 +34,7 @@ import {
 /** Distance at which a move order counts as arrived. */
 const ARRIVE_EPS = 0.05;
 
-/**
- * Fraction of the effective attack reach a chase closes to before stopping.
- * The 10% gap is HYSTERESIS: the unit halts strictly INSIDE its own reach, so
- * separation jitter, a shuffling target or the acceleration ramp can nudge it
- * without immediately dropping it out of range and restarting the chase.
- */
-const HOLD_FRACTION = 0.9;
+// ⭐ 搬去 `sim/moveFeel.ts` 了（2026-09-01）—— 住 `content/config/combat-feel.json` 的 `moveFeel`。
 
 /**
  * 卡住就接敵的規則表 (GH#216)。缺格 → 出貨預設,**不是**空表 —— 空表的
@@ -472,7 +467,7 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
       : sc
         ? reachTo(sc, self.radius, tgt.radius)
         : self.radius + tgt.radius + 0.1;
-    const stop = reach * HOLD_FRACTION;
+    const stop = reach * moveFeelRules(world).holdFraction;
     const d2 = distSq(self.pos, tgt.pos);
     // ⭐⭐ spec §25/§29/§31（GH#863）—— **自動**目標的追擊距離上限。
     //
@@ -997,7 +992,7 @@ function autoAcquirePass(
     //   ⛔ 在此之前它是 `targeting.ts` 的寫死常數。⚠️ 缺席 ⇒ 原本的 6。
     const nearRadius = acquireRadius(sc, t.radius, ae.meleeAcquireFloor);
     const radius = holdPosition
-      ? reachTo(sc, t.radius, 0) * HOLD_FRACTION
+      ? reachTo(sc, t.radius, 0) * moveFeelRules(world).holdFraction
       : (engaging || idleSeeking) && ae.seekRadius > nearRadius
         ? ae.seekRadius
         : nearRadius;

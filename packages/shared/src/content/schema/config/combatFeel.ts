@@ -358,6 +358,37 @@ export const zConfigCombatFeelDoc = z
       })
       .strict()
       .optional(),
+    /**
+     * ⭐ 「**走起來／貼上去是什麼感覺**」的五個量值（2026-09-01）。
+     *
+     * ⛔ `TURN_FACTOR` / `TURN_SNAP_DOT` **刻意不在這裡**：客戶端預測共用同一支
+     * `turnToward()` 而它沒有 config 通道 ⇒ 做成可調 = 一個不會報錯的 desync
+     * （同 `facing` 那一段對 `aimHoldTicks` 的裁決）。
+     *
+     * ⚠️ 在此之前它們是 `sim/systems/MovementSystem.ts`（1）· `collision/avoid.ts`（1）
+     * · `systems/BasicAttackSystem.ts`（2）· `systems/OrderSystem.ts`（1）的模組層常數
+     * —— ⛔ **只有改程式碰得到**。
+     *
+     * ⭐ 每一格的預設**逐位元等於**它搬過來之前的那個常數
+     * ⇒ 這一次的改動是「它現在有一個住處」，⛔ 不是「它變了」。
+     *
+     * ⚠️ 上下界與 `sim/moveFeel.ts` 的 `BOUNDS` **逐字相同**。ABSENT ⇒ `DEFAULT_MOVE_FEEL`。
+     */
+    moveFeel: z
+      .object({
+        /** 從站定加速到全速要幾 tick（起步／煞車的頓挫）。出貨 3。 */
+        accelTicks: z.number().min(0).max(30).optional(),
+        /** 繞過障礙物時多留的餘裕（世界單位）。出貨 0.3。 */
+        avoidMargin: z.number().min(0).max(3).optional(),
+        /** 自動攻擊的射程緩衝。出貨 4。 */
+        autoRangeBuffer: z.number().min(0).max(20).optional(),
+        /** 近戰揮空時往前踉蹌的距離（純手感）。出貨 0.8。 */
+        whiffLungeDist: z.number().min(0).max(5).optional(),
+        /** 追擊時停在射程的幾成。⛔ 上界 1：> 1 = 停在射程外，永遠打不到人。出貨 0.9。 */
+        holdFraction: z.number().min(0.1).max(1).optional(),
+      })
+      .strict()
+      .optional(),
     facing: z
       .object({
         /** 出手後的收招餘韻 tick 數 (30 tick = 1 秒) */

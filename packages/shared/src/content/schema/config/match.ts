@@ -644,6 +644,26 @@ export const zConfigMatchDoc = z
         /** fraction of cost refunded on sell, 0..1 */
         sellRefund: z.number().min(0).max(1),
         inventorySlots: z.number().int().min(1).max(9),
+        /**
+         * ⭐⭐ 商店與頂點路線的四個量值（2026-09-01）——
+         * ⚠️ 這一族在 CLAUDE.md 裡是**被逐字點名的寫死前科**：
+         *   > `CAPSTONE_ROUND_GATE = 6` ⇒ 實打每場只有 5–6 回合 → #82 的 7,500 金
+         *   > 頂點路線**永遠開不了**；`STAT_TICK_TARGET = 20` ⇒ 兩個常數乘起來
+         *   > 變成不可能，而且**後台一個都改不到**。
+         * ⇒ ⭐ 這四格就是把那兩行從「代價」變成一格下拉選單。
+         *
+         * ⛔ `GOLD_PER_AEP` **刻意不在這裡** —— 它零個讀取端（價格是烘進表裡的
+         * 字面值），做成設定會是一個謊。理由與可反駁條件在 `sim/economy/economyRules.ts`。
+         *
+         * ⚠️ 上下界與 `economyRules.ts` 的 `BOUNDS` **逐字相同**。ABSENT ⇒ 出貨預設。
+         */
+        legendaryOrbPrice: z.number().min(0).max(100_000).optional(),
+        /** 一次屬性精粹的價錢。出貨 375。 */
+        statTickPrice: z.number().min(0).max(100_000).optional(),
+        /** 累積幾次精粹解鎖頂點。⛔ 下界 1：0 = 開場就有頂點（機制消失）。出貨 20。 */
+        statTickTarget: z.number().int().min(1).max(200).optional(),
+        /** 第幾回合起頂點才解鎖。⭐ 0 = 不設閘。⚠️ 它與上一格**相乘**才是「這條路線打不打得開」。出貨 6。 */
+        capstoneRoundGate: z.number().int().min(0).max(60).optional(),
       })
       .strict(),
     /**

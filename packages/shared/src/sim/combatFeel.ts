@@ -62,6 +62,7 @@ import {
   normalizeImpactFeelRules,
   type ImpactFeelRules,
 } from "./combat/impactFeel";
+import { DEFAULT_MOVE_FEEL, normalizeMoveFeelRules, type MoveFeelRules } from "./moveFeel";
 import { dot, len, lenSq, normalize, sub, type Vec2 } from "./math/vec2";
 
 /** 擊退規則(全部後台可調)。 */
@@ -634,6 +635,11 @@ export interface CombatFeelRules {
    * 讀的時候一律走那支的 `impactFeelRules(world)`。
    */
   impactFeel?: ImpactFeelRules;
+  /**
+   * ⭐ 「走起來／貼上去是什麼感覺」的七個量值（2026-09-01）。選用的理由與 `facing` 逐字相同。
+   * 語意、上下界與出貨預設全部在 `sim/moveFeel.ts`。讀的時候一律走 `moveFeelRules(world)`。
+   */
+  moveFeel?: MoveFeelRules;
 }
 
 /**
@@ -908,6 +914,7 @@ export const DEFAULT_COMBAT_FEEL: CombatFeelRules = Object.freeze({
   predictionHold: DEFAULT_PREDICTION_HOLD,
   hitstop: DEFAULT_HITSTOP,
   impactFeel: DEFAULT_IMPACT_FEEL,
+  moveFeel: DEFAULT_MOVE_FEEL,
   autoEngage: DEFAULT_AUTO_ENGAGE,
   stuckEscape: DEFAULT_STUCK_ESCAPE,
   manualOrder: DEFAULT_MANUAL_ORDER,
@@ -1086,6 +1093,7 @@ export function combatFeelFromDoc(doc: unknown): CombatFeelRules {
     predictionHold?: unknown;
     hitstop?: unknown;
     impactFeel?: unknown;
+    moveFeel?: unknown;
   };
   if (d.schema !== COMBAT_FEEL_SCHEMA) return DEFAULT_COMBAT_FEEL;
   return Object.freeze({
@@ -1099,6 +1107,7 @@ export function combatFeelFromDoc(doc: unknown): CombatFeelRules {
     predictionHold: normalizePredictionHold(d.predictionHold),
     hitstop: normalizeHitstopRules(d.hitstop),
     impactFeel: normalizeImpactFeelRules(d.impactFeel),
+    moveFeel: normalizeMoveFeelRules(d.moveFeel),
   });
 }
 

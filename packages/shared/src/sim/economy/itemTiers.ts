@@ -42,6 +42,7 @@
  * are the round-5 card and the {@link LEGENDARY_ORB_ITEM_ID} roll trigger.
  * `everyPurchasablePriceIsATierPrice` in itemTiers.test.ts is the gate.
  */
+import { DEFAULT_ECONOMY } from "./economyRules";
 import type { ItemId } from "../../ids";
 import { ModOp, type StatModifier } from "../stats/modifiers";
 import { Stat } from "../stats/statTypes";
@@ -75,7 +76,10 @@ export const GOLD_PER_AEP = 46.15;
  * component (the standing no-crafting decision).
  */
 export const LEGENDARY_ORB_ITEM_ID = "legendary-orb" as ItemId;
-export const LEGENDARY_ORB_PRICE = 2400;
+// ⭐ 搬去 `economy/economyRules.ts` 了（2026-09-01）—— 住 `config.match@1` 的 `economy`。
+//   ⚠️ 這一行留著是為了**顯示面**（admin 的價格說明）與 `shopServicePrice()`
+//   （它沒有 `world`）；⭐ 值從出貨預設推導，⛔ 不是第二個住處。
+export const LEGENDARY_ORB_PRICE = DEFAULT_ECONOMY.legendaryOrbPrice;
 /** The pool the orb rolls from — the same table the round-5 card uses. */
 export const LEGENDARY_POOL_TABLE = "legendary-weapons";
 
@@ -113,9 +117,8 @@ export function legendaryShelfPrice(multiplier: number): number {
  * 是第五場之後」, reachable but only just.
  */
 export const STAT_TICK_ITEM_ID = "stat-attunement" as ItemId;
-export const STAT_TICK_PRICE = 375;
-/** 20th cumulative tick = the capstone. 20 x 375 = 7,500g of a ~7,600g match. */
-export const STAT_TICK_TARGET = 20;
+export const STAT_TICK_PRICE = DEFAULT_ECONOMY.statTickPrice;
+export const STAT_TICK_TARGET = DEFAULT_ECONOMY.statTickTarget;
 
 /**
  * The two SHOP SERVICES: listings that take gold but never occupy a slot.

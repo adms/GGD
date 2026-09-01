@@ -85,5 +85,12 @@
     "exShakeCap": 1.4,
     "exCamKickFloor": 0.7,
     "exFreezeTicks": 8
+  },
+  "moveFeel": {
+    "accelTicks": 3,
+    "avoidMargin": 0.3,
+    "autoRangeBuffer": 4,
+    "whiffLungeDist": 0.8,
+    "holdFraction": 0.9
   }
 }

@@ -15,6 +15,7 @@
  * point via the seeded RNG (deterministic). On-hit item passives (onBasicAttack)
  * and lifesteal always fire when the hit LANDS, never at the swing start.
  */
+import { moveFeelRules } from "../moveFeel";
 import type { EntityId, ChampionId, ProjectileId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import type { StatsComp } from "../stats/statsComp";
@@ -51,9 +52,8 @@ const DEFAULT_DAMAGE_POINT_RANGED = 0.3;
 const DEFAULT_MISSILE_SPEED = 20;
 /** Auto-attack projectile hit radius + range buffer past the attack range. */
 const AUTO_HIT_RADIUS = 0.4;
-const AUTO_RANGE_BUFFER = 4;
-/** Whiffed-melee over-commit lunge (combat-juice): a small forward stumble. */
-const WHIFF_LUNGE_DIST = 0.8;
+// ⭐ 搬去 `sim/moveFeel.ts` 了（2026-09-01）—— 住 `content/config/combat-feel.json` 的 `moveFeel`。
+// ⭐ 搬去 `sim/moveFeel.ts` 了（2026-09-01）—— 住 `content/config/combat-feel.json` 的 `moveFeel`。
 const WHIFF_LUNGE_SPEED = 10;
 
 /**
@@ -512,7 +512,7 @@ function resolveAttack(
   if (attackType === "ranged" && (dir.x !== 0 || dir.z !== 0)) {
     // launch an auto projectile; on-hit pipeline resolves on impact
     const speed = cdef?.missileSpeed ?? DEFAULT_MISSILE_SPEED;
-    const range = Math.max(sc.final[Stat.AttackRange], 4) + AUTO_RANGE_BUFFER;
+    const range = Math.max(sc.final[Stat.AttackRange], 4) + moveFeelRules(world).autoRangeBuffer;
     const pid = world.spawn();
     world.transform.set(pid, {
       pos: { x: t.pos.x, z: t.pos.z },
@@ -657,6 +657,6 @@ function whiff(
     kind: "dash",
     dir: normalize(t.facing),
     speed: WHIFF_LUNGE_SPEED,
-    remaining: WHIFF_LUNGE_DIST,
+    remaining: moveFeelRules(world).whiffLungeDist,
   };
 }

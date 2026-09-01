@@ -61,7 +61,11 @@
     "roundWinGold": 300,
     "roundLoseGold": 150,
     "sellRefund": 0.4,
-    "inventorySlots": 6
+    "inventorySlots": 6,
+    "legendaryOrbPrice": 2400,
+    "statTickPrice": 375,
+    "statTickTarget": 20,
+    "capstoneRoundGate": 6
   },
   "progression": {
     "levelCap": 99,

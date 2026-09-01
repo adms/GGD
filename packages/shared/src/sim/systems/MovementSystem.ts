@@ -20,6 +20,7 @@
  * decoupling it from the velocity keeps controls responsive and needs no speed
  * clamp while turning.
  */
+import { moveFeelRules } from "../moveFeel";
 import type { SimWorld } from "../SimWorld";
 import type { Vec2 } from "../math/vec2";
 import { sub, len, scale, normalize, addScaled, dot, cross, perp, lenSq } from "../math/vec2";
@@ -54,8 +55,7 @@ export const TURN_FACTOR = 0.35;
 /** Facing snaps instead of lerping when already this closely aligned. */
 const TURN_SNAP_DOT = 0.9995;
 
-/** Ticks to reach full move speed from standstill (start/stop jerk removal). */
-export const ACCEL_TICKS = 3;
+// ⭐ 搬去 `sim/moveFeel.ts` 了（2026-09-01）—— 住 `content/config/combat-feel.json` 的 `moveFeel`。
 
 /**
  * Rotate `facing` toward unit direction `desired` by one bounded nlerp step:
@@ -82,6 +82,8 @@ export function turnToward(facing: Vec2, desired: Vec2, k: number = TURN_FACTOR)
 }
 
 export function movementSystem(world: SimWorld): void {
+  // ⭐ 一次解析，⛔ 不是每個實體查一次（這一支是每 tick 跑全場的熱路徑）。
+  const mf = moveFeelRules(world);
   const dt = world.dt;
 
   for (const [id, t] of world.transform) {
@@ -272,8 +274,9 @@ export function movementSystem(world: SimWorld): void {
         const baseSpeed =
           world.stats.get(id)?.final[Stat.MoveSpeed] ||
           (world.mob.has(id) ? mobSpeed : BASE_MOVE_SPEED);
-        // acceleration ramp: full speed reached over ACCEL_TICKS ticks
-        const ramp = Math.min(1, (t.accel ?? 0) + 1 / ACCEL_TICKS);
+        // ⭐ 加速斜坡的 tick 數住在 `config.combat-feel@1` 的 `moveFeel.accelTicks`
+        //   （2026-09-01 之前是這個檔的模組層常數 ⇒ ⛔ 只有改程式碰得到）。
+        const ramp = Math.min(1, (t.accel ?? 0) + 1 / mf.accelTicks);
         t.accel = ramp;
         const speed = baseSpeed * speedMult * ramp;
         const stepLen = Math.min(speed * dt, d);
@@ -295,7 +298,14 @@ export function movementSystem(world: SimWorld): void {
         // the other half of owner's 「被卡住永遠走不到」.
         const dir = flies
           ? { x: to.x / d, z: to.z / d }
-          : steerAroundObstacles(t.pos, t.radius, { x: to.x / d, z: to.z / d }, d, zone.obstacles);
+          : steerAroundObstacles(
+              t.pos,
+              t.radius,
+              { x: to.x / d, z: to.z / d },
+              d,
+              zone.obstacles,
+              mf.avoidMargin,
+            );
         // body turns toward the move direction; motion is the ordered direction.
         // 面向鎖優先 (task #264)：出手的那幾 tick，身體朝著瞄準方向，腳照走 ——
         // 走位與朝向解耦本來就是這個系統的設計（見檔頭 Design note），這裡只是把

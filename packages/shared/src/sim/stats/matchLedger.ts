@@ -32,6 +32,7 @@
  * 的同一支。`matchLedger.test.ts` 用突變測試釘住這件事:把 snapshot 改成讀帳本
  * 自己數的一個計數器,測試會紅。
  */
+import { DEFAULT_ECONOMY, economyRules } from "../economy/economyRules";
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import { STAT_TICK_TARGET } from "../economy/itemTiers";
@@ -319,7 +320,7 @@ export function createRoundPlayerRecord(over: Partial<RoundPlayerRecord> = {}): 
     hpRatio: 0,
     alive: false,
     statStacks: 0,
-    statTarget: STAT_TICK_TARGET,
+    statTarget: DEFAULT_ECONOMY.statTickTarget,
     statCapstonePct: 0,
     placement: 0,
     ...over,
@@ -343,8 +344,9 @@ export function createRoundPlayerRecord(over: Partial<RoundPlayerRecord> = {}): 
  */
 export function statPathSnapshotOf(world: SimWorld, id: EntityId): StatPathView {
   const champ = world.champion.get(id);
-  if (!champ) return statPathView(0, 0);
-  return statPathView(champ.statStacks, champ.statCapstonePct);
+  const target = economyRules(world).statTickTarget;
+  if (!champ) return statPathView(0, 0, target);
+  return statPathView(champ.statStacks, champ.statCapstonePct, target);
 }
 
 // ───────────────────────────────────────────────────────────────────────────

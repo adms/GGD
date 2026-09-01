@@ -33,6 +33,7 @@
  * `world.rng`, so a replay of the same seed and the same intent stream produces
  * the same build. Nothing here reads a clock.
  */
+import { DEFAULT_ECONOMY, economyRules } from "./economyRules";
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import { attachSource } from "../stats/statPipeline";
@@ -51,16 +52,7 @@ import {
 
 export type StatTickResult = "ok" | "no-gold" | "no-champion";
 
-/**
- * THE ROUND GATE (task #104). Even at {@link STAT_TICK_TARGET} stacks the
- * capstone is WITHHELD until the match reaches this round, so 傳說·萬象強化 can
- * never land before 「大約是第五場之後」 — the pacing the 375g tick price was
- * tuned to. itemTiers.ts shows the 20th tick lands in the round-6 shop on every
- * deterministic income path, but a winning streak's extra kill/round gold could
- * otherwise buy the 20th tick a round or two early; this gate makes the pacing a
- * guarantee rather than an arithmetic accident.
- */
-export const CAPSTONE_ROUND_GATE = 6;
+// ⭐ 搬去 `economy/economyRules.ts` 了（2026-09-01）—— 住 `config.match@1` 的 `economy.capstoneRoundGate`。
 
 /**
  * Whether the match has reached the capstone's unlock round. `world.round === 0`
@@ -68,7 +60,7 @@ export const CAPSTONE_ROUND_GATE = 6;
  * as ungated, exactly like the pre-#104 behaviour.
  */
 export function capstoneRoundReached(world: SimWorld): boolean {
-  return world.round === 0 || world.round >= CAPSTONE_ROUND_GATE;
+  return world.round === 0 || world.round >= economyRules(world).capstoneRoundGate;
 }
 
 export interface StatTickOutcome {
@@ -127,12 +119,17 @@ export interface StatPathView {
   atRisk: number;
 }
 
-export function statPathView(stacks: number, capstonePct: number): StatPathView {
+export function statPathView(
+  stacks: number,
+  capstonePct: number,
+  /** ⭐ 目標次數（`config.match@1` 的 `economy.statTickTarget`）。缺席 ⇒ 出貨值。 */
+  target: number = DEFAULT_ECONOMY.statTickTarget,
+): StatPathView {
   const live = capstonePct === 0;
   return {
     stacks,
-    target: STAT_TICK_TARGET,
-    remaining: live ? Math.max(0, STAT_TICK_TARGET - stacks) : 0,
+    target,
+    remaining: live ? Math.max(0, target - stacks) : 0,
     live,
     capstonePct,
     atRisk: live ? stacks : 0,
@@ -182,7 +179,7 @@ export function attrBonusFromArray(values: readonly number[] | undefined): AttrB
 export function statTicksRemaining(world: SimWorld, id: EntityId): number {
   const champ = world.champion.get(id);
   if (!champ || champ.statCapstonePct > 0) return 0;
-  return Math.max(0, STAT_TICK_TARGET - champ.statStacks);
+  return Math.max(0, economyRules(world).statTickTarget - champ.statStacks);
 }
 
 /**
@@ -207,7 +204,7 @@ export function buyStatUpgrade(world: SimWorld, id: EntityId): StatTickOutcome {
   const champ = world.champion.get(id);
   if (!champ) return { result: "no-champion", stacks: 0, choices: [], capstonePct: 0 };
   // ⭐ 這位英雄的售價倍率（見 `itemTiers.shopChargeFor`）。
-  const price = shopChargeFor(champ.shopPriceMult, STAT_TICK_PRICE);
+  const price = shopChargeFor(champ.shopPriceMult, economyRules(world).statTickPrice);
   if (champ.gold < price) {
     return { result: "no-gold", stacks: champ.statStacks, choices: [], capstonePct: 0 };
   }
@@ -224,7 +221,7 @@ export function buyStatUpgrade(world: SimWorld, id: EntityId): StatTickOutcome {
 
   let capstonePct = 0;
   if (
-    champ.statStacks >= STAT_TICK_TARGET &&
+    champ.statStacks >= economyRules(world).statTickTarget &&
     champ.statCapstonePct === 0 &&
     capstoneRoundReached(world)
   ) {

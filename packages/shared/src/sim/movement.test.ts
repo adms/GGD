@@ -9,7 +9,10 @@ import { PILLAR_ARENA } from "../../testkit/arenas";
 import { SimWorld } from "./SimWorld";
 import { asSeatId, asTeamId, type EntityId, type SeatId } from "../ids";
 import type { IntentFrame } from "./intents";
-import { turnToward, TURN_FACTOR, ACCEL_TICKS } from "./systems/MovementSystem";
+import { turnToward, TURN_FACTOR } from "./systems/MovementSystem";
+// ⭐ 從**出貨預設**推導，⛔ 不抄字面值（抄一份就是第四個住處，第〇·四守則）。
+import { DEFAULT_MOVE_FEEL } from "./moveFeel";
+const ACCEL_TICKS = DEFAULT_MOVE_FEEL.accelTicks;
 import * as V from "./math/vec2";
 
 /**

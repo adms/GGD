@@ -484,6 +484,34 @@ export const MATCH_FIELD_INFO: Readonly<Record<string, MatchFieldInfo>> = Object
     live: null,
     realHome: "packages/shared/src/sim/economy/shop.ts 的 INVENTORY_SLOTS",
   },
+  "economy.legendaryOrbPrice": {
+    zh: "傳說寶玉一次多少錢",
+    note: "⭐ 有消費端（2026-09-01 接上）—— 商店裡抽一次傳說的價錢。⛔ 在此之前它是程式常數。",
+    live: "sim economy/legendaryOrb.buyLegendaryOrb → shopChargeFor（開賽前定格在 world.economy）",
+    realHome: "packages/shared/src/sim/economy/economyRules.ts 的 DEFAULT_ECONOMY",
+  },
+  "economy.statTickPrice": {
+    zh: "一次屬性精粹多少錢",
+    note: "⭐ 有消費端（2026-09-01 接上）—— 買一次三圍精粹的價錢。",
+    live: "sim economy/statPath.buyStatUpgrade → shopChargeFor（開賽前定格在 world.economy）",
+    realHome: "packages/shared/src/sim/economy/economyRules.ts 的 DEFAULT_ECONOMY",
+  },
+  "economy.statTickTarget": {
+    zh: "累積幾次精粹解鎖頂點",
+    note:
+      "⭐ 有消費端（2026-09-01 接上）。⚠️ 它與底下的「第幾回合起解鎖」**相乘**才是「這條路線打不打得開」——" +
+      "CLAUDE.md 逐字記著前科：兩個常數乘起來變成不可能，而且一個都改不到。⛔ 下界 1：0 = 開場就有頂點（機制消失）。",
+    live: "sim economy/statPath.statTicksRemaining / grantCapstone ＋ 結算面板的分母",
+    realHome: "packages/shared/src/sim/economy/economyRules.ts 的 DEFAULT_ECONOMY",
+  },
+  "economy.capstoneRoundGate": {
+    zh: "第幾回合起頂點才解鎖",
+    note:
+      "⭐ 有消費端（2026-09-01 接上）。⭐ 0 = 不設閘（第一回合就開得了）。" +
+      "⚠️ 實打一場只有 5–6 回合 ⇒ 這一格設得比回合數高，那條路線就**永遠開不了**（#82 的前科）。",
+    live: "sim economy/statPath.capstoneRoundReached（每一次商店開啟都問它）",
+    realHome: "packages/shared/src/sim/economy/statPath.ts 的 capstoneRoundReached",
+  },
   "progression.levelCap": {
     zh: "等級上限",
     note: "沒有消費端 —— `grantLevels` / `grantXp` 讀的是程式裡的 `LEVEL_CAP`。⭐ 2026-08-20 起出貨值**與它相等**（99），由測試釘住；在此之前文件寫 18 而程式是 99，兩邊說了六個月的反話。",
@@ -704,6 +732,10 @@ export const MATCH_GROUPS: readonly MatchGroup[] = [
       "economy.roundLoseGold",
       "economy.sellRefund",
       "economy.inventorySlots",
+      "economy.legendaryOrbPrice",
+      "economy.statTickPrice",
+      "economy.statTickTarget",
+      "economy.capstoneRoundGate",
       "progression.levelCap",
       "progression.xpBase",
       "progression.xpPerLevel",
