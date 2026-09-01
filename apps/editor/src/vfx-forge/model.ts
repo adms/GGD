@@ -7,6 +7,19 @@ import { eventOriginBelongsToAbility } from "../preview/eventOwnership";
 export type AssetDrop = { collection: "models" | "vfx"; id: string };
 export type AssetPlacement = { forwardU: number; sideU: number };
 
+/** One authoring vocabulary shared by the add toolbar and its acceptance gate. */
+export const VFX_FORGE_SEGMENT_KINDS = [
+  "modelFx",
+  "vfx",
+  "floatingText",
+  "screenFlash",
+  "screenShake",
+  "sound",
+  "anim",
+  "bodyMove",
+  "hideBody",
+] as const satisfies readonly VfxScriptSegment["kind"][];
+
 export interface ForgeAbility {
   id: string;
   name?: string;
@@ -213,6 +226,14 @@ export function newSegment(kind: VfxScriptSegment["kind"]): VfxScriptSegment {
     screenShake: { kind, on: "castEffect", amplitude: 0.2, durationSec: 0.25 },
     sound: { kind, on: "castEffect", soundKey: "ability.cast" },
     anim: { kind, on: "castEffect", at: "caster", pulse: "cast" },
+    bodyMove: {
+      kind,
+      on: "castEffect",
+      at: "caster",
+      mode: "teleport",
+      offset: { x: 0, y: 0, z: 0 },
+      durationMs: 250,
+    },
     hideBody: { kind, on: "castEffect", at: "caster", durationMs: 500 },
   };
   return checked(seeds[kind]);

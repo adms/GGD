@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import {
+  VFX_FORGE_SEGMENT_KINDS,
   newSegment,
   reactionTriggerOf,
   scheduleSimEvents,
@@ -80,7 +81,8 @@ describe("VFX Forge authoring core", () => {
       offsetForwardU: 3.2,
       offsetSideU: -1.4,
     });
-    for (const kind of ["floatingText", "screenFlash", "screenShake", "sound", "anim", "hideBody"] as const) {
+    expect(new Set(VFX_FORGE_SEGMENT_KINDS).size).toBe(VFX_FORGE_SEGMENT_KINDS.length);
+    for (const kind of VFX_FORGE_SEGMENT_KINDS) {
       expect(newSegment(kind).kind).toBe(kind);
     }
   });

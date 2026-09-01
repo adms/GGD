@@ -1,9 +1,5 @@
 import type { VfxScriptDoc, VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
-import { decodeAssetDrag, segmentTimes, type AssetDrop, type TriggerCue } from "./model";
-
-const KINDS: VfxScriptSegment["kind"][] = [
-  "modelFx", "vfx", "floatingText", "screenFlash", "screenShake", "sound", "anim", "hideBody",
-];
+import { VFX_FORGE_SEGMENT_KINDS, decodeAssetDrag, segmentTimes, type AssetDrop, type TriggerCue } from "./model";
 
 export function VfxTimeline({
   script,
@@ -65,7 +61,7 @@ export function VfxTimeline({
           </label>
         </div>
         <div className="vfx-add-kinds">
-          {KINDS.map((kind) => <button type="button" key={kind} onClick={() => onAddKind(kind)}>+ {kind}</button>)}
+          {VFX_FORGE_SEGMENT_KINDS.map((kind) => <button type="button" key={kind} onClick={() => onAddKind(kind)}>+ {kind}</button>)}
         </div>
       </header>
       <input
