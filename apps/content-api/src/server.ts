@@ -64,6 +64,10 @@ import { SseHub } from "./sse";
 import { registerDevWriteGuard } from "./guard";
 import { listSnapshots, readSnapshot, snapshotFile, snapshotText } from "./backup";
 import { registerImportRoutes } from "./importRoutes";
+import {
+  registerEditorSourceRoutes,
+  registerProductWriteGuard,
+} from "./editorSourceRoutes";
 
 export interface ContentApiOptions {
   contentDir: string;
@@ -568,6 +572,13 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
 
   // ---------- Editor package importer (G1 握手層，唯讀；importRoutes.ts) ----------
   registerImportRoutes(app, { contentDir: root, gameVersion: process.env.GGD_BUILD_STAMP ?? null });
+
+  // ⭐⭐ P0-1 —— 產生器來源轉接器（GH: editor seam）。
+  //   ⚠️ `registerProductWriteGuard` 是 **onRequest**（比路由早）⇒ 一支 curl 也擋得住，
+  //   ⛔ 不是「請編輯器不要直接寫產物」。
+  const repoRoot = resolve(root, "..");
+  registerProductWriteGuard(app, { repoRoot, contentDir: root });
+  registerEditorSourceRoutes(app, { repoRoot, contentDir: root });
 
   // ---------- SSE ----------
   app.get("/content-api/events", (req, reply) => {
