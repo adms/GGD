@@ -212,6 +212,43 @@ const BJS_ALPHA_ADD = 1;
 const BJS_ALPHABLEND = 2;
 
 /**
+ * 地面魔法陣／符文卡片的幾何判準。
+ *
+ * 這裡不能靠模型 id 名單：下一張魔法陣不會自動進名單。真正會把「去背 alpha」
+ * 變成死資料的形狀，是一張幾乎沒有厚度、另外兩軸接近正方形的發光卡片。
+ * 光束也是薄片，但長寬比很大，所以仍保留 ONE+ONE 的原作亮度。
+ */
+function isPlanarGlyphCard(mesh: {
+  getBoundingInfo(): { boundingBox: { extendSize: { x: number; y: number; z: number } } };
+}): boolean {
+  const half = mesh.getBoundingInfo().boundingBox.extendSize;
+  const spans = [Math.abs(half.x) * 2, Math.abs(half.y) * 2, Math.abs(half.z) * 2].sort(
+    (left, right) => left - right,
+  );
+  const longest = spans[2] ?? 0;
+  if (longest <= 1e-6) return false;
+  // 部分 WC3 圓盤（例如 tomeofretrainingcaster）不是數學上的零厚度：轉檔後
+  // Z 向約為直徑的 9.7%。12% 可涵蓋這種有厚度的符文盤，又不會把長條光束
+  // 誤判成卡片（後者仍會被「中軸至少為長軸一半」排除）。
+  return (spans[0] ?? 0) <= longest * 0.12 && (spans[1] ?? 0) >= longest * 0.5;
+}
+
+/**
+ * 轉檔器已把 WC3 layer 的原始混合語意保存在 glTF material extras。
+ * `AddAlpha`（filterMode 4）必須讀來源 alpha；`Additive`（3）則刻意忽略 alpha。
+ * 舊 GLB 沒有 extras 時回 `undefined`，再由幾何退路判斷，不能猜成其中一種。
+ */
+function stockW3xBlend(material: Record<string, unknown>): "alpha" | "additive" | undefined {
+  const metadata = material["metadata"] as
+    | { gltf?: { extras?: { w3x?: { blend?: unknown; filterMode?: unknown } } } }
+    | undefined;
+  const w3x = metadata?.gltf?.extras?.w3x;
+  if (w3x?.blend === "AddAlpha" || w3x?.filterMode === 4) return "alpha";
+  if (w3x?.blend === "Additive" || w3x?.filterMode === 3) return "additive";
+  return undefined;
+}
+
+/**
  * 🔆 **把原作的 additive 混合補回來**（GH#767）。
  *
  * ── 為什麼這是一個**缺的機制**，⛔ 不是一格口味參數 ──────────────────────
@@ -230,7 +267,7 @@ const BJS_ALPHABLEND = 2;
  * ⚠️ 這裡讀的是**最終**掛在 mesh 上的那份材質（`applyFxTint` 之後才呼叫）——
  * 對**原始**素材物件寫的斷言不管有沒有生效都會過（`views/mobTint.test.ts` 檔頭）。
  *
- * ── ⭐【GH#767 的洞，2026-08-28 量到】ONEONE 對**宣告了透明度**的材質是錯的 ────
+ * ── ⭐【GH#767 的洞，2026-08-28 量到】ONEONE 對**需要 alpha 形狀**的材質是錯的 ──
  * owner（第三次）：「Rider, 木乃香 施展技能底下魔法陣依然沒有去背」。
  * A/B 實測（beam-audition `?ability=godie-hvsh.r` / `godie-etyr.q`）：
  * 出貨預設（一律 ONEONE）⇒ 地面魔法陣（midchilder／oblivion／tome，2–3 個
@@ -238,10 +275,9 @@ const BJS_ALPHABLEND = 2;
  * **每一片都以全額 RGB 相加 ⇒ 疊爆成一大團實心白**；`?additive=0` 與
  * `ALPHA_ADD` 都是正確的粉紫魔法陣。⛔ 而光束家族（20-03/59-04）的
  * 246–254 亮度驗收**只在 ONEONE 下成立**（ALPHA_ADD 量到 86.9）。
- * ⇒ ⭐ 分工不是家族名單，是**材質自己的宣告**：alpha < 1（`model@1.fxAlpha`
- * 或節點級 `alpha`，applyFxTint 已乘進最終材質）＝「這一份的透明度有語意」
- * ⇒ 混合模式必須**讀 alpha**（{@link BJS_ALPHA_ADD}＝WC3 fm3 的逐字 blendFunc）；
- * 沒宣告 ⇒ 維持 ONEONE（光束驗收不動）。
+ * ⇒ ⭐ 分工不是家族名單。優先讀 glTF extras 保存的原始 WC3 `AddAlpha`；其次讀
+ * `model@1.fxAlpha`／節點級 alpha；只有舊 GLB 沒保存 extras 時，才以「薄且近
+ * 正方形的發光卡片」作退路。明確標成 `Additive` 的細長光束維持 ONEONE。
  *
  * @returns 真的被改成加法的材質數（0 = 這一具沒有 glow 材質，或開關關著）。
  */
@@ -257,8 +293,12 @@ export function applyStockGlowAdditive(root: TransformNode): number {
     const e = mat["emissiveColor"] as { r: number; g: number; b: number } | undefined;
     if (!e || (e.r <= 0 && e.g <= 0 && e.b <= 0)) continue;
     const a = mat["alpha"];
-    mat["alphaMode"] =
-      typeof a === "number" && a < 1 ? BJS_ALPHA_ADD : BJS_ALPHA_ONEONE;
+    const sourceBlend = stockW3xBlend(mat);
+    const alphaCarriesShape =
+      (typeof a === "number" && a < 1) ||
+      sourceBlend === "alpha" ||
+      (sourceBlend === undefined && isPlanarGlyphCard(mesh));
+    mat["alphaMode"] = alphaCarriesShape ? BJS_ALPHA_ADD : BJS_ALPHA_ONEONE;
     // ⚠️ 只設 alphaMode 是**寫了但不會發生**：PBR 的不透明素材被載入器鎖成
     //    `transparencyMode: OPAQUE`，而 `needAlphaBlending()` 回 false 時
     //    混合模式那一格**根本不會被讀**（同 `applyFxTint` 的 fxAlpha 那一段）。
