@@ -2,12 +2,7 @@ import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import {
-  packagedExecutableCandidates,
-  parseCliArgs,
-  parseSmokeReceipt,
-  resolvePackagedExecutable,
-} from "./smoke-packaged.mjs";
+import { packagedExecutableCandidates, parseCliArgs, parseSmokeReceipt, resolvePackagedExecutable } from "./smoke-packaged.mjs";
 
 const product = "GGD Ability & VFX Editor";
 const root = join(tmpdir(), `ggd-editor-smoke-runner-test-${process.pid}`);
