@@ -1,0 +1,451 @@
+{
+  "schema": "ggd-brick-census@1",
+  "note": "⭐ 積木普查（owner 2026-09-01：「編輯器是堆積木的角色，要充分了解有哪些積木；main 是做出積木的角色」）。⛔ 產物 —— 改 `tools/brick-census/gen.ts`，⛔ 不要手改。",
+  "counts": {
+    "engineFamilies": 19,
+    "templateDocs": 46,
+    "usable": 19,
+    "engineMissing": 26,
+    "shells": 18,
+    "zeroAdoption": 36,
+    "terminal": 1
+  },
+  "engineFamilies": [
+    "buff-self",
+    "charge-push",
+    "ground-nova",
+    "instant-blast",
+    "leap-strike",
+    "line-sweep",
+    "lock-combo",
+    "mark-stacks",
+    "on-attack",
+    "on-hit-react",
+    "orbit-array",
+    "periodic-field",
+    "proxy-cast",
+    "proxy-fanout",
+    "random-barrage",
+    "single-strike",
+    "summon-agent",
+    "teleport",
+    "traveling-wave"
+  ],
+  "unusedEngineFamilies": [],
+  "templates": [
+    {
+      "id": "tpl-buff-self",
+      "family": "buff-self",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 3,
+      "abilities": 29,
+      "terminal": false
+    },
+    {
+      "id": "tpl-single-strike",
+      "family": "single-strike",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 3,
+      "abilities": 24,
+      "terminal": false
+    },
+    {
+      "id": "tpl-instant-blast",
+      "family": "instant-blast",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 4,
+      "abilities": 12,
+      "terminal": false
+    },
+    {
+      "id": "tpl-proxy-cast",
+      "family": "proxy-cast",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 8,
+      "abilities": 8,
+      "terminal": false
+    },
+    {
+      "id": "tpl-periodic-field",
+      "family": "periodic-field",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 9,
+      "abilities": 5,
+      "terminal": false
+    },
+    {
+      "id": "tpl-line-sweep",
+      "family": "line-sweep",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 6,
+      "abilities": 1,
+      "terminal": false
+    },
+    {
+      "id": "tpl-orbit-array",
+      "family": "orbit-array",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 7,
+      "abilities": 1,
+      "terminal": false
+    },
+    {
+      "id": "tpl-summon-agent",
+      "family": "summon-agent",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 12,
+      "abilities": 1,
+      "terminal": false
+    },
+    {
+      "id": "tpl-traveling-wave",
+      "family": "traveling-wave",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 9,
+      "abilities": 1,
+      "terminal": false
+    },
+    {
+      "id": "tpl-barrier-domain",
+      "family": "barrier-domain",
+      "engineKnows": false,
+      "status": "draft",
+      "params": 0,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-beam-roll",
+      "family": "beam-roll",
+      "engineKnows": false,
+      "status": "enabled",
+      "params": 17,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-blink-strike",
+      "family": "blink-strike",
+      "engineKnows": false,
+      "status": "draft",
+      "params": 0,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-channel-beam",
+      "family": "channel-beam",
+      "engineKnows": false,
+      "status": "draft",
+      "params": 0,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-charge-push",
+      "family": "charge-push",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 11,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-combo-finisher",
+      "family": "combo-finisher",
+      "engineKnows": false,
+      "status": "draft",
+      "params": 13,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-data-no-trigger",
+      "family": "data-no-trigger",
+      "engineKnows": false,
+      "status": "draft",
+      "params": 0,
+      "abilities": 0,
+      "terminal": true
+    },
+    {
+      "id": "tpl-death-mechanic",
+      "family": "death-mechanic",
+      "engineKnows": false,
+      "status": "draft",
+      "params": 0,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-dragon-quake",
+      "family": "dragon-quake",
+      "engineKnows": false,
+      "status": "draft",
+      "params": 12,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-dragon-serpent",
+      "family": "dragon-serpent",
+      "engineKnows": false,
+      "status": "draft",
+      "params": 12,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-dragon-shockwave",
+      "family": "dragon-shockwave",
+      "engineKnows": false,
+      "status": "draft",
+      "params": 9,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-drain-leech",
+      "family": "drain-leech",
+      "engineKnows": false,
+      "status": "draft",
+      "params": 0,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-global-rule",
+      "family": "global-rule",
+      "engineKnows": false,
+      "status": "draft",
+      "params": 0,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-ground-nova",
+      "family": "ground-nova",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 4,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-growth-charge",
+      "family": "growth-charge",
+      "engineKnows": false,
+      "status": "draft",
+      "params": 0,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-leap-strike",
+      "family": "leap-strike",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 8,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-life-manipulate",
+      "family": "life-manipulate",
+      "engineKnows": false,
+      "status": "draft",
+      "params": 0,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-line-blast",
+      "family": "line-blast",
+      "engineKnows": false,
+      "status": "enabled",
+      "params": 15,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-lock-combo",
+      "family": "lock-combo",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 10,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-locust-line",
+      "family": "locust-line",
+      "engineKnows": false,
+      "status": "enabled",
+      "params": 11,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-locust-orb",
+      "family": "locust-orb",
+      "engineKnows": false,
+      "status": "enabled",
+      "params": 12,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-locust-strike",
+      "family": "locust-strike",
+      "engineKnows": false,
+      "status": "enabled",
+      "params": 11,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-locust-swarm",
+      "family": "locust-swarm",
+      "engineKnows": false,
+      "status": "enabled",
+      "params": 12,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-locust-travel",
+      "family": "locust-travel",
+      "engineKnows": false,
+      "status": "enabled",
+      "params": 11,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-mark-stacks",
+      "family": "mark-stacks",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 20,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-on-attack",
+      "family": "on-attack",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 6,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-on-hit-react",
+      "family": "on-hit-react",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 5,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-proxy-fanout",
+      "family": "proxy-fanout",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 6,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-pull-throw",
+      "family": "pull-throw",
+      "engineKnows": false,
+      "status": "draft",
+      "params": 0,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-pure-cosmetic",
+      "family": "pure-cosmetic",
+      "engineKnows": false,
+      "status": "draft",
+      "params": 0,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-radial-burst",
+      "family": "radial-burst",
+      "engineKnows": false,
+      "status": "enabled",
+      "params": 12,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-random-barrage",
+      "family": "random-barrage",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 9,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-range-gamble",
+      "family": "range-gamble",
+      "engineKnows": false,
+      "status": "draft",
+      "params": 0,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-resource-ops",
+      "family": "resource-ops",
+      "engineKnows": false,
+      "status": "draft",
+      "params": 0,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-strip-transform",
+      "family": "strip-transform",
+      "engineKnows": false,
+      "status": "draft",
+      "params": 0,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-team-synergy",
+      "family": "team-synergy",
+      "engineKnows": false,
+      "status": "draft",
+      "params": 0,
+      "abilities": 0,
+      "terminal": false
+    },
+    {
+      "id": "tpl-teleport",
+      "family": "teleport",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 6,
+      "abilities": 0,
+      "terminal": false
+    }
+  ]
+}
