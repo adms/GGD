@@ -1939,5 +1939,29 @@
     "since": "2026-09-01",
     "why": "GH#838 M1 逐刀瞬移 / M3 升空曲線 —— ⭐ 這一格今天是 0 是**對的**：它的第一份採用者會是 owner 指名的驗收三招之一 **01-04 超究武神霸斬**，而那一招是**由外部編輯器（Codex 的特效工坊）產出**的內容（owner 2026-08-31：「給 codex 編輯器做，你到時候參考就好」）。⛔ 我不先填它 —— 填了就是替 owner 決定那一招長什麼樣，⭐ 而這一段存在的目的正好相反：**讓他做得出來**。⚠️ 機制側全鏈路通並有守衛（bodyMoveSegment.test.ts 六條，兩個突變驗過）：schema 段 · 播放器 case · appBridges · EntityViewRegistry 的合成點 · ⭐ 編輯器欄位。",
     "group": "vfx-script-body-move"
+  },
+  "enum:abilities.effects[]#grantGold.to=target": {
+    "status": "landing",
+    "since": "2026-09-01",
+    "why": "GH#890 —— ⭐ `grantGold` 在 2026-09-01 之前**零個出貨採用者**，而 92-04 馬勒戈壁（owner：「改成**額外獲得**而非奪取」）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而它們服務的是**還沒有出貨的卡片形狀**：`perTargetLevel`／`mobLevelSource`／`fallbackLevel` 是「黃金數量為**敵方等級**」那一族（`grantGold.ts` 的檔頭逐字點名鍊金術之盾），`to=target` 是「**付錢給受害者**」的設計。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一張卡長什麼樣。⭐ 它們會在下一張這一族的卡片上被自然採用。",
+    "group": "grant-gold-siblings"
+  },
+  "field:abilities.effects[]#grantGold.condition": {
+    "status": "landing",
+    "since": "2026-09-01",
+    "why": "GH#890 —— ⭐ `grantGold` 在 2026-09-01 之前**零個出貨採用者**，而 92-04 馬勒戈壁（owner：「改成**額外獲得**而非奪取」）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而它們服務的是**還沒有出貨的卡片形狀**：`perTargetLevel`／`mobLevelSource`／`fallbackLevel` 是「黃金數量為**敵方等級**」那一族（`grantGold.ts` 的檔頭逐字點名鍊金術之盾），`to=target` 是「**付錢給受害者**」的設計。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一張卡長什麼樣。⭐ 它們會在下一張這一族的卡片上被自然採用。",
+    "group": "grant-gold-siblings"
+  },
+  "field:abilities.effects[]#grantGold.fallbackLevel": {
+    "status": "landing",
+    "since": "2026-09-01",
+    "why": "GH#890 —— ⭐ `grantGold` 在 2026-09-01 之前**零個出貨採用者**，而 92-04 馬勒戈壁（owner：「改成**額外獲得**而非奪取」）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而它們服務的是**還沒有出貨的卡片形狀**：`perTargetLevel`／`mobLevelSource`／`fallbackLevel` 是「黃金數量為**敵方等級**」那一族（`grantGold.ts` 的檔頭逐字點名鍊金術之盾），`to=target` 是「**付錢給受害者**」的設計。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一張卡長什麼樣。⭐ 它們會在下一張這一族的卡片上被自然採用。",
+    "group": "grant-gold-siblings"
+  },
+  "field:abilities.effects[]#grantGold.mobLevelSource": {
+    "status": "landing",
+    "since": "2026-09-01",
+    "why": "GH#890 —— ⭐ `grantGold` 在 2026-09-01 之前**零個出貨採用者**，而 92-04 馬勒戈壁（owner：「改成**額外獲得**而非奪取」）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而它們服務的是**還沒有出貨的卡片形狀**：`perTargetLevel`／`mobLevelSource`／`fallbackLevel` 是「黃金數量為**敵方等級**」那一族（`grantGold.ts` 的檔頭逐字點名鍊金術之盾），`to=target` 是「**付錢給受害者**」的設計。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一張卡長什麼樣。⭐ 它們會在下一張這一族的卡片上被自然採用。",
+    "group": "grant-gold-siblings"
   }
 }

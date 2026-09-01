@@ -136,7 +136,11 @@ const hasLoopMechanism = (doc: unknown): boolean =>
  * · `godie-u034.ex` / `godie-ucrl.ex`（06-002 殺意）——「**剪刀**：…每秒損失60點生命，
  *   持續8秒」⇒ 那一句掛在**另一支技能的一個分支**上（猜猜拳三選一），
  *   要的是 `ability-augment@1` 的逐分支追加，⛔ 不是這一支自己的 effects。
- * · ⭐ `godie-h02u.r`（92-04 馬勒戈壁）——**做過又收回來的**，而收回的理由是階梯：
+ * · ✅ **已修**（2026-09-01，GH#890）`godie-h02u.r`（92-04 馬勒戈壁）——
+ *   ⭐ owner 逐字：「把這兩招都改成**額外獲得**而非奪取就好」⇒ 卡面改寫成
+ *   「每秒額外獲得150黃金」，而 JSON 長出 `delayed{intervalSec:1,count:6}`
+ *   包住一格 `grantGold`。⛔ 原本的問題敘述保留在下面（知識⛔不無聲消失）：
+ *   （舊）——**做過又收回來的**，而收回的理由是階梯：
  *   這一格套上 `tpl-periodic-field` 之後，`abilityCodeParity` 當場紅並逐字說
  *   「⛔ 不要把它加進 baseline 了事，拿去給 owner 裁決哪一邊是對的」——
  *   因為**同編號的本體 `godie-h02v.r` 帶的是 owner 的新版說明**（階梯第 1 層：
@@ -148,7 +152,7 @@ const hasLoopMechanism = (doc: unknown): boolean =>
  *   ⇒ ⛔ 也不可以反過來把本體改成變身態的樣子。
  */
 const KNOWN_LYING: ReadonlySet<string> = new Set([
-  "godie-h02u.r", "godie-o030.w", "godie-orkn.w", "godie-u034.ex", "godie-ucrl.ex",
+  "godie-o030.w", "godie-orkn.w", "godie-u034.ex", "godie-ucrl.ex",
 ]);
 
 describe("卡面宣稱「每 N 秒…持續 M 秒」的技能，JSON 裡要有節奏（GH#648）", () => {

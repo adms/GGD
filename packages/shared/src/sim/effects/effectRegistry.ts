@@ -100,7 +100,8 @@ import { mindControlEffect } from "./mindControl";
 
 // ── 嘲弄 / 煉金術 (鍊金術之盾 godie-i06q) ────────────────────────────────────
 import { tauntEffect } from "./taunt"; // 強制索敵 — model + config in ../taunt.ts
-import { grantGoldEffect } from "./grantGold"; // 「黃金數量為敵方等級」
+import { grantGoldEffect } from "./grantGold";
+import { grantXpEffect } from "./grantXp"; // ⭐ GH#890 —— 每秒額外獲得經驗值 // 「黃金數量為敵方等級」
 
 // ── 復活 (天生牙 godie-i031) ─────────────────────────────────────────────────
 // Delegates the STATE CONTRACT to `sim/revive.ts::reviveChampionAt`, the same
@@ -190,6 +191,7 @@ export const EFFECT_HANDLERS: EffectRegistry = {
   // ── 發放金幣, optionally × the victim's level (「黃金數量為敵方等級」).
   //    ⚠️ Pays at PROC time, not at kill confirmation — see ./grantGold.ts.
   grantGold: grantGoldEffect,
+  grantXp: grantXpEffect,
 
   // ── 復活 (天生牙 godie-i031) — this handler decides WHO / WHERE / WHETHER;
   //    the state contract («what a revived champion looks like») is the

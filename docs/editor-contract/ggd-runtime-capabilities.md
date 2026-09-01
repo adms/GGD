@@ -1,6 +1,6 @@
 # GGD 遊戲端執行期能力清單（`ggd-runtime-capabilities@1`）
 
-**指紋 `e534e6ef`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
+**指紋 `111434fa`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
 
 ## 這份文件是什麼
 
@@ -106,14 +106,14 @@
 
 這是引擎執行期**真的有處理器**的全部種類；不在這張表上的名稱一律會被拒絕。
 
-`applyBuff` · `applyStatus` · `blink` · `carry` · `chainLightning` · `championForm` · `comboStrikes` · `convertTeam` · `cycleBuff` · `damage` · `damageArea` · `damageLine` · `dash` · `delayed` · `devour` · `dispel` · `dot` · `evasion` · `eventValueConversion` · `extendBuff` · `floatingText` · `grantAttribute` · `grantGold` · `heal` · `invulnerable` · `knockback` · `leap` · `manaBarrier` · `modifyCooldown` · `proxyCast` · `pull` · `randomArea` · `restore` · `revive` · `screenFlash` · `screenShake` · `shield` · `shieldBreak` · `spawnModelFx` · `spawnProjectile` · `spawnVfx` · `spendMana` · `summon` · `swapResource` · `taunt` · `weightedBranch`
+`applyBuff` · `applyStatus` · `blink` · `carry` · `chainLightning` · `championForm` · `comboStrikes` · `convertTeam` · `cycleBuff` · `damage` · `damageArea` · `damageLine` · `dash` · `delayed` · `devour` · `dispel` · `dot` · `evasion` · `eventValueConversion` · `extendBuff` · `floatingText` · `grantAttribute` · `grantGold` · `grantXp` · `heal` · `invulnerable` · `knockback` · `leap` · `manaBarrier` · `modifyCooldown` · `proxyCast` · `pull` · `randomArea` · `restore` · `revive` · `screenFlash` · `screenShake` · `shield` · `shieldBreak` · `spawnModelFx` · `spawnProjectile` · `spawnVfx` · `spendMana` · `summon` · `swapResource` · `taunt` · `weightedBranch`
 
 ⭐ **一個種類一個檔**（#467）—— 檔名恆等於上面那張清單裡的種類名：
 
 | 種類的哪一半 | 檔案 | 覆蓋 |
 |---|---|---|
-| 欄位與上下界 | `packages/shared/src/content/schema/effects/<種類>.ts` | 46 / 46 個種類有自己的檔 |
-| 型別 | `packages/shared/src/sim/effects/variants/<種類>.ts` | 46 / 46 個種類有自己的檔 |
+| 欄位與上下界 | `packages/shared/src/content/schema/effects/<種類>.ts` | 47 / 47 個種類有自己的檔 |
+| 型別 | `packages/shared/src/sim/effects/variants/<種類>.ts` | 47 / 47 個種類有自己的檔 |
 
 ⚠️ 右欄兩個數字是**每次匯出時數出來的**，⛔ 不是寫死的宣稱。分母是這一節上方那張
 清單的長度；分子是那個目錄裡真的存在的檔。兩者不相等就代表有種類還沒分出去。
@@ -336,7 +336,7 @@
   "issues": [
     {
       "path": "effects.0.kind",
-      "message": "Invalid discriminator value. Expected 'damage' | 'damageArea' | 'damageLine' | 'grantAttribute' | 'revive' | 'heal' | 'shield' | 'applyStatus' | 'applyBuff' | 'cycleBuff' | 'restore' | 'spendMana' | 'dash' | 'leap' | 'blink' | 'championForm' | 'spawnProjectile' | 'spawnVfx' | 'dot' | 'summon' | 'invulnerable' | 'knockback' | 'evasion' | 'taunt' | 'grantGold' | 'dispel' | 'shieldBreak' | 'devour' | 'modifyCooldown' | 'weightedBranch' | 'swapResource' | 'eventValueConversion' | 'randomArea' | 'delayed' | 'proxyCast' | 'manaBarrier' | 'extendBuff' | 'carry' | 'convertTeam' | 'chainLightning' | 'comboStrikes' | 'pull' | 'spawnModelFx' | 'screenFlash' | 'screenShake' | 'floatingText'",
+      "message": "Invalid discriminator value. Expected 'damage' | 'damageArea' | 'damageLine' | 'grantAttribute' | 'revive' | 'heal' | 'shield' | 'applyStatus' | 'applyBuff' | 'cycleBuff' | 'restore' | 'spendMana' | 'dash' | 'leap' | 'blink' | 'championForm' | 'spawnProjectile' | 'spawnVfx' | 'dot' | 'summon' | 'invulnerable' | 'knockback' | 'evasion' | 'taunt' | 'grantGold' | 'grantXp' | 'dispel' | 'shieldBreak' | 'devour' | 'modifyCooldown' | 'weightedBranch' | 'swapResource' | 'eventValueConversion' | 'randomArea' | 'delayed' | 'proxyCast' | 'manaBarrier' | 'extendBuff' | 'carry' | 'convertTeam' | 'chainLightning' | 'comboStrikes' | 'pull' | 'spawnModelFx' | 'screenFlash' | 'screenShake' | 'floatingText'",
       "code": "invalid_union_discriminator"
     }
   ]

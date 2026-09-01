@@ -74,6 +74,25 @@ const PRE_A4_KINDS: ReadonlySet<string> = new Set([
  */
 const OWN_GEOMETRY_KINDS: ReadonlyMap<string, string> = new Map([["randomArea", "scatterRadius"]]);
 
+/**
+ * ⭐⭐ E1 的**第三類**：沒有幾何、只有**收款人**的 kind（2026-09-01）。
+ *
+ * ── ⛔ 為什麼不是給它一個 `shape` ─────────────────────────────────────
+ * 上面那段註解自己講了判準：「⛔ 加一列之前先問：這個 kind 的 handler 真的
+ * **讀不到** `shape` 嗎？⋯一個必填卻沒有人讀的 `shape` **只滿足 E1 的字面，
+ * 不滿足 E1 的意思**。」
+ *
+ * ⭐ `grantXp`（GH#890）就是這一類：它不解任何範圍 —— 它把經驗發給
+ * **施法者**或**已經被外層解出來的目標**。⇒ 它的「作用範圍」逐字就是 `to`。
+ *
+ * ⚠️ ⭐ 而 `grantGold` 是**同一類**，只是它在 A4 之前就註冊了所以被祖父條款放行
+ * ⇒ ⭐ 這一格不是新開的例外，是**把一個一直存在的類別寫下來**。
+ *
+ * ⛔ 紀律與 `OWN_GEOMETRY_KINDS` 逐字相同：每一列指名那個 kind **真的收**的欄位，
+ * 下面的測試會去問出貨的 Zod 收不收；⭐ 名字加進來但欄位不存在的那一刻它就紅。
+ */
+const PAYOUT_KINDS: ReadonlyMap<string, string> = new Map([["grantXp", "to"]]);
+
 /** 這一格（`shape` 或自帶的幾何欄位）schema 收不收。 */
 function acceptsField(kind: string, field: string, value: unknown): boolean {
   const probe = { kind, [field]: value } as unknown;
@@ -92,6 +111,12 @@ function acceptsField(kind: string, field: string, value: unknown): boolean {
 
 /** 一份最小可解析的文件，只為了問「schema 收不收作用範圍」。 */
 function acceptsShape(kind: string): boolean {
+  const payout = PAYOUT_KINDS.get(kind);
+  if (payout !== undefined) {
+    // ⭐ 收款型的：⛔ 兩個方向一起問 —— 它必須收 `to`，**而且**不可以偷偷
+    //   還留著 `shape`（留著就代表那一格是「有設、沒有人讀」）。
+    return acceptsField(kind, payout, "self") && !acceptsField(kind, "shape", "single");
+  }
   const own = OWN_GEOMETRY_KINDS.get(kind);
   if (own !== undefined) {
     // 自帶幾何的：⛔ 兩個方向一起問 —— 它必須收自己那一格，**而且**不可以偷偷
@@ -124,6 +149,9 @@ describe("E1：新 effect kind 一律帶 shape", () => {
     // 否則它會靜靜地變成一張紀念品。
     const stale = [...OWN_GEOMETRY_KINDS.keys()].filter((k) => !newKinds.includes(k));
     expect(stale, "OWN_GEOMETRY_KINDS 指到已經不存在（或不是新）的 kind").toEqual([]);
+    // ⭐ 收款型那張表同一條紀律 —— ⛔ 否則它會靜靜地變成一張紀念品。
+    const stalePayout = [...PAYOUT_KINDS.keys()].filter((k) => !newKinds.includes(k));
+    expect(stalePayout, "PAYOUT_KINDS 指到已經不存在（或不是新）的 kind").toEqual([]);
   });
 
   it('shape:"circle" 沒寫 radius 的文件進不來 —— 而且是載入時擋,不是執行期靜默退化', () => {

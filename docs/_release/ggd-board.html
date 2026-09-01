@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-08-31 21:54 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-09-01 12:50 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.33.0 · 資料截至 2026-08-31 21:54 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-31 21:54 (GMT+8)</h1><div class="meta"><span>帳本 <b>13</b> 份</span><span>點名票號 <b>341</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.34.22 · 資料截至 2026-09-01 12:50 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-01 12:50 (GMT+8)</h1><div class="meta"><span>帳本 <b>14</b> 份</span><span>點名票號 <b>348</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -871,6 +871,52 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>19:07</td><td>[#327] ②tokenizer（允許清單在形狀不在詞彙）＋③SHA-256 唯一/md5 拒絕。①⛔ 不翻 strict —— 票文漏了 digest 對原始 JSON 取 hash 這個理由，改成補「我沒看懂這幾格」的訊號 ⇒ c9250791a + 8a00f6879</td><td>327</td></tr>
 <tr><td>21:26</td><td>[#813] WS handshake 的 token 逐次進 access_log（#724 只關了 REST 那一半）⇒ 遮蔽而非關閉，真的跑 nginx 驗過。compose↔helm 74 個旋鈕轉不到，其中 <b>6 格是 rollback 開關</b> ⇒ helm 長出 rollbackEnv ⇒ 816a74ff9</td><td>813</td></tr>
 <tr><td>21:54</td><td>#448 落地（commit 43a587a2e）：blink 長出 <code>to:&amp;quot;markedUnit&amp;quot;</code> + <code>markStatusId</code>，兩段行為由內容的 <code>not(目標帶標記)</code> 表達（零新機制）。rollback 開關 <code>displacement-tiers.markedBlink</code>（三個住處）。契約 4814→4819。⛔ 未驗收、未 push。</td><td>448</td></tr>
+<tr><td>22:42</td><td>BMPNDD 完成 v0.33.1：push 3cac95e14 → deploy 到 Mac mini（7 項後置條件全綠）。⭐ 線上 bundle cv_b8827ae796ba 確認含 camera-mark 與 markedUnit ⇒ 內容那一半有終端證據。</td><td>448</td></tr>
+<tr><td>23:19</td><td>#330 自動加點落地（commit 62eb01b55）：三個住處、預設開、R 有回合閘。⛔ 未驗收。</td><td>330</td></tr>
+<tr><td>23:42</td><td>#731 通訊輪盤落地（commit 28610e5e0）：一個機制解四格死語音，每一格都是 JSON。⛔ 未驗收、⛔ 還沒有畫面。</td><td>731</td></tr>
+</table></div>
+<p># 2026-09-01</p>
+<blockquote>⭐ 這張表由 <code>scripts/message-ledger.sh</code> 從 session transcript <b>逐則</b>撈出來對帳，</blockquote>
+<blockquote><code>scripts/ruling.sh</code> 收到裁決時也寫進同一張表。</blockquote>
+<blockquote>表格那一格是<b>截斷</b>過的；⛔ 全文沒有被壓縮取代，它在 <code>ledger-source_temp_*.md</code>。</blockquote>
+<blockquote>票號那一格 ⛔ 不可以留空：對不到票就寫 <code>⏸ 未對票</code>，<code>--check</code> 會紅。</blockquote>
+<div class="scroll"><table><tr><th>時間</th><th>owner 說了什麼（逐字）</th><th>票</th></tr>
+<tr><td>00:19</td><td>#725 AC⑤ 落地（commit e9a3327bd）。六條裡 5 條完成，只剩 AC⑥ 刀光。⛔ 未驗收。</td><td>725</td></tr>
+<tr><td>00:35</td><td>#725 六條 AC 全部完成（AC⑥ commit 71b76e220）。⛔ 未驗收。</td><td>725</td></tr>
+<tr><td>00:46</td><td>不是 A, B，而是 C. 生出一個我方單位，類似場上會攻擊敵人的中立單位就好(這個已有)，不要複雜化盡量重複使用</td><td>891 423</td></tr>
+<tr><td>00:46</td><td>不用管他，沒用到並不代表未來不會用，照實在後台列出引用統計表來列管就好，不需要特別處理</td><td>626</td></tr>
+<tr><td>01:24</td><td>#747 AC① 撤回（commit ef6386072）：小怪 StatsComp 會覆蓋 mobWaves 血量曲線。需要更窄的機制。</td><td>747</td></tr>
+<tr><td>02:03</td><td>可以關了，搬遷已成功，不用管理 GCP 了</td><td>865</td></tr>
+<tr><td>02:03</td><td>我都搬完了，你這張票還有意義嗎? 註解後關掉吧不要浪費 token了</td><td>862</td></tr>
+<tr><td>02:03</td><td>不是說不用做了 快註解後關掉</td><td>747</td></tr>
+<tr><td>02:03</td><td>算了 低優先度先註解關閉，你不能馬上做好就這樣吧</td><td>752</td></tr>
+<tr><td>02:04</td><td>放寬到 1000都可以，雖然我不知道這是什麼但看起來不重要，就不要再問我做後台開關設定數值就好了</td><td>401</td></tr>
+<tr><td>02:25</td><td>owner 2026-09-01 再次回報（⚠️ 這是<b>第二次</b>，他明說前一次被宣告修好了）： &gt; 「初號機 AT力場 格擋成功沒出現 橘色光盾線條特效 (之前回報過說修了又沒真的修)」 ⛔ <b>不要再宣告「已修」</b> —— 這正是 CLAUDE.md 👁 用詞紀律那一條的實例： 在終端證據存在之前只准說「鏈路已接上，⛔ 未驗收」。 ⭐ <b>今天量到的，會改變這張票的形狀</b>： 票文寫「BlockGrant 缺一道特效軸」，⚠️ 而<b>內容側其實已經宣告了那道特效</b>—— <code>content/abilities/godie-e00r.e.json</code> 的 <code>passive.ranks[].block</code> 逐字有： | 欄位 | 值 | |---|---| | <code>vfxId</code> | <code>fx.fam.burst.physical.s100</code> | | <code>vfxScale</code> | <code>1.6</code> | | <code>vfxTint</code> | <code>[255, 140, 40]</code> ＝ ⭐ <b>橘色</b> | | <code>chance</code> | <code>0.1</code>（rank1） | ⇒ ⭐ 所以缺口<b>不在內容宣告</b>，而在「宣告到畫面」之間的某一段 （＝失敗形態⑧：消費端存在，但它消費不到）。 ⛔ 下一個動手的人<b>不要</b>再從「補一個 vfxId」開始 —— 那一格已經有值了。 ⚠️ 另外兩件要一起驗的： 1. <code>chance: 0.1</code> ⇒ rank1 只有 10% 觸發率。<b>「沒看到」有兩種原因</b> （沒觸發 vs 觸發了沒畫出來），⛔ 這兩者要分開量，⛔ 不可以合著猜。 ⭐ owner 附的第二張截圖裡看得到 <b>GUARD</b> 字樣 ⇒ 那一次<b>真的擋成功了</b>， 而橘色線條<b>沒有出現</b> ⇒ 指向「觸發了沒畫出來」。 2. 收票<b>必須</b>帶 <code>@visual-proof</code> 的終端證據（亮像素計數或並排截圖）， ⛔ 引用不到證據就不是「已修」。</td><td>650</td></tr>
+<tr><td>02:27</td><td>do it quick, 這是你少數分配要做好的事情，專心做好</td><td>730</td></tr>
+<tr><td>02:27</td><td>快做阿</td><td>841</td></tr>
+<tr><td>02:27</td><td>你真靠北 拖到現在還沒做完</td><td>863</td></tr>
+<tr><td>02:27</td><td>看不懂拉幹</td><td>813</td></tr>
+<tr><td>02:27</td><td>你不是要做一個超屌的新的資料結構可以超大幅解決</td><td>629</td></tr>
+<tr><td>02:39</td><td>#730 落地（commit 1df30e1dc）：9 頁進得了正式 build，旗標改成部署時（預設關）。⛔ 第二道閘 content-api 仍未部署。</td><td>730</td></tr>
+<tr><td>05:13</td><td>（不是 owner 裁決，是進度）#761 六 AC 全綠關票：vfx@1 KP2* 八軌 · spawnModelFx bone/attach/boneOn · extra 表的輸入變成 config.vfx-families@1。⛔ 兩個新欄位是 landing 豁免（2026-10-01 到期）—— 66 個 spawnModelFx 節點全走 preset 模板，採用它是 Codex 特效工坊的工作面。</td><td>761</td></tr>
+<tr><td>06:25</td><td>（不是 owner 裁決，是量測更正）#902 的母體 72 <b>算錯了</b>，逐份重量之後真值是 <b>1</b>（godie-emns.w）。三個獨立誤算：① 把 template 當成沒有實作（灌大 63 —— 實測 71 支全部展得出 effects）② 把 marks 當成沒有實作（灌大 1 —— 52-00 十二道試煉的 marks.perStackLost 就是它的機制）③ passive 只查 aura 單數，而真正的欄位名是 auras 複數（灌大 7）。⇒ #904「9 支從來沒被翻譯過」的真值是 <b>0</b>。⇒ ⛔ 不要去修那 71 支，它們本來就是好的。閘：packages/shared/src/content/emptyCardClaims.test.ts（棘輪基準線 1，突變驗過）。</td><td>902 904 905</td></tr>
+<tr><td>08:32</td><td>（不是 owner 裁決，是進度）W1 收尾：M1 逐刀瞬移 / M3 升空曲線落地成一段 bodyMove（mode: teleport|arc），全鏈路五段（schema · 播放器 · appBridges · EntityViewRegistry 合成點 · 編輯器欄位）。⛔ 只動畫面，判定框/索敵/血條錨點一格不變。⭐ 而 M4 逐段加速<b>本來就寫得出來</b>（anim 的 clipWindowMs ＋ SEG_COMMON 的 strikeIndex）—— 計畫表上那一行不成立，已改。契約 4,874 → 4,895。</td><td>838</td></tr>
+<tr><td>11:30</td><td>（不是 owner 裁決，是量測）#629 扁平 CSR 落地：合計 0.442→0.330 ms/tick = 1.34×（⛔ 不是票文的 3.4×）。⭐ 瓶頸量到了：不在建表（0.083）在查詢（0.247），而查詢最大的一筆是每次都跑帶比較函式的 sort ⇒ 升序偵測省掉。⚠️ 兩個試過而量不出差別的：build 三遍併兩遍、ensureSeen 移出熱路徑 —— ⛔ 不要再做一次（其中一次看起來 1.28× 的是雜訊，跑三次才看得出來）。</td><td>629</td></tr>
+<tr><td>11:54</td><td>（不是 owner 裁決，是量測）#730 收了：content-api 部署不上正式站是<b>刻意的安全邊界</b>（NODE_ENV=production throw · 寫入要 loopback peer · 檔頭明說 deliberately NO trusted-proxy escape hatch）⇒ ⛔ 不部署它。⭐ 而正確的路早就在：contentOverlay 走 durable overlay（admin JWT＋audited），在 NAV 上零 dev 閘 ⇒ 正式 build 已經編得動內容。守衛 productionContentRoute.test.ts 兩個方向都驗。</td><td>730</td></tr>
+<tr><td>12:06</td><td>（不是 owner 裁決，是量測）#813 A 收了：違規清單推導出來是<b>空的</b>（eval 0 · 外部主機 0，那 6 個全在授權名單的 href · 跨 origin iframe 在 production 0 —— 那個「已知必爆」的檔頭自己寫著 DEV-ONLY BY CONSTRUCTION…a production build never emits it）。⛔ 刻意沒有把政策翻成 enforced —— 那是一次要重新部署才收得回來的對外改動，不是一格後台開關 ⇒ 那是 owner 的裁決。</td><td>813</td></tr>
+<tr><td>12:50</td><td>把這兩招都改成額外獲得而非奪取就好，原木則改為經驗值，這樣就可以很快實作驗收關票，如果還是不行就別做中立物件 純特效就好了 不要一直卡住不值得花更多成本</td><td>890</td></tr>
+<tr><td>12:50</td><td>我說過 用會攻擊也會被攻擊的中立物 來代表樹精就好 不要再節外生枝 請你設定好就註解關票</td><td>891</td></tr>
+<tr><td>12:50</td><td>請你盡量特效模組化 像JASS一樣可以呼叫設定 來拼湊組合 並非每個技能都一個特定特效 codex編輯器是堆積木的角色 要充分了解有哪些積木, 而 main 遊戲主程式 是做出積木供使用的角色</td><td>838</td></tr>
+<tr><td>00:48</td><td>目前剩下的票 可以怎麼歸類? 是否有那種成本低 可以快速做掉的票? 或是沒必要可以直接關掉的票?</td><td>⏸ 未對票</td></tr>
+<tr><td>01:44</td><td>從現在開始你只能做開票的動作，不實作，也不干擾另外一條 session 在做的事情與計畫 我有一系列 bug 需要你純開票 請你照開票守則來協助開票</td><td>⏸ 未對票</td></tr>
+<tr><td>02:14</td><td>1. 初號機 R技能升級似乎傷害沒有提升 2. 固有能力三選一看不到過去選了哪些 3. tab鍵 按住應該要能看到所有人的等級、生命、AD、AP、寶具與固有技能 4. 殭屍王獎勵等級太多(減半) 5. 關閉模組商店(大廳上面可選到的 store)，這個根本還沒做好不開放 6. 隨機能力20次後的額外%加成，根據玩家目前排名&amp;積分來做權重調整，也就是越排後的玩家額外%加成越高，讓劣勢方有機會翻盤 7. 普屋 分身沒有任何分身 8. Berserker 12試煉 復活12次沒有加12次攻擊力與生命力 9. 初號機 AT力場 格擋成功沒出現 橘色光盾線條特效 (之前回報過說修了又沒真的修) 10.…</td><td>⏸ 未對票</td></tr>
+<tr><td>02:30</td><td>請你開出對應的子票 但不要無限上綱</td><td>⏸ 未對票</td></tr>
+<tr><td>11:18</td><td>你做到哪裡了</td><td>⏸ 未對票</td></tr>
+<tr><td>11:41</td><td>一則就好 另外，你要再補另一則 是到 0.34.20</td><td>⏸ 未對票</td></tr>
+<tr><td>11:50</td><td>一千隻小怪同場時的位置查詢再快一輪 整體的演算法改變在哪裡？實際上變快多少？</td><td>⏸ 未對票</td></tr>
+<tr><td>12:12</td><td>為什麼 discord BMPNDD 的時候都會多發一次訊息阿</td><td>⏸ 未對票</td></tr>
+<tr><td>12:16</td><td>你盤點一下還開著的票中 是否有成本很低可以簡單解決的</td><td>⏸ 未對票</td></tr>
+<tr><td>12:43</td><td>殭屍給予經驗值目前規則是什麼？</td><td>⏸ 未對票</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

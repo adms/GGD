@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "e534e6ef",
+  "fingerprint": "111434fa",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -25,6 +25,7 @@
     "floatingText",
     "grantAttribute",
     "grantGold",
+    "grantXp",
     "heal",
     "invulnerable",
     "knockback",

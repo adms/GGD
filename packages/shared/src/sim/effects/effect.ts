@@ -243,6 +243,7 @@ import type { KnockbackVariant } from "./variants/knockback";
 import type { EvasionVariant } from "./variants/evasion";
 import type { TauntVariant } from "./variants/taunt";
 import type { GrantGoldVariant } from "./variants/grantGold";
+import type { GrantXpVariant } from "./variants/grantXp";
 import type { DelayedVariant } from "./variants/delayed";
 import type { ProxyCastVariant } from "./variants/proxyCast";
 import type { CarryVariant } from "./variants/carry";
@@ -302,6 +303,8 @@ type EffectVariant =
   | EvasionVariant
   | TauntVariant
   | GrantGoldVariant
+  // ⭐ GH#890 —— owner：「原木則改為經驗值」。
+  | GrantXpVariant
   | DelayedVariant
   | ProxyCastVariant
   | CarryVariant

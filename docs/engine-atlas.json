@@ -1,11 +1,11 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "9d43feef",
+  "capabilityFingerprint": "e534e6ef",
   "counts": {
     "effectKinds": 46,
     "hookEvents": 33,
     "conditionLeafKinds": 5,
-    "templateFamilies": 26,
+    "templateFamilies": 27,
     "effectFields": 261,
     "stats": 23,
     "combatEnvKeys": 39
@@ -602,6 +602,7 @@
       "radial-burst",
       "random-barrage",
       "single-strike",
+      "summon-agent",
       "teleport",
       "traveling-wave"
     ]

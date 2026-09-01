@@ -3,7 +3,7 @@
   "name": "92-04 馬勒戈壁",
   "icon": "assets/icons/abilities/godie-h02u.r.webp",
   "provenance": "w3x-import",
-  "description": "[投影]\n{{cd}}秒冷卻時間\n\n草泥馬將內心的風景投射到戰場上，改變了戰場，每秒奪取周圍英雄的黃金150並造成{{dmg}}傷害，持續6秒。",
+  "description": "[投影]\n{{cd}}秒冷卻時間\n\n草泥馬將內心的風景投射到戰場上，改變了戰場，每秒額外獲得150黃金並對周圍敵人造成{{dmg}}傷害，持續6秒。",
   "slot": "R",
   "castType": "self",
   "maxRank": 3,
@@ -44,6 +44,20 @@
         }
       ],
       "duration": 3.0
+    },
+    {
+      "kind": "delayed",
+      "shape": "single",
+      "intervalSec": 1.0,
+      "count": 6,
+      "delaySec": 1.0,
+      "effects": [
+        {
+          "kind": "grantGold",
+          "flat": 150,
+          "to": "self"
+        }
+      ]
     }
   ],
   "vfxKey": "fx.prim.nature.explosion-lg",

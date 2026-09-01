@@ -49,6 +49,7 @@ import { zKnockback, refine as refine_knockback } from "./knockback";
 import { zEvasion } from "./evasion";
 import { zTaunt } from "./taunt";
 import { zGrantGold } from "./grantGold";
+import { zGrantXp } from "./grantXp";
 import { zDispel, refine as refine_dispel } from "./dispel";
 import { zShieldBreak, refine as refine_shieldBreak } from "./shieldBreak";
 import { zDevour, refine as refine_devour } from "./devour";
@@ -97,6 +98,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   zEvasion,
   zTaunt,
   zGrantGold,
+  zGrantXp,
   zDispel,
   zShieldBreak,
   zDevour,

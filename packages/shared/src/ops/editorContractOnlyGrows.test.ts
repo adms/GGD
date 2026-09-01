@@ -34,8 +34,9 @@ const ROOT = resolve(__dirname, "../../../..");
  *   · `vfx@1` 長出 KP2* 八條時間軌  ⇒ `vfxField` 53 → **86**
  *   · `spawnModelFx` 收得下骨頭掛點 ⇒ 4,873 → **4,874**
  *   · `damageTierPerRank` ＋ `summon-agent` 家族 ⇒ **4,895**
+ *   · ⭐ `grantXp`（GH#890）⇒ **4,899** —— ⭐ 棘輪往上轉的樣子
  */
-const FLOOR = 4895;
+const FLOOR = 4899;
 
 describe("⭐ 編輯器契約只會變長（棘輪）", () => {
   const doc = JSON.parse(
