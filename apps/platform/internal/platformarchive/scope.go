@@ -9,7 +9,6 @@ import (
 	"strings"
 
 	"github.com/ggd/platform/internal/account"
-	"github.com/ggd/platform/internal/ranking"
 	"github.com/ggd/platform/internal/admin"
 	"github.com/ggd/platform/internal/ai"
 	"github.com/ggd/platform/internal/combatenv"
@@ -20,7 +19,9 @@ import (
 	"github.com/ggd/platform/internal/invite"
 	"github.com/ggd/platform/internal/matchstats"
 	"github.com/ggd/platform/internal/opsenv"
+	"github.com/ggd/platform/internal/ranking"
 	"github.com/ggd/platform/internal/room"
+	"github.com/ggd/platform/internal/submissions"
 	"github.com/ggd/platform/internal/wallet"
 )
 
@@ -122,9 +123,13 @@ var (
 	colOverlayLog       = contentoverlay.LogCollection
 	colAnnouncements    = admin.ColAnnouncements
 	colFriends          = friend.ColFriends
-	colTemplates        = room.ColTemplates
-	colHistory          = gamelink.ColHistory
-	colAudit            = admin.ColAudit
+	// ⭐ 玩家投稿的**兩半**（GH#908）。⚠️ 它們刻意分成兩個集合（owner 2026-08-27：
+	//   「批核材料跟批核結果分署不同資料夾」）⇒ 這裡也要兩條規則，⛔ 不是一條。
+	colSubmissions        = submissions.CollectionMaterial
+	colSubmissionVerdicts = submissions.CollectionVerdict
+	colTemplates          = room.ColTemplates
+	colHistory            = gamelink.ColHistory
+	colAudit              = admin.ColAudit
 	// ColReplays is the game-server's recording directory as the platform sees
 	// it. It is NOT a jsonstore collection: apps/game-server writes it through
 	// GGD_REPLAY_DIR and compose.family.yaml bind-mounts ../data/replays into
@@ -252,6 +257,11 @@ func Rules() []Rule {
 		// GH 2026-08-17 宿敵紀錄。⚠️ 這張白名單是**明列**的 —— 沒加進來的集合
 		// 換主機時會安靜地留在舊機（沒有測試會紅），所以新集合一定要補這一行。
 		simple(colHeadToHead, GroupHistory, KindDoc, PolicyAdditive, "宿敵對戰紀錄"),
+		// ⭐⭐ 玩家**自己做的內容**（GH#908）。⚠️ 這是這台機器上最不可取代的一種資料：
+		//   帳號可以重建、戰績可以重跑，⛔ 而一份玩家做的技能**沒有第二份**。
+		//   ⇒ 兩半都是 Additive（⛔ 不是 Singleton：每一份投稿是一個獨立文件）。
+		simple(colSubmissions, GroupCore, KindDoc, PolicyAdditive, "玩家投稿（內容本體）"),
+		simple(colSubmissionVerdicts, GroupCore, KindDoc, PolicyAdditive, "玩家投稿的審核裁決"),
 		simple(colAudit, GroupAudit, KindJSONL, PolicyAppendOnly, "管理稽核紀錄"),
 	}
 

@@ -83,6 +83,15 @@ var GoConsumedConfigs = []GoConsumedConfig{
 			"is only the BASE the 戰鬥系統 page starts from; see the openQuestion on #241.",
 	},
 	{
+		Key:      "config/ui-cues",
+		File:     "config/ui-cues.json",
+		GoReader: "internal/server (playercontent.go)",
+		Liveness: ReadsOverlay,
+		LiveConsumer: "internal/server itself — playerContentFlags() 先讀 durable overlay 再退回出貨樹，" +
+			"所以後台把「玩家投稿」兩格關掉是**當下**生效的。⭐ 這兩格是一條對外開放路線的緊急開關，" +
+			"⛔ 一個要等重啟才關得掉的開關比沒有開關更糟（見 #278 的前科）。",
+	},
+	{
 		Key:      "config/config.match",
 		File:     "config/config.match.json",
 		GoReader: "internal/opsenv",

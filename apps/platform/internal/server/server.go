@@ -24,6 +24,7 @@ import (
 	"github.com/ggd/platform/internal/config"
 	"github.com/ggd/platform/internal/contentoverlay"
 	"github.com/ggd/platform/internal/curation"
+	"github.com/ggd/platform/internal/submissions"
 	"github.com/ggd/platform/internal/data/boot"
 	"github.com/ggd/platform/internal/data/jsonstore"
 	"github.com/ggd/platform/internal/data/redisx"
@@ -58,6 +59,10 @@ type Server struct {
 	Wallet    *wallet.Service
 	Admin     *admin.Service
 	Curation  *curation.Service
+	// Submissions 是**玩家投稿**的入口（GH#908，責任③）。
+	// ⚠️ 它的公開讀與投稿寫都由 `config.ui-cues@1` 的 `playerContent` 兩格開關擋著，
+	// ⭐ 而出貨兩格**都是關的** —— 對外開放的東西不預設開。
+	Submissions *submissions.Service
 	Overlay   *contentoverlay.Service
 	CombatEnv *combatenv.Service
 	OpsEnv    *opsenv.Service
@@ -324,6 +329,7 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 	// (curation/legacyevict.go, GH#479/#481). Read-only; it never writes under
 	// content/.
 	curationSvc := curation.New(store, rdb, curation.WithContentDir(cfg.ContentDir))
+	submissionsSvc := submissions.New(store)
 	// #189 durable content overlay: the data/ store that lets an admin content
 	// edit survive a git pull on the host (content/ there is a :ro mount).
 	//
@@ -434,7 +440,7 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 		Cfg: cfg, Rdb: rdb, Store: store, Journal: journal, Accounts: accounts,
 		Auth: authSvc, Friends: friends, Presence: pres, Rooms: rooms,
 		Ranking: rank, Gamelink: glink, Wallet: walletSvc, Admin: adminSvc,
-		Curation: curationSvc, Overlay: overlaySvc, CombatEnv: combatEnvSvc, OpsEnv: opsEnvSvc, Invites: inviteSvc,
+		Curation: curationSvc, Submissions: submissionsSvc, Overlay: overlaySvc, CombatEnv: combatEnvSvc, OpsEnv: opsEnvSvc, Invites: inviteSvc,
 		AI: aiSvc, Approve: approveSvc, Archive: archiveSvc, MatchStats: matchStatsSvc,
 		Hub: hub, Sessions: sessions,
 		registerRateLimit:  envInt("GGD_REGISTER_RATE_LIMIT", 0),
@@ -566,6 +572,9 @@ func (s *Server) buildRouter(templates *room.Templates) {
 		admin.NewHandlers(s.Admin).MountPublic(api) // active announcement feed
 		// content whitelist: public read (game-server + client), admin writes
 		curation.NewHandlers(s.Curation, s.Admin.AdminOnly).MountPublic(api)
+		// GET /submissions/discoverable —— ⭐ 只回「核准過**而且內容沒被換過**」的那些。
+		//   ⚠️ 開關關著時它回**空清單**，⛔ 不是 404（見 submissions/handlers.go）。
+		submissions.NewHandlers(s.Submissions, s.Admin.AdminOnly, s.playerContentFlags).MountPublic(api)
 		// #189 durable content overlay: public read of the merged-content bundle
 		// (game-server + client), admin-gated writes on the authed router below.
 		contentoverlay.NewHandlers(s.Overlay, s.Admin.AdminOnly).MountPublic(api)
@@ -626,6 +635,8 @@ func (s *Server) buildRouter(templates *room.Templates) {
 			admin.NewHandlers(s.Admin).Mount(pr) // /admin/* — AdminOnly inside
 			// /curation/whitelist writes — AdminOnly inside
 			curation.NewHandlers(s.Curation, s.Admin.AdminOnly).Mount(pr)
+			// /submissions —— 投稿（玩家）＋ 待審佇列與裁決（AdminOnly inside）
+			submissions.NewHandlers(s.Submissions, s.Admin.AdminOnly, s.playerContentFlags).Mount(pr)
 			// #189 /content-overlay/docs/* writes — AdminOnly inside
 			contentoverlay.NewHandlers(s.Overlay, s.Admin.AdminOnly).Mount(pr)
 			// /admin/combat-env — AdminOnly inside

@@ -64,6 +64,13 @@ func censusContentDir(t *testing.T) string {
   "version": 4,
   "multipliers": { "damageDealt": 0.5, "cooldown": 1.0 }
 }`,
+		// ⭐ 出貨兩格都是**關**的（對外開放的東西不預設開）——
+		//   探針就是把 `discover` 從 false 翻成 true。
+		"config/ui-cues.json": `{
+    "id": "ui-cues",
+    "schema": "config.ui-cues@1",
+    "playerContent": { "submit": false, "discover": false }
+  }`,
 		"config/config.match.json": `{
   "id": "config.match",
   "schema": "config@1",
@@ -163,6 +170,28 @@ func probes() map[string]probe {
 			},
 			shipped:    shippedDamageDealt,
 			overridden: overrideDamageDealt,
+		},
+		"config/ui-cues": {
+			override: map[string]any{
+				"id": "ui-cues", "schema": "config.ui-cues@1",
+				"playerContent": map[string]any{"submit": true, "discover": true},
+			},
+			// ⭐ 讀的是**玩家真的走的那條路**：公開的 discoverable 清單。
+			//   關著 ⇒ 它回空清單（⛔ 不是 404）；開了 ⇒ 它真的去查投稿。
+			//   ⚠️ 兩種情況都回 200，所以探針量的是**回應的形狀**，
+			//   ⛔ 不是狀態碼 —— 200/200 分不出開關有沒有生效。
+			read: func(t *testing.T, ts *testutil.TS, token string) float64 {
+				submit, discover := ts.Srv.PlayerContentFlagsForTest()
+				if submit != discover {
+					t.Fatalf("兩格開關是全有或全無的：submit=%v discover=%v", submit, discover)
+				}
+				if discover {
+					return 1
+				}
+				return 0
+			},
+			shipped:    0,
+			overridden: 1,
 		},
 		"config/config.match": {
 			override: map[string]any{

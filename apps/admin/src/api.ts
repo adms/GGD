@@ -849,3 +849,71 @@ export interface AdminFriendBackfillResult {
 export function backfillAdminFriends(): Promise<AdminFriendBackfillResult> {
   return api.request<AdminFriendBackfillResult>("/friends/admin-backfill", { body: {} });
 }
+
+// ─────────────────────────────────────────────────────────── 玩家投稿 (GH#908)
+
+/**
+ * ⭐⭐ 玩家投稿（`internal/submissions`）—— 大目標的最後一段：
+ * 「**開放讓玩家自己設計 英雄、技能、特效**」。
+ *
+ * ⚠️ ⭐ 承重的規則只有一條：**什麼時候看得到**。玩家投稿是這個遊戲第一個
+ * 不是我們自己寫的內容 ⇒ 繞過審核最便宜的一招是「先送一份乾淨的、核准之後再換掉」。
+ * ⇒ `discoverable` 有**兩個**條件：① 審核通過 ② ⭐ **通過當時的內容指紋還等於現在的**。
+ * ⇒ 換了內容 ⇒ 核准自動失效，退回等審。（那一條規則住在**伺服器**，⛔ 不在這裡。）
+ *
+ * ⚠️ 兩格開關（`config.ui-cues@1` 的 `playerContent`）出貨**都關** ——
+ * 關著時公開清單回**空陣列**（⛔ 不是 404：一條會 404 的路線會讓前端寫出兩套程式碼）。
+ */
+export interface SubmissionView {
+  id: string;
+  accountId: string;
+  kind: string;
+  digest: string;
+  status: "pending" | "approved" | "rejected";
+  reason?: string;
+  /** ⭐ 核准過**而且**內容沒被換過。⛔ 只看 status 是不夠的。 */
+  discoverable: boolean;
+  createdAt: string;
+}
+
+/** 公開的「看得到的投稿」清單（⛔ 不需要登入）。 */
+export function getDiscoverableSubmissions(): Promise<SubmissionView[]> {
+  return api.request<SubmissionView[]>("/submissions/discoverable", { auth: false });
+}
+
+/** 我自己的投稿與它們的狀態。 */
+export function getMySubmissions(): Promise<SubmissionView[]> {
+  return api.request<SubmissionView[]>("/submissions/mine", { method: "GET" });
+}
+
+/** 待審佇列（管理員）。 */
+export function getPendingSubmissions(): Promise<SubmissionView[]> {
+  return api.request<SubmissionView[]>("/submissions/pending", { method: "GET" });
+}
+
+/**
+ * 送一份投稿。⚠️ `accountId` **永遠取自 token**，⛔ body 裡的會被伺服器丟掉。
+ */
+export function submitContent(req: {
+  id: string;
+  kind: string;
+  digest: string;
+  payload: string;
+}): Promise<SubmissionView> {
+  return api.request<SubmissionView>("/submissions", { body: req });
+}
+
+/**
+ * 核准／否決一份投稿（管理員）。
+ * ⚠️ **否決必須填原因**（owner 2026-08-24 對批次驗收頁的逐字要求：「追加原因的 HITL」）——
+ * ⛔ 伺服器會擋下沒有原因的否決。
+ */
+export function decideSubmission(
+  id: string,
+  status: "approved" | "rejected",
+  reason?: string,
+): Promise<SubmissionView> {
+  return api.request<SubmissionView>(`/submissions/${encodeURIComponent(id)}/decide`, {
+    body: { status, reason: reason ?? "" },
+  });
+}
