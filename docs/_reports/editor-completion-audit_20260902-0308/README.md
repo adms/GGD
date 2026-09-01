@@ -1,10 +1,10 @@
 # GGD 本機技能／VFX Editor 完工稽核
 
-狀態：2026-09-02 03:56（Asia/Taipei）
+狀態：2026-09-02 04:09（Asia/Taipei）
 
 Editor branch：`feat/vfx-forge-codex`
 
-基準：`origin/main@b8420abe`
+基準：`origin/main@b8420abe`；Editor handoff `4bdd6cee`
 
 稽核方式：需求逐條對程式、machine contract、測試、桌面 build 與實際瀏覽器 framebuffer 證據；
 「測試存在」不等於完成，只有覆蓋到需求行為才列為已證明。
@@ -22,7 +22,7 @@ receipt、G2 importer、完整 asset manifest、遠端 effective VFX limits 與�
 
 ## 本輪驗收結果
 
-- Editor full suite：44 files、255 tests 全通過。
+- Editor full suite：45 files、259 tests 全通過。
 - Editor typecheck：通過。
 - Editor production build：通過；只有既有大型 Babylon chunk warning，沒有 build error。
 - Desktop suite：3 files、18 tests 全通過；typecheck 通過。
@@ -33,6 +33,12 @@ receipt、G2 importer、完整 asset manifest、遠端 effective VFX limits 與�
   compact evidence upload 全通過；run `33552053135`。
 - `pnpm caps:check`：通過，capability fingerprint `111434fa`。
 - `editorCoverageFresh.test.ts`：2/2 通過，coverage fingerprint `8dec65b891b7`、required 4941。
+- 重新 fetch 後 `origin/main` 仍是 `b8420abe`，GitHub 沒有 `feat/editor-seam-*` remote branch
+  或 Editor seam PR；正式站 profile 仍是 `cv_88cbb6486bf2`、profile `3f8d4687566f`、
+  capability `111434fa`、Package `Draft 0.4`、只支援 `bootstrap` 且 delta 關閉。
+- 正式站 `/content-api/content-import/{validate,apply,rollback}` 對外 POST 仍回 405；
+  `/api/v1/content-import/*` 仍回 404。這只證明 production write seam 尚未公開，不能當成
+  G2 importer 的 501 machine envelope 或成功收據。
 - 第一次在受限 sandbox 執行兩項 tsx freshness command 時，Unix socket `listen EPERM`；
   改用允許的 `/private/tmp/ggd-tsx-ipc` 後同一命令通過。這是執行環境限制，沒有把它誤報成產品回歸。
 
@@ -73,7 +79,9 @@ package；所有 omitted refs 必須與完整 exact Base snapshot 相同，否�
 以下任一項未通過，都不能把整體 goal 標成完成：
 
 1. `GET /content-api/editor-source` 與 source-adapter CAS/regenerate，證明 generated Owner 文字與 champion mirror 在完整 sync 後仍保存。
-2. runtime-direct package machine contract 只有一套 truth，target profile 提供 G2、gameRevision、migration/activation/authoring receipts 與明確 endpoints。
+2. runtime-direct package machine contract 只有一套 truth，target profile 提供 G2、gameRevision、migration/activation/authoring receipts 與明確 endpoints。Main 必須原子整合
+   `docs/editor-contract/GGD_EDITOR_PACKAGE_SPEC_RUNTIME_DIRECT_DELTA_20260902.md`：只有
+   `validate` 接收 JSON／ZIP；`apply` 引用 server-side verified plan，不得重新上傳 package。
 3. validate/apply/rollback/active/runtime-bundle 實作 bounded ZIP、staging、原子 ACTIVE、health read-back、CAS、rollback 與 audit。
 4. active runtime bundle 含全部註冊 collection 的 exact entries/doc/collection hashes；tamper、missing collection、Base dependency drift 都被拒絕。
 5. Production AI verdict/Promote 使用 authenticated actor、不可變 audit、candidate/source/operation hashes；generator-owned output 無通用 PUT 繞路。
