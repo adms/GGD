@@ -1,4 +1,4 @@
-import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
@@ -7,6 +7,7 @@ import { buildCapabilityManifest } from "@ggd/shared/content/editorCapabilities"
 import { rebuildAllIndexes, writeDocAtomic } from "@ggd/shared/content/node";
 import {
   contentDirForRemoteWorkspace,
+  baseContentVersionForRemoteWorkspace,
   normalizeRemoteSource,
   readPinnedTargetProfile,
   remoteWorkspacePolicy,
@@ -188,6 +189,36 @@ describe("remote editor workspace", () => {
     expect(() => validateRemoteBundle(bundle, manifest)).toThrow(/hash 不一致/);
   });
 
+  it("pins the original remote manifest so asset-aware versions can revalidate the profile", async () => {
+    const workspace = temp("ggd-remote-asset-aware-profile-");
+    const payload = remotePayload(900);
+    const manifest = JSON.parse(payload.manifest);
+    const bundle = JSON.parse(payload.bundle);
+    const hashes = Object.fromEntries(
+      Object.entries(bundle.collections).map(([name, value]) => [name, (value as { hash: string }).hash]),
+    );
+    const remoteVersion = contentVersion({ ...hashes, __assets: "asset-tree-test" });
+    manifest.contentVersion = bundle.contentVersion = remoteVersion;
+    const profile = publishedProfile(manifest);
+    const assetAware = {
+      ...payload,
+      manifest: JSON.stringify(manifest),
+      bundle: JSON.stringify(bundle),
+      profile: JSON.stringify(profile),
+      contentVersion: remoteVersion,
+    };
+
+    await syncRemoteWorkspace({
+      sourceInput: "http://127.0.0.1:9999",
+      workspaceRoot: workspace,
+      fetchImpl: fakeFetch(assetAware),
+    });
+    expect(readManifestVersion(contentDirForRemoteWorkspace(workspace))).not.toBe(remoteVersion);
+    expect(baseContentVersionForRemoteWorkspace(workspace, remoteVersion))
+      .toBe(readManifestVersion(contentDirForRemoteWorkspace(workspace)));
+    expect(readPinnedTargetProfile(workspace, remoteVersion)?.profileDigest).toBe(profile.profileDigest);
+  });
+
   it("three-way merges remote-only changes and preserves local documents on a collision", async () => {
     const workspace = temp("ggd-remote-merge-");
     const first = remotePayload(900);
@@ -252,6 +283,21 @@ describe("remote editor workspace", () => {
     expect(pinned?.authoringModel?.intentField).toBe("template.cards");
   });
 
+  it("revalidates the pinned profile before exposing it to the Editor renderer", async () => {
+    const workspace = temp("ggd-remote-pinned-profile-tamper-");
+    const payload = remotePayload(900);
+    await syncRemoteWorkspace({
+      sourceInput: "http://127.0.0.1:9999",
+      workspaceRoot: workspace,
+      fetchImpl: fakeFetch(payload),
+    });
+    const profilePath = join(workspace, "base", payload.contentVersion, "editor-target-profile.json");
+    const tampered = JSON.parse(readFileSync(profilePath, "utf8"));
+    tampered.effectiveVfxLimits = { maxParticlesPerSystem: 999999 };
+    writeFileSync(profilePath, JSON.stringify(tampered), "utf8");
+    expect(readPinnedTargetProfile(workspace, payload.contentVersion)).toBeNull();
+  });
+
   it("verifies unknown remote collections but excludes them from the editable workspace", () => {
     const payload = remotePayload(900);
     const manifest = JSON.parse(payload.manifest);
@@ -271,3 +317,8 @@ describe("remote editor workspace", () => {
     expect(warnings).toContainEqual(expect.stringMatching(/^future-collection：/));
   });
 });
+
+function readManifestVersion(contentRoot: string): string | null {
+  const manifest = JSON.parse(readFileSync(join(contentRoot, "manifest.json"), "utf8")) as { contentVersion?: unknown };
+  return typeof manifest.contentVersion === "string" ? manifest.contentVersion : null;
+}

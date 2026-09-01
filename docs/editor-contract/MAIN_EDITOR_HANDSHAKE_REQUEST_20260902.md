@@ -1,6 +1,6 @@
 # 給 GGD main：Editor 完工所需接縫（可直接交給 Codex）
 
-狀態：2026-09-02 03:08（Asia/Taipei）
+狀態：2026-09-02 03:24（Asia/Taipei）
 Editor 分支：`feat/vfx-forge-codex`（禁止推到 `main`）
 正式站實測：`cv_88cbb6486bf2` · capability `111434fa` · profile `3f8d4687566f`
 最新 `origin/main@b8420abe` 產物：`cv_385f45e0afb8` · profile `99ef62b583c5`
@@ -192,6 +192,27 @@ manifest 外資產一律 fail closed。Editor 會在收到這份契約後把目�
 - 場景 VFX hard max life 與 hard-cap scope。
 - 一次性 emitter 上限。
 - round purge mode。
+
+欄位名稱與 JSON 表示請固定為（`null` 是 JSON 對「無上限」的唯一表示，不可輸出
+`Infinity` 字串或省略半份物件）：
+
+```ts
+effectiveVfxLimits: {
+  maxParticlesPerSystem: number; // 正整數
+  maxRatePerSystem: number;      // 正整數／秒
+  maxActiveRibbons: number;      // 正整數
+  ribbonFadeBudgetSec: number;   // 正數
+  hardMaxLifeSec: number;        // 正數
+  hardCapScope: "scene" | "managed" | "off";
+  maxOneShotEmitters: number | null; // 正整數；null = unlimited rollback mode
+  roundPurgeMode: "off" | "soft" | "full";
+}
+```
+
+Editor 已能讀取 Desktop 驗證並 pin 住的 profile：完整物件才採用；缺欄位或型別錯誤會
+fail closed；profile 與目前預覽 renderer 的實際 resolver 任一格不同，也會以
+`VFX_RUNTIME_LIMIT_DRIFT` 停止預覽，不會把兩套值混在同一頁。舊 profile 缺整個物件時
+仍可用本機 runtime resolver，但 UI 會明示正式站尚未提供同源收據。
 
 值必須由 `vfx-budget`、`vfx-cleanup` 與 runtime clamp 合併後得到。加 contract test：修改
 任一 config 或 runtime clamp，profile 與遊戲有效值必須一起變；schema 最大值不算答案。

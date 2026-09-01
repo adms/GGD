@@ -9,8 +9,10 @@ import {
   type EditorDesktopSourceInfo,
 } from "@ggd/shared/editorDesktop";
 import {
+  baseContentVersionForRemoteWorkspace,
   contentDirForRemoteWorkspace,
   normalizeRemoteSource,
+  readPinnedTargetProfile,
   remoteWorkspaceKey,
   remoteWorkspacePolicy,
   syncRemoteWorkspace,
@@ -245,7 +247,9 @@ async function start(): Promise<void> {
     };
   }
 
-  const initialWorkingContentVersion = sourceInfo.workingContentVersion;
+  const remoteBaseWorkingContentVersion = sourceInfo.kind === "remote"
+    ? baseContentVersionForRemoteWorkspace(config.workspacePath, sourceInfo.pinnedContentVersion)
+    : null;
   const currentSourceInfo = (): EditorDesktopSourceInfo => {
     let workingContentVersion = sourceInfo.workingContentVersion;
     try {
@@ -255,13 +259,16 @@ async function start(): Promise<void> {
       // Keep the last verified value; the content-api will report the actual read error elsewhere.
     }
     const locallyChanged = sourceInfo.kind === "remote"
-      && sourceInfo.state === "current"
-      && workingContentVersion !== initialWorkingContentVersion;
+      && remoteBaseWorkingContentVersion !== null
+      && workingContentVersion !== remoteBaseWorkingContentVersion;
+    const hasConflicts = sourceInfo.state === "merged-with-conflicts";
     return {
       ...sourceInfo,
       workingContentVersion,
-      state: locallyChanged ? "local-changes" : sourceInfo.state,
-      message: locallyChanged ? "線上 Base 已固定；目前有尚未匯出的本機修改" : sourceInfo.message,
+      state: hasConflicts ? "merged-with-conflicts" : locallyChanged ? "local-changes" : sourceInfo.state,
+      message: hasConflicts
+        ? sourceInfo.message
+        : locallyChanged ? "線上 Base 已固定；目前有尚未匯出的本機修改" : sourceInfo.message,
     };
   };
 
@@ -282,6 +289,13 @@ async function start(): Promise<void> {
         timeoutMs: policy.requestTimeoutMs,
       },
     } : {}),
+  });
+  server.get("/content-api/desktop-target-profile", async (_req, reply) => {
+    if (config.kind !== "remote") return reply.code(404).send({ error: "not a remote desktop workspace" });
+    const profile = readPinnedTargetProfile(config.workspacePath, sourceInfo.pinnedContentVersion);
+    return profile
+      ? reply.send(profile)
+      : reply.code(404).send({ error: "verified pinned target profile is unavailable" });
   });
   const editorFiles = rendererRoot();
   const adminFiles = adminRoot();

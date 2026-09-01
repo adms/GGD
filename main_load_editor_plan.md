@@ -1,8 +1,8 @@
 # 遊戲主程式載入 Editor JSON／ZIP 的修改建議
 
-狀態：**Revision 2.5 — runtime-direct 契約對齊；AI 技能變更先審後上**
+狀態：**Revision 2.6 — runtime-direct 契約對齊；AI 技能變更先審後上；遠端有效 VFX 上限收據**
 
-最後驗證：2026-09-02 01:49（Asia/Taipei）
+最後驗證：2026-09-02 03:24（Asia/Taipei）
 
 適用範圍：GGD 遊戲主程式、後台與 Content Import API；不是 Editor UI 實作說明。
 
@@ -421,9 +421,19 @@ config receipt 應公開並版本化至少下列變數：單粒子系統存量�
 effective value = min(schema bound, runtime config, device/profile clamp)
 ```
 
+公開 profile 的 canonical JSON 欄位固定為
+`maxParticlesPerSystem`、`maxRatePerSystem`、`maxActiveRibbons`、
+`ribbonFadeBudgetSec`、`hardMaxLifeSec`、`hardCapScope`、
+`maxOneShotEmitters`、`roundPurgeMode`。其中 `hardCapScope` 只接受
+`scene／managed／off`，`roundPurgeMode` 只接受 `off／soft／full`，無上限 emitter
+以 JSON `null` 表示。整個 `effectiveVfxLimits` 缺席是舊版相容狀態；物件存在卻缺任一格
+是契約損壞，不能拿本機值補洞。
+
 欄位未公開或 receipt 過期時標示「無法證明實際生效值」，不可退回 UI 常數。這些值由
 同一份 config registry 驅動 runtime、Forge slider 與 importer diagnostics；參數變更後
-coverage／profile fingerprint 必須一起變紅。
+coverage／profile fingerprint 必須一起變紅。Desktop 必須先重驗 pinned profile digest；
+Editor 再逐格比對 target profile 與目前 renderer resolver，任一格漂移即停止 production
+parity 預覽，不可只把 profile 數字印在畫面上而讓 renderer 繼續用另一套值。
 
 ### 9.2 視覺驗收不是 schema 驗收
 

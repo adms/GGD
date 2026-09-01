@@ -105,6 +105,8 @@ export const api = {
   manifest: () => request<Manifest>(`${BASE}/manifest`),
   /** Present only in the packaged desktop shell; ordinary web/dev Editor returns null. */
   desktopSource: () => requestOptional<EditorDesktopSourceInfo>(`${BASE}/desktop-source`),
+  /** Verified immutable profile pinned by the packaged remote-workspace shell. */
+  desktopTargetProfile: () => requestOptional<Record<string, unknown>>(`${BASE}/desktop-target-profile`),
   index: (collection: CollectionName) =>
     request<CollectionIndex>(`${BASE}/${collection}/_index`),
   doc: <T = unknown>(collection: CollectionName, id: string) =>

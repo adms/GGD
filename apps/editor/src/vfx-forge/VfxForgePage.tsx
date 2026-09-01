@@ -477,13 +477,14 @@ export function VfxForgePage() {
 
       {previewContent.data ? (
         <section className="vfx-effective-limits" aria-label="實際生效的 VFX 上限">
-          <b>實際生效上限</b>
+          <b>實際生效上限（{previewContent.data.limitsSource === "target-profile" ? "正式站同源 profile" : "目前 runtime resolver"}）</b>
           <span>單系統 {previewContent.data.limits.maxParticlesPerSystem} 顆</span>
           <span>每秒 {previewContent.data.limits.maxRatePerSystem} 顆</span>
           <span>Ribbon {previewContent.data.limits.maxActiveRibbons} 條／停止後 ≤ {previewContent.data.limits.ribbonFadeBudgetSec}s</span>
-          <span>場景 VFX ≤ {previewContent.data.limits.hardMaxLifeSec}s</span>
+          <span>場景 VFX ≤ {previewContent.data.limits.hardMaxLifeSec}s／hard-cap {previewContent.data.limits.hardCapScope}</span>
           <span>一次性發射器 {Number.isFinite(previewContent.data.limits.maxOneShotEmitters) ? previewContent.data.limits.maxOneShotEmitters : "無上限"}</span>
           <span>回合清理 {previewContent.data.limits.roundPurgeMode}</span>
+          {previewContent.data.limitWarnings.map((warning) => <span className="warning" key={warning}>⚠️ {warning}</span>)}
         </section>
       ) : null}
 

@@ -182,6 +182,13 @@ source comparison and rejected experiments are documented in
 browser-captured two-frame-per-skill evidence and framebuffer hygiene scan are
 in `docs/_reports/vfx-forge-eight-skill_visual-proof_20260902-0233/README.md`.
 
+Remote Desktop previews consume the digest-verified profile pinned beside the
+immutable Base. When `effectiveVfxLimits` is present, all eight resolved fields
+must match the renderer actually running in the Editor; any drift fails closed
+instead of printing remote numbers over different local behavior. Older
+profiles that omit the whole object stay usable through the shared local
+runtime resolver, with that compatibility state shown in the Forge UI.
+
 The former Ideal EX join from [#885](https://github.com/adms/GGD/issues/885) is
 now guarded through the real shipped chain. Unknown provenance still fails
 closed; do not work around it by changing visual timing or using a similar
@@ -189,8 +196,9 @@ existing trigger.
 
 ## Feature branch handoff
 
-Implementation lives on `feat/vfx-forge-codex`, currently synchronized through
-`origin/main@b8420abe`; the latest audited Editor commit is `4f13d418`. It is
+Implementation lives on `feat/vfx-forge-codex`, based on
+`origin/main@b8420abe`; the feature-branch tip is the only current Editor
+revision. It is
 intentionally not merged or pushed to `main`. Main should use
 `docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md` as a reference
 and reimplement only the main-owned seams on its own feature branch; the

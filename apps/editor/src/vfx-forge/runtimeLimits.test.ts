@@ -37,11 +37,19 @@ describe("VFX Forge effective runtime limits", () => {
       schema: "config.vfx-cleanup@1",
       maxOneShotEmitters: 44,
       vfxHardMaxLifeSec: 4,
+      vfxHardCapScope: "managed",
       roundPurgeMode: "soft",
     } as never);
     const limits = applyVfxRuntimeLimits();
     expect(limits.maxOneShotEmitters).toBe(44);
     expect(limits.hardMaxLifeSec).toBe(4);
+    expect(limits.hardCapScope).toBe("managed");
     expect(limits.roundPurgeMode).toBe("soft");
+  });
+
+  it("fails closed when a remote profile does not match the renderer actually in use", () => {
+    const runtime = applyVfxRuntimeLimits();
+    expect(() => applyVfxRuntimeLimits({ ...runtime, maxActiveRibbons: runtime.maxActiveRibbons + 1 }))
+      .toThrow(/VFX_RUNTIME_LIMIT_DRIFT.*maxActiveRibbons/);
   });
 });

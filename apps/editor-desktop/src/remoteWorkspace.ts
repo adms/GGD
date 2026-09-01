@@ -236,6 +236,10 @@ function targetProfileFile(root: string, version: string): string {
   return join(root, "base", version, "editor-target-profile.json");
 }
 
+function remoteManifestFile(root: string, version: string): string {
+  return join(root, "base", version, "remote-manifest.json");
+}
+
 function writeMetadata(root: string, metadata: RemoteWorkspaceMetadata): void {
   mkdirSync(root, { recursive: true });
   const target = metadataFile(root);
@@ -461,13 +465,22 @@ function persistTargetProfile(root: string, version: string, profile: RemoteEdit
   renameSync(tmp, target);
 }
 
+function persistRemoteManifest(root: string, version: string, manifest: Manifest): void {
+  const target = remoteManifestFile(root, version);
+  mkdirSync(dirname(target), { recursive: true });
+  const tmp = `${target}.tmp-${process.pid}`;
+  writeFileSync(tmp, fileJson(manifest), "utf8");
+  renameSync(tmp, target);
+}
+
 export function readPinnedTargetProfile(root: string, version: string | null): PinnedTargetProfile | null {
   if (!version) return null;
   try {
     const profile = JSON.parse(
       readFileSync(targetProfileFile(root, version), "utf8"),
     ) as RemoteEditorTargetProfile;
-    return profile.schema === "ggd-editor-target-profile@1" ? profile : null;
+    const manifest = JSON.parse(readFileSync(remoteManifestFile(root, version), "utf8")) as Manifest;
+    return manifest ? validateRemoteTargetProfile(profile, manifest) : null;
   } catch {
     return null;
   }
@@ -512,6 +525,13 @@ function readBundleFromSnapshot(root: string, version: string): ContentBundle {
 
 function baseWorkingVersion(root: string, remoteVersion: string): string | null {
   return readManifest(snapshotContentDir(root, remoteVersion))?.contentVersion ?? null;
+}
+
+export function baseContentVersionForRemoteWorkspace(
+  root: string,
+  remoteVersion: string | null,
+): string | null {
+  return remoteVersion ? baseWorkingVersion(root, remoteVersion) : null;
 }
 
 function localHash(contentRoot: string, collection: CollectionName, id: string): string | null {
@@ -618,6 +638,7 @@ export async function syncRemoteWorkspace(options: SyncRemoteWorkspaceOptions): 
     if (previous?.pinnedContentVersion === manifest.contentVersion && existsSync(join(working, "manifest.json"))) {
       const workingVersion = readManifest(working)?.contentVersion ?? null;
       const state = previous.conflicts.length > 0 ? "merged-with-conflicts" : workingVersion === baseWorkingVersion(root, manifest.contentVersion) ? "current" : "local-changes";
+      persistRemoteManifest(root, manifest.contentVersion, manifest);
       persistTargetProfile(root, manifest.contentVersion, targetProfile);
       const metadata = {
         ...previous,
@@ -638,6 +659,7 @@ export async function syncRemoteWorkspace(options: SyncRemoteWorkspaceOptions): 
     const compatibilityWarnings: string[] = [];
     const bundle = validateRemoteBundle(bundleResult.value, manifest, compatibilityWarnings);
     const base = ensureBaseSnapshot(root, bundle, manifest.contentVersion);
+    persistRemoteManifest(root, manifest.contentVersion, manifest);
     persistTargetProfile(root, manifest.contentVersion, targetProfile);
     let conflicts: readonly RemoteConflict[] = [];
 
