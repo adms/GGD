@@ -35,7 +35,7 @@
 | 超究武神霸斬 `godie-hart.r` | 7/10：12 段 script，是八招最好的 main 基線 | 9/10：A077/A0B1 有逐刀站位、升空、受害者定格與逐段加速 | 7/10 | 已有多段斬與黃藍直立終結；逐段速度／高度仍是 Owner 評分重點。[連斬](03-omnislash-combo-side.png)／[終結](03-omnislash-final-side.png) |
 | 阿邦快速劍X `godie-nbbc.r` | 5/10：ability 已有真 blink，但舊 script 的 hideBody／替身會重複位移 | 7/10：A0EZ 明確記錄隱藏本體、550 wc3u 位移與落點 | 6/10 | A 段採 Owner 藍衝擊波；B 段只補動畫，不再以 script 移動 authority。[A 段](04-avan-x-wave-side.png)／[B 段](04-avan-x-dash-final-side.png) |
 | 龍鬥氣砲咒文 `godie-nbbc.e` | 3/10：只有 ability 的十顆 RedDragonMissile，與 Owner 藍光束衝突 | 7/10（歷史）／3/10（Owner 目標）：A05J 的十 dummy 節奏清楚，但顏色與形狀不同 | 5/10 | Editor 能畫藍白寬 beam；若 main 的 ability-owned 紅飛彈未被 presentation replacement 壓掉，仍不得上線。[安全寬度](05-dragon-aura-beam-fixed-side.png) |
-| 龜派氣功 `godie-ogrh.r` | 6/10：已有 ReviveHuman／FlameStrike 資源與 script，但輪廓偏薄 | 8/10：A03S 的槍口、六段路徑、震屏與收尾資訊完整 | 7/10 | 保留資源家族，使用安全的橫向比例重建橘金寬 beam；禁止回到巨大拉伸白卡。[畫面](06-kamehameha-beam-side.png) |
+| 龜派氣功 `godie-ogrh.r` | 6/10：已有 ReviveHuman／FlameStrike 資源與 script，但輪廓偏薄 | 8/10（編舞）／5/10（光束形狀）：A03S 有槍口、震屏、收尾與六個沿線傷害／火柱取樣點；那六具 `h006` 不是六段光束模型，不能拿來決定 beam 分段 | 7/10 | 保留資源家族，使用安全的橫向比例重建橘金寬 beam；禁止回到巨大拉伸白卡。[畫面](06-kamehameha-beam-side.png) |
 | 理想鄉EX `godie-e002.ex` | 6/10：17 段 script 與真 reflect provenance 已存在，但模型／換位品質仍需肉眼驗收 | 9/10：A0CT 與 EX 鏈能證明反彈成功→多段斬→終結的因果 | 7/10 | 新成品組合含 reflect 起手、六次本體換位與第七段黃藍橫砲。[反彈](07-avalon-reflect-side.png)／[連斬](07-avalon-slashes-side.png)／[終結](07-avalon-final-side.png) |
 | 騎英之手綱 `godie-hvsh.r` | 3/10：只有 ability 單次傷害／法陣，缺 dash＋beam script | 8/10（編舞）／4/10（Owner 形狀）：A0RQ 的曲線、高度與 h024 路徑很有用，但不是藍長 beam | 6.5/10 | 依 Owner 做 Rider 本體 dash＋藍白光束；永久保留 owner-override 紀錄。[突進](08-bellerophon-dash-beam-side.png)／[落點](08-bellerophon-exit-side.png) |
 
