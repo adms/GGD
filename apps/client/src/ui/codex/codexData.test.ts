@@ -296,7 +296,26 @@ describe("codex normalisation", () => {
       bucket: "recipe-book",
       source: "derived",
     });
-    expect(bucketOf({ name: "四魂之玉", cost: 0 })).toEqual({ bucket: "quest-reward", source: "derived" });
+    // ⭐⭐ GH#912 —— 這一行在此之前斷言「`cost: 0` ⇒ 任務獎勵」，而**那是錯的**：
+    //   這個遊戲**沒有任何任務**（`quest-rewards` 表 owner 2026-08-01 已裁決退場，
+    //   而 `ex-release-weapons.json` 的 note 逐字：「『任務道具』是舊時代 DOTA 玩法的
+    //   標籤，**競技場新玩法完全不考慮它**」）。
+    //   ⚠️ 而畫面上那四個字讓 owner 合理地推論「這些永遠拿不到」——⭐ 它們每一場都抽得到。
+    //   ⇒ ⛔ 這條紅不是回歸，是**前提消失**（票文自己預告了它會紅）。
+    expect(bucketOf({ name: "四魂之玉", cost: 0 })).toEqual({
+      bucket: "no-modifiers",
+      source: "derived",
+    });
+    // ⭐ 而它**在掉落表裡**的時候，說得出真正的來源。
+    expect(
+      bucketOf({ id: "four-souls-jewel", name: "四魂之玉", cost: 0 }, new Set(["four-souls-jewel"])),
+    ).toEqual({ bucket: "loot-drop", source: "derived" });
+    // ⛔ 反方向：不在表裡的**不可以**被標成抽選來源（⚠️ 同一個病換一邊）。
+    expect(bucketOf({ id: "some-token", cost: 0 }, new Set(["four-souls-jewel"])).bucket).not.toBe(
+      "loot-drop",
+    );
+    // ⭐ 文件明寫的 `quest-reward` 仍然贏（⛔ 拿掉的是**推導**，不是那個 bucket）。
+    expect(bucketOf({ bucket: "quest-reward", cost: 0 }).source).toBe("doc");
     expect(bucketOf({ name: "劍", cost: 900, modifiers: [{ stat: "ad", op: "flat", value: 1 }] })).toEqual({
       bucket: "with-modifiers",
       source: "derived",

@@ -62,6 +62,14 @@ export type CodexItemBucket =
   | "component"
   | "recipe-book"
   | "quest-reward"
+  /**
+   * ⭐ GH#912 —— **回合抽選**發的寶具（⛔ 不是用錢買的，也⛔ 不是任務給的）。
+   *
+   * ⚠️ 在此之前這一族被 `cost === 0` 推導成 `quest-reward`，而**這個遊戲沒有任何任務**
+   * ⇒ 圖鑑上那四個字讓 owner 合理地推論「這些永遠拿不到」，⭐ 而它們**每一場都抽得到**。
+   * ⇒ 這一格是**從掉落表反查出來的**（⛔ 不是客戶端硬寫的一張對照表 —— 那會過期）。
+   */
+  | "loot-drop"
   | "token-no-op"
   | "with-modifiers"
   | "no-modifiers";

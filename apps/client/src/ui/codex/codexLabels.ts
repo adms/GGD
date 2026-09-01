@@ -75,6 +75,9 @@ const BUCKET_LABEL: Record<CodexItemBucket, string> = {
   component: "素材",
   "recipe-book": "製作書",
   "quest-reward": "任務獎勵",
+  // ⭐ GH#912 —— 回合抽選發的寶具。⛔ 不是用錢買的，⛔ 也不是任務給的
+  //   （⚠️ 這個遊戲**沒有任何任務**，而舊標籤讓玩家以為這些拿不到）。
+  "loot-drop": "回合抽選",
   "token-no-op": "無效果代幣",
   "with-modifiers": "有屬性加成",
   "no-modifiers": "無屬性加成",

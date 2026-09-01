@@ -284,25 +284,82 @@ function modifiers(v: unknown): CodexModifier[] {
  * prove. `source` is rendered in the UI so nobody mistakes the fallback for
  * curation.
  */
-export function bucketOf(doc: Record<string, unknown>): { bucket: CodexItemBucket; source: "doc" | "derived" } {
+export function bucketOf(
+  doc: Record<string, unknown>,
+  /**
+   * ⭐ GH#912 —— **活著的掉落表**裡出現過的道具 id（由 `loadCodex` 反查出來）。
+   * ⚠️ 缺席 ⇒ 這一條推導不做（⛔ 不是「假設它不是抽選來的」）—— 舊呼叫端與測試照舊。
+   */
+  lootIds?: ReadonlySet<string>,
+): { bucket: CodexItemBucket; source: "doc" | "derived" } {
   const authored = str(doc["bucket"]) ?? str(doc["kind"]);
   const KNOWN: readonly string[] = ["final", "component", "recipe-book", "quest-reward", "token-no-op"];
   if (authored && KNOWN.includes(authored)) return { bucket: authored as CodexItemBucket, source: "doc" };
   const name = str(doc["name"]) ?? "";
   if (name.includes("製作書")) return { bucket: "recipe-book", source: "derived" };
-  if (num(doc["cost"], 0) === 0) return { bucket: "quest-reward", source: "derived" };
+  // ⭐⭐ GH#912 —— **先問掉落表**：它抽得到嗎？
+  //   ⚠️ 這一條必須排在 `cost === 0` 前面 —— 抽選發的寶具**本來就不用錢買**，
+  //   而舊碼把「不用錢」讀成「任務給的」。
+  const id = str(doc["id"]);
+  if (id && lootIds?.has(id)) return { bucket: "loot-drop", source: "derived" };
+  // ⛔⛔ `cost === 0 ⇒ quest-reward` **拿掉了**（GH#912）。
+  //
+  // ⚠️ 這個遊戲**沒有任何任務** —— `quest-rewards` 表已於 owner 2026-08-01 裁決退場，
+  // 而 `ex-release-weapons.json` 的 note 逐字寫著：「『任務道具』是舊時代 DOTA 玩法的標籤，
+  // **競技場新玩法完全不考慮它**」。
+  // ⇒ 畫面上印「任務獎勵」是**第一·五守則**說的那種字：說了但不會發生。
+  // ⭐ `quest-reward` 現在**只有文件明寫**才會出現（上面那個 `authored` 分支）。
   const mods = modifiers(doc["modifiers"]);
   return { bucket: mods.length > 0 ? "with-modifiers" : "no-modifiers", source: "derived" };
 }
 
-export function normaliseItem(raw: unknown): CodexItem | null {
+/**
+ * ⭐⭐ GH#912 —— **活著的掉落表**裡出現過的每一個道具 id。
+ *
+ * ── ⛔ 為什麼不是在客戶端硬寫一張對照表 ────────────────────────────────────
+ * 那會是**第二個住處**（第〇·四守則）：掉落表一改它就過期，而圖鑑會繼續說舊話。
+ * ⇒ ⭐ 從 `content/loot-tables/` **反查**。
+ *
+ * ── ⭐ 「活著」的判準：`config.arena-rules@1` **引用得到它** ────────────────
+ * ⚠️ ⛔ 不是「`content/loot-tables/` 底下有這個檔」—— 一張退場的表留在樹裡是常見的，
+ * 而把它算進來會讓一件**抽不到**的寶具被標成「回合抽選」（同一個病換一邊）。
+ * ⇒ 只收 `weaponTiers[].table` 與 `rounds.*.weaponLootTable` 指到的那幾張。
+ *
+ * ⛔ 任何一步拿不到資料 ⇒ 回**空集合**，而 `bucketOf` 那一條推導就不做
+ * （⭐ 退回誠實的 `with-modifiers`/`no-modifiers`，⛔ 不編一個假的來源）。
+ */
+export async function liveLootItemIds(fetchFn: FetchFn, base: string): Promise<ReadonlySet<string>> {
+  const out = new Set<string>();
+  const rules = asRecord(await getJson(fetchFn, `${base}/config/arena-rules.json`));
+  if (!rules) return out;
+  const wanted = new Set<string>();
+  for (const tier of Array.isArray(rules["weaponTiers"]) ? rules["weaponTiers"] : []) {
+    const t = str(asRecord(tier)?.["table"]);
+    if (t) wanted.add(t);
+  }
+  const rounds = asRecord(rules["rounds"]);
+  for (const r of Object.values(rounds ?? {})) {
+    const t = str(asRecord(r)?.["weaponLootTable"]);
+    if (t) wanted.add(t);
+  }
+  for (const id of wanted) {
+    const doc = asRecord(await getJson(fetchFn, `${base}/loot-tables/${id}.json`));
+    for (const e of Array.isArray(doc?.["entries"]) ? (doc["entries"] as unknown[]) : []) {
+      const itemId = str(asRecord(e)?.["itemId"]);
+      if (itemId) out.add(itemId);
+    }
+  }
+  return out;
+}
+
+export function normaliseItem(raw: unknown, lootIds?: ReadonlySet<string>): CodexItem | null {
   const doc = asRecord(raw);
   const id = doc ? str(doc["id"]) : null;
   if (!doc || !id) return null;
   const name = str(doc["name"]) ?? id;
   const description = str(doc["description"]);
   const tags = strArray(doc["tags"]);
-  const { bucket, source } = bucketOf(doc);
+  const { bucket, source } = bucketOf(doc, lootIds);
   const mods = modifiers(doc["modifiers"]);
   return {
     kind: "item",
@@ -498,8 +555,10 @@ export async function loadCodex(opts: LoadCodexOptions = {}): Promise<CodexData>
   const manifest = await getJson(fetchFn, `${base}/manifest.json`);
   if (manifest === null) errors.push("manifest.json missing — contentVersion unknown");
 
+  // ⭐ GH#912 —— 先反查掉落表，⛔ 否則 `bucketOf` 只能靠 `cost` 猜（而它猜錯了）。
+  const lootIds = await liveLootItemIds(fetchFn, base);
   const [items, champions, abilities, whitelistDoc] = await Promise.all([
-    loadCollection(fetchFn, base, "items", concurrency, normaliseItem, errors),
+    loadCollection(fetchFn, base, "items", concurrency, (raw) => normaliseItem(raw, lootIds), errors),
     loadCollection(fetchFn, base, "champions", concurrency, normaliseChampion, errors),
     loadCollection(fetchFn, base, "abilities", concurrency, normaliseAbility, errors),
     getJson(fetchFn, opts.whitelistUrl ?? WHITELIST_URL),
