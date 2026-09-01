@@ -31,6 +31,7 @@ import {
   proseViolations,
   renderAbilityText,
   type ProseTables,
+  DEFAULT_PROSE_TABLES,
 } from "./abilityProse";
 import { KNOWN_MISMATCHES } from "./descriptionClaims.baseline";
 
@@ -120,7 +121,8 @@ describe("技能說明從 JSON 推導（說明推導（票號待開））", () =
     const dist = (t: Record<string, { distance: number }>) =>
       Object.fromEntries(Object.entries(t).map(([k, v]) => [k, v.distance]));
     tables = {
-      range: rangeTiersFromDoc(cfgs.find((c) => c.schema === "config.range-tiers@1")).range,
+    damage: DEFAULT_PROSE_TABLES.damage,
+    range: rangeTiersFromDoc(cfgs.find((c) => c.schema === "config.range-tiers@1")).range,
       radius: aoeTiersFromDoc(cfgs.find((c) => c.schema === "config.aoe-tiers@1")).radius,
       travel: dist(disp.travel as never) as ProseTables["travel"],
       push: dist(disp.push as never) as ProseTables["push"],

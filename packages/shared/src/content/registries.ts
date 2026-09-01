@@ -342,6 +342,9 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
    * 閘。一個接縫 ⇒ ⛔ 不可能出現「這裡印舊值、場上跑新值」。
    */
   const proseTables: ProseTables = {
+    // ⭐ 用**同一份**已經解出來的傷害級距表（⛔ 不是第二份）——
+    //   `{{dmg}}` 現在解析得了「只寫級別、⛔ 不烘 flat」的傷害節點（第〇·四守則的形狀）。
+    damage: damageTiers.damage,
     range: rangeTiers.range,
     radius: aoeTiers.radius,
     travel: Object.fromEntries(

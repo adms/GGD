@@ -52,6 +52,11 @@
     {
       "step": "castderive:build:raw",
       "reason": "逐行讀過 packages/shared/scripts/deriveCastTimes.ts：它載入既有內容、對每一份算 deriveCastTime()、**只覆寫 castTimeSec 一格**（含英雄卡的內嵌鏡像），其餘位元組一個都不碰。⛔ 把它當作者會讓 492 份技能/英雄檔全部落進「改產物被擋／改來源沒有來源」的死路 —— 那正是 GH#707 記錄過的、一天內擋掉三條 lane 的形狀。"
+    },
+    {
+      "step": "skillremake:json",
+      "reason": "⭐ 2026-09-02 —— 它**內部呼叫** `deriveCastTimes`（`castderive:build:raw`，上一列已登記的正規化器）兩趟，所以它的執行窗口裡會出現「只改 `castTimeSec` 一格」的寫入，落在它**沒有產生**的那幾份手編檔上。⚠️ 實測觸發（本輪）：`godie-etyr.r` / `godie-udea.w` 與它們的英雄卡 —— 那兩支的效果樹修好之後（模板展開不再吃掉自己寫的 `damageArea`/`dash`），`deriveCastTime()` 算出不同的秒數（0.667 → 0.067）並寫回去。⛔ 不可以把那幾份加進 `skillremake:json` 的 `writes`：隔離區會把 492 份技能／英雄檔鎖成 444 ＝ GH#707 一天內擋掉三條 lane 的那個形狀。⭐ 它**同時**是 91 份技能的作者 —— 這一列宣告的是「它也會做正規化」，⛔ 不是「它不是作者」（`sync-io.json` 的 writes 仍然逐檔列著那 126 份）。 ⭐⭐ `onlyOutsideOwnWrites: true` —— 它與其餘四支**不同**：那四支對它們碰到的每一份都只是正規化器，⛔ 而這一支對自己 `writes` 裡逐檔列名的那 126 份**是作者**。⇒ 這一格讓「擁有權」問對問題：**在它自己的 writes 裡 ⇒ 作者；在外面 ⇒ 正規化器**。⚠️ 少了它，`editorSource` 會把 421 份技能全部判成 `normalizer-only`⇒ 編輯器會直接寫那 91 份產物，⛔ 而下一次 sync 打回來。",
+      "onlyOutsideOwnWrites": true
     }
   ],
   "$rejected": [

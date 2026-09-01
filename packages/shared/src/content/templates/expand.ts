@@ -2561,6 +2561,13 @@ function isSpawnModelFx(n: unknown): n is Record<string, unknown> {
   return n !== null && typeof n === "object" && (n as Record<string, unknown>)["kind"] === "spawnModelFx";
 }
 
+/** ⭐ 一個效果節點的 kind（認不出來 ⇒ `null`）。 */
+function kindOf(n: unknown): string | null {
+  if (n === null || typeof n !== "object") return null;
+  const k = (n as Record<string, unknown>)["kind"];
+  return typeof k === "string" ? k : null;
+}
+
 export function mergeExpansion(
   skeleton: Record<string, unknown>,
   ex: ExpandResult,
@@ -2587,9 +2594,7 @@ export function mergeExpansion(
   //     ⇒ 讓 `w3xDummyModelWiring` 那條守衛紅並指名它，⛔ 不要靜默。
   //  ③ **冪等** —— ①保證重新 merge 一份已經 merge 過的文件不會疊出第二具：
   //     那時 `effects` 裡已經有一個 spawnModelFx，而展開仍然沒有 ⇒ 保留同一個。
-  const authoredFx = Array.isArray(out["effects"])
-    ? (out["effects"] as unknown[]).filter(isSpawnModelFx)
-    : [];
+  const authoredEffects = Array.isArray(out["effects"]) ? (out["effects"] as unknown[]) : [];
   // ⚠️ `castTimeSec` 是**推導**欄位，不是作者的行為選擇：它由
   //    `packages/shared/scripts/deriveCastTimes.ts` 從 `castTimeFormula` 蓋進每一份文件。
   //    而 `castTimeSec` 在模板裡是一格 `optional` 參數 —— 文件沒填時
@@ -2609,9 +2614,34 @@ export function mergeExpansion(
   if (out["castTimeSec"] === undefined && authoredCastTime !== undefined) {
     out["castTimeSec"] = authoredCastTime;
   }
-  if (authoredFx.length > 0 && Array.isArray(out["effects"])) {
+  // ⭐⭐ **2026-09-02 —— 把 GH#698 的保留從「只有 `spawnModelFx`」推廣到「任何 kind」。**
+  //
+  // ── ⛔ 量到的（12 份文件同時有 `template` 與自己的 `effects`）──────────────
+  // 9 份只帶 `spawnModelFx`（上面那條規則救得到），⭐ 而**另外 3 份帶的是行為**：
+  //   · `godie-etyr.r`（14-04 聖夜降臨）`damageArea` —— 卡面逐字「召喚瞬間會造成
+  //     周圍 {{dmg}} 傷害」，⛔ 而註冊表裡那一格**整個不在**
+  //     ⇒ 玩家看到的是裸的 `{{dmg}}`，而且**真的沒有傷害**（第一·五守則）
+  //   · `godie-nbbc.w` `blink` · `godie-udea.w` `dash`
+  //
+  // ⭐ 而這正是 owner 要的積木語意：「像 JASS 一樣可以呼叫設定 **來拼湊組合**」——
+  //   ⛔ 一個「用了模板就不准再加任何東西」的展開器**表達不出**組合。
+  //
+  // ⚠️ 三條性質**逐字沿用** GH#698（它們本來就與 kind 無關）：
+  //  ① 展開**自己產出同一個 kind** ⇒ ⛔ 不保留（兩個節點會打架；正解是走模板參數）
+  //  ② 展開**沒有 `effects`** ⇒ ⛔ 不保留（純被動／純標記的模板不跑 effects，
+  //     硬塞只是把「被洗掉」換成「留著但沒有人跑」——同一個謊，更難查）
+  //  ③ **冪等** —— ①保證重新 merge 一份已經 merge 過的文件不會疊出第二份
+  //
+  // ⭐ 保留的節點**接在後面**：模板的行為先跑，作者的追加後跑
+  //   （`godie-etyr.r` 的語意正是「召喚**瞬間**造成傷害」）。
+  if (authoredEffects.length > 0 && Array.isArray(out["effects"])) {
     const expanded = out["effects"] as unknown[];
-    if (!expanded.some(isSpawnModelFx)) out["effects"] = [...expanded, ...authoredFx];
+    const expandedKinds = new Set(expanded.map(kindOf).filter((k): k is string => k !== null));
+    const keep = authoredEffects.filter((n) => {
+      const k = kindOf(n);
+      return k !== null && !expandedKinds.has(k);
+    });
+    if (keep.length > 0) out["effects"] = [...expanded, ...keep];
   }
   return out;
 }

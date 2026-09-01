@@ -44,7 +44,19 @@ export interface SyncIoFacts {
 
 /** `normalizers.json` 裡被明確歸類成「就地改欄位」的那些 step。 */
 export interface NormalizerFacts {
-  readonly normalizers: readonly { readonly step: string }[];
+  readonly normalizers: readonly {
+    readonly step: string;
+    /**
+     * ⭐ 這一支**只在自己 `writes` 之外**才是正規化器 —— 在裡面它是**作者**。
+     *
+     * ⚠️ ⭐ 為什麼需要這一格（2026-09-02 量到）：`skillremake:json` 內部呼叫
+     * `deriveCastTimes` ⇒ 它會在**自己沒有產生**的手編檔上改一格 `castTimeSec`
+     * ⇒ 執行期對帳要求它登記成正規化器。⛔ 而一旦登記，`ownershipOf` 就把
+     * **421 份技能全部**判成 `normalizer-only` ⇒ ⭐ 編輯器會直接寫那 91 份產物，
+     * 而下一次 sync 打回來 —— ⛔ 正是這整套要防的那件事。
+     */
+    readonly onlyOutsideOwnWrites?: boolean;
+  }[];
 }
 
 export function sha256Hex(text: string): string {
@@ -83,7 +95,12 @@ export function ownershipOf(
   norms: NormalizerFacts,
 ): { ownership: SourceOwnership; writers: string[]; authors: string[] } {
   const writers = writersOf(path, io);
-  const normalizerNames = new Set(norms.normalizers.map((n) => n.step));
+  // ⭐ 「只在自己 writes 之外才是正規化器」的那幾支，⛔ 不算進正規化器名單 ——
+  //   ⚠️ 因為 `writersOf()` **已經**只回傳「writes 匹配到這條路徑」的 step
+  //   ⇒ 它出現在這裡就代表**這條路徑在它的 writes 裡** ⇒ 它是作者。
+  const normalizerNames = new Set(
+    norms.normalizers.filter((n) => n.onlyOutsideOwnWrites !== true).map((n) => n.step),
+  );
   const authors = writers.filter(
     (w) => !normalizerNames.has(w) && !normalizerNames.has(`${w}:raw`),
   );

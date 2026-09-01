@@ -344,7 +344,7 @@
 | 14-00 | 14-00 召喚式神 | 木乃香 | 召喚代理 | godie-etyr.passive | ⛔ 沒套 |
 | 14-01 | 14-01 東風繪扇、南風末廣 | 木乃香 | 原地震波 | godie-etyr.q | ⛔ 沒套 |
 | 14-02 | 14-02 式神炸裂 | 木乃香 | NEW:自爆式神 | godie-etyr.e | tpl-orbit-array |
-| 14-04 | 14-04 AKT戰隊 | 木乃香 | 引導通魔 | godie-etyr.r | tpl-single-strike |
+| 14-04 | 14-04 AKT戰隊 | 木乃香 | 引導通魔 | godie-etyr.r | tpl-summon-agent |
 | 15-02 | 15-02 沉睡之霧 | 法師涅吉 | 召喚代理 | godie-emfr.w | ⛔ 沒套 |
 | 15-03 | 15-03 雷電風暴 | 法師涅吉 | 瞬發點爆 | godie-emfr.e | ⛔ 沒套 |
 | 15-04 | 15-04 千之雷 | 法師涅吉 | 瞬發點爆 | godie-emfr.r | ⛔ 沒套 |

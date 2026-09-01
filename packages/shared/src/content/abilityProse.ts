@@ -76,6 +76,7 @@
  *    而它是 owner 明說要換成級距詞的那一軸。
  */
 import { DUEL_ZONE_RADIUS_REF, SKILL_TIER_NAMES, snapToTier, type SkillTierName } from "./skillTiers";
+import { DEFAULT_DAMAGE_TIERS } from "./damageTiers";
 import { DEFAULT_RANGE_TIERS } from "./rangeTiers";
 import { DEFAULT_AOE_TIERS } from "./aoeTiers";
 import { DEFAULT_DISPLACEMENT_TIERS } from "./displacementTiers";
@@ -380,6 +381,19 @@ export const NUM_PATTERNS: readonly NumPattern[] = [
 
 /** 級距表 + 決鬥區半徑。⛔ 全部從出貨 config / arenas 推導，不抄字面值。 */
 export interface ProseTables {
+  /**
+   * ⭐⭐ **傷害五級距**（2026-09-02）—— ⛔ 在此之前這一軸**不在這張表上**。
+   *
+   * ── ⛔ 而少了它會靜靜地印出佔位符 ────────────────────────────────────────
+   * 第〇·四守則要求傷害節點**只寫級別**（`{"damageTier":"小"}`），
+   * ⛔ 不烘進算好的 `flat`。⇒ ⭐ 而 `damageRanks()` 在此之前只讀
+   * `flat` / `perRank` / `mult` —— ⚠️ **最正確的那一種寫法，正好是它讀不到的那一種**。
+   *
+   * ⭐ 量到的後果（`godie-etyr.r` 14-04 聖夜降臨）：卡片上直接印出
+   * 「造成周圍 **{{dmg}}** 傷害」給玩家看。⛔ 而 `skillnorm` 那道閘要到有人
+   * 全跑產生器的那一天才叫。
+   */
+  readonly damage: Readonly<Record<SkillTierName, number>>;
   readonly range: Readonly<Record<SkillTierName, number>>;
   readonly radius: Readonly<Record<SkillTierName, number>>;
   readonly travel: Readonly<Record<SkillTierName, number>>;
@@ -412,6 +426,7 @@ export interface ProseTables {
  * 所以這一份**不會**影響任何一張玩家看得到的卡片。
  */
 export const DEFAULT_PROSE_TABLES: ProseTables = Object.freeze({
+  damage: DEFAULT_DAMAGE_TIERS.damage,
   range: DEFAULT_RANGE_TIERS.range,
   radius: DEFAULT_AOE_TIERS.radius,
   travel: Object.fromEntries(
@@ -543,10 +558,10 @@ const pos = (v: unknown): number | undefined =>
  * 而那一段沒有佔位符，這一支代不了它。⇒ 出貨語料裡那樣的節點必須是 **0 個**，
  * 閘在 `abilityProse.test.ts`（「⑨ `mult` 不可以和 `ratios` 同一格」）。
  */
-function damageRanks(v: unknown): number[] | undefined {
+function damageRanks(v: unknown, tables?: ProseTables): number[] | undefined {
   if (typeof v === "number") return Number.isFinite(v) ? [v] : undefined;
   if (v === null || typeof v !== "object") return undefined;
-  const o = v as { flat?: unknown; perRank?: unknown; mult?: unknown };
+  const o = v as { flat?: unknown; perRank?: unknown; mult?: unknown; damageTier?: unknown };
   // 缺席 ⇒ ×1（逐位元同這一格出現之前）。schema 已經把它收成 positive().max(20)，
   // 所以非正數只可能來自**沒有過 schema** 的草稿 ⇒ 當成缺席，⛔ 不是當成 0。
   const mult = pos(o.mult) ?? 1;
@@ -557,7 +572,15 @@ function damageRanks(v: unknown): number[] | undefined {
       .map((n) => (n + flat) * mult);
     return rs.length > 0 ? rs : undefined;
   }
-  return typeof o.flat === "number" ? [o.flat * mult] : undefined;
+  if (typeof o.flat === "number") return [o.flat * mult];
+  // ⭐⭐ **只寫級別、⛔ 不烘 flat** 的那一種（第〇·四守則要的形狀）——
+  //   ⚠️ 在此之前它落在這裡回 `undefined` ⇒ `{{dmg}}` 原樣印在卡片上。
+  //   ⭐ 用**同一張出貨表**解析（⛔ 不抄一份數字）。
+  if (typeof o.damageTier === "string") {
+    const t = (tables ?? DEFAULT_PROSE_TABLES).damage[o.damageTier as SkillTierName];
+    if (typeof t === "number") return [t * mult];
+  }
+  return undefined;
 }
 
 /**
@@ -625,7 +648,7 @@ const isDamageNode = (n: Record<string, unknown>): boolean =>
   typeof n["damageType"] === "string" || /^damage/i.test(String(n["kind"] ?? ""));
 
 /** 一棵樹上的傷害葉（深度優先），每一片是它自己的逐階數列。 */
-function damageLeaves(root: unknown): number[][] {
+function damageLeaves(root: unknown, tables?: ProseTables): number[][] {
   const out: number[][] = [];
   const seen = new Set<unknown>();
   for (const node of walk(root)) {
@@ -633,7 +656,7 @@ function damageLeaves(root: unknown): number[][] {
     for (const k of DAMAGE_KEYS) {
       if (!(k in node) || seen.has(node[k])) continue;
       seen.add(node[k]);
-      const rs = damageRanks(node[k]);
+      const rs = damageRanks(node[k], tables);
       if (rs !== undefined) out.push(rs);
     }
   }
@@ -651,10 +674,10 @@ function damageLeaves(root: unknown): number[][] {
  * ⚠️ 只有**每一階都有第 j 片**時才橫著併；階數不齊就退回直著讀
  *（那代表各階的效果樹形狀不同，橫著併會把不同的東西湊成一串）。
  */
-function passiveDamageLeaves(passive: unknown): number[][] {
+function passiveDamageLeaves(passive: unknown, tables?: ProseTables): number[][] {
   const ranks = (passive as { ranks?: unknown } | null | undefined)?.ranks;
-  if (!Array.isArray(ranks) || ranks.length === 0) return damageLeaves(passive);
-  const perRank = ranks.map((r) => damageLeaves(r));
+  if (!Array.isArray(ranks) || ranks.length === 0) return damageLeaves(passive, tables);
+  const perRank = ranks.map((r) => damageLeaves(r, tables));
   const width = Math.max(...perRank.map((a) => a.length));
   const out: number[][] = [];
   for (let j = 0; j < width; j++) {
@@ -692,8 +715,8 @@ export function abilityQuantities(
     if (push === undefined && kind === "knockback") push = pos(node["distance"]);
   }
   for (const rs of [
-    ...damageLeaves([d["effects"], d["marks"], d["toggle"]]),
-    ...passiveDamageLeaves(d["passive"]),
+    ...damageLeaves([d["effects"], d["marks"], d["toggle"]], t),
+    ...passiveDamageLeaves(d["passive"], t),
   ]) {
     const s = fmtRanks(rs);
     if (s === undefined) continue;

@@ -9,18 +9,18 @@
   "cooldown:same": 113,
   "cooldown:tier": 155,
   "cooldown:w3a-absent": 172,
-  "duration:free-number": 33,
-  "duration:ggd-absent": 186,
-  "duration:same": 10,
+  "duration:free-number": 35,
+  "duration:ggd-absent": 183,
+  "duration:same": 11,
   "duration:w3a-absent": 223,
   "mana:ggd-zero": 78,
   "mana:same": 25,
   "mana:tier": 168,
   "mana:w3a-absent": 181,
   "radius:free-number": 5,
-  "radius:ggd-absent": 87,
+  "radius:ggd-absent": 84,
   "radius:same": 4,
-  "radius:tier": 55,
+  "radius:tier": 58,
   "radius:w3a-absent": 301,
   "range:ggd-zero": 31,
   "range:same": 7,
@@ -1291,7 +1291,7 @@
    "ggd": "godie-etyr.r",
    "name": "14-04 AKT戰隊",
    "w3aValue": 60.0,
-   "ggdValue": 6.0,
+   "ggdValue": 30.0,
    "verdict": "tier"
   },
   {
@@ -1301,7 +1301,7 @@
    "ggd": "godie-etyr.r",
    "name": "14-04-03 涼宮禁言",
    "w3aValue": 0.0,
-   "ggdValue": 6.0,
+   "ggdValue": 30.0,
    "verdict": "tier"
   },
   {
@@ -1311,7 +1311,7 @@
    "ggd": "godie-etyr.r",
    "name": "14-04-02 六芒星",
    "w3aValue": 0.0,
-   "ggdValue": 6.0,
+   "ggdValue": 30.0,
    "verdict": "tier"
   },
   {
@@ -1321,7 +1321,7 @@
    "ggd": "godie-etyr.r",
    "name": "14-04 聖夜降臨",
    "w3aValue": 0.01,
-   "ggdValue": 6.0,
+   "ggdValue": 30.0,
    "verdict": "tier"
   },
   {
@@ -6377,36 +6377,6 @@
   {
    "axis": "radius",
    "key": "radius:ggd-absent",
-   "w3a": "A0JZ",
-   "ggd": "godie-etyr.r",
-   "name": "14-04 AKT戰隊",
-   "w3aValue": 600.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:ggd-absent",
-   "w3a": "A0K2",
-   "ggd": "godie-etyr.r",
-   "name": "14-04-03 涼宮禁言",
-   "w3aValue": 500.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:ggd-absent",
-   "w3a": "A0SS",
-   "ggd": "godie-etyr.r",
-   "name": "14-04 聖夜降臨",
-   "w3aValue": 450.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:ggd-absent",
    "w3a": "AOae",
    "ggd": "godie-etyr.w",
    "name": "14-03 魔力應援",
@@ -7237,6 +7207,36 @@
   {
    "axis": "radius",
    "key": "radius:tier",
+   "w3a": "A0JZ",
+   "ggd": "godie-etyr.r",
+   "name": "14-04 AKT戰隊",
+   "w3aValue": 600.0,
+   "ggdValue": 6.0,
+   "verdict": "tier"
+  },
+  {
+   "axis": "radius",
+   "key": "radius:tier",
+   "w3a": "A0K2",
+   "ggd": "godie-etyr.r",
+   "name": "14-04-03 涼宮禁言",
+   "w3aValue": 500.0,
+   "ggdValue": 6.0,
+   "verdict": "tier"
+  },
+  {
+   "axis": "radius",
+   "key": "radius:tier",
+   "w3a": "A0SS",
+   "ggd": "godie-etyr.r",
+   "name": "14-04 聖夜降臨",
+   "w3aValue": 450.0,
+   "ggdValue": 6.0,
+   "verdict": "tier"
+  },
+  {
+   "axis": "radius",
+   "key": "radius:tier",
    "w3a": "A0BR",
    "ggd": "godie-h00l.r",
    "name": "60-04 迴旋斬",
@@ -7682,6 +7682,26 @@
    "name": "15-002 風花-武裝解除",
    "w3aValue": 0.01,
    "ggdValue": 5.0,
+   "verdict": "free-number"
+  },
+  {
+   "axis": "duration",
+   "key": "duration:free-number",
+   "w3a": "A0JZ",
+   "ggd": "godie-etyr.r",
+   "name": "14-04 AKT戰隊",
+   "w3aValue": 0.1,
+   "ggdValue": 8.0,
+   "verdict": "free-number"
+  },
+  {
+   "axis": "duration",
+   "key": "duration:free-number",
+   "w3a": "A0K2",
+   "ggd": "godie-etyr.r",
+   "name": "14-04-03 涼宮禁言",
+   "w3aValue": 5.0,
+   "ggdValue": 8.0,
    "verdict": "free-number"
   },
   {
@@ -8451,36 +8471,6 @@
    "ggd": "godie-etyr.q",
    "name": "14-01 東風繪扇、南風末廣",
    "w3aValue": 0.01,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:ggd-absent",
-   "w3a": "A0JZ",
-   "ggd": "godie-etyr.r",
-   "name": "14-04 AKT戰隊",
-   "w3aValue": 0.1,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:ggd-absent",
-   "w3a": "A0K2",
-   "ggd": "godie-etyr.r",
-   "name": "14-04-03 涼宮禁言",
-   "w3aValue": 5.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:ggd-absent",
-   "w3a": "A0SS",
-   "ggd": "godie-etyr.r",
-   "name": "14-04 聖夜降臨",
-   "w3aValue": 8.0,
    "ggdValue": null,
    "verdict": "ggd-absent"
   },
