@@ -57,6 +57,11 @@ import {
   normalizeHitstopRules,
   type HitstopRules,
 } from "./combat/hitstopHold";
+import {
+  DEFAULT_IMPACT_FEEL,
+  normalizeImpactFeelRules,
+  type ImpactFeelRules,
+} from "./combat/impactFeel";
 import { dot, len, lenSq, normalize, sub, type Vec2 } from "./math/vec2";
 
 /** 擊退規則(全部後台可調)。 */
@@ -623,6 +628,12 @@ export interface CombatFeelRules {
    * `sim/combat/hitstopHold.ts`。讀的時候一律走那支的 `hitstopRules(world)`。
    */
   hitstop?: HitstopRules;
+  /**
+   * ⭐ 「一發打起來有多重」的十三個量值（2026-09-01）。選用的理由與 `facing` 逐字相同。
+   * 語意、上下界與出貨預設全部在 `sim/combat/impactFeel.ts`。
+   * 讀的時候一律走那支的 `impactFeelRules(world)`。
+   */
+  impactFeel?: ImpactFeelRules;
 }
 
 /**
@@ -896,6 +907,7 @@ export const DEFAULT_COMBAT_FEEL: CombatFeelRules = Object.freeze({
   facing: DEFAULT_FACING,
   predictionHold: DEFAULT_PREDICTION_HOLD,
   hitstop: DEFAULT_HITSTOP,
+  impactFeel: DEFAULT_IMPACT_FEEL,
   autoEngage: DEFAULT_AUTO_ENGAGE,
   stuckEscape: DEFAULT_STUCK_ESCAPE,
   manualOrder: DEFAULT_MANUAL_ORDER,
@@ -1073,6 +1085,7 @@ export function combatFeelFromDoc(doc: unknown): CombatFeelRules {
     aimAssist?: unknown;
     predictionHold?: unknown;
     hitstop?: unknown;
+    impactFeel?: unknown;
   };
   if (d.schema !== COMBAT_FEEL_SCHEMA) return DEFAULT_COMBAT_FEEL;
   return Object.freeze({
@@ -1085,6 +1098,7 @@ export function combatFeelFromDoc(doc: unknown): CombatFeelRules {
     aimAssist: normalizeAimAssistRules(d.aimAssist),
     predictionHold: normalizePredictionHold(d.predictionHold),
     hitstop: normalizeHitstopRules(d.hitstop),
+    impactFeel: normalizeImpactFeelRules(d.impactFeel),
   });
 }
 

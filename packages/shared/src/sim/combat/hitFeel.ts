@@ -17,6 +17,7 @@
  * curves for those, and the merge. The GAMEPLAY half (hitstop / hitstun /
  * knockback) is computed + merged in `damage.ts` where the world state lives.
  */
+import { DEFAULT_IMPACT_FEEL, type ImpactFeelRules } from "./impactFeel";
 import type { DamageType } from "../effects/effect";
 
 /** Weight tier for a landed hit; crit is the top tier. Shared with the profile. */
@@ -137,14 +138,10 @@ const CAMKICK_BY_TIER: Record<ImpactTier, number> = { light: 0.15, medium: 0.3, 
 export const AUTHORED_FLASH_MS_MIN = 30;
 export const AUTHORED_FLASH_MS_MAX = 260;
 
-/** A blocked hit's cosmetics are softer (less shake / kick). */
-const BLOCK_SHAKE_MULT = 0.6;
-const BLOCK_CAMKICK_MULT = 0.5;
-/** EX hits bump the shake and floor the camera kick / add a cosmetic freeze. */
-const EX_SHAKE_MULT = 1.25;
-const EX_SHAKE_CAP = 1.4;
-const EX_CAMKICK_FLOOR = 0.7;
-const EX_FREEZE_TICKS = 8;
+// ⭐ 這六格搬去 `sim/combat/impactFeel.ts` 了（2026-09-01）——
+//   它們現在住在 `content/config/combat-feel.json` 的 `impactFeel`，
+//   ⛔ 在此之前**只有改程式碰得到**（大目標：所有功能都要可 JSON 操作設定）。
+//   出貨值逐格不變，見 `DEFAULT_IMPACT_FEEL`。
 
 /**
  * The damage-derived cosmetic default for a landed hit — what an un-authored
@@ -157,10 +154,15 @@ export function deriveCosmetics(
   isBlock: boolean,
   isCounter: boolean,
   isEX: boolean,
+  /**
+   * ⭐ 演出量值（`config.combat-feel@1` 的 `impactFeel.*`）。缺席 ⇒ 出貨值
+   * ⇒ 行為逐位元不變。⛔ 在 2026-09-01 之前這六格是這個檔的模組層常數。
+   */
+  feel: ImpactFeelRules = DEFAULT_IMPACT_FEEL,
 ): ImpactCosmetics {
   let shakeMag = SHAKE_BY_TIER[tier];
-  if (isEX) shakeMag = Math.min(EX_SHAKE_CAP, shakeMag * EX_SHAKE_MULT);
-  if (isBlock) shakeMag *= BLOCK_SHAKE_MULT;
+  if (isEX) shakeMag = Math.min(feel.exShakeCap, shakeMag * feel.exShakeMult);
+  if (isBlock) shakeMag *= feel.blockShakeMult;
 
   const shakeStyle: ShakeStyle = tier === "crit" || isEX ? "omni" : "directional";
 
@@ -172,8 +174,8 @@ export function deriveCosmetics(
   else sparkKind = "hit";
 
   let camKick = CAMKICK_BY_TIER[tier];
-  if (isBlock) camKick *= BLOCK_CAMKICK_MULT;
-  if (isEX) camKick = Math.max(camKick, EX_CAMKICK_FLOOR);
+  if (isBlock) camKick *= feel.blockCamKickMult;
+  if (isEX) camKick = Math.max(camKick, feel.exCamKickFloor);
 
   // NOTE: no flashColor / flashMs here on purpose — un-authored means ABSENT,
   // not "some default the client will ignore". See the block comment above.
@@ -182,7 +184,7 @@ export function deriveCosmetics(
     shakeStyle,
     sparkKind,
     camKick,
-    exFreeze: isEX ? EX_FREEZE_TICKS : 0,
+    exFreeze: isEX ? feel.exFreezeTicks : 0,
   };
 }
 

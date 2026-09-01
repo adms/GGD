@@ -314,6 +314,50 @@ export const zConfigCombatFeelDoc = z
       })
       .strict()
       .optional(),
+    /**
+     * ⭐ 「**一發打起來有多重**」的十三個量值（2026-09-01）。
+     *
+     * ⚠️ 在此之前它們是 `sim/combat/damage.ts`（7 個）與 `sim/combat/hitFeel.ts`
+     * （6 個）的模組層常數 —— ⛔ **只有改程式碰得到**，而 owner 的大目標逐字是
+     * 「所有功能都要可 JSON 操作設定」。
+     *
+     * ⭐ 每一格的預設**逐位元等於**它搬過來之前的那個常數
+     * ⇒ 這一次的改動是「它現在有一個住處」，⛔ 不是「它變了」。
+     *
+     * ⚠️ 每一格的上下界與 `sim/combat/impactFeel.ts` 的 `BOUNDS` **逐字相同**
+     * （admin 的鏡射測試逐格比對兩邊）。ABSENT ⇒ `DEFAULT_IMPACT_FEEL`。
+     */
+    impactFeel: z
+      .object({
+        /** 每多少「衝擊」加一 tick 定格。⭐ 小 = 更容易頓；出貨 55。 */
+        hitstopPerImpact: z.number().min(1).max(1000).optional(),
+        /** 定格的強調上限（爆擊／破防可以超過基礎 6）。出貨 8。 */
+        hitstopCounterCap: z.number().min(0).max(60).optional(),
+        /** 衝擊到這裡算「中」擊（決定火花／震動的分級）。出貨 60。 */
+        tierMediumImpact: z.number().min(0).max(10000).optional(),
+        /** 衝擊到這裡算「重」擊。出貨 120。 */
+        tierHeavyImpact: z.number().min(0).max(10000).optional(),
+        /** 每多少衝擊加一 tick 受身硬直。出貨 40。 */
+        hitstunPerImpact: z.number().min(1).max(1000).optional(),
+        /** 硬直至少比定格長幾 tick（＝出手方的先手）。出貨 2。 */
+        hitstunAdvantage: z.number().min(0).max(60).optional(),
+        /** 擊倒躺地幾 tick（30 tick = 1 秒）。出貨 14。 */
+        knockdownTicks: z.number().min(0).max(300).optional(),
+        /** 被擋下時螢幕震動打幾折。出貨 0.6。 */
+        blockShakeMult: z.number().min(0).max(4).optional(),
+        /** 被擋下時鏡頭踢打幾折。出貨 0.5。 */
+        blockCamKickMult: z.number().min(0).max(4).optional(),
+        /** EX 命中的震動倍率。出貨 1.25。 */
+        exShakeMult: z.number().min(0).max(4).optional(),
+        /** EX 震動的上限（⛔ 倍率乘完之後夾在這裡）。出貨 1.4。 */
+        exShakeCap: z.number().min(0).max(8).optional(),
+        /** EX 命中鏡頭踢的**下限**。出貨 0.7。 */
+        exCamKickFloor: z.number().min(0).max(8).optional(),
+        /** EX 命中的純演出凍結 tick（⛔ 不影響 sim 判定）。出貨 8。 */
+        exFreezeTicks: z.number().min(0).max(60).optional(),
+      })
+      .strict()
+      .optional(),
     facing: z
       .object({
         /** 出手後的收招餘韻 tick 數 (30 tick = 1 秒) */

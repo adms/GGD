@@ -73,8 +73,38 @@ export function globToRe(glob) {
 export const matchesGlob = (glob, path) => globToRe(glob).test(path);
 
 /** `sync-io.json` → `Map<step, globs[]>`。 */
+/**
+ * ⭐⭐ 戶籍表的 writes **＋ 寫入端原始碼裡的 `// ggd:writes` 靜態宣告**。
+ *
+ * ⚠️ 這一段是 2026-09-01 補的。在此之前靜態宣告**只有 `merge-io.mjs` 收得到**，
+ * 而那條路要求**重新量測整張表** —— ⭐ 而那件事今天量到是不安全的：
+ * 把現有的表餵回 `merge-io` 再合一次，`castderive:build:raw` 的 **493 筆 reads
+ * 會消失**（它同時 read 又 write 那 493 份，而過濾規則會把自寫的剔掉）
+ * ⇒ `syncPlan` / `syncPrune` 當場紅（「一行客戶端改動要跑 40 支」）。
+ * ⇒ ⭐ 所以宣告要在**這裡**也被讀到：一個新家族被寫出來時（`fx.fam.*.json`），
+ *   對帳當場就認得它，⛔ 不必等下一次全量重量測。
+ *
+ * ⚠️ 兩個名字都問（`<step>` 與 `<step>:raw`）—— 理由與下面 `step` 那一段逐字相同：
+ * 公開名包著 genrun，真正的產生器在 `:raw` 上，⛔ 只讀公開名只會撈到 genrun.sh。
+ */
+function staticDeclared(stepName) {
+  let pkg;
+  // ⚠️ `ROOT` 是 CLI 段的區域變數（在這一行下面很遠），⛔ 這裡看不到它 ⇒ 自己算一份。
+  const root = new URL("../..", import.meta.url).pathname;
+  try { pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8")); } catch { return []; }
+  const cmd = `${pkg.scripts?.[stepName] ?? ""} ${pkg.scripts?.[stepName.replace(/:raw$/, "")] ?? ""} ${pkg.scripts?.[`${stepName}:raw`] ?? ""}`;
+  const out = [];
+  for (const rel of [...cmd.matchAll(/[\w./-]+\.(?:py|ts|mjs|js|sh)/g)].map((m) => m[0])) {
+    let head;
+    try { head = readFileSync(join(root, rel), "utf8").split("\n").slice(0, 120).join("\n"); } catch { continue; }
+    // ⚠️ 捕到**行尾**，⛔ 不是 \S+ —— 這個 repo 有含空白的檔名（同 merge-io 的註解）。
+    for (const m of head.matchAll(/ggd:writes\s+(.+)$/gm)) out.push(m[1].trim());
+  }
+  return out;
+}
+
 export function declaredWrites(io) {
-  return new Map((io.steps ?? []).map((s) => [s.name, s.writes ?? []]));
+  return new Map((io.steps ?? []).map((s) => [s.name, [...(s.writes ?? []), ...staticDeclared(s.name)]]));
 }
 
 /** 這條路徑被哪幾支 step 認領（⛔ 空陣列 = 沒有任何戶籍）。 */

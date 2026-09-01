@@ -122,6 +122,19 @@ export const COMBAT_FEEL_GROUPS: readonly FeelGroup[] = [
       "並在頭上冒「掙脫」。硬控（暈眩／定身／施法自鎖）是設計，保險絲**不**碰它們。",
   },
   {
+    key: "impactFeel",
+    title: "一發有多重",
+    intro:
+      "**打中的那一下，遊戲怎麼判斷它「重不重」，以及重了會怎樣。** " +
+      "在 2026-09-01 之前這十三格是 `sim/combat/damage.ts` 與 `hitFeel.ts` 的程式常數 —— " +
+      "⛔ owner 想調就得改程式、重建映像、重新部署。⭐ 現在它們是這一頁。 " +
+      "**分級門檻**（中／重）決定火花、震動、鏡頭踢的等級；" +
+      "**每多少衝擊加一 tick** 決定定格與硬直隨傷害成長的速度；" +
+      "**擋下／EX 的倍率**只改演出，⛔ 不改判定。 " +
+      "⚠️ 定格那一族還要 `hitstop.scale > 0` 才看得到 —— 出貨是 0（owner：「先設定為0 求順暢為主」）。" +
+      "⭐ 一鍵 rollback ＝ 把每一格調回說明裡括號中的出貨值。",
+  },
+  {
     key: "facing",
     title: "面向鎖",
     intro:
@@ -222,6 +235,60 @@ export const COMBAT_FEEL_LABELS: Readonly<Record<string, FeelLabel>> = Object.fr
       why:
         "「揮中的那一下雙方一起頓一格」是打擊感的來源；只有攻擊方留著它時，這個頓挫不會被誤讀成延遲。",
     },
+  },
+  "impactFeel.hitstopPerImpact": {
+    zh: "定格：每多少衝擊 +1 tick",
+    note: "小 = 更容易頓（出貨 55）。乘完 `hitstop.scale` 之後才是玩家感覺到的凍結。",
+  },
+  "impactFeel.hitstopCounterCap": {
+    zh: "定格上限（爆擊／破防）",
+    note: "普通命中最多 6 tick；爆擊與破防可以衝到這一格（出貨 8）。",
+  },
+  "impactFeel.tierMediumImpact": {
+    zh: "「中」擊的門檻",
+    note: "減傷後的衝擊到這裡就算中擊 —— ⭐ 換一組火花與震動（出貨 60）。",
+  },
+  "impactFeel.tierHeavyImpact": {
+    zh: "「重」擊的門檻",
+    note: "同上，重擊那一階（出貨 120）。⛔ 爆擊不看這兩格，它自己就是最高階。",
+  },
+  "impactFeel.hitstunPerImpact": {
+    zh: "硬直：每多少衝擊 +1 tick",
+    note:
+      "受擊方**動作被鎖**（走得動、⛔ 但出不了手也施不了法）的長度，隨傷害成長的速度（出貨 40）。" +
+      "⚠️ 它只在定格 > 0 時才生成 —— `hitstop.scale` 是 0 的話這一格備而不用。",
+  },
+  "impactFeel.hitstunAdvantage": {
+    zh: "出手方的先手 tick",
+    note: "硬直至少比定格長這麼多 —— ⭐ 這就是「打中的人先能動」（出貨 2）。",
+  },
+  "impactFeel.knockdownTicks": {
+    zh: "擊倒躺地 tick",
+    note: "重擊（未被擋下的物理／真傷）把人打倒之後躺多久（出貨 14 ≈ 0.47 秒）。",
+  },
+  "impactFeel.blockShakeMult": {
+    zh: "擋下：震動打幾折",
+    note: "擋成功時螢幕震動打幾折 —— 擋下來的手感要比硬吃輕（出貨 0.6）。⛔ 只改演出，擋掉多少傷害不看這一格。",
+  },
+  "impactFeel.blockCamKickMult": {
+    zh: "擋下：鏡頭踢打幾折",
+    note: "同上，鏡頭往後踢的幅度打幾折（出貨 0.5）。⭐ 兩格一起調才會讓「擋下」整體變軟或變硬。",
+  },
+  "impactFeel.exShakeMult": {
+    zh: "EX：震動倍率",
+    note: "EX 命中時震動乘這一格（出貨 1.25）—— ⭐ 讓大招在畫面上比普攻明顯，⛔ 不改傷害。",
+  },
+  "impactFeel.exShakeCap": {
+    zh: "EX：震動上限",
+    note: "⛔ 倍率乘完之後夾在這裡，避免大招把畫面搖爛（出貨 1.4）。",
+  },
+  "impactFeel.exCamKickFloor": {
+    zh: "EX：鏡頭踢下限",
+    note: "再輕的 EX 也至少踢這麼多鏡頭（出貨 0.7）—— ⭐ 這是**下限**，⛔ 不是倍率。",
+  },
+  "impactFeel.exFreezeTicks": {
+    zh: "EX：演出凍結 tick",
+    note: "EX 命中時客戶端額外凍結幾 tick（出貨 8）。⭐ **純演出**，⛔ 不影響 sim 判定與網路同步。",
   },
   "hitstop.scale": {
     zh: "定格時長倍率",

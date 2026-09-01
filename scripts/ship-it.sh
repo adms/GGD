@@ -46,6 +46,17 @@ else
     printf '### %s → %s（%s 個 commit）\n\n' "${_PREV:-起點}" "$TAG" \
       "$(git rev-list --count "${_PREV:+${_PREV}..}${TAG}" 2>/dev/null)"
     git log --format='- %s' "${_PREV:+${_PREV}..}${TAG}" 2>/dev/null | head -40
+      # ⭐⭐ 玩家段落**先放進草稿裡** —— ⛔ 不是「記得補」。
+      #
+      # ⚠️ 這一段是 2026-09-01 補的，而缺它的代價量到了：
+      #   `releaseNoteHasPlayerSection.test.ts` 對 **v0.34.17–v0.34.25 九版連續**紅，
+      #   ⭐ 而每一版的玩家句其實**都算出來了** —— 它發去了 Discord，⛔ 只是沒進 note。
+      #   ⇒ 那是**失敗形態⑪**：兩條各自正確的路（note 生草稿 · 公告算玩家句），
+      #     而接縫上沒有人站。
+      #
+      # ⭐ 這裡呼叫的是**預覽**（⛔ 沒有 `--post`）⇒ 不會多發一則公告。
+      printf '\n## 🎮 玩家看得到的\n\n'
+      bash scripts/release-note-players.sh 2>/dev/null | sed -n '/^- /p' | head -20
   } > "$_DRAFT"
   echo "   ⭐ 草稿已生成：$_DRAFT（$(git rev-list --count "${_PREV:+${_PREV}..}${TAG}" 2>/dev/null) 個 commit）"
   echo "   ⇒ 填完理由再跑：gh release create $TAG --title … --notes-file $_DRAFT"

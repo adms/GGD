@@ -852,9 +852,30 @@ def main() -> int:
         where = preserve(p, why, stamp, tool)
         lines.append(f"{stamp}\t{tool}\t{why}\t{p}\t{where}")
     if lines:
-        LOG.parent.mkdir(parents=True, exist_ok=True)
-        with LOG.open("a", encoding="utf-8") as f:
-            f.write("\n".join(lines) + "\n")
+        # ⭐⭐ 帳本寫不進去**不可以殺掉這支 hook**（2026-09-01 量到）。
+        #
+        # ⚠️ 這個檔頭逐字承諾「這支 hook **永遠不擋工具**（exit 0）—— 一個會擋人的
+        #   備份 hook 會被關掉，而被關掉的閘等於沒有閘」。⛔ 而在此之前，
+        #   帳本一旦變成唯讀（隔離區掃到它、或一次手滑的 chmod），這裡就
+        #   **擲 PermissionError ⇒ 整支 hook rc=1** —— ⭐ 它自己變成了那個會擋人的東西。
+        #
+        # ⚠️ 而它真的發生了：`_ledger.tsv` 被鎖成 444（genguard：「鎖著但戶籍無主」），
+        #   於是 `laneYCommitRefHookMounted` 的「這條完全合法」那一條紅了 —— ⭐ 而症狀
+        #   長得像「hook 誤擋合法指令」，⛔ 根因卻是**帳本的權限**。
+        #
+        # ⭐ 留底**已經做完了**（`preserve()` 在上面）⇒ 帳本寫不進去只損失**紀錄**，
+        #   ⛔ 不損失副本。⇒ 出聲，然後放行（fail-open 沒錯，靜默才是缺陷）。
+        try:
+            LOG.parent.mkdir(parents=True, exist_ok=True)
+            with LOG.open("a", encoding="utf-8") as f:
+                f.write("\n".join(lines) + "\n")
+        except OSError as e:
+            print(
+                f"⚠️ 覆蓋帳本寫不進去（{e.__class__.__name__}）—— ⭐ 副本**已經留了**，"
+                f"⛔ 只是這幾筆沒記進 {LOG}。\n"
+                f"   ⇒ 多半是它被鎖成唯讀：chmod u+w {LOG}",
+                file=sys.stderr,
+            )
         kept = [l for l in lines if "SKIP" not in l]
         if kept:
             print(f"🗄  覆蓋前已留底 {len(kept)} 份 → docs/legacy/_overwrites/{stamp}/", file=sys.stderr)

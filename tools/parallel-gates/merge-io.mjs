@@ -66,7 +66,14 @@ for (const p of passes) {
     for (const w of s.writes) e.writes.add(canon(w));
     e.ms = Math.max(e.ms, s.ms);
     e.ok = e.ok && s.ok;
-    e.readCount = Math.max(e.readCount, s.reads.length);
+    // ⭐⭐ **可重入**：`s.readCount` 也要納入 max —— ⛔ 這一行在 2026-09-01 之前是
+    //   `Math.max(e.readCount, s.reads.length)`，而 `steps[].reads` 存下來的是
+    //   **過濾後**的清單（檔頭第 19 行逐字：「全量的筆數留在 readCount」）
+    //   ⇒ 拿自己的產物當輸入再合一次，readCount 會從 **40,670 塌成 9,769**
+    //   （2026-09-01 量到）⇒ 規劃器的裁剪整個退化（`syncPlan` / `syncPrune`
+    //   兩條當場紅：一行客戶端改動要跑 **40 支**）。
+    //   ⚠️ 而它**看起來完全正常** —— writes 一格都沒少。
+    e.readCount = Math.max(e.readCount, s.readCount ?? 0, s.reads.length);
     byName.set(s.name, e);
   }
 }
@@ -102,10 +109,23 @@ const order = base.steps.map((s) => s.name);
 const allWrites = new Set();
 for (const e of byName.values()) for (const w of e.writes) allWrites.add(w);
 
+// ⭐⭐ **glob 也算命中** —— ⛔ 這一段在 2026-09-01 之前不存在，而缺它讓
+//   `merge-io` **不可重入**：一旦戶籍表裡有人用 glob 認領（`content/abilities/*.json`
+//   那一族），把表自己餵回去再合一次，`allWrites.has(r)` 對**個別路徑**是
+//   字面比對 ⇒ 一律 false ⇒ ⭐ `castderive:build:raw` 的 **493 筆 reads 當場蒸發**
+//   （2026-09-01 量到，`vfxfam:build` 另外掉 1 筆）。
+//   ⚠️ 而 writes 一格都沒少 ⇒ **看起來完全正常**，紅的是很遠的
+//   `syncPlan` / `syncPrune`（「一行客戶端改動要跑 40 支」）。
+//   ⇒ ⭐ 消費端（quarantine / genguard / hook）本來就都懂 fnmatch，只有這裡不懂。
+const _globRe = (g) =>
+  new RegExp("^" + g.split("*").map((s) => s.replace(/[.+?^${}()|[\]\\]/g, "\\$&")).join("[^/]*") + "$");
+const _globs = [...allWrites].filter((w) => w.includes("*")).map((w) => [w, _globRe(w)]);
+const writtenBySomeone = (r) => allWrites.has(r) || _globs.some(([, re]) => re.test(r));
+
 const steps = order.map((name) => {
   const e = byName.get(name);
   for (const g of staticWrites(name)) { e.writes.add(g); allWrites.add(g); }
-  const reads = [...e.reads].filter((r) => allWrites.has(r) && !e.writes.has(r)).sort();
+  const reads = [...e.reads].filter((r) => writtenBySomeone(r) && !e.writes.has(r)).sort();
   return {
     name,
     ok: e.ok,

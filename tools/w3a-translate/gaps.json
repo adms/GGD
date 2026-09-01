@@ -10,12 +10,12 @@
   "cooldown:tier": 155,
   "cooldown:w3a-absent": 172,
   "duration:free-number": 32,
-  "duration:ggd-absent": 188,
-  "duration:same": 9,
+  "duration:ggd-absent": 187,
+  "duration:same": 10,
   "duration:w3a-absent": 223,
-  "mana:ggd-zero": 77,
+  "mana:ggd-zero": 78,
   "mana:same": 25,
-  "mana:tier": 169,
+  "mana:tier": 168,
   "mana:w3a-absent": 181,
   "radius:free-number": 5,
   "radius:ggd-absent": 87,
@@ -2797,6 +2797,16 @@
   {
    "axis": "mana",
    "key": "mana:ggd-zero",
+   "w3a": "A03T",
+   "ggd": "godie-huth.e",
+   "name": "28-03 分身",
+   "w3aValue": 120.0,
+   "ggdValue": 0.0,
+   "verdict": "ggd-zero"
+  },
+  {
+   "axis": "mana",
+   "key": "mana:ggd-zero",
    "w3a": "A0RR",
    "ggd": "godie-hvsh.passive",
    "name": "48-00 石化之眼",
@@ -3881,16 +3891,6 @@
    "ggd": "godie-hpb1.w",
    "name": "07-02 者、皆、陣",
    "w3aValue": 110.0,
-   "ggdValue": 144.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
-   "w3a": "A03T",
-   "ggd": "godie-huth.e",
-   "name": "28-03 分身",
-   "w3aValue": 120.0,
    "ggdValue": 144.0,
    "verdict": "tier"
   },
@@ -8791,16 +8791,6 @@
    "ggd": "godie-hpb1.r",
    "name": "07-04 神聖結界",
    "w3aValue": 8.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:ggd-absent",
-   "w3a": "A03T",
-   "ggd": "godie-huth.e",
-   "name": "28-03 分身",
-   "w3aValue": 10.0,
    "ggdValue": null,
    "verdict": "ggd-absent"
   },

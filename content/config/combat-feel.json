@@ -70,5 +70,20 @@
       "rooted": true,
       "stunned": true
     }
+  },
+  "impactFeel": {
+    "hitstopPerImpact": 55,
+    "hitstopCounterCap": 8,
+    "tierMediumImpact": 60,
+    "tierHeavyImpact": 120,
+    "hitstunPerImpact": 40,
+    "hitstunAdvantage": 2,
+    "knockdownTicks": 14,
+    "blockShakeMult": 0.6,
+    "blockCamKickMult": 0.5,
+    "exShakeMult": 1.25,
+    "exShakeCap": 1.4,
+    "exCamKickFloor": 0.7,
+    "exFreezeTicks": 8
   }
 }

@@ -39,6 +39,14 @@
  * `generateFamilyContent.test.ts`：它把這支腳本跑在沙箱樹上再比對檔案。
  */
 // ggd:writes content/config/vfx-families.json
+// ggd:writes content/vfx/fx.fam.*.json
+// ⭐⭐ 上面那一行 glob 是 2026-09-01 補的，⛔ 而在此之前 `steps[].writes` 是一張
+//    **逐檔列名**的量測結果 ⇒ 每新增一個家族就多一份「跑完了但戶籍對不上」的孤兒。
+//    ⚠️ `fx.fam.ground-dust.arcane.s120.json` 就是那樣來的：它被這支寫出來、
+//    ⛔ 沒有人認領它 ⇒ 隔離區不鎖它 ⇒ **任何通道都寫得進去，而沒有東西會紅**。
+//    ⭐ 用 glob 是誠實的 —— 這個檔頭第一行逐字寫著它就是 `content/vfx/fx.fam.*.json`
+//    的產生器，⛔ 那個目錄下的這一族沒有一份是手編的（同 #827 的判準：
+//    「這一支真的**產生**這些檔，還是只**就地改欄位**？」—— 這一支是前者）。
 // ⭐ 靜態宣告（`merge-io.mjs` 會收）—— 這一支 2026-08-27 才進 sync 鏈（GH#802），
 //    在那之前它**沒有戶籍**：chain 裡有它、`steps[]` 裡沒有 ⇒ 規劃器看到不認得的
 //    步驟就 fail-closed **全跑**（`syncPlan.test.ts` 當場抓到）。

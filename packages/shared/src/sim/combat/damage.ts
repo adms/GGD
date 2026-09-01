@@ -39,6 +39,7 @@ import { woundMult } from "../grievousWounds";
 import { weaknessMult } from "../weakness";
 import { outputMult } from "../stats/outputMult";
 import { scaleHitstopTicks } from "./hitstopHold";
+import { DEFAULT_IMPACT_FEEL, impactFeelRules } from "./impactFeel";
 import {
   deriveCosmetics,
   mergeCosmetics,
@@ -181,8 +182,7 @@ export interface DamagePacket {
 const HITSTOP_MIN_IMPACT = 12;
 const HITSTOP_MIN_TICKS = 2;
 const HITSTOP_MAX_TICKS = 6; // base cap (~6 ticks) for a plain hit
-/** +1 hitstop tick per this much impact (heavier hit = longer freeze). */
-const HITSTOP_PER_IMPACT = 55;
+// ⭐ `HITSTOP_PER_IMPACT` 搬去 `impactFeel.ts` 了（2026-09-01）—— 見下面那一段。
 
 // ----------------------------------------------------- UNIFIED IMPACT PROFILE
 // ONE hit-weight computed once here in applyImpact and carried on the hitImpact
@@ -191,20 +191,19 @@ const HITSTOP_PER_IMPACT = 55;
 // constant. All integer / branch-only maths — no rng, no trig, no wall-clock —
 // so the client's prediction shadow world derives the identical profile.
 
-/** Impact tier boundaries (mitigated, pre-shield force). crit overrides both. */
-const TIER_MEDIUM_IMPACT = 60;
-const TIER_HEAVY_IMPACT = 120;
+/**
+ * ⭐⭐ 分級門檻與底下六個「一發有多重」的量值**住在設定裡**了（2026-09-01）：
+ * `content/config/combat-feel.json` 的 `impactFeel` ⇒ `sim/combat/impactFeel.ts`。
+ *
+ * ⚠️ ⛔ **不要在這個檔再寫一份** —— 那會是第二個住處，而它必然過期
+ *   （第〇·四守則）。`deriveTier` 的兩個參數預設是 `DEFAULT_IMPACT_FEEL` 的
+ *   同兩格，⭐ 從那一份推導，⛔ 不是抄的。
+ */
+const TIER_MEDIUM_IMPACT = DEFAULT_IMPACT_FEEL.tierMediumImpact;
+const TIER_HEAVY_IMPACT = DEFAULT_IMPACT_FEEL.tierHeavyImpact;
 
 /** Crit lands a DISTINCTLY longer freeze (the "that one HURT" pause): +2 ticks. */
 const HITSTOP_CRIT_BONUS = 2;
-/** A guard shatter is the biggest 破碎 beat — floor its freeze to the cap. */
-const HITSTOP_COUNTER_CAP = 8; // emphasis cap: crit/guardBreak may exceed the base 6
-
-/** Victim-only hitstun: +1 tick per this much impact on top of the base lock. */
-const HITSTUN_PER_IMPACT = 40;
-/** Ticks the victim stays action-locked BEYOND the attacker's freeze (frame
- *  advantage — the attacker recovers first, the defender is on the back foot). */
-const HITSTUN_ADVANTAGE = 2;
 /** Hitstun never roots longer than this (a knockdown handles the heaviest CC). */
 const HITSTUN_MAX_TICKS = 12;
 
@@ -269,10 +268,17 @@ export interface ImpactProfile {
 }
 
 /** Tier from the mitigated impact + crit + guardBreak (crit is the top tier). */
-function deriveTier(impact: number, crit: boolean, guardBreak: boolean): ImpactTier {
+function deriveTier(
+  impact: number,
+  crit: boolean,
+  guardBreak: boolean,
+  /** ⭐ 分級門檻（`config.combat-feel@1` 的 `impactFeel.*`）。缺席 ⇒ 出貨值。 */
+  heavyAt: number = TIER_HEAVY_IMPACT,
+  mediumAt: number = TIER_MEDIUM_IMPACT,
+): ImpactTier {
   if (crit) return "crit";
-  if (guardBreak || impact >= TIER_HEAVY_IMPACT) return "heavy";
-  if (impact >= TIER_MEDIUM_IMPACT) return "medium";
+  if (guardBreak || impact >= heavyAt) return "heavy";
+  if (impact >= mediumAt) return "medium";
   return "light";
 }
 
@@ -361,8 +367,7 @@ const KB_SPEED = 16;
 
 /** Heavy UNBLOCKED physical/true hit at/above this impact knocks the victim down. */
 const KD_MIN_IMPACT = 170;
-/** prone + getup window (ticks ~= 0.47s @30Hz). */
-const KNOCKDOWN_TICKS = 14;
+// ⭐ 擊倒躺地 tick 搬去 `impactFeel.ts` 了（2026-09-01）—— `feel.knockdownTicks`。
 
 /**
  * Resolve the firing source's optional `hitFeel` override block (task #133) from
@@ -494,15 +499,19 @@ function applyImpact(
   // ---- HITSTOP — freeze BOTH fighters (SF-style), heavier hit = longer freeze,
   // with crit / guard-shatter EMPHASIS so the biggest beats read distinctly.
   // Chip never freezes, but a guard shatter always lands its dramatic hold.
+  // ⭐ 十三個量值的住處是 `content/config/combat-feel.json` 的 `impactFeel`
+  //   （2026-09-01 之前它們是這個檔的模組層常數 ⇒ ⛔ 只有改程式碰得到）。
+  //   ⚠️ 缺格 ⇒ 出貨值 ⇒ 行為逐位元不變。
+  const feel = impactFeelRules(world);
   let hitstopTicks = 0;
   if (impact >= HITSTOP_MIN_IMPACT || guardBreak) {
     hitstopTicks = Math.min(
       HITSTOP_MAX_TICKS,
-      Math.max(HITSTOP_MIN_TICKS, HITSTOP_MIN_TICKS + Math.floor(impact / HITSTOP_PER_IMPACT)),
+      Math.max(HITSTOP_MIN_TICKS, HITSTOP_MIN_TICKS + Math.floor(impact / feel.hitstopPerImpact)),
     );
     if (crit) hitstopTicks += HITSTOP_CRIT_BONUS; // crit: distinctly longer hold
-    if (guardBreak) hitstopTicks = Math.max(hitstopTicks, HITSTOP_COUNTER_CAP); // shatter: floor to max
-    hitstopTicks = Math.min(hitstopTicks, HITSTOP_COUNTER_CAP); // clamp to the emphasis cap
+    if (guardBreak) hitstopTicks = Math.max(hitstopTicks, feel.hitstopCounterCap); // shatter: floor to max
+    hitstopTicks = Math.min(hitstopTicks, feel.hitstopCounterCap); // clamp to the emphasis cap
   }
   // explicit hitstop override wins over the impact-derived freeze (can also arm
   // a freeze on an otherwise-chip hit), clamped to the override cap.
@@ -521,7 +530,7 @@ function applyImpact(
   if (hitstopTicks > 0) {
     hitstunTicks = Math.min(
       HITSTUN_MAX_TICKS,
-      hitstopTicks + HITSTUN_ADVANTAGE + Math.floor(impact / HITSTUN_PER_IMPACT),
+      hitstopTicks + feel.hitstunAdvantage + Math.floor(impact / feel.hitstunPerImpact),
     );
     // explicit hitstun override wins, but never drops below the shared freeze
     // (the frame-advantage invariant: the victim is locked >= the attacker).
@@ -533,13 +542,13 @@ function applyImpact(
     }
   }
 
-  const tier = deriveTier(impact, crit, guardBreak);
+  const tier = deriveTier(impact, crit, guardBreak, feel.tierHeavyImpact, feel.tierMediumImpact);
   // COUNTER: the victim was mid-swing / mid-cast when this landed (see above).
   const isCounter = isCounterHit(world, target);
   // COSMETIC half: damage-derived default (scaled by tier/type/flags), then any
   // explicit hitFeel cosmetic overrides layered on top.
   const cosmetics: ImpactCosmetics = mergeCosmetics(
-    deriveCosmetics(tier, type, blocked, isCounter, isEX),
+    deriveCosmetics(tier, type, blocked, isCounter, isEX, feel),
     hf,
   );
 
@@ -616,8 +625,8 @@ function applyImpact(
   // 是法術** —— 除非那件道具明講 `impactType: "converted"`(那是**道具文件**上
   // 的政策欄位,跟這個參數不是同一個東西,見 `damageTypeOverride.ts` 的同名陷阱)。
   if (!blocked && impact >= KD_MIN_IMPACT && impactGateType !== "magic") {
-    bumpFreeze(world.knockdown, target, KNOCKDOWN_TICKS);
-    world.emit("knockdown", { target, source, x, z, ticks: KNOCKDOWN_TICKS });
+    bumpFreeze(world.knockdown, target, feel.knockdownTicks);
+    world.emit("knockdown", { target, source, x, z, ticks: feel.knockdownTicks });
   }
 }
 
