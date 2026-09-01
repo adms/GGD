@@ -46,7 +46,7 @@
 |---|---|---|
 | #838 | **可進 main 驗收** | 資源池拖拉、真 CameraRig、slider、時間軸、所見即所得、middleware 寫回、安全門與 reusable recipes 已在分支；八招有實際圖證。 |
 | #547 | **部分可驗；保留開啟** | 通用 prototype 與八招內容已有示範；阿邦白卡、龍鬥氣砲紅條需 main/source 修。 |
-| #623 | **不可關** | 本次沒有拿舊「綠表」退場；GOAL 已警告只有 1/9 真正安全，需逐張讀卡面後另做內容審核。 |
+| #623 | **唯一安全的一對已完成；票保留開啟** | 逐張卡面複核後，只把 `godie-h01o`（一護卍解態）加入 `retiredChampions`；專用入口／退場守衛通過。其餘 13 對會造成卡面失真、空入口或丟失不同 3D 身體，全部維持不動。部署時若正式站已有 roster durable overlay，仍須在後台「英雄上下架」同步這一格。 |
 | #650 | **等待 main 正確事件接縫** | Editor 已能寫現有事件與 block 的 `vfxId`；`blockSuccess` 不能掛攻擊者，禁止用錯 owner 的 workaround。 |
 | #664 | **可進 main 驗收** | 不透明背景、魔法陣卡片、additive 預算與實際 compositor 圖證納入安全門。 |
 | #734 | **沒有新的 Editor 內容變更** | 右鍵攻擊回饋屬既有 main 工作；本批不假裝已驗收。 |
@@ -72,5 +72,6 @@
 - `pnpm editorcov:check` 與 `editorCoverageFresh.test.ts`：通過。
 - `pnpm --filter @ggd/editor typecheck`：通過。
 - VFX Forge recipe／model／八招視覺文法：3 個 test files、21 tests 通過。
+- #623 `transformRetireGate`／`transformEntryRetired`：2 個 test files、3 tests 通過；只退唯一有完整替代狀態的一護卍解態。
 
 上述只證明契約與資料沒有退化；八招是否像原作仍以本報告的逐招圖片評價為準。
