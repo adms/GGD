@@ -646,6 +646,40 @@ export const zConfigMatchDoc = z
         inventorySlots: z.number().int().min(1).max(9),
       })
       .strict(),
+    /**
+     * ⭐⭐ 賽後評分的**八個基準錨**（2026-09-01）。
+     *
+     * ⚠️ 它們在此之前是 `sim/stats/rating.ts` 裡的八個**寫死常數** ——
+     * ⭐ 而那個檔的檔頭自己寫著「FORMULA (**documented so balance/tuning is
+     * auditable**)」⇒ 它明說這是**要調的東西**，⛔ 而它調不到（第一守則）。
+     *
+     * ⭐ 每一格是「這一軸拿滿分要多少」——例如 `damage: 12000` ＝ 一場打滿
+     * 12,000 傷害那一軸就是 1.0。⇒ ⭐ **調小 = 更容易拿高分**。
+     *
+     * ⛔ 出貨值逐位元等於原本寫死的八個 ⇒ 行為零改變。
+     * ⚠️ 上界都是**誤打守衛**（⛔ 不是平衡）：一個 0 會讓那一軸永遠滿分。
+     */
+    rating: z
+      .object({
+        /** (擊殺+助攻)/死亡 拿滿分的門檻。原 `KDA_REF = 5`。 */
+        kda: z.number().positive().max(100).optional(),
+        /** 參團率拿滿分的門檻。原 `KP_REF = 8`。 */
+        killParticipation: z.number().positive().max(200).optional(),
+        /** 輸出拿滿分的門檻。原 `DMG_REF = 12000`。 */
+        damage: z.number().positive().max(10_000_000).optional(),
+        /** 承傷拿滿分的門檻。原 `TANK_REF = 18000`。 */
+        tanked: z.number().positive().max(10_000_000).optional(),
+        /** 治療拿滿分的門檻。原 `HEAL_REF = 6000`。 */
+        healed: z.number().positive().max(10_000_000).optional(),
+        /** 控場拿滿分的門檻（tick；30Hz ⇒ 300 ＝ 10 秒）。原 `CC_REF = 300`。 */
+        ccTicks: z.number().positive().max(100_000).optional(),
+        /** 目標分拿滿分的門檻（吃花數）。原 `OBJ_REF = 6`。 */
+        objectives: z.number().positive().max(1000).optional(),
+        /** 救援拿滿分的門檻。⚠️ 復活每隊每回合上限 1 ⇒ 一場 3 次已經很多。原 `RESCUE_REF = 3`。 */
+        rescues: z.number().positive().max(100).optional(),
+      })
+      .strict()
+      .default({}),
     progression: z
       .object({
         levelCap: z.number().int().min(1),

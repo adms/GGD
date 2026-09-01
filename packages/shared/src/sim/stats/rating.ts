@@ -128,21 +128,58 @@ function lobbyMaxAlive(lobby: readonly PlayerMatchStats[]): number {
   return m;
 }
 
+/**
+ * ⭐⭐ 八個基準錨 —— 2026-09-01 起它們是一格設定
+ * （`config.match@1` 的 `rating.*`），⛔ 而不是這個檔裡的常數。
+ *
+ * ⚠️ 這個檔的檔頭自己寫著「FORMULA (**documented so balance/tuning is auditable**)」
+ * ⇒ ⭐ 它明說這是**要調的東西** —— ⛔ 而在此之前它調不到（第一守則）。
+ *
+ * ⭐ 缺席的每一格退回原本寫死的值 ⇒ **行為逐位元不變**。
+ */
+export interface RatingRefs {
+  kda?: number;
+  killParticipation?: number;
+  damage?: number;
+  tanked?: number;
+  healed?: number;
+  ccTicks?: number;
+  objectives?: number;
+  rescues?: number;
+}
+
+/** 出貨值 —— ⭐ 逐位元等於 2026-09-01 之前寫死的那八個。 */
+export const DEFAULT_RATING_REFS: Required<RatingRefs> = Object.freeze({
+  kda: KDA_REF,
+  killParticipation: KP_REF,
+  damage: DMG_REF,
+  tanked: TANK_REF,
+  healed: HEAL_REF,
+  ccTicks: CC_REF,
+  objectives: OBJ_REF,
+  rescues: RESCUE_REF,
+});
+
+/** ⛔ 0 或負的錨會讓那一軸永遠滿分 ⇒ 一律退回出貨值（⚠️ 上下界與 Zod 逐字相同）。 */
+function refOf(v: number | undefined, fallback: number): number {
+  return typeof v === "number" && Number.isFinite(v) && v > 0 ? v : fallback;
+}
+
 /** The nine sub-scores for one player, each in [0,1]. */
-function subScores(stats: PlayerMatchStats, maxAlive: number): Sub {
+function subScores(stats: PlayerMatchStats, maxAlive: number, refs: RatingRefs = {}): Sub {
   const kda = (stats.kills + stats.assists) / Math.max(1, stats.deaths);
   const shots = stats.abilityHits + stats.abilityWhiffs;
   return {
-    kda: clamp01(kda / KDA_REF),
-    kp: clamp01(stats.killParticipation / KP_REF),
-    dmg: clamp01(stats.damageDealt / DMG_REF),
-    tank: clamp01((stats.damageTaken + stats.damageBlocked) / TANK_REF),
+    kda: clamp01(kda / refOf(refs.kda, KDA_REF)),
+    kp: clamp01(stats.killParticipation / refOf(refs.killParticipation, KP_REF)),
+    dmg: clamp01(stats.damageDealt / refOf(refs.damage, DMG_REF)),
+    tank: clamp01((stats.damageTaken + stats.damageBlocked) / refOf(refs.tanked, TANK_REF)),
     acc: shots > 0 ? clamp01(stats.abilityHits / shots) : 0.5,
     surv: maxAlive > 0 ? clamp01(stats.timeAliveTicks / maxAlive) : 1,
-    heal: clamp01(stats.healingDone / HEAL_REF),
-    cc: clamp01(stats.ccAppliedTicks / CC_REF),
-    obj: clamp01(stats.flowersEaten / OBJ_REF),
-    resc: clamp01(stats.revivesPerformed / RESCUE_REF),
+    heal: clamp01(stats.healingDone / refOf(refs.healed, HEAL_REF)),
+    cc: clamp01(stats.ccAppliedTicks / refOf(refs.ccTicks, CC_REF)),
+    obj: clamp01(stats.flowersEaten / refOf(refs.objectives, OBJ_REF)),
+    resc: clamp01(stats.revivesPerformed / refOf(refs.rescues, RESCUE_REF)),
   };
 }
 
@@ -164,22 +201,28 @@ function weightedScore(sub: Sub, w: Sub): number {
 }
 
 /** Role-agnostic baseline (used to percentile-rank the whole lobby). */
-function baseScore(stats: PlayerMatchStats, maxAlive: number): number {
-  return weightedScore(subScores(stats, maxAlive), DEFAULT_WEIGHTS);
+function baseScore(stats: PlayerMatchStats, maxAlive: number, refs: RatingRefs = {}): number {
+  return weightedScore(subScores(stats, maxAlive, refs), DEFAULT_WEIGHTS);
 }
 
 /**
  * The composite [0,1] that both grade() and perMatchRanks() sort on:
  * 0.5·role-weighted + 0.5·lobby-percentile, plus a small multikill bonus.
  */
-export function compositeScore(stats: PlayerMatchStats, lobby: readonly PlayerMatchStats[], role: string): number {
+export function compositeScore(
+  stats: PlayerMatchStats,
+  lobby: readonly PlayerMatchStats[],
+  role: string,
+  /** ⭐ 基準錨（`config.match@1` 的 `rating.*`）。缺席 ⇒ 出貨值。 */
+  refs: RatingRefs = {},
+): number {
   const maxAlive = lobbyMaxAlive(lobby);
-  const roleScore = weightedScore(subScores(stats, maxAlive), weightsFor(role));
+  const roleScore = weightedScore(subScores(stats, maxAlive, refs), weightsFor(role));
 
-  const mine = baseScore(stats, maxAlive);
+  const mine = baseScore(stats, maxAlive, refs);
   const n = Math.max(1, lobby.length);
   let atOrBelow = 0;
-  for (const p of lobby) if (baseScore(p, maxAlive) <= mine + 1e-9) atOrBelow += 1;
+  for (const p of lobby) if (baseScore(p, maxAlive, refs) <= mine + 1e-9) atOrBelow += 1;
   // when the player is not part of the passed lobby, count them implicitly
   const percentile = lobby.length > 0 ? atOrBelow / n : 1;
 
@@ -199,9 +242,15 @@ export function gradeFromScore(score: number): Grade {
  * Grade one player against the lobby, weighted by their role. `lobbyStats`
  * should include every player in the match (including this one).
  */
-export function grade(playerStats: PlayerMatchStats, lobbyStats: readonly PlayerMatchStats[], role: string): Grade {
+export function grade(
+  playerStats: PlayerMatchStats,
+  lobbyStats: readonly PlayerMatchStats[],
+  role: string,
+  /** ⭐ 基準錨（`config.match@1` 的 `rating.*`）。缺席 ⇒ 出貨值 ⇒ 行為逐位元不變。 */
+  refs: RatingRefs = {},
+): Grade {
   const lobby = lobbyStats.length > 0 ? lobbyStats : [playerStats];
-  return gradeFromScore(compositeScore(playerStats, lobby, role));
+  return gradeFromScore(compositeScore(playerStats, lobby, role, refs));
 }
 
 /**

@@ -72,6 +72,16 @@
     "xpAssist": 60,
     "xpRoundSurvive": 100
   },
+  "rating": {
+    "kda": 5,
+    "killParticipation": 8,
+    "damage": 12000,
+    "tanked": 18000,
+    "healed": 6000,
+    "ccTicks": 300,
+    "objectives": 6,
+    "rescues": 3
+  },
   "draft": {
     "offerCount": 3,
     "tierSchedule": {}

@@ -146,6 +146,8 @@ const MATCH_CONFIG: ConfigDoc = {
     xpAssist: 60,
     xpRoundSurvive: 100,
   },
+  // ⭐ 賽後評分的八個基準錨（2026-09-01）—— ⭐ 逐位元等於原本寫死在 `rating.ts` 的那八個。
+  rating: { kda: 5, killParticipation: 8, damage: 12000, tanked: 18000, healed: 6000, ccTicks: 300, objectives: 6, rescues: 3 },
   draft: { offerCount: 3, tierSchedule: { "1": "silver", "3": "gold", "5": "prismatic" } },
 };
 emit("config", MATCH_CONFIG);

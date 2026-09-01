@@ -142,7 +142,7 @@ import { Champions, Abilities, LootTables, Items, Statuses } from "@ggd/shared/s
 import { Configs, Models } from "@ggd/shared/content";
 import { spawnChampion } from "@ggd/shared/sim/spawnChampion";
 import { createMatchStats, type PlayerMatchStats } from "@ggd/shared/sim/stats/matchStats";
-import { grade, perMatchRanks, rankScore, survivalBonus, type RankEntry } from "@ggd/shared/sim/stats/rating";
+import { grade, perMatchRanks, rankScore, survivalBonus, type RankEntry, type RatingRefs } from "@ggd/shared/sim/stats/rating";
 import {
   MatchLedger,
   createRoundPlayerRecord,
@@ -3680,8 +3680,14 @@ export class MatchController {
     }
     const lobby = entries.map((e) => e.stats);
     const ranks = perMatchRanks(entries);
+    // ⭐ 評分的八個基準錨現在是一格設定（`config.match@1` 的 `rating.*`）——
+    //   ⛔ 在此之前它們是 `sim/stats/rating.ts` 裡的常數，而那個檔的檔頭自己寫著
+    //   「documented so balance/**tuning is auditable**」⇒ 它明說要調，⛔ 而它調不到。
+    // ⚠️ 缺席 ⇒ 出貨值 ⇒ 行為逐位元不變。
+    const ratingRefs =
+      (Configs.tryGet(MATCH_CONFIG_DOC_ID) as { rating?: RatingRefs } | undefined)?.rating ?? {};
     players.forEach((p, i) => {
-      p.grade = grade(entries[i]!.stats, lobby, entries[i]!.role);
+      p.grade = grade(entries[i]!.stats, lobby, entries[i]!.role, ratingRefs);
       p.rank = ranks[i]!;
       // The SAME expression the placement sorted on. Printing a different number
       // beside the rank it did not produce is how a scoreboard starts lying.

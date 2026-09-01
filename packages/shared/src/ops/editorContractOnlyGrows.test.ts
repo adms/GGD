@@ -36,7 +36,7 @@ const ROOT = resolve(__dirname, "../../../..");
  *   · `damageTierPerRank` ＋ `summon-agent` 家族 ⇒ **4,895**
  *   · ⭐ `grantXp`（GH#890）⇒ **4,899** —— ⭐ 棘輪往上轉的樣子
  */
-const FLOOR = 4899;
+const FLOOR = 4908;
 
 describe("⭐ 編輯器契約只會變長（棘輪）", () => {
   const doc = JSON.parse(
