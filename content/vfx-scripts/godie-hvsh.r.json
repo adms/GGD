@@ -100,6 +100,21 @@
       "alpha": 1
     },
     {
+      "vfxId": "fx.prim.lightning.explosion-lg",
+      "at": "target",
+      "durationSec": 0.55,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 700,
+      "w3xScale": 2.4,
+      "tint": [
+        105,
+        190,
+        255
+      ],
+      "alpha": 1
+    },
+    {
       "amplitude": 0.45,
       "durationSec": 0.9,
       "kind": "screenShake",

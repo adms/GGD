@@ -63,6 +63,57 @@ def _norm_q(q):
     return tuple(c / m for c in q)
 
 
+def _key_opaque_additive_carrier(img):
+    """Turn an opaque, dominant edge backdrop into ONE+ONE-safe glow art.
+
+    Some legacy BLPs encode an effect as a dark shape on an opaque white (or
+    coloured) carrier.  Plain luminance-keying assumes the opposite convention
+    (bright shape on black) and therefore turns the carrier into a solid card.
+    Detect only the strong, non-uniform edge-carrier shape; a genuinely solid
+    glowing quad (100% one colour) remains untouched.
+
+    The keyed output is grayscale on black, with alpha carrying the same mask.
+    Black RGB at the carrier is essential: the shipped model-FX path faithfully
+    uses WC3 ONE+ONE for additive materials, and ONE+ONE does not read alpha.
+    """
+    from PIL import Image
+
+    rgba = img.convert("RGBA")
+    width, height = rgba.size
+    pixels = list(rgba.getdata())
+    border = max(1, round(min(width, height) * 0.05))
+    bins: dict[int, list] = {}
+    edge_total = 0
+    for index, (r, g, b, _a) in enumerate(pixels):
+        x, y = index % width, index // width
+        edge = x < border or y < border or x >= width - border or y >= height - border
+        if edge:
+            edge_total += 1
+        key = ((r >> 5) << 6) | ((g >> 5) << 3) | (b >> 5)
+        row = bins.setdefault(key, [0, 0, 0, 0, 0])
+        row[0] += 1
+        row[1] += int(edge)
+        row[2] += r
+        row[3] += g
+        row[4] += b
+    dominant = max(bins.values(), key=lambda row: row[1], default=[0, 0, 0, 0, 0])
+    total_share = dominant[0] / len(pixels) if pixels else 0
+    edge_share = dominant[1] / edge_total if edge_total else 0
+    if dominant[0] <= 0 or total_share < 0.10 or total_share >= 0.98 or edge_share < 0.60:
+        return rgba, False
+    bg = tuple(round(dominant[channel] / dominant[0]) for channel in (2, 3, 4))
+    if max(bg) <= 16:
+        return rgba, False
+    distance = [max(abs(r - bg[0]), abs(g - bg[1]), abs(b - bg[2])) for r, g, b, _a in pixels]
+    peak = max(distance, default=0)
+    if peak <= 8:
+        return rgba, False
+    mask = [0 if value <= 8 else min(255, round(value * 255 / peak)) for value in distance]
+    out = Image.new("RGBA", rgba.size)
+    out.putdata([(value, value, value, value) for value in mask])
+    return out, True
+
+
 # --- effect-geoset guard (task #17) -----------------------------------------
 # WC3 particle/emitter effects (giant beams, ground rings, glow billboards) are
 # sometimes authored as ordinary GEOS geosets. Baked as solid geometry they
@@ -747,8 +798,13 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
             # texture genuinely unresolvable -> soft gray placeholder so the
             # geometry is at least visible (never zero pixels again)
             img = Image.new("RGBA", (8, 8), (150, 150, 150, 255))
-        r, g, b, _a = img.split()
-        img.putalpha(ImageChops.lighter(ImageChops.lighter(r, g), b))
+        img, carrier_keyed = _key_opaque_additive_carrier(img)
+        if carrier_keyed:
+            res.notes.append(
+                f"texture {tex_id}: opaque edge carrier → black-background additive key")
+        else:
+            r, g, b, _a = img.split()
+            img.putalpha(ImageChops.lighter(ImageChops.lighter(r, g), b))
         out = io.BytesIO()
         img.save(out, "PNG")
         view = buf.add_blob(out.getvalue())

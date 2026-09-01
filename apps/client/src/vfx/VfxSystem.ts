@@ -873,6 +873,7 @@ export class VfxSystem {
     this.telegraphLayer = new TelegraphLayer(scene, {
       entityPos: (id) => this.ctx.entityPos(id),
       castProgress: (id, nowMs) => this.ctx.castProgress?.(id, nowMs) ?? null,
+      resolveTextureUrl: this.ctx.resolveTextureUrl,
     });
     // ⭐ GH#838 特效工坊 —— 演出腳本播放器。它自己不畫任何東西：把
     //    `content/vfx-scripts/` 的 segment 翻成既有 wire payload **回餵
@@ -1893,18 +1894,31 @@ export class VfxSystem {
       case "castBegin": {
         const caster = ev.data.caster as number | undefined;
         if (typeof caster !== "number") break;
+        const abilityId = ev.data.abilityId as string | undefined;
         const secs = typeof ev.data.castTimeSec === "number" ? ev.data.castTimeSec : 0;
         const ticks = typeof ev.data.ticks === "number" ? ev.data.ticks : 0;
         const durationMs = secs > 0 ? secs * 1000 : ticks * TICK_MS;
         if (!(durationMs > 0)) break;
-        this.pillars.begin(caster, durationMs, this.pillarPaletteFor(ev.data.abilityId as string | undefined), nowMs);
+        // The cast pillar is default presentation, not combat truth.  A
+        // vfx-script owns that presentation just like it owns the cast binding
+        // and inline spawnVfx/spawnModelFx effects; keeping this pillar made
+        // authored casts draw both looks at once.  On bright KI/arcane palettes
+        // the overlapping additive motes can wash the whole camera white.
+        // The geometry telegraph remains active because it communicates the
+        // real hit area rather than decorating the cast.
+        if (!abilityId || !this.scriptPlayer.hasScript(abilityId)) {
+          this.pillars.begin(caster, durationMs, this.pillarPaletteFor(abilityId), nowMs);
+        }
         break;
       }
       // resolved → a short outward release flash on the frame the effects land
       case "castEnd": {
         const caster = ev.data.caster as number | undefined;
         if (typeof caster === "number") {
-          this.pillars.finish(caster, nowMs);
+          const abilityId = ev.data.abilityId as string | undefined;
+          if (!abilityId || !this.scriptPlayer.hasScript(abilityId)) {
+            this.pillars.finish(caster, nowMs);
+          }
           // the ground shape pops on the SAME frame the sim runs the effects
           this.telegraphLayer.resolve(caster, nowMs);
         }
@@ -1915,7 +1929,10 @@ export class VfxSystem {
       case "castInterrupt": {
         const caster = ev.data.caster as number | undefined;
         if (typeof caster === "number") {
-          this.pillars.interrupt(caster, nowMs);
+          const abilityId = ev.data.abilityId as string | undefined;
+          if (!abilityId || !this.scriptPlayer.hasScript(abilityId)) {
+            this.pillars.interrupt(caster, nowMs);
+          }
           // …and neither may the ground shape. Before #228 nothing removed a
           // telegraph, so a stunned caster's ring kept filling and still fired
           // its "it lands HERE" resolve pop for damage that never happened.

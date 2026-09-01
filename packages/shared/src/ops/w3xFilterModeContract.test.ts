@@ -100,6 +100,18 @@ describe.runIf(PY !== null)("w3x filter-mode 對照表（GH#841）", () => {
     ).toBe(0);
   });
 
+  it("additive 的不透明白色外框必須反向取形，不能把白底當成整片發光", () => {
+    const carrier = one("fm3-additive-white-carrier");
+    expect(carrier.emissive).toBe(true);
+    expect(carrier.textureAlpha!.min).toBe(0);
+    expect(carrier.textureAlpha!.max).toBe(255);
+    expect(carrier.textureAlpha!.transparent).toBeGreaterThan(0);
+    expect(
+      carrier.textureAlpha!.brightTransparent,
+      "白色 carrier 雖然 alpha 已清掉，但 RGB 仍亮；ONE+ONE 仍會畫出白底",
+    ).toBe(0);
+  });
+
   it("疊加層不再靜默消失:不透明底 ＋ 混色疊加 = 兩份材質", () => {
     const layers = probe.probes["two-layer-opaque-base-plus-blend"]!;
     expect(layers.map((m) => m.alphaMode)).toEqual(["OPAQUE", "BLEND"]);

@@ -68,6 +68,48 @@ describe("VFX Forge asset backdrop gate", () => {
     expect((await gate.check({ collection: "vfx", id: "sprite" })).safe).toBe(true);
   });
 
+  it("blocks an opaque carrier colour on planar GLB geometry even when the material claims BLEND", async () => {
+    const docs = new Map<string, unknown>([
+      ["flat", { id: "flat", glbPath: "assets/flat.glb" }],
+      ["crossed", { id: "crossed", glbPath: "assets/crossed.glb" }],
+      ["effect", { id: "effect", glbPath: "assets/effect.glb", fxEmitters: ["fx.effect.p00"] }],
+      ["masked", { id: "masked", glbPath: "assets/masked.glb" }],
+      ["solid", { id: "solid", glbPath: "assets/solid.glb" }],
+    ]);
+    const source = {
+      doc: async <T,>(_collection: "models" | "vfx", id: string): Promise<T> => docs.get(id) as T,
+      assetBytes: async (path: string): Promise<ArrayBuffer> => modelGlb({
+        planar: path.includes("flat"),
+        alphaMode: path.includes("solid") ? "OPAQUE" : path.includes("masked") || path.includes("effect") ? "MASK" : "BLEND",
+        emissive: path.includes("crossed"),
+      }),
+    };
+    const gate = new AssetSafetyGate(source, async () => raster([196, 35, 35, 255]));
+
+    const flat = await gate.check({ collection: "models", id: "flat" });
+    expect(flat.code).toBe("MODEL_TEXTURE_BACKDROP");
+    expect(flat.summary).toContain("不透明單色底板");
+    expect(flat.detail).toContain("BLEND");
+    expect(flat.detail).toContain("單色底 100.00%");
+
+    // Crossed billboards share one 3-D accessor box, so their aggregate bounds
+    // are not flat. A BLEND/MASK effect material with an all-opaque carrier is
+    // nevertheless unsafe and must not bypass the geometric lane.
+    expect((await gate.check({ collection: "models", id: "crossed" })).code).toBe("MODEL_TEXTURE_BACKDROP");
+
+    // Effect-model metadata is authoritative even when an imported material
+    // forgot to mark itself emissive and the combined mesh bounds are 3-D.
+    expect((await gate.check({ collection: "models", id: "effect" })).code).toBe("MODEL_TEXTURE_BACKDROP");
+
+    // A normal non-emissive MASK body atlas can legitimately have one dominant
+    // edge colour. It is not an effect card and must not be keyed as a backdrop.
+    expect((await gate.check({ collection: "models", id: "masked" })).safe).toBe(true);
+
+    // An opaque, uniformly coloured atlas on a real 3D body is normal.  The
+    // backdrop bug requires both the carrier-like texture and flat geometry.
+    expect((await gate.check({ collection: "models", id: "solid" })).safe).toBe(true);
+  });
+
   it("collects model, particle and model-trail refs once, then guards the sole write seam", async () => {
     const script: VfxScriptDoc = {
       id: "skill.a",
@@ -103,4 +145,48 @@ function raster(pixel: readonly [number, number, number, number]): DecodedRaster
   const rgba = new Uint8ClampedArray(10 * 10 * 4);
   for (let i = 0; i < rgba.length; i += 4) rgba.set(pixel, i);
   return { width: 10, height: 10, rgba };
+}
+
+function modelGlb({
+  planar,
+  alphaMode,
+  emissive,
+}: {
+  planar: boolean;
+  alphaMode: "OPAQUE" | "MASK" | "BLEND";
+  emissive: boolean;
+}): ArrayBuffer {
+  const json = {
+    bufferViews: [{ byteOffset: 0, byteLength: 4 }],
+    images: [{ bufferView: 0, mimeType: "image/png" }],
+    textures: [{ source: 0 }],
+    materials: [{
+      name: "carrier",
+      alphaMode,
+      emissiveFactor: emissive ? [1, 1, 1] : [0, 0, 0],
+      pbrMetallicRoughness: { baseColorTexture: { index: 0 } },
+    }],
+    meshes: [{ primitives: [{ material: 0, attributes: { POSITION: 0 } }] }],
+    accessors: [{
+      min: [-1, -1, planar ? 0 : -1],
+      max: [1, 1, planar ? 0 : 1],
+    }],
+  };
+  const jsonRaw = new TextEncoder().encode(JSON.stringify(json));
+  const jsonLength = (jsonRaw.byteLength + 3) & ~3;
+  const binLength = 4;
+  const total = 12 + 8 + jsonLength + 8 + binLength;
+  const output = new Uint8Array(total);
+  const view = new DataView(output.buffer);
+  view.setUint32(0, 0x46546c67, true);
+  view.setUint32(4, 2, true);
+  view.setUint32(8, total, true);
+  view.setUint32(12, jsonLength, true);
+  view.setUint32(16, 0x4e4f534a, true);
+  output.fill(0x20, 20, 20 + jsonLength);
+  output.set(jsonRaw, 20);
+  const binHeader = 20 + jsonLength;
+  view.setUint32(binHeader, binLength, true);
+  view.setUint32(binHeader + 4, 0x004e4942, true);
+  return output.buffer;
 }

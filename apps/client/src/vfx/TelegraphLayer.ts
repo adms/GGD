@@ -90,6 +90,8 @@ export interface TelegraphLayerCtx {
    * disagree — see the header. GameApp passes `CastTracker.progressFor`.
    */
   castProgress?(id: number, nowMs: number): number | null;
+  /** Override the shipped `/content/` mount for editor/local reference data. */
+  resolveTextureUrl?(path: string): string;
 }
 
 interface Live {
@@ -200,7 +202,7 @@ export class TelegraphLayer {
         nowMs,
         Math.max(1, windupMs),
         instant ? FLASH_HOLD_MS : RESOLVE_HOLD_MS,
-        { palette, outlineOnly, quiet: instant },
+        { palette, outlineOnly, quiet: instant, resolveTextureUrl: this.ctx.resolveTextureUrl },
       );
       rec.circle.setProgress(rec.t);
     }
@@ -357,6 +359,13 @@ export class TelegraphLayer {
     const mesh = createGroundQuad(this.scene, "telegraph-corridor");
     const mat = new StandardMaterial("telegraph-corridor-mat", this.scene);
     mat.disableLighting = true;
+    // Pure-emissive overlay. StandardMaterial starts with a WHITE diffuse
+    // channel; leaving it alive adds white to the channel tint and clamps the
+    // large skillshot corridor into an opaque-looking white card in actual
+    // play. This quad is UI geometry, not a lit surface, so only emissiveColor
+    // may contribute to RGB.
+    mat.diffuseColor = Color3.Black();
+    mat.specularColor = Color3.Black();
     mat.emissiveColor = new Color3(1, 0.22, 0.14);
     mesh.material = mat;
     return mesh;

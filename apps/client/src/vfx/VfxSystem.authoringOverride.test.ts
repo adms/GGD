@@ -53,6 +53,42 @@ describe("VfxSystem authoring script override", () => {
     vfx.dispose();
   });
 
+  it("keeps the truthful telegraph but suppresses the default cast pillar for a scripted cast", () => {
+    engine = new NullEngine();
+    scene = new Scene(engine);
+    const draft: VfxScriptDoc = {
+      id: "forge.scripted-charge",
+      schema: "vfx-script@1",
+      abilityId: "forge.scripted-charge",
+      segments: [{ kind: "floatingText", on: "castStart", text: "CUSTOM", durationSec: 1 }],
+    };
+    const vfx = new VfxSystem(scene, {
+      entityPos: () => ({ x: 0, z: 0 }),
+      teamOf: () => 0,
+      vfxScriptFor: (id) => id === draft.abilityId ? draft : undefined,
+      allVfxScripts: () => [draft],
+    });
+
+    vfx.handleEvent({
+      type: "castBegin",
+      tick: 0,
+      data: {
+        caster: 1,
+        slot: "R",
+        abilityId: draft.abilityId,
+        ticks: 30,
+        castTimeSec: 1,
+      },
+    }, 0);
+
+    const internals = vfx as unknown as {
+      pillars: { activeCount: number };
+    };
+    expect(internals.pillars.activeCount).toBe(0);
+    expect(scene.particleSystems.some((system) => system.name.includes("castpillar"))).toBe(false);
+    vfx.dispose();
+  });
+
   it("applies a script vfxSpawn flyHeight to the real emitter, not only to the pool key", () => {
     engine = new NullEngine();
     scene = new Scene(engine);

@@ -8,7 +8,7 @@ import { DirectionalLight } from "@babylonjs/core/Lights/directionalLight";
 import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import type { ParticleSystem } from "@babylonjs/core/Particles/particleSystem";
-import type { AssetContainer } from "@babylonjs/core/assetContainer";
+import type { AssetContainer, InstantiatedEntries } from "@babylonjs/core/assetContainer";
 import type { AnimationGroup } from "@babylonjs/core/Animations/animationGroup";
 import type { Mesh } from "@babylonjs/core/Meshes/mesh";
 import type { EventMessage } from "@ggd/shared/protocol/messages";
@@ -19,6 +19,7 @@ import { abilityIdOfAuthoredOrigin, type ChampionDef } from "@ggd/shared/sim";
 import type { AbilityVfxLayerOverride } from "@ggd/shared/content/schema/abilityVfx";
 import type { ModelFxSpawnEvent } from "../../../client/src/render/modelFxPath";
 import { ModelFxRig } from "../../../client/src/render/modelFxRig";
+import { AssetManager } from "../../../client/src/render/AssetManager";
 import { CameraRig } from "../../../client/src/render/CameraRig";
 import { buildZoneGround } from "../../../client/src/render/ArenaGround";
 import { facingToYaw } from "../../../client/src/render/math/motion";
@@ -42,13 +43,13 @@ import {
 import { applyAimYaw } from "../../../client/src/render/vfx/artParams";
 import { yawDegToward } from "../../../client/src/vfx/orient";
 import { api } from "../api/client";
-import { loadGlbContainer } from "../preview3d/loadGlb";
 import { assetUrl } from "../preview3d/assetUrl";
 import { resolveClip } from "../preview3d/clips";
 import { burstNow, toParticleSystem } from "../preview3d/particles";
 import { projectileIdsOf, type ForgeAbility, type ScheduledSimEvent } from "./model";
 import { calibrateTwoWay } from "../../../client/src/vfx/auditionCalibrate";
 import type { PreviewActorPose } from "../preview/PreviewController";
+import { auditBackdropFrame, type BackdropFrameAudit } from "./backdropFrameAudit";
 
 const STEP_MS = 1000 / 60;
 const CASTER_POS = { x: 0, z: 0 };
@@ -89,6 +90,14 @@ export interface ForgeOverlay {
   actors: { caster: string; target: string };
 }
 
+export interface BackdropTimelineAudit {
+  safe: boolean;
+  sampledFrames: number;
+  worstAtMs: number;
+  worst: BackdropFrameAudit;
+  suspects: readonly string[];
+}
+
 export interface VfxForgeStageOptions {
   fetchDoc?<T>(collection: "models" | "vfx", id: string): Promise<T>;
   onOverlay?(overlay: ForgeOverlay): void;
@@ -114,7 +123,7 @@ interface ForgeActor {
   readonly position: { x: number; z: number };
   readonly facing: { x: number; z: number };
   champion: ChampionDef | null;
-  container: AssetContainer | null;
+  instance: InstantiatedEntries | null;
   bodyRoot: TransformNode | null;
   glbRoot: TransformNode | null;
   groups: AnimationGroup[];
@@ -151,16 +160,18 @@ export class VfxForgeStage {
   private readonly models = new Map<string, ModelDoc>();
   private readonly vfx = new Map<string, VfxDoc>();
   private readonly modelFxContainerPromises = new Map<string, Promise<AssetContainer>>();
-  private readonly ownedModelFxContainers = new Set<AssetContainer>();
+  private readonly assets: AssetManager;
   private readonly fetchDoc: NonNullable<VfxForgeStageOptions["fetchDoc"]>;
   private readonly onOverlay: NonNullable<VfxForgeStageOptions["onOverlay"]>;
   private readonly modelRig: ModelFxRig;
   private readonly groundFloor: ReturnType<typeof buildZoneGround>["floor"];
+  private readonly groundReady: Promise<void>;
   private readonly actors: { caster: ForgeActor; target: ForgeActor };
   private actorReady: Promise<void> = Promise.resolve();
+  private contentReady: Promise<void> = Promise.resolve();
   private prepareSeq = 0;
   private player: VfxScriptPlayer;
-  private readonly mode: VfxForgeStageMode;
+  private mode: VfxForgeStageMode;
   private readonly runtimeVfx: VfxSystem | null;
   private readonly canvas: HTMLCanvasElement;
 
@@ -183,6 +194,10 @@ export class VfxForgeStage {
     this.engine = new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: false }, true);
     this.engine.setHardwareScalingLevel(1 / Math.min(globalThis.devicePixelRatio || 1, 2));
     this.scene = new Scene(this.engine);
+    // Use the game's exact GLB byte cache, LOD resolver, texture deduplication
+    // and source-container lifetime. Only the content mount differs: local or
+    // remote editor reference assets are served through content-api.
+    this.assets = new AssetManager(this.scene, "/content-api/");
     this.scene.clearColor = new Color4(0.035, 0.045, 0.07, 1);
     this.scene.useConstantAnimationDeltaTime = true;
 
@@ -204,7 +219,35 @@ export class VfxForgeStage {
       // and lighting but use ArenaGround's textureless stone fallback.
       undefined,
     );
+    // VFX acceptance needs a stable neutral card, not arena art. Keep the
+    // shipped floor/rim geometry and camera scale, but replace the textureless
+    // PBR fallback with deterministic unlit charcoal. The PBR fallback can
+    // transiently resolve as Babylon white while imported GLBs compile; in a
+    // frame-stepped editor that frame stays forever and is indistinguishable
+    // from the exact missing-alpha defect this surface exists to reveal.
+    for (const [mesh, tint] of [
+      [ground.floor, new Color3(0.12, 0.13, 0.16)],
+      [ground.rim, new Color3(0.065, 0.07, 0.09)],
+    ] as const) {
+      mesh.material?.dispose(false, false);
+      const material = new StandardMaterial(`${mesh.name}-forge-neutral`, this.scene);
+      material.disableLighting = true;
+      material.diffuseColor = Color3.Black();
+      material.specularColor = Color3.Black();
+      material.emissiveColor = tint;
+      mesh.material = material;
+    }
     this.groundFloor = ground.floor;
+    // The Forge is usually paused on frame zero. PBR's lazy first compilation
+    // can therefore leave Babylon's white placeholder on screen forever,
+    // visually indistinguishable from an unremoved texture background. The
+    // game loop naturally advances past it; a frame-stepped editor must warm
+    // both arena materials explicitly before declaring the preview ready.
+    this.groundReady = Promise.all(
+      [ground.floor, ground.rim].flatMap((mesh) =>
+        mesh.material ? [mesh.material.forceCompilationAsync(mesh)] : [],
+      ),
+    ).then(() => undefined);
     this.groundFloor.isPickable = true;
     this.actors = {
       caster: this.makeActor("caster", "施法者", this.homePose.caster, { x: 0, z: 1 }, new Color3(0.24, 0.55, 0.95), opts.actors?.caster ?? null),
@@ -264,7 +307,7 @@ export class VfxForgeStage {
     return this.nowMs;
   }
 
-  async setContent(
+  setContent(
     script: VfxScriptDoc,
     ability: ForgeAbility,
     schedule: readonly ScheduledSimEvent[],
@@ -278,22 +321,30 @@ export class VfxForgeStage {
     this.player.invalidate();
     this.runtimeVfx?.invalidateVfxScripts();
     this.emitOverlay("預載角色與腳本素材…");
-    await Promise.all([
-      this.actorReady,
-      this.mode === "runtime"
-        ? this.preloadRuntimeAssets(ability)
-        : this.preloadScriptAssets(script),
-    ]);
-    const warmDocs = script.segments.flatMap((segment) => {
-      if (segment.kind !== "vfx") return [];
-      const doc = this.vfx.get(segment.vfxId) ?? VfxDefs.tryGet(segment.vfxId);
-      return doc ? [doc] : [];
+    const ready = (async (): Promise<boolean> => {
+      await Promise.all([
+        this.groundReady,
+        this.actorReady,
+        this.mode === "runtime"
+          ? this.preloadRuntimeAssets(ability)
+          : this.preloadScriptAssets(script),
+      ]);
+      const warmDocs = script.segments.flatMap((segment) => {
+        if (segment.kind !== "vfx") return [];
+        const doc = this.vfx.get(segment.vfxId) ?? VfxDefs.tryGet(segment.vfxId);
+        return doc ? [doc] : [];
+      });
+      this.runtimeVfx?.warmVfxDocs(warmDocs);
+      // `warmVfxDocs` creates the exact shipped textures but emits nothing.
+      // Wait once here; deterministic seeks below must never race image decode.
+      await this.scene.whenReadyAsync();
+      return !this.disposed && seq === this.prepareSeq;
     });
-    this.runtimeVfx?.warmVfxDocs(warmDocs);
-    // `warmVfxDocs` creates the exact shipped textures but emits nothing.
-    // Wait once here; deterministic seeks below must never race image decode.
-    await this.scene.whenReadyAsync();
-    return !this.disposed && seq === this.prepareSeq;
+    const result = ready();
+    // The save-time GPU audit must not race the React setContent effect. Keep a
+    // non-rejecting readiness latch; the caller still receives the real error.
+    this.contentReady = result.then(() => undefined, () => undefined);
+    return result;
   }
 
   /** Rebuild and deterministically replay from frame zero to the requested time. */
@@ -393,14 +444,197 @@ export class VfxForgeStage {
     return control;
   }
 
+  /**
+   * Run the unsaved draft through the FULL shipped presentation and inspect
+   * real GPU pixels. Saving calls this even while the author is using the
+   * script-only isolation view, so ability art, projectile art and modelFx
+   * cannot bypass the source-asset gate and surprise the actual match.
+   */
+  async auditBackdropTimeline(durationMs: number): Promise<BackdropTimelineAudit> {
+    const restoreMode = this.mode;
+    const restoreMs = this.nowMs;
+    this.mode = "runtime";
+    try {
+      await this.contentReady;
+      await this.preloadRuntimeAssets(this.ability);
+      await this.groundReady;
+      await this.scene.whenReadyAsync();
+      this.reset();
+      const stopAt = Math.max(0, durationMs);
+      let sampledFrames = 0;
+      let worstAtMs = 0;
+      let suspects: readonly string[] = [];
+      let worst: BackdropFrameAudit = {
+        brightShare: 0,
+        nearWhiteShare: 0,
+        dominantBrightShare: 0,
+        localWhiteCardShare: 0,
+        unsafe: false,
+      };
+      const read = async (): Promise<BackdropFrameAudit> => {
+        this.renderScene();
+        this.renderScene();
+        const width = this.engine.getRenderWidth();
+        const height = this.engine.getRenderHeight();
+        const rgba = (await this.engine.readPixels(0, 0, width, height)) as Uint8Array;
+        return auditBackdropFrame(rgba, width, height);
+      };
+      while (true) {
+        let result = await read();
+        if (result.unsafe) {
+          // Diagnostic A/B on the exact failed frame. This does not excuse a
+          // telegraph from the gate; it names the layer that must be fixed.
+          this.runtimeVfx?.telegraphs228.clear();
+          const withoutTelegraph = await read();
+          if (!withoutTelegraph.unsafe) {
+            result = {
+              ...result,
+              reason: `${result.reason ?? "畫面底板"}（移除施法範圍預告後恢復，來源為 Telegraph）`,
+            };
+          } else {
+            const isolateActor = async (role: "caster" | "target"): Promise<boolean> => {
+              const actor = this.actors[role];
+              const bodyWasEnabled = actor.bodyRoot?.isEnabled() ?? false;
+              const fallbackWasEnabled = actor.fallback.isEnabled();
+              actor.bodyRoot?.setEnabled(false);
+              actor.fallback.setEnabled(false);
+              const isolated = await read();
+              actor.bodyRoot?.setEnabled(bodyWasEnabled);
+              actor.fallback.setEnabled(fallbackWasEnabled);
+              return !isolated.unsafe;
+            };
+            if (await isolateActor("caster")) {
+              result = {
+                ...result,
+                reason: `${result.reason ?? "畫面底板"}（隱藏施法者後恢復，來源為施法者 3D Model）`,
+              };
+            } else if (await isolateActor("target")) {
+              result = {
+                ...result,
+                reason: `${result.reason ?? "畫面底板"}（隱藏目標後恢復，來源為目標 3D Model）`,
+              };
+            } else {
+              const actors = [this.actors.caster, this.actors.target];
+              const actorStates = actors.map((actor) => ({
+                body: actor.bodyRoot?.isEnabled() ?? false,
+                fallback: actor.fallback.isEnabled(),
+              }));
+              for (const actor of actors) {
+                actor.bodyRoot?.setEnabled(false);
+                actor.fallback.setEnabled(false);
+              }
+              const withoutActors = await read();
+              actors.forEach((actor, index) => {
+                actor.bodyRoot?.setEnabled(actorStates[index]!.body);
+                actor.fallback.setEnabled(actorStates[index]!.fallback);
+              });
+              if (!withoutActors.unsafe) {
+                result = {
+                  ...result,
+                  reason: `${result.reason ?? "畫面底板"}（隱藏雙方模型後恢復，來源為 3D Model 疊加）`,
+                };
+              } else {
+                const ground = this.scene.meshes.filter((mesh) => mesh.name.startsWith("zone-0-"));
+                const groundStates = ground.map((mesh) => mesh.isEnabled());
+                ground.forEach((mesh) => mesh.setEnabled(false));
+                const withoutGround = await read();
+                ground.forEach((mesh, index) => mesh.setEnabled(groundStates[index]!));
+                if (!withoutGround.unsafe) {
+                  let isolatedMesh = "場地";
+                  for (const mesh of ground) {
+                    const wasEnabled = mesh.isEnabled();
+                    mesh.setEnabled(false);
+                    const withoutMesh = await read();
+                    mesh.setEnabled(wasEnabled);
+                    if (!withoutMesh.unsafe) {
+                      isolatedMesh = mesh.name;
+                      break;
+                    }
+                  }
+                  const materialStates = ground.map((mesh) => {
+                    const material = mesh.material as unknown as {
+                      name?: string;
+                      albedoColor?: { r: number; g: number; b: number };
+                      albedoTexture?: { name?: string } | null;
+                      emissiveColor?: { r: number; g: number; b: number };
+                      disableLighting?: boolean;
+                      unlit?: boolean;
+                      alpha?: number;
+                    } | null;
+                    const color = material?.albedoColor;
+                    const emissive = material?.emissiveColor;
+                    return material
+                      ? `${mesh.name}/${material.name ?? "?"} albedo=${color ? `${color.r.toFixed(3)},${color.g.toFixed(3)},${color.b.toFixed(3)}` : "?"} emissive=${emissive ? `${emissive.r.toFixed(3)},${emissive.g.toFixed(3)},${emissive.b.toFixed(3)}` : "?"} alpha=${material.alpha ?? "?"} unlit=${material.unlit ?? material.disableLighting ?? false} texture=${material.albedoTexture?.name ?? "none"}`
+                      : `${mesh.name}/無材質`;
+                  }).join("；");
+                  const image = this.scene.imageProcessingConfiguration;
+                  const camera = this.scene.activeCamera;
+                  const cameraState = camera
+                    ? `camera=${camera.globalPosition.x.toFixed(2)},${camera.globalPosition.y.toFixed(2)},${camera.globalPosition.z.toFixed(2)} fov=${camera.fov.toFixed(3)} minZ=${camera.minZ.toFixed(3)}`
+                    : "camera=none";
+                  const sceneState = `exposure=${image.exposure.toFixed(2)} contrast=${image.contrast.toFixed(2)} tone=${image.toneMappingEnabled} ${cameraState} lights=${this.scene.lights.map((light) => `${light.name}:${light.intensity.toFixed(2)}`).join(",")}`;
+                  result = {
+                    ...result,
+                    reason: `${result.reason ?? "畫面底板"}（隱藏 ${isolatedMesh} 後恢復：${materialStates}；${sceneState}）`,
+                  };
+                }
+              }
+            }
+          }
+        }
+        sampledFrames++;
+        const score = Math.max(result.nearWhiteShare, result.brightShare, result.dominantBrightShare, result.localWhiteCardShare);
+        const worstScore = Math.max(worst.nearWhiteShare, worst.brightShare, worst.dominantBrightShare, worst.localWhiteCardShare);
+        if (score > worstScore || result.unsafe) {
+          worst = result;
+          worstAtMs = this.nowMs;
+          suspects = this.backdropMeshSuspects();
+        }
+        if (result.unsafe || this.nowMs >= stopAt) break;
+        // 15 Hz is dense enough to catch a one-shot VFX carrier (the minimum
+        // shipped effect lifetime is longer than four 60 Hz frames) without
+        // turning every save into a second 60 fps capture job.
+        for (let frame = 0; frame < 4 && this.nowMs < stopAt; frame++) {
+          this.advanceFrame(true, Math.min(STEP_MS, stopAt - this.nowMs), false);
+        }
+      }
+      return { safe: !worst.unsafe, sampledFrames, worstAtMs, worst, suspects };
+    } finally {
+      this.mode = restoreMode;
+      this.seek(restoreMs);
+    }
+  }
+
+  /** Names the largest visible non-arena meshes when a framebuffer audit fails. */
+  private backdropMeshSuspects(): string[] {
+    const eye = this.scene.activeCamera?.globalPosition;
+    if (!eye) return [];
+    return this.scene.meshes
+      .filter((mesh) => mesh.isEnabled() && mesh.isVisible && mesh.visibility > 0)
+      .filter((mesh) => !mesh.name.startsWith("zone-0-") && mesh !== this.groundFloor)
+      .map((mesh) => {
+        const sphere = mesh.getBoundingInfo().boundingSphere;
+        const distance = Vector3.Distance(eye, sphere.centerWorld);
+        const score = sphere.radiusWorld / Math.max(0.01, distance);
+        const chain: string[] = [];
+        let node: { name?: string; parent?: unknown } | null = mesh;
+        while (node && chain.length < 4) {
+          if (node.name) chain.unshift(node.name);
+          node = node.parent as typeof node;
+        }
+        return { score, label: `${chain.join("/")} · r/d=${score.toFixed(2)} · ${mesh.material?.name ?? "無材質"}` };
+      })
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 5)
+      .map((item) => item.label);
+  }
+
   dispose(): void {
     this.disposed = true;
     this.generation++;
     for (const actor of Object.values(this.actors)) this.disposeActor(actor);
     this.runtimeVfx?.dispose();
     this.modelRig.dispose();
-    for (const container of this.ownedModelFxContainers) container.dispose();
-    this.ownedModelFxContainers.clear();
     this.modelFxContainerPromises.clear();
     this.disposeParticles();
     this.scene.dispose();
@@ -427,7 +661,7 @@ export class VfxForgeStage {
       position: { ...position },
       facing,
       champion,
-      container: null,
+      instance: null,
       bodyRoot: null,
       glbRoot: null,
       groups: [],
@@ -445,22 +679,31 @@ export class VfxForgeStage {
     this.emitOverlay("載入 3D 角色…");
     try {
       const doc = await this.fetchDoc<ModelDoc>("models", champion.modelKey);
-      const container = await loadGlbContainer(this.scene, doc.glbPath);
+      const container = await this.assets.load(doc.glbPath);
+      if (!container) throw new Error(`GGD AssetManager 無法載入 ${doc.glbPath}`);
       if (this.disposed || this.scene.isDisposed) {
-        container.dispose();
         return;
       }
-      container.addAllToScene();
+      // Match ChampionView/StorePreview exactly: the loaded container is the
+      // source cache, while the scene receives a real cloned instance. Adding
+      // the container originals directly can leave glTF PBR textures ready in
+      // GPU memory but render their meshes with a flat white source-material
+      // state after deterministic reset/seek.
+      const instance = container.instantiateModelsToScene(
+        (name) => `forge-${actor.role}-${name}`,
+        false,
+        { doNotInstantiate: true },
+      );
       const bodyRoot = new TransformNode(`forge-${actor.role}-body`, this.scene);
       bodyRoot.position.set(actor.position.x, 0, actor.position.z);
       bodyRoot.rotation.y = facingToYaw(actor.facing.x, actor.facing.z);
       const glbRoot = new TransformNode(`forge-${actor.role}-glb`, this.scene);
       glbRoot.parent = bodyRoot;
       glbRoot.rotation.y = glbYawOffset(doc);
-      for (const node of container.rootNodes) node.parent = glbRoot;
+      for (const node of instance.rootNodes) node.parent = glbRoot;
       const visible = applyHiddenPrimitives(glbRoot.getChildMeshes(false), doc.hiddenPrimitives);
       if (visible.length === 0) {
-        container.dispose();
+        instance.dispose();
         bodyRoot.dispose(false, false);
         return;
       }
@@ -476,19 +719,28 @@ export class VfxForgeStage {
       const rendered = glbRoot.getHierarchyBoundingVectors(true, ENABLED_ONLY);
       if (Number.isFinite(rendered.min.y)) glbRoot.position.y = -rendered.min.y;
       applyModelTint(glbRoot, champion);
-      actor.container = container;
+      actor.instance = instance;
       actor.bodyRoot = bodyRoot;
       actor.glbRoot = glbRoot;
-      actor.groups = [...container.animationGroups];
+      actor.groups = [...instance.animationGroups];
       actor.clipMap = doc.clipMap;
       actor.fallback.setEnabled(false);
       this.playActor(actor, "idle", true);
+      await this.scene.whenReadyAsync();
+      // The Forge can remain paused on frame zero indefinitely. The shipped
+      // game advances naturally while Babylon compiles imported PBR variants,
+      // but a deterministic editor seek can otherwise freeze Babylon's white
+      // placeholder on screen and make a healthy texture look un-keyed. Treat
+      // the exact visible material variants as part of actor readiness.
+      await Promise.all(visible.flatMap((mesh) =>
+        mesh.material ? [mesh.material.forceCompilationAsync(mesh)] : [],
+      ));
       const height = rendered.max.y - rendered.min.y;
       const centerX = (rendered.min.x + rendered.max.x) / 2;
       const centerZ = (rendered.min.z + rendered.max.z) / 2;
       this.actorStatus[actor.role] =
         `${champion.name} · ${champion.modelKey} · ${visible.length} meshes · ` +
-        `h${height.toFixed(2)} · ×${finalScale.toFixed(3)} · @${centerX.toFixed(1)},${centerZ.toFixed(1)}`;
+        `h${height.toFixed(2)} · ×${finalScale.toFixed(3)} · @${centerX.toFixed(1)},${centerZ.toFixed(1)} · 材質已預熱`;
       // The script may already be scrubbed past a pulse while this GLB loaded.
       this.seek(this.nowMs);
     } catch (error) {
@@ -499,9 +751,9 @@ export class VfxForgeStage {
 
   private disposeActor(actor: ForgeActor): void {
     if (actor.glbRoot) releaseModelTint(actor.glbRoot);
-    actor.container?.dispose();
+    actor.instance?.dispose();
     actor.bodyRoot?.dispose(false, false);
-    actor.container = null;
+    actor.instance = null;
     actor.bodyRoot = null;
     actor.glbRoot = null;
     actor.groups = [];
@@ -510,12 +762,11 @@ export class VfxForgeStage {
   private loadModelFxContainer(path: string): Promise<AssetContainer> {
     const cached = this.modelFxContainerPromises.get(path);
     if (cached) return cached;
-    const pending = loadGlbContainer(this.scene, path).then((container) => {
+    const pending = this.assets.load(path, "fx").then((container) => {
+      if (!container) throw new Error(`GGD AssetManager 無法載入 ${path}`);
       if (this.disposed) {
-        container.dispose();
         throw new Error("VFX Forge stage was disposed during model preload");
       }
-      this.ownedModelFxContainers.add(container);
       return container;
     });
     this.modelFxContainerPromises.set(path, pending);

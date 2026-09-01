@@ -49,6 +49,8 @@ describe("預告圈的白色魔法陣 (GH#576 / owner 2026-08-23)", () => {
 
       const f = emissive(fill);
       expect([f.r, f.g, f.b]).toEqual([1, 1, 1]);
+      const fillMat = fill.material as StandardMaterial;
+      expect([fillMat.diffuseColor.r, fillMat.diffuseColor.g, fillMat.diffuseColor.b]).toEqual([0, 0, 0]);
 
       // ⭐ 承重：外圈**沒有**跟著變白 —— 通道分辨還在。
       const r = emissive(ring);

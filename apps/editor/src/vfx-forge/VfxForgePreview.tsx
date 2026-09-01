@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
 import type { ChampionDef } from "@ggd/shared/sim";
 import {
@@ -10,25 +10,16 @@ import {
 } from "./model";
 import {
   VfxForgeStage,
+  type BackdropTimelineAudit,
   type ForgeOverlay,
   type VfxForgeStageMode,
 } from "./VfxForgeStage";
 
-export function VfxForgePreview({
-  script,
-  ability,
-  schedule,
-  durationMs,
-  playheadMs,
-  seekRevision = 0,
-  playing,
-  caster,
-  target,
-  mode = "script",
-  onTime,
-  onStop,
-  onDropAsset,
-}: {
+export interface VfxForgePreviewHandle {
+  auditBackdropTimeline(): Promise<BackdropTimelineAudit>;
+}
+
+interface VfxForgePreviewProps {
   script: VfxScriptDoc;
   ability: ForgeAbility;
   schedule: readonly ScheduledSimEvent[];
@@ -43,7 +34,23 @@ export function VfxForgePreview({
   onTime(ms: number): void;
   onStop(): void;
   onDropAsset?(asset: AssetDrop, placement?: AssetPlacement): void;
-}) {
+}
+
+export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreviewProps>(function VfxForgePreview({
+  script,
+  ability,
+  schedule,
+  durationMs,
+  playheadMs,
+  seekRevision = 0,
+  playing,
+  caster,
+  target,
+  mode = "script",
+  onTime,
+  onStop,
+  onDropAsset,
+}, ref) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stageRef = useRef<VfxForgeStage | null>(null);
   const playheadRef = useRef(playheadMs);
@@ -54,13 +61,23 @@ export function VfxForgePreview({
     actors: { caster: "替身", target: "替身" },
   });
   const [calibration, setCalibration] = useState("量尺未校準");
+  const [backdropAudit, setBackdropAudit] = useState("底板未檢查");
   const [focusPreview, setFocusPreview] = useState(false);
   const firstPose = schedule.find((item) => item.actorPose)?.actorPose;
   const homePoseKey = firstPose
     ? `${firstPose.caster.x},${firstPose.caster.z}/${firstPose.target.x},${firstPose.target.z}`
     : "pending-pose";
 
+  useImperativeHandle(ref, () => ({
+    auditBackdropTimeline: async () => {
+      const stage = stageRef.current;
+      if (!stage) throw new Error("實際遊戲畫面尚未載入，禁止略過底板檢查");
+      return stage.auditBackdropTimeline(durationMs);
+    },
+  }), [durationMs]);
+
   useEffect(() => { playheadRef.current = playheadMs; }, [playheadMs]);
+  useEffect(() => { setBackdropAudit("底板未檢查"); }, [ability.id, script]);
 
   // CSS fullscreen changes the canvas backing size after the current frame has
   // already been drawn. ResizeObserver updates Babylon's buffer, but resizing
@@ -198,6 +215,21 @@ export function VfxForgePreview({
         <button type="button" onClick={() => stageRef.current?.zoomBy(100)}>鏡頭拉遠</button>
         <button
           type="button"
+          className={`vfx-calibrate${backdropAudit.startsWith("⛔") ? " failed" : ""}`}
+          onClick={() => {
+            setBackdropAudit("底板掃描中…");
+            void stageRef.current?.auditBackdropTimeline(durationMs)
+              .then((result) => setBackdropAudit(result.safe
+                ? `底板通過 · ${result.sampledFrames}格`
+                : `⛔ ${(result.worstAtMs / 1000).toFixed(3)}秒 · ${result.worst.reason ?? "畫面底板"}` +
+                  (result.suspects.length ? ` · ${result.suspects.slice(0, 3).join(" | ")}` : "")))
+              .catch((error) => setBackdropAudit(`⛔ 檢查失敗：${String(error)}`));
+          }}
+        >
+          {backdropAudit}
+        </button>
+        <button
+          type="button"
           className={`vfx-calibrate${calibration.startsWith("⛔") ? " failed" : ""}`}
           onClick={() => {
             setCalibration("校準中…");
@@ -211,6 +243,6 @@ export function VfxForgePreview({
       </div>
     </div>
   );
-}
+});
 
 const FRAME_MS = 1000 / 60;

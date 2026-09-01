@@ -37,9 +37,9 @@
       "kind": "vfx",
       "on": "strike",
       "atMs": 0,
-      "w3xScale": 1.6,
+      "w3xScale": 0.9,
       "flyHeight": 141,
-      "alpha": 1,
+      "alpha": 0.35,
       "facingDeg": 52
     },
     {
@@ -49,9 +49,9 @@
       "kind": "vfx",
       "on": "strike",
       "atMs": 35,
-      "w3xScale": 1.5,
+      "w3xScale": 0.85,
       "flyHeight": 141,
-      "alpha": 0.95,
+      "alpha": 0.4,
       "facingDeg": -58
     },
     {
@@ -62,8 +62,8 @@
       "on": "strike",
       "atMs": 0,
       "strikeIndex": 7,
-      "w3xScale": 2.2,
-      "alpha": 0.95
+      "w3xScale": 1.05,
+      "alpha": 0.4
     },
     {
       "vfxId": "fx.fam.light-column.w3x-00ffff.s150",
@@ -73,8 +73,8 @@
       "on": "strike",
       "atMs": 70,
       "strikeIndex": 7,
-      "w3xScale": 1.3,
-      "alpha": 1
+      "w3xScale": 0.75,
+      "alpha": 0.45
     },
     {
       "amplitude": 0.55,

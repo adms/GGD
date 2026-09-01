@@ -7,7 +7,7 @@
     "angleDeg": 9
   },
   "mode": "burst",
-  "burstCount": 32,
+  "burstCount": 8,
   "lifetimeSec": {
     "min": 0.14,
     "max": 0.4
@@ -30,20 +30,9 @@
       0
     ]
   },
-  "sizeStops": [
-    [
-      0,
-      0.21
-    ],
-    [
-      0.1,
-      0.5
-    ],
-    [
-      1,
-      0
-    ]
-  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/trace_03.png",
+  "gravityY": 0,
   "colorStops": [
     [
       0,
@@ -82,17 +71,28 @@
       ]
     ]
   ],
-  "blendMode": "additive",
-  "gravityY": 0,
+  "sizeStops": [
+    [
+      0,
+      0.21
+    ],
+    [
+      0.1,
+      0.5
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "stretched": true,
+  "tailLength": 3.5,
   "speed": {
     "min": 12,
     "max": 20
   },
-  "texture": "assets/textures/particles/trace_03.png",
-  "stretched": true,
-  "tailLength": 3.5,
   "orient": {
-    "pitchDeg": 0,
-    "yawFrom": "aim"
+    "yawFrom": "aim",
+    "pitchDeg": 0
   }
 }

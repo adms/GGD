@@ -19,6 +19,8 @@ vi.mock("../render/QualityController", () => ({
   qualityController: { getParams: (): { particleDensity: number } => ({ particleDensity: 1 }) },
 }));
 import { Scene } from "@babylonjs/core/scene";
+import type { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
+import type { Texture } from "@babylonjs/core/Materials/Textures/texture";
 import { TelegraphLayer, FLASH_HOLD_MS } from "./TelegraphLayer";
 import { FULL_TIER_CAP, TOTAL_TIER_CAP } from "./telegraphChannel";
 import type { TelegraphShape } from "./telegraphShape";
@@ -133,6 +135,22 @@ describe("the telegraph tracks the SIM's wind-up, not a clock of its own", () =>
 });
 
 describe("an INSTANT cast gets a landing flash, never a fake fill", () => {
+  it("routes the rune opacity mask through the host content resolver", () => {
+    const scene = new Scene(engine);
+    const layer = new TelegraphLayer(scene, {
+      entityPos: () => ({ x: 0, z: 0 }),
+      resolveTextureUrl: (path) => `/content-api/${path}`,
+    });
+    layer.begin(60, circle(), "enemy", 0, 0);
+    const fill = scene.meshes.find((mesh) => mesh.name === "telegraph-fill")!;
+    const material = fill.material as StandardMaterial;
+    expect((material.opacityTexture as Texture | null)?.url).toBe(
+      "/content-api/assets/textures/particles/magic_02.png",
+    );
+    layer.dispose();
+    scene.dispose();
+  });
+
   it("resolves immediately, stays quiet, and reaps itself", () => {
     cover("telegraph-layer-lifecycle");
     const { scene, layer } = rig();
@@ -158,6 +176,12 @@ describe("the corridor SWEEPS over the wind-up so its timing is readable", () =>
     progress.set(7, 0.25);
     layer.begin(7, line(), "enemy", 800, 0);
     const quad = scene.meshes.find((m) => m.name === "telegraph-corridor")!;
+    const material = quad.material as StandardMaterial;
+    // A large transparent corridor is a UI overlay. Babylon's default white
+    // diffuse channel would add to the emissive channel and turn it into a
+    // screen-filling white card at gameplay camera scale.
+    expect([material.diffuseColor.r, material.diffuseColor.g, material.diffuseColor.b]).toEqual([0, 0, 0]);
+    expect([material.specularColor.r, material.specularColor.g, material.specularColor.b]).toEqual([0, 0, 0]);
     layer.update(10);
     const quarter = quad.scaling.y;
     expect(quarter).toBeCloseTo(8 * 0.25, 5);

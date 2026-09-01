@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   zodIssues,
@@ -35,7 +35,7 @@ import {
 import { ensurePreviewContentReady } from "../preview/previewContent";
 import { writeVfxScript } from "./writeback";
 import { VfxAssetPalette } from "./VfxAssetPalette";
-import { VfxForgePreview } from "./VfxForgePreview";
+import { VfxForgePreview, type VfxForgePreviewHandle } from "./VfxForgePreview";
 import type { VfxForgeStageMode } from "./VfxForgeStage";
 import { VfxTimeline } from "./VfxTimeline";
 import { SegmentInspector } from "./SegmentInspector";
@@ -82,6 +82,7 @@ export function VfxForgePage() {
   const [trace, setTrace] = useState<CastPreviewTrace | ReactionPreviewTrace | null>(null);
   const [traceError, setTraceError] = useState<string | null>(null);
   const [assetSafety, setAssetSafety] = useState<Map<string, AssetSafetyResult | "checking">>(new Map());
+  const previewRef = useRef<VfxForgePreviewHandle>(null);
 
   const championId = abilityId.includes(".") ? abilityId.slice(0, abilityId.lastIndexOf(".")) : "";
   const previewContent = useQuery({
@@ -254,8 +255,19 @@ export function VfxForgePage() {
 
   const save = async (): Promise<void> => {
     if (!draft || errorCount > 0 || assetAuditPending || assetBlockers.length > 0) return;
-    setStatus("驗證並寫回中…");
+    setStatus("以完整技能演出掃描未去背底板…");
     try {
+      const visual = await previewRef.current?.auditBackdropTimeline();
+      if (!visual) throw new Error("實際遊戲畫面尚未載入，禁止略過底板檢查");
+      if (!visual.safe) {
+        setStatus(
+          `⛔ 禁止儲存：${visual.worst.reason ?? "實際畫面出現底板"} · ` +
+          `${(visual.worstAtMs / 1000).toFixed(3)}秒` +
+          (visual.suspects.length ? ` · 疑似 ${visual.suspects[0]}` : ""),
+        );
+        return;
+      }
+      setStatus(`底板掃描通過（${visual.sampledFrames}格），驗證並寫回中…`);
       const result = await writeVfxScript(draft, assetSafetyGate, api, isNew ? "create" : "put");
       setOriginal(draft);
       setIsNew(false);
@@ -346,7 +358,7 @@ export function VfxForgePage() {
         </button>
         <span>
           {previewMode === "runtime"
-            ? "真 Sim 事件＋ability JSON＋目前已存檔的 VFX Script；未儲存 draft 請用「只看腳本層」"
+            ? "真 Sim 事件＋ability JSON＋目前未儲存的 VFX Script draft"
             : "隔離檢查目前 VFX Script；不代表技能視覺驗收通過"}
         </span>
       </section>
@@ -386,6 +398,7 @@ export function VfxForgePage() {
             />
             <section className="vfx-forge-center">
               <VfxForgePreview
+                ref={previewRef}
                 script={draft}
                 ability={ability}
                 schedule={schedule}

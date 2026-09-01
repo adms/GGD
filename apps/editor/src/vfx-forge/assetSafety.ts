@@ -13,6 +13,10 @@ const ALPHA_BACKGROUND_MAX = 5;
 const BRIGHT_MATTE_MIN = 8;
 const MIN_BACKGROUND_SHARE = 0.02;
 const MAX_BRIGHT_BACKGROUND_SHARE = 0.001;
+const OPAQUE_CARRIER_EDGE_SHARE = 0.6;
+const OPAQUE_CARRIER_TOTAL_SHARE = 0.1;
+const PLANAR_THICKNESS_RATIO = 0.02;
+const CARRIER_COLOR_SHIFT = 5;
 
 type Rgba = readonly [number, number, number, number];
 type BlendMode = "additive" | "alpha" | "alphaKey" | "modulate";
@@ -51,6 +55,7 @@ interface VfxDoc {
 
 interface ModelDoc {
   glbPath?: string;
+  fxEmitters?: readonly string[];
 }
 
 interface GlbJson {
@@ -63,6 +68,8 @@ interface GlbJson {
     emissiveFactor?: number[];
     pbrMetallicRoughness?: { baseColorTexture?: { index?: number } };
   }[];
+  meshes?: { primitives?: { material?: number; attributes?: Record<string, number> }[] }[];
+  accessors?: { min?: number[]; max?: number[] }[];
 }
 
 export class UnsafeVfxAssetError extends Error {
@@ -165,13 +172,49 @@ export class AssetSafetyGate implements VfxScriptAssetGuard {
       measured++;
       let background = 0;
       let brightBackground = 0;
-      forEachPixel(pixels, ([r, g, b, a]) => {
-        if (a > ALPHA_BACKGROUND_MAX) return;
-        background++;
-        if (Math.max(r, g, b) > BRIGHT_MATTE_MIN) brightBackground++;
+      let edgePixels = 0;
+      const carrierBins = new Map<number, { total: number; edge: number }>();
+      const border = Math.max(1, Math.round(Math.min(pixels.width, pixels.height) * 0.05));
+      forEachPixel(pixels, ([r, g, b, a], x, y) => {
+        if (a <= ALPHA_BACKGROUND_MAX) {
+          background++;
+          if (Math.max(r, g, b) > BRIGHT_MATTE_MIN) brightBackground++;
+        }
+        const edge = x < border || y < border || x >= pixels.width - border || y >= pixels.height - border;
+        if (edge) edgePixels++;
+        if (a >= 250) {
+          // Quantise to 5 bits/channel. A photographed/painted background is
+          // rarely byte-identical after compression, but its outer carrier
+          // still lands in one dominant colour bucket.
+          const key = ((r >> CARRIER_COLOR_SHIFT) << 6) | ((g >> CARRIER_COLOR_SHIFT) << 3) | (b >> CARRIER_COLOR_SHIFT);
+          const bin = carrierBins.get(key) ?? { total: 0, edge: 0 };
+          bin.total++;
+          if (edge) bin.edge++;
+          carrierBins.set(key, bin);
+        }
       });
       const count = pixelCount(pixels);
-      if (background / count < MIN_BACKGROUND_SHARE) continue;
+      if (background / count < MIN_BACKGROUND_SHARE) {
+        const carrier = [...carrierBins.values()].sort((a, b) => b.edge - a.edge)[0] ?? { total: 0, edge: 0 };
+        const carrierShare = carrier.total / count;
+        const carrierEdgeShare = edgePixels > 0 ? carrier.edge / edgePixels : 0;
+        if (
+          (materialIsPlanarCard(json, materialIndex) ||
+            Math.max(...(material.emissiveFactor ?? [0])) > 0 ||
+            (doc.fxEmitters?.length ?? 0) > 0) &&
+          carrierShare >= OPAQUE_CARRIER_TOTAL_SHARE &&
+          carrierEdgeShare >= OPAQUE_CARRIER_EDGE_SHARE
+        ) {
+          return {
+            asset,
+            safe: false,
+            code: "MODEL_TEXTURE_BACKDROP",
+            summary: "3D Model 的特效貼圖保留不透明單色底板",
+            detail: `mat${materialIndex}:${material.name ?? "?"} · ${material.alphaMode ?? "OPAQUE"} · 單色底 ${(carrierShare * 100).toFixed(2)}% · 邊緣 ${(carrierEdgeShare * 100).toFixed(1)}%`,
+          };
+        }
+        continue;
+      }
       if ((material.alphaMode ?? "OPAQUE") === "OPAQUE") {
         return {
           asset,
@@ -299,6 +342,24 @@ function embeddedImage(
   const end = start + bufferView.byteLength;
   if (end > bin.length) throw new Error(`${assetId}: GLB image ${imageIndex} 超出 BIN 範圍`);
   return { bytes: bin.subarray(start, end), mimeType: image.mimeType ?? "image/png" };
+}
+
+function materialIsPlanarCard(json: GlbJson, materialIndex: number): boolean {
+  let found = false;
+  for (const mesh of json.meshes ?? []) {
+    for (const primitive of mesh.primitives ?? []) {
+      if (primitive.material !== materialIndex) continue;
+      found = true;
+      const position = primitive.attributes?.POSITION;
+      const accessor = position === undefined ? undefined : json.accessors?.[position];
+      if (!accessor?.min || !accessor.max || accessor.min.length < 3 || accessor.max.length < 3) return false;
+      const extents = [0, 1, 2]
+        .map((axis) => Math.abs(accessor.max![axis]! - accessor.min![axis]!))
+        .sort((a, b) => a - b);
+      if (extents[2]! <= 1e-6 || extents[0]! > extents[2]! * PLANAR_THICKNESS_RATIO) return false;
+    }
+  }
+  return found;
 }
 
 function addRef(refs: Map<string, AssetDrop>, asset: AssetDrop): void {
