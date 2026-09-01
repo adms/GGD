@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "88a43f5aaa91",
+  "hash": "830e075499cb",
   "entries": [
     {
       "id": "attach.ex.midchilder-aura",
@@ -505,6 +505,18 @@
       "path": "vfx/fx.firestorm.json",
       "hash": "6ffd435ece97",
       "size": 697
+    },
+    {
+      "id": "fx.forge.beam.blue",
+      "path": "vfx/fx.forge.beam.blue.json",
+      "hash": "90a72c365c6e",
+      "size": 1160
+    },
+    {
+      "id": "fx.forge.beam.fire",
+      "path": "vfx/fx.forge.beam.fire.json",
+      "hash": "8887a18b7ba9",
+      "size": 1153
     },
     {
       "id": "fx.grail.bolt",

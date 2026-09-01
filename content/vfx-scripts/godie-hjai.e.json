@@ -24,40 +24,23 @@
       "clipWindowMs": 1250
     },
     {
-      "kind": "modelFx",
-      "on": "castEffect",
       "modelKey": "w3x.stock.reddragonmissile",
       "path": "toTarget",
       "speed": 3,
-      "scale": 1.2,
+      "scale": 2.2,
       "tint": [
         1,
-        0.22,
-        0.04
+        0.4,
+        0.1
       ],
       "alpha": 1,
-      "heightU": 0.8,
       "lifeSec": 1.18,
-      "trailVfxId": "fx.prim.fire.bolt",
-      "trailIntervalSec": 0.22
-    },
-    {
-      "vfxId": "fx.prim.holy.beam-flat",
-      "at": "self",
-      "durationSec": 1.25,
-      "kind": "vfx",
+      "kind": "modelFx",
       "on": "castEffect",
-      "atMs": 0,
-      "offsetForwardU": 2,
-      "w3xScale": 1.4,
-      "tint": [
-        255,
-        70,
-        18
-      ],
-      "flyHeight": 128,
-      "alpha": 1,
-      "pitchDeg": 0
+      "offsetSideU": 0.2,
+      "heightU": 0.8,
+      "trailVfxId": "fx.prim.fire.bolt",
+      "trailIntervalSec": 0.1
     },
     {
       "vfxId": "fx.prim.fire.explosion-lg",

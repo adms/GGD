@@ -24,34 +24,34 @@
       "clipWindowMs": 900
     },
     {
-      "vfxId": "fx.prim.lightning.beam-flat",
+      "vfxId": "fx.forge.beam.blue",
       "at": "self",
-      "durationSec": 1,
+      "durationSec": 1.1,
       "kind": "vfx",
       "on": "castEffect",
       "atMs": 0,
-      "offsetForwardU": 2,
-      "w3xScale": 2,
+      "offsetForwardU": 0.5,
+      "w3xScale": 5.2,
       "tint": [
-        60,
-        140,
+        55,
+        145,
         255
       ],
       "flyHeight": 128,
       "alpha": 1
     },
     {
-      "vfxId": "fx.prim.holy.beam-flat",
+      "vfxId": "fx.forge.beam.blue",
       "at": "self",
-      "durationSec": 0.95,
+      "durationSec": 1.05,
       "kind": "vfx",
       "on": "castEffect",
-      "atMs": 40,
-      "offsetForwardU": 2,
-      "w3xScale": 1,
+      "atMs": 35,
+      "offsetForwardU": 0.5,
+      "w3xScale": 2.6,
       "tint": [
-        190,
-        235,
+        210,
+        242,
         255
       ],
       "flyHeight": 128,

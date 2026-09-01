@@ -59,6 +59,19 @@ function applyFacingOffset(
   return { x: pos.x + fx * fwd + fz * side, z: pos.z + fz * fwd - fx * side };
 }
 
+/** Unit aim from one world point to another; coincident points have no direction. */
+function directionToward(
+  from: { x: number; z: number } | null | undefined,
+  to: { x: number; z: number } | null | undefined,
+): { x: number; z: number } | undefined {
+  if (!from || !to) return undefined;
+  const x = to.x - from.x;
+  const z = to.z - from.z;
+  const len = Math.hypot(x, z);
+  if (len < 1e-6) return undefined;
+  return { x: x / len, z: z / len };
+}
+
 /** 一次觸發當下解出的錨點材料（之後 firing 時仍會 refresh 施法者位置）。 */
 interface TriggerFrame {
   caster: number;
@@ -204,11 +217,14 @@ export class VfxScriptPlayer {
             ? { x: d.x as number, z: d.z as number }
             : undefined;
         const victim = d.victim as number | undefined;
+        const targetPos = at ?? (victim !== undefined ? (this.deps.entityPos(victim) ?? undefined) : undefined);
+        const direction = directionToward(this.deps.entityPos(caster), targetPos);
         const frame: TriggerFrame = {
           caster,
           tick: ev.tick | 0,
           ...(victim !== undefined ? { victim } : {}),
-          ...(at !== undefined ? { point: at, targetPos: at } : {}),
+          ...(targetPos !== undefined ? { point: targetPos, targetPos } : {}),
+          ...(direction !== undefined ? { direction } : {}),
         };
         for (const seg of script.segments) {
           if (seg.on !== "strike") continue;
@@ -251,12 +267,15 @@ export class VfxScriptPlayer {
         const script = this.deps.scriptFor(abilityId);
         if (!script) return;
         const attacker = d.attacker as number | undefined;
+        const targetPos =
+          attacker !== undefined ? (this.deps.entityPos(attacker) ?? undefined) : undefined;
+        const direction = directionToward(this.deps.entityPos(reflector), targetPos);
         const frame: TriggerFrame = {
           caster: reflector,
           tick: ev.tick | 0,
           // ⭐ 反彈的「目標」是**攻擊者**（傷害被送回去的那一方）。
-          targetPos:
-            attacker !== undefined ? (this.deps.entityPos(attacker) ?? undefined) : undefined,
+          ...(targetPos !== undefined ? { point: targetPos, targetPos } : {}),
+          ...(direction !== undefined ? { direction } : {}),
         };
         this.schedule(script, "reflectSuccess", frame, nowMs);
         return;

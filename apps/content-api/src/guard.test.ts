@@ -468,6 +468,23 @@ describe("追加的 dev origin 只收 loopback（2026-08-31）", () => {
     expect(isAllowedOrigin("http://localhost:4321")).toBe(true);
   });
 
+  it("⭐ 非預設 Editor 埠由 content-api 啟動參數配對，真寫入不會假啟用", async () => {
+    await app.close();
+    resetAllowedOrigins();
+    app = buildServer({
+      contentDir: root,
+      backupDir: backups,
+      editorOrigins: ["http://127.0.0.1:5175"],
+    });
+    await app.ready();
+
+    const res = await put({
+      remoteAddress: LOOPBACK,
+      headers: { origin: "http://127.0.0.1:5175" },
+    });
+    expect(res.statusCode).toBe(200);
+  });
+
   it("⛔⛔ 反方向：非 loopback 的**擋下來，而且說得出是哪一個**", () => {
     const bad = [
       "https://evil.com",

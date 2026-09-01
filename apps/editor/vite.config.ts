@@ -13,6 +13,11 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5174,
+    // A silent 5174 -> 5175 fallback leaves the UI readable but makes every
+    // guarded save fail because Origin is part of the dev-write authority.
+    // Custom ports stay supported: start Vite explicitly and pass the same
+    // loopback origin through GGD_EDITOR_ORIGINS to content-api.
+    strictPort: true,
     host: "127.0.0.1",
     proxy: {
       "/content-api": {

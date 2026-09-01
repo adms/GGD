@@ -73,6 +73,8 @@ describe("八招 VFX Forge 視覺文法", () => {
       ["fx.prim.lightning.slash", 6],
       ["fx.fam.light-column.holy.s150", 8],
       ["fx.fam.light-column.w3x-00ffff.s150", 8],
+      ["fx.forge.beam.fire", 48],
+      ["fx.forge.beam.blue", 48],
     ]);
     for (const [id, cap] of caps) {
       const vfx = loadJson("vfx", id);
@@ -103,10 +105,14 @@ describe("八招 VFX Forge 視覺文法", () => {
   it.each(["godie-nbbc.e", "godie-ogrh.r", "godie-hvsh.r"] as const)(
     "%s 是持續、雙層、可辨色的橫向氣功砲",
     (id) => {
-      const beams = kinds(id, "vfx").filter((s) => s.kind === "vfx" && s.vfxId.includes("beam-flat"));
+      const beams = kinds(id, "vfx").filter((s) => s.kind === "vfx" && s.vfxId.includes("beam"));
       expect(beams.length).toBeGreaterThanOrEqual(2);
       expect(beams.every((s) => (s.durationSec ?? 0) >= 0.8)).toBe(true);
       expect(new Set(beams.map((s) => JSON.stringify(s.tint))).size).toBeGreaterThanOrEqual(2);
+      for (const beam of beams) {
+        const resource = loadJson("vfx", beam.vfxId);
+        expect(resource.orient, `${beam.vfxId} 必須隨瞄準方向旋轉`).toEqual({ yawFrom: "aim" });
+      }
     },
   );
 

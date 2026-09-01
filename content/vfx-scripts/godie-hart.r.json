@@ -62,8 +62,8 @@
       "on": "strike",
       "atMs": 0,
       "strikeIndex": 7,
-      "w3xScale": 1.05,
-      "alpha": 0.4
+      "w3xScale": 1.8,
+      "alpha": 0.8
     },
     {
       "vfxId": "fx.fam.light-column.w3x-00ffff.s150",
@@ -73,8 +73,8 @@
       "on": "strike",
       "atMs": 70,
       "strikeIndex": 7,
-      "w3xScale": 0.75,
-      "alpha": 0.45
+      "w3xScale": 1.4,
+      "alpha": 0.75
     },
     {
       "amplitude": 0.55,
@@ -82,6 +82,30 @@
       "kind": "screenShake",
       "on": "strike",
       "strikeIndex": 7
+    },
+    {
+      "kind": "hideBody",
+      "on": "strike",
+      "at": "caster",
+      "durationMs": 280
+    },
+    {
+      "modelKey": "imported.cloud",
+      "path": "toTarget",
+      "speed": 28,
+      "clip": "attack",
+      "clipTimeScale": 3,
+      "scale": 1.15,
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alpha": 1,
+      "lifeSec": 0.3,
+      "kind": "modelFx",
+      "on": "strike",
+      "offsetSideU": 0.45
     }
   ]
 }

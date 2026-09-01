@@ -35,16 +35,17 @@
       "speed": 14,
       "clip": "attack",
       "clipTimeScale": 2.2,
-      "scale": 1.25,
+      "scale": 1.5,
       "tint": [
-        0.2,
-        0.58,
+        0.7,
+        0.85,
         1
       ],
       "alpha": 1,
       "lifeSec": 1,
       "kind": "modelFx",
       "on": "castEffect",
+      "offsetSideU": 0.7,
       "heightU": 1,
       "heightKeys": [
         {
@@ -66,34 +67,34 @@
       ]
     },
     {
-      "vfxId": "fx.prim.lightning.beam-flat",
+      "vfxId": "fx.forge.beam.blue",
       "at": "self",
-      "durationSec": 0.92,
+      "durationSec": 1,
       "kind": "vfx",
       "on": "castEffect",
       "atMs": 0,
-      "offsetForwardU": 2.2,
-      "w3xScale": 2,
+      "offsetForwardU": 0.5,
+      "w3xScale": 4.8,
       "tint": [
-        70,
-        140,
+        65,
+        155,
         255
       ],
       "flyHeight": 128,
       "alpha": 1
     },
     {
-      "vfxId": "fx.prim.holy.beam-flat",
+      "vfxId": "fx.forge.beam.blue",
       "at": "self",
-      "durationSec": 0.86,
+      "durationSec": 0.95,
       "kind": "vfx",
       "on": "castEffect",
-      "atMs": 40,
-      "offsetForwardU": 2.2,
-      "w3xScale": 1,
+      "atMs": 35,
+      "offsetForwardU": 0.5,
+      "w3xScale": 2.4,
       "tint": [
-        210,
-        240,
+        215,
+        242,
         255
       ],
       "flyHeight": 128,

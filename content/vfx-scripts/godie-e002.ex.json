@@ -5,6 +5,18 @@
   "notes": "20-002 理想鄉EX（原作參考 KwAlIYfmV48@83–100，兩招合併）。反彈成功先爆開防禦光，接七段黃藍動畫斬擊，最後向敵人釋放寬廣聖光砲；傷害、反彈與七段時序仍住 ability JSON。",
   "segments": [
     {
+      "vfxId": "fx.prim.holy.slash-lg",
+      "at": "self",
+      "durationSec": 0.3,
+      "kind": "vfx",
+      "on": "reflectSuccess",
+      "atMs": 0,
+      "w3xScale": 1.35,
+      "flyHeight": 128,
+      "alpha": 0.85,
+      "facingDeg": 90
+    },
+    {
       "text": "AVALON · 理想鄉",
       "colorRgb": [
         255,
@@ -14,16 +26,18 @@
       "sizeScale": 1.55,
       "durationSec": 1.1,
       "kind": "floatingText",
-      "on": "reflectSuccess",
-      "atMs": 0
+      "on": "strike",
+      "atMs": 0,
+      "strikeIndex": 1
     },
     {
       "vfxId": "fx.prim.holy.slash-lg",
       "at": "self",
       "durationSec": 0.45,
       "kind": "vfx",
-      "on": "reflectSuccess",
+      "on": "strike",
       "atMs": 0,
+      "strikeIndex": 1,
       "w3xScale": 1.8,
       "flyHeight": 128,
       "alpha": 1,
@@ -34,8 +48,9 @@
       "at": "self",
       "durationSec": 0.45,
       "kind": "vfx",
-      "on": "reflectSuccess",
+      "on": "strike",
       "atMs": 0,
+      "strikeIndex": 1,
       "w3xScale": 1.7,
       "flyHeight": 128,
       "alpha": 0.95,
@@ -100,16 +115,16 @@
       "pitchDeg": 0
     },
     {
-      "vfxId": "fx.prim.holy.beam-flat",
+      "vfxId": "fx.forge.beam.fire",
       "at": "self",
-      "durationSec": 1.1,
+      "durationSec": 1.2,
       "kind": "vfx",
       "on": "strike",
       "atMs": 0,
       "strikeIndex": 7,
-      "offsetForwardU": 2.5,
+      "offsetForwardU": 0.5,
       "offsetSideU": 0,
-      "w3xScale": 1.8,
+      "w3xScale": 5,
       "tint": [
         255,
         205,
@@ -122,16 +137,16 @@
       "pitchDeg": 0
     },
     {
-      "vfxId": "fx.prim.lightning.beam-flat",
+      "vfxId": "fx.forge.beam.blue",
       "at": "self",
-      "durationSec": 1.02,
+      "durationSec": 1.12,
       "kind": "vfx",
       "on": "strike",
-      "atMs": 45,
+      "atMs": 35,
       "strikeIndex": 7,
-      "offsetForwardU": 2.5,
+      "offsetForwardU": 0.5,
       "offsetSideU": 0,
-      "w3xScale": 1.15,
+      "w3xScale": 3,
       "tint": [
         80,
         170,

@@ -17,16 +17,16 @@
       "on": "castStart"
     },
     {
-      "vfxId": "fx.prim.lightning.beam-flat",
+      "vfxId": "fx.forge.beam.blue",
       "at": "self",
-      "durationSec": 0.48,
+      "durationSec": 0.7,
       "kind": "vfx",
       "on": "castEffect",
       "atMs": 0,
-      "offsetForwardU": 2,
-      "w3xScale": 1.6,
+      "offsetForwardU": 0.5,
+      "w3xScale": 3.8,
       "tint": [
-        130,
+        110,
         210,
         255
       ],
@@ -46,17 +46,18 @@
       "speed": 28,
       "clip": "attack",
       "clipTimeScale": 3.2,
-      "scale": 1,
+      "scale": 1.3,
       "tint": [
-        0.2,
-        0.58,
+        0.65,
+        0.82,
         1
       ],
       "alpha": 1,
       "lifeSec": 0.56,
       "kind": "modelFx",
       "on": "castEffect",
-      "atMs": 420
+      "atMs": 420,
+      "offsetSideU": 0.55
     },
     {
       "vfxId": "fx.prim.holy.slash-lg",

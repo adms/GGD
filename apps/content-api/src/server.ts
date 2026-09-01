@@ -62,7 +62,7 @@ import {
   writeDocAtomic,
 } from "@ggd/shared/content/node";
 import { SseHub } from "./sse";
-import { registerDevWriteGuard } from "./guard";
+import { addAllowedOrigins, registerDevWriteGuard } from "./guard";
 import { listSnapshots, readSnapshot, snapshotFile, snapshotText } from "./backup";
 import { registerImportRoutes } from "./importRoutes";
 import {
@@ -92,6 +92,12 @@ export interface ContentApiOptions {
   externalProfileHosts?: readonly string[];
   /** test seam; production code uses the platform fetch implementation. */
   externalProfileFetch?: typeof fetch;
+  /**
+   * Additional loopback Editor origins for this dev process.  This is how a
+   * deliberately non-default Vite port is paired with the write service; the
+   * guard still rejects every non-loopback value.
+   */
+  editorOrigins?: readonly string[];
 }
 
 interface Params {
@@ -131,6 +137,12 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   // `trustProxy` is deliberately LEFT OFF: the write guard must never be able
   // to be talked into believing a forwarded header.
   const app = Fastify({ logger: opts.logger ?? false, bodyLimit: 2 * 1024 * 1024 });
+  const { rejected: rejectedEditorOrigins } = addAllowedOrigins(opts.editorOrigins ?? []);
+  if (rejectedEditorOrigins.length > 0) {
+    throw new Error(
+      `content-api rejected non-loopback Editor origin(s): ${rejectedEditorOrigins.join(", ")}`,
+    );
+  }
   // FIRST hook registered, so a refused write never reaches routing or the disk.
   registerDevWriteGuard(app);
   const hub = new SseHub();
