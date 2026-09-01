@@ -29,6 +29,10 @@ export interface MoveFeelRules {
   whiffLungeDist: number;
   /** 追擊時停在射程的幾成（`OrderSystem` 的 `HOLD_FRACTION`）—— 留一點餘裕才不會一抖就重追。 */
   holdFraction: number;
+  /** 花與障礙物／出生點的最小淨空（`flowers.ts` 的 `FLOWER_CLEARANCE`）。 */
+  flowerClearance: number;
+  /** 混亂狀態每幾 tick 重挑一次亂走目標（`chaos.ts` 的 `CHAOS_REROLL_TICKS`）。⭐ 短到看得出在亂走、長到走得出距離。 */
+  chaosRerollTicks: number;
 }
 
 /** ⭐ 出貨值 —— **逐格等於**它搬過來之前的那個常數。 */
@@ -38,6 +42,8 @@ export const DEFAULT_MOVE_FEEL: MoveFeelRules = Object.freeze({
   autoRangeBuffer: 4,
   whiffLungeDist: 0.8,
   holdFraction: 0.9,
+  flowerClearance: 3,
+  chaosRerollTicks: 15,
 });
 
 /** ⚠️ 與 Zod 那一份**逐字相同**（admin 的鏡射測試逐格比對）。 */
@@ -48,6 +54,9 @@ const BOUNDS: Readonly<Record<keyof MoveFeelRules, readonly [number, number]>> =
   whiffLungeDist: [0, 5],
   // ⛔ 上界 1：> 1 = 停在射程外 ⇒ 永遠打不到人。
   holdFraction: [0.1, 1],
+  flowerClearance: [0, 20],
+  // ⛔ 下界 1：0 會讓 `world.tick % n` 除以零。
+  chaosRerollTicks: [1, 300],
 });
 
 export function normalizeMoveFeelRules(raw: unknown): MoveFeelRules {

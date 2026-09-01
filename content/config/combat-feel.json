@@ -91,6 +91,8 @@
     "avoidMargin": 0.3,
     "autoRangeBuffer": 4,
     "whiffLungeDist": 0.8,
-    "holdFraction": 0.9
+    "holdFraction": 0.9,
+    "flowerClearance": 3,
+    "chaosRerollTicks": 15
   }
 }

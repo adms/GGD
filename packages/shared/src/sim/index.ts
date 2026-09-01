@@ -68,7 +68,6 @@ export {
   type PlayerMatchStats,
   createMatchStats,
   getMatchStats,
-  ASSIST_WINDOW_TICKS,
   MULTIKILL_WINDOW_TICKS,
 } from "./stats/matchStats";
 export {
@@ -126,7 +125,6 @@ export { spawnChampion, type SpawnChampionArgs } from "./spawnChampion";
 export {
   FLOWER_RADIUS,
   FLOWER_MODEL_KEY,
-  FLOWER_CLEARANCE,
   flowerRulesFromConfig,
   flowersAliveInZone,
   pickFlowerSpawnPos,

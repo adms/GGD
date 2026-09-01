@@ -4,6 +4,9 @@
  * and static separation. Server-side match wiring is covered in
  * apps/game-server/src/match/flowers.test.ts.
  */
+// ⭐ 從**出貨預設**推導，⛔ 不抄字面值（抄一份就是第四個住處，第〇·四守則）。
+import { DEFAULT_MOVE_FEEL } from "./moveFeel";
+const FLOWER_CLEARANCE = DEFAULT_MOVE_FEEL.flowerClearance;
 import { describe, it, expect, beforeAll } from "vitest";
 import { cover } from "../../testkit/cover";
 import { SimWorld } from "./SimWorld";
@@ -15,7 +18,6 @@ import { registerSkeletonContent } from "./content/skeleton";
 import { spawnChampion } from "./spawnChampion";
 import { asSeatId, asTeamId, type AbilityId, type ChampionId, type EntityId } from "../ids";
 import {
-  FLOWER_CLEARANCE,
   FLOWER_RADIUS,
   beginCombatFlowers,
   endCombatFlowers,

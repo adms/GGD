@@ -36,6 +36,21 @@ describe("⭐ 移動與接敵的量值住在設定裡", () => {
     );
   });
 
+  it("★ ⭐ 混亂重骰間隔調大 ⇒ **重挑的次數真的變少**（⛔ 不是讀欄位）", () => {
+    // ⭐ `chaos.ts` 的判準是 `world.tick % n !== 0` ⇒ n 變大 = 命中的 tick 變少。
+    //   ⚠️ 這裡直接量那個算術，⛔ 因為跑一整場混亂需要一支會亂走的英雄，
+    //   而那條路已經有 `c1c2.test.ts` 在守 —— 這一條只證明**那個 n 來自設定**。
+    const hits = (n: number): number => {
+      let c = 0;
+      for (let t = 0; t < 300; t++) if (t % n === 0) c += 1;
+      return c;
+    };
+    expect(hits(DEFAULT_MOVE_FEEL.chaosRerollTicks)).toBe(20);
+    expect(hits(normalizeMoveFeelRules({ chaosRerollTicks: 60 }).chaosRerollTicks)).toBe(5);
+    // ⛔ 0 會讓 `tick % n` 除以零 ⇒ 下界 1
+    expect(normalizeMoveFeelRules({ chaosRerollTicks: 0 }).chaosRerollTicks).toBe(1);
+  });
+
   it("⭐ ⛔ 客戶端共用的那兩個**不在**這裡（turnFactor / turnSnapDot）", () => {
     // ⚠️ 它們住在 `turnToward()` 裡，而 `predict/LocalPrediction.ts` 直接呼叫它 ⇒
     //   伺服器讀設定而客戶端讀常數 = 一個**不會報錯**的 desync。

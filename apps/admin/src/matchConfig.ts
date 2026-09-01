@@ -512,6 +512,14 @@ export const MATCH_FIELD_INFO: Readonly<Record<string, MatchFieldInfo>> = Object
     live: "sim economy/statPath.capstoneRoundReached（每一次商店開啟都問它）",
     realHome: "packages/shared/src/sim/economy/statPath.ts 的 capstoneRoundReached",
   },
+  "economy.assistWindowTicks": {
+    zh: "助攻認定窗（tick）",
+    note:
+      "⭐ 有消費端（2026-09-01 接上）。死前這麼多 tick 內打過它的敵人（⛔ 不含補刀的那個）算一次助攻。" +
+      "30 tick = 1 秒 ⇒ 出貨 300 ＝ 10 秒。⛔ **連殺窗刻意不可調**：客戶端音效直接共用那個常數，" +
+      "做成設定而客戶端讀不到，會讓記分板與音效對「8–10 秒的第二顆人頭」說不同的話（那是 #234 修掉的 bug）。",
+    live: "sim stats/matchStats.recordChampionDeath（每一次英雄死亡都問它）",
+  },
   "progression.levelCap": {
     zh: "等級上限",
     note: "沒有消費端 —— `grantLevels` / `grantXp` 讀的是程式裡的 `LEVEL_CAP`。⭐ 2026-08-20 起出貨值**與它相等**（99），由測試釘住；在此之前文件寫 18 而程式是 99，兩邊說了六個月的反話。",
@@ -736,6 +744,7 @@ export const MATCH_GROUPS: readonly MatchGroup[] = [
       "economy.statTickPrice",
       "economy.statTickTarget",
       "economy.capstoneRoundGate",
+      "economy.assistWindowTicks",
       "progression.levelCap",
       "progression.xpBase",
       "progression.xpPerLevel",

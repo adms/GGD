@@ -664,6 +664,16 @@ export const zConfigMatchDoc = z
         statTickTarget: z.number().int().min(1).max(200).optional(),
         /** 第幾回合起頂點才解鎖。⭐ 0 = 不設閘。⚠️ 它與上一格**相乘**才是「這條路線打不打得開」。出貨 6。 */
         capstoneRoundGate: z.number().int().min(0).max(60).optional(),
+        /**
+         * ⭐ 助攻認定窗（tick，30Hz ⇒ 300 ＝ 10 秒）——「死前這麼多 tick 內打過它
+         * 的敵人（⛔ 不含補刀的那個）算一次助攻」。出貨 300。
+         *
+         * ⛔ **連殺窗刻意不在這裡**：`MULTIKILL_WINDOW_TICKS` 被客戶端音效直接
+         * import（`audio/sfxEdges.ts`），而那個檔的檔頭記著它為什麼要共用 ——
+         * 音效曾經自己寫過一個 8,000 ms，於是記分板與音效對「8–10 秒的第二顆人頭」
+         * 說了不同的話。⇒ 做成設定而客戶端讀不到 = 把那個 bug 放回來。
+         */
+        assistWindowTicks: z.number().int().min(0).max(36_000).optional(),
       })
       .strict(),
     /**

@@ -65,7 +65,8 @@
     "legendaryOrbPrice": 2400,
     "statTickPrice": 375,
     "statTickTarget": 20,
-    "capstoneRoundGate": 6
+    "capstoneRoundGate": 6,
+    "assistWindowTicks": 300
   },
   "progression": {
     "levelCap": 99,

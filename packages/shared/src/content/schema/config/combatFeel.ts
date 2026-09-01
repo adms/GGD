@@ -386,6 +386,10 @@ export const zConfigCombatFeelDoc = z
         whiffLungeDist: z.number().min(0).max(5).optional(),
         /** 追擊時停在射程的幾成。⛔ 上界 1：> 1 = 停在射程外，永遠打不到人。出貨 0.9。 */
         holdFraction: z.number().min(0.1).max(1).optional(),
+        /** 花與障礙物／出生點的最小淨空（世界單位）。出貨 3。 */
+        flowerClearance: z.number().min(0).max(20).optional(),
+        /** 混亂狀態每幾 tick 重挑一次亂走目標。⛔ 下界 1：0 會讓 `tick % n` 除以零。出貨 15（0.5 秒）。 */
+        chaosRerollTicks: z.number().int().min(1).max(300).optional(),
       })
       .strict()
       .optional(),

@@ -15,6 +15,7 @@
  * The rating layer (rating.ts) grades a finished scoreboard; this file only
  * COUNTS. Keep the two concerns separate.
  */
+import { economyRules } from "../economy/economyRules";
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import { mobLedgerRule } from "../mobs";
@@ -98,9 +99,7 @@ export interface PlayerMatchStats {
   bountyGold: number;
 }
 
-/** Assist credit window: an enemy that damaged the victim within this many ticks
- *  before its death (and is not the killer) earns an assist. 10s @30Hz. */
-export const ASSIST_WINDOW_TICKS = 300;
+// ⭐ 搬去 `economy/economyRules.ts` 了（2026-09-01）—— 住 `config.match@1` 的 `economy.assistWindowTicks`。
 /** Kills within this many ticks of the previous one chain into a multikill. */
 export const MULTIKILL_WINDOW_TICKS = 300;
 
@@ -458,7 +457,7 @@ export function recordChampionDeath(
   if (dmgMap) {
     for (const [attacker, tick] of dmgMap) {
       if (attacker === killer) continue;
-      if (now - tick > ASSIST_WINDOW_TICKS) continue;
+      if (now - tick > economyRules(world).assistWindowTicks) continue;
       const a = world.matchStats.get(attacker);
       if (a) {
         a.assists += 1;

@@ -18,6 +18,9 @@
  *   · `targeting.ts` 的 `if (isConfused(...)) return false` 拿掉 → c2-confused 紅
  *   · `OrderSystem.ts` 最後那行 `chaosPass(world)` 拿掉 → c2-confused 紅
  */
+// ⭐ 從**出貨預設**推導，⛔ 不抄字面值（抄一份就是第四個住處，第〇·四守則）。
+import { DEFAULT_MOVE_FEEL } from "./moveFeel";
+const CHAOS_REROLL_TICKS = DEFAULT_MOVE_FEEL.chaosRerollTicks;
 import { describe, it, expect, beforeAll } from "vitest";
 import { cover } from "../../testkit/cover";
 import { SimWorld } from "./SimWorld";
@@ -26,7 +29,7 @@ import { registerSkeletonContent, SELA } from "./content/skeleton";
 import { spawnChampion } from "./spawnChampion";
 import { castAbility } from "./abilities/abilitySystem";
 import { acquireTarget } from "./targeting";
-import { CHAOS_REROLL_TICKS, CHAOS_STEP_DISTANCE } from "./chaos";
+import { CHAOS_STEP_DISTANCE } from "./chaos";
 import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../ids";
 import type { StatusEffect } from "./components";
 

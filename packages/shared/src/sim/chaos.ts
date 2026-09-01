@@ -77,18 +77,12 @@
  *     一具身體），所以這支函式在影子裡**一次都不會跑** —— 它抽的 rng 不會讓
  *     預測與權威的 rng 流分家。恐懼今天也是這個處境。
  */
+import { moveFeelRules } from "./moveFeel";
 import type { EntityId } from "../ids";
 import type { SimWorld } from "./SimWorld";
 import { isConfused } from "./targeting";
 
-/**
- * 隔多久換一個方向（tick）。15 ≈ 0.5 秒。
- *
- * ⚠️ 這**不是**平衡旋鈕，所以它不是欄位（同 `FEAR_FLEE_DISTANCE` 的理由）：
- * 它要滿足的只有兩件事 —— 短到看得出來是在亂走（不是直線衝出去），長到身體
- * 真的走得出一段距離（不是原地抖）。0.5 秒兩邊都滿足。
- */
-export const CHAOS_REROLL_TICKS = 15;
+// ⭐ 搬去 `sim/moveFeel.ts` 了（2026-09-01）—— 住 `config.combat-feel@1` 的 `moveFeel`。
 
 /**
  * 每次把亂走的目標點放多遠。與 `FEAR_FLEE_DISTANCE` 同一個數字、同一個理由：
@@ -148,7 +142,7 @@ export function chaosWander(world: SimWorld, id: EntityId): void {
 
   // ② 亂走。沿用上一個方向，直到走到了（moveTarget 被抵達檢查清成 null）或
   //    重抽窗口到了 —— 見檔頭「不是每 tick 重抽」。
-  if (nav.moveTarget !== null && world.tick % CHAOS_REROLL_TICKS !== 0) return;
+  if (nav.moveTarget !== null && world.tick % moveFeelRules(world).chaosRerollTicks !== 0) return;
   const dir = CHAOS_DIRS[world.rng.int(CHAOS_DIRS.length)] ?? CHAOS_DIRS[0]!;
   nav.moveTarget = {
     x: t.pos.x + dir.x * CHAOS_STEP_DISTANCE,

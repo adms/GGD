@@ -14,6 +14,7 @@
  *  - Flowers are NEUTRAL: no TeamComp/seat, so they can never count toward
  *    duel victory, team lives, placement, or alive-champion checks.
  */
+import { moveFeelRules } from "./moveFeel";
 import type { EntityId } from "../ids";
 import type { SimWorld } from "./SimWorld";
 import type { Vec2 } from "./math/vec2";
@@ -27,8 +28,7 @@ export const FLOWER_RADIUS = 0.7;
 /** EntityState.key / model doc id used for flowers on the wire. */
 export const FLOWER_MODEL_KEY = "prop.flower";
 
-/** Min clearance (units) between a flower and obstacles / champion spawns. */
-export const FLOWER_CLEARANCE = 3;
+// ⭐ 搬去 `sim/moveFeel.ts` 了（2026-09-01）—— 住 `config.combat-feel@1` 的 `moveFeel`。
 
 /** Flower rules in TICKS (converted from the config doc's seconds). */
 export interface FlowerRules {
@@ -132,7 +132,7 @@ export function pickFlowerSpawnPos(world: SimWorld, zone: number): Vec2 {
     const dz = world.rng.range(-maxR, maxR);
     if (dx * dx + dz * dz > maxR * maxR) continue; // outside the disc — resample
     const p = { x: zoneDef.center.x + dx, z: zoneDef.center.z + dz };
-    if (clearOfObstacles(world, zone, p, FLOWER_CLEARANCE)) return p;
+    if (clearOfObstacles(world, zone, p, moveFeelRules(world).flowerClearance)) return p;
   }
   // fallback (dense obstacle layouts): mid-radius point, forced onto valid ground
   const body = {

@@ -33,6 +33,11 @@ export interface EconomyRules {
   statTickTarget: number;
   /** 第幾回合起頂點才解鎖（`statPath.ts` 的 `CAPSTONE_ROUND_GATE`）。 */
   capstoneRoundGate: number;
+  /**
+   * 助攻認定窗（tick，30Hz ⇒ 300 ＝ 10 秒；`stats/matchStats.ts` 的 `ASSIST_WINDOW_TICKS`）。
+   * ⛔ **連殺窗不在這裡** —— 它被客戶端音效共用，理由見 `codeOnlyKnobs.test.ts` 的豁免表。
+   */
+  assistWindowTicks: number;
 }
 
 /** ⭐ 出貨值 —— **逐格等於**它搬過來之前的那個常數。 */
@@ -41,6 +46,7 @@ export const DEFAULT_ECONOMY: EconomyRules = Object.freeze({
   statTickPrice: 375,
   statTickTarget: 20,
   capstoneRoundGate: 6,
+  assistWindowTicks: 300,
 });
 
 /** ⚠️ 與 Zod 那一份**逐字相同**。 */
@@ -52,6 +58,7 @@ const BOUNDS: Readonly<Record<keyof EconomyRules, readonly [number, number]>> = 
   // ⭐ 0 = 不設回合閘（第一回合就開得了）。⚠️ 上界刻意寬：一場實打 5–6 回合，
   //   而 owner 想做長局的時候不該被這一格擋住。
   capstoneRoundGate: [0, 60],
+  assistWindowTicks: [0, 36000],
 });
 
 export function normalizeEconomyRules(raw: unknown): EconomyRules {

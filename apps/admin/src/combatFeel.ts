@@ -319,6 +319,14 @@ export const COMBAT_FEEL_LABELS: Readonly<Record<string, FeelLabel>> = Object.fr
     zh: "追擊停在射程的幾成",
     note: "追人時停在射程的這個比例（出貨 0.9）——⭐ 留一點餘裕，⛔ 否則一抖就掉出射程重追。",
   },
+  "moveFeel.flowerClearance": {
+    zh: "花與障礙物的最小淨空",
+    note: "花不會長在離柱子／出生點這麼近的地方（世界單位，出貨 3）。⭐ 小 = 花更容易卡在牆邊，⛔ 大 = 場地中央擠成一團。",
+  },
+  "moveFeel.chaosRerollTicks": {
+    zh: "混亂每幾 tick 重挑方向",
+    note: "中了混亂的單位每隔這麼多 tick 重挑一次亂走目標（30 tick = 1 秒，出貨 15）。⭐ 短到看得出在亂走、長到真的走得出一段距離。",
+  },
   "hitstop.scale": {
     zh: "定格時長倍率",
     note:
