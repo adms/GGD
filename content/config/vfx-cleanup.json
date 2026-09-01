@@ -9,6 +9,8 @@
   "deathFxCalmScale": 0.25,
   "deathFxRelightOnChannel": true,
   "maxOneShotEmitters": 96,
+  "maxActiveRibbons": 10,
+  "ribbonFadeBudgetSec": 0.2,
   "emitterSweepSec": 2,
   "purgeImpactPoolOnRoundEnd": true,
   "purgeVictoryFxOnCombatStart": true,

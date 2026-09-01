@@ -48,6 +48,7 @@ import {
   type ImportErrorEnvelope,
   buildTargetProfile,
   clampImportLimits,
+  type AssetManifestFacts,
   type ContentFacts,
   type ImportLimits,
   type ReloadMode,
@@ -173,6 +174,30 @@ function unsupported(reply: FastifyReply, path: string, stage: string, why: stri
   return reply.code(501).send(envelope);
 }
 
+/**
+ * ⭐ P1-1 —— 讀 `content/assets-manifest.json`。
+ *
+ * ⛔ 讀不到／壞掉 ⇒ `null`（與 `readContentFacts` 逐字相同的處置）：
+ * ⭐ 一份**拿不到**的 asset manifest 與一份**空的** asset manifest 是兩件事 ——
+ * 後者會讓外部編輯器以為「這個 Base 沒有任何二進位資產」而放行一包引用 GLB 的內容。
+ */
+async function readAssetManifest(root: string): Promise<AssetManifestFacts | null> {
+  const file = join(root, "assets-manifest.json");
+  if (!existsSync(file)) return null;
+  try {
+    const m = JSON.parse(await readFile(file, "utf8")) as AssetManifestFacts;
+    if (typeof m.schema !== "string" || !Array.isArray(m.entries)) return null;
+    return m;
+  } catch {
+    return null;
+  }
+}
+
+/** ⭐ P1-2 —— 兩份 vfx 設定（缺席 ⇒ `undefined`，由 resolver 用出貨預設）。 */
+function vfxDocs(): { budget: unknown; cleanup: unknown } {
+  return { budget: Configs.tryGet("vfx-budget"), cleanup: Configs.tryGet("vfx-cleanup") };
+}
+
 export function registerImportRoutes(app: FastifyInstance, opts: ImportRoutesOptions): void {
   const root = resolve(opts.contentDir);
   const prefixes = opts.prefixes ?? DEFAULT_IMPORT_PREFIXES;
@@ -251,6 +276,9 @@ export function registerImportRoutes(app: FastifyInstance, opts: ImportRoutesOpt
           generatedAt: now().toISOString(),
           gameVersion: opts.gameVersion ?? null,
           content,
+          assetManifest: await readAssetManifest(root),
+          vfxBudget: vfxDocs().budget,
+          vfxCleanup: vfxDocs().cleanup,
           limits: opts.limits,
           ...(opts.reloadMode !== undefined ? { reloadMode: opts.reloadMode } : {}),
         }),

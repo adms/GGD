@@ -34,6 +34,7 @@
  * 外部編輯器要 pin 的是**內容**不是時鐘：`content.contentVersion` 與 `profileDigest`
  * 兩格都在，而且只有內容真的變了才會變。⛔ 不要把時間戳加回來。
  */
+import { effectiveVfxLimits } from "../src/content/import/effectiveVfxLimits";
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { writeProduct } from "../src/ops/writeProduct";
@@ -313,9 +314,24 @@ export function buildEditorTargetProfile(): Record<string, unknown> {
     xs === undefined ? null : sha12(JSON.stringify([...xs].sort()));
 
   // ── ⑦ asset manifest digest ────────────────────────────────────────────
-  const lod = readJson<unknown>(join(CONTENT, "assets", "models", "_lod.json"));
-  if (lod === null) {
-    unavailable.push({ field: "assetManifestDigest", reason: "assets/models/_lod.json 不存在。" });
+  //
+  // ⛔⛔ 在 2026-09-02 之前這一格是 `sha12(assets/models/_lod.json)` —— **一份 LOD 表**，
+  //    而它宣稱自己是 `assetManifestDigest`。⇒ 外部編輯器拿它去驗遠端 GLB／貼圖時，
+  //    ⭐ 那個 digest **一顆都沒涵蓋**：換掉一顆 GLB 它不會變，⛔ 而契約上寫著它會。
+  //
+  // ⭐ 現在讀 `content/assets-manifest.json`（`pnpm assets:manifest` 的產物）——
+  //    被 `content/**/*.json` 引用到的**每一顆**二進位，各帶 `sha256` 與 `bytes`。
+  const assetManifest = readJson<{
+    counts?: { entries?: number; totalBytes?: number };
+    entries?: unknown[];
+  }>(join(CONTENT, "assets-manifest.json"));
+  if (assetManifest === null) {
+    unavailable.push({
+      field: "assetManifestDigest / assetManifest",
+      reason:
+        "content/assets-manifest.json 不存在 —— 跑 `pnpm assets:manifest`。" +
+        "⛔ 在它產出來之前，遠端資產**驗不了**（只有路徑，沒有 hash）。",
+    });
   }
 
   // ── ⑨ 是否允許 production delta ────────────────────────────────────────
@@ -538,8 +554,22 @@ export function buildEditorTargetProfile(): Record<string, unknown> {
       liveEndpoint: "/api/v1/curation/whitelist",
     },
 
-    // ⑦
-    assetManifestDigest: lod === null ? null : sha12(JSON.stringify(lod)),
+    // ⑦ ⭐ 完整 manifest 的 canonical digest（⛔ 不再是那份 LOD 表）
+    assetManifestDigest: assetManifest === null ? null : sha12(JSON.stringify(assetManifest)),
+    assetManifest:
+      assetManifest === null
+        ? null
+        : {
+            path: "assets-manifest.json",
+            entries: assetManifest.counts?.entries ?? assetManifest.entries?.length ?? 0,
+            totalBytes: assetManifest.counts?.totalBytes ?? 0,
+          },
+    // ⭐ P1-2 —— **實際生效**的 VFX 限制（⛔ 不是 schema 上界）。與客戶端
+    //    `RibbonTrail` / `ribbonMath` / `particleFactory` **同一支** resolver。
+    effectiveVfxLimits: effectiveVfxLimits(
+      readJson(join(CONTENT, "config", "vfx-budget.json")) as never,
+      readJson(join(CONTENT, "config", "vfx-cleanup.json")) as never,
+    ),
 
     // ⑨
     deltaExportAllowed,

@@ -14,7 +14,7 @@ import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { RibbonDoc } from "@ggd/shared/content";
-import { RibbonBudget, RibbonTrail, MAX_ACTIVE_RIBBONS } from "./RibbonTrail";
+import { RibbonBudget, RibbonTrail, maxActiveRibbons } from "./RibbonTrail";
 import {
   RIBBON_FADE_BUDGET_SEC,
   RIBBON_MAX_LIFESPAN_SEC,
@@ -294,7 +294,7 @@ describe("RibbonTrail swing trail (ribbon-swing-trail)", () => {
     const budget = new RibbonBudget();
     const trails: RibbonTrail[] = [];
     const rigs: Rig[] = [];
-    for (let i = 0; i < MAX_ACTIVE_RIBBONS + 4; i++) {
+    for (let i = 0; i < maxActiveRibbons() + 4; i++) {
       const trail = new RibbonTrail(scene, { ...SWORD, id: `fx.t${i}` }, { budget });
       const rig = makeRig();
       trail.attachTo(rig.weapon, 0, rig.root);
@@ -306,7 +306,7 @@ describe("RibbonTrail swing trail (ribbon-swing-trail)", () => {
       // stagger the swings so "oldest" is well defined
       t = drive(trails[i]!, rigs[i]!, t, 100, { speed: SWING_ON_SPEED * 3 });
     }
-    expect(budget.activeCount).toBeLessThanOrEqual(MAX_ACTIVE_RIBBONS);
+    expect(budget.activeCount).toBeLessThanOrEqual(maxActiveRibbons());
     // the first-opened trails were the ones stolen
     expect(trails[0]!.swinging).toBe(false);
     expect(trails[trails.length - 1]!.swinging).toBe(true);

@@ -5478,7 +5478,22 @@
     "itemCount": 101,
     "liveEndpoint": "/api/v1/curation/whitelist"
   },
-  "assetManifestDigest": "07091bbef8af",
+  "assetManifestDigest": "d82a2968ae3a",
+  "assetManifest": {
+    "path": "assets-manifest.json",
+    "entries": 1640,
+    "totalBytes": 102902938
+  },
+  "effectiveVfxLimits": {
+    "maxParticlesPerSystem": 1200,
+    "maxRatePerSystem": 600,
+    "maxActiveRibbons": 10,
+    "ribbonFadeBudgetSec": 0.2,
+    "hardMaxLifeSec": 5,
+    "hardCapScope": "scene",
+    "maxOneShotEmitters": 96,
+    "roundPurgeMode": "full"
+  },
   "deltaExportAllowed": false,
   "supportedModes": [
     "bootstrap"
@@ -5489,5 +5504,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "99ef62b583c5"
+  "profileDigest": "40b52b3a2fe1"
 }

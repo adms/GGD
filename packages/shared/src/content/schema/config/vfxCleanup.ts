@@ -180,6 +180,24 @@ export const zConfigVfxCleanupDoc = z
      */
     maxOneShotEmitters: z.number().int().min(16).max(1024).optional(),
     /**
+     * ⭐⭐ P1-2（2026-09-02）—— **同時活著的刀光／緞帶上限**。
+     *
+     * ⚠️ 在此之前它是 `apps/client/src/vfx/RibbonTrail.ts` 的 `MAX_ACTIVE_RIBBONS = 10`
+     * ——⛔ 一個**只有改程式碰得到**的角落，而外部編輯器**看不到它**：
+     * 它做得出一份會同時開 30 條刀光的內容，而遊戲會靜默偷走 20 條。
+     *
+     * ⭐ 超過上限時**偷走最久沒開的那一條**（`RibbonBudget.open()`），⛔ 不是拒絕新的。
+     */
+    maxActiveRibbons: z.number().int().min(1).max(64).optional(),
+    /**
+     * ⭐⭐ P1-2 —— **一條緞帶最多活／淡多久**（秒）。
+     *
+     * ⚠️ 在此之前是 `ribbonMath.ts` 的 `RIBBON_MAX_LIFESPAN_SEC = 0.2`。
+     * ⭐ 它同時是「刀光尾巴多長」與「淡出多久」——緞帶的 alpha 是沿著取樣環
+     * 依 `age/lifespan` 算的，⇒ 壽命就是淡出預算，⛔ 不是兩個數字。
+     */
+    ribbonFadeBudgetSec: z.number().min(0.02).max(2).optional(),
+    /**
      * 多久掃一次閒置發射器（秒）。掃描本身只走一次 `scene.particleSystems`
      * 等級的清單，很便宜；設小 = 殘骸活得更短、記憶體更平，代價是回收動作
      * 更頻繁。0.5–60 秒。
@@ -547,6 +565,9 @@ export const DEFAULT_VFX_CLEANUP: ConfigVfxCleanupDoc = {
   // GH#270 —— 出貨值必須和 `content/config/vfx-cleanup.json` 一字不差；
   // `content/vfxCleanupConfig.test.ts` 的 drift 斷言在守。
   maxOneShotEmitters: 96,
+  // ⭐ 出貨值＝搬過來之前 `RibbonTrail.ts` / `ribbonMath.ts` 的那兩個常數。
+  maxActiveRibbons: 10,
+  ribbonFadeBudgetSec: 0.2,
   emitterSweepSec: 2,
   purgeImpactPoolOnRoundEnd: true,
   // owner 2026-08-17 —— 下一回合開打就把上一回合的勝利煙火停掉並重新武裝勝利偵測。

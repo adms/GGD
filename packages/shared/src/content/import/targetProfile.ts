@@ -37,6 +37,7 @@
  *
  * ③ 這支是純函式：不讀檔、不看時鐘。事實由呼叫端（route）注入。
  */
+import { effectiveVfxLimits, type EffectiveVfxLimits } from "./effectiveVfxLimits";
 import { sha256Hex } from "../sha256";
 import { stableStringify } from "../hash";
 import {
@@ -185,6 +186,21 @@ export interface TargetProfileInput {
   readonly capabilities?: RuntimeCapabilityManifest;
   readonly limits?: Partial<ImportLimits>;
   readonly reloadMode?: ReloadMode;
+  /**
+   * ⭐ P1-1 —— `content/assets-manifest.json` 的內容（讀不到 ⇒ null）。
+   * ⛔ 這一支**不讀檔** —— 呼叫端給，理由與 `content` 那一格逐字相同（可測性 + 決定性）。
+   */
+  readonly assetManifest?: AssetManifestFacts | null;
+  /** ⭐ P1-2 —— 兩份 vfx 設定（缺席 ⇒ 出貨預設，⛔ 不是 0）。 */
+  readonly vfxBudget?: unknown;
+  readonly vfxCleanup?: unknown;
+}
+
+/** ⭐ P1-1 —— asset manifest 裡這一支需要的那一小片。 */
+export interface AssetManifestFacts {
+  readonly schema: string;
+  readonly counts: { readonly entries: number; readonly totalBytes: number };
+  readonly entries: readonly { readonly path: string; readonly sha256: string }[];
 }
 
 /** 一格「現在拿不到」的東西：欄位名 + **為什麼** + 對方該怎麼辦。 */
@@ -238,7 +254,36 @@ export interface TargetProfile {
     readonly championCurationDigest: string | null;
     readonly itemCurationDigest: string | null;
   };
+  /**
+   * ⭐ P1-1（2026-09-02）—— **完整** asset manifest 的 canonical digest。
+   * ⛔ 在此之前是 `null`（理由：「尚無版本化的 asset manifest」）⇒ 外部編輯器
+   * 拿得到 `glbPath`，⛔ 而**沒有辦法驗證那顆 GLB 是不是它預期的那一顆**。
+   */
   readonly assetManifestDigest: string | null;
+  /** ⭐ P1-1 —— 清單的位置與筆數，讓編輯器**抓得到**它（⛔ 不只是一個 hash）。 */
+  readonly assetManifest: {
+    readonly path: string;
+    readonly entries: number;
+    readonly totalBytes: number;
+  } | null;
+  /**
+   * ⭐ P1-2 —— **實際生效**的 VFX 限制（⛔ 不是 schema 的上界）。
+   * 由 `effectiveVfxLimits()` 產生 —— ⭐ 與客戶端 `RibbonTrail` / `ribbonMath` /
+   * `particleFactory` **同一支** resolver ⇒ 編輯器看到的就是上線會生效的。
+   */
+  readonly effectiveVfxLimits: EffectiveVfxLimits;
+  /**
+   * ⭐ owner 2026-08-15 的裁決寫成**機器讀得懂的形狀**（⛔ 不是散文）。
+   * 靜態 profile 從 08-15 起就有它；⛔ 這一份 2026-09-02 才補上 ——
+   * ⚠️ 在此之前兩份 receipt 對同一件事說了**相反**的話 17 天。
+   */
+  readonly authoringModel: {
+    readonly accepts: readonly string[];
+    readonly notRequired: readonly string[];
+    readonly validatedBy: readonly string[];
+    readonly intentField: string;
+    readonly note: string;
+  };
   readonly limits: ImportLimits;
   readonly reloadMode: ReloadMode;
   readonly verification: {
@@ -282,8 +327,16 @@ export function buildTargetProfile(input: TargetProfileInput): TargetProfile {
     {
       field: "compiler.contractVersion / compiler.fingerprint",
       reason:
-        "effect-template/product/chain compiler 尚未實作（計畫 §4.4）；" +
-        "現有的是 legacy template expander，不是規格要的 compiler，兩者指紋不可互換。",
+        "⭐ owner 2026-08-15 裁決：**砍掉編譯器那一層**（commit 5406c4ce7 / GH#327）。" +
+        "⛔ 這兩格是 null 的理由**不是「還沒做」，是「這條路上不會有編譯器」** —— " +
+        "編輯器直接產 `ability@1`/`item@1`，由 Zod schema ＋ capability 清單 ＋ " +
+        "authoring-rules 驗。⚠️ 兩種理由會讓對面做**相反**的事（等你做完 vs 現在就直出）" +
+        "⇒ 見 `authoringModel`。⛔ 也不可以為了「看起來完整」填一個假指紋：" +
+        "一個宣稱存在的編譯器合約會讓對方去實作重編比對，而那是我們這一側不會做的事，" +
+        "於是他們每一包都比對失敗，而失敗訊息看起來像格式問題。",
+      // ⚠️ 這一段在 2026-09-02 之前寫的是「尚未實作（計畫 §4.4）」——
+      //    ⭐ 靜態 profile 在 08-15 就改對了，⛔ 而**這一份沒有跟著改**：
+      //    同一件事，兩份 receipt 說了相反的話 17 天（第三守則的形狀）。
     },
     {
       field: "distribution.digest",
@@ -294,10 +347,6 @@ export function buildTargetProfile(input: TargetProfileInput): TargetProfile {
       reason:
         "白名單住在 platform（Go）服務，不在這個 content 服務的邊界內；" +
         "跨服務讀取要等 G3 決定 distribution index 落點。",
-    },
-    {
-      field: "assetManifestDigest",
-      reason: "尚無版本化的 asset manifest；V1 也明確排除 binary asset upload（規格 §14）。",
     },
   ];
   if (input.content === null) {
@@ -327,13 +376,38 @@ export function buildTargetProfile(input: TargetProfileInput): TargetProfile {
     supportedModes: ["bootstrap"] as readonly PackageMode[],
     deltaExportAllowed: false,
     compiler: { contractVersion: null, fingerprint: null },
+    authoringModel: {
+      accepts: ["ability@1", "item@1"],
+      notRequired: ["effect-template@1", "effect-product@1", "effect-chain@1", "expectedCompiled"],
+      validatedBy: [
+        "zod:collection-schema",
+        "capabilities:ggd-runtime-capabilities@1",
+        "authoring-rules:ggd-authoring-rules@1",
+      ],
+      intentField: "template.cards",
+      note:
+        "owner 2026-08-15 裁決：砍掉編譯器那一層。規格 §2 的四層模型是為多作者世界寫的，" +
+        "GGD 只有一個作者 —— 一種表示法 ＋ 一個驗證器 ＝ 沒有第二個實作可以漂移。",
+    },
     runtimeCapabilities: capabilities,
     distribution: {
       digest: null,
       championCurationDigest: null,
       itemCurationDigest: null,
     },
-    assetManifestDigest: null,
+    assetManifestDigest: input.assetManifest == null ? null : digestOf(input.assetManifest),
+    assetManifest:
+      input.assetManifest == null
+        ? null
+        : {
+            path: "assets-manifest.json",
+            entries: input.assetManifest.counts.entries,
+            totalBytes: input.assetManifest.counts.totalBytes,
+          },
+    effectiveVfxLimits: effectiveVfxLimits(
+      input.vfxBudget as never,
+      input.vfxCleanup as never,
+    ),
     limits,
     reloadMode: input.reloadMode ?? "process-reload",
     verification: {

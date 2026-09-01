@@ -37,6 +37,8 @@
  * The contract the tests hold this to: from the moment the blade stops moving,
  * the trail is COMPLETELY gone within RIBBON_FADE_BUDGET_SEC (0.25 s).
  */
+import { Configs } from "@ggd/shared/content";
+import { effectiveVfxLimits } from "@ggd/shared/content/import/effectiveVfxLimits";
 import type { ColorStop } from "./particleFactory";
 
 export interface RibbonSample {
@@ -61,6 +63,11 @@ export interface RibbonSample {
  * Hard ceiling on a trail sample's life. 刀光劍影 is a 2–3 frame streak that
  * hugs the arc, not a banner: anything above ~0.2 s starts to pool.
  */
+/**
+ * ⭐ P1-2（2026-09-02）—— 這一格搬進 `config.vfx-cleanup@1` 的 `ribbonFadeBudgetSec`。
+ * ⚠️ 留著這個名字是為了**下界與型別**；⭐ 生效值走 `ribbonFadeBudgetSec()`
+ * （與 target profile **同一支** resolver）。
+ */
 export const RIBBON_MAX_LIFESPAN_SEC = 0.2;
 /** Floor, so a degenerate doc can't produce a zero-length (invisible) strip. */
 export const RIBBON_MIN_LIFESPAN_SEC = 0.06;
@@ -84,9 +91,17 @@ export const RIBBON_WIDTH_EXP = 0.75;
 export const RIBBON_MAX_HALF_WIDTH = 0.7;
 
 /** Clamp an authored lifespan into the 刀光 budget. */
+export function ribbonFadeBudgetSec(): number {
+  return effectiveVfxLimits(
+    Configs.tryGet("vfx-budget") as never,
+    Configs.tryGet("vfx-cleanup") as never,
+  ).ribbonFadeBudgetSec;
+}
+
 export function clampRibbonLifespanSec(sec: number): number {
   if (!Number.isFinite(sec) || sec <= 0) return RIBBON_MIN_LIFESPAN_SEC;
-  return Math.min(RIBBON_MAX_LIFESPAN_SEC, Math.max(RIBBON_MIN_LIFESPAN_SEC, sec));
+  // ⭐ 上界走共用 resolver（⛔ 不是這個檔的常數）—— 見上面那一段。
+  return Math.min(ribbonFadeBudgetSec(), Math.max(RIBBON_MIN_LIFESPAN_SEC, sec));
 }
 
 /** Clamp an authored half-width (above/below) into the blade-arc budget. */

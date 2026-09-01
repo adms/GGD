@@ -30,6 +30,8 @@
  * every swing forever; attach/detach re-seed the ring so a pooled trail
  * (AmbientVfx) never shows a stale streak.
  */
+import { Configs } from "@ggd/shared/content";
+import { effectiveVfxLimits } from "@ggd/shared/content/import/effectiveVfxLimits";
 import type { Scene } from "@babylonjs/core/scene";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { Mesh } from "@babylonjs/core/Meshes/mesh";
@@ -82,7 +84,21 @@ export function ribbonAlphaModeFor(mode: VfxBlendMode): number {
 }
 
 /** Max trails laying samples at the same time (overdraw discipline). */
-export const MAX_ACTIVE_RIBBONS = 10;
+/**
+ * ⭐ P1-2（2026-09-02）—— 這一格搬進 `config.vfx-cleanup@1` 的 `maxActiveRibbons`。
+ *
+ * ⚠️ 在此之前它是一個**只有改程式碰得到**的常數，而外部編輯器看不到它：
+ * 它做得出一份會同時開 30 條刀光的內容，⛔ 而遊戲會靜默偷走 20 條。
+ *
+ * ⭐ 讀的是 `@ggd/shared` 的 `effectiveVfxLimits()` —— **與 target profile 同一支**
+ * ⇒ ⛔ 不可能出現「編輯器讀一份、遊戲讀另一份」。
+ */
+export function maxActiveRibbons(): number {
+  return effectiveVfxLimits(
+    Configs.tryGet("vfx-budget") as never,
+    Configs.tryGet("vfx-cleanup") as never,
+  ).maxActiveRibbons;
+}
 
 interface BudgetedTrail {
   /** force the trail's gate shut (its streak then fades out normally) */
@@ -98,7 +114,7 @@ interface BudgetedTrail {
 export class RibbonBudget {
   private readonly active: { trail: BudgetedTrail; sinceMs: number }[] = [];
 
-  constructor(private readonly max: number = MAX_ACTIVE_RIBBONS) {}
+  constructor(private readonly max: number = maxActiveRibbons()) {}
 
   /** trails currently laying samples (test/observability seam) */
   get activeCount(): number {
