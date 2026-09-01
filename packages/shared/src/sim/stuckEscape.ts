@@ -54,6 +54,12 @@ interface EscState {
   lastTick: number;
   /** 上一 tick 的實際座標（null = 剛開帳，這一 tick 只記不量）。 */
   prev: { x: number; z: number } | null;
+  /**
+   * ⭐⭐ GH#901 —— **開始卡住的那一點**。
+   * ⛔ `prev`（上一 tick）救不了 owner 描述的「只是抖動小移動」——
+   * 抖動每一 tick 都動得比門檻多 ⇒ 計數每 tick 歸零 ⇒ 永遠脫不了困。
+   */
+  anchor: { x: number; z: number } | null;
 }
 
 /** 逐 world 的保險絲狀態（前例：hitstopHold.ts 的 `stuckStates`）。 */
@@ -67,7 +73,7 @@ function escState(world: SimWorld, id: EntityId): EscState {
   }
   let st = per.get(id);
   if (st === undefined) {
-    st = { held: 0, releaseUntil: 0, lastTick: world.tick, prev: null };
+    st = { held: 0, releaseUntil: 0, lastTick: world.tick, prev: null, anchor: null };
     per.set(id, st);
   }
   return st;
@@ -152,7 +158,26 @@ export function stuckEscapeTick(world: SimWorld, id: EntityId, verdict: WalkStal
   const ae = world.combatFeel.autoEngage;
   const stallSpeed = ae !== undefined ? ae.stallSpeed : 0.5;
   const eps = stallSpeed * world.dt;
-  if (distSq(t.pos, prev) >= eps * eps) {
+  // ⭐⭐ GH#901 —— owner 2026-09-01 逐字：「⋯**或只是抖動小移動**困在**原點附近**
+  //   超過3秒⋯目的是不要讓玩家覺得**被黏住了失去操控感**」。
+  //
+  // ⛔ 在此之前這裡比的是「**這一 tick 對上一 tick**」的位移 ⇒ ⭐ 一個原地抖動的
+  //   單位每一 tick 都動得比 `eps` 多 ⇒ 計數**每 tick 歸零** ⇒ 它永遠脫不了困，
+  //   ⚠️ 而那正是 owner 描述的情境（他明講「抖動小移動」）。
+  //
+  // ⭐ 改成從**錨點**（開始卡住的那一點）量：走出 `anchorRadius` 才重新開始算。
+  //   ⇒ 抖動再久也走不出那個圈，於是它終於累積得起來；
+  //   ⇒ ⭐ 而真的在移動的單位一下就走出去（出貨移速 5.8/秒 ÷ 1.2 單位 ≈ 0.2 秒）。
+  // ⛔ `anchorRadius: 0` = 逐位元回到舊行為（逐 tick 比較）⇒ 一鍵 rollback。
+  const ar = rules.anchorRadius;
+  if (ar > 0) {
+    if (st.anchor === null) st.anchor = { x: t.pos.x, z: t.pos.z };
+    if (distSq(t.pos, st.anchor) >= ar * ar) {
+      st.held = 0;
+      st.anchor = { x: t.pos.x, z: t.pos.z };
+      return;
+    }
+  } else if (distSq(t.pos, prev) >= eps * eps) {
     st.held = 0;
     return;
   }
@@ -165,6 +190,9 @@ export function stuckEscapeTick(world: SimWorld, id: EntityId, verdict: WalkStal
   if (!overlappingLiveUnit(world, id)) return;
   st.releaseUntil = world.tick + releaseTicks;
   st.held = 0;
+  // ⭐ 放行之後錨點跟著移到現在的位置 —— ⛔ 否則放行窗一結束它立刻又「還在原點」
+  //   ⇒ 會變成每 releaseSec 就喊一次「脫困」的無限迴圈。
+  st.anchor = { x: t.pos.x, z: t.pos.z };
   emitStuckEscape(world, id);
 }
 

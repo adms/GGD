@@ -406,6 +406,20 @@ export const zConfigCombatFeelDoc = z
         thresholdSec: z.number().min(0).max(10).optional(),
         /** 放行窗長度（秒）：這段期間單位間碰撞不擋他（0 = 只累積不放人）。 */
         releaseSec: z.number().min(0).max(10).optional(),
+          /**
+           * ⭐⭐ GH#901 —— 「困在**原點附近**」的那個「附近」有多大（世界單位）。
+           *
+           * owner 2026-09-01（逐字）：
+           * > 「⋯一直沒有移動**或只是抖動小移動**困在**原點附近**超過3秒⋯
+           * >   目的是不要讓玩家覺得**被黏住了失去操控感**」
+           *
+           * ⛔ 在此之前判準是「這一 tick 對上一 tick」的位移 ⇒ ⭐ 一個原地**抖動**的
+           * 單位每 tick 都動得比門檻多 ⇒ 計數每 tick 歸零 ⇒ ⛔ **它永遠脫不了困**。
+           * ⇒ ⭐ 改成從**開始卡住的那一點**量：走出這個半徑才重新開始算。
+           *
+           * ⛔ **0 = 回到舊行為**（逐 tick 比較）⇒ 一鍵 rollback。
+           */
+          anchorRadius: z.number().min(0).max(20).optional(),
       })
       .strict()
       .optional(),

@@ -142,4 +142,71 @@ describe("stuck escape fuse (GH#677)", () => {
     const escaped = run(world, 150, orders);
     expect(escaped.has(a)).toBe(false); // CC 的 tick 凍結,不累積成互卡
   });
+
+  /**
+   * ⭐⭐ GH#901 —— owner 2026-09-01 逐字：
+   * > 「同一個地方被困太久 (滑鼠點其他地方但一直沒有移動**或只是抖動小移動**
+   * >   困在**原點附近**超過3秒) 則強制不被軟硬控可自由移動一段距離⋯
+   * >   目的是不要讓玩家覺得**被黏住了失去操控感**」
+   *
+   * ⛔ 在此之前判準是「**這一 tick 對上一 tick**」的位移 ⇒ ⭐ 一個原地**抖動**的
+   * 單位每一 tick 都動得比門檻多 ⇒ 計數**每 tick 歸零** ⇒ ⛔ **它永遠脫不了困**。
+   *
+   * ⚠️ 這條刻意**不**用兩個互卡的單位（那是上面那一條驗過的）——
+   * ⭐ 它直接把座標抖起來，因為那是 owner 描述的那個情境，
+   * ⛔ 而舊判準對它**結構上失明**。
+   *
+   * MUTATION LOG：
+   *   · `stuckEscape.ts` 的 `if (ar > 0)` 那一段拿掉（回到逐 tick 比較）→ 這條紅
+   */
+  it("★ ⭐ **原地抖動**也算被困（⛔ 舊判準對它結構上失明 —— 每 tick 歸零）", () => {
+    const world = makeWorld();
+    const a = spawnChampion(world, 0, 0, { x: -44, z: -6 });
+    const b = spawnChampion(world, 1, 0, { x: -43.0, z: -6 });
+    const home = { x: -44, z: -6 };
+    const orders = new Map<number, Order>([[0, moveTo(-38, -6)]]);
+    let escaped = new Set<EntityId>();
+    for (let i = 0; i < 150; i++) {
+      // ⭐ 每一 tick 把 A 抖回原點附近的**不同**一點 —— 逐 tick 位移**遠大於**門檻，
+      //   ⛔ 而它從來沒有離開過原點。這正是 owner 說的「只是抖動小移動」。
+      const t = world.transform.get(a)!;
+      t.pos.x = home.x + (i % 2 === 0 ? 0.18 : -0.18);
+      t.pos.z = home.z + (i % 3 === 0 ? 0.12 : -0.12);
+      // ⭐ B 也釘住 —— 分離 pass 每 tick 會把它推開，⛔ 而「真的被單位堵住」是
+      //   `stuckEscape` 的最後一道閘（`overlappingLiveUnit`）。⚠️ 不釘住的話這條
+      //   測試會因為**前提消失**而紅，⛔ 而那看起來會像機制壞了。
+      world.transform.get(b)!.pos.x = -43.0;
+      world.transform.get(b)!.pos.z = -6;
+      for (const e of run(world, 1, orders)) escaped.add(e);
+    }
+    expect(
+      escaped.has(a),
+      "⛔⛔ 抖了 150 tick（5 秒）都沒有脫困 —— ⭐ 舊判準比的是「這一 tick 對上一 tick」，\n" +
+        "而抖動每一 tick 都動得比門檻多 ⇒ 計數**每 tick 歸零** ⇒ 它永遠累積不到門檻。\n" +
+        "⇒ ⭐ 這正是 owner 說的「**被黏住了失去操控感**」。",
+    ).toBe(true);
+    expect(world.transform.get(b)!.pos.x, "⚠️ 前提自證：B 真的一直在旁邊堵著").toBe(-43.0);
+  });
+
+  it("⭐ `anchorRadius: 0` = 逐位元回到舊行為（⛔ 一鍵 rollback）", () => {
+    const world = makeWorld();
+    world.combatFeel = {
+      ...DEFAULT_COMBAT_FEEL,
+      stuckEscape: { ...DEFAULT_COMBAT_FEEL.stuckEscape!, anchorRadius: 0 },
+    };
+    const a = spawnChampion(world, 0, 0, { x: -44, z: -6 });
+    const b2 = spawnChampion(world, 1, 0, { x: -43.0, z: -6 });
+    const home = { x: -44, z: -6 };
+    const orders = new Map<number, Order>([[0, moveTo(-38, -6)]]);
+    const escaped = new Set<EntityId>();
+    for (let i = 0; i < 150; i++) {
+      const t = world.transform.get(a)!;
+      t.pos.x = home.x + (i % 2 === 0 ? 0.18 : -0.18);
+      t.pos.z = home.z + (i % 3 === 0 ? 0.12 : -0.12);
+      world.transform.get(b2)!.pos.x = -43.0;
+      world.transform.get(b2)!.pos.z = -6;
+      for (const e of run(world, 1, orders)) escaped.add(e);
+    }
+    expect(escaped.has(a), "⛔ 關掉之後應該回到舊行為（抖動 = 不算被困）").toBe(false);
+  });
 });

@@ -43,7 +43,8 @@
   "stuckEscape": {
     "enabled": true,
     "thresholdSec": 2,
-    "releaseSec": 1
+    "releaseSec": 1,
+    "anchorRadius": 1.2
   },
   "hitstop": {
     "holdsVictimWalk": false,

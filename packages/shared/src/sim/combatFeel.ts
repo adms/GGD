@@ -752,6 +752,23 @@ export interface StuckEscapeRules {
   thresholdSec: number;
   /** 放行窗長度（秒）：這段期間單位間碰撞不擋他。0 = 只累積不放人 = 等於關。 */
   releaseSec: number;
+  /**
+   * ⭐⭐ GH#901 —— 「困在**原點附近**」的那個「附近」有多大（世界單位）。
+   *
+   * owner 2026-09-01（逐字）：
+   * > 「同一個地方被困太久 (滑鼠點其他地方但一直沒有移動**或只是抖動小移動**
+   * >   困在**原點附近**超過3秒)⋯目的是不要讓玩家覺得被黏住了失去操控感」
+   *
+   * ── ⛔ 在此之前判準是「**這一 tick 對上一 tick** 的位移」──────────────
+   * ⇒ ⭐ 一個原地**抖動**的單位每一 tick 都動得比門檻多 ⇒ 計數**每 tick 歸零**
+   *   ⇒ ⛔ **它永遠脫不了困**，而 owner 描述的正是這個情境。
+   *
+   * ⭐ 改成錨點：從**開始卡住的那一點**量。走出這個半徑才重新開始算 ——
+   * ⛔ 抖動再久也走不出去，於是它終於累積得起來。
+   *
+   * ⛔ **0 = 回到舊行為**（逐 tick 比較）⇒ 一鍵 rollback。
+   */
+  anchorRadius: number;
 }
 
 /**
@@ -763,6 +780,8 @@ export const DEFAULT_STUCK_ESCAPE: StuckEscapeRules = Object.freeze({
   enabled: true,
   thresholdSec: 2,
   releaseSec: 1,
+  // ⭐ GH#901 —— 一個身體半徑左右（出貨英雄 ~0.5）。⭐ 抖動走不出去，⛔ 真的在走一定走得出去。
+  anchorRadius: 1.2,
 });
 
 /** 正規化。夾限 0..10 與 Zod 的上下界**逐字相同**（admin 的鏡射測試會比對）。 */
@@ -775,6 +794,7 @@ export function normalizeStuckEscapeRules(raw: unknown): StuckEscapeRules {
     enabled: typeof r.enabled === "boolean" ? r.enabled : DEFAULT_STUCK_ESCAPE.enabled,
     thresholdSec: num(r.thresholdSec, DEFAULT_STUCK_ESCAPE.thresholdSec, 0, 10),
     releaseSec: num(r.releaseSec, DEFAULT_STUCK_ESCAPE.releaseSec, 0, 10),
+    anchorRadius: num(r.anchorRadius, DEFAULT_STUCK_ESCAPE.anchorRadius, 0, 20),
   });
 }
 
