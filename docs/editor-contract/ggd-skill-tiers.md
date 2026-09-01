@@ -33,7 +33,7 @@ owner 2026-08-19（GH#438，這一份要涵蓋的**全部**軸）：
 | 軸 | JSON 欄位 | 出貨 config | 幾支技能填了 | 開關 |
 |---|---|---|---:|---|
 | 施法距離 | `rangeTier` | `range-tiers.json` | 186 (44.2%) | `enabled: true` |
-| 施法範圍 | `radiusTier` | `aoe-tiers.json` | 99 (23.5%) | `enabled: true` |
+| 施法範圍 | `radiusTier` | `aoe-tiers.json` | 100 (23.8%) | `enabled: true` |
 | 位移 | `distanceTier` | `displacement-tiers.json` | 2 (0.5%) | `enabled: true` |
 | **傷害** | `damageTier` | `damage-tiers.json` | 173 (41.1%) | `enabled: true` |
 | **耗魔** | `manaCostTier` | `mana-tiers.json` | 199 (47.3%) | `enabled: true` |

@@ -19,11 +19,12 @@
     144.0
   ],
   "manaCostTier": "小",
-  "effects": [],
-  "template": {
-    "ref": "tpl-single-strike",
-    "params": {
-      "damage": {
+  "effects": [
+    {
+      "kind": "damageArea",
+      "damageType": "magic",
+      "radiusTier": "中",
+      "amount": {
         "damageTier": "小",
         "ratios": [
           {
@@ -32,7 +33,20 @@
           }
         ]
       },
-      "damageType": "magic"
+      "radius": 6
+    }
+  ],
+  "template": {
+    "ref": "tpl-summon-agent",
+    "params": {
+      "count": 1,
+      "body": "self",
+      "durationSec": 8,
+      "damageMult": 0.5,
+      "hpMult": 0.5,
+      "formation": "ring",
+      "spread": 2,
+      "onOwnerDeath": "despawn"
     }
   },
   "vfxKey": "fx.prim.holy.nova-lg",
