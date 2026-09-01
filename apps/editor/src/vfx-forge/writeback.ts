@@ -1,27 +1,42 @@
 import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
 import { zVfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
-import { api, type WriteResult } from "../api/client";
+import { api, type AiProposalResult } from "../api/client";
 import type { VfxScriptAssetGuard } from "./assetSafety";
 
-export interface VfxScriptWriter {
-  put(collection: "vfx-scripts", id: string, doc: VfxScriptDoc): Promise<WriteResult>;
-  create?(collection: "vfx-scripts", id: string, doc: VfxScriptDoc): Promise<WriteResult>;
+export interface VfxScriptProposalWriter {
+  submitAiProposal(input: {
+    target: { collection: "vfx-scripts"; id: string };
+    purpose: "production-candidate" | "editor-capability-fixture";
+    candidate: VfxScriptDoc;
+    summary?: string;
+    evidence?: string[];
+    autoVisualScore?: number;
+  }): Promise<AiProposalResult>;
 }
 
-/** The only write seam owned by VFX Forge. Its collection cannot be varied. */
-export async function writeVfxScript(
+/**
+ * The only persistence seam owned by VFX Forge.
+ *
+ * It can submit a non-live proposal only.  There is intentionally no `put` or
+ * `create` member in this interface, so UI shortcuts and future AI agents
+ * cannot turn a draft into shipping content without the admin approval gate.
+ */
+export async function submitVfxScriptProposal(
   input: unknown,
   assetGuard: VfxScriptAssetGuard,
-  writer: VfxScriptWriter = api as VfxScriptWriter,
-  mode: "put" | "create" = "put",
-): Promise<WriteResult> {
+  purpose: "production-candidate" | "editor-capability-fixture",
+  writer: VfxScriptProposalWriter = api as VfxScriptProposalWriter,
+  metadata: { summary?: string; evidence?: string[]; autoVisualScore?: number } = {},
+): Promise<AiProposalResult> {
   const doc = zVfxScriptDoc.parse(input);
-  // This is deliberately inside the sole write seam, not only a disabled UI
-  // button: keyboard shortcuts, future importers and tests cannot bypass it.
+  // This remains inside the sole persistence seam: submitting an unsafe draft
+  // to a review page would waste human review time and could later Promote a
+  // texture with a visible backdrop.
   await assetGuard.assertScriptSafe(doc);
-  if (mode === "create") {
-    if (!writer.create) throw new Error("VFX script writer does not support create");
-    return writer.create("vfx-scripts", doc.id, doc);
-  }
-  return writer.put("vfx-scripts", doc.id, doc);
+  return writer.submitAiProposal({
+    target: { collection: "vfx-scripts", id: doc.id },
+    purpose,
+    candidate: doc,
+    ...metadata,
+  });
 }

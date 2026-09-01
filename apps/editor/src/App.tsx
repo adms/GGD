@@ -17,7 +17,7 @@ const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 1, refetchOnWindowFocus: false } },
 });
 
-/** Top-level authoring flows. VFX Forge owns only content/vfx-scripts. */
+/** Top-level authoring flows. VFX Forge proposes only vfx-scripts; Promote owns live writes. */
 type Mode =
   | { kind: "collection"; collection: CollectionName | null }
   | { kind: "forge" }

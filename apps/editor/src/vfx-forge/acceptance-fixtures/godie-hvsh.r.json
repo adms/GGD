@@ -1,0 +1,199 @@
+{
+  "id": "godie-hvsh.r",
+  "schema": "vfx-script@1",
+  "abilityId": "godie-hvsh.r",
+  "notes": "#547／#838 main 驗收候選：48-04 騎英之手綱／出貨名『騎英之疆繩』（原作參考 KwAlIYfmV48@446）。Rider／天馬高速 dash 後帶出寬橫向藍白光砲；傷害仍由 ability JSON 決定。",
+  "segments": [
+    {
+      "text": "騎英之手綱 · BELLEROPHON",
+      "colorRgb": [
+        108,
+        202,
+        255
+      ],
+      "sizeScale": 1.45,
+      "durationSec": 1.1,
+      "kind": "floatingText",
+      "on": "castStart"
+    },
+    {
+      "kind": "anim",
+      "on": "castStart",
+      "at": "caster",
+      "pulse": "cast",
+      "clipWindowMs": 1200
+    },
+    {
+      "kind": "anim",
+      "on": "castEffect",
+      "at": "caster",
+      "pulse": "attack",
+      "clipWindowMs": 900
+    },
+    {
+      "kind": "bodyMove",
+      "on": "castEffect",
+      "at": "caster",
+      "mode": "arc",
+      "offset": { "x": 0.55, "y": 0.7, "z": 3 },
+      "durationMs": 900
+    },
+    {
+      "modelKey": "w3x.stock.revivehuman",
+      "path": "forward",
+      "speed": 13,
+      "distance": 12,
+      "scale": 0.72,
+      "scaleAxis": [0.48, 0.48, 2.9],
+      "spinDegPerSec": 380,
+      "tint": [0.3, 0.7, 1],
+      "alpha": 0.9,
+      "lifeSec": 1,
+      "kind": "modelFx",
+      "on": "castEffect",
+      "offsetForwardU": 0.5,
+      "heightU": 0.85
+    },
+    {
+      "vfxId": "fx.forge.beam.blue",
+      "at": "self",
+      "durationSec": 1,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 0,
+      "offsetForwardU": 0.5,
+      "w3xScale": 5,
+      "tint": [
+        65,
+        155,
+        255
+      ],
+      "flyHeight": 80,
+      "alpha": 1
+    },
+    {
+      "vfxId": "fx.forge.beam.blue",
+      "at": "self",
+      "durationSec": 0.75,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 260,
+      "offsetForwardU": 0.5,
+      "w3xScale": 5,
+      "tint": [65, 155, 255],
+      "flyHeight": 80,
+      "alpha": 1
+    },
+    {
+      "vfxId": "fx.forge.beam.blue",
+      "at": "self",
+      "durationSec": 0.75,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 295,
+      "offsetForwardU": 0.5,
+      "w3xScale": 2.1,
+      "tint": [215, 242, 255],
+      "flyHeight": 80,
+      "alpha": 1
+    },
+    {
+      "vfxId": "fx.forge.beam.blue",
+      "at": "self",
+      "durationSec": 0.75,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 520,
+      "offsetForwardU": 0.5,
+      "w3xScale": 5,
+      "tint": [65, 155, 255],
+      "flyHeight": 80,
+      "alpha": 1
+    },
+    {
+      "vfxId": "fx.forge.beam.blue",
+      "at": "self",
+      "durationSec": 0.75,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 555,
+      "offsetForwardU": 0.5,
+      "w3xScale": 2.1,
+      "tint": [215, 242, 255],
+      "flyHeight": 80,
+      "alpha": 1
+    },
+    {
+      "vfxId": "fx.forge.beam.blue",
+      "at": "self",
+      "durationSec": 0.75,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 780,
+      "offsetForwardU": 0.5,
+      "w3xScale": 5,
+      "tint": [65, 155, 255],
+      "flyHeight": 80,
+      "alpha": 1
+    },
+    {
+      "vfxId": "fx.forge.beam.blue",
+      "at": "self",
+      "durationSec": 0.75,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 815,
+      "offsetForwardU": 0.5,
+      "w3xScale": 2.1,
+      "tint": [215, 242, 255],
+      "flyHeight": 80,
+      "alpha": 1
+    },
+    {
+      "vfxId": "fx.forge.beam.blue",
+      "at": "self",
+      "durationSec": 0.95,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 35,
+      "offsetForwardU": 0.5,
+      "w3xScale": 2.1,
+      "tint": [
+        215,
+        242,
+        255
+      ],
+      "flyHeight": 80,
+      "alpha": 1
+    },
+    {
+      "vfxId": "fx.prim.lightning.explosion-lg",
+      "at": "target",
+      "durationSec": 0.55,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 700,
+      "w3xScale": 0.75,
+      "tint": [
+        105,
+        190,
+        255
+      ],
+      "alpha": 0.82
+    },
+    {
+      "kind": "anim",
+      "on": "castEffect",
+      "atMs": 700,
+      "at": "target",
+      "pulse": "hurt",
+      "clipWindowMs": 560
+    },
+    {
+      "amplitude": 0.45,
+      "durationSec": 0.9,
+      "kind": "screenShake",
+      "on": "castEffect"
+    }
+  ]
+}

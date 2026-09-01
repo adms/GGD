@@ -82,6 +82,16 @@ export interface WriteResult {
   contentVersion: string;
 }
 
+export interface AiProposalResult {
+  proposal: {
+    key: string;
+    candidateHash: string;
+    purpose: "production-candidate" | "editor-capability-fixture";
+    promotable: boolean;
+  };
+  status: "pending-review" | "fixture-pending";
+}
+
 export const api = {
   manifest: () => request<Manifest>(`${BASE}/manifest`),
   index: (collection: CollectionName) =>
@@ -175,6 +185,25 @@ export const api = {
       method: "POST",
       body: JSON.stringify(doc),
     }),
+  /**
+   * Submit an AI-authored candidate to the local human-review ledger.  This
+   * writes no game content; only the admin review page can approve and Promote
+   * the exact candidate hash later.
+   */
+  submitAiProposal: (input: {
+    target: { collection: CollectionName; id: string };
+    purpose: "production-candidate" | "editor-capability-fixture";
+    candidate: unknown;
+    summary?: string;
+    evidence?: string[];
+    autoVisualScore?: number;
+  }) => {
+    assertWritable();
+    return request<AiProposalResult>(`${BASE}/ai-review/proposals`, {
+      method: "POST",
+      body: JSON.stringify(input),
+    });
+  },
   /**
    * Write a binary asset (base64) to content/<contentPath>. Used by the AI-icon
    * Accept flow to store the generated PNG under assets/icons/<kind>/<id>.png.

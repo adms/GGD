@@ -35,7 +35,7 @@ beforeEach(async () => {
   rebuildAllIndexes(root);
   // undo store inside the tmp dir so the suite cleans up after itself (the real
   // default is <content>/../data/content-backups — outside the deployable tree)
-  app = buildServer({ contentDir: root, backupDir: join(root, ".backups") });
+  app = buildServer({ contentDir: root, backupDir: join(root, ".backups"), reviewDir: join(root, ".review") });
   await app.ready();
 });
 
@@ -134,6 +134,154 @@ describe("validate-on-write (content-08)", () => {
     expect(index.hash).toBe(body.collectionHash);
     // no tmp litter from the atomic write
     expect(readdirSync(join(root, "items")).filter((f) => f.includes(".tmp"))).toEqual([]);
+  });
+});
+
+describe("AI change control", () => {
+  it("closes the ordinary CRUD bypass for vfx-scripts", async () => {
+    const candidate = {
+      id: "skill.ai",
+      schema: "vfx-script@1",
+      abilityId: "skill.ai",
+      segments: [{ kind: "floatingText", on: "castStart", text: "candidate" }],
+    };
+    const direct = await app.inject({
+      method: "PUT",
+      url: "/content-api/vfx-scripts/skill.ai",
+      payload: candidate,
+    });
+    expect(direct.statusCode).toBe(409);
+    expect(direct.json().error).toContain("人工核准");
+    expect(existsSync(join(root, "vfx-scripts", "skill.ai.json"))).toBe(false);
+  });
+
+  it("keeps candidates non-live until an exact human-approved hash is explicitly promoted", async () => {
+    const candidate = { ...ITEM, cost: 975 };
+    const submitted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "items", id: ITEM.id },
+        purpose: "production-candidate",
+        candidate,
+        summary: "AI balance proposal",
+      },
+    });
+    expect(submitted.statusCode).toBe(201);
+    const proposal = submitted.json().proposal as { key: string; candidateHash: string; promotable: boolean };
+    expect(proposal.promotable).toBe(true);
+    expect(JSON.parse(readFileSync(join(root, "items", `${ITEM.id}.json`), "utf8")).cost).toBe(900);
+
+    const early = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/promote",
+      payload: { key: proposal.key, candidateHash: proposal.candidateHash },
+    });
+    expect(early.statusCode).toBe(409);
+
+    const approved = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/verdicts",
+      payload: {
+        key: proposal.key,
+        candidateHash: proposal.candidateHash,
+        verdict: "approve",
+        reviewer: "Owner",
+        note: "數值與演出均已人工確認",
+      },
+    });
+    expect(approved.statusCode).toBe(200);
+
+    const promoted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/promote",
+      payload: { key: proposal.key, candidateHash: proposal.candidateHash },
+    });
+    expect(promoted.statusCode).toBe(200);
+    expect(JSON.parse(readFileSync(join(root, "items", `${ITEM.id}.json`), "utf8")).cost).toBe(975);
+    expect((await app.inject({ url: "/content-api/ai-review/proposals" })).json().items[0].status).toBe("promoted");
+  });
+
+  it("invalidates approval when live content drifts after submission", async () => {
+    const submitted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "items", id: ITEM.id },
+        purpose: "production-candidate",
+        candidate: { ...ITEM, cost: 980 },
+      },
+    });
+    const proposal = submitted.json().proposal as { key: string; candidateHash: string };
+    await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/verdicts",
+      payload: { key: proposal.key, candidateHash: proposal.candidateHash, verdict: "approve", reviewer: "Owner", note: "ok" },
+    });
+    await app.inject({ method: "PUT", url: `/content-api/items/${ITEM.id}`, payload: { ...ITEM, cost: 901 } });
+    const promoted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/promote",
+      payload: { key: proposal.key, candidateHash: proposal.candidateHash },
+    });
+    expect(promoted.statusCode).toBe(409);
+    expect(promoted.json().error).toContain("送審後已變更");
+    expect(JSON.parse(readFileSync(join(root, "items", `${ITEM.id}.json`), "utf8")).cost).toBe(901);
+  });
+
+  it("forces all eight acceptance IDs to non-promotable fixtures", async () => {
+    const candidate = {
+      id: "godie-hart.r",
+      schema: "vfx-script@1",
+      abilityId: "godie-hart.r",
+      segments: [{ kind: "floatingText", on: "castStart", text: "fixture" }],
+    };
+    const submitted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "vfx-scripts", id: candidate.id },
+        purpose: "production-candidate",
+        candidate,
+      },
+    });
+    expect(submitted.statusCode).toBe(201);
+    const proposal = submitted.json().proposal as {
+      key: string;
+      candidateHash: string;
+      purpose: string;
+      promotable: boolean;
+    };
+    expect(proposal).toMatchObject({ purpose: "editor-capability-fixture", promotable: false });
+    expect(existsSync(join(root, "vfx-scripts", `${candidate.id}.json`))).toBe(false);
+
+    const noScore = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/verdicts",
+      payload: { key: proposal.key, candidateHash: proposal.candidateHash, verdict: "pass", reviewer: "Owner", note: "looks right" },
+    });
+    expect(noScore.statusCode).toBe(400);
+    const passed = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/verdicts",
+      payload: {
+        key: proposal.key,
+        candidateHash: proposal.candidateHash,
+        verdict: "pass",
+        reviewer: "Owner",
+        note: "Editor can express this scene",
+        humanVisualScore: 4,
+      },
+    });
+    expect(passed.statusCode).toBe(200);
+    const promoted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/promote",
+      payload: { key: proposal.key, candidateHash: proposal.candidateHash },
+    });
+    expect(promoted.statusCode).toBe(409);
+    expect(promoted.json().error).toContain("永遠不能 Promote");
+    expect(existsSync(join(root, "vfx-scripts", `${candidate.id}.json`))).toBe(false);
   });
 });
 

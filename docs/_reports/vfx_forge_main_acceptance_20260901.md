@@ -1,12 +1,23 @@
-# VFX Forge 八招與 main 比較／main 驗收交接
+# VFX Forge 八招 Editor 能力驗收／與 main 比較
 
-狀態：**feature branch ready for main review；不代表票已關閉**
+狀態：**Editor capability fixtures；不得直接套用遊戲主程式**
 
 比較基準：`origin/main@ead4a6a3`
 
 工作分支：`feat/vfx-forge-codex`
 
 視覺證據：[連續影格與舞台截圖](./vfx_forge_visual_proof_20260901/README.md)
+
+## ⛔ 2026-09-01 14:10 Owner 邊界更正
+
+本報告的八招只用來驗收「Editor 能不能做出這類演出」，不是待合併的正式技能內容。
+分支視覺欄描述的是 Editor fixture，不代表可覆蓋 `content/vfx-scripts/`。AI 產生或調整的
+技能效果、機制、動畫與特效，一律先送後台「AI 變更上線前批核」；pending／fail／reject
+都不生效，人工核准後仍需另外 Promote 精確 candidate hash。
+
+八招的 proposal 由伺服器強制 `promotable=false`，後台只允許 pass／fail 與 0～10 肉眼
+評分。即使 Editor 驗收通過，也不能 Promote。日後若要採用其中的視覺做法，必須另建
+production candidate 並重新人工核准，不能把本 fixture 當正式內容。
 
 ## 評分方法
 
@@ -44,7 +55,7 @@
 
 | 票 | 狀態給 main | 說明 |
 |---|---|---|
-| #838 | **可進 main 驗收** | 資源池拖拉、真 CameraRig、slider、時間軸、所見即所得、middleware 寫回、安全門與 reusable recipes 已在分支；八招有實際圖證。 |
+| #838 | **可驗 Editor 能力；八招內容不可進 main** | 資源池拖拉、真 CameraRig、slider、時間軸、所見即所得、安全門與 reusable recipes 可驗；儲存只提交 AI proposal，八招固定不可 Promote。 |
 | #547 | **部分可驗；保留開啟** | 通用 prototype 與八招內容已有示範；阿邦白卡、龍鬥氣砲紅條需 main/source 修。 |
 | #623 | **唯一安全的一對已完成；票保留開啟** | 逐張卡面複核後，只把 `godie-h01o`（一護卍解態）加入 `retiredChampions`；專用入口／退場守衛通過。其餘 13 對會造成卡面失真、空入口或丟失不同 3D 身體，全部維持不動。部署時若正式站已有 roster durable overlay，仍須在後台「英雄上下架」同步這一格。 |
 | #650 | **等待 main 正確事件接縫** | Editor 已能寫現有事件與 block 的 `vfxId`；`blockSuccess` 不能掛攻擊者，禁止用錯 owner 的 workaround。 |
@@ -58,12 +69,13 @@
 | #885 | **內容可驗** | 理想鄉 EX 已用 `reflectSuccess` 完成實際演出與圖證。 |
 | #903 | **不可關，等待美術／數值決策** | 14-04／39-04 缺的是新身體與數值；repo 沒有可忠實代用的四神／式神資產，不捏造內容也不拿相似模型硬湊。 |
 
-## main 驗收時的最小檢查
+## Editor／批核流程的最小檢查
 
 1. 開啟八招各看代表幀與連續影格；不能只看 Zod／Vitest 綠燈。
 2. 先確認阿邦白卡與龍鬥氣砲紅條的來源修正，再重錄這兩招。
 3. 執行 `pnpm content:build`、`pnpm caps:check`、`pnpm editorcov:check`、Editor typecheck 與 VFX asset safety check。
-4. main 可挑選 commit 或合併 feature branch；**不要讓內容腳本和生成 ability 形成重複綁定**。
+4. 確認八招只從 Editor fixtures 載入，未新增或覆蓋正式 content；**不要把圖證通過誤當成內容核准**。
+5. 另以一份非八招測試候選驗證：未核准 Promote 失敗、修改後舊核准失效、人工核准後明確 Promote 才寫入。
 
 ## 本分支完成的關鍵驗證
 

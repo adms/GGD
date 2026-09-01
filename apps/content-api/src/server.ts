@@ -74,6 +74,7 @@ import {
   fetchExternalTargetProfile,
   parseEditorProfileHosts,
 } from "./externalProfile";
+import { AiReviewStore, type AiProposalPurpose, type AiVerdict } from "./aiReview";
 
 export interface ContentApiOptions {
   contentDir: string;
@@ -98,6 +99,8 @@ export interface ContentApiOptions {
    * guard still rejects every non-loopback value.
    */
   editorOrigins?: readonly string[];
+  /** Local, non-shipping AI proposal and human-verdict material. */
+  reviewDir?: string;
 }
 
 interface Params {
@@ -133,6 +136,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   }
 
   const backupRoot = resolve(opts.backupDir ?? join(root, "..", "data", "content-backups"));
+  const aiReview = new AiReviewStore(resolve(opts.reviewDir ?? join(root, "..", "docs", "_review")));
 
   // `trustProxy` is deliberately LEFT OFF: the write guard must never be able
   // to be talked into believing a forwarded header.
@@ -252,6 +256,127 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
     return res.ok ? (res.doc as { id: string }) : null;
   }
 
+  /** Hash the exact live document that an AI proposal was based on. */
+  async function currentDocHash(file: string): Promise<string | null> {
+    if (!existsSync(file)) return null;
+    return hashDoc(JSON.parse(await readFile(file, "utf8")) as Record<string, unknown>);
+  }
+
+  // ---------- AI change control: draft -> human verdict -> explicit promote ----------
+  // These routes are deliberately in content-api rather than only in React.
+  // Calling PUT with a proposal-shaped object is not approval, and editing a
+  // candidate after approval changes its hash and invalidates the verdict.
+  app.get("/content-api/ai-review/proposals", async (_req, reply) => reply.send(aiReview.queue()));
+
+  app.post("/content-api/ai-review/proposals", async (req, reply) => {
+    const body = req.body as {
+      target?: { collection?: unknown; id?: unknown };
+      purpose?: unknown;
+      candidate?: unknown;
+      summary?: unknown;
+      evidence?: unknown;
+      autoVisualScore?: unknown;
+    } | null;
+    const collection = body?.target?.collection;
+    const id = body?.target?.id;
+    if (typeof collection !== "string" || typeof id !== "string") {
+      return err(reply, 400, "需要 target.collection 與 target.id");
+    }
+    const loc = resolveDoc(reply, { collection, id });
+    if (!loc) return;
+    const candidate = validateBody(reply, loc.collection, loc.id, body?.candidate);
+    if (!candidate) return;
+    const requestedPurpose = body?.purpose;
+    if (requestedPurpose !== "production-candidate" && requestedPurpose !== "editor-capability-fixture") {
+      return err(reply, 400, "purpose 必須是 production-candidate 或 editor-capability-fixture");
+    }
+    try {
+      const proposal = aiReview.submit({
+        target: { collection: loc.collection, id: loc.id },
+        purpose: requestedPurpose as AiProposalPurpose,
+        candidate: candidate as Record<string, unknown>,
+        baseHash: await currentDocHash(loc.file),
+        summary: typeof body?.summary === "string" ? body.summary : "",
+        evidence: Array.isArray(body?.evidence) ? body.evidence.filter((value): value is string => typeof value === "string") : [],
+        ...(body?.autoVisualScore === undefined ? {} : { autoVisualScore: body.autoVisualScore as number }),
+      });
+      return reply.code(201).send({ proposal, status: proposal.promotable ? "pending-review" : "fixture-pending" });
+    } catch (error) {
+      return err(reply, 400, error instanceof Error ? error.message : String(error));
+    }
+  });
+
+  app.post("/content-api/ai-review/verdicts", async (req, reply) => {
+    const body = req.body as {
+      key?: unknown;
+      candidateHash?: unknown;
+      verdict?: unknown;
+      reviewer?: unknown;
+      note?: unknown;
+      humanVisualScore?: unknown;
+    } | null;
+    if (
+      typeof body?.key !== "string" || typeof body.candidateHash !== "string" ||
+      typeof body.verdict !== "string" || typeof body.reviewer !== "string" || typeof body.note !== "string"
+    ) {
+      return err(reply, 400, "需要 key、candidateHash、verdict、reviewer、note");
+    }
+    try {
+      return reply.send({
+        verdict: aiReview.decide({
+          key: body.key,
+          candidateHash: body.candidateHash,
+          verdict: body.verdict as AiVerdict,
+          reviewer: body.reviewer,
+          note: body.note,
+          ...(body.humanVisualScore === undefined ? {} : { humanVisualScore: body.humanVisualScore as number }),
+        }),
+      });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      return err(reply, message.includes("已變更") ? 409 : 400, message);
+    }
+  });
+
+  app.post("/content-api/ai-review/promote", async (req, reply) => {
+    const body = req.body as { key?: unknown; candidateHash?: unknown } | null;
+    if (typeof body?.key !== "string" || typeof body.candidateHash !== "string") {
+      return err(reply, 400, "需要 key 與 candidateHash");
+    }
+    try {
+      const proposal = aiReview.promotionCandidate(body.key, body.candidateHash);
+      const loc = resolveDoc(reply, proposal.target);
+      if (!loc) return;
+      const liveHash = await currentDocHash(loc.file);
+      if (liveHash !== proposal.baseHash) {
+        return err(
+          reply,
+          409,
+          `目標內容在候選送審後已變更（送審基準 ${proposal.baseHash ?? "不存在"}，目前 ${liveHash ?? "不存在"}）；請重新提交與審查`,
+        );
+      }
+      // Re-run the current game schema at the last possible moment.  A UI-side
+      // green check, or a verdict made against an older schema, is not enough.
+      const doc = validateBody(reply, loc.collection, loc.id, proposal.candidate);
+      if (!doc) return;
+      const existed = existsSync(loc.file);
+      const backup = snapshotFile(backupRoot, loc.collection, loc.id, loc.file, { onError: backupWarn });
+      const { hash } = writeDocAtomic(root, loc.collection, doc);
+      const { collectionHash, contentVersion } = reindex(loc.collection);
+      const promotion = aiReview.recordPromotion(body.key, body.candidateHash, hash);
+      hub.publish({
+        type: "content:changed",
+        collection: loc.collection,
+        id: loc.id,
+        change: existed ? "change" : "add",
+      });
+      return reply.send({ id: loc.id, hash, collectionHash, contentVersion, backup: backup?.file ?? null, promotion });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      return err(reply, message.includes("尚未") || message.includes("不能 Promote") ? 409 : 400, message);
+    }
+  });
+
   // ---------- reads ----------
   app.get("/content-api/manifest", async (_req, reply) => {
     const p = join(root, "manifest.json");
@@ -286,6 +411,13 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
     ): Promise<unknown> {
       const loc = resolveDoc(reply, req.params);
       if (!loc) return;
+      if (loc.collection === "vfx-scripts") {
+        return err(
+          reply,
+          409,
+          "vfx-scripts 已禁止直接 PUT/POST；請先提交 AI 候選，經後台人工核准後由 Promote 套用",
+        );
+      }
       const exists = existsSync(loc.file);
       if (create && exists) {
         return err(reply, 409, `${loc.collection}/${loc.id} already exists`);
@@ -319,6 +451,9 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   app.delete<{ Params: Params }>("/content-api/:collection/:id", async (req, reply) => {
     const loc = resolveDoc(reply, req.params);
     if (!loc) return;
+    if (loc.collection === "vfx-scripts") {
+      return err(reply, 409, "vfx-scripts 已禁止直接 DELETE；刪除也必須走版本化人工批核流程");
+    }
     // a delete is the most destructive verb here — snapshot before unlinking,
     // so /restore can bring the document back.
     const backup = snapshotFile(backupRoot, loc.collection, loc.id, loc.file, {

@@ -7,7 +7,7 @@ import {
   isCompositingNeutral,
   type DecodedRaster,
 } from "./assetSafety";
-import { writeVfxScript } from "./writeback";
+import { submitVfxScriptProposal } from "./writeback";
 
 const WHITE = [[1, 1, 1, 1] as const];
 
@@ -131,7 +131,7 @@ describe("VFX Forge asset backdrop gate", () => {
       { collection: "models", id: "model.a" },
       { collection: "vfx", id: "vfx.trail" },
     ]);
-    const put = vi.fn(async () => ({ id: "skill.a", hash: "h", collectionHash: "c", contentVersion: "v" }));
+    const submitAiProposal = vi.fn();
     const guard = {
       assertScriptSafe: vi.fn(async () => {
         throw new UnsafeVfxAssetError([{
@@ -142,8 +142,10 @@ describe("VFX Forge asset backdrop gate", () => {
         }]);
       }),
     };
-    await expect(writeVfxScript(script, guard, { put })).rejects.toThrow(UnsafeVfxAssetError);
-    expect(put).not.toHaveBeenCalled();
+    await expect(submitVfxScriptProposal(
+      script, guard, "production-candidate", { submitAiProposal },
+    )).rejects.toThrow(UnsafeVfxAssetError);
+    expect(submitAiProposal).not.toHaveBeenCalled();
   });
 });
 

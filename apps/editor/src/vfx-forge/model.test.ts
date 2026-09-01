@@ -8,7 +8,7 @@ import {
   timelineDurationMs,
   triggerCuesFromSim,
 } from "./model";
-import { writeVfxScript } from "./writeback";
+import { submitVfxScriptProposal } from "./writeback";
 
 describe("VFX Forge authoring core", () => {
   it("takes cast, strike and projectile timing only from the real SimWorld event trace", () => {
@@ -95,11 +95,13 @@ describe("VFX Forge authoring core", () => {
     expect(timelineDurationMs(script, [{ on: "castEffect", atMs: 2000, label: "結算" }])).toBeGreaterThanOrEqual(6250);
   });
 
-  it("has one write destination and validates before calling it", async () => {
-    const put = vi.fn(async () => ({ id: "x", hash: "h", collectionHash: "c", contentVersion: "v" }));
-    const create = vi.fn(async () => ({ id: "x", hash: "h2", collectionHash: "c", contentVersion: "v" }));
+  it("has one non-live proposal destination and validates before calling it", async () => {
+    const submitAiProposal = vi.fn(async (input: { purpose: "production-candidate" | "editor-capability-fixture" }) => ({
+      proposal: { key: "vfx-scripts:x", candidateHash: "h", purpose: input.purpose, promotable: input.purpose === "production-candidate" },
+      status: input.purpose === "production-candidate" ? "pending-review" as const : "fixture-pending" as const,
+    }));
     const assetGuard = { assertScriptSafe: vi.fn(async () => undefined) };
-    await writeVfxScript(
+    await submitVfxScriptProposal(
       {
         id: "x",
         schema: "vfx-script@1",
@@ -107,18 +109,25 @@ describe("VFX Forge authoring core", () => {
         segments: [{ kind: "floatingText", on: "castStart", text: "x" }],
       },
       assetGuard,
-      { put, create },
+      "production-candidate",
+      { submitAiProposal },
     );
-    expect(put).toHaveBeenCalledWith("vfx-scripts", "x", expect.objectContaining({ abilityId: "x" }));
-    await expect(writeVfxScript({ id: "bad" }, assetGuard, { put })).rejects.toThrow();
-    expect(put).toHaveBeenCalledTimes(1);
-    await writeVfxScript(
+    expect(submitAiProposal).toHaveBeenCalledWith(expect.objectContaining({
+      target: { collection: "vfx-scripts", id: "x" },
+      purpose: "production-candidate",
+      candidate: expect.objectContaining({ abilityId: "x" }),
+    }));
+    await expect(submitVfxScriptProposal(
+      { id: "bad" }, assetGuard, "production-candidate", { submitAiProposal },
+    )).rejects.toThrow();
+    expect(submitAiProposal).toHaveBeenCalledTimes(1);
+    await submitVfxScriptProposal(
       { id: "x", schema: "vfx-script@1", abilityId: "x", segments: [{ kind: "floatingText", on: "castStart", text: "x" }] },
       assetGuard,
-      { put, create },
-      "create",
+      "editor-capability-fixture",
+      { submitAiProposal },
     );
-    expect(create).toHaveBeenCalledWith("vfx-scripts", "x", expect.anything());
+    expect(submitAiProposal).toHaveBeenLastCalledWith(expect.objectContaining({ purpose: "editor-capability-fixture" }));
     expect(assetGuard.assertScriptSafe).toHaveBeenCalledTimes(2);
   });
 });

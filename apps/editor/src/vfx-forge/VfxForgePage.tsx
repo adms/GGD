@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import {
   zodIssues,
   type CollectionIndex,
@@ -33,7 +33,7 @@ import {
   type ReactionPreviewTrace,
 } from "../preview/PreviewController";
 import { ensurePreviewContentReady } from "../preview/previewContent";
-import { writeVfxScript } from "./writeback";
+import { submitVfxScriptProposal } from "./writeback";
 import { VfxAssetPalette } from "./VfxAssetPalette";
 import { VfxForgePreview, type VfxForgePreviewHandle } from "./VfxForgePreview";
 import type { VfxForgeStageMode } from "./VfxForgeStage";
@@ -53,22 +53,15 @@ import {
   buildVfxForgeRecipe,
   type VfxForgeRecipeId,
 } from "./recipes";
-
-const ACCEPTANCE = [
-  ["godie-hjai.e", "04-03 龍破斬"],
-  ["godie-hjai.r", "04-04 神滅斬"],
-  ["godie-hart.r", "01-04 超究武神霸斬"],
-  ["godie-nbbc.r", "08-04 阿邦快速劍X"],
-  ["godie-nbbc.e", "08-03 龍鬥氣砲咒文"],
-  ["godie-ogrh.r", "09-04 龜派氣功"],
-  ["godie-e002.ex", "20-002 理想鄉EX"],
-  ["godie-hvsh.r", "48-04 騎英之手綱"],
-] as const;
+import { acceptanceFixtureFor, VFX_FORGE_ACCEPTANCE } from "./acceptanceFixtures";
 
 const simPreview = createSimPreviewController();
 
+// GH#838 progress: these eight scenes prove the Forge can compose the required
+// visual grammar. They are Editor fixtures, not game-content candidates; the
+// GH#664 gate therefore permits pass/fail evidence but never Promote.
+
 export function VfxForgePage() {
-  const qc = useQueryClient();
   const indexes = useForgeIndexes();
   const assetSafetyGate = useMemo(() => new AssetSafetyGate(api), []);
   const [abilityId, setAbilityId] = useState("godie-hart.r");
@@ -78,7 +71,7 @@ export function VfxForgePage() {
   const draftHistory = useUndoHistory<VfxScriptDoc | null>(null, sameJson);
   const draft = draftHistory.value;
   const [original, setOriginal] = useState<VfxScriptDoc | null>(null);
-  const [isNew, setIsNew] = useState(false);
+  const [isAcceptanceFixture, setIsAcceptanceFixture] = useState(false);
   const [selected, setSelected] = useState(0);
   const [playheadMs, setPlayheadMs] = useState(0);
   const [seekRevision, setSeekRevision] = useState(0);
@@ -135,15 +128,18 @@ export function VfxForgePage() {
     void (async () => {
       try {
         const abilityDoc = await api.doc<ForgeAbility>("abilities", abilityId);
+        const fixture = acceptanceFixtureFor(abilityId);
         const exists = existingIds.has(abilityId);
-        const script = exists ? await api.doc<VfxScriptDoc>("vfx-scripts", abilityId) : newScript(abilityId);
+        const script = fixture ?? (exists ? await api.doc<VfxScriptDoc>("vfx-scripts", abilityId) : newScript(abilityId));
         if (!live) return;
         setAbility(abilityDoc);
         draftHistory.reset(script);
         setOriginal(script);
-        setIsNew(!exists);
+        setIsAcceptanceFixture(fixture !== null);
         setSelected(0);
-        setStatus(exists ? "已載入" : "尚無腳本；儲存時只會新增 vfx-scripts 文件");
+        setStatus(fixture
+          ? "已載入 Editor 驗收樣本；不屬於遊戲 content，且永遠不可 Promote"
+          : exists ? "已載入；修改只能提交 AI 批核" : "尚無正式腳本；可建立 AI 上線候選，但不會直接寫入 content");
       } catch (e) {
         if (!live) return;
         setAbility(null);
@@ -291,12 +287,24 @@ export function VfxForgePage() {
         );
         return;
       }
-      setStatus(`底板掃描通過（${visual.sampledFrames}格），驗證並寫回中…`);
-      const result = await writeVfxScript(draft, assetSafetyGate, api, isNew ? "create" : "put");
+      setStatus(`底板掃描通過（${visual.sampledFrames}格），提交人工批核佇列…`);
+      const result = await submitVfxScriptProposal(
+        draft,
+        assetSafetyGate,
+        isAcceptanceFixture ? "editor-capability-fixture" : "production-candidate",
+        api,
+        {
+          summary: isAcceptanceFixture
+            ? "八招 VFX Forge 表達能力驗收；只評估編輯器，不得套用遊戲主程式"
+            : "VFX Forge AI 輔助調整候選",
+        },
+      );
       setOriginal(draft);
-      setIsNew(false);
-      setStatus(`已儲存 content/vfx-scripts/${draft.id}.json · ${result.hash}`);
-      void qc.invalidateQueries({ queryKey: ["index", "vfx-scripts"] });
+      setStatus(
+        result.proposal.promotable
+          ? `已送人工批核，尚未套用 · ${result.proposal.candidateHash}`
+          : `已送八招能力驗收，伺服器已鎖定不可 Promote · ${result.proposal.candidateHash}`,
+      );
     } catch (e) {
       if (e instanceof ApiValidationError) {
         setServerErrors(issuesToErrorMap(e.issues));
@@ -317,7 +325,7 @@ export function VfxForgePage() {
       <header className="vfx-forge-head">
         <div>
           <h1>✨ GGD 特效工坊 <small>VFX Forge</small></h1>
-          <p>只編輯純演出腳本；傷害、段數與結算時序仍以 ability JSON 為真相。</p>
+          <p>只編輯純演出候選；AI 修改先進後台批核，通過前絕不寫入遊戲 content。</p>
         </div>
         <div className="vfx-forge-save">
           <span className={errorCount || assetBlockers.length ? "error" : ""}>{status}{dirty ? " · 未儲存" : ""}</span>
@@ -325,7 +333,7 @@ export function VfxForgePage() {
           <button type="button" disabled={!draftHistory.canRedo} onClick={draftHistory.redo} title="重做（Ctrl/Cmd+Shift+Z）">↷ 重做</button>
           <button type="button" disabled={!dirty} onClick={() => { if (original) draftHistory.commit(original); }}>還原存檔版</button>
           <button type="button" disabled={!dirty || errorCount > 0 || assetAuditPending || assetBlockers.length > 0} onClick={() => void save()}>
-            {assetAuditPending ? "檢查貼圖中…" : "儲存腳本"}
+            {assetAuditPending ? "檢查貼圖中…" : isAcceptanceFixture ? "提交能力驗收" : "提交 AI 批核"}
           </button>
         </div>
       </header>
@@ -342,8 +350,20 @@ export function VfxForgePage() {
             ))}
           </select>
         </label>
-        {ACCEPTANCE.map(([id, label]) => <button type="button" className={abilityId === id ? "active" : ""} key={id} onClick={() => choose(id)}>{label}</button>)}
+        {VFX_FORGE_ACCEPTANCE.map(([id, label]) => <button type="button" className={abilityId === id ? "active" : ""} key={id} onClick={() => choose(id)}>{label}</button>)}
       </section>
+
+      {isAcceptanceFixture ? (
+        <section className="vfx-blocker" role="status">
+          <b>🧪 Editor 能力驗收樣本</b>
+          <span>這八招只驗收工坊能否做出對應演出。候選存放於審查材料區，不是遊戲內容；後台只能判定通過／失敗，Promote 端點也會拒絕。</span>
+        </section>
+      ) : (
+        <section className="vfx-reaction-info" aria-label="AI 修改上線政策">
+          <b>🧑‍⚖️ AI 修改需人工批核</b>
+          <span>提交只建立候選。後台核准綁定此版 JSON 雜湊；任何後續修改都必須重新審查，核准後仍需另外按 Promote 才會套用。</span>
+        </section>
+      )}
 
       {previewContent.data ? (
         <section className="vfx-effective-limits" aria-label="實際生效的 VFX 上限">

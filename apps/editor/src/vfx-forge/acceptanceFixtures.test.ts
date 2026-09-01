@@ -1,5 +1,5 @@
 /**
- * Owner acceptance guard for the eight VFX Forge reference abilities.
+ * Owner capability guard for the eight Editor-only VFX Forge fixtures.
  *
  * This intentionally checks visual grammar, not damage or balance. A green
  * schema alone cannot prove that the authored timeline still contains the
@@ -12,21 +12,13 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { zVfxScriptDoc, type VfxScriptDoc, type VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
+import { acceptanceFixtureFor, VFX_FORGE_ACCEPTANCE } from "./acceptanceFixtures";
 
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
-const IDS = [
-  "godie-hjai.e", // 龍破斬
-  "godie-hjai.r", // 神滅斬
-  "godie-hart.r", // 超究武神霸斬
-  "godie-nbbc.r", // 阿邦快速劍X
-  "godie-nbbc.e", // 龍鬥氣砲咒文
-  "godie-ogrh.r", // 龜派氣功
-  "godie-e002.ex", // 理想鄉EX
-  "godie-hvsh.r", // 騎英之手綱
-] as const;
+const IDS = VFX_FORGE_ACCEPTANCE.map(([id]) => id);
 
 function load(id: string): VfxScriptDoc {
-  return zVfxScriptDoc.parse(JSON.parse(readFileSync(join(CONTENT, "vfx-scripts", `${id}.json`), "utf8")));
+  return zVfxScriptDoc.parse(acceptanceFixtureFor(id));
 }
 
 function loadJson(collection: string, id: string): Record<string, unknown> {
@@ -49,8 +41,8 @@ const segs = (id: typeof IDS[number]): readonly VfxScriptSegment[] => docs.get(i
 const kinds = <K extends VfxScriptSegment["kind"]>(id: typeof IDS[number], kind: K) =>
   segs(id).filter((s): s is Extract<VfxScriptSegment, { kind: K }> => s.kind === kind);
 
-describe("八招 VFX Forge 視覺文法", () => {
-  it("八份都是可由編輯器往返的 vfx-script@1，且一招不少", () => {
+describe("八招 Editor-only VFX Forge 視覺文法", () => {
+  it("八份 fixture 都是可由編輯器往返的 vfx-script@1，且一招不少", () => {
     expect([...docs.keys()]).toEqual(IDS);
     for (const id of IDS) expect(docs.get(id)!.abilityId).toBe(id);
   });
