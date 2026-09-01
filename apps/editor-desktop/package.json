@@ -2,17 +2,19 @@
   "name": "@ggd/editor-desktop",
   "version": "0.1.0",
   "private": true,
+  "author": "GGD",
   "main": "dist/main.cjs",
   "description": "Local macOS/Windows shell for the GGD skill and VFX editor",
   "dependencies": {
     "@ggd/shared": "workspace:*"
   },
   "scripts": {
-    "build:renderer": "pnpm --filter @ggd/editor exec vite build --mode desktop && pnpm --filter @ggd/admin exec vite build --mode desktop",
+    "build:renderer": "pnpm --filter @ggd/editor exec vite build --mode desktop --outDir ../editor-desktop/dist/renderer/editor --emptyOutDir && pnpm --filter @ggd/admin exec vite build --mode desktop --outDir ../editor-desktop/dist/renderer/admin --emptyOutDir",
     "build:main": "esbuild src/main.ts --bundle --platform=node --format=cjs --outfile=dist/main.cjs --external:electron && esbuild src/preload.ts --bundle --platform=node --format=cjs --outfile=dist/preload.cjs --external:electron",
     "build": "pnpm build:renderer && pnpm build:main",
     "start": "pnpm build && electron .",
-    "dist:mac": "pnpm build && electron-builder --mac",
+    "smoke": "pnpm build && electron . --source-url=https://ggd.adms.ai --smoke-test --user-data-dir=dist/smoke-user-data",
+    "dist:mac": "pnpm build && electron-builder --mac --universal",
     "dist:win": "pnpm build && electron-builder --win",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run"
@@ -31,11 +33,11 @@
     "asar": true,
     "files": ["dist/main.cjs", "dist/preload.cjs", "package.json"],
     "extraResources": [
-      { "from": "../editor/dist", "to": "editor" },
-      { "from": "../admin/dist", "to": "admin" }
+      { "from": "dist/renderer/editor", "to": "editor" },
+      { "from": "dist/renderer/admin", "to": "admin" }
     ],
-    "mac": { "target": ["dmg", "zip"], "category": "public.app-category.developer-tools" },
-    "win": { "target": ["nsis", "portable"] },
+    "mac": { "target": ["dmg", "zip"], "category": "public.app-category.developer-tools", "icon": "../client/public/icons/icon-512.png" },
+    "win": { "target": ["nsis", "portable"], "icon": "../client/public/icons/icon-512.png" },
     "nsis": { "oneClick": true, "perMachine": false }
   }
 }

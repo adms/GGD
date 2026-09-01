@@ -36,7 +36,7 @@ receipt、G2 importer、完整 asset manifest、遠端 effective VFX limits 與�
 
 | 原始要求 | 判定 | 權威證據 |
 | --- | --- | --- |
-| macOS／Windows 本機程式，低維護成本 | 已證明 | `apps/editor-desktop/package.json`：Electron；mac `dmg/zip`、Windows `nsis/portable`；`editor-desktop` test/typecheck/build 均通過。 |
+| macOS／Windows 本機程式，低維護成本 | 已證明（本機發行版）；公開簽章另列限制 | Electron；實際產出 universal macOS `dmg/zip` 與 Windows x64 `nsis/portable`。Desktop renderer 與 Web dist 隔離，最終 macOS app 對正式站跑 packaged smoke，五條路由全 200。證據與 SHA-256：`docs/_reports/editor-desktop-release-smoke_20260902-0337/README.md`。 |
 | 可以用本機 GGD 資料夾，也可以用 `https://ggd.adms.ai` 當唯讀參考 Base；所有修改留本機 | 已證明 | `apps/editor-desktop/src/main.ts`、`remoteWorkspace.ts`；manifest/bundle/profile digest、三方合併、離線 cache、衝突保留與 host/byte/time bounds 的測試。 |
 | 模組化、容易維護，不複製遊戲規則 | 已證明 | schema form、Forge、VFX Forge、Export Center、desktop shell 分模組；預覽使用真 `SimWorld`、`CameraRig`、`VfxSystem` 與共用 resolver。 |
 | 效果模板定義 → 模板＋參數成品 → 成品效果鏈 | 已證明（現有 runtime vocabulary） | `ForgeStudio.tsx` 的每張 `AbilityTemplateCard {ref,params}` 是一份成品，鏈只放成品卡；可拖拉、排序、獨立參數、條件、衝突策略、展開來源；`forgeStudioStack.test.ts` 與 shared `stack.test.ts` 證明第二張卡真的進入 effects/hooks。 |

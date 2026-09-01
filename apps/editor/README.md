@@ -189,6 +189,15 @@ instead of printing remote numbers over different local behavior. Older
 profiles that omit the whole object stay usable through the shared local
 runtime resolver, with that compatibility state shown in the Forge UI.
 
+Desktop release builds keep their Vite output under
+`apps/editor-desktop/dist/renderer/`; they never overwrite the production web
+Editor or Admin `dist/` trees. `dist:mac` emits one universal Apple Silicon +
+Intel DMG/ZIP, while `dist:win` emits x64 NSIS + portable EXE. The packaged app
+also supports `--smoke-test`, which starts the real loopback server, verifies
+the embedded Editor/Admin and source/profile routes, prints a JSON receipt, and
+exits without opening a window. The latest packaging evidence is recorded in
+`docs/_reports/editor-desktop-release-smoke_20260902-0337/README.md`.
+
 The former Ideal EX join from [#885](https://github.com/adms/GGD/issues/885) is
 now guarded through the real shipped chain. Unknown provenance still fails
 closed; do not work around it by changing visual timing or using a similar

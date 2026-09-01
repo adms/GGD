@@ -196,13 +196,13 @@ async function chooseSource(policy: RemoteWorkspacePolicy): Promise<SourceConfig
 function rendererRoot(): string {
   return app.isPackaged
     ? join(process.resourcesPath, "editor")
-    : resolve(__dirname, "../../editor/dist");
+    : join(__dirname, "renderer", "editor");
 }
 
 function adminRoot(): string {
   return app.isPackaged
     ? join(process.resourcesPath, "admin")
-    : resolve(__dirname, "../../admin/dist");
+    : join(__dirname, "renderer", "admin");
 }
 
 async function start(): Promise<void> {
@@ -333,6 +333,31 @@ async function start(): Promise<void> {
   const { rejected } = addAllowedOrigins([origin]);
   if (rejected.length > 0) throw new Error(`桌面 Editor origin 被拒絕：${rejected.join("、")}`);
 
+  if (app.commandLine.hasSwitch("smoke-test")) {
+    const paths = [
+      "/editor/",
+      "/admin/",
+      "/content-api/manifest",
+      "/content-api/desktop-source",
+      ...(config.kind === "remote" ? ["/content-api/desktop-target-profile"] : []),
+    ];
+    const checks: Array<{ path: string; status: number; contentType: string | null }> = [];
+    for (const path of paths) {
+      const response = await fetch(`${origin}${path}`);
+      checks.push({ path, status: response.status, contentType: response.headers.get("content-type") });
+      if (!response.ok) throw new Error(`desktop smoke test ${path} -> ${response.status}`);
+      await response.arrayBuffer();
+    }
+    console.log(JSON.stringify({
+      schema: "ggd-editor-desktop-smoke@1",
+      source: currentSourceInfo(),
+      checks,
+    }));
+    await server.close();
+    app.exit(0);
+    return;
+  }
+
   const window = new BrowserWindow({
     width: 1540,
     height: 960,
@@ -383,7 +408,13 @@ async function start(): Promise<void> {
 }
 
 app.whenReady().then(start).catch((error) => {
-  void dialog.showErrorBox("GGD Editor 無法啟動", error instanceof Error ? error.stack ?? error.message : String(error));
+  const detail = error instanceof Error ? error.stack ?? error.message : String(error);
+  if (app.commandLine.hasSwitch("smoke-test")) {
+    console.error(detail);
+    app.exit(1);
+    return;
+  }
+  void dialog.showErrorBox("GGD Editor 無法啟動", detail);
   app.quit();
 });
 app.on("window-all-closed", () => { if (process.platform !== "darwin") app.quit(); });
