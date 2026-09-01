@@ -63,6 +63,7 @@ export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreview
   const [calibration, setCalibration] = useState("量尺未校準");
   const [backdropAudit, setBackdropAudit] = useState("底板未檢查");
   const [focusPreview, setFocusPreview] = useState(false);
+  const [sideReviewView, setSideReviewView] = useState(true);
   const firstPose = schedule.find((item) => item.actorPose)?.actorPose;
   const homePoseKey = firstPose
     ? `${firstPose.caster.x},${firstPose.caster.z}/${firstPose.target.x},${firstPose.target.z}`
@@ -210,6 +211,16 @@ export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreview
       <div className="vfx-stage-tools">
         <button type="button" onClick={() => setFocusPreview((current) => !current)}>
           {focusPreview ? "返回編輯" : "全螢幕預覽"}
+        </button>
+        <button
+          type="button"
+          onClick={() => setSideReviewView((current) => {
+            const next = !current;
+            stageRef.current?.setSideReviewView(next);
+            return next;
+          })}
+        >
+          {sideReviewView ? "切換實戰俯視" : "切換側向驗收"}
         </button>
         <button type="button" onClick={() => stageRef.current?.zoomBy(-100)}>鏡頭拉近</button>
         <button type="button" onClick={() => stageRef.current?.zoomBy(100)}>鏡頭拉遠</button>

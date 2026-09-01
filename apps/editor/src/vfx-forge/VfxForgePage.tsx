@@ -46,6 +46,13 @@ import {
   assetRefsFromScript,
   type AssetSafetyResult,
 } from "./assetSafety";
+import {
+  CLASSIC_BEAM_MODEL_KEY,
+  VFX_FORGE_RECIPES,
+  abilityUsesModel,
+  buildVfxForgeRecipe,
+  type VfxForgeRecipeId,
+} from "./recipes";
 
 const ACCEPTANCE = [
   ["godie-hjai.e", "04-03 龍破斬"],
@@ -252,6 +259,23 @@ export function VfxForgePage() {
     mutate((doc) => ({ ...doc, segments: [...doc.segments, newSegment(kind)] }));
     setSelected(draft?.segments.length ?? 0);
   };
+  const addRecipe = async (id: VfxForgeRecipeId): Promise<void> => {
+    if (!draft || !ability) return;
+    const coreAlreadyOwned = abilityUsesModel(ability, CLASSIC_BEAM_MODEL_KEY);
+    const segments = buildVfxForgeRecipe(id, { includeModelCore: !coreAlreadyOwned });
+    const candidate: VfxScriptDoc = { ...draft, segments: [...draft.segments, ...segments] };
+    const checks = await assetSafetyGate.checkScript(candidate);
+    const blocker = checks.find((item) => !item.safe);
+    if (blocker) {
+      setStatus(`⛔ 組合未加入：${blocker.asset.id} · ${blocker.summary}`);
+      return;
+    }
+    mutate(() => candidate);
+    setSelected(draft.segments.length);
+    setStatus(coreAlreadyOwned
+      ? "ability 已擁有 ReviveHuman MDL 主體；只加入粒子輔助層，避免重複繪製"
+      : "已加入 MDL 主體＋粒子輔助層；每一塊都可在時間軸單獨調整");
+  };
 
   const save = async (): Promise<void> => {
     if (!draft || errorCount > 0 || assetAuditPending || assetBlockers.length > 0) return;
@@ -332,6 +356,16 @@ export function VfxForgePage() {
           <span>回合清理 {previewContent.data.limits.roundPurgeMode}</span>
         </section>
       ) : null}
+
+      <section className="vfx-recipes" aria-label="可重用特效組合">
+        <b>可重用組合</b>
+        <span>像 JASS helper 一樣展開成標準積木；MDL 是主體，粒子只做輔助。</span>
+        {VFX_FORGE_RECIPES.map((recipe) => (
+          <button key={recipe.id} type="button" title={recipe.description} onClick={() => void addRecipe(recipe.id)}>
+            {recipe.label}
+          </button>
+        ))}
+      </section>
 
       {reactionTrigger === "reflectSuccess" ? (
         <section className="vfx-reaction-info" aria-label="被動反應試放方式">

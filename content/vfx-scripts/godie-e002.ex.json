@@ -2,19 +2,18 @@
   "id": "godie-e002.ex",
   "schema": "vfx-script@1",
   "abilityId": "godie-e002.ex",
-  "notes": "20-002 理想鄉EX（原作參考 KwAlIYfmV48@83–100，兩招合併）。反彈成功先爆開防禦光，接七段黃藍動畫斬擊，最後向敵人釋放寬廣聖光砲；傷害、反彈與七段時序仍住 ability JSON。",
+  "notes": "#885／#838 main 驗收候選：20-002 理想鄉EX（原作參考 KwAlIYfmV48@83–100，兩招合併）。reflectSuccess 爆開防禦火花，真 comboStrike 驅動 Saber 六次閃到目標周圍斬擊，第七段回到原位釋放黃藍聖光砲；傷害、反彈與七段時序仍住 ability JSON。",
   "segments": [
     {
-      "vfxId": "fx.prim.holy.slash-lg",
+      "vfxId": "fx.avalon.reflect-spark",
       "at": "self",
       "durationSec": 0.3,
       "kind": "vfx",
       "on": "reflectSuccess",
       "atMs": 0,
-      "w3xScale": 1.35,
-      "flyHeight": 128,
-      "alpha": 0.85,
-      "facingDeg": 90
+      "w3xScale": 0.8,
+      "flyHeight": 82,
+      "alpha": 0.78
     },
     {
       "text": "AVALON · 理想鄉",
@@ -31,32 +30,6 @@
       "strikeIndex": 1
     },
     {
-      "vfxId": "fx.prim.holy.slash-lg",
-      "at": "self",
-      "durationSec": 0.45,
-      "kind": "vfx",
-      "on": "strike",
-      "atMs": 0,
-      "strikeIndex": 1,
-      "w3xScale": 1.8,
-      "flyHeight": 128,
-      "alpha": 1,
-      "facingDeg": 52
-    },
-    {
-      "vfxId": "fx.prim.lightning.slash",
-      "at": "self",
-      "durationSec": 0.45,
-      "kind": "vfx",
-      "on": "strike",
-      "atMs": 0,
-      "strikeIndex": 1,
-      "w3xScale": 1.7,
-      "flyHeight": 128,
-      "alpha": 0.95,
-      "facingDeg": -52
-    },
-    {
       "kind": "anim",
       "on": "strike",
       "at": "caster",
@@ -71,19 +44,61 @@
       "clipWindowMs": 600
     },
     {
-      "modelKey": "imported.herosaber",
-      "path": "toTarget",
-      "speed": 32,
-      "clip": "attack",
-      "clipTimeScale": 3.2,
-      "scale": 1,
-      "alpha": 0.92,
-      "lifeSec": 0.22,
-      "kind": "modelFx",
-      "on": "strike"
+      "kind": "bodyMove",
+      "on": "strike",
+      "strikeIndex": 1,
+      "at": "caster",
+      "mode": "teleport",
+      "offset": { "x": -0.8, "y": 0, "z": 2.6 },
+      "durationMs": 220
     },
     {
-      "vfxId": "fx.prim.holy.slash-lg",
+      "kind": "bodyMove",
+      "on": "strike",
+      "strikeIndex": 2,
+      "at": "caster",
+      "mode": "teleport",
+      "offset": { "x": 0.8, "y": 0.1, "z": 2.8 },
+      "durationMs": 220
+    },
+    {
+      "kind": "bodyMove",
+      "on": "strike",
+      "strikeIndex": 3,
+      "at": "caster",
+      "mode": "teleport",
+      "offset": { "x": -0.65, "y": 0.2, "z": 3.15 },
+      "durationMs": 220
+    },
+    {
+      "kind": "bodyMove",
+      "on": "strike",
+      "strikeIndex": 4,
+      "at": "caster",
+      "mode": "teleport",
+      "offset": { "x": 0.65, "y": 0.15, "z": 3.1 },
+      "durationMs": 220
+    },
+    {
+      "kind": "bodyMove",
+      "on": "strike",
+      "strikeIndex": 5,
+      "at": "caster",
+      "mode": "teleport",
+      "offset": { "x": -0.35, "y": 0.35, "z": 2.75 },
+      "durationMs": 220
+    },
+    {
+      "kind": "bodyMove",
+      "on": "strike",
+      "strikeIndex": 6,
+      "at": "caster",
+      "mode": "teleport",
+      "offset": { "x": 0.35, "y": 0.3, "z": 2.95 },
+      "durationMs": 260
+    },
+    {
+      "vfxId": "fx.prim.holy.slash",
       "at": "target",
       "durationSec": 0.22,
       "kind": "vfx",
@@ -91,9 +106,9 @@
       "atMs": 0,
       "offsetForwardU": 0,
       "offsetSideU": 0,
-      "w3xScale": 1.5,
-      "flyHeight": 128,
-      "alpha": 1,
+      "w3xScale": 0.56,
+      "flyHeight": 82,
+      "alpha": 0.76,
       "timeScale": 1,
       "facingDeg": 58,
       "pitchDeg": 0
@@ -107,12 +122,28 @@
       "atMs": 35,
       "offsetForwardU": 0,
       "offsetSideU": 0,
-      "w3xScale": 1.5,
-      "flyHeight": 128,
-      "alpha": 0.95,
+      "w3xScale": 0.58,
+      "flyHeight": 82,
+      "alpha": 0.78,
       "timeScale": 1,
       "facingDeg": -61,
       "pitchDeg": 0
+    },
+    {
+      "modelKey": "w3x.stock.revivehuman",
+      "path": "static",
+      "anchor": "self",
+      "scale": 0.78,
+      "scaleAxis": [0.52, 0.52, 3.2],
+      "tint": [1, 0.84, 0.32],
+      "alpha": 0.9,
+      "lifeSec": 1.15,
+      "kind": "modelFx",
+      "on": "strike",
+      "atMs": 0,
+      "strikeIndex": 7,
+      "offsetForwardU": 0.8,
+      "heightU": 0.85
     },
     {
       "vfxId": "fx.forge.beam.fire",
@@ -124,13 +155,13 @@
       "strikeIndex": 7,
       "offsetForwardU": 0.5,
       "offsetSideU": 0,
-      "w3xScale": 5,
+      "w3xScale": 5.3,
       "tint": [
         255,
         205,
         70
       ],
-      "flyHeight": 128,
+      "flyHeight": 80,
       "alpha": 1,
       "timeScale": 1,
       "facingDeg": 0,
@@ -146,13 +177,13 @@
       "strikeIndex": 7,
       "offsetForwardU": 0.5,
       "offsetSideU": 0,
-      "w3xScale": 3,
+      "w3xScale": 2.3,
       "tint": [
         80,
         170,
         255
       ],
-      "flyHeight": 128,
+      "flyHeight": 80,
       "alpha": 1,
       "timeScale": 1,
       "facingDeg": 0,

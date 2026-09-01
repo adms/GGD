@@ -2,7 +2,7 @@
   "id": "godie-hjai.r",
   "schema": "vfx-script@1",
   "abilityId": "godie-hjai.r",
-  "notes": "04-04 神滅斬（原作參考 cFz1d48fvN8）。黑紫光刀蓄力後，莉娜本體高速穿越目標並留下斬痕；script 只負責 dash 斬擊演出。",
+  "notes": "#547 main 驗收候選：04-04 神滅斬（原作參考 cFz1d48fvN8）。黑紫光刀蓄力後，莉娜本體高速穿越目標並留下斬痕；script 只負責 dash 斬擊演出。",
   "segments": [
     {
       "text": "神滅斬 · RAGNA BLADE",
@@ -35,29 +35,37 @@
       "speed": 24,
       "clip": "attack",
       "clipTimeScale": 2.8,
-      "scale": 1.3,
-      "tint": [
-        0.75,
-        0.45,
-        0.95
-      ],
-      "alpha": 1,
+      "scale": 1.2,
       "lifeSec": 0.65,
       "kind": "modelFx",
       "on": "castEffect",
       "offsetSideU": 0.55
     },
     {
-      "vfxId": "fx.prim.arcane.slash-lg",
-      "at": "self",
+      "vfxId": "fx.prim.void.slash",
+      "at": "target",
       "durationSec": 0.42,
       "kind": "vfx",
       "on": "castEffect",
       "atMs": 120,
-      "w3xScale": 0.95,
-      "flyHeight": 128,
-      "alpha": 1,
-      "facingDeg": 8
+      "w3xScale": 1.55,
+      "tint": [118, 28, 210],
+      "flyHeight": 72,
+      "alpha": 0.85,
+      "facingDeg": 52
+    },
+    {
+      "vfxId": "fx.prim.arcane.slash-lg",
+      "at": "target",
+      "durationSec": 0.36,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 150,
+      "w3xScale": 1.15,
+      "tint": [230, 138, 255],
+      "flyHeight": 76,
+      "alpha": 0.76,
+      "facingDeg": -48
     },
     {
       "vfxId": "fx.prim.arcane.explosion",
@@ -66,10 +74,18 @@
       "kind": "vfx",
       "on": "castEffect",
       "atMs": 280,
-      "w3xScale": 1.05,
-      "flyHeight": 128,
-      "alpha": 0.95,
+      "w3xScale": 0.62,
+      "flyHeight": 72,
+      "alpha": 0.72,
       "facingDeg": -55
+    },
+    {
+      "kind": "anim",
+      "on": "castEffect",
+      "atMs": 280,
+      "at": "target",
+      "pulse": "hurt",
+      "clipWindowMs": 520
     },
     {
       "amplitude": 0.38,

@@ -2,7 +2,7 @@
   "id": "godie-ogrh.r",
   "schema": "vfx-script@1",
   "abilityId": "godie-ogrh.r",
-  "notes": "09-04 龜派氣功（原作參考 XkFlhrLaHeA@68）。雙手聚氣後打出橘金、寬而連續的橫向氣功砲；damageLine、命中與傷害仍住 ability JSON。",
+  "notes": "#803／#547／#838 main 驗收候選：09-04 龜派氣功（原作參考 XkFlhrLaHeA@68）。雙手聚氣後打出橘金、寬而連續的橫向氣功砲；damageLine、命中與傷害仍住 ability JSON。",
   "segments": [
     {
       "text": "龜 · 派 · 氣 · 功",
@@ -24,6 +24,19 @@
       "clipWindowMs": 900
     },
     {
+      "vfxId": "fx.prim.fire.pulse-sm",
+      "at": "self",
+      "durationSec": 0.4,
+      "kind": "vfx",
+      "on": "castStart",
+      "atMs": 600,
+      "offsetForwardU": 0.38,
+      "w3xScale": 0.75,
+      "tint": [255, 188, 62],
+      "flyHeight": 82,
+      "alpha": 0.92
+    },
+    {
       "vfxId": "fx.forge.beam.fire",
       "at": "self",
       "durationSec": 1.2,
@@ -37,7 +50,7 @@
         132,
         20
       ],
-      "flyHeight": 128,
+      "flyHeight": 80,
       "alpha": 0.92
     },
     {
@@ -48,13 +61,91 @@
       "on": "castEffect",
       "atMs": 35,
       "offsetForwardU": 0.5,
-      "w3xScale": 2.8,
+      "w3xScale": 2.4,
       "tint": [
         255,
         242,
         190
       ],
-      "flyHeight": 128,
+      "flyHeight": 80,
+      "alpha": 1
+    },
+    {
+      "vfxId": "fx.forge.beam.fire",
+      "at": "self",
+      "durationSec": 0.8,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 260,
+      "offsetForwardU": 0.5,
+      "w3xScale": 5.5,
+      "tint": [255, 132, 20],
+      "flyHeight": 80,
+      "alpha": 0.92
+    },
+    {
+      "vfxId": "fx.forge.beam.fire",
+      "at": "self",
+      "durationSec": 0.8,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 295,
+      "offsetForwardU": 0.5,
+      "w3xScale": 2.4,
+      "tint": [255, 242, 190],
+      "flyHeight": 80,
+      "alpha": 1
+    },
+    {
+      "vfxId": "fx.forge.beam.fire",
+      "at": "self",
+      "durationSec": 0.8,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 520,
+      "offsetForwardU": 0.5,
+      "w3xScale": 5.5,
+      "tint": [255, 132, 20],
+      "flyHeight": 80,
+      "alpha": 0.92
+    },
+    {
+      "vfxId": "fx.forge.beam.fire",
+      "at": "self",
+      "durationSec": 0.8,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 555,
+      "offsetForwardU": 0.5,
+      "w3xScale": 2.4,
+      "tint": [255, 242, 190],
+      "flyHeight": 80,
+      "alpha": 1
+    },
+    {
+      "vfxId": "fx.forge.beam.fire",
+      "at": "self",
+      "durationSec": 0.8,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 780,
+      "offsetForwardU": 0.5,
+      "w3xScale": 5.5,
+      "tint": [255, 132, 20],
+      "flyHeight": 80,
+      "alpha": 0.92
+    },
+    {
+      "vfxId": "fx.forge.beam.fire",
+      "at": "self",
+      "durationSec": 0.8,
+      "kind": "vfx",
+      "on": "castEffect",
+      "atMs": 815,
+      "offsetForwardU": 0.5,
+      "w3xScale": 2.4,
+      "tint": [255, 242, 190],
+      "flyHeight": 80,
       "alpha": 1
     },
     {
@@ -62,6 +153,14 @@
       "durationSec": 0.9,
       "kind": "screenShake",
       "on": "castEffect"
+    },
+    {
+      "kind": "anim",
+      "on": "castEffect",
+      "atMs": 140,
+      "at": "target",
+      "pulse": "hurt",
+      "clipWindowMs": 520
     }
   ]
 }

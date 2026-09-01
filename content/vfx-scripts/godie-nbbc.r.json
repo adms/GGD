@@ -2,7 +2,7 @@
   "id": "godie-nbbc.r",
   "schema": "vfx-script@1",
   "abilityId": "godie-nbbc.r",
-  "notes": "08-04 阿邦快速劍X（原作參考 QE9RrCjt428@157）。A 式藍白衝擊波先行，B 式小呆高速 dash 斬穿並留下橘白終結斬；damageLine、mark、blink 與真傷仍住 ability JSON。",
+  "notes": "#547／#838 main 驗收候選：08-04 阿邦快速劍X（原作參考 QE9RrCjt428@157）。A 式藍白衝擊波先行，B 式小呆高速 dash 斬穿並留下橘白終結斬；damageLine、mark、blink 與真傷仍住 ability JSON。",
   "segments": [
     {
       "text": "阿邦快速劍X",
@@ -24,52 +24,44 @@
       "on": "castEffect",
       "atMs": 0,
       "offsetForwardU": 0.5,
-      "w3xScale": 3.8,
+      "w3xScale": 2.4,
       "tint": [
         110,
         210,
         255
       ],
-      "flyHeight": 128,
+      "flyHeight": 80,
       "alpha": 0.95
     },
     {
-      "kind": "hideBody",
+      "kind": "anim",
       "on": "castEffect",
       "atMs": 420,
       "at": "caster",
+      "pulse": "attack",
+      "clipWindowMs": 560
+    },
+    {
+      "kind": "bodyMove",
+      "on": "castEffect",
+      "atMs": 420,
+      "at": "caster",
+      "mode": "teleport",
+      "offset": { "x": 0.55, "y": 0.08, "z": 3.2 },
       "durationMs": 560
     },
     {
-      "modelKey": "imported.sd2",
-      "path": "toTarget",
-      "speed": 28,
-      "clip": "attack",
-      "clipTimeScale": 3.2,
-      "scale": 1.3,
-      "tint": [
-        0.65,
-        0.82,
-        1
-      ],
-      "alpha": 1,
-      "lifeSec": 0.56,
-      "kind": "modelFx",
-      "on": "castEffect",
-      "atMs": 420,
-      "offsetSideU": 0.55
-    },
-    {
       "vfxId": "fx.prim.holy.slash-lg",
-      "at": "self",
+      "at": "target",
       "durationSec": 0.52,
       "kind": "vfx",
       "on": "castEffect",
       "atMs": 430,
       "offsetForwardU": 1,
-      "w3xScale": 1.2,
-      "flyHeight": 128,
-      "alpha": 1
+      "w3xScale": 1.25,
+      "flyHeight": 82,
+      "alpha": 0.78,
+      "facingDeg": 48
     },
     {
       "vfxId": "fx.prim.fire.explosion",
@@ -78,10 +70,18 @@
       "kind": "vfx",
       "on": "castEffect",
       "atMs": 680,
-      "w3xScale": 1.5,
-      "flyHeight": 128,
-      "alpha": 1,
+      "w3xScale": 1.25,
+      "flyHeight": 82,
+      "alpha": 0.82,
       "facingDeg": 62
+    },
+    {
+      "kind": "anim",
+      "on": "castEffect",
+      "atMs": 680,
+      "at": "target",
+      "pulse": "hurt",
+      "clipWindowMs": 520
     },
     {
       "amplitude": 0.46,

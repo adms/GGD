@@ -85,33 +85,60 @@ describe("八招 VFX Forge 視覺文法", () => {
   });
 
   it("龍破斬先飛行，飛行結束後才在遠端爆炸", () => {
-    const moving = kinds("godie-hjai.e", "modelFx").find((s) => s.kind === "modelFx" && s.path === "toTarget");
-    expect(moving).toBeDefined();
-    expect(moving?.trailVfxId).toBeTruthy();
-    const remote = kinds("godie-hjai.e", "vfx").filter((s) => s.kind === "vfx" && s.at === "target");
+    const travel = kinds("godie-hjai.e", "vfx").filter(
+      (s) => s.kind === "vfx" && s.vfxId === "fx.prim.fire.bolt",
+    );
+    expect(travel.length).toBeGreaterThanOrEqual(7);
+    expect(Math.max(...travel.map((s) => s.offsetForwardU ?? 0))).toBeGreaterThanOrEqual(6);
+    expect(Math.max(...travel.map((s) => s.atMs ?? 0))).toBeGreaterThanOrEqual(1000);
+    // RedDragonMissile and imported.bahamut both failed the real compositor:
+    // one exposed a card and the other polluted the scene with white geometry.
+    expect(segs("godie-hjai.e").some((s) => s.kind === "modelFx" && s.modelKey === "w3x.stock.reddragonmissile")).toBe(false);
+    expect(segs("godie-hjai.e").some((s) => s.kind === "modelFx" && s.modelKey === "imported.bahamut")).toBe(false);
+    const remote = kinds("godie-hjai.e", "vfx").filter(
+      (s) => s.kind === "vfx" && s.at === "self" && (s.offsetForwardU ?? 0) >= 6 && s.vfxId !== "fx.prim.fire.bolt",
+    );
     expect(remote.length).toBeGreaterThanOrEqual(2);
-    expect(Math.min(...remote.map((s) => s.atMs ?? 0))).toBeGreaterThanOrEqual((moving?.lifeSec ?? 0) * 900);
+    expect(Math.min(...remote.map((s) => s.atMs ?? 0))).toBeGreaterThanOrEqual(1150);
   });
 
-  it.each(["godie-hjai.r", "godie-nbbc.r", "godie-hvsh.r"] as const)(
-    "%s 保留隱藏本體、衝向目標、落點收刀三段",
-    (id) => {
-      expect(kinds(id, "hideBody")).toHaveLength(1);
-      expect(kinds(id, "modelFx").some((s) => s.kind === "modelFx" && s.path === "toTarget" && (s.speed ?? 0) > 0)).toBe(true);
-      expect(kinds(id, "vfx").some((s) => s.kind === "vfx" && s.at === "target")).toBe(true);
-    },
-  );
+  it("神滅斬保留隱藏本體、衝向目標、落點收刀三段", () => {
+    expect(kinds("godie-hjai.r", "hideBody")).toHaveLength(1);
+    expect(kinds("godie-hjai.r", "modelFx").some((s) => s.kind === "modelFx" && s.path === "toTarget" && (s.speed ?? 0) > 0)).toBe(true);
+    expect(kinds("godie-hjai.r", "vfx").some((s) => s.kind === "vfx" && s.at === "target")).toBe(true);
+  });
+
+  it("阿邦快速劍X 用真小呆本體做 B 式衝刺，不用會變白的替身", () => {
+    expect(kinds("godie-nbbc.r", "hideBody")).toHaveLength(0);
+    expect(kinds("godie-nbbc.r", "modelFx")).toHaveLength(0);
+    expect(kinds("godie-nbbc.r", "bodyMove").some((segment) => segment.mode === "teleport" && segment.offset.z >= 3)).toBe(true);
+    expect(kinds("godie-nbbc.r", "anim").some((segment) => segment.on === "castEffect" && segment.at === "caster")).toBe(true);
+  });
+
+  it("騎英之手綱用真 Rider 本體做可見的突進，不靠白色模型替身", () => {
+    expect(kinds("godie-hvsh.r", "hideBody")).toHaveLength(0);
+    expect(kinds("godie-hvsh.r", "bodyMove").some((segment) => segment.mode === "arc" && segment.offset.z >= 3)).toBe(true);
+    expect(kinds("godie-hvsh.r", "anim").some((segment) => segment.on === "castEffect" && segment.at === "caster")).toBe(true);
+  });
 
   it.each(["godie-nbbc.e", "godie-ogrh.r", "godie-hvsh.r"] as const)(
     "%s 是持續、雙層、可辨色的橫向氣功砲",
     (id) => {
+      const modelKeys = collectAbilityModelKeys(loadJson("abilities", id));
+      for (const segment of kinds(id, "modelFx")) modelKeys.add(segment.modelKey);
+      expect(modelKeys.has("w3x.stock.revivehuman"), `${id} 必須用 90° 橫放 MDL 當主體`).toBe(true);
       const beams = kinds(id, "vfx").filter((s) => s.kind === "vfx" && s.vfxId.includes("beam"));
-      expect(beams.length).toBeGreaterThanOrEqual(2);
-      expect(beams.every((s) => (s.durationSec ?? 0) >= 0.8)).toBe(true);
+      expect(beams.length).toBeGreaterThanOrEqual(8);
+      expect(beams.every((s) => (s.durationSec ?? 0) >= 0.5)).toBe(true);
+      const starts = [...new Set(beams.map((s) => s.atMs ?? 0))];
+      expect(Math.max(...starts) - Math.min(...starts), `${id} 不可退回單幀光束`).toBeGreaterThanOrEqual(700);
       expect(new Set(beams.map((s) => JSON.stringify(s.tint))).size).toBeGreaterThanOrEqual(2);
       for (const beam of beams) {
         const resource = loadJson("vfx", beam.vfxId);
-        expect(resource.orient, `${beam.vfxId} 必須隨瞄準方向旋轉`).toEqual({ yawFrom: "aim" });
+        expect(resource.orient, `${beam.vfxId} 必須橫放並隨瞄準方向旋轉`).toMatchObject({
+          yawFrom: "aim",
+          pitchDeg: 0,
+        });
       }
     },
   );
@@ -121,6 +148,15 @@ describe("八招 VFX Forge 視覺文法", () => {
       expect(kinds(id, "anim").some((s) => s.kind === "anim" && s.on === "strike")).toBe(true);
       expect(segs(id).filter((s) => s.on === "strike" && s.strikeIndex === 7).length).toBeGreaterThanOrEqual(2);
     }
+  });
+
+  it("理想鄉終結砲保留 ReviveHuman MDL 主體，黃藍粒子只做輔助", () => {
+    const core = kinds("godie-e002.ex", "modelFx").find(
+      (segment) => segment.strikeIndex === 7 && segment.modelKey === "w3x.stock.revivehuman",
+    );
+    expect(core).toBeDefined();
+    expect(core?.scaleAxis?.[2]).toBeGreaterThan(core?.scaleAxis?.[0] ?? Number.POSITIVE_INFINITY);
+    expect(kinds("godie-e002.ex", "vfx").filter((segment) => segment.strikeIndex === 7 && segment.vfxId.includes("beam")).length).toBeGreaterThanOrEqual(2);
   });
 
   it("理想鄉 EX 只能由反彈成功起手，不可偽裝成主動施法", () => {

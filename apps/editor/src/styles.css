@@ -186,6 +186,9 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .vfx-effective-limits { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; padding: 8px 16px; border-bottom: 1px solid #34425a; background: #111a29; color: #aebbd0; font-size: 12px; }
 .vfx-effective-limits b { color: #ffd66d; }
 .vfx-effective-limits span { white-space: nowrap; }
+.vfx-recipes { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; padding: 8px 16px; border-bottom: 1px solid #292e3b; background: #151a25; }
+.vfx-recipes > span { color: #9da9be; margin-right: auto; }
+.vfx-recipes button { border-color: #3976a8; background: #17314a; }
 .vfx-blocker { display: flex; gap: 10px; align-items: baseline; margin: 8px 16px 0; padding: 9px 12px; border: 1px solid #9b3434; border-left-width: 4px; background: #2a1719; color: #efc7c7; }
 .vfx-blocker b { color: #ff918b; white-space: nowrap; }
 .vfx-blocker span { font-size: 12px; }

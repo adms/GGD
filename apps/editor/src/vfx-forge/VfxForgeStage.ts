@@ -17,6 +17,7 @@ import { Models, VfxDefs, VfxScripts } from "@ggd/shared/content/registries";
 import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
 import { abilityIdOfAuthoredOrigin, type ChampionDef } from "@ggd/shared/sim";
 import type { AbilityVfxLayerOverride } from "@ggd/shared/content/schema/abilityVfx";
+import { ABILITY_VFX_LAYER_OVERRIDE_FIELDS } from "@ggd/shared/content/schema/abilityVfx";
 import type { ModelFxSpawnEvent } from "../../../client/src/render/modelFxPath";
 import { ModelFxRig } from "../../../client/src/render/modelFxRig";
 import { AssetManager } from "../../../client/src/render/AssetManager";
@@ -147,6 +148,8 @@ export class VfxForgeStage {
   private schedule: readonly ScheduledSimEvent[];
   private nowMs = 0;
   private nextEvent = 0;
+  /** Last authored particle placement, surfaced in the Forge HUD for aim QA. */
+  private lastVfxAim: string | null = null;
   private generation = 0;
   private textSerial = 0;
   private disposed = false;
@@ -170,8 +173,20 @@ export class VfxForgeStage {
   private actorReady: Promise<void> = Promise.resolve();
   private contentReady: Promise<void> = Promise.resolve();
   private prepareSeq = 0;
+  private seekTimer = 0;
+  private seekSeq = 0;
   private player: VfxScriptPlayer;
   private mode: VfxForgeStageMode;
+  /**
+   * Gameplay keeps the shipped MOBA camera looking down the +z lane. That is
+   * correct in a match, but it makes a +z projectile/beam collapse into the
+   * depth axis in an authoring proof (the old eight-skill evidence literally
+   * photographed horizontal beams as vertical columns). The Forge therefore
+   * defaults to a 90-degree review orbit while retaining the real CameraRig's
+   * pitch, dolly, shake and clamps. Authors can switch back to the gameplay
+   * sightline at any time.
+   */
+  private sideReviewView = true;
   private readonly runtimeVfx: VfxSystem | null;
   private readonly canvas: HTMLCanvasElement;
 
@@ -255,6 +270,9 @@ export class VfxForgeStage {
     };
 
     this.cameraRig = new CameraRig(this.scene, this.cameraFocus());
+    // VFX authoring is a close inspection surface. Start at the shipped
+    // minimum clamp; the explicit zoom controls can still pull back.
+    this.cameraRig.zoomBy(-10_000);
     this.cameraRig.update({
       dtMs: STEP_MS,
       localPos: this.cameraFocus(),
@@ -263,6 +281,7 @@ export class VfxForgeStage {
       viewportWidth: canvas.clientWidth || 960,
       viewportHeight: canvas.clientHeight || 540,
     });
+    this.applyReviewOrbit();
 
     this.modelRig = new ModelFxRig(this.scene, {
       resolveModel: (id) => this.models.get(id) ?? null,
@@ -329,16 +348,37 @@ export class VfxForgeStage {
           ? this.preloadRuntimeAssets(ability)
           : this.preloadScriptAssets(script),
       ]);
+      const previewAimYaw = yawDegToward(
+        this.homePose.target.x - this.homePose.caster.x,
+        this.homePose.target.z - this.homePose.caster.z,
+      );
       const warmDocs = script.segments.flatMap((segment) => {
         if (segment.kind !== "vfx") return [];
         const doc = this.vfx.get(segment.vfxId) ?? VfxDefs.tryGet(segment.vfxId);
-        return doc ? [doc] : [];
+        if (!doc) return [];
+        // Pool keys include every per-segment override and the resolved aim
+        // yaw.  Warming only the base document leaves the first deterministic
+        // seek to construct a brand-new textured pool entry; Babylon then
+        // decodes that texture after the front-loaded burst has already been
+        // consumed.  Real-time playback happens to work on the second pass,
+        // while scrubbing photographs an empty frame.  Warm the exact shipped
+        // variant instead so frame N is identical on the first and tenth seek.
+        const override: Record<string, unknown> = {};
+        for (const field of ABILITY_VFX_LAYER_OVERRIDE_FIELDS) {
+          const value = (segment as unknown as Record<string, unknown>)[field];
+          if (value !== undefined) override[field] = value;
+        }
+        const tuned = Object.keys(override).length > 0
+          ? applyVfxOverrides(doc, override as AbilityVfxLayerOverride)
+          : doc;
+        return [applyAimYaw(tuned, previewAimYaw)];
       });
       this.runtimeVfx?.warmVfxDocs(warmDocs);
       // `warmVfxDocs` creates the exact shipped textures but emits nothing.
       // Wait once here; deterministic seeks below must never race image decode.
       await this.scene.whenReadyAsync();
-      return !this.disposed && seq === this.prepareSeq;
+      if (this.disposed || seq !== this.prepareSeq) return false;
+      return true;
     });
     const result = ready();
     // The save-time GPU audit must not race the React setContent effect. Keep a
@@ -349,6 +389,44 @@ export class VfxForgeStage {
 
   /** Rebuild and deterministically replay from frame zero to the requested time. */
   seek(targetMs: number): void {
+    // The shipped VfxSystem lazily finalises override-specific particle pools
+    // on their first rendered spawn.  A cold deterministic scrub can therefore
+    // consume a front-loaded burst before its texture is drawable, while the
+    // exact same second scrub succeeds. Replay once as a GPU primer and once as
+    // the authoritative frame. Real-time Play uses advance(), so only explicit
+    // authoring seeks pay this correctness cost.
+    clearTimeout(this.seekTimer);
+    const seq = ++this.seekSeq;
+    if (targetMs <= 0 || !this.runtimeVfx) {
+      this.replayTo(targetMs, true);
+      return;
+    }
+    this.replayTo(targetMs, false);
+    // Yield across texture decode/upload (one rAF was still too early on a
+    // cold imported model) before the authoritative burst is emitted. Two
+    // synchronous replays are the same GPU frame and do not fix cold seek.
+    this.seekTimer = window.setTimeout(() => {
+      this.seekTimer = 0;
+      void this.finishPrimedSeek(targetMs, seq);
+    }, 150);
+  }
+
+  private async finishPrimedSeek(targetMs: number, seq: number): Promise<void> {
+    // A modelFx material with a per-instance tint/alpha only exists after the
+    // primer replay. Wait for that exact clone, compile it while it is still
+    // alive, then reset once more: ModelFxRig reuses the prepared instance from
+    // its pool, so the authoritative frame cannot be the opaque white Babylon
+    // placeholder seen by the earlier screenshot audit.
+    await this.scene.whenReadyAsync();
+    const meshes = this.scene.meshes.filter((mesh) => mesh.isEnabled());
+    await Promise.all(meshes.flatMap((mesh) =>
+      mesh.material ? [mesh.material.forceCompilationAsync(mesh)] : [],
+    ));
+    if (this.disposed || seq !== this.seekSeq) return;
+    this.replayTo(targetMs, true);
+  }
+
+  private replayTo(targetMs: number, notify: boolean): void {
     const target = Math.max(0, targetMs);
     this.reset();
     let rendered = false;
@@ -364,7 +442,7 @@ export class VfxForgeStage {
       rendered = true;
     }
     if (!rendered) this.renderScene();
-    this.emitOverlay("已定位");
+    if (notify) this.emitOverlay("已定位");
   }
 
   advance(): number {
@@ -394,8 +472,25 @@ export class VfxForgeStage {
       viewportWidth: this.engine.getRenderWidth(),
       viewportHeight: this.engine.getRenderHeight(),
     });
+    this.applyReviewOrbit();
     this.renderScene();
     this.emitOverlay(wheelDeltaY < 0 ? "鏡頭拉近" : "鏡頭拉遠");
+  }
+
+  /** Toggle between a perpendicular authoring proof and the shipped lane view. */
+  setSideReviewView(enabled: boolean): void {
+    this.sideReviewView = enabled;
+    this.cameraRig.update({
+      dtMs: STEP_MS,
+      localPos: this.cameraFocus(),
+      cursor: null,
+      panKeys: null,
+      viewportWidth: this.engine.getRenderWidth(),
+      viewportHeight: this.engine.getRenderHeight(),
+    });
+    this.applyReviewOrbit();
+    this.renderScene();
+    this.emitOverlay(enabled ? "側向驗收鏡頭" : "實戰俯視鏡頭");
   }
 
   /** Translate a canvas drop point through the shipped camera into script facing offsets. */
@@ -631,6 +726,8 @@ export class VfxForgeStage {
 
   dispose(): void {
     this.disposed = true;
+    clearTimeout(this.seekTimer);
+    this.seekSeq++;
     this.generation++;
     for (const actor of Object.values(this.actors)) this.disposeActor(actor);
     this.runtimeVfx?.dispose();
@@ -684,11 +781,13 @@ export class VfxForgeStage {
       if (this.disposed || this.scene.isDisposed) {
         return;
       }
-      // Match ChampionView/StorePreview exactly: the loaded container is the
-      // source cache, while the scene receives a real cloned instance. Adding
-      // the container originals directly can leave glTF PBR textures ready in
-      // GPU memory but render their meshes with a flat white source-material
-      // state after deterministic reset/seek.
+      // Match ChampionView/StorePreview exactly: champion instances share the
+      // loaded container's source materials.  `cloneMaterials:true` looks like
+      // useful editor isolation, but Babylon can clone a glTF PBR material
+      // before its embedded albedo texture has reached the ready state; a
+      // frame-stepped seek then photographs that clone as a permanent white
+      // silhouette.  The shipped game deliberately uses `false`, and the
+      // Forge must render the same pixels it is accepting.
       const instance = container.instantiateModelsToScene(
         (name) => `forge-${actor.role}-${name}`,
         false,
@@ -773,6 +872,22 @@ export class VfxForgeStage {
     return pending;
   }
 
+  /**
+   * Make the first paused scrub truthful. AssetContainer resolution means the
+   * GLB bytes were parsed, not that its textures/shaders are drawable. Runtime
+   * modelFx clones those source materials on demand; if the source was never
+   * compiled, the exact event frame appears as a solid white body for several
+   * seconds and only fixes itself after real time passes. Compile the source
+   * variants once before timeline controls are enabled. Clones then inherit
+   * ready textures while tint/alpha remain the production rig's responsibility.
+   */
+  private async warmModelFxMaterials(container: AssetContainer): Promise<void> {
+    await this.scene.whenReadyAsync();
+    await Promise.all(container.meshes.flatMap((mesh) =>
+      mesh.material ? [mesh.material.forceCompilationAsync(mesh)] : [],
+    ));
+  }
+
   /** Resolve every referenced doc and GLB before the first deterministic replay. */
   private async preloadScriptAssets(script: VfxScriptDoc): Promise<void> {
     const modelKeys = [...new Set(script.segments.flatMap((segment) =>
@@ -793,9 +908,11 @@ export class VfxForgeStage {
     await Promise.all(modelKeys.flatMap((key) => {
       const doc = this.models.get(key);
       return doc
-        ? [this.loadModelFxContainer(doc.glbPath).catch((error) => {
-            this.emitOverlay(`模型資產預載失敗：${key} · ${String(error)}`);
-          })]
+        ? [this.loadModelFxContainer(doc.glbPath)
+            .then((container) => this.warmModelFxMaterials(container))
+            .catch((error) => {
+              this.emitOverlay(`模型資產預載失敗：${key} · ${String(error)}`);
+            })]
         : [];
     }));
     await Promise.all(vfxIds.map(async (id) => {
@@ -841,6 +958,7 @@ export class VfxForgeStage {
     this.flash = null;
     this.flashUntilMs = 0;
     this.texts = [];
+    this.lastVfxAim = null;
     for (const actor of Object.values(this.actors)) {
       actor.idleAfterMs = 0;
       actor.hiddenUntilMs = 0;
@@ -899,6 +1017,7 @@ export class VfxForgeStage {
       viewportWidth: this.engine.getRenderWidth(),
       viewportHeight: this.engine.getRenderHeight(),
     });
+    this.applyReviewOrbit();
     this.reap();
     if (render) this.renderScene();
     if (notify) this.emitOverlay("播放中");
@@ -979,6 +1098,22 @@ export class VfxForgeStage {
     };
   }
 
+  /**
+   * Orbit the already-computed CameraRig eye around its ground focus. This is
+   * deliberately a presentation-only transform: it does not touch Sim poses,
+   * aim payloads, VFX orientation, dolly, pitch, or shake magnitude.
+   */
+  private applyReviewOrbit(): void {
+    if (!this.sideReviewView) return;
+    const focus = this.cameraFocus();
+    const camera = this.cameraRig.camera;
+    const dx = camera.position.x - focus.x;
+    const dz = camera.position.z - focus.z;
+    camera.position.x = focus.x - dz;
+    camera.position.z = focus.z + dx;
+    camera.setTarget(new Vector3(focus.x, 0, focus.z));
+  }
+
   private renderScene(): void {
     this.scene.render();
   }
@@ -1029,7 +1164,8 @@ export class VfxForgeStage {
       const doc = this.models.get(key);
       if (!doc) return;
       try {
-        await this.loadModelFxContainer(doc.glbPath);
+        const container = await this.loadModelFxContainer(doc.glbPath);
+        await this.warmModelFxMaterials(container);
       } catch (error) {
         this.emitOverlay(`Runtime 模型資產預載失敗：${key} · ${String(error)}`);
       }
@@ -1065,6 +1201,12 @@ export class VfxForgeStage {
       if (this.mode === "script" && this.runtimeVfx) {
         // Render through the exact shipped pool/factory.  The Forge player
         // still owns the authored schedule; VfxSystem owns only presentation.
+        const x = Number(data.x ?? 0);
+        const z = Number(data.z ?? 0);
+        const caster = Number(data.caster);
+        const casterPos = Number.isFinite(caster) ? this.actorForEntity(caster).position : null;
+        const aimYaw = casterPos ? yawDegToward(x - casterPos.x, z - casterPos.z) : null;
+        this.lastVfxAim = `${String(data.vfxId ?? "")} @ ${x.toFixed(2)},${z.toFixed(2)} yaw ${aimYaw?.toFixed(1) ?? "—"}°`;
         this.runtimeVfx.handleEvent(ev, nowMs);
         return;
       }
@@ -1076,6 +1218,7 @@ export class VfxForgeStage {
       const caster = Number(data.caster);
       const casterPos = Number.isFinite(caster) ? this.actorForEntity(caster).position : null;
       const aimYaw = casterPos ? yawDegToward(x - casterPos.x, z - casterPos.z) : null;
+      this.lastVfxAim = `${id} @ ${x.toFixed(2)},${z.toFixed(2)} yaw ${aimYaw?.toFixed(1) ?? "—"}°`;
       void this.spawnVfx(id, x, z, y, overrides, Number(data.durationSec ?? 0) || undefined, aimYaw);
       return;
     }
@@ -1174,8 +1317,9 @@ export class VfxForgeStage {
       (sum, system) => sum + system.getActiveCount(),
       0,
     );
+    const aim = this.lastVfxAim ? ` · ${this.lastVfxAim}` : "";
     const view = eye
-      ? `${status} · ${visible}/${this.scene.meshes.length} meshes · ${particleCount}/${this.scene.particleSystems.length} particles/systems · eye ${eye.x.toFixed(1)},${eye.y.toFixed(1)},${eye.z.toFixed(1)}`
+      ? `${status} · ${visible}/${this.scene.meshes.length} meshes · ${particleCount}/${this.scene.particleSystems.length} particles/systems · eye ${eye.x.toFixed(1)},${eye.y.toFixed(1)},${eye.z.toFixed(1)}${aim}`
       : status;
     this.onOverlay({ flash: this.flash, texts: this.texts, status: view, actors: { ...this.actorStatus } });
   }
