@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "61d88bb0b51d",
+  "hash": "f2dddf5a697d",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -41,7 +41,7 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "c734ee9126e4",
+      "hash": "f9bfbff20d53",
       "size": 8419
     },
     {
@@ -131,8 +131,8 @@
     {
       "id": "combat-feel",
       "path": "config/combat-feel.json",
-      "hash": "f2e5b7ee1d1a",
-      "size": 1425
+      "hash": "4081c749fe32",
+      "size": 1450
     },
     {
       "id": "combo-strikes",
