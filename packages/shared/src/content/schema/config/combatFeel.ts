@@ -344,6 +344,29 @@ export const zConfigCombatFeelDoc = z
         stallTicks: z.number().int().min(1).max(600),
         /** 「走不動」的速度門檻 (units/sec),和 standstill.walkEps 同一個量 */
         stallSpeed: z.number().min(0).max(100),
+        /**
+         * ⭐⭐ 「**誰是我的目標**」的三個決策點（2026-09-01）。
+         *
+         * ⚠️ 它們在此之前是 `sim/targeting.ts` 裡的三個**寫死常數** ——
+         * ⭐ 而 owner 的大目標逐字是「**所有功能都要可 JSON 操作設定**」，
+         * 而 CLAUDE.md 第一守則：「**決策點**是這條守則最常被漏掉的一半」。
+         *
+         * ⛔ 出貨值逐位元等於原本寫死的那三個 ⇒ **行為零改變**。
+         */
+        /** 仇恨窗：幾個 tick 內打過我的人優先。原本 `THREAT_WINDOW_TICKS = 75`（2.5 秒）。 */
+        threatWindowTicks: z.number().int().min(0).max(600).optional(),
+        /**
+         * 近戰的**最小**索敵半徑（單位）。原本 `MELEE_ACQUIRE_FLOOR = 6`。
+         * ⚠️ 原註解：「⛔ 少了它，一半的角色這個功能看起來是死的」——
+         * 6 是 24 單位區域半徑的四分之一，⭐ 且低於每一條遠程的射程帶（6–12）
+         * ⇒ 遠程角色仍然用自己更長的射程。
+         */
+        meleeAcquireFloor: z.number().min(0).max(48).optional(),
+        /**
+         * 自動索到的目標**追多遠**（加在身體半徑上）。原本 `ACQUIRE_LEASH = 2`。
+         * ⚠️ ⭐ **玩家自己下的指令永遠不受牽繩限制** —— ⛔ 這一格只管自動索敵。
+         */
+        acquireLeash: z.number().min(0).max(48).optional(),
         /** 卡住之後的索敵半徑(單位);bot 的 AI_ENGAGE_RANGE 是 48 */
         seekRadius: z.number().min(0).max(200),
         /**

@@ -297,6 +297,17 @@ export interface AutoEngageRules {
    */
   stallSpeed: number;
   /**
+     * ⭐⭐ 「誰是我的目標」的三個決策點（2026-09-01）——
+     * ⛔ 它們在此之前是 `sim/targeting.ts` 的三個**寫死常數**。
+     * ⚠️ 缺席 ⇒ 用 `DEFAULT_AUTO_ENGAGE` 的值（逐位元等於原本寫死的那三個）。
+     */
+    /** 仇恨窗（tick）：原 `THREAT_WINDOW_TICKS = 75`。 */
+    threatWindowTicks: number;
+    /** 近戰的最小索敵半徑：原 `MELEE_ACQUIRE_FLOOR = 6`。 */
+    meleeAcquireFloor: number;
+    /** 自動索到的目標追多遠（加在身體半徑上）：原 `ACQUIRE_LEASH = 2`。 */
+    acquireLeash: number;
+  /**
    * 放大後的索敵半徑(單位)。bot 用的是 48。
    *
    * ⚠️ 有**兩個**入口:走位卡住(`autoEngageActive`,一直都有),以及站著不動
@@ -712,6 +723,10 @@ export const DEFAULT_AUTO_ENGAGE: AutoEngageRules = Object.freeze({
   enabled: true,
   stallTicks: 30,
   stallSpeed: 0.5,
+  // ⭐ 逐位元等於原本寫死在 `sim/targeting.ts` 的那三個常數 ⇒ 行為零改變。
+  threatWindowTicks: 75,
+  meleeAcquireFloor: 6,
+  acquireLeash: 2,
   seekRadius: 48,
   // 出貨 **false** = 今天的行為,一個 tick 都沒有變(見 `idleSeeks` 的說明)。
   // 這一格是 owner 的平衡決策,不是缺陷修正:true 那一側會讓「什麼都不按」的
@@ -989,6 +1004,10 @@ export function normalizeAutoEngageRules(raw: unknown): AutoEngageRules {
     stallTicks: ticks(r.stallTicks, DEFAULT_AUTO_ENGAGE.stallTicks, 1, 600),
     stallSpeed: num(r.stallSpeed, DEFAULT_AUTO_ENGAGE.stallSpeed, 0, 100),
     seekRadius: num(r.seekRadius, DEFAULT_AUTO_ENGAGE.seekRadius, 0, 200),
+    // ⭐ 夾限與 Zod 的上下界**逐字相同**（admin 的鏡射測試會比對）。
+    threatWindowTicks: num(r.threatWindowTicks, DEFAULT_AUTO_ENGAGE.threatWindowTicks, 0, 600),
+    meleeAcquireFloor: num(r.meleeAcquireFloor, DEFAULT_AUTO_ENGAGE.meleeAcquireFloor, 0, 48),
+    acquireLeash: num(r.acquireLeash, DEFAULT_AUTO_ENGAGE.acquireLeash, 0, 48),
     idleSeeks: typeof r.idleSeeks === "boolean" ? r.idleSeeks : DEFAULT_AUTO_ENGAGE.idleSeeks,
     respectLiveSteering:
       typeof r.respectLiveSteering === "boolean"

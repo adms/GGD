@@ -35,7 +35,10 @@
     "seekRadius": 48,
     "idleSeeks": false,
     "respectLiveSteering": true,
-    "ccPausesStall": true
+    "ccPausesStall": true,
+    "threatWindowTicks": 75,
+    "meleeAcquireFloor": 6,
+    "acquireLeash": 2
   },
   "aimAssist": {
     "mobPenalty": 6

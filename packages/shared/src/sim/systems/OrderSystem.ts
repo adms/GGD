@@ -993,7 +993,9 @@ function autoAcquirePass(
     // ⭐ idle 接管拿 `seekRadius`（W4 量過：近戰地板 6 在 bot 平均 40+ 單位遠的
     //    對局裡等於「開了跟沒開一樣」）。
     const idleSeeking = idleEngaged || (ae.enabled && ae.idleSeeks && nav.order === null);
-    const nearRadius = acquireRadius(sc, t.radius);
+    // ⭐ 近戰地板改成一格設定（`autoEngage.meleeAcquireFloor`）——
+    //   ⛔ 在此之前它是 `targeting.ts` 的寫死常數。⚠️ 缺席 ⇒ 原本的 6。
+    const nearRadius = acquireRadius(sc, t.radius, ae.meleeAcquireFloor);
     const radius = holdPosition
       ? reachTo(sc, t.radius, 0) * HOLD_FRACTION
       : (engaging || idleSeeking) && ae.seekRadius > nearRadius
@@ -1023,7 +1025,9 @@ function autoAcquirePass(
     // ---- keep, swap, or drop the held AUTO target ----
     if (nav.attackTarget !== null && nav.attackTargetAuto) {
       const held = rankOf(world, id, nav.attackTarget);
-      const leash = radius + ACQUIRE_LEASH;
+      // ⭐ 牽繩也是一格設定（`autoEngage.acquireLeash`）。⚠️ 缺席 ⇒ 原本的 2。
+      //   ⛔ 玩家自己下的指令**永遠不受牽繩限制** —— 這一格只管自動索敵。
+      const leash = radius + (world.combatFeel.autoEngage?.acquireLeash ?? ACQUIRE_LEASH);
       if (held && held.d2 <= leash * leash) {
         // Still legal and inside the leash. Only a CATEGORICALLY better target
         // (an enemy champion over a mob, or the enemy that just started hitting

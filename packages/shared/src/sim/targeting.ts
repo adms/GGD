@@ -221,10 +221,21 @@ export function forcedTargetOf(
  * fire from range and a melee champion closes in — with no second range number
  * to keep in sync.
  */
-export function acquireRadius(sc: StatsComp | undefined, selfRadius: number): number {
-  if (!sc) return MELEE_ACQUIRE_FLOOR;
+export function acquireRadius(
+  sc: StatsComp | undefined,
+  selfRadius: number,
+  /**
+   * ⭐ 近戰的**最小**索敵半徑。2026-09-01 起它是一格設定
+   * （`config.combat-feel@1` 的 `autoEngage.meleeAcquireFloor`）——
+   * ⛔ 在此之前它是這個檔的一個寫死常數，而 owner 的大目標逐字是
+   * 「**所有功能都要可 JSON 操作設定**」。
+   * ⚠️ 缺席 ⇒ 用 `MELEE_ACQUIRE_FLOOR`（⭐ 逐位元等於原本的值）。
+   */
+  floor: number = MELEE_ACQUIRE_FLOOR,
+): number {
+  if (!sc) return floor;
   const reach = reachTo(sc, selfRadius, NOMINAL_TARGET_RADIUS);
-  return reach > MELEE_ACQUIRE_FLOOR ? reach : MELEE_ACQUIRE_FLOOR;
+  return reach > floor ? reach : floor;
 }
 
 /**
@@ -414,7 +425,10 @@ export function isThreat(world: SimWorld, victim: EntityId, attacker: EntityId):
   // LOOKUP ONLY — never iterate this inner map: its order is first-hit order.
   const tick = world.recentDamagers.get(victim)?.get(attacker);
   if (tick === undefined) return false;
-  return world.tick - tick <= THREAT_WINDOW_TICKS;
+  // ⭐ 仇恨窗是一格設定（`autoEngage.threatWindowTicks`）——
+  //   ⛔ 在此之前是這個檔的寫死常數。⚠️ 缺席 ⇒ 原本的 75。
+  const w = world.combatFeel.autoEngage?.threatWindowTicks ?? THREAT_WINDOW_TICKS;
+  return world.tick - tick <= w;
 }
 
 /** The sort keys for one candidate, or null when it is not a legal target. */

@@ -477,6 +477,11 @@ describe("GH#216 卡住就接敵 —— 後台文件真的會生效", () => {
         idleSeeks: true,
         respectLiveSteering: false,
         ccPausesStall: false,
+        // ⭐ 2026-09-01 —— 瞄準的三個決策點變成設定。
+        //   ⚠️ 逐格填**與出貨相反**的值（出貨 75 / 6 / 2），照這個檔頭的規矩。
+        threatWindowTicks: 40,
+        meleeAcquireFloor: 9,
+        acquireLeash: 5,
       },
     }).autoEngage;
     expect(rules).toEqual({
@@ -487,6 +492,9 @@ describe("GH#216 卡住就接敵 —— 後台文件真的會生效", () => {
       idleSeeks: true,
       respectLiveSteering: false,
       ccPausesStall: false,
+      threatWindowTicks: 40,
+      meleeAcquireFloor: 9,
+      acquireLeash: 5,
     });
     // 每一格都和出貨預設不同 —— 否則上面那個 `toEqual` 有一半是被預設值餵飽的。
     for (const k of Object.keys(DEFAULT_AUTO_ENGAGE) as (keyof typeof DEFAULT_AUTO_ENGAGE)[]) {
