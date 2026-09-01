@@ -86,4 +86,62 @@ describe("Discord 公告發成功就要記帳（owner 2026-09-01：每個版本�
         `帳本現況:\n${after}`,
     ).toBe(true);
   }, 90_000);
+
+  /**
+   * ⭐⭐ 反方向 —— 而它是 **GH#907** 的那一半。
+   *
+   * ⚠️ 上面那一條證明「發成功會記帳」。⛔ 它證明不了「記過帳就不再發」——
+   *   ⭐ 而 BMPNDD **自己就呼叫這支腳本兩次**（1/4 push 那一段 + 3/4 公告那一段），
+   *   ⇒ 2026-09-01 玩家在 Discord 上收到**同一則**「系統優化更新」兩則，
+   *   ⛔ 而兩次都回 HTTP 204 ——「成功」在這裡不是任何東西的證據。
+   *
+   * ⭐ 量的是**伺服器收到幾個請求**，⛔ 不是腳本印了什麼
+   *   （失敗形態⑦：掃屬性代替掃行為 —— 印出「不重複發」與「真的沒送」是兩件事）。
+   *
+   * MUTATION LOG（落地前跑過）：
+   *   · 把 `grep -q "^${NOW}\t"` 前置檢查整段拿掉 → 🔴（hits 1，⛔ 不是 0）
+   */
+  it("★ ⭐ 帳本上已經有這一版 ⇒ **一個請求都不送**（GH#907：BMPNDD 呼叫它兩次）", async () => {
+    let hits = 0;
+    const srv = createServer((_q, s) => { hits += 1; s.writeHead(204).end(); });
+    await new Promise<void>((ok) => srv.listen(0, "127.0.0.1", ok));
+    const port = (srv.address() as { port: number }).port;
+
+    const dir = mkdtempSync(join(tmpdir(), "ggd-announce-dup-"));
+    const ledger = join(dir, "_announced.tsv");
+    const stub = join(dir, "bin");
+    mkdirSync(stub, { recursive: true });
+    writeFileSync(join(stub, "gh"), '#!/bin/sh\ncase "$*" in *--json*) echo "[]";; *) echo "";; esac\n');
+    chmodSync(join(stub, "gh"), 0o755);
+
+    const tags = execFileSync("git", ["tag", "--sort=-v:refname"], { cwd: ROOT, encoding: "utf8" })
+      .split("\n").filter(Boolean);
+    const now = tags[0]!;
+    // ⭐ 帳本上**已經有**這一版 —— 也就是「第一次已經發過了」的世界。
+    writeFileSync(ledger, `版號\t日期\t一句\n${now}\t2026-09-01\t（上一次發過了）\n`);
+
+    try {
+      await run("bash", ["scripts/release-note-players.sh", "--post", "--since", tags[2]!], {
+        cwd: ROOT, encoding: "utf8", timeout: 60_000,
+        env: {
+          ...process.env,
+          GGD_DISCORD_WEBHOOK: `http://127.0.0.1:${port}/hook`,
+          GGD_ANNOUNCE_LEDGER: ledger,
+          PATH: `${stub}:${process.env.PATH ?? ""}`,
+        },
+      });
+    } catch {
+      /* 同上：非零離開與這條守衛無關 */
+    } finally {
+      srv.close();
+    }
+
+    expect(
+      hits,
+      `⛔⛔ ${now} 帳本上已經有了，而這支腳本**還是送了 ${hits} 個請求**\n` +
+        `⇒ 玩家會在 Discord 收到重複公告（GH#907）。\n` +
+        `⭐ 修在**發送端**的帳本前置檢查，⛔ 不是叫呼叫端少呼叫一次 ——\n` +
+        `   BMPNDD 那兩次呼叫各有各的理由，而「這一版發過了嗎」只有帳本答得出來。`,
+    ).toBe(0);
+  }, 90_000);
 });

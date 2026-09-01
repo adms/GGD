@@ -178,6 +178,29 @@ HOOK="${GGD_DISCORD_WEBHOOK:-}"
 [ -n "$HOOK" ] || { echo "⛔ 沒設 GGD_DISCORD_WEBHOOK —— 去 Discord 伺服器設定→整合→Webhook 建一個" >&2; exit 1; }
 [ -n "$LINES" ] || { echo "⛔ 沒有內容可發（零張票寫了玩家那一句）" >&2; exit 1; }
 
+# ── ⭐ 已經公告過就不要再發一次（GH#907）─────────────────────────────
+#
+# ⚠️ 這一段在 2026-09-01 之前不存在,而缺它的代價是**玩家收到重複訊息**:
+#   BMPNDD 自己就呼叫這支腳本**兩次**(1/4 push 那一段 + 3/4 公告那一段),
+#   ⇒ 同一則「系統優化更新」在 Discord 出現兩則,⛔ 而兩次都回 HTTP 204「成功」。
+#
+# ⭐ 判準是**帳本**,⛔ 不是「腳本自己記得跑過沒有」——
+#   帳本是跨行程的(bmpndd 的兩次呼叫是兩個獨立的 shell),
+#   而「這一版發過了嗎」這個問題只有帳本答得出來。
+#
+# ⚠️ ⛔ 刻意**不**靜默跳過(fail-open 沒錯,靜默才是缺陷):
+#   它印出帳本上那一列,讓讀的人看得出來「為什麼這一次沒發」。
+# ⭐ 逃生口 GGD_ANNOUNCE_FORCE=1 —— 真的要補發時用(例:上一次發到錯的頻道)。
+if [ "${GGD_ANNOUNCE_FORCE:-0}" != "1" ]; then
+  _LG="${GGD_ANNOUNCE_LEDGER:-docs/_release/_announced.tsv}"
+  if [ -f "$_LG" ] && grep -q "^${NOW}	" "$_LG"; then
+    echo "⭐ $NOW 已經公告過了 ⇒ ⛔ 不重複發"
+    echo "    帳本: $(grep -m1 "^${NOW}	" "$_LG" | cut -f1,2)"
+    echo "    真的要補發: GGD_ANNOUNCE_FORCE=1 $0 --post"
+    exit 0
+  fi
+fi
+
 BODY=$(printf '## 🎮 %s 更新\n\n%s' "$NOW" "$LINES")
 JSON=$(python3 -c 'import json,sys; print(json.dumps({"content": sys.stdin.read()[:1900]}))' <<< "$BODY")
 CODE=$(curl -s -o /tmp/dc.out -w '%{http_code}' -H 'Content-Type: application/json' -d "$JSON" "$HOOK")
