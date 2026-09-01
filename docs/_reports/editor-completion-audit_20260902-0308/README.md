@@ -1,6 +1,6 @@
 # GGD 本機技能／VFX Editor 完工稽核
 
-狀態：2026-09-02 04:09（Asia/Taipei）
+狀態：2026-09-02 04:24（Asia/Taipei）
 
 Editor branch：`feat/vfx-forge-codex`
 
@@ -16,9 +16,11 @@ Codex 擁有的 Electron 本機 Editor、Forge、VFX Forge、遠端唯讀 Base�
 fail closed，因為 GGD main 尚未交付 source adapter、對齊後的 runtime-direct package
 receipt、G2 importer、完整 asset manifest、遠端 effective VFX limits 與正式英雄模型映射。
 
-因此目前正確狀態不是「Editor 壞掉」，也不是「整條產品已可上線」：Editor-owned
-實作面與 macOS／Windows 實包啟動證據已完成；端到端 production Promote／apply
-仍須等 Main 回交，再用本報告最後一節重驗後才能宣告整體完成。
+因此目前正確狀態不是「Editor 壞掉」，也不是「整條產品已可上線」：目前出貨 scope 的
+Editor UI、ability/item package builder 與 macOS／Windows 實包啟動證據已完成；
+`vfx-script@1` production Package／review receipt、單檔 JSON 的 server-side safe wrapping，
+以及端到端 production Promote／apply 仍須先等 Main contract kit 回交，再由 Editor 做一次
+fixture-driven integration，最後用本報告最後一節重驗。
 
 ## 本輪驗收結果
 
@@ -55,7 +57,7 @@ receipt、G2 importer、完整 asset manifest、遠端 effective VFX limits 與�
 | 八招是 Editor 能力 fixture，不直接改遊戲技能；AI 變更先經一頁人工批核 | 已證明（本機）；Production 授權待 Main | fixture 永久 non-promotable；候選 hash 綁定 JSON＋frame proof；Admin 一頁顯示與評分。Production actor/auth/audit 與 generator source Promote 列在 Main handoff P0-4。 |
 | 圖片、魔法陣、模型貼圖不能帶不透明背景 | 已證明 | VFX asset safety gate、palette probe、frame backdrop audit；最新八招報告含 framebuffer hygiene。失敗素材不能加入／送審。 |
 | 顯示實際生效的粒子、Ribbon、生命週期、emitter、回合清理限制，不抄常數 | 已證明（本機）；遠端 profile 待 Main | `runtimeLimits.ts` 直接讀 shipped renderer/config resolver；測試修改 vfx-budget/vfx-cleanup 後畫面值同步改變。正式遠端 profile 的同源 `effectiveVfxLimits` 列在 Main handoff P1-2。 |
-| 單檔 JSON、完整覆蓋、選取部分更新、一鍵 ZIP | 已證明；Production buttons 依契約 fail closed | `ExportCenterPage` 三模式與單檔按鈕有 render-tree 守衛；builder 產 deterministic JCS Package JSON／STORE ZIP。Full 擋 implicit delete；delta 分離 selection roots 與 changes、只驗選取 closure、加入 changed forward dependencies、排除未選草稿、以 exact Base pin omitted refs。 |
+| 單檔 JSON、完整覆蓋、選取部分更新、一鍵 ZIP | ability/item scope 已證明；VFX production package 尚未證明 | `ExportCenterPage` 三模式與單檔按鈕有 render-tree 守衛；builder 對 ability/item 產 deterministic JCS Package JSON／STORE ZIP。Full 擋 implicit delete；delta 分離 selection roots 與 changes、只驗選取 closure、加入 changed forward dependencies、排除未選草稿、以 exact Base pin omitted refs。目前 `RuntimeAuthoringCollection` 只有 abilities/items；`vfx-script@1` 須等 Main registry/G5 contract 後接入。裸單檔 JSON 目前只是下載；Main 需用 `validate-single` 包成 server-side canonical delta plan，不能直接 PUT。 |
 | 嚴格自我驗證 | 已證明 | shared Zod、exact refs、JCS/package/archive hashes、ZIP safety、完整 Base collection/doc hashes、delta closure、UI reachability、4941 格雙向 coverage 與 README receipt 守衛。Importer 仍須獨立重驗。 |
 | 不做 Warcraft 3 完整地圖編輯器 | 已遵守 | 沒有地形筆刷、單位擺放、region/trigger authoring 或素材匯入工作流。Contract 中 map/arena 的一般 schema 表單與檢視器只是內容文件 coverage，不是地圖編輯子系統。 |
 | 不直接修改遊戲主程式 | 已遵守 | Editor branch 不推 main；main-owned sim/schema/content/API 接縫集中在 `MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md`，由 Main 在自己的 feature branch 重做。 |
@@ -91,3 +93,7 @@ package；所有 omitted refs 必須與完整 exact Base snapshot 相同，否�
 9. 用一個真 package 走 Editor JSON 與 ZIP 各一次 validate/apply/read-back/rollback，semantic digest 相同；再重跑八招與一項 template multi-card 技能的實際瀏覽器視覺驗收。
 10. Windows x64 packaged smoke 已由 run `33552053135` 證明；公開發行前另驗
     Authenticode 簽章（不影響本機驗收版的功能完成判定）。
+11. Main contract registry 明示 `vfx-script@1` planned→G5 supported；Editor 對同一 generated
+    fixture 完成 VFX Package／review-required receipt integration，且 fixture 永久不可 Promote。
+12. Admin 單檔 JSON 走 `validate-single` 產生 canonical single-root delta plan；缺 active ref／
+    dependency drift 會拒絕，成功後仍沿用同一 apply／rollback state machine。

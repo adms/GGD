@@ -1,8 +1,8 @@
 # 遊戲主程式載入 Editor JSON／ZIP 的修改建議
 
-狀態：**Revision 2.7 — runtime-direct Draft 0.5 delta；verified-plan 兩階段 apply；AI 技能變更先審後上**
+狀態：**Revision 2.8 — 一次性交付 contract kit；runtime-direct／VFX／來源／審查接縫前置對齊**
 
-最後驗證：2026-09-02 04:00（Asia/Taipei）
+最後驗證：2026-09-02 04:24（Asia/Taipei）
 
 適用範圍：GGD 遊戲主程式、後台與 Content Import API；不是 Editor UI 實作說明。
 
@@ -130,6 +130,25 @@ writer，都不能算 HITL 權限邊界。
 `vfx-scripts`。正式環境還必須讓 AI／Editor 的 credential 只有「提案」權限，人工 verdict
 與 Promote 使用不同的 Admin 權限，才能把省略標頭或直接呼叫 writer 的繞過路徑封死。
 
+### 1.6 Main 應一次回交 contract kit，不逐 route 對接
+
+Main 在 G0 第一批應從 shared machine schema 產生一包 conformance fixtures，讓 Editor、
+Go platform、Content API 與 CI 讀同一份資料：public／authenticated profiles、contract index、
+完整 Base bundle、asset manifest、resolved appearance、source-adapter descriptors／plans、
+bootstrap／full／delta Package JSON＋STORE ZIP、operation success／error／stale／rollback receipts、
+AI proposal／evidence／verdict fixtures，以及 planned `vfx-script@1` package。
+
+Contract index 至少描述每個 authoring representation、operation endpoint、media type、auth scope、
+stage、mode、quota、request／response schema 與完整 digest。第一批只開 ability／item G2，但
+store／diff／audit／operation 不可 hard-code 成兩種；`vfx-script@1`、未來 Product／Chain 與
+planned gameplay mechanisms 先以 registry row 表達 planned／unsupported。如此 G3–G5 只改
+capability state 與新增 implementation，不必重做 importer wire contract。
+
+Main 同時提供本機 reference server／fixture harness。Editor 只對 fixture contract 寫 client，
+production 使用同一 conformance suite；不能用散文範例、短 digest 或人工貼 JSON 充當交接。
+完整回交清單見
+`docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md` 第 0 節。
+
 ## 2. 唯一實作順序與可啟用範圍
 
 不再維護另一套 P0–P3 優先級；只使用 G0–G5，避免同一工作在不同章節出現互相矛盾的等級。
@@ -145,7 +164,8 @@ writer，都不能算 HITL 權限邊界。
 
 任何 package 的可啟用階段取其所有變更與依賴所需的最高階段。例：純技能、全部 capability 已 supported、無 curation 變更，可在 G2 啟用；道具取得性變更至少 G3；partial target-set 或 evade 語意至少等對應 G4 閘門關閉；VFX document 至少 G5。
 
-Raw runtime JSON 永遠只供檢視／除錯，不屬於上述 production apply 路徑。
+Raw runtime JSON 本身永遠不是 production apply authority；它只能供檢視／除錯，或進入
+`validate-single` 由 server 包裝成 canonical package／verified plan，不能被直接 PUT 到 ACTIVE。
 
 ## 3. G0：先把契約關閉
 
@@ -206,9 +226,20 @@ Actor、environment、issuedAt／expiresAt、一次性 consumed state 不塞進 
 
 ### 3.4 Raw JSON 與「單檔匯入」
 
-Package endpoint 收到裸 `ability@1`／`item@1` 必須回 `RAW_RUNTIME_DOCUMENT_NOT_A_PACKAGE`。Runtime-direct 是 package 內 canonical document 的 authority，並不表示可以省略 manifest、Base、dependency closure、receipts 與 operation contract；伺服器不得猜測並包裝 raw document。
+Package endpoint 收到裸 `ability@1`／`item@1` 必須回
+`RAW_RUNTIME_DOCUMENT_NOT_A_PACKAGE`。Runtime-direct 是 package 內 canonical document 的
+authority，並不表示可以省略 manifest、Base、dependency closure、receipts 與 operation
+contract；通用 Package route 不可猜測 raw document。
 
-若後台要提供「單檔 JSON 匯入」，Editor 應輸出一個只選一個 root、但仍含完整 closure 與 manifest 的 **Package JSON**。使用者看到的是一個 JSON 檔，系統仍走同一條安全 pipeline。
+但產品明確需要後台載入單檔 JSON，因此 Main 另提供 versioned `validate-single` convenience
+route。它只收一份已知 runtime schema 與 authenticated active target／expected generation，
+server 從 immutable ACTIVE snapshot 取得 exact external dependencies，建立 canonical single-root
+delta Package、跑同一個 processor 並回 verified plan；apply 仍只消耗 plan。若 ref 不在 ACTIVE、
+依賴 hash 漂移、文件需要另一份未上線變更或 representation 尚未 supported，就拒絕並要求
+完整 Package JSON／ZIP。第一批只允許 ability／item；`vfx-script@1` 等 G5。
+
+Editor 也可輸出只選一個 root、但仍含完整 closure 與 manifest 的 Package JSON。兩種 UI 都能
+讓使用者看到「一個 JSON 檔」，但沒有任何路徑直接 PUT raw document 或略過 Base／closure／CAS。
 
 ### 3.5 Owner source、typed mechanics 與等級政策
 
@@ -255,6 +286,7 @@ Owner regression corpus 只以 fixture-set id／digest／scenario digests 引用
 - `GET /api/v1/content-import/active/target-profile`
 - `GET /api/v1/content-import/health`
 - `POST /api/v1/content-import/validate`
+- `POST /api/v1/content-import/validate-single`
 - `POST /api/v1/content-import/apply`
 - `POST /api/v1/content-import/rollback`
 - `GET /api/v1/content-import/operations/<operationId>`
@@ -266,7 +298,9 @@ Owner regression corpus 只以 fixture-set id／digest／scenario digests 引用
 G0 必須固定：
 
 - Package JSON／ZIP 的 vendor Content-Type、允許的 content sniffing、upload checksum 與錯誤碼；bare `ggd-editor-package@1` manifest 不得冒充完整 Package JSON envelope。
-- `ggd-content-validate-request@1`、`ggd-content-apply-request@1`、`ggd-content-rollback-request@1`、`ggd-content-operation@1` 與 error envelope 的 Zod schema。
+- `ggd-content-validate-request@1`、`ggd-content-validate-single-request@1`、
+  `ggd-content-apply-request@1`、`ggd-content-rollback-request@1`、
+  `ggd-content-operation@1` 與 error envelope 的 Zod schema。
 - apply 的 `planDigest`、expected Base/profile pins、Idempotency-Key 與 retry semantics。
 - rollback 的 target activation、expected current activation 與 reason。
 

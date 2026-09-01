@@ -1,6 +1,6 @@
 # GGD Editor Package Draft 0.5 runtime-direct delta
 
-狀態：2026-09-02 04:00（Asia/Taipei）
+狀態：2026-09-02 04:24（Asia/Taipei）
 
 用途：這是給 Main 原子升級 `GGD_EDITOR_PACKAGE_SPEC.md`、shared machine schema、
 target profile 與 importer 的**差異規格**。它不是新的獨立 wire contract，也不能單獨拿來
@@ -66,6 +66,13 @@ semantic digest 相同，以及 STORE ZIP transport safety。
 `GET /api/v1/content-import/operations/:operationId` 到 `VALIDATED` 後才能取得 server-side
 `planDigest`、candidate digests、expected active generation 與 expiry。
 
+產品另需要「後台載入單檔 JSON」，因此可提供 versioned `validate-single` convenience route。
+它不是 Package route：只收一份 supported runtime document 與 authenticated ACTIVE pins，由
+server 從 immutable active snapshot 解 exact dependencies、產生 canonical single-root delta
+Package，再進入上述同一 validate pipeline。它不得直接寫 content；缺依賴、dependency drift、
+需要另一份本機變更或 representation 尚未 supported 時必須拒絕。第一批只收 ability／item，
+`vfx-script@1` 等 G5。
+
 ### Apply
 
 `POST /api/v1/content-import/apply` **不得再次接收 package bytes**。它只引用同一 actor
@@ -114,7 +121,7 @@ Public discovery profile 不得冒充 authenticated active receipt；短 digest 
 
 1. `GGD_EDITOR_PACKAGE_SPEC.md` 升 Draft 0.5 並整合本 delta。
 2. `packageSchema.ts` 與 request／operation／result／error Zod。
-3. Editor target-profile machine schema與產生器；package spec label／digest 跟著文件生成。
+3. Editor target-profile machine schema 與產生器；package spec label／digest 跟著文件生成。
 4. Importer validate／apply／rollback／active／runtime-bundle／operation routes。
 5. Shared golden fixtures：Package JSON 與 ZIP semantic equality、runtime-direct manifest、
    two-phase plan consumption、stale/expired/consumed plan、idempotency mismatch。
@@ -122,3 +129,22 @@ Public discovery profile 不得冒充 authenticated active receipt；短 digest 
 
 上述任一住處未同步時，`implementedStage`、`supportedModes` 與 `deltaExportAllowed` 必須維持
 目前誠實值，Editor 也會繼續 fail closed。
+
+## 7. Draft 0.5 現在就要保留的 representation registry
+
+Runtime-direct V1 只允許 `ability@1`／`item@1`，但 package/store/operation/audit 的 machine
+shape 不得 hard-code 成只有這兩種。Target profile 的 contract index 應以 registry 宣告：
+
+- `ability@1`、`item@1`：G2 supported（item 的玩家取得性另受 G3）。
+- `vfx-script@1`：planned、最低 G5；package kind 固定為 `vfx-script`。既有 `vfx` 若保留，
+  只代表未來 emitter `vfx@1` document authoring；兩者不可共用模糊字串。VFX script
+  production promotion policy 預設 `review-required`。
+- effect-template／Product／Chain：planned；目前不要求、不 compile、不建立佔位文件。
+
+Importer 遇 planned／unsupported kind 回穩定 diagnostic，不用 404、silent ignore 或 generic
+schema error。等 G3–G5 實作後，只升 registry/capability state 與對應 processor；verified-plan、
+CAS、audit、operation polling、idempotency 與 activation wire contract 保持不變。
+
+同時產一份 planned `vfx-script@1` golden package，驗證現在必定被 production apply 拒絕；
+未來 G5 轉 supported 時，沿用同一 fixture 反轉期待值。這能防止 Main 做完 G2 後，為接 VFX
+Forge 又建立第二套 upload／review／activation 管線。
