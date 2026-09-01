@@ -5530,14 +5530,34 @@
     ]
   },
   "deltaExportAllowed": false,
+  "implementedStage": "G1",
+  "stageBlockers": [
+    {
+      "id": "importer-endpoints",
+      "why": "六條匯入端點（validate/apply/rollback/active/runtime-bundle/operations）要全部掛上。"
+    },
+    {
+      "id": "game-revision",
+      "why": "`base.gameRevision` 是 full/delta 的 pin 之一 —— 沒有它，一包 delta 就無法宣告它是對**哪一個遊戲版本**建的。"
+    },
+    {
+      "id": "active-snapshot",
+      "why": "還沒有任何 activation ⇒ ⭐ 沒有 base 可以 pin ⇒ **只有 bootstrap 是合法的**（⛔ 這不是缺陷，是這台的真實狀態）。"
+    },
+    {
+      "id": "authoring-digest",
+      "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
+    }
+  ],
+  "migrationFingerprint": "5e3d05325a3f",
   "supportedModes": [
     "bootstrap"
   ],
   "unavailable": [
     {
       "field": "deltaExportAllowed",
-      "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
+      "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "8cddce000195"
+  "profileDigest": "d337d14e4cca"
 }

@@ -59,6 +59,7 @@ import {
   extractEntry,
   readCentralDirectory,
 } from "./zipReader";
+import { createHash } from "node:crypto";
 import { ImportStore } from "./importStore";
 import type { ActivePointer } from "./importStore";
 import {
@@ -250,6 +251,39 @@ export function registerImportRoutes(
     dir: opts.importDir ?? resolve(root, "..", "data", "content-import"),
   });
 
+  /**
+   * ⭐ profile 要的那幾格「這台**現在**是什麼狀態」。
+   *
+   * ⚠️ ⭐ `migrationFingerprint` 的語意是「**一包 bootstrap 是對哪一套 schema 建的**」
+   * ⇒ 它算的是**出貨的文件面**（`docSurface`，從 Zod 推導）。
+   * ⛔ 不是一個手寫的版本字串：schema 改了而字串沒改 ⇒ 一包過期的 bootstrap
+   * 會被當成當前的收下。
+   */
+  const g2Facts = (): {
+    active: { hasSnapshot: boolean; activationDigest: string | null; authoringDigest: string | null };
+    migrationFingerprint: string;
+  } => {
+    const a = store.active();
+    const caps = buildCapabilityManifest();
+    return {
+      active: {
+        hasSnapshot: a !== null,
+        activationDigest: a?.activationDigest ?? null,
+        // ⭐ authoring corpus 的 digest ＝ ACTIVE 那一棵樹的 digest。
+        //   ⚠️ 今天它與 `activationDigest` 是同一個值（一次 apply 換一整棵樹）——
+        //   ⛔ 而兩格**刻意分開**：之後 authoring store 與 activation 會分家。
+        authoringDigest: a?.activationDigest ?? null,
+      },
+      migrationFingerprint: sha12(
+        JSON.stringify(caps.docSurface) + "|" + JSON.stringify(caps.templateFamilies),
+      ),
+    };
+  };
+
+  /** ⭐ 與 repo 其餘 digest 同一個政策（sha256 前 12 hex）。 */
+  const sha12 = (t: string): string =>
+    createHash("sha256").update(t, "utf8").digest("hex").slice(0, 12);
+
   const { limits, clamped } = clampImportLimits(opts.limits);
   if (clamped.length > 0) {
     app.log.warn({ clamped }, "content-import: 匯入預算超出允許範圍，已夾回");
@@ -264,6 +298,8 @@ export function registerImportRoutes(
         content,
         limits: opts.limits,
         authoringProcessor,
+        ...g2Facts(),
+        importerEndpoints: IMPORTER_ENDPOINTS,
         ...(opts.reloadMode !== undefined
           ? { reloadMode: opts.reloadMode }
           : {}),
@@ -336,6 +372,9 @@ export function registerImportRoutes(
           limits: opts.limits,
           // ⭐ 與上面 `capabilities` **同一個**物件 ⇒ ⛔ 兩份 receipt 不可能漂。
           authoringProcessor,
+          // ⭐ 與上面**同一支** `g2Facts()` ⇒ ⛔ 兩份 profile 不可能對 stage 說不同的話。
+          ...g2Facts(),
+          importerEndpoints: IMPORTER_ENDPOINTS,
           ...(opts.reloadMode !== undefined
             ? { reloadMode: opts.reloadMode }
             : {}),
@@ -399,6 +438,26 @@ export function registerImportRoutes(
 // ══════════════════════════════════════════════════════════════════════════
 // ⭐⭐ G2：validate / apply / rollback / active / runtime-bundle / operations
 // ══════════════════════════════════════════════════════════════════════════
+
+/**
+ * ⭐ **六條匯入端點**，一張表。
+ *
+ * ⚠️ ⛔ 它不是為了好看：`target profile` 要把它交出去（規格 §3「machine-readable
+ * importer endpoints」）—— ⭐ 而 profile 與實際掛上去的路線必須是**同一份資料**，
+ * ⛔ 不是兩份會漂的清單。閘：`importRoutesG2.test.ts` 逐條 inject 打得到。
+ */
+export const IMPORTER_ENDPOINTS: readonly { method: string; path: string }[] = Object.freeze([
+  { method: "POST", path: "/validate" },
+  { method: "POST", path: "/apply" },
+  { method: "POST", path: "/rollback" },
+  { method: "GET", path: "/active" },
+  { method: "GET", path: "/active/target-profile" },
+  { method: "GET", path: "/active/runtime-bundle" },
+  { method: "GET", path: "/operations/:operationId" },
+  { method: "GET", path: "/audit" },
+  { method: "GET", path: "/health" },
+  { method: "GET", path: "/capabilities" },
+]);
 
 interface G2Deps {
   readonly root: string;

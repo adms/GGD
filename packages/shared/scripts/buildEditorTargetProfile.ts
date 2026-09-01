@@ -36,6 +36,12 @@
  */
 import { effectiveVfxLimits } from "../src/content/import/effectiveVfxLimits";
 import { buildAuthoringProcessor } from "../src/content/import/authoringProcessor";
+import {
+  deltaExportAllowedOf,
+  resolveImplementedStage,
+  supportedModesOf,
+} from "../src/content/import/g2Readiness";
+import type { G2Facts } from "../src/content/import/g2Readiness";
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { writeProduct } from "../src/ops/writeProduct";
@@ -380,15 +386,39 @@ export function buildEditorTargetProfile(): Record<string, unknown> {
     });
   }
 
-  // ── ⑨ 是否允許 production delta ────────────────────────────────────────
-  //    ⛔ 硬性 false：delta 需要一個真的 authoring store base，而正式站沒有。
-  //    這一行是**契約**不是設定 —— 對方最該先讀的一行（見 PACKAGE_SPEC §4.2）。
-  const deltaExportAllowed = false;
+  // ── ⑨ stage / modes / delta —— ⭐ **推導**，⛔ 不是三個手寫的值 ──────────
+  //
+  // ⚠️ ⭐ 這一份是**靜態**profile（跟著 `content:build` 走），所以它看不到
+  //    runtime 的 ACTIVE ⇒ `hasActiveSnapshot` 永遠是 false ⇒ 永遠是 G1、
+  //    永遠只有 bootstrap。⭐ 而那**不是寫死**：它是同一支
+  //    `resolveImplementedStage()` 在「這一份沒有 runtime 事實」時算出來的答案。
+  //    ⇒ 對面想知道**這一台現在**支不支援 delta，要讀
+  //    `GET /api/v1/content-import/active/target-profile`（那一份有 ACTIVE）。
+  const authoringProcessor = buildAuthoringProcessor(REPO);
+  const g2: G2Facts = {
+    hasActiveSnapshot: false,
+    activationDigest: null,
+    authoringDigest: null,
+    // ⭐ 靜態 profile **刻意沒有** gameRevision —— 它是建置戳記（吃環境），
+    //   而任何吃環境的欄位都會讓 `--check` 的逐位元比對永遠不相等
+    //   ⇒ 那條閘只能被放寬成模糊比對，⛔ 而一條被放寬的閘等於沒有閘。
+    //   ⇒ ⭐ 它變成一個 `stageBlocker`（⛔ 不是一個假值）。
+    gameRevision: null,
+    migrationFingerprint: sha12(
+      JSON.stringify(caps.docSurface) + "|" + JSON.stringify(caps.templateFamilies),
+    ),
+    endpointsMounted: false,
+    processorFingerprint: authoringProcessor.fingerprint,
+    assetManifestDigest: assetManifest === null ? null : sha12(JSON.stringify(assetManifest)),
+  };
+  const stageResolved = resolveImplementedStage(g2);
+  const deltaExportAllowed = deltaExportAllowedOf(g2);
   unavailable.push({
     field: "deltaExportAllowed",
     reason:
-      "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。" +
-      "delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。",
+      "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。" +
+      "⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 " +
+      "`GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。",
   });
 
   const body = {
@@ -632,11 +662,14 @@ export function buildEditorTargetProfile(): Record<string, unknown> {
     //    ⛔ 取代 `compiler.{contractVersion,fingerprint}` 那一對 null。
     //    ⚠️ 指紋是**量出來的**（七個共用實作面的位元組），⛔ 不是手寫版本字串：
     //      一個手寫的版本會在 schema 改了而版本沒 bump 時**靜靜地繼續說「一樣」**。
-    authoringProcessor: buildAuthoringProcessor(REPO),
+    authoringProcessor,
 
     // ⑨
     deltaExportAllowed,
-    supportedModes: ["bootstrap"],
+    implementedStage: stageResolved.stage,
+    stageBlockers: stageResolved.missing.map((m) => ({ id: m.id, why: m.why })),
+    migrationFingerprint: g2.migrationFingerprint,
+    supportedModes: supportedModesOf(g2),
 
     /** 每一個 null 的出處。⚠️ 沒有這一格，null 跟「忘了填」長得一模一樣。 */
     unavailable,

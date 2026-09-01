@@ -283,12 +283,60 @@ describe("G2 routes —— 六條走真的 HTTP", () => {
     expect(r.json().code).toBe("NO_ACTIVE_SNAPSHOT");
   });
 
-  it("★★ ⭐ `implementedStage` 仍然是 **G1** —— ⛔ 六條 route 活著不等於 G2", async () => {
+  it("★★ ⭐ `implementedStage` 是**推導**的 —— ⛔ 六條 route 活著不等於 G2", async () => {
     const r = await get(`${P}/health`);
     expect(
       r.json().implementedStage,
-      "⛔⛔ 提前宣告 G2 ⇒ ⭐ 對面會打開 full/delta，而 base pin 那幾格還是 null",
+      "⛔⛔ 還沒有任何 activation 就宣告 G2 ⇒ ⭐ 對面會打開 full/delta，而 base pin 是 null",
     ).toBe("G1");
+    // ⭐ 而 `G1` **要說得出缺哪幾條** —— ⛔ 一個沒有原因的 G1 讓對面只能猜。
+    const prof = await get(`${P}/active/target-profile`);
+    const blockers = (prof.json().stageBlockers as { id: string }[]).map((b) => b.id);
+    expect(blockers, "⛔ 沒有列出缺哪幾條").toContain("active-snapshot");
+    expect(prof.json().supportedModes).toEqual(["bootstrap"]);
+    expect(prof.json().deltaExportAllowed).toBe(false);
+    // ⭐ 而端點表是**交出去的**（規格 §3「machine-readable importer endpoints」）。
+    const eps = (prof.json().importerEndpoints as { path: string }[]).map((e) => e.path);
+    expect(eps).toContain("/apply");
+    expect(eps).toContain("/rollback");
+  });
+
+  it("★★ ⭐⭐ **apply 過一次之後**，stage 自己會變 —— ⛔ 不是有人去改一個常數", async () => {
+    // ⚠️ ⭐ 這一條是整個 `g2Readiness` 存在的理由：
+    //   一個手寫的 `implementedStage` **不會**因為世界變了而變，
+    //   ⛔ 它只會在有人覺得「差不多做完了」的那天被改掉。
+    const before = await get(`${P}/active/target-profile`);
+    expect(before.json().implementedStage).toBe("G1");
+
+    const a = await post(`${P}/apply`, { operationId: "op-1", package: pkg("hero.q") });
+    expect(a.statusCode, `⛔ apply 失敗：${a.body.slice(0, 400)}`).toBe(200);
+
+    const after = await get(`${P}/active/target-profile`);
+    const blockers = (after.json().stageBlockers as { id: string }[]).map((b) => b.id);
+    // ⭐ `active-snapshot` 與 `authoring-digest` 這兩條**自己解掉了**。
+    expect(blockers).not.toContain("active-snapshot");
+    expect(blockers).not.toContain("authoring-digest");
+    expect(after.json().supportedModes, "⛔ 有 base 了而仍然只收 bootstrap").toContain("delta");
+    expect(after.json().base.activationDigest).toMatch(/^sha256:[0-9a-f]{64}$/);
+  });
+
+  it("★★ ⭐ `deltaExportAllowed` **不等於** supportedModes 含 delta", async () => {
+    await post(`${P}/apply`, { operationId: "op-1", package: pkg("hero.q") });
+    const prof = (await get(`${P}/active/target-profile`)).json() as {
+      supportedModes: string[];
+      deltaExportAllowed: boolean;
+      implementedStage: string;
+      stageBlockers: { id: string }[];
+    };
+    expect(prof.supportedModes).toContain("delta");
+    if (prof.implementedStage !== "G2") {
+      expect(
+        prof.deltaExportAllowed,
+        "⛔⛔ stage 還不是 G2 而 deltaExportAllowed 是 true ⇒\n" +
+          "⭐ 對面會建出一包 pin 了半組欄位的 delta，而它在 apply 才被拒。\n" +
+          "   還缺：" + prof.stageBlockers.map((b) => b.id).join(" · "),
+      ).toBe(false);
+    }
   });
 });
 

@@ -42,6 +42,13 @@ import {
   type EffectiveVfxLimits,
 } from "./effectiveVfxLimits";
 import type { AuthoringProcessorDeclaration } from "./authoringProcessor";
+import {
+  authoringStoreStateOf,
+  deltaExportAllowedOf,
+  resolveImplementedStage,
+  supportedModesOf,
+} from "./g2Readiness";
+import type { G2Facts } from "./g2Readiness";
 import { sha256Hex } from "../sha256";
 import { stableStringify } from "../hash";
 import {
@@ -97,7 +104,14 @@ export interface ImportErrorEnvelope {
   readonly retryable: boolean;
 }
 
-/** 這一輪（計畫 §12）走到哪一階段。對方用它決定能不能建包。 */
+/**
+ * 這一輪（計畫 §12）走到哪一階段。對方用它決定能不能建包。
+ *
+ * ⚠️ ⭐ **2026-09-02 之後這只是「算不出來時的保底值」** ——
+ * 真正的 stage 由 `resolveImplementedStage()` **逐條推導**（`g2Readiness.ts`）。
+ * ⛔ 一個手寫的 `"G2"` 沒有任何東西在守它：它會在有人覺得「差不多做完了」
+ * 的那一天被改掉，⚠️ 然後對面打開 full/delta，而 base pin 那幾格還是 null。
+ */
 export const IMPLEMENTED_STAGE = "G1";
 
 /**
@@ -201,6 +215,16 @@ export interface TargetProfileInput {
   readonly assetManifest?: AssetManifestFacts | null;
   /** ⭐ 規格 §1 —— 由 `buildAuthoringProcessor(repoRoot)` 量出來的宣告。 */
   readonly authoringProcessor?: AuthoringProcessorDeclaration | null;
+  /** ⭐ 這一台**現在**的 ACTIVE（⛔ 沒有就是 undefined ⇒ 只有 bootstrap 合法）。 */
+  readonly active?: {
+    readonly hasSnapshot: boolean;
+    readonly activationDigest: string | null;
+    readonly authoringDigest: string | null;
+  };
+  /** ⭐ bootstrap 要帶的 migration fingerprint。 */
+  readonly migrationFingerprint?: string | null;
+  /** ⭐ 掛上去的匯入端點（⛔ 沒傳 ⇒ `endpointsMounted` 是 false ⇒ 擋在 G1）。 */
+  readonly importerEndpoints?: readonly { readonly method: string; readonly path: string }[];
   /** ⭐ P1-2 —— 兩份 vfx 設定（缺席 ⇒ 出貨預設，⛔ 不是 0）。 */
   readonly vfxBudget?: unknown;
   readonly vfxCleanup?: unknown;
@@ -253,6 +277,13 @@ export interface TargetProfile {
     readonly contentDigest: string | null;
   };
   readonly authoringStoreState: AuthoringStoreState;
+  /**
+   * ⭐ **stage 還缺哪幾條** —— ⛔ 一個 `"G1"` 不說原因，對面只能猜。
+   * ⚠️ G2 時它是空陣列（⛔ 不是省略：省略與「沒有缺」讀起來一樣）。
+   */
+  readonly stageBlockers: readonly { readonly id: string; readonly why: string }[];
+  /** ⭐ 六條匯入端點，機器讀得懂（⛔ 不是散文裡的一段路徑）。 */
+  readonly importerEndpoints: readonly { readonly method: string; readonly path: string }[];
   /** ⛔ authoring store 不在時只有 `bootstrap`；delta 需要一個真的 base。 */
   readonly supportedModes: readonly PackageMode[];
   /** ⭐ 對方最該先讀的一行：現在能不能產 production-ready delta。 */
@@ -330,7 +361,20 @@ export function buildTargetProfile(input: TargetProfileInput): TargetProfile {
   const { limits } = clampImportLimits(input.limits);
 
   // authoring store 尚未存在（G2 才做）—— 這是事實，不是設定值。
-  const authoringStoreState: AuthoringStoreState = "absent";
+  // ⭐⭐ stage / modes / deltaExportAllowed 全部從**同一組事實**推導。
+  //   ⛔ 三個各自手寫 = 三份必然漂的真相。
+  const g2: G2Facts = {
+    hasActiveSnapshot: input.active?.hasSnapshot ?? false,
+    activationDigest: input.active?.activationDigest ?? null,
+    authoringDigest: input.active?.authoringDigest ?? null,
+    gameRevision: input.gameVersion,
+    migrationFingerprint: input.migrationFingerprint ?? null,
+    endpointsMounted: input.importerEndpoints !== undefined,
+    processorFingerprint: input.authoringProcessor?.fingerprint ?? null,
+    assetManifestDigest: input.assetManifest == null ? null : digestOf(input.assetManifest),
+  };
+  const stageResolved = resolveImplementedStage(g2);
+  const authoringStoreState: AuthoringStoreState = authoringStoreStateOf(g2);
 
   const unavailable: UnavailableField[] = [
     {
@@ -342,8 +386,8 @@ export function buildTargetProfile(input: TargetProfileInput): TargetProfile {
     {
       field: "base.authoringDigest",
       reason:
-        "尚未有 managed authoring store（計畫 §4.2）。第一包必須是 `bootstrap`，" +
-        "由它攜帶完整 authoring corpus 與 migration fingerprint。",
+        "⭐ 2026-09-02 起它**有值了** —— 只要這台 bootstrap 過一次。" +
+        "還是 null 就表示還沒有任何 activation（`stageBlockers` 會指名 `active-snapshot`）。",
     },
     {
       field: "compiler.contractVersion / compiler.fingerprint",
@@ -389,10 +433,15 @@ export function buildTargetProfile(input: TargetProfileInput): TargetProfile {
   const body = {
     schema: TARGET_PROFILE_SCHEMA as typeof TARGET_PROFILE_SCHEMA,
     gameVersion: input.gameVersion,
-    implementedStage: IMPLEMENTED_STAGE,
+    implementedStage: stageResolved.stage,
+    stageBlockers: stageResolved.missing.map((m) => ({ id: m.id, why: m.why })),
+    importerEndpoints: input.importerEndpoints ?? [],
     base: {
-      activationDigest: null,
-      authoringDigest: null,
+      // ⭐ 2026-09-02 —— 這兩格從**這台現在的 ACTIVE** 讀（⛔ 不再是寫死的 null）。
+      //   ⚠️ 沒有 ACTIVE 時仍然是 null，⭐ 而那不是「還沒做」，是「還沒 bootstrap 過」
+      //   —— `stageBlockers` 會指名 `active-snapshot` 說出來。
+      activationDigest: g2.activationDigest,
+      authoringDigest: g2.authoringDigest,
       contentVersion: input.content?.contentVersion ?? null,
       contentDigest:
         input.content === null
@@ -400,8 +449,8 @@ export function buildTargetProfile(input: TargetProfileInput): TargetProfile {
           : digestOf(input.content.collectionHashes),
     },
     authoringStoreState,
-    supportedModes: ["bootstrap"] as readonly PackageMode[],
-    deltaExportAllowed: false,
+    supportedModes: supportedModesOf(g2),
+    deltaExportAllowed: deltaExportAllowedOf(g2),
     authoringProcessor: input.authoringProcessor ?? null,
     compiler: { contractVersion: null, fingerprint: null },
     authoringModel: {

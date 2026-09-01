@@ -49,7 +49,14 @@ const productionCallers = (): string[] => {
     .filter((l) => !l.includes(".test."))
     .filter((l) => !l.startsWith("packages/shared/src/content/import/zipSafety.ts"))
     // ⛔ 註解裡提到它不算「呼叫」
-    .filter((l) => !/:\s*(\/\/|\*|#)/.test(l.split(":").slice(2).join(":")));
+    .filter((l) => !/:\s*(\/\/|\*|#)/.test(l.split(":").slice(2).join(":")))
+    // ⛔⛔ **`import` 也不算呼叫** —— 2026-09-02 突變抓到：
+    //   把 `checkZipSafety(...)` 那一行換成一個寫死的 `{ ok: true }`，
+    //   ⭐ 這條閘**仍然是綠的**，因為檔頭的 `import { checkZipSafety }` 還在。
+    //   ⇒ 它量的是「有沒有提到」，⛔ 不是「有沒有呼叫」（失敗形態⑥）。
+    .filter((l) => !/^\s*import\b|from ["']/.test(l.split(":").slice(2).join(":")))
+    // ⭐ 一個呼叫長得像 `checkZipSafety(` —— ⛔ 一個型別註記或字串不算。
+    .filter((l) => /checkZipSafety\s*\(/.test(l));
 };
 
 describe("importer 一旦上線，zip 安全檢查就必須被呼叫", () => {
@@ -63,20 +70,18 @@ describe("importer 一旦上線，zip 安全檢查就必須被呼叫", () => {
   });
 
   it("★ `/validate` 還回 501 ⇒ 放行；⭐ 一旦不回 501 ⇒ `checkZipSafety` 必須有呼叫端", () => {
-    const src = readFileSync(ROUTES, "utf8");
-    // ⭐ 從**那張機器可讀的表**判斷，⛔ 不是掃字串「501」
-    const stillUnimplemented = /path:\s*"\/validate"/.test(src) && /const UNIMPLEMENTED/.test(src);
+    // ⭐⭐ 2026-09-02 —— **前提消失了**：`/validate` 已經實作（見 `registerG2Routes`）。
+    //
+    // ⚠️ 在此之前這條閘有一個「還沒實作就放行」的分支，判斷式是
+    //   `/path:\s*"\/validate"/ && /const UNIMPLEMENTED/`。
+    // ⛔ 而那個判斷式**當場就被騙了**：`IMPORTER_ENDPOINTS` 那張機器可讀的端點表
+    //   裡也有一行 `path: "/validate"` ⇒ 它把「已經實作」讀成「還沒實作」，
+    //   ⭐ 然後要求 `callers.length === 0`（也就是**反過來**要求沒有人呼叫）。
+    //
+    // ⇒ ⭐ 正解不是修那個正則，是**把分支整個拿掉**：
+    //   importer 上線了，所以這條閘從現在起**永遠**要求呼叫端。
+    //   ⛔ 一個「條件成立時才檢查」的閘，它的條件本身沒有守衛。
     const callers = productionCallers();
-
-    if (stillUnimplemented) {
-      // ⭐ 前提還沒改變 ⇒ 這條閘**刻意什麼都不要求**，
-      //   ⛔ 但它要**說出來**（一個安靜地跳過的閘與一個通過的閘長得一樣）。
-      expect(
-        callers.length,
-        "⭐ `/validate` 已經有實作了？那 `stillUnimplemented` 的判斷式過期了 —— 更新它",
-      ).toBe(0);
-      return;
-    }
 
     expect(
       callers,
