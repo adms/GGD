@@ -127,9 +127,13 @@ var (
 	//   「批核材料跟批核結果分署不同資料夾」）⇒ 這裡也要兩條規則，⛔ 不是一條。
 	colSubmissions        = submissions.CollectionMaterial
 	colSubmissionVerdicts = submissions.CollectionVerdict
-	colTemplates          = room.ColTemplates
-	colHistory            = gamelink.ColHistory
-	colAudit              = admin.ColAudit
+	// ⭐ **第三**半（規格 §4）：promote 是 admin 的另一個明確授權動作，
+	//   ⛔ 不是裁決的副作用 ⇒ 它有自己的寫入端，所以也要自己一條規則。
+	//   ⚠️ 少了它，搬家之後「哪些內容被推上線過」整段留在舊主機上。
+	colSubmissionPromotions = submissions.CollectionPromotion
+	colTemplates            = room.ColTemplates
+	colHistory              = gamelink.ColHistory
+	colAudit                = admin.ColAudit
 	// ColReplays is the game-server's recording directory as the platform sees
 	// it. It is NOT a jsonstore collection: apps/game-server writes it through
 	// GGD_REPLAY_DIR and compose.family.yaml bind-mounts ../data/replays into
@@ -262,6 +266,7 @@ func Rules() []Rule {
 		//   ⇒ 兩半都是 Additive（⛔ 不是 Singleton：每一份投稿是一個獨立文件）。
 		simple(colSubmissions, GroupCore, KindDoc, PolicyAdditive, "玩家投稿（內容本體）"),
 		simple(colSubmissionVerdicts, GroupCore, KindDoc, PolicyAdditive, "玩家投稿的審核裁決"),
+		simple(colSubmissionPromotions, GroupCore, KindDoc, PolicyAdditive, "投稿的上線授權（promote）"),
 		simple(colAudit, GroupAudit, KindJSONL, PolicyAppendOnly, "管理稽核紀錄"),
 	}
 

@@ -24,7 +24,6 @@ import (
 	"github.com/ggd/platform/internal/config"
 	"github.com/ggd/platform/internal/contentoverlay"
 	"github.com/ggd/platform/internal/curation"
-	"github.com/ggd/platform/internal/submissions"
 	"github.com/ggd/platform/internal/data/boot"
 	"github.com/ggd/platform/internal/data/jsonstore"
 	"github.com/ggd/platform/internal/data/redisx"
@@ -40,35 +39,36 @@ import (
 	"github.com/ggd/platform/internal/presence"
 	"github.com/ggd/platform/internal/ranking"
 	"github.com/ggd/platform/internal/room"
+	"github.com/ggd/platform/internal/submissions"
 	"github.com/ggd/platform/internal/wallet"
 )
 
 // Server bundles every wired component.
 type Server struct {
-	Cfg       config.Config
-	Rdb       *redisx.Client
-	Store     *jsonstore.Store
-	Journal   *wal.WAL
-	Accounts  *account.Repo
-	Auth      *auth.Service
-	Friends   *friend.Service
-	Presence  *presence.Service
-	Rooms     *room.Service
-	Ranking   *ranking.Service
-	Gamelink  *gamelink.Service
-	Wallet    *wallet.Service
-	Admin     *admin.Service
-	Curation  *curation.Service
+	Cfg      config.Config
+	Rdb      *redisx.Client
+	Store    *jsonstore.Store
+	Journal  *wal.WAL
+	Accounts *account.Repo
+	Auth     *auth.Service
+	Friends  *friend.Service
+	Presence *presence.Service
+	Rooms    *room.Service
+	Ranking  *ranking.Service
+	Gamelink *gamelink.Service
+	Wallet   *wallet.Service
+	Admin    *admin.Service
+	Curation *curation.Service
 	// Submissions 是**玩家投稿**的入口（GH#908，責任③）。
 	// ⚠️ 它的公開讀與投稿寫都由 `config.ui-cues@1` 的 `playerContent` 兩格開關擋著，
 	// ⭐ 而出貨兩格**都是關的** —— 對外開放的東西不預設開。
 	Submissions *submissions.Service
-	Overlay   *contentoverlay.Service
-	CombatEnv *combatenv.Service
-	OpsEnv    *opsenv.Service
-	Invites   *invite.Service
-	AI        *ai.Service
-	Approve   *approvelink.Service
+	Overlay     *contentoverlay.Service
+	CombatEnv   *combatenv.Service
+	OpsEnv      *opsenv.Service
+	Invites     *invite.Service
+	AI          *ai.Service
+	Approve     *approvelink.Service
 	// Archive is #243's whole-platform ZIP export/import.
 	Archive *platformarchive.Service
 	// MatchStats is #207's per-match analysis ledger store.
@@ -636,7 +636,10 @@ func (s *Server) buildRouter(templates *room.Templates) {
 			// /curation/whitelist writes — AdminOnly inside
 			curation.NewHandlers(s.Curation, s.Admin.AdminOnly).Mount(pr)
 			// /submissions —— 投稿（玩家）＋ 待審佇列與裁決（AdminOnly inside）
-			submissions.NewHandlers(s.Submissions, s.Admin.AdminOnly, s.playerContentFlags).Mount(pr)
+			// ⭐ `.WithPromote(...)` 掛上 ③ 那一段（promote）——
+			//   ⛔ 它今天**沒有** revalidator ⇒ 呼叫一律 503（見 playercontent.go）。
+			submissions.NewHandlers(s.Submissions, s.Admin.AdminOnly, s.playerContentFlags).
+				WithPromote(s.submissionPromoteDeps()).Mount(pr)
 			// #189 /content-overlay/docs/* writes — AdminOnly inside
 			contentoverlay.NewHandlers(s.Overlay, s.Admin.AdminOnly).Mount(pr)
 			// /admin/combat-env — AdminOnly inside

@@ -65,10 +65,13 @@ var idRe = regexp.MustCompile(`^[a-zA-Z0-9][a-zA-Z0-9._-]{0,63}$`)
 
 // Material 是**玩家寫的**那一半。⛔ 這裡沒有任何裁決欄位。
 type Material struct {
-	Version   int       `json:"version"`
-	ID        string    `json:"id"`
-	AccountID string    `json:"accountId"`
-	Kind      string    `json:"kind"`
+	Version   int    `json:"version"`
+	ID        string `json:"id"`
+	AccountID string `json:"accountId"`
+	Kind      string `json:"kind"`
+	// Origin 記下這一份是**誰產的**（`player` / `ai-editor`）。
+	// ⭐ 它由**認證過的 actor 的角色**填，⛔ 不是包裡自稱的（規格 §4）。
+	Origin string `json:"origin,omitempty"`
 	// Digest 是這一份內容的指紋。⭐ 它是 Discoverable 第二個條件的左邊。
 	Digest    string    `json:"digest"`
 	Payload   string    `json:"payload"`
@@ -96,6 +99,12 @@ type View struct {
 	Status       string `json:"status"`
 	Reason       string `json:"reason,omitempty"`
 	Discoverable bool   `json:"discoverable"`
+	// Promotable ＝ ⭐「現在按 promote 會成功嗎」。⛔ 不是「審過了嗎」。
+	Promotable bool `json:"promotable"`
+	// NotPromotableWhy 讓批核頁**說得出原因** —— ⛔ 一個灰掉的按鈕不算說明。
+	NotPromotableWhy string `json:"notPromotableWhy,omitempty"`
+	// Promoted ＝ ⭐ 現在**有沒有有效的**上線資格（指紋對得上）。
+	Promoted bool `json:"promoted"`
 }
 
 // Discoverable 是**這個套件唯一承重的一行**。
@@ -112,6 +121,9 @@ func Discoverable(m Material, v Verdict) bool {
 func ValidKind(kind string) bool {
 	switch kind {
 	case "champion", "ability", "vfx", "item":
+		return true
+	case KindCapabilityFixture:
+		// ⭐ 收得下（編輯器要送得進來），⛔ 但**永遠**不可 promote（見 Promotable）。
 		return true
 	}
 	return false
@@ -139,6 +151,15 @@ func normalizeMaterial(in Material, now time.Time) (Material, error) {
 	}
 	if len(in.Payload) > MaxPayloadBytes {
 		return Material{}, httpx.BadRequest("submission payload is too large")
+	}
+	// ⭐ 規格 §4：「package 裡的 reviewer 字串**不是身分證明**」。
+	//   ⛔ 選擇**拒絕**而不是靜靜忽略 —— 忽略會讓對面以為那一格生效了。
+	if err := RejectReviewerClaims(in.Payload); err != nil {
+		return Material{}, err
+	}
+	// ⭐ Origin 只收兩個值，⛔ 而且它由呼叫端（看角色）填 —— 包裡自稱一律覆蓋。
+	if in.Origin != OriginAIEditor {
+		in.Origin = OriginPlayer
 	}
 	in.Version = SchemaVersion
 	if in.CreatedAt.IsZero() {
@@ -231,7 +252,16 @@ func (s *Service) verdictOf(id string) (Verdict, error) {
 
 func (s *Service) viewOf(m Material) View {
 	v, _ := s.verdictOf(m.ID)
-	return View{Material: m, Status: v.Status, Reason: v.Reason, Discoverable: Discoverable(m, v)}
+	ok, why := Promotable(m, v)
+	return View{
+		Material:         m,
+		Status:           v.Status,
+		Reason:           v.Reason,
+		Discoverable:     Discoverable(m, v),
+		Promotable:       ok,
+		NotPromotableWhy: why,
+		Promoted:         Promoted(m, s.promotionOf(m.ID)),
+	}
 }
 
 // Get returns one submission joined with its verdict.

@@ -873,6 +873,20 @@ export interface SubmissionView {
   reason?: string;
   /** ⭐ 核准過**而且**內容沒被換過。⛔ 只看 status 是不夠的。 */
   discoverable: boolean;
+  /** ⭐ 這一份是誰產的（`player` / `ai-editor`）—— 由**角色**填，⛔ 不是包裡自稱。 */
+  origin?: "player" | "ai-editor";
+  /**
+   * ⭐ **現在按 promote 會成功嗎** —— ⛔ 不是「審過了嗎」。
+   *
+   * ⚠️ owner 2026-09-01 逐字：八招驗收技能證明的是「編輯器**做不做得出**」，
+   * ⛔ 不是「這一招**可以出貨**」⇒ `kind === "editor-capability-fixture"` 的
+   * ⭐ **永遠**是 false，即使人工 pass。
+   */
+  promotable: boolean;
+  /** ⭐ 為什麼不能 promote —— ⛔ 一個灰掉的按鈕不算說明。 */
+  notPromotableWhy?: string;
+  /** ⭐ 現在有沒有**有效的**上線資格（指紋對得上）。換過內容就自動失效。 */
+  promoted: boolean;
   createdAt: string;
 }
 
@@ -915,5 +929,35 @@ export function decideSubmission(
 ): Promise<SubmissionView> {
   return api.request<SubmissionView>(`/submissions/${encodeURIComponent(id)}/decide`, {
     body: { status, reason: reason ?? "" },
+  });
+}
+
+/**
+ * ⭐⭐ **把一份審過的投稿真的推上線**（管理員的**另一個**明確授權動作）。
+ *
+ * ── ⛔ 為什麼它與 `decideSubmission` 是兩個按鈕 ────────────────────────────
+ * owner 2026-09-01 逐字：
+ *
+ * > 「八個驗收技能特效是用來**驗收編輯器是否能做出對應技能**，
+ * >  **不是直接套用回去遊戲主程式中**，所有技能效果機制動畫特效由 AI 來調整變更
+ * >  都要經過**後台一頁批核審查頁 通過才能套用**」
+ *
+ * ⇒ ⭐ 「通過」與「套用」是**兩個決定**。⛔ promote 不是 decide 的副作用。
+ *
+ * @param expectedDigest ⭐ 你**審的那一份**的指紋。伺服器比對不上就回 409 ——
+ *   ⛔ 這是為了讓「我按下去的跟我看的是同一份」變成一個**會擋下來**的條件，
+ *   ⛔ 不是「頁面應該有重新整理」這種期待。
+ *
+ * ⚠️ 今天這條路線**一律回 503 `revalidator_missing`** —— 重驗
+ * （base / schema / capability / asset safety）住在 content-api 那一側而它還沒完成。
+ * ⭐ 那是刻意的 fail-closed：一條「看起來會動、實際上沒重驗」的上線路徑更危險。
+ */
+export function promoteSubmission(
+  id: string,
+  expectedDigest: string,
+  reason?: string,
+): Promise<SubmissionView> {
+  return api.request<SubmissionView>(`/submissions/${encodeURIComponent(id)}/promote`, {
+    body: { confirm: true, expectedDigest, reason: reason ?? "" },
   });
 }

@@ -4,10 +4,13 @@ import (
 	"encoding/json"
 	"errors"
 	"log/slog"
+	"net/http"
 	"os"
 	"path/filepath"
 
+	"github.com/ggd/platform/internal/auth"
 	"github.com/ggd/platform/internal/data/jsonstore"
+	"github.com/ggd/platform/internal/submissions"
 )
 
 // overlayPlayerContentKey 是 console 的 `putOverlayDoc(CONFIG, "ui-cues")` 產生的鍵。
@@ -97,4 +100,37 @@ func parsePlayerContent(raw []byte, from string) (bool, bool) {
 // 而這兩格開關開與關**都回 200**，⇒ 狀態碼分不出它有沒有生效。
 func (s *Server) PlayerContentFlagsForTest() (submit bool, discover bool) {
 	return s.playerContentFlags()
+}
+
+// ⭐⭐ §4 —— AI／編輯器憑證的判別，與 promote 的稽核。
+//
+// ⚠️ ⭐ `submissionPromoteDeps` **刻意不提供 `Revalidate`** ——
+// 於是 `POST /submissions/{id}/promote` 這條路線**存在、admin 擋著、會寫稽核**，
+// ⛔ 而任何一次呼叫都會回 **503 `revalidator_missing`**。
+//
+// ⭐ 那是這一格今天唯一誠實的狀態：重驗（base / schema / capability / asset safety）
+// 住在 content-api（TS）那一側，而它要的 importer validate 端點還沒完成（規格 §3）。
+// ⛔ 塞一個「當它過了」的鉤子會讓 promote 看起來會動 —— ⭐ 而一條
+// 「看起來會動、實際上沒重驗」的上線路徑，比沒有這條路徑危險得多。
+func (s *Server) submissionPromoteDeps() submissions.PromoteDeps {
+	return submissions.PromoteDeps{
+		// ⭐ origin 取自**角色**，⛔ 不是 body（包裡自稱一律覆蓋）。
+		IsProposer: func(r *http.Request) bool {
+			id, ok := auth.IdentityFrom(r.Context())
+			if !ok || s.Accounts == nil {
+				return false
+			}
+			a, err := s.Accounts.GetByID(r.Context(), id.AccountID)
+			if err != nil {
+				return false
+			}
+			return a.HasRole(submissions.RoleEditorProposer)
+		},
+		Audit: func(adminID, action string, detail map[string]any) {
+			if s.Curation == nil {
+				return
+			}
+			s.Curation.Audit(adminID, action, detail)
+		},
+	}
 }
