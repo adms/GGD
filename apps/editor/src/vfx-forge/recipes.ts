@@ -90,7 +90,11 @@ function classicBeam(
       ...(yawOffsetDeg === 0 ? {} : { yawOffsetDeg }),
     }));
   }
-  const vfxId = fire ? "fx.forge.beam.fire" : "fx.forge.beam.blue";
+  // Fixtures may only compose resources already shipped by main. Creating a
+  // new content/vfx document here would turn an Editor capability check into
+  // an unreviewed game-content change. Segment tint supplies the orange/blue
+  // identity; the WC3 MDL remains the actual beam body.
+  const vfxId = fire ? "fx.prim.holy.beam-flat" : "fx.prim.lightning.beam-flat";
   const outerTint = fire ? [255, 132, 20] : [65, 155, 255];
   const coreTint = fire ? [255, 242, 190] : [215, 242, 255];
   // Two pulses × outer/core; together with the MDL's two own emitters the
@@ -166,7 +170,7 @@ function dashSlashVoid(): VfxScriptSegment[] {
 function shockwaveDashLight(modelKey: string): VfxScriptSegment[] {
   return [
     zVfxScriptSegment.parse({
-      kind: "vfx", on: "castEffect", vfxId: "fx.forge.beam.blue", at: "self",
+      kind: "vfx", on: "castEffect", vfxId: "fx.prim.lightning.beam-flat", at: "self",
       durationSec: 0.55, offsetForwardU: 0.55, w3xScale: 2.8,
       tint: [90, 205, 255], flyHeight: 55, alpha: 0.78,
     }),

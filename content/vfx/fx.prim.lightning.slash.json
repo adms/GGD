@@ -7,7 +7,7 @@
     "angleDeg": 92
   },
   "mode": "burst",
-  "burstCount": 6,
+  "burstCount": 26,
   "lifetimeSec": {
     "min": 0.12,
     "max": 0.34
@@ -18,21 +18,18 @@
   },
   "color": {
     "start": [
-      0.05,
-      0.35,
+      0.946,
+      0.9676,
       1,
-      0.9
+      1
     ],
     "end": [
-      0,
-      0.05,
-      0.3,
+      0.126,
+      0.1476,
+      0.18,
       0
     ]
   },
-  "blendMode": "additive",
-  "texture": "assets/textures/particles/slash_01.png",
-  "gravityY": 0,
   "sizeStops": [
     [
       0,
@@ -47,10 +44,51 @@
       0
     ]
   ],
-  "stretched": true,
-  "tailLength": 2.6,
+  "colorStops": [
+    [
+      0,
+      [
+        0.946,
+        0.9676,
+        1,
+        1
+      ]
+    ],
+    [
+      0.2,
+      [
+        0.7,
+        0.82,
+        1,
+        1
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.35,
+        0.41,
+        0.5,
+        0.42
+      ]
+    ],
+    [
+      1,
+      [
+        0.126,
+        0.1476,
+        0.18,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 0,
   "speed": {
     "min": 7,
     "max": 13
-  }
+  },
+  "texture": "assets/textures/particles/slash_01.png",
+  "stretched": true,
+  "tailLength": 2.6
 }

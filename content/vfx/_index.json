@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "fd746ce91ae8",
+  "hash": "0c49d44b90f4",
   "entries": [
     {
       "id": "attach.ex.midchilder-aura",
@@ -287,8 +287,8 @@
     {
       "id": "fx.fam.light-column.holy.s150",
       "path": "vfx/fx.fam.light-column.holy.s150.json",
-      "hash": "93a21192bccd",
-      "size": 742
+      "hash": "862a951e4cae",
+      "size": 1143
     },
     {
       "id": "fx.fam.light-column.ice.s100",
@@ -299,8 +299,8 @@
     {
       "id": "fx.fam.light-column.w3x-00ffff.s150",
       "path": "vfx/fx.fam.light-column.w3x-00ffff.s150.json",
-      "hash": "072dcb5535a0",
-      "size": 748
+      "hash": "ea0f8425e49d",
+      "size": 1111
     },
     {
       "id": "fx.fam.light-column.w3x-ff00ff.s205",
@@ -505,18 +505,6 @@
       "path": "vfx/fx.firestorm.json",
       "hash": "6ffd435ece97",
       "size": 697
-    },
-    {
-      "id": "fx.forge.beam.blue",
-      "path": "vfx/fx.forge.beam.blue.json",
-      "hash": "a3441fc8ed1b",
-      "size": 1181
-    },
-    {
-      "id": "fx.forge.beam.fire",
-      "path": "vfx/fx.forge.beam.fire.json",
-      "hash": "e26bae2aa59b",
-      "size": 1174
     },
     {
       "id": "fx.grail.bolt",
@@ -755,8 +743,8 @@
     {
       "id": "fx.prim.holy.beam-flat",
       "path": "vfx/fx.prim.holy.beam-flat.json",
-      "hash": "0c4534ea7204",
-      "size": 1187
+      "hash": "626d23cf2ceb",
+      "size": 1188
     },
     {
       "id": "fx.prim.holy.beam-lg",
@@ -815,8 +803,8 @@
     {
       "id": "fx.prim.holy.slash-lg",
       "path": "vfx/fx.prim.holy.slash-lg.json",
-      "hash": "d5967d7c8c80",
-      "size": 731
+      "hash": "69ad2dfa3efd",
+      "size": 1132
     },
     {
       "id": "fx.prim.holy.swarm-lg",
@@ -959,8 +947,8 @@
     {
       "id": "fx.prim.lightning.beam-flat",
       "path": "vfx/fx.prim.lightning.beam-flat.json",
-      "hash": "831c411a768d",
-      "size": 1187
+      "hash": "c92f7ed1aef6",
+      "size": 1188
     },
     {
       "id": "fx.prim.lightning.beam-lg",
@@ -1019,8 +1007,8 @@
     {
       "id": "fx.prim.lightning.slash",
       "path": "vfx/fx.prim.lightning.slash.json",
-      "hash": "f3c7669c861b",
-      "size": 732
+      "hash": "cb866d8c7cdb",
+      "size": 1128
     },
     {
       "id": "fx.prim.nature.beam",

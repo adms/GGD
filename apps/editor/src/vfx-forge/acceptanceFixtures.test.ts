@@ -54,22 +54,27 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
     }
   });
 
-  it("八招共用光束／斬痕資源不以大量 additive 粒子洗白畫面", () => {
-    const caps = new Map([
-      ["fx.prim.holy.beam-flat", 8],
-      ["fx.prim.lightning.beam-flat", 8],
-      ["fx.prim.holy.slash-lg", 6],
-      ["fx.prim.lightning.slash", 6],
-      ["fx.fam.light-column.holy.s150", 8],
-      ["fx.fam.light-column.w3x-00ffff.s150", 8],
-      ["fx.forge.beam.fire", 48],
-      ["fx.forge.beam.blue", 48],
-    ]);
-    for (const [id, cap] of caps) {
-      const vfx = loadJson("vfx", id);
-      expect(vfx.blendMode, id).toBe("additive");
-      expect(Number(vfx.burstCount), id).toBeGreaterThan(0);
-      expect(Number(vfx.burstCount), id).toBeLessThanOrEqual(cap);
+  it("經典光束從 runtime config 取得 additive／粒子實際上限，不抄 UI 常數", () => {
+    const budget = loadJson("config", "vfx-budget");
+    const model = loadJson("models", "w3x.stock.revivehuman");
+    const modelEmitters = Array.isArray(model.fxEmitters) ? model.fxEmitters.length : 0;
+    const additiveCap = Number(budget.maxConcurrentAdditive);
+    const particleCap = Number(budget.maxParticlesPerSystem);
+    expect(additiveCap).toBeGreaterThan(0);
+    expect(particleCap).toBeGreaterThan(0);
+
+    for (const id of ["godie-nbbc.e", "godie-ogrh.r", "godie-hvsh.r"] as const) {
+      const helpers = kinds(id, "vfx");
+      // At 465ms both pulses overlap: four helper systems + the two declared
+      // ReviveHuman emitters. If main retunes the budget, this guard follows
+      // content/config/vfx-budget.json and turns red automatically.
+      expect(helpers.length + modelEmitters, id).toBeLessThanOrEqual(additiveCap);
+      for (const helper of helpers) {
+        const resource = loadJson("vfx", helper.vfxId);
+        expect(resource.blendMode, helper.vfxId).toBe("additive");
+        expect(Number(resource.burstCount), helper.vfxId).toBeGreaterThan(0);
+        expect(Number(resource.burstCount), helper.vfxId).toBeLessThanOrEqual(particleCap);
+      }
     }
   });
 
