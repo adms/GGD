@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-09-01 12:50 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-09-01 14:20 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.34.22 · 資料截至 2026-09-01 12:50 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-01 12:50 (GMT+8)</h1><div class="meta"><span>帳本 <b>14</b> 份</span><span>點名票號 <b>348</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.34.25 · 資料截至 2026-09-01 14:20 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-01 14:20 (GMT+8)</h1><div class="meta"><span>帳本 <b>14</b> 份</span><span>點名票號 <b>351</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -813,7 +813,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>12:53</td><td>我要停機</td><td>#861</td></tr>
 <tr><td>12:53</td><td>我要出國了</td><td>#861</td></tr>
 <tr><td>21:11</td><td>我回來了 繼續吧</td><td>#869</td></tr>
-<tr><td>13:03</td><td>馬上要停止了</td><td>⏸ 未對票</td></tr>
+<tr><td>13:03</td><td>馬上要停止了</td><td>— 中斷通知（他要停了），⛔ 不是指派</td></tr>
 </table></div>
 <p># 2026-08-30</p>
 <blockquote>⭐ 這張表由 <code>scripts/message-ledger.sh</code> 從 session transcript <b>逐則</b>撈出來對帳，</blockquote>
@@ -821,10 +821,10 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <blockquote>表格那一格是<b>截斷</b>過的；⛔ 全文沒有被壓縮取代，它在 <code>ledger-source_temp_*.md</code>。</blockquote>
 <blockquote>票號那一格 ⛔ 不可以留空：對不到票就寫 <code>⏸ 未對票</code>，<code>--check</code> 會紅。</blockquote>
 <div class="scroll"><table><tr><th>時間</th><th>owner 說了什麼（逐字）</th><th>票</th></tr>
-<tr><td>00:45</td><td>不是說好部署是透過 github?</td><td>⏸ 未對票</td></tr>
-<tr><td>01:12</td><td>我接下來還會多一個給玩家看的 release note 要發佈在 discord ，請問要怎麼設定</td><td>⏸ 未對票</td></tr>
-<tr><td>01:28</td><td>你自動發版就發玩家discord 公告就好 但記得不要講實作細節</td><td>⏸ 未對票</td></tr>
-<tr><td>01:36</td><td>算了 太複雜 我們把目前的票處理完就好</td><td>⏸ 未對票</td></tr>
+<tr><td>00:45</td><td>不是說好部署是透過 github?</td><td>#861</td></tr>
+<tr><td>01:12</td><td>我接下來還會多一個給玩家看的 release note 要發佈在 discord ，請問要怎麼設定</td><td>— 設定問題（Discord webhook 怎麼接），⭐ 落地在 scripts/release-note-players.sh</td></tr>
+<tr><td>01:28</td><td>你自動發版就發玩家discord 公告就好 但記得不要講實作細節</td><td>— ⭐ 常設指令：自動發玩家公告且⛔不講實作細節；落地在 release-note-players.sh 的細節閘</td></tr>
+<tr><td>01:36</td><td>算了 太複雜 我們把目前的票處理完就好</td><td>— 收斂範圍（先把手上的票做完），⛔ 不是新工作</td></tr>
 <tr><td>14:23</td><td>如果沒有對玩家有差別的改版你還是要發 系統優化更新</td><td>869</td></tr>
 <tr><td>15:11</td><td>我的傾向是 開放讓玩家自己設計 英雄、技能、特效，不是靠 AI 無止境的逼近太沒效率</td><td>838 244</td></tr>
 <tr><td>15:13</td><td>所以後台編輯器的抽象化、完整性、視覺化可操作性很重要，因為所有功能都要可JSON操作設定，並且也有 no code 遊戲引擎等級的操作介面</td><td>838 820</td></tr>
@@ -838,32 +838,32 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <div class="scroll"><table><tr><th>時間</th><th>owner 說了什麼（逐字）</th><th>票</th></tr>
 <tr><td>02:33</td><td>不用管 codex branch，以遊戲主程式 main 為主，我再讓 codex 配合</td><td>869 244</td></tr>
 <tr><td>02:41</td><td>feat/ability-review-authoring 是 codex 的 branch ，你可以參考思路，但獨立編輯器 桌面版 Electron 還是 codex 的獨立工作喔</td><td>869 838</td></tr>
-<tr><td>01:33</td><td>回來了</td><td>⏸ 未對票</td></tr>
-<tr><td>02:26</td><td>docs/未合併改動決策表_20260830.md 有影響到編輯器的嗎？</td><td>⏸ 未對票</td></tr>
-<tr><td>03:01</td><td>codex 正在做專案轉移給另一個 codex 新專案，即將 &quot;下一次要從 GitHub 在新 Codex 專案接手，先完成一件必要事項：目前遷移 commit 還沒有 push 到 GitHub。 這次先推送分支 feat/ability-review-authoring push 到 origin，不動 main&quot; =&gt; 這是 codex 跟我說他要做的事情，不是我要你作的</td><td>⏸ 未對票</td></tr>
-<tr><td>04:24</td><td>你不是說你目前做的事情會大幅影響到嗎</td><td>⏸ 未對票</td></tr>
+<tr><td>01:33</td><td>回來了</td><td>— 招呼，⛔ 沒有工作內容</td></tr>
+<tr><td>02:26</td><td>docs/未合併改動決策表_20260830.md 有影響到編輯器的嗎？</td><td>— 問題（那份決策表對編輯器的影響），⭐ 當場答完；結論後來收進 #889 的契約涵蓋盤點</td></tr>
+<tr><td>03:01</td><td>codex 正在做專案轉移給另一個 codex 新專案，即將 &quot;下一次要從 GitHub 在新 Codex 專案接手，先完成一件必要事項：目前遷移 commit 還沒有 push 到 GitHub。 這次先推送分支 feat/ability-review-authoring push 到 origin，不動 main&quot; =&gt; 這是 codex 跟我說他要做的事情，不是我要你作的</td><td>— 背景告知（Codex 專案轉移），⛔ 不需要 main 這邊動工</td></tr>
+<tr><td>04:24</td><td>你不是說你目前做的事情會大幅影響到嗎</td><td>— 追問前一則，⭐ 當場答完</td></tr>
 <tr><td>13:12</td><td>體素計畫已經全面暫停了 有相關的票請你先都關閉</td><td>739</td></tr>
-<tr><td>11:08</td><td>BMPDNN 的 B 是包含備份戰情版 你做不了是因為 vpn 斷了</td><td>⏸ 未對票</td></tr>
-<tr><td>11:13</td><td>我做完(a)了</td><td>⏸ 未對票</td></tr>
-<tr><td>11:44</td><td>我打開vpn了</td><td>⏸ 未對票</td></tr>
-<tr><td>11:53</td><td>我們不是說過 一律用 git pull 方式部署嗎</td><td>⏸ 未對票</td></tr>
-<tr><td>11:56</td><td>你自己查一下過去的對話 我們三天前才做完搬遷計畫 你自己查一下怎麼做部署的</td><td>⏸ 未對票</td></tr>
-<tr><td>11:57</td><td>你自己查一下過去的對話 我們三天前才做完搬遷計畫 你自己查一下怎麼做部署的</td><td>⏸ 未對票</td></tr>
-<tr><td>12:05</td><td>你的 BMPNDD 是否有真正測試更新 並且沒有污染源了?</td><td>⏸ 未對票</td></tr>
-<tr><td>12:06</td><td>理論上 BMPNDD 應該包含 mini deploy 了才對</td><td>⏸ 未對票</td></tr>
-<tr><td>12:08</td><td>請你先改部署相關問題 避免再發生 另外回答我 請你再次檢查 docs/editor-contract/CODEX_CATCHUP_20260830.md ← 追平清單（逐項列名） docs/玩家UGC No Code 視覺化遊戲引擎編輯器計畫.md ← 全盤計畫 docs/editor-contract/ggd-runtime-capabilities.json ← ⭐ 機器可讀的契約（真相來源） 這3份資料是否符合現況，是否有缺漏或陷阱要註明，以及開發守則注意事項，讓分工明確有效率又安全 我要讓 codex 編輯器開工了</td><td>⏸ 未對票</td></tr>
-<tr><td>12:20</td><td>我覺得目的跟計畫要寫清楚 開放讓玩家自己設計 英雄、技能、特效，不是靠 AI 無止境的逼近太沒效率 所以後台編輯器的抽象化、完整性、視覺化可操作性很重要，因為所有功能都要可JSON操作設定，並且也有 no code 遊戲引擎等級的操作介面 docs/玩家UGC No Code 視覺化遊戲引擎編輯器計畫.md</td><td>⏸ 未對票</td></tr>
-<tr><td>12:39</td><td>那請你列出要給 codex 編輯器看的文件列表</td><td>⏸ 未對票</td></tr>
-<tr><td>12:41</td><td>遊戲主程式 main 這邊還需要做什麼嗎</td><td>⏸ 未對票</td></tr>
-<tr><td>12:48</td><td>3 緊急 · 35 重要 · 12 優先 有跟技能、特效編輯器相關的嗎？或是系統層級關鍵</td><td>⏸ 未對票</td></tr>
-<tr><td>12:54</td><td>我想要編列 goal 做完為止，請你給我一個計畫來執行 goal</td><td>⏸ 未對票</td></tr>
+<tr><td>11:08</td><td>BMPDNN 的 B 是包含備份戰情版 你做不了是因為 vpn 斷了</td><td>#907</td></tr>
+<tr><td>11:13</td><td>我做完(a)了</td><td>— 進度回報（他做完 (a)），⛔ 不是指派</td></tr>
+<tr><td>11:44</td><td>我打開vpn了</td><td>— 環境狀態（VPN 打開了），⛔ 不是指派</td></tr>
+<tr><td>11:53</td><td>我們不是說過 一律用 git pull 方式部署嗎</td><td>#861</td></tr>
+<tr><td>11:56</td><td>你自己查一下過去的對話 我們三天前才做完搬遷計畫 你自己查一下怎麼做部署的</td><td>#861</td></tr>
+<tr><td>11:57</td><td>你自己查一下過去的對話 我們三天前才做完搬遷計畫 你自己查一下怎麼做部署的</td><td>#861</td></tr>
+<tr><td>12:05</td><td>你的 BMPNDD 是否有真正測試更新 並且沒有污染源了?</td><td>#907</td></tr>
+<tr><td>12:06</td><td>理論上 BMPNDD 應該包含 mini deploy 了才對</td><td>#861</td></tr>
+<tr><td>12:08</td><td>請你先改部署相關問題 避免再發生 另外回答我 請你再次檢查 docs/editor-contract/CODEX_CATCHUP_20260830.md ← 追平清單（逐項列名） docs/玩家UGC No Code 視覺化遊戲引擎編輯器計畫.md ← 全盤計畫 docs/editor-contract/ggd-runtime-capabilities.json ← ⭐ 機器可讀的契約（真相來源） 這3份資料是否符合現況，是否有缺漏或陷阱要註明，以及開發守則注意事項，讓分工明確有效率又安全 我要讓 codex 編輯器開工了</td><td>#861</td></tr>
+<tr><td>12:20</td><td>我覺得目的跟計畫要寫清楚 開放讓玩家自己設計 英雄、技能、特效，不是靠 AI 無止境的逼近太沒效率 所以後台編輯器的抽象化、完整性、視覺化可操作性很重要，因為所有功能都要可JSON操作設定，並且也有 no code 遊戲引擎等級的操作介面 docs/玩家UGC No Code 視覺化遊戲引擎編輯器計畫.md</td><td>— ⭐ 大目標的原話（開放讓玩家自己設計英雄/技能/特效），它是 goal 本身，⛔ 不是一張票；落在 docs/_goal-main_20260901.md</td></tr>
+<tr><td>12:39</td><td>那請你列出要給 codex 編輯器看的文件列表</td><td>— 文件清單，⭐ 當場給；落在 docs/editor-contract/</td></tr>
+<tr><td>12:41</td><td>遊戲主程式 main 這邊還需要做什麼嗎</td><td>— 問題（main 還要做什麼），⭐ 答案就是三件責任，落在 docs/_goal-main_20260901.md</td></tr>
+<tr><td>12:48</td><td>3 緊急 · 35 重要 · 12 優先 有跟技能、特效編輯器相關的嗎？或是系統層級關鍵</td><td>— 盤點問題，⭐ 當場答完（哪幾張與編輯器相關）</td></tr>
+<tr><td>12:54</td><td>我想要編列 goal 做完為止，請你給我一個計畫來執行 goal</td><td>— goal 計畫的請求，⭐ 產物是 docs/_goal-main_20260901.md，⛔ 不是一張票</td></tr>
 <tr><td>12:57</td><td>2 #873（觸控攻擊鈕 97.7% 被蓋）帶 [優先] 但不在這條線上 —— 要插進來嗎？ =&gt; 手機操作目前是低優先度 1 ⭐ #838 是 [緊急][feature]，16 則留言 —— 它可能很大。要我在階段 0 先把它拆成「今天做得完的」與「下一批」嗎？還是整張做到底？ =&gt; 看不到內容無法判斷 3 ⭐ #881 我會改機制（外觀規則不讀武器 tag，已量到只影響 9 隻、只動 top 一軸），⛔ 不是重生成快照。⭐ 而 3 隻（一護 ×2 · 殺生丸）的和服是對的 ⇒ 我會把它們搬進 L1 明確覆寫。⭐ 這個判斷要你點頭嗎？還是照常設指令我自己決定＋留開關？ =&gt; 看不到內容無法判…</td><td>#873 #838 #881</td></tr>
 <tr><td>13:06</td><td>① #838 特效工坊 —— ⭐ 它很大，但已經有一半在了 你 08-28 的原話（票裡逐字） 「特效工坊 =&gt; 各種特效標籤、model/粒子資源、表示形選項及參數來微調逼近真實，儲存成JSON來完成校正，並用容易操作的UI如silder, 各種拖曳所見即所得⋯我要可以拖拉model,粒子特效進編輯器模擬遊戲畫面，用 silder 調大小、透明度、顏色、轉向、高度、動畫速度⋯」 ⭐ 驗收是三招：01-04 超究武神霸斬 · 04-03 龍破斬 · 20-002 理想鄉EX =&gt; 給 codex 編輯器做，你到時候參考就好，但你要寫好技術規格包含驗收圖跟契約 md 給 codex 可以參考 ②…</td><td>#838 #881</td></tr>
-<tr><td>13:21</td><td>我想要編列 goal 做完為止，請你給我一個計畫來執行 goal</td><td>⏸ 未對票</td></tr>
-<tr><td>13:23</td><td>太少了吧 我要你做完目前 緊急 重要 優先的票，並且能讓 codex 編輯器獨立作業為最優先 目標是 開放讓玩家自己設計 英雄、技能、特效，不是靠 AI 無止境的逼近太沒效率 所以後台編輯器的抽象化、完整性、視覺化可操作性很重要，因為所有功能都要可JSON操作設定，並且也有 no code 遊戲引擎等級的操作介面</td><td>⏸ 未對票</td></tr>
-<tr><td>13:28</td><td>好 那 codex 編輯器那邊的 goal 呢</td><td>⏸ 未對票</td></tr>
-<tr><td>13:28</td><td>我說了 給我要寫的 goal 指令</td><td>⏸ 未對票</td></tr>
-<tr><td>13:31</td><td>太少了吧 我要你做完目前 緊急 重要 優先的票，並且能讓 codex 編輯器獨立作業為最優先 目標是 開放讓玩家自己設計 英雄、技能、特效，不是靠 AI 無止境的逼近太沒效率 所以後台編輯器的抽象化、完整性、視覺化可操作性很重要，因為所有功能都要可JSON操作設定，並且也有 no code 遊戲引擎等級的操作介面 這個前提大目標方向呢 請你考量之後重新修這 codex 跟你自己的 goal</td><td>⏸ 未對票</td></tr>
+<tr><td>13:21</td><td>我想要編列 goal 做完為止，請你給我一個計畫來執行 goal</td><td>— 同 12:54</td></tr>
+<tr><td>13:23</td><td>太少了吧 我要你做完目前 緊急 重要 優先的票，並且能讓 codex 編輯器獨立作業為最優先 目標是 開放讓玩家自己設計 英雄、技能、特效，不是靠 AI 無止境的逼近太沒效率 所以後台編輯器的抽象化、完整性、視覺化可操作性很重要，因為所有功能都要可JSON操作設定，並且也有 no code 遊戲引擎等級的操作介面</td><td>— 同 12:54（他要求擴大範圍）</td></tr>
+<tr><td>13:28</td><td>好 那 codex 編輯器那邊的 goal 呢</td><td>— Codex 那一邊的 goal，⭐ 產物是給 Codex 的指令訊息，⛔ 不在 main 的票上</td></tr>
+<tr><td>13:28</td><td>我說了 給我要寫的 goal 指令</td><td>— Codex 那一邊的 goal，⭐ 產物是給 Codex 的指令訊息，⛔ 不在 main 的票上</td></tr>
+<tr><td>13:31</td><td>太少了吧 我要你做完目前 緊急 重要 優先的票，並且能讓 codex 編輯器獨立作業為最優先 目標是 開放讓玩家自己設計 英雄、技能、特效，不是靠 AI 無止境的逼近太沒效率 所以後台編輯器的抽象化、完整性、視覺化可操作性很重要，因為所有功能都要可JSON操作設定，並且也有 no code 遊戲引擎等級的操作介面 這個前提大目標方向呢 請你考量之後重新修這 codex 跟你自己的 goal</td><td>— 同 13:23</td></tr>
 <tr><td>17:16</td><td>[#862] log 上限：票寫「已關」而出貨機上 6 個容器一個都沒有 —— 關它的腳本是 Linux 專用，搬家後沒人跑過。修在 compose（跟著 repo 走）⇒ 688ae853a</td><td>862</td></tr>
 <tr><td>17:46</td><td>[#803] 金色一直都在 —— 它卡在一格 family:null。PRE2 早就轉得出來,luma-key 洗不掉彩度。量到 sat 0.541（原作 0.47–0.54）。機制 model@1.fxEmitters：原作一顆 .mdx 是「geoset ＋ 它自己的粒子」而我們只出貨了一半 ⇒ d35b6fb9c + 6d7f78ab7</td><td>803</td></tr>
 <tr><td>17:58</td><td>[#761] 家族表 11 格只有 models 調不到 —— 而它正是「播幾顆發射器」。⛔ 不烘進 421 份技能（第〇·四），改成讓規則的輸入可編輯。順帶關掉兩個「後台改了畫面不動」的快取洞 ⇒ 0c259fe35。新缺口：契約對 config.* 零涵蓋 ⇒ GH#889</td><td>761</td></tr>
@@ -917,6 +917,19 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>12:12</td><td>為什麼 discord BMPNDD 的時候都會多發一次訊息阿</td><td>⏸ 未對票</td></tr>
 <tr><td>12:16</td><td>你盤點一下還開著的票中 是否有成本很低可以簡單解決的</td><td>⏸ 未對票</td></tr>
 <tr><td>12:43</td><td>殭屍給予經驗值目前規則是什麼？</td><td>⏸ 未對票</td></tr>
+<tr><td>13:07</td><td>owner 2026-09-01： &gt; 「09-04 已經正確使用 w3x.stock.revivehuman + tpl-beam-roll；但 08-03 的 ability 仍是舊 &gt; RedDragonMissile 必須把 08-03 的來源改成同一個 beam-roll 積木」 ⛔ <b>這一項查證之後不成立，⭐ 而查證的過程指到了真正的那一格。</b> ## ⭐ 反證（原作資料，⛔ 不是推測） <code>tools/w3x-import</code> 的 <code>OBJECTS.json</code> 單位定義： | unit | 模型 | 用在 | |---|---|---| | <b>e003</b> | <code>Abilities\Weapons\RedDragonBreath\<b>RedDragonMissile.mdl</b></code> | ⭐ <b>08-03</b> | | h007 | <code>...ReviveHuman\ReviveHuman.mdl</code> | 09-04 的<b>單具光束</b> | | h006 | <code>...FlameStrike\FlameStrike1.mdl</code> | 09-04 的<b>沿線 6 具</b> | ⇒ ⭐ 08-03 的 <code>modelKey: w3x.stock.reddragonmissile</code> <b>就是忠實翻譯</b>，⛔ 不是舊殘留。 ⇒ <code>count: 10</code> 對應 <code>PolarProjectionBJ(caster, 150×i, facing)</code> i=1..10（j:28838）——<b>原作真的是沿線 10 具</b>。 ⚠️ 被誤讀成間距排列的是 <b>09-04</b>（家族預設 <code>count</code> 曾經是 6），⛔ 不是 08-03。 而 09-04 今天已經把兩件事分成兩個節點：<code>revivehuman</code> 單具光束 · <code>flamestrike1</code> 走 <code>tpl-locust-line</code>。 ⛔ 若把 08-03 改成 <code>revivehuman</code>，會<b>重演一個修過的缺陷</b> —— <code>templateOriginBaseline.json</code> 逐字記著 2026-08-26 之前共用模型造成 「59-04 的符文陣與 08-03 的龍息彈<b>長成同一具劍氣</b>」，判準是「<b>modelKey 是身分不是幾何</b>」。 ## ⭐ 而真正錯的那一格，正是這張票已經點名的 <code>spacing</code> | | 值 | |---|---| | JASS | <code>150×i</code> wc3 單位 | | 換算率 <code>GGD_PER_WC3</code>（<code>expand.ts:50</code>） | 11/600 | | ⇒ <b>正確 spacing</b> | ⭐ <b>2.75</b> | | 出貨值 | ⛔ <b>1.2</b>（不到一半） | ⇒ ⭐ 那排飛彈<b>擠得太密</b>，看起來會像一團而不是一條線 —— ⭐ 這很可能就是 owner 觀察到「08-03 看起來不對」的實際成因， ⛔ 而修法是把 <code>spacing</code> 翻對，⛔ 不是換模型。 ⚠️ 兩份鏡射檔都要動：<code>content/abilities/godie-n01c.e.json</code> ＋ <code>godie-nbbc.e.json</code> （＋ champion 內嵌鏡射）。</td><td>880</td></tr>
+<tr><td>13:14</td><td>owner 2026-09-01： &gt; 「這是第幾回合? 是增加 還是增加至?」 &gt; 「你建議怎麼平衡設計 50%靠打殭屍 50%靠系統拉升避免弱勢方無法翻身」 ## ⭐ 先答兩個事實問題（量到的，⛔ 不是推測） <b>① 是「增加」，⛔ 不是「增加至」。</b> <code>grantLevels(world, id, count)</code> 是一個跑 <code>count</code> 次的迴圈， 每次把經驗條補滿升一級；<code>MatchController.ts:1958</code> 對 <code>activeSeats()</code> 逐一呼叫 ⇒ <b>每回合結束每個活著的席次無差別 +N 級</b>，⛔ 零名次加權。 <b>② 十個回合的累計：</b> | 回合 | 系統給等 | 累計等級 | |---:|---:|---:| | 1 | +2 | L3 | | 2 | +3 | L6 | | 3 | +3 | L9 | | 4 | +3 | L12 | | 5 | +6 | L18 | | 6 | +7 | L25 | | 7 | +5 | L30 | | 8 | +5 | L35 | | 9 | +5 | L40 | | 10 | +10 | <b>L50</b> | <code>overflow: null</code> ⇒ 第 10 回合之後不再給。 ## ⭐⭐ 建議的設計：把系統那一半改成<b>樓地板</b>（增加至） ⭐ owner 的問法本身就是解法 —— 「增加至」自帶翻盤保護，⛔ 不需要算名次、⛔ 不需要新機制。 ``<code> roundFloor = [3, 6, 9, 12, 18, 25, 30, 35, 40, 50] ← ⭐ 就是今天的累計值,⛔ 一個數字都沒改 回合結束：if (level &amp;lt; floor[round]) grantLevels(entity, floor[round] - level) </code>`<code> | 誰 | 會發生什麼 | |---|---| | 落後的人 | 拉到樓地板 ⇒ ⭐ <b>自動翻盤保護</b> | | 領先的人（打殭屍已超過樓地板） | 保住領先，⛔ 系統不再額外墊高他 | | 天花板 | ⭐ <b>不變</b> —— 第 10 回合仍保證 L50 | ### ⭐ 「50/50」是這個機制的<b>自然結果</b>，⛔ 不是一個要設的數字 | 玩家 | 系統貢獻 | 自己賺 | |---|---:|---:| | 完全不打殭屍 | 100% | 0% | | 很會打 | <b>0%</b> | 100% | | 中間 | 自然落在兩者之間 | ⇒ ⭐ 要調的是<b>樓地板的高度</b>（它決定「打得多好才開始靠自己」）， ⛔ 不是一個叫「50%」的旋鈕。 ## ⚠️ 但樓地板單獨上線 = 機制等於沒開 現況是 <b>100% 系統 / 0% 自己賺</b> —— 要超過樓地板得殺 <b>2,474 隻</b>。 ⇒ 殭屍 XP 必須同步調： </code>`<code> reward.xp = 49,490 ÷ (一場的中位數擊殺數) </code>`<code> | 中位數擊殺 | </code>reward.xp<code> | |---:|---:| | 400 | 124 | | 800 | 62 | | 1,200 | 41（≈ 今天的 40） | ❓ ⭐ <b>那個中位數今天沒有人量過。</b> </code>world.mobKills<code> 每場都在記 ⇒ 這是「跑幾場讀出來」，⛔ 不是猜。<b>⛔ 不要在量到之前設值。</b> ## ⛔ 刻意不做的（同時上兩個就分不出誰造成什麼） 防滾雪球的兩個候選 —— XP 分享半徑（LoL 模式）· 對超出樓地板者遞減 XP —— ⭐ <b>先都不要做</b>。樓地板保護下面那一端就好，上面那一端等量到再說。 ## ⭐ 三個住處與 rollback | | | |---|---| | 新欄位 | </code>roundLevelMode: &quot;increment&quot; | &quot;floor&quot;<code> | | 預設 | ⭐ <b></code>&quot;floor&quot;<code></b>（我挑的；owner 沒做完前自己判斷的那條指令） | | rollback | 切回 </code>&quot;increment&quot;<code> ＝ 逐位元等於今天 | | 樓地板本身 | 一個 10 格的陣列，⭐ 出貨值就是今天的累計值 ⇒ <b>落地當下零平衡改動</b> | ## 追加驗收 7. </code>roundLevelMode: &quot;floor&quot;<code> 時，一個等級已高於樓地板的人<b>拿不到</b>系統給等 8. 切回 </code>&quot;increment&quot;<code> ⇒ 逐位元回到今天的行為 9. 樓地板陣列與 </code>reward.xp` 後台都改得到</td><td>909</td></tr>
+<tr><td>13:18</td><td>## 🚨 [重要訊息] —— owner 2026-09-01 逐字裁決（⛔ 不要再問，⛔ 不要改寫） &gt; 「八個驗收技能特效是用來<b>驗收編輯器是否能做出對應技能</b>，<b>不是直接套用回去遊戲主程式中</b>， &gt; 所有技能效果機制動畫特效由 AI 來調整變更都要經過<b>後台一頁批核審查頁 通過才能套用</b>， &gt; 因為目前 <b>AI 產特效的正確性太差了且太不穩定了</b> &gt; （<b>肉眼評價 0~4/10 分</b>, 加上<b>視覺擷圖自動審查 2~6/10 分</b>）」 ## ⭐ 這則裁決改變兩件事 ### ① 八招驗收技能的<b>用途</b>被限定了 | ⭐ 是 | ⛔ 不是 | |---|---| | 「編輯器<b>做不做得出</b>這一招」的證明 | 「這一招<b>可以出貨</b>」的證明 | ⇒ ⛔ <b>八招的產出不得直接寫進遊戲主程式的出貨內容。</b> 它們是<b>編輯器的驗收夾具</b>，⛔ 不是內容批次。 ⚠️ 誰把它們當成「順便把這八招做好了」而合併進出貨內容，就違反了這一則。 ### ② AI 改動特效／機制／動畫 ⇒ <b>批核審查頁是硬閘</b>，⛔ 不是建議 ⭐ 適用範圍是 owner 逐字的四個詞：<b>技能效果 · 機制 · 動畫 · 特效</b> —— 只要是<b>由 AI 調整變更</b>的，⛔ 一律不得直接套用，要先過<b>後台一頁批核審查頁</b>。 ⚠️ ⭐ <b>而套用路徑今天已經是活的</b> —— #736（admin 編輯 → game-server 熱載 → client 看得到） 與 #730（9 個編輯頁上正式 build）<b>都已經關票出貨</b>。 ⇒ ⛔ 這道閘不是「之後蓋」，是<b>現在就缺</b>。 ## ⭐ owner 給了兩個量化數字（⭐ 這是 repo 裡第一次有 AI 特效品質的量值） | 量法 | 分數 | |---|---| | 肉眼評價 | <b>0~4 / 10</b> | | 視覺擷圖自動審查 | <b>2~6 / 10</b> | ⚠️ ⭐ <b>這兩個數字直接否決了一種設計</b>：把「Claude 看接觸表初審」當成特效的<b>終審</b>。 上界 4/10 與 6/10 都低於任何可接受的出貨門檻 ⇒ ⭐ <b>人類批核是必要的那一層</b>， ⛔ 機器初審只能用來<b>縮短佇列</b>，⛔ 不能取代它（CLAUDE.md 🧑‍⚖️ Tier 1.5 逐字： 「⛔ <b>不得</b>當高風險項的終審」——這則裁決把「高風險」的範圍定死在 AI 產的特效上）。 ⭐ 而它也給了 HITL 分層漏斗一個<b>可檢查的成功判準</b>： 批核通過的那些，重測時應該要高於這兩個區間 —— ⛔ 否則就是漏斗沒有在篩。</td><td>664</td></tr>
+<tr><td>14:20</td><td>（不是 owner 裁決，是進度）#908 責任③第一塊落地：投稿的資料模型與可見性。⭐ 可見性有兩個條件（核准過 且 指紋沒變）—— ⛔ 只驗 status 擋不住「先送乾淨的、核准後換內容」。⚠️ 而突變證明第一版守衛比它讀起來弱：案例走 withNewContent 會退回 pending ⇒ 指紋那一半從未被判定。順帶修掉 parseWithUnknownFieldReport 被拒時回空診斷的洞（呼叫端只能說「不合法」說不出哪一格）。</td><td>908</td></tr>
+<tr><td>12:57</td><td>升級所需經驗值太線性 你參考一下 lol 做法? 另外你的提議不錯，是應該要做總經驗值 系統倍率</td><td>⏸ 未對票</td></tr>
+<tr><td>13:02</td><td>09-04 已經正確使用 w3x.stock.revivehuman + tpl-beam-roll；但 08-03 的 ability 仍是舊 RedDragonMissile 必須把 08-03 的來源改成同一個 beam-roll 積木 請開這張票</td><td>⏸ 未對票</td></tr>
+<tr><td>13:12</td><td>來源 一場給多少 回合直接給等級（rounds[].grantLevels） 49 級 ⇒ 打完就是 L50 打殭屍賺到同樣 49 級要 98,980 XP ＝ 一般殭屍 2,474 隻 這是第幾回合? 是增加 還是增加至? 你建議怎麼平衡設計 50%靠打殭屍 50%靠系統拉升避免弱勢方無法翻身</td><td>⏸ 未對票</td></tr>
+<tr><td>13:17</td><td>幫我註記在 codex 編輯器相關的票中 [重要訊息] , 八個驗收技能特效是用來驗收編輯器是否能做出對應技能，不是直接套用回去遊戲主程式中，所有技能效果機制動畫特效由AI來調整變更都要經過後台一頁批核審查頁 通過才能套用，因為目前 AI 產特效的正確性太差了且太不穩定了 (肉眼評價 0~4/10分, 加上視覺擷圖自動審查 2~6/10分)</td><td>⏸ 未對票</td></tr>
+<tr><td>13:23</td><td>但我想知道你的建議阿 但先不要寫到票裡</td><td>⏸ 未對票</td></tr>
+<tr><td>13:26</td><td>我是覺得 殭屍給的經驗值好像有問題</td><td>⏸ 未對票</td></tr>
+<tr><td>13:30</td><td>不是故意的，請你開票</td><td>⏸ 未對票</td></tr>
+<tr><td>13:37</td><td>新增第十一回合 生存模式 如果整場所有回合戰鬥中 累計打敗三次殭屍王則展開第十一回合 時限10分鐘 不會出現火圈 以活下來為目標 每30秒出現一波殭屍組合 這個殭屍組合你可以建議 難度指數增加 組合項目可以包含 殭屍 特殊殭屍 殭屍王 的不同英雄組合 甚至加入場景效果 例如特定區域 BR 大轟炸 目前是討論先不開票</td><td>⏸ 未對票</td></tr>
+<tr><td>14:05</td><td>普通殭屍依然可以 2秒一波</td><td>⏸ 未對票</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

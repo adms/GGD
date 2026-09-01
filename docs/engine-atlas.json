@@ -1,8 +1,8 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "e534e6ef",
+  "capabilityFingerprint": "111434fa",
   "counts": {
-    "effectKinds": 46,
+    "effectKinds": 47,
     "hookEvents": 33,
     "conditionLeafKinds": 5,
     "templateFamilies": 27,
@@ -511,6 +511,7 @@
       "floatingText",
       "grantAttribute",
       "grantGold",
+      "grantXp",
       "heal",
       "invulnerable",
       "knockback",

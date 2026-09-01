@@ -3740,7 +3740,7 @@
     {
       "id": "fx.saber.gold-dust",
       "kind": "vfx",
-      "hash": "f484767149f06e45345af2be4c421f4ed9c4578e",
+      "hash": "c8cce041e80169b64af4ab28e048b1b9d24964b3",
       "risk": 2,
       "reasons": [
         "2 支上架技能引用（R/EX ×2 加權後 risk 2）",
@@ -4305,19 +4305,6 @@
       ]
     },
     {
-      "id": "fx.fam.burst.physical.s100",
-      "kind": "vfx",
-      "hash": "4c393351497bc5dd013bb5743d6de6a2892772d7",
-      "risk": 1,
-      "reasons": [
-        "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e00r.e"
-      ]
-    },
-    {
       "id": "fx.fam.ground-dust.ki.s120",
       "kind": "vfx",
       "hash": "a10facca1c4c448337b08446801a42c66895c7db",
@@ -4354,6 +4341,19 @@
       ],
       "refs": [
         "godie-efur.w"
+      ]
+    },
+    {
+      "id": "fx.fam.shockwave-ring.physical.s150",
+      "kind": "vfx",
+      "hash": "ce4c03edcbc9b762e9f82d489da317aba772993f",
+      "risk": 1,
+      "reasons": [
+        "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
+        "未審"
+      ],
+      "refs": [
+        "godie-e00r.e"
       ]
     },
     {

@@ -8,11 +8,11 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_6d2ad2be870f`
+contentVersion `cv_19c91ba7b9f0`
 
 ---
 
-## 效果（effect kind） —— 46 種
+## 效果（effect kind） —— 47 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
@@ -29,7 +29,7 @@ contentVersion `cv_6d2ad2be870f`
 | `damageArea` | 範圍傷害 | 45 | `godie-e001.passive`、`godie-e002.w`、`godie-e007.r`、`godie-e008.ex`、`godie-e00n.passive`、`godie-e00s.e`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00s.w`、`godie-e00w.ex`、`godie-e00w.q`、`godie-e00w.r` …（共 45） |
 | `damageLine` | 直線傷害 | 19 | `godie-e002.e`、`godie-e002.ex`、`godie-e00l.e`、`godie-e00l.ex`、`godie-e00r.r`、`godie-edem.e`、`godie-emfr.q`、`godie-h01n.e`、`godie-h01u.e`、`godie-h02r.r`、`godie-h02u.e`、`godie-h02v.e` …（共 19） |
 | `dash` | 衝刺（腳不離地） | 8 | `godie-edem.e`、`godie-h01n.q`、`godie-h01u.e`、`godie-hapm.r`、`godie-u00j.w`、`godie-udea.w`、`godie-zombiex.w`、`thorne.q` |
-| `delayed` | 延遲落地／排程 | 21 | `godie-e002.ex`、`godie-e00l.ex`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-h020.e`、`godie-h02u.q`、`godie-h02v.ex`、`godie-h02v.q`、`godie-hapm.ex`、`godie-hapm.passive`、`godie-hjai.e`、`godie-n003.r` …（共 21） |
+| `delayed` | 延遲落地／排程 | 23 | `godie-e002.ex`、`godie-e00l.ex`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-h020.e`、`godie-h02u.ex`、`godie-h02u.q`、`godie-h02u.r`、`godie-h02v.ex`、`godie-h02v.q`、`godie-hapm.ex`、`godie-hapm.passive` …（共 23） |
 | `devour` | 吞噬 | 4 | `godie-e00r.q`、`godie-h02u.w`、`godie-h02v.w`、`grail-ex-13` |
 | `dispel` | 淨化／驅散 | 12 | `godie-e007.r`、`godie-e007.w`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-ewar.r`、`godie-ewar.w`、`godie-h00l.passive`、`grail-c-01`、`grail-c-08`、`grail-a-06`、`grail-a-15`、`grail-ex-14` |
 | `dot` | 持續傷害（燃燒／流血／中毒） | 14 | `godie-edem.ex`、`godie-edem.q`、`godie-h02r.passive`、`godie-h02u.e`、`godie-h02v.e`、`godie-hgam.passive`、`godie-huth.r`、`godie-n00p.w`、`godie-nsjs.w`、`godie-o00x.q`、`godie-o030.e`、`godie-ogld.w` …（共 14） |
@@ -38,7 +38,8 @@ contentVersion `cv_6d2ad2be870f`
 | `extendBuff` | 延長既有增益 | 1 | `godie-hapm.q` |
 | `floatingText` | 特效文字（原作的 TextTag，例「1Hit…7Hit」） | 9 | `godie-e002.e`、`godie-e002.ex`、`godie-e00l.e`、`godie-e00l.ex`、`godie-h020.e`、`godie-hart.r`、`godie-hjai.e`、`godie-n003.r`、`godie-n01g.r` |
 | `grantAttribute` | 加三圍（力／敏／智） | 5 | `godie-hpb1.passive`、`godie-hvsh.e`、`godie-n01c.passive`、`godie-nbbc.passive`、`grail-c-10` |
-| `grantGold` | 發錢 | 1 | `godie-n00b.passive` |
+| `grantGold` | 發錢 | 2 | `godie-h02u.r`、`godie-n00b.passive` |
+| `grantXp` | 發經驗值 | 1 | `godie-h02u.ex` |
 | `heal` | 治療（吃係數） | 10 | `godie-etyr.q`、`godie-h02r.passive`、`godie-hgam.passive`、`godie-hvsh.e`、`godie-n003.w`、`godie-n01c.q`、`godie-n01g.w`、`godie-nbbc.q`、`godie-o02p.r`、`godie-o02p.w` |
 | `invulnerable` | 免疫／魔免／免控 | 18 | `godie-e00r.ex`、`godie-e00r.passive`、`godie-hapm.ex`、`godie-hapm.passive`、`godie-hapm.w`、`godie-hart.r`、`godie-hpb1.w`、`godie-u00j.q`、`godie-u00n.r`、`godie-u00o.r`、`godie-u010.q`、`godie-uvng.q` …（共 18） |
 | `knockback` | 擊退／擊飛／拉扯／擊倒 | 13 | `godie-e007.ex`、`godie-e00w.q`、`godie-efur.w`、`godie-ewar.ex`、`godie-h00l.q`、`godie-h00l.r`、`godie-h01u.w`、`godie-h02k.r`、`godie-hapm.ex`、`godie-hapm.passive`、`godie-u00v.r`、`grail-c-02` …（共 13） |
