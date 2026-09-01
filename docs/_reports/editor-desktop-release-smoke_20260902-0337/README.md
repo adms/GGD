@@ -71,10 +71,8 @@ pnpm --filter @ggd/editor-desktop dist:win
 ```
 
 `win-unpacked/GGD Ability & VFX Editor.exe` is a PE32+ x86-64 application and
-contains the packaged Editor/Admin resources. The macOS host has no Wine, so
-this proves the Windows package/resource closure but not Windows process launch;
-the same smoke must be run on a real Windows host before a public release. After
-building on that host, the deterministic command is:
+contains the packaged Editor/Admin resources. The deterministic verification
+command is:
 
 ```bash
 pnpm --filter @ggd/editor-desktop smoke:packaged
@@ -86,6 +84,25 @@ user-data, and fails unless the packaged process emits a valid
 or separately unpacked executable can be selected with
 `--executable="C:\\path\\to\\GGD Ability & VFX Editor.exe"`.
 
+At 2026-09-02 03:56（Asia/Taipei）, GitHub Actions run
+[`33552053135`](https://github.com/adms/GGD/actions/runs/33552053135) built the
+package on `windows-latest`, launched the real unpacked `.exe`, and completed
+successfully. The uploaded log contains both receipts; its run metadata,
+artifact SHA-256 and normalized receipt are preserved in
+[`windows-smoke-receipt.json`](./windows-smoke-receipt.json):
+
+- app: `ggd-editor-desktop-smoke@1`
+- runner: `ggd-editor-packaged-smoke-runner@1`, `platform: "win32"`
+- Base: `cv_88cbb6486bf2`; working snapshot: `cv_afec1c4d9dbd`
+- target profile: `3f8d4687566f`
+- `/editor/`, `/admin/`, manifest, desktop source and desktop target profile:
+  all HTTP 200
+
+The first two feature-branch runs failed before packaging: one exposed a
+Windows ESM/shebang parser edge and one exposed a Unix-only path assertion.
+Both were fixed, and the third run exercised tests, `dist:win`, process launch,
+receipt parsing and artifact upload end to end.
+
 | Artifact | Size | SHA-256 |
 |---|---:|---|
 | `GGD Ability & VFX Editor Setup 0.1.0.exe` | 94 MB | `b8c1f4029582426415fea19645f6b9769465f2ada8f1619a8186332415966218` |
@@ -96,7 +113,8 @@ or separately unpacked executable can be selected with
 - The macOS build is not Developer-ID signed or notarized because this machine
   has no valid Developer ID Application identity. It is a local acceptance
   build, not a frictionless public download.
-- Windows signing was not independently verified on a Windows host.
+- Windows process launch is verified; Authenticode signing is still not
+  configured or claimed for this local acceptance build.
 - Main still advertises only `bootstrap`; G2 validate/apply/rollback, exact
   active Base, source adapter, production review/Promote, asset manifest and
   effective VFX-limit receipts remain Main-owned blockers.
