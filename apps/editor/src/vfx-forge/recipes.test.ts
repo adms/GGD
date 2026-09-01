@@ -8,13 +8,16 @@ describe("VFX Forge editor-side recipes", () => {
     expect(segments.every((segment) => zVfxScriptSegment.safeParse(segment).success)).toBe(true);
     expect(segments.filter((segment) => segment.kind === "modelFx" && segment.modelKey === CLASSIC_BEAM_MODEL_KEY)).toHaveLength(1);
     const body = segments.find((segment) => segment.kind === "modelFx");
-    expect(body).toMatchObject({ path: "static", anchor: "self", scaleAxis: [0.48, 0.48, 2.68] });
+    expect(body).toMatchObject({
+      path: "static", anchor: "self", scale: 4,
+      scaleAxis: [0.9, 0.9, 4.4], offsetForwardU: 0.8,
+    });
     const particles = segments.filter((segment) => segment.kind === "vfx");
     expect(particles).toHaveLength(4);
     expect(Math.max(...particles.map((segment) => segment.atMs ?? 0))).toBe(465);
   });
 
-  it.each(["line-blast-fire", "dash-slash-void", "shockwave-dash-light", "combo-slash-holy", "reflect-counter-open"] as const)(
+  it.each(["line-blast-fire", "dash-slash-void", "shockwave-dash-light", "combo-slash-holy", "reflect-counter-open", "avalon-counter-chain", "rider-dash-beam-blue"] as const)(
     "%s expands only into shipped script bricks",
     (id) => {
       const segments = buildVfxForgeRecipe(id);
@@ -30,6 +33,23 @@ describe("VFX Forge editor-side recipes", () => {
     });
     const arrival = segments.filter((segment) => segment.kind === "vfx");
     expect(arrival.every((segment) => (segment.atMs ?? 0) >= 430)).toBe(true);
+    expect(arrival).toContainEqual(expect.objectContaining({
+      vfxId: "fx.prim.fire.explosion-lg",
+      w3xScale: 2.2,
+      offsetForwardU: 12.8,
+    }));
+  });
+
+  it("void dash moves the real caster and never spawns the unsafe Lina model clone", () => {
+    const segments = buildVfxForgeRecipe("dash-slash-void");
+    expect(segments.some((segment) => segment.kind === "modelFx" || segment.kind === "hideBody")).toBe(false);
+    expect(segments).toContainEqual(expect.objectContaining({
+      kind: "bodyMove", at: "caster", mode: "arc",
+      offset: { x: 0.35, y: 0.2, z: 4.5 }, durationMs: 560,
+    }));
+    expect(segments).toContainEqual(expect.objectContaining({
+      kind: "anim", at: "caster", pulse: "attack",
+    }));
   });
 
   it("reflect opening is impossible to trigger from cast or block", () => {
@@ -46,16 +66,34 @@ describe("VFX Forge editor-side recipes", () => {
   });
 
   it("shockwave dash keeps both stages in one reusable recipe without moving authority", () => {
-    const segments = buildVfxForgeRecipe("shockwave-dash-light", { dashModelKey: "imported.sd2" });
+    const segments = buildVfxForgeRecipe("shockwave-dash-light");
     expect(segments).toContainEqual(expect.objectContaining({
-      kind: "modelFx", modelKey: "imported.sd2", path: "toTarget", atMs: 330,
+      kind: "vfx", vfxId: "fx.prim.lightning.beam-flat",
     }));
+    expect(segments.some((segment) =>
+      segment.kind === "vfx" && segment.vfxId === "fx.prim.lightning.beam-flat" && segment.facingDeg !== undefined,
+    )).toBe(false);
+    expect(segments.some((segment) => segment.kind === "modelFx" || segment.kind === "hideBody")).toBe(false);
     expect(segments.some((segment) => segment.kind === "bodyMove")).toBe(false);
+    expect(segments).toContainEqual(expect.objectContaining({
+      kind: "anim", at: "caster", pulse: "attack", atMs: 330,
+    }));
   });
 
   it("omits the body when ability JSON already owns the same model brick", () => {
     const ability = { effects: [{ kind: "spawnModelFx", modelKey: CLASSIC_BEAM_MODEL_KEY }] };
     expect(abilityUsesModel(ability, CLASSIC_BEAM_MODEL_KEY)).toBe(true);
     expect(buildVfxForgeRecipe("classic-beam-fire", { includeModelCore: false }).some((segment) => segment.kind === "modelFx")).toBe(false);
+  });
+
+  it("exposes the two multi-stage acceptance scenes as true from-blank composite cards", () => {
+    const avalon = buildVfxForgeRecipe("avalon-counter-chain");
+    expect(avalon.some((segment) => segment.on === "reflectSuccess")).toBe(true);
+    expect(avalon.filter((segment) => segment.kind === "bodyMove" && segment.on === "strike")).toHaveLength(6);
+    expect(avalon.filter((segment) => segment.on === "strike" && segment.strikeIndex === 7).length).toBeGreaterThanOrEqual(2);
+
+    const rider = buildVfxForgeRecipe("rider-dash-beam-blue");
+    expect(rider).toContainEqual(expect.objectContaining({ kind: "bodyMove", at: "caster", mode: "arc" }));
+    expect(rider.filter((segment) => segment.kind === "vfx")).toHaveLength(4);
   });
 });

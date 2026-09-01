@@ -12,7 +12,7 @@ import {
 } from "@ggd/shared/content/schema/vfxScript";
 import { Abilities, Champions, type CastableSlot } from "@ggd/shared/sim";
 import type { AbilityId, ChampionId } from "@ggd/shared/ids";
-import { api, ApiValidationError } from "../api/client";
+import { api, ApiValidationError, type AiVisualEvidence } from "../api/client";
 import { issuesToErrorMap, type ErrorMap } from "../store";
 import { sameJson, useUndoHistory } from "../history";
 import {
@@ -54,6 +54,8 @@ import {
   type VfxForgeRecipeId,
 } from "./recipes";
 import { acceptanceFixtureFor, VFX_FORGE_ACCEPTANCE } from "./acceptanceFixtures";
+import { acceptanceSourceFor } from "./acceptanceSources";
+import { AcceptanceSourcePanel } from "./AcceptanceSourcePanel";
 
 const simPreview = createSimPreviewController();
 
@@ -66,12 +68,18 @@ export function VfxForgePage() {
   const assetSafetyGate = useMemo(() => new AssetSafetyGate(api), []);
   const [abilityId, setAbilityId] = useState("godie-hart.r");
   const [abilityInput, setAbilityInput] = useState("godie-hart.r");
-  const [targetChampionId, setTargetChampionId] = useState("sela");
+  // Use a real shipped 3D champion as the default opponent. The old `sela`
+  // blockout is useful for mechanics tests but its white cube head trips the
+  // same framebuffer signature as a missing-alpha card and does not satisfy
+  // the Owner requirement to review two actual character models.
+  const [targetChampionId, setTargetChampionId] = useState("godie-e00r");
   const [ability, setAbility] = useState<ForgeAbility | null>(null);
   const draftHistory = useUndoHistory<VfxScriptDoc | null>(null, sameJson);
   const draft = draftHistory.value;
   const [original, setOriginal] = useState<VfxScriptDoc | null>(null);
   const [isAcceptanceFixture, setIsAcceptanceFixture] = useState(false);
+  const [acceptanceStartedFromBlank, setAcceptanceStartedFromBlank] = useState(false);
+  const [authoringActions, setAuthoringActions] = useState<string[]>([]);
   const [selected, setSelected] = useState(0);
   const [playheadMs, setPlayheadMs] = useState(0);
   const [seekRevision, setSeekRevision] = useState(0);
@@ -82,6 +90,7 @@ export function VfxForgePage() {
   const [trace, setTrace] = useState<CastPreviewTrace | ReactionPreviewTrace | null>(null);
   const [traceError, setTraceError] = useState<string | null>(null);
   const [assetSafety, setAssetSafety] = useState<Map<string, AssetSafetyResult | "checking">>(new Map());
+  const [visualEvidence, setVisualEvidence] = useState<AiVisualEvidence[]>([]);
   const previewRef = useRef<VfxForgePreviewHandle>(null);
 
   const championId = abilityId.includes(".") ? abilityId.slice(0, abilityId.lastIndexOf(".")) : "";
@@ -113,6 +122,7 @@ export function VfxForgePage() {
     () => runtimeAbility ? reactionTriggerOf(runtimeAbility) : null,
     [runtimeAbility],
   );
+  const acceptanceSource = useMemo(() => acceptanceSourceFor(abilityId), [abilityId]);
 
   const existingIds = useMemo(
     () => new Set(indexes.scripts.data?.entries.map((e) => e.id) ?? []),
@@ -125,6 +135,7 @@ export function VfxForgePage() {
     setPlaying(false);
     setPlayheadMs(0);
     setServerErrors({});
+    setVisualEvidence([]);
     void (async () => {
       try {
         const abilityDoc = await api.doc<ForgeAbility>("abilities", abilityId);
@@ -136,6 +147,8 @@ export function VfxForgePage() {
         draftHistory.reset(script);
         setOriginal(script);
         setIsAcceptanceFixture(fixture !== null);
+        setAcceptanceStartedFromBlank(false);
+        setAuthoringActions(fixture ? [`載入只讀參考樣本：${abilityId}`] : [`載入技能：${abilityId}`]);
         setSelected(0);
         setStatus(fixture
           ? "已載入 Editor 驗收樣本；不屬於遊戲 content，且永遠不可 Promote"
@@ -179,9 +192,9 @@ export function VfxForgePage() {
     const onKeyDown = (event: KeyboardEvent): void => {
       if (!(event.ctrlKey || event.metaKey) || event.altKey) return;
       const key = event.key.toLowerCase();
-      if (key === "z" && event.shiftKey) { event.preventDefault(); draftHistory.redo(); }
-      else if (key === "z") { event.preventDefault(); draftHistory.undo(); }
-      else if (key === "y") { event.preventDefault(); draftHistory.redo(); }
+      if (key === "z" && event.shiftKey) { event.preventDefault(); draftHistory.redo(); setVisualEvidence([]); }
+      else if (key === "z") { event.preventDefault(); draftHistory.undo(); setVisualEvidence([]); }
+      else if (key === "y") { event.preventDefault(); draftHistory.redo(); setVisualEvidence([]); }
     };
     globalThis.addEventListener("keydown", onKeyDown);
     return () => globalThis.removeEventListener("keydown", onKeyDown);
@@ -229,6 +242,12 @@ export function VfxForgePage() {
   const mutate = (fn: (doc: VfxScriptDoc) => VfxScriptDoc): void => {
     draftHistory.commit((doc) => (doc ? fn(doc) : doc));
     setServerErrors({});
+    // Evidence is candidate-bound. Never let a screenshot of the previous
+    // JSON survive an edit and appear beside a new hash in human review.
+    setVisualEvidence([]);
+  };
+  const recordAction = (action: string): void => {
+    setAuthoringActions((previous) => previous[previous.length - 1] === action ? previous : [...previous, action]);
   };
   const probeAsset = (asset: AssetDrop): void => {
     const key = assetKey(asset);
@@ -248,11 +267,13 @@ export function VfxForgePage() {
       return;
     }
     mutate((doc) => ({ ...doc, segments: [...doc.segments, segmentFromAsset(asset, placement)] }));
+    recordAction(`拖入素材：${asset.collection}/${asset.id}`);
     setSelected(draft?.segments.length ?? 0);
     setStatus(`素材去背通過：${asset.id}`);
   };
   const addKind = (kind: VfxScriptSegment["kind"]): void => {
     mutate((doc) => ({ ...doc, segments: [...doc.segments, newSegment(kind)] }));
+    recordAction(`新增時間軸積木：${kind}`);
     setSelected(draft?.segments.length ?? 0);
   };
   const addRecipe = async (id: VfxForgeRecipeId): Promise<void> => {
@@ -267,6 +288,7 @@ export function VfxForgePage() {
       return;
     }
     mutate(() => candidate);
+    recordAction(`加入可重用組合：${id}`);
     setSelected(draft.segments.length);
     setStatus(coreAlreadyOwned
       ? "ability 已擁有 ReviveHuman MDL 主體；只加入粒子輔助層，避免重複繪製"
@@ -275,6 +297,13 @@ export function VfxForgePage() {
 
   const save = async (): Promise<void> => {
     if (!draft || errorCount > 0 || assetAuditPending || assetBlockers.length > 0) return;
+    const requiredEvidence = isAcceptanceFixture ? 2 : 1;
+    if (visualEvidence.length < requiredEvidence) {
+      setStatus(isAcceptanceFixture
+        ? "⛔ 八招能力驗收至少要擷取 2 張完整技能演出畫面"
+        : "⛔ VFX 候選至少要擷取 1 張完整技能演出畫面");
+      return;
+    }
     setStatus("以完整技能演出掃描未去背底板…");
     try {
       const visual = await previewRef.current?.auditBackdropTimeline();
@@ -297,6 +326,20 @@ export function VfxForgePage() {
           summary: isAcceptanceFixture
             ? "八招 VFX Forge 表達能力驗收；只評估編輯器，不得套用遊戲主程式"
             : "VFX Forge AI 輔助調整候選",
+          evidence: [
+            ...(acceptanceSource ? [
+              `owner-target:${acceptanceSource.ownerTarget}`,
+              `main-current:${acceptanceSource.main.summary}`,
+              `jass-summary:${acceptanceSource.jass.summary}`,
+              `jass-locust:${acceptanceSource.jass.locustComposition}`,
+              `source-resolution:${acceptanceSource.resolution.alignment}:${acceptanceSource.resolution.note}`,
+            ] : []),
+            ...(acceptanceSource?.jass.references ?? []),
+            ...(acceptanceStartedFromBlank ? [`editor-from-blank:${abilityId}`] : []),
+            `preview-target:${targetChampionId}`,
+            ...authoringActions.map((action, index) => `editor-action:${index + 1}:${action}`),
+          ],
+          visualEvidence,
         },
       );
       setOriginal(draft);
@@ -319,6 +362,57 @@ export function VfxForgePage() {
     setAbilityInput(id);
     setAbilityId(id);
   };
+  const startAcceptanceFromBlank = (): void => {
+    const blank = newScript(abilityId);
+    draftHistory.reset(blank);
+    setOriginal(blank);
+    setSelected(0);
+    setPlaying(false);
+    setPlayheadMs(0);
+    setAcceptanceStartedFromBlank(true);
+    setAuthoringActions([`從空白畫布開始：${abilityId}`]);
+    setVisualEvidence([]);
+    setStatus("空白畫布已建立；請用資源拖拉、積木與時間軸重建，完成後才能提交能力驗收");
+  };
+  const restoreAcceptanceReference = (): void => {
+    const fixture = acceptanceFixtureFor(abilityId);
+    if (!fixture) return;
+    draftHistory.reset(fixture);
+    setOriginal(fixture);
+    setSelected(0);
+    setPlaying(false);
+    setPlayheadMs(0);
+    setAcceptanceStartedFromBlank(false);
+    setAuthoringActions([`載入只讀參考樣本：${abilityId}`]);
+    setVisualEvidence([]);
+    setStatus("已載入只讀驗收參考；必須按「從空白重建」並實際操作後，才可提交能力驗收");
+  };
+
+  const fixtureWorkflowBlocked = isAcceptanceFixture && !acceptanceStartedFromBlank;
+  const requiredVisualEvidence = isAcceptanceFixture ? 2 : 1;
+  const visualEvidenceBlocked = visualEvidence.length < requiredVisualEvidence;
+
+  const captureVisualEvidence = async (): Promise<void> => {
+    if (previewMode !== "runtime") {
+      setStatus("⛔ 視覺證據必須在「完整技能演出」模式擷取");
+      return;
+    }
+    if (visualEvidence.length >= 4) {
+      setStatus("視覺證據最多 4 張；請先刪除不需要的畫面");
+      return;
+    }
+    try {
+      const frame = await previewRef.current?.captureVisualEvidence(
+        `${abilityId} vs ${targetChampionId} · ${(playheadMs / 1000).toFixed(3)}秒 · 證據${visualEvidence.length + 1}`,
+      );
+      if (!frame) throw new Error("預覽尚未準備完成");
+      setVisualEvidence((current) => [...current, frame]);
+      recordAction(`擷取視覺證據：${frame.view}/${(frame.atMs / 1000).toFixed(3)}秒`);
+      setStatus(`已擷取候選畫面 ${visualEvidence.length + 1}/4；修改 JSON 會自動清除舊證據`);
+    } catch (error) {
+      setStatus(`⛔ 擷取視覺證據失敗：${String(error)}`);
+    }
+  };
 
   return (
     <main className="vfx-forge">
@@ -329,10 +423,17 @@ export function VfxForgePage() {
         </div>
         <div className="vfx-forge-save">
           <span className={errorCount || assetBlockers.length ? "error" : ""}>{status}{dirty ? " · 未儲存" : ""}</span>
-          <button type="button" disabled={!draftHistory.canUndo} onClick={draftHistory.undo} title="復原（Ctrl/Cmd+Z）">↶ 復原</button>
-          <button type="button" disabled={!draftHistory.canRedo} onClick={draftHistory.redo} title="重做（Ctrl/Cmd+Shift+Z）">↷ 重做</button>
-          <button type="button" disabled={!dirty} onClick={() => { if (original) draftHistory.commit(original); }}>還原存檔版</button>
-          <button type="button" disabled={!dirty || errorCount > 0 || assetAuditPending || assetBlockers.length > 0} onClick={() => void save()}>
+          <button type="button" disabled={!draftHistory.canUndo} onClick={() => { draftHistory.undo(); setVisualEvidence([]); }} title="復原（Ctrl/Cmd+Z）">↶ 復原</button>
+          <button type="button" disabled={!draftHistory.canRedo} onClick={() => { draftHistory.redo(); setVisualEvidence([]); }} title="重做（Ctrl/Cmd+Shift+Z）">↷ 重做</button>
+          <button type="button" disabled={!dirty} onClick={() => { if (original) { draftHistory.commit(original); setVisualEvidence([]); } }}>還原存檔版</button>
+          <button
+            type="button"
+            disabled={!dirty || errorCount > 0 || assetAuditPending || assetBlockers.length > 0 || fixtureWorkflowBlocked || visualEvidenceBlocked}
+            title={fixtureWorkflowBlocked
+              ? "八招必須從空白畫布用 Editor 重建，不能直接提交預置 JSON"
+              : visualEvidenceBlocked ? `送審前還需要 ${requiredVisualEvidence - visualEvidence.length} 張完整技能演出畫面` : undefined}
+            onClick={() => void save()}
+          >
             {assetAuditPending ? "檢查貼圖中…" : isAcceptanceFixture ? "提交能力驗收" : "提交 AI 批核"}
           </button>
         </div>
@@ -344,7 +445,7 @@ export function VfxForgePage() {
         <button type="button" onClick={() => choose(abilityInput.trim())}>載入</button>
         <label>
           驗收目標
-          <select value={targetChampionId} onChange={(event) => setTargetChampionId(event.target.value)}>
+          <select value={targetChampionId} onChange={(event) => { setTargetChampionId(event.target.value); setVisualEvidence([]); }}>
             {indexes.champions.data?.entries.map((entry) => (
               <option key={entry.id} value={entry.id}>{entry.id}</option>
             ))}
@@ -356,7 +457,11 @@ export function VfxForgePage() {
       {isAcceptanceFixture ? (
         <section className="vfx-blocker" role="status">
           <b>🧪 Editor 能力驗收樣本</b>
-          <span>這八招只驗收工坊能否做出對應演出。候選存放於審查材料區，不是遊戲內容；後台只能判定通過／失敗，Promote 端點也會拒絕。</span>
+          <span>
+            這八招只驗收工坊能否做出對應演出。預置內容只能當參考；必須從空白畫布重建並留下操作證據，候選才可送審。後台只能判定通過／失敗，Promote 端點也會拒絕。
+          </span>
+          <button type="button" onClick={startAcceptanceFromBlank}>從空白重建</button>
+          <button type="button" onClick={restoreAcceptanceReference}>載入參考</button>
         </section>
       ) : (
         <section className="vfx-reaction-info" aria-label="AI 修改上線政策">
@@ -364,6 +469,8 @@ export function VfxForgePage() {
           <span>提交只建立候選。後台核准綁定此版 JSON 雜湊；任何後續修改都必須重新審查，核准後仍需另外按 Promote 才會套用。</span>
         </section>
       )}
+
+      {isAcceptanceFixture && acceptanceSource ? <AcceptanceSourcePanel source={acceptanceSource} /> : null}
 
       {previewContent.data ? (
         <section className="vfx-effective-limits" aria-label="實際生效的 VFX 上限">
@@ -467,6 +574,28 @@ export function VfxForgePage() {
                 onStop={stop}
                 onDropAsset={addAsset}
               />
+              <section className="vfx-visual-evidence" aria-label="候選視覺證據">
+                <header>
+                  <div>
+                    <b>候選畫面證據 {visualEvidence.length}/{requiredVisualEvidence}（最多 4）</b>
+                    <small>完整技能演出 · 綁定本次候選；任何 JSON 修改都會清空</small>
+                  </div>
+                  <button type="button" disabled={previewMode !== "runtime" || visualEvidence.length >= 4} onClick={() => void captureVisualEvidence()}>
+                    📷 擷取目前格
+                  </button>
+                </header>
+                {visualEvidence.length === 0 ? <p>在關鍵幀擷取側視／俯視或不同階段，送審後會直接顯示在後台單頁。</p> : (
+                  <div className="vfx-evidence-grid">
+                    {visualEvidence.map((frame, index) => (
+                      <figure key={`${frame.view}:${frame.atMs}:${index}`}>
+                        <img src={frame.dataUrl} alt={frame.label} />
+                        <figcaption>{frame.view === "side" ? "側視" : "俯視"} · {(frame.atMs / 1000).toFixed(3)}秒</figcaption>
+                        <button type="button" onClick={() => setVisualEvidence((frames) => frames.filter((_, i) => i !== index))}>移除</button>
+                      </figure>
+                    ))}
+                  </div>
+                )}
+              </section>
               <VfxTimeline
                 script={draft}
                 cues={cues}
@@ -498,10 +627,14 @@ export function VfxForgePage() {
               index={selectedIndex}
               count={draft.segments.length}
               errors={stripSegmentErrorPrefix(errors, selectedIndex)}
-              onChange={(segment) => mutate((doc) => ({ ...doc, segments: doc.segments.map((s, i) => i === selectedIndex ? segment : s) }))}
+              onChange={(segment) => {
+                mutate((doc) => ({ ...doc, segments: doc.segments.map((s, i) => i === selectedIndex ? segment : s) }));
+                recordAction(`調整第 ${selectedIndex + 1} 段：${segment.kind}`);
+              }}
               onSelect={setSelected}
               onDelete={() => {
                 mutate((doc) => ({ ...doc, segments: doc.segments.filter((_, i) => i !== selectedIndex) }));
+                recordAction(`刪除第 ${selectedIndex + 1} 段`);
                 setSelected(Math.max(0, selectedIndex - 1));
               }}
               onMove={(delta) => {
@@ -511,6 +644,7 @@ export function VfxForgePage() {
                   [segments[selectedIndex], segments[to]] = [segments[to]!, segments[selectedIndex]!];
                   return { ...doc, segments };
                 });
+                recordAction(`移動第 ${selectedIndex + 1} 段：${delta < 0 ? "往前" : "往後"}`);
                 setSelected(selectedIndex + delta);
               }}
             />

@@ -27,6 +27,11 @@ const ITEM = {
   tags: ["ap"],
 };
 
+const VISUAL_EVIDENCE = [
+  { label: "impact side", dataUrl: "data:image/webp;base64,AA==", atMs: 900, view: "side" },
+  { label: "impact top", dataUrl: "data:image/webp;base64,AQ==", atMs: 900, view: "top" },
+];
+
 let root: string;
 let app: FastifyInstance;
 
@@ -253,11 +258,13 @@ describe("AI change control", () => {
           // the fixture classification and must override all eight IDs.
           purpose: "production-candidate",
           candidate,
+          visualEvidence: VISUAL_EVIDENCE,
         },
       });
       expect(submitted.statusCode, id).toBe(201);
       proposal = submitted.json().proposal as typeof proposal;
       expect(proposal, id).toMatchObject({ purpose: "editor-capability-fixture", promotable: false });
+      expect(submitted.json().proposal.visualEvidence, id).toHaveLength(2);
       expect(existsSync(join(root, "vfx-scripts", `${id}.json`)), id).toBe(false);
     }
 
@@ -287,6 +294,56 @@ describe("AI change control", () => {
     });
     expect(promoted.statusCode).toBe(409);
     expect(promoted.json().error).toContain("永遠不能 Promote");
+  });
+
+  it("requires candidate-bound visual evidence for VFX and rejects malformed image payloads", async () => {
+    const candidate = {
+      id: "skill.ai",
+      schema: "vfx-script@1",
+      abilityId: "skill.ai",
+      segments: [{ kind: "floatingText", on: "castStart", text: "candidate" }],
+    };
+    const missing = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: { target: { collection: "vfx-scripts", id: candidate.id }, purpose: "production-candidate", candidate },
+    });
+    expect(missing.statusCode).toBe(400);
+    expect(missing.json().error).toContain("至少需要 1 張");
+
+    const malformed = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "vfx-scripts", id: candidate.id },
+        purpose: "production-candidate",
+        candidate,
+        visualEvidence: [{ ...VISUAL_EVIDENCE[0], dataUrl: "https://example.com/proof.png" }],
+      },
+    });
+    expect(malformed.statusCode).toBe(400);
+    expect(malformed.json().error).toContain("PNG/WebP data URL");
+
+    const submitted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "vfx-scripts", id: candidate.id },
+        purpose: "production-candidate",
+        candidate,
+        visualEvidence: [VISUAL_EVIDENCE[0]],
+      },
+    });
+    expect(submitted.statusCode).toBe(201);
+    expect(submitted.json().proposal.visualEvidence).toEqual([VISUAL_EVIDENCE[0]]);
+    const proposal = submitted.json().proposal as { key: string; candidateHash: string };
+    const noScore = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/verdicts",
+      payload: { key: proposal.key, candidateHash: proposal.candidateHash, verdict: "approve", reviewer: "Owner", note: "looks right" },
+    });
+    expect(noScore.statusCode).toBe(400);
+    expect(noScore.json().error).toContain("VFX 候選必須填");
   });
 });
 

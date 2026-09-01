@@ -69,33 +69,19 @@ function compose(abilityId: string, base: readonly VfxScriptSegment[]): VfxScrip
     case "godie-nbbc.r":
       return [
         ...base.filter((segment) => segment.on === "castStart"),
-        ...buildVfxForgeRecipe("shockwave-dash-light", { dashModelKey: "imported.sd2" }),
+        ...buildVfxForgeRecipe("shockwave-dash-light"),
       ];
     case "godie-hart.r":
       return [...withoutKinds(base, ["anim", "vfx", "modelFx"]), ...buildVfxForgeRecipe("combo-slash-holy")];
     case "godie-nbbc.e":
-    case "godie-ogrh.r":
-    case "godie-hvsh.r": {
+    case "godie-ogrh.r": {
       const recipe = abilityId === "godie-ogrh.r" ? "classic-beam-fire" : "classic-beam-blue";
       return [...withoutKinds(base, ["modelFx", "vfx"]), ...buildVfxForgeRecipe(recipe)];
     }
+    case "godie-hvsh.r":
+      return buildVfxForgeRecipe("rider-dash-beam-blue");
     case "godie-e002.ex":
-      return [
-        ...withoutKinds(base, ["anim", "modelFx", "vfx"]),
-        ...buildVfxForgeRecipe("reflect-counter-open"),
-        ...buildVfxForgeRecipe("combo-slash-holy", { includeFinalColumn: false }),
-        ...buildVfxForgeRecipe("classic-beam-fire", {
-          trigger: { on: "strike", strikeIndex: 7, atMs: 220 },
-          beamAnchor: "target",
-          beamYawOffsetDeg: 180,
-        }),
-        ...buildVfxForgeRecipe("classic-beam-blue", {
-          includeModelCore: false,
-          trigger: { on: "strike", strikeIndex: 7, atMs: 245 },
-          beamAnchor: "target",
-          beamYawOffsetDeg: 180,
-        }),
-      ];
+      return buildVfxForgeRecipe("avalon-counter-chain");
     default:
       return [...base];
   }

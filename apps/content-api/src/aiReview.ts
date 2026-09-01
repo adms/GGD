@@ -33,6 +33,13 @@ export interface AiProposalTarget {
   id: string;
 }
 
+export interface AiVisualEvidence {
+  label: string;
+  dataUrl: string;
+  atMs: number;
+  view: "side" | "top";
+}
+
 export interface AiChangeProposal {
   schema: "ggd-ai-change-proposal@1";
   key: string;
@@ -42,6 +49,7 @@ export interface AiChangeProposal {
   source: "ai-assisted-editor";
   summary: string;
   evidence: string[];
+  visualEvidence: AiVisualEvidence[];
   autoVisualScore?: number;
   candidate: Record<string, unknown>;
   candidateHash: string;
@@ -92,6 +100,7 @@ interface SubmitInput {
   baseHash: string | null;
   summary?: string;
   evidence?: string[];
+  visualEvidence?: unknown;
   autoVisualScore?: number;
 }
 
@@ -128,6 +137,33 @@ function score(value: unknown, field: string): number | undefined {
   return value;
 }
 
+function visualEvidenceFrames(value: unknown): AiVisualEvidence[] {
+  if (value === undefined) return [];
+  if (!Array.isArray(value)) throw new Error("visualEvidence 必須是陣列");
+  if (value.length > 4) throw new Error("視覺證據最多 4 張");
+  return value.map((raw, index) => {
+    if (typeof raw !== "object" || raw === null || Array.isArray(raw)) {
+      throw new Error(`visualEvidence.${index} 必須是物件`);
+    }
+    const frame = raw as Record<string, unknown>;
+    const label = typeof frame.label === "string" ? frame.label.trim() : "";
+    if (label === "" || label.length > 80) throw new Error(`visualEvidence.${index}.label 必須是 1～80 字`);
+    const atMs = frame.atMs;
+    if (typeof atMs !== "number" || !Number.isFinite(atMs) || atMs < 0 || atMs > 30_000) {
+      throw new Error(`visualEvidence.${index}.atMs 必須是 0～30000`);
+    }
+    if (frame.view !== "side" && frame.view !== "top") {
+      throw new Error(`visualEvidence.${index}.view 必須是 side 或 top`);
+    }
+    const dataUrl = frame.dataUrl;
+    if (typeof dataUrl !== "string" || dataUrl.length > 400_000 ||
+      !/^data:image\/(?:png|webp);base64,[A-Za-z0-9+/]+={0,2}$/.test(dataUrl)) {
+      throw new Error(`visualEvidence.${index}.dataUrl 必須是 400KB 以下的 PNG/WebP data URL`);
+    }
+    return { label, dataUrl, atMs: Math.round(atMs), view: frame.view };
+  });
+}
+
 export function aiProposalKey(target: AiProposalTarget): string {
   return `${target.collection}:${target.id}`;
 }
@@ -154,6 +190,15 @@ export class AiReviewStore {
     const existing = this.readProposal(key);
     const forcedFixture = input.target.collection === "vfx-scripts" && VFX_FORGE_ACCEPTANCE_IDS.has(input.target.id);
     const purpose: AiProposalPurpose = forcedFixture ? "editor-capability-fixture" : input.purpose;
+    const visualEvidence = visualEvidenceFrames(input.visualEvidence);
+    if (input.target.collection === "vfx-scripts") {
+      const minimum = forcedFixture ? 2 : 1;
+      if (visualEvidence.length < minimum) {
+        throw new Error(forcedFixture
+          ? "八招能力驗收至少需要 2 張候選畫面證據"
+          : "VFX 上線候選至少需要 1 張候選畫面證據");
+      }
+    }
     const proposal: AiChangeProposal = {
       schema: "ggd-ai-change-proposal@1",
       key,
@@ -163,6 +208,7 @@ export class AiReviewStore {
       source: "ai-assisted-editor",
       summary: String(input.summary ?? "").trim(),
       evidence: (input.evidence ?? []).filter((item): item is string => typeof item === "string" && item.trim() !== ""),
+      visualEvidence,
       ...(score(input.autoVisualScore, "autoVisualScore") === undefined
         ? {}
         : { autoVisualScore: input.autoVisualScore }),
@@ -190,6 +236,12 @@ export class AiReviewStore {
       throw new Error("候選內容已變更；這次裁決不能套到新版本");
     }
     const fixture = proposal.purpose === "editor-capability-fixture";
+    if (proposal.target.collection === "vfx-scripts") {
+      const minimum = fixture ? 2 : 1;
+      if ((proposal.visualEvidence ?? []).length < minimum) {
+        throw new Error(fixture ? "八招能力驗收缺少 2 張候選畫面證據" : "VFX 候選缺少候選畫面證據");
+      }
+    }
     const allowed = fixture ? new Set<AiVerdict>(["pass", "fail"]) : new Set<AiVerdict>(["approve", "reject"]);
     if (!allowed.has(input.verdict)) {
       throw new Error(fixture ? "驗收樣本只能判定 pass/fail" : "上線候選只能判定 approve/reject");
@@ -199,7 +251,9 @@ export class AiReviewStore {
     if (reviewer === "") throw new Error("人工審查者必填");
     if (note === "") throw new Error("人工審查意見必填");
     const humanVisualScore = score(input.humanVisualScore, "humanVisualScore");
-    if (fixture && humanVisualScore === undefined) throw new Error("八招驗收必須填 0～10 肉眼分數");
+    if (proposal.target.collection === "vfx-scripts" && humanVisualScore === undefined) {
+      throw new Error(fixture ? "八招驗收必須填 0～10 肉眼分數" : "VFX 候選必須填 0～10 肉眼分數");
+    }
     const entry: AiChangeVerdict = {
       schema: "ggd-ai-change-verdict@1",
       key: input.key,
@@ -245,9 +299,10 @@ export class AiReviewStore {
     const verdicts = readLedger(this.verdictsFile, EMPTY_VERDICTS).entries;
     const promotions = readLedger(this.promotionsFile, EMPTY_PROMOTIONS).entries;
     const items = this.readAllProposals().map((proposal): AiProposalQueueItem => {
+      const normalized = { ...proposal, visualEvidence: proposal.visualEvidence ?? [] };
       const verdict = verdicts[proposal.key] ?? null;
       const promotion = promotions[proposal.key] ?? null;
-      return { ...proposal, verdict, promotion, status: statusOf(proposal, verdict, promotion) };
+      return { ...normalized, verdict, promotion, status: statusOf(normalized, verdict, promotion) };
     }).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
     const counts = Object.fromEntries([
       "pending-review",

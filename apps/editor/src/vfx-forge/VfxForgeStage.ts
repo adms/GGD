@@ -99,6 +99,14 @@ export interface BackdropTimelineAudit {
   suspects: readonly string[];
 }
 
+/** A candidate-bound framebuffer used by the one-page human review gate. */
+export interface VfxVisualEvidenceFrame {
+  label: string;
+  dataUrl: string;
+  atMs: number;
+  view: "side" | "top";
+}
+
 export interface VfxForgeStageOptions {
   fetchDoc?<T>(collection: "models" | "vfx", id: string): Promise<T>;
   onOverlay?(overlay: ForgeOverlay): void;
@@ -270,9 +278,12 @@ export class VfxForgeStage {
     };
 
     this.cameraRig = new CameraRig(this.scene, this.cameraFocus());
-    // VFX authoring is a close inspection surface. Start at the shipped
-    // minimum clamp; the explicit zoom controls can still pull back.
-    this.cameraRig.zoomBy(-10_000);
+    // Keep CameraRig's config-backed DEFAULT dolly.  The Forge used to force
+    // the closest 10u clamp here; a 12u projectile then put its endpoint and
+    // explosion outside the frame even though the shipped camera defaults to
+    // 18u.  That made a healthy Dragon Slave look like it never arrived and,
+    // worse, made screenshots validate a different camera from actual play.
+    // Authors can still use the explicit zoom controls for close inspection.
     this.cameraRig.update({
       dtMs: STEP_MS,
       localPos: this.cameraFocus(),
@@ -491,6 +502,31 @@ export class VfxForgeStage {
     this.applyReviewOrbit();
     this.renderScene();
     this.emitOverlay(enabled ? "側向驗收鏡頭" : "實戰俯視鏡頭");
+  }
+
+  /**
+   * Capture the exact unsaved draft frame through the real renderer.
+   *
+   * The review record stores this image next to the candidate hash.  It is
+   * deliberately a framebuffer capture rather than a DOM screenshot: browser
+   * chrome, timeline selection and debug badges must not be mistaken for game
+   * pixels during visual approval.
+   */
+  async captureVisualEvidence(label: string): Promise<VfxVisualEvidenceFrame> {
+    await this.contentReady;
+    await this.scene.whenReadyAsync();
+    this.renderScene();
+    this.renderScene();
+    const dataUrl = this.canvas.toDataURL("image/webp", 0.82);
+    if (!dataUrl.startsWith("data:image/webp;base64,")) {
+      throw new Error("瀏覽器無法產生 WebP 視覺證據");
+    }
+    return {
+      label: label.trim() || `${(this.nowMs / 1000).toFixed(3)}秒`,
+      dataUrl,
+      atMs: Math.round(this.nowMs),
+      view: this.sideReviewView ? "side" : "top",
+    };
   }
 
   /** Translate a canvas drop point through the shipped camera into script facing offsets. */

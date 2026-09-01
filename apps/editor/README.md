@@ -40,7 +40,12 @@ together; writes remain local. The API guard rejects non-loopback mutation.
   `content/vfx-scripts/`; a script replaces the default binding instead of
   stacking with it. Scene reset also clears not-yet-fired script segments and
   cast-end waiters, so scrub/replay cannot accumulate delayed effects from an
-  earlier run.
+  earlier run. AI-authored VFX never writes live content from this page: a
+  candidate must include one framebuffer proof (two for the eight named
+  capability fixtures), the proof is cleared on every draft/target change, and
+  the admin page shows those exact frames beside the hash-locked JSON before a
+  human can score it. The eight fixtures are server-classified and permanently
+  non-promotable even if a client lies about their purpose.
 - **Champions / Skins** — complete schema forms plus live final stats and the
   actual GLB presentation path: facing correction, hidden primitives, body
   normalization, ground placement, animation clips, tint and alpha. Champion
@@ -68,8 +73,10 @@ Before changing a content path, use `bash scripts/genguard.sh <path>`.
   descriptor must point to a source adapter. If that route is unavailable, the
   editor fails safe and shows a read-only blocker.
 - `content/vfx-scripts/*.json` and `content/skins/*.json` are directly authored
-  collections today. They still pass server-side schema validation and the
-  content API guard before a write.
+  collections today. Skin writes still follow the ordinary source policy; VFX
+  Forge deliberately has no direct writer and can only create a hash-locked AI
+  proposal. After human approval, Promote revalidates the exact script before
+  the content API writes it.
 - Save and delete share the same source policy. Network or provenance lookup
   failures block deletion instead of falling through.
 
@@ -98,13 +105,14 @@ The branch does not use the old `required = 546` count as a constant. Current
 generated truth is:
 
 ```text
-editor coverage fingerprint     e459792944b8
-capability fingerprint          f3f4185c
-required cells                  680
+editor coverage fingerprint     c94dd78a65b9
+capability fingerprint          111434fa
+required cells                  4938
 ```
 
-The count increased because `vfx-script@1` entered the contract and the coverage
-walker now includes nested record/tuple fields. The walker repair is tracked by
+The count includes `vfx-script@1`, the complete nested visual-document surface,
+and main's `effectFieldPath` axis: 416 nested effect paths such as
+`block.vfxId` and `amount.attrRatios.coeff`. The walker repair is tracked by
 [#888](https://github.com/adms/GGD/issues/888); do not hand-edit the generated
 coverage JSON.
 
@@ -123,11 +131,26 @@ without a real control is red, and an editor control outside the contract is red
 
 ## Named VFX acceptance cases
 
-| Ability | Editor result | Runtime result |
+The eight Owner-named scenes are Editor capability fixtures, not replacement
+game content. Each was rebuilt from a blank canvas using exposed recipe cards,
+passed the full-runtime backdrop scan, and entered the local review queue with
+two actual-model framebuffer proofs. The server exposes pass/fail only and has
+no Promote path for these IDs.
+
+| Ability | Required visual grammar | Main/JASS adoption |
 | --- | --- | --- |
-| `godie-hart.r` — 01-04 超究武神霸斬 | Real cast trace and 12 script tracks load without a blocker. | Playable through the current event path. |
-| `godie-hjai.e` — 04-03 龍破斬 | Real cast trace and 2 script tracks load without a blocker. | Playable; asset-fidelity gaps remain documented in the shipped script notes. |
-| `godie-e002.ex` — 20-002 理想鄉EX | The Forge performs the real reflect setup, enemy magic hit, passive hook and seven-strike schedule; all 17 tracks are editable. | **Passed:** the editor and shipped `VfxScriptPlayer` share one strict authored-origin parser, so the real `hook:abilityPassive:godie-e002.ex` strikes select the EX script without rewriting the event. A shipped-content → real Sim → real player guard covers the seam. |
+| `godie-hjai.e` — 04-03 龍破斬 | projectile travels, then remote explosion | JASS order retained; Owner's red-orange volume wins |
+| `godie-hjai.r` — 04-04 神滅斬 | real caster dash plus purple-black slash | Owner override: JASS moved the victim |
+| `godie-hart.r` — 01-04 超究武神霸斬 | animated multi-hit plus yellow-blue vertical finisher | main is the strongest baseline; JASS stage speed/height remains comparison truth |
+| `godie-nbbc.r` — 08-04 阿邦快速劍X | blue shockwave then authoritative blink slash | ability owns the blink; script must not move the body again |
+| `godie-nbbc.e` — 08-03 龍鬥氣砲咒文 | broad blue-white horizontal beam | Owner override: JASS used ten red missile dummies |
+| `godie-ogrh.r` — 09-04 龜派氣功 | broad orange-gold horizontal beam | main/JASS resource family retained, silhouette rebuilt for readability |
+| `godie-e002.ex` — 20-002 理想鄉EX | reflect success, six reposition slashes, seventh yellow-blue beam | real reflect/strike provenance; source divergence stays visible in review |
+| `godie-hvsh.r` — 48-04 騎英之手綱 | real Rider dash plus blue-white beam | Owner override: W3X was a curved locust/magic-circle charge |
+
+Authoritative local review records live under `docs/_review/ai-proposals/`;
+visual analysis and rejected experiments are documented in
+`docs/_reports/vfx-forge-editor-acceptance-20260902/README.md`.
 
 The former Ideal EX join from [#885](https://github.com/adms/GGD/issues/885) is
 now guarded through the real shipped chain. Unknown provenance still fails
@@ -137,6 +160,6 @@ existing trigger.
 ## Feature branch handoff
 
 Implementation lives on `feat/vfx-forge-codex`, based on
-`origin/main@de7006c6`. It is intentionally not merged or pushed to `main`.
+`origin/main@d69c0560`. It is intentionally not merged or pushed to `main`.
 Review the commits after that base in order; each authoring layer has its own
 commit so GGD can cherry-pick or rollback it independently.

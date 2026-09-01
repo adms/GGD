@@ -11,10 +11,12 @@ export const VFX_FORGE_RECIPES = [
   { id: "classic-beam-fire", label: "經典橘金氣功砲", description: "ReviveHuman MDL 橫放主體＋橘金粒子外暈" },
   { id: "classic-beam-blue", label: "經典藍白氣功砲", description: "ReviveHuman MDL 橫放主體＋藍白粒子外暈" },
   { id: "line-blast-fire", label: "定距火球＋落點爆炸", description: "FireBlast MDL 真正飛行，抵達後才爆炸" },
-  { id: "dash-slash-void", label: "黑紫衝刺斬", description: "隱藏本體、移動角色殘像、交叉斬痕與命中震動" },
-  { id: "shockwave-dash-light", label: "衝擊波＋追身光斬", description: "A 段先放衝擊波，B 段用角色模型分身衝刺斬穿" },
+  { id: "dash-slash-void", label: "黑紫衝刺斬", description: "真正施法者高速穿越、交叉斬痕與命中震動" },
+  { id: "shockwave-dash-light", label: "衝擊波＋追身光斬", description: "A 段朝目標放衝擊波，B 段替 ability 的真實衝刺補上揮劍與斬光" },
   { id: "combo-slash-holy", label: "黃藍多段斬＋終結柱", description: "每段攻擊／受擊動畫、交叉斬光與第七段 MDL 光柱" },
   { id: "reflect-counter-open", label: "反彈成功起手", description: "只由 reflectSuccess 觸發的防禦火花；不猜 blockSuccess" },
+  { id: "avalon-counter-chain", label: "理想鄉反擊七斬", description: "反彈成功起手、六次換位斬擊與第七段黃藍橫向終結砲" },
+  { id: "rider-dash-beam-blue", label: "Rider 突進＋藍光束", description: "真 Rider 本體突進、藍白橫向光束與命中動畫" },
 ] as const;
 
 export type VfxForgeRecipeId = typeof VFX_FORGE_RECIPES[number]["id"];
@@ -34,7 +36,6 @@ export function buildVfxForgeRecipe(
     trigger?: VfxForgeRecipeTrigger;
     beamAnchor?: "self" | "target";
     beamYawOffsetDeg?: number;
-    dashModelKey?: string;
   } = {},
 ): VfxScriptSegment[] {
   if (id === "classic-beam-fire" || id === "classic-beam-blue") {
@@ -48,9 +49,11 @@ export function buildVfxForgeRecipe(
   }
   if (id === "line-blast-fire") return lineBlastFire();
   if (id === "dash-slash-void") return dashSlashVoid();
-  if (id === "shockwave-dash-light") return shockwaveDashLight(options.dashModelKey ?? "imported.sd2");
+  if (id === "shockwave-dash-light") return shockwaveDashLight();
   if (id === "combo-slash-holy") return comboSlashHoly(options.includeFinalColumn ?? true);
-  return reflectCounterOpen();
+  if (id === "reflect-counter-open") return reflectCounterOpen();
+  if (id === "avalon-counter-chain") return avalonCounterChain();
+  return riderDashBeamBlue();
 }
 
 /**
@@ -82,10 +85,16 @@ function classicBeam(
   if (includeModelCore) {
     segments.push(zVfxScriptSegment.parse({
       kind: "modelFx", ...triggerFields(trigger), modelKey: CLASSIC_BEAM_MODEL_KEY,
-      path: "static", anchor, scale: 2.5,
-      scaleAxis: [0.48, 0.48, 2.68], spinDegPerSec: 180,
+      path: "static", anchor, scale: 4,
+      // The converted GLB keeps the central ReviveHuman geometry but not the
+      // WC3 PRE2 ribbon that made the original beam broad and long.  The model
+      // contract explicitly maps axis 3 to the rigged forward axis, so this is
+      // a deterministic reconstruction of that missing silhouette rather than
+      // a model-local guess.  The old 0.48/2.68 values rendered as a thin line
+      // and a single muzzle star at the shipped 18u camera.
+      scaleAxis: [0.9, 0.9, 4.4], spinDegPerSec: 180,
       clip: "idle", clipTimeScale: 0.18,
-      tint: fire ? [1, 0.34, 0.03] : [0.08, 0.36, 1], alpha: fire ? 0.64 : 0.5,
+      tint: fire ? [1, 0.34, 0.03] : [0.08, 0.36, 1], alpha: fire ? 0.72 : 0.68,
       lifeSec: 1.1, offsetForwardU: 0.8, heightU: 0,
       ...(yawOffsetDeg === 0 ? {} : { yawOffsetDeg }),
     }));
@@ -129,9 +138,14 @@ function lineBlastFire(): VfxScriptSegment[] {
       trailVfxId: "fx.prim.fire.bolt", trailIntervalSec: 0.08,
     }),
     zVfxScriptSegment.parse({
-      kind: "vfx", on: "castEffect", atMs: 440, vfxId: "fx.prim.fire.explosion",
+      // The ability's authoritative blast radius is 8u.  The small primitive
+      // read as a spark at the shipped 18u camera and made the projectile look
+      // as if it simply vanished.  Use main's existing large burst and scale
+      // it as the visible endpoint body; the following ring remains the fast
+      // radial edge.  No damage/radius truth is duplicated here.
+      kind: "vfx", on: "castEffect", atMs: 440, vfxId: "fx.prim.fire.explosion-lg",
       at: "self", offsetForwardU: 12.8, durationSec: 0.52,
-      w3xScale: 1.45, tint: [255, 72, 18], flyHeight: 80, alpha: 0.82,
+      w3xScale: 2.2, tint: [255, 72, 18], flyHeight: 80, alpha: 0.78,
     }),
     zVfxScriptSegment.parse({
       kind: "vfx", on: "castEffect", atMs: 440, vfxId: "fx.fam.shockwave-ring.fire.s150",
@@ -146,40 +160,51 @@ function lineBlastFire(): VfxScriptSegment[] {
 
 function dashSlashVoid(): VfxScriptSegment[] {
   return [
-    zVfxScriptSegment.parse({ kind: "hideBody", on: "castEffect", at: "caster", durationMs: 650 }),
+    // Move the real rendered caster instead of spawning imported.linainvers as
+    // a duplicate model.  That GLB contains an alpha-bearing texture declared
+    // OPAQUE; the asset gate correctly rejects it because animation can expose
+    // a full rectangular card. `bodyMove` is presentation-only and resets by
+    // itself, so gameplay position/targeting authority remains in the ability.
     zVfxScriptSegment.parse({
-      kind: "modelFx", on: "castEffect", modelKey: "imported.linainvers",
-      path: "toTarget", speed: 24, clip: "attack", clipTimeScale: 2.8,
-      scale: 1.2, lifeSec: 0.65, offsetSideU: 0.55,
+      kind: "anim", on: "castEffect", at: "caster", pulse: "attack", clipWindowMs: 560,
     }),
     zVfxScriptSegment.parse({
-      kind: "vfx", on: "castEffect", atMs: 120, vfxId: "fx.prim.void.slash",
+      kind: "bodyMove", on: "castEffect", at: "caster", mode: "arc",
+      offset: { x: 0.35, y: 0.2, z: 4.5 }, durationMs: 560,
+    }),
+    zVfxScriptSegment.parse({
+      kind: "vfx", on: "castEffect", atMs: 350, vfxId: "fx.prim.void.slash",
       at: "target", durationSec: 0.42, w3xScale: 2,
       tint: [118, 28, 210], flyHeight: 72, alpha: 0.85, facingDeg: 52,
     }),
     zVfxScriptSegment.parse({
-      kind: "vfx", on: "castEffect", atMs: 150, vfxId: "fx.prim.arcane.slash-lg",
+      kind: "vfx", on: "castEffect", atMs: 385, vfxId: "fx.prim.arcane.slash-lg",
       at: "target", durationSec: 0.36, w3xScale: 1.6,
       tint: [230, 138, 255], flyHeight: 76, alpha: 0.76, facingDeg: -48,
     }),
-    zVfxScriptSegment.parse({ kind: "anim", on: "castEffect", atMs: 280, at: "target", pulse: "hurt", clipWindowMs: 520 }),
-    zVfxScriptSegment.parse({ kind: "screenShake", on: "castEffect", atMs: 280, amplitude: 0.38, durationSec: 0.32 }),
+    zVfxScriptSegment.parse({ kind: "anim", on: "castEffect", atMs: 390, at: "target", pulse: "hurt", clipWindowMs: 520 }),
+    zVfxScriptSegment.parse({ kind: "screenShake", on: "castEffect", atMs: 390, amplitude: 0.38, durationSec: 0.32 }),
   ];
 }
 
-function shockwaveDashLight(modelKey: string): VfxScriptSegment[] {
+function shockwaveDashLight(): VfxScriptSegment[] {
   return [
     zVfxScriptSegment.parse({
       kind: "vfx", on: "castEffect", vfxId: "fx.prim.lightning.beam-flat", at: "self",
       durationSec: 0.55, offsetForwardU: 0.55, w3xScale: 2.8,
+      // The document already uses aim-relative orientation. Its long tail
+      // stays behind the leading edge; applying a 180° layer offset reverses
+      // the actual projectile, even though a still frame can make the tail
+      // look like it is travelling backward.
       tint: [90, 205, 255], flyHeight: 55, alpha: 0.78,
     }),
-    zVfxScriptSegment.parse({ kind: "hideBody", on: "castEffect", atMs: 330, at: "caster", durationMs: 620 }),
     zVfxScriptSegment.parse({
-      kind: "modelFx", on: "castEffect", atMs: 330, modelKey,
-      path: "toTarget", speed: 22, clip: "attack", clipTimeScale: 2.4,
-      scale: 1.05, lifeSec: 0.62, offsetSideU: 0.28,
+      kind: "anim", on: "castEffect", atMs: 330,
+      at: "caster", pulse: "attack", clipWindowMs: 620,
     }),
+    // Deliberately no bodyMove/modelFx/hideBody here. godie-nbbc.r already
+    // owns delayed -> blink(to:point) in ability JSON. Adding a presentation
+    // move on top made the real caster travel twice and overshoot the slash.
     zVfxScriptSegment.parse({
       kind: "vfx", on: "castEffect", atMs: 430, vfxId: "fx.prim.holy.slash-lg",
       at: "target", durationSec: 0.42, w3xScale: 2.1,
@@ -234,6 +259,49 @@ function reflectCounterOpen(): VfxScriptSegment[] {
     kind: "vfx", on: "reflectSuccess", vfxId: "fx.prim.holy.pulse-sm",
     at: "self", durationSec: 0.2, w3xScale: 0.52, flyHeight: 82, alpha: 0.42,
   })];
+}
+
+/** Full composite card for an Editor-from-blank Avalon EX reconstruction. */
+function avalonCounterChain(): VfxScriptSegment[] {
+  const teleportOffsets = [
+    { x: -0.8, y: 0, z: 2.6 },
+    { x: 0.8, y: 0.1, z: 2.8 },
+    { x: -0.65, y: 0.2, z: 3.15 },
+    { x: 0.65, y: 0.15, z: 3.1 },
+    { x: -0.35, y: 0.35, z: 2.75 },
+    { x: 0.35, y: 0.3, z: 2.95 },
+  ];
+  const bodyMoves = teleportOffsets.map((offset, index) => zVfxScriptSegment.parse({
+    kind: "bodyMove", on: "strike", strikeIndex: index + 1,
+    at: "caster", mode: "teleport", offset, durationMs: index === 5 ? 260 : 220,
+  }));
+  return [
+    ...reflectCounterOpen(),
+    zVfxScriptSegment.parse({
+      kind: "floatingText", on: "strike", strikeIndex: 1,
+      text: "AVALON · 理想鄉", colorRgb: [255, 232, 160], sizeScale: 1.55, durationSec: 1.1,
+    }),
+    ...bodyMoves,
+    ...comboSlashHoly(false),
+    ...classicBeam(true, true, { on: "strike", strikeIndex: 7, atMs: 220 }, "target", 180),
+    ...classicBeam(false, false, { on: "strike", strikeIndex: 7, atMs: 245 }, "target", 180),
+    zVfxScriptSegment.parse({ kind: "screenShake", on: "strike", strikeIndex: 7, amplitude: 0.58, durationSec: 0.7 }),
+  ];
+}
+
+/** Full composite card for an Editor-from-blank Rider charge reconstruction. */
+function riderDashBeamBlue(): VfxScriptSegment[] {
+  return [
+    zVfxScriptSegment.parse({ kind: "anim", on: "castStart", at: "caster", pulse: "cast", clipWindowMs: 1200 }),
+    zVfxScriptSegment.parse({ kind: "anim", on: "castEffect", at: "caster", pulse: "attack", clipWindowMs: 900 }),
+    zVfxScriptSegment.parse({
+      kind: "bodyMove", on: "castEffect", at: "caster", mode: "arc",
+      offset: { x: 0.55, y: 0.7, z: 3 }, durationMs: 900,
+    }),
+    ...classicBeam(false, true, { on: "castEffect" }, "self", 0),
+    zVfxScriptSegment.parse({ kind: "anim", on: "castEffect", atMs: 700, at: "target", pulse: "hurt", clipWindowMs: 560 }),
+    zVfxScriptSegment.parse({ kind: "screenShake", on: "castEffect", amplitude: 0.45, durationSec: 0.9 }),
+  ];
 }
 
 /** Existing ability-owned MDL bodies must not be emitted again by the script. */

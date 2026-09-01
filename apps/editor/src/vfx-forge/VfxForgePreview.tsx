@@ -12,11 +12,13 @@ import {
   VfxForgeStage,
   type BackdropTimelineAudit,
   type ForgeOverlay,
+  type VfxVisualEvidenceFrame,
   type VfxForgeStageMode,
 } from "./VfxForgeStage";
 
 export interface VfxForgePreviewHandle {
   auditBackdropTimeline(): Promise<BackdropTimelineAudit>;
+  captureVisualEvidence(label: string): Promise<VfxVisualEvidenceFrame>;
 }
 
 interface VfxForgePreviewProps {
@@ -74,6 +76,11 @@ export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreview
       const stage = stageRef.current;
       if (!stage) throw new Error("實際遊戲畫面尚未載入，禁止略過底板檢查");
       return stage.auditBackdropTimeline(durationMs);
+    },
+    captureVisualEvidence: async (label) => {
+      const stage = stageRef.current;
+      if (!stage) throw new Error("實際遊戲畫面尚未載入，無法擷取審查證據");
+      return stage.captureVisualEvidence(label);
     },
   }), [durationMs]);
 

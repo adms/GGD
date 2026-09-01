@@ -111,11 +111,17 @@ describe("VFX Forge authoring core", () => {
       assetGuard,
       "production-candidate",
       { submitAiProposal },
+      {
+        evidence: ["editor-from-blank:x", "editor-action:1:新增時間軸積木：floatingText"],
+        visualEvidence: [{ label: "impact", dataUrl: "data:image/webp;base64,AA==", atMs: 900, view: "side" }],
+      },
     );
     expect(submitAiProposal).toHaveBeenCalledWith(expect.objectContaining({
       target: { collection: "vfx-scripts", id: "x" },
       purpose: "production-candidate",
       candidate: expect.objectContaining({ abilityId: "x" }),
+      evidence: ["editor-from-blank:x", "editor-action:1:新增時間軸積木：floatingText"],
+      visualEvidence: [{ label: "impact", dataUrl: "data:image/webp;base64,AA==", atMs: 900, view: "side" }],
     }));
     await expect(submitVfxScriptProposal(
       { id: "bad" }, assetGuard, "production-candidate", { submitAiProposal },

@@ -92,6 +92,13 @@ export interface AiProposalResult {
   status: "pending-review" | "fixture-pending";
 }
 
+export interface AiVisualEvidence {
+  label: string;
+  dataUrl: string;
+  atMs: number;
+  view: "side" | "top";
+}
+
 export const api = {
   manifest: () => request<Manifest>(`${BASE}/manifest`),
   index: (collection: CollectionName) =>
@@ -196,6 +203,7 @@ export const api = {
     candidate: unknown;
     summary?: string;
     evidence?: string[];
+    visualEvidence?: AiVisualEvidence[];
     autoVisualScore?: number;
   }) => {
     assertWritable();

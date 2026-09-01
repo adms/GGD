@@ -36,6 +36,13 @@ function collectAbilityModelKeys(value: unknown, out = new Set<string>()): Set<s
   return out;
 }
 
+function abilityContainsEffect(value: unknown, kind: string): boolean {
+  if (Array.isArray(value)) return value.some((child) => abilityContainsEffect(child, kind));
+  if (value === null || typeof value !== "object") return false;
+  const rec = value as Record<string, unknown>;
+  return rec.kind === kind || Object.values(rec).some((child) => abilityContainsEffect(child, kind));
+}
+
 const docs = new Map(IDS.map((id) => [id, load(id)]));
 const segs = (id: typeof IDS[number]): readonly VfxScriptSegment[] => docs.get(id)!.segments;
 const kinds = <K extends VfxScriptSegment["kind"]>(id: typeof IDS[number], kind: K) =>
@@ -93,20 +100,38 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
     );
     expect(remote.length).toBeGreaterThanOrEqual(2);
     expect(Math.min(...remote.map((s) => s.atMs ?? 0))).toBeGreaterThanOrEqual(430);
+    expect(remote).toContainEqual(expect.objectContaining({
+      vfxId: "fx.prim.fire.explosion-lg",
+      w3xScale: 2.2,
+    }));
   });
 
-  it("神滅斬保留隱藏本體、衝向目標、落點收刀三段", () => {
-    expect(kinds("godie-hjai.r", "hideBody")).toHaveLength(1);
-    expect(kinds("godie-hjai.r", "modelFx").some((s) => s.kind === "modelFx" && s.path === "toTarget" && (s.speed ?? 0) > 0)).toBe(true);
+  it("神滅斬驅動真正施法者穿越目標，不生成有底板風險的莉娜分身", () => {
+    expect(kinds("godie-hjai.r", "hideBody")).toHaveLength(0);
+    expect(kinds("godie-hjai.r", "modelFx")).toHaveLength(0);
+    expect(kinds("godie-hjai.r", "bodyMove")).toContainEqual(expect.objectContaining({
+      at: "caster", mode: "arc", offset: expect.objectContaining({ z: 4.5 }), durationMs: 560,
+    }));
+    expect(kinds("godie-hjai.r", "anim")).toContainEqual(expect.objectContaining({
+      on: "castEffect", at: "caster", pulse: "attack",
+    }));
     expect(kinds("godie-hjai.r", "vfx").some((s) => s.kind === "vfx" && s.at === "target")).toBe(true);
   });
 
-  it("阿邦快速劍X 用同一份小呆模型做純演出 B 式衝刺，不疊加權威位移", () => {
-    expect(kinds("godie-nbbc.r", "hideBody")).toHaveLength(1);
-    expect(kinds("godie-nbbc.r", "modelFx")).toContainEqual(expect.objectContaining({
-      modelKey: "imported.sd2", path: "toTarget", atMs: 330,
+  it("阿邦快速劍X 朝目標放 A 式衝擊波，B 式不重複 ability 已有的真實 blink", () => {
+    expect(abilityContainsEffect(loadJson("abilities", "godie-nbbc.r"), "blink")).toBe(true);
+    expect(kinds("godie-nbbc.r", "hideBody")).toHaveLength(0);
+    expect(kinds("godie-nbbc.r", "modelFx")).toHaveLength(0);
+    expect(kinds("godie-nbbc.r", "vfx")).toContainEqual(expect.objectContaining({
+      vfxId: "fx.prim.lightning.beam-flat",
     }));
+    expect(kinds("godie-nbbc.r", "vfx").some((segment) =>
+      segment.vfxId === "fx.prim.lightning.beam-flat" && segment.facingDeg !== undefined,
+    )).toBe(false);
     expect(kinds("godie-nbbc.r", "bodyMove")).toHaveLength(0);
+    expect(kinds("godie-nbbc.r", "anim")).toContainEqual(expect.objectContaining({
+      on: "castEffect", atMs: 330, at: "caster", pulse: "attack",
+    }));
     expect(kinds("godie-nbbc.r", "anim").some((segment) => segment.on === "castEffect" && segment.at === "target")).toBe(true);
   });
 

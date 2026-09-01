@@ -275,6 +275,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
       candidate?: unknown;
       summary?: unknown;
       evidence?: unknown;
+      visualEvidence?: unknown;
       autoVisualScore?: unknown;
     } | null;
     const collection = body?.target?.collection;
@@ -298,6 +299,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
         baseHash: await currentDocHash(loc.file),
         summary: typeof body?.summary === "string" ? body.summary : "",
         evidence: Array.isArray(body?.evidence) ? body.evidence.filter((value): value is string => typeof value === "string") : [],
+        visualEvidence: body?.visualEvidence,
         ...(body?.autoVisualScore === undefined ? {} : { autoVisualScore: body.autoVisualScore as number }),
       });
       return reply.code(201).send({ proposal, status: proposal.promotable ? "pending-review" : "fixture-pending" });

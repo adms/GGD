@@ -1,6 +1,6 @@
 import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
 import { zVfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
-import { api, type AiProposalResult } from "../api/client";
+import { api, type AiProposalResult, type AiVisualEvidence } from "../api/client";
 import type { VfxScriptAssetGuard } from "./assetSafety";
 
 export interface VfxScriptProposalWriter {
@@ -10,6 +10,7 @@ export interface VfxScriptProposalWriter {
     candidate: VfxScriptDoc;
     summary?: string;
     evidence?: string[];
+    visualEvidence?: AiVisualEvidence[];
     autoVisualScore?: number;
   }): Promise<AiProposalResult>;
 }
@@ -26,7 +27,7 @@ export async function submitVfxScriptProposal(
   assetGuard: VfxScriptAssetGuard,
   purpose: "production-candidate" | "editor-capability-fixture",
   writer: VfxScriptProposalWriter = api as VfxScriptProposalWriter,
-  metadata: { summary?: string; evidence?: string[]; autoVisualScore?: number } = {},
+  metadata: { summary?: string; evidence?: string[]; visualEvidence?: AiVisualEvidence[]; autoVisualScore?: number } = {},
 ): Promise<AiProposalResult> {
   const doc = zVfxScriptDoc.parse(input);
   // This remains inside the sole persistence seam: submitting an unsafe draft
