@@ -1,5 +1,8 @@
 /**
- * Structured textual preview (stub for the future BabylonPreview — see
+ * Generic collection preview. The focused asset collections already use their
+ * real Babylon panels; Forge/VFX Forge own the full dual-actor ability stage.
+ * The structured ability/stat half here remains deliberately renderless until
+ * main exposes one reusable generic client render bridge (see
  * BabylonPreview.todo.md). The numbers are REAL: FinalStats come from a
  * sandbox SimWorld through the actual statPipeline; ability amounts resolve
  * through the actual resolveScaling with those stats.

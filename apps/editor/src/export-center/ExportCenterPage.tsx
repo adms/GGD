@@ -14,8 +14,10 @@ import {
 import {
   buildRuntimePackage,
   buildRuntimePackageZip,
-  runtimeDocumentsFromBaseBundle,
+  resolveDeltaRuntimeClosure,
+  runtimeBaseSnapshotFromBundle,
   runtimeReferenceKeys,
+  type RuntimeBaseSnapshot,
   type RuntimeAuthoringDocument,
 } from "./exportBuilder";
 
@@ -81,7 +83,7 @@ export function ExportCenterPage() {
   const [collection, setCollection] = useState<"abilities" | "items">("abilities");
   const [docId, setDocId] = useState("");
   const [exportStatus, setExportStatus] = useState("選擇一份 Runtime 文件");
-  const [baseDocuments, setBaseDocuments] = useState<RuntimeAuthoringDocument[] | null>(null);
+  const [baseSnapshot, setBaseSnapshot] = useState<RuntimeBaseSnapshot | null>(null);
   const [baseStatus, setBaseStatus] = useState("full／delta 需要載入遊戲端 active runtime bundle；bootstrap 不需要。");
   const [packageStatus, setPackageStatus] = useState("等待目標握手");
   const [packageBusy, setPackageBusy] = useState(false);
@@ -101,7 +103,7 @@ export function ExportCenterPage() {
       const raw = await api.externalTargetProfile(profileUrl.trim());
       const facts = readTargetProfileFacts(raw);
       setProfile(facts);
-      setBaseDocuments(null);
+      setBaseSnapshot(null);
       setBaseStatus("full／delta 需要載入與這份 profile 相同版本的 active runtime bundle。");
       setProfileStatus(`已讀取 ${facts.schema}`);
       try { localStorage.setItem(PROFILE_URL_KEY, profileUrl.trim()); } catch { /* optional */ }
@@ -134,50 +136,91 @@ export function ExportCenterPage() {
     blockers: profile
       ? [
         ...packageModeBlockers(profile, row.mode),
-        ...(row.mode !== "bootstrap" && !baseDocuments ? ["尚未載入 exact base runtime bundle"] : []),
+        ...(row.mode !== "bootstrap" && !baseSnapshot ? ["尚未載入 exact base runtime bundle"] : []),
       ]
       : ["先讀取 target profile"],
-  })), [baseDocuments, profile]);
+  })), [baseSnapshot, profile]);
 
   const loadBaseBundle = async (file: File | null): Promise<void> => {
     if (!file || !profile?.contentVersion) return;
     setBaseStatus("驗證 Base bundle 的版本、文件與 collection hashes…");
     try {
-      const docs = runtimeDocumentsFromBaseBundle(JSON.parse(await file.text()), profile.contentVersion);
-      setBaseDocuments(docs);
-      setBaseStatus(`已載入 exact Base：${docs.filter((doc) => doc.collection === "abilities").length} 技能、${docs.filter((doc) => doc.collection === "items").length} 道具。`);
+      const snapshot = runtimeBaseSnapshotFromBundle(JSON.parse(await file.text()), profile.contentVersion);
+      setBaseSnapshot(snapshot);
+      setBaseStatus(`已載入 exact Base：${snapshot.runtimeDocuments.filter((doc) => doc.collection === "abilities").length} 技能、${snapshot.runtimeDocuments.filter((doc) => doc.collection === "items").length} 道具、${snapshot.documents.length} 份完整依賴快照。`);
     } catch (error) {
-      setBaseDocuments(null);
+      setBaseSnapshot(null);
       setBaseStatus(`⛔ ${String(error)}`);
     }
   };
 
-  const collectDocuments = async (mode: PackageMode): Promise<RuntimeAuthoringDocument[]> => {
-    if (mode === "delta") {
-      if (!docId) throw new Error("delta 必須選擇一份技能或道具 root");
-      const document = await api.doc<Record<string, unknown>>(collection, docId);
-      await api.validate(collection, docId, document);
-      return [{ collection, id: docId, document }];
-    }
+  const collectRuntimeCorpus = async (validateAll: boolean): Promise<RuntimeAuthoringDocument[]> => {
     const [abilities, items] = await Promise.all([api.index("abilities"), api.index("items")]);
     const refs = [
       ...abilities.entries.map((entry) => ({ collection: "abilities" as const, id: entry.id })),
       ...items.entries.map((entry) => ({ collection: "items" as const, id: entry.id })),
     ];
-    setPackageStatus(`讀取並驗證完整 Runtime corpus：${refs.length} 份…`);
+    setPackageStatus(`${validateAll ? "讀取並驗證" : "掃描"} Runtime corpus：${refs.length} 份…`);
     return mapConcurrent(refs, 12, async (ref) => {
       const document = await api.doc<Record<string, unknown>>(ref.collection, ref.id);
-      await api.validate(ref.collection, ref.id, document);
+      if (validateAll) await api.validate(ref.collection, ref.id, document);
       return { ...ref, document };
     });
   };
 
-  const collectRequires = async (documents: readonly RuntimeAuthoringDocument[]) => {
+  const collectDocuments = async (mode: PackageMode): Promise<{
+    documents: RuntimeAuthoringDocument[];
+    selectionRoots: RuntimeAuthoringDocument[];
+    addedDependencies: RuntimeAuthoringDocument[];
+  }> => {
+    const corpus = await collectRuntimeCorpus(mode !== "delta");
+    if (mode !== "delta") {
+      return { documents: corpus, selectionRoots: corpus, addedDependencies: [] };
+    }
+    if (!docId) throw new Error("delta 必須選擇一份技能或道具 root");
+    if (!baseSnapshot) throw new Error("delta 必須先載入 exact Base runtime bundle");
+    const closure = resolveDeltaRuntimeClosure(
+      corpus,
+      baseSnapshot.runtimeDocuments,
+      [{ collection, id: docId }],
+    );
+    const validated = new Set<string>();
+    for (const document of [...closure.selectionRoots, ...closure.documents]) {
+      const key = `${document.collection}/${document.id}`;
+      if (validated.has(key)) continue;
+      validated.add(key);
+      await api.validate(document.collection, document.id, document.document);
+    }
+    if (closure.addedDependencies.length > 0) {
+      setPackageStatus(`選取 root 需要自動加入 ${closure.addedDependencies.length} 份 changed forward dependencies：${closure.addedDependencies.map((doc) => `${doc.collection}/${doc.id}`).join("、")}`);
+    }
+    return {
+      documents: [...closure.documents],
+      selectionRoots: [...closure.selectionRoots],
+      addedDependencies: [...closure.addedDependencies],
+    };
+  };
+
+  const collectRequires = async (
+    documents: readonly RuntimeAuthoringDocument[],
+    exactBase: RuntimeBaseSnapshot | null,
+  ) => {
     const refs = runtimeReferenceKeys(documents);
     setPackageStatus(`固定 ${refs.length} 份未隨包攜帶的 exact dependencies…`);
+    const base = exactBase
+      ? new Map(exactBase.documents.map((doc) => [`${doc.collection}/${doc.id}`, doc]))
+      : null;
     return mapConcurrent(refs, 12, async (ref) => {
       const document = await api.doc<Record<string, unknown>>(ref.collection, ref.id);
-      return { kind: ref.collection, id: ref.id, contentSha256: contentSha256(document) };
+      await api.validate(ref.collection, ref.id, document);
+      const currentHash = contentSha256(document);
+      if (!base) return { kind: ref.collection, id: ref.id, contentSha256: currentHash };
+      const exact = base.get(`${ref.collection}/${ref.id}`);
+      if (!exact) throw new Error(`EXACT_BASE_DEPENDENCY_MISSING：${ref.collection}/${ref.id}`);
+      if (exact.contentSha256 !== currentHash) {
+        throw new Error(`BASE_DEPENDENCY_DRIFT：${ref.collection}/${ref.id} 的本機版本不等於 exact Base；請把它納入支援的 authoring closure，或先同步 Base。`);
+      }
+      return { kind: ref.collection, id: ref.id, contentSha256: exact.contentSha256 };
     });
   };
 
@@ -186,22 +229,29 @@ export function ExportCenterPage() {
     setPackageBusy(true);
     setPackageStatus(`建立 ${mode} ${format.toUpperCase()}…`);
     try {
-      const documents = await collectDocuments(mode);
-      const requires = await collectRequires(documents);
+      const collected = await collectDocuments(mode);
+      // An unchanged selected root can still lead to a changed forward
+      // dependency. Keep the root in reference analysis even when it is not a
+      // package entry; selectionRoots already pins its own exact hash.
+      const requires = await collectRequires(
+        [...collected.documents, ...collected.selectionRoots],
+        mode === "bootstrap" ? null : baseSnapshot,
+      );
       const built = buildRuntimePackage({
         mode,
         target: profile,
-        documents,
-        ...(mode === "bootstrap" ? {} : { baseDocuments: baseDocuments ?? undefined }),
+        documents: collected.documents,
+        selectionRoots: collected.selectionRoots,
+        ...(mode === "bootstrap" ? {} : { baseDocuments: baseSnapshot?.runtimeDocuments }),
         requires,
       });
       if (format === "json") {
         downloadJson(built.package, `${built.filenameStem}.json`);
-        setPackageStatus(`已下載 ${built.filenameStem}.json · ${built.package.manifest.packageDigest}`);
+        setPackageStatus(`已下載 ${built.filenameStem}.json · ${built.package.manifest.packageDigest}${collected.addedDependencies.length > 0 ? ` · 自動閉包 ${collected.addedDependencies.length} 份依賴` : ""}`);
       } else {
         const zip = await buildRuntimePackageZip(built);
         downloadBytes(zip.bytes, zip.filename, "application/zip");
-        setPackageStatus(`已下載 ${zip.filename} · package ${built.package.manifest.packageDigest} · archive ${zip.archiveSha256}`);
+        setPackageStatus(`已下載 ${zip.filename} · package ${built.package.manifest.packageDigest} · archive ${zip.archiveSha256}${collected.addedDependencies.length > 0 ? ` · 自動閉包 ${collected.addedDependencies.length} 份依賴` : ""}`);
       }
     } catch (error) {
       setPackageStatus(`⛔ 建包失敗：${String(error)}`);
@@ -251,7 +301,7 @@ export function ExportCenterPage() {
           <select aria-label="Runtime document" value={docId} onChange={(event) => setDocId(event.target.value)}>
             {(index.data?.entries ?? []).map((entry) => <option key={entry.id} value={entry.id}>{entry.id}</option>)}
           </select>
-          <button type="button" disabled={!docId || index.isLoading} onClick={() => void exportRaw()}>下載單檔 JSON</button>
+          <button data-field="export.single.json" type="button" disabled={!docId || index.isLoading} onClick={() => void exportRaw()}>下載單檔 JSON</button>
         </div>
         <p className={exportStatus.startsWith("⛔") ? "error" : "export-status"}>{exportStatus}</p>
       </section>
@@ -265,7 +315,7 @@ export function ExportCenterPage() {
         </div>
         <div className="export-mode-grid">
           {modeRows.map((row) => (
-            <article key={row.mode} className={row.blockers.length === 0 ? "ready" : "blocked"}>
+            <article data-field={`export.mode.${row.mode}`} key={row.mode} className={row.blockers.length === 0 ? "ready" : "blocked"}>
               <header><b>{row.label}</b><code>{row.mode}</code></header>
               <p>{row.description}</p>
               {row.blockers.length === 0 ? (
@@ -274,8 +324,8 @@ export function ExportCenterPage() {
                 <ul>{row.blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}</ul>
               )}
               <div className="export-package-actions">
-                <button type="button" disabled={packageBusy || row.blockers.length > 0} onClick={() => void exportPackage(row.mode, "json")}>Package JSON</button>
-                <button type="button" disabled={packageBusy || row.blockers.length > 0} onClick={() => void exportPackage(row.mode, "zip")}>一鍵 ZIP</button>
+                <button data-field={`export.mode.${row.mode}.json`} type="button" disabled={packageBusy || row.blockers.length > 0} onClick={() => void exportPackage(row.mode, "json")}>Package JSON</button>
+                <button data-field={`export.mode.${row.mode}.zip`} type="button" disabled={packageBusy || row.blockers.length > 0} onClick={() => void exportPackage(row.mode, "zip")}>一鍵 ZIP</button>
               </div>
             </article>
           ))}

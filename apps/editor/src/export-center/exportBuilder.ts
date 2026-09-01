@@ -1,4 +1,12 @@
-import { extractRefs, hashCollection, hashDoc, validateDoc, type CollectionName } from "@ggd/shared/content";
+import {
+  COLLECTION_NAMES,
+  extractRefs,
+  hashCollection,
+  hashDoc,
+  isCollectionName,
+  validateDoc,
+  type CollectionName,
+} from "@ggd/shared/content";
 import { packageDigest } from "@ggd/shared/content/import/digest";
 import { canonicalizeJcs, compareUtf8Bytes, contentSha256, jcsByteLength, SHA256_PREFIX } from "@ggd/shared/content/import/jcs";
 import {
@@ -8,6 +16,7 @@ import {
   type PackageManifest,
 } from "@ggd/shared/content/import/packageSchema";
 import { checkZipSafety } from "@ggd/shared/content/import/zipSafety";
+import { normalizeTemplateBinding } from "@ggd/shared/content/templates/expand";
 import type { TargetProfileFacts, PackageMode } from "./exportPolicy";
 
 export type RuntimeAuthoringCollection = "abilities" | "items";
@@ -16,6 +25,27 @@ export interface RuntimeAuthoringDocument {
   readonly collection: RuntimeAuthoringCollection;
   readonly id: string;
   readonly document: Record<string, unknown>;
+}
+
+export interface ExactBaseDocument {
+  readonly collection: CollectionName;
+  readonly id: string;
+  readonly document: Record<string, unknown>;
+  readonly contentSha256: string;
+}
+
+export interface RuntimeBaseSnapshot {
+  readonly runtimeDocuments: readonly RuntimeAuthoringDocument[];
+  readonly documents: readonly ExactBaseDocument[];
+}
+
+export interface DeltaRuntimeClosure {
+  /** Only documents whose bytes differ from the exact Base. */
+  readonly documents: readonly RuntimeAuthoringDocument[];
+  /** The roots the operator explicitly picked, whether or not the root itself changed. */
+  readonly selectionRoots: readonly RuntimeAuthoringDocument[];
+  /** Changed forward dependencies automatically pulled into the package. */
+  readonly addedDependencies: readonly RuntimeAuthoringDocument[];
 }
 
 export interface RuntimeRequire {
@@ -29,6 +59,11 @@ export interface BuildRuntimePackageInput {
   readonly target: TargetProfileFacts;
   /** bootstrap/full: complete ability+item corpus; delta: selected closed roots only. */
   readonly documents: readonly RuntimeAuthoringDocument[];
+  /**
+   * User intent, kept separate from the changed dependency closure. Required
+   * for delta; bootstrap/full default to the complete document set.
+   */
+  readonly selectionRoots?: readonly RuntimeAuthoringDocument[];
   /** Required for full/delta so changes[].before is exact and full cannot imply delete. */
   readonly baseDocuments?: readonly RuntimeAuthoringDocument[];
   readonly requires?: readonly RuntimeRequire[];
@@ -63,6 +98,65 @@ function sortedDocuments(input: readonly RuntimeAuthoringDocument[]): RuntimeAut
   });
 }
 
+const sameContent = (a: RuntimeAuthoringDocument, b: RuntimeAuthoringDocument | undefined): boolean =>
+  b !== undefined && contentSha256(a.document) === contentSha256(b.document);
+
+/**
+ * Starting from the operator's selected roots, find changed runtime documents
+ * that are required to resolve those roots. Unrelated local edits are never
+ * included. Traversal continues through unchanged nodes because a changed
+ * dependency may sit more than one edge below the selected root.
+ */
+export function resolveDeltaRuntimeClosure(
+  currentDocuments: readonly RuntimeAuthoringDocument[],
+  baseDocuments: readonly RuntimeAuthoringDocument[],
+  selected: readonly Pick<RuntimeAuthoringDocument, "collection" | "id">[],
+): DeltaRuntimeClosure {
+  if (selected.length === 0) throw new Error("delta 必須至少選擇一份 root");
+  // Do not schema-validate unrelated local drafts: delta isolation means an
+  // invalid, unselected document cannot poison a different root's export.
+  const current = new Map<string, RuntimeAuthoringDocument>();
+  for (const doc of currentDocuments) {
+    const key = keyOf(doc);
+    if (current.has(key)) throw new Error(`Runtime corpus 文件重複：${key}`);
+    current.set(key, doc);
+  }
+  const base = new Map(sortedDocuments(baseDocuments).map((doc) => [keyOf(doc), doc]));
+  const selectedKeys = new Set(selected.map(keyOf));
+  const roots = [...selectedKeys].map((key) => {
+    const doc = current.get(key);
+    if (!doc) throw new Error(`選取的 delta root 不存在：${key}`);
+    return doc;
+  });
+
+  const visited = new Set<string>();
+  const changed = new Map<string, RuntimeAuthoringDocument>();
+  const queue = [...roots];
+  while (queue.length > 0) {
+    const doc = queue.shift()!;
+    const key = keyOf(doc);
+    if (visited.has(key)) continue;
+    visited.add(key);
+    sortedDocuments([doc]); // validate only the reachable envelope
+    if (!sameContent(doc, base.get(key))) changed.set(key, doc);
+
+    for (const edge of extractRefs(doc.collection, doc.document)) {
+      if (edge.targetCollection !== "abilities" && edge.targetCollection !== "items") continue;
+      const targetKey = `${edge.targetCollection}/${edge.targetId}`;
+      const target = current.get(targetKey);
+      if (!target) throw new Error(`delta closure 找不到 ${targetKey}（由 ${key}.${edge.field} 引用）`);
+      if (!visited.has(targetKey)) queue.push(target);
+    }
+  }
+
+  const documents = sortedDocuments([...changed.values()]);
+  return {
+    documents,
+    selectionRoots: sortedDocuments(roots),
+    addedDependencies: documents.filter((doc) => !selectedKeys.has(keyOf(doc))),
+  };
+}
+
 function requireTarget(target: TargetProfileFacts, mode: PackageMode): void {
   const missing: string[] = [];
   if (!target.contentVersion) missing.push("contentVersion");
@@ -79,7 +173,32 @@ export function buildRuntimePackage(input: BuildRuntimePackageInput): BuiltRunti
   requireTarget(input.target, input.mode);
   const documents = sortedDocuments(input.documents);
   if (documents.length === 0) throw new Error("Package 至少要有一份 ability 或 item");
+  const selectionRootDocs = sortedDocuments(
+    input.selectionRoots ?? (input.mode === "delta" ? [] : documents),
+  );
+  if (input.mode === "delta" && selectionRootDocs.length === 0) {
+    throw new Error("delta 必須明示 selectionRoots，不能把 dependency closure 冒充使用者選取");
+  }
+  const selectedKeys = new Set(selectionRootDocs.map(keyOf));
   const base = new Map(sortedDocuments(input.baseDocuments ?? []).map((doc) => [keyOf(doc), doc]));
+  const packaged = new Map(documents.map((doc) => [keyOf(doc), doc]));
+  if (input.mode !== "delta") {
+    const packageKeys = [...packaged.keys()].sort(compareUtf8Bytes);
+    const rootKeys = [...selectedKeys].sort(compareUtf8Bytes);
+    if (JSON.stringify(packageKeys) !== JSON.stringify(rootKeys)) {
+      throw new Error(`${input.mode} 的 selectionRoots 必須等於完整 package membership`);
+    }
+  }
+  for (const root of selectionRootDocs) {
+    const key = keyOf(root);
+    const included = packaged.get(key);
+    if (included && contentSha256(included.document) !== contentSha256(root.document)) {
+      throw new Error(`selectionRoot 與 package entry 內容不一致：${key}`);
+    }
+    if (input.mode === "delta" && !sameContent(root, base.get(key)) && !included) {
+      throw new Error(`選取 root 已變更卻未列入 changes：${key}`);
+    }
+  }
   if (input.mode !== "bootstrap" && base.size === 0) throw new Error(`${input.mode} 必須載入 exact base runtime bundle`);
   if (input.mode === "full") {
     const current = new Set(documents.map(keyOf));
@@ -99,7 +218,7 @@ export function buildRuntimePackage(input: BuildRuntimePackageInput): BuiltRunti
       op: "upsert" as const,
       before: beforeHash ? { contentSha256: beforeHash } : null,
       after: { contentSha256: afterHash },
-      reason: "selected" as const,
+      reason: selectedKeys.has(keyOf(doc)) ? "selected" as const : "required-dependency" as const,
     }];
   });
   if (input.mode !== "bootstrap" && changes.length === 0) throw new Error("選取內容與 exact base 相同，沒有可匯出的變更");
@@ -138,7 +257,7 @@ export function buildRuntimePackage(input: BuildRuntimePackageInput): BuiltRunti
     };
   });
 
-  const selectionRoots = documents.map((doc) => ({
+  const selectionRoots = selectionRootDocs.map((doc) => ({
     kind: documentKind(doc.collection),
     id: doc.id,
     contentSha256: contentSha256(doc.document),
@@ -201,18 +320,17 @@ export function runtimeReferenceKeys(documents: readonly RuntimeAuthoringDocumen
       const key = `${edge.targetCollection}/${edge.targetId}`;
       if (!included.has(key)) refs.set(key, { collection: edge.targetCollection, id: edge.targetId });
     }
-    const template = doc.collection === "abilities" && typeof doc.document.template === "object" && doc.document.template !== null
-      ? (doc.document.template as { ref?: unknown }).ref
-      : undefined;
-    if (typeof template === "string" && template !== "") {
-      refs.set(`ability-templates/${template}`, { collection: "ability-templates", id: template });
+    if (doc.collection === "abilities" && doc.document.template !== undefined) {
+      for (const card of normalizeTemplateBinding(doc.document.template).cards) {
+        refs.set(`ability-templates/${card.ref}`, { collection: "ability-templates", id: card.ref });
+      }
     }
   }
   return [...refs.values()].sort((a, b) => compareUtf8Bytes(`${a.collection}/${a.id}`, `${b.collection}/${b.id}`));
 }
 
 /** Validate an imported active runtime bundle before using it as full/delta before-state. */
-export function runtimeDocumentsFromBaseBundle(raw: unknown, expectedContentVersion: string): RuntimeAuthoringDocument[] {
+export function runtimeBaseSnapshotFromBundle(raw: unknown, expectedContentVersion: string): RuntimeBaseSnapshot {
   if (typeof raw !== "object" || raw === null || Array.isArray(raw)) throw new Error("Base bundle 必須是 JSON object");
   const bundle = raw as {
     schema?: unknown;
@@ -222,8 +340,10 @@ export function runtimeDocumentsFromBaseBundle(raw: unknown, expectedContentVers
   if (bundle.schema !== "content-bundle@1" || bundle.contentVersion !== expectedContentVersion || !bundle.collections) {
     throw new Error(`Base bundle 必須是 content-bundle@1 且版本等於 ${expectedContentVersion}`);
   }
-  const result: RuntimeAuthoringDocument[] = [];
-  for (const collection of ["abilities", "items"] as const) {
+  const runtimeDocuments: RuntimeAuthoringDocument[] = [];
+  const documents: ExactBaseDocument[] = [];
+  for (const collection of Object.keys(bundle.collections).sort(compareUtf8Bytes)) {
+    if (!isCollectionName(collection)) throw new Error(`Base bundle 含未知 collection：${collection}`);
     const group = bundle.collections[collection];
     if (!group || typeof group.hash !== "string" || !Array.isArray(group.entries)) throw new Error(`Base bundle 缺少 ${collection}`);
     const entries = group.entries as { id?: unknown; hash?: unknown; doc?: unknown }[];
@@ -238,11 +358,26 @@ export function runtimeDocumentsFromBaseBundle(raw: unknown, expectedContentVers
       const parsed = validateDoc(collection, entry.doc);
       if (!parsed.ok) throw new Error(`${collection}/${entry.id} 不符合目前 runtime schema`);
       hashes.push({ id: entry.id, hash: entry.hash });
-      result.push({ collection, id: entry.id, document: entry.doc as Record<string, unknown> });
+      const document = entry.doc as Record<string, unknown>;
+      documents.push({ collection, id: entry.id, document, contentSha256: contentSha256(document) });
+      if (collection === "abilities" || collection === "items") {
+        runtimeDocuments.push({ collection, id: entry.id, document });
+      }
     }
     if (hashCollection(hashes) !== group.hash) throw new Error(`${collection} collection hash 不一致`);
   }
-  return sortedDocuments(result);
+  for (const collection of COLLECTION_NAMES) {
+    if (!bundle.collections[collection]) throw new Error(`Base bundle 缺少 ${collection}`);
+  }
+  return {
+    runtimeDocuments: sortedDocuments(runtimeDocuments),
+    documents: documents.sort((a, b) => compareUtf8Bytes(`${a.collection}/${a.id}`, `${b.collection}/${b.id}`)),
+  };
+}
+
+/** Back-compatible narrow view used by existing callers and tests. */
+export function runtimeDocumentsFromBaseBundle(raw: unknown, expectedContentVersion: string): RuntimeAuthoringDocument[] {
+  return [...runtimeBaseSnapshotFromBundle(raw, expectedContentVersion).runtimeDocuments];
 }
 
 const UTF8 = new TextEncoder();

@@ -1,6 +1,6 @@
 # 給 GGD main：Editor 完工所需接縫（可直接交給 Codex）
 
-狀態：2026-09-02 02:40（Asia/Taipei）
+狀態：2026-09-02 03:08（Asia/Taipei）
 Editor 分支：`feat/vfx-forge-codex`（禁止推到 `main`）
 正式站實測：`cv_88cbb6486bf2` · capability `111434fa` · profile `3f8d4687566f`
 最新 `origin/main@b8420abe` 產物：`cv_385f45e0afb8` · profile `99ef62b583c5`
@@ -87,6 +87,13 @@ authoringProcessor: {
 - full/delta 的 `base.activationDigest`／`base.authoringDigest`。
 - machine-readable importer endpoints，至少 validate／apply／active runtime bundle；Editor 不從 URL 字串猜 route。
 
+`active/runtime-bundle` 必須是與 `base.contentVersion` 完全相同的
+`content-bundle@1` **完整依賴快照**，不只是 abilities／items。每個目前註冊的 collection
+都要帶完整 entries、逐文件 hash 與 collection hash；Editor 會全部重算後才接受。這是為了讓
+delta 未隨包攜帶的 ability-template／VFX／projectile／status 等 `requires[]` 固定在 exact
+Base，而不是誤用本機 workspace 的 hash。Base 缺 collection、外部依賴在本機與 Base
+不同、或 selected root 無法在不帶入該變更的情況下閉包，Editor 都會 fail closed。
+
 Editor 端 JSON／ZIP builder 已完成並自我驗證；上述 receipt 缺任何一格就 fail closed。full／delta
 另支援人工載入 exact active runtime bundle 作 fallback，等 endpoints 回交後再改成一鍵抓取。
 
@@ -106,6 +113,11 @@ GET  /api/v1/content-import/operations/:operationId
 必要條件：bounded ZIP preflight/extraction、JCS/hash、shared Zod、capability、authoring-rules、
 ref closure、無任意 script、immutable version storage、PREPARED、fsync、Base CAS、原子
 ACTIVE pointer、health read-back、rollback 與 operation audit。禁止用逐文件 PUT 拼成假 apply。
+
+Delta 驗收另須證明：`selectionRoots[]` 只代表人工選取，不會把自動 closure 冒充成選取；
+changed forward dependencies 使用 `reason=required-dependency`；未選本機草稿不會滲入或阻擋；
+changed selected root 不得從 `changes[]` 消失；所有 omitted refs 都對 exact Base hash，而不是
+打包當下的本機 hash。Editor 已有對應 builder 與變異守衛，Importer 必須獨立重驗，不能信任報告。
 
 在能力真的完成前，`supportedModes`／`deltaExportAllowed` 必須維持目前誠實值；不要為了讓
 Editor 按鈕變亮而提前宣告 full/delta。

@@ -3,8 +3,14 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { packageDigest } from "@ggd/shared/content/import/digest";
 import { zEditorImportPackage } from "@ggd/shared/content/import/packageSchema";
-import { hashCollection, hashDoc } from "@ggd/shared/content";
-import { buildRuntimePackage, buildRuntimePackageZip, runtimeDocumentsFromBaseBundle, runtimeReferenceKeys } from "./exportBuilder";
+import {
+  buildRuntimePackage,
+  buildRuntimePackageZip,
+  resolveDeltaRuntimeClosure,
+  runtimeBaseSnapshotFromBundle,
+  runtimeDocumentsFromBaseBundle,
+  runtimeReferenceKeys,
+} from "./exportBuilder";
 import type { TargetProfileFacts } from "./exportPolicy";
 
 const target: TargetProfileFacts = {
@@ -57,10 +63,47 @@ describe("runtime package builder", () => {
   });
 
   it("builds delta only against an exact base and refuses no-op or implicit full delete", () => {
-    const delta = buildRuntimePackage({ mode: "delta", target, documents: [ability(200)], baseDocuments: [ability(100)] });
+    const delta = buildRuntimePackage({
+      mode: "delta",
+      target,
+      documents: [ability(200)],
+      selectionRoots: [ability(200)],
+      baseDocuments: [ability(100)],
+    });
     expect(delta.package.manifest.changes).toHaveLength(1);
+    expect(delta.package.manifest.selectionRoots).toHaveLength(1);
+    expect(delta.package.manifest.changes[0]?.reason).toBe("selected");
     expect(delta.package.manifest.changes[0]?.before?.contentSha256).toMatch(/^sha256:/);
-    expect(() => buildRuntimePackage({ mode: "delta", target, documents: [ability(100)], baseDocuments: [ability(100)] })).toThrow(/沒有可匯出的變更/);
+    expect(() => buildRuntimePackage({
+      mode: "delta",
+      target,
+      documents: [ability(100)],
+      selectionRoots: [ability(100)],
+      baseDocuments: [ability(100)],
+    })).toThrow(/沒有可匯出的變更/);
+    expect(() => buildRuntimePackage({ mode: "delta", target, documents: [ability(200)], baseDocuments: [ability(100)] })).toThrow(/selectionRoots/);
+    expect(() => buildRuntimePackage({
+      mode: "delta",
+      target,
+      documents: [],
+      selectionRoots: [ability(200)],
+      baseDocuments: [ability(100)],
+    })).toThrow(/至少要有一份/);
+    expect(() => buildRuntimePackage({
+      mode: "delta",
+      target,
+      documents: [ability(200)],
+      selectionRoots: [ability(300)],
+      baseDocuments: [ability(100)],
+    })).toThrow(/內容不一致/);
+    const dep = { ...ability(50), id: "dep.q", document: { ...ability(50).document, id: "dep.q" } };
+    expect(() => buildRuntimePackage({
+      mode: "delta",
+      target,
+      documents: [dep],
+      selectionRoots: [ability(200)],
+      baseDocuments: [ability(100), { ...ability(40), id: "dep.q", document: { ...ability(40).document, id: "dep.q" } }],
+    })).toThrow(/已變更卻未列入 changes/);
     expect(() => buildRuntimePackage({ mode: "full", target, documents: [ability(200)], baseDocuments: [...[ability(100)], {
       collection: "items" as const,
       id: "missing",
@@ -74,22 +117,88 @@ describe("runtime package builder", () => {
     expect(runtimeReferenceKeys([doc])).toEqual([{ collection: "abilities", id: "other.q" }]);
   });
 
+  it("pins every template card shape, not only the legacy single-card ref", () => {
+    const doc = ability(100);
+    (doc.document as Record<string, unknown>).template = {
+      cards: [
+        { ref: "tpl-ground-nova", params: {} },
+        { ref: "tpl-buff-self", params: {} },
+      ],
+      onConflict: "reject",
+    };
+    expect(runtimeReferenceKeys([doc])).toEqual([
+      { collection: "ability-templates", id: "tpl-buff-self" },
+      { collection: "ability-templates", id: "tpl-ground-nova" },
+    ]);
+  });
+
+  it("delta closure adds only changed reachable dependencies and keeps roots distinct", () => {
+    const rootBase = ability(100);
+    const rootCurrent = ability(100);
+    (rootBase.document as Record<string, unknown>).augment = { targets: [{ abilityId: "dep.q", patches: [] }] };
+    (rootCurrent.document as Record<string, unknown>).augment = { targets: [{ abilityId: "dep.q", patches: [] }] };
+    const depBase = { ...ability(20), id: "dep.q", document: { ...ability(20).document, id: "dep.q" } };
+    const depCurrent = { ...ability(30), id: "dep.q", document: { ...ability(30).document, id: "dep.q" } };
+    const unrelatedBase = { ...ability(40), id: "other.q", document: { ...ability(40).document, id: "other.q" } };
+    const unrelatedCurrent = {
+      ...ability(50),
+      id: "other.q",
+      // Deliberately invalid: an unselected draft must not poison this delta.
+      document: { ...ability(50).document, id: "other.q", schema: "broken@1" },
+    };
+
+    const closure = resolveDeltaRuntimeClosure(
+      [rootCurrent, depCurrent, unrelatedCurrent],
+      [rootBase, depBase, unrelatedBase],
+      [{ collection: "abilities", id: "test.q" }],
+    );
+    expect(closure.selectionRoots.map((doc) => doc.id)).toEqual(["test.q"]);
+    expect(closure.documents.map((doc) => doc.id)).toEqual(["dep.q"]);
+    expect(closure.addedDependencies.map((doc) => doc.id)).toEqual(["dep.q"]);
+
+    const built = buildRuntimePackage({
+      mode: "delta",
+      target,
+      documents: closure.documents,
+      selectionRoots: closure.selectionRoots,
+      baseDocuments: [rootBase, depBase, unrelatedBase],
+    });
+    expect(built.package.manifest.selectionRoots.map((root) => root.id)).toEqual(["test.q"]);
+    expect(built.package.manifest.changes.map((change) => [change.id, change.reason])).toEqual([
+      ["dep.q", "required-dependency"],
+    ]);
+  });
+
+  it("traverses through an unchanged intermediary to find a changed nested dependency", () => {
+    const rootBase = ability(10);
+    const rootCurrent = ability(10);
+    const middleBase = { ...ability(20), id: "middle.q", document: { ...ability(20).document, id: "middle.q" } };
+    const middleCurrent = { ...ability(20), id: "middle.q", document: { ...ability(20).document, id: "middle.q" } };
+    const leafBase = { ...ability(30), id: "leaf.q", document: { ...ability(30).document, id: "leaf.q" } };
+    const leafCurrent = { ...ability(31), id: "leaf.q", document: { ...ability(31).document, id: "leaf.q" } };
+    (rootBase.document as Record<string, unknown>).augment = { targets: [{ abilityId: "middle.q", patches: [] }] };
+    (rootCurrent.document as Record<string, unknown>).augment = { targets: [{ abilityId: "middle.q", patches: [] }] };
+    (middleBase.document as Record<string, unknown>).augment = { targets: [{ abilityId: "leaf.q", patches: [] }] };
+    (middleCurrent.document as Record<string, unknown>).augment = { targets: [{ abilityId: "leaf.q", patches: [] }] };
+
+    const closure = resolveDeltaRuntimeClosure(
+      [rootCurrent, middleCurrent, leafCurrent],
+      [rootBase, middleBase, leafBase],
+      [{ collection: "abilities", id: "test.q" }],
+    );
+    expect(closure.documents.map((doc) => doc.id)).toEqual(["leaf.q"]);
+    expect(closure.addedDependencies.map((doc) => doc.id)).toEqual(["leaf.q"]);
+  });
+
   it("accepts only hash-verified exact base runtime bundles", () => {
     const root = join(__dirname, "..", "..", "..", "..");
-    const abilityDoc = JSON.parse(readFileSync(join(root, "content", "abilities", "godie-e001.q.json"), "utf8"));
-    const abilityEntry = { id: abilityDoc.id, hash: hashDoc(abilityDoc), doc: abilityDoc };
-    const item = JSON.parse(readFileSync(join(root, "content", "items", "godie-i000.json"), "utf8"));
-    const itemEntry = { id: item.id, hash: hashDoc(item), doc: item };
-    const bundle = {
-      schema: "content-bundle@1",
-      contentVersion: target.contentVersion,
-      collections: {
-        abilities: { hash: hashCollection([abilityEntry]), entries: [abilityEntry] },
-        items: { hash: hashCollection([itemEntry]), entries: [itemEntry] },
-      },
-    };
-    expect(runtimeDocumentsFromBaseBundle(bundle, target.contentVersion!)).toHaveLength(2);
-    item.cost = 2;
+    const bundle = JSON.parse(readFileSync(join(root, "content", "bundle.json"), "utf8"));
+    bundle.contentVersion = target.contentVersion;
+    const snapshot = runtimeBaseSnapshotFromBundle(bundle, target.contentVersion!);
+    expect(snapshot.runtimeDocuments.length).toBeGreaterThan(2);
+    expect(snapshot.documents.some((doc) => doc.collection === "ability-templates")).toBe(true);
+    expect(runtimeDocumentsFromBaseBundle(bundle, target.contentVersion!)).toHaveLength(snapshot.runtimeDocuments.length);
+    bundle.collections["ability-templates"].entries[0].doc.name += " tampered";
     expect(() => runtimeDocumentsFromBaseBundle(bundle, target.contentVersion!)).toThrow(/hash 不一致/);
   });
 });

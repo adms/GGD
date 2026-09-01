@@ -198,7 +198,7 @@ export interface PreviewController {
   ): ReactionPreviewTrace;
   previewItem(item: ItemDef, on: ChampionDef, opts?: { level?: number }): StatDelta[];
   previewAugment(aug: AugmentDef, on: ChampionDef, opts?: { level?: number }): StatDelta[];
-  /** stub: records the request; Babylon impl plays the ParticleSystem */
+  /** Renderless controller records the request; visual stages play it through VfxSystem. */
   spawnVfx(vfxKey: string): void;
   /** advance the sandbox SimWorld by fixed ticks (empty intents) */
   stepFixed(ticks: number): void;

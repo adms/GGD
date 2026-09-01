@@ -56,11 +56,14 @@ together; writes remain local. The API guard rejects non-loopback mutation.
   `ggd-editor-import@1` Package JSON and byte-stable STORE ZIP, including JCS
   document hashes, exact Base hashes, dependency closure, reports, semantic
   package digest, transport digest and its own ZIP safety preflight. Full export
-  refuses implicit deletion and delta requires one selected root plus exact Base
-  documents. Production buttons remain visibly blocked until main aligns the
-  runtime-direct authoring receipt, G2 Base receipts and importer endpoints; the
-  UI never fills a fake compiler fingerprint or labels a local file bundle as an
-  applicable production package.
+  refuses implicit deletion. Delta keeps the operator's selected root separate
+  from the actual change set, walks changed forward dependencies transitively,
+  excludes unrelated local drafts, labels auto-added changes as
+  `required-dependency`, and pins every omitted reference to the exact Base
+  bundle rather than the current workspace. Production buttons remain visibly
+  blocked until main aligns the runtime-direct authoring receipt, G2 Base
+  receipts and importer endpoints; the UI never fills a fake compiler
+  fingerprint or labels a local file bundle as an applicable production package.
 - **Collections** — schema-driven controls cover every current authorable field
   for abilities, VFX, models, projectiles, skins, templates and the remaining
   registered content collections. Bounded numbers render sliders and references
@@ -128,9 +131,9 @@ The branch does not use the old `required = 546` count as a constant. Current
 generated truth is:
 
 ```text
-editor coverage fingerprint     c94dd78a65b9
+editor coverage fingerprint     8dec65b891b7
 capability fingerprint          111434fa
-required cells                  4938
+required cells                  4941
 ```
 
 The count includes `vfx-script@1`, the complete nested visual-document surface,
@@ -151,6 +154,8 @@ pnpm --filter @ggd/editor build
 
 `fullCoverageMatchesContract.test.ts` is the bidirectional gate: a contract cell
 without a real control is red, and an editor control outside the contract is red.
+`readmeContract.test.ts` separately makes stale fingerprints and required counts
+red instead of leaving the next handoff on an old contract snapshot.
 
 ## Named VFX acceptance cases
 
@@ -172,8 +177,10 @@ no Promote path for these IDs.
 | `godie-hvsh.r` — 48-04 騎英之手綱 | real Rider dash plus blue-white beam | Owner override: W3X was a curved locust/magic-circle charge |
 
 Authoritative local review records live under `docs/_review/ai-proposals/`;
-visual analysis and rejected experiments are documented in
-`docs/_reports/vfx-forge-editor-acceptance-20260902/README.md`.
+source comparison and rejected experiments are documented in
+`docs/_reports/vfx-forge-editor-acceptance-20260902/README.md`; the latest
+browser-captured two-frame-per-skill evidence and framebuffer hygiene scan are
+in `docs/_reports/vfx-forge-eight-skill_visual-proof_20260902-0233/README.md`.
 
 The former Ideal EX join from [#885](https://github.com/adms/GGD/issues/885) is
 now guarded through the real shipped chain. Unknown provenance still fails
@@ -182,7 +189,9 @@ existing trigger.
 
 ## Feature branch handoff
 
-Implementation lives on `feat/vfx-forge-codex`, based on
-`origin/main@d69c0560`. It is intentionally not merged or pushed to `main`.
-Review the commits after that base in order; each authoring layer has its own
-commit so GGD can cherry-pick or rollback it independently.
+Implementation lives on `feat/vfx-forge-codex`, currently synchronized through
+`origin/main@b8420abe`; the latest audited Editor commit is `4f13d418`. It is
+intentionally not merged or pushed to `main`. Main should use
+`docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md` as a reference
+and reimplement only the main-owned seams on its own feature branch; the
+coordination contract explicitly forbids wholesale cherry-picking this branch.

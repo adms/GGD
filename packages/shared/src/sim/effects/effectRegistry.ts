@@ -90,11 +90,11 @@ import { knockbackEffect } from "./knockback"; // P4 擊退／擊飛 — bounds 
 import { invulnerableEffect } from "./invulnerable"; // P3 無敵/免疫 — predicates live there too
 import { summonEffect } from "./summon"; // P2 召喚物 — lifecycle half in ../summons.ts
 
-// ── landed lane P5 — timed evasion through the existing Stat.Evasion pipeline
+// ── reserved slots (GH#289) — schema-known, registry-slotted, LOUDLY unimplemented
 import { evasionEffect } from "./evasion";
-// ── 2026-08-09 (GH#301-2) — 真瞬移，走 movement/blink.ts。
+// ── 契約層 2026-08-09 (GH#301-2) — 真瞬移。⛔ 保留槽位，`apply` 目前 THROW。
 import { blinkEffect } from "./blink";
-// ── [EX∅ 根源] 2026-08-18 —— 背負與陣營轉換的正式 handler。
+// ── [EX∅ 根源] 2026-08-18 —— 兩個空殼槽位（見下面註冊處的說明）。
 import { carryEffect } from "./carry";
 import { mindControlEffect } from "./mindControl";
 
@@ -244,10 +244,14 @@ export const EFFECT_HANDLERS: EffectRegistry = {
   //    重寫沉默／暈眩／魔力那些 if。終止性 = 深度嚴格遞增 + 有界上限。
   proxyCast: proxyCastEffect,
 
-  // ── lane P5 — 閃避（uses the existing Stat.Evasion）──────────────────────
-  evasion: evasionEffect,
+  // ── reserved: replace the stub module's `apply`, nothing here changes ─────
+  evasion: evasionEffect, //           lane P5 — 閃避   (uses the existing Stat.Evasion)
 
-  // ── [EX∅ 根源]（2026-08-18）：背負與陣營轉換已落地 ───────────────────────
+  // ── [EX∅ 根源]（2026-08-18）：詞彙包先落地兩個槽位 ────────────────────────
+  // ⚠️ 兩支 handler 目前是**空殼**（`apply` 什麼都不做，⛔ 也不 throw ——
+  // 一個會丟例外的保留槽會讓一份合法的 JSON 在真的比賽裡炸掉伺服器）。
+  // 它們在這裡是因為 `EffectHandlers` 是 mapped type：**少一列是 compile error**，
+  // 而那正是我們要的 —— 「schema 收得下、註冊表沒有它」在這個 repo 裡不可能發生。
   carry: carryEffect, //         L4 —— 【背負】(禰豆子的木箱)
   convertTeam: mindControlEffect, // L5 —— 【陣營轉換】(大師球)
   // GH#451 —— 「範圍內每一個單位各觸發一次連鎖」。⛔ 一個機制，不是兩支技能。
