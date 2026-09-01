@@ -184,6 +184,7 @@ function segmentTailMs(segment: VfxScriptSegment): number {
     case "floatingText": return (segment.durationSec ?? 1) * 1000;
     case "screenFlash": return segment.durationSec * 1000;
     case "screenShake": return segment.durationSec * 1000;
+    case "bodyMove": return segment.durationMs;
     case "hideBody": return segment.durationMs;
     case "anim": return segment.clipWindowMs ?? 500;
     case "sound": return 0;
