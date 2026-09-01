@@ -14,6 +14,7 @@
  *   · CAS 那一段（`before.sha256 !== expectedSourceSha256`）拿掉 → 🔴（④）
  */
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { withSourceLock } from "./testSourceLock";
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import Fastify, { type FastifyInstance } from "fastify";
@@ -137,7 +138,8 @@ describe("P0-1 editor-source", () => {
     expect(w.statusCode, "⛔ 閘擋掉了一份可以直接寫的文件").not.toBe(409);
   });
 
-  it("★★ ⭐ ④ CAS：來源 hash 不符 ⇒ **409，一個位元組都不寫**", async () => {
+  it("★★ ⭐ ④ CAS：來源 hash 不符 ⇒ **409，一個位元組都不寫**", async () =>
+    withSourceLock(async () => {
     const srcAbs = resolve(REPO, "tools/skill-remake/heroes/godie-e00s.py");
     const before = readFileSync(srcAbs, "utf8");
     // ⛔⛔ 2026-09-02 的事故：這一條斷言「檔案沒被改」，⇒ 我**沒有寫 finally**。
@@ -165,9 +167,15 @@ describe("P0-1 editor-source", () => {
     } finally {
       writeFileSync(srcAbs, before, "utf8");
     }
-  });
+    }),
+    // ⚠️ ⭐ 15 分鐘**不是**因為這條測試很慢（它 <50ms）——
+    //   是因為它可能在**等鎖**：另一支測試會跑真的產生器（~110s）。
+    //   ⛔ 預設 5s 會讓「在排隊」看起來像「掛住了」。
+    15 * 60_000,
+  );
 
-  it("★★ ⭐ ⑤ CAS 相符 ⇒ 寫來源 ＋ 跑**那一個**重生成指令；⚠️ 而重生成失敗要**還原**", async () => {
+  it("★★ ⭐ ⑤ CAS 相符 ⇒ 寫來源 ＋ 跑**那一個**重生成指令；⚠️ 而重生成失敗要**還原**", async () =>
+    withSourceLock(async () => {
     const srcAbs = resolve(REPO, "tools/skill-remake/heroes/godie-e00s.py");
     const before = readFileSync(srcAbs, "utf8");
     const edited = `${before}\n# editor-source CAS 測試（測試自己會還原）\n`;
@@ -195,9 +203,15 @@ describe("P0-1 editor-source", () => {
     } finally {
       writeFileSync(srcAbs, before, "utf8");
     }
-  });
+    }),
+    // ⚠️ ⭐ 15 分鐘**不是**因為這條測試很慢（它 <50ms）——
+    //   是因為它可能在**等鎖**：另一支測試會跑真的產生器（~110s）。
+    //   ⛔ 預設 5s 會讓「在排隊」看起來像「掛住了」。
+    15 * 60_000,
+  );
 
-  it("⭐ ⑥ 重生成失敗 ⇒ 來源**還原**，⛔ 不留半套狀態", async () => {
+  it("⭐ ⑥ 重生成失敗 ⇒ 來源**還原**，⛔ 不留半套狀態", async () =>
+    withSourceLock(async () => {
     const srcAbs = resolve(REPO, "tools/skill-remake/heroes/godie-e00s.py");
     const before = readFileSync(srcAbs, "utf8");
     const boom = Fastify({ logger: false });
@@ -230,5 +244,10 @@ describe("P0-1 editor-source", () => {
       await boom.close();
       writeFileSync(srcAbs, before, "utf8");
     }
-  });
+    }),
+    // ⚠️ ⭐ 15 分鐘**不是**因為這條測試很慢（它 <50ms）——
+    //   是因為它可能在**等鎖**：另一支測試會跑真的產生器（~110s）。
+    //   ⛔ 預設 5s 會讓「在排隊」看起來像「掛住了」。
+    15 * 60_000,
+  );
 });

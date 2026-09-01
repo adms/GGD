@@ -30,6 +30,7 @@
  * ⭐ 而且 ⛔ **不要 kill 它**：`finally` 還沒跑完，來源會停在被改過的狀態。
  */
 import { describe, it, expect } from "vitest";
+import { withSourceLock } from "./testSourceLock";
 import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -76,7 +77,9 @@ function run(cmd: string): void {
 describe("P0-1 §5 來源改動撐得過 sync", () => {
   it(
     "★★ ⭐ 改**來源**的一個非級距欄位 ⇒ 重生成 ⇒ 三支正規化器跑完，那個值**還在**",
-    () => {
+    async () =>
+      // ⭐ 與 `editorSourceRoutes.test.ts` 共用一把鎖 —— 兩支寫**同一個真實檔**。
+      withSourceLock(() => {
       const srcBefore = readFileSync(SRC, "utf8");
       const before = JSON.parse(readFileSync(PRODUCT, "utf8")) as Product;
       // ⭐ 錨點挑**非級距**欄位：`scatterRadius` 是 effect 的原始參數，
@@ -124,7 +127,7 @@ describe("P0-1 §5 來源改動撐得過 sync", () => {
       const restored = JSON.parse(readFileSync(PRODUCT, "utf8")) as Product;
       expect(restored.effects[0]?.scatterRadius).toBe(6.0);
       expect(restored.cooldown).toEqual(before.cooldown);
-    },
+      }),
     15 * 60_000,
   );
 
