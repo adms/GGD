@@ -75,6 +75,7 @@ describe("VFX Forge asset backdrop gate", () => {
       ["effect", { id: "effect", glbPath: "assets/effect.glb", fxEmitters: ["fx.effect.p00"] }],
       ["masked", { id: "masked", glbPath: "assets/masked.glb" }],
       ["solid", { id: "solid", glbPath: "assets/solid.glb" }],
+      ["tiny", { id: "tiny", glbPath: "assets/tiny.glb" }],
     ]);
     const source = {
       doc: async <T,>(_collection: "models" | "vfx", id: string): Promise<T> => docs.get(id) as T,
@@ -82,6 +83,7 @@ describe("VFX Forge asset backdrop gate", () => {
         planar: path.includes("flat"),
         alphaMode: path.includes("solid") ? "OPAQUE" : path.includes("masked") || path.includes("effect") ? "MASK" : "BLEND",
         emissive: path.includes("crossed"),
+        tinyPlanarWithBody: path.includes("tiny"),
       }),
     };
     const gate = new AssetSafetyGate(source, async () => raster([196, 35, 35, 255]));
@@ -108,6 +110,11 @@ describe("VFX Forge asset backdrop gate", () => {
     // An opaque, uniformly coloured atlas on a real 3D body is normal.  The
     // backdrop bug requires both the carrier-like texture and flat geometry.
     expect((await gate.check({ collection: "models", id: "solid" })).safe).toBe(true);
+
+    // Some character GLBs contain a four-vertex utility quad that is under 5%
+    // of the body span. It is not an effect carrier at authored scale; if a
+    // script enlarges it, the rendered-frame audit still blocks the save.
+    expect((await gate.check({ collection: "models", id: "tiny" })).safe).toBe(true);
   });
 
   it("collects model, particle and model-trail refs once, then guards the sole write seam", async () => {
@@ -151,10 +158,12 @@ function modelGlb({
   planar,
   alphaMode,
   emissive,
+  tinyPlanarWithBody = false,
 }: {
   planar: boolean;
   alphaMode: "OPAQUE" | "MASK" | "BLEND";
   emissive: boolean;
+  tinyPlanarWithBody?: boolean;
 }): ArrayBuffer {
   const json = {
     bufferViews: [{ byteOffset: 0, byteLength: 4 }],
@@ -165,12 +174,18 @@ function modelGlb({
       alphaMode,
       emissiveFactor: emissive ? [1, 1, 1] : [0, 0, 0],
       pbrMetallicRoughness: { baseColorTexture: { index: 0 } },
-    }],
-    meshes: [{ primitives: [{ material: 0, attributes: { POSITION: 0 } }] }],
-    accessors: [{
-      min: [-1, -1, planar ? 0 : -1],
-      max: [1, 1, planar ? 0 : 1],
-    }],
+    }, { name: "body" }],
+    meshes: [{ primitives: [
+      { material: 0, attributes: { POSITION: 0 } },
+      ...(tinyPlanarWithBody ? [{ material: 1, attributes: { POSITION: 1 } }] : []),
+    ] }],
+    accessors: [
+      {
+        min: tinyPlanarWithBody ? [-0.01, 0, -0.01] : [-1, -1, planar ? 0 : -1],
+        max: tinyPlanarWithBody ? [0.01, 0, 0.01] : [1, 1, planar ? 0 : 1],
+      },
+      ...(tinyPlanarWithBody ? [{ min: [-1, -1, -1], max: [1, 1, 1] }] : []),
+    ],
   };
   const jsonRaw = new TextEncoder().encode(JSON.stringify(json));
   const jsonLength = (jsonRaw.byteLength + 3) & ~3;

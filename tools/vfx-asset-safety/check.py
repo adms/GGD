@@ -42,6 +42,7 @@ MAX_BRIGHT_BACKGROUND_SHARE = 0.001
 OPAQUE_CARRIER_EDGE_SHARE = 0.60
 OPAQUE_CARRIER_TOTAL_SHARE = 0.10
 PLANAR_THICKNESS_RATIO = 0.02
+PLANAR_MIN_MODEL_SPAN_RATIO = 0.05
 CARRIER_COLOR_SHIFT = 5
 
 
@@ -201,15 +202,24 @@ def material_is_planar_card(doc: dict, material_index: int) -> bool:
     carrier remains visible, so geometry is part of the proof.
     """
     found = False
+    material_span = 0.0
+    model_span = 0.0
     for mesh in doc.get("meshes", []):
         for primitive in mesh.get("primitives", []):
+            any_position = primitive.get("attributes", {}).get("POSITION")
+            accessors = doc.get("accessors", [])
+            if isinstance(any_position, int) and any_position < len(accessors):
+                any_accessor = accessors[any_position]
+                any_lo, any_hi = any_accessor.get("min"), any_accessor.get("max")
+                if (isinstance(any_lo, list) and isinstance(any_hi, list)
+                        and len(any_lo) >= 3 and len(any_hi) >= 3):
+                    model_span = max(model_span, *(abs(float(any_hi[i]) - float(any_lo[i])) for i in range(3)))
             if primitive.get("material") != material_index:
                 continue
             found = True
             position = primitive.get("attributes", {}).get("POSITION")
             if not isinstance(position, int):
                 return False
-            accessors = doc.get("accessors", [])
             if position >= len(accessors):
                 return False
             accessor = accessors[position]
@@ -219,7 +229,12 @@ def material_is_planar_card(doc: dict, material_index: int) -> bool:
             extents = sorted(abs(float(hi[i]) - float(lo[i])) for i in range(3))
             if extents[2] <= 1e-6 or extents[0] > extents[2] * PLANAR_THICKNESS_RATIO:
                 return False
-    return found
+            material_span = max(material_span, extents[2])
+    # Tiny utility quads inside an otherwise full 3D body cannot create a
+    # visible carrier at the authored model scale.  Enlarged script instances
+    # remain covered by the save-time rendered-frame sweep.
+    return (found and model_span > 0
+            and material_span >= model_span * PLANAR_MIN_MODEL_SPAN_RATIO)
 
 
 def opaque_carrier_shares(image: Image.Image) -> tuple[float, float]:
@@ -259,6 +274,17 @@ def opaque_carrier_shares(image: Image.Image) -> tuple[float, float]:
     return carrier[0] / total, carrier[1] / edge_total if edge_total else 0
 
 
+def material_requires_backdrop_decode(
+    alpha_mode: str, emissive: float, effect_model: bool, planar_card: bool
+) -> bool:
+    """Whether this material must have its texture decoded by the safety gate.
+
+    Planar geometry is never allowed to use the old BLEND/non-emissive fast
+    path: alpha=1 across the texture still paints a visible rectangular card.
+    """
+    return alpha_mode == "OPAQUE" or emissive > 0 or effect_model or planar_card
+
+
 def check_model_doc(path: Path, seen: set[Path]) -> list[str]:
     doc = json.loads(path.read_text())
     asset_id = doc.get("id", path.stem)
@@ -281,10 +307,12 @@ def check_model_doc(path: Path, seen: set[Path]) -> list[str]:
     for material_index, material in enumerate(gltf.get("materials", [])):
         alpha_mode = material.get("alphaMode", "OPAQUE")
         emissive = max(material.get("emissiveFactor", [0]))
+        planar_card = material_is_planar_card(gltf, material_index)
         # Opaque needs its alpha inspected; a transparent non-emissive material
-        # cannot expose hidden bright RGB, so decoding it would spend most of
-        # the gate's time proving an already-safe case.
-        if alpha_mode != "OPAQUE" and emissive <= 0 and not effect_model:
+        # on real 3D geometry cannot expose hidden bright RGB.  A planar card is
+        # different: BLEND with alpha=1 everywhere still paints the complete
+        # rectangle, even when the model doc forgot to declare fxEmitters.
+        if not material_requires_backdrop_decode(alpha_mode, emissive, effect_model, planar_card):
             continue
         texture_index = (material.get("pbrMetallicRoughness", {}).get("baseColorTexture", {}).get("index"))
         if not isinstance(texture_index, int):

@@ -68,6 +68,13 @@ describe.skipIf(PYTHON === null)("shipped VFX carrier texture safety", () => {
       "solid={**base,'accessors':[{'min':[-1,-1,-1],'max':[1,1,1]}]}",
       "assert m.material_is_planar_card(flat,0)",
       "assert not m.material_is_planar_card(solid,0)",
+      "tiny={'meshes':[{'primitives':[{'material':0,'attributes':{'POSITION':0}},{'material':1,'attributes':{'POSITION':1}}]}],'accessors':[{'min':[-.01,0,-.01],'max':[.01,0,.01]},{'min':[-1,-1,-1],'max':[1,1,1]}]}",
+      "assert not m.material_is_planar_card(tiny,0)",
+      "blend={'alphaMode':'BLEND','emissiveFactor':[0,0,0]}",
+      "assert m.material_is_planar_card(flat,0) and blend['alphaMode']=='BLEND'",
+      "assert m.material_requires_backdrop_decode('BLEND',0,False,True)",
+      "assert not m.material_requires_backdrop_decode('BLEND',0,False,False)",
+      "assert all(a==255 for a in im.getchannel('A').getdata())",
       "print('opaque-planar-probe: PASS')",
     ].join(";");
     const output = execFileSync(

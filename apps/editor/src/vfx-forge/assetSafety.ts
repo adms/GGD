@@ -16,6 +16,7 @@ const MAX_BRIGHT_BACKGROUND_SHARE = 0.001;
 const OPAQUE_CARRIER_EDGE_SHARE = 0.6;
 const OPAQUE_CARRIER_TOTAL_SHARE = 0.1;
 const PLANAR_THICKNESS_RATIO = 0.02;
+const PLANAR_MIN_MODEL_SPAN_RATIO = 0.05;
 const CARRIER_COLOR_SHIFT = 5;
 
 type Rgba = readonly [number, number, number, number];
@@ -346,8 +347,18 @@ function embeddedImage(
 
 function materialIsPlanarCard(json: GlbJson, materialIndex: number): boolean {
   let found = false;
+  let materialSpan = 0;
+  let modelSpan = 0;
   for (const mesh of json.meshes ?? []) {
     for (const primitive of mesh.primitives ?? []) {
+      const anyPosition = primitive.attributes?.POSITION;
+      const anyAccessor = anyPosition === undefined ? undefined : json.accessors?.[anyPosition];
+      if (anyAccessor?.min && anyAccessor.max && anyAccessor.min.length >= 3 && anyAccessor.max.length >= 3) {
+        modelSpan = Math.max(
+          modelSpan,
+          ...[0, 1, 2].map((axis) => Math.abs(anyAccessor.max![axis]! - anyAccessor.min![axis]!)),
+        );
+      }
       if (primitive.material !== materialIndex) continue;
       found = true;
       const position = primitive.attributes?.POSITION;
@@ -357,9 +368,14 @@ function materialIsPlanarCard(json: GlbJson, materialIndex: number): boolean {
         .map((axis) => Math.abs(accessor.max![axis]! - accessor.min![axis]!))
         .sort((a, b) => a - b);
       if (extents[2]! <= 1e-6 || extents[0]! > extents[2]! * PLANAR_THICKNESS_RATIO) return false;
+      materialSpan = Math.max(materialSpan, extents[2]!);
     }
   }
-  return found;
+  // Ignore tiny utility quads embedded in an otherwise full 3D character.
+  // Their pixels cannot form a visible backdrop at the model's authored scale;
+  // the save-time GPU sweep still catches a script that deliberately enlarges
+  // one.  A real effect card remains comparable to the model's total span.
+  return found && modelSpan > 0 && materialSpan >= modelSpan * PLANAR_MIN_MODEL_SPAN_RATIO;
 }
 
 function addRef(refs: Map<string, AssetDrop>, asset: AssetDrop): void {
