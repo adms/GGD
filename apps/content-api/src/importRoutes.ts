@@ -50,6 +50,7 @@ import {
   formatDiagnostic,
 } from "@ggd/shared/content/import/diagnostics";
 import { buildAuthoringProcessor } from "@ggd/shared/content/import/authoringProcessor";
+import { buildContractIndex } from "@ggd/shared/content/import/contractIndex";
 import {
   pathParts,
   validatePackage,
@@ -977,6 +978,16 @@ function registerG2Routes(
       collections,
     });
   });
+
+  // ── GET /contract-index ────────────────────────────────────────────────
+  // ⭐⭐ §0-1 —— **雙方唯一的接縫**（交接文件逐字）。
+  //
+  // ⚠️ ⭐ 為什麼它是一條 route 而不是一份靜態檔：它要帶 **ZIP 政策的實際值**，
+  //   而那些值住在伺服器（`ZIP_LIMITS`）⇒ 一份靜態檔會在政策改動時說謊。
+  //   ⭐ profile 那一側只放 `digest`（漂移偵測），完整內容走這裡。
+  app.get(`${prefix}/contract-index`, async (_req, reply) =>
+    reply.send(buildContractIndex(ZIP_LIMITS as unknown as Record<string, number>)),
+  );
 
   // ── GET /audit ─────────────────────────────────────────────────────────
   // ⭐ 稽核是**唯讀**的（⛔ 沒有刪除、沒有編輯）—— append-only 的意義就在這裡。

@@ -5478,6 +5478,62 @@
     "itemCount": 101,
     "liveEndpoint": "/api/v1/curation/whitelist"
   },
+  "contractIndex": {
+    "schema": "ggd-editor-contract-index@1",
+    "minEditorContractVersion": "1.0.0",
+    "digest": "f0fa79b088ba",
+    "href": "/api/v1/content-import/contract-index",
+    "representations": [
+      {
+        "schema": "ability@1",
+        "packageKind": "runtime-document",
+        "state": "supported",
+        "minStage": "G2",
+        "modes": [
+          "bootstrap",
+          "full",
+          "delta"
+        ],
+        "promotionPolicy": "admin-package-apply"
+      },
+      {
+        "schema": "item@1",
+        "packageKind": "runtime-document",
+        "state": "supported",
+        "minStage": "G2",
+        "modes": [
+          "bootstrap",
+          "full",
+          "delta"
+        ],
+        "promotionPolicy": "admin-package-apply"
+      },
+      {
+        "schema": "vfx-script@1",
+        "packageKind": "vfx-script",
+        "state": "planned",
+        "minStage": "G5",
+        "modes": [],
+        "promotionPolicy": "review-required"
+      },
+      {
+        "schema": "template@1",
+        "packageKind": "effect-template",
+        "state": "planned",
+        "minStage": "profile 宣告後",
+        "modes": [],
+        "promotionPolicy": "review-required"
+      },
+      {
+        "schema": "editor-capability-fixture",
+        "packageKind": "capability-fixture",
+        "state": "supported",
+        "minStage": "G2",
+        "modes": [],
+        "promotionPolicy": "forbidden"
+      }
+    ]
+  },
   "assetManifestDigest": "d82a2968ae3a",
   "assetManifest": {
     "path": "assets-manifest.json",
@@ -5500,7 +5556,7 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "e46d097c114b",
+    "fingerprint": "80129ebcecbe",
     "surfaces": [
       {
         "surface": "ability-item-zod-schemas",
@@ -5508,7 +5564,7 @@
       },
       {
         "surface": "exact-ref-collector",
-        "digest": "a49be1d31d15"
+        "digest": "ac45a80c363c"
       },
       {
         "surface": "capability-applicability",
@@ -5562,5 +5618,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "680e40d72c08"
+  "profileDigest": "8d15fb8fe3c0"
 }

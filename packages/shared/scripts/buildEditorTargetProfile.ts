@@ -35,6 +35,13 @@
  * 兩格都在，而且只有內容真的變了才會變。⛔ 不要把時間戳加回來。
  */
 import { effectiveVfxLimits } from "../src/content/import/effectiveVfxLimits";
+import {
+  buildContractIndex,
+  CONTRACT_INDEX_SCHEMA,
+  MIN_EDITOR_CONTRACT_VERSION,
+  REPRESENTATIONS,
+} from "../src/content/import/contractIndex";
+import { ZIP_LIMITS } from "../src/content/import/zipSafety";
 import { buildAuthoringProcessor } from "../src/content/import/authoringProcessor";
 import {
   deltaExportAllowedOf,
@@ -635,6 +642,30 @@ export function buildEditorTargetProfile(): Record<string, unknown> {
       championCount: whitelist?.champions?.length ?? null,
       itemCount: whitelist?.items?.length ?? null,
       liveEndpoint: "/api/v1/curation/whitelist",
+    },
+
+    // ⑧ ⭐⭐ §0-1 —— **契約登錄表的指紋**（⛔ 這裡只放 digest）。
+    //
+    // ⚠️ ⭐ 為什麼 profile 只放 digest 而不是整份 index：index 要帶 **ZIP 政策的
+    //   實際值**，而那些值住在伺服器（`ZIP_LIMITS`）⇒ 一份靜態複本會在政策
+    //   改動時**說謊**。⭐ 完整內容走 `GET <prefix>/contract-index`，
+    //   profile 這一格只回答「**你手上那份還是不是最新的**」。
+    contractIndex: {
+      schema: CONTRACT_INDEX_SCHEMA,
+      minEditorContractVersion: MIN_EDITOR_CONTRACT_VERSION,
+      // ⛔ 這裡刻意**不**傳真的 ZIP_LIMITS：`buildEditorTargetProfile` 跑在
+      //   建置期（沒有伺服器），⭐ 而 digest 要能被對面拿來比對 ⇒ 兩邊都用
+      //   同一份出貨常數。⚠️ 它就是伺服器那條 route 會傳的那一份。
+      digest: buildContractIndex(ZIP_LIMITS as unknown as Record<string, number>).digest,
+      href: "/api/v1/content-import/contract-index",
+      representations: REPRESENTATIONS.map((r) => ({
+        schema: r.schema,
+        packageKind: r.packageKind,
+        state: r.state,
+        minStage: r.minStage,
+        modes: r.modes,
+        promotionPolicy: r.promotionPolicy,
+      })),
     },
 
     // ⑦ ⭐ 完整 manifest 的 canonical digest（⛔ 不再是那份 LOD 表）
