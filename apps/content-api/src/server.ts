@@ -101,6 +101,15 @@ export interface ContentApiOptions {
   editorOrigins?: readonly string[];
   /** Local, non-shipping AI proposal and human-verdict material. */
   reviewDir?: string;
+  /** Missing preview assets may be fetched from the selected immutable Base and cached locally. */
+  remoteAssets?: {
+    contentBaseUrl: string;
+    cacheDir: string;
+    maxAssetBytes: number;
+    timeoutMs: number;
+    /** test seam; desktop uses the platform fetch implementation. */
+    fetchImpl?: typeof fetch;
+  };
 }
 
 interface Params {
@@ -122,6 +131,30 @@ const ASSET_MIME: Record<string, string> = {
   ".ktx2": "image/ktx2",
   ".bin": "application/octet-stream",
 };
+
+class RemoteAssetTooLarge extends Error {}
+
+async function readResponseBounded(response: Response, maxBytes: number): Promise<Buffer> {
+  if (!response.body) throw new Error("remote asset response has no body");
+  const reader = response.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let total = 0;
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      total += value.byteLength;
+      if (total > maxBytes) {
+        await reader.cancel("remote asset exceeded limit");
+        throw new RemoteAssetTooLarge(`remote asset exceeds ${maxBytes} bytes`);
+      }
+      chunks.push(value);
+    }
+  } finally {
+    reader.releaseLock();
+  }
+  return Buffer.concat(chunks.map((chunk) => Buffer.from(chunk)), total);
+}
 
 export function buildServer(opts: ContentApiOptions): FastifyInstance {
   if (process.env.NODE_ENV === "production" && !opts.allowProduction) {
@@ -679,6 +712,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   // confined to content/assets. Used by the editor's Babylon preview panels
   // (GLB models, particle textures).
   const assetRoot = join(root, "assets");
+  const remoteAssetCache = opts.remoteAssets ? resolve(opts.remoteAssets.cacheDir) : null;
   app.get<{ Params: { "*": string } }>("/content-api/assets/*", async (req, reply) => {
     const rel = req.params["*"] ?? "";
     const segments = rel.split("/");
@@ -689,11 +723,52 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
     if (file !== assetRoot && !file.startsWith(assetRoot + sep)) {
       return err(reply, 400, "path escapes content assets root");
     }
-    if (!existsSync(file)) return err(reply, 404, `asset not found: ${rel}`);
+    let readable = file;
+    if (!existsSync(readable) && opts.remoteAssets && remoteAssetCache) {
+      const cached = resolve(remoteAssetCache, rel);
+      if (cached !== remoteAssetCache && !cached.startsWith(remoteAssetCache + sep)) {
+        return err(reply, 400, "path escapes remote asset cache");
+      }
+      if (existsSync(cached)) {
+        readable = cached;
+      } else {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), opts.remoteAssets.timeoutMs);
+        timeout.unref?.();
+        try {
+          const base = opts.remoteAssets.contentBaseUrl.endsWith("/")
+            ? opts.remoteAssets.contentBaseUrl
+            : `${opts.remoteAssets.contentBaseUrl}/`;
+          const encoded = segments.map(encodeURIComponent).join("/");
+          const response = await (opts.remoteAssets.fetchImpl ?? fetch)(new URL(`assets/${encoded}`, base), {
+            redirect: "error",
+            signal: controller.signal,
+          });
+          if (response.status === 404) return err(reply, 404, `asset not found: ${rel}`);
+          if (!response.ok) return err(reply, 502, `remote asset fetch failed: HTTP ${response.status}`);
+          const declared = Number(response.headers.get("content-length") ?? "0");
+          if (Number.isFinite(declared) && declared > opts.remoteAssets.maxAssetBytes) {
+            return err(reply, 413, `remote asset exceeds ${opts.remoteAssets.maxAssetBytes} bytes`);
+          }
+          const bytes = await readResponseBounded(response, opts.remoteAssets.maxAssetBytes);
+          mkdirSync(dirname(cached), { recursive: true });
+          const tmp = `${cached}.tmp-${process.pid}`;
+          writeFileSync(tmp, bytes);
+          renameSync(tmp, cached);
+          readable = cached;
+        } catch (error) {
+          if (error instanceof RemoteAssetTooLarge) return err(reply, 413, error.message);
+          return err(reply, 502, `remote asset unavailable: ${error instanceof Error ? error.message : String(error)}`);
+        } finally {
+          clearTimeout(timeout);
+        }
+      }
+    }
+    if (!existsSync(readable)) return err(reply, 404, `asset not found: ${rel}`);
     return reply
       .type(ASSET_MIME[rel.slice(rel.lastIndexOf(".")).toLowerCase()] ?? "application/octet-stream")
       .header("cache-control", "no-cache")
-      .send(await readFile(file));
+      .send(await readFile(readable));
   });
 
   // ---------- binary asset writes (dev-only; used by the editor AI-icon flow) ----------

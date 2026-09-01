@@ -20,7 +20,8 @@ const BASE = "/content-api";
  */
 function isDevBuild(): boolean {
   try {
-    return Boolean((import.meta as unknown as { env?: { DEV?: boolean } }).env?.DEV);
+    const env = (import.meta as unknown as { env?: { DEV?: boolean; VITE_DESKTOP?: string } }).env;
+    return Boolean(env?.DEV || env?.VITE_DESKTOP === "1");
   } catch {
     return false;
   }
