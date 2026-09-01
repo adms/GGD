@@ -1,6 +1,6 @@
 # GGD 本機技能／VFX Editor 完工稽核
 
-狀態：2026-09-02 03:08（Asia/Taipei）
+狀態：2026-09-02 03:44（Asia/Taipei）
 
 Editor branch：`feat/vfx-forge-codex`
 
@@ -17,16 +17,18 @@ fail closed，因為 GGD main 尚未交付 source adapter、對齊後的 runtime
 receipt、G2 importer、完整 asset manifest、遠端 effective VFX limits 與正式英雄模型映射。
 
 因此目前正確狀態不是「Editor 壞掉」，也不是「整條產品已可上線」：Editor-owned
-工作面已完成；端到端 production Promote／apply 必須等 Main 回交，再用本報告最後一節
-重驗後才能宣告整體完成。
+實作面已完成；Windows 實機啟動證據與端到端 production Promote／apply 仍須通過，
+再用本報告最後一節重驗後才能宣告整體完成。
 
 ## 本輪驗收結果
 
 - Editor full suite：44 files、255 tests 全通過。
 - Editor typecheck：通過。
 - Editor production build：通過；只有既有大型 Babylon chunk warning，沒有 build error。
-- Desktop suite：2 files、11 tests 全通過；typecheck 通過。
+- Desktop suite：3 files、18 tests 全通過；typecheck 通過。
 - Desktop renderer（Editor＋Admin）與 Electron main/preload build：通過。
+- 跨平台 packaged smoke runner：macOS universal 實包回傳 app／runner 雙 receipt，
+  五條 route 全 200；無 receipt、非 0 exit、signal、失敗 route 都 fail closed。
 - `pnpm caps:check`：通過，capability fingerprint `111434fa`。
 - `editorCoverageFresh.test.ts`：2/2 通過，coverage fingerprint `8dec65b891b7`、required 4941。
 - 第一次在受限 sandbox 執行兩項 tsx freshness command 時，Unix socket `listen EPERM`；
@@ -36,7 +38,7 @@ receipt、G2 importer、完整 asset manifest、遠端 effective VFX limits 與�
 
 | 原始要求 | 判定 | 權威證據 |
 | --- | --- | --- |
-| macOS／Windows 本機程式，低維護成本 | 已證明（本機發行版）；公開簽章另列限制 | Electron；實際產出 universal macOS `dmg/zip` 與 Windows x64 `nsis/portable`。Desktop renderer 與 Web dist 隔離，最終 macOS app 對正式站跑 packaged smoke，五條路由全 200。證據與 SHA-256：`docs/_reports/editor-desktop-release-smoke_20260902-0337/README.md`。 |
+| macOS／Windows 本機程式，低維護成本 | macOS 已證明；Windows 包裝閉包已證明、實機啟動待驗；公開簽章另列限制 | Electron；實際產出 universal macOS `dmg/zip` 與 Windows x64 `nsis/portable`。Desktop renderer 與 Web dist 隔離，最終 macOS app 對正式站跑 packaged smoke，五條路由全 200。Windows PE／內含資源已驗，仍需在真正 Windows host 跑同一個 `smoke:packaged` receipt 閘。證據與 SHA-256：`docs/_reports/editor-desktop-release-smoke_20260902-0337/README.md`。 |
 | 可以用本機 GGD 資料夾，也可以用 `https://ggd.adms.ai` 當唯讀參考 Base；所有修改留本機 | 已證明 | `apps/editor-desktop/src/main.ts`、`remoteWorkspace.ts`；manifest/bundle/profile digest、三方合併、離線 cache、衝突保留與 host/byte/time bounds 的測試。 |
 | 模組化、容易維護，不複製遊戲規則 | 已證明 | schema form、Forge、VFX Forge、Export Center、desktop shell 分模組；預覽使用真 `SimWorld`、`CameraRig`、`VfxSystem` 與共用 resolver。 |
 | 效果模板定義 → 模板＋參數成品 → 成品效果鏈 | 已證明（現有 runtime vocabulary） | `ForgeStudio.tsx` 的每張 `AbilityTemplateCard {ref,params}` 是一份成品，鏈只放成品卡；可拖拉、排序、獨立參數、條件、衝突策略、展開來源；`forgeStudioStack.test.ts` 與 shared `stack.test.ts` 證明第二張卡真的進入 effects/hooks。 |
@@ -77,3 +79,5 @@ package；所有 omitted refs 必須與完整 exact Base snapshot 相同，否�
 7. target profile 的 effective VFX limits 與遊戲同一 resolver；修改 config/runtime clamp 時兩邊同時變。
 8. `godie-e00r` 等 champion/model authoritative mapping 回交後，遊戲與 Editor 對同 id 解到同 model，附無 VFX／受擊遮擋基準圖。
 9. 用一個真 package 走 Editor JSON 與 ZIP 各一次 validate/apply/read-back/rollback，semantic digest 相同；再重跑八招與一項 template multi-card 技能的實際瀏覽器視覺驗收。
+10. 在真正 Windows x64 host 執行 `pnpm --filter @ggd/editor-desktop smoke:packaged`，
+    取得 `ggd-editor-packaged-smoke-runner@1` 且所有 app route 200；公開發行前另驗簽章。

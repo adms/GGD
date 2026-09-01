@@ -1,0 +1,57 @@
+name: editor-desktop-windows-smoke
+
+# Feature-branch acceptance only. This gives the Codex-owned desktop shell a
+# real Windows host without changing Main's production CI or claiming that the
+# Main-owned importer exists.
+on:
+  push:
+    branches: [feat/vfx-forge-codex]
+    paths:
+      - .github/workflows/editor-desktop-windows-smoke.yml
+      - apps/editor-desktop/**
+      - apps/editor/**
+      - apps/admin/**
+      - apps/content-api/**
+      - packages/shared/**
+      - package.json
+      - pnpm-lock.yaml
+      - pnpm-workspace.yaml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: editor-desktop-windows-smoke-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  packaged-smoke:
+    name: Windows x64 packaged smoke
+    runs-on: windows-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Desktop contract tests
+        run: pnpm --filter @ggd/editor-desktop test
+      - name: Build Windows installer and portable package
+        run: pnpm --filter @ggd/editor-desktop dist:win
+      - name: Launch the packaged executable and require a smoke receipt
+        shell: pwsh
+        run: |
+          pnpm --filter @ggd/editor-desktop smoke:packaged 2>&1 | Tee-Object -FilePath apps/editor-desktop/dist/windows-smoke.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Upload compact receipt log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: editor-desktop-windows-smoke-${{ github.run_id }}
+          path: apps/editor-desktop/dist/windows-smoke.log
+          if-no-files-found: warn
+          retention-days: 7
