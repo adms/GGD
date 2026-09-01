@@ -4,8 +4,13 @@
  *   GET  <prefix>/capabilities            引擎能做什麼（從出貨註冊表推導）
  *   GET  <prefix>/active/target-profile   離線建包用的 base receipt
  *   GET  <prefix>/health                  匯入子系統的狀態
- *   POST <prefix>/validate | /apply | /rollback        → 501
- *   GET  <prefix>/active | /active/runtime-bundle | /operations/:id → 501
+ *   POST <prefix>/validate | /apply | /rollback         ⭐ 已實作
+ *   GET  <prefix>/active | /active/runtime-bundle | /operations/:id  ⭐ 已實作
+ *
+ * ⚠️ ⭐ 上面兩行在 2026-09-02 之前寫著「→ 501」，⛔ 而那**已經是假的** ——
+ *   六條在 `631e82c44` / `27bc0c77d` 就落地了。⇒ 一份交接文件照著這個檔頭
+ *   把「validate/apply/rollback 明確回 501」寫進了對外請求，
+ *   ⭐ 而對面差一點就再實作一次已經在出貨的東西（第三守則：註解會說謊）。
  *
  * ─────────────────────────────────────────────────────────────────────────────
  * ⛔ 為什麼未實作的那些回 501 而不是 200
@@ -39,6 +44,7 @@ import type { FastifyInstance, FastifyReply } from "fastify";
 import { buildCapabilityManifest } from "@ggd/shared/content/editorCapabilities";
 import { buildAuthoringRules } from "@ggd/shared/content/authoringRules";
 import { Configs } from "@ggd/shared/content";
+import { hashDoc, hashCollection, contentVersion } from "@ggd/shared/content/hash";
 import {
   IMPORT_DIAGNOSTICS,
   formatDiagnostic,
@@ -904,24 +910,71 @@ function registerG2Routes(
       });
     }
     const a = d.store.active();
-    const docs: Record<string, Record<string, unknown>> = {};
+    // ⭐⭐ **形狀逐格對齊 `content-bundle@1`**（2026-09-02）。
+    //
+    // ⚠️ 在此之前這裡只回一個 `docs: {collection: {id: doc}}` 的巢狀 map ——
+    // ⛔ **零個 hash**。而對面的規則逐字是「Editor 會**全部重算後才接受**」
+    // ⇒ ⭐ 沒有 hash 它**算不了**，只能 fail closed。
+    //
+    // ⭐ 三件事一起補齊（交接文件點名的那三樣）：
+    //   ① **全部註冊 collection**（⛔ 不是只有 abilities/items）
+    //   ② **逐文件 hash**（`entries[].hash`）
+    //   ③ **collection hash**（`collections[].hash`）
+    //
+    // ⚠️ ⭐ 三個雜湊都走**出貨的那三支**（`hashDoc`/`hashCollection`/`contentVersion`，
+    // `packages/shared/src/content/hash.ts`）——⛔ 不在這裡自己算一份：
+    // 對面重算時用的是同一份 `content-bundle@1` 語意，
+    // ⭐ 自己算一份等於保證兩邊對不起來（失敗形態⑤）。
+    const byCollection = new Map<string, { id: string; doc: Record<string, unknown> }[]>();
     const walk = (dir: string, collection: string): void => {
       for (const e of readdirSync(dir, { withFileTypes: true })) {
         if (e.isDirectory()) walk(join(dir, e.name), e.name);
         else if (e.name.endsWith(".json")) {
           const id = e.name.slice(0, -5);
-          (docs[collection] ??= {})[id] = JSON.parse(
-            readFileSync(join(dir, e.name), "utf8"),
-          ) as Record<string, unknown>;
+          const doc = JSON.parse(readFileSync(join(dir, e.name), "utf8")) as Record<
+            string,
+            unknown
+          >;
+          (byCollection.get(collection) ?? byCollection.set(collection, []).get(collection)!).push({
+            id,
+            doc,
+          });
         }
       }
     };
     walk(tree, "");
+
+    const collections: Record<
+      string,
+      { hash: string; count: number; entries: { id: string; hash: string; doc: unknown }[] }
+    > = {};
+    const collectionHashes: Record<string, string> = {};
+    // ⭐ **entry 的排序**是契約的一部分：`hashCollection` 吃順序，⛔ 而
+    //   `readdirSync` 的順序是檔案系統的（macOS 與 Linux 不同）
+    //   ⇒ 不排就會兩台算出兩個 collection hash。⇒ 見下面那一行的 `.sort()`。
+    //
+    // ⚠️ ⭐ **collection 這一層的 `.sort()` 不是承重的**（誠實記著）——
+    //   `contentVersion()` 走 `stableStringify`（它自己排 key）⇒ 這裡的順序
+    //   對輸出的雜湊沒有影響。⛔ 我原本在這裡寫了「排序是契約的一部分」，
+    //   而突變驗證（拿掉它 → **仍然綠**）證明那句話是錯的。
+    //   ⭐ 留著 `.sort()` 只為了**回應的 key 順序穩定**（人讀 diff 用）。
+    for (const name of [...byCollection.keys()].sort()) {
+      const rows = byCollection
+        .get(name)!
+        .sort((x, y) => (x.id < y.id ? -1 : x.id > y.id ? 1 : 0))
+        .map((r) => ({ id: r.id, hash: hashDoc(r.doc), doc: r.doc }));
+      const h = hashCollection(rows.map((r) => ({ id: r.id, hash: r.hash })));
+      collections[name] = { hash: h, count: rows.length, entries: rows };
+      collectionHashes[name] = h;
+    }
+
     return reply.send({
       schema: "ggd-content-runtime-bundle@1",
       activationDigest: a?.activationDigest ?? null,
       packageDigest: a?.packageDigest ?? null,
-      docs,
+      // ⭐ 對面拿它去 pin `base.contentVersion` —— ⛔ 不是自己從 docs 反推。
+      contentVersion: contentVersion(collectionHashes),
+      collections,
     });
   });
 

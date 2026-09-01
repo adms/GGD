@@ -9,6 +9,7 @@
  * ⇒ ⭐ 這一支只驗**接縫**：真的 inject、真的看狀態碼、真的看 ACTIVE 有沒有動。
  */
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { hashDoc, hashCollection, contentVersion } from "@ggd/shared/content/hash";
 import {
   existsSync,
   mkdtempSync,
@@ -194,8 +195,39 @@ describe("G2 routes —— 六條走真的 HTTP", () => {
     // ⭐ runtime-bundle 拿得到**那棵樹的內容**（⛔ 不是 content/bundle.json）。
     const rb = await get(`${P}/active/runtime-bundle`);
     expect(rb.statusCode).toBe(200);
-    expect(rb.json().docs.abilities["hero.q"].id).toBe("hero.q");
-    expect(rb.json().activationDigest).toBe(d1);
+    const bundle = rb.json() as {
+      activationDigest: string;
+      contentVersion: string;
+      collections: Record<
+        string,
+        { hash: string; count: number; entries: { id: string; hash: string; doc: { id: string } }[] }
+      >;
+    };
+    expect(bundle.activationDigest).toBe(d1);
+    const ab = bundle.collections["abilities"];
+    expect(ab, "⛔ collections 裡沒有 abilities").toBeDefined();
+    expect(ab!.entries.find((e) => e.id === "hero.q")?.doc.id).toBe("hero.q");
+
+    // ⭐⭐ **對面會全部重算後才接受** ⇒ 三樣缺一它就 fail closed（交接文件逐字）。
+    //   ⚠️ ⭐ 這裡**真的重算一次**（⛔ 不是斷言「欄位存在」）——
+    //     一個回 `hash: ""` 的 route 也會讓「欄位存在」那種斷言通過。
+    for (const [name, c] of Object.entries(bundle.collections)) {
+      expect(c.count, `⛔ ${name} 的 count 與 entries 數對不上`).toBe(c.entries.length);
+      for (const e of c.entries) {
+        expect(e.hash, `⛔ ${name}/${e.id} 的逐文件 hash 重算對不上`).toBe(hashDoc(e.doc));
+      }
+      expect(c.hash, `⛔ ${name} 的 collection hash 重算對不上`).toBe(
+        hashCollection(c.entries.map((e) => ({ id: e.id, hash: e.hash }))),
+      );
+    }
+    expect(
+      bundle.contentVersion,
+      "⛔ contentVersion 重算對不上 ⇒ 對面沒辦法拿它 pin exact Base",
+    ).toBe(
+      contentVersion(
+        Object.fromEntries(Object.entries(bundle.collections).map(([n, c]) => [n, c.hash])),
+      ),
+    );
 
     // ⭐ 第二次啟用要帶 CAS。
     const b = await post(`${P}/apply`, {
@@ -218,8 +250,11 @@ describe("G2 routes —— 六條走真的 HTTP", () => {
 
     // ⭐ 回捲之後 runtime-bundle 回到第一版（⛔ hero.w 不在了）。
     const rb2 = await get(`${P}/active/runtime-bundle`);
-    expect(rb2.json().docs.abilities["hero.q"]).toBeTruthy();
-    expect(rb2.json().docs.abilities["hero.w"]).toBeUndefined();
+    const ids2 = (
+      rb2.json().collections["abilities"] as { entries: { id: string }[] }
+    ).entries.map((e) => e.id);
+    expect(ids2, "⛔ 回捲之後 hero.q 不見了").toContain("hero.q");
+    expect(ids2, "⛔ 回捲之後 hero.w 還在").not.toContain("hero.w");
   });
 
   it("★★ ⭐ `apply` 的 CAS：帶錯的 expected ⇒ 409，而 ACTIVE **沒動**", async () => {
@@ -467,7 +502,11 @@ describe("G2 ZIP 傳輸層", () => {
     expect(r.json().status).toBe("activated");
     // ⭐ 真的進了 runtime-bundle。
     const rb = await get(`${P}/active/runtime-bundle`);
-    expect(rb.json().docs.abilities["hero.q"].id).toBe("hero.q");
+    expect(
+      (
+        rb.json().collections["abilities"] as { entries: { id: string; doc: { id: string } }[] }
+      ).entries.find((e) => e.id === "hero.q")?.doc.id,
+    ).toBe("hero.q");
     // ⭐ 冪等仍然成立（同一個 header id 重送）。
     const again = await postZip(`${P}/apply`, z, {
       "x-ggd-operation-id": "zip-op-1",

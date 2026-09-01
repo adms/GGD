@@ -5485,6 +5485,9 @@
     "totalBytes": 102902938
   },
   "effectiveVfxLimits": {
+    "schema": "ggd-effective-vfx-limits@1",
+    "limitProfileId": "ggd-default-desktop@1",
+    "resolverFingerprint": "b6422e2cd5a0",
     "maxParticlesPerSystem": 1200,
     "maxRatePerSystem": 600,
     "maxActiveRibbons": 10,
@@ -5559,5 +5562,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "5c202f60e0a9"
+  "profileDigest": "680e40d72c08"
 }

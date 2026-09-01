@@ -17,6 +17,7 @@
  * `DEFAULT_VFX_CLEANUP` —— 「讀不到」必須是「出貨政策」，不可以是「不回收」，
  * 也不可以是兩者的半套混合。
  */
+import { effectiveVfxLimits } from "@ggd/shared/content/import/effectiveVfxLimits";
 import {
   Configs,
   DEFAULT_VFX_CLEANUP,
@@ -92,14 +93,23 @@ export function ringCapForRoundBoundary(policy: ConfigVfxCleanupDoc): number {
 const ONE_SHOT_EMITTER_BOUNDS = { min: 16, max: 1024 } as const;
 const SWEEP_SEC_BOUNDS = { min: 0.5, max: 60 } as const;
 
-/** 同時允許閒置的一次性發射器上限（`enabled=false` ⇒ 不設限，止血閥）。 */
+/**
+ * 同時允許閒置的一次性發射器上限（`enabled=false` ⇒ 不設限，止血閥）。
+ *
+ * ⭐⭐ **2026-09-02（P1-2）：改成走共用 resolver** —— ⛔ 不再自己算一次。
+ *
+ * ⚠️ 在此之前這裡與 `effectiveVfxLimits()`（那份要交給外部編輯器的收據）
+ * 是**兩份各自的算式**，而它們已經對不上：止血閥翻下去時這裡回 `Infinity`，
+ * ⛔ 而收據一律回 96 ⇒ ⭐ 編輯器會照著一個**不存在的上限**去限制作者。
+ *
+ * ⭐ 現在只有一份算式 ⇒ 「收據與遊戲一致」是**結構性**的，
+ * ⛔ 不是一條要靠人記得同步的散文（第三守則）。
+ * ⭐ `null`（收據那一側的「無上限」表示）在這裡換回 `Infinity`——
+ * 這個檔的消費端拿它去做 `size > cap` 比較，⛔ 而 `null` 在那裡會靜默變成 0。
+ */
 export function oneShotEmitterCap(policy: ConfigVfxCleanupDoc): number {
-  if (!policy.enabled) return Infinity;
-  const v = policy.maxOneShotEmitters;
-  if (typeof v !== "number" || !Number.isFinite(v)) {
-    return DEFAULT_VFX_CLEANUP.maxOneShotEmitters ?? 96;
-  }
-  return Math.min(ONE_SHOT_EMITTER_BOUNDS.max, Math.max(ONE_SHOT_EMITTER_BOUNDS.min, Math.floor(v)));
+  const v = effectiveVfxLimits(undefined, policy).maxOneShotEmitters;
+  return v === null ? Infinity : v;
 }
 
 /** 掃描間隔（毫秒）。`enabled=false` ⇒ `Infinity`（永遠不掃）。 */
