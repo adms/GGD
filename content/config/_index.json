@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "bf6b6a436c0d",
+  "hash": "227fea0eb566",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -131,8 +131,8 @@
     {
       "id": "combat-feel",
       "path": "config/combat-feel.json",
-      "hash": "1fc5a7c95339",
-      "size": 1900
+      "hash": "9a36a1b59a97",
+      "size": 2043
     },
     {
       "id": "combo-strikes",
@@ -143,8 +143,8 @@
     {
       "id": "config.match",
       "path": "config/config.match.json",
-      "hash": "5e4fe87f9316",
-      "size": 1841
+      "hash": "008ad34733bf",
+      "size": 1952
     },
     {
       "id": "content-load",
