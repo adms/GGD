@@ -234,6 +234,13 @@ export interface VfxContext {
    * ⚠️ 這**不是**權威隱身；缺席 ⇒ 段是 no-op（headless 測試的樣子）。
    */
   hideBody?(id: number, durationMs: number): void;
+  /** ⭐ M1 逐刀瞬移 / M3 升空曲線（GH#838）—— **只動畫面**的位移。 */
+  moveBody?(
+    id: number,
+    offset: { x: number; y: number; z: number },
+    durationMs: number,
+    arc: boolean,
+  ): void;
 }
 
 // ---------------------------------------------------------------------------
@@ -845,6 +852,8 @@ export class VfxSystem {
       playSfx: (event, opts) => this.ctx.playSfx?.(event, opts ?? {}) ?? false,
       pulseAnim: (id, kind, opts) => this.ctx.pulseAnim?.(id, kind, opts),
       hideBody: (id, ms) => this.ctx.hideBody?.(id, ms),
+      // ⭐ M1 逐刀瞬移 / M3 升空曲線（GH#838）—— 與 `hideBody` 同一條路。
+      moveBody: (id, offset, ms, arc) => this.ctx.moveBody?.(id, offset, ms, arc),
       enabled: () =>
         (ContentConfigs.tryGet("vfx-scripts") as { enabled?: boolean } | undefined)?.enabled ??
         DEFAULT_VFX_SCRIPTS.enabled,

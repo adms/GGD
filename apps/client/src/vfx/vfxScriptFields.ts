@@ -125,5 +125,16 @@ export const FIELDS: Record<VfxScriptSegment["kind"], FieldSpec[]> = {
     { key: "pulse", label: "動畫", kind: "select", options: ["hurt", "attack", "cast"] },
     { key: "clipWindowMs", label: "剪輯窗 ms", kind: "range", min: 50, max: 3000, step: 25 },
   ],
+  // ⭐⭐ M1 逐刀瞬移 ＋ M3 升空曲線（超究武神霸斬）—— **只動畫面**，⛔ 不動判定框。
+  //    ⭐ 逐刀不同的角度用上面 COMMON 的 `strikeIndex`：N 刀 = N 段，各自一個 offset。
+  bodyMove: [
+    ...COMMON,
+    { key: "at", label: "動誰", kind: "select", options: ["caster", "target"] },
+    { key: "mode", label: "怎麼過去", kind: "select", options: ["teleport", "arc"] },
+    { key: "offset.x", label: "偏移 X", kind: "range", min: -12, max: 12, step: 0.1 },
+    { key: "offset.y", label: "偏移 Y（升空）", kind: "range", min: -12, max: 12, step: 0.1 },
+    { key: "offset.z", label: "偏移 Z", kind: "range", min: -12, max: 12, step: 0.1 },
+    { key: "durationMs", label: "持續 ms", kind: "range", min: 50, max: 3000, step: 25 },
+  ],
 };
 

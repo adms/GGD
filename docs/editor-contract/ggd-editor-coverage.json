@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "3202c767b979",
-  "capabilityFingerprint": "553408c5",
+  "fingerprint": "33169dc18071",
+  "capabilityFingerprint": "e534e6ef",
   "required": [
     {
       "group": "abilityField",
@@ -682,6 +682,11 @@
       "group": "configField",
       "name": "adaptiveCostMode=work",
       "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
+      "name": "additiveOverflowBrightness",
+      "owner": "config.vfx-budget@1"
     },
     {
       "group": "configField",
@@ -11650,6 +11655,16 @@
     },
     {
       "group": "configField",
+      "name": "lobbyStore",
+      "owner": "config.ui-cues@1"
+    },
+    {
+      "group": "configField",
+      "name": "lobbyStore.enabled",
+      "owner": "config.ui-cues@1"
+    },
+    {
+      "group": "configField",
       "name": "longPressMs",
       "owner": "config.gamepad@1"
     },
@@ -12207,6 +12222,11 @@
       "group": "configField",
       "name": "maxApproachDistance",
       "owner": "config.cast-approach@1"
+    },
+    {
+      "group": "configField",
+      "name": "maxConcurrentAdditive",
+      "owner": "config.vfx-budget@1"
     },
     {
       "group": "configField",
@@ -18310,6 +18330,11 @@
     },
     {
       "group": "configField",
+      "name": "stuckEscape.anchorRadius",
+      "owner": "config.combat-feel@1"
+    },
+    {
+      "group": "configField",
       "name": "stuckEscape.enabled",
       "owner": "config.combat-feel@1"
     },
@@ -19909,6 +19934,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "amount.damageTierPerRank"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "amount.flat"
     },
     {
@@ -19954,6 +19983,10 @@
     {
       "group": "effectFieldPath",
       "name": "amountPerTick.damageTier"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amountPerTick.damageTierPerRank"
     },
     {
       "group": "effectFieldPath",
@@ -20234,6 +20267,10 @@
     {
       "group": "effectFieldPath",
       "name": "comboBonus.amount.damageTier"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "comboBonus.amount.damageTierPerRank"
     },
     {
       "group": "effectFieldPath",
@@ -22703,6 +22740,10 @@
     },
     {
       "group": "templateFamily",
+      "name": "summon-agent"
+    },
+    {
+      "group": "templateFamily",
       "name": "teleport"
     },
     {
@@ -23261,6 +23302,41 @@
     },
     {
       "group": "vfxScriptField",
+      "name": "segments[].kind=bodyMove.at",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].kind=bodyMove.atMs",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].kind=bodyMove.durationMs",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].kind=bodyMove.mode",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].kind=bodyMove.offset",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].kind=bodyMove.on",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].kind=bodyMove.strikeIndex",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
       "name": "segments[].kind=floatingText.at",
       "owner": "vfx-script@1"
     },
@@ -23636,6 +23712,31 @@
     },
     {
       "group": "vfxScriptField",
+      "name": "segments[].mode=arc",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].mode=teleport",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].offset.x",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].offset.y",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].offset.z",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
       "name": "segments[].on=castEffect",
       "owner": "vfx-script@1"
     },
@@ -23774,18 +23875,18 @@
     "hookField": 21,
     "abilityField": 38,
     "auraField": 8,
-    "templateFamily": 26,
+    "templateFamily": 27,
     "conditionLeaf": 5,
     "conditionLeafField": 13,
-    "effectFieldPath": 417,
+    "effectFieldPath": 420,
     "vfxField": 86,
     "modelField": 42,
     "projectileField": 15,
     "skinField": 9,
-    "vfxScriptField": 113,
-    "configField": 3741,
+    "vfxScriptField": 125,
+    "configField": 3746,
     "_notRequired": 15,
-    "_total": 4874,
+    "_total": 4895,
     "_ownerOnly": 39
   }
 }

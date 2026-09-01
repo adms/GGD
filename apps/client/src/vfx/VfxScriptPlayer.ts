@@ -92,6 +92,16 @@ export interface VfxScriptPlayerDeps {
   pulseAnim?(id: number, kind: "attack" | "cast" | "hurt", opts?: { clipWindowMs?: number }): void;
   /** N6 演出用暫時隱形 —— 缺席 ⇒ 段 no-op。 */
   hideBody?(id: number, durationMs: number): void;
+  /**
+   * ⭐ M1 逐刀瞬移 / M3 升空曲線（GH#838）—— **只動畫面**的位移。
+   * ⛔ 判定框、索敵、碰撞一格都不變（與 `hideBody` 同一個理由）。
+   */
+  moveBody?(
+    id: number,
+    offset: { x: number; y: number; z: number },
+    durationMs: number,
+    arc: boolean,
+  ): void;
   /** 後台開關（三個住處那一格）—— 每次事件都活讀，關掉＝逐位元回到沒有 script 的世界。 */
   enabled(): boolean;
 }
@@ -489,6 +499,20 @@ export class VfxScriptPlayer {
       case "sound": {
         this.deps.playSfx?.(seg.soundKey, {});
         return;
+      }
+      case "bodyMove": {
+        // ⭐⭐ M1 逐刀瞬移 ＋ M3 升空曲線 —— **一段**做兩件事（第〇·五守則）。
+        // ⚠️ 它**只動畫面**：判定框、索敵、碰撞一格都不變。
+        const mv = seg as unknown as {
+          at?: "caster" | "target";
+          mode?: "teleport" | "arc";
+          offset: { x: number; y: number; z: number };
+          durationMs: number;
+        };
+        const mover = mv.at === "target" ? frame.victim : frame.caster;
+        if (mover === undefined) break;
+        this.deps.moveBody?.(mover, mv.offset, mv.durationMs, mv.mode === "arc");
+        break;
       }
       case "hideBody": {
         // ⭐ N6 —— 原作的主詞是施法者（ShowUnitHide(GetTriggerUnit())）。

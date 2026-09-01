@@ -28,6 +28,7 @@ import { mudTintFor, type GrowthTier } from "./views/growthTier";
 import { growthTierFromFlags, formIndexFromFlags, ENTITY_FLAG, ENTITY_KIND } from "@ggd/shared/protocol/schema";
 import { stealthVisualFor } from "./stealthVisual";
 import { isBodyHidden } from "./scriptedHide";
+import { scriptedOffset } from "./scriptedMove";
 import type { VoxelLook } from "./views/voxelLook";
 import type { AssetManager } from "./AssetManager";
 import {
@@ -1032,10 +1033,24 @@ export class EntityViewRegistry {
           .alpha * (isBodyHidden(e.id, args.nowMs) ? 0 : 1),
       );
       const pose = args.poseFor(e);
+        // ⭐⭐ GH#838 M1 逐刀瞬移 / M3 升空曲線 —— **演出位移**加在這裡，
+        //    ⭐ 與 `isBodyHidden` 逐字同一個位置與同一個理由：位置是**每一次 sync
+        //    都重寫**的，當場寫下去會在下一幀被覆蓋。
+        // ⚠️ ⭐ 它**只動畫面** —— `lastPos`（血條錨點與 `posOf` 的唯一答案）刻意
+        //    **不**吃這個偏移：判定框、索敵、血條都留在權威位置上。
+        //    ⛔ 讓血條跟著飛 = 玩家會以為那具身體真的在那裡。
+        const mo = scriptedOffset(e.id, args.nowMs);
       // #247: the interpolated height rides the same pose seam as x/z. The
       // AIRBORNE flag comes off the entity (not off `h > 0`) so takeoff and
       // landing ticks, where h is exactly 0, still count as in-flight.
-      view.setPose(pose.x, pose.z, pose.fx, pose.fz, pose.h ?? e.h ?? 0, e.airborne === true);
+        view.setPose(
+          pose.x + (mo?.x ?? 0),
+          pose.z + (mo?.z ?? 0),
+          pose.fx,
+          pose.fz,
+          (pose.h ?? e.h ?? 0) + (mo?.y ?? 0),
+          e.airborne === true,
+        );
 
       // ⭐ `lastPos` 是 {@link posOf} **唯一**的答案，而 `posOf()` 正是血條錨點、
       // 施法特效（`VfxSystem` 的 `entityPos`）、狀態光環、遠端腳步與空間音訊

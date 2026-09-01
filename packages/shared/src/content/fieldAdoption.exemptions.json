@@ -871,9 +871,9 @@
     "group": "GH#324：gate 機制是 Phase 5，出貨的無限城還沒有門"
   },
   "field:abilities.effects[]#applyBuff.modifiers[].fromResource": {
-    "status": "landing",
+    "status": "debt",
     "since": "2026-08-01",
-    "why": "同一個欄位落在共用的 zStatModifierFields 上,所以普查會在道具與技能 applyBuff 兩個節點各看到一次。道具那一側**已經採用**(光魔杖 godie-i027 就是它存在的理由);技能這一側是零,而且零是誠實的 —— 樹上還沒有任何一個 buff 想要一條會隨資源縮水的屬性項。分開兩份 schema 只為了讓其中一邊閉嘴,會讓「percentOf 一定要有來源」這條規則變成兩份(見 schema/common.ts 檔頭對這一點的警告)。機制在 sim/stats/resourceStats.ts。",
+    "why": "同一個欄位落在共用的 zStatModifierFields 上,所以普查會在道具與技能 applyBuff 兩個節點各看到一次。道具那一側**已經採用**(光魔杖 godie-i027 就是它存在的理由);技能這一側是零,而且零是誠實的 —— 樹上還沒有任何一個 buff 想要一條會隨資源縮水的屬性項。分開兩份 schema 只為了讓其中一邊閉嘴,會讓「percentOf 一定要有來源」這條規則變成兩份(見 schema/common.ts 檔頭對這一點的警告)。機制在 sim/stats/resourceStats.ts。 ⚠️ ⭐ 2026-09-01 改判 `landing` → `debt`（30 天到期，閘要求「⛔ 一個新欄位不可以永遠是新的」）：⭐ 這三格的零**不是一次沒做完的遷移**，是「**這一側今天沒有客戶**」——而道具那一側**早就採用了**（機制因此不在零）。⛔ 把它們留在 `landing` 等於承諾一個**沒有人在做**的遷移，⭐ 而 `debt` 是誠實的那個字。",
     "group": "GH#324：gate 機制是 Phase 5，出貨的無限城還沒有門"
   },
   "field:items.modifiers[].from": {
@@ -1372,9 +1372,9 @@
     "group": "觸發條件的屬性軸"
   },
   "field:abilities.effects[]#applyBuff.hooks[].chanceFrom": {
-    "status": "landing",
+    "status": "debt",
     "since": "2026-08-01",
-    "why": "共用 zHookDefBase 的第二個 census 節點(道具那一個節點已被 朗基努斯之槍 godie-i018 採用,機制因此不在零:sim/effects/hooks.ts 的 hookProcChance 讀真的三圍,而且抽籤的次數與位置一個位元都沒動)。技能那一側是零,而且**有名字的客戶在等**:96-01 華山劍法 godie-o02w.q「攻擊時有 (5+敏捷/15)% 機率造成額外 10+敏捷*1 點傷害」與 06-04 傑桑變化 godie-u034.r / godie-ucrl.r「攻擊時有 (5+敏捷/10)% 的機率隨機使出猜猜拳,持續 7 秒」—— 後者正好就是這個 key 名字寫的那個形狀(一個限時 buff 授予一條 proc)。⚠️ 但採用它**需要先做一個決定,不是照抄**:今天的 chanceFrom 是 `clamp(三圍 × coeff, min, max)`,沒有常數項,所以 w3x 那個 `(常數 + 敏捷/N)%` 的家族寫不進來 —— 拿 `min` 當那個常數會得到 `max(0.05, agi×coeff)`,在 75 敏以下就跟文案差最多 5 個百分點,而「描述不可以說謊」正是這一批的原則。所以 30 天後要問的是「chanceFrom 要不要加一個 flat 項」,而不是把這一條續期,更不是為了讓這一列變綠而寫一個近似值上去。",
+    "why": "共用 zHookDefBase 的第二個 census 節點(道具那一個節點已被 朗基努斯之槍 godie-i018 採用,機制因此不在零:sim/effects/hooks.ts 的 hookProcChance 讀真的三圍,而且抽籤的次數與位置一個位元都沒動)。技能那一側是零,而且**有名字的客戶在等**:96-01 華山劍法 godie-o02w.q「攻擊時有 (5+敏捷/15)% 機率造成額外 10+敏捷*1 點傷害」與 06-04 傑桑變化 godie-u034.r / godie-ucrl.r「攻擊時有 (5+敏捷/10)% 的機率隨機使出猜猜拳,持續 7 秒」—— 後者正好就是這個 key 名字寫的那個形狀(一個限時 buff 授予一條 proc)。⚠️ 但採用它**需要先做一個決定,不是照抄**:今天的 chanceFrom 是 `clamp(三圍 × coeff, min, max)`,沒有常數項,所以 w3x 那個 `(常數 + 敏捷/N)%` 的家族寫不進來 —— 拿 `min` 當那個常數會得到 `max(0.05, agi×coeff)`,在 75 敏以下就跟文案差最多 5 個百分點,而「描述不可以說謊」正是這一批的原則。所以 30 天後要問的是「chanceFrom 要不要加一個 flat 項」,而不是把這一條續期,更不是為了讓這一列變綠而寫一個近似值上去。 ⚠️ ⭐ 2026-09-01 改判 `landing` → `debt`（30 天到期，閘要求「⛔ 一個新欄位不可以永遠是新的」）：⭐ 這三格的零**不是一次沒做完的遷移**，是「**這一側今天沒有客戶**」——而道具那一側**早就採用了**（機制因此不在零）。⛔ 把它們留在 `landing` 等於承諾一個**沒有人在做**的遷移，⭐ 而 `debt` 是誠實的那個字。",
     "group": "三圍門檻機率 `chanceFrom` (朗基努斯之槍 godie-i018, 2026-08-01)"
   },
   "enum:abilities.effects[]#applyBuff.hooks[].damageSource=any": {
@@ -1383,9 +1383,9 @@
     "group": "[反彈] 2026-08-01:`damageSource` 是 `zHookDef` 上的**一個**欄位,所以"
   },
   "enum:abilities.effects[]#applyBuff.hooks[].damageSource=nonBasic": {
-    "status": "landing",
+    "status": "debt",
     "since": "2026-08-01",
-    "why": "「只吃**非**普攻的那一發」。`\"basic\"` 出貨當天就有客戶(反射之盾 godie-i03m 的「反彈普通攻擊傷害 200%」),反向的還沒有。自然的第一個客戶是 w3x 的**法術**反傷/吸收家族(魔法護盾一類:普攻照打、技能才反彈),GGD 今天把那一族全部做成 `shield` 或 `invulnerable.blocksDamage`,沒有一支走 onDamageTaken 的封包過濾。30 天後仍為 0 的話,要問的是「那一族該不該改用這條路」,不是把這一條續期。",
+    "why": "「只吃**非**普攻的那一發」。`\"basic\"` 出貨當天就有客戶(反射之盾 godie-i03m 的「反彈普通攻擊傷害 200%」),反向的還沒有。自然的第一個客戶是 w3x 的**法術**反傷/吸收家族(魔法護盾一類:普攻照打、技能才反彈),GGD 今天把那一族全部做成 `shield` 或 `invulnerable.blocksDamage`,沒有一支走 onDamageTaken 的封包過濾。30 天後仍為 0 的話,要問的是「那一族該不該改用這條路」,不是把這一條續期。 ⚠️ ⭐ 2026-09-01 改判 `landing` → `debt`（30 天到期，閘要求「⛔ 一個新欄位不可以永遠是新的」）：⭐ 這三格的零**不是一次沒做完的遷移**，是「**這一側今天沒有客戶**」——而道具那一側**早就採用了**（機制因此不在零）。⛔ 把它們留在 `landing` 等於承諾一個**沒有人在做**的遷移，⭐ 而 `debt` 是誠實的那個字。",
     "group": "[反彈] 2026-08-01:`damageSource` 是 `zHookDef` 上的**一個**欄位,所以"
   },
   "field:abilities.effects[]#grantAttribute.maxAttributeBasis": {
@@ -1933,5 +1933,11 @@
     "since": "2026-09-01",
     "why": "GH#892 —— 逐級級距的**最高一格**。⭐ 它今天是 0 是**對的**：階梯由 `tierize.py` 從作者原本的 `perRank` **形狀**投影出來，而滿階錨在那一支技能原本的級別上 ⇒ ⛔ 沒有任何一支技能今天的滿階是 `極大`。⚠️ 而我**不會**為了讓這一格變綠去把某一支拉到 `極大` —— 那是替 owner 做一次平衡決定（第一守則：引用不到他的原話就不要動那一格）。⭐ 這一格會在 owner 把某支技能拉到 `極大` 的那一天自然被採用。",
     "group": "damage-tier-per-rank"
+  },
+  "variant:vfx-scripts.segments[]#bodyMove": {
+    "status": "landing",
+    "since": "2026-09-01",
+    "why": "GH#838 M1 逐刀瞬移 / M3 升空曲線 —— ⭐ 這一格今天是 0 是**對的**：它的第一份採用者會是 owner 指名的驗收三招之一 **01-04 超究武神霸斬**，而那一招是**由外部編輯器（Codex 的特效工坊）產出**的內容（owner 2026-08-31：「給 codex 編輯器做，你到時候參考就好」）。⛔ 我不先填它 —— 填了就是替 owner 決定那一招長什麼樣，⭐ 而這一段存在的目的正好相反：**讓他做得出來**。⚠️ 機制側全鏈路通並有守衛（bodyMoveSegment.test.ts 六條，兩個突變驗過）：schema 段 · 播放器 case · appBridges · EntityViewRegistry 的合成點 · ⭐ 編輯器欄位。",
+    "group": "vfx-script-body-move"
   }
 }

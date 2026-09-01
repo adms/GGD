@@ -223,6 +223,47 @@ export const zVfxScriptAnim = z
  * ⇒ 借它來做演出等於偷加一個無敵窗）。客戶端自己一格 alpha 覆寫，⛔ 不動 sim。
  * ⭐ 它**自己會過期** —— 掉一則封包不會留下一具永遠不回來的身體。
  */
+/**
+ * ⭐⭐【演出位移】**M1 逐刀瞬移** ＋ **M3 升空曲線**（GH#838，超究武神霸斬）。
+ *
+ * owner 指名的驗收三招之一。原作 01-04 每一刀之前把小呆 `SetUnitPositionLoc` 到
+ * 目標的**另一個角度**（M1），而第三段把兩個人一起 `SetUnitFlyHeight` 拉上天（M3）。
+ *
+ * ── ⭐ 一段，⛔ 不是兩段 ──────────────────────────────────────────────────
+ * 「瞬移」與「升空」在資料上是**同一件事**：把一具身體的**視覺位置**推到一個偏移。
+ * 差別只有**怎麼過去** ⇒ 一個 `mode`，⛔ 不是兩個 segment kind（第〇·五守則）。
+ *
+ * ── ⚠️ 誠實邊界：它**只動畫面**，⛔ 不動 sim ────────────────────────────
+ * 判定框、索敵、碰撞**一格都不變** —— 與 `hideBody` 逐字同一個理由：
+ * 把演出借給權威狀態，等於偷加一個**位移窗**（而位移是這個遊戲最貴的資源之一）。
+ *
+ * ⭐ 逐刀不同的角度用 `strikeIndex` 表達：N 刀 = N 段，各自一個 `offset`。
+ * ⭐ 逐段加速用 `anim` 段的 `clipWindowMs`（M4）—— ⛔ 那一格本來就在。
+ */
+export const zVfxScriptBodyMove = z
+  .object({
+    kind: z.literal("bodyMove"),
+    ...SEG_COMMON,
+    /** 動誰：施法者（省略＝caster —— 這一族的主詞）或目標。 */
+    at: z.enum(["caster", "target"]).optional(),
+    /**
+     * ⭐ `teleport` = 立刻到位、時間到瞬間回來（**M1**，原作一刀砍完就閃到下一個角度
+     * ⇒ ⛔ 中間沒有滑行）· `arc` = 沿拋物線去而復返（**M3** 升空）。省略＝`teleport`。
+     */
+    mode: z.enum(["teleport", "arc"]).optional(),
+    /** 相對於權威位置的偏移（世界單位）。⚠️ 上界是**護欄** —— 一份寫錯的腳本不可以把身體丟出場外。 */
+    offset: z
+      .object({
+        x: z.number().min(-12).max(12),
+        y: z.number().min(-12).max(12),
+        z: z.number().min(-12).max(12),
+      })
+      .strict(),
+    /** 這段偏移持續多久（毫秒）。⚠️ 上界同樣是護欄 —— 原作最長那一段約 1.2 秒。 */
+    durationMs: z.number().int().min(50).max(3000),
+  })
+  .strict();
+
 export const zVfxScriptHideBody = z
   .object({
     kind: z.literal("hideBody"),
@@ -252,6 +293,7 @@ export const zVfxScriptSegment = z.discriminatedUnion("kind", [
   zVfxScriptSound,
   zVfxScriptAnim,
   zVfxScriptHideBody,
+  zVfxScriptBodyMove,
 ]);
 export type VfxScriptSegment = z.infer<typeof zVfxScriptSegment>;
 

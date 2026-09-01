@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "553408c5",
+  "fingerprint": "e534e6ef",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -408,6 +408,7 @@
     "amount.attrRatios.basis",
     "amount.attrRatios.coeff",
     "amount.damageTier",
+    "amount.damageTierPerRank",
     "amount.flat",
     "amount.mult",
     "amount.perRank",
@@ -420,6 +421,7 @@
     "amountPerTick.attrRatios.basis",
     "amountPerTick.attrRatios.coeff",
     "amountPerTick.damageTier",
+    "amountPerTick.damageTierPerRank",
     "amountPerTick.flat",
     "amountPerTick.mult",
     "amountPerTick.perRank",
@@ -490,6 +492,7 @@
     "comboBonus.amount",
     "comboBonus.amount.attrRatios",
     "comboBonus.amount.damageTier",
+    "comboBonus.amount.damageTierPerRank",
     "comboBonus.amount.flat",
     "comboBonus.amount.mult",
     "comboBonus.amount.perRank",
@@ -1175,6 +1178,7 @@
     "radial-burst",
     "random-barrage",
     "single-strike",
+    "summon-agent",
     "teleport",
     "traveling-wave"
   ],

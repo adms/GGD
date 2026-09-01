@@ -1,4 +1,5 @@
 import { hideBodyFor } from "../render/scriptedHide";
+import { moveBodyFor } from "../render/scriptedMove";
 /**
  * appBridges — GameApp **注給子系統的接線**（GH#838）。
  *
@@ -63,6 +64,17 @@ export function makeHideBodyBridge(
 }
 
 /**
+ * ⭐ M1 逐刀瞬移 / M3 升空曲線（GH#838，超究武神霸斬）。
+ * ⚠️ 與 `hideBody` 同一個形狀：⭐ 只記「誰、偏移多少、到什麼時候」，
+ * 由 `EntityViewRegistry` 在同一個合成點加進去，⛔ 而且自己會過期。
+ */
+export function makeMoveBodyBridge(
+  now: () => number,
+): (id: number, offset: { x: number; y: number; z: number }, durationMs: number, arc: boolean) => void {
+  return (id, offset, durationMs, arc) => moveBodyFor(id, offset, durationMs, arc, now());
+}
+
+/**
  * ⭐ 演出腳本要的**全部**接縫，一次給齊（GH#838）。
  * GameApp 只寫一行 `...makeScriptFxBridges(this.views)` —— 第〇·七守則的
  * 「一行接線」病的正解是**讓那一行不隨功能數成長**，⛔ 不是每加一個機制多一行。
@@ -73,6 +85,17 @@ export function makeScriptFxBridges(
 ): {
   pulseAnim: (id: number, kind: "attack" | "cast" | "hurt", opts?: { clipWindowMs?: number }) => void;
   hideBody: (id: number, durationMs: number) => void;
+  /** ⭐ M1 逐刀瞬移 / M3 升空曲線（GH#838）—— **只動畫面**的位移。 */
+  moveBody: (
+    id: number,
+    offset: { x: number; y: number; z: number },
+    durationMs: number,
+    arc: boolean,
+  ) => void;
 } {
-  return { pulseAnim: makeAnimPulseBridge(views, now), hideBody: makeHideBodyBridge(now) };
+  return {
+    pulseAnim: makeAnimPulseBridge(views, now),
+    hideBody: makeHideBodyBridge(now),
+    moveBody: makeMoveBodyBridge(now),
+  };
 }
