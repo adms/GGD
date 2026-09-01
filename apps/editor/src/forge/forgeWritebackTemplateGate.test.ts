@@ -21,6 +21,8 @@
  *   · `templateWriteBlockers`: `if (!hasTemplateBinding(after)) return []` →
  *     `return []` unconditionally
  *       → 「壞掉的 ref 連 API 都碰不到」 red.
+ *   · `runForgeWrite`: remove `generatorOwnedBlockers(after)` from the live
+ *     gate → 「偽造 plan 也不能寫 generator-owned 產物」 red.
  */
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { readFileSync } from "node:fs";
@@ -132,6 +134,19 @@ describe("寫回前就擋下展開不了的模板（不是等下一次 registerA
     expect(blockers[0]).toContain(name);
     await expect(runForgeWrite(planForgeWrite(bad, bad, null, TEMPLATES), bad, null, TEMPLATES))
       .rejects.toThrow();
+    expect(calls).toEqual([]);
+  });
+
+  it("偽造 plan 也不能寫 generator-owned 產物", async () => {
+    const generated = abilityDoc(undefined);
+    delete generated["template"];
+    generated["provenance"] = "owner-spec";
+
+    // Deliberately erase the blockers that planForgeWrite found.  The execution
+    // path must recompute source ownership instead of trusting UI state.
+    const unsafePlan = { ...planForgeWrite(generated, generated, null, TEMPLATES), blockers: [] };
+    await expect(runForgeWrite(unsafePlan, generated, null, TEMPLATES))
+      .rejects.toThrow("不能直接改產物");
     expect(calls).toEqual([]);
   });
 

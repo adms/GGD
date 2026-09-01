@@ -36,6 +36,8 @@ interface VfxForgePreviewProps {
   onTime(ms: number): void;
   onStop(): void;
   onDropAsset?(asset: AssetDrop, placement?: AssetPlacement): void;
+  canCaptureEvidence?: boolean;
+  onCaptureEvidence?(): void;
 }
 
 export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreviewProps>(function VfxForgePreview({
@@ -52,6 +54,8 @@ export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreview
   onTime,
   onStop,
   onDropAsset,
+  canCaptureEvidence = false,
+  onCaptureEvidence,
 }, ref) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stageRef = useRef<VfxForgeStage | null>(null);
@@ -231,6 +235,11 @@ export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreview
         </button>
         <button type="button" onClick={() => stageRef.current?.zoomBy(-100)}>鏡頭拉近</button>
         <button type="button" onClick={() => stageRef.current?.zoomBy(100)}>鏡頭拉遠</button>
+        {focusPreview && onCaptureEvidence ? (
+          <button type="button" disabled={!canCaptureEvidence} onClick={onCaptureEvidence}>
+            📷 擷取全螢幕證據
+          </button>
+        ) : null}
         <button
           type="button"
           className={`vfx-calibrate${backdropAudit.startsWith("⛔") ? " failed" : ""}`}
@@ -238,7 +247,7 @@ export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreview
             setBackdropAudit("底板掃描中…");
             void stageRef.current?.auditBackdropTimeline(durationMs)
               .then((result) => setBackdropAudit(result.safe
-                ? `底板通過 · ${result.sampledFrames}格`
+                ? `底板通過 · 衛生${result.autoVisualScore}/10 · ${result.sampledFrames}格 · 顯影${(result.worst.litShare * 100).toFixed(1)}% · 高光${(result.worst.highlightShare * 100).toFixed(1)}% · 粒子峰值${result.peakParticleCount}/${result.peakSystemCount}`
                 : `⛔ ${(result.worstAtMs / 1000).toFixed(3)}秒 · ${result.worst.reason ?? "畫面底板"}` +
                   (result.suspects.length ? ` · ${result.suspects.slice(0, 3).join(" | ")}` : "")))
               .catch((error) => setBackdropAudit(`⛔ 檢查失敗：${String(error)}`));
@@ -252,7 +261,9 @@ export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreview
           onClick={() => {
             setCalibration("校準中…");
             void stageRef.current?.calibrate()
-              .then((bright) => setCalibration(`雙向校準通過 · control ${bright}`))
+              .then((reading) => setCalibration(
+                `雙向校準通過 · 亮 ${reading.brightControl} · 暗亮點 ${reading.darkBright} · 暗顯影 ${reading.darkLit}`,
+              ))
               .catch((e) => setCalibration(`⛔ 校準失敗：${String(e)}`));
           }}
         >

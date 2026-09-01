@@ -237,12 +237,17 @@ function comboSlashHoly(includeFinalColumn: boolean): VfxScriptSegment[] {
       zVfxScriptSegment.parse({
         kind: "vfx", on: "strike", strikeIndex: 7,
         vfxId: "fx.prim.holy.beam-lg", at: "target", durationSec: 0.95,
-        w3xScale: 2.5, tint: [255, 210, 70], alpha: 0.52, offsetSideU: -0.24,
+        // Two additive columns used to overlap at 2.5/3.2 scale and hide both
+        // actors in the final frame (GPU proof: 7.1% lit, 5.2% highlight).
+        // Keep the yellow/blue split, but make the silhouettes readable.
+        w3xScale: 1.65, tint: [255, 210, 70], alpha: 0.28,
+        offsetForwardU: -0.32, offsetSideU: -0.1,
       }),
       zVfxScriptSegment.parse({
         kind: "vfx", on: "strike", strikeIndex: 7, atMs: 45,
         vfxId: "fx.prim.lightning.beam-lg", at: "target", durationSec: 0.9,
-        w3xScale: 3.2, tint: [70, 180, 255], alpha: 0.62, offsetSideU: 0.24,
+        w3xScale: 1.95, tint: [70, 180, 255], alpha: 0.32,
+        offsetForwardU: 0.32, offsetSideU: 0.1,
       }),
     );
   }

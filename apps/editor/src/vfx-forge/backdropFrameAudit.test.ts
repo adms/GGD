@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { auditBackdropFrame } from "./backdropFrameAudit";
+import { auditBackdropFrame, automaticVisualHygieneScore } from "./backdropFrameAudit";
 
 function solid(width: number, height: number, rgba: readonly [number, number, number, number]): Uint8Array {
   return Uint8Array.from({ length: width * height * 4 }, (_, index) => rgba[index % 4]!);
@@ -87,5 +87,35 @@ describe("VFX Forge rendered-frame backdrop guard", () => {
 
   it("fails closed when framebuffer readback is empty", () => {
     expect(auditBackdropFrame(new Uint8Array(), 0, 0).unsafe).toBe(true);
+  });
+});
+
+describe("automaticVisualHygieneScore", () => {
+  it("stays conservative for a locally over-bright but not full-screen frame", () => {
+    const score = automaticVisualHygieneScore({
+      litShare: 0.071,
+      highlightShare: 0.052,
+      brightShare: 0,
+      nearWhiteShare: 0,
+      dominantBrightShare: 0,
+      dominantNonBackgroundShare: 0,
+      localWhiteCardShare: 0,
+      unsafe: false,
+    });
+    expect(score).toBe(6);
+  });
+
+  it("never turns an unsafe carrier into a passing number", () => {
+    expect(automaticVisualHygieneScore({
+      litShare: 1,
+      highlightShare: 1,
+      brightShare: 1,
+      nearWhiteShare: 1,
+      dominantBrightShare: 1,
+      dominantNonBackgroundShare: 1,
+      localWhiteCardShare: 1,
+      unsafe: true,
+      reason: "opaque card",
+    })).toBe(0);
   });
 });

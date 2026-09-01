@@ -340,6 +340,9 @@ export function VfxForgePage() {
             ...authoringActions.map((action, index) => `editor-action:${index + 1}:${action}`),
           ],
           visualEvidence,
+          // Framebuffer hygiene is only triage. The admin still requires a
+          // human score and note for Owner/JASS/main fidelity before verdict.
+          autoVisualScore: visual.autoVisualScore,
         },
       );
       setOriginal(draft);
@@ -573,6 +576,8 @@ export function VfxForgePage() {
                 onTime={onTime}
                 onStop={stop}
                 onDropAsset={addAsset}
+                canCaptureEvidence={previewMode === "runtime" && visualEvidence.length < 4}
+                onCaptureEvidence={() => void captureVisualEvidence()}
               />
               <section className="vfx-visual-evidence" aria-label="候選視覺證據">
                 <header>

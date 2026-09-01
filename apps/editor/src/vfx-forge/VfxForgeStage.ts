@@ -50,7 +50,11 @@ import { burstNow, toParticleSystem } from "../preview3d/particles";
 import { projectileIdsOf, type ForgeAbility, type ScheduledSimEvent } from "./model";
 import { calibrateTwoWay } from "../../../client/src/vfx/auditionCalibrate";
 import type { PreviewActorPose } from "../preview/PreviewController";
-import { auditBackdropFrame, type BackdropFrameAudit } from "./backdropFrameAudit";
+import {
+  auditBackdropFrame,
+  automaticVisualHygieneScore,
+  type BackdropFrameAudit,
+} from "./backdropFrameAudit";
 
 const STEP_MS = 1000 / 60;
 const CASTER_POS = { x: 0, z: 0 };
@@ -93,7 +97,11 @@ export interface ForgeOverlay {
 
 export interface BackdropTimelineAudit {
   safe: boolean;
+  /** Framebuffer hygiene only; semantic/source fidelity remains manual. */
+  autoVisualScore: number;
   sampledFrames: number;
+  peakParticleCount: number;
+  peakSystemCount: number;
   worstAtMs: number;
   worst: BackdropFrameAudit;
   suspects: readonly string[];
@@ -517,6 +525,14 @@ export class VfxForgeStage {
     await this.scene.whenReadyAsync();
     this.renderScene();
     this.renderScene();
+    const width = this.engine.getRenderWidth();
+    const height = this.engine.getRenderHeight();
+    const rgba = (await this.engine.readPixels(0, 0, width, height)) as Uint8Array;
+    const frameAudit = auditBackdropFrame(rgba, width, height);
+    this.emitOverlay(
+      `證據格 · 顯影 ${(frameAudit.litShare * 100).toFixed(1)}% · ` +
+      `高光 ${(frameAudit.highlightShare * 100).toFixed(1)}%`,
+    );
     const dataUrl = this.canvas.toDataURL("image/webp", 0.82);
     if (!dataUrl.startsWith("data:image/webp;base64,")) {
       throw new Error("瀏覽器無法產生 WebP 視覺證據");
@@ -541,7 +557,7 @@ export class VfxForgeStage {
   }
 
   /** Two-way bright/dark self-certification before any visual proof reading. */
-  async calibrate(): Promise<number> {
+  async calibrate(): Promise<{ brightControl: number; darkBright: number; darkLit: number }> {
     // Use the renderer's real framebuffer, not canvas.drawImage(). Safari and
     // Chromium can expose an opaque/composited WebGL canvas to 2D drawImage,
     // which made an actually dark scene look 100% bright to the ruler. This is
@@ -570,9 +586,13 @@ export class VfxForgeStage {
       camera: this.cameraRig.camera,
       rulers: { "engine.readPixels": read },
     });
+    // Persist both directions in the UI/report. `calibrateTwoWay` already
+    // fails unless the dark reading falls after the bright control; reading
+    // once more here makes that second half visible instead of merely implied.
+    const dark = await read();
     await this.scene.whenReadyAsync();
     this.renderScene();
-    return control;
+    return { brightControl: control, darkBright: dark.bright, darkLit: dark.lit };
   }
 
   /**
@@ -593,9 +613,13 @@ export class VfxForgeStage {
       this.reset();
       const stopAt = Math.max(0, durationMs);
       let sampledFrames = 0;
+      let peakParticleCount = 0;
+      let peakSystemCount = 0;
       let worstAtMs = 0;
       let suspects: readonly string[] = [];
       let worst: BackdropFrameAudit = {
+        litShare: 0,
+        highlightShare: 0,
         brightShare: 0,
         nearWhiteShare: 0,
         dominantBrightShare: 0,
@@ -613,6 +637,11 @@ export class VfxForgeStage {
       };
       while (true) {
         let result = await read();
+        peakParticleCount = Math.max(
+          peakParticleCount,
+          this.scene.particleSystems.reduce((sum, system) => sum + system.getActiveCount(), 0),
+        );
+        peakSystemCount = Math.max(peakSystemCount, this.scene.particleSystems.length);
         if (result.unsafe) {
           // Diagnostic A/B on the exact failed frame. This does not excuse a
           // telegraph from the gate; it names the layer that must be fixed.
@@ -715,8 +744,8 @@ export class VfxForgeStage {
           }
         }
         sampledFrames++;
-        const score = Math.max(result.nearWhiteShare, result.brightShare, result.dominantBrightShare, result.dominantNonBackgroundShare, result.localWhiteCardShare);
-        const worstScore = Math.max(worst.nearWhiteShare, worst.brightShare, worst.dominantBrightShare, worst.dominantNonBackgroundShare, worst.localWhiteCardShare);
+        const score = Math.max(result.litShare, result.highlightShare, result.nearWhiteShare, result.brightShare, result.dominantBrightShare, result.dominantNonBackgroundShare, result.localWhiteCardShare);
+        const worstScore = Math.max(worst.litShare, worst.highlightShare, worst.nearWhiteShare, worst.brightShare, worst.dominantBrightShare, worst.dominantNonBackgroundShare, worst.localWhiteCardShare);
         if (score > worstScore || result.unsafe) {
           worst = result;
           worstAtMs = this.nowMs;
@@ -730,7 +759,16 @@ export class VfxForgeStage {
           this.advanceFrame(true, Math.min(STEP_MS, stopAt - this.nowMs), false);
         }
       }
-      return { safe: !worst.unsafe, sampledFrames, worstAtMs, worst, suspects };
+      return {
+        safe: !worst.unsafe,
+        autoVisualScore: automaticVisualHygieneScore(worst),
+        sampledFrames,
+        peakParticleCount,
+        peakSystemCount,
+        worstAtMs,
+        worst,
+        suspects,
+      };
     } finally {
       this.mode = restoreMode;
       this.seek(restoreMs);

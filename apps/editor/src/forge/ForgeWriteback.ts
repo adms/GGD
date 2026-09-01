@@ -219,11 +219,16 @@ export async function runForgeWrite(
   }
   const id = String(after["id"]);
 
-  // ---- 0. the template gate, BEFORE the server round-trip ------------------
+  // ---- 0. source + template gates, BEFORE the server round-trip ------------
   // Re-run rather than trusting `plan.blockers`: a plan is built once and the
-  // confirm dialog can sit open while the card list changes underneath it.
-  // Same function the loader runs, so「編輯器接受的」==「載入器展開得動的」.
-  const blockers = templateWriteBlockers(after, templates);
+  // confirm dialog can sit open while the card list or source-owned document
+  // changes underneath it.  A caller also must not be able to bypass the UI by
+  // invoking `runForgeWrite()` with a fabricated plan.
+  // Same template function the loader runs, so「編輯器接受的」==「載入器展開得動的」.
+  const blockers = [
+    ...generatorOwnedBlockers(after),
+    ...templateWriteBlockers(after, templates),
+  ];
   if (blockers.length > 0) {
     throw new Error(`拒絕寫回：${blockers.join("；")}`);
   }

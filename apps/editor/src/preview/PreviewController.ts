@@ -604,14 +604,10 @@ function effectLines(
         });
         break;
       /* ═══════════════════════════════════════════════════════════════════
-       * RESERVED KINDS (GH#289). The sim handlers throw until their lane
-       * lands (sim/effects/effectRegistry.ts), so the preview says so IN THE
-       * LINE rather than rendering a confident summary of a spell that would
-       * crash the tick. The `never` tripwire below is why they are here at
-       * all: growing the union without teaching this switch does not compile.
-       *
-       * When a lane implements its kind, replace its case here with a real
-       * summary — that IS part of landing the feature, not a follow-up.
+       * Runtime kinds that originally landed as reserved slots.  Every case
+       * below now describes the shipped handler; a stale "NOT IMPLEMENTED"
+       * label is a correctness bug because the designer uses this panel to
+       * decide what the game will actually do.
        * ═══════════════════════════════════════════════════════════════════ */
       case "dot": {
         // lane P1 LANDED. The card names the CADENCE, the PAYOUT COUNT and the
@@ -635,15 +631,22 @@ function effectLines(
         });
         break;
       }
-      case "summon":
+      case "summon": {
+        const body = e.body === "self" ? "施法者分身" : (e.championId ?? "（缺少英雄 id）");
+        const at = e.at === "target" ? "目標" : e.at === "point" ? "指定地點" : "施法者";
         out.push({
           depth,
           kind: e.kind,
-          summary: `⚠ NOT IMPLEMENTED (lane P2) — summon ${e.count}× ${e.championId}${
-            e.durationSec !== undefined ? ` for ${e.durationSec}s` : " (permanent)"
-          }`,
+          summary:
+            `召喚 ${e.count}× ${body}，位於${at}` +
+            ` · ${e.formation ?? "ring"} 陣型` +
+            `${e.spread !== undefined ? `，間距/半徑 ${e.spread}` : ""}` +
+            `${e.durationSec !== undefined ? ` · 持續 ${e.durationSec}s` : " · 永久"}` +
+            `${e.maxAlive !== undefined ? ` · 同時上限 ${e.maxAlive}` : ""}` +
+            `${e.onCap === "replaceOldest" ? " · 滿額時替換最舊召喚物" : ""}`,
         });
         break;
+      }
       case "invulnerable": {
         // lane P3 LANDED. The card must say which AXES this grant actually
         // refuses — 「無敵」 alone is the lie that made 41-002 絕對屏障 ship as
@@ -668,7 +671,14 @@ function effectLines(
         out.push({
           depth,
           kind: e.kind,
-          summary: `⚠ NOT IMPLEMENTED (lane P4) — knockback ${e.distance}u @ ${e.speed}u/s from ${e.from ?? "caster"}`,
+          summary:
+            `${e.from === "pull" ? "拉扯" : e.launchHeight && e.launchHeight > 0 ? "擊飛" : "擊退"}` +
+            ` ${e.applyTo === "self" ? "自己" : "目標"}` +
+            ` · 基準距離 ${e.distance}u @ ${e.speed}u/s` +
+            ` · 方向 ${e.from ?? "caster"}` +
+            `${e.launchHeight !== undefined ? ` · 高度 ${e.launchHeight}u` : ""}` +
+            `${e.launchDistance !== undefined ? ` · 落點 ${e.launchDistance}` : ""}` +
+            `${(e.uncontrollable ?? true) ? " · 期間不可控制" : ""}`,
         });
         break;
       case "cycleBuff": {
@@ -690,7 +700,10 @@ function effectLines(
         out.push({
           depth,
           kind: e.kind,
-          summary: `⚠ NOT IMPLEMENTED (lane P5) — ${Math.round(e.chance * 100)}% evasion on ${e.applyTo ?? "self"} for ${e.durationSec}s`,
+          summary:
+            `閃避 ${Math.round(e.chance * 100)}% → ${e.applyTo ?? "self"}，持續 ${e.durationSec}s` +
+            `${e.dodgesAbilities ? " · 可閃避技能" : " · 只閃避普攻"}` +
+            `${e.dodgesTrueDamage ? " · 包含真實傷害" : ""}`,
         });
         break;
       // 18-00 薔薇荊棘之刃 —— 面前的一條直線 (sim/effects/damageLine.ts)。
@@ -953,7 +966,7 @@ function effectLines(
         });
         break;
       }
-      // ── 契約層（2026-08-09，GH#301-2）真瞬移 ───────────────────────────
+      // ── 真瞬移（2026-08-09，GH#301-2）──────────────────────────────────
       case "blink": {
         const dest =
           e.to === "point" ? "指定地點" : e.to === "caster" ? "施法者身邊" : "目標身上";
@@ -964,15 +977,12 @@ function effectLines(
             `瞬移${e.applyTo === "target" ? "目標" : "自己"}到${dest}` +
             `${e.shape === "circle" ? `（半徑 ${e.radius ?? "?"} 內${e.side === "enemies" ? "敵人" : "隊友"}一起）` : ""}` +
             `${e.stopShortUnits ? ` · 落在前方 ${e.stopShortUnits} 單位處` : ""}` +
-            " · ⛔ 真瞬移：沒有中間位置（與 leap 的差別就在這裡）" +
-            " · ⚠️ 引擎側尚未實作（GH#301-2），現在放出來會丟例外",
+            " · ⛔ 真瞬移：沒有中間位置（與 leap 的差別就在這裡）",
         });
         effectLines(e.onArrive ?? [], finalStats, attrs, maxRank, depth + 1, out);
         break;
       }
-      // ── Lane 3（2026-08-10）—— schema 與型別先行，引擎 handler 是下一階段。
-      //    ⚠️ 兩條 summary 都**明說**「引擎側尚未實作」，形狀抄上面 `blink`
-      //    當年那一句：一個看起來能用、放出去卻丟例外的預覽比空白更糟。
+      // ── Lane 3（2026-08-10）—— 延遲序列與代放都已走正式 handler。────────
       case "delayed": {
         const shots = e.count ?? 1;
         out.push({
@@ -982,7 +992,8 @@ function effectLines(
             `延遲 ${e.delaySec}s 後${shots > 1 ? `連續 ${shots} 下（每 ${e.intervalSec ?? "?"}s 一下）` : "打出一下"}` +
             `${e.targetMode === "reresolve" ? " · 每一下重新選目標（走開就打空）" : " · 目標在施放那一刻鎖定"}` +
             `${e.shape === "circle" ? `（半徑 ${e.radius ?? "?"} 內${e.side === "allies" ? "隊友" : "敵人"}）` : ""}` +
-            " · ⚠️ 引擎側尚未實作（Lane 3），現在放出來會丟例外",
+            `${e.anchor === "caster" ? " · 圓心跟隨施法者" : ""}` +
+            `${e.hitOncePerTarget ? " · 每名目標整串最多命中一次" : ""}`,
         });
         effectLines(e.effects, finalStats, attrs, maxRank, depth + 1, out);
         if (e.finalEffects) {
@@ -1000,15 +1011,12 @@ function effectLines(
             ` · ${e.payCosts === undefined || e.payCosts === "none" ? "不付代價" : e.payCosts === "mana" ? "扣魔" : "扣魔並進冷卻"}` +
             `${e.respectCooldown ? " · 冷卻中不代放" : ""}` +
             `${e.rankMode === "fixed" ? ` · 固定第 ${e.fixedRank} 階` : " · 用玩家點的等級"}` +
-            " · ⚠️ 引擎側尚未實作（Lane 3），現在放出來會丟例外",
+            `${e.emitCastEvents ? " · 會觸發施法/命中事件" : " · 不額外觸發施法事件"}` +
+            ` · 鏈深上限 ${e.maxDepth ?? 0}`,
         });
         break;
       }
-      // ── [EX∅ 根源]（2026-08-18）—— 詞彙包先落地，引擎 handler 是 L4 / L5。
-      //    ⚠️ 兩條 summary 都**明說**「引擎側尚未實作」，形狀抄上面 Lane 3 那兩條：
-      //    一個看起來能用、放出去什麼都不發生的預覽比空白更糟（失敗形態②）。
-      //    ⛔ 這兩個 case 不是裝飾 —— 下面那個 `never` 會拒絕編譯，直到它們在這裡
-      //    被處理過（那正是這個 tripwire 存在的理由）。
+      // ── [EX∅ 根源]（2026-08-18）—— 背負與陣營轉換都已落地。──────────────
       case "carry": {
         out.push({
           depth,
@@ -1017,8 +1025,7 @@ function effectLines(
             `背負${e.shape === "circle" ? `半徑 ${e.radius ?? "?"} 內` : ""}` +
             `${e.side === "enemies" ? "敵人" : "隊友"} ${e.maxTargets ?? 1} 名，${e.durationSec}s` +
             `${e.untargetable?.abilityAoe ? " · 連 AoE 都打不到" : " · 不可被選取（但 AoE 仍打得到）"}` +
-            `${e.onCarrierDeath === "drop" ? " · 載具死了乘客跟著倒" : " · 載具死了就放下"}` +
-            " · ⚠️ 引擎側尚未實作（[EX∅ 根源] L4），現在放出來什麼都不會發生",
+            `${e.onCarrierDeath === "drop" ? " · 載具死了乘客跟著倒" : " · 載具死了就放下"}`,
         });
         effectLines(e.onHitTargets ?? [], finalStats, attrs, maxRank, depth + 1, out);
         break;
@@ -1032,7 +1039,7 @@ function effectLines(
             `（同時最多 ${e.maxHeld ?? 2} 隻）` +
             `${e.until === "duration" ? ` · ${e.durationSec ?? "?"}s 後歸位` : e.until === "roundEnd" ? " · 回合結束歸位" : " · 打死才歸位"}` +
             `${e.oncePerRoundPerVictim === false ? " · 同一隻可重複捕捉" : " · 同一隻一回合只能捕一次"}` +
-            " · ⚠️ 引擎側尚未實作（[EX∅ 根源] L5），現在放出來什麼都不會發生",
+            `${e.countsForOriginalTeam ? " · 勝負仍算原隊存活" : " · 勝負改算新隊伍"}`,
         });
         break;
       }

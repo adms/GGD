@@ -1,4 +1,5 @@
 /** Collection sidebar + doc list (create/duplicate/delete = JSON file ops). */
+import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { CollectionName } from "@ggd/shared/content";
 import { api, ApiValidationError } from "../api/client";
@@ -107,6 +108,7 @@ function DesktopSourceBadge() {
 export function DocList({ collection }: { collection: CollectionName }) {
   const qc = useQueryClient();
   const store = useEditorStore();
+  const [query, setQuery] = useState("");
   const { data, error } = useQuery({
     queryKey: ["index", collection],
     queryFn: () => api.index(collection),
@@ -133,6 +135,9 @@ export function DocList({ collection }: { collection: CollectionName }) {
     }
   };
 
+  const entries = data?.entries ?? [];
+  const visibleEntries = entries.filter((entry) => docEntryMatchesQuery(entry, query));
+
   return (
     <div className="doc-list">
       <div className="doc-list-head">
@@ -148,9 +153,20 @@ export function DocList({ collection }: { collection: CollectionName }) {
           + new
         </button>
       </div>
+      <label className="doc-search">
+        <span className="visually-hidden">搜尋文件</span>
+        <input
+          type="search"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="搜尋 ID 或版本指紋"
+          aria-label="搜尋文件"
+        />
+        <small>{visibleEntries.length}{query.trim() ? ` / ${entries.length}` : ""}</small>
+      </label>
       {error ? <p className="error">index unavailable — is content-api running?</p> : null}
       <ul>
-        {(data?.entries ?? []).map((e) => (
+        {visibleEntries.map((e) => (
           <li key={e.id} className={store.docId === e.id ? "active" : ""}>
             <button type="button" className="doc-open" onClick={() => void open(e.id)}>
               {e.id} <span className="hash">{e.hash}</span>
@@ -200,9 +216,17 @@ export function DocList({ collection }: { collection: CollectionName }) {
             </span>
           </li>
         ))}
+        {!error && data && visibleEntries.length === 0 ? (
+          <li className="doc-list-empty">找不到符合的文件。</li>
+        ) : null}
       </ul>
     </div>
   );
+}
+
+export function docEntryMatchesQuery(entry: { id: string; hash: string }, rawQuery: string): boolean {
+  const query = rawQuery.trim().toLocaleLowerCase();
+  return !query || entry.id.toLocaleLowerCase().includes(query) || entry.hash.toLocaleLowerCase().includes(query);
 }
 
 function setDocId(doc: unknown, id: string): unknown {

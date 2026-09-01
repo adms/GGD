@@ -1,6 +1,6 @@
 # 給 GGD main：Editor 完工所需接縫（可直接交給 Codex）
 
-狀態：2026-09-02 01:49（Asia/Taipei）
+狀態：2026-09-02 02:40（Asia/Taipei）
 Editor 分支：`feat/vfx-forge-codex`（禁止推到 `main`）
 正式站實測：`cv_88cbb6486bf2` · capability `111434fa` · profile `3f8d4687566f`
 最新 `origin/main@b8420abe` 產物：`cv_385f45e0afb8` · profile `99ef62b583c5`
@@ -121,6 +121,39 @@ Editor 按鈕變亮而提前宣告 full/delta。
 - production candidate 在送審後有任何 byte 變更，舊 verdict 立即失效。
 - Package 內 reviewer 字串不是身分證明；apply 仍需後台授權 receipt。
 
+### generator-owned 技能不能走通用整份文件 Promote
+
+Editor 的「人工本機編輯」與「AI 輔助修改」是兩條不同授權路徑。人工編輯仍依
+P0-1 的 `writePolicy` 寫 document 或 source adapter；凡是 AI 產生或調整技能機制、
+動畫或 VFX，必須先送 proposal，再由後台人工審查。對 `generator-owned` ability 與
+champion mirror，proposal 不可只保存一份 runtime JSON 候選，至少還要綁定：
+
+```ts
+{
+  sourceBaseSha256: string;
+  authoringOperation: unknown;       // main 匯出的 versioned source-adapter operation
+  authoringOperationDigest: string;  // canonical digest
+  expectedOutputs: Array<{ path: string; sha256: string }>;
+}
+```
+
+verdict 必須同時鎖定 `candidateHash`、`sourceBaseSha256` 與
+`authoringOperationDigest`。Promote 時只能用 P0-1 的 source adapter 做 CAS 修改真正來源，
+執行唯一 regenerate command，重驗 ability 產物與 champion mirror，再 rebuild／audit；
+不得把候選物件直接 `PUT` 到產生後的 JSON。
+
+在 source adapter 尚未出貨以前，content-api 必須 fail closed：
+
+- 可以收件與人工審查，讓候選不遺失；
+- `/content-api/ai-review/promote` 遇到 generator-owned ability／champion 必須回 `409`；
+- 通用 whole-document Promote、普通 PUT/PATCH 都不能成為繞路；
+- hand-authored 文件只有在 authoritative `editor-source` 回報
+  `writePolicy: "document"` 時才可沿用通用 Promote。
+
+請加伺服器測試證明：偽造 `purpose`、取得 approve verdict、或直接呼叫通用 Promote，
+都不能改動 generator-owned output；只有相同 source hash 的 source-adapter Promote 能成功，
+且完整 regeneration 後 Owner 文案與 champion mirror 都一致。
+
 ## P1-1：公開完整 Asset Manifest，不只 `_lod.json` digest
 
 `content/editor-target-profile.json` 目前已有 `assetManifestDigest`，但產生器只 hash
@@ -150,6 +183,20 @@ manifest 外資產一律 fail closed。Editor 會在收到這份契約後把目�
 
 值必須由 `vfx-budget`、`vfx-cleanup` 與 runtime clamp 合併後得到。加 contract test：修改
 任一 config 或 runtime clamp，profile 與遊戲有效值必須一起變；schema 最大值不算答案。
+
+## P1-3：修正正式英雄到 3D Model 的 authoritative 映射
+
+八招實機證據發現：`content/champions/godie-e00r.json` 的正式 `modelKey` 仍是
+`champ.skin.rogue`，所以 Editor 忠實預覽「初號機」時得到的是泛用方塊／rogue 模型，
+即使 repo 已有 Eva 相關 imported GLB 也不能私下替換。這會同時污染遊戲實際畫面、VFX
+遮擋判斷與後台人工批核。
+
+請由 main 在真正的 champion/model 來源修正映射並重生成；不要只改產物 JSON。回交時附：
+
+1. source file 與 regenerate command。
+2. `godie-e00r` 最終 `modelKey`、GLB 路徑與材質／alpha 安全檢查。
+3. 遊戲與 Editor 對同一 champion id 解到相同 model key 的測試。
+4. 一張無 VFX 的角色基準圖與一張被技能命中的遮擋圖。
 
 ## 已有、不要重做
 

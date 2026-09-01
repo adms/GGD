@@ -65,7 +65,7 @@ export function App() {
           <ForgePage />
         ) : (
           <>
-            {mode.collection ? <DocList collection={mode.collection} /> : null}
+            {mode.collection ? <DocList key={mode.collection} collection={mode.collection} /> : null}
             <EditorView />
           </>
         )}

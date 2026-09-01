@@ -1,4 +1,8 @@
 export interface BackdropFrameAudit {
+  /** Pixels materially above the neutral arena card; used for non-authoritative hygiene scoring. */
+  litShare: number;
+  /** Pixels bright enough to hide local silhouettes even when tone mapping keeps them below pure white. */
+  highlightShare: number;
   brightShare: number;
   nearWhiteShare: number;
   dominantBrightShare: number;
@@ -6,6 +10,27 @@ export interface BackdropFrameAudit {
   localWhiteCardShare: number;
   unsafe: boolean;
   reason?: string;
+}
+
+/**
+ * Conservative framebuffer-hygiene score for reviewer triage.
+ *
+ * It answers only whether the frame stays readable and free from a washed-out
+ * carrier. Timing, direction, colour and source fidelity remain a human review
+ * decision; this value is never an approval authority.
+ */
+export function automaticVisualHygieneScore(frame: BackdropFrameAudit): number {
+  if (frame.unsafe) return 0;
+  const exposurePenalty = Math.max(
+    frame.highlightShare * 80,
+    frame.brightShare * 100,
+    frame.nearWhiteShare * 120,
+    frame.dominantBrightShare * 110,
+    frame.dominantNonBackgroundShare * 60,
+    frame.localWhiteCardShare * 2000,
+  );
+  const score = Math.max(0, Math.min(10, 10 - exposurePenalty));
+  return Math.round(score * 2) / 2;
 }
 
 const LOCAL_CARD_MIN_SHARE = 0.0001;
@@ -87,6 +112,8 @@ export function auditBackdropFrame(
   const pixels = Math.max(0, Math.min(width * height, Math.floor(rgba.length / 4)));
   if (pixels === 0) {
     return {
+      litShare: 0,
+      highlightShare: 0,
       brightShare: 0,
       nearWhiteShare: 0,
       dominantBrightShare: 0,
@@ -97,6 +124,8 @@ export function auditBackdropFrame(
     };
   }
 
+  let lit = 0;
+  let highlight = 0;
   let bright = 0;
   let nearWhite = 0;
   const nearWhiteMask = new Uint8Array(pixels);
@@ -107,6 +136,8 @@ export function auditBackdropFrame(
     const b = rgba[offset + 2] ?? 0;
     const max = Math.max(r, g, b);
     const min = Math.min(r, g, b);
+    if (max >= 96) lit++;
+    if (max >= 160) highlight++;
     if (max >= 220) bright++;
     if (min >= 235) {
       nearWhite++;
@@ -138,12 +169,16 @@ export function auditBackdropFrame(
     }
   }
 
+  const litShare = lit / pixels;
+  const highlightShare = highlight / pixels;
   const brightShare = bright / pixels;
   const nearWhiteShare = nearWhite / pixels;
   const dominantBrightShare = dominantBright / pixels;
   const dominantNonBackgroundShare = dominantNonBackground / pixels;
   if (nearWhiteShare >= 0.45) {
     return {
+      litShare,
+      highlightShare,
       brightShare,
       nearWhiteShare,
       dominantBrightShare,
@@ -155,6 +190,8 @@ export function auditBackdropFrame(
   }
   if (brightShare >= 0.75) {
     return {
+      litShare,
+      highlightShare,
       brightShare,
       nearWhiteShare,
       dominantBrightShare,
@@ -166,6 +203,8 @@ export function auditBackdropFrame(
   }
   if (dominantBrightShare >= 0.55) {
     return {
+      litShare,
+      highlightShare,
       brightShare,
       nearWhiteShare,
       dominantBrightShare,
@@ -177,6 +216,8 @@ export function auditBackdropFrame(
   }
   if (dominantNonBackgroundShare >= 0.18) {
     return {
+      litShare,
+      highlightShare,
       brightShare,
       nearWhiteShare,
       dominantBrightShare,
@@ -189,6 +230,8 @@ export function auditBackdropFrame(
   const localCardShare = localWhiteCardShare(nearWhiteMask, width, height);
   if (localCardShare >= LOCAL_CARD_MIN_SHARE) {
     return {
+      litShare,
+      highlightShare,
       brightShare,
       nearWhiteShare,
       dominantBrightShare,
@@ -199,6 +242,8 @@ export function auditBackdropFrame(
     };
   }
   return {
+    litShare,
+    highlightShare,
     brightShare,
     nearWhiteShare,
     dominantBrightShare,

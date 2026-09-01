@@ -107,6 +107,12 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
   });
 
   it("神滅斬驅動真正施法者穿越目標，不生成有底板風險的莉娜分身", () => {
+    const raw = JSON.parse(readFileSync(join(
+      dirname(fileURLToPath(import.meta.url)),
+      "acceptance-fixtures/godie-hjai.r.json",
+    ), "utf8")) as VfxScriptDoc;
+    expect(raw.segments.filter((segment) => segment.kind === "hideBody")).toHaveLength(0);
+    expect(raw.segments.filter((segment) => segment.kind === "modelFx")).toHaveLength(0);
     expect(kinds("godie-hjai.r", "hideBody")).toHaveLength(0);
     expect(kinds("godie-hjai.r", "modelFx")).toHaveLength(0);
     expect(kinds("godie-hjai.r", "bodyMove")).toContainEqual(expect.objectContaining({
@@ -171,6 +177,17 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
       expect(kinds(id, "anim").some((s) => s.kind === "anim" && s.on === "strike")).toBe(true);
       expect(segs(id).filter((s) => s.on === "strike" && s.strikeIndex === 7).length).toBeGreaterThanOrEqual(2);
     }
+  });
+
+  it("超究武神霸斬第七刀保留黃藍雙柱，但不得回到遮住角色的過曝尺寸", () => {
+    const columns = kinds("godie-hart.r", "vfx").filter(
+      (segment) => segment.strikeIndex === 7 && segment.vfxId.endsWith("beam-lg"),
+    );
+    expect(columns).toHaveLength(2);
+    expect(new Set(columns.map((segment) => JSON.stringify(segment.tint))).size).toBe(2);
+    expect(Math.max(...columns.map((segment) => segment.w3xScale ?? 0))).toBeLessThanOrEqual(2);
+    expect(Math.max(...columns.map((segment) => segment.alpha ?? 1))).toBeLessThanOrEqual(0.32);
+    expect(Math.min(...columns.map((segment) => Math.abs(segment.offsetForwardU ?? 0)))).toBeGreaterThanOrEqual(0.3);
   });
 
   it("理想鄉終結砲保留 ReviveHuman MDL 主體，黃藍粒子只做輔助", () => {

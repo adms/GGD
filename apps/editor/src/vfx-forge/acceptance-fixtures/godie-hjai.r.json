@@ -24,24 +24,6 @@
       "clipWindowMs": 1800
     },
     {
-      "kind": "hideBody",
-      "on": "castEffect",
-      "at": "caster",
-      "durationMs": 650
-    },
-    {
-      "modelKey": "imported.linainvers",
-      "path": "toTarget",
-      "speed": 24,
-      "clip": "attack",
-      "clipTimeScale": 2.8,
-      "scale": 1.2,
-      "lifeSec": 0.65,
-      "kind": "modelFx",
-      "on": "castEffect",
-      "offsetSideU": 0.55
-    },
-    {
       "vfxId": "fx.prim.void.slash",
       "at": "target",
       "durationSec": 0.42,
