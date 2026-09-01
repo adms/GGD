@@ -49,6 +49,16 @@ import {
   validatePackage,
 } from "@ggd/shared/content/import/validatePackage";
 import type { BaseFacts } from "@ggd/shared/content/import/validatePackage";
+import {
+  ZIP_LIMITS,
+  checkZipSafety,
+} from "@ggd/shared/content/import/zipSafety";
+import {
+  ZipFormatError,
+  archiveSha256,
+  extractEntry,
+  readCentralDirectory,
+} from "./zipReader";
 import { ImportStore } from "./importStore";
 import type { ActivePointer } from "./importStore";
 import {
@@ -440,6 +450,84 @@ function registerG2Routes(
 ): void {
   const fp = d.authoringProcessor?.fingerprint ?? "";
 
+  /**
+   * ⭐ 收 `application/zip` 成 **Buffer**。
+   *
+   * ⚠️ ⛔ 這裡就是**上傳的有界性**（bounded upload）落地的地方：
+   * `bodyLimit` 用 `ZIP_LIMITS.maxArchiveCompressedBytes` —— ⭐ 與 `checkZipSafety`
+   * **同一個數字**，⛔ 不是另外挑一個（兩個數字必然漂，而漂開的那一天
+   * 「擋在門口」與「擋在檢查」會給出不同的答案）。
+   */
+  if (!app.hasContentTypeParser("application/zip")) {
+    app.addContentTypeParser(
+      ["application/zip", "application/octet-stream"],
+      { parseAs: "buffer", bodyLimit: ZIP_LIMITS.maxArchiveCompressedBytes },
+      (_req, body, done) => {
+        done(null, body);
+      },
+    );
+  }
+
+  /**
+   * ⭐⭐ **ZIP 傳輸層** —— 一份 `application/zip` body → package 物件。
+   *
+   * ⚠️ ⭐ 順序是承重的，⛔ 不可以調換：
+   *   ① 讀 **central directory**（⛔ 不解壓 —— zip-slip 在解開那一刻就發生了）
+   *   ② `checkZipSafety`（17 條：slip / symlink / 重複 / 大小寫碰撞 / 壓縮比…）
+   *   ③ **只解**通過的那些 entry，且逐份驗 local header／長度／CRC
+   * ⇒ ⭐ ②夾在①③之間 —— ⛔ 任何「先解開再檢查」的寫法都讓檢查變成裝飾。
+   */
+  const fromZip = (body: Buffer): unknown => {
+    if (body.length > ZIP_LIMITS.maxArchiveCompressedBytes) {
+      throw new ZipFormatError(
+        "ZIP_ARCHIVE_TOO_LARGE",
+        `ZIP ${body.length} bytes 超過上限 ${ZIP_LIMITS.maxArchiveCompressedBytes}。`,
+      );
+    }
+    const cd = readCentralDirectory(body);
+    const safety = checkZipSafety(cd.entries);
+    if (!safety.ok) {
+      const first = safety.diagnostics[0];
+      throw new ZipFormatError(
+        first?.code ?? "ZIP_UNSAFE",
+        safety.diagnostics
+          .map((x) => `${x.code} ${x.path}: ${x.message}`)
+          .join(" | "),
+      );
+    }
+    const byPath = new Map<string, string>();
+    for (const e of cd.entries) {
+      if (e.isDirectory === true) continue;
+      byPath.set(e.path, extractEntry(body, e).toString("utf8"));
+    }
+    const manifestRaw = byPath.get("manifest.json");
+    if (manifestRaw === undefined) {
+      throw new ZipFormatError(
+        "ZIP_MANIFEST_MISSING",
+        "ZIP 裡沒有 manifest.json。",
+      );
+    }
+    const documents: { path: string; document: unknown }[] = [];
+    for (const [path, text] of byPath) {
+      if (!path.startsWith("authoring/")) continue;
+      documents.push({ path, document: JSON.parse(text) as unknown });
+    }
+    documents.sort((a, b) => (a.path < b.path ? -1 : 1));
+    return {
+      schema: "ggd-editor-import@1",
+      manifest: JSON.parse(manifestRaw) as unknown,
+      documents,
+    };
+  };
+
+  /**
+   * ⭐ body 可能是 JSON 也可能是 ZIP。
+   * ⛔ 由 **Buffer 與否**決定（content-type parser 已經分好了），
+   * ⛔ 不是「試著 parse 看看」—— 那是一條猜測路徑。
+   */
+  const packageOf = (body: unknown, jsonField: unknown): unknown =>
+    Buffer.isBuffer(body) ? fromZip(body) : jsonField;
+
   /** ⭐ validate 與 apply 共用**同一支**驗證 —— ⛔ 兩份實作必然漂。 */
   const runValidate = async (raw: unknown) =>
     validatePackage({
@@ -489,16 +577,35 @@ function registerG2Routes(
   });
 
   // ── POST /validate —— ⭐ **無狀態變更**（規格逐字）───────────────────────
-  app.post(`${prefix}/validate`, async (req, reply) => {
-    const v = await runValidate(req.body);
-    // ⛔ 這條 route 一個位元組都不寫 —— `operationId` 由 digest 推導，⛔ 不落地。
-    const id =
-      "validate-" +
-      (v.value?.manifest.packageDigest ?? "unparsable").slice(-16);
-    return reply
-      .code(v.ok ? 200 : 422)
-      .send(resultOf(id, v.ok ? "validated" : "rejected", v));
-  });
+  app.post(
+    `${prefix}/validate`,
+    { bodyLimit: ZIP_LIMITS.maxArchiveCompressedBytes },
+    async (req, reply) => {
+      let raw: unknown;
+      try {
+        raw = packageOf(req.body, req.body);
+      } catch (e) {
+        return reply.code(422).send({
+          schema: IMPORT_ERROR_SCHEMA,
+          code: e instanceof ZipFormatError ? e.code : "ZIP_UNREADABLE",
+          message: e instanceof Error ? e.message : String(e),
+          retryable: false,
+        });
+      }
+      const v = await runValidate(raw);
+      // ⛔ 這條 route 一個位元組都不寫 —— `operationId` 由 digest 推導，⛔ 不落地。
+      const id =
+        "validate-" +
+        (v.value?.manifest.packageDigest ?? "unparsable").slice(-16);
+      return reply.code(v.ok ? 200 : 422).send({
+        ...resultOf(id, v.ok ? "validated" : "rejected", v),
+        // ⭐ ZIP 進來的才有 —— 讓對面比對得出「你收到的是不是我送的那一份檔」。
+        ...(Buffer.isBuffer(req.body)
+          ? { transport: { archiveSha256: archiveSha256(req.body) } }
+          : {}),
+      });
+    },
+  );
 
   // ── POST /apply ────────────────────────────────────────────────────────
   app.post<{
@@ -507,105 +614,130 @@ function registerG2Routes(
       package?: unknown;
       expectedActivationDigest?: string | null;
     };
-  }>(`${prefix}/apply`, async (req, reply) => {
-    const body = req.body ?? {};
-    const operationId =
-      typeof body.operationId === "string" ? body.operationId : "";
-    if (operationId === "") {
-      return reply.code(400).send({
-        schema: IMPORT_ERROR_SCHEMA,
-        code: "MISSING_OPERATION_ID",
-        message:
-          "apply 必須帶 operationId —— ⭐ 它是冪等鍵：重送同一個 id 要回同一個答案，" +
-          "⛔ 不是再跑一次。",
-        retryable: false,
-      });
-    }
-    // ⭐ 冪等：已經到終態的操作**直接回它自己**（⛔ 不重跑）。
-    const prior = d.store.getOperation(operationId);
-    if (
-      prior !== null &&
-      (prior.status === "activated" || prior.status === "rejected")
-    ) {
-      return reply
-        .code(200)
-        .send({ ...resultOf(operationId, prior.status, null), replayed: true });
-    }
-
-    d.store.beginOperation(operationId, "content-api");
-    // ⭐ **重跑一次驗證** —— ⛔ 不信任先前那一次 validate 的結論
-    //   （base 在這中間會動；那正是 CAS 之外的第二道保險）。
-    const v = await runValidate(body.package);
-    if (!v.ok || v.value === null) {
-      d.store.updateOperation(operationId, {
-        status: "rejected",
-        diagnostics: v.diagnostics,
-      });
-      return reply.code(422).send(resultOf(operationId, "rejected", v));
-    }
-    const digest = v.value.manifest.packageDigest;
-    try {
-      // ⭐ immutable candidate（同一個 digest 只寫一次）。
-      d.store.putCandidate(digest, JSON.stringify(body.package));
-      // ⭐ PREPARED：整棵樹寫到旁邊、fsync、逐份讀回來比對。
-      const files = new Map<string, string>();
-      for (const doc of v.value.documents) {
-        const parts = pathParts(doc.path);
-        if (parts === null) continue;
-        files.set(
-          `${parts.collection}/${parts.id}.json`,
-          JSON.stringify(doc.document, null, 2),
-        );
+  }>(
+    `${prefix}/apply`,
+    { bodyLimit: ZIP_LIMITS.maxArchiveCompressedBytes },
+    async (req, reply) => {
+      // ⭐ ZIP body 沒有欄位可放 `operationId` ⇒ 走 header。
+      //   ⛔ 不是塞進 ZIP 裡：一個寫在包裡的冪等鍵會**跟著包被重送**，那就不是冪等鍵了。
+      const zipOpId = String(req.headers["x-ggd-operation-id"] ?? "");
+      const body =
+        (Buffer.isBuffer(req.body) ? { operationId: zipOpId } : req.body) ?? {};
+      const operationId =
+        typeof body.operationId === "string" ? body.operationId : "";
+      if (operationId === "") {
+        return reply.code(400).send({
+          schema: IMPORT_ERROR_SCHEMA,
+          code: "MISSING_OPERATION_ID",
+          message:
+            "apply 必須帶 operationId —— ⭐ 它是冪等鍵：重送同一個 id 要回同一個答案，" +
+            "⛔ 不是再跑一次。",
+          retryable: false,
+        });
       }
-      d.store.prepare(operationId, files);
-      d.store.updateOperation(operationId, {
-        status: "prepared",
-        packageDigest: digest,
-        changedDocuments: v.changed.map(
-          (c: { collection: string; id: string; path: string }) => ({
-            collection: c.collection,
-            id: c.id,
-            path: c.path,
-          }),
-        ),
-      });
-      // ⭐ Base CAS ＋ 原子換指標 ＋ 健康回讀。
-      const activationDigest = d.store.treeDigest(operationId);
-      const expected =
-        body.expectedActivationDigest === undefined
-          ? undefined
-          : body.expectedActivationDigest;
-      const pointer = d.store.activate(
-        {
-          activationDigest,
+      // ⭐ 冪等：已經到終態的操作**直接回它自己**（⛔ 不重跑）。
+      const prior = d.store.getOperation(operationId);
+      if (
+        prior !== null &&
+        (prior.status === "activated" || prior.status === "rejected")
+      ) {
+        return reply
+          .code(200)
+          .send({
+            ...resultOf(operationId, prior.status, null),
+            replayed: true,
+          });
+      }
+
+      d.store.beginOperation(operationId, "content-api");
+      // ⭐ **重跑一次驗證** —— ⛔ 不信任先前那一次 validate 的結論
+      //   （base 在這中間會動；那正是 CAS 之外的第二道保險）。
+      // ⭐ ZIP body 在這裡展開（⛔ 與 validate 走**同一支** `packageOf`）。
+      let rawPkg: unknown;
+      try {
+        rawPkg = packageOf(req.body, body.package);
+      } catch (e) {
+        d.store.updateOperation(operationId, { status: "rejected" });
+        return reply.code(422).send({
+          schema: IMPORT_ERROR_SCHEMA,
+          code: e instanceof ZipFormatError ? e.code : "ZIP_UNREADABLE",
+          message: e instanceof Error ? e.message : String(e),
+          retryable: false,
+        });
+      }
+      const v = await runValidate(rawPkg);
+      if (!v.ok || v.value === null) {
+        d.store.updateOperation(operationId, {
+          status: "rejected",
+          diagnostics: v.diagnostics,
+        });
+        return reply.code(422).send(resultOf(operationId, "rejected", v));
+      }
+      const digest = v.value.manifest.packageDigest;
+      try {
+        // ⭐ immutable candidate（同一個 digest 只寫一次）。
+        d.store.putCandidate(digest, JSON.stringify(rawPkg));
+        // ⭐ PREPARED：整棵樹寫到旁邊、fsync、逐份讀回來比對。
+        const files = new Map<string, string>();
+        for (const doc of v.value.documents) {
+          const parts = pathParts(doc.path);
+          if (parts === null) continue;
+          files.set(
+            `${parts.collection}/${parts.id}.json`,
+            JSON.stringify(doc.document, null, 2),
+          );
+        }
+        d.store.prepare(operationId, files);
+        d.store.updateOperation(operationId, {
+          status: "prepared",
           packageDigest: digest,
-          operationId,
-          tree: operationId,
-        },
-        expected,
-      );
-      d.store.updateOperation(operationId, {
-        status: "activated",
-        activationDigest: pointer.activationDigest,
-      });
-      return reply
-        .code(200)
-        .send(
+          changedDocuments: v.changed.map(
+            (c: { collection: string; id: string; path: string }) => ({
+              collection: c.collection,
+              id: c.id,
+              path: c.path,
+            }),
+          ),
+        });
+        // ⭐ Base CAS ＋ 原子換指標 ＋ 健康回讀。
+        const activationDigest = d.store.treeDigest(operationId);
+        const headerCas = req.headers["x-ggd-expected-activation"];
+        const expected =
+          typeof headerCas === "string"
+            ? headerCas
+            : body.expectedActivationDigest === undefined
+              ? undefined
+              : body.expectedActivationDigest;
+        const pointer = d.store.activate(
+          {
+            activationDigest,
+            packageDigest: digest,
+            operationId,
+            tree: operationId,
+          },
+          expected,
+        );
+        d.store.updateOperation(operationId, {
+          status: "activated",
+          activationDigest: pointer.activationDigest,
+        });
+        return reply.code(200).send(
           resultOf(operationId, "activated", v, {
             activationDigest: pointer.activationDigest,
           }),
         );
-    } catch (e) {
-      // ⛔ 失敗**不改** ACTIVE —— 那是 activate 自己保證的（CAS 前一個位元組都不動）。
-      d.store.updateOperation(operationId, { status: "rejected" });
-      return reply.code(409).send({
-        schema: IMPORT_ERROR_SCHEMA,
-        code: "APPLY_FAILED",
-        message: e instanceof Error ? e.message : String(e),
-        retryable: false,
-      });
-    }
-  });
+      } catch (e) {
+        // ⛔ 失敗**不改** ACTIVE —— 那是 activate 自己保證的（CAS 前一個位元組都不動）。
+        d.store.updateOperation(operationId, { status: "rejected" });
+        return reply.code(409).send({
+          schema: IMPORT_ERROR_SCHEMA,
+          code: "APPLY_FAILED",
+          message: e instanceof Error ? e.message : String(e),
+          retryable: false,
+        });
+      }
+    },
+  );
 
   // ── POST /rollback ─────────────────────────────────────────────────────
   app.post<{ Body: { expectedActivationDigest?: string } }>(

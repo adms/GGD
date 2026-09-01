@@ -20,6 +20,7 @@ import {
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import Fastify, { type FastifyInstance } from "fastify";
+import { deflateRawSync } from "node:zlib";
 
 import { contentSha256 } from "@ggd/shared/content/import/jcs";
 import { packageDigest } from "@ggd/shared/content/import/digest";
@@ -162,8 +163,9 @@ describe("G2 routes —— 六條走真的 HTTP", () => {
 
   it("★★ ⭐ `POST /validate` 對壞掉的包回 422 **而且說得出是哪一條**", async () => {
     const bad = pkg();
-    (bad.manifest["authoringProcessor"] as { fingerprint: string }).fingerprint =
-      "ffffffffffff";
+    (
+      bad.manifest["authoringProcessor"] as { fingerprint: string }
+    ).fingerprint = "ffffffffffff";
     const r = await post(`${P}/validate`, bad);
     expect(r.statusCode).toBe(422);
     const codes = (r.json().diagnostics as { code: string }[]).map(
@@ -287,5 +289,165 @@ describe("G2 routes —— 六條走真的 HTTP", () => {
       r.json().implementedStage,
       "⛔⛔ 提前宣告 G2 ⇒ ⭐ 對面會打開 full/delta，而 base pin 那幾格還是 null",
     ).toBe("G1");
+  });
+});
+
+// ══════════════════════════════════════════════════════════════════════════
+// ⭐⭐ ZIP 傳輸層走真的 HTTP
+// ══════════════════════════════════════════════════════════════════════════
+
+const CRC_T = (() => {
+  const t = new Int32Array(256);
+  for (let n = 0; n < 256; n += 1) {
+    let c = n;
+    for (let k = 0; k < 8; k += 1) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+    t[n] = c;
+  }
+  return t;
+})();
+function crc32b(buf: Buffer): number {
+  let c = -1;
+  for (let i = 0; i < buf.length; i += 1)
+    c = CRC_T[(c ^ buf[i]!) & 0xff]! ^ (c >>> 8);
+  return (c ^ -1) >>> 0;
+}
+
+/** ⭐ 手工組一份 ZIP（⛔ 不用函式庫 —— 要組得出畸形的）。 */
+function makeZip(
+  files: { name: string; text: string }[],
+  trailing?: Buffer,
+): Buffer {
+  const locals: Buffer[] = [];
+  const centrals: Buffer[] = [];
+  let offset = 0;
+  for (const f of files) {
+    const data = Buffer.from(f.text, "utf8");
+    const comp = deflateRawSync(data);
+    const useDef = comp.length < data.length;
+    const payload = useDef ? comp : data;
+    const method = useDef ? 8 : 0;
+    const name = Buffer.from(f.name, "utf8");
+    const lh = Buffer.alloc(30);
+    lh.writeUInt32LE(0x04034b50, 0);
+    lh.writeUInt16LE(20, 4);
+    lh.writeUInt16LE(0x800, 6);
+    lh.writeUInt16LE(method, 8);
+    lh.writeUInt32LE(crc32b(data), 14);
+    lh.writeUInt32LE(payload.length, 18);
+    lh.writeUInt32LE(data.length, 22);
+    lh.writeUInt16LE(name.length, 26);
+    const local = Buffer.concat([lh, name, payload]);
+    locals.push(local);
+    const ch = Buffer.alloc(46);
+    ch.writeUInt32LE(0x02014b50, 0);
+    ch.writeUInt16LE(20, 4);
+    ch.writeUInt16LE(20, 6);
+    ch.writeUInt16LE(0x800, 8);
+    ch.writeUInt16LE(method, 10);
+    ch.writeUInt32LE(crc32b(data), 16);
+    ch.writeUInt32LE(payload.length, 20);
+    ch.writeUInt32LE(data.length, 24);
+    ch.writeUInt16LE(name.length, 28);
+    ch.writeUInt32LE(((0o100644 & 0xffff) << 16) >>> 0, 38);
+    ch.writeUInt32LE(offset, 42);
+    centrals.push(Buffer.concat([ch, name]));
+    offset += local.length;
+  }
+  const cd = Buffer.concat(centrals);
+  const eocd = Buffer.alloc(22);
+  eocd.writeUInt32LE(0x06054b50, 0);
+  eocd.writeUInt16LE(files.length, 8);
+  eocd.writeUInt16LE(files.length, 10);
+  eocd.writeUInt32LE(cd.length, 12);
+  eocd.writeUInt32LE(offset, 16);
+  const parts = [...locals, cd, eocd];
+  if (trailing !== undefined) parts.push(trailing);
+  return Buffer.concat(parts);
+}
+
+/** ⭐ 把 `pkg()` 的物件攤成 ZIP 的檔案表。 */
+function zipOf(
+  id = "hero.q",
+  extra: { name: string; text: string }[] = [],
+): Buffer {
+  const p = pkg(id);
+  return makeZip([
+    { name: "manifest.json", text: JSON.stringify(p.manifest) },
+    ...p.documents.map((d) => ({
+      name: d.path,
+      text: JSON.stringify(d.document),
+    })),
+    ...extra,
+  ]);
+}
+
+const postZip = (
+  url: string,
+  body: Buffer,
+  headers: Record<string, string> = {},
+) =>
+  app.inject({
+    method: "POST",
+    url,
+    payload: body,
+    headers: { "content-type": "application/zip", ...headers },
+  });
+
+describe("G2 ZIP 傳輸層", () => {
+  it("★★ ⭐ 一份合法的 ZIP `validate` 得過，而且回得出 `archiveSha256`", async () => {
+    const z = zipOf();
+    const r = await postZip(`${P}/validate`, z);
+    expect(r.statusCode, `⛔ 合法 ZIP 被拒：${r.body.slice(0, 400)}`).toBe(200);
+    expect(r.json().status).toBe("validated");
+    expect(r.json().transport.archiveSha256).toMatch(/^sha256:[0-9a-f]{64}$/);
+  });
+
+  it("★★ ⭐⭐ `apply` 收 ZIP，`operationId` 走 **header**（⛔ 不是包裡）", async () => {
+    const z = zipOf("hero.q");
+    const r = await postZip(`${P}/apply`, z, {
+      "x-ggd-operation-id": "zip-op-1",
+    });
+    expect(r.statusCode, `⛔ ZIP apply 失敗：${r.body.slice(0, 500)}`).toBe(
+      200,
+    );
+    expect(r.json().status).toBe("activated");
+    // ⭐ 真的進了 runtime-bundle。
+    const rb = await get(`${P}/active/runtime-bundle`);
+    expect(rb.json().docs.abilities["hero.q"].id).toBe("hero.q");
+    // ⭐ 冪等仍然成立（同一個 header id 重送）。
+    const again = await postZip(`${P}/apply`, z, {
+      "x-ggd-operation-id": "zip-op-1",
+    });
+    expect(again.json().replayed).toBe(true);
+  });
+
+  it("★★ ⭐ EOCD 之後多出位元組 ⇒ 422 `ZIP_TRAILING_DATA`（⛔ 不是 500）", async () => {
+    const z = zipOf("hero.q");
+    const r = await postZip(
+      `${P}/validate`,
+      Buffer.concat([z, Buffer.from("走私")]),
+    );
+    expect(r.statusCode).toBe(422);
+    expect(r.json().code).toBe("ZIP_TRAILING_DATA");
+  });
+
+  it("★★ ⭐⭐ zip-slip（`../` 路徑）⇒ 拒，⭐ 而且**在解壓之前**", async () => {
+    const z = zipOf("hero.q", [{ name: "../../etc/passwd", text: "pwned" }]);
+    const r = await postZip(`${P}/validate`, z);
+    expect(r.statusCode, "⛔ zip-slip 的包被收下了").toBe(422);
+    expect(r.json().message).toMatch(/ZIP_SLIP|ZIP_PATH_NOT_ALLOWED/);
+  });
+
+  it("★ ⭐ ZIP 裡沒有 manifest.json ⇒ 說得出是哪一條", async () => {
+    const z = makeZip([{ name: "authoring/abilities/x.json", text: "{}" }]);
+    const r = await postZip(`${P}/validate`, z);
+    expect(r.statusCode).toBe(422);
+    expect(r.json().code).toMatch(/ZIP_MANIFEST_MISSING/);
+  });
+
+  it("★ ⭐ 不是 ZIP 的位元組 ⇒ 422（⛔ 不是 500）", async () => {
+    const r = await postZip(`${P}/validate`, Buffer.from("這不是 ZIP"));
+    expect(r.statusCode).toBe(422);
+    expect(r.json().code).toMatch(/ZIP_/);
   });
 });
