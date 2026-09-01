@@ -32,7 +32,7 @@
  * 所以非 loopback 的呼叫拿到的是 403 而不是 501。那是對的順序 —— 授權在能力宣告
  * 之前。
  */
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import type { FastifyInstance, FastifyReply } from "fastify";
@@ -44,6 +44,13 @@ import {
   formatDiagnostic,
 } from "@ggd/shared/content/import/diagnostics";
 import { buildAuthoringProcessor } from "@ggd/shared/content/import/authoringProcessor";
+import {
+  pathParts,
+  validatePackage,
+} from "@ggd/shared/content/import/validatePackage";
+import type { BaseFacts } from "@ggd/shared/content/import/validatePackage";
+import { ImportStore } from "./importStore";
+import type { ActivePointer } from "./importStore";
 import {
   IMPLEMENTED_STAGE,
   IMPORT_ERROR_SCHEMA,
@@ -79,6 +86,8 @@ export interface ImportRoutesOptions {
    * （⛔ 不是靜靜地產出一個涵蓋不到東西的假指紋）。
    */
   repoRoot?: string;
+  /** ⭐ 匯入狀態的落點。預設 `<contentDir>/../data/content-import`（⛔ 在 content/ 之外）。 */
+  importDir?: string;
   /** 注入時鐘，讓守衛拿得到穩定的 `generatedAt`。 */
   now?: () => Date;
 }
@@ -94,45 +103,13 @@ const UNIMPLEMENTED: readonly {
   stage: string;
   why: string;
 }[] = [
-  {
-    method: "post",
-    path: "/validate",
-    stage: "G1（本輪只做握手層，validate 在同階段的下一步）",
-    why:
-      "需要 bounded transport（zipSafety 已有）+ Zod／capability／authoring-rules 三道驗證。" +
-      "⚠️ owner 2026-08-15 砍掉了「遊戲端重編 + 逐位元比對」那一段 —— 見 target profile 的 " +
-      "`authoringModel`：編輯器直接產 ability@1，所以沒有第二個編譯器可以漂移。",
-  },
-  {
-    method: "post",
-    path: "/apply",
-    stage: "G2",
-    why: "需要 immutable version storage + CAS + ACTIVE pointer + health read-back。⛔ 逐文件 PUT 不是 apply（規格 §11）。",
-  },
-  {
-    method: "post",
-    path: "/rollback",
-    stage: "G2",
-    why: "沒有 activation 歷史就沒有可回退的目標。",
-  },
-  {
-    method: "get",
-    path: "/active",
-    stage: "G2",
-    why: "尚無 ACTIVE pointer 與 previous verified activation。",
-  },
-  {
-    method: "get",
-    path: "/active/runtime-bundle",
-    stage: "G2",
-    why: "尚無 immutable runtime snapshot；`content/bundle.json` 是可變的出貨檔，不是它。",
-  },
-  {
-    method: "get",
-    path: "/operations/:operationId",
-    stage: "G2",
-    why: "尚無 operation log。",
-  },
+  // ⭐ 2026-09-02 —— validate / apply / rollback / active / operations / runtime-bundle
+  //   六條**都已經實作**（見底下的 registerG2Routes）。
+  // ⚠️ ⛔ 而 `implementedStage` **仍然是 G1** —— 規格 §3 逐字：
+  //   「target profile 真的完成後**才可**宣告 implementedStage: G2」。
+  //   ⭐ 今天還缺：bootstrap migrationFingerprint · full/delta 的 base.activationDigest /
+  //   authoringDigest · supportedModes 擴到 full/delta · deltaExportAllowed。
+  //   ⇒ ⛔ 我**不**為了讓對面的按鈕亮起來而提前宣告。
 ];
 
 /** 讀 `content/manifest.json` 的事實；沒 build 過就回 null。 */
@@ -252,6 +229,16 @@ export function registerImportRoutes(
       "content-import: 算不出 authoringProcessor 指紋 —— profile 會標成 null 並附理由",
     );
   }
+
+  /**
+   * ⭐ 匯入的持久狀態（候選 / 操作 / staging / ACTIVE / history）。
+   *
+   * ⚠️ ⭐ 落在 `<contentDir>/../data/content-import` —— **刻意在 `content/` 之外**，
+   * ⛔ 與備份同一個理由：它不可以進出貨樹，也不可以被烘進映像。
+   */
+  const store = new ImportStore({
+    dir: opts.importDir ?? resolve(root, "..", "data", "content-import"),
+  });
 
   const { limits, clamped } = clampImportLimits(opts.limits);
   if (clamped.length > 0) {
@@ -375,5 +362,343 @@ export function registerImportRoutes(
         ),
       );
     }
+
+    registerG2Routes(app, prefix, {
+      root,
+      store,
+      authoringProcessor,
+      // ⭐ 這一台**支援**的 capability id ——
+      //   ⛔ 從出貨的 `simCapabilities`（available=true 的那些）＋ 出貨 effect kinds 推導，
+      //   ⛔ 不是一張手寫名單（第〇·五守則：能力清單是**推導出來**的）。
+      capabilities: () => {
+        const cm = buildCapabilityManifest();
+        const out = new Set<string>();
+        for (const [id, v] of Object.entries(cm.simCapabilities)) {
+          if (v.available) out.add(id);
+        }
+        for (const f of cm.templateFamilies) out.add(f);
+        for (const k of cm.docSurface["ability@1"] ?? [])
+          out.add("ability@1." + k);
+        return out;
+      },
+      reloadMode: opts.reloadMode ?? "process-reload",
+    });
   }
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// ⭐⭐ G2：validate / apply / rollback / active / runtime-bundle / operations
+// ══════════════════════════════════════════════════════════════════════════
+
+interface G2Deps {
+  readonly root: string;
+  readonly store: ImportStore;
+  readonly authoringProcessor: { readonly fingerprint: string } | null;
+  readonly capabilities: () => Set<string>;
+  readonly reloadMode: ReloadMode;
+}
+
+/**
+ * ⭐ 從**出貨樹**讀出 base 事實。
+ *
+ * ⚠️ `present` 是 ⑥（隱式刪除）與 ⑦（相依封閉）的分母 ——
+ * ⛔ 讀不到就回空 Map，⭐ 而那會讓 ⑥ 變成永遠通過。
+ * ⇒ 所以呼叫端拿不到 `manifest.json` 時**不可以**跑 full 模式的 apply。
+ */
+async function readBaseFacts(
+  root: string,
+  active: ActivePointer | null,
+): Promise<BaseFacts> {
+  const present = new Map<string, Set<string>>();
+  const idx = join(root, "bundle.json");
+  if (existsSync(idx)) {
+    try {
+      const b = JSON.parse(await readFile(idx, "utf8")) as {
+        docs?: Record<string, Record<string, unknown>>;
+      };
+      for (const [collection, byId] of Object.entries(b.docs ?? {})) {
+        present.set(collection, new Set(Object.keys(byId)));
+      }
+    } catch {
+      // ⛔ 讀不到就是空的 —— 呼叫端會在 full 模式看到「隱式刪除」而停下來。
+    }
+  }
+  const content = await readContentFacts(root);
+  return {
+    gameRevision: null,
+    contentVersion: content?.contentVersion ?? null,
+    activationDigest: active?.activationDigest ?? null,
+    authoringDigest: null,
+    present,
+  };
+}
+
+function registerG2Routes(
+  app: FastifyInstance,
+  prefix: string,
+  d: G2Deps,
+): void {
+  const fp = d.authoringProcessor?.fingerprint ?? "";
+
+  /** ⭐ validate 與 apply 共用**同一支**驗證 —— ⛔ 兩份實作必然漂。 */
+  const runValidate = async (raw: unknown) =>
+    validatePackage({
+      raw,
+      base: await readBaseFacts(d.root, d.store.active()),
+      capabilities: d.capabilities(),
+      processorFingerprint: fp,
+    });
+
+  const resultOf = (
+    operationId: string,
+    status: "validated" | "activated" | "rejected" | "rolled-back",
+    v: Awaited<ReturnType<typeof runValidate>> | null,
+    extra: Record<string, unknown> = {},
+  ) => ({
+    schema: "ggd-content-import-result@1",
+    operationId,
+    status,
+    packageDigest: v?.value?.manifest.packageDigest ?? null,
+    previousContentVersion: null,
+    newContentVersion: null,
+    previousAuthoringDigest: null,
+    newAuthoringDigest: null,
+    planDigest: null,
+    diagnostics: v?.diagnostics ?? [],
+    changedDocuments: (v?.changed ?? []).map(
+      (c: {
+        collection: string;
+        id: string;
+        path: string;
+        contentSha256: string;
+      }) => ({
+        kind: c.collection,
+        id: c.id,
+        path: c.path,
+        op: "upsert",
+        contentSha256: c.contentSha256,
+      }),
+    ),
+    selectionRoots: v?.value?.manifest.selectionRoots ?? [],
+    fidelityDecisions: [],
+    derivedDocuments: [],
+    activationDigest: null,
+    reloadMode: d.reloadMode,
+    authoringStoreState: d.store.active() === null ? "absent" : "present",
+    ...extra,
+  });
+
+  // ── POST /validate —— ⭐ **無狀態變更**（規格逐字）───────────────────────
+  app.post(`${prefix}/validate`, async (req, reply) => {
+    const v = await runValidate(req.body);
+    // ⛔ 這條 route 一個位元組都不寫 —— `operationId` 由 digest 推導，⛔ 不落地。
+    const id =
+      "validate-" +
+      (v.value?.manifest.packageDigest ?? "unparsable").slice(-16);
+    return reply
+      .code(v.ok ? 200 : 422)
+      .send(resultOf(id, v.ok ? "validated" : "rejected", v));
+  });
+
+  // ── POST /apply ────────────────────────────────────────────────────────
+  app.post<{
+    Body: {
+      operationId?: string;
+      package?: unknown;
+      expectedActivationDigest?: string | null;
+    };
+  }>(`${prefix}/apply`, async (req, reply) => {
+    const body = req.body ?? {};
+    const operationId =
+      typeof body.operationId === "string" ? body.operationId : "";
+    if (operationId === "") {
+      return reply.code(400).send({
+        schema: IMPORT_ERROR_SCHEMA,
+        code: "MISSING_OPERATION_ID",
+        message:
+          "apply 必須帶 operationId —— ⭐ 它是冪等鍵：重送同一個 id 要回同一個答案，" +
+          "⛔ 不是再跑一次。",
+        retryable: false,
+      });
+    }
+    // ⭐ 冪等：已經到終態的操作**直接回它自己**（⛔ 不重跑）。
+    const prior = d.store.getOperation(operationId);
+    if (
+      prior !== null &&
+      (prior.status === "activated" || prior.status === "rejected")
+    ) {
+      return reply
+        .code(200)
+        .send({ ...resultOf(operationId, prior.status, null), replayed: true });
+    }
+
+    d.store.beginOperation(operationId, "content-api");
+    // ⭐ **重跑一次驗證** —— ⛔ 不信任先前那一次 validate 的結論
+    //   （base 在這中間會動；那正是 CAS 之外的第二道保險）。
+    const v = await runValidate(body.package);
+    if (!v.ok || v.value === null) {
+      d.store.updateOperation(operationId, {
+        status: "rejected",
+        diagnostics: v.diagnostics,
+      });
+      return reply.code(422).send(resultOf(operationId, "rejected", v));
+    }
+    const digest = v.value.manifest.packageDigest;
+    try {
+      // ⭐ immutable candidate（同一個 digest 只寫一次）。
+      d.store.putCandidate(digest, JSON.stringify(body.package));
+      // ⭐ PREPARED：整棵樹寫到旁邊、fsync、逐份讀回來比對。
+      const files = new Map<string, string>();
+      for (const doc of v.value.documents) {
+        const parts = pathParts(doc.path);
+        if (parts === null) continue;
+        files.set(
+          `${parts.collection}/${parts.id}.json`,
+          JSON.stringify(doc.document, null, 2),
+        );
+      }
+      d.store.prepare(operationId, files);
+      d.store.updateOperation(operationId, {
+        status: "prepared",
+        packageDigest: digest,
+        changedDocuments: v.changed.map(
+          (c: { collection: string; id: string; path: string }) => ({
+            collection: c.collection,
+            id: c.id,
+            path: c.path,
+          }),
+        ),
+      });
+      // ⭐ Base CAS ＋ 原子換指標 ＋ 健康回讀。
+      const activationDigest = d.store.treeDigest(operationId);
+      const expected =
+        body.expectedActivationDigest === undefined
+          ? undefined
+          : body.expectedActivationDigest;
+      const pointer = d.store.activate(
+        {
+          activationDigest,
+          packageDigest: digest,
+          operationId,
+          tree: operationId,
+        },
+        expected,
+      );
+      d.store.updateOperation(operationId, {
+        status: "activated",
+        activationDigest: pointer.activationDigest,
+      });
+      return reply
+        .code(200)
+        .send(
+          resultOf(operationId, "activated", v, {
+            activationDigest: pointer.activationDigest,
+          }),
+        );
+    } catch (e) {
+      // ⛔ 失敗**不改** ACTIVE —— 那是 activate 自己保證的（CAS 前一個位元組都不動）。
+      d.store.updateOperation(operationId, { status: "rejected" });
+      return reply.code(409).send({
+        schema: IMPORT_ERROR_SCHEMA,
+        code: "APPLY_FAILED",
+        message: e instanceof Error ? e.message : String(e),
+        retryable: false,
+      });
+    }
+  });
+
+  // ── POST /rollback ─────────────────────────────────────────────────────
+  app.post<{ Body: { expectedActivationDigest?: string } }>(
+    `${prefix}/rollback`,
+    async (req, reply) => {
+      const expected = req.body?.expectedActivationDigest;
+      if (typeof expected !== "string") {
+        return reply.code(400).send({
+          schema: IMPORT_ERROR_SCHEMA,
+          code: "MISSING_EXPECTED_ACTIVATION",
+          message:
+            "rollback 必須帶 expectedActivationDigest —— ⭐ 回捲是**有條件**的：" +
+            "⛔ 一個無條件的回捲會把別人剛啟用的東西也捲掉。",
+          retryable: false,
+        });
+      }
+      try {
+        const p = d.store.rollback(expected);
+        return reply.code(200).send({
+          ...resultOf("rollback-" + expected.slice(-16), "rolled-back", null),
+          activationDigest: p.activationDigest,
+        });
+      } catch (e) {
+        return reply.code(409).send({
+          schema: IMPORT_ERROR_SCHEMA,
+          code: "ROLLBACK_REFUSED",
+          message: e instanceof Error ? e.message : String(e),
+          retryable: false,
+        });
+      }
+    },
+  );
+
+  // ── GET /active ────────────────────────────────────────────────────────
+  app.get(`${prefix}/active`, async (_req, reply) => {
+    const a = d.store.active();
+    return reply.send({
+      schema: "ggd-content-import-active@1",
+      active: a,
+      // ⭐ 對面要知道「回捲得到嗎」——⛔ 不是自己去猜 history 有沒有東西。
+      rollbackAvailable: a !== null && a.previousActivationDigest !== null,
+    });
+  });
+
+  // ── GET /active/runtime-bundle ─────────────────────────────────────────
+  app.get(`${prefix}/active/runtime-bundle`, async (_req, reply) => {
+    const tree = d.store.activeTreePath();
+    if (tree === null) {
+      return reply.code(404).send({
+        schema: IMPORT_ERROR_SCHEMA,
+        code: "NO_ACTIVE_SNAPSHOT",
+        message:
+          "還沒有任何 activation ⇒ 沒有 immutable runtime snapshot。" +
+          "⛔ `content/bundle.json` **不是**它（那是可變的出貨檔）。",
+        retryable: false,
+      });
+    }
+    const a = d.store.active();
+    const docs: Record<string, Record<string, unknown>> = {};
+    const walk = (dir: string, collection: string): void => {
+      for (const e of readdirSync(dir, { withFileTypes: true })) {
+        if (e.isDirectory()) walk(join(dir, e.name), e.name);
+        else if (e.name.endsWith(".json")) {
+          const id = e.name.slice(0, -5);
+          (docs[collection] ??= {})[id] = JSON.parse(
+            readFileSync(join(dir, e.name), "utf8"),
+          ) as Record<string, unknown>;
+        }
+      }
+    };
+    walk(tree, "");
+    return reply.send({
+      schema: "ggd-content-runtime-bundle@1",
+      activationDigest: a?.activationDigest ?? null,
+      packageDigest: a?.packageDigest ?? null,
+      docs,
+    });
+  });
+
+  // ── GET /operations/:operationId ───────────────────────────────────────
+  app.get<{ Params: { operationId: string } }>(
+    `${prefix}/operations/:operationId`,
+    async (req, reply) => {
+      const rec = d.store.getOperation(req.params.operationId);
+      if (rec === null) {
+        return reply.code(404).send({
+          schema: IMPORT_ERROR_SCHEMA,
+          code: "UNKNOWN_OPERATION",
+          message: `沒有 operation ${req.params.operationId}`,
+          retryable: false,
+        });
+      }
+      return reply.send(rec);
+    },
+  );
 }

@@ -1,0 +1,291 @@
+/**
+ * ⭐⭐ **六條 G2 route 走真的 HTTP** —— validate / apply / rollback / active /
+ * runtime-bundle / operations（規格 §3）。
+ *
+ * ── ⛔ 為什麼要有這一支（失敗形態⑪）──────────────────────────────────────
+ * `validatePackage` 有自己的守衛、`ImportStore` 有自己的守衛 ——
+ * ⚠️ ⭐ 而**兩條各自對的守衛，接縫可以是空的**：
+ * route 掛錯 prefix、body 沒接到、錯誤碼回錯 —— 兩邊的單元測試全部是綠的。
+ * ⇒ ⭐ 這一支只驗**接縫**：真的 inject、真的看狀態碼、真的看 ACTIVE 有沒有動。
+ */
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import {
+  existsSync,
+  mkdtempSync,
+  mkdirSync,
+  readdirSync,
+  statSync,
+  writeFileSync,
+} from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import Fastify, { type FastifyInstance } from "fastify";
+
+import { contentSha256 } from "@ggd/shared/content/import/jcs";
+import { packageDigest } from "@ggd/shared/content/import/digest";
+import { buildAuthoringProcessor } from "@ggd/shared/content/import/authoringProcessor";
+import { registerImportRoutes } from "./importRoutes";
+
+const REPO = join(__dirname, "../../..");
+const FP = buildAuthoringProcessor(REPO).fingerprint;
+const P = "/api/v1/content-import";
+
+let app: FastifyInstance;
+let contentDir: string;
+let importDir: string;
+
+beforeEach(async () => {
+  const base = mkdtempSync(join(tmpdir(), "ggd-g2-"));
+  contentDir = join(base, "content");
+  importDir = join(base, "data", "content-import");
+  mkdirSync(contentDir, { recursive: true });
+  // ⭐ 一份最小的 manifest，讓 `readBaseFacts` 有東西讀。
+  writeFileSync(
+    join(contentDir, "manifest.json"),
+    JSON.stringify({ contentVersion: "cv_test", collections: {} }),
+    "utf8",
+  );
+  app = Fastify({ logger: false });
+  registerImportRoutes(app, {
+    contentDir,
+    importDir,
+    repoRoot: REPO,
+    gameVersion: null,
+  });
+  await app.ready();
+});
+afterEach(async () => {
+  await app.close();
+});
+
+const ABILITY = {
+  schema: "ability@1",
+  id: "hero.q",
+  name: "測試技",
+  description: "測試",
+  castType: "self",
+  maxRank: 1,
+  cooldown: [1],
+  manaCost: [0],
+  range: 0,
+  effects: [],
+};
+
+function pkg(id = "hero.q") {
+  const doc = { ...ABILITY, id };
+  const path = `authoring/abilities/${id}.json`;
+  const manifest: Record<string, unknown> = {
+    schema: "ggd-editor-package@1",
+    mode: "bootstrap",
+    gameId: "ggd",
+    packageDigest: "sha256:" + "0".repeat(64),
+    base: {
+      gameRevision: "r1",
+      contentVersion: "cv_test",
+      activationDigest: null,
+      authoringDigest: null,
+    },
+    migrationFingerprint: "mf-1",
+    selectionRoots: [],
+    changes: [],
+    authoringProcessor: {
+      kind: "runtime-direct",
+      contractVersion: "runtime-direct@1",
+      fingerprint: FP,
+    },
+    requiredCapabilities: [],
+    entries: [
+      {
+        path,
+        role: "authoring",
+        contentSha256: contentSha256(doc),
+        contentSize: 100,
+        collection: "abilities",
+        id,
+        op: "upsert",
+      },
+    ],
+    requires: [],
+    expectedDerived: [],
+    validationPolicy: {},
+    requiredScenarios: [],
+    fidelityDecisions: [],
+    acceptedWarnings: [],
+  };
+  manifest["packageDigest"] = packageDigest(manifest);
+  return {
+    schema: "ggd-editor-import@1",
+    manifest,
+    documents: [{ path, document: doc }],
+  };
+}
+
+/** ⭐ 落點底下的**每一個檔** —— 路徑 ＋ 位元組數。⛔ 不只是目錄名。 */
+function treeOf(dir: string): string[] {
+  const out: string[] = [];
+  const walk = (d: string, prefix: string): void => {
+    for (const e of readdirSync(d, { withFileTypes: true })) {
+      const rel = prefix === "" ? e.name : `${prefix}/${e.name}`;
+      if (e.isDirectory()) walk(join(d, e.name), rel);
+      else out.push(`${rel} ${statSync(join(d, e.name)).size}`);
+    }
+  };
+  if (existsSync(dir)) walk(dir, "");
+  return out.sort();
+}
+
+const post = (url: string, payload: unknown) =>
+  app.inject({ method: "POST", url, payload: payload as object });
+const get = (url: string) => app.inject({ method: "GET", url });
+
+describe("G2 routes —— 六條走真的 HTTP", () => {
+  it("★★ ⭐ `POST /validate` 收下乾淨的包，而且**一個位元組都不寫**", async () => {
+    const before = await get(`${P}/active`);
+    expect(before.json().active, "儀器：一開始不該有 ACTIVE").toBeNull();
+    const baseline = treeOf(importDir);
+
+    const r = await post(`${P}/validate`, pkg());
+    expect(r.statusCode, `⛔ 乾淨的包被拒：${r.body.slice(0, 400)}`).toBe(200);
+    expect(r.json().status).toBe("validated");
+    expect(r.json().changedDocuments).toHaveLength(1);
+
+    // ⭐⭐ 「無狀態變更」要驗的是**整個落點沒有多出東西** ——
+    //   ⛔ 只看 `GET /active` 是不夠的：一次 `beginOperation` 會寫進 `operations/`
+    //   而 ACTIVE 仍然是 null ⇒ ⭐ 那條斷言對這種洩漏是瞎的（2026-09-02 突變抓到）。
+    const after = await get(`${P}/active`);
+    expect(after.json().active).toBeNull();
+    expect(
+      treeOf(importDir),
+      "⛔⛔ validate **在落點寫了東西** ⇒ 規格逐字：`validate` MUST 無狀態變更",
+    ).toEqual(baseline);
+  });
+
+  it("★★ ⭐ `POST /validate` 對壞掉的包回 422 **而且說得出是哪一條**", async () => {
+    const bad = pkg();
+    (bad.manifest["authoringProcessor"] as { fingerprint: string }).fingerprint =
+      "ffffffffffff";
+    const r = await post(`${P}/validate`, bad);
+    expect(r.statusCode).toBe(422);
+    const codes = (r.json().diagnostics as { code: string }[]).map(
+      (d) => d.code,
+    );
+    expect(codes).toContain("PROCESSOR_FINGERPRINT_MISMATCH");
+  });
+
+  it("★★ ⭐⭐ `apply` → `active` → `runtime-bundle` → `rollback` 走得通", async () => {
+    const a = await post(`${P}/apply`, {
+      operationId: "op-1",
+      package: pkg("hero.q"),
+    });
+    expect(a.statusCode, `⛔ apply 失敗：${a.body.slice(0, 500)}`).toBe(200);
+    expect(a.json().status).toBe("activated");
+    const d1 = a.json().activationDigest as string;
+    expect(d1).toMatch(/^sha256:[0-9a-f]{64}$/);
+
+    // ⭐ ACTIVE 真的指到它了。
+    const act = await get(`${P}/active`);
+    expect(act.json().active.activationDigest).toBe(d1);
+    expect(act.json().rollbackAvailable, "⛔ 第一次啟用不該說回捲得了").toBe(
+      false,
+    );
+
+    // ⭐ runtime-bundle 拿得到**那棵樹的內容**（⛔ 不是 content/bundle.json）。
+    const rb = await get(`${P}/active/runtime-bundle`);
+    expect(rb.statusCode).toBe(200);
+    expect(rb.json().docs.abilities["hero.q"].id).toBe("hero.q");
+    expect(rb.json().activationDigest).toBe(d1);
+
+    // ⭐ 第二次啟用要帶 CAS。
+    const b = await post(`${P}/apply`, {
+      operationId: "op-2",
+      package: pkg("hero.w"),
+      expectedActivationDigest: d1,
+    });
+    expect(b.statusCode, `⛔ 第二次 apply 失敗：${b.body.slice(0, 500)}`).toBe(
+      200,
+    );
+    const d2 = b.json().activationDigest as string;
+    expect(d2).not.toBe(d1);
+
+    // ⭐ 回捲回得去，⛔ 而且要帶對的前提。
+    const wrong = await post(`${P}/rollback`, { expectedActivationDigest: d1 });
+    expect(wrong.statusCode, "⛔ 用過期的前提回捲成功了").toBe(409);
+    const ok = await post(`${P}/rollback`, { expectedActivationDigest: d2 });
+    expect(ok.statusCode, `⛔ 回捲失敗：${ok.body.slice(0, 400)}`).toBe(200);
+    expect(ok.json().activationDigest).toBe(d1);
+
+    // ⭐ 回捲之後 runtime-bundle 回到第一版（⛔ hero.w 不在了）。
+    const rb2 = await get(`${P}/active/runtime-bundle`);
+    expect(rb2.json().docs.abilities["hero.q"]).toBeTruthy();
+    expect(rb2.json().docs.abilities["hero.w"]).toBeUndefined();
+  });
+
+  it("★★ ⭐ `apply` 的 CAS：帶錯的 expected ⇒ 409，而 ACTIVE **沒動**", async () => {
+    const a = await post(`${P}/apply`, {
+      operationId: "op-1",
+      package: pkg("hero.q"),
+    });
+    expect(a.statusCode).toBe(200);
+    const d1 = a.json().activationDigest as string;
+
+    const bad = await post(`${P}/apply`, {
+      operationId: "op-x",
+      package: pkg("hero.w"),
+      expectedActivationDigest: "sha256:" + "9".repeat(64),
+    });
+    expect(bad.statusCode).toBe(409);
+    expect(bad.json().code).toBe("APPLY_FAILED");
+    const act = await get(`${P}/active`);
+    expect(
+      act.json().active.activationDigest,
+      "⛔⛔ CAS 失敗了而 ACTIVE 被換掉 ⇒ ⭐ 那比沒有 CAS 更糟",
+    ).toBe(d1);
+  });
+
+  it("★★ ⭐ `apply` 是**冪等**的：同一個 operationId 重送回同一個答案", async () => {
+    const a = await post(`${P}/apply`, {
+      operationId: "op-1",
+      package: pkg("hero.q"),
+    });
+    expect(a.statusCode).toBe(200);
+    const again = await post(`${P}/apply`, {
+      operationId: "op-1",
+      package: pkg("hero.q"),
+    });
+    expect(again.statusCode, "⛔ 重送同一個 operationId 又跑了一次").toBe(200);
+    expect(
+      again.json().replayed,
+      "⛔ 沒有標成 replay ⇒ 對面分不出「又做了一次」",
+    ).toBe(true);
+    expect(again.json().status).toBe("activated");
+  });
+
+  it("★ ⭐ `apply` 沒帶 operationId ⇒ 400（它是冪等鍵）", async () => {
+    const r = await post(`${P}/apply`, { package: pkg() });
+    expect(r.statusCode).toBe(400);
+    expect(r.json().code).toBe("MISSING_OPERATION_ID");
+  });
+
+  it("★ ⭐ `GET /operations/:id` 查得到狀態機；不存在 ⇒ 404", async () => {
+    await post(`${P}/apply`, { operationId: "op-1", package: pkg() });
+    const r = await get(`${P}/operations/op-1`);
+    expect(r.statusCode).toBe(200);
+    expect(r.json().status).toBe("activated");
+    expect(r.json().changedDocuments).toHaveLength(1);
+    expect((await get(`${P}/operations/nope`)).statusCode).toBe(404);
+  });
+
+  it("★ ⭐ 還沒 apply 過 ⇒ `runtime-bundle` 回 404，⛔ 而不是回 content/bundle.json", async () => {
+    const r = await get(`${P}/active/runtime-bundle`);
+    expect(r.statusCode).toBe(404);
+    expect(r.json().code).toBe("NO_ACTIVE_SNAPSHOT");
+  });
+
+  it("★★ ⭐ `implementedStage` 仍然是 **G1** —— ⛔ 六條 route 活著不等於 G2", async () => {
+    const r = await get(`${P}/health`);
+    expect(
+      r.json().implementedStage,
+      "⛔⛔ 提前宣告 G2 ⇒ ⭐ 對面會打開 full/delta，而 base pin 那幾格還是 null",
+    ).toBe("G1");
+  });
+});

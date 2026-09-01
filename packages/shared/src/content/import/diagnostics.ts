@@ -116,6 +116,83 @@ export const IMPORT_DIAGNOSTICS = {
     severity: "error",
     origin: "contract",
   }),
+  /**
+   * ⭐ 包宣稱的處理器指紋與**這一台**算出來的不同（規格 §1）。
+   *
+   * ⚠️ ⛔ 它不是「格式錯了」—— 是「你驗過的那套規則已經不是我現在跑的這一套」。
+   * ⭐ 兩者的處置完全不同：前者改包，後者**重新匯出**。
+   */
+  PROCESSOR_FINGERPRINT_MISMATCH: def({
+    code: "PROCESSOR_FINGERPRINT_MISMATCH",
+    message:
+      "包宣稱的 authoringProcessor 指紋是 {theirs}，而這一台是 {ours}。⭐ 你驗過的那套規則" +
+      "（ability/item schema · ref 收集器 · capability · authoring rules · loader · derived · golden）" +
+      "已經變了 ⇒ ⛔ 請用新的 target profile **重新匯出**，⛔ 不是改這個包。",
+    spec: "SPEC §0·1 / §10",
+    failClosed: true,
+    severity: "error",
+    origin: "contract",
+  }),
+  /** ⭐ 包裡某一份文件的內容雜湊與它宣稱的對不上。 */
+  ENTRY_HASH_MISMATCH: def({
+    code: "ENTRY_HASH_MISMATCH",
+    message:
+      "{path} 宣稱的 contentSha256 是 {claimed}，實際算出來是 {actual}。" +
+      "⛔ 傳輸損毀或包被改過 —— 這一格是**內容的身分**，不可以放行。",
+    spec: "SPEC §10 / §11-1",
+    failClosed: true,
+    severity: "error",
+    origin: "contract",
+  }),
+  /** ⭐ manifest 的 packageDigest 與重算的不同。 */
+  PACKAGE_DIGEST_MISMATCH: def({
+    code: "PACKAGE_DIGEST_MISMATCH",
+    message:
+      "manifest 宣稱 packageDigest={claimed}，重算是 {actual}。" +
+      "⛔ 一個對不上的 digest 讓「這一包是不是我審的那一包」變成無法回答。",
+    spec: "SPEC §10",
+    failClosed: true,
+    severity: "error",
+    origin: "contract",
+  }),
+  /** ⭐ base pin 與這一台的實際狀態不符（exact Base/before hashes）。 */
+  BASE_PIN_MISMATCH: def({
+    code: "BASE_PIN_MISMATCH",
+    message:
+      "包 pin 的 base.{field} 是 {theirs}，而這一台現在是 {ours}。" +
+      "⛔ 套下去會覆蓋掉你沒看過的改動 —— 請用**現在**的 target profile 重新建包。",
+    spec: "SPEC §10 / §11-2",
+    failClosed: true,
+    severity: "error",
+    origin: "contract",
+  }),
+  /**
+   * ⭐ 相依封閉性：包裡某份文件指向一個**包與 base 都沒有**的 id。
+   *
+   * ⚠️ 只管**硬**參照（`zRef`）——軟參照（`ref?:`）懸空只警告，
+   * ⛔ 因為那是「還沒做的特效」而不是「壞掉的內容」（與出貨 loader 同一條規則）。
+   */
+  REF_NOT_CLOSED: def({
+    code: "REF_NOT_CLOSED",
+    message:
+      "{collection}/{id} 的 {field} 指向 {target}，而**包裡與 base 裡都沒有**它。" +
+      "⛔ 套下去會得到一份載入即失敗的內容 —— 請把被指到的那一份一起帶進包裡。",
+    spec: "SPEC §11-3",
+    failClosed: true,
+    severity: "error",
+    origin: "contract",
+  }),
+  /** ⭐ 包要求的能力這一台沒有。 */
+  CAPABILITY_UNSUPPORTED: def({
+    code: "CAPABILITY_UNSUPPORTED",
+    message:
+      "包要求能力 {capability}，而這一台的 runtime 不認得它。" +
+      "⛔ 套下去內容會通過 schema 而在遊戲裡什麼都不發生（第一·五守則）。",
+    spec: "SPEC §11-5",
+    failClosed: true,
+    severity: "error",
+    origin: "contract",
+  }),
   IMPLICIT_DELETE_FORBIDDEN: def({
     code: "IMPLICIT_DELETE_FORBIDDEN",
     message:
