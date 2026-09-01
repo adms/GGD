@@ -165,6 +165,28 @@ export const zConfigUiCuesDoc = z
       })
       .strict()
       .optional(),
+    /**
+     * ⭐⭐ GH#908 —— **玩家投稿與發現**（大目標的最後一段）。
+     *
+     * owner 的大目標逐字：「**開放讓玩家自己設計 英雄、技能、特效**」。
+     * ⇒ ⭐ 編輯器做得出內容之後，⛔ 而它今天沒有出口。
+     *
+     * ⚠️ ⭐ **兩格都預設關** —— 這是這個專案第一個**對外開放**的東西：
+     * 玩家投稿是**第一個不可信的內容來源**（出貨內容都是我們自己寫的）
+     * ⇒ ⛔ 對外開放的東西**不預設開**。
+     *
+     * ⭐ 兩格分開的理由：`submit` 開而 `discover` 關 ＝ **收得到但還沒公開** ——
+     * ⛔ 那正是第一批投稿進來時要的狀態（先累積、先審，⛔ 不是一開就上線）。
+     */
+    playerContent: z
+      .object({
+        /** 玩家送得出投稿嗎。⛔ 出貨 false。 */
+        submit: z.boolean(),
+        /** 大廳看得到**已核准**的玩家內容嗎。⛔ 出貨 false。 */
+        discover: z.boolean(),
+      })
+      .strict()
+      .optional(),
     commsWheel: z
       .object({
         /** 總開關。⛔ 關掉＝一鍵 rollback（輪盤打不開，那 5 格回到啞的）。 */
@@ -216,6 +238,8 @@ export type UiCuesDoc = Omit<ConfigUiCuesDoc, "id" | "schema" | "note">;
 export const DEFAULT_UI_CUES: UiCuesDoc = {
   // ⭐ GH#896 —— owner：「這個根本還沒做好不開放」。⛔ 預設關。
   lobbyStore: { enabled: false },
+  // ⭐ GH#908 —— 對外開放的東西⛔不預設開。
+  playerContent: { submit: false, discover: false },
   telegraphRune: true,
   // ⭐ 預設就是「畫真的會打到人的那個形狀」（第〇·六守則：優先權大的更新預設啟動）。
   telegraphGroundShape: "line",

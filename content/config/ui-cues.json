@@ -5,6 +5,10 @@
   "lobbyStore": {
     "enabled": false
   },
+  "playerContent": {
+    "submit": false,
+    "discover": false
+  },
   "telegraphRune": true,
   "telegraphGroundShape": "line",
   "telegraphRuneAlpha": 0.85,

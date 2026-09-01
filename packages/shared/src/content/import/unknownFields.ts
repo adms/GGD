@@ -120,7 +120,30 @@ export function parseWithUnknownFieldReport<T extends z.ZodTypeAny>(
   readonly diagnostics: readonly ImportDiagnostic[];
 } {
   const parsed = schema.safeParse(raw);
-  if (!parsed.success) return { ok: false, value: null, diagnostics: [] };
+  if (!parsed.success) {
+    // ⛔⛔ 這一行在 2026-09-01 之前是 `diagnostics: []` —— ⭐ **被拒的那條路一個字都不說**。
+    //
+    // ⚠️ 而它的症狀特別惡劣：呼叫端拿到 `ok:false` ＋ **空的診斷** ⇒ 它只能說
+    //   「不合法」，⛔ 說不出**是哪一格**。⭐ 而這個模組存在的全部理由就是
+    //   「多餘欄位**說得出名字**」（GH#327）—— ⇒ 型別錯的那一半卻是啞的。
+    //
+    // ⭐ 2026-09-01 抓到它的是 GH#908 的投稿守衛：一份 `gameId: 123` 的包被拒了，
+    //   而斷言「拒了卻說不出原因」紅。⇒ ⭐ 玩家投稿是**不可信輸入** ——
+    //   一句說不出原因的拒絕，對投稿者等於「壞了但我不告訴你哪裡」。
+    //
+    // ⛔ 只取前幾條：一份結構全錯的包會產生上百個 issue，⭐ 而前幾條就指得到現場。
+    return {
+      ok: false,
+      value: null,
+      diagnostics: parsed.error.issues.slice(0, 8).map((i) =>
+        diagnostic(
+          "PACKAGE_SCHEMA_INVALID",
+          { path: i.path.join(".") || "(root)", detail: i.message },
+          { path: i.path.join(".") || "(root)" },
+        ),
+      ),
+    };
+  }
   // ⭐ 掃的是**原始輸入**，⛔ 不是 parse 的產物 —— Zod 的 `.passthrough()` 會保留
   //   未知 key，⚠️ 但一個 `.strict()` 的子節點會在這裡就把它丟掉，
   //   ⇒ 掃產物會**漏報**那一種。

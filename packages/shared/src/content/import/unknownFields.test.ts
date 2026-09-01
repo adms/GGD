@@ -90,10 +90,22 @@ describe("GH#327 ① 組合入口 —— ⛔ 拿不到「只 parse 沒掃描」�
     expect(r.diagnostics[0]!.message).toContain("revisionn");
   });
 
-  it("⭐ parse 失敗 ⇒ ⛔ 不報未知欄位（那會蓋掉真正的錯誤）", () => {
+  it("⭐ parse 失敗 ⇒ ⛔ 不報未知欄位，⭐ 而**真正的錯誤要說得出是哪一格**", () => {
     const r = parseWithUnknownFieldReport(zExactRef, { kind: "ability" });
     expect(r.ok).toBe(false);
-    expect(r.diagnostics, "⛔ 一堆「沒看懂」會把 schema 錯誤淹掉").toEqual([]);
+    // ⭐ 這一條的意圖沒變：⛔ 一堆「沒看懂」會把 schema 錯誤淹掉。
+    expect(
+      r.diagnostics.filter((d) => d.code === "UNKNOWN_FIELDS_NOT_UNDERSTOOD"),
+      "⛔ 一堆「沒看懂」會把 schema 錯誤淹掉",
+    ).toEqual([]);
+    // ⭐⭐ 2026-09-01（GH#908）——**加強**：在此之前這裡斷言 `toEqual([])`，
+    //   ⇒ ⛔ 那等於要求「被拒的那條路**一個字都不說**」。
+    // ⚠️ 而這個模組存在的全部理由是「說得出是哪一格」（GH#327）——
+    //   ⇒ ⭐ 型別錯的那一半卻是啞的：呼叫端只能說「不合法」。
+    // ⭐ 抓到它的是玩家投稿的守衛（不可信輸入 ⇒ 一句說不出原因的拒絕，
+    //   對投稿者等於「壞了但我不告訴你哪裡」）。
+    expect(r.diagnostics.length, "⛔ 拒了卻一個字都不說").toBeGreaterThan(0);
+    expect(r.diagnostics.every((d) => d.code === "PACKAGE_SCHEMA_INVALID")).toBe(true);
   });
 
   it("⭐ 乾淨的輸入 ⇒ **零診斷**（⛔ 誤報讓人學會忽略它）", () => {
