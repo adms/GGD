@@ -37,6 +37,7 @@
  * gutter the cluster publishes (`../chromeReserve`) instead of hard-coding a
  * width, and wraps rather than compressing into it.
  */
+import { lobbyStoreOpen } from "@ggd/shared/content/schema/config/uiCues";
 import { uiCues } from "../uiCuesConfig";
 import { useState } from "react";
 import { useApp } from "./store";
@@ -495,8 +496,12 @@ export function LobbyScreen(): React.JSX.Element {
   const wallet = useApp((s) => s.wallet);
   const wsStatus = useApp((s) => s.wsStatus);
   const lobbyView = useApp((s) => s.lobbyView);
-  // ⭐ GH#896 —— 模組商店的總開關（出貨 false）。⛔ 缺席 = 用 `DEFAULT_UI_CUES` 的 false。
-  const storeOpen = uiCues().lobbyStore?.enabled === true;
+  // ⭐ GH#911 —— 那一頁裝著**兩種商品、兩種貨幣**：英雄（藍水晶，靠遊玩賺）＋ 造型（M 幣）。
+  //   owner：「商店買角色的部分好像被關掉了 **我只要關掉買模組特效的部分**」
+  //   ⇒ 按鈕與路由只問「這一頁進不進得去」（任一半開著就進得去），
+  //   ⛔ 而**哪一半畫出來**是 StoreScreen 自己的事。
+  //   ⚠️ 兩個讀端（按鈕 ＋ 底下的 body）問**同一支函式**，⛔ 不是各自寫一次條件。
+  const storeOpen = lobbyStoreOpen(uiCues()).page;
   const setLobbyView = useApp((s) => s.setLobbyView);
   const room = useApp((s) => s.room);
   const doLogout = useApp((s) => s.doLogout);

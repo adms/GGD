@@ -160,8 +160,24 @@ export const zConfigUiCuesDoc = z
      */
     lobbyStore: z
       .object({
-        /** 出貨值 **false** ＝ owner 說的「還沒做好不開放」。⭐ 做完了把它改成 true。 */
-        enabled: z.boolean(),
+        /**
+         * ⛔ **舊欄位（legacy）**，⚠️ 保留只為了**已經存過的後台 override**。
+         *
+         * #896 把它做成**整頁**的總開關，而 owner 2026-09-01 指出那是錯的：
+         * > 「商店買角色的部分好像被關掉了 **我只要關掉買模組特效的部分**」
+         *
+         * ⇒ ⭐ 那一頁裝著**兩種商品、兩種貨幣**：英雄用**藍水晶**（靠遊玩賺）、
+         * 造型用 **M 幣**（後台發放）。一格開關把兩半一起關掉。
+         *
+         * ⚠️ 讀的時候一律走 `lobbyStoreOpen()`，⛔ 不要直接讀這一格 ——
+         * 它今天的語意是「`false` ⇒ **整頁**關掉（兩半都關）」，
+         * ⭐ 而 `true`／缺席 ⇒ 由底下兩格各自決定。
+         */
+        enabled: z.boolean().optional(),
+        /** ⭐ **英雄**那一半（藍水晶）。出貨 **true** —— owner 只要關造型。 */
+        champions: z.boolean().optional(),
+        /** ⛔ **造型／模組**那一半（M 幣）。出貨 **false** ——「這個根本還沒做好不開放」。 */
+        skins: z.boolean().optional(),
       })
       .strict()
       .optional(),
@@ -237,7 +253,8 @@ export type UiCuesDoc = Omit<ConfigUiCuesDoc, "id" | "schema" | "note">;
  */
 export const DEFAULT_UI_CUES: UiCuesDoc = {
   // ⭐ GH#896 —— owner：「這個根本還沒做好不開放」。⛔ 預設關。
-  lobbyStore: { enabled: false },
+  // ⭐ GH#911 —— 拆成兩半：英雄**開**（藍水晶靠遊玩賺，owner 要保留）、造型**關**。
+  lobbyStore: { champions: true, skins: false },
   // ⭐ GH#908 —— 對外開放的東西⛔不預設開。
   playerContent: { submit: false, discover: false },
   telegraphRune: true,
@@ -297,4 +314,31 @@ export function resolveUiCues(doc: ConfigUiCuesDoc | null | undefined): UiCuesDo
 export function rallyExtendLabel(seconds: number): string {
   if (seconds >= 60 && seconds % 60 === 0) return `多等 ${seconds / 60} 分鐘`;
   return `多等 ${seconds} 秒`;
+}
+
+/**
+ * ⭐⭐ 大廳商店的**兩半**各自開不開（GH#911）—— ⛔ 這是唯一的讀法。
+ *
+ * ── ⚠️ 為什麼一定要走同一支函式 ────────────────────────────────────────────
+ * #896 刻意做了**兩個讀端**（大廳的按鈕 ＋ `lobbyView === "store"` 的 body）——
+ * ⛔ 少擋一邊就會留下「按鈕在但點進去是空的」或「按鈕沒了但舊瀏覽器狀態進得去」。
+ * ⇒ ⭐ 兩個讀端問同一支函式，⛔ 不是各自寫一次條件（那是第〇·四守則的第二個住處）。
+ *
+ * ── ⭐ legacy `enabled` 的語意 ─────────────────────────────────────────────
+ * 已經存過的後台 override 只有 `{ enabled: false }`（#896 的形狀）。
+ * ⇒ `enabled === false` **兩半都關**（尊重那一次的裁決：整頁關掉）。
+ * ⛔ 而 `enabled === true` 不強制打開造型 —— 它只表示「整頁沒有被關」，
+ *   兩半仍然各自看自己那一格（⭐ 否則一份舊的 `{enabled:true}` 會把造型偷偷打開）。
+ */
+export function lobbyStoreOpen(doc: Pick<UiCuesDoc, "lobbyStore">): {
+  champions: boolean;
+  skins: boolean;
+  /** ⭐ 按鈕與路由用這一格：任一半開著，那一頁就進得去。 */
+  page: boolean;
+} {
+  const s = doc.lobbyStore;
+  if (s?.enabled === false) return { champions: false, skins: false, page: false };
+  const champions = s?.champions ?? DEFAULT_UI_CUES.lobbyStore?.champions ?? false;
+  const skins = s?.skins ?? DEFAULT_UI_CUES.lobbyStore?.skins ?? false;
+  return { champions, skins, page: champions || skins };
 }

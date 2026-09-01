@@ -40,6 +40,8 @@
  * no i18n layer and #19 owns introducing one — inventing a key/lookup system in
  * one screen would fork it.
  */
+import { lobbyStoreOpen } from "@ggd/shared/content/schema/config/uiCues";
+import { uiCues } from "../uiCuesConfig";
 import { useEffect, useMemo, useState } from "react";
 import { useApp } from "./store";
 import { deriveStoreRows, storeRowsForWhitelist, type ChampionRow, type SkinRow } from "./catalog";
@@ -207,6 +209,11 @@ export const STORE_LIST_SCROLL: React.CSSProperties = {
 export function StoreChampionGroup(props: {
   champ: ChampionRow;
   wallet: Wallet | null;
+  /**
+   * ⭐ GH#911 —— 造型那一半畫不畫（`config.ui-cues@1` 的 `lobbyStore.skins`）。
+   * ⚠️ 缺席 ⇒ **畫**（⛔ 這個預設是給既有測試與故事書用的；出貨值由呼叫端傳）。
+   */
+  showSkins?: boolean;
   shownSkinId: string | null;
   onSelect: (sk: SkinRow) => void;
   onBuy: (item: PurchaseItem) => void;
@@ -282,7 +289,9 @@ export function StoreChampionGroup(props: {
           {champ.blurb}
         </div>
       )}
-      {champ.skins.map((sk) => {
+      {/* ⭐ GH#911 —— owner：「我只要關掉買模組特效的部分」。
+          ⛔ 程式碼一行都沒刪（同 #896）：關的是**畫不畫**，資料照樣載。 */}
+      {(props.showSkins ?? true) && champ.skins.map((sk) => {
         const isShown = props.shownSkinId === sk.id;
         const short = !sk.owned && balanceOf(wallet, sk.currency) < sk.price;
         return (
@@ -398,6 +407,8 @@ export function StoreScreen(): React.JSX.Element {
     [catalog, skinDocs, contentReady, whitelist],
   );
   const allSkins = useMemo(() => rows.flatMap((r) => r.skins), [rows]);
+  // ⭐ GH#911 —— 兩半各自的開關（⛔ 一次解析，不是每一列問一次）。
+  const store = lobbyStoreOpen(uiCues());
   const shown = selected ?? allSkins[0] ?? null;
   // The preview caption names the champion this skin belongs to. `named:false`
   // (content not loaded / unknown champion) yields "" so the caption drops the
@@ -445,6 +456,7 @@ export function StoreScreen(): React.JSX.Element {
               key={champ.id}
               champ={champ}
               wallet={wallet}
+              showSkins={store.skins}
               shownSkinId={shown?.id ?? null}
               onSelect={setSelected}
               onBuy={purchaseBegin}
