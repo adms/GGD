@@ -154,17 +154,17 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.5
-              }
-            ],
             "damageTierPerRank": [
               "極小",
               "極小",
               "小",
               "小"
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.5
+              }
             ]
           }
         },

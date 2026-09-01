@@ -168,10 +168,10 @@
         60.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "effects": [],
       "template": {
@@ -189,11 +189,10 @@
       },
       "vfxKey": "fx.prim.arcane.swarm",
       "targetsEnemies": true,
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.267,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "極大",
-      "manaCostTier": "小"
+      "cooldownTier": "極大"
     },
     "R": {
       "id": "godie-huth.r",
