@@ -186,6 +186,10 @@ describe("discriminated EffectDef union (editor-02)", () => {
         // 兩個都跟著 `PreviewController.effectLines` 的 case 一起進來，所以
         // 這條釘子與那個 `never` 分支同時被滿足 —— 補 tag 不是修好它。
         "grantGold", // 「黃金數量為敵方等級」
+        // GH#890 原木改為經驗值。UI union 與 PreviewController 已有真正
+        // `grantXp` 分支；把名字留在這條刻意寫死的 tripwire，下一次 schema
+        // 成長才不會再出現「全契約覆蓋綠、舊種類清單紅」的分裂狀態。
+        "grantXp",
         "floatingText",
         "heal",
         "invulnerable", // lane P3 — 無敵
