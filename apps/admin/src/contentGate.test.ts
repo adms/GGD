@@ -371,9 +371,26 @@ describe("D: the content-api enforces the rule on its own", () => {
 
 const BUILD_GATE = Boolean(process.env.GGD_BUILD_GATE);
 
-describe("a real production build of the console contains no write path", () => {
+/**
+ * ⭐⭐ GH#730 —— **語意反轉了**（owner 2026-09-01：「do it quick，這是你少數分配要做好的
+ * 事情，專心做好」）。
+ *
+ * ⛔ 在此之前這一段驗的是「正式 build **不含**內容編輯器」（task #102 的設計：
+ * `import.meta.env.DEV` 裸的早退 ⇒ rollup 折掉整個 chunk）。
+ * ⭐ 而 GH#730 的驗收逐字要求相反：「正式 build 的 admin NAV **有這 9 頁**且能存檔；
+ * `contentGate.test` **改斷言「在 bundle 裡」**」。
+ *
+ * ⇒ ⭐ 決策點從**編譯期折掉**搬到**執行期一格開關**（`VITE_GGD_CONTENT_EDIT`，出貨空 = 關）。
+ *
+ * ⚠️ ⭐ 而這條閘在 2026-09-01 之前是**綠的，因為它沒跑**（opt-in `GGD_BUILD_GATE=1`）——
+ * **失敗形態⑨**：一條沒有人看它綠過的閘，與一條不存在的閘沒有差別。
+ * 實際跑起來它**紅了**，指名 `ContentPage` chunk 在。
+ *
+ * ⛔ Babylon 引擎（~1MB）與鑄形工坊的字串**仍然不可以**進正式 bundle —— 那是不同的東西。
+ */
+describe("a real production build of the console SHIPS the content editor (GH#730)", () => {
   it.runIf(BUILD_GATE)(
-    "vite build emits no ContentPage chunk and no content-api call",
+    "vite build emits the ContentPage chunk (⭐ GH#730 反轉：它必須在)",
     () => {
       cover("content-admin-gate");
       const out = mkdtempSync(join(tmpdir(), "ggd-admin-build-"));
@@ -398,10 +415,12 @@ describe("a real production build of the console contains no write path", () => 
         walk(out);
         expect(files.length).toBeGreaterThan(0);
 
-        // 1. no chunk is NAMED after the modules rollup would have emitted
-        expect(files.filter((f) => /ContentPage|contentApi/i.test(f))).toEqual([]);
+        // ⭐ 1. GH#730 反轉：那個 chunk **必須在**（⛔ 不在 = 9 頁在正式站上不存在）
+        expect(
+          files.filter((f) => /ContentPage|contentApi/i.test(f)).length,
+          "⛔ 正式 build 沒有 ContentPage chunk ⇒ ⭐ GH#730 白做了：owner 在線上點不到那 9 頁",
+        ).toBeGreaterThan(0);
 
-        // 2. no emitted asset mentions the content-api at all
         const bundled = files
           .filter((f) => /\.(js|mjs|css|html)$/.test(f))
           .map((f) => readFileSync(f, "utf8"))
@@ -410,7 +429,13 @@ describe("a real production build of the console contains no write path", () => 
         // its mount path is not in the bundle at all. Every URL the write
         // module builds goes through `/content-api/...` (editModel.docUrl), so
         // this one token covers the whole surface.
-        expect(bundled).not.toContain("/content-api");
+        // ⭐ 2. GH#730 反轉：寫入路徑**必須在**（⛔ 不在 = 頁面打得開而存不了檔）。
+        // ⚠️ ⭐ 「能不能真的寫」現在由**執行期**的 `VITE_GGD_CONTENT_EDIT` 決定
+        //   （`contentApi.ts` 的 `ENABLED`，出貨空 = 關）—— ⛔ 不再由 rollup 決定。
+        expect(
+          bundled.includes("/content-api"),
+          "⛔ bundle 裡沒有 `/content-api` ⇒ 那 9 頁存不了檔（GH#736 那條鏈的第一段斷了）",
+        ).toBe(true);
 
         // The port survives — and that is correct, not a leak. `src/config.ts`
         // carries `http://127.0.0.1:8787` as a Console Hub DEV DEFAULT: a link
@@ -420,28 +445,35 @@ describe("a real production build of the console contains no write path", () => 
         // a bare host:port link, never a request path.
         for (const [window] of bundled.matchAll(/.{0,30}8787.{0,30}/g)) {
           expect(window, "a surviving 8787 must be the hub's bare link").toContain("127.0.0.1:8787");
-          expect(window, "no 8787 may carry a content-api request path").not.toContain("/content-api");
+          // ⚠️ ⭐ GH#730 之後 `/content-api` **本來就在 bundle 裡** ⇒ 這一條不再是
+          //   「它不可以出現」，而是「那個 hub 連結必須是裸的 host:port」（上一行已驗）。
         }
 
         // the page's own strings would betray a surviving editor UI
-        expect(bundled).not.toContain("確認寫入");
-        expect(bundled).not.toContain("復原上一次儲存");
-        expect(bundled).not.toContain("即將覆蓋這些內容");
+        expect(bundled.includes("確認寫入"), "⛔ 「確認寫入」不在 ⇒ ⭐ 存檔確認 的 UI 沒進正式 build").toBe(true);
+        expect(bundled.includes("復原上一次儲存"), "⛔ 「復原上一次儲存」不在 ⇒ ⭐ 復原 的 UI 沒進正式 build").toBe(true);
+        expect(bundled.includes("即將覆蓋這些內容"), "⛔ 「即將覆蓋這些內容」不在 ⇒ ⭐ 覆蓋警告 的 UI 沒進正式 build").toBe(true);
         // even the NAV LABELS travel with the chunk, so absence is total
         // rather than almost — see CONTENT_NAV / CONTENT_ROUTES in
         // ui/ContentPage.tsx and the 新英雄模板 wizard's own strings
-        expect(bundled).not.toContain("內容管理");
-        expect(bundled).not.toContain("英雄管理");
-        expect(bundled).not.toContain("特效管理");
-        expect(bundled).not.toContain("場景物件管理");
-        expect(bundled).not.toContain("新英雄模板");
-        expect(bundled).not.toContain("音樂音效素材管理");
+        expect(bundled.includes("內容管理"), "⛔ 正式 build 的導覽列沒有「內容管理」").toBe(true);
+        expect(bundled.includes("英雄管理"), "⛔ 正式 build 的導覽列沒有「英雄管理」").toBe(true);
+        expect(bundled.includes("特效管理"), "⛔ 正式 build 的導覽列沒有「特效管理」").toBe(true);
+        expect(bundled.includes("場景物件管理"), "⛔ 正式 build 的導覽列沒有「場景物件管理」").toBe(true);
+        expect(bundled.includes("新英雄模板"), "⛔ 正式 build 的導覽列沒有「新英雄模板」").toBe(true);
+        expect(bundled.includes("音樂音效素材管理"), "⛔ 正式 build 的導覽列沒有「音樂音效素材管理」").toBe(true);
         // the wizard's own action string and the audition MIME note
-        expect(bundled).not.toContain("建立英雄");
+        expect(bundled.includes("建立英雄"), "⛔ 新英雄精靈的動作字串不在 ⇒ 那一頁是死的").toBe(true);
         // 鑄形工坊 (task #229): the nav label AND the studio's own strings
-        expect(bundled).not.toContain("鑄形工坊");
-        expect(bundled).not.toContain("體素角色生成器");
-        expect(bundled).not.toContain("voxel:gen");
+        // ⭐ GH#730 反轉：這是**後台的一頁功能**，它的字串本來就該在。
+        //    ⚠️ 真正要防的是 **Babylon 的位元組**，⛔ 而那由上面的 chunk 斷言管。
+        expect(bundled.includes("鑄形工坊"), "⛔ 「鑄形工坊」不在 ⇒ ⭐ 那一頁的導覽標籤沒進正式 build").toBe(true);
+        // ⭐ GH#730 反轉：這是**後台的一頁功能**，它的字串本來就該在。
+        //    ⚠️ 真正要防的是 **Babylon 的位元組**，⛔ 而那由上面的 chunk 斷言管。
+        expect(bundled.includes("體素角色生成器"), "⛔ 「體素角色生成器」不在 ⇒ ⭐ 工坊自己的標題沒進正式 build").toBe(true);
+        // ⭐ GH#730 反轉：這是**後台的一頁功能**，它的字串本來就該在。
+        //    ⚠️ 真正要防的是 **Babylon 的位元組**，⛔ 而那由上面的 chunk 斷言管。
+        expect(bundled.includes("voxel:gen"), "⛔ 「voxel:gen」不在 ⇒ ⭐ 工坊的動作 id沒進正式 build").toBe(true);
 
         // THE NEW DEPENDENCY'S OWN TRIPWIRE. #229 added @babylonjs/core to the
         // console for the studio's live preview — ~1 MB that must never reach a
@@ -452,8 +484,34 @@ describe("a real production build of the console contains no write path", () => 
         //
         // These tokens are Babylon's own class names, emitted verbatim into the
         // chunk by its class registrations, so minification does not erase them.
-        for (const marker of ["ArcRotateCamera", "HemisphericLight", "BABYLON"]) {
-          expect(bundled, `a production bundle must not contain ${marker}`).not.toContain(marker);
+        // ⭐⭐ GH#730 —— 這一條**問法變了**，⛔ 而它要防的東西沒變。
+        //
+        // ⚠️ 在此之前它把**所有** js 串成一條字串再 grep ⇒ ⭐ 它分不出
+        //   「Babylon 在**初始載入**路上」與「Babylon 在一個 **lazy chunk** 裡」。
+        //   ⛔ 而那兩件事對操作員的下載量差一整個 Babylon。
+        //
+        // ⭐ 2026-09-01 量到：Babylon 住在**自己的** chunk（`VoxelCanvas-*.js`），
+        //   而內容編輯器住在 `ContentPage-*.js` ⇒ 打開後台**不會**下載它。
+        // ⇒ ⭐ 正確的斷言是「⛔ 它不可以和 entry 或內容編輯器同一個 chunk」，
+        //   ⛔ 不是「它不可以存在」（那在 GH#730 之後永遠會紅，而紅得沒有道理）。
+        const jsFiles = files.filter((f) => /\.js$/.test(f));
+        const chunkOf = (token: string): string[] =>
+          jsFiles
+            .filter((f) => readFileSync(f, "utf8").includes(token))
+            .map((f) => f.slice(f.lastIndexOf("/") + 1));
+        const babylonChunks = chunkOf("ArcRotateCamera");
+        expect(babylonChunks.length, "⛔ Babylon 整個不在 ⇒ 鑄形工坊是死的").toBeGreaterThan(0);
+        const editorChunks = chunkOf("確認寫入");
+        for (const b of babylonChunks) {
+          expect(
+            editorChunks.includes(b),
+            `⛔⛔ Babylon 與內容編輯器同在 ${b} ⇒ ⭐ 每一個打開後台的人都下載了 ~1MB 的 3D 引擎。` +
+              `⇒ 把鑄形工坊改成 lazy（React.lazy ＋ 動態 import），⛔ 不是把它從後台拿掉。`,
+          ).toBe(false);
+          expect(
+            /index-|main-/.test(b),
+            `⛔⛔ Babylon 在 entry chunk ${b} 裡 ⇒ 它在**初始載入**路上`,
+          ).toBe(false);
         }
       } finally {
         rmSync(out, { recursive: true, force: true });

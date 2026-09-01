@@ -35,7 +35,7 @@
  *    silently, the header shows the live cv_ and a save reports the NEW one
  *    with an explicit "重開一場才會生效" warning.
  */
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, lazy, Suspense } from "react";
 import {
   applyEdits,
   diffDocs,
@@ -63,7 +63,18 @@ import {
 import { AudioAuditionPage } from "./AudioAuditionPage";
 import { VfxStudioPage } from "./VfxStudioPage";
 import { NewHeroPageRoot } from "./NewHeroPage";
-import { VoxelStudioPageRoot } from "./voxel/VoxelStudioPage";
+// ⭐⭐ GH#730 的回歸修復 —— **鑄形工坊要 lazy**。
+//
+// ⚠️ 2026-09-01 量到：GH#730 把這 9 頁搬進正式 build 之後，這一行 **靜態** import
+// 把整個 `@babylonjs/core`（~1MB）也一起拉進去 ⇒ 正式 admin bundle **3.4 MB**。
+// ⭐ 而那正是 `contentGate.test.ts` 原本那條「Babylon 不可以進正式 bundle」在防的事
+// ⛔ —— 它當時綠著，因為它是 opt-in 而**沒有人跑它**（失敗形態⑨）。
+//
+// ⭐ `React.lazy` + 動態 import ⇒ rollup 切成獨立 chunk：
+//   9 頁照樣出貨，⛔ 而 Babylon **只在有人真的打開鑄形工坊時**才下載。
+const VoxelStudioPageRoot = lazy(() =>
+  import("./voxel/VoxelStudioPage").then((m) => ({ default: m.VoxelStudioPageRoot })),
+);
 import { Badge, Btn, ErrorBanner, Panel, TextInput } from "./widgets";
 import {
   ACCENT,
@@ -263,7 +274,13 @@ export function renderContentDevPage(
 ): React.JSX.Element | null {
   if (page === "audio") return <AudioAuditionPage />;
   if (page === "newHero") return <NewHeroPageRoot onNavigate={onNavigate} />;
-  if (page === "voxelStudio") return <VoxelStudioPageRoot onNavigate={onNavigate} />;
+  if (page === "voxelStudio")
+    return (
+      // ⭐ `Suspense` 是 lazy 的必要搭檔 —— ⛔ 少了它 React 會擲例外。
+      <Suspense fallback={<div style={{ padding: 24 }}>載入鑄形工坊…</div>}>
+        <VoxelStudioPageRoot onNavigate={onNavigate} />
+      </Suspense>
+    );
   if (page === "vfxStudio") return <VfxStudioPage />;
   const route = CONTENT_ROUTES.find((r) => r.page === page && r.only !== undefined);
   if (route === undefined) return null;
