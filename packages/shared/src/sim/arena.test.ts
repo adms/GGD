@@ -112,10 +112,18 @@ describe("ult gate override (arena-04)", () => {
     grantLevels(w, id, 2);
     expect(champ.level).toBe(3);
     expect(ab.unspentPoints).toBe(pointsBefore + 2);
-    // partial xp on the bar is topped off, not double-counted
+    // ⭐⭐ GH#910 —— 這三行在此之前斷言 `champ.xp` 被歸零，而註解逐字寫著
+    //   「partial xp on the bar is topped off, not double-counted」。
+    //
+    // ⚠️ ⭐ **那句話把缺陷寫成了功能**：owner 2026-09-01 回報「殭屍給的經驗值好像有問題」
+    //   並確認「**不是故意的**」。玩家累積在條上的進度變成系統少付的量，
+    //   ⛔ 不是玩家的收穫 —— 量到中等強度的玩家**打的殭屍有六到七成白打**。
+    //
+    // ⇒ ⭐ 這條紅**不是回歸，是前提消失**（失敗形態⑩：守衛靠缺陷才綠）。
+    //   出貨行為（`economy.roundGrantKeepsRemainder`，預設 true）＝ 餘額**留著往上疊**。
     champ.xp = 10;
     grantLevels(w, id, 1);
     expect(champ.level).toBe(4);
-    expect(champ.xp).toBe(0);
+    expect(champ.xp, "⛔ 餘額被吸收掉了 —— 那正是 GH#910 修掉的東西").toBe(10);
   });
 });

@@ -1293,9 +1293,18 @@ export class MatchController {
     //   ⛔ 在此之前 `STAT_TICK_TARGET` / `CAPSTONE_ROUND_GATE` 是寫死的常數，
     //   而 CLAUDE.md 逐字記著它們的代價（「兩個常數乘起來變成不可能，
     //   而且後台一個都改不到」）。同樣在 tick 0 之前定格。
-    this.world.economy = normalizeEconomyRules(
-      (Configs.tryGet(MATCH_CONFIG_DOC_ID) as { economy?: unknown } | undefined)?.economy,
-    );
+    // ⚠️ ⭐ `roundGrantKeepsRemainder` 住在 `progression` 那一節（它是**經驗**的事），
+    //   而其餘四格住 `economy` ⇒ 這裡把兩節**合起來**餵給同一個 rules 物件。
+    //   ⛔ 不是把那一格搬去 `economy` —— 後台的分頁按語意分，⭐ 而 sim 只要一個入口。
+    {
+      const mc = Configs.tryGet(MATCH_CONFIG_DOC_ID) as
+        | { economy?: Record<string, unknown>; progression?: Record<string, unknown> }
+        | undefined;
+      this.world.economy = normalizeEconomyRules({
+        ...(mc?.economy ?? {}),
+        roundGrantKeepsRemainder: mc?.progression?.["roundGrantKeepsRemainder"],
+      });
+    }
     // 手把操作方案 (`config.controller-scheme@1`, GH#863) —— 同樣在 tick 0 之前定格。
     this.world.controllerScheme = controllerScheme;
     // 護盾規則 (`config.shield@1`, GH#289 lane P6) —— 同樣在 tick 0 之前定格。

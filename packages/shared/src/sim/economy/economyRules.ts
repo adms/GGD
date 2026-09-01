@@ -38,6 +38,13 @@ export interface EconomyRules {
    * ⛔ **連殺窗不在這裡** —— 它被客戶端音效共用，理由見 `codeOnlyKnobs.test.ts` 的豁免表。
    */
   assistWindowTicks: number;
+  /**
+   * ⭐ GH#910 —— 回合給等**保不保留**經驗條上的餘額。
+   * ⛔ false（舊行為）＝ 只補差額 ⇒ 玩家累積的進度被系統吸收掉
+   *   （量到：中等強度的玩家**打的殭屍有六到七成白打**）。
+   * ⭐ true（出貨）＝ 給滿一整級的量，餘額往上疊。
+   */
+  roundGrantKeepsRemainder: boolean;
 }
 
 /** ⭐ 出貨值 —— **逐格等於**它搬過來之前的那個常數。 */
@@ -47,10 +54,11 @@ export const DEFAULT_ECONOMY: EconomyRules = Object.freeze({
   statTickTarget: 20,
   capstoneRoundGate: 6,
   assistWindowTicks: 300,
+  roundGrantKeepsRemainder: true,
 });
 
 /** ⚠️ 與 Zod 那一份**逐字相同**。 */
-const BOUNDS: Readonly<Record<keyof EconomyRules, readonly [number, number]>> = Object.freeze({
+const BOUNDS: Readonly<Partial<Record<keyof EconomyRules, readonly [number, number]>>> = Object.freeze({
   legendaryOrbPrice: [0, 100000],
   statTickPrice: [0, 100000],
   // ⛔ 下界 1：0 次精粹 = 開場就有頂點，那不是「便宜」，是機制消失。
@@ -66,11 +74,16 @@ export function normalizeEconomyRules(raw: unknown): EconomyRules {
     string,
     unknown
   >;
-  const out = { ...DEFAULT_ECONOMY } as Record<string, number>;
+  const out = { ...DEFAULT_ECONOMY } as Record<string, number | boolean>;
   for (const k of Object.keys(DEFAULT_ECONOMY) as (keyof EconomyRules)[]) {
     const v = r[k];
+    // ⭐ 布林那一格（`roundGrantKeepsRemainder`）沒有上下界 —— 它只有兩個狀態。
+    if (typeof DEFAULT_ECONOMY[k] === "boolean") {
+      if (typeof v === "boolean") (out as Record<string, unknown>)[k] = v;
+      continue;
+    }
     if (typeof v !== "number" || !Number.isFinite(v)) continue;
-    const [lo, hi] = BOUNDS[k];
+    const [lo, hi] = BOUNDS[k]!;
     out[k] = Math.min(hi, Math.max(lo, v));
   }
   return Object.freeze(out) as unknown as EconomyRules;

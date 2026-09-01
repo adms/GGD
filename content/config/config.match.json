@@ -75,7 +75,8 @@
     "xpPerLevel": 80,
     "xpKill": 120,
     "xpAssist": 60,
-    "xpRoundSurvive": 100
+    "xpRoundSurvive": 100,
+    "roundGrantKeepsRemainder": true
   },
   "rating": {
     "kda": 5,

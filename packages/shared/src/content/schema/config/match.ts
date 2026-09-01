@@ -736,6 +736,21 @@ export const zConfigMatchDoc = z
         xpKill: z.number().int().min(0),
         xpAssist: z.number().int().min(0),
         xpRoundSurvive: z.number().int().min(0),
+        /**
+         * ⭐⭐ GH#910 —— **回合給等要不要保留經驗條上的餘額**。
+         *
+         * owner 2026-09-01：「我是覺得 殭屍給的經驗值好像有問題」·「**不是故意的**，請你開票」
+         *
+         * ⛔ 在此之前 `grantLevels` 只補**差額**（`xpToNext(level) - champ.xp`）——
+         * ⇒ 玩家累積在條上的進度變成**系統少付的量**，⛔ 不是玩家的收穫。
+         * ⚠️ 一場有 **49 次**回合給等 ⇒ 量到中等強度的玩家
+         * **打的殭屍有六到七成的經驗蒸發掉**（每回合殺 25 隻 ⇒ 191/250 隻白打）。
+         *
+         * ⭐ **true（出貨）** ＝ 給滿一整級的量，餘額往上疊 ⇒ 打殭屍賺的**全額**留給玩家。
+         * ⛔ false ＝ 舊行為（一鍵 rollback）。
+         * ⚠️ 打開它會讓玩家等級**變高**（量到 +3～4 級），⭐ 那是這張票的目的。
+         */
+        roundGrantKeepsRemainder: z.boolean().optional(),
       })
       .strict(),
     draft: z

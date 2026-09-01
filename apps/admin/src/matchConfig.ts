@@ -520,6 +520,15 @@ export const MATCH_FIELD_INFO: Readonly<Record<string, MatchFieldInfo>> = Object
       "做成設定而客戶端讀不到，會讓記分板與音效對「8–10 秒的第二顆人頭」說不同的話（那是 #234 修掉的 bug）。",
     live: "sim stats/matchStats.recordChampionDeath（每一次英雄死亡都問它）",
   },
+  "progression.roundGrantKeepsRemainder": {
+    zh: "回合給等**保留**經驗條餘額",
+    note:
+      "⭐ **出貨開著**（GH#910）。owner 2026-09-01：「殭屍給的經驗值好像有問題」·「**不是故意的**」。" +
+      "⛔ 關掉＝舊行為：回合給等只補「差到下一級的那一段」⇒ 玩家累積在條上的進度被系統**吸收掉**。" +
+      "⚠️ 一場有 49 次回合給等 ⇒ 量到中等強度的玩家**打的殭屍有六到七成白打**（每回合殺 25 隻 ⇒ 191/250 隻）。" +
+      "⭐ 打開＝給滿一整級的量，餘額往上疊；⚠️ 玩家等級會**變高**（量到 +3～4 級），⭐ 那是這一格的目的。",
+    live: "sim economy/progression.grantLevels（每一次回合給等、每 30 隻殭屍的加等都問它）",
+  },
   "progression.levelCap": {
     zh: "等級上限",
     note: "沒有消費端 —— `grantLevels` / `grantXp` 讀的是程式裡的 `LEVEL_CAP`。⭐ 2026-08-20 起出貨值**與它相等**（99），由測試釘住；在此之前文件寫 18 而程式是 99，兩邊說了六個月的反話。",
@@ -746,6 +755,7 @@ export const MATCH_GROUPS: readonly MatchGroup[] = [
       "economy.capstoneRoundGate",
       "economy.assistWindowTicks",
       "progression.levelCap",
+      "progression.roundGrantKeepsRemainder",
       "progression.xpBase",
       "progression.xpPerLevel",
       "progression.xpKill",
