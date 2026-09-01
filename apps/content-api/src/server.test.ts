@@ -15,6 +15,7 @@ import { hashDoc } from "@ggd/shared/content";
 import { rebuildAllIndexes, writeDocAtomic } from "@ggd/shared/content/node";
 import { buildServer } from "./server";
 import { SseHub } from "./sse";
+import { VFX_FORGE_ACCEPTANCE_IDS } from "./aiReview";
 
 const ITEM = {
   id: "ember-rod",
@@ -230,30 +231,35 @@ describe("AI change control", () => {
   });
 
   it("forces all eight acceptance IDs to non-promotable fixtures", async () => {
-    const candidate = {
-      id: "godie-hart.r",
-      schema: "vfx-script@1",
-      abilityId: "godie-hart.r",
-      segments: [{ kind: "floatingText", on: "castStart", text: "fixture" }],
-    };
-    const submitted = await app.inject({
-      method: "POST",
-      url: "/content-api/ai-review/proposals",
-      payload: {
-        target: { collection: "vfx-scripts", id: candidate.id },
-        purpose: "production-candidate",
-        candidate,
-      },
-    });
-    expect(submitted.statusCode).toBe(201);
-    const proposal = submitted.json().proposal as {
+    let proposal!: {
       key: string;
       candidateHash: string;
       purpose: string;
       promotable: boolean;
     };
-    expect(proposal).toMatchObject({ purpose: "editor-capability-fixture", promotable: false });
-    expect(existsSync(join(root, "vfx-scripts", `${candidate.id}.json`))).toBe(false);
+    for (const id of VFX_FORGE_ACCEPTANCE_IDS) {
+      const candidate = {
+        id,
+        schema: "vfx-script@1",
+        abilityId: id,
+        segments: [{ kind: "floatingText", on: "castStart", text: "fixture" }],
+      };
+      const submitted = await app.inject({
+        method: "POST",
+        url: "/content-api/ai-review/proposals",
+        payload: {
+          target: { collection: "vfx-scripts", id },
+          // Deliberately lie about the purpose: the server, not the UI, owns
+          // the fixture classification and must override all eight IDs.
+          purpose: "production-candidate",
+          candidate,
+        },
+      });
+      expect(submitted.statusCode, id).toBe(201);
+      proposal = submitted.json().proposal as typeof proposal;
+      expect(proposal, id).toMatchObject({ purpose: "editor-capability-fixture", promotable: false });
+      expect(existsSync(join(root, "vfx-scripts", `${id}.json`)), id).toBe(false);
+    }
 
     const noScore = await app.inject({
       method: "POST",
@@ -281,7 +287,6 @@ describe("AI change control", () => {
     });
     expect(promoted.statusCode).toBe(409);
     expect(promoted.json().error).toContain("永遠不能 Promote");
-    expect(existsSync(join(root, "vfx-scripts", `${candidate.id}.json`))).toBe(false);
   });
 });
 

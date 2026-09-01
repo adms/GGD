@@ -1,8 +1,8 @@
 # 遊戲主程式載入 Editor JSON／ZIP 的修改建議
 
-狀態：**Revision 2.2 — 已對 `origin/main@007d9ffc`、正式站公開 profile、VFX Forge 與目前機器 schema 做第三次接縫審查**
+狀態：**Revision 2.4 — AI 技能變更先審後上；八招改為永久非上線 Editor fixtures**
 
-最後驗證：2026-09-01 02:13（Asia/Taipei）
+最後驗證：2026-09-01 22:50（Asia/Taipei）
 
 適用範圍：GGD 遊戲主程式、後台與 Content Import API；不是 Editor UI 實作說明。
 
@@ -87,6 +87,39 @@ G0 應讓 profile 明示 digest algorithm、完整 SHA-256、package schema vers
 - ZIP safety 超限、stale base／profile／plan、CAS 失敗。
 - 遊戲端重編結果與 expected compiled 不同。
 - required scenario、strict refs、full-tree loader 或 candidate health 失敗。
+- AI 產生或 AI 調整的技能效果、機制、動畫與 VFX 尚未完成上線前人工批核。
+- 人工核准的 candidate hash 與實際 Promote 內容不同，或目標 Base 在送審後已漂移。
+
+### 1.5 AI 變更一律先審後上；不可沿用「先上線、事後否決」
+
+既有「功能批次驗收」是一般功能批次的事後 rollback 流程，不能套用到 AI 內容。AI
+目前的視覺與機制正確性不穩定，因此 AI 產生或調整的技能效果、機制、動畫、特效必須
+先存成不生效的 proposal，進入後台同一頁人工批核；pending／rejected 都不得出現在
+ACTIVE content、overlay、ZIP apply 或遊戲 registry。
+
+AI proposal 至少保存 target collection／id、candidate JSON、candidate hash、Base hash、
+來源、摘要、視覺證據、自動視覺分數與時間。人工 verdict 必須保存 reviewer、中文意見、
+肉眼分數（視覺驗收時）與精確 candidate hash。任何內容修改都會使舊 verdict 變成
+`changed-after-review`；Promote 時再次跑最新 schema／capability／asset safety，並用 Base
+hash 作 CAS，禁止「核准 A、套用 B」。核准與 Promote 是兩個明確動作，不做自動核准。
+自動截圖審查、schema、測試與 AI 自評只可作為證據；無論分數多高，都不能建立人工
+verdict、不能解鎖 Promote，也不能把候選提前寫入 overlay、ZIP 或 live content。
+
+本機 MVP 以 loopback-only content-api 隔離 proposal／verdict；production 必須把 verdict
+與 Promote 放在 authenticated Admin API，以 session actor 寫 audit log，Editor／AI proxy
+本身不得持有這兩條權限。只在前端隱藏按鈕、相信 `reviewer` 字串或讓 AI 呼叫同一支管理員
+writer，都不能算 HITL 權限邊界。
+
+八個指定技能是 `editor-capability-fixture`：只用來驗收 Editor 能否表達指定場景，後台
+只能判定 Editor 驗收 pass／fail 並記錄 0～10 肉眼分數；其 proposal 永久
+`promotable=false`，伺服器 Promote 端點也必須拒絕。fixture 應住 Editor／review material，
+不住 `content/vfx-scripts/`，也不可因驗收通過而進遊戲主程式。若日後真的要上線其中一招，
+必須另建 production candidate，重新和當時 Base 比對並獨立人工核准。
+
+這個限制不是只靠 UI 隱藏按鈕：八個 fixture ID 由伺服器再分類，即使客戶端送成
+`production-candidate` 也會被強制改成 fixture；普通內容 CRUD 也不能拿來寫入
+`vfx-scripts`。正式環境還必須讓 AI／Editor 的 credential 只有「提案」權限，人工 verdict
+與 Promote 使用不同的 Admin 權限，才能把省略標頭或直接呼叫 writer 的繞過路徑封死。
 
 ## 2. 唯一實作順序與可啟用範圍
 
@@ -347,10 +380,12 @@ Combat／VFX events 逐步加入 castId、abilityId／itemId、ProductRef／comp
 
 Editor 的 `IntentFrame → world.step()` 可證明數值與主要機制終態；Babylon 只呈現同一份結果。在 render bridge、secondary targets、projectile／impact timing 與 asset authority 對齊前，只能標示 degraded preview，不能聲稱 production renderer parity。
 
-`vfx-script@1` 已是目前 VFX Forge 的唯一可寫演出文件，寫入位置只允許
-`content/vfx-scripts/<abilityId>.json`。`content/abilities/*.json` 保留傷害、次數、
-命中與權威時序，Editor 不得以演出操作回寫它；Importer 自己重建 manifest、bundle、
-indexes 與 generated files。
+`vfx-script@1` 已是目前 VFX Forge 唯一能提出的演出文件。Forge 的儲存動作只能建立
+`docs/_review` 之類隔離材料中的 AI proposal，不能直接寫 `content/vfx-scripts/`。
+只有人工核准後的獨立 Promote 動作，才可將精確 hash 寫入
+`content/vfx-scripts/<abilityId>.json`。`content/abilities/*.json` 保留傷害、次數、命中與
+權威時序，Editor 不得以演出操作回寫它；Importer 自己重建 manifest、bundle、indexes
+與 generated files。
 
 目前腳本演出面包含 `modelFx`、`vfx`、`floatingText`、`screenFlash`、
 `screenShake`、`sound`、`anim`、`hideBody` 與 `beam`。其中 `beam` 的長、寬、
@@ -362,6 +397,12 @@ indexes 與 generated files。
 `modelFxSpawn` 要保留 authored `origin`，使有腳本的技能可以**取代**能力預設演出；
 腳本合成的事件仍走同一個 VfxSystem consumer，但不帶 authored origin，因此不會被
 自己的 replacement guard 擋掉。禁止同一刀同時播放預設綁定與腳本綁定。
+
+投射物的 `projectileSpawn`、`projectileHit` 與非普攻 `projectileEnd` 也要攜帶同一份
+authored `origin`。只靠共用 `projectileId` 反查會把一顆彈道認領給多份 script，並讓預設
+發射／命中／落空特效與自訂演出重疊；呈現層必須先用精確 ability origin 判斷所有權，
+舊 host 才允許退回 `projectileId` 相容查找。這個 origin 只控制演出歸屬，不改傷害、射程
+或命中判定。
 
 ### 9.1 VFX 有效上限必須來自系統變數
 
@@ -384,10 +425,16 @@ VFX 交付至少保留：雙向 framebuffer 校準結果、真 Sim 觸發班表�
 起手／中段／收尾關鍵影格，以及原作參考與逐招 verdict。通過 schema、typecheck 或
 coverage freshness 只證明管線可讀，不能替代畫面判讀。
 
-2026-09-01 的 8 招驗收也揭露 imported GLB 的貼圖／隱藏 primitive 品質會直接污染
+2026-09-01 的 8 招是 **Editor-only capability fixtures**，不屬於遊戲內容。它們揭露
+imported GLB 的貼圖／隱藏 primitive 品質會直接污染
 結果；`imported.herosaber` 等資產可在 0 秒就出現棋盤材質。遊戲端資產管線應加入
 missing-texture、巨大遮罩 primitive、材質透明度與 bounds 的載入前守衛，資產未通過時
 Forge 必須把「技能腳本」與「基礎模型資產」分開判責，不得把破圖算成腳本通過。
+
+目前 AI 生成視覺品質只能當預審：Owner 肉眼觀察約 0～4／10，自動截圖審查約
+2～6／10。兩種分數都不可自行產生 pass；八招在後台維持 `fixture-pending`，直到人類逐招
+查看起手／中段／收尾畫面、填 0～10 肉眼分數與中文原因，再明確按 pass／fail。就算
+pass，也只證明 Editor 具有表達能力，仍沒有 Promote 按鈕或伺服器寫入路徑。
 
 ### 9.3 貼圖去背必須按實際合成式驗證
 
