@@ -49,6 +49,19 @@ read-only source `https://ggd.adms.ai`. It exited `0`, reported source state
 - `/content-api/desktop-source`
 - `/content-api/desktop-target-profile`
 
+At 2026-09-02 03:43（Asia/Taipei）, the cross-platform runner was also executed
+against this same universal package:
+
+```bash
+pnpm --filter @ggd/editor-desktop smoke:packaged
+```
+
+It returned both `ggd-editor-desktop-smoke@1` and
+`ggd-editor-packaged-smoke-runner@1`, preserved the same source/profile
+receipts, and exited `0`. The first sandboxed attempt aborted in AppKit before
+application startup; it produced no receipt and the runner correctly failed.
+The recorded passing result was run with normal GUI-launch authority.
+
 ## Windows x64 output
 
 Built with:
@@ -60,7 +73,18 @@ pnpm --filter @ggd/editor-desktop dist:win
 `win-unpacked/GGD Ability & VFX Editor.exe` is a PE32+ x86-64 application and
 contains the packaged Editor/Admin resources. The macOS host has no Wine, so
 this proves the Windows package/resource closure but not Windows process launch;
-the same `--smoke-test` must be run on a real Windows host before a public release.
+the same smoke must be run on a real Windows host before a public release. After
+building on that host, the deterministic command is:
+
+```bash
+pnpm --filter @ggd/editor-desktop smoke:packaged
+```
+
+The runner locates the unpacked platform executable, uses isolated temporary
+user-data, and fails unless the packaged process emits a valid
+`ggd-editor-desktop-smoke@1` receipt with successful route checks. An installed
+or separately unpacked executable can be selected with
+`--executable="C:\\path\\to\\GGD Ability & VFX Editor.exe"`.
 
 | Artifact | Size | SHA-256 |
 |---|---:|---|

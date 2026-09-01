@@ -9,6 +9,7 @@ describe("desktop delivery contract", () => {
     expect(pkg.build.win.target).toEqual(expect.arrayContaining(["nsis", "portable"]));
     expect(pkg.scripts["dist:mac"]).toContain("--universal");
     expect(pkg.scripts.smoke).toContain("--smoke-test");
+    expect(pkg.scripts["smoke:packaged"]).toBe("node scripts/smoke-packaged.mjs");
     expect(pkg.build.mac.icon).toBe("../client/public/icons/icon-512.png");
     expect(pkg.build.win.icon).toBe(pkg.build.mac.icon);
     expect(existsSync(join(__dirname, "..", pkg.build.mac.icon))).toBe(true);

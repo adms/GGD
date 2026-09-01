@@ -14,6 +14,7 @@
     "build": "pnpm build:renderer && pnpm build:main",
     "start": "pnpm build && electron .",
     "smoke": "pnpm build && electron . --source-url=https://ggd.adms.ai --smoke-test --user-data-dir=dist/smoke-user-data",
+    "smoke:packaged": "node scripts/smoke-packaged.mjs",
     "dist:mac": "pnpm build && electron-builder --mac --universal",
     "dist:win": "pnpm build && electron-builder --win",
     "typecheck": "tsc --noEmit -p tsconfig.json",
