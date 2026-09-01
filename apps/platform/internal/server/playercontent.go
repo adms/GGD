@@ -104,14 +104,13 @@ func (s *Server) PlayerContentFlagsForTest() (submit bool, discover bool) {
 
 // ⭐⭐ §4 —— AI／編輯器憑證的判別，與 promote 的稽核。
 //
-// ⚠️ ⭐ `submissionPromoteDeps` **刻意不提供 `Revalidate`** ——
-// 於是 `POST /submissions/{id}/promote` 這條路線**存在、admin 擋著、會寫稽核**，
-// ⛔ 而任何一次呼叫都會回 **503 `revalidator_missing`**。
+// ⭐ **重驗真的接上了**（2026-09-02）：`GGD_CONTENT_API_URL` 有值時，
+// promote 會對 content-api 的 `POST /content-import/validate` 發**一次真的驗證**，
+// 而那一支是 TS 側的純函式 `validatePackage`（⛔ 不在 Go 這邊重寫第二份）。
 //
-// ⭐ 那是這一格今天唯一誠實的狀態：重驗（base / schema / capability / asset safety）
-// 住在 content-api（TS）那一側，而它要的 importer validate 端點還沒完成（規格 §3）。
-// ⛔ 塞一個「當它過了」的鉤子會讓 promote 看起來會動 —— ⭐ 而一條
-// 「看起來會動、實際上沒重驗」的上線路徑，比沒有這條路徑危險得多。
+// ⚠️ ⭐ 而**沒設定就沒有鉤子** ⇒ `Promote` 回 503 `revalidator_missing`。
+// ⛔ 這一格沒有安全的預設值：塞一個「當它過了」的鉤子會讓 promote 看起來會動，
+// ⭐ 而一條「看起來會動、實際上沒重驗」的上線路徑，比沒有這條路徑危險得多。
 func (s *Server) submissionPromoteDeps() submissions.PromoteDeps {
 	return submissions.PromoteDeps{
 		// ⭐ origin 取自**角色**，⛔ 不是 body（包裡自稱一律覆蓋）。
@@ -126,6 +125,8 @@ func (s *Server) submissionPromoteDeps() submissions.PromoteDeps {
 			}
 			return a.HasRole(submissions.RoleEditorProposer)
 		},
+		// ⭐ 沒設定 ⇒ `ContentAPIRevalidator` 回 nil ⇒ `Promote` 拒絕（fail-closed）。
+		Revalidate: submissions.ContentAPIRevalidator(os.Getenv("GGD_CONTENT_API_URL"), nil),
 		Audit: func(adminID, action string, detail map[string]any) {
 			if s.Curation == nil {
 				return

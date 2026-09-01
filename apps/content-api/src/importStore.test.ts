@@ -294,3 +294,23 @@ describe("ImportStore —— 有條件的 rollback", () => {
     expect(() => s.rollback(v1.activationDigest)).toThrow(/沒有上一版/);
   });
 });
+
+describe("ImportStore —— 稽核是 append-only", () => {
+  it("★★ ⭐ 一次 apply 一行；⛔ 覆寫不了、刪不掉", () => {
+    const s = store();
+    expect(s.audit("a", "x", { n: 1 })).toBe(true);
+    expect(s.audit("b", "y", { n: 2 })).toBe(true);
+    const tail = s.auditTail();
+    expect(tail).toHaveLength(2);
+    // ⭐ 最新的在前。
+    expect(tail[0]!["action"]).toBe("y");
+    // ⭐⭐ 而**兩筆都在** —— ⛔ 第二次寫沒有蓋掉第一次
+    //   （這正是它與 `operations/<id>.json` 不同的地方：那一份是狀態，會被覆寫）。
+    expect(tail[1]!["action"]).toBe("x");
+    expect(tail[1]!["n"]).toBe(1);
+  });
+
+  // ⛔ 「稽核寫不進去回 false 而不擲例外」**這裡測不到** ——
+  //   建構子會先在 mkdir 失敗，⭐ 而我不為了測一條路徑去 mock fs
+  //   （那會變成「測一個虛構通道」＝ 失敗形態⑤）。誠實記在這裡。
+});

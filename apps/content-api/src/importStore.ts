@@ -423,6 +423,57 @@ export class ImportStore {
     return null;
   }
 
+  /**
+   * ⭐⭐ **稽核行** —— append-only，一行一個 JSON。
+   *
+   * ⚠️ ⭐ 它與 `operations/` 是**不同的東西**，⛔ 不是重複：
+   *   · `operations/<id>.json` 是**狀態**（會被覆寫成終態）
+   *   · 稽核是**發生過什麼**（⛔ 永遠不覆寫，只 append）
+   * ⇒ ⭐ 一個「操作最後長什麼樣」答不出「中間被誰改過幾次」。
+   *
+   * ⚠️ ⛔ 寫稽核失敗**不可以**讓匯入失敗（那會讓一個磁碟滿變成拒絕服務），
+   * ⭐ 但也**不可以靜默** —— 呼叫端拿得到回傳值，⛔ 而它必須被讀。
+   */
+  audit(
+    actor: string,
+    action: string,
+    detail: Record<string, unknown>,
+  ): boolean {
+    const line =
+      JSON.stringify({
+        ts: this.now().toISOString(),
+        actor,
+        action,
+        ...detail,
+      }) + "\n";
+    const path = join(this.dir, "audit.ndjson");
+    try {
+      mkdirSync(dirname(path), { recursive: true });
+      const fd = openSync(path, "a");
+      try {
+        writeFileSync(fd, line);
+        fsyncSync(fd);
+      } finally {
+        closeSync(fd);
+      }
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  /** ⭐ 讀稽核（最新的在前）。⛔ 只給後台看，不對外。 */
+  auditTail(limit = 200): Record<string, unknown>[] {
+    const path = join(this.dir, "audit.ndjson");
+    if (!existsSync(path)) return [];
+    return readFileSync(path, "utf8")
+      .split("\n")
+      .filter((l) => l.trim() !== "")
+      .slice(-limit)
+      .reverse()
+      .map((l) => JSON.parse(l) as Record<string, unknown>);
+  }
+
   /** ⭐ 出貨樹的位置（ACTIVE 指到的那一棵）。 */
   activeTreePath(): string | null {
     const a = this.active();

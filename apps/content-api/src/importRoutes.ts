@@ -641,12 +641,10 @@ function registerG2Routes(
         prior !== null &&
         (prior.status === "activated" || prior.status === "rejected")
       ) {
-        return reply
-          .code(200)
-          .send({
-            ...resultOf(operationId, prior.status, null),
-            replayed: true,
-          });
+        return reply.code(200).send({
+          ...resultOf(operationId, prior.status, null),
+          replayed: true,
+        });
       }
 
       d.store.beginOperation(operationId, "content-api");
@@ -721,6 +719,15 @@ function registerG2Routes(
           status: "activated",
           activationDigest: pointer.activationDigest,
         });
+        // ⭐ 稽核：**發生過什麼**（⛔ 與 operations 的「最後長什麼樣」是兩件事）。
+        d.store.audit("content-api", "content-import.apply", {
+          operationId,
+          packageDigest: digest,
+          activationDigest: pointer.activationDigest,
+          previousActivationDigest: pointer.previousActivationDigest,
+          changed: v.changed.length,
+          transport: Buffer.isBuffer(req.body) ? "zip" : "json",
+        });
         return reply.code(200).send(
           resultOf(operationId, "activated", v, {
             activationDigest: pointer.activationDigest,
@@ -729,6 +736,11 @@ function registerG2Routes(
       } catch (e) {
         // ⛔ 失敗**不改** ACTIVE —— 那是 activate 自己保證的（CAS 前一個位元組都不動）。
         d.store.updateOperation(operationId, { status: "rejected" });
+        d.store.audit("content-api", "content-import.apply-failed", {
+          operationId,
+          packageDigest: digest,
+          reason: e instanceof Error ? e.message : String(e),
+        });
         return reply.code(409).send({
           schema: IMPORT_ERROR_SCHEMA,
           code: "APPLY_FAILED",
@@ -756,6 +768,10 @@ function registerG2Routes(
       }
       try {
         const p = d.store.rollback(expected);
+        d.store.audit("content-api", "content-import.rollback", {
+          from: expected,
+          to: p.activationDigest,
+        });
         return reply.code(200).send({
           ...resultOf("rollback-" + expected.slice(-16), "rolled-back", null),
           activationDigest: p.activationDigest,
@@ -816,6 +832,15 @@ function registerG2Routes(
       docs,
     });
   });
+
+  // ── GET /audit ─────────────────────────────────────────────────────────
+  // ⭐ 稽核是**唯讀**的（⛔ 沒有刪除、沒有編輯）—— append-only 的意義就在這裡。
+  app.get(`${prefix}/audit`, async (_req, reply) =>
+    reply.send({
+      schema: "ggd-content-import-audit@1",
+      entries: d.store.auditTail(),
+    }),
+  );
 
   // ── GET /operations/:operationId ───────────────────────────────────────
   app.get<{ Params: { operationId: string } }>(
