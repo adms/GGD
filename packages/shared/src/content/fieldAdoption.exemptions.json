@@ -1321,11 +1321,6 @@
     "why": "#147 落地的是**機制**（sim/effects/pull.ts：destination 三檔 caster / point / anchorRing，等分錨點環用單位旋轉常數表因為 sim/** 禁三角函式），內容那一半由主 session 接。⛔ NOT 「沒有人需要」：A091 05-03 及喀爾度（godie-h021.e / godie-hblm.e）的 JASS 白紙黑字是 `2×等級` 個錨點 + `250+100×等級` 半徑（war3map.j:28224-28233），而它今天寫不出來 —— `knockback` 的 from:\"pull\" 只推得動一段長度而且會走 GH#193 的距離減法（對拉是反過來的）。`content/ability-templates/tpl-pull-throw.json` 也還掛著 status:\"draft\" 等這一格。接內容的做法寫在報告的『需要主 session 接線』。機制由 sim/effects/comboAndPull.test.ts 釘住（兩具身體真的被搬到環上、而且去的是不同的錨點）。",
     "group": "靈氣 (auras) — the container FELL BACK UNDER MIN_REACH on 2026-07-30 ---"
   },
-  "variant:abilities.effects[]#summon": {
-    "status": "debt",
-    "why": "GH#289 lane P2 landed the MECHANISM (sim/effects/summon.ts + sim/summons.ts: real bodies through the SHARED mobs.spawnUnitBody, the champion stat pipeline via the SummonComp level seam, formation/lifetime/team/cap/owner-death as content fields, and summonSystem at step slot 9d″); the content half is a separate lane and content/ is a single-threaded domain this session. NOT 'nobody needs it', and that is MEASURED not asserted: docs/ability-templates.md classifies 52 map abilities as 「召喚代理」 — the largest single behaviour family in the game — and the TRUE-summon subset among them is named and sourced. 96-04 獨孤九劍 spawns 9 sword spirits 'o02X' with a 10 s timed life (j:44907-44930); 91-002 亡靈大軍 rings 8 ghouls 'u031' at 450u and orders them at the target point (j:53391); 18-04 億年樹 summons 'n010' for 9 s × level (j:28040-28106); 37-02 黑核晶 caps concurrent crystals at 7 and 「超過殺最舊」 (j:44592-44657) — which is literally where `maxAlive` + `onCap: \"replaceOldest\"` come from; 35-00 召喚佩 is a persistent pet (j:42909-42915); 33-01 放山雞 spawns 'n000'. Today every one of those is text-only. Resolve by porting 96-04 or 91-002 onto a `summon` effect (both are `formation: \"ring\"` + `durationSec`, i.e. no new mechanism needed). The mechanism itself is proven end to end by sim/effects/summon.test.ts, which runs a real SimWorld.step() and reads the bodies back off world.transform / world.health / world.team, with recorded mutations on expiry, cap, eviction and owner-death. The 30-day expiry is the reminder, because 'the primitive landed, the content did not' is exactly the S8 this census exists to catch.",
-    "group": "靈氣 (auras) — the container FELL BACK UNDER MIN_REACH on 2026-07-30 ---"
-  },
   "enum:abilities.effects[]#applyBuff.condition|0|1|0.op=!=": {
     "status": "debt",
     "why": "比較運算子,鑄技工坊 ConditionEditor 的下拉選單成員之一(apps/editor/src/forge/ConditionEditor.tsx)。出貨的條件卡都是門檻式(`<=` / `>`),沒有一張需要相等比較。第一個自然的採用者是「等級剛好 N」或「層數 == 上限」這種整數比較 —— 目前沒有這種卡。若 30 天後仍是 0,誠實的結論是這兩個成員該從 zCondition 拿掉,而不是硬編一張卡去餵它。",
@@ -1963,5 +1958,125 @@
     "since": "2026-09-01",
     "why": "GH#890 —— ⭐ `grantGold` 在 2026-09-01 之前**零個出貨採用者**，而 92-04 馬勒戈壁（owner：「改成**額外獲得**而非奪取」）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而它們服務的是**還沒有出貨的卡片形狀**：`perTargetLevel`／`mobLevelSource`／`fallbackLevel` 是「黃金數量為**敵方等級**」那一族（`grantGold.ts` 的檔頭逐字點名鍊金術之盾），`to=target` 是「**付錢給受害者**」的設計。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一張卡長什麼樣。⭐ 它們會在下一張這一族的卡片上被自然採用。",
     "group": "grant-gold-siblings"
+  },
+  "enum:abilities.effects[]#summon.at=self": {
+    "status": "landing",
+    "since": "2026-08-31",
+    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
+  },
+  "enum:abilities.effects[]#summon.at=target": {
+    "status": "landing",
+    "since": "2026-08-31",
+    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
+  },
+  "enum:abilities.effects[]#summon.body=champion": {
+    "status": "landing",
+    "since": "2026-08-31",
+    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
+  },
+  "enum:abilities.effects[]#summon.onOwnerDeath=persist": {
+    "status": "landing",
+    "since": "2026-08-31",
+    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
+  },
+  "enum:abilities.effects[]#summon.team=neutral": {
+    "status": "landing",
+    "since": "2026-08-31",
+    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
+  },
+  "field:abilities.effects[]#summon.autoTargetable": {
+    "status": "landing",
+    "since": "2026-08-31",
+    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
+  },
+  "field:abilities.effects[]#summon.bountyGold": {
+    "status": "landing",
+    "since": "2026-08-31",
+    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
+  },
+  "field:abilities.effects[]#summon.burnsInFireRing": {
+    "status": "landing",
+    "since": "2026-08-31",
+    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
+  },
+  "field:abilities.effects[]#summon.capScope": {
+    "status": "landing",
+    "since": "2026-08-31",
+    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
+  },
+  "field:abilities.effects[]#summon.championId": {
+    "status": "landing",
+    "since": "2026-08-31",
+    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
+  },
+  "field:abilities.effects[]#summon.condition": {
+    "status": "landing",
+    "since": "2026-08-31",
+    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
+  },
+  "field:abilities.effects[]#summon.formation": {
+    "status": "landing",
+    "since": "2026-08-31",
+    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
+  },
+  "field:abilities.effects[]#summon.killCredit": {
+    "status": "landing",
+    "since": "2026-08-31",
+    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
+  },
+  "field:abilities.effects[]#summon.level": {
+    "status": "landing",
+    "since": "2026-08-31",
+    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
+  },
+  "field:abilities.effects[]#summon.manualTargetable": {
+    "status": "landing",
+    "since": "2026-08-31",
+    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
+  },
+  "field:abilities.effects[]#summon.maxAlive": {
+    "status": "landing",
+    "since": "2026-08-31",
+    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
+  },
+  "field:abilities.effects[]#summon.mobTargetable": {
+    "status": "landing",
+    "since": "2026-08-31",
+    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
+  },
+  "field:abilities.effects[]#summon.onCap": {
+    "status": "landing",
+    "since": "2026-08-31",
+    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
+  },
+  "field:abilities.effects[]#summon.spread": {
+    "status": "landing",
+    "since": "2026-08-31",
+    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
+  },
+  "field:abilities.effects[]#summon.targetPriority": {
+    "status": "landing",
+    "since": "2026-08-31",
+    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
+    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
   }
 }

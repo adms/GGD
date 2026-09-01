@@ -52,7 +52,12 @@ export interface SummonVariant {
    */
   body?: "champion" | "self";
   /** which body to spawn — a champion doc id, resolved through the registry */
-  championId: string;
+  /**
+   * ⭐ 2026-09-02（GH#423）—— **`body:"self"` 時可缺席**（那條路在 sim 端一個字都不讀它）。
+   * ⚠️ 「其餘 body 必須有」由 `schema/effects/summon.ts` 的 `refine` 釘住
+   * （⛔ 不在 Zod 的 object 上 —— `discriminatedUnion` 只收 `ZodObject`）。
+   */
+  championId?: string;
   /** how many bodies this cast creates */
   count: number;
   /** seconds before despawn; ABSENT = permanent (the WC3 0-duration form) */

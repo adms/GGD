@@ -43,7 +43,7 @@ import { zChampionForm } from "./championForm";
 import { zSpawnProjectile } from "./spawnProjectile";
 import { zSpawnVfx, refine as refine_spawnVfx } from "./spawnVfx";
 import { zDot, refine as refine_dot } from "./dot";
-import { zSummon } from "./summon";
+import { zSummon, refine as refine_summon } from "./summon";
 import { zInvulnerable } from "./invulnerable";
 import { zKnockback, refine as refine_knockback } from "./knockback";
 import { zEvasion } from "./evasion";
@@ -166,6 +166,7 @@ export const EFFECT_REFINERS: Partial<Record<EffectDef["kind"], (e: never, ctx: 
   spawnModelFx: refine_spawnModelFx,
   spawnVfx: refine_spawnVfx,
   swapResource: refine_swapResource,
+  summon: refine_summon,
   weightedBranch: refine_weightedBranch,
 };
 

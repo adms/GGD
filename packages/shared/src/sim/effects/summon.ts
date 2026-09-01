@@ -91,9 +91,9 @@ export const summonEffect: EffectKindSpec<"summon"> = {
     // the same rule the pre-P6 `shield.absorbs` followed.
     if (e.killCredit === "owner") {
       throw new Error(
-        "summon.killCredit: \"owner\" is not implemented — a summon's kills currently pay " +
+        'summon.killCredit: "owner" is not implemented — a summon\'s kills currently pay ' +
           "nobody, because systems/DeathSystem.ts gates every payout on " +
-          "world.champion.has(killer). Use \"none\" (or omit the field) until that seam exists.",
+          'world.champion.has(killer). Use "none" (or omit the field) until that seam exists.',
       );
     }
 
@@ -108,13 +108,20 @@ export const summonEffect: EffectKindSpec<"summon"> = {
     // gains a 變身 counterpart).
     const wantedId =
       e.body === "self"
-        ? (world.stats.get(ctx.caster)?.championId ?? (e.championId as ChampionId))
-        : (e.championId as ChampionId);
+        ? (world.stats.get(ctx.caster)?.championId ??
+          (e.championId as ChampionId | undefined))
+        : (e.championId as ChampionId | undefined);
     // SOFT ref (see the Zod mirror): the ability may be authored before the body
     // ships. An unknown id summons NOTHING — loudly wrong on screen, rather than
     // `Champions.get` throwing inside a tick and taking the whole match down.
-    if (Champions.tryGet(wantedId) === undefined) {
-      world.emit("summonFailed", { owner: ctx.caster, championId: wantedId, reason: "unknownBody" });
+    // ⭐ 2026-09-02（GH#423）—— `championId` 現在是**條件必填**（`body:"self"` 可缺席）。
+    //   ⇒ 缺席**而且**不是 self ⇒ 走同一條 `summonFailed` 出口，⛔ 不是 throw。
+    if (wantedId === undefined || Champions.tryGet(wantedId) === undefined) {
+      world.emit("summonFailed", {
+        owner: ctx.caster,
+        championId: wantedId,
+        reason: "unknownBody",
+      });
       return;
     }
 

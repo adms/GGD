@@ -1,11 +1,8 @@
 import { z } from "zod";
 import { zRef } from "../common";
-import {
-  EFFECT_COMMON_SHAPE,
-} from "./_shared";
+import { EFFECT_COMMON_SHAPE } from "./_shared";
 
-export const zSummon =
-z
+export const zSummon = z
   .object({
     kind: z.literal("summon"),
     ...EFFECT_COMMON_SHAPE,
@@ -21,7 +18,19 @@ z
      * summoned unit ships. An unknown id summons NOTHING and emits
      * `summonFailed` (effects/summon.ts) — never a throw inside a tick.
      */
-    championId: zRef("champions", { soft: true }),
+    /**
+     * ⭐⭐ 2026-09-02（GH#423）—— `body:"self"` 時**可以缺席**。
+     *
+     * ⚠️ 在此之前它是**無條件必填**，而 `body:"self"` 那條路在 sim 端
+     * **一個字都不讀它** ⇒ 作者被逼著填一個指不到任何文件的佔位
+     * （`templates/expand.ts` 逐字：「這個 id 刻意指不到任何文件 ——
+     * 它是『這一格不該被讀』的宣告」）。
+     *
+     * ⛔ 那是**契約在說謊**：一格寫著「哪一位英雄」而正確答案是「沒有」。
+     * ⇒ 改成條件必填（見底下的 superRefine）：`body:"self"` ⇒ 可缺席；
+     * 其餘 ⇒ 仍然必填，⭐ 而錯誤訊息指名那一格。
+     */
+    championId: zRef("champions", { soft: true }).optional(),
     /** bodies per cast. The ceiling is an anti-typo guard, not balance. */
     count: z.number().int().min(1).max(20),
     /** seconds before despawn; ABSENT = permanent (WC3's 0-duration form) */
@@ -108,3 +117,45 @@ z
     bountyGold: z.number().min(0).max(1000).optional(),
   })
   .strict();
+
+/**
+ * ⭐⭐ 為什麼「`body:"self"` ⇒ `championId` 可缺席」**不是**寫在 Zod 裡（2026-09-02）。
+ *
+ * ⚠️ 我試過 `.superRefine(...)`，⛔ 而它**編不過**：`superRefine` 回傳 `ZodEffects`，
+ * 而 `effects/index.ts` 的 effect union 是 `discriminatedUnion("kind", …)` ——
+ * 它只吃 `ZodObject`。⇒ 加一個條件驗證會讓**整個 effect union 塌掉**。
+ *
+ * ⇒ ⭐ 契約這一層說「optional」（那是真的：`self` 那條路不讀它），
+ * 而「其餘 body 必須有」由**內容守衛**（`content/summonBodyRequired.test.ts`）釘住。
+ * ⛔ 這不是把規則丟掉 —— 它換了一個住處，⭐ 而那個住處會紅。
+ *
+ * ⚠️ 誠實的代價：一份手寫的壞文件（`body:"champion"` 而沒有 id）**過得了 Zod**，
+ * 到 sim 端會 emit `summonFailed`（⛔ 不會 throw）。⇒ 內容守衛是唯一的閘。
+ */
+
+/**
+ * ⭐ 這一支的跨欄位檢查（GH#423）—— `championId` 是**條件必填**。
+ *
+ * ⛔ 掛在 `index.ts` 的派發表上，⛔ 不是掛在上面那個 `z.object` 上：
+ * `.superRefine` 會把 `ZodObject` 變成 `ZodEffects`，而 `z.discriminatedUnion`
+ * 只收 `ZodObject`（zod 的型別約束，⛔ 不是風格）——⚠️ 我先寫成後者，
+ * 而它讓**整個 effect union 塌掉**（46 個 kind 一起編不過）。
+ *
+ * ⭐ 而這一格改成 optional 的理由：`body:"self"` 那條路在 sim 端**一個字都不讀它**，
+ * ⇒ 在此之前作者被逼著填一個指不到任何文件的佔位（`templates/expand.ts` 逐字：
+ * 「這個 id 刻意指不到任何文件 —— 它是『這一格不該被讀』的宣告」）。
+ * ⛔ 那是**契約在說謊**：一格寫著「哪一位英雄」而正確答案是「沒有」。
+ */
+export const refine = (
+  e: { body?: "champion" | "self"; championId?: string },
+  ctx: z.RefinementCtx,
+): void => {
+  if ((e.body ?? "champion") !== "self" && !e.championId) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["championId"],
+      message:
+        'summon 需要一格 championId（⭐ 除非 body:"self" —— 那條路複製施法者自己）',
+    });
+  }
+};
