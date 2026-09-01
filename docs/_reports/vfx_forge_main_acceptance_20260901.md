@@ -53,7 +53,7 @@
 | #736 | **已由 main 關閉；不動作** | 本分支不重開也不關票。 |
 | #803 | **部分可驗；保留開啟** | 橘／藍 beam recipe 與龜派／Rider 圖證完成；龍鬥氣砲仍受 RedDragonMissile 來源阻擋。 |
 | #244 | **Editor 套用面可驗** | 模板與 script 可在表單、recipe 與時間軸組合；JASS 翻譯規則仍歸 main。 |
-| #887 | **可進 main 驗收** | source-safe editor-source 轉接維持在分支；不直寫生成 ability。 |
+| #887 | **Editor 呼叫端可驗；票保留開啟** | Editor 已定義 `ggd-editor-source@1`、呼叫 `/content-api/editor-source`，且 route 缺席時 fail-safe 唯讀；main 的 descriptor route／真正 source adapter 尚未出貨，不能宣稱端到端完成。 |
 | #888 | **可進 main 驗收** | coverage walker 的 record／tuple 展開修正維持在分支。 |
 | #885 | **內容可驗** | 理想鄉 EX 已用 `reflectSuccess` 完成實際演出與圖證。 |
 | #903 | **不可關，等待美術／數值決策** | 14-04／39-04 缺的是新身體與數值；repo 沒有可忠實代用的四神／式神資產，不捏造內容也不拿相似模型硬湊。 |
