@@ -1,6 +1,6 @@
 # 給 GGD main：Editor 完工所需接縫（可直接交給 Codex）
 
-狀態：2026-09-02 03:24（Asia/Taipei）
+狀態：2026-09-02 04:00（Asia/Taipei）
 Editor 分支：`feat/vfx-forge-codex`（禁止推到 `main`）
 正式站實測：`cv_88cbb6486bf2` · capability `111434fa` · profile `3f8d4687566f`
 最新 `origin/main@b8420abe` 產物：`cv_385f45e0afb8` · profile `99ef62b583c5`
@@ -61,9 +61,9 @@ Owner 文案 bytes 未被 JSON round-trip 改寫。
 ```
 
 但 shared 的 `zPackageManifest` 仍強制每包都有非空
-`compiler.contractVersion`／`compiler.fingerprint`，而 `GGD_EDITOR_PACKAGE_SPEC.md` 仍是
-Draft 0.4 四層 compiler 模型。這三份 machine truth 不能同時成立；Editor 不會用
-`none`／假 fingerprint 騙過 schema。
+`compiler.contractVersion`／`compiler.fingerprint`，出貨 `GGD_EDITOR_PACKAGE_SPEC.md` 仍是
+Draft 0.4 四層 compiler。正式 profile 卻已裁成 runtime-direct；三份 truth 不一致，
+Editor 不會用 `none`／假 fingerprint 騙過 schema。
 
 請在 G2 之前選定並只保留一套 machine contract。建議是 runtime-direct authoring：
 
@@ -77,7 +77,10 @@ authoringProcessor: {
 
 `compiler` 只在真的需要 compile 的 representation 出現；runtime-direct 的 importer 對
 `ability@1`／`item@1` 做相同 Zod、ref closure、capability、authoring-rules 與 full staging
-驗證，不建立假的第二表示法。請同步修改 spec、shared Zod、target profile、importer tests。
+驗證，不建立假的第二表示法。精確 delta 見
+`docs/editor-contract/GGD_EDITOR_PACKAGE_SPEC_RUNTIME_DIRECT_DELTA_20260902.md`。請在同一個
+Main change set 同步修改 spec、shared Zod、target profile generator／產物與 importer tests，
+不能只改一邊。
 
 此外 target profile 必須公開建包不可猜的欄位：
 
@@ -99,7 +102,9 @@ Editor 端 JSON／ZIP builder 已完成並自我驗證；上述 receipt 缺任�
 
 ## P0-3：Package importer G2（目前 validate/apply/rollback 明確回 501）
 
-請依 `GGD_EDITOR_PACKAGE_SPEC.md` 實作：
+請依 `main_load_editor_plan.md` 的兩階段 verified-plan 流程與
+`GGD_EDITOR_PACKAGE_SPEC_RUNTIME_DIRECT_DELTA_20260902.md` 實作；**不要照出貨 Draft 0.4
+把 package bytes 再送進 apply**：
 
 ```http
 POST /api/v1/content-import/validate
@@ -109,6 +114,13 @@ GET  /api/v1/content-import/active
 GET  /api/v1/content-import/active/runtime-bundle
 GET  /api/v1/content-import/operations/:operationId
 ```
+
+- `validate` 才接收 bounded JSON／ZIP，建立 immutable staging，回 `202 + operationId`；
+  poll 成功後取得 server-side `planDigest`。
+- `apply` 只接收 `validationOperationId + planDigest + expectedActiveGeneration` 與
+  `Idempotency-Key`，不得再次接收另一份可能不同的 package bytes。
+- `rollback` 接收 target activation、expected current generation／digest 與 reason；
+  三條 route 分開授權與 audit。
 
 必要條件：bounded ZIP preflight/extraction、JCS/hash、shared Zod、capability、authoring-rules、
 ref closure、無任意 script、immutable version storage、PREPARED、fsync、Base CAS、原子

@@ -1,16 +1,21 @@
 # 遊戲主程式載入 Editor JSON／ZIP 的修改建議
 
-狀態：**Revision 2.6 — runtime-direct 契約對齊；AI 技能變更先審後上；遠端有效 VFX 上限收據**
+狀態：**Revision 2.7 — runtime-direct Draft 0.5 delta；verified-plan 兩階段 apply；AI 技能變更先審後上**
 
-最後驗證：2026-09-02 03:24（Asia/Taipei）
+最後驗證：2026-09-02 04:00（Asia/Taipei）
 
 適用範圍：GGD 遊戲主程式、後台與 Content Import API；不是 Editor UI 實作說明。
 
-本文只定義「遊戲端還必須實作什麼」與各階段的完成閘門。Package 欄位、JCS digest、Effect Definition／Product／Chain 形狀不在此重複，以 [`GGD_EDITOR_PACKAGE_SPEC.md`](GGD_EDITOR_PACKAGE_SPEC.md) 及 `packages/shared/src/content/import/` 的機器 schema 為準。
+本文只定義「遊戲端還必須實作什麼」與各階段的完成閘門。Draft 0.4 與目前 profile
+已發生 runtime-direct 漂移；Main 應以
+[`GGD_EDITOR_PACKAGE_SPEC_RUNTIME_DIRECT_DELTA_20260902.md`](docs/editor-contract/GGD_EDITOR_PACKAGE_SPEC_RUNTIME_DIRECT_DELTA_20260902.md)
+原子升級 spec、`packages/shared/src/content/import/` machine schema、profile 與 importer，
+不能只挑其中一份當真相。
 
 相關資料：
 
 - [`GGD_EDITOR_PACKAGE_SPEC.md`](GGD_EDITOR_PACKAGE_SPEC.md)：Package JSON／ZIP 的共同資料契約。
+- [`GGD_EDITOR_PACKAGE_SPEC_RUNTIME_DIRECT_DELTA_20260902.md`](docs/editor-contract/GGD_EDITOR_PACKAGE_SPEC_RUNTIME_DIRECT_DELTA_20260902.md)：Draft 0.5 runtime-direct 與 verified-plan apply 的原子更新差異。
 - [`docs/_codex-handoff.md`](docs/_codex-handoff.md)：目前引擎能力與資料入口導覽。
 - [`OPEN_HERO_WHITELIST.md`](OPEN_HERO_WHITELIST.md)：生成的英雄參考名單，不是 live curation authority。
 - [`LEGENDARY_WEAPON_FULL_AUDIT.md`](LEGENDARY_WEAPON_FULL_AUDIT.md)：生成的傳說武器 census，不是 importer 常數。
@@ -52,7 +57,7 @@
 | Runtime-direct receipt | profile 宣告 compiler 已移除，但 package schema 仍強制 compiler 欄位 | Editor 不會填假 `none`／fingerprint；三份 machine truth 對齊前不可建 production package |
 | G2 Base receipts | 缺 `implementedStage=G2`、`base.gameRevision`、bootstrap migration fingerprint，full/delta 另缺 activation／authoring digests | 無法安全 pin Base 或判斷匯入模式 |
 | Machine endpoints | 未公告 validate／apply／active runtime bundle 等版本化端點 | Editor 不從 URL 字串猜 route |
-| Public package contract | profile 與 Draft 0.4 四層 compiler 文字不一致 | importer 無法安全協商 exact schema／spec |
+| Public package contract | Draft 0.5 delta 已裁定方向，但出貨 spec label／shared schema 仍是 Draft 0.4 | importer 無法安全協商 exact schema／spec |
 | Tag engine 對帳 | `matchesEngine=false` | 不可用該 manifest 證明 canonical tag 與 mechanics 一致 |
 | Authoring rules | 公開 pricing endpoint 為 `null` | MP／冷卻等規則只能當本機建議，不能當 production contract |
 | Write API | validate／apply／rollback 仍回 501 | 目前只能讀 profile、離線建包與本機自驗 |
