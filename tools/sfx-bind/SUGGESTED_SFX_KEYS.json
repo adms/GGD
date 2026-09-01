@@ -34,16 +34,16 @@
       "element": 52,
       "generic": 297
     },
-    "suggested": 105,
+    "suggested": 107,
     "applicable": 15,
     "byTier": {
       "A-vfx-owned": 15,
-      "C-family-generic": 90
+      "C-family-generic": 92
     },
-    "noSuggestion": 244,
+    "noSuggestion": 242,
     "byCause": {
       "element-whoosh-already": 50,
-      "no-source-audio": 184,
+      "no-source-audio": 182,
       "source-map-silent": 2,
       "stock-label-only": 8
     }
@@ -314,6 +314,22 @@
       }
     },
     {
+      "ability": "godie-e00s.r",
+      "name": "70-04 千年練成",
+      "champion": "godie-e00s",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "footstep",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "groundDust",
+        "familySoundLaunch": "footstep"
+      }
+    },
+    {
       "ability": "godie-e00x.e",
       "name": "77-03 GLADIARIA ALAT",
       "champion": "godie-e00x",
@@ -327,6 +343,22 @@
       "evidence": {
         "vfxFamily": "resurrect",
         "familySoundLaunch": "reviveChannel"
+      }
+    },
+    {
+      "ability": "godie-e010.r",
+      "name": "70-04 千年練成",
+      "champion": "godie-e010",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "footstep",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "groundDust",
+        "familySoundLaunch": "footstep"
       }
     },
     {
@@ -2086,16 +2118,6 @@
       }
     },
     {
-      "ability": "godie-e00s.r",
-      "name": "70-04 千年練成",
-      "champion": "godie-e00s",
-      "todayPlays": "abilityCast",
-      "cause": "no-source-audio",
-      "evidence": {
-        "base": "ANr3"
-      }
-    },
-    {
       "ability": "godie-e00s.w",
       "name": "70-02 大怒石",
       "champion": "godie-e00s",
@@ -2208,16 +2230,6 @@
     {
       "ability": "godie-e010.passive",
       "name": "70-00 紮根",
-      "champion": "godie-e010",
-      "todayPlays": "abilityCast",
-      "cause": "no-source-audio",
-      "evidence": {
-        "base": null
-      }
-    },
-    {
-      "ability": "godie-e010.r",
-      "name": "70-04 千年練成",
       "champion": "godie-e010",
       "todayPlays": "abilityCast",
       "cause": "no-source-audio",
