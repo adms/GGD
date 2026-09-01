@@ -282,6 +282,13 @@ export interface TargetProfile {
    * ⚠️ G2 時它是空陣列（⛔ 不是省略：省略與「沒有缺」讀起來一樣）。
    */
   readonly stageBlockers: readonly { readonly id: string; readonly why: string }[];
+  /**
+   * ⭐ 一包 **bootstrap 必須帶**的 migration fingerprint（規格 §10）。
+   * ⚠️ 它算的是**出貨的文件面**（`docSurface`，從 Zod 推導）——
+   * ⛔ 不是一個手寫版本字串：schema 改了而字串沒改 ⇒ 一包過期的 bootstrap
+   * 會被當成當前的收下。
+   */
+  readonly migrationFingerprint: string | null;
   /** ⭐ 六條匯入端點，機器讀得懂（⛔ 不是散文裡的一段路徑）。 */
   readonly importerEndpoints: readonly { readonly method: string; readonly path: string }[];
   /** ⛔ authoring store 不在時只有 `bootstrap`；delta 需要一個真的 base。 */
@@ -435,6 +442,7 @@ export function buildTargetProfile(input: TargetProfileInput): TargetProfile {
     gameVersion: input.gameVersion,
     implementedStage: stageResolved.stage,
     stageBlockers: stageResolved.missing.map((m) => ({ id: m.id, why: m.why })),
+    migrationFingerprint: g2.migrationFingerprint,
     importerEndpoints: input.importerEndpoints ?? [],
     base: {
       // ⭐ 2026-09-02 —— 這兩格從**這台現在的 ACTIVE** 讀（⛔ 不再是寫死的 null）。

@@ -293,6 +293,12 @@ describe("G2 routes —— 六條走真的 HTTP", () => {
     const prof = await get(`${P}/active/target-profile`);
     const blockers = (prof.json().stageBlockers as { id: string }[]).map((b) => b.id);
     expect(blockers, "⛔ 沒有列出缺哪幾條").toContain("active-snapshot");
+    // ⭐ 這一組的內容樹**沒有** assets-manifest.json ⇒ 那一條前提必須也在缺的名單上。
+    //   ⚠️ 少了這一句，`asset-manifest` 那條前提可以被整個刪掉而測試全綠（突變驗過）。
+    expect(
+      blockers,
+      "⛔ 內容樹沒有 asset manifest 而 G2 的前提沒有指名它 ⇒ ⭐ 那條前提形同不存在",
+    ).toContain("asset-manifest");
     expect(prof.json().supportedModes).toEqual(["bootstrap"]);
     expect(prof.json().deltaExportAllowed).toBe(false);
     // ⭐ 而端點表是**交出去的**（規格 §3「machine-readable importer endpoints」）。
@@ -497,5 +503,174 @@ describe("G2 ZIP 傳輸層", () => {
     const r = await postZip(`${P}/validate`, Buffer.from("這不是 ZIP"));
     expect(r.statusCode).toBe(422);
     expect(r.json().code).toMatch(/ZIP_/);
+  });
+});
+
+
+// ══════════════════════════════════════════════════════════════════════════
+// ⭐⭐ G2 **真的到得了嗎** —— ⛔ 「還沒到」與「永遠到不了」是兩件事
+// ══════════════════════════════════════════════════════════════════════════
+
+describe("G2 可達性", () => {
+  /**
+   * ⚠️ ⭐ 這一組刻意用**帶 gameVersion 的**伺服器 ——
+   * 上面那些用的是 `gameVersion: null`（＝本機沒有建置戳記），所以它們永遠卡在
+   * `game-revision` 那一條。⛔ 而那會讓「G2 到不了」看起來像設計上的死路，
+   * ⭐ 實際上只是**這台機器沒有戳記**。
+   */
+  let app2: FastifyInstance;
+  let dir2: string;
+
+  beforeEach(async () => {
+    const base = mkdtempSync(join(tmpdir(), "ggd-g2r-"));
+    const cd = join(base, "content");
+    dir2 = join(base, "data", "content-import");
+    mkdirSync(cd, { recursive: true });
+    writeFileSync(
+      join(cd, "manifest.json"),
+      JSON.stringify({ contentVersion: "cv_test", collections: {} }),
+      "utf8",
+    );
+    // ⭐ 一份**最小但真的合法**的 asset manifest —— `asset-manifest` 是 G2 的前提之一。
+    //   ⚠️ ⛔ 沒有它的內容樹**本來就不該**是 G2（對面驗不了它引用的 GLB）。
+    writeFileSync(
+      join(cd, "assets-manifest.json"),
+      JSON.stringify({
+        schema: "ggd-asset-manifest@1",
+        counts: { entries: 1, totalBytes: 4 },
+        entries: [
+          {
+            path: "assets/models/x.glb",
+            bytes: 4,
+            sha256: "sha256:" + "0".repeat(64),
+            contentType: "model/gltf-binary",
+          },
+        ],
+      }),
+      "utf8",
+    );
+    app2 = Fastify({ logger: false });
+    registerImportRoutes(app2, {
+      contentDir: cd,
+      importDir: dir2,
+      repoRoot: REPO,
+      // ⭐ 出貨時這一格來自 `GGD_BUILD_STAMP`（`git describe --tags --always --dirty`）。
+      gameVersion: "v0.34.26-3-gdeadbee",
+    });
+    await app2.ready();
+  });
+  afterEach(async () => {
+    await app2.close();
+  });
+
+  it("★★ ⭐⭐ 有戳記 ＋ bootstrap 過一次 ⇒ stage **真的變成 G2**", async () => {
+    const before = (await app2.inject({ method: "GET", url: `${P}/active/target-profile` })).json() as {
+      implementedStage: string;
+      stageBlockers: { id: string }[];
+    };
+    // ⭐ 儀器：有戳記之後 `game-revision` 就不在缺的名單上了。
+    expect(before.stageBlockers.map((b) => b.id)).not.toContain("game-revision");
+    expect(before.implementedStage, "儀器：還沒 bootstrap 就不該是 G2").toBe("G1");
+
+    const a = await app2.inject({
+      method: "POST",
+      url: `${P}/apply`,
+      payload: { operationId: "boot-1", package: pkg("hero.q") } as object,
+    });
+    expect(a.statusCode, `⛔ bootstrap 失敗：${a.body.slice(0, 400)}`).toBe(200);
+
+    const after = (await app2.inject({ method: "GET", url: `${P}/active/target-profile` })).json() as {
+      implementedStage: string;
+      stageBlockers: { id: string; why: string }[];
+      supportedModes: string[];
+      deltaExportAllowed: boolean;
+      base: { activationDigest: string | null; authoringDigest: string | null };
+      migrationFingerprint?: string;
+    };
+    expect(
+      after.implementedStage,
+      "⛔⛔ 每一條前提都成立了而 stage 還是 G1 ⇒ ⭐ 那代表 G2 **永遠到不了**，\n" +
+        "   而「還沒到」與「到不了」對面的處置完全相反（等 vs 改路）。\n" +
+        "   還缺：" +
+        after.stageBlockers.map((b) => `${b.id}（${b.why}）`).join(" · "),
+    ).toBe("G2");
+    expect(after.stageBlockers, "⭐ G2 時缺口必須是空陣列").toEqual([]);
+    expect(after.supportedModes).toEqual(["bootstrap", "full", "delta"]);
+    expect(
+      after.deltaExportAllowed,
+      "⛔ G2 了而仍然不准匯出 delta ⇒ 那一格與 stage 對同一件事說了不同的話",
+    ).toBe(true);
+    expect(after.base.activationDigest).toMatch(/^sha256:[0-9a-f]{64}$/);
+    expect(after.base.authoringDigest).toMatch(/^sha256:[0-9a-f]{64}$/);
+    expect(after.migrationFingerprint).toMatch(/^[0-9a-f]{12}$/);
+  });
+
+  it("★★ ⭐⭐ `/capabilities` · `/health` · `/active/target-profile` **三條說同一個 stage**", async () => {
+    // ⚠️ ⭐ 失敗形態⑪：三條各自對的 route，接縫是空的 ——
+    //   在此之前 `/capabilities` 與 `/health` 回的是**常數** `IMPLEMENTED_STAGE`，
+    //   而 `/active/target-profile` 回推導值 ⇒ 一次 apply 之後它們會說 G1 與 G2。
+    const read = async (path: string): Promise<string> =>
+      (await app2.inject({ method: "GET", url: `${P}${path}` })).json().implementedStage as string;
+
+    const before = [
+      await read("/capabilities"),
+      await read("/health"),
+      await read("/active/target-profile"),
+    ];
+    expect(new Set(before).size, `⛔ apply 之前三條就不一致：${before.join(" / ")}`).toBe(1);
+
+    await app2.inject({
+      method: "POST",
+      url: `${P}/apply`,
+      payload: { operationId: "boot-1", package: pkg("hero.q") } as object,
+    });
+
+    const after = [
+      await read("/capabilities"),
+      await read("/health"),
+      await read("/active/target-profile"),
+    ];
+    expect(
+      new Set(after).size,
+      `⛔⛔ apply 之後三條說了不同的 stage：${after.join(" / ")} ⇒\n` +
+        "⭐ 對面讀哪一條就得到哪一個答案，而它們無法同時是對的。",
+    ).toBe(1);
+    expect(after[0], "儀器：apply 之後應該是 G2，⛔ 否則上面那條比的是兩個 G1").toBe("G2");
+
+    // ⭐ 而 `/health` 的三格也不可以再說謊。
+    const h = (await app2.inject({ method: "GET", url: `${P}/health` })).json() as {
+      status: string;
+      authoringStoreState: string;
+      activation: { activationDigest: string } | null;
+    };
+    expect(h.status, "⛔ ACTIVE 明明在，health 還說 not-implemented").not.toBe("not-implemented");
+    expect(h.authoringStoreState, "⛔ ACTIVE 明明在，health 還說 absent").not.toBe("absent");
+    expect(h.activation?.activationDigest).toMatch(/^sha256:[0-9a-f]{64}$/);
+  });
+
+  it("★★ ⭐ 而 rollback 回到**第一版之前**是不可能的 ⇒ stage ⛔ 不會退回 G1", async () => {
+    // ⚠️ ⭐ 這一條問的是「stage 會不會抖」：一個會在兩個值之間跳的 stage，
+    //   對面每次讀到不同答案而內容沒變 ⇒ ⛔ 他只能停下來。
+    await app2.inject({
+      method: "POST",
+      url: `${P}/apply`,
+      payload: { operationId: "boot-1", package: pkg("hero.q") } as object,
+    });
+    const one = (await app2.inject({ method: "GET", url: `${P}/active/target-profile` })).json() as {
+      implementedStage: string;
+      base: { activationDigest: string };
+    };
+    expect(one.implementedStage).toBe("G2");
+    const r = await app2.inject({
+      method: "POST",
+      url: `${P}/rollback`,
+      payload: { expectedActivationDigest: one.base.activationDigest } as object,
+    });
+    // ⭐ 第一次啟用沒有上一版可以回捲 ⇒ 409（⛔ 不是靜靜地什麼都不做）。
+    expect(r.statusCode).toBe(409);
+    const two = (await app2.inject({ method: "GET", url: `${P}/active/target-profile` })).json() as {
+      implementedStage: string;
+    };
+    expect(two.implementedStage, "⛔ 一次失敗的 rollback 把 stage 打回 G1").toBe("G2");
   });
 });

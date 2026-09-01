@@ -298,6 +298,11 @@ export function registerImportRoutes(
         content,
         limits: opts.limits,
         authoringProcessor,
+        // ⭐⭐ 這一行是**必要的**，⛔ 不是抄過來的：
+        //   `asset-manifest` 是 G2 的前提之一 ⇒ 少了它，`/capabilities` 會回 G1
+        //   而 `/active/target-profile` 回 G2 —— ⭐ 兩份 receipt 對同一件事說不同的話，
+        //   而那正是這一整批工作在修的病。
+        assetManifest: await readAssetManifest(root),
         ...g2Facts(),
         importerEndpoints: IMPORTER_ENDPOINTS,
         ...(opts.reloadMode !== undefined
@@ -308,7 +313,12 @@ export function registerImportRoutes(
       // 兩邊各算一次就會 drift，而 drift 的那一天沒有人會發現。
       return reply.send({
         schema: profile.runtimeCapabilities.schema,
-        implementedStage: IMPLEMENTED_STAGE,
+        // ⭐⭐ 從**同一份 profile** 讀（⛔ 不是那個常數）——
+        //   ⚠️ 上面那句註解逐字寫著「兩邊各算一次就會 drift」，
+        //   而 `IMPLEMENTED_STAGE` **就是第二次算**：它回常數，profile 回推導值
+        //   ⇒ 一次 apply 之後這兩條 route 會對同一件事說 G1 與 G2。
+        implementedStage: profile.implementedStage,
+        stageBlockers: profile.stageBlockers,
         runtimeCapabilities: profile.runtimeCapabilities,
         unsupported: profile.runtimeCapabilities.unsupported,
         supportedModes: profile.supportedModes,
@@ -385,15 +395,38 @@ export function registerImportRoutes(
     app.get(`${prefix}/health`, async (_req, reply) => {
       const content = await readContentFacts(root);
       const caps = buildCapabilityManifest();
-      // ⚠️ 刻意**不是**計畫 §4.1 的四個狀態之一（activated / awaiting-reload /
-      // degraded / rollback-required）—— 那四個都預設「有一個 activation」。
-      // 回一個對方 switch 不到的值，會讓對方 fail-closed，這正是我們要的。
+      const profile = buildTargetProfile({
+        generatedAt: now().toISOString(),
+        gameVersion: opts.gameVersion ?? null,
+        content,
+        limits: opts.limits,
+        authoringProcessor,
+        assetManifest: await readAssetManifest(root),
+        ...g2Facts(),
+        importerEndpoints: IMPORTER_ENDPOINTS,
+        ...(opts.reloadMode !== undefined ? { reloadMode: opts.reloadMode } : {}),
+      });
+      const activePointer = store.active();
+      // ⚠️ ⭐ 在此之前這三格是**寫死的**（`"not-implemented"` / `null` / `"absent"`）——
+      //   ⛔ 而一次 apply 之後它們全部變成謊話：ACTIVE 明明在，health 說 absent。
+      //   ⭐ 「還沒實作」是刻意回一個對方 switch 不到的值讓他 fail-closed，
+      //   而那個理由**在實作之後就消失了**（第三守則：一句活過保存期限的散文）。
       return reply.send({
         schema: IMPORT_HEALTH_SCHEMA,
-        status: "not-implemented",
-        implementedStage: IMPLEMENTED_STAGE,
-        activation: null,
-        authoringStoreState: "absent",
+        status: activePointer === null ? "no-activation" : "activated",
+        implementedStage: profile.implementedStage,
+        stageBlockers: profile.stageBlockers,
+        activation:
+          activePointer === null
+            ? null
+            : {
+                activationDigest: activePointer.activationDigest,
+                packageDigest: activePointer.packageDigest,
+                operationId: activePointer.operationId,
+                activatedAt: activePointer.activatedAt,
+                rollbackAvailable: activePointer.previousActivationDigest !== null,
+              },
+        authoringStoreState: profile.authoringStoreState,
         contentVersion: content?.contentVersion ?? null,
         capabilityFingerprint: caps.fingerprint,
         reloadMode: opts.reloadMode ?? "process-reload",
