@@ -1,6 +1,6 @@
 # 特效工坊（VFX Forge）· 技術規格 —— 給 Codex
 
-狀態：**Revision 10 — 2026-09-02 14:00 CST，以 `origin/main@29f8628f`（含 v0.35.15）與 `feat/vfx-forge-codex` 程式／隔離測試重驗**
+狀態：**Revision 11 — 2026-09-02 14:21 CST，以 `origin/main@29f8628f`（含 v0.35.15）與 `feat/vfx-forge-codex` 程式／隔離測試重驗**
 
 > 本文保留 2026-08-31 的出發點，但「缺口」必須以各節的目前狀態為準；不可把舊基線當成今天的待辦。
 
@@ -83,7 +83,7 @@
 | 「**模擬遊戲畫面**」 | 真 `CameraRig`＋真地板＋雙方角色＋frame-step | ✅ `VfxForgeStage`／`VfxForgePreview`；可切完整 runtime 或只看 script |
 | 「**slider** 調大小/透明度/顏色/轉向/高度/動畫速度」 | schema 驅動連續參數表單 | ✅ `SegmentInspector`＋共用 `FormRenderer`；上下界來自共用 schema，不抄常數 |
 | 「**所見即所得**」 | 改一格 → 同一份 draft 即時重播 | ✅ draft、預覽、時間軸與送審 hash 共用同一 JSON |
-| 「**觀看全程**」 | 播放、scrub、1/60 frame-step、精確秒數 | ✅ 並可對每張送審關鍵格重跑 framebuffer 稽核 |
+| 「**觀看全程**」 | 播放、scrub、1/60 frame-step、精確秒數 | ✅ 並可對每張送審關鍵格重跑 framebuffer 稽核；時間軸以「施法者攻擊／目標受擊／第 N 段傷害」等 no-code 名稱呈現，raw kind/trigger 僅留在 tooltip |
 | 「**回存到主線甚至 github**」 | AI 候選 → 後台人工批核 → Promote | ✅ Forge 只能投 proposal；不直接寫 ability，也不讓 fixture Promote |
 
 上述六項是 Editor 已完成的 UI／接縫，不應再交給 Main 重做。Main 只提供 schema、播放器、權威事件、

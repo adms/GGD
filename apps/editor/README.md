@@ -58,7 +58,9 @@ updates browser history, and Back/Forward restores the matching screen.
   The guard consumes real SimWorld strike/projectile-hit cues, so a gameplay
   hit with no authored VFX is still checked. Capture and submission remain
   fail-closed until that trace is accepted and runtime-compatible; switching
-  abilities clears the prior trace immediately.
+  abilities clears the prior trace immediately. Timeline controls and tracks
+  use player-facing labels such as `角色動作`, `施法者攻擊` and `第 N 段傷害`;
+  raw schema ids remain available in tooltips for diagnosis.
 - **Champions / Skins** — complete schema forms plus live final stats and the
   actual GLB presentation path: facing correction, hidden primitives, body
   normalization, ground placement, animation clips, tint and alpha. Champion
