@@ -182,7 +182,7 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     baseRegen: 0,
     regenPerLevel: 0,
   },
-  reward: { gold: 20, xp: 40, killsPerLevel: 6 },
+  reward: { gold: 20, xp: 40, killsPerLevel: 0 },
   // 殭屍王 + 特殊殭屍 (#262). Restated from `DEFAULT_MOB_WAVES_CONFIG` for the
   // same reason as everything above, and pinned against it by mobWaves.test.ts.
   boss: {
@@ -235,7 +235,7 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     bountyGold: 30000,
     bountyXp: 1200,
     // ⭐ owner 2026-09-01：「殭屍王獎勵等級太多(**減半**)」
-    bountyLevels: 25,
+    bountyLevels: 10,
     lastHitMultiplier: 2,
     lastHitMode: "bonus",
     countOverkill: false,
@@ -307,7 +307,7 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     // asks for the old flat reward back.
     bountyGold: 5000,
     bountyXp: 200,
-    bountyLevels: 5,
+    bountyLevels: 3,
     lastHitMultiplier: 1,
     lastHitMode: "bonus",
     splitByDamage: true,
@@ -991,10 +991,17 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
   },
   "reward.killsPerLevel": {
     zh: "殺幾隻升一級",
-    note: "這是「肉鴿爬升」的主軸：每累積 N 隻擊殺，那個玩家直接 +1 等級",
+    note:
+      "每累積 N 隻擊殺，那個玩家直接 +1 等級。" +
+      "⭐⭐ **填 0 ＝ 關閉這個機制**（出貨值就是 0）—— owner 2026-09-02 逐字：" +
+      "「把打6隻就升級**先設定為關閉**⋯這樣可以大幅避免掉直接升級被省略的 xp」。" +
+      "⚠️ ⛔ 在 2026-09-02 之前這一格的下界是 **1** ⇒ **關不掉** —— " +
+      "⭐ 而引擎早就支援（`MobSystem.ts` 逐字 `if (rules.killsPerLevel > 0 && …)`），" +
+      "⛔ 是後台與 schema 的界線不准你寫。" +
+      "⇒ ⭐ 想把爬升重心搬回**經驗**就留 0；想回到舊行為填 6。",
     unit: "隻",
     kind: "int",
-    min: 1,
+    min: 0, // ⭐ 0 ＝ 關閉（GH#918）
     optional: false,
   },
 

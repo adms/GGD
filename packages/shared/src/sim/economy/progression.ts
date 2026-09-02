@@ -16,8 +16,13 @@ export const LEVEL_CAP = 99;
 /**
  * `mob` (task #215) is the XP a killer earns per roguelite mob (喪標麥可) kill.
  * Deliberately SMALL relative to `xpToNext` (≈4,020 at L50 → ≈7,940 at L99): a
- * single mob barely moves the bar, so the DOMINANT L50→L99 climb is the
- * every-30-kills `grantLevels(1)` bonus (see MobSystem / `reward.killsPerLevel`),
+ * single mob barely moves the bar.
+ *
+ * ⚠️⚠️ **這一段在 2026-09-02 之前就已經是謊話，而現在它反過來了。**
+ * 它原本寫著「the DOMINANT L50→L99 climb is the **every-30-kills**
+ * `grantLevels(1)` bonus」—— ⛔ 而出貨值當時是 **6**（⛔ 不是 30），
+ * ⭐ 現在是 **0（關閉）**（GH#918，owner 逐字）。
+ * ⇒ ⭐ 直接發等級那條路**關掉了**，L50→L99 的爬升現在**真的**靠經驗，
  * not the per-kill XP. The mob is the intended path past the round-grant L50
  * ceiling — that is the whole point of the mechanic.
  */

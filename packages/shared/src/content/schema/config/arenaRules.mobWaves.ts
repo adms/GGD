@@ -7,8 +7,14 @@ import { z } from "zod";
  * spawning min(k, `mobsPerWaveCap`) mobs, capped at `maxAlivePerZone` alive per
  * battlefield. Each mob walks to the nearest enemy champion and melee-attacks;
  * on death it pays the killer `reward.gold` + `reward.xp`, and every
- * `reward.killsPerLevel`th mob kill grants that champion +1 LEVEL (the intended
- * climb past the round-grant L50 ceiling toward LV99). Optional + additive: an
+ * `reward.killsPerLevel`th mob kill grants that champion +1 LEVEL.
+ *
+ * ⚠️ ⭐ **出貨值是 `0`（＝關閉）自 2026-09-02（GH#918）** —— owner 逐字：
+ * 「把打6隻就升級**先設定為關閉**⋯這樣可以大幅避免掉直接升級被省略的 xp」。
+ * ⇒ ⛔ 那句「the intended climb past the round-grant L50 ceiling toward LV99」
+ * **不再成立** —— ⭐ 爬升的重心搬回**經驗**了。
+ *
+ * Optional + additive: an
  * absent block means the mechanic is simply OFF (same legacy-compat convention
  * as `flowers` / `reviveCircles` / `guardianTower`), which is what every unit
  * test and the client's prediction shadow world see. Seconds in the doc, ticks
@@ -431,7 +437,18 @@ export const zMobWavesConfig = z
         /** XP to the killer per mob kill */
         xp: z.number().int().min(0),
         /** every Nth mob kill grants the killer +1 level */
-        killsPerLevel: z.number().int().min(1),
+        /**
+         * ⭐⭐ **`0` ＝ 關閉這個機制**（GH#918，owner 2026-09-02 逐字：
+         * 「把打6隻就升級**先設定為關閉**」）。
+         *
+         * ⛔⛔ 在此之前這裡是 `min(1)` —— 而 `MobSystem.ts:418` 逐字寫著
+         * `if (rules.killsPerLevel > 0 && …)` ⇒ ⭐ **引擎早就支援關閉，
+         * 是契約不准你寫**。
+         *
+         * ⚠️ 那正是 CLAUDE.md 第一守則點名的形狀：一個決策被寫死在**界線**裡
+         * ⇒ owner 想關掉它時，改的不是一格設定，是一次部署。
+         */
+        killsPerLevel: z.number().int().min(0),
       })
       .strict(),
     /**
@@ -1168,9 +1185,13 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     // rather than the grind thirty of them used to be. The reward that used to
     // arrive once a round now arrives several times, which is the point —
     // 「肉鴿」 is supposed to feel like a climb, not like homework.
-    killsPerLevel: 6,
+    // ⭐ owner 2026-09-02 逐字：「把打6隻就升級**先設定為關閉**」⇒ 0
+    killsPerLevel: 0,
   },
-  // 殭屍王 (#262). 100 personal kills, and — because `killsPerLevel` is 6 — a
+  // 殭屍王 (#262). 100 personal kills, and — ⚠️ **that reasoning is now stale**:
+  // `killsPerLevel` is **0** since 2026-09-02 (GH#918), so the summoner is NOT
+  // ~16 levels up any more. ⭐ owner 逐字：「殭屍王要不要跟著調弱 ⇒ **不必**,
+  // 這是刻意調整遊戲節奏」⇒ ⛔ 6,000 HP 留著，⭐ 但它的**理由**變了。 —— a
   // champion who summons one is already ~16 levels up from zombies alone, so the
   // king is authored as a genuine wall rather than a big zombie: 6,000 hp against
   // the round-9 zombie's 200, and a 12 attack against its 1.2.
@@ -1281,7 +1302,8 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     // GH#206 owner 2026-07-29 「殭屍王 獎勵 金錢+30,000 等級提升+50」.
     // ⭐ owner 2026-09-01（逐字）：「殭屍王獎勵等級太多(**減半**)」⇒ 50 → 25。
     //    ⚠️ 原值 50 來自 owner 2026-07-29「殭屍王 獎勵 金錢+30,000 等級提升+50」。
-    bountyLevels: 25,
+    // ⭐ owner 2026-09-02 逐字：「特殊殭屍 + lv3, 殭屍王 + lv10」＋「[③ 是獎池還是每人] **獎池**，跟以前一樣」 ⇒ 25 → 10
+    bountyLevels: 10,
     lastHitMultiplier: 2,
     // GH#206 — see the schema note above. `"bonus"` is the owner's ruling and
     // deliberately lets the payout exceed `bountyGold` (200% at the extreme).
@@ -1409,7 +1431,8 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     // special reads as 「王的六分之一」 on every currency instead of having one
     // number invented for it. A live 後台 knob like everything else here.
     bountyXp: 200,
-    bountyLevels: 5,
+    // ⭐ owner 2026-09-02 逐字：「特殊殭屍 + lv3, 殭屍王 + lv10」＋「[③ 是獎池還是每人] **獎池**，跟以前一樣」 ⇒ 5 → 3
+    bountyLevels: 3,
     // 1 = NO 翻倍, unlike the king's 2. The owner's 「補最後一刀翻倍」 ruling was
     // about the 殭屍王; the instruction for the special is only 「照傷害比例分」,
     // so the shipped answer is a pure proportion.

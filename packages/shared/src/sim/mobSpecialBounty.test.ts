@@ -176,10 +176,21 @@ describe("特殊殭屍分紅 —— 兩個人打,照傷害比例各拿各的", (
     // 5,000 的 3/4 與 1/4。平分會是 2500/2500,補刀通吃會是 0/5000。
     expect(w.champion.get(a)!.gold - goldA0).toBe(3750);
     expect(w.champion.get(b)!.gold - goldB0).toBe(1250);
-    // 等級:5 級照 3:1 分是 3 + 1,餘數 1 給補刀的 B ⇒ 3 / 2。
-    // 「餘數丟掉」的實作會是 3 / 1,總共只發 4 級。
-    expect(w.champion.get(a)!.level - lvA0).toBe(3);
-    expect(w.champion.get(b)!.level - lvB0).toBe(2);
+    // ⭐⭐ 2026-09-02（GH#918）—— 這幾格本來抄的是 **5 級**這個出貨字面值，
+    // ⛔ 而 owner 把它改成 3 的當下這條就紅了，而且用「分紅壞了」這種**錯誤訊息**。
+    // ⇒ ⭐ 照 CLAUDE.md 第二守則：**從 config 推導**（`SHIPPED_*`／`DEFAULT_*`），
+    //   ⛔ 不抄字面值 —— 它已經有三個住處，測試裡再抄一份就是**第四個**。
+    //
+    // ⭐ 承重的**機制**是「照傷害比例分，⛔ 而餘數歸補刀」：
+    //   L 級照 3:1 分是 floor(3L/4) + floor(L/4)，餘數 1 給補刀的 B。
+    //   「餘數丟掉」的實作會少發一級 —— ⭐ 那才是這一條要抓的。
+    // ⚠️ 欄位在 `special.bounty` 底下（⛔ 不是 `special` 上）—— 我第一版猜錯了一層。
+    const L = rules.special!.bounty!.levels;
+    const shareA = Math.floor((L * 3) / 4);
+    const shareB = L - shareA; // ⭐ 餘數歸補刀（B）
+    expect(w.champion.get(a)!.level - lvA0).toBe(shareA);
+    expect(w.champion.get(b)!.level - lvB0).toBe(shareB);
+    expect(shareA + shareB, "⛔ 餘數被丟掉了 ⇒ 總共少發一級").toBe(L);
 
     // ── 事件(玩家真正看得到的結算)───────────────────────────────────────
     const data = settlement(w);
@@ -195,10 +206,10 @@ describe("特殊殭屍分紅 —— 兩個人打,照傷害比例各拿各的", (
     expect(byId.get(b as unknown as number)!.lastHit).toBe(true);
     // GRANTED levels, not requested — the panel must not promise a level the
     // champion never got.
-    expect(byId.get(a as unknown as number)!.levels).toBe(3);
-    expect(byId.get(b as unknown as number)!.levels).toBe(2);
+    expect(byId.get(a as unknown as number)!.levels).toBe(shareA);
+    expect(byId.get(b as unknown as number)!.levels).toBe(shareB);
     expect(data["totalGold"]).toBe(5000);
-    expect(data["totalLevels"]).toBe(5);
+    expect(data["totalLevels"]).toBe(L);
     // The event names the arena, so a client can gate the panel to the duel that
     // actually fought it. -1 here means every player in the match sees it.
     expect(data["zone"]).toBe(0);
@@ -296,8 +307,15 @@ describe("特殊殭屍分紅 —— 兩個人打,照傷害比例各拿各的", (
     const shipped = mobRulesFromConfig(DEFAULT_MOB_WAVES_CONFIG, DT, 3);
     const bounty = mobBountyRules(shipped, "special");
     expect(bounty, "出貨的競技場沒有授權特殊殭屍分紅").not.toBeNull();
-    expect(bounty!.gold).toBe(5000);
-    expect(bounty!.levels).toBe(5);
+    // ⭐ 從 config 推導（⛔ 不抄出貨值 —— 它有三個住處，這裡是第四個）
+    // ⚠️⚠️ **兩層的欄位名與巢狀都不同** —— ⭐ 我在 2026-09-02 為此猜錯**三次**，
+    //   第四次才去把真的形狀印出來（⛔ 而印一次只要 30 秒）：
+    //   · config 側：`special.bountyGold` / `special.bountyLevels`（**頂層**，
+    //     而 `special.bounty` 在出貨檔裡是 **null**）
+    //   · 解析後：`rules.special.bounty.gold` / `.levels`（`mobs.ts:1007`）
+    //   ⇒ ⭐ 這幾行**從 config 推導**（⛔ 不抄字面值），而它們必須按**實際**欄位名寫。
+    expect(bounty!.gold).toBe(DEFAULT_MOB_WAVES_CONFIG.special!.bountyGold);
+    expect(bounty!.levels).toBe(DEFAULT_MOB_WAVES_CONFIG.special!.bountyLevels);
     expect(bounty!.splitByDamage).toBe(true);
     // 1, NOT the king's 2 — owner only asked for 照傷害比例分 on the special.
     expect(bounty!.lastHitMultiplier).toBe(1);
@@ -323,8 +341,9 @@ describe("splitByDamage 這個旋鈕是活的", () => {
     hit(w, b, mob, 1000); // B 補刀
     w.step(new Map());
 
-    expect(w.champion.get(b)!.gold).toBe(5000);
-    expect(w.champion.get(b)!.level - 1).toBe(5);
+    // ⭐ 關掉 splitByDamage ⇒ 補刀通吃**整個獎池**（⛔ 不是某個字面數字）
+    expect(w.champion.get(b)!.gold).toBe(rules.special!.bounty!.gold);
+    expect(w.champion.get(b)!.level - 1).toBe(rules.special!.bounty!.levels);
     // …而 A 什麼都沒有。開著的時候他拿 3750,所以這條在兩種實作下數字不同。
     expect(w.champion.get(a)!.gold - goldA0).toBe(0);
     expect(w.champion.get(a)!.level - lvA0).toBe(0);
