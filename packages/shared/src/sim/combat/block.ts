@@ -390,7 +390,11 @@ function chainBlockCut(
     if (b === undefined) continue;
     if (src.expiresAtTick !== undefined && src.expiresAtTick <= world.tick) continue;
     if (!b.damageTypes.includes(type)) continue;
-    const chance = clamp01(b.chance);
+    // ⭐ GH#650 —— 系統倍率（`config.block@1.chanceMult`，出貨 1.0 ＝ 逐位元不變）。
+    //   ⚠️ ⭐ 乘在 **clamp 之前**是承重的：先夾再乘會讓一格 0.6 的機率
+    //   乘 2 之後變成 1.2 而 `blockOnCooldown` 之後的 `rng.chance(1.2)` 恆真 ——
+    //   ⛔ 那不是「更常擋」，是「永遠擋」。
+    const chance = clamp01(b.chance * world.blockRules.chanceMult);
     const fraction = clamp01(b.fraction);
     // 一個 chance 或 fraction 為 0 的來源什麼都擋不掉,所以它不可以吃掉一次
     // draw —— 否則「裝一件沒用的格擋」會偷偷平移整條亂數流。
@@ -449,7 +453,10 @@ function bestBlockCut(
       if (!(impact > pool)) continue;
     }
     if (blockOnCooldown(world, src, b)) continue;
-    const chance = clamp01(b.chance);
+    // ⭐ GH#650 —— 系統倍率（`config.block@1.chanceMult`，出貨 1.0 ＝ 逐位元不變）。
+    //   ⚠️ ⭐ 乘在 **clamp 之前**是承重的：先夾再乘會讓一格 0.6 的機率
+    //   乘 2 之後變成 1.2 ⇒ `rng.chance(1.2)` 恆真 —— ⛔ 那不是「更常擋」，是「永遠擋」。
+    const chance = clamp01(b.chance * world.blockRules.chanceMult);
     const fraction = clamp01(b.fraction);
     const weight = chance * fraction;
     if (weight > bestWeight) {

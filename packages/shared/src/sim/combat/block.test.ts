@@ -676,7 +676,7 @@ describe("格擋 — ⑥ 內部冷卻 (絕對 tick,閘在骰子之前)", () => {
 describe("格擋 — ⑦ stacking 是後台欄位,兩個值都真的改變一場比賽", () => {
   const twoSources = (seed: number, stacking: BlockStacking): Rig => {
     const r = rig(seed);
-    r.world.blockRules = { stacking };
+    r.world.blockRules = { stacking, chanceMult: 1 };
     giveBlock(r, { damageTypes: ["physical"], chance: 0.3, fraction: 1 }, "item:a#0");
     giveBlock(r, { damageTypes: ["physical"], chance: 0.3, fraction: 1 }, "item:b#1");
     return r;
@@ -703,7 +703,7 @@ describe("格擋 — ⑦ stacking 是後台欄位,兩個值都真的改變一場
     // 0.5 × 0.5 = 0.25 贏過 1 × 0.2 = 0.2,所以擋中時擋掉的是 50 不是 20。
     // 弱的那個刻意排在前面 —— 「最後一個贏」的掃法會挑錯。
     const r = rig();
-    r.world.blockRules = { stacking: "best" };
+    r.world.blockRules = { stacking: "best", chanceMult: 1 };
     giveBlock(r, { damageTypes: ["physical"], chance: 1, fraction: 0.2 }, "item:weak#0");
     giveBlock(r, { damageTypes: ["physical"], chance: 0.5, fraction: 0.5 }, "item:strong#1");
     expect([...new Set(cutSamples(r, 200))].sort((a, b) => a - b)).toEqual([0, 50]);
