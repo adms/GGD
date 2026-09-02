@@ -116,13 +116,13 @@ cmd_verify() {
   # ⭐ 持久化模式要跟快照的內容一致：有 appendonlydir ⇒ redis 會**優先載 AOF**。
   #   ⛔ 用 `--appendonly no` 去驗一份 AOF 快照，量到的是 RDB 那一半 —— 又是一把單邊的尺。
   local AOF=no; [ -d "$tmp/appendonlydir" ] && AOF=yes
-  say "持久化 appendonly=$AOF（依快照內容決定，⛔ 不是猜的）"
+  say "持久化 appendonly=${AOF}（依快照內容決定，⛔ 不是猜的）"
 
   docker rm -f "$VC" >/dev/null 2>&1 || true
   # ⛔ 不發佈任何埠、⛔ 不設密碼、⛔ 不進任何 compose 專案 —— 它只活幾秒鐘
   docker run -d --name "$VC" --network none -v "$tmp:/data" "$IMG" \
       redis-server --appendonly "$AOF" --save '' >/dev/null 2>&1 \
-    || die "起不了驗證用容器（$IMG）"
+    || die "起不了驗證用容器（${IMG}）"
 
   local i loaded=0
   for i in $(seq 1 60); do

@@ -74,7 +74,7 @@ describe("GH#940 ① —— 被動不假裝施法（跑出貨內容）", () => {
     // ⚠️ 104 份卡面帶 `[被動]`／`[靈氣]`，⭐ 而其中有 effects 的那幾份
     //   是**真的主動技**（`damage` / `championForm` / `screenShake`）。
     // ⇒ ⛔ 任何「看到 [被動] 就不播 cast」的實作都會弄壞它們。
-    const tagged = all.filter((d) => /\[被動\]|\[靈氣\]/.test(String(d.description ?? "")));
+    const tagged = all.filter((d) => /\[被動\]|\[靈氣\]/.test(String((d as { description?: string }).description ?? "")));
     expect(tagged.length, "⛔ 一份都沒有 ⇒ 描述欄的形狀變了，這條在量空氣").toBeGreaterThan(50);
     const taggedButActive = tagged.filter((d) => d.effects.length > 0);
     expect(

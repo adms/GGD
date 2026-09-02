@@ -106,7 +106,7 @@ cmd_plan() {
     if not_yet_moved "$s" "$d"; then
       printf "    %-24s → %-22s %s  [%s]\n" "$s" "$d" "$($SUDO du -sh "$s" 2>/dev/null | cut -f1)" "${MOVE_KIND[$i]}"
     else
-      ok "$s 已搬 → $d（$( [ -L "$s" ] && echo "symlink" || echo "設定指向" )）"
+      ok "$s 已搬 → ${d}（$( [ -L "$s" ] && echo "symlink" || echo "設定指向" )）"
     fi
   done
 
@@ -289,7 +289,7 @@ do_harden() {
     $SUDO mkdir -p "/etc/systemd/system/${u}.service.d"
     $SUDO tee "/etc/systemd/system/${u}.service.d/ggd-datadisk.conf" >/dev/null <<EOF
 # GGD scripts/host-migrate.sh —— ⛔ 不要手改,重跑 harden
-# 資料住 $DEST_ROOT。沒掛上就**不要啟動** —— 起一套空的 store 比不啟動糟得多:
+# 資料住 ${DEST_ROOT}。沒掛上就**不要啟動** —— 起一套空的 store 比不啟動糟得多:
 # daemon 健康、docker ps 空的、網站 502,而看起來像有人把東西刪了。
 [Unit]
 RequiresMountsFor=$DEST_ROOT
@@ -342,9 +342,9 @@ cmd_verify() {
   dk=$(docker info --format '{{.DockerRootDir}}' 2>/dev/null)
   cd_=$($SUDO containerd config dump 2>/dev/null | sed -n 's/^root = .\(.*\).$/\1/p' | head -1)
   [ "$(readlink -f "$dk")" = "$(readlink -f "$DEST_ROOT/docker")" ] \
-    && ok "DockerRootDir → $dk" || bad "DockerRootDir = $dk（期望 $DEST_ROOT/docker）"
+    && ok "DockerRootDir → $dk" || bad "DockerRootDir = ${dk}（期望 $DEST_ROOT/docker）"
   [ "$(readlink -f "$cd_")" = "$(readlink -f "$DEST_ROOT/containerd")" ] \
-    && ok "containerd root = $cd_" || bad "containerd root = $cd_（期望 $DEST_ROOT/containerd）"
+    && ok "containerd root = $cd_" || bad "containerd root = ${cd_}（期望 $DEST_ROOT/containerd）"
 
   head_ "② ⭐ 承重驗證:真的寫一次,看位元組落在哪一顆碟"
   # ⛔ 「設定寫對了」證明不了「它真的往那裡寫」。拉一顆小映像,量兩邊的增量。
@@ -398,7 +398,7 @@ PY
   local i
   for i in "${!MOVE_SRC[@]}"; do
     local leftovers; leftovers=$(ls -d "${MOVE_SRC[$i]}".pre-migrate-* 2>/dev/null)
-    [ -n "$leftovers" ] && warn "舊來源仍在:$leftovers（$($SUDO du -sh $leftovers 2>/dev/null | cut -f1)）⇒ 驗完可 reclaim"
+    [ -n "$leftovers" ] && warn "舊來源仍在:${leftovers}（$($SUDO du -sh $leftovers 2>/dev/null | cut -f1)）⇒ 驗完可 reclaim"
   done
   say ""
   [ "$FAILED" -eq 0 ] && say "${GRN}後置條件全過${RST}" || say "${RED}有 ✗ —— ⛔ 不要 reclaim${RST}"

@@ -37,7 +37,7 @@ find_repo() {
   done
   return 1
 }
-REPO="$(find_repo)" || die "⛔ 找不到 GGD repo（試過 \$GGD_REPO、腳本上一層、~/GGD、/home/can/GGD、/data/GGD、\$PWD）
+REPO="$(find_repo)" || die "⛔ 找不到 GGD repo（試過 \${GGD_REPO}、腳本上一層、~/GGD、/home/can/GGD、/data/GGD、\${PWD}）
    ⇒ 設 GGD_REPO=/path/to/GGD 再跑。⛔ 拒絕在猜不到 repo 的情況下產出一個空包。"
 OUT="${GGD_EXPORT_OUT:-/data/site-export}"
 WITH_SECRETS=0; DRY=0
@@ -145,7 +145,7 @@ for d in "${BULK[@]}"; do
 done
 info "合計 ≈ $((TOTAL/1024)) MB（⛔ 不含映像 9.4G —— arm64 一定要重 build）"
 # ⭐ 空包必須是**錯誤**,⛔ 不是一份報告。一個 exit 0 的空包會在對面「還原成功」。
-[ "$TOTAL" -gt 0 ] || die "⛔ 一個目錄都沒找到（repo=$REPO）—— 這不是「沒有資料」,是**路徑錯了**。
+[ "$TOTAL" -gt 0 ] || die "⛔ 一個目錄都沒找到（repo=${REPO}）—— 這不是「沒有資料」,是**路徑錯了**。
    ⇒ 確認 $REPO/data/ 底下真的有 accounts/ matches/ 等目錄。"
 info "repo = $REPO"
 
@@ -355,7 +355,7 @@ case "$COMPRESS" in
   gzip) EXT=tar.gz;  C_CORE=(gzip -9 -c);        C_BULK=(gzip -1 -c) ;;
   *) die "⛔ GGD_EXPORT_COMPRESS 只認 zstd / gzip" ;;
 esac
-info "壓法：$COMPRESS（.$EXT）"
+info "壓法：${COMPRESS}（.${EXT}）"
 
 [ "${#PRESENT[@]}" -gt 0 ] || die "⛔ 一個 core 目錄都沒有 —— 拒絕產出空包"
 tar -C "$REPO/data" --numeric-owner -cf - "${PRESENT[@]}" | "${C_CORE[@]}" > "$BUNDLE/data-core.$EXT" \

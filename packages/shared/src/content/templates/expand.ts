@@ -306,6 +306,18 @@ export interface ExpandResult {
   castType: CastType;
   effects: EffectDef[];
   radius?: number;
+  /**
+   * ⭐ **施法距離**（2026-09-02，GH#916 的 `blink-strike` 帶進來的）。
+   *
+   * ⛔⛔ 在此之前模板**表達不了它** —— 而「瞬移到目標身邊」這一族的
+   * 距離就是它的定義（出貨五支 6／6／8／12／4.5 各不相同）。
+   * ⇒ 沒有這一格，模板產出的技能會**沒有施法距離**，
+   * 而那是一個 `params` 裡有、輸出裡沒有的**空宣稱**（第一·五守則）。
+   *
+   * ⚠️ 它進 {@link STACK_SCALAR_KEYS}：兩張卡各說一個距離 ⇒ 衝突要被指名，
+   * ⛔ 不是靜靜取其中一個。
+   */
+  range?: number;
   castTimeSec?: number;
   targetsEnemies?: boolean;
   /** proc families (on-attack / on-hit-react) are PASSIVE; effects stays [] */
@@ -797,6 +809,45 @@ const FAMILIES: Readonly<Record<string, Family>> = {
 
   // 1. 單體斬擊 — one targeted magic strike. IMPURE-EXEMPLAR: 菲特 23-04 also
   // self-buffs + execute-gates; only the numeric core is seeded here.
+  /**
+   * ⭐⭐ **瞬移突斬**（GH#916）—— 瞬移到目標身邊、停在他前面一點點，落地打一發。
+   *
+   * ⛔⛔ 在 2026-09-02 之前它是一份 **`params: {}` 的空殼**（`status: "draft"`）
+   * ⇒ ⭐ 對編輯器來說這塊積木**不存在**，而樹上有 **5 支**技能是手刻同一個形狀。
+   * ⚠️ 那正是 `ggd-brick-census.json` 的 `shells: 17` 那一族 ——
+   * ⭐ 而這一份是其中**唯一一個有真需求**的（其餘 16 份今天擋住 0 支）。
+   *
+   * ⭐ 每一格預設都**引用得到出處**（第一守則規矩 5，⛔ 沒有出處的預設會被
+   * 後來的自己當成證據）：`stopShortUnits: 1.8` 是出貨 4/5 支的逐位元值、
+   * `damage` 三支全部是 `damageTier:"小"` ＋ `coeff 0.5`、`range` 取中位數 6。
+   *
+   * ⚠️ ⛔ **另有 7 支純位移**（`to:"point"`、零 `onArrive`、`range 12`）——
+   * 那是**另一個家族**，⛔ 不要把它們塞進這一份：這一份的 `onArrive` 是承重的，
+   * 而它們一個 `onArrive` 都沒有。
+   */
+  "blink-strike": (t, p) => {
+    const onArrive: EffectDef[] = [
+      { kind: "spawnVfx", vfxId: str(t, p, "arriveVfxId"), at: "point" } as EffectDef,
+      damageEffect(damageType(t, p, "damageType"), scaling(t, p, "damage")),
+    ];
+    return {
+      castType: "targeted",
+      targetsEnemies: true,
+      range: num(t, p, "range"),
+      ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+      effects: [
+        {
+          kind: "blink",
+          shape: "single",
+          to: "targetUnit",
+          applyTo: "self",
+          stopShortUnits: num(t, p, "stopShortUnits"),
+          onArrive,
+        } as EffectDef,
+      ],
+    };
+  },
+
   "single-strike": (t, p) => ({
     castType: "targeted",
     targetsEnemies: true,
@@ -2249,6 +2300,8 @@ export function denormalizeTemplateBinding(
 const STACK_SCALAR_KEYS = [
   "castType",
   "radius",
+  // ⭐ 2026-09-02 —— 見 `ExpandResult.range` 的理由。
+  "range",
   "castTimeSec",
   "targetsEnemies",
   "innateKind",

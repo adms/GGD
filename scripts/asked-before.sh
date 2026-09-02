@@ -18,7 +18,7 @@ cd "$(dirname "$0")/.."
 PROJ="$HOME/.claude/projects/-Users-Takuro-GGD"
 HITS=0
 for kw in "$@"; do
-  echo "════ 「$kw」 ════"
+  echo "════ 「${kw}」 ════"
   # ① 我自己的日期帳本（最便宜、命中率最高）
   if out=$(grep -rn --color=never "$kw" docs/_daily/*.md 2>/dev/null | head -12) && [ -n "$out" ]; then
     echo "── docs/_daily（我記過的裁決）──"; echo "$out"; HITS=1

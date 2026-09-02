@@ -38,7 +38,7 @@ case "$HOST" in
   *ggd.adms.ai*|34.81.104.163|*adms.ai*)
     die "⛔ $HOST 看起來是正式站 —— 這支腳本只對 mini 說話。正式站走 scripts/host-deploy.sh" ;;
 esac
-[ -n "$USER_" ] || { echo "$RED⛔ 請設 GGD_MINI_USER（在 mini 上跑 whoami 就知道）$RST" >&2; exit 2; }
+[ -n "$USER_" ] || { echo "${RED}⛔ 請設 GGD_MINI_USER（在 mini 上跑 whoami 就知道）$RST" >&2; exit 2; }
 # ⭐ `-A`（agent 轉發）—— mini 用**我這台的** GitHub 金鑰 clone/fetch,
 #   ⛔ 而 mini 上不需要存放任何憑證。GCP 的 `host-deploy.sh` 也是這樣做的。
 #
@@ -100,13 +100,13 @@ cmd_check() {
 import socket,sys
 try: print(socket.getaddrinfo('$HOST',22,socket.AF_INET,socket.SOCK_STREAM)[0][4][0])
 except Exception: print('')" 2>/dev/null)
-  [ -n "$ip" ] && info "$HOST → $ip（$(route -n get "$ip" 2>/dev/null | awk '/interface/{print $2}')）" \
+  [ -n "$ip" ] && info "$HOST → ${ip}（$(route -n get "$ip" 2>/dev/null | awk '/interface/{print $2}')）" \
                || bad "$HOST 解析不到"
   local rtt; rtt=$(ping -c 5 -i 0.2 "$HOST" 2>/dev/null | awk -F'/' '/round-trip/{printf "%.2f",$5}')
   [ -n "$rtt" ] && ok "RTT ${rtt} ms" || warn "ping 不回（⛔ 不一定是壞的 —— 隱形模式）"
 
   head_ "2. SSH"
-  if r true 2>/dev/null; then ok "免密碼登入 OK（$USER_@$HOST）"
+  if r true 2>/dev/null; then ok "免密碼登入 OK（$USER_@${HOST}）"
   else
       # ⛔⛔ **在此之前這裡一律說「跑 ssh-copy-id」，而那常常指著錯的方向。**
       #   2026-08-30 實測：兩把鑰匙都在 agent 裡、`ssh-copy-id` 早就跑過，
@@ -129,7 +129,7 @@ except Exception: print('')" 2>/dev/null)
         _MY_NET="${_MY_IP%.*}"
         _TARGET_NET="${HOST%.*}"
         if [ -n "$_MY_IP" ] && [ "$_MY_NET" != "$_TARGET_NET" ]; then
-          info "  ⭐ **量到了：這台在 $_MY_IP（網段 $_MY_NET.x），而目標在 $_TARGET_NET.x**"
+          info "  ⭐ **量到了：這台在 ${_MY_IP}（網段 $_MY_NET.x），而目標在 $_TARGET_NET.x**"
           info "  ⇒ ⛔ 移動的是**這一台**，⛔ 不是 mini —— 它多半好好的。"
           info "  ⇒ 回到 mini 的區網，或走 VPN／Tailscale，⛔ 不要去喚醒一台沒睡的機器。"
         elif [ -n "$_MY_IP" ]; then
@@ -162,7 +162,7 @@ except Exception: print('')" 2>/dev/null)
     || warn "data/ 還沒有 ⇒ scripts/site-export.sh + site-import.sh"
   # ⭐ 這一條是 owner 的機器才有的死因,check 一定要問
   local au; au=$(r 'defaults read /Library/Preferences/com.apple.loginwindow autoLoginUser 2>/dev/null' 2>/dev/null)
-  [ -n "$au" ] && ok "自動登入已開（$au）" \
+  [ -n "$au" ] && ok "自動登入已開（${au}）" \
     || bad "⛔ 沒有自動登入 —— 重開機會停在登入畫面,而 docker 是使用者層程式 ⇒ 站不會回來"
   local sl; sl=$(r 'pmset -g | awk "\$1==\"sleep\"{print \$2}"' 2>/dev/null)
   [ "${sl:-1}" = 0 ] && ok "不睡" || bad "⛔ 會睡（sleep=${sl:-?}）⇒ sudo pmset -a sleep 0 disablesleep 1"
@@ -290,7 +290,7 @@ cmd_deploy() {
       [ -z "${failed// /}" ] || die "⛔ 這幾份備份不起來（多半是 root 所有，**需要 sudo**）：
   $failed
      ⇒ 請在 mini 上先處理它們，⛔ 這一次不部署。"
-      ok "已備份 $n_clash 份到 $bdir（⭐ 帳本：`ls $bdir`）"
+      ok "已備份 $n_clash 份到 ${bdir}（⭐ 帳本：`ls $bdir`）"
     fi
     r "cd $REMOTE_REPO && git checkout -f -q $head_local" || die "checkout $head_local 失敗"
     # ⭐ **後置條件**：備份還在（⛔ 「備份了」與「備份成功了」是兩件事）。
@@ -303,7 +303,7 @@ cmd_deploy() {
   local remote_head; remote_head=$(r "cd $REMOTE_REPO && git rev-parse HEAD" 2>/dev/null)
   [ "$remote_head" = "$head_local" ] \
     && ok "mini 對到 $(echo "$head_local" | cut -c1-8)（⭐ git,有 .git ⇒ 版本戳自己算得出來）" \
-    || die "⛔ 同步後版本對不上（mini=$remote_head 本機=$head_local）"
+    || die "⛔ 同步後版本對不上（mini=$remote_head 本機=${head_local}）"
 
   head_ "2. build（arm64）"
   # ⛔⛔ **裸的 `docker compose build` 會掉版本戳**。
@@ -485,7 +485,7 @@ cmd_tunnel() {
   # ⭐ `docker port <容器>` 只列**真的發佈**的映射 —— 回空就是零發佈。
   local pub; pub=$(r "cd $REMOTE_REPO && docker port ggd-edge-1" 2>/dev/null | tr -d ' \n')
   [ -z "$pub" ] && ok "edge 零發佈埠 —— 主機上沒有任何入口（EXPOSE 8080/tcp ⛔ 不算）" \
-                || bad "⛔ edge 仍**發佈**：$pub（tunnel overlay 沒吃到?）"
+                || bad "⛔ edge 仍**發佈**：${pub}（tunnel overlay 沒吃到?）"
 
   head_ "4. ⭐ cloudflared → edge 走得通嗎（那才是 tunnel 實際走的路）"
   # ⛔ 第一版在 cloudflared 容器裡跑 `sh -c wget` —— 而它是 **distroless 映像,
@@ -595,9 +595,9 @@ cmd_tunnel_verify() {
   local mine ref_code
   mine=$(_ws "$host"); ref_code=$(_ws "$ref")
   if [ "$mine" = "$ref_code" ]; then
-    ok "WebSocket 升級路徑與正式站一致（兩邊都是 HTTP $mine）—— ⭐ tunnel 是透明的"
+    ok "WebSocket 升級路徑與正式站一致（兩邊都是 HTTP ${mine}）—— ⭐ tunnel 是透明的"
   else
-    bad "⛔ WebSocket 升級：本站 $mine ≠ 正式站 $ref_code（$wsp）"
+    bad "⛔ WebSocket 升級：本站 $mine ≠ 正式站 ${ref_code}（${wsp}）"
     info "⇒ 去 tunnel 的 Additional application settings 確認 WebSocket 沒被關掉"
   fi
   echo

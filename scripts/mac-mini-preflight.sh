@@ -135,7 +135,7 @@ sec_host() {
   #     沒有自動登入 ⇒ 重開機停在登入畫面 ⇒ Docker 永遠不起來 ⇒ 站永遠是死的,
   #     ⭐ 而 Mac 本身完全健康、ssh 進得去、看起來一切正常。
   local au; au=$(defaults read /Library/Preferences/com.apple.loginwindow autoLoginUser 2>/dev/null)
-  [ -n "$au" ] && ok "自動登入已開（$au）" || bad "⛔ 沒有自動登入 —— 重開機會停在登入畫面而 Docker 是使用者層程式 ⇒ 站不會回來"
+  [ -n "$au" ] && ok "自動登入已開（${au}）" || bad "⛔ 沒有自動登入 —— 重開機會停在登入畫面而 Docker 是使用者層程式 ⇒ 站不會回來"
 
   # B4 容器 runtime
   if command -v orbctl >/dev/null 2>&1 || [ -d /Applications/OrbStack.app ]; then
@@ -219,7 +219,7 @@ sec_net() {
     info "   （cloudflared 在同一個 docker 網路裡直接連 edge:8080，⛔ 不需要 host 的埠）"
     info "⭐ 要在同一區網走直連：-f docker/compose.lan.yaml 並寫出 GGD_LAN_BIND=<網卡IP>"
   else
-    ok "edge 綁在 $bind（⛔ 不是 0.0.0.0）"
+    ok "edge 綁在 ${bind}（⛔ 不是 0.0.0.0）"
   fi
 
   # ⭐ 直連 vs 繞出去再繞回來 —— ⛔ 不要猜「應該差不多」
