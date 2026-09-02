@@ -228,6 +228,24 @@ def collect() -> list[tuple[str, str, list[tuple[str, str, str]]]]:
         rows = []
         for dirpath, dirnames, filenames in os.walk(abs_root):
             dirnames.sort()
+            # ⭐⭐ 2026-09-02（GH#947）—— **`_overwrites/` 不逐檔列。**
+            #
+            # ⛔ 量到：3367 條裡 **2762 條（82%）是自動留底** ——
+            # 而它們是 `scripts/preserve-before-overwrite.py`（PreToolUse hook）寫的，
+            # ⭐ **每一次覆蓋檔案就多一個目錄** ⇒ 這份索引在一個工作 session 裡
+            # 過期了 **5 次以上**，而每一次「紅」講的都不是知識的事。
+            #
+            # ⭐ 兩個理由，⛔ 都不是「它很吵」：
+            # ① **它們已經有自己的帳本** —— `docs/legacy/_overwrites/_ledger.tsv`，
+            #    CLAUDE.md 逐字指名那一份是覆蓋留底的紀錄。⇒ 這裡再列一次是
+            #    **第二個住處**（第〇·四守則），而且是會腐爛的那一個。
+            # ② 這份索引的用途是 owner 說的「**以免真的需要的時候**」找回退休的
+            #    **文件** —— ⭐ 而 605 條真的條目被 2762 條機器留底埋掉了。
+            #
+            # ⚠️ ⛔ **不是刪除**：檔案原封不動躺在磁碟上，帳本一列都沒少。
+            # ⭐ 要改回來就把這三行拿掉（⇒ 一行 diff 的 rollback）。
+            if "_overwrites" in dirnames:
+                dirnames.remove("_overwrites")
             for fn in sorted(filenames):
                 if fn == ".DS_Store":
                     continue
@@ -301,6 +319,24 @@ def render() -> str:
         L.append("")
         L.append(blurb)
         L.append("")
+        if root == "docs/legacy":
+            # ⭐⭐ **少掉的那一整區要在這裡說出來** —— ⛔ 一個靜默地不見的區塊
+            # 與「它本來就不存在」長得一模一樣（第一·五守則的反面：
+            # 知識可以搬家，⛔ 不可以無聲消失）。
+            L.append(
+                "> ⚠️ ⛔ **`_overwrites/` 刻意不逐檔列。** 那裡是"
+                "`scripts/preserve-before-overwrite.py`（PreToolUse hook）的**自動留底**，"
+                "⭐ 每覆蓋一個檔就多一個目錄 —— 2026-09-02 量到它佔這份索引的 **82%**"
+                "（3367 條裡 2762 條），⇒ 把 605 條真的條目埋掉，"
+                "而且讓這份索引在一個工作 session 裡過期 **5 次以上**。"
+            )
+            L.append(">")
+            L.append(
+                "> ⭐ **它有自己的帳本**：[`docs/legacy/_overwrites/_ledger.tsv`]"
+                "(legacy/_overwrites/_ledger.tsv) —— CLAUDE.md 逐字指名那一份。"
+                "⇒ 要找某一次覆蓋的留底就查那裡，⛔ 檔案一個都沒有被刪。"
+            )
+            L.append("")
         if root == "content/_legacy":
             L.append(CONTENT_LEGACY_NOTE)
             L.append("")
