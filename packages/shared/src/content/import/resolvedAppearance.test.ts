@@ -64,6 +64,36 @@ describe("resolved-appearance@1", () => {
     ).toEqual([]);
   });
 
+  it("★★ ⭐⭐ ②′ 與**註冊表**（＝遊戲真的用的那一份）逐字一致", async () => {
+    // ⛔⛔ 上一版讀的是**磁碟上的 JSON** —— ⭐ 而遊戲用的是**註冊表**
+    //   （`Champions.get(id).modelKey`，由 snapshot 的 `e.key` 送到客戶端）。
+    // ⚠️ 兩者之間隔著模板展開與級距解析 ⇒ ⭐ 只驗磁碟檔是**失敗形態⑤**
+    //   （被測的不是出貨的那個）。⇒ 這一條問註冊表。
+    const { registerAll } = await import("../registries");
+    const { ContentLoader } = await import("../loader");
+    const { shippedContentSource } = await import("../__fixtures__/shippedContent");
+    const { Champions } = await import("../../sim/content/registry");
+    registerAll((await new ContentLoader(shippedContentSource(CONTENT)).load()).store);
+
+    const mismatched: string[] = [];
+    let checked = 0;
+    for (const c of champs) {
+      const reg = Champions.get(c.id as never) as unknown as { modelKey?: string } | undefined;
+      if (reg === undefined) continue;
+      checked += 1;
+      const r = resolveAppearance(c.id, c, models.get(String(c.modelKey)));
+      if (r.ok && r.appearance.modelKey !== reg.modelKey) {
+        mismatched.push(`${c.id}: resolver=${r.appearance.modelKey} 註冊表=${reg.modelKey}`);
+      }
+    }
+    expect(checked, "儀器：註冊表裡一位英雄都沒讀到 ⇒ 這條在量空氣").toBeGreaterThan(50);
+    expect(
+      mismatched,
+      "⛔⛔ resolver 與**註冊表**解出不同的 modelKey ⇒\n" +
+        "   ⭐ 遊戲畫一顆、外部編輯器預覽另一顆，而兩邊都覺得自己是對的。",
+    ).toEqual([]);
+  }, 120_000);
+
   it("★★ ⭐⭐ ② 解出的 `modelKey` 逐字等於**遊戲會用的**那一個", () => {
     // ⭐ 遊戲那一側讀的就是 `champion@1.modelKey`（`EntityViewRegistry` 的
     //   `Champions.get(championId).modelKey`）⇒ 這條證明 resolver **沒有改寫它**。
