@@ -129,7 +129,19 @@ export function ReplaysPage(): React.JSX.Element {
       {identity && (
         <div style={{ fontSize: 11, color: TEXT_DIM, margin: "6px 0 10px" }}>
           目前伺服器內容版本 <code style={{ color: GOLD }}>{identity.contentVersion || "(未載入)"}</code> ·
-          建置 <code>{identity.buildStamp}</code>　—　只有相同版本錄製的回放能重播，其餘會被明確拒絕。
+          建置 <code>{identity.buildStamp}</code>
+          {identity.buildStamp === "dev" ? (
+            // ⛔⛔ GH#949 —— 這句話在此之前逐字寫著「其餘會被明確拒絕」，
+            // ⭐ 而正式站上每一份錄影的建置編號都是 `"dev"` ⇒ **什麼都不會被拒絕**。
+            // 第一·五守則：卡面上不可以有說了不會發生的字。
+            <>
+              　—　⚠️ 這台<strong>沒有建置編號</strong>（見 /healthz 的{" "}
+              <code>build.stamped</code>）⇒ ⛔ 版本柵欄目前是<strong>關著的</strong>，
+              舊版錄的回放不會被擋下來。
+            </>
+          ) : (
+            <>　—　只有相同版本錄製的回放能重播，其餘會被明確拒絕。</>
+          )}
         </div>
       )}
       {loading ? (

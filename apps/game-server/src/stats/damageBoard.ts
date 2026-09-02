@@ -50,7 +50,17 @@ export interface DamageBoardEntry {
   damage: number;
   /** epoch ms —— host 的時鐘(sim 裡刻意沒有時鐘) */
   ts: number;
-  /** build 版本(GGD_BUILD_STAMP;dev 是 "dev-<pid>" 那一族) */
+  /**
+   * build 版本 —— `buildStamp()`（`replay/fingerprint.ts`）的結果。
+   *
+   * ⛔⛔ **這裡本來寫著「dev 是 `dev-<pid>` 那一族」，而那是假的**（GH#949，第三守則）：
+   * `buildStamp()` 的回退值是**光禿禿的 `"dev"`**，⛔ 沒有任何後綴。
+   * `dev-xxxxxxxx` 是 `matchId`／`accountId`（`rooms/MatchRoom.ts`），
+   * ⭐ **完全不同的東西** —— 而那句話會讓下一個人以為「dev 帶著 pid，所以分得出場次」。
+   *
+   * ⚠️ 看到 `"dev"` 代表**這台沒有版本戳**（見 `../buildHealth.ts`），
+   * ⛔ 不是「這是開發版」。
+   */
   version: string;
   matchId: string;
   seatId: number;

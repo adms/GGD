@@ -418,12 +418,27 @@ export function activeContentVersion(): string {
  * suspects are a code change and — for a host-only divergence — the match
  * orchestrator specifically.
  */
+/** `buildStamp()` 的回退值 —— ⭐ 語意住在 `../buildHealth.ts`。 */
+const UNSTAMPED = "dev";
+
 function explainDivergence(header: ReplayHeader, kind: "sim" | "host", tick: number): string {
-  const sameBuild = header.buildStamp === buildStamp();
+  const now = buildStamp();
+  const sameBuild = header.buildStamp === now;
+  // ⛔⛔ GH#949 —— **兩邊都是回退值時，「相同」不是一個結論。**
+  //
+  // 正式站上 `buildStamp()` 必然落到 `"dev"`（容器裡沒有 checkout，而部署腳本
+  // 只在 `build` 那一行給了 `GGD_BUILD_STAMP`）⇒ ⭐ **任兩份錄影都判「相同版本」**，
+  // 而在此之前這一行會逐字說「所以問題不是版本落差」——
+  // ⭐ 一句**在它最該說話的時候沉默**的診斷（CLAUDE.md：單邊校準的量尺）。
+  const unstamped = header.buildStamp === UNSTAMPED || now === UNSTAMPED;
   const buildLine = sameBuild
-    ? `建置編號與錄製時相同（${header.buildStamp}），所以問題不是版本落差，` +
-      `而是同一份程式碼在重播時走了不同的路徑——請把這段回報為 bug。`
-    : `錄製時的建置是 ${header.buildStamp}，目前是 ${buildStamp()}。` +
+    ? unstamped
+      ? `⚠️ 兩邊都**沒有建置編號**（都是 ${UNSTAMPED}）⇒ ⛔ **版本落差無法排除** —— ` +
+        `這台 shard 沒有被戳記（見 /healthz 的 build.stamped），所以「相同」只代表` +
+        `兩份都沒有答案，⛔ 不代表程式碼沒變。`
+      : `建置編號與錄製時相同（${header.buildStamp}），所以問題不是版本落差，` +
+        `而是同一份程式碼在重播時走了不同的路徑——請把這段回報為 bug。`
+    : `錄製時的建置是 ${header.buildStamp}，目前是 ${now}。` +
       `內容版本相同但程式碼不同，最可能的原因就是這次改動改變了模擬行為。`;
   const where =
     kind === "sim"

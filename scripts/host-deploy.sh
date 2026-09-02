@@ -286,6 +286,22 @@ if [ "$MODE" = rollback ]; then
   else
     printf '\033[33m  ! 沒有 %s，只回滾了映像；content/ 維持現狀\033[0m\n' "$PREV_FILE"
   fi
+  # ⛔⛔ GH#949 —— **回滾之後版本戳不可以是空的。**
+  #
+  # `docker/compose.yaml` 的 `GGD_BUILD_STAMP: "${GGD_BUILD_STAMP:-}"` 讀的是
+  # **`up` 那一刻的 shell env**，⛔ 而這條回滾分支跑在下面那行 `export` 的**之前**
+  # ⇒ 回滾之後 game shard 的 `buildStamp()` 落到 `"dev"`
+  # ⇒ ⭐ 錄影的版本柵欄關掉（任兩份判同一版），而且**靜默**。
+  #
+  # ⚠️ 回滾的是**映像**，所以版本戳要指向被退回的那一版（`$PREV_COMMIT`），
+  # ⛔ 不是現在的 HEAD —— 拿 HEAD 會讓錄影 header 說謊得更難查。
+  # 拿不到就明講 `rollback-unstamped`，⛔ 不要留空（留空 ＝ 退回 `"dev"` ＝ 看不出來）。
+  if [ -n "${PREV_COMMIT:-}" ]; then
+    export GGD_BUILD_STAMP="rollback-$(git describe --tags --always "$PREV_COMMIT" 2>/dev/null || echo "$PREV_COMMIT") $(date -u +%Y-%m-%d)"
+  else
+    export GGD_BUILD_STAMP="rollback-unstamped $(date -u +%Y-%m-%d)"
+  fi
+  ok "回滾的 build stamp = $GGD_BUILD_STAMP"
   docker compose "${COMPOSE_FILES[@]}" --env-file "$ENV_FILE" up -d
   MODE=verify   # 落到下面同一套後置驗證
 fi
