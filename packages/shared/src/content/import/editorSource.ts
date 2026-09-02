@@ -120,6 +120,8 @@ export function ownershipOf(
  * 而 `sourceExists` 由呼叫端驗（這一支不碰檔案系統：可測性 ＋ 決定性）。
  */
 export interface SourceAdapter {
+  /** ⭐ 對外的穩定 id —— 對面引用**這個**，⛔ 不是 `regenerate` 那個字串。 */
+  readonly adapterId: string;
   readonly step: string;
   /** 產物路徑 → 來源檔路徑（算不出來 ⇒ null）。 */
   readonly sourceFor: (productPath: string) => string | null;
@@ -128,8 +130,22 @@ export interface SourceAdapter {
   readonly why: string;
 }
 
+/**
+ * ⭐⭐ **`adapterId` 是對外的**穩定名字**，⛔ `regenerate` 不是。**
+ *
+ * ── ⛔ 交接文件逐字 ─────────────────────────────────────────────────────
+ * 「`regenerateCommand` **只能當人類說明／audit metadata**。Client 不得回傳或
+ *   要求 server 執行任意 shell string；真正執行的是 Main 註冊的 `adapterId`。
+ *   ⭐ 否則 source adapter 會變成**遠端命令入口**。」
+ *
+ * ⇒ ⭐ 對面引用的是 `adapterId`；`regenerate` 那個字串只給人看與寫稽核。
+ * ⚠️ 出貨的實作**本來就**是 server 端選 adapter（`adapterFor()`），
+ * ⛔ 但那個性質在 2026-09-02 之前**只有一行註解在守** ——
+ * ⭐ 現在有一條測試證明「請求裡的任何字串都到不了 `execFileSync`」。
+ */
 export const SOURCE_ADAPTERS: readonly SourceAdapter[] = Object.freeze([
   {
+    adapterId: "skillremake-hero-py.ability@1",
     step: "skillremake:json",
     sourceFor: (p) => {
       const m = /^content\/abilities\/([a-z0-9-]+)\.[a-z0-9]+\.json$/.exec(p);
@@ -141,6 +157,7 @@ export const SOURCE_ADAPTERS: readonly SourceAdapter[] = Object.freeze([
       "產物 id 的第一段**就是**英雄 id（`godie-e00s.r` → `godie-e00s.py`）。",
   },
   {
+    adapterId: "skillremake-hero-py.champion@1",
     step: "skillremake:json",
     sourceFor: (p) => {
       const m = /^content\/champions\/([a-z0-9-]+)\.json$/.exec(p);

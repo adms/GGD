@@ -318,7 +318,7 @@ export function registerEditorSourceRoutes(
         sha256: sha256Hex(source),
         bytes: Buffer.byteLength(source),
       },
-      regenerate: { step: a.step, command: a.regenerate },
+      regenerate: { adapterId: a.adapterId, step: a.step, command: a.regenerate },
       product: {
         path,
         before: productBefore?.sha256 ?? null,
