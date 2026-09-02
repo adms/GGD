@@ -246,6 +246,25 @@ export const CONFIG_DOC_EXEMPTIONS: readonly ConfigDocExemption[] = [
     expiresWhen: "plan.py 不再覆寫整份、或 schema 長出一格「人來決定」的參數時失效。",
   },
   {
+    docId: "unsafe-textures",
+    kind: "NOT_TUNABLE",
+    provenanceKey: "measured",
+    why:
+      "⭐ **量測台帳，⛔ 不是偏好表**：五張 wc3 貼圖每一列都帶 sha256、alpha 直方圖" +
+      "（`alphaRange` / 常數值 / 邊緣有效加光）與 usage 四欄（vfx 文件 / 可達 vfx / " +
+      "技能 / 英雄）—— ⭐ 全部是**從位元組與內容樹量出來的**。" +
+      "⚠️ 開一頁讓人手改 `status` ＝ 把一份可稽核的量測變成沒有出處的偏好，" +
+      "而 `measured` 欄位會**繼續宣稱有出處**（第三守則）。" +
+      "⭐ 而判準本身是一個**配對**（貼圖 × blendMode）：" +
+      "`zap1` 在 additive 下安全、換成 alpha 就是一塊實心方板 —— " +
+      "⛔ 那不是一個人可以在後台勾的布林。" +
+      "⇒ 要放行一張貼圖的正確路徑是**修那張貼圖**（改 alpha／blend），" +
+      "然後守衛的 sha256 會紅著要人重量測。",
+    expiresWhen:
+      "⭐ 某一張貼圖真的被修好（sha256 變了）而需要人來裁決新的 status 時失效 —— " +
+      "⚠️ 那時候要問的是「這一格該不該有後台入口」，⛔ 不是把這一列續期。",
+  },
+  {
     docId: "unit-tints",
     kind: "NOT_TUNABLE",
     provenanceKey: "source",

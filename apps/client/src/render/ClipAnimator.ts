@@ -53,7 +53,7 @@ export type ClipState = AnimState | PresentationClip;
  * fail-LOUD half of that fallback (CLAUDE.md: fail-open is fine, SILENT is the
  * defect). Do not add a silent second fallback path here.
  */
-const DEFAULT_CLIP_NAMES: Record<ClipState, string[]> = {
+export const DEFAULT_CLIP_NAMES: Record<ClipState, string[]> = {
   idle: ["idle", "stand"],
   run: ["run", "walk", "move"],
   attack: ["attack", "swing", "shoot"],

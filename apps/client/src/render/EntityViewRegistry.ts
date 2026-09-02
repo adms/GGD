@@ -764,6 +764,34 @@ export class EntityViewRegistry {
         if (cue) view.flash(cue.rgb, nowMs, cue.ms, cue.alpha);
         break;
       }
+      /**
+       * ⭐⭐ **位移的演出時刻**（Codex 阻塞清單 P0-5）—— 三種位移共用一則。
+       *
+       * ⛔⛔ 這一則在 2026-09-02 **才過線**（在此之前它停在 `SERVER_ONLY`）——
+       * ⭐ 而開線的同一刻就要有人讀它，⛔ 否則就是失敗形態⑧
+       * （`performanceEventsHaveConsumers` 這條閘逐字要求「一個歸宿」）。
+       *
+       * ⭐ 為什麼 `cast` 而不是 `attack`：位移是**施法者自己做的動作**
+       * （衝刺／跳躍／瞬移都是「他發動了什麼」），⛔ 而 `attack` 的語意是打到人。
+       * ⚠️ 而 `blink` 是**瞬間**的 ⇒ 它的窗要短（`durationSec` 是 0）——
+       * ⭐ 直接把引擎排的時長交給脈衝，⛔ 不是猜一個。
+       *
+       * ⚠️ ⛔ **只讀 `phase: "start"`**：三個發射站今天都只在起點發一則
+       * （理由是 sim 的 —— `displace` 接 `onDashOrBlink`，多發一則＝卡片觸發兩次）。
+       * ⇒ 這裡對 `impact`/`end` 刻意 no-op，⭐ 而不是假裝它們會來。
+       */
+      case "displace": {
+        const id = ev.data.id as number | undefined;
+        const phase = ev.data.phase as string | undefined;
+        if (id === undefined || phase !== "start") break;
+        const secs = ev.data.durationSec as number | undefined;
+        this.champions.get(id)?.pulse("cast", nowMs, {
+          ...(typeof secs === "number" && secs > 0
+            ? { windowMs: Math.round(secs * 1000), clipWindowMs: Math.round(secs * 1000) }
+            : {}),
+        });
+        break;
+      }
       // unblocked heavy hit → KNOCKDOWN: a longer prone/getup flinch on the victim.
       case "knockdown": {
         const target = ev.data.target as number | undefined;

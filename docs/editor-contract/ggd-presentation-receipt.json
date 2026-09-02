@@ -1,0 +1,128 @@
+{
+  "schema": "ggd-presentation-receipt@1",
+  "note": "⭐ 演出契約收據（Codex 阻塞清單 C）。**每一格都是推導的** —— ⛔ 產物，改 `tools/presentation-receipt/gen.ts`，⛔ 不要手改。⚠️ 一格寫著 `unsupported` **就是它今天的實話** —— ⭐ 請 fail closed，⛔ 不要抄 Main 的常數繞過去。",
+  "actorPulses": {
+    "vocabulary": [
+      "attack",
+      "cast",
+      "hurt",
+      "guard",
+      "dodge"
+    ],
+    "defaultWindowMs": {
+      "attack": 350,
+      "cast": 450,
+      "hurt": 250,
+      "guard": 300,
+      "dodge": 220
+    },
+    "animStates": [
+      "idle",
+      "run",
+      "attack",
+      "cast",
+      "hurt",
+      "death"
+    ],
+    "outsideClipMap": [
+      "guard",
+      "dodge"
+    ]
+  },
+  "clipFallback": {
+    "candidates": {
+      "idle": [
+        "idle",
+        "stand"
+      ],
+      "run": [
+        "run",
+        "walk",
+        "move"
+      ],
+      "attack": [
+        "attack",
+        "swing",
+        "shoot"
+      ],
+      "cast": [
+        "cast",
+        "spell",
+        "ability"
+      ],
+      "hurt": [
+        "hurt",
+        "hit",
+        "flinch"
+      ],
+      "death": [
+        "death",
+        "die",
+        "ko"
+      ],
+      "celebrate": [
+        "celebrate",
+        "cheer",
+        "victory",
+        "dance"
+      ],
+      "guard": [
+        "defend",
+        "block",
+        "guard",
+        "shield",
+        "parry"
+      ],
+      "dodge": [
+        "dodge",
+        "evade",
+        "roll",
+        "sidestep",
+        "walk"
+      ]
+    },
+    "policy": "① 文件 `clipMap` 的明確指名 → ② 這張表的模糊比對（同一顆 glb 自己的剪輯，⛔ 不會退到別的角色）→ ③ 都沒有 ⇒ 退回 idle 並**警告一次**（fail-loud）。⭐ idle 是循環的 ⇒ ⛔ 角色不會停住或消失。",
+    "measured": "264 顆出貨 .glb 的 AnimationGroup 名普查：guard 0 · dodge 0 · dash 0 · leap 0 · teleport 0 位元組；而 stand 295 · attack 238 · walk 171 · attack defend 21。"
+  },
+  "replacementPolicy": {
+    "status": "unsupported",
+    "why": "⛔ **今天沒有取代機制**：`scriptPlayer.onEvent()` 之後 `switch` 直接往下走（⛔ 無 early-return、⛔ 無旗標）⇒ 兩條都跑。⭐ 而出貨的 10 份 script **逐份對照過只有 1 次重疊**（已修）——作者側是靠**約定**避開的，⛔ 不是靠機制。⇒ ⭐ 閘：`packages/shared/src/content/vfxScriptNoDoubleDraw.test.ts`（腳本不可以畫技能已經在畫的東西）。",
+    "evidence": "apps/client/src/vfx/VfxSystem.ts · packages/shared/src/content/vfxScriptNoDoubleDraw.test.ts"
+  },
+  "singleArc": {
+    "status": "supported",
+    "why": "10 顆單發弧（burstCount:1、錐角 ≤1°、初速 0、非拉長）。⭐ 既有的 26 發 slash 一顆都沒動。",
+    "evidence": "content/vfx/fx.prim.*.arc.json · packages/shared/src/content/singleArcPrimitive.test.ts",
+    "ids": [
+      "fx.prim.arcane.arc",
+      "fx.prim.blood.arc",
+      "fx.prim.fire.arc",
+      "fx.prim.holy.arc",
+      "fx.prim.ki.arc",
+      "fx.prim.lightning.arc",
+      "fx.prim.nature.arc",
+      "fx.prim.physical.arc",
+      "fx.prim.void.arc",
+      "fx.prim.wind.arc"
+    ],
+    "params": [
+      "w3xScale",
+      "tint",
+      "alpha",
+      "facingDeg",
+      "pitchDeg",
+      "flyHeight"
+    ]
+  },
+  "evasionProvenance": {
+    "status": "supported",
+    "why": "⭐ `evade` 帶著**真正抽中**的來源 identity（`by: {id, kind, statusId?}` ＋ `channel: basic|ability|fumble` ＋ `chance`）。⚠️ basic 那一條是**一次抽籤的分層歸因** —— `rollEvade` 從 `rng.chance(p)` 改寫成 `const roll = rng.next(); if (!(roll < p)) return false`，⭐ 而 `Rng.chance` 逐字就是 `next() < p` ⇒ **抽籤次數、位置、結果一個位元都沒動**。⭐ 分母留一塊無主的給 `base.evasion` ⇒ `by: null` ⇒ 走既有的泛用 MISS。",
+    "evidence": "packages/shared/src/sim/combat/evasion.ts"
+  },
+  "displaceCue": {
+    "status": "supported",
+    "why": "⭐ `displace` 帶著 `phase`（start/impact/end）與技能 identity。",
+    "evidence": "packages/shared/src/sim/movement/leap.ts · packages/shared/src/sim/effects/blink.ts"
+  },
+  "fingerprint": "100ab50e2ad0ec39"
+}

@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "e34aecdb5517",
+  "hash": "9d00bf4744f4",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -463,6 +463,12 @@
       "path": "config/unit-tints.json",
       "hash": "e4773bf9eb11",
       "size": 11203
+    },
+    {
+      "id": "unsafe-textures",
+      "path": "config/unsafe-textures.json",
+      "hash": "0531730d40b0",
+      "size": 7993
     },
     {
       "id": "valhalla-sandbox",

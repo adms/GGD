@@ -571,6 +571,23 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // CADENCE: 一次 `addShield` 一則，由**施法次數**決定，⛔ 不是 per-tick。
   // ⭐ 一發 AoE 給三個人 → 三則（三個人真的各多了一片）。
   "shieldGained",
+  // ⭐⭐ GH#354 ／ Codex 阻塞清單 P0-5 —— **位移的演出時刻**。2026-09-02 開線。
+  //
+  // ⛔ 在此之前它停在 `SERVER_ONLY`，理由那一段寫著「與已外送的 `leapStart`
+  // 講同一件事」—— ⭐ 而那個理由在 2026-09-02 **失效了**：
+  // `leapStart` 只涵蓋**跳躍**，⛔ 而 `displace` 現在是**三種位移共用**的那一則
+  // （`dash` / `blink` / `leap` 三個發射站），⭐ 而且它帶著 `phase` 與 `abilityId`。
+  //
+  // ⚠️ Codex 逐字要的是「至少能區分 start／impact／end」與「哪一支技能造成位移」
+  // ⇒ ⛔ 不開線 ＝ 那兩格**送不到編輯器**，而積木等於沒做（失敗形態⑧）。
+  //
+  // 酬載型別 `DisplaceEvent` 住 `packages/shared/src/sim/movement/leap.ts`，
+  // 三個發射站都用 `satisfies` 送 ⇒ 欄位漂掉是 **tsc 的紅**。
+  //
+  // CADENCE: **一次位移一則**（⛔ 不是 per-tick）。
+  // ⚠️ ⭐ 而三站**都只發一則** —— `displace` 接 `onDashOrBlink`
+  // （`WorldHookSystem.ts:313`）⇒ 多發一則 = 卡片觸發兩次 = **改 sim 判定**。
+  "displace",
 ]);
 
 /**
@@ -595,7 +612,6 @@ export const SERVER_ONLY_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // `packages/shared/src/sim` —— 列進來會被正確地判成「分類了但沒有人發」。
   // 它們不外送是**因為外送是白名單**（`isFannedOutEvent`），不是因為列在這裡。
   "abilityHit",
-  "displace",
   "lethalDamage",
   // ⚠️ `resourceSwap` **不在這張表上了**（GH#406，2026-08-19）：v0.21.1 把它
   // 暫時列在這裡並註明「接上呈現的那一版要搬回 FANNED_OUT」，而那一版已經到了 ——

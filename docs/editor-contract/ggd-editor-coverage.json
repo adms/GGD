@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "82ba38223951",
+  "fingerprint": "41c50c0eba21",
   "capabilityFingerprint": "24bd88e2",
   "required": [
     {
@@ -11245,6 +11245,11 @@
     },
     {
       "group": "configField",
+      "name": "id",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
       "name": "idleExcludeSeconds",
       "owner": "config.lobby-rally@1"
     },
@@ -13910,6 +13915,11 @@
     },
     {
       "group": "configField",
+      "name": "note",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
       "name": "numberColor",
       "owner": "config.item-card@1"
     },
@@ -15710,6 +15720,11 @@
     },
     {
       "group": "configField",
+      "name": "quarantineRatchet",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
       "name": "radius",
       "owner": "config.aoe-tiers@1"
     },
@@ -17082,6 +17097,11 @@
       "group": "configField",
       "name": "schema",
       "owner": "config.new-hero-checks@1"
+    },
+    {
+      "group": "configField",
+      "name": "schema",
+      "owner": "config.unsafe-textures@1"
     },
     {
       "group": "configField",
@@ -18787,6 +18807,161 @@
       "group": "configField",
       "name": "textAxis=relation",
       "owner": "config.damage-colors@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].file",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].measured",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].measured.alphaRange",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].measured.borderEffAdditive",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].measured.distinctAlphaValues",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].measured.edgeEffAdditive",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].measured.edgeEffAdditive.bottom",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].measured.edgeEffAdditive.left",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].measured.edgeEffAdditive.right",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].measured.edgeEffAdditive.top",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].measured.hasAlphaShape",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].measured.maxAlpha",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].measured.minAlpha",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].measured.opaquePct",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].measured.size",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].safeBlendModes",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].safeBlendModes[]=additive",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].safeBlendModes[]=alpha",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].safeBlendModes[]=alphaKey",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].safeBlendModes[]=modulate",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].sha256",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].status",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].status=quarantined",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].status=safe",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].usage",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].usage.abilities",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].usage.champions",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].usage.reachableVfxDocs",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].usage.vfxDocs",
+      "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "textures[].why",
+      "owner": "config.unsafe-textures@1"
     },
     {
       "group": "configField",
@@ -24147,9 +24322,9 @@
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 127,
-    "configField": 3795,
+    "configField": 3830,
     "_notRequired": 15,
-    "_total": 4948,
+    "_total": 4983,
     "_ownerOnly": 39
   }
 }
