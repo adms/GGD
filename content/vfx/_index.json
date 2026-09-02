@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "0c49d44b90f4",
+  "hash": "6f1e56551013",
   "entries": [
     {
       "id": "attach.ex.midchilder-aura",
@@ -513,6 +513,12 @@
       "size": 1120
     },
     {
+      "id": "fx.prim.arcane.arc",
+      "path": "vfx/fx.prim.arcane.arc.json",
+      "hash": "69db4cc2c142",
+      "size": 1143
+    },
+    {
       "id": "fx.prim.arcane.beam",
       "path": "vfx/fx.prim.arcane.beam.json",
       "hash": "caecdc0b8f8e",
@@ -609,6 +615,12 @@
       "size": 1067
     },
     {
+      "id": "fx.prim.blood.arc",
+      "path": "vfx/fx.prim.blood.arc.json",
+      "hash": "a01973f5dd1b",
+      "size": 1153
+    },
+    {
       "id": "fx.prim.blood.nova",
       "path": "vfx/fx.prim.blood.nova.json",
       "hash": "39e7d5186d8b",
@@ -681,6 +693,12 @@
       "size": 1141
     },
     {
+      "id": "fx.prim.fire.arc",
+      "path": "vfx/fx.prim.fire.arc.json",
+      "hash": "52390b2b433e",
+      "size": 1132
+    },
+    {
       "id": "fx.prim.fire.beam",
       "path": "vfx/fx.prim.fire.beam.json",
       "hash": "c8a1738e3293",
@@ -733,6 +751,12 @@
       "path": "vfx/fx.prim.fire.slash-lg.json",
       "hash": "68c1f3822a9c",
       "size": 1120
+    },
+    {
+      "id": "fx.prim.holy.arc",
+      "path": "vfx/fx.prim.holy.arc.json",
+      "hash": "5ea4854846dc",
+      "size": 1144
     },
     {
       "id": "fx.prim.holy.beam",
@@ -867,6 +891,12 @@
       "size": 1121
     },
     {
+      "id": "fx.prim.ki.arc",
+      "path": "vfx/fx.prim.ki.arc.json",
+      "hash": "329b4e61f2c4",
+      "size": 1142
+    },
+    {
       "id": "fx.prim.ki.beam",
       "path": "vfx/fx.prim.ki.beam.json",
       "hash": "21c70136adc6",
@@ -939,6 +969,12 @@
       "size": 1126
     },
     {
+      "id": "fx.prim.lightning.arc",
+      "path": "vfx/fx.prim.lightning.arc.json",
+      "hash": "58434bd40c7d",
+      "size": 1144
+    },
+    {
       "id": "fx.prim.lightning.beam",
       "path": "vfx/fx.prim.lightning.beam.json",
       "hash": "0b407e8d29d9",
@@ -1009,6 +1045,12 @@
       "path": "vfx/fx.prim.lightning.slash.json",
       "hash": "cb866d8c7cdb",
       "size": 1128
+    },
+    {
+      "id": "fx.prim.nature.arc",
+      "path": "vfx/fx.prim.nature.arc.json",
+      "hash": "b009f61627db",
+      "size": 1144
     },
     {
       "id": "fx.prim.nature.beam",
@@ -1099,6 +1141,12 @@
       "path": "vfx/fx.prim.nature.swarm-lg.json",
       "hash": "4d969b106ffb",
       "size": 1072
+    },
+    {
+      "id": "fx.prim.physical.arc",
+      "path": "vfx/fx.prim.physical.arc.json",
+      "hash": "f515a991cf42",
+      "size": 1148
     },
     {
       "id": "fx.prim.physical.beam",
@@ -1221,6 +1269,12 @@
       "size": 1083
     },
     {
+      "id": "fx.prim.void.arc",
+      "path": "vfx/fx.prim.void.arc.json",
+      "hash": "275996b5fe68",
+      "size": 1156
+    },
+    {
       "id": "fx.prim.void.beam",
       "path": "vfx/fx.prim.void.beam.json",
       "hash": "94bee8528540",
@@ -1321,6 +1375,12 @@
       "path": "vfx/fx.prim.void.swarm-lg.json",
       "hash": "b71601538d5f",
       "size": 1084
+    },
+    {
+      "id": "fx.prim.wind.arc",
+      "path": "vfx/fx.prim.wind.arc.json",
+      "hash": "a17340f6dc09",
+      "size": 1162
     },
     {
       "id": "fx.prim.wind.beam",
