@@ -72,6 +72,13 @@ function ability(id: string): Record<string, unknown> {
   return JSON.parse(readFileSync(join(REPO, "content/abilities", `${id}.json`), "utf8")) as Record<string, unknown>;
 }
 
+function currentScriptHash(id: string): string | null {
+  const file = join(REPO, "content/vfx-scripts", `${id}.json`);
+  return existsSync(file)
+    ? hashDoc(JSON.parse(readFileSync(file, "utf8")) as Record<string, unknown>)
+    : null;
+}
+
 describe("八招實際送審產物", () => {
   it("候選 hash、角色動作、兩張 framebuffer 與永久不可 Promote 的隔離全部對得上", () => {
     for (const [id] of VFX_FORGE_ACCEPTANCE) {
@@ -86,6 +93,8 @@ describe("八招實際送審產物", () => {
       });
       expect(item.candidateHash, id).toBe(hashDoc(candidate));
       expect(item.reviewHash, id).toBe(reviewHash(item));
+      expect(item.baseHash, `${id} 的送審 Base 必須等於目前 Main 腳本；不存在時明確為 null`)
+        .toBe(currentScriptHash(id));
       expect(item.visualEvidence.length, id).toBeGreaterThanOrEqual(2);
       expect(item.visualEvidence.every((frame) =>
         /^data:image\/(?:png|webp);base64,/.test(frame.dataUrl) &&
