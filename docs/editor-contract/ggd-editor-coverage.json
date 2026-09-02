@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "44cd204b15fc",
+  "fingerprint": "9240cfe84baa",
   "capabilityFingerprint": "65de4b39",
   "required": [
     {
@@ -24020,6 +24020,16 @@
     },
     {
       "group": "vfxScriptField",
+      "name": "segments[].kind=anim.replaces",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].kind=anim.replacesForMs",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
       "name": "segments[].kind=anim.strikeIndex",
       "owner": "vfx-script@1"
     },
@@ -24051,6 +24061,16 @@
     {
       "group": "vfxScriptField",
       "name": "segments[].kind=bodyMove.on",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].kind=bodyMove.replaces",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].kind=bodyMove.replacesForMs",
       "owner": "vfx-script@1"
     },
     {
@@ -24105,6 +24125,16 @@
     },
     {
       "group": "vfxScriptField",
+      "name": "segments[].kind=floatingText.replaces",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].kind=floatingText.replacesForMs",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
       "name": "segments[].kind=floatingText.riseSpeed",
       "owner": "vfx-script@1"
     },
@@ -24141,6 +24171,16 @@
     {
       "group": "vfxScriptField",
       "name": "segments[].kind=hideBody.on",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].kind=hideBody.replaces",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].kind=hideBody.replacesForMs",
       "owner": "vfx-script@1"
     },
     {
@@ -24225,6 +24265,16 @@
     },
     {
       "group": "vfxScriptField",
+      "name": "segments[].kind=modelFx.replaces",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].kind=modelFx.replacesForMs",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
       "name": "segments[].kind=modelFx.scale",
       "owner": "vfx-script@1"
     },
@@ -24305,6 +24355,16 @@
     },
     {
       "group": "vfxScriptField",
+      "name": "segments[].kind=screenFlash.replaces",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].kind=screenFlash.replacesForMs",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
       "name": "segments[].kind=screenFlash.strikeIndex",
       "owner": "vfx-script@1"
     },
@@ -24330,6 +24390,16 @@
     },
     {
       "group": "vfxScriptField",
+      "name": "segments[].kind=screenShake.replaces",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].kind=screenShake.replacesForMs",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
       "name": "segments[].kind=screenShake.strikeIndex",
       "owner": "vfx-script@1"
     },
@@ -24341,6 +24411,16 @@
     {
       "group": "vfxScriptField",
       "name": "segments[].kind=sound.on",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].kind=sound.replaces",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].kind=sound.replacesForMs",
       "owner": "vfx-script@1"
     },
     {
@@ -24406,6 +24486,16 @@
     {
       "group": "vfxScriptField",
       "name": "segments[].kind=vfx.pitchDeg",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].kind=vfx.replaces",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].kind=vfx.replacesForMs",
       "owner": "vfx-script@1"
     },
     {
@@ -24537,6 +24627,16 @@
       "group": "vfxScriptField",
       "name": "segments[].pulse=hurt",
       "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].replaces=caster.action",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "segments[].replaces=target.reaction",
+      "owner": "vfx-script@1"
     }
   ],
   "notRequired": [
@@ -24616,10 +24716,10 @@
     "modelField": 42,
     "projectileField": 15,
     "skinField": 9,
-    "vfxScriptField": 127,
+    "vfxScriptField": 147,
     "configField": 3881,
     "_notRequired": 15,
-    "_total": 5044,
+    "_total": 5064,
     "_ownerOnly": 39
   }
 }

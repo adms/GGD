@@ -18363,19 +18363,19 @@
       "kind": "textures",
       "refs": [
         "bundle",
+        "fx.prim.arcane.arc",
         "fx.prim.arcane.slash",
         "fx.prim.arcane.slash-lg",
+        "fx.prim.blood.arc",
         "fx.prim.blood.slash",
+        "fx.prim.fire.arc",
         "fx.prim.fire.slash",
         "fx.prim.fire.slash-lg",
+        "fx.prim.holy.arc",
         "fx.prim.holy.slash",
-        "fx.prim.holy.slash-lg",
-        "fx.prim.ki.slash",
-        "fx.prim.lightning.slash",
-        "fx.prim.nature.slash",
-        "fx.prim.nature.slash-lg"
+        "fx.prim.holy.slash-lg"
       ],
-      "moreRefs": 5
+      "moreRefs": 15
     },
     {
       "path": "assets/textures/particles/smoke_01.png",
@@ -18753,7 +18753,8 @@
       "refs": [
         "bundle",
         "fx.w3x.particle.babyface.p00",
-        "godie-babyface-p0"
+        "godie-babyface-p0",
+        "unsafe-textures"
       ]
     },
     {
@@ -18799,7 +18800,8 @@
       "refs": [
         "bundle",
         "fx.w3x.particle.heroeva01s2.p01",
-        "godie-heroeva01s2-p1"
+        "godie-heroeva01s2-p1",
+        "unsafe-textures"
       ]
     },
     {
@@ -18822,7 +18824,7 @@
         "godie-herokunoichi-r0",
         "godie-herokunoichi-r1"
       ],
-      "moreRefs": 21
+      "moreRefs": 22
     },
     {
       "path": "assets/textures/particles/wc3/rockparticle.png",
@@ -18846,7 +18848,8 @@
         "fx.w3x.stock.thunderclapcaster.p00",
         "godie-lightningtornado-p11",
         "godie-lightningtornado-p3",
-        "godie-lightningtornado-p7"
+        "godie-lightningtornado-p7",
+        "unsafe-textures"
       ]
     },
     {
@@ -18857,7 +18860,8 @@
       "kind": "textures",
       "refs": [
         "bundle",
-        "godie-lightningtornado-p13"
+        "godie-lightningtornado-p13",
+        "unsafe-textures"
       ]
     }
   ]

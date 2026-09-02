@@ -1,8 +1,6 @@
 {
   "schema": "ggd-main-handback@1",
   "note": "⭐ Main → Editor 的**機器可讀回報**。⛔ 產物 —— 改 `tools/main-handback/gen.ts`，⛔ 不要手改。⚠️ 每一格都是從出貨的東西量出來的（route 從原始碼掃、能力直接引用 `ggd-presentation-receipt.json`）—— ⛔ 沒有一格是宣稱。",
-  "branch": "main",
-  "commit": "b3f17498557ffe8dc72b2db6741f5650b00a857a",
   "receipts": {
     "targetProfileDigest": "fd41cc86e5bbc5c2",
     "capabilityFingerprint": "24bd88e2",

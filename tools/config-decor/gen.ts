@@ -449,7 +449,13 @@ function detectNoReadEnd(configDir: string, knobs: Knob[], corpus: Corpus): Find
       path: k.path,
       value: shippedValue(configDir, k),
       why:
-        `\`${k.key}\` 在 ${corpus.files} 份出貨消費端原始碼裡**被讀** 0 次 ` +
+        // ⛔⛔ **母體大小刻意不寫進這一句**（2026-09-02）—— 在此之前它是
+        //   `在 ${corpus.files} 份…裡` ⇒ ⭐ **任何人多加一個原始碼檔,這 23 列
+        //   的散文會一起變** ⇒ 產物過期而內容其實一模一樣。
+        //   ⚠️ 那與 CLAUDE.md 記過的「時鐘欄位逼得 --check 被放寬」是同一個病:
+        //   一格會隨無關改動而變的欄位,會讓逐位元組比對變成雜訊。
+        //   ⭐ 母體只住 `population.corpusFiles` **一格**（那裡它是真資訊）。
+        `\`${k.key}\` 在出貨消費端原始碼裡**被讀** 0 次 ` +
         `（讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）` +
         `⇒ 沒有任何東西讀得到它。`,
     });

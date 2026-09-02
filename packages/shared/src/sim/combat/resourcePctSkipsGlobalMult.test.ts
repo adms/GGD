@@ -10,6 +10,9 @@
  * 失敗形態⑤（被測的不是出貨的那個）：一份自己寫的 `damageLine + resourcePct`
  * 在「沒有任何一支技能真的長這樣」的樹上也會綠。所以這裡讀
  * `content/abilities/godie-e00r.r.json`（59-04 野戰型陽電子砲）本人 ——
+ * ⚠️ ⭐ 那份檔是 **`skillremake:json` · `castderive:build`** 的產物
+ * ⇒ ⛔ 要改它請改**產生器來源**再 `bash scripts/genrun.sh <step>`，
+ *   ⛔ 不要直接編那份 JSON（下一次 sync 會把它打回來）。
  * 出貨量到它是**唯一**同時帶「傷害級距」與「目標最大生命 10% 真傷」的節點，
  * ⇒ 也就是唯一一支能同時證明兩個方向的技能。
  *

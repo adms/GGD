@@ -18,6 +18,9 @@ import {
   zConfigMoveSpeedTiersDoc,
   zConfigSkillNormalizeDoc,
   zConfigManaEconomyDoc,
+  // ⭐ 吟唱五級距（GH#943）／AP 係數公式（GH#942）—— 同上面那一族走 barrel。
+  zConfigCastTimeTiersDoc,
+  zConfigApCoefficientDoc,
 } from "@ggd/shared/content";
 import {
   ANCHOR_ROLE,
@@ -685,3 +688,218 @@ export const MANA_ECONOMY_SPEC: ConfigDocSpec<"manaEconomy"> = {
 };
 
 
+
+// ──────────────────── 吟唱五級距 (config/cast-time-tiers) ─
+
+/**
+ * ⭐ GH#943 —— owner 2026-09-02 逐字給的五格。
+ * ⛔ 這五個數字是他的，⛔ 不要在這裡挑或改。
+ */
+export const CAST_TIME_TIERS_SPEC: ConfigDocSpec<"castTimeTiers"> = {
+  page: "castTimeTiers",
+  collection: "config",
+  docId: "cast-time-tiers",
+  schemaTag: "config.cast-time-tiers@1",
+  zod: zConfigCastTimeTiersDoc,
+  title: "吟唱五級距",
+  intro: [
+    '技能 JSON 填 `castTimeTier: "中"`，這一頁決定「中」要吟唱幾秒。',
+    "⭐ 五個數字是 **owner 2026-09-02 逐字給的**：「吟唱⋯其實這個也可以五級距 **0, 0.1, 0.3, 0.5, 1** 建議也改成這個」。⛔ 不要自己挑。",
+    "⚠️ 上界 1.0 與既有的 `config.cast-time@1.castTimeMaxSec` 一致 —— ⭐ 兩者刻意同一個數字：**級距寫得出來的最大值，就是引擎夾得住的最大值**。",
+    "⚠️ ⭐ 這一格同時是 **AP 係數公式的一個維度**（吟唱越久係數越高）⇒ 改它會讓標了級別的技能**傷害跟著動**。⛔ 不要把它當成純粹的手感旋鈕。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/cast-time-tiers.json`**。",
+  ],
+  consumer:
+    "packages/shared/src/content/castTimeTiers.ts 的 resolveCastTimeTier（全專案唯一的查表處）← content/registries.ts 在技能註冊時把 castTimeTier 翻成 castTimeSec",
+  effect: "**要重啟 game-server shard 才生效**（內容在註冊時就解析完）。同其他五級距(#278)。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "級距總開關",
+      note:
+        "⭐ **一鍵回頭**：關掉之後 `castTimeTier` 不解析，技能回到自己手寫的 `castTimeSec`。" +
+        "⚠️ ⛔ 關掉**不是**「全部瞬發」—— 解析器回 `null`（＝這一格沒有意見），⛔ 不是 0。",
+    },
+    ...SKILL_TIER_NAMES.map((tier) => ({
+      path: `seconds.${tier}`,
+      zh: `${tier} — 吟唱秒數`,
+      note:
+        `填 \`castTimeTier: "${tier}"\` 的技能要吟唱幾秒（出貨值 {{出貨值}}）。` +
+        `⚠️ 改這一格，樹上每一支標成「${tier}」的技能同時跟著變，` +
+        `⭐ **而且 AP 係數會重算**（吟唱是公式的六維之一）。`,
+    })),
+  ],
+  preserved: [],
+};
+
+// ──────────────────── AP 係數公式 (config/ap-coefficient) ─
+
+/**
+ * ⭐⭐ GH#942 —— 148 個手填的 `coeff` 退場，換成一條六維公式。
+ *
+ * ⚠️ ⭐ **這一頁的每一格都會改變全庫的技能傷害** —— 它不是一頁參數，
+ * 是**一條會被套到 154 個節點上的算式**。⇒ 每一格的說明都要說「它動的是什麼」。
+ * ⭐ 而 `enabled` 那一格就是 owner 常設指令要的**一鍵 rollback**：
+ * 關掉 ⇒ 每一支技能回到自己文件裡那個手填的 `coeff`。
+ */
+export const AP_COEFFICIENT_SPEC: ConfigDocSpec<"apCoefficient"> = {
+  page: "apCoefficient",
+  collection: "config",
+  docId: "ap-coefficient",
+  schemaTag: "config.ap-coefficient@1",
+  zod: zConfigApCoefficientDoc,
+  title: "AP 係數公式",
+  intro: [
+    "⭐ `coeff = 基準 × 全域倍率 × 冷卻 × 吟唱 × 距離 × 目標形狀 × 條件 × 基礎值補償` —— **六個維度**，全部從技能自己的五級距標籤讀。",
+    "⛔ 在這一頁之前，148 個 `ratios[].coeff` 是**手填的自由數字**（0.1 → 7.0，差 70 倍），而沒有任何東西說得出為什麼。",
+    "⚠️ ⭐ **基準是校準出來的，⛔ 不是挑的**：它讓全庫 154 個節點的幾何平均等於**現況**的幾何平均 ⇒ 上線那一刻整體強度不變，變的是**相對關係**。⛔ 改它等於整體調強或調弱。",
+    "⚠️ ⭐ **第六維是 owner 2026-09-02 加的**：「有時候技能本身如果基礎傷害低，我也會用高 AP/AD 加成來彌補」⇒ `damageTier` 越低、補償越高。⛔ 少了它，一支刻意「低基礎高成長」的技能會被公式當成離群值收掉 —— 那正是設計意圖被反向執行。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/ap-coefficient.json`**。",
+  ],
+  consumer:
+    "packages/shared/src/content/apCoefficient.ts 的 resolveApCoefficient（全專案唯一的算式）← content/registries.ts 在技能註冊時把六個級距標籤翻成 ratios[].coeff",
+  effect: "**要重啟 game-server shard 才生效**（內容在註冊時就解析完）。同五級距(#278)。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "公式總開關",
+      note:
+        "⭐⭐ **一鍵 rollback**：關掉之後公式完全不跑，每一支技能回到自己文件裡那個手填的 `coeff`。" +
+        "⚠️ 這一格存在的理由就是「我挑錯的成本必須是改一格下拉選單」。",
+    },
+    {
+      path: "base",
+      zh: "基準係數",
+      note:
+        "整條公式的起點（出貨值 {{出貨值}}）。⭐ 它是**校準值** —— 讓全庫幾何平均等於現況。" +
+        "⚠️ ⛔ 改它 ＝ **全庫技能一起調強或調弱**，而不是調整某一類。要調整體強度請優先用下面那一格。",
+    },
+    {
+      path: "globalMult",
+      zh: "全域倍率",
+      note:
+        "⭐ **調整體強度就轉這一格**（出貨 1.0）—— 它與基準相乘，但語意乾淨：基準是校準出來的常數，這一格是**意圖**。" +
+        "⚠️ 1.1 ＝ 全庫 AP 加成整體 +10%。",
+    },
+    {
+      path: "cooldownSlopeExp",
+      zh: "冷卻維度的斜率",
+      note: "冷卻越長、係數越高的**陡峭程度**（出貨 {{出貨值}}）。⭐ 1.0 ＝ 線性；調高 ⇒ 長冷卻技的獎勵放大。",
+    },
+    {
+      path: "cooldown.normalizeToMidOfShape",
+      zh: "冷卻先對「同形狀的中位」正規化",
+      note:
+        "⭐ 開著：一支技能的冷卻先跟**同一種目標形狀**的中位比，再進公式。" +
+        "⚠️ ⛔ 關掉的話單體技會結構性吃虧 —— 單體表最高 60s，而範圍表可到 90/120。",
+    },
+    {
+      path: "cooldown.scale",
+      zh: "冷卻維度的幅度",
+      note:
+        "冷卻這一維最多能貢獻多少（出貨 {{出貨值}}）。⭐ 它與斜率是兩件事:斜率決定**形狀**,這一格決定**幅度**。⚠️ 調高 ⇒ 長冷卻與短冷卻技的係數差距整體拉開。",
+    },
+    {
+      path: "cooldown.min",
+      zh: "冷卻維度下界",
+      note:
+        "⚠️ **保險絲**:短冷卻技的係數不會被壓到這一格以下（出貨 {{出貨值}}）。"
+        + "⭐ 沒有它,一支 2 秒冷卻的技能會被公式壓到幾乎不吃 AP —— 而那不是設計,是除法的副作用。",
+    },
+    {
+      path: "cooldown.max",
+      zh: "冷卻維度上界",
+      note:
+        "⚠️ **保險絲**:長冷卻技的係數不會被抬到這一格以上（出貨 {{出貨值}}）。"
+        + "⭐ 沒有它,一支 300 秒冷卻的大招會拿到一個沒有人驗算過的巨大係數。",
+    },
+    {
+      path: "castTime.base",
+      zh: "吟唱維度的基準",
+      note: "沒有吟唱（瞬發）時這一維的值（出貨 {{出貨值}}）。⭐ 1.0 ＝ 瞬發不加成也不懲罰。",
+    },
+    {
+      path: "castTime.slope",
+      zh: "吟唱維度的斜率",
+      note: "每一秒吟唱換多少係數（出貨 {{出貨值}}）。⚠️ ⭐ 被動技的吟唱**一律當 0** —— 那是 GH#948 修掉的 34 支。",
+    },
+    {
+      path: "castTime.capSec",
+      zh: "吟唱計入上限（秒）",
+      note:
+        "⚠️ **保險絲**:超過這一格的吟唱不再換更多係數（出貨 {{出貨值}}）。"
+        + "⭐ 它與吟唱五級距的上界刻意同一個數字 —— 級距寫得出來的最大值,就是公式算得進去的最大值。",
+    },
+    {
+      path: "range.reference",
+      zh: "距離的參考值",
+      note: "⭐ 係數 1.0 對應的施法距離（出貨 {{出貨值}}）。⚠️ 比它遠的技能係數被壓低（打得到的優勢要付費）。",
+    },
+    {
+      path: "range.exponent",
+      zh: "距離維度的指數",
+      note:
+        "距離影響的**陡峭程度**（出貨 {{出貨值}}）。⭐ 0 ＝ 距離完全不影響係數,"
+        + "調高 ⇒ 遠程技的係數折價加重。⚠️ 它動的是**全部**有施法距離的技能。",
+    },
+    {
+      path: "range.selfCenteredAs",
+      zh: "自我中心技的等效距離",
+      note: "⭐ 以自己為中心的技能沒有「施法距離」⇒ 用這一格代替（出貨 {{出貨值}}）。⚠️ 填太高等於白送近戰技一份遠程折價。",
+    },
+    {
+      path: "shape.single",
+      zh: "目標形狀 — 單體",
+      note:
+        "⭐ 只打一個人 ⇒ 每一發該更重（出貨 {{出貨值}}）。"
+        + "⚠️ 它與範圍那幾格是**相對關係**:單獨調高這一格等於全面加強單體技。",
+    },
+    {
+      path: "shape.line",
+      zh: "目標形狀 — 直線",
+      note:
+        "貫穿型（出貨 {{出貨值}}）—— 介於單體與範圍之間。"
+        + "⚠️ 命中人數取決於站位 ⇒ 它是這一維裡**變異最大**的一格。",
+    },
+    {
+      path: "shape.area.reference",
+      zh: "目標形狀 — 範圍的參考半徑",
+      note: "⭐ 半徑等於這一格時，範圍技的形狀維度等於 1.0（出貨 {{出貨值}}）。",
+    },
+    {
+      path: "shape.area.exponent",
+      zh: "範圍半徑的指數",
+      note:
+        "半徑越大、係數越低的**陡峭程度**（出貨 {{出貨值}}）。⭐ 0 ＝ 範圍大小完全不影響係數。"
+        + "⚠️ 調高 ⇒ 大範圍技的每一發變輕,而小範圍技幾乎不受影響。",
+    },
+    ...SKILL_TIER_NAMES.map((tier) => ({
+      path: `condition.${tier}`,
+      zh: `條件 — ${tier}`,
+      note:
+        `技能標成 \`conditionTier: "${tier}"\` 時這一維的倍率（出貨值 {{出貨值}}）。` +
+        `⭐ 條件越苛刻（越難觸發）⇒ 每一次觸發該越重。` +
+        `⚠️ 不填級別的技能一律當「${SKILL_TIER_NAMES[0]}」（＝無條件）。`,
+    })),
+    {
+      path: "baseTierCompensation.enabled",
+      zh: "基礎值補償開關",
+      note:
+        "⭐⭐ owner 2026-09-02 加的**第六維**：「有時候技能本身如果基礎傷害低，我也會用高 AP/AD 加成來彌補」。" +
+        "⚠️ ⭐ **關掉它等於全部補償都變 1.0** —— 那是這一維的一鍵 rollback，⛔ 但關掉會讓低基礎技被公式當離群值收掉。",
+    },
+    ...SKILL_TIER_NAMES.map((tier) => ({
+      path: `baseTierCompensation.byDamageTier.${tier}`,
+      zh: `基礎值補償 — 傷害級距 ${tier}`,
+      note:
+        `\`damageTier: "${tier}"\` 的技能，AP 係數乘上這一格（出貨值 {{出貨值}}）。` +
+        `⭐ 基礎傷害越低 ⇒ 補償越高（這是 owner 的設計語彙，⛔ 不是平衡微調）。`,
+    })),
+    {
+      path: "baseTierCompensation.whenTierAbsent",
+      zh: "基礎值補償 — 沒填傷害級距時",
+      note: "⚠️ 技能沒有 `damageTier` 時用這一格（出貨 {{出貨值}}）。⭐ 刻意偏高一點：沒填級別的多半是小額傷害。",
+    },
+  ],
+  preserved: [],
+};

@@ -13,7 +13,7 @@
 |---|---:|
 | 出貨 config 文件 | 96 |
 | **旋鈕**（Zod 靜態鍵的葉子，⛔ 不含 record 的鍵與陣列索引） | **1875** |
-| 消費端原始碼（⛔ 已排除後台欄位表與測試） | 13246 |
+| 消費端原始碼（⛔ 已排除後台欄位表與測試） | 13248 |
 | 殭屍獎勵的等級區間（`dominated` 的分母） | L9–L99 |
 
 ## 分類
@@ -29,28 +29,28 @@
 
 | 檔 | 路徑 | 出貨值 | 量到的 |
 |---|---|---|---|
-| `config.match.json` | `economy.assistGold` | `75` | `assistGold` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `config.match.json` | `economy.roundLoseGold` | `150` | `roundLoseGold` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `config.match.json` | `economy.roundWinGold` | `300` | `roundWinGold` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `config.match.json` | `progression.xpAssist` | `60` | `xpAssist` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `config.match.json` | `progression.xpBase` | `100` | `xpBase` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `config.match.json` | `progression.xpKill` | `120` | `xpKill` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `config.match.json` | `progression.xpPerLevel` | `80` | `xpPerLevel` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `config.match.json` | `progression.xpRoundSurvive` | `100` | `xpRoundSurvive` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `controller-scheme.json` | `schemes.*.combatInput.aimStick` | `"true …（2 筆）"` | `aimStick` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `damage-rules.json` | `oneShotPctOfMaxHp` | `0.8` | `oneShotPctOfMaxHp` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `map-report.json` | `maps[].worldD` | `"36 …（7 筆）"` | `worldD` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `map-report.json` | `maps[].worldW` | `"48 …（7 筆）"` | `worldW` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unit-tints.json` | `transient[].erasesStaticTint` | `true` | `erasesStaticTint` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `quarantineRatchet` | `2` | `quarantineRatchet` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `textures[].measured.alphaRange` | `"0 …（5 筆）"` | `alphaRange` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `textures[].measured.borderEffAdditive` | `"39.2 …（5 筆）"` | `borderEffAdditive` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `textures[].measured.distinctAlphaValues` | `"1 …（5 筆）"` | `distinctAlphaValues` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `textures[].measured.hasAlphaShape` | `"false …（5 筆）"` | `hasAlphaShape` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `textures[].measured.maxAlpha` | `"253 …（5 筆）"` | `maxAlpha` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `textures[].measured.minAlpha` | `"253 …（5 筆）"` | `minAlpha` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `textures[].measured.opaquePct` | `"0 …（5 筆）"` | `opaquePct` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `textures[].usage.reachableVfxDocs` | `"1 …（5 筆）"` | `reachableVfxDocs` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `config.match.json` | `economy.assistGold` | `75` | `assistGold` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `config.match.json` | `economy.roundLoseGold` | `150` | `roundLoseGold` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `config.match.json` | `economy.roundWinGold` | `300` | `roundWinGold` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `config.match.json` | `progression.xpAssist` | `60` | `xpAssist` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `config.match.json` | `progression.xpBase` | `100` | `xpBase` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `config.match.json` | `progression.xpKill` | `120` | `xpKill` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `config.match.json` | `progression.xpPerLevel` | `80` | `xpPerLevel` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `config.match.json` | `progression.xpRoundSurvive` | `100` | `xpRoundSurvive` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `controller-scheme.json` | `schemes.*.combatInput.aimStick` | `"true …（2 筆）"` | `aimStick` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `damage-rules.json` | `oneShotPctOfMaxHp` | `0.8` | `oneShotPctOfMaxHp` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `map-report.json` | `maps[].worldD` | `"36 …（7 筆）"` | `worldD` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `map-report.json` | `maps[].worldW` | `"48 …（7 筆）"` | `worldW` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unit-tints.json` | `transient[].erasesStaticTint` | `true` | `erasesStaticTint` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `quarantineRatchet` | `2` | `quarantineRatchet` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `textures[].measured.alphaRange` | `"0 …（5 筆）"` | `alphaRange` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `textures[].measured.borderEffAdditive` | `"39.2 …（5 筆）"` | `borderEffAdditive` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `textures[].measured.distinctAlphaValues` | `"1 …（5 筆）"` | `distinctAlphaValues` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `textures[].measured.hasAlphaShape` | `"false …（5 筆）"` | `hasAlphaShape` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `textures[].measured.maxAlpha` | `"253 …（5 筆）"` | `maxAlpha` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `textures[].measured.minAlpha` | `"253 …（5 筆）"` | `minAlpha` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `textures[].measured.opaquePct` | `"0 …（5 筆）"` | `opaquePct` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `textures[].usage.reachableVfxDocs` | `"1 …（5 筆）"` | `reachableVfxDocs` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
 
 ### 被同軸的另一格蓋掉 · 2 格（A 類）
 

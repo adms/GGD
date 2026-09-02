@@ -277,6 +277,10 @@ export const NAV: NavItem[] = [
   { page: "cooldownTiers", label: "冷卻五級距", emoji: "⏲", section: SEC_TIERS },
   { page: "damageTiers", label: "傷害五級距", emoji: "💥", section: SEC_TIERS },
   { page: "manaTiers", label: "耗魔五級距", emoji: "🔷", section: SEC_TIERS },
+  // ⭐ 吟唱五級距（GH#943）／AP 係數公式（GH#942）—— 緊接在其他五級距後面是刻意的:
+  //   ⭐ AP 係數那一頁的「公式總開關」就是 owner 常設指令要的**一鍵 rollback**。
+  { page: "castTimeTiers", label: "吟唱五級距", emoji: "⏳", section: SEC_TIERS },
+  { page: "apCoefficient", label: "AP 係數公式", emoji: "🧮", section: SEC_TIERS },
   // 移速／攻速的**每級成長**五級距 (2026-08-21)。緊鄰上面五軸 —— 同一組級距名、
   // 同一個「級別住內容、數字住 config」的形狀，只是它掛在**英雄卡**上不是技能。
   { page: "speedGrowthTiers", label: "速度成長五級距", emoji: "🏃", section: SEC_TIERS },

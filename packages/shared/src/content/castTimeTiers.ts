@@ -69,3 +69,27 @@ export function castTimeTierOf(
   }
   return best;
 }
+
+/**
+ * ⭐⭐ **載入時把 `castTimeTier` 翻成 `castTimeSec`**（GH#943）。
+ *
+ * ⛔⛔ 少了這一支，`castTimeTier` 就是「有欄位、有表、⛔ 而沒有人翻譯它」——
+ * ⭐ 那正是 CLAUDE.md 的失敗形態⑧：schema 收得下、後台存得起來、
+ * 卡面上印著，⛔ 而遊戲裡什麼都不發生。
+ * ⚠️ 而 `gen_contract_numbers.py` 逐字擋下來了：
+ * 「`resolveCastTimeTier` 不在 registries.ts 的解析接縫上 —— 沒有人翻譯它」。
+ *
+ * ## ⭐ 級距贏（第〇·四守則）
+ *
+ * 兩格都填 ⇒ **級距贏**（同 `resolveCooldownTier` 的「級別贏」規則）——
+ * ⛔ 否則 `castTimeSec` 就是第二個住處，而級距表一改它就靜靜分岔。
+ */
+export function resolveCastTimeTierOnDoc<T extends Record<string, unknown>>(
+  def: T,
+  tiers: CastTimeTiers = DEFAULT_CAST_TIME_TIERS,
+): T {
+  if (!tiers.enabled) return def;
+  const secs = resolveCastTimeTier(def["castTimeTier"] as string | undefined, tiers);
+  if (secs === null) return def;
+  return { ...def, castTimeSec: secs };
+}

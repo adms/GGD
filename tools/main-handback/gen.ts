@@ -27,13 +27,11 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { execFileSync } from "node:child_process";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../..");
 const OUT = join(ROOT, "docs/editor-contract/ggd-main-handback.json");
 const read = (p: string) => readFileSync(join(ROOT, p), "utf8");
 const json = (p: string) => JSON.parse(read(p)) as Record<string, unknown>;
-const git = (...a: string[]) => execFileSync("git", a, { cwd: ROOT, encoding: "utf8" }).trim();
 
 /** ⭐ route 清單**從原始碼掃**，⛔ 不是手抄（手抄的清單會在下一次改 route 時過期）。 */
 function importerRoutes(): string[] {
@@ -102,8 +100,18 @@ function build(): unknown {
       "⭐ Main → Editor 的**機器可讀回報**。⛔ 產物 —— 改 `tools/main-handback/gen.ts`，" +
       "⛔ 不要手改。⚠️ 每一格都是從出貨的東西量出來的（route 從原始碼掃、" +
       "能力直接引用 `ggd-presentation-receipt.json`）—— ⛔ 沒有一格是宣稱。",
-    branch: git("rev-parse", "--abbrev-ref", "HEAD"),
-    commit: git("rev-parse", "HEAD"),
+    /**
+     * ⛔⛔ **⛔ 沒有 `branch` / `commit`** —— 手打那一份有,⭐ 而它們讓這條閘
+     * **永遠不可能綠**：`--check` 是逐位元組比對,而 HEAD 每一次 commit 都變
+     * ⇒ 每一次 commit 之後 `handback:check` 都紅,而內容一個位元組都沒動。
+     * ⚠️ 那正是 CLAUDE.md 記過的失敗形態⑨（一個永遠不會綠的閘）＋
+     * 「時鐘欄位逼得 `--check` 被放寬」的同一個病 ——
+     * ⭐ 而 2026-09-02 我在同一個小時裡把它犯了**兩次**
+     * （`decor` 的 `corpusFiles` 烘進 23 列散文,然後是這裡）。
+     *
+     * ⭐ 「這份契約對應哪一版」由 `receipts` 的**內容指紋**回答 ——
+     * 那是真的識別（內容變了指紋才變），⛔ 而 commit hash 只是時間戳。
+     */
     // ⚠️ 沿用上一份量到的欄位（它們的來源在別的產生器，這裡⛔ 不重算）。
     receipts: prev.receipts,
     routes: { importer: importerRoutes(), sourceAdapter: [] },

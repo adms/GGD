@@ -143,7 +143,60 @@ const OP_LABEL: Record<CompareOp, string> = {
 };
 
 /** The clause shapes the dropdowns can build. */
-type ClauseKind = "stat" | "kind" | "chance" | "status" | "equipment";
+// ⭐⭐ GH#937 —— `recentCast`（連續技窗口）是 2026-09-02 新增的條件葉。
+// ⚠️ ⭐ 這一行漏改的代價**不是**少一個選項：`tsc` 會紅在下面那個
+// `const kind: ClauseKind = clause.leaf.kind` —— ⭐ 而那正是「積木做出來了，
+// 而編輯器看不到它」在型別層被擋下來的樣子（⛔ 不是執行期才發現）。
+type ClauseKind = "stat" | "kind" | "chance" | "status" | "equipment" | "recentCast";
+
+/**
+ * ⭐ 連續技窗口的欄位（GH#937）。
+ *
+ * ⚠️ 兩種形狀共用一個 `kind`：`{abilityId}` 與 `{slot}`。
+ * ⭐ 這裡只畫**槽位**那一種 —— ⛔ 而那不是簡化：
+ * `ability@1` 今天**沒有** `tags` 欄位（421/421 零命中），而槽位是引擎既有的
+ * 分組單位（`WorldHookSystem` 的 `onUltimateCast` 逐字就是 `d.slot === "R"`）。
+ * ⇒ ⭐ 想指定某一支技能的作者可以直接改 JSON；⛔ 而 UI 先給**填得出合法值**的那一種。
+ */
+function RecentCastFields({
+  path,
+  leaf,
+  onChange,
+}: {
+  path: string;
+  leaf: Extract<ConditionLeaf, { kind: "recentCast" }>;
+  onChange(next: ConditionLeaf): void;
+}) {
+  const slot = "slot" in leaf ? leaf.slot : "Q";
+  return (
+    <>
+      <label>
+        哪一格
+        <select
+          id={`${path}-slot`}
+          value={slot}
+          onChange={(e) => onChange({ ...leaf, slot: e.target.value } as ConditionLeaf)}
+        >
+          {(["Q", "W", "E", "R", "EX", "PASSIVE"] as const).map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        幾秒內接上算數
+        <input
+          id={`${path}-within`}
+          type="number"
+          step="0.1"
+          value={leaf.withinSec}
+          onChange={(e) => onChange({ ...leaf, withinSec: Number(e.target.value) })}
+        />
+      </label>
+    </>
+  );
+}
 
 const CLAUSE_LABEL: Record<ClauseKind, string> = {
   stat: "數值比較（屬性 / HP / MP）",
@@ -151,6 +204,10 @@ const CLAUSE_LABEL: Record<ClauseKind, string> = {
   chance: "機率",
   status: "狀態標記（某一份 / 某一類：[暈眩] / [燃燒] / [致盲] …）",
   equipment: "裝備了道具（某一件 / 某一類）",
+  // ⭐ GH#937 —— 連續技窗口。⚠️ 標籤刻意講「**槽位**」而不是「技能」：
+  //   `ability@1` 今天**沒有** `tags` 欄位（421/421 零命中）⇒ ⛔ 做一個永遠比不中的
+  //   標籤分支會是一句說了不會發生的話（第一·五守則）。
+  recentCast: "最近施放過（連續技窗口：前一招 N 秒內接上）",
 };
 
 /** 「某一件」還是「某一類」—— 這一列右邊要畫哪一個輸入框。 */
@@ -208,6 +265,10 @@ const DEFAULT_LEAF: Record<ClauseKind, ConditionLeaf> = {
   // 空字串過不了 `zId`,於是「剛切到這個種類」的那一刻卡片就是不可儲存的,而表單
   // 上看不出為什麼。預填一個能存的值,作者改成他要的那一個即可。
   status: { kind: "status", subject: "target", statusId: "root" as StatusId },
+  // ⭐ 預填**槽位**那一種（⛔ 不是技能 id）：槽位一定填得出合法值，
+  //   而技能 id 的空字串過不了 `zRef` ⇒ 剛切過來的那一刻卡片就不可儲存。
+  //   ⚠️ 與上面 `status` 預填 `root` 是**同一個理由**。
+  recentCast: { kind: "recentCast", subject: "self", slot: "Q", withinSec: 1 },
   // 77-002 御雷劍問的是**自己**帶著什麼，跟其他四種葉子的「目標」相反，所以這
   // 一格的預填主體是 self。同上一則的理由：預填一個**存得起來**的 id（skeleton
   // 的 `ember-rod` 是真的存在的道具），空字串過不了 `zId`，作者會看到一張莫名
@@ -588,6 +649,8 @@ function ClauseRow({
   onChange(next: Clause): void;
   onRemove(): void;
 }) {
+  // ⭐ `recentCast` 有兩種形狀（依技能 id／依槽位）而它們**同一個 kind** ——
+  // ⛔ 下拉選單上是一格，⛔ 不是兩格。
   const kind: ClauseKind = clause.leaf.kind === "stat" ? "stat" : clause.leaf.kind;
 
   return (
@@ -636,6 +699,14 @@ function ClauseRow({
         />
       ) : clause.leaf.kind === "kind" ? (
         <KindFields
+          path={path}
+          leaf={clause.leaf}
+          onChange={(leaf) => onChange({ ...clause, leaf })}
+        />
+      ) : clause.leaf.kind === "recentCast" ? (
+        // ⭐ GH#937 —— 兩種形狀（依技能 id／依槽位）**同一個 kind**
+        //   ⇒ 下拉選單上是一格，⛔ 不是兩格。
+        <RecentCastFields
           path={path}
           leaf={clause.leaf}
           onChange={(leaf) => onChange({ ...clause, leaf })}

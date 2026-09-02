@@ -93,21 +93,27 @@ export const zConfigApCoefficientDoc = z
       })
       .strict(),
     castTime: z
-      .object({ base: z.number(), slope: z.number(), capSec: z.number().min(0).max(10) })
+      .object({
+        // ⚠️ ⭐ 上界是**必要的**（第一守則逐字：「欄位要有上界，不是只有下界」）——
+        //   打錯一個 0 會過後台、在下游才被拒或被靜默夾掉（同 #277）。
+        base: z.number().min(0.1).max(5),
+        slope: z.number().min(0).max(5),
+        capSec: z.number().min(0).max(10),
+      })
       .strict(),
     range: z
       .object({
-        reference: z.number().min(0.1),
+        reference: z.number().min(0.1).max(50),
         exponent: z.number().min(0).max(2),
         /** ⭐ 施法距離 0（自我中心）⇒ 用這個值（＝最貼臉）。 */
-        selfCenteredAs: z.number().min(0.1),
+        selfCenteredAs: z.number().min(0.1).max(50),
       })
       .strict(),
     shape: z
       .object({
         single: z.number().min(0.1).max(10),
         line: z.number().min(0.1).max(10),
-        area: z.object({ reference: z.number().min(0.1), exponent: z.number().min(0).max(2) }).strict(),
+        area: z.object({ reference: z.number().min(0.1).max(50), exponent: z.number().min(0).max(2) }).strict(),
       })
       .strict(),
     /** ⭐ 條件五級距 —— 判準是「**這個條件我自己控制得了嗎**」。 */

@@ -24,6 +24,14 @@
  *
  * `docs/editor-contract/ggd-declared-shape-census.json` —— ⭐ 給編輯器讀，
  * ⛔ 不是給人讀的散文。
+ *
+ * ## ⚠️ 為什麼它**不在** `skills:sync` 的鏈上
+ *
+ * `tools/parallel-gates/sync-io.json` 的 `steps` 是**量出來的**（trace × 2 → merge），
+ * ⛔ 而 CLAUDE.md 逐字禁止手寫它 —— 而重量測是一個**全域鎖**的動作。
+ *
+ * ⇒ ⭐ 它只掛在 **`skills:check`**（`declshape:check`）：過期時**會紅**，
+ * 訊息叫人跑 `pnpm declshape:build`。⭐ 與 `receipt:build` 同一個處理。
  */
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
