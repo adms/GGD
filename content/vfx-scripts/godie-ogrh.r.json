@@ -2,165 +2,25 @@
   "id": "godie-ogrh.r",
   "schema": "vfx-script@1",
   "abilityId": "godie-ogrh.r",
-  "notes": "#803／#547／#838 main 驗收候選：09-04 龜派氣功（原作參考 XkFlhrLaHeA@68）。雙手聚氣後打出橘金、寬而連續的橫向氣功砲；damageLine、命中與傷害仍住 ability JSON。",
+  "notes": "09-04 龜派氣功（JASS A03S，war3map.j 31804-31953；底稿 docs/_reports/vfx-editor-jass3b_temp_20260828-0312.md §1）。⭐ 只補 ability JSON 沒有畫的三段：槍口的兩發爆炸（j:31903 j:31905，掛在施法者前方 150wc3u=2.75u 的地板點）＋ 鏡頭噪動（j:31815-31817，2 秒後 j:31948 清除）。h007/h008/h006 已住 ability 的三個 spawnModelFx 節點 ⇒ ⛔ 這裡不重複。⚠️ 原作 A03S 沒有 CreateTextTag、沒有 PlaySound、沒有 SetUnitAnimation ⇒ 這裡也沒有。⚠️ 已知偏差：ability 的三個 spawnModelFx 缺 offsetForwardU（MISSING N1）⇒ 它們今天畫在腳下而不是槍口；鏡頭噪動只能是全域（MISSING N3，原作限 512wc3u=9.39u 內的英雄玩家）。 ⭐ 2026-08-28：鏡頭噪動**搬回技能 JSON** 並改成 `applyTo:\"nearby\" radius:9.39`（j:31815-31817 `CameraSetEQNoiseForPlayer` 只給 512wc3u 內的英雄玩家 —— 原本MISSING N3，2026-08-28 的 `cueRecipients` 新分支補上了）。⛔ 這裡不再留一份，免得同一個演出有兩個住處（第〇·四守則）。",
   "segments": [
     {
-      "text": "龜 · 派 · 氣 · 功",
-      "colorRgb": [
-        255,
-        166,
-        48
-      ],
-      "sizeScale": 1.5,
-      "durationSec": 0.9,
-      "kind": "floatingText",
-      "on": "castStart"
-    },
-    {
-      "kind": "anim",
-      "on": "castStart",
-      "at": "caster",
-      "pulse": "cast",
-      "clipWindowMs": 900
-    },
-    {
-      "vfxId": "fx.prim.fire.pulse-sm",
-      "at": "self",
-      "durationSec": 0.4,
-      "kind": "vfx",
-      "on": "castStart",
-      "atMs": 600,
-      "offsetForwardU": 0.38,
-      "w3xScale": 0.75,
-      "tint": [255, 188, 62],
-      "flyHeight": 82,
-      "alpha": 0.92
-    },
-    {
-      "vfxId": "fx.forge.beam.fire",
-      "at": "self",
-      "durationSec": 1.2,
-      "kind": "vfx",
+      "kind": "modelFx",
       "on": "castEffect",
-      "atMs": 0,
-      "offsetForwardU": 0.5,
-      "w3xScale": 5.5,
-      "tint": [
-        255,
-        132,
-        20
-      ],
-      "flyHeight": 80,
-      "alpha": 0.92
+      "modelKey": "w3x.stock.nedeathsmall",
+      "path": "static",
+      "anchor": "self",
+      "offsetForwardU": 2.75,
+      "lifeSec": 1
     },
     {
-      "vfxId": "fx.forge.beam.fire",
-      "at": "self",
-      "durationSec": 1.15,
-      "kind": "vfx",
+      "kind": "modelFx",
       "on": "castEffect",
-      "atMs": 35,
-      "offsetForwardU": 0.5,
-      "w3xScale": 2.4,
-      "tint": [
-        255,
-        242,
-        190
-      ],
-      "flyHeight": 80,
-      "alpha": 1
-    },
-    {
-      "vfxId": "fx.forge.beam.fire",
-      "at": "self",
-      "durationSec": 0.8,
-      "kind": "vfx",
-      "on": "castEffect",
-      "atMs": 260,
-      "offsetForwardU": 0.5,
-      "w3xScale": 5.5,
-      "tint": [255, 132, 20],
-      "flyHeight": 80,
-      "alpha": 0.92
-    },
-    {
-      "vfxId": "fx.forge.beam.fire",
-      "at": "self",
-      "durationSec": 0.8,
-      "kind": "vfx",
-      "on": "castEffect",
-      "atMs": 295,
-      "offsetForwardU": 0.5,
-      "w3xScale": 2.4,
-      "tint": [255, 242, 190],
-      "flyHeight": 80,
-      "alpha": 1
-    },
-    {
-      "vfxId": "fx.forge.beam.fire",
-      "at": "self",
-      "durationSec": 0.8,
-      "kind": "vfx",
-      "on": "castEffect",
-      "atMs": 520,
-      "offsetForwardU": 0.5,
-      "w3xScale": 5.5,
-      "tint": [255, 132, 20],
-      "flyHeight": 80,
-      "alpha": 0.92
-    },
-    {
-      "vfxId": "fx.forge.beam.fire",
-      "at": "self",
-      "durationSec": 0.8,
-      "kind": "vfx",
-      "on": "castEffect",
-      "atMs": 555,
-      "offsetForwardU": 0.5,
-      "w3xScale": 2.4,
-      "tint": [255, 242, 190],
-      "flyHeight": 80,
-      "alpha": 1
-    },
-    {
-      "vfxId": "fx.forge.beam.fire",
-      "at": "self",
-      "durationSec": 0.8,
-      "kind": "vfx",
-      "on": "castEffect",
-      "atMs": 780,
-      "offsetForwardU": 0.5,
-      "w3xScale": 5.5,
-      "tint": [255, 132, 20],
-      "flyHeight": 80,
-      "alpha": 0.92
-    },
-    {
-      "vfxId": "fx.forge.beam.fire",
-      "at": "self",
-      "durationSec": 0.8,
-      "kind": "vfx",
-      "on": "castEffect",
-      "atMs": 815,
-      "offsetForwardU": 0.5,
-      "w3xScale": 2.4,
-      "tint": [255, 242, 190],
-      "flyHeight": 80,
-      "alpha": 1
-    },
-    {
-      "amplitude": 0.38,
-      "durationSec": 0.9,
-      "kind": "screenShake",
-      "on": "castEffect"
-    },
-    {
-      "kind": "anim",
-      "on": "castEffect",
-      "atMs": 140,
-      "at": "target",
-      "pulse": "hurt",
-      "clipWindowMs": 520
+      "modelKey": "w3x.stock.neutralbuildingexplosion",
+      "path": "static",
+      "anchor": "self",
+      "offsetForwardU": 2.75,
+      "lifeSec": 1.2
     }
   ]
 }

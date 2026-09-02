@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_4697f677b761",
+    "contentVersion": "cv_8e0ba5078c33",
     "collections": {
       "champions": {
         "hash": "3d0922cecbf5",
@@ -62,8 +62,8 @@
         "count": 46
       },
       "vfx-scripts": {
-        "hash": "6868011ed37a",
-        "count": 13
+        "hash": "aff67fd40c11",
+        "count": 10
       }
     },
     "collectionCount": 15
@@ -5472,10 +5472,10 @@
     ]
   },
   "curation": {
-    "championDigest": null,
-    "itemDigest": null,
-    "championCount": null,
-    "itemCount": null,
+    "championDigest": "e39f1147b9e7",
+    "itemDigest": "9943a99f7205",
+    "championCount": 49,
+    "itemCount": 101,
     "liveEndpoint": "/api/v1/curation/whitelist"
   },
   "contractIndex": {
@@ -5556,7 +5556,7 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "e0fdd840d255",
+    "fingerprint": "80129ebcecbe",
     "surfaces": [
       {
         "surface": "ability-item-zod-schemas",
@@ -5564,7 +5564,7 @@
       },
       {
         "surface": "exact-ref-collector",
-        "digest": "c1b7aecb5a7c"
+        "digest": "ac45a80c363c"
       },
       {
         "surface": "capability-applicability",
@@ -5614,13 +5614,9 @@
   ],
   "unavailable": [
     {
-      "field": "curation.*",
-      "reason": "data/curation/whitelist.json 不在（它是平台的執行期狀態，不進版控）。要即時的開放清單請打 GET /api/v1/curation/whitelist。"
-    },
-    {
       "field": "deltaExportAllowed",
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "737dc6a4d1a6"
+  "profileDigest": "8d15fb8fe3c0"
 }

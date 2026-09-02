@@ -2,9 +2,11 @@
   "id": "godie-hart.r",
   "schema": "vfx-script@1",
   "abilityId": "godie-hart.r",
-  "notes": "#547／#838 main 驗收候選：01-04 超究武神霸斬（原作參考 9X6LCjFgAiA）。真 comboStrike 驅動角色逐刀閃到目標周圍、黃藍交叉斬痕；第七段升起黃藍直立光束砲。傷害與七段時序仍只住 ability JSON。",
+  "notes": "GH#838 三招之一（JASS A077，war3map.j 33759–33944；底稿 docs/_reports/vfx-editor-jass3_temp_20260828-0042.md §1）。行為＝comboStrikes superff7（6 段＋收尾 3.5s，GH#250）。每刀：劍氣/血濺/雷擊/殘影/鳳凰彈；收尾（strikeIndex 7＝sim 終傷那一刻）：中立爆炸＋震動；升空 KFK/FlameStrike 錨在第 6 段＋offsets。M 缺口（票§MISSING）：M1 逐刀瞬移、M3 升空曲線、M4 受害者定格 —— 落地後補段。 ⭐ M3 升空曲線已用在收尾（JASS 三人升空 1000wc3u≈18.3u 再以 rate 5000 急墜；這裡取半高 9.2u 讓它留在戰鬥鏡頭的視野內 —— 逐格微調走 studio 的 slider）。 ⭐ M4 施法者側：JASS 每一刀也對克勞德 SetUnitAnimation(\"Spell\")（j:109）＋ SetUnitTimeScalePercent(SupI×100)（j:107，⚠️ 段數越後越快）——GGD 用 pulse:cast＋短剪輯窗表達「每刀都揮一次」；⛔ 逐段加速那一半今天表達不了（clipWindowMs 是固定值），那是 M4 的尾巴。\n\n⛔⛔ **2026-08-30 刪掉了 3 段 `vfx{on:\"strike\", vfxId:\"…thunderclapcaster.p00\", at:\"target\"}`。**\n⭐ 理由：同一個打擊特效在 GH#809 之後有了**第二個住處** —— `content/abilities/godie-hart.r.json` 的 `spawnVfx{at:\"bone\", attach:\"chest\", boneOn:\"victim\"}`。\n⚠️ 兩層是**加成**的（sim 送一發、腳本播一發）⇒ 每一刀生**兩發**，而且錨點還不一樣（胸口 vs 腳下）。\n⇒ 留下 ability 那一份（它翻自 JASS 的 `AddSpecialEffectTargetUnitBJ(…, GetEnumUnit(), …)`，錨在**受擊者的骨頭**上），⛔ 刪掉這裡這一段。\n⭐ 判準（第〇·四守則）：**同一個事實不可以有兩個住處** —— ⛔ 而「兩邊都有」與「只有一邊」在 headless 測試裡長得一模一樣。",
   "segments": [
     {
+      "kind": "floatingText",
+      "on": "castStart",
       "text": "超究武神霸斬",
       "colorRgb": [
         255,
@@ -12,147 +14,126 @@
         90
       ],
       "sizeScale": 1.8,
-      "durationSec": 1.2,
-      "kind": "floatingText",
-      "on": "castStart"
+      "riseSpeed": 0.6,
+      "durationSec": 1.2
     },
     {
-      "kind": "anim",
+      "kind": "vfx",
+      "on": "castStart",
+      "vfxId": "fx.fam.resurrect.holy.s95",
+      "at": "bone",
+      "attach": "weapon",
+      "durationSec": 1.0
+    },
+    {
+      "kind": "modelFx",
       "on": "strike",
-      "at": "caster",
-      "pulse": "attack",
-      "clipWindowMs": 320
+      "modelKey": "imported.herocloudcyd",
+      "path": "static",
+      "anchor": "self",
+      "heightU": 1.1,
+      "lifeSec": 0.4,
+      "alpha": 0.9
+    },
+    {
+      "kind": "modelFx",
+      "on": "strike",
+      "modelKey": "w3x.stock.humanbloodpeasant",
+      "path": "static",
+      "anchor": "target",
+      "heightU": 1.1,
+      "lifeSec": 0.5
+    },
+    {
+      "kind": "modelFx",
+      "on": "strike",
+      "modelKey": "w3x.stock.mirrorimagecaster",
+      "path": "static",
+      "anchor": "self",
+      "lifeSec": 0.4,
+      "alpha": 0.7
+    },
+    {
+      "kind": "modelFx",
+      "on": "strike",
+      "modelKey": "w3x.stock.phoenixmissile",
+      "path": "static",
+      "anchor": "self",
+      "heightU": 1.3,
+      "lifeSec": 0.3
+    },
+    {
+      "kind": "floatingText",
+      "on": "strike",
+      "text": "斬",
+      "colorRgb": [
+        255,
+        102,
+        77
+      ],
+      "sizeScale": 1.2,
+      "at": "target",
+      "durationSec": 0.5
+    },
+    {
+      "kind": "modelFx",
+      "on": "strike",
+      "strikeIndex": 6,
+      "atMs": 200,
+      "modelKey": "w3x.stock.flamestrike1",
+      "path": "static",
+      "anchor": "target",
+      "scale": 1.5,
+      "lifeSec": 1.4,
+      "heightKeys": [
+        {
+          "t": 0,
+          "h": 0
+        },
+        {
+          "t": 0.5,
+          "h": 9.2
+        },
+        {
+          "t": 0.8,
+          "h": 9.2
+        },
+        {
+          "t": 1.1,
+          "h": 0
+        }
+      ]
+    },
+    {
+      "kind": "modelFx",
+      "on": "strike",
+      "strikeIndex": 7,
+      "modelKey": "w3x.stock.neutralbuildingexplosion",
+      "path": "static",
+      "anchor": "target",
+      "scale": 1.4,
+      "lifeSec": 1.0
+    },
+    {
+      "kind": "screenShake",
+      "on": "strike",
+      "strikeIndex": 7,
+      "amplitude": 0.55,
+      "durationSec": 0.6
     },
     {
       "kind": "anim",
       "on": "strike",
       "at": "target",
       "pulse": "hurt",
-      "clipWindowMs": 520
+      "clipWindowMs": 900
     },
     {
-      "vfxId": "fx.prim.holy.slash",
-      "at": "target",
-      "durationSec": 0.24,
-      "kind": "vfx",
+      "kind": "anim",
       "on": "strike",
-      "atMs": 0,
-      "w3xScale": 0.58,
-      "flyHeight": 82,
-      "alpha": 0.72,
-      "facingDeg": 52
-    },
-    {
-      "vfxId": "fx.prim.lightning.slash",
-      "at": "target",
-      "durationSec": 0.22,
-      "kind": "vfx",
-      "on": "strike",
-      "atMs": 35,
-      "w3xScale": 0.62,
-      "flyHeight": 82,
-      "alpha": 0.78,
-      "facingDeg": -58
-    },
-    {
-      "vfxId": "fx.fam.light-column.holy.s150",
-      "at": "target",
-      "durationSec": 1.35,
-      "kind": "vfx",
-      "on": "strike",
-      "atMs": 0,
-      "strikeIndex": 7,
-      "w3xScale": 0.9,
-      "tint": [255, 210, 70],
-      "flyHeight": 0,
-      "alpha": 0.28,
-      "offsetSideU": -0.55,
-      "facingDeg": 0
-    },
-    {
-      "vfxId": "fx.fam.light-column.w3x-00ffff.s150",
-      "at": "target",
-      "durationSec": 1.2,
-      "kind": "vfx",
-      "on": "strike",
-      "atMs": 70,
-      "strikeIndex": 7,
-      "w3xScale": 2.65,
-      "tint": [70, 180, 255],
-      "flyHeight": 0,
-      "alpha": 0.72,
-      "offsetSideU": 0.55,
-      "facingDeg": 0
-    },
-    {
-      "amplitude": 0.55,
-      "durationSec": 0.6,
-      "kind": "screenShake",
-      "on": "strike",
-      "strikeIndex": 7
-    },
-    {
-      "kind": "bodyMove",
-      "on": "strike",
-      "strikeIndex": 1,
       "at": "caster",
-      "mode": "teleport",
-      "offset": { "x": -0.55, "y": 0, "z": 2.35 },
-      "durationMs": 360
-    },
-    {
-      "kind": "bodyMove",
-      "on": "strike",
-      "strikeIndex": 2,
-      "at": "caster",
-      "mode": "teleport",
-      "offset": { "x": 0.55, "y": 0, "z": 3.65 },
-      "durationMs": 280
-    },
-    {
-      "kind": "bodyMove",
-      "on": "strike",
-      "strikeIndex": 3,
-      "at": "caster",
-      "mode": "teleport",
-      "offset": { "x": -0.45, "y": 0.15, "z": 3.55 },
-      "durationMs": 280
-    },
-    {
-      "kind": "bodyMove",
-      "on": "strike",
-      "strikeIndex": 4,
-      "at": "caster",
-      "mode": "teleport",
-      "offset": { "x": 0.45, "y": 0.1, "z": 2.4 },
-      "durationMs": 280
-    },
-    {
-      "kind": "bodyMove",
-      "on": "strike",
-      "strikeIndex": 5,
-      "at": "caster",
-      "mode": "teleport",
-      "offset": { "x": -0.25, "y": 0.35, "z": 2.55 },
-      "durationMs": 280
-    },
-    {
-      "kind": "bodyMove",
-      "on": "strike",
-      "strikeIndex": 6,
-      "at": "caster",
-      "mode": "teleport",
-      "offset": { "x": 0.25, "y": 0.25, "z": 3.45 },
-      "durationMs": 320
-    },
-    {
-      "kind": "bodyMove",
-      "on": "strike",
-      "strikeIndex": 7,
-      "at": "caster",
-      "mode": "arc",
-      "offset": { "x": 0, "y": 1.2, "z": 3 },
-      "durationMs": 650
+      "pulse": "cast",
+      "clipWindowMs": 320
     }
   ]
 }

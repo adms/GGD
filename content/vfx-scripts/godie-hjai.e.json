@@ -2,153 +2,24 @@
   "id": "godie-hjai.e",
   "schema": "vfx-script@1",
   "abilityId": "godie-hjai.e",
-  "notes": "#547 main 驗收候選：04-03 龍破斬（原作參考 cFz1d48fvN8）。七段重疊火焰彈沿面向飛行 6u，再於遠端爆炸；不用 imported.bahamut，因真機合成會污染場景材質並顯示白色幾何塊。傷害與命中仍以 ability JSON 為真相。",
+  "notes": "GH#838 三招之一（JASS A04R，war3map.j 29886–30160；底稿 §2）。castStart：DoomTarget 胸口魔法陣（heightU 1.1）＋h013 聚氣陣 230%。火球本體/詠唱五句在 ability JSON（tpl-line-blast＋delayed），⛔ 不重複。缺口：M11 拖尾、到達觸發器（爆炸環 18×WarStomp 等 modelFxArrive）。",
   "segments": [
     {
-      "text": "龍破斬 · DRAGON SLAVE",
-      "colorRgb": [
-        255,
-        88,
-        32
-      ],
-      "sizeScale": 1.45,
-      "durationSec": 1.1,
-      "kind": "floatingText",
-      "on": "castStart"
-    },
-    {
-      "kind": "anim",
+      "kind": "modelFx",
       "on": "castStart",
-      "at": "caster",
-      "pulse": "cast",
-      "clipWindowMs": 1250
+      "modelKey": "imported.doom",
+      "path": "static",
+      "anchor": "self",
+      "heightU": 1.1,
+      "lifeSec": 1.5,
+      "scale": 1.6
     },
     {
-      "vfxId": "fx.prim.fire.bolt",
-      "at": "self",
-      "durationSec": 0.28,
       "kind": "vfx",
       "on": "castStart",
-      "atMs": 0,
-      "offsetForwardU": 0.8,
-      "w3xScale": 0.9,
-      "flyHeight": 80,
-      "tint": [255, 92, 24],
-      "alpha": 0.9
-    },
-    {
-      "vfxId": "fx.prim.fire.bolt",
+      "vfxId": "fx.w3x.stock.markofchaostarget.p00",
       "at": "self",
-      "durationSec": 0.28,
-      "kind": "vfx",
-      "on": "castStart",
-      "atMs": 180,
-      "offsetForwardU": 1.7,
-      "w3xScale": 1,
-      "flyHeight": 80,
-      "tint": [255, 76, 20],
-      "alpha": 0.9
-    },
-    {
-      "vfxId": "fx.prim.fire.bolt",
-      "at": "self",
-      "durationSec": 0.28,
-      "kind": "vfx",
-      "on": "castStart",
-      "atMs": 360,
-      "offsetForwardU": 2.6,
-      "w3xScale": 1.08,
-      "flyHeight": 80,
-      "tint": [255, 68, 18],
-      "alpha": 0.92
-    },
-    {
-      "vfxId": "fx.prim.fire.bolt",
-      "at": "self",
-      "durationSec": 0.28,
-      "kind": "vfx",
-      "on": "castStart",
-      "atMs": 540,
-      "offsetForwardU": 3.5,
-      "w3xScale": 1.16,
-      "flyHeight": 80,
-      "tint": [255, 58, 16],
-      "alpha": 0.94
-    },
-    {
-      "vfxId": "fx.prim.fire.bolt",
-      "at": "self",
-      "durationSec": 0.28,
-      "kind": "vfx",
-      "on": "castStart",
-      "atMs": 720,
-      "offsetForwardU": 4.4,
-      "w3xScale": 1.24,
-      "flyHeight": 80,
-      "tint": [255, 50, 14],
-      "alpha": 0.94
-    },
-    {
-      "vfxId": "fx.prim.fire.bolt",
-      "at": "self",
-      "durationSec": 0.28,
-      "kind": "vfx",
-      "on": "castStart",
-      "atMs": 900,
-      "offsetForwardU": 5.3,
-      "w3xScale": 1.32,
-      "flyHeight": 80,
-      "tint": [255, 45, 12],
-      "alpha": 0.96
-    },
-    {
-      "vfxId": "fx.prim.fire.bolt",
-      "at": "self",
-      "durationSec": 0.28,
-      "kind": "vfx",
-      "on": "castStart",
-      "atMs": 1080,
-      "offsetForwardU": 6,
-      "w3xScale": 1.4,
-      "flyHeight": 80,
-      "tint": [255, 42, 10],
-      "alpha": 0.96
-    },
-    {
-      "vfxId": "fx.prim.fire.explosion",
-      "at": "self",
-      "durationSec": 0.5,
-      "kind": "vfx",
-      "on": "castStart",
-      "atMs": 1180,
-      "offsetForwardU": 6,
-      "w3xScale": 1.2,
-      "tint": [
-        255,
-        78,
-        24
-      ],
-      "flyHeight": 80,
-      "alpha": 0.78
-    },
-    {
-      "vfxId": "fx.fam.shockwave-ring.fire.s150",
-      "at": "self",
-      "durationSec": 0.5,
-      "kind": "vfx",
-      "on": "castStart",
-      "atMs": 1180,
-      "offsetForwardU": 6,
-      "w3xScale": 1,
-      "flyHeight": 12,
-      "alpha": 0.68
-    },
-    {
-      "amplitude": 0.42,
-      "durationSec": 0.45,
-      "kind": "screenShake",
-      "on": "castStart",
-      "atMs": 1180
+      "durationSec": 1.2
     }
   ]
 }
