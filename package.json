@@ -213,6 +213,8 @@
     "vfxbind:check": "python3 tools/vfx-bind/scan.py --check --strict",
     "vfxfam:build": "bash scripts/genrun.sh vfxfam:build vfxfam:build:raw",
     "vfxfam:build:raw": "tsx apps/client/src/render/vfx/generateFamilyContent.ts",
+    "vfxforge:check": "node tools/vfx-forge/check.mjs",
+    "vfxforge:check:release": "node tools/vfx-forge/check.mjs --release",
     "vocab:test": "python3 tools/engine-vocab/test_engine_vocab.py",
     "voice:index": "tsx tools/voice-gen/index-lines.mjs",
     "voxel:build": "bash scripts/genrun.sh voxel:build voxel:build:raw",

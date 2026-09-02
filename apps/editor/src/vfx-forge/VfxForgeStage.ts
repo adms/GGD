@@ -1,19 +1,13 @@
-import { Engine } from "@babylonjs/core/Engines/engine";
+import type { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
-// Eagerly register the shaders Babylon's GLB/PBR texture loader needs before
-// the first imported champion is instantiated.  The lazy fallback requests
-// `src/Shaders/*.fx` from Vite; an SPA fallback answers with HTML (or retries
-// until timeout), leaving the Forge actor stuck at "載入…" and making a real
-// attack pulse visually indistinguishable from a missing actor animation.
-// The shipped particle rig follows the same self-contained registration rule.
 import "@babylonjs/core/Shaders/postprocess.vertex";
 import "@babylonjs/core/Shaders/rgbdDecode.fragment";
+import "@babylonjs/core/Shaders/pbr.vertex";
+import "@babylonjs/core/Shaders/pbr.fragment";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
-import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
-import { DirectionalLight } from "@babylonjs/core/Lights/directionalLight";
-import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
+import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import type { ParticleSystem } from "@babylonjs/core/Particles/particleSystem";
 import type { AssetContainer, InstantiatedEntries } from "@babylonjs/core/assetContainer";
@@ -32,6 +26,8 @@ import type { ModelFxSpawnEvent } from "../../../client/src/render/modelFxPath";
 import { ModelFxRig } from "../../../client/src/render/modelFxRig";
 import { AssetManager } from "../../../client/src/render/AssetManager";
 import { CameraRig } from "../../../client/src/render/CameraRig";
+import { setupLighting, type LightingHandle } from "../../../client/src/render/Lighting";
+import { Renderer } from "../../../client/src/render/Renderer";
 import { resolveClips, type ClipState } from "../../../client/src/render/ClipAnimator";
 import { buildZoneGround } from "../../../client/src/render/ArenaGround";
 import { facingToYaw } from "../../../client/src/render/math/motion";
@@ -68,6 +64,18 @@ import {
 import { PRESENTATION_RECEIPT } from "./presentationContract";
 
 const STEP_MS = 1000 / 60;
+/**
+ * A paused Forge has no natural render loop to carry Babylon over its first
+ * PBR/texture-ready boundary. Wait briefly for the scene when preparing an
+ * actor, but never make one unrelated lazy resource able to deadlock the
+ * authoring surface.
+ */
+const ACTOR_READY_BUDGET_MS = 750;
+/** Same short post-load settling window used by the shipped model audition. */
+const ACTOR_WARMUP_FRAMES = 10;
+/** A champion body must alter a meaningful patch of the real framebuffer. */
+const MIN_ACTOR_VISIBLE_PIXELS = 250;
+const MIN_ACTOR_PIXEL_DELTA = 24;
 const CASTER_POS = { x: 0, z: 0 };
 // PreviewController's real sandbox places the opponent on +z. Keeping the
 // render stage on that same axis means point/direction payloads can pass to
@@ -158,6 +166,8 @@ interface ForgeActor {
   glbRoot: TransformNode | null;
   groups: AnimationGroup[];
   clipMap: ModelDoc["clipMap"] | null;
+  /** Real GLB loaded but did not draw legibly; keep a marked local fallback instead. */
+  fallbackForced: boolean;
   idleAfterMs: number;
   hiddenUntilMs: number;
 }
@@ -189,16 +199,23 @@ export class VfxForgeStage {
   private castFocus: { x: number; z: number } | null;
   private flash: ForgeOverlay["flash"] = null;
   private readonly actorStatus = { caster: "替身", target: "替身" };
+  /** A visually absent GLB must block evidence/promote rather than pass as a black frame. */
+  private readonly visualAssetIssues = new Set<string>();
   private flashUntilMs = 0;
   private texts: { id: number; text: string; x: number; z: number; untilMs: number }[] = [];
   private particles: LiveParticle[] = [];
   private readonly models = new Map<string, ModelDoc>();
   private readonly vfx = new Map<string, VfxDoc>();
   private readonly modelFxContainerPromises = new Map<string, Promise<AssetContainer>>();
+  /** The actual playable-client scene boot path, not an editor-owned Babylon variant. */
+  private readonly renderer: Renderer;
   private readonly assets: AssetManager;
+  /** Same scenery-aware lighting path as the playable client; Forge owns no light constants. */
+  private readonly lighting: LightingHandle;
   private readonly fetchDoc: NonNullable<VfxForgeStageOptions["fetchDoc"]>;
   private readonly onOverlay: NonNullable<VfxForgeStageOptions["onOverlay"]>;
   private readonly modelRig: ModelFxRig;
+  private readonly groundRoot: TransformNode;
   private readonly groundFloor: ReturnType<typeof buildZoneGround>["floor"];
   private readonly groundReady: Promise<void>;
   private readonly actors: { caster: ForgeActor; target: ForgeActor };
@@ -238,24 +255,38 @@ export class VfxForgeStage {
     this.castFocus = castFocusOf(schedule, this.homePose);
     this.fetchDoc = opts.fetchDoc ?? ((collection, id) => api.doc(collection, id));
     this.onOverlay = opts.onOverlay ?? (() => undefined);
-    this.engine = new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: false }, true);
-    this.engine.setHardwareScalingLevel(1 / Math.min(globalThis.devicePixelRatio || 1, 2));
-    this.scene = new Scene(this.engine);
+    // Use the Main renderer as-is.  Reconstructing just Engine + Scene in the
+    // editor looked equivalent, but silently skipped the client render policy
+    // (quality-backed resolution, scene setup and its module side effects).
+    // That left real GLB meshes loaded and enabled yet visually absent in the
+    // Forge.  This remains a local editor canvas; no game session is mounted.
+    this.renderer = new Renderer(canvas);
+    this.engine = this.renderer.engine;
+    this.scene = this.renderer.scene;
     // Use the game's exact GLB byte cache, LOD resolver, texture deduplication
     // and source-container lifetime. Only the content mount differs: local or
     // remote editor reference assets are served through content-api.
     this.assets = new AssetManager(this.scene, "/content-api/");
-    this.scene.clearColor = new Color4(0.035, 0.045, 0.07, 1);
+    // PBR actors must be judged under the exact client lighting resolver.
+    // A hand-written Forge hemi/sun pair had drifted in intensity, ground fill
+    // and palette from the playable renderer, which made the paused scene
+    // appear black even after a healthy GLB prewarm.  The shared resolver also
+    // means a future content lighting change reaches the editor automatically.
+    this.lighting = setupLighting(this.scene);
+    this.lighting.applyScenery(undefined, false);
     this.scene.useConstantAnimationDeltaTime = true;
 
     const root = new TransformNode("vfx-forge-arena", this.scene);
-    const hemi = new HemisphericLight("vfx-forge-hemi", new Vector3(0.3, 1, 0.2), this.scene);
-    hemi.intensity = 0.75;
-    new DirectionalLight("vfx-forge-sun", new Vector3(-0.4, -1, 0.35), this.scene).intensity = 1.05;
+    this.groundRoot = root;
+    root.position.set(this.homePose.caster.x, 0, this.homePose.caster.z);
     const ground = buildZoneGround(
       this.scene,
       root,
-      { center: { ...this.homePose.caster }, boundaryRadius: 24 },
+      // Geometry is authored around local zero. The root follows the latest
+      // SimWorld caster pose in setContent(); traces commonly place the duel at
+      // x=-40, and leaving a constructor-time floor at x=0 makes its curved rim
+      // fill the camera like a giant opaque VFX card.
+      { center: { x: 0, z: 0 }, boundaryRadius: 24 },
       0,
       // VFX Forge can read a local workspace or a remote reference profile via
       // `/content-api/`; ArenaGround's shipped texture loader intentionally
@@ -372,6 +403,7 @@ export class VfxForgeStage {
     this.schedule = schedule;
     this.homePose = homePoseOf(schedule);
     this.castFocus = castFocusOf(schedule, this.homePose);
+    this.groundRoot.position.set(this.homePose.caster.x, 0, this.homePose.caster.z);
     this.player.invalidate();
     this.runtimeVfx?.invalidateVfxScripts();
     this.emitOverlay("預載角色與腳本素材…");
@@ -538,6 +570,11 @@ export class VfxForgeStage {
    */
   async captureVisualEvidence(label: string): Promise<VfxVisualEvidenceFrame> {
     await this.contentReady;
+    if (this.visualAssetIssues.size > 0) {
+      throw new Error(
+        `3D 預覽完整性未通過，禁止建立視覺證據：${[...this.visualAssetIssues].join("；")}`,
+      );
+    }
     await this.scene.whenReadyAsync();
     this.renderScene();
     this.renderScene();
@@ -854,8 +891,7 @@ export class VfxForgeStage {
     this.modelRig.dispose();
     this.modelFxContainerPromises.clear();
     this.disposeParticles();
-    this.scene.dispose();
-    this.engine.dispose();
+    this.renderer.dispose();
   }
 
   private makeActor(
@@ -883,6 +919,7 @@ export class VfxForgeStage {
       glbRoot: null,
       groups: [],
       clipMap: null,
+      fallbackForced: false,
       idleAfterMs: 0,
       hiddenUntilMs: 0,
     };
@@ -948,18 +985,44 @@ export class VfxForgeStage {
       actor.clipMap = doc.clipMap;
       actor.fallback.setEnabled(false);
       this.playActor(actor, "idle", true);
-      // The Forge can remain paused on frame zero indefinitely. The shipped
-      // game advances naturally while Babylon compiles imported PBR variants,
-      // but a deterministic editor seek can otherwise freeze Babylon's white
-      // placeholder on screen and make a healthy texture look un-keyed. Compile
-      // the exact actor variants directly: waiting for the WHOLE scene here is
-      // a deadlock in a frame-stepped editor because unrelated lazy VFX pools
-      // may not become ready until a later seek.  Actor readiness must only
-      // depend on the actor it reports.
+      // A normal game render loop reaches the PBR/texture-ready boundary on
+      // its own. Forge commonly pauses at frame zero, so render once and give
+      // the scene a bounded chance to settle before compiling this actor.
+      // Waiting unboundedly on Scene.whenReadyAsync() was a deadlock: a cold
+      // optional VFX pool could keep the preview at "載入角色" forever.
+      this.renderScene();
+      await Promise.race([
+        this.scene.whenReadyAsync().catch(() => undefined),
+        new Promise<void>((resolve) => globalThis.setTimeout(resolve, ACTOR_READY_BUDGET_MS)),
+      ]);
+      if (this.disposed || this.scene.isDisposed) return;
+      // Compile the actor independently after that bounded scene turn. This
+      // retains the real AssetManager/PBR path instead of swapping in a
+      // preview-only loader that could accept pixels the game cannot render.
       await Promise.all(visible.flatMap((mesh) =>
         mesh.material ? [mesh.material.forceCompilationAsync(mesh)] : [],
       ));
-      this.renderScene();
+      // `forceCompilationAsync` proves the shader variant exists, but browser
+      // texture upload and KHR_parallel_shader_compile become visible only on
+      // subsequent rendering tasks. The game naturally has them; a paused
+      // Forge does not. Match the shipped audition's ten-frame settle window
+      // so a frame-zero review is a real model, not its black/white bootstrap.
+      await this.renderWarmupFrames(ACTOR_WARMUP_FRAMES);
+      if (this.disposed || this.scene.isDisposed) return;
+      const visibility = await this.measureActorVisibility(actor);
+      if (!visibility.visible) {
+        // Do not replace a missing model with an optimistic fake.  The coloured
+        // capsule is an explicitly marked interaction fallback, while the
+        // source issue prevents visual evidence from becoming reviewable.
+        actor.fallbackForced = true;
+        actor.bodyRoot.setEnabled(false);
+        actor.fallback.setEnabled(true);
+        const issue = `${champion.name} · ${appearance.modelKey} 3D 模型在真實 framebuffer 僅改變 ${visibility.changedPixels} 像素`;
+        this.visualAssetIssues.add(issue);
+        this.actorStatus[actor.role] = `⚠ ${issue}，已顯示替身並封鎖視覺驗收`;
+        this.emitOverlay("3D 模型不可辨識，候選不得送審");
+        return;
+      }
       const height = rendered.max.y - rendered.min.y;
       const centerX = (rendered.min.x + rendered.max.x) / 2;
       const centerZ = (rendered.min.z + rendered.max.z) / 2;
@@ -970,6 +1033,16 @@ export class VfxForgeStage {
       // The script may already be scrubbed past a pulse while this GLB loaded.
       this.seek(this.nowMs);
     } catch (error) {
+      // A failed imported presentation must remain usable and visible. The GLB
+      // may already have disabled the coloured capsule before a late texture
+      // or shader failure surfaced; leaving both paths disabled produces an
+      // empty stage and turns an asset failure into a misleading camera/VFX
+      // failure. Dispose the partial presentation and restore the fallback.
+      if (!this.disposed) {
+        this.disposeActor(actor);
+        actor.fallback.setEnabled(true);
+        this.renderScene();
+      }
       this.actorStatus[actor.role] = `${champion.name} · 替身（載入失敗）`;
       this.emitOverlay(`${champion.name} 3D 載入失敗，保留碰撞替身：${String(error)}`);
     }
@@ -983,6 +1056,7 @@ export class VfxForgeStage {
     actor.bodyRoot = null;
     actor.glbRoot = null;
     actor.groups = [];
+    actor.fallbackForced = false;
   }
 
   private loadModelFxContainer(path: string): Promise<AssetContainer> {
@@ -1009,7 +1083,6 @@ export class VfxForgeStage {
    * ready textures while tint/alpha remain the production rig's responsibility.
    */
   private async warmModelFxMaterials(container: AssetContainer): Promise<void> {
-    await this.scene.whenReadyAsync();
     await Promise.all(container.meshes.flatMap((mesh) =>
       mesh.material ? [mesh.material.forceCompilationAsync(mesh)] : [],
     ));
@@ -1031,7 +1104,12 @@ export class VfxForgeStage {
         this.emitOverlay(`模型文件載入失敗：${key} · ${String(error)}`);
       }
     }));
-    this.modelRig.warm(modelKeys);
+    // Script-only presentation is still rendered by the shipped VfxSystem.
+    // Warm the rig that will actually consume the synthetic modelFxSpawn
+    // event; warming only the Forge fallback rig leaves the first deterministic
+    // seek empty even though the GLB container itself has already loaded.
+    this.runtimeVfx?.warmModelFx(modelKeys);
+    if (!this.runtimeVfx) this.modelRig.warm(modelKeys);
     await Promise.all(modelKeys.flatMap((key) => {
       const doc = this.models.get(key);
       return doc
@@ -1104,8 +1182,8 @@ export class VfxForgeStage {
     for (const actor of Object.values(this.actors)) {
       actor.idleAfterMs = 0;
       actor.hiddenUntilMs = 0;
-      actor.bodyRoot?.setEnabled(true);
-      actor.fallback.setEnabled(actor.bodyRoot === null);
+      actor.bodyRoot?.setEnabled(!actor.fallbackForced);
+      actor.fallback.setEnabled(actor.bodyRoot === null || actor.fallbackForced);
       this.playActor(actor, "idle", true);
     }
     this.setActorPose(this.homePose);
@@ -1144,6 +1222,7 @@ export class VfxForgeStage {
 
   private advanceFrame(render: boolean, dtMs = STEP_MS, notify = true): void {
     this.nowMs += dtMs;
+    this.lighting.animate(this.nowMs / 1000);
     this.consumeEvents();
     if (this.mode === "runtime") this.runtimeVfx?.update(this.nowMs);
     else {
@@ -1258,6 +1337,55 @@ export class VfxForgeStage {
 
   private renderScene(): void {
     this.scene.render();
+  }
+
+  /**
+   * A successful GLB parse is not visual evidence. Sample the actual
+   * framebuffer with just this actor hidden, once at load time: a model whose
+   * textures/materials collapse into the background becomes an explicit blocked
+   * asset rather than a deceptively "ready" black silhouette.
+   */
+  private async measureActorVisibility(actor: ForgeActor): Promise<{
+    visible: boolean;
+    changedPixels: number;
+  }> {
+    const root = actor.bodyRoot;
+    const width = this.engine.getRenderWidth();
+    const height = this.engine.getRenderHeight();
+    if (!root || width <= 0 || height <= 0) return { visible: true, changedPixels: 0 };
+    const read = async (): Promise<Uint8Array> => {
+      this.renderScene();
+      this.renderScene();
+      return (await this.engine.readPixels(0, 0, width, height)) as Uint8Array;
+    };
+    const enabled = root.isEnabled();
+    const shown = await read();
+    root.setEnabled(false);
+    try {
+      const hidden = await read();
+      let changedPixels = 0;
+      for (let i = 0; i + 2 < shown.length && i + 2 < hidden.length; i += 4) {
+        const delta =
+          Math.abs(shown[i]! - hidden[i]!) +
+          Math.abs(shown[i + 1]! - hidden[i + 1]!) +
+          Math.abs(shown[i + 2]! - hidden[i + 2]!);
+        if (delta >= MIN_ACTOR_PIXEL_DELTA) changedPixels++;
+      }
+      return { visible: changedPixels >= MIN_ACTOR_VISIBLE_PIXELS, changedPixels };
+    } finally {
+      root.setEnabled(enabled);
+      this.renderScene();
+    }
+  }
+
+  /** Render a bounded number of browser tasks while a paused actor settles. */
+  private async renderWarmupFrames(frames: number): Promise<void> {
+    for (let frame = 0; frame < frames; frame++) {
+      if (this.disposed || this.scene.isDisposed) return;
+      this.renderScene();
+      await new Promise<void>((resolve) => globalThis.setTimeout(resolve, STEP_MS));
+    }
+    this.renderScene();
   }
 
   private casterEntityId(): number | undefined {
@@ -1435,8 +1563,8 @@ export class VfxForgeStage {
     for (const actor of Object.values(this.actors)) {
       if (actor.hiddenUntilMs > 0 && actor.hiddenUntilMs <= this.nowMs) {
         actor.hiddenUntilMs = 0;
-        actor.bodyRoot?.setEnabled(true);
-        actor.fallback.setEnabled(actor.bodyRoot === null);
+        actor.bodyRoot?.setEnabled(!actor.fallbackForced);
+        actor.fallback.setEnabled(actor.bodyRoot === null || actor.fallbackForced);
       }
       if (actor.idleAfterMs > 0 && actor.idleAfterMs <= this.nowMs) {
         actor.idleAfterMs = 0;

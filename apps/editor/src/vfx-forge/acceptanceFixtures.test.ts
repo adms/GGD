@@ -50,6 +50,22 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
     }
   });
 
+  it("載入真 SimWorld cue 時自動補齊不存在於靜態配方的攻擊與受擊動作", () => {
+    const strikeCues = [{ on: "strike" as const, strikeIndex: 1 }];
+    const dragon = acceptanceFixtureFor("godie-hjai.e", strikeCues)!;
+    expect(actionAnimationIssues(dragon, {
+      activationMode: "active",
+      requiredTimelineCues: strikeCues,
+    })).toEqual([]);
+
+    const projectileCues = [{ on: "projectileHit" as const }];
+    const beam = acceptanceFixtureFor("godie-nbbc.e", projectileCues)!;
+    expect(actionAnimationIssues(beam, {
+      activationMode: "active",
+      requiredTimelineCues: projectileCues,
+    })).toEqual([]);
+  });
+
   it("斬擊成品只使用 Main 收據的單發 arc，不把 26 發 slash 當一刀", () => {
     const actionSkills = ["godie-hjai.r", "godie-nbbc.r", "godie-hart.r", "godie-e002.ex"] as const;
     for (const id of actionSkills) {

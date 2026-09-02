@@ -87,6 +87,7 @@ function classicBeam(
   yawOffsetDeg: number,
   sideOffsetU = 0,
   particleAlphaScale = 1,
+  pulseOffsetsMs: readonly number[] = [0, 430],
 ): VfxScriptSegment[] {
   const segments: VfxScriptSegment[] = [];
   if (includeModelCore) {
@@ -114,22 +115,27 @@ function classicBeam(
   const vfxId = fire ? "fx.prim.holy.beam-flat" : "fx.prim.lightning.beam-flat";
   const outerTint = fire ? [255, 132, 20] : [65, 155, 255];
   const coreTint = fire ? [255, 242, 190] : [215, 242, 255];
-  // Two pulses × outer/core: four bounded additive systems total.
-  for (const atMs of [0, 430]) {
+  // Two pulses × outer/core: four bounded additive systems total. The earlier
+  // 2.2/1.0 scale with 0.24 alpha rendered as a few thin tracer hairs at the
+  // real CameraRig distance, not a classic horizontal energy beam. Keep the
+  // same shipped brick and budget, but make its broad outer body and hot core
+  // visually legible. Callers combining two colours can request one pulse per
+  // colour so the same four-system cap is preserved.
+  for (const atMs of pulseOffsetsMs) {
     segments.push(zVfxScriptSegment.parse({
       kind: "vfx", ...triggerFields(trigger, atMs), vfxId, at: anchor,
-      durationSec: 0.62, offsetForwardU: 0.8, w3xScale: 2.2,
+      durationSec: 0.78, offsetForwardU: 0.8, w3xScale: 4.4,
       // ReviveHuman's compositor pivot sits around hand/chest height. Keep the
       // helpers near that centreline but visibly subordinate: full-size
       // additive sprites at the exact model height collapsed into a white card.
-      tint: outerTint, flyHeight: 72, alpha: Math.min(1, 0.24 * particleAlphaScale),
+      tint: outerTint, flyHeight: 72, alpha: Math.min(1, 0.54 * particleAlphaScale),
       ...(sideOffsetU === 0 ? {} : { offsetSideU: sideOffsetU }),
       ...(yawOffsetDeg === 0 ? {} : { facingDeg: yawOffsetDeg }),
     }));
     segments.push(zVfxScriptSegment.parse({
       kind: "vfx", ...triggerFields(trigger, atMs + 35), vfxId, at: anchor,
-      durationSec: 0.62, offsetForwardU: 0.8, w3xScale: 1,
-      tint: coreTint, flyHeight: 72, alpha: Math.min(1, 0.28 * particleAlphaScale),
+      durationSec: 0.78, offsetForwardU: 0.8, w3xScale: 2.2,
+      tint: coreTint, flyHeight: 72, alpha: Math.min(1, 0.78 * particleAlphaScale),
       ...(sideOffsetU === 0 ? {} : { offsetSideU: sideOffsetU }),
       ...(yawOffsetDeg === 0 ? {} : { facingDeg: yawOffsetDeg }),
     }));
@@ -302,8 +308,8 @@ function avalonCounterChain(): VfxScriptSegment[] {
     // Keep the orange MDL body and blue particle core slightly separated.
     // Exact overlap made the brighter orange layer erase the requested
     // yellow/blue identity even though both systems were technically alive.
-    ...classicBeam(true, false, { on: "strike", strikeIndex: 7, atMs: 220 }, "target", 180, -0.16, 0.9),
-    ...classicBeam(false, false, { on: "strike", strikeIndex: 7, atMs: 245 }, "target", 180, 0.22, 1.55),
+    ...classicBeam(true, false, { on: "strike", strikeIndex: 7, atMs: 220 }, "target", 180, -0.16, 0.9, [0]),
+    ...classicBeam(false, false, { on: "strike", strikeIndex: 7, atMs: 245 }, "target", 180, 0.22, 1.25, [0]),
     zVfxScriptSegment.parse({ kind: "screenShake", on: "strike", strikeIndex: 7, amplitude: 0.58, durationSec: 0.7 }),
   ];
 }

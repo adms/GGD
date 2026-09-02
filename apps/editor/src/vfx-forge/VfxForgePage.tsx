@@ -302,6 +302,20 @@ export function VfxForgePage() {
       : [],
     [ability, cues, draft],
   );
+
+  // Acceptance references are immutable capability examples. Once the real
+  // SimWorld trace reveals strike/projectile cues, deterministically fold the
+  // corresponding actor pulses into the reference itself instead of asking an
+  // author to press a repair button on every load. From-blank authoring remains
+  // untouched; its normal add/recipe paths already apply the same rule.
+  useEffect(() => {
+    if (!isAcceptanceFixture || acceptanceStartedFromBlank || ability?.id !== abilityId || cues.length === 0) return;
+    const completed = acceptanceFixtureFor(abilityId, cues);
+    if (!completed || (draft && sameJson(draft, completed))) return;
+    draftHistory.reset(completed);
+    setLoadedOriginal(completed);
+    setStatus("驗收參考已依真 SimWorld 傷害節點自動補齊角色攻擊／受擊動作");
+  }, [ability?.id, abilityId, acceptanceStartedFromBlank, cues, draft, draftHistory.reset, isAcceptanceFixture]);
   const replacementBlockers = useMemo(
     () => draft ? unsupportedReplacementClaims(draft) : [],
     [draft],

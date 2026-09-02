@@ -12,6 +12,10 @@ import ogrhR from "./acceptance-fixtures/godie-ogrh.r.json";
 import e002Ex from "./acceptance-fixtures/godie-e002.ex.json";
 import hvshR from "./acceptance-fixtures/godie-hvsh.r.json";
 import { buildVfxForgeRecipe } from "./recipes";
+import {
+  completeActionAnimations,
+  type ActionTimelineCue,
+} from "./actionAnimationPrinciples";
 
 /**
  * These eight scripts test whether VFX Forge can express the requested scenes.
@@ -40,14 +44,24 @@ export const VFX_FORGE_ACCEPTANCE = [
   ["godie-hvsh.r", "48-04 騎英之手綱"],
 ] as const;
 
-export function acceptanceFixtureFor(abilityId: string): VfxScriptDoc | null {
+export function acceptanceFixtureFor(
+  abilityId: string,
+  requiredTimelineCues: readonly ActionTimelineCue[] = [],
+): VfxScriptDoc | null {
   const raw = FIXTURES[abilityId];
   if (raw === undefined) return null;
   const base = zVfxScriptDoc.parse(structuredClone(raw));
   // Fixtures deliberately expand the same reusable recipe helpers exposed by
   // the Forge UI. This proves the scenes are composed from bricks rather than
   // maintained as eight unrelated, hand-written effects.
-  return zVfxScriptDoc.parse({ ...base, segments: compose(abilityId, base.segments) });
+  const segments = compose(abilityId, base.segments);
+  return zVfxScriptDoc.parse({
+    ...base,
+    segments: completeActionAnimations(segments, {
+      activationMode: abilityId === "godie-e002.ex" ? "passive" : "active",
+      requiredTimelineCues,
+    }),
+  });
 }
 
 function withoutKinds(
