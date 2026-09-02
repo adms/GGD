@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "a7107b6b09f7",
+  "hash": "ad5ee62bf946",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -331,6 +331,12 @@
       "path": "config/new-hero-checks.json",
       "hash": "6908e89dd53f",
       "size": 1252
+    },
+    {
+      "id": "one-shot-clamp",
+      "path": "config/one-shot-clamp.json",
+      "hash": "acc7a44b3b5c",
+      "size": 944
     },
     {
       "id": "origin-routes",

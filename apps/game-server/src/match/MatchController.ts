@@ -139,6 +139,10 @@ import {
 } from "@ggd/shared/sim/world/ArenaDef";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import { Champions, Abilities, LootTables, Items, Statuses } from "@ggd/shared/sim/content/registry";
+import {
+  SHIPPED_ONE_SHOT_CLAMP,
+  type ConfigOneShotClampDoc,
+} from "@ggd/shared/content/schema/config/oneShotClamp";
 import { Configs, Models } from "@ggd/shared/content";
 import { spawnChampion } from "@ggd/shared/sim/spawnChampion";
 import { createMatchStats, type PlayerMatchStats } from "@ggd/shared/sim/stats/matchStats";
@@ -1119,6 +1123,14 @@ export class MatchController {
      */
     combatFeel: CombatFeelRules = combatFeelFromDoc(Configs.tryGet(COMBAT_FEEL_DOC_ID)),
     /**
+     * ⭐⭐ 一擊必殺的夾限（GH#928）—— 與 `combatFeel` **完全同一條路**
+     * （`Configs` 是 boot 時載入的，後台改了要重啟 shard 才生效）。
+     * ⛔ 出貨 `enabled: false` ⇒ ⭐ 這一格今天逐位元 no-op。
+     */
+    oneShotClamp: ConfigOneShotClampDoc =
+      (Configs.tryGet("one-shot-clamp") as unknown as ConfigOneShotClampDoc | undefined) ??
+      SHIPPED_ONE_SHOT_CLAMP,
+    /**
      * ⭐ 手把操作方案 (`config.controller-scheme@1`, GH#863) —— sim 只用它的
      * `combatInput`（「移動算不算戰鬥輸入」）。和 `combatFeel` 完全同一條路，
      * 含同一個已知限制：`Configs` 是 boot 時載入的，後台切了版本要重啟 shard。
@@ -1266,6 +1278,9 @@ export class MatchController {
     registerSkeletonContent();
     this.world = new SimWorld(arena, seed);
     this.world.combatEnv = combatEnv;
+    // ⭐ 一擊必殺夾限（GH#928）—— ⛔ 漏掉這一行，那一格就永遠是出貨預設，
+    //   後台開了場上沒反應（＝失敗形態⑧，這一輪已經中過兩次）。
+    this.world.oneShotClamp = oneShotClamp;
     // Snapshotted before tick 0 — a match in progress can never see a change.
     this.world.baseBonus = baseBonus;
     // ⭐ 每級加成（owner 2026-08-13「英雄每等級都會 +1 AP」）。

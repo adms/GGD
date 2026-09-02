@@ -26,6 +26,10 @@ import type { FireRingRules } from "./fireRing";
 import type { ReviveRules } from "./revive";
 import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "./combatEnv";
 import {
+  SHIPPED_ONE_SHOT_CLAMP,
+  type ConfigOneShotClampDoc,
+} from "../content/schema/config/oneShotClamp";
+import {
   DEFAULT_BASE_BONUS,
   DEFAULT_PER_LEVEL_BONUS,
   type BaseBonusTable,
@@ -772,6 +776,21 @@ export class SimWorld {
    * prediction shadow world behave byte-identically to the pre-env sim.
    */
   combatEnv: CombatEnvMultipliers = DEFAULT_COMBAT_ENV;
+
+  /**
+   * ⭐⭐ **一擊必殺的夾限**（GH#928）—— 與 `combatEnv` **完全同一個形狀**：
+   * host 在 tick 0 之前指派一次、⛔ 中途不動 ⇒ determinism 自動成立
+   * （sim ⛔ 不讀 config/globals）。
+   *
+   * ⛔⛔ 量到的（owner 2026-09-02 貼的榜單前 100）：**12 列**打掉單一英雄
+   * 超過 **100% 最大生命**，最高 **401%**。⭐ 根因是五級距只管加法項
+   * （`傷害 = 級距 + 0.8×AP`，而級距是從**純基礎**血量反推的 ⇒ 那個空間裡 AP＝0）。
+   *
+   * ⭐⭐ **出貨預設 `enabled: false`** ⇒ ⭐ 這一格今天逐位元 no-op。
+   * 它存在是為了讓 owner **改一個下拉選單**就能試，
+   * ⛔ 不是為了讓我替他決定要不要夾（第一守則：「可調」≠「我可以轉」）。
+   */
+  oneShotClamp: ConfigOneShotClampDoc = SHIPPED_ONE_SHOT_CLAMP;
 
   /**
    * 基礎加成 (see baseBonus.ts) — flat grants added AFTER `combatEnv` scales

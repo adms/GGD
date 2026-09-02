@@ -1084,7 +1084,30 @@ export function combatResolveSystem(world: SimWorld): void {
 
       // "impact" = post-mitigation, PRE-shield damage: the blow's raw force,
       // used to scale hitstop/knockback even when a shield eats the hp loss.
-      const impact = mitigate(world, pkt);
+      let impact = mitigate(world, pkt);
+
+      // ⭐⭐ **一擊必殺的夾限**（GH#928）—— ⛔ 出貨關著，⭐ 這幾行今天逐位元 no-op。
+      //
+      // ⭐ **位置是承重的：`mitigate()` 之後、護盾之前。**
+      //   · 在 mitigate **之後** → 夾的是「他**真的**會吃多少」，
+      //     ⛔ 不是「這一發原本多大」（高護甲的人不該被夾兩次）
+      //   · 在護盾**之前** → 夾限 ⛔ 不會讓護盾白白吸收一段被夾掉的傷害
+      //   · ⭐ 夾 `impact` 而不是最後扣血 → 演出（hitstop/擊退）跟著夾後的力道走，
+      //     ⛔ 否則畫面上還是那一記「打飛全場」的巨響而血條只掉一半
+      //
+      // ⚠️ ⭐ 這不改公式、不夾 AP、不動任何技能的數值（#928 的 Non-goals）——
+      //   它只是在最後一步把單次傷害壓在「目標最大生命的 N 倍」以內。
+      if (world.oneShotClamp.enabled) {
+        const victimHp = world.health.get(pkt.target);
+        // ⭐ 小怪預設不夾：榜單量到的 B 類（總傷害大但單體佔比低）打的正是小怪，
+        //   ⛔ 而那**不是缺陷**。
+        const isChampion = world.champion.has(pkt.target);
+        if (victimHp && (isChampion || world.oneShotClamp.alsoClampMinions)) {
+          const cap = victimHp.maxHp * world.oneShotClamp.maxFractionOfMaxHp;
+          if (cap > 0 && impact > cap) impact = cap;
+        }
+      }
+
 
       // `shieldBefore` / the guard-break basis is the ELIGIBLE total, not the
       // whole pool: an anti-magic barrier still standing must not suppress the
