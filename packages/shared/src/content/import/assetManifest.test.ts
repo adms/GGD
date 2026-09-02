@@ -188,3 +188,64 @@ describe("P1-1 依賴閉包", () => {
     ).toEqual([]);
   }, 120_000);
 });
+
+// ---------------------------------------------------------------------------
+// ⭐ `kind` 與反向引用（交接文件 P1-1：「每筆可另外帶 logical asset key／kind、dependencies」）
+// ---------------------------------------------------------------------------
+
+describe("P1-1 kind ＋ 反向引用", () => {
+  interface Rich extends Entry {
+    kind: string;
+    refs: string[];
+    moreRefs?: number;
+  }
+  const rich = doc.entries as Rich[];
+
+  it("★★ ⭐ 每一筆都有 `kind`，⛔ 而它不是「副檔名換個名字」", () => {
+    const kinds = new Set(rich.map((e) => e.kind));
+    expect(kinds.size, "⛔ 只有一種 kind ⇒ 它沒有在分類").toBeGreaterThan(2);
+    // ⭐ 認不出來的一律 `"other"` —— ⛔ 一個誠實的分類，⛔ 不是猜一個。
+    for (const e of rich) {
+      expect(typeof e.kind, `⛔ ${e.path} 沒有 kind`).toBe("string");
+      expect(e.kind.length).toBeGreaterThan(0);
+    }
+    // ⭐ 同一個副檔名要能落在**不同的** kind（⛔ 否則它就是 contentType 的別名）。
+    const pngKinds = new Set(rich.filter((e) => e.path.endsWith(".png")).map((e) => e.kind));
+    expect(
+      pngKinds.size,
+      "⛔⛔ 所有 .png 都是同一個 kind ⇒ ⭐ `kind` 只是 `contentType` 的別名，\n" +
+        "   而編輯器要它是為了**分類與篩選**（貼圖 vs 圖示是兩種東西）。",
+    ).toBeGreaterThan(1);
+  });
+
+  it("★★ ⭐⭐ 反向引用**指得回真的文件**（⛔ 不是一個空陣列）", () => {
+    const withRefs = rich.filter((e) => e.refs.length > 0);
+    expect(
+      withRefs.length,
+      "⛔⛔ 一筆反向引用都沒有 ⇒ ⭐ 那不是「沒有人引用資產」，\n" +
+        "   是這支產生器沒有建反向索引（而清單只收**被引用到的**，⇒ 不可能為 0）。",
+    ).toBe(rich.length);
+    // ⭐ 儀器：至少有一顆是**共用**的（⛔ 一對一的話這一欄沒有價值）。
+    const shared = rich.filter((e) => e.refs.length + (e.moreRefs ?? 0) > 1);
+    expect(shared.length, "⛔ 沒有任何一顆被多份文件共用 ⇒ 反向索引在量空氣").toBeGreaterThan(10);
+  });
+
+  it("★★ ⭐ **有界**：超過上限要說出來（⛔ 不是靜默截斷）", () => {
+    const truncated = rich.filter((e) => e.moreRefs !== undefined);
+    expect(
+      truncated.length,
+      "⛔ 沒有任何一筆被截斷 ⇒ ⭐ 這條在量空氣（2026-09-02 量到有共用貼圖被 62 份引用）",
+    ).toBeGreaterThan(0);
+    for (const e of truncated) {
+      expect(e.moreRefs!, `⛔ ${e.path} 的 moreRefs 不是正數`).toBeGreaterThan(0);
+      // ⭐ 截斷了就**一定**列滿上限（⛔ 不是列 3 個然後說「還有 50」）。
+      expect(e.refs.length, `⛔ ${e.path} 截斷了卻沒列滿`).toBeGreaterThan(5);
+    }
+  });
+
+  it("★ ⭐ 引用者**排過序**（⛔ 否則每次重生成的位元組都不同）", () => {
+    for (const e of rich) {
+      expect([...e.refs].sort(), `⛔ ${e.path} 的 refs 沒排序 ⇒ --check 會永遠紅`).toEqual(e.refs);
+    }
+  });
+});
