@@ -733,6 +733,21 @@ export class ContentDb {
   }
 
   /**
+   * ⭐⭐ **護盾生成的 beat 開不開**（GH#940，`config.ambient-vfx@1` 的 `hitCues`）。
+   *
+   * ⚠️ ⭐ 缺席時回 **`true`** —— 這一格與 `attackTrailConfig()` **刻意相反**：
+   * 那一格缺席＝「沒設定」⇒ 關；⭐ 這一格是**修好一個只有下半場的演出**
+   * （破碎一直在畫、生成從來沒畫過），⇒ 照第〇·六守則
+   * 「**優先權大的更新後都是預設啟動**」，回退值要落在**修好**的那一邊。
+   *
+   * ⛔ 後台把它關掉 ⇒ 逐位元回到 2026-09-02 之前的行為。
+   */
+  shieldGainedCue(): boolean {
+    const c = (this.ambientVfx as { hitCues?: { shieldGained?: boolean } } | null)?.hitCues;
+    return c?.shieldGained ?? true;
+  }
+
+  /**
    * 場地布景道具的常駐火焰政策（GH#251）。文件缺席／沒有這個區塊時回傳
    * `DEFAULT_ARENA_FIRE`（`enabled: false`）—— 內容載不到的那條路**不可以**
    * 把 owner 明說要拿掉的火又點回來。`dressArena` 是唯一的消費者。

@@ -2429,3 +2429,29 @@ Editor 負責用積木拼成技能成品**」。
 ⛔ **而訊息指著錯方向**：它逐字建議把那些檔加進 `content:build` 的 `writes`
 ⇒ 隔離區會把手編檔鎖成 444 ＝ **GH#707 擋掉三條 lane 的形狀**。
 ⚠️ 它在長 session 裡**必然發生**（`msgledger:build` 讀 transcript，而 transcript 一直在長）。
+
+### 🏷️ 束⑨′ 版本戳（#949 · ⭐ 已修，v0.35.17）
+
+`buildStamp()` 在正式站**必然**落到第 ③ 階 `"dev"` —— ⛔ 而那不只是排行榜上一欄字：
+同一顆值寫進**每一份錄影的 header** ⇒ ⭐ **任兩份永遠判「相同版本」**，
+而診斷會逐字說「所以問題不是版本落差」⇒ 把查的人往錯方向帶。
+
+⭐ 根因是**一行 shell**：`compose.yaml` 讀的是 `up` 那一刻的 shell env，
+⛔ 不是 build arg，而兩支腳本都只在 `build` 那一行給了 stamp。
+
+⭐ 部署後真的量到：`{"stamp":"v0.35.17 2026-09-02","stamped":true,"source":"env"}`
+—— `source:"env"` 就是證據（容器裡沒有 `.git`）。
+⛔ **還沒驗到**：舊版錄影被拒絕、回滾路徑。
+
+### 🧪 束⑨″ 一條**假紅燈**（#950）
+
+`speedlists:check` **直接跑 EXIT=0**、`--dir apps/admin` **1305 全綠**，
+⛔ 只有整個 `apps` 一起跑才紅 ⇒ ⭐ **別的目錄的測試在干擾它**，⛔ 不是產物過期。
+
+⚠️ 而它的訊息**指著錯方向**：「跑 `speedlists:build` 然後 git add」——
+照做會產生一份**位元組相同**的產物 ⇒ 下一輪看到又紅會以為是新的錯。
+⭐ 本 session 已經為它跑了三次 build ＋ 兩次全套重驗。
+
+⇒ ⭐ 這是 CLAUDE.md「一條綠燈有四種假的來源」的**鏡像**：一條假的紅燈。
+⛔ 修法不可以是重試或 `.skip`（那是把假紅燈換成假綠燈）——
+要**指名干擾源**。嫌疑：`tools/skill-lists/gen.mjs` 的 `loadContentCached`。

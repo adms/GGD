@@ -229,6 +229,29 @@ export const zConfigAmbientVfxDoc = z
     /** 圓盤外的 2D 景深背景政策（GH#324）。缺席 = 用 `DEFAULT_ARENA_BACKDROP`。 */
     backdrop: zArenaBackdrop.optional(),
     /** 場景特色（配色／打光／裝飾散佈）政策（GH#362）。缺席 = 用 `DEFAULT_ARENA_SCENERY_POLICY`。 */
+    /**
+     * ⭐⭐ **命中回饋的兩個 beat**（GH#940，2026-09-02）。
+     *
+     * ⛔⛔ `shieldGained` 這一則在 sim 裡發得好好的（`sim/effects/shield.ts`，
+     * 一次 `addShield` 一則），⛔ 而它停在 `SERVER_ONLY_EVENT_TYPES`
+     * ⇒ ⭐ **生成那一半從來沒有畫過一個像素**，而**破碎**那一半
+     * （`guardBreak`）一直是活的 ⇒ 玩家看到的是一個**只有下半場**的演出。
+     *
+     * ⭐ 為什麼是一格開關而不是直接寫死：owner 2026-08-23 逐字抱怨過
+     * 「地上常出現**一堆亮藍色往外擴散的圈圈特效**⋯**太亮太搶眼不好看**」
+     * ⇒ 這是一個**新的畫面元素**，而他不在
+     * ⇒ 照常設指令（「沒做完以前別問我了自己判斷，**但是留後台開關可以簡易 rollback**」）
+     *   我挑了「開」當預設，⭐ 而關掉它是**一格下拉**，⛔ 不是一次部署。
+     *
+     * ⚠️ 顏色刻意避開他點名的亮藍 —— 用**淡玉綠**，⛔ 不是 `ice` 那族的青白。
+     */
+    hitCues: z
+      .object({
+        /** ⛔ 關掉＝回到今天的行為（生成無聲、只有破碎會亮）。 */
+        shieldGained: z.boolean().default(true),
+      })
+      .strict()
+      .optional(),
     scenery: zArenaSceneryPolicy.optional(),
   })
   .strict();

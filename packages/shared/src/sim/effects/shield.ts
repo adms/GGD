@@ -12,6 +12,42 @@ import { resolveScaling } from "./effect";
 import { addShield } from "../combat/damage";
 import { casterAttrs, casterStats } from "./effectCommon";
 
+/**
+ * ⭐⭐ **`shieldGained` 的酬載型別 —— 住在發射站旁邊**（GH#940）。
+ *
+ * ⛔⛔ 為什麼要有這個介面：`SimWorld.emit(type: string, data: Record<string, unknown>)`
+ * 與 `EventMessage.data` **都沒有型別** ⇒ 消費端想讀任何欄位就非 `as` 不可，
+ * ⭐ 而每一個 `as` 都是一個**靜默的洞**（CLAUDE.md 失敗形態⑧：
+ * 2026-08-23 一天之內中五次，四種守衛全部結構性失明）。
+ *
+ * ⇒ ⭐ 兩邊 import 同一個型別 ⇒ 欄位改名或消失是 **tsc 的紅**，
+ * ⛔ 不是「上線之後沒有人畫得出來」。
+ *
+ * ⚠️ 2026-09-02 量到全 repo **118 個事件名 · 159 個 emit 呼叫點，
+ * 而 payload 介面只有 4 個** —— 這是第 5 個。
+ */
+export interface ShieldGainedEvent {
+  /** 拿到盾的那一位。⭐ 客戶端就是拿它去查座標的。 */
+  readonly target: number;
+  /** 誰給的（施法者）—— 可能與 `target` 同一人（自我護盾）。 */
+  readonly source: number;
+  /** 這一片盾的吸收量。⚠️ 池子的**總量**在快照的 `EntityState.shield` 裡，
+   *  這裡是「剛剛多了多少」那個 beat 的量。 */
+  readonly amount: number;
+  /**
+   * ⭐ 封包的 **provenance 標籤**（`ctx.origin`，例：`"basic"`／技能 id）——
+   * ⛔ **不是座標**。
+   *
+   * ⚠️ 2026-09-02：寫這個介面的第一版把它宣告成 `{x,z}`，
+   * ⭐ 而 **tsc 當場紅了** —— `effect.ts:68` 逐字是 `readonly origin: string`。
+   * ⇒ 這正是這個介面存在的理由：在此之前消費端只能寫 `ev.data.origin as {x,z}`，
+   * ⭐ 而那個 `as` 會**編譯得過、上線後靜默壞掉**（失敗形態⑧）。
+   *
+   * ⇒ ⭐ 客戶端要座標請走 `posFromEvent(ev, ev.data.target)`，⛔ 不是讀這一格。
+   */
+  readonly origin: string;
+}
+
 export const shieldEffect: EffectKindSpec<"shield"> = {
   apply(e, ctx) {
     const { world } = ctx;
@@ -53,7 +89,14 @@ export const shieldEffect: EffectKindSpec<"shield"> = {
       //   · 身上已經有兩片再拿第三片 → 仍然一則（他只「產生」了一片）。
       // 反過來的口徑（每個目標的池子總數變化發一次）在單體技上跟這個一模一樣，
       // 只在 AoE 上分岔 —— 那正是失敗形態④（壞的實作跟對的長得一樣）。
-      world.emit("shieldGained", { target, source: ctx.caster, amount, origin: ctx.origin });
+      // ⭐ 型別化的送出 —— `satisfies` 讓欄位漏掉或打錯字變成 **tsc 的紅**。
+      const payload = {
+        target,
+        source: ctx.caster,
+        amount,
+        origin: ctx.origin,
+      } satisfies ShieldGainedEvent;
+      world.emit("shieldGained", payload);
     }
   },
 };

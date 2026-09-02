@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "71b5be5a4f57",
+  "fingerprint": "986e27f110d1",
   "capabilityFingerprint": "111434fa",
   "required": [
     {
@@ -10672,6 +10672,16 @@
       "group": "configField",
       "name": "hideEnemyHealthBar",
       "owner": "config.stealth@1"
+    },
+    {
+      "group": "configField",
+      "name": "hitCues",
+      "owner": "config.ambient-vfx@1"
+    },
+    {
+      "group": "configField",
+      "name": "hitCues.shieldGained",
+      "owner": "config.ambient-vfx@1"
     },
     {
       "group": "configField",
@@ -24123,9 +24133,9 @@
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 125,
-    "configField": 3793,
+    "configField": 3795,
     "_notRequired": 15,
-    "_total": 4943,
+    "_total": 4945,
     "_ownerOnly": 39
   }
 }

@@ -627,6 +627,16 @@ export const IMPACT_TINTS = {
   counter: [1, 0.2, 0.15],
   /** ICE spark: an opt-in icy cyan-white for cold abilities (content hitFeel). */
   ice: [0.6, 0.85, 1],
+  /**
+   * ⭐ 護盾**生成**（GH#940）—— **淡玉綠**。
+   *
+   * ⚠️ ⛔ 刻意**不是**藍的：owner 2026-08-23 逐字
+   * 「地上常出現**一堆亮藍色往外擴散的圈圈特效**⋯**太亮太搶眼不好看**」
+   * ⇒ 新加的畫面元素避開那個色域。
+   * ⚠️ 也刻意與 `guardBreak`（近乎純白的碎裂）**分得開** ——
+   * 兩件事在同一場戰鬥裡會前後發生，⛔ 同一個顏色等於沒有講出差別。
+   */
+  shieldGained: [0.55, 0.95, 0.8],
 } as const satisfies Record<string, Rgb>;
 
 /** Per-intensity tuning: counts/lifetimes/sizes per the AAA-target ranges. */

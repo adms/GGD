@@ -556,6 +556,21 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   "markChanged",
   "lethalSaved",
   "markInstallConflict",
+  // ⭐⭐ GH#940 —— **護盾生成的 beat**。2026-09-02 開線。
+  //
+  // ⛔ 在此之前這一則停在 `SERVER_ONLY`，理由（那一段自己寫的）是
+  // 「今天沒有客戶端 handler，現在開線買不到任何東西」——
+  // ⭐ 而它同時給了開線的條件：「**跟畫它的東西一起開**」。這一次兩件事同一個 commit。
+  //
+  // ⚠️ 量到的落差：破碎那一半（`guardBreak`）在 `VfxSystem.ts` 有完整的 case，
+  // ⭐ 而**生成那一半從來沒畫過一個像素** —— 一個只有下半場的演出。
+  //
+  // 酬載型別 `ShieldGainedEvent` 住在發射站旁邊（`sim/effects/shield.ts`），
+  // 兩邊 import 同一個 ⇒ 欄位漂掉是 **tsc 的紅**（失敗形態⑧的根治）。
+  //
+  // CADENCE: 一次 `addShield` 一則，由**施法次數**決定，⛔ 不是 per-tick。
+  // ⭐ 一發 AoE 給三個人 → 三則（三個人真的各多了一片）。
+  "shieldGained",
 ]);
 
 /**
@@ -639,22 +654,22 @@ export const SERVER_ONLY_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // simply has no authored users yet.
   "toggleEnter",
   "toggleExit",
-  // GH#300 的兩個新時刻 (2026-08-09). 它們存在的理由是**內容側**的:
-  // `systems/WorldHookSystem.ts` 把它們轉成 `onShieldGained` / `onStatusApplied`
-  // 兩個 hook 事件。同 `recoveryBegin` 的規則 —— 今天沒有客戶端 handler,
+  // GH#300 的新時刻 (2026-08-09). 它存在的理由是**內容側**的:
+  // `systems/WorldHookSystem.ts` 把它轉成 `onStatusApplied` hook 事件。
+  // 同 `recoveryBegin` 的規則 —— 今天沒有客戶端 handler,
   // 現在開線買不到任何東西,只會把缺口藏起來:「一個沒有消費者的事件在線上跟一個
   // 消費者靜默 no-op 的事件長得一模一樣」。
   //
-  //   shieldGained — `{ target, source, amount, origin }`. 護盾的**量**本來就在
-  //     快照裡(`EntityState.shield`),所以缺的只是「剛剛多了一片」那個 beat。
-  //     要開線的話跟畫它的東西一起開。CADENCE: 一次 `addShield` 一則,由施法次數
-  //     決定,不是 per-tick。
   //   statusApplied — `{ target, source, statusId, origin }`. ⚠️ 它是 `stunApplied`
   //     的**上位集合**,而 `stunApplied` 已經在上面過線了。兩個一起送 = 每一次暈眩
   //     發兩則,而客戶端會用兩條不同的路畫同一件事(檔頭第 3 點 DOUBLE-FIRE)。
   //     真要開線的話,正確的做法是先決定 `stunApplied` 要不要被它取代。
   //     CADENCE: transition-only(續期不重發),所以是「被上狀態的次數」不是 tick 數。
-  "shieldGained",
+  //
+  // ⭐⭐ `shieldGained` **在 2026-09-02 過線了**（GH#940）—— 見上面的
+  // `FANNED_OUT_EVENT_TYPES`。⭐ 而它是**照這一段自己寫的規則**走的：
+  // 「要開線的話**跟畫它的東西一起開**」⇒ 同一個 commit 裡 `VfxSystem` 有了
+  // `case "shieldGained"`，而一條契約守衛跑**出貨的**技能拿**真的**事件餵**真的**消費端。
   "statusApplied",
   // Guardian's last-hit buff expiring (GuardianSystem). The buff itself shows
   // through replicated stats; no cue was ever authored for its end.
