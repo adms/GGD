@@ -1,0 +1,661 @@
+{
+  "schema": "ggd-vfx-forge-acceptance-proof@3",
+  "generatedAt": "2026-09-02T21:21:38.284Z",
+  "source": "docs/_review/ai-proposals",
+  "purpose": "editor-capability-fixture",
+  "promotable": false,
+  "calibration": {
+    "method": "true CameraRig two-direction calibration",
+    "result": "pass",
+    "brightPixels": 739600,
+    "darkBrightPixels": 4550,
+    "darkVisiblePixels": 9465
+  },
+  "cases": [
+    {
+      "id": "godie-hjai.e",
+      "code": "04-03",
+      "name": "莉娜 · 龍破斬",
+      "ownerTarget": "投射後一段距離爆炸",
+      "candidateHash": "5f776f8cbaa4",
+      "reviewHash": "7ba4c1b6ffab",
+      "baseHash": "655fe3834e5c",
+      "autoVisualScore": 5.5,
+      "visualAudit": {
+        "schema": "ggd-vfx-visual-audit@3",
+        "safe": true,
+        "autoVisualScore": 5.5,
+        "sampledFrames": 42,
+        "peakParticleCount": 176,
+        "peakSystemCount": 50,
+        "worstAtMs": 1066.6666666666658,
+        "worst": {
+          "litShare": 0.08753147821707379,
+          "highlightShare": 0.00238290103248552,
+          "brightShare": 0.0013598589775875095,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0.00045958196927726016,
+          "dominantNonBackgroundShare": 0.07696004364979435,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false,
+          "reason": "Main 地面貼花／無貼圖幾何環已通過材質／同格剝離驗證；素材層未檢出底板"
+        },
+        "suspects": [
+          "telegraph-fill · r/d=0.81 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
+          "telegraph-ring · r/d=0.60 · telegraph-ring · 無貼圖",
+          "telegraph-shock · r/d=0.45 · telegraph-shock · 無貼圖",
+          "vfx-decal · r/d=0.11 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+          "vfx-decal · r/d=0.11 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
+        ]
+      },
+      "auditCurrent": true,
+      "updatedAt": "2026-09-02T21:17:29.085Z",
+      "mainCurrent": "ability 已有 line-blast／抵達爆炸；script 補詠唱法陣，但沿途與爆炸層次仍不完整。",
+      "jassSummary": "Fire_NOVA 詠唱後，DragonSlaveMove 以 0.03 秒週期推進 FireBlast，抵達後展開爆炸鏈。",
+      "jassLocust": "h013 MarkOfChaosTarget 聚氣法陣＋h014 FireBlast 投射物；原作沿途及終點另建立效果。",
+      "sourceResolution": "partial:Owner 與 JASS 的投射→爆炸順序一致；以 Owner 的紅橘、體積火焰為視覺目標，保留 JASS 時序。",
+      "frames": [
+        {
+          "filename": "04-03_godie-hjai.e_01_1434ms.png",
+          "label": "godie-hjai.e vs godie-e001 · 1.434秒 · 證據1",
+          "atMs": 1434,
+          "view": "side",
+          "frameAudit": {
+            "litShare": 0.012069797699991607,
+            "highlightShare": 0.006036472760849492,
+            "brightShare": 0.0018341307814992026,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0010870477629480399,
+            "dominantNonBackgroundShare": 0.005022874171073617,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0.0011667925795349617,
+            "unsafe": false,
+            "reason": "整段 GPU 底板稽核已通過；本格紅色安全粒子的棋盤啟發式誤判已排除"
+          }
+        },
+        {
+          "filename": "04-03_godie-hjai.e_02_1550ms.png",
+          "label": "godie-hjai.e vs godie-e001 · 1.550秒 · 證據3",
+          "atMs": 1550,
+          "view": "side",
+          "frameAudit": {
+            "litShare": 0.059417233274573995,
+            "highlightShare": 0.0255466717031814,
+            "brightShare": 0.006070049525728196,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0019327625283303955,
+            "dominantNonBackgroundShare": 0.013255477209770838,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false,
+            "reason": "Main 已驗證演出層通過素材收據／同格剝離；未檢出底板"
+          }
+        }
+      ]
+    },
+    {
+      "id": "godie-hjai.r",
+      "code": "04-04",
+      "name": "莉娜 · 神滅斬",
+      "ownerTarget": "dash 後斬擊",
+      "candidateHash": "1c5b252172bd",
+      "reviewHash": "8a6babd79e01",
+      "baseHash": null,
+      "autoVisualScore": 9.5,
+      "visualAudit": {
+        "schema": "ggd-vfx-visual-audit@3",
+        "safe": true,
+        "autoVisualScore": 9.5,
+        "sampledFrames": 34,
+        "peakParticleCount": 49,
+        "peakSystemCount": 21,
+        "worstAtMs": 1133.3333333333328,
+        "worst": {
+          "litShare": 0.006490808360614455,
+          "highlightShare": 0,
+          "brightShare": 0,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0.005865441114748594,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": [
+          "vfx-ring · r/d=0.12 · vfx-ring-mat · 無貼圖",
+          "vfx-ring · r/d=0.12 · vfx-ring-mat · 無貼圖",
+          "vfx-ring · r/d=0.12 · vfx-ring-mat · 無貼圖",
+          "telegraph-corridor · r/d=0.12 · telegraph-corridor-mat · 無貼圖",
+          "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
+        ]
+      },
+      "auditCurrent": true,
+      "updatedAt": "2026-09-02T21:06:54.444Z",
+      "mainCurrent": "Main 只有 ability 演出，沒有出貨 godie-hjai.r 專用 vfx-script；dash、角色動作與紫黑斬擊目前只存在 Editor 驗收 fixture。",
+      "jassSummary": "命中後先造成傷害，0.5 秒後啟用 LinaS_Effect 推動目標，並對附近玩家震屏。",
+      "jassLocust": "施法點 HeroCloudCyd；推動路徑使用 UndeadDissipate、ImpaleTargetDust，另有 WispExplode。",
+      "sourceResolution": "owner-override:JASS 核心是推動受害者，不是施法者 dash；依 Owner 最新目標改成 dash 斬擊，但在審查頁永久標示此偏離。",
+      "frames": [
+        {
+          "filename": "04-04_godie-hjai.r_01_1084ms.png",
+          "label": "godie-hjai.r vs godie-e001 · 1.084秒 · 證據1",
+          "atMs": 1084,
+          "view": "side",
+          "frameAudit": {
+            "litShare": 0.009640728615797867,
+            "highlightShare": 0.006037522034751951,
+            "brightShare": 0.0002749097624443885,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0005875933853773189,
+            "dominantNonBackgroundShare": 0.003024007386888273,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false,
+            "reason": "Main 已驗證演出層通過素材收據／同格剝離；未檢出底板"
+          }
+        },
+        {
+          "filename": "04-04_godie-hjai.r_02_1448ms.png",
+          "label": "godie-hjai.r vs godie-e001 · 1.448秒 · 證據2",
+          "atMs": 1448,
+          "view": "side",
+          "frameAudit": {
+            "litShare": 0.005880130949383027,
+            "highlightShare": 0.001879249559304961,
+            "brightShare": 0.00013430705951481575,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0004018719046419877,
+            "dominantNonBackgroundShare": 0.001047175354654579,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "godie-hart.r",
+      "code": "01-04",
+      "name": "克勞德 · 超究武神霸斬",
+      "ownerTarget": "動畫連斬＋黃藍直立光束砲",
+      "candidateHash": "9224c85b1e77",
+      "reviewHash": "976554c9a64d",
+      "baseHash": "9b1af8fd531f",
+      "autoVisualScore": 8.5,
+      "visualAudit": {
+        "schema": "ggd-vfx-visual-audit@3",
+        "safe": true,
+        "autoVisualScore": 8.5,
+        "sampledFrames": 87,
+        "peakParticleCount": 75,
+        "peakSystemCount": 32,
+        "worstAtMs": 4599.9999999999945,
+        "worst": {
+          "litShare": 0.02301372450264417,
+          "highlightShare": 0.015647821707378495,
+          "brightShare": 0.0093626710316461,
+          "nearWhiteShare": 0.002355619911021573,
+          "dominantBrightShare": 0.002199278099555108,
+          "dominantNonBackgroundShare": 0.0025193066398052546,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": [
+          "vfx-ring · r/d=0.10 · vfx-ring-mat · 無貼圖",
+          "vfx-ring · r/d=0.10 · vfx-ring-mat · 無貼圖",
+          "vfx-ring · r/d=0.10 · vfx-ring-mat · 無貼圖",
+          "vfx-ring · r/d=0.10 · vfx-ring-mat · 無貼圖",
+          "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
+        ]
+      },
+      "auditCurrent": true,
+      "updatedAt": "2026-09-02T21:10:22.747Z",
+      "mainCurrent": "已有 combo、無敵與豐富 script，是八招中最完整的 main 基線；逐刀站位與加速仍需校準。",
+      "jassSummary": "七段斬擊逐刀換位，第三段升空，後段播放速度逐步提高，最後一刀另有終結演出。",
+      "jassLocust": "ResurrectTarget 武器光柱＋h002 幻影；施法者與受害者依段次改位置、高度、面向與動畫速度。",
+      "sourceResolution": "partial:多段與終結方向一致；必須補足逐刀身體位置、升空曲線與逐段加速後才可人工通過。",
+      "frames": [
+        {
+          "filename": "01-04_godie-hart.r_01_2578ms.png",
+          "label": "godie-hart.r vs godie-e001 · 2.578秒 · 證據1",
+          "atMs": 2578,
+          "view": "side",
+          "frameAudit": {
+            "litShare": 0.019994963485268195,
+            "highlightShare": 0.007821287668933098,
+            "brightShare": 0.00045118777805758416,
+            "nearWhiteShare": 0.000001049273902459498,
+            "dominantBrightShare": 0.00043439939561823216,
+            "dominantNonBackgroundShare": 0.0019757827583312348,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false,
+            "reason": "施法範圍 Telegraph 已通過同格剝離驗證；素材層未檢出底板"
+          }
+        },
+        {
+          "filename": "01-04_godie-hart.r_02_4620ms.png",
+          "label": "godie-hart.r vs godie-e001 · 4.620秒 · 證據2",
+          "atMs": 4620,
+          "view": "side",
+          "frameAudit": {
+            "litShare": 0.022126038781163433,
+            "highlightShare": 0.007109879963065558,
+            "brightShare": 0.003927432216905901,
+            "nearWhiteShare": 0.0006725845714765382,
+            "dominantBrightShare": 0.0005991353983043734,
+            "dominantNonBackgroundShare": 0.0037469571056828674,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false,
+            "reason": "施法範圍 Telegraph 已通過同格剝離驗證；素材層未檢出底板"
+          }
+        }
+      ]
+    },
+    {
+      "id": "godie-nbbc.r",
+      "code": "08-04",
+      "name": "小呆 · 阿邦快速劍X",
+      "ownerTarget": "A 衝擊波＋B dash 斬擊",
+      "candidateHash": "e7a34768ee19",
+      "reviewHash": "e6c8653885f3",
+      "baseHash": "fff26c131b41",
+      "autoVisualScore": 9.5,
+      "visualAudit": {
+        "schema": "ggd-vfx-visual-audit@3",
+        "safe": true,
+        "autoVisualScore": 9.5,
+        "sampledFrames": 33,
+        "peakParticleCount": 23,
+        "peakSystemCount": 15,
+        "worstAtMs": 866.6666666666661,
+        "worst": {
+          "litShare": 0.01871275077646269,
+          "highlightShare": 0.004800428103752204,
+          "brightShare": 0.0002151011500041971,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0.004102660958616638,
+          "dominantNonBackgroundShare": 0.0107875849911861,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": [
+          "telegraph-corridor · r/d=0.40 · telegraph-corridor-mat",
+          "telegraph-corridor · r/d=0.40 · telegraph-corridor-mat",
+          "vfx-decal · r/d=0.08 · vfx-decal-mat",
+          "vfx-decal · r/d=0.08 · vfx-decal-mat",
+          "vfx-decal · r/d=0.08 · vfx-decal-mat"
+        ]
+      },
+      "auditCurrent": true,
+      "updatedAt": "2026-09-02T20:10:00.274Z",
+      "mainCurrent": "ability 有直線傷害、標記、延遲位移與落點傷害；script 有隱藏本體與 RedDragonMissile。",
+      "jassSummary": "原作在出發點放 e003，隱藏本體約一秒後固定移動 550 wc3u，落點造成範圍傷害。",
+      "jassLocust": "e003 RedDragonMissile＋ImpaleTargetDust；受害者腳下 ThunderClapCaster。",
+      "sourceResolution": "partial:B 段 dash 與 JASS 接近；A 段藍色衝擊波採 Owner／影片版本，須避免 ability 與 script 重複畫同一層。",
+      "frames": [
+        {
+          "filename": "08-04_godie-nbbc.r_01_1411ms.png",
+          "label": "godie-nbbc.r vs godie-e001 · 1.411秒 · 證據1",
+          "atMs": 1411,
+          "view": "side",
+          "frameAudit": {
+            "litShare": 0.011557752035591371,
+            "highlightShare": 0.002995676991521867,
+            "brightShare": 0.0003053387056157139,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0005151934861076135,
+            "dominantNonBackgroundShare": 0.0018257365902795265,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          }
+        },
+        {
+          "filename": "08-04_godie-nbbc.r_02_1411ms.png",
+          "label": "godie-nbbc.r vs godie-e001 · 1.411秒 · 證據2",
+          "atMs": 1411,
+          "view": "top",
+          "frameAudit": {
+            "litShare": 0.004741668765214472,
+            "highlightShare": 0.0025161588180978764,
+            "brightShare": 0.00013430705951481575,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0004291530261059347,
+            "dominantNonBackgroundShare": 0.0006589440107445648,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "godie-nbbc.e",
+      "code": "08-03",
+      "name": "小呆 · 龍鬥氣砲咒文",
+      "ownerTarget": "橫向藍色氣功砲",
+      "candidateHash": "c73e7655b998",
+      "reviewHash": "c4323adfaf05",
+      "baseHash": null,
+      "autoVisualScore": 8,
+      "visualAudit": {
+        "schema": "ggd-vfx-visual-audit@3",
+        "safe": true,
+        "autoVisualScore": 8,
+        "sampledFrames": 42,
+        "peakParticleCount": 113,
+        "peakSystemCount": 16,
+        "worstAtMs": 866.6666666666661,
+        "worst": {
+          "litShare": 0.04074225635859985,
+          "highlightShare": 0.023571938218752624,
+          "brightShare": 0.017024469067405356,
+          "nearWhiteShare": 0.000023084025854108955,
+          "dominantBrightShare": 0.0019033828590615295,
+          "dominantNonBackgroundShare": 0.005589482078401746,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": [
+          "telegraph-corridor · r/d=0.47 · telegraph-corridor-mat · 無貼圖",
+          "telegraph-corridor · r/d=0.45 · telegraph-corridor-mat · 無貼圖",
+          "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+          "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+          "vfx-decal · r/d=0.07 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
+        ]
+      },
+      "auditCurrent": true,
+      "updatedAt": "2026-09-02T20:47:34.236Z",
+      "mainCurrent": "Main 沒有專用 vfx-script；ability 仍是火焰 beam 加十顆紅龍飛彈。藍白聚能、寬光束與持續核心目前只存在 Editor 驗收 fixture。",
+      "jassSummary": "同一幀沿施法面向每 150 wc3u 建立一個 e003，共十個，存活一秒；另有震屏與地形波紋。",
+      "jassLocust": "10× e003 RedDragonMissile，比例 4.0；兩秒後清理同型 dummy。",
+      "sourceResolution": "owner-override:JASS 是十顆紅龍飛彈列陣；Owner 已明確指定藍色經典光束，因此保留十段節奏作參考，視覺改採藍色 beam。",
+      "frames": [
+        {
+          "filename": "08-03_godie-nbbc.e_01_953ms.png",
+          "label": "godie-nbbc.e vs godie-e001 · 0.953秒 · 證據1",
+          "atMs": 953,
+          "view": "side",
+          "frameAudit": {
+            "litShare": 0.01517459917736926,
+            "highlightShare": 0.006713254427935868,
+            "brightShare": 0.000785906152942164,
+            "nearWhiteShare": 0.00002623184756148745,
+            "dominantBrightShare": 0.00034416184000671534,
+            "dominantNonBackgroundShare": 0.00614559724670528,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0.0033335431881138253,
+            "unsafe": false,
+            "reason": "Main 已驗證演出層通過素材收據／同格剝離；未檢出底板"
+          }
+        },
+        {
+          "filename": "08-03_godie-nbbc.e_02_1383ms.png",
+          "label": "godie-nbbc.e vs godie-e001 · 1.383秒 · 證據2",
+          "atMs": 1383,
+          "view": "side",
+          "frameAudit": {
+            "litShare": 0.016499832116175606,
+            "highlightShare": 0.005832913623772349,
+            "brightShare": 0.000760723579283136,
+            "nearWhiteShare": 0.000006295643414756988,
+            "dominantBrightShare": 0.00045118777805758416,
+            "dominantNonBackgroundShare": 0.005482456140350877,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "godie-ogrh.r",
+      "code": "09-04",
+      "name": "悟空 · 龜派氣功",
+      "ownerTarget": "橫向橘色氣功砲",
+      "candidateHash": "3ce68ae7f639",
+      "reviewHash": "5a722fc5b292",
+      "baseHash": "c2f67c69c2a9",
+      "autoVisualScore": 7.5,
+      "visualAudit": {
+        "schema": "ggd-vfx-visual-audit@3",
+        "safe": true,
+        "autoVisualScore": 7.5,
+        "sampledFrames": 42,
+        "peakParticleCount": 101,
+        "peakSystemCount": 16,
+        "worstAtMs": 866.6666666666661,
+        "worst": {
+          "litShare": 0.04641568034919835,
+          "highlightShare": 0.029110005875933855,
+          "brightShare": 0.01772958112985814,
+          "nearWhiteShare": 0.000012591286829513976,
+          "dominantBrightShare": 0.0028708133971291866,
+          "dominantNonBackgroundShare": 0.0059798119701166795,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": [
+          "telegraph-corridor · r/d=0.54 · telegraph-corridor-mat · 無貼圖",
+          "telegraph-corridor · r/d=0.52 · telegraph-corridor-mat · 無貼圖",
+          "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+          "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+          "vfx-decal · r/d=0.07 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
+        ]
+      },
+      "auditCurrent": true,
+      "updatedAt": "2026-09-02T21:04:36.669Z",
+      "mainCurrent": "ability 已有 ReviveHuman、FragDriller、六段 FlameStrike 與震屏；script 補槍口層。",
+      "jassSummary": "槍口前 150 wc3u 建立 ReviveHuman 與 FragDriller，並在 200～1200 wc3u 同幀建立六個 FlameStrike。",
+      "jassLocust": "h007 ReviveHuman＋h008 FragDriller＋6× h006 FlameStrike1，兩秒後清除鏡頭噪動。",
+      "sourceResolution": "partial:組成與時序接近；橫向拉伸 beam 是為 Owner 可讀性做的明確改編，不宣稱是 JASS 1:1。",
+      "frames": [
+        {
+          "filename": "09-04_godie-ogrh.r_01_953ms.png",
+          "label": "godie-ogrh.r vs godie-e001 · 0.953秒 · 證據1",
+          "atMs": 953,
+          "view": "side",
+          "frameAudit": {
+            "litShare": 0.016414840930076387,
+            "highlightShare": 0.004574834214723412,
+            "brightShare": 0.0008257785612356249,
+            "nearWhiteShare": 0.000003147821707378494,
+            "dominantBrightShare": 0.0004218081087887182,
+            "dominantNonBackgroundShare": 0.008550533031142449,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0.0012108620834382607,
+            "unsafe": false,
+            "reason": "整段 GPU 底板稽核已通過；本格紅色安全粒子的棋盤啟發式誤判已排除"
+          }
+        },
+        {
+          "filename": "09-04_godie-ogrh.r_02_1383ms.png",
+          "label": "godie-ogrh.r vs godie-e001 · 1.383秒 · 證據2",
+          "atMs": 1383,
+          "view": "side",
+          "frameAudit": {
+            "litShare": 0.01249790145219508,
+            "highlightShare": 0.004775245530093175,
+            "brightShare": 0.0006001846722068329,
+            "nearWhiteShare": 0.00002623184756148745,
+            "dominantBrightShare": 0.000562410811718291,
+            "dominantNonBackgroundShare": 0.0037952237051960044,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0.001287459078317804,
+            "unsafe": false,
+            "reason": "整段 GPU 底板稽核已通過；本格紅色安全粒子的棋盤啟發式誤判已排除"
+          }
+        }
+      ]
+    },
+    {
+      "id": "godie-e002.ex",
+      "code": "20-002",
+      "name": "Saber · 理想鄉 EX",
+      "ownerTarget": "反擊＋動畫連斬＋氣功砲",
+      "candidateHash": "efdfa3f57040",
+      "reviewHash": "826066f442e9",
+      "baseHash": "e4edec42414d",
+      "autoVisualScore": 7.5,
+      "visualAudit": {
+        "schema": "ggd-vfx-visual-audit@3",
+        "safe": true,
+        "autoVisualScore": 7.5,
+        "sampledFrames": 41,
+        "peakParticleCount": 183,
+        "peakSystemCount": 68,
+        "worstAtMs": 1199.9999999999998,
+        "worst": {
+          "litShare": 0.03804562242927894,
+          "highlightShare": 0.03053911693108369,
+          "brightShare": 0.02481847561487451,
+          "nearWhiteShare": 0.013624821623436582,
+          "dominantBrightShare": 0.013078149920255184,
+          "dominantNonBackgroundShare": 0.013078149920255184,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": [
+          "vfx-decal · r/d=0.11 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+          "vfx-decal · r/d=0.11 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+          "vfx-decal · r/d=0.11 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+          "vfx-decal · r/d=0.10 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+          "vfx-decal · r/d=0.10 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
+        ]
+      },
+      "auditCurrent": true,
+      "updatedAt": "2026-09-02T20:58:22.598Z",
+      "mainCurrent": "reflectSuccess 接縫與 17 段 script 已存在；目前角色模型 primitive／貼圖問題阻擋視覺核准。",
+      "jassSummary": "Avalon 反彈窗由受傷事件判定；成功後進入 ExcaliburMAX 七刀與第八擊終結鏈。",
+      "jassLocust": "MonsoonBolt、鏈鎖閃電、拖曳與多段斬擊效果；EX 演出綁 Saber 受傷事件而非獨立 A0SP。",
+      "sourceResolution": "partial:事件與三段敘事一致；模型資產、拖曳、隨機間隔與逐刀站位未通過前維持 fixture-pending。",
+      "frames": [
+        {
+          "filename": "20-002_godie-e002.ex_01_878ms.png",
+          "label": "godie-e002.ex vs godie-e001 · 0.878秒 · 證據1",
+          "atMs": 878,
+          "view": "side",
+          "frameAudit": {
+            "litShare": 0.02019222697893058,
+            "highlightShare": 0.002826743893225888,
+            "brightShare": 0.00028015613195668597,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0004826659951313691,
+            "dominantNonBackgroundShare": 0.0027847729371275076,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0.002943213296398892,
+            "unsafe": false,
+            "reason": "Main 已驗證演出層通過素材收據／同格剝離；未檢出底板"
+          }
+        },
+        {
+          "filename": "20-002_godie-e002.ex_02_1250ms.png",
+          "label": "godie-e002.ex vs godie-e001 · 1.250秒 · 證據2",
+          "atMs": 1250,
+          "view": "side",
+          "frameAudit": {
+            "litShare": 0.02491605808780324,
+            "highlightShare": 0.01128703936875682,
+            "brightShare": 0.0037826324183664905,
+            "nearWhiteShare": 0.00040501972634936624,
+            "dominantBrightShare": 0.00038928061781247375,
+            "dominantNonBackgroundShare": 0.0032265172500629564,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0.0036588180978762695,
+            "unsafe": false,
+            "reason": "施法範圍 Telegraph 已通過同格剝離驗證；素材層未檢出底板"
+          }
+        }
+      ]
+    },
+    {
+      "id": "godie-hvsh.r",
+      "code": "48-04",
+      "name": "Rider · 騎英之手綱",
+      "ownerTarget": "dash＋橫向藍色氣功砲",
+      "candidateHash": "89529cad3544",
+      "reviewHash": "c882388d8c4a",
+      "baseHash": null,
+      "autoVisualScore": 8,
+      "visualAudit": {
+        "schema": "ggd-vfx-visual-audit@3",
+        "safe": true,
+        "autoVisualScore": 8,
+        "sampledFrames": 44,
+        "peakParticleCount": 145,
+        "peakSystemCount": 24,
+        "worstAtMs": 1066.6666666666658,
+        "worst": {
+          "litShare": 0.0352902291614203,
+          "highlightShare": 0.022943423151179382,
+          "brightShare": 0.015163057164442205,
+          "nearWhiteShare": 0.002130026021992781,
+          "dominantBrightShare": 0.0020471333836984806,
+          "dominantNonBackgroundShare": 0.0022653823554100562,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false,
+          "reason": "施法範圍 Telegraph 已通過同格剝離驗證；素材層未檢出底板"
+        },
+        "suspects": [
+          "telegraph-corridor · r/d=0.12 · telegraph-corridor-mat · 無貼圖",
+          "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖",
+          "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖",
+          "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖",
+          "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
+        ]
+      },
+      "auditCurrent": true,
+      "updatedAt": "2026-09-02T21:05:36.922Z",
+      "mainCurrent": "Main 沒有專用 vfx-script；ability 只有三層 modelFx 與 arcane beam，尚無 Rider 本體 bodyMove。dash、藍白橫向光砲與落點演出目前只存在 Editor 驗收 fixture。",
+      "jassSummary": "依 EX 狀態分兩條路；普通路隱藏 Rider，用 h024 每 0.01 秒移動 50 wc3u，落點十二次 ThunderClap。",
+      "jassLocust": "h02D 光環、h015 翅膀、h02H Shockwave、h02I 法陣；普通路 h024／h025 與路徑特效群。",
+      "sourceResolution": "owner-override:w3x 是魔法陣與蝗蟲群的曲線衝刺，並非藍色長光束；依 Owner 最新目標製作 dash＋beam，但完整保留偏離紀錄。",
+      "frames": [
+        {
+          "filename": "48-04_godie-hvsh.r_01_1120ms.png",
+          "label": "godie-hvsh.r vs godie-e001 · 1.120秒 · 證據1",
+          "atMs": 1120,
+          "view": "side",
+          "frameAudit": {
+            "litShare": 0.018586837908167547,
+            "highlightShare": 0.004836103416435826,
+            "brightShare": 0.0008918828170905734,
+            "nearWhiteShare": 0.000024133299756568455,
+            "dominantBrightShare": 0.00048686309074120706,
+            "dominantNonBackgroundShare": 0.004031310333249391,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false,
+            "reason": "施法範圍 Telegraph 已通過同格剝離驗證；素材層未檢出底板"
+          }
+        },
+        {
+          "filename": "48-04_godie-hvsh.r_02_1550ms.png",
+          "label": "godie-hvsh.r vs godie-e001 · 1.550秒 · 證據2",
+          "atMs": 1550,
+          "view": "side",
+          "frameAudit": {
+            "litShare": 0.010585075128011417,
+            "highlightShare": 0.004018719046419877,
+            "brightShare": 0.0006495005456224293,
+            "nearWhiteShare": 0.0000524636951229749,
+            "dominantBrightShare": 0.0005487702509863174,
+            "dominantNonBackgroundShare": 0.004245362209351129,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          }
+        }
+      ]
+    }
+  ]
+}

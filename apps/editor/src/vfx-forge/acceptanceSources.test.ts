@@ -20,13 +20,31 @@ describe("八招的 Owner／main／JASS+w3x 來源帳本", () => {
       expect(entry.resolution.note.length, entry.abilityId).toBeGreaterThan(15);
       if (entry.videoReference) {
         expect(entry.videoReference.url, entry.abilityId).toMatch(/^https:\/\/youtu\.be|^https:\/\/www\.youtube\.com\//);
+        expect(entry.videoReference.state, `${entry.abilityId} 不得以少數關鍵格冒充影片驗收`).toBe("interval-sampled");
+        expect(entry.videoReference.sampleWindows.length, entry.abilityId).toBeGreaterThan(0);
+        expect(entry.videoReference.continuityNotes.length, entry.abilityId).toBeGreaterThanOrEqual(2);
+        for (const window of entry.videoReference.sampleWindows) {
+          expect(window.fromSec, entry.abilityId).toBeGreaterThanOrEqual(0);
+          expect(window.toSec, entry.abilityId).toBeGreaterThan(window.fromSec);
+          expect(window.stepSec, `${entry.abilityId} 取樣間隔不得超過一秒`).toBeGreaterThan(0);
+          expect(window.stepSec, `${entry.abilityId} 取樣間隔不得超過一秒`).toBeLessThanOrEqual(1);
+          expect(window.frameCount, entry.abilityId).toBeGreaterThanOrEqual(
+            Math.floor((window.toSec - window.fromSec) / window.stepSec),
+          );
+        }
         expect(entry.videoReference.keyframes.length, entry.abilityId).toBeGreaterThanOrEqual(2);
         for (const frame of entry.videoReference.keyframes) {
           expect(frame.atSec, `${entry.abilityId} ${frame.label}`).toBeGreaterThanOrEqual(0);
           expect(frame.label.length, entry.abilityId).toBeGreaterThanOrEqual(4);
-          if (entry.videoReference.state === "sampled") {
+          if (entry.videoReference.state === "interval-sampled") {
             expect(frame.atSec, `${entry.abilityId} 不得把未取樣的 0 秒冒充已取樣`).toBeGreaterThan(0);
             expect(frame.label, entry.abilityId).not.toContain("待取樣");
+            expect(
+              entry.videoReference.sampleWindows.some(
+                (window) => frame.atSec >= window.fromSec && frame.atSec <= window.toSec,
+              ),
+              `${entry.abilityId} 關鍵格必須落在逐秒取樣窗內`,
+            ).toBe(true);
           }
         }
       }

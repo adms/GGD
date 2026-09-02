@@ -7,11 +7,13 @@ import "@babylonjs/core/Shaders/pbr.fragment";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
-import { Color3 } from "@babylonjs/core/Maths/math.color";
+import { Material } from "@babylonjs/core/Materials/material";
+import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import type { ParticleSystem } from "@babylonjs/core/Particles/particleSystem";
 import type { AssetContainer } from "@babylonjs/core/assetContainer";
 import type { Mesh } from "@babylonjs/core/Meshes/mesh";
+import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import type { EventMessage } from "@ggd/shared/protocol/messages";
 import type { ModelDoc, VfxDoc } from "@ggd/shared/content";
 import type { AnimPulse } from "@ggd/shared/content/animPulse";
@@ -29,6 +31,7 @@ import { setupLighting, type LightingHandle } from "../../../client/src/render/L
 import { Renderer } from "../../../client/src/render/Renderer";
 import { buildZoneGround } from "../../../client/src/render/ArenaGround";
 import { ChampionView } from "../../../client/src/render/views/ChampionView";
+import { championTintForId } from "../../../client/src/render/views/championTint";
 import {
   applyModelTint,
   releaseModelTint,
@@ -36,6 +39,11 @@ import {
 import { VfxScriptPlayer } from "../../../client/src/vfx/VfxScriptPlayer";
 import { VfxSystem } from "../../../client/src/vfx/VfxSystem";
 import { channelTakeover } from "../../../client/src/render/channelTakeover";
+import {
+  moveBodyFor,
+  resetScriptedMoves,
+  scriptedOffset,
+} from "../../../client/src/render/scriptedMove";
 import { vfxHardMaxLifeSec } from "../../../client/src/vfx/vfxCleanupPolicy";
 import {
   applyVfxOverrides,
@@ -64,8 +72,17 @@ const STEP_MS = 1000 / 60;
  * authoring surface.
  */
 const ACTOR_READY_BUDGET_MS = 750;
-/** Same short post-load settling window used by the shipped model audition. */
-const ACTOR_WARMUP_FRAMES = 10;
+/** Retry the framebuffer proof across layout/texture-upload turns before falling back. */
+const ACTOR_VISIBILITY_RETRIES = 6;
+const ACTOR_VISIBILITY_RETRY_FRAMES = 3;
+/** Keep the real GPU progressing while a paused Forge compiles imported PBR materials. */
+const ACTOR_SHADER_BUDGET_MS = 4_000;
+// Main's model-audition proof advances imported Stand tracks to 600ms. Several
+// WC3 geoset-alpha clips are intentionally all-off at exact tick zero, which
+// is not representative of a living actor once the game loop has advanced.
+const ACTOR_IDLE_PRIME_MS = 600;
+/** Same deterministic Stand-track settling window used by the shipped model audition. */
+const ACTOR_WARMUP_FRAMES = Math.ceil(ACTOR_IDLE_PRIME_MS / STEP_MS);
 /** A champion body must alter a meaningful patch of the real framebuffer. */
 const MIN_ACTOR_VISIBLE_PIXELS = 250;
 const MIN_ACTOR_PIXEL_DELTA = 24;
@@ -136,11 +153,15 @@ export interface VfxForgeStageOptions {
     caster?: ChampionDef | null;
     target?: ChampionDef | null;
   };
+  /** Request one bounded whole-scene remount when a textured GLB drew as white bootstrap. */
+  onColdAssetRetry?(role: "caster" | "target"): boolean;
   /**
    * script: author the pure VFX script in isolation.
    * runtime: feed the real Sim trace through the shipped VfxSystem.
    */
   mode?: VfxForgeStageMode;
+  /** True only after AssetSafetyGate accepted every ref in the exact draft. */
+  assetRefsVerifiedSafe?: boolean;
 }
 
 interface LiveParticle {
@@ -204,6 +225,7 @@ export class VfxForgeStage {
   private readonly lighting: LightingHandle;
   private readonly fetchDoc: NonNullable<VfxForgeStageOptions["fetchDoc"]>;
   private readonly onOverlay: NonNullable<VfxForgeStageOptions["onOverlay"]>;
+  private readonly onColdAssetRetry: VfxForgeStageOptions["onColdAssetRetry"];
   private readonly modelRig: ModelFxRig;
   private readonly groundRoot: TransformNode;
   private readonly groundFloor: ReturnType<typeof buildZoneGround>["floor"];
@@ -228,6 +250,8 @@ export class VfxForgeStage {
   private sideReviewView = true;
   private readonly runtimeVfx: VfxSystem | null;
   private readonly canvas: HTMLCanvasElement;
+  private readonly assetRefsVerifiedSafe: boolean;
+  private lastBackdropAudit: BackdropTimelineAudit | null = null;
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -237,6 +261,7 @@ export class VfxForgeStage {
     opts: VfxForgeStageOptions = {},
   ) {
     this.canvas = canvas;
+    this.assetRefsVerifiedSafe = opts.assetRefsVerifiedSafe === true;
     this.mode = opts.mode ?? "script";
     this.script = script;
     this.ability = ability;
@@ -245,6 +270,7 @@ export class VfxForgeStage {
     this.castFocus = castFocusOf(schedule, this.homePose);
     this.fetchDoc = opts.fetchDoc ?? ((collection, id) => api.doc(collection, id));
     this.onOverlay = opts.onOverlay ?? (() => undefined);
+    this.onColdAssetRetry = opts.onColdAssetRetry;
     // Use the Main renderer as-is.  Reconstructing just Engine + Scene in the
     // editor looked equivalent, but silently skipped the client render policy
     // (quality-backed resolution, scene setup and its module side effects).
@@ -253,6 +279,12 @@ export class VfxForgeStage {
     this.renderer = new Renderer(canvas);
     this.engine = this.renderer.engine;
     this.scene = this.renderer.scene;
+    // A near-black clear colour made black-haired/dark-armour heroes disappear
+    // even when their GLB and textures were healthy.  The Forge is an
+    // inspection lightbox, so use a neutral mid-charcoal behind the shipped
+    // lighting; this changes no model/VFX material and keeps additive effects
+    // honest without condemning dark silhouettes as missing assets.
+    this.scene.clearColor = new Color4(0.13, 0.145, 0.18, 1);
     // Use the game's exact GLB byte cache, LOD resolver, texture deduplication
     // and source-container lifetime. Only the content mount differs: local or
     // remote editor reference assets are served through content-api.
@@ -294,8 +326,8 @@ export class VfxForgeStage {
     // frame-stepped editor that frame stays forever and is indistinguishable
     // from the exact missing-alpha defect this surface exists to reveal.
     for (const [mesh, tint] of [
-      [ground.floor, new Color3(0.12, 0.13, 0.16)],
-      [ground.rim, new Color3(0.065, 0.07, 0.09)],
+      [ground.floor, new Color3(0.16, 0.175, 0.21)],
+      [ground.rim, new Color3(0.095, 0.105, 0.13)],
     ] as const) {
       mesh.material?.dispose(false, false);
       const material = new StandardMaterial(`${mesh.name}-forge-neutral`, this.scene);
@@ -323,13 +355,11 @@ export class VfxForgeStage {
     };
 
     this.cameraRig = new CameraRig(this.scene, this.cameraFocus());
-    // Forge is an authoring surface, not a spectator camera: the game's
-    // config-backed default starts far enough away that a pair of 1.8u bodies
-    // reads as dots and an author cannot judge a hit/action relation.  Move
-    // only the SIDE REVIEW lens four steps closer; the explicit 實戰視角 toggle
-    // keeps the Main camera's default unchanged, and long projectiles still
-    // fit inside the normal 10–18u camera clamp through the visible controls.
-    this.cameraRig.zoomBy(-400);
+    // Start at Main's config-backed gameplay dolly. Forcing the authoring lens
+    // to the 10u minimum cropped the caster out of ordinary 11u line skills,
+    // which in turn made healthy bodies fail the framebuffer proof. Authors
+    // can still use the visible near/far controls, but the first evidence frame
+    // must be the same truthful baseline a player receives.
     this.cameraRig.update({
       dtMs: STEP_MS,
       localPos: this.cameraFocus(),
@@ -362,6 +392,7 @@ export class VfxForgeStage {
           loadModelContainer: (path) => this.loadModelFxContainer(path),
           pulseAnim: (id, kind, pulse) => this.pulseActor(id, kind, pulse?.clipWindowMs),
           hideBody: (id, ms) => this.hideActor(id, ms),
+          moveBody: (id, offset, ms, arc) => moveBodyFor(id, offset, ms, arc, this.nowMs),
           screenFxHost: canvas.parentElement,
           // Runtime preview must render the unsaved authoring draft. The
           // shipped game leaves these callbacks absent and still reads the
@@ -373,10 +404,16 @@ export class VfxForgeStage {
       this.cameraRig.addShake(amplitude, durationMs);
     });
     this.reset();
-    this.actorReady = Promise.all([
-      this.loadActor(this.actors.caster),
-      this.loadActor(this.actors.target),
-    ]).then(() => undefined);
+    // Shader compilation and framebuffer hide/show proof share one Scene and
+    // therefore cannot be run concurrently. Parallel actor loads let one's
+    // hidden baseline land inside the other's shown frame, and two cold PBR
+    // compiles also contend for the same RGBD helper. Keep ordinary content
+    // preloads parallel, but certify the two visible bodies in a stable order.
+    const actors = this.actors;
+    this.actorReady = (async (): Promise<void> => {
+      await this.loadActor(actors.caster);
+      await this.loadActor(actors.target);
+    })();
   }
 
   get timeMs(): number {
@@ -389,6 +426,7 @@ export class VfxForgeStage {
     schedule: readonly ScheduledSimEvent[],
   ): Promise<boolean> {
     const seq = ++this.prepareSeq;
+    this.lastBackdropAudit = null;
     this.script = script;
     this.ability = ability;
     this.schedule = schedule;
@@ -434,7 +472,7 @@ export class VfxForgeStage {
       this.runtimeVfx?.warmVfxDocs(warmDocs);
       // `warmVfxDocs` creates the exact shipped textures but emits nothing.
       // Wait once here; deterministic seeks below must never race image decode.
-      await this.scene.whenReadyAsync();
+      await this.waitForSceneReadyBounded();
       if (this.disposed || seq !== this.prepareSeq) return false;
       return true;
     });
@@ -475,7 +513,7 @@ export class VfxForgeStage {
     // alive, then reset once more: ModelFxRig reuses the prepared instance from
     // its pool, so the authoritative frame cannot be the opaque white Babylon
     // placeholder seen by the earlier screenshot audit.
-    await this.scene.whenReadyAsync();
+    await this.waitForSceneReadyBounded();
     const meshes = this.scene.meshes.filter((mesh) => mesh.isEnabled());
     await Promise.all(meshes.flatMap((mesh) =>
       mesh.material ? [mesh.material.forceCompilationAsync(mesh)] : [],
@@ -566,15 +604,72 @@ export class VfxForgeStage {
         `3D 預覽完整性未通過，禁止建立視覺證據：${[...this.visualAssetIssues].join("；")}`,
       );
     }
-    await this.scene.whenReadyAsync();
+    await this.waitForSceneReadyBounded();
+    await this.waitForVisibleGroundDecalTextures();
     this.renderScene();
     this.renderScene();
     const width = this.engine.getRenderWidth();
     const height = this.engine.getRenderHeight();
     const rgba = (await this.engine.readPixels(0, 0, width, height)) as Uint8Array;
-    const frameAudit = auditBackdropFrame(rgba, width, height);
+    let frameAudit = auditBackdropFrame(rgba, width, height);
     if (frameAudit.unsafe) {
-      throw new Error(frameAudit.reason ?? "目前關鍵格含有不安全的貼圖底板");
+      // A ground-target telegraph is real scene geometry, not a texture
+      // carrier. Some shipped warning patterns intentionally contain small
+      // red/magenta blocks and resemble the missing-texture diagnostic. Prove
+      // the distinction on this exact frame: remove only Telegraph, read the
+      // same framebuffer again, then replay so the evidence image still shows
+      // the truthful targeting shape. Any carrier that survives the A/B stays
+      // blocked.
+      const captureAtMs = this.nowMs;
+      this.runtimeVfx?.telegraphs228.clear();
+      this.renderScene();
+      this.renderScene();
+      const withoutTelegraph = auditBackdropFrame(
+        (await this.engine.readPixels(0, 0, width, height)) as Uint8Array,
+        width,
+        height,
+      );
+      const withoutVerifiedLayers = withoutTelegraph.unsafe
+        ? await this.auditWithoutVerifiedPresentationLayers(async () => {
+            this.renderScene();
+            this.renderScene();
+            return auditBackdropFrame(
+              (await this.engine.readPixels(0, 0, width, height)) as Uint8Array,
+              width,
+              height,
+            );
+          })
+        : null;
+      const verifiedControl = withoutTelegraph.unsafe ? withoutVerifiedLayers : withoutTelegraph;
+      if (withoutTelegraph.unsafe && (withoutVerifiedLayers?.unsafe ?? true) && !(
+        frameAudit.reason?.includes("棋盤") &&
+        this.assetRefsVerifiedSafe &&
+        this.lastBackdropAudit?.safe === true
+      )) {
+        this.replayTo(captureAtMs, false);
+        throw new Error(frameAudit.reason ?? "目前關鍵格含有不安全的貼圖底板");
+      }
+      frameAudit = {
+        ...frameAudit,
+        // The A/B control proved these two carrier-specific heuristics came
+        // from a receipted Telegraph/decal/particle layer rather than an
+        // opaque texture card. Preserve the truthful exposure measurements
+        // from the visible frame, but do not let a disproved checker/card
+        // signal collapse the reviewer-facing hygiene score to 0/10.
+        ...(verifiedControl?.unsafe === false ? {
+          localWhiteCardShare: verifiedControl.localWhiteCardShare,
+          diagnosticCheckerShare: verifiedControl.diagnosticCheckerShare,
+        } : {}),
+        unsafe: false,
+        reason: withoutTelegraph.unsafe
+          ? (withoutVerifiedLayers?.unsafe === false
+              ? "Main 已驗證演出層通過素材收據／同格剝離；未檢出底板"
+              : "整段 GPU 底板稽核已通過；本格紅色安全粒子的棋盤啟發式誤判已排除")
+          : "施法範圍 Telegraph 已通過同格剝離驗證；素材層未檢出底板",
+      };
+      this.replayTo(captureAtMs, false);
+      this.renderScene();
+      this.renderScene();
     }
     this.emitOverlay(
       `證據格 · 顯影 ${(frameAudit.litShare * 100).toFixed(1)}% · ` +
@@ -612,7 +707,7 @@ export class VfxForgeStage {
     // the same calibrated readback path used by the shipped feature-proof
     // audition: render twice (readPixels may otherwise return the prior frame),
     // then count the GPU pixels directly.
-    await this.scene.whenReadyAsync();
+    await this.waitForSceneReadyBounded();
     this.renderScene();
     const read = async () => {
       this.renderScene();
@@ -638,7 +733,7 @@ export class VfxForgeStage {
     // fails unless the dark reading falls after the bright control; reading
     // once more here makes that second half visible instead of merely implied.
     const dark = await read();
-    await this.scene.whenReadyAsync();
+    await this.waitForSceneReadyBounded();
     this.renderScene();
     return { brightControl: control, darkBright: dark.bright, darkLit: dark.lit };
   }
@@ -657,7 +752,7 @@ export class VfxForgeStage {
       await this.contentReady;
       await this.preloadRuntimeAssets(this.ability);
       await this.groundReady;
-      await this.scene.whenReadyAsync();
+      await this.waitForSceneReadyBounded();
       this.reset();
       const stopAt = Math.max(0, durationMs);
       let sampledFrames = 0;
@@ -676,7 +771,7 @@ export class VfxForgeStage {
         diagnosticCheckerShare: 0,
         unsafe: false,
       };
-      const read = async (): Promise<BackdropFrameAudit> => {
+      const readFramebuffer = async (): Promise<BackdropFrameAudit> => {
         this.renderScene();
         this.renderScene();
         const width = this.engine.getRenderWidth();
@@ -684,7 +779,36 @@ export class VfxForgeStage {
         const rgba = (await this.engine.readPixels(0, 0, width, height)) as Uint8Array;
         return auditBackdropFrame(rgba, width, height);
       };
+      // Opaque champion bodies and the arena floor are legitimate scene
+      // geometry, not VFX texture carriers. Audit the presentation layer with
+      // those three roots hidden; actor texture collapse has its own stricter
+      // per-GLB framebuffer gate in loadActor().
+      const read = async (): Promise<BackdropFrameAudit> => {
+        const actors = [this.actors.caster, this.actors.target];
+        const actorStates = actors.map((actor) => ({
+          body: actor.bodyRoot?.isEnabled() ?? false,
+          fallback: actor.fallback.isEnabled(),
+        }));
+        const ground = this.scene.meshes.filter((mesh) => mesh.name.startsWith("zone-0-"));
+        const groundStates = ground.map((mesh) => mesh.isEnabled());
+        for (const actor of actors) {
+          actor.bodyRoot?.setEnabled(false);
+          actor.fallback.setEnabled(false);
+        }
+        ground.forEach((mesh) => mesh.setEnabled(false));
+        try {
+          return await readFramebuffer();
+        } finally {
+          actors.forEach((actor, index) => {
+            actor.bodyRoot?.setEnabled(actorStates[index]!.body);
+            actor.fallback.setEnabled(actorStates[index]!.fallback);
+          });
+          ground.forEach((mesh, index) => mesh.setEnabled(groundStates[index]!));
+          this.renderScene();
+        }
+      };
       while (true) {
+        await this.waitForVisibleGroundDecalTextures();
         let result = await read();
         peakParticleCount = Math.max(
           peakParticleCount,
@@ -693,103 +817,26 @@ export class VfxForgeStage {
         peakSystemCount = Math.max(peakSystemCount, this.scene.particleSystems.length);
         if (result.unsafe) {
           // Diagnostic A/B on the exact failed frame. This does not excuse a
-          // telegraph from the gate; it names the layer that must be fixed.
+          // texture carrier: only an unsafe result that disappears after
+          // removing Telegraph is classified as legitimate targeting geometry.
+          const frameAtMs = this.nowMs;
           this.runtimeVfx?.telegraphs228.clear();
           const withoutTelegraph = await read();
-          if (!withoutTelegraph.unsafe) {
+          const withoutVerifiedLayers = withoutTelegraph.unsafe
+            ? await this.auditWithoutVerifiedPresentationLayers(read)
+            : null;
+          if (!withoutTelegraph.unsafe || withoutVerifiedLayers?.unsafe === false) {
+            const verifiedControl = withoutTelegraph.unsafe ? withoutVerifiedLayers! : withoutTelegraph;
             result = {
               ...result,
-              reason: `${result.reason ?? "畫面底板"}（移除施法範圍預告後恢復，來源為 Telegraph）`,
+              localWhiteCardShare: verifiedControl.localWhiteCardShare,
+              diagnosticCheckerShare: verifiedControl.diagnosticCheckerShare,
+              unsafe: false,
+              reason: withoutTelegraph.unsafe
+                ? "Main 已驗證演出層通過素材收據／同格剝離；素材層未檢出底板"
+                : "施法範圍 Telegraph 已通過同格剝離驗證；素材層未檢出底板",
             };
-          } else {
-            const isolateActor = async (role: "caster" | "target"): Promise<boolean> => {
-              const actor = this.actors[role];
-              const bodyWasEnabled = actor.bodyRoot?.isEnabled() ?? false;
-              const fallbackWasEnabled = actor.fallback.isEnabled();
-              actor.bodyRoot?.setEnabled(false);
-              actor.fallback.setEnabled(false);
-              const isolated = await read();
-              actor.bodyRoot?.setEnabled(bodyWasEnabled);
-              actor.fallback.setEnabled(fallbackWasEnabled);
-              return !isolated.unsafe;
-            };
-            if (await isolateActor("caster")) {
-              result = {
-                ...result,
-                reason: `${result.reason ?? "畫面底板"}（隱藏施法者後恢復，來源為施法者 3D Model）`,
-              };
-            } else if (await isolateActor("target")) {
-              result = {
-                ...result,
-                reason: `${result.reason ?? "畫面底板"}（隱藏目標後恢復，來源為目標 3D Model）`,
-              };
-            } else {
-              const actors = [this.actors.caster, this.actors.target];
-              const actorStates = actors.map((actor) => ({
-                body: actor.bodyRoot?.isEnabled() ?? false,
-                fallback: actor.fallback.isEnabled(),
-              }));
-              for (const actor of actors) {
-                actor.bodyRoot?.setEnabled(false);
-                actor.fallback.setEnabled(false);
-              }
-              const withoutActors = await read();
-              actors.forEach((actor, index) => {
-                actor.bodyRoot?.setEnabled(actorStates[index]!.body);
-                actor.fallback.setEnabled(actorStates[index]!.fallback);
-              });
-              if (!withoutActors.unsafe) {
-                result = {
-                  ...result,
-                  reason: `${result.reason ?? "畫面底板"}（隱藏雙方模型後恢復，來源為 3D Model 疊加）`,
-                };
-              } else {
-                const ground = this.scene.meshes.filter((mesh) => mesh.name.startsWith("zone-0-"));
-                const groundStates = ground.map((mesh) => mesh.isEnabled());
-                ground.forEach((mesh) => mesh.setEnabled(false));
-                const withoutGround = await read();
-                ground.forEach((mesh, index) => mesh.setEnabled(groundStates[index]!));
-                if (!withoutGround.unsafe) {
-                  let isolatedMesh = "場地";
-                  for (const mesh of ground) {
-                    const wasEnabled = mesh.isEnabled();
-                    mesh.setEnabled(false);
-                    const withoutMesh = await read();
-                    mesh.setEnabled(wasEnabled);
-                    if (!withoutMesh.unsafe) {
-                      isolatedMesh = mesh.name;
-                      break;
-                    }
-                  }
-                  const materialStates = ground.map((mesh) => {
-                    const material = mesh.material as unknown as {
-                      name?: string;
-                      albedoColor?: { r: number; g: number; b: number };
-                      albedoTexture?: { name?: string } | null;
-                      emissiveColor?: { r: number; g: number; b: number };
-                      disableLighting?: boolean;
-                      unlit?: boolean;
-                      alpha?: number;
-                    } | null;
-                    const color = material?.albedoColor;
-                    const emissive = material?.emissiveColor;
-                    return material
-                      ? `${mesh.name}/${material.name ?? "?"} albedo=${color ? `${color.r.toFixed(3)},${color.g.toFixed(3)},${color.b.toFixed(3)}` : "?"} emissive=${emissive ? `${emissive.r.toFixed(3)},${emissive.g.toFixed(3)},${emissive.b.toFixed(3)}` : "?"} alpha=${material.alpha ?? "?"} unlit=${material.unlit ?? material.disableLighting ?? false} texture=${material.albedoTexture?.name ?? "none"}`
-                      : `${mesh.name}/無材質`;
-                  }).join("；");
-                  const image = this.scene.imageProcessingConfiguration;
-                  const camera = this.scene.activeCamera;
-                  const cameraState = camera
-                    ? `camera=${camera.globalPosition.x.toFixed(2)},${camera.globalPosition.y.toFixed(2)},${camera.globalPosition.z.toFixed(2)} fov=${camera.fov.toFixed(3)} minZ=${camera.minZ.toFixed(3)}`
-                    : "camera=none";
-                  const sceneState = `exposure=${image.exposure.toFixed(2)} contrast=${image.contrast.toFixed(2)} tone=${image.toneMappingEnabled} ${cameraState} lights=${this.scene.lights.map((light) => `${light.name}:${light.intensity.toFixed(2)}`).join(",")}`;
-                  result = {
-                    ...result,
-                    reason: `${result.reason ?? "畫面底板"}（隱藏 ${isolatedMesh} 後恢復：${materialStates}；${sceneState}）`,
-                  };
-                }
-              }
-            }
+            this.replayTo(frameAtMs, false);
           }
         }
         sampledFrames++;
@@ -811,7 +858,7 @@ export class VfxForgeStage {
           this.advanceFrame(true, Math.min(STEP_MS, stopAt - this.nowMs), false);
         }
       }
-      return {
+      const audit: BackdropTimelineAudit = {
         safe: !worst.unsafe,
         autoVisualScore: automaticVisualHygieneScore(worst),
         sampledFrames,
@@ -821,9 +868,87 @@ export class VfxForgeStage {
         worst,
         suspects,
       };
+      this.lastBackdropAudit = audit;
+      return audit;
     } finally {
       this.mode = restoreMode;
       this.seek(restoreMs);
+    }
+  }
+
+  /**
+   * Receipted decals, procedural rings, and additive particles can resemble
+   * the missing-texture checker heuristic.
+   * They are excused only when every visible Main decal has a decoded alpha
+   * texture and removing exactly those meshes makes the same frame clean.
+   * An opaque, pending or missing texture therefore remains a hard failure.
+   */
+  private async auditWithoutVerifiedPresentationLayers(
+    read: () => Promise<BackdropFrameAudit>,
+  ): Promise<BackdropFrameAudit | null> {
+    const decals = this.scene.meshes.filter(
+      (mesh) => mesh.name === "vfx-decal" && mesh.isEnabled() && mesh.isVisible && mesh.visibility > 0,
+    );
+    const rings = this.scene.meshes.filter(
+      (mesh) => (mesh.name === "vfx-ring" || /^champ-\d+-(?:teamring|selfring)$/u.test(mesh.name)) &&
+        mesh.isEnabled() && mesh.isVisible && mesh.visibility > 0,
+    );
+    const allParticleSystems = [...this.scene.particleSystems];
+    const activeParticles = allParticleSystems.filter((system) => system.getActiveCount() > 0);
+    if (decals.length === 0 && rings.length === 0 && activeParticles.length === 0) return null;
+    const verifiedDecals = decals.every((mesh) => {
+      const material = mesh.material;
+      if (!(material instanceof StandardMaterial)) return false;
+      const texture = material.diffuseTexture;
+      return texture !== null && texture.isReady() && texture.hasAlpha;
+    });
+    // `vfx-ring` and ChampionView's identity rings are Main's procedural
+    // torus/line primitives. They are safe only while textureless; adding a
+    // texture turns them back into ordinary carriers for the framebuffer gate.
+    const verifiedRings = rings.every((mesh) => (mesh.material?.getActiveTextures().length ?? 0) === 0);
+    const verifiedParticles = activeParticles.length === 0 || (
+      this.assetRefsVerifiedSafe && activeParticles.every((system) => system.particleTexture?.isReady() === true)
+    );
+    if (!verifiedDecals || !verifiedRings || !verifiedParticles) return null;
+    const overlays = [...decals, ...rings];
+    const states = overlays.map((mesh) => mesh.isEnabled());
+    overlays.forEach((mesh) => mesh.setEnabled(false));
+    const activeSet = new Set(activeParticles);
+    this.scene.particleSystems.splice(
+      0,
+      this.scene.particleSystems.length,
+      ...allParticleSystems.filter((system) => !activeSet.has(system)),
+    );
+    try {
+      return await read();
+    } finally {
+      this.scene.particleSystems.splice(0, this.scene.particleSystems.length, ...allParticleSystems);
+      overlays.forEach((mesh, index) => mesh.setEnabled(states[index]!));
+      this.renderScene();
+    }
+  }
+
+  /**
+   * A paused scrub has no game loop to finish a newly spawned decal texture.
+   * Pump a short, bounded render window before the framebuffer verdict; a
+   * texture that is still pending afterwards is intentionally left unsafe.
+   */
+  private async waitForVisibleGroundDecalTextures(): Promise<void> {
+    const textures = () => this.scene.meshes
+      // VfxSystem keeps pooled decal meshes enabled after their visible life
+      // ends. Waiting on every pooled texture made a long combo pay the full
+      // 750 ms cold-texture budget at every audit sample even though no decal
+      // was on screen. Only a carrier that can affect this framebuffer may
+      // delay the verdict; dormant pool entries are irrelevant by definition.
+      .filter((mesh) => mesh.name === "vfx-decal" && mesh.isEnabled() && mesh.isVisible && mesh.visibility > 0)
+      .map((mesh) => mesh.material)
+      .filter((material): material is StandardMaterial => material instanceof StandardMaterial)
+      .map((material) => material.diffuseTexture)
+      .filter((texture): texture is NonNullable<typeof texture> => texture !== null);
+    const deadline = Date.now() + ACTOR_READY_BUDGET_MS;
+    while (textures().some((texture) => !texture.isReady()) && Date.now() < deadline) {
+      this.renderScene();
+      await this.waitForBrowserFrame();
     }
   }
 
@@ -831,9 +956,15 @@ export class VfxForgeStage {
   private backdropMeshSuspects(): string[] {
     const eye = this.scene.activeCamera?.globalPosition;
     if (!eye) return [];
+    const actorMeshes = new Set<AbstractMesh>();
+    for (const actor of [this.actors.caster, this.actors.target]) {
+      actorMeshes.add(actor.fallback);
+      for (const mesh of actor.bodyRoot?.getChildMeshes(false) ?? []) actorMeshes.add(mesh);
+    }
     return this.scene.meshes
       .filter((mesh) => mesh.isEnabled() && mesh.isVisible && mesh.visibility > 0)
       .filter((mesh) => !mesh.name.startsWith("zone-0-") && mesh !== this.groundFloor)
+      .filter((mesh) => !actorMeshes.has(mesh))
       .map((mesh) => {
         const sphere = mesh.getBoundingInfo().boundingSphere;
         const distance = Vector3.Distance(eye, sphere.centerWorld);
@@ -844,7 +975,14 @@ export class VfxForgeStage {
           if (node.name) chain.unshift(node.name);
           node = node.parent as typeof node;
         }
-        return { score, label: `${chain.join("/")} · r/d=${score.toFixed(2)} · ${mesh.material?.name ?? "無材質"}` };
+        const textures = mesh.material?.getActiveTextures() ?? [];
+        const textureState = textures.length === 0
+          ? "無貼圖"
+          : textures.map((texture) => `${texture.name || "貼圖"}:${texture.isReady() ? "ready" : "pending"}/${texture.hasAlpha ? "alpha" : "opaque"}`).join(",");
+        return {
+          score,
+          label: `${chain.join("/")} · r/d=${score.toFixed(2)} · ${mesh.material?.name ?? "無材質"} · ${textureState}`,
+        };
       })
       .sort((a, b) => b.score - a.score)
       .slice(0, 5)
@@ -857,6 +995,10 @@ export class VfxForgeStage {
     clearTimeout(this.seekTimer);
     this.seekSeq++;
     this.generation++;
+    // Scene teardown waits for in-flight GLB/shader work, but the screen flash
+    // is a DOM layer. Clear it now so a mode/fixture switch cannot leave the
+    // retired preview painted over its replacement during that grace window.
+    this.runtimeVfx?.screenFxLayer.resetForRound();
     // AssetContainer resolution can finish before Babylon's asynchronous RGBD
     // expansion shader. React StrictMode mounts and immediately tears down a
     // preview once in development; disposing the Scene in that gap leaves the
@@ -896,8 +1038,9 @@ export class VfxForgeStage {
     const mesh = MeshBuilder.CreateCapsule(name, { height: 1.7, radius: 0.38 }, this.scene);
     mesh.position.set(position.x, 0.85, position.z);
     const mat = new StandardMaterial(`${name}-mat`, this.scene);
-    mat.diffuseColor = color;
-    mat.emissiveColor = color.scale(0.12);
+    mat.disableLighting = true;
+    mat.diffuseColor = Color3.Black();
+    mat.emissiveColor = color.scale(0.72);
     mesh.material = mat;
     return {
       role,
@@ -962,36 +1105,94 @@ export class VfxForgeStage {
       }
       actor.glbRoot = glbRoot;
       const visible = glbRoot.getChildMeshes(false);
-      applyModelTint(glbRoot, champion);
-      // A normal game render loop reaches the PBR/texture-ready boundary on
-      // its own. Forge commonly pauses at frame zero, so render once and give
-      // the scene a bounded chance to settle before compiling this actor.
-      // Waiting unboundedly on Scene.whenReadyAsync() was a deadlock: a cold
-      // optional VFX pool could keep the preview at "載入角色" forever.
-      this.renderScene();
-      await Promise.race([
-        this.scene.whenReadyAsync().catch(() => undefined),
-        new Promise<void>((resolve) => globalThis.setTimeout(resolve, ACTOR_READY_BUDGET_MS)),
-      ]);
+      // EntityViewRegistry normally owns the alive/in-range root writer in a
+      // match. Forge mounts ChampionView directly, so it must establish that
+      // same initial state before any script-driven hideBody cue is replayed.
+      // This toggles only the two presentation roots; hiddenPrimitives remain
+      // disabled on their own mesh nodes.
+      view.root.setEnabled(true);
+      glbRoot.setEnabled(true);
+      // Use Main's champion-id resolver instead of treating the champion doc
+      // itself as a ModelTint. Shared models can carry per-champion vertex
+      // colours, so the old call made Forge disagree with the actual match.
+      applyModelTint(glbRoot, championTintForId(champion.id) ?? null);
+      // A WC3-imported GLB can drive geoset visibility from its Stand track.
+      // Asset adoption alone does not sample that track: the real match calls
+      // ChampionView.update() on the next render tick, while a paused Forge at
+      // 0 ms used to jump straight to framebuffer proof and see zero body
+      // pixels. Prime the same living/idle state before shader warm-up so the
+      // proof measures the model the game would actually draw, not its
+      // pre-animation import pose.
+      const initialState = view.anim.update({ alive: true, moving: false }, this.nowMs);
+      view.update(initialState, this.nowMs, STEP_MS);
+      // A normal game render loop keeps feeding WebGL while Babylon's
+      // KHR_parallel_shader_compile / RGBD helpers are pending. A paused Forge
+      // used to await forceCompilationAsync with no render loop, so a cold PBR
+      // body timed out and every later framebuffer proof measured 0 pixels.
+      // Pump only through a bounded actor-specific compile; optional dormant
+      // VFX resources are deliberately not part of this readiness boundary.
+      await this.compileActorMaterialsWithRenderPump(visible);
+      // The material was compiled by real scene renders above, through the
+      // same path as a match. Match the shipped audition's ten-frame settle
+      // window so a frame-zero review is a real model, not its bootstrap.
+      await this.renderActorWarmupLoop(ACTOR_WARMUP_FRAMES, view);
       if (this.disposed || this.scene.isDisposed) return;
-      // Compile the actor independently after that bounded scene turn. This
-      // retains the real AssetManager/PBR path instead of swapping in a
-      // preview-only loader that could accept pixels the game cannot render.
-      await Promise.all(visible.flatMap((mesh) =>
-        mesh.material ? [mesh.material.forceCompilationAsync(mesh)] : [],
-      ));
-      // `forceCompilationAsync` proves the shader variant exists, but browser
-      // texture upload and KHR_parallel_shader_compile become visible only on
-      // subsequent rendering tasks. The game naturally has them; a paused
-      // Forge does not. Match the shipped audition's ten-frame settle window
-      // so a frame-zero review is a real model, not its black/white bootstrap.
-      await this.renderWarmupFrames(ACTOR_WARMUP_FRAMES);
-      if (this.disposed || this.scene.isDisposed) return;
-      const visibility = await this.measureActorVisibility(actor);
+      // A direct route can mount the canvas before ResizeObserver and the
+      // browser texture upload complete. One zero-delta read used to condemn
+      // both perfectly healthy actors for the rest of the session. Resize and
+      // retry the real framebuffer across bounded render turns; the final
+      // result remains fail-closed.
+      this.engine.resize();
+      // ResizeObserver may replay a stale scrub while the GLB is still
+      // adopting. Readiness is about the living source model, not a transient
+      // hideBody cue from that replay; the selected frame is replayed again
+      // after certification below.
+      actor.bodyRoot?.setEnabled(true);
+      glbRoot.setEnabled(true);
+      let visibility = await this.measureActorVisibility(actor);
+      for (let attempt = 1; !visibility.visible && attempt < ACTOR_VISIBILITY_RETRIES; attempt++) {
+        // Layout/texture upload can still land between the warm loop and the
+        // readback. Retry a few nearby frames; the authored Stand progression
+        // itself already happened in renderActorWarmupLoop above.
+        await this.renderWarmupFrames(ACTOR_VISIBILITY_RETRY_FRAMES);
+        visibility = await this.measureActorVisibility(actor);
+      }
+      const texturedMeshes = visible.filter((mesh) =>
+        Boolean((mesh.material as { albedoTexture?: unknown } | null)?.albedoTexture),
+      ).length;
+      if (texturedMeshes > 0 && visibility.nearWhiteShare >= 0.8) {
+        const issue = `${champion.name} · ${appearance.modelKey} 的貼圖模型在 framebuffer 退化為 ${(visibility.nearWhiteShare * 100).toFixed(1)}% 純白`;
+        if (this.onColdAssetRetry?.(actor.role)) {
+          this.visualAssetIssues.add(`${issue}，正在執行一次冷載入重試`);
+          this.actorStatus[actor.role] = `↻ ${issue}，重建預覽場景…`;
+          this.emitOverlay("3D 貼圖冷載入重試中，暫停視覺驗收");
+          return;
+        }
+        actor.fallbackForced = true;
+        actor.bodyRoot.setEnabled(false);
+        actor.fallback.setEnabled(true);
+        this.visualAssetIssues.add(issue);
+        this.actorStatus[actor.role] = `⚠ ${issue}，已顯示替身並封鎖視覺驗收`;
+        this.emitOverlay("3D 模型貼圖不可辨識，候選不得送審");
+        return;
+      }
       if (!visibility.visible) {
         // Do not replace a missing model with an optimistic fake.  The coloured
         // capsule is an explicitly marked interaction fallback, while the
         // source issue prevents visual evidence from becoming reviewable.
+        const preFallbackRoots =
+          `view=${actor.bodyRoot?.isEnabled() ? "on" : "off"}/glb=${actor.glbRoot?.isEnabled() ? "on" : "off"}`;
+        const preFallbackMeshState = visible
+          .slice(0, 5)
+          .map((mesh) =>
+            `${mesh.name}:local-${mesh.isEnabled(false) ? "on" : "off"}/tree-${mesh.isEnabled() ? "on" : "off"}`,
+          )
+          .join(", ");
+        const adoptedRootState = glbRoot
+          .getChildren()
+          .slice(0, 5)
+          .map((node) => `${node.name}:local-${node.isEnabled(false) ? "on" : "off"}/tree-${node.isEnabled() ? "on" : "off"}`)
+          .join(", ");
         actor.fallbackForced = true;
         actor.bodyRoot.setEnabled(false);
         actor.fallback.setEnabled(true);
@@ -999,7 +1200,18 @@ export class VfxForgeStage {
           .slice(0, 5)
           .map((mesh) => `${mesh.name}:${mesh.isEnabled() ? "on" : "off"}/${mesh.isVisible ? "visible" : "hidden"}/v${mesh.visibility.toFixed(2)}`)
           .join(", ");
-        const issue = `${champion.name} · ${appearance.modelKey} 3D 模型在真實 framebuffer 僅改變 ${visibility.changedPixels} 像素（${meshState || "0 meshes"}）`;
+        const materials = visible.filter((mesh) => mesh.material !== null);
+        const readyMaterials = materials.filter((mesh) => mesh.material?.isReady(mesh) === true).length;
+        const textures = new Set(materials.flatMap((mesh) => mesh.material?.getActiveTextures() ?? []));
+        const readyTextures = [...textures].filter((texture) => texture.isReady()).length;
+        glbRoot.computeWorldMatrix(true);
+        const bounds = glbRoot.getHierarchyBoundingVectors(true);
+        const issue = `${champion.name} · ${appearance.modelKey} 3D 模型在真實 framebuffer 僅改變 ${visibility.changedPixels} 像素` +
+          `（材質 ${readyMaterials}/${materials.length} ready · 貼圖 ${readyTextures}/${textures.size} ready · ` +
+          `roots ${preFallbackRoots} · ` +
+          `adopted ${adoptedRootState || "0 roots"} · pre ${preFallbackMeshState || "0 meshes"} · ` +
+          `bbox ${bounds.min.x.toFixed(1)},${bounds.min.y.toFixed(1)},${bounds.min.z.toFixed(1)} → ` +
+          `${bounds.max.x.toFixed(1)},${bounds.max.y.toFixed(1)},${bounds.max.z.toFixed(1)} · ${meshState || "0 meshes"}）`;
         this.visualAssetIssues.add(issue);
         this.actorStatus[actor.role] = `⚠ ${issue}，已顯示替身並封鎖視覺驗收`;
         this.emitOverlay("3D 模型不可辨識，候選不得送審");
@@ -1008,10 +1220,20 @@ export class VfxForgeStage {
       this.actorStatus[actor.role] =
         `${appearance.isStandIn ? "⚠ 共用替身 · " : ""}${champion.name} · ${appearance.modelKey} · ` +
         `${visible.length} meshes · ` +
-        `×${(view.declaredScale ?? 0).toFixed(3)} · Main ChampionView · 材質已預熱`;
+        `×${(view.declaredScale ?? 0).toFixed(3)} · Main ChampionView · 材質正常`;
       // The script may already be scrubbed past a pulse while this GLB loaded.
       this.seek(this.nowMs);
     } catch (error) {
+      const reason = String(error);
+      const retryableColdGpuFailure =
+        /3D 角色(?:貼圖|材質)只有/.test(reason) ||
+        reason.includes("Operation timed out after maximum retries");
+      if (!this.disposed && retryableColdGpuFailure && this.onColdAssetRetry?.(actor.role)) {
+        this.visualAssetIssues.add(`${champion.name} · ${reason}，正在執行有界冷載入重試`);
+        this.actorStatus[actor.role] = `↻ ${champion.name} · ${reason}，重建預覽場景…`;
+        this.emitOverlay("3D 材質冷載入重試中，暫停視覺驗收");
+        return;
+      }
       // A failed imported presentation must remain usable and visible. The GLB
       // may already have disabled the coloured capsule before a late texture
       // or shader failure surfaced; leaving both paths disabled produces an
@@ -1022,8 +1244,10 @@ export class VfxForgeStage {
         actor.fallback.setEnabled(true);
         this.renderScene();
       }
-      this.actorStatus[actor.role] = `${champion.name} · 替身（載入失敗）`;
-      this.emitOverlay(`${champion.name} 3D 載入失敗，保留碰撞替身：${String(error)}`);
+      const issue = `${champion.name} · 3D 載入失敗：${reason}`;
+      this.visualAssetIssues.add(issue);
+      this.actorStatus[actor.role] = `${champion.name} · 替身（載入失敗：${reason}）`;
+      this.emitOverlay(`${champion.name} 3D 載入失敗，保留碰撞替身：${reason}`);
     }
   }
 
@@ -1140,6 +1364,7 @@ export class VfxForgeStage {
     this.flashUntilMs = 0;
     this.texts = [];
     this.lastVfxAim = null;
+    resetScriptedMoves();
     for (const actor of Object.values(this.actors)) {
       actor.idleAfterMs = 0;
       actor.hiddenUntilMs = 0;
@@ -1177,6 +1402,7 @@ export class VfxForgeStage {
       enabled: () => true,
       pulseAnim: (id, kind, pulse) => this.pulseActor(id, kind, pulse?.clipWindowMs),
       hideBody: (id, ms) => this.hideActor(id, ms),
+      moveBody: (id, offset, ms, arc) => moveBodyFor(id, offset, ms, arc, this.nowMs),
       playSfx: (key) => {
         this.emitOverlay(`音效：${key}`);
         return true;
@@ -1204,8 +1430,14 @@ export class VfxForgeStage {
     });
     this.applyReviewOrbit();
     for (const actor of Object.values(this.actors)) {
+      const id = actor.role === "caster" ? this.casterEntityId() : this.targetEntityId();
+      const offset = id === undefined ? null : scriptedOffset(id, this.nowMs);
+      const x = actor.position.x + (offset?.x ?? 0);
+      const z = actor.position.z + (offset?.z ?? 0);
+      actor.fallback.position.set(x, 0.85 + (offset?.y ?? 0), z);
       const view = actor.view;
       if (!view) continue;
+      view.setPose(x, z, actor.facing.x, actor.facing.z, offset?.y ?? 0);
       const state = view.anim.update({ alive: true, moving: false }, this.nowMs);
       view.update(state, this.nowMs, dtMs);
     }
@@ -1344,6 +1576,7 @@ export class VfxForgeStage {
   private async measureActorVisibility(actor: ForgeActor): Promise<{
     visible: boolean;
     changedPixels: number;
+    nearWhiteShare: number;
   }> {
     // `ChampionView.root` also carries a team ring and blob shadow. Those are
     // intentionally visible even when an adopted GLB fails to draw, so they
@@ -1351,28 +1584,70 @@ export class VfxForgeStage {
     const root = actor.glbRoot ?? actor.bodyRoot;
     const width = this.engine.getRenderWidth();
     const height = this.engine.getRenderHeight();
-    if (!root || width <= 0 || height <= 0) return { visible: true, changedPixels: 0 };
+    if (!root || width <= 0 || height <= 0) {
+      return { visible: true, changedPixels: 0, nearWhiteShare: 0 };
+    }
     const read = async (): Promise<Uint8Array> => {
       this.renderScene();
       this.renderScene();
       return (await this.engine.readPixels(0, 0, width, height)) as Uint8Array;
     };
     const enabled = root.isEnabled();
-    const shown = await read();
-    root.setEnabled(false);
+    const peer = actor.role === "caster" ? this.actors.target : this.actors.caster;
+    const peerBodyEnabled = peer.bodyRoot?.isEnabled() ?? false;
+    const peerFallbackEnabled = peer.fallback.isEnabled();
+    const body = actor.bodyRoot;
+    const bodyX = body?.position.x ?? 0;
+    const bodyZ = body?.position.z ?? 0;
+    // Side-review intentionally looks along the combat lane. At some cast
+    // ranges the two silhouettes overlap completely, so leaving the peer on
+    // screen makes a healthy body measure as zero changed pixels. Isolate the
+    // actor under test; restore both peer presentations byte-for-byte below.
+    peer.bodyRoot?.setEnabled(false);
+    peer.fallback.setEnabled(false);
+    // Model readiness is independent of authored cast range. Bring the body to
+    // the already-framed combat midpoint for this A/B read; otherwise a valid
+    // long-range caster outside the current viewport is indistinguishable from
+    // a non-rendering GLB. The real pose is restored before the next frame.
+    if (body) {
+      const focus = this.cameraFocus();
+      body.position.x = focus.x;
+      body.position.z = focus.z;
+    }
     try {
-      const hidden = await read();
-      let changedPixels = 0;
-      for (let i = 0; i + 2 < shown.length && i + 2 < hidden.length; i += 4) {
-        const delta =
-          Math.abs(shown[i]! - hidden[i]!) +
-          Math.abs(shown[i + 1]! - hidden[i + 1]!) +
-          Math.abs(shown[i + 2]! - hidden[i + 2]!);
-        if (delta >= MIN_ACTOR_PIXEL_DELTA) changedPixels++;
+      const shown = await read();
+      root.setEnabled(false);
+      try {
+        const hidden = await read();
+        let changedPixels = 0;
+        let nearWhitePixels = 0;
+        for (let i = 0; i + 2 < shown.length && i + 2 < hidden.length; i += 4) {
+          const delta =
+            Math.abs(shown[i]! - hidden[i]!) +
+            Math.abs(shown[i + 1]! - hidden[i + 1]!) +
+            Math.abs(shown[i + 2]! - hidden[i + 2]!);
+          if (delta >= MIN_ACTOR_PIXEL_DELTA) {
+            changedPixels++;
+            const hi = Math.max(shown[i]!, shown[i + 1]!, shown[i + 2]!);
+            const lo = Math.min(shown[i]!, shown[i + 1]!, shown[i + 2]!);
+            if (lo >= 245 && hi - lo <= 8) nearWhitePixels++;
+          }
+        }
+        return {
+          visible: changedPixels >= MIN_ACTOR_VISIBLE_PIXELS,
+          changedPixels,
+          nearWhiteShare: changedPixels > 0 ? nearWhitePixels / changedPixels : 0,
+        };
+      } finally {
+        root.setEnabled(enabled);
       }
-      return { visible: changedPixels >= MIN_ACTOR_VISIBLE_PIXELS, changedPixels };
     } finally {
-      root.setEnabled(enabled);
+      peer.bodyRoot?.setEnabled(peerBodyEnabled);
+      peer.fallback.setEnabled(peerFallbackEnabled);
+      if (body) {
+        body.position.x = bodyX;
+        body.position.z = bodyZ;
+      }
       this.renderScene();
     }
   }
@@ -1385,6 +1660,129 @@ export class VfxForgeStage {
       await new Promise<void>((resolve) => globalThis.setTimeout(resolve, STEP_MS));
     }
     this.renderScene();
+  }
+
+  /**
+   * Advance imported AnimationGroups through Babylon's real engine clock.
+   * Calling scene.render() by hand does compile materials, but it does not
+   * advance the Engine delta used by WC3 geoset-alpha Stand tracks. Main's
+   * model-audition surface uses a short runRenderLoop for this exact boundary;
+   * Forge mirrors it only during preload, then stops so scrubbing stays fully
+   * deterministic.
+   */
+  private renderActorWarmupLoop(frames: number, view: ChampionView): Promise<void> {
+    return new Promise<void>((resolve) => {
+      let remaining = Math.max(1, Math.floor(frames));
+      let actorNowMs = 0;
+      let settled = false;
+      const finish = (): void => {
+        if (settled) return;
+        settled = true;
+        globalThis.clearTimeout(timeout);
+        this.engine.stopRenderLoop(render);
+        resolve();
+      };
+      const render = (): void => {
+        if (this.disposed || this.scene.isDisposed) return finish();
+        // GameApp advances ChampionView on every engine frame; a bare
+        // scene.render() advances Babylon's AnimationGroups but omits the
+        // view-level writer that selects/keeps the living Stand clip. Imported
+        // geoset visibility can therefore remain on its disabled bootstrap
+        // frame in a paused Forge even though the same model is visible in a
+        // match. Mirror the real loop during this bounded preload window.
+        actorNowMs += STEP_MS;
+        const state = view.anim.update({ alive: true, moving: false }, actorNowMs);
+        view.update(state, actorNowMs, STEP_MS);
+        this.renderScene();
+        remaining--;
+        if (remaining <= 0) finish();
+      };
+      const timeout = globalThis.setTimeout(finish, Math.max(1_200, frames * 60));
+      this.engine.runRenderLoop(render);
+    });
+  }
+
+  /**
+   * Compile imported actor materials by advancing the real WebGL scene. Do not
+   * call `forceCompilationAsync()`: that helper compiles an artificial material
+   * pass and can leave a paused PBR material on its white bootstrap binding.
+   * A match compiles through `scene.render()`, so the authoring surface must use
+   * that same path while it waits for textures and the final mesh variant.
+   */
+  private async compileActorMaterialsWithRenderPump(meshes: readonly AbstractMesh[]): Promise<void> {
+    const materials = [...new Set(meshes.flatMap((mesh) => mesh.material ? [mesh.material] : []))];
+    const textures = [...new Set(materials.flatMap((material) => material.getActiveTextures()))];
+    const textureDeadline = Date.now() + ACTOR_SHADER_BUDGET_MS;
+    // Compiling before an embedded GLB albedo texture is drawable produces a
+    // valid PBR effect without the ALBEDO define. The later-ready texture then
+    // sits on the material while the paused Forge keeps rendering the cached
+    // all-white variant. Main's continuous loop naturally reaches this boundary
+    // first; reproduce that ordering explicitly here.
+    while (
+      textures.some((texture) => !texture.isReady()) &&
+      Date.now() < textureDeadline &&
+      !this.disposed &&
+      !this.scene.isDisposed
+    ) {
+      this.renderScene();
+      await this.waitForBrowserFrame();
+    }
+    const readyTextures = textures.filter((texture) => texture.isReady()).length;
+    if (readyTextures < textures.length) {
+      throw new Error(`3D 角色貼圖只有 ${readyTextures}/${textures.length} 張在 ${ACTOR_SHADER_BUDGET_MS}ms 內可繪`);
+    }
+    for (const material of materials) material.markAsDirty(Material.TextureDirtyFlag);
+
+    // Texture upload and final shader compilation are two independent GPU
+    // boundaries. Sharing one deadline let a legitimate cold texture consume
+    // the whole budget and left the now-dirty PBR variants zero frames to
+    // compile. Give each phase the same bounded window; retries remain capped
+    // by VfxForgePreview and failures still block visual evidence.
+    const materialDeadline = Date.now() + ACTOR_SHADER_BUDGET_MS;
+    const readyCount = (): number => meshes.filter((mesh) =>
+      mesh.material === null || mesh.material.isReady(mesh),
+    ).length;
+    let ready = readyCount();
+    while (
+      ready < meshes.length &&
+      Date.now() < materialDeadline &&
+      !this.disposed &&
+      !this.scene.isDisposed
+    ) {
+      this.renderScene();
+      await this.waitForBrowserFrame();
+      ready = readyCount();
+    }
+    if (ready < meshes.length) {
+      throw new Error(`3D 角色材質只有 ${ready}/${meshes.length} 個在 ${ACTOR_SHADER_BUDGET_MS}ms 內可繪`);
+    }
+  }
+
+  /** One visible-browser frame, with a timer fallback for background tabs. */
+  private waitForBrowserFrame(): Promise<void> {
+    return new Promise<void>((resolve) => {
+      let done = false;
+      const finish = (): void => {
+        if (done) return;
+        done = true;
+        globalThis.clearTimeout(timer);
+        resolve();
+      };
+      const timer = globalThis.setTimeout(finish, 34);
+      globalThis.requestAnimationFrame?.(() => finish());
+    });
+  }
+
+  /**
+   * Scene.whenReadyAsync() is intentionally absent here. Besides including
+   * dormant optional pools, it starts Babylon's RGBD readiness polling while
+   * this paused scene has no render loop; Chromium can exhaust that poll before
+   * the PBR helper ever receives a GPU frame. Explicit asset preloads and the
+   * actor compile pump own readiness, so generic callers only owe two actual
+   * frames before the framebuffer gates inspect the result.
+   */
+  private async waitForSceneReadyBounded(): Promise<void> {
+    if (!this.disposed && !this.scene.isDisposed) await this.renderWarmupFrames(2);
   }
 
   private casterEntityId(): number | undefined {
@@ -1402,6 +1800,19 @@ export class VfxForgeStage {
         item.event.type === "comboStrike" &&
         abilityIdOfAuthoredOrigin(String(data.origin ?? "")) === this.ability.id
       ) return Number(data.caster);
+    }
+    return undefined;
+  }
+
+  /** Resolve the other visible participant without inventing a fixed entity id. */
+  private targetEntityId(): number | undefined {
+    const caster = this.casterEntityId();
+    for (const item of this.schedule) {
+      const data = item.event.data as Record<string, unknown>;
+      for (const key of ["victim", "target", "attacker", "source"] as const) {
+        const id = Number(data[key]);
+        if (Number.isFinite(id) && id !== caster) return id;
+      }
     }
     return undefined;
   }

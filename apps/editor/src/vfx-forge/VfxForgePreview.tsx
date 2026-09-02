@@ -17,6 +17,8 @@ import {
 } from "./VfxForgeStage";
 import { visualHygieneTriage } from "./backdropFrameAudit";
 
+const MAX_COLD_SCENE_RETRIES_PER_ROLE = 2;
+
 export interface VfxForgePreviewHandle {
   auditBackdropTimeline(): Promise<BackdropTimelineAudit>;
   captureVisualEvidence(label: string): Promise<VfxVisualEvidenceFrame>;
@@ -38,6 +40,7 @@ interface VfxForgePreviewProps {
   onStop(): void;
   onDropAsset?(asset: AssetDrop, placement?: AssetPlacement): void;
   canCaptureEvidence?: boolean;
+  assetRefsVerifiedSafe?: boolean;
   onCaptureEvidence?(): void;
 }
 
@@ -56,6 +59,7 @@ export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreview
   onStop,
   onDropAsset,
   canCaptureEvidence = false,
+  assetRefsVerifiedSafe = false,
   onCaptureEvidence,
 }, ref) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -71,6 +75,15 @@ export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreview
   const [backdropAudit, setBackdropAudit] = useState("底板未檢查");
   const [focusPreview, setFocusPreview] = useState(false);
   const [sideReviewView, setSideReviewView] = useState(true);
+  const [coldAssetRetry, setColdAssetRetry] = useState(0);
+  const coldRetryKey = `${ability.id}/${caster?.id ?? "-"}/${target?.id ?? "-"}/${mode}`;
+  const coldRetryState = useRef<{ key: string; attempts: Map<"caster" | "target", number> }>({
+    key: coldRetryKey,
+    attempts: new Map(),
+  });
+  if (coldRetryState.current.key !== coldRetryKey) {
+    coldRetryState.current = { key: coldRetryKey, attempts: new Map() };
+  }
   const firstPose = schedule.find((item) => item.actorPose)?.actorPose;
   const homePoseKey = firstPose
     ? `${firstPose.caster.x},${firstPose.caster.z}/${firstPose.target.x},${firstPose.target.z}`
@@ -109,10 +122,37 @@ export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreview
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    // Champion/target queries settle independently on a cold page. Mounting a
+    // Babylon scene for the null/null, champion/null and champion/target
+    // states disposes GLB parses while their embedded textures are still
+    // uploading. A later scene can then inherit the raw-byte request but keep
+    // a white bootstrap material until the next manual remount. The Forge is a
+    // two-actor acceptance surface, so wait for both content documents and
+    // construct exactly one stable gameplay scene.
+    if (!caster || !target) {
+      setOverlay({
+        flash: null,
+        texts: [],
+        status: "等待雙方角色內容…",
+        actors: {
+          caster: caster?.name ?? "載入中",
+          target: target?.name ?? "載入中",
+        },
+      });
+      return;
+    }
     const stage = new VfxForgeStage(canvas, script, ability, schedule, {
       actors: { caster, target },
       mode,
+      assetRefsVerifiedSafe,
       onOverlay: setOverlay,
+      onColdAssetRetry: (role) => {
+        const attempts = coldRetryState.current.attempts.get(role) ?? 0;
+        if (attempts >= MAX_COLD_SCENE_RETRIES_PER_ROLE) return false;
+        coldRetryState.current.attempts.set(role, attempts + 1);
+        setColdAssetRetry((current) => current + 1);
+        return true;
+      },
     });
     stageRef.current = stage;
     let resizeFrame = 0;
@@ -138,7 +178,7 @@ export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreview
     // Stage ownership follows the selected ability and the real Sim home pose.
     // Draft changes that keep the same world frame use setContent below.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ability.id, caster?.id, homePoseKey, mode, target?.id]);
+  }, [ability.id, assetRefsVerifiedSafe, caster?.id, coldAssetRetry, homePoseKey, mode, target?.id]);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -244,6 +284,7 @@ export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreview
         <button
           type="button"
           className={`vfx-calibrate${backdropAudit.startsWith("⛔") ? " failed" : ""}`}
+          title={backdropAudit}
           onClick={() => {
             setBackdropAudit("底板掃描中…");
             void stageRef.current?.auditBackdropTimeline(durationMs)

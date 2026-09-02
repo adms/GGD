@@ -10,8 +10,10 @@ export function AcceptanceSourcePanel({ source }: { source: AcceptanceSourceEntr
         <article><b>JASS／w3x 蝗蟲群</b><small>{source.jass.rawcodes.join(" · ")}</small><p>{source.jass.summary}</p><p>{source.jass.locustComposition}</p></article>
         {source.videoReference ? (
           <article>
-            <b>YouTube 動作參考</b><small>{source.videoReference.state === "sampled" ? "已取樣固定關鍵格" : "待取樣；不可當成已驗收"}</small>
+            <b>YouTube 動作參考</b><small>{source.videoReference.state === "interval-sampled" ? "已逐秒取樣＋事件格" : "待逐秒取樣；不可當成已驗收"}</small>
             <p><a href={source.videoReference.url} target="_blank" rel="noreferrer">開啟 Owner 提供影片</a></p>
+            <p>{source.videoReference.sampleWindows.map((window) => `${window.fromSec}～${window.toSec}秒／每${window.stepSec}秒一格／${window.frameCount}格`).join("；")}</p>
+            <p>{source.videoReference.continuityNotes.join("；")}</p>
             <p>{source.videoReference.keyframes.map((frame) => `${frame.atSec.toFixed(2)}秒：${frame.label}`).join("；")}</p>
           </article>
         ) : null}

@@ -11,8 +11,11 @@ describe("VFX Forge editor-side recipes", () => {
     expect(segments.every((segment) => zVfxScriptSegment.safeParse(segment).success)).toBe(true);
     expect(segments.filter((segment) => segment.kind === "modelFx" && segment.modelKey === CLASSIC_BEAM_MODEL_KEY)).toHaveLength(0);
     const particles = segments.filter((segment) => segment.kind === "vfx");
-    expect(particles).toHaveLength(4);
-    expect(Math.max(...particles.map((segment) => segment.atMs ?? 0))).toBe(465);
+    expect(particles).toHaveLength(6);
+    expect(Math.max(...particles.map((segment) => segment.atMs ?? 0))).toBe(650);
+    expect(Math.max(...particles.map((segment) => segment.w3xScale ?? 0))).toBeLessThanOrEqual(3.2);
+    expect(Math.max(...particles.map((segment) => segment.alpha ?? 0))).toBeLessThanOrEqual(0.72);
+    expect(particles.filter((segment) => segment.vfxId.includes("beam")).every((segment) => segment.timeScale === 1)).toBe(true);
   });
 
   it.each(["line-blast-fire", "dash-slash-void", "shockwave-dash-light", "combo-slash-holy", "reflect-counter-open", "avalon-counter-chain", "rider-dash-beam-blue"] as const)(
@@ -24,13 +27,16 @@ describe("VFX Forge editor-side recipes", () => {
     },
   );
 
-  it("line blast travels as an MDL and explodes only after its measured flight time", () => {
+  it("line blast travels as safe additive pulses and explodes only after its measured flight time", () => {
     const segments = activeRecipe("line-blast-fire");
-    expect(segments.find((segment) => segment.kind === "modelFx")).toMatchObject({
-      kind: "modelFx", modelKey: "imported.fireblast", path: "forward", speed: 27.5, distance: 12,
-    });
-    const arrival = segments.filter((segment) => segment.kind === "vfx");
-    expect(arrival.every((segment) => (segment.atMs ?? 0) >= 430)).toBe(true);
+    expect(segments.some((segment) => segment.kind === "modelFx")).toBe(false);
+    const travel = segments.flatMap((segment) =>
+      segment.kind === "vfx" && segment.vfxId === "fx.prim.fire.bolt" ? [segment] : []);
+    expect(travel).toHaveLength(6);
+    expect(travel.map((segment) => segment.offsetForwardU)).toEqual([1.2, 3.2, 5.2, 7.2, 9.2, 11.2]);
+    expect(Math.max(...travel.map((segment) => segment.atMs ?? 0))).toBeLessThan(500);
+    const arrival = segments.filter((segment) => segment.kind === "vfx" && segment.vfxId !== "fx.prim.fire.bolt");
+    expect(arrival.every((segment) => (segment.atMs ?? 0) >= 500)).toBe(true);
     expect(arrival).toContainEqual(expect.objectContaining({
       vfxId: "fx.prim.fire.explosion-lg",
       w3xScale: 2.2,
@@ -48,6 +54,20 @@ describe("VFX Forge editor-side recipes", () => {
     expect(segments).toContainEqual(expect.objectContaining({
       kind: "anim", at: "caster", pulse: "attack",
     }));
+  });
+
+  it("active sword combos take over the opening with an attack clip instead of unsafe generic cast art", () => {
+    const active = activeRecipe("combo-slash-holy");
+    expect(active).toContainEqual(expect.objectContaining({
+      kind: "anim", on: "castStart", at: "caster", pulse: "attack",
+      replaces: "caster.action",
+    }));
+    expect(active.some((segment) =>
+      segment.kind === "anim" && segment.on === "castStart" && segment.pulse === "cast",
+    )).toBe(false);
+
+    const passive = buildVfxForgeRecipe("avalon-counter-chain", { activationMode: "passive" });
+    expect(passive.some((segment) => segment.on === "castStart" || segment.on === "castEffect")).toBe(false);
   });
 
   it("reflect opening is impossible to trigger from cast or block", () => {
@@ -98,6 +118,6 @@ describe("VFX Forge editor-side recipes", () => {
 
     const rider = activeRecipe("rider-dash-beam-blue");
     expect(rider).toContainEqual(expect.objectContaining({ kind: "bodyMove", at: "caster", mode: "arc" }));
-    expect(rider.filter((segment) => segment.kind === "vfx")).toHaveLength(4);
+    expect(rider.filter((segment) => segment.kind === "vfx")).toHaveLength(6);
   });
 });

@@ -89,8 +89,6 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
 
   it("經典光束從 runtime config 取得 additive／粒子實際上限，不抄 UI 常數", () => {
     const budget = loadJson("config", "vfx-budget");
-    const model = loadJson("models", "w3x.stock.revivehuman");
-    const modelEmitters = Array.isArray(model.fxEmitters) ? model.fxEmitters.length : 0;
     const additiveCap = Number(budget.maxConcurrentAdditive);
     const particleCap = Number(budget.maxParticlesPerSystem);
     expect(additiveCap).toBeGreaterThan(0);
@@ -98,10 +96,10 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
 
     for (const id of ["godie-nbbc.e", "godie-ogrh.r", "godie-hvsh.r"] as const) {
       const helpers = kinds(id, "vfx");
-      // At 465ms both pulses overlap: four helper systems + the two declared
-      // ReviveHuman emitters. If main retunes the budget, this guard follows
-      // content/config/vfx-budget.json and turns red automatically.
-      expect(helpers.length + modelEmitters, id).toBeLessThanOrEqual(additiveCap);
+      // The script replaces the unsafe ReviveHuman model, so only the six
+      // transparent helper systems are live. If main retunes the budget, this
+      // guard follows content/config/vfx-budget.json and turns red automatically.
+      expect(helpers.length, id).toBeLessThanOrEqual(additiveCap);
       for (const helper of helpers) {
         const resource = loadJson("vfx", helper.vfxId);
         expect(resource.blendMode, helper.vfxId).toBe("additive");
@@ -112,20 +110,25 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
   });
 
   it("龍破斬先飛行，飛行結束後才在遠端爆炸", () => {
-    const travel = kinds("godie-hjai.e", "modelFx").find(
-      (s) => s.modelKey === "imported.fireblast",
-    );
-    expect(travel).toMatchObject({ path: "forward", speed: 27.5, distance: 12, scale: 4.5 });
-    expect(travel?.trailVfxId).toBe("fx.prim.fire.bolt");
-    // RedDragonMissile and imported.bahamut failed the real compositor: one
-    // exposed a card and the other polluted the scene with white geometry.
+    const travel = kinds("godie-hjai.e", "vfx").filter((s) => s.vfxId === "fx.prim.fire.bolt");
+    expect(travel).toHaveLength(6);
+    expect(travel.map((s) => s.offsetForwardU)).toEqual([1.2, 3.2, 5.2, 7.2, 9.2, 11.2]);
+    expect(Math.max(...travel.map((s) => s.atMs ?? 0))).toBeLessThan(500);
+    // Every available model carrier failed the real compositor at some frame;
+    // the accepted form is assembled entirely from safe additive primitives.
+    expect(kinds("godie-hjai.e", "modelFx")).toHaveLength(0);
     expect(segs("godie-hjai.e").some((s) => s.kind === "modelFx" && s.modelKey === "w3x.stock.reddragonmissile")).toBe(false);
+    expect(segs("godie-hjai.e").some((s) => s.kind === "modelFx" && s.modelKey === "w3x.stock.phoenixmissile")).toBe(false);
+    expect(segs("godie-hjai.e").some((s) => s.kind === "modelFx" && s.modelKey === "imported.fireblast")).toBe(false);
     expect(segs("godie-hjai.e").some((s) => s.kind === "modelFx" && s.modelKey === "imported.bahamut")).toBe(false);
     const remote = kinds("godie-hjai.e", "vfx").filter(
       (s) => s.at === "self" && (s.offsetForwardU ?? 0) >= 12,
     );
-    expect(remote.length).toBeGreaterThanOrEqual(2);
-    expect(Math.min(...remote.map((s) => s.atMs ?? 0))).toBeGreaterThanOrEqual(430);
+    // One volumetric burst is the endpoint body.  Do not require a second
+    // radial ring: in the real camera that family expands into an arena-sized
+    // flat circle and weakens the otherwise readable explosion.
+    expect(remote).toHaveLength(1);
+    expect(Math.min(...remote.map((s) => s.atMs ?? 0))).toBeGreaterThanOrEqual(500);
     expect(remote).toContainEqual(expect.objectContaining({
       vfxId: "fx.prim.fire.explosion-lg",
       w3xScale: 2.2,
@@ -191,6 +194,16 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
           pitchDeg: 0,
         });
       }
+    },
+  );
+
+  it.each(["godie-nbbc.e", "godie-ogrh.r"] as const)(
+    "%s 的光束配方不重複播放同一個施法動作",
+    (id) => {
+      const opening = kinds(id, "anim").filter((segment) =>
+        segment.on === "castStart" && segment.at === "caster",
+      );
+      expect(opening).toHaveLength(1);
     },
   );
 

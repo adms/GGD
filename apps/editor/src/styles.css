@@ -270,7 +270,14 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .vfx-evidence-grid figcaption { color: #aebbd2; font-size: 10px; margin-top: 4px; }
 .vfx-evidence-grid button { position: absolute; right: 6px; bottom: 4px; padding: 1px 5px; font-size: 9px; }
 .vfx-calibrate { border-color: #427450; color: #8fe0a6; }
-.vfx-calibrate.failed { border-color: #9b3434; color: #ff918b; max-width: 75%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vfx-calibrate.failed {
+  border-color: #9b3434;
+  color: #ff918b;
+  max-width: min(100%, 70rem);
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
 .export-center { grid-column: 2 / -1; min-width: 0; height: 100vh; overflow-y: auto; background: #0f121a; color: #d7dbe7; }
 .export-head { display: flex; justify-content: space-between; gap: 16px; padding: 18px 22px; border-bottom: 1px solid #2a3040; background: #141824; }
 .export-head h1 { margin: 0; font-size: 22px; }

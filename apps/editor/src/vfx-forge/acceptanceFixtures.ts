@@ -90,7 +90,7 @@ function compose(abilityId: string, base: readonly VfxScriptSegment[]): VfxScrip
     case "godie-nbbc.e":
     case "godie-ogrh.r": {
       const recipe = abilityId === "godie-ogrh.r" ? "classic-beam-fire" : "classic-beam-blue";
-      return [...withoutKinds(base, ["modelFx", "vfx"]), ...buildVfxForgeRecipe(recipe, { activationMode: "active" })];
+      return [...withoutKinds(base, ["anim", "modelFx", "vfx"]), ...buildVfxForgeRecipe(recipe, { activationMode: "active" })];
     }
     case "godie-hvsh.r":
       return buildVfxForgeRecipe("rider-dash-beam-blue", { activationMode: "active" });

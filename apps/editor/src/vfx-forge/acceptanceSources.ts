@@ -26,13 +26,21 @@ export interface AcceptanceSourceEntry {
   };
   /**
    * Owner-supplied video is a motion-language reference, never an asset source.
-   * We record only a small fixed set of poses: resampling happens when the
-   * authored script hash changes, rather than generating a costly video audit
-   * on every editor interaction.
+   * Each referenced action is sampled through its full review window at least
+   * once per second, then supplemented with event frames. Re-sampling happens
+   * only when the reference/window changes; candidate VFX still gets its own
+   * deterministic framebuffer proof whenever the authored script hash changes.
    */
   readonly videoReference?: {
     readonly url: string;
-    readonly state: "sampled" | "queued";
+    readonly state: "interval-sampled" | "queued";
+    readonly sampleWindows: readonly {
+      readonly fromSec: number;
+      readonly toSec: number;
+      readonly stepSec: number;
+      readonly frameCount: number;
+    }[];
+    readonly continuityNotes: readonly string[];
     readonly keyframes: readonly {
       readonly atSec: number;
       readonly label: string;
@@ -65,10 +73,16 @@ export const VFX_FORGE_ACCEPTANCE_SOURCES: readonly AcceptanceSourceEntry[] = [
     },
     videoReference: {
       url: "https://www.youtube.com/watch?v=cFz1d48fvN8",
-      state: "sampled",
+      state: "interval-sampled",
+      sampleWindows: [{ fromSec: 0, toSec: 61, stepSec: 1, frameCount: 61 }],
+      continuityNotes: [
+        "18～26秒是長蓄力與火球成形，27～28.5秒才看見投射行進，29～30.5秒進入白熱爆炸與地面衝擊。",
+        "角色施法姿勢、球形彈體、飛行段與遠端爆炸是四個不可合併的事件；不能把蓄力格誤標成終點爆炸。",
+      ],
       keyframes: [
-        { atSec: 10.57, label: "起手：角色保持施法姿勢，周身紫紅聚能" },
-        { atSec: 19.30, label: "終點：目標處形成紅白球形爆炸；Editor 仍須保留兩格之間的投射行進" },
+        { atSec: 19.5, label: "起手：角色舉手維持施法姿勢，紅橘球形核心開始成形" },
+        { atSec: 27, label: "投射：白熱核心沿直線離開角色，仍能辨識發射點與飛行方向" },
+        { atSec: 29.5, label: "終點：目標處形成有地面輪廓的球形爆炸，不與投射段黏成同一格" },
       ],
     },
   },
@@ -92,11 +106,16 @@ export const VFX_FORGE_ACCEPTANCE_SOURCES: readonly AcceptanceSourceEntry[] = [
     },
     videoReference: {
       url: "https://www.youtube.com/watch?v=cFz1d48fvN8",
-      state: "sampled",
+      state: "interval-sampled",
+      sampleWindows: [{ fromSec: 0, toSec: 61, stepSec: 1, frameCount: 61 }],
+      continuityNotes: [
+        "45～48秒先由角色聚出紫紅核心與黑色巨刃，49～52.5秒是貼身揮斬，53～55.5秒才是跨場斬痕與命中爆發。",
+        "黑紫巨刃與角色揮砍共用同一動線；Owner 指定的 dash 是設計覆寫，但仍須保留起手、穿越、命中、收招四段。",
+      ],
       keyframes: [
-        { atSec: 48.11, label: "起手：黑色巨刃外圍有紫紅圓弧與粒子，不用月牙扇取代角色" },
-        { atSec: 50.92, label: "斬擊：角色明確揮下黑紫巨刃，特效貼著武器動線" },
-        { atSec: 53.01, label: "收尾：黑色主斬痕跨越戰場；Editor 的 dash 動線採 Owner 最新指定" },
+        { atSec: 48, label: "起手：黑色巨刃外圍有紫紅圓弧與粒子，不用月牙扇取代角色" },
+        { atSec: 50, label: "斬擊：角色明確揮下黑紫巨刃，特效貼著武器動線" },
+        { atSec: 53.5, label: "命中：黑色主斬痕跨越戰場後才爆發；Editor 的 dash 動線採 Owner 最新指定" },
       ],
     },
   },
@@ -120,11 +139,16 @@ export const VFX_FORGE_ACCEPTANCE_SOURCES: readonly AcceptanceSourceEntry[] = [
     },
     videoReference: {
       url: "https://www.youtube.com/watch?v=9X6LCjFgAiA",
-      state: "sampled",
+      state: "interval-sampled",
+      sampleWindows: [{ fromSec: 0, toSec: 34, stepSec: 1, frameCount: 34 }],
+      continuityNotes: [
+        "0～7.5秒由角色逐刀換位斬擊，目標同步受擊；8～8.5秒才出現直立藍白主柱與少量黃光，9秒後進入收尾。",
+        "21.55秒已是片尾畫面，禁止再把它當終結技證據；連斬的主體是角色與受害者，不是大量獨立月牙。",
+      ],
       keyframes: [
-        { atSec: 1.34, label: "起手：角色拔劍、藍白聚能，不以多枚月牙取代身體動作" },
-        { atSec: 10.68, label: "連斬：角色與目標皆有位移／反應，斬擊為動作的附屬" },
-        { atSec: 21.55, label: "終結：白藍主柱加少量黃光，高度與方向具壓迫感" },
+        { atSec: 1, label: "起手：角色拔劍、藍白聚能，不以多枚月牙取代身體動作" },
+        { atSec: 3, label: "連斬：角色與目標皆有位移／反應，單發斬光只是動作的附屬" },
+        { atSec: 8, label: "終結：直立白藍主柱加少量黃光，高度與方向具壓迫感" },
       ],
     },
   },
@@ -148,10 +172,16 @@ export const VFX_FORGE_ACCEPTANCE_SOURCES: readonly AcceptanceSourceEntry[] = [
     },
     videoReference: {
       url: "https://youtu.be/QE9RrCjt428?t=157",
-      state: "sampled",
+      state: "interval-sampled",
+      sampleWindows: [{ fromSec: 156, toSec: 162, stepSec: 1, frameCount: 6 }],
+      continuityNotes: [
+        "156.75秒先出現紫藍 A 段衝擊波，157～158秒角色高速貼近，158.5秒進入角色特寫，159～160秒以交叉斬光收束。",
+        "A、B 兩段必須看得出先後；B 段 dash 不能只移動特效而不移動角色。",
+      ],
       keyframes: [
-        { atSec: 157.71, label: "A 段：一道寬大的紫藍斬擊衝擊波橫越角色與目標" },
-        { atSec: 158.91, label: "B 段：角色近身特寫與藍紫雷光，身體動作是主體" },
+        { atSec: 156.75, label: "A 段：一道寬大的紫藍斬擊衝擊波橫越角色與目標" },
+        { atSec: 158.5, label: "B 段：角色近身特寫與藍紫雷光，身體動作是主體" },
+        { atSec: 159.5, label: "終結：交叉主斬光一次收束，不堆成無動作的小月牙扇" },
       ],
     },
   },
@@ -194,10 +224,16 @@ export const VFX_FORGE_ACCEPTANCE_SOURCES: readonly AcceptanceSourceEntry[] = [
     },
     videoReference: {
       url: "https://youtu.be/XkFlhrLaHeA?t=68",
-      state: "sampled",
+      state: "interval-sampled",
+      sampleWindows: [{ fromSec: 67, toSec: 75, stepSec: 1, frameCount: 8 }],
+      continuityNotes: [
+        "67～69秒先維持橘金蓄力姿勢，69.5～70.5秒白藍核心擴張，71～72.5秒為持續橫向光束，73秒後才是命中煙霧。",
+        "Owner 的橘色版本仍是最終色彩裁決，但角色蓄力、槍口核心、持續束、目標反應四段都要保留。",
+      ],
       keyframes: [
-        { atSec: 68.86, label: "起手：角色全身橘金氣焰聚能，先看得見施展姿勢" },
-        { atSec: 71.91, label: "命中：白藍高亮核心佔主要輪廓；顏色仍以 Owner 指定的橘色版本為準" },
+        { atSec: 68, label: "起手：角色全身橘金氣焰聚能，先看得見施展姿勢" },
+        { atSec: 70, label: "發射：角色與槍口白亮核心仍可辨識，不能只剩滿畫面曝光" },
+        { atSec: 72, label: "持續：橫向主束保持粗細與方向；顏色以 Owner 指定的橘色版本為準" },
       ],
     },
   },
@@ -221,11 +257,17 @@ export const VFX_FORGE_ACCEPTANCE_SOURCES: readonly AcceptanceSourceEntry[] = [
     },
     videoReference: {
       url: "https://youtu.be/KwAlIYfmV48?t=83",
-      state: "queued",
+      state: "interval-sampled",
+      sampleWindows: [{ fromSec: 83, toSec: 101, stepSec: 1, frameCount: 18 }],
+      continuityNotes: [
+        "83～90.5秒是黃金防禦、承受與反擊，92～94.5秒重新聚能，95～98秒逐刀斬擊，98.5～100秒才落下單一巨大金白終結光束。",
+        "兩招合併仍須保留事件邊界；每刀要配角色攻擊與受害者反應，只有最後一擊能使用壓倒性的主光束。",
+      ],
       keyframes: [
-        { atSec: 83, label: "Avalon 反擊起手" },
-        { atSec: 91, label: "動畫連斬" },
-        { atSec: 100, label: "黃藍終結砲" },
+        { atSec: 85, label: "Avalon：黃金防禦層承受攻擊，Saber 有明確格擋姿勢" },
+        { atSec: 89, label: "反擊：Saber 離開防禦姿勢出刀，目標產生受擊與倒地" },
+        { atSec: 96, label: "連斬：角色逐刀揮砍並換位，斬光附著在每次攻擊動線" },
+        { atSec: 99.5, label: "終結：單一巨大金白光束落下，不以多枚小月牙取代" },
       ],
     },
   },
@@ -249,10 +291,16 @@ export const VFX_FORGE_ACCEPTANCE_SOURCES: readonly AcceptanceSourceEntry[] = [
     },
     videoReference: {
       url: "https://youtu.be/KwAlIYfmV48?t=446",
-      state: "queued",
+      state: "interval-sampled",
+      sampleWindows: [{ fromSec: 432, toSec: 451, stepSec: 0.5, frameCount: 38 }],
+      continuityNotes: [
+        "連結的446秒已落在下一段演出；向前擴取後，Rider 本段約在437～439.5秒：先壓低身體 dash，再形成單一巨大藍白橫向主束，命中後角色落地。",
+        "驗收以實際動作段而非 URL 起點字面值為準；角色位移、主束與落點反應不可拆成彼此無關的三個特效。",
+      ],
       keyframes: [
-        { atSec: 446, label: "Rider 本體 dash" },
-        { atSec: 447, label: "藍色橫向主光束與落點" },
+        { atSec: 437, label: "起手：Rider 壓低身體並朝目標 dash，角色本體是主體" },
+        { atSec: 438.5, label: "主擊：單一巨大藍白橫向光束沿 dash 方向貫穿畫面" },
+        { atSec: 439.5, label: "落點：目標受擊倒地、Rider 完成位移，不留下第二組重複主束" },
       ],
     },
   },

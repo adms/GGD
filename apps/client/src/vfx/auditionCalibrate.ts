@@ -83,6 +83,10 @@ export async function calibrateTwoWay(opts: {
   const qm = new StandardMaterial("calib-mat", scene as never);
   qm.emissiveColor = new Color3(1, 1, 1);
   qm.disableLighting = true;
+  // The audition cameras do not all share the same handedness.  The control
+  // plane must remain visible from either side or a healthy ruler can compare
+  // the unchanged scene against itself and fail the dark half of calibration.
+  qm.backFaceCulling = false;
   quad.material = qm;
   quad.parent = camera as never;
   quad.position.set(0, 0, 5);

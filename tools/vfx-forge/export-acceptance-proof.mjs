@@ -166,7 +166,7 @@ const lines = [
   `- 來源：\`${relative(REPO, PROPOSALS)}\` 的 hash-locked proposal framebuffer`,
   "- 對戰：真 Sim／真 VfxSystem／真 CameraRig／雙方真 3D 外觀；目標固定為非替身、非鏡像的 `godie-e001`",
   `- 雙向量尺：通過（亮 ${manifest.calibration.brightPixels}／暗亮點 ${manifest.calibration.darkBrightPixels}／暗顯影 ${manifest.calibration.darkVisiblePixels}）`,
-  "- 每招保留兩個由時間軸「建議關鍵格」選出的完整 Runtime 畫面；不是只截資料面板",
+  "- 每招保留兩個由時間軸事件選出的完整 Runtime 關鍵格（可採系統建議或人工精確秒數）；不是只截資料面板",
   "- `reviewHash` 同時綁定 JSON、擷圖、說明與 GPU 收據，任一變更都必須重新人工審查",
   `- 視覺稽核資格：${allAuditsCurrent ? "全部為 @3 且逐張通過，可進人工裁決" : "包含舊世代或缺少逐張關鍵格稽核，已禁止正向裁決"}`,
   "- 自動分數僅供人工分流，不代表原作還原、動作正確或已通過",

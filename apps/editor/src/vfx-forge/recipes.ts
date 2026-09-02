@@ -54,7 +54,9 @@ export function buildVfxForgeRecipe(
   } else if (id === "line-blast-fire") segments = lineBlastFire();
   else if (id === "dash-slash-void") segments = dashSlashVoid();
   else if (id === "shockwave-dash-light") segments = shockwaveDashLight();
-  else if (id === "combo-slash-holy") segments = comboSlashHoly(options.includeFinalColumn ?? true);
+  else if (id === "combo-slash-holy") {
+    segments = comboSlashHoly(options.includeFinalColumn ?? true, options.activationMode === "active");
+  }
   else if (id === "reflect-counter-open") segments = reflectCounterOpen();
   else if (id === "avalon-counter-chain") segments = avalonCounterChain();
   else segments = riderDashBeamBlue();
@@ -115,60 +117,81 @@ function classicBeam(
   const vfxId = fire ? "fx.prim.holy.beam-flat" : "fx.prim.lightning.beam-flat";
   const outerTint = fire ? [255, 132, 20] : [65, 155, 255];
   const coreTint = fire ? [255, 242, 190] : [215, 242, 255];
-  // Two pulses × outer/core: four bounded additive systems total. The earlier
-  // 2.2/1.0 scale with 0.24 alpha rendered as a few thin tracer hairs at the
-  // real CameraRig distance, not a classic horizontal energy beam. Keep the
-  // same shipped brick and budget, but make its broad outer body and hot core
-  // visually legible. Callers combining two colours can request one pulse per
-  // colour so the same four-system cap is preserved.
+  // Two pulses × outer/core leave two systems in the six-slot additive budget
+  // for the readable grammar a classic beam needs: a muzzle core and an impact
+  // bloom. The previous 1.7× time scale separated the stretched sprites into
+  // fast "hairs"; normal travel time plus overlap reads as a sustained beam.
   for (const atMs of pulseOffsetsMs) {
     segments.push(zVfxScriptSegment.parse({
       kind: "vfx", ...triggerFields(trigger, atMs), vfxId, at: anchor,
-      durationSec: 0.78, offsetForwardU: 0.8, w3xScale: 4.4,
+      durationSec: 1.15, offsetForwardU: 0.8, w3xScale: 3.2, timeScale: 1,
       // ReviveHuman's compositor pivot sits around hand/chest height. Keep the
       // helpers near that centreline but visibly subordinate: full-size
       // additive sprites at the exact model height collapsed into a white card.
-      tint: outerTint, flyHeight: 72, alpha: Math.min(1, 0.54 * particleAlphaScale),
+      tint: outerTint, flyHeight: 72, alpha: Math.min(1, 0.3 * particleAlphaScale),
       ...(sideOffsetU === 0 ? {} : { offsetSideU: sideOffsetU }),
       ...(yawOffsetDeg === 0 ? {} : { facingDeg: yawOffsetDeg }),
     }));
     segments.push(zVfxScriptSegment.parse({
       kind: "vfx", ...triggerFields(trigger, atMs + 35), vfxId, at: anchor,
-      durationSec: 0.78, offsetForwardU: 0.8, w3xScale: 2.2,
-      tint: coreTint, flyHeight: 72, alpha: Math.min(1, 0.78 * particleAlphaScale),
+      durationSec: 1.15, offsetForwardU: 0.8, w3xScale: 1.4, timeScale: 1,
+      tint: coreTint, flyHeight: 72, alpha: Math.min(1, 0.62 * particleAlphaScale),
       ...(sideOffsetU === 0 ? {} : { offsetSideU: sideOffsetU }),
       ...(yawOffsetDeg === 0 ? {} : { facingDeg: yawOffsetDeg }),
+    }));
+  }
+  // Single-pulse callers are combo finishers that already own their opening
+  // and impact. The full classic-beam card adds both endpoints so the picture
+  // says charge -> sustained body -> hit instead of looking like loose hairs.
+  if (pulseOffsetsMs.length > 1) {
+    segments.push(zVfxScriptSegment.parse({
+      kind: "vfx", ...triggerFields(trigger),
+      vfxId: fire ? "fx.prim.holy.pulse-sm" : "fx.prim.lightning.pulse-sm",
+      at: anchor, durationSec: 0.42, offsetForwardU: 0.5,
+      w3xScale: 1.35, tint: coreTint, flyHeight: 72,
+      alpha: Math.min(1, 0.72 * particleAlphaScale),
+      ...(sideOffsetU === 0 ? {} : { offsetSideU: sideOffsetU }),
+    }));
+    segments.push(zVfxScriptSegment.parse({
+      kind: "vfx", ...triggerFields(trigger, 650),
+      vfxId: fire ? "fx.prim.fire.explosion" : "fx.prim.lightning.pulse-lg",
+      at: "target", durationSec: 0.46, w3xScale: fire ? 1.05 : 0.9,
+      tint: outerTint, flyHeight: 68,
+      alpha: Math.min(1, 0.68 * particleAlphaScale),
     }));
   }
   return segments;
 }
 
-/** JASS A04R: one FireBlast locust travels 12u, then the endpoint explodes. */
+/** JASS A04R: a visible fire mass travels 12u, then the endpoint explodes. */
 function lineBlastFire(): VfxScriptSegment[] {
-  return [
+  // Three available model carriers were rejected by the real framebuffer:
+  // imported.fireblast exposed the diagnostic checker, RedDragon had a card,
+  // and Phoenix unfolded a giant white plane late in its animation. Compose a
+  // moving fire mass from Main's additive bolt primitive instead. Adjacent
+  // short-lived pulses overlap by one step, so it reads as one travelling
+  // projectile rather than seven unrelated explosions.
+  const travel = [1.2, 3.2, 5.2, 7.2, 9.2, 11.2].map((offsetForwardU, index) =>
     zVfxScriptSegment.parse({
-      kind: "modelFx", on: "castEffect", modelKey: "imported.fireblast",
-      path: "forward", speed: 27.5, distance: 12, spinDegPerSec: 360,
-      scale: 4.5, lifeSec: 0.5, offsetForwardU: 0.8, heightU: 0.8,
-      trailVfxId: "fx.prim.fire.bolt", trailIntervalSec: 0.08,
-    }),
+      kind: "vfx", on: "castEffect", atMs: index * 84,
+      vfxId: "fx.prim.fire.bolt", at: "self", offsetForwardU,
+      durationSec: 0.22, w3xScale: 1.25 + index * 0.04,
+      tint: [255, 70 - index * 5, 14], flyHeight: 80, alpha: 0.82,
+    }));
+  return [
+    ...travel,
     zVfxScriptSegment.parse({
       // The ability's authoritative blast radius is 8u.  The small primitive
       // read as a spark at the shipped 18u camera and made the projectile look
       // as if it simply vanished.  Use main's existing large burst and scale
       // it as the visible endpoint body; the following ring remains the fast
       // radial edge.  No damage/radius truth is duplicated here.
-      kind: "vfx", on: "castEffect", atMs: 440, vfxId: "fx.prim.fire.explosion-lg",
+      kind: "vfx", on: "castEffect", atMs: 500, vfxId: "fx.prim.fire.explosion-lg",
       at: "self", offsetForwardU: 12.8, durationSec: 0.52,
       w3xScale: 2.2, tint: [255, 72, 18], flyHeight: 80, alpha: 0.78,
     }),
     zVfxScriptSegment.parse({
-      kind: "vfx", on: "castEffect", atMs: 440, vfxId: "fx.fam.shockwave-ring.fire.s150",
-      at: "self", offsetForwardU: 12.8, durationSec: 0.52,
-      w3xScale: 1.1, flyHeight: 12, alpha: 0.64,
-    }),
-    zVfxScriptSegment.parse({
-      kind: "screenShake", on: "castEffect", atMs: 440, amplitude: 0.42, durationSec: 0.45,
+      kind: "screenShake", on: "castEffect", atMs: 500, amplitude: 0.42, durationSec: 0.45,
     }),
   ];
 }
@@ -231,15 +254,28 @@ function shockwaveDashLight(): VfxScriptSegment[] {
   ];
 }
 
-function comboSlashHoly(includeFinalColumn: boolean): VfxScriptSegment[] {
+function comboSlashHoly(includeFinalColumn: boolean, includeOpeningAttack: boolean): VfxScriptSegment[] {
   const segments: VfxScriptSegment[] = [
+    ...(includeOpeningAttack
+      ? [zVfxScriptSegment.parse({
+          // Sword combos open with the character's real attack clip. Using
+          // the generic cast clip here is both visually weaker and unsafe for
+          // imported.cloud: its Spell animation exposes a legacy opaque mesh
+          // in the close Forge camera. The receipted caster.action takeover
+          // keeps Main's default cast from playing underneath this choice.
+          kind: "anim", on: "castStart", at: "caster", pulse: "attack", clipWindowMs: 650,
+        })]
+      : []),
     zVfxScriptSegment.parse({ kind: "anim", on: "strike", at: "caster", pulse: "attack", clipWindowMs: 320 }),
     zVfxScriptSegment.parse({ kind: "anim", on: "strike", at: "target", pulse: "hurt", clipWindowMs: 520 }),
     zVfxScriptSegment.parse({
       // Generic strike fires once per authoritative comboStrike: one actor
       // swing, one target reaction and exactly one receipted arc per damage beat.
       kind: "vfx", on: "strike", vfxId: singleArcVfxId("holy"), at: "target",
-      durationSec: 0.24, w3xScale: 1.05, flyHeight: 82, alpha: 0.72,
+      // One decisive oversized arc is the readable complement to one actor
+      // swing.  The old 1.05 scale disappeared behind the two bodies and
+      // encouraged authors to compensate with a 26-crescent fan.
+      durationSec: 0.3, w3xScale: 2.25, flyHeight: 82, alpha: 0.9,
     }),
   ];
   if (includeFinalColumn) {
@@ -297,7 +333,7 @@ function avalonCounterChain(): VfxScriptSegment[] {
       text: "AVALON · 理想鄉", colorRgb: [255, 232, 160], sizeScale: 1.55, durationSec: 1.1,
     }),
     ...bodyMoves,
-    ...comboSlashHoly(false),
+    ...comboSlashHoly(false, false),
     // The seventh hit changes from close slash into a charged beam. Give that
     // interval its own follow-through instead of leaving the character frozen
     // while four beam layers continue after the first attack clip ended.

@@ -103,15 +103,14 @@ describe("八招實際送審產物", () => {
       expect(["ggd-vfx-visual-audit@1", "ggd-vfx-visual-audit@2", "ggd-vfx-visual-audit@3"], id)
         .toContain(item.visualAudit.schema);
       expect(item.visualAudit, id).toMatchObject({ safe: true, worst: { unsafe: false } });
-      // @1／@2，或缺少逐張 frameAudit 的 @3，都是這批畫面揭露的
-      // 假陰性。保留畫面作失敗證據，但不得被測試誤叫成 current／
-      // passable。修正 Main 素材後必須由 UI 以完整 @3 重新提交，屆時
-      // 這條斷言也應連同報告一起升級。
+      // Every final fixture must be submitted from the UI with a complete @3
+      // timeline audit and a safe per-frame receipt.  This is evidence that
+      // the candidate is current; it is still not an Owner pass verdict.
       expect(
         item.visualAudit.schema === "ggd-vfx-visual-audit@3" &&
         item.visualEvidence.every((frame) => frame.frameAudit?.unsafe === false),
         id,
-      ).toBe(false);
+      ).toBe(true);
       expect(item.visualAudit.sampledFrames, id).toBeGreaterThan(0);
       expect(item.visualAudit.peakParticleCount, id).toBeGreaterThanOrEqual(0);
       expect(item.visualAudit.peakSystemCount, id).toBeGreaterThanOrEqual(0);
@@ -122,23 +121,7 @@ describe("八招實際送審產物", () => {
         activationMode: activationModeForAbility(abilityDoc),
         allowRapidBarrage: hasAuthoritativeRapidMultiStrike(abilityDoc),
       });
-      if (id === "godie-e002.ex") {
-        // This historical @1 proposal is deliberately retained as failed
-        // evidence. The newer actor-pair guard found that its late seventh-
-        // strike beam outlives the victim reaction window; changing JSON while
-        // reusing the old screenshots would forge a review receipt.
-        expect([...new Set(actionIssues.map((issue) => issue.code))], id)
-          .toEqual(["TARGET_REACTION_MISSING"]);
-      } else if (id === "godie-hart.r") {
-        // The stricter active-cast guard found a second historical defect:
-        // the submitted candidate animates every combo strike but never gives
-        // Cloud a castStart/castEffect action. Keep the old JSON/screenshots as
-        // failed evidence; the next @3 UI submission must rebuild it.
-        expect([...new Set(actionIssues.map((issue) => issue.code))], id)
-          .toEqual(["CAST_ACTION_MISSING"]);
-      } else {
-        expect(actionIssues, id).toEqual([]);
-      }
+      expect(actionIssues, id).toEqual([]);
       expect(candidate.segments.some((segment) =>
         segment.kind === "modelFx" && segment.modelKey === "w3x.stock.revivehuman",
       ), id).toBe(false);
@@ -171,7 +154,7 @@ describe("八招實際送審產物", () => {
     expect(manifest.cases.map((entry) => entry.id)).toEqual(VFX_FORGE_ACCEPTANCE.map(([id]) => id));
     for (const entry of manifest.cases) {
       expect(entry.candidateHash, entry.id).toBe(proposal(entry.id).candidateHash);
-      expect(entry.auditCurrent, entry.id).toBe(false);
+      expect(entry.auditCurrent, entry.id).toBe(true);
       expect(entry.frames.length, entry.id).toBeGreaterThanOrEqual(2);
       for (const frame of entry.frames) {
         const file = join(root, frame.filename);

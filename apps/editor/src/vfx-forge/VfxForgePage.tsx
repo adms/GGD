@@ -830,6 +830,7 @@ export function VfxForgePage() {
                   caster={runtimeChampion}
                   target={runtimeTarget}
                   mode={previewMode}
+                  assetRefsVerifiedSafe={assetPreviewAllowed}
                   onTime={onTime}
                   onStop={stop}
                   onDropAsset={(asset, placement) => { void addAsset(asset, placement); }}
