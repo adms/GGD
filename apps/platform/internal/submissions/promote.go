@@ -116,6 +116,30 @@ func RejectReviewerClaims(payload string) error {
 //
 // ⭐ 三個條件全部要成立，⛔ 而 fixture 那一條是**無法被覆蓋**的。
 func Promotable(m Material, v Verdict) (bool, string) {
+	return PromotableWithOwnership(m, v, nil)
+}
+
+// PromotableWithOwnership 是 Promotable 加上**產生器擁有權**那一問（GH#932）。
+//
+// ── ⛔ 交接文件逐字 ─────────────────────────────────────────────────────
+// 「在 source adapter 尚未出貨以前，content-api 必須 **fail closed**：
+//
+//	`/content-api/ai-review/promote` 遇到 generator-owned ability／champion
+//	必須回 409；⛔ 通用 whole-document Promote…都不能成為繞路。」
+//
+// ── ⭐ 而在此之前**沒有任何東西問得出這一題** ──────────────────────────
+// `Material` 沒有 `Target` ⇒ 一份候選**沒說它要換掉哪一份文件**
+// ⇒ ⛔ 「那是不是產生器的產物」這個問題連問都問不出來。
+//
+// ⚠️ ⭐ 而它有實質後果：直接寫產生器的產物 ⇒ 下一次 `pnpm skills:sync`
+// 把它打回來，⛔ 而那個「又變回去了」看起來像**新的**錯。
+//
+// ── ⭐ 三條 fail-closed（每一條都是「不知道 ⇒ 拒絕」）────────────────────
+//
+//	① 沒有 `Target` ⇒ 拒絕（⛔ 不是「沒宣告就當它安全」）
+//	② 沒有 `GeneratorOwned` 可問 ⇒ 拒絕（⛔ 不是「查不到就放行」）
+//	③ 查得到而**是**產物 ⇒ 拒絕，⭐ 並指向 source adapter 那條路
+func PromotableWithOwnership(m Material, v Verdict, own GeneratorOwned) (bool, string) {
 	if m.Kind == KindCapabilityFixture {
 		// ⭐ owner 2026-09-01：八招是「編輯器**做不做得出**」的證明，
 		//   ⛔ 不是「這一招**可以出貨**」的證明。⇒ 即使人工 pass 也不可上線。
@@ -127,6 +151,27 @@ func Promotable(m Material, v Verdict) (bool, string) {
 	if v.ApprovedDigest == "" || v.ApprovedDigest != m.Digest {
 		// ⭐ 與 Discoverable 同一個機制：內容換過一個位元組，舊裁決立即失效。
 		return false, "verdict was issued for different bytes (candidate changed since review)"
+	}
+	// ── ⭐ 產生器擁有權（GH#932）—— 三條都是「不知道 ⇒ 拒絕」 ───────────────
+	if m.Target == nil || m.Target.Collection == "" || m.Target.ID == "" {
+		return false, "candidate does not declare a target document; " +
+			"promotion cannot check whether that document is generator-owned " +
+			"(a direct write to a generator product is reverted by the next `pnpm skills:sync`)"
+	}
+	if own == nil {
+		return false, "no ownership oracle available; refusing to promote without " +
+			"checking whether the target is a generator product (fail-closed)"
+	}
+	owned, ok := own.IsGeneratorOwned(m.Target.Collection, m.Target.ID)
+	if !ok {
+		return false, "ownership of " + m.Target.Collection + "/" + m.Target.ID +
+			" is unknown; refusing to promote (unknown is not the same as safe)"
+	}
+	if owned {
+		return false, m.Target.Collection + "/" + m.Target.ID +
+			" is a generator product: promote it through the source adapter " +
+			"(POST /content-api/editor-source), never as a whole-document write — " +
+			"a direct write is reverted by the next `pnpm skills:sync`"
 	}
 	return true, ""
 }
@@ -155,7 +200,7 @@ func (s *Service) Promote(id, by string, rv Revalidator) (View, error) {
 		return View{}, httpx.NotFound("no such submission")
 	}
 	v, _ := s.verdictOf(id)
-	if ok, why := Promotable(m, v); !ok {
+	if ok, why := PromotableWithOwnership(m, v, s.owned); !ok {
 		return View{}, httpx.Err(409, "not_promotable", why)
 	}
 	receipt, err := rv(m)

@@ -73,10 +73,41 @@ type Material struct {
 	// ⭐ 它由**認證過的 actor 的角色**填，⛔ 不是包裡自稱的（規格 §4）。
 	Origin string `json:"origin,omitempty"`
 	// Digest 是這一份內容的指紋。⭐ 它是 Discoverable 第二個條件的左邊。
-	Digest    string    `json:"digest"`
+	Digest string `json:"digest"`
+	// Target 說這一份候選**要換掉哪一份出貨文件**（`abilities` / `godie-e00s.r`）。
+	//
+	// ⭐⭐ **它是 promote 的前提，⛔ 不是 submit 的前提**（GH#932 / 交接文件 P0-4）：
+	// 投稿與人工審查可以在還沒決定落點時進行，⛔ 而**上線**不行 ——
+	// ⚠️ 一份「不知道要換掉什麼」的候選，沒有任何東西問得出
+	// 「那一份是不是產生器的產物」。
+	//
+	// ⚠️ ⭐ 而那個問題有實質後果：直接寫產生器的產物 ⇒
+	// 下一次 `pnpm skills:sync` 把它打回來，⛔ 而那個「又變回去了」
+	// 看起來像**新的**錯（owner 2026-08-24：「發生上百次」）。
+	Target    *Target   `json:"target,omitempty"`
 	Payload   string    `json:"payload"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
+}
+
+// Target 是一份候選的落點（出貨文件的 collection ＋ id）。
+type Target struct {
+	Collection string `json:"collection"`
+	ID         string `json:"id"`
+}
+
+// GeneratorOwned 回「這一份出貨文件是不是產生器的產物」。
+//
+// ⭐⭐ **注入而不是 import**：擁有權的答案住在 `tools/parallel-gates/sync-io.json`
+// （量出來的戶籍表），⛔ 而那是 TypeScript 那一側的東西。
+// ⇒ ⭐ 照這個 repo 既有的接縫形狀：一個介面 ＋ **nil 就 fail-closed**。
+//
+// ⚠️ ⭐ `nil` 的語意是**拒絕**，⛔ 不是放行 —— 交接文件逐字：
+// 「在 source adapter 尚未出貨以前，content-api 必須 **fail closed**」。
+type GeneratorOwned interface {
+	// IsGeneratorOwned 回 (是不是產物, 查得到嗎)。
+	// ⛔ `ok=false` ⇒ 呼叫端**拒絕 promote**（查不到 ≠ 不是產物）。
+	IsGeneratorOwned(collection, id string) (owned bool, ok bool)
 }
 
 // Verdict 是**管理者寫的**那一半。⛔ 這裡沒有任何內容欄位。
@@ -173,7 +204,12 @@ func normalizeMaterial(in Material, now time.Time) (Material, error) {
 type Service struct {
 	store *jsonstore.Store
 	now   func() time.Time
+	// ⭐ GH#932 —— 產生器擁有權的來源。**nil ⇒ promote 一律拒絕**（fail-closed）。
+	owned GeneratorOwned
 }
+
+// SetGeneratorOwned 注入擁有權來源。⛔ 不注入 ⇒ promote 全部拒絕。
+func (s *Service) SetGeneratorOwned(g GeneratorOwned) { s.owned = g }
 
 // New builds the service around the platform jsonstore.
 func New(store *jsonstore.Store) *Service {

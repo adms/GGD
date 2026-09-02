@@ -8,6 +8,7 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -334,6 +335,12 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 	// content/.
 	curationSvc := curation.New(store, rdb, curation.WithContentDir(cfg.ContentDir))
 	submissionsSvc := submissions.New(store)
+	// ⭐ GH#932 —— promote 的產生器擁有權來源（讀**量出來的**戶籍表）。
+	//   ⛔ 不注入 ⇒ promote 一律拒絕（fail-closed，見 PromotableWithOwnership）。
+	//   ⚠️ `ContentDir` 是 `<repo>/content` ⇒ 上一層就是 repo 根。
+	submissionsSvc.SetGeneratorOwned(
+		submissions.NewSyncIOOwnership(filepath.Dir(cfg.ContentDir)),
+	)
 	// #189 durable content overlay: the data/ store that lets an admin content
 	// edit survive a git pull on the host (content/ there is a :ro mount).
 	//
