@@ -1,6 +1,6 @@
 # GGD Main ↔ Codex Editor：必要接縫結案收據
 
-狀態：**Revision 18 — Main `29f8628f`（含 v0.35.15）已整合；替身英雄棘輪已同步，六個可重用積木／契約阻塞仍未落地**
+狀態：**Revision 19 — Main `29f8628f`（含 v0.35.15）已整合；主動起手與被動反應守衛再收緊，六個可重用積木／契約阻塞仍未落地**
 
 核對基準：`origin/main@29f8628f`（包含 tag `v0.35.15` at `7d032d9c`）
 
@@ -9,7 +9,7 @@ Main seam：`origin/feat/editor-seam-20260902@29f8628f` 與 `main` 同一點；�
 
 Editor：`feat/vfx-forge-codex`（禁止直接提交或推送 `main`）
 
-最後核對：**2026-09-02 13:22（Asia/Taipei）**
+最後核對：**2026-09-02 13:36（Asia/Taipei）**
 
 ## 結論
 
@@ -193,10 +193,12 @@ Owner 裁決：角色演出不是 Editor 八招的特例，而是 Main 所有技
 on-hit 不重播假施法；block 是 guard、evade 是 dodge；專屬 script 不與預設疊兩次；缺 clip fallback 可見且穩定。
 所有預設 VFX 仍須經亮／暗 CameraRig framebuffer 去背守衛，schema 合法不能代替視覺安全。
 
-Editor 已於 2026-09-02 12:54 將「每個權威 strike 同時具有 caster attack＋target reaction」寫成守衛與
-自動補完。八份目前來源 fixture 皆通過；舊理想鄉 EX `@1` 送審物則被抓到第七刀 650–710ms 超出目標
-反應窗。舊 JSON／擷圖維持失敗證據，Editor 不要求 Main 代修該技能成品；這只證明 Main 的全域 resolver
-也必須有相同 actor-pair 底線，不能讓粒子時間軸在角色靜止時獨自播放。
+Editor 已將「每個權威 strike 同時具有 caster attack＋target reaction」與「主動技能必須另外具有
+castStart／castEffect 起手」寫成兩條獨立守衛與自動補完；recipe 呼叫端也強制傳入 runtime active/passive
+mode，純被動不會因為套一張反擊 recipe 就長出假 cast。八份目前來源 fixture 皆通過；舊理想鄉 EX `@1`
+送審物仍缺第七刀後段目標反應，舊超究武神霸斬送審物則只有逐刀 strike、沒有真正施展起手。舊 JSON／擷圖
+維持失敗證據，Editor 不要求 Main 代修技能成品；這只證明 Main 的全域 resolver 必須同時守住 cast 與
+actor-pair 兩層，不能讓後續連段動作冒充施法，也不能讓粒子時間軸在角色靜止時獨自播放。
 
 Editor 的 current 收據已提升為 `ggd-vfx-visual-audit@3`：除了完整時間軸抽樣，送審的每張
 關鍵格都會在精確時間點重新讀回 framebuffer。這已抓到 `godie-ogrh.r` 1.356 秒約

@@ -36,8 +36,10 @@ const PLANS: Readonly<Record<string, string>> = {
   // (lane P2 — real bodies that fight and expire) and `periodicDamage` (lane P1
   // `dot`). All three had a confession here and a `false` in SIM_CAPABILITIES
   // while their handlers, registry rows and behavioural tests were already
-  // shipping. Only `combo` is still genuinely absent.
-  combo: "鎖定連段未支援 — 一次施放只跑一輪效果，分段時序不表現",
+  // shipping. `combo` followed in GH#541: comboStrikes now resolves every beat
+  // separately and combo-finisher expands through the shipped family. Keep no
+  // dead confession here — if a future capability becomes partial, add its
+  // concrete substitute only while SIM_CAPABILITIES marks it unavailable.
 };
 
 /** Absent capabilities this template declares, with their degradation plans. */

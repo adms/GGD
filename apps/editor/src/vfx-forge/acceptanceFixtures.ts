@@ -60,28 +60,28 @@ function withoutKinds(
 function compose(abilityId: string, base: readonly VfxScriptSegment[]): VfxScriptSegment[] {
   switch (abilityId) {
     case "godie-hjai.e":
-      return [...withoutKinds(base, ["modelFx", "vfx", "screenShake"]), ...buildVfxForgeRecipe("line-blast-fire")];
+      return [...withoutKinds(base, ["modelFx", "vfx", "screenShake"]), ...buildVfxForgeRecipe("line-blast-fire", { activationMode: "active" })];
     case "godie-hjai.r":
       return [
         ...base.filter((segment) => segment.on === "castStart"),
-        ...buildVfxForgeRecipe("dash-slash-void"),
+        ...buildVfxForgeRecipe("dash-slash-void", { activationMode: "active" }),
       ];
     case "godie-nbbc.r":
       return [
         ...base.filter((segment) => segment.on === "castStart"),
-        ...buildVfxForgeRecipe("shockwave-dash-light"),
+        ...buildVfxForgeRecipe("shockwave-dash-light", { activationMode: "active" }),
       ];
     case "godie-hart.r":
-      return [...withoutKinds(base, ["anim", "vfx", "modelFx"]), ...buildVfxForgeRecipe("combo-slash-holy")];
+      return [...withoutKinds(base, ["anim", "vfx", "modelFx"]), ...buildVfxForgeRecipe("combo-slash-holy", { activationMode: "active" })];
     case "godie-nbbc.e":
     case "godie-ogrh.r": {
       const recipe = abilityId === "godie-ogrh.r" ? "classic-beam-fire" : "classic-beam-blue";
-      return [...withoutKinds(base, ["modelFx", "vfx"]), ...buildVfxForgeRecipe(recipe)];
+      return [...withoutKinds(base, ["modelFx", "vfx"]), ...buildVfxForgeRecipe(recipe, { activationMode: "active" })];
     }
     case "godie-hvsh.r":
-      return buildVfxForgeRecipe("rider-dash-beam-blue");
+      return buildVfxForgeRecipe("rider-dash-beam-blue", { activationMode: "active" });
     case "godie-e002.ex":
-      return buildVfxForgeRecipe("avalon-counter-chain");
+      return buildVfxForgeRecipe("avalon-counter-chain", { activationMode: "passive" });
     default:
       return [...base];
   }

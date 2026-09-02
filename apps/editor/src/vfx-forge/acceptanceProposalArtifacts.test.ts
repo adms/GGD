@@ -129,6 +129,13 @@ describe("八招實際送審產物", () => {
         // reusing the old screenshots would forge a review receipt.
         expect([...new Set(actionIssues.map((issue) => issue.code))], id)
           .toEqual(["TARGET_REACTION_MISSING"]);
+      } else if (id === "godie-hart.r") {
+        // The stricter active-cast guard found a second historical defect:
+        // the submitted candidate animates every combo strike but never gives
+        // Cloud a castStart/castEffect action. Keep the old JSON/screenshots as
+        // failed evidence; the next @3 UI submission must rebuild it.
+        expect([...new Set(actionIssues.map((issue) => issue.code))], id)
+          .toEqual(["CAST_ACTION_MISSING"]);
       } else {
         expect(actionIssues, id).toEqual([]);
       }

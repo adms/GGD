@@ -106,8 +106,11 @@ export function actionAnimationIssues(
   const issues: ActionAnimationIssue[] = [];
   const indexed = doc.segments.map((segment, index) => ({ segment, index }));
   const visible = indexed.filter(({ segment }) => VISIBLE_KINDS.has(segment.kind));
-  const actions = indexed.filter(
-    ({ segment }) => segment.kind === "anim" && segment.at === "caster",
+  const castActions = indexed.filter(
+    ({ segment }) =>
+      segment.kind === "anim" &&
+      segment.at === "caster" &&
+      (segment.on === "castStart" || segment.on === "castEffect"),
   );
 
   const passive = options.activationMode === "passive";
@@ -123,11 +126,15 @@ export function actionAnimationIssues(
       });
     }
   }
-  if (!passive && doc.segments.some((segment) => segment.kind !== "anim") && actions.length === 0) {
+  // A strike/reaction pulse later in the timeline is not a cast action. Every
+  // active script has at least one segment (schema min=1), so require an
+  // explicit caster action on the actual cast channel even when the authored
+  // presentation currently contains only sound, text, or target animation.
+  if (!passive && castActions.length === 0) {
     issues.push({
       code: "CAST_ACTION_MISSING",
-      message: "技能有可見演出，但沒有施法者的施展／攻擊動作。",
-      segmentIndexes: visible.map(({ index }) => index),
+      message: "主動技能缺少施法者在 castStart／castEffect 的真正施展動作；後續 strike／反應動作不能冒充起手。",
+      segmentIndexes: indexed.map(({ index }) => index),
     });
   }
 
@@ -263,28 +270,22 @@ export function completeActionAnimations(
   const completed = [...segments];
   const visible = segments.filter((segment) => VISIBLE_KINDS.has(segment.kind));
   const passive = options.activationMode === "passive";
-  const hasCasterAction = completed.some(
-    (segment) => segment.kind === "anim" && segment.at === "caster",
+  const hasCastAction = completed.some(
+    (segment) =>
+      segment.kind === "anim" &&
+      segment.at === "caster" &&
+      (segment.on === "castStart" || segment.on === "castEffect"),
   );
 
   // Every authored active/reaction scene starts with an actual actor, even if
   // the only original brick is sound, flash or hideBody. Pick a trigger that
   // can really fire for this script; never invent a behavior event.
-  if (!passive && segments.some((segment) => segment.kind !== "anim") && !hasCasterAction) {
-    const first = visible[0] ?? segments[0]!;
-    const on = first.on === "reflectSuccess"
-      ? "reflectSuccess"
-      : first.on === "strike"
-        ? "strike"
-        : "castStart";
+  if (!passive && segments.length > 0 && !hasCastAction) {
     completed.unshift({
       kind: "anim",
-      on,
-      ...(on === "strike" && first.strikeIndex !== undefined
-        ? { strikeIndex: first.strikeIndex }
-        : {}),
+      on: "castStart",
       at: "caster",
-      pulse: on === "strike" ? "attack" : "cast",
+      pulse: "cast",
       clipWindowMs: 650,
     });
   }

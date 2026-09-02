@@ -1,6 +1,6 @@
 # 特效工坊（VFX Forge）· 技術規格 —— 給 Codex
 
-狀態：**Revision 8 — 2026-09-02 13:22 CST，以 `origin/main@29f8628f`（含 v0.35.15）與 `feat/vfx-forge-codex` 程式／隔離測試重驗**
+狀態：**Revision 9 — 2026-09-02 13:36 CST，以 `origin/main@29f8628f`（含 v0.35.15）與 `feat/vfx-forge-codex` 程式／隔離測試重驗**
 
 > 本文保留 2026-08-31 的出發點，但「缺口」必須以各節的目前狀態為準；不可把舊基線當成今天的待辦。
 
@@ -171,16 +171,18 @@ fail／reject，但禁止 pass／approve／Promote。不得替舊核准補欄位
 
 ### 3.1 角色動作與斬擊模板原則（2026-09-02）
 
-1. 任何有可見演出的主動技能，至少要有施法者 `anim`；不能用粒子代替角色施展動作。
+1. 任何主動技能都要有施法者綁在 `castStart`／`castEffect` 的 `anim`；後續 `strike`、反彈或目標受擊動作不能冒充施展動作，也不能用粒子代替角色起手。
 2. 時間軸技能在每個 `strike`、`bodyMove` 起點與終結間隔都要有覆蓋該時間窗的角色動作；權威 `strike` 同時要求施法者攻擊與目標受擊反應。一段動作結束後仍在播特效，視為缺件。
 3. 普通近戰的一個傷害節點＝一個角色攻擊動作＋一個主斬弧。不得用多個月牙堆出「看似有動畫」的扇形。
 4. 只有 ability JSON 的權威 `comboStrikes` 證明它是極速連斬（例如九頭龍閃、三千世界）才能例外；VFX 自己排出三個月牙、技能名稱或備註都不能替自己取得豁免。例外內仍要求至少三個、小型、分時出現的單弧，而不是同幀重疊。
 5. `fx.prim.*.slash*` 現有每份都是 `burstCount:26`，一個 segment 本身就會噴 26 個月牙；Editor 對普通斬擊一律阻擋。Main 需提供可調色／大小／方向、一次只畫一弧的 `single-arc` 積木，Editor 才能按第 3、4 點組合。
 
 對應的可執行守衛與自動補動作住在
-`apps/editor/src/vfx-forge/actionAnimationPrinciples.ts`；八招目前來源 fixture 全數通過同一條守衛，沒有技能專用豁免。
-舊 `godie-e002.ex` 的 `@1` 送審物被新守衛抓到第七刀後段缺目標反應；它保留為失敗證據，禁止把舊擷圖
-配上補動作後的新 JSON。Main 共用積木到位後必須從 Forge 重新播放、擷取並產生新的 `@3` 收據。
+`apps/editor/src/vfx-forge/actionAnimationPrinciples.ts`；recipe API 強制要求呼叫端傳入 runtime 的 active/passive mode，
+八招目前來源 fixture 全數通過同一條守衛，沒有技能專用豁免。舊送審物則揭露兩個不可回填的歷史缺陷：
+`godie-e002.ex` 的 `@1` 第七刀後段缺目標反應，`godie-hart.r` 只有逐刀攻擊而沒有真正的
+`castStart`／`castEffect` 施展動作。兩份 JSON／擷圖都保留為失敗證據，禁止把舊擷圖配上補動作後的新 JSON。
+Main 共用積木到位後必須從 Forge 重新播放、擷取並產生新的完整 `@3` 收據。
 
 ### 3.2 被動技能演出模板原則（2026-09-02）
 

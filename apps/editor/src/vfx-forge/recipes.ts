@@ -32,12 +32,14 @@ export interface VfxForgeRecipeTrigger {
 export function buildVfxForgeRecipe(
   id: VfxForgeRecipeId,
   options: {
+    /** Required: a passive reaction must never inherit an active castStart. */
+    activationMode: "active" | "passive";
     includeModelCore?: boolean;
     includeFinalColumn?: boolean;
     trigger?: VfxForgeRecipeTrigger;
     beamAnchor?: "self" | "target";
     beamYawOffsetDeg?: number;
-  } = {},
+  },
 ): VfxScriptSegment[] {
   let segments: VfxScriptSegment[];
   if (id === "classic-beam-fire" || id === "classic-beam-blue") {
@@ -55,7 +57,7 @@ export function buildVfxForgeRecipe(
   else if (id === "reflect-counter-open") segments = reflectCounterOpen();
   else if (id === "avalon-counter-chain") segments = avalonCounterChain();
   else segments = riderDashBeamBlue();
-  return completeActionAnimations(segments);
+  return completeActionAnimations(segments, { activationMode: options.activationMode });
 }
 
 /**

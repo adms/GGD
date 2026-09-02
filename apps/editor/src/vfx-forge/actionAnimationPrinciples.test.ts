@@ -33,6 +33,37 @@ describe("VFX Forge action-animation principles", () => {
     expect(actionAnimationIssues(doc(segments))).toEqual([]);
   });
 
+  it("does not mistake a later strike or target reaction for the active cast action", () => {
+    const strikeOnly = doc([
+      { kind: "anim", on: "strike", at: "caster", pulse: "attack" },
+      { kind: "anim", on: "strike", at: "target", pulse: "hurt" },
+    ]);
+    expect(actionAnimationIssues(strikeOnly).map((issue) => issue.code))
+      .toContain("CAST_ACTION_MISSING");
+
+    const completed = completeActionAnimations(strikeOnly.segments);
+    expect(completed).toContainEqual(expect.objectContaining({
+      kind: "anim",
+      on: "castStart",
+      at: "caster",
+      pulse: "cast",
+    }));
+    expect(actionAnimationIssues(doc(completed))).toEqual([]);
+  });
+
+  it("gives an active reflect scene a real cast before its later reaction", () => {
+    const completed = completeActionAnimations([
+      { kind: "anim", on: "reflectSuccess", at: "caster", pulse: "cast" },
+    ]);
+    expect(completed[0]).toEqual(expect.objectContaining({
+      kind: "anim",
+      on: "castStart",
+      at: "caster",
+      pulse: "cast",
+    }));
+    expect(actionAnimationIssues(doc(completed))).toEqual([]);
+  });
+
   it("rejects a fan of two crescents in one ordinary strike window", () => {
     const issues = actionAnimationIssues(doc([
       { kind: "anim", on: "strike", at: "caster", pulse: "attack", clipWindowMs: 500 },

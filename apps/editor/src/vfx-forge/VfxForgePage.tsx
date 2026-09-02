@@ -342,12 +342,13 @@ export function VfxForgePage() {
   };
   const addRecipe = async (id: VfxForgeRecipeId): Promise<void> => {
     if (!draft || !ability) return;
-    const segments = buildVfxForgeRecipe(id, { includeModelCore: false });
+    const activationMode = activationModeForAbility(ability);
+    const segments = buildVfxForgeRecipe(id, { includeModelCore: false, activationMode });
     const candidate: VfxScriptDoc = {
       ...draft,
       segments: completeActionAnimations(
         [...draft.segments, ...segments],
-        { activationMode: activationModeForAbility(ability) },
+        { activationMode },
       ),
     };
     const checks = await assetSafetyGate.checkScript(candidate);

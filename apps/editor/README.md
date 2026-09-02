@@ -50,7 +50,9 @@ updates browser history, and Back/Forward restores the matching screen.
   human can score it. The eight fixtures are server-classified and permanently
   non-promotable even if a client lies about their purpose.
   Changing a segment's representation preserves its trigger, `strikeIndex`
-  and exact timeline offset. Every authoritative strike is guarded as an actor
+  and exact timeline offset. Every active script separately requires a caster
+  action on `castStart`/`castEffect`; a later strike cannot masquerade as its
+  cast. Every authoritative strike is guarded as an actor
   pair: the caster attack and target reaction must both cover that beat, so a
   cloud of slash particles cannot pass while either character remains static.
 - **Champions / Skins** — complete schema forms plus live final stats and the
