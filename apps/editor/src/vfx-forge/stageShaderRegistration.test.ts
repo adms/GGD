@@ -60,10 +60,23 @@ describe("VFX Forge paused rendering", () => {
     expect(source).not.toContain("new Engine(canvas");
   });
 
+  it("delegates champion bodies and action clips to the shipped ChampionView", () => {
+    const source = readFileSync(new URL("./VfxForgeStage.ts", import.meta.url), "utf8")
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .replace(/^\s*\/\/.*$/gm, "");
+    expect(source).toContain("new ChampionView(this.scene, entityId, champion.modelKey");
+    expect(source).toContain("view.tryUpgradeToGlb(this.assets, doc, champion.bodyScale)");
+    expect(source).toContain("view.beginCast(windowMs, this.nowMs)");
+    expect(source).toContain("view.beginAttack(windowMs, this.nowMs)");
+    expect(source).toContain("view.anim.update({ alive: true, moving: false }, this.nowMs)");
+    expect(source).not.toContain("resolveClips(actor.groups");
+  });
+
   it("fails closed when a parsed GLB does not visibly alter the real framebuffer", () => {
     const source = readFileSync(new URL("./VfxForgeStage.ts", import.meta.url), "utf8");
     expect(source).toContain("MIN_ACTOR_VISIBLE_PIXELS = 250");
     expect(source).toContain("measureActorVisibility(actor)");
+    expect(source).toContain("const root = actor.glbRoot ?? actor.bodyRoot");
     expect(source).toContain("3D 預覽完整性未通過，禁止建立視覺證據");
     expect(source).toContain("actor.fallbackForced = true");
   });

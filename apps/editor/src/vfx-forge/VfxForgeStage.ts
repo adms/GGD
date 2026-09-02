@@ -10,8 +10,7 @@ import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import type { ParticleSystem } from "@babylonjs/core/Particles/particleSystem";
-import type { AssetContainer, InstantiatedEntries } from "@babylonjs/core/assetContainer";
-import type { AnimationGroup } from "@babylonjs/core/Animations/animationGroup";
+import type { AssetContainer } from "@babylonjs/core/assetContainer";
 import type { Mesh } from "@babylonjs/core/Meshes/mesh";
 import type { EventMessage } from "@ggd/shared/protocol/messages";
 import type { ModelDoc, VfxDoc } from "@ggd/shared/content";
@@ -28,19 +27,12 @@ import { AssetManager } from "../../../client/src/render/AssetManager";
 import { CameraRig } from "../../../client/src/render/CameraRig";
 import { setupLighting, type LightingHandle } from "../../../client/src/render/Lighting";
 import { Renderer } from "../../../client/src/render/Renderer";
-import { resolveClips, type ClipState } from "../../../client/src/render/ClipAnimator";
 import { buildZoneGround } from "../../../client/src/render/ArenaGround";
-import { facingToYaw } from "../../../client/src/render/math/motion";
-import { glbYawOffset } from "../../../client/src/render/views/glbFacing";
-import {
-  applyHiddenPrimitives,
-  ENABLED_ONLY,
-} from "../../../client/src/render/views/hiddenPrimitives";
+import { ChampionView } from "../../../client/src/render/views/ChampionView";
 import {
   applyModelTint,
   releaseModelTint,
 } from "../../../client/src/render/views/modelTint";
-import { normalizedModelScale } from "../../../client/src/render/views/modelSizing";
 import { VfxScriptPlayer } from "../../../client/src/vfx/VfxScriptPlayer";
 import { VfxSystem } from "../../../client/src/vfx/VfxSystem";
 import { vfxHardMaxLifeSec } from "../../../client/src/vfx/vfxCleanupPolicy";
@@ -161,11 +153,10 @@ interface ForgeActor {
   readonly position: { x: number; z: number };
   readonly facing: { x: number; z: number };
   champion: ChampionDef | null;
-  instance: InstantiatedEntries | null;
+  /** The real gameplay actor presentation — Forge never reimplements its GLB attach path. */
+  view: ChampionView | null;
   bodyRoot: TransformNode | null;
   glbRoot: TransformNode | null;
-  groups: AnimationGroup[];
-  clipMap: ModelDoc["clipMap"] | null;
   /** Real GLB loaded but did not draw legibly; keep a marked local fallback instead. */
   fallbackForced: boolean;
   idleAfterMs: number;
@@ -190,8 +181,6 @@ export class VfxForgeStage {
   /** Last authored particle placement, surfaced in the Forge HUD for aim QA. */
   private lastVfxAim: string | null = null;
   private generation = 0;
-  /** Missing presentation clips are visible authoring defects, but report once per actor/pulse. */
-  private readonly warnedActorClips = new Set<string>();
   private textSerial = 0;
   private disposed = false;
   private teardownStarted = false;
@@ -914,18 +903,22 @@ export class VfxForgeStage {
       position: { ...position },
       facing,
       champion,
-      instance: null,
+      view: null,
       bodyRoot: null,
       glbRoot: null,
-      groups: [],
-      clipMap: null,
       fallbackForced: false,
       idleAfterMs: 0,
       hiddenUntilMs: 0,
     };
   }
 
-  /** Replace the coloured fallback with the same champion GLB presentation used in game. */
+  /**
+   * Replace the coloured fallback with the exact champion presentation used in
+   * a match.  This deliberately delegates attachment, normalisation, ground
+   * seating and clip timing to ChampionView; duplicating those rules here made
+   * an Editor-only third renderer that could drift even when every individual
+   * value looked plausible.
+   */
   private async loadActor(actor: ForgeActor): Promise<void> {
     const champion = actor.champion;
     if (!champion) return;
@@ -936,55 +929,38 @@ export class VfxForgeStage {
       const resolved = resolveAppearance(champion.id, champion, doc);
       if (!resolved.ok) throw new Error(`resolved-appearance@1: ${resolved.failure.kind}`);
       const appearance = resolved.appearance;
-      const container = await this.assets.load(appearance.glbPath);
-      if (!container) throw new Error(`GGD AssetManager 無法載入 ${appearance.glbPath}`);
       if (this.disposed || this.scene.isDisposed) {
         return;
       }
-      // Match ChampionView/StorePreview exactly: champion instances share the
-      // loaded container's source materials.  `cloneMaterials:true` looks like
-      // useful editor isolation, but Babylon can clone a glTF PBR material
-      // before its embedded albedo texture has reached the ready state; a
-      // frame-stepped seek then photographs that clone as a permanent white
-      // silhouette.  The shipped game deliberately uses `false`, and the
-      // Forge must render the same pixels it is accepting.
-      const instance = container.instantiateModelsToScene(
-        (name) => `forge-${actor.role}-${name}`,
-        false,
-        { doNotInstantiate: true },
-      );
-      const bodyRoot = new TransformNode(`forge-${actor.role}-body`, this.scene);
-      bodyRoot.position.set(actor.position.x, 0, actor.position.z);
-      bodyRoot.rotation.y = facingToYaw(actor.facing.x, actor.facing.z);
-      const glbRoot = new TransformNode(`forge-${actor.role}-glb`, this.scene);
-      glbRoot.parent = bodyRoot;
-      glbRoot.rotation.y = glbYawOffset(doc);
-      for (const node of instance.rootNodes) node.parent = glbRoot;
-      const visible = applyHiddenPrimitives(glbRoot.getChildMeshes(false), doc.hiddenPrimitives);
-      if (visible.length === 0) {
-        instance.dispose();
-        bodyRoot.dispose(false, false);
+      const entityId = actor.role === "caster" ? 900_001 : 900_002;
+      const view = new ChampionView(this.scene, entityId, champion.modelKey, actor.role === "caster" ? 0 : 1);
+      view.setPose(actor.position.x, actor.position.z, actor.facing.x, actor.facing.z);
+      view.tryUpgradeToGlb(this.assets, doc, champion.bodyScale);
+      actor.view = view;
+      actor.bodyRoot = view.root;
+      actor.fallback.setEnabled(false);
+      // AssetManager's cache and the view's adoption callback are both async.
+      // Wait only through the same bounded authoring window used by the Forge;
+      // a missing GLB is a rejected visual candidate, never an infinite spinner.
+      const deadline = Date.now() + ACTOR_READY_BUDGET_MS;
+      while (!view.adoptedGlb && Date.now() < deadline && !this.disposed && !this.scene.isDisposed) {
+        this.renderScene();
+        await new Promise<void>((resolve) => globalThis.setTimeout(resolve, STEP_MS));
+      }
+      const glbRoot = this.scene.getTransformNodeByName(`champ-${entityId}-glb`);
+      if (!view.adoptedGlb || !glbRoot) {
+        actor.fallbackForced = true;
+        view.root.setEnabled(false);
+        actor.fallback.setEnabled(true);
+        const issue = `${champion.name} · ${appearance.modelKey} 未在 ${ACTOR_READY_BUDGET_MS}ms 內採用遊戲 GLB`;
+        this.visualAssetIssues.add(issue);
+        this.actorStatus[actor.role] = `⚠ ${issue}，已顯示替身並封鎖視覺驗收`;
+        this.emitOverlay("3D 模型未就緒，候選不得送審");
         return;
       }
-      glbRoot.computeWorldMatrix(true);
-      const native = glbRoot.getHierarchyBoundingVectors(true, ENABLED_ONLY);
-      const finalScale = normalizedModelScale(
-        native.max.y - native.min.y,
-        doc.scale,
-        champion.bodyScale,
-      );
-      glbRoot.scaling.setAll(finalScale);
-      glbRoot.computeWorldMatrix(true);
-      const rendered = glbRoot.getHierarchyBoundingVectors(true, ENABLED_ONLY);
-      if (Number.isFinite(rendered.min.y)) glbRoot.position.y = -rendered.min.y;
-      applyModelTint(glbRoot, champion);
-      actor.instance = instance;
-      actor.bodyRoot = bodyRoot;
       actor.glbRoot = glbRoot;
-      actor.groups = [...instance.animationGroups];
-      actor.clipMap = doc.clipMap;
-      actor.fallback.setEnabled(false);
-      this.playActor(actor, "idle", true);
+      const visible = glbRoot.getChildMeshes(false);
+      applyModelTint(glbRoot, champion);
       // A normal game render loop reaches the PBR/texture-ready boundary on
       // its own. Forge commonly pauses at frame zero, so render once and give
       // the scene a bounded chance to settle before compiling this actor.
@@ -1017,19 +993,20 @@ export class VfxForgeStage {
         actor.fallbackForced = true;
         actor.bodyRoot.setEnabled(false);
         actor.fallback.setEnabled(true);
-        const issue = `${champion.name} · ${appearance.modelKey} 3D 模型在真實 framebuffer 僅改變 ${visibility.changedPixels} 像素`;
+        const meshState = visible
+          .slice(0, 5)
+          .map((mesh) => `${mesh.name}:${mesh.isEnabled() ? "on" : "off"}/${mesh.isVisible ? "visible" : "hidden"}/v${mesh.visibility.toFixed(2)}`)
+          .join(", ");
+        const issue = `${champion.name} · ${appearance.modelKey} 3D 模型在真實 framebuffer 僅改變 ${visibility.changedPixels} 像素（${meshState || "0 meshes"}）`;
         this.visualAssetIssues.add(issue);
         this.actorStatus[actor.role] = `⚠ ${issue}，已顯示替身並封鎖視覺驗收`;
         this.emitOverlay("3D 模型不可辨識，候選不得送審");
         return;
       }
-      const height = rendered.max.y - rendered.min.y;
-      const centerX = (rendered.min.x + rendered.max.x) / 2;
-      const centerZ = (rendered.min.z + rendered.max.z) / 2;
       this.actorStatus[actor.role] =
         `${appearance.isStandIn ? "⚠ 共用替身 · " : ""}${champion.name} · ${appearance.modelKey} · ` +
         `${visible.length} meshes · ` +
-        `h${height.toFixed(2)} · ×${finalScale.toFixed(3)} · @${centerX.toFixed(1)},${centerZ.toFixed(1)} · 材質已預熱`;
+        `×${(view.declaredScale ?? 0).toFixed(3)} · Main ChampionView · 材質已預熱`;
       // The script may already be scrubbed past a pulse while this GLB loaded.
       this.seek(this.nowMs);
     } catch (error) {
@@ -1050,12 +1027,10 @@ export class VfxForgeStage {
 
   private disposeActor(actor: ForgeActor): void {
     if (actor.glbRoot) releaseModelTint(actor.glbRoot);
-    actor.instance?.dispose();
-    actor.bodyRoot?.dispose(false, false);
-    actor.instance = null;
+    actor.view?.dispose();
+    actor.view = null;
     actor.bodyRoot = null;
     actor.glbRoot = null;
-    actor.groups = [];
     actor.fallbackForced = false;
   }
 
@@ -1130,36 +1105,20 @@ export class VfxForgeStage {
     }));
   }
 
-  private playActor(actor: ForgeActor, clip: "idle" | AnimPulse, loop: boolean): void {
-    if (actor.groups.length === 0) return;
-    for (const group of actor.groups) group.stop();
-    const resolved = resolveClips(actor.groups, actor.clipMap ?? undefined);
-    const requested = resolved.get(clip as ClipState);
-    const fallback = resolved.get("idle");
-    if (requested === undefined) {
-      const warningKey = `${actor.role}:${clip}`;
-      if (!this.warnedActorClips.has(warningKey)) {
-        this.warnedActorClips.add(warningKey);
-        this.emitOverlay(
-          `⚠ ${actor.role} 找不到 ${clip} 動作；依 Main 契約退回同角色 idle，請檢查 GLB 動畫`,
-        );
-      }
-    }
-    const index = requested ?? fallback;
-    const group = index === undefined ? null : actor.groups[index] ?? null;
-    if (group) group.start(loop, 1);
-  }
-
   private actorForEntity(id: number): ForgeActor {
     return id === this.casterEntityId() ? this.actors.caster : this.actors.target;
   }
 
   private pulseActor(id: number, kind: AnimPulse, clipWindowMs?: number): void {
     const actor = this.actorForEntity(id);
-    this.playActor(actor, kind, false);
-    actor.idleAfterMs = this.nowMs + (
-      clipWindowMs ?? PRESENTATION_RECEIPT.actorPulses.defaultWindowMs[kind]
-    );
+    const windowMs = clipWindowMs ?? PRESENTATION_RECEIPT.actorPulses.defaultWindowMs[kind];
+    const view = actor.view;
+    if (view) {
+      if (kind === "cast") view.beginCast(windowMs, this.nowMs);
+      else if (kind === "attack") view.beginAttack(windowMs, this.nowMs);
+      else view.pulse(kind, this.nowMs, { windowMs });
+    }
+    actor.idleAfterMs = this.nowMs + windowMs;
     this.emitOverlay(`動畫脈衝：${kind}`);
   }
 
@@ -1184,7 +1143,6 @@ export class VfxForgeStage {
       actor.hiddenUntilMs = 0;
       actor.bodyRoot?.setEnabled(!actor.fallbackForced);
       actor.fallback.setEnabled(actor.bodyRoot === null || actor.fallbackForced);
-      this.playActor(actor, "idle", true);
     }
     this.setActorPose(this.homePose);
     // Timeline replay keeps preloaded GLB containers and reuses pooled geometry;
@@ -1239,6 +1197,12 @@ export class VfxForgeStage {
       viewportHeight: this.engine.getRenderHeight(),
     });
     this.applyReviewOrbit();
+    for (const actor of Object.values(this.actors)) {
+      const view = actor.view;
+      if (!view) continue;
+      const state = view.anim.update({ alive: true, moving: false }, this.nowMs);
+      view.update(state, this.nowMs, dtMs);
+    }
     this.reap();
     if (render) this.renderScene();
     if (notify) this.emitOverlay("播放中");
@@ -1299,15 +1263,15 @@ export class VfxForgeStage {
       caster.facing.z = dz / len;
       target.facing.x = -dx / len;
       target.facing.z = -dz / len;
-      if (caster.bodyRoot) caster.bodyRoot.rotation.y = facingToYaw(caster.facing.x, caster.facing.z);
-      if (target.bodyRoot) target.bodyRoot.rotation.y = facingToYaw(target.facing.x, target.facing.z);
+      caster.view?.setPose(caster.position.x, caster.position.z, caster.facing.x, caster.facing.z);
+      target.view?.setPose(target.position.x, target.position.z, target.facing.x, target.facing.z);
     }
   }
 
   private moveActor(actor: ForgeActor, x: number, z: number): void {
     actor.position.x = x;
     actor.position.z = z;
-    actor.bodyRoot?.position.set(x, 0, z);
+    actor.view?.setPose(x, z, actor.facing.x, actor.facing.z);
     actor.fallback.position.set(x, 0.85, z);
   }
 
@@ -1349,7 +1313,10 @@ export class VfxForgeStage {
     visible: boolean;
     changedPixels: number;
   }> {
-    const root = actor.bodyRoot;
+    // `ChampionView.root` also carries a team ring and blob shadow. Those are
+    // intentionally visible even when an adopted GLB fails to draw, so they
+    // must never count as proof that the character body is renderable.
+    const root = actor.glbRoot ?? actor.bodyRoot;
     const width = this.engine.getRenderWidth();
     const height = this.engine.getRenderHeight();
     if (!root || width <= 0 || height <= 0) return { visible: true, changedPixels: 0 };
@@ -1568,7 +1535,6 @@ export class VfxForgeStage {
       }
       if (actor.idleAfterMs > 0 && actor.idleAfterMs <= this.nowMs) {
         actor.idleAfterMs = 0;
-        this.playActor(actor, "idle", true);
       }
     }
   }
