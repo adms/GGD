@@ -2,7 +2,7 @@
 
 狀態：**Revision 5.0 — Main 關鍵接縫已完成，等待 feature branch 可取得後驗證**
 
-最後驗證：**2026-09-02 07:59（Asia/Taipei）**
+最後驗證：**2026-09-02 08:15（Asia/Taipei）**
 
 可直接交給 Main Codex 的最小訊息：
 [`docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md`](docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md)。
@@ -18,12 +18,16 @@ Main 回報 `feat/editor-seam-20260902` 的 `b54441df8`、`cf40d5db3` 已完成�
 因此 Main 本輪沒有新的程式功能待辦。唯一必要動作是把該 feature branch 推到 origin，仍然不要推 main，
 讓 Editor 分支能抓取並跑 integration tests。
 
+本次重新驗證：origin 沒有任何 `*editor*`／`*seam*` branch；直接 fetch 兩個 commit SHA 也失敗；正式站
+contract-index／runtime-bundle 均為 404。因此仍只能驗證 Editor 消費端，不能宣稱真接縫已完成。
+
 ## Editor 接下來自行完成
 
 ```text
 contract-index
   → 決定 ability@1／item@1 是否支援及可用 modes
   → 未知 representation fail closed
+  → URL bridge 只允許 target profile 同源的固定 contract-index path
 
 active/runtime-bundle
   → 重算每份 hashDoc
@@ -37,6 +41,11 @@ effectiveVfxLimits
   → 讀八個 resolver 實際值
   → null maxOneShotEmitters = Infinity
   → 不完整時拒收遠端收據，預覽明示降級到本機 resolver
+
+generator-owned write
+  → Forge 寫入前重新讀 ability 與 champion 的 editor-source receipt
+  → champion mirror 只有 writePolicy=document 才可 PATCH
+  → source-adapter／readonly／缺收據全部在送出前拒絕
 ```
 
 ## 保持抽象化分工

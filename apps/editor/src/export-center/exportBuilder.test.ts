@@ -19,6 +19,8 @@ const target: TargetProfileFacts = {
   contentVersion: "cv_base",
   capabilityFingerprint: "caps",
   profileDigest: "profile",
+  contractIndexDigest: "contract",
+  contractIndexHref: "/api/v1/content-import/contract-index",
   implementedStage: "G2",
   authoringStoreState: "ready",
   supportedModes: ["bootstrap", "full", "delta"],

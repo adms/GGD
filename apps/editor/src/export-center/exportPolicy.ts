@@ -1,3 +1,5 @@
+import { modesFor, promotionPolicyFor, type EditorContractIndex } from "./editorContractIndex";
+
 export const DEFAULT_TARGET_PROFILE_URL =
   "https://ggd.adms.ai/content/editor-target-profile.json";
 
@@ -8,6 +10,8 @@ export interface TargetProfileFacts {
   contentVersion: string | null;
   capabilityFingerprint: string | null;
   profileDigest: string | null;
+  contractIndexDigest: string | null;
+  contractIndexHref: string | null;
   implementedStage: string | null;
   authoringStoreState: string | null;
   supportedModes: readonly PackageMode[];
@@ -53,6 +57,7 @@ export function readTargetProfileFacts(profile: unknown): TargetProfileFacts {
   const content = record(root["content"]);
   const base = record(root["base"]);
   const contract = record(root["contract"]);
+  const contractIndex = record(root["contractIndex"]);
   const authoringProcessor = record(root["authoringProcessor"]);
   const compiler = record(root["compiler"]) ?? record(contract?.["compiler"]);
   const authoringModel = record(root["authoringModel"]);
@@ -69,6 +74,8 @@ export function readTargetProfileFacts(profile: unknown): TargetProfileFacts {
     contentVersion: stringOrNull(base?.["contentVersion"]) ?? stringOrNull(content?.["contentVersion"]),
     capabilityFingerprint: stringOrNull(runtime?.["fingerprint"]),
     profileDigest: stringOrNull(root["profileDigest"]),
+    contractIndexDigest: stringOrNull(contractIndex?.["digest"]),
+    contractIndexHref: stringOrNull(contractIndex?.["href"]),
     implementedStage: stringOrNull(root["implementedStage"]),
     authoringStoreState: stringOrNull(root["authoringStoreState"]),
     supportedModes: modes(root["supportedModes"]),
@@ -92,14 +99,30 @@ export function readTargetProfileFacts(profile: unknown): TargetProfileFacts {
   };
 }
 
-export function packageModeBlockers(facts: TargetProfileFacts, mode: PackageMode): readonly string[] {
+export function packageModeBlockers(
+  facts: TargetProfileFacts,
+  mode: PackageMode,
+  contractIndex: EditorContractIndex | null,
+): readonly string[] {
   const blockers: string[] = [];
+  if (!contractIndex) blockers.push("缺少已驗證的 Main contract-index");
   if (!facts.supportedModes.includes(mode)) blockers.push(`目標未宣告支援 ${mode}`);
   if (!facts.contentVersion) blockers.push("缺少 base.contentVersion");
   if (!facts.gameRevision) blockers.push("缺少 base.gameRevision");
-  if (facts.implementedStage !== "G2") blockers.push("目標未宣告 importer G2");
-  if (!facts.authoringAccepts.includes("ability@1") || !facts.authoringAccepts.includes("item@1")) {
-    blockers.push("目標未宣告接受 ability@1／item@1 authoring");
+  if (mode === "bootstrap") {
+    if (facts.implementedStage !== "G1" && facts.implementedStage !== "G2") {
+      blockers.push("目標未宣告 importer G1／G2");
+    }
+  } else if (facts.implementedStage !== "G2") {
+    blockers.push("目標未宣告 importer G2");
+  }
+  for (const representation of ["ability@1", "item@1"] as const) {
+    if (!modesFor(contractIndex, representation).includes(mode)) {
+      blockers.push(`contract-index 未宣告 ${representation} 支援 ${mode}`);
+    }
+    if (promotionPolicyFor(contractIndex, representation) !== "admin-package-apply") {
+      blockers.push(`contract-index 未允許 ${representation} 走 admin package apply`);
+    }
   }
   if (
     facts.authoringProcessorKind !== "runtime-direct" ||

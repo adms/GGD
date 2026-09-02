@@ -123,6 +123,12 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ url }),
     }),
+  /** Bounded, allow-listed bridge for the Main-owned machine contract registry. */
+  externalContractIndex: (profileUrl: string, href: string) =>
+    request<Record<string, unknown>>(`${BASE}/external-contract-index`, {
+      method: "POST",
+      body: JSON.stringify({ profileUrl, href }),
+    }),
   /**
    * Main-owned source lookup. `null` is the compatibility state while an older
    * content-api has not shipped the route; policy then fails safe from the

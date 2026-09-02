@@ -1,6 +1,6 @@
 # GGD 本機技能／VFX Editor 進度與收尾稽核
 
-狀態：2026-09-02 07:59（Asia/Taipei）
+狀態：2026-09-02 08:15（Asia/Taipei）
 
 Editor branch：`feat/vfx-forge-codex`
 
@@ -37,6 +37,10 @@ Main 回報 `feat/editor-seam-20260902` 的 `b54441df8`、`cf40d5db3` 已交付 
   在 Editor 可見 clone 也不存在。不得把文字回報冒充已完成 integration。
 - Main 回報 target profile 仍誠實宣告 `implementedStage=G1`、`supportedModes=["bootstrap"]`；
   Editor 不會為了讓 full／delta 按鈕變亮而猜 ACTIVE receipt。
+- 正式站 profile 實測 `cv_8e0ba5078c33`／digest `5c202f60e0a9`，仍缺 contractIndex 與 VFX receipt metadata；
+  contract-index／active runtime-bundle route 均回 404。
+- contract-index bridge 4 files／8 tests（含固定同源 path、schema、bytes）；Editor contract／bundle／Forge
+  4 files／24 tests 全通過，production build 通過。
 - 第一次在受限 sandbox 執行兩項 tsx freshness command 時，Unix socket `listen EPERM`；
   改用允許的 `/private/tmp/ggd-tsx-ipc` 後同一命令通過。這是執行環境限制，沒有把它誤報成產品回歸。
 
@@ -57,6 +61,15 @@ Main 回報 `feat/editor-seam-20260902` 的 `b54441df8`、`cf40d5db3` 已交付 
 | 嚴格自我驗證 | 已證明 | shared Zod、exact refs、JCS/package/archive hashes、ZIP safety、ACTIVE receipt、完整 Base collection/doc/contentVersion hashes、delta closure、UI reachability、4943 格雙向 coverage 與 README receipt 守衛。Importer 仍須獨立重驗。 |
 | 不做 Warcraft 3 完整地圖編輯器 | 已遵守 | 沒有地形筆刷、單位擺放、region/trigger authoring 或素材匯入工作流。Contract 中 map/arena 的一般 schema 表單與檢視器只是內容文件 coverage，不是地圖編輯子系統。 |
 | 不直接修改遊戲主程式 | 已遵守 | Editor branch 不推 main；Main 本輪只需讓既有 `feat/editor-seam-20260902` 可取得，沒有再要求重做 importer 或非阻塞功能。 |
+
+### Generator-owned 繞路核對
+
+- Codex Editor 沒有呼叫 `POST :collection/:id/restore`。
+- Forge 會用 `PATCH champions/:id/abilities/:slot` 寫 standalone ability 的 champion mirror；舊版只看
+  ability provenance，無法證明 champion product 可直接寫。
+- 現在確認畫面與實際執行都讀 Main `editor-source`：ability 與 champion 各自必須是
+  `writePolicy=document`；source-adapter、readonly、缺收據皆在送出 PATCH 前拒絕。Main route guard 是第二鎖，
+  不能用來取代 Editor 端來源真相提示。
 
 ## 本輪補出的真缺口
 

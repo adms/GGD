@@ -2,6 +2,16 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { packageModeBlockers, readTargetProfileFacts, rawRuntimeSchemaFor } from "./exportPolicy";
+import { readEditorContractIndex } from "./editorContractIndex";
+
+const contractIndex = readEditorContractIndex({
+  schema: "ggd-editor-contract-index@1",
+  digest: "contract",
+  representations: [
+    { representation: "ability@1", packageKind: "runtime-document", state: "supported", minStage: "G2", modes: ["bootstrap", "full", "delta"], promotionPolicy: "admin-package-apply" },
+    { representation: "item@1", packageKind: "runtime-document", state: "supported", minStage: "G2", modes: ["bootstrap", "full", "delta"], promotionPolicy: "admin-package-apply" },
+  ],
+});
 
 describe("Export Center target-profile policy", () => {
   it("reads both shipped-editor and live-content profile shapes", () => {
@@ -20,7 +30,7 @@ describe("Export Center target-profile policy", () => {
       contract: { compiler: { contractVersion: null, fingerprint: null } },
     });
     expect(shipped).toMatchObject({ contentVersion: "cv_a", supportedModes: ["bootstrap"] });
-    expect(packageModeBlockers(shipped, "bootstrap")).not.toContain(
+    expect(packageModeBlockers(shipped, "bootstrap", contractIndex)).not.toContain(
       "目標沒有可 pin 的 runtime-direct authoringProcessor receipt",
     );
 
@@ -42,9 +52,14 @@ describe("Export Center target-profile policy", () => {
         fingerprint: "fp",
       },
       runtimeCapabilities: { fingerprint: "caps2" },
+      contractIndex: { digest: "contract", href: "/api/v1/content-import/contract-index" },
       authoringModel: { accepts: ["ability@1", "item@1"] },
     });
-    expect(packageModeBlockers(live, "delta")).toEqual([]);
+    expect(live).toMatchObject({
+      contractIndexDigest: "contract",
+      contractIndexHref: "/api/v1/content-import/contract-index",
+    });
+    expect(packageModeBlockers(live, "delta", contractIndex)).toEqual([]);
   });
 
   it("never treats G1 or a missing exact base as production-ready", () => {
@@ -60,7 +75,7 @@ describe("Export Center target-profile policy", () => {
         fingerprint: "fp",
       },
     });
-    expect(packageModeBlockers(facts, "delta")).toEqual(expect.arrayContaining([
+    expect(packageModeBlockers(facts, "delta", contractIndex)).toEqual(expect.arrayContaining([
       "缺少 base.activationDigest",
       "缺少 base.authoringDigest",
       "目標未宣告 importer G2",
@@ -76,10 +91,10 @@ describe("Export Center target-profile policy", () => {
     const root = join(__dirname, "..", "..", "..", "..");
     const facts = readTargetProfileFacts(JSON.parse(readFileSync(join(root, "content", "editor-target-profile.json"), "utf8")));
     for (const mode of ["bootstrap", "full", "delta"] as const) {
-      expect(packageModeBlockers(facts, mode), mode).not.toEqual([]);
+      expect(packageModeBlockers(facts, mode, null), mode).not.toEqual([]);
     }
-    expect(packageModeBlockers(facts, "bootstrap")).toEqual(expect.arrayContaining([
-      "目標未宣告 importer G2",
+    expect(packageModeBlockers(facts, "bootstrap", null)).toEqual(expect.arrayContaining([
+      "缺少已驗證的 Main contract-index",
       "缺少 base.gameRevision",
     ]));
   });

@@ -12,6 +12,10 @@ import {
   type TargetProfileFacts,
 } from "./exportPolicy";
 import {
+  readEditorContractIndex,
+  type EditorContractIndex,
+} from "./editorContractIndex";
+import {
   buildRuntimePackage,
   buildRuntimePackageZip,
   resolveDeltaRuntimeClosure,
@@ -79,6 +83,7 @@ async function mapConcurrent<T, R>(values: readonly T[], limit: number, fn: (val
 export function ExportCenterPage() {
   const [profileUrl, setProfileUrl] = useState(savedProfileUrl);
   const [profile, setProfile] = useState<TargetProfileFacts | null>(null);
+  const [contractIndex, setContractIndex] = useState<EditorContractIndex | null>(null);
   const [profileStatus, setProfileStatus] = useState("尚未讀取目標 profile");
   const [collection, setCollection] = useState<"abilities" | "items">("abilities");
   const [docId, setDocId] = useState("");
@@ -103,12 +108,21 @@ export function ExportCenterPage() {
       const raw = await api.externalTargetProfile(profileUrl.trim());
       const facts = readTargetProfileFacts(raw);
       setProfile(facts);
+      setContractIndex(null);
       setBaseSnapshot(null);
       setBaseStatus("full／delta 需要載入與這份 profile 相同版本的 active runtime bundle。");
-      setProfileStatus(`已讀取 ${facts.schema}`);
+      if (!facts.contractIndexHref || !facts.contractIndexDigest) {
+        setProfileStatus(`⚠️ 已讀取 ${facts.schema}，但缺少 contractIndex.href／digest；Package 維持封鎖`);
+      } else {
+        const rawIndex = await api.externalContractIndex(profileUrl.trim(), facts.contractIndexHref);
+        const verifiedIndex = readEditorContractIndex(rawIndex, facts.contractIndexDigest);
+        setContractIndex(verifiedIndex);
+        setProfileStatus(`已讀取 ${facts.schema} · contract ${verifiedIndex.digest}`);
+      }
       try { localStorage.setItem(PROFILE_URL_KEY, profileUrl.trim()); } catch { /* optional */ }
     } catch (error) {
       setProfile(null);
+      setContractIndex(null);
       setProfileStatus(`⛔ ${String(error)}`);
     }
   };
@@ -135,11 +149,11 @@ export function ExportCenterPage() {
     ...row,
     blockers: profile
       ? [
-        ...packageModeBlockers(profile, row.mode),
+        ...packageModeBlockers(profile, row.mode, contractIndex),
         ...(row.mode !== "bootstrap" && !baseSnapshot ? ["尚未載入 exact base runtime bundle"] : []),
       ]
       : ["先讀取 target profile"],
-  })), [baseSnapshot, profile]);
+  })), [baseSnapshot, contractIndex, profile]);
 
   const loadBaseBundle = async (file: File | null): Promise<void> => {
     if (!file || !profile?.contentVersion) return;
@@ -285,6 +299,7 @@ export function ExportCenterPage() {
             <div><dt>Content</dt><dd>{profile.contentVersion ?? "未提供"}</dd></div>
             <div><dt>Capabilities</dt><dd>{profile.capabilityFingerprint ?? "未提供"}</dd></div>
             <div><dt>Profile digest</dt><dd>{profile.profileDigest ?? "未提供"}</dd></div>
+            <div><dt>Contract index</dt><dd>{contractIndex?.digest ?? profile.contractIndexDigest ?? "未提供"}</dd></div>
             <div><dt>Importer</dt><dd>{profile.implementedStage ?? "靜態 profile"}</dd></div>
             <div><dt>Authoring store</dt><dd>{profile.authoringStoreState ?? "未提供"}</dd></div>
             <div><dt>Game revision</dt><dd>{profile.gameRevision ?? "未提供"}</dd></div>

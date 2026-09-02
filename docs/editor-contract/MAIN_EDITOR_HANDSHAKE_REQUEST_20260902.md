@@ -6,7 +6,7 @@
 
 Main 已回報但 Editor 尚無法取得的 commits：`b54441df8`、`cf40d5db3`（分支 `feat/editor-seam-20260902`）
 
-最後核對：**2026-09-02 07:59（Asia/Taipei）**
+最後核對：**2026-09-02 08:15（Asia/Taipei）**
 
 Editor 分支：`feat/vfx-forge-codex`。雙方都禁止直接提交或推送 `main`。
 
@@ -19,6 +19,9 @@ Editor 分支：`feat/vfx-forge-codex`。雙方都禁止直接提交或推送 `m
 
 目前 `git fetch origin feat/editor-seam-20260902` 回 `couldn't find remote ref`，兩個 commit 在 Editor
 可見的 clone 也不存在，所以無法用真實 route 回應完成 integration test。
+
+正式站同步檢查也仍是舊版：`contract-index` 與 `active/runtime-bundle` 都回 404；公開 profile
+`cv_8e0ba5078c33`／`5c202f60e0a9` 尚未帶 contractIndex 與三個 VFX receipt metadata。
 
 ## Editor 會接的三份已完成契約
 
@@ -45,6 +48,9 @@ Editor 分支：`feat/vfx-forge-codex`。雙方都禁止直接提交或推送 `m
 - 不把 `godie-e00r` 換成 16 頂點 Eva 殘件；等待真資產與 appearance resolver（GGD#933/#934）。
 - 不把七色 palette 當 Editor importer 阻塞；維持 `matchesEngine=false` fail closed（GGD#935）。
 - 不重做 importer routes、ZIP guard、ACTIVE/CAS/rollback、source adapter、批核頁或 Promote 流程。
+- Main 回報已補 `PATCH champions/:id/abilities/:slot` 與 `POST :collection/:id/restore` 的 generator-owned
+  guard；不需再開新票。Editor 已加第二層：champion mirror 沒有 `writePolicy=document` 收據時不送 PATCH，
+  而 Editor 本身沒有呼叫 restore。
 
 ## 分支可抓後的最小回交證據
 

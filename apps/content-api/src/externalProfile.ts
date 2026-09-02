@@ -57,7 +57,7 @@ export function validateExternalProfileUrl(raw: unknown, allowedHosts: readonly 
   return url;
 }
 
-async function readBoundedBody(response: Response, maxBytes: number): Promise<Uint8Array> {
+export async function readBoundedBody(response: Response, maxBytes: number): Promise<Uint8Array> {
   const declared = Number(response.headers.get("content-length") ?? "0");
   if (Number.isFinite(declared) && declared > maxBytes) {
     throw new ExternalProfileError(413, `target profile 超過 ${maxBytes} bytes`);

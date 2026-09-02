@@ -232,6 +232,11 @@ export function ForgeStudio({
     queryFn: () => api.doc<Record<string, unknown>>("abilities", abilityId),
     enabled: abilityId !== "",
   });
+  const abilitySource = useQuery({
+    queryKey: ["forge", "editor-source", "abilities", abilityId],
+    queryFn: () => api.editorSource("abilities", abilityId),
+    enabled: abilityId !== "",
+  });
 
   // ---- the expansion. Same pure function the registry runs at boot. ----
   const expansion = useMemo(() => {
@@ -414,6 +419,14 @@ export function ForgeStudio({
     );
     return (owner as unknown as Record<string, unknown>) ?? null;
   }, [champions, abilityId]);
+  const championId = championDoc && typeof championDoc["id"] === "string"
+    ? championDoc["id"]
+    : "";
+  const championSource = useQuery({
+    queryKey: ["forge", "editor-source", "champions", championId],
+    queryFn: () => api.editorSource("champions", championId),
+    enabled: championId !== "",
+  });
 
   // ---- stack editing ------------------------------------------------------
   const setCardParams = (i: number, next: Record<string, unknown>): void =>
@@ -480,7 +493,10 @@ export function ForgeStudio({
 
   const buildPlan = () => {
     if (!host.data || !after) return;
-    setPlan(planForgeWrite(host.data, after, championDoc, docs));
+    setPlan(planForgeWrite(host.data, after, championDoc, docs, {
+      ability: abilitySource.data ?? null,
+      champion: championSource.data ?? null,
+    }));
     setSignedOff(false);
   };
 

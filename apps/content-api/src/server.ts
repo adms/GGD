@@ -74,6 +74,7 @@ import {
   fetchExternalTargetProfile,
   parseEditorProfileHosts,
 } from "./externalProfile";
+import { fetchExternalContractIndex } from "./externalContractIndex";
 import { AiReviewStore, type AiProposalPurpose, type AiVerdict } from "./aiReview";
 import type { EditorDesktopSourceInfo } from "@ggd/shared/editorDesktop";
 
@@ -201,6 +202,20 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
       if (error instanceof ExternalProfileError) return err(reply, error.statusCode, error.message);
       req.log.warn({ err: error }, "external target profile fetch failed");
       return err(reply, 502, `target profile 讀取失敗：${String(error)}`);
+    }
+  });
+
+  app.post("/content-api/external-contract-index", async (req, reply) => {
+    const body = req.body as { profileUrl?: unknown; href?: unknown } | null;
+    try {
+      return reply.send(await fetchExternalContractIndex(body?.profileUrl, body?.href, {
+        allowedHosts: opts.externalProfileHosts ?? parseEditorProfileHosts(process.env.GGD_EDITOR_PROFILE_HOSTS),
+        ...(opts.externalProfileFetch ? { fetchImpl: opts.externalProfileFetch } : {}),
+      }));
+    } catch (error) {
+      if (error instanceof ExternalProfileError) return err(reply, error.statusCode, error.message);
+      req.log.warn({ err: error }, "external contract-index fetch failed");
+      return err(reply, 502, `contract-index 讀取失敗：${String(error)}`);
     }
   });
 
