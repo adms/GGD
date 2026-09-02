@@ -7,6 +7,8 @@
  * ⛔ 而 owner 回報的是「**初號機**格擋成功沒出現特效」—— 那是兩個不同的宣稱。
  *
  * ⚠️ ⭐ 這一支跑的是**出貨內容**:`content/abilities/godie-e00r.e.json` 本人。
+ * ⚠️ 那份檔是 **`skillremake:json` · `castderive:build`** 的產物 ——
+ * ⛔ 要改它請改**產生器來源**再 `bash scripts/genrun.sh <step>`，⛔ 不要直接編那份 JSON。
  * ⇒ 內容側哪一天把 `vfxId` 拿掉、改名、或那一格 rank 結構變了 ⇒ 這裡紅。
  *
  * ⭐ 而票文自己也過期了（前提回驗，2026-09-02）:

@@ -73,7 +73,10 @@ export interface BlockRules {
    * ⚠️ 它存在的理由是一次量測，⛔ 不是平衡想法：owner 回報過**兩次**
    * 「初號機 AT力場格擋成功沒出現橘色光盾特效」，
    * ⭐ 而 2026-09-02 跑出貨鏈量到的是 —— **格擋成功時特效真的會發**
-   * （`blockVfxShippedAbility.test.ts`，跑 `content/abilities/godie-e00r.e.json` 本人）。
+   * （`blockVfxShippedAbility.test.ts`，跑 `content/abilities/godie-e00r.e.json` 本人 ——
+   * ⚠️ 那一份是**產生器的產物**：`bash scripts/genguard.sh <路徑>` 查擁有者，
+   * 要改就改**來源**再 `bash scripts/genrun.sh <step>`；⛔ 直接改出貨 JSON 會被
+   * 下一次 sync 打回來，而那個「又紅了」看起來像**新的**錯）。
    *
    * ⭐ 而他判斷「格擋成功」的依據（畫面上的 **GUARD** 字）**不是那一格擋的**：
    * `apps/client/src/ui/combatText.ts:363` 逐字

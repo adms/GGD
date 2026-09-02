@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-09-02 23:24 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-09-03 01:38 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.35.26 · 資料截至 2026-09-02 23:24 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-02 23:24 (GMT+8)</h1><div class="meta"><span>帳本 <b>15</b> 份</span><span>點名票號 <b>376</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.36.0 · 資料截至 2026-09-03 01:38 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-03 01:38 (GMT+8)</h1><div class="meta"><span>帳本 <b>16</b> 份</span><span>點名票號 <b>376</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -1087,6 +1087,14 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>23:12</td><td>我已經啟動 goal 了，請你把第六維度加入計劃書 跟給我一小段話 我補充給 claude code 就好</td><td>— ⭐ #942 的<b>六維更正</b>（第六維＝基礎值補償,owner 逐字「基礎傷害低就用高 AP 加成彌補」）⇒ 落在 <b>#942</b></td></tr>
 <tr><td>23:14</td><td>⭐ 補充 #942：公式是<b>六維</b>不是五維。 第六維＝<b>基礎值補償</b>（owner 2026-09-02 逐字：「有時候技能本身如果基礎傷害低， 我也會用高 AP/AD 加成來彌補，也請你考量這個變因」）。 coeff = BASE × 冷卻 × 吟唱 × 距離 × 目標形狀 × 條件 × 基礎值補償 依 damageTier 取值（落成一格 baseTierCompensation，三個住處，可一鍵關成全 1.0）： 極小 1.6 · 小 1.3 · 中 1.0 · 大 0.8 · 極大 0.6 ⚠️ 加了它 <b>BASE 必須重新校準</b>到全庫幾何平均 1.00 —— ⛔ 不可以直接…</td><td>#942 #928</td></tr>
 <tr><td>23:24</td><td>另外 如果是色違的也算是相似命中 例如 109 芙莉蓮（投票第 1 名 13%）—— 銀白雙馬尾＋白袍 ＋ 黑長襪 + 靴子 ＋精靈少女 ＋ 拿魔法長杖 的組合，849 顆裡一顆都沒有。(你原本寫綠袍錯誤蠻多請你如果都沒有命中可以多查證修正) 假設有一個精靈少女 但是黑頭髮雙馬尾 是沒關係的 因為用 AI 換顏色成本很低 又或者缺一根魔杖 也沒關係 很容易找到替代品附著</td><td>— 相似模型比對的判準補充（色違也算命中）⇒ 素材比對工作,⛔ 這一則不開票</td></tr>
+</table></div>
+<p># 2026-09-03</p>
+<blockquote>⭐ 這張表由 <code>scripts/message-ledger.sh</code> 從 session transcript <b>逐則</b>撈出來對帳，</blockquote>
+<blockquote><code>scripts/ruling.sh</code> 收到裁決時也寫進同一張表。</blockquote>
+<blockquote>表格那一格是<b>截斷</b>過的；⛔ 全文沒有被壓縮取代，它在 <code>ledger-source_temp_*.md</code>。</blockquote>
+<blockquote>票號那一格 ⛔ 不可以留空：對不到票就寫 <code>⏸ 未對票</code>，<code>--check</code> 會紅。</blockquote>
+<div class="scroll"><table><tr><th>時間</th><th>owner 說了什麼（逐字）</th><th>票</th></tr>
+<tr><td>01:38</td><td>開票</td><td>⏸ 未對票</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>
