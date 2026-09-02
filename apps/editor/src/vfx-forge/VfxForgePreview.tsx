@@ -15,6 +15,7 @@ import {
   type VfxVisualEvidenceFrame,
   type VfxForgeStageMode,
 } from "./VfxForgeStage";
+import { visualHygieneTriage } from "./backdropFrameAudit";
 
 export interface VfxForgePreviewHandle {
   auditBackdropTimeline(): Promise<BackdropTimelineAudit>;
@@ -247,7 +248,7 @@ export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreview
             setBackdropAudit("底板掃描中…");
             void stageRef.current?.auditBackdropTimeline(durationMs)
               .then((result) => setBackdropAudit(result.safe
-                ? `底板通過 · 衛生${result.autoVisualScore}/10 · ${result.sampledFrames}格 · 顯影${(result.worst.litShare * 100).toFixed(1)}% · 高光${(result.worst.highlightShare * 100).toFixed(1)}% · 粒子峰值${result.peakParticleCount}/${result.peakSystemCount}`
+                ? `未檢出不透明底板 · 衛生${result.autoVisualScore}/10（${visualHygieneTriage(result.autoVisualScore)}） · ${result.sampledFrames}格 · 顯影${(result.worst.litShare * 100).toFixed(1)}% · 高光${(result.worst.highlightShare * 100).toFixed(1)}% · 粒子峰值${result.peakParticleCount}/${result.peakSystemCount}`
                 : `⛔ ${(result.worstAtMs / 1000).toFixed(3)}秒 · ${result.worst.reason ?? "畫面底板"}` +
                   (result.suspects.length ? ` · ${result.suspects.slice(0, 3).join(" | ")}` : "")))
               .catch((error) => setBackdropAudit(`⛔ 檢查失敗：${String(error)}`));

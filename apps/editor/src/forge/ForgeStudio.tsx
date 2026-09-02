@@ -78,6 +78,8 @@ import {
   type VfxLayerDraft,
 } from "./vfxLayerModel";
 import { ConditionEditor } from "./ConditionEditor";
+import { passivePresentationRules } from "../passivePresentationPrinciples";
+import { PassivePresentationPanel } from "../PassivePresentationPanel";
 import type { EffectCondition } from "@ggd/shared/sim/content/condition";
 import {
   TEMPLATE_STACK_DRAG_MIME,
@@ -281,6 +283,7 @@ export function ForgeStudio({
     const { vfxLayers: _drop, ...rest } = merged as Record<string, unknown>;
     return { ...rest, ...patchForDoc(layers) } as Record<string, unknown>;
   }, [host.data, expansion, binding, layers]);
+  const passiveRules = useMemo(() => passivePresentationRules(after ?? host.data), [after, host.data]);
 
   const docErrors: ErrorMap = useMemo(() => {
     if (!after) return {};
@@ -721,6 +724,7 @@ export function ForgeStudio({
               }))}
             />
           ) : null}
+          <PassivePresentationPanel rules={passiveRules} />
         </section>
 
         <section className="forge-col">

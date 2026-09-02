@@ -2,18 +2,19 @@ import {
   zVfxScriptSegment,
   type VfxScriptSegment,
 } from "@ggd/shared/content/schema/vfxScript";
+import { completeActionAnimations } from "./actionAnimationPrinciples";
 
 /**
  * Editor-side macros: expand into ordinary vfx-script@1 blocks, so the player
  * gets no second schema and authors can still edit every resulting brick.
  */
 export const VFX_FORGE_RECIPES = [
-  { id: "classic-beam-fire", label: "經典橘金氣功砲", description: "ReviveHuman MDL 橫放主體＋橘金粒子外暈" },
-  { id: "classic-beam-blue", label: "經典藍白氣功砲", description: "ReviveHuman MDL 橫放主體＋藍白粒子外暈" },
+  { id: "classic-beam-fire", label: "經典橘金氣功砲", description: "透明安全的橘金雙層長軸粒子；不使用會露出白卡的 ReviveHuman MDL" },
+  { id: "classic-beam-blue", label: "經典藍白氣功砲", description: "透明安全的藍白雙層長軸粒子；不使用會露出白卡的 ReviveHuman MDL" },
   { id: "line-blast-fire", label: "定距火球＋落點爆炸", description: "FireBlast MDL 真正飛行，抵達後才爆炸" },
-  { id: "dash-slash-void", label: "黑紫衝刺斬", description: "真正施法者高速穿越、交叉斬痕與命中震動" },
+  { id: "dash-slash-void", label: "黑紫衝刺斬", description: "真正施法者高速穿越、單次命中光與震動；等待 Main single-arc 積木後自動換成一個大型主斬痕" },
   { id: "shockwave-dash-light", label: "衝擊波＋追身光斬", description: "A 段朝目標放衝擊波，B 段替 ability 的真實衝刺補上揮劍與斬光" },
-  { id: "combo-slash-holy", label: "黃藍多段斬＋終結柱", description: "每段攻擊／受擊動畫、交叉斬光與第七段 MDL 光柱" },
+  { id: "combo-slash-holy", label: "黃藍多段斬＋終結柱", description: "每段一個角色攻擊／受擊動畫與單次命中光，第七段 MDL 光柱；不再使用一次噴26個月牙的舊積木" },
   { id: "reflect-counter-open", label: "反彈成功起手", description: "只由 reflectSuccess 觸發的防禦火花；不猜 blockSuccess" },
   { id: "avalon-counter-chain", label: "理想鄉反擊七斬", description: "反彈成功起手、六次換位斬擊與第七段黃藍橫向終結砲" },
   { id: "rider-dash-beam-blue", label: "Rider 突進＋藍光束", description: "真 Rider 本體突進、藍白橫向光束與命中動畫" },
@@ -38,30 +39,31 @@ export function buildVfxForgeRecipe(
     beamYawOffsetDeg?: number;
   } = {},
 ): VfxScriptSegment[] {
+  let segments: VfxScriptSegment[];
   if (id === "classic-beam-fire" || id === "classic-beam-blue") {
-    return classicBeam(
+    segments = classicBeam(
       id === "classic-beam-fire",
-      options.includeModelCore ?? true,
+      options.includeModelCore ?? false,
       options.trigger ?? { on: "castEffect" },
       options.beamAnchor ?? "self",
       options.beamYawOffsetDeg ?? 0,
     );
-  }
-  if (id === "line-blast-fire") return lineBlastFire();
-  if (id === "dash-slash-void") return dashSlashVoid();
-  if (id === "shockwave-dash-light") return shockwaveDashLight();
-  if (id === "combo-slash-holy") return comboSlashHoly(options.includeFinalColumn ?? true);
-  if (id === "reflect-counter-open") return reflectCounterOpen();
-  if (id === "avalon-counter-chain") return avalonCounterChain();
-  return riderDashBeamBlue();
+  } else if (id === "line-blast-fire") segments = lineBlastFire();
+  else if (id === "dash-slash-void") segments = dashSlashVoid();
+  else if (id === "shockwave-dash-light") segments = shockwaveDashLight();
+  else if (id === "combo-slash-holy") segments = comboSlashHoly(options.includeFinalColumn ?? true);
+  else if (id === "reflect-counter-open") segments = reflectCounterOpen();
+  else if (id === "avalon-counter-chain") segments = avalonCounterChain();
+  else segments = riderDashBeamBlue();
+  return completeActionAnimations(segments);
 }
 
 /**
- * The classic beam is deliberately MDL-first. `w3x.stock.revivehuman` declares
- * fxLongAxis:"y"; the shipped model rig rotates that source pillar onto +Z,
- * so a single stretched model becomes the horizontal body. Particles only add
- * two bounded halo pulses. With the model's two emitters this stays at the
- * shipped maxConcurrentAdditive=6 instead of whitening the frame.
+ * The classic beam is particle-first. The legacy ReviveHuman MDL can still be
+ * requested by isolated tests, but Forge recipes default it off: the real
+ * framebuffer audit proved its TeamGlow mesh becomes an opaque white card.
+ * Two time-separated outer/core pulses keep the long-axis silhouette without
+ * accepting a model merely because its schema and asset digest are valid.
  */
 function triggerFields(trigger: VfxForgeRecipeTrigger, relativeMs = 0): Pick<VfxScriptSegment, "on" | "atMs" | "strikeIndex"> {
   const atMs = (trigger.atMs ?? 0) + relativeMs;
@@ -80,6 +82,8 @@ function classicBeam(
   trigger: VfxForgeRecipeTrigger,
   anchor: "self" | "target",
   yawOffsetDeg: number,
+  sideOffsetU = 0,
+  particleAlphaScale = 1,
 ): VfxScriptSegment[] {
   const segments: VfxScriptSegment[] = [];
   if (includeModelCore) {
@@ -96,6 +100,7 @@ function classicBeam(
       clip: "idle", clipTimeScale: 0.18,
       tint: fire ? [1, 0.34, 0.03] : [0.08, 0.36, 1], alpha: fire ? 0.72 : 0.68,
       lifeSec: 1.1, offsetForwardU: 0.8, heightU: 0,
+      ...(sideOffsetU === 0 ? {} : { offsetSideU: sideOffsetU }),
       ...(yawOffsetDeg === 0 ? {} : { yawOffsetDeg }),
     }));
   }
@@ -106,8 +111,7 @@ function classicBeam(
   const vfxId = fire ? "fx.prim.holy.beam-flat" : "fx.prim.lightning.beam-flat";
   const outerTint = fire ? [255, 132, 20] : [65, 155, 255];
   const coreTint = fire ? [255, 242, 190] : [215, 242, 255];
-  // Two pulses × outer/core; together with the MDL's two own emitters the
-  // maximum simultaneous additive systems is six (GH#900 shipped budget).
+  // Two pulses × outer/core: four bounded additive systems total.
   for (const atMs of [0, 430]) {
     segments.push(zVfxScriptSegment.parse({
       kind: "vfx", ...triggerFields(trigger, atMs), vfxId, at: anchor,
@@ -115,13 +119,15 @@ function classicBeam(
       // ReviveHuman's compositor pivot sits around hand/chest height. Keep the
       // helpers near that centreline but visibly subordinate: full-size
       // additive sprites at the exact model height collapsed into a white card.
-      tint: outerTint, flyHeight: 72, alpha: 0.24,
+      tint: outerTint, flyHeight: 72, alpha: Math.min(1, 0.24 * particleAlphaScale),
+      ...(sideOffsetU === 0 ? {} : { offsetSideU: sideOffsetU }),
       ...(yawOffsetDeg === 0 ? {} : { facingDeg: yawOffsetDeg }),
     }));
     segments.push(zVfxScriptSegment.parse({
       kind: "vfx", ...triggerFields(trigger, atMs + 35), vfxId, at: anchor,
       durationSec: 0.62, offsetForwardU: 0.8, w3xScale: 1,
-      tint: coreTint, flyHeight: 72, alpha: 0.28,
+      tint: coreTint, flyHeight: 72, alpha: Math.min(1, 0.28 * particleAlphaScale),
+      ...(sideOffsetU === 0 ? {} : { offsetSideU: sideOffsetU }),
       ...(yawOffsetDeg === 0 ? {} : { facingDeg: yawOffsetDeg }),
     }));
   }
@@ -173,14 +179,12 @@ function dashSlashVoid(): VfxScriptSegment[] {
       offset: { x: 0.35, y: 0.2, z: 4.5 }, durationMs: 560,
     }),
     zVfxScriptSegment.parse({
-      kind: "vfx", on: "castEffect", atMs: 350, vfxId: "fx.prim.void.slash",
-      at: "target", durationSec: 0.42, w3xScale: 2,
-      tint: [118, 28, 210], flyHeight: 72, alpha: 0.85, facingDeg: 52,
-    }),
-    zVfxScriptSegment.parse({
-      kind: "vfx", on: "castEffect", atMs: 385, vfxId: "fx.prim.arcane.slash-lg",
-      at: "target", durationSec: 0.36, w3xScale: 1.6,
-      tint: [230, 138, 255], flyHeight: 76, alpha: 0.76, facingDeg: -48,
+      // Main's current slash primitives burst 26 crescent sprites each. Until
+      // a true single-arc brick exists, prefer one bounded impact pulse over a
+      // fake fan; the real caster attack remains the primary motion.
+      kind: "vfx", on: "castEffect", atMs: 370, vfxId: "fx.prim.arcane.pulse-lg",
+      at: "target", durationSec: 0.32, w3xScale: 1.35,
+      tint: [190, 88, 255], flyHeight: 76, alpha: 0.72,
     }),
     zVfxScriptSegment.parse({ kind: "anim", on: "castEffect", atMs: 390, at: "target", pulse: "hurt", clipWindowMs: 520 }),
     zVfxScriptSegment.parse({ kind: "screenShake", on: "castEffect", atMs: 390, amplitude: 0.38, durationSec: 0.32 }),
@@ -206,9 +210,9 @@ function shockwaveDashLight(): VfxScriptSegment[] {
     // owns delayed -> blink(to:point) in ability JSON. Adding a presentation
     // move on top made the real caster travel twice and overshoot the slash.
     zVfxScriptSegment.parse({
-      kind: "vfx", on: "castEffect", atMs: 430, vfxId: "fx.prim.holy.slash-lg",
-      at: "target", durationSec: 0.42, w3xScale: 2.1,
-      tint: [255, 208, 88], flyHeight: 72, alpha: 0.8, facingDeg: 48,
+      kind: "vfx", on: "castEffect", atMs: 430, vfxId: "fx.prim.holy.pulse-lg",
+      at: "target", durationSec: 0.32, w3xScale: 1.25,
+      tint: [255, 208, 88], flyHeight: 72, alpha: 0.72,
     }),
     zVfxScriptSegment.parse({
       kind: "vfx", on: "castEffect", atMs: 650, vfxId: "fx.prim.fire.explosion",
@@ -224,12 +228,11 @@ function comboSlashHoly(includeFinalColumn: boolean): VfxScriptSegment[] {
     zVfxScriptSegment.parse({ kind: "anim", on: "strike", at: "caster", pulse: "attack", clipWindowMs: 320 }),
     zVfxScriptSegment.parse({ kind: "anim", on: "strike", at: "target", pulse: "hurt", clipWindowMs: 520 }),
     zVfxScriptSegment.parse({
-      kind: "vfx", on: "strike", vfxId: "fx.prim.holy.slash", at: "target",
-      durationSec: 0.34, w3xScale: 1.5, flyHeight: 82, alpha: 0.82, facingDeg: 52,
-    }),
-    zVfxScriptSegment.parse({
-      kind: "vfx", on: "strike", atMs: 35, vfxId: "fx.prim.lightning.slash", at: "target",
-      durationSec: 0.32, w3xScale: 1.6, flyHeight: 82, alpha: 0.82, facingDeg: -58,
+      // Generic strike fires once per authoritative comboStrike. Existing
+      // slash bricks are 26-particle fans, so use one short hit pulse until
+      // Main ships the single-arc brick; never hide the character animation.
+      kind: "vfx", on: "strike", vfxId: "fx.prim.holy.pulse-lg", at: "target",
+      durationSec: 0.22, w3xScale: 1.2, flyHeight: 82, alpha: 0.68,
     }),
   ];
   if (includeFinalColumn) {
@@ -288,8 +291,18 @@ function avalonCounterChain(): VfxScriptSegment[] {
     }),
     ...bodyMoves,
     ...comboSlashHoly(false),
-    ...classicBeam(true, true, { on: "strike", strikeIndex: 7, atMs: 220 }, "target", 180),
-    ...classicBeam(false, false, { on: "strike", strikeIndex: 7, atMs: 245 }, "target", 180),
+    // The seventh hit changes from close slash into a charged beam. Give that
+    // interval its own follow-through instead of leaving the character frozen
+    // while four beam layers continue after the first attack clip ended.
+    zVfxScriptSegment.parse({
+      kind: "anim", on: "strike", strikeIndex: 7, atMs: 180,
+      at: "caster", pulse: "attack", clipWindowMs: 1050,
+    }),
+    // Keep the orange MDL body and blue particle core slightly separated.
+    // Exact overlap made the brighter orange layer erase the requested
+    // yellow/blue identity even though both systems were technically alive.
+    ...classicBeam(true, false, { on: "strike", strikeIndex: 7, atMs: 220 }, "target", 180, -0.16, 0.9),
+    ...classicBeam(false, false, { on: "strike", strikeIndex: 7, atMs: 245 }, "target", 180, 0.22, 1.55),
     zVfxScriptSegment.parse({ kind: "screenShake", on: "strike", strikeIndex: 7, amplitude: 0.58, durationSec: 0.7 }),
   ];
 }
@@ -303,7 +316,7 @@ function riderDashBeamBlue(): VfxScriptSegment[] {
       kind: "bodyMove", on: "castEffect", at: "caster", mode: "arc",
       offset: { x: 0.55, y: 0.7, z: 3 }, durationMs: 900,
     }),
-    ...classicBeam(false, true, { on: "castEffect" }, "self", 0),
+    ...classicBeam(false, false, { on: "castEffect" }, "self", 0),
     zVfxScriptSegment.parse({ kind: "anim", on: "castEffect", atMs: 700, at: "target", pulse: "hurt", clipWindowMs: 560 }),
     zVfxScriptSegment.parse({ kind: "screenShake", on: "castEffect", amplitude: 0.45, durationSec: 0.9 }),
   ];

@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { auditBackdropFrame, automaticVisualHygieneScore } from "./backdropFrameAudit";
+import {
+  auditBackdropFrame,
+  automaticVisualHygieneScore,
+  visualHygieneTriage,
+} from "./backdropFrameAudit";
 
 function solid(width: number, height: number, rgba: readonly [number, number, number, number]): Uint8Array {
   return Uint8Array.from({ length: width * height * 4 }, (_, index) => rgba[index % 4]!);
@@ -117,5 +121,11 @@ describe("automaticVisualHygieneScore", () => {
       unsafe: true,
       reason: "opaque card",
     })).toBe(0);
+  });
+
+  it("never describes a 0/10 composition as passing", () => {
+    expect(visualHygieneTriage(0)).toBe("低清晰度");
+    expect(visualHygieneTriage(4)).toBe("人工複核");
+    expect(visualHygieneTriage(7)).toBe("清晰");
   });
 });

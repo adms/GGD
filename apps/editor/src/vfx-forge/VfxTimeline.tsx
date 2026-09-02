@@ -1,5 +1,12 @@
 import type { VfxScriptDoc, VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
-import { VFX_FORGE_SEGMENT_KINDS, decodeAssetDrag, segmentTimes, type AssetDrop, type TriggerCue } from "./model";
+import {
+  VFX_FORGE_SEGMENT_KINDS,
+  decodeAssetDrag,
+  recommendedEvidenceTimes,
+  segmentTimes,
+  type AssetDrop,
+  type TriggerCue,
+} from "./model";
 
 export function VfxTimeline({
   script,
@@ -31,6 +38,7 @@ export function VfxTimeline({
   onDropAsset(asset: AssetDrop): void;
 }) {
   const times = segmentTimes(script, cues);
+  const evidenceTimes = recommendedEvidenceTimes(script, cues);
   return (
     <section
       className="vfx-timeline"
@@ -76,6 +84,19 @@ export function VfxTimeline({
       <div className="vfx-ruler">
         {cues.map((cue, i) => (
           <span key={`${cue.on}-${cue.strikeIndex ?? 0}-${i}`} style={{ left: `${(cue.atMs / durationMs) * 100}%` }} title={`${cue.label} ${(cue.atMs / 1000).toFixed(2)}s`} />
+        ))}
+      </div>
+      <div className="vfx-keyframes" aria-label="建議關鍵格">
+        <span>建議關鍵格</span>
+        {evidenceTimes.map((time) => (
+          <button
+            type="button"
+            key={`${time.atMs}:${time.label}`}
+            title={time.label}
+            onClick={() => onSeek(time.atMs)}
+          >
+            {(time.atMs / 1000).toFixed(3)}s
+          </button>
         ))}
       </div>
       <div className="vfx-tracks">

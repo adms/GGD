@@ -129,6 +129,32 @@
 | **②** | ⭐ **行為的真相仍在 ability JSON** —— script 只管「**畫什麼 · 掛哪 · 何時**」 | 第〇·四守則：傷害/次數/時序**不可以有第二個住處** |
 | **③** | ⭐ 有 script 的技能**取代**預設綁定，⛔ **不疊加** | ⚠️ 真的踩過：`godie-hart.r` 曾經 sim 送一發、腳本再播一發 ⇒ **每一刀生兩發**，錨點還不一樣（胸口 vs 腳下） |
 
+### 3.1 角色動作與斬擊模板原則（2026-09-02）
+
+1. 任何有可見演出的主動技能，至少要有施法者 `anim`；不能用粒子代替角色施展動作。
+2. 時間軸技能在每個 `strike`、`bodyMove` 起點與終結間隔都要有覆蓋該時間窗的角色動作；一段動作結束後仍在播特效，視為缺件。
+3. 普通近戰的一個傷害節點＝一個角色攻擊動作＋一個主斬弧。不得用多個月牙堆出「看似有動畫」的扇形。
+4. 只有 ability JSON 的權威 `comboStrikes` 證明它是極速連斬（例如九頭龍閃、三千世界）才能例外；VFX 自己排出三個月牙、技能名稱或備註都不能替自己取得豁免。例外內仍要求至少三個、小型、分時出現的單弧，而不是同幀重疊。
+5. `fx.prim.*.slash*` 現有每份都是 `burstCount:26`，一個 segment 本身就會噴 26 個月牙；Editor 對普通斬擊一律阻擋。Main 需提供可調色／大小／方向、一次只畫一弧的 `single-arc` 積木，Editor 才能按第 3、4 點組合。
+
+對應的可執行守衛與自動補動作住在
+`apps/editor/src/vfx-forge/actionAnimationPrinciples.ts`；八招 fixture 全數通過同一條守衛，沒有技能專用豁免。
+
+### 3.2 被動技能演出模板原則（2026-09-02）
+
+被動技能不補假的 `castStart`／`castEffect`。Editor 先讀 ability JSON 的真正觸發來源，再把演出放回同一條權威事件：
+
+1. `onBasicAttack`／on-hit：普攻本身已提供攻擊動作；額外命中光、音效、浮字放在同一個 `hook.effects`，不能另造一發施法。
+2. 暴擊：普攻本身提供攻擊動作，runtime 既有 crit hitstop、重擊火花與暴擊數字是預設演出；來源專屬 VFX 直接放在 `onDamageDealt` hook，使用 `damageCrit:"crit"`＋`critSource:"thisSource"` 綁回真正觸發的 grant，不另擲一次機率，也不需要 Main 新欄位。
+3. 格擋：使用 `block.vfxId/vfxScale/vfxTint`，掛在防禦者並取代泛用格擋火花；不與泛用效果疊兩次。
+4. 反彈：使用權威 `onReflectSuccess` hook 或 `vfx-script reflectSuccess`；Editor 對 vfx-script 的真正反彈節點自動補防禦動作，可再組接觸火花及反擊時間軸，但不得改寫成假的 cast 觸發。
+5. 迴避：runtime 已有 `evade` 結果與 MISS 提示；在事件仍無來源 grant provenance 前，Editor 不得把某支被動的專屬閃身／殘影綁上去冒充正確歸屬。
+6. 週期、受傷、低血、護盾等：只有玩家需要辨識那次觸發時才補短演出，且必須位於對應的 `onInterval`／`onDamageTaken` 效果鏈；不要求每個純數值被動持續噴粒子。
+
+槽位不能代替啟用方式：Q/W/E/R/EX 也可能是純被動或主被動混合技能。Editor 以 `passive` rank block 與實際 active effects 判斷；純被動禁止 `castStart/castEffect`，混合技能則同時顯示主動動作守衛與被動事件演出計畫。
+
+機器判斷住在 `apps/editor/src/passivePresentationPrinciples.ts`，鑄技工坊與 VFX Forge 都顯示同一份自動演出計畫。`authored`、runtime 預設、可用現有積木補完、缺 Main 事件歸屬四種狀態分開呈現，不由 LLM 猜測。
+
 ---
 
 ## 4. ⭐ 驗收圖 —— 素材已經在 repo 裡

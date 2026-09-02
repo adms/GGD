@@ -382,7 +382,9 @@ export interface BootOptions {
 export function desktopLandingPage(search: string, desktopEnabled: boolean): Page | null {
   if (!desktopEnabled) return null;
   try {
-    return new URLSearchParams(search).get("desktopPage") === "aiChangeReview" ? "aiChangeReview" : null;
+    return new URLSearchParams(search).get("desktopPage") === "aiChangeReview"
+      ? "submissionsReview"
+      : null;
   } catch {
     return null;
   }

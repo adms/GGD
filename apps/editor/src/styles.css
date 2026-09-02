@@ -319,6 +319,8 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .vfx-scrubber { width: 100%; margin: 8px 0 2px; accent-color: #bd8cff; }
 .vfx-ruler { position: relative; height: 9px; border-top: 1px solid #42495b; }
 .vfx-ruler span { position: absolute; top: -3px; width: 1px; height: 8px; background: #e4a74e; }
+.vfx-keyframes { display: flex; align-items: center; gap: 6px; padding: 5px 0 8px; font-size: 11px; color: #8295b5; }
+.vfx-keyframes button { padding: 3px 7px; border-color: #52698f; color: #bdd2f6; }
 .vfx-tracks {
   display: flex;
   flex-direction: column;

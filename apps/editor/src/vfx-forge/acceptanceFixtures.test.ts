@@ -13,6 +13,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { zVfxScriptDoc, type VfxScriptDoc, type VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
 import { acceptanceFixtureFor, VFX_FORGE_ACCEPTANCE } from "./acceptanceFixtures";
+import { actionAnimationIssues, activationModeForAbility } from "./actionAnimationPrinciples";
 
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
 const IDS = VFX_FORGE_ACCEPTANCE.map(([id]) => id);
@@ -23,17 +24,6 @@ function load(id: string): VfxScriptDoc {
 
 function loadJson(collection: string, id: string): Record<string, unknown> {
   return JSON.parse(readFileSync(join(CONTENT, collection, `${id}.json`), "utf8")) as Record<string, unknown>;
-}
-
-function collectAbilityModelKeys(value: unknown, out = new Set<string>()): Set<string> {
-  if (Array.isArray(value)) {
-    for (const child of value) collectAbilityModelKeys(child, out);
-  } else if (value !== null && typeof value === "object") {
-    const rec = value as Record<string, unknown>;
-    if (rec.kind === "spawnModelFx" && typeof rec.modelKey === "string") out.add(rec.modelKey);
-    for (const child of Object.values(rec)) collectAbilityModelKeys(child, out);
-  }
-  return out;
 }
 
 function abilityContainsEffect(value: unknown, kind: string): boolean {
@@ -49,6 +39,15 @@ const kinds = <K extends VfxScriptSegment["kind"]>(id: typeof IDS[number], kind:
   segs(id).filter((s): s is Extract<VfxScriptSegment, { kind: K }> => s.kind === kind);
 
 describe("八招 Editor-only VFX Forge 視覺文法", () => {
+  it("每招都符合角色動作／時間軸節點／單一主斬擊原則", () => {
+    for (const id of IDS) {
+      const ability = loadJson("abilities", id);
+      expect(actionAnimationIssues(load(id), {
+        activationMode: activationModeForAbility(ability),
+        allowRapidBarrage: abilityContainsEffect(ability, "comboStrikes"),
+      }), id).toEqual([]);
+    }
+  });
   it("八份 fixture 都是可由編輯器往返的 vfx-script@1，且一招不少", () => {
     expect([...docs.keys()]).toEqual(IDS);
     for (const id of IDS) expect(docs.get(id)!.abilityId).toBe(id);
@@ -150,12 +149,8 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
   it.each(["godie-nbbc.e", "godie-ogrh.r", "godie-hvsh.r"] as const)(
     "%s 是持續、雙層、可辨色的橫向氣功砲",
     (id) => {
-      const modelKeys = collectAbilityModelKeys(loadJson("abilities", id));
-      for (const segment of kinds(id, "modelFx")) modelKeys.add(segment.modelKey);
-      expect(modelKeys.has("w3x.stock.revivehuman"), `${id} 必須用 90° 橫放 MDL 當主體`).toBe(true);
-      const core = kinds(id, "modelFx").find((segment) => segment.modelKey === "w3x.stock.revivehuman");
-      expect(core).toMatchObject({ path: "static", anchor: "self" });
-      expect(core?.scaleAxis?.[2]).toBeGreaterThan(core?.scaleAxis?.[0] ?? Number.POSITIVE_INFINITY);
+      expect(kinds(id, "modelFx").some((segment) => segment.modelKey === "w3x.stock.revivehuman"),
+        `${id} 的 script 不可再引入實測會露出白卡的 ReviveHuman MDL`).toBe(false);
       const beams = kinds(id, "vfx").filter((s) => s.kind === "vfx" && s.vfxId.includes("beam"));
       expect(beams).toHaveLength(4);
       expect(beams.every((s) => (s.durationSec ?? 0) >= 0.5)).toBe(true);
@@ -177,6 +172,13 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
       expect(kinds(id, "anim").some((s) => s.kind === "anim" && s.on === "strike")).toBe(true);
       expect(segs(id).filter((s) => s.on === "strike" && s.strikeIndex === 7).length).toBeGreaterThanOrEqual(2);
     }
+    const avalonFinal = kinds("godie-e002.ex", "vfx").filter((segment) =>
+      segment.on === "strike" && segment.strikeIndex === 7 && segment.vfxId.includes("beam"),
+    );
+    expect(avalonFinal.some((segment) => (segment.tint?.[2] ?? 0) > (segment.tint?.[0] ?? 0) &&
+      (segment.alpha ?? 0) >= 0.37 && (segment.offsetSideU ?? 0) > 0)).toBe(true);
+    expect(avalonFinal.some((segment) => (segment.tint?.[0] ?? 0) > (segment.tint?.[2] ?? 0) &&
+      (segment.offsetSideU ?? 0) < 0)).toBe(true);
   });
 
   it("超究武神霸斬第七刀保留黃藍雙柱，但不得回到遮住角色的過曝尺寸", () => {
@@ -190,12 +192,10 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
     expect(Math.min(...columns.map((segment) => Math.abs(segment.offsetForwardU ?? 0)))).toBeGreaterThanOrEqual(0.3);
   });
 
-  it("理想鄉終結砲保留 ReviveHuman MDL 主體，黃藍粒子只做輔助", () => {
-    const core = kinds("godie-e002.ex", "modelFx").find(
+  it("理想鄉終結砲不使用白卡 MDL，黃藍長軸粒子仍保留", () => {
+    expect(kinds("godie-e002.ex", "modelFx").some(
       (segment) => segment.strikeIndex === 7 && segment.modelKey === "w3x.stock.revivehuman",
-    );
-    expect(core).toBeDefined();
-    expect(core?.scaleAxis?.[2]).toBeGreaterThan(core?.scaleAxis?.[0] ?? Number.POSITIVE_INFINITY);
+    )).toBe(false);
     expect(kinds("godie-e002.ex", "vfx").filter((segment) => segment.strikeIndex === 7 && segment.vfxId.includes("beam")).length).toBeGreaterThanOrEqual(2);
   });
 

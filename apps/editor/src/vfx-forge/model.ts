@@ -164,6 +164,78 @@ export function segmentTimes(
   return out.sort((a, b) => a.atMs - b.atMs || a.segmentIndex - b.segmentIndex);
 }
 
+export interface RecommendedEvidenceTime {
+  atMs: number;
+  label: string;
+}
+
+const EVIDENCE_KIND_WEIGHT: Record<VfxScriptSegment["kind"], number> = {
+  modelFx: 5,
+  vfx: 4,
+  bodyMove: 3,
+  anim: 3,
+  hideBody: 2,
+  screenFlash: 2,
+  screenShake: 1,
+  floatingText: 1,
+  sound: 0,
+};
+
+/**
+ * Suggest drawable moments instead of making reviewers guess from the trigger
+ * clock. Segment offsets are relative to Sim events, so "castEffect at 1.000s
+ * + slash at 350ms" must point to about 1.400s, not 0.350s.
+ */
+export function recommendedEvidenceTimes(
+  script: VfxScriptDoc,
+  cues: readonly TriggerCue[],
+  limit = 4,
+): RecommendedEvidenceTime[] {
+  if (limit <= 0) return [];
+  const occurrences = segmentTimes(script, cues)
+    .map((time) => ({ ...time, segment: script.segments[time.segmentIndex]! }))
+    .filter(({ segment }) => EVIDENCE_KIND_WEIGHT[segment.kind] > 0);
+  if (occurrences.length === 0) return [];
+
+  const groups: Array<typeof occurrences> = [];
+  for (const occurrence of occurrences) {
+    const group = groups[groups.length - 1];
+    if (!group || occurrence.atMs - group[0]!.atMs > 90) groups.push([occurrence]);
+    else group.push(occurrence);
+  }
+
+  const candidates = groups.map((group) => {
+    const start = group[0]!.atMs;
+    const maxTail = Math.max(...group.map(({ segment }) => segmentTailMs(segment)), 0);
+    const sampleDelay = Math.min(120, Math.max(40, maxTail * 0.15));
+    const kinds = [...new Set(group.map(({ segment }) => segment.kind))];
+    return {
+      atMs: Math.round(start + sampleDelay),
+      label: `${group[0]!.label.split(" · ")[0]} · ${kinds.join("+")}`,
+      score: group.reduce((sum, { segment }) => sum + EVIDENCE_KIND_WEIGHT[segment.kind], 0),
+    };
+  });
+
+  // Always cover the opening and finisher, then fill with the densest distinct
+  // beats. A seven-hit combo must not return four adjacent middle slashes while
+  // hiding its ending.
+  const wanted = Math.min(limit, candidates.length);
+  const selected = new Set<number>([0, candidates.length - 1]);
+  for (const index of candidates
+    .map((candidate, index) => ({ candidate, index }))
+    .sort((a, b) => b.candidate.score - a.candidate.score || b.candidate.atMs - a.candidate.atMs)
+    .map(({ index }) => index)) {
+    if (selected.size >= wanted) break;
+    if ([...selected].some((chosen) => Math.abs(candidates[chosen]!.atMs - candidates[index]!.atMs) < 180)) continue;
+    selected.add(index);
+  }
+  for (let index = candidates.length - 1; selected.size < wanted && index >= 0; index--) selected.add(index);
+
+  return [...selected]
+    .map((index) => ({ atMs: candidates[index]!.atMs, label: candidates[index]!.label }))
+    .sort((a, b) => a.atMs - b.atMs);
+}
+
 export function timelineDurationMs(script: VfxScriptDoc, cues: readonly TriggerCue[]): number {
   const lastCue = cues.reduce((m, cue) => Math.max(m, cue.atMs), 0);
   const lastSegment = segmentTimes(script, cues).reduce(
@@ -191,7 +263,11 @@ function segmentTailMs(segment: VfxScriptSegment): number {
   }
 }
 
-export function segmentFromAsset(asset: AssetDrop, placement?: AssetPlacement): VfxScriptSegment {
+export function segmentFromAsset(
+  asset: AssetDrop,
+  placement?: AssetPlacement,
+  reactionTrigger?: ForgeReactionTrigger | null,
+): VfxScriptSegment {
   const offsets = placement
     ? {
         ...(placement.forwardU !== 0 ? { offsetForwardU: placement.forwardU } : {}),
@@ -201,7 +277,7 @@ export function segmentFromAsset(asset: AssetDrop, placement?: AssetPlacement): 
   return asset.collection === "models"
     ? checked({
         kind: "modelFx",
-        on: placement ? "castStart" : "castEffect",
+        on: reactionTrigger ?? (placement ? "castStart" : "castEffect"),
         modelKey: asset.id,
         path: "static",
         anchor: placement ? "self" : "point",
@@ -210,7 +286,7 @@ export function segmentFromAsset(asset: AssetDrop, placement?: AssetPlacement): 
       })
     : checked({
         kind: "vfx",
-        on: placement ? "castStart" : "castEffect",
+        on: reactionTrigger ?? (placement ? "castStart" : "castEffect"),
         vfxId: asset.id,
         at: placement ? "self" : "point",
         durationSec: 1,
@@ -218,24 +294,29 @@ export function segmentFromAsset(asset: AssetDrop, placement?: AssetPlacement): 
       });
 }
 
-export function newSegment(kind: VfxScriptSegment["kind"]): VfxScriptSegment {
+export function newSegment(
+  kind: VfxScriptSegment["kind"],
+  reactionTrigger?: ForgeReactionTrigger | null,
+): VfxScriptSegment {
+  const effectTrigger = reactionTrigger ?? "castEffect";
+  const openingTrigger = reactionTrigger ?? "castStart";
   const seeds: Record<VfxScriptSegment["kind"], unknown> = {
-    modelFx: { kind, on: "castEffect", modelKey: "model-id", path: "static", anchor: "point", lifeSec: 1 },
-    vfx: { kind, on: "castEffect", vfxId: "vfx-id", at: "point", durationSec: 1 },
-    floatingText: { kind, on: "castStart", text: "招式名稱" },
-    screenFlash: { kind, on: "castEffect", colorRgb: [255, 255, 255], peakAlpha: 0.25, durationSec: 0.2 },
-    screenShake: { kind, on: "castEffect", amplitude: 0.2, durationSec: 0.25 },
-    sound: { kind, on: "castEffect", soundKey: "ability.cast" },
-    anim: { kind, on: "castEffect", at: "caster", pulse: "cast" },
+    modelFx: { kind, on: effectTrigger, modelKey: "model-id", path: "static", anchor: "point", lifeSec: 1 },
+    vfx: { kind, on: effectTrigger, vfxId: "vfx-id", at: "point", durationSec: 1 },
+    floatingText: { kind, on: openingTrigger, text: "招式名稱" },
+    screenFlash: { kind, on: effectTrigger, colorRgb: [255, 255, 255], peakAlpha: 0.25, durationSec: 0.2 },
+    screenShake: { kind, on: effectTrigger, amplitude: 0.2, durationSec: 0.25 },
+    sound: { kind, on: effectTrigger, soundKey: "ability.cast" },
+    anim: { kind, on: effectTrigger, at: "caster", pulse: "cast" },
     bodyMove: {
       kind,
-      on: "castEffect",
+      on: effectTrigger,
       at: "caster",
       mode: "teleport",
       offset: { x: 0, y: 0, z: 0 },
       durationMs: 250,
     },
-    hideBody: { kind, on: "castEffect", at: "caster", durationMs: 500 },
+    hideBody: { kind, on: effectTrigger, at: "caster", durationMs: 500 },
   };
   return checked(seeds[kind]);
 }
@@ -246,13 +327,16 @@ function checked(value: unknown): VfxScriptSegment {
   return parsed.data;
 }
 
-export function newScript(abilityId: string): VfxScriptDoc {
+export function newScript(
+  abilityId: string,
+  reactionTrigger?: ForgeReactionTrigger | null,
+): VfxScriptDoc {
   return {
     id: abilityId,
     schema: "vfx-script@1",
     abilityId,
     notes: "VFX Forge 建立；只記錄演出，不複製傷害、次數或時序規則。",
-    segments: [newSegment("floatingText")],
+    segments: [newSegment("floatingText", reactionTrigger)],
   };
 }
 

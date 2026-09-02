@@ -33,6 +33,20 @@ export function automaticVisualHygieneScore(frame: BackdropFrameAudit): number {
   return Math.round(score * 2) / 2;
 }
 
+/**
+ * Human-facing wording for the non-authoritative framebuffer score.
+ *
+ * A clean alpha/backdrop scan and a readable composition are different facts:
+ * the former may pass while overlapping additive layers still score 0/10.
+ * Never call that combination "通過" in the Forge UI. Low scores remain
+ * submittable because the review queue must also record human rejection.
+ */
+export function visualHygieneTriage(score: number): "清晰" | "人工複核" | "低清晰度" {
+  if (score >= 7) return "清晰";
+  if (score >= 4) return "人工複核";
+  return "低清晰度";
+}
+
 const LOCAL_CARD_MIN_SHARE = 0.0001;
 const LOCAL_CARD_MIN_FILL = 0.92;
 const LOCAL_CARD_MIN_SIDE = 3;

@@ -1,7 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
 import {
   VFX_FORGE_SEGMENT_KINDS,
+  newScript,
   newSegment,
+  recommendedEvidenceTimes,
   reactionTriggerOf,
   scheduleSimEvents,
   segmentFromAsset,
@@ -87,12 +89,39 @@ describe("VFX Forge authoring core", () => {
     }
   });
 
+  it("seeds passive reaction authoring on the real event instead of castStart/castEffect", () => {
+    expect(newScript("godie-e002.ex", "reflectSuccess").segments[0]?.on).toBe("reflectSuccess");
+    expect(newSegment("vfx", "reflectSuccess").on).toBe("reflectSuccess");
+    expect(segmentFromAsset(
+      { collection: "vfx", id: "fx.guard" },
+      undefined,
+      "reflectSuccess",
+    ).on).toBe("reflectSuccess");
+  });
+
   it("keeps the timeline alive through the last segment tail", () => {
     const script = {
       id: "x", schema: "vfx-script@1" as const, abilityId: "x",
       segments: [{ kind: "screenFlash" as const, on: "castEffect" as const, colorRgb: [255, 255, 255] as [number, number, number], peakAlpha: 0.5, durationSec: 4 }],
     };
     expect(timelineDurationMs(script, [{ on: "castEffect", atMs: 2000, label: "結算" }])).toBeGreaterThanOrEqual(6250);
+  });
+
+  it("recommends absolute drawable frames after Sim trigger offsets", () => {
+    const script = {
+      id: "x",
+      schema: "vfx-script@1" as const,
+      abilityId: "x",
+      segments: [
+        { kind: "anim" as const, on: "castEffect" as const, at: "caster" as const, pulse: "attack" as const, clipWindowMs: 560 },
+        { kind: "vfx" as const, on: "castEffect" as const, atMs: 350, vfxId: "fx.slash", at: "target" as const, durationSec: 0.4 },
+        { kind: "vfx" as const, on: "castEffect" as const, atMs: 385, vfxId: "fx.core", at: "target" as const, durationSec: 0.3 },
+      ],
+    };
+    const times = recommendedEvidenceTimes(script, [{ on: "castEffect", atMs: 1000, label: "吟唱完成" }]);
+    expect(times[0]!.atMs).toBeGreaterThanOrEqual(1040);
+    expect(times.at(-1)!.atMs).toBeGreaterThanOrEqual(1390);
+    expect(times.at(-1)!.label).toContain("vfx");
   });
 
   it("has one non-live proposal destination and validates before calling it", async () => {

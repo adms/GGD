@@ -745,9 +745,12 @@ export class VfxForgeStage {
           }
         }
         sampledFrames++;
-        const score = Math.max(result.litShare, result.highlightShare, result.nearWhiteShare, result.brightShare, result.dominantBrightShare, result.dominantNonBackgroundShare, result.localWhiteCardShare);
-        const worstScore = Math.max(worst.litShare, worst.highlightShare, worst.nearWhiteShare, worst.brightShare, worst.dominantBrightShare, worst.dominantNonBackgroundShare, worst.localWhiteCardShare);
-        if (score > worstScore || result.unsafe) {
+        // Pick the same worst frame the reviewer-facing score actually uses.
+        // The old unweighted max could select a mildly lit frame while missing
+        // a smaller near-white carrier whose weighted hygiene score was lower.
+        const score = automaticVisualHygieneScore(result);
+        const worstScore = automaticVisualHygieneScore(worst);
+        if (score < worstScore || result.unsafe) {
           worst = result;
           worstAtMs = this.nowMs;
           suspects = this.backdropMeshSuspects();
