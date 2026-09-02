@@ -50,7 +50,34 @@
  * 而 `Record<AnimPulse, number>` 會退化成 `Record<string, number>`
  * ⇒ ⭐ 上面第 2 步那個「會逼 tsc 紅」的保證就沒有了。
  */
-export const ANIM_PULSES = ["attack", "cast", "hurt"] as const;
+export const ANIM_PULSES = ["attack", "cast", "hurt", "guard", "dodge"] as const;
+
+/**
+ * ⭐⭐ **2026-09-02 加了 `guard` / `dodge`**（Codex 阻塞清單 P0-2）。
+ *
+ * ⭐ 而這一次加成員**只動這一行** —— 那正是同一天做的地基買到的東西：
+ * `z.enum(ANIM_PULSES)`（schema）、`Record<AnimPulse, number>`（下面的窗）、
+ * 客戶端四個 import 端 **全部自動跟上**，⛔ 漏改任一處會是 **tsc 的紅**。
+ *
+ * ── ⛔⛔ 而素材是硬牆，所以 fallback 是這一格的**本體** ────────────────
+ *
+ * 264 顆出貨 `.glb` 的 AnimationGroup 名普查：
+ * `guard` **0** · `dodge` **0** · `dash` 0 · `leap` 0 · `teleport` 0 位元組。
+ * ⭐ 有的是：`stand` 295 · `attack` 238 · `walk` 171 · `spell` 134 ·
+ * **`attack defend` 21** · `stand hit` 9。
+ *
+ * ⇒ ⭐ 兩塊新脈衝**不進 `clipMap`**（那張表 `zClipMap` 嚴格在 6 格，
+ * 動它要改每一份 model doc），⛔ 而是走 `ClipAnimator` 既有的
+ * **`PresentationClip`** 軸 —— `celebrate` 已經是那個形狀的前例：
+ * 模糊比對 ＋ 找不到就退回 idle 並**警告一次**（fail-loud）。
+ *
+ * ⚠️ Codex 逐字禁止的四件，這裡逐條對：
+ * · ⛔ 完全不播 ⇒ ⭐ 退回 idle（`stand`，295 顆有）
+ * · ⛔ 角色停止或消失 ⇒ ⭐ idle 是循環的，⛔ 不會定格
+ * · ⛔ 拿 `hurt` 當唯一格擋 ⇒ ⭐ `guard` 的候選是 `defend`/`block`/`shield`，
+ *   ⛔ **沒有 `hurt`**
+ * · ⛔ 退到錯角色 ⇒ ⭐ 全部在**同一顆 glb 自己的**剪輯裡找
+ */
 
 export type AnimPulse = (typeof ANIM_PULSES)[number];
 
@@ -65,6 +92,10 @@ export const PULSE_MS: Record<AnimPulse, number> = {
   attack: 350,
   cast: 450,
   hurt: 250,
+  /** 格擋 —— ⭐ 比受擊長一點（撐住的姿勢要看得出來），⛔ 比揮擊短。 */
+  guard: 300,
+  /** 迴避 —— ⭐ 最短：它是一個閃身，⛔ 不是一個姿勢。 */
+  dodge: 220,
 };
 
 /** ⭐ 執行期的收窄 —— 給讀**外部 JSON／網路訊息**的地方用。 */

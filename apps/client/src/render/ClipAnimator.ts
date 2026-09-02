@@ -30,7 +30,15 @@ import { PULSE_MS, type AnimState } from "./anim/AnimationStateMachine";
  * `ClipState`, so every existing caller still typechecks unchanged, but a new
  * `AnimationStateMachine.update()` return value can never be `celebrate`.
  */
-export type PresentationClip = "celebrate";
+/**
+ * ⭐ 不進 `clipMap` 的演出剪輯 —— `zClipMap` **嚴格在 6 格**，
+ * ⛔ 動它要改每一份 model doc。⇒ 這條軸就是為此存在的（`celebrate` 是前例）。
+ *
+ * ⭐⭐ 2026-09-02 加 `guard` / `dodge`（Codex 阻塞清單 P0-2）：
+ * 264 顆出貨 glb 裡 `guard`/`dodge` 是 **0 位元組** ⇒ 它們**必然**走模糊比對，
+ * 而找不到就退回 idle 並**警告一次** —— ⭐ 那是 fail-loud 的那一半。
+ */
+export type PresentationClip = "celebrate" | "guard" | "dodge";
 export type ClipState = AnimState | PresentationClip;
 
 /**
@@ -53,9 +61,24 @@ const DEFAULT_CLIP_NAMES: Record<ClipState, string[]> = {
   hurt: ["hurt", "hit", "flinch"],
   death: ["death", "die", "ko"],
   celebrate: ["celebrate", "cheer", "victory", "dance"],
+  /**
+   * ⭐ 格擋 —— ⛔ **刻意沒有 `hurt`**（Codex 逐字：「不得將 `hurt` 當成唯一格擋動作」）。
+   * ⚠️ `attack defend` 在出貨的 264 顆 glb 裡有 **21 顆**（普查量的），
+   * 而它正是 WC3 「舉盾格擋」的剪輯名。找不到 ⇒ 退回 idle（⛔ 不是 hurt）。
+   */
+  guard: ["defend", "block", "guard", "shield", "parry"],
+  /**
+   * ⭐ 迴避 —— 一個閃身。`walk`/`run` 在 171/many 顆上有，
+   * 而 `pulseSpeedRatio` 會把它壓進 220ms 的窗 ⇒ 看起來是一個急促的側移。
+   * ⛔ 沒有 `hurt`：閃過去的人**沒有被打到**，播受擊會說謊。
+   */
+  dodge: ["dodge", "evade", "roll", "sidestep", "walk"],
 };
 
 const LOOPING: Record<ClipState, boolean> = {
+  // ⭐ 兩塊新脈衝都是**一次性**的（⛔ 循環的格擋會卡住身體）
+  guard: false,
+  dodge: false,
   idle: true,
   run: true,
   attack: false,

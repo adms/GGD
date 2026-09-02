@@ -108,8 +108,11 @@ describe("動作脈衝的詞彙表只有一個住處（GH#940）", () => {
     // ⚠️ 沒有這一條，上面那條在正則寫壞時會**永遠是綠的** ——
     // 而那正是 CLAUDE.md 的形態⑨（一個永遠不會紅的閘）。
     const P = ANIM_PULSES;
-    expect(handCopiesOf('kind: "attack" | "cast" | "hurt",', P)).toBe(true);
-    expect(handCopiesOf('z.enum(["hurt", "attack", "cast"])', P), "順序換過也要抓得到").toBe(true);
+    // ⚠️ 2026-09-02（P0-2）詞彙表長到 **5 格** ⇒ 夾具要跟著長，
+    //   ⛔ 否則這條儀器驗的是一個**已經不存在**的聯集（而它會安靜地變綠）。
+    const all = [...P].map((k) => `"${k}"`);
+    expect(handCopiesOf(`kind: ${all.join(" | ")},`, P)).toBe(true);
+    expect(handCopiesOf(`z.enum([${[...all].reverse().join(", ")}])`, P), "順序換過也要抓得到").toBe(true);
     expect(handCopiesOf('const x = "attack";', P), "⛔ 單獨一個字不該誤報").toBe(false);
     // ⭐⭐ 反誤報：**六格狀態表**含著 attack/cast/hurt 相鄰，⛔ 但它不是脈衝表。
     // ⚠️ 第一版的正則在這一行上回 true，於是報了五個誤報。
@@ -130,7 +133,8 @@ describe("動作脈衝的詞彙表只有一個住處（GH#940）", () => {
 
   it("⭐ 執行期收窄跟著詞彙表走（⛔ 不是另一份 if）", () => {
     for (const p of ANIM_PULSES) expect(isAnimPulse(p)).toBe(true);
-    expect(isAnimPulse("dodge"), "⛔ 還沒進詞彙表的積木不可以被放行").toBe(false);
+    // ⚠️ `dodge` 在 2026-09-02 進了詞彙表（P0-2）⇒ 反例要換一個**還沒進去**的。
+    expect(isAnimPulse("teleport"), "⛔ 還沒進詞彙表的積木不可以被放行").toBe(false);
     expect(isAnimPulse(undefined)).toBe(false);
   });
 });

@@ -41,7 +41,18 @@ import { PULSE_MS, type AnimPulse, type AnimState } from "@ggd/shared/content/an
 export const RUN_LINGER_MS = 200;
 
 /** Pulse priority when several land in the same window. */
-const PULSE_RANK: Record<AnimPulse, number> = { hurt: 0, attack: 1, cast: 2 };
+/**
+ * ⭐ 誰蓋得過誰。⛔ 數字大的贏。
+ * ⭐⭐ 2026-09-02：`dodge` 與 `guard` 排在 `hurt` **之上** ——
+ * 一次成功的迴避／格擋**就是**「沒有被打到」，⛔ 讓 hurt 蓋過它會演成挨打。
+ */
+const PULSE_RANK: Record<AnimPulse, number> = {
+  hurt: 0,
+  guard: 1,
+  dodge: 1,
+  attack: 2,
+  cast: 3,
+};
 
 export interface AnimInputs {
   alive: boolean;
@@ -60,7 +71,13 @@ export class AnimationStateMachine {
    * would make the character feel stuck for the length of the tail.
    */
   private recovery = false;
-  state: AnimState = "idle";
+  /**
+   * ⭐ 現在的狀態。⚠️ 型別是 **`AnimState | AnimPulse`** —— 因為
+   * `update()` 在脈衝期間直接回**脈衝名**，而 2026-09-02 之後脈衝多了
+   * `guard`/`dodge`，⛔ 它們**不在** 6 格 `AnimState` 裡（見 `animPulse.ts`：
+   * 它們走 `ClipAnimator` 的 `PresentationClip` 軸，⛔ 不進 `clipMap`）。
+   */
+  state: AnimState | AnimPulse = "idle";
 
   /**
    * Event-driven pulse (from MSG.EVENT: abilityCast / damage / basic attack).
@@ -119,7 +136,7 @@ export class AnimationStateMachine {
   }
 
   /** Recompute the state from authoritative flags; returns the new state. */
-  update(inputs: AnimInputs, nowMs: number): AnimState {
+  update(inputs: AnimInputs, nowMs: number): AnimState | AnimPulse {
     if (!inputs.alive) {
       this.pulse = null;
       this.recovery = false;

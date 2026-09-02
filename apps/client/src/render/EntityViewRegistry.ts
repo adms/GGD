@@ -670,7 +670,13 @@ export class EntityViewRegistry {
         if (target !== undefined) {
           const view = this.champions.get(target);
           if (view) {
-            view.triggerHurt(nowMs);
+            // ⭐⭐ P0-2 —— **擋下來的那一發播 `guard`，⛔ 不是 `hurt`。**
+            //   `ev.data.blocked` 是出貨的那個旗標（`VfxSystem` 的泛用火花
+            //   也讀同一格 ⇒ ⛔ 兩邊不會對同一發做出不同判斷）。
+            //   ⚠️ 其餘一切照舊：hitstop、閃光、火花都還在
+            //   —— ⭐ 換掉的只有**身體的姿勢**。
+            if (ev.data.blocked === true) view.triggerGuard(nowMs);
+            else view.triggerHurt(nowMs);
             // ⚠️ `ChampionView.flash` **無條件**寫 `flashRgb`/`flashAlpha`,只有
             //    `flashUntilMs` 走 `Math.max` ⇒ 一發 `ms: 0` 的閃光（GH#741 的
             //    `blockFlashMode: "none"`）會把**還在燒的上一發**的 alpha 洗成 0。
@@ -690,6 +696,20 @@ export class EntityViewRegistry {
           );
           sourceView?.setHitstop(plan.freezeMs, nowMs);
         }
+        break;
+      }
+      /**
+       * ⭐⭐ **閃過去了**（Codex 阻塞清單 P0-2）—— 防禦者播 `dodge`。
+       *
+       * ⛔⛔ 在此之前 `evade` 在**整個渲染層零個消費端**：
+       * 它只有一條浮動文字（`frameBus`）⇒ ⭐ 身體**一格都沒動過**。
+       *
+       * ⭐ 而 MISS 的字**照舊**（那是另一條路）——
+       * Codex 逐字要求「保留 MISS 回饋」。
+       */
+      case "evade": {
+        const evader = ev.data.target as number | undefined;
+        if (evader !== undefined) this.champions.get(evader)?.triggerDodge(nowMs);
         break;
       }
       // unblocked heavy hit → KNOCKDOWN: a longer prone/getup flinch on the victim.
