@@ -55,8 +55,8 @@ export const VFX_FORGE_ACCEPTANCE_SOURCES = [
     label: "04-04 神滅斬",
     ownerTarget: "莉娜高速 dash 穿過目標並完成紫黑色斬擊，角色動線必須清楚。",
     main: {
-      script: "shipped",
-      summary: "Main 已出貨專用 vfx-script：隱藏本體、Lina 模型高速穿越目標，並疊加兩道紫色斬痕與落點爆發。",
+      script: "ability-only",
+      summary: "Main 只有 ability 演出，沒有出貨 godie-hjai.r 專用 vfx-script；dash、角色動作與紫黑斬擊目前只存在 Editor 驗收 fixture。",
     },
     jass: {
       rawcodes: ["A07F"],
@@ -112,8 +112,8 @@ export const VFX_FORGE_ACCEPTANCE_SOURCES = [
     label: "08-03 龍鬥氣砲咒文",
     ownerTarget: "藍色經典橫向氣功砲，具有寬光束、白色核心與清楚的發射起點。",
     main: {
-      script: "shipped",
-      summary: "Main 已出貨專用 vfx-script：胸前藍白聚能、沿地面推進的多層橫向光束與持續核心；命中仍由 ability 掌權。",
+      script: "ability-only",
+      summary: "Main 沒有專用 vfx-script；ability 仍是火焰 beam 加十顆紅龍飛彈。藍白聚能、寬光束與持續核心目前只存在 Editor 驗收 fixture。",
     },
     jass: {
       rawcodes: ["A05J"],
@@ -169,8 +169,8 @@ export const VFX_FORGE_ACCEPTANCE_SOURCES = [
     label: "48-04 騎英之手綱",
     ownerTarget: "Rider 本體高速 dash，伴隨藍色經典橫向氣功砲與清楚落點爆發。",
     main: {
-      script: "shipped",
-      summary: "Main 已出貨專用 vfx-script：Rider 以 bodyMove 弧線 dash，並疊加藍白橫向光砲與落點演出。",
+      script: "ability-only",
+      summary: "Main 沒有專用 vfx-script；ability 只有三層 modelFx 與 arcane beam，尚無 Rider 本體 bodyMove。dash、藍白橫向光砲與落點演出目前只存在 Editor 驗收 fixture。",
     },
     jass: {
       rawcodes: ["A0RQ"],
