@@ -5534,7 +5534,7 @@
       }
     ]
   },
-  "assetManifestDigest": "d82a2968ae3a",
+  "assetManifestDigest": "e5f330c81983",
   "assetManifest": {
     "path": "assets-manifest.json",
     "entries": 1640,
@@ -5618,5 +5618,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "def518b48b00"
+  "profileDigest": "83dd8144b3de"
 }

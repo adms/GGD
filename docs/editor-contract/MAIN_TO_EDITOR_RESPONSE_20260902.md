@@ -35,7 +35,55 @@
 
 ---
 
+## ⛔⛔ 一·五、**先讀這一節**：那些 route 在正式站上**不存在**（⭐ 而那是設計）
+
+⚠️ ⭐ **2026-09-02 實測**（`https://ggd.adms.ai`）：
+
+| 路徑 | HTTP |
+|---|---:|
+| `/content/editor-target-profile.json` | **200** |
+| `/content/assets-manifest.json` | **200** |
+| `/api/v1/content-import/contract-index` | ⛔ **404** |
+| `/api/v1/content-import/active/runtime-bundle` | ⛔ **404** |
+| `/api/v1/content-import/health` | ⛔ **404** |
+
+### ⭐ 而它**不是**部署失敗 —— `docker/edge.Dockerfile` 逐字寫著
+
+> 「`/content-api/` is deliberately absent from the production nginx…
+>  the surface a deploy does not contain **cannot be reached, authenticated or otherwise**.」
+
+⇒ ⭐ **正式站根本不出貨那一整個表面。** 那是刻意的（GH#239 之後的裁決：
+「THE FIX IS **EXPOSURE**, NOT AN ENVIRONMENT GATE」）。
+
+### ⇒ ⭐ 所以「哪些東西在哪裡」是這樣的
+
+| 表面 | 在哪裡拿得到 | ⛔ 不在哪裡 |
+|---|---|---|
+| `editor-target-profile.json`（含 `contractIndex.digest` / `effectiveVfxLimits`） | ⭐ **正式站的靜態 `content/`** | — |
+| `assets-manifest.json` | ⭐ **正式站的靜態 `content/`** | — |
+| `bundle.json` / `manifest.json` | ⭐ **正式站的靜態 `content/`** | — |
+| `contract-index` 的**完整內容** | 本機 `pnpm dev:editor` 的 `/content-api` proxy | ⛔ 正式站 |
+| `active/runtime-bundle` · `validate` · `apply` · `rollback` · `editor-source` | 同上（loopback） | ⛔ 正式站 |
+
+⚠️ ⭐ 而交接文件自己也是這樣要求的：
+「Public static profile **只供 discovery／唯讀 Base**；active profile、verified plan、
+verdict、apply、rollback 都必須來自 **authenticated gateway**」——
+⭐ 那個 gateway **還沒建**（第一版由 Admin 頁上傳，見交接文件 §0-3）。
+
+### ⛔ 我上一版的這份文件把那些 route 列出來卻**沒說這件事**
+
+⚠️ ⭐ 那是 CLAUDE.md 記過的形狀：
+**「它沒有在跑」與「它在哪一個環境沒有在跑」是兩件事** ——
+⇒ 照原文對著 `https://ggd.adms.ai` 接，會拿到 404 而誤判成「main 沒做」。
+⭐ 已更正。
+
+---
+
 ## ✅ 二、已上線的 machine schema／route
+
+> ⚠️ ⭐ 讀這一節之前先看上面那一節：**下面每一條 `/api/v1/...` 都只在本機／
+> loopback 拿得到**，⛔ 正式站是 404（而那是設計，⛔ 不是缺陷）。
+> ⭐ 靜態 `content/**` 那幾份**在正式站上就拿得到**。
 
 ### `ggd-editor-contract-index@1` —— §0-1，**雙方唯一的接縫**
 
@@ -228,8 +276,12 @@ deltaExportAllowed       false
 
 ## ⚠️ 八、一件已知的驗收限制
 
-`resourcePct`／級距那一族的字面值**走來源也不會原樣存活** ——
-⭐ `tierize()` 是「值 → 級別 → 值」，⇒ 改 `cooldown: 90 → 77` 會被解析回 **90**（同一級距）。
+級距那一族的**字面值**走來源也不會原樣存活 ——
+⭐ `tierize()` 是「值 → **級別** → 值」：寫進來源的數字先被歸到一個級別，
+再由那個級別的表**寫回值** ⇒ ⛔ 同一級距內的兩個數字，回來會是**同一個**。
+
+⚠️ ⭐ 而這正是為什麼編輯器**只該編級別**（owner 2026-08-23 逐字：
+「編輯器只編輯原始資料（五級距）」）—— ⛔ 編字面值等於編一個會被覆寫的東西。
 
 ⭐ 那是**第〇·四守則要的行為**（值只有一個住處），⛔ 不是接縫壞掉。
 ⇒ ⭐ 而 `ggd-editor-source@1` 因此帶一格 **`normalizedFields`**，
