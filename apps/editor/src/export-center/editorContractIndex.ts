@@ -158,3 +158,18 @@ export function modesFor(index: EditorContractIndex | null, representation: stri
   const row = representationContract(index, representation);
   return row?.state === "supported" ? row.modes : [];
 }
+
+/**
+ * Runtime documents that Main currently allows through package apply. This is
+ * intentionally derived from the verified registry instead of keeping a third
+ * `ability@1` / `item@1` policy array in the Editor.
+ */
+export function packageRuntimeRepresentations(
+  index: EditorContractIndex | null,
+): readonly EditorRepresentationContract[] {
+  return index?.representations.filter((row) =>
+    row.state === "supported" &&
+    row.packageKind === "runtime-document" &&
+    row.promotionPolicy === "admin-package-apply"
+  ) ?? [];
+}

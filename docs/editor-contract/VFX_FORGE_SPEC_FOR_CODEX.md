@@ -1,6 +1,6 @@
 # 特效工坊（VFX Forge）· 技術規格 —— 給 Codex
 
-狀態：**Revision 3 — 2026-09-02 11:59 CST，以 `origin/main@1d8dc285`（v0.35.12）與 `feat/vfx-forge-codex` 實際畫面重驗**
+狀態：**Revision 4 — 2026-09-02 12:06 CST，以 `origin/main@25fa2cba`（v0.35.13）與 `feat/vfx-forge-codex` 實際畫面重驗**
 
 > 本文保留 2026-08-31 的出發點，但「缺口」必須以各節的目前狀態為準；不可把舊基線當成今天的待辦。
 
@@ -239,7 +239,7 @@ docs/_reports/audition-ruler-selfcert_visual-proof_20260829-2153/
 | `docs/技能標記機制與效果規則.md` | 「**它怎麼用**」—— 參數與上下界 |
 | `docs/editor-contract/README_CODEX_開工清單.md` | ⭐ **索引 ＋ 14 個坑** |
 
-⭐ 2026-09-02 11:59 CST 的收據：`fingerprint = 71b5be5a4f57`、
+⭐ 2026-09-02 12:06 CST 的收據：`fingerprint = 71b5be5a4f57`、
 `capabilityFingerprint = 111434fa`。兩者答不同的問題，也都是易變收據；每次開工先跑產生器的 `--check`，
 不能把這兩串編進 Editor 常數。現有雙向測試另抓到 Main 漏報 `templateFamily/combo-finisher`；修正前即使
 `caps:check` 綠燈也不能宣稱契約完整。

@@ -1,28 +1,48 @@
 # GGD Main ↔ Codex Editor：必要接縫結案收據
 
-狀態：**Revision 11 — Main v0.35.12 已整合；只剩五個可重用積木／契約阻塞**
+狀態：**Revision 12 — Main v0.35.13 已整合；五個可重用積木／契約阻塞仍未落地**
 
-核對基準：`origin/main@1d8dc285`（tag `v0.35.12`）
+核對基準：`origin/main@25fa2cba`（tag `v0.35.13`）
 
-Main seam：已以 `--ff-only` 線性進入 `main`；來源 ref `origin/feat/editor-seam-20260902@608c4de02` 暫留供追溯
+Main seam：`origin/feat/editor-seam-20260902@25fa2cba` 與 `main` 同一點；正式回交住
+`docs/editor-contract/MAIN_TO_EDITOR_RESPONSE_20260902.md`
 
 Editor：`feat/vfx-forge-codex`（禁止直接提交或推送 `main`）
 
-最後核對：**2026-09-02 11:42（Asia/Taipei）**
+最後核對：**2026-09-02 12:06（Asia/Taipei）**
 
 ## 結論
 
-Editor 已抓取並整合 Main v0.35.12 的完整線性歷史，包括以下五個接縫 commits：
+Editor 已抓取並整合 Main v0.35.13 的完整線性歷史，包括以下接縫 commits：
 
 - `b54441df`：完整 `active/runtime-bundle` 與 effective VFX limit identity receipt；
 - `cf40d5db`：`ggd-editor-contract-index@1` 唯一登錄表；
 - `cbc70f5a`：穩定 `adapterId` 與 source adapter 非遠端命令入口證明；
 - `4ec5e676`：補上 champion-slot PATCH 與 restore 的 generator-owned server guard。
 - `5dc0eb92`：新增 `resolved-appearance@1` 與 `isStandIn`，讓共用替身不再靜默。
+- `656f9d3f`：將 Main 正式回交文件放進 repo，不再只存在對話文字。
+- `25fa2cba`：修正 asset manifest 測試原本沒有真正驗證閉包的問題；此項不會消除下列 27 個
+  framebuffer／透明底板 blocker。
+
+Editor 已完成 Main 回交要求的「第三份 representation 清單」修正：Export Center 不再以字面
+`["ability@1","item@1"]` 決定 package policy，而是從已驗證的 `contract-index` 推導所有
+`supported + runtime-document + admin-package-apply` 列。若 Main 新增 representation 而 Editor 尚無 builder，
+或 target profile 摘要與完整 index 不一致，現在會明確 fail closed，不會安靜漏包。
 
 Editor 仍只在 `feat/vfx-forge-codex`；**不要把 Editor 提交直接推到 `main`**。
 
 Main 目前只需修正下方五個可重用積木／契約缺口；不需要替 Editor 拼任何技能、時間軸或完整特效。
+
+## v0.35.13 可重跑的現況證據
+
+| 阻塞 | 驗證指令 | 2026-09-02 12:06 結果 |
+|---|---|---|
+| 有效 yaw | `rg -n 'yawOffsetDeg: num\\(model\\.yawOffsetDeg, 0\\)' packages/shared/src/content/import/resolvedAppearance.ts` | 仍命中 raw 0° fallback |
+| 單發主斬弧 | `rg -n '"burstCount"\\s*:\\s*26' content/vfx/fx.prim.*slash*.json` | 所有現有 slash primitive 仍為 26 發 |
+| 迴避 provenance | `sed -n '286,310p' packages/shared/src/sim/combat/evasion.ts` | payload 仍只有 `source/target/x/z`，沒有 grant identity |
+| actor-aware resolver | `rg -n 'resolveAbilityPresentation|"guard".*"dodge"' packages/shared/src apps/client/src` | 沒有統一 resolver／兩個 actor pulse |
+| combo capability | `pnpm --filter @ggd/editor test -- src/form/fullCoverageMatchesContract.test.ts` | 唯一紅燈仍是 `templateFamily/combo-finisher` |
+| 素材安全 | `pnpm vfxassets:check:fast` | 仍為 27 blockers、五張來源貼圖 |
 
 ## 不可越界的分工
 
@@ -162,7 +182,7 @@ Editor 會繼續負責技能專屬組合、時間軸、色彩、鏡頭與人工�
 
 ## 阻塞積木 5：`combo-finisher` 已出貨，但對外 capability 契約漏報
 
-Main `v0.35.12` 已讓 `combo-finisher` 成為可展開的真正模板家族：
+Main 自 `v0.35.12` 起已讓 `combo-finisher` 成為可展開的真正模板家族：
 
 - `content/ability-templates/tpl-combo-finisher.json` 為 `status:"enabled"`；
 - `packages/shared/src/content/templates/expand.ts` 已有 `"combo-finisher"` 展開器；

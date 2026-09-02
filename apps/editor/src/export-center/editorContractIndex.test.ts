@@ -7,6 +7,7 @@ import { sha256Hex } from "@ggd/shared/content/sha256";
 import { ZIP_LIMITS } from "@ggd/shared/content/import/zipSafety";
 import {
   modesFor,
+  packageRuntimeRepresentations,
   promotionPolicyFor,
   readEditorContractIndex,
 } from "./editorContractIndex";
@@ -32,6 +33,7 @@ describe("Main editor contract index", () => {
     expect(modesFor(index, "ability@1")).toEqual(["bootstrap", "full", "delta"]);
     expect(modesFor(index, "vfx-script@1")).toEqual([]);
     expect(promotionPolicyFor(index, "editor-capability-fixture")).toBe("forbidden");
+    expect(packageRuntimeRepresentations(index).map((row) => row.schema)).toEqual(["ability@1", "item@1"]);
   });
 
   it("matches the shipped target-profile digest to Main's full registry", () => {

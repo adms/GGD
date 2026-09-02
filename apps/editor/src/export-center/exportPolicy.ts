@@ -1,9 +1,17 @@
-import { modesFor, promotionPolicyFor, type EditorContractIndex } from "./editorContractIndex";
+import { packageRuntimeRepresentations, type EditorContractIndex } from "./editorContractIndex";
 
 export const DEFAULT_TARGET_PROFILE_URL =
   "https://ggd.adms.ai/content/editor-target-profile.json";
 
 export type PackageMode = "bootstrap" | "full" | "delta";
+
+const RUNTIME_SCHEMA_BY_COLLECTION = {
+  abilities: "ability@1",
+  items: "item@1",
+} as const;
+
+type RuntimeAuthoringCollection = keyof typeof RUNTIME_SCHEMA_BY_COLLECTION;
+type EditorRuntimeSchema = typeof RUNTIME_SCHEMA_BY_COLLECTION[RuntimeAuthoringCollection];
 
 export interface TargetProfileFacts {
   schema: string;
@@ -116,12 +124,25 @@ export function packageModeBlockers(
   } else if (facts.implementedStage !== "G2") {
     blockers.push("目標未宣告 importer G2");
   }
-  for (const representation of ["ability@1", "item@1"] as const) {
-    if (!modesFor(contractIndex, representation).includes(mode)) {
-      blockers.push(`contract-index 未宣告 ${representation} 支援 ${mode}`);
+  const runtimeRepresentations = packageRuntimeRepresentations(contractIndex);
+  if (contractIndex && runtimeRepresentations.length === 0) {
+    blockers.push("contract-index 沒有可由 package apply 的 runtime-document");
+  }
+  for (const representation of runtimeRepresentations) {
+    if (!representation.modes.includes(mode)) {
+      blockers.push(`contract-index 未宣告 ${representation.schema} 支援 ${mode}`);
     }
-    if (promotionPolicyFor(contractIndex, representation) !== "admin-package-apply") {
-      blockers.push(`contract-index 未允許 ${representation} 走 admin package apply`);
+    if (!runtimeCollectionForSchema(representation.schema)) {
+      blockers.push(`Editor 尚未實作 ${representation.schema} 的 runtime package builder`);
+    }
+  }
+  if (contractIndex) {
+    const profileSchemas = [...new Set(facts.authoringAccepts)].sort();
+    const contractSchemas = runtimeRepresentations.map((row) => row.schema).sort();
+    if (JSON.stringify(profileSchemas) !== JSON.stringify(contractSchemas)) {
+      blockers.push(
+        `target profile 與 contract-index 的 runtime representations 不一致（profile=${profileSchemas.join(",") || "∅"}；contract=${contractSchemas.join(",") || "∅"}）`,
+      );
     }
   }
   if (
@@ -140,6 +161,13 @@ export function packageModeBlockers(
   return [...new Set(blockers)];
 }
 
-export function rawRuntimeSchemaFor(collection: "abilities" | "items"): "ability@1" | "item@1" {
-  return collection === "abilities" ? "ability@1" : "item@1";
+export function rawRuntimeSchemaFor(collection: RuntimeAuthoringCollection): EditorRuntimeSchema {
+  return RUNTIME_SCHEMA_BY_COLLECTION[collection];
+}
+
+export function runtimeCollectionForSchema(schema: string): RuntimeAuthoringCollection | null {
+  for (const [collection, knownSchema] of Object.entries(RUNTIME_SCHEMA_BY_COLLECTION)) {
+    if (knownSchema === schema) return collection as RuntimeAuthoringCollection;
+  }
+  return null;
 }

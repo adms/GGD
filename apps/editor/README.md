@@ -113,7 +113,10 @@ does not require redesigning the editor. The current published profile only
 supports `bootstrap`, declares runtime-direct `ability@1` / `item@1` authoring,
 and has no active authoring store. Package generation now pins the shipped
 `authoringProcessor` receipt and omits `compiler`, matching Main's
-runtime-direct contract. Production export remains fail closed until the target
+runtime-direct contract. The set of package-applicable runtime representations
+is derived from the digest-verified contract index rather than a third Editor
+allow-list; a new Main representation without an Editor builder, or a profile
+summary that disagrees with the full index, fails closed. Production export remains fail closed until the target
 declares G2 and supplies the exact Base facts required by the selected mode.
 
 The desktop app can use either a local GGD directory or an HTTPS remote Base such
@@ -124,8 +127,8 @@ preserved for review. Binary assets are local-first and fetched through a bounde
 allow-listed cache bridge. Per-file asset hash verification will become mandatory
 as soon as main publishes the complete asset manifest requested by the handshake.
 
-Last verified 2026-09-02 11:54 CST, the feature branch contains
-`origin/main@1d8dc285` (tag `v0.35.12`). Treat this as a receipt rather than a
+Last verified 2026-09-02 12:06 CST, the feature branch contains
+`origin/main@25fa2cba` (tag `v0.35.13`). Treat this as a receipt rather than a
 permanent constant: fetch Main and compare the live ref before making a current
 compatibility claim. Live and repository profile digests likewise remain
 volatile receipts and are never compiled into the Editor as constants.
@@ -226,7 +229,7 @@ existing trigger.
 ## Feature branch handoff
 
 Implementation lives on `feat/vfx-forge-codex`, containing Main through the
-last verified receipt `origin/main@1d8dc285` (tag `v0.35.12`); the feature-branch
+last verified receipt `origin/main@25fa2cba` (tag `v0.35.13`); the feature-branch
 tip is the only current Editor revision. It is intentionally not merged or
 pushed to `main`. Main should use
 `docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md` as a reference
