@@ -96,6 +96,7 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .preview-panel h3 { margin-top: 0; }
 .preview-seam { color: var(--muted); font-size: 11px; }
 .preview-note { color: var(--muted); font-size: 12px; }
+.preview-warning { color: #ff918b; }
 .preview-stats { border-collapse: collapse; width: 100%; }
 .preview-stats td { border-bottom: 1px solid var(--line); padding: 3px 4px; font-size: 12px; }
 .preview-stats td:last-child { text-align: right; font-variant-numeric: tabular-nums; }

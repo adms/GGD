@@ -13,6 +13,7 @@ import type { AnimationGroup } from "@babylonjs/core/Animations/animationGroup";
 import type { Mesh } from "@babylonjs/core/Meshes/mesh";
 import type { EventMessage } from "@ggd/shared/protocol/messages";
 import type { ModelDoc, VfxDoc } from "@ggd/shared/content";
+import { resolveAppearance } from "@ggd/shared/content/import/resolvedAppearance";
 import { Models, VfxDefs, VfxScripts } from "@ggd/shared/content/registries";
 import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
 import { abilityIdOfAuthoredOrigin, type ChampionDef } from "@ggd/shared/sim";
@@ -851,8 +852,11 @@ export class VfxForgeStage {
     this.emitOverlay("載入 3D 角色…");
     try {
       const doc = await this.fetchDoc<ModelDoc>("models", champion.modelKey);
-      const container = await this.assets.load(doc.glbPath);
-      if (!container) throw new Error(`GGD AssetManager 無法載入 ${doc.glbPath}`);
+      const resolved = resolveAppearance(champion.id, champion, doc);
+      if (!resolved.ok) throw new Error(`resolved-appearance@1: ${resolved.failure.kind}`);
+      const appearance = resolved.appearance;
+      const container = await this.assets.load(appearance.glbPath);
+      if (!container) throw new Error(`GGD AssetManager 無法載入 ${appearance.glbPath}`);
       if (this.disposed || this.scene.isDisposed) {
         return;
       }
@@ -913,7 +917,8 @@ export class VfxForgeStage {
       const centerX = (rendered.min.x + rendered.max.x) / 2;
       const centerZ = (rendered.min.z + rendered.max.z) / 2;
       this.actorStatus[actor.role] =
-        `${champion.name} · ${champion.modelKey} · ${visible.length} meshes · ` +
+        `${appearance.isStandIn ? "⚠ 共用替身 · " : ""}${champion.name} · ${appearance.modelKey} · ` +
+        `${visible.length} meshes · ` +
         `h${height.toFixed(2)} · ×${finalScale.toFixed(3)} · @${centerX.toFixed(1)},${centerZ.toFixed(1)} · 材質已預熱`;
       // The script may already be scrubbed past a pulse while this GLB loaded.
       this.seek(this.nowMs);

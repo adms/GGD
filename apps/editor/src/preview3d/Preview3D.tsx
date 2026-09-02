@@ -7,11 +7,13 @@ import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   zChampionDoc,
+  zModelDoc,
   zSkinDoc,
   type CollectionName,
   type ChampionDoc,
   type SkinDoc,
 } from "@ggd/shared/content";
+import { resolveAppearance } from "@ggd/shared/content/import/resolvedAppearance";
 import { api } from "../api/client";
 import { ModelPanel } from "./ModelPanel";
 import { VfxPanel } from "./VfxPanel";
@@ -68,6 +70,14 @@ function ChampionModelEmbed({ doc }: { doc: unknown }) {
 
   if (!champion) return <p className="preview-note">Fix validation errors to preview the character.</p>;
   if (unavailable) return unavailable;
+  const model = zModelDoc.safeParse(query.data);
+  if (!model.success) return <p className="preview-note">Fix model validation errors to preview the character.</p>;
+  const resolved = resolveAppearance(
+    champion.id,
+    { id: champion.id, modelKey },
+    model.data,
+  );
+  if (!resolved.ok) return <p className="preview-note">Appearance failed: {resolved.failure.kind}</p>;
   const appearance = effectiveHeroAppearance(champion, skin);
   return (
     <div className="hero-appearance-preview">
@@ -81,6 +91,7 @@ function ChampionModelEmbed({ doc }: { doc: unknown }) {
       <p className="preview-note">
         實際生效：model <code>{modelKey}</code> · 體型 ×{champion.bodyScale ?? 1} ·
         tint {appearance.tint?.join(",") ?? "neutral"} · alpha {appearance.alpha ?? 1}
+        {resolved.appearance.isStandIn ? <strong className="preview-warning"> · ⚠ 共用替身，不能當角色外觀驗收證據</strong> : null}
       </p>
       <ModelPanel
         doc={query.data}
@@ -111,12 +122,21 @@ function SkinModelEmbed({ doc }: { doc: unknown }) {
   const unavailable = modelQueryState(skin.modelKey, modelQuery);
   if (unavailable) return unavailable;
   if (!champion) return <p className="preview-note">Loading owner champion…</p>;
+  const model = zModelDoc.safeParse(modelQuery.data);
+  if (!model.success) return <p className="preview-note">Fix model validation errors to preview the skin.</p>;
+  const resolved = resolveAppearance(
+    champion.id,
+    { id: champion.id, modelKey: skin.modelKey },
+    model.data,
+  );
+  if (!resolved.ok) return <p className="preview-note">Appearance failed: {resolved.failure.kind}</p>;
   const appearance = effectiveHeroAppearance(champion, skin);
   return (
     <div className="hero-appearance-preview">
       <p className="preview-note">
         {champion.name} + {skin.name}：model <code>{skin.modelKey}</code> ·
         tint {appearance.tint?.join(",") ?? "neutral"} · alpha {appearance.alpha ?? 1}
+        {resolved.appearance.isStandIn ? <strong className="preview-warning"> · ⚠ 共用替身，不能當角色外觀驗收證據</strong> : null}
       </p>
       <ModelPanel
         doc={modelQuery.data}

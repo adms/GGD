@@ -1,25 +1,28 @@
 # GGD Main ↔ Codex Editor：必要接縫結案收據
 
-狀態：**Revision 6 — Main 關鍵接縫已整合，沒有新的阻塞要求**
+狀態：**Revision 7 — Main v0.35.4 已整合；只剩一個 resolver 方向語意阻塞**
 
-核對基準：`origin/main@de7006c69`
+核對基準：`origin/main@d63214d78`（tag `v0.35.4`）
 
-Main seam：`origin/feat/editor-seam-20260902@4ec5e676`
+Main seam：已以 `--ff-only` 線性進入 `main`；來源 ref `origin/feat/editor-seam-20260902@608c4de02` 暫留供追溯
 
 Editor：`feat/vfx-forge-codex`（禁止直接提交或推送 `main`）
 
-最後核對：**2026-09-02 08:28（Asia/Taipei）**
+最後核對：**2026-09-02 08:43（Asia/Taipei）**
 
 ## 結論
 
-Main 不必再為本輪新增程式。Editor 已抓取並整合以下四個 feature-branch commits：
+Editor 已抓取並整合 Main v0.35.4 的完整線性歷史，包括以下五個接縫 commits：
 
 - `b54441df`：完整 `active/runtime-bundle` 與 effective VFX limit identity receipt；
 - `cf40d5db`：`ggd-editor-contract-index@1` 唯一登錄表；
 - `cbc70f5a`：穩定 `adapterId` 與 source adapter 非遠端命令入口證明；
 - `4ec5e676`：補上 champion-slot PATCH 與 restore 的 generator-owned server guard。
+- `5dc0eb92`：新增 `resolved-appearance@1` 與 `isStandIn`，讓共用替身不再靜默。
 
-兩邊仍維持 feature branch；**不要把任何一邊直接推到 `main`**。
+Editor 仍只在 `feat/vfx-forge-codex`；**不要把 Editor 提交直接推到 `main`**。
+
+Main 目前只需修正下方一個可重用 resolver 語意；不需要替 Editor 拼任何技能、時間軸或特效。
 
 ## 不可越界的分工
 
@@ -56,6 +59,28 @@ Main 的驗收標準是該 primitive 可被任意技能重用；成品像不像�
    - source adapter 僅由 server 端登錄的 `adapterId` 選擇，client 不可傳 shell command；
    - Editor 寫 champion mirror 前仍會重新讀 ability 與 champion 的 `editor-source`；兩份都必須
      `writePolicy=document` 才送 PATCH。Editor 沒有呼叫 restore。
+5. `resolved-appearance@1`
+   - Editor 已用同一 resolver 解析 VFX Forge 施法者／目標與英雄 3D 預覽；
+   - `isStandIn=true` 仍可用來除錯機制，但禁止擷取或送出人工批核視覺證據；
+   - 候選證據附 `championId/modelKey/modelDocDigest/resolverFingerprint` 收據。
+
+## 唯一需要 Main 修正的積木：缺省 yaw 不是實際生效值
+
+`resolvedAppearance.ts` 目前以 `yawOffsetDeg: num(model.yawOffsetDeg, 0)` 處理缺值；但遊戲的權威
+`glbYawOffset(doc)` 規則是：未填 override 時，`assets/models/imported/*` 與 Blizzard overlay 預設 **90°**，
+native 預設 **0°**。因此新契約回的 0° 不是「實際生效值」。
+
+出貨盤點：138 顆 imported model 中 136 顆未填 override；52 位出貨英雄受影響，包含 Saber、莉娜、佐助、
+涅吉。Editor 若盲信新欄位，角色會相對遊戲側轉 90°。
+
+請 Main 只修這個 reusable primitive：
+
+1. 讓 resolved appearance 的有效 yaw 呼叫與遊戲相同的 family-default resolver；不得複製第二份 prefix 表。
+2. 加一個 imported、未填 `yawOffsetDeg` 的測試，期望有效值 90°；再保留 native 0° 與顯式 override。
+3. 如果欄位要保留「作者原值」語意，請另名為 `authoredYawOffsetDeg`，並新增明確的 `effectiveYawOffsetDeg`；
+   不要讓名為 resolved 的契約回 raw fallback。
+
+修正前 Editor 仍呼叫遊戲既有 `glbYawOffset(doc)` 畫方向，只使用 resolver 其餘正確欄位，避免自行發明規則。
 
 ## 本輪整合時修正的 Editor 接縫
 
@@ -67,7 +92,7 @@ Main 的驗收標準是該 primitive 可被任意技能重用；成品像不像�
 
 ## 非阻塞、不要塞回本輪
 
-- `validate-single`、AI promote 便利 route、新 Eva 模型、appearance resolver、七色 palette；
+- `validate-single`、AI promote 便利 route、新 Eva 模型、七色 palette；
 - `vfx-script@1` production importer：index 仍明示 `planned/G5`，Editor 只保留可擴充骨架，不假裝可上線；
 - 正式站部署：feature-branch integration 已完成，何時部署由 Main 發版流程決定。部署前公開站仍可能是舊
   profile/404，這不應反向要求 Editor 猜欄位。

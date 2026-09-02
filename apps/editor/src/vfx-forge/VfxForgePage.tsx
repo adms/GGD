@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
+  Models,
   zodIssues,
   type CollectionIndex,
   type FieldIssue,
 } from "@ggd/shared/content";
+import { resolveAppearance } from "@ggd/shared/content/import/resolvedAppearance";
 import {
   zVfxScriptDoc,
   type VfxScriptDoc,
@@ -57,6 +59,7 @@ import {
 import { acceptanceFixtureFor, VFX_FORGE_ACCEPTANCE } from "./acceptanceFixtures";
 import { acceptanceSourceFor } from "./acceptanceSources";
 import { AcceptanceSourcePanel } from "./AcceptanceSourcePanel";
+import { reviewAppearances } from "./appearanceReview";
 
 const simPreview = createSimPreviewController();
 
@@ -69,11 +72,10 @@ export function VfxForgePage() {
   const assetSafetyGate = useMemo(() => new AssetSafetyGate(api), []);
   const [abilityId, setAbilityId] = useState("godie-hart.r");
   const [abilityInput, setAbilityInput] = useState("godie-hart.r");
-  // Use a real shipped 3D champion as the default opponent. The old `sela`
-  // blockout is useful for mechanics tests but its white cube head trips the
-  // same framebuffer signature as a missing-alpha card and does not satisfy
-  // the Owner requirement to review two actual character models.
-  const [targetChampionId, setTargetChampionId] = useState("godie-e00r");
+  // Use a real shipped 3D champion as the default opponent. `godie-e00r` looks
+  // plausible but resolved-appearance@1 correctly identifies it as the rogue
+  // stand-in; screenshots of that body are not valid visual proof.
+  const [targetChampionId, setTargetChampionId] = useState("godie-e001");
   const [ability, setAbility] = useState<ForgeAbility | null>(null);
   const draftHistory = useUndoHistory<VfxScriptDoc | null>(null, sameJson);
   const draft = draftHistory.value;
@@ -118,6 +120,22 @@ export function VfxForgePage() {
       ? Champions.tryGet(targetChampionId as ChampionId) ?? null
       : null,
     [previewContent.data, targetChampionId],
+  );
+  const casterAppearance = useMemo(
+    () => runtimeChampion
+      ? resolveAppearance(runtimeChampion.id, runtimeChampion, Models.tryGet(runtimeChampion.modelKey))
+      : null,
+    [runtimeChampion],
+  );
+  const targetAppearance = useMemo(
+    () => runtimeTarget
+      ? resolveAppearance(runtimeTarget.id, runtimeTarget, Models.tryGet(runtimeTarget.modelKey))
+      : null,
+    [runtimeTarget],
+  );
+  const appearanceReview = useMemo(
+    () => reviewAppearances(casterAppearance, targetAppearance),
+    [casterAppearance, targetAppearance],
   );
   const reactionTrigger = useMemo(
     () => runtimeAbility ? reactionTriggerOf(runtimeAbility) : null,
@@ -300,6 +318,10 @@ export function VfxForgePage() {
 
   const save = async (): Promise<void> => {
     if (!draft || errorCount > 0 || assetAuditPending || assetBlockers.length > 0) return;
+    if (!appearanceReview.allowed) {
+      setStatus(`⛔ 外觀證據無效：${appearanceReview.issues.join("；")}`);
+      return;
+    }
     const requiredEvidence = isAcceptanceFixture ? 2 : 1;
     if (visualEvidence.length < requiredEvidence) {
       setStatus(isAcceptanceFixture
@@ -340,6 +362,7 @@ export function VfxForgePage() {
             ...(acceptanceSource?.jass.references ?? []),
             ...(acceptanceStartedFromBlank ? [`editor-from-blank:${abilityId}`] : []),
             `preview-target:${targetChampionId}`,
+            ...appearanceReview.receipts,
             ...authoringActions.map((action, index) => `editor-action:${index + 1}:${action}`),
           ],
           visualEvidence,
@@ -403,6 +426,10 @@ export function VfxForgePage() {
       setStatus("⛔ 素材安全收據尚未全部通過，預覽與擷圖保持鎖定");
       return;
     }
+    if (!appearanceReview.allowed) {
+      setStatus(`⛔ 不可擷取批核證據：${appearanceReview.issues.join("；")}`);
+      return;
+    }
     if (previewMode !== "runtime") {
       setStatus("⛔ 視覺證據必須在「完整技能演出」模式擷取");
       return;
@@ -438,9 +465,10 @@ export function VfxForgePage() {
           <button type="button" disabled={!dirty} onClick={() => { if (original) { draftHistory.commit(original); setVisualEvidence([]); } }}>還原存檔版</button>
           <button
             type="button"
-            disabled={!dirty || errorCount > 0 || assetAuditPending || assetBlockers.length > 0 || fixtureWorkflowBlocked || visualEvidenceBlocked}
+            disabled={!dirty || errorCount > 0 || assetAuditPending || assetBlockers.length > 0 || !appearanceReview.allowed || fixtureWorkflowBlocked || visualEvidenceBlocked}
             title={fixtureWorkflowBlocked
               ? "八招必須從空白畫布用 Editor 重建，不能直接提交預置 JSON"
+              : !appearanceReview.allowed ? appearanceReview.issues.join("；")
               : visualEvidenceBlocked ? `送審前還需要 ${requiredVisualEvidence - visualEvidence.length} 張完整技能演出畫面` : undefined}
             onClick={() => void save()}
           >
@@ -463,6 +491,15 @@ export function VfxForgePage() {
         </label>
         {VFX_FORGE_ACCEPTANCE.map(([id, label]) => <button type="button" className={abilityId === id ? "active" : ""} key={id} onClick={() => choose(id)}>{label}</button>)}
       </section>
+
+      {!appearanceReview.allowed ? (
+        <section className="vfx-blocker" role="alert">
+          <b>⛔ 外觀證據不可批核</b>
+          <span>
+            {appearanceReview.issues.join("；")}。仍可預覽機制，但不可擷取或送出會讓審查者誤認為真實角色模型的證據。
+          </span>
+        </section>
+      ) : null}
 
       {isAcceptanceFixture ? (
         <section className="vfx-blocker" role="status">
@@ -588,7 +625,7 @@ export function VfxForgePage() {
                   onTime={onTime}
                   onStop={stop}
                   onDropAsset={addAsset}
-                  canCaptureEvidence={previewMode === "runtime" && visualEvidence.length < 4}
+                  canCaptureEvidence={appearanceReview.allowed && previewMode === "runtime" && visualEvidence.length < 4}
                   onCaptureEvidence={() => void captureVisualEvidence()}
                 />
               ) : (
@@ -609,7 +646,7 @@ export function VfxForgePage() {
                     <b>候選畫面證據 {visualEvidence.length}/{requiredVisualEvidence}（最多 4）</b>
                     <small>完整技能演出 · 綁定本次候選；任何 JSON 修改都會清空</small>
                   </div>
-                  <button type="button" disabled={!assetPreviewAllowed || previewMode !== "runtime" || visualEvidence.length >= 4} onClick={() => void captureVisualEvidence()}>
+                  <button type="button" disabled={!assetPreviewAllowed || !appearanceReview.allowed || previewMode !== "runtime" || visualEvidence.length >= 4} onClick={() => void captureVisualEvidence()}>
                     📷 擷取目前格
                   </button>
                 </header>
