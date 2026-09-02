@@ -4,6 +4,26 @@
  */
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
+
+/**
+ * ⭐ `world.emit("projectileHit", …)` 的酬載 —— **型別住 emit 站旁邊**，
+ * 客戶端 import 同一個（CLAUDE.md 失敗形態⑧的根治法：⛔ 不要在消費端寫 `as`，
+ * 欄位改名／消失要讓 **tsc 紅**，⛔ 不是「上線之後沒有人畫得出來」）。
+ *
+ * ⚠️ 兩個發射點共用它：普攻那一發多帶 `crit`，技能彈道那一發沒有。
+ */
+export interface ProjectileHitEvent {
+  /** 彈道實體 id（渲染層用它退場）。 */
+  id: EntityId;
+  /** 射出這一發的人。 */
+  owner: EntityId;
+  /** 被命中的人 —— ⭐ 角色動作（`hurt`）掛在**它**身上。 */
+  target: EntityId;
+  /** 作者側的彈道 id（`vfx-script@1` 的歸屬鍵）。 */
+  projectileId?: string;
+  /** 普攻路徑才有。 */
+  crit?: boolean;
+}
 import { scale, addScaled, dist } from "../math/vec2";
 import { sweptCircleVsCircle } from "../collision/intersect";
 import { runEffects } from "../effects/effectRunner";

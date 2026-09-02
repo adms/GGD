@@ -21,6 +21,8 @@
  */
 import { z } from "zod";
 import { zId, zRef } from "./common";
+// ⭐ 取代通道的**唯一住處** —— ⛔ 這裡不再抄一份 enum（第〇·四守則）。
+import { PRESENTATION_CHANNELS } from "../abilityPresentation";
 import { zSpawnModelFx } from "./effects/spawnModelFx";
 import { zSpawnVfx } from "./effects/spawnVfx";
 import { zAbilityVfxLayerOverride } from "./abilityVfx";
@@ -72,6 +74,28 @@ const SEG_COMMON = {
    * ⛔ 只有 `on:"strike"` 讀它（doc-level refine 擋半套）。
    */
   strikeIndex: z.number().int().min(1).max(100).optional(),
+  /**
+   * ⭐⭐ **取代語意**（Codex 阻塞清單 C 的 `replacementPolicy`）——
+   * 這一段**接管**哪一條演出通道。
+   *
+   * ⛔⛔ 在此之前**沒有取代機制**：`VfxSystem` 的 `scriptPlayer.onEvent()`
+   * 之後 `switch` 直接往下走 ⇒ ⭐ 專屬 script 與預設演出**兩條都跑**，
+   * 而作者側是靠**約定**避開重疊的，⛔ 不是靠機制。
+   *
+   * ⭐ 宣告之後：從這一段觸發的那一刻起 `windowMs` 毫秒內，
+   * **同一個實體**的那一條通道上，預設演出**不播**。
+   * ⛔ 不同通道**可以共存** —— 一段接管 `caster.action` 的腳本，
+   * ⛔ 不會把受擊者的 `target.reaction` 一起吃掉（Codex 逐字的取代規則）。
+   *
+   * ⚠️ 省略＝今天的行為（兩條都跑）⇒ ⭐ 出貨的 10 份 script 逐位元不變。
+   */
+  replaces: z.enum(PRESENTATION_CHANNELS).optional(),
+  /**
+   * `replaces` 的接管時長（毫秒）。省略＝`320`
+   * ＝ ⭐ 最長的一塊動作積木（`PULSE_MS.cast` 450 的安全內縮）——
+   * ⛔ 不是「永遠」：一個沒有到期的接管會讓那個人**再也不會有反應**。
+   */
+  replacesForMs: z.number().int().min(1).max(20000).optional(),
 } as const;
 
 /** 模型演出段 —— 詞彙照抄 spawnModelFx 的演出子集（單一住處）。 */

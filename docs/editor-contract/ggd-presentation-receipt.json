@@ -166,9 +166,9 @@
     "note": "⭐ 這是**唯一**的住處 —— `GameApp` / `VfxSystem` / `VfxScriptPlayer` / `EntityViewRegistry` 一律查它，⛔ 不各自維護規則（Codex 逐字）。"
   },
   "replacementPolicy": {
-    "status": "unsupported",
-    "why": "⛔ **今天沒有取代機制**：`scriptPlayer.onEvent()` 之後 `switch` 直接往下走（⛔ 無 early-return、⛔ 無旗標）⇒ 兩條都跑。⭐ 而出貨的 10 份 script **逐份對照過只有 1 次重疊**（已修）——作者側是靠**約定**避開的，⛔ 不是靠機制。⇒ ⭐ 閘：`packages/shared/src/content/vfxScriptNoDoubleDraw.test.ts`（腳本不可以畫技能已經在畫的東西）。",
-    "evidence": "apps/client/src/vfx/VfxSystem.ts · packages/shared/src/content/vfxScriptNoDoubleDraw.test.ts"
+    "status": "supported",
+    "why": "⭐ **有取代語意**：一段 vfx script 用 `replaces: \"caster.action\" | \"target.reaction\"` 宣告接管一條演出通道，播放器在**排程的當下**（⛔ 不是 `atMs` 之後）登記到 `channelTakeover`，而 `playDefaultPresentation` 播之前問一次。⚠️ ⭐ **逐實體 × 逐通道** —— 接管 `caster.action` ⛔ 不會吃掉受擊者的 `target.reaction`（Codex 逐字：不同 channel 可以共存）。⚠️ 接管**一定會到期**（`replacesForMs`，省略＝320ms）—— ⛔ 沒有到期的接管會讓那個人再也不會有反應。⚠️ 省略 `replaces` ＝ 今天的行為（兩條都跑）⇒ 出貨的 10 份 script 逐位元不變。",
+    "evidence": "packages/shared/src/content/schema/vfxScript.ts（replaces）· apps/client/src/render/channelTakeover.ts · apps/client/src/vfx/VfxScriptPlayer.ts（claim）· apps/client/src/render/EntityViewRegistry.ts（heldBy）· 閘 apps/client/src/render/channelTakeover.test.ts"
   },
   "singleArc": {
     "status": "supported",
@@ -205,5 +205,5 @@
     "why": "⭐ `displace` 帶著 `phase`（start/impact/end）與技能 identity。",
     "evidence": "packages/shared/src/sim/movement/leap.ts · packages/shared/src/sim/effects/blink.ts"
   },
-  "fingerprint": "d0ad1ef871050611"
+  "fingerprint": "6bcab3af80573361"
 }

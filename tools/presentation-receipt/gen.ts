@@ -139,22 +139,48 @@ function displaceCue(): Capability {
  * `VfxSystem.handleEvent` 的 `scriptPlayer.onEvent(ev)` 之後 `switch` 直接往下走
  * ⇒ 專屬 script **與**預設演出**兩條都跑**。
  */
+/**
+ * ⭐⭐ 這一格在 2026-09-02 從 `unsupported` 變成 `supported`
+ * —— ⭐ Codex 明確點名它是阻塞，而收據自己的 `why` 早就寫了正解
+ * （「要真正的取代語意請定義 channel」），而 `PRESENTATION_RULES`
+ * **已經有 channel 欄位**了 ⇒ 機制的一半本來就在。
+ *
+ * ⚠️ ⭐ **三段關係都要成立才算 supported**，⛔ 一段不算
+ * （CLAUDE.md 綠燈假來源⑪：兩條各自驗一半的守衛可以同時綠而接縫是死的）：
+ * ① schema 寫得出來（`replaces`）② 播放器會登記 ③ 預設演出會問。
+ * ⇒ 任一段消失 ⇒ 這一格自動掉回 `unsupported`，⛔ 而不是繼續說謊。
+ */
 function replacementPolicy(): Capability {
-  const s = src("apps/client/src/vfx/VfxSystem.ts");
-  const i = s.indexOf("this.scriptPlayer.onEvent(ev");
-  const after = i >= 0 ? s.slice(i, i + 400) : "";
-  const suppresses = /return;|suppress|early-?return/i.test(after);
+  const schema = src("packages/shared/src/content/schema/vfxScript.ts");
+  const player = src("apps/client/src/vfx/VfxScriptPlayer.ts");
+  const registry = src("apps/client/src/render/EntityViewRegistry.ts");
+  const declarable = /replaces:\s*z\.enum\(PRESENTATION_CHANNELS\)/.test(schema);
+  const claims = /channelTakeover\.claim\(/.test(player);
+  const asks = /channelTakeover\.heldBy\(/.test(registry);
+  const ok = declarable && claims && asks;
+  const missing = [
+    declarable ? "" : "schema 沒有 `replaces`",
+    claims ? "" : "播放器沒有登記",
+    asks ? "" : "預設演出沒有問",
+  ].filter(Boolean);
   return {
-    status: suppresses ? "supported" : "unsupported",
-    why: suppresses
-      ? "⭐ 專屬 script 會壓制同 channel 的預設演出。"
-      : "⛔ **今天沒有取代機制**：`scriptPlayer.onEvent()` 之後 `switch` 直接往下走" +
-        "（⛔ 無 early-return、⛔ 無旗標）⇒ 兩條都跑。" +
-        "⭐ 而出貨的 10 份 script **逐份對照過只有 1 次重疊**（已修）——" +
-        "作者側是靠**約定**避開的，⛔ 不是靠機制。" +
-        "⇒ ⭐ 閘：`packages/shared/src/content/vfxScriptNoDoubleDraw.test.ts`" +
-        "（腳本不可以畫技能已經在畫的東西）。",
-    evidence: "apps/client/src/vfx/VfxSystem.ts · packages/shared/src/content/vfxScriptNoDoubleDraw.test.ts",
+    status: ok ? "supported" : "unsupported",
+    why: ok
+      ? "⭐ **有取代語意**：一段 vfx script 用 `replaces: \"caster.action\" | \"target.reaction\"` " +
+        "宣告接管一條演出通道，播放器在**排程的當下**（⛔ 不是 `atMs` 之後）登記到 " +
+        "`channelTakeover`，而 `playDefaultPresentation` 播之前問一次。" +
+        "⚠️ ⭐ **逐實體 × 逐通道** —— 接管 `caster.action` ⛔ 不會吃掉受擊者的 " +
+        "`target.reaction`（Codex 逐字：不同 channel 可以共存）。" +
+        "⚠️ 接管**一定會到期**（`replacesForMs`，省略＝320ms）—— " +
+        "⛔ 沒有到期的接管會讓那個人再也不會有反應。" +
+        "⚠️ 省略 `replaces` ＝ 今天的行為（兩條都跑）⇒ 出貨的 10 份 script 逐位元不變。"
+      : `⛔ 取代機制**不完整**：${missing.join("、")} ⇒ 專屬 script 與預設演出兩條都跑。`,
+    evidence:
+      "packages/shared/src/content/schema/vfxScript.ts（replaces）· " +
+      "apps/client/src/render/channelTakeover.ts · " +
+      "apps/client/src/vfx/VfxScriptPlayer.ts（claim）· " +
+      "apps/client/src/render/EntityViewRegistry.ts（heldBy）· " +
+      "閘 apps/client/src/render/channelTakeover.test.ts",
   };
 }
 
