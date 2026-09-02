@@ -202,8 +202,39 @@ content/assets/models/imported/heroeva01s2.glb
 | 現在 e00r 的 `champ.skin.rogue` | **336** |
 | `imported.heroeva01s2` | ⛔ **16** |
 
-⇒ ⭐ **換過去會讓畫面更糟**（336 → 16）。已開 GGD#933（資產）與 GGD#934（消費端接線）。
-**在 #933 有真模型之前，請不要把 e00r 的預覽改到 Eva 上。**
+⇒ ⭐ **換過去會讓畫面更糟**（336 → 16）。
+
+### ⭐⭐ 而查到底之後，答案完全不同：**原作用的是 SatyrTrickster**
+
+`tools/w3x-import/out/GoDieEX22s-src/OBJECTS.json` 的 `heroes.E00R`：
+
+```
+name  = 最終泛用人型決戰兵器
+model = units\creeps\SatyrTrickster\SatyrTrickster.mdl
+```
+
+⇒ ⭐ **原作從來沒有用 Eva 模型當身體。**
+
+⭐ 而這同時解釋了那顆 16 頂點的 GLB：`HeroEVA01S2.mdx` 只有 4,354 bytes
+（幾何 `GEOS` 1,004 bytes）＋ **帶 `PREM` 粒子發射器**
+⇒ ⭐ 它是**特效**（初號機身上的光效），⛔ 不是角色本體。
+⇒ ⛔ **轉換器沒有掉東西** —— ⚠️ 雙方從一開始就在找錯東西。
+
+### ⇒ ⭐ 剩下的是**一個機械動作**，⛔ 不是一個設計問題
+
+repo 已有 **39 份** `w3x.stock.*` 內建模型走同一條管線
+⇒ 抽 `SatyrTrickster.mdl` → 轉成 `w3x.stock.satyrtrickster` → 指過去。
+⚠️ ⛔ 而**抽取需要 WC3 的 MPQ**（地圖檔裡沒有它 —— 全 raw 匯出只有 1 個
+`units__` 內建路徑，而那是一張貼圖）。
+
+⇒ **在那顆模型進來之前，請不要把 e00r 的預覽改到 Eva 上。**
+⭐ 而 `resolved-appearance@1` 的 `isStandIn` 會把它標出來（⛔ 不會靜靜地畫錯）。
+
+### ⚠️ ⭐ 而交接文件那句「repo 已有 Eva 相關 imported GLB」
+
+⛔ 它**成立**（檔案在），⭐ 但那顆是**特效**。
+⇒ 這是 CLAUDE.md 記過的形狀：**「那個路徑存在」不等於「那個東西存在」** ——
+⭐ 而它花掉了雙方各一輪。⇒ 下次寫「repo 已有 X」時，請一併寫**哪一行程式會讀它**。
 
 ---
 
