@@ -2,8 +2,8 @@
   "schema": "ggd-assets-manifest@1",
   "note": "⭐ 被 content/**/*.json 引用到的**每一顆**二進位資產。⛔ 產物 —— 改 `tools/asset-manifest/gen.ts`，⛔ 不要手改。⚠️ 只收**被引用到的**：content/assets/ 底下有一萬多個檔，而清單的用途是驗證引用得到的東西。",
   "counts": {
-    "entries": 1641,
-    "totalBytes": 103659558
+    "entries": 1642,
+    "totalBytes": 103693151
   },
   "entries": [
     {
@@ -18047,14 +18047,14 @@
         "fx.w3x.particle.holyawakening.p04",
         "fx.w3x.particle.lasercannonfinalred.p00",
         "fx.w3x.particle.sephboom.p06",
+        "fx.w3x.stock.flamestrike1.p00",
+        "fx.w3x.stock.flamestrike1.p02",
         "fx.w3x.stock.markofchaostarget.p00",
         "godie-blackhole-p1",
         "godie-blackhole-p4",
-        "godie-herofate-p1",
-        "godie-holyawakening-p4",
-        "godie-lasercannonfinalred-p0"
+        "godie-herofate-p1"
       ],
-      "moreRefs": 2
+      "moreRefs": 4
     },
     {
       "path": "assets/textures/particles/circle_05.png",
@@ -18144,10 +18144,10 @@
         "fx.w3x.particle.sephboom.p00",
         "fx.w3x.particle.sephboom.p02",
         "fx.w3x.particle.sephboom.p04",
-        "godie-blackhole-p6",
-        "godie-boomnl-p0"
+        "fx.w3x.stock.flamestrike1.p04",
+        "fx.w3x.stock.nedeathsmall.p00"
       ],
-      "moreRefs": 6
+      "moreRefs": 8
     },
     {
       "path": "assets/textures/particles/flame_01.png",
@@ -18175,12 +18175,12 @@
         "fx.w3x.particle.enchant.p03",
         "fx.w3x.particle.enchant.p04",
         "fx.w3x.particle.lavabreathdamage.p00",
+        "fx.w3x.stock.reddragonmissile.p02",
+        "fx.w3x.stock.reddragonmissile.p03",
         "godie-cloud-p0",
-        "godie-enchant-p0",
-        "godie-enchant-p1",
-        "godie-enchant-p2"
+        "godie-enchant-p0"
       ],
-      "moreRefs": 17
+      "moreRefs": 19
     },
     {
       "path": "assets/textures/particles/flame_04.png",
@@ -18202,7 +18202,7 @@
         "fx.fam.burst.w3x-ffaaaa.s100",
         "fx.fam.kaboom.fire.s115"
       ],
-      "moreRefs": 15
+      "moreRefs": 16
     },
     {
       "path": "assets/textures/particles/flare_01.png",
@@ -18246,7 +18246,7 @@
         "fx.prim.earth.nova-lg",
         "fx.prim.fire.nova"
       ],
-      "moreRefs": 42
+      "moreRefs": 46
     },
     {
       "path": "assets/textures/particles/light_02.png",
@@ -18268,7 +18268,7 @@
         "fx.fam.light-column.w3x-ff00ff.s205",
         "fx.fam.resurrect.fire.s95"
       ],
-      "moreRefs": 50
+      "moreRefs": 62
     },
     {
       "path": "assets/textures/particles/light_03.png",
@@ -18425,6 +18425,7 @@
         "fx.prim.wind.tornado",
         "fx.prim.wind.tornado-lg",
         "fx.w3x.stock.earthquaketarget.p00",
+        "fx.w3x.stock.volcanodeath.p00",
         "godie-gumdam-p1",
         "godie-meteor-p4",
         "godie-meteor-p5"
@@ -18442,6 +18443,7 @@
         "fx.w3x.orb.bloodbreathstream.p00",
         "fx.w3x.orb.bloodbreathstream.p01",
         "fx.w3x.orb.bloodbreathstream.p02",
+        "fx.w3x.stock.humanbloodpeasant.p00",
         "godie-bloodbreathstream-p0",
         "godie-bloodbreathstream-p1",
         "godie-bloodbreathstream-p2",
@@ -18490,10 +18492,10 @@
         "fx.w3x.particle.flamessmoke.p00",
         "fx.w3x.particle.flamessmoke.p01",
         "fx.w3x.particle.flamessmoke.p03",
-        "fx.w3x.stock.fragdriller.p00",
-        "godie-aquaspikeversion2-p4"
+        "fx.w3x.stock.flamestrike1.p03",
+        "fx.w3x.stock.fragdriller.p00"
       ],
-      "moreRefs": 30
+      "moreRefs": 33
     },
     {
       "path": "assets/textures/particles/smoke_09.png",
@@ -18635,6 +18637,18 @@
       ]
     },
     {
+      "path": "assets/textures/particles/star_06.png",
+      "bytes": 33593,
+      "sha256": "1eeea29f7a006be4a9682412fefc37087d158b100f60abde99933766870dcba0",
+      "contentType": "image/png",
+      "kind": "textures",
+      "refs": [
+        "bundle",
+        "fx.w3x.stock.flamestrike1.p01",
+        "fx.w3x.stock.nedeathsmall.p01"
+      ]
+    },
+    {
       "path": "assets/textures/particles/star_07.png",
       "bytes": 30831,
       "sha256": "115baf371bb2781e8e925027d5bf4acf779062204d40a72ccc8c7164c65bdbd4",
@@ -18645,6 +18659,7 @@
         "fx.w3x.particle.blackhole1.p00",
         "fx.w3x.particle.blackhole1.p01",
         "fx.w3x.particle.flash.p01",
+        "fx.w3x.stock.nedeathsmall.p03",
         "fx.w3x.stock.revivehuman.p02",
         "godie-blackhole1-p0",
         "godie-blackhole1-p1",

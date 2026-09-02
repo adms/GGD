@@ -102,6 +102,14 @@ describe("👁 fx.w3x.stock.* —— 抽出來的 PRE2 要發得出粒子且亮�
     for (const f of readdirSync(VFX_DIR)) {
       if (!f.startsWith(STOCK_PREFIX) || !f.endsWith(".json")) continue;
       const doc = JSON.parse(readFileSync(join(VFX_DIR, f), "utf8")) as Doc;
+      // ⛔⛔ **問 schema，⛔ 不是問前綴**（2026-09-02，GH#753）——
+      //   同一個前綴底下今天有**兩種** schema：`vfx@1`（PRE2 粒子）與
+      //   `ribbon@1`（RIBB 緞帶）。⭐ 而這一支問的是「發不發得出粒子」，
+      //   那是粒子的性質：緞帶沒有 `color.start` / `rate` / `burstCount`
+      //   ⇒ 一進來就 `Cannot read properties of undefined`。
+      // ⚠️ ⭐ 教訓：**一條掃「檔名前綴」的守衛，在同前綴長出第二種 schema 的
+      //   那一天會炸** —— 而它炸的方式讀起來像「內容壞了」，⛔ 不是「守衛過期了」。
+      if (doc.schema !== "vfx@1") continue;
       seen += 1;
       const d = stockEmitDefects(doc);
       if (d.length) bad.push(`${doc.id}: ${d.join("；")}`);

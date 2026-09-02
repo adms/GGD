@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_4b18f7eef4ee",
+    "contentVersion": "cv_3cab7cddea45",
     "collections": {
       "champions": {
-        "hash": "de4f627327f9",
+        "hash": "0b63236e572d",
         "count": 71
       },
       "abilities": {
-        "hash": "ba969b4408c1",
+        "hash": "6c0a6caf7f9e",
         "count": 421
       },
       "items": {
@@ -42,16 +42,16 @@
         "count": 7
       },
       "config": {
-        "hash": "1adaa13f84fa",
+        "hash": "87f92a26ea06",
         "count": 96
       },
       "models": {
-        "hash": "eb42ccf639cd",
+        "hash": "657ea888006b",
         "count": 152
       },
       "vfx": {
-        "hash": "6f1e56551013",
-        "count": 671
+        "hash": "7df129081586",
+        "count": 702
       },
       "skins": {
         "hash": "3d1095f3da83",
@@ -4434,7 +4434,7 @@
       "effectKindsSource": "runtimeCapabilities.effectKinds（⛔ 不在這裡重複一份）"
     },
     "vfx": {
-      "docCount": 671,
+      "docCount": 702,
       "keys": [
         "fx.barkskin",
         "fx.bramble-burst",
@@ -5599,11 +5599,11 @@
       }
     ]
   },
-  "assetManifestDigest": "5bca7ee16c6a",
+  "assetManifestDigest": "129666d26df6",
   "assetManifest": {
     "path": "assets-manifest.json",
-    "entries": 1641,
-    "totalBytes": 103659558
+    "entries": 1642,
+    "totalBytes": 103693151
   },
   "effectiveVfxLimits": {
     "schema": "ggd-effective-vfx-limits@1",
@@ -5683,5 +5683,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "5c57f2685c97"
+  "profileDigest": "949ef7dbe0bd"
 }
