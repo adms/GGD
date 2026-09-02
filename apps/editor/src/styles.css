@@ -244,6 +244,7 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .vfx-asset.safe small { color: #77c995; }
 .vfx-asset.unsafe { border-color: #9b3434; background: #2a1719; cursor: not-allowed; }
 .vfx-asset.unsafe span, .vfx-asset.unsafe small { color: #ff918b; }
+.vfx-asset.pending { opacity: 0.68; cursor: wait; }
 .vfx-forge-center { min-width: 0; display: grid; grid-template-rows: minmax(410px, 58vh) minmax(400px, auto); }
 .vfx-stage { position: relative; min-height: 380px; overflow: hidden; contain: paint; transform: translateZ(0); background: #080a10; }
 .vfx-stage.focused { position: fixed; inset: 0; width: 100vw; height: 100vh; min-height: 0; max-height: none; margin: 0; border-radius: 0; z-index: 10000; }

@@ -257,6 +257,22 @@ export function assetKey(asset: AssetDrop): string {
   return `${asset.collection}:${asset.id}`;
 }
 
+/**
+ * Preview is a consumer too: an unsafe draft must not render for even one
+ * frame while its async source checks are still pending.  Requiring one safe
+ * receipt per exact ref also prevents stale query data from authorising a
+ * newly edited script.
+ */
+export function allAssetRefsVerifiedSafe(
+  refs: readonly AssetDrop[],
+  results: readonly AssetSafetyResult[] | undefined,
+): boolean {
+  if (refs.length === 0) return true;
+  if (!results) return false;
+  const byKey = new Map(results.map((result) => [assetKey(result.asset), result]));
+  return refs.every((ref) => byKey.get(assetKey(ref))?.safe === true);
+}
+
 export function isCompositingNeutral(
   mode: BlendMode,
   colors: readonly Rgba[],

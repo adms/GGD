@@ -42,6 +42,7 @@ import { SegmentInspector } from "./SegmentInspector";
 import {
   AssetSafetyGate,
   UnsafeVfxAssetError,
+  allAssetRefsVerifiedSafe,
   assetKey,
   assetRefsFromScript,
   type AssetSafetyResult,
@@ -217,6 +218,8 @@ export function VfxForgePage() {
   });
   const assetBlockers = (scriptSafety.data ?? []).filter((result) => !result.safe);
   const assetAuditPending = draftAssetRefs.length > 0 && scriptSafety.isPending;
+  const assetPreviewAllowed = !scriptSafety.isPending && !scriptSafety.error &&
+    allAssetRefsVerifiedSafe(draftAssetRefs, scriptSafety.data);
   const schedule = useMemo(
     () => trace ? scheduleSimEvents(trace.events, abilityId) : [],
     [abilityId, trace],
@@ -396,6 +399,10 @@ export function VfxForgePage() {
   const visualEvidenceBlocked = visualEvidence.length < requiredVisualEvidence;
 
   const captureVisualEvidence = async (): Promise<void> => {
+    if (!assetPreviewAllowed) {
+      setStatus("⛔ 素材安全收據尚未全部通過，預覽與擷圖保持鎖定");
+      return;
+    }
     if (previewMode !== "runtime") {
       setStatus("⛔ 視覺證據必須在「完整技能演出」模式擷取");
       return;
@@ -565,31 +572,44 @@ export function VfxForgePage() {
               onProbe={probeAsset}
             />
             <section className="vfx-forge-center">
-              <VfxForgePreview
-                ref={previewRef}
-                script={draft}
-                ability={ability}
-                schedule={schedule}
-                durationMs={durationMs}
-                playheadMs={playheadMs}
-                seekRevision={seekRevision}
-                playing={playing}
-                caster={runtimeChampion}
-                target={runtimeTarget}
-                mode={previewMode}
-                onTime={onTime}
-                onStop={stop}
-                onDropAsset={addAsset}
-                canCaptureEvidence={previewMode === "runtime" && visualEvidence.length < 4}
-                onCaptureEvidence={() => void captureVisualEvidence()}
-              />
+              {assetPreviewAllowed ? (
+                <VfxForgePreview
+                  ref={previewRef}
+                  script={draft}
+                  ability={ability}
+                  schedule={schedule}
+                  durationMs={durationMs}
+                  playheadMs={playheadMs}
+                  seekRevision={seekRevision}
+                  playing={playing}
+                  caster={runtimeChampion}
+                  target={runtimeTarget}
+                  mode={previewMode}
+                  onTime={onTime}
+                  onStop={stop}
+                  onDropAsset={addAsset}
+                  canCaptureEvidence={previewMode === "runtime" && visualEvidence.length < 4}
+                  onCaptureEvidence={() => void captureVisualEvidence()}
+                />
+              ) : (
+                <section className="vfx-blocker" role="alert">
+                  <b>⛔ 預覽已鎖定</b>
+                  <span>
+                    {scriptSafety.error
+                      ? `素材安全檢查失敗：${String(scriptSafety.error)}`
+                      : assetBlockers.length > 0
+                        ? `不合格素材：${assetBlockers.map((item) => item.asset.id).join("、")}`
+                        : "正在取得目前腳本每一個模型／粒子素材的去背安全收據。"}
+                  </span>
+                </section>
+              )}
               <section className="vfx-visual-evidence" aria-label="候選視覺證據">
                 <header>
                   <div>
                     <b>候選畫面證據 {visualEvidence.length}/{requiredVisualEvidence}（最多 4）</b>
                     <small>完整技能演出 · 綁定本次候選；任何 JSON 修改都會清空</small>
                   </div>
-                  <button type="button" disabled={previewMode !== "runtime" || visualEvidence.length >= 4} onClick={() => void captureVisualEvidence()}>
+                  <button type="button" disabled={!assetPreviewAllowed || previewMode !== "runtime" || visualEvidence.length >= 4} onClick={() => void captureVisualEvidence()}>
                     📷 擷取目前格
                   </button>
                 </header>

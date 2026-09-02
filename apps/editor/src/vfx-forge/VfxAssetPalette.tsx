@@ -38,6 +38,7 @@ export function VfxAssetPalette({
           const asset: AssetDrop = { collection: tab, id: entry.id };
           const state = safety.get(assetKey(asset));
           const unsafe = state !== undefined && state !== "checking" && !state.safe;
+          const verifiedSafe = state !== undefined && state !== "checking" && state.safe;
           const safetyLabel = state === "checking"
             ? "檢查中"
             : state
@@ -46,18 +47,20 @@ export function VfxAssetPalette({
           return (
             <button
               type="button"
-              draggable={!unsafe}
-              className={`vfx-asset${unsafe ? " unsafe" : state && state !== "checking" ? " safe" : ""}`}
+              draggable={verifiedSafe}
+              aria-disabled={!verifiedSafe}
+              className={`vfx-asset${unsafe ? " unsafe" : verifiedSafe ? " safe" : " pending"}`}
               key={entry.id}
               title={`${entry.id}\n${state && state !== "checking" ? `${state.summary}${state.detail ? `\n${state.detail}` : ""}` : safetyLabel}`}
               onPointerEnter={() => onProbe(asset)}
               onFocus={() => onProbe(asset)}
               onDragStart={(e) => {
-                if (unsafe) { e.preventDefault(); return; }
+                if (!verifiedSafe) { e.preventDefault(); onProbe(asset); return; }
                 e.dataTransfer.effectAllowed = "copy";
                 e.dataTransfer.setData("application/x-ggd-vfx-asset", encodeAssetDrag(asset));
               }}
-              onDoubleClick={() => { if (!unsafe) void onAdd(asset); }}
+              onClick={() => { if (!verifiedSafe) onProbe(asset); }}
+              onDoubleClick={() => { if (verifiedSafe) void onAdd(asset); else onProbe(asset); }}
             >
               <span>{tab === "models" ? "◆" : "✦"}</span>
               <code>{entry.id}</code>

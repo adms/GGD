@@ -3,6 +3,7 @@ import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
 import {
   AssetSafetyGate,
   UnsafeVfxAssetError,
+  allAssetRefsVerifiedSafe,
   assetRefsFromScript,
   isCompositingNeutral,
   type DecodedRaster,
@@ -12,6 +13,24 @@ import { submitVfxScriptProposal } from "./writeback";
 const WHITE = [[1, 1, 1, 1] as const];
 
 describe("VFX Forge asset backdrop gate", () => {
+  it("keeps preview locked until every exact asset ref has a safe receipt", () => {
+    const refs = [
+      { collection: "models", id: "model.a" },
+      { collection: "vfx", id: "vfx.a" },
+    ] as const;
+    const safeModel = {
+      asset: refs[0], safe: true, code: "SAFE", summary: "ok",
+    } as const;
+    const safeVfx = {
+      asset: refs[1], safe: true, code: "SAFE", summary: "ok",
+    } as const;
+    expect(allAssetRefsVerifiedSafe(refs, undefined)).toBe(false);
+    expect(allAssetRefsVerifiedSafe(refs, [safeModel])).toBe(false);
+    expect(allAssetRefsVerifiedSafe(refs, [safeModel, { ...safeVfx, safe: false }])).toBe(false);
+    expect(allAssetRefsVerifiedSafe(refs, [safeModel, safeVfx])).toBe(true);
+    expect(allAssetRefsVerifiedSafe([], undefined)).toBe(true);
+  });
+
   it("uses the actual blend equation instead of merely checking for an alpha channel", () => {
     expect(isCompositingNeutral("alpha", WHITE, [255, 255, 255, 0])).toBe(true);
     expect(isCompositingNeutral("additive", WHITE, [255, 255, 255, 0])).toBe(false);
