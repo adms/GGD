@@ -188,7 +188,12 @@ fail／reject，但禁止 pass／approve／Promote。不得替舊核准補欄位
 5. 迴避：runtime 已有 `evade` 結果與 MISS 提示；在事件仍無來源 grant provenance 前，Editor 不得把某支被動的專屬閃身／殘影綁上去冒充正確歸屬。
 6. 週期、受傷、低血、護盾等：只有玩家需要辨識那次觸發時才補短演出，且必須位於對應的 `onInterval`／`onDamageTaken` 效果鏈；不要求每個純數值被動持續噴粒子。
 
-槽位不能代替啟用方式：Q/W/E/R/EX 也可能是純被動或主被動混合技能。Editor 以 `passive` rank block 與實際 active effects 判斷；純被動禁止 `castStart/castEffect`，混合技能則同時顯示主動動作守衛與被動事件演出計畫。
+槽位不能單獨代替啟用方式：Main 目前有 34 份 `slot:"PASSIVE"`、但明確為
+`innateKind:"active"` 的可施放天生技。Editor 逐字鏡像 Main cast ladder：PASSIVE slot 只有
+`innateKind:"active"` 能施放；Q/W/E/R/EX 則以 `passive` rank block 與實際 active effects 判斷，
+有被動區塊且 effects 為空才是純被動。純被動禁止 `castStart/castEffect`，混合技能則同時顯示
+主動動作守衛與被動事件演出計畫。`innateKind` 依 schema 不得出現在其他槽位，遇到畸形輸入也不得
+讓這個 stray field 改寫 castability。
 
 機器判斷住在 `apps/editor/src/passivePresentationPrinciples.ts`，鑄技工坊與 VFX Forge 都顯示同一份自動演出計畫。`authored`、runtime 預設、可用現有積木補完、缺 Main 事件歸屬四種狀態分開呈現，不由 LLM 猜測。
 

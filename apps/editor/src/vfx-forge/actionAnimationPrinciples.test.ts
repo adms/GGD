@@ -1,4 +1,7 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync, readdirSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { zVfxScriptDoc, type VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
 import {
   actionAnimationIssues,
@@ -111,9 +114,34 @@ describe("VFX Forge action-animation principles", () => {
     expect(segments.some((segment) => segment.on === "castStart" || segment.on === "castEffect")).toBe(false);
     expect(actionAnimationIssues(doc(segments), { activationMode: "passive" })).toEqual([]);
     expect(activationModeForAbility({ slot: "PASSIVE" })).toBe("passive");
+    expect(activationModeForAbility({ slot: "PASSIVE", innateKind: "active" })).toBe("active");
+    // Main's schema forbids innateKind outside PASSIVE. Even malformed input
+    // must not let that stray field hide an otherwise castable learned skill.
+    expect(activationModeForAbility({ slot: "Q", innateKind: "passive", effects: [{}] })).toBe("active");
     expect(activationModeForAbility({ slot: "EX", passive: { ranks: [{}] }, effects: [] })).toBe("passive");
     expect(activationModeForAbility({ slot: "EX", passive: { ranks: [{}] }, effects: [{ kind: "applyBuff" }] })).toBe("active");
     expect(activationModeForAbility({ slot: "Q" })).toBe("active");
+  });
+
+  it("mirrors Main's castability predicates for every shipped ability", () => {
+    const root = join(dirname(fileURLToPath(import.meta.url)), "../../../../content/abilities");
+    const abilities = readdirSync(root)
+      .filter((file) => file.endsWith(".json") && !file.startsWith("_"))
+      .map((file) => JSON.parse(readFileSync(join(root, file), "utf8")) as Record<string, unknown>);
+    expect(abilities).toHaveLength(421);
+    expect(abilities.filter((ability) => ability.slot === "PASSIVE" && ability.innateKind === "active")).toHaveLength(34);
+    for (const ability of abilities) {
+      // Mirrors innateCastBlock() followed by isPassiveOnly() in Main's
+      // abilitySystem cast ladder. This is deliberately structural: prose and
+      // skill names are never allowed to change runtime castability.
+      const expected = ability.slot === "PASSIVE"
+        ? ability.innateKind === "active" ? "active" : "passive"
+        : typeof ability.passive === "object" && ability.passive !== null &&
+            Array.isArray(ability.effects) && ability.effects.length === 0
+          ? "passive"
+          : "active";
+      expect(activationModeForAbility(ability), String(ability.id)).toBe(expected);
+    }
   });
 
   it("blocks cast triggers on a pure passive instead of manufacturing a cast", () => {

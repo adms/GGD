@@ -200,9 +200,16 @@ export function hasAuthoritativeRapidMultiStrike(ability: unknown): boolean {
 export function activationModeForAbility(ability: unknown): "active" | "passive" {
   if (typeof ability !== "object" || ability === null) return "active";
   const record = ability as Record<string, unknown>;
-  if (record.slot === "PASSIVE" || record.innateKind === "passive") return "passive";
+  // Mirror Main's cast ladder exactly:
+  //   innateCastBlock(def) runs first and opens PASSIVE only for
+  //   innateKind:"active"; every other PASSIVE shape remains uncastable.
+  // `innateKind` is schema-forbidden on Q/W/E/R/EX, so it must never override
+  // their effect shape here either.
+  if (record.slot === "PASSIVE") {
+    return record.innateKind === "active" ? "active" : "passive";
+  }
   // Passive enhancements can live in Q/W/E/R/EX. They are pure passive only
-  // when a passive rank block exists and there is no active effect payload;
+  // when a passive rank block exists and effects is empty (`isPassiveOnly`);
   // hybrid skills keep their active action path while the passive panel still
   // exposes the reactive half.
   const hasPassive = typeof record.passive === "object" && record.passive !== null;
