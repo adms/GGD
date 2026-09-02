@@ -179,8 +179,16 @@ no Promote path for these IDs.
 Authoritative local review records live under `docs/_review/ai-proposals/`;
 source comparison and rejected experiments are documented in
 `docs/_reports/vfx-forge-editor-acceptance-20260902/README.md`; the latest
-browser-captured two-frame-per-skill evidence and framebuffer hygiene scan are
-in `docs/_reports/vfx-forge-eight-skill_visual-proof_20260902-0233/README.md`.
+browser-captured two-frame-per-skill evidence and structured full-timeline GPU
+scan are in
+`docs/_reports/vfx_forge_8_ability_visual-proof_20260902-1047/README.md`.
+
+Every new VFX proposal carries a structured `ggd-vfx-visual-audit@1` receipt
+from the complete runtime timeline scan. Human verdicts and Promote are bound
+to a `reviewHash` over the candidate JSON, base hash, purpose, explanations,
+screenshots, automatic score and GPU receipt. Changing only a screenshot or
+audit result therefore invalidates the old verdict just as changing JSON does;
+legacy VFX proposals without that receipt must be resubmitted from the Forge.
 
 Remote Desktop previews consume the digest-verified profile pinned beside the
 immutable Base. When `effectiveVfxLimits` is present, all eight resolved fields

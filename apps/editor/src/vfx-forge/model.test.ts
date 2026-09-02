@@ -126,7 +126,13 @@ describe("VFX Forge authoring core", () => {
 
   it("has one non-live proposal destination and validates before calling it", async () => {
     const submitAiProposal = vi.fn(async (input: { purpose: "production-candidate" | "editor-capability-fixture" }) => ({
-      proposal: { key: "vfx-scripts:x", candidateHash: "h", purpose: input.purpose, promotable: input.purpose === "production-candidate" },
+      proposal: {
+        key: "vfx-scripts:x",
+        candidateHash: "candidate-hash",
+        reviewHash: "review-hash",
+        purpose: input.purpose,
+        promotable: input.purpose === "production-candidate",
+      },
       status: input.purpose === "production-candidate" ? "pending-review" as const : "fixture-pending" as const,
     }));
     const assetGuard = { assertScriptSafe: vi.fn(async () => undefined) };

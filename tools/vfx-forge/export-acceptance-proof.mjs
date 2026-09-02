@@ -76,7 +76,7 @@ mkdirSync(outDir, { recursive: true });
 const scratch = mkdtempSync(join(tmpdir(), "ggd-vfx-proof-"));
 
 const manifest = {
-  schema: "ggd-vfx-forge-acceptance-proof@1",
+  schema: "ggd-vfx-forge-acceptance-proof@2",
   generatedAt: new Date().toISOString(),
   source: "docs/_review/ai-proposals",
   purpose: "editor-capability-fixture",
@@ -105,6 +105,16 @@ try {
     if (!Array.isArray(proposal.visualEvidence) || proposal.visualEvidence.length < 2) {
       throw new Error(`${id}: at least two framebuffer evidence frames are required`);
     }
+    if (typeof proposal.reviewHash !== "string" || proposal.reviewHash === "") {
+      throw new Error(`${id}: reviewHash is required`);
+    }
+    if (proposal.visualAudit?.schema !== "ggd-vfx-visual-audit@1" ||
+      proposal.visualAudit.safe !== true || proposal.visualAudit.worst?.unsafe !== false) {
+      throw new Error(`${id}: complete safe GPU visual audit receipt is required`);
+    }
+    if (proposal.autoVisualScore !== proposal.visualAudit.autoVisualScore) {
+      throw new Error(`${id}: visual score does not match GPU audit receipt`);
+    }
     if (!proposal.evidence.includes("preview-target:godie-e001")) {
       throw new Error(`${id}: expected non-mirror target godie-e001 evidence receipt`);
     }
@@ -119,8 +129,10 @@ try {
       name,
       ownerTarget,
       candidateHash: proposal.candidateHash,
+      reviewHash: proposal.reviewHash,
       baseHash: proposal.baseHash,
       autoVisualScore: proposal.autoVisualScore,
+      visualAudit: proposal.visualAudit,
       updatedAt: proposal.updatedAt,
       mainCurrent: evidenceValue(proposal, "main-current:"),
       jassSummary: evidenceValue(proposal, "jass-summary:"),
@@ -147,13 +159,14 @@ const lines = [
   "- 對戰：真 Sim／真 VfxSystem／真 CameraRig／雙方真 3D 外觀；目標固定為非替身、非鏡像的 `godie-e001`",
   `- 雙向量尺：通過（亮 ${manifest.calibration.brightPixels}／暗亮點 ${manifest.calibration.darkBrightPixels}／暗顯影 ${manifest.calibration.darkVisiblePixels}）`,
   "- 每招保留兩個由時間軸「建議關鍵格」選出的完整 Runtime 畫面；不是只截資料面板",
+  "- 每招另附完整時間軸 GPU 掃描收據；`reviewHash` 同時綁定 JSON、擷圖、說明與該收據，任一變更都必須重新人工審查",
   "- 自動分數僅供人工分流，不代表原作還原、動作正確或已通過",
   "",
   "## 八招摘要",
   "",
-  "| 技能 | Owner 目標 | 候選 hash | 自動清晰度 | 人工裁決 |",
+  "| 技能 | Owner 目標 | 候選／審查 hash | GPU 衛生分流 | 人工裁決 |",
   "|---|---|---|---:|---|",
-  ...manifest.cases.map((entry) => `| ${entry.code} ${entry.name} | ${entry.ownerTarget} | \`${entry.candidateHash}\` | ${entry.autoVisualScore}/10 | 待 Owner 於後台 pass/fail |`),
+  ...manifest.cases.map((entry) => `| ${entry.code} ${entry.name} | ${entry.ownerTarget} | \`${entry.candidateHash}\`／\`${entry.reviewHash}\` | ${entry.autoVisualScore}/10 | 待 Owner 於後台 pass/fail |`),
   "",
   ...manifest.cases.flatMap((entry) => [
     `## ${entry.code} ${entry.name}`,
@@ -163,7 +176,8 @@ const lines = [
     `- JASS：${entry.jassSummary}`,
     `- JASS／蝗蟲群：${entry.jassLocust}`,
     `- 來源判定：${entry.sourceResolution}`,
-    `- 候選：\`${entry.candidateHash}\`（base \`${entry.baseHash ?? "none"}\`），自動清晰度 ${entry.autoVisualScore}/10`,
+    `- 候選：\`${entry.candidateHash}\`；審查材料：\`${entry.reviewHash}\`；base：\`${entry.baseHash ?? "none"}\``,
+    `- GPU 完整時間軸：${entry.visualAudit.sampledFrames} 格；衛生分流 ${entry.autoVisualScore}/10；最差 ${(entry.visualAudit.worstAtMs / 1000).toFixed(3)} 秒；粒子峰值 ${entry.visualAudit.peakParticleCount}／系統 ${entry.visualAudit.peakSystemCount}`,
     "",
     ...entry.frames.map((frame) => `![${frame.label}](./${frame.filename})\n\n${frame.atMs}ms · ${frame.view}`),
     "",
@@ -173,7 +187,6 @@ const lines = [
   "- PNG 是送審候選的實際 framebuffer；報告不以 schema 通過冒充視覺通過。",
   "- 自動掃描只負責不透明底板／可讀性分流；顏色、方向、節奏、原作忠實度仍由人工 0～10 分與 pass/fail 決定。",
   "- 本工具只讀 proposal 並輸出報告，不寫 `content/vfx-scripts/`，不會把八招套回遊戲。",
-  "",
 ];
 writeFileSync(join(outDir, "README.md"), `${lines.join("\n")}\n`);
 

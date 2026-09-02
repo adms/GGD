@@ -27,8 +27,36 @@ interface Proposal {
   promotable: boolean;
   evidence: string[];
   visualEvidence: { dataUrl: string; atMs: number; view: string }[];
+  visualAudit: {
+    schema: string;
+    safe: boolean;
+    autoVisualScore: number;
+    sampledFrames: number;
+    peakParticleCount: number;
+    peakSystemCount: number;
+    worstAtMs: number;
+    worst: { unsafe: boolean };
+  };
+  autoVisualScore?: number;
   candidate: unknown;
   candidateHash: string;
+  reviewHash: string;
+  summary: string;
+  baseHash: string | null;
+}
+
+function reviewHash(item: Proposal): string {
+  return hashDoc({
+    target: item.target,
+    purpose: item.purpose,
+    summary: item.summary,
+    evidence: item.evidence,
+    visualEvidence: item.visualEvidence,
+    visualAudit: item.visualAudit ?? null,
+    autoVisualScore: item.autoVisualScore ?? null,
+    candidateHash: item.candidateHash,
+    baseHash: item.baseHash,
+  });
 }
 
 function proposal(id: string): Proposal {
@@ -52,11 +80,21 @@ describe("八招實際送審產物", () => {
         promotable: false,
       });
       expect(item.candidateHash, id).toBe(hashDoc(candidate));
+      expect(item.reviewHash, id).toBe(reviewHash(item));
       expect(item.visualEvidence.length, id).toBeGreaterThanOrEqual(2);
       expect(item.visualEvidence.every((frame) =>
         /^data:image\/(?:png|webp);base64,/.test(frame.dataUrl) &&
         frame.atMs >= 0 && (frame.view === "side" || frame.view === "top"),
       ), id).toBe(true);
+      expect(item.visualAudit, id).toMatchObject({
+        schema: "ggd-vfx-visual-audit@1",
+        safe: true,
+        worst: { unsafe: false },
+      });
+      expect(item.visualAudit.sampledFrames, id).toBeGreaterThan(0);
+      expect(item.visualAudit.peakParticleCount, id).toBeGreaterThanOrEqual(0);
+      expect(item.visualAudit.peakSystemCount, id).toBeGreaterThanOrEqual(0);
+      expect(item.autoVisualScore, id).toBe(item.visualAudit.autoVisualScore);
       expect(item.evidence, id).toContain(`editor-from-blank:${id}`);
       expect(item.evidence, id).toContain("preview-target:godie-e001");
       expect(actionAnimationIssues(candidate, {

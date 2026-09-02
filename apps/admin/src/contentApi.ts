@@ -215,6 +215,7 @@ export interface ContentApiOptions {
 export interface AiReviewVerdictInput {
   readonly key: string;
   readonly candidateHash: string;
+  readonly reviewHash: string;
   readonly verdict: "approve" | "reject" | "pass" | "fail";
   readonly reviewer: string;
   readonly note: string;
@@ -224,6 +225,7 @@ export interface AiReviewVerdictInput {
 export interface AiReviewPromoteInput {
   readonly key: string;
   readonly candidateHash: string;
+  readonly reviewHash: string;
 }
 
 export interface AiReviewApi {

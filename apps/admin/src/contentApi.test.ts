@@ -312,6 +312,7 @@ describe("AI change review uses the single guarded content-api authority", () =>
     await review.verdict({
       key: "vfx-scripts/godie-hart.r",
       candidateHash: "sha256:candidate",
+      reviewHash: "sha256:review",
       verdict: "approve",
       reviewer: "Owner",
       note: "逐格視覺驗收通過",
@@ -320,6 +321,7 @@ describe("AI change review uses the single guarded content-api authority", () =>
     await review.promote({
       key: "vfx-scripts/godie-hart.r",
       candidateHash: "sha256:candidate",
+      reviewHash: "sha256:review",
     }, { fetchFn });
 
     expect(calls.map((call) => `${call.method} ${call.url}`)).toEqual([
@@ -330,6 +332,7 @@ describe("AI change review uses the single guarded content-api authority", () =>
     expect(calls[1]!.body).toEqual({
       key: "vfx-scripts/godie-hart.r",
       candidateHash: "sha256:candidate",
+      reviewHash: "sha256:review",
       verdict: "approve",
       reviewer: "Owner",
       note: "逐格視覺驗收通過",
@@ -338,6 +341,7 @@ describe("AI change review uses the single guarded content-api authority", () =>
     expect(calls[2]!.body).toEqual({
       key: "vfx-scripts/godie-hart.r",
       candidateHash: "sha256:candidate",
+      reviewHash: "sha256:review",
     });
   });
 
@@ -350,6 +354,7 @@ describe("AI change review uses the single guarded content-api authority", () =>
     await expect(review.promote({
       key: "vfx-scripts/godie-hart.r",
       candidateHash: "sha256:stale",
+      reviewHash: "sha256:stale-review",
     }, { fetchFn })).rejects.toThrow("候選送審後已變更");
   });
 });

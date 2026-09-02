@@ -17,6 +17,7 @@ function item(overrides: Partial<AiReviewQueueItem> = {}): AiReviewQueueItem {
     visualEvidence: [],
     candidate: {},
     candidateHash: "sha256:candidate",
+    reviewHash: "sha256:review",
     baseHash: null,
     updatedAt: "2026-09-02T00:00:00.000Z",
     status: "approved",

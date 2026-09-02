@@ -88,6 +88,7 @@ export interface AiProposalResult {
   proposal: {
     key: string;
     candidateHash: string;
+    reviewHash: string;
     purpose: "production-candidate" | "editor-capability-fixture";
     promotable: boolean;
   };
@@ -99,6 +100,28 @@ export interface AiVisualEvidence {
   dataUrl: string;
   atMs: number;
   view: "side" | "top";
+}
+
+export interface AiVisualAuditReceipt {
+  schema: "ggd-vfx-visual-audit@1";
+  safe: true;
+  autoVisualScore: number;
+  sampledFrames: number;
+  peakParticleCount: number;
+  peakSystemCount: number;
+  worstAtMs: number;
+  worst: {
+    litShare: number;
+    highlightShare: number;
+    brightShare: number;
+    nearWhiteShare: number;
+    dominantBrightShare: number;
+    dominantNonBackgroundShare: number;
+    localWhiteCardShare: number;
+    unsafe: false;
+    reason?: string;
+  };
+  suspects: string[];
 }
 
 export const api = {
@@ -215,6 +238,7 @@ export const api = {
     summary?: string;
     evidence?: string[];
     visualEvidence?: AiVisualEvidence[];
+    visualAudit?: AiVisualAuditReceipt;
     autoVisualScore?: number;
   }) => {
     assertWritable();

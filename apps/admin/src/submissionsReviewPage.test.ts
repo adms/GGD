@@ -64,6 +64,13 @@ describe("投稿批核頁", () => {
     ).toBe(true);
   });
 
+  it("★★ Editor／AI 裁決與 Promote 同時送出 candidateHash 和 reviewHash", () => {
+    expect(SRC).toContain("candidateHash: item.candidateHash");
+    expect(SRC.match(/reviewHash: item\.reviewHash/g)?.length).toBeGreaterThanOrEqual(3);
+    expect(SRC).toContain("GPU 完整時間軸稽核");
+    expect(SRC).toContain("舊候選缺少 GPU 完整時間軸稽核收據");
+  });
+
   it("★ ⭐ 這一頁真的掛在導覽上，而且**不是** dev 限定", () => {
     expect(NAV, "⛔ 導覽列沒有它 —— 點不進去").toContain('page: "submissionsReview"');
     expect(NAV).toContain("<SubmissionsReviewPage />");

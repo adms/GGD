@@ -327,6 +327,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
       summary?: unknown;
       evidence?: unknown;
       visualEvidence?: unknown;
+      visualAudit?: unknown;
       autoVisualScore?: unknown;
     } | null;
     const collection = body?.target?.collection;
@@ -351,6 +352,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
         summary: typeof body?.summary === "string" ? body.summary : "",
         evidence: Array.isArray(body?.evidence) ? body.evidence.filter((value): value is string => typeof value === "string") : [],
         visualEvidence: body?.visualEvidence,
+        visualAudit: body?.visualAudit,
         ...(body?.autoVisualScore === undefined ? {} : { autoVisualScore: body.autoVisualScore as number }),
       });
       return reply.code(201).send({ proposal, status: proposal.promotable ? "pending-review" : "fixture-pending" });
@@ -363,22 +365,24 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
     const body = req.body as {
       key?: unknown;
       candidateHash?: unknown;
+      reviewHash?: unknown;
       verdict?: unknown;
       reviewer?: unknown;
       note?: unknown;
       humanVisualScore?: unknown;
     } | null;
     if (
-      typeof body?.key !== "string" || typeof body.candidateHash !== "string" ||
+      typeof body?.key !== "string" || typeof body.candidateHash !== "string" || typeof body.reviewHash !== "string" ||
       typeof body.verdict !== "string" || typeof body.reviewer !== "string" || typeof body.note !== "string"
     ) {
-      return err(reply, 400, "需要 key、candidateHash、verdict、reviewer、note");
+      return err(reply, 400, "需要 key、candidateHash、reviewHash、verdict、reviewer、note");
     }
     try {
       return reply.send({
         verdict: aiReview.decide({
           key: body.key,
           candidateHash: body.candidateHash,
+          reviewHash: body.reviewHash,
           verdict: body.verdict as AiVerdict,
           reviewer: body.reviewer,
           note: body.note,
@@ -392,12 +396,12 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   });
 
   app.post("/content-api/ai-review/promote", async (req, reply) => {
-    const body = req.body as { key?: unknown; candidateHash?: unknown } | null;
-    if (typeof body?.key !== "string" || typeof body.candidateHash !== "string") {
-      return err(reply, 400, "需要 key 與 candidateHash");
+    const body = req.body as { key?: unknown; candidateHash?: unknown; reviewHash?: unknown } | null;
+    if (typeof body?.key !== "string" || typeof body.candidateHash !== "string" || typeof body.reviewHash !== "string") {
+      return err(reply, 400, "需要 key、candidateHash 與 reviewHash");
     }
     try {
-      const proposal = aiReview.promotionCandidate(body.key, body.candidateHash);
+      const proposal = aiReview.promotionCandidate(body.key, body.candidateHash, body.reviewHash);
       const loc = resolveDoc(reply, proposal.target);
       if (!loc) return;
       const liveHash = await currentDocHash(loc.file);
@@ -416,7 +420,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
       const backup = snapshotFile(backupRoot, loc.collection, loc.id, loc.file, { onError: backupWarn });
       const { hash } = writeDocAtomic(root, loc.collection, doc);
       const { collectionHash, contentVersion } = reindex(loc.collection);
-      const promotion = aiReview.recordPromotion(body.key, body.candidateHash, hash);
+      const promotion = aiReview.recordPromotion(body.key, body.candidateHash, body.reviewHash, hash);
       hub.publish({
         type: "content:changed",
         collection: loc.collection,
@@ -426,7 +430,11 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
       return reply.send({ id: loc.id, hash, collectionHash, contentVersion, backup: backup?.file ?? null, promotion });
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      return err(reply, message.includes("尚未") || message.includes("不能 Promote") ? 409 : 400, message);
+      return err(
+        reply,
+        message.includes("尚未") || message.includes("不能 Promote") || message.includes("已變更") ? 409 : 400,
+        message,
+      );
     }
   });
 

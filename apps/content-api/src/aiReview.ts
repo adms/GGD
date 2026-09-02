@@ -6,9 +6,10 @@
  * capability fixtures and are permanently non-promotable.
  *
  * AI-authored candidates are material under docs/_review, never live content.
- * A human verdict is bound to the exact candidate hash.  Promotion is a
- * separate operation and the caller must still revalidate the candidate and
- * compare its base hash immediately before writing content.
+ * A human verdict is bound to the exact review hash: candidate JSON plus every
+ * screenshot, GPU receipt and explanation the reviewer actually saw.
+ * Promotion is a separate operation and the caller must still revalidate the
+ * candidate and compare its base hash immediately before writing content.
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -40,6 +41,28 @@ export interface AiVisualEvidence {
   view: "side" | "top";
 }
 
+export interface AiVisualAuditReceipt {
+  schema: "ggd-vfx-visual-audit@1";
+  safe: true;
+  autoVisualScore: number;
+  sampledFrames: number;
+  peakParticleCount: number;
+  peakSystemCount: number;
+  worstAtMs: number;
+  worst: {
+    litShare: number;
+    highlightShare: number;
+    brightShare: number;
+    nearWhiteShare: number;
+    dominantBrightShare: number;
+    dominantNonBackgroundShare: number;
+    localWhiteCardShare: number;
+    unsafe: false;
+    reason?: string;
+  };
+  suspects: string[];
+}
+
 export interface AiChangeProposal {
   schema: "ggd-ai-change-proposal@1";
   key: string;
@@ -50,9 +73,13 @@ export interface AiChangeProposal {
   summary: string;
   evidence: string[];
   visualEvidence: AiVisualEvidence[];
+  /** GPU sweep that produced the score. Required for every new VFX proposal. */
+  visualAudit?: AiVisualAuditReceipt;
   autoVisualScore?: number;
   candidate: Record<string, unknown>;
   candidateHash: string;
+  /** Candidate + all human-visible review material. Verdicts bind this, not only candidateHash. */
+  reviewHash: string;
   baseHash: string | null;
   createdAt: string;
   updatedAt: string;
@@ -62,6 +89,7 @@ export interface AiChangeVerdict {
   schema: "ggd-ai-change-verdict@1";
   key: string;
   candidateHash: string;
+  reviewHash: string;
   verdict: AiVerdict;
   reviewer: string;
   note: string;
@@ -73,6 +101,7 @@ export interface AiPromotion {
   schema: "ggd-ai-change-promotion@1";
   key: string;
   candidateHash: string;
+  reviewHash: string;
   promotedAt: string;
   outputHash: string;
 }
@@ -101,6 +130,7 @@ interface SubmitInput {
   summary?: string;
   evidence?: string[];
   visualEvidence?: unknown;
+  visualAudit?: unknown;
   autoVisualScore?: number;
 }
 
@@ -164,6 +194,98 @@ function visualEvidenceFrames(value: unknown): AiVisualEvidence[] {
   });
 }
 
+function boundedNumber(
+  record: Record<string, unknown>,
+  field: string,
+  min: number,
+  max: number,
+  integer = false,
+): number {
+  const value = record[field];
+  if (typeof value !== "number" || !Number.isFinite(value) || value < min || value > max ||
+    (integer && !Number.isInteger(value))) {
+    throw new Error(`visualAudit.${field} 必須是 ${min}～${max}${integer ? " 的整數" : ""}`);
+  }
+  return value;
+}
+
+function visualAuditReceipt(value: unknown): AiVisualAuditReceipt | undefined {
+  if (value === undefined) return undefined;
+  if (typeof value !== "object" || value === null || Array.isArray(value)) {
+    throw new Error("visualAudit 必須是物件");
+  }
+  const raw = value as Record<string, unknown>;
+  if (raw.schema !== "ggd-vfx-visual-audit@1") throw new Error("visualAudit.schema 不支援");
+  if (raw.safe !== true) throw new Error("visualAudit 必須是完整時間軸 GPU 掃描通過的收據");
+  const worstRaw = raw.worst;
+  if (typeof worstRaw !== "object" || worstRaw === null || Array.isArray(worstRaw)) {
+    throw new Error("visualAudit.worst 必須是物件");
+  }
+  const worst = worstRaw as Record<string, unknown>;
+  if (worst.unsafe !== false) throw new Error("visualAudit.worst.unsafe 必須為 false");
+  const reason = worst.reason;
+  if (reason !== undefined && (typeof reason !== "string" || reason.length > 800)) {
+    throw new Error("visualAudit.worst.reason 最多 800 字");
+  }
+  if (!Array.isArray(raw.suspects) || raw.suspects.length > 8 ||
+    raw.suspects.some((item) => typeof item !== "string" || item.length > 500)) {
+    throw new Error("visualAudit.suspects 最多 8 筆，每筆最多 500 字");
+  }
+  return {
+    schema: "ggd-vfx-visual-audit@1",
+    safe: true,
+    autoVisualScore: boundedNumber(raw, "autoVisualScore", 0, 10),
+    sampledFrames: boundedNumber(raw, "sampledFrames", 1, 10_000, true),
+    peakParticleCount: boundedNumber(raw, "peakParticleCount", 0, 1_000_000, true),
+    peakSystemCount: boundedNumber(raw, "peakSystemCount", 0, 100_000, true),
+    worstAtMs: boundedNumber(raw, "worstAtMs", 0, 30_000),
+    worst: {
+      litShare: boundedNumber(worst, "litShare", 0, 1),
+      highlightShare: boundedNumber(worst, "highlightShare", 0, 1),
+      brightShare: boundedNumber(worst, "brightShare", 0, 1),
+      nearWhiteShare: boundedNumber(worst, "nearWhiteShare", 0, 1),
+      dominantBrightShare: boundedNumber(worst, "dominantBrightShare", 0, 1),
+      dominantNonBackgroundShare: boundedNumber(worst, "dominantNonBackgroundShare", 0, 1),
+      localWhiteCardShare: boundedNumber(worst, "localWhiteCardShare", 0, 1),
+      unsafe: false,
+      ...(typeof reason === "string" && reason.trim() !== "" ? { reason: reason.trim() } : {}),
+    },
+    suspects: [...raw.suspects] as string[],
+  };
+}
+
+type ReviewMaterial = Pick<AiChangeProposal,
+  "target" | "purpose" | "summary" | "evidence" | "visualEvidence" | "visualAudit" |
+  "autoVisualScore" | "candidateHash" | "baseHash"
+>;
+
+export function aiProposalReviewHash(material: ReviewMaterial): string {
+  return hashDoc({
+    target: material.target,
+    purpose: material.purpose,
+    summary: material.summary,
+    evidence: material.evidence,
+    visualEvidence: material.visualEvidence,
+    visualAudit: material.visualAudit ?? null,
+    autoVisualScore: material.autoVisualScore ?? null,
+    candidateHash: material.candidateHash,
+    baseHash: material.baseHash,
+  });
+}
+
+function normalizeProposal(raw: AiChangeProposal): AiChangeProposal {
+  // Proposal JSON lives on the local filesystem and may be inspected or
+  // edited outside the server. Never trust its self-reported candidate hash:
+  // recomputing it makes any such edit invalidate the verdict instead of
+  // letting a stale hash authorize different bytes.
+  const proposal = {
+    ...raw,
+    visualEvidence: raw.visualEvidence ?? [],
+    candidateHash: hashDoc(raw.candidate),
+  };
+  return { ...proposal, reviewHash: aiProposalReviewHash(proposal) };
+}
+
 export function aiProposalKey(target: AiProposalTarget): string {
   return `${target.collection}:${target.id}`;
 }
@@ -191,6 +313,7 @@ export class AiReviewStore {
     const forcedFixture = input.target.collection === "vfx-scripts" && VFX_FORGE_ACCEPTANCE_IDS.has(input.target.id);
     const purpose: AiProposalPurpose = forcedFixture ? "editor-capability-fixture" : input.purpose;
     const visualEvidence = visualEvidenceFrames(input.visualEvidence);
+    const visualAudit = visualAuditReceipt(input.visualAudit);
     if (input.target.collection === "vfx-scripts") {
       const minimum = forcedFixture ? 2 : 1;
       if (visualEvidence.length < minimum) {
@@ -198,25 +321,33 @@ export class AiReviewStore {
           ? "八招能力驗收至少需要 2 張候選畫面證據"
           : "VFX 上線候選至少需要 1 張候選畫面證據");
       }
+      if (!visualAudit) throw new Error("VFX 候選必須包含完整時間軸 GPU 視覺稽核收據");
     }
-    const proposal: AiChangeProposal = {
-      schema: "ggd-ai-change-proposal@1",
+    const autoVisualScore = score(input.autoVisualScore, "autoVisualScore");
+    if (visualAudit && autoVisualScore !== undefined && visualAudit.autoVisualScore !== autoVisualScore) {
+      throw new Error("autoVisualScore 必須與 visualAudit.autoVisualScore 相同");
+    }
+    const material = {
+      schema: "ggd-ai-change-proposal@1" as const,
       key,
       target: input.target,
       purpose,
       promotable: purpose === "production-candidate",
-      source: "ai-assisted-editor",
+      source: "ai-assisted-editor" as const,
       summary: String(input.summary ?? "").trim(),
       evidence: (input.evidence ?? []).filter((item): item is string => typeof item === "string" && item.trim() !== ""),
       visualEvidence,
-      ...(score(input.autoVisualScore, "autoVisualScore") === undefined
-        ? {}
-        : { autoVisualScore: input.autoVisualScore }),
+      ...(visualAudit ? { visualAudit } : {}),
+      ...(autoVisualScore === undefined ? {} : { autoVisualScore }),
       candidate: input.candidate,
       candidateHash: hashDoc(input.candidate),
       baseHash: input.baseHash,
       createdAt: existing?.createdAt ?? now,
       updatedAt: now,
+    };
+    const proposal: AiChangeProposal = {
+      ...material,
+      reviewHash: aiProposalReviewHash(material),
     };
     atomicJson(join(this.proposalsDir, `${fileStem(key)}.json`), proposal);
     return proposal;
@@ -225,6 +356,7 @@ export class AiReviewStore {
   decide(input: {
     key: string;
     candidateHash: string;
+    reviewHash: string;
     verdict: AiVerdict;
     reviewer: string;
     note: string;
@@ -235,12 +367,16 @@ export class AiReviewStore {
     if (proposal.candidateHash !== input.candidateHash) {
       throw new Error("候選內容已變更；這次裁決不能套到新版本");
     }
+    if (proposal.reviewHash !== input.reviewHash) {
+      throw new Error("候選擷圖／稽核收據已變更；請重新檢視後再裁決");
+    }
     const fixture = proposal.purpose === "editor-capability-fixture";
     if (proposal.target.collection === "vfx-scripts") {
       const minimum = fixture ? 2 : 1;
       if ((proposal.visualEvidence ?? []).length < minimum) {
         throw new Error(fixture ? "八招能力驗收缺少 2 張候選畫面證據" : "VFX 候選缺少候選畫面證據");
       }
+      if (!proposal.visualAudit) throw new Error("VFX 候選缺少 GPU 完整時間軸稽核收據，請由 Editor 重新送審");
     }
     const allowed = fixture ? new Set<AiVerdict>(["pass", "fail"]) : new Set<AiVerdict>(["approve", "reject"]);
     if (!allowed.has(input.verdict)) {
@@ -258,6 +394,7 @@ export class AiReviewStore {
       schema: "ggd-ai-change-verdict@1",
       key: input.key,
       candidateHash: input.candidateHash,
+      reviewHash: input.reviewHash,
       verdict: input.verdict,
       reviewer,
       note,
@@ -270,22 +407,24 @@ export class AiReviewStore {
     return entry;
   }
 
-  promotionCandidate(key: string, candidateHash: string): AiChangeProposal {
+  promotionCandidate(key: string, candidateHash: string, reviewHash: string): AiChangeProposal {
     const item = this.queue().items.find((candidate) => candidate.key === key);
     if (!item) throw new Error(`找不到 AI 候選：${key}`);
     if (!item.promotable || item.purpose === "editor-capability-fixture") {
       throw new Error("這是編輯器能力驗收樣本，永遠不能 Promote 到遊戲內容");
     }
     if (item.candidateHash !== candidateHash) throw new Error("候選 hash 已變更，請重新審查");
+    if (item.reviewHash !== reviewHash) throw new Error("候選審查材料已變更，請重新審查");
     if (item.status !== "approved") throw new Error(`候選尚未通過人工核准（目前 ${item.status}）`);
     return item;
   }
 
-  recordPromotion(key: string, candidateHash: string, outputHash: string): AiPromotion {
+  recordPromotion(key: string, candidateHash: string, reviewHash: string, outputHash: string): AiPromotion {
     const entry: AiPromotion = {
       schema: "ggd-ai-change-promotion@1",
       key,
       candidateHash,
+      reviewHash,
       outputHash,
       promotedAt: new Date().toISOString(),
     };
@@ -299,7 +438,7 @@ export class AiReviewStore {
     const verdicts = readLedger(this.verdictsFile, EMPTY_VERDICTS).entries;
     const promotions = readLedger(this.promotionsFile, EMPTY_PROMOTIONS).entries;
     const items = this.readAllProposals().map((proposal): AiProposalQueueItem => {
-      const normalized = { ...proposal, visualEvidence: proposal.visualEvidence ?? [] };
+      const normalized = normalizeProposal(proposal);
       const verdict = verdicts[proposal.key] ?? null;
       const promotion = promotions[proposal.key] ?? null;
       return { ...normalized, verdict, promotion, status: statusOf(normalized, verdict, promotion) };
@@ -319,14 +458,18 @@ export class AiReviewStore {
 
   readProposal(key: string): AiChangeProposal | null {
     const file = join(this.proposalsDir, `${fileStem(key)}.json`);
-    return existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) as AiChangeProposal : null;
+    return existsSync(file)
+      ? normalizeProposal(JSON.parse(readFileSync(file, "utf8")) as AiChangeProposal)
+      : null;
   }
 
   private readAllProposals(): AiChangeProposal[] {
     if (!existsSync(this.proposalsDir)) return [];
     return readdirSync(this.proposalsDir)
       .filter((name) => name.endsWith(".json"))
-      .map((name) => JSON.parse(readFileSync(join(this.proposalsDir, name), "utf8")) as AiChangeProposal);
+      .map((name) => normalizeProposal(
+        JSON.parse(readFileSync(join(this.proposalsDir, name), "utf8")) as AiChangeProposal,
+      ));
   }
 }
 
@@ -335,8 +478,11 @@ function statusOf(
   verdict: AiChangeVerdict | null,
   promotion: AiPromotion | null,
 ): AiProposalStatus {
-  if (promotion?.candidateHash === proposal.candidateHash) return "promoted";
-  if (verdict !== null && verdict.candidateHash !== proposal.candidateHash) return "changed-after-review";
+  if (promotion?.candidateHash === proposal.candidateHash && promotion.reviewHash === proposal.reviewHash) return "promoted";
+  if (verdict !== null &&
+    (verdict.candidateHash !== proposal.candidateHash || verdict.reviewHash !== proposal.reviewHash)) {
+    return "changed-after-review";
+  }
   if (proposal.purpose === "editor-capability-fixture") {
     if (verdict?.verdict === "pass") return "fixture-passed";
     if (verdict?.verdict === "fail") return "fixture-failed";

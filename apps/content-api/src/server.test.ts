@@ -32,6 +32,27 @@ const VISUAL_EVIDENCE = [
   { label: "impact top", dataUrl: "data:image/webp;base64,AQ==", atMs: 900, view: "top" },
 ];
 
+const VISUAL_AUDIT = {
+  schema: "ggd-vfx-visual-audit@1",
+  safe: true,
+  autoVisualScore: 8,
+  sampledFrames: 30,
+  peakParticleCount: 120,
+  peakSystemCount: 4,
+  worstAtMs: 900,
+  worst: {
+    litShare: 0.1,
+    highlightShare: 0.02,
+    brightShare: 0.01,
+    nearWhiteShare: 0,
+    dominantBrightShare: 0.005,
+    dominantNonBackgroundShare: 0.02,
+    localWhiteCardShare: 0,
+    unsafe: false,
+  },
+  suspects: [],
+} as const;
+
 let root: string;
 let app: FastifyInstance;
 
@@ -174,14 +195,19 @@ describe("AI change control", () => {
       },
     });
     expect(submitted.statusCode).toBe(201);
-    const proposal = submitted.json().proposal as { key: string; candidateHash: string; promotable: boolean };
+    const proposal = submitted.json().proposal as {
+      key: string;
+      candidateHash: string;
+      reviewHash: string;
+      promotable: boolean;
+    };
     expect(proposal.promotable).toBe(true);
     expect(JSON.parse(readFileSync(join(root, "items", `${ITEM.id}.json`), "utf8")).cost).toBe(900);
 
     const early = await app.inject({
       method: "POST",
       url: "/content-api/ai-review/promote",
-      payload: { key: proposal.key, candidateHash: proposal.candidateHash },
+      payload: { key: proposal.key, candidateHash: proposal.candidateHash, reviewHash: proposal.reviewHash },
     });
     expect(early.statusCode).toBe(409);
 
@@ -191,6 +217,7 @@ describe("AI change control", () => {
       payload: {
         key: proposal.key,
         candidateHash: proposal.candidateHash,
+        reviewHash: proposal.reviewHash,
         verdict: "approve",
         reviewer: "Owner",
         note: "數值與演出均已人工確認",
@@ -201,7 +228,7 @@ describe("AI change control", () => {
     const promoted = await app.inject({
       method: "POST",
       url: "/content-api/ai-review/promote",
-      payload: { key: proposal.key, candidateHash: proposal.candidateHash },
+      payload: { key: proposal.key, candidateHash: proposal.candidateHash, reviewHash: proposal.reviewHash },
     });
     expect(promoted.statusCode).toBe(200);
     expect(JSON.parse(readFileSync(join(root, "items", `${ITEM.id}.json`), "utf8")).cost).toBe(975);
@@ -218,17 +245,24 @@ describe("AI change control", () => {
         candidate: { ...ITEM, cost: 980 },
       },
     });
-    const proposal = submitted.json().proposal as { key: string; candidateHash: string };
+    const proposal = submitted.json().proposal as { key: string; candidateHash: string; reviewHash: string };
     await app.inject({
       method: "POST",
       url: "/content-api/ai-review/verdicts",
-      payload: { key: proposal.key, candidateHash: proposal.candidateHash, verdict: "approve", reviewer: "Owner", note: "ok" },
+      payload: {
+        key: proposal.key,
+        candidateHash: proposal.candidateHash,
+        reviewHash: proposal.reviewHash,
+        verdict: "approve",
+        reviewer: "Owner",
+        note: "ok",
+      },
     });
     await app.inject({ method: "PUT", url: `/content-api/items/${ITEM.id}`, payload: { ...ITEM, cost: 901 } });
     const promoted = await app.inject({
       method: "POST",
       url: "/content-api/ai-review/promote",
-      payload: { key: proposal.key, candidateHash: proposal.candidateHash },
+      payload: { key: proposal.key, candidateHash: proposal.candidateHash, reviewHash: proposal.reviewHash },
     });
     expect(promoted.statusCode).toBe(409);
     expect(promoted.json().error).toContain("送審後已變更");
@@ -239,6 +273,7 @@ describe("AI change control", () => {
     let proposal!: {
       key: string;
       candidateHash: string;
+      reviewHash: string;
       purpose: string;
       promotable: boolean;
     };
@@ -259,6 +294,8 @@ describe("AI change control", () => {
           purpose: "production-candidate",
           candidate,
           visualEvidence: VISUAL_EVIDENCE,
+          visualAudit: VISUAL_AUDIT,
+          autoVisualScore: VISUAL_AUDIT.autoVisualScore,
         },
       });
       expect(submitted.statusCode, id).toBe(201);
@@ -271,7 +308,14 @@ describe("AI change control", () => {
     const noScore = await app.inject({
       method: "POST",
       url: "/content-api/ai-review/verdicts",
-      payload: { key: proposal.key, candidateHash: proposal.candidateHash, verdict: "pass", reviewer: "Owner", note: "looks right" },
+      payload: {
+        key: proposal.key,
+        candidateHash: proposal.candidateHash,
+        reviewHash: proposal.reviewHash,
+        verdict: "pass",
+        reviewer: "Owner",
+        note: "looks right",
+      },
     });
     expect(noScore.statusCode).toBe(400);
     const passed = await app.inject({
@@ -280,6 +324,7 @@ describe("AI change control", () => {
       payload: {
         key: proposal.key,
         candidateHash: proposal.candidateHash,
+        reviewHash: proposal.reviewHash,
         verdict: "pass",
         reviewer: "Owner",
         note: "Editor can express this scene",
@@ -290,7 +335,7 @@ describe("AI change control", () => {
     const promoted = await app.inject({
       method: "POST",
       url: "/content-api/ai-review/promote",
-      payload: { key: proposal.key, candidateHash: proposal.candidateHash },
+      payload: { key: proposal.key, candidateHash: proposal.candidateHash, reviewHash: proposal.reviewHash },
     });
     expect(promoted.statusCode).toBe(409);
     expect(promoted.json().error).toContain("永遠不能 Promote");
@@ -324,7 +369,7 @@ describe("AI change control", () => {
     expect(malformed.statusCode).toBe(400);
     expect(malformed.json().error).toContain("PNG/WebP data URL");
 
-    const submitted = await app.inject({
+    const missingAudit = await app.inject({
       method: "POST",
       url: "/content-api/ai-review/proposals",
       payload: {
@@ -334,16 +379,164 @@ describe("AI change control", () => {
         visualEvidence: [VISUAL_EVIDENCE[0]],
       },
     });
+    expect(missingAudit.statusCode).toBe(400);
+    expect(missingAudit.json().error).toContain("GPU 視覺稽核收據");
+
+    const submitted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "vfx-scripts", id: candidate.id },
+        purpose: "production-candidate",
+        candidate,
+        visualEvidence: [VISUAL_EVIDENCE[0]],
+        visualAudit: VISUAL_AUDIT,
+        autoVisualScore: VISUAL_AUDIT.autoVisualScore,
+      },
+    });
     expect(submitted.statusCode).toBe(201);
     expect(submitted.json().proposal.visualEvidence).toEqual([VISUAL_EVIDENCE[0]]);
-    const proposal = submitted.json().proposal as { key: string; candidateHash: string };
+    expect(submitted.json().proposal.visualAudit).toEqual(VISUAL_AUDIT);
+    const proposal = submitted.json().proposal as { key: string; candidateHash: string; reviewHash: string };
     const noScore = await app.inject({
       method: "POST",
       url: "/content-api/ai-review/verdicts",
-      payload: { key: proposal.key, candidateHash: proposal.candidateHash, verdict: "approve", reviewer: "Owner", note: "looks right" },
+      payload: {
+        key: proposal.key,
+        candidateHash: proposal.candidateHash,
+        reviewHash: proposal.reviewHash,
+        verdict: "approve",
+        reviewer: "Owner",
+        note: "looks right",
+      },
     });
     expect(noScore.statusCode).toBe(400);
     expect(noScore.json().error).toContain("VFX 候選必須填");
+  });
+
+  it("invalidates a verdict when screenshots or GPU review material change without changing candidate JSON", async () => {
+    const candidate = {
+      id: "skill.review-hash",
+      schema: "vfx-script@1",
+      abilityId: "skill.review-hash",
+      segments: [{ kind: "floatingText", on: "castStart", text: "same candidate" }],
+    };
+    const first = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "vfx-scripts", id: candidate.id },
+        purpose: "production-candidate",
+        candidate,
+        summary: "first frame",
+        visualEvidence: [VISUAL_EVIDENCE[0]],
+        visualAudit: VISUAL_AUDIT,
+        autoVisualScore: VISUAL_AUDIT.autoVisualScore,
+      },
+    });
+    expect(first.statusCode).toBe(201);
+    const reviewed = first.json().proposal as { key: string; candidateHash: string; reviewHash: string };
+    const verdict = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/verdicts",
+      payload: {
+        key: reviewed.key,
+        candidateHash: reviewed.candidateHash,
+        reviewHash: reviewed.reviewHash,
+        verdict: "approve",
+        reviewer: "Owner",
+        note: "reviewed the first evidence",
+        humanVisualScore: 8,
+      },
+    });
+    expect(verdict.statusCode).toBe(200);
+
+    const changed = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "vfx-scripts", id: candidate.id },
+        purpose: "production-candidate",
+        candidate,
+        summary: "second frame",
+        visualEvidence: [VISUAL_EVIDENCE[1]],
+        visualAudit: { ...VISUAL_AUDIT, worstAtMs: 1_200 },
+        autoVisualScore: VISUAL_AUDIT.autoVisualScore,
+      },
+    });
+    expect(changed.statusCode).toBe(201);
+    const resubmitted = changed.json().proposal as { key: string; candidateHash: string; reviewHash: string };
+    expect(resubmitted.candidateHash).toBe(reviewed.candidateHash);
+    expect(resubmitted.reviewHash).not.toBe(reviewed.reviewHash);
+
+    const queue = (await app.inject({ url: "/content-api/ai-review/proposals" })).json();
+    expect(queue.items[0].status).toBe("changed-after-review");
+    const stale = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/verdicts",
+      payload: {
+        key: resubmitted.key,
+        candidateHash: resubmitted.candidateHash,
+        reviewHash: reviewed.reviewHash,
+        verdict: "approve",
+        reviewer: "Owner",
+        note: "must not carry over",
+        humanVisualScore: 8,
+      },
+    });
+    expect(stale.statusCode).toBe(409);
+    expect(stale.json().error).toContain("擷圖／稽核收據已變更");
+
+    const stalePromotion = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/promote",
+      payload: {
+        key: resubmitted.key,
+        candidateHash: reviewed.candidateHash,
+        reviewHash: reviewed.reviewHash,
+      },
+    });
+    expect(stalePromotion.statusCode).toBe(409);
+    expect(stalePromotion.json().error).toContain("審查材料已變更");
+  });
+
+  it("recomputes candidateHash from proposal bytes instead of trusting a manually stale stored hash", async () => {
+    const submitted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "items", id: ITEM.id },
+        purpose: "production-candidate",
+        candidate: { ...ITEM, cost: 970 },
+        summary: "original",
+      },
+    });
+    expect(submitted.statusCode).toBe(201);
+    const original = submitted.json().proposal as { key: string; candidateHash: string; reviewHash: string };
+    const proposalFile = join(root, ".review", "ai-proposals", "items--ember-rod.json");
+    const stored = JSON.parse(readFileSync(proposalFile, "utf8"));
+    stored.candidate.cost = 5_000;
+    // Deliberately leave both stored hashes unchanged to simulate an unsafe
+    // manual edit or a stale external writer.
+    writeFileSync(proposalFile, `${JSON.stringify(stored, null, 2)}\n`, "utf8");
+
+    const queue = (await app.inject({ url: "/content-api/ai-review/proposals" })).json();
+    expect(queue.items[0].candidateHash).not.toBe(original.candidateHash);
+    expect(queue.items[0].reviewHash).not.toBe(original.reviewHash);
+    const staleVerdict = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/verdicts",
+      payload: {
+        key: original.key,
+        candidateHash: original.candidateHash,
+        reviewHash: original.reviewHash,
+        verdict: "approve",
+        reviewer: "Owner",
+        note: "must not authorize edited bytes",
+      },
+    });
+    expect(staleVerdict.statusCode).toBe(409);
+    expect(staleVerdict.json().error).toContain("候選內容已變更");
   });
 });
 

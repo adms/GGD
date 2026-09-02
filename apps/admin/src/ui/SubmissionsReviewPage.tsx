@@ -33,6 +33,7 @@ import {
   decisionLabels,
   isCapabilityFixture,
   parseHumanVisualScore,
+  percent,
   statusText,
   type AiReviewQueue,
   type AiReviewQueueItem,
@@ -327,6 +328,7 @@ export function SubmissionsReviewPage(): React.JSX.Element {
             <p style={{ color: TEXT_MAIN, lineHeight: 1.6, margin: "8px 0" }}>{item.summary}</p>
             <div style={{ color: TEXT_DIM, fontSize: 12, wordBreak: "break-all" }}>
               candidate <code>{item.candidateHash}</code>
+              {<> · review <code>{item.reviewHash}</code></>}
               {item.baseHash !== null && <> · base <code>{item.baseHash}</code></>}
             </div>
             {fixture && (
@@ -351,6 +353,28 @@ export function SubmissionsReviewPage(): React.JSX.Element {
                 </figure>
               ))}
             </div>
+            {item.visualAudit ? (
+              <div
+                data-field={`visual-audit-${item.key}`}
+                style={{ marginTop: 10, padding: 10, border: `1px solid ${PANEL_BORDER}`, borderRadius: 6, color: TEXT_DIM, fontSize: 12, lineHeight: 1.7 }}
+              >
+                <b style={{ color: TEXT_MAIN }}>GPU 完整時間軸稽核</b>
+                <div>
+                  {item.visualAudit.sampledFrames} 格 · 最差 {(item.visualAudit.worstAtMs / 1000).toFixed(3)}秒 ·
+                  粒子峰值 {item.visualAudit.peakParticleCount}／系統 {item.visualAudit.peakSystemCount}
+                </div>
+                <div>
+                  亮區 {percent(item.visualAudit.worst.highlightShare)} · 純亮 {percent(item.visualAudit.worst.brightShare)} ·
+                  近白 {percent(item.visualAudit.worst.nearWhiteShare)} · 局部白底 {percent(item.visualAudit.worst.localWhiteCardShare)}
+                </div>
+                {item.visualAudit.worst.reason && <div>診斷：{item.visualAudit.worst.reason}</div>}
+                {item.visualAudit.suspects.length > 0 && <div>疑似來源：{item.visualAudit.suspects.join("；")}</div>}
+              </div>
+            ) : item.target.collection === "vfx-scripts" ? (
+              <div style={{ color: WARN, marginTop: 8, fontSize: 12 }}>
+                ⛔ 舊候選缺少 GPU 完整時間軸稽核收據，必須由 Editor 重新送審後才能裁決。
+              </div>
+            ) : null}
             <div style={{ display: "grid", gridTemplateColumns: "minmax(150px, 0.5fr) minmax(120px, 0.35fr) minmax(260px, 1.5fr)", gap: 8, marginTop: 12 }}>
               <TextInput
                 dataField={`ai-reviewer-${item.key}`}
@@ -378,6 +402,7 @@ export function SubmissionsReviewPage(): React.JSX.Element {
                 onClick={() => void actAi(item.key, () => aiReview.verdict({
                   key: item.key,
                   candidateHash: item.candidateHash,
+                  reviewHash: item.reviewHash,
                   verdict: labels.positiveVerdict,
                   reviewer: fields.reviewer,
                   note: fields.note,
@@ -393,6 +418,7 @@ export function SubmissionsReviewPage(): React.JSX.Element {
                 onClick={() => void actAi(item.key, () => aiReview.verdict({
                   key: item.key,
                   candidateHash: item.candidateHash,
+                  reviewHash: item.reviewHash,
                   verdict: labels.negativeVerdict,
                   reviewer: fields.reviewer,
                   note: fields.note,
@@ -408,6 +434,7 @@ export function SubmissionsReviewPage(): React.JSX.Element {
                 onClick={() => void actAi(item.key, () => aiReview.promote({
                   key: item.key,
                   candidateHash: item.candidateHash,
+                  reviewHash: item.reviewHash,
                 }))}
                 disabled={aiBusy === item.key || !canPromote}
                 title={fixture ? "能力驗收樣本永遠不可 Promote" : "只有 hash 未變且已人工核准的 production candidate 才能套用"}

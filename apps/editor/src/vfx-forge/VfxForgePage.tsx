@@ -410,6 +410,27 @@ export function VfxForgePage() {
             ...authoringActions.map((action, index) => `editor-action:${index + 1}:${action}`),
           ],
           visualEvidence,
+          visualAudit: {
+            schema: "ggd-vfx-visual-audit@1",
+            safe: true,
+            autoVisualScore: visual.autoVisualScore,
+            sampledFrames: visual.sampledFrames,
+            peakParticleCount: visual.peakParticleCount,
+            peakSystemCount: visual.peakSystemCount,
+            worstAtMs: visual.worstAtMs,
+            worst: {
+              litShare: visual.worst.litShare,
+              highlightShare: visual.worst.highlightShare,
+              brightShare: visual.worst.brightShare,
+              nearWhiteShare: visual.worst.nearWhiteShare,
+              dominantBrightShare: visual.worst.dominantBrightShare,
+              dominantNonBackgroundShare: visual.worst.dominantNonBackgroundShare,
+              localWhiteCardShare: visual.worst.localWhiteCardShare,
+              unsafe: false,
+              ...(visual.worst.reason ? { reason: visual.worst.reason } : {}),
+            },
+            suspects: [...visual.suspects],
+          },
           // Framebuffer hygiene is only triage. The admin still requires a
           // human score and note for Owner/JASS/main fidelity before verdict.
           autoVisualScore: visual.autoVisualScore,

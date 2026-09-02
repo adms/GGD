@@ -17,6 +17,28 @@ export interface AiReviewEvidenceFrame {
   readonly view: "side" | "top";
 }
 
+export interface AiReviewVisualAudit {
+  readonly schema: "ggd-vfx-visual-audit@1";
+  readonly safe: true;
+  readonly autoVisualScore: number;
+  readonly sampledFrames: number;
+  readonly peakParticleCount: number;
+  readonly peakSystemCount: number;
+  readonly worstAtMs: number;
+  readonly worst: {
+    readonly litShare: number;
+    readonly highlightShare: number;
+    readonly brightShare: number;
+    readonly nearWhiteShare: number;
+    readonly dominantBrightShare: number;
+    readonly dominantNonBackgroundShare: number;
+    readonly localWhiteCardShare: number;
+    readonly unsafe: false;
+    readonly reason?: string;
+  };
+  readonly suspects: readonly string[];
+}
+
 export interface AiReviewQueueItem {
   readonly key: string;
   readonly target: { readonly collection: string; readonly id: string };
@@ -25,9 +47,11 @@ export interface AiReviewQueueItem {
   readonly summary: string;
   readonly evidence: readonly string[];
   readonly visualEvidence: readonly AiReviewEvidenceFrame[];
+  readonly visualAudit?: AiReviewVisualAudit;
   readonly autoVisualScore?: number;
   readonly candidate: Record<string, unknown>;
   readonly candidateHash: string;
+  readonly reviewHash: string;
   readonly baseHash: string | null;
   readonly updatedAt: string;
   readonly status: AiProposalStatus;
@@ -98,4 +122,8 @@ export function parseHumanVisualScore(value: string): number | null {
   if (value.trim() === "") return null;
   const parsed = Number(value);
   return Number.isFinite(parsed) && parsed >= 0 && parsed <= 10 ? parsed : null;
+}
+
+export function percent(value: number): string {
+  return `${(value * 100).toFixed(value >= 0.01 ? 1 : 3)}%`;
 }
