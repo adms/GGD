@@ -70,6 +70,7 @@ const focusedTests = [
   "src/vfx-forge/presentationContract.test.ts",
   "src/vfx-forge/actionAnimationPrinciples.test.ts",
   "src/vfx-forge/acceptanceFixtures.test.ts",
+  "src/vfx-forge/acceptanceSources.test.ts",
   "src/vfx-forge/recipes.test.ts",
   "src/vfx-forge/model.test.ts",
   "src/vfx-forge/runtimeLimits.test.ts",

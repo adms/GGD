@@ -35,6 +35,7 @@ import {
 } from "../../../client/src/render/views/modelTint";
 import { VfxScriptPlayer } from "../../../client/src/vfx/VfxScriptPlayer";
 import { VfxSystem } from "../../../client/src/vfx/VfxSystem";
+import { channelTakeover } from "../../../client/src/render/channelTakeover";
 import { vfxHardMaxLifeSec } from "../../../client/src/vfx/vfxCleanupPolicy";
 import {
   applyVfxOverrides,
@@ -1150,6 +1151,10 @@ export class VfxForgeStage {
     // clearing the container map here makes the first scrub frame an empty shell.
     this.modelRig.resetForRound();
     this.runtimeVfx?.resetForRound({ preserveOneShotPool: true });
+    // The runtime player claims this same ledger before the default body
+    // presentation is selected. Resetting a deterministic Forge replay must
+    // therefore also clear expiring claims from the previous scrub.
+    channelTakeover.reset();
     this.disposeParticles();
     this.player = this.makePlayer();
     this.consumeEvents();
@@ -1217,8 +1222,12 @@ export class VfxForgeStage {
       const item = this.schedule[this.nextEvent++]!;
       if (item.actorPose) this.setActorPose(item.actorPose);
       if (this.mode === "runtime") {
-        this.pulseActorsFromRuntimeEvent(item.event);
         this.runtimeVfx?.handleEvent(item.event, item.atMs);
+        // VfxScriptPlayer claims `replaces` synchronously while handling the
+        // event. Default body motion must be selected afterwards, exactly as
+        // Main's EntityViewRegistry does, or Forge would visually certify a
+        // double animation that the runtime suppresses (or vice versa).
+        this.pulseActorsFromRuntimeEvent(item.event, item.atMs);
       }
       else this.player.onEvent(item.event, item.atMs);
     }
@@ -1230,25 +1239,47 @@ export class VfxForgeStage {
    * the same real Sim events to the two preview actors or the models remain in
    * idle while the effects fire around them.
    */
-  private pulseActorsFromRuntimeEvent(ev: EventMessage): void {
+  private pulseActorsFromRuntimeEvent(ev: EventMessage, nowMs: number): void {
     const data = ev.data;
+    const pulseDefault = (
+      id: number,
+      channel: "caster.action" | "target.reaction",
+      pulse: AnimPulse,
+      windowMs: number,
+    ): void => {
+      if (!channelTakeover.heldBy(id, channel, nowMs)) {
+        this.pulseActor(id, pulse, windowMs);
+      }
+    };
     if (ev.type === "abilityCast" && data.abilityId === this.ability.id) {
       const caster = Number(data.caster);
       if (Number.isFinite(caster)) {
-        this.pulseActor(
+        pulseDefault(
           caster,
+          "caster.action",
           "cast",
           Math.max(600, Math.round(Math.max(0, this.ability.castTimeSec ?? 0) * 1000)),
         );
       }
       return;
     }
-    if (ev.type !== "comboStrike") return;
-    if (abilityIdOfAuthoredOrigin(String(data.origin ?? "")) !== this.ability.id) return;
-    const caster = Number(data.caster);
-    const victim = Number(data.victim);
-    if (Number.isFinite(caster)) this.pulseActor(caster, "attack", 420);
-    if (Number.isFinite(victim)) this.pulseActor(victim, "hurt", 520);
+    if (ev.type === "comboStrike") {
+      if (abilityIdOfAuthoredOrigin(String(data.origin ?? "")) !== this.ability.id) return;
+      const caster = Number(data.caster);
+      const victim = Number(data.victim);
+      if (Number.isFinite(caster)) pulseDefault(caster, "caster.action", "attack", 420);
+      if (Number.isFinite(victim)) pulseDefault(victim, "target.reaction", "hurt", 520);
+      return;
+    }
+    if (ev.type === "projectileHit") {
+      const target = Number(data.target);
+      if (Number.isFinite(target)) pulseDefault(target, "target.reaction", "hurt", 520);
+      return;
+    }
+    if (ev.type === "reflectSuccess") {
+      const reflector = Number(data.reflector);
+      if (Number.isFinite(reflector)) pulseDefault(reflector, "target.reaction", "guard", 520);
+    }
   }
 
   private setActorPose(pose: PreviewActorPose): void {

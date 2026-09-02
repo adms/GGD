@@ -24,13 +24,27 @@ export interface AcceptanceSourceEntry {
     alignment: "aligned" | "partial" | "owner-override";
     note: string;
   };
+  /**
+   * Owner-supplied video is a motion-language reference, never an asset source.
+   * We record only a small fixed set of poses: resampling happens when the
+   * authored script hash changes, rather than generating a costly video audit
+   * on every editor interaction.
+   */
+  readonly videoReference?: {
+    readonly url: string;
+    readonly state: "sampled" | "queued";
+    readonly keyframes: readonly {
+      readonly atSec: number;
+      readonly label: string;
+    }[];
+  };
 }
 
 const REPORT_A = "docs/_reports/vfx-editor-jass3_temp_20260828-0042.md";
 const REPORT_B = "docs/_reports/vfx-editor-jass3b_temp_20260828-0312.md";
 const JASS = "tools/w3x-import/out/GoDieEX22s/jass-spells";
 
-export const VFX_FORGE_ACCEPTANCE_SOURCES = [
+export const VFX_FORGE_ACCEPTANCE_SOURCES: readonly AcceptanceSourceEntry[] = [
   {
     abilityId: "godie-hjai.e",
     label: "04-03 龍破斬",
@@ -48,6 +62,14 @@ export const VFX_FORGE_ACCEPTANCE_SOURCES = [
     resolution: {
       alignment: "partial",
       note: "Owner 與 JASS 的投射→爆炸順序一致；以 Owner 的紅橘、體積火焰為視覺目標，保留 JASS 時序。",
+    },
+    videoReference: {
+      url: "https://www.youtube.com/watch?v=cFz1d48fvN8",
+      state: "queued",
+      keyframes: [
+        { atSec: 0, label: "投射起手（待依影片實際鏡頭取樣）" },
+        { atSec: 0, label: "定距爆炸（待依影片實際鏡頭取樣）" },
+      ],
     },
   },
   {
@@ -68,6 +90,14 @@ export const VFX_FORGE_ACCEPTANCE_SOURCES = [
       alignment: "owner-override",
       note: "JASS 核心是推動受害者，不是施法者 dash；依 Owner 最新目標改成 dash 斬擊，但在審查頁永久標示此偏離。",
     },
+    videoReference: {
+      url: "https://www.youtube.com/watch?v=cFz1d48fvN8",
+      state: "queued",
+      keyframes: [
+        { atSec: 0, label: "衝刺起手（待依影片實際鏡頭取樣）" },
+        { atSec: 0, label: "穿越後紫黑斬擊（待依影片實際鏡頭取樣）" },
+      ],
+    },
   },
   {
     abilityId: "godie-hart.r",
@@ -87,6 +117,15 @@ export const VFX_FORGE_ACCEPTANCE_SOURCES = [
       alignment: "partial",
       note: "多段與終結方向一致；必須補足逐刀身體位置、升空曲線與逐段加速後才可人工通過。",
     },
+    videoReference: {
+      url: "https://www.youtube.com/watch?v=9X6LCjFgAiA",
+      state: "sampled",
+      keyframes: [
+        { atSec: 1.34, label: "起手：角色拔劍、藍白聚能，不以多枚月牙取代身體動作" },
+        { atSec: 10.68, label: "連斬：角色與目標皆有位移／反應，斬擊為動作的附屬" },
+        { atSec: 21.55, label: "終結：白藍主柱加少量黃光，高度與方向具壓迫感" },
+      ],
+    },
   },
   {
     abilityId: "godie-nbbc.r",
@@ -105,6 +144,14 @@ export const VFX_FORGE_ACCEPTANCE_SOURCES = [
     resolution: {
       alignment: "partial",
       note: "B 段 dash 與 JASS 接近；A 段藍色衝擊波採 Owner／影片版本，須避免 ability 與 script 重複畫同一層。",
+    },
+    videoReference: {
+      url: "https://youtu.be/QE9RrCjt428?t=157",
+      state: "queued",
+      keyframes: [
+        { atSec: 157, label: "A 段藍色衝擊波" },
+        { atSec: 158, label: "B 段角色 dash 斬擊" },
+      ],
     },
   },
   {
@@ -144,6 +191,14 @@ export const VFX_FORGE_ACCEPTANCE_SOURCES = [
       alignment: "partial",
       note: "組成與時序接近；橫向拉伸 beam 是為 Owner 可讀性做的明確改編，不宣稱是 JASS 1:1。",
     },
+    videoReference: {
+      url: "https://youtu.be/XkFlhrLaHeA?t=68",
+      state: "queued",
+      keyframes: [
+        { atSec: 68, label: "槍口聚能與橘色橫向主光束" },
+        { atSec: 69, label: "白色核心與持續尾段" },
+      ],
+    },
   },
   {
     abilityId: "godie-e002.ex",
@@ -162,6 +217,15 @@ export const VFX_FORGE_ACCEPTANCE_SOURCES = [
     resolution: {
       alignment: "partial",
       note: "事件與三段敘事一致；模型資產、拖曳、隨機間隔與逐刀站位未通過前維持 fixture-pending。",
+    },
+    videoReference: {
+      url: "https://youtu.be/KwAlIYfmV48?t=83",
+      state: "queued",
+      keyframes: [
+        { atSec: 83, label: "Avalon 反擊起手" },
+        { atSec: 91, label: "動畫連斬" },
+        { atSec: 100, label: "黃藍終結砲" },
+      ],
     },
   },
   {
@@ -182,8 +246,16 @@ export const VFX_FORGE_ACCEPTANCE_SOURCES = [
       alignment: "owner-override",
       note: "w3x 是魔法陣與蝗蟲群的曲線衝刺，並非藍色長光束；依 Owner 最新目標製作 dash＋beam，但完整保留偏離紀錄。",
     },
+    videoReference: {
+      url: "https://youtu.be/KwAlIYfmV48?t=446",
+      state: "queued",
+      keyframes: [
+        { atSec: 446, label: "Rider 本體 dash" },
+        { atSec: 447, label: "藍色橫向主光束與落點" },
+      ],
+    },
   },
-] as const satisfies readonly AcceptanceSourceEntry[];
+];
 
 export function acceptanceSourceFor(abilityId: string): AcceptanceSourceEntry | null {
   return VFX_FORGE_ACCEPTANCE_SOURCES.find((entry) => entry.abilityId === abilityId) ?? null;

@@ -18,6 +18,14 @@ describe("八招的 Owner／main／JASS+w3x 來源帳本", () => {
       expect(entry.jass.summary.length, entry.abilityId).toBeGreaterThan(15);
       expect(entry.jass.locustComposition.length, entry.abilityId).toBeGreaterThan(15);
       expect(entry.resolution.note.length, entry.abilityId).toBeGreaterThan(15);
+      if (entry.videoReference) {
+        expect(entry.videoReference.url, entry.abilityId).toMatch(/^https:\/\/youtu\.be|^https:\/\/www\.youtube\.com\//);
+        expect(entry.videoReference.keyframes.length, entry.abilityId).toBeGreaterThanOrEqual(2);
+        for (const frame of entry.videoReference.keyframes) {
+          expect(frame.atSec, `${entry.abilityId} ${frame.label}`).toBeGreaterThanOrEqual(0);
+          expect(frame.label.length, entry.abilityId).toBeGreaterThanOrEqual(4);
+        }
+      }
     }
   });
 

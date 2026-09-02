@@ -79,6 +79,19 @@ describe("VFX Forge paused rendering", () => {
     expect(source).not.toContain("resolveClips(actor.groups");
   });
 
+  it("mirrors Main's default action channels after script takeover claims", () => {
+    const source = readFileSync(new URL("./VfxForgeStage.ts", import.meta.url), "utf8")
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .replace(/^\s*\/\/.*$/gm, "");
+    expect(source).toContain('import { channelTakeover } from "../../../client/src/render/channelTakeover"');
+    expect(source).toContain("this.runtimeVfx?.handleEvent(item.event, item.atMs);");
+    expect(source).toContain("this.pulseActorsFromRuntimeEvent(item.event, item.atMs);");
+    expect(source).toContain('channelTakeover.heldBy(id, channel, nowMs)');
+    expect(source).toContain('ev.type === "projectileHit"');
+    expect(source).toContain('ev.type === "reflectSuccess"');
+    expect(source).toContain("channelTakeover.reset()");
+  });
+
   it("fails closed when a parsed GLB does not visibly alter the real framebuffer", () => {
     const source = readFileSync(new URL("./VfxForgeStage.ts", import.meta.url), "utf8");
     expect(source).toContain("MIN_ACTOR_VISIBLE_PIXELS = 250");
