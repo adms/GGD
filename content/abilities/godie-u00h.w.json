@@ -35,7 +35,7 @@
         ]
       },
       "damageType": "physical",
-      "castTimeSec": 1.233
+      "castTimeSec": 1.433
     }
   },
   "vfxKey": "fx.prim.fire.slash",
@@ -43,7 +43,7 @@
   "radius": 3.0,
   "schema": "ability@1",
   "icon": "assets/icons/abilities/godie-u00h.w.png",
-  "castTimeSec": 1.233,
+  "castTimeSec": 1.433,
   "rangeTier": "大",
   "range": 8,
   "radiusTier": "極小"

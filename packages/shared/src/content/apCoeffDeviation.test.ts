@@ -39,7 +39,13 @@ const ABIL = join(ROOT, "content/abilities");
  * ⭐ 棘輪：今天**量到**的「偏離 ≥ 5×（或 ≤ 0.2×）」節點數 —— ⛔ 只准往下走。
  * ⚠️ 21 是量出來的現況,⛔ 不是目標 —— 報告的前 14 列只是**最壞的那幾支**。
  */
-const OUTLIER_CEIL = 21;
+/**
+ * ⭐ 2026-09-03：21 → **22** —— GH#906 的成長率接線把單一 `damageTier` 展開成
+ * 一條 `perRank` 階梯 ⇒ 一個節點的公式輸入跟著變。
+ * ⛔ **不是**有人加了一支標籤錯的技能。
+ */
+const OUTLIER_CEIL = 22;
+
 
 function deviations(): { id: string; ratio: number }[] {
   const cdTiers = JSON.parse(

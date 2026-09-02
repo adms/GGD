@@ -87,12 +87,12 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.667
+          "castTimeSec": 0.833
         }
       },
       "vfxKey": "fx.prim.wind.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.833,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
@@ -152,7 +152,7 @@
         }
       ],
       "vfxKey": "fx.prim.nature.bolt",
-      "castTimeSec": 0.833,
+      "castTimeSec": 1.133,
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "中",

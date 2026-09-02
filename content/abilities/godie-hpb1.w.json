@@ -56,7 +56,7 @@
   "sfxKey": "wc3.moongo",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.667,
+  "castTimeSec": 1,
   "rangeTier": "極大",
   "range": 12
 }

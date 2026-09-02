@@ -219,13 +219,13 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.233
+          "castTimeSec": 1.633
         }
       },
       "vfxKey": "fx.prim.void.pulse-lg",
       "sfxKey": "wc3.shadowhunterready1",
       "targetsEnemies": true,
-      "castTimeSec": 1.233,
+      "castTimeSec": 1.633,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",

@@ -159,7 +159,24 @@ describe("傷害五級距 (GH#447)", () => {
       }[]
     )[0]?.amount;
     expect(amount?.["flat"]).toBe(DEFAULT_DAMAGE_TIERS.damage.大);
-    expect(amount?.["perRank"]).toBeUndefined();
+    // ⭐⭐ 2026-09-03（GH#906）：`perRank` 現在**可能是推導出來的** ——
+    //   `resolveRankGrowthOnDoc` 在 `withTiers` 的最外層把
+    //   「單一 `damageTier` ＋ `cooldownTier`」展開成一條成長階梯。
+    //
+    // ⭐ 而兩者分得出來，⛔ 不必再加一個旗標：
+    //   · **作者寫的**絕對值階梯 ⇒ 第 1 階是那一階的**傷害**（> 0）
+    //   · **推導的**增量階梯     ⇒ 第 1 階必然是 **0**
+    //     （`resolveScaling` 算 `flat + perRank[rank-1]` ⇒ 相加 ⇒ 第 1 階不加東西）
+    //
+    // ⇒ ⭐ #447 要防的是「作者寫的那一份還躺在旁邊」＝**第二個住處**，
+    //   ⛔ 而一條當場算出來的增量不是住處。
+    const per = amount?.["perRank"];
+    if (per !== undefined)
+      expect(
+        (per as number[])[0],
+        "⛔ 級距化的節點還帶著**作者寫的** perRank（第 1 階不是 0）——那是第二個住處",
+      ).toBe(0);
+
     expect(amount?.["ratios"]).toEqual([{ stat: "ap", coeff: 0.5 }]);
   });
 });

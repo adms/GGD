@@ -81,3 +81,60 @@ export function expandRankLadder(base: number, growth: number, ranks: number): n
   const n = Math.max(1, Math.floor(ranks));
   return Array.from({ length: n }, (_, i) => base * (1 + growth * i));
 }
+
+/**
+ * ⭐⭐ **把「只有一格 `damageTier`」的多階技能展開成階梯**（GH#906）。
+ *
+ * ⛔⛔ 量到的現況（2026-09-03）：`content/abilities` 裡
+ * **153 份 `maxRank > 1` 的技能只有單一 `damageTier`** ⇒ ⭐ 升級**完全不加傷害**。
+ * ⚠️ 而卡面多半寫著「120/220/320/420」這種階梯 ⇒ ⭐ 那是第一·五守則的空宣稱。
+ *
+ * ⭐⭐ **而 GH#906 票文開的藥是錯的**：它說「從 git 找出每一支被 `tierize` 取代掉的
+ * 原始 `perRank`，逐支寫回」——⛔ 那是 **O(N) 的考古**，而且
+ * ⭐ 它把一份**算得出來的**資料烘回 153 份文件（⛔ 正是第〇·四守則禁止的形狀）。
+ *
+ * ⇒ ⭐ 正解是**在載入時展開**：技能只寫 `damageTier` ＋ 它的 `cooldownTier`，
+ * 成長率由 `resolveRankGrowth()` 查表 ⇒ ⭐ 一次接線解決全部，
+ * 而 owner 哪天改那五格，**零份文件要重寫**。
+ *
+ * ⚠️ ⭐ **寫的是 `perRank` 的「增量」，⛔ 不是絕對值** ——
+ * `resolveScaling` 算的是 `flat + perRank[rank-1]`（⭐ 相加），
+ * 所以第 1 階必須是 **0**，第 i 階是 `flat × growth × i`
+ * ⇒ 合起來 `flat × (1 + growth × i)` ＝ `expandRankLadder` 的定義。
+ * ⛔ 寫絕對值會讓第 1 階當場變成兩倍。
+ *
+ * ⚠️ ⭐ **已經有逐階資料的一律不碰**（`perRank` 或 `damageTierPerRank` 在的話）——
+ * 那是作者/產生器**明確寫下**的曲線，⛔ 它贏過這條推導（第〇·六守則的階梯）。
+ */
+export function resolveRankGrowthOnDoc<T>(doc: T, rules: RankGrowthRules = DEFAULT_RANK_GROWTH_RULES): T {
+  if (!rules.enabled) return doc;
+  const d = doc as unknown as Record<string, unknown>;
+  const maxRank = typeof d["maxRank"] === "number" ? d["maxRank"] : 1;
+  if (!(maxRank > 1)) return doc;
+  const growth = resolveRankGrowth(d["cooldownTier"], rules);
+  if (growth === null || !(growth > 0)) return doc;
+
+  let touched = false;
+  const walk = (o: unknown): unknown => {
+    if (Array.isArray(o)) return o.map(walk);
+    if (!o || typeof o !== "object") return o;
+    const n = { ...(o as Record<string, unknown>) };
+    // ⭐ 一個 `amount` 節點：有 `flat`、⛔ 而沒有任何逐階資料。
+    const isAmount =
+      typeof n["flat"] === "number" &&
+      n["perRank"] === undefined &&
+      n["damageTierPerRank"] === undefined;
+    if (isAmount) {
+      const base = n["flat"] as number;
+      if (base > 0) {
+        // ⭐ 增量：第 1 階 0，第 i 階 base × growth × i。
+        n["perRank"] = Array.from({ length: maxRank }, (_, i) => base * growth * i);
+        touched = true;
+      }
+    }
+    for (const [k, v] of Object.entries(n)) n[k] = walk(v);
+    return n;
+  };
+  const out = walk(d) as T;
+  return touched ? out : doc;
+}

@@ -90,12 +90,12 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.667
+          "castTimeSec": 1.033
         }
       },
       "vfxKey": "fx.prim.holy.pulse",
       "targetsEnemies": true,
-      "castTimeSec": 0.667,
+      "castTimeSec": 1.033,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
@@ -192,12 +192,12 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.667
+          "castTimeSec": 0.833
         }
       },
       "vfxKey": "fx.prim.holy.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.833,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",

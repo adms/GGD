@@ -36,6 +36,7 @@ import { rangeTiersFromDoc, resolveRangeTier } from "./rangeTiers";
 // 冷卻五級距 → 秒數（GH#445）／傷害五級距 → 基礎值（GH#447）。同上，唯一的查表處。
 import { cooldownTiersFromDoc, resolveCooldownTier } from "./cooldownTiers";
 import { DEFAULT_CAST_TIME_TIERS, resolveCastTimeTierOnDoc } from "./castTimeTiers";
+import { DEFAULT_RANK_GROWTH_RULES, resolveRankGrowthOnDoc, type RankGrowthRules } from "./rankGrowth";
 import { damageTiersFromDoc, resolveDamageTier } from "./damageTiers";
 // GH#541 —— 連段的間隔序列住 `config.combo-strikes@1`（第〇·四守則的共用表）,
 // 在**載入時**被解析進每一個 `comboStrikes` 節點。⛔ 沒有這一步,只寫 `family`
@@ -285,6 +286,12 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
     (configDocs.find((c) => c.schema === "config.cast-time-tiers@1") as unknown as
       | typeof DEFAULT_CAST_TIME_TIERS
       | undefined) ?? DEFAULT_CAST_TIME_TIERS;
+  // ⭐ 升級成長率（GH#938 的機制，GH#906 的接線）—— ⛔ 缺席時用 `DEFAULT_`（＝出貨值），
+  //   而 `resolveRankGrowthOnDoc` 在 `enabled:false` 時逐位元 no-op（⭐ 那格就是 rollback）。
+  const rankGrowth =
+    (configDocs.find((c) => c.schema === "config.rank-growth@1") as unknown as
+      | RankGrowthRules
+      | undefined) ?? DEFAULT_RANK_GROWTH_RULES;
   // 移速**加成**五級距（GH#789，owner 2026-08-27「%轉換為五級距⋯0.1~4」）。
   // ⚠️ 它級距化的是 **modifier 節點**（任意深度的 `{stat:"ms", op:pctAdd|pctMult}`），
   // 帶 `msBonusTier` 的節點**沒有** `value`（#534 exclusive）——所以這一層**不可以漏**：
@@ -311,6 +318,12 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
     // ⭐ 吟唱級距（GH#943）包在最外層與耗魔同理：它只讀頂層 `castTimeTier`，
     // ⛔ 不看幾何、不看傷害、不看冷卻 ⇒ 順序無關。
     // ⚠️ ⛔ 少了這一層，`castTimeTier` 就是「有欄位而沒有人翻譯」（失敗形態⑧）。
+    // ⭐⭐ 升級成長率（GH#906）包在**最外層**，而位置是承重的：
+    //   它讀的是 `resolveDamageTier` **寫完之後**的 `flat`
+    //   ⇒ 包在裡面的話它會讀到 `undefined`，那一層逐位元 no-op 而**沒有任何東西會紅**。
+    // ⚠️ ⭐ 它與吟唱／耗魔那幾層不同：那些只讀頂層欄位所以順序無關，
+    //   ⛔ 這一層**有順序相依**。
+    resolveRankGrowthOnDoc(
     resolveCastTimeTierOnDoc(
     resolveMsBonusTier(
     resolveComboFamilies(
@@ -340,6 +353,8 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
       moveSpeedTiers,
     ) as never,
       castTimeTiers,
+    ) as never,
+      rankGrowth,
     ) as T;
 
   /**

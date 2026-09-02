@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "f34d5d5f3bb5",
+  "fingerprint": "43e5a204f051",
   "capabilityFingerprint": "855cf94f",
   "required": [
     {
@@ -4287,6 +4287,36 @@
       "group": "configField",
       "name": "byArchetype.range.tank=極小",
       "owner": "config.stat-normalization@1"
+    },
+    {
+      "group": "configField",
+      "name": "byCooldownTier",
+      "owner": "config.rank-growth@1"
+    },
+    {
+      "group": "configField",
+      "name": "byCooldownTier.中",
+      "owner": "config.rank-growth@1"
+    },
+    {
+      "group": "configField",
+      "name": "byCooldownTier.大",
+      "owner": "config.rank-growth@1"
+    },
+    {
+      "group": "configField",
+      "name": "byCooldownTier.小",
+      "owner": "config.rank-growth@1"
+    },
+    {
+      "group": "configField",
+      "name": "byCooldownTier.極大",
+      "owner": "config.rank-growth@1"
+    },
+    {
+      "group": "configField",
+      "name": "byCooldownTier.極小",
+      "owner": "config.rank-growth@1"
     },
     {
       "group": "configField",
@@ -9371,6 +9401,11 @@
     {
       "group": "configField",
       "name": "enabled",
+      "owner": "config.rank-growth@1"
+    },
+    {
+      "group": "configField",
+      "name": "enabled",
       "owner": "config.ap-coefficient@1"
     },
     {
@@ -11192,6 +11227,11 @@
       "group": "configField",
       "name": "id",
       "owner": "config.cast-time-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "id",
+      "owner": "config.rank-growth@1"
     },
     {
       "group": "configField",
@@ -13876,6 +13916,11 @@
     {
       "group": "configField",
       "name": "note",
+      "owner": "config.rank-growth@1"
+    },
+    {
+      "group": "configField",
+      "name": "note",
       "owner": "config.ap-coefficient@1"
     },
     {
@@ -16205,6 +16250,11 @@
     },
     {
       "group": "configField",
+      "name": "resourcePctSkipsGlobalMult",
+      "owner": "config.ap-damage-scaling@1"
+    },
+    {
+      "group": "configField",
       "name": "restoreManualOrderOnLapse",
       "owner": "config.taunt@1"
     },
@@ -17087,6 +17137,11 @@
       "group": "configField",
       "name": "schema",
       "owner": "config.cast-time-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "schema",
+      "owner": "config.rank-growth@1"
     },
     {
       "group": "configField",
@@ -19847,6 +19902,11 @@
       "group": "configField",
       "name": "wetSpecular",
       "owner": "config.weather@1"
+    },
+    {
+      "group": "configField",
+      "name": "whenTierAbsent",
+      "owner": "config.rank-growth@1"
     },
     {
       "group": "configField",
@@ -24726,9 +24786,9 @@
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 147,
-    "configField": 3882,
+    "configField": 3894,
     "_notRequired": 15,
-    "_total": 5066,
+    "_total": 5078,
     "_ownerOnly": 39
   }
 }
