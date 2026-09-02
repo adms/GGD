@@ -1,97 +1,59 @@
-# 給 GGD Main Codex：Editor 必要接縫（可直接複製）
+# 給 GGD Main Codex：Editor 最小必要接縫（可直接複製）
 
-狀態：**Revision 4 — 只保留 Main 必須完成、Editor 無法自行補上的五個工作包**
+狀態：**Revision 5 — Main 已完成關鍵程式；本輪只剩交付 feature branch**
 
-基準：`origin/main@de7006c69`
+核對基準：`origin/main@de7006c69`
 
-最後核對：**2026-09-02 07:42（Asia/Taipei）**
+Main 已回報但 Editor 尚無法取得的 commits：`b54441df8`、`cf40d5db3`（分支 `feat/editor-seam-20260902`）
 
-Editor 分支：`feat/vfx-forge-codex`；請在 Main 自己的 feature branch 開工，禁止直接提交 `main`。
+最後核對：**2026-09-02 07:59（Asia/Taipei）**
 
-## 先不要重做
+Editor 分支：`feat/vfx-forge-codex`。雙方都禁止直接提交或推送 `main`。
 
-Main 已有 import routes、bounded ZIP、ACTIVE/CAS/rollback 骨架、source adapter、投稿批核頁、
-通過與 Promote 分離、assets manifest、`effectiveVfxLimits` 八個實際值。請補現有接縫，不要另建第二套。
+## 結論
 
-## 只做以下五包
+先前五包要求已被最新 Main 實作與量測推翻。這一輪 **不要再新增功能**；Editor 現在唯一需要 Main 做的事是：
 
-### 1. Contract index 與完整 limits receipt
+> **請把 `feat/editor-seam-20260902` 推到 origin（仍然不要推 main），讓 Editor 能抓到
+> `b54441df8`、`cf40d5db3` 做接縫測試。**
 
-新增一份 machine-readable contract index，作為 Main 與 Editor 唯一的接縫索引，至少列出：
+目前 `git fetch origin feat/editor-seam-20260902` 回 `couldn't find remote ref`，兩個 commit 在 Editor
+可見的 clone 也不存在，所以無法用真實 route 回應完成 integration test。
 
-- representation：`ability@1`、`item@1`、`vfx-script@1` 對應的 collection、path、schema 與 promotion policy；
-- endpoint：validate、apply、rollback、active、runtime-bundle、operations、validate-single 的 URL、method、
-  request/response schema、media type、auth scope、max bytes 與同步／輪詢方式；
-- index 自身的 schema/version/fingerprint。
+## Editor 會接的三份已完成契約
 
-在 `effectiveVfxLimits` 補齊三個 metadata：
+分支可抓後，Editor 只驗以下三項，不要求 Main 重做：
 
-```json
-{
-  "schema": "effective-vfx-limits@1",
-  "limitProfileId": "<stable profile id>",
-  "resolverFingerprint": "<digest of resolver inputs/logic>"
-}
-```
+1. `GET /api/v1/content-import/active/runtime-bundle`
+   - `schema = ggd-content-runtime-bundle@1`；
+   - 必須帶 `activationDigest`、`packageDigest`、`contentVersion`；
+   - 每個 collection 帶 `hash`、`count` 與逐文件 `{id, hash, doc}`；
+   - Editor 以共用 `hashDoc`、`hashCollection`、`contentVersion` 全部重算，不一致即拒收。
+2. `effectiveVfxLimits`
+   - `schema = ggd-effective-vfx-limits@1`；
+   - 必須帶 `limitProfileId`、`resolverFingerprint` 與八個實際生效值；
+   - `maxOneShotEmitters: null` 代表 resolver 的 `Infinity`，Editor 不得擅自當成 96。
+3. `GET /api/v1/content-import/contract-index`
+   - `schema = ggd-editor-contract-index@1`；
+   - Editor 從 route 讀 representation、mode 與 promotion policy，不再維護第三份常數表；
+   - 未知 representation 一律 fail closed。
 
-八個實際限制值仍由現有 resolver 產生，禁止在 profile 另寫常數。三格缺失或 fingerprint 不符時，
-Editor 必須 fail closed。
+## 明確不要在本輪處理
 
-驗收：public profile 與 authenticated active profile 都能由 contract index 驗證；任意刪除三格之一的測試會紅。
+- 不做 `validate-single`；完整 Package 路徑已可驗證，這只是便利功能（GGD#931）。
+- 不新增不存在的 AI promote route；generator-owned 的 PUT/PATCH 409 已足夠（GGD#932）。
+- 不把 `godie-e00r` 換成 16 頂點 Eva 殘件；等待真資產與 appearance resolver（GGD#933/#934）。
+- 不把七色 palette 當 Editor importer 阻塞；維持 `matchesEngine=false` fail closed（GGD#935）。
+- 不重做 importer routes、ZIP guard、ACTIVE/CAS/rollback、source adapter、批核頁或 Promote 流程。
 
-### 2. 把現有 importer 骨架補成真正閉環
+## 分支可抓後的最小回交證據
 
-不新增另一組 routes，只補現有 pipeline 的承重語意：
+Editor 會自行完成並回報：
 
-- 每份 document 使用遊戲同一份 collection Zod 與 hard authoring rules；capability/ref/asset 從文件推導，
-  不可只相信 manifest 自述；
-- delta 必須套到 exact ACTIVE base，產生含未修改文件的完整 immutable snapshot，不能用本包取代整棵樹；
-- 遊戲 runtime 必須真正讀到 ACTIVE snapshot；apply 後以 runtime read-back digest 確認，rollback 同理；
-- Platform Promote 只有在 revalidate、Base CAS、apply 與 runtime read-back 全成功後才可標 promoted。
+- contract-index 完整／缺欄／未知 representation 三種測試；
+- runtime-bundle 的 document、collection、contentVersion 任一突變皆拒收；
+- VFX limits 三欄收據、`null` emitter cap 與 resolver drift 測試；
+- bootstrap-only profile 維持只開 bootstrap；只有真 ACTIVE receipt 齊全才開 full／delta。
 
-驗收只要四條窄測：非法 ability schema 回 422；漏報 capability 仍回 422；bootstrap A + delta B 後
-runtime 同時有 A+B；拔掉 runtime consumer 時 apply 不得回 healthy。
-
-### 3. `validate-single` 與 generator-owned Promote 409
-
-- 新增 authenticated `validate-single` convenience：接受一份 `ability@1`／`item@1`／`vfx-script@1`，
-  server 以 ACTIVE base 包成 canonical single-root delta，仍走同一支 validator；不得直接寫檔。
-- Promote 遇到 generator-owned product 時，通用 apply 必須回 **409**，並回 source descriptor／adapter id；
-  後續只能走既有 source adapter。不得部分改 product，也不得在瀏覽器執行 generator。
-
-驗收：同一份非法文件經 package validate 與 validate-single 得到同 code；generator-owned candidate 即使已核准，
-通用 Promote 仍 409 且所有 source/product hash 不變。
-
-### 4. 修正 `godie-e00r` 的權威模型映射
-
-目前 `content/champions/godie-e00r.json` 仍是：
-
-```json
-"modelKey": "champ.skin.rogue"
-```
-
-卡面是「初號機」，不能以 rogue fallback 出貨。請改到 Main 已收錄的正確初號機 model/skin key，
-並以 resolver 測試確認 card、Editor preview、遊戲 runtime 得到同一個非 rogue key。不要在 Editor 寫例外表。
-
-### 5. 遊戲 client 消費七色 token palette
-
-tokenizer 已存在，但 client 尚未依 group/color 渲染。請接上全域七色 palette：
-
-- 只對 tokenizer 產生的完整 `[...]` token 上色，禁止 substring replacement；
-- 每個 token 必須帶 group id 與色碼；未知 token 保留原文並用 neutral 色；
-- `[小範圍]`、`[範圍]`、`[大範圍]` 同屬亮藍；已廢除的舊範圍標籤不得復活；
-- presentation 不得改技能機制，也不得把系統 AP 乘數寫進契約。
-
-驗收：`GL[AD]IARIA` 只框真正的 `[AD]`；普通字串中的 `AP` 不被切割；七群各有 client snapshot。
-
-## 明確不在這次 Main 工作
-
-- 不做第二套批核頁、第二套 importer 或第二套 source adapter。
-- 不做 Editor UI、VFX Forge、八招 fixture、逐秒擷圖或視覺品質調整。
-- 不做完整資產池、地形／單位／區域／觸發器／地圖編輯器。
-- 不處理 15 項 future capability；只保持契約可擴充。
-
-## 回交證據
-
-只需提供 feature branch/commit，以及上述五包各自的 request/response fixture 或窄測結果。不要用全 repo
-綠燈取代這五包的直接證據，也不要推到 `main`。
+Main 不必先做地毯式測試，也不必為了讓按鈕變亮而偽造 ACTIVE。若目前沒有 active snapshot，誠實維持
+`implementedStage=G1`、`supportedModes=["bootstrap"]` 即可；這不是程式缺口。

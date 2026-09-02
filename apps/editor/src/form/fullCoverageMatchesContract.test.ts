@@ -107,6 +107,47 @@ function visualSurface(group: string, schema: unknown, owner: string): CoverageI
   return [...new Set(names)].map((name) => ({ group, name, owner }));
 }
 
+/**
+ * Reproduce the runtime contract's bounded nested-effect walk from the UI tree,
+ * rather than copying `effectFieldPaths` back out of the manifest.  A field is
+ * evidence only when `walkZod` produced a control for it.  Nested unions/lazy
+ * recursion stop here exactly as they do in `nestedFieldPathsOf`.
+ */
+function effectFieldPathSurface(effectUnion: UIDiscriminatedUnion): CoverageItem[] {
+  const names = new Set<string>([effectUnion.discriminator]);
+  const relative = (path: string): string => path
+    .replace(/^effects\[\]\.?/, "")
+    .replace(/\[\]/g, "");
+  const add = (node: UINode): void => {
+    const name = relative(node.path);
+    if (name) names.add(name);
+  };
+  const descend = (node: UINode, depth: number): void => {
+    if (depth > 2) return;
+    // Hook fields have their own `hookField` / `hookEvent` contract axes. The
+    // runtime walker reaches them through a lazy boundary and intentionally
+    // stops after recording the parent `hooks` field.
+    if (relative(node.path) === "hooks") return;
+    if (node.kind === "object") {
+      for (const field of node.fields) {
+        add(field);
+        descend(field, depth + 1);
+      }
+      return;
+    }
+    if (node.kind === "array") descend(node.item, depth);
+    // Tuple, record and nested unions intentionally stop: the runtime
+    // capability walker treats them as a boundary at this depth.
+  };
+  for (const variant of effectUnion.variants) {
+    for (const field of variant.fields) {
+      add(field);
+      descend(field, 1);
+    }
+  }
+  return [...names].map((name) => ({ group: "effectFieldPath", name }));
+}
+
 function configSurface(): CoverageItem[] {
   const contract = JSON.parse(
     readFileSync(join(REPO, "docs/editor-contract/ggd-editor-coverage.json"), "utf8"),
@@ -154,6 +195,7 @@ function abilitySurface(): CoverageItem[] {
         out.push({ group: "effectField", name: last(field.path) });
       }
     }
+    out.push(...effectFieldPathSurface(effectUnion));
   }
 
   for (const node of allNodes(root)) {

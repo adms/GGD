@@ -1,45 +1,54 @@
 # 遊戲主程式載入 Editor JSON／ZIP 的修改建議
 
-狀態：**Revision 4.0 — 依 `origin/main@de7006c69` 收斂為五個 Main 必要工作包**
+狀態：**Revision 5.0 — Main 關鍵接縫已完成，等待 feature branch 可取得後驗證**
 
-最後驗證：**2026-09-02 07:42（Asia/Taipei）**
+最後驗證：**2026-09-02 07:59（Asia/Taipei）**
 
-可直接交給 Main Codex 的實作單：
+可直接交給 Main Codex 的最小訊息：
 [`docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md`](docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md)。
 
-## 結論
+## 現況結論
 
-Main 已經有 importer、source adapter、投稿／批核／Promote 與 VFX limits 的骨架。Editor 不再要求 Main
-重做這些功能，只需補五個 Editor 無法自行完成的接縫：
+Main 回報 `feat/editor-seam-20260902` 的 `b54441df8`、`cf40d5db3` 已完成三條關鍵接縫：
 
-1. contract index，以及 `effectiveVfxLimits` 的 `schema`、`limitProfileId`、`resolverFingerprint`；
-2. 現有 importer 的真 schema/rules 驗證、delta 完整 snapshot 與 runtime read-back；
-3. `validate-single` convenience，以及 generator-owned 通用 Promote 必回 409；
-4. `godie-e00r` 從 `champ.skin.rogue` 改為權威初號機模型；
-5. 遊戲 client 真正消費七色 bracket-token palette。
+1. 完整且可重算的 `active/runtime-bundle`；
+2. 帶 identity receipt 的 `effectiveVfxLimits`；
+3. 作為唯一 representation／endpoint 真相來源的 `contract-index`。
 
-## 固定資料流
+因此 Main 本輪沒有新的程式功能待辦。唯一必要動作是把該 feature branch 推到 origin，仍然不要推 main，
+讓 Editor 分支能抓取並跑 integration tests。
+
+## Editor 接下來自行完成
 
 ```text
-Editor 本機 workspace
-  → Package JSON／ZIP（或單份 JSON）
-  → Main contract index 決定 representation 與 endpoint
-  → 同一支 validator 驗 schema／rules／refs／capabilities／assets
-  → immutable proposal → 人工批核 → 明確 Promote
-  → delta 套入完整 ACTIVE snapshot
-  → game runtime read-back digest
-  → 可驗證 rollback
+contract-index
+  → 決定 ability@1／item@1 是否支援及可用 modes
+  → 未知 representation fail closed
+
+active/runtime-bundle
+  → 重算每份 hashDoc
+  → 重算每個 hashCollection + count
+  → 重算 contentVersion
+  → 核對 activationDigest／packageDigest 與 target profile
+  → 通過後才成為 full／delta exact Base
+
+effectiveVfxLimits
+  → 驗 schema／limitProfileId／resolverFingerprint
+  → 讀八個 resolver 實際值
+  → null maxOneShotEmitters = Infinity
+  → 不完整時拒收遠端收據，預覽明示降級到本機 resolver
 ```
 
-## 不再列入 Main 待辦
+## 保持抽象化分工
 
-- 已存在的 import routes、ZIP guard、ACTIVE CAS、rollback、source adapter、投稿批核頁與 Promote 分權；
-- Editor UI、VFX Forge、八招驗收、擷圖、視覺品質與本機檔案管理；
-- 完整資產池、外觀設計工具、地形／單位／區域／觸發器；
-- 系統 AP 乘數與 15 項 future capability 的本期實作。
+- Main 做「積木」：runtime effect、hook、VFX primitive、resolver、限制與機器契約。
+- Editor／後台做「堆積木」：完整表單、拖拉、時間軸、即時視覺預覽、模組配方、驗證與 JSON／ZIP。
+- 技能、特效與英雄資料不得依賴 AI 無止境逼近；AI 只能提出候選，玩家必須能用 no-code 介面精確修改，
+  並經人工批核與 Promote 才能進入遊戲。
+- `vfx-script@1` 目前在 contract index 為 `planned/G5` 時，Editor 顯示規劃狀態，不偽裝成可匯入。
 
-## 完成判定
+## 本輪不再要求 Main
 
-Main 在自己的 feature branch 提供五包的窄測／fixture 即可。最重要的閉環證據是：bootstrap A，套入
-delta B 後遊戲 runtime 同時讀到 A+B，且 rollback 的 runtime digest 回到前一版。只有 API 回
-`activated`、ACTIVE pointer 改變或後台出現按鈕，都不能單獨算完成。
+`validate-single`、AI promote 409、新 Eva 模型、appearance resolver、七色 palette 都已有 issue 或不是目前
+Editor importer 的關鍵路徑；不得塞回本輪阻塞清單。沒有 active snapshot 時維持 bootstrap-only 是正確狀態，
+不要求 Main 造假收據來解鎖 full／delta。

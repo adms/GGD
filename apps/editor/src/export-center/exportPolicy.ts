@@ -12,6 +12,9 @@ export interface TargetProfileFacts {
   authoringStoreState: string | null;
   supportedModes: readonly PackageMode[];
   deltaExportAllowed: boolean;
+  authoringProcessorKind: string | null;
+  authoringProcessorContractVersion: string | null;
+  authoringProcessorFingerprint: string | null;
   compilerContractVersion: string | null;
   compilerFingerprint: string | null;
   activationDigest: string | null;
@@ -50,6 +53,7 @@ export function readTargetProfileFacts(profile: unknown): TargetProfileFacts {
   const content = record(root["content"]);
   const base = record(root["base"]);
   const contract = record(root["contract"]);
+  const authoringProcessor = record(root["authoringProcessor"]);
   const compiler = record(root["compiler"]) ?? record(contract?.["compiler"]);
   const authoringModel = record(root["authoringModel"]);
   const unavailable = Array.isArray(root["unavailable"])
@@ -69,6 +73,9 @@ export function readTargetProfileFacts(profile: unknown): TargetProfileFacts {
     authoringStoreState: stringOrNull(root["authoringStoreState"]),
     supportedModes: modes(root["supportedModes"]),
     deltaExportAllowed: root["deltaExportAllowed"] === true,
+    authoringProcessorKind: stringOrNull(authoringProcessor?.["kind"]),
+    authoringProcessorContractVersion: stringOrNull(authoringProcessor?.["contractVersion"]),
+    authoringProcessorFingerprint: stringOrNull(authoringProcessor?.["fingerprint"]),
     compilerContractVersion: stringOrNull(compiler?.["contractVersion"]),
     compilerFingerprint: stringOrNull(compiler?.["fingerprint"]),
     activationDigest: stringOrNull(base?.["activationDigest"]),
@@ -94,8 +101,12 @@ export function packageModeBlockers(facts: TargetProfileFacts, mode: PackageMode
   if (!facts.authoringAccepts.includes("ability@1") || !facts.authoringAccepts.includes("item@1")) {
     blockers.push("目標未宣告接受 ability@1／item@1 authoring");
   }
-  if (!facts.compilerContractVersion || !facts.compilerFingerprint) {
-    blockers.push("目標沒有可 pin 的 compiler contractVersion／fingerprint");
+  if (
+    facts.authoringProcessorKind !== "runtime-direct" ||
+    facts.authoringProcessorContractVersion !== "runtime-direct@1" ||
+    !facts.authoringProcessorFingerprint
+  ) {
+    blockers.push("目標沒有可 pin 的 runtime-direct authoringProcessor receipt");
   }
   if (mode === "bootstrap" && !facts.migrationFingerprint) blockers.push("缺少 migrationFingerprint");
   if (mode !== "bootstrap") {

@@ -2,10 +2,13 @@ import { describe, expect, it } from "vitest";
 import { readEffectiveVfxLimits, vfxLimitDrift } from "./targetProfileLimits";
 
 const advertised = {
+  schema: "ggd-effective-vfx-limits@1" as const,
+  limitProfileId: "ranked-default",
+  resolverFingerprint: "limits-9c2d78e1",
   maxParticlesPerSystem: 1200,
   maxRatePerSystem: 600,
   maxActiveRibbons: 10,
-  ribbonFadeBudgetSec: 0.25,
+  ribbonFadeBudgetSec: 0.2,
   hardMaxLifeSec: 5,
   hardCapScope: "scene" as const,
   maxOneShotEmitters: 96,
@@ -19,6 +22,12 @@ describe("target-profile effective VFX limits", () => {
   });
 
   it("rejects partial, invalid, and non-JSON unlimited values", () => {
+    const { schema: _schema, ...withoutSchema } = advertised;
+    const { limitProfileId: _profileId, ...withoutProfileId } = advertised;
+    const { resolverFingerprint: _fingerprint, ...withoutFingerprint } = advertised;
+    expect(() => readEffectiveVfxLimits({ effectiveVfxLimits: withoutSchema })).toThrow(/schema/);
+    expect(() => readEffectiveVfxLimits({ effectiveVfxLimits: withoutProfileId })).toThrow(/limitProfileId/);
+    expect(() => readEffectiveVfxLimits({ effectiveVfxLimits: withoutFingerprint })).toThrow(/resolverFingerprint/);
     expect(() => readEffectiveVfxLimits({ effectiveVfxLimits: { ...advertised, hardCapScope: undefined } }))
       .toThrow(/hardCapScope/);
     expect(() => readEffectiveVfxLimits({ effectiveVfxLimits: { ...advertised, maxRatePerSystem: 0 } }))

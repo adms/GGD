@@ -108,10 +108,10 @@ comma-separated `GGD_EDITOR_PROFILE_HOSTS` value.
 The three package modes stay present even when blocked so later main-side work
 does not require redesigning the editor. The current published profile only
 supports `bootstrap`, declares runtime-direct `ability@1` / `item@1` authoring,
-and has no active authoring store. However, the package manifest schema still
-requires a compiler receipt while the profile deliberately publishes none, and
-the main importer returns 501 for validate/apply/rollback. The editor reports
-that contract drift and fails closed instead of inventing a `none` compiler.
+and has no active authoring store. Package generation now pins the shipped
+`authoringProcessor` receipt and omits `compiler`, matching Main's
+runtime-direct contract. Production export remains fail closed until the target
+declares G2 and supplies the exact Base facts required by the selected mode.
 
 The desktop app can use either a local GGD directory or an HTTPS remote Base such
 as `https://ggd.adms.ai`. Remote manifest, bundle, target profile and individual
@@ -121,7 +121,7 @@ preserved for review. Binary assets are local-first and fetched through a bounde
 allow-listed cache bridge. Per-file asset hash verification will become mandatory
 as soon as main publishes the complete asset manifest requested by the handshake.
 
-Current feature work is based on `origin/main@b8420abe`; live and repository
+Current feature work is based on `origin/main@de7006c69`; live and repository
 profile digests are treated as volatile receipts and are never compiled into the
 Editor as constants.
 
@@ -131,13 +131,13 @@ The branch does not use the old `required = 546` count as a constant. Current
 generated truth is:
 
 ```text
-editor coverage fingerprint     8dec65b891b7
+editor coverage fingerprint     71b5be5a4f57
 capability fingerprint          111434fa
-required cells                  4941
+required cells                  4943
 ```
 
 The count includes `vfx-script@1`, the complete nested visual-document surface,
-and main's `effectFieldPath` axis: 416 nested effect paths such as
+and main's `effectFieldPath` axis: 420 nested effect paths such as
 `block.vfxId` and `amount.attrRatios.coeff`. The walker repair is tracked by
 [#888](https://github.com/adms/GGD/issues/888); do not hand-edit the generated
 coverage JSON.
@@ -206,7 +206,7 @@ existing trigger.
 ## Feature branch handoff
 
 Implementation lives on `feat/vfx-forge-codex`, based on
-`origin/main@b8420abe`; the feature-branch tip is the only current Editor
+`origin/main@de7006c69`; the feature-branch tip is the only current Editor
 revision. It is
 intentionally not merged or pushed to `main`. Main should use
 `docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md` as a reference

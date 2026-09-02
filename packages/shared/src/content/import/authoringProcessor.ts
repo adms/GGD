@@ -37,8 +37,15 @@ import { resolve } from "node:path";
 
 import { canonicalizeJcs } from "./jcs";
 
-export const AUTHORING_PROCESSOR_KIND = "runtime-direct" as const;
-export const AUTHORING_PROCESSOR_CONTRACT_VERSION = "runtime-direct@1" as const;
+import {
+  AUTHORING_PROCESSOR_CONTRACT_VERSION,
+  AUTHORING_PROCESSOR_KIND,
+} from "./authoringProcessorContract";
+
+export {
+  AUTHORING_PROCESSOR_CONTRACT_VERSION,
+  AUTHORING_PROCESSOR_KIND,
+} from "./authoringProcessorContract";
 
 /**
  * ⭐ 七個**共用實作面** —— 對面驗一包所依賴的每一段程式。

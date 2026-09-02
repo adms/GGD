@@ -484,6 +484,9 @@ export function VfxForgePage() {
           <span>場景 VFX ≤ {previewContent.data.limits.hardMaxLifeSec}s／hard-cap {previewContent.data.limits.hardCapScope}</span>
           <span>一次性發射器 {Number.isFinite(previewContent.data.limits.maxOneShotEmitters) ? previewContent.data.limits.maxOneShotEmitters : "無上限"}</span>
           <span>回合清理 {previewContent.data.limits.roundPurgeMode}</span>
+          {previewContent.data.limitsReceipt ? (
+            <span>上限收據 {previewContent.data.limitsReceipt.limitProfileId} · {previewContent.data.limitsReceipt.resolverFingerprint}</span>
+          ) : null}
           {previewContent.data.limitWarnings.map((warning) => <span className="warning" key={warning}>⚠️ {warning}</span>)}
         </section>
       ) : null}

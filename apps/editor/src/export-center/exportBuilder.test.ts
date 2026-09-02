@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { contentVersion } from "@ggd/shared/content";
 import { packageDigest } from "@ggd/shared/content/import/digest";
 import { zEditorImportPackage } from "@ggd/shared/content/import/packageSchema";
 import {
@@ -22,8 +23,11 @@ const target: TargetProfileFacts = {
   authoringStoreState: "ready",
   supportedModes: ["bootstrap", "full", "delta"],
   deltaExportAllowed: true,
-  compilerContractVersion: "runtime-direct@1",
-  compilerFingerprint: "runtime-direct-fp",
+  authoringProcessorKind: "runtime-direct",
+  authoringProcessorContractVersion: "runtime-direct@1",
+  authoringProcessorFingerprint: "runtime-direct-fp",
+  compilerContractVersion: null,
+  compilerFingerprint: null,
   activationDigest: "sha256:" + "a".repeat(64),
   authoringDigest: "sha256:" + "b".repeat(64),
   gameRevision: "rev-1",
@@ -53,6 +57,12 @@ describe("runtime package builder", () => {
   it("builds a self-validating deterministic bootstrap JSON and byte-identical ZIP", async () => {
     const built = buildRuntimePackage({ mode: "bootstrap", target, documents: [ability(100)] });
     expect(zEditorImportPackage.safeParse(built.package).success).toBe(true);
+    expect(built.package.manifest.authoringProcessor).toEqual({
+      kind: "runtime-direct",
+      contractVersion: "runtime-direct@1",
+      fingerprint: "runtime-direct-fp",
+    });
+    expect(built.package.manifest.compiler).toBeUndefined();
     expect(packageDigest(built.package.manifest)).toBe(built.package.manifest.packageDigest);
     const first = await buildRuntimePackageZip(built);
     const second = await buildRuntimePackageZip(built);
@@ -193,12 +203,55 @@ describe("runtime package builder", () => {
   it("accepts only hash-verified exact base runtime bundles", () => {
     const root = join(__dirname, "..", "..", "..", "..");
     const bundle = JSON.parse(readFileSync(join(root, "content", "bundle.json"), "utf8"));
-    bundle.contentVersion = target.contentVersion;
-    const snapshot = runtimeBaseSnapshotFromBundle(bundle, target.contentVersion!);
+    bundle.schema = "ggd-content-runtime-bundle@1";
+    bundle.activationDigest = "sha256:" + "a".repeat(64);
+    bundle.packageDigest = "sha256:" + "b".repeat(64);
+    for (const group of Object.values(bundle.collections) as { entries: unknown[]; count?: number }[]) {
+      group.count = group.entries.length;
+    }
+    bundle.contentVersion = contentVersion(Object.fromEntries(
+      Object.entries(bundle.collections).map(([name, group]) => [name, (group as { hash: string }).hash]),
+    ));
+    const snapshot = runtimeBaseSnapshotFromBundle(bundle, bundle.contentVersion, bundle.activationDigest);
     expect(snapshot.runtimeDocuments.length).toBeGreaterThan(2);
     expect(snapshot.documents.some((doc) => doc.collection === "ability-templates")).toBe(true);
-    expect(runtimeDocumentsFromBaseBundle(bundle, target.contentVersion!)).toHaveLength(snapshot.runtimeDocuments.length);
+    expect(snapshot.packageDigest).toBe(bundle.packageDigest);
+    expect(runtimeDocumentsFromBaseBundle(bundle, bundle.contentVersion, bundle.activationDigest)).toHaveLength(snapshot.runtimeDocuments.length);
     bundle.collections["ability-templates"].entries[0].doc.name += " tampered";
-    expect(() => runtimeDocumentsFromBaseBundle(bundle, target.contentVersion!)).toThrow(/hash 不一致/);
+    expect(() => runtimeDocumentsFromBaseBundle(bundle, bundle.contentVersion, bundle.activationDigest)).toThrow(/hash 不一致/);
+  });
+
+  it("rejects legacy, count, activation, and recomputed contentVersion drift", () => {
+    const root = join(__dirname, "..", "..", "..", "..");
+    const source = JSON.parse(readFileSync(join(root, "content", "bundle.json"), "utf8"));
+    const bundle = {
+      ...source,
+      schema: "ggd-content-runtime-bundle@1",
+      activationDigest: "sha256:" + "a".repeat(64),
+      packageDigest: "sha256:" + "b".repeat(64),
+      collections: Object.fromEntries(Object.entries(source.collections).map(([name, group]) => [name, {
+        ...(group as Record<string, unknown>),
+        count: (group as { entries: unknown[] }).entries.length,
+      }])),
+    };
+    bundle.contentVersion = contentVersion(Object.fromEntries(
+      Object.entries(bundle.collections).map(([name, group]) => [name, (group as { hash: string }).hash]),
+    ));
+    expect(() => runtimeBaseSnapshotFromBundle({ ...bundle, schema: "content-bundle@1" }, bundle.contentVersion))
+      .toThrow(/ggd-content-runtime-bundle@1/);
+    expect(() => runtimeBaseSnapshotFromBundle(bundle, bundle.contentVersion, "sha256:" + "c".repeat(64)))
+      .toThrow(/activationDigest/);
+    const badCount = structuredClone(bundle);
+    badCount.collections.abilities.count += 1;
+    expect(() => runtimeBaseSnapshotFromBundle(badCount, bundle.contentVersion, bundle.activationDigest))
+      .toThrow(/count/);
+    const badVersion = structuredClone(bundle);
+    badVersion.collections.abilities.hash = "0".repeat(12);
+    expect(() => runtimeBaseSnapshotFromBundle(badVersion, bundle.contentVersion, bundle.activationDigest))
+      .toThrow(/collection hash/);
+    const badContentVersion = structuredClone(bundle);
+    badContentVersion.contentVersion = "cv_000000000000";
+    expect(() => runtimeBaseSnapshotFromBundle(badContentVersion, badContentVersion.contentVersion, bundle.activationDigest))
+      .toThrow(/contentVersion 重算不一致/);
   });
 });

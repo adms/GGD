@@ -1,5 +1,6 @@
 import {
   COLLECTION_NAMES,
+  contentVersion,
   extractRefs,
   hashCollection,
   hashDoc,
@@ -35,6 +36,10 @@ export interface ExactBaseDocument {
 }
 
 export interface RuntimeBaseSnapshot {
+  readonly schema: "ggd-content-runtime-bundle@1";
+  readonly activationDigest: string;
+  readonly packageDigest: string;
+  readonly contentVersion: string;
   readonly runtimeDocuments: readonly RuntimeAuthoringDocument[];
   readonly documents: readonly ExactBaseDocument[];
 }
@@ -161,8 +166,9 @@ function requireTarget(target: TargetProfileFacts, mode: PackageMode): void {
   const missing: string[] = [];
   if (!target.contentVersion) missing.push("contentVersion");
   if (!target.gameRevision) missing.push("gameRevision");
-  if (!target.compilerContractVersion) missing.push("compiler.contractVersion");
-  if (!target.compilerFingerprint) missing.push("compiler.fingerprint");
+  if (target.authoringProcessorKind !== "runtime-direct") missing.push("authoringProcessor.kind=runtime-direct");
+  if (target.authoringProcessorContractVersion !== "runtime-direct@1") missing.push("authoringProcessor.contractVersion=runtime-direct@1");
+  if (!target.authoringProcessorFingerprint) missing.push("authoringProcessor.fingerprint");
   if (mode === "bootstrap" && !target.migrationFingerprint) missing.push("migrationFingerprint");
   if (mode !== "bootstrap" && !target.activationDigest) missing.push("activationDigest");
   if (mode !== "bootstrap" && !target.authoringDigest) missing.push("authoringDigest");
@@ -276,10 +282,17 @@ export function buildRuntimePackage(input: BuildRuntimePackageInput): BuiltRunti
     ...(input.mode === "bootstrap" ? { migrationFingerprint: input.target.migrationFingerprint! } : {}),
     selectionRoots,
     changes,
-    compiler: {
-      contractVersion: input.target.compilerContractVersion!,
-      fingerprint: input.target.compilerFingerprint!,
+    authoringProcessor: {
+      kind: "runtime-direct" as const,
+      contractVersion: "runtime-direct@1" as const,
+      fingerprint: input.target.authoringProcessorFingerprint!,
     },
+    ...(input.target.compilerContractVersion && input.target.compilerFingerprint
+      ? { compiler: {
+          contractVersion: input.target.compilerContractVersion,
+          fingerprint: input.target.compilerFingerprint,
+        } }
+      : {}),
     requiredCapabilities: [],
     entries,
     requires: [...(input.requires ?? [])].sort((a, b) => compareUtf8Bytes(`${a.kind}/${a.id}`, `${b.kind}/${b.id}`)),
@@ -329,24 +342,49 @@ export function runtimeReferenceKeys(documents: readonly RuntimeAuthoringDocumen
   return [...refs.values()].sort((a, b) => compareUtf8Bytes(`${a.collection}/${a.id}`, `${b.collection}/${b.id}`));
 }
 
+const SHA256_DIGEST_RE = /^sha256:[0-9a-f]{64}$/;
+
 /** Validate an imported active runtime bundle before using it as full/delta before-state. */
-export function runtimeBaseSnapshotFromBundle(raw: unknown, expectedContentVersion: string): RuntimeBaseSnapshot {
+export function runtimeBaseSnapshotFromBundle(
+  raw: unknown,
+  expectedContentVersion: string,
+  expectedActivationDigest?: string | null,
+): RuntimeBaseSnapshot {
   if (typeof raw !== "object" || raw === null || Array.isArray(raw)) throw new Error("Base bundle 必須是 JSON object");
   const bundle = raw as {
     schema?: unknown;
+    activationDigest?: unknown;
+    packageDigest?: unknown;
     contentVersion?: unknown;
-    collections?: Record<string, { hash?: unknown; entries?: unknown }>;
+    collections?: Record<string, { hash?: unknown; count?: unknown; entries?: unknown }>;
   };
-  if (bundle.schema !== "content-bundle@1" || bundle.contentVersion !== expectedContentVersion || !bundle.collections) {
-    throw new Error(`Base bundle 必須是 content-bundle@1 且版本等於 ${expectedContentVersion}`);
+  if (bundle.schema !== "ggd-content-runtime-bundle@1" || bundle.contentVersion !== expectedContentVersion || !bundle.collections) {
+    throw new Error(`Base bundle 必須是 ggd-content-runtime-bundle@1 且版本等於 ${expectedContentVersion}`);
+  }
+  if (typeof bundle.activationDigest !== "string" || !SHA256_DIGEST_RE.test(bundle.activationDigest)) {
+    throw new Error("Base bundle 缺少有效 activationDigest");
+  }
+  if (expectedActivationDigest && bundle.activationDigest !== expectedActivationDigest) {
+    throw new Error("Base bundle activationDigest 與 target profile 不一致");
+  }
+  if (typeof bundle.packageDigest !== "string" || !SHA256_DIGEST_RE.test(bundle.packageDigest)) {
+    throw new Error("Base bundle 缺少有效 packageDigest");
   }
   const runtimeDocuments: RuntimeAuthoringDocument[] = [];
   const documents: ExactBaseDocument[] = [];
+  const collectionHashes: Record<string, string> = {};
   for (const collection of Object.keys(bundle.collections).sort(compareUtf8Bytes)) {
     if (!isCollectionName(collection)) throw new Error(`Base bundle 含未知 collection：${collection}`);
     const group = bundle.collections[collection];
-    if (!group || typeof group.hash !== "string" || !Array.isArray(group.entries)) throw new Error(`Base bundle 缺少 ${collection}`);
+    if (
+      !group ||
+      typeof group.hash !== "string" ||
+      !Number.isSafeInteger(group.count) ||
+      (group.count as number) < 0 ||
+      !Array.isArray(group.entries)
+    ) throw new Error(`Base bundle 缺少 ${collection} 的 hash／count／entries`);
     const entries = group.entries as { id?: unknown; hash?: unknown; doc?: unknown }[];
+    if (group.count !== entries.length) throw new Error(`${collection} collection count 不一致`);
     const hashes: { id: string; hash: string }[] = [];
     for (const entry of entries) {
       if (typeof entry.id !== "string" || typeof entry.hash !== "string" || typeof entry.doc !== "object" || entry.doc === null) {
@@ -365,19 +403,32 @@ export function runtimeBaseSnapshotFromBundle(raw: unknown, expectedContentVersi
       }
     }
     if (hashCollection(hashes) !== group.hash) throw new Error(`${collection} collection hash 不一致`);
+    collectionHashes[collection] = group.hash;
   }
   for (const collection of COLLECTION_NAMES) {
     if (!bundle.collections[collection]) throw new Error(`Base bundle 缺少 ${collection}`);
   }
+  const rebuiltContentVersion = contentVersion(collectionHashes);
+  if (rebuiltContentVersion !== bundle.contentVersion) {
+    throw new Error(`Base bundle contentVersion 重算不一致：${rebuiltContentVersion}`);
+  }
   return {
+    schema: "ggd-content-runtime-bundle@1",
+    activationDigest: bundle.activationDigest,
+    packageDigest: bundle.packageDigest,
+    contentVersion: bundle.contentVersion,
     runtimeDocuments: sortedDocuments(runtimeDocuments),
     documents: documents.sort((a, b) => compareUtf8Bytes(`${a.collection}/${a.id}`, `${b.collection}/${b.id}`)),
   };
 }
 
 /** Back-compatible narrow view used by existing callers and tests. */
-export function runtimeDocumentsFromBaseBundle(raw: unknown, expectedContentVersion: string): RuntimeAuthoringDocument[] {
-  return [...runtimeBaseSnapshotFromBundle(raw, expectedContentVersion).runtimeDocuments];
+export function runtimeDocumentsFromBaseBundle(
+  raw: unknown,
+  expectedContentVersion: string,
+  expectedActivationDigest?: string | null,
+): RuntimeAuthoringDocument[] {
+  return [...runtimeBaseSnapshotFromBundle(raw, expectedContentVersion, expectedActivationDigest).runtimeDocuments];
 }
 
 const UTF8 = new TextEncoder();

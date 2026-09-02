@@ -6,7 +6,10 @@ import {
 } from "@ggd/shared/content";
 import { api } from "../api/client";
 import { applyVfxRuntimeLimits, type EffectiveVfxLimits } from "../vfx-forge/runtimeLimits";
-import { readEffectiveVfxLimits } from "../vfx-forge/targetProfileLimits";
+import {
+  readEffectiveVfxLimits,
+  type EffectiveVfxLimitsReceipt,
+} from "../vfx-forge/targetProfileLimits";
 
 export interface PreviewContentReady {
   contentVersion: string;
@@ -14,6 +17,7 @@ export interface PreviewContentReady {
   quarantined: number;
   limits: EffectiveVfxLimits;
   limitsSource: "runtime-resolver" | "target-profile";
+  limitsReceipt: Pick<EffectiveVfxLimitsReceipt, "limitProfileId" | "resolverFingerprint"> | null;
   limitWarnings: readonly string[];
 }
 
@@ -44,8 +48,15 @@ export function ensurePreviewContentReady(): Promise<PreviewContentReady> {
       const remoteBaseIsCurrent = desktopSource?.kind === "remote"
         && (desktopSource.state === "current" || desktopSource.state === "offline-cache");
       const targetProfile = remoteBaseIsCurrent ? await api.desktopTargetProfile() : null;
-      const advertisedLimits = readEffectiveVfxLimits(targetProfile);
       const limitWarnings: string[] = [];
+      let advertisedLimits: EffectiveVfxLimitsReceipt | null = null;
+      try {
+        advertisedLimits = readEffectiveVfxLimits(targetProfile);
+      } catch (error: unknown) {
+        limitWarnings.push(
+          `正式站 effectiveVfxLimits 收據不完整，已拒收並改用目前本機 runtime resolver：${error instanceof Error ? error.message : String(error)}`,
+        );
+      }
       if (desktopSource?.kind === "remote" && !remoteBaseIsCurrent) {
         limitWarnings.push("工作副本已偏離遠端 Base；上限以目前本機 runtime resolver 為準");
       } else if (desktopSource?.kind === "remote" && !targetProfile) {
@@ -59,6 +70,10 @@ export function ensurePreviewContentReady(): Promise<PreviewContentReady> {
         quarantined: result.quarantined.length,
         limits: applyVfxRuntimeLimits(advertisedLimits),
         limitsSource: advertisedLimits ? "target-profile" as const : "runtime-resolver" as const,
+        limitsReceipt: advertisedLimits ? {
+          limitProfileId: advertisedLimits.limitProfileId,
+          resolverFingerprint: advertisedLimits.resolverFingerprint,
+        } : null,
         limitWarnings,
       };
     })

@@ -12,11 +12,16 @@ describe("Export Center target-profile policy", () => {
       profileDigest: "p1",
       content: { contentVersion: "cv_a" },
       runtimeCapabilities: { fingerprint: "caps" },
+      authoringProcessor: {
+        kind: "runtime-direct",
+        contractVersion: "runtime-direct@1",
+        fingerprint: "runtime-direct-fp",
+      },
       contract: { compiler: { contractVersion: null, fingerprint: null } },
     });
     expect(shipped).toMatchObject({ contentVersion: "cv_a", supportedModes: ["bootstrap"] });
-    expect(packageModeBlockers(shipped, "bootstrap")).toContain(
-      "目標沒有可 pin 的 compiler contractVersion／fingerprint",
+    expect(packageModeBlockers(shipped, "bootstrap")).not.toContain(
+      "目標沒有可 pin 的 runtime-direct authoringProcessor receipt",
     );
 
     const live = readTargetProfileFacts({
@@ -31,7 +36,11 @@ describe("Export Center target-profile policy", () => {
         activationDigest: "sha256:a",
         authoringDigest: "sha256:b",
       },
-      compiler: { contractVersion: "v1", fingerprint: "fp" },
+      authoringProcessor: {
+        kind: "runtime-direct",
+        contractVersion: "runtime-direct@1",
+        fingerprint: "fp",
+      },
       runtimeCapabilities: { fingerprint: "caps2" },
       authoringModel: { accepts: ["ability@1", "item@1"] },
     });
@@ -45,7 +54,11 @@ describe("Export Center target-profile policy", () => {
       supportedModes: ["bootstrap", "delta"],
       deltaExportAllowed: true,
       base: { activationDigest: null, authoringDigest: null },
-      compiler: { contractVersion: "v1", fingerprint: "fp" },
+      authoringProcessor: {
+        kind: "runtime-direct",
+        contractVersion: "runtime-direct@1",
+        fingerprint: "fp",
+      },
     });
     expect(packageModeBlockers(facts, "delta")).toEqual(expect.arrayContaining([
       "缺少 base.activationDigest",
@@ -67,9 +80,7 @@ describe("Export Center target-profile policy", () => {
     }
     expect(packageModeBlockers(facts, "bootstrap")).toEqual(expect.arrayContaining([
       "目標未宣告 importer G2",
-      "目標沒有可 pin 的 compiler contractVersion／fingerprint",
       "缺少 base.gameRevision",
-      "缺少 migrationFingerprint",
     ]));
   });
 });

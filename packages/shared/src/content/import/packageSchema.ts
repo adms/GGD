@@ -28,7 +28,7 @@ import { z } from "zod";
 import {
   AUTHORING_PROCESSOR_CONTRACT_VERSION,
   AUTHORING_PROCESSOR_KIND,
-} from "./authoringProcessor";
+} from "./authoringProcessorContract";
 import type { ImportDiagnostic } from "./diagnostics";
 import { parseWithUnknownFieldReport } from "./unknownFields";
 import { zImportDiagnostic } from "./diagnostics";

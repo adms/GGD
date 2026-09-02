@@ -145,9 +145,13 @@ export function ExportCenterPage() {
     if (!file || !profile?.contentVersion) return;
     setBaseStatus("驗證 Base bundle 的版本、文件與 collection hashes…");
     try {
-      const snapshot = runtimeBaseSnapshotFromBundle(JSON.parse(await file.text()), profile.contentVersion);
+      const snapshot = runtimeBaseSnapshotFromBundle(
+        JSON.parse(await file.text()),
+        profile.contentVersion,
+        profile.activationDigest,
+      );
       setBaseSnapshot(snapshot);
-      setBaseStatus(`已載入 exact Base：${snapshot.runtimeDocuments.filter((doc) => doc.collection === "abilities").length} 技能、${snapshot.runtimeDocuments.filter((doc) => doc.collection === "items").length} 道具、${snapshot.documents.length} 份完整依賴快照。`);
+      setBaseStatus(`已載入 exact ACTIVE Base：${snapshot.runtimeDocuments.filter((doc) => doc.collection === "abilities").length} 技能、${snapshot.runtimeDocuments.filter((doc) => doc.collection === "items").length} 道具、${snapshot.documents.length} 份完整依賴快照 · ${snapshot.activationDigest.slice(0, 19)}…`);
     } catch (error) {
       setBaseSnapshot(null);
       setBaseStatus(`⛔ ${String(error)}`);
@@ -308,7 +312,7 @@ export function ExportCenterPage() {
 
       <section className="export-panel">
         <h2>3. Package JSON／ZIP</h2>
-        <p>JSON 與 ZIP 共用同一個 JCS packageDigest；ZIP 使用固定 UTF-8／1980-01-01／STORE policy，輸入相同即 byte-identical。full／delta 的 before hashes 只接受遊戲端 exact active bundle。</p>
+        <p>JSON 與 ZIP 共用同一個 JCS packageDigest；ZIP 使用固定 UTF-8／1980-01-01／STORE policy，輸入相同即 byte-identical。full／delta 的 before hashes 只接受遊戲端 <code>ggd-content-runtime-bundle@1</code>，並重算逐文件、集合與 contentVersion。</p>
         <div className="export-base-row">
           <label>Exact Base runtime bundle <input type="file" accept="application/json,.json" disabled={!profile?.contentVersion || packageBusy} onChange={(event) => void loadBaseBundle(event.target.files?.[0] ?? null)} /></label>
           <span className={baseStatus.startsWith("⛔") ? "error" : "export-status"}>{baseStatus}</span>
