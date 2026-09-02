@@ -96,9 +96,19 @@ describe("共用替身英雄（只准變少）", () => {
           "   ⇒ 把 `STAND_IN_CEIL` 調成 3，並把這一條改成斷言新的 modelKey。",
       ).toBe("（把這裡換成新的 modelKey）");
     }
-    // ⭐ 而正解**寫在這裡**（⛔ 不是只在票上）：下一輪讀到這個檔的人不必再查一次。
-    //   w3x `heroes.E00R.model = units\creeps\SatyrTrickster\SatyrTrickster.mdl`
-    //   ⇒ 抽那顆內建模型 → `w3x.stock.satyrtrickster` → 指過去（GH#933）。
+    // ⭐⭐ **修的時候要動哪裡**（⛔ 不是只在票上，⛔ 也不是憑記憶）：
+    //
+    //   ① 抽 `units\creeps\SatyrTrickster\SatyrTrickster.mdl`（⛔ 需要 WC3 的 MPQ ——
+    //      全 repo 零命中，而那 22 份 `w3x.stock.*` 的 GLB 也不在地圖匯出裡）
+    //   ② 轉成 `content/assets/models/imported/satyrtrickster.glb`
+    //      ＋ 一份 `content/models/w3x.stock.satyrtrickster.json`（照既有 39 份的形狀）
+    //   ③ ⭐ 把 `content/champions/godie-e00r.json` 的 `modelKey` 指過去 ——
+    //      ⚠️ `genguard` 說它**沒有產生器來源**（只被正規化器就地改欄位）
+    //      ⇒ ⭐ **直接改那份 JSON 是對的**，⛔ 而不是去找一支不存在的產生器
+    //   ④ `bash scripts/genrun.sh content:build` ＋ 把 CEIL 調成 17
+    //
+    // ⚠️ ⭐ ③ 那一格特別記著：`modelKey` 是 `zRef("models")` ——**硬 ref**
+    //   ⇒ ⛔ 在 ② 完成之前先改 ③，內容驗證整份會失敗（＝ 2026-08-02 那次事故的形狀）。
     expect(e00r!.modelKey).toBe("champ.skin.rogue");
   });
 });
