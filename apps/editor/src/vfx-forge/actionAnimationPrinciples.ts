@@ -1,5 +1,9 @@
 import type { VfxScriptDoc, VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
-import { isSingleArcVfxId } from "./presentationContract";
+import {
+  completePresentationReplacements,
+  isSingleArcVfxId,
+  replacementClaimForSegment,
+} from "./presentationContract";
 
 export interface ActionAnimationIssue {
   readonly code:
@@ -9,6 +13,7 @@ export interface ActionAnimationIssue {
     | "SLASH_ACTION_MISSING"
     | "SLASH_OVERDRAWN"
     | "MULTI_CRESCENT_BRICK"
+    | "ACTION_REPLACEMENT_MISSING"
     | "PASSIVE_CAST_TRIGGER";
   readonly message: string;
   readonly segmentIndexes: readonly number[];
@@ -19,6 +24,7 @@ const AUTO_COMPLETABLE_ACTION_ISSUES = new Set<ActionAnimationIssue["code"]>([
   "TIMELINE_ACTION_MISSING",
   "TARGET_REACTION_MISSING",
   "SLASH_ACTION_MISSING",
+  "ACTION_REPLACEMENT_MISSING",
 ]);
 
 /** True only when the safe fixer can solve at least one reported issue by adding actor pulses. */
@@ -198,6 +204,15 @@ export function actionAnimationIssues(
   }
 
   const allActions = indexed.filter(({ segment }) => segment.kind === "anim");
+  for (const { segment, index } of allActions) {
+    const claim = replacementClaimForSegment(segment);
+    if (!claim || segment.replaces !== undefined) continue;
+    issues.push({
+      code: "ACTION_REPLACEMENT_MISSING",
+      message: `角色動作會與 Main 預設演出重播；請接管 ${claim.channel}。`,
+      segmentIndexes: [index],
+    });
+  }
   for (const { segment, index } of visible) {
     // A passive never receives a fake cast, but a real reflect/strike/projectile
     // event can and should animate the reacting actor. Purely periodic/passive
@@ -422,5 +437,5 @@ export function completeActionAnimations(
       });
     }
   }
-  return completed;
+  return completePresentationReplacements(completed);
 }

@@ -1,4 +1,5 @@
 import { ANIM_PULSES, type AnimPulse } from "@ggd/shared/content/animPulse";
+import type { PresentationChannel } from "@ggd/shared/content/abilityPresentation";
 import type {
   VfxScriptDoc,
   VfxScriptSegment,
@@ -163,7 +164,7 @@ export type ReplacementTrigger =
 
 export interface PresentationReplacementClaim {
   readonly trigger: ReplacementTrigger;
-  readonly channel: string;
+  readonly channel: PresentationChannel;
   /** Only selects which combo event owns the claim; it is not part of channel vocabulary. */
   readonly strikeIndex?: number;
 }
@@ -211,6 +212,22 @@ export function replacementClaimsForScript(doc: VfxScriptDoc): PresentationRepla
     claims.set(key, claim);
   }
   return [...claims.values()];
+}
+
+/**
+ * Stamp Main's receipted actor-channel takeover onto every generated action.
+ * Explicit author choices always win; the Editor only fills a missing claim,
+ * and only while Main advertises the replacement policy as supported.
+ */
+export function completePresentationReplacements(
+  segments: readonly VfxScriptSegment[],
+): VfxScriptSegment[] {
+  if (PRESENTATION_RECEIPT.replacementPolicy.status !== "supported") return [...segments];
+  return segments.map((segment) => {
+    if (segment.replaces !== undefined) return segment;
+    const claim = replacementClaimForSegment(segment);
+    return claim ? { ...segment, replaces: claim.channel } : segment;
+  });
 }
 
 export function unsupportedReplacementClaims(doc: VfxScriptDoc): PresentationReplacementClaim[] {

@@ -11,12 +11,44 @@ import {
   hasAuthoritativeRapidMultiStrike,
   activationModeForAbility,
 } from "./actionAnimationPrinciples";
+import { completePresentationReplacements } from "./presentationContract";
 
 function doc(segments: VfxScriptSegment[]) {
+  return zVfxScriptDoc.parse({
+    id: "ability.test",
+    schema: "vfx-script@1",
+    abilityId: "ability.test",
+    segments: completePresentationReplacements(segments),
+  });
+}
+
+function legacyDoc(segments: VfxScriptSegment[]) {
   return zVfxScriptDoc.parse({ id: "ability.test", schema: "vfx-script@1", abilityId: "ability.test", segments });
 }
 
 describe("VFX Forge action-animation principles", () => {
+  it("auto-stamps actor channel takeovers and reports legacy unstamped actions", () => {
+    const legacy = legacyDoc([
+      { kind: "anim", on: "castStart", at: "caster", pulse: "cast" },
+      { kind: "anim", on: "projectileHit", at: "target", pulse: "hurt" },
+    ]);
+    expect(actionAnimationIssues(legacy).map((issue) => issue.code))
+      .toContain("ACTION_REPLACEMENT_MISSING");
+
+    const completed = completeActionAnimations([
+      { kind: "vfx", on: "projectileHit", at: "target", vfxId: "fx.prim.fire.arc" },
+    ]);
+    expect(completed).toContainEqual(expect.objectContaining({
+      kind: "anim", on: "castStart", at: "caster", replaces: "caster.action",
+    }));
+    expect(completed).toContainEqual(expect.objectContaining({
+      kind: "anim", on: "projectileHit", at: "target", replaces: "target.reaction",
+    }));
+    expect(actionAnimationIssues(doc(completed))).not.toEqual(expect.arrayContaining([
+      expect.objectContaining({ code: "ACTION_REPLACEMENT_MISSING" }),
+    ]));
+  });
+
   it("adds cast actions to an otherwise effect-only active recipe", () => {
     const segments = completeActionAnimations([
       { kind: "vfx", on: "castEffect", vfxId: "fx.prim.fire.bolt", at: "self", durationSec: 0.4 },

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   PRESENTATION_RECEIPT,
+  completePresentationReplacements,
   isSingleArcVfxId,
   readPresentationReceipt,
   replacementClaimsForScript,
@@ -56,6 +57,26 @@ describe("Main presentation receipt", () => {
       { kind: "anim", on: "castEffect", at: "caster", pulse: "attack" },
       { kind: "anim", on: "projectileSpawn", at: "caster", pulse: "cast" },
     ]))).toEqual([]);
+  });
+
+  it("stamps every receipted actor takeover without overwriting author intent", () => {
+    expect(completePresentationReplacements([
+      { kind: "anim", on: "castStart", at: "caster", pulse: "cast" },
+      { kind: "anim", on: "castEffect", at: "caster", pulse: "attack" },
+      { kind: "anim", on: "strike", at: "caster", pulse: "attack" },
+      { kind: "anim", on: "strike", at: "target", pulse: "hurt" },
+      { kind: "anim", on: "projectileHit", at: "target", pulse: "hurt" },
+      { kind: "anim", on: "reflectSuccess", at: "caster", pulse: "guard" },
+      { kind: "anim", on: "castStart", at: "caster", pulse: "cast", replaces: "target.reaction" },
+    ])).toEqual([
+      { kind: "anim", on: "castStart", at: "caster", pulse: "cast", replaces: "caster.action" },
+      { kind: "anim", on: "castEffect", at: "caster", pulse: "attack" },
+      { kind: "anim", on: "strike", at: "caster", pulse: "attack", replaces: "caster.action" },
+      { kind: "anim", on: "strike", at: "target", pulse: "hurt", replaces: "target.reaction" },
+      { kind: "anim", on: "projectileHit", at: "target", pulse: "hurt", replaces: "target.reaction" },
+      { kind: "anim", on: "reflectSuccess", at: "caster", pulse: "guard", replaces: "target.reaction" },
+      { kind: "anim", on: "castStart", at: "caster", pulse: "cast", replaces: "target.reaction" },
+    ]);
   });
 
   it("unblocks the editor only when Main receipts a real replacement policy", () => {

@@ -253,6 +253,7 @@ export class VfxScriptPlayer {
           const frame: TriggerFrame = {
             caster: owner,
             tick: ev.tick | 0,
+            ...(target !== undefined ? { victim: target } : {}),
             targetPos:
               target !== undefined ? (this.deps.entityPos(target) ?? undefined) : undefined,
           };
@@ -282,6 +283,10 @@ export class VfxScriptPlayer {
         const frame: TriggerFrame = {
           caster: reflector,
           tick: ev.tick | 0,
+          // The default presentation names the defender `target`; the script
+          // player names that same body `caster`. `target.reaction` must still
+          // claim the reflector, never the attacker receiving reflected damage.
+          victim: reflector,
           // ⭐ 反彈的「目標」是**攻擊者**（傷害被送回去的那一方）。
           ...(targetPos !== undefined ? { point: targetPos, targetPos } : {}),
           ...(direction !== undefined ? { direction } : {}),

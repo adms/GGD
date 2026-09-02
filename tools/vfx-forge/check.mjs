@@ -84,6 +84,12 @@ run("VFX Forge focused gate", "pnpm", [
   "--pool=threads", "--minWorkers=1", "--maxWorkers=1", "--reporter=dot",
 ]);
 
+run("Runtime actor takeover routing", "pnpm", [
+  "--filter", "@ggd/client", "exec", "vitest", "run",
+  "src/vfx/VfxScriptPlayer.channelTakeover.test.ts",
+  "--pool=threads", "--minWorkers=1", "--maxWorkers=1", "--reporter=dot",
+]);
+
 if (release) {
   run("Editor typecheck", "pnpm", ["--filter", "@ggd/editor", "typecheck"]);
   run("Editor build", "pnpm", ["--filter", "@ggd/editor", "build"]);
