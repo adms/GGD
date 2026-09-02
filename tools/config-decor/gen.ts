@@ -660,12 +660,51 @@ function sameSubject(hit: Hit, k: Knob, corpus: Corpus): boolean {
  * ⛔⛔ **一個到處都有的名字不是主詞** —— `displacement-tiers.json` 的
  * `push.極大.distance` 的父段是 `push`，⚠️ 而 `arr.push(…)` 出現在**幾乎每一份檔案**裡
  * ⇒ 「同一份檔也提到 push」對任何一行都成立 ⇒ ⭐ 關係②整條退化成永遠為真。
- * ⇒ 判準：主詞必須**稀有**（出現在 ≤ 20% 的檔案裡）。
+ * ⇒ 判準：主詞必須**稀有**（出現在 ≤ 2% 的檔案裡）。
+ *
+ * ⭐ **2% 是量出來的，⛔ 不是挑一個好看的數字**（2026-09-02，母體 13,221 檔）：
+ * 真主詞 `worldCues` 0.1% · `mobWaves` 0.2% · `damageLine` 0.4% · `reward` 0.4%
+ * · `boss` 0.6%，而 TS 的通用變數名 `line` 是 **12.2%** ——
+ * ⭐ 中間有**一個數量級的鴻溝**，2% 落在鴻溝裡（真主詞上限的 3 倍、`line` 的 1/6）。
+ * ⚠️ 在此之前這一格是 20%，⛔ 於是 `line` 過關，把 `world-cues.json` 的
+ * `line.damageLine.lifeMs` 配到了 `WorldAnchorLayer.tsx` 的
+ * `e.lifeMs > 0 ? ageMs / e.lifeMs : 1`（浮動錨層的**另一個** `lifeMs`）——
+ * ⭐ 而那個檔連 `damageLine` / `worldCues` 都一次沒提過。
  *   ⛔ 一個都不稀有 ⇒ **不判**（誤報比漏報貴）。
  */
+/**
+ * ⭐ **⛔ 不可能是 config 主詞的字** —— 它們是**程式語言側**的常見識別字。
+ *
+ * ⚠️ ⭐ 稀有度攔不住它們，⛔ 因為稀有度問的是「這個字**多普遍**」而不是
+ * 「它**是不是這一格的主詞**」。量到的分佈（2026-09-02，母體 13,221 檔）：
+ * 真主詞 `worldCues` 0.1% · `mobWaves` 0.2% · `damageLine` 0.4% · `reward` 0.4%
+ * · `boss` 0.6%，而 `line` 是 **12.2%** —— ⭐ 中間有一個數量級的鴻溝，
+ * ⛔ 但把 cap 從 20% 收到 2% 會連 `mobWaves` / `reward` 一起弄丟
+ * （普查器的 spread 母體與離線量測不同）⇒ ⭐ 收 cap 是在誤報與漏報之間換邊，
+ * 而黑名單是**零誤傷**的那一條。
+ *
+ * ⭐ 已發生的誤判：`world-cues.json` 的 `line.damageLine.lifeMs` 被頂層分組名
+ * **`line`** 配到 `WorldAnchorLayer.tsx:430` 的 `e.lifeMs > 0 ? ageMs / e.lifeMs : 1`
+ * （浮動錨層的**另一個** `lifeMs`）—— 那個檔連 `damageLine` / `worldCues`
+ * 都一次沒出現過，而 `line` 在它裡面只是一個迴圈變數。
+ *
+ * ⚠️ **加字進來要說得出「它在程式側是什麼」** —— ⛔ 「這一列很吵」不是理由。
+ */
+const GENERIC_SUBJECTS = new Set(["line", "value", "key", "name", "type", "id", "data", "item", "index"]);
+
 function subjectsOf(k: Knob, corpus: Corpus): string[] {
   const cap = Math.max(1, Math.floor(corpus.files * 0.2));
   const spread = (s: string) => corpus.spread.get(s) ?? 0;
+  /**
+   * ⛔⛔ ⭐ 主詞比對的母體是「這一份檔**真的去讀**的識別字」，
+   * ⛔ 不是「檔案裡出現過的任何 token」（那會收進**區域變數名**）——
+   * 2026-09-02 `world-cues.json` 的 `line.damageLine.lifeMs` 就是被頂層分組名
+   * **`line`** 配到 `WorldAnchorLayer.tsx` 的 `e.lifeMs > 0 ? ageMs / e.lifeMs : 1`
+   * （浮動錨層的**另一個** `lifeMs`），而那個檔裡的 `line` 只是一個迴圈變數，
+   * `damageLine` / `worldCues` 一次都沒出現過。
+   * ⭐ 而稀有度攔不住它：稀有度問「這個字**多普遍**」，
+   * ⛔ 問不出「這個檔**是不是在讀這一格**」。
+   */
   return [
     ...k.path
       .split(".")
@@ -673,7 +712,7 @@ function subjectsOf(k: Knob, corpus: Corpus): string[] {
       .map((s) => s.replace(/\[\]$/, ""))
       .filter((s) => IDENT.test(s)),
     k.file.replace(/\.json$/, "").replace(/-([a-z])/g, (_, c: string) => c.toUpperCase()),
-  ].filter((s) => spread(s) <= cap);
+  ].filter((s) => !GENERIC_SUBJECTS.has(s) && spread(s) <= cap);
 }
 
 /** ⭐ 【B · 上下界夾成一個點】—— 那一格在後台是一個永遠不會動的輸入框。 */

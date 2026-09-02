@@ -11,61 +11,59 @@
 
 | | |
 |---|---:|
-| 出貨 config 文件 | 94 |
-| **旋鈕**（Zod 靜態鍵的葉子，⛔ 不含 record 的鍵與陣列索引） | **1837** |
-| 消費端原始碼（⛔ 已排除後台欄位表與測試） | 2144 |
+| 出貨 config 文件 | 96 |
+| **旋鈕**（Zod 靜態鍵的葉子，⛔ 不含 record 的鍵與陣列索引） | **1875** |
+| 消費端原始碼（⛔ 已排除後台欄位表與測試） | 13246 |
 | 殭屍獎勵的等級區間（`dominated` 的分母） | L9–L99 |
 
 ## 分類
 
 | 類 | 意思 | 格數 |
 |---|---|---:|
-| **A** | 調了玩家量不到差別 | **25** |
-| **B** | 引擎做得到而調不到 | **9** |
-| C | 正常 | 1530 |
-| ⚠️ 量不到 | 鍵名不是識別字（級距標籤／列舉鍵）—— ⭐ 「零讀端」這把尺對它們**結構上是瞎的** | 273 |
+| **A** | 調了玩家量不到差別 | **24** |
+| **B** | 引擎做得到而調不到 | **8** |
+| C | 正常 | 1555 |
+| ⚠️ 量不到 | 鍵名不是識別字（級距標籤／列舉鍵）—— ⭐ 「零讀端」這把尺對它們**結構上是瞎的** | 288 |
 
 ### 零讀端 · 22 格（A 類）
 
 | 檔 | 路徑 | 出貨值 | 量到的 |
 |---|---|---|---|
-| `config.match.json` | `economy.assistGold` | `75` | `assistGold` 在 2144 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `config.match.json` | `economy.roundLoseGold` | `150` | `roundLoseGold` 在 2144 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `config.match.json` | `economy.roundWinGold` | `300` | `roundWinGold` 在 2144 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `config.match.json` | `progression.xpAssist` | `60` | `xpAssist` 在 2144 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `config.match.json` | `progression.xpBase` | `100` | `xpBase` 在 2144 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `config.match.json` | `progression.xpKill` | `120` | `xpKill` 在 2144 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `config.match.json` | `progression.xpPerLevel` | `80` | `xpPerLevel` 在 2144 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `config.match.json` | `progression.xpRoundSurvive` | `100` | `xpRoundSurvive` 在 2144 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `controller-scheme.json` | `schemes.*.combatInput.aimStick` | `"true …（2 筆）"` | `aimStick` 在 2144 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `damage-rules.json` | `oneShotPctOfMaxHp` | `0.8` | `oneShotPctOfMaxHp` 在 2144 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `map-report.json` | `maps[].worldD` | `"36 …（7 筆）"` | `worldD` 在 2144 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `map-report.json` | `maps[].worldW` | `"48 …（7 筆）"` | `worldW` 在 2144 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unit-tints.json` | `transient[].erasesStaticTint` | `true` | `erasesStaticTint` 在 2144 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `quarantineRatchet` | `2` | `quarantineRatchet` 在 2144 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `textures[].measured.alphaRange` | `"0 …（5 筆）"` | `alphaRange` 在 2144 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `textures[].measured.borderEffAdditive` | `"39.2 …（5 筆）"` | `borderEffAdditive` 在 2144 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `textures[].measured.distinctAlphaValues` | `"1 …（5 筆）"` | `distinctAlphaValues` 在 2144 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `textures[].measured.hasAlphaShape` | `"false …（5 筆）"` | `hasAlphaShape` 在 2144 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `textures[].measured.maxAlpha` | `"253 …（5 筆）"` | `maxAlpha` 在 2144 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `textures[].measured.minAlpha` | `"253 …（5 筆）"` | `minAlpha` 在 2144 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `textures[].measured.opaquePct` | `"0 …（5 筆）"` | `opaquePct` 在 2144 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `textures[].usage.reachableVfxDocs` | `"1 …（5 筆）"` | `reachableVfxDocs` 在 2144 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `config.match.json` | `economy.assistGold` | `75` | `assistGold` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `config.match.json` | `economy.roundLoseGold` | `150` | `roundLoseGold` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `config.match.json` | `economy.roundWinGold` | `300` | `roundWinGold` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `config.match.json` | `progression.xpAssist` | `60` | `xpAssist` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `config.match.json` | `progression.xpBase` | `100` | `xpBase` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `config.match.json` | `progression.xpKill` | `120` | `xpKill` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `config.match.json` | `progression.xpPerLevel` | `80` | `xpPerLevel` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `config.match.json` | `progression.xpRoundSurvive` | `100` | `xpRoundSurvive` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `controller-scheme.json` | `schemes.*.combatInput.aimStick` | `"true …（2 筆）"` | `aimStick` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `damage-rules.json` | `oneShotPctOfMaxHp` | `0.8` | `oneShotPctOfMaxHp` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `map-report.json` | `maps[].worldD` | `"36 …（7 筆）"` | `worldD` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `map-report.json` | `maps[].worldW` | `"48 …（7 筆）"` | `worldW` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unit-tints.json` | `transient[].erasesStaticTint` | `true` | `erasesStaticTint` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `quarantineRatchet` | `2` | `quarantineRatchet` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `textures[].measured.alphaRange` | `"0 …（5 筆）"` | `alphaRange` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `textures[].measured.borderEffAdditive` | `"39.2 …（5 筆）"` | `borderEffAdditive` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `textures[].measured.distinctAlphaValues` | `"1 …（5 筆）"` | `distinctAlphaValues` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `textures[].measured.hasAlphaShape` | `"false …（5 筆）"` | `hasAlphaShape` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `textures[].measured.maxAlpha` | `"253 …（5 筆）"` | `maxAlpha` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `textures[].measured.minAlpha` | `"253 …（5 筆）"` | `minAlpha` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `textures[].measured.opaquePct` | `"0 …（5 筆）"` | `opaquePct` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `textures[].usage.reachableVfxDocs` | `"1 …（5 筆）"` | `reachableVfxDocs` 在 13246 份出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
 
-### 被同軸的另一格蓋掉 · 3 格（A 類）
+### 被同軸的另一格蓋掉 · 2 格（A 類）
 
 | 檔 | 路徑 | 出貨值 | 量到的 |
 |---|---|---|---|
-| `arena-rules.json` | `mobWaves.boss.bountyXp` | `1200` | 同一個物件裡的 bountyLevels=25 在同一條軸上直接發等級。等級區間 L9–L99（從 `rounds[].grantLevels` 與 `mobWaves.fromRound` 推導）⇒ 這一格佔那一次獎勵的 **0.6%–6.1%**（中位 1.1%，門檻 25.0%）。 |
-| `arena-rules.json` | `mobWaves.reward.xp` | `40` | 同一個物件裡的 killsPerLevel=6 在同一條軸上直接發等級。等級區間 L9–L99（從 `rounds[].grantLevels` 與 `mobWaves.fromRound` 推導）⇒ 這一格佔那一次獎勵的 **2.9%–24.5%**（中位 5.2%，門檻 25.0%）。 |
-| `arena-rules.json` | `mobWaves.special.bountyXp` | `200` | 同一個物件裡的 bountyLevels=5 在同一條軸上直接發等級。等級區間 L9–L99（從 `rounds[].grantLevels` 與 `mobWaves.fromRound` 推導）⇒ 這一格佔那一次獎勵的 **0.5%–5.1%**（中位 0.9%，門檻 25.0%）。 |
+| `arena-rules.json` | `mobWaves.boss.bountyXp` | `1200` | 同一個物件裡的 bountyLevels=10 在同一條軸上直接發等級。等級區間 L9–L99（從 `rounds[].grantLevels` 與 `mobWaves.fromRound` 推導）⇒ 這一格佔那一次獎勵的 **1.5%–14.0%**（中位 2.7%，門檻 25.0%）。 |
+| `arena-rules.json` | `mobWaves.special.bountyXp` | `200` | 同一個物件裡的 bountyLevels=3 在同一條軸上直接發等級。等級區間 L9–L99（從 `rounds[].grantLevels` 與 `mobWaves.fromRound` 推導）⇒ 這一格佔那一次獎勵的 **0.8%–8.3%**（中位 1.5%，門檻 25.0%）。 |
 
-### 引擎做得到而 schema 不准（0） · 9 格（B 類）
+### 引擎做得到而 schema 不准（0） · 8 格（B 類）
 
 | 檔 | 路徑 | 出貨值 | 量到的 |
 |---|---|---|---|
 | `arena-rules.json` | `mobWaves.boss.killThreshold` | `"zod min 1"` | Zod 的下界是 `min(1)`，⛔ 而引擎把 0 當成一個活的分支：`if (boss.killThreshold <= 0) return false;` ⇒ 一個**做得到卻調不到**的狀態。 |
-| `arena-rules.json` | `mobWaves.reward.killsPerLevel` | `"zod min 1"` | Zod 的下界是 `min(1)`，⛔ 而引擎把 0 當成一個活的分支：`if (rules.killsPerLevel > 0 && n % rules.killsPerLevel === 0) {` ⇒ 一個**做得到卻調不到**的狀態。 |
 | `body-scale.json` | `attackRangeCurve[].bodyScale` | `"zod min 0.1"` | Zod 的下界是 `min(0.1)`，⛔ 而引擎把 0 當成一個活的分支：`typeof bodyScale === "number" && Number.isFinite(bodyScale) && bodyScale > 0 ? bodyScale : 1;` ⇒ 一個**做得到卻調不到**的狀態。 |
 | `config.match.json` | `draft.offerCount` | `"zod min 1"` | Zod 的下界是 `min(1)`，⛔ 而引擎把 0 當成一個活的分支：`return input.phase === INTERMISSION_PHASE && input.offerCount > 0 ? "draft" : "shop";` ⇒ 一個**做得到卻調不到**的狀態。 |
 | `config.match.json` | `match.fireRing.roundHardCapSec` | `"zod min 20"` | Zod 的下界是 `min(20)`，⛔ 而引擎把 0 當成一個活的分支：`cfg.roundHardCapSec <= 0` ⇒ 一個**做得到卻調不到**的狀態。 |
@@ -78,7 +76,7 @@
 
 | 檔 | 旋鈕 | A | B |
 |---|---:|---:|---:|
-| `arena-rules.json` | 226 | 3 | 2 |
+| `arena-rules.json` | 226 | 2 | 1 |
 | `body-scale.json` | 4 | 0 | 1 |
 | `config.match.json` | 62 | 8 | 2 |
 | `controller-scheme.json` | 38 | 1 | 0 |

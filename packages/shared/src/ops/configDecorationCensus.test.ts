@@ -84,11 +84,6 @@ const found = new Map(shipped.findings.map((f) => [key(f), f]));
  */
 const KNOWN: Record<string, string> = {
   // ── ⭐ owner 親自點名的那一族（A · dominated）──────────────────────────
-  "arena-rules.json:mobWaves.reward.xp":
-    "⭐ owner 2026-09-01 逐字點名的那一格。同軸的 `killsPerLevel=6` 直接發整級 ⇒ " +
-    "這一格佔那一次獎勵 2.9%–24.5%（中位 5.2%）。⛔ 不在這張票裡改值 —— " +
-    "GH#918 已經是 owner 的裁決（把 `killsPerLevel` 設成 0）。" +
-    "⇒ 到期條件：`killsPerLevel` 一旦是 0，這一格自動變 C，這一列當場變幽靈而測試紅。",
   "arena-rules.json:mobWaves.boss.bountyXp":
     "同上的第二個實例：`bountyLevels=25` 蓋掉 `bountyXp=1200`（佔 0.6%–6.1%）。" +
     "⇒ 到期條件：`bountyLevels` 調到與 xp 同一個量級，或設成 0。",
@@ -145,10 +140,6 @@ const KNOWN: Record<string, string> = {
     "⇒ 到期條件：染色管線真的照它決定要不要清掉靜態染色。",
 
   // ── ⭐ B：引擎做得到而 schema 不准 ─────────────────────────────────────
-  "arena-rules.json:mobWaves.reward.killsPerLevel":
-    "⭐ owner 點名的第三個實例（票文的 ③）：`MobSystem` 逐字 `killsPerLevel > 0 &&` " +
-    "＝ **引擎支援關閉**，⛔ 而 Zod 是 `min(1)` ⇒ 「關掉它」今天寫不出來。" +
-    "⇒ 這正是 GH#918 卡住的那一格。到期條件：Zod 下界改成 0。",
   "arena-rules.json:mobWaves.boss.killThreshold":
     "同型：`if (boss.killThreshold <= 0) return false;` ＝ 引擎支援「不召喚王」，" +
     "⛔ 而 Zod 是 `min(1)`。⚠️ 但同一個物件已經有 `boss.enabled` 做同一件事 ⇒ " +
@@ -181,7 +172,13 @@ const KNOWN: Record<string, string> = {
  * ⭐ **棘輪** —— 2026-09-02 首次量到 **34** 格。⛔ 這個數字只能變小。
  * ⚠️ 它**不是**「允許 34 格裝飾」，⭐ 而是「⛔ 不准長出第 35 格而沒有人看過」。
  */
-const EXEMPT_CAP = 34;
+/**
+ * ⭐ 2026-09-02：34 → 32 —— ⭐ **GH#918 的兩格到期了**，
+ * 而它們的 KNOWN 註解**自己預言過這一刻**（「`killsPerLevel` 一旦是 0，
+ * 這一列當場變幽靈而測試紅」）。今天 `killsPerLevel = 0` 且 Zod 下界已放開
+ * ⇒ ⭐ 這是**設計好的紅**，⛔ 不是回歸。
+ */
+const EXEMPT_CAP = 32;
 
 describe("🔍 設定裝飾欄位普查 (config-decoration-census)", () => {
   it("① 母體還在 —— 偵測壞掉時它會安靜地回空的,⭐ 而空的看起來就是『全都正常』", () => {
