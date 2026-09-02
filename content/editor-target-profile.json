@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_8e0ba5078c33",
+    "contentVersion": "cv_31369590f6e8",
     "collections": {
       "champions": {
         "hash": "3d0922cecbf5",
@@ -58,7 +58,7 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "2d9d4ffde87b",
+        "hash": "33d2fcb9003e",
         "count": 46
       },
       "vfx-scripts": {
@@ -2113,7 +2113,7 @@
         {
           "id": "tpl-combo-finisher",
           "family": "combo-finisher",
-          "status": "draft",
+          "status": "enabled",
           "params": {
             "comboFamily": {
               "type": "docRef",
@@ -2157,7 +2157,7 @@
               "default": 4,
               "min": 0,
               "max": 20,
-              "inert": "原作的字級是 `udg_SupI * 4 + 6`（每一刀的字比上一刀大一點，war3map.j 的 CreateTextTagUnitBJ），而 `floatingText.sizeScale` 是**一個**數字 —— 段號只解析得進 `text` 的 {{i}}，⛔ 解析不進字級。要它就得讓 sizeScale 也吃佔位符（一次 schema 改動），⛔ 不是在這裡填一個沒有人讀的數字。"
+              "origin": "⭐ 收尾那一下的字要比每一下大 —— owner 2026-08-23「最後一個**重招或大招**結尾」。⚠️ 出貨的 godie-hart.r 逐字量到：每一下 sizeScale 1.2、收尾 1.8 ⇒ 比值 1.5 ＝ √(這一格 4)。⛔ 在 2026-09-02 之前這一格標著 `inert`（因為那時沒有 family 讀它），⭐ 而閘（paramsSchema.test.ts）在接線落地的當下就指名了它。"
             },
             "finisherVfx": {
               "type": "docRef",
@@ -4359,8 +4359,8 @@
         }
       ],
       "templateStatus": {
-        "draft": 19,
-        "enabled": 27
+        "draft": 18,
+        "enabled": 28
       },
       "innateKinds": [
         "active",
@@ -5618,5 +5618,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "8d15fb8fe3c0"
+  "profileDigest": "def518b48b00"
 }

@@ -2,11 +2,11 @@
   "schema": "ggd-brick-census@1",
   "note": "⭐ 積木普查（owner 2026-09-01：「編輯器是堆積木的角色，要充分了解有哪些積木；main 是做出積木的角色」）。⛔ 產物 —— 改 `tools/brick-census/gen.ts`，⛔ 不要手改。",
   "counts": {
-    "engineFamilies": 27,
+    "engineFamilies": 28,
     "templateDocs": 46,
-    "usable": 27,
-    "engineMissing": 18,
-    "shells": 18,
+    "usable": 28,
+    "engineMissing": 17,
+    "shells": 17,
     "zeroAdoption": 36,
     "terminal": 1
   },
@@ -14,6 +14,7 @@
     "beam-roll",
     "buff-self",
     "charge-push",
+    "combo-finisher",
     "ground-nova",
     "instant-blast",
     "leap-strike",
@@ -170,8 +171,8 @@
     {
       "id": "tpl-combo-finisher",
       "family": "combo-finisher",
-      "engineKnows": false,
-      "status": "draft",
+      "engineKnows": true,
+      "status": "enabled",
       "params": 13,
       "abilities": 0,
       "terminal": false

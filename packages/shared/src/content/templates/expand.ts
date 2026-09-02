@@ -1095,6 +1095,99 @@ const FAMILIES: Readonly<Record<string, Family>> = {
 
   // 8. 變身強化(數值面) — self stat buff, NUMERIC side only. 戰鬥涅吉 82-04 闇之魔法.
   // Ability-set swap / model morph is explicitly OUT of P1 (design non-goal §六).
+  /**
+   * ⭐⭐ **連段收尾**（GH#916）—— 「放招之後自動打打打打，最後一個重招結尾」。
+   *
+   * ── ⭐ owner 2026-08-23 逐字（模板文件的 description 抄著同一段）────────
+   * 「龍虎亂舞是這個模板的**俗稱**，意思是類似**格鬥天王**裡的角色招式龍虎亂舞，
+   *  **放招之後自動打打打打最後一個重招或大招結尾**」
+   *
+   * ── ⛔ 為什麼它在 2026-09-02 之前是「有模板、沒有積木」──────────────────
+   * ⭐ 機制**早就做好了**：`comboStrikes` 的 schema（`effects/comboStrikes.ts`）
+   * 與 sim 都在出貨。模板文件也有**13 格填好預設的參數**。
+   * ⛔ 缺的只有**這一條接線** —— 而 `FAMILIES` 裡沒有它 ⇒ `isExpandable` 回 false
+   * ⇒ ⭐ 對編輯器來說「連段收尾」這塊積木**不存在**。
+   *
+   * ⚠️ ⭐ 而出貨有 **1 支**技能在用 `comboStrikes`（`godie-hart.r` 01-04 超究武神霸斬）——
+   * ⛔ 它是**手寫**的。⇒ ⭐ 這一條接線讓下一支不必再手刻一遍。
+   *
+   * ── ⛔ 它刻意**不**參數化的東西 ─────────────────────────────────────────
+   * `strikes` / `damage` / `strikeReposition` **不在這 13 格裡** ——
+   * ⭐ 它們是**這一支技能**的節奏與數值，⛔ 不是「連段收尾」這個家族的形狀。
+   * ⇒ 文件用 `comboStrikes` 節點自己帶（`mergeExpansion` 會保留，見那一支的註解）。
+   */
+  "combo-finisher": (t, p) => {
+    const hitText = str(t, p, "hitText");
+    return {
+      castType: "targeted",
+      effects: [
+        // ⚠️ ⭐ `as unknown as EffectDef` 與這個檔裡其餘家族同一個做法：
+        //   `str()` 回 `string`，⛔ 而 schema 的 `damageType` / `at` 是**窄 union**。
+        //   ⭐ 收窄的責任在 **Zod**（展開結果會過 `zAbilityDoc.safeParse`，
+        //   見 `expandIfTemplated`）⇒ ⛔ 這裡再寫一次型別守衛是第二個住處。
+        {
+          kind: "comboStrikes",
+          shape: "single",
+          family: str(t, p, "comboFamily"),
+          // ⭐ 每一下：傷害 → 打擊特效 → 跳字。⛔ 順序不是隨意的 ——
+          //   特效要在傷害**之後**（傷害決定了有沒有命中），跳字最後。
+          perStrike: [
+            { kind: "damage", damageType: str(t, p, "damageType"), amount: { damageTier: "極小" } },
+            {
+              kind: "spawnVfx",
+              vfxId: str(t, p, "hitVfx"),
+              at: "bone",
+              attach: "chest",
+              boneOn: "victim",
+            },
+            {
+              kind: "floatingText",
+              shape: "single",
+              text: hitText,
+              applyTo: "victim",
+              colorRgb: [255, 255, 255],
+              sizeScale: num(t, p, "hitTextSizeScale"),
+              riseSpeed: num(t, p, "hitTextRiseSpeed"),
+              durationSec: num(t, p, "hitTextDurationSec"),
+            },
+          ],
+          // ⭐ 收尾：重招 ＋ 全螢幕的兩件事（閃光與震動）——
+          //   ⚠️ 那兩件是 `applyTo: "all"`，⛔ 不是只給受害者：
+          //   owner 說的是「**大招結尾**」，而一個只有受害者看得到的收尾不是大招。
+          finisher: [
+            { kind: "damage", damageType: str(t, p, "damageType"), amount: { damageTier: "極小" } },
+            { kind: "spawnVfx", vfxId: str(t, p, "finisherVfx"), at: "target" },
+            {
+              kind: "floatingText",
+              shape: "single",
+              text: hitText,
+              applyTo: "victim",
+              colorRgb: [255, 236, 168],
+              sizeScale: num(t, p, "hitTextSizeScale") * num(t, p, "hitTextSizeGrowth") ** 0.5,
+              riseSpeed: num(t, p, "hitTextRiseSpeed"),
+              durationSec: num(t, p, "hitTextDurationSec"),
+            },
+            {
+              kind: "screenFlash",
+              shape: "single",
+              colorRgb: [217, 235, 255],
+              peakAlpha: num(t, p, "finisherFlashAlpha"),
+              durationSec: num(t, p, "finisherFlashSec"),
+              applyTo: "all",
+            },
+            {
+              kind: "screenShake",
+              shape: "single",
+              amplitude: num(t, p, "finisherShakeAmplitude"),
+              durationSec: num(t, p, "finisherShakeSec"),
+              applyTo: "all",
+            },
+          ],
+        } as unknown as EffectDef,
+      ],
+    };
+  },
+
   "buff-self": (t, p) => ({
     castType: "self",
     ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),

@@ -43,9 +43,9 @@ const CENSUS = JSON.parse(
  *   —— 第〇·五守則逐字點名的那種謊：「宣告 unsupported 但引擎其實有
  *   → 紅（**對方白白繞路**）」。
  */
-const USABLE_FLOOR = 27;
-const ENGINE_MISSING_CEIL = 18;
-const SHELLS_CEIL = 18;
+const USABLE_FLOOR = 28;
+const ENGINE_MISSING_CEIL = 17;
+const SHELLS_CEIL = 17;
 
 describe("⭐ 積木普查（編輯器要知道有哪些積木）", () => {
   it("★ ⭐ **拼得動的積木只准變多**", () => {
