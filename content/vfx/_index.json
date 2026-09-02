@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "c61b7f2afa73",
+  "hash": "7df129081586",
   "entries": [
     {
       "id": "attach.ex.midchilder-aura",
@@ -2187,6 +2187,24 @@
       "size": 1017
     },
     {
+      "id": "fx.w3x.stock.aivitarget.r00",
+      "path": "vfx/fx.w3x.stock.aivitarget.r00.json",
+      "hash": "fab9b765878f",
+      "size": 302
+    },
+    {
+      "id": "fx.w3x.stock.aivitarget.r01",
+      "path": "vfx/fx.w3x.stock.aivitarget.r01.json",
+      "hash": "13702689225c",
+      "size": 302
+    },
+    {
+      "id": "fx.w3x.stock.aivitarget.r02",
+      "path": "vfx/fx.w3x.stock.aivitarget.r02.json",
+      "hash": "4c95480db082",
+      "size": 302
+    },
+    {
       "id": "fx.w3x.stock.awaken.p00",
       "path": "vfx/fx.w3x.stock.awaken.p00.json",
       "hash": "1b76688d2c72",
@@ -2293,6 +2311,54 @@
       "path": "vfx/fx.w3x.stock.markofchaostarget.p05.json",
       "hash": "21983afb0eeb",
       "size": 1033
+    },
+    {
+      "id": "fx.w3x.stock.markofchaostarget.r00",
+      "path": "vfx/fx.w3x.stock.markofchaostarget.r00.json",
+      "hash": "c2f482de07d1",
+      "size": 304
+    },
+    {
+      "id": "fx.w3x.stock.markofchaostarget.r01",
+      "path": "vfx/fx.w3x.stock.markofchaostarget.r01.json",
+      "hash": "62be03c9ad45",
+      "size": 304
+    },
+    {
+      "id": "fx.w3x.stock.markofchaostarget.r02",
+      "path": "vfx/fx.w3x.stock.markofchaostarget.r02.json",
+      "hash": "1375ac0026fc",
+      "size": 306
+    },
+    {
+      "id": "fx.w3x.stock.markofchaostarget.r03",
+      "path": "vfx/fx.w3x.stock.markofchaostarget.r03.json",
+      "hash": "7c9e68e0f36f",
+      "size": 304
+    },
+    {
+      "id": "fx.w3x.stock.markofchaostarget.r04",
+      "path": "vfx/fx.w3x.stock.markofchaostarget.r04.json",
+      "hash": "ecc5d90e596a",
+      "size": 304
+    },
+    {
+      "id": "fx.w3x.stock.markofchaostarget.r05",
+      "path": "vfx/fx.w3x.stock.markofchaostarget.r05.json",
+      "hash": "acae95d619c5",
+      "size": 304
+    },
+    {
+      "id": "fx.w3x.stock.markofchaostarget.r06",
+      "path": "vfx/fx.w3x.stock.markofchaostarget.r06.json",
+      "hash": "bffebc21ef92",
+      "size": 304
+    },
+    {
+      "id": "fx.w3x.stock.markofchaostarget.r07",
+      "path": "vfx/fx.w3x.stock.markofchaostarget.r07.json",
+      "hash": "79a1864ff99c",
+      "size": 304
     },
     {
       "id": "fx.w3x.stock.nedeathsmall.p00",

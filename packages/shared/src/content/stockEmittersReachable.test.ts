@@ -29,9 +29,22 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const VFX = join(ROOT, "content/vfx");
 const MODELS = join(ROOT, "content/models");
 
-/** 抽出來的原作 emitter（`fx.w3x.stock.<stem>.pNN`）。 */
+/**
+ * 抽出來的原作**粒子** emitter（`fx.w3x.stock.<stem>.pNN`）。
+ *
+ * ⚠️ ⭐ **刻意排除 `.rNN`（`ribbon@1`）** —— 那一族走**另一條**播放路徑：
+ * `MoveTrailFx` 的判準逐字是「看它是不是一份 `ribbon@1`」
+ * ⇒ 任何一支技能把 `spawnVfx.vfxId` 指到它就播得到，⛔ 零行程式。
+ * ⛔ 而 `model@1.fxEmitters` 那條路**播不了它**（`VfxSystem.play()` 吃 `vfx@1`）
+ * ⇒ 拿這條守衛去要求 ribbon 有 `fxEmitters` 宣告，會逼人做一件**做不到**的事。
+ */
 const emitterIds = readdirSync(VFX)
-  .filter((f) => f.startsWith("fx.w3x.stock.") && f.endsWith(".json"))
+  .filter((f) => f.startsWith("fx.w3x.stock.") && /\.p\d+\.json$/.test(f))
+  .map((f) => f.replace(/\.json$/, ""));
+
+/** 抽出來的原作**緞帶**（`fx.w3x.stock.<stem>.rNN`）。 */
+const ribbonIds = readdirSync(VFX)
+  .filter((f) => f.startsWith("fx.w3x.stock.") && /\.r\d+\.json$/.test(f))
   .map((f) => f.replace(/\.json$/, ""));
 
 /** 每一份 `model@1` 宣告的 `fxEmitters` 聯集。 */
@@ -87,6 +100,26 @@ describe("原作 emitter 到得了播得到它的地方（GH#699）", () => {
         "（逐模型，⛔ 不廣播）② 在 `config.vfx-families@1` 的某一族 `models` 收它（會廣播整族）。\n" +
         "⛔ 「先抽出來放著」不是理由 —— 那正是 `stillGated` 當初要防的死內容。",
     ).toEqual([]);
+  });
+
+  it("⭐⭐ 抽出來的緞帶真的是 `ribbon@1`（⛔ 不是被當成粒子文件寫出去）", () => {
+    // ⭐ GH#753 —— RIBB 那一半。⚠️ 它與粒子是**兩個 schema**，
+    //   而 `MoveTrailFx` 的判準逐字是「看它是不是一份 `ribbon@1`」
+    //   ⇒ 寫錯 schema 就是靜靜的 no-op（退回一顆 HitSpark）。
+    expect(ribbonIds.length, "⛔ 一條都沒抽到 ⇒ RIBB 出口沒跑").toBeGreaterThan(5);
+    for (const id of ribbonIds) {
+      const d = JSON.parse(readFileSync(join(VFX, `${id}.json`), "utf8")) as {
+        schema?: string;
+        widthAbove?: number;
+        widthBelow?: number;
+      };
+      expect(d.schema, `⛔ ${id} 的 schema 不是 ribbon@1`).toBe("ribbon@1");
+      // ⭐ 一條寬度全 0 的緞帶畫不出任何像素（同 `vfxDocsBirthVisibility` 的判準）
+      expect(
+        (d.widthAbove ?? 0) + (d.widthBelow ?? 0),
+        `⛔ ${id} 的上下寬度都是 0 —— 那條緞帶畫不出像素`,
+      ).toBeGreaterThan(0);
+    }
   });
 
   it("⭐ 反方向：`fxEmitters` 指到的每一顆都**真的存在**（⛔ 打錯字要紅）", () => {

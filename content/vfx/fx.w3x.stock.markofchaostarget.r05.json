@@ -1,0 +1,16 @@
+{
+  "id": "fx.w3x.stock.markofchaostarget.r05",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/light_02.png",
+  "widthAbove": 0.425,
+  "widthBelow": 0.425,
+  "lifespanSec": 0.15,
+  "color": [
+    1.0,
+    0.0,
+    0.0,
+    1.0
+  ],
+  "blendMode": "additive",
+  "anchorBone": "Dummy40"
+}

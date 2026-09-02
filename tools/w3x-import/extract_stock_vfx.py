@@ -479,11 +479,35 @@ def run(out_root: str, min_refs: int, dry_run: bool, order: str = "visual") -> d
             row, blob, tex, notes, order,
             roots=[out_root, os.path.join(REPO, "content")],
         )
-        if not docs:
-            # A mesh-only stock model (no PRE2) has nothing this tool can port.
-            # Recorded, not hidden: silence here would read as "extracted fine".
-            notes.append(f"{row['stem']}: no shippable PRE2 emitters — nothing to extract")
-        for doc in docs:
+        # ⭐⭐ GH#753 —— **RIBB（緞帶）那一半**。
+        #
+        # ⛔⛔ #699 的 Non-goals 逐字寫「⛔ 不做 RIBB 那半（另票）」，
+        # ⭐ 而那張票開了之後這一段仍然缺 —— 缺的**不是解析器**
+        # （`ep.build_ribbon_doc` 今天就把 map-model 那 54 份逐位元重現得出來），
+        # 缺的是 **stock 這條路不走它**。
+        #
+        # ⭐ 而播放路徑**早就在**：`MoveTrailFx` 的判準逐字是
+        # 「看它是不是一份 `ribbon@1`」⇒ 任何一支技能只要把 `spawnVfx.vfxId`
+        # 指到一份緞帶文件就播得到，⛔ 零行程式。
+        # ⚠️ ⛔ 而 `model@1.fxEmitters` 那條路**播不了它**：
+        # `VfxSystem.play()` 吃的是 `vfx@1`。⇒ 兩條路各管一半，⛔ 不要混。
+        ribbon_docs: list[dict] = []
+        try:
+            m = ep.parse_particles(blob)
+            for i, rb in enumerate(m.ribbons):
+                rid = f"{ID_PREFIX}.{row['stem']}.r{i:02d}"
+                ribbon_docs.append(
+                    ep.build_ribbon_doc(rid, rb, m, ep.DEFAULT_SCALE, tex, notes)
+                )
+        except Exception as e:  # noqa: BLE001 — 解析失敗要**說出來**，⛔ 不是靜默跳過
+            notes.append(f"{row['stem']}: RIBB parse failed ({e}) — no ribbon docs")
+
+        if not docs and not ribbon_docs:
+            # A mesh-only stock model (no PRE2 / no RIBB) has nothing this tool
+            # can port. Recorded, not hidden: silence here would read as
+            # "extracted fine".
+            notes.append(f"{row['stem']}: no shippable PRE2/RIBB emitters — nothing to extract")
+        for doc in [*docs, *ribbon_docs]:
             if not dry_run:
                 os.makedirs(vfx_out, exist_ok=True)
                 write_doc(os.path.join(vfx_out, doc["id"] + ".json"), ep.doc_text(doc))
