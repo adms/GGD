@@ -1,0 +1,94 @@
+{
+  "id": "fx.prim.physical.arc",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.02,
+    "angleDeg": 1
+  },
+  "mode": "burst",
+  "burstCount": 1,
+  "lifetimeSec": {
+    "min": 0.22,
+    "max": 0.28
+  },
+  "size": {
+    "start": 1.9026,
+    "end": 2.5685
+  },
+  "color": {
+    "start": [
+      0.9856,
+      0.9892,
+      1,
+      1
+    ],
+    "end": [
+      0.1656,
+      0.1692,
+      0.18,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      1.0464
+    ],
+    [
+      0.18,
+      1.9026
+    ],
+    [
+      1,
+      2.5685
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        0.9856,
+        0.9892,
+        1,
+        1
+      ]
+    ],
+    [
+      0.2,
+      [
+        0.92,
+        0.94,
+        1,
+        1
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.46,
+        0.47,
+        0.5,
+        0.42
+      ]
+    ],
+    [
+      1,
+      [
+        0.1656,
+        0.1692,
+        0.18,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 0,
+  "speed": {
+    "min": 0.0,
+    "max": 0.0
+  },
+  "texture": "assets/textures/particles/slash_01.png",
+  "stretched": false,
+  "tailLength": 2.6
+}

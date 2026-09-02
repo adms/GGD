@@ -15,6 +15,9 @@ import { startDash } from "../systems/MovementSystem";
 import { normalize, sub } from "../math/vec2";
 import { dashOnEndQueue } from "./dashOnEnd";
 import { DASH_ON_END_MAX_EFFECTS } from "./kindLimits";
+import type { DisplaceEvent } from "../movement/leap";
+import { abilityIdOfOrigin } from "../combat/damage";
+import { TICK_HZ } from "../../constants";
 
 export const dashEffect: EffectKindSpec<"dash"> = {
   apply(e, ctx) {
@@ -33,7 +36,30 @@ export const dashEffect: EffectKindSpec<"dash"> = {
     // ⚠️ 方向是零向量時 `startDash` 不建 override＝衝刺沒有發生，所以這道閘
     // 與下面 onEnd 那一道是**同一個判準**，⛔ 不是兩份。
     if (world.nav.get(ctx.caster)?.override?.kind === "dash") {
-      world.emit("displace", { id: ctx.caster, mode: "dash" });
+      // ⭐⭐ 2026-09-02（Codex P0-5）—— **第三個發射站**。
+      //
+      // ⛔⛔ 留它不補就是失敗形態⑧：另外兩站（`leap.ts` / `blink.ts`）已經帶
+      // `phase`／`abilityId`，⭐ 而消費端讀 `ev.data.phase` 在衝刺上會拿到
+      // **`undefined`** —— 一個「有 case、而它讀一個零寫入端的欄位」的洞。
+      //
+      // `phase: "start"`：這一行在 `startDash` 建好 override **之後**、
+      // 而位移要到下一個 tick 才開始積 ⇒ ⭐ 身體一格都還沒動。
+      // ⚠️ ⛔ **不補第二則**（理由與另外兩站逐字相同）：`displace` 接
+      // `onDashOrBlink`（`WorldHookSystem.ts:313`）⇒ 多發一則 = 卡片觸發兩次 = **改 sim 判定**。
+      const dashOv = world.nav.get(ctx.caster)?.override;
+      world.emit("displace", {
+        id: ctx.caster,
+        mode: "dash",
+        phase: "start",
+        caster: ctx.caster,
+        origin: ctx.origin,
+        abilityId: abilityIdOfOrigin(ctx.origin) ?? null,
+        // ⭐ 引擎真的排的時長（⛔ 不是作者寫的秒數）——與 leap 那一站同一個口徑。
+        durationSec:
+          dashOv != null && typeof (dashOv as { ticks?: unknown }).ticks === "number"
+            ? (dashOv as { ticks: number }).ticks / TICK_HZ
+            : 0,
+      } satisfies DisplaceEvent);
     }
 
     // ⭐ S7 —— 缺席 = 沒有回呼 = 這個欄位出現之前的行為，一個 tick 都不差。

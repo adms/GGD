@@ -847,6 +847,9 @@ export class GameApp {
           return p;
         },
         vfxDoc: (key) => this.contentDb.vfxFor(key),
+        // ⭐ GH#940 —— 護盾生成的 beat 開不開（後台一格，一鍵 rollback）。
+        // ⚠️ 走 `ContentDb`，⛔ 不是在這裡讀 config —— 那會是第二個住處。
+        shieldGainedCue: () => this.contentDb.shieldGainedCue(),
         ...makeScriptFxBridges(this.views), // GH#838 演出腳本的接縫（理由住 appBridges 檔頭）
         // ⭐ GH#551/#543 —— 移動中的**模型**特效要的兩個接縫（翻滾光束／圓周冰塊／
         //    直線火球）。⚠️ 它們是**注入**的,理由與上面 `vfxDoc` 一字不差：

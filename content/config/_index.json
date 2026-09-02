@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "a7b9c5b0db6d",
+  "hash": "9d00bf4744f4",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -17,8 +17,8 @@
     {
       "id": "ambient-vfx",
       "path": "config/ambient-vfx.json",
-      "hash": "33910e68bd2a",
-      "size": 4914
+      "hash": "b1ba3b61f86c",
+      "size": 4959
     },
     {
       "id": "aoe-tiers",
@@ -465,6 +465,12 @@
       "size": 11203
     },
     {
+      "id": "unsafe-textures",
+      "path": "config/unsafe-textures.json",
+      "hash": "0531730d40b0",
+      "size": 7993
+    },
+    {
       "id": "valhalla-sandbox",
       "path": "config/valhalla-sandbox.json",
       "hash": "ec920637826e",
@@ -491,8 +497,8 @@
     {
       "id": "vfx-families",
       "path": "config/vfx-families.json",
-      "hash": "be54611d7f67",
-      "size": 29062
+      "hash": "ba31fc3947db",
+      "size": 29012
     },
     {
       "id": "vfx-scripts",

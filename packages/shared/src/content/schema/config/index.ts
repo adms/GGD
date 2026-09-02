@@ -41,6 +41,9 @@ import { zConfigArenaPoolDoc } from "../arenaPoolDoc";
 // ⚠️ `newHeroChecks` 只 import `./schema/{ability,champion}` 與幾支純函式，
 //    ⛔ 不 import 這個檔 —— 所以這條 import 不會造成循環。
 import { zConfigNewHeroChecksDoc } from "../../newHeroChecks";
+// ⭐ 不安全 VFX 貼圖的隔離契約（Codex 阻塞清單 P0-6）。⚠️ 漏掉這一行 = 一份
+//    unsafe-textures.json 進了 content/ 之後整份內容驗證失敗 → 骨架英雄。
+import { zConfigUnsafeTexturesDoc } from "./unsafeTextures";
 // 每回合 S~D 評價的係數 (#212/#232)。整份 schema 定在自己的檔案裡(欄位多、
 // 上下界全部從 sim 的 ROUND_GRADE_BOUNDS 生),這裡只把它掛進 collection union。
 import { zConfigRoundGradeDoc } from "../roundGrade";
@@ -420,6 +423,8 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   //    ⛔ 它的 Zod 刻意住在 `../newHeroChecks`（規則清單、預設值、檢查本體同一個
   //    檔），這裡只負責把它掛進 union —— 掛不掛得上才是那份文件上不上得了線的關鍵。
   zConfigNewHeroChecksDoc,
+  // ⭐ 不安全 VFX 貼圖的隔離契約（Codex 阻塞清單 P0-6）。⚠️ 漏掉這一行 = 骨架英雄。
+  zConfigUnsafeTexturesDoc,
 ]);
 /**
  * `config` 這個集合裡的**任何一份**文件（GH#312）。

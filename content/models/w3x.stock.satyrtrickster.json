@@ -1,0 +1,18 @@
+{
+  "id": "w3x.stock.satyrtrickster",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/satyrtrickster.glb",
+  "scale": 130.7692,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Stand Ready",
+    "hurt": "Stand - 2",
+    "death": "Death"
+  },
+  "hiddenPrimitives": [
+    3
+  ]
+}

@@ -14,6 +14,7 @@ import { fileURLToPath } from "node:url";
 import { zVfxScriptDoc, type VfxScriptDoc, type VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
 import { acceptanceFixtureFor, VFX_FORGE_ACCEPTANCE } from "./acceptanceFixtures";
 import { actionAnimationIssues, activationModeForAbility } from "./actionAnimationPrinciples";
+import { isSingleArcVfxId } from "./presentationContract";
 
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
 const IDS = VFX_FORGE_ACCEPTANCE.map(([id]) => id);
@@ -46,6 +47,16 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
         activationMode: activationModeForAbility(ability),
         allowRapidBarrage: abilityContainsEffect(ability, "comboStrikes"),
       }), id).toEqual([]);
+    }
+  });
+
+  it("斬擊成品只使用 Main 收據的單發 arc，不把 26 發 slash 當一刀", () => {
+    const actionSkills = ["godie-hjai.r", "godie-nbbc.r", "godie-hart.r", "godie-e002.ex"] as const;
+    for (const id of actionSkills) {
+      const effects = kinds(id, "vfx");
+      expect(effects.some((segment) => isSingleArcVfxId(segment.vfxId)), `${id} 缺單發主斬弧`).toBe(true);
+      expect(effects.some((segment) => /^fx\.prim\.[a-z0-9-]+\.slash(?:-lg)?$/i.test(segment.vfxId)),
+        `${id} 仍使用 26 發舊 slash`).toBe(false);
     }
   });
   it("八份 fixture 都是可由編輯器往返的 vfx-script@1，且一招不少", () => {

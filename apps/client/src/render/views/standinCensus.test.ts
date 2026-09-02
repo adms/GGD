@@ -276,18 +276,24 @@ describe("#77 替身回退有沒有丟掉地圖的真 scale", () => {
     expect(dropped).toEqual([]);
   });
 
-  it("地圖的真模型指向是機器讀得到的：14 位穿通用身體的有 10 位帶著 umdl", async () => {
+  it("地圖的真模型指向是機器讀得到的：13 位穿通用身體的有 10 位帶著 umdl", async () => {
     cover("standin-census");
     const census = censusChampionBodies(ROSTER, hooksFor(await overlayModels(false)));
     const standins = [...census.bodies.values()].filter((b) => b.isStandin);
-    // 14 = 撞臉的 12 位 + 初號機（獨佔 blocky-rogue）+ 喪標麥可（獨佔
-    // blocky-undead）。「穿別人的身體」與「跟人撞臉」是兩件事。
+    // 13 = 撞臉的 12 位 + 喪標麥可（獨佔 blocky-undead）。
+    // 「穿別人的身體」與「跟人撞臉」是兩件事。
     // ⚠️ 2026-08-16 下架四位之後 16→14。
-    expect(standins.length).toBe(14);
-    expect(census.totals.onGenericBody).toBe(14);
+    // ⭐ 2026-09-02（GH#933）14→13：**初號機畢業了** —— 它從 blocky-rogue
+    //   搬到自己的 `w3x.stock.satyrtrickster`（War3x.mpq 抽出來轉的），
+    //   ⇒ 不再穿通用身體。⭐ 這是棘輪的**正確方向**（少一位借身體的）。
+    expect(standins.length).toBe(13);
+    expect(census.totals.onGenericBody).toBe(13);
     expect(census.totals.sharing).toBe(12);
     // 地圖沒有覆寫 umdl（繼承 base unit）的那幾位沒有這個欄位。
-    expect(standins.filter((b) => b.mapModel !== null).length).toBe(10);
+    // ⭐ 2026-09-02（GH#933）10→9：初號機（`godie-e00r`）搬去自己的
+    //   `w3x.stock.satyrtrickster` ⇒ 它不在「穿通用身體」這個母體裡了，
+    //   而它正是帶著 umdl 的那 10 位之一。
+    expect(standins.filter((b) => b.mapModel !== null).length).toBe(9);
     // 小叮噹本來是一隻 0.6 倍的藍色熊貓，而且那件事現在寫在資料裡。
     const n00b = census.bodies.get("godie-n00b")!;
     expect(n00b.mapScale).toBe(0.6);
@@ -360,9 +366,11 @@ describe("#224 普查的判定 = 渲染器真的做了什麼", () => {
       );
     }
     // 而且真的有人載到通用方塊人 —— 否則上面每一條都是 null === null 的空對帳。
+    // ⭐ 2026-09-02（GH#933）14→13：初號機從 `blocky-rogue` 搬到
+    //   `assets/models/imported/satyrtrickster.glb`（下面那條 >20 因此也多一位）。
     expect(
       [...observed.values()].filter((p) => p?.startsWith("assets/models/champions/blocky-")).length,
-    ).toBe(14);
+    ).toBe(13);
     // 而且真的有人載到自己的模型（另一半的空對帳防線）。
     expect([...observed.values()].filter((p) => p?.startsWith("assets/models/imported/")).length)
       .toBeGreaterThan(20);

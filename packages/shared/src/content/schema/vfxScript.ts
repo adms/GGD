@@ -27,6 +27,7 @@ import { zAbilityVfxLayerOverride } from "./abilityVfx";
 import { zFloatingText } from "./effects/floatingText";
 import { zScreenFlash } from "./effects/screenFlash";
 import { zScreenShake } from "./effects/screenShake";
+import { ANIM_PULSES } from "../animPulse";
 
 /**
  * 觸發器（v1 —— 只列播放器真的接了的）。⭐ 語意名**刻意與 wire 事件名解耦**：
@@ -207,7 +208,11 @@ export const zVfxScriptAnim = z
     ...SEG_COMMON,
     /** 誰演：目標（省略＝target —— 這一族的主詞就是受害者）或施法者。 */
     at: z.enum(["target", "caster"]).optional(),
-    pulse: z.enum(["attack", "cast", "hurt"]),
+    // ⭐ GH#940 —— **從詞彙表推導**，⛔ 不再手打一份。
+    // 在此之前這一行是 `z.enum(["attack","cast","hurt"])`，而同一個聯集
+    // 散在五個住處 ⇒ 加一塊動作積木漏改這裡 ⇒ 編輯器寫得出來、schema 拒收，
+    // ⭐ 而**沒有任何東西會紅**。
+    pulse: z.enum(ANIM_PULSES),
     /** 剪輯窗（毫秒）—— 拉長＝慢動作。省略＝用出貨預設窗。 */
     clipWindowMs: z.number().int().min(50).max(6000).optional(),
   })

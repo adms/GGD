@@ -325,7 +325,20 @@ cmd_deploy() {
   redis_snapshot_before_shutdown
 
   head_ "3. up"
-  r "cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env up -d" \
+  # ⛔⛔ GH#949 —— **`up` 也要帶版本戳，⛔ 不是只有 `build`。**
+  #
+  # `docker/compose.yaml:237` 的 `GGD_BUILD_STAMP: "${GGD_BUILD_STAMP:-}"` 讀的是
+  # **`up` 那一刻的 shell env**，⛔ 不是 build arg ⇒ 在此之前 game 容器的
+  # `process.env.GGD_BUILD_STAMP` 一直是空的。
+  # ⇒ `buildStamp()` 的第 ① 階落空 → 容器裡沒有 checkout（②落空）→ ⭐ **`"dev"`**。
+  #
+  # ⚠️ 而它不只是徽章：同一顆值寫進**每一份錄影的 header**，
+  # 而 `Player.ts` 拿它比對 ⇒ 兩份都是 `"dev"` ⇒ **任兩份永遠判「相同版本」**
+  # ⇒ ⭐ 錄影的版本柵欄整個是關著的，而且**靜默**。
+  #
+  # ⭐ **同一顆 `$stamp`**（上面第 2 段算的那一個），⛔ 不要在這裡再跑一次
+  # `git describe` —— 那會是第二個住處，而它會在兩次之間漂（第〇·四守則）。
+  r "cd $REMOTE_REPO && GGD_BUILD_STAMP='$stamp' docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env up -d" \
     2>&1 | tail -4 | sed 's/^/    /'
 
   head_ "4. ⭐ 驗站真的活著（⛔ 不是「compose 沒報錯」）"

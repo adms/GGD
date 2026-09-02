@@ -114,10 +114,72 @@ function isTerminal(doc: TplDoc): boolean {
   return n.includes("永遠不會有參數") || n.includes("分流終點");
 }
 
+
+/**
+ * ⭐⭐ **需求側** —— 「那些**手刻的**技能實際上是哪幾種形狀」（GH#916 步驟①）。
+ *
+ * ⛔⛔ 在此之前這份普查**只有供給側**（每一個模板被幾支用）——
+ * 而 owner 的分工是「**main 是做出積木的角色**」⇒ ⭐ 要先知道**該做哪一塊**。
+ *
+ * ⚠️ ⭐ 而正確的問法是**由下而上**：
+ * ⛔ 不是「`tpl-blink-strike` 涵蓋幾支」（那要先假設它該長什麼樣），
+ * ⭐ 是「**263 支手刻的實際上長什麼樣，哪一種最多**」。
+ * ⇒ 這正是第〇·五守則的排序法：**按擋住的支數做機制**，⛔ 不是按檔名順序。
+ *
+ * ⭐ 形狀 ＝ 那支技能**遞迴展開後**的 effect kind 多重集合
+ * （`spawnProjectile.onHit` 底下的也算 —— ⛔ 少了遞迴，投射物技能會全部塌成一種）。
+ *
+ * ⚠️ **只數手刻的**：接了模板的那 82 支已經有積木了，
+ * ⛔ 把它們算進來會讓已經解決的形狀看起來還缺一塊。
+ */
+function demandShapes(): Array<{
+  shape: string;
+  count: number;
+  examples: string[];
+}> {
+  const dir = join(ROOT, "content/abilities");
+  const byShape = new Map<string, string[]>();
+  for (const f of readdirSync(dir)) {
+    if (!f.endsWith(".json") || f === "_index.json") continue;
+    const d = JSON.parse(readFileSync(join(dir, f), "utf8")) as {
+      id?: string;
+      template?: unknown;
+      effects?: unknown[];
+    };
+    if (refsOf(d.template).length > 0) continue; // ⭐ 已經有積木了
+    const effects = d.effects ?? [];
+    if (effects.length === 0) continue; // ⛔ 純被動／marks —— 不是 effects 模板的客戶
+    const kinds: string[] = [];
+    const walk = (nodes: unknown): void => {
+      if (!Array.isArray(nodes)) return;
+      for (const n of nodes) {
+        if (!n || typeof n !== "object") continue;
+        const o = n as Record<string, unknown>;
+        if (typeof o["kind"] === "string") kinds.push(o["kind"]);
+        for (const v of Object.values(o)) if (Array.isArray(v)) walk(v);
+      }
+    };
+    walk(effects);
+    const tally = new Map<string, number>();
+    for (const k of kinds) tally.set(k, (tally.get(k) ?? 0) + 1);
+    const shape = [...tally]
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([k, n]) => (n > 1 ? `${k}\u00d7${n}` : k))
+      .join(" + ");
+    const list = byShape.get(shape) ?? [];
+    list.push(String(d.id ?? f));
+    byShape.set(shape, list);
+  }
+  return [...byShape]
+    .map(([shape, ids]) => ({ shape, count: ids.length, examples: ids.sort().slice(0, 4) }))
+    .sort((a, b) => b.count - a.count || a.shape.localeCompare(b.shape));
+}
+
 function build(): unknown {
   const fams = engineFamilies();
   const tpl = templates();
   const used = adoption();
+  const demand = demandShapes();
   const rows = [...tpl]
     .map(([id, d]) => ({
       id,
@@ -149,7 +211,24 @@ function build(): unknown {
       zeroAdoption: rows.filter((r) => r.abilities === 0 && !r.terminal).length,
       /** ⭐ 刻意永遠空的分流終點（⛔ 不是待補的積木）。 */
       terminal: rows.filter((r) => r.terminal).length,
+      /** ⛔ **手刻**（沒接模板而有 effects）—— 積木不夠的直接量值。 */
+      handWritten: demand.reduce((n, d) => n + d.count, 0),
+      /** ⭐ 它們攤成幾種**不同的形狀**。 */
+      distinctShapes: demand.length,
+      /**
+       * ⚠️ **只出現一次**的形狀 —— ⛔ 它們**不是模板的客戶**。
+       * ⭐ 這一格存在的理由：`handWritten` 單獨看會讓人以為「還缺 263 塊積木」，
+       * 而真相是**長尾**。
+       */
+      singletonShapes: demand.filter((d) => d.count === 1).length,
+      /** ⭐ 前 8 種形狀涵蓋幾支 —— 「做幾塊就夠」的答案。 */
+      top8Coverage: demand.slice(0, 8).reduce((n, d) => n + d.count, 0),
     },
+    /**
+     * ⭐⭐ **需求側**（GH#916 步驟①）—— 手刻技能的形狀分佈，**由多到少**。
+     * ⭐ 這一欄就是「下一塊積木該做哪一個」的答案，⛔ 而它是**推導**的。
+     */
+    demand: demand.slice(0, 24),
     engineFamilies: fams,
     /** ⭐ 引擎認得但**沒有任何模板檔**用它 —— 一塊做好了沒人拿的積木。 */
     unusedEngineFamilies: fams.filter((f) => ![...tpl.values()].some((d) => d.family === f)),

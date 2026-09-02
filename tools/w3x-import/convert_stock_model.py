@@ -152,6 +152,16 @@ STOCK_MODELS: dict[str, str] = {
     # 喪標麥可) IS this family's identity — bindings live there, veto via the
     # #669 review page.
     "forgottenonetent": "Units\\Creeps\\ForgottenOne\\ForgottenOneTent.mdl",
+    # ⭐⭐ GH#933 —— **一具角色本體**（⛔ 這張表在此之前全部是特效／dummy）。
+    #
+    # ⚠️ ⭐ 為什麼它在這裡：w3x 原始資料逐字說 `godie-e00r`（初號機）用的就是它 ——
+    #   `heroes.E00R.model = units\creeps\SatyrTrickster\SatyrTrickster.mdl`
+    #   ⇒ ⛔ 而 GGD 一直讓它站在共用替身 `champ.skin.rogue` 上。
+    #
+    # ⚠️ ⭐ 而那顆看似正解的 `HeroEVA01S2.mdx`（地圖自帶）**不是身體**：
+    #   4,354 bytes · 幾何 `GEOS` **1,004 bytes** · 帶 `PREM` 粒子發射器
+    #   ⇒ 它是初號機身上的**光效**。⭐ 這一顆的幾何是 **21,660 bytes**（21 倍）。
+    "satyrtrickster": "Units\\Creeps\\SatyrTrickster\\SatyrTrickster.mdl",
     # GH#688 Phase 6 · PENTA lane — ThunderClapCaster geoset half (the PRE2
     # emitter half already ships as content/vfx/fx.w3x.stock.thunderclapcaster
     # .p00.json).  Only shipped visible landing spot: o006 雷切 via LightCutRun

@@ -2,8 +2,8 @@
   "schema": "ggd-assets-manifest@1",
   "note": "⭐ 被 content/**/*.json 引用到的**每一顆**二進位資產。⛔ 產物 —— 改 `tools/asset-manifest/gen.ts`，⛔ 不要手改。⚠️ 只收**被引用到的**：content/assets/ 底下有一萬多個檔，而清單的用途是驗證引用得到的東西。",
   "counts": {
-    "entries": 1640,
-    "totalBytes": 102902938
+    "entries": 1641,
+    "totalBytes": 103659558
   },
   "entries": [
     {
@@ -16980,6 +16980,17 @@
       "refs": [
         "bundle",
         "imported.roots"
+      ]
+    },
+    {
+      "path": "assets/models/imported/satyrtrickster.glb",
+      "bytes": 756620,
+      "sha256": "0e5ee9590d124bbc9bdf295dee51a5c331162d7eb4b889b9b5ee901db10f6464",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "w3x.stock.satyrtrickster"
       ]
     },
     {

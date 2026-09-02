@@ -16,21 +16,43 @@
  * hurt pulse only plays from idle; movement keeps the run loop.
  */
 
-export type AnimState = "idle" | "run" | "attack" | "cast" | "hurt" | "death";
+// ⭐ GH#940 —— 這裡本來是第六份手抄的六格詞彙表。
+// ⇒ 轉出唯一住處（`packages/shared/src/voxel/clips.ts` 的 `CLIP_STATES`，
+//   它與 `zClipMap` 的 `.strict()` 綁在一起 ⇒ 那個綁定是承重的）。
+export type { AnimState } from "@ggd/shared/content/animPulse";
 
-export type AnimPulse = "attack" | "cast" | "hurt";
-
-export const PULSE_MS: Record<AnimPulse, number> = {
-  attack: 350,
-  cast: 450,
-  hurt: 250,
-};
+/**
+ * ⭐⭐ GH#940 —— `AnimPulse` 與 `PULSE_MS` **搬到 `@ggd/shared` 去了**，
+ * 這兩行是**門面**（re-export），⛔ 不是第二份。
+ *
+ * ⚠️ 為什麼要搬：同一個聯集在此之前手抄在**五個住處**，其中一個是
+ * `packages/shared/src/content/schema/vfxScript.ts` 的 `z.enum` ——
+ * ⛔ 而 shared 不可以 import client ⇒ 唯一能同時服務兩邊的住處在 shared。
+ * ⇒ ⭐ 加一塊動作積木漏改任一處，在此之前**不會有任何 tsc 紅**。
+ *
+ * ⭐ 門面保住了既有的 import 端（`ChampionView.ts` 等）——
+ * ⛔ 搬家不可以逼每一個消費者改一行。
+ */
+export { PULSE_MS, ANIM_PULSES, isAnimPulse } from "@ggd/shared/content/animPulse";
+export type { AnimPulse } from "@ggd/shared/content/animPulse";
+import { PULSE_MS, type AnimPulse, type AnimState } from "@ggd/shared/content/animPulse";
 
 /** Keep run alive briefly across movement-detection flickers/stalls. */
 export const RUN_LINGER_MS = 200;
 
 /** Pulse priority when several land in the same window. */
-const PULSE_RANK: Record<AnimPulse, number> = { hurt: 0, attack: 1, cast: 2 };
+/**
+ * ⭐ 誰蓋得過誰。⛔ 數字大的贏。
+ * ⭐⭐ 2026-09-02：`dodge` 與 `guard` 排在 `hurt` **之上** ——
+ * 一次成功的迴避／格擋**就是**「沒有被打到」，⛔ 讓 hurt 蓋過它會演成挨打。
+ */
+const PULSE_RANK: Record<AnimPulse, number> = {
+  hurt: 0,
+  guard: 1,
+  dodge: 1,
+  attack: 2,
+  cast: 3,
+};
 
 export interface AnimInputs {
   alive: boolean;
@@ -49,7 +71,13 @@ export class AnimationStateMachine {
    * would make the character feel stuck for the length of the tail.
    */
   private recovery = false;
-  state: AnimState = "idle";
+  /**
+   * ⭐ 現在的狀態。⚠️ 型別是 **`AnimState | AnimPulse`** —— 因為
+   * `update()` 在脈衝期間直接回**脈衝名**，而 2026-09-02 之後脈衝多了
+   * `guard`/`dodge`，⛔ 它們**不在** 6 格 `AnimState` 裡（見 `animPulse.ts`：
+   * 它們走 `ClipAnimator` 的 `PresentationClip` 軸，⛔ 不進 `clipMap`）。
+   */
+  state: AnimState | AnimPulse = "idle";
 
   /**
    * Event-driven pulse (from MSG.EVENT: abilityCast / damage / basic attack).
@@ -108,7 +136,7 @@ export class AnimationStateMachine {
   }
 
   /** Recompute the state from authoritative flags; returns the new state. */
-  update(inputs: AnimInputs, nowMs: number): AnimState {
+  update(inputs: AnimInputs, nowMs: number): AnimState | AnimPulse {
     if (!inputs.alive) {
       this.pulse = null;
       this.recovery = false;

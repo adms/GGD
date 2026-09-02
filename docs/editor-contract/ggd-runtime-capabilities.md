@@ -1,6 +1,6 @@
 # GGD 遊戲端執行期能力清單（`ggd-runtime-capabilities@1`）
 
-**指紋 `111434fa`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
+**指紋 `24bd88e2`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
 
 ## 這份文件是什麼
 
@@ -126,7 +126,7 @@
 
 模板是「參數化的技能骨架」：填參數就展開成一組 effect。下列家族已在遊戲端出貨且可展開（清單由展開器本人過濾，所以不會宣稱一個展不開的家族）。
 
-`beam-roll` · `buff-self` · `charge-push` · `ground-nova` · `instant-blast` · `leap-strike` · `line-blast` · `line-sweep` · `lock-combo` · `locust-line` · `locust-orb` · `locust-strike` · `locust-swarm` · `locust-travel` · `mark-stacks` · `on-attack` · `on-hit-react` · `orbit-array` · `periodic-field` · `proxy-cast` · `proxy-fanout` · `radial-burst` · `random-barrage` · `single-strike` · `summon-agent` · `teleport` · `traveling-wave`
+`beam-roll` · `buff-self` · `charge-push` · `combo-finisher` · `ground-nova` · `instant-blast` · `leap-strike` · `line-blast` · `line-sweep` · `lock-combo` · `locust-line` · `locust-orb` · `locust-strike` · `locust-swarm` · `locust-travel` · `mark-stacks` · `on-attack` · `on-hit-react` · `orbit-array` · `periodic-field` · `proxy-cast` · `proxy-fanout` · `radial-burst` · `random-barrage` · `single-strike` · `summon-agent` · `teleport` · `traveling-wave`
 
 ## 6. 模擬器能力旗標
 

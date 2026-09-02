@@ -20,6 +20,7 @@ import { platformStatusWithContent } from "./config/contentBus";
 import { degradedHealthzStatus, replayHealth, type ReplayHealthSnapshot } from "./replay/replayHealth";
 import { contentHealth, type ContentHealthSnapshot } from "./contentHealth";
 import { contentCacheHealth, type ContentCacheSnapshot } from "./contentCacheHealth";
+import { buildHealth, buildStampGateMode, type BuildHealthSnapshot } from "./buildHealth";
 
 export interface HealthzPayload {
   /** Conjunction of every subsystem that can be unhealthy — today: replay. */
@@ -43,6 +44,17 @@ export interface HealthzPayload {
    * 見 ./contentCacheHealth.ts 的檔頭。
    */
   contentCache: ContentCacheSnapshot;
+  /**
+   * ⭐ GH#949 —— 「這台在跑哪一版」。
+   *
+   * ⚠️ 它與 `contentCache` 同一條理由（fail-open 沒錯，**靜默**才是缺陷）：
+   * 退回 `"dev"` 是對的（本機開發不該被版本戳擋住），⛔ 但在此之前
+   * 「有戳記」與「整條沒接上」在外面看起來一模一樣 —— 而正式站量到的是**後者**。
+   *
+   * ⛔ 它**預設不進 `ok`**：一個沒有版本戳的 shard 照樣打得完一場。
+   * ⭐ 要讓探針看得到就把 `GGD_BUILD_STAMP_HEALTHZ=unhealthy` 打開。
+   */
+  build: BuildHealthSnapshot;
   platform: ReturnType<typeof platformStatusWithContent>;
 }
 
@@ -85,14 +97,17 @@ export interface HealthzPayload {
 export function buildHealthzPayload(): HealthzPayload {
   const replay = replayHealth.snapshot();
   const content = contentHealth();
+  const build = buildHealth();
+  const buildOk = build.stamped || buildStampGateMode() === "warn";
   return {
     // A real conjunction, not the literal `true` this used to be.
-    ok: replay.ok && content.ok,
+    ok: replay.ok && content.ok && buildOk,
     rooms: roomRegistry.stats(),
     sim: tickHealth.snapshot(),
     replay,
     content,
     contentCache: contentCacheHealth(),
+    build,
     platform: platformStatusWithContent(),
   };
 }

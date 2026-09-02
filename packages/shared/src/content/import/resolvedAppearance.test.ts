@@ -18,6 +18,8 @@ import { describe, it, expect, beforeAll } from "vitest";
 import { readFileSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { STAND_IN_MODEL_KEYS } from "../voxelSkin/types";
+import { effectiveYawOffsetDeg } from "../glbYaw";
 
 import {
   resolveAppearance,
@@ -124,6 +126,45 @@ describe("resolved-appearance@1", () => {
     ).toBe("英雄卡指的那一顆");
   });
 
+  it("★★ ⭐⭐ ④ yaw 回的是**實際生效值** —— ⛔ 不是文件上寫了什麼（Codex 阻塞清單 B）", () => {
+    // ⛔⛔ 在此之前這一格是 `num(model.yawOffsetDeg, 0)` ——
+    // ⭐ 而遊戲套的是 `glbYawOffset()`，它在文件缺值時走**家族回退**
+    //   （`assets/models/imported/` ⇒ **90°**）
+    // ⇒ ⭐ 外部編輯器拿到 0°、畫面上是 90°：一個安靜的、每一隻匯入英雄都中的錯。
+    let checkedImported = 0;
+    let checkedAuthored = 0;
+    for (const c of champs) {
+      const m = models.get(String(c.modelKey));
+      if (!m) continue;
+      const r = resolveAppearance(c.id, c, m);
+      if (!r.ok) continue;
+      const a = r.appearance;
+      // ⭐ 承重：契約的生效值 ＝ **出貨 resolver** 算出來的（⛔ 不是我在這裡重算 prefix）
+      expect(
+        a.effectiveYawOffsetDeg,
+        `${c.id}: 契約的 effective yaw 與出貨 resolver 不一致`,
+      ).toBeCloseTo(
+        effectiveYawOffsetDeg({
+          glbPath: a.glbPath,
+          yawOffsetDeg: a.authoredYawOffsetDeg ?? undefined,
+        }),
+        6,
+      );
+      if (a.authoredYawOffsetDeg === null && a.glbPath.startsWith("assets/models/imported/")) {
+        // ⭐⭐ 這就是那個錯：文件沒寫、路徑是匯入的 ⇒ **90°**，⛔ 不是 0
+        expect(a.effectiveYawOffsetDeg, `${c.id}: 匯入模型缺值時應該是 90°`).toBeCloseTo(90, 6);
+        checkedImported++;
+      }
+      if (a.authoredYawOffsetDeg !== null) {
+        expect(a.effectiveYawOffsetDeg).toBeCloseTo(a.authoredYawOffsetDeg, 6);
+        checkedAuthored++;
+      }
+    }
+    // ⭐ 儀器：兩條路都真的走到了（⛔ 否則上面在量空氣）
+    expect(checkedImported, "⛔ 沒有任何一隻是「匯入 + 文件沒寫 yaw」⇒ 這條在量空氣").toBeGreaterThan(0);
+    expect(checkedAuthored, "⛔ 沒有任何一隻文件寫了 yaw ⇒ 覆寫那條路沒被驗到").toBeGreaterThan(0);
+  });
+
   it("★★ ⭐⭐ ③ 站在**共用替身**上的英雄被明講出來（⛔ 不是靜默）", () => {
     const standIns = champs
       .map((c) => ({ c, r: resolveAppearance(c.id, c, models.get(String(c.modelKey))) }))
@@ -134,11 +175,46 @@ describe("resolved-appearance@1", () => {
       standIns.length,
       "⛔ 一位共用替身英雄都沒標出來 —— ⭐ 2026-09-02 量到有 4 位 ⇒ `isStandIn` 壞了",
     ).toBeGreaterThan(0);
-    // ⭐ 而 `godie-e00r`（初號機）**必須**在裡面 —— 它是引發 GH#933 的那一位。
+    // ⭐⭐ 2026-09-02 —— 這裡本來寫死 `godie-e00r`（引發 GH#933 的那一位）。
+    // ⛔ 而修好它的**那一次改動**（初號機拿到自己的 satyrtrickster 網格）
+    // 就讓這條夾具紅了 —— 失敗形態⑩的形狀：**守衛是靠缺陷才綠的**。
+    //
+    // ⇒ ⭐ 改成從**另一個住處**推導，⛔ 不點名任何一位：
+    //   · `isStandInModel()` 用的是**前綴**（`champ.`）
+    //   · `STAND_IN_MODEL_KEYS` 是**逐顆列名**的四具 rig
+    //   兩者是獨立的兩份知識 ⇒ 拿後者驗前者，任一邊漂掉都會紅。
+    //
+    // ⚠️ ⛔ **「共用同一顆 modelKey」不是這條的判準** —— 量到 17 個共用 key，
+    // 其中 14 個是 `imported.*`（英雄與它的變體刻意共用**同一顆真的角色模型**，
+    // 例：`godie-h02v`/`godie-h02u` 草泥馬兩兄弟）⇒ 那些預覽是**對的**。
+    // ⭐ 「站在通用 rig 上」才是會讓編輯器預覽出錯角色的那一種。
+    const onGenericRig = champs.filter((c) =>
+      STAND_IN_MODEL_KEYS.includes(String(c.modelKey)),
+    );
     expect(
-      standIns.some((s) => s.startsWith("godie-e00r")),
-      "⛔ 初號機沒有被標成共用替身 ⇒ 外部編輯器會忠實預覽出一個**錯的角色**",
-    ).toBe(true);
+      onGenericRig.length,
+      "⛔ 一位都沒站在四具通用 rig 上 ⇒ 這條在量空氣（或 STAND_IN_MODEL_KEYS 空了）",
+    ).toBeGreaterThan(0);
+    for (const c of onGenericRig) {
+      expect(
+        standIns.some((s) => s.startsWith(`${c.id} `)),
+        `⛔ ${c.id} 站在通用替身 ${String(c.modelKey)} 上卻沒被標出來 ` +
+          "⇒ 外部編輯器會忠實預覽出一個**錯的角色**",
+      ).toBe(true);
+    }
+    // ⭐⭐ **反方向**（⛔ 一頭不算 —— 形態⑫）：
+    // 上面那個迴圈只走「列名 ⇒ 有標」，所以把一顆 key 從 `STAND_IN_MODEL_KEYS`
+    // 拿掉只會讓迴圈**變短**，⛔ 不可能紅（突變驗過，第一版就是綠的）。
+    // ⇒ ⭐ 反過來再走一次：**被標成替身的，一定要在列名表裡**。
+    //   兩頭都走，兩個住處任一邊漂掉都會紅。
+    for (const id of standIns) {
+      const key = id.slice(id.indexOf("(") + 1, id.lastIndexOf(")"));
+      expect(
+        STAND_IN_MODEL_KEYS.includes(key),
+        `⛔ ${id} 被標成替身，而 ${key} 不在 STAND_IN_MODEL_KEYS 裡 ` +
+          "⇒ 前綴判斷與列名表漂開了（兩份知識只剩一份是對的）",
+      ).toBe(true);
+    }
   });
 
   it("★★ ⭐ ④ `modelDocDigest` 對**整份**文件（⛔ 不是只有 glbPath）", () => {

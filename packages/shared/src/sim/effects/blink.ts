@@ -54,6 +54,11 @@ import type { EffectKindSpec } from "./effectKind";
 import { runEffects } from "./effectRunner";
 import { shapeTargets } from "./shapeTargets";
 import { teleportBody } from "../movement/blink";
+// ⭐ Codex P0-5 —— `displace` 的酬載型別住在**另一個發射站**旁邊
+// （`movement/leap.ts`），兩邊 import 同一個 ⇒ 欄位漂掉是 tsc 的紅。
+import type { DisplaceEvent } from "../movement/leap";
+// ⭐ **唯一**的 origin 解析器（見 `combat/damage.ts:288` 的檔頭）。
+import { abilityIdOfOrigin } from "../combat/damage";
 
 /**
  * 這一個 mover 要去哪（尚未證明合法 —— 合法性是 `teleportBody` 的事）。
@@ -184,7 +189,26 @@ export const blinkEffect: EffectKindSpec<"blink"> = {
 
       // GH#354 —— 位移的統一時刻（見 effects/dash.ts）。⚠️ 在 `landed === null`
       // 那道閘**之後**：瞬移被地形擋掉時什麼都沒發生，不該觸發「位移後⋯」。
-      world.emit("displace", { id: mover, mode: "blink" });
+      //
+      // ⭐ Codex P0-5 —— `phase: "end"` 是**這一行的位置**推導出來的，⛔ 不是挑的：
+      // 它在 `teleportBody` 回傳 `landed` 的下面 ⇒ 身體**已經在終點上**。
+      // ⛔ 這裡刻意沒有配一則 `"start"`：瞬移是原子的（中間位置一格都不存在），
+      // 而多發一則 `displace` 會讓 `onDashOrBlink` 觸發兩次 ＝ 改變 sim 判定。
+      world.emit("displace", {
+        id: mover,
+        mode: "blink",
+        phase: "end",
+        caster: ctx.caster,
+        origin: ctx.origin,
+        abilityId: abilityIdOfOrigin(ctx.origin) ?? null,
+        // ⭐ 原子：同一個 tick 就到了 —— ⛔ 不是「很短」，是 0。
+        durationSec: 0,
+        ...(ctx.abilitySlot !== undefined ? { slot: ctx.abilitySlot } : {}),
+        // ⭐ 連段的第幾刀。⚠️ 這一格 leap 那一側**結構上拿不到**（那裡收的是
+        // `StartLeapOptions` 不是 `ctx`）—— 理由與兩個要改的呼叫點寫在
+        // `movement/leap.ts` 的 `DisplaceEvent` 檔頭。
+        ...(ctx.sequenceIndex !== undefined ? { strikeIndex: ctx.sequenceIndex } : {}),
+      } satisfies DisplaceEvent);
 
       // 抵達之後**立刻**執行，同一個 tick。`point` 換成落點，`targets` 不動。
       if (onArrive !== undefined) {

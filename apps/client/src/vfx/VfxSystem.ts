@@ -171,6 +171,8 @@ import {
   screenFlashSpecFromEvent,
   screenShakeSpecFromEvent,
 } from "../render/screenFx";
+import type { AnimPulse } from "@ggd/shared/content/animPulse";
+import type { ShieldGainedEvent } from "@ggd/shared/sim/effects/shield";
 
 /** Reusable scratch for the #233 headroom probe — no per-frame allocation. */
 const HEADROOM_F = new Vector3();
@@ -178,6 +180,12 @@ const HEADROOM_F = new Vector3();
 export interface VfxContext {
   /** rendered position of an entity (view space), or null if unknown */
   entityPos(id: number): { x: number; z: number } | null;
+  /**
+   * ⭐ 護盾生成的 beat 開不開（GH#940）—— 後台的 rollback 開關。
+   * ⚠️ **選用**：舊的呼叫端（測試夾具、audition）不必改一行，
+   * ⛔ 而缺席時的答案是「開」——與 `ContentDb.shieldGainedCue()` 的回退同向。
+   */
+  shieldGainedCue?(): boolean;
   /** authored vfx doc for a vfxKey, or null (docs are optional content) */
   vfxDoc?(key: string): VfxDoc | null;
   /**
@@ -242,7 +250,7 @@ export interface VfxContext {
    * ⛔ 不知道「view 從哪來」（同 `vfxDoc` / `modelDocFor` 一字不差的理由）。
    * 缺席 ⇒ 動畫段是 no-op（headless 測試與舊接線的樣子，⛔ 不是整個功能不生效）。
    */
-  pulseAnim?(id: number, kind: "attack" | "cast" | "hurt", opts?: { clipWindowMs?: number }): void;
+  pulseAnim?(id: number, kind: AnimPulse, opts?: { clipWindowMs?: number }): void;
   /**
    * ⭐ GH#838 N6 —— 演出用的暫時隱形（阿邦快速劍X：人消失 1 秒，只剩劍氣）。
    * ⚠️ 這**不是**權威隱身；缺席 ⇒ 段是 no-op（headless 測試的樣子）。
@@ -2172,6 +2180,30 @@ export class VfxSystem {
         const pos = this.posFromEvent(ev, ev.data.target as number | undefined);
         if (!pos) break;
         this.feedback.landingDust({ x: pos.x, z: pos.z, scale: this.budgetScale(), nowMs });
+        break;
+      }
+      // ⭐⭐ 護盾**生成** shieldGained（GH#940）—— 一片淡玉綠的光亮起來。
+      //
+      // ⛔⛔ 在此之前這一半**從來沒有畫過一個像素**：事件在 sim 裡發得好好的
+      // （`sim/effects/shield.ts`，一次 `addShield` 一則），⛔ 而它停在
+      // `SERVER_ONLY_EVENT_TYPES` ——「一個沒有消費者的事件在線上跟一個
+      // 消費者靜默 no-op 的事件長得一模一樣」。
+      // ⇒ ⭐ 而**破碎**那一半（下面的 `guardBreak`）一直是活的
+      //   ⇒ 玩家看到的是一個**只有下半場**的演出。
+      //
+      // ⚠️ 座標走 `posFromEvent(ev, ev.data.target)`，⛔ **不是** `ev.data.origin`
+      // —— 那一格是封包的 **provenance 標籤**（`"basic"` 那一族），⛔ 不是座標。
+      // ⭐ 寫這一段時 `ShieldGainedEvent` 的型別**當場攔下了那個誤讀**（tsc 紅）。
+      case "shieldGained": {
+        if (this.ctx.shieldGainedCue?.() === false) break; // ⭐ 後台一鍵 rollback
+        const d = ev.data as unknown as ShieldGainedEvent;
+        const pos = this.posFromEvent(ev, d.target);
+        if (!pos) break;
+        // ⭐ 比破防**輕**（那是碎裂，這是撐起來），而 `amount` 交給既有的
+        //   五級距（GH#617：越大越快）。
+        this.sparks.push(
+          new HitSpark(this.scene, pos.x, pos.z, nowMs, "light", 240, IMPACT_TINTS.shieldGained, 1.0, d.amount),
+        );
         break;
       }
       // 破防 guardBreak — a bigger cool-white shatter pop.

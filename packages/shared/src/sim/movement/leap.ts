@@ -72,6 +72,12 @@ import type { LeapOverride } from "../components";
 import { relaxBody } from "../collision/resolve";
 import { flightIgnoresObstacles } from "../flight";
 import { crossesWalls, policyFor, resolveDisplacementEnd } from "./wallBlock";
+// ⭐ **唯一**的 origin 解析器（它自己的檔頭逐字寫著「it is the one place origin
+// is parsed」）—— ⛔ 不在這裡再寫一份 `startsWith("ability:")`，理由見
+// `stats/modifiers.ts:484`。⚠️ 這條 import 與 `combat/damage.ts:30` 的
+// `cancelLeap` 形成一個**循環**，而它是安全的：兩邊都只在**函式體內**互相呼叫，
+// 模組頂層一個字都沒有跑到對方（`leap.test.ts` / `blink.test.ts` 是證據）。
+import { abilityIdOfOrigin } from "../combat/damage";
 import { TICK_HZ } from "../../constants";
 
 /** Minimum flight length in ticks — a 1-tick "leap" is a teleport, not an arc. */
@@ -217,6 +223,116 @@ export function resolveLandingPoint(
   return body.pos;
 }
 
+/** 位移的三種來源 —— 三支效果共用**一則** `displace`（`WorldHookSystem.ts:313`）。 */
+export type DisplaceMode = "dash" | "leap" | "blink";
+
+/**
+ * 這一則講的是位移的哪一個**時刻**。
+ *
+ *  · `"start"`  —— 位移**開始**，身體還沒動到終點。leap 的起跳 tick 就是這個：
+ *                  `nav.override` 剛掛上、`leapPosAt(0,N)` 仍然回起點，弧線還有
+ *                  `durationSec` 要飛。
+ *  · `"impact"` —— 途中命中。⛔⛔ **今天出貨的三個發射站一個都不送這個值。**
+ *                  ⭐ 它是 Codex 契約要求的**詞彙**，⛔ 不是一個已經存在的 beat ——
+ *                  編輯器今天寫「位移途中命中時⋯」的內容**永遠不會觸發**
+ *                  （第一·五守則：卡片上不可以有說了但不會發生的字）。
+ *                  要它就要先做機制（第〇·五守則：盤點 → 按擋住幾支排序 → 做機制）。
+ *  · `"end"`    —— 位移**結束**，身體已經在終點上。blink 就是這個：那一則在
+ *                  `teleportBody` 成功**之後**才發，而瞬移是**原子**的
+ *                  （同一 tick 換座標，中間位置一格都不存在）⇒ 起點與終點同一刻。
+ *
+ * ⛔⛔ **為什麼 leap 沒有第二則 `end`**：`displace` 接著 `onDashOrBlink`
+ * （`WorldHookSystem.ts:313`）⇒ 在落地那一刻補一則 `displace` 會讓每一次跳躍
+ * 把玩家的卡片觸發**兩次** ＝ 改變 sim 判定，而這條 lane 逐字禁止那件事。
+ * ⭐ 落地那一刻**已經有**兩則外送事件可以接：`leapStart`（起跳，帶 `ticks`／`apex`）
+ * 與 `LeapSystem.ts:152` 的 `explosion`（落地，帶落點座標）。
+ */
+export type DisplacePhase = "start" | "impact" | "end";
+
+/**
+ * ⭐⭐ **`displace` 的酬載型別 —— 住在發射站旁邊**（Codex 阻塞清單 P0-5）。
+ *
+ * ⛔⛔ 為什麼要有這個介面：`SimWorld.emit(type: string, data: Record<string, unknown>)`
+ * 與 `EventMessage.data` **都沒有型別** ⇒ 消費端想讀任何欄位就非 `as` 不可，
+ * ⭐ 而每一個 `as` 都是一個**靜默的洞**（CLAUDE.md 失敗形態⑧）。
+ * ⇒ 兩邊 import 同一個 ⇒ 欄位改名或消失是 **tsc 的紅**。
+ *
+ * ── 三個發射站，今天只有兩個採用了這個型別 ────────────────────────────────
+ * | 發射站 | phase | 已型別化 |
+ * |---|---|---|
+ * | `movement/leap.ts`（本檔，起跳） | `"start"` | ✅ |
+ * | `effects/blink.ts`（瞬移完成） | `"end"` | ✅ |
+ * | ⛔ `effects/dash.ts:36` | —— | ⛔ **還沒** —— 它今天只送 `{id, mode}` |
+ *
+ * ⚠️ ⭐ **那第三個是一個已知的洞**（形態⑧：讀 `ev.data.phase` 會拿到 `undefined`）。
+ * 它不在這條 lane 的檔案柵欄裡，所以這裡**宣告**它而不是偷偷修它 ——
+ * 守衛 `sim/displaceCueContract.test.ts` 第④條把這個缺口**量出來並釘住**：
+ * 修好 dash 的那一位會看到那一條紅，訊息裡寫著要改哪兩行。
+ *
+ * ── ⛔ 拿不到的那幾格（⛔ 不塞猜的值）─────────────────────────────────────
+ *  · `strikeIndex` —— **leap 這一側拿不到**。`startLeap` 收的是
+ *    {@link StartLeapOptions}（一個**移動原語**的參數包），⛔ 不是 `EffectContext`，
+ *    而段號住在 `EffectContext.sequenceIndex`（唯一的填寫者是 `effects/delayed.ts:423`）。
+ *    要它就得在 `StartLeapOptions` 多一格並在**兩個**呼叫點填：
+ *    `effects/leap.ts:73` 與 `effects/knockback.ts:316` —— 兩個都在柵欄外。
+ *    ⭐ blink 那一側拿得到（它手上就是 `ctx`），所以它有這一格。
+ *  · `target`（位移的**對象**）—— ⛔ 沒有第二格，因為 {@link DisplaceEvent.id}
+ *    **就是**它：`applyTo:"self"` 時 `id === caster`，`applyTo:"target"`（集結／
+ *    拉人／52-02 蹂躪編年史丟受害者）時 `id` 是被丟的那一位而 `caster` 是施法者。
+ *    ⇒ `id` + `caster` 已經完整回答了 Codex 的「caster/target」，多一格就是
+ *    同一個值的第二個住處（第〇·四守則）。
+ */
+export interface DisplaceEvent {
+  /**
+   * **被位移的那一位**。⚠️ 這個鍵名是承重的：`WorldHookSystem.ts:313` 的
+   * `actorKey: "id"` 讀它決定【使用位移技後】掛在誰身上。
+   */
+  readonly id: number;
+  /** 哪一種位移 —— 條件葉讀它就能只吃閃現／只吃跳躍。 */
+  readonly mode: DisplaceMode;
+  /** 見 {@link DisplacePhase}。 */
+  readonly phase: DisplacePhase;
+  /**
+   * 施法者。⚠️ 與 {@link DisplaceEvent.id} **可以不同人** —— 52-02 蹂躪編年史
+   * 丟的是受害者（`id` = 受害者，`caster` = 丟的人）。
+   */
+  readonly caster: number;
+  /**
+   * 封包的 **provenance 標籤**（`ctx.origin`，例：`"ability:godie-hart.q"`／
+   * `"item:…"`／`"basic"`）—— ⛔ **不是座標**（`ShieldGainedEvent.origin` 的
+   * 檔頭記著同一個誤讀當場被 tsc 攔下來過）。⭐ 這一格是**唯一的真相**。
+   */
+  readonly origin: string;
+  /**
+   * `origin` 解出來的技能 id，非技能來源（道具／普攻／狀態 DoT）是 `null`。
+   *
+   * ⚠️ ⭐ 它是**衍生值**，唯一的算法是 `abilityIdOfOrigin(origin) ?? null` ——
+   * ⛔ 不要手寫、⛔ 不要在消費端再寫第二份 `startsWith("ability:")`
+   * （`stats/modifiers.ts:484` 記著為什麼兩份會分岔）。
+   *
+   * ⚠️ **為什麼仍然帶著它**（`effects/spawnModelFx.ts:286` 逐字寫著「⛔ 不新開
+   * 一個欄位」，那條慣例是對**內部**消費端說的）：`displace` 是一份**對外的編輯器
+   * 契約**，而外部編輯器 import 不到 `abilityIdOfOrigin`。⭐ 兩份不會分岔，因為
+   * 守衛第②條逐則比對 `abilityId === abilityIdOfOrigin(origin) ?? null`。
+   */
+  readonly abilityId: string | null;
+  /**
+   * 這次位移**真的**要花多久（秒）。
+   * ⚠️ leap 給的是**整數化之後**的 `ticks / TICK_HZ`，⛔ 不是作者寫的 `durationSec`
+   * ——「這一格什麼時候結束」問的是引擎真的排了幾個 tick。
+   * blink 是 `0`（原子的，同一 tick 就到了）。
+   */
+  readonly durationSec: number;
+  /** 施放的那一格（Q/W/E/R/EX/PASSIVE）。缺席 = 這次執行不是從一格技能來的。 */
+  readonly slot?: CastableSlot;
+  /**
+   * 連段的**第幾刀**，1 起算（＝ `EffectContext.sequenceIndex`，客戶端
+   * `VfxScriptPlayer.ts:203` 的 `strikeIndex` 過濾讀的就是同一個號碼）。
+   * ⚠️ 缺席 = 這一次執行**不在序列裡**；⛔ leap 那一側結構上拿不到（見檔頭）。
+   */
+  readonly strikeIndex?: number;
+}
+
 export interface StartLeapOptions {
   /** requested landing point; omit (or pass the caster's own pos) for inPlace */
   to: Vec2;
@@ -290,7 +406,23 @@ export function startLeap(world: SimWorld, id: EntityId, opts: StartLeapOptions)
   });
   // GH#354 —— 位移的統一時刻（見 effects/dash.ts）。⛔ 不取代 `leapStart`：
   // 那一則是客戶端的起跳動畫線索，這一則是內容側的觸發時刻。
-  world.emit("displace", { id, mode: "leap" });
+  //
+  // ⭐ Codex P0-5 —— `phase: "start"` 是**這一行的位置**推導出來的，⛔ 不是挑的：
+  // 它在 `nav.override = ov` 的下面、而 `ov.elapsed` 還是 0（`LeapSystem.ts:97`
+  // 才開始加），所以身體**一格都還沒飛**。⛔ 這裡刻意沒有第二則 `end`，
+  // 理由寫在 {@link DisplacePhase}（多一則 = `onDashOrBlink` 觸發兩次 = 改判定）。
+  world.emit("displace", {
+    id,
+    mode: "leap",
+    phase: "start",
+    caster: opts.casterId,
+    origin: opts.origin,
+    abilityId: abilityIdOfOrigin(opts.origin) ?? null,
+    // ⭐ 整數化**之後**的那個時長（`leapTicks` 已經夾過 `MIN_LEAP_TICKS`）——
+    // 演出要對齊的是引擎真的排的 tick 數，⛔ 不是作者寫的 `opts.durationSec`。
+    durationSec: ticks / TICK_HZ,
+    ...(opts.slot !== undefined ? { slot: opts.slot } : {}),
+  } satisfies DisplaceEvent);
   return true;
 }
 

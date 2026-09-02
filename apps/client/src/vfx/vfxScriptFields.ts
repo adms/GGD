@@ -11,6 +11,7 @@
  * 兩種在畫面上都只會說「存檔失敗」。閘：`studioSliderBounds.test.ts`。
  */
 import { VFX_SCRIPT_TRIGGERS, type VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
+import { ANIM_PULSES } from "@ggd/shared/content/animPulse";
 
 // ── slider/欄位規格（資料驅動；⛔ 不逐段手刻表單）──────────────────────────
 export interface FieldSpec {
@@ -122,7 +123,10 @@ export const FIELDS: Record<VfxScriptSegment["kind"], FieldSpec[]> = {
   anim: [
     ...COMMON,
     { key: "at", label: "誰演", kind: "select", options: ["target", "caster"] },
-    { key: "pulse", label: "動畫", kind: "select", options: ["hurt", "attack", "cast"] },
+    // ⭐ GH#940 —— 下拉選項**從詞彙表推導**，⛔ 不再手抄。
+    // ⚠️ 在此之前這裡寫死三格：加一塊動作積木 ⇒ schema 收得下、
+    // ⛔ 而編輯器的下拉裡**選不到它** —— 一個 tsc 看不見的洞。
+    { key: "pulse", label: "動畫", kind: "select", options: [...ANIM_PULSES] },
     { key: "clipWindowMs", label: "剪輯窗 ms", kind: "range", min: 50, max: 3000, step: 25 },
   ],
   // ⭐⭐ M1 逐刀瞬移 ＋ M3 升空曲線（超究武神霸斬）—— **只動畫面**，⛔ 不動判定框。

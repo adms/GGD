@@ -192,6 +192,10 @@ describe("discriminated EffectDef union (editor-02)", () => {
         "grantXp",
         "floatingText",
         "heal",
+        // ⭐ 2026-09-02 —— `grantXp` 是 `9ac96ba3c` 加進 schema 的新 kind。
+        // ⛔ 這條紅**不是**這一輪造成的（第三守則：紅在合併之後 ≠ 合併造成）。
+        // ⭐ 棘輪正在做它該做的事：一個新 effect kind 要被編輯器**明確承認**。
+        "grantXp",
         "invulnerable", // lane P3 — 無敵
         "knockback", // lane P4 — 擊退
         "leap", // task #247

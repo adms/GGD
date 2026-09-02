@@ -1,4 +1,5 @@
 import type { VfxScriptDoc, VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
+import type { AnimPulse } from "@ggd/shared/content/animPulse";
 import {
   VFX_FORGE_SEGMENT_KINDS,
   decodeAssetDrag,
@@ -9,7 +10,13 @@ import {
 } from "./model";
 
 const ACTOR_LABEL = { caster: "施法者", target: "目標" } as const;
-const PULSE_LABEL = { attack: "攻擊", cast: "施法", hurt: "受擊" } as const;
+const PULSE_LABEL = {
+  attack: "攻擊",
+  cast: "施法",
+  hurt: "受擊",
+  guard: "格擋",
+  dodge: "迴避",
+} as const satisfies Record<AnimPulse, string>;
 export const SEGMENT_KIND_LABEL = {
   modelFx: "3D 模型特效",
   vfx: "粒子特效",

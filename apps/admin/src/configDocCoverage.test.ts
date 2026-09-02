@@ -189,7 +189,7 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // 2026-08-27（GH#806）：29 → 28。`audio-map` 的 KNOWN_GAP 被付掉 —— ⭐ 而它是被
     // **引擎**付掉的（`configTables.ts` 長出 `recordScalars`），⛔ 不是手刻一頁。
     // ⭐ 總列數變少 = 這張表最健康的移動方向。
-    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(28); // 2026-08-22：25 → 27（#529 ability-vfx-bindings · #541 combo-strikes，兩份都是產生器擁有的推導表）
+    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(29); // +unsafe-textures（量測台帳，Codex P0-6）。2026-08-22：25
     // 2026-08-17：13 → 14。`roster`（英雄上下架）**往下走了一格** —— 它從
     // KNOWN_GAP 變成 OWN_PAGE，因為 ui/RosterPage.tsx 做出來了。⚠️ 這是這張表
     // 唯一「健康」的移動方向：帳單被付掉，而總列數不變。
@@ -203,7 +203,7 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // 兩份都是**產生器擁有**的推導表（各自有 `--check` 逐位元組閘）——
     // ⛔ 給它們一張編輯表單,操作者填的值會在下一次跑產生器時被無聲蓋掉,
     // 而 `source` / `unmatched` 欄位會**繼續宣稱**它有出處(＝ icon-plan 那一列的形狀)。
-    expect(byKind("NOT_TUNABLE")).toHaveLength(6); // +owner-knobs（授權表，⛔ 不是設定）
+    expect(byKind("NOT_TUNABLE")).toHaveLength(7); // +owner-knobs（授權表）+unsafe-textures（量測台帳，Codex P0-6）
     // 2026-08-02：2 → 5。新增的三列是 lobby-layout / valhalla-sandbox /
     // victory-podium —— 三份文件與 Zod 都接完了,只差客戶端還在讀寫死的常數。
     // 2026-08-03：5 → 4。victory-podium **往下走了一格**:客戶端接上了消費端,

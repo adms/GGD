@@ -1,4 +1,5 @@
 import type { VfxScriptDoc, VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
+import { isSingleArcVfxId } from "./presentationContract";
 
 export interface ActionAnimationIssue {
   readonly code:
@@ -58,11 +59,13 @@ export interface ActionTimelineCue {
 }
 
 function isSlash(segment: VfxScriptSegment): boolean {
-  return (segment.kind === "vfx" && /(?:^|[.-])slash(?:[.-]|$)/i.test(segment.vfxId)) ||
+  return (segment.kind === "vfx" && (
+    isSingleArcVfxId(segment.vfxId) || /(?:^|[.-])slash(?:[.-]|$)/i.test(segment.vfxId)
+  )) ||
     (segment.kind === "modelFx" && /(?:^|[.-])(?:slash|crescent)(?:[.-]|$)/i.test(segment.modelKey));
 }
 
-/** Main's current slash primitives each burst 26 crescent sprites. */
+/** Legacy slash primitives burst 26 crescents; receipted `.arc` bricks are the safe replacement. */
 function isCurrentMultiCrescentBrick(segment: VfxScriptSegment): boolean {
   return segment.kind === "vfx" && /^fx\.prim\.[a-z0-9-]+\.slash(?:-lg)?$/i.test(segment.vfxId);
 }
@@ -387,9 +390,11 @@ export function completeActionAnimations(
         at: actor,
         pulse: actor === "target"
           ? "hurt"
-          : impact.on === "castStart" || impact.on === "reflectSuccess"
-            ? "cast"
-            : "attack",
+          : impact.on === "reflectSuccess"
+            ? "guard"
+            : impact.on === "castStart"
+              ? "cast"
+              : "attack",
         clipWindowMs: impact.kind === "bodyMove" ? Math.max(520, impact.durationMs) : 650,
       });
     }

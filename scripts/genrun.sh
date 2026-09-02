@@ -17,6 +17,29 @@ STEP="${1:?用法: scripts/genrun.sh <pnpm step,例 shapes:build> [要跑的 scr
 #   ⛔ 少了這個分離，wrapper 會呼叫自己 ⇒ 無窮遞迴。
 RUN="${2:-$STEP}"
 
+# ⭐⭐ GH#950 —— **內容樹的獨佔鎖**。
+#
+# ⚠️ 為什麼：這支腳本會**成批重寫** `content/**`（`skillremake:json` 一次寫 400+ 份），
+# ⛔ 而 vitest 的**檔案之間是並行的** ⇒ 另一支測試的 `--check` 可能正好讀到
+# 一棵寫到一半的樹 ⇒ ⭐ 報一個**假的「過期」**，而它的訊息叫人去跑 build
+# （照做會產生一份**位元組相同**的產物 ⇒ 下一輪又紅 ⇒ 以為是新的錯）。
+#
+# ⭐ 這裡是**唯一**要改的地方：genrun 是每一支產生器的單一入口。
+# 讀者那一側走 `scripts/gencheck.sh`（共享鎖）。
+#
+# ⚠️ ⛔ **巢狀時不可以再拿一次** —— `flock` 是 per-fd 的，
+# 而 `skills:sync` 底下的 genrun 是**另一個 process** ⇒ 再拿一次獨佔鎖會**死鎖**。
+# ⇒ 判準與下面那個隔離區的巢狀防護**同一個**：`GGD_QUARANTINE_UNLOCKED`。
+if [ "${GGD_QUARANTINE_UNLOCKED:-0}" != "1" ] && [ "${GGD_CONTENT_LOCK_HELD:-0}" != "1" ]; then
+  export GGD_CONTENT_LOCK_HELD=1
+  # ⚠️ ⛔ 不可以寫 `"$0" "$STEP" "${2:-}"` —— `$2` 沒給時那會傳一個**空字串**，
+  #   而下面的 `RUN="${2:-$STEP}"` 對空字串**不會**套預設 ⇒ `pnpm ""`。
+  if [ "$#" -ge 2 ]; then
+    exec python3 scripts/content-tree-lock.py write -- bash "$0" "$STEP" "$2"
+  fi
+  exec python3 scripts/content-tree-lock.py write -- bash "$0" "$STEP"
+fi
+
 # ⭐⭐ GH#815 —— **巢狀防護**。`sync.mjs`（skills:sync）一開始就把整個隔離區解鎖，
 #   然後依序跑 38 支。如果每一支都在收工時把**自己的**產物重新上鎖，
 #   鏈上後面那些**寫同一批檔**的步驟就會吃 EACCES ——

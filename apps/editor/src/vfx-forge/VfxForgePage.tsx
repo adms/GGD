@@ -70,6 +70,10 @@ import {
   hasAuthoritativeRapidMultiStrike,
 } from "./actionAnimationPrinciples";
 import { simTraceReviewState } from "./simTraceReview";
+import {
+  PRESENTATION_RECEIPT,
+  unsupportedReplacementClaims,
+} from "./presentationContract";
 
 const simPreview = createSimPreviewController();
 
@@ -89,7 +93,10 @@ export function VfxForgePage() {
   const [ability, setAbility] = useState<ForgeAbility | null>(null);
   const draftHistory = useUndoHistory<VfxScriptDoc | null>(null, sameJson);
   const draft = draftHistory.value;
-  const [original, setOriginal] = useState<VfxScriptDoc | null>(null);
+  // This is the file/profile snapshot that was loaded. A submitted proposal is
+  // not a saved/live version and must never replace this restore baseline.
+  const [loadedOriginal, setLoadedOriginal] = useState<VfxScriptDoc | null>(null);
+  const [lastSubmittedHash, setLastSubmittedHash] = useState<string | null>(null);
   const [isAcceptanceFixture, setIsAcceptanceFixture] = useState(false);
   const [acceptanceStartedFromBlank, setAcceptanceStartedFromBlank] = useState(false);
   const [authoringActions, setAuthoringActions] = useState<string[]>([]);
@@ -188,7 +195,8 @@ export function VfxForgePage() {
         if (!live) return;
         setAbility(abilityDoc);
         draftHistory.reset(script);
-        setOriginal(script);
+        setLoadedOriginal(script);
+        setLastSubmittedHash(null);
         setIsAcceptanceFixture(fixture !== null);
         setAcceptanceStartedFromBlank(false);
         setAuthoringActions(fixture ? [`載入只讀參考樣本：${abilityId}`] : [`載入技能：${abilityId}`]);
@@ -243,7 +251,10 @@ export function VfxForgePage() {
     return () => globalThis.removeEventListener("keydown", onKeyDown);
   }, [draftHistory.redo, draftHistory.undo]);
 
-  const dirty = useMemo(() => JSON.stringify(draft) !== JSON.stringify(original), [draft, original]);
+  const dirty = useMemo(
+    () => JSON.stringify(draft) !== JSON.stringify(loadedOriginal),
+    [draft, loadedOriginal],
+  );
   const inlineErrors: ErrorMap = useMemo(() => {
     if (!draft) return {};
     const parsed = zVfxScriptDoc.safeParse(draft);
@@ -291,6 +302,11 @@ export function VfxForgePage() {
       : [],
     [ability, cues, draft],
   );
+  const replacementBlockers = useMemo(
+    () => draft ? unsupportedReplacementClaims(draft) : [],
+    [draft],
+  );
+  const replacementBlocked = replacementBlockers.length > 0;
   const canAutoCompleteActionIssues = hasAutoCompletableActionIssue(actionIssues);
   const durationMs = useMemo(() => (draft ? timelineDurationMs(draft, cues) : 1000), [cues, draft]);
   const selectedIndex = draft ? Math.min(selected, draft.segments.length - 1) : 0;
@@ -379,7 +395,7 @@ export function VfxForgePage() {
   };
 
   const save = async (): Promise<void> => {
-    if (!draft || !simReview.ready || errorCount > 0 || assetAuditPending || assetBlockers.length > 0 || actionIssues.length > 0 || activationConflict) return;
+    if (!draft || !simReview.ready || errorCount > 0 || assetAuditPending || assetBlockers.length > 0 || actionIssues.length > 0 || replacementBlocked || activationConflict) return;
     if (!reviewEvidenceAllowed) {
       setStatus(`⛔ 外觀證據無效：${reviewEvidenceIssues.join("；")}`);
       return;
@@ -458,7 +474,7 @@ export function VfxForgePage() {
           autoVisualScore: visual.autoVisualScore,
         },
       );
-      setOriginal(draft);
+      setLastSubmittedHash(result.proposal.candidateHash);
       setStatus(
         result.proposal.promotable
           ? `已送人工批核，尚未套用 · ${result.proposal.candidateHash}`
@@ -481,7 +497,8 @@ export function VfxForgePage() {
   const startAcceptanceFromBlank = (): void => {
     const blank = newScript(abilityId, reactionTrigger);
     draftHistory.reset(blank);
-    setOriginal(blank);
+    setLoadedOriginal(blank);
+    setLastSubmittedHash(null);
     setSelected(0);
     setPlaying(false);
     setPlayheadMs(0);
@@ -494,7 +511,8 @@ export function VfxForgePage() {
     const fixture = acceptanceFixtureFor(abilityId);
     if (!fixture) return;
     draftHistory.reset(fixture);
-    setOriginal(fixture);
+    setLoadedOriginal(fixture);
+    setLastSubmittedHash(null);
     setSelected(0);
     setPlaying(false);
     setPlayheadMs(0);
@@ -509,6 +527,10 @@ export function VfxForgePage() {
   const visualEvidenceBlocked = visualEvidence.length < requiredVisualEvidence;
 
   const captureVisualEvidence = async (): Promise<void> => {
+    if (replacementBlocked) {
+      setStatus("⛔ Main 尚未支援 trigger:channel 取代；預設動作與腳本動作會重播，禁止當成驗收證據");
+      return;
+    }
     if (!simReview.ready) {
       setStatus(`⛔ 不可擷取批核證據：${simReview.reason}`);
       return;
@@ -550,16 +572,19 @@ export function VfxForgePage() {
           <p>只編輯純演出候選；AI 修改先進後台批核，通過前絕不寫入遊戲 content。</p>
         </div>
         <div className="vfx-forge-save">
-          <span className={errorCount || assetBlockers.length || actionIssues.length || activationConflict ? "error" : ""}>{status}{dirty ? " · 未儲存" : ""}</span>
+          <span className={errorCount || assetBlockers.length || actionIssues.length || replacementBlocked || activationConflict ? "error" : ""}>
+            {status}{dirty ? " · 未提交變更" : ""}{lastSubmittedHash ? ` · 最近送審 ${lastSubmittedHash}` : ""}
+          </span>
           <button type="button" disabled={!draftHistory.canUndo} onClick={() => { draftHistory.undo(); setVisualEvidence([]); }} title="復原（Ctrl/Cmd+Z）">↶ 復原</button>
           <button type="button" disabled={!draftHistory.canRedo} onClick={() => { draftHistory.redo(); setVisualEvidence([]); }} title="重做（Ctrl/Cmd+Shift+Z）">↷ 重做</button>
-          <button type="button" disabled={!dirty} onClick={() => { if (original) { draftHistory.commit(original); setVisualEvidence([]); } }}>還原存檔版</button>
+          <button type="button" disabled={!dirty} onClick={() => { if (loadedOriginal) { draftHistory.commit(loadedOriginal); setVisualEvidence([]); } }}>還原載入版</button>
           <button
             type="button"
-            disabled={!dirty || !simReview.ready || errorCount > 0 || assetAuditPending || assetBlockers.length > 0 || actionIssues.length > 0 || activationConflict !== null || !reviewEvidenceAllowed || fixtureWorkflowBlocked || visualEvidenceBlocked}
+            disabled={!dirty || !simReview.ready || errorCount > 0 || assetAuditPending || assetBlockers.length > 0 || actionIssues.length > 0 || replacementBlocked || activationConflict !== null || !reviewEvidenceAllowed || fixtureWorkflowBlocked || visualEvidenceBlocked}
             title={fixtureWorkflowBlocked
               ? "八招必須從空白畫布用 Editor 重建，不能直接提交預置 JSON"
               : !simReview.ready ? simReview.reason
+              : replacementBlocked ? "Main 尚未支援腳本動作取代同一 trigger:channel 的預設動作"
               : !reviewEvidenceAllowed ? reviewEvidenceIssues.join("；")
               : visualEvidenceBlocked ? `送審前還需要 ${requiredVisualEvidence - visualEvidence.length} 張完整技能演出畫面` : undefined}
             onClick={() => void save()}
@@ -631,7 +656,7 @@ export function VfxForgePage() {
 
       <section className="vfx-recipes" aria-label="可重用特效組合">
         <b>可重用組合</b>
-        <span>像 JASS helper 一樣展開成標準積木；每招自動帶施展動作，時間軸的傷害／位移節點必須配角色動作。普通斬擊一動作只配一個主斬弧；只有三段以上、分時且小型的明確極速連斬可例外。目前 Main 的 slash 積木每顆會噴26個月牙，工坊會阻擋它，等待 single-arc 積木。</span>
+        <span>像 JASS helper 一樣展開成標準積木；每招自動帶施展動作，時間軸的傷害／位移節點必須配角色動作。普通斬擊一動作只配 Main 收據中的一個 single-arc；只有三段以上、分時且小型的明確極速連斬可例外。舊 slash 積木每顆會噴26個月牙，工坊仍會阻擋。</span>
         {VFX_FORGE_RECIPES.map((recipe) => (
           <button key={recipe.id} type="button" title={recipe.description} onClick={() => void addRecipe(recipe.id)}>
             {recipe.label}
@@ -711,12 +736,24 @@ export function VfxForgePage() {
                   }),
                 }));
                 recordAction("依技能模板原則補齊施展／攻擊動作");
-                setStatus("已補齊可安全推定的角色動作；假觸發、過量月牙與缺少 Main 積木仍須依 blocker 個別處理");
+              setStatus("已補齊可安全推定的角色動作；假觸發、舊26發月牙與 Main replacement blocker 仍會個別阻擋");
               }}
             >
               自動補角色動作
             </button>
           ) : null}
+        </section>
+      ) : null}
+
+      {replacementBlocked ? (
+        <section className="vfx-blocker" role="alert">
+          <b>⛔ Main 動作取代接縫尚未出貨</b>
+          <span>
+            收據 {PRESENTATION_RECEIPT.fingerprint} 明確回報 replacementPolicy={PRESENTATION_RECEIPT.replacementPolicy.status}。
+            目前候選會占用 {replacementBlockers.map((claim) =>
+              `${claim.trigger}:${claim.channel}${claim.strikeIndex === undefined ? "" : `#${claim.strikeIndex}`}`
+            ).join("、")}；若繼續送審，Main 預設動作與腳本動作會同時播放。仍可編輯與預覽，但禁止擷取證據及送審。
+          </span>
         </section>
       ) : null}
 
@@ -754,7 +791,7 @@ export function VfxForgePage() {
                   onTime={onTime}
                   onStop={stop}
                   onDropAsset={(asset, placement) => { void addAsset(asset, placement); }}
-                  canCaptureEvidence={simReview.ready && reviewEvidenceAllowed && previewMode === "runtime" && visualEvidence.length < 4}
+                  canCaptureEvidence={simReview.ready && !replacementBlocked && reviewEvidenceAllowed && previewMode === "runtime" && visualEvidence.length < 4}
                   onCaptureEvidence={() => void captureVisualEvidence()}
                 />
               ) : (
@@ -775,7 +812,7 @@ export function VfxForgePage() {
                     <b>候選畫面證據 {visualEvidence.length}/{requiredVisualEvidence}（最多 4）</b>
                     <small>完整技能演出 · 綁定本次候選；任何 JSON 修改都會清空</small>
                   </div>
-                  <button type="button" disabled={!simReview.ready || !assetPreviewAllowed || !reviewEvidenceAllowed || previewMode !== "runtime" || visualEvidence.length >= 4} onClick={() => void captureVisualEvidence()}>
+                  <button type="button" disabled={!simReview.ready || replacementBlocked || !assetPreviewAllowed || !reviewEvidenceAllowed || previewMode !== "runtime" || visualEvidence.length >= 4} onClick={() => void captureVisualEvidence()}>
                     📷 擷取目前格
                   </button>
                 </header>

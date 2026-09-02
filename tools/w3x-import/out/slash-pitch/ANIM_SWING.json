@@ -45,18 +45,6 @@
    "pitchDeg": 66,
    "attackClipPitchDeg": 67
   },
-  "godie-e00r.w": {
-   "champion": "godie-e00r",
-   "championName": "最終泛用人型決戰兵器 - 初號機",
-   "ability": "59-02 高週波短刀",
-   "modelKey": "champ.skin.rogue",
-   "clip": "cast",
-   "blade": "weapon←handRight",
-   "sweptDeg": 74.9,
-   "planarity": 0.998,
-   "pitchDeg": 89,
-   "attackClipPitchDeg": 84
-  },
   "godie-e00w.q": {
    "champion": "godie-e00w",
    "championName": "神鳴流劍士 - 櫻綻剎那",
@@ -395,6 +383,15 @@
   }
  },
  "unmeasured": {
+  "godie-e00r.w": {
+   "champion": "godie-e00r",
+   "ability": "59-02 高週波短刀",
+   "modelKey": "w3x.stock.satyrtrickster",
+   "reason": "short-sweep",
+   "detail": "掃過 19.8° < 25.0°",
+   "castClip": "Stand Ready",
+   "attackFallbackPitchDeg": 31
+  },
   "godie-h02r.q": {
    "champion": "godie-h02r",
    "ability": "90-01 飛葉快刀",

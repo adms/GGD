@@ -14,6 +14,11 @@ import type { EventMessage } from "@ggd/shared/protocol/messages";
 import type { ModelDoc, VfxDoc } from "@ggd/shared/content";
 import type { ProjectileFlight } from "@ggd/shared/content";
 import type { VoxelSkinRecipe } from "@ggd/shared/content/voxelSkin";
+import type {
+  EvadeChannel,
+  EvadeEvent,
+  EvadeSourceRef,
+} from "@ggd/shared/sim/combat/evasion";
 import { TICK_MS } from "@ggd/shared/constants";
 import { standinRelativeScaleOf } from "@ggd/shared/content/standinScale";
 import { ChampionView, type FormAttachmentSpec } from "./views/ChampionView";
@@ -39,6 +44,10 @@ import {
 } from "./combatFeedback";
 import { TELEPORT_STEP_UNITS } from "./math/motion";
 import { lifecycleLedger } from "./lifecycleLedger";
+import {
+  resolveAbilityPresentation,
+  type PresentationTrigger,
+} from "@ggd/shared/content/abilityPresentation";
 
 /** Per-champion vertex-tint bookkeeping (task #49). */
 interface TintState {
@@ -160,8 +169,42 @@ export interface EntityViewState {
   };
 }
 
+/**
+ * ⭐⭐ **一次迴避的專屬演出**（Codex 阻塞清單 P0-4）——「**真正抽中的那個來源**」
+ * 自己的染色，⛔ 不是「有 evade 就播同一段」。
+ *
+ * ⚠️ 這一格是**加在通用回饋之上**的，⛔ 不是取代它：`triggerDodge` 永遠會播
+ * （Codex 驗收②「沒有專屬設定時維持既有 MISS／通用迴避回饋」）。
+ * ⇒ ⭐ 解析不到 ⇒ 逐位元回到今天的畫面。
+ */
+export interface EvadeCue {
+  /** `ChampionView.flash` 的顏色（Codex 逐字要求的「染色」）。 */
+  rgb: [number, number, number];
+  /** 毫秒；省略 ⇒ `flash` 自己的預設。 */
+  ms?: number;
+  /** 0..1；省略 ⇒ `flash` 自己的預設。 */
+  alpha?: number;
+}
+
 /** Optional content lookups (return null until docs are fetched). */
 export interface ViewContentHooks {
+  /**
+   * ⭐⭐ P0-4 —— **這一次迴避是誰讓它成功的**，換一段專屬演出。
+   *
+   * `by` 是 sim 送來的、**真正抽中**的那一份來源（`ModifierSource.id` /
+   * `StatusEffect.sourceId`），⛔ 不是「這個人身上第一個/最高的迴避來源」——
+   * sim 端用**那一次擲出來的數字**做分層歸因（`sim/combat/evasion.ts`
+   * 的 `basicEvadeSource`）。
+   *
+   * ⚠️ `by === null` 是**合法**的：迴避可能整份來自英雄的 `base.evasion`
+   * （出貨的 `godie-u00j` 就是），那時沒有任何 grant 擁有這一次。
+   *
+   * ⚠️ `channel === "fumble"` 時 `by` 是**攻擊者**身上的詛咒，⛔ 不是閃避者的 ——
+   * 解析器要看得懂這個差別，⛔ 不可以假設 `by` 屬於畫面上動的那一位。
+   *
+   * 缺席（今天每一個呼叫端）＝ 通用迴避回饋，逐位元不變。
+   */
+  evadeCueFor?(by: EvadeSourceRef | null, channel: EvadeChannel): EvadeCue | null;
   /**
    * seatId lets the caller substitute per-seat skins (equipped cosmetics).
    *
@@ -457,6 +500,30 @@ export interface SyncArgs {
 }
 
 export class EntityViewRegistry {
+  /**
+   * ⭐⭐ **照登錄表播預設動作**（Codex 阻塞清單 P0-3）。
+   *
+   * ⛔ 在此之前這六個 `case` **各自寫死一行** `pulse(...)` ⇒
+   * 「哪個事件該播誰的什麼動作」**沒有一個住處**，
+   * 而外部編輯器問不出這張表、新增事件時漏接也不會有東西紅。
+   *
+   * ⇒ ⭐ 規則住 `@ggd/shared/content/abilityPresentation`，這裡只查表。
+   * ⚠️ `opts` 讓呼叫端傳**事件帶來的**時序（castTime／durationSec／restartClip）——
+   * ⛔ 那是規則管不到的（它只說「播哪一塊」）。
+   */
+  private playDefaultPresentation(
+    trigger: PresentationTrigger,
+    ids: { caster?: number | undefined; target?: number | undefined },
+    nowMs: number,
+    opts?: { windowMs?: number; clipWindowMs?: number; restartClip?: boolean },
+  ): void {
+    for (const rule of resolveAbilityPresentation(trigger)) {
+      const id = rule.actor === "caster" ? ids.caster : ids.target;
+      if (id === undefined) continue;
+      this.champions.get(id)?.pulse(rule.pulse, nowMs, opts);
+    }
+  }
+
   private readonly champions = new Map<number, ChampionView>();
   private readonly projectiles = new Map<number, ProjectileView>();
   private readonly pool: ProjectileView[] = [];
@@ -599,7 +666,8 @@ export class EntityViewRegistry {
       }
       case "abilityCast": {
         const caster = ev.data.caster as number | undefined;
-        if (caster !== undefined) this.champions.get(caster)?.pulse("cast", nowMs);
+        // ⭐ P0-3 —— 查表，⛔ 不再寫死
+        this.playDefaultPresentation("abilityCast", { caster }, nowMs);
         break;
       }
       // castEnd and castInterrupt are NOT the same moment and must not share a
@@ -643,7 +711,11 @@ export class EntityViewRegistry {
           // pop on the attacker. Melee autos never flashed the attacker before,
           // so the strike read only on the victim. `[...]` copies the readonly
           // tunable into the mutable tuple `flash` expects.
-          view?.pulse("attack", nowMs, { restartClip: false });
+          // ⭐ P0-3 —— 查表。⚠️ `restartClip:false` 是**事件帶來的時序**，
+          //   ⛔ 不是規則的一部分（Codex：hitstop 不得從頭重播剪輯）。
+          this.playDefaultPresentation("basicAttack", { caster: source }, nowMs, {
+            restartClip: false,
+          });
           view?.flash([...ATTACKER_FLASH_RGB], nowMs, ATTACKER_FLASH_MS);
         }
         break;
@@ -670,7 +742,18 @@ export class EntityViewRegistry {
         if (target !== undefined) {
           const view = this.champions.get(target);
           if (view) {
-            view.triggerHurt(nowMs);
+            // ⭐⭐ P0-2 —— **擋下來的那一發播 `guard`，⛔ 不是 `hurt`。**
+            //   `ev.data.blocked` 是出貨的那個旗標（`VfxSystem` 的泛用火花
+            //   也讀同一格 ⇒ ⛔ 兩邊不會對同一發做出不同判斷）。
+            //   ⚠️ 其餘一切照舊：hitstop、閃光、火花都還在
+            //   —— ⭐ 換掉的只有**身體的姿勢**。
+            // ⭐ P0-3 —— 查表。⛔ 擋下來與沒擋下來是**兩個 trigger**，
+            //   而不是這裡的一個 if（規則住登錄表）。
+            this.playDefaultPresentation(
+              ev.data.blocked === true ? "hitImpactBlocked" : "hitImpact",
+              { target },
+              nowMs,
+            );
             // ⚠️ `ChampionView.flash` **無條件**寫 `flashRgb`/`flashAlpha`,只有
             //    `flashUntilMs` 走 `Math.max` ⇒ 一發 `ms: 0` 的閃光（GH#741 的
             //    `blockFlashMode: "none"`）會把**還在燒的上一發**的 alpha 洗成 0。
@@ -690,6 +773,63 @@ export class EntityViewRegistry {
           );
           sourceView?.setHitstop(plan.freezeMs, nowMs);
         }
+        break;
+      }
+      /**
+       * ⭐⭐ **閃過去了**（Codex 阻塞清單 P0-2）—— 防禦者播 `dodge`。
+       *
+       * ⛔⛔ 在此之前 `evade` 在**整個渲染層零個消費端**：
+       * 它只有一條浮動文字（`frameBus`）⇒ ⭐ 身體**一格都沒動過**。
+       *
+       * ⭐ 而 MISS 的字**照舊**（那是另一條路）——
+       * Codex 逐字要求「保留 MISS 回饋」。
+       */
+      case "evade": {
+        // ⭐⭐ P0-4 —— 讀的是 **sim 發射站旁邊那個型別**（`EvadeEvent`），
+        //   ⛔ 不是一串各自為政的 `as`。欄位改名／消失 ⇒ **tsc 紅**，
+        //   ⛔ 不是「上線之後沒有人畫得出來」（失敗形態⑧）。
+        const d = ev.data as unknown as Partial<EvadeEvent>;
+        const evader = d.target;
+        if (evader === undefined) break;
+        const view = this.champions.get(evader);
+        if (!view) break;
+        // ① 通用回饋 —— ⭐ **永遠先播**（Codex 驗收②：沒有專屬設定時維持既有回饋）。
+        this.playDefaultPresentation("evade", { target: evader }, nowMs);
+        // ② 專屬演出 —— ⭐ 由**真正抽中的那一個來源**選（`d.by`），
+        //    ⛔ 不是「這個人身上有迴避就播 X」。`by` 為 null（純 base.evasion）
+        //    或解析不到 ⇒ 只有①，逐位元回到今天的畫面。
+        const cue = this.content.evadeCueFor?.(d.by ?? null, d.channel ?? "basic");
+        if (cue) view.flash(cue.rgb, nowMs, cue.ms, cue.alpha);
+        break;
+      }
+      /**
+       * ⭐⭐ **位移的演出時刻**（Codex 阻塞清單 P0-5）—— 三種位移共用一則。
+       *
+       * ⛔⛔ 這一則在 2026-09-02 **才過線**（在此之前它停在 `SERVER_ONLY`）——
+       * ⭐ 而開線的同一刻就要有人讀它，⛔ 否則就是失敗形態⑧
+       * （`performanceEventsHaveConsumers` 這條閘逐字要求「一個歸宿」）。
+       *
+       * ⭐ 為什麼 `cast` 而不是 `attack`：位移是**施法者自己做的動作**
+       * （衝刺／跳躍／瞬移都是「他發動了什麼」），⛔ 而 `attack` 的語意是打到人。
+       * ⚠️ 而 `blink` 是**瞬間**的 ⇒ 它的窗要短（`durationSec` 是 0）——
+       * ⭐ 直接把引擎排的時長交給脈衝，⛔ 不是猜一個。
+       *
+       * ⚠️ ⛔ **只讀 `phase: "start"`**：三個發射站今天都只在起點發一則
+       * （理由是 sim 的 —— `displace` 接 `onDashOrBlink`，多發一則＝卡片觸發兩次）。
+       * ⇒ 這裡對 `impact`/`end` 刻意 no-op，⭐ 而不是假裝它們會來。
+       */
+      case "displace": {
+        const id = ev.data.id as number | undefined;
+        const phase = ev.data.phase as string | undefined;
+        if (id === undefined || phase !== "start") break;
+        const secs = ev.data.durationSec as number | undefined;
+        // ⭐ P0-3 —— 查表。⚠️ `durationSec` 是**事件帶來的時序**（引擎真的排的 tick），
+        //   ⛔ 不是規則的一部分 —— 規則只說「播哪一塊」。
+        this.playDefaultPresentation("displace", { caster: id }, nowMs, {
+          ...(typeof secs === "number" && secs > 0
+            ? { windowMs: Math.round(secs * 1000), clipWindowMs: Math.round(secs * 1000) }
+            : {}),
+        });
         break;
       }
       // unblocked heavy hit → KNOCKDOWN: a longer prone/getup flinch on the victim.

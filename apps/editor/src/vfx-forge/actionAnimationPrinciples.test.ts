@@ -101,6 +101,16 @@ describe("VFX Forge action-animation principles", () => {
     expect(issues.map((issue) => issue.code)).toContain("MULTI_CRESCENT_BRICK");
   });
 
+  it("accepts one receipted single-arc and still enforces its actor action", () => {
+    const candidate = doc([
+      { kind: "anim", on: "castStart", at: "caster", pulse: "cast" },
+      { kind: "anim", on: "strike", at: "caster", pulse: "attack", clipWindowMs: 500 },
+      { kind: "anim", on: "strike", at: "target", pulse: "hurt", clipWindowMs: 500 },
+      { kind: "vfx", on: "strike", vfxId: "fx.prim.holy.arc", at: "target", durationSec: 0.2 },
+    ]);
+    expect(actionAnimationIssues(candidate)).toEqual([]);
+  });
+
   it("requires an action window at every strike or movement beat", () => {
     const issues = actionAnimationIssues(doc([
       { kind: "anim", on: "castStart", at: "caster", pulse: "cast" },
@@ -143,7 +153,9 @@ describe("VFX Forge action-animation principles", () => {
     const segments = completeActionAnimations([
       { kind: "vfx", on: "reflectSuccess", vfxId: "fx.prim.holy.pulse-sm", at: "self", durationSec: 0.2 },
     ], { activationMode: "passive" });
-    expect(segments).toContainEqual(expect.objectContaining({ kind: "anim", on: "reflectSuccess", at: "caster" }));
+    expect(segments).toContainEqual(expect.objectContaining({
+      kind: "anim", on: "reflectSuccess", at: "caster", pulse: "guard",
+    }));
     expect(segments.some((segment) => segment.on === "castStart" || segment.on === "castEffect")).toBe(false);
     expect(actionAnimationIssues(doc(segments), { activationMode: "passive" })).toEqual([]);
     expect(activationModeForAbility({ slot: "PASSIVE" })).toBe("passive");

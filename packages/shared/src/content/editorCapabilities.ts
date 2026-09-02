@@ -2231,6 +2231,22 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
  * `content/ability-templates/` 的實際家族名比對，漏了就紅。
  */
 const FAMILY_PROBE_LIST: readonly string[] = [
+  // ⭐⭐ 2026-09-02（Codex 阻塞清單 A）—— **四個漏列的**。
+  //
+  // ⛔⛔ `combo-finisher` 是 `status:"enabled"` 而且 `isExpandable()` 為 true，
+  // ⛔ 卻**不在對外契約裡** ⇒ ⭐ 外部編輯器看不到一塊做好的積木。
+  //
+  // ⚠️ ⭐ 而守衛沒有紅，因為它**只驗「被出貨內容真的引用」的家族** ——
+  // 而 `combo-finisher` 的採用數是 **0**（它是新的）⇒ ⛔ **結構上失明**
+  // （失敗形態⑫：只從一頭走的掃描）。
+  // ⇒ 那條守衛這一次一起補上了另一個方向：
+  //   **`status:"enabled"` ＋ `isExpandable()` 的家族，一律要在契約裡**，
+  //   ⛔ 不論有沒有人用它。
+  //
+  // ⚠️ 三個 `dragon-*` 是 draft ⇒ `isExpandable()` 會把它們濾掉，
+  // ⭐ 列在這裡是**免費的**（檔頭逐字：「多列一個不存在的名字是安全的」），
+  // 而它們哪天轉 enabled 就會自動出現在契約裡。
+  "combo-finisher", "dragon-quake", "dragon-serpent", "dragon-shockwave",
   "barrier-domain", "beam-roll", "buff-self", "blink-strike", "channel-beam", "charge-push",
   "data-no-trigger", "death-mechanic", "drain-leech", "global-rule", "ground-nova",
   "growth-charge", "instant-blast", "leap-strike", "life-manipulate", "line-sweep",

@@ -58,9 +58,15 @@ import {
   type PresetSystemOptions,
   type Rgb,
 } from "./vfxPresets";
+import type { AnimState, AnimPulse } from "@ggd/shared/content/animPulse";
 
 /** Visual animation states this channel can gate on (mirrors AnimState). */
-export type WhirlwindState = "idle" | "run" | "attack" | "cast" | "hurt" | "death";
+// ⭐ GH#940 —— 這就是狀態格的詞彙表，⛔ 不是另一個東西 ⇒ 用同一份。
+// ⭐ GH#940 —— 這就是狀態格的詞彙表，⛔ 不是另一個東西 ⇒ 用同一份。
+// ⭐⭐ 2026-09-02（P0-2）：`| AnimPulse` —— 狀態機在脈衝期間直接回**脈衝名**，
+// 而 `guard`/`dodge` 不在 6 格 `AnimState` 裡（它們走 `PresentationClip` 軸）。
+// ⛔ 這裡收窄會讓 tsc 在呼叫端紅 —— ⭐ 而那正是它 2026-09-02 做到的事。
+export type WhirlwindState = AnimState | AnimPulse;
 
 /**
  * One model's whirlwind. The field set is deliberately the task #50 art-param

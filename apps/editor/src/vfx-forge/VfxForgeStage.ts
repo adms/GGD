@@ -13,6 +13,7 @@ import type { AnimationGroup } from "@babylonjs/core/Animations/animationGroup";
 import type { Mesh } from "@babylonjs/core/Meshes/mesh";
 import type { EventMessage } from "@ggd/shared/protocol/messages";
 import type { ModelDoc, VfxDoc } from "@ggd/shared/content";
+import type { AnimPulse } from "@ggd/shared/content/animPulse";
 import { resolveAppearance } from "@ggd/shared/content/import/resolvedAppearance";
 import { Models, VfxDefs, VfxScripts } from "@ggd/shared/content/registries";
 import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
@@ -23,6 +24,7 @@ import type { ModelFxSpawnEvent } from "../../../client/src/render/modelFxPath";
 import { ModelFxRig } from "../../../client/src/render/modelFxRig";
 import { AssetManager } from "../../../client/src/render/AssetManager";
 import { CameraRig } from "../../../client/src/render/CameraRig";
+import { resolveClips, type ClipState } from "../../../client/src/render/ClipAnimator";
 import { buildZoneGround } from "../../../client/src/render/ArenaGround";
 import { facingToYaw } from "../../../client/src/render/math/motion";
 import { glbYawOffset } from "../../../client/src/render/views/glbFacing";
@@ -46,7 +48,6 @@ import { applyAimYaw } from "../../../client/src/render/vfx/artParams";
 import { yawDegToward } from "../../../client/src/vfx/orient";
 import { api } from "../api/client";
 import { assetUrl } from "../preview3d/assetUrl";
-import { resolveClip } from "../preview3d/clips";
 import { burstNow, toParticleSystem } from "../preview3d/particles";
 import { projectileIdsOf, type ForgeAbility, type ScheduledSimEvent } from "./model";
 import { calibrateTwoWay } from "../../../client/src/vfx/auditionCalibrate";
@@ -56,6 +57,7 @@ import {
   automaticVisualHygieneScore,
   type BackdropFrameAudit,
 } from "./backdropFrameAudit";
+import { PRESENTATION_RECEIPT } from "./presentationContract";
 
 const STEP_MS = 1000 / 60;
 const CASTER_POS = { x: 0, z: 0 };
@@ -170,8 +172,11 @@ export class VfxForgeStage {
   /** Last authored particle placement, surfaced in the Forge HUD for aim QA. */
   private lastVfxAim: string | null = null;
   private generation = 0;
+  /** Missing presentation clips are visible authoring defects, but report once per actor/pulse. */
+  private readonly warnedActorClips = new Set<string>();
   private textSerial = 0;
   private disposed = false;
+  private teardownStarted = false;
   private homePose: PreviewActorPose;
   private castFocus: { x: number; z: number } | null;
   private flash: ForgeOverlay["flash"] = null;
@@ -811,10 +816,31 @@ export class VfxForgeStage {
   }
 
   dispose(): void {
+    if (this.disposed) return;
     this.disposed = true;
     clearTimeout(this.seekTimer);
     this.seekSeq++;
     this.generation++;
+    // AssetContainer resolution can finish before Babylon's asynchronous RGBD
+    // expansion shader. React StrictMode mounts and immediately tears down a
+    // preview once in development; disposing the Scene in that gap leaves the
+    // shader callback calling a null postProcessManager. Keep the dead stage
+    // inert, wait for its already-started readiness work, then free it. This is
+    // bounded by the asset promises themselves and does not keep rendering.
+    void this.disposeAfterInflightWork();
+  }
+
+  private async disposeAfterInflightWork(): Promise<void> {
+    if (this.teardownStarted) return;
+    this.teardownStarted = true;
+    await Promise.allSettled([this.groundReady, this.actorReady, this.contentReady]);
+    if (!this.scene.isDisposed) {
+      try {
+        await this.scene.whenReadyAsync();
+      } catch {
+        // Teardown must still complete after a failed texture or shader.
+      }
+    }
     for (const actor of Object.values(this.actors)) this.disposeActor(actor);
     this.runtimeVfx?.dispose();
     this.modelRig.dispose();
@@ -1015,10 +1041,23 @@ export class VfxForgeStage {
     }));
   }
 
-  private playActor(actor: ForgeActor, clip: "idle" | "attack" | "cast" | "hurt", loop: boolean): void {
-    if (!actor.clipMap) return;
+  private playActor(actor: ForgeActor, clip: "idle" | AnimPulse, loop: boolean): void {
+    if (actor.groups.length === 0) return;
     for (const group of actor.groups) group.stop();
-    const group = resolveClip(actor.groups, actor.clipMap[clip]);
+    const resolved = resolveClips(actor.groups, actor.clipMap ?? undefined);
+    const requested = resolved.get(clip as ClipState);
+    const fallback = resolved.get("idle");
+    if (requested === undefined) {
+      const warningKey = `${actor.role}:${clip}`;
+      if (!this.warnedActorClips.has(warningKey)) {
+        this.warnedActorClips.add(warningKey);
+        this.emitOverlay(
+          `⚠ ${actor.role} 找不到 ${clip} 動作；依 Main 契約退回同角色 idle，請檢查 GLB 動畫`,
+        );
+      }
+    }
+    const index = requested ?? fallback;
+    const group = index === undefined ? null : actor.groups[index] ?? null;
     if (group) group.start(loop, 1);
   }
 
@@ -1026,10 +1065,12 @@ export class VfxForgeStage {
     return id === this.casterEntityId() ? this.actors.caster : this.actors.target;
   }
 
-  private pulseActor(id: number, kind: "attack" | "cast" | "hurt", clipWindowMs = 600): void {
+  private pulseActor(id: number, kind: AnimPulse, clipWindowMs?: number): void {
     const actor = this.actorForEntity(id);
     this.playActor(actor, kind, false);
-    actor.idleAfterMs = this.nowMs + clipWindowMs;
+    actor.idleAfterMs = this.nowMs + (
+      clipWindowMs ?? PRESENTATION_RECEIPT.actorPulses.defaultWindowMs[kind]
+    );
     this.emitOverlay(`動畫脈衝：${kind}`);
   }
 

@@ -67,7 +67,10 @@ const LEGACY_DIR = join(CONTENT_DIR, "_legacy/champions");
 
 /** The 21 kept stand-ins (drafts/PROMOTED.md is the authoritative table). */
 const STANDIN_IDS = [
-  "godie-e00r",
+  // ⭐ 2026-09-02（GH#933）—— `godie-e00r`（初號機）**畢業了**：
+  // 它現在跑自己的 `w3x.stock.satyrtrickster`（從 War3x.mpq 抽出來轉的），
+  // ⛔ 不再是體素替身 ⇒ 從這份升級名單移除。
+  // ⚠️ 這是**縮短**（棘輪的正確方向）：一位英雄拿到自己的模型是進步。
   "godie-e00s",
   "godie-e00t",
   "godie-e00u",

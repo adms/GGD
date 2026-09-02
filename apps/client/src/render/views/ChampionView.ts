@@ -1072,7 +1072,7 @@ export class ChampionView {
    * the 觀戰中 banner at that point, and a caret hovering over a body that is
    * about to dissolve (#220) would outlive the body itself.
    */
-  private updateSelfMarker(state: AnimState, nowMs: number): void {
+  private updateSelfMarker(state: AnimState | AnimPulse, nowMs: number): void {
     const ring = this.selfRing;
     const caret = this.selfCaret;
     if (!ring || !caret) return;
@@ -1259,6 +1259,33 @@ export class ChampionView {
   }
 
   /**
+   * ⭐⭐ **擋下來了**（Codex 阻塞清單 P0-2）—— 防禦者播 `guard`。
+   *
+   * ⛔ **不是 `hurt`**：Codex 逐字「不得將 `hurt` 當成唯一格擋動作」，
+   * 而它也不誠實 —— 一次成功的格擋**沒有被打穿**。
+   *
+   * ⚠️ 素材是硬牆：264 顆出貨 glb 裡 `guard` 是 **0 位元組** ⇒ 它必然走
+   * `ClipAnimator` 的模糊比對（`defend`/`block`/`guard`/`shield`/`parry`，
+   * 其中 `attack defend` 有 **21 顆**），⭐ 找不到就退回 idle 並**警告一次**。
+   * ⛔ 退回 idle **不是**「什麼都沒發生」——身體仍在動，⭐ 而 hitstop 與
+   * 火花仍然照播（那兩條不歸這裡）。
+   */
+  triggerGuard(nowMs: number): void {
+    this.pulse("guard", nowMs);
+  }
+
+  /**
+   * ⭐⭐ **閃過去了**（P0-2）—— 防禦者播 `dodge`。
+   *
+   * ⛔ 同樣**不是 `hurt`**：閃過去的人**沒有被打到**，播受擊是一句謊。
+   * ⭐ 而 MISS 的浮動文字**不受影響**（它走 `frameBus`，另一條路）——
+   * Codex 逐字要求「保留 MISS 回饋」。
+   */
+  triggerDodge(nowMs: number): void {
+    this.pulse("dodge", nowMs);
+  }
+
+  /**
    * Bigger reaction for an unblocked heavy hit → KNOCKDOWN: hold the hurt flinch
    * for a longer window (the sim roots the victim prone for a short getup).
    */
@@ -1418,7 +1445,7 @@ export class ChampionView {
    * had already started rising when protection (re)appeared, since
    * `dissolveFrame(0)` restores full opacity and zero rise.
    */
-  private updateDissolve(state: AnimState, nowMs: number): boolean {
+  private updateDissolve(state: AnimState | AnimPulse, nowMs: number): boolean {
     if (state !== "death") {
       // alive again (revive completed / next round spawned this seat) — the same
       // edge #85 disarms on. Undo everything the dissolve wrote.
@@ -1495,7 +1522,13 @@ export class ChampionView {
   }
 
   /** Advance the visual animation for this frame. */
-  update(state: AnimState, nowMs: number, dtMs: number, speedUnitsPerSec = 0): void {
+  /**
+   * ⭐⭐ 2026-09-02（P0-2）—— `state` 的型別是 **`AnimState | AnimPulse`**：
+   * 狀態機在脈衝期間直接回**脈衝名**，而 `guard`/`dodge` 不在 6 格 `AnimState` 裡
+   * （它們走 `ClipAnimator` 的 `PresentationClip` 軸 ⇒ ⛔ 不進 `clipMap`，
+   * ⇒ ⛔ 零個 model doc 要改）。
+   */
+  update(state: AnimState | AnimPulse, nowMs: number, dtMs: number, speedUnitsPerSec = 0): void {
     this.stepFacing(dtMs); // yaw smoothing — model-source independent
     // #244: the growth ease + the tier-2 mud ring, before the dissolve early-out
     // (a corpse's ring is switched off by setBodyVisible, not by skipping this).

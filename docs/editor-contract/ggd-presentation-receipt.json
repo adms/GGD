@@ -1,0 +1,209 @@
+{
+  "schema": "ggd-presentation-receipt@1",
+  "note": "⭐ 演出契約收據（Codex 阻塞清單 C）。**每一格都是推導的** —— ⛔ 產物，改 `tools/presentation-receipt/gen.ts`，⛔ 不要手改。⚠️ 一格寫著 `unsupported` **就是它今天的實話** —— ⭐ 請 fail closed，⛔ 不要抄 Main 的常數繞過去。",
+  "actorPulses": {
+    "vocabulary": [
+      "attack",
+      "cast",
+      "hurt",
+      "guard",
+      "dodge"
+    ],
+    "defaultWindowMs": {
+      "attack": 350,
+      "cast": 450,
+      "hurt": 250,
+      "guard": 300,
+      "dodge": 220
+    },
+    "animStates": [
+      "idle",
+      "run",
+      "attack",
+      "cast",
+      "hurt",
+      "death"
+    ],
+    "outsideClipMap": [
+      "guard",
+      "dodge"
+    ]
+  },
+  "clipFallback": {
+    "candidates": {
+      "idle": [
+        "idle",
+        "stand"
+      ],
+      "run": [
+        "run",
+        "walk",
+        "move"
+      ],
+      "attack": [
+        "attack",
+        "swing",
+        "shoot"
+      ],
+      "cast": [
+        "cast",
+        "spell",
+        "ability"
+      ],
+      "hurt": [
+        "hurt",
+        "hit",
+        "flinch"
+      ],
+      "death": [
+        "death",
+        "die",
+        "ko"
+      ],
+      "celebrate": [
+        "celebrate",
+        "cheer",
+        "victory",
+        "dance"
+      ],
+      "guard": [
+        "defend",
+        "block",
+        "guard",
+        "shield",
+        "parry"
+      ],
+      "dodge": [
+        "dodge",
+        "evade",
+        "roll",
+        "sidestep",
+        "walk"
+      ]
+    },
+    "policy": "① 文件 `clipMap` 的明確指名 → ② 這張表的模糊比對（同一顆 glb 自己的剪輯，⛔ 不會退到別的角色）→ ③ 都沒有 ⇒ 退回 idle 並**警告一次**（fail-loud）。⭐ idle 是循環的 ⇒ ⛔ 角色不會停住或消失。",
+    "measured": "264 顆出貨 .glb 的 AnimationGroup 名普查：guard 0 · dodge 0 · dash 0 · leap 0 · teleport 0 位元組；而 stand 295 · attack 238 · walk 171 · attack defend 21。"
+  },
+  "defaultPresentation": {
+    "rules": [
+      {
+        "trigger": "abilityCast",
+        "actor": "caster",
+        "pulse": "cast",
+        "channel": "caster.action",
+        "why": "⭐ Codex 逐字：「主動技能在 castStart/castEffect **必須有施法者 cast/attack**」。⛔ 粒子或光束不能取代施法動作 —— 一個只有特效、身體不動的施放讀起來像 bug。"
+      },
+      {
+        "trigger": "basicAttack",
+        "actor": "caster",
+        "pulse": "attack",
+        "channel": "caster.action",
+        "why": "⭐ 普攻的揮擊。⚠️ 出貨接法帶 `restartClip: false` —— Codex 逐字：「hitstop 應暫停或延長既有動作，⛔ 不得從頭重播剪輯」。"
+      },
+      {
+        "trigger": "comboStrike",
+        "actor": "caster",
+        "pulse": "attack",
+        "channel": "caster.action",
+        "why": "⭐ Codex 逐字：「每個權威 `strikeIndex` 必須有施法者 attack ＋ 目標 hurt/reaction」。⚠️ 權威來源是 ability JSON 的 `comboStrikes`／`delayed` —— ⛔ 技能名稱或 VFX 自己排出的月牙數量**不能**取得連斬豁免。"
+      },
+      {
+        "trigger": "comboStrike",
+        "actor": "target",
+        "pulse": "hurt",
+        "channel": "target.reaction",
+        "why": "⭐ 同上的另一半 —— ⛔ 只有攻擊者動、被打的人不動，讀起來是打空氣。"
+      },
+      {
+        "trigger": "projectileHit",
+        "actor": "target",
+        "pulse": "hurt",
+        "channel": "target.reaction",
+        "why": "⭐ Codex 逐字：「`projectileHit` 必須有目標反應」。"
+      },
+      {
+        "trigger": "hitImpact",
+        "actor": "target",
+        "pulse": "hurt",
+        "channel": "target.reaction",
+        "why": "⭐ 沒擋下來的那一發 —— 受擊。⚠️ 判準是事件上的 `blocked` 旗標，而 `VfxSystem` 的泛用火花讀**同一格** ⇒ ⛔ 兩邊不會對同一發做出不同判斷。"
+      },
+      {
+        "trigger": "hitImpactBlocked",
+        "actor": "target",
+        "pulse": "guard",
+        "channel": "target.reaction",
+        "why": "⭐ Codex 逐字：「格擋：防禦者播放 `guard`」。⛔ **不是 `hurt`** —— 一次成功的格擋沒有被打穿，播受擊是一句謊。"
+      },
+      {
+        "trigger": "evade",
+        "actor": "target",
+        "pulse": "dodge",
+        "channel": "target.reaction",
+        "why": "⭐ Codex 逐字：「迴避：防禦者播放 `dodge`，**保留 MISS 回饋**」。⚠️ MISS 的浮動文字走 `frameBus`（另一條路）⇒ ⛔ 不受這一格影響。"
+      },
+      {
+        "trigger": "reflectSuccess",
+        "actor": "target",
+        "pulse": "guard",
+        "channel": "target.reaction",
+        "why": "⭐ Codex 逐字：「反彈：從 `reflectSuccess` 播放防禦／反擊動作」。⚠️ 反彈封包的 `source` 就是**防禦者**（`combat/damage.ts:61` 的 provenance）⇒ ⭐ 歸屬乾淨，⛔ 不需要新的 dep。"
+      },
+      {
+        "trigger": "displace",
+        "actor": "caster",
+        "pulse": "cast",
+        "channel": "caster.action",
+        "why": "⭐ Codex 逐字：「`displace/leapStart` 等位移節點應有對應角色動作」。⭐ 用 `cast` 而不是 `attack`：位移是**施法者自己發動的**，⛔ 而 `attack` 的語意是打到人。⚠️ 只在 `phase:\"start\"` 播 —— 三個發射站今天都只在起點發一則。"
+      }
+    ],
+    "neverFakeCast": [
+      "passiveProc",
+      "auraTick",
+      "shieldGained"
+    ],
+    "resolver": "packages/shared/src/content/abilityPresentation.ts :: resolveAbilityPresentation()",
+    "note": "⭐ 這是**唯一**的住處 —— `GameApp` / `VfxSystem` / `VfxScriptPlayer` / `EntityViewRegistry` 一律查它，⛔ 不各自維護規則（Codex 逐字）。"
+  },
+  "replacementPolicy": {
+    "status": "unsupported",
+    "why": "⛔ **今天沒有取代機制**：`scriptPlayer.onEvent()` 之後 `switch` 直接往下走（⛔ 無 early-return、⛔ 無旗標）⇒ 兩條都跑。⭐ 而出貨的 10 份 script **逐份對照過只有 1 次重疊**（已修）——作者側是靠**約定**避開的，⛔ 不是靠機制。⇒ ⭐ 閘：`packages/shared/src/content/vfxScriptNoDoubleDraw.test.ts`（腳本不可以畫技能已經在畫的東西）。",
+    "evidence": "apps/client/src/vfx/VfxSystem.ts · packages/shared/src/content/vfxScriptNoDoubleDraw.test.ts"
+  },
+  "singleArc": {
+    "status": "supported",
+    "why": "10 顆單發弧（burstCount:1、錐角 ≤1°、初速 0、非拉長）。⭐ 既有的 26 發 slash 一顆都沒動。",
+    "evidence": "content/vfx/fx.prim.*.arc.json · packages/shared/src/content/singleArcPrimitive.test.ts",
+    "ids": [
+      "fx.prim.arcane.arc",
+      "fx.prim.blood.arc",
+      "fx.prim.fire.arc",
+      "fx.prim.holy.arc",
+      "fx.prim.ki.arc",
+      "fx.prim.lightning.arc",
+      "fx.prim.nature.arc",
+      "fx.prim.physical.arc",
+      "fx.prim.void.arc",
+      "fx.prim.wind.arc"
+    ],
+    "params": [
+      "w3xScale",
+      "tint",
+      "alpha",
+      "facingDeg",
+      "pitchDeg",
+      "flyHeight"
+    ]
+  },
+  "evasionProvenance": {
+    "status": "supported",
+    "why": "⭐ `evade` 帶著**真正抽中**的來源 identity（`by: {id, kind, statusId?}` ＋ `channel: basic|ability|fumble` ＋ `chance`）。⚠️ basic 那一條是**一次抽籤的分層歸因** —— `rollEvade` 從 `rng.chance(p)` 改寫成 `const roll = rng.next(); if (!(roll < p)) return false`，⭐ 而 `Rng.chance` 逐字就是 `next() < p` ⇒ **抽籤次數、位置、結果一個位元都沒動**。⭐ 分母留一塊無主的給 `base.evasion` ⇒ `by: null` ⇒ 走既有的泛用 MISS。",
+    "evidence": "packages/shared/src/sim/combat/evasion.ts"
+  },
+  "displaceCue": {
+    "status": "supported",
+    "why": "⭐ `displace` 帶著 `phase`（start/impact/end）與技能 identity。",
+    "evidence": "packages/shared/src/sim/movement/leap.ts · packages/shared/src/sim/effects/blink.ts"
+  },
+  "fingerprint": "d0ad1ef871050611"
+}

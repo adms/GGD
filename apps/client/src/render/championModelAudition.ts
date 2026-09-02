@@ -51,8 +51,10 @@ import { normalizedModelScale } from "./views/modelSizing";
 import { blizzardOverlayModels } from "./views/blizzardOverlay";
 import { standinSizes } from "./views/standinSizes";
 import type { AnimState } from "./anim/AnimationStateMachine";
+import { ANIM_STATES as SHARED_ANIM_STATES } from "@ggd/shared/content/animPulse";
 
-const ANIM_STATES: readonly AnimState[] = ["idle", "run", "attack", "cast", "hurt", "death"];
+// ⭐ GH#940 —— 從**唯一住處**取，⛔ 不再手抄六格。
+const ANIM_STATES: readonly AnimState[] = SHARED_ANIM_STATES;
 const asAnimState = (s: string | undefined): AnimState =>
   ANIM_STATES.includes(s as AnimState) ? (s as AnimState) : "idle";
 

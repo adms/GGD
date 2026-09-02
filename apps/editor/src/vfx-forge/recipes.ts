@@ -3,6 +3,7 @@ import {
   type VfxScriptSegment,
 } from "@ggd/shared/content/schema/vfxScript";
 import { completeActionAnimations } from "./actionAnimationPrinciples";
+import { singleArcVfxId } from "./presentationContract";
 
 /**
  * Editor-side macros: expand into ordinary vfx-script@1 blocks, so the player
@@ -12,9 +13,9 @@ export const VFX_FORGE_RECIPES = [
   { id: "classic-beam-fire", label: "經典橘金氣功砲", description: "透明安全的橘金雙層長軸粒子；不使用會露出白卡的 ReviveHuman MDL" },
   { id: "classic-beam-blue", label: "經典藍白氣功砲", description: "透明安全的藍白雙層長軸粒子；不使用會露出白卡的 ReviveHuman MDL" },
   { id: "line-blast-fire", label: "定距火球＋落點爆炸", description: "FireBlast MDL 真正飛行，抵達後才爆炸" },
-  { id: "dash-slash-void", label: "黑紫衝刺斬", description: "真正施法者高速穿越、單次命中光與震動；等待 Main single-arc 積木後自動換成一個大型主斬痕" },
+  { id: "dash-slash-void", label: "黑紫衝刺斬", description: "真正施法者高速穿越，搭配 Main 收據中的單發大型主斬弧與震動" },
   { id: "shockwave-dash-light", label: "衝擊波＋追身光斬", description: "A 段朝目標放衝擊波，B 段替 ability 的真實衝刺補上揮劍與斬光" },
-  { id: "combo-slash-holy", label: "黃藍多段斬＋終結柱", description: "每段一個角色攻擊／受擊動畫與單次命中光，第七段 MDL 光柱；不再使用一次噴26個月牙的舊積木" },
+  { id: "combo-slash-holy", label: "黃藍多段斬＋終結柱", description: "每段一個角色攻擊／受擊動畫與一個分時單斬弧，第七段黃藍光柱" },
   { id: "reflect-counter-open", label: "反彈成功起手", description: "只由 reflectSuccess 觸發的防禦火花；不猜 blockSuccess" },
   { id: "avalon-counter-chain", label: "理想鄉反擊七斬", description: "反彈成功起手、六次換位斬擊與第七段黃藍橫向終結砲" },
   { id: "rider-dash-beam-blue", label: "Rider 突進＋藍光束", description: "真 Rider 本體突進、藍白橫向光束與命中動畫" },
@@ -181,12 +182,11 @@ function dashSlashVoid(): VfxScriptSegment[] {
       offset: { x: 0.35, y: 0.2, z: 4.5 }, durationMs: 560,
     }),
     zVfxScriptSegment.parse({
-      // Main's current slash primitives burst 26 crescent sprites each. Until
-      // a true single-arc brick exists, prefer one bounded impact pulse over a
-      // fake fan; the real caster attack remains the primary motion.
-      kind: "vfx", on: "castEffect", atMs: 370, vfxId: "fx.prim.arcane.pulse-lg",
-      at: "target", durationSec: 0.32, w3xScale: 1.35,
-      tint: [190, 88, 255], flyHeight: 76, alpha: 0.72,
+      // One receipted arc, not a 26-crescent fan. The actor swing remains the
+      // primary motion; this is the single oversized cut that makes it read.
+      kind: "vfx", on: "castEffect", atMs: 370, vfxId: singleArcVfxId("void"),
+      at: "target", durationSec: 0.3, w3xScale: 1.85,
+      tint: [190, 88, 255], flyHeight: 76, alpha: 0.78,
     }),
     zVfxScriptSegment.parse({ kind: "anim", on: "castEffect", atMs: 390, at: "target", pulse: "hurt", clipWindowMs: 520 }),
     zVfxScriptSegment.parse({ kind: "screenShake", on: "castEffect", atMs: 390, amplitude: 0.38, durationSec: 0.32 }),
@@ -212,9 +212,9 @@ function shockwaveDashLight(): VfxScriptSegment[] {
     // owns delayed -> blink(to:point) in ability JSON. Adding a presentation
     // move on top made the real caster travel twice and overshoot the slash.
     zVfxScriptSegment.parse({
-      kind: "vfx", on: "castEffect", atMs: 430, vfxId: "fx.prim.holy.pulse-lg",
-      at: "target", durationSec: 0.32, w3xScale: 1.25,
-      tint: [255, 208, 88], flyHeight: 72, alpha: 0.72,
+      kind: "vfx", on: "castEffect", atMs: 430, vfxId: singleArcVfxId("holy"),
+      at: "target", durationSec: 0.3, w3xScale: 1.45,
+      tint: [255, 208, 88], flyHeight: 72, alpha: 0.76,
     }),
     zVfxScriptSegment.parse({
       kind: "vfx", on: "castEffect", atMs: 650, vfxId: "fx.prim.fire.explosion",
@@ -230,11 +230,10 @@ function comboSlashHoly(includeFinalColumn: boolean): VfxScriptSegment[] {
     zVfxScriptSegment.parse({ kind: "anim", on: "strike", at: "caster", pulse: "attack", clipWindowMs: 320 }),
     zVfxScriptSegment.parse({ kind: "anim", on: "strike", at: "target", pulse: "hurt", clipWindowMs: 520 }),
     zVfxScriptSegment.parse({
-      // Generic strike fires once per authoritative comboStrike. Existing
-      // slash bricks are 26-particle fans, so use one short hit pulse until
-      // Main ships the single-arc brick; never hide the character animation.
-      kind: "vfx", on: "strike", vfxId: "fx.prim.holy.pulse-lg", at: "target",
-      durationSec: 0.22, w3xScale: 1.2, flyHeight: 82, alpha: 0.68,
+      // Generic strike fires once per authoritative comboStrike: one actor
+      // swing, one target reaction and exactly one receipted arc per damage beat.
+      kind: "vfx", on: "strike", vfxId: singleArcVfxId("holy"), at: "target",
+      durationSec: 0.24, w3xScale: 1.05, flyHeight: 82, alpha: 0.72,
     }),
   ];
   if (includeFinalColumn) {
