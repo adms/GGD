@@ -10,16 +10,6 @@
   ],
   "pending": [
     {
-      "step": "content:build",
-      "path": "content/vfx-scripts/_index.json",
-      "why": "GH#838 的 `vfx-scripts` 集合是**上一次量測 sync-io 之後**才出現的。`packages/shared/scripts/buildIndexes.ts` 對 manifest 裡**每一個**集合重建 `_index.json`（⛔ 不是一張寫死的清單，⭐ 而且它的檔頭已經逐字宣告 `// ggd:writes content/*/_index.json`）⇒ 任何跑 `content:build` 的步驟都會寫它。\n⭐ **2026-08-30 重量測（`trace.mjs` pass1）確認了這件事**：`skillremake:json` 與 `content:build` **兩支**的 writes 都含 `content/vfx-scripts/_index.json`（`skillremake:json` 內部會呼叫 `pnpm content:build` 兩趟）。⇒ ⭐ 這一列在此之前只寫了 `content:build`，而報錯的是 `skillremake:json` —— **同一個洞，兩個步驟名**。\n⛔ **為什麼還沒把量測併進 `sync-io.json`**：pass1 的原始輸出**不能直接用** —— 它把 9 支量成「零產物」（`apconv:build` / `anchors:build` / `statcaps:build` / `sfxbind:build` / `speedtiers:build` / `skillremake:provenance` …），而那些是「**內容不同才寫**」的形狀（`force-writes.mjs` 的檔頭逐字解釋過）⇒ 直接併會讓 `genrun.sh <那 9 支>` 解鎖不到東西 ＝ ⭐ **把 #771 放大**。正確流程是 `trace ×2 → force-writes → merge-io`。\n⭐ 到期條件：走完那個流程之後，兩支的 writes 會含它 ⇒ 這兩列當場變幽靈而測試紅。"
-    },
-    {
-      "step": "skillremake:json",
-      "path": "content/vfx-scripts/_index.json",
-      "why": "與上一列**同一個洞** —— `skillremake:json` 內部呼叫 `pnpm content:build` 兩趟（`deriveCastTimes` 前後各一），而 `buildIndexes.ts` 對每一個集合重建 `_index.json`。⭐ 2026-08-30 的 `trace.mjs` pass1 量到它確實寫這一份。到期條件同上一列。"
-    },
-    {
       "step": "msgledger:build",
       "path": "docs/owner模組指派.md",
       "why": "⭐⭐ **併行 session 寫的，⛔ 不是這一步。** 2026-09-02 同一天內誤歸因**兩次**：批1 收尾時 `docs/世界觀-原創主線設定.md` 被算到 `locust:build` 頭上（那支只寫兩份，都不是它），批3 收尾時這三份被算到 `msgledger:build` 頭上。⚠️ ⭐ 根因是對帳量的是「這一步**期間**哪些檔的 mtime 變了」，⛔ 不是「這一步**寫了**什麼」—— 而另一條 session 同時在寫 docs/。⇒ ⛔ 純檔案系統的判準分辨不出這兩者（新建的產物與新建的併行檔長得一樣）。⭐ 到期條件：這三份哪一天**真的**進了某支產生器的 writes（或它們的作者 session 收工），重量測 sync-io 之後把這幾列刪掉。⚠️ 而它們今天確實是**無主**的（沒有產生器會重生成它們）—— 那一半的警告仍然成立。"

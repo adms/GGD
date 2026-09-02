@@ -189,6 +189,30 @@ export function buildEditorCoverage(): {
           // ⇒ ⭐ 原樣推出去，⛔ 不要自己再組一次路徑。
           for (const s of sub) out.push(s);
       }
+    } else if (node.kind === "tuple") {
+      // ⭐⭐ GH#888 —— **元組的每一格也要展開**。
+      //
+      // ⛔ 在此之前 tuple 掉不進下面那個 `"item" in node` 分支：
+      //   `walkZod` 給元組的欄位叫 **`items`（複數）**（`apps/editor/src/form/walk.ts:187`）
+      //   ⇒ 一個 `z.tuple([...])` 只留下**它自己的名字**，
+      //   ⭐ 而編輯器要編的東西住在每一格裡。
+      //
+      // ⚠️ ⭐ 與 record 那一段**同一個教訓**（就在上面）：路徑由 `walkZod`
+      //   自己組好，⛔ 這裡原樣推出去 —— 再接一次前綴會得到一份
+      //   「多了一段路徑、讀起來跟真的一模一樣」的契約。
+      // ⚠️⚠️ ⭐ **這一段今天的增量是 0，而那是量到的、⛔ 不是它沒接上**：
+      //   出貨的每一個 `z.tuple` 的葉**全部是純量**
+      //   （`zRgba` = `[number×4]`、`zColorStop` = `[number, [number×4]]`），
+      //   ⭐ 而 `flatten` 只在 `object` 分支 push 路徑 —— 純量本來就不進契約
+      //   （`color.start` 那一格自己在，⛔ 它底下沒有 `.0`..`.3`，而那是對的：
+      //    編輯器渲染的是一個顏色選擇器，⛔ 不是四個獨立欄位）。
+      // ⇒ ⭐ 它防的是**下一次有人把 object/record 放進 tuple** 的那一天 ——
+      //   在此之前那會是**靜默的漏格**（同 GH#889 的 record，也是零報錯地少了 12 格）。
+      for (const it of ((node as { items?: UINode[] }).items ?? [])) {
+        const sub: string[] = [];
+        flatten(it, sub);
+        for (const s of sub) out.push(s);
+      }
     } else if ("item" in node && node.item) {
       flatten(node.item as UINode, out);
     } else if (node.kind === "discriminatedUnion") {
