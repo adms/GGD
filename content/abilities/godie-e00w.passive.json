@@ -33,7 +33,7 @@
             "on": "onEvade",
             "effects": [
               {
-                "kind": "damage",
+                "kind": "damageArea",
                 "damageType": "physical",
                 "amount": {
                   "damageTier": "極小",
@@ -43,7 +43,9 @@
                       "coeff": 1.3
                     }
                   ]
-                }
+                },
+                "radius": 4.5,
+                "radiusTier": "小"
               },
               {
                 "kind": "applyStatus",
