@@ -15,10 +15,22 @@ export interface AiReviewEvidenceFrame {
   readonly dataUrl: string;
   readonly atMs: number;
   readonly view: "side" | "top";
+  readonly frameAudit?: {
+    readonly litShare: number;
+    readonly highlightShare: number;
+    readonly brightShare: number;
+    readonly nearWhiteShare: number;
+    readonly dominantBrightShare: number;
+    readonly dominantNonBackgroundShare: number;
+    readonly localWhiteCardShare: number;
+    readonly diagnosticCheckerShare: number;
+    readonly unsafe: false;
+    readonly reason?: string;
+  };
 }
 
 export interface AiReviewVisualAudit {
-  readonly schema: "ggd-vfx-visual-audit@1";
+  readonly schema: "ggd-vfx-visual-audit@1" | "ggd-vfx-visual-audit@2" | "ggd-vfx-visual-audit@3";
   readonly safe: true;
   readonly autoVisualScore: number;
   readonly sampledFrames: number;
@@ -33,6 +45,7 @@ export interface AiReviewVisualAudit {
     readonly dominantBrightShare: number;
     readonly dominantNonBackgroundShare: number;
     readonly localWhiteCardShare: number;
+    readonly diagnosticCheckerShare?: number;
     readonly unsafe: false;
     readonly reason?: string;
   };
@@ -80,7 +93,10 @@ export function isCapabilityFixture(item: AiReviewQueueItem): boolean {
  * exact candidate hash before this button is offered.
  */
 export function canPromoteAiProposal(item: AiReviewQueueItem): boolean {
-  return !isCapabilityFixture(item) && item.promotable && item.status === "approved";
+  const currentVisualAudit = item.target.collection !== "vfx-scripts" ||
+    (item.visualAudit?.schema === "ggd-vfx-visual-audit@3" &&
+      item.visualEvidence.every((frame) => frame.frameAudit !== undefined));
+  return !isCapabilityFixture(item) && item.promotable && item.status === "approved" && currentVisualAudit;
 }
 
 export function decisionLabels(item: AiReviewQueueItem): {

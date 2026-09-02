@@ -100,10 +100,22 @@ export interface AiVisualEvidence {
   dataUrl: string;
   atMs: number;
   view: "side" | "top";
+  frameAudit: {
+    litShare: number;
+    highlightShare: number;
+    brightShare: number;
+    nearWhiteShare: number;
+    dominantBrightShare: number;
+    dominantNonBackgroundShare: number;
+    localWhiteCardShare: number;
+    diagnosticCheckerShare: number;
+    unsafe: boolean;
+    reason?: string;
+  };
 }
 
 export interface AiVisualAuditReceipt {
-  schema: "ggd-vfx-visual-audit@1";
+  schema: "ggd-vfx-visual-audit@3";
   safe: true;
   autoVisualScore: number;
   sampledFrames: number;
@@ -118,6 +130,7 @@ export interface AiVisualAuditReceipt {
     dominantBrightShare: number;
     dominantNonBackgroundShare: number;
     localWhiteCardShare: number;
+    diagnosticCheckerShare: number;
     unsafe: false;
     reason?: string;
   };

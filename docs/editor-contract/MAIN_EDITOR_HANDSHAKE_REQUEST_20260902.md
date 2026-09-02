@@ -145,6 +145,12 @@ Owner 裁決：角色演出不是 Editor 八招的特例，而是 Main 所有技
 on-hit 不重播假施法；block 是 guard、evade 是 dodge；專屬 script 不與預設疊兩次；缺 clip fallback 可見且穩定。
 所有預設 VFX 仍須經亮／暗 CameraRig framebuffer 去背守衛，schema 合法不能代替視覺安全。
 
+Editor 的 current 收據已提升為 `ggd-vfx-visual-audit@3`：除了完整時間軸抽樣，送審的每張
+關鍵格都會在精確時間點重新讀回 framebuffer。這已抓到 `godie-ogrh.r` 1.356 秒約
+**0.193%** 的紅／紫診斷棋盤載體；舊時間軸收據曾錯誤判安全。Main 的 reusable primitive、
+GroundDecal、模型材質與 fallback 必須以實際 framebuffer 為準，禁止輸出棋盤載體、未去背矩形、
+不透明魔法陣底板或白色材質 placeholder。這是積木品質要求，不是請 Main 替八招拼時間軸。
+
 2026-09-02 10:17 實跑 `pnpm vfxassets:check:fast` 的 Main 基線仍為 **27 個 blocker**，不是本 Editor
 分支新增：`babyface.png`（2）、`heroeva01effect.png`（2）、`ribbonblur1.png`（多個英雄 Ribbon）、
 `zap1.png/zap1b.png`（ThunderClap／LightningTornado）。請 Main 修復貼圖／blend 或在資產契約中 quarantine，

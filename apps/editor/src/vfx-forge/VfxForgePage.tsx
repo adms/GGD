@@ -411,7 +411,7 @@ export function VfxForgePage() {
           ],
           visualEvidence,
           visualAudit: {
-            schema: "ggd-vfx-visual-audit@1",
+            schema: "ggd-vfx-visual-audit@3",
             safe: true,
             autoVisualScore: visual.autoVisualScore,
             sampledFrames: visual.sampledFrames,
@@ -426,6 +426,7 @@ export function VfxForgePage() {
               dominantBrightShare: visual.worst.dominantBrightShare,
               dominantNonBackgroundShare: visual.worst.dominantNonBackgroundShare,
               localWhiteCardShare: visual.worst.localWhiteCardShare,
+              diagnosticCheckerShare: visual.worst.diagnosticCheckerShare,
               unsafe: false,
               ...(visual.worst.reason ? { reason: visual.worst.reason } : {}),
             },

@@ -160,10 +160,13 @@ red instead of leaving the next handoff on an old contract snapshot.
 ## Named VFX acceptance cases
 
 The eight Owner-named scenes are Editor capability fixtures, not replacement
-game content. Each was rebuilt from a blank canvas using exposed recipe cards,
-passed the full-runtime backdrop scan, and entered the local review queue with
-two actual-model framebuffer proofs. The server exposes pass/fail only and has
-no Promote path for these IDs.
+game content. Each was rebuilt from a blank canvas using exposed recipe cards
+and entered the local review queue with two actual-model framebuffer proofs.
+Those pictures then exposed a false-negative in the old timeline-only backdrop
+scan: red/purple diagnostic carriers were visible at exact reviewer keyframes.
+All eight records are therefore retained as failure evidence and quarantined;
+none is a visual pass. The server exposes pass/fail only and has no Promote
+path for these IDs.
 
 | Ability | Required visual grammar | Main/JASS adoption |
 | --- | --- | --- |
@@ -181,14 +184,18 @@ source comparison and rejected experiments are documented in
 `docs/_reports/vfx-forge-editor-acceptance-20260902/README.md`; the latest
 browser-captured two-frame-per-skill evidence and structured full-timeline GPU
 scan are in
-`docs/_reports/vfx_forge_8_ability_visual-proof_20260902-1047/README.md`.
+`docs/_reports/vfx_forge_8_ability_visual-proof_20260902-1131/README.md`.
 
-Every new VFX proposal carries a structured `ggd-vfx-visual-audit@1` receipt
-from the complete runtime timeline scan. Human verdicts and Promote are bound
-to a `reviewHash` over the candidate JSON, base hash, purpose, explanations,
-screenshots, automatic score and GPU receipt. Changing only a screenshot or
-audit result therefore invalidates the old verdict just as changing JSON does;
-legacy VFX proposals without that receipt must be resubmitted from the Forge.
+Every new VFX proposal carries a structured `ggd-vfx-visual-audit@3` receipt
+from both the complete runtime timeline scan and an exact GPU readback for each
+submitted reviewer keyframe. The exact-frame guard rejects diagnostic
+red/purple/blue checker carriers, opaque local cards and unsafe washout; a
+15 Hz sweep cannot excuse a bad frame it skipped. Human verdicts and Promote
+are bound to a `reviewHash` over the candidate JSON, base hash, purpose,
+explanations, screenshots, automatic score and GPU receipts. Changing only a
+screenshot or audit result therefore invalidates the old verdict just as
+changing JSON does. `@1`, `@2`, and incomplete `@3` records remain readable so
+the Owner can record a failure, but cannot receive pass/approve or Promote.
 
 Remote Desktop previews consume the digest-verified profile pinned beside the
 immutable Base. When `effectiveVfxLimits` is present, all eight resolved fields

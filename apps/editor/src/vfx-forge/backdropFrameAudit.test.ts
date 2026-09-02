@@ -89,6 +89,44 @@ describe("VFX Forge rendered-frame backdrop guard", () => {
     expect(auditBackdropFrame(rgba, width, height).unsafe).toBe(false);
   });
 
+  it("rejects a small red diagnostic checker that the whole-frame ratios miss", () => {
+    const width = 160;
+    const height = 120;
+    const rgba = solid(width, height, [20, 24, 32, 255]);
+    for (let y = 38; y < 78; y++) {
+      for (let x = 62; x < 102; x++) {
+        const hot = (Math.floor((x - 62) / 4) + Math.floor((y - 38) / 4)) % 2 === 0;
+        const offset = (y * width + x) * 4;
+        rgba[offset] = hot ? 240 : 58;
+        rgba[offset + 1] = hot ? 18 : 4;
+        rgba[offset + 2] = hot ? 72 : 12;
+      }
+    }
+    const result = auditBackdropFrame(rgba, width, height);
+    expect(result.unsafe).toBe(true);
+    expect(result.diagnosticCheckerShare).toBeGreaterThan(0);
+    expect(result.reason).toContain("棋盤");
+  });
+
+  it("allows a compact organic red fire blob without periodic checker corners", () => {
+    const width = 160;
+    const height = 120;
+    const rgba = solid(width, height, [20, 24, 32, 255]);
+    for (let y = 35; y < 85; y++) {
+      for (let x = 55; x < 105; x++) {
+        const dx = x - 80;
+        const dy = y - 60;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance > 24) continue;
+        const offset = (y * width + x) * 4;
+        rgba[offset] = Math.max(120, 245 - Math.round(distance * 4));
+        rgba[offset + 1] = Math.max(20, 92 - Math.round(distance * 2));
+        rgba[offset + 2] = 32;
+      }
+    }
+    expect(auditBackdropFrame(rgba, width, height).unsafe).toBe(false);
+  });
+
   it("fails closed when framebuffer readback is empty", () => {
     expect(auditBackdropFrame(new Uint8Array(), 0, 0).unsafe).toBe(true);
   });
@@ -104,6 +142,7 @@ describe("automaticVisualHygieneScore", () => {
       dominantBrightShare: 0,
       dominantNonBackgroundShare: 0,
       localWhiteCardShare: 0,
+      diagnosticCheckerShare: 0,
       unsafe: false,
     });
     expect(score).toBe(6);
@@ -118,6 +157,7 @@ describe("automaticVisualHygieneScore", () => {
       dominantBrightShare: 1,
       dominantNonBackgroundShare: 1,
       localWhiteCardShare: 1,
+      diagnosticCheckerShare: 1,
       unsafe: true,
       reason: "opaque card",
     })).toBe(0);

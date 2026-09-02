@@ -26,7 +26,12 @@ interface Proposal {
   purpose: string;
   promotable: boolean;
   evidence: string[];
-  visualEvidence: { dataUrl: string; atMs: number; view: string }[];
+  visualEvidence: {
+    dataUrl: string;
+    atMs: number;
+    view: string;
+    frameAudit?: { unsafe: boolean };
+  }[];
   visualAudit: {
     schema: string;
     safe: boolean;
@@ -35,7 +40,7 @@ interface Proposal {
     peakParticleCount: number;
     peakSystemCount: number;
     worstAtMs: number;
-    worst: { unsafe: boolean };
+    worst: { unsafe: boolean; diagnosticCheckerShare?: number };
   };
   autoVisualScore?: number;
   candidate: unknown;
@@ -68,7 +73,7 @@ function ability(id: string): Record<string, unknown> {
 }
 
 describe("八招實際送審產物", () => {
-  it("候選 hash、角色動作守衛、兩張 framebuffer 與永久不可 Promote 全部對得上", () => {
+  it("候選 hash、角色動作、兩張 framebuffer 與永久不可 Promote 的隔離全部對得上", () => {
     for (const [id] of VFX_FORGE_ACCEPTANCE) {
       const item = proposal(id);
       const candidate = zVfxScriptDoc.parse(item.candidate);
@@ -86,11 +91,18 @@ describe("八招實際送審產物", () => {
         /^data:image\/(?:png|webp);base64,/.test(frame.dataUrl) &&
         frame.atMs >= 0 && (frame.view === "side" || frame.view === "top"),
       ), id).toBe(true);
-      expect(item.visualAudit, id).toMatchObject({
-        schema: "ggd-vfx-visual-audit@1",
-        safe: true,
-        worst: { unsafe: false },
-      });
+      expect(["ggd-vfx-visual-audit@1", "ggd-vfx-visual-audit@2", "ggd-vfx-visual-audit@3"], id)
+        .toContain(item.visualAudit.schema);
+      expect(item.visualAudit, id).toMatchObject({ safe: true, worst: { unsafe: false } });
+      // @1／@2，或缺少逐張 frameAudit 的 @3，都是這批畫面揭露的
+      // 假陰性。保留畫面作失敗證據，但不得被測試誤叫成 current／
+      // passable。修正 Main 素材後必須由 UI 以完整 @3 重新提交，屆時
+      // 這條斷言也應連同報告一起升級。
+      expect(
+        item.visualAudit.schema === "ggd-vfx-visual-audit@3" &&
+        item.visualEvidence.every((frame) => frame.frameAudit?.unsafe === false),
+        id,
+      ).toBe(false);
       expect(item.visualAudit.sampledFrames, id).toBeGreaterThan(0);
       expect(item.visualAudit.peakParticleCount, id).toBeGreaterThanOrEqual(0);
       expect(item.visualAudit.peakSystemCount, id).toBeGreaterThanOrEqual(0);
@@ -124,13 +136,16 @@ describe("八招實際送審產物", () => {
     expect(latest).toBeDefined();
     const root = join(REPORTS, latest!);
     const manifest = JSON.parse(readFileSync(join(root, "manifest.json"), "utf8")) as {
+      schema: string;
       promotable: boolean;
-      cases: { id: string; candidateHash: string; frames: { filename: string }[] }[];
+      cases: { id: string; candidateHash: string; auditCurrent: boolean; frames: { filename: string }[] }[];
     };
+    expect(manifest.schema).toBe("ggd-vfx-forge-acceptance-proof@3");
     expect(manifest.promotable).toBe(false);
     expect(manifest.cases.map((entry) => entry.id)).toEqual(VFX_FORGE_ACCEPTANCE.map(([id]) => id));
     for (const entry of manifest.cases) {
       expect(entry.candidateHash, entry.id).toBe(proposal(entry.id).candidateHash);
+      expect(entry.auditCurrent, entry.id).toBe(false);
       expect(entry.frames.length, entry.id).toBeGreaterThanOrEqual(2);
       for (const frame of entry.frames) {
         const file = join(root, frame.filename);

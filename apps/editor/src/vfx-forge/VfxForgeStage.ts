@@ -114,6 +114,8 @@ export interface VfxVisualEvidenceFrame {
   dataUrl: string;
   atMs: number;
   view: "side" | "top";
+  /** Exact keyframe readback; timeline sampling alone can skip a one-frame bad carrier. */
+  frameAudit: BackdropFrameAudit;
 }
 
 export interface VfxForgeStageOptions {
@@ -530,6 +532,9 @@ export class VfxForgeStage {
     const height = this.engine.getRenderHeight();
     const rgba = (await this.engine.readPixels(0, 0, width, height)) as Uint8Array;
     const frameAudit = auditBackdropFrame(rgba, width, height);
+    if (frameAudit.unsafe) {
+      throw new Error(frameAudit.reason ?? "目前關鍵格含有不安全的貼圖底板");
+    }
     this.emitOverlay(
       `證據格 · 顯影 ${(frameAudit.litShare * 100).toFixed(1)}% · ` +
       `高光 ${(frameAudit.highlightShare * 100).toFixed(1)}%`,
@@ -543,6 +548,7 @@ export class VfxForgeStage {
       dataUrl,
       atMs: Math.round(this.nowMs),
       view: this.sideReviewView ? "side" : "top",
+      frameAudit,
     };
   }
 
@@ -626,6 +632,7 @@ export class VfxForgeStage {
         dominantBrightShare: 0,
         dominantNonBackgroundShare: 0,
         localWhiteCardShare: 0,
+        diagnosticCheckerShare: 0,
         unsafe: false,
       };
       const read = async (): Promise<BackdropFrameAudit> => {

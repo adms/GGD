@@ -39,10 +39,23 @@ export interface AiVisualEvidence {
   dataUrl: string;
   atMs: number;
   view: "side" | "top";
+  /** Optional only while reading legacy @1/@2 proposals. New @3 submissions require it. */
+  frameAudit?: {
+    litShare: number;
+    highlightShare: number;
+    brightShare: number;
+    nearWhiteShare: number;
+    dominantBrightShare: number;
+    dominantNonBackgroundShare: number;
+    localWhiteCardShare: number;
+    diagnosticCheckerShare: number;
+    unsafe: false;
+    reason?: string;
+  };
 }
 
 export interface AiVisualAuditReceipt {
-  schema: "ggd-vfx-visual-audit@1";
+  schema: "ggd-vfx-visual-audit@1" | "ggd-vfx-visual-audit@2" | "ggd-vfx-visual-audit@3";
   safe: true;
   autoVisualScore: number;
   sampledFrames: number;
@@ -57,6 +70,8 @@ export interface AiVisualAuditReceipt {
     dominantBrightShare: number;
     dominantNonBackgroundShare: number;
     localWhiteCardShare: number;
+    /** Added in @2; @3 also treats blue-channel readback as the same checker family. */
+    diagnosticCheckerShare?: number;
     unsafe: false;
     reason?: string;
   };
@@ -167,6 +182,31 @@ function score(value: unknown, field: string): number | undefined {
   return value;
 }
 
+function visualFrameAudit(value: unknown, index: number): NonNullable<AiVisualEvidence["frameAudit"]> | undefined {
+  if (value === undefined) return undefined;
+  if (typeof value !== "object" || value === null || Array.isArray(value)) {
+    throw new Error(`visualEvidence.${index}.frameAudit 必須是物件`);
+  }
+  const raw = value as Record<string, unknown>;
+  if (raw.unsafe !== false) throw new Error(`visualEvidence.${index}.frameAudit.unsafe 必須為 false`);
+  const reason = raw.reason;
+  if (reason !== undefined && (typeof reason !== "string" || reason.length > 800)) {
+    throw new Error(`visualEvidence.${index}.frameAudit.reason 最多 800 字`);
+  }
+  return {
+    litShare: boundedNumber(raw, "litShare", 0, 1),
+    highlightShare: boundedNumber(raw, "highlightShare", 0, 1),
+    brightShare: boundedNumber(raw, "brightShare", 0, 1),
+    nearWhiteShare: boundedNumber(raw, "nearWhiteShare", 0, 1),
+    dominantBrightShare: boundedNumber(raw, "dominantBrightShare", 0, 1),
+    dominantNonBackgroundShare: boundedNumber(raw, "dominantNonBackgroundShare", 0, 1),
+    localWhiteCardShare: boundedNumber(raw, "localWhiteCardShare", 0, 1),
+    diagnosticCheckerShare: boundedNumber(raw, "diagnosticCheckerShare", 0, 1),
+    unsafe: false,
+    ...(typeof reason === "string" && reason.trim() !== "" ? { reason: reason.trim() } : {}),
+  };
+}
+
 function visualEvidenceFrames(value: unknown): AiVisualEvidence[] {
   if (value === undefined) return [];
   if (!Array.isArray(value)) throw new Error("visualEvidence 必須是陣列");
@@ -190,7 +230,14 @@ function visualEvidenceFrames(value: unknown): AiVisualEvidence[] {
       !/^data:image\/(?:png|webp);base64,[A-Za-z0-9+/]+={0,2}$/.test(dataUrl)) {
       throw new Error(`visualEvidence.${index}.dataUrl 必須是 400KB 以下的 PNG/WebP data URL`);
     }
-    return { label, dataUrl, atMs: Math.round(atMs), view: frame.view };
+    const frameAudit = visualFrameAudit(frame.frameAudit, index);
+    return {
+      label,
+      dataUrl,
+      atMs: Math.round(atMs),
+      view: frame.view,
+      ...(frameAudit ? { frameAudit } : {}),
+    };
   });
 }
 
@@ -215,7 +262,10 @@ function visualAuditReceipt(value: unknown): AiVisualAuditReceipt | undefined {
     throw new Error("visualAudit 必須是物件");
   }
   const raw = value as Record<string, unknown>;
-  if (raw.schema !== "ggd-vfx-visual-audit@1") throw new Error("visualAudit.schema 不支援");
+  if (!["ggd-vfx-visual-audit@1", "ggd-vfx-visual-audit@2", "ggd-vfx-visual-audit@3"].includes(String(raw.schema))) {
+    throw new Error("visualAudit.schema 不支援");
+  }
+  const auditSchema = raw.schema as AiVisualAuditReceipt["schema"];
   if (raw.safe !== true) throw new Error("visualAudit 必須是完整時間軸 GPU 掃描通過的收據");
   const worstRaw = raw.worst;
   if (typeof worstRaw !== "object" || worstRaw === null || Array.isArray(worstRaw)) {
@@ -232,7 +282,7 @@ function visualAuditReceipt(value: unknown): AiVisualAuditReceipt | undefined {
     throw new Error("visualAudit.suspects 最多 8 筆，每筆最多 500 字");
   }
   return {
-    schema: "ggd-vfx-visual-audit@1",
+    schema: auditSchema,
     safe: true,
     autoVisualScore: boundedNumber(raw, "autoVisualScore", 0, 10),
     sampledFrames: boundedNumber(raw, "sampledFrames", 1, 10_000, true),
@@ -247,6 +297,9 @@ function visualAuditReceipt(value: unknown): AiVisualAuditReceipt | undefined {
       dominantBrightShare: boundedNumber(worst, "dominantBrightShare", 0, 1),
       dominantNonBackgroundShare: boundedNumber(worst, "dominantNonBackgroundShare", 0, 1),
       localWhiteCardShare: boundedNumber(worst, "localWhiteCardShare", 0, 1),
+      ...(auditSchema === "ggd-vfx-visual-audit@2" || auditSchema === "ggd-vfx-visual-audit@3"
+        ? { diagnosticCheckerShare: boundedNumber(worst, "diagnosticCheckerShare", 0, 1) }
+        : {}),
       unsafe: false,
       ...(typeof reason === "string" && reason.trim() !== "" ? { reason: reason.trim() } : {}),
     },
@@ -322,6 +375,12 @@ export class AiReviewStore {
           : "VFX 上線候選至少需要 1 張候選畫面證據");
       }
       if (!visualAudit) throw new Error("VFX 候選必須包含完整時間軸 GPU 視覺稽核收據");
+      if (visualAudit.schema !== "ggd-vfx-visual-audit@3") {
+        throw new Error("VFX 候選的舊視覺稽核會漏掉棋盤貼圖，必須由 Editor 以 @3 重新掃描");
+      }
+      if (visualEvidence.some((frame) => frame.frameAudit === undefined)) {
+        throw new Error("VFX 候選每張關鍵格都必須包含 @3 GPU 畫面稽核，禁止只依賴時間軸抽樣");
+      }
     }
     const autoVisualScore = score(input.autoVisualScore, "autoVisualScore");
     if (visualAudit && autoVisualScore !== undefined && visualAudit.autoVisualScore !== autoVisualScore) {
@@ -377,6 +436,13 @@ export class AiReviewStore {
         throw new Error(fixture ? "八招能力驗收缺少 2 張候選畫面證據" : "VFX 候選缺少候選畫面證據");
       }
       if (!proposal.visualAudit) throw new Error("VFX 候選缺少 GPU 完整時間軸稽核收據，請由 Editor 重新送審");
+      const positiveVerdict = fixture ? "pass" : "approve";
+      if (proposal.visualAudit.schema !== "ggd-vfx-visual-audit@3" && input.verdict === positiveVerdict) {
+        throw new Error("VFX 候選仍是會漏掉棋盤貼圖的舊稽核，請由 Editor 重新送審");
+      }
+      if ((proposal.visualEvidence ?? []).some((frame) => frame.frameAudit === undefined) && input.verdict === positiveVerdict) {
+        throw new Error("VFX 候選的關鍵格沒有逐張 GPU 稽核，請由 Editor 重新送審");
+      }
     }
     const allowed = fixture ? new Set<AiVerdict>(["pass", "fail"]) : new Set<AiVerdict>(["approve", "reject"]);
     if (!allowed.has(input.verdict)) {
@@ -412,6 +478,12 @@ export class AiReviewStore {
     if (!item) throw new Error(`找不到 AI 候選：${key}`);
     if (!item.promotable || item.purpose === "editor-capability-fixture") {
       throw new Error("這是編輯器能力驗收樣本，永遠不能 Promote 到遊戲內容");
+    }
+    if (item.target.collection === "vfx-scripts" && (
+      item.visualAudit?.schema !== "ggd-vfx-visual-audit@3" ||
+      item.visualEvidence.some((frame) => frame.frameAudit === undefined)
+    )) {
+      throw new Error("VFX 候選仍是舊稽核或缺少逐張關鍵格稽核，禁止 Promote");
     }
     if (item.candidateHash !== candidateHash) throw new Error("候選 hash 已變更，請重新審查");
     if (item.reviewHash !== reviewHash) throw new Error("候選審查材料已變更，請重新審查");

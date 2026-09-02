@@ -27,29 +27,32 @@ const ITEM = {
   tags: ["ap"],
 };
 
+const FRAME_AUDIT = {
+  litShare: 0.1,
+  highlightShare: 0.02,
+  brightShare: 0.01,
+  nearWhiteShare: 0,
+  dominantBrightShare: 0.005,
+  dominantNonBackgroundShare: 0.02,
+  localWhiteCardShare: 0,
+  diagnosticCheckerShare: 0,
+  unsafe: false,
+} as const;
+
 const VISUAL_EVIDENCE = [
-  { label: "impact side", dataUrl: "data:image/webp;base64,AA==", atMs: 900, view: "side" },
-  { label: "impact top", dataUrl: "data:image/webp;base64,AQ==", atMs: 900, view: "top" },
+  { label: "impact side", dataUrl: "data:image/webp;base64,AA==", atMs: 900, view: "side", frameAudit: FRAME_AUDIT },
+  { label: "impact top", dataUrl: "data:image/webp;base64,AQ==", atMs: 900, view: "top", frameAudit: FRAME_AUDIT },
 ];
 
 const VISUAL_AUDIT = {
-  schema: "ggd-vfx-visual-audit@1",
+  schema: "ggd-vfx-visual-audit@3",
   safe: true,
   autoVisualScore: 8,
   sampledFrames: 30,
   peakParticleCount: 120,
   peakSystemCount: 4,
   worstAtMs: 900,
-  worst: {
-    litShare: 0.1,
-    highlightShare: 0.02,
-    brightShare: 0.01,
-    nearWhiteShare: 0,
-    dominantBrightShare: 0.005,
-    dominantNonBackgroundShare: 0.02,
-    localWhiteCardShare: 0,
-    unsafe: false,
-  },
+  worst: FRAME_AUDIT,
   suspects: [],
 } as const;
 
@@ -382,6 +385,46 @@ describe("AI change control", () => {
     expect(missingAudit.statusCode).toBe(400);
     expect(missingAudit.json().error).toContain("GPU 視覺稽核收據");
 
+    const legacyAudit = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "vfx-scripts", id: candidate.id },
+        purpose: "production-candidate",
+        candidate,
+        visualEvidence: [VISUAL_EVIDENCE[0]],
+        visualAudit: {
+          ...VISUAL_AUDIT,
+          schema: "ggd-vfx-visual-audit@1",
+          worst: Object.fromEntries(Object.entries(VISUAL_AUDIT.worst)
+            .filter(([key]) => key !== "diagnosticCheckerShare")),
+        },
+        autoVisualScore: VISUAL_AUDIT.autoVisualScore,
+      },
+    });
+    expect(legacyAudit.statusCode).toBe(400);
+    expect(legacyAudit.json().error).toContain("棋盤貼圖");
+
+    const missingFrameAudit = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "vfx-scripts", id: candidate.id },
+        purpose: "production-candidate",
+        candidate,
+        visualEvidence: [{
+          label: VISUAL_EVIDENCE[0]!.label,
+          dataUrl: VISUAL_EVIDENCE[0]!.dataUrl,
+          atMs: VISUAL_EVIDENCE[0]!.atMs,
+          view: VISUAL_EVIDENCE[0]!.view,
+        }],
+        visualAudit: VISUAL_AUDIT,
+        autoVisualScore: VISUAL_AUDIT.autoVisualScore,
+      },
+    });
+    expect(missingFrameAudit.statusCode).toBe(400);
+    expect(missingFrameAudit.json().error).toContain("每張關鍵格");
+
     const submitted = await app.inject({
       method: "POST",
       url: "/content-api/ai-review/proposals",
@@ -412,6 +455,65 @@ describe("AI change control", () => {
     });
     expect(noScore.statusCode).toBe(400);
     expect(noScore.json().error).toContain("VFX 候選必須填");
+  });
+
+  it("allows an old @1 VFX receipt to be failed but never approved", async () => {
+    const candidate = {
+      id: "skill.legacy",
+      schema: "vfx-script@1",
+      abilityId: "skill.legacy",
+      segments: [{ kind: "floatingText", on: "castStart", text: "legacy" }],
+    };
+    const submitted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "vfx-scripts", id: candidate.id },
+        purpose: "production-candidate",
+        candidate,
+        visualEvidence: [VISUAL_EVIDENCE[0]],
+        visualAudit: VISUAL_AUDIT,
+        autoVisualScore: VISUAL_AUDIT.autoVisualScore,
+      },
+    });
+    expect(submitted.statusCode).toBe(201);
+    const file = join(root, ".review", "ai-proposals", "vfx-scripts--skill.legacy.json");
+    const stored = JSON.parse(readFileSync(file, "utf8"));
+    stored.visualAudit.schema = "ggd-vfx-visual-audit@1";
+    delete stored.visualAudit.worst.diagnosticCheckerShare;
+    writeFileSync(file, `${JSON.stringify(stored, null, 2)}\n`, "utf8");
+    const item = (await app.inject({ url: "/content-api/ai-review/proposals" })).json().items[0];
+
+    const approve = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/verdicts",
+      payload: {
+        key: item.key,
+        candidateHash: item.candidateHash,
+        reviewHash: item.reviewHash,
+        verdict: "approve",
+        reviewer: "Owner",
+        note: "must not pass legacy audit",
+        humanVisualScore: 8,
+      },
+    });
+    expect(approve.statusCode).toBe(400);
+    expect(approve.json().error).toContain("棋盤貼圖");
+
+    const reject = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/verdicts",
+      payload: {
+        key: item.key,
+        candidateHash: item.candidateHash,
+        reviewHash: item.reviewHash,
+        verdict: "reject",
+        reviewer: "Owner",
+        note: "legacy audit is insufficient",
+        humanVisualScore: 0,
+      },
+    });
+    expect(reject.statusCode).toBe(200);
   });
 
   it("invalidates a verdict when screenshots or GPU review material change without changing candidate JSON", async () => {

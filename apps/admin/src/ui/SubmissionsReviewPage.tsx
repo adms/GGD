@@ -300,6 +300,9 @@ export function SubmissionsReviewPage(): React.JSX.Element {
         const fields = aiFields[item.key] ?? { reviewer: "Owner", note: "", score: "" };
         const score = parseHumanVisualScore(fields.score);
         const inputsReady = fields.reviewer.trim() !== "" && fields.note.trim() !== "" && score !== null;
+        const currentVisualAudit = item.target.collection !== "vfx-scripts" ||
+          (item.visualAudit?.schema === "ggd-vfx-visual-audit@3" &&
+            item.visualEvidence.every((frame) => frame.frameAudit !== undefined));
         const canPromote = canPromoteAiProposal(item);
         return (
           <div
@@ -349,6 +352,7 @@ export function SubmissionsReviewPage(): React.JSX.Element {
                   />
                   <figcaption style={{ color: TEXT_DIM, fontSize: 12, marginTop: 4 }}>
                     {frame.label} · {frame.atMs}ms · {frame.view}
+                    {frame.frameAudit && <> · 棋盤 {percent(frame.frameAudit.diagnosticCheckerShare)}</>}
                   </figcaption>
                 </figure>
               ))}
@@ -366,6 +370,8 @@ export function SubmissionsReviewPage(): React.JSX.Element {
                 <div>
                   亮區 {percent(item.visualAudit.worst.highlightShare)} · 純亮 {percent(item.visualAudit.worst.brightShare)} ·
                   近白 {percent(item.visualAudit.worst.nearWhiteShare)} · 局部白底 {percent(item.visualAudit.worst.localWhiteCardShare)}
+                  {item.visualAudit.worst.diagnosticCheckerShare !== undefined &&
+                    <> · 棋盤載體 {percent(item.visualAudit.worst.diagnosticCheckerShare)}</>}
                 </div>
                 {item.visualAudit.worst.reason && <div>診斷：{item.visualAudit.worst.reason}</div>}
                 {item.visualAudit.suspects.length > 0 && <div>疑似來源：{item.visualAudit.suspects.join("；")}</div>}
@@ -375,6 +381,11 @@ export function SubmissionsReviewPage(): React.JSX.Element {
                 ⛔ 舊候選缺少 GPU 完整時間軸稽核收據，必須由 Editor 重新送審後才能裁決。
               </div>
             ) : null}
+            {item.target.collection === "vfx-scripts" && item.visualAudit && !currentVisualAudit && (
+              <div style={{ color: WARN, marginTop: 8, fontSize: 12 }}>
+                ⛔ 這份收據世代過舊或缺少逐張關鍵格稽核，可能漏掉紅／紫／藍棋盤貼圖；只能人工判定失敗／拒絕，不能通過、核准或 Promote。請由 Editor 以 @3 重新掃描。
+              </div>
+            )}
             <div style={{ display: "grid", gridTemplateColumns: "minmax(150px, 0.5fr) minmax(120px, 0.35fr) minmax(260px, 1.5fr)", gap: 8, marginTop: 12 }}>
               <TextInput
                 dataField={`ai-reviewer-${item.key}`}
@@ -408,7 +419,7 @@ export function SubmissionsReviewPage(): React.JSX.Element {
                   note: fields.note,
                   humanVisualScore: score ?? undefined,
                 }))}
-                disabled={aiBusy === item.key || !inputsReady}
+                disabled={aiBusy === item.key || !inputsReady || !currentVisualAudit}
               >
                 {labels.positive}
               </Btn>

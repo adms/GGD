@@ -8,6 +8,8 @@ export interface BackdropFrameAudit {
   dominantBrightShare: number;
   dominantNonBackgroundShare: number;
   localWhiteCardShare: number;
+  /** Repeating high-chroma carrier pattern rendered by a missing/opaque texture card. */
+  diagnosticCheckerShare: number;
   unsafe: boolean;
   reason?: string;
 }
@@ -28,6 +30,7 @@ export function automaticVisualHygieneScore(frame: BackdropFrameAudit): number {
     frame.dominantBrightShare * 110,
     frame.dominantNonBackgroundShare * 60,
     frame.localWhiteCardShare * 2000,
+    frame.diagnosticCheckerShare * 2000,
   );
   const score = Math.max(0, Math.min(10, 10 - exposurePenalty));
   return Math.round(score * 2) / 2;
@@ -52,6 +55,116 @@ const LOCAL_CARD_MIN_FILL = 0.92;
 const LOCAL_CARD_MIN_SIDE = 3;
 const LOCAL_CARD_MIN_ASPECT = 0.25;
 const LOCAL_CARD_MAX_ASPECT = 4;
+const CHECKER_TILE = 4;
+const CHECKER_TILE_MIN_HOT_PIXELS = 3;
+const CHECKER_MIN_TILES_PER_SIDE = 8;
+const CHECKER_MIN_COMPONENT_FILL = 0.3;
+const CHECKER_MIN_CORNER_RATIO = 0.09;
+
+/**
+ * Detect a local red/magenta diagnostic checker without banning ordinary fire.
+ *
+ * A failed alpha/material carrier has three properties together: a compact
+ * rectangular cluster, high-chroma hot cells, and repeated opposite-corner
+ * alternation at a stable pixel interval. Organic fire can be red and dense,
+ * while a telegraph ring can be rectangular in projection; neither has all
+ * three. Work on 4px tiles first so a full 1280x720 timeline sweep stays cheap,
+ * then run the more expensive periodicity test only inside eligible clusters.
+ */
+function diagnosticCheckerShare(
+  hotMask: Uint8Array,
+  width: number,
+  height: number,
+): number {
+  const tileWidth = Math.floor(width / CHECKER_TILE);
+  const tileHeight = Math.floor(height / CHECKER_TILE);
+  if (tileWidth === 0 || tileHeight === 0) return 0;
+  const tileHot = new Uint8Array(tileWidth * tileHeight);
+  for (let y = 0; y < tileHeight * CHECKER_TILE; y++) {
+    for (let x = 0; x < tileWidth * CHECKER_TILE; x++) {
+      if (hotMask[y * width + x] === 0) continue;
+      tileHot[Math.floor(y / CHECKER_TILE) * tileWidth + Math.floor(x / CHECKER_TILE)]!++;
+    }
+  }
+  const active = new Uint8Array(tileHot.length);
+  for (let i = 0; i < tileHot.length; i++) {
+    if (tileHot[i]! >= CHECKER_TILE_MIN_HOT_PIXELS) active[i] = 1;
+  }
+  const pixels = width * height;
+  let largest = 0;
+  for (let seed = 0; seed < active.length; seed++) {
+    if (active[seed] !== 1) continue;
+    const stack = [seed];
+    active[seed] = 2;
+    const component: number[] = [];
+    let minX = tileWidth;
+    let maxX = -1;
+    let minY = tileHeight;
+    let maxY = -1;
+    while (stack.length) {
+      const index = stack.pop()!;
+      component.push(index);
+      const x = index % tileWidth;
+      const y = Math.floor(index / tileWidth);
+      minX = Math.min(minX, x);
+      maxX = Math.max(maxX, x);
+      minY = Math.min(minY, y);
+      maxY = Math.max(maxY, y);
+      for (let dy = -1; dy <= 1; dy++) {
+        for (let dx = -1; dx <= 1; dx++) {
+          if (dx === 0 && dy === 0) continue;
+          const nx = x + dx;
+          const ny = y + dy;
+          if (nx < 0 || nx >= tileWidth || ny < 0 || ny >= tileHeight) continue;
+          const next = ny * tileWidth + nx;
+          if (active[next] === 1) {
+            active[next] = 2;
+            stack.push(next);
+          }
+        }
+      }
+    }
+    const boxWidth = maxX - minX + 1;
+    const boxHeight = maxY - minY + 1;
+    const aspect = boxWidth / boxHeight;
+    if (
+      boxWidth < CHECKER_MIN_TILES_PER_SIDE ||
+      boxHeight < CHECKER_MIN_TILES_PER_SIDE ||
+      aspect < LOCAL_CARD_MIN_ASPECT ||
+      aspect > LOCAL_CARD_MAX_ASPECT ||
+      component.length / (boxWidth * boxHeight) < CHECKER_MIN_COMPONENT_FILL
+    ) continue;
+
+    const x0 = minX * CHECKER_TILE;
+    const x1 = Math.min(width, (maxX + 1) * CHECKER_TILE);
+    const y0 = minY * CHECKER_TILE;
+    const y1 = Math.min(height, (maxY + 1) * CHECKER_TILE);
+    let hotPixels = 0;
+    for (let y = y0; y < y1; y++) {
+      for (let x = x0; x < x1; x++) hotPixels += hotMask[y * width + x]!;
+    }
+    if (hotPixels === 0) continue;
+    let bestCorners = 0;
+    const maxLag = Math.min(12, x1 - x0 - 1, y1 - y0 - 1);
+    for (let lag = 2; lag <= maxLag; lag++) {
+      let corners = 0;
+      for (let y = y0; y < y1 - lag; y++) {
+        for (let x = x0; x < x1 - lag; x++) {
+          const a = hotMask[y * width + x]!;
+          const b = hotMask[y * width + x + lag]!;
+          const c = hotMask[(y + lag) * width + x]!;
+          const d = hotMask[(y + lag) * width + x + lag]!;
+          if (a === d && b === c && a !== b) corners++;
+        }
+      }
+      bestCorners = Math.max(bestCorners, corners);
+    }
+    if (bestCorners / hotPixels >= CHECKER_MIN_CORNER_RATIO) {
+      largest = Math.max(largest, hotPixels / pixels);
+    }
+  }
+  return largest;
+}
 
 /**
  * Find a small, almost solid, axis-aligned white carrier. The old whole-frame
@@ -133,6 +246,7 @@ export function auditBackdropFrame(
       dominantBrightShare: 0,
       dominantNonBackgroundShare: 0,
       localWhiteCardShare: 0,
+      diagnosticCheckerShare: 0,
       unsafe: true,
       reason: "GPU 畫面讀回為空，無法證明沒有底板",
     };
@@ -143,6 +257,7 @@ export function auditBackdropFrame(
   let bright = 0;
   let nearWhite = 0;
   const nearWhiteMask = new Uint8Array(pixels);
+  const diagnosticHotMask = new Uint8Array(pixels);
   const bins = new Uint32Array(16 * 16 * 16);
   for (let pixel = 0, offset = 0; pixel < pixels; pixel++, offset += 4) {
     const r = rgba[offset] ?? 0;
@@ -156,6 +271,14 @@ export function auditBackdropFrame(
     if (min >= 235) {
       nearWhite++;
       nearWhiteMask[pixel] = 1;
+    }
+    // Babylon/WebGL readback channel ordering and tone mapping can turn the
+    // same failed magenta card red, purple or blue. Classify the non-green
+    // high-chroma family, then let the compact-periodic test distinguish it
+    // from a legitimate beam or organic fire.
+    const redBlueMax = Math.max(r, b);
+    if (redBlueMax >= 120 && g <= redBlueMax * 0.6 && redBlueMax - min >= 65) {
+      diagnosticHotMask[pixel] = 1;
     }
     bins[((r >> 4) << 8) | ((g >> 4) << 4) | (b >> 4)]!++;
   }
@@ -198,6 +321,7 @@ export function auditBackdropFrame(
       dominantBrightShare,
       dominantNonBackgroundShare,
       localWhiteCardShare: 0,
+      diagnosticCheckerShare: 0,
       unsafe: true,
       reason: `近白像素覆蓋 ${(nearWhiteShare * 100).toFixed(1)}%，疑似未去背貼圖或白色底板`,
     };
@@ -211,6 +335,7 @@ export function auditBackdropFrame(
       dominantBrightShare,
       dominantNonBackgroundShare,
       localWhiteCardShare: 0,
+      diagnosticCheckerShare: 0,
       unsafe: true,
       reason: `高亮像素覆蓋 ${(brightShare * 100).toFixed(1)}%，疑似粒子過曝洗白畫面`,
     };
@@ -224,6 +349,7 @@ export function auditBackdropFrame(
       dominantBrightShare,
       dominantNonBackgroundShare,
       localWhiteCardShare: 0,
+      diagnosticCheckerShare: 0,
       unsafe: true,
       reason: `單一高亮色塊覆蓋 ${(dominantBrightShare * 100).toFixed(1)}%，疑似模型／貼圖底板`,
     };
@@ -237,6 +363,7 @@ export function auditBackdropFrame(
       dominantBrightShare,
       dominantNonBackgroundShare,
       localWhiteCardShare: 0,
+      diagnosticCheckerShare: 0,
       unsafe: true,
       reason: `單一非背景色塊覆蓋 ${(dominantNonBackgroundShare * 100).toFixed(1)}%，疑似預告幾何或彩色貼圖底板`,
     };
@@ -251,8 +378,24 @@ export function auditBackdropFrame(
       dominantBrightShare,
       dominantNonBackgroundShare,
       localWhiteCardShare: localCardShare,
+      diagnosticCheckerShare: 0,
       unsafe: true,
       reason: `局部近白矩形卡片佔畫面 ${(localCardShare * 100).toFixed(3)}%，疑似小型粒子／模型貼圖未去背`,
+    };
+  }
+  const checkerShare = diagnosticCheckerShare(diagnosticHotMask, width, height);
+  if (checkerShare > 0) {
+    return {
+      litShare,
+      highlightShare,
+      brightShare,
+      nearWhiteShare,
+      dominantBrightShare,
+      dominantNonBackgroundShare,
+      localWhiteCardShare: localCardShare,
+      diagnosticCheckerShare: checkerShare,
+      unsafe: true,
+      reason: `局部紅／紫棋盤載體佔畫面 ${(checkerShare * 100).toFixed(3)}%，疑似貼圖載入失敗或透明底板外露`,
     };
   }
   return {
@@ -263,6 +406,7 @@ export function auditBackdropFrame(
     dominantBrightShare,
     dominantNonBackgroundShare,
     localWhiteCardShare: localCardShare,
+    diagnosticCheckerShare: checkerShare,
     unsafe: false,
   };
 }

@@ -136,6 +136,17 @@ describe("VFX Forge authoring core", () => {
       status: input.purpose === "production-candidate" ? "pending-review" as const : "fixture-pending" as const,
     }));
     const assetGuard = { assertScriptSafe: vi.fn(async () => undefined) };
+    const frameAudit = {
+      litShare: 0.1,
+      highlightShare: 0.02,
+      brightShare: 0.01,
+      nearWhiteShare: 0,
+      dominantBrightShare: 0,
+      dominantNonBackgroundShare: 0,
+      localWhiteCardShare: 0,
+      diagnosticCheckerShare: 0,
+      unsafe: false,
+    };
     await submitVfxScriptProposal(
       {
         id: "x",
@@ -148,7 +159,7 @@ describe("VFX Forge authoring core", () => {
       { submitAiProposal },
       {
         evidence: ["editor-from-blank:x", "editor-action:1:新增時間軸積木：floatingText"],
-        visualEvidence: [{ label: "impact", dataUrl: "data:image/webp;base64,AA==", atMs: 900, view: "side" }],
+        visualEvidence: [{ label: "impact", dataUrl: "data:image/webp;base64,AA==", atMs: 900, view: "side", frameAudit }],
       },
     );
     expect(submitAiProposal).toHaveBeenCalledWith(expect.objectContaining({
@@ -156,7 +167,7 @@ describe("VFX Forge authoring core", () => {
       purpose: "production-candidate",
       candidate: expect.objectContaining({ abilityId: "x" }),
       evidence: ["editor-from-blank:x", "editor-action:1:新增時間軸積木：floatingText"],
-      visualEvidence: [{ label: "impact", dataUrl: "data:image/webp;base64,AA==", atMs: 900, view: "side" }],
+      visualEvidence: [{ label: "impact", dataUrl: "data:image/webp;base64,AA==", atMs: 900, view: "side", frameAudit }],
     }));
     await expect(submitVfxScriptProposal(
       { id: "bad" }, assetGuard, "production-candidate", { submitAiProposal },

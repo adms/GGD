@@ -15,6 +15,27 @@ function item(overrides: Partial<AiReviewQueueItem> = {}): AiReviewQueueItem {
     summary: "候選",
     evidence: [],
     visualEvidence: [],
+    visualAudit: {
+      schema: "ggd-vfx-visual-audit@3",
+      safe: true,
+      autoVisualScore: 8,
+      sampledFrames: 30,
+      peakParticleCount: 100,
+      peakSystemCount: 4,
+      worstAtMs: 900,
+      worst: {
+        litShare: 0.1,
+        highlightShare: 0.02,
+        brightShare: 0.01,
+        nearWhiteShare: 0,
+        dominantBrightShare: 0,
+        dominantNonBackgroundShare: 0,
+        localWhiteCardShare: 0,
+        diagnosticCheckerShare: 0,
+        unsafe: false,
+      },
+      suspects: [],
+    },
     candidate: {},
     candidateHash: "sha256:candidate",
     reviewHash: "sha256:review",
@@ -45,6 +66,12 @@ describe("AI 投稿批核呈現規則", () => {
     expect(canPromoteAiProposal(item())).toBe(true);
     expect(canPromoteAiProposal(item({ status: "pending-review" }))).toBe(false);
     expect(canPromoteAiProposal(item({ promotable: false }))).toBe(false);
+    expect(canPromoteAiProposal(item({
+      visualAudit: { ...item().visualAudit!, schema: "ggd-vfx-visual-audit@1" },
+    }))).toBe(false);
+    expect(canPromoteAiProposal(item({
+      visualEvidence: [{ label: "old", dataUrl: "data:image/webp;base64,AA==", atMs: 1, view: "side" }],
+    }))).toBe(false);
     expect(decisionLabels(item())).toMatchObject({
       positiveVerdict: "approve",
       negativeVerdict: "reject",
