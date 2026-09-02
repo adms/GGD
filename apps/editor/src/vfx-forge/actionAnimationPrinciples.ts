@@ -13,6 +13,13 @@ export interface ActionAnimationIssue {
   readonly segmentIndexes: readonly number[];
 }
 
+export interface AbilityActivationConflict {
+  readonly code: "ABILITY_ACTIVATION_CONFLICT";
+  readonly descriptionMode: "active" | "passive";
+  readonly runtimeMode: "active" | "passive";
+  readonly message: string;
+}
+
 const VISIBLE_KINDS = new Set<VfxScriptSegment["kind"]>(["vfx", "modelFx", "bodyMove"]);
 
 export interface ActionAnimationOptions {
@@ -215,6 +222,37 @@ export function activationModeForAbility(ability: unknown): "active" | "passive"
   const hasPassive = typeof record.passive === "object" && record.passive !== null;
   const activeEffects = Array.isArray(record.effects) && record.effects.length > 0;
   return hasPassive && !activeEffects ? "passive" : "active";
+}
+
+/**
+ * Detect only an explicit [主動]/[被動] header contradiction. Historical
+ * prose uses many other labels ([主動攻擊], [輔助], [靈氣]…), so absence of an
+ * exact tag is intentionally not guessed. This guard never changes Owner text
+ * or runtime structure; it only prevents authoring VFX against two conflicting
+ * truths.
+ */
+export function activationConflictForAbility(ability: unknown): AbilityActivationConflict | null {
+  if (typeof ability !== "object" || ability === null) return null;
+  const record = ability as Record<string, unknown>;
+  if (typeof record.description !== "string") return null;
+  const header = record.description.trimStart().split(/\r?\n/, 1)[0]?.replaceAll("**", "") ?? "";
+  const tags = new Set([...header.matchAll(/\[([^\]]+)\]/g)].map((match) => match[1]));
+  const explicitActive = tags.has("主動");
+  const explicitPassive = tags.has("被動");
+  // [主動][被動] is an intentional hybrid declaration; the runtime remains
+  // castable while the passive panel covers its reactive half.
+  if (explicitActive === explicitPassive) return null;
+  const descriptionMode = explicitActive ? "active" : "passive";
+  const runtimeMode = activationModeForAbility(record);
+  if (descriptionMode === runtimeMode) return null;
+  return {
+    code: "ABILITY_ACTIVATION_CONFLICT",
+    descriptionMode,
+    runtimeMode,
+    message: descriptionMode === "passive"
+      ? "技能說明標示[被動]，但 Main 結構會走主動施放；Editor 仍預覽真 runtime，但一致前禁止送審。"
+      : "技能說明標示[主動]，但 Main 結構會拒絕施放；Editor 仍預覽真 runtime，但一致前禁止送審。",
+  };
 }
 
 /** Add only missing action bricks; callers still run actionAnimationIssues. */

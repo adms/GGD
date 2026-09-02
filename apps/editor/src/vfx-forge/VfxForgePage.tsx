@@ -63,6 +63,7 @@ import { passivePresentationRules } from "../passivePresentationPrinciples";
 import { PassivePresentationPanel } from "../PassivePresentationPanel";
 import {
   actionAnimationIssues,
+  activationConflictForAbility,
   activationModeForAbility,
   completeActionAnimations,
   hasAuthoritativeRapidMultiStrike,
@@ -264,6 +265,10 @@ export function VfxForgePage() {
       : [],
     [ability, draft],
   );
+  const activationConflict = useMemo(
+    () => activationConflictForAbility(ability),
+    [ability],
+  );
   const schedule = useMemo(
     () => trace ? scheduleSimEvents(trace.events, abilityId) : [],
     [abilityId, trace],
@@ -358,7 +363,7 @@ export function VfxForgePage() {
   };
 
   const save = async (): Promise<void> => {
-    if (!draft || errorCount > 0 || assetAuditPending || assetBlockers.length > 0 || actionIssues.length > 0) return;
+    if (!draft || errorCount > 0 || assetAuditPending || assetBlockers.length > 0 || actionIssues.length > 0 || activationConflict) return;
     if (!reviewEvidenceAllowed) {
       setStatus(`⛔ 外觀證據無效：${reviewEvidenceIssues.join("；")}`);
       return;
@@ -525,13 +530,13 @@ export function VfxForgePage() {
           <p>只編輯純演出候選；AI 修改先進後台批核，通過前絕不寫入遊戲 content。</p>
         </div>
         <div className="vfx-forge-save">
-          <span className={errorCount || assetBlockers.length || actionIssues.length ? "error" : ""}>{status}{dirty ? " · 未儲存" : ""}</span>
+          <span className={errorCount || assetBlockers.length || actionIssues.length || activationConflict ? "error" : ""}>{status}{dirty ? " · 未儲存" : ""}</span>
           <button type="button" disabled={!draftHistory.canUndo} onClick={() => { draftHistory.undo(); setVisualEvidence([]); }} title="復原（Ctrl/Cmd+Z）">↶ 復原</button>
           <button type="button" disabled={!draftHistory.canRedo} onClick={() => { draftHistory.redo(); setVisualEvidence([]); }} title="重做（Ctrl/Cmd+Shift+Z）">↷ 重做</button>
           <button type="button" disabled={!dirty} onClick={() => { if (original) { draftHistory.commit(original); setVisualEvidence([]); } }}>還原存檔版</button>
           <button
             type="button"
-            disabled={!dirty || errorCount > 0 || assetAuditPending || assetBlockers.length > 0 || actionIssues.length > 0 || !reviewEvidenceAllowed || fixtureWorkflowBlocked || visualEvidenceBlocked}
+            disabled={!dirty || errorCount > 0 || assetAuditPending || assetBlockers.length > 0 || actionIssues.length > 0 || activationConflict !== null || !reviewEvidenceAllowed || fixtureWorkflowBlocked || visualEvidenceBlocked}
             title={fixtureWorkflowBlocked
               ? "八招必須從空白畫布用 Editor 重建，不能直接提交預置 JSON"
               : !reviewEvidenceAllowed ? reviewEvidenceIssues.join("；")
@@ -685,6 +690,13 @@ export function VfxForgePage() {
           >
             自動補角色動作
           </button>
+        </section>
+      ) : null}
+
+      {activationConflict ? (
+        <section className="vfx-blocker" role="alert">
+          <b>⛔ 技能啟用方式與說明衝突</b>
+          <span>{activationConflict.code}：{activationConflict.message}</span>
         </section>
       ) : null}
 

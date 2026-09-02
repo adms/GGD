@@ -195,6 +195,11 @@ fail／reject，但禁止 pass／approve／Promote。不得替舊核准補欄位
 主動動作守衛與被動事件演出計畫。`innateKind` 依 schema 不得出現在其他槽位，遇到畸形輸入也不得
 讓這個 stray field 改寫 castability。
 
+Editor 另以精確首行 `[主動]`／`[被動]` 做唯讀衝突守衛：它不以文案改寫 runtime，也不猜
+`[主動攻擊]`、`[輔助]` 等舊標籤；只有說明明確宣告與 Main cast ladder 相反時，允許真 runtime 預覽但禁止
+送審，等待能力機制或標籤在來源端對齊。目前 Main 有 27 份此類明確衝突，包含 `godie-o030.ex`；Editor
+不會默默把它們當成另一種技能，也不會修改 Owner 原文。
+
 機器判斷住在 `apps/editor/src/passivePresentationPrinciples.ts`，鑄技工坊與 VFX Forge 都顯示同一份自動演出計畫。`authored`、runtime 預設、可用現有積木補完、缺 Main 事件歸屬四種狀態分開呈現，不由 LLM 猜測。
 
 ---

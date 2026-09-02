@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { zVfxScriptDoc, type VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
 import {
   actionAnimationIssues,
+  activationConflictForAbility,
   completeActionAnimations,
   hasAuthoritativeRapidMultiStrike,
   activationModeForAbility,
@@ -142,6 +143,46 @@ describe("VFX Forge action-animation principles", () => {
           : "active";
       expect(activationModeForAbility(ability), String(ability.id)).toBe(expected);
     }
+  });
+
+  it("fails closed on explicit description/runtime activation conflicts without guessing legacy tags", () => {
+    expect(activationConflictForAbility({
+      slot: "EX",
+      effects: [{ kind: "applyBuff" }],
+      description: "**[被動][普攻時]**\n\n強化普通攻擊。",
+    })).toEqual(expect.objectContaining({
+      code: "ABILITY_ACTIVATION_CONFLICT",
+      descriptionMode: "passive",
+      runtimeMode: "active",
+    }));
+    expect(activationConflictForAbility({
+      slot: "PASSIVE",
+      innateKind: "active",
+      effects: [{ kind: "spawnVfx" }],
+      description: "[主動][範圍]\n\n施放特效。",
+    })).toBeNull();
+    expect(activationConflictForAbility({
+      slot: "EX",
+      effects: [{ kind: "applyBuff" }],
+      passive: { ranks: [{}] },
+      description: "[主動][被動][變身]\n\n主被動混合。",
+    })).toBeNull();
+    expect(activationConflictForAbility({
+      slot: "Q",
+      effects: [{ kind: "damage" }],
+      description: "[主動攻擊]\n\n舊格式沒有精確[主動]標籤。",
+    })).toBeNull();
+  });
+
+  it("surfaces every shipped explicit activation conflict instead of silently changing prose", () => {
+    const root = join(dirname(fileURLToPath(import.meta.url)), "../../../../content/abilities");
+    const conflicts = readdirSync(root)
+      .filter((file) => file.endsWith(".json") && !file.startsWith("_"))
+      .map((file) => JSON.parse(readFileSync(join(root, file), "utf8")) as Record<string, unknown>)
+      .map((ability) => ({ id: String(ability.id), issue: activationConflictForAbility(ability) }))
+      .filter((entry) => entry.issue !== null);
+    expect(conflicts).toHaveLength(27);
+    expect(conflicts.map((entry) => entry.id)).toContain("godie-o030.ex");
   });
 
   it("blocks cast triggers on a pure passive instead of manufacturing a cast", () => {
