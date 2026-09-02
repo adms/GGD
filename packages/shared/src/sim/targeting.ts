@@ -380,7 +380,11 @@ export function isMobTargetable(world: SimWorld, cand: EntityId, seeker?: Entity
   // [陣營轉換]（[EX∅ 根源]）—— 一隻**被借走的**小怪對其他小怪來說是敵人。
   // 沒有這一行的話，被捕的殭屍王在 `MobSystem` 的隊伍閘那一側是敵人、在這一側
   // 卻選不到，於是整群殭屍**站著不動**：兩份答案各自為真，而畫面上像是 AI 壞了。
-  // ⛔ 空殼期間 `isMindControlled` 一律回 false，所以今天是嚴格的 no-op。
+  // ⚠️ ⭐ 這一行以前寫著「⛔ 空殼期間 `isMindControlled` 一律回 false，所以今天是
+  //   嚴格的 no-op」—— ⛔ **那句話早就過期了**（`isMindControlled` 讀的是
+  //   `world.mindControl`，而 `convertTeam` 真的會寫進去）。
+  // ⚠️ 而它害人往錯的方向找：GH#913 的紅燈看起來像「這一族還沒實作」，
+  //   ⭐ 而真相是 `MobSystem` 的候選名單把小怪整批剔掉了（失敗形態⑪，接縫是空的）。
   if (world.mob.has(cand) && isMindControlled(world, cand)) return true;
   return false;
 }

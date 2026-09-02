@@ -81,6 +81,7 @@ import type { MobKind } from "../components";
 import { bossSummonsAt, splitBossBounty, type BossDamageEntry, type BossBountyShare } from "../mobBoss";
 import { standstillBlocks } from "../combatFeel";
 import { forcedTargetOf, isMobTargetable } from "../targeting";
+import { isMindControlled } from "../mindControl";
 // ⭐ GH#577 / GH#602 —— 王的自動施法走**出貨的**施法入口，⛔ 不是第二條路徑。
 import { castAbility, groundAoeTargets, resolveAbilityRange } from "../abilities/abilitySystem";
 import { abilityInstanceFor } from "../abilities/innateActive";
@@ -170,8 +171,24 @@ export function mobSystem(world: SimWorld): void {
    */
   const aggroCandidates: EntityId[] = [];
   for (const [cid, cteam] of world.team) {
-    if (cteam.teamId === MONSTER_TEAM) continue; // 殭屍自己（含被捕的）不是目標
-    if (world.mob.has(cid)) continue; // ⭐ 那 1000 隻就是在這裡被剔掉的
+    if (cteam.teamId === MONSTER_TEAM) continue; // ⭐ 那 1000 隻就是在這裡被剔掉的
+    // ⭐⭐ **[陣營轉換] 的例外**（2026-09-02，GH#913）。
+    //
+    // ── ⛔ 在此之前這一行是 `if (world.mob.has(cid)) continue;` ──────────────
+    // ⚠️ 而它的註解寫著「⭐ 那 1000 隻就是在這裡被剔掉的」—— ⛔ **那是假的**：
+    // 每一隻殭屍都在 `MONSTER_TEAM`，⭐ 所以它們**上一行就走了**。
+    // ⇒ 量到（GH#913 的夾具）：上一行剔 1 隻雜兵，這一行剔的**只有 `13`**
+    //   —— ⭐ 而 `13` 正是那隻**被借走的王**。
+    //
+    // ⇒ ⭐ 這一行唯一的實際效果，是**打斷陣營轉換** ——
+    //   ⛔ 而 `isMobTargetable` 那一側早就放行了（它有一條逐字寫著
+    //   「一隻**被借走的**小怪對其他小怪來說是敵人」的分支）。
+    //   ⚠️ 兩塊各自正確，⛔ 而接縫是空的（失敗形態⑪）：
+    //   `isMobTargetable` 說「可以」，⛔ 而候選名單裡從來沒有牠 ⇒ 沒有人問過它。
+    //
+    // ⭐ 保留這道便宜過濾（⛔ 不是刪掉它）：一隻走到這裡而**不是**被借走的小怪
+    // 仍然不該進名單 —— 那條路今天走不到，⭐ 但它是這一行原本要防的東西。
+    if (world.mob.has(cid) && !isMindControlled(world, cid)) continue;
     aggroCandidates.push(cid);
   }
 
