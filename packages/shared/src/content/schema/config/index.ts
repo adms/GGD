@@ -117,6 +117,7 @@ import { zConfigDispelDoc } from "./dispel";
 import { zConfigCooldownRulesDoc } from "./cooldownRules";
 import { zConfigCastTimeDoc } from "./castTime";
 import { zConfigCastTimeTiersDoc } from "./castTimeTiers";
+import { zConfigApCoefficientDoc } from "./apCoefficient";
 import { zConfigAoeTiersDoc } from "./aoeTiers";
 import { zConfigRangeTiersDoc } from "./rangeTiers";
 import { zConfigCooldownTiersDoc } from "./cooldownTiers";
@@ -175,6 +176,7 @@ export * from "./bossIntro";
 export * from "./camera";
 export * from "./castTime";
 export * from "./castTimeTiers";
+export * from "./apCoefficient";
 // ⭐ `castApproachDoc` 住在上一層（拆檔那天它剛好由另一條 lane 建立）。
 // ⛔ 只 import 不 re-export = 後台 `import { zConfigCastApproachDoc } from "@ggd/shared/content"`
 //    在**執行期**拿到 undefined，而 tsc 之外沒有東西會說 —— 走訪器直接 crash。
@@ -308,6 +310,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   // content/ 之後整份內容驗證失敗 → 骨架英雄（2026-08-02 事故的形狀）。
   zConfigCastTimeDoc,
   zConfigCastTimeTiersDoc,
+  zConfigApCoefficientDoc,
   // AoE 五級距（owner 2026-08-11 立、2026-08-19 擴成五級）。⚠️ 漏掉這一行 =
   // 一份 aoe-tiers.json 進了 content/ 之後整份內容驗證失敗 → 骨架英雄，理由見下面那一段。
   zConfigAoeTiersDoc,

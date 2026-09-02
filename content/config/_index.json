@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "b87c3fd09cff",
+  "hash": "876e6cc9d14e",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -25,6 +25,12 @@
       "path": "config/aoe-tiers.json",
       "hash": "5f4b138cc6e9",
       "size": 1142
+    },
+    {
+      "id": "ap-coefficient",
+      "path": "config/ap-coefficient.json",
+      "hash": "1e4c59a70127",
+      "size": 1402
     },
     {
       "id": "ap-damage-scaling",

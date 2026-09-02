@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "17f6aad99a48",
+  "fingerprint": "44cd204b15fc",
   "capabilityFingerprint": "65de4b39",
   "required": [
     {
@@ -1907,6 +1907,56 @@
       "group": "configField",
       "name": "barsToAbilitiesGapPx",
       "owner": "config.hud-layout@1"
+    },
+    {
+      "group": "configField",
+      "name": "base",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "baseTierCompensation",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "baseTierCompensation.byDamageTier",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "baseTierCompensation.byDamageTier.中",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "baseTierCompensation.byDamageTier.大",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "baseTierCompensation.byDamageTier.小",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "baseTierCompensation.byDamageTier.極大",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "baseTierCompensation.byDamageTier.極小",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "baseTierCompensation.enabled",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "baseTierCompensation.whenTierAbsent",
+      "owner": "config.ap-coefficient@1"
     },
     {
       "group": "configField",
@@ -8115,6 +8165,26 @@
     },
     {
       "group": "configField",
+      "name": "castTime",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "castTime.base",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "castTime.capSec",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "castTime.slope",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
       "name": "castTimeMaxSec",
       "owner": "config.cast-time@1"
     },
@@ -8595,6 +8665,36 @@
     },
     {
       "group": "configField",
+      "name": "condition",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "condition.中",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "condition.大",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "condition.小",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "condition.極大",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "condition.極小",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
       "name": "conflictMode",
       "owner": "config.taunt@1"
     },
@@ -8615,6 +8715,31 @@
     },
     {
       "group": "configField",
+      "name": "cooldown",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "cooldown.max",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "cooldown.min",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "cooldown.normalizeToMidOfShape",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "cooldown.scale",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
       "name": "cooldownMult",
       "owner": "config.berserk@1"
     },
@@ -8632,6 +8757,11 @@
       "group": "configField",
       "name": "cooldownPredict.graceMs",
       "owner": "config.feel-fx@1"
+    },
+    {
+      "group": "configField",
+      "name": "cooldownSlopeExp",
+      "owner": "config.ap-coefficient@1"
     },
     {
       "group": "configField",
@@ -9232,6 +9362,11 @@
       "group": "configField",
       "name": "enabled",
       "owner": "config.cast-time-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "enabled",
+      "owner": "config.ap-coefficient@1"
     },
     {
       "group": "configField",
@@ -10072,6 +10207,11 @@
       "group": "configField",
       "name": "generate.tier2[].id",
       "owner": "config.icon-plan@1"
+    },
+    {
+      "group": "configField",
+      "name": "globalMult",
+      "owner": "config.ap-coefficient@1"
     },
     {
       "group": "configField",
@@ -11047,6 +11187,11 @@
       "group": "configField",
       "name": "id",
       "owner": "config.cast-time-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "id",
+      "owner": "config.ap-coefficient@1"
     },
     {
       "group": "configField",
@@ -13726,6 +13871,11 @@
     {
       "group": "configField",
       "name": "note",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "note",
       "owner": "config.aoe-tiers@1"
     },
     {
@@ -15861,7 +16011,27 @@
     {
       "group": "configField",
       "name": "range",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "range",
       "owner": "config.range-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "range.exponent",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "range.reference",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "range.selfCenteredAs",
+      "owner": "config.ap-coefficient@1"
     },
     {
       "group": "configField",
@@ -16912,6 +17082,11 @@
       "group": "configField",
       "name": "schema",
       "owner": "config.cast-time-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "schema",
+      "owner": "config.ap-coefficient@1"
     },
     {
       "group": "configField",
@@ -18277,6 +18452,36 @@
       "group": "configField",
       "name": "shakeMaxSec",
       "owner": "config.screen-fx@1"
+    },
+    {
+      "group": "configField",
+      "name": "shape",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "shape.area",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "shape.area.exponent",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "shape.area.reference",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "shape.line",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "shape.single",
+      "owner": "config.ap-coefficient@1"
     },
     {
       "group": "configField",
@@ -24412,9 +24617,9 @@
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 127,
-    "configField": 3840,
+    "configField": 3881,
     "_notRequired": 15,
-    "_total": 5003,
+    "_total": 5044,
     "_ownerOnly": 39
   }
 }
