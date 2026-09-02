@@ -69,6 +69,7 @@ import {
   hasAutoCompletableActionIssue,
   hasAuthoritativeRapidMultiStrike,
 } from "./actionAnimationPrinciples";
+import { simTraceReviewState } from "./simTraceReview";
 
 const simPreview = createSimPreviewController();
 
@@ -172,6 +173,10 @@ export function VfxForgePage() {
     setPlayheadMs(0);
     setServerErrors({});
     setVisualEvidence([]);
+    // A trace is candidate-bound evidence. Never let the previous ability's
+    // accepted SimWorld run keep review controls open while this one loads.
+    setTrace(null);
+    setTraceError(null);
     void (async () => {
       try {
         const abilityDoc = await api.doc<ForgeAbility>("abilities", abilityId);
@@ -257,16 +262,6 @@ export function VfxForgePage() {
   const assetAuditPending = draftAssetRefs.length > 0 && scriptSafety.isPending;
   const assetPreviewAllowed = !scriptSafety.isPending && !scriptSafety.error &&
     allAssetRefsVerifiedSafe(draftAssetRefs, scriptSafety.data);
-  const actionIssues = useMemo(
-    () => draft
-      ? actionAnimationIssues(draft, {
-          allowRapidBarrage: hasAuthoritativeRapidMultiStrike(ability),
-          activationMode: activationModeForAbility(ability),
-        })
-      : [],
-    [ability, draft],
-  );
-  const canAutoCompleteActionIssues = hasAutoCompletableActionIssue(actionIssues);
   const activationConflict = useMemo(
     () => activationConflictForAbility(ability),
     [ability],
@@ -279,6 +274,24 @@ export function VfxForgePage() {
     () => ability ? triggerCuesFromSim(schedule, runtimeAbility ?? ability) : [],
     [ability, runtimeAbility, schedule],
   );
+  const simReview = useMemo(
+    () => simTraceReviewState(
+      trace,
+      traceError ?? (previewContent.error ? String(previewContent.error) : null),
+    ),
+    [previewContent.error, trace, traceError],
+  );
+  const actionIssues = useMemo(
+    () => draft
+      ? actionAnimationIssues(draft, {
+          allowRapidBarrage: hasAuthoritativeRapidMultiStrike(ability),
+          activationMode: activationModeForAbility(ability),
+          requiredTimelineCues: cues,
+        })
+      : [],
+    [ability, cues, draft],
+  );
+  const canAutoCompleteActionIssues = hasAutoCompletableActionIssue(actionIssues);
   const durationMs = useMemo(() => (draft ? timelineDurationMs(draft, cues) : 1000), [cues, draft]);
   const selectedIndex = draft ? Math.min(selected, draft.segments.length - 1) : 0;
   const stop = useCallback(() => setPlaying(false), []);
@@ -324,7 +337,7 @@ export function VfxForgePage() {
       ...doc,
       segments: completeActionAnimations(
         [...doc.segments, segmentFromAsset(asset, placement, reactionTrigger)],
-        { activationMode: activationModeForAbility(ability) },
+        { activationMode: activationModeForAbility(ability), requiredTimelineCues: cues },
       ),
     }));
     recordAction(`拖入素材：${asset.collection}/${asset.id}`);
@@ -336,7 +349,7 @@ export function VfxForgePage() {
       ...doc,
       segments: completeActionAnimations(
         [...doc.segments, newSegment(kind, reactionTrigger)],
-        { activationMode: activationModeForAbility(ability) },
+        { activationMode: activationModeForAbility(ability), requiredTimelineCues: cues },
       ),
     }));
     recordAction(`新增時間軸積木：${kind}`);
@@ -350,7 +363,7 @@ export function VfxForgePage() {
       ...draft,
       segments: completeActionAnimations(
         [...draft.segments, ...segments],
-        { activationMode },
+        { activationMode, requiredTimelineCues: cues },
       ),
     };
     const checks = await assetSafetyGate.checkScript(candidate);
@@ -366,7 +379,7 @@ export function VfxForgePage() {
   };
 
   const save = async (): Promise<void> => {
-    if (!draft || errorCount > 0 || assetAuditPending || assetBlockers.length > 0 || actionIssues.length > 0 || activationConflict) return;
+    if (!draft || !simReview.ready || errorCount > 0 || assetAuditPending || assetBlockers.length > 0 || actionIssues.length > 0 || activationConflict) return;
     if (!reviewEvidenceAllowed) {
       setStatus(`⛔ 外觀證據無效：${reviewEvidenceIssues.join("；")}`);
       return;
@@ -496,6 +509,10 @@ export function VfxForgePage() {
   const visualEvidenceBlocked = visualEvidence.length < requiredVisualEvidence;
 
   const captureVisualEvidence = async (): Promise<void> => {
+    if (!simReview.ready) {
+      setStatus(`⛔ 不可擷取批核證據：${simReview.reason}`);
+      return;
+    }
     if (!assetPreviewAllowed) {
       setStatus("⛔ 素材安全收據尚未全部通過，預覽與擷圖保持鎖定");
       return;
@@ -539,9 +556,10 @@ export function VfxForgePage() {
           <button type="button" disabled={!dirty} onClick={() => { if (original) { draftHistory.commit(original); setVisualEvidence([]); } }}>還原存檔版</button>
           <button
             type="button"
-            disabled={!dirty || errorCount > 0 || assetAuditPending || assetBlockers.length > 0 || actionIssues.length > 0 || activationConflict !== null || !reviewEvidenceAllowed || fixtureWorkflowBlocked || visualEvidenceBlocked}
+            disabled={!dirty || !simReview.ready || errorCount > 0 || assetAuditPending || assetBlockers.length > 0 || actionIssues.length > 0 || activationConflict !== null || !reviewEvidenceAllowed || fixtureWorkflowBlocked || visualEvidenceBlocked}
             title={fixtureWorkflowBlocked
               ? "八招必須從空白畫布用 Editor 重建，不能直接提交預置 JSON"
+              : !simReview.ready ? simReview.reason
               : !reviewEvidenceAllowed ? reviewEvidenceIssues.join("；")
               : visualEvidenceBlocked ? `送審前還需要 ${requiredVisualEvidence - visualEvidence.length} 張完整技能演出畫面` : undefined}
             onClick={() => void save()}
@@ -663,6 +681,9 @@ export function VfxForgePage() {
       {trace && !trace.accepted ? (
         <section className="vfx-blocker" role="alert"><b>⛔ 真 IntentFrame 被拒</b><span>{trace.reason ?? "unknown"}；工坊不會自行合成成功事件。</span></section>
       ) : null}
+      {simReview.pending ? (
+        <section className="vfx-blocker" role="status"><b>⏳ 真 Sim 動作稽核尚未就緒</b><span>{simReview.reason}；完成前禁止擷取與送審。</span></section>
+      ) : null}
 
       {assetBlockers.length > 0 ? (
         <section className="vfx-blocker" role="alert">
@@ -686,6 +707,7 @@ export function VfxForgePage() {
                   ...doc,
                   segments: completeActionAnimations(doc.segments, {
                     activationMode: activationModeForAbility(ability),
+                    requiredTimelineCues: cues,
                   }),
                 }));
                 recordAction("依技能模板原則補齊施展／攻擊動作");
@@ -732,7 +754,7 @@ export function VfxForgePage() {
                   onTime={onTime}
                   onStop={stop}
                   onDropAsset={(asset, placement) => { void addAsset(asset, placement); }}
-                  canCaptureEvidence={reviewEvidenceAllowed && previewMode === "runtime" && visualEvidence.length < 4}
+                  canCaptureEvidence={simReview.ready && reviewEvidenceAllowed && previewMode === "runtime" && visualEvidence.length < 4}
                   onCaptureEvidence={() => void captureVisualEvidence()}
                 />
               ) : (
@@ -753,7 +775,7 @@ export function VfxForgePage() {
                     <b>候選畫面證據 {visualEvidence.length}/{requiredVisualEvidence}（最多 4）</b>
                     <small>完整技能演出 · 綁定本次候選；任何 JSON 修改都會清空</small>
                   </div>
-                  <button type="button" disabled={!assetPreviewAllowed || !reviewEvidenceAllowed || previewMode !== "runtime" || visualEvidence.length >= 4} onClick={() => void captureVisualEvidence()}>
+                  <button type="button" disabled={!simReview.ready || !assetPreviewAllowed || !reviewEvidenceAllowed || previewMode !== "runtime" || visualEvidence.length >= 4} onClick={() => void captureVisualEvidence()}>
                     📷 擷取目前格
                   </button>
                 </header>

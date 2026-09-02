@@ -44,6 +44,17 @@ export interface ActionAnimationOptions {
   readonly allowRapidBarrage?: boolean;
   /** Passive skills react to combat events; they must never be given a fake cast. */
   readonly activationMode?: "active" | "passive";
+  /**
+   * Authoritative cues emitted by the real SimWorld preview. These close the
+   * blind spot where a combo/projectile hit exists in gameplay but the script
+   * omitted every visible segment at that beat.
+   */
+  readonly requiredTimelineCues?: readonly ActionTimelineCue[];
+}
+
+export interface ActionTimelineCue {
+  readonly on: VfxScriptSegment["on"];
+  readonly strikeIndex?: number;
 }
 
 function isSlash(segment: VfxScriptSegment): boolean {
@@ -90,6 +101,37 @@ function actionCovers(
   const impactAt = impact.atMs ?? 0;
   const window = action.clipWindowMs ?? 520;
   return impactAt >= Math.max(0, actionAt - 80) && impactAt <= actionAt + window;
+}
+
+function actionCoversCue(
+  action: VfxScriptSegment,
+  cue: ActionTimelineCue,
+  actor: "caster" | "target",
+): boolean {
+  if (action.kind !== "anim" || (action.at ?? "target") !== actor || action.on !== cue.on) return false;
+  if (cue.on === "strike" && action.strikeIndex !== undefined && action.strikeIndex !== cue.strikeIndex) return false;
+  // Segment offsets are relative to the authoritative event. A reaction that
+  // starts hundreds of milliseconds later cannot cover the hit itself.
+  return (action.atMs ?? 0) <= 80;
+}
+
+function requiredActorsForCue(cue: ActionTimelineCue): readonly ("caster" | "target")[] {
+  if (cue.on === "strike") return ["caster", "target"];
+  if (cue.on === "projectileHit") return ["target"];
+  return [];
+}
+
+function uniqueRequiredCues(cues: readonly ActionTimelineCue[]): ActionTimelineCue[] {
+  const out: ActionTimelineCue[] = [];
+  const seen = new Set<string>();
+  for (const cue of cues) {
+    if (requiredActorsForCue(cue).length === 0) continue;
+    const key = `${cue.on}:${cue.strikeIndex ?? "each"}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(cue);
+  }
+  return out;
 }
 
 function rapidBarrage(slashes: readonly VfxScriptSegment[]): boolean {
@@ -171,6 +213,30 @@ export function actionAnimationIssues(
             ? "斬擊特效沒有同一傷害節點的角色攻擊動作。"
             : "時間軸的可見／傷害／位移節點沒有相同觸發與時間窗的角色動作。",
         segmentIndexes: [index],
+      });
+    }
+  }
+
+  // Gameplay truth can own a damage beat even when the authored script owns no
+  // particle/model/bodyMove at that trigger. Use only real SimWorld cues; never
+  // infer a combo from prose or from a convenient fan of slash sprites.
+  for (const cue of uniqueRequiredCues(options.requiredTimelineCues ?? [])) {
+    const relatedVisible = visible.some(({ segment }) =>
+      segment.on === cue.on &&
+      (cue.on !== "strike" || segment.strikeIndex === undefined || segment.strikeIndex === cue.strikeIndex),
+    );
+    // A visible beat already went through the stricter action-window check
+    // above. This branch exists only for the otherwise invisible gameplay beat.
+    if (relatedVisible) continue;
+    for (const actor of requiredActorsForCue(cue)) {
+      if (allActions.some(({ segment }) => actionCoversCue(segment, cue, actor))) continue;
+      const targetReaction = actor === "target";
+      issues.push({
+        code: targetReaction ? "TARGET_REACTION_MISSING" : "TIMELINE_ACTION_MISSING",
+        message: targetReaction
+          ? `真 ${cue.on}${cue.strikeIndex ? ` #${cue.strikeIndex}` : ""} 傷害點缺少目標受擊反應。`
+          : `真 ${cue.on}${cue.strikeIndex ? ` #${cue.strikeIndex}` : ""} 傷害點缺少施法者攻擊動作。`,
+        segmentIndexes: [],
       });
     }
   }
@@ -279,7 +345,7 @@ export function activationConflictForAbility(ability: unknown): AbilityActivatio
 /** Add only missing action bricks; callers still run actionAnimationIssues. */
 export function completeActionAnimations(
   segments: readonly VfxScriptSegment[],
-  options: Pick<ActionAnimationOptions, "activationMode"> = {},
+  options: Pick<ActionAnimationOptions, "activationMode" | "requiredTimelineCues"> = {},
 ): VfxScriptSegment[] {
   const completed = [...segments];
   const visible = segments.filter((segment) => VISIBLE_KINDS.has(segment.kind));
@@ -325,6 +391,29 @@ export function completeActionAnimations(
             ? "cast"
             : "attack",
         clipWindowMs: impact.kind === "bodyMove" ? Math.max(520, impact.durationMs) : 650,
+      });
+    }
+  }
+
+  // If gameplay emits a beat that has no presentation brick at all, add actor
+  // pulses directly on that proven trigger. The first missing actor receives a
+  // generic strike pulse (covers every index); when the author already chose
+  // per-index actions, preserve that granularity and fill only the missing one.
+  for (const cue of uniqueRequiredCues(options.requiredTimelineCues ?? [])) {
+    for (const actor of requiredActorsForCue(cue)) {
+      if (completed.some((action) => actionCoversCue(action, cue, actor))) continue;
+      const alreadySpecific = completed.some((action) =>
+        action.kind === "anim" && action.on === cue.on && (action.at ?? "target") === actor,
+      );
+      completed.push({
+        kind: "anim",
+        on: cue.on,
+        ...(cue.on === "strike" && cue.strikeIndex !== undefined && alreadySpecific
+          ? { strikeIndex: cue.strikeIndex }
+          : {}),
+        at: actor,
+        pulse: actor === "target" ? "hurt" : "attack",
+        clipWindowMs: 650,
       });
     }
   }

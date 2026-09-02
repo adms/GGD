@@ -55,6 +55,10 @@ updates browser history, and Back/Forward restores the matching screen.
   cast. Every authoritative strike is guarded as an actor
   pair: the caster attack and target reaction must both cover that beat, so a
   cloud of slash particles cannot pass while either character remains static.
+  The guard consumes real SimWorld strike/projectile-hit cues, so a gameplay
+  hit with no authored VFX is still checked. Capture and submission remain
+  fail-closed until that trace is accepted and runtime-compatible; switching
+  abilities clears the prior trace immediately.
 - **Champions / Skins** — complete schema forms plus live final stats and the
   actual GLB presentation path: facing correction, hidden primitives, body
   normalization, ground placement, animation clips, tint and alpha. Champion

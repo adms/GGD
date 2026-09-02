@@ -1,6 +1,6 @@
 # 特效工坊（VFX Forge）· 技術規格 —— 給 Codex
 
-狀態：**Revision 9 — 2026-09-02 13:36 CST，以 `origin/main@29f8628f`（含 v0.35.15）與 `feat/vfx-forge-codex` 程式／隔離測試重驗**
+狀態：**Revision 10 — 2026-09-02 14:00 CST，以 `origin/main@29f8628f`（含 v0.35.15）與 `feat/vfx-forge-codex` 程式／隔離測試重驗**
 
 > 本文保留 2026-08-31 的出發點，但「缺口」必須以各節的目前狀態為準；不可把舊基線當成今天的待辦。
 
@@ -179,6 +179,9 @@ fail／reject，但禁止 pass／approve／Promote。不得替舊核准補欄位
 
 對應的可執行守衛與自動補動作住在
 `apps/editor/src/vfx-forge/actionAnimationPrinciples.ts`；recipe API 強制要求呼叫端傳入 runtime 的 active/passive mode，
+守衛也會直接消費真 SimWorld 排程的 `strike`／`projectileHit` cue；即使作者沒有在該傷害點放任何可見 VFX，
+仍然要求對應的攻擊者／受擊者動作。真 trace 尚未完成、IntentFrame 被拒、試放失敗或 reactive provenance
+無法被 Main runtime 消費時，擷取與送審一律 fail closed；切換技能時也會立即清除上一招的 trace，不能沿用舊收據。
 八招目前來源 fixture 全數通過同一條守衛，沒有技能專用豁免。舊送審物則揭露兩個不可回填的歷史缺陷：
 `godie-e002.ex` 的 `@1` 第七刀後段缺目標反應，`godie-hart.r` 只有逐刀攻擊而沒有真正的
 `castStart`／`castEffect` 施展動作。兩份 JSON／擷圖都保留為失敗證據，禁止把舊擷圖配上補動作後的新 JSON。

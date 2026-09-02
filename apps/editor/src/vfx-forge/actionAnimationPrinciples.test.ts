@@ -242,4 +242,49 @@ describe("VFX Forge action-animation principles", () => {
       segmentIndexes: [2],
     }])).toBe(false);
   });
+
+  it("uses real SimWorld strike cues to catch an invisible combo beat", () => {
+    const castOnly = doc([
+      { kind: "anim", on: "castStart", at: "caster", pulse: "cast" },
+      { kind: "floatingText", on: "castStart", text: "七連斬" },
+    ]);
+    const requiredTimelineCues = [
+      { on: "strike" as const, strikeIndex: 1 },
+      { on: "strike" as const, strikeIndex: 2 },
+    ];
+    const issues = actionAnimationIssues(castOnly, { requiredTimelineCues });
+    expect(issues.map((issue) => issue.code)).toEqual([
+      "TIMELINE_ACTION_MISSING",
+      "TARGET_REACTION_MISSING",
+      "TIMELINE_ACTION_MISSING",
+      "TARGET_REACTION_MISSING",
+    ]);
+
+    const completed = completeActionAnimations(castOnly.segments, { requiredTimelineCues });
+    expect(completed).toContainEqual(expect.objectContaining({
+      kind: "anim", on: "strike", at: "caster", pulse: "attack",
+    }));
+    expect(completed).toContainEqual(expect.objectContaining({
+      kind: "anim", on: "strike", at: "target", pulse: "hurt",
+    }));
+    // Generic strike pulses fire on both authoritative indexes without
+    // manufacturing fourteen near-identical segments.
+    expect(completed.filter((segment) => segment.kind === "anim" && segment.on === "strike")).toHaveLength(2);
+    expect(actionAnimationIssues(doc(completed), { requiredTimelineCues })).toEqual([]);
+  });
+
+  it("requires a target reaction for a real projectileHit even without impact VFX", () => {
+    const candidate = doc([
+      { kind: "anim", on: "castStart", at: "caster", pulse: "cast" },
+      { kind: "sound", on: "projectileSpawn", soundKey: "ability.launch" },
+    ]);
+    const cues = [{ on: "projectileHit" as const }];
+    expect(actionAnimationIssues(candidate, { requiredTimelineCues: cues }).map((issue) => issue.code))
+      .toEqual(["TARGET_REACTION_MISSING"]);
+    const completed = completeActionAnimations(candidate.segments, { requiredTimelineCues: cues });
+    expect(completed).toContainEqual(expect.objectContaining({
+      kind: "anim", on: "projectileHit", at: "target", pulse: "hurt",
+    }));
+    expect(actionAnimationIssues(doc(completed), { requiredTimelineCues: cues })).toEqual([]);
+  });
 });

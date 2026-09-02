@@ -1,6 +1,6 @@
 # GGD Main ↔ Codex Editor：必要接縫結案收據
 
-狀態：**Revision 19 — Main `29f8628f`（含 v0.35.15）已整合；主動起手與被動反應守衛再收緊，六個可重用積木／契約阻塞仍未落地**
+狀態：**Revision 20 — Main `29f8628f`（含 v0.35.15）已整合；真 Sim 傷害節點與批核證據閘已 fail closed，六個可重用積木／契約阻塞仍未落地**
 
 核對基準：`origin/main@29f8628f`（包含 tag `v0.35.15` at `7d032d9c`）
 
@@ -9,7 +9,7 @@ Main seam：`origin/feat/editor-seam-20260902@29f8628f` 與 `main` 同一點；�
 
 Editor：`feat/vfx-forge-codex`（禁止直接提交或推送 `main`）
 
-最後核對：**2026-09-02 13:36（Asia/Taipei）**
+最後核對：**2026-09-02 14:00（Asia/Taipei）**
 
 ## 結論
 
@@ -195,7 +195,10 @@ on-hit 不重播假施法；block 是 guard、evade 是 dodge；專屬 script �
 
 Editor 已將「每個權威 strike 同時具有 caster attack＋target reaction」與「主動技能必須另外具有
 castStart／castEffect 起手」寫成兩條獨立守衛與自動補完；recipe 呼叫端也強制傳入 runtime active/passive
-mode，純被動不會因為套一張反擊 recipe 就長出假 cast。八份目前來源 fixture 皆通過；舊理想鄉 EX `@1`
+mode，純被動不會因為套一張反擊 recipe 就長出假 cast。守衛現在直接讀真 SimWorld 的 `strike`／
+`projectileHit` cue，因此「傷害真的發生，但腳本完全沒放該節點」也會紅；trace 尚未完成、試放被拒／失敗或
+reactive provenance 不相容時，擷取與送審皆保持鎖定，切換技能也不會沿用上一招的 accepted trace。
+八份目前來源 fixture 皆通過；舊理想鄉 EX `@1`
 送審物仍缺第七刀後段目標反應，舊超究武神霸斬送審物則只有逐刀 strike、沒有真正施展起手。舊 JSON／擷圖
 維持失敗證據，Editor 不要求 Main 代修技能成品；這只證明 Main 的全域 resolver 必須同時守住 cast 與
 actor-pair 兩層，不能讓後續連段動作冒充施法，也不能讓粒子時間軸在角色靜止時獨自播放。
