@@ -44,6 +44,10 @@ import {
 } from "./combatFeedback";
 import { TELEPORT_STEP_UNITS } from "./math/motion";
 import { lifecycleLedger } from "./lifecycleLedger";
+import {
+  resolveAbilityPresentation,
+  type PresentationTrigger,
+} from "@ggd/shared/content/abilityPresentation";
 
 /** Per-champion vertex-tint bookkeeping (task #49). */
 interface TintState {
@@ -496,6 +500,30 @@ export interface SyncArgs {
 }
 
 export class EntityViewRegistry {
+  /**
+   * ⭐⭐ **照登錄表播預設動作**（Codex 阻塞清單 P0-3）。
+   *
+   * ⛔ 在此之前這六個 `case` **各自寫死一行** `pulse(...)` ⇒
+   * 「哪個事件該播誰的什麼動作」**沒有一個住處**，
+   * 而外部編輯器問不出這張表、新增事件時漏接也不會有東西紅。
+   *
+   * ⇒ ⭐ 規則住 `@ggd/shared/content/abilityPresentation`，這裡只查表。
+   * ⚠️ `opts` 讓呼叫端傳**事件帶來的**時序（castTime／durationSec／restartClip）——
+   * ⛔ 那是規則管不到的（它只說「播哪一塊」）。
+   */
+  private playDefaultPresentation(
+    trigger: PresentationTrigger,
+    ids: { caster?: number | undefined; target?: number | undefined },
+    nowMs: number,
+    opts?: { windowMs?: number; clipWindowMs?: number; restartClip?: boolean },
+  ): void {
+    for (const rule of resolveAbilityPresentation(trigger)) {
+      const id = rule.actor === "caster" ? ids.caster : ids.target;
+      if (id === undefined) continue;
+      this.champions.get(id)?.pulse(rule.pulse, nowMs, opts);
+    }
+  }
+
   private readonly champions = new Map<number, ChampionView>();
   private readonly projectiles = new Map<number, ProjectileView>();
   private readonly pool: ProjectileView[] = [];
@@ -638,7 +666,8 @@ export class EntityViewRegistry {
       }
       case "abilityCast": {
         const caster = ev.data.caster as number | undefined;
-        if (caster !== undefined) this.champions.get(caster)?.pulse("cast", nowMs);
+        // ⭐ P0-3 —— 查表，⛔ 不再寫死
+        this.playDefaultPresentation("abilityCast", { caster }, nowMs);
         break;
       }
       // castEnd and castInterrupt are NOT the same moment and must not share a
@@ -682,7 +711,11 @@ export class EntityViewRegistry {
           // pop on the attacker. Melee autos never flashed the attacker before,
           // so the strike read only on the victim. `[...]` copies the readonly
           // tunable into the mutable tuple `flash` expects.
-          view?.pulse("attack", nowMs, { restartClip: false });
+          // ⭐ P0-3 —— 查表。⚠️ `restartClip:false` 是**事件帶來的時序**，
+          //   ⛔ 不是規則的一部分（Codex：hitstop 不得從頭重播剪輯）。
+          this.playDefaultPresentation("basicAttack", { caster: source }, nowMs, {
+            restartClip: false,
+          });
           view?.flash([...ATTACKER_FLASH_RGB], nowMs, ATTACKER_FLASH_MS);
         }
         break;
@@ -714,8 +747,13 @@ export class EntityViewRegistry {
             //   也讀同一格 ⇒ ⛔ 兩邊不會對同一發做出不同判斷）。
             //   ⚠️ 其餘一切照舊：hitstop、閃光、火花都還在
             //   —— ⭐ 換掉的只有**身體的姿勢**。
-            if (ev.data.blocked === true) view.triggerGuard(nowMs);
-            else view.triggerHurt(nowMs);
+            // ⭐ P0-3 —— 查表。⛔ 擋下來與沒擋下來是**兩個 trigger**，
+            //   而不是這裡的一個 if（規則住登錄表）。
+            this.playDefaultPresentation(
+              ev.data.blocked === true ? "hitImpactBlocked" : "hitImpact",
+              { target },
+              nowMs,
+            );
             // ⚠️ `ChampionView.flash` **無條件**寫 `flashRgb`/`flashAlpha`,只有
             //    `flashUntilMs` 走 `Math.max` ⇒ 一發 `ms: 0` 的閃光（GH#741 的
             //    `blockFlashMode: "none"`）會把**還在燒的上一發**的 alpha 洗成 0。
@@ -756,7 +794,7 @@ export class EntityViewRegistry {
         const view = this.champions.get(evader);
         if (!view) break;
         // ① 通用回饋 —— ⭐ **永遠先播**（Codex 驗收②：沒有專屬設定時維持既有回饋）。
-        view.triggerDodge(nowMs);
+        this.playDefaultPresentation("evade", { target: evader }, nowMs);
         // ② 專屬演出 —— ⭐ 由**真正抽中的那一個來源**選（`d.by`），
         //    ⛔ 不是「這個人身上有迴避就播 X」。`by` 為 null（純 base.evasion）
         //    或解析不到 ⇒ 只有①，逐位元回到今天的畫面。
@@ -785,7 +823,9 @@ export class EntityViewRegistry {
         const phase = ev.data.phase as string | undefined;
         if (id === undefined || phase !== "start") break;
         const secs = ev.data.durationSec as number | undefined;
-        this.champions.get(id)?.pulse("cast", nowMs, {
+        // ⭐ P0-3 —— 查表。⚠️ `durationSec` 是**事件帶來的時序**（引擎真的排的 tick），
+        //   ⛔ 不是規則的一部分 —— 規則只說「播哪一塊」。
+        this.playDefaultPresentation("displace", { caster: id }, nowMs, {
           ...(typeof secs === "number" && secs > 0
             ? { windowMs: Math.round(secs * 1000), clipWindowMs: Math.round(secs * 1000) }
             : {}),

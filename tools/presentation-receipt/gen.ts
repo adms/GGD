@@ -44,6 +44,10 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ANIM_PULSES, PULSE_MS, ANIM_STATES } from "../../packages/shared/src/content/animPulse";
 import { DEFAULT_CLIP_NAMES } from "../../apps/client/src/render/ClipAnimator";
+import {
+  PRESENTATION_RULES,
+  NEVER_FAKE_CAST_TRIGGERS,
+} from "../../packages/shared/src/content/abilityPresentation";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../..");
 const OUT = join(ROOT, "docs/editor-contract/ggd-presentation-receipt.json");
@@ -186,6 +190,22 @@ function build(): unknown {
       measured:
         "264 顆出貨 .glb 的 AnimationGroup 名普查：guard 0 · dodge 0 · dash 0 · leap 0 · " +
         "teleport 0 位元組；而 stand 295 · attack 238 · walk 171 · attack defend 21。",
+    },
+    /**
+     * ⭐⭐ **trigger → 預設 actor action**（Codex 阻塞清單 P0-3）——
+     * ⭐ 整份公開，⛔ 不是「有一個 resolver」這句話。
+     *
+     * ⚠️ 每一列都帶 `channel`（取代通道）與 `why`（為什麼是這一塊）——
+     * ⭐ Editor 據此決定「我的 script 要不要取代它」。
+     */
+    defaultPresentation: {
+      rules: PRESENTATION_RULES,
+      /** ⛔ 純被動不可以生成假的 cast —— 這幾個 trigger 永遠不在表上。 */
+      neverFakeCast: [...NEVER_FAKE_CAST_TRIGGERS],
+      resolver: "packages/shared/src/content/abilityPresentation.ts :: resolveAbilityPresentation()",
+      note:
+        "⭐ 這是**唯一**的住處 —— `GameApp` / `VfxSystem` / `VfxScriptPlayer` / " +
+        "`EntityViewRegistry` 一律查它，⛔ 不各自維護規則（Codex 逐字）。",
     },
     replacementPolicy: replacementPolicy(),
     singleArc: singleArc(),

@@ -10,6 +10,7 @@ import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ANIM_PULSES, PULSE_MS, isAnimPulse } from "@ggd/shared/content/animPulse";
+import { resolveAbilityPresentation } from "@ggd/shared/content/abilityPresentation";
 import { zVfxScriptAnim } from "@ggd/shared/content/schema/vfxScript";
 import { AnimationStateMachine } from "./anim/AnimationStateMachine";
 import { resolveClips } from "./ClipAnimator";
@@ -78,11 +79,26 @@ describe("guard / dodge 動作積木（P0-2）", () => {
     const reg = readFileSync(join(ROOT, "apps/client/src/render/EntityViewRegistry.ts"), "utf8");
     // ⛔ 掃字串是形態⑥ —— ⭐ 所以這裡驗的是**兩者的關係**：
     //   同一個 `hitImpact` 分支裡，`blocked` 為真走 guard、否則走 hurt。
-    const i = reg.indexOf("view.triggerGuard(nowMs)");
-    expect(i, "⛔ 沒有任何地方呼叫 triggerGuard ⇒ 這塊積木沒有消費端").toBeGreaterThan(0);
-    const window = reg.slice(i - 400, i + 200);
-    expect(window, "⛔ guard 不是掛在 `blocked` 上").toContain("ev.data.blocked === true");
-    expect(window, "⛔ 沒擋到的那一半不再播 hurt 了").toContain("view.triggerHurt(nowMs)");
-    expect(reg, "⛔ `evade` 沒有接到 dodge").toContain("triggerDodge(nowMs)");
+    // ⭐⭐ 2026-09-02（P0-3）—— 這一條**改問更上一層**了。
+    //
+    // ⛔ 原本它掃 `EntityViewRegistry` 裡有沒有 `view.triggerGuard(nowMs)` ——
+    // ⭐ 而 P0-3 把那六處寫死的 `pulse(...)` 收進**單一登錄表**
+    // （`@ggd/shared/content/abilityPresentation`）⇒ 那個字串不見了。
+    //
+    // ⇒ ⭐ 現在驗的是**同一件事的更強版本**：登錄表裡「擋下來播 guard、
+    //   閃過去播 dodge」，而分派層**真的去查表**（⛔ 不是自己寫死）。
+    expect(
+      resolveAbilityPresentation("hitImpactBlocked").some(
+        (r) => r.actor === "target" && r.pulse === "guard",
+      ),
+      "⛔ 登錄表裡「擋下來」沒有播 guard",
+    ).toBe(true);
+    expect(
+      resolveAbilityPresentation("evade").some((r) => r.actor === "target" && r.pulse === "dodge"),
+      "⛔ 登錄表裡「閃過去」沒有播 dodge",
+    ).toBe(true);
+    // ⭐ 而分派層真的走那條路（⛔ 沒有繞過去自己寫死）
+    expect(reg, "⛔ 分派層沒有查表").toContain("playDefaultPresentation(");
+    expect(reg, "⛔ 擋下來與沒擋下來不是兩個 trigger").toContain('"hitImpactBlocked"');
   });
 });
