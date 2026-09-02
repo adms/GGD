@@ -66,6 +66,7 @@ import {
   activationConflictForAbility,
   activationModeForAbility,
   completeActionAnimations,
+  hasAutoCompletableActionIssue,
   hasAuthoritativeRapidMultiStrike,
 } from "./actionAnimationPrinciples";
 
@@ -265,6 +266,7 @@ export function VfxForgePage() {
       : [],
     [ability, draft],
   );
+  const canAutoCompleteActionIssues = hasAutoCompletableActionIssue(actionIssues);
   const activationConflict = useMemo(
     () => activationConflictForAbility(ability),
     [ability],
@@ -676,21 +678,23 @@ export function VfxForgePage() {
         <section className="vfx-blocker" role="alert">
           <b>⛔ 角色動作／斬擊配對未通過</b>
           <span>{actionIssues.map((issue) => `${issue.code}：${issue.message}`).join("；")}</span>
-          <button
-            type="button"
-            onClick={() => {
-              mutate((doc) => ({
-                ...doc,
-                segments: completeActionAnimations(doc.segments, {
-                  activationMode: activationModeForAbility(ability),
-                }),
-              }));
-              recordAction("依技能模板原則補齊施展／攻擊動作");
-              setStatus("已補齊可確定的角色動作；多餘月牙仍需刪到一個主斬擊，或改成三段以上的小型極速連斬");
-            }}
-          >
-            自動補角色動作
-          </button>
+          {canAutoCompleteActionIssues ? (
+            <button
+              type="button"
+              onClick={() => {
+                mutate((doc) => ({
+                  ...doc,
+                  segments: completeActionAnimations(doc.segments, {
+                    activationMode: activationModeForAbility(ability),
+                  }),
+                }));
+                recordAction("依技能模板原則補齊施展／攻擊動作");
+                setStatus("已補齊可安全推定的角色動作；假觸發、過量月牙與缺少 Main 積木仍須依 blocker 個別處理");
+              }}
+            >
+              自動補角色動作
+            </button>
+          ) : null}
         </section>
       ) : null}
 

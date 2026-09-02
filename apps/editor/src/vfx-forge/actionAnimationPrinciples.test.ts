@@ -7,6 +7,7 @@ import {
   actionAnimationIssues,
   activationConflictForAbility,
   completeActionAnimations,
+  hasAutoCompletableActionIssue,
   hasAuthoritativeRapidMultiStrike,
   activationModeForAbility,
 } from "./actionAnimationPrinciples";
@@ -220,7 +221,25 @@ describe("VFX Forge action-animation principles", () => {
     const candidate = doc([
       { kind: "vfx", on: "castEffect", vfxId: "fx.prim.holy.pulse-sm", at: "self", durationSec: 0.2 },
     ]);
-    expect(actionAnimationIssues(candidate, { activationMode: "passive" }).map((issue) => issue.code))
-      .toContain("PASSIVE_CAST_TRIGGER");
+    const issues = actionAnimationIssues(candidate, { activationMode: "passive" });
+    expect(issues.map((issue) => issue.code)).toContain("PASSIVE_CAST_TRIGGER");
+    expect(hasAutoCompletableActionIssue(issues)).toBe(false);
+  });
+
+  it("offers safe auto-completion only for missing actor pulses", () => {
+    expect(hasAutoCompletableActionIssue([{
+      code: "CAST_ACTION_MISSING",
+      message: "missing",
+      segmentIndexes: [0],
+    }])).toBe(true);
+    expect(hasAutoCompletableActionIssue([{
+      code: "SLASH_OVERDRAWN",
+      message: "manual",
+      segmentIndexes: [0, 1],
+    }, {
+      code: "MULTI_CRESCENT_BRICK",
+      message: "main brick",
+      segmentIndexes: [2],
+    }])).toBe(false);
   });
 });

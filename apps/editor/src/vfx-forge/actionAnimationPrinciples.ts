@@ -13,6 +13,20 @@ export interface ActionAnimationIssue {
   readonly segmentIndexes: readonly number[];
 }
 
+const AUTO_COMPLETABLE_ACTION_ISSUES = new Set<ActionAnimationIssue["code"]>([
+  "CAST_ACTION_MISSING",
+  "TIMELINE_ACTION_MISSING",
+  "TARGET_REACTION_MISSING",
+  "SLASH_ACTION_MISSING",
+]);
+
+/** True only when the safe fixer can solve at least one reported issue by adding actor pulses. */
+export function hasAutoCompletableActionIssue(
+  issues: readonly ActionAnimationIssue[],
+): boolean {
+  return issues.some((issue) => AUTO_COMPLETABLE_ACTION_ISSUES.has(issue.code));
+}
+
 export interface AbilityActivationConflict {
   readonly code: "ABILITY_ACTIVATION_CONFLICT";
   readonly descriptionMode: "active" | "passive";
