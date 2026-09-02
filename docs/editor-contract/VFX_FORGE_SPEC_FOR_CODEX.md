@@ -1,5 +1,9 @@
 # 特效工坊（VFX Forge）· 技術規格 —— 給 Codex
 
+狀態：**Revision 3 — 2026-09-02 11:59 CST，以 `origin/main@1d8dc285`（v0.35.12）與 `feat/vfx-forge-codex` 實際畫面重驗**
+
+> 本文保留 2026-08-31 的出發點，但「缺口」必須以各節的目前狀態為準；不可把舊基線當成今天的待辦。
+
 > ⭐ owner 2026-08-31 逐字：
 > 「[三招驗收] **給 codex 編輯器做**，你到時候參考就好，
 >  但你要**寫好技術規格包含驗收圖跟契約 md** 給 codex 可以參考」
@@ -20,16 +24,23 @@
 > 「特效工坊 · 演出腳本 應該也是**後台其中一頁**對吧 也是一樣的機制，
 >  編輯儲存完後可以**回存到主線甚至間接到 github**」（2026-08-28）
 
-### ⭐ 驗收（owner 指名的三招）
+### ⭐ 驗收（owner 後續擴充為八招）
 
 | 編號 | 技能 |
 |---|---|
-| **01-04** | 超究武神霸斬 |
 | **04-03** | 龍破斬 |
+| **04-04** | 神滅斬 |
+| **01-04** | 超究武神霸斬 |
+| **08-04** | 阿邦快速劍X |
+| **08-03** | 龍鬥氣砲咒文 |
+| **09-04** | 龜派氣功 |
 | **20-002** | 理想鄉EX |
+| **48-04** | 騎英之手綱 |
 
-⚠️ ⭐ 驗收**不是**「編輯器存在」——是**用它**把三招的全動畫特效做到可上線，
-全程 **JASS 一比一**（⛔ 不亂猜 —— 逐動詞翻譯）。
+⚠️ 這八招是 **Editor 表達能力 fixture**，不是要直接覆蓋遊戲 Main 的八份成品，也永久不可 Promote。
+每招必須從空白畫布實際操作重建，用 Owner 最新目標、目前 Main 與 JASS／w3x 蝗蟲群三方對照；能 1:1
+翻譯的逐動詞翻譯，為可讀性做的改編或 Main 尚缺的積木都要明寫，不能把近似冒充原作。任何 AI 候選仍須進
+後台人工批核；Editor fixture 只能 pass／fail 驗收工坊能力，不能套入正式內容。
 
 ---
 
@@ -53,47 +64,53 @@
 
 ⇒ ⭐ **超究武神霸斬已經有一份可讀的範本** —— 照它的形狀做，⛔ 不要另外發明。
 
-### ⭐ schema 今天支援的
+### ⭐ `vfx-script@1` 目前支援的（2026-09-02 實讀 schema）
 
 | 軸 | 值 |
 |---|---|
-| **觸發器** `on` | `castStart` · `strike`（帶 `index`）· `projectileHit` |
-| **表示形** `kind` | `modelFx` · `vfx` · `screenFlash` · `screenShake` · `floatingText` · `sound` |
+| **觸發器** `on` | `castStart` · `castEffect` · `strike`（帶 `strikeIndex`）· `projectileSpawn` · `projectileHit` · `reflectSuccess` |
+| **表示形** `kind` | `modelFx` · `vfx` · `screenFlash` · `screenShake` · `floatingText` · `sound` · `anim` · `hideBody` · `bodyMove` |
 
 ---
 
-## 2. ⛔ 缺的（⭐ 這才是 Codex 的工作面）
+## 2. Editor 工作面的目前狀態
 
 ### 2.1 ⭐ 編輯器本體（owner 原話裡的每一個詞）
 
-| owner 的詞 | 要什麼 | main 今天 |
+| owner 的詞 | 要什麼 | 目前 feature branch |
 |---|---|---|
-| 「**拖拉 model、粒子特效進編輯器**」 | 資源池 → 拖進畫布 | ⛔ 無 |
-| 「**模擬遊戲畫面**」 | ⭐ **真 CameraRig ＋ 真地板 ＋ frame-step** | ⛔ 無 |
-| 「**slider** 調大小/透明度/顏色/轉向/高度/動畫速度」 | 連續參數表單 | ⛔ 無（`vfxForge.ts` 是資料層，⛔ 不是 UI） |
-| 「**所見即所得**」 | 改一格 → 畫面即時重播 | ⛔ 無 |
-| 「**觀看全程**」 | 時間軸播放器（含 scrub） | ⛔ 無 |
-| 「**回存到主線甚至 github**」 | 寫回 middleware → PR | ⛔ 無 |
+| 「**拖拉 model、粒子特效進編輯器**」 | 資源池 → 拖進畫布／時間軸 | ✅ `VfxAssetPalette`＋安全收據；未驗證或不安全素材不可進預覽候選 |
+| 「**模擬遊戲畫面**」 | 真 `CameraRig`＋真地板＋雙方角色＋frame-step | ✅ `VfxForgeStage`／`VfxForgePreview`；可切完整 runtime 或只看 script |
+| 「**slider** 調大小/透明度/顏色/轉向/高度/動畫速度」 | schema 驅動連續參數表單 | ✅ `VfxSegmentForm`；上下界來自共用 schema，不抄常數 |
+| 「**所見即所得**」 | 改一格 → 同一份 draft 即時重播 | ✅ draft、預覽、時間軸與送審 hash 共用同一 JSON |
+| 「**觀看全程**」 | 播放、scrub、1/60 frame-step、精確秒數 | ✅ 並可對每張送審關鍵格重跑 framebuffer 稽核 |
+| 「**回存到主線甚至 github**」 | AI 候選 → 後台人工批核 → Promote | ✅ Forge 只能投 proposal；不直接寫 ability，也不讓 fixture Promote |
 
-### 2.2 ⛔ 機制缺口（票 §MISSING 自己列的，⭐ 這些要 main 做）
+上述六項是 Editor 已完成的 UI／接縫，不應再交給 Main 重做。Main 只提供 schema、播放器、權威事件、
+可重用 VFX／actor 積木與安全限制；Editor 用它們拼成品。
 
-| # | 缺什麼 | 擋住哪一招 |
+### 2.2 2026-08-31 的四個機制缺口已如何落地
+
+| # | 目前狀態 | 住處／誠實邊界 |
 |---|---|---|
-| **M1** | 逐刀瞬移 | 超究武神霸斬 |
-| **M3** | 升空曲線 | 同上（今天用「取半高」近似，⛔ 那是偏離） |
-| **M4** | 受害者定格 ＋ ⭐ **逐段加速**（`SetUnitTimeScalePercent(SupI×100)`，段數越後越快） | 同上 —— ⛔ `clipWindowMs` 是固定值，表達不了 |
-| **M-防禦** | `defenseSuccess` 觸發器（反彈/格擋成功） | ⭐ **理想鄉EX**（它由反彈成功觸發） |
+| **M1 逐刀瞬移** | ✅ `bodyMove`＋`strikeIndex` | 純演出位移，不改 sim 判定框／碰撞 |
+| **M3 升空曲線** | ✅ `bodyMove.mode:"arc"` 與 `modelFx.heightKeys` | 視覺曲線；權威位移仍留 ability JSON |
+| **M4 定格／逐段速度** | 🟡 `anim.clipWindowMs`＋逐段 segment 可表達 | pulse 仍只有 `attack/cast/hurt`，強制 death clip 不是 1:1，必須明寫偏離 |
+| **反彈成功** | ✅ 正式名稱是 `reflectSuccess` | 由帶 ability provenance 的真反彈事件觸發；不能用計時器猜 |
 
-⚠️ ⭐ **`defenseSuccess` 今天不在 schema 的 `on` 列舉裡** ⇒ 理想鄉EX **寫不出來**。
-⇒ ⭐ 這一條是 main 的前置，⛔ Codex 做不了。**要它就開一張票**，main 一天內給。
+目前真正會阻塞 Editor 的 Main 接縫已集中在
+[`MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md`](MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md)：有效 yaw resolver、
+單發 `single-arc`、迴避來源 provenance、actor-aware 預設演出 resolver、`combo-finisher` capability 漏報，
+以及仍會讓素材安全閘阻擋的實際 framebuffer 問題。不要在本節重新維護第二份票單。
 
-### 2.3 ⛔ 表示形缺口
+### 2.3 表示形的單一住處
 
-票列的完整表示形清單 vs schema 今天有的：
+舊表把 `beam`、`ribbon`、ground decal 與 billboard 都當成新的 script `kind`，現在已證明那會複製第二套
+詞彙。Script 只負責「何時／掛哪」：橫向 beam 由 `model@1.fxLongAxis` 與 `modelFx` 參數表示；粒子／stretched
+billboard／`ribbon@1` 都由 `vfx` 集合文件表示；地面痕跡走引擎既有 decal 家族。Editor 資源池與表單讀這些
+共用文件，不再自行發明 `beam` 或 `billboard` segment kind。
 
-| 有 | ⛔ 缺 |
-|---|---|
-| modelFx · vfx · screenFlash · screenShake · floatingText · sound | **beam**（`fxLongAxis`）· **ribbon/trail** · **ground ring/decal** · **billboard** |
+若 JASS 語意仍無任何正式積木能表達，才依下列規則開 Main 票；不得在 Editor 複製 renderer。
 
 ⭐ **判準（owner 的方法論，逐字）**：
 
@@ -207,7 +224,9 @@ docs/_reports/audition-ruler-selfcert_visual-proof_20260829-2153/
 ### 4.4 ⭐ 驗收物的形狀
 
 一份 `docs/_reports/<主題>_visual-proof_<時間戳>/`，內含：
-① 連續影格 PNG ② 一份 `.md` 逐格對 JASS 時間軸 ③ `calibrate()` 的兩方向紀錄。
+① 關鍵格／連續影格 PNG ② 一份 `.md` 逐格對 Owner、Main、JASS／w3x 時間軸 ③ `calibrate()` 的兩方向紀錄
+④ 每張圖的 `ggd-vfx-visual-audit@3.frameAudit` ⑤ 完整時間軸掃描與候選／Base hash。八招還必須留下「從空白
+重建」操作證據，且用途固定為 `editor-capability-fixture`。
 
 ---
 
@@ -215,12 +234,15 @@ docs/_reports/audition-ruler-selfcert_visual-proof_20260829-2153/
 
 | 檔 | 回答什麼 |
 |---|---|
-| `docs/editor-contract/ggd-editor-coverage.json` | ⭐ **546 格必畫**（含 `vfxField` 45 · `modelField` 30 · `projectileField` 12 · `skinField` 9） |
-| `docs/editor-contract/ggd-runtime-capabilities.json` | 46 effect kinds · 33 hooks · 260 effect fields |
+| `docs/editor-contract/ggd-editor-coverage.json` | 目前 **4,943 格 required**；由產生器輸出，不能手改 |
+| `docs/editor-contract/ggd-runtime-capabilities.json` | 目前 47 effect kinds · 33 hooks · 261 effect fields · 420 nested paths |
 | `docs/技能標記機制與效果規則.md` | 「**它怎麼用**」—— 參數與上下界 |
 | `docs/editor-contract/README_CODEX_開工清單.md` | ⭐ **索引 ＋ 14 個坑** |
 
-⭐ 今天的指紋：`fingerprint = 60ddb509bf66`（⛔ 與 `capabilityFingerprint` 不同，兩者答不同的問題）。
+⭐ 2026-09-02 11:59 CST 的收據：`fingerprint = 71b5be5a4f57`、
+`capabilityFingerprint = 111434fa`。兩者答不同的問題，也都是易變收據；每次開工先跑產生器的 `--check`，
+不能把這兩串編進 Editor 常數。現有雙向測試另抓到 Main 漏報 `templateFamily/combo-finisher`；修正前即使
+`caps:check` 綠燈也不能宣稱契約完整。
 
 ---
 
@@ -238,11 +260,13 @@ docs/_reports/audition-ruler-selfcert_visual-proof_20260829-2153/
 
 | 步 | 做什麼 | 誰 |
 |---:|---|---|
-| **1** | ⭐ 讀 `content/vfx-scripts/godie-hart.r.json` —— **超究武神霸斬已經有範本** | Codex |
-| **2** | 編輯器讀寫 `vfx-script@1`（⛔ 不碰 ability JSON） | Codex |
-| **3** | 真 CameraRig ＋ frame-step 預覽 ＋ slider 表單 | Codex |
-| **4** | ⭐ 撞到表達不了的 ⇒ **開票**（⛔ 不要近似） | Codex → main |
-| **5** | `defenseSuccess` 觸發器 ＋ M1/M3/M4 機制 | ⭐ **main** |
-| **6** | 三招逐格對 JASS ＋ 連續擷圖 | owner 操作 |
+| **1** | 讀當前 Main 的能力／素材／限制 receipts；過期或不完整就 fail closed | Codex |
+| **2** | 玩家／AI 從空白用資源、recipe、slider 與時間軸組合 `vfx-script@1` | Codex Editor |
+| **3** | 真 CameraRig＋runtime replay＋精確 keyframe／完整時間軸視覺守衛 | Codex Editor |
+| **4** | 撞到表達不了的 ⇒ 只開可重用積木／事件票，不用近似冒充 | Codex → Main |
+| **5** | Main 出積木與機器契約；Editor 讀新 receipt 後解鎖對應控制 | Main → Codex |
+| **6** | 八招從空白驗收工坊能力；AI 候選進後台逐張人工批核 | Owner／Reviewer |
+| **7** | 正式玩家成品另走 production-candidate＋Approve＋Promote；fixture 永久禁止 Promote | Admin／Main |
 
-⚠️ ⭐ **步 5 是 main 的前置** —— ⛔ 理想鄉EX 在它落地之前寫不出來。
+目前 Editor 程式面已完成步 1–4 的通用流程；八招仍因 Main 的共用積木／素材安全問題保持隔離與拒絕通過，
+不能把「UI 已完成」誤寫成「八招視覺品質已驗收」。
