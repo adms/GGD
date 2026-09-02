@@ -65,10 +65,10 @@ export const VFX_FORGE_ACCEPTANCE_SOURCES: readonly AcceptanceSourceEntry[] = [
     },
     videoReference: {
       url: "https://www.youtube.com/watch?v=cFz1d48fvN8",
-      state: "queued",
+      state: "sampled",
       keyframes: [
-        { atSec: 0, label: "投射起手（待依影片實際鏡頭取樣）" },
-        { atSec: 0, label: "定距爆炸（待依影片實際鏡頭取樣）" },
+        { atSec: 10.57, label: "起手：角色保持施法姿勢，周身紫紅聚能" },
+        { atSec: 19.30, label: "終點：目標處形成紅白球形爆炸；Editor 仍須保留兩格之間的投射行進" },
       ],
     },
   },
@@ -92,10 +92,11 @@ export const VFX_FORGE_ACCEPTANCE_SOURCES: readonly AcceptanceSourceEntry[] = [
     },
     videoReference: {
       url: "https://www.youtube.com/watch?v=cFz1d48fvN8",
-      state: "queued",
+      state: "sampled",
       keyframes: [
-        { atSec: 0, label: "衝刺起手（待依影片實際鏡頭取樣）" },
-        { atSec: 0, label: "穿越後紫黑斬擊（待依影片實際鏡頭取樣）" },
+        { atSec: 48.11, label: "起手：黑色巨刃外圍有紫紅圓弧與粒子，不用月牙扇取代角色" },
+        { atSec: 50.92, label: "斬擊：角色明確揮下黑紫巨刃，特效貼著武器動線" },
+        { atSec: 53.01, label: "收尾：黑色主斬痕跨越戰場；Editor 的 dash 動線採 Owner 最新指定" },
       ],
     },
   },
@@ -147,10 +148,10 @@ export const VFX_FORGE_ACCEPTANCE_SOURCES: readonly AcceptanceSourceEntry[] = [
     },
     videoReference: {
       url: "https://youtu.be/QE9RrCjt428?t=157",
-      state: "queued",
+      state: "sampled",
       keyframes: [
-        { atSec: 157, label: "A 段藍色衝擊波" },
-        { atSec: 158, label: "B 段角色 dash 斬擊" },
+        { atSec: 157.71, label: "A 段：一道寬大的紫藍斬擊衝擊波橫越角色與目標" },
+        { atSec: 158.91, label: "B 段：角色近身特寫與藍紫雷光，身體動作是主體" },
       ],
     },
   },
@@ -193,10 +194,10 @@ export const VFX_FORGE_ACCEPTANCE_SOURCES: readonly AcceptanceSourceEntry[] = [
     },
     videoReference: {
       url: "https://youtu.be/XkFlhrLaHeA?t=68",
-      state: "queued",
+      state: "sampled",
       keyframes: [
-        { atSec: 68, label: "槍口聚能與橘色橫向主光束" },
-        { atSec: 69, label: "白色核心與持續尾段" },
+        { atSec: 68.86, label: "起手：角色全身橘金氣焰聚能，先看得見施展姿勢" },
+        { atSec: 71.91, label: "命中：白藍高亮核心佔主要輪廓；顏色仍以 Owner 指定的橘色版本為準" },
       ],
     },
   },

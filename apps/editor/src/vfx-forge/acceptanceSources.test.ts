@@ -24,6 +24,10 @@ describe("八招的 Owner／main／JASS+w3x 來源帳本", () => {
         for (const frame of entry.videoReference.keyframes) {
           expect(frame.atSec, `${entry.abilityId} ${frame.label}`).toBeGreaterThanOrEqual(0);
           expect(frame.label.length, entry.abilityId).toBeGreaterThanOrEqual(4);
+          if (entry.videoReference.state === "sampled") {
+            expect(frame.atSec, `${entry.abilityId} 不得把未取樣的 0 秒冒充已取樣`).toBeGreaterThan(0);
+            expect(frame.label, entry.abilityId).not.toContain("待取樣");
+          }
         }
       }
     }
