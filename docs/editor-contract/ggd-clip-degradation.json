@@ -1,0 +1,1860 @@
+{
+  "schema": "ggd-clip-degradation@1",
+  "note": "⭐ 每一塊動作積木在每一顆出貨模型上**會不會降級成 idle**。⛔ 產物 —— 改 `tools/clip-degradation/gen.ts`，⛔ 不要手改。⚠️ ⭐ `resolveClips()` 找不到一塊剪輯時**什麼都不做** ⇒ 播放器退回 idle，而那在畫面上與「這個模型沒有這個動作」長得一模一樣 ⇒ ⭐ 外部編輯器**必須**讀這一份才知道自己拼的演出在哪些模型上是空的。",
+  "matching": {
+    "how": "動畫名轉小寫之後做**子字串**比對（`model@1.clipMap` 可以逐顆覆寫，⛔ 這份普查不含那一層）",
+    "vocabulary": {
+      "idle": [
+        "idle",
+        "stand"
+      ],
+      "run": [
+        "run",
+        "walk",
+        "move"
+      ],
+      "attack": [
+        "attack",
+        "swing",
+        "shoot"
+      ],
+      "cast": [
+        "cast",
+        "spell",
+        "ability"
+      ],
+      "hurt": [
+        "hurt",
+        "hit",
+        "flinch"
+      ],
+      "death": [
+        "death",
+        "die",
+        "ko"
+      ],
+      "celebrate": [
+        "celebrate",
+        "cheer",
+        "victory",
+        "dance"
+      ],
+      "guard": [
+        "defend",
+        "block",
+        "guard",
+        "shield",
+        "parry"
+      ],
+      "dodge": [
+        "dodge",
+        "evade",
+        "roll",
+        "sidestep",
+        "walk"
+      ]
+    }
+  },
+  "population": {
+    "glbFiles": 426,
+    "animatedModels": 269,
+    "clips": 9
+  },
+  "coverage": {
+    "attack": {
+      "models": 187,
+      "pct": 69.5
+    },
+    "cast": {
+      "models": 150,
+      "pct": 55.8
+    },
+    "celebrate": {
+      "models": 14,
+      "pct": 5.2
+    },
+    "death": {
+      "models": 212,
+      "pct": 78.8
+    },
+    "dodge": {
+      "models": 178,
+      "pct": 66.2
+    },
+    "guard": {
+      "models": 6,
+      "pct": 2.2
+    },
+    "hurt": {
+      "models": 22,
+      "pct": 8.2
+    },
+    "idle": {
+      "models": 248,
+      "pct": 92.2
+    },
+    "run": {
+      "models": 186,
+      "pct": 69.1
+    }
+  },
+  "degradesTo": "idle",
+  "perModel": {
+    "content/assets/models/champions/blocky-barbarian.glb": [
+      "dodge",
+      "guard"
+    ],
+    "content/assets/models/champions/blocky-knight.glb": [
+      "dodge",
+      "guard"
+    ],
+    "content/assets/models/champions/blocky-mage.glb": [
+      "dodge",
+      "guard"
+    ],
+    "content/assets/models/champions/blocky-rogue.glb": [
+      "dodge",
+      "guard"
+    ],
+    "content/assets/models/champions/blocky-undead.glb": [
+      "dodge",
+      "guard"
+    ],
+    "content/assets/models/champions/voxel-godie-u00n.glb": [
+      "dodge",
+      "guard"
+    ],
+    "content/assets/models/champions/voxel-godie-udre.glb": [
+      "dodge",
+      "guard"
+    ],
+    "content/assets/models/champions/voxel-placeholder.sanji.glb": [
+      "dodge",
+      "guard"
+    ],
+    "content/assets/models/guardians/guardian_beast-mid.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/guardians/guardian_beast-small.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/guardians/guardian_beast.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/1hswd-01.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/aivitarget.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/aquaspikeversion2.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/imported/awaken.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/awing.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/azunyan.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/bahamut.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/billy.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/blackhole.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/blackhole1.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/bladestorm-swordeffect.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/bloodbreathstream.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/imported/boxcat.glb": [
+      "attack",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/bulbasaur-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/bulbasaur-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/bulbasaur.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/bwing.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/charlie.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/cloud-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/cloud-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/cloud.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/collision-mid.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/collision-small.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/collision.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/crescent.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/darkportaltarget.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/imported/darkraor.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/deathwave.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/divinering.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/doom.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/earthtornado2.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/enchant.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/fireblast.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/firefly.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/flamessmoke.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/flamestrike1.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/flamestriketarget.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/flash.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/imported/forgottenonetent.glb": [
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/fox-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/fox-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/fox.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/fox2-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/fox2-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/fox2.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/fragdriller.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/imported/frostnova.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/goku-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/goku-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/goku.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/goku3head.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/gokuhead.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/grandorcaura.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/grandundeadaura.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/gumdam-mid.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/gumdam-small.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/gumdam.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/gx.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/gxhuge.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/hero-turtle.glb": [
+      "celebrate",
+      "guard"
+    ],
+    "content/assets/models/imported/herobiggon-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herobiggon-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herobiggon.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herobuu-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herobuu-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herobuu.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herocloudcyd.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/herocloudkfksword.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/herocloudstrife.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heroeva01s2.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/herofate-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herofate-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herofate.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herogirl-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herogirl-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herogirl.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herohanzouhattori-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herohanzouhattori-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herohanzouhattori.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herohehi-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herohehi-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herohehi.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herohimurakenshin-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herohimurakenshin-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herohimurakenshin.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heroichigo-mid.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heroichigo-small.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heroichigo.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herokunoichi-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herokunoichi-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herokunoichi.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herokyo-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herokyo-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herokyo.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herolight-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herolight-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herolight.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herolingtong-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herolingtong-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herolingtong.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heroluffeattack.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/heromiku-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heromiku-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heromiku.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heromusashimiyamoto-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heromusashimiyamoto-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heromusashimiyamoto.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heronarutos4effect.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/herooichi-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herooichi-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herooichi.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heropika-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heropika-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heropika.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heropikachu-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heropikachu-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heropikachu.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heroraichus3.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/herorider-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herorider-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herorider.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heroryuk.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herosaber-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herosaber-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herosaber.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herosasuke-mid.glb": [
+      "celebrate",
+      "hurt"
+    ],
+    "content/assets/models/imported/herosasuke-small.glb": [
+      "celebrate",
+      "hurt"
+    ],
+    "content/assets/models/imported/herosasuke.glb": [
+      "celebrate",
+      "hurt"
+    ],
+    "content/assets/models/imported/herosephiroth-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herosephiroth-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herosephiroth.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heroshana-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heroshana-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heroshana.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heroshanawingsmall-mid.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/heroshanawingsmall-small.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/heroshanawingsmall.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/herotoshiiemaeda-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herotoshiiemaeda-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/herotoshiiemaeda.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heroxelloss-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heroxelloss-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/heroxelloss.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/holo.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/holyawakening.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/imported/horse-mid.glb": [
+      "cast",
+      "guard"
+    ],
+    "content/assets/models/imported/horse-small.glb": [
+      "cast",
+      "celebrate",
+      "guard"
+    ],
+    "content/assets/models/imported/horse.glb": [
+      "cast",
+      "guard"
+    ],
+    "content/assets/models/imported/horsehead-mid.glb": [
+      "cast",
+      "guard"
+    ],
+    "content/assets/models/imported/horsehead-small.glb": [
+      "cast",
+      "celebrate",
+      "guard"
+    ],
+    "content/assets/models/imported/horsehead.glb": [
+      "cast",
+      "guard"
+    ],
+    "content/assets/models/imported/humanbloodpeasant.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/imported/hzyn-mid.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/hzyn-small.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/hzyn.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/japanesecherry-mid.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/japanesecherry-small.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/japanesecherry.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/kikyou-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/kikyou-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/kikyou.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/konyui.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/lgcr-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/lgcr-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/lgcr.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/lightningnova.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/imported/lightningtornado.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/imported/linainvers-mid.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/linainvers-small.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/linainvers.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/linkstik-mid.glb": [
+      "cast",
+      "guard"
+    ],
+    "content/assets/models/imported/linkstik-small.glb": [
+      "cast",
+      "celebrate",
+      "guard"
+    ],
+    "content/assets/models/imported/linkstik.glb": [
+      "cast",
+      "guard"
+    ],
+    "content/assets/models/imported/long-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/long-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/long.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/love2.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/lubu-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/lubu-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/lubu.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/luffe-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/luffe-punch.glb": [
+      "attack",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/imported/luffe-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/luffe.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/ma-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/ma-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/ma.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/magical-sword.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/markofchaostarget.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/imported/meteor.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/imported/mfls-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/mfls-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/mfls.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/midchildernanohaaura.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/minitypeflame.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/mirrorimagecaster.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/imported/monsoonbolttarget.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/ne-shield.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/nedeathsmall.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/imported/negi-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/negi-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/negi.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/netherstrike.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/niya-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/niya-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/niya.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/oblivionaura.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/phoenixmissile.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/picacugy-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/picacugy-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/picacugy.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/pika-mid.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/pika-small.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/pika.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/purplecoat.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/rabbit-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/rabbit-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/rabbit.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/reddragonmissile.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/imported/renaryugu2-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/renaryugu2-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/renaryugu2.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/revivehuman.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/ritsu.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/roots.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/satyrtrickster.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/sd2-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/sd2-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/sd2.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/sesshomaru-mid.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/sesshomaru-small.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/sesshomaru.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/sonicbreathstream.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/imported/stampedemissiledeath.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/imported/student.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/supershinythingy.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/tectonicfury.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/thunderclapcaster.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/tomeofretrainingcaster.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/imported/tornadoelemental.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/txbbb.glb": [
+      "cast",
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/war3mapimported-poweraura.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/windmissle.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/wuqi.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "run"
+    ],
+    "content/assets/models/imported/xzz.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/ye-wuqi1-mid.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/ye-wuqi1-small.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/ye-wuqi1.glb": [
+      "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/imported/zy3-mid.glb": [
+      "celebrate",
+      "hurt"
+    ],
+    "content/assets/models/imported/zy3-small.glb": [
+      "celebrate",
+      "hurt"
+    ],
+    "content/assets/models/imported/zy3.glb": [
+      "celebrate",
+      "hurt"
+    ],
+    "content/assets/models/menu/dragon2-mid.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/menu/dragon2-small.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/menu/dragon2.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
+    "content/assets/models/props/guardian_skeleton.glb": [
+      "celebrate",
+      "guard"
+    ],
+    "content/assets/models/shop/merchant-mid.glb": [
+      "cast",
+      "celebrate",
+      "guard"
+    ],
+    "content/assets/models/shop/merchant-small.glb": [
+      "cast",
+      "celebrate",
+      "guard"
+    ],
+    "content/assets/models/shop/merchant.glb": [
+      "cast",
+      "celebrate",
+      "guard"
+    ]
+  }
+}

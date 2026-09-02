@@ -38,7 +38,7 @@
  * ⭐ 它就會自動進鏈（⛔ 不必有人記得補）。
  */
 // ggd:writes docs/editor-contract/ggd-presentation-receipt.json
-import { readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { readFileSync, readdirSync, writeFileSync, existsSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -184,6 +184,19 @@ function replacementPolicy(): Capability {
   };
 }
 
+/**
+ * ⭐ 從**降級普查的產物**讀（⛔ 不重算 —— 那會是第二個住處，
+ * 而兩份一定會漂）。產物不在 ⇒ 回 `null`，⛔ 不是編一個數字。
+ */
+function clipCoverage(): Record<string, number> | null {
+  const p = join(ROOT, "docs/editor-contract/ggd-clip-degradation.json");
+  if (!existsSync(p)) return null;
+  const c = JSON.parse(readFileSync(p, "utf8")) as {
+    coverage: Record<string, { pct: number }>;
+  };
+  return Object.fromEntries(Object.entries(c.coverage).map(([k, v]) => [k, v.pct]));
+}
+
 function build(): unknown {
   const body = {
     schema: "ggd-presentation-receipt@1",
@@ -202,6 +215,20 @@ function build(): unknown {
        * ⇒ ⭐ 加它們**零個 model doc 要改**。
        */
       outsideClipMap: [...ANIM_PULSES].filter((p) => !(ANIM_STATES as readonly string[]).includes(p)),
+      /**
+       * ⭐⭐ **降級率** —— 一塊積木在多少比例的角色模型上真的**有剪輯**。
+       *
+       * ⛔⛔ 這一格是 2026-09-02 量出來才知道要放的:`resolveClips()` 找不到
+       * 一塊剪輯時**什麼都不做** ⇒ 退回 idle，⭐ 而那在畫面上與
+       * 「這個模型沒有這個動作」長得一模一樣 ⇒ 外部編輯器拼了一個 `guard` 演出，
+       * ⭐ **97.8% 的角色什麼都不會做**，而它無從得知。
+       *
+       * ⚠️ ⭐ 這是**素材事實**，⛔ 不是配置問題:實測整個素材庫裡
+       * `block` / `guard` / `shield` / `parry` **一個動畫名都沒有**，
+       * 只有 `defend` 那一族（`attack defend` 6 顆）。
+       * ⇒ 完整逐模型清單在 `ggd-clip-degradation.json`。
+       */
+      clipCoveragePct: clipCoverage(),
     },
     /**
      * ⭐ 缺 clip 時的模糊比對候選 —— **出貨的那一張表**。
