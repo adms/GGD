@@ -1,0 +1,84 @@
+{
+  "id": "fx.w3x.stock.nedeathsmall.p02",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.001,
+    "angleDeg": 180.0
+  },
+  "mode": "continuous",
+  "rate": 70.0,
+  "lifetimeSec": {
+    "min": 0.4,
+    "max": 0.4
+  },
+  "size": {
+    "start": 0.517,
+    "end": 0.208
+  },
+  "color": {
+    "start": [
+      0.0,
+      1.0,
+      0.729,
+      1.0
+    ],
+    "end": [
+      0.329,
+      0.408,
+      0.992,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.0,
+        1.0,
+        0.729,
+        1.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.0,
+        0.682,
+        1.0,
+        0.812
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.329,
+        0.408,
+        0.992,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.517
+    ],
+    [
+      0.5,
+      0.403
+    ],
+    [
+      1,
+      0.208
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/light_02.png",
+  "stretched": true,
+  "tailLength": 0.8,
+  "speed": {
+    "min": 2.7222,
+    "max": 2.8333
+  }
+}

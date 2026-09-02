@@ -11,5 +11,12 @@
     "cast": "stand",
     "hurt": "stand",
     "death": "death"
-  }
+  },
+  "fxEmitters": [
+    "fx.w3x.stock.flamestrike1.p00",
+    "fx.w3x.stock.flamestrike1.p01",
+    "fx.w3x.stock.flamestrike1.p02",
+    "fx.w3x.stock.flamestrike1.p03",
+    "fx.w3x.stock.flamestrike1.p04"
+  ]
 }

@@ -316,6 +316,26 @@ def worklist(min_refs: int, notes: list[str] | None = None) -> list[dict]:
                 )
             continue
         if not m.get("family"):
+            # ⭐⭐ **第三條入場路徑**（2026-09-02）—— 這顆模型**自己出貨了**。
+            #
+            # ⛔⛔ 這一段上面那句 `stillGated` 散文（在 `stock_vfx_owner_named.json`）
+            # 逐字寫著：「一個沒有家族宣告它的模型，`stockEmitterIds()` 永遠產不出
+            # 它的 doc id ⇒ 抽出來是**沒有任何東西播得到的死內容**」。
+            # ⭐ 而 GH#803 的 `model@1.fxEmitters` 上線之後那句話就**過期了**：
+            #   · doc id 是 `fx.w3x.stock.<stem>.p<NN>` —— ⭐ 它**根本不含 family**
+            #   · `modelFxRig.ts:708` 在模型**出生時**逐個播 `doc.fxEmitters`
+            #     ⇒ ⭐ 那正是「播得到它」的第二條路，而它**逐模型**、⛔ 不廣播
+            # ⇒ 第三守則的形狀：一句在它到期之後還活著的散文，而沒有東西變紅。
+            #
+            # ⚠️ ⭐ blast radius 與 family 那條路**不同**：進來只表示「抽得出 vfx 文件」，
+            # ⛔ 不表示有人播它 —— 要播還要有人在 `model@1.fxEmitters` 裡寫它。
+            # ⇒ 這條路徑**不會**讓任何一族多播東西（`notAnExemption` 警告的正是那個）。
+            if not os.path.exists(
+                os.path.join(REPO, "content", "models", f"w3x.stock.{m['stem']}.json")
+            ):
+                continue
+            m = {**m, "admittedBy": "shipped-model"}
+            rows.append(m)
             continue
         if m.get("refCount", 0) >= min_refs:
             m = {**m, "admittedBy": "min-refs"}
@@ -555,7 +575,8 @@ def main() -> int:
         return check(min_refs, order)
     report = run(out_root, min_refs, dry_run, order)
     for m in report["models"]:
-        print(f"{m['stem']:24s} {m['family']:16s} refs={m['refCount']:4d} "
+        # ⭐ `family` 可能是 None（`shipped-model` 那條入場路徑）—— ⛔ 不要 format None
+        print(f"{m['stem']:24s} {(m['family'] or '(無家族)'):16s} refs={m['refCount']:4d} "
               f"[{m['admittedBy']}] PRE2={m['pre2Count']} -> {len(m['docs'])} doc(s)")
         for e in m["emitterMap"]:
             print(f"    {e['id']:44s} <- PRE2#{e['pre2Index']} {e['emitter']} w={e['weight']}")

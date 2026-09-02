@@ -86,6 +86,7 @@ describe("GH#803 模型自己帶的原作粒子", () => {
     const f = resolve(ROOT, "content/models/w3x.stock.revivehuman.json");
     expect(existsSync(f)).toBe(true);
     const ids: string[] = JSON.parse(readFileSync(f, "utf8")).fxEmitters ?? [];
+    const sats: { id: string; sat: number }[] = [];
     expect(ids.length, "⛔ 一顆都沒掛 ⇒ 機制在而內容沒用它（第一·五守則）").toBeGreaterThan(0);
     for (const id of ids) {
       const v = resolve(ROOT, `content/vfx/${id}.json`);
@@ -104,9 +105,23 @@ describe("GH#803 模型自己帶的原作粒子", () => {
           }),
         0,
       );
-      // ⭐ 這是整張票的**點**：出貨 .glb 的 5 張貼圖 4 張 sat 0.000–0.066，
-      //   而掛上來的粒子必須帶著 mesh 沒有的彩度 —— ⛔ 否則掛了也還是灰的。
-      expect(best, `⛔ ${id} 的 sat 只有 ${best.toFixed(3)} —— 它補不回金色`).toBeGreaterThan(0.3);
+      sats.push({ id, sat: best });
     }
+    // ⭐ 這是整張票的**點**：出貨 .glb 的 5 張貼圖 4 張 sat 0.000–0.066，
+    //   而掛上來的粒子必須帶著 mesh 沒有的彩度 —— ⛔ 否則掛了也還是灰的。
+    //
+    // ⚠️⚠️ ⭐ 這一條在 2026-09-02 從**逐顆**放寬成**聚合**，而理由不是「讓它綠」：
+    //   原作的一顆 .mdx 本來就有**白色的粒子**（煙、火星、亮芯）——
+    //   `revivehuman` 的 PRE2#2 `BlizParticle01` 就是 sat 0.000 的那一顆。
+    //   ⛔ 逐顆要求 sat>0.3 等於**禁止忠實翻譯**：它會逼人只挑有顏色的那幾顆掛，
+    //   而那是「挑一個看起來像的」而不是翻譯（第〇·六守則）。
+    // ⭐ 它真正要保護的性質是**至少有一顆帶得回彩度** —— 那才是「補得回金色」。
+    const best = Math.max(...sats.map((s) => s.sat), 0);
+    expect(
+      best,
+      `⛔ 掛上來的 ${sats.length} 顆**沒有一顆**帶彩度` +
+        `（${sats.map((s) => `${s.id}=${s.sat.toFixed(3)}`).join(" · ")}）` +
+        ` —— 掛了也還是灰的`,
+    ).toBeGreaterThan(0.3);
   });
 });

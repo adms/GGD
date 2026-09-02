@@ -11,5 +11,8 @@
     "cast": "Birth",
     "hurt": "Birth",
     "death": "Birth"
-  }
+  },
+  "fxEmitters": [
+    "fx.w3x.stock.humanbloodpeasant.p00"
+  ]
 }
