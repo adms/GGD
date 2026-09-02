@@ -1,0 +1,68 @@
+{
+  "schema": "ggd-main-handback@1",
+  "note": "⭐ Main → Editor 的**機器可讀回報**。⛔ 產物 —— 改 tools/main-handback/gen.ts，⛔ 不要手改。⚠️ 每一格都是從出貨的東西量出來的（route 從原始碼掃、digest 從內容算、測試證據是真的跑過的數字）—— ⛔ 沒有一格是宣稱。",
+  "branch": "feat/editor-seam-20260902",
+  "commit": "18b5ffecbdacb94275ebdc085b4189a8dc28dae8",
+  "mainCommit": "18b5ffecbdacb94275ebdc085b4189a8dc28dae8",
+  "branchEqualsMain": true,
+  "receipts": {
+    "targetProfileDigest": "fd41cc86e5bbc5c2",
+    "capabilityFingerprint": "24bd88e2",
+    "presentationReceiptFingerprint": "100ab50e2ad0ec39",
+    "contentVersion": "cv_9c465321b5da"
+  },
+  "routes": {
+    "importer": [
+      "${prefix}/active",
+      "${prefix}/active/runtime-bundle",
+      "${prefix}/active/target-profile",
+      "${prefix}/apply",
+      "${prefix}/audit",
+      "${prefix}/authoring-rules",
+      "${prefix}/capabilities",
+      "${prefix}/contract-index",
+      "${prefix}/health",
+      "${prefix}/operations/",
+      "${prefix}/rollback",
+      "${prefix}/validate"
+    ],
+    "sourceAdapter": []
+  },
+  "machineSchemas": [
+    "ggd-editor-contract-index@1   (packages/shared/src/content/import/contractIndex.ts)",
+    "ggd-runtime-capabilities@1    (docs/editor-contract/ggd-runtime-capabilities.json)",
+    "ggd-presentation-receipt@1    (docs/editor-contract/ggd-presentation-receipt.json)",
+    "ggd-brick-census@1            (docs/editor-contract/ggd-brick-census.json)",
+    "config.unsafe-textures@1      (content/config/unsafe-textures.json)"
+  ],
+  "testEvidence": {
+    "contentApi": "7 files / 69 tests — editorSourceRoutes · SurvivesSync · NoRemoteExec · importRoutesG2 · importStore · CrashRecovery · guard",
+    "importContract": "124 tests — packages/shared/src/content/import",
+    "platformPermissions": "go test ./internal/submissions/... ok (promote · generatorowned · revalidate)",
+    "full": "packages/shared 4732/4732 · apps 8499/8499 · typecheck EXIT=0"
+  },
+  "brickCensus": {
+    "engineFamilies": 28,
+    "templateDocs": 46,
+    "usable": 28,
+    "engineMissing": 17,
+    "shells": 17,
+    "zeroAdoption": 36,
+    "terminal": 1,
+    "handWritten": 263,
+    "distinctShapes": 99,
+    "singletonShapes": 58,
+    "top8Coverage": 118
+  },
+  "presentationCapabilities": {
+    "singleArc": "supported",
+    "evasionProvenance": "supported",
+    "displaceCue": "supported",
+    "replacementPolicy": "unsupported"
+  },
+  "knownUnsupported": [
+    "replacementPolicy — `VfxSystem` 的 scriptPlayer.onEvent() 之後 switch 直接往下走（⛔ 無 early-return）⇒ 專屬 script 與預設演出**兩條都跑**。⭐ 出貨 10 份 script 逐份對過**只有 1 次真重疊**（已修），閘：packages/shared/src/content/vfxScriptNoDoubleDraw.test.ts。⛔ 刻意未做 suppress 欄位：今天**零支內容**需要它。⭐ 要真正的取代語意請定義 channel。",
+    "displace strikeIndex（leap 側）— `startLeap` 收 StartLeapOptions ⛔ 不是 EffectContext，段號住 ctx.sequenceIndex ⇒ ⭐ 結構上拿不到。blink 側拿得到，已帶。",
+    "displace phase \"impact\" — union 收了（詞彙完整），⛔ 而**零個發射站送它**。"
+  ]
+}
