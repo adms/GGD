@@ -73,6 +73,25 @@ describe("VFX Forge action-animation principles", () => {
     expect(issues.map((issue) => issue.code)).toContain("TIMELINE_ACTION_MISSING");
   });
 
+  it("requires both attacker action and victim reaction for every authoritative strike", () => {
+    const candidate = doc([
+      { kind: "anim", on: "strike", strikeIndex: 2, at: "caster", pulse: "attack", clipWindowMs: 500 },
+      { kind: "vfx", on: "strike", strikeIndex: 2, vfxId: "fx.owner.hit", at: "target", durationSec: 0.2 },
+    ]);
+    expect(actionAnimationIssues(candidate).map((issue) => issue.code))
+      .toContain("TARGET_REACTION_MISSING");
+
+    const completed = completeActionAnimations(candidate.segments);
+    expect(completed).toContainEqual(expect.objectContaining({
+      kind: "anim",
+      on: "strike",
+      strikeIndex: 2,
+      at: "target",
+      pulse: "hurt",
+    }));
+    expect(actionAnimationIssues(doc(completed))).toEqual([]);
+  });
+
   it("auto-completes separated timeline beats with separate actor actions", () => {
     const segments = completeActionAnimations([
       { kind: "vfx", on: "castEffect", vfxId: "fx.prim.fire.bolt", at: "self", durationSec: 0.3 },

@@ -187,6 +187,11 @@ Owner 裁決：角色演出不是 Editor 八招的特例，而是 Main 所有技
 on-hit 不重播假施法；block 是 guard、evade 是 dodge；專屬 script 不與預設疊兩次；缺 clip fallback 可見且穩定。
 所有預設 VFX 仍須經亮／暗 CameraRig framebuffer 去背守衛，schema 合法不能代替視覺安全。
 
+Editor 已於 2026-09-02 12:54 將「每個權威 strike 同時具有 caster attack＋target reaction」寫成守衛與
+自動補完。八份目前來源 fixture 皆通過；舊理想鄉 EX `@1` 送審物則被抓到第七刀 650–710ms 超出目標
+反應窗。舊 JSON／擷圖維持失敗證據，Editor 不要求 Main 代修該技能成品；這只證明 Main 的全域 resolver
+也必須有相同 actor-pair 底線，不能讓粒子時間軸在角色靜止時獨自播放。
+
 Editor 的 current 收據已提升為 `ggd-vfx-visual-audit@3`：除了完整時間軸抽樣，送審的每張
 關鍵格都會在精確時間點重新讀回 framebuffer。這已抓到 `godie-ogrh.r` 1.356 秒約
 **0.193%** 的紅／紫診斷棋盤載體；舊時間軸收據曾錯誤判安全。Main 的 reusable primitive、

@@ -4,6 +4,7 @@ export interface ActionAnimationIssue {
   readonly code:
     | "CAST_ACTION_MISSING"
     | "TIMELINE_ACTION_MISSING"
+    | "TARGET_REACTION_MISSING"
     | "SLASH_ACTION_MISSING"
     | "SLASH_OVERDRAWN"
     | "MULTI_CRESCENT_BRICK"
@@ -40,6 +41,14 @@ function actionActorFor(impact: VfxScriptSegment): "caster" | "target" {
   return "caster";
 }
 
+function requiredActionActors(impact: VfxScriptSegment): readonly ("caster" | "target")[] {
+  // A combo strike is an authoritative damage beat, not just a presentation
+  // anchor. Both bodies must visibly participate or a perfectly timed slash
+  // can still pass while the victim remains a mannequin.
+  if (impact.on === "strike") return ["caster", "target"];
+  return [actionActorFor(impact)];
+}
+
 function triggerMatches(
   action: VfxScriptSegment,
   impact: VfxScriptSegment,
@@ -50,8 +59,12 @@ function triggerMatches(
   return action.strikeIndex === undefined || action.strikeIndex === impact.strikeIndex;
 }
 
-function actionCovers(action: VfxScriptSegment, impact: VfxScriptSegment): boolean {
-  if (!triggerMatches(action, impact) || action.kind !== "anim") return false;
+function actionCovers(
+  action: VfxScriptSegment,
+  impact: VfxScriptSegment,
+  actor = actionActorFor(impact),
+): boolean {
+  if (!triggerMatches(action, impact, actor) || action.kind !== "anim") return false;
   const actionAt = action.atMs ?? 0;
   const impactAt = impact.atMs ?? 0;
   const window = action.clipWindowMs ?? 520;
@@ -117,12 +130,18 @@ export function actionAnimationIssues(
     // event can and should animate the reacting actor. Purely periodic/passive
     // effects stay in hook.effects because vfx-script has no such trigger.
     if (passive && (segment.on === "castStart" || segment.on === "castEffect")) continue;
-    if (!allActions.some(({ segment: action }) => actionCovers(action, segment))) {
+    for (const actor of requiredActionActors(segment)) {
+      if (allActions.some(({ segment: action }) => actionCovers(action, segment, actor))) continue;
+      const targetReaction = actor === "target" && segment.on === "strike";
       issues.push({
-        code: isSlash(segment) ? "SLASH_ACTION_MISSING" : "TIMELINE_ACTION_MISSING",
-        message: isSlash(segment)
-          ? "斬擊特效沒有同一傷害節點的角色攻擊動作。"
-          : "時間軸的可見／傷害／位移節點沒有相同觸發與時間窗的角色動作。",
+        code: targetReaction
+          ? "TARGET_REACTION_MISSING"
+          : isSlash(segment) ? "SLASH_ACTION_MISSING" : "TIMELINE_ACTION_MISSING",
+        message: targetReaction
+          ? "斬擊傷害節點有施法者動作，但缺少同一刀的目標受擊反應。"
+          : isSlash(segment)
+            ? "斬擊特效沒有同一傷害節點的角色攻擊動作。"
+            : "時間軸的可見／傷害／位移節點沒有相同觸發與時間窗的角色動作。",
         segmentIndexes: [index],
       });
     }
@@ -230,23 +249,24 @@ export function completeActionAnimations(
   // gets its own actor pulse instead of leaving the model frozen behind VFX.
   for (const impact of visible) {
     if (passive && (impact.on === "castStart" || impact.on === "castEffect")) continue;
-    if (completed.some((action) => actionCovers(action, impact))) continue;
-    const actor = actionActorFor(impact);
-    completed.push({
-      kind: "anim",
-      on: impact.on,
-      ...(impact.atMs === undefined ? {} : { atMs: impact.atMs }),
-      ...(impact.on === "strike" && impact.strikeIndex !== undefined
-        ? { strikeIndex: impact.strikeIndex }
-        : {}),
-      at: actor,
-      pulse: actor === "target"
-        ? "hurt"
-        : impact.on === "castStart" || impact.on === "reflectSuccess"
-          ? "cast"
-          : "attack",
-      clipWindowMs: impact.kind === "bodyMove" ? Math.max(520, impact.durationMs) : 650,
-    });
+    for (const actor of requiredActionActors(impact)) {
+      if (completed.some((action) => actionCovers(action, impact, actor))) continue;
+      completed.push({
+        kind: "anim",
+        on: impact.on,
+        ...(impact.atMs === undefined ? {} : { atMs: impact.atMs }),
+        ...(impact.on === "strike" && impact.strikeIndex !== undefined
+          ? { strikeIndex: impact.strikeIndex }
+          : {}),
+        at: actor,
+        pulse: actor === "target"
+          ? "hurt"
+          : impact.on === "castStart" || impact.on === "reflectSuccess"
+            ? "cast"
+            : "attack",
+        clipWindowMs: impact.kind === "bodyMove" ? Math.max(520, impact.durationMs) : 650,
+      });
+    }
   }
   return completed;
 }

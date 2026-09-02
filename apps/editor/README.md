@@ -49,6 +49,10 @@ updates browser history, and Back/Forward restores the matching screen.
   the admin page shows those exact frames beside the hash-locked JSON before a
   human can score it. The eight fixtures are server-classified and permanently
   non-promotable even if a client lies about their purpose.
+  Changing a segment's representation preserves its trigger, `strikeIndex`
+  and exact timeline offset. Every authoritative strike is guarded as an actor
+  pair: the caster attack and target reaction must both cover that beat, so a
+  cloud of slash particles cannot pass while either character remains static.
 - **Champions / Skins** — complete schema forms plus live final stats and the
   actual GLB presentation path: facing correction, hidden primitives, body
   normalization, ground placement, animation clips, tint and alpha. Champion
@@ -234,7 +238,7 @@ existing trigger.
 ## Feature branch handoff
 
 Implementation lives on `feat/vfx-forge-codex`, containing Main through the
-last verified receipt `origin/main@d29d0be6` (tag `v0.35.14`); the feature-branch
+last verified receipt `origin/main@d421c1ad` (including tag `v0.35.15` at `7d032d9c`); the feature-branch
 tip is the only current Editor revision. It is intentionally not merged or
 pushed to `main`. Main should use
 `docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md` as a reference

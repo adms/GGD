@@ -4,6 +4,7 @@ import {
   newScript,
   newSegment,
   recommendedEvidenceTimes,
+  retypeSegment,
   reactionTriggerOf,
   scheduleSimEvents,
   segmentFromAsset,
@@ -97,6 +98,34 @@ describe("VFX Forge authoring core", () => {
       undefined,
       "reflectSuccess",
     ).on).toBe("reflectSuccess");
+  });
+
+  it("changes representation without changing the authored trigger address", () => {
+    expect(retypeSegment({
+      kind: "bodyMove",
+      on: "strike",
+      strikeIndex: 4,
+      atMs: 375,
+      at: "caster",
+      mode: "teleport",
+      offset: { x: 1, y: 0, z: -1 },
+      durationMs: 260,
+    }, "vfx")).toMatchObject({
+      kind: "vfx",
+      on: "strike",
+      strikeIndex: 4,
+      atMs: 375,
+    });
+    expect(retypeSegment({
+      kind: "vfx",
+      on: "reflectSuccess",
+      vfxId: "fx.guard",
+      at: "self",
+      durationSec: 0.25,
+    }, "modelFx")).toMatchObject({
+      kind: "modelFx",
+      on: "reflectSuccess",
+    });
   });
 
   it("keeps the timeline alive through the last segment tail", () => {

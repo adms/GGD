@@ -3,7 +3,7 @@ import { zVfxScriptSegment, type VfxScriptSegment } from "@ggd/shared/content/sc
 import { FormRenderer } from "../form/FormRenderer";
 import { walkZod } from "../form/walk";
 import { setIn, type ErrorMap } from "../store";
-import { newSegment } from "./model";
+import { retypeSegment } from "./model";
 
 export function SegmentInspector({
   segment,
@@ -51,7 +51,7 @@ export function SegmentInspector({
         errors={errors}
         onChange={(path, value) => {
           if (path === "" && value && typeof value === "object" && "kind" in value) {
-            onChange(newSegment((value as VfxScriptSegment).kind));
+            onChange(retypeSegment(segment, (value as VfxScriptSegment).kind));
             return;
           }
           onChange(setIn(segment, path, value) as VfxScriptSegment);

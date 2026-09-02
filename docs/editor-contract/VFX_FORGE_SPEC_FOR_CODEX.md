@@ -1,6 +1,6 @@
 # 特效工坊（VFX Forge）· 技術規格 —— 給 Codex
 
-狀態：**Revision 5 — 2026-09-02 12:16 CST，以 `origin/main@d29d0be6`（v0.35.14）與 `feat/vfx-forge-codex` 實際畫面重驗**
+狀態：**Revision 6 — 2026-09-02 12:54 CST，以 `origin/main@d421c1ad`（含 v0.35.15）與 `feat/vfx-forge-codex` 程式／隔離測試重驗**
 
 > 本文保留 2026-08-31 的出發點，但「缺口」必須以各節的目前狀態為準；不可把舊基線當成今天的待辦。
 
@@ -81,7 +81,7 @@
 |---|---|---|
 | 「**拖拉 model、粒子特效進編輯器**」 | 資源池 → 拖進畫布／時間軸 | ✅ `VfxAssetPalette`＋安全收據；未驗證或不安全素材不可進預覽候選 |
 | 「**模擬遊戲畫面**」 | 真 `CameraRig`＋真地板＋雙方角色＋frame-step | ✅ `VfxForgeStage`／`VfxForgePreview`；可切完整 runtime 或只看 script |
-| 「**slider** 調大小/透明度/顏色/轉向/高度/動畫速度」 | schema 驅動連續參數表單 | ✅ `VfxSegmentForm`；上下界來自共用 schema，不抄常數 |
+| 「**slider** 調大小/透明度/顏色/轉向/高度/動畫速度」 | schema 驅動連續參數表單 | ✅ `SegmentInspector`＋共用 `FormRenderer`；上下界來自共用 schema，不抄常數 |
 | 「**所見即所得**」 | 改一格 → 同一份 draft 即時重播 | ✅ draft、預覽、時間軸與送審 hash 共用同一 JSON |
 | 「**觀看全程**」 | 播放、scrub、1/60 frame-step、精確秒數 | ✅ 並可對每張送審關鍵格重跑 framebuffer 稽核 |
 | 「**回存到主線甚至 github**」 | AI 候選 → 後台人工批核 → Promote | ✅ Forge 只能投 proposal；不直接寫 ability，也不讓 fixture Promote |
@@ -167,13 +167,15 @@ fail／reject，但禁止 pass／approve／Promote。不得替舊核准補欄位
 ### 3.1 角色動作與斬擊模板原則（2026-09-02）
 
 1. 任何有可見演出的主動技能，至少要有施法者 `anim`；不能用粒子代替角色施展動作。
-2. 時間軸技能在每個 `strike`、`bodyMove` 起點與終結間隔都要有覆蓋該時間窗的角色動作；一段動作結束後仍在播特效，視為缺件。
+2. 時間軸技能在每個 `strike`、`bodyMove` 起點與終結間隔都要有覆蓋該時間窗的角色動作；權威 `strike` 同時要求施法者攻擊與目標受擊反應。一段動作結束後仍在播特效，視為缺件。
 3. 普通近戰的一個傷害節點＝一個角色攻擊動作＋一個主斬弧。不得用多個月牙堆出「看似有動畫」的扇形。
 4. 只有 ability JSON 的權威 `comboStrikes` 證明它是極速連斬（例如九頭龍閃、三千世界）才能例外；VFX 自己排出三個月牙、技能名稱或備註都不能替自己取得豁免。例外內仍要求至少三個、小型、分時出現的單弧，而不是同幀重疊。
 5. `fx.prim.*.slash*` 現有每份都是 `burstCount:26`，一個 segment 本身就會噴 26 個月牙；Editor 對普通斬擊一律阻擋。Main 需提供可調色／大小／方向、一次只畫一弧的 `single-arc` 積木，Editor 才能按第 3、4 點組合。
 
 對應的可執行守衛與自動補動作住在
-`apps/editor/src/vfx-forge/actionAnimationPrinciples.ts`；八招 fixture 全數通過同一條守衛，沒有技能專用豁免。
+`apps/editor/src/vfx-forge/actionAnimationPrinciples.ts`；八招目前來源 fixture 全數通過同一條守衛，沒有技能專用豁免。
+舊 `godie-e002.ex` 的 `@1` 送審物被新守衛抓到第七刀後段缺目標反應；它保留為失敗證據，禁止把舊擷圖
+配上補動作後的新 JSON。Main 共用積木到位後必須從 Forge 重新播放、擷取並產生新的 `@3` 收據。
 
 ### 3.2 被動技能演出模板原則（2026-09-02）
 

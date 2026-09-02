@@ -321,6 +321,24 @@ export function newSegment(
   return checked(seeds[kind]);
 }
 
+/**
+ * Change only the representation brick while keeping the authored timeline
+ * address. A union-card switch must not turn reflectSuccess back into a fake
+ * cast, move a combo beat to another strike, or silently jump to time zero.
+ */
+export function retypeSegment(
+  segment: VfxScriptSegment,
+  kind: VfxScriptSegment["kind"],
+): VfxScriptSegment {
+  const next = newSegment(kind, segment.on === "reflectSuccess" ? "reflectSuccess" : null);
+  return checked({
+    ...next,
+    on: segment.on,
+    ...(segment.atMs === undefined ? {} : { atMs: segment.atMs }),
+    ...(segment.strikeIndex === undefined ? {} : { strikeIndex: segment.strikeIndex }),
+  });
+}
+
 function checked(value: unknown): VfxScriptSegment {
   const parsed = zVfxScriptSegment.safeParse(value);
   if (!parsed.success) throw new Error(parsed.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`).join("; "));

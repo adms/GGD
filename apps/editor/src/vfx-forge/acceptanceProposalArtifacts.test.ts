@@ -118,10 +118,20 @@ describe("八招實際送審產物", () => {
       expect(item.autoVisualScore, id).toBe(item.visualAudit.autoVisualScore);
       expect(item.evidence, id).toContain(`editor-from-blank:${id}`);
       expect(item.evidence, id).toContain("preview-target:godie-e001");
-      expect(actionAnimationIssues(candidate, {
+      const actionIssues = actionAnimationIssues(candidate, {
         activationMode: activationModeForAbility(abilityDoc),
         allowRapidBarrage: hasAuthoritativeRapidMultiStrike(abilityDoc),
-      }), id).toEqual([]);
+      });
+      if (id === "godie-e002.ex") {
+        // This historical @1 proposal is deliberately retained as failed
+        // evidence. The newer actor-pair guard found that its late seventh-
+        // strike beam outlives the victim reaction window; changing JSON while
+        // reusing the old screenshots would forge a review receipt.
+        expect([...new Set(actionIssues.map((issue) => issue.code))], id)
+          .toEqual(["TARGET_REACTION_MISSING"]);
+      } else {
+        expect(actionIssues, id).toEqual([]);
+      }
       expect(candidate.segments.some((segment) =>
         segment.kind === "modelFx" && segment.modelKey === "w3x.stock.revivehuman",
       ), id).toBe(false);
