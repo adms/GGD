@@ -8,8 +8,238 @@
     "engineMissing": 17,
     "shells": 17,
     "zeroAdoption": 36,
-    "terminal": 1
+    "terminal": 1,
+    "handWritten": 263,
+    "distinctShapes": 99,
+    "singletonShapes": 58,
+    "top8Coverage": 118
   },
+  "demand": [
+    {
+      "shape": "applyBuff",
+      "count": 35,
+      "examples": [
+        "godie-e001.q",
+        "godie-e008.w",
+        "godie-e00n.ex",
+        "godie-e00n.q"
+      ]
+    },
+    {
+      "shape": "applyStatus + damage",
+      "count": 29,
+      "examples": [
+        "godie-e001.e",
+        "godie-e007.q",
+        "godie-e008.q",
+        "godie-e00n.e"
+      ]
+    },
+    {
+      "shape": "applyBuff + championForm",
+      "count": 12,
+      "examples": [
+        "godie-e001.r",
+        "godie-e00w.e",
+        "godie-hgam.ex",
+        "godie-hjai.ex"
+      ]
+    },
+    {
+      "shape": "damage",
+      "count": 12,
+      "examples": [
+        "godie-e007.e",
+        "godie-e00x.e",
+        "godie-etyr.passive",
+        "godie-h02r.e"
+      ]
+    },
+    {
+      "shape": "championForm",
+      "count": 8,
+      "examples": [
+        "godie-e002.w",
+        "godie-e00l.w",
+        "godie-e00s.passive",
+        "godie-e010.passive"
+      ]
+    },
+    {
+      "shape": "damage + spawnProjectile",
+      "count": 8,
+      "examples": [
+        "godie-e010.q",
+        "godie-n003.e",
+        "godie-n01g.e",
+        "godie-o00l.q"
+      ]
+    },
+    {
+      "shape": "applyStatus",
+      "count": 7,
+      "examples": [
+        "godie-e010.e",
+        "godie-emns.q",
+        "godie-h02r.w",
+        "godie-hgam.w"
+      ]
+    },
+    {
+      "shape": "blink",
+      "count": 7,
+      "examples": [
+        "godie-n00b.e",
+        "godie-o00k.w",
+        "godie-o00x.w",
+        "godie-o02l.passive"
+      ]
+    },
+    {
+      "shape": "applyBuff + damage",
+      "count": 6,
+      "examples": [
+        "godie-emfr.w",
+        "godie-h00l.r",
+        "godie-u034.q",
+        "godie-u034.w"
+      ]
+    },
+    {
+      "shape": "applyStatus + damage + spawnProjectile",
+      "count": 5,
+      "examples": [
+        "godie-e008.e",
+        "godie-o030.r",
+        "godie-orkn.r",
+        "godie-u00h.e"
+      ]
+    },
+    {
+      "shape": "damage + dot",
+      "count": 5,
+      "examples": [
+        "godie-o00x.q",
+        "godie-o030.e",
+        "godie-ogld.w",
+        "godie-ogrh.q"
+      ]
+    },
+    {
+      "shape": "heal",
+      "count": 5,
+      "examples": [
+        "godie-n003.w",
+        "godie-n01c.q",
+        "godie-n01g.w",
+        "godie-nbbc.q"
+      ]
+    },
+    {
+      "shape": "applyStatus + damage + spawnModelFx",
+      "count": 4,
+      "examples": [
+        "godie-e00x.q",
+        "godie-h020.r",
+        "godie-hjai.r",
+        "godie-hvwd.ex"
+      ]
+    },
+    {
+      "shape": "damage + screenShake + spawnModelFx×3 + spawnVfx",
+      "count": 4,
+      "examples": [
+        "godie-u010.e",
+        "godie-u010.ex",
+        "godie-uvng.e",
+        "godie-uvng.ex"
+      ]
+    },
+    {
+      "shape": "applyBuff + applyStatus + damageArea",
+      "count": 3,
+      "examples": [
+        "godie-e001.passive",
+        "godie-e00n.passive",
+        "godie-edem.w"
+      ]
+    },
+    {
+      "shape": "applyStatus + damage + invulnerable + leap",
+      "count": 3,
+      "examples": [
+        "godie-hapm.w",
+        "godie-u00n.r",
+        "godie-u00o.r"
+      ]
+    },
+    {
+      "shape": "damage + knockback",
+      "count": 3,
+      "examples": [
+        "godie-e007.ex",
+        "godie-efur.w",
+        "godie-ewar.ex"
+      ]
+    },
+    {
+      "shape": "damageArea",
+      "count": 3,
+      "examples": [
+        "godie-e00x.passive",
+        "godie-efur.e",
+        "godie-emns.e"
+      ]
+    },
+    {
+      "shape": "applyBuff + applyStatus + blink + spawnVfx",
+      "count": 2,
+      "examples": [
+        "godie-o030.passive",
+        "godie-orkn.passive"
+      ]
+    },
+    {
+      "shape": "applyBuff + damage + screenFlash×2 + screenShake + spawnModelFx + spawnVfx",
+      "count": 2,
+      "examples": [
+        "godie-e002.r",
+        "godie-e00l.r"
+      ]
+    },
+    {
+      "shape": "applyBuff + damage + spawnModelFx",
+      "count": 2,
+      "examples": [
+        "godie-emfr.ex",
+        "godie-hart.e"
+      ]
+    },
+    {
+      "shape": "applyBuff + shield",
+      "count": 2,
+      "examples": [
+        "sela.w",
+        "thorne.w"
+      ]
+    },
+    {
+      "shape": "applyStatus + blink + damageArea×2 + damageLine + delayed + spawnModelFx + spawnVfx",
+      "count": 2,
+      "examples": [
+        "godie-n01c.r",
+        "godie-nbbc.r"
+      ]
+    },
+    {
+      "shape": "applyStatus + damage + damageArea + delayed×4 + floatingText×5 + screenShake + spawnModelFx×2 + spawnVfx",
+      "count": 2,
+      "examples": [
+        "godie-h020.e",
+        "godie-hjai.e"
+      ]
+    }
+  ],
   "engineFamilies": [
     "beam-roll",
     "buff-self",
