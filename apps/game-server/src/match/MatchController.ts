@@ -4153,6 +4153,9 @@ export class MatchController {
           tick,
           abilityId,
           slot: String(data.slot ?? ""),
+          // ⭐ GH#914 —— **施放當下**讀（⛔ 不是事後）：事後讀會拿到
+          //   「這一場結束時」的等級，⭐ 而那對一張「哪一發最痛」的榜是錯的分母。
+          casterLevel: this.world.champion.get(data.caster as EntityId)?.level,
         });
         // 後到的傷害/治療掛回**最近一次**同座位同技能的施放,見
         // {@link castByAbility} 的已知近似說明。

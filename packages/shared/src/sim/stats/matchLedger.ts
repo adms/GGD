@@ -187,6 +187,15 @@ export interface AbilityCastRecord extends AbilityCastCredit {
   topHeroHit: number;
   /** 上面那一擊命中當下，**那個目標**的最大生命。0 = 不知道（見 {@link HeroHitSample}）。 */
   topHeroHitMaxHp: number;
+  /**
+   * ⭐ GH#914 —— **施放當下**施法者的等級。
+   *
+   * ⚠️ **可缺席**：這一格之前寫進帳本的每一次施放都沒有它。
+   * ⛔ 後台看到缺席要畫「—」，⛔ **不是 0** —— 0 是一個真的等級（而且不可能）。
+   * ⭐ 而它必須在**開 cast 的當下**讀 —— ⛔ 事後讀會拿到「這一場結束時」的等級，
+   *   那對一張「哪一發最痛」的榜是錯的分母。
+   */
+  casterLevel?: number;
 }
 
 /** {@link MatchLedger.beginCast} 回傳的 handle。 */
@@ -517,6 +526,8 @@ export class MatchLedger {
     tick: number;
     abilityId: string;
     slot: string;
+    /** ⭐ 施放當下的等級（GH#914）。缺席 ⇒ 這一筆沒有等級（⛔ 不是 0）。 */
+    casterLevel?: number;
   }): CastHandle {
     const castId = this.nextCastId;
     this.nextCastId += 1;
@@ -536,6 +547,8 @@ export class MatchLedger {
       heroKills: 0,
       topHeroHit: 0,
       topHeroHitMaxHp: 0,
+      // ⭐ `undefined` 要**留著**（⛔ 不是補 0）：後台靠它分辨「舊資料」與「等級 0」。
+      ...(args.casterLevel === undefined ? {} : { casterLevel: args.casterLevel }),
     });
     return castId;
   }
@@ -851,6 +864,19 @@ export interface TopDamageCast {
   /** 施放當下持有的道具(buy/grant − sell,tick ≤ 施放 tick,升冪排序) */
   items: string[];
   /**
+   * ⭐ GH#914 —— 這一次施放**命中幾個英雄 / 幾隻小怪**。
+   *
+   * ⚠️ ⭐ **兩個數字刻意分開**（票文逐字）：「一發掃過 30 隻殭屍與一發打中 3 個英雄，
+   * 是完全不同的事件」⇒ ⛔ 加起來變成一個「命中數」會把它們混成同一件事。
+   *
+   * ⭐ 而它讓這張榜第一次**可比**：今天的 `damage` 是一次施放的**總傷害**
+   * ⇒ ⛔ 一發打中 8 隻的 AoE 與一發打中 1 個人的爆發，在同一欄裡根本不能比。
+   */
+  heroHits: number;
+  mobHits: number;
+  /** ⭐ 施放當下的等級。缺席 ⇒ 舊資料（⛔ 後台畫「—」，不是 0）。 */
+  casterLevel?: number;
+  /**
    * GH#658 —— 這一次施放打在**單一英雄**身上的最大一擊。0 = 沒打到任何英雄。
    */
   victimDamage: number;
@@ -907,6 +933,9 @@ export function topDamageCasts(snap: MatchLedgerSnapshot, limit: number): TopDam
       items: itemsOwnedAt(snap.itemTxns, c.seatId, c.tick),
       victimDamage: c.topHeroHit,
       victimMaxHp: c.topHeroHitMaxHp,
+      heroHits: c.heroHits,
+      mobHits: c.mobHits,
+      casterLevel: c.casterLevel,
     }));
 }
 

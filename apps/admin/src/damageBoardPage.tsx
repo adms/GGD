@@ -20,6 +20,10 @@ import {
   pctOfMaxHp,
   type DamageBoardFilter,
   type DamageBoardRow,
+  DAMAGE_BOARD_COLUMNS,
+  damagePerTarget,
+  sortDamageRows,
+  type SortDir,
 } from "./damageBoard";
 import { fetchNameIndex, itemLabels, nameLabelFor, type NameIndex, type NameKind } from "./contentNames";
 import { DEFAULT_ONE_SHOT_PCT_OF_MAX_HP } from "@ggd/shared/content";
@@ -42,6 +46,8 @@ export function DamageBoardPage(): JSX.Element {
     minPctOfMaxHp: 0,
   });
   const [page, setPage] = useState(1);
+  // ⭐ 預設按**傷害降冪** —— 這是一張「哪一發最痛」的榜（⛔ 不是時間軸）。
+  const [sort, setSort] = useState<{ key: string; dir: SortDir }>({ key: "damage", dir: "desc" });
   // GH#658 —— 標記/過濾的門檻,從 config 讀(覆蓋層 → 出貨檔 → 出貨常數)。
   const [threshold, setThreshold] = useState(DEFAULT_ONE_SHOT_PCT_OF_MAX_HP);
   const [onlyOneShot, setOnlyOneShot] = useState(false);
@@ -86,7 +92,10 @@ export function DamageBoardPage(): JSX.Element {
   );
   const shares = useMemo(() => championShares(filtered), [filtered]);
   const pages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
-  const pageRows = pageOf(filtered, Math.min(page, pages), PER_PAGE);
+  // ⭐ GH#914 —— 排序**在分頁之前**（⛔ 不是只排當頁）：
+  //   只排當頁的話「按傷害排序」會變成「把這 50 筆重排」，⛔ 而不是找出最痛的那一發。
+  const sorted = useMemo(() => sortDamageRows(filtered, sort.key, sort.dir), [filtered, sort]);
+  const pageRows = pageOf(sorted, Math.min(page, pages), PER_PAGE);
   const topShare = shares[0]?.sharePct ?? 0;
 
   // ---- #786:「名稱＋小字 id」的三個渲染件 --------------------------------
@@ -203,9 +212,34 @@ export function DamageBoardPage(): JSX.Element {
             <table style={{ borderCollapse: "collapse", width: "100%", fontSize: 13 }}>
               <thead>
                 <tr style={{ color: TEXT_DIM, textAlign: "left" }}>
-                  {["#", "傷害", "佔目標血量", "英雄", "技能", "槽位", "回合", "裝備", "版本", "時間"].map((h) => (
-                    <th key={h} style={{ borderBottom: PANEL_BORDER, padding: "6px 8px" }}>
-                      {h}
+                  {DAMAGE_BOARD_COLUMNS.map((c) => (
+                    <th
+                      key={c.key}
+                      onClick={
+                        c.sortable === false
+                          ? undefined
+                          : () => {
+                              // ⭐ 同一欄再點一次 ⇒ 反向；換一欄 ⇒ 從**降冪**開始
+                              //   （⛔ 不是升冪：這是一張「哪一發最痛」的榜）。
+                              setSort((prev) =>
+                                prev.key === c.key
+                                  ? { key: c.key, dir: prev.dir === "desc" ? "asc" : "desc" }
+                                  : { key: c.key, dir: "desc" },
+                              );
+                              setPage(1);
+                            }
+                      }
+                      style={{
+                        borderBottom: PANEL_BORDER,
+                        padding: "6px 8px",
+                        cursor: c.sortable === false ? "default" : "pointer",
+                        whiteSpace: "nowrap",
+                        color: sort.key === c.key ? TEXT_MAIN : undefined,
+                      }}
+                      title={c.sortable === false ? undefined : "點一下排序"}
+                    >
+                      {c.label}
+                      {sort.key === c.key && (sort.dir === "desc" ? " ▼" : " ▲")}
                     </th>
                   ))}
                 </tr>
@@ -225,9 +259,26 @@ export function DamageBoardPage(): JSX.Element {
                       {fmtPct(pct)}
                       {oneShot && <strong style={{ marginLeft: 6 }}>☠ 一擊</strong>}
                     </td>
+                    {/* ⭐ GH#914 —— `victimDamage` 一直都在 entry 裡，⛔ 而畫面從來沒顯示它。
+                        ⚠️ 百分比**藏住了絕對值**：「佔 40%」在 3,000 血與 30,000 血的人身上差十倍。 */}
+                    <td style={{ padding: "5px 8px", color: TEXT_DIM, whiteSpace: "nowrap" }}>
+                      {r.victimDamage === null ? "—" : fmtDmg(r.victimDamage)}
+                    </td>
+                    {/* ⚠️ ⭐ 兩個命中數**分開**（owner 逐字）：一發掃 30 隻殭屍與
+                        一發打中 3 個英雄是**完全不同的事件**。缺席畫「—」，⛔ 不是 0。 */}
+                    <td style={{ padding: "5px 8px", color: TEXT_DIM }}>{r.heroHits ?? "—"}</td>
+                    <td style={{ padding: "5px 8px", color: TEXT_DIM }}>{r.mobHits ?? "—"}</td>
+                    <td style={{ padding: "5px 8px", color: TEXT_DIM, whiteSpace: "nowrap" }}>
+                      {(() => {
+                        const v = damagePerTarget(r);
+                        return v === null ? "—" : fmtDmg(v);
+                      })()}
+                    </td>
                     <td style={{ padding: "5px 8px" }}>{nameCell("champions", r.championId)}</td>
                     <td style={{ padding: "5px 8px" }}>{nameCell("abilities", r.abilityId)}</td>
                     <td style={{ padding: "5px 8px", color: TEXT_DIM }}>{r.slot}</td>
+                    {/* ⭐ 等級：缺席 ⇒ 「—」，⛔ 不是 0（0 會讓舊資料看起來像等級 0）。 */}
+                    <td style={{ padding: "5px 8px", color: TEXT_DIM }}>{r.casterLevel ?? "—"}</td>
                     <td style={{ padding: "5px 8px" }}>{r.round}</td>
                     <td
                       title={
@@ -255,6 +306,11 @@ export function DamageBoardPage(): JSX.Element {
                                 )}
                               </span>
                             ))}
+                    </td>
+                    {/* ⭐ 同場識別 —— entry 一直都有 `matchId`，⛔ 而畫面沒顯示它
+                        ⇒ 「這幾發是同一場的嗎」看不出來。前 8 碼夠辨識，全文進 title。 */}
+                    <td title={r.matchId} style={{ padding: "5px 8px", color: TEXT_DIM, fontFamily: "monospace", fontSize: 11 }}>
+                      {r.matchId === "" ? "—" : r.matchId.slice(0, 8)}
                     </td>
                     <td style={{ padding: "5px 8px", color: TEXT_DIM }}>{r.version}</td>
                     <td style={{ padding: "5px 8px", color: TEXT_DIM }}>{fmtTs(r.ts)}</td>
