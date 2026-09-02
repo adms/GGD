@@ -47,7 +47,7 @@ describe("匯入的崩潰復原", () => {
       // 先有一個 ACTIVE
       tree(s, "op-1", "first");
       const a1 = s.activate(
-        { tree: "op-1", activationDigest: s.treeDigest("op-1"), packageDigest: "sha256:aaa" },
+        { tree: "op-1", activationDigest: s.treeDigest("op-1"), packageDigest: "sha256:aaa", operationId: null },
         undefined,
       );
       // ⭐ 再 PREPARE 第二棵，⛔ 而**不** activate（＝在那之間掛掉）
@@ -84,7 +84,7 @@ describe("匯入的崩潰復原", () => {
       const s = store(dir);
       tree(s, "op-1", "first");
       const a1 = s.activate(
-        { tree: "op-1", activationDigest: s.treeDigest("op-1"), packageDigest: "sha256:aaa" },
+        { tree: "op-1", activationDigest: s.treeDigest("op-1"), packageDigest: "sha256:aaa", operationId: null },
         undefined,
       );
       // ⭐ 模擬「寫到一半就斷電」：tmp 檔在，⛔ 而 rename 沒發生。
@@ -108,7 +108,7 @@ describe("匯入的崩潰復原", () => {
       const s = store(dir);
       tree(s, "op-1", "first");
       const a1 = s.activate(
-        { tree: "op-1", activationDigest: s.treeDigest("op-1"), packageDigest: "sha256:aaa" },
+        { tree: "op-1", activationDigest: s.treeDigest("op-1"), packageDigest: "sha256:aaa", operationId: null },
         undefined,
       );
       // ⭐ 重啟之後拿**過期的**前提去 activate ⇒ 必須擲例外
@@ -117,7 +117,7 @@ describe("匯入的崩潰復原", () => {
       expect(
         () =>
           s2.activate(
-            { tree: "op-2", activationDigest: s2.treeDigest("op-2"), packageDigest: "sha256:bbb" },
+            { tree: "op-2", activationDigest: s2.treeDigest("op-2"), packageDigest: "sha256:bbb", operationId: null },
             "sha256:過期的前提",
           ),
         "⛔⛔ 重啟之後 CAS 放行了一個過期的前提 ⇒\n" +
