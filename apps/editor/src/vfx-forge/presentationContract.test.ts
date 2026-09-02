@@ -58,11 +58,11 @@ describe("Main presentation receipt", () => {
     ]))).toEqual([]);
   });
 
-  it("fails closed while Main reports replacementPolicy unsupported", () => {
+  it("unblocks the editor only when Main receipts a real replacement policy", () => {
     const claims = unsupportedReplacementClaims(doc([
       { kind: "anim", on: "castStart", at: "caster", pulse: "cast" },
     ]));
-    expect(PRESENTATION_RECEIPT.replacementPolicy.status).toBe("unsupported");
-    expect(claims).toEqual([{ trigger: "abilityCast", channel: "caster.action" }]);
+    expect(PRESENTATION_RECEIPT.replacementPolicy.status).toBe("supported");
+    expect(claims).toEqual([]);
   });
 });

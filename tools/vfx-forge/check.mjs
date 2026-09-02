@@ -60,7 +60,7 @@ if (handbackFingerprint !== receiptFingerprint) {
 }
 
 console.log(JSON.stringify({
-  mainCommit: handback.mainCommit ?? null,
+  mainCommit: handback.commit ?? handback.mainCommit ?? null,
   receiptFingerprint: receiptFingerprint ?? null,
   blockers,
   warnings,
