@@ -32,19 +32,60 @@
 import { describe, it, expect } from "vitest";
 import { withSourceLock } from "./testSourceLock";
 import { execFileSync } from "node:child_process";
-import { readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { NORMALIZER_OWNED_FIELDS } from "@ggd/shared/content/import/editorSource";
 
 const REPO = resolve(__dirname, "../../..");
 const SRC = resolve(REPO, "tools/skill-remake/heroes/godie-e00s.py");
 const PRODUCT = resolve(REPO, "content/abilities/godie-e00s.r.json");
+const GLOBAL_BUILD_PRODUCTS = [
+  resolve(REPO, "content/bundle.json"),
+  resolve(REPO, "content/manifest.json"),
+  resolve(REPO, "content/editor-target-profile.json"),
+] as const;
+
+interface FileSnapshot {
+  readonly path: string;
+  readonly bytes: Buffer;
+  readonly mode: number;
+}
+
+function snapshotGlobalBuildProducts(): readonly FileSnapshot[] {
+  return GLOBAL_BUILD_PRODUCTS.map((path) => ({
+    path,
+    bytes: readFileSync(path),
+    mode: statSync(path).mode & 0o777,
+  }));
+}
+
+function restoreGlobalBuildProducts(snapshots: readonly FileSnapshot[]): void {
+  for (const snapshot of snapshots) {
+    // `genrun` 正常收工會把產物重新上鎖。這裡只把本測試自己改過的三份全域產物
+    // 還原成進場位元組，然後恢復原權限；不碰任何作者文件。
+    chmodSync(snapshot.path, 0o600);
+    writeFileSync(snapshot.path, snapshot.bytes);
+    chmodSync(snapshot.path, snapshot.mode);
+  }
+}
 
 /** ⭐ 會寫到 `content/abilities/godie-e00s.*` 的每一支（來自出貨戶籍表）。 */
 const OVERWRITERS = [
-  "bash scripts/genrun.sh skillremake:json",
-  "bash scripts/genrun.sh tiers:apply",
-  "bash scripts/genrun.sh skillremake:provenance",
+  // ⛔ 這一支只驗「來源 → 文件」存活，不可以讓 `content:build` 的全域 VFX 資產閘
+  // 汙染儀器；完整出貨閘仍由 `skills:sync` / `ship:check` 負責。產生器本體照跑，
+  // 只把它最後那段全域 rebuild 暫時拿掉，下一步立即跑真正的 castderive 正規化器。
+  "bash scripts/genrun.sh skillremake:json skillremake:json:no-build",
+  // `deriveCastTime()` 會讀出貨索引裡渲染後的 `{{cast}}`；因此和正式產生器一樣，
+  // 必須在每一趟之間重建核心索引，直到第三趟確認已到定點。這裡刻意只跑
+  // shared 的索引產生器，不繞過正式 `content:build` 的 VFX 資產安全閘。
+  "bash scripts/genrun.sh content:build content:build:indexes-only",
+  "bash scripts/genrun.sh castderive:build castderive:build:raw",
+  "bash scripts/genrun.sh content:build content:build:indexes-only",
+  "bash scripts/genrun.sh castderive:build castderive:build:raw",
+  "bash scripts/genrun.sh content:build content:build:indexes-only",
+  "bash scripts/genrun.sh castderive:build castderive:build:raw",
+  "bash scripts/genrun.sh tiers:apply tiers:apply:raw",
+  "bash scripts/genrun.sh skillremake:provenance skillremake:provenance:raw",
 ];
 
 interface Product {
@@ -82,6 +123,7 @@ describe("P0-1 §5 來源改動撐得過 sync", () => {
       withSourceLock(() => {
       const srcBefore = readFileSync(SRC, "utf8");
       const before = JSON.parse(readFileSync(PRODUCT, "utf8")) as Product;
+      const globalProductsBefore = snapshotGlobalBuildProducts();
       // ⭐ 錨點挑**非級距**欄位：`scatterRadius` 是 effect 的原始參數，
       //   ⛔ 不歸任何一張級距表 ⇒ 它是「來源改動存不存活」的**乾淨**儀器。
       // ⚠️ ⛔ 不可以拿 `cooldown` 當錨點（第一版就是這樣紅的）——見下面那一條。
@@ -120,8 +162,14 @@ describe("P0-1 §5 來源改動撐得過 sync", () => {
             "正在對編輯器說謊（它宣稱這幾格會被下游改寫）。",
         ).toEqual(before.cooldown);
       } finally {
-        writeFileSync(SRC, srcBefore, "utf8");
-        for (const cmd of OVERWRITERS) run(cmd);
+        try {
+          writeFileSync(SRC, srcBefore, "utf8");
+          for (const cmd of OVERWRITERS) run(cmd);
+        } finally {
+          // 核心索引重建會依本機完整 asset tree 重算 contentVersion；那是本測試之外
+          // 的全域狀態，無論斷言或下游產生器是否失敗，都必須逐位元組還原。
+          restoreGlobalBuildProducts(globalProductsBefore);
+        }
       }
       // ⭐ 還原之後也要驗**真的還原了** —— ⛔ 一條會留下殘留的測試比沒有測試更糟。
       const restored = JSON.parse(readFileSync(PRODUCT, "utf8")) as Product;
