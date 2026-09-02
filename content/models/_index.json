@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "ec63704f41d9",
+  "hash": "eb42ccf639cd",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -871,6 +871,12 @@
       "path": "models/w3x.stock.revivehuman.json",
       "hash": "9598147ce009",
       "size": 446
+    },
+    {
+      "id": "w3x.stock.satyrtrickster",
+      "path": "models/w3x.stock.satyrtrickster.json",
+      "hash": "4c7ec17ffebe",
+      "size": 360
     },
     {
       "id": "w3x.stock.stampedemissiledeath",

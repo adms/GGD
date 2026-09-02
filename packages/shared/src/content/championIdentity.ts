@@ -116,6 +116,7 @@
  * @see ./championForms.ts — the 26 `Eme1`/`Emeu` pairs the exception reads.
  */
 import { baseFormIdOf, isAlternateForm, isW3xFormPair } from "./championForms";
+import { STAND_IN_MODEL_KEYS } from "./voxelSkin/types";
 
 /**
  * `NN-0X` / `NN-00X` ability-name prefix (task #11). The trailing `(?!\d)`
@@ -128,8 +129,18 @@ import { baseFormIdOf, isAlternateForm, isW3xFormPair } from "./championForms";
 // "-" delimiter keeps "100-00" (hero 100) unambiguous from "10-000".
 export const HERO_NUMBER_RE = /^(\d{2,3})-(\d{2,3})(?!\d)/;
 
-/** Meshes whose key starts with this are the four shared CC0 stand-ins. */
-const STAND_IN_MODEL_PREFIX = "champ.";
+/**
+ * ⭐⭐ 2026-09-02（GH#933）—— **這裡本來是一條前綴 `"champ."`，而它比它自己的
+ * 註解寬**：那句註解逐字寫著「the **four** shared CC0 stand-ins」，
+ * ⛔ 而前綴同時吃進了 `champ.godie-zombiex` —— 那是**殭屍王自己的**網格，
+ * ⛔ 不是共用替身。⇒ 對外契約 `resolved-appearance@1.isStandIn` 因此對它說謊
+ * （外部編輯器被告知「這是共用替身，預覽可能不對」，而那顆就是它本人）。
+ *
+ * ⭐ 客戶端那一份（`apps/client/.../champselect/standIn.ts`）**早就修對了**，
+ * 而且檔頭寫下了理由：「Two lists mean a fifth fallback added to the content
+ * makes the renderer switch bodies while this badge stays silent」。
+ * ⇒ ⭐ 共用這一份改成讀**同一張表**，⛔ 不再有第二套判準。
+ */
 
 /** The minimal ability shape identity needs: its display name. */
 export interface IdentityAbility {
@@ -238,7 +249,7 @@ export function sharesNameComponent(a: string, b: string): boolean {
 
 /** True when `modelKey` is one of the four shared CC0 stand-in meshes. */
 export function isStandInModel(modelKey: string | null | undefined): boolean {
-  return typeof modelKey === "string" && modelKey.startsWith(STAND_IN_MODEL_PREFIX);
+  return typeof modelKey === "string" && STAND_IN_MODEL_KEYS.includes(modelKey);
 }
 
 /**

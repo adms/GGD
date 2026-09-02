@@ -137,6 +137,24 @@ def apply_to_content(merged: dict[str, dict], dead: list[str]) -> tuple[dict, li
         if slot and "pitchDeg" in slot:
             changes.append(f"{aid}: {slot['pitchDeg']} → （刪除,兩邊都量不到）")
             del slot["pitchDeg"]
+        # ⭐⭐ 2026-09-02（GH#933）—— **空了就把整列收掉。**
+        #
+        # ⚠️ 在此之前刪掉 `pitchDeg` 會留下一格 `{}`,而那是一個**沒有資訊的住處**
+        #    （第〇·四守則）:「這支量不到」這件事 `ANIM_SWING.json` 的 `unmeasured`
+        #    **已經帶著理由記著了**（掃過幾度、門檻多少、退回哪一個值）。
+        #
+        # ⭐ 而它是**有代價的**,不是潔癖:admin 的 `abilityBindingFromDraft()` 把
+        #    空草稿讀成 `null`（＝操作員清空所有欄位＝刪掉這筆綁定,⭐ 刻意的）,
+        #    於是一格 `{}` 在鑄技工坊的 round-trip 守衛上直接紅。
+        #    2026-09-02 初號機換模型（blocky-rogue → w3x.stock.satyrtrickster）
+        #    讓 `godie-e00r.w` 第一次落進這條路,那條守衛因此紅 —— ⭐ 它是對的。
+        #
+        # ⚠️ 同上面那段死列的理由:整列刪掉**不是改別人推導的值**,而且它
+        #    **重新推導得回來** —— 哪天那支的揮擊掃過 25° 門檻,下一次 pitch:build
+        #    會把列長回來。⛔ 知識不會消失。
+        if slot is not None and not slot:
+            changes.append(f"{aid}: （刪列,pitchDeg 拿掉之後這一列是空的）")
+            del abilities[aid]
 
     doc["abilities"] = dict(sorted(abilities.items()))
     return doc, changes

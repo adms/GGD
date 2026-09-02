@@ -23,11 +23,11 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 3329 個檔案**，分佈在 2 個隔離區。
+**目前共 3332 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
-| [`docs/legacy/`](legacy-index.md#docslegacy) | 2889 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
+| [`docs/legacy/`](legacy-index.md#docslegacy) | 2892 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
 | [`content/_legacy/`](legacy-index.md#contentlegacy) | 440 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
@@ -35,7 +35,7 @@ owner 2026-08-13：
 
 ---
 
-## `docs/legacy/` —— 2889 檔
+## `docs/legacy/` —— 2892 檔
 
 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）
 
@@ -203,6 +203,7 @@ owner 2026-08-13：
 | `_overwrites/voiceMixPolicy_temp_20260822-0122.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/技能係數公式化計畫_v1_temp_20260902-1028.md` | 技能係數公式化計畫 —— ⚠️ 這是 `docs/技能係數公式化計畫.md` 的 **v1**，2026-09-02 被 v2 取代時補存的。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/技能係數公式化計畫_v2_temp_20260902-1039.md` | 技能係數公式化計畫 —— ⭐ **這一份是討論的落點，⛔ 不是票。** 定案之後再拆票（拆法見最後一節）。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/技能係數公式化計畫_v3_temp_20260902-1348.md` | 技能係數公式化計畫 —— ⭐ **這一份是討論的落點，⛔ 不是票。** 定案之後再拆票（拆法見最後一節）。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/20260820-012418/CLAUDE.md` | GGD — 開發守則 —— 這一份是**規則**，不是說明書。架構與現況看 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/20260820-012959/docs/_release/board-live.md` | ⭐ 瓶頸已解除：鎖是 `bundle.json`，不是 `content/` 目錄 —— 切分依據是**檔案領域互斥**，⛔ 不是主題相近 —— 兩條 lane 只要會編到同一個檔就不能併行。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/ad_fold_temp_20260822-0414/combat-env.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
@@ -2894,6 +2895,8 @@ owner 2026-08-13：
 | `_overwrites/overwrite_temp_20260902-114606/docs/_release/ggd-board.html` | （.html 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260902-121446/docs/_release/ggd-board.html` | （.html 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260902-122108/docs/_release/ggd-board.html` | （.html 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260902-134500/gh-940.body.md` | ⛔ 已被更正（2026-09-02）：以下面這則 owner 逐字裁決為準 —— 請你協助開票以下內容 [Editor seam] Actor-aware 技能演出預設：主動施展、被動反應、single-arc 與事件來源 => Main 負責「做積木、事件與預設 fallback」；Editor  | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260902-134500/gh-940.title.txt` | （.txt 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/04.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/06.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/08.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |

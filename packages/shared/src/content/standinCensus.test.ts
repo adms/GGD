@@ -74,6 +74,15 @@ const ROSTER = championsIn(join(CONTENT, "champions"));
 const ARCHIVED_IDS = new Set(championsIn(LEGACY_CHAMPIONS).map((c) => c.id));
 
 /**
+ * ⭐ 出貨皮膚 —— **它們也是替身網格的租戶**（`skin@1.modelKey`）。
+ * ⛔ 在 2026-09-02 之前這份普查只數英雄,於是一顆只被皮膚用的替身
+ * 看起來像「沒有人用」。
+ */
+const SKINS: Array<{ id: string; modelKey?: string }> = readdirSync(join(CONTENT, "skins"))
+  .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+  .map((f) => JSON.parse(readFileSync(join(CONTENT, "skins", f), "utf8")));
+
+/**
  * THE CENSUS. `modelKey` → the champion ids that render on it, for every model
  * doc that more than one champion shares OR that is one of the four historic
  * stand-ins. Sorted, so the literal below is reviewable.
@@ -126,7 +135,17 @@ const EXPECTED: Readonly<Record<string, readonly string[]>> = {
   // godie-n01b（萬解那一對）、godie-n01l、godie-nbst、godie-obla、以及曹操
   // godie-o02n/godie-o02o 那一對都進了 `_legacy`。**成對的一起走**，所以沒有任何
   // 變身連結被切斷（standinRoster.test.ts 的 same-side 檢查在守這件事）。
-  "champ.skin.rogue": ["godie-e00r"],
+  // ⭐⭐ 2026-09-02（GH#933）：**這一格空了** —— `godie-e00r`（初號機）拿到了
+  // 自己的模型。⚠️ 而找到它的路徑值得記著：
+  //   · 交接文件說「repo 已有 Eva 相關 imported GLB」⇒ ⛔ 那顆是**特效**
+  //     （4,354 bytes · 幾何 1,004 bytes · 帶 `PREM` 粒子發射器）
+  //   · ⭐ w3x 原始資料逐字說它用的是
+  //     `heroes.E00R.model = units\creeps\SatyrTrickster\SatyrTrickster.mdl`
+  //   · ⇒ 從 retail MPQ 抽出來，走既有的 `convert_stock_model.py`
+  //     ⇒ `w3x.stock.satyrtrickster`（**573 頂點 · 13 個動畫**，對照 rogue 的 336）
+  // ⛔ 這一格**留著**而不是刪掉：一個空陣列說「這顆替身今天沒有人借」，
+  // ⭐ 而刪掉會讓「又有人搬回來」變成靜默。
+  "champ.skin.rogue": [],
 };
 
 describe("#226 census: who borrows a stand-in, and which one", () => {
@@ -166,8 +185,26 @@ describe("#226 census: who borrows a stand-in, and which one", () => {
     expect(new Set(borrowers).size).toBe(censusTotal);
     // …and every one of the four stand-in rigs still has a live tenant, so a
     // shipped mesh never becomes dead weight nobody renders.
+    //
+    // ⭐⭐ 2026-09-02（GH#933）—— **「租戶」不只是英雄，還有皮膚。**
+    //
+    // ⚠️ `godie-e00r` 搬走之後 `champ.skin.rogue` 的英雄租戶歸零 ⇒ 這條閘紅了，
+    // ⭐ 而它問的是對的問題（「有沒有變成沒人畫的死重」）——
+    // ⛔ 只是它的**分母漏了一條路**：`content/skins/skin.sela.rogue.json`
+    // （`skin@1`，Nightblade Sela，750 M幣）**正在用它**。
+    //
+    // ⇒ ⭐ 分母補上皮膚，⛔ 而不是把這條閘放寬：
+    //   一顆真的沒有人用的替身網格仍然要紅。
+    const skinTenants = new Set(
+      SKINS.filter((s) => typeof s.modelKey === "string").map((s) => s.modelKey as string),
+    );
     for (const key of STAND_IN_MODEL_KEYS) {
-      expect((CENSUS.get(key) ?? []).length, `${key} has no live borrower`).toBeGreaterThan(0);
+      const tenants = (CENSUS.get(key) ?? []).length + (skinTenants.has(key) ? 1 : 0);
+      expect(
+        tenants,
+        `${key} has no live borrower —— ⭐ 英雄與**皮膚**都沒有人用它 ⇒ 出貨了一顆沒人畫的網格。\n` +
+          "   ⇒ 把它退場（`content/_legacy/`），⛔ 不是把這條閘放寬。",
+      ).toBeGreaterThan(0);
     }
   });
 

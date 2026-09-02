@@ -43,9 +43,11 @@ const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../conte
  *
  * ── 今天的 18 位（⭐ 分成三群）────────────────────────────────────────
  *  · `champ.sela` ×9 · `champ.thorne` ×n · `champ.skin.*` ×4
- *  · 其中 `godie-e00r`（初號機）的**正解已知**：SatyrTrickster（GH#933）
+ *  · ⭐ **2026-09-02：`godie-e00r` 已經修好了** —— 18 → **17**。
+ *    w3x 說它用 SatyrTrickster ⇒ 從 retail MPQ 抽出來、轉成
+ *    `w3x.stock.satyrtrickster`（573 頂點 · 13 個動畫）並指過去。
  */
-const STAND_IN_CEIL = 18;
+const STAND_IN_CEIL = 17;
 
 describe("共用替身英雄（只准變少）", () => {
   const champs = readdirSync(join(CONTENT, "champions"))
@@ -84,31 +86,15 @@ describe("共用替身英雄（只准變少）", () => {
     ).toBeGreaterThan(0);
   });
 
-  it("★★ ⭐ `godie-e00r` 的**正解已知** —— ⛔ 而它還沒被指過去", () => {
+  it("★★ ⭐⭐ `godie-e00r` **已經有自己的模型了**（⛔ 不再是替身）", () => {
     const e00r = champs.find((c) => c.id === "godie-e00r");
     expect(e00r, "儀器：初號機不在出貨樹裡").toBeDefined();
-    // ⭐ 這一條在**修好的那一天**會紅 —— ⚠️ 而那正是它該紅的時候：
-    //   ⇒ 提醒去把 CEIL 調小、把這條改成「⭐ 已修好」。
-    if (!isStandInModel(e00r!.modelKey)) {
-      expect(
-        e00r!.modelKey,
-        "⭐⭐ 初號機不再是替身了 —— ⛔ 而這條測試還停在舊的世界。\n" +
-          "   ⇒ 把 `STAND_IN_CEIL` 調成 3，並把這一條改成斷言新的 modelKey。",
-      ).toBe("（把這裡換成新的 modelKey）");
-    }
-    // ⭐⭐ **修的時候要動哪裡**（⛔ 不是只在票上，⛔ 也不是憑記憶）：
-    //
-    //   ① 抽 `units\creeps\SatyrTrickster\SatyrTrickster.mdl`（⛔ 需要 WC3 的 MPQ ——
-    //      全 repo 零命中，而那 22 份 `w3x.stock.*` 的 GLB 也不在地圖匯出裡）
-    //   ② 轉成 `content/assets/models/imported/satyrtrickster.glb`
-    //      ＋ 一份 `content/models/w3x.stock.satyrtrickster.json`（照既有 39 份的形狀）
-    //   ③ ⭐ 把 `content/champions/godie-e00r.json` 的 `modelKey` 指過去 ——
-    //      ⚠️ `genguard` 說它**沒有產生器來源**（只被正規化器就地改欄位）
-    //      ⇒ ⭐ **直接改那份 JSON 是對的**，⛔ 而不是去找一支不存在的產生器
-    //   ④ `bash scripts/genrun.sh content:build` ＋ 把 CEIL 調成 17
-    //
-    // ⚠️ ⭐ ③ 那一格特別記著：`modelKey` 是 `zRef("models")` ——**硬 ref**
-    //   ⇒ ⛔ 在 ② 完成之前先改 ③，內容驗證整份會失敗（＝ 2026-08-02 那次事故的形狀）。
-    expect(e00r!.modelKey).toBe("champ.skin.rogue");
+    expect(
+      isStandInModel(e00r!.modelKey),
+      "⛔⛔ 初號機**又**變回共用替身了 ⇒ ⭐ 它在 2026-09-02 已經有自己的模型：\n" +
+        "   w3x `heroes.E00R.model = units\\creeps\\SatyrTrickster\\SatyrTrickster.mdl`\n" +
+        "   ⇒ 從 retail MPQ 抽出來轉成 `w3x.stock.satyrtrickster`（573 頂點 · 13 動畫）。",
+    ).toBe(false);
+    expect(e00r!.modelKey).toBe("w3x.stock.satyrtrickster");
   });
 });
