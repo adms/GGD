@@ -67,6 +67,21 @@ export interface DamageBoardEntry {
   victimDamage?: number;
   /** 上面那一擊命中當下,那個目標的最大生命。缺席/0 = 不知道。 */
   victimMaxHp?: number;
+  /**
+   * ⭐ GH#914 —— 這一次施放**命中幾個英雄 / 幾隻小怪**。
+   *
+   * ⚠️ ⭐ **兩個數字刻意分開**（owner 逐字要的）：一發掃過 30 隻殭屍與一發打中
+   * 3 個英雄是**完全不同的事件** ⇒ ⛔ 加起來會把它們混成同一件事。
+   * ⭐ 而它讓這張榜第一次可比：`damage` 是**總傷害**，
+   * ⇒ ⛔ AoE 與單體爆發在同一欄裡根本不能比；有了命中數才算得出「每目標傷害」。
+   *
+   * ⚠️ **可缺席**：這一格之前寫進 zset 的每一筆都沒有它 ⇒ 後台畫「—」，⛔ 不是 0
+   * （0 會讓舊資料看起來像「一個人都沒打中」）。
+   */
+  heroHits?: number;
+  mobHits?: number;
+  /** ⭐ 施放當下的等級。缺席 ⇒ 舊資料（⛔ 畫「—」，不是 0）。 */
+  casterLevel?: number;
 }
 
 /** 全域排行榜的 zset key。改 schema 就 bump 版本後綴,舊 key 自然老死。 */
@@ -116,6 +131,9 @@ export function buildDamageBoardEntries(
     // GH#658 —— 兩個**原始事實**;百分比由後台推導(`pctOfVictimMaxHp`)。
     victimDamage: c.victimDamage,
     victimMaxHp: c.victimMaxHp,
+    heroHits: c.heroHits,
+    mobHits: c.mobHits,
+    casterLevel: c.casterLevel,
   }));
 }
 

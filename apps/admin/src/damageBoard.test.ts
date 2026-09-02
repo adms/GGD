@@ -28,6 +28,9 @@ const row = (over: Partial<DamageBoardRow>): DamageBoardRow => ({
   // GH#658 —— 預設 null ＝「這一筆是舊資料」,⛔ 不是 0(見 pctOfMaxHp)。
   victimDamage: null,
   victimMaxHp: null,
+  heroHits: null,
+  mobHits: null,
+  casterLevel: null,
   ...over,
 });
 

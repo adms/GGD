@@ -33,7 +33,7 @@
  *（就是那 10 天）、以及錯的號沒有被擋下來。其餘刪掉。
  */
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
-import { execFileSync, spawnSync } from "node:child_process";
+import { execFileSync, execSync, spawnSync } from "node:child_process";
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
@@ -143,4 +143,63 @@ describe("版號守衛 scripts/release.sh", () => {
     expect(bad.err).toContain("v0.10.0");
   });
 
+});
+
+// ---------------------------------------------------------------------------
+// ⭐⭐ 冪等（2026-09-02）—— HEAD 已經有 tag ⇒ 重用它，⛔ 不是再打一個
+// ---------------------------------------------------------------------------
+
+describe("release.sh 的冪等", () => {
+  /**
+   * ⛔⛔ **它在防的那件事**（2026-09-02 真的發生了）：
+   *
+   * `ship-it.sh` 的順序是「**先打 tag → 再要 release note**」，
+   * ⛔ 而 note 那一步**刻意不能自動生**（內容要人寫）。
+   * ⇒ ⭐ 每一次「補完 note 再重跑一次」都會**再打一個 tag** ——
+   *   一個下午燒掉 v0.35.6 → v0.35.7，兩個 tag **指向同一個 commit**。
+   *
+   * ⚠️ ⭐ 而 `bmpndd.sh` 的訊息逐字寫著「**過了的步驟是冪等的**」，
+   *   ⛔ 那句話當時是**假的** —— 而它正是叫人重跑的那一句（第三守則）。
+   *
+   * ⭐ 判準是「**HEAD 上有沒有 tag**」，⛔ 不是「那個名字在不在」：
+   *   後者只擋得住「同一個名字打兩次」，⛔ 擋不住「同一個 commit 打兩個名字」。
+   *
+   * MUTATION LOG：把 `--points-at HEAD` 那一段拿掉 → 🔴（第二次跑打出第二個 tag）
+   */
+  it("★★ ⭐ 同一個 commit 上跑兩次 ⇒ 只有**一個** tag", () => {
+    const dir = mkdtempSync(join(tmpdir(), "ggd-rel-idem-"));
+    try {
+      const sh = (cmd: string): string =>
+        execSync(cmd, { cwd: dir, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+      sh("git init -q -b main");
+      sh('git config user.email t@t && git config user.name t');
+      writeFileSync(join(dir, "a.txt"), "1");
+      sh("git add -A && git commit -q -m first");
+      sh(`mkdir -p scripts && cp ${JSON.stringify(SCRIPT)} scripts/`);
+      sh("git add -A && git commit -q -m second");
+
+      const run = (): string => {
+        try {
+          return sh('bash scripts/release.sh --tag "一句話" 2>&1');
+        } catch (e) {
+          return String((e as { stdout?: Buffer }).stdout ?? e);
+        }
+      };
+      run();
+      const after1 = sh("git tag --points-at HEAD").trim().split("\n").filter(Boolean);
+      expect(after1.length, "儀器：第一次跑沒打出 tag").toBe(1);
+
+      const out2 = run();
+      const after2 = sh("git tag --points-at HEAD").trim().split("\n").filter(Boolean);
+      expect(
+        after2.length,
+        "⛔⛔ 同一個 commit 上跑第二次又打了一個 tag ⇒\n" +
+          "   ⭐ 而 BMPNDD 的 note 步驟失敗時**就是**叫人重跑（它自稱冪等）\n" +
+          `   實際 tag：${after2.join(" ")}`,
+      ).toBe(1);
+      expect(out2, "⛔ 重用時要說出來（⛔ 不是靜默）").toMatch(/重用|已經是/);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
 });

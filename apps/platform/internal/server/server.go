@@ -316,6 +316,10 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 		cfg.MatchPendingTTL, cfg.MatchLivenessGrace, cfg.HMACSkew)
 	rooms.SetStarter(glink)
 	rooms.SetOwnership(walletSvc)
+	// ⭐ GH#915 —— 大廳列表的名稱／牌位（房主是誰、誰在裡面、什麼牌位）。
+	//   ⚠️ 接在這裡而不是 `room.New()` 的參數，是因為 `rank` 在它**之後**才建 ——
+	//   ⭐ 而這個接縫刻意是 optional（nil ⇒ 大廳照舊只回七個欄位）。
+	rooms.SetLobbyProfiles(rank)
 	// 大廳集合令 (GH#492): who a rally broadcast may reach. The enumeration lives
 	// in friend (accounts + presence are already there) and is SHARED with
 	// GET /lobby/online, so the room browser and the broadcast can never disagree
