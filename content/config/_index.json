@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "87f92a26ea06",
+  "hash": "a7107b6b09f7",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -35,8 +35,8 @@
     {
       "id": "ap-damage-scaling",
       "path": "config/ap-damage-scaling.json",
-      "hash": "a4ebb9e1aa44",
-      "size": 935
+      "hash": "e30d6fde4f48",
+      "size": 973
     },
     {
       "id": "arena-pool",
@@ -367,6 +367,12 @@
       "path": "config/range-tiers.json",
       "hash": "d87cdbcfecf4",
       "size": 789
+    },
+    {
+      "id": "rank-growth",
+      "path": "config/rank-growth.json",
+      "hash": "e77c1d073320",
+      "size": 1064
     },
     {
       "id": "ranking",

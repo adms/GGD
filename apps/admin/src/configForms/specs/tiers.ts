@@ -21,6 +21,7 @@ import {
   // ⭐ 吟唱五級距（GH#943）／AP 係數公式（GH#942）—— 同上面那一族走 barrel。
   zConfigCastTimeTiersDoc,
   zConfigApCoefficientDoc,
+  zConfigRankGrowthDoc,
 } from "@ggd/shared/content";
 import {
   ANCHOR_ROLE,
@@ -899,6 +900,56 @@ export const AP_COEFFICIENT_SPEC: ConfigDocSpec<"apCoefficient"> = {
       path: "baseTierCompensation.whenTierAbsent",
       zh: "基礎值補償 — 沒填傷害級距時",
       note: "⚠️ 技能沒有 `damageTier` 時用這一格（出貨 {{出貨值}}）。⭐ 刻意偏高一點：沒填級別的多半是小額傷害。",
+    },
+  ],
+  preserved: [],
+};
+
+// ──────────────────── 升級成長率 (config/rank-growth) ─
+
+/**
+ * ⭐⭐ GH#938 —— owner 2026-09-02 逐字：
+ * 「`rankGrowth` 全域預設 0.5 其實**跟 CD／觸發頻率有關係**，
+ *  陽離子砲會是 `rankGrowth: 1.0` 是因為 **CD 較長**」
+ */
+export const RANK_GROWTH_SPEC: ConfigDocSpec<"rankGrowth"> = {
+  page: "rankGrowth",
+  collection: "config",
+  docId: "rank-growth",
+  schemaTag: "config.rank-growth@1",
+  zod: zConfigRankGrowthDoc,
+  title: "升級成長率",
+  intro: [
+    "⭐ 一支技能**每升一級**，傷害成長幾成 —— 而它由那支技能的**冷卻級距**決定。",
+    "⛔ 在這一頁之前，升級成長是把 3–4 個算好的值烘進每一份技能文件，而傷害梯子只有**五格** ⇒ 量到 **29 個節點裡 27 個（93%）至少有一級升了零提升**：80-02 弒鬼神的卡面寫「120/220/320/420（每級 +100）」，而實際是 **200/200/500/500**（+0 / +300 / +0）。",
+    "⭐ owner 2026-09-02 逐字：「`rankGrowth` 全域預設 0.5 其實**跟 CD／觸發頻率有關係**，陽離子砲會是 1.0 是因為 **CD 較長**」。⚠️ ⭐ 而資料**證實了那條直覺**：把 27 個節點的實質成長率按冷卻級距分箱，上界是 0.50 → 0.50 → 0.50 → **0.75** → **1.00** —— 那條規則本來就在，只是被五格梯子壓平了。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/rank-growth.json`**。",
+  ],
+  consumer: "packages/shared/src/content/rankGrowth.ts 的 resolveRankGrowth（全專案唯一的查表處）",
+  effect: "**要重啟 game-server shard 才生效**（內容在註冊時就解析完）。同其他級距(#278)。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "成長率總開關",
+      note:
+        "⭐ **一鍵 rollback**：關掉之後升級成長回到技能自己寫的 `damageTierPerRank`。" +
+        "⚠️ ⛔ 關掉**不是**「升級不變強」—— 解析器回 `null`（這一格沒有意見），⛔ 不是 0。",
+    },
+    ...SKILL_TIER_NAMES.map((tier) => ({
+      path: `byCooldownTier.${tier}`,
+      zh: `冷卻「${tier}」的技能 — 每級成長`,
+      note:
+        `冷卻級距是「${tier}」的技能,每升一級傷害成長幾成（出貨值 {{出貨值}}）。` +
+        `⭐ 0.5 ＝ 第二級是首級的 1.5 倍、第三級 2 倍（**線性**,⛔ 不是複利 ——` +
+        `owner 點名的 80-02 卡面逐字是「每級 +100」,那是等差）。` +
+        `⚠️ 改這一格,樹上每一支冷卻標成「${tier}」的技能同時跟著變。`,
+    })),
+    {
+      path: "whenTierAbsent",
+      zh: "沒有冷卻級距時",
+      note:
+        "⚠️ 技能沒有 `cooldownTier` 時用這一格（出貨 {{出貨值}}）。" +
+        "⭐ 0.5 是**量到的中位數**,⛔ 不是一個保守的猜測。",
     },
   ],
   preserved: [],
