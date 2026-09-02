@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-09-02 10:50 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-09-02 14:16 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.35.15 · 資料截至 2026-09-02 10:50 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-02 10:50 (GMT+8)</h1><div class="meta"><span>帳本 <b>15</b> 份</span><span>點名票號 <b>368</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.35.22 · 資料截至 2026-09-02 14:16 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-02 14:16 (GMT+8)</h1><div class="meta"><span>帳本 <b>15</b> 份</span><span>點名票號 <b>370</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -1043,6 +1043,20 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>10:13</td><td>① 79-02 斬擊：⭐ 為什麼「降 CD 換降傷害」是對的 =&gt; ⭐ 降 CD 到 15s ② 08-04 阿邦快速劍X 的條件級距 ⭐ 那是真的條件（比 EX 難、比反彈易） =&gt; A 極大·反應 3.0× ，我的判斷時機微操作是比反彈難，因為反彈是被動只要判斷時機，微操除了判斷時機還要操作例如適合距離，條件更嚴苛 ③ 12-04 龍氣爆發：要不要給條件 =&gt; ⭐ B 接同一條混亂線（有混亂時） ⭐ 1.02 ⭐ 零新機制（條件葉已存在）· 強化角色的連招身分／⛔ 沒混亂時仍是 0.64 ④ 04-03 龍破斬 CD 改 60 秒=&gt; ok, 另外 EX增幅狀態下也有增加傷害對吧? doc…</td><td>⏸ 未對票</td></tr>
 <tr><td>10:22</td><td>請你協助開票以下內容 「Main 提供通用演出積木與預設規則」的票，不是要求 Main 逐招拼特效。以下可直接整段複製開票： # [Editor seam] Actor-aware 技能演出預設：主動施展、被動反應、single-arc 與事件來源 ## 目標 Main 遊戲主程式需要提供統一、可查詢、可測試的技能演出預設，使技能即使尚未製作專屬 VFX Script，也不會出現： - 角色站著不動，只有粒子特效。 - 時間軸每次傷害／位移時，角色沒有對應攻擊或受擊動作。 - 被動技能被錯誤播放成主動施法。 - 一次普通揮砍噴出大量月牙。 - 格擋、迴避、暴擊等被動觸發只有數值，缺少基本視覺回…</td><td>⏸ 未對票</td></tr>
 <tr><td>10:36</td><td>⭐⭐ 同一個匯入錯誤的兩個方向：龍破斬抄了「增幅後」那格，神滅斬抄了「平時」那格。 而 godie-hjai（基礎）與 godie-h020（增幅形態）今天在傷害節點上逐位元組相同 ⇒ 「增幅」在這位英雄身上一個位元組都沒發生。⛔ 沒有任何守衛會紅（noOpModifierClaims 掃 modifier，這是「描述指向不存在的機制」）。⇒ 建議一條新守衛涵蓋全部 26 對變身英雄。=&gt; ok B3 04-04 神滅斬（平時） 1.3 1.86 升（吟唱滿格＋距4.5貼臉＋單體） =&gt; 單體+吟唱+近距離 怎麼才這一點點 增幅呢? CD太短? ⭐ 建議取 ⓑ。 想要 ⓒ 的效果就轉一格總倍率…</td><td>⏸ 未對票</td></tr>
+<tr><td>13:50</td><td>開票 —— [Editor Contract] Main 全域角色動作與主／被動技能演出預設（v2 擴充版：19 塊 actor 動作積木、啟用模式判定四條、被動演出 11 列、script 覆蓋驗證、批核與上線界線、十項視覺 fixture）=&gt; Main 提供可重用積木、runtime 事件、預設 resolver 與驗證契約；Editor 負責用積木拼成技能成品。</td><td>940</td></tr>
+<tr><td>14:00</td><td>如果都做完了 就可以拿計畫跟相關議題都去開票 （同一則的三項確認） 1. 所有技能傷害（含升級）、AP加成、冷卻、距離、範圍、耗魔、條件增幅...這些全部都五級距化標籤化 (條件表達也是模板標籤組合) 2. 所有標籤都遵守公式合理自洽，並且沒有 loop 參照 3. 因此而調整的技能開票列表，並且標示不合理之處及 before/after 原因做法 （本輪其他逐字裁決） · 單體冷卻軸封頂 2.0 =&gt; 補阿 這 33%很重要 · 吟唱付2秒領1秒 =&gt; 請一起拉平（⭐ 查證：castTimeMaxSec=1 已出貨 #787，本來就沒有白付） · cooldownSlopeExp = 1.00 線性 =&gt; ok · 形狀項保留 2.5（⛔ 不要改 1.8）=&gt; ok · 吟唱五級距建議 0, 0.1, 0.3, 0.5, 1 · B1 77-00 浮雲 =&gt; 快查修正開票阿（⇒ #941） · B2 黑化升 =&gt; yes ／ B4 千鳥流 =&gt; ok ／ B5 馬勒戈壁單獨重設計 =&gt; ok · B6 12-002「怎麼還那麼低?」=&gt; ⭐ 破案：cooldownTier 填「中」＝30秒，缺陷在 CD 不在係數 · 26 對變身增幅守衛 =&gt; ok · 最後提醒，要確保公式沒有 loop 互相參照的情形（⇒ 已驗，乾淨）</td><td>945</td></tr>
+<tr><td>14:15</td><td>你給我一個簡化版 適合對玩家說明遊戲設計規則的 技能五級距公式說明及影響技能調整改版詳細公告.md 到時候 BMPDNN 一起更新上去 (Note&amp;Discord) ⇒ 已寫：docs/技能五級距公式說明及影響技能調整改版詳細公告.md（210 行） ⚠️ 文件內含「Discord 精簡版」純文字區塊 —— Discord ⛔ 不渲染 markdown 表格， 所以表格版給 Note/release note，程式碼區塊那一段直接複製貼 Discord。 ⚠️ 全篇標示「改版預告，尚未上線」——⛔ 不可以在實作落地前發成「已修正」。</td><td>945</td></tr>
+<tr><td>14:16</td><td>傷害排行榜的 版本是指 v.0xx.xx 的版本號，你只寫 dev 有什麼意義是嗎 =&gt; 照你說的開票</td><td>949</td></tr>
+<tr><td>13:23</td><td># [Editor Contract] Main 全域角色動作與主／被動技能演出預設 ## 目的 Main 必須提供一致、可機器讀取的角色動作與特效演出積木，使： - 沒有 <code>vfx-script@1</code> 的技能，也有合理的預設演出。 - Editor 可利用同一批積木拼裝完整技能。 - 有自訂 script 時，不會和 Main 預設特效重複播放。 - 主動、被動、混合型技能都能依 runtime 真實事件播放正確動作。 - AI／Editor 不能只產生粒子特效而漏掉施法者動作與受擊者反應。 Main 的責任是「製作積木、提供事件與預設解析規則」；不需要替八個驗收技能逐招拼裝成品。 ---…</td><td>⏸ 未對票</td></tr>
+<tr><td>13:39</td><td>① ⭐ 單體技能的冷卻軸結構性封頂在 2.0 —— 單體表最高 60s；範圍表可到 90/120（cdm 3.0）⇒ 單體大絕永遠少 33% 冷卻補償 =&gt; 補阿 這 33%很重要 ② ⭐ 吟唱付 2 秒只領 1 秒 —— castTimeSec: 2.0，而上限只認 1.0 ⇒ 多付的 1 秒是白付的 =&gt; 請一起拉平 ⭐⭐ 大招每分鐘只有 Q 的 0.58 倍，單發只強 1.17 倍 —— 兩個軸都輸。 「大招」今天只是「一個比較慢的 Q」。 =&gt; ⭐ 1.00 ⭐ 3.04× ⭐ 1.52× 0.42 1.28 ⭐ 建議 ok ⭐ 建議：保留 2.5，⛔ 不要改 1.8（1.8 只剩 1…</td><td>⏸ 未對票</td></tr>
+<tr><td>13:41</td><td>你也太久了</td><td>⏸ 未對票</td></tr>
+<tr><td>13:44</td><td>開票</td><td>⏸ 未對票</td></tr>
+<tr><td>13:52</td><td>我想要確定幾件事 1. 所有技能傷害（含升級）、AP加成、冷卻、距離、範圍、耗魔、條件增幅...這些全部都五級距化標籤化 (條件表達也是模板標籤組合) 2. 所有標籤都遵守公式合理自洽，並且沒有 loop 參照 3. 因此而調整的技能開票列表，並且標示不合理之處及 before/after 原因做法 /goal 如果都做完了 就可以拿計畫跟相關議題都去開票</td><td>⏸ 未對票</td></tr>
+<tr><td>13:52</td><td>為什麼你會卡四五次回答類似東西 卻不讓我 interupt 回答給你呢</td><td>⏸ 未對票</td></tr>
+<tr><td>13:53</td><td>#940 已改寫完成，等你的下一步。 No response needed. #940 完成。這條線只做開票，其餘等你說。 Waiting on you. #940 已交付。 =&gt; 我早就發訊息但送不進去，應該是你設定了什麼機制等訊息但又跟 claude code desktop 機制撞牆訊息送不進去被檔住連 interupt 都不行</td><td>#940</td></tr>
+<tr><td>14:06</td><td>查什麼 結果 CronList No scheduled jobs 排程任務 No scheduled tasks found .claude/settings.json 只有一支 PreToolUse（preserve-before-overwrite.py 覆蓋前備份），⛔ 沒有 Stop hook ~/.claude/settings.json 只有 permissions 等四個鍵，⛔ 沒有任何 hook 殘留行程 只有另一條線的 @ggd/editor / @ggd/content-api dev server（/private/tmp/GGD-vfx-forge，那是 Codex…</td><td>⏸ 未對票</td></tr>
+<tr><td>14:10</td><td># 傷害（全目標累積） 佔目標血量 ▼ 單體最大一擊 命中英雄 命中小怪 每目標傷害 英雄 技能 槽位 等級 回合 裝備 同場 版本 時間 =&gt; 傷害排行榜的 版本是指 v.0xx.xx 的版本號，你只寫 dev 有什麼意義是嗎</td><td>⏸ 未對票</td></tr>
+<tr><td>14:13</td><td>照你說的開票</td><td>⏸ 未對票</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

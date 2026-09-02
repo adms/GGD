@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "41c50c0eba21",
-  "capabilityFingerprint": "24bd88e2",
+  "fingerprint": "17f6aad99a48",
+  "capabilityFingerprint": "65de4b39",
   "required": [
     {
       "group": "abilityField",
@@ -209,6 +209,10 @@
     {
       "group": "abilityField",
       "name": "castTimeSec"
+    },
+    {
+      "group": "abilityField",
+      "name": "castTimeTier"
     },
     {
       "group": "abilityField",
@@ -396,6 +400,10 @@
     },
     {
       "group": "conditionLeafField",
+      "name": "abilityId"
+    },
+    {
+      "group": "conditionLeafField",
       "name": "is"
     },
     {
@@ -428,6 +436,10 @@
     },
     {
       "group": "conditionLeafField",
+      "name": "slot"
+    },
+    {
+      "group": "conditionLeafField",
       "name": "stat"
     },
     {
@@ -447,8 +459,16 @@
       "name": "value"
     },
     {
+      "group": "conditionLeafField",
+      "name": "withinSec"
+    },
+    {
       "group": "conditionLeaf",
       "name": "kind"
+    },
+    {
+      "group": "conditionLeaf",
+      "name": "recentCast"
     },
     {
       "group": "conditionLeaf",
@@ -9211,6 +9231,11 @@
     {
       "group": "configField",
       "name": "enabled",
+      "owner": "config.cast-time-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "enabled",
       "owner": "config.aoe-tiers@1"
     },
     {
@@ -11017,6 +11042,11 @@
       "group": "configField",
       "name": "id",
       "owner": "config.cast-time@1"
+    },
+    {
+      "group": "configField",
+      "name": "id",
+      "owner": "config.cast-time-tiers@1"
     },
     {
       "group": "configField",
@@ -13687,6 +13717,11 @@
       "group": "configField",
       "name": "note",
       "owner": "config.cast-time@1"
+    },
+    {
+      "group": "configField",
+      "name": "note",
+      "owner": "config.cast-time-tiers@1"
     },
     {
       "group": "configField",
@@ -16876,6 +16911,11 @@
     {
       "group": "configField",
       "name": "schema",
+      "owner": "config.cast-time-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "schema",
       "owner": "config.aoe-tiers@1"
     },
     {
@@ -17956,7 +17996,17 @@
     {
       "group": "configField",
       "name": "seconds",
+      "owner": "config.cast-time-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "seconds",
       "owner": "config.cooldown-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "seconds.中",
+      "owner": "config.cast-time-tiers@1"
     },
     {
       "group": "configField",
@@ -17987,6 +18037,26 @@
       "group": "configField",
       "name": "seconds.單體.極小",
       "owner": "config.cooldown-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "seconds.大",
+      "owner": "config.cast-time-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "seconds.小",
+      "owner": "config.cast-time-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "seconds.極大",
+      "owner": "config.cast-time-tiers@1"
+    },
+    {
+      "group": "configField",
+      "name": "seconds.極小",
+      "owner": "config.cast-time-tiers@1"
     },
     {
       "group": "configField",
@@ -20350,6 +20420,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "amount.conditionTier"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "amount.damageTier"
     },
     {
@@ -20382,6 +20456,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "amount.ratios.when"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "amountPerTick"
     },
     {
@@ -20399,6 +20477,10 @@
     {
       "group": "effectFieldPath",
       "name": "amountPerTick.attrRatios.coeff"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amountPerTick.conditionTier"
     },
     {
       "group": "effectFieldPath",
@@ -20431,6 +20513,10 @@
     {
       "group": "effectFieldPath",
       "name": "amountPerTick.ratios.stat"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amountPerTick.ratios.when"
     },
     {
       "group": "effectFieldPath",
@@ -20683,6 +20769,10 @@
     {
       "group": "effectFieldPath",
       "name": "comboBonus.amount.attrRatios"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "comboBonus.amount.conditionTier"
     },
     {
       "group": "effectFieldPath",
@@ -24311,20 +24401,20 @@
     "effectField": 261,
     "hookEvent": 33,
     "hookField": 21,
-    "abilityField": 38,
+    "abilityField": 39,
     "auraField": 8,
     "templateFamily": 28,
-    "conditionLeaf": 5,
-    "conditionLeafField": 13,
-    "effectFieldPath": 420,
+    "conditionLeaf": 6,
+    "conditionLeafField": 16,
+    "effectFieldPath": 425,
     "vfxField": 86,
     "modelField": 42,
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 127,
-    "configField": 3830,
+    "configField": 3840,
     "_notRequired": 15,
-    "_total": 4983,
+    "_total": 5003,
     "_ownerOnly": 39
   }
 }

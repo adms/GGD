@@ -40,8 +40,7 @@ import type { AbilityId, ItemId, StatusId } from "../../ids";
 //
 // ⚠️ ⛔ 這裡**不可以**用 `--ours`／`--theirs` 解 —— 任一邊都會吃掉另一條 lane
 // 的成果，⭐ 而且**不會有東西紅**（CLAUDE.md 記過那個形狀）。
-import { zCastableSlot } from "./common";
-import { zRef } from "./ref";
+import { zCastableSlot, zRef } from "./ref";
 import {
   RECENT_CAST_WITHIN_MAX_SEC,
   RECENT_CAST_WITHIN_MIN_SEC,

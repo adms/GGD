@@ -30,6 +30,7 @@ import { Stat } from "../../sim/stats/statTypes";
 import { ModOp } from "../../sim/stats/modifiers";
 // 傷害五級距（GH#447）。⛔ 不要在這裡重打一份級距名 —— 五個字全專案只有一份。
 import { DAMAGE_TIER_NAMES } from "../damageTiers";
+import { SKILL_TIER_NAMES } from "../skillTiers";
 import { RANK_SCALAR_MAX_COLUMNS } from "../../sim/perRank";
 import { MS_BONUS_OPS, MS_BONUS_TIER_NAMES } from "../moveSpeedTiers";
 // ⭐ GH#936 —— `ratios[].when` 吃的就是這一份 union（⛔ 不是第二套判準）。
@@ -55,7 +56,13 @@ export const zAbilitySlot = z.enum(["Q", "W", "E", "R", "EX"]);
  * one is "which slot does this DOC occupy", this one is "which slot may a cast
  * NAME".
  */
-export const zCastableSlot = z.enum(["Q", "W", "E", "R", "EX", "PASSIVE"]);
+// ⭐ 2026-09-02 —— 搬到 `./ref`（無迴圈葉模組），這裡是**門面**。
+// 理由：`condition.ts` 需要它，而 `common.ts` 反過來需要 `condition.ts` 的
+// `zEffectCondition`（`ratios[].when`）⇒ ⛔ 走 `./common` 就是一條會炸的迴圈。
+export { zCastableSlot } from "./ref";
+// ⚠️ re-export **不會**把名字帶進本地作用域 —— 下面  要用它。
+//   （同一個坑 2026-09-02 踩了三次：AnimPulse 的 PULSE_MS、glbYaw、這裡。）
+import { zCastableSlot } from "./ref";
 /**
  * Every slot a champion OWNS — the five castable ones plus "PASSIVE".
  *
@@ -547,6 +554,30 @@ export const zScaling = z
      * 各一份：一個機制服務全部（第零守則⑨）。
      */
     damageTier: z.enum(DAMAGE_TIER_NAMES).optional(),
+    /**
+     * ⭐⭐ **條件級距**（GH#943 —— owner 2026-09-02 逐字：
+     * 「所有技能傷害（含升級）、AP加成、冷卻、距離、範圍、耗魔、**條件增幅**⋯
+     *  這些**全部都五級距化標籤化**（**條件表達也是模板標籤組合**）」）。
+     *
+     * ── ⭐ 它回答的是「**這條係數有多難吃到**」──────────────────────────
+     * 一條「敵人低於 30% 血才吃」的係數，與一條**恆真**的係數，
+     * ⛔ 在數值上不可以一樣重 —— ⭐ 而在 2026-09-02 之前**沒有欄位表達這件事**。
+     *
+     * ── ⛔ 為什麼**不必逐支填**（⭐ 這是這一格能落地的關鍵）──────────────
+     * 2026-09-02 量到：**208 支**帶 AP 係數的技能裡，
+     * ⭐ **絕大多數沒有任何條件結構**（`when` / `condition` 都沒有）
+     * ⇒ 它們的答案**推導得出來**：沒有條件 ⇒ **極小**（＝恆真，乘數 1.0）。
+     *
+     * ⇒ ⭐ 缺席時由 `resolveConditionTier()` 從**文件自己的結構**推導，
+     * ⛔ 而不是要人去 208 份檔各填一格 —— 那會是 208 個會過期的第二住處。
+     * ⇒ ⭐ 真正要人判斷的只有**有條件而難度不是預設**的那幾支。
+     *
+     * ── ⭐ 雙向守衛（`tierTagCoverage.test.ts`）────────────────────────────
+     * · 有條件結構卻沒有這一格 ⇒ 走推導（⛔ 不紅 —— 那是設計）
+     * · ⛔ **填了這一格卻沒有任何條件結構** ⇒ **紅**
+     *   （那是一句說了不會發生的話：宣稱「很難吃到」而它恆真）
+     */
+    conditionTier: z.enum(SKILL_TIER_NAMES).optional(),
     /**
      * ⭐⭐ **逐級的**傷害級別（GH#892）—— `["中","大","極大"]`。
      *

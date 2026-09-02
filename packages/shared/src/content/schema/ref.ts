@@ -77,3 +77,20 @@ export function refFromDescription(
   if (!m) return null;
   return { target: m[2]!, soft: m[1] === "ref?" };
 }
+
+/**
+ * ⭐⭐ **可施放的槽位** —— 2026-09-02 從 `common.ts` 搬進來（GH#943 撞到的）。
+ *
+ * ⛔⛔ **這條迴圈回來過一次。** GH#937（條件葉 `recentCast`）需要槽位，
+ * 而它從 `./common` 拿 ⇒ ⭐ **`common → condition → common` 的迴圈當場重建**，
+ * 症狀逐字是 `ReferenceError: Cannot access 'zCastableSlot' before initialization`
+ * —— 整個 `content:build` 在 import 時就炸。
+ *
+ * ⇒ ⭐ 與 `zRef` **同一個理由、同一個解法**：搬到兩邊都在上面的葉模組。
+ * ⚠️ `common.ts` 仍 re-export 它當門面 ⇒ ⛔ 既有 import 端一個都不用改。
+ *
+ * ⚠️ ⛔ **不要**再從 `./common` import 它到 `condition.ts` —— 那會第三次重建迴圈。
+ * ⭐ 閘：`schemaImportCycle.test.ts`。
+ */
+export const zCastableSlot = z.enum(["Q", "W", "E", "R", "EX", "PASSIVE"]);
+

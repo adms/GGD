@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "9d00bf4744f4",
+  "hash": "b87c3fd09cff",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -41,7 +41,7 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "f9bfbff20d53",
+      "hash": "dece6343544d",
       "size": 8419
     },
     {
@@ -115,6 +115,12 @@
       "path": "config/cast-time.json",
       "hash": "4091ecc954c5",
       "size": 1286
+    },
+    {
+      "id": "cast-time-tiers",
+      "path": "config/cast-time-tiers.json",
+      "hash": "d8473dae1ef5",
+      "size": 620
     },
     {
       "id": "champion-voices",
