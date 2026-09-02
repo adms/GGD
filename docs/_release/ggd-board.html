@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-09-02 08:20 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-09-02 08:24 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.35.3 · 資料截至 2026-09-02 08:20 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-02 08:20 (GMT+8)</h1><div class="meta"><span>帳本 <b>15</b> 份</span><span>點名票號 <b>365</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.35.3 · 資料截至 2026-09-02 08:24 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-02 08:24 (GMT+8)</h1><div class="meta"><span>帳本 <b>15</b> 份</span><span>點名票號 <b>365</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -1014,6 +1014,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>07:43</td><td>請你開票修正以下情況 而最嚴重的一種：乘法層也乘在「目標最大生命 %」上 =&gt; 生命百分比傷害若是 [真實傷害] 則不列入 AP 乘數中，因為真實傷害沒有魔抗來制衡 請列出以下技能說明及傷害公式給我人為調整 48-04 騎英之疆繩 39-03 蛟龍 07-03 列、在、前 44-04 心臟麻痺 99-01 甩蔥歌 52-04 巨神一擊 80-02 弒鬼神 13-02 龍頭戲畫。牙突 48-01 魔法鎖鏈 04-03 龍破斬 70-04 千年練成 53-02 強化炸彈陣 ⭐ ratios[].coeff（AP） ⛔ 22 種相異值，0.1 → 7.0 =&gt; 把極端值列給我</td><td>⏸ 未對票</td></tr>
 <tr><td>08:08</td><td>我意外發現 有技能傷害升級 原本可以提升 但是因為五級距反而沒有提升? 我可以裡解釋因為五級距跳太大了? 如果是這樣五級距的傷害成長你要給我新建議 #1 · #2 · #5 · #9 · #12 卡面寫死了「+300 / 350 / 200 / 150 / 150」，⛔ 而實作是「小(500)」 —— 卡面那個數字是 w3x 原作值，⭐ 級距化之後沒有回頭改文案 =&gt; 請你綜合我上面提到的給建議 #3 列、在、前：卡面的「追加 130%/250% AP」⛔ 實作裡完全沒有（只有 0.5×AP）=&gt; 連續技機制，用技能標籤實作，開票 #10 龍破斬：卡面說「碎片增幅後 +180%AP」，⛔ 而…</td><td>#12 #10 #921</td></tr>
 <tr><td>08:20</td><td>每支技能只填一個 damageTier ＋ 一個 rankGrowth（全域預設 0.5，可逐支覆寫）。=&gt; 同意套用全技能升級，這是關鍵重要成本又低的票(一次解決所有技能升階問題槓桿很大)，但你反而要確定距離、範圍、傷害這三個參數的起始五級距制衡關係是否合理，因為已經不會根據五級距跳級成長，結合你另外一個建議 [建議：把那五處的字面數字換成 {{dmg}} 佔位] 可以一起判斷後修改，開票</td><td>938</td></tr>
+<tr><td>08:24</td><td>rankGrowth 全域預設 0.5 其實跟 CD/觸發頻率有關係，陽離子砲會是 rankGrowth: 1.0 是因為CD較長</td><td>938</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>
