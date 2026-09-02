@@ -14,6 +14,11 @@ import type { EventMessage } from "@ggd/shared/protocol/messages";
 import type { ModelDoc, VfxDoc } from "@ggd/shared/content";
 import type { ProjectileFlight } from "@ggd/shared/content";
 import type { VoxelSkinRecipe } from "@ggd/shared/content/voxelSkin";
+import type {
+  EvadeChannel,
+  EvadeEvent,
+  EvadeSourceRef,
+} from "@ggd/shared/sim/combat/evasion";
 import { TICK_MS } from "@ggd/shared/constants";
 import { standinRelativeScaleOf } from "@ggd/shared/content/standinScale";
 import { ChampionView, type FormAttachmentSpec } from "./views/ChampionView";
@@ -160,8 +165,42 @@ export interface EntityViewState {
   };
 }
 
+/**
+ * ⭐⭐ **一次迴避的專屬演出**（Codex 阻塞清單 P0-4）——「**真正抽中的那個來源**」
+ * 自己的染色，⛔ 不是「有 evade 就播同一段」。
+ *
+ * ⚠️ 這一格是**加在通用回饋之上**的，⛔ 不是取代它：`triggerDodge` 永遠會播
+ * （Codex 驗收②「沒有專屬設定時維持既有 MISS／通用迴避回饋」）。
+ * ⇒ ⭐ 解析不到 ⇒ 逐位元回到今天的畫面。
+ */
+export interface EvadeCue {
+  /** `ChampionView.flash` 的顏色（Codex 逐字要求的「染色」）。 */
+  rgb: [number, number, number];
+  /** 毫秒；省略 ⇒ `flash` 自己的預設。 */
+  ms?: number;
+  /** 0..1；省略 ⇒ `flash` 自己的預設。 */
+  alpha?: number;
+}
+
 /** Optional content lookups (return null until docs are fetched). */
 export interface ViewContentHooks {
+  /**
+   * ⭐⭐ P0-4 —— **這一次迴避是誰讓它成功的**，換一段專屬演出。
+   *
+   * `by` 是 sim 送來的、**真正抽中**的那一份來源（`ModifierSource.id` /
+   * `StatusEffect.sourceId`），⛔ 不是「這個人身上第一個/最高的迴避來源」——
+   * sim 端用**那一次擲出來的數字**做分層歸因（`sim/combat/evasion.ts`
+   * 的 `basicEvadeSource`）。
+   *
+   * ⚠️ `by === null` 是**合法**的：迴避可能整份來自英雄的 `base.evasion`
+   * （出貨的 `godie-u00j` 就是），那時沒有任何 grant 擁有這一次。
+   *
+   * ⚠️ `channel === "fumble"` 時 `by` 是**攻擊者**身上的詛咒，⛔ 不是閃避者的 ——
+   * 解析器要看得懂這個差別，⛔ 不可以假設 `by` 屬於畫面上動的那一位。
+   *
+   * 缺席（今天每一個呼叫端）＝ 通用迴避回饋，逐位元不變。
+   */
+  evadeCueFor?(by: EvadeSourceRef | null, channel: EvadeChannel): EvadeCue | null;
   /**
    * seatId lets the caller substitute per-seat skins (equipped cosmetics).
    *
@@ -708,8 +747,21 @@ export class EntityViewRegistry {
        * Codex 逐字要求「保留 MISS 回饋」。
        */
       case "evade": {
-        const evader = ev.data.target as number | undefined;
-        if (evader !== undefined) this.champions.get(evader)?.triggerDodge(nowMs);
+        // ⭐⭐ P0-4 —— 讀的是 **sim 發射站旁邊那個型別**（`EvadeEvent`），
+        //   ⛔ 不是一串各自為政的 `as`。欄位改名／消失 ⇒ **tsc 紅**，
+        //   ⛔ 不是「上線之後沒有人畫得出來」（失敗形態⑧）。
+        const d = ev.data as unknown as Partial<EvadeEvent>;
+        const evader = d.target;
+        if (evader === undefined) break;
+        const view = this.champions.get(evader);
+        if (!view) break;
+        // ① 通用回饋 —— ⭐ **永遠先播**（Codex 驗收②：沒有專屬設定時維持既有回饋）。
+        view.triggerDodge(nowMs);
+        // ② 專屬演出 —— ⭐ 由**真正抽中的那一個來源**選（`d.by`），
+        //    ⛔ 不是「這個人身上有迴避就播 X」。`by` 為 null（純 base.evasion）
+        //    或解析不到 ⇒ 只有①，逐位元回到今天的畫面。
+        const cue = this.content.evadeCueFor?.(d.by ?? null, d.channel ?? "basic");
+        if (cue) view.flash(cue.rgb, nowMs, cue.ms, cue.alpha);
         break;
       }
       // unblocked heavy hit → KNOCKDOWN: a longer prone/getup flinch on the victim.
