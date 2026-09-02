@@ -332,6 +332,30 @@ type ChampionOwnership interface {
 	OwnsChampion(ctx context.Context, accountID, championID string) (bool, error)
 }
 
+// LobbyProfiles is the seam to internal/account + internal/ranking for the
+// lobby list (GH#915).
+//
+// ⭐⭐ **注入而不是 import**，⛔ 而理由不是整潔：
+// `room` 直接 import `ranking` 會做出 `room → ranking → …` 的相依邊，
+// ⚠️ 而 `ranking` 的 season/apex 讀取是**有狀態**的（`ensureLoadedPlayer`）
+// ⇒ 一條大廳輪詢就會把排行榜的載入路徑拖進來。
+// ⭐ 照這個檔既有的 `ChampionOwnership` / `MatchStarter` 同一個形狀：
+// **一個介面 ＋ nil 就退化**，⛔ 不是一個必需的相依。
+//
+// ⚠️ ⭐ `nil` ⇒ 大廳照舊只回七個欄位（⛔ 不是 500，也⛔ 不是空清單）——
+// 那是 fail-open，⭐ 而它**看得見**：前端拿不到 `members` 就不畫那一段。
+type LobbyProfiles interface {
+	// LobbyProfile 回一個帳號的**公開**投影。
+	// ⛔ 查不到 ⇒ `ok=false`，⭐ 而呼叫端要把那一位當成「沒有牌位」列出來，
+	// ⛔ 不是整個房間不列（一個查不到的帳號不該讓整列消失）。
+	LobbyProfile(ctx context.Context, accountID string) (username, tier, division string, ok bool)
+	// TierRank 回這個牌位在階梯上的位置（越大越高）；不認得 ⇒ `ok=false`。
+	//
+	// ⭐⭐ **順序住在 ranking，⛔ 這裡不抄一份** —— 抄的那一份會在加一個牌位
+	// 的那天**安靜地錯掉**（第〇·四守則：同一個知識不可以有兩個住處）。
+	TierRank(tier string) (rank int, ok bool)
+}
+
 // ErrNotFound is returned for unknown/expired rooms.
 var ErrNotFound = httpx.NotFound("room not found")
 
@@ -341,6 +365,8 @@ type Service struct {
 	pres    *presence.Service
 	starter MatchStarter
 	owns    ChampionOwnership
+	// ⭐ GH#915 大廳列表的名稱／牌位來源；nil ⇒ 只回七個欄位（見 LobbyProfiles）。
+	profiles LobbyProfiles
 	// roster is the GH#492 大廳集合令 seam (rally.go); nil disables broadcasting.
 	roster LobbyRoster
 }
@@ -349,6 +375,9 @@ type Service struct {
 func New(rdb *redisx.Client, pres *presence.Service) *Service {
 	return &Service{rdb: rdb, pres: pres}
 }
+
+// SetLobbyProfiles injects the GH#915 name/tier seam. Optional.
+func (s *Service) SetLobbyProfiles(p LobbyProfiles) { s.profiles = p }
 
 // SetStarter injects the gamelink seam.
 func (s *Service) SetStarter(st MatchStarter) { s.starter = st }
@@ -935,11 +964,52 @@ func (s *Service) StartSolo(ctx context.Context, actor string, st Settings) (Sta
 }
 
 // OpenRoom is one lobby-list row.
+// LobbyMember is ONE joined player **as the lobby list shows them**.
+//
+// ⚠️ ⭐ 它與房間內的 `Member` 是**兩個不同的東西**，⛔ 不是同一個型別的兩種用法：
+//
+//	· `Member`（房間內）—— 你**已經在房裡**了 ⇒ 它帶 `accountId` / `ready` / 選角
+//	· `LobbyMember`（大廳）—— **任何登入者**都看得到 ⇒ ⛔ 只有顯示名與牌位
+//
+// ⇒ ⭐ 名字刻意不同，⛔ 而混用它們就是把房內的隱私情境套到公開清單上。
+//
+// ⭐⭐ **隱私是欄位的形狀決定的，⛔ 不是一句註解**（GH#915）。
+// 房間列表是**登入後可見的公開清單** ⇒ ⛔ 上面不可以有 email 或內部 id。
+// ⭐ 這個 struct 逐格對齊 `ranking.PointsRow` 的**公開投影**
+// （`Username` / `Tier` / `Division`）—— 那一份已經在排行榜上對外了。
+// ⛔ 刻意**沒有** `AccountID`：大廳不需要它，而一旦放進來就再也拿不掉。
+type LobbyMember struct {
+	Username string `json:"username"`
+	Tier     string `json:"tier,omitempty"`
+	Division string `json:"division,omitempty"`
+	// Host marks 房主 —— owner 逐字要的第一樣東西（「大廳看不到房主」）。
+	Host bool `json:"host,omitempty"`
+}
+
+// OpenRoom is one row of the lobby list.
 type OpenRoom struct {
 	Room
 	Players int `json:"players"`
 	Max     int `json:"max"`
+	// ⭐ 已加入的玩家（名稱＋牌位）。
+	//
+	// ⚠️ ⭐ **有界**：大廳列表被頻繁輪詢，而一個房間可以有 12 個人 × 50 個房間
+	// ⇒ 無界的話這條 route 會變成 600 次帳號查詢/次輪詢。
+	// ⇒ 只列前 {@link MaxListedMembers} 個，其餘進 `moreMembers`。
+	Members []LobbyMember `json:"members,omitempty"`
+	// 還有幾個人沒列出來（⭐ 前端顯示「還有 M 人」，⛔ 不是靜默截斷）。
+	MoreMembers int `json:"moreMembers,omitempty"`
+	// ⭐ 這個房間的牌位區間（已加入者的最低／最高）—— owner：「哪些玩家跟牌位加入了」。
+	// ⛔ 沒有人有牌位時兩格都是空字串（⛔ 不是「青銅」——那是一個編出來的事實）。
+	TierLow  string `json:"tierLow,omitempty"`
+	TierHigh string `json:"tierHigh,omitempty"`
 }
+
+// MaxListedMembers 是**一列**最多列幾個玩家。
+//
+// ⚠️ ⭐ 它刻意是一個常數而不是後台欄位：這是**回應大小**的柵欄（防 DoS），
+// ⛔ 不是一個玩法決策 —— 第一守則管的是後者。
+const MaxListedMembers = 6
 
 // ListOpen reads the rooms:open ZSET (newest first), skipping vanished rooms.
 func (s *Service) ListOpen(ctx context.Context) ([]OpenRoom, error) {
@@ -961,9 +1031,73 @@ func (s *Service) ListOpen(ctx context.Context) ([]OpenRoom, error) {
 		if err != nil {
 			return nil, err
 		}
-		out = append(out, OpenRoom{Room: rm, Players: n, Max: MaxPlayers})
+		row := OpenRoom{Room: rm, Players: n, Max: MaxPlayers}
+		s.decorateLobbyRow(ctx, &row)
+		out = append(out, row)
 	}
 	return out, nil
+}
+
+// decorateLobbyRow fills members / tier range (GH#915). Best-effort by design.
+//
+// ⭐⭐ **每一個錯誤都退化，⛔ 沒有一個會讓大廳 500** ——
+// owner 的抱怨是「看不到房主跟房間有誰」，⚠️ 而一個因為某個帳號查不到就整頁壞掉的
+// 大廳，比看不到房主**更糟**。
+// ⇒ ⭐ 查不到就少那一格，⛔ 不是少那一列，更⛔ 不是整頁。
+func (s *Service) decorateLobbyRow(ctx context.Context, row *OpenRoom) {
+	ids, err := s.rdb.R.SMembers(ctx, redisx.KeyRoomMembers(row.ID)).Result()
+	if err != nil {
+		return
+	}
+	applyLobbyMembers(row, ids, s.profiles, ctx)
+}
+
+// applyLobbyMembers is the pure half of decorateLobbyRow.
+//
+// ⭐⭐ **拆出來是為了讓排序／截斷／區間測得到**（⛔ 不是為了整潔）：
+// 那三件事各自都有一個「看起來對而其實錯」的版本
+// （房主沒排第一 · 靜默截斷 · 用字串比大小當牌位順序），
+// ⇒ ⭐ 而它們**不需要 Redis** 就驗得出來。
+func applyLobbyMembers(
+	row *OpenRoom,
+	ids []string,
+	profiles LobbyProfiles,
+	ctx context.Context,
+) {
+	if profiles == nil {
+		return
+	}
+	// ⭐ 排序：Redis 的 SET **沒有順序** ⇒ 不排的話同一個房間每次輪詢的
+	//   玩家順序都不一樣，⛔ 而畫面會在原地亂跳。
+	sort.Strings(ids)
+	// ⭐ 房主排第一（⛔ 不是靠 id 排序碰巧排到）—— owner 要的第一樣東西就是它。
+	sort.SliceStable(ids, func(i, j int) bool {
+		return ids[i] == row.HostID && ids[j] != row.HostID
+	})
+	loRank, hiRank := 0, 0
+	for _, id := range ids {
+		if len(row.Members) >= MaxListedMembers {
+			row.MoreMembers = len(ids) - len(row.Members)
+			break
+		}
+		name, tier, div, ok := profiles.LobbyProfile(ctx, id)
+		if !ok {
+			// ⭐ 查不到 ⇒ 仍然列出來（⛔ 不是跳過）：一個空位比一個消失的人誠實。
+			name = ""
+		}
+		row.Members = append(row.Members, LobbyMember{
+			Username: name, Tier: tier, Division: div, Host: id == row.HostID,
+		})
+		// ⭐ 牌位區間 —— 用 ranking 的**順序**比，⛔ 不是字串比大小。
+		if r, known := profiles.TierRank(tier); tier != "" && known {
+			if row.TierLow == "" || r < loRank {
+				row.TierLow, loRank = tier, r
+			}
+			if row.TierHigh == "" || r > hiRank {
+				row.TierHigh, hiRank = tier, r
+			}
+		}
+	}
 }
 
 func firstNonEmpty(vals ...string) string {

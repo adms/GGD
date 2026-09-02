@@ -31,6 +31,7 @@ import {
   type RoomMatchSettings,
   type RoomSettingKey,
 } from "@ggd/shared/roomSettings";
+import type { OpenRoom } from "./types";
 import { appStore, useApp } from "./store";
 import { Btn, TextInput, Panel, Badge, FieldError, ACCENT, OK } from "./widgets";
 import { useArenaOptions, DEFAULT_MAP_ID } from "./maps";
@@ -64,6 +65,21 @@ export const EMPTY_ROOM_SETTINGS_FORM: RoomSettingsForm = {
  * 房主沒碰的欄位要一路缺席到伺服器，才會退回 `content/config/config.match.json`
  * 的出貨值 —— 包含 vs bot 的 320 秒選角。送一個 0 下去會被當成「明確設定 0」。
  */
+/**
+ * ⭐ 房間的牌位區間，一句話（⛔ 沒有牌位資訊 ⇒ `null`，呼叫端整段不畫）。
+ *
+ * ⚠️ ⭐ **順序不在這裡算** —— Go 那一側用 `ranking.TierRank` 決定了哪個低哪個高，
+ * ⛔ 而前端再排一次就是第二個住處（加一個牌位的那天它會安靜地錯）。
+ * ⇒ 這裡只負責**怎麼寫成一句話**。
+ */
+function roomTierRange(r: OpenRoom): string | null {
+  if (r.tierLow === undefined || r.tierLow === "") return null;
+  if (r.tierHigh === undefined || r.tierHigh === "" || r.tierHigh === r.tierLow) {
+    return r.tierLow;
+  }
+  return `${r.tierLow}〜${r.tierHigh}`;
+}
+
 export function roomSettingsFromForm(form: RoomSettingsForm): RoomMatchSettings {
   const out: RoomMatchSettings = {};
   for (const key of ROOM_SETTING_KEYS) {
@@ -398,7 +414,34 @@ export function RoomListPanel({ pinned }: { pinned?: React.ReactNode } = {}): Re
               </div>
               <div style={{ fontSize: 11, color: TEXT_DIM }}>
                 {r.mode} · {r.botDifficulty} bots
+                {roomTierRange(r) !== null && <> · {roomTierRange(r)}</>}
               </div>
+              {/* ⭐ GH#915 —— 房主是誰、誰在裡面、什麼牌位。
+                  ⚠️ `members` **缺席**（舊伺服器／seam 沒注入）⇒ ⛔ 整段不畫，
+                  ⭐ 而不是畫一個空框：那會讓「沒接線」看起來像「房裡沒人」。 */}
+              {r.members !== undefined && r.members.length > 0 && (
+                <div style={{ fontSize: 11, color: TEXT_DIM, marginTop: 2 }}>
+                  {r.members.map((m, i) => (
+                    <span key={`${m.username}-${i}`}>
+                      {i > 0 && "、"}
+                      {m.host && <span title="房主">👑</span>}
+                      {/* ⭐ 名字查不到時顯示「—」，⛔ 不是空白：
+                          一個空白看起來像渲染壞了，一個「—」看得出是缺資料。 */}
+                      {m.username === "" ? "—" : m.username}
+                      {m.tier !== undefined && m.tier !== "" && (
+                        <span style={{ opacity: 0.75 }}>
+                          {" "}
+                          {m.tier}
+                          {m.division !== undefined && m.division !== "" ? ` ${m.division}` : ""}
+                        </span>
+                      )}
+                    </span>
+                  ))}
+                  {r.moreMembers !== undefined && r.moreMembers > 0 && (
+                    <span style={{ opacity: 0.75 }}>　還有 {r.moreMembers} 人</span>
+                  )}
+                </div>
+              )}
             </div>
             <Badge color={r.players < r.max ? OK : ACCENT}>
               {r.players}/{r.max}

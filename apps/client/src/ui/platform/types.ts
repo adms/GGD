@@ -110,9 +110,41 @@ export interface RoomResp {
   members: RoomMember[];
 }
 
+/**
+ * ⭐ 大廳列表上的**一位**玩家（GH#915）。
+ *
+ * ⚠️ ⭐ 它與這個檔裡的 `RoomMember`（**房間內**的成員）是**兩個不同的東西**：
+ *   · `RoomMember` —— 你**已經在房裡**了 ⇒ 它帶 `accountId` / `ready` / 選角
+ *   · `LobbyMember` —— **任何登入者**都看得到 ⇒ ⛔ 只有顯示名與牌位
+ *
+ * ⚠️ ⭐ 它刻意**沒有** `accountId`：房間列表是登入後可見的**公開清單**，
+ * ⛔ 而一旦把內部 id 放上去就再也拿不掉。Go 那一側的 `room.RoomMember`
+ * 是同一個形狀（逐格對齊 `ranking.PointsRow` 已經對外的那三格）。
+ */
+export interface LobbyMember {
+  username: string;
+  /** 牌位（沒打過排位 ⇒ 缺席，⛔ 不是「鐵」）。 */
+  tier?: string;
+  division?: string;
+  /** ⭐ 房主 —— owner 的第一句抱怨就是「大廳看不到房主」。 */
+  host?: boolean;
+}
+
 export interface OpenRoom extends Room {
   players: number;
   max: number;
+  /**
+   * ⭐ 已加入的玩家（房主排第一）。
+   *
+   * ⚠️ **缺席與空陣列是兩件事**：缺席 ＝ 伺服器沒接這條線（舊版／seam 沒注入）
+   * ⇒ ⛔ 不要畫一個空框；空陣列 ＝ 真的沒有人。
+   */
+  members?: LobbyMember[];
+  /** 還有幾個人沒列出來（⭐ 有界，⛔ 不是靜默截斷）。 */
+  moreMembers?: number;
+  /** 房間的牌位區間（⛔ 沒有人有牌位時兩格都缺席）。 */
+  tierLow?: string;
+  tierHigh?: string;
 }
 
 export interface StartInfo {
