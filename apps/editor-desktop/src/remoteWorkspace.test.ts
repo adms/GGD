@@ -75,6 +75,8 @@ function withAssetManifest(payload: ReturnType<typeof remotePayload>) {
       bytes: bytes.byteLength,
       sha256: sha256Hex(bytes.toString("utf8")),
       contentType: "model/gltf-binary",
+      kind: "models",
+      refs: ["remote-model"],
     }],
   };
   const profile = JSON.parse(payload.profile);

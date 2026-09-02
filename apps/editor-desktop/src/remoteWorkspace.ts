@@ -172,6 +172,11 @@ export interface RemoteAssetManifestEntry {
   readonly bytes: number;
   readonly sha256: string;
   readonly contentType: string;
+  /** Main-owned resource-pool category (`models`, `textures`, `icons`, ...). */
+  readonly kind: string;
+  /** Sorted, bounded reverse references: shipped product ids affected by this asset. */
+  readonly refs: readonly string[];
+  readonly moreRefs?: number;
 }
 
 export interface RemoteAssetManifest {
@@ -520,6 +525,28 @@ export function validateRemoteAssetManifest(
     }
     if (typeof entry.contentType !== "string" || entry.contentType === "") {
       throw new Error(`${entry.path}: contentType 無效`);
+    }
+    if (typeof entry.kind !== "string" || entry.kind === "") {
+      throw new Error(`${entry.path}: kind 無效`);
+    }
+    if (!Array.isArray(entry.refs)) {
+      throw new Error(`${entry.path}: refs 必須是排序、去重的文件 id`);
+    }
+    if (entry.refs.some((ref: unknown) => typeof ref !== "string" || ref === "")) {
+      throw new Error(`${entry.path}: refs 必須是排序、去重的文件 id`);
+    }
+    const refs = entry.refs as readonly string[];
+    if (
+      new Set(refs).size !== refs.length ||
+      refs.some((ref: string, index: number) => index > 0 && refs[index - 1]! > ref)
+    ) {
+      throw new Error(`${entry.path}: refs 必須是排序、去重的文件 id`);
+    }
+    if (
+      entry.moreRefs !== undefined &&
+      (!Number.isSafeInteger(entry.moreRefs) || entry.moreRefs <= 0)
+    ) {
+      throw new Error(`${entry.path}: moreRefs 無效`);
     }
     totalBytes += entry.bytes;
     if (!Number.isSafeInteger(totalBytes)) throw new Error("asset manifest totalBytes 溢位");

@@ -132,8 +132,8 @@ cache entries fail closed instead of entering the preview. Older profiles withou
 the receipt may still load JSON, but remote binary fetching remains disabled and
 the desktop source status reports that compatibility state.
 
-Last verified 2026-09-02 12:43 CST, the feature branch contains
-`origin/main@d29d0be6` (tag `v0.35.14`). Treat this as a receipt rather than a
+Last verified 2026-09-02 12:45 CST, the feature branch contains
+`origin/main@d421c1ad` (including tag `v0.35.15` at `7d032d9c`). Treat this as a receipt rather than a
 permanent constant: fetch Main and compare the live ref before making a current
 compatibility claim. Live and repository profile digests likewise remain
 volatile receipts and are never compiled into the Editor as constants.
