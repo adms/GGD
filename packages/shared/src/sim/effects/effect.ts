@@ -143,7 +143,13 @@ export interface TriggerDamage {
 export interface Scaling {
   flat?: number;
   perRank?: number[];
-  ratios?: { stat: Stat; coeff: number }[];
+  /**
+   * ⭐ `when` —— 這一條係數的**前提**（GH#936）。缺席 ＝ 恆真 ＝ 這一格出現之前。
+   * 語意、為什麼吃既有的 condition union、以及「一次解算求值一次」的理由全部寫在
+   * `content/schema/common.ts::zScaling.ratios[].when`（作者面那一份）。
+   * 求值走 {@link ScalingConditionOracle}，⛔ 不是這裡自己判。
+   */
+  ratios?: { stat: Stat; coeff: number; when?: EffectCondition }[];
   /**
    * 三圍係數 —— 「等同(總力量)」「5.0 × AGI」這一族,加在 `ratios` 之上。
    *
@@ -202,6 +208,22 @@ export type AttrLookup = (attr: AttrKey, basis: AttrBasis) => number;
  * 真的有英雄在場的地方傳它進去,`attrRatios` 就會靜默變成 0。
  */
 export const NO_ATTR_LOOKUP: AttrLookup = () => 0;
+
+/**
+ * ⭐ 「這個 `ratios[].when` 現在成不成立？」——`resolveScaling` 問條件的**唯一管道**。
+ *
+ * ── 為什麼是一支傳進來的函式，⛔ 不是在 `resolveScaling` 裡呼叫 `evaluateCondition`
+ * `resolveScaling` 至今是一個**純函式**（輸入全在參數上、⛔ 不碰 world）——
+ * 見上面 {@link AttrLookup} 那一段：它是全遊戲被呼叫最多的算式之一，測試可以直接
+ * 餵數字。而 `evaluateCondition(world, cond, ctx)` 要一個 `SimWorld` **而且會消耗
+ * `world.rng`**。把 world 拉進來就把這條算式變成「要架世界才測得動」的東西，
+ * 而且會讓一支顯示／預覽路徑（`apps/editor` 的 PreviewController）不小心抽到籤。
+ * ⇒ 用跟 `attrs` 完全一樣的形狀：**一個查詢函式**。
+ *
+ * sim 這一側的實作是把它綁到 `evaluateCondition(ctx.world, cond, {self: ctx.caster,
+ * target: ctx.targets[0]})`。
+ */
+export type ScalingConditionOracle = (cond: EffectCondition) => boolean;
 
 /**
  * 一個 effect 的**本體**（kind 專屬欄位）。⛔ 不要直接用它 —— 出貨的型別是
@@ -462,9 +484,29 @@ export function resolveScaling(
    * 變成編譯錯誤。不涉及三圍的呼叫點傳 {@link NO_ATTR_LOOKUP}。
    */
   attrs: AttrLookup,
+  /**
+   * ⭐ GH#936 —— `ratios[].when` 的求值器。**選填**，而三條路各自的意思是刻意的：
+   *
+   * | `when` | `holds` | 結果 |
+   * |---|---|---|
+   * | 缺席 | 有／沒有都一樣 | ⭐ **計入，而且一次都不問** ⇒ 今天出貨的 208 個 AP 節點**逐位元不變**、零 rng draw |
+   * | 有 | 有 | 問它，`true` 才計入 |
+   * | 有 | ⛔ 沒有 | ⭐ **不計入**（fail-CLOSED） |
+   *
+   * ⚠️ 最後一列是**決定**，⛔ 不是疏忽：這一格存在的理由就是「一個有條件的加成
+   * 被當成常駐在發放」（龍破斬的 1.8×AP）。⇒ 一個沒接上求值器的呼叫點如果
+   * fail-OPEN，它會**逐字重現這張票要修的缺陷**，而且看起來完全正常。
+   * fail-closed 至少讓「沒接線」長得跟「條件沒成立」一樣 —— ⭐ 而那正是
+   * 顯示／預覽路徑（沒有 world 可問）唯一誠實的答案：「**保證拿得到的那一份**」。
+   */
+  holds?: ScalingConditionOracle,
 ): number {
   let v = (sc.flat ?? 0) + (sc.perRank?.[Math.max(0, rank - 1)] ?? 0);
-  for (const r of sc.ratios ?? []) v += (finalStats[r.stat] ?? 0) * r.coeff;
+  for (const r of sc.ratios ?? []) {
+    // ⛔ `when` 缺席時**一次都不呼叫** `holds` —— 見上面那張表第一列。
+    if (r.when !== undefined && (holds === undefined || !holds(r.when))) continue;
+    v += (finalStats[r.stat] ?? 0) * r.coeff;
+  }
   for (const r of sc.attrRatios ?? []) v += attrs(r.attr, r.basis ?? "total") * r.coeff;
   // ⭐ GH#843 —— 整份酬載的倍率，**最後**才乘（owner 2026-08-28:「（A+AP）10倍」）。
   //    ⚠️ 位置是承重的：乘在 ratios 之前的話它只放大基礎值，而 owner 寫的是

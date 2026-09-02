@@ -28,10 +28,20 @@
  */
 import { z } from "zod";
 import type { AbilityId, ItemId, StatusId } from "../../ids";
-// ⭐ 槽位那一格**共用既有的** `zCastableSlot`（`./common`），⛔ 不是在這裡再寫一
-// 份六個字串的 enum —— 兩份會在第七格出現的那天分歧，而分歧的樣子是「這顆葉子
-// 收得下的槽位，跟 `scopeSlot` 收得下的不一樣」，⛔ 沒有任何東西會紅。
-import { zCastableSlot, zRef } from "./common";
+// ⭐⭐ **兩條 lane 的合併（2026-09-02）—— 兩邊都對而且互補。**
+//
+// · GH#937（Lane A）：槽位那一格**共用既有的** `zCastableSlot`，⛔ 不是在這裡再寫
+//   一份六個字串的 enum —— 兩份會在第七格出現的那天分歧，而分歧的樣子是
+//   「這顆葉子收得下的槽位，跟 `scopeSlot` 收得下的不一樣」，⛔ 沒有任何東西會紅。
+// · GH#936（Lane B）：`zRef` 從 **`./ref`** 拿，⛔ 不是 `./common` ——
+//   `common.ts` 反過來需要這個檔的 `zEffectCondition`（`zScaling.ratios[].when`），
+//   走 `./common` 就是一條**會炸**的 import 迴圈（實測 `TypeError: zRef is not a function`）。
+//   理由與實測寫在 `ref.ts` 的檔頭；閘是 `schemaImportCycle.test.ts`。
+//
+// ⚠️ ⛔ 這裡**不可以**用 `--ours`／`--theirs` 解 —— 任一邊都會吃掉另一條 lane
+// 的成果，⭐ 而且**不會有東西紅**（CLAUDE.md 記過那個形狀）。
+import { zCastableSlot } from "./common";
+import { zRef } from "./ref";
 import {
   RECENT_CAST_WITHIN_MAX_SEC,
   RECENT_CAST_WITHIN_MIN_SEC,

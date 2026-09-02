@@ -8,53 +8,32 @@
  * structurally identical to the TS shapes in `sim/content/defs.ts`.
  */
 import { z } from "zod";
+/**
+ * ⭐⭐ 門面 —— `ID_RE` / `zId` / `zIdFor` / `zRef` / `refFromDescription` 今天住
+ * `./ref`，⛔ 不再是這個檔的 local const。全 repo 100+ 個
+ * `from ".../schema/common"` 的 import 端**一個都不用改**（含
+ * `tools/skill-spec/gen_spec.ts` 那條寫死路徑的）。
+ *
+ * ⚠️⚠️ **這個門面救不了 `condition.ts`，所以那個檔要直接 import `./ref`** ——
+ * 而這是**量到的**（GH#936，⛔ 不是推測）：vite/vitest 的 SSR transform 把
+ * **import 全部提到最前面**，卻把 `export {}` 的 `defineProperty` 留在**本體**
+ * ⇒ 迴圈回來的那一刻 `common.zRef` 還沒被定義 ⇒
+ * `TypeError: zRef is not a function`。⭐ 真 ESM 的 indirect binding 撐得住，
+ * ⛔ 而我們跑的不是真 ESM。
+ * ⇒ ⭐ 正解不是「讓迴圈活下來」，是**把迴圈拿掉**：`condition.ts` 走 `./ref`，
+ * 這個檔單向 import `./condition`。門面只服務**既有的 100+ 個 import 端**。
+ * ⭐ 閘：`schemaImportCycle.test.ts`（兩個方向各真的先 import 一次，⛔ 不是掃字串）。
+ */
+import { ID_RE, zId, zIdFor, zRef, refFromDescription } from "./ref";
+export { ID_RE, zId, zIdFor, zRef, refFromDescription };
 import { Stat } from "../../sim/stats/statTypes";
 import { ModOp } from "../../sim/stats/modifiers";
 // 傷害五級距（GH#447）。⛔ 不要在這裡重打一份級距名 —— 五個字全專案只有一份。
 import { DAMAGE_TIER_NAMES } from "../damageTiers";
 import { RANK_SCALAR_MAX_COLUMNS } from "../../sim/perRank";
 import { MS_BONUS_OPS, MS_BONUS_TIER_NAMES } from "../moveSpeedTiers";
-
-/** filename stem == id; dots allowed for namespaced ids like "sela.q". */
-export const ID_RE = /^[a-z0-9][a-z0-9._-]*$/;
-
-export const zId = z
-  .string()
-  .min(1)
-  .max(64)
-  .regex(ID_RE, "id must be lowercase [a-z0-9] with . _ - separators");
-
-/** Same as zId but typed as a branded id (ChampionId, AbilityId, …). */
-export const zIdFor = <T extends string>(): z.ZodType<T, z.ZodTypeDef, string> =>
-  zId as unknown as z.ZodType<T, z.ZodTypeDef, string>;
-
-/**
- * `zRef(target)` — an id that must exist in another collection. The target is
- * carried in the schema description ("ref:items" / soft "ref?:vfx") so the
- * editor walker can render a RefSelect and the REFERENCES table stays honest.
- * Soft refs only WARN when dangling (e.g. vfx that hasn't been authored yet).
- */
-export const zRef = <T extends string = string>(
-  target: string,
-  opts?: { soft?: boolean },
-  // NoInfer: without it, TS would contextually infer T = any from ZodRawShape
-  // when zRef is used inside a z.object() literal without an explicit type arg.
-): z.ZodType<NoInfer<T>, z.ZodTypeDef, string> =>
-  zId.describe(`${opts?.soft ? "ref?" : "ref"}:${target}`) as unknown as z.ZodType<
-    NoInfer<T>,
-    z.ZodTypeDef,
-    string
-  >;
-
-/** Parse a walker-facing description back into ref metadata. */
-export function refFromDescription(
-  description: string | undefined,
-): { target: string; soft: boolean } | null {
-  if (!description) return null;
-  const m = /^(ref\??):(.+)$/.exec(description);
-  if (!m) return null;
-  return { target: m[2]!, soft: m[1] === "ref?" };
-}
+// ⭐ GH#936 —— `ratios[].when` 吃的就是這一份 union（⛔ 不是第二套判準）。
+import { zEffectCondition } from "./condition";
 
 /** The four rankable/levelable slots. */
 export const zCoreAbilitySlot = z.enum(["Q", "W", "E", "R"]);
@@ -592,7 +571,53 @@ export const zScaling = z
       .optional(),
     flat: z.number().optional(),
     perRank: z.array(z.number()).optional(),
-    ratios: z.array(z.object({ stat: zStat, coeff: z.number() }).strict()).optional(),
+    ratios: z
+      .array(
+        z
+          .object({
+            stat: zStat,
+            coeff: z.number(),
+            /**
+             * ⭐⭐【這一條係數的前提】GH#936 —— 「**只有 X 成立時**才吃這個係數」。
+             *
+             * ── 為什麼會有這一格（owner 2026-09-02，逐字）────────────────────
+             * > 「#10 龍破斬：卡面說「碎片增幅後 +180%AP」，⛔ 而 1.8×AP 是常駐的，
+             * >  不需要碎片 => **碎片是 EX 施展得到的增幅狀態，可以做條件偵測增幅 AP 傷害**」
+             *
+             * 在這一格之前，`ratios` 只有 `stat` ＋ `coeff` ⇒ 一條「帶著某狀態才有的
+             * 加成」**寫不出來**，於是逐支技能只能把它寫成**常駐** ⇒ ⛔ 卡面在說謊
+             * （第一·五守則：卡片上不可以有「說了但不會發生」的字）。
+             *
+             * ── ⭐ 它吃的是**既有的** `condition` union，⛔ 不是第二套判準 ───────
+             * 同一個型別、同一個求值器、同一組葉子（`EffectCondition` /
+             * `evaluateCondition` / `zEffectCondition`）—— 與 `EffectDef.condition`、
+             * `HookDef.condition`、`AugmentTarget.condition` 共用。
+             * ⛔ 為 `ratios` 寫第二套葉子 = 兩份保證分岔的清單，而編輯器只看得到一份。
+             * ⇒ 這一格**不新增任何條件葉**：`kind:"status"` 那一族今天就現成。
+             *
+             * ── 語意（DECIDED，⛔ 不要留給實作者猜）──────────────────────────
+             * **① 缺席 ＝ 恆真。** 今天出貨的每一個 `ratios` 節點**逐位元不變**，
+             *    而且**一次求值器都不呼叫** ⇒ ⛔ 零 rng draw（見 `resolveScaling`）。
+             * **② `self` ＝ 施法者**（與 hook / effect 上的 `subject:"self"` 同義）。
+             * **③ 求值時機 ＝ 一次 `Scaling` 解算一次**，⛔ 不是每個目標各一次 ——
+             *    因為傷害的**基礎值**在 `damageArea` / `damageLine` 那一族是
+             *    **整發共用**的（`resolveScaling` 在圈外算一次再分給每個受害者）。
+             *    ⇒ ⚠️ 用 `subject:"target"` 的條件在這裡問到的是**那一發的 ctx 目標**，
+             *    ⛔ 不是逐一受害者 —— 要「逐一」請用 `EffectDef.condition`
+             *    （那一格才是逐目標的）或 `victimCondition`。
+             * ⚠️ 由此：`chance` 葉放進來會**每次解算抽一次**（dot 每 tick 一次）——
+             *    寫得出來但幾乎一定不是作者要的，⭐ 要機率請寫在觸發器上。
+             */
+            when: zEffectCondition
+              .optional()
+              .describe(
+                "這一條係數的前提：條件成立時才吃這個係數（例如「身上帶有某狀態時 +180% [AP]」）。" +
+                  "留空＝一直吃。⚠️ 每次傷害解算求值一次（⛔ 不是每個受害者各一次）。",
+              ),
+          })
+          .strict(),
+      )
+      .optional(),
     /**
      * 三圍係數 —— mirrors `Scaling.attrRatios` in sim/effects/effect.ts, where
      * 「為什麼力/敏/智 不能是 `ratios` 的一筆」與 `basis` 兩種讀法的來源
