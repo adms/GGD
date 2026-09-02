@@ -12,6 +12,7 @@ import { enemiesInCircle } from "../abilities/abilitySystem";
 import { distSq } from "../math/vec2";
 import { casterAttrs, casterDamageStats } from "./effectCommon";
 import { resourcePctAmount } from "./dynamicTerms";
+import { unscaledFractionOf } from "../combat/apDamageScaling";
 import { clampSpreadFalloff, clampSpreadRadius, clampSpreadTargets } from "./spreadLimits";
 import { runOnHitChain, selectVictims } from "./victimFilter";
 import { rollAbilityCrit } from "../combat/critStrike";
@@ -81,8 +82,13 @@ export const damageAreaEffect: EffectKindSpec<"damageArea"> = {
       // ⭐ S2（GH#299）—— 資源百分比項。與 `damage.resourcePct` 共用同一個
       // 讀取器，per-target 解算（分母是**某一個身體**的條，一次範圍技的每個
       // 受害者本來就該算出不同的數字 —— 見 `dynamicTerms.ts` 檔頭）。
+      // ⭐ GH#929 —— 真傷的百分比項不吃全域三層乘法。⛔ 記**比例**不是絕對量，
+      // 而這一支正是理由：`amount` 上面才剛乘過**距離衰減**，下面還會乘暴擊 ——
+      // 絕對量每多一個乘法就要記得同步一次，比例對整發同乘是不變量。
+      let resPart = 0;
       if (e.resourcePct !== undefined) {
-        amount += resourcePctAmount(world, ctx.caster, v.id, e.resourcePct, ctx.rank);
+        resPart = resourcePctAmount(world, ctx.caster, v.id, e.resourcePct, ctx.rank);
+        amount += resPart;
       }
       // ⭐ ⑨（2026-08-10）—— 走 `combat/critStrike.ts::rollAbilityCrit`（普攻那一半
       // 的同一支），⛔ 不是第二段就地擲骰。理由與抽籤位置見那支的檔頭。
@@ -100,15 +106,18 @@ export const damageAreaEffect: EffectKindSpec<"damageArea"> = {
         if (cr.crit) amount *= cr.mult;
         critSources = cr.critSources;
       }
+      // 省略 = 後台「傷害規則」頁的預設（出貨 magic）。
+      // ⛔ 讀 `world.damageRules` 而不是寫死一個字串 —— 見 sim/damageRules.ts 檔頭。
+      const type = e.damageType ?? world.damageRules.defaultAbilityDamageType;
+      const unscaledFraction = unscaledFractionOf(world, amount, resPart, type);
       world.damageQueue.push({
         source: ctx.caster,
         target: v.id,
         amount,
         ...(critSources !== undefined ? { critSources } : {}),
-        // 省略 = 後台「傷害規則」頁的預設（出貨 magic）。
-        // ⛔ 讀 `world.damageRules` 而不是寫死一個字串 —— 見 sim/damageRules.ts 檔頭。
-        type: e.damageType ?? world.damageRules.defaultAbilityDamageType,
+        type,
         crit,
+        ...(unscaledFraction > 0 ? { unscaledFraction } : {}),
         origin: ctx.origin,
       });
     }

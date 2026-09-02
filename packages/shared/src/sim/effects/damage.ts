@@ -9,6 +9,7 @@ import { resolveScaling, type TriggerDamage } from "./effect";
 import { bankedAddend, casterAttrs, casterDamageStats, comboAddend } from "./effectCommon";
 import { DAMAGE_QUEUE_MAX_PASSES } from "./reflectLimits";
 import { distanceScaleAmount, resourcePctAmount } from "./dynamicTerms";
+import { unscaledFractionOf } from "../combat/apDamageScaling";
 // ⭐ ⑨（2026-08-10）—— 技能暴擊與普攻走**同一支**判定，見那支的檔頭。
 import { rollAbilityCrit } from "../combat/critStrike";
 
@@ -145,8 +146,13 @@ export const damageEffect: EffectKindSpec<"damage"> = {
         const hp = world.health.get(target);
         if (hp) amount += (pctCol.basis === "current" ? hp.hp : hp.maxHp) * pct;
       }
+      // ⭐ GH#929 —— 這一份是「某一條血條的百分比」，`damageType: "true"` 時
+      // 它**不吃**全域三層乘法（卡面的 X% 就要是 X%）。⛔ 記的是**比例**不是
+      // 絕對量，理由與三道閘見 `combat/apDamageScaling.ts::unscaledFractionOf`。
+      let resPart = 0;
       if (resTerm !== undefined) {
-        amount += resourcePctAmount(world, ctx.caster, target, resTerm, ctx.rank);
+        resPart = resourcePctAmount(world, ctx.caster, target, resTerm, ctx.rank);
+        amount += resPart;
       }
       if (distTerm !== undefined) {
         amount += distanceScaleAmount(world, ctx.caster, target, distTerm);
@@ -184,14 +190,19 @@ export const damageEffect: EffectKindSpec<"damage"> = {
       if ((incPct !== undefined || resTerm !== undefined || distTerm !== undefined) && amount <= 0) {
         continue;
       }
+      // 省略 = 後台「傷害規則」頁的預設（出貨 magic）。
+      // ⛔ 讀 `world.damageRules` 而不是寫死一個字串 —— 見 sim/damageRules.ts 檔頭。
+      const type = e.damageType ?? world.damageRules.defaultAbilityDamageType;
+      // ⭐ GH#929 —— 比例在**暴擊之後**算也一樣（暴擊乘的是整發，比例是不變量），
+      // 這裡取 `amount` 是為了讓分母就是真的被 push 出去的那個數。
+      const unscaledFraction = unscaledFractionOf(world, amount, resPart, type);
       world.damageQueue.push({
         source: ctx.caster,
         target,
         amount,
-        // 省略 = 後台「傷害規則」頁的預設（出貨 magic）。
-        // ⛔ 讀 `world.damageRules` 而不是寫死一個字串 —— 見 sim/damageRules.ts 檔頭。
-        type: e.damageType ?? world.damageRules.defaultAbilityDamageType,
+        type,
         crit,
+        ...(unscaledFraction > 0 ? { unscaledFraction } : {}),
         // ⭐ 這一發被哪幾條暴擊來源加成了 —— `combat/damage.ts` 把它交給
         // `TriggerDamage.critSources`，`HookDef.critSource:"thisSource"` 讀它。
         ...(critSources !== undefined ? { critSources } : {}),

@@ -114,6 +114,39 @@ export interface DamagePacket {
    */
   skipGlobalDamageMult?: boolean;
   /**
+   * ⭐ GH#929 —— 這一發封包裡**不吃**上面那三層全域乘法的那一份**佔比**（0..1）。
+   *
+   * ABSENT = 0 = 整發照乘，也就是這個欄位出現之前的每一發封包 ——
+   * 所以加上它是一個**嚴格的 no-op**。
+   *
+   * ⛔ 它**不是** {@link skipGlobalDamageMult} 的第二個旗標，而是同一個豁免的
+   * **部分**版本，套在**同一個位置**（`apDamageScaling.ts` 檔頭逐字要求
+   * 「與全域倍率共用**同一個**旗標，⛔ 不開第二個」—— 這裡沒有第二個判斷點，
+   * 只有「整發」與「一部分」兩種量）。
+   *
+   * ⚠️ **為什麼非得是部分的**：一發裡可以同時有兩份量。出貨的 59-04
+   * 野戰型陽電子砲（`godie-e00r.r`）是「傷害級距（小/中/大）**＋** 目標最大
+   * 生命 10% 真傷」——
+   *   · 整發豁免 ⇒ 連級距那一份也免掉 AP 乘數 ＝ **第二個缺陷**；
+   *   · 完全不豁免 ⇒ 卡面的 10% 在滿裝法師手上是 **27%** ＝ 今天的缺陷。
+   * ⇒ 只有「把百分比那一份減出來、乘完再加回去」兩邊都對。
+   *
+   * ⭐ **為什麼是比例而不是絕對量**：見 `combat/apDamageScaling.ts` 的
+   * {@link unscaledFractionOf} —— 比例對「對整發同乘一個數」（暴擊倍率、
+   * `damageArea` 的距離衰減）是不變量，⛔ 絕對量每多一個乘法就要記得同步一次。
+   *
+   * ⭐ **拆成兩發封包也能算對，而那是刻意不選的**：兩發 = 兩個浮動數字、
+   * 兩次 `onDamageTaken` / `onDamageDealt`、兩次護盾結算 ——
+   * 也就是把一件**發生一次**的事變成發生兩次（同 `effects/damage.ts`
+   * 「反彈了 0 就不發封包」那一條的立場）。而減出來再加回去在這裡是**精確**的：
+   * 這一族封包的 `type` 一律是 `"true"`，⇒ 護甲/魔抗那一段對兩份量都是恆等，
+   * 兩種做法在減傷順序上的差異在這一格**結構上不存在**。
+   *
+   * 只有四個傷害葉（`damage` / `damageArea` / `damageLine` 與它們的
+   * `resourcePct` 項）寫它，只有下面那一段排空迴圈讀它。
+   */
+  unscaledFraction?: number;
+  /**
    * [暴擊吸血] (天堂之劍 godie-i01n 「暴擊時吸血回復100%傷害」) —— 這一發
    * **procced 出來的**吸血比例,在揮擊那一刻由
    * `combat/critStrike.ts::rollCritStrike` 決定。
@@ -983,6 +1016,19 @@ export function combatResolveSystem(world: SimWorld): void {
       // 反彈的分母是這一行**之後**的讀數,所以少了 `skipGlobalDamageMult`,
       // 反彈就會被乘第二次(比例變成 `pct × k`)。整段推導寫在 `DamagePacket`
       // 那個欄位上,開關是 `incomingPct.applyGlobalDamageMult`。
+      // ⭐ GH#929 —— 「目標最大生命 X%」的**真傷**那一份先**減出來**，下面三層
+      // 全域乘法乘完之後再原封加回去。⇒ 卡面的 X% 就是 X%，而同一發裡的級距／
+      // `coeff × AP` 照舊被乘（⛔ 整發豁免會連那一份也免掉，那是第二個缺陷）。
+      //
+      // ⚠️ 位置與 `skipGlobalDamageMult` **逐字相同**：包住下面三行、⛔ 不包
+      // 【虛弱】那一行。虛弱是「出手的人被砍了一刀」，⛔ 不是「這一發被放大」，
+      // 而反彈封包也照吃它 —— 兩個豁免的邊界一致，⛔ 不是我在這裡多挑一個。
+      //
+      // 缺席（今天出貨的每一發，⛔ 除了那 12 個 `true` 的 `resourcePct` 節點）
+      // ⇒ `unscaled` 是 0 ⇒ 這兩行逐位元是恆等式。
+      const unscaled =
+        pkt.unscaledFraction === undefined ? 0 : pkt.amount * pkt.unscaledFraction;
+      if (unscaled > 0) pkt.amount -= unscaled;
       if (pkt.skipGlobalDamageMult !== true) pkt.amount *= world.combatEnv.damageDealt;
       // ⚖️ 系統技能倍率（owner 2026-08-23「系統技能倍率設定成 0.3」）——
       // ⛔ 只乘技能（ability: 起源）,普攻/火圈/守衛塔/hook 的 proc 都不吃。
@@ -1010,6 +1056,8 @@ export function combatResolveSystem(world: SimWorld): void {
       if (pkt.skipGlobalDamageMult !== true) {
         pkt.amount *= apDamageMult(world, pkt.source, pkt.origin);
       }
+      // ⭐ GH#929 —— 把百分比那一份原封加回去（見上面那一行的說明）。
+      if (unscaled > 0) pkt.amount += unscaled;
 
       // 【虛弱】—— 攻擊者**造成的傷害**打折（GH#301-4，owner 2026-08-09：
       // 「攻擊速度暫時減半、AP/AD 造成傷害暫時減半」）。
