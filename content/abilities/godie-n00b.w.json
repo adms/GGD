@@ -22,18 +22,15 @@
   "manaCostTier": "小",
   "effects": [],
   "template": {
-    "ref": "tpl-single-strike",
+    "ref": "tpl-summon-agent",
     "params": {
-      "damage": {
-        "damageTier": "小",
-        "ratios": [
-          {
-            "stat": "ap",
-            "coeff": 0.6
-          }
-        ]
-      },
-      "damageType": "magic",
+      "count": 1,
+      "body": "self",
+      "damageMult": 1.0,
+      "hpMult": 0.333,
+      "durationSec": 20,
+      "formation": "ring",
+      "spread": 2,
       "castTimeSec": 0.667
     }
   },
