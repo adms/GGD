@@ -182,6 +182,8 @@ function configJson(): string {
     rate: RULES.rate,
     scope: RULES.scope,
     apRatioMode: RULES.apRatioMode,
+    // ⭐ GH#929 —— 從 `DEFAULT_AP_DAMAGE_SCALING` 同一顆值出來,⛔ 不是這裡再挑一次。
+    resourcePctSkipsGlobalMult: RULES.resourcePctSkipsGlobalMult,
   };
   return `${JSON.stringify(doc, null, 2)}\n`;
 }

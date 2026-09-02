@@ -43,6 +43,27 @@ export const zConfigApDamageScalingDoc = z
           "帶法強係數的技能傷害節點，絕大多數拿掉係數之後就完全沒有屬性相依（變成純固定值），" +
           "而係數今天橫跨一個數量級 —— 所以 replace 會把「特別吃法強的大招」與「幾乎不吃的小招」壓成同一支。",
       ),
+    /**
+     * ⭐⭐ GH#929 —— **「目標最大生命 X%」那一族要不要吃這一層**。
+     *
+     * ⛔⛔ 在此之前這一格**只住在 sim 的 TS 裡**（`sim/combat/apDamageScaling.ts:130`）
+     * ⇒ ⭐ 它是一個「引擎讀得到、⛔ 而後台調不到」的旗標 —— 第一守則的三個住處少了兩個。
+     *
+     * ⚠️ ⭐ 出貨 `true` 的理由是量到的：卡面寫「目標最大生命 **10%**」而實際打了
+     * **27%** —— 因為那一發的量已經是「目標血量的一個比例」，
+     * 再乘一次施法者的法強乘數就變成一句謊話（第一·五守則）。
+     * ⭐ 而**反彈封包早就因為同一個理由被豁免了**（見上面 `note` 那一句）
+     * ⇒ 這一格只是把同一條規則說出口。
+     *
+     * ⭐ 關掉它 ＝ 回到「連血量比例也吃法強」的舊行為（一鍵 rollback）。
+     */
+    resourcePctSkipsGlobalMult: z
+      .boolean()
+      .describe(
+        "「目標最大生命 X%」這一族要不要吃全域 AP 乘法層。true（出貨值）＝ 不吃 —— " +
+          "卡面說 10% 就真的是 10%；false ＝ 吃，也就是這個欄位出現之前的行為" +
+          "（那時卡面說 10% 而實際打 27%）。",
+      ),
   })
   .strict();
 export type ConfigApDamageScalingDoc = z.infer<typeof zConfigApDamageScalingDoc>;
@@ -58,4 +79,6 @@ export const SHIPPED_AP_DAMAGE_SCALING: ConfigApDamageScalingDoc = {
   rate: DEFAULT_AP_DAMAGE_SCALING.rate,
   scope: DEFAULT_AP_DAMAGE_SCALING.scope,
   apRatioMode: DEFAULT_AP_DAMAGE_SCALING.apRatioMode,
+  // ⭐ GH#929 —— 同一顆出貨值（⛔ 不抄字面量,那會是第四個住處）。
+  resourcePctSkipsGlobalMult: DEFAULT_AP_DAMAGE_SCALING.resourcePctSkipsGlobalMult,
 };
