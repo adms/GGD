@@ -86,7 +86,12 @@ describe("generator-owned 守衛的涵蓋範圍", () => {
       missed,
       "⛔⛔ 這幾條會寫內容文件的 route，`writeTargetOf()` **對不出它動到哪一份**\n" +
         "   ⇒ ⭐ 它們**整條繞過** generator-owned 檢查（一支 curl 就寫得進去）。\n" +
-        "   ⇒ 在 `writeTargetOf()` 補上它的路徑規則，⛔ 不是在這條測試加豁免。",
+        "   ⇒ 在 `writeTargetOf()`（`apps/content-api/src/editorSourceRoutes.ts`）\n" +
+        "     補上它的路徑規則，⛔ 不是在這條測試加豁免。\n" +
+        "   ⚠️⚠️ 而**修內容本身**之前先查那一份是誰的：`bash scripts/genguard.sh <路徑>`\n" +
+        "     · 產生器的產物 ⇒ 改**來源**（`tools/…`）再 `bash scripts/genrun.sh <step>`。\n" +
+        "     ⛔ 直接改出貨 JSON 會被下一次 sync 打回來，\n" +
+        "     而那個「又紅了」看起來像**新的**錯。",
     ).toEqual([]);
   });
 
