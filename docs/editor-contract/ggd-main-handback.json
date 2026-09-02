@@ -1,10 +1,8 @@
 {
   "schema": "ggd-main-handback@1",
-  "note": "⭐ Main → Editor 的**機器可讀回報**。⛔ 產物 —— 改 tools/main-handback/gen.ts，⛔ 不要手改。⚠️ 每一格都是從出貨的東西量出來的（route 從原始碼掃、digest 從內容算、測試證據是真的跑過的數字）—— ⛔ 沒有一格是宣稱。",
-  "branch": "feat/editor-seam-20260902",
-  "commit": "18b5ffecbdacb94275ebdc085b4189a8dc28dae8",
-  "mainCommit": "18b5ffecbdacb94275ebdc085b4189a8dc28dae8",
-  "branchEqualsMain": true,
+  "note": "⭐ Main → Editor 的**機器可讀回報**。⛔ 產物 —— 改 `tools/main-handback/gen.ts`，⛔ 不要手改。⚠️ 每一格都是從出貨的東西量出來的（route 從原始碼掃、能力直接引用 `ggd-presentation-receipt.json`）—— ⛔ 沒有一格是宣稱。",
+  "branch": "main",
+  "commit": "b3f17498557ffe8dc72b2db6741f5650b00a857a",
   "receipts": {
     "targetProfileDigest": "fd41cc86e5bbc5c2",
     "capabilityFingerprint": "24bd88e2",
@@ -16,17 +14,33 @@
       "${prefix}/active",
       "${prefix}/active/runtime-bundle",
       "${prefix}/active/target-profile",
-      "${prefix}/apply",
       "${prefix}/audit",
       "${prefix}/authoring-rules",
       "${prefix}/capabilities",
       "${prefix}/contract-index",
       "${prefix}/health",
-      "${prefix}/operations/",
-      "${prefix}/rollback",
       "${prefix}/validate"
     ],
     "sourceAdapter": []
+  },
+  "productionAccess": {
+    "note": "⭐ `content-api` 在正式站**刻意不部署**（`docker/edge.Dockerfile` 逐字：`/content-api/` is deliberately absent from the production nginx）⇒ `${prefix}/*` 在 `ggd.adms.ai` 上回 404 是**設計**，⛔ 不是壞掉。⭐ 下面逐條給正式站的等價物；⛔ 其餘 route（validate／apply／rollback 等寫入端）在正式站**沒有等價物**，那是同一個安全立場的另一半。",
+    "rows": [
+      {
+        "route": "${prefix}/active/target-profile",
+        "productionUrl": "/content/editor-target-profile.json",
+        "file": "content/editor-target-profile.json",
+        "why": "⭐ 同一件事的靜態版：唯讀、從出貨資料推導、跟著 `content:build` 走 —— 那份檔自己的 `note` 逐字是「給外部技能／道具編輯器 **pin base** 用」。⚠️ ⛔ 它**不含** `generatedAt`／activation 狀態（正式站沒有 activation）。",
+        "status": "static"
+      },
+      {
+        "route": "${prefix}/active/runtime-bundle",
+        "productionUrl": "/content/bundle.json",
+        "file": "content/bundle.json",
+        "why": "⭐⭐ **正式站的 404 是契約本身**，⛔ 不是缺口：`runtime-bundle` 只在 **apply 過**之後才有東西（`NO_ACTIVE_SNAPSHOT`，閘 `importRoutesG2.test.ts`），而正式站從來沒有 activation。⇒ 執行期內容請讀 `bundle.json` —— ⚠️ ⛔ 那**不是** runtime-bundle 的替身（同一支測試逐字禁止用它冒充），它是**正式站的內容本身**。",
+        "status": "static"
+      }
+    ]
   },
   "machineSchemas": [
     "ggd-editor-contract-index@1   (packages/shared/src/content/import/contractIndex.ts)",
@@ -58,11 +72,7 @@
     "singleArc": "supported",
     "evasionProvenance": "supported",
     "displaceCue": "supported",
-    "replacementPolicy": "unsupported"
+    "replacementPolicy": "supported"
   },
-  "knownUnsupported": [
-    "replacementPolicy — `VfxSystem` 的 scriptPlayer.onEvent() 之後 switch 直接往下走（⛔ 無 early-return）⇒ 專屬 script 與預設演出**兩條都跑**。⭐ 出貨 10 份 script 逐份對過**只有 1 次真重疊**（已修），閘：packages/shared/src/content/vfxScriptNoDoubleDraw.test.ts。⛔ 刻意未做 suppress 欄位：今天**零支內容**需要它。⭐ 要真正的取代語意請定義 channel。",
-    "displace strikeIndex（leap 側）— `startLeap` 收 StartLeapOptions ⛔ 不是 EffectContext，段號住 ctx.sequenceIndex ⇒ ⭐ 結構上拿不到。blink 側拿得到，已帶。",
-    "displace phase \"impact\" — union 收了（詞彙完整），⛔ 而**零個發射站送它**。"
-  ]
+  "knownUnsupported": []
 }

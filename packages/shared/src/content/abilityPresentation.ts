@@ -49,6 +49,23 @@ export type PresentationTrigger =
 export type PresentationActor = "caster" | "target";
 
 /**
+ * ⭐⭐ **取代通道的封閉詞彙表**（Codex 阻塞清單 C 的 `replacementPolicy`）。
+ *
+ * ⛔⛔ 在此之前 `channel` 是**自由字串** ⇒ ⭐ 一個打錯字的通道名
+ * 「壓制」了一個不存在的東西，而**沒有任何東西會紅**
+ * （CLAUDE.md：打錯字的代號會讓統計靜默分裂，而一份會靜默分裂的統計比沒有更糟）。
+ *
+ * ⭐ 兩格的語意：
+ * · `caster.action` —— 施法者**自己做的動作**（揮擊／施法／位移）
+ * · `target.reaction` —— 被作用者的**反應**（受擊／格擋／迴避）
+ *
+ * ⚠️ ⭐ 加一格要說得出「它與既有兩格**哪裡不同**」——
+ * ⛔ 「這一支比較特別」不是理由（那是逐支覆寫，第一守則規矩 4）。
+ */
+export const PRESENTATION_CHANNELS = ["caster.action", "target.reaction"] as const;
+export type PresentationChannel = (typeof PRESENTATION_CHANNELS)[number];
+
+/**
  * ⭐ 一條預設規則。
  *
  * ⚠️ ⭐ `pulse` 直接用 **`AnimPulse`** —— ⛔ 我第一版在這裡**手抄了那個聯集**，
@@ -65,7 +82,7 @@ export interface PresentationRule {
    * ⭐ **取代通道** —— 同一個 `trigger:channel` 上，專屬 script 取代預設演出；
    * ⛔ 不同 channel 可以共存（Codex 逐字的取代規則）。
    */
-  readonly channel: string;
+  readonly channel: PresentationChannel;
   /** ⭐ 為什麼是這一塊 —— ⛔ 沒有理由的規則會變成一句過期的散文。 */
   readonly why: string;
 }

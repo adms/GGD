@@ -34,6 +34,8 @@ import type { ModelFxSpawnEvent } from "@ggd/shared/sim/effects/spawnModelFx";
 import type { FloatingTextEvent, ScreenFlashEvent, ScreenShakeEvent } from "@ggd/shared/sim/effects/clientCues";
 import type { VfxSpawnEvent } from "@ggd/shared/sim/effects/spawnVfx";
 import type { AnimPulse } from "@ggd/shared/content/animPulse";
+// ⭐ 取代語意 —— 兩個系統 import 同一份帳本（⛔ 不是各自一份旗標）。
+import { channelTakeover, DEFAULT_TAKEOVER_MS } from "../render/channelTakeover";
 
 /**
  * 面向座標系的位移（JASS PolarProjectionBJ 的翻譯；＋side＝面向的右手邊）。
@@ -230,6 +232,7 @@ export class VfxScriptPlayer {
         for (const seg of script.segments) {
           if (seg.on !== "strike") continue;
           if (seg.strikeIndex !== undefined && seg.strikeIndex !== index) continue;
+          this.claimTakeover(seg, frame, nowMs);
           this.pending.push({ dueMs: nowMs + (seg.atMs ?? 0), seg, frame });
         }
         return;
@@ -353,6 +356,7 @@ export class VfxScriptPlayer {
   ): void {
     for (const seg of script.segments) {
       if (seg.on !== on) continue;
+      this.claimTakeover(seg, frame, nowMs);
       this.pending.push({
         dueMs: nowMs + (seg.atMs ?? 0),
         seg,
@@ -360,6 +364,27 @@ export class VfxScriptPlayer {
         ...(tentativeKey !== undefined ? { tentativeKey } : {}),
       });
     }
+  }
+
+  /**
+   * ⭐⭐ **取代語意的登記**（Codex 阻塞清單 C 的 `replacementPolicy`）。
+   *
+   * ⚠️ ⭐ **在排程的當下登記，⛔ 不是等到 `atMs` 之後執行時** ——
+   * 預設演出在**事件那一幀**就會播，而一段 `atMs: 200` 的腳本
+   * 如果等到 200ms 後才登記，那一幀早就兩條都跑完了。
+   *
+   * ⚠️ ⭐ 接管的**對象逐通道不同**：`caster.action` 掛施法者、
+   * `target.reaction` 掛受害者 —— ⛔ 掛錯人＝壓制了一個沒有要壓制的身體。
+   * ⇒ 受害者缺席（打空）時 `target.reaction` 這一段**不登記**，
+   * ⛔ 不是登記在施法者身上。
+   */
+  private claimTakeover(seg: VfxScriptSegment, frame: TriggerFrame, nowMs: number): void {
+    const channel = seg.replaces;
+    if (channel === undefined) return;
+    const entity = channel === "caster.action" ? frame.caster : frame.victim;
+    if (entity === undefined) return;
+    const untilMs = nowMs + (seg.atMs ?? 0) + (seg.replacesForMs ?? DEFAULT_TAKEOVER_MS);
+    channelTakeover.claim(entity, channel, untilMs);
   }
 
   private anchorPos(

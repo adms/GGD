@@ -19,6 +19,11 @@ import type {
   EvadeEvent,
   EvadeSourceRef,
 } from "@ggd/shared/sim/combat/evasion";
+// ⭐ 三個演出錨的酬載型別 —— **住在各自的 emit 站旁邊**，兩邊 import 同一個
+//   （CLAUDE.md 失敗形態⑧：消費端寫 `as` ⇒ 欄位改名時沒有任何東西會紅）。
+import type { ComboStrikeEvent } from "@ggd/shared/sim/effects/delayed";
+import type { ProjectileHitEvent } from "@ggd/shared/sim/systems/ProjectileSystem";
+import type { ReflectSuccessEvent } from "@ggd/shared/sim/systems/ReflectHookSystem";
 import { TICK_MS } from "@ggd/shared/constants";
 import { standinRelativeScaleOf } from "@ggd/shared/content/standinScale";
 import { ChampionView, type FormAttachmentSpec } from "./views/ChampionView";
@@ -44,6 +49,7 @@ import {
 } from "./combatFeedback";
 import { TELEPORT_STEP_UNITS } from "./math/motion";
 import { lifecycleLedger } from "./lifecycleLedger";
+import { channelTakeover } from "./channelTakeover";
 import {
   resolveAbilityPresentation,
   type PresentationTrigger,
@@ -520,6 +526,10 @@ export class EntityViewRegistry {
     for (const rule of resolveAbilityPresentation(trigger)) {
       const id = rule.actor === "caster" ? ids.caster : ids.target;
       if (id === undefined) continue;
+      // ⭐⭐ **取代語意**（Codex 阻塞清單 C）—— 一段帶 `replaces` 的專屬腳本
+      //   已經接管這條通道時,預設演出**不播**。
+      //   ⛔ 不同通道**不受影響**:接管 `caster.action` 不會吃掉受擊者的反應。
+      if (channelTakeover.heldBy(id, rule.channel, nowMs)) continue;
       this.champions.get(id)?.pulse(rule.pulse, nowMs, opts);
     }
   }
@@ -803,6 +813,67 @@ export class EntityViewRegistry {
         break;
       }
       /**
+       * ⭐⭐ **連斬的每一段**（Codex 阻塞清單：「每個權威 `strikeIndex` 必須有
+       * 施法者 attack ＋ 目標 hurt/reaction」）。
+       *
+       * ⛔⛔ 在此之前 `comboStrike` 在渲染層**只有 VFX 一個消費端**
+       * （`VfxScriptPlayer` 的 `on:"strike"` 段）⇒ ⭐ 月牙飛出去，
+       * 而**兩個人的身體一格都沒動**。
+       *
+       * ⭐ 兩半都由**登錄表**給（`caster→attack` ＋ `target→hurt`），
+       * ⛔ 不是這裡的兩行 if —— 一段連斬打空（`victim` 缺席）時
+       * `playDefaultPresentation` 自己會跳過那一半。
+       *
+       * ⚠️ ⭐ **`restartClip: false`** —— 一段 7 刀的連斬每一段都從頭重播剪輯，
+       * 讀起來會是**抽搐**而不是連擊（同 `basicAttack` 的 hitstop 規矩）。
+       */
+      case "comboStrike": {
+        const d = ev.data as unknown as Partial<ComboStrikeEvent>;
+        const caster = d.caster;
+        if (caster === undefined) break;
+        this.playDefaultPresentation(
+          "comboStrike",
+          { caster, ...(d.victim !== undefined ? { target: d.victim } : {}) },
+          nowMs,
+          { restartClip: false },
+        );
+        break;
+      }
+      /**
+       * ⭐⭐ **彈道命中**（Codex 逐字：「`projectileHit` 必須有目標反應」）。
+       *
+       * ⛔⛔ 在此之前這一則在渲染層只有**特效**兩個消費端
+       * （`VfxSystem` 的爆點、`VfxScriptPlayer` 的 `on:"projectileHit"` 段）
+       * ⇒ ⭐ 火花炸開，而**被射中的人不會縮一下**。
+       *
+       * ⚠️ ⭐ 只有 `target` 那一半 —— 射手的動作在**射出**那一刻就播過了
+       * （`basicAttack` / `abilityCast`），⛔ 命中時再播一次是重複。
+       */
+      case "projectileHit": {
+        const d = ev.data as unknown as Partial<ProjectileHitEvent>;
+        const target = d.target;
+        if (target === undefined) break;
+        this.playDefaultPresentation("projectileHit", { target }, nowMs);
+        break;
+      }
+      /**
+       * ⭐⭐ **反彈成功**（Codex 逐字：「反彈：從 `reflectSuccess` 播放防禦／反擊動作」）。
+       *
+       * ⛔⛔ 在此之前它在渲染層只有 `VfxScriptPlayer` 一個消費端
+       * ⇒ ⭐ 沒有腳本的那些反彈技能，畫面上**完全沒有反彈這件事**。
+       *
+       * ⚠️ ⭐ **動作掛在 `reflector` 身上** —— 登錄表把它記成 `actor: "target"`
+       * （反彈的人是**被打的那一方**），所以這裡填的是 `target: reflector`，
+       * ⛔ 不是 `caster`。填錯邊 ⇒ 攻擊者做出防禦姿勢，而那是一句謊。
+       */
+      case "reflectSuccess": {
+        const d = ev.data as unknown as Partial<ReflectSuccessEvent>;
+        const reflector = d.reflector;
+        if (reflector === undefined) break;
+        this.playDefaultPresentation("reflectSuccess", { target: reflector }, nowMs);
+        break;
+      }
+      /**
        * ⭐⭐ **位移的演出時刻**（Codex 阻塞清單 P0-5）—— 三種位移共用一則。
        *
        * ⛔⛔ 這一則在 2026-09-02 **才過線**（在此之前它停在 `SERVER_ONLY`）——
@@ -930,6 +1001,9 @@ export class EntityViewRegistry {
     releaseModelTint(view.root);
     view.dispose();
     this.champions.delete(id);
+    // ⛔ 不清會讓 id 重用時**繼承別人的通道接管** ⇒ 新來的人一段時間內
+    //   完全沒有反應,而那看起來就是「動畫壞了」。
+    channelTakeover.clear(id);
     this.lastPos.delete(id);
     this.speedEma.delete(id);
     this.culled.delete(id);

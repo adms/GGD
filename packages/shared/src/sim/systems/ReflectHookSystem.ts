@@ -52,8 +52,29 @@
  * `fireHooks` 可能會抽 `world.rng`（作者寫了 `chance`/`condition` 時），
  * 而那發生在每一個複本的同一個固定點。沒有人反彈的世界只做一次陣列掃描。
  */
+import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import { fireHooks } from "../effects/hooks";
+
+/**
+ * ⭐ `world.emit("reflectSuccess", …)` 的酬載 —— **型別住 emit 站旁邊**，
+ * 客戶端 import 同一個（CLAUDE.md 失敗形態⑧的根治法）。
+ *
+ * ⚠️ ⭐ **`reflector` 是防禦者**（把傷害送回去的那一方）——
+ * 角色動作（`guard`）掛在**它**身上，⛔ 不是 `attacker`。
+ */
+export interface ReflectSuccessEvent {
+  /** 反彈成功的人 ＝ 防禦者。 */
+  reflector: EntityId;
+  /** 原本的攻擊者（傷害被送回去的那一方）。 */
+  attacker: EntityId;
+  /** `"ability:<id>"` —— 反彈封包自己的 provenance（＝防禦者那支反彈技能）。 */
+  origin: string;
+  /** 反彈回去的量。 */
+  amount: number;
+  x: number;
+  z: number;
+}
 
 export function reflectHookSystem(world: SimWorld): void {
   const queue = world.pendingReflectHooks;

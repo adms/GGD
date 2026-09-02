@@ -109,12 +109,36 @@ describe("演出契約收據（Codex C）", () => {
       ).toBe(true);
     }
     if (r.replacementPolicy.status === "supported") {
-      const vfx = readFileSync(join(ROOT, "apps/client/src/vfx/VfxSystem.ts"), "utf8");
-      const i = vfx.indexOf("this.scriptPlayer.onEvent(ev");
-      expect(i, "⛔ 找不到 script 接縫 ⇒ 這條在量空氣").toBeGreaterThan(0);
+      // ⭐⭐ 2026-09-02 機制換了：取代不再是「接縫 early-return」（那個做法會把
+      //   **整條**預設演出一起吃掉），而是**逐實體 × 逐通道**的接管帳本。
+      //   ⇒ 這一條跟著換成問**新機制的三段**，⛔ 不是刪掉承重的那一半。
+      //
+      // ⚠️ ⭐ 而它刻意用**比產生器更強的問法**：`heldBy` 必須在
+      //   `playDefaultPresentation` **這個函式體內**被呼叫 —— ⛔ 不是「檔案裡有這個字」。
+      //   （產生器只問「檔案裡有沒有」⇒ 兩份 receipt 用不同的問法問同一件事，
+      //     ⭐ 產生器說謊時這一條會紅。）
+      const schema = readFileSync(
+        join(ROOT, "packages/shared/src/content/schema/vfxScript.ts"),
+        "utf8",
+      );
       expect(
-        /return;|suppress|early-?return/i.test(vfx.slice(i, i + 400)),
-        "⛔⛔ 收據宣稱專屬 script 會取代預設演出，而接縫**直接往下走** ⇒ 兩條都跑",
+        /replaces:\s*z\.enum\(PRESENTATION_CHANNELS\)/.test(schema),
+        "⛔⛔ 收據宣稱有取代語意，而 schema **寫不出 `replaces`** ⇒ 編輯器根本宣告不了",
+      ).toBe(true);
+
+      const player = readFileSync(join(ROOT, "apps/client/src/vfx/VfxScriptPlayer.ts"), "utf8");
+      expect(
+        /channelTakeover\.claim\(/.test(player),
+        "⛔⛔ 收據宣稱會接管，而播放器**從不登記** ⇒ 宣告了也不會發生",
+      ).toBe(true);
+
+      const reg = readFileSync(join(ROOT, "apps/client/src/render/EntityViewRegistry.ts"), "utf8");
+      const fn = reg.indexOf("private playDefaultPresentation(");
+      expect(fn, "⛔ 找不到預設演出的入口 ⇒ 這條在量空氣").toBeGreaterThan(0);
+      const body = reg.slice(fn, reg.indexOf("\n  }", fn));
+      expect(
+        /channelTakeover\.heldBy\(/.test(body),
+        "⛔⛔ 收據宣稱會壓制，而 `playDefaultPresentation` **播之前不問** ⇒ 兩條都跑",
       ).toBe(true);
     }
   });
