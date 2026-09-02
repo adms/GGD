@@ -122,12 +122,33 @@ EOF
   --tag)
     [[ $# -ge 2 ]] || usage
     msg="$2"
-    if git rev-parse -q --verify "refs/tags/$NEXT" >/dev/null; then
-      echo "✗ $NEXT 已經存在了。" >&2
+    # ⭐⭐ **冪等**（2026-09-02）—— HEAD 已經有 tag ⇒ **重用它**，⛔ 不是再打一個。
+    #
+    # ── ⛔ 在此之前發生的事 ─────────────────────────────────────────────────
+    # `ship-it.sh` 的順序是「**先打 tag → 再要 release note**」，
+    # ⛔ 而 note 那一步**刻意不能自動生**（內容要人寫）。
+    # ⇒ ⭐ 每一次「補完 note 再重跑一次」都會**再打一個 tag**：
+    #   2026-09-02 一個下午燒掉 v0.35.6 → v0.35.7，兩個 tag **指向同一個 commit**。
+    #
+    # ⚠️ ⭐ 而 `bmpndd.sh` 自己的訊息逐字寫著「**過了的步驟是冪等的**」——
+    #   ⛔ 那句話當時是**假的**，而它正是叫人重跑的那一句（第三守則）。
+    # ⚠️ 這支腳本自己也警告過同一件事：「⛔ 而**零個 commit** 的 tag 不該存在
+    #   —— 那種版號答不出『這一版做了什麼』」——⭐ 它知道，⛔ 但沒有擋。
+    #
+    # ⇒ ⭐ 判準是「**HEAD 上有沒有 tag**」，⛔ 不是「$NEXT 這個名字在不在」：
+    #   後者只擋得住「同一個名字打兩次」，⛔ 擋不住「同一個 commit 打兩個名字」。
+    EXISTING=$(git tag --points-at HEAD --sort=-creatordate | grep '^v' | head -1 || true)
+    if [ -n "$EXISTING" ]; then
+      echo "✓ HEAD 已經是 $EXISTING —— ⭐ 重用它（⛔ 不打第二個 tag 指向同一個 commit）"
+      echo "  ⚠️ 要發新版就先 commit：一個**零 commit** 的版號答不出「這一版做了什麼」"
+      NEXT="$EXISTING"
+    elif git rev-parse -q --verify "refs/tags/$NEXT" >/dev/null; then
+      echo "✗ $NEXT 已經存在了（⛔ 而它不在 HEAD 上）。" >&2
       exit 1
+    else
+      git tag -a "$NEXT" -m "$NEXT —— $msg"
+      echo "✓ 打好了 $NEXT"
     fi
-    git tag -a "$NEXT" -m "$NEXT —— $msg"
-    echo "✓ 打好了 $NEXT"
     echo "  理由: ${REASON:-第一個 tag}"
     echo
     echo "下一步:"
