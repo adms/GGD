@@ -16,6 +16,9 @@ pnpm dev:editor
 
 Open `http://127.0.0.1:5174/editor/`. The editor and `content-api` are started
 together; writes remain local. The API guard rejects non-loopback mutation.
+Top-level authoring screens also have reload-safe URLs:
+`/editor/forge`, `/editor/vfx-forge`, and `/editor/export`. Sidebar navigation
+updates browser history, and Back/Forward restores the matching screen.
 
 ## Authoring surfaces
 
@@ -121,9 +124,11 @@ preserved for review. Binary assets are local-first and fetched through a bounde
 allow-listed cache bridge. Per-file asset hash verification will become mandatory
 as soon as main publishes the complete asset manifest requested by the handshake.
 
-Current feature work is based on `origin/main@de7006c69`; live and repository
-profile digests are treated as volatile receipts and are never compiled into the
-Editor as constants.
+Last verified 2026-09-02 11:54 CST, the feature branch contains
+`origin/main@1d8dc285` (tag `v0.35.12`). Treat this as a receipt rather than a
+permanent constant: fetch Main and compare the live ref before making a current
+compatibility claim. Live and repository profile digests likewise remain
+volatile receipts and are never compiled into the Editor as constants.
 
 ## Contract gates
 
@@ -220,10 +225,10 @@ existing trigger.
 
 ## Feature branch handoff
 
-Implementation lives on `feat/vfx-forge-codex`, based on
-`origin/main@de7006c69`; the feature-branch tip is the only current Editor
-revision. It is
-intentionally not merged or pushed to `main`. Main should use
+Implementation lives on `feat/vfx-forge-codex`, containing Main through the
+last verified receipt `origin/main@1d8dc285` (tag `v0.35.12`); the feature-branch
+tip is the only current Editor revision. It is intentionally not merged or
+pushed to `main`. Main should use
 `docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md` as a reference
 and reimplement only the main-owned seams on its own feature branch; the
 coordination contract explicitly forbids wholesale cherry-picking this branch.
