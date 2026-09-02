@@ -58,7 +58,7 @@ describe("VFX Forge editor-side recipes", () => {
         on: "reflectSuccess",
         vfxId: "fx.prim.holy.pulse-sm",
       }),
-      expect.objectContaining({ kind: "anim", on: "reflectSuccess", at: "caster", pulse: "cast" }),
+      expect.objectContaining({ kind: "anim", on: "reflectSuccess", at: "caster", pulse: "guard" }),
     ]));
     expect(passive.some(
       (segment) => segment.kind === "vfx" && segment.vfxId === "fx.avalon.reflect-spark",

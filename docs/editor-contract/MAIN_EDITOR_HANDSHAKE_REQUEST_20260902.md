@@ -1,8 +1,8 @@
 # Main ↔ Editor：VFX 演出接縫（僅列真正阻塞）
 
-狀態：**Revision 22 — 已逐分支、機器收據、runtime 消費端與正式站核對**
+狀態：**Revision 23 — Main 已 fast-forward 回交分支；仍以 runtime 與正式站證據判定完成度**
 
-最後核對：**2026-09-02 22:10（Asia/Taipei）**
+最後核對：**2026-09-02 22:34（Asia/Taipei）**
 
 Editor 分支：`feat/vfx-forge-codex`。**不得提交或推送 Main。**
 
@@ -28,10 +28,9 @@ Editor 已消費這一輪真正落地的積木：
 
 ## 本次重新核對的四個收據
 
-- Git：`origin/main@18b5ffecbdac`；`origin/feat/editor-seam-20260902@68e954f55655`。
-  `git rev-list --left-right --count origin/main...origin/feat/editor-seam-20260902` 回 `0 2`，所以回交分支仍比
-  Main 多兩個 commit。Editor `HEAD@9f63d431cb02` 已同時包含兩者，不影響本機繼續開發；但不可宣稱 Main ref
-  已含完整回交。
+- Git：`origin/main@68e954f55655`；`origin/feat/editor-seam-20260902@68e954f55655`。
+  `git rev-list --left-right --count origin/main...origin/feat/editor-seam-20260902` 回 `0 0`；Main 已用線性
+  fast-forward 完整接收該分支，這一項已完成。
 - 契約閘：`pnpm caps:check` 通過，capability fingerprint `24bd88e2`；
   `editorCoverageFresh.test.ts` 2/2 通過，coverage fingerprint `41c50c0eba21`、required 4983。
 - 回交收據仍過時：`ggd-main-handback.json` 內的 `commit/mainCommit` 仍是 `18b5ffec`，且
@@ -39,7 +38,7 @@ Editor 已消費這一輪真正落地的積木：
 - 正式站 `/content/editor-target-profile.json`（profile digest `cceb3a4cc9cb`）仍沒有
   `presentationReceipt`；`/api/v1/content-import/active/target-profile` 實測回 404 `no such route`。
 
-上述是四種不同狀態：Editor 已接入 handback，不等於 Main ref 已合併；repo 產物存在，不等於 runtime 已消費；
+上述是四種不同狀態：Main ref 已合併，不等於 runtime 已消費；repo 產物存在，不等於機器回報已重生；
 本機收據可讀，不等於 URL Base 已能驗證。以下三項因此仍是硬阻塞。
 
 ## P0-1：請把登錄表剩餘三列接到實際角色消費端

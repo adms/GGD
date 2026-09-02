@@ -1,5 +1,13 @@
 import { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
+// Eagerly register the shaders Babylon's GLB/PBR texture loader needs before
+// the first imported champion is instantiated.  The lazy fallback requests
+// `src/Shaders/*.fx` from Vite; an SPA fallback answers with HTML (or retries
+// until timeout), leaving the Forge actor stuck at "載入…" and making a real
+// attack pulse visually indistinguishable from a missing actor animation.
+// The shipped particle rig follows the same self-contained registration rule.
+import "@babylonjs/core/Shaders/postprocess.vertex";
+import "@babylonjs/core/Shaders/rgbdDecode.fragment";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
@@ -940,15 +948,18 @@ export class VfxForgeStage {
       actor.clipMap = doc.clipMap;
       actor.fallback.setEnabled(false);
       this.playActor(actor, "idle", true);
-      await this.scene.whenReadyAsync();
       // The Forge can remain paused on frame zero indefinitely. The shipped
       // game advances naturally while Babylon compiles imported PBR variants,
       // but a deterministic editor seek can otherwise freeze Babylon's white
-      // placeholder on screen and make a healthy texture look un-keyed. Treat
-      // the exact visible material variants as part of actor readiness.
+      // placeholder on screen and make a healthy texture look un-keyed. Compile
+      // the exact actor variants directly: waiting for the WHOLE scene here is
+      // a deadlock in a frame-stepped editor because unrelated lazy VFX pools
+      // may not become ready until a later seek.  Actor readiness must only
+      // depend on the actor it reports.
       await Promise.all(visible.flatMap((mesh) =>
         mesh.material ? [mesh.material.forceCompilationAsync(mesh)] : [],
       ));
+      this.renderScene();
       const height = rendered.max.y - rendered.min.y;
       const centerX = (rendered.min.x + rendered.max.x) / 2;
       const centerZ = (rendered.min.z + rendered.max.z) / 2;
