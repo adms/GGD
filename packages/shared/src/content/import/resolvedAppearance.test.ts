@@ -249,6 +249,46 @@ describe("resolved-appearance@1", () => {
     });
   });
 
+  it("★★ ⭐⭐ ⑦ 契約**明講它沒回答什麼** —— ⛔ 沉默的 resolver 會讓對面預覽出錯的角色", () => {
+    // ⛔⛔ 在此之前這份契約**安靜地只答 base case**。
+    // ⭐ 而遊戲真正走的是 `EntityViewRegistry.modelDocFor(modelKey, seatId, formIndex)`，
+    //   上面還疊著 `blizzardOverlay.resolve()` 與 `modelOverrideFor`（#77 逐支 scale）。
+    // ⇒ ⭐ 這一條驗的是**那四個軸真的還在客戶端的接縫上** ——
+    //   ⛔ 不是「陣列裡有四個字串」（那是掃屬性，形態⑦）。
+    const one = champs.find((c) => models.has(String(c.modelKey)));
+    expect(one, "⛔ 一位英雄都解不出來 ⇒ 這條在量空氣").toBeDefined();
+    const r = resolveAppearance(one!.id, one!, models.get(String(one!.modelKey)));
+    expect(r.ok).toBe(true);
+    const axes = r.ok ? r.appearance.axesNotCovered : [];
+    expect(axes.length, "⛔ 契約沒有講出它沒涵蓋的軸").toBeGreaterThan(0);
+
+    // ⭐ 逐軸驗它**在客戶端真的存在** —— 少了這一步，這份清單就只是一句散文。
+    const reg = readFileSync(
+      join(CONTENT, "../apps/client/src/render/EntityViewRegistry.ts"),
+      "utf8",
+    );
+    const overlay = readFileSync(
+      join(CONTENT, "../apps/client/src/render/views/blizzardOverlay.ts"),
+      "utf8",
+    );
+    const proof: Record<string, boolean> = {
+      skin: /modelDocFor\?\.\(|seatId\?: number/.test(reg),
+      form: /formIndex\?: number/.test(reg),
+      overlay: /resolve\(/.test(overlay),
+      override: /modelOverrideFor/.test(reg),
+    };
+    for (const axis of axes) {
+      expect(
+        proof[axis],
+        `⛔ 契約說它沒涵蓋「${axis}」，⛔ 而客戶端找不到那一軸 ⇒ ` +
+          "這一列要嘛過期了、要嘛從一開始就是編的。",
+      ).toBe(true);
+    }
+    // ⭐ 反方向：⛔ 表**只能變短** —— 涵蓋了一軸就拿掉它，
+    //   ⛔ 不可以為了讓某條測試變綠而加一列。
+    expect(axes.length, "⛔ 軸的數目變多了 —— 那是退步，⛔ 不是進步").toBeLessThanOrEqual(4);
+  });
+
   it("★ ⭐ ⑥ 契約指紋穩定且釘住**欄位集合**", () => {
     const fp = appearanceResolverFingerprint();
     expect(fp).toHaveLength(12);

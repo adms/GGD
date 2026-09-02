@@ -79,7 +79,16 @@ function directionToward(
 interface TriggerFrame {
   caster: number;
   tick: number;
-  /** ⭐ M4 —— 這一段的受害者實體 id（只有 `comboStrike` 帶得到）。 */
+  /**
+   * ⭐ 這一則的**受方實體 id** —— ⭐ 也是 `target.reaction` 通道的**接管對象**。
+   *
+   * ⚠️ ⛔ 這一行在 2026-09-02 之前寫著「只有 `comboStrike` 帶得到」,而在
+   * `replaces` 上線的那一刻它就從**註解**變成了**缺陷**（第三守則：
+   * 一句在它到期之後還活著的散文）—— 那三條路各自只填了自己需要的欄位,
+   * 而新的機制讀的是這一格。
+   * ⇒ 今天三條都填：`comboStrike`（那一段的受害者）·
+   *   `projectileHit`（被命中的人）· `reflectSuccess`（**反彈者自己**）。
+   */
   victim?: number;
   point?: { x: number; z: number };
   direction?: { x: number; z: number };
@@ -253,6 +262,13 @@ export class VfxScriptPlayer {
           const frame: TriggerFrame = {
             caster: owner,
             tick: ev.tick | 0,
+            // ⭐⭐ **被命中的人要進 `victim`**（Codex 2026-09-02 抓到的）——
+            //   ⛔ 在此之前只有 `comboStrike` 填它 ⇒ 一段宣告
+            //   `replaces: "target.reaction"` 的腳本在這條路上**登記不到任何人**
+            //   ⇒ `heldBy` 永遠 false ⇒ ⭐ 取代語意在這一類上靜默失效
+            //   （預設演出照播,而作者以為自己已經接管了）。
+            // ⚠️ `projectileSpawn` 走同一個 case 而它沒有 target ⇒ 那時是 undefined,
+            //   ⭐ 那是對的:還沒命中就沒有「被命中的人」。
             ...(target !== undefined ? { victim: target } : {}),
             targetPos:
               target !== undefined ? (this.deps.entityPos(target) ?? undefined) : undefined,
@@ -283,11 +299,16 @@ export class VfxScriptPlayer {
         const frame: TriggerFrame = {
           caster: reflector,
           tick: ev.tick | 0,
-          // The default presentation names the defender `target`; the script
-          // player names that same body `caster`. `target.reaction` must still
-          // claim the reflector, never the attacker receiving reflected damage.
+          // ⭐⭐ **接管對象是 `reflector`,⛔ 不是 `attacker`**（Codex 2026-09-02 抓到的）。
+          //   ⚠️ 這裡有一個真的會踩到的不對稱:
+          //   · **空間**上「目標」是攻擊者（傷害飛回去的方向）⇒ `targetPos` 用他
+          //   · **身體**上做出反應的是**防禦者自己** ⇒ 登錄表把 `reflectSuccess`
+          //     記成 `actor: "target"` 而 `EntityViewRegistry` 傳的是
+          //     `{ target: reflector }` ⇒ ⭐ `target.reaction` 這條通道
+          //     必須登記在 **reflector** 身上。
+          //   ⛔ 填 attacker ⇒ 攻擊者被壓制、而防禦者的預設 `guard` 照播
+          //     —— 兩邊都錯,且畫面上看起來只是「有時候會重播」。
           victim: reflector,
-          // ⭐ 反彈的「目標」是**攻擊者**（傷害被送回去的那一方）。
           ...(targetPos !== undefined ? { point: targetPos, targetPos } : {}),
           ...(direction !== undefined ? { direction } : {}),
         };

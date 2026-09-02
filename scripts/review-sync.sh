@@ -56,7 +56,7 @@ remote=$(ssh -o BatchMode=yes -o ConnectTimeout=10 "$HOST" "cat $RPATH/$REMOTE_R
 rc=$?
 if [[ $rc -ne 0 || -z "$remote" ]]; then
   # ⭐ fail-open 沒錯，**靜默**才是缺陷：說清楚「沒同步到」與「同步到 0 筆」的差別。
-  echo "⚠️ **沒同步到**（ssh rc=$rc）—— 線上可能還沒部署 review sidecar，或這台連不上。"
+  echo "⚠️ **沒同步到**（ssh rc=${rc}）—— 線上可能還沒部署 review sidecar，或這台連不上。"
   echo "   ⛔ 這不等於「線上 0 筆裁決」。本機現有：$(count_of "$REL") 筆。"
   exit 0
 fi

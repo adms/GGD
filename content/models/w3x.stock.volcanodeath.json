@@ -11,5 +11,9 @@
     "cast": "Stand",
     "hurt": "Stand",
     "death": "Stand"
-  }
+  },
+  "fxEmitters": [
+    "fx.w3x.stock.volcanodeath.p00",
+    "fx.w3x.stock.volcanodeath.p01"
+  ]
 }

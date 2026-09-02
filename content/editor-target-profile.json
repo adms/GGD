@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_9c465321b5da",
+    "contentVersion": "cv_3cab7cddea45",
     "collections": {
       "champions": {
-        "hash": "de4f627327f9",
+        "hash": "0b63236e572d",
         "count": 71
       },
       "abilities": {
-        "hash": "ba969b4408c1",
+        "hash": "6c0a6caf7f9e",
         "count": 421
       },
       "items": {
@@ -42,23 +42,23 @@
         "count": 7
       },
       "config": {
-        "hash": "9d00bf4744f4",
-        "count": 94
+        "hash": "87f92a26ea06",
+        "count": 96
       },
       "models": {
-        "hash": "eb42ccf639cd",
+        "hash": "657ea888006b",
         "count": 152
       },
       "vfx": {
-        "hash": "6f1e56551013",
-        "count": 671
+        "hash": "7df129081586",
+        "count": 702
       },
       "skins": {
         "hash": "3d1095f3da83",
         "count": 5
       },
       "ability-templates": {
-        "hash": "33d2fcb9003e",
+        "hash": "4123b9f3d180",
         "count": 46
       },
       "vfx-scripts": {
@@ -93,7 +93,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "24bd88e2",
+    "fingerprint": "855cf94f",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -182,10 +182,12 @@
       "chance",
       "equipment",
       "kind",
+      "recentCast",
       "stat",
       "status"
     ],
     "conditionLeafFields": [
+      "abilityId",
       "is",
       "itemId",
       "kind",
@@ -194,11 +196,13 @@
       "op",
       "other",
       "p",
+      "slot",
       "stat",
       "statusId",
       "subject",
       "tag",
-      "value"
+      "value",
+      "withinSec"
     ],
     "hookFields": [
       "abilitySlot",
@@ -501,6 +505,7 @@
       "amount.attrRatios.attr",
       "amount.attrRatios.basis",
       "amount.attrRatios.coeff",
+      "amount.conditionTier",
       "amount.damageTier",
       "amount.damageTierPerRank",
       "amount.flat",
@@ -509,11 +514,13 @@
       "amount.ratios",
       "amount.ratios.coeff",
       "amount.ratios.stat",
+      "amount.ratios.when",
       "amountPerTick",
       "amountPerTick.attrRatios",
       "amountPerTick.attrRatios.attr",
       "amountPerTick.attrRatios.basis",
       "amountPerTick.attrRatios.coeff",
+      "amountPerTick.conditionTier",
       "amountPerTick.damageTier",
       "amountPerTick.damageTierPerRank",
       "amountPerTick.flat",
@@ -522,6 +529,7 @@
       "amountPerTick.ratios",
       "amountPerTick.ratios.coeff",
       "amountPerTick.ratios.stat",
+      "amountPerTick.ratios.when",
       "amplitude",
       "anchor",
       "anchorCount",
@@ -585,6 +593,7 @@
       "comboBonus",
       "comboBonus.amount",
       "comboBonus.amount.attrRatios",
+      "comboBonus.amount.conditionTier",
       "comboBonus.amount.damageTier",
       "comboBonus.amount.damageTierPerRank",
       "comboBonus.amount.flat",
@@ -921,6 +930,7 @@
     "abilityFields": [
       "augment",
       "castTimeSec",
+      "castTimeTier",
       "castType",
       "cooldown",
       "cooldownShape",
@@ -1100,6 +1110,7 @@
       "ability@1": [
         "augment",
         "castTimeSec",
+        "castTimeTier",
         "castType",
         "cooldown",
         "cooldownShape",
@@ -1249,6 +1260,7 @@
     },
     "templateFamilies": [
       "beam-roll",
+      "blink-strike",
       "buff-self",
       "charge-push",
       "combo-finisher",
@@ -1978,8 +1990,60 @@
         {
           "id": "tpl-blink-strike",
           "family": "blink-strike",
-          "status": "draft",
-          "params": {}
+          "status": "enabled",
+          "params": {
+            "range": {
+              "type": "number",
+              "default": 6,
+              "min": 1,
+              "max": 20,
+              "origin": "census: 出貨 5 支 `to:\"targetUnit\"` 的 blink 技能施法距離 —— godie-n01c.w 6 · godie-nbbc.w 6 · godie-h01o.q 8 · godie-u00v.r 12 · godie-efur.q 4.5 ⇒ **中位數 6**（⛔ 不是平均 9.3 —— 那一支 12 是大招）。（⚠️ 單位是 **GGD 格**，⛔ 不是 wc3u —— schema 的 `unit` 列舉裡沒有它，所以這一格刻意留空。）"
+            },
+            "stopShortUnits": {
+              "type": "number",
+              "default": 1.8,
+              "min": 0,
+              "max": 5,
+              "origin": "census: 出貨 **4/5 支逐位元都是 1.8**（n01c.w · nbbc.w · h01o.q · u00v.r），只有 godie-efur.q 是 1。⛔ 0 會讓施法者疊進目標身體裡。（⚠️ 單位是 **GGD 格**，⛔ 不是 wc3u —— schema 的 `unit` 列舉裡沒有它，所以這一格刻意留空。）"
+            },
+            "damage": {
+              "type": "scaling",
+              "default": {
+                "damageTier": "小",
+                "ratios": [
+                  {
+                    "stat": "ad",
+                    "coeff": 0.5
+                  }
+                ]
+              },
+              "origin": "census: 三支帶傷害的**全部**是 `damageTier:\"小\"` —— n01c.w（ad 0.5）· h01o.q（ap 0.5）· u00v.r（ap 0.8）⇒ 取兩支相同的 **0.5**。"
+            },
+            "damageType": {
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ],
+              "default": "physical",
+              "origin": "census: 出貨 2:1 偏 physical（n01c.w physical · u00v.r physical · h01o.q magic）。"
+            },
+            "arriveVfxId": {
+              "type": "docRef",
+              "default": "fx.prim.lightning.slash",
+              "origin": "census: 出貨兩支用 `fx.prim.lightning.slash`（n01c.w · nbbc.w），另兩支各自不同 ⇒ **多數決**。"
+            },
+            "castTimeSec": {
+              "type": "number",
+              "optional": true,
+              "default": 0,
+              "min": 0,
+              "max": 5,
+              "unit": "s",
+              "origin": "census: 出貨五支**全部**沒有 castTimeSec ⇒ 0（瞬發）。"
+            }
+          }
         },
         {
           "id": "tpl-buff-self",
@@ -4360,8 +4424,8 @@
         }
       ],
       "templateStatus": {
-        "draft": 18,
-        "enabled": 28
+        "draft": 17,
+        "enabled": 29
       },
       "innateKinds": [
         "active",
@@ -4370,7 +4434,7 @@
       "effectKindsSource": "runtimeCapabilities.effectKinds（⛔ 不在這裡重複一份）"
     },
     "vfx": {
-      "docCount": 671,
+      "docCount": 702,
       "keys": [
         "fx.barkskin",
         "fx.bramble-burst",
@@ -4696,12 +4760,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "24bd88e2",
+    "engineFingerprint": "855cf94f",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 24bd88e2 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 855cf94f —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -5535,11 +5599,11 @@
       }
     ]
   },
-  "assetManifestDigest": "ebfe4e826ad4",
+  "assetManifestDigest": "129666d26df6",
   "assetManifest": {
     "path": "assets-manifest.json",
-    "entries": 1641,
-    "totalBytes": 103659558
+    "entries": 1642,
+    "totalBytes": 103693151
   },
   "effectiveVfxLimits": {
     "schema": "ggd-effective-vfx-limits@1",
@@ -5557,11 +5621,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "1b30464bb133",
+    "fingerprint": "152d9be719e0",
     "surfaces": [
       {
         "surface": "ability-item-zod-schemas",
-        "digest": "9a8573a3aabc"
+        "digest": "fd268f4fea23"
       },
       {
         "surface": "exact-ref-collector",
@@ -5609,7 +5673,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "6a9145059781",
+  "migrationFingerprint": "e462cfdcca22",
   "supportedModes": [
     "bootstrap"
   ],
@@ -5619,5 +5683,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "01a216dc17c7"
+  "profileDigest": "949ef7dbe0bd"
 }

@@ -58,7 +58,7 @@ mkdir -p "$OUT_DIR"
   echo "HEAD      $(git log --oneline -1)"
   echo "branch    $(git rev-parse --abbrev-ref HEAD)"
   UP="$(git rev-parse --abbrev-ref '@{u}' 2>/dev/null || echo origin/main)"
-  echo "未 push   $(git rev-list --count "$UP"..HEAD 2>/dev/null || echo '?') 個 commit（vs $UP）"
+  echo "未 push   $(git rev-list --count "$UP"..HEAD 2>/dev/null || echo '?') 個 commit（vs ${UP}）"
   echo "工作區    已追蹤改動 $(git status --short | grep -cv '^??' | tr -d ' ') 檔 / 未追蹤 $(git status --short | grep -c '^??' | tr -d ' ') 項"
   echo '```'
   echo

@@ -52,6 +52,7 @@
  */
 import type { SimWorld } from "../SimWorld";
 import type { EntityId } from "../../ids";
+import type { DamageType } from "../effects/effect";
 import { Stat } from "../stats/statTypes";
 import { originInScope, type DamageConversionScope } from "./damageTypeOverride";
 
@@ -95,6 +96,24 @@ export interface ApDamageScaling {
   scope: ApDamageScope;
   /** 與既有 AP 係數的關係。見 {@link ApRatioMode}。 */
   apRatioMode: ApRatioMode;
+  /**
+   * ⭐ GH#929 —— 卡面寫「目標最大生命 X%」的**真傷**那一份**不吃**這一層。
+   *
+   * > 「生命百分比傷害若是 **[真實傷害]** 則不列入 AP 乘數中，
+   * >  因為**真實傷害沒有魔抗來制衡**」
+   * > — owner 2026-09-02（逐字）
+   *
+   * ⭐ 出貨 **true ＝ 修好的那一邊**（第〇·六守則：優先權高的更新預設啟動；
+   * 而「卡面不可以說謊」是第一·五守則）。**false ＝ 一鍵 rollback**，
+   * 逐位元回到 2026-09-02 之前 —— 那時 59-04「目標最大生命 10%」在
+   * 滿裝法師手上實測是 **27%**。
+   *
+   * ⚠️ owner 的判準是**有沒有煞車**，⛔ 不是「百分比傷害都不該被放大」：
+   * magic / physical 的百分比傷害會被魔抗／護甲吃掉一截，所以它們吃 AP 乘數
+   * 是有制衡的；⛔ 真傷沒有任何制衡。⇒ 這一格**只**認 `damageType === "true"`。
+   * 出貨量到的 24 個 `resourcePct` 節點裡，這一格管的是 **12 個**。
+   */
+  resourcePctSkipsGlobalMult: boolean;
 }
 
 /**
@@ -108,6 +127,7 @@ export const DEFAULT_AP_DAMAGE_SCALING: ApDamageScaling = Object.freeze({
   rate: 0.005,
   scope: "ability",
   apRatioMode: "stack",
+  resourcePctSkipsGlobalMult: true,
 });
 
 /**
@@ -127,7 +147,12 @@ const MODES: readonly ApRatioMode[] = ["stack", "replace"];
  */
 export function normalizeApDamageScaling(raw: unknown): ApDamageScaling {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) return DEFAULT_AP_DAMAGE_SCALING;
-  const r = raw as { rate?: unknown; scope?: unknown; apRatioMode?: unknown };
+  const r = raw as {
+    rate?: unknown;
+    scope?: unknown;
+    apRatioMode?: unknown;
+    resourcePctSkipsGlobalMult?: unknown;
+  };
   const rate =
     typeof r.rate === "number" && Number.isFinite(r.rate) && r.rate >= 0
       ? Math.min(r.rate, AP_DAMAGE_RATE_MAX)
@@ -140,6 +165,13 @@ export function normalizeApDamageScaling(raw: unknown): ApDamageScaling {
     apRatioMode: MODES.includes(r.apRatioMode as ApRatioMode)
       ? (r.apRatioMode as ApRatioMode)
       : DEFAULT_AP_DAMAGE_SCALING.apRatioMode,
+    // ⭐ GH#929 —— 只認**真的布林**；任何別的東西（含缺席）都回出貨預設。
+    // ⛔ 不可以寫成 `!!r.x` —— 那會把「這份文件沒有這一格」讀成 **false**，
+    // 也就是把一個**缺席的旗標**靜靜地變成「關掉修正」。
+    resourcePctSkipsGlobalMult:
+      typeof r.resourcePctSkipsGlobalMult === "boolean"
+        ? r.resourcePctSkipsGlobalMult
+        : DEFAULT_AP_DAMAGE_SCALING.resourcePctSkipsGlobalMult,
   };
 }
 
@@ -192,4 +224,44 @@ export function apDamageMult(
 export function apRatiosSuppressed(world: SimWorld, origin: string): boolean {
   const rules = world.apDamageScaling;
   return rules.apRatioMode === "replace" && originInScope(origin, rules.scope);
+}
+
+/**
+ * ⭐ GH#929 —— 這一發封包裡「某一條血條的百分比」那一份**佔多少比例**。
+ *
+ * ═══════════════════════════════════════════════════════════════════════════
+ * ⭐ 為什麼是**比例**而不是絕對量
+ * ═══════════════════════════════════════════════════════════════════════════
+ * 傷害葉在 push 之前還會對**整發**乘一些東西（`canCrit` 的暴擊倍率、
+ * `damageArea` 的距離衰減）。記絕對量的話，那些乘法每多一個就要記得同步乘
+ * 一次它 —— 而漏掉的那一次會讓豁免的量與實際的量脫鉤，
+ * ⛔ 且**在畫面上跟正確的一模一樣**。
+ * ⭐ 比例對「對整發同乘一個數」是**不變量**：`(u·k) / (t·k) = u / t`。
+ * ⇒ 只要那些乘法乘的是整發，這一格就永遠是對的，⛔ 不必逐一維護。
+ *
+ * ═══════════════════════════════════════════════════════════════════════════
+ * ⚠️ 三道閘，缺一發就是另一種「卡面說謊」
+ * ═══════════════════════════════════════════════════════════════════════════
+ *  · 開關關掉 ⇒ 回 0 ⇒ 逐位元回到 2026-09-02 之前（一鍵 rollback）。
+ *  · ⛔ 型別不是 `"true"` ⇒ 回 0。owner 的判準是**有沒有煞車**：
+ *    magic/physical 會被魔抗/護甲吃掉一截，⇒ 它們吃 AP 乘數是有制衡的。
+ *  · 兩個量任一 ≤ 0 ⇒ 回 0（`u/t` 在 `t = 0` 是 `Infinity`／`NaN`，
+ *    而一個 NaN 傷害在血條上等於「這一發沒扣血」而且**不會有任何一行報錯**）。
+ *
+ * ⭐ 夾在 1：`u > t` 只可能來自上游把 amount 減過（負的加項），
+ * 而「豁免的比例 > 100%」在下游會把封包放大，⇒ 夾住比相信它安全。
+ *
+ * purity：一個除法、兩個比較。⛔ 無 `**`、無三角函式、無時鐘、無亂數。
+ */
+export function unscaledFractionOf(
+  world: SimWorld,
+  total: number,
+  resourcePctPart: number,
+  type: DamageType,
+): number {
+  if (world.apDamageScaling.resourcePctSkipsGlobalMult !== true) return 0;
+  if (type !== "true") return 0;
+  if (resourcePctPart <= 0 || total <= 0) return 0;
+  const f = resourcePctPart / total;
+  return f >= 1 ? 1 : f;
 }

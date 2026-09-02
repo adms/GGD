@@ -1,10 +1,10 @@
 {
   "schema": "review-queue@1",
   "counts": {
-    "assets": 1207,
-    "tier0": 865,
+    "assets": 1249,
+    "tier0": 906,
     "reviewed": 0,
-    "pending": 342,
+    "pending": 343,
     "voice": {
       "champions": 51,
       "status": "measurement-stale",
@@ -1940,6 +1940,18 @@
       "id": "fx.prim.ki.bolt",
       "kind": "vfx",
       "hash": "7f2f7c22828a03d2191f25ce5069927fb8f8a53a",
+      "risk": 4,
+      "reasons": [
+        "抱怨族「閃電/雷電」+4",
+        "未審"
+      ],
+      "refs": [],
+      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
+    },
+    {
+      "id": "fx.prim.lightning.arc",
+      "kind": "vfx",
+      "hash": "b81064ea805dcb876d24881a66f8f735b4029b7c",
       "risk": 4,
       "reasons": [
         "抱怨族「閃電/雷電」+4",

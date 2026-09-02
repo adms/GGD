@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "24bd88e2",
+  "fingerprint": "855cf94f",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -89,10 +89,12 @@
     "chance",
     "equipment",
     "kind",
+    "recentCast",
     "stat",
     "status"
   ],
   "conditionLeafFields": [
+    "abilityId",
     "is",
     "itemId",
     "kind",
@@ -101,11 +103,13 @@
     "op",
     "other",
     "p",
+    "slot",
     "stat",
     "statusId",
     "subject",
     "tag",
-    "value"
+    "value",
+    "withinSec"
   ],
   "hookFields": [
     "abilitySlot",
@@ -408,6 +412,7 @@
     "amount.attrRatios.attr",
     "amount.attrRatios.basis",
     "amount.attrRatios.coeff",
+    "amount.conditionTier",
     "amount.damageTier",
     "amount.damageTierPerRank",
     "amount.flat",
@@ -416,11 +421,13 @@
     "amount.ratios",
     "amount.ratios.coeff",
     "amount.ratios.stat",
+    "amount.ratios.when",
     "amountPerTick",
     "amountPerTick.attrRatios",
     "amountPerTick.attrRatios.attr",
     "amountPerTick.attrRatios.basis",
     "amountPerTick.attrRatios.coeff",
+    "amountPerTick.conditionTier",
     "amountPerTick.damageTier",
     "amountPerTick.damageTierPerRank",
     "amountPerTick.flat",
@@ -429,6 +436,7 @@
     "amountPerTick.ratios",
     "amountPerTick.ratios.coeff",
     "amountPerTick.ratios.stat",
+    "amountPerTick.ratios.when",
     "amplitude",
     "anchor",
     "anchorCount",
@@ -492,6 +500,7 @@
     "comboBonus",
     "comboBonus.amount",
     "comboBonus.amount.attrRatios",
+    "comboBonus.amount.conditionTier",
     "comboBonus.amount.damageTier",
     "comboBonus.amount.damageTierPerRank",
     "comboBonus.amount.flat",
@@ -828,6 +837,7 @@
   "abilityFields": [
     "augment",
     "castTimeSec",
+    "castTimeTier",
     "castType",
     "cooldown",
     "cooldownShape",
@@ -1007,6 +1017,7 @@
     "ability@1": [
       "augment",
       "castTimeSec",
+      "castTimeTier",
       "castType",
       "cooldown",
       "cooldownShape",
@@ -1156,6 +1167,7 @@
   },
   "templateFamilies": [
     "beam-roll",
+    "blink-strike",
     "buff-self",
     "charge-push",
     "combo-finisher",

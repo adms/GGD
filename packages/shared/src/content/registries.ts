@@ -35,6 +35,7 @@ import { aoeTiersFromDoc, resolveRadiusTier } from "./aoeTiers";
 import { rangeTiersFromDoc, resolveRangeTier } from "./rangeTiers";
 // 冷卻五級距 → 秒數（GH#445）／傷害五級距 → 基礎值（GH#447）。同上，唯一的查表處。
 import { cooldownTiersFromDoc, resolveCooldownTier } from "./cooldownTiers";
+import { DEFAULT_CAST_TIME_TIERS, resolveCastTimeTierOnDoc } from "./castTimeTiers";
 import { damageTiersFromDoc, resolveDamageTier } from "./damageTiers";
 // GH#541 —— 連段的間隔序列住 `config.combo-strikes@1`（第〇·四守則的共用表）,
 // 在**載入時**被解析進每一個 `comboStrikes` 節點。⛔ 沒有這一步,只寫 `family`
@@ -278,6 +279,12 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   // 沒有 `manaCostTier` 一格，所以 212 支要花魔力的技能各自帶一個自由數字：
   // 級距表一改它們一動都不會動，⛔ 而且沒有任何東西會紅。
   const manaTiers = manaTiersFromDoc(configDocs.find((c) => c.schema === "config.mana-tiers@1"));
+  // ⭐ 吟唱五級距（GH#943）—— ⛔ 缺席時用 `DEFAULT_`（＝出貨值），
+  //   而 `resolveCastTimeTierOnDoc` 在 `enabled:false` 時逐位元 no-op。
+  const castTimeTiers =
+    (configDocs.find((c) => c.schema === "config.cast-time-tiers@1") as unknown as
+      | typeof DEFAULT_CAST_TIME_TIERS
+      | undefined) ?? DEFAULT_CAST_TIME_TIERS;
   // 移速**加成**五級距（GH#789，owner 2026-08-27「%轉換為五級距⋯0.1~4」）。
   // ⚠️ 它級距化的是 **modifier 節點**（任意深度的 `{stat:"ms", op:pctAdd|pctMult}`），
   // 帶 `msBonusTier` 的節點**沒有** `value`（#534 exclusive）——所以這一層**不可以漏**：
@@ -301,6 +308,10 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
     // ⛔ 不看幾何、不看傷害、不看冷卻 ⇒ 順序無關。
     // ⭐ 移速加成級距包在最外層與耗魔同理：它只讀 modifier 節點的 `msBonusTier`，
     // ⛔ 不看幾何、不看傷害、不看冷卻 ⇒ 順序無關。
+    // ⭐ 吟唱級距（GH#943）包在最外層與耗魔同理：它只讀頂層 `castTimeTier`，
+    // ⛔ 不看幾何、不看傷害、不看冷卻 ⇒ 順序無關。
+    // ⚠️ ⛔ 少了這一層，`castTimeTier` 就是「有欄位而沒有人翻譯」（失敗形態⑧）。
+    resolveCastTimeTierOnDoc(
     resolveMsBonusTier(
     resolveComboFamilies(
       resolveManaCostTier(
@@ -327,6 +338,8 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
       comboFamilies,
     ) as never,
       moveSpeedTiers,
+    ) as never,
+      castTimeTiers,
     ) as T;
 
   /**

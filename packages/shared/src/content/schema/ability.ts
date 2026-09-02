@@ -13,6 +13,7 @@ import { AOE_TIER_NAMES } from "../aoeTiers";
 import { RANGE_TIER_NAMES } from "../rangeTiers";
 import { COOLDOWN_SHAPES, COOLDOWN_TIER_NAMES } from "../cooldownTiers";
 import { MANA_TIER_NAMES } from "../manaTiers";
+import { SKILL_TIER_NAMES } from "../skillTiers";
 
 export const zCastType = z.enum(["targeted", "skillshot", "ground", "self", "dash"]);
 
@@ -858,6 +859,25 @@ export const zAbilityDef = z
     sfxKey: z.string().min(1).optional(),
     /** cast time (seconds) before effects fire; default 0 = instant */
     castTimeSec: z.number().min(0).optional(),
+    /**
+     * ⭐⭐ **吟唱五級距**（GH#943）—— owner 2026-09-02 逐字：
+     * > 「吟唱⋯其實這個也可以五級距 **0, 0.1, 0.3, 0.5, 1** 建議也改成這個」
+     *
+     * ── ⭐ 它與上面那一格的分工（⛔ 不是第二個住處）──────────────────────
+     * · `castTimeTier`（這一格）：作者**寫**得出什麼 —— ⭐ 五格**下拉選單**
+     * · `castTimeSec`：⭐ 解析出來的**秒數**（級距填了就由它翻譯，⛔ 兩格都填 ⇒ 級距贏）
+     * · `applyCastTimeRules`（`sim/castTimeRules.ts`）：引擎**夾**成什麼
+     *
+     * ── ⛔ 為什麼這一格值得存在（⛔ 不是為了整齊）────────────────────────
+     * 契約 4,983 格裡有 **14 種 `*Tier`** 會渲染成下拉選單，
+     * ⛔ 而吟唱今天是一個**空白數字框** ⇒ ⭐ 玩家在編輯器裡沒有東西告訴他
+     * 0.1 秒與 1.0 秒差 10 倍、而 **1.0 已經是天花板**（`castTimeMaxSec`，#787）。
+     *
+     * ⚠️ 級距的上界與那個天花板**刻意同一個數字** ⇒ ⛔ 作者不可能寫出一個
+     * 「會被靜靜夾掉」的值。表住 `content/config/cast-time-tiers.json`，
+     * 解析在 `content/castTimeTiers.ts`（⭐ 全專案唯一的查表處）。
+     */
+    castTimeTier: z.enum(SKILL_TIER_NAMES).optional(),
     /** root the caster for the cast duration (default true) */
     rootWhileCasting: z.boolean().optional(),
     /**

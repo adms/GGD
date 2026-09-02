@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_9c465321b5da`
+contentVersion `cv_3cab7cddea45`
 
 ---
 
@@ -102,13 +102,14 @@ contentVersion `cv_9c465321b5da`
 | `onUltimateCast` | 大招（R）施放時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onUltimateHit` | 大招（R）命中時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 
-## 條件葉（condition leaf） —— 5 種
+## 條件葉（condition leaf） —— 6 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
 | `chance` | 機率 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `equipment` | 裝備了某道具時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `kind` | 對象是誰（小兵／英雄／BOSS） | 1 | `godie-h02k.ex` |
+| `recentCast` | 最近施放過（連續技窗口）—— ⭐ 「這位施法者在最近 N 秒內按過某一格技能」。⚠️ 判準是**槽位**（Q/W/E/R/EX），⛔ 不是技能標籤 —— `ability@1` 今天**沒有** `tags` 欄位（421/421 零命中），做一個永遠比不中的 tag 分支會是一句說了不會發生的話（第一·五守則）。 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `stat` | 屬性門檻（血量低於 X%…） | 9 | `godie-e002.w`、`godie-e00l.w`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-emfr.passive`、`godie-h00l.ex`、`godie-h02u.w`、`godie-h02v.w`、`grail-ex-13` |
 | `status` | 身上有某狀態時 | 27 | `godie-e00r.q`、`godie-edem.r`、`godie-efur.ex`、`godie-emns.e`、`godie-emns.r`、`godie-ewar.e`、`godie-h00l.e`、`godie-h01n.e`、`godie-h01n.w`、`godie-h01o.w`、`godie-h01u.e`、`godie-h02k.ex` …（共 27） |
 
@@ -232,7 +233,7 @@ contentVersion `cv_9c465321b5da`
 | `witch-form` | `witch-form` |
 | `wound` | `grievous-wounds`、`no-heal` |
 
-## 特效（vfx）—— 671 份
+## 特效（vfx）—— 702 份
 
 由 `spawnVfx.vfxId`、技能的 `vfxKey`、彈道的 `vfxKey` 引用。
 
@@ -327,83 +328,91 @@ contentVersion `cv_9c465321b5da`
 - `fx.w3x.particle.sephboom.p01` · `fx.w3x.particle.sephboom.p02` · `fx.w3x.particle.sephboom.p03` · `fx.w3x.particle.sephboom.p04`
 - `fx.w3x.particle.sephboom.p05` · `fx.w3x.particle.sephboom.p06` · `fx.w3x.particle.sonicbreathstream.p00` · `fx.w3x.particle.sonicbreathstream.p01`
 - `fx.w3x.particle.sonicbreathstream.p02` · `fx.w3x.particle.supershinythingy.p00` · `fx.w3x.particle.supershinythingy.p01` · `fx.w3x.particle.supershinythingy.p02`
-- `fx.w3x.stock.awaken.p00` · `fx.w3x.stock.awaken.p01` · `fx.w3x.stock.awaken.p02` · `fx.w3x.stock.earthquaketarget.p00`
-- `fx.w3x.stock.earthquaketarget.p01` · `fx.w3x.stock.fragdriller.p00` · `fx.w3x.stock.markofchaostarget.p00` · `fx.w3x.stock.markofchaostarget.p01`
-- `fx.w3x.stock.markofchaostarget.p02` · `fx.w3x.stock.markofchaostarget.p03` · `fx.w3x.stock.markofchaostarget.p04` · `fx.w3x.stock.markofchaostarget.p05`
-- `fx.w3x.stock.revivehuman.p00` · `fx.w3x.stock.revivehuman.p01` · `fx.w3x.stock.revivehuman.p02` · `fx.w3x.stock.thunderclapcaster.p00`
-- `fx.w3x.stock.warstompcaster.p00` · `fx.wave.arcane` · `fx.wave.earth` · `fx.wave.fire`
-- `fx.wave.ice` · `fx.wave.ki` · `fx.wave.lightning` · `fx.wave.physical`
-- `fx.wave.void` · `godie-1hswd-01-p0` · `godie-1hswd-01-p1` · `godie-1hswd-01-p2`
-- `godie-aquaspikeversion2-p0` · `godie-aquaspikeversion2-p1` · `godie-aquaspikeversion2-p10` · `godie-aquaspikeversion2-p11`
-- `godie-aquaspikeversion2-p2` · `godie-aquaspikeversion2-p3` · `godie-aquaspikeversion2-p4` · `godie-aquaspikeversion2-p5`
-- `godie-aquaspikeversion2-p6` · `godie-aquaspikeversion2-p7` · `godie-aquaspikeversion2-p8` · `godie-aquaspikeversion2-p9`
-- `godie-babyface-p0` · `godie-billy-p0` · `godie-blackhole-p0` · `godie-blackhole-p1`
-- `godie-blackhole-p2` · `godie-blackhole-p3` · `godie-blackhole-p4` · `godie-blackhole-p5`
-- `godie-blackhole-p6` · `godie-blackhole-r0` · `godie-blackhole-r1` · `godie-blackhole1-p0`
-- `godie-blackhole1-p1` · `godie-blackhole1-p2` · `godie-bladestorm-swordeffect-p0` · `godie-bloodbreathstream-p0`
-- `godie-bloodbreathstream-p1` · `godie-bloodbreathstream-p2` · `godie-boomnl-p0` · `godie-boomnl-p1`
-- `godie-boomnl-p2` · `godie-boomnl-p3` · `godie-boomnl-p4` · `godie-bulbasaur-p0`
-- `godie-cloud-p0` · `godie-cloud-r0` · `godie-darkbreathdamage-p0` · `godie-darkraor-p0`
-- `godie-darkraor-p1` · `godie-darkraor-p2` · `godie-deathwave-p0` · `godie-deathwave-r0`
-- `godie-deathwave-r1` · `godie-deathwave-r2` · `godie-demonfilth-p0` · `godie-demonfilth-p1`
-- `godie-demonfilth-p2` · `godie-demonfilth-p3` · `godie-demonfilth-p4` · `godie-divinering-p0`
-- `godie-divinering-p1` · `godie-divinering-p10` · `godie-divinering-p11` · `godie-divinering-p12`
-- `godie-divinering-p13` · `godie-divinering-p14` · `godie-divinering-p15` · `godie-divinering-p16`
-- `godie-divinering-p17` · `godie-divinering-p18` · `godie-divinering-p19` · `godie-divinering-p2`
-- `godie-divinering-p3` · `godie-divinering-p4` · `godie-divinering-p5` · `godie-divinering-p6`
-- `godie-divinering-p7` · `godie-divinering-p8` · `godie-divinering-p9` · `godie-earthtornado2-p0`
-- `godie-earthtornado2-p1` · `godie-earthtornado2-p10` · `godie-earthtornado2-p11` · `godie-earthtornado2-p12`
-- `godie-earthtornado2-p13` · `godie-earthtornado2-p2` · `godie-earthtornado2-p3` · `godie-earthtornado2-p4`
-- `godie-earthtornado2-p5` · `godie-earthtornado2-p6` · `godie-earthtornado2-p7` · `godie-earthtornado2-p8`
-- `godie-earthtornado2-p9` · `godie-enchant-p0` · `godie-enchant-p1` · `godie-enchant-p2`
-- `godie-enchant-p3` · `godie-enchant-p4` · `godie-fireblast-p0` · `godie-fireblast-p1`
-- `godie-fireblast-p2` · `godie-fireblast-p3` · `godie-flamessmoke-p0` · `godie-flamessmoke-p1`
-- `godie-flamessmoke-p2` · `godie-flamessmoke-p3` · `godie-flash-p0` · `godie-flash-p1`
-- `godie-fox-p0` · `godie-fox2-p0` · `godie-frostnova-p0` · `godie-frostnova-p1`
-- `godie-frostnova-p2` · `godie-frostnova-p3` · `godie-gumdam-p0` · `godie-gumdam-p1`
-- `godie-gumdam-p2` · `godie-gumdam-p3` · `godie-gumdam-p4` · `godie-gx-p0`
-- `godie-gx-r0` · `godie-gxhuge-p0` · `godie-gxhuge-r0` · `godie-herobuu-p0`
-- `godie-herocloudkfksword-p0` · `godie-herocloudstrife-p0` · `godie-herocloudstrife-p1` · `godie-herocloudstrife-r0`
-- `godie-heroeva01s2-p0` · `godie-heroeva01s2-p1` · `godie-herofate-p0` · `godie-herofate-p1`
-- `godie-herofate-r0` · `godie-herogirl-r0` · `godie-herogirl-r1` · `godie-herohanzouhattori-p0`
-- `godie-herohanzouhattori-r0` · `godie-herohehi-p0` · `godie-herohehi-r0` · `godie-herohimurakenshin-p0`
-- `godie-herohimurakenshin-p1` · `godie-herohimurakenshin-r0` · `godie-heroichigo-p0` · `godie-heroichigo-r0`
-- `godie-heroichigo-r1` · `godie-herokunoichi-r0` · `godie-herokunoichi-r1` · `godie-herokyo-p0`
-- `godie-herokyo-r0` · `godie-heroluffeattack-p0` · `godie-heromiku-p0` · `godie-heromiku-p1`
-- `godie-heromusashimiyamoto-p0` · `godie-heromusashimiyamoto-r0` · `godie-heromusashimiyamoto-r1` · `godie-heronarutos4effect-p0`
-- `godie-heronarutos4effect-p1` · `godie-heronarutos4effect-p2` · `godie-heronarutos4effect-p3` · `godie-heronarutos4effect-p4`
-- `godie-heronarutos4effect-p5` · `godie-herooichi-p0` · `godie-herooichi-p1` · `godie-heroraichus3-p0`
-- `godie-heroraichus3-p1` · `godie-herorider-p0` · `godie-heroryuk-p0` · `godie-herosaber-p0`
-- `godie-herosaber-p1` · `godie-herosaber-r0` · `godie-herosasuke-p0` · `godie-herosasuke-p1`
-- `godie-herosasuke-p2` · `godie-herosasuke-p3` · `godie-herosasuke-r0` · `godie-herosasuke-r1`
-- `godie-herosephiroth-p0` · `godie-herosephiroth-r0` · `godie-heroshana-p0` · `godie-heroshana-p1`
-- `godie-heroshana-p2` · `godie-heroshana-r0` · `godie-herotoshiiemaeda-p0` · `godie-herotoshiiemaeda-r0`
-- `godie-heroxelloss-p0` · `godie-heroxelloss-p1` · `godie-holyawakening-p0` · `godie-holyawakening-p1`
-- `godie-holyawakening-p2` · `godie-holyawakening-p3` · `godie-holyawakening-p4` · `godie-holyawakening-p5`
-- `godie-holyawakening-r0` · `godie-holyawakening-r1` · `godie-holyawakening-r2` · `godie-holyawakening-r3`
-- `godie-holyawakening-r4` · `godie-holyawakening-r5` · `godie-holyawakening-r6` · `godie-holyawakening-r7`
-- `godie-horse-p0` · `godie-lasercannonfinalred-p0` · `godie-lasercannonfinalred-p1` · `godie-lasercannonfinalred-p2`
-- `godie-lasercannonfinalred-p3` · `godie-lasercannonfinalred-p4` · `godie-lasercannonfinalred-p5` · `godie-lasercannonfinalred-p6`
-- `godie-lasercannonfinalred-p7` · `godie-lavabreathdamage-p0` · `godie-lightningnova-p0` · `godie-lightningnova-p1`
-- `godie-lightningtornado-p0` · `godie-lightningtornado-p1` · `godie-lightningtornado-p10` · `godie-lightningtornado-p11`
-- `godie-lightningtornado-p12` · `godie-lightningtornado-p13` · `godie-lightningtornado-p2` · `godie-lightningtornado-p3`
-- `godie-lightningtornado-p4` · `godie-lightningtornado-p5` · `godie-lightningtornado-p6` · `godie-lightningtornado-p7`
-- `godie-lightningtornado-p8` · `godie-lightningtornado-p9` · `godie-linainvers-p0` · `godie-linainvers-p1`
-- `godie-linainvers-p2` · `godie-lubu-p0` · `godie-lubu-p1` · `godie-lubu-p2`
-- `godie-lubu-r0` · `godie-ma-p0` · `godie-ma-p1` · `godie-magical-sword-p0`
-- `godie-meteor-p0` · `godie-meteor-p1` · `godie-meteor-p2` · `godie-meteor-p3`
-- `godie-meteor-p4` · `godie-meteor-p5` · `godie-meteor-p6` · `godie-meteor-p7`
-- `godie-mfls-r0` · `godie-mfls-r1` · `godie-minitypeflame-p0` · `godie-minitypeflame-p1`
-- `godie-negi-p0` · `godie-negi-p1` · `godie-netherstrike-p0` · `godie-netherstrike-p1`
-- `godie-netherstrike-p2` · `godie-netherstrike-p3` · `godie-netherstrike-p4` · `godie-niya-p0`
-- `godie-niya-p1` · `godie-niya-r0` · `godie-oblivionaura-p0` · `godie-picacugy-r0`
-- `godie-renaryugu2-p0` · `godie-renaryugu2-p1` · `godie-renaryugu2-r0` · `godie-sd2-r0`
-- `godie-sd2-r1` · `godie-sd2-r2` · `godie-sd2-r3` · `godie-sesshomaru-p0`
-- `godie-sesshomaru-r0` · `godie-sonicbreathstream-p0` · `godie-sonicbreathstream-p1` · `godie-sonicbreathstream-p2`
-- `godie-supershinythingy-p0` · `godie-supershinythingy-p1` · `godie-supershinythingy-p2` · `godie-supershinythingy-r0`
-- `godie-supershinythingy-r1` · `godie-supershinythingy-r2` · `godie-tectonicfury-p0` · `godie-tectonicfury-p1`
-- `godie-windmissle-r0` · `godie-windmissle-r1` · `godie-windmissle-r2` · `godie-ye-wuqi1-p0`
-- `godie-ye-wuqi1-p1` · `godie-ye-wuqi1-p2` · `godie-ye-wuqi1-r0`
+- `fx.w3x.stock.aivitarget.r00` · `fx.w3x.stock.aivitarget.r01` · `fx.w3x.stock.aivitarget.r02` · `fx.w3x.stock.awaken.p00`
+- `fx.w3x.stock.awaken.p01` · `fx.w3x.stock.awaken.p02` · `fx.w3x.stock.earthquaketarget.p00` · `fx.w3x.stock.earthquaketarget.p01`
+- `fx.w3x.stock.flamestrike1.p00` · `fx.w3x.stock.flamestrike1.p01` · `fx.w3x.stock.flamestrike1.p02` · `fx.w3x.stock.flamestrike1.p03`
+- `fx.w3x.stock.flamestrike1.p04` · `fx.w3x.stock.fragdriller.p00` · `fx.w3x.stock.humanbloodpeasant.p00` · `fx.w3x.stock.markofchaostarget.p00`
+- `fx.w3x.stock.markofchaostarget.p01` · `fx.w3x.stock.markofchaostarget.p02` · `fx.w3x.stock.markofchaostarget.p03` · `fx.w3x.stock.markofchaostarget.p04`
+- `fx.w3x.stock.markofchaostarget.p05` · `fx.w3x.stock.markofchaostarget.r00` · `fx.w3x.stock.markofchaostarget.r01` · `fx.w3x.stock.markofchaostarget.r02`
+- `fx.w3x.stock.markofchaostarget.r03` · `fx.w3x.stock.markofchaostarget.r04` · `fx.w3x.stock.markofchaostarget.r05` · `fx.w3x.stock.markofchaostarget.r06`
+- `fx.w3x.stock.markofchaostarget.r07` · `fx.w3x.stock.nedeathsmall.p00` · `fx.w3x.stock.nedeathsmall.p01` · `fx.w3x.stock.nedeathsmall.p02`
+- `fx.w3x.stock.nedeathsmall.p03` · `fx.w3x.stock.nedeathsmall.p04` · `fx.w3x.stock.nedeathsmall.p05` · `fx.w3x.stock.nedeathsmall.p06`
+- `fx.w3x.stock.nedeathsmall.p07` · `fx.w3x.stock.reddragonmissile.p00` · `fx.w3x.stock.reddragonmissile.p01` · `fx.w3x.stock.reddragonmissile.p02`
+- `fx.w3x.stock.reddragonmissile.p03` · `fx.w3x.stock.revivehuman.p00` · `fx.w3x.stock.revivehuman.p01` · `fx.w3x.stock.revivehuman.p02`
+- `fx.w3x.stock.thunderclapcaster.p00` · `fx.w3x.stock.volcanodeath.p00` · `fx.w3x.stock.volcanodeath.p01` · `fx.w3x.stock.warstompcaster.p00`
+- `fx.wave.arcane` · `fx.wave.earth` · `fx.wave.fire` · `fx.wave.ice`
+- `fx.wave.ki` · `fx.wave.lightning` · `fx.wave.physical` · `fx.wave.void`
+- `godie-1hswd-01-p0` · `godie-1hswd-01-p1` · `godie-1hswd-01-p2` · `godie-aquaspikeversion2-p0`
+- `godie-aquaspikeversion2-p1` · `godie-aquaspikeversion2-p10` · `godie-aquaspikeversion2-p11` · `godie-aquaspikeversion2-p2`
+- `godie-aquaspikeversion2-p3` · `godie-aquaspikeversion2-p4` · `godie-aquaspikeversion2-p5` · `godie-aquaspikeversion2-p6`
+- `godie-aquaspikeversion2-p7` · `godie-aquaspikeversion2-p8` · `godie-aquaspikeversion2-p9` · `godie-babyface-p0`
+- `godie-billy-p0` · `godie-blackhole-p0` · `godie-blackhole-p1` · `godie-blackhole-p2`
+- `godie-blackhole-p3` · `godie-blackhole-p4` · `godie-blackhole-p5` · `godie-blackhole-p6`
+- `godie-blackhole-r0` · `godie-blackhole-r1` · `godie-blackhole1-p0` · `godie-blackhole1-p1`
+- `godie-blackhole1-p2` · `godie-bladestorm-swordeffect-p0` · `godie-bloodbreathstream-p0` · `godie-bloodbreathstream-p1`
+- `godie-bloodbreathstream-p2` · `godie-boomnl-p0` · `godie-boomnl-p1` · `godie-boomnl-p2`
+- `godie-boomnl-p3` · `godie-boomnl-p4` · `godie-bulbasaur-p0` · `godie-cloud-p0`
+- `godie-cloud-r0` · `godie-darkbreathdamage-p0` · `godie-darkraor-p0` · `godie-darkraor-p1`
+- `godie-darkraor-p2` · `godie-deathwave-p0` · `godie-deathwave-r0` · `godie-deathwave-r1`
+- `godie-deathwave-r2` · `godie-demonfilth-p0` · `godie-demonfilth-p1` · `godie-demonfilth-p2`
+- `godie-demonfilth-p3` · `godie-demonfilth-p4` · `godie-divinering-p0` · `godie-divinering-p1`
+- `godie-divinering-p10` · `godie-divinering-p11` · `godie-divinering-p12` · `godie-divinering-p13`
+- `godie-divinering-p14` · `godie-divinering-p15` · `godie-divinering-p16` · `godie-divinering-p17`
+- `godie-divinering-p18` · `godie-divinering-p19` · `godie-divinering-p2` · `godie-divinering-p3`
+- `godie-divinering-p4` · `godie-divinering-p5` · `godie-divinering-p6` · `godie-divinering-p7`
+- `godie-divinering-p8` · `godie-divinering-p9` · `godie-earthtornado2-p0` · `godie-earthtornado2-p1`
+- `godie-earthtornado2-p10` · `godie-earthtornado2-p11` · `godie-earthtornado2-p12` · `godie-earthtornado2-p13`
+- `godie-earthtornado2-p2` · `godie-earthtornado2-p3` · `godie-earthtornado2-p4` · `godie-earthtornado2-p5`
+- `godie-earthtornado2-p6` · `godie-earthtornado2-p7` · `godie-earthtornado2-p8` · `godie-earthtornado2-p9`
+- `godie-enchant-p0` · `godie-enchant-p1` · `godie-enchant-p2` · `godie-enchant-p3`
+- `godie-enchant-p4` · `godie-fireblast-p0` · `godie-fireblast-p1` · `godie-fireblast-p2`
+- `godie-fireblast-p3` · `godie-flamessmoke-p0` · `godie-flamessmoke-p1` · `godie-flamessmoke-p2`
+- `godie-flamessmoke-p3` · `godie-flash-p0` · `godie-flash-p1` · `godie-fox-p0`
+- `godie-fox2-p0` · `godie-frostnova-p0` · `godie-frostnova-p1` · `godie-frostnova-p2`
+- `godie-frostnova-p3` · `godie-gumdam-p0` · `godie-gumdam-p1` · `godie-gumdam-p2`
+- `godie-gumdam-p3` · `godie-gumdam-p4` · `godie-gx-p0` · `godie-gx-r0`
+- `godie-gxhuge-p0` · `godie-gxhuge-r0` · `godie-herobuu-p0` · `godie-herocloudkfksword-p0`
+- `godie-herocloudstrife-p0` · `godie-herocloudstrife-p1` · `godie-herocloudstrife-r0` · `godie-heroeva01s2-p0`
+- `godie-heroeva01s2-p1` · `godie-herofate-p0` · `godie-herofate-p1` · `godie-herofate-r0`
+- `godie-herogirl-r0` · `godie-herogirl-r1` · `godie-herohanzouhattori-p0` · `godie-herohanzouhattori-r0`
+- `godie-herohehi-p0` · `godie-herohehi-r0` · `godie-herohimurakenshin-p0` · `godie-herohimurakenshin-p1`
+- `godie-herohimurakenshin-r0` · `godie-heroichigo-p0` · `godie-heroichigo-r0` · `godie-heroichigo-r1`
+- `godie-herokunoichi-r0` · `godie-herokunoichi-r1` · `godie-herokyo-p0` · `godie-herokyo-r0`
+- `godie-heroluffeattack-p0` · `godie-heromiku-p0` · `godie-heromiku-p1` · `godie-heromusashimiyamoto-p0`
+- `godie-heromusashimiyamoto-r0` · `godie-heromusashimiyamoto-r1` · `godie-heronarutos4effect-p0` · `godie-heronarutos4effect-p1`
+- `godie-heronarutos4effect-p2` · `godie-heronarutos4effect-p3` · `godie-heronarutos4effect-p4` · `godie-heronarutos4effect-p5`
+- `godie-herooichi-p0` · `godie-herooichi-p1` · `godie-heroraichus3-p0` · `godie-heroraichus3-p1`
+- `godie-herorider-p0` · `godie-heroryuk-p0` · `godie-herosaber-p0` · `godie-herosaber-p1`
+- `godie-herosaber-r0` · `godie-herosasuke-p0` · `godie-herosasuke-p1` · `godie-herosasuke-p2`
+- `godie-herosasuke-p3` · `godie-herosasuke-r0` · `godie-herosasuke-r1` · `godie-herosephiroth-p0`
+- `godie-herosephiroth-r0` · `godie-heroshana-p0` · `godie-heroshana-p1` · `godie-heroshana-p2`
+- `godie-heroshana-r0` · `godie-herotoshiiemaeda-p0` · `godie-herotoshiiemaeda-r0` · `godie-heroxelloss-p0`
+- `godie-heroxelloss-p1` · `godie-holyawakening-p0` · `godie-holyawakening-p1` · `godie-holyawakening-p2`
+- `godie-holyawakening-p3` · `godie-holyawakening-p4` · `godie-holyawakening-p5` · `godie-holyawakening-r0`
+- `godie-holyawakening-r1` · `godie-holyawakening-r2` · `godie-holyawakening-r3` · `godie-holyawakening-r4`
+- `godie-holyawakening-r5` · `godie-holyawakening-r6` · `godie-holyawakening-r7` · `godie-horse-p0`
+- `godie-lasercannonfinalred-p0` · `godie-lasercannonfinalred-p1` · `godie-lasercannonfinalred-p2` · `godie-lasercannonfinalred-p3`
+- `godie-lasercannonfinalred-p4` · `godie-lasercannonfinalred-p5` · `godie-lasercannonfinalred-p6` · `godie-lasercannonfinalred-p7`
+- `godie-lavabreathdamage-p0` · `godie-lightningnova-p0` · `godie-lightningnova-p1` · `godie-lightningtornado-p0`
+- `godie-lightningtornado-p1` · `godie-lightningtornado-p10` · `godie-lightningtornado-p11` · `godie-lightningtornado-p12`
+- `godie-lightningtornado-p13` · `godie-lightningtornado-p2` · `godie-lightningtornado-p3` · `godie-lightningtornado-p4`
+- `godie-lightningtornado-p5` · `godie-lightningtornado-p6` · `godie-lightningtornado-p7` · `godie-lightningtornado-p8`
+- `godie-lightningtornado-p9` · `godie-linainvers-p0` · `godie-linainvers-p1` · `godie-linainvers-p2`
+- `godie-lubu-p0` · `godie-lubu-p1` · `godie-lubu-p2` · `godie-lubu-r0`
+- `godie-ma-p0` · `godie-ma-p1` · `godie-magical-sword-p0` · `godie-meteor-p0`
+- `godie-meteor-p1` · `godie-meteor-p2` · `godie-meteor-p3` · `godie-meteor-p4`
+- `godie-meteor-p5` · `godie-meteor-p6` · `godie-meteor-p7` · `godie-mfls-r0`
+- `godie-mfls-r1` · `godie-minitypeflame-p0` · `godie-minitypeflame-p1` · `godie-negi-p0`
+- `godie-negi-p1` · `godie-netherstrike-p0` · `godie-netherstrike-p1` · `godie-netherstrike-p2`
+- `godie-netherstrike-p3` · `godie-netherstrike-p4` · `godie-niya-p0` · `godie-niya-p1`
+- `godie-niya-r0` · `godie-oblivionaura-p0` · `godie-picacugy-r0` · `godie-renaryugu2-p0`
+- `godie-renaryugu2-p1` · `godie-renaryugu2-r0` · `godie-sd2-r0` · `godie-sd2-r1`
+- `godie-sd2-r2` · `godie-sd2-r3` · `godie-sesshomaru-p0` · `godie-sesshomaru-r0`
+- `godie-sonicbreathstream-p0` · `godie-sonicbreathstream-p1` · `godie-sonicbreathstream-p2` · `godie-supershinythingy-p0`
+- `godie-supershinythingy-p1` · `godie-supershinythingy-p2` · `godie-supershinythingy-r0` · `godie-supershinythingy-r1`
+- `godie-supershinythingy-r2` · `godie-tectonicfury-p0` · `godie-tectonicfury-p1` · `godie-windmissle-r0`
+- `godie-windmissle-r1` · `godie-windmissle-r2` · `godie-ye-wuqi1-p0` · `godie-ye-wuqi1-p1`
+- `godie-ye-wuqi1-p2` · `godie-ye-wuqi1-r0`
 
 ## ⛔ 已知壞掉 / 未支援
 

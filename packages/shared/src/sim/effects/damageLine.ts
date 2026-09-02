@@ -73,6 +73,7 @@ import { canSee } from "../stealth";
 import { distSq, type Vec2 } from "../math/vec2";
 import { aimDirection, casterAttrs, casterDamageStats } from "./effectCommon";
 import { resourcePctAmount } from "./dynamicTerms";
+import { unscaledFractionOf } from "../combat/apDamageScaling";
 import { clampSpreadRadius, clampSpreadTargets } from "./spreadLimits";
 import { runOnHitChain, selectVictims } from "./victimFilter";
 import { rollAbilityCrit } from "../combat/critStrike";
@@ -157,8 +158,13 @@ export const damageLineEffect: EffectKindSpec<"damageLine"> = {
       // ⭐ S2（GH#299）—— 資源百分比項。與 `damage.resourcePct` 共用同一個
       // 讀取器，per-target 解算（分母是**某一個身體**的條，一次範圍技的每個
       // 受害者本來就該算出不同的數字 —— 見 `dynamicTerms.ts` 檔頭）。
+      // ⭐ GH#929 —— 真傷的百分比項不吃全域三層乘法。出貨的 59-04 野戰型陽電子砲
+      // （`godie-e00r.r`）就是這一條：級距（小/中/大）**照乘**、目標最大生命 10%
+      // **不乘**。⛔ 整發豁免會連級距也免掉。見 `combat/apDamageScaling.ts`。
+      let resPart = 0;
       if (e.resourcePct !== undefined) {
-        amount += resourcePctAmount(world, ctx.caster, v.id, e.resourcePct, ctx.rank);
+        resPart = resourcePctAmount(world, ctx.caster, v.id, e.resourcePct, ctx.rank);
+        amount += resPart;
       }
       // ⭐ ⑨（2026-08-10）—— 同 `damageArea`：走 `rollAbilityCrit`，一份判定。
       let crit = false;
@@ -175,15 +181,18 @@ export const damageLineEffect: EffectKindSpec<"damageLine"> = {
         if (cr.crit) amount *= cr.mult;
         critSources = cr.critSources;
       }
+      // 省略 = 後台「傷害規則」頁的預設（出貨 magic）。
+      // ⛔ 讀 `world.damageRules` 而不是寫死一個字串 —— 見 sim/damageRules.ts 檔頭。
+      const type = e.damageType ?? world.damageRules.defaultAbilityDamageType;
+      const unscaledFraction = unscaledFractionOf(world, amount, resPart, type);
       world.damageQueue.push({
         source: ctx.caster,
         target: v.id,
         amount,
         ...(critSources !== undefined ? { critSources } : {}),
-        // 省略 = 後台「傷害規則」頁的預設（出貨 magic）。
-        // ⛔ 讀 `world.damageRules` 而不是寫死一個字串 —— 見 sim/damageRules.ts 檔頭。
-        type: e.damageType ?? world.damageRules.defaultAbilityDamageType,
+        type,
         crit,
+        ...(unscaledFraction > 0 ? { unscaledFraction } : {}),
         origin: ctx.origin,
       });
     }

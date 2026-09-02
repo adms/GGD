@@ -844,6 +844,18 @@ TIER_FILE_FIELDS = {
     # ⭐ 2026-08-21 —— 五軸的**最後一軸**。在它之前 `ability@1` 上根本沒有這一格，
     #    所以另外四軸各有 85–350 支填了級別，而耗魔是 0 支（機制沒做，⛔ 不是漏填）。
     "config.mana-tiers@1": ("`manaCostTier`", "耗魔"),
+    # ⏳ 2026-09-02 GH#943 —— owner 逐字：「吟唱⋯其實這個也可以五級距
+    #    **0, 0.1, 0.3, 0.5, 1** 建議也改成這個」。⚠️ ⭐ 上界 1.0 與
+    #    `castTimeMaxSec`（#787 的 owner 夾）**刻意同一個數字** ⇒ ⛔ 作者不可能
+    #    寫出一個「會被靜靜夾掉」的值。載入時由 `resolveCastTimeTierOnDoc` 翻譯
+    #    （⭐ 級距贏，同 `resolveCooldownTier` 的「級別贏」規則）。
+    "config.cast-time-tiers@1": ("`castTimeTier`", "吟唱"),
+    # 🧮 2026-09-02 GH#942/#943 —— ⭐ 這一張**不是**「級距 → 值」的表，而是
+    #    **六維公式的乘數表**（冷卻·吟唱·距離·形狀·條件·基礎值補償）。
+    #    ⚠️ 它的級距欄位 `conditionTier` 是**讀取時推導**的（⛔ 不改文件）：
+    #    缺席時由 `resolveConditionTier()` 從文件自己的結構推導 ⇒ ⛔ 208 支帶 AP
+    #    係數的技能**不必**各填一格（那會是 208 個會過期的第二住處）。
+    "config.ap-coefficient@1": ("`conditionTier`（住 `amount.zScaling`，⭐ 缺席時推導）", "AP 係數六維公式"),
     # 💨 2026-08-27 GH#789 —— owner:「移動速度加成一律的 %轉換為五級距，一樣列表
     #    可設定，五級距上下限增加移速為 0.1~4」。⚠️ 作者欄位**不在** `ability@1` 頂層,
     #    它落在**任何一條加移速的 modifier**（ability／item／augment 共用同一把梯子）,

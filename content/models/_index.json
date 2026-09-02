@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "eb42ccf639cd",
+  "hash": "657ea888006b",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -785,8 +785,8 @@
     {
       "id": "w3x.stock.awaken",
       "path": "models/w3x.stock.awaken.json",
-      "hash": "19b7e65746cf",
-      "size": 426
+      "hash": "5966072c1098",
+      "size": 457
     },
     {
       "id": "w3x.stock.darkportaltarget",
@@ -797,8 +797,8 @@
     {
       "id": "w3x.stock.flamestrike1",
       "path": "models/w3x.stock.flamestrike1.json",
-      "hash": "146e4cbb9484",
-      "size": 308
+      "hash": "56ba09c58774",
+      "size": 515
     },
     {
       "id": "w3x.stock.flamestriketarget",
@@ -827,8 +827,8 @@
     {
       "id": "w3x.stock.humanbloodpeasant",
       "path": "models/w3x.stock.humanbloodpeasant.json",
-      "hash": "f6d018252984",
-      "size": 320
+      "hash": "cdcb91b598e2",
+      "size": 384
     },
     {
       "id": "w3x.stock.mirrorimagecaster",
@@ -845,8 +845,8 @@
     {
       "id": "w3x.stock.nedeathsmall",
       "path": "models/w3x.stock.nedeathsmall.json",
-      "hash": "a4868811900a",
-      "size": 310
+      "hash": "395a4a51c6fe",
+      "size": 628
     },
     {
       "id": "w3x.stock.neutralbuildingexplosion",
@@ -863,14 +863,14 @@
     {
       "id": "w3x.stock.reddragonmissile",
       "path": "models/w3x.stock.reddragonmissile.json",
-      "hash": "feba01714869",
-      "size": 362
+      "hash": "030b6c219df2",
+      "size": 548
     },
     {
       "id": "w3x.stock.revivehuman",
       "path": "models/w3x.stock.revivehuman.json",
-      "hash": "9598147ce009",
-      "size": 446
+      "hash": "e6f01942e84e",
+      "size": 482
     },
     {
       "id": "w3x.stock.satyrtrickster",
@@ -893,8 +893,8 @@
     {
       "id": "w3x.stock.thunderclapcaster",
       "path": "models/w3x.stock.thunderclapcaster.json",
-      "hash": "4fbd1a886313",
-      "size": 319
+      "hash": "d95def421df6",
+      "size": 383
     },
     {
       "id": "w3x.stock.tomeofretrainingcaster",
@@ -911,8 +911,8 @@
     {
       "id": "w3x.stock.volcanodeath",
       "path": "models/w3x.stock.volcanodeath.json",
-      "hash": "39d3cc137947",
-      "size": 310
+      "hash": "a4ffa3a970e7",
+      "size": 406
     }
   ]
 }

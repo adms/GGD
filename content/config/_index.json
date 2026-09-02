@@ -1,12 +1,12 @@
 {
   "collection": "config",
-  "hash": "9d00bf4744f4",
+  "hash": "87f92a26ea06",
   "entries": [
     {
       "id": "ability-vfx-bindings",
       "path": "config/ability-vfx-bindings.json",
-      "hash": "e49422203999",
-      "size": 49007
+      "hash": "ef617199ca50",
+      "size": 59274
     },
     {
       "id": "admin-friend",
@@ -27,6 +27,12 @@
       "size": 1142
     },
     {
+      "id": "ap-coefficient",
+      "path": "config/ap-coefficient.json",
+      "hash": "802c25138d1e",
+      "size": 1568
+    },
+    {
       "id": "ap-damage-scaling",
       "path": "config/ap-damage-scaling.json",
       "hash": "a4ebb9e1aa44",
@@ -41,7 +47,7 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "f9bfbff20d53",
+      "hash": "dece6343544d",
       "size": 8419
     },
     {
@@ -83,8 +89,8 @@
     {
       "id": "block",
       "path": "config/block.json",
-      "hash": "1fa5a299849a",
-      "size": 704
+      "hash": "346c580ce8fd",
+      "size": 1178
     },
     {
       "id": "body-scale",
@@ -115,6 +121,12 @@
       "path": "config/cast-time.json",
       "hash": "4091ecc954c5",
       "size": 1286
+    },
+    {
+      "id": "cast-time-tiers",
+      "path": "config/cast-time-tiers.json",
+      "hash": "d8473dae1ef5",
+      "size": 620
     },
     {
       "id": "champion-voices",

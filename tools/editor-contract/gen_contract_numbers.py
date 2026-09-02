@@ -843,6 +843,35 @@ def _schema_tier_fields():
 #   `rows` —— 從 config 文件取出「級別 → 數字」，一軸可以有多張（冷卻三種形狀）
 TIER_AXES = (
     {
+        # ⭐⭐ GH#943 —— owner 2026-09-02 逐字：
+        #   「吟唱⋯其實這個也可以五級距 **0, 0.1, 0.3, 0.5, 1** 建議也改成這個」
+        # ⚠️ 上界 1.0 與 `castTimeMaxSec`（#787 owner 夾）刻意同一個數字
+        #   ⇒ ⛔ 作者不可能寫出一個「會被靜靜夾掉」的值。
+        "field": "castTimeTier", "raw": ("castTimeSec",), "resolver": "resolveCastTimeTier",
+        "cfg": "cast-time-tiers", "schema": "config.cast-time-tiers@1", "env": None,  # ⭐ 吟唱不吃全域倍率（同 mana-tiers）
+        "where": "`ability@1` 頂層",
+        "rows": lambda c: [("吟唱秒數", c.get("seconds", c))],
+        "note": "⭐ owner 逐字給的五格；⛔ 上界＝引擎夾得住的上限（#787）",
+    },
+    {
+        # ⭐⭐ GH#943 —— 「條件表達也是模板標籤組合」（owner 2026-09-02 逐字）。
+        # ⚠️ ⭐ **缺席時由 `resolveConditionTier()` 從文件自己的結構推導**
+        #   （沒條件 ⇒ 極小＝恆真；有條件沒判斷 ⇒ 中）
+        #   ⇒ ⛔ 208 支帶 AP 係數的技能**不必**各填一格（那會是 208 個會過期的第二住處）。
+        "field": "conditionTier", "raw": (), "resolver": "resolveConditionTier",
+        "cfg": "ap-coefficient", "schema": "config.ap-coefficient@1", "env": None,  # ⭐ 條件乘數不吃全域倍率
+        "where": "`Scaling`（傷害節點的 `amount`）",
+        "rows": lambda c: [("條件乘數", c.get("condition", {}))],
+        "note": "⭐ 判準是「這個條件我自己控制得了嗎」；⛔ 缺席時**推導**而不是留空",
+        "derived": True,
+        "derivedWhy": (
+            "⭐ 它**刻意不改文件**：缺席時由 `resolveConditionTier()` 從文件自己的結構推導"
+            "（沒有 `when`／`condition` ⇒ 極小＝恆真；有條件而作者沒判斷 ⇒ 中）。"
+            "⛔ 往 208 支帶 AP 係數的技能各寫一格 ＝ 208 個會過期的第二住處（第〇·四守則）。"
+            "⇒ 消費端是 `apCoefficient.ts` 的 `apCoeffInputsFrom()`（讀取時求值）。"
+        ),
+    },
+    {
         "field": "radiusTier", "raw": ("radius",), "resolver": "resolveRadiusTier",
         "cfg": "aoe-tiers", "schema": "config.aoe-tiers@1", "env": "abilityRange",
         "where": "`ability@1` 頂層 · 每一個帶 AoE 的 effect",
@@ -924,6 +953,30 @@ def tier_axes():
     seam = REGISTRIES_TS.read_text(encoding="utf-8")
     out, names = [], None
     for a in TIER_AXES:
+        # ⭐⭐ 有**兩種**級距（GH#943 逼出來的分辨）：
+        #   ① **載入時改寫文件**（`resolveCooldownTier` 那一族）—— 它必須在
+        #      `registries.ts` 的接縫上，⛔ 否則就是「有欄位而沒有人翻譯」（形態⑧）。
+        #   ② ⭐ **讀取時推導**（`resolveConditionTier`）—— 它**刻意不改文件**：
+        #      缺席時從文件自己的結構推導（沒條件 ⇒ 恆真），⛔ 而不是往 208 份
+        #      技能各寫一格（那會是 208 個會過期的第二住處，第〇·四守則）。
+        #
+        # ⚠️ ⭐ 而②仍然要**有人真的呼叫它** —— ⛔ 「宣告了一個沒有人用的推導器」
+        #   與「沒有翻譯」一樣是空的。⇒ 下面驗它出現在**某個出貨消費端**。
+        if a.get("derived"):
+            reason = a.get("derivedWhy")
+            if not reason:
+                sys.exit(f"`{a['field']}` 宣告成 derived 卻沒有寫下**為什麼不改文件** —— 一句能被反駁的理由")
+            hits = [
+                pth for pth in (REPO / "packages/shared/src").rglob("*.ts")
+                if ".test." not in pth.name and a["resolver"] in pth.read_text(encoding="utf-8")
+                and pth.name != f"{a['resolver'].replace('resolve', '').lower()}.ts"
+            ]
+            if len(hits) < 2:  # 定義處 ＋ 至少一個消費端
+                sys.exit(
+                    f"`{a['resolver']}` 宣告成 derived，⛔ 而全出貨原始碼只有 {len(hits)} 處提到它 "
+                    f"—— ⭐ 一個沒有消費端的推導器與「沒有翻譯」一樣是空的"
+                )
+            continue
         if a["resolver"] not in seam:
             sys.exit(f"`{a['resolver']}` 不在 registries.ts 的解析接縫上 —— `{a['field']}` 沒有人翻譯它")
         c = cfg(a["cfg"])

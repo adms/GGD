@@ -163,6 +163,8 @@ const EMITTED_TIER_SCHEMAS: readonly string[] = [
   "config.damage-tiers@1",
   "config.mana-tiers@1",
   "config.cooldown-tiers@1",
+  // ⭐ GH#943 —— owner 逐字：「吟唱⋯其實這個也可以五級距 0, 0.1, 0.3, 0.5, 1」
+  "config.cast-time-tiers@1",
 ];
 
 /** 是級距 config，但**不是技能的一軸** —— 每一列都要說得出為什麼。 */

@@ -48,7 +48,7 @@ fi
 if [ "${GGD_QUARANTINE_UNLOCKED:-0}" = "1" ]; then
   pnpm "$RUN"
   RC=$?
-  [ "$RC" -eq 0 ] || echo "✗✗ genrun: \`pnpm ${RUN}\` 失敗（exit ${RC}）" >&2
+  [ "$RC" -eq 0 ] || echo "✗✗ genrun: \`pnpm $RUN\` 失敗（exit ${RC}）" >&2
   exit "$RC"
 fi
 
@@ -94,12 +94,12 @@ fi
 
 bash scripts/product-quarantine.sh lock
 if [ "$RC" -eq 3 ]; then
-  echo "✗✗ genrun: ${STEP} **跑完了但戶籍對不上**（見上面的對帳報告）—— GH#771。" >&2
-  echo "✗✗ genrun: ${STEP} **跑完了但戶籍對不上**（見上面的對帳報告）—— GH#771。"
+  echo "✗✗ genrun: $STEP **跑完了但戶籍對不上**（見上面的對帳報告）—— GH#771。" >&2
+  echo "✗✗ genrun: $STEP **跑完了但戶籍對不上**（見上面的對帳報告）—— GH#771。"
 elif [ "$RC" -ne 0 ]; then
-  echo "✗✗ genrun: \`pnpm ${STEP}\` 失敗（exit ${RC}）—— ⛔ 產物**沒有**重新產生。" >&2
-  echo "✗✗ genrun: \`pnpm ${STEP}\` 失敗（exit ${RC}）—— ⛔ 產物**沒有**重新產生。"
+  echo "✗✗ genrun: \`pnpm $STEP\` 失敗（exit ${RC}）—— ⛔ 產物**沒有**重新產生。" >&2
+  echo "✗✗ genrun: \`pnpm $STEP\` 失敗（exit ${RC}）—— ⛔ 產物**沒有**重新產生。"
 else
-  echo "✓ genrun: ${STEP} 完成（產物已重新上鎖）"
+  echo "✓ genrun: $STEP 完成（產物已重新上鎖）"
 fi
 exit "$RC"

@@ -157,6 +157,8 @@ export const NAV_TAGS: Record<string, readonly NavTag[]> = {
   cooldownTiers: ["數值", "技能", "可調"], // 尺之三
   damageTiers: ["數值", "技能", "可調"], // 尺之四
   manaTiers: ["數值", "技能", "可調"], // 尺之五
+  castTimeTiers: ["數值", "技能", "可調"], // 尺之六（GH#943 —— owner 逐字給的 0/0.1/0.3/0.5/1）
+  apCoefficient: ["數值", "技能", "可調"], // ⭐ 六維公式（GH#942）—— 它**吃**上面每一把尺的標籤,所以同一族
   speedGrowthTiers: ["數值", "可調"], // 掛在英雄卡上，不是技能
   skillNormalize: ["技能", "數值", "可調"], // authoring-time：閘怎麼問
   manaEconomy: ["數值", "可調"], // 回魔地板

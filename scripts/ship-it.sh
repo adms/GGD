@@ -58,7 +58,7 @@ else
       printf '\n## 🎮 玩家看得到的\n\n'
       bash scripts/release-note-players.sh 2>/dev/null | sed -n '/^- /p' | head -20
   } > "$_DRAFT"
-  echo "   ⭐ 草稿已生成：$_DRAFT（$(git rev-list --count "${_PREV:+${_PREV}..}${TAG}" 2>/dev/null) 個 commit）"
+  echo "   ⭐ 草稿已生成：${_DRAFT}（$(git rev-list --count "${_PREV:+${_PREV}..}${TAG}" 2>/dev/null) 個 commit）"
   echo "   ⇒ 填完理由再跑：gh release create $TAG --title … --notes-file $_DRAFT"
   echo "   ⛔ 而**零個 commit** 的 tag 不該存在 —— 那種版號答不出「這一版做了什麼」"
   FAIL="${FAIL}note "
@@ -97,7 +97,7 @@ fi
 
 echo
 if [ -z "$FAIL" ]; then
-  echo "🚢 push + note + discord + deploy —— 四步全過（$TAG）"
+  echo "🚢 push + note + discord + deploy —— 四步全過（${TAG}）"
 else
   # ⚠️ ⭐ fail-loud：漏掉哪一步要**說出來**，⛔ 靜默跳過與全過長得一樣
   echo "⚠️ 這幾步**沒過**：$FAIL"

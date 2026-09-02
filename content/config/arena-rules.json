@@ -284,7 +284,7 @@
     "reward": {
       "gold": 20,
       "xp": 40,
-      "killsPerLevel": 6
+      "killsPerLevel": 0
     },
     "boss": {
       "enabled": true,
@@ -313,7 +313,7 @@
         "perRound": 0,
         "flat": 10
       },
-      "bountyLevels": 25,
+      "bountyLevels": 10,
       "lastHitMode": "bonus",
       "countOverkill": false,
       "noClip": true,
@@ -362,7 +362,7 @@
       },
       "bountyGold": 5000,
       "bountyXp": 200,
-      "bountyLevels": 5,
+      "bountyLevels": 3,
       "lastHitMultiplier": 1,
       "lastHitMode": "bonus",
       "splitByDamage": true,

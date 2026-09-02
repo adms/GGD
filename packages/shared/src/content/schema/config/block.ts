@@ -39,6 +39,23 @@ export const zConfigBlockDoc = z
      * 種子 → 兩種模式給出兩組不同的擋掉量與不同的 rng draw 數)。
      */
     stacking: z.enum(["independent", "best"]),
+    /**
+     * ⭐⭐ GH#650 —— **格擋觸發率的系統倍率**（出貨 1.0 ＝ 逐位元不變）。
+     *
+     * ⚠️ 它存在的理由是一次量測，⛔ 不是平衡想法：owner 回報過**兩次**
+     * 「初號機 AT力場格擋成功沒出現橘色光盾特效」，
+     * ⭐ 而跑出貨鏈量到的是 —— **格擋成功時特效真的會發**
+     * （`sim/combat/blockVfxShippedAbility.test.ts`，跑那份 ability JSON 本人）。
+     * ⭐ 而他判斷「格擋成功」的依據（畫面上的 **GUARD** 字）**不是那一格擋的**：
+     * GUARD 只在**整發被吃光**時出現，⛔ 而 AT力場只擋 50%。
+     * ⇒ 最可能的真相是那 **10%** 沒抽中。
+     *
+     * ⇒ ⭐ 這一格讓 owner **自己驗**：調到 3 ⇒ 30% ⇒ 幾發之內一定看得到。
+     * ⚠️ ⛔ 出貨值我不替他決定（第一守則「可調 ≠ 我可以轉」）。
+     * ⚠️ 上界 5：再高會把所有 `chance` 夾到 1（每一發都擋）—— 那不是旋鈕是開關。
+     * ⭐ 0 是合法的：那是「把格擋整族關掉」的除錯狀態。
+     */
+    chanceMult: z.number().min(0).max(5).optional(),
   })
   .strict();
 export type ConfigBlockDoc = z.infer<typeof zConfigBlockDoc>;

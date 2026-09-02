@@ -2088,5 +2088,86 @@
     "status": "landing",
     "since": "2026-09-02",
     "why": "⭐ `dodge` 是 2026-09-02 為 Codex 阻塞清單 P0-2 新做的**動作積木**，而 owner 2026-09-01 逐字定義的分工是「**main 是做出積木供使用的角色**，[後台編輯器及codex編輯器] 是**堆積木**的角色」⇒ ⭐ 出貨內容零採用是**這條 lane 的定義**，⛔ 不是遷移沒做完。⚠️ 而它刻意用 `landing`（30 天到期）⛔ 不是 `debt`：Codex 逐字說「Main 完成積木與契約後，Editor 會從空白重新組裝八個 capability fixture」⇒ ⭐ 30 天後若仍是零，代表**那件事沒有發生**，而那正是這條閘該喊的時候。⭐ 積木本身的守衛在 `apps/client/src/render/guardDodgePulse.test.ts`（schema 收得下 · 狀態機蓋得過 hurt · 缺 clip 的 fallback 不是 hurt · 消費端接的是 `blocked` 與 `evade` 兩個真事件）。"
+  },
+  "field:abilities.effects[]#chainLightning.amount.ratios[].when": {
+    "status": "landing",
+    "since": "2026-09-02",
+    "why": "GH#936 —— 一條係數的**前提**（「帶著某狀態時才吃這個 AP 係數」）。⭐ 這一格今天是 0 是**對的**：機制（schema ＋ `resolveScaling`）與內容（哪一支技能改成條件式）刻意分兩張票 —— 票文逐字寫著「⛔ 不包含：改任何係數的**值**」，而第一份採用者是 owner 2026-09-02 點名的 04-03 龍破斬（`godie-hjai.e`）：> 「碎片是 EX 施展得到的增幅狀態，可以做條件偵測增幅 AP 傷害」。⛔ 我不先填它：那會在同一個 commit 裡對一支出貨技能做一次**削弱**（沒碎片時少 1.8×AP），而那要走批核頁（#926），⛔ 不是夾帶在一塊積木裡。⚠️ 機制側兩個方向都有守衛並突變驗過（`sim/effects/conditionalRatios.test.ts`：條件不成立不計入 / 成立才計入 / 缺席逐位元同今天且零 rng draw）。⚠️ census 只列 `chainLightning` 這一把，但這一格住 `zScaling`，damage / damageArea / damageLine / dot / heal / shield / spendMana 共用同一份。",
+    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
+  },
+  "field:abilities.castTimeTier": {
+    "status": "landing",
+    "since": "2026-09-02",
+    "why": "⭐ `castTimeTier` 是 2026-09-02（GH#943）新做的**五級距軸** —— owner 逐字：「吟唱⋯其實這個也可以五級距 **0, 0.1, 0.3, 0.5, 1** 建議也改成這個」。⛔ 出貨內容零採用是**這條 lane 的定義**（Main 做積木、內容側／編輯器採用），⛔ 不是遷移沒做完。⚠️ 而它**不是空的**：載入時由 `resolveCastTimeTierOnDoc` 翻譯（⭐ 級距贏），而 `contract:numbers` 逐字擋過一次「沒有人翻譯它」。⇒ 30 天後若仍是零，代表**沒有人採用它** —— ⭐ 那正是這條閘該喊的時候。"
+  },
+  "field:champions.abilities.*.castTimeTier": {
+    "status": "landing",
+    "since": "2026-09-02",
+    "why": "⭐ `castTimeTier` 是 2026-09-02（GH#943）新做的**五級距軸** —— owner 逐字：「吟唱⋯其實這個也可以五級距 **0, 0.1, 0.3, 0.5, 1** 建議也改成這個」。⛔ 出貨內容零採用是**這條 lane 的定義**（Main 做積木、內容側／編輯器採用），⛔ 不是遷移沒做完。⚠️ 而它**不是空的**：載入時由 `resolveCastTimeTierOnDoc` 翻譯（⭐ 級距贏），而 `contract:numbers` 逐字擋過一次「沒有人翻譯它」。⇒ 30 天後若仍是零，代表**沒有人採用它** —— ⭐ 那正是這條閘該喊的時候。"
+  },
+  "field:abilities.effects[]#chainLightning.amount.conditionTier": {
+    "status": "landing",
+    "since": "2026-09-02",
+    "why": "⭐ `conditionTier` 是 2026-09-02（GH#943）新做的軸，而它**刻意是推導型**：缺席時由 `resolveConditionTier()` 從文件自己的結構推導（沒條件 ⇒ 極小＝恆真）。⛔ 往 208 支帶 AP 係數的技能各填一格 ＝ 208 個會過期的第二住處（第〇·四守則）。⇒ ⭐ **零採用是設計，⛔ 不是缺口** —— 真正要人填的只有「有條件而難度不是預設」那幾支。⚠️ 30 天後要問的是「有沒有出現那種技能」，⛔ 不是把它續期。"
+  },
+  "field:vfx-scripts.segments[]#anim.replaces": {
+    "status": "landing",
+    "since": "2026-09-02",
+    "why": "⭐ 2026-09-02 **取代語意**（Codex 阻塞清單 C 的 `replacementPolicy`）——這一段接管哪一條演出通道。⛔ 在此之前 Main **沒有取代機制**:專屬 script 與預設演出**兩條都跑**,出貨 10 份 script 是靠**作者的約定**避開重疊的,⛔ 不是靠機制（收據那一格因此逐字是 `unsupported`,而它是實話）。⭐ 這一格今天是 0 是**對的**:第一份採用者會是**外部編輯器產出的內容** —— ⛔ 我不先填它,填了就是替 Codex 決定哪一段該接管哪條通道。⚠️ 機制側三段全通並有守衛（`channelTakeover.test.ts` 五條 · `presentationReceiptFresh` 的承重那一半要求 `heldBy` 在 `playDefaultPresentation` **函式體內**,突變驗過會掉回 `unsupported`）:schema `replaces` · 播放器 `claim` · 預設演出 `heldBy`。⚠️ ⭐ 省略它 ＝ 今天的行為（兩條都跑）⇒ 出貨的 10 份 script **逐位元不變**。",
+    "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
+  },
+  "field:vfx-scripts.segments[]#anim.replacesForMs": {
+    "status": "landing",
+    "since": "2026-09-02",
+    "why": "⭐ 同上（`replaces` 的接管時長）。⚠️ ⭐ 省略＝**320ms** —— ⛔ 刻意不是「永遠」:一個沒有到期的接管會讓那個人**再也不會有任何反應**,而那看起來就像動畫壞了。⇒ 只有需要**比一塊動作積木更長**的接管才會填它。",
+    "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
+  },
+  "field:vfx-scripts.segments[]#floatingText.replaces": {
+    "status": "landing",
+    "since": "2026-09-02",
+    "why": "⭐ 2026-09-02 **取代語意**（Codex 阻塞清單 C 的 `replacementPolicy`）——這一段接管哪一條演出通道。⛔ 在此之前 Main **沒有取代機制**:專屬 script 與預設演出**兩條都跑**,出貨 10 份 script 是靠**作者的約定**避開重疊的,⛔ 不是靠機制（收據那一格因此逐字是 `unsupported`,而它是實話）。⭐ 這一格今天是 0 是**對的**:第一份採用者會是**外部編輯器產出的內容** —— ⛔ 我不先填它,填了就是替 Codex 決定哪一段該接管哪條通道。⚠️ 機制側三段全通並有守衛（`channelTakeover.test.ts` 五條 · `presentationReceiptFresh` 的承重那一半要求 `heldBy` 在 `playDefaultPresentation` **函式體內**,突變驗過會掉回 `unsupported`）:schema `replaces` · 播放器 `claim` · 預設演出 `heldBy`。⚠️ ⭐ 省略它 ＝ 今天的行為（兩條都跑）⇒ 出貨的 10 份 script **逐位元不變**。",
+    "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
+  },
+  "field:vfx-scripts.segments[]#floatingText.replacesForMs": {
+    "status": "landing",
+    "since": "2026-09-02",
+    "why": "⭐ 同上（`replaces` 的接管時長）。⚠️ ⭐ 省略＝**320ms** —— ⛔ 刻意不是「永遠」:一個沒有到期的接管會讓那個人**再也不會有任何反應**,而那看起來就像動畫壞了。⇒ 只有需要**比一塊動作積木更長**的接管才會填它。",
+    "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
+  },
+  "field:vfx-scripts.segments[]#modelFx.replaces": {
+    "status": "landing",
+    "since": "2026-09-02",
+    "why": "⭐ 2026-09-02 **取代語意**（Codex 阻塞清單 C 的 `replacementPolicy`）——這一段接管哪一條演出通道。⛔ 在此之前 Main **沒有取代機制**:專屬 script 與預設演出**兩條都跑**,出貨 10 份 script 是靠**作者的約定**避開重疊的,⛔ 不是靠機制（收據那一格因此逐字是 `unsupported`,而它是實話）。⭐ 這一格今天是 0 是**對的**:第一份採用者會是**外部編輯器產出的內容** —— ⛔ 我不先填它,填了就是替 Codex 決定哪一段該接管哪條通道。⚠️ 機制側三段全通並有守衛（`channelTakeover.test.ts` 五條 · `presentationReceiptFresh` 的承重那一半要求 `heldBy` 在 `playDefaultPresentation` **函式體內**,突變驗過會掉回 `unsupported`）:schema `replaces` · 播放器 `claim` · 預設演出 `heldBy`。⚠️ ⭐ 省略它 ＝ 今天的行為（兩條都跑）⇒ 出貨的 10 份 script **逐位元不變**。",
+    "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
+  },
+  "field:vfx-scripts.segments[]#modelFx.replacesForMs": {
+    "status": "landing",
+    "since": "2026-09-02",
+    "why": "⭐ 同上（`replaces` 的接管時長）。⚠️ ⭐ 省略＝**320ms** —— ⛔ 刻意不是「永遠」:一個沒有到期的接管會讓那個人**再也不會有任何反應**,而那看起來就像動畫壞了。⇒ 只有需要**比一塊動作積木更長**的接管才會填它。",
+    "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
+  },
+  "field:vfx-scripts.segments[]#screenShake.replaces": {
+    "status": "landing",
+    "since": "2026-09-02",
+    "why": "⭐ 2026-09-02 **取代語意**（Codex 阻塞清單 C 的 `replacementPolicy`）——這一段接管哪一條演出通道。⛔ 在此之前 Main **沒有取代機制**:專屬 script 與預設演出**兩條都跑**,出貨 10 份 script 是靠**作者的約定**避開重疊的,⛔ 不是靠機制（收據那一格因此逐字是 `unsupported`,而它是實話）。⭐ 這一格今天是 0 是**對的**:第一份採用者會是**外部編輯器產出的內容** —— ⛔ 我不先填它,填了就是替 Codex 決定哪一段該接管哪條通道。⚠️ 機制側三段全通並有守衛（`channelTakeover.test.ts` 五條 · `presentationReceiptFresh` 的承重那一半要求 `heldBy` 在 `playDefaultPresentation` **函式體內**,突變驗過會掉回 `unsupported`）:schema `replaces` · 播放器 `claim` · 預設演出 `heldBy`。⚠️ ⭐ 省略它 ＝ 今天的行為（兩條都跑）⇒ 出貨的 10 份 script **逐位元不變**。",
+    "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
+  },
+  "field:vfx-scripts.segments[]#screenShake.replacesForMs": {
+    "status": "landing",
+    "since": "2026-09-02",
+    "why": "⭐ 同上（`replaces` 的接管時長）。⚠️ ⭐ 省略＝**320ms** —— ⛔ 刻意不是「永遠」:一個沒有到期的接管會讓那個人**再也不會有任何反應**,而那看起來就像動畫壞了。⇒ 只有需要**比一塊動作積木更長**的接管才會填它。",
+    "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
+  },
+  "field:vfx-scripts.segments[]#vfx.replaces": {
+    "status": "landing",
+    "since": "2026-09-02",
+    "why": "⭐ 2026-09-02 **取代語意**（Codex 阻塞清單 C 的 `replacementPolicy`）——這一段接管哪一條演出通道。⛔ 在此之前 Main **沒有取代機制**:專屬 script 與預設演出**兩條都跑**,出貨 10 份 script 是靠**作者的約定**避開重疊的,⛔ 不是靠機制（收據那一格因此逐字是 `unsupported`,而它是實話）。⭐ 這一格今天是 0 是**對的**:第一份採用者會是**外部編輯器產出的內容** —— ⛔ 我不先填它,填了就是替 Codex 決定哪一段該接管哪條通道。⚠️ 機制側三段全通並有守衛（`channelTakeover.test.ts` 五條 · `presentationReceiptFresh` 的承重那一半要求 `heldBy` 在 `playDefaultPresentation` **函式體內**,突變驗過會掉回 `unsupported`）:schema `replaces` · 播放器 `claim` · 預設演出 `heldBy`。⚠️ ⭐ 省略它 ＝ 今天的行為（兩條都跑）⇒ 出貨的 10 份 script **逐位元不變**。",
+    "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
+  },
+  "field:vfx-scripts.segments[]#vfx.replacesForMs": {
+    "status": "landing",
+    "since": "2026-09-02",
+    "why": "⭐ 同上（`replaces` 的接管時長）。⚠️ ⭐ 省略＝**320ms** —— ⛔ 刻意不是「永遠」:一個沒有到期的接管會讓那個人**再也不會有任何反應**,而那看起來就像動畫壞了。⇒ 只有需要**比一塊動作積木更長**的接管才會填它。",
+    "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
   }
 }

@@ -141,7 +141,7 @@ DEPLOY_T0=$(date +%s)   # ⏱ GH#671 全量部署 wall-clock 的起點
 COMMIT_AT_START=$(git rev-parse HEAD 2>/dev/null || echo "")
 [ "$ACCOUNTS_BEFORE" -gt 0 ] 2>/dev/null \
   || die "data/accounts 裡數到 $ACCOUNTS_BEFORE 個帳號 —— 這不對，停在這裡而不是在上面蓋東西"
-ok "部署前帳號數: $ACCOUNTS_BEFORE（住在 host 的 data/，不在映像裡）"
+ok "部署前帳號數: ${ACCOUNTS_BEFORE}（住在 host 的 data/，不在映像裡）"
 
 # ── 0.5 磁碟閘 ───────────────────────────────────────────────────────────────
 # 2026-08-16：一次被 SIGPIPE 打斷的 build 把 build cache 養到 80GB，docker 的碟
@@ -175,11 +175,11 @@ ok "部署前帳號數: $ACCOUNTS_BEFORE（住在 host 的 data/，不在映像�
 BUILD_CACHE_CAP="${GGD_BUILD_CACHE_CAP:-40GB}"
 MIN_FREE_GB="${GGD_MIN_FREE_GB:-20}"
 if [ "$MODE" = full ]; then
-  say "磁碟閘（build cache 上限 $BUILD_CACHE_CAP，可用空間下限 ${MIN_FREE_GB}G）"
+  say "磁碟閘（build cache 上限 ${BUILD_CACHE_CAP}，可用空間下限 ${MIN_FREE_GB}G）"
   # `--max-used-space` 要 Docker 28+。舊版沒有這個旗標，退回時間過濾器並說出來
   # ——⛔ 不可以靜默略過，那就等於這個閘不存在（fail-open 必須有人聽得見）。
   if docker builder prune -f --max-used-space "$BUILD_CACHE_CAP" >/dev/null 2>&1; then
-    ok "build cache 夾到 $BUILD_CACHE_CAP（LRU）"
+    ok "build cache 夾到 ${BUILD_CACHE_CAP}（LRU）"
     # ⚠️ GH#618 —— containerd store 上，**懸空的映像層不歸 builder prune 管**。
     # `image prune -f` 只刪沒有 tag 也沒有容器在用的那些 ⇒ ⛔ 不會碰到 :prev
     #（回滾落腳點有 tag），⛔ 不會碰到 volume（玩家資料）。
@@ -280,7 +280,7 @@ if [ "$MODE" = rollback ]; then
   done
   if [ -f "$PREV_FILE" ]; then
     PREV_COMMIT=$(cat "$PREV_FILE")
-    say "把 content/ 也退回 $PREV_COMMIT（content 是 live bind-mount，只退映像會得到沒人測過的組合）"
+    say "把 content/ 也退回 ${PREV_COMMIT}（content 是 live bind-mount，只退映像會得到沒人測過的組合）"
     git checkout "$PREV_COMMIT" -- content/
     ok "content/ @ $PREV_COMMIT"
   else
@@ -507,7 +507,7 @@ else
       # 「跑一次檢查可能中斷一場比賽」不是一個檢查該有的權力。
       # 完整部署本來就會重啟，那時候順手修沒有額外代價。
       if [ "$MODE" = "verify" ]; then
-        die "錄影目錄寫不進去（writable=$REPLAY_WRITABLE）—— 這台 shard **一場都不會錄到**，
+        die "錄影目錄寫不進去（writable=${REPLAY_WRITABLE}）—— 這台 shard **一場都不會錄到**，
      而遊戲會照常運作，所以沒有人會發現。
      ⚠️ `--verify-only` 刻意**不自動修**：修法要重啟 game shard，會踢掉正在打的人。
      沒有人在線上的話，跑一次完整部署（它會自己修），或手動：
@@ -516,7 +516,7 @@ else
      完整 runbook：docs/replay-observability.md"
       fi
       # 先自己修，再重驗。不是「印出修法」——見上面那一段。
-      warn "錄影目錄寫不進去（writable=$REPLAY_WRITABLE）—— 先自己修擁有者（容器內的 root，不是主機 sudo）"
+      warn "錄影目錄寫不進去（writable=${REPLAY_WRITABLE}）—— 先自己修擁有者（容器內的 root，不是主機 sudo）"
       docker exec -u root ggd-game-1 chown -R 1000:1000 /data/replays || warn "容器內 chown 沒成功（繼續，讓下面的重驗來裁決）"
       docker exec -u root ggd-game-1 chmod 755 /data/replays || warn "容器內 chmod 沒成功（繼續，讓下面的重驗來裁決）"
       docker restart ggd-game-1 >/dev/null || warn "ggd-game-1 重啟失敗"
@@ -628,7 +628,7 @@ else
   if [ "$REVIEW_OK" = "True" ]; then
     ok "批核頁資料面: 材料 $REVIEW_N 批 · 結果可寫（穿過 edge 驗的）"
   else
-    warn "批核頁 /healthz 說不健康（ok=$REVIEW_OK, verdicts.writable=$REVIEW_W, 材料=$REVIEW_N）——
+    warn "批核頁 /healthz 說不健康（ok=$REVIEW_OK, verdicts.writable=$REVIEW_W, 材料=${REVIEW_N}）——
      線上的批次驗收頁可能讀不到批次。⛔ 不擋部署。詳情：curl -s $BASE/__review/healthz"
   fi
 fi
@@ -639,7 +639,7 @@ ACCOUNTS_AFTER=$(accounts_now)
   "帳號從 $ACCOUNTS_BEFORE 掉到 $ACCOUNTS_AFTER —— 有東西寫壞了 data/。
      帳號住在 host 的 data/（bind mount），部署本來就碰不到它。
      會弄丟的只有三條路，詳見這支腳本檔頭的「玩家資料」那一段。"
-ok "帳號數: $ACCOUNTS_BEFORE → $ACCOUNTS_AFTER（沒有掉）"
+ok "帳號數: $ACCOUNTS_BEFORE → ${ACCOUNTS_AFTER}（沒有掉）"
 
 # ⏱ GH#671 —— 全量部署的 wall-clock（owner 的目標是 ≤ 3 分鐘 = 180s）。
 # ⚠️ `--verify-only` 沒有 build ⇒ 這個秒數量的是「跑幾條 curl」，⛔ 不是部署耗時。
@@ -687,7 +687,7 @@ else
   HIT=0
   for d in $DNS_IPS; do for m in $SELF_IPS; do [ "$d" = "$m" ] && HIT=1; done; done
   if [ "$HIT" = 1 ]; then
-    ok "玩家連到的就是這一台（$PUBLIC_HOST → $DNS_IPS）"
+    ok "玩家連到的就是這一台（$PUBLIC_HOST → ${DNS_IPS}）"
   else
     die "⛔⛔ **部署到了玩家連不到的機器。**
        $PUBLIC_HOST 解析到 : $DNS_IPS

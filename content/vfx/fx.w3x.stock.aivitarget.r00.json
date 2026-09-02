@@ -1,0 +1,16 @@
+{
+  "id": "fx.w3x.stock.aivitarget.r00",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/light_02.png",
+  "widthAbove": 0.425,
+  "widthBelow": 0.425,
+  "lifespanSec": 0.15,
+  "color": [
+    0.69,
+    0.322,
+    0.973,
+    0.7
+  ],
+  "blendMode": "additive",
+  "anchorBone": "Dummy06"
+}

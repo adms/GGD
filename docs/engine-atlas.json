@@ -1,11 +1,11 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "111434fa",
+  "capabilityFingerprint": "855cf94f",
   "counts": {
     "effectKinds": 47,
     "hookEvents": 33,
-    "conditionLeafKinds": 5,
-    "templateFamilies": 27,
+    "conditionLeafKinds": 6,
+    "templateFamilies": 29,
     "effectFields": 261,
     "stats": 23,
     "combatEnvKeys": 39
@@ -575,13 +575,16 @@
       "chance",
       "equipment",
       "kind",
+      "recentCast",
       "stat",
       "status"
     ],
     "templateFamilies": [
       "beam-roll",
+      "blink-strike",
       "buff-self",
       "charge-push",
+      "combo-finisher",
       "ground-nova",
       "instant-blast",
       "leap-strike",

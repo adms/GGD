@@ -102,7 +102,7 @@ cmd_run() {
       dev_src=$(df -P "$REPO" 2>/dev/null | tail -1 | awk '{print $1}')
       dev_dst=$(df -P "$(dirname "$DEST")" 2>/dev/null | tail -1 | awk '{print $1}')
       [ -n "$dev_dst" ] && [ "$dev_src" = "$dev_dst" ] \
-        && die "⛔ 目的地與來源在同一顆碟（$dev_src）—— 那不叫備份,那叫第二份副本"
+        && die "⛔ 目的地與來源在同一顆碟（${dev_src}）—— 那不叫備份,那叫第二份副本"
       ;;
   esac
 

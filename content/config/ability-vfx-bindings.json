@@ -53,6 +53,19 @@
       "confidence": "CONFIRMED"
     },
     {
+      "abilityId": "godie-e008.ex",
+      "vfxKeys": [
+        "fx.w3x.stock.flamestrike1.p00",
+        "fx.w3x.stock.flamestrike1.p01",
+        "fx.w3x.stock.flamestrike1.p02",
+        "fx.w3x.stock.flamestrike1.p03",
+        "fx.w3x.stock.flamestrike1.p04"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A0UO",
+      "confidence": "CONFIRMED"
+    },
+    {
       "abilityId": "godie-e00l.e",
       "vfxKeys": [
         "fx.w3x.particle.holyawakening.p00",
@@ -160,7 +173,8 @@
     {
       "abilityId": "godie-h020.e",
       "vfxKeys": [
-        "fx.w3x.stock.warstompcaster.p00"
+        "fx.w3x.stock.volcanodeath.p00",
+        "fx.w3x.stock.volcanodeath.p01"
       ],
       "source": "jass-literal:jass:effectLoc",
       "rawcode": "A04R",
@@ -227,7 +241,8 @@
     {
       "abilityId": "godie-hjai.e",
       "vfxKeys": [
-        "fx.w3x.stock.warstompcaster.p00"
+        "fx.w3x.stock.volcanodeath.p00",
+        "fx.w3x.stock.volcanodeath.p01"
       ],
       "source": "jass-literal:jass:effectLoc",
       "rawcode": "A04R",
@@ -967,6 +982,18 @@
       "why": "原作地圖裡**沒有任何技能**引用模型 `sonicbreathstream`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
     },
     {
+      "vfxKey": "fx.w3x.stock.aivitarget.r00",
+      "why": "⚠️ 這份 emitter 文件在 `models` 裡找不到來源模型 —— 它是別條產生鏈(例:extract_stock_vfx.py 的零售 MPQ 抽取)的產物,不歸這張表管"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.aivitarget.r01",
+      "why": "⚠️ 這份 emitter 文件在 `models` 裡找不到來源模型 —— 它是別條產生鏈(例:extract_stock_vfx.py 的零售 MPQ 抽取)的產物,不歸這張表管"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.aivitarget.r02",
+      "why": "⚠️ 這份 emitter 文件在 `models` 裡找不到來源模型 —— 它是別條產生鏈(例:extract_stock_vfx.py 的零售 MPQ 抽取)的產物,不歸這張表管"
+    },
+    {
       "vfxKey": "fx.w3x.stock.awaken.p00",
       "why": "零售 MPQ 抽出來的 `awaken`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。"
     },
@@ -991,6 +1018,10 @@
       "why": "零售 MPQ 抽出來的 `fragdriller`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。"
     },
     {
+      "vfxKey": "fx.w3x.stock.humanbloodpeasant.p00",
+      "why": "零售 MPQ 抽出來的 `humanbloodpeasant`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。"
+    },
+    {
       "vfxKey": "fx.w3x.stock.markofchaostarget.p00",
       "why": "零售 MPQ 抽出來的 `markofchaostarget`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 7 支在**身上**的通道點名它(godie-h01n.ex:art:caster, godie-h01o.ex:art:caster, godie-hapm.r:jass:effectTargetUnit, godie-n003.ex:art:missile, godie-n01c.ex:art:missile, godie-n01g.ex:art:missile…);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
     },
@@ -1013,6 +1044,86 @@
     {
       "vfxKey": "fx.w3x.stock.markofchaostarget.p05",
       "why": "零售 MPQ 抽出來的 `markofchaostarget`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 7 支在**身上**的通道點名它(godie-h01n.ex:art:caster, godie-h01o.ex:art:caster, godie-hapm.r:jass:effectTargetUnit, godie-n003.ex:art:missile, godie-n01c.ex:art:missile, godie-n01g.ex:art:missile…);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.markofchaostarget.r00",
+      "why": "⚠️ 這份 emitter 文件在 `models` 裡找不到來源模型 —— 它是別條產生鏈(例:extract_stock_vfx.py 的零售 MPQ 抽取)的產物,不歸這張表管"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.markofchaostarget.r01",
+      "why": "⚠️ 這份 emitter 文件在 `models` 裡找不到來源模型 —— 它是別條產生鏈(例:extract_stock_vfx.py 的零售 MPQ 抽取)的產物,不歸這張表管"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.markofchaostarget.r02",
+      "why": "⚠️ 這份 emitter 文件在 `models` 裡找不到來源模型 —— 它是別條產生鏈(例:extract_stock_vfx.py 的零售 MPQ 抽取)的產物,不歸這張表管"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.markofchaostarget.r03",
+      "why": "⚠️ 這份 emitter 文件在 `models` 裡找不到來源模型 —— 它是別條產生鏈(例:extract_stock_vfx.py 的零售 MPQ 抽取)的產物,不歸這張表管"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.markofchaostarget.r04",
+      "why": "⚠️ 這份 emitter 文件在 `models` 裡找不到來源模型 —— 它是別條產生鏈(例:extract_stock_vfx.py 的零售 MPQ 抽取)的產物,不歸這張表管"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.markofchaostarget.r05",
+      "why": "⚠️ 這份 emitter 文件在 `models` 裡找不到來源模型 —— 它是別條產生鏈(例:extract_stock_vfx.py 的零售 MPQ 抽取)的產物,不歸這張表管"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.markofchaostarget.r06",
+      "why": "⚠️ 這份 emitter 文件在 `models` 裡找不到來源模型 —— 它是別條產生鏈(例:extract_stock_vfx.py 的零售 MPQ 抽取)的產物,不歸這張表管"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.markofchaostarget.r07",
+      "why": "⚠️ 這份 emitter 文件在 `models` 裡找不到來源模型 —— 它是別條產生鏈(例:extract_stock_vfx.py 的零售 MPQ 抽取)的產物,不歸這張表管"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.nedeathsmall.p00",
+      "why": "零售 MPQ 抽出來的 `nedeathsmall`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 4 支在**身上**的通道點名它(godie-e002.e:jass:effectLoc, godie-e00l.e:jass:effectLoc, godie-o00x.r:jass:effectLoc, godie-ogrh.r:jass:effectLoc);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.nedeathsmall.p01",
+      "why": "零售 MPQ 抽出來的 `nedeathsmall`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 4 支在**身上**的通道點名它(godie-e002.e:jass:effectLoc, godie-e00l.e:jass:effectLoc, godie-o00x.r:jass:effectLoc, godie-ogrh.r:jass:effectLoc);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.nedeathsmall.p02",
+      "why": "零售 MPQ 抽出來的 `nedeathsmall`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 4 支在**身上**的通道點名它(godie-e002.e:jass:effectLoc, godie-e00l.e:jass:effectLoc, godie-o00x.r:jass:effectLoc, godie-ogrh.r:jass:effectLoc);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.nedeathsmall.p03",
+      "why": "零售 MPQ 抽出來的 `nedeathsmall`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 4 支在**身上**的通道點名它(godie-e002.e:jass:effectLoc, godie-e00l.e:jass:effectLoc, godie-o00x.r:jass:effectLoc, godie-ogrh.r:jass:effectLoc);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.nedeathsmall.p04",
+      "why": "零售 MPQ 抽出來的 `nedeathsmall`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 4 支在**身上**的通道點名它(godie-e002.e:jass:effectLoc, godie-e00l.e:jass:effectLoc, godie-o00x.r:jass:effectLoc, godie-ogrh.r:jass:effectLoc);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.nedeathsmall.p05",
+      "why": "零售 MPQ 抽出來的 `nedeathsmall`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 4 支在**身上**的通道點名它(godie-e002.e:jass:effectLoc, godie-e00l.e:jass:effectLoc, godie-o00x.r:jass:effectLoc, godie-ogrh.r:jass:effectLoc);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.nedeathsmall.p06",
+      "why": "零售 MPQ 抽出來的 `nedeathsmall`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 4 支在**身上**的通道點名它(godie-e002.e:jass:effectLoc, godie-e00l.e:jass:effectLoc, godie-o00x.r:jass:effectLoc, godie-ogrh.r:jass:effectLoc);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.nedeathsmall.p07",
+      "why": "零售 MPQ 抽出來的 `nedeathsmall`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 4 支在**身上**的通道點名它(godie-e002.e:jass:effectLoc, godie-e00l.e:jass:effectLoc, godie-o00x.r:jass:effectLoc, godie-ogrh.r:jass:effectLoc);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.reddragonmissile.p00",
+      "why": "零售 MPQ 抽出來的 `reddragonmissile`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 4 支在**身上**的通道點名它(godie-h020.q:art:missile, godie-hjai.q:art:missile, godie-n01c.e:art:missile, godie-nbbc.e:art:missile);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.reddragonmissile.p01",
+      "why": "零售 MPQ 抽出來的 `reddragonmissile`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 4 支在**身上**的通道點名它(godie-h020.q:art:missile, godie-hjai.q:art:missile, godie-n01c.e:art:missile, godie-nbbc.e:art:missile);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.reddragonmissile.p02",
+      "why": "零售 MPQ 抽出來的 `reddragonmissile`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 4 支在**身上**的通道點名它(godie-h020.q:art:missile, godie-hjai.q:art:missile, godie-n01c.e:art:missile, godie-nbbc.e:art:missile);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.reddragonmissile.p03",
+      "why": "零售 MPQ 抽出來的 `reddragonmissile`,但**沒有任何**活著且 CONFIRMED 的技能在落點通道(jass:effectLoc / art:area)點名它。⚠️ 有 4 支在**身上**的通道點名它(godie-h020.q:art:missile, godie-hjai.q:art:missile, godie-n01c.e:art:missile, godie-nbbc.e:art:missile);⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
     },
     {
       "vfxKey": "fx.w3x.stock.revivehuman.p00",

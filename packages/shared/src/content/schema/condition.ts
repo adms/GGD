@@ -27,9 +27,23 @@
  * `conditionDepth` from the sim module so the two cannot drift.
  */
 import { z } from "zod";
-import type { ItemId, StatusId } from "../../ids";
-import { zRef } from "./common";
+import type { AbilityId, ItemId, StatusId } from "../../ids";
+// ⭐⭐ **兩條 lane 的合併（2026-09-02）—— 兩邊都對而且互補。**
+//
+// · GH#937（Lane A）：槽位那一格**共用既有的** `zCastableSlot`，⛔ 不是在這裡再寫
+//   一份六個字串的 enum —— 兩份會在第七格出現的那天分歧，而分歧的樣子是
+//   「這顆葉子收得下的槽位，跟 `scopeSlot` 收得下的不一樣」，⛔ 沒有任何東西會紅。
+// · GH#936（Lane B）：`zRef` 從 **`./ref`** 拿，⛔ 不是 `./common` ——
+//   `common.ts` 反過來需要這個檔的 `zEffectCondition`（`zScaling.ratios[].when`），
+//   走 `./common` 就是一條**會炸**的 import 迴圈（實測 `TypeError: zRef is not a function`）。
+//   理由與實測寫在 `ref.ts` 的檔頭；閘是 `schemaImportCycle.test.ts`。
+//
+// ⚠️ ⛔ 這裡**不可以**用 `--ours`／`--theirs` 解 —— 任一邊都會吃掉另一條 lane
+// 的成果，⭐ 而且**不會有東西紅**（CLAUDE.md 記過那個形狀）。
+import { zCastableSlot, zRef } from "./ref";
 import {
+  RECENT_CAST_WITHIN_MAX_SEC,
+  RECENT_CAST_WITHIN_MIN_SEC,
   EQUIPMENT_TAG_MAX_LEN,
   EQUIPMENT_TAG_MIN_LEN,
   CONDITION_ABSOLUTE_MAX,
@@ -256,12 +270,63 @@ export const zEquipmentTagLeaf = z
 
 export const zEquipmentLeaf = z.union([zEquipmentItemLeaf, zEquipmentTagLeaf]);
 
+/**
+ * 「最近 N 秒內施放過某技能」—— 連續技窗口（GH#937）。
+ *
+ * ⭐ **兩個分支各只帶一格**（`abilityId` ＝這一支 / `slot` ＝那一格），而且都
+ * `.strict()` —— 形狀跟同一檔的 `zStatusLeaf` / `zEquipmentLeaf` 逐字一樣，
+ * ⛔ 不是第三套寫法。`{abilityId, slot}` 兩格一起寫**兩個分支都不收**，所以
+ * 「且？或？」這個沒有人定義過的語意在後台是當場紅一格，⛔ 而不是安靜地由求值
+ * 端替作者決定。
+ *
+ * ⚠️ `abilityId` 是 **soft ref**，跟 `statusId` / `itemId` 同一個理由（條件寫得
+ * 出來，⛔ 不被「那支技能還沒上架」擋住）；`slot` 的界由 `./common` 的
+ * `zCastableSlot` 給 —— ⭐ 與 `scopeSlot` **同一份** enum，⛔ 不是第二份。
+ *
+ * ⚠️ `withinSec` **兩端都有界**（第一守則：⛔ 不是只有下界）。下界是一個 tick 的
+ * 秒數 —— `0` 寫得進去的話那是一個永遠為假的閘（第一·五守則的空宣稱）。
+ * 兩個界與求值端共用 `sim/content/condition.ts` 的同一對常數，⛔ 不是抄過來的
+ * 兩個數字。
+ *
+ * ⛔ 為什麼**沒有** `tag` 分支：`ability@1` 今天沒有 `tags`
+ * （2026-09-02 量到：出貨 421 份技能文件零份有這一格）。開一個比對不到任何東西
+ * 的分支就是「卡面說了但不會發生」—— 見 `RecentCastSlotLeaf` 的說明。
+ */
+export const zRecentCastAbilityLeaf = z
+  .object({
+    kind: z.literal("recentCast"),
+    subject: zConditionSubject,
+    abilityId: zRef<AbilityId>("abilities", { soft: true }),
+    withinSec: z
+      .number()
+      .min(RECENT_CAST_WITHIN_MIN_SEC)
+      .max(RECENT_CAST_WITHIN_MAX_SEC)
+      .describe("窗口幾秒內接上算數。1 = 前一招放完一秒內按下去才有追加。"),
+  })
+  .strict();
+
+export const zRecentCastSlotLeaf = z
+  .object({
+    kind: z.literal("recentCast"),
+    subject: zConditionSubject,
+    slot: zCastableSlot.describe("哪一格按鈕。R = 終極技，對全體英雄一次寫成。"),
+    withinSec: z
+      .number()
+      .min(RECENT_CAST_WITHIN_MIN_SEC)
+      .max(RECENT_CAST_WITHIN_MAX_SEC)
+      .describe("窗口幾秒內接上算數。1 = 前一招放完一秒內按下去才有追加。"),
+  })
+  .strict();
+
+export const zRecentCastLeaf = z.union([zRecentCastAbilityLeaf, zRecentCastSlotLeaf]);
+
 export const zConditionLeaf = z.union([
   zChanceLeaf,
   zStatLeaf,
   zKindLeaf,
   zStatusLeaf,
   zEquipmentLeaf,
+  zRecentCastLeaf,
 ]);
 
 /**

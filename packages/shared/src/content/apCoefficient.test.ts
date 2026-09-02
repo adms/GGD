@@ -1,0 +1,171 @@
+/**
+ * ⭐⭐ **AP 係數六維公式**（GH#942）。
+ *
+ * ## ⭐ 承重的那一條：**校準真的成立**
+ *
+ * `base` 不是挑的 —— 它是**解出來**的：
+ * 全庫 154 個帶 `ratios` 的節點，公式算出來的幾何平均要等於**現況**的幾何平均。
+ * ⇒ ⭐ 這一條就是「總量守恆」那句話的**可執行版本**。
+ *
+ * ⚠️⚠️ ⛔ **計畫書寫的 `0.225` 是五維的值** —— owner 2026-09-02 逐字補了第六維
+ * （「有時候技能本身如果**基礎傷害低**，我也會用**高 AP/AD 加成來彌補**」），
+ * 而他同一則警告「⛔ **不可以直接乘上去**」。
+ * ⇒ ⭐ 直接沿用 0.225 會讓全庫**通膨將近一倍**（眾數 `小` 佔 87 個節點，補償 1.3×）。
+ * ⇒ 這一條會在那種情況下**紅**。
+ */
+import { describe, it, expect } from "vitest";
+import { readFileSync, readdirSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+import {
+  DEFAULT_AP_COEFFICIENT,
+  resolveApCoeff,
+  apCoeffTerms,
+  apCoeffInputsFrom,
+} from "./apCoefficient";
+import { resolveConditionTier } from "./conditionTiers";
+import type { SkillTierName } from "./skillTiers";
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
+const ABIL = join(ROOT, "content/abilities");
+const cdTiers = JSON.parse(
+  readFileSync(join(ROOT, "content/config/cooldown-tiers.json"), "utf8"),
+) as { seconds: Record<string, Record<string, number>> };
+
+function walk(n: unknown, out: Record<string, unknown>[] = []): Record<string, unknown>[] {
+  if (Array.isArray(n)) {
+    for (const x of n) walk(x, out);
+    return out;
+  }
+  if (n === null || typeof n !== "object") return out;
+  const o = n as Record<string, unknown>;
+  out.push(o);
+  for (const v of Object.values(o)) walk(v, out);
+  return out;
+}
+
+/** ⭐ 出貨的每一個帶 `ratios` 的節點，配上它的六個輸入。 */
+const samples = readdirSync(ABIL)
+  .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+  .flatMap((f) => {
+    const d = JSON.parse(readFileSync(join(ABIL, f), "utf8")) as Record<string, unknown>;
+    return walk(d["effects"])
+      .filter((n) => Array.isArray(n["ratios"]) && (n["ratios"] as unknown[]).length > 0)
+      .map((n) => {
+        const isArea = n["kind"] === "damageArea" || n["radius"] !== undefined;
+        const shape = isArea ? "範圍" : JSON.stringify(d).includes("championForm") ? "變身" : "單體";
+        const mid = cdTiers.seconds[shape]?.["中"] ?? 30;
+        const tier = d["cooldownTier"];
+        const cd =
+          typeof tier === "string" && cdTiers.seconds[shape]?.[tier] !== undefined
+            ? cdTiers.seconds[shape][tier]!
+            : Array.isArray(d["cooldown"]) && (d["cooldown"] as number[]).length > 0
+              ? (d["cooldown"] as number[])[0]!
+              : mid;
+        return {
+          id: String(d["id"]),
+          inputs: apCoeffInputsFrom(d, n, mid, cd),
+          coeffs: (n["ratios"] as Array<Record<string, unknown>>)
+            .map((r) => r["coeff"])
+            .filter((c): c is number => typeof c === "number" && c > 0),
+        };
+      });
+  });
+
+const gm = (xs: readonly number[]): number =>
+  Math.exp(xs.reduce((s, x) => s + Math.log(x), 0) / xs.length);
+
+describe("AP 係數六維公式（GH#942）", () => {
+  it("⭐ 儀器：出貨真的有這些節點（⛔ 否則校準那條在量空氣）", () => {
+    expect(samples.length, "⛔ 一個帶 ratios 的節點都沒掃到").toBeGreaterThan(100);
+    expect(samples.flatMap((s) => s.coeffs).length).toBeGreaterThan(100);
+  });
+
+  it("⭐⭐⭐ **校準成立**：公式的幾何平均 ＝ 現況的幾何平均（總量守恆）", () => {
+    const current = gm(samples.flatMap((s) => s.coeffs));
+    const formula = gm(
+      samples.flatMap((s) => s.coeffs.map(() => resolveApCoeff(s.inputs) ?? 1)),
+    );
+    // ⚠️ ⛔ 這一條就是 owner 那句「不可以直接乘上去」的可執行版本。
+    //   ⭐ 5% 的容差：`base` 出貨到小數第四位，⛔ 而不是無限精度。
+    expect(
+      formula / current,
+      `⛔ 公式的水位與現況差 ${((formula / current - 1) * 100).toFixed(1)}%\n` +
+        "   ⇒ ⭐ `base` 要**重新校準**（現況幾何平均 ÷ 六維乘積幾何平均），\n" +
+        "     ⛔ 不是憑感覺調一個數字。\n" +
+        `   （現況 ${current.toFixed(4)} · 公式 ${formula.toFixed(4)}）`,
+    ).toBeCloseTo(1, 1);
+  });
+
+  it("⭐⭐ **第六維真的在** —— ⛔ 關掉它公式就變了（那是它存在的證據）", () => {
+    const off = { ...DEFAULT_AP_COEFFICIENT, baseTierCompensation: { ...DEFAULT_AP_COEFFICIENT.baseTierCompensation, enabled: false } };
+    const withComp = samples.map((s) => resolveApCoeff(s.inputs) ?? 0);
+    const without = samples.map((s) => resolveApCoeff(s.inputs, off) ?? 0);
+    const moved = withComp.filter((v, i) => Math.abs(v - without[i]!) > 1e-9).length;
+    expect(
+      moved,
+      "⛔ 開關第六維一個節點都沒變 ⇒ ⭐ 那一維是**裝飾性的**（GH#927 的形狀）",
+    ).toBeGreaterThan(samples.length / 2);
+    // ⭐ 而且方向要對：全庫眾數是「小」(1.3×) ⇒ 開著應該**整體較高**
+    expect(gm(withComp) / gm(without), "⛔ 第六維的方向反了").toBeGreaterThan(1);
+  });
+
+  it("⭐ 冷卻用**該形狀的「中」格**正規化（⛔ 不是寫死 30 秒）", () => {
+    // ⚠️ 單體「中」30 秒、範圍「中」60 秒 —— ⛔ 同一個分母會讓範圍技拿兩倍。
+    const single = apCoeffTerms({
+      cooldownSec: 60, midCooldownSec: 30, castTimeSec: 0, rangeUnits: 6,
+      shape: "single", conditionTier: "極小" as SkillTierName,
+    });
+    const area = apCoeffTerms({
+      cooldownSec: 60, midCooldownSec: 60, castTimeSec: 0, rangeUnits: 6,
+      shape: "area", radiusUnits: 3, conditionTier: "極小" as SkillTierName,
+    });
+    expect(single["cooldown"]!, "⛔ 單體 60 秒（＝極大）沒有拿到兩倍").toBeCloseTo(3.0, 3);
+    expect(area["cooldown"]!, "⛔ 範圍 60 秒（＝中）應該剛好是 scale").toBeCloseTo(1.5, 3);
+  });
+
+  it("⭐ 被動的吟唱項是 **0** —— ⛔ 這是 GH#948 留下的約束", () => {
+    // ⛔ 34 支被動帶著 `castTimeSec` 而它們**根本沒有吟唱** ⇒ 會白拿最多 +50%。
+    const passive = apCoeffInputsFrom(
+      { slot: "PASSIVE", castTimeSec: 1.7, range: 0 }, { ratios: [{}] }, 30, 30,
+    );
+    expect(passive.castTimeSec, "⛔ 被動吃到了吟唱補償 ⇒ 白拿 +50% 係數").toBe(0);
+    const active = apCoeffInputsFrom(
+      { slot: "R", castTimeSec: 1.7, range: 0 }, { ratios: [{}] }, 30, 30,
+    );
+    expect(active.castTimeSec, "⛔ 主動的吟唱被吃掉了 ⇒ 這條在量空氣").toBeGreaterThan(0);
+  });
+
+  it("⭐ 關掉 ⇒ `null`（＝用文件寫死的值），⛔ 不是 1.0", () => {
+    // ⚠️ 1.0 是一個**有意義**的係數 ⇒ 拿它當「沒有答案」會靜默改變 148 個節點。
+    expect(
+      resolveApCoeff(
+        { cooldownSec: 30, midCooldownSec: 30, castTimeSec: 0, rangeUnits: 6, shape: "single", conditionTier: "極小" as SkillTierName },
+        { ...DEFAULT_AP_COEFFICIENT, enabled: false },
+      ),
+    ).toBeNull();
+  });
+
+  it("⭐ 三個住處不漂開（出貨檔 ↔ DEFAULT_）", () => {
+    const shipped = JSON.parse(
+      readFileSync(join(ROOT, "content/config/ap-coefficient.json"), "utf8"),
+    ) as Record<string, unknown>;
+    for (const k of ["base", "globalMult", "cooldownSlopeExp"]) {
+      expect(shipped[k], `⛔ ${k} 與 DEFAULT_ 漂開了`).toBe(
+        (DEFAULT_AP_COEFFICIENT as unknown as Record<string, unknown>)[k],
+      );
+    }
+    expect(shipped["condition"]).toEqual(DEFAULT_AP_COEFFICIENT.condition);
+    expect(
+      (shipped["baseTierCompensation"] as Record<string, unknown>)["byDamageTier"],
+      "⛔ 第六維的表漂開了",
+    ).toEqual(DEFAULT_AP_COEFFICIENT.baseTierCompensation.byDamageTier);
+  });
+
+  it("⭐ 條件級距走**唯一的**推導器（⛔ 不是第二套判準）", () => {
+    const gated = apCoeffInputsFrom(
+      { slot: "R" }, { ratios: [{ when: { kind: "status" } }] }, 30, 30,
+    );
+    expect(gated.conditionTier).toBe(resolveConditionTier({ ratios: [{ when: { kind: "status" } }] }));
+  });
+});

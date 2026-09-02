@@ -1,0 +1,273 @@
+{
+  "schema": "ggd-declared-shape-census@1",
+  "note": "⭐ 「宣告的欄位」對「實際的結構／卡面」（GH#948）—— ⛔ 產物，改 `tools/declared-shape/gen.ts`，⛔ 不要手改。⚠️ 卡面比對前**剝掉 `「…」`**（第〇·六守則細則②：那是角色對白，⛔ 不是效果）。",
+  "counts": {
+    "abilities": 421,
+    "passiveWithCastTime": 34,
+    "cardSaysWideButTierIsNot": 7,
+    "cooldownArrayAlongsideTier": 342,
+    "basicAttackHookNotOnCard": 18
+  },
+  "passiveWithCastTime": [
+    {
+      "id": "godie-e001.passive",
+      "castTimeSec": 0.833
+    },
+    {
+      "id": "godie-e00n.passive",
+      "castTimeSec": 0.833
+    },
+    {
+      "id": "godie-e00s.passive",
+      "castTimeSec": 0.267
+    },
+    {
+      "id": "godie-e00x.passive",
+      "castTimeSec": 0.467
+    },
+    {
+      "id": "godie-e010.passive",
+      "castTimeSec": 0.267
+    },
+    {
+      "id": "godie-emns.passive",
+      "castTimeSec": 0.267
+    },
+    {
+      "id": "godie-etyr.passive",
+      "castTimeSec": 1.133
+    },
+    {
+      "id": "godie-h02r.passive",
+      "castTimeSec": 1.7
+    },
+    {
+      "id": "godie-hgam.passive",
+      "castTimeSec": 1.7
+    },
+    {
+      "id": "godie-hvsh.passive",
+      "castTimeSec": 1.7
+    },
+    {
+      "id": "godie-hvwd.passive",
+      "castTimeSec": 0.833
+    },
+    {
+      "id": "godie-n003.passive",
+      "castTimeSec": 0.267
+    },
+    {
+      "id": "godie-n00b.passive",
+      "castTimeSec": 1.033
+    },
+    {
+      "id": "godie-n01g.passive",
+      "castTimeSec": 0.267
+    },
+    {
+      "id": "godie-o00k.passive",
+      "castTimeSec": 1.033
+    },
+    {
+      "id": "godie-o00l.passive",
+      "castTimeSec": 0.233
+    },
+    {
+      "id": "godie-o02l.passive",
+      "castTimeSec": 0.467
+    },
+    {
+      "id": "godie-o030.passive",
+      "castTimeSec": 1.033
+    },
+    {
+      "id": "godie-ofar.passive",
+      "castTimeSec": 0.467
+    },
+    {
+      "id": "godie-orkn.passive",
+      "castTimeSec": 1.033
+    },
+    {
+      "id": "godie-osam.passive",
+      "castTimeSec": 0.267
+    },
+    {
+      "id": "godie-u00h.passive",
+      "castTimeSec": 0.267
+    },
+    {
+      "id": "godie-u00l.passive",
+      "castTimeSec": 0.267
+    },
+    {
+      "id": "godie-u00n.passive",
+      "castTimeSec": 0.267
+    },
+    {
+      "id": "godie-u00o.passive",
+      "castTimeSec": 0.267
+    },
+    {
+      "id": "godie-u010.passive",
+      "castTimeSec": 0.267
+    },
+    {
+      "id": "godie-u01u.passive",
+      "castTimeSec": 0.267
+    },
+    {
+      "id": "godie-u034.passive",
+      "castTimeSec": 0.667
+    },
+    {
+      "id": "godie-ubal.passive",
+      "castTimeSec": 1.433
+    },
+    {
+      "id": "godie-ucrl.passive",
+      "castTimeSec": 0.667
+    },
+    {
+      "id": "godie-udre.passive",
+      "castTimeSec": 0.267
+    },
+    {
+      "id": "godie-umal.passive",
+      "castTimeSec": 0.267
+    },
+    {
+      "id": "godie-uvng.passive",
+      "castTimeSec": 0.267
+    },
+    {
+      "id": "godie-zombieking.passive",
+      "castTimeSec": 0.267
+    }
+  ],
+  "cardSaysWideButTierIsNot": [
+    {
+      "id": "godie-e007.r",
+      "name": "12-04 龍氣爆發",
+      "radiusTier": "中"
+    },
+    {
+      "id": "godie-edem.ex",
+      "name": "45-002 天照",
+      "radiusTier": "中"
+    },
+    {
+      "id": "godie-edem.w",
+      "name": "45-02 千鳥流",
+      "radiusTier": "中"
+    },
+    {
+      "id": "godie-ewar.r",
+      "name": "12-04 龍氣爆發",
+      "radiusTier": "中"
+    },
+    {
+      "id": "godie-u010.ex",
+      "name": "38-002 究極暴走黑龍波",
+      "radiusTier": "中"
+    },
+    {
+      "id": "godie-uvng.ex",
+      "name": "38-002 究極暴走黑龍波",
+      "radiusTier": "中"
+    },
+    {
+      "id": "godie-zombiex.r",
+      "name": "100-04 百式・哈基米",
+      "radiusTier": "小"
+    }
+  ],
+  "cooldownArrayAlongsideTier": {
+    "count": 342,
+    "sample": [
+      "godie-e001.e",
+      "godie-e001.ex",
+      "godie-e001.passive",
+      "godie-e001.q",
+      "godie-e001.r",
+      "godie-e002.e",
+      "godie-e002.r",
+      "godie-e002.w"
+    ]
+  },
+  "basicAttackHookNotOnCard": [
+    {
+      "id": "godie-e002.w",
+      "name": "20-01 風王結界"
+    },
+    {
+      "id": "godie-e00l.w",
+      "name": "20-01 風王結界"
+    },
+    {
+      "id": "godie-e00r.w",
+      "name": "59-02 高週波短刀"
+    },
+    {
+      "id": "godie-e00s.w",
+      "name": "70-02 大怒石"
+    },
+    {
+      "id": "godie-e00w.ex",
+      "name": "77-002 御雷劍"
+    },
+    {
+      "id": "godie-e010.w",
+      "name": "70-02 大怒石"
+    },
+    {
+      "id": "godie-efur.passive",
+      "name": "13-00 念。攻防轉換"
+    },
+    {
+      "id": "godie-emfr.e",
+      "name": "15-03 獄炎煉我"
+    },
+    {
+      "id": "godie-emfr.r",
+      "name": "15-04 雷天大壯。貳式"
+    },
+    {
+      "id": "godie-emfr.w",
+      "name": "15-02 疾風迅雷"
+    },
+    {
+      "id": "godie-ewar.e",
+      "name": "12-03 破凰之心。空破山"
+    },
+    {
+      "id": "godie-h00l.e",
+      "name": "60-03 三角神力．勇氣"
+    },
+    {
+      "id": "godie-h02k.passive",
+      "name": "89-00 憤怒的門牙"
+    },
+    {
+      "id": "godie-h02v.r",
+      "name": "92-04 馬勒戈壁"
+    },
+    {
+      "id": "godie-n00p.passive",
+      "name": "18-00 薔薇荊棘之刃"
+    },
+    {
+      "id": "godie-nsjs.passive",
+      "name": "18-00 薔薇荊棘之刃"
+    },
+    {
+      "id": "godie-o030.ex",
+      "name": "30-002 變態紳士"
+    },
+    {
+      "id": "godie-orkn.ex",
+      "name": "30-002 變態紳士"
+    }
+  ]
+}

@@ -10,6 +10,7 @@ import { Abilities } from "../content/registry";
 import { runEffects } from "../effects/effectRunner";
 import { fireHooks } from "../effects/hooks";
 import { recordAbilityCast } from "../stats/matchStats";
+import { noteAbilityCast } from "../content/castLedger";
 import { queryOverlap } from "../collision/queries";
 import { circle } from "../collision/shapes";
 // `groundAoeTargets` 的友方那一側用它把施法者自己收回來 —— 刻意用
@@ -772,6 +773,10 @@ export function castAbility(
   }
 
   recordAbilityCast(world, caster); // scoreboard: one successful cast (Q/W/E/R/EX/天生技)
+  // ⭐ 連續技窗口的**唯一**寫入點（GH#937）。與上面那一行併排是刻意的：兩者的
+  // 判準逐字相同（「一次真的提交出去的施放」），而它們在同一個位置就不可能分歧。
+  // ⛔ 放在任何一道拒絕閘之前，「最近施放過」就會對著一次被拒的按鍵回 true。
+  noteAbilityCast(world, caster, slot, inst.abilityId);
   // `vfxKey` (fx.prim.<element>.<shape>) rides along so the client's per-frame
   // audio mapper can play the ELEMENT whoosh (fire/ice/lightning) for the cast
   // without loading any ability data of its own (audio COMBAT-AUDIO routing).

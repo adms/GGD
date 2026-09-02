@@ -11,5 +11,8 @@
     "cast": "stand",
     "hurt": "stand",
     "death": "stand"
-  }
+  },
+  "fxEmitters": [
+    "fx.w3x.stock.thunderclapcaster.p00"
+  ]
 }

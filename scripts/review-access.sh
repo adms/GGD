@@ -55,7 +55,7 @@ case "$cmd" in
     ls "$VERDICT_DIR"/*.json >/dev/null 2>&1 || { echo "⛔ 結果目錄沒有任何檔：$VERDICT_DIR"; fail=1; }
     if [[ -f "$MATERIAL" ]]; then
       p=$(perm "$MATERIAL")
-      [[ "$p" == 444 ]] || { echo "⛔ 材料沒鎖（$p，該是 444）—— 手滑的 Edit 會直接寫進去。修：bash scripts/review-access.sh lock"; fail=1; }
+      [[ "$p" == 444 ]] || { echo "⛔ 材料沒鎖（${p}，該是 444）—— 手滑的 Edit 會直接寫進去。修：bash scripts/review-access.sh lock"; fail=1; }
       # ⭐ 欄位不相交：材料檔裡出現裁決欄位 = 分署漏了
       if grep -qE '"(verdict|verdictAt|verdictHash)"' "$MATERIAL"; then
         echo "⛔ 材料檔裡有**裁決欄位** —— 分署破了（誰把 owner 的裁決寫進我的檔？）"; fail=1

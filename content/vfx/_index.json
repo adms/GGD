@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "6f1e56551013",
+  "hash": "7df129081586",
   "entries": [
     {
       "id": "attach.ex.midchilder-aura",
@@ -2187,6 +2187,24 @@
       "size": 1017
     },
     {
+      "id": "fx.w3x.stock.aivitarget.r00",
+      "path": "vfx/fx.w3x.stock.aivitarget.r00.json",
+      "hash": "fab9b765878f",
+      "size": 302
+    },
+    {
+      "id": "fx.w3x.stock.aivitarget.r01",
+      "path": "vfx/fx.w3x.stock.aivitarget.r01.json",
+      "hash": "13702689225c",
+      "size": 302
+    },
+    {
+      "id": "fx.w3x.stock.aivitarget.r02",
+      "path": "vfx/fx.w3x.stock.aivitarget.r02.json",
+      "hash": "4c95480db082",
+      "size": 302
+    },
+    {
       "id": "fx.w3x.stock.awaken.p00",
       "path": "vfx/fx.w3x.stock.awaken.p00.json",
       "hash": "1b76688d2c72",
@@ -2217,10 +2235,46 @@
       "size": 1025
     },
     {
+      "id": "fx.w3x.stock.flamestrike1.p00",
+      "path": "vfx/fx.w3x.stock.flamestrike1.p00.json",
+      "hash": "1bd0d3df83b1",
+      "size": 1032
+    },
+    {
+      "id": "fx.w3x.stock.flamestrike1.p01",
+      "path": "vfx/fx.w3x.stock.flamestrike1.p01.json",
+      "hash": "2ffd0cc1e08b",
+      "size": 1011
+    },
+    {
+      "id": "fx.w3x.stock.flamestrike1.p02",
+      "path": "vfx/fx.w3x.stock.flamestrike1.p02.json",
+      "hash": "39675dea8da9",
+      "size": 1029
+    },
+    {
+      "id": "fx.w3x.stock.flamestrike1.p03",
+      "path": "vfx/fx.w3x.stock.flamestrike1.p03.json",
+      "hash": "c12375d4474c",
+      "size": 1058
+    },
+    {
+      "id": "fx.w3x.stock.flamestrike1.p04",
+      "path": "vfx/fx.w3x.stock.flamestrike1.p04.json",
+      "hash": "7c9016ffcc74",
+      "size": 1004
+    },
+    {
       "id": "fx.w3x.stock.fragdriller.p00",
       "path": "vfx/fx.w3x.stock.fragdriller.p00.json",
       "hash": "d6a2f8fd883a",
       "size": 1016
+    },
+    {
+      "id": "fx.w3x.stock.humanbloodpeasant.p00",
+      "path": "vfx/fx.w3x.stock.humanbloodpeasant.p00.json",
+      "hash": "d2ca2ee8327e",
+      "size": 1055
     },
     {
       "id": "fx.w3x.stock.markofchaostarget.p00",
@@ -2259,6 +2313,126 @@
       "size": 1033
     },
     {
+      "id": "fx.w3x.stock.markofchaostarget.r00",
+      "path": "vfx/fx.w3x.stock.markofchaostarget.r00.json",
+      "hash": "c2f482de07d1",
+      "size": 304
+    },
+    {
+      "id": "fx.w3x.stock.markofchaostarget.r01",
+      "path": "vfx/fx.w3x.stock.markofchaostarget.r01.json",
+      "hash": "62be03c9ad45",
+      "size": 304
+    },
+    {
+      "id": "fx.w3x.stock.markofchaostarget.r02",
+      "path": "vfx/fx.w3x.stock.markofchaostarget.r02.json",
+      "hash": "1375ac0026fc",
+      "size": 306
+    },
+    {
+      "id": "fx.w3x.stock.markofchaostarget.r03",
+      "path": "vfx/fx.w3x.stock.markofchaostarget.r03.json",
+      "hash": "7c9e68e0f36f",
+      "size": 304
+    },
+    {
+      "id": "fx.w3x.stock.markofchaostarget.r04",
+      "path": "vfx/fx.w3x.stock.markofchaostarget.r04.json",
+      "hash": "ecc5d90e596a",
+      "size": 304
+    },
+    {
+      "id": "fx.w3x.stock.markofchaostarget.r05",
+      "path": "vfx/fx.w3x.stock.markofchaostarget.r05.json",
+      "hash": "acae95d619c5",
+      "size": 304
+    },
+    {
+      "id": "fx.w3x.stock.markofchaostarget.r06",
+      "path": "vfx/fx.w3x.stock.markofchaostarget.r06.json",
+      "hash": "bffebc21ef92",
+      "size": 304
+    },
+    {
+      "id": "fx.w3x.stock.markofchaostarget.r07",
+      "path": "vfx/fx.w3x.stock.markofchaostarget.r07.json",
+      "hash": "79a1864ff99c",
+      "size": 304
+    },
+    {
+      "id": "fx.w3x.stock.nedeathsmall.p00",
+      "path": "vfx/fx.w3x.stock.nedeathsmall.p00.json",
+      "hash": "37c1577e7534",
+      "size": 1016
+    },
+    {
+      "id": "fx.w3x.stock.nedeathsmall.p01",
+      "path": "vfx/fx.w3x.stock.nedeathsmall.p01.json",
+      "hash": "b139af0aaf68",
+      "size": 1066
+    },
+    {
+      "id": "fx.w3x.stock.nedeathsmall.p02",
+      "path": "vfx/fx.w3x.stock.nedeathsmall.p02.json",
+      "hash": "845c3c02e87b",
+      "size": 1062
+    },
+    {
+      "id": "fx.w3x.stock.nedeathsmall.p03",
+      "path": "vfx/fx.w3x.stock.nedeathsmall.p03.json",
+      "hash": "c65c4d22c614",
+      "size": 1037
+    },
+    {
+      "id": "fx.w3x.stock.nedeathsmall.p04",
+      "path": "vfx/fx.w3x.stock.nedeathsmall.p04.json",
+      "hash": "8df496116b93",
+      "size": 1065
+    },
+    {
+      "id": "fx.w3x.stock.nedeathsmall.p05",
+      "path": "vfx/fx.w3x.stock.nedeathsmall.p05.json",
+      "hash": "137688030669",
+      "size": 1020
+    },
+    {
+      "id": "fx.w3x.stock.nedeathsmall.p06",
+      "path": "vfx/fx.w3x.stock.nedeathsmall.p06.json",
+      "hash": "126a289657cd",
+      "size": 1017
+    },
+    {
+      "id": "fx.w3x.stock.nedeathsmall.p07",
+      "path": "vfx/fx.w3x.stock.nedeathsmall.p07.json",
+      "hash": "e602bc20dd41",
+      "size": 1017
+    },
+    {
+      "id": "fx.w3x.stock.reddragonmissile.p00",
+      "path": "vfx/fx.w3x.stock.reddragonmissile.p00.json",
+      "hash": "6e5faa810d08",
+      "size": 1013
+    },
+    {
+      "id": "fx.w3x.stock.reddragonmissile.p01",
+      "path": "vfx/fx.w3x.stock.reddragonmissile.p01.json",
+      "hash": "1eac22fa4bd8",
+      "size": 952
+    },
+    {
+      "id": "fx.w3x.stock.reddragonmissile.p02",
+      "path": "vfx/fx.w3x.stock.reddragonmissile.p02.json",
+      "hash": "efbf156f26bf",
+      "size": 1047
+    },
+    {
+      "id": "fx.w3x.stock.reddragonmissile.p03",
+      "path": "vfx/fx.w3x.stock.reddragonmissile.p03.json",
+      "hash": "9869e37f182b",
+      "size": 1011
+    },
+    {
       "id": "fx.w3x.stock.revivehuman.p00",
       "path": "vfx/fx.w3x.stock.revivehuman.p00.json",
       "hash": "657a6e0b5592",
@@ -2281,6 +2455,18 @@
       "path": "vfx/fx.w3x.stock.thunderclapcaster.p00.json",
       "hash": "d46bb1f6af03",
       "size": 1009
+    },
+    {
+      "id": "fx.w3x.stock.volcanodeath.p00",
+      "path": "vfx/fx.w3x.stock.volcanodeath.p00.json",
+      "hash": "8f75a2216368",
+      "size": 1021
+    },
+    {
+      "id": "fx.w3x.stock.volcanodeath.p01",
+      "path": "vfx/fx.w3x.stock.volcanodeath.p01.json",
+      "hash": "09811105e887",
+      "size": 1062
     },
     {
       "id": "fx.w3x.stock.warstompcaster.p00",

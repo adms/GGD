@@ -113,7 +113,7 @@
  * draws in phase 1 only. No clock, no Math.random, no trig, no `**` — safe under
  * sim/purity.test.ts.
  */
-import type { EntityId, ItemId, StatusId } from "../../ids";
+import type { AbilityId, EntityId, ItemId, StatusId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 // 「這一筆狀態實例真的在做什麼」的真相就住在這個型別上，而它同時是
 // {@link STATUS_FIELD_TAGS} 那道**編譯期**閘的來源：`Record<keyof StatusEffect, …>`
@@ -127,7 +127,7 @@ import type { StatusEffect } from "../components";
 // 「他身上那些狀態各屬於哪一**類**」的真相同樣在登錄表上（`StatusMeta.tags`，
 // 由 `content/registries.ts` 從 `status-effect@1.tags` 帶過來）。⛔ 同上：不要在
 // 這裡另外開一份 id→tag 表。
-import { Items, Statuses } from "./registry";
+import { Abilities, Items, Statuses } from "./registry";
 import { Stat } from "../stats/statTypes";
 import type { AttrKey } from "../stats/attributes";
 import { liveAttribute } from "../stats/attrSources";
@@ -137,6 +137,8 @@ import { liveAttribute } from "../stats/attrSources";
 // 所以 `> world.tick` 的**再**檢查才是「這一 tick 到底還算不算」的真答案。
 // 抄第二份 = 兩個答案,而它們只會在某一 tick 的邊緣分歧 —— 那是查不出來的那種。
 import { hasStatus, statusStacks } from "../effects/effectCommon";
+import { CASTABLE_SLOTS, type CastableSlot } from "../intents";
+import { lastCastTickInSlot, lastCastTickOfAbility } from "./castLedger";
 
 // ---------------------------------------------------------------------------
 // THE VOCABULARY
@@ -553,7 +555,89 @@ export function isEquipmentItemLeaf(leaf: EquipmentLeaf): leaf is EquipmentItemL
   return (leaf as EquipmentItemLeaf).itemId !== undefined;
 }
 
-export type ConditionLeaf = ChanceLeaf | StatLeaf | KindLeaf | StatusLeaf | EquipmentLeaf;
+// ---------------------------------------------------------------------------
+// 連續技窗口 —— 「最近 N 秒內施放過某技能」（GH#937）
+// ---------------------------------------------------------------------------
+
+/**
+ * `withinSec` 的上下界。
+ *
+ * **下界 = 一個 tick 的秒數**（30 tick/s ⇒ 0.034），⛔ 不是 0：`0` 的意思是
+ * 「同一個 tick 內」，而那條路寫不出任何一個連續技（第二支技能一定在下一個
+ * tick 才按得下去）—— 一個永遠為假的閘就是第一·五守則講的空宣稱。
+ *
+ * **上界 30 秒**：連續技窗口是「接得上嗎」，⛔ 不是「這一場放過嗎」。想問後者的
+ * 內容要的是一個標記（`applyStatus` ＋ `condition.status`），⛔ 不是這顆葉子 ——
+ * 而那條路今天就走得通。把上界開到幾百秒等於讓這兩件事看起來可以互相取代。
+ */
+export const RECENT_CAST_WITHIN_MIN_SEC = 0.034;
+export const RECENT_CAST_WITHIN_MAX_SEC = 30;
+
+/**
+ * 「**這一支**技能在最近 N 秒內被施放過」。
+ *
+ * ⭐ 這顆葉子問的是**施放**，⛔ 不是命中 —— 連續技的窗口從按下去那一刻開始算，
+ * 而「者、皆、陣」那一類的鋪場技可能一個人都沒打到卻仍然開了窗口。
+ *
+ * ⚠️ 讀的是**已提交**的施放（`castLedger.noteAbilityCast` 的呼叫點在每一道拒絕
+ * 閘之後），所以一次因為沒魔力而被拒的按鍵不會開窗口。
+ *
+ * ⚠️ `abilityId` 是 **soft ref**，跟 `StatusIdLeaf.statusId` / `EquipmentItemLeaf
+ * .itemId` 逐字同一個理由：條件寫得出來，⛔ 不該被「那支技能還沒進 registry」
+ * （編輯器沙盒、還沒上架的英雄）擋住。
+ *
+ * ⚠️ `subject` 跟這一檔每一顆葉子共用同一個語意：`self` = 施法者 / hook 的持有
+ * 者，`target` = 這次事件的對手。⭐ `target` 是**真的有用**的一半 ——
+ * 「對手剛剛交了位移技」是一個閘，⛔ 不是一個湊出來的對稱。
+ */
+export interface RecentCastAbilityLeaf {
+  kind: "recentCast";
+  subject: ConditionSubject;
+  /** 指名的那一支技能編號。 */
+  abilityId: AbilityId;
+  /** 窗口長度（秒）。⭐ 換算成 tick 在求值端做，⛔ 不烘進文件。 */
+  withinSec: number;
+}
+
+/**
+ * 「**那一格**在最近 N 秒內被施放過」——⭐ owner 要的「**一組**技能」那一半。
+ *
+ * ⭐ 為什麼是槽位而不是一個自由字串的技能標籤：**`ability@1` 今天沒有 `tags`**
+ * （2026-09-02 量到：出貨 421 份技能文件**零份**有這一格；`template` 那一格在
+ * `registerAll` 展開時就被吃掉了，`AbilityDef` 上讀不到）。
+ * ⛔ 開一個比對不到任何東西的 `tag` 分支＝第一·五守則的空宣稱：schema 收得下、
+ * 後台存得起來、卡面印得出來，而它永遠是 false。
+ *
+ * ⇒ 槽位是**今天真的活著**的那一種分組，而且它已經是這個引擎的分組單位：
+ * `systems/WorldHookSystem.ts` 的 `onUltimateCast` 逐字就是
+ * `when: (_w, d) => d.slot === "R"`。「終極技之後 1 秒內」對全 111 位英雄一次寫成。
+ *
+ * ⚠️ `ability@1` 長出 `tags` 的那一天，這裡多**一個** union 成員就好
+ * （形狀跟 `StatusLeaf` / `EquipmentLeaf` 的「一份 vs 一類」逐字相同）——
+ * ⛔ 不必動求值端的結構，也⛔ 不必回頭改任何一份既有內容。
+ */
+export interface RecentCastSlotLeaf {
+  kind: "recentCast";
+  subject: ConditionSubject;
+  /** 哪一格按鈕（Q / W / E / R / EX / PASSIVE）。 */
+  slot: CastableSlot;
+  withinSec: number;
+}
+
+export type RecentCastLeaf = RecentCastAbilityLeaf | RecentCastSlotLeaf;
+
+/** 這顆葉子問的是哪一種？型別謂詞，讓求值端、說明端與編輯器共用同一個答案。 */
+export function isRecentCastAbilityLeaf(leaf: RecentCastLeaf): leaf is RecentCastAbilityLeaf {
+  return (leaf as RecentCastAbilityLeaf).abilityId !== undefined;
+}
+
+export type ConditionLeaf =
+  | ChanceLeaf
+  | StatLeaf
+  | KindLeaf
+  | StatusLeaf
+  | EquipmentLeaf
+  | RecentCastLeaf;
 
 /** 且 — every child must hold. Schema requires ≥1 child, so it is never vacuous. */
 export interface AllCondition {
@@ -1146,6 +1230,21 @@ function evalNode(
     if (id === undefined) return false;
     return hasEquipment(world, id, cond);
   }
+  if (cond.kind === "recentCast") {
+    const id = subjectOf(ctx, cond.subject);
+    if (id === undefined) return false;
+    const at = isRecentCastAbilityLeaf(cond)
+      ? lastCastTickOfAbility(world, id, cond.abilityId)
+      : lastCastTickInSlot(world, id, cond.slot);
+    // 「從來沒放過」與「放過但太久了」合流成同一個 false —— 而它們在型別上
+    // 分得開（`null` vs 一個數字），所以這個合流是看得見的一行，⛔ 不是一次
+    // 「sentinel 夠不夠負」的算術巧合（見 `castLedger.lastCastTickInSlot`）。
+    if (at === null) return false;
+    // ⭐ 絕對 tick 相減（CLAUDE.md 硬約束：⛔ 不用遞減計數器），而窗口在**讀的
+    // 當下**才換算 —— 所以 tick 率或內容改了窗口長度，⛔ 不必回頭重寫紀錄。
+    // ⚠️ `<=` 而不是 `<`：`withinSec` 是「幾秒內」，邊界那一 tick 要算在裡面。
+    return world.tick - at <= Math.round(cond.withinSec / world.dt);
+  }
   const id = subjectOf(ctx, cond.subject);
   if (id === undefined) return false;
   const mode = cond.mode ?? "absolute";
@@ -1397,8 +1496,39 @@ function equipmentLabel(leaf: EquipmentLeaf): string {
     : `【${leaf.tag}】類的道具`;
 }
 
+/**
+ * 技能在句子裡怎麼稱呼它 —— **印名字**（者、皆、陣），⛔ 不是編號。
+ * 與 {@link itemLabel} 逐字同一個取捨與同一個理由：`AbilityDef` 身上有 `name`，
+ * 而 `Abilities` 登錄表就在同一個 import。登錄表沒註冊時退回 id ——
+ * 那是一個**看得出來**的退化，⛔ 不是一句假話。
+ */
+function abilityLabel(abilityId: AbilityId): string {
+  return Abilities.tryGet(abilityId)?.name ?? abilityId;
+}
+
+const SLOT_LABEL: Record<CastableSlot, string> = {
+  Q: "Q",
+  W: "W",
+  E: "E",
+  R: "終極技",
+  EX: "EX 技能",
+  PASSIVE: "天生技",
+};
+
+/** 「最近…施放過…」那一句的受詞 —— 一支是【名字】，一格是那顆按鈕。 */
+function recentCastMatchLabel(leaf: RecentCastLeaf): string {
+  return isRecentCastAbilityLeaf(leaf)
+    ? `【${abilityLabel(leaf.abilityId)}】`
+    : `${SLOT_LABEL[leaf.slot]}`;
+}
+
 function describeLeaf(leaf: ConditionLeaf): string {
   if (leaf.kind === "chance") return `${pct(leaf.p)} 機率`;
+  if (leaf.kind === "recentCast") {
+    // ⛔ 秒數一定要進句子：一張「1 秒內接上才有追加」的卡如果印成「最近施放過
+    // X」，那句文案對玩家與作者**兩邊**都是假的（同 `statusMatchLabel` 的層數）。
+    return `${SUBJECT_LABEL[leaf.subject]}在 ${num(leaf.withinSec)} 秒內施放過${recentCastMatchLabel(leaf)}`;
+  }
   if (leaf.kind === "kind") return `${SUBJECT_LABEL[leaf.subject]}是${KIND_LABEL[leaf.is]}`;
   if (leaf.kind === "status") {
     return `${SUBJECT_LABEL[leaf.subject]}帶有${statusMatchLabel(leaf)}`;
@@ -1461,6 +1591,12 @@ function describeNode(cond: EffectCondition, depth: number): string {
     // 「非（自己裝備了【御雷劍】）」把最常見的一句話寫成了機器翻譯。
     if (isLeaf(inner) && inner.kind === "equipment") {
       return `${SUBJECT_LABEL[inner.subject]}沒有裝備${equipmentLabel(inner)}`;
+    }
+    // 同理：「沒接上連續技」是這顆葉子的另一半用法（窗口關著時走另一條分支），
+    // 而 `not` 是它唯一的寫法。「非（自己在 1 秒內施放過【者、皆、陣】）」
+    // 把最常見的一句話寫成了機器翻譯。
+    if (isLeaf(inner) && inner.kind === "recentCast") {
+      return `${SUBJECT_LABEL[inner.subject]}在 ${num(inner.withinSec)} 秒內沒有施放過${recentCastMatchLabel(inner)}`;
     }
     return `非（${describeNode(inner, depth + 1)}）`;
   }

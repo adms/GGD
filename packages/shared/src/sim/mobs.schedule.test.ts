@@ -174,7 +174,16 @@ describe("the shipped numbers are the owner's", () => {
     expect(prog).toMatch(/world\.emit\("levelUp"/);
   });
 
-  it("killsPerLevel is 6", () => {
-    expect(shippedMobWaves().reward.killsPerLevel).toBe(6);
-  });
+  // ⛔⛔ 這裡本來是 `it("killsPerLevel is 6")` —— 一條**把出貨值抄進測試**的斷言。
+  //
+  // ⭐ CLAUDE.md 第二守則逐字：出貨數字已經有三個住處（`content/config/` ＋
+  // Zod `DEFAULT_*` ＋ admin `SHIPPED_*`），而它們之間有 drift 測試在守
+  // ⇒ ⛔ 測試裡再抄一份就是**第四個住處，而它沒有守衛** ⇒ 它一定會過期，
+  //   而且**用錯誤的訊息紅**（「排程壞了」而真相只是數值被調過）。
+  //
+  // ⭐ 2026-09-02（GH#918）owner 把它改成 0（關閉），這一條當場紅 —— 而它紅的
+  // 訊息與「排程」毫無關係。⇒ 刪掉，⛔ 不是把 6 改成 0。
+  //
+  // ⭐ 真正該被守的是**機制**：`MobSystem.ts` 的 `killsPerLevel > 0` 那道閘
+  // （0 ⇒ 一次都不發等級）—— 那一條在 `mobKillLevelOff.test.ts`。
 });

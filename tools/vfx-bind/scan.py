@@ -771,6 +771,15 @@ def crosscheck(doc: dict[str, Any]) -> list[str]:
 # 逃生口 `GGD_VFXBIND_STRICT_OFF=1`(⛔ 用了要在 commit 訊息裡說為什麼)。
 HITL_PENDING_PROMOTED = frozenset(
     {
+        # ⭐⭐ 2026-09-02（GH#699 / GH#753）—— **第 35 支，而它是新證據帶出來的**。
+        #
+        # ⚠️ 那一輪把 stock 的 PRE2 從 17 份補到 37 份、RIBB 從 0 補到 11 份
+        # ⇒ ⭐ 這支技能的證據**這一天才過四道閘**，⛔ 它不是漏掉的舊債。
+        # ⛔ 而「哪一張圖層是這支技能的主體」是**視覺判斷**（#529 逐字：
+        # 「接錯比不接糟」）⇒ ⭐ 我不替它決定，登記進佇列等 HITL。
+        # ⭐ 到期條件：批核頁上有人勾了它 ⇒ 補 `vfx-ability-art.json` 的 promoted 列
+        # 並把這一行刪掉（棘輪只能變短）。
+        "godie-e008.ex",
         "godie-e002.w",
         "godie-e00l.w",
         "godie-e00w.passive",

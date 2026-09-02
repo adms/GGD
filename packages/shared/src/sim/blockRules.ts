@@ -67,6 +67,29 @@ export const BLOCK_STACKINGS: readonly BlockStacking[] = Object.freeze([
 
 export interface BlockRules {
   stacking: BlockStacking;
+  /**
+   * ⭐⭐ GH#650 —— **格擋觸發率的系統倍率**。
+   *
+   * ⚠️ 它存在的理由是一次量測，⛔ 不是平衡想法：owner 回報過**兩次**
+   * 「初號機 AT力場格擋成功沒出現橘色光盾特效」，
+   * ⭐ 而 2026-09-02 跑出貨鏈量到的是 —— **格擋成功時特效真的會發**
+   * （`blockVfxShippedAbility.test.ts`，跑 `content/abilities/godie-e00r.e.json` 本人 ——
+   * ⚠️ 那一份是**產生器的產物**：`bash scripts/genguard.sh <路徑>` 查擁有者，
+   * 要改就改**來源**再 `bash scripts/genrun.sh <step>`；⛔ 直接改出貨 JSON 會被
+   * 下一次 sync 打回來，而那個「又紅了」看起來像**新的**錯）。
+   *
+   * ⭐ 而他判斷「格擋成功」的依據（畫面上的 **GUARD** 字）**不是那一格擋的**：
+   * `apps/client/src/ui/combatText.ts:363` 逐字
+   * `if (ev.amount <= 0) return ev.blocked ? "guard" : null`
+   * ⇒ GUARD 只在**整發被吃光**時出現，⛔ 而 AT力場是 `fraction: 0.5`（只擋一半）。
+   * ⇒ ⭐ 最可能的真相是那 **10%（rank1 的 `chance`）根本沒抽中**。
+   *
+   * ⇒ 這一格讓 owner **自己驗**：調到 3 ⇒ 30% ⇒ 幾發之內一定看得到。
+   * ⚠️ ⭐ 出貨值 **1.0 ＝ 逐位元不變** —— ⛔ 我不替他決定格擋該多常觸發
+   *   （那是他的系統倍率，第一守則「可調 ≠ 我可以轉」）。
+   * ⚠️ 上界 5：再高就會讓 `chance` 全部夾到 1（＝每一發都擋），那不是旋鈕是開關。
+   */
+  chanceMult: number;
 }
 
 /**
@@ -78,6 +101,8 @@ export interface BlockRules {
  */
 export const DEFAULT_BLOCK_RULES: BlockRules = Object.freeze({
   stacking: "independent",
+  // ⭐ 1.0 ＝ 逐位元同今天（⛔ 與上面 `stacking` 那一段刻意不同：那一格改了平衡，這一格沒有）。
+  chanceMult: 1,
 });
 
 /** 文件的 schema 字串 —— 讀寫兩端(sim / 後台 overlay)共用這一個常數。 */
@@ -100,6 +125,12 @@ export function normalizeBlockRules(raw: unknown): BlockRules {
   const r = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>;
   return Object.freeze({
     stacking: isStacking(r.stacking) ? r.stacking : DEFAULT_BLOCK_RULES.stacking,
+    // ⚠️ ⭐ 上下界都夾 —— 第一守則逐字「欄位要有上界，不是只有下界」。
+    //   ⛔ 0 是合法的（＝關掉全部格擋），⭐ 那是一個真的用得到的除錯狀態。
+    chanceMult:
+      typeof r.chanceMult === "number" && Number.isFinite(r.chanceMult)
+        ? Math.min(5, Math.max(0, r.chanceMult))
+        : DEFAULT_BLOCK_RULES.chanceMult,
   });
 }
 

@@ -124,7 +124,7 @@ else warn "--no-bulk：⛔ 沒還原 replays / blizzard-overlay"; fi
 head_ "6. ⭐ 對帳 —— 這一段才是「搬遷成功」的定義"
 # ⭐ 先講清楚哪幾格**來源本來就沒有** —— ⛔ 不要讓它們看起來像「還原時掉了」。
 ABS=$(mval absent_at_source | tr ',' ' ')
-[ -n "${ABS// /}" ] && info "來源本來就沒有：$ABS（⇒ 目的地也不該有,這不是遺失）"
+[ -n "${ABS// /}" ] && info "來源本來就沒有：${ABS}（⇒ 目的地也不該有,這不是遺失）"
 # ⛔ 「tar 解得開」不是證據。逐項比對 manifest 記下的計數。
 while IFS= read -r line; do
   d=${line%%=*}; d=${d#count.}; want=${line#*=}

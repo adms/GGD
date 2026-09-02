@@ -1,0 +1,82 @@
+{
+  "id": "fx.w3x.stock.humanbloodpeasant.p00",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.178,
+    "angleDeg": 15.0
+  },
+  "mode": "continuous",
+  "rate": 201.475,
+  "lifetimeSec": {
+    "min": 1.1,
+    "max": 1.1
+  },
+  "size": {
+    "start": 0.333,
+    "end": 0.0
+  },
+  "color": {
+    "start": [
+      0.784,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "end": [
+      0.784,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.784,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    [
+      0.25,
+      [
+        0.784,
+        0.0,
+        0.0,
+        0.784
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.784,
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.333
+    ],
+    [
+      0.25,
+      0.167
+    ],
+    [
+      1,
+      0.0
+    ]
+  ],
+  "blendMode": "alpha",
+  "texture": "assets/textures/particles/smoke_04.png",
+  "stretched": true,
+  "tailLength": 0.15,
+  "gravityY": -11.111,
+  "anchorBone": "Bone_Chest"
+}

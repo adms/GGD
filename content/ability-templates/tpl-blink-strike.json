@@ -2,16 +2,68 @@
   "id": "tpl-blink-strike",
   "schema": "template@1",
   "name": "瞬移突斬",
-  "description": "P2 瞬移突斬 (dash 近似 / 位移家族)。",
+  "description": "⭐ 瞬移到目標身邊、停在他前面一點點，落地當下打一發。⚠️ 出貨量到的形狀（2026-09-02，⛔ 不是我編的）：5 支帶 `to:\"targetUnit\"` 的 blink 技能 —— `godie-h01o.q`（magic ap 0.5）· `godie-n01c.w`（physical ad 0.5）· `godie-nbbc.w`（只有特效）· `godie-u00v.r`（大組合）· `godie-efur.q`（致盲）。⭐ 其中 4/5 支的 `stopShortUnits` 逐位元都是 **1.8**。⛔ 另有 7 支純位移（`to:\"point\"`，零 `onArrive`）—— 那是**另一個家族**，⛔ 不走這一份。",
   "family": "blink-strike",
-  "status": "draft",
-  "params": {},
+  "status": "enabled",
+  "params": {
+    "range": {
+      "type": "number",
+      "default": 6,
+      "min": 1,
+      "max": 20,
+      "origin": "census: 出貨 5 支 `to:\"targetUnit\"` 的 blink 技能施法距離 —— godie-n01c.w 6 · godie-nbbc.w 6 · godie-h01o.q 8 · godie-u00v.r 12 · godie-efur.q 4.5 ⇒ **中位數 6**（⛔ 不是平均 9.3 —— 那一支 12 是大招）。（⚠️ 單位是 **GGD 格**，⛔ 不是 wc3u —— schema 的 `unit` 列舉裡沒有它，所以這一格刻意留空。）"
+    },
+    "stopShortUnits": {
+      "type": "number",
+      "default": 1.8,
+      "min": 0,
+      "max": 5,
+      "origin": "census: 出貨 **4/5 支逐位元都是 1.8**（n01c.w · nbbc.w · h01o.q · u00v.r），只有 godie-efur.q 是 1。⛔ 0 會讓施法者疊進目標身體裡。（⚠️ 單位是 **GGD 格**，⛔ 不是 wc3u —— schema 的 `unit` 列舉裡沒有它，所以這一格刻意留空。）"
+    },
+    "damage": {
+      "type": "scaling",
+      "default": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ad",
+            "coeff": 0.5
+          }
+        ]
+      },
+      "origin": "census: 三支帶傷害的**全部**是 `damageTier:\"小\"` —— n01c.w（ad 0.5）· h01o.q（ap 0.5）· u00v.r（ap 0.8）⇒ 取兩支相同的 **0.5**。"
+    },
+    "damageType": {
+      "type": "enum",
+      "values": [
+        "magic",
+        "physical",
+        "true"
+      ],
+      "default": "physical",
+      "origin": "census: 出貨 2:1 偏 physical（n01c.w physical · u00v.r physical · h01o.q magic）。"
+    },
+    "arriveVfxId": {
+      "type": "docRef",
+      "default": "fx.prim.lightning.slash",
+      "origin": "census: 出貨兩支用 `fx.prim.lightning.slash`（n01c.w · nbbc.w），另兩支各自不同 ⇒ **多數決**。"
+    },
+    "castTimeSec": {
+      "type": "number",
+      "optional": true,
+      "default": 0,
+      "min": 0,
+      "max": 5,
+      "unit": "s",
+      "origin": "census: 出貨五支**全部**沒有 castTimeSec ⇒ 0（瞬發）。"
+    }
+  },
   "requires": [
-    "dash"
+    "blink"
   ],
   "gapScore": 5,
   "exemplar": {
-    "skill": "(draft)",
+    "skill": "godie-n01c.w（出貨最接近預設的那一支）",
     "jass": "(P2/P3)"
   }
 }

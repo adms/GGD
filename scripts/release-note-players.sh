@@ -206,7 +206,7 @@ JSON=$(python3 -c 'import json,sys; print(json.dumps({"content": sys.stdin.read(
 CODE=$(curl -s -o /tmp/dc.out -w '%{http_code}' -H 'Content-Type: application/json' -d "$JSON" "$HOOK")
 case "$CODE" in
   20*)
-    echo "✓ 已發到 Discord（HTTP $CODE）"
+    echo "✓ 已發到 Discord（HTTP ${CODE}）"
     # ⭐⭐ 發成功就**自己記帳** —— ⛔ 這一行在 2026-09-01 之前不存在。
     #
     # ⚠️ 而缺它的形狀正是失敗形態⑪（兩條對的守衛，組合是空的）：
@@ -236,5 +236,5 @@ case "$CODE" in
       echo "  ✓ 已記進 $LEDGER"
     fi
     ;;
-  *)   echo "⛔ 發布失敗 HTTP $CODE：$(head -c 200 /tmp/dc.out)" >&2; exit 1;;
+  *)   echo "⛔ 發布失敗 HTTP ${CODE}：$(head -c 200 /tmp/dc.out)" >&2; exit 1;;
 esac
