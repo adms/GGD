@@ -36,11 +36,22 @@ describe("龍破斬的條件式係數（GH#936）", () => {
       };
       walk(d);
       expect(ratios.length, `⛔ ${id} 找不到那條 1.8×AP —— 係數改了就回來改這條`).toBeGreaterThan(0);
-      for (const r of ratios)
-        expect(
-          r.when,
-          `⛔ ${id} 的 1.8×AP 是**常駐**的 —— 而卡面逐字寫著「碎片增幅後」`,
-        ).toBeTruthy();
+      // ⭐⭐ 問的是「**有沒有一筆**帶條件的 1.8」，⛔ 不是「每一筆 1.8 都帶條件」。
+      //
+      // ⚠️ ⭐ 在此之前這裡是 `for (const r of ratios) expect(r.when)` —— **每一筆都要**，
+      //   ⇒ 而 04-03 龍破斬的**平時**係數剛好也是 1.8
+      //   （`tools/ap-conversion` 從 w3x 換算來的，⭐ 那一筆是對的）
+      //   ⇒ ⛔ 守衛把一份**正確**的內容判成紅。
+      //
+      // ⭐ 語意（04-002 碎片卡面逐字：「龍破斬及神滅斬**增加**傷害(180% [AP])」）：
+      //   增幅是一條**額外**加上去的係數，⛔ 不是取代平時那一條
+      //   ⇒ 引擎把 `ratios` 相加 ⇒ 神滅斬平時 1.3、增幅後 1.3+1.8=3.1 ✅
+      const gated = ratios.filter((r) => (r as { when?: unknown }).when);
+      expect(
+        gated.length,
+        `⛔ ${id} 的 1.8×AP **全部是常駐**的 —— 而卡面逐字寫著「碎片增幅後」\n` +
+          "  ⭐ 那條增幅要帶 `when`，⛔ 否則玩家沒放 EX 也吃得到",
+      ).toBeGreaterThan(0);
     }
   });
 

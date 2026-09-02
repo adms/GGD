@@ -199,10 +199,10 @@
     },
     {
       "key": "radius:tier",
-      "max": 58,
+      "max": 59,
       "layer": "GGD-tier-table",
       "reason": "owner 2026-08-11「原則上不寫範圍數字」⇒ AOE 走級距(`content/config/aoe-tiers.json`);出貨文件帶著 `radiusTier`。⭐ 2026-08-28 +1：08-04 阿邦快速劍X 變身態（godie-nbbc.r）拿掉空模板殼之後，落點 AoE（j:28918 `GetUnitsInRangeOfLocAll(250)` = 4.58→級距 4.5「小」）第一次進到出貨形狀 ——⛔ 不是漂移，是它本來就該有而以前被 `tpl-single-strike` 蓋住了。 ⭐ 2026-09-02 —— `godie-etyr.r`（14-04 聖夜降臨）的 `damageArea` **在此之前被模板展開刪掉了**（`mergeExpansion` 只保留 `spawnModelFx`），⇒ 掃描器看到的是「GGD 沒有這一軸」。修好之後那一支從 `ggd-absent` **移到**這一格。⛔ 這不是漂移，是**同一支在兩格之間搬家**：兩個 `ggd-absent` 各 −3、兩個各 +3，總筆數 978 → 977。",
-      "why": "⭐ 2026-08-31 從 54 → 55（GH#648 內容批）：18-04 億年樹的治療場（`godie-nsjs.r`）第一次長出 `delayed{shape:\"circle\"}`,而圓一律帶 `radiusTier`＋字面 `radius`（理由同上一列：schema 的 refine 跑在 `resolveRadiusTier` 之前）。⇒ 變多**不是漂移**,是一支技能從『卡面說範圍治療、JSON 沒有圈』變成有圈。"
+      "why": "⭐ 2026-08-31 從 54 → 55（GH#648 內容批）：18-04 億年樹的治療場（`godie-nsjs.r`）第一次長出 `delayed{shape:\"circle\"}`,而圓一律帶 `radiusTier`＋字面 `radius`（理由同上一列：schema 的 refine 跑在 `resolveRadiusTier` 之前）。⇒ 變多**不是漂移**,是一支技能從『卡面說範圍治療、JSON 沒有圈』變成有圈。 ⭐ 2026-09-03：58→59 —— GH#941 把 77-00 浮雲-旋一閃從單體 `damage` 改成 `damageArea`（owner 逐字：「反彈條件單體，但**反彈傷害是範圍**喔」）⇒ 那一支多了一格 `radiusTier`。⭐ 這是**修好**，⛔ 不是漂移。"
     },
     {
       "key": "radius:free-number",
@@ -213,11 +213,11 @@
     },
     {
       "key": "radius:ggd-absent",
-      "max": 84,
+      "max": 83,
       "layer": "⚫無主",
       "reason": "w3a 有 `area`(範圍技)而出貨側**整棵效果樹找不到任何 radius**。⚠️ 這一批混了兩種:重製時刻意改成單體的,以及**漏接範圍**的 —— 而兩種在 JSON 裡長得一模一樣。⭐ 2026-08-28 −1：同上一列的另一半（nbbc.r 從『沒有半徑』變成『有半徑』）。 ⭐ 2026-09-02 —— `godie-etyr.r`（14-04 聖夜降臨）的 `damageArea` **在此之前被模板展開刪掉了**（`mergeExpansion` 只保留 `spawnModelFx`），⇒ 掃描器看到的是「GGD 沒有這一軸」。修好之後那一支從 `ggd-absent` **移到**這一格。⛔ 這不是漂移，是**同一支在兩格之間搬家**：兩個 `ggd-absent` 各 −3、兩個各 +3，總筆數 978 → 977。",
       "followUp": "逐支對 owner 的新版技能說明(階梯第 1 層):說明寫[範圍]而 JSON 沒有 radius ⇒ 漏接;說明就是單體 ⇒ 在文件裡記一行,這一列的 max 跟著降。",
-      "why": "⭐ 2026-08-31 從 88 → 87 —— 上一列的另一半（億年樹從『沒有半徑』變成『有半徑』）。⇒ 照守衛的指示把 max 調降成量到的數字。"
+      "why": "⭐ 2026-08-31 從 88 → 87 —— 上一列的另一半（億年樹從『沒有半徑』變成『有半徑』）。⇒ 照守衛的指示把 max 調降成量到的數字。 ⭐ 2026-09-03：84→83 —— 同一支技能補上半徑之後，「GGD 沒有這一格」少了一筆。"
     },
     {
       "key": "duration:free-number",

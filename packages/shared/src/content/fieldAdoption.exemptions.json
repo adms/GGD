@@ -2089,12 +2089,6 @@
     "since": "2026-09-02",
     "why": "⭐ `dodge` 是 2026-09-02 為 Codex 阻塞清單 P0-2 新做的**動作積木**，而 owner 2026-09-01 逐字定義的分工是「**main 是做出積木供使用的角色**，[後台編輯器及codex編輯器] 是**堆積木**的角色」⇒ ⭐ 出貨內容零採用是**這條 lane 的定義**，⛔ 不是遷移沒做完。⚠️ 而它刻意用 `landing`（30 天到期）⛔ 不是 `debt`：Codex 逐字說「Main 完成積木與契約後，Editor 會從空白重新組裝八個 capability fixture」⇒ ⭐ 30 天後若仍是零，代表**那件事沒有發生**，而那正是這條閘該喊的時候。⭐ 積木本身的守衛在 `apps/client/src/render/guardDodgePulse.test.ts`（schema 收得下 · 狀態機蓋得過 hurt · 缺 clip 的 fallback 不是 hurt · 消費端接的是 `blocked` 與 `evade` 兩個真事件）。"
   },
-  "field:abilities.effects[]#chainLightning.amount.ratios[].when": {
-    "status": "landing",
-    "since": "2026-09-02",
-    "why": "GH#936 —— 一條係數的**前提**（「帶著某狀態時才吃這個 AP 係數」）。⭐ 這一格今天是 0 是**對的**：機制（schema ＋ `resolveScaling`）與內容（哪一支技能改成條件式）刻意分兩張票 —— 票文逐字寫著「⛔ 不包含：改任何係數的**值**」，而第一份採用者是 owner 2026-09-02 點名的 04-03 龍破斬（`godie-hjai.e`）：> 「碎片是 EX 施展得到的增幅狀態，可以做條件偵測增幅 AP 傷害」。⛔ 我不先填它：那會在同一個 commit 裡對一支出貨技能做一次**削弱**（沒碎片時少 1.8×AP），而那要走批核頁（#926），⛔ 不是夾帶在一塊積木裡。⚠️ 機制側兩個方向都有守衛並突變驗過（`sim/effects/conditionalRatios.test.ts`：條件不成立不計入 / 成立才計入 / 缺席逐位元同今天且零 rng draw）。⚠️ census 只列 `chainLightning` 這一把，但這一格住 `zScaling`，damage / damageArea / damageLine / dot / heal / shield / spendMana 共用同一份。",
-    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
-  },
   "field:abilities.castTimeTier": {
     "status": "landing",
     "since": "2026-09-02",
@@ -2169,5 +2163,30 @@
     "since": "2026-09-02",
     "why": "⭐ 同上（`replaces` 的接管時長）。⚠️ ⭐ 省略＝**320ms** —— ⛔ 刻意不是「永遠」:一個沒有到期的接管會讓那個人**再也不會有任何反應**,而那看起來就像動畫壞了。⇒ 只有需要**比一塊動作積木更長**的接管才會填它。",
     "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
+  },
+  "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=E": {
+    "status": "landing",
+    "since": "2026-09-03",
+    "why": "⭐ `ratios[].when` / `hooks[].when` 的 `recentCast.slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有內容（GH#936/#944 的變身增幅：「最近放過 EX 才吃這條係數」）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**，⛔ 不是四個各自要接線的功能：它們與 EX 走**完全相同**的那一行 `resolveScaling`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「最近放過 Q 才吃這條」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
+  },
+  "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=PASSIVE": {
+    "status": "landing",
+    "since": "2026-09-03",
+    "why": "⭐ `ratios[].when` / `hooks[].when` 的 `recentCast.slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有內容（GH#936/#944 的變身增幅：「最近放過 EX 才吃這條係數」）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**，⛔ 不是四個各自要接線的功能：它們與 EX 走**完全相同**的那一行 `resolveScaling`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「最近放過 Q 才吃這條」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
+  },
+  "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=Q": {
+    "status": "landing",
+    "since": "2026-09-03",
+    "why": "⭐ `ratios[].when` / `hooks[].when` 的 `recentCast.slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有內容（GH#936/#944 的變身增幅：「最近放過 EX 才吃這條係數」）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**，⛔ 不是四個各自要接線的功能：它們與 EX 走**完全相同**的那一行 `resolveScaling`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「最近放過 Q 才吃這條」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
+  },
+  "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=R": {
+    "status": "landing",
+    "since": "2026-09-03",
+    "why": "⭐ `ratios[].when` / `hooks[].when` 的 `recentCast.slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有內容（GH#936/#944 的變身增幅：「最近放過 EX 才吃這條係數」）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**，⛔ 不是四個各自要接線的功能：它們與 EX 走**完全相同**的那一行 `resolveScaling`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「最近放過 Q 才吃這條」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
+  },
+  "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=W": {
+    "status": "landing",
+    "since": "2026-09-03",
+    "why": "⭐ `ratios[].when` / `hooks[].when` 的 `recentCast.slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有內容（GH#936/#944 的變身增幅：「最近放過 EX 才吃這條係數」）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**，⛔ 不是四個各自要接線的功能：它們與 EX 走**完全相同**的那一行 `resolveScaling`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「最近放過 Q 才吃這條」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
   }
 }

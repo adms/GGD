@@ -73,6 +73,17 @@ function build(): string {
       if (after === null) continue;
       for (const r of n["ratios"] as Record<string, unknown>[]) {
         if (r["stat"] !== "ap" || typeof r["coeff"] !== "number") continue;
+        // ⭐⭐ **條件式係數不進這張表** —— ⛔ 兩個空間混算（第一守則那一節的形狀）。
+        //
+        // ⭐ 公式（GH#942）回答的是「**這一支技能的無條件主係數**該是多少」，
+        //   ⛔ 而一筆帶 `when` 的 ratio 是**額外項**（04-002 碎片卡面逐字：
+        //   「龍破斬及神滅斬**增加**傷害(180% [AP])」）—— 它的分母是
+        //   「增幅提供多少」，⛔ 不是「這支技能值多少」。
+        //
+        // ⚠️ ⭐ 2026-09-03 量到的代價：GH#936/#944 落地之後母體從 127 變 129，
+        //   而那兩筆的「偏離」是 0.10× ⇒ ⭐ 棘輪從 21 跳到 23，
+        //   ⛔ 讀起來像「又有兩支標籤判錯了」—— 而它們兩支都是對的。
+        if (r["when"] !== undefined) continue;
         const before = r["coeff"] as number;
         if (!(before > 0)) continue;
         rows.push({

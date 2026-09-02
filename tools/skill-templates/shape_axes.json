@@ -293,7 +293,8 @@
     "summon.team": [],
     "summon.damageMult": [],
     "summon.hpMult": [],
-    "summon.onOwnerDeath": []
+    "summon.onOwnerDeath": [],
+    "recentCast.withinSec": []
   },
   "_topLevelWhy": "技能文件**自己**的欄位（⛔ 不在 effects 樹裡），同樣要被分類 —— 一支 `castTimeSec: 3` 的技能有一段三秒的等待，而它一格 effect 都不必有。",
   "topLevel": {
@@ -780,6 +781,7 @@
     "summon.team": "⭐ 召喚體站哪一邊 —— **歸屬**，⛔ 不是形狀。⭐ 與 `grantGold.to`／`randomArea.who` 完全同型（那兩格也是空軸）。",
     "summon.damageMult": "⭐ 召喚體的傷害倍率 —— 一個純量倍率**不帶時序**：它不讓技能變成多段，也不讓它變成迴圈。⭐ 可反駁：哪天倍率隨段數遞增，那就是【多段】。",
     "summon.hpMult": "⭐ 召喚體的生命倍率 —— 同 `summon.damageMult`。",
-    "summon.onOwnerDeath": "⭐ 主人死了召喚體怎麼辦（`despawn`／留著）—— 它是**到期條件的一個分支**，⚠️ 而「有沒有到期」那一題已經由 `summon.durationSec` 的【持續】軸回答了 ⇒ ⛔ 再算一次會讓同一支技能在同一條軸上被數兩次。"
+    "summon.onOwnerDeath": "⭐ 主人死了召喚體怎麼辦（`despawn`／留著）—— 它是**到期條件的一個分支**，⚠️ 而「有沒有到期」那一題已經由 `summon.durationSec` 的【持續】軸回答了 ⇒ ⛔ 再算一次會讓同一支技能在同一條軸上被數兩次。",
+    "recentCast.withinSec": "⭐ 條件式係數（`ratios[].when`）的**回望窗**：「最近 N 秒內放過 EX」（GH#936/#944 的變身增幅）。⛔ 空軸：它不決定技能的形狀 —— 時序/範圍/多段/路徑**一格都不動**。同一支技能不論這一格是 3 還是 60，飛行時間、半徑、段數、路線完全一樣；改變的只是「這一發打出去時**係數是多少**」。⭐ 與 `internalCooldown` 同型：兩者都在回答「什麼時候算數」，⛔ 不是「長什麼樣」。⭐ 可反駁：哪天出現「窗口內外走**不同的**演出、或打到不同範圍」的機制，它就變成一條軸。"
   }
 }

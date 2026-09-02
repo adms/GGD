@@ -73,6 +73,13 @@ function deviations(): { id: string; ratio: number }[] {
       if (after === null) continue;
       for (const r of n["ratios"] as Record<string, unknown>[]) {
         if (r["stat"] !== "ap" || typeof r["coeff"] !== "number") continue;
+        // ⭐⭐ **條件式係數不算在這條棘輪裡** —— ⛔ 兩個空間混算。
+        // ⭐ 公式問的是「這一支技能的**無條件主係數**該是多少」，
+        //   ⛔ 而帶 `when` 的是**額外項**（04-002 碎片：「增加傷害(180% AP)」）。
+        //   ⇒ 拿額外項去對主係數的公式，得到的「偏離」沒有意義。
+        // ⚠️ 2026-09-03 量到：GH#936/#944 落地讓母體 127→129，
+        //   而那兩筆的 0.10× 把棘輪從 21 推到 23 —— 而它們兩支都是對的。
+        if (r["when"] !== undefined) continue;
         const before = r["coeff"] as number;
         if (before > 0) out.push({ id: String(d["id"]), ratio: after / before });
       }

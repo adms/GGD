@@ -407,7 +407,27 @@ def convert_doc(doc: dict, targets: list[dict]) -> dict:
         return out
     # 掛在**第一個**傷害酬載上（卡面主傷害那一發）。
     _, amount, _m = amounts[0]
-    amount["ratios"] = [{"stat": "ap", "coeff": round(coeff, 2)}]
+    # ⭐⭐ 這一支**只擁有一格**：那筆「無條件的 ap 主係數」。
+    #
+    # ⛔⛔ 在此之前它寫的是 `amount["ratios"] = [{...}]` —— **整條取代** ⇒
+    #   任何**別人**寫進去的 ratio（帶 `when` 的條件式係數：GH#936 的碎片增幅、
+    #   GH#944 的變身增幅）在下一次 `skills:sync` **靜默消失**。
+    #   ⚠️ ⭐ 而它連紅都不會 —— 內容變回舊值，守衛才紅，
+    #   ⇒ 讀起來像「守衛壞了」，⛔ 不是「內容被吃掉了」（2026-09-02 量到，四條守衛同時紅）。
+    #
+    # ⭐ 判準（第〇·四守則）：**一個只覆寫其中幾格的正規化器，
+    #   ⛔ 不可以丟掉它沒有產生的那幾格。**
+    prev = amount.get("ratios") if isinstance(amount.get("ratios"), list) else []
+    # ⭐ 帶 `when` 的是**條件式**係數 ⇒ 別人的，留著。
+    kept = [r for r in prev if isinstance(r, dict) and r.get("when") is not None]
+    # ⭐ 而我這一筆若原本就有非 `stat`/`coeff` 的欄位（將來加的），也一併帶過去。
+    mine = next(
+        (dict(r) for r in prev
+         if isinstance(r, dict) and r.get("stat") == "ap" and r.get("when") is None),
+        {},
+    )
+    mine.update({"stat": "ap", "coeff": round(coeff, 2)})
+    amount["ratios"] = [mine, *kept]
     amount.pop("attrRatios", None)
     for _k, a, _mm in amounts[1:]:
         a.pop("attrRatios", None)

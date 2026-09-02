@@ -178,10 +178,34 @@ def apply_doc(doc: dict, entry: dict, k: dict) -> dict:
     out["description"] = entry["description"]
     for i, (_kind, amount, _m) in enumerate(amounts):
         before = entry["amounts"][i] if i < len(entry["amounts"]) else {}
+        # ⭐⭐ 倒回之前先把**帶條件的 ratio** 撈出來 —— ⛔ 它們不屬於這條換算鏈。
+        #
+        # ⛔⛔ 在此之前這個迴圈把 `ratios` **整條**倒回 `claims.json` 的換算前快照，
+        #   ⇒ 任何**別人**寫進去的條件式係數（帶 `when` 的：GH#936 的碎片增幅、
+        #     GH#944 的變身增幅）在下一次 `skills:sync` **靜默消失**。
+        #   ⚠️ ⭐ 2026-09-02 量到的代價：四條剛寫好的守衛在 sync 之後同時紅，
+        #     而它讀起來像「守衛壞了」，⛔ 不是「內容被吃掉了」。
+        #
+        # ⭐ 為什麼是「保留」而不是「把它們也寫進 claims.json」：
+        #   後者會讓同一個事實有**第二個住處**（第〇·四守則）——
+        #   而 `claims.json` 的語意是「**w3x 原文的宣稱**」，
+        #   ⛔ 一條 GGD 自己設計的條件式增幅不屬於那裡。
+        #
+        # ⚠️ ⭐ 冪等仍然成立：保留的是**輸入本來就有**的那幾筆，
+        #   第二次跑會保留同樣的幾筆 ⇒ `--check` 照樣在比對真的東西。
+        conditional = {
+            key: [
+                r for r in (amount.get(key) or [])
+                if isinstance(r, dict) and r.get("when") is not None
+            ]
+            for key in ("ratios", "attrRatios")
+        }
         for key in ("ratios", "attrRatios"):
             amount.pop(key, None)
             if before.get(key) is not None:
                 amount[key] = json.loads(json.dumps(before[key]))
+            if conditional[key]:
+                amount[key] = (amount.get(key) or []) + conditional[key]
 
     if not k["enabled"]:
         return out
@@ -216,11 +240,33 @@ def apply_doc(doc: dict, entry: dict, k: dict) -> dict:
         _retype(out, index)
 
     ratio = {"stat": "ap", "coeff": coeff}
+    # ⭐⭐ 這一支**只擁有一格**：那筆「**無條件**的 ap 主係數」。
+    #
+    # ⛔⛔ 在此之前 `mode="replace"`（＝出貨值）寫的是 `amount["ratios"] = [ratio]`
+    #   —— **整條取代** ⇒ 任何**別人**寫進去的條件式 ratio（帶 `when` 的：
+    #   GH#936 的碎片增幅、GH#944 的變身增幅）在下一次 `skills:sync` **靜默消失**。
+    #   ⚠️ ⭐ 而 `mode="add"` 那一條也一樣漏：它的 `kept` 只留 `stat != "ap"`
+    #   ⇒ 一筆**帶條件的 ap** ratio 照樣被當成「我的」丟掉。
+    #
+    # ⭐ 2026-09-02 量到的代價：四條剛寫好的守衛在 `skills:sync` 之後同時紅，
+    #   ⚠️ 而它讀起來像「守衛壞了」，⛔ 不是「內容被吃掉了」——
+    #   ⭐ 那正是 CLAUDE.md 的「改產物等於沒改」，只是**方向相反**：
+    #     這一次改的是**手編檔**，而一支正規化器把它吃了。
+    #
+    # ⭐ 判準（第〇·四守則）：**一個只覆寫其中幾格的正規化器，
+    #   ⛔ 不可以丟掉它沒有產生的那幾格。**
+    conditional = [
+        r for r in (amount.get("ratios") or [])
+        if isinstance(r, dict) and r.get("when") is not None
+    ]
     if k["mode"] == "add":
-        kept = [r for r in (amount.get("ratios") or []) if r.get("stat") != "ap"]
-        amount["ratios"] = kept + [ratio]
+        kept = [
+            r for r in (amount.get("ratios") or [])
+            if r.get("stat") != "ap" and r.get("when") is None
+        ]
+        amount["ratios"] = kept + [ratio] + conditional
     else:
-        amount["ratios"] = [ratio]
+        amount["ratios"] = [ratio] + conditional
     amount.pop("attrRatios", None)
     # ⚠️ 其餘酬載上的 `attrRatios` 也要走 —— 它們是同一條被取代的宣稱的一部分。
     for i, (_k2, a, _m2) in enumerate(amounts):

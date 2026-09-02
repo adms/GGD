@@ -18,9 +18,9 @@
   "mana:tier": 167,
   "mana:w3a-absent": 181,
   "radius:free-number": 5,
-  "radius:ggd-absent": 84,
+  "radius:ggd-absent": 83,
   "radius:same": 4,
-  "radius:tier": 58,
+  "radius:tier": 59,
   "radius:w3a-absent": 301,
   "range:ggd-zero": 31,
   "range:same": 7,
@@ -6277,16 +6277,6 @@
   {
    "axis": "radius",
    "key": "radius:ggd-absent",
-   "w3a": "A0JC",
-   "ggd": "godie-e00w.passive",
-   "name": "77-00 閃電特效",
-   "w3aValue": 99999.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:ggd-absent",
    "w3a": "A0UN",
    "ggd": "godie-edem.passive",
    "name": "45-00x 麒麟無傷害天雷",
@@ -7081,6 +7071,16 @@
    "ggd": "godie-e00s.q",
    "name": "70-01 伸卡球",
    "w3aValue": 300.0,
+   "ggdValue": 4.5,
+   "verdict": "tier"
+  },
+  {
+   "axis": "radius",
+   "key": "radius:tier",
+   "w3a": "A0JC",
+   "ggd": "godie-e00w.passive",
+   "name": "77-00 閃電特效",
+   "w3aValue": 99999.0,
    "ggdValue": 4.5,
    "verdict": "tier"
   },
