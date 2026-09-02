@@ -33,13 +33,28 @@ describe("editor source safety", () => {
       ownership: {
         kind: "generator-owned",
         producer: "skillremake:json",
-        sourcePaths: ["tools/skill-remake/batch1.py"],
+        sourcePaths: ["tools/skill-remake/heroes/godie-e002.py"],
+        editableMembers: [
+          "content/abilities/godie-e002.q.json",
+          "content/champions/godie-e002.json",
+        ],
       },
       writePolicy: "source-adapter",
+      source: {
+        path: "tools/skill-remake/heroes/godie-e002.py",
+        sha256: "a".repeat(64),
+        bytes: 123,
+        text: "# source text is evidence, not an Editor write surface",
+      },
+      normalizedFields: ["cooldown", "manaCost"],
     });
     expect(blockers).toHaveLength(1);
     expect(blockers[0]).toContain("skillremake:json");
-    expect(blockers[0]).toContain("tools/skill-remake/batch1.py");
+    expect(blockers[0]).toContain("tools/skill-remake/heroes/godie-e002.py");
+    expect(blockers[0]).toContain("只接受整份來源文字");
+    expect(blockers[0]).toContain("不會把 JSON 成員差異猜寫成 Python");
+    expect(blockers[0]).toContain("content/champions/godie-e002.json");
+    expect(blockers[0]).toContain("cooldown、manaCost");
   });
 
   it("fails safe for generated champions until main supplies source ownership", () => {

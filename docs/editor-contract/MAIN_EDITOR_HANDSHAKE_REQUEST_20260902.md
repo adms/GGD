@@ -1,6 +1,6 @@
 # GGD Main ↔ Codex Editor：必要接縫結案收據
 
-狀態：**Revision 12 — Main v0.35.13 已整合；五個可重用積木／契約阻塞仍未落地**
+狀態：**Revision 13 — Main v0.35.13 已整合；六個可重用積木／契約阻塞仍未落地**
 
 核對基準：`origin/main@25fa2cba`（tag `v0.35.13`）
 
@@ -9,7 +9,7 @@ Main seam：`origin/feat/editor-seam-20260902@25fa2cba` 與 `main` 同一點；�
 
 Editor：`feat/vfx-forge-codex`（禁止直接提交或推送 `main`）
 
-最後核對：**2026-09-02 12:06（Asia/Taipei）**
+最後核對：**2026-09-02 12:13（Asia/Taipei）**
 
 ## 結論
 
@@ -31,7 +31,7 @@ Editor 已完成 Main 回交要求的「第三份 representation 清單」修正
 
 Editor 仍只在 `feat/vfx-forge-codex`；**不要把 Editor 提交直接推到 `main`**。
 
-Main 目前只需修正下方五個可重用積木／契約缺口；不需要替 Editor 拼任何技能、時間軸或完整特效。
+Main 目前只需修正下方六個可重用積木／契約缺口；不需要替 Editor 拼任何技能、時間軸或完整特效。
 
 ## v0.35.13 可重跑的現況證據
 
@@ -42,6 +42,7 @@ Main 目前只需修正下方五個可重用積木／契約缺口；不需要替
 | 迴避 provenance | `sed -n '286,310p' packages/shared/src/sim/combat/evasion.ts` | payload 仍只有 `source/target/x/z`，沒有 grant identity |
 | actor-aware resolver | `rg -n 'resolveAbilityPresentation|"guard".*"dodge"' packages/shared/src apps/client/src` | 沒有統一 resolver／兩個 actor pulse |
 | combo capability | `pnpm --filter @ggd/editor test -- src/form/fullCoverageMatchesContract.test.ts` | 唯一紅燈仍是 `templateFamily/combo-finisher` |
+| no-code source write | `rg -n 'expectedSourceSha256.*source|source\?: string' apps/content-api/src/editorSourceRoutes.ts` | POST 仍只接受整份來源文字，沒有結構化 product/member patch 或 dry-run |
 | 素材安全 | `pnpm vfxassets:check:fast` | 仍為 27 blockers、五張來源貼圖 |
 
 ## 不可越界的分工
@@ -76,7 +77,9 @@ Main 的驗收標準是該 primitive 可被任意技能重用；成品像不像�
 4. Generator-owned 寫入
    - Main server guard 已涵蓋 `PATCH champions/:id/abilities/:slot` 與
      `POST :collection/:id/restore`；
-   - source adapter 僅由 server 端登錄的 `adapterId` 選擇，client 不可傳 shell command；
+   - source adapter 僅由 server 端登錄表選擇，client 不可傳 shell command；目前 GET 回應**沒有**
+     `adapterId`，只有 POST 成功後的 `regenerate.adapterId`，因此 Main 回交文件所寫「GET 回應帶 adapterId」
+     與實作不符；
    - Editor 寫 champion mirror 前仍會重新讀 ability 與 champion 的 `editor-source`；兩份都必須
      `writePolicy=document` 才送 PATCH。Editor 沒有呼叫 restore。
 5. `resolved-appearance@1`
@@ -211,6 +214,76 @@ Main 自 `v0.35.12` 起已讓 `combo-finisher` 成為可展開的真正模板家
 
 修正前 Editor 保留現有 `combo-finisher` 控制與紅燈，不刪掉積木來迎合一份漏報的契約，也不自行偽造
 capability receipt。
+
+## 阻塞積木 6：現有 source adapter 只有 raw-source POST，no-code Editor 無法安全寫回產生器來源
+
+Main 已正確擋住 generator-owned 產物的 PUT／PATCH，`GET /content-api/editor-source` 也能說出來源 Python、
+CAS hash、blast radius 與正規化欄位。缺口在寫入語意：目前 POST body 只有
+`collection/id/expectedSourceSha256/source/reason`，其中 `source` 是**整份 Python 原始碼文字**。
+
+這足以讓懂 Python 的工具改來源，卻不是 no-code Editor 可以使用的積木。Forge 手上只有經過 Zod 驗證的
+ability product member patch；若由瀏覽器以 regex、字串置換或自製 Python parser 把 JSON diff 翻回來源，會把
+Main 的來源語法、builder API 與格式細節複製到 Editor，下一次產生器改版便可能靜默改錯英雄的六支技能。
+把 raw source 放進 textarea 也不符合「玩家不用寫 code」的產品目標。
+
+另有一項已量出的契約漂移：`MAIN_TO_EDITOR_RESPONSE_20260902.md` 說 GET 回應帶穩定 `adapterId`，但目前
+`editorSourceRoutes.ts` 的 GET 沒有該欄；只有 POST 成功回應的 `regenerate.adapterId` 才有。Editor 不能在寫入前
+據此辨識 adapter 能力。
+
+請 Main 只提供一條**結構化來源轉接積木**，不要替 Editor 做 Forge UI 或拼技能：
+
+1. GET receipt 新增穩定 `adapterId`、明確的 `writeModes`／capability、可結構化修改的 product members；目前名為
+   `ownership.editableMembers` 的內容其實是重生成後受影響的**文件路徑**，請保留相容性並另增語意清楚的
+   `affectedProducts` 與 `editableProductMembers`，不要把兩件事混成一格。
+2. 提供 server-owned 的 preview/dry-run 操作，輸入是經 schema 驗證的 product member patch，至少包含：
+   `collection`、`id`、`expectedSourceSha256`、`patch`、`reason`；client 不送 Python、adapter command 或來源路徑。
+3. 由 Main 登錄的 adapter 將 patch 翻成 authoritative source 變更，跑真正產生器與正規化器，再回：來源 diff、
+   所有 affected products 的 before/after hash 與 product diff、實際生效值、`normalizedFields` 警告、驗證結果、
+   `proposalDigest`。dry-run 必須零檔案變更。
+4. apply 必須帶同一個 source CAS 與 `proposalDigest`；server 重新驗證後原子套用。產生器、schema、mirror 或
+   content build 任一步失敗都要還原來源與所有產物，不能留下「來源新、產物舊」或只更新 standalone 的半套。
+5. ability 與 champion mirror 由**同一次來源重生成**產生；Editor 不應再對 generator-owned champion 送第二次
+   PATCH。回應須列出 blast radius，讓批核頁顯示同一英雄的六支技能與英雄卡可能一起改變。
+6. adapter 若不能無損表達某個 Forge member，必須在 preview 明確拒絕該欄位；不可丟掉、不可靠地近似，也不可
+   接受後讓下一次 `skills:sync` 打回來。
+
+建議 machine shape（欄名可由 Main 調整，語意不可少）：
+
+```jsonc
+// GET /content-api/editor-source
+{
+  "adapter": {
+    "adapterId": "skillremake-hero-py.ability@1",
+    "writeModes": ["product-member-patch@1"],
+    "affectedProducts": ["content/abilities/…", "content/champions/…"],
+    "editableProductMembers": ["template", "castType", "effects", "passive", "vfxKey", "vfxLayers"]
+  }
+}
+
+// POST preview（或等價 route）
+{
+  "collection": "abilities",
+  "id": "godie-e002.q",
+  "expectedSourceSha256": "…",
+  "patch": { "template": {}, "effects": [] },
+  "reason": "VFX Forge no-code writeback"
+}
+```
+
+隔離／整合驗收至少涵蓋：
+
+- dry-run 前後 repo 所有檔案 hash 相同；
+- stale source CAS 回 409 且零寫入；
+- client 傳 `adapterId`、command、sourcePath 或 raw Python 都不影響 server 選擇；
+- 一支 generator-owned ability 的模板／effects patch 經 preview＋apply 後，standalone 與 champion mirror 一致，
+  再跑 `pnpm skills:sync` 仍存活；
+- 非 editable member fail closed，訊息指出欄位；
+- 正規化欄位回報實際生效值，不把 77 被級距解析回 90 誤報為接縫損壞；
+- 人為使產生器或 schema 驗證失敗時，來源與全部產物逐位元還原；
+- Editor 全程不需讀、解析或產生 Python。
+
+修正前 Editor 會誠實顯示：「Main 目前只接受整份來源文字；no-code Editor 不會把 JSON 成員差異猜寫成
+Python」，並停止寫回。它不會退回直接 PATCH 產物，也不會把 raw Python 暴露成玩家編輯介面。
 
 ## 本輪整合時修正的 Editor 接縫
 
