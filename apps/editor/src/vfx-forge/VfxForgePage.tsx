@@ -354,6 +354,33 @@ export function VfxForgePage() {
       setAssetSafety((previous) => new Map(previous).set(key, result));
     });
   };
+  /**
+   * Check a palette page in small deterministic batches.  This avoids asking
+   * an LLM to judge a texture and avoids 150 simultaneous image decodes, while
+   * still leaving every individual asset fail-closed until its own receipt has
+   * landed.
+   */
+  const probeAssets = (assets: readonly AssetDrop[]): void => {
+    const pending = assets.filter((asset) => !assetSafety.has(assetKey(asset)));
+    if (pending.length === 0) return;
+    setAssetSafety((previous) => {
+      const next = new Map(previous);
+      for (const asset of pending) next.set(assetKey(asset), "checking");
+      return next;
+    });
+    void (async () => {
+      const BATCH_SIZE = 4;
+      for (let start = 0; start < pending.length; start += BATCH_SIZE) {
+        const batch = pending.slice(start, start + BATCH_SIZE);
+        const results = await Promise.all(batch.map((asset) => assetSafetyGate.check(asset)));
+        setAssetSafety((previous) => {
+          const next = new Map(previous);
+          for (const result of results) next.set(assetKey(result.asset), result);
+          return next;
+        });
+      }
+    })();
+  };
   const addAsset = async (asset: AssetDrop, placement?: AssetPlacement): Promise<void> => {
     const key = assetKey(asset);
     setAssetSafety((previous) => new Map(previous).set(key, "checking"));
@@ -787,6 +814,7 @@ export function VfxForgePage() {
               onAdd={addAsset}
               safety={assetSafety}
               onProbe={probeAsset}
+              onProbeAll={probeAssets}
             />
             <section className="vfx-forge-center">
               {assetPreviewAllowed ? (

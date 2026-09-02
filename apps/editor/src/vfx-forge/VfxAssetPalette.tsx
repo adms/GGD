@@ -9,12 +9,15 @@ export function VfxAssetPalette({
   onAdd,
   safety,
   onProbe,
+  onProbeAll,
 }: {
   models?: CollectionIndex;
   vfx?: CollectionIndex;
   onAdd(asset: AssetDrop): void | Promise<void>;
   safety: ReadonlyMap<string, AssetSafetyResult | "checking">;
   onProbe(asset: AssetDrop): void;
+  /** Deterministic bulk scan; assets remain unusable until their own receipt is safe. */
+  onProbeAll?(assets: readonly AssetDrop[]): void;
 }) {
   const [tab, setTab] = useState<AssetDrop["collection"]>("models");
   const [filter, setFilter] = useState("");
@@ -51,6 +54,14 @@ export function VfxAssetPalette({
         本頁 {entries.length} 項 · 去背通過 {safetyCounts.safe} · 檢查中 {safetyCounts.checking} ·
         禁止 {safetyCounts.unsafe} · 待驗證 {safetyCounts.pending}
       </p>
+      <button
+        type="button"
+        className="vfx-asset-scan"
+        disabled={safetyCounts.pending === 0 || onProbeAll === undefined}
+        onClick={() => onProbeAll?.(entries.map((entry) => ({ collection: tab, id: entry.id })))}
+      >
+        驗證本頁待驗證素材
+      </button>
       <div className="vfx-asset-list">
         {entries.map((entry) => {
           const asset: AssetDrop = { collection: tab, id: entry.id };

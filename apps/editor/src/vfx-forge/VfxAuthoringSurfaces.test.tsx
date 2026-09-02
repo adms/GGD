@@ -54,6 +54,24 @@ describe("VFX Forge authoring surfaces", () => {
     expect(markup).toContain("去背通過 1");
     expect(markup).toContain("禁止 1");
     expect(markup).toContain("待驗證 1");
+    expect(markup).toContain("驗證本頁待驗證素材");
+  });
+
+  it("offers a bounded page scan without making pending assets draggable", () => {
+    const pending: AssetDrop = { collection: "models", id: "model.pending" };
+    const onProbeAll = vi.fn();
+    const markup = renderToStaticMarkup(
+      <VfxAssetPalette
+        models={index("models", [pending.id])}
+        vfx={index("vfx", [])}
+        onAdd={vi.fn()}
+        onProbe={vi.fn()}
+        onProbeAll={onProbeAll}
+        safety={new Map()}
+      />,
+    );
+    expect(markup).toContain("驗證本頁待驗證素材");
+    expect(markup).toContain('draggable="false"');
   });
 
   it("lets a pending double-click enter the guarded add path on the first attempt", async () => {
