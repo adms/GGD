@@ -322,12 +322,13 @@ export class VfxForgeStage {
     };
 
     this.cameraRig = new CameraRig(this.scene, this.cameraFocus());
-    // Keep CameraRig's config-backed DEFAULT dolly.  The Forge used to force
-    // the closest 10u clamp here; a 12u projectile then put its endpoint and
-    // explosion outside the frame even though the shipped camera defaults to
-    // 18u.  That made a healthy Dragon Slave look like it never arrived and,
-    // worse, made screenshots validate a different camera from actual play.
-    // Authors can still use the explicit zoom controls for close inspection.
+    // Forge is an authoring surface, not a spectator camera: the game's
+    // config-backed default starts far enough away that a pair of 1.8u bodies
+    // reads as dots and an author cannot judge a hit/action relation.  Move
+    // only the SIDE REVIEW lens four steps closer; the explicit 實戰視角 toggle
+    // keeps the Main camera's default unchanged, and long projectiles still
+    // fit inside the normal 10–18u camera clamp through the visible controls.
+    this.cameraRig.zoomBy(-400);
     this.cameraRig.update({
       dtMs: STEP_MS,
       localPos: this.cameraFocus(),

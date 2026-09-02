@@ -60,6 +60,13 @@ describe("VFX Forge paused rendering", () => {
     expect(source).not.toContain("new Engine(canvas");
   });
 
+  it("starts only the Forge review lens closer, while keeping the Main camera rig", () => {
+    const source = readFileSync(new URL("./VfxForgeStage.ts", import.meta.url), "utf8");
+    expect(source).toContain("this.cameraRig.zoomBy(-400)");
+    expect(source).toContain("實戰視角 toggle");
+    expect(source).toContain("new CameraRig(this.scene, this.cameraFocus())");
+  });
+
   it("delegates champion bodies and action clips to the shipped ChampionView", () => {
     const source = readFileSync(new URL("./VfxForgeStage.ts", import.meta.url), "utf8")
       .replace(/\/\*[\s\S]*?\*\//g, "")
