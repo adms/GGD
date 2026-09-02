@@ -10,12 +10,12 @@
   "cooldown:tier": 155,
   "cooldown:w3a-absent": 172,
   "duration:free-number": 35,
-  "duration:ggd-absent": 183,
-  "duration:same": 11,
+  "duration:ggd-absent": 182,
+  "duration:same": 12,
   "duration:w3a-absent": 223,
-  "mana:ggd-zero": 78,
+  "mana:ggd-zero": 79,
   "mana:same": 25,
-  "mana:tier": 168,
+  "mana:tier": 167,
   "mana:w3a-absent": 181,
   "radius:free-number": 5,
   "radius:ggd-absent": 84,
@@ -2887,6 +2887,16 @@
   {
    "axis": "mana",
    "key": "mana:ggd-zero",
+   "w3a": "A0NE",
+   "ggd": "godie-n00b.w",
+   "name": "57-03 複製鏡",
+   "w3aValue": 200.0,
+   "ggdValue": 0.0,
+   "verdict": "ggd-zero"
+  },
+  {
+   "axis": "mana",
+   "key": "mana:ggd-zero",
    "w3a": "A0T1",
    "ggd": "godie-n01c.ex",
    "name": "08-002 龍魔人",
@@ -4072,16 +4082,6 @@
    "name": "57-04 竹蜻蜓",
    "w3aValue": 300.0,
    "ggdValue": 288.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
-   "w3a": "A0NE",
-   "ggd": "godie-n00b.w",
-   "name": "57-03 複製鏡",
-   "w3aValue": 200.0,
-   "ggdValue": 144.0,
    "verdict": "tier"
   },
   {
@@ -8961,16 +8961,6 @@
    "ggd": "godie-n00b.r",
    "name": "57-04 竹蜻蜓",
    "w3aValue": 1.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:ggd-absent",
-   "w3a": "A0NE",
-   "ggd": "godie-n00b.w",
-   "name": "57-03 複製鏡",
-   "w3aValue": 20.0,
    "ggdValue": null,
    "verdict": "ggd-absent"
   },

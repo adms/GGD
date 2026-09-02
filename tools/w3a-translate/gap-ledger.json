@@ -135,7 +135,7 @@
     },
     {
       "key": "mana:tier",
-      "max": 168,
+      "max": 167,
       "layer": "GGD-tier-table",
       "reason": "owner 的五級距魔耗表(`content/config/mana-tiers.json`)取代原作值;出貨文件帶著 `manaCostTier` ⇒ 有主。",
       "bumps": [
@@ -152,12 +152,15 @@
           "to": 168,
           "ggd": "godie-huth.e",
           "why": "GH#903 子票（2026-09-01）—— `godie-huth.e`（28-03 分身）改接 `tpl-summon-agent` 之後，`tierize.py` 的 ⑦ 分支（owner 逐字：「若不是主動傷害技能 就免魔力吧 乾脆點」）判定它**不再是主動傷害技** ⇒ 魔耗歸 0 且級別欄被拔掉（拔掉是刻意的：`manaCostTier` 的下界是 1，留著它會讓 `resolveManaCostTier` 把 0 換成 73 —— 失敗形態②）。⭐ 這是**同一件事的三個面**：`mana:tier` −1 · `mana:ggd-zero` +1 · `duration:ggd-absent` −1（召喚體有 durationSec ⇒ 那一支從「沒有持續」變成「有」），⛔ 不是三次獨立漂移。⚠️ 我**沒有**去覆寫它：試過把 `manaCostTier: 小` 放回去再跑 `tiers:apply`，⭐ 而它照 owner 的規則又拔掉了 —— ⛔ 規則贏，⛔ 不是我贏。"
+        },
+        {
+          "why": "GH#903 子票（2026-09-02）—— ⭐ **同一個規則的第二個實例**（第一次是 `godie-huth.e` 28-03 分身,見這一格 bumps 裡上一則）。`godie-n00b.w`（57-03 複製鏡)從 `tpl-single-strike` 改接 `tpl-summon-agent` 之後,`tierize.py` 的 ⑦ 分支（owner 逐字:「若不是主動傷害技能 就免魔力吧 乾脆點」)判定它**不再是主動傷害技** ⇒ 魔耗歸 0 且級別欄被拔掉。⭐ 三個面同時動:`mana:tier` −1 · `mana:ggd-zero` +1 · `duration:ggd-absent` −1（召喚體有 `durationSec` ⇒ 從「沒有持續」變成「有」),⛔ 不是三次獨立漂移。⚠️ ⭐ 而卡面**完全沒有提到傷害** —— 那一發 `damageTier 小 · ap 0.6` 是佔位模板帶來的,⛔ 不是設計 ⇒ 拿掉它才是翻譯（第〇·六守則）。⛔ 我沒有去覆寫規則的判定。"
         }
       ]
     },
     {
       "key": "mana:ggd-zero",
-      "max": 78,
+      "max": 79,
       "layer": "⚫無主",
       "reason": "出貨魔耗 0 且**沒有** `manaCostTier`,而 w3a 那一支是要錢的。⚠️ 只有 17 支是天生技 —— 另外 **59 支是 Q/W/E/R/EX 主動技**,一個免費的主動技不是級距裁決的結果,是一個沒有出處的數字。",
       "followUp": "把它們分成兩堆:真的設計成免費的(留下理由)與漏填 manaCostTier 的(補級距欄)。",
@@ -175,6 +178,9 @@
           "to": 78,
           "ggd": "godie-huth.e",
           "why": "GH#903 子票（2026-09-01）—— `godie-huth.e`（28-03 分身）改接 `tpl-summon-agent` 之後，`tierize.py` 的 ⑦ 分支（owner 逐字：「若不是主動傷害技能 就免魔力吧 乾脆點」）判定它**不再是主動傷害技** ⇒ 魔耗歸 0 且級別欄被拔掉（拔掉是刻意的：`manaCostTier` 的下界是 1，留著它會讓 `resolveManaCostTier` 把 0 換成 73 —— 失敗形態②）。⭐ 這是**同一件事的三個面**：`mana:tier` −1 · `mana:ggd-zero` +1 · `duration:ggd-absent` −1（召喚體有 durationSec ⇒ 那一支從「沒有持續」變成「有」），⛔ 不是三次獨立漂移。⚠️ 我**沒有**去覆寫它：試過把 `manaCostTier: 小` 放回去再跑 `tiers:apply`，⭐ 而它照 owner 的規則又拔掉了 —— ⛔ 規則贏，⛔ 不是我贏。"
+        },
+        {
+          "why": "GH#903 子票（2026-09-02）—— ⭐ **同一個規則的第二個實例**（第一次是 `godie-huth.e` 28-03 分身,見這一格 bumps 裡上一則）。`godie-n00b.w`（57-03 複製鏡)從 `tpl-single-strike` 改接 `tpl-summon-agent` 之後,`tierize.py` 的 ⑦ 分支（owner 逐字:「若不是主動傷害技能 就免魔力吧 乾脆點」)判定它**不再是主動傷害技** ⇒ 魔耗歸 0 且級別欄被拔掉。⭐ 三個面同時動:`mana:tier` −1 · `mana:ggd-zero` +1 · `duration:ggd-absent` −1（召喚體有 `durationSec` ⇒ 從「沒有持續」變成「有」),⛔ 不是三次獨立漂移。⚠️ ⭐ 而卡面**完全沒有提到傷害** —— 那一發 `damageTier 小 · ap 0.6` 是佔位模板帶來的,⛔ 不是設計 ⇒ 拿掉它才是翻譯（第〇·六守則）。⛔ 我沒有去覆寫規則的判定。"
         }
       ]
     },
@@ -232,7 +238,7 @@
     },
     {
       "key": "duration:ggd-absent",
-      "max": 183,
+      "max": 182,
       "layer": "⚫無主",
       "reason": "w3a 宣告了持續時間而出貨側**整棵效果樹沒有任何 durationSec**。⚠️ 同 `radius:ggd-absent`:混了「重製成瞬發」與「漏接持續效果」兩種,而 JSON 裡分不出來。⭐ 另外 w3a 還有 `hero_duration`(對英雄減時)這一格,GGD **一格都沒有** —— 那是一個缺的機制,不只是漏翻。⚠️ 2026-08-28 +4：上一列的鏡像。⭐ 這 4 支**本來就沒有**時長，只是以前被 cue 的 `durationSec` 冒名頂替 ⇒ 195 是**低報**，199 才是真的缺口。 ⭐ 2026-09-02 —— `godie-etyr.r`（14-04 聖夜降臨）的 `damageArea` **在此之前被模板展開刪掉了**（`mergeExpansion` 只保留 `spawnModelFx`），⇒ 掃描器看到的是「GGD 沒有這一軸」。修好之後那一支從 `ggd-absent` **移到**這一格。⛔ 這不是漂移，是**同一支在兩格之間搬家**：兩個 `ggd-absent` 各 −3、兩個各 +3，總筆數 978 → 977。",
       "followUp": "先做「對英雄/對雜兵分開的持續時間」那一格(w3a 573 支帶值),再逐支對說明分堆。",

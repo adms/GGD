@@ -15,11 +15,10 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    144.0,
-    144.0,
-    144.0
+    0.0,
+    0.0,
+    0.0
   ],
-  "manaCostTier": "小",
   "effects": [],
   "template": {
     "ref": "tpl-summon-agent",
@@ -31,13 +30,13 @@
       "durationSec": 20,
       "formation": "ring",
       "spread": 2,
-      "castTimeSec": 0.667
+      "castTimeSec": 0.267
     }
   },
   "vfxKey": "fx.prim.arcane.pulse",
   "sfxKey": "wc3.spellbreakerpissed4",
   "targetsEnemies": true,
-  "castTimeSec": 0.667,
+  "castTimeSec": 0.267,
   "rangeTier": "極大",
   "range": 12
 }

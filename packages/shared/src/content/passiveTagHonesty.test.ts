@@ -53,7 +53,10 @@ const PASSIVE_TAG = /\[(被動|靈氣)\]/;
  * ⭐ 棘輪 —— **只能往下**。2026-09-02 量到 30。
  * ⚠️ 修好一支就把這個數字調小，⛔ 不要放大它（放大＝又寫了一張說謊的卡）。
  */
-const CEIL = 30;
+// ⭐ 2026-09-02（GH#905）：30 → 29 —— `godie-u00v.q` 44-01 的拳頭從
+//   `tpl-buff-self`（給自己 as+0.25）翻成 `passive.ranks[].hooks[onBasicAttack]`
+//   ⇒ 它變成純被動,⭐ 而卡面逐字就寫著 `[被動] 0秒冷卻`。⛔ 棘輪只准降。
+const CEIL = 29;
 
 beforeAll(async () => {
   for (const r of [Champions, Abilities, Items, Augments, Projectiles, LootTables]) r.clear();
