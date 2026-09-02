@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "24bd88e2",
+  "fingerprint": "5a4b579d",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -89,10 +89,12 @@
     "chance",
     "equipment",
     "kind",
+    "recentCast",
     "stat",
     "status"
   ],
   "conditionLeafFields": [
+    "abilityId",
     "is",
     "itemId",
     "kind",
@@ -101,11 +103,13 @@
     "op",
     "other",
     "p",
+    "slot",
     "stat",
     "statusId",
     "subject",
     "tag",
-    "value"
+    "value",
+    "withinSec"
   ],
   "hookFields": [
     "abilitySlot",

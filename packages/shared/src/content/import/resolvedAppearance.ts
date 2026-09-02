@@ -80,6 +80,28 @@ export interface ResolvedAppearance {
    *   ⭐ 而且它不會知道自己錯了。
    */
   readonly isStandIn: boolean;
+  /**
+   * ⭐⭐ **這個答案沒有涵蓋的軸**（GH#934，2026-09-02）。
+   *
+   * ⛔⛔ 在此之前這份契約**安靜地只答 base case** —— 而遊戲真正走的是
+   * `EntityViewRegistry` 的 `modelDocFor(modelKey, **seatId**, **formIndex**)`，
+   * 而且它上面還疊了**兩層**會改變最終外觀的東西：
+   *
+   * | 軸 | 誰動它 | 動了什麼 |
+   * |---|---|---|
+   * | **skin** | `modelDocFor` 的 `seatId` | 玩家買的皮膚換掉整顆模型 |
+   * | **form** | `modelDocFor` 的 `formIndex` | 變身態換掉整顆模型 |
+   * | **overlay** | `blizzardOverlay.resolve()` | 合成一份 `ModelDoc` 取代 base |
+   * | **override** | `modelOverrideFor`（#77） | ⭐ 逐支 scale —— **18 位**共用 `champ.sela` 的英雄靠它才不會同一個大小 |
+   *
+   * ⇒ ⭐ 一個**沉默**的 resolver 會讓外部編輯器忠實預覽出一個**錯的角色**，
+   * 而且它不會知道自己錯了 —— ⛔ 那正是這張票自己寫下的風險。
+   *
+   * ⇒ ⭐ 這一格把「我沒回答什麼」**明講**出來，⛔ 而不是讓對面自己去發現。
+   * ⚠️ 它是**常數**（⛔ 不隨 champion 變）—— 哪一天某一軸被涵蓋了，
+   * 這個陣列變短，而 `resolverFingerprint` 會跟著動 ⇒ 對面**必然**看得到。
+   */
+  readonly axesNotCovered: readonly string[];
   readonly resolverFingerprint: string;
 }
 
@@ -136,6 +158,17 @@ function points(v: unknown): Readonly<Record<string, AttachPoint>> {
 }
 
 /**
+ * ⭐ 這一版**沒有**涵蓋的軸 —— 量出來的（見 `axesNotCovered` 的說明）。
+ * ⚠️ ⭐ 表只能**變短**：涵蓋了一軸就把它拿掉，⛔ 不可以為了讓某條測試變綠而加一列。
+ */
+const AXES_NOT_COVERED: readonly string[] = Object.freeze([
+  "skin",     // `modelDocFor(_, seatId)` —— 玩家買的皮膚換掉整顆模型
+  "form",     // `modelDocFor(_, _, formIndex)` —— 變身態換掉整顆模型
+  "overlay",  // `blizzardOverlay.resolve()` 合成一份 ModelDoc 取代 base
+  "override", // `modelOverrideFor`（#77）逐支 scale —— 18 位共用 champ.sela 的靠它
+]);
+
+/**
  * ⭐ 契約指紋 —— **欄位集合**的雜湊。
  *
  * ⚠️ 語意與 `effectiveVfxLimits` 的指紋刻意不同：那一支的值會隨設定變，
@@ -157,6 +190,7 @@ const FIELDS = Object.freeze([
   "attachPoints",
   "teamTintMaterials",
   "isStandIn",
+  "axesNotCovered",
   "resolverFingerprint",
 ]);
 
@@ -223,6 +257,7 @@ export function resolveAppearance(
           : [],
       ),
       isStandIn: isStandInModel(modelKey),
+      axesNotCovered: AXES_NOT_COVERED,
       resolverFingerprint: appearanceResolverFingerprint(),
     }),
   };
