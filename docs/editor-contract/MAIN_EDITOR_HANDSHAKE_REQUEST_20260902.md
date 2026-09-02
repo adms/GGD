@@ -1,18 +1,18 @@
 # GGD Main ↔ Codex Editor：必要接縫結案收據
 
-狀態：**Revision 10 — Main v0.35.4 已整合；只剩四個可重用積木／預設演出阻塞**
+狀態：**Revision 11 — Main v0.35.12 已整合；只剩五個可重用積木／契約阻塞**
 
-核對基準：`origin/main@d63214d78`（tag `v0.35.4`）
+核對基準：`origin/main@1d8dc285`（tag `v0.35.12`）
 
 Main seam：已以 `--ff-only` 線性進入 `main`；來源 ref `origin/feat/editor-seam-20260902@608c4de02` 暫留供追溯
 
 Editor：`feat/vfx-forge-codex`（禁止直接提交或推送 `main`）
 
-最後核對：**2026-09-02 10:15（Asia/Taipei）**
+最後核對：**2026-09-02 11:42（Asia/Taipei）**
 
 ## 結論
 
-Editor 已抓取並整合 Main v0.35.4 的完整線性歷史，包括以下五個接縫 commits：
+Editor 已抓取並整合 Main v0.35.12 的完整線性歷史，包括以下五個接縫 commits：
 
 - `b54441df`：完整 `active/runtime-bundle` 與 effective VFX limit identity receipt；
 - `cf40d5db`：`ggd-editor-contract-index@1` 唯一登錄表；
@@ -22,7 +22,7 @@ Editor 已抓取並整合 Main v0.35.4 的完整線性歷史，包括以下五�
 
 Editor 仍只在 `feat/vfx-forge-codex`；**不要把 Editor 提交直接推到 `main`**。
 
-Main 目前只需修正下方四個可重用積木／預設 resolver；不需要替 Editor 拼任何技能、時間軸或完整特效。
+Main 目前只需修正下方五個可重用積木／契約缺口；不需要替 Editor 拼任何技能、時間軸或完整特效。
 
 ## 不可越界的分工
 
@@ -159,6 +159,38 @@ GroundDecal、模型材質與 fallback 必須以實際 framebuffer 為準，禁�
 
 Editor 會繼續負責技能專屬組合、時間軸、色彩、鏡頭與人工批核；八招 capability fixture 永遠
 `promotable:false`，不屬於這張 Main 票的內容工作。
+
+## 阻塞積木 5：`combo-finisher` 已出貨，但對外 capability 契約漏報
+
+Main `v0.35.12` 已讓 `combo-finisher` 成為可展開的真正模板家族：
+
+- `content/ability-templates/tpl-combo-finisher.json` 為 `status:"enabled"`；
+- `packages/shared/src/content/templates/expand.ts` 已有 `"combo-finisher"` 展開器；
+- `isExpandable("combo-finisher") === true`，Main 的 GH#916 隔離測試也通過。
+
+但 `docs/editor-contract/ggd-runtime-capabilities.json` 與由它生成的
+`ggd-editor-coverage.json` 都沒有 `templateFamilies/combo-finisher`。原因是
+`editorCapabilities.ts` 的 `FAMILY_PROBE_LIST` 仍漏掉這個名字；現有測試只要求「已被出貨技能引用」的家族
+進契約，而這顆新積木尚未被 content 引用，所以 `caps:check` 與 `editorcov:check` 都錯誤綠燈。
+
+實際 Editor 雙向 coverage 守衛已紅：
+
+```text
+編輯器有但契約沒有: templateFamily/combo-finisher
+```
+
+請 Main 只修契約產生鏈，不要替 Editor 做連段成品：
+
+1. 讓所有 `status:"enabled"` 且 `isExpandable(family) === true` 的模板家族必定進
+   `RuntimeCapabilityManifest.templateFamilies`；不可只看是否已有 ability 引用。
+2. 最好讓家族來源從唯一 registry／模板文件推導；若目前仍必須保留 probe list，至少補上
+   `combo-finisher`，並加一條「enabled＋expandable 但零引用」也會紅的突變測試。
+3. 依規則跑 `pnpm caps:export` 與 `pnpm editorcov:build` 更新產物；不要手改兩份 JSON。
+4. 驗收必須讓 `pnpm --filter @ggd/editor test -- src/form/fullCoverageMatchesContract.test.ts`
+   兩個方向都回空集合。
+
+修正前 Editor 保留現有 `combo-finisher` 控制與紅燈，不刪掉積木來迎合一份漏報的契約，也不自行偽造
+capability receipt。
 
 ## 本輪整合時修正的 Editor 接縫
 
