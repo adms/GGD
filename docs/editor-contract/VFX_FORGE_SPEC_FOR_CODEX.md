@@ -1,6 +1,6 @@
 # 特效工坊（VFX Forge）· 技術規格 —— 給 Codex
 
-狀態：**Revision 6 — 2026-09-02 12:54 CST，以 `origin/main@d421c1ad`（含 v0.35.15）與 `feat/vfx-forge-codex` 程式／隔離測試重驗**
+狀態：**Revision 7 — 2026-09-02 13:01 CST，以 `origin/main@8b20c321`（含 v0.35.15）與 `feat/vfx-forge-codex` 程式／隔離測試重驗**
 
 > 本文保留 2026-08-31 的出發點，但「缺口」必須以各節的目前狀態為準；不可把舊基線當成今天的待辦。
 

@@ -1,19 +1,19 @@
 # GGD Main ↔ Codex Editor：必要接縫結案收據
 
-狀態：**Revision 16 — Main `d421c1ad`（含 v0.35.15）已整合；遠端資產接縫已封口，六個可重用積木／契約阻塞仍未落地**
+狀態：**Revision 17 — Main `8b20c321`（含 v0.35.15）已整合；遠端資產接縫已封口，六個可重用積木／契約阻塞仍未落地**
 
-核對基準：`origin/main@d421c1ad`（包含 tag `v0.35.15` at `7d032d9c`）
+核對基準：`origin/main@8b20c321`（包含 tag `v0.35.15` at `7d032d9c`）
 
-Main seam：`origin/feat/editor-seam-20260902@d421c1ad` 與 `main` 同一點；正式回交住
+Main seam：`origin/feat/editor-seam-20260902@8b20c321` 與 `main` 同一點；正式回交住
 `docs/editor-contract/MAIN_TO_EDITOR_RESPONSE_20260902.md`
 
 Editor：`feat/vfx-forge-codex`（禁止直接提交或推送 `main`）
 
-最後核對：**2026-09-02 12:45（Asia/Taipei）**
+最後核對：**2026-09-02 13:01（Asia/Taipei）**
 
 ## 結論
 
-Editor 已抓取並整合 Main `d421c1ad` 的完整線性歷史，包括以下接縫 commits：
+Editor 已抓取並整合 Main `8b20c321` 的完整線性歷史，包括以下接縫 commits：
 
 - `b54441df`：完整 `active/runtime-bundle` 與 effective VFX limit identity receipt；
 - `cf40d5db`：`ggd-editor-contract-index@1` 唯一登錄表；
@@ -31,6 +31,10 @@ Editor 已抓取並整合 Main `d421c1ad` 的完整線性歷史，包括以下�
 - `abdb963b`：mini deploy 診斷能指出 client/server 哪一側 revision 漂移。
 - `d421c1ad`：resolved appearance golden vector 改以出貨 registry 驗 modelKey；這補強既有 P1-3 證據，
   但仍未修復下方「effective yaw」缺口。
+- `d63381e9`：P1-3 回交定案：原作 `godie-e00r` 身體是 SatyrTrickster；16 頂點 Eva GLB 是粒子特效殘件，
+  Editor 維持 `isStandIn` fail-closed，不把殘件冒充角色模型。
+- `b3ff32a7`／`f546eb3f`：新增並修正 importer 崩潰復原測試；不改 Editor 演出 vocabulary。
+- `8b20c321`：更新只讀驗證帳本；六個下列積木的機器證據未變。
 
 Editor 已完成 Main 回交要求的「第三份 representation 清單」修正：Export Center 不再以字面
 `["ability@1","item@1"]` 決定 package policy，而是從已驗證的 `contract-index` 推導所有
@@ -47,9 +51,9 @@ Editor 仍只在 `feat/vfx-forge-codex`；**不要把 Editor 提交直接推到 
 
 Main 目前只需修正下方六個可重用積木／契約缺口；不需要替 Editor 拼任何技能、時間軸或完整特效。
 
-## Main `d421c1ad` 可重跑的現況證據
+## Main `8b20c321` 可重跑的現況證據
 
-| 阻塞 | 驗證指令 | 2026-09-02 12:46 結果 |
+| 阻塞 | 驗證指令 | 2026-09-02 13:01 結果 |
 |---|---|---|
 | 有效 yaw | `rg -n 'yawOffsetDeg: num\\(model\\.yawOffsetDeg, 0\\)' packages/shared/src/content/import/resolvedAppearance.ts` | 仍命中 raw 0° fallback |
 | 單發主斬弧 | `rg -n '"burstCount"\\s*:\\s*26' content/vfx/fx.prim.*slash*.json` | 所有現有 slash primitive 仍為 26 發 |
@@ -198,7 +202,7 @@ Editor 的 current 收據已提升為 `ggd-vfx-visual-audit@3`：除了完整時
 GroundDecal、模型材質與 fallback 必須以實際 framebuffer 為準，禁止輸出棋盤載體、未去背矩形、
 不透明魔法陣底板或白色材質 placeholder。這是積木品質要求，不是請 Main 替八招拼時間軸。
 
-2026-09-02 12:46 實跑 `pnpm vfxassets:check:fast` 的 Main 基線仍為 **27 個 blocker**，不是本 Editor
+2026-09-02 13:02 實跑 `pnpm vfxassets:check:fast` 的 Main 基線仍為 **27 個 blocker**，不是本 Editor
 分支新增：`babyface.png`（2）、`heroeva01effect.png`（2）、`ribbonblur1.png`（多個英雄 Ribbon）、
 `zap1.png/zap1b.png`（ThunderClap／LightningTornado）。請 Main 修復貼圖／blend 或在資產契約中 quarantine，
 並確保 default resolver 與可作者資源清單永遠不選它們；不要用 allowlist 把紅燈消音。Editor 已 fail closed：
