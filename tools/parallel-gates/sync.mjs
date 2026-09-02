@@ -140,6 +140,11 @@ _quarantine("unlock");
 //   少了這一行，第一支跑完就把自己的產物鎖回去，而鏈上後面寫同一批檔的步驟吃 EACCES
 //   —— ⭐ 一個「只在鏈裡發生、單獨跑永遠是綠的」的缺陷。
 process.env.GGD_QUARANTINE_UNLOCKED = "1";
+// ⭐⭐ GH#950 —— 這一整趟由 `package.json` 的 `skills:sync` **在外面**用
+// `scripts/content-tree-lock.py write` 包起來（那把鎖真的被持有）。
+// ⚠️ 這裡只是把「已經有人持鎖」傳給底下的 genrun ⇒ ⛔ 它們不會再拿一次而死鎖。
+// ⛔ 這一行**不會**自己拿鎖 —— 它是一個轉述，⛔ 不是一個宣稱。
+process.env.GGD_CONTENT_LOCK_HELD = "1";
 process.on("exit", () => _quarantine("lock"));
 
 const prune = new Set();
