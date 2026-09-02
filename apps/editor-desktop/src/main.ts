@@ -12,6 +12,7 @@ import {
   baseContentVersionForRemoteWorkspace,
   contentDirForRemoteWorkspace,
   normalizeRemoteSource,
+  readPinnedAssetManifest,
   readPinnedTargetProfile,
   remoteWorkspaceKey,
   remoteWorkspacePolicy,
@@ -213,6 +214,7 @@ async function start(): Promise<void> {
   let contentDir: string;
   let dataRoot: string;
   let remoteContentBaseUrl: string | null = null;
+  let remoteAssetManifest: ReturnType<typeof readPinnedAssetManifest> = null;
   let sourceInfo: EditorDesktopSourceInfo;
   if (config.kind === "remote") {
     sourceInfo = await syncRemoteWorkspace({
@@ -221,6 +223,7 @@ async function start(): Promise<void> {
       policy,
     });
     remoteContentBaseUrl = sourceInfo.contentBaseUrl;
+    remoteAssetManifest = readPinnedAssetManifest(config.workspacePath, sourceInfo.pinnedContentVersion);
     contentDir = contentDirForRemoteWorkspace(config.workspacePath);
     dataRoot = join(config.workspacePath, "data");
   } else {
@@ -281,12 +284,13 @@ async function start(): Promise<void> {
     reviewDir: join(dataRoot, "editor-review"),
     externalProfileHosts: policy.allowedHosts,
     desktopSource: currentSourceInfo,
-    ...(remoteContentBaseUrl ? {
+    ...(remoteContentBaseUrl && remoteAssetManifest ? {
       remoteAssets: {
         contentBaseUrl: remoteContentBaseUrl,
         cacheDir: join(config.workspacePath, "cache", "assets"),
         maxAssetBytes: policy.maxAssetBytes,
         timeoutMs: policy.requestTimeoutMs,
+        assetManifest: remoteAssetManifest,
       },
     } : {}),
   });

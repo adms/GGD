@@ -147,6 +147,11 @@ interface RemoteEditorTargetProfile {
     readonly itemDigest: string | null;
   };
   readonly assetManifestDigest: string | null;
+  readonly assetManifest?: {
+    readonly path: string;
+    readonly entries: number;
+    readonly totalBytes: number;
+  } | null;
   readonly deltaExportAllowed: boolean;
   readonly supportedModes: readonly ("bootstrap" | "full" | "delta")[];
   readonly unavailable: readonly { field: string; reason: string }[];
@@ -161,6 +166,22 @@ interface RemoteEditorTargetProfile {
 }
 
 export type PinnedTargetProfile = RemoteEditorTargetProfile;
+
+export interface RemoteAssetManifestEntry {
+  readonly path: string;
+  readonly bytes: number;
+  readonly sha256: string;
+  readonly contentType: string;
+}
+
+export interface RemoteAssetManifest {
+  readonly schema: "ggd-assets-manifest@1";
+  readonly counts: { readonly entries: number; readonly totalBytes: number };
+  readonly entries: readonly RemoteAssetManifestEntry[];
+}
+
+const REMOTE_ASSET_MANIFEST_WARNING =
+  "遠端 Base 未提供可驗證的完整 asset manifest；二進位模型／貼圖下載已 fail closed";
 
 /**
  * V1 deliberately allowlists the official host. Loopback is accepted for tests
@@ -238,6 +259,10 @@ function targetProfileFile(root: string, version: string): string {
 
 function remoteManifestFile(root: string, version: string): string {
   return join(root, "base", version, "remote-manifest.json");
+}
+
+function assetManifestFile(root: string, version: string): string {
+  return join(root, "base", version, "assets-manifest.json");
 }
 
 function writeMetadata(root: string, metadata: RemoteWorkspaceMetadata): void {
@@ -427,6 +452,20 @@ export function validateRemoteTargetProfile(raw: unknown, manifest: Manifest): R
   if (typeof profile.profileDigest !== "string" || !/^[0-9a-f]{12}$/i.test(profile.profileDigest)) {
     throw new Error("target profile 缺少有效 profileDigest");
   }
+  if (profile.assetManifestDigest !== null) {
+    if (!/^[0-9a-f]{12}$/i.test(profile.assetManifestDigest)) {
+      throw new Error("target profile 的 assetManifestDigest 無效");
+    }
+    if (
+      profile.assetManifest?.path !== "assets-manifest.json" ||
+      !Number.isSafeInteger(profile.assetManifest.entries) ||
+      profile.assetManifest.entries < 1 ||
+      !Number.isSafeInteger(profile.assetManifest.totalBytes) ||
+      profile.assetManifest.totalBytes < 1
+    ) {
+      throw new Error("target profile 缺少完整 assetManifest receipt");
+    }
+  }
   // Static profile generation is clock-free and intentionally hashes JSON
   // insertion order. Mirroring that policy is part of receipt validation.
   const { profileDigest, ...digestBody } = profile;
@@ -434,6 +473,68 @@ export function validateRemoteTargetProfile(raw: unknown, manifest: Manifest): R
   const actual = sha256Hex(JSON.stringify(stable)).slice(0, 12);
   if (actual !== profileDigest) throw new Error(`target profile digest 不一致（預期 ${actual}）`);
   return profile;
+}
+
+/** Validate the complete binary-asset receipt before a remote byte can be cached. */
+export function validateRemoteAssetManifest(
+  raw: unknown,
+  profile: RemoteEditorTargetProfile,
+): RemoteAssetManifest {
+  if (profile.assetManifestDigest === null || profile.assetManifest == null) {
+    throw new Error("target profile 未宣告可驗證的 asset manifest");
+  }
+  if (typeof raw !== "object" || raw === null || Array.isArray(raw)) {
+    throw new Error("asset manifest 不是物件");
+  }
+  const doc = raw as RemoteAssetManifest;
+  if (doc.schema !== "ggd-assets-manifest@1" || !Array.isArray(doc.entries)) {
+    throw new Error("asset manifest schema 或 entries 無效");
+  }
+  if (
+    !Number.isSafeInteger(doc.counts?.entries) ||
+    !Number.isSafeInteger(doc.counts?.totalBytes) ||
+    doc.counts.entries !== doc.entries.length ||
+    doc.counts.entries !== profile.assetManifest.entries
+  ) {
+    throw new Error("asset manifest 筆數與 profile 不一致");
+  }
+  const paths = new Set<string>();
+  let totalBytes = 0;
+  for (const entry of doc.entries) {
+    const path = typeof entry.path === "string" ? entry.path : "";
+    const parts: string[] = path.split("/");
+    if (
+      parts[0] !== "assets" ||
+      parts.length < 2 ||
+      parts.some((part) => part === "" || part === "." || part === ".." || part.includes("\0"))
+    ) {
+      throw new Error(`asset manifest 路徑無效：${String(entry.path)}`);
+    }
+    if (paths.has(path)) throw new Error(`asset manifest 路徑重複：${path}`);
+    paths.add(path);
+    if (!Number.isSafeInteger(entry.bytes) || entry.bytes < 0) {
+      throw new Error(`${entry.path}: bytes 無效`);
+    }
+    if (!/^[0-9a-f]{64}$/i.test(entry.sha256)) {
+      throw new Error(`${entry.path}: sha256 無效`);
+    }
+    if (typeof entry.contentType !== "string" || entry.contentType === "") {
+      throw new Error(`${entry.path}: contentType 無效`);
+    }
+    totalBytes += entry.bytes;
+    if (!Number.isSafeInteger(totalBytes)) throw new Error("asset manifest totalBytes 溢位");
+  }
+  if (
+    totalBytes !== doc.counts.totalBytes ||
+    totalBytes !== profile.assetManifest.totalBytes
+  ) {
+    throw new Error("asset manifest totalBytes 與 profile 不一致");
+  }
+  const digest = sha256Hex(JSON.stringify(doc)).slice(0, 12);
+  if (digest !== profile.assetManifestDigest) {
+    throw new Error(`asset manifest digest 不一致（預期 ${profile.assetManifestDigest}，實際 ${digest}）`);
+  }
+  return doc;
 }
 
 async function fetchTargetProfile(
@@ -456,6 +557,22 @@ async function fetchTargetProfile(
   }
 }
 
+async function fetchAssetManifest(
+  fetchImpl: typeof fetch,
+  normalized: NormalizedRemoteSource,
+  profile: RemoteEditorTargetProfile | null,
+  policy: RemoteWorkspacePolicy,
+): Promise<RemoteAssetManifest | null> {
+  if (profile?.assetManifestDigest == null || profile.assetManifest == null) return null;
+  const result = await fetchJsonLimited(
+    fetchImpl,
+    new URL(profile.assetManifest.path, normalized.contentBaseUrl).href,
+    policy.maxManifestBytes,
+    policy.requestTimeoutMs,
+  );
+  return validateRemoteAssetManifest(result.value, profile);
+}
+
 function persistTargetProfile(root: string, version: string, profile: RemoteEditorTargetProfile | null): void {
   if (!profile) return;
   const target = targetProfileFile(root, version);
@@ -473,6 +590,15 @@ function persistRemoteManifest(root: string, version: string, manifest: Manifest
   renameSync(tmp, target);
 }
 
+function persistAssetManifest(root: string, version: string, manifest: RemoteAssetManifest | null): void {
+  if (!manifest) return;
+  const target = assetManifestFile(root, version);
+  mkdirSync(dirname(target), { recursive: true });
+  const tmp = `${target}.tmp-${process.pid}`;
+  writeFileSync(tmp, fileJson(manifest), "utf8");
+  renameSync(tmp, target);
+}
+
 export function readPinnedTargetProfile(root: string, version: string | null): PinnedTargetProfile | null {
   if (!version) return null;
   try {
@@ -481,6 +607,18 @@ export function readPinnedTargetProfile(root: string, version: string | null): P
     ) as RemoteEditorTargetProfile;
     const manifest = JSON.parse(readFileSync(remoteManifestFile(root, version), "utf8")) as Manifest;
     return manifest ? validateRemoteTargetProfile(profile, manifest) : null;
+  } catch {
+    return null;
+  }
+}
+
+export function readPinnedAssetManifest(root: string, version: string | null): RemoteAssetManifest | null {
+  if (!version) return null;
+  try {
+    const profile = readPinnedTargetProfile(root, version);
+    if (!profile || profile.assetManifestDigest === null) return null;
+    const raw = JSON.parse(readFileSync(assetManifestFile(root, version), "utf8")) as unknown;
+    return validateRemoteAssetManifest(raw, profile);
   } catch {
     return null;
   }
@@ -634,17 +772,23 @@ export async function syncRemoteWorkspace(options: SyncRemoteWorkspaceOptions): 
     );
     const manifest = validateRemoteManifest(manifestResult.value);
     const targetProfile = await fetchTargetProfile(fetchImpl, normalized, manifest, policy);
+    const assetManifest = await fetchAssetManifest(fetchImpl, normalized, targetProfile, policy);
 
     if (previous?.pinnedContentVersion === manifest.contentVersion && existsSync(join(working, "manifest.json"))) {
       const workingVersion = readManifest(working)?.contentVersion ?? null;
       const state = previous.conflicts.length > 0 ? "merged-with-conflicts" : workingVersion === baseWorkingVersion(root, manifest.contentVersion) ? "current" : "local-changes";
       persistRemoteManifest(root, manifest.contentVersion, manifest);
       persistTargetProfile(root, manifest.contentVersion, targetProfile);
+      persistAssetManifest(root, manifest.contentVersion, assetManifest);
+      const compatibilityWarnings = previous.compatibilityWarnings
+        .filter((warning) => warning !== REMOTE_ASSET_MANIFEST_WARNING);
+      if (!assetManifest) compatibilityWarnings.push(REMOTE_ASSET_MANIFEST_WARNING);
       const metadata = {
         ...previous,
         latestRemoteContentVersion: manifest.contentVersion,
         lastSuccessfulCheckAt: now().toISOString(),
         targetProfileDigest: targetProfile?.profileDigest ?? previous.targetProfileDigest,
+        compatibilityWarnings,
       };
       writeMetadata(root, metadata);
       return sourceInfo(root, normalized, metadata, state, false, state === "current" ? "已與線上基準同步" : "已保留本機修改");
@@ -657,10 +801,12 @@ export async function syncRemoteWorkspace(options: SyncRemoteWorkspaceOptions): 
       policy.requestTimeoutMs,
     );
     const compatibilityWarnings: string[] = [];
+    if (!assetManifest) compatibilityWarnings.push(REMOTE_ASSET_MANIFEST_WARNING);
     const bundle = validateRemoteBundle(bundleResult.value, manifest, compatibilityWarnings);
     const base = ensureBaseSnapshot(root, bundle, manifest.contentVersion);
     persistRemoteManifest(root, manifest.contentVersion, manifest);
     persistTargetProfile(root, manifest.contentVersion, targetProfile);
+    persistAssetManifest(root, manifest.contentVersion, assetManifest);
     let conflicts: readonly RemoteConflict[] = [];
 
     if (!existsSync(join(working, "manifest.json"))) {

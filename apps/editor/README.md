@@ -124,10 +124,15 @@ as `https://ggd.adms.ai`. Remote manifest, bundle, target profile and individual
 document hashes are validated before the snapshot is pinned. Local edits stay in
 the desktop working tree and are three-way merged on refresh; conflicts are
 preserved for review. Binary assets are local-first and fetched through a bounded,
-allow-listed cache bridge. Per-file asset hash verification will become mandatory
-as soon as main publishes the complete asset manifest requested by the handshake.
+allow-listed cache bridge. Main's complete `assets-manifest.json` is fetched and
+verified against the pinned target-profile digest before that bridge is enabled.
+Every downloaded or cached GLB／texture／audio byte stream is checked against its
+manifest byte count and SHA-256; unlisted assets, tampered responses and stale
+cache entries fail closed instead of entering the preview. Older profiles without
+the receipt may still load JSON, but remote binary fetching remains disabled and
+the desktop source status reports that compatibility state.
 
-Last verified 2026-09-02 12:06 CST, the feature branch contains
+Last verified 2026-09-02 12:43 CST, the feature branch contains
 `origin/main@d29d0be6` (tag `v0.35.14`). Treat this as a receipt rather than a
 permanent constant: fetch Main and compare the live ref before making a current
 compatibility claim. Live and repository profile digests likewise remain

@@ -1,6 +1,6 @@
 # GGD Main ↔ Codex Editor：必要接縫結案收據
 
-狀態：**Revision 14 — Main v0.35.14 已整合；六個可重用積木／契約阻塞仍未落地**
+狀態：**Revision 15 — Main v0.35.14 已整合；遠端資產接縫已封口，六個可重用積木／契約阻塞仍未落地**
 
 核對基準：`origin/main@d29d0be6`（tag `v0.35.14`）
 
@@ -9,7 +9,7 @@ Main seam：`origin/feat/editor-seam-20260902@d29d0be6` 與 `main` 同一點；�
 
 Editor：`feat/vfx-forge-codex`（禁止直接提交或推送 `main`）
 
-最後核對：**2026-09-02 12:16（Asia/Taipei）**
+最後核對：**2026-09-02 12:43（Asia/Taipei）**
 
 ## 結論
 
@@ -30,6 +30,11 @@ Editor 已完成 Main 回交要求的「第三份 representation 清單」修正
 `["ability@1","item@1"]` 決定 package policy，而是從已驗證的 `contract-index` 推導所有
 `supported + runtime-document + admin-package-apply` 列。若 Main 新增 representation 而 Editor 尚無 builder，
 或 target profile 摘要與完整 index 不一致，現在會明確 fail closed，不會安靜漏包。
+
+Main 的完整 `assets-manifest.json` 接縫也已由 Editor 消費：Desktop 先核對 profile receipt、manifest
+筆數／總位元組／digest 與每筆路徑，再允許遠端二進位橋接；下載內容與既有 cache 都必須逐檔符合
+`bytes + SHA-256`，未列名、被竄改或舊 Base cache 一律 fail closed。舊 profile 仍可讀 JSON，但不會下載
+任何無完整 receipt 的 GLB／貼圖／音效。
 
 Editor 仍只在 `feat/vfx-forge-codex`；**不要把 Editor 提交直接推到 `main`**。
 
@@ -88,6 +93,11 @@ Main 的驗收標準是該 primitive 可被任意技能重用；成品像不像�
    - Editor 已用同一 resolver 解析 VFX Forge 施法者／目標與英雄 3D 預覽；
    - `isStandIn=true` 仍可用來除錯機制，但禁止擷取或送出人工批核視覺證據；
    - 候選證據附 `championId/modelKey/modelDocDigest/resolverFingerprint` 收據。
+6. 遠端二進位資產
+   - `assetManifestDigest` 依 Main 同一規則重算 `JSON.stringify(assetManifest)` 的 12-hex SHA-256；
+   - receipt、`counts.entries`、`counts.totalBytes`、逐檔 64-hex SHA-256 與受限 `assets/...` 路徑全部驗證；
+   - cache 命中也重新雜湊，不能把另一個 Base 或中斷下載留下的位元組當成命中；
+   - `remoteWorkspace.test.ts` 已直接讀 Main 當前出貨 profile／manifest 做契約驗證，不只驗合成夾具。
 
 ## 阻塞積木 1：缺省 yaw 不是實際生效值
 
@@ -294,6 +304,8 @@ Python」，並停止寫回。它不會退回直接 PATCH 產物，也不會把 
 - 兩條遠端唯讀 bridge 改用 HTTP GET；它們只讀 allow-listed HTTPS profile/index，不會被「所有 POST
   都是內容寫入」的掃描誤判，也沒有放寬 generator-owned 守衛。
 - 靜態 profile 已由合併後產生器重建；contract-index digest 為 `f0fa79b088ba`。
+- 遠端 Base 的完整 asset manifest 已 pin 在相同 contentVersion 目錄；Content API bridge 只服務該 receipt
+  列名且 byte count／SHA-256 相符的資產，沒有 receipt 時整條 bridge 不啟用。
 
 ## 非阻塞、不要塞回本輪
 

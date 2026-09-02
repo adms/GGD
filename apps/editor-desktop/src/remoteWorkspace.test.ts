@@ -1,6 +1,6 @@
 import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { contentVersion, hashCollection, hashDoc, sha256Hex } from "@ggd/shared/content";
 import { buildCapabilityManifest } from "@ggd/shared/content/editorCapabilities";
@@ -9,14 +9,17 @@ import {
   contentDirForRemoteWorkspace,
   baseContentVersionForRemoteWorkspace,
   normalizeRemoteSource,
+  readPinnedAssetManifest,
   readPinnedTargetProfile,
   remoteWorkspacePolicy,
   syncRemoteWorkspace,
   validateRemoteBundle,
+  validateRemoteAssetManifest,
   validateRemoteTargetProfile,
 } from "./remoteWorkspace";
 
 const roots: string[] = [];
+const repoRoot = resolve(__dirname, "../../..");
 afterEach(() => {
   for (const root of roots.splice(0)) rmSync(root, { recursive: true, force: true });
 });
@@ -57,7 +60,36 @@ function remotePayload(cost: number, extra = false) {
     manifest: readFileSync(join(root, "manifest.json"), "utf8"),
     bundle: readFileSync(join(root, "bundle.json"), "utf8"),
     profile: JSON.stringify(profile),
+    assetManifest: null as string | null,
     contentVersion: manifest.contentVersion,
+  };
+}
+
+function withAssetManifest(payload: ReturnType<typeof remotePayload>) {
+  const bytes = Buffer.from("remote-glb");
+  const assetManifest = {
+    schema: "ggd-assets-manifest@1",
+    counts: { entries: 1, totalBytes: bytes.byteLength },
+    entries: [{
+      path: "assets/models/remote.glb",
+      bytes: bytes.byteLength,
+      sha256: sha256Hex(bytes.toString("utf8")),
+      contentType: "model/gltf-binary",
+    }],
+  };
+  const profile = JSON.parse(payload.profile);
+  profile.assetManifestDigest = sha256Hex(JSON.stringify(assetManifest)).slice(0, 12);
+  profile.assetManifest = {
+    path: "assets-manifest.json",
+    entries: assetManifest.counts.entries,
+    totalBytes: assetManifest.counts.totalBytes,
+  };
+  delete profile.profileDigest;
+  profile.profileDigest = sha256Hex(JSON.stringify(profile)).slice(0, 12);
+  return {
+    ...payload,
+    profile: JSON.stringify(profile),
+    assetManifest: JSON.stringify(assetManifest),
   };
 }
 
@@ -71,6 +103,8 @@ function fakeFetch(payload: ReturnType<typeof remotePayload>, online = true): ty
         ? payload.bundle
         : path.endsWith("/editor-target-profile.json")
           ? payload.profile
+          : path.endsWith("/assets-manifest.json")
+            ? payload.assetManifest
           : null;
     if (raw === null) return new Response("missing", { status: 404 });
     return new Response(raw, { status: 200, headers: { "content-type": "application/json", "content-length": String(Buffer.byteLength(raw)) } });
@@ -170,6 +204,56 @@ describe("remote editor workspace", () => {
     expect(source.targetProfileDigest).toMatch(/^[0-9a-f]{12}$/);
     expect(JSON.parse(readFileSync(join(contentDirForRemoteWorkspace(workspace), "items", "remote-item.json"), "utf8")).cost).toBe(900);
     expect(existsSync(join(workspace, "base", payload.contentVersion, "content", "bundle.json"))).toBe(true);
+  });
+
+  it("pins a digest-verified asset manifest for the remote preview bridge", async () => {
+    const workspace = temp("ggd-remote-asset-manifest-");
+    const payload = withAssetManifest(remotePayload(900));
+    const source = await syncRemoteWorkspace({
+      sourceInput: "http://127.0.0.1:9999",
+      workspaceRoot: workspace,
+      fetchImpl: fakeFetch(payload),
+    });
+    const pinned = readPinnedAssetManifest(workspace, source.pinnedContentVersion);
+    expect(pinned?.entries).toEqual([
+      expect.objectContaining({ path: "assets/models/remote.glb", bytes: 10 }),
+    ]);
+    expect(source.compatibilityWarnings).not.toEqual(
+      expect.arrayContaining([expect.stringContaining("asset manifest")]),
+    );
+  });
+
+  it("accepts Main's actually shipped profile ↔ asset-manifest receipt", () => {
+    const profile = JSON.parse(
+      readFileSync(join(repoRoot, "content/editor-target-profile.json"), "utf8"),
+    );
+    const manifest = JSON.parse(
+      readFileSync(join(repoRoot, "content/assets-manifest.json"), "utf8"),
+    );
+    const verified = validateRemoteAssetManifest(manifest, profile);
+    expect(verified.entries).toHaveLength(profile.assetManifest.entries);
+    expect(verified.counts.totalBytes).toBe(profile.assetManifest.totalBytes);
+    expect(sha256Hex(JSON.stringify(verified)).slice(0, 12)).toBe(profile.assetManifestDigest);
+  });
+
+  it("rejects a tampered or escaping asset manifest before pinning the Base", async () => {
+    const workspace = temp("ggd-remote-asset-manifest-tamper-");
+    const payload = withAssetManifest(remotePayload(900));
+    const tampered = JSON.parse(payload.assetManifest!);
+    tampered.entries[0].sha256 = "0".repeat(64);
+    await expect(syncRemoteWorkspace({
+      sourceInput: "http://127.0.0.1:9999",
+      workspaceRoot: workspace,
+      fetchImpl: fakeFetch({ ...payload, assetManifest: JSON.stringify(tampered) }),
+    })).rejects.toThrow(/asset manifest digest 不一致/);
+
+    const profile = JSON.parse(payload.profile);
+    const escaping = JSON.parse(payload.assetManifest!);
+    escaping.entries[0].path = "assets/../outside.glb";
+    profile.assetManifestDigest = sha256Hex(JSON.stringify(escaping)).slice(0, 12);
+    delete profile.profileDigest;
+    profile.profileDigest = sha256Hex(JSON.stringify(profile)).slice(0, 12);
+    expect(() => validateRemoteAssetManifest(escaping, profile)).toThrow(/路徑無效/);
   });
 
   it("accepts main contentVersion's private asset-tree component while fully verifying JSON", () => {

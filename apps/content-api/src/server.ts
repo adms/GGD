@@ -32,8 +32,9 @@
  * overwrite and delete first snapshots the bytes on disk into the git-ignored
  * undo store (backup.ts), and /restore puts one back.
  */
-import { existsSync, mkdirSync, renameSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { dirname, join, resolve, sep } from "node:path";
 import Fastify, { type FastifyInstance, type FastifyReply } from "fastify";
 import {
@@ -109,6 +110,16 @@ export interface ContentApiOptions {
     cacheDir: string;
     maxAssetBytes: number;
     timeoutMs: number;
+    /** Digest-verified receipt pinned beside the immutable remote Base. */
+    assetManifest: {
+      readonly schema: "ggd-assets-manifest@1";
+      readonly entries: readonly {
+        readonly path: string;
+        readonly bytes: number;
+        readonly sha256: string;
+        readonly contentType: string;
+      }[];
+    };
     /** test seam; desktop uses the platform fetch implementation. */
     fetchImpl?: typeof fetch;
   };
@@ -137,6 +148,10 @@ const ASSET_MIME: Record<string, string> = {
 };
 
 class RemoteAssetTooLarge extends Error {}
+
+function assetSha256(bytes: Uint8Array): string {
+  return createHash("sha256").update(bytes).digest("hex");
+}
 
 async function readResponseBounded(response: Response, maxBytes: number): Promise<Buffer> {
   if (!response.body) throw new Error("remote asset response has no body");
@@ -745,6 +760,12 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   // (GLB models, particle textures).
   const assetRoot = join(root, "assets");
   const remoteAssetCache = opts.remoteAssets ? resolve(opts.remoteAssets.cacheDir) : null;
+  const remoteAssetIndex = new Map(
+    (opts.remoteAssets?.assetManifest.entries ?? []).map((entry) => [entry.path, entry] as const),
+  );
+  if (opts.remoteAssets && remoteAssetIndex.size !== opts.remoteAssets.assetManifest.entries.length) {
+    throw new Error("remote asset manifest contains duplicate paths");
+  }
   app.get<{ Params: { "*": string } }>("/content-api/assets/*", async (req, reply) => {
     const rel = req.params["*"] ?? "";
     const segments = rel.split("/");
@@ -757,13 +778,28 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
     }
     let readable = file;
     if (!existsSync(readable) && opts.remoteAssets && remoteAssetCache) {
+      const receipt = remoteAssetIndex.get(`assets/${rel}`);
+      if (!receipt) {
+        return err(reply, 412, `asset is absent from the pinned manifest: assets/${rel}`);
+      }
+      if (receipt.bytes > opts.remoteAssets.maxAssetBytes) {
+        return err(reply, 413, `asset exceeds ${opts.remoteAssets.maxAssetBytes} bytes`);
+      }
       const cached = resolve(remoteAssetCache, rel);
       if (cached !== remoteAssetCache && !cached.startsWith(remoteAssetCache + sep)) {
         return err(reply, 400, "path escapes remote asset cache");
       }
       if (existsSync(cached)) {
-        readable = cached;
-      } else {
+        const cachedBytes = await readFile(cached);
+        if (cachedBytes.byteLength === receipt.bytes && assetSha256(cachedBytes) === receipt.sha256) {
+          readable = cached;
+        } else {
+          // A cache from another Base, an interrupted old client, or manual
+          // tampering must never be served as the pinned immutable asset.
+          rmSync(cached, { force: true });
+        }
+      }
+      if (!existsSync(readable)) {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), opts.remoteAssets.timeoutMs);
         timeout.unref?.();
@@ -782,7 +818,13 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
           if (Number.isFinite(declared) && declared > opts.remoteAssets.maxAssetBytes) {
             return err(reply, 413, `remote asset exceeds ${opts.remoteAssets.maxAssetBytes} bytes`);
           }
+          if (declared > 0 && declared !== receipt.bytes) {
+            return err(reply, 502, `remote asset byte count differs from pinned manifest: ${declared} != ${receipt.bytes}`);
+          }
           const bytes = await readResponseBounded(response, opts.remoteAssets.maxAssetBytes);
+          if (bytes.byteLength !== receipt.bytes || assetSha256(bytes) !== receipt.sha256) {
+            return err(reply, 502, `remote asset digest differs from pinned manifest: assets/${rel}`);
+          }
           mkdirSync(dirname(cached), { recursive: true });
           const tmp = `${cached}.tmp-${process.pid}`;
           writeFileSync(tmp, bytes);
@@ -798,7 +840,8 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
     }
     if (!existsSync(readable)) return err(reply, 404, `asset not found: ${rel}`);
     return reply
-      .type(ASSET_MIME[rel.slice(rel.lastIndexOf(".")).toLowerCase()] ?? "application/octet-stream")
+      .type(remoteAssetIndex.get(`assets/${rel}`)?.contentType ??
+        ASSET_MIME[rel.slice(rel.lastIndexOf(".")).toLowerCase()] ?? "application/octet-stream")
       .header("cache-control", "no-cache")
       .send(await readFile(readable));
   });
