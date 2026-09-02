@@ -16,12 +16,26 @@ func newSvc(t *testing.T) *Service {
 	s := New(store)
 	n := time.Date(2026, 9, 1, 0, 0, 0, 0, time.UTC)
 	s.SetNow(func() time.Time { n = n.Add(time.Second); return n })
+	s.SetGeneratorOwned(notOwned{})
 	return s
 }
 
 func mat(id, digest string) Material {
-	return Material{ID: id, AccountID: "acct-1", Kind: "ability", Digest: digest, Payload: `{"a":1}`}
+	// ⭐ GH#932 —— 夾具帶 `Target`：一份**不宣告落點**的候選現在 promote 不了
+	//   （⭐ 那正是新閘要的行為，⛔ 而它在落地當下就把這幾條舊夾具擋下來了）。
+	return Material{
+		ID: id, AccountID: "acct-1", Kind: "ability", Digest: digest, Payload: `{"a":1}`,
+		Target: &Target{Collection: "abilities", ID: "手編的技能"},
+	}
 }
+
+// notOwned 是一個**永遠說「不是產物」**的擁有權來源（測試用）。
+// ⚠️ ⭐ 它刻意回 `ok=true` —— ⛔ 「查得到而不是產物」與「查不到」是**兩件事**，
+//
+//	而只有前者可以 promote。
+type notOwned struct{}
+
+func (notOwned) IsGeneratorOwned(string, string) (bool, bool) { return false, true }
 
 // ⭐⭐ 承重：**核准之後把內容換掉，它就不再看得見**。
 //
