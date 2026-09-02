@@ -117,9 +117,28 @@ except Exception: print('')" 2>/dev/null)
       #   ⛔ 不是同一件事。連不到 ⇒ 是網路；連得到而被拒 ⇒ 才是鑰匙。
       if ! nc -z -G 4 "$HOST" 22 2>/dev/null; then
         bad "⛔ 連不到 $HOST:22 —— ⭐ 這是**網路**，⛔ 不是鑰匙"
-        info "  · mini 睡著了？（caffeinate ／ 系統設定 → 節能）"
-        info "  · 不在同一個網段？（要區網或 VPN）"
-        info "  · IP 變了？（DHCP）"
+        # ⭐⭐ **量出「是哪一邊移動了」，⛔ 不是印三個猜測**（2026-09-02）。
+        #
+        # ⚠️ 在此之前這裡是三行並列的可能性（睡著／不同網段／IP 變了）——
+        # ⭐ 而 2026-09-02 那次**連續五輪**都被讀成「mini 睡著了」，
+        # ⛔ 真相是**這台筆電換了網路**（`10.10.206.29`，而 mini 在 `192.168.0.x`）。
+        #
+        # ⇒ ⭐ 前兩個是**分辨得出來的**：比對我自己的網段與目標的網段。
+        #   ⛔ 只有第三個（DHCP 換 IP）需要人去看。
+        _MY_IP="$( (ipconfig getifaddr en0 || ipconfig getifaddr en1) 2>/dev/null || true)"
+        _MY_NET="${_MY_IP%.*}"
+        _TARGET_NET="${HOST%.*}"
+        if [ -n "$_MY_IP" ] && [ "$_MY_NET" != "$_TARGET_NET" ]; then
+          info "  ⭐ **量到了：這台在 $_MY_IP（網段 $_MY_NET.x），而目標在 $_TARGET_NET.x**"
+          info "  ⇒ ⛔ 移動的是**這一台**，⛔ 不是 mini —— 它多半好好的。"
+          info "  ⇒ 回到 mini 的區網，或走 VPN／Tailscale，⛔ 不要去喚醒一台沒睡的機器。"
+        elif [ -n "$_MY_IP" ]; then
+          info "  ⭐ 同一個網段（$_MY_NET.x）而連不到 ⇒ **mini 那一側**："
+          info "  · 睡著了？（caffeinate ／ 系統設定 → 節能）"
+          info "  · IP 變了？（DHCP —— 同網段但換了尾碼）"
+        else
+          info "  ⚠️ 量不到本機 IP（en0/en1 都沒有）⇒ 這台可能根本沒連上網路。"
+        fi
         info "⛔ **不要**跑 ssh-copy-id —— 它跟這個問題無關，而且會卡在密碼提示。"
       else
         bad "SSH 登不進去（⭐ port 22 通得到 ⇒ 這一次真的是鑰匙）"
