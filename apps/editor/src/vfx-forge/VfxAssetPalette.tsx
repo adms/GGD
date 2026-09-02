@@ -24,7 +24,11 @@ export function VfxAssetPalette({
   const entries = useMemo(() => {
     const source = tab === "models" ? models : vfx;
     const q = filter.trim().toLowerCase();
-    return (source?.entries ?? []).filter((e) => !q || e.id.toLowerCase().includes(q)).slice(0, 300);
+    // The palette is the editor's catalogue of reusable bricks.  Silently
+    // slicing it made the last 371 shipped VFX impossible to discover,
+    // inspect, verify or compose; search is the scalability control, not an
+    // invisible ownership boundary.
+    return (source?.entries ?? []).filter((e) => !q || e.id.toLowerCase().includes(q));
   }, [filter, models, tab, vfx]);
   const safetyCounts = useMemo(() => {
     let safe = 0;

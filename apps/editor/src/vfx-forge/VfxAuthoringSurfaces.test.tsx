@@ -74,6 +74,29 @@ describe("VFX Forge authoring surfaces", () => {
     expect(markup).toContain('draggable="false"');
   });
 
+  it("does not hide later reusable VFX behind a fixed palette cap", async () => {
+    const ids = Array.from({ length: 301 }, (_, i) => `fx.${i}`);
+    const host = document.createElement("div");
+    const root = createRoot(host);
+    await act(async () => {
+      root.render(
+        <VfxAssetPalette
+          models={index("models", [])}
+          vfx={index("vfx", ids)}
+          onAdd={vi.fn()}
+          onProbe={vi.fn()}
+          safety={new Map()}
+        />,
+      );
+    });
+    const vfxTab = [...host.querySelectorAll<HTMLButtonElement>("button")]
+      .find((button) => button.textContent === "粒子 VFX");
+    await act(async () => vfxTab!.dispatchEvent(new MouseEvent("click", { bubbles: true })));
+    expect(host.textContent).toContain("本頁 301 項");
+    expect(host.textContent).toContain("fx.300");
+    await act(async () => root.unmount());
+  });
+
   it("lets a pending double-click enter the guarded add path on the first attempt", async () => {
     const pending: AssetDrop = { collection: "models", id: "model.pending" };
     const onAdd = vi.fn().mockResolvedValue(undefined);
