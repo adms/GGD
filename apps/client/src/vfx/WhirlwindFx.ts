@@ -58,9 +58,11 @@ import {
   type PresetSystemOptions,
   type Rgb,
 } from "./vfxPresets";
+import type { AnimState } from "@ggd/shared/content/animPulse";
 
 /** Visual animation states this channel can gate on (mirrors AnimState). */
-export type WhirlwindState = "idle" | "run" | "attack" | "cast" | "hurt" | "death";
+// ⭐ GH#940 —— 這就是狀態格的詞彙表，⛔ 不是另一個東西 ⇒ 用同一份。
+export type WhirlwindState = AnimState;
 
 /**
  * One model's whirlwind. The field set is deliberately the task #50 art-param

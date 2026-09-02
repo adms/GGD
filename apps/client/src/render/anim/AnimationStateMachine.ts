@@ -16,15 +16,26 @@
  * hurt pulse only plays from idle; movement keeps the run loop.
  */
 
-export type AnimState = "idle" | "run" | "attack" | "cast" | "hurt" | "death";
+// ⭐ GH#940 —— 這裡本來是第六份手抄的六格詞彙表。
+// ⇒ 轉出唯一住處（`packages/shared/src/voxel/clips.ts` 的 `CLIP_STATES`，
+//   它與 `zClipMap` 的 `.strict()` 綁在一起 ⇒ 那個綁定是承重的）。
+export type { AnimState } from "@ggd/shared/content/animPulse";
 
-export type AnimPulse = "attack" | "cast" | "hurt";
-
-export const PULSE_MS: Record<AnimPulse, number> = {
-  attack: 350,
-  cast: 450,
-  hurt: 250,
-};
+/**
+ * ⭐⭐ GH#940 —— `AnimPulse` 與 `PULSE_MS` **搬到 `@ggd/shared` 去了**，
+ * 這兩行是**門面**（re-export），⛔ 不是第二份。
+ *
+ * ⚠️ 為什麼要搬：同一個聯集在此之前手抄在**五個住處**，其中一個是
+ * `packages/shared/src/content/schema/vfxScript.ts` 的 `z.enum` ——
+ * ⛔ 而 shared 不可以 import client ⇒ 唯一能同時服務兩邊的住處在 shared。
+ * ⇒ ⭐ 加一塊動作積木漏改任一處，在此之前**不會有任何 tsc 紅**。
+ *
+ * ⭐ 門面保住了既有的 import 端（`ChampionView.ts` 等）——
+ * ⛔ 搬家不可以逼每一個消費者改一行。
+ */
+export { PULSE_MS, ANIM_PULSES, isAnimPulse } from "@ggd/shared/content/animPulse";
+export type { AnimPulse } from "@ggd/shared/content/animPulse";
+import { PULSE_MS, type AnimPulse, type AnimState } from "@ggd/shared/content/animPulse";
 
 /** Keep run alive briefly across movement-detection flickers/stalls. */
 export const RUN_LINGER_MS = 200;

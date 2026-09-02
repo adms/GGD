@@ -168,6 +168,7 @@ import {
   screenFlashSpecFromEvent,
   screenShakeSpecFromEvent,
 } from "../render/screenFx";
+import type { AnimPulse } from "@ggd/shared/content/animPulse";
 
 /** Reusable scratch for the #233 headroom probe — no per-frame allocation. */
 const HEADROOM_F = new Vector3();
@@ -228,7 +229,7 @@ export interface VfxContext {
    * ⛔ 不知道「view 從哪來」（同 `vfxDoc` / `modelDocFor` 一字不差的理由）。
    * 缺席 ⇒ 動畫段是 no-op（headless 測試與舊接線的樣子，⛔ 不是整個功能不生效）。
    */
-  pulseAnim?(id: number, kind: "attack" | "cast" | "hurt", opts?: { clipWindowMs?: number }): void;
+  pulseAnim?(id: number, kind: AnimPulse, opts?: { clipWindowMs?: number }): void;
   /**
    * ⭐ GH#838 N6 —— 演出用的暫時隱形（阿邦快速劍X：人消失 1 秒，只剩劍氣）。
    * ⚠️ 這**不是**權威隱身；缺席 ⇒ 段是 no-op（headless 測試的樣子）。

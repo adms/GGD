@@ -11,6 +11,7 @@ import { moveBodyFor } from "../render/scriptedMove";
  */
 
 import type { SfxRelation } from "../audio/spatial";
+import type { AnimPulse } from "@ggd/shared/content/animPulse";
 
 export function footstepRelationOf(
   id: number,
@@ -31,7 +32,7 @@ export function footstepRelationOf(
  * 後面每一個事件，GH#608）。 */
 export interface AnimPulseTarget {
   pulse(
-    kind: "attack" | "cast" | "hurt",
+    kind: AnimPulse,
     nowMs: number,
     opts?: { windowMs?: number; clipWindowMs?: number; restartClip?: boolean },
   ): void;
@@ -46,7 +47,7 @@ export function makeAnimPulseBridge(
   views: ChampionViewLookup,
   /** 毫秒時鐘。出貨用 `performance.now`；測試注一個假的。 */
   now: () => number = () => performance.now(),
-): (id: number, kind: "attack" | "cast" | "hurt", opts?: { clipWindowMs?: number }) => void {
+): (id: number, kind: AnimPulse, opts?: { clipWindowMs?: number }) => void {
   return (id, kind, opts) => {
     views.getChampionView(id)?.pulse(kind, now(), opts);
   };
@@ -83,7 +84,7 @@ export function makeScriptFxBridges(
   views: ChampionViewLookup,
   now: () => number = () => performance.now(),
 ): {
-  pulseAnim: (id: number, kind: "attack" | "cast" | "hurt", opts?: { clipWindowMs?: number }) => void;
+  pulseAnim: (id: number, kind: AnimPulse, opts?: { clipWindowMs?: number }) => void;
   hideBody: (id: number, durationMs: number) => void;
   /** ⭐ M1 逐刀瞬移 / M3 升空曲線（GH#838）—— **只動畫面**的位移。 */
   moveBody: (

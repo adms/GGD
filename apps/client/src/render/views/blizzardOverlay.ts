@@ -45,6 +45,7 @@
 import type { ModelDoc } from "@ggd/shared/content";
 import { BLIZZARD_LOCAL_GLB_PREFIX } from "./glbFacing";
 import { fullAssetsEnabled } from "../../config/fullAssets";
+import { ANIM_STATES } from "@ggd/shared/content/animPulse";
 
 /** Manifest path relative to the content mount (same doc as championVoice). */
 export const BLIZZARD_OVERLAY_MANIFEST_PATH = "assets/blizzard-local/MANIFEST.json";
@@ -267,7 +268,8 @@ function asClipMap(v: unknown): ModelDoc["clipMap"] | null {
   if (!v || typeof v !== "object") return null;
   const o = v as Record<string, unknown>;
   const out: Record<string, string> = {};
-  for (const k of ["idle", "run", "attack", "cast", "hurt", "death"] as const) {
+  // ⭐ GH#940 —— 從唯一住處取，⛔ 不再手抄。
+  for (const k of ANIM_STATES) {
     const s = o[k];
     if (typeof s !== "string" || s.length === 0) return null;
     out[k] = s;

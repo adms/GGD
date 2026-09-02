@@ -32,6 +32,7 @@ import { modelFxInstancesFromFrame } from "@ggd/shared/sim/effects/modelFxPlacem
 import type { ModelFxSpawnEvent } from "@ggd/shared/sim/effects/spawnModelFx";
 import type { FloatingTextEvent, ScreenFlashEvent, ScreenShakeEvent } from "@ggd/shared/sim/effects/clientCues";
 import type { VfxSpawnEvent } from "@ggd/shared/sim/effects/spawnVfx";
+import type { AnimPulse } from "@ggd/shared/content/animPulse";
 
 /**
  * 面向座標系的位移（JASS PolarProjectionBJ 的翻譯；＋side＝面向的右手邊）。
@@ -89,7 +90,7 @@ export interface VfxScriptPlayerDeps {
   dispatch(ev: EventMessage, nowMs: number): void;
   playSfx?(event: string, opts?: { volume?: number; gateKey?: string }): boolean;
   /** M4 動畫脈衝（受害者定格）—— 缺席 ⇒ 動畫段 no-op。 */
-  pulseAnim?(id: number, kind: "attack" | "cast" | "hurt", opts?: { clipWindowMs?: number }): void;
+  pulseAnim?(id: number, kind: AnimPulse, opts?: { clipWindowMs?: number }): void;
   /** N6 演出用暫時隱形 —— 缺席 ⇒ 段 no-op。 */
   hideBody?(id: number, durationMs: number): void;
   /**

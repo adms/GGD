@@ -10,8 +10,15 @@ export interface NamedClip {
   name: string;
 }
 
-export const CLIP_STATES = ["idle", "run", "attack", "cast", "hurt", "death"] as const;
-export type ClipState = (typeof CLIP_STATES)[number];
+// ⭐⭐ GH#940 —— 這裡本來是**第二個** `CLIP_STATES`（同名、同內容、各自漂）。
+// ⇒ 轉出唯一住處那一份（`packages/shared/src/voxel/clips.ts`，它與
+//   `zClipMap` 的 `.strict()` 綁在一起 ⇒ 那個綁定是承重的）。
+import { ANIM_STATES } from "@ggd/shared/content/animPulse";
+import type { AnimState } from "@ggd/shared/content/animPulse";
+
+// ⭐ 轉出同一份 —— 本地名字保住既有的 import 端（⛔ 搬家不逼消費者改一行）。
+export const CLIP_STATES = ANIM_STATES;
+export type ClipState = AnimState;
 
 /**
  * Find the AnimationGroup for a clip name: exact match first, then a
