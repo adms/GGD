@@ -51,6 +51,7 @@ import { casterAttrs, casterDamageStats } from "./effectCommon";
 import type { ResourcePctTerm } from "./dynamicTerms";
 import { resourcePctAmount } from "./dynamicTerms";
 import { rankColumn } from "../perRank";
+import { scalingOracle } from "../content/condition";
 
 /** Re-applying the same burn from the same caster. See `EffectDef.dot.stacking`. */
 export type DotStacking = "refresh" | "independent" | "stack";
@@ -180,7 +181,7 @@ export const dotEffect: EffectKindSpec<"dot"> = {
     // the number is frozen at APPLY. A DoT that re-read the caster's AP on each
     // payout would be a different (and un-authorable) spell — and would keep
     // changing after the caster died.
-    const base = resolveScaling(casterDamageStats(ctx), e.amountPerTick, ctx.rank, casterAttrs(ctx));
+    const base = resolveScaling(casterDamageStats(ctx), e.amountPerTick, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0]));
     // Seconds→ticks ONCE, here. Never per payout: a per-tick division could
     // round differently on a different host, which is a desync in the one place
     // that decides who dies.

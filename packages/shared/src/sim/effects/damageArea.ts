@@ -16,6 +16,7 @@ import { unscaledFractionOf } from "../combat/apDamageScaling";
 import { clampSpreadFalloff, clampSpreadRadius, clampSpreadTargets } from "./spreadLimits";
 import { runOnHitChain, selectVictims } from "./victimFilter";
 import { rollAbilityCrit } from "../combat/critStrike";
+import { scalingOracle } from "../content/condition";
 
 /**
  * `damageArea` 的圓心, 依序: 事件受害者 → 施法點 → 施法者。
@@ -70,7 +71,7 @@ export const damageAreaEffect: EffectKindSpec<"damageArea"> = {
     const struck = selectVictims(victims, cap, e.victimCondition, e.maxTargetsCounts, ctx);
 
     const stats = casterDamageStats(ctx);
-    const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx));
+    const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0]));
     for (const v of struck) {
       // 線性衰減: t=0 (圓心) 吃滿額, t=1 (半徑) 吃 falloff 倍。
       // `enemiesInCircle` 是 BODY-OVERLAP 查詢 (身體邊緣碰到就算), 所以中心

@@ -1671,3 +1671,31 @@ export function abilityConditionLabels(def: {
   }
   return out;
 }
+
+/**
+ * ⭐⭐ **`ratios[].when` 的求值器工廠**（2026-09-03，GH#937 的前提回驗挖出來的）。
+ *
+ * ⛔⛔ 量到的缺口：`resolveScaling` 的第五參 `holds` 是 **fail-CLOSED**
+ * （檔頭那張表逐字：`when` 有而 `holds` 沒有 ⇒ **不計入**），
+ * ⭐ 而全 repo **零個 production 呼叫點傳它** ——
+ * ⇒ ⭐⭐ GH#936／#944 落地的四筆條件式係數在遊戲裡**永遠是 0**。
+ *
+ * ⚠️ ⭐ 而它**測不出來**：內容在、schema 收、`resolveScaling` 有那一行、
+ * 四條守衛全綠 —— ⭐ 那正是失敗形態⑧（消費端存在，但它消費不到）。
+ *
+ * ⭐ 為什麼是工廠而不是讓 `resolveScaling` 自己查：
+ * ⛔ `effects/effect.ts` 不可以 import 這個檔 —— **這個檔已經 import 它了**
+ * （`hasStatus` / `statusStacks` 走 `effects/effectCommon`）⇒ 那是一個環，
+ * 而同型的環在這個 repo 炸過三次（`zRef` / `zCastableSlot` / `PULSE_MS`）。
+ * ⇒ ⭐ **依賴注入**：呼叫端（有 `ctx` 的那 9 個 effect handler）把它傳進去。
+ *
+ * ⚠️ ⭐ 顯示／預覽路徑**刻意不傳** —— 它們沒有 world 可問，
+ * 而 fail-closed 在那裡是誠實的答案：「**保證拿得到的那一份**」。
+ */
+export function scalingOracle(
+  world: SimWorld,
+  self: EntityId,
+  target?: EntityId,
+): (cond: EffectCondition) => boolean {
+  return (cond) => evaluateCondition(world, cond, { self, target });
+}

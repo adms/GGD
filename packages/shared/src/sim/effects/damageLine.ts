@@ -77,6 +77,7 @@ import { unscaledFractionOf } from "../combat/apDamageScaling";
 import { clampSpreadRadius, clampSpreadTargets } from "./spreadLimits";
 import { runOnHitChain, selectVictims } from "./victimFilter";
 import { rollAbilityCrit } from "../combat/critStrike";
+import { scalingOracle } from "../content/condition";
 
 /**
  * Which way the lash goes. `aim: "target"` degrades to facing, never to nothing.
@@ -152,7 +153,7 @@ export const damageLineEffect: EffectKindSpec<"damageLine"> = {
     }
 
     const stats = casterDamageStats(ctx);
-    const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx));
+    const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0]));
     for (const v of struck) {
       let amount = base;
       // ⭐ S2（GH#299）—— 資源百分比項。與 `damage.resourcePct` 共用同一個

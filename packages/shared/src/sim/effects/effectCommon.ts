@@ -191,6 +191,14 @@ export function statusStacks(world: SimWorld, id: EntityId, statusId: StatusId):
 export function comboAddend(
   e: Extract<EffectDef, { kind: "damage" }>,
   ctx: EffectContext,
+  /**
+   * ⭐⭐ `ratios[].when` 的求值器 —— **依賴注入**（2026-09-03）。
+   * ⛔ 這個檔不可以自己去建它：`content/condition.ts` **已經 import 這個檔**
+   * （`hasStatus` / `statusStacks`）⇒ 反向 import 是一個環，
+   * 而同型的環在這個 repo 炸過三次。⇒ 由呼叫端（`damage.ts`）傳進來。
+   * ⚠️ 缺席 ⇒ `resolveScaling` fail-closed ⇒ 帶條件的那幾筆**不計入**。
+   */
+  holds?: (cond: Parameters<NonNullable<Parameters<typeof resolveScaling>[4]>>[0]) => boolean,
 ): number {
   const combo = e.comboBonus;
   if (combo === undefined) return 0;
@@ -198,7 +206,7 @@ export function comboAddend(
   // ⭐ `casterDamageStats` 而不是 `casterStats`：連擊窗加成**是傷害**，
   // 少了這一個字，`apRatioMode: "replace"` 就只摀掉主體、漏掉連擊那一項 ——
   // 一個「只有一半生效」的開關比沒有開關更難查。
-  return resolveScaling(casterDamageStats(ctx), combo.amount, ctx.rank, casterAttrs(ctx));
+  return resolveScaling(casterDamageStats(ctx), combo.amount, ctx.rank, casterAttrs(ctx), holds);
 }
 
 /**

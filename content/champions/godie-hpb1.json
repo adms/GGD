@@ -200,8 +200,26 @@
                 "amount": {
                   "ratios": [
                     {
-                      "coeff": 1.25,
-                      "stat": "ad"
+                      "stat": "ap",
+                      "coeff": 1.3,
+                      "when": {
+                        "kind": "stat",
+                        "subject": "self",
+                        "stat": "level",
+                        "op": "<",
+                        "value": 30
+                      }
+                    },
+                    {
+                      "stat": "ap",
+                      "coeff": 2.5,
+                      "when": {
+                        "kind": "stat",
+                        "subject": "self",
+                        "stat": "level",
+                        "op": ">=",
+                        "value": 30
+                      }
                     }
                   ]
                 }

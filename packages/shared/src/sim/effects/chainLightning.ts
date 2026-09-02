@@ -75,6 +75,7 @@ import { runOnHitChain } from "./victimFilter";
 import { runEffects } from "./effectRunner";
 import { rebaseTriggerForDeferred } from "./deferredTrigger";
 import { rollAbilityCrit } from "../combat/critStrike";
+import { scalingOracle } from "../content/condition";
 import {
   CHAIN_MAX_JUMPS,
   CHAIN_MAX_JUMP_INTERVAL_SEC,
@@ -380,7 +381,7 @@ export const chainLightningEffect: EffectKindSpec<"chainLightning"> = {
     }
 
     const stats = casterDamageStats(ctx);
-    const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx));
+    const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0]));
     const t = world.transform.get(ctx.caster);
     const cast: ChainLightningCast = {
       caster: ctx.caster,
