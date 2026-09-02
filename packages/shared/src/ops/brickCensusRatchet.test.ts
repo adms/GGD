@@ -22,15 +22,30 @@ import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
+import { isExpandable } from "../content/templates/expand";
+
 const ROOT = resolve(__dirname, "../../../..");
 const CENSUS = JSON.parse(
   readFileSync(resolve(ROOT, "docs/editor-contract/ggd-brick-census.json"), "utf8"),
-) as { counts: Record<string, number>; templates: { id: string; abilities: number }[] };
+) as {
+  counts: Record<string, number>;
+  engineFamilies: string[];
+  templates: { id: string; family?: string; abilities: number }[];
+};
 
-/** ⭐ 2026-09-02 量到的真值。⛔ 改它之前先問「這是進步還是退步」。 */
-const USABLE_FLOOR = 19;
-const ENGINE_MISSING_CEIL = 26;
-const SHELLS_CEIL = 18;
+/**
+ * ⭐ 2026-09-02 量到的真值。⛔ 改它之前先問「這是進步還是退步」。
+ *
+ * ⚠️ ⭐ **19 → 27 不是新增了八塊積木** —— 那八塊**一直都在**，
+ * ⛔ 而普查用一條只認**行內箭頭函式**的正則去數 `FAMILIES`，
+ * ⇒ `"beam-roll": modelFxFamily,` 這種**共用引用**的八個家族被漏掉了。
+ * ⇒ ⭐ 對外的契約說「引擎有 19 個」而它其實有 **27** 個
+ *   —— 第〇·五守則逐字點名的那種謊：「宣告 unsupported 但引擎其實有
+ *   → 紅（**對方白白繞路**）」。
+ */
+const USABLE_FLOOR = 28;
+const ENGINE_MISSING_CEIL = 17;
+const SHELLS_CEIL = 17;
 
 describe("⭐ 積木普查（編輯器要知道有哪些積木）", () => {
   it("★ ⭐ **拼得動的積木只准變多**", () => {
@@ -51,6 +66,36 @@ describe("⭐ 積木普查（編輯器要知道有哪些積木）", () => {
 
   it("⭐ 空盒子只准變少（⚠️ ⛔ 而「刪掉模板檔」不算進步 —— 見上一條）", () => {
     expect(CENSUS.counts["shells"]).toBeLessThanOrEqual(SHELLS_CEIL);
+  });
+
+  it("★★ ⭐⭐ 普查數的 family **逐名等於引擎真的認得的**（⛔ 不是一條正則猜的）", () => {
+    // ⛔⛔ 2026-09-02 抓到的那個謊：普查用
+    //   `/^ {2}"([a-z0-9-]+)":\s*\(t, p\)/` 掃 `FAMILIES`
+    //   ⇒ ⭐ 它只認**行內箭頭函式**，⛔ 而八個家族是**共用引用**
+    //   （`"beam-roll": modelFxFamily,`）⇒ 對外少報 8 塊積木。
+    //
+    // ⭐ 這一條問**出貨的那支**（`isExpandable`），⛔ 不是再寫一條正則 ——
+    //   ⚠️ 一條「用另一條正則驗第一條正則」的測試，會跟著同一個盲點一起錯。
+    const fams = CENSUS.engineFamilies;
+    expect(fams.length, "儀器：普查一個 family 都沒列 ⇒ 下面在量空氣").toBeGreaterThan(0);
+    const notReal = fams.filter((f) => !isExpandable(f));
+    expect(
+      notReal,
+      "⛔ 普查說引擎認得這幾個 family，⭐ 而 `isExpandable()` 說不認得 ⇒\n" +
+        "   對面會做出**拼上去是死的**內容（第〇·五守則）。",
+    ).toEqual([]);
+    // ⭐ 反方向：模板文件宣告的 family，引擎認得的**都要**在普查裡
+    //   （⛔ 只驗一個方向 ⇒ 失敗形態⑫）。
+    const missed = CENSUS.templates
+      .map((t) => t.family)
+      .filter((f): f is string => typeof f === "string" && f !== "")
+      .filter((f) => isExpandable(f) && !fams.includes(f));
+    expect(
+      [...new Set(missed)],
+      "⛔⛔ 引擎**認得**這幾個 family，⭐ 而普查沒有列出來 ⇒\n" +
+        "   對面看不到它們 ⇒ ⭐ **白白繞路**去做一塊已經存在的積木。\n" +
+        "   ⚠️ 這正是 2026-09-02 那八個 `modelFxFamily` 家族的形狀。",
+    ).toEqual([]);
   });
 
   it("⭐ 量尺自證：**被用到的家族**真的出現在普查裡（⛔ 不是一張空表）", () => {

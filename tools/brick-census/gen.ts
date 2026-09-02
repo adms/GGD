@@ -24,14 +24,43 @@
 // ggd:writes docs/editor-contract/ggd-brick-census.json
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { isExpandable } from "@ggd/shared/content/templates/expand";
 
 const ROOT = resolve(__dirname, "../..");
 const OUT = join(ROOT, "docs/editor-contract/ggd-brick-census.json");
 
 /** ⭐ 引擎認得的 family —— 從**出貨原始碼**推導，⛔ 不是手寫清單。 */
+/**
+ * ⭐⭐ 引擎認得的 family —— **問出貨的那支**（`isExpandable`），⛔ 不是用正則猜。
+ *
+ * ── ⛔⛔ 在此之前這裡是一條正則，而它**對外少報了 8 塊積木** ────────────
+ * 舊的寫法是 `/^ {2}"([a-z0-9-]+)":\s*\(t, p\)/gm` ——
+ * ⇒ ⭐ 它只認**行內箭頭函式**，⛔ 而八個 family 是**共用的引用**：
+ *
+ * ```ts
+ * "beam-roll": modelFxFamily,     // ← 正則看不到
+ * "radial-burst": modelFxFamily,
+ * "locust-line": modelFxFamily,   // …另外五個 locust-*
+ * "line-blast": modelFxFamily,
+ * ```
+ *
+ * ⇒ ⛔ 對外的普查說「引擎有 19 個 family」，⭐ 而它其實有 **27** 個。
+ * ⚠️ 而 CLAUDE.md 第〇·五守則逐字點名這種錯：
+ * 「宣告 unsupported 但引擎其實有 → 紅（**對方白白繞路**）」——
+ * ⭐ 外部編輯器看不到我們的 registry，⛔ **沒有辦法發現我們在說謊**。
+ *
+ * ⇒ ⭐ 判準改成：**候選名單用正則掃（寬），答案問 `isExpandable()`（準）**。
+ * ⛔ 正則從此只負責「有哪些名字值得問」，⛔ 不負責回答。
+ */
 function engineFamilies(): string[] {
   const src = readFileSync(join(ROOT, "packages/shared/src/content/templates/expand.ts"), "utf8");
-  return [...src.matchAll(/^ {2}"([a-z0-9-]+)":\s*\(t, p\)/gm)].map((m) => m[1]!).sort();
+  // ⭐ 候選：`FAMILIES` 區塊裡每一個字串鍵（⛔ 不看它的值長什麼樣）。
+  const block = /const FAMILIES[^=]*=\s*\{([\s\S]*?)\n\};/.exec(src)?.[1] ?? "";
+  const candidates = new Set([...block.matchAll(/^ {2}"([a-z0-9-]+)":/gm)].map((m) => m[1]!));
+  // ⭐ 而模板文件宣告的 family 也要問一次 —— 一個引擎有、⛔ 而 FAMILIES 區塊
+  //   排版換過的家族，不該因為正則而消失。
+  for (const d of templates().values()) if (d.family) candidates.add(d.family);
+  return [...candidates].filter((f) => isExpandable(f)).sort();
 }
 
 interface TplDoc {
