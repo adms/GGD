@@ -413,3 +413,21 @@ export interface SkinDoc {
   mcoinPrice: number;
   modelKey: string;
 }
+
+/**
+ * ⭐ GH#908 —— `GET /submissions/discoverable` 的一列。
+ *
+ * ⚠️ 欄位名照 Go 那一頭的 `submissions.View`（`json:` tag）——
+ * ⛔ 這裡不重新命名：一個「客戶端自己取的名字」會讓下一次改欄位時
+ * 兩邊各自為真而沒有東西紅。
+ */
+export interface DiscoverableSubmission {
+  id: string;
+  accountId: string;
+  kind: string;
+  digest: string;
+  /** `player` / `ai-editor` —— ⭐ 由**認證過的 actor 的角色**填，⛔ 不是包裡自稱的。 */
+  origin?: string;
+  status: string;
+  discoverable: boolean;
+}

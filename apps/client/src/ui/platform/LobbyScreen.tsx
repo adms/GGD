@@ -46,6 +46,9 @@ import { ChangePasswordDialog } from "./ChangePasswordDialog";
 import { FriendsPanel } from "./FriendsPanel";
 import { LobbyAnnouncement } from "./LobbyAnnouncement";
 import { LeaderboardPanel } from "./LeaderboardPanel";
+// ⭐ GH#908 責任③ —— 玩家內容的發現入口。⚠️ 預設關（`playerContent.discover`）⇒
+//   出貨設定下它 render null,⛔ 而那是對的:對外開放的東西不預設開。
+import { PlayerContentPanel } from "./PlayerContentPanel";
 import { NemesisPanel } from "./NemesisPanel";
 import { OnlinePlayersPanel } from "./OnlinePlayersPanel";
 import { RallyConfirmDialog } from "./RallyConfirmDialog";
@@ -640,6 +643,7 @@ export function LobbyScreen(): React.JSX.Element {
                 {slot === "online" && <OnlinePlayersPanel policy={DEFAULT_LOBBY_LAYOUT} />}
                 {slot === "nemesis" && <NemesisPanel policy={DEFAULT_LOBBY_LAYOUT} />}
                 {slot === "leaderboard" && <LeaderboardPanel />}
+                {slot === "leaderboard" && <PlayerContentPanel />}
               </div>
             ))}
           </div>
