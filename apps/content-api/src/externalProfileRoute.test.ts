@@ -15,7 +15,7 @@ afterEach(async () => {
   root = null;
 });
 
-describe("POST /content-api/external-target-profile", () => {
+describe("GET /content-api/external-target-profile", () => {
   it("bridges one allow-listed profile without exposing an open proxy", async () => {
     root = mkdtempSync(join(tmpdir(), "ggd-profile-route-"));
     const externalProfileFetch = vi.fn(async () => new Response(JSON.stringify({
@@ -31,18 +31,17 @@ describe("POST /content-api/external-target-profile", () => {
     await app.ready();
 
     const ok = await app.inject({
-      method: "POST",
-      url: "/content-api/external-target-profile",
-      payload: { url: "https://profiles.example.test/editor-target-profile.json" },
+      method: "GET",
+      url: "/content-api/external-target-profile?url=" +
+        encodeURIComponent("https://profiles.example.test/editor-target-profile.json"),
     });
     expect(ok.statusCode).toBe(200);
     expect(ok.json()).toMatchObject({ schema: "ggd-editor-target-profile@1" });
     expect(externalProfileFetch).toHaveBeenCalledOnce();
 
     const blocked = await app.inject({
-      method: "POST",
-      url: "/content-api/external-target-profile",
-      payload: { url: "https://127.0.0.1/private" },
+      method: "GET",
+      url: "/content-api/external-target-profile?url=" + encodeURIComponent("https://127.0.0.1/private"),
     });
     expect(blocked.statusCode).toBe(403);
     expect(externalProfileFetch).toHaveBeenCalledOnce();

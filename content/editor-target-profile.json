@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_4ca96df6b765",
+    "contentVersion": "cv_4697f677b761",
     "collections": {
       "champions": {
         "hash": "3d0922cecbf5",
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "4ded4604bf2b",
+        "hash": "a7b9c5b0db6d",
         "count": 93
       },
       "models": {
@@ -50,8 +50,8 @@
         "count": 151
       },
       "vfx": {
-        "hash": "fd746ce91ae8",
-        "count": 663
+        "hash": "0c49d44b90f4",
+        "count": 661
       },
       "skins": {
         "hash": "3d1095f3da83",
@@ -4369,7 +4369,7 @@
       "effectKindsSource": "runtimeCapabilities.effectKinds（⛔ 不在這裡重複一份）"
     },
     "vfx": {
-      "docCount": 663,
+      "docCount": 661,
       "keys": [
         "fx.barkskin",
         "fx.bramble-burst",
@@ -5478,6 +5478,62 @@
     "itemCount": null,
     "liveEndpoint": "/api/v1/curation/whitelist"
   },
+  "contractIndex": {
+    "schema": "ggd-editor-contract-index@1",
+    "minEditorContractVersion": "1.0.0",
+    "digest": "f0fa79b088ba",
+    "href": "/api/v1/content-import/contract-index",
+    "representations": [
+      {
+        "schema": "ability@1",
+        "packageKind": "runtime-document",
+        "state": "supported",
+        "minStage": "G2",
+        "modes": [
+          "bootstrap",
+          "full",
+          "delta"
+        ],
+        "promotionPolicy": "admin-package-apply"
+      },
+      {
+        "schema": "item@1",
+        "packageKind": "runtime-document",
+        "state": "supported",
+        "minStage": "G2",
+        "modes": [
+          "bootstrap",
+          "full",
+          "delta"
+        ],
+        "promotionPolicy": "admin-package-apply"
+      },
+      {
+        "schema": "vfx-script@1",
+        "packageKind": "vfx-script",
+        "state": "planned",
+        "minStage": "G5",
+        "modes": [],
+        "promotionPolicy": "review-required"
+      },
+      {
+        "schema": "template@1",
+        "packageKind": "effect-template",
+        "state": "planned",
+        "minStage": "profile 宣告後",
+        "modes": [],
+        "promotionPolicy": "review-required"
+      },
+      {
+        "schema": "editor-capability-fixture",
+        "packageKind": "capability-fixture",
+        "state": "supported",
+        "minStage": "G2",
+        "modes": [],
+        "promotionPolicy": "forbidden"
+      }
+    ]
+  },
   "assetManifestDigest": "d82a2968ae3a",
   "assetManifest": {
     "path": "assets-manifest.json",
@@ -5485,6 +5541,9 @@
     "totalBytes": 102902938
   },
   "effectiveVfxLimits": {
+    "schema": "ggd-effective-vfx-limits@1",
+    "limitProfileId": "ggd-default-desktop@1",
+    "resolverFingerprint": "b6422e2cd5a0",
     "maxParticlesPerSystem": 1200,
     "maxRatePerSystem": 600,
     "maxActiveRibbons": 10,
@@ -5497,7 +5556,7 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "e46d097c114b",
+    "fingerprint": "e0fdd840d255",
     "surfaces": [
       {
         "surface": "ability-item-zod-schemas",
@@ -5505,7 +5564,7 @@
       },
       {
         "surface": "exact-ref-collector",
-        "digest": "a49be1d31d15"
+        "digest": "c1b7aecb5a7c"
       },
       {
         "surface": "capability-applicability",
@@ -5563,5 +5622,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "d18bc0bca781"
+  "profileDigest": "737dc6a4d1a6"
 }

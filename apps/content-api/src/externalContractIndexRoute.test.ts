@@ -15,7 +15,7 @@ afterEach(async () => {
   root = null;
 });
 
-describe("POST /content-api/external-contract-index", () => {
+describe("GET /content-api/external-contract-index", () => {
   it("bridges only the allow-listed Main contract route", async () => {
     root = mkdtempSync(join(tmpdir(), "ggd-contract-route-"));
     const externalProfileFetch = vi.fn(async () => new Response(JSON.stringify({
@@ -32,23 +32,19 @@ describe("POST /content-api/external-contract-index", () => {
     await app.ready();
 
     const ok = await app.inject({
-      method: "POST",
-      url: "/content-api/external-contract-index",
-      payload: {
-        profileUrl: "https://profiles.example.test/content/editor-target-profile.json",
-        href: "/api/v1/content-import/contract-index",
-      },
+      method: "GET",
+      url: "/content-api/external-contract-index?profileUrl=" +
+        encodeURIComponent("https://profiles.example.test/content/editor-target-profile.json") +
+        "&href=" + encodeURIComponent("/api/v1/content-import/contract-index"),
     });
     expect(ok.statusCode).toBe(200);
     expect(ok.json()).toMatchObject({ schema: "ggd-editor-contract-index@1" });
 
     const blocked = await app.inject({
-      method: "POST",
-      url: "/content-api/external-contract-index",
-      payload: {
-        profileUrl: "https://profiles.example.test/content/editor-target-profile.json",
-        href: "https://evil.example/api/v1/content-import/contract-index",
-      },
+      method: "GET",
+      url: "/content-api/external-contract-index?profileUrl=" +
+        encodeURIComponent("https://profiles.example.test/content/editor-target-profile.json") +
+        "&href=" + encodeURIComponent("https://evil.example/api/v1/content-import/contract-index"),
     });
     expect(blocked.statusCode).toBe(403);
     expect(externalProfileFetch).toHaveBeenCalledOnce();

@@ -42,6 +42,7 @@ import {
   type EffectiveVfxLimits,
 } from "./effectiveVfxLimits";
 import type { AuthoringProcessorDeclaration } from "./authoringProcessor";
+import { acceptedRuntimeSchemas } from "./contractIndex";
 import {
   authoringStoreStateOf,
   deltaExportAllowedOf,
@@ -462,7 +463,8 @@ export function buildTargetProfile(input: TargetProfileInput): TargetProfile {
     authoringProcessor: input.authoringProcessor ?? null,
     compiler: { contractVersion: null, fingerprint: null },
     authoringModel: {
-      accepts: ["ability@1", "item@1"],
+      // ⭐ 從契約登錄表推導（§0-1）—— ⛔ 這裡在 2026-09-02 之前是**第二份**手寫陣列。
+      accepts: acceptedRuntimeSchemas(),
       notRequired: [
         "effect-template@1",
         "effect-product@1",

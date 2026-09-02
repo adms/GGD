@@ -111,18 +111,61 @@ function bad(
  * ⭐ **伺服器端**拒絕直接寫產生器的產物。
  * ⚠️ `onRequest` ⇒ 比路由早跑，⛔ 所以繞不過去（同 `registerDevWriteGuard` 的順序）。
  */
+/**
+ * ⭐⭐ **一條會寫的 route ⇒ 它動到哪一份出貨文件。**
+ *
+ * ── ⛔⛔ 2026-09-02 量到的洞 ────────────────────────────────────────────
+ * 在此之前這裡是一條**只吃兩段路徑**的正則
+ * （`^/content-api/([a-z-]+)/([^/?]+)$`）⇒ ⭐ 而 `server.ts` 有一條**四段**的：
+ *
+ * ```
+ * PATCH /content-api/champions/:id/abilities/:slot
+ * ```
+ *
+ * ⇒ ⛔ **它整條繞過了 generator-owned 檢查** —— 而它寫的正是交接文件點名的
+ * 「generator-owned `content/abilities/*.json`、**champion mirrors**」。
+ *
+ * ⚠️ ⭐ 這是失敗形態⑫的形狀：我的掃描從「**我記得的那個 URL 形狀**」走，
+ * ⛔ 而不是從「**server 註冊了哪些會寫的 route**」走
+ * ⇒ 結構上看不見我沒想到的那一條。
+ * ⇒ ⭐ 守衛 `productWriteGuardCoversEveryRoute.test.ts` 現在從**另一頭**走。
+ */
+export function writeTargetOf(
+  urlPath: string,
+): { collection: string; id: string } | null {
+  // ⭐ 英雄卡的**內嵌技能槽**：它寫的是 `content/champions/<id>.json`
+  //   （⛔ 不是 `content/abilities/…`）—— 擁有權要照**英雄卡**問。
+  const slot = /^\/content-api\/champions\/([^/?]+)\/abilities\/([^/?]+)$/.exec(urlPath);
+  if (slot !== null) {
+    return { collection: "champions", id: decodeURIComponent(slot[1]!) };
+  }
+  // ⭐⭐ `/restore` 把一份**快照**寫回去 —— ⛔ 它與 PUT 寫的是同一份出貨文件。
+  //   ⚠️ 這一條是上面那條守衛（從 `server.ts` 的 route 那一頭走）**當場抓到的第二條**
+  //   繞路 —— ⛔ 我原本只想到 `:id/abilities/:slot`。
+  //   ⇒ ⭐ 這就是為什麼那條掃描要從「server 註冊了什麼」走，
+  //     ⛔ 而不是從「我記得的 URL 形狀」走（失敗形態⑫）。
+  const restore = /^\/content-api\/([a-z-]+)\/([^/?]+)\/restore$/.exec(urlPath);
+  if (restore !== null) {
+    return { collection: restore[1]!, id: decodeURIComponent(restore[2]!) };
+  }
+  const two = /^\/content-api\/([a-z-]+)\/([^/?]+)$/.exec(urlPath);
+  if (two !== null) {
+    return { collection: two[1]!, id: decodeURIComponent(two[2]!) };
+  }
+  return null;
+}
+
 export function registerProductWriteGuard(
   app: FastifyInstance,
   opts: EditorSourceOptions,
 ): void {
   const repoRoot = resolve(opts.repoRoot);
   app.addHook("onRequest", async (req: FastifyRequest, reply: FastifyReply) => {
-    const m = /^\/content-api\/([a-z-]+)\/([^/?]+)$/.exec(
-      req.url.split("?")[0] ?? "",
-    );
-    if (m === null) return;
     if (!["PUT", "POST", "PATCH", "DELETE"].includes(req.method)) return;
-    const path = productPathOf(m[1]!, decodeURIComponent(m[2]!));
+    const target = writeTargetOf(req.url.split("?")[0] ?? "");
+    if (target === null) return;
+    const { collection, id } = target;
+    const path = productPathOf(collection, id);
     if (path === null) return;
     const facts = readFacts(repoRoot);
     if (facts === null) return; // 讀不到戶籍表 ⇒ 不擋（⛔ 而 GET 那條會說出來）
@@ -130,8 +173,8 @@ export function registerProductWriteGuard(
     if (ownership !== "generator-owned") return;
     const a = adapterFor(path, authors);
     await bad(reply, 409, "GENERATOR_OWNED_PRODUCT", {
-      collection: m[1],
-      id: decodeURIComponent(m[2]!),
+      collection,
+      id,
       path,
       authors,
       message:
@@ -318,7 +361,7 @@ export function registerEditorSourceRoutes(
         sha256: sha256Hex(source),
         bytes: Buffer.byteLength(source),
       },
-      regenerate: { step: a.step, command: a.regenerate },
+      regenerate: { adapterId: a.adapterId, step: a.step, command: a.regenerate },
       product: {
         path,
         before: productBefore?.sha256 ?? null,

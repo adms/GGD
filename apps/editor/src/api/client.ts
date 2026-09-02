@@ -119,16 +119,15 @@ export const api = {
     return requestBytes(`${BASE}/${contentPath}`);
   },
   externalTargetProfile: (url: string) =>
-    request<Record<string, unknown>>(`${BASE}/external-target-profile`, {
-      method: "POST",
-      body: JSON.stringify({ url }),
-    }),
+    request<Record<string, unknown>>(
+      `${BASE}/external-target-profile?url=${encodeURIComponent(url)}`,
+    ),
   /** Bounded, allow-listed bridge for the Main-owned machine contract registry. */
   externalContractIndex: (profileUrl: string, href: string) =>
-    request<Record<string, unknown>>(`${BASE}/external-contract-index`, {
-      method: "POST",
-      body: JSON.stringify({ profileUrl, href }),
-    }),
+    request<Record<string, unknown>>(
+      `${BASE}/external-contract-index?profileUrl=${encodeURIComponent(profileUrl)}` +
+        `&href=${encodeURIComponent(href)}`,
+    ),
   /**
    * Main-owned source lookup. `null` is the compatibility state while an older
    * content-api has not shipped the route; policy then fails safe from the

@@ -3,15 +3,9 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { packageModeBlockers, readTargetProfileFacts, rawRuntimeSchemaFor } from "./exportPolicy";
 import { readEditorContractIndex } from "./editorContractIndex";
+import { buildContractIndex } from "@ggd/shared/content/import/contractIndex";
 
-const contractIndex = readEditorContractIndex({
-  schema: "ggd-editor-contract-index@1",
-  digest: "contract",
-  representations: [
-    { representation: "ability@1", packageKind: "runtime-document", state: "supported", minStage: "G2", modes: ["bootstrap", "full", "delta"], promotionPolicy: "admin-package-apply" },
-    { representation: "item@1", packageKind: "runtime-document", state: "supported", minStage: "G2", modes: ["bootstrap", "full", "delta"], promotionPolicy: "admin-package-apply" },
-  ],
-});
+const contractIndex = readEditorContractIndex(buildContractIndex({}));
 
 describe("Export Center target-profile policy", () => {
   it("reads both shipped-editor and live-content profile shapes", () => {
@@ -52,11 +46,11 @@ describe("Export Center target-profile policy", () => {
         fingerprint: "fp",
       },
       runtimeCapabilities: { fingerprint: "caps2" },
-      contractIndex: { digest: "contract", href: "/api/v1/content-import/contract-index" },
+      contractIndex: { digest: contractIndex.digest, href: "/api/v1/content-import/contract-index" },
       authoringModel: { accepts: ["ability@1", "item@1"] },
     });
     expect(live).toMatchObject({
-      contractIndexDigest: "contract",
+      contractIndexDigest: contractIndex.digest,
       contractIndexHref: "/api/v1/content-import/contract-index",
     });
     expect(packageModeBlockers(live, "delta", contractIndex)).toEqual([]);

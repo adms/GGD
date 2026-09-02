@@ -24,6 +24,7 @@
  *    由 capabilities 那一層負責，兩者不要混。
  */
 import { z } from "zod";
+import { acceptedRuntimeSchemas } from "./contractIndex";
 
 import {
   AUTHORING_PROCESSOR_CONTRACT_VERSION,
@@ -540,7 +541,14 @@ export const PACKAGE_SCHEMA_TAGS: readonly string[] = Object.freeze([
  * ⛔ 這是白名單，不是啟發式 —— 規格 §11-1 要求「不得猜測或降級 apply」，
  * 所以任何靠形狀去猜的做法都是違規的。
  */
-export const RAW_RUNTIME_SCHEMA_TAGS: readonly string[] = Object.freeze(["ability@1", "item@1"]);
+// ⭐⭐ **2026-09-02：改成從契約登錄表推導**（§0-1）。
+//
+// ⚠️ 在此之前這一行是 `Object.freeze(["ability@1", "item@1"])` —— ⛔ 而**同一份陣列**
+// 在 `targetProfile.ts` 的 `authoringModel.accepts` 還有第二份，Editor 那邊是第三份。
+// ⭐ 交接文件逐字點名這件事：「不要再把 `accepts` 寫成散落於 profile、Importer 與
+// Editor 的三份陣列」。
+// ⇒ ⭐ 唯一住處是 `contractIndex.REPRESENTATIONS`；加一種 representation 只改那一張表。
+export const RAW_RUNTIME_SCHEMA_TAGS: readonly string[] = acceptedRuntimeSchemas();
 
 const isRecord = (v: unknown): v is Record<string, unknown> =>
   typeof v === "object" && v !== null && !Array.isArray(v);

@@ -15,7 +15,7 @@
  *   POST   /content-api/:collection/:id/restore    restore a snapshot (itself undoable)
  *   GET    /content-api/events                     SSE content:changed (chokidar)
  *   GET    /content-api/assets/*                   binary assets (glb/textures) for editor previews
- *   POST   /content-api/external-target-profile    bounded allow-listed HTTPS profile bridge
+ *   GET    /content-api/external-target-profile    bounded allow-listed HTTPS profile bridge
  *
  * Every write validates with the SAME Zod schemas the game loader uses, then
  * writes atomically (tmp+rename) and incrementally reindexes (collection
@@ -191,10 +191,10 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   app.decorate("sseHub", hub);
   app.decorate("backupDir", backupRoot);
 
-  app.post("/content-api/external-target-profile", async (req, reply) => {
-    const body = req.body as { url?: unknown } | null;
+  app.get("/content-api/external-target-profile", async (req, reply) => {
+    const query = req.query as { url?: unknown } | null;
     try {
-      return reply.send(await fetchExternalTargetProfile(body?.url, {
+      return reply.send(await fetchExternalTargetProfile(query?.url, {
         allowedHosts: opts.externalProfileHosts ?? parseEditorProfileHosts(process.env.GGD_EDITOR_PROFILE_HOSTS),
         ...(opts.externalProfileFetch ? { fetchImpl: opts.externalProfileFetch } : {}),
       }));
@@ -205,10 +205,10 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
     }
   });
 
-  app.post("/content-api/external-contract-index", async (req, reply) => {
-    const body = req.body as { profileUrl?: unknown; href?: unknown } | null;
+  app.get("/content-api/external-contract-index", async (req, reply) => {
+    const query = req.query as { profileUrl?: unknown; href?: unknown } | null;
     try {
-      return reply.send(await fetchExternalContractIndex(body?.profileUrl, body?.href, {
+      return reply.send(await fetchExternalContractIndex(query?.profileUrl, query?.href, {
         allowedHosts: opts.externalProfileHosts ?? parseEditorProfileHosts(process.env.GGD_EDITOR_PROFILE_HOSTS),
         ...(opts.externalProfileFetch ? { fetchImpl: opts.externalProfileFetch } : {}),
       }));
