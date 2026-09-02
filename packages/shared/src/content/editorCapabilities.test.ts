@@ -25,6 +25,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../testkit/cover";
+import { isExpandable } from "./templates/expand";
 import {
   PLANNED_CAPABILITIES,
   buildCapabilityManifest,
@@ -124,6 +125,42 @@ describe("ggd-runtime-capabilities@1 —— 對外契約不可能過期", () => 
         for (const [id, fam] of idToFamily) if (text.includes(`"${id}"`)) referenced.add(fam);
       }
     }
+    // ⭐⭐ 2026-09-02（Codex 阻塞清單 A）—— **第二個方向**。
+    //
+    // ⛔⛔ 上面那個 `referenced` 只涵蓋「**被出貨內容真的引用**」的家族
+    // ⇒ ⭐ 一塊**做好了但還沒有人用**的積木，這條守衛**結構上看不見**
+    //   （失敗形態⑫：只從一頭走的掃描）。
+    // ⚠️ 而那正是 2026-09-02 量到的事：`combo-finisher` 是
+    //   `status:"enabled"` ＋ `isExpandable()` 為 true，採用數 **0**，
+    //   ⛔ 而它**不在對外契約裡** ⇒ 外部編輯器看不到一塊做好的積木。
+    //
+    // ⇒ ⭐ 判準改成 Codex 逐字要的那個：
+    //   **`status !== "draft"` ＋ `isExpandable()`** ⇒ 一律要在契約裡，
+    //   ⛔ **不論有沒有人用它**。
+    //
+    // ⚠️ 這**不會**造成上面註解擔心的「永遠紅的假警報」——
+    //   那些分類模板要嘛是 draft、要嘛 `isExpandable()` 為 false，兩道都濾掉了。
+    const enabledExpandable = new Set<string>();
+    for (const f of readdirSync(dir)) {
+      if (!f.startsWith("tpl-") || !f.endsWith(".json")) continue;
+      const doc = JSON.parse(readFileSync(join(dir, f), "utf8")) as {
+        family?: string;
+        status?: string;
+      };
+      if (typeof doc.family !== "string") continue;
+      if ((doc.status ?? "enabled") === "draft") continue;
+      if (!isExpandable(doc.family)) continue;
+      enabledExpandable.add(doc.family);
+    }
+    const notDeclared = [...enabledExpandable].filter((f) => !exported.has(f)).sort();
+    expect(
+      notDeclared.join("\n"),
+      "⛔ 這幾個家族 `status` 不是 draft、`isExpandable()` 為 true，⛔ 而契約沒有宣告它們\n" +
+        "   ⇒ ⭐ 外部編輯器看不到一塊**已經做好**的積木（採用數是 0 ⛔ 不是理由）。\n" +
+        `   ⇒ 補進 \`FAMILY_PROBE_LIST\`：\n${notDeclared.map((f) => `  ${f}`).join("\n")}`,
+    ).toBe("");
+    expect(enabledExpandable.size, "⛔ 一個 enabled+可展開的家族都沒有 ⇒ 這條在量空氣").toBeGreaterThan(3);
+
     const missing = [...referenced].filter((fam) => !exported.has(fam)).sort();
     expect(
       missing.join("\n"),

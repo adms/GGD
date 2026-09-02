@@ -19,6 +19,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { STAND_IN_MODEL_KEYS } from "../voxelSkin/types";
+import { effectiveYawOffsetDeg } from "../glbYaw";
 
 import {
   resolveAppearance,
@@ -123,6 +124,45 @@ describe("resolved-appearance@1", () => {
       "⛔⛔ resolver 回的是**模型文件自己的 id**，⛔ 不是英雄卡指的那一個 ⇒\n" +
         "   ⭐ 一份 id 與檔名不一致的 model@1 會讓 Editor 預覽另一顆模型。",
     ).toBe("英雄卡指的那一顆");
+  });
+
+  it("★★ ⭐⭐ ④ yaw 回的是**實際生效值** —— ⛔ 不是文件上寫了什麼（Codex 阻塞清單 B）", () => {
+    // ⛔⛔ 在此之前這一格是 `num(model.yawOffsetDeg, 0)` ——
+    // ⭐ 而遊戲套的是 `glbYawOffset()`，它在文件缺值時走**家族回退**
+    //   （`assets/models/imported/` ⇒ **90°**）
+    // ⇒ ⭐ 外部編輯器拿到 0°、畫面上是 90°：一個安靜的、每一隻匯入英雄都中的錯。
+    let checkedImported = 0;
+    let checkedAuthored = 0;
+    for (const c of champs) {
+      const m = models.get(String(c.modelKey));
+      if (!m) continue;
+      const r = resolveAppearance(c.id, c, m);
+      if (!r.ok) continue;
+      const a = r.appearance;
+      // ⭐ 承重：契約的生效值 ＝ **出貨 resolver** 算出來的（⛔ 不是我在這裡重算 prefix）
+      expect(
+        a.effectiveYawOffsetDeg,
+        `${c.id}: 契約的 effective yaw 與出貨 resolver 不一致`,
+      ).toBeCloseTo(
+        effectiveYawOffsetDeg({
+          glbPath: a.glbPath,
+          yawOffsetDeg: a.authoredYawOffsetDeg ?? undefined,
+        }),
+        6,
+      );
+      if (a.authoredYawOffsetDeg === null && a.glbPath.startsWith("assets/models/imported/")) {
+        // ⭐⭐ 這就是那個錯：文件沒寫、路徑是匯入的 ⇒ **90°**，⛔ 不是 0
+        expect(a.effectiveYawOffsetDeg, `${c.id}: 匯入模型缺值時應該是 90°`).toBeCloseTo(90, 6);
+        checkedImported++;
+      }
+      if (a.authoredYawOffsetDeg !== null) {
+        expect(a.effectiveYawOffsetDeg).toBeCloseTo(a.authoredYawOffsetDeg, 6);
+        checkedAuthored++;
+      }
+    }
+    // ⭐ 儀器：兩條路都真的走到了（⛔ 否則上面在量空氣）
+    expect(checkedImported, "⛔ 沒有任何一隻是「匯入 + 文件沒寫 yaw」⇒ 這條在量空氣").toBeGreaterThan(0);
+    expect(checkedAuthored, "⛔ 沒有任何一隻文件寫了 yaw ⇒ 覆寫那條路沒被驗到").toBeGreaterThan(0);
   });
 
   it("★★ ⭐⭐ ③ 站在**共用替身**上的英雄被明講出來（⛔ 不是靜默）", () => {

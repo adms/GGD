@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "111434fa",
+  "fingerprint": "24bd88e2",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -1158,6 +1158,7 @@
     "beam-roll",
     "buff-self",
     "charge-push",
+    "combo-finisher",
     "ground-nova",
     "instant-blast",
     "leap-strike",

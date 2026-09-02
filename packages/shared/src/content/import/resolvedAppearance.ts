@@ -24,6 +24,7 @@
 import { sha256Hex } from "../sha256";
 import { canonicalizeJcs } from "./jcs";
 import { isStandInModel } from "../championIdentity";
+import { effectiveYawOffsetDeg } from "../glbYaw";
 
 export const RESOLVED_APPEARANCE_SCHEMA = "resolved-appearance@1" as const;
 
@@ -43,7 +44,28 @@ export interface ResolvedAppearance {
   readonly modelDocDigest: string;
   readonly scale: number;
   readonly collisionRadius: number;
-  /** 模型面向修正（度）。缺席 ⇒ 0。 */
+  /**
+   * ⚠️ **文件上寫了什麼**（度）。缺席 ⇒ 0。
+   *
+   * ⛔⛔ **這一格在此之前是唯一的一格，而它對外說謊**（Codex 阻塞清單 B）：
+   * 遊戲套的是 `effectiveYawOffsetDeg`，⭐ 而它在文件缺值時走**家族回退**
+   * （w3x 匯入的模型是 **90°**）⇒ 外部編輯器拿到 0°、畫面上是 90°。
+   * ⇒ ⭐ 這一格保留（它回答「作者寫了什麼」），⛔ 但**不要拿它來畫**。
+   */
+  readonly authoredYawOffsetDeg: number | null;
+  /**
+   * ⭐⭐ **遊戲真的套用的那個值**（度）。
+   *
+   * ⭐ 由 `content/glbYaw.ts` 的 `effectiveYawOffsetDeg()` 算 ——
+   * **與客戶端 `glbFacing.ts` 是同一支**（那邊改成門面了）
+   * ⇒ ⛔ 「契約與遊戲的 yaw 規則漂開」在結構上不可能發生。
+   */
+  readonly effectiveYawOffsetDeg: number;
+  /**
+   * @deprecated ⚠️ **舊名，等於 `effectiveYawOffsetDeg`** —— 保留一版讓消費端搬家。
+   * ⛔ 它的**語意變了**（從「文件寫了什麼」變成「實際生效」）：
+   * ⭐ 那是刻意的 —— 舊消費端拿它去畫，而它們要的一直是**生效值**。
+   */
   readonly yawOffsetDeg: number;
   readonly clipMap: Readonly<Record<string, string>>;
   readonly attachPoints: Readonly<Record<string, AttachPoint>>;
@@ -128,6 +150,8 @@ const FIELDS = Object.freeze([
   "modelDocDigest",
   "scale",
   "collisionRadius",
+  "authoredYawOffsetDeg",
+  "effectiveYawOffsetDeg",
   "yawOffsetDeg",
   "clipMap",
   "attachPoints",
@@ -176,7 +200,21 @@ export function resolveAppearance(
       modelDocDigest: sha256Hex(canonicalizeJcs(model as Record<string, unknown>)).slice(0, 12),
       scale: num(model.scale, 1),
       collisionRadius: num(model.collisionRadius, 0.5),
-      yawOffsetDeg: num(model.yawOffsetDeg, 0),
+      authoredYawOffsetDeg:
+        typeof model.yawOffsetDeg === "number" && Number.isFinite(model.yawOffsetDeg)
+          ? model.yawOffsetDeg
+          : null,
+      // ⭐ 出貨的那一支（⛔ 不是這裡重寫一份 prefix 規則 —— Codex 逐字要求的）
+      effectiveYawOffsetDeg: effectiveYawOffsetDeg({
+        glbPath: String(model.glbPath ?? ""),
+        yawOffsetDeg:
+          typeof model.yawOffsetDeg === "number" ? model.yawOffsetDeg : undefined,
+      }),
+      yawOffsetDeg: effectiveYawOffsetDeg({
+        glbPath: String(model.glbPath ?? ""),
+        yawOffsetDeg:
+          typeof model.yawOffsetDeg === "number" ? model.yawOffsetDeg : undefined,
+      }),
       clipMap: strRecord(model.clipMap),
       attachPoints: points(model.attachPoints),
       teamTintMaterials: Object.freeze(

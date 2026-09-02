@@ -68,61 +68,28 @@
 import type { ModelDoc } from "@ggd/shared/content";
 
 /** glbPath prefix identifying a w3x-imported model (baked forward +X). */
-export const IMPORTED_GLB_PREFIX = "assets/models/imported/";
-
-/**
- * glbPath prefix of the Blizzard model overlay (task #177 ships it to the
- * family host; `VITE_GGD_FULL_ASSETS=1` is what makes the client ask for it).
- * Those .glbs come out of the SAME tools/w3x-import converter, so they share
- * the imported family's baked forward — verified per file: 35 of the 40 measure
- * +X and the remaining 5 are only unmeasurable (too few paired bones), none
- * measures anything else.
- */
-export const BLIZZARD_LOCAL_GLB_PREFIX = "assets/blizzard-local/models/";
-
-/** Native/voxel-baked glTF authored forward +Z ⇒ φ = 0°. */
-export const NATIVE_GLB_YAW_OFFSET = 0;
-
-/** w3x-imported forward +X ⇒ φ = 90°. */
-export const IMPORTED_GLB_YAW_OFFSET = Math.PI / 2;
-
-/**
- * The offset for a .glb baked 180° from its own family (forward -X where the
- * family is +X) ⇒ φ = -90° ≡ 270°. Not applied by prefix — a model earns it by
- * carrying `yawOffsetDeg: 270` in its doc.
- */
-export const IMPORTED_FLIPPED_GLB_YAW_OFFSET = Math.PI + Math.PI / 2;
-
-/**
- * True when a model's .glb comes from the w3x import pipeline — either the
- * shipped `assets/models/imported/` family or the Blizzard overlay (same
- * converter ⇒ same baked forward ⇒ same default yaw offset).
- */
-export function isImportedGlb(glbPath: string): boolean {
-  return (
-    glbPath.startsWith(IMPORTED_GLB_PREFIX) || glbPath.startsWith(BLIZZARD_LOCAL_GLB_PREFIX)
-  );
-}
-
-/** The family default for a path, ignoring any per-doc override. */
-export function familyGlbYawOffset(glbPath: string): number {
-  return isImportedGlb(glbPath) ? IMPORTED_GLB_YAW_OFFSET : NATIVE_GLB_YAW_OFFSET;
-}
+// ⭐⭐ Codex 阻塞清單 B（2026-09-02）—— 這一整段**搬到 `@ggd/shared` 去了**，
+// 這裡是**門面**（re-export），⛔ 不是第二份。
+//
+// ⚠️ 為什麼要搬：`resolved-appearance@1`（住 shared）在此之前回的是
+// 「文件上寫了什麼」（缺值 ⇒ **0°**），⛔ 而遊戲套的是**家族回退**
+// （w3x 匯入的是 **90°**）⇒ ⭐ 外部編輯器拿到的是一個安靜的錯值。
+// ⛔ 而 shared **不可以** import client ⇒ 契約那一側**構造上**拿不到出貨的 resolver。
+// ⇒ ⭐ 搬到 shared 之後兩邊 import 同一支，⛔ 漂開在結構上不可能發生。
+//
+// ⭐ 門面保住既有的 9 個 import 端（`ChampionView` / `blizzardOverlay` /
+// `IntermissionScene` / `StorePreview` …）—— ⛔ 搬家不逼消費者改一行。
+export {
+  IMPORTED_GLB_PREFIX,
+  BLIZZARD_LOCAL_GLB_PREFIX,
+  NATIVE_GLB_YAW_OFFSET,
+  IMPORTED_GLB_YAW_OFFSET,
+  IMPORTED_FLIPPED_GLB_YAW_OFFSET,
+  isImportedGlb,
+  familyGlbYawOffset,
+  glbYawOffset,
+  effectiveYawOffsetDeg,
+} from "@ggd/shared/content/glbYaw";
 
 /** The subset of a ModelDoc this module needs (overlay docs are synthesized). */
 export type FacingModelDoc = Pick<ModelDoc, "glbPath"> & { yawOffsetDeg?: number };
-
-/**
- * The yaw offset (radians) to apply to a loaded .glb's glbRoot so its rendered
- * facing matches the sim's planar facing.
- *
- * `yawOffsetDeg` on the doc wins when present — including when it is 0, which
- * is a meaningful value (a native-family model, or an imported one re-exported
- * to +Z), so the check is `undefined`, never falsiness.
- */
-export function glbYawOffset(doc: FacingModelDoc): number {
-  if (doc.yawOffsetDeg !== undefined && Number.isFinite(doc.yawOffsetDeg)) {
-    return (doc.yawOffsetDeg * Math.PI) / 180;
-  }
-  return familyGlbYawOffset(doc.glbPath);
-}
