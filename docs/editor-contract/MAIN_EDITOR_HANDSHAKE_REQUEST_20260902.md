@@ -1,19 +1,19 @@
 # GGD Main ↔ Codex Editor：必要接縫結案收據
 
-狀態：**Revision 17 — Main `8b20c321`（含 v0.35.15）已整合；遠端資產接縫已封口，六個可重用積木／契約阻塞仍未落地**
+狀態：**Revision 18 — Main `29f8628f`（含 v0.35.15）已整合；替身英雄棘輪已同步，六個可重用積木／契約阻塞仍未落地**
 
-核對基準：`origin/main@8b20c321`（包含 tag `v0.35.15` at `7d032d9c`）
+核對基準：`origin/main@29f8628f`（包含 tag `v0.35.15` at `7d032d9c`）
 
-Main seam：`origin/feat/editor-seam-20260902@8b20c321` 與 `main` 同一點；正式回交住
+Main seam：`origin/feat/editor-seam-20260902@29f8628f` 與 `main` 同一點；正式回交住
 `docs/editor-contract/MAIN_TO_EDITOR_RESPONSE_20260902.md`
 
 Editor：`feat/vfx-forge-codex`（禁止直接提交或推送 `main`）
 
-最後核對：**2026-09-02 13:01（Asia/Taipei）**
+最後核對：**2026-09-02 13:22（Asia/Taipei）**
 
 ## 結論
 
-Editor 已抓取並整合 Main `8b20c321` 的完整線性歷史，包括以下接縫 commits：
+Editor 已抓取並整合 Main `29f8628f` 的完整線性歷史，包括以下接縫 commits：
 
 - `b54441df`：完整 `active/runtime-bundle` 與 effective VFX limit identity receipt；
 - `cf40d5db`：`ggd-editor-contract-index@1` 唯一登錄表；
@@ -35,6 +35,8 @@ Editor 已抓取並整合 Main `8b20c321` 的完整線性歷史，包括以下�
   Editor 維持 `isStandIn` fail-closed，不把殘件冒充角色模型。
 - `b3ff32a7`／`f546eb3f`：新增並修正 importer 崩潰復原測試；不改 Editor 演出 vocabulary。
 - `8b20c321`：更新只讀驗證帳本；六個下列積木的機器證據未變。
+- `daf9e2bb`：新增共用替身英雄數量棘輪，並把先前窄前綴誤報的 4 位更正為 resolver 實際判定的 18 位。
+- `29f8628f`：把初號機正確模型的四步修法與 hard-ref 順序警告寫進棘輪；沒有新增 VFX／actor 積木。
 
 Editor 已完成 Main 回交要求的「第三份 representation 清單」修正：Export Center 不再以字面
 `["ability@1","item@1"]` 決定 package policy，而是從已驗證的 `contract-index` 推導所有
@@ -51,9 +53,9 @@ Editor 仍只在 `feat/vfx-forge-codex`；**不要把 Editor 提交直接推到 
 
 Main 目前只需修正下方六個可重用積木／契約缺口；不需要替 Editor 拼任何技能、時間軸或完整特效。
 
-## Main `8b20c321` 可重跑的現況證據
+## Main `29f8628f` 可重跑的現況證據
 
-| 阻塞 | 驗證指令 | 2026-09-02 13:01 結果 |
+| 阻塞 | 驗證指令 | 2026-09-02 13:22 結果 |
 |---|---|---|
 | 有效 yaw | `rg -n 'yawOffsetDeg: num\\(model\\.yawOffsetDeg, 0\\)' packages/shared/src/content/import/resolvedAppearance.ts` | 仍命中 raw 0° fallback |
 | 單發主斬弧 | `rg -n '"burstCount"\\s*:\\s*26' content/vfx/fx.prim.*slash*.json` | 所有現有 slash primitive 仍為 26 發 |

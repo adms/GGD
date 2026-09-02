@@ -136,8 +136,8 @@ cache entries fail closed instead of entering the preview. Older profiles withou
 the receipt may still load JSON, but remote binary fetching remains disabled and
 the desktop source status reports that compatibility state.
 
-Last verified 2026-09-02 13:01 CST, the feature branch contains
-`origin/main@8b20c321` (including tag `v0.35.15` at `7d032d9c`). Treat this as a receipt rather than a
+Last verified 2026-09-02 13:22 CST, the feature branch contains
+`origin/main@29f8628f` (including tag `v0.35.15` at `7d032d9c`). Treat this as a receipt rather than a
 permanent constant: fetch Main and compare the live ref before making a current
 compatibility claim. Live and repository profile digests likewise remain
 volatile receipts and are never compiled into the Editor as constants.
@@ -238,7 +238,7 @@ existing trigger.
 ## Feature branch handoff
 
 Implementation lives on `feat/vfx-forge-codex`, containing Main through the
-last verified receipt `origin/main@8b20c321` (including tag `v0.35.15` at `7d032d9c`); the feature-branch
+last verified receipt `origin/main@29f8628f` (including tag `v0.35.15` at `7d032d9c`); the feature-branch
 tip is the only current Editor revision. It is intentionally not merged or
 pushed to `main`. Main should use
 `docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md` as a reference

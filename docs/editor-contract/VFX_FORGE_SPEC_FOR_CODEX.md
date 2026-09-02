@@ -1,6 +1,6 @@
 # 特效工坊（VFX Forge）· 技術規格 —— 給 Codex
 
-狀態：**Revision 7 — 2026-09-02 13:01 CST，以 `origin/main@8b20c321`（含 v0.35.15）與 `feat/vfx-forge-codex` 程式／隔離測試重驗**
+狀態：**Revision 8 — 2026-09-02 13:22 CST，以 `origin/main@29f8628f`（含 v0.35.15）與 `feat/vfx-forge-codex` 程式／隔離測試重驗**
 
 > 本文保留 2026-08-31 的出發點，但「缺口」必須以各節的目前狀態為準；不可把舊基線當成今天的待辦。
 
@@ -79,7 +79,7 @@
 
 | owner 的詞 | 要什麼 | 目前 feature branch |
 |---|---|---|
-| 「**拖拉 model、粒子特效進編輯器**」 | 資源池 → 拖進畫布／時間軸 | ✅ `VfxAssetPalette`＋安全收據；未驗證或不安全素材不可進預覽候選 |
+| 「**拖拉 model、粒子特效進編輯器**」 | 資源池 → 拖進畫布／時間軸 | ✅ `VfxAssetPalette`＋安全收據；未驗證或不安全素材不可拖入；首次雙擊走同一條去背 gate，安全才加入，並顯示通過／檢查中／禁止／待驗證統計 |
 | 「**模擬遊戲畫面**」 | 真 `CameraRig`＋真地板＋雙方角色＋frame-step | ✅ `VfxForgeStage`／`VfxForgePreview`；可切完整 runtime 或只看 script |
 | 「**slider** 調大小/透明度/顏色/轉向/高度/動畫速度」 | schema 驅動連續參數表單 | ✅ `SegmentInspector`＋共用 `FormRenderer`；上下界來自共用 schema，不抄常數 |
 | 「**所見即所得**」 | 改一格 → 同一份 draft 即時重播 | ✅ draft、預覽、時間軸與送審 hash 共用同一 JSON |
@@ -102,6 +102,11 @@
 [`MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md`](MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md)：有效 yaw resolver、
 單發 `single-arc`、迴避來源 provenance、actor-aware 預設演出 resolver、`combo-finisher` capability 漏報，
 以及仍會讓素材安全閘阻擋的實際 framebuffer 問題。不要在本節重新維護第二份票單。
+
+Main `daf9e2bb`／`29f8628f` 新增共用替身英雄棘輪，並把先前誤報的 4 位更正為實際 resolver 判定的
+18 位；Editor 的視覺證據仍逐位讀 `resolved-appearance@1.isStandIn` fail closed，不把這個數量抄成常數。
+這兩個 commit 只補外觀證據與修復順序，沒有新增 VFX／actor 積木；本節六個阻塞經 13:22 的關鍵指令重跑
+仍未改變。
 
 ### 2.3 表示形的單一住處
 
