@@ -1,19 +1,19 @@
 # GGD Main ↔ Codex Editor：必要接縫結案收據
 
-狀態：**Revision 13 — Main v0.35.13 已整合；六個可重用積木／契約阻塞仍未落地**
+狀態：**Revision 14 — Main v0.35.14 已整合；六個可重用積木／契約阻塞仍未落地**
 
-核對基準：`origin/main@25fa2cba`（tag `v0.35.13`）
+核對基準：`origin/main@d29d0be6`（tag `v0.35.14`）
 
-Main seam：`origin/feat/editor-seam-20260902@25fa2cba` 與 `main` 同一點；正式回交住
+Main seam：`origin/feat/editor-seam-20260902@d29d0be6` 與 `main` 同一點；正式回交住
 `docs/editor-contract/MAIN_TO_EDITOR_RESPONSE_20260902.md`
 
 Editor：`feat/vfx-forge-codex`（禁止直接提交或推送 `main`）
 
-最後核對：**2026-09-02 12:13（Asia/Taipei）**
+最後核對：**2026-09-02 12:16（Asia/Taipei）**
 
 ## 結論
 
-Editor 已抓取並整合 Main v0.35.13 的完整線性歷史，包括以下接縫 commits：
+Editor 已抓取並整合 Main v0.35.14 的完整線性歷史，包括以下接縫 commits：
 
 - `b54441df`：完整 `active/runtime-bundle` 與 effective VFX limit identity receipt；
 - `cf40d5db`：`ggd-editor-contract-index@1` 唯一登錄表；
@@ -23,6 +23,8 @@ Editor 已抓取並整合 Main v0.35.13 的完整線性歷史，包括以下接�
 - `656f9d3f`：將 Main 正式回交文件放進 repo，不再只存在對話文字。
 - `25fa2cba`：修正 asset manifest 測試原本沒有真正驗證閉包的問題；此項不會消除下列 27 個
   framebuffer／透明底板 blocker。
+- `d29d0be6`：通用 proposal promote 現在會先解析目標所有權，generator-owned target fail closed；這補的是
+  promote 繞路，不是下方 no-code source write 積木。
 
 Editor 已完成 Main 回交要求的「第三份 representation 清單」修正：Export Center 不再以字面
 `["ability@1","item@1"]` 決定 package policy，而是從已驗證的 `contract-index` 推導所有
@@ -33,7 +35,7 @@ Editor 仍只在 `feat/vfx-forge-codex`；**不要把 Editor 提交直接推到 
 
 Main 目前只需修正下方六個可重用積木／契約缺口；不需要替 Editor 拼任何技能、時間軸或完整特效。
 
-## v0.35.13 可重跑的現況證據
+## v0.35.14 可重跑的現況證據
 
 | 阻塞 | 驗證指令 | 2026-09-02 12:06 結果 |
 |---|---|---|
@@ -295,7 +297,8 @@ Python」，並停止寫回。它不會退回直接 PATCH 產物，也不會把 
 
 ## 非阻塞、不要塞回本輪
 
-- `validate-single`、AI promote 便利 route、新 Eva 模型、七色 palette；
+- `validate-single`、新 Eva 模型、七色 palette；通用 AI/proposal promote 的 generator-owned 守衛已於
+  `d29d0be6` 落地，不再列缺口；
 - `vfx-script@1` production importer：index 仍明示 `planned/G5`，Editor 只保留可擴充骨架，不假裝可上線；
 - 正式站部署：feature-branch integration 已完成，何時部署由 Main 發版流程決定。部署前公開站仍可能是舊
   profile/404，這不應反向要求 Editor 猜欄位。

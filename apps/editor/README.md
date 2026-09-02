@@ -128,7 +128,7 @@ allow-listed cache bridge. Per-file asset hash verification will become mandator
 as soon as main publishes the complete asset manifest requested by the handshake.
 
 Last verified 2026-09-02 12:06 CST, the feature branch contains
-`origin/main@25fa2cba` (tag `v0.35.13`). Treat this as a receipt rather than a
+`origin/main@d29d0be6` (tag `v0.35.14`). Treat this as a receipt rather than a
 permanent constant: fetch Main and compare the live ref before making a current
 compatibility claim. Live and repository profile digests likewise remain
 volatile receipts and are never compiled into the Editor as constants.
@@ -229,7 +229,7 @@ existing trigger.
 ## Feature branch handoff
 
 Implementation lives on `feat/vfx-forge-codex`, containing Main through the
-last verified receipt `origin/main@25fa2cba` (tag `v0.35.13`); the feature-branch
+last verified receipt `origin/main@d29d0be6` (tag `v0.35.14`); the feature-branch
 tip is the only current Editor revision. It is intentionally not merged or
 pushed to `main`. Main should use
 `docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md` as a reference
