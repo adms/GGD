@@ -11,12 +11,25 @@
     "Textures\\CartoonCloud.blp": "smoke_06",
     "Textures\\Shockwave1.blp": "circle_04",
     "Textures\\GenericGlowFaded.blp": "light_02",
+    "Textures\\GenericGlow2b.blp": "light_02",
     "Textures\\Yellow_Star_Dim.blp": "star_09",
     "Textures\\Yellow_Star.blp": "star_07",
+    "Textures\\Flame4.blp": "flame_03",
+    "ReplaceableTextures\\Weather\\Clouds8x8.blp": "smoke_07",
     "Textures\\Clouds8x8Fade.blp": "smoke_07",
+    "Textures\\Clouds8x8.blp": "smoke_07",
+    "Textures\\Clouds8x8ModFire.blp": "fire_02",
+    "abilities\\Spells\\Human\\FlameStrike\\White1_star5tga.blp": "star_06",
     "Textures\\Dust5A.blp": "smoke_03",
     "Textures\\LavaLump.blp": "flame_04",
-    "Textures\\Star8b.blp": "star_08"
+    "Textures\\Leaf.blp": "light_01",
+    "Textures\\Leaf4x4.blp": "light_01",
+    "Textures\\Clouds8x8Fire.blp": "fire_02",
+    "Textures\\star2_32.blp": "star_06",
+    "Textures\\star5tga.blp": "star_07",
+    "Textures\\Ghost2.blp": "light_02",
+    "Textures\\Star8b.blp": "star_08",
+    "Textures\\BloodWhiteSmall.blp": "smoke_04"
   },
   "models": [
     {
@@ -161,6 +174,129 @@
       "droppedEmitters": []
     },
     {
+      "stem": "reddragonmissile",
+      "family": null,
+      "wc3Path": "Abilities\\Weapons\\RedDragonBreath\\RedDragonMissile.mdl",
+      "archive": "war3.mpq",
+      "refCount": 10,
+      "admittedBy": "shipped-model",
+      "mdxBytes": 11209,
+      "pre2Count": 4,
+      "docs": [
+        "fx.w3x.stock.reddragonmissile.p00",
+        "fx.w3x.stock.reddragonmissile.p01",
+        "fx.w3x.stock.reddragonmissile.p02",
+        "fx.w3x.stock.reddragonmissile.p03"
+      ],
+      "emitterMap": [
+        {
+          "id": "fx.w3x.stock.reddragonmissile.p00",
+          "pre2Index": 1,
+          "emitter": "BlizParticle02burst",
+          "weight": 1.25
+        },
+        {
+          "id": "fx.w3x.stock.reddragonmissile.p01",
+          "pre2Index": 2,
+          "emitter": "BlizParticle02",
+          "weight": 0.833
+        },
+        {
+          "id": "fx.w3x.stock.reddragonmissile.p02",
+          "pre2Index": 0,
+          "emitter": "BlizParticle01",
+          "weight": 0.708
+        },
+        {
+          "id": "fx.w3x.stock.reddragonmissile.p03",
+          "pre2Index": 3,
+          "emitter": "BlizParticle02burst01snow",
+          "weight": 0.694
+        }
+      ],
+      "droppedEmitters": []
+    },
+    {
+      "stem": "flamestrike1",
+      "family": null,
+      "wc3Path": "Abilities\\Spells\\Human\\FlameStrike\\FlameStrike1.mdl",
+      "archive": "War3x.mpq",
+      "refCount": 9,
+      "admittedBy": "shipped-model",
+      "mdxBytes": 25948,
+      "pre2Count": 5,
+      "docs": [
+        "fx.w3x.stock.flamestrike1.p00",
+        "fx.w3x.stock.flamestrike1.p01",
+        "fx.w3x.stock.flamestrike1.p02",
+        "fx.w3x.stock.flamestrike1.p03",
+        "fx.w3x.stock.flamestrike1.p04"
+      ],
+      "emitterMap": [
+        {
+          "id": "fx.w3x.stock.flamestrike1.p00",
+          "pre2Index": 3,
+          "emitter": "BlizParticleShockWave02",
+          "weight": 8.333
+        },
+        {
+          "id": "fx.w3x.stock.flamestrike1.p01",
+          "pre2Index": 4,
+          "emitter": "BlizParticleFlash",
+          "weight": 5.556
+        },
+        {
+          "id": "fx.w3x.stock.flamestrike1.p02",
+          "pre2Index": 2,
+          "emitter": "BlizParticleShockWave1",
+          "weight": 3.889
+        },
+        {
+          "id": "fx.w3x.stock.flamestrike1.p03",
+          "pre2Index": 0,
+          "emitter": "BlizParticleLowFire",
+          "weight": 0.833
+        },
+        {
+          "id": "fx.w3x.stock.flamestrike1.p04",
+          "pre2Index": 1,
+          "emitter": "BlizParticleLowSmoke",
+          "weight": 0.3149,
+          "modulateDelta": 0.18893
+        }
+      ],
+      "droppedEmitters": []
+    },
+    {
+      "stem": "volcanodeath",
+      "family": null,
+      "wc3Path": "Abilities\\Spells\\Other\\Volcano\\VolcanoDeath.mdl",
+      "archive": "War3Patch.mpq",
+      "refCount": 6,
+      "admittedBy": "shipped-model",
+      "mdxBytes": 1742,
+      "pre2Count": 2,
+      "docs": [
+        "fx.w3x.stock.volcanodeath.p00",
+        "fx.w3x.stock.volcanodeath.p01"
+      ],
+      "emitterMap": [
+        {
+          "id": "fx.w3x.stock.volcanodeath.p00",
+          "pre2Index": 0,
+          "emitter": "DeathBlast",
+          "weight": 3.056
+        },
+        {
+          "id": "fx.w3x.stock.volcanodeath.p01",
+          "pre2Index": 1,
+          "emitter": "LavaBlast",
+          "weight": 1.031
+        }
+      ],
+      "droppedEmitters": []
+    },
+    {
       "stem": "fragdriller",
       "family": "missile",
       "wc3Path": "Abilities\\Weapons\\FragDriller\\FragDriller.mdl",
@@ -214,6 +350,90 @@
       "droppedEmitters": []
     },
     {
+      "stem": "nedeathsmall",
+      "family": null,
+      "wc3Path": "Objects\\Spawnmodels\\NightElf\\NEDeathSmall\\NEDeathSmall.mdl",
+      "archive": "war3.mpq",
+      "refCount": 4,
+      "admittedBy": "shipped-model",
+      "mdxBytes": 11516,
+      "pre2Count": 8,
+      "docs": [
+        "fx.w3x.stock.nedeathsmall.p00",
+        "fx.w3x.stock.nedeathsmall.p01",
+        "fx.w3x.stock.nedeathsmall.p02",
+        "fx.w3x.stock.nedeathsmall.p03",
+        "fx.w3x.stock.nedeathsmall.p04",
+        "fx.w3x.stock.nedeathsmall.p05",
+        "fx.w3x.stock.nedeathsmall.p06",
+        "fx.w3x.stock.nedeathsmall.p07"
+      ],
+      "emitterMap": [
+        {
+          "id": "fx.w3x.stock.nedeathsmall.p00",
+          "pre2Index": 4,
+          "emitter": "CenterGlowBlast",
+          "weight": 3.333
+        },
+        {
+          "id": "fx.w3x.stock.nedeathsmall.p01",
+          "pre2Index": 5,
+          "emitter": "CenterGlowBlast02",
+          "weight": 1.667
+        },
+        {
+          "id": "fx.w3x.stock.nedeathsmall.p02",
+          "pre2Index": 6,
+          "emitter": "BlizParticleDemonglow",
+          "weight": 0.517
+        },
+        {
+          "id": "fx.w3x.stock.nedeathsmall.p03",
+          "pre2Index": 7,
+          "emitter": "BlizParticleDemonglow0pixies",
+          "weight": 0.417
+        },
+        {
+          "id": "fx.w3x.stock.nedeathsmall.p04",
+          "pre2Index": 0,
+          "emitter": "CenterExplo",
+          "weight": 0.247
+        },
+        {
+          "id": "fx.w3x.stock.nedeathsmall.p05",
+          "pre2Index": 1,
+          "emitter": "DeathParticle",
+          "weight": 0.222
+        },
+        {
+          "id": "fx.w3x.stock.nedeathsmall.p06",
+          "pre2Index": 3,
+          "emitter": "LeafBomb02",
+          "weight": 0.167
+        },
+        {
+          "id": "fx.w3x.stock.nedeathsmall.p07",
+          "pre2Index": 2,
+          "emitter": "LeafBomb01",
+          "weight": 0.139
+        }
+      ],
+      "droppedEmitters": []
+    },
+    {
+      "stem": "aivitarget",
+      "family": null,
+      "wc3Path": "Abilities\\Spells\\Items\\AIvi\\AIviTarget.mdl",
+      "archive": "war3.mpq",
+      "refCount": 3,
+      "admittedBy": "shipped-model",
+      "mdxBytes": 19496,
+      "pre2Count": 0,
+      "docs": [],
+      "emitterMap": [],
+      "droppedEmitters": []
+    },
+    {
       "stem": "awaken",
       "family": "resurrect",
       "wc3Path": "Abilities\\Spells\\Other\\Awaken\\Awaken.mdl",
@@ -249,6 +469,28 @@
         }
       ],
       "droppedEmitters": []
+    },
+    {
+      "stem": "humanbloodpeasant",
+      "family": null,
+      "wc3Path": "Objects\\Spawnmodels\\Human\\HumanBlood\\HumanBloodPeasant.mdl",
+      "archive": "war3.mpq",
+      "refCount": 1,
+      "admittedBy": "shipped-model",
+      "mdxBytes": 3175,
+      "pre2Count": 1,
+      "docs": [
+        "fx.w3x.stock.humanbloodpeasant.p00"
+      ],
+      "emitterMap": [
+        {
+          "id": "fx.w3x.stock.humanbloodpeasant.p00",
+          "pre2Index": 0,
+          "emitter": "BlizParticleBloodSpray_blood",
+          "weight": 0.333
+        }
+      ],
+      "droppedEmitters": []
     }
   ],
   "notes": [
@@ -259,6 +501,36 @@
     "fx.w3x.stock.markofchaostarget.pre2#1: emissionRate 0, used KP2E peak 50.0",
     "fx.w3x.stock.markofchaostarget.pre2#1: dropped 8x8 spriteSheet (substituted single-frame texture)",
     "fx.w3x.stock.markofchaostarget.pre2#3: emissionRate 0, used KP2E peak 26.3",
-    "fx.w3x.stock.fragdriller.pre2#0: dropped 8x8 spriteSheet (substituted single-frame texture)"
+    "fx.w3x.stock.reddragonmissile.pre2#1: dropped 8x8 spriteSheet (substituted single-frame texture)",
+    "fx.w3x.stock.reddragonmissile.pre2#2: dropped 8x8 spriteSheet (substituted single-frame texture)",
+    "fx.w3x.stock.flamestrike1.pre2#0: emissionRate 0, used KP2E peak 30.0",
+    "fx.w3x.stock.flamestrike1.pre2#0: dropped 8x8 spriteSheet (substituted single-frame texture)",
+    "fx.w3x.stock.flamestrike1.pre2#1: emissionRate 0, used KP2E peak 20.0",
+    "fx.w3x.stock.flamestrike1.pre2#1: dropped 8x8 spriteSheet (substituted single-frame texture)",
+    "fx.w3x.stock.flamestrike1.pre2#2: emissionRate 0, used KP2E peak 20.0",
+    "fx.w3x.stock.flamestrike1.pre2#3: emissionRate 0, used KP2E peak 15.0",
+    "fx.w3x.stock.flamestrike1.pre2#4: emissionRate 0, used KP2E peak 10.0",
+    "forgottenonetent: not found in any retail archive \u2014 skipped",
+    "fx.w3x.stock.volcanodeath.pre2#0: emissionRate 0, used KP2E peak 60.0",
+    "fx.w3x.stock.volcanodeath.pre2#1: emissionRate 0, used KP2E peak 50.0",
+    "fx.w3x.stock.fragdriller.pre2#0: dropped 8x8 spriteSheet (substituted single-frame texture)",
+    "fx.w3x.stock.nedeathsmall.pre2#0: emissionRate 0, used KP2E peak 50.0",
+    "fx.w3x.stock.nedeathsmall.pre2#1: rectangular 90.64x90.64 emission plane approximated by its bounding disc r=1.259 (vfx@1 has no box emitter)",
+    "fx.w3x.stock.nedeathsmall.pre2#1: emissionRate 0, used KP2E peak 10.0",
+    "fx.w3x.stock.nedeathsmall.pre2#1: dropped 4x4 spriteSheet (substituted single-frame texture)",
+    "fx.w3x.stock.nedeathsmall.pre2#2: rectangular 90.64x90.64 emission plane approximated by its bounding disc r=1.259 (vfx@1 has no box emitter)",
+    "fx.w3x.stock.nedeathsmall.pre2#2: emissionRate 0, used KP2E peak 10.0",
+    "fx.w3x.stock.nedeathsmall.pre2#2: dropped 4x4 spriteSheet (substituted single-frame texture)",
+    "fx.w3x.stock.nedeathsmall.pre2#3: rectangular 0.0x90.64 emission plane approximated by its bounding disc r=1.259 (vfx@1 has no box emitter)",
+    "fx.w3x.stock.nedeathsmall.pre2#3: emissionRate 0, used KP2E peak 10.0",
+    "fx.w3x.stock.nedeathsmall.pre2#3: dropped 4x4 spriteSheet (substituted single-frame texture)",
+    "fx.w3x.stock.nedeathsmall.pre2#4: emissionRate 0, used KP2E peak 60.0",
+    "fx.w3x.stock.nedeathsmall.pre2#4: dropped 8x8 spriteSheet (substituted single-frame texture)",
+    "fx.w3x.stock.nedeathsmall.pre2#5: emissionRate 0, used KP2E peak 110.1",
+    "fx.w3x.stock.nedeathsmall.pre2#6: emissionRate 0, used KP2E peak 70.0",
+    "fx.w3x.stock.nedeathsmall.pre2#7: emissionRate 0, used KP2E peak 70.0",
+    "satyrtrickster: not found in any retail archive \u2014 skipped",
+    "fx.w3x.stock.humanbloodpeasant.pre2#0: rectangular 6.82x12.796 emission plane approximated by its bounding disc r=0.178 (vfx@1 has no box emitter)",
+    "fx.w3x.stock.humanbloodpeasant.pre2#0: emissionRate 0, used KP2E peak 201.475"
   ]
 }
