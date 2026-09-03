@@ -114,6 +114,39 @@ export const zPackagePath = z
   .regex(/^[A-Za-z0-9][A-Za-z0-9._\-]*(\/[A-Za-z0-9][A-Za-z0-9._\-@]*)*$/, "path 必須是安全的相對 POSIX 路徑")
   .refine((p) => !p.split("/").includes(".."), "path 不得包含 `..`");
 
+/**
+ * ⭐⭐ GH#969 —— **一個會變成檔案路徑的字串，要當成路徑來驗。**
+ *
+ * ── ⛔ 在此之前 `collection` / `id` 是 `zShort` ＝ `z.string().min(1).max(256)` ──
+ * ⭐ **零字元限制** ⇒ `id: "../../../../tmp/pwned"` **通得過 schema**。
+ *
+ * ⚠️ ⭐ **今天它還不是漏洞** —— 現有的 `join()` 都用固定檔名
+ * （`manifest.json` / `bundle.json`）⇒ 那兩格從來沒被當成路徑用過。
+ * ⛔ **而 #966（編輯器打包 icon）會把它啟動**：icon 的落點**必然**是
+ *   `content/assets/icons/<collection>/<id>.webp`（`tools/icon-gen/convert-webp.mjs`）
+ * ⇒ ⭐ 那一刻起，這兩格就是**未信任來源直接拼進檔案系統路徑**。
+ * ⇒ 本型別在功能落地**之前**先關掉它（票文逐字：「⛔ 在那之前關掉」）。
+ *
+ * ── ⭐ 判準與 `zPackagePath` **同一套**（⛔ 不是我另編的一套）────────────────
+ * 上面那一支已經是這個 repo 的路徑防護模板：**字元白名單 ＋ 明確拒 `..`**。
+ * 這裡是它的**單段**版本 —— ⛔ 連 `/` 都不准（`collection` 與 `id` 各自是**一段**，
+ * ⛔ 不是一條路徑）⇒ 目錄穿越在**字元層**就不可能，而 ⛔ 不是靠某個消費端記得 sanitize。
+ *
+ * ⚠️ 出貨的合法值都過得了（2026-09-04 實查）：
+ *   · collection：`abilities` `champions` `vfx` `items` `augments` `arenas` …（單段）
+ *   · id：`godie-e001.q` `attach.ex.midchilder-aura`（`-` 與 `.` 都在白名單裡）
+ *
+ * ⛔ 刻意**不**允許開頭是 `.` —— 那擋掉 `.` / `..` / `.hidden` **一整族**，
+ * ⭐ 而 `..` 那一條 refine 仍然留著：⚠️ 兩層是**刻意重疊**的，
+ * 因為白名單哪天被放寬（有人加了 `/`），`..` 那一條要還在。
+ */
+export const zPathSegment = z
+  .string()
+  .min(1)
+  .max(IMPORT_LIMITS.maxShortString)
+  .regex(/^[A-Za-z0-9][A-Za-z0-9._\-@]*$/, "必須是安全的**單段**名字（⛔ 不可含 `/`，⛔ 不可以 `.` 開頭）")
+  .refine((s) => s !== ".." && !s.includes(".."), "⛔ 不得包含 `..`（目錄穿越）");
+
 /** 三種 mode（規格 §7／§10）。 */
 export const PACKAGE_MODES = ["bootstrap", "full", "delta"] as const;
 export const zPackageMode = z.enum(PACKAGE_MODES);
@@ -139,7 +172,7 @@ export const zChangeOp = z.literal("upsert");
 export const zExactRef = z
   .object({
     kind: zAuthoringKind,
-    id: zShort,
+    id: zPathSegment,
     revision: z.number().int().min(1).max(1_000_000).optional(),
     contentSha256: zSha256Hex,
   })
@@ -175,7 +208,7 @@ const zChangeSide = z
 export const zManifestChange = z
   .object({
     kind: zAuthoringKind,
-    id: zShort,
+    id: zPathSegment,
     path: zPackagePath,
     op: zChangeOp,
     before: zChangeSide.nullable(),
@@ -191,8 +224,17 @@ export const zManifestEntry = z
     contentSha256: zSha256Hex,
     contentSize: z.number().int().min(0).max(IMPORT_LIMITS.maxContentSize),
     // content entries 才有的欄位（規格 §10）。
-    collection: zShort.optional(),
-    id: zShort.optional(),
+    // ⭐⭐ GH#969 —— `collection` 與 `id` 用 `zPathSegment`，⛔ 不是 `zShort`：
+    //   它們**會被拼進檔案系統路徑**（`content/assets/icons/<collection>/<id>.webp`，
+    //   #966 的 icon 落點）⇒ ⭐ 一個會變成路徑的字串要當成路徑來驗。
+    //   ⚠️ `zShort` 是 `z.string().min(1).max(256)` ＝ **零字元限制**
+    //   ⇒ 在此之前 `id: "../../../../tmp/pwned"` 通得過 schema。
+    //   ⛔ 它今天還不是漏洞（現有 join 都用固定檔名），⭐ 而 #966 會把它啟動。
+    collection: zPathSegment.optional(),
+    id: zPathSegment.optional(),
+    // ⚠️ `schema` 刻意**維持 `zShort`** —— 它是 `config.roster@1` 這種**標籤**，
+    //   ⛔ 從來不會變成路徑，而它合法地含有 `@`／`.` 之外的形狀（版本號）。
+    //   ⭐ 判準是「**它會不會被拼進路徑**」，⛔ 不是「它看起來像不像 id」。
     schema: zShort.optional(),
     op: zChangeOp.optional(),
     revision: z.number().int().min(1).max(1_000_000).optional(),
@@ -201,8 +243,8 @@ export const zManifestEntry = z
 
 export const zManifestRequire = z
   .object({
-    kind: zShort,
-    id: zShort,
+    kind: zPathSegment,
+    id: zPathSegment,
     revision: z.number().int().min(1).max(1_000_000).optional(),
     contentSha256: zSha256Hex,
   })
@@ -212,8 +254,8 @@ export const zManifestRequire = z
 export const zExpectedCompiled = z
   .object({
     path: zPackagePath,
-    collection: zShort,
-    id: zShort,
+    collection: zPathSegment,
+    id: zPathSegment,
     contentSha256: zSha256Hex,
     authority: z.enum(["legacy-template-binding", "native-effects"]).optional(),
   })
@@ -226,8 +268,8 @@ export const zExpectedCompiled = z
  */
 export const zExpectedDerived = z
   .object({
-    kind: zShort,
-    id: zShort.optional(),
+    kind: zPathSegment,
+    id: zPathSegment.optional(),
     contentSha256: zSha256Hex.optional(),
     contentVersion: zShort.optional(),
     contentReachable: z.boolean().optional(),
@@ -237,7 +279,7 @@ export const zExpectedDerived = z
 
 export const zRequiredScenario = z
   .object({
-    id: zShort,
+    id: zPathSegment,
     schema: zShort,
     contentSha256: zSha256Hex,
     subjectContentSha256: zSha256Hex.optional(),
@@ -247,7 +289,7 @@ export const zRequiredScenario = z
 
 export const zFidelityDecisionRef = z
   .object({
-    id: zShort,
+    id: zPathSegment,
     contentSha256: zSha256Hex,
     decision: zShort.optional(),
     subject: zShort.optional(),
@@ -497,7 +539,7 @@ export const zImportResult = z
         z
           .object({
             kind: zAuthoringKind,
-            id: zShort,
+            id: zPathSegment,
             path: zPackagePath,
             op: zChangeOp,
             contentSha256: zSha256Hex,
