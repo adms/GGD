@@ -51,6 +51,7 @@
     "content:build": "bash scripts/genrun.sh content:build content:build:raw",
     "content:build:indexes-only": "pnpm --filter @ggd/shared content:build",
     "content:build:raw": "pnpm vfxassets:check && bash scripts/python-pillow.sh tools/w3x-import/repair_alpha_backdrops.py --check && pnpm --filter @ggd/shared content:build && pnpm spec:build && pnpm overview:build && pnpm tiers:build",
+    "vfx:review": "pnpm --filter @ggd/vfx-visual-review review",
     "content:validate": "pnpm --filter @ggd/shared content:validate",
     "contract:numbers": "bash scripts/genrun.sh contract:numbers contract:numbers:raw",
     "contract:numbers:check": "python3 tools/editor-contract/gen_contract_numbers.py --check",
