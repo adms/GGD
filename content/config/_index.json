@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "08adbdec4eda",
+  "hash": "38edf7972bd9",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -29,8 +29,8 @@
     {
       "id": "ap-coefficient",
       "path": "config/ap-coefficient.json",
-      "hash": "802c25138d1e",
-      "size": 1568
+      "hash": "8ed478a22a7e",
+      "size": 1957
     },
     {
       "id": "ap-damage-scaling",
@@ -399,6 +399,12 @@
       "size": 723
     },
     {
+      "id": "review-tuning",
+      "path": "config/review-tuning.json",
+      "hash": "6bdc3fa6b487",
+      "size": 1023
+    },
+    {
       "id": "roster",
       "path": "config/roster.json",
       "hash": "b8ee47643f51",
@@ -473,8 +479,8 @@
     {
       "id": "ui-cues",
       "path": "config/ui-cues.json",
-      "hash": "cafcf00e428b",
-      "size": 3499
+      "hash": "46b79f220a12",
+      "size": 3526
     },
     {
       "id": "ui-lexicon",

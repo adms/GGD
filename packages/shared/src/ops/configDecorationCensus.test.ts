@@ -83,6 +83,17 @@ const found = new Map(shipped.findings.map((f) => [key(f), f]));
  * ⭐ **棘輪**：{@link EXEMPT_CAP} 只能變小。
  */
 const KNOWN: Record<string, string> = {
+  // ── ⭐ 資產驗收漏斗 Phase 2（GH#664）—— 一個理由，5 格共用 ──────────
+  "review-tuning.json:blockShipOnPending":
+    "⭐ 資產驗收漏斗 Phase 2 的可調參數（GH#664）—— ⭐ **票文逐字要求它們不可以寫死**：「pHash 閾值做成一格可調（⛔ 寫死 —— 它就是 owner 之後會調的東西）」。⚠️ 而今天量不到差別是**對的**：`perceptualBaselineEnabled` 出貨 `false`（參考影格那一半還沒建）、`blockShipOnPending` 出貨 `false`（⭐ 那是硬規定：⛔ 部署不可以被「人不在」卡死），而 Tier2 那一頁的核准帳本現在是 **0 筆** ⇒ 整條漂移偵測沒有東西可比對。⇒ **到期條件**：`docs/_review/approvals.json` 出現第一筆核准 ⇒ 基準線打開 ⇒ 這幾列當場作廢。",
+  "review-tuning.json:contactSheetTopN":
+    "⭐ 資產驗收漏斗 Phase 2 的可調參數（GH#664）—— ⭐ **票文逐字要求它們不可以寫死**：「pHash 閾值做成一格可調（⛔ 寫死 —— 它就是 owner 之後會調的東西）」。⚠️ 而今天量不到差別是**對的**：`perceptualBaselineEnabled` 出貨 `false`（參考影格那一半還沒建）、`blockShipOnPending` 出貨 `false`（⭐ 那是硬規定：⛔ 部署不可以被「人不在」卡死），而 Tier2 那一頁的核准帳本現在是 **0 筆** ⇒ 整條漂移偵測沒有東西可比對。⇒ **到期條件**：`docs/_review/approvals.json` 出現第一筆核准 ⇒ 基準線打開 ⇒ 這幾列當場作廢。",
+  "review-tuning.json:hitlBatchSize":
+    "⭐ 資產驗收漏斗 Phase 2 的可調參數（GH#664）—— ⭐ **票文逐字要求它們不可以寫死**：「pHash 閾值做成一格可調（⛔ 寫死 —— 它就是 owner 之後會調的東西）」。⚠️ 而今天量不到差別是**對的**：`perceptualBaselineEnabled` 出貨 `false`（參考影格那一半還沒建）、`blockShipOnPending` 出貨 `false`（⭐ 那是硬規定：⛔ 部署不可以被「人不在」卡死），而 Tier2 那一頁的核准帳本現在是 **0 筆** ⇒ 整條漂移偵測沒有東西可比對。⇒ **到期條件**：`docs/_review/approvals.json` 出現第一筆核准 ⇒ 基準線打開 ⇒ 這幾列當場作廢。",
+  "review-tuning.json:perceptualBaselineEnabled":
+    "⭐ 資產驗收漏斗 Phase 2 的可調參數（GH#664）—— ⭐ **票文逐字要求它們不可以寫死**：「pHash 閾值做成一格可調（⛔ 寫死 —— 它就是 owner 之後會調的東西）」。⚠️ 而今天量不到差別是**對的**：`perceptualBaselineEnabled` 出貨 `false`（參考影格那一半還沒建）、`blockShipOnPending` 出貨 `false`（⭐ 那是硬規定：⛔ 部署不可以被「人不在」卡死），而 Tier2 那一頁的核准帳本現在是 **0 筆** ⇒ 整條漂移偵測沒有東西可比對。⇒ **到期條件**：`docs/_review/approvals.json` 出現第一筆核准 ⇒ 基準線打開 ⇒ 這幾列當場作廢。",
+  "review-tuning.json:perceptualDriftThreshold":
+    "⭐ 資產驗收漏斗 Phase 2 的可調參數（GH#664）—— ⭐ **票文逐字要求它們不可以寫死**：「pHash 閾值做成一格可調（⛔ 寫死 —— 它就是 owner 之後會調的東西）」。⚠️ 而今天量不到差別是**對的**：`perceptualBaselineEnabled` 出貨 `false`（參考影格那一半還沒建）、`blockShipOnPending` 出貨 `false`（⭐ 那是硬規定：⛔ 部署不可以被「人不在」卡死），而 Tier2 那一頁的核准帳本現在是 **0 筆** ⇒ 整條漂移偵測沒有東西可比對。⇒ **到期條件**：`docs/_review/approvals.json` 出現第一筆核准 ⇒ 基準線打開 ⇒ 這幾列當場作廢。",
   // ── ⭐ 第十一回合的骨架（GH#919–#925）—— 一個理由，16 格共用 ──────────
   "arena-rules.json:round11.bannerText":
     "⭐ 第十一回合的**骨架**（GH#919–#925）—— `round11.enabled` 出貨是 `false`，sim 那一半還沒做 ⇒ ⭐ 玩家當然量不到差別，**而那正是它關著的理由**。⚠️ 六張票的參數全撞同一個檔 ⇒ 一次把形狀定下來，⛔ 不是逐張加一格。⇒ **到期條件**：那六張票任何一張把 sim 接上並把 `enabled` 打開 ⇒ 這一列當場作廢。",
@@ -222,7 +233,7 @@ const KNOWN: Record<string, string> = {
  * ⛔ 而它**不可以**被當成「以後可以再調高」的先例：
  * 其餘 32 列每一列都是一個**個別的**債，⭐ 它們仍然只准變少。
  */
-const EXEMPT_CAP = 48;
+const EXEMPT_CAP = 53;
 
 
 describe("🔍 設定裝飾欄位普查 (config-decoration-census)", () => {

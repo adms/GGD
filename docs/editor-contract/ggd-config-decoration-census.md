@@ -11,21 +11,21 @@
 
 | | |
 |---|---:|
-| 出貨 config 文件 | 98 |
-| **旋鈕**（Zod 靜態鍵的葉子，⛔ 不含 record 的鍵與陣列索引） | **1929** |
-| 消費端原始碼（⛔ 已排除後台欄位表與測試） | 13258 |
+| 出貨 config 文件 | 99 |
+| **旋鈕**（Zod 靜態鍵的葉子，⛔ 不含 record 的鍵與陣列索引） | **1935** |
+| 消費端原始碼（⛔ 已排除後台欄位表與測試） | 13259 |
 | 殭屍獎勵的等級區間（`dominated` 的分母） | L9–L99 |
 
 ## 分類
 
 | 類 | 意思 | 格數 |
 |---|---|---:|
-| **A** | 調了玩家量不到差別 | **40** |
+| **A** | 調了玩家量不到差別 | **45** |
 | **B** | 引擎做得到而調不到 | **8** |
-| C | 正常 | 1573 |
+| C | 正常 | 1574 |
 | ⚠️ 量不到 | 鍵名不是識別字（級距標籤／列舉鍵）—— ⭐ 「零讀端」這把尺對它們**結構上是瞎的** | 308 |
 
-### 零讀端 · 38 格（A 類）
+### 零讀端 · 43 格（A 類）
 
 | 檔 | 路徑 | 出貨值 | 量到的 |
 |---|---|---|---|
@@ -57,6 +57,11 @@
 | `damage-rules.json` | `oneShotPctOfMaxHp` | `0.8` | `oneShotPctOfMaxHp` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
 | `map-report.json` | `maps[].worldD` | `"36 …（7 筆）"` | `worldD` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
 | `map-report.json` | `maps[].worldW` | `"48 …（7 筆）"` | `worldW` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `review-tuning.json` | `blockShipOnPending` | `false` | `blockShipOnPending` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `review-tuning.json` | `contactSheetTopN` | `20` | `contactSheetTopN` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `review-tuning.json` | `hitlBatchSize` | `40` | `hitlBatchSize` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `review-tuning.json` | `perceptualBaselineEnabled` | `false` | `perceptualBaselineEnabled` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `review-tuning.json` | `perceptualDriftThreshold` | `0.12` | `perceptualDriftThreshold` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
 | `unit-tints.json` | `transient[].erasesStaticTint` | `true` | `erasesStaticTint` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
 | `unsafe-textures.json` | `quarantineRatchet` | `2` | `quarantineRatchet` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
 | `unsafe-textures.json` | `textures[].measured.alphaRange` | `"0 …（5 筆）"` | `alphaRange` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
@@ -98,6 +103,7 @@
 | `controller-scheme.json` | 38 | 1 | 0 |
 | `damage-rules.json` | 3 | 1 | 0 |
 | `map-report.json` | 25 | 2 | 0 |
+| `review-tuning.json` | 6 | 5 | 0 |
 | `store.json` | 13 | 0 | 1 |
 | `unit-tints.json` | 11 | 1 | 0 |
 | `unsafe-textures.json` | 22 | 9 | 0 |
