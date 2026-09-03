@@ -102,6 +102,23 @@ export const zConfigUiCuesDoc = z
      */
     draftShowPicked: z.boolean(),
     /**
+     * ⭐⭐ **三選一面板上顯示「連續屬性強化 N / 20」與歸零警告**（GH#972）——
+     * owner 2026-09-02 逐字：
+     * > 「隨機能力三選一那邊 **似乎沒有足夠提示 連續20次會有特殊加成**」
+     *
+     * ⭐ 資料本來就在（`SeatState.statStacks` → `SeatView.statStacks`）——
+     * ⛔ 缺的只是把它畫出來，⚠️ 而在此之前三選一那一頁**一個字都沒有**
+     * （商店那一行則只活在 `title=` 的滑鼠提示裡，手把／觸控讀不到）。
+     *
+     * ⭐ 那一段印的每一個數字都從 `config.match@1` 的 `economy` 解析
+     * （`statTickTarget` / `capstoneRoundGate`），⛔ 文案裡沒有寫死的 20 或 6。
+     *
+     * ⭐ 出貨 `true`；關掉 ＝ 回到 2026-09-03 之前（⛔ 機制不變，關的是畫不畫）。
+     * ⚠️ **optional 是刻意的**（同 `mouseTwoStageCast`）：舊的後台 override
+     * 少這一格⛔不該讓整份被 strict Zod 拒掉。缺席 ＝ **開著**。
+     */
+    draftShowStatPath: z.boolean().optional(),
+    /**
      * ⭐ **主揪的「再等一下」有哪幾個選項** —— owner 2026-08-23 說的「多等 1 分鐘」。
      *
      * ⭐ **「有幾個選項」本身就是這一格**：下次要「再加一個 5 秒」＝在這個陣列裡
@@ -277,6 +294,8 @@ export const DEFAULT_UI_CUES: UiCuesDoc = {
   passiveIcdReadout: true,
   // ⭐ GH#893 —— 出貨開著（owner 要的就是「看得到」）。
   draftShowPicked: true,
+  // ⭐ GH#972 —— 同一個理由：owner 抱怨的正是「沒有足夠提示」。出貨開著。
+  draftShowStatPath: true,
   rallyExtendSeconds: [60],
   // ⭐ 權威側說了算（第〇·六守則：優先權大的更新預設啟動）。變灰那一條是 rollback。
   coinThrowButtonMode: "always-enabled",
@@ -313,6 +332,9 @@ export function resolveUiCues(doc: ConfigUiCuesDoc | null | undefined): UiCuesDo
     passiveFlashThrottleMs: doc.passiveFlashThrottleMs,
     passiveIcdReadout: doc.passiveIcdReadout,
     draftShowPicked: doc.draftShowPicked,
+    // ⭐ 缺席 ＝ **開著**（GH#972）——⛔ 一份還沒重新 build 的舊 bundle
+    //   不該把 owner 剛要的提示靜靜關掉（那與「還沒做」長得一模一樣）。
+    draftShowStatPath: doc.draftShowStatPath ?? true,
     rallyExtendSeconds: [...doc.rallyExtendSeconds],
     coinThrowButtonMode: doc.coinThrowButtonMode,
     mouseTwoStageCast: doc.mouseTwoStageCast ?? true,

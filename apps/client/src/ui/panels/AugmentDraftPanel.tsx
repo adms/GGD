@@ -58,6 +58,7 @@ import { GlyphTile } from "../components/GlyphTile";
 import { Tooltip } from "../components/Tooltip";
 import { SfxButton } from "../SfxButton";
 import { resolveChoice } from "./resolveChoice";
+import { statPathReadout } from "./statPathReadout";
 import { uiCues } from "../uiCuesConfig";
 import { DRAFT_CONFIRM_SFX, tierColor, tierLabel, weaponEffectDescription } from "./draftCardStyle";
 // owner 2026-08-02 的卡片排版,四個渲染點之一(三選一抽卡)。
@@ -166,6 +167,68 @@ function PickedSoFar(): React.JSX.Element | null {
       <span style={{ color: "#c8d0e0" }}>
         {picked.map((id) => resolveChoice(id).name || id).join("、")}
       </span>
+    </div>
+  );
+}
+
+/**
+ * ⭐⭐ **連續屬性強化的進度與歸零警告**（GH#972）—— owner 2026-09-02 逐字：
+ * > 「隨機能力三選一那邊 **似乎沒有足夠提示 連續20次會有特殊加成**」
+ *
+ * ⭐ 掛在**這一頁**是承重的：這一格三選一正是「買一次能力屬性強化」開出來的卡
+ * （`buyStatUpgrade` → `rollAttrChoices`），⇒ ⭐ 玩家看著它的那一刻，
+ * 正是他剛剛把連續次數 +1 的那一刻 —— ⛔ 而在此之前這一頁一個字都沒說。
+ *
+ * ⚠️ ⭐ 三個 `useHud` 各自回**一個數字**（⛔ 不是物件也不是陣列）：GH#618 的閘
+ * （`augmentDraftNoReconcile`）量到 `seats` 的快取鍵含 `cooldowns`/`mana`
+ * ⇒ **每一張快照都是新物件** ⇒ 一個回物件的選擇器會讓這棵子樹每 tick 重跑 React，
+ * 而它**零個 DOM mutation**（失敗形態④：肉眼看不出來，只有那條閘會叫）。
+ *
+ * ⛔ 每一個數字都從設定解析（`statPathReadout`），⛔ 文案裡沒有寫死的 20 或 6。
+ */
+function StatPathProgress(): React.JSX.Element | null {
+  const stacks = useHud((s) =>
+    s.localSeatId === null
+      ? -1
+      : (s.seats.find((v) => v.seatId === s.localSeatId)?.statStacks ?? -1),
+  );
+  const capstonePct = useHud((s) =>
+    s.localSeatId === null
+      ? 0
+      : (s.seats.find((v) => v.seatId === s.localSeatId)?.statCapstonePct ?? 0),
+  );
+  const round = useHud((s) => s.round);
+  if (!uiCues().draftShowStatPath) return null;
+  // ⛔ 沒有座位 ⇒ 不畫（⛔ 不是畫 0/20 —— 那會宣告一件我們還不知道的事）。
+  if (stacks < 0) return null;
+  const readout = statPathReadout({ stacks, capstonePct, round });
+  return (
+    <div
+      style={{
+        marginTop: 10,
+        fontSize: 11,
+        color: "#8b94a8",
+        textAlign: "center",
+        maxWidth: 640,
+        lineHeight: 1.6,
+      }}
+    >
+      <span style={{ color: readout.live ? "#c8d0e0" : "#f2a13c", fontWeight: "bold" }}>
+        {readout.headline}
+      </span>
+      {readout.goal && <span>　{readout.goal}</span>}
+      {/* ⭐⭐ 歸零警告 —— **看得見的字**，⛔ 不是 `title=` 的滑鼠提示：
+          手把與觸控沒有 hover，⇒ 藏在 title 裡的那一句對它們**不存在**。 */}
+      {readout.resetWarning && (
+        <div style={{ color: "#e08a8a", marginTop: 2 }}>{readout.resetWarning}</div>
+      )}
+      {readout.gateNote && (
+        <div style={{ color: "#8b94a8", marginTop: 1 }}>{readout.gateNote}</div>
+      )}
+      {/* ⚠️ 一個永遠達不到的目標至少不該假裝自己達得到（⛔ 不硬擋，那是設定的事）。 */}
+      {readout.unreachableNote && (
+        <div style={{ color: "#e8b24a", marginTop: 1 }}>{readout.unreachableNote}</div>
+      )}
     </div>
   );
 }
@@ -419,6 +482,8 @@ export function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
           );
         })}
       </div>
+      {/* ⭐ GH#972 —— 連續屬性強化的進度＋歸零警告（owner：「沒有足夠提示」）。 */}
+      <StatPathProgress />
       {/* ⭐ GH#893 —— 本場已選（讀伺服器狀態，⛔ 不是客戶端自己記的）。 */}
       <PickedSoFar />
     </div>

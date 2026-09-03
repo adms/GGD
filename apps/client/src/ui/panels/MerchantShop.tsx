@@ -71,7 +71,9 @@ import {
   formatStatDelta,
   isVisibleDelta,
 } from "./statDisplay";
-import { attrBonusFromArray, statPathView } from "@ggd/shared/sim/economy/statPath";
+import { attrBonusFromArray } from "@ggd/shared/sim/economy/statPath";
+// ⭐ GH#972 —— 「連續強化 N / 20」與歸零警告的**唯一**文案推導（數字全部從設定解析）。
+import { statPathReadout } from "./statPathReadout";
 import { inventoryAttrBonus } from "@ggd/shared/sim/economy/itemSource";
 import { buildItemRow, itemDisplayName, type RowItem } from "./itemStats";
 import { Tooltip } from "../components/Tooltip";
@@ -919,7 +921,15 @@ export function StatPanel(props: {
   // #211 N/20 — ONE derivation, shared with the sim. Every number and every
   // branch below (target, remaining, at-risk, still-live) is READ off this
   // object; nothing about the stat path is decided in this file.
-  const path = statPathView(props.statStacks, props.capstonePct);
+  //
+  // ⭐⭐ GH#972 —— **分母從設定解析**（`config.match@1` 的 `economy.statTickTarget`）。
+  //   ⛔ 在此之前第三個參數缺席 ⇒ 退回 `DEFAULT_ECONOMY` 的 20，而那一格今天是
+  //   後台一格：owner 把它調成 5，⛔ 這一行照樣印 20 ＝ 一句謊話（第〇·四守則）。
+  const readout = statPathReadout({
+    stacks: props.statStacks,
+    capstonePct: props.capstonePct,
+  });
+  const path = readout.view;
   // 三圍 (#260) — 「力敏智三屬性也要顯示在 SHOP 的玩家角色屬性表」. Read through
   // the SHARED `championAttribute` (statDisplay.attributeRows), so this row and
   // the sim's own base-stat maths are one number with one definition.
@@ -1077,6 +1087,30 @@ export function StatPanel(props: {
           <span style={{ marginLeft: "auto", fontSize: 9, color: GOOD }}>預覽中 · +為裝上此道具後</span>
         )}
       </div>
+      {/* ⭐⭐ GH#972 —— 歸零警告要**看得見**（owner：「似乎沒有足夠提示」）。
+          ⛔ 在此之前它只活在上面那一格的 `title=` 裡：**手把與觸控沒有 hover**
+          ⇒ 那一句話對它們**不存在**，而按下購買是不可逆的。⭐ 這一行是常駐的，
+          ⛔ 不是點下去才跳的確認框 —— 它出現在**買之前**的每一秒，而一個每次
+          買裝都要按掉的確認框會被學成噪音（票文的 Known risk 逐字點名）。
+          只在 `atRisk > 0` 出現（頂點發下來之後它是 0 ＝ 沒有東西會被毀掉）。 */}
+      {readout.resetWarning && (
+        <div
+          style={{
+            fontSize: 10,
+            color: "#e08a8a",
+            border: "1px solid rgba(224,138,138,0.35)",
+            background: "rgba(224,138,138,0.10)",
+            borderRadius: 6,
+            padding: "2px 6px",
+            marginBottom: 4,
+            fontVariantNumeric: "tabular-nums",
+          }}
+        >
+          {readout.resetWarning}
+          {readout.goal && <span style={{ color: TEXT_DIM }}>　{readout.goal}</span>}
+          {readout.gateNote && <span style={{ color: TEXT_DIM }}>　{readout.gateNote}</span>}
+        </div>
+      )}
       {/* ── 三圍 力／敏／智 (#260) ────────────────────────────────────────
           Above the 15-stat grid on purpose: the attributes are what the shop
           now SELLS (能力屬性強化 三選一), so a shopper deciding whether to spend
