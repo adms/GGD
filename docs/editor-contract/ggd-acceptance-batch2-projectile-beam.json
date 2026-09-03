@@ -1,0 +1,88 @@
+{
+  "id": "acceptance-batch2-projectile-beam",
+  "schema": "ggd-acceptance-batch@1",
+  "batch": 2,
+  "title": "投射與光束",
+  "note": "⭐⭐ **本批 8 份的名冊 —— 機器讀的唯一住處**（GH#960）。⛔ 測試檔裡不可以再抄一份 id 清單（第〇·四守則：抄了必過期）。⚠️⚠️ **前提更正（2026-09-03 實查）**：票文寫「本批的 id 清單只有一個住處（#953 定案的 #838 body）」—— ⛔ 那句話今天**不成立**：`gh issue view 838` 的 body 裡**一個 batch id 都沒有**（grep `godie-hvwd` = 0 命中），而 #953 自己的檔頭逐字說它「⛔ 一個字都沒有動那張票」，只落了**八招**那一份（`ggd-acceptance-eight.json`）。⇒ 46 份清單今天唯一的住處是 `docs/_daily/ledger-source_temp_20260903.md`（owner 18:47 的原話全文）—— ⚠️ 而那一份是 `msgledger:build` 的產物、**git 未追蹤**、而且名字帶 `_temp_` ⇒ `scripts/temp-sweep.sh --move` 七天後就會把它搬走。⇒ ⭐ 本檔照 #953 的前例把**本批這 8 列**收斂成機器讀得到的一份（⛔ 只放批 2，其餘五批各自一份 ⇒ 六批零檔案重疊、可完全並行）。",
+  "sourceOfTruth": {
+    "human": "owner 2026-09-02/09-03 18:47「鑄技工坊／VFX Forge 現有技能驗收清單」原話全文",
+    "verbatimLedger": "docs/_daily/ledger-source_temp_20260903.md（⚠️ msgledger:build 產物 · git 未追蹤 · `_temp_` 命名）",
+    "siblingMachineHome": "docs/editor-contract/ggd-acceptance-eight.json（GH#953，⭐ 八招那一份）"
+  },
+  "sharedAxes": [
+    "投射物先飛行再爆炸",
+    "沿途命中與終點範圍分開",
+    "光束長寬與傷害線一致",
+    "連鎖跳數與衰減"
+  ],
+  "rows": [
+    {
+      "n": 6,
+      "id": "godie-nbbc.e",
+      "name": "08-03 龍鬥氣砲咒文",
+      "type": "藍色橫向氣功砲",
+      "note": "氣功砲由角色前方發射；施法動作、投射方向與碰撞傷害一致。"
+    },
+    {
+      "n": 7,
+      "id": "godie-ogrh.r",
+      "name": "09-04 龜派氣功",
+      "type": "橘色橫向氣功砲",
+      "note": "蓄力後發射橘色橫向光束；直線傷害、長度、寬度、鏡頭震動與超級賽亞人增幅正確。"
+    },
+    {
+      "n": 8,
+      "id": "godie-o00x.r",
+      "name": "09-04 龜派氣功（鏡像）",
+      "type": "鏡像一致性",
+      "note": "與 `godie-ogrh.r` 逐欄一致；模型差異不得改變傷害線、時間與光束尺寸。"
+    },
+    {
+      "n": 13,
+      "id": "godie-hvwd.e",
+      "name": "02-03 魂飛魄散",
+      "type": "直線攻擊／模板衝突",
+      "note": "說明是直線攻擊，但目前模板是單體；Editor 必須標紅語意衝突，不可靜默通過。",
+      "knownConflict": true
+    },
+    {
+      "n": 14,
+      "id": "godie-o00k.e",
+      "name": "86-03 神鳴",
+      "type": "直線攻擊／模板衝突",
+      "note": "說明是前方直線，但目前模板是瞬發範圍；必須顯示衝突並允許改成直線積木。",
+      "knownConflict": true
+    },
+    {
+      "n": 2,
+      "id": "godie-hjai.e",
+      "name": "04-03 龍破斬",
+      "type": "投射後爆炸",
+      "note": "投射物先飛行再爆炸；沿途命中與終點範圍分開；詠唱文字、爆炸、震動與傷害點對齊。"
+    },
+    {
+      "n": 3,
+      "id": "godie-h020.e",
+      "name": "04-03 龍破斬（鏡像）",
+      "type": "鏡像一致性",
+      "note": "與 `godie-hjai.e` 的機制、級距和演出一致；任一版本修改時必須提示差異。"
+    },
+    {
+      "n": 23,
+      "id": "godie-udea.r",
+      "name": "65-04 天譴",
+      "type": "多起點連鎖閃電",
+      "note": "最多20個起點各自建立獨立連鎖；每鏈最多16次且每跳剩90%傷害；每次燒魔，最近目標另受額外傷害。"
+    }
+  ],
+  "mirrorPairs": [
+    ["godie-hjai.e", "godie-h020.e"],
+    ["godie-ogrh.r", "godie-o00x.r"]
+  ],
+  "cosmeticKeys": ["id", "icon", "vfxKey"],
+  "commonRule4": {
+    "rule": "五級距標籤不存在時判定為「⛔ 阻塞於 #943」，⛔ 不是通過",
+    "axes": ["rangeTier", "conditionTier"],
+    "why": "⛔ 否則「沒有欄位可驗」會被讀成綠 —— ⭐ 而 conditionTier 今天全庫 0 覆蓋（實測 421/421 沒有）。"
+  }
+}
