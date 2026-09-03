@@ -1,8 +1,8 @@
 {
   "population": {
-    "configFiles": 99,
-    "knobs": 1935,
-    "corpusFiles": 13259,
+    "configFiles": 100,
+    "knobs": 1942,
+    "corpusFiles": 13265,
     "levelWindow": {
       "min": 9,
       "max": 99
@@ -15,7 +15,7 @@
     "schema-locks-engine-zero": 8,
     "no-read-end": 43,
     "notAssessable": 308,
-    "C": 1574
+    "C": 1581
   },
   "findings": [
     {
@@ -458,7 +458,7 @@
     },
     {
       "file": "config.match.json",
-      "knobs": 62,
+      "knobs": 63,
       "a": 8,
       "b": 2
     },

@@ -22579,7 +22579,7 @@
       "ok": true,
       "ms": 5181,
       "readCount": 34598,
-      "writeCount": 1,
+      "writeCount": 2,
       "reads": [
         "content/abilities/_index.json",
         "content/abilities/godie-e002.e.json",
@@ -22891,7 +22891,8 @@
         "寶具總表_EX三階.csv"
       ],
       "writes": [
-        "docs/_release/戰情版-20260903.md"
+        "docs/_release/戰情版-*.md",
+        "docs/_release/戰情版_temp_*.md"
       ]
     },
     {
@@ -25873,5 +25874,5 @@
       "writes": []
     }
   ],
-  "mergeNote": "⭐ 三趟聯集:pass1(乾淨樹) + pass2(HEAD~60 回捲) + **上一版的 sync-io.json**。⚠️ 第三份的 chain 是舊的(45 支),merge-io.mjs 正確地拒絕併它 —— 這一步是手動做的,理由是 merge-io 自己的原則:「併法一律取聯集,觀察到的 I/O 是事實」。⛔ 為什麼非併不可:`castderive:build:raw` 與 `tiers:apply` 是正規化器,在已正規化的樹上 0 寫,純量測會丟掉 404 個產物(含全部 godie-*.json)。⭐ 2026-09-03 追加:`prose:build` 原本也是這個病(兩趟都 0 寫),已改用 `// ggd:writes` 靜態宣告根治(見 tools/card-prose/apply_placeholders.ts 檔頭)——⛔ 不再需要靠這次聯集救它。"
+  "mergeNote": "⭐ 三趟聯集:pass1(乾淨樹) + pass2(HEAD~60 回捲) + **上一版的 sync-io.json**。⚠️ 第三份的 chain 是舊的(45 支),merge-io.mjs 正確地拒絕併它 —— 這一步是手動做的,理由是 merge-io 自己的原則:「併法一律取聯集,觀察到的 I/O 是事實」。⛔ 為什麼非併不可:`castderive:build:raw` 與 `tiers:apply` 是正規化器,在已正規化的樹上 0 寫,純量測會丟掉 404 個產物(含全部 godie-*.json)。⭐ 2026-09-03 追加:`prose:build` 原本也是這個病(兩趟都 0 寫),已改用 `// ggd:writes` 靜態宣告根治(見 tools/card-prose/apply_placeholders.ts 檔頭)——⛔ 不再需要靠這次聯集救它。 ⭐ 2026-09-04 追加:`board:roll` 的 writes 從**寫死日期**(`戰情版-20260903.md`)改成 **glob**(`戰情版-*.md` ＋ `戰情版_temp_*.md`)——⛔ 那個檔**每天換名**,寫死日期的戶籍在跨日的第一次 sync 就會判「無人認領」(實測 exit 3)。⭐ 同型前例:`msgledger:build` 的 `ledger-source_temp_*.md`。"
 }
