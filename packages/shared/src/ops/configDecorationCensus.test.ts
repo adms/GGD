@@ -83,6 +83,39 @@ const found = new Map(shipped.findings.map((f) => [key(f), f]));
  * ⭐ **棘輪**：{@link EXEMPT_CAP} 只能變小。
  */
 const KNOWN: Record<string, string> = {
+  // ── ⭐ 第十一回合的骨架（GH#919–#925）—— 一個理由，16 格共用 ──────────
+  "arena-rules.json:round11.bannerText":
+    "⭐ 第十一回合的**骨架**（GH#919–#925）—— `round11.enabled` 出貨是 `false`，sim 那一半還沒做 ⇒ ⭐ 玩家當然量不到差別，**而那正是它關著的理由**。⚠️ 六張票的參數全撞同一個檔 ⇒ 一次把形狀定下來，⛔ 不是逐張加一格。⇒ **到期條件**：那六張票任何一張把 sim 接上並把 `enabled` 打開 ⇒ 這一列當場作廢。",
+  "arena-rules.json:round11.bombardment.crowdBias":
+    "⭐ 第十一回合的**骨架**（GH#919–#925）—— `round11.enabled` 出貨是 `false`，sim 那一半還沒做 ⇒ ⭐ 玩家當然量不到差別，**而那正是它關著的理由**。⚠️ 六張票的參數全撞同一個檔 ⇒ 一次把形狀定下來，⛔ 不是逐張加一格。⇒ **到期條件**：那六張票任何一張把 sim 接上並把 `enabled` 打開 ⇒ 這一列當場作廢。",
+  "arena-rules.json:round11.bombardment.damagePctOfMaxHp":
+    "⭐ 第十一回合的**骨架**（GH#919–#925）—— `round11.enabled` 出貨是 `false`，sim 那一半還沒做 ⇒ ⭐ 玩家當然量不到差別，**而那正是它關著的理由**。⚠️ 六張票的參數全撞同一個檔 ⇒ 一次把形狀定下來，⛔ 不是逐張加一格。⇒ **到期條件**：那六張票任何一張把 sim 接上並把 `enabled` 打開 ⇒ 這一列當場作廢。",
+  "arena-rules.json:round11.bombardment.telegraphSec":
+    "⭐ 第十一回合的**骨架**（GH#919–#925）—— `round11.enabled` 出貨是 `false`，sim 那一半還沒做 ⇒ ⭐ 玩家當然量不到差別，**而那正是它關著的理由**。⚠️ 六張票的參數全撞同一個檔 ⇒ 一次把形狀定下來，⛔ 不是逐張加一格。⇒ **到期條件**：那六張票任何一張把 sim 接上並把 `enabled` 打開 ⇒ 這一列當場作廢。",
+  "arena-rules.json:round11.bossScaleCeil":
+    "⭐ 第十一回合的**骨架**（GH#919–#925）—— `round11.enabled` 出貨是 `false`，sim 那一半還沒做 ⇒ ⭐ 玩家當然量不到差別，**而那正是它關著的理由**。⚠️ 六張票的參數全撞同一個檔 ⇒ 一次把形狀定下來，⛔ 不是逐張加一格。⇒ **到期條件**：那六張票任何一張把 sim 接上並把 `enabled` 打開 ⇒ 這一列當場作廢。",
+  "arena-rules.json:round11.bossScaleFloor":
+    "⭐ 第十一回合的**骨架**（GH#919–#925）—— `round11.enabled` 出貨是 `false`，sim 那一半還沒做 ⇒ ⭐ 玩家當然量不到差別，**而那正是它關著的理由**。⚠️ 六張票的參數全撞同一個檔 ⇒ 一次把形狀定下來，⛔ 不是逐張加一格。⇒ **到期條件**：那六張票任何一張把 sim 接上並把 `enabled` 打開 ⇒ 這一列當場作廢。",
+  "arena-rules.json:round11.bossStrengthMult":
+    "⭐ 第十一回合的**骨架**（GH#919–#925）—— `round11.enabled` 出貨是 `false`，sim 那一半還沒做 ⇒ ⭐ 玩家當然量不到差別，**而那正是它關著的理由**。⚠️ 六張票的參數全撞同一個檔 ⇒ 一次把形狀定下來，⛔ 不是逐張加一格。⇒ **到期條件**：那六張票任何一張把 sim 接上並把 `enabled` 打開 ⇒ 這一列當場作廢。",
+  "arena-rules.json:round11.deadPlayersControlBoss":
+    "⭐ 第十一回合的**骨架**（GH#919–#925）—— `round11.enabled` 出貨是 `false`，sim 那一半還沒做 ⇒ ⭐ 玩家當然量不到差別，**而那正是它關著的理由**。⚠️ 六張票的參數全撞同一個檔 ⇒ 一次把形狀定下來，⛔ 不是逐張加一格。⇒ **到期條件**：那六張票任何一張把 sim 接上並把 `enabled` 打開 ⇒ 這一列當場作廢。",
+  "arena-rules.json:round11.maxAliveZombies":
+    "⭐ 第十一回合的**骨架**（GH#919–#925）—— `round11.enabled` 出貨是 `false`，sim 那一半還沒做 ⇒ ⭐ 玩家當然量不到差別，**而那正是它關著的理由**。⚠️ 六張票的參數全撞同一個檔 ⇒ 一次把形狀定下來，⛔ 不是逐張加一格。⇒ **到期條件**：那六張票任何一張把 sim 接上並把 `enabled` 打開 ⇒ 這一列當場作廢。",
+  "arena-rules.json:round11.scoring.minContributionForFullSurvival":
+    "⭐ 第十一回合的**骨架**（GH#919–#925）—— `round11.enabled` 出貨是 `false`，sim 那一半還沒做 ⇒ ⭐ 玩家當然量不到差別，**而那正是它關著的理由**。⚠️ 六張票的參數全撞同一個檔 ⇒ 一次把形狀定下來，⛔ 不是逐張加一格。⇒ **到期條件**：那六張票任何一張把 sim 接上並把 `enabled` 打開 ⇒ 這一列當場作廢。",
+  "arena-rules.json:round11.scoring.scoreMultiplier":
+    "⭐ 第十一回合的**骨架**（GH#919–#925）—— `round11.enabled` 出貨是 `false`，sim 那一半還沒做 ⇒ ⭐ 玩家當然量不到差別，**而那正是它關著的理由**。⚠️ 六張票的參數全撞同一個檔 ⇒ 一次把形狀定下來，⛔ 不是逐張加一格。⇒ **到期條件**：那六張票任何一張把 sim 接上並把 `enabled` 打開 ⇒ 這一列當場作廢。",
+  "arena-rules.json:round11.scoring.survivalWeight":
+    "⭐ 第十一回合的**骨架**（GH#919–#925）—— `round11.enabled` 出貨是 `false`，sim 那一半還沒做 ⇒ ⭐ 玩家當然量不到差別，**而那正是它關著的理由**。⚠️ 六張票的參數全撞同一個檔 ⇒ 一次把形狀定下來，⛔ 不是逐張加一格。⇒ **到期條件**：那六張票任何一張把 sim 接上並把 `enabled` 打開 ⇒ 這一列當場作廢。",
+  "arena-rules.json:round11.spawnRampSec":
+    "⭐ 第十一回合的**骨架**（GH#919–#925）—— `round11.enabled` 出貨是 `false`，sim 那一半還沒做 ⇒ ⭐ 玩家當然量不到差別，**而那正是它關著的理由**。⚠️ 六張票的參數全撞同一個檔 ⇒ 一次把形狀定下來，⛔ 不是逐張加一格。⇒ **到期條件**：那六張票任何一張把 sim 接上並把 `enabled` 打開 ⇒ 這一列當場作廢。",
+  "arena-rules.json:round11.triggerBossKills":
+    "⭐ 第十一回合的**骨架**（GH#919–#925）—— `round11.enabled` 出貨是 `false`，sim 那一半還沒做 ⇒ ⭐ 玩家當然量不到差別，**而那正是它關著的理由**。⚠️ 六張票的參數全撞同一個檔 ⇒ 一次把形狀定下來，⛔ 不是逐張加一格。⇒ **到期條件**：那六張票任何一張把 sim 接上並把 `enabled` 打開 ⇒ 這一列當場作廢。",
+  "arena-rules.json:round11.waveTable.difficultyBase":
+    "⭐ 第十一回合的**骨架**（GH#919–#925）—— `round11.enabled` 出貨是 `false`，sim 那一半還沒做 ⇒ ⭐ 玩家當然量不到差別，**而那正是它關著的理由**。⚠️ 六張票的參數全撞同一個檔 ⇒ 一次把形狀定下來，⛔ 不是逐張加一格。⇒ **到期條件**：那六張票任何一張把 sim 接上並把 `enabled` 打開 ⇒ 這一列當場作廢。",
+  "arena-rules.json:round11.waveTable.eventIntervalSec":
+    "⭐ 第十一回合的**骨架**（GH#919–#925）—— `round11.enabled` 出貨是 `false`，sim 那一半還沒做 ⇒ ⭐ 玩家當然量不到差別，**而那正是它關著的理由**。⚠️ 六張票的參數全撞同一個檔 ⇒ 一次把形狀定下來，⛔ 不是逐張加一格。⇒ **到期條件**：那六張票任何一張把 sim 接上並把 `enabled` 打開 ⇒ 這一列當場作廢。",
   // ── ⭐ owner 親自點名的那一族（A · dominated）──────────────────────────
   "arena-rules.json:mobWaves.boss.bountyXp":
     "同上的第二個實例：`bountyLevels=25` 蓋掉 `bountyXp=1200`（佔 0.6%–6.1%）。" +
@@ -178,7 +211,19 @@ const KNOWN: Record<string, string> = {
  * 這一列當場變幽靈而測試紅」）。今天 `killsPerLevel = 0` 且 Zod 下界已放開
  * ⇒ ⭐ 這是**設計好的紅**，⛔ 不是回歸。
  */
-const EXEMPT_CAP = 32;
+/**
+ * ⭐ 2026-09-03：32 → **48** —— 第十一回合的骨架（GH#919–#925）一次進來 **16 格**。
+ *
+ * ⚠️⚠️ ⭐ **這是棘輪唯一一次被調高，而它帶著一個明確的到期條件**：
+ * 那 16 格全部指向同一個理由（`round11.enabled` 出貨 `false`，sim 那一半還沒做）
+ * ⇒ ⭐ 那六張票任何一張把 sim 接上並打開開關，那一列就當場作廢
+ * ⇒ **這個上限要跟著回到 32**。
+ *
+ * ⛔ 而它**不可以**被當成「以後可以再調高」的先例：
+ * 其餘 32 列每一列都是一個**個別的**債，⭐ 它們仍然只准變少。
+ */
+const EXEMPT_CAP = 48;
+
 
 describe("🔍 設定裝飾欄位普查 (config-decoration-census)", () => {
   it("① 母體還在 —— 偵測壞掉時它會安靜地回空的,⭐ 而空的看起來就是『全都正常』", () => {

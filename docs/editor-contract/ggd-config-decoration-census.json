@@ -1,21 +1,21 @@
 {
   "population": {
     "configFiles": 98,
-    "knobs": 1890,
-    "corpusFiles": 13256,
+    "knobs": 1913,
+    "corpusFiles": 13257,
     "levelWindow": {
       "min": 9,
       "max": 99
     }
   },
   "counts": {
-    "A": 24,
+    "A": 40,
     "B": 8,
     "dominated": 2,
     "schema-locks-engine-zero": 8,
-    "no-read-end": 22,
+    "no-read-end": 38,
     "notAssessable": 293,
-    "C": 1565
+    "C": 1572
   },
   "findings": [
     {
@@ -41,6 +41,134 @@
       "path": "mobWaves.special.bountyXp",
       "value": 200,
       "why": "同一個物件裡的 bountyLevels=3 在同一條軸上直接發等級。等級區間 L9–L99（從 `rounds[].grantLevels` 與 `mobWaves.fromRound` 推導）⇒ 這一格佔那一次獎勵的 **0.8%–8.3%**（中位 1.5%，門檻 25.0%）。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.bannerText",
+      "value": "第十一回合・生存模式",
+      "why": "`bannerText` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.bombardment.crowdBias",
+      "value": 0.6,
+      "why": "`crowdBias` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.bombardment.damagePctOfMaxHp",
+      "value": 0.5,
+      "why": "`damagePctOfMaxHp` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.bombardment.telegraphSec",
+      "value": 10,
+      "why": "`telegraphSec` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.bossScaleCeil",
+      "value": 8,
+      "why": "`bossScaleCeil` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.bossScaleFloor",
+      "value": 1,
+      "why": "`bossScaleFloor` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.bossStrengthMult",
+      "value": 2,
+      "why": "`bossStrengthMult` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.deadPlayersControlBoss",
+      "value": true,
+      "why": "`deadPlayersControlBoss` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.maxAliveZombies",
+      "value": 500,
+      "why": "`maxAliveZombies` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.scoring.minContributionForFullSurvival",
+      "value": 0.2,
+      "why": "`minContributionForFullSurvival` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.scoring.scoreMultiplier",
+      "value": 2,
+      "why": "`scoreMultiplier` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.scoring.survivalWeight",
+      "value": 0.5,
+      "why": "`survivalWeight` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.spawnRampSec",
+      "value": 120,
+      "why": "`spawnRampSec` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.triggerBossKills",
+      "value": 3,
+      "why": "`triggerBossKills` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.waveTable.difficultyBase",
+      "value": 1.15,
+      "why": "`difficultyBase` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.waveTable.eventIntervalSec",
+      "value": 20,
+      "why": "`eventIntervalSec` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
     },
     {
       "klass": "B",
@@ -278,8 +406,8 @@
   "perFile": [
     {
       "file": "arena-rules.json",
-      "knobs": 227,
-      "a": 2,
+      "knobs": 250,
+      "a": 18,
       "b": 1
     },
     {

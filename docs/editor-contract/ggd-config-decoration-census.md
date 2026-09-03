@@ -12,23 +12,39 @@
 | | |
 |---|---:|
 | 出貨 config 文件 | 98 |
-| **旋鈕**（Zod 靜態鍵的葉子，⛔ 不含 record 的鍵與陣列索引） | **1890** |
-| 消費端原始碼（⛔ 已排除後台欄位表與測試） | 13256 |
+| **旋鈕**（Zod 靜態鍵的葉子，⛔ 不含 record 的鍵與陣列索引） | **1913** |
+| 消費端原始碼（⛔ 已排除後台欄位表與測試） | 13257 |
 | 殭屍獎勵的等級區間（`dominated` 的分母） | L9–L99 |
 
 ## 分類
 
 | 類 | 意思 | 格數 |
 |---|---|---:|
-| **A** | 調了玩家量不到差別 | **24** |
+| **A** | 調了玩家量不到差別 | **40** |
 | **B** | 引擎做得到而調不到 | **8** |
-| C | 正常 | 1565 |
+| C | 正常 | 1572 |
 | ⚠️ 量不到 | 鍵名不是識別字（級距標籤／列舉鍵）—— ⭐ 「零讀端」這把尺對它們**結構上是瞎的** | 293 |
 
-### 零讀端 · 22 格（A 類）
+### 零讀端 · 38 格（A 類）
 
 | 檔 | 路徑 | 出貨值 | 量到的 |
 |---|---|---|---|
+| `arena-rules.json` | `round11.bannerText` | `"第十一回合・生存模式"` | `bannerText` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `arena-rules.json` | `round11.bombardment.crowdBias` | `0.6` | `crowdBias` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `arena-rules.json` | `round11.bombardment.damagePctOfMaxHp` | `0.5` | `damagePctOfMaxHp` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `arena-rules.json` | `round11.bombardment.telegraphSec` | `10` | `telegraphSec` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `arena-rules.json` | `round11.bossScaleCeil` | `8` | `bossScaleCeil` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `arena-rules.json` | `round11.bossScaleFloor` | `1` | `bossScaleFloor` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `arena-rules.json` | `round11.bossStrengthMult` | `2` | `bossStrengthMult` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `arena-rules.json` | `round11.deadPlayersControlBoss` | `true` | `deadPlayersControlBoss` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `arena-rules.json` | `round11.maxAliveZombies` | `500` | `maxAliveZombies` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `arena-rules.json` | `round11.scoring.minContributionForFullSurvival` | `0.2` | `minContributionForFullSurvival` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `arena-rules.json` | `round11.scoring.scoreMultiplier` | `2` | `scoreMultiplier` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `arena-rules.json` | `round11.scoring.survivalWeight` | `0.5` | `survivalWeight` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `arena-rules.json` | `round11.spawnRampSec` | `120` | `spawnRampSec` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `arena-rules.json` | `round11.triggerBossKills` | `3` | `triggerBossKills` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `arena-rules.json` | `round11.waveTable.difficultyBase` | `1.15` | `difficultyBase` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `arena-rules.json` | `round11.waveTable.eventIntervalSec` | `20` | `eventIntervalSec` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
 | `config.match.json` | `economy.assistGold` | `75` | `assistGold` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
 | `config.match.json` | `economy.roundLoseGold` | `150` | `roundLoseGold` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
 | `config.match.json` | `economy.roundWinGold` | `300` | `roundWinGold` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
@@ -76,7 +92,7 @@
 
 | 檔 | 旋鈕 | A | B |
 |---|---:|---:|---:|
-| `arena-rules.json` | 227 | 2 | 1 |
+| `arena-rules.json` | 250 | 18 | 1 |
 | `body-scale.json` | 4 | 0 | 1 |
 | `config.match.json` | 62 | 8 | 2 |
 | `controller-scheme.json` | 38 | 1 | 0 |

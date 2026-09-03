@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "e3135fdc0c58",
+  "fingerprint": "ba67b7759c0d",
   "capabilityFingerprint": "18d7999e",
   "required": [
     {
@@ -16416,6 +16416,171 @@
     },
     {
       "group": "configField",
+      "name": "round11",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.arenaId",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.bannerText",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.bombardment",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.bombardment.crowdBias",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.bombardment.damagePctOfMaxHp",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.bombardment.enabled",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.bombardment.radius",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.bombardment.telegraphSec",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.bossScaleCeil",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.bossScaleFloor",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.bossStrengthMult",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.deadPlayersControlBoss",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.durationSec",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.enabled",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.maxAliveZombies",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.scoring",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.scoring.minContributionForFullSurvival",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.scoring.scoreMultiplier",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.scoring.survivalWeight",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.spawnRampSec",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.triggerBossKills",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.waveTable",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.waveTable.difficultyBase",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.waveTable.eventIntervalSec",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.waveTable.events",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.waveTable.events[].kind",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.waveTable.events[].kind=bombardment",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.waveTable.events[].kind=boss",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.waveTable.events[].kind=normal",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.waveTable.events[].kind=reviveCircle",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.waveTable.events[].kind=special",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "round11.waveTable.events[].weight",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
       "name": "roundCardCollapsed",
       "owner": "config.victory-podium@1"
     },
@@ -24817,9 +24982,9 @@
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 147,
-    "configField": 3901,
+    "configField": 3934,
     "_notRequired": 15,
-    "_total": 5084,
+    "_total": 5117,
     "_ownerOnly": 39
   }
 }
