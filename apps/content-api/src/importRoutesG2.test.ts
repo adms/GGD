@@ -26,7 +26,7 @@ import { deflateRawSync } from "node:zlib";
 import { contentSha256 } from "@ggd/shared/content/import/jcs";
 import { packageDigest } from "@ggd/shared/content/import/digest";
 import { buildAuthoringProcessor } from "@ggd/shared/content/import/authoringProcessor";
-import { registerImportRoutes } from "./importRoutes";
+import { registerImportRoutes, IMPORTER_ENDPOINTS } from "./importRoutes";
 
 const REPO = join(__dirname, "../../..");
 const FP = buildAuthoringProcessor(REPO).fingerprint;
@@ -769,5 +769,53 @@ describe("POST /validate-single（GH#931）", () => {
     const r = await post(`${P}/validate-single`, { collection: "items", document: { schema: "item@1" } });
     expect(r.statusCode).toBe(422);
     expect((r.json() as { code?: string }).code).toBe("SINGLE_DOCUMENT_INVALID");
+  });
+});
+
+/**
+ * ⭐⭐ **「合理性檢查」與「推薦組合」的兩個資料源交得出去**（GH#957）。
+ *
+ * owner 2026-09-02（逐字，追加的驗收軸）：
+ * > 「玩家要能做的出來，並且自動化機制檢查**合理性**及**推薦組合**」
+ *
+ * ⭐ 照 owner 的角色分工（「Main 只提供⋯**限制 resolver** 與**機器契約**」），
+ * Main 側的責任就是**把那兩份交出去** ——
+ * ⛔ 而在此之前 `brick-census` **完全沒有端點**（對面 `git show` 得到，
+ * ⚠️ 但**跑起來的編輯器讀不到**），
+ * ⛔ 而 `authoring-rules` **有 route 卻不在 `IMPORTER_ENDPOINTS` 裡**
+ * ⇒ ⭐ 那張表就是 target profile 交出去的那一份 ⇒ **編輯器看不到那條路**
+ * （形態⑪：端點在，而契約沒說它在）。
+ */
+describe("編輯器的兩個唯讀契約（GH#957）", () => {
+  it("★★ ⭐ `GET /authoring-rules` —— 合理性檢查的**權威**（⛔ 不是抄一份到編輯器）", async () => {
+    const r = await get(`${P}/authoring-rules`);
+    expect(r.statusCode, "⛔ 合理性規則拿不到 ⇒ 編輯器只能自己抄一份（＝第二個住處）").toBe(200);
+    const body = r.json() as Record<string, unknown>;
+    expect(
+      Object.keys(body).length,
+      "⛔ 回了一個空物件 —— 那與「端點不存在」對編輯器是同一件事",
+    ).toBeGreaterThan(0);
+  });
+
+  it("★★ ⭐ `GET /brick-census` —— 推薦組合要用的**積木清單**", async () => {
+    const r = await get(`${P}/brick-census`);
+    expect(
+      r.statusCode,
+      "⛔⛔ 積木清單拿不到 ⇒ ⭐ owner 逐字：「編輯器是**堆積木**的角色，\n" +
+        "  要充分了解**有哪些積木**」—— 而它讀不到那份清單。",
+    ).toBe(200);
+    const body = r.json() as { counts?: Record<string, number> };
+    expect(body.counts, "⛔ 沒有 `counts` ⇒ 那不是積木普查").toBeTruthy();
+  });
+
+  it("★★ ⭐⭐ 兩條都**在端點表裡**（⛔ 有 route 而契約沒說 = 對面看不到）", () => {
+    const paths = new Set(IMPORTER_ENDPOINTS.map((e) => `${e.method} ${e.path}`));
+    for (const p of ["GET /authoring-rules", "GET /brick-census"])
+      expect(
+        paths.has(p),
+        `⛔⛔ \`${p}\` 沒有掛進 \`IMPORTER_ENDPOINTS\` ⇒\n` +
+          "  ⭐ 那張表是 **target profile 交出去的那一份** ——\n" +
+          "  ⛔ route 活著而契約沒說它在，對面就**找不到它**。",
+      ).toBe(true);
   });
 });

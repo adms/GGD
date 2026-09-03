@@ -358,6 +358,40 @@ export function registerImportRoutes(
     );
 
     /**
+     * ⭐⭐ GH#957 —— **積木普查**（`ggd-brick-census@1`）。
+     *
+     * owner 2026-09-01（逐字）：
+     * > 「編輯器是**堆積木**的角色，要充分了解有哪些積木；main 是**做出積木**的角色」
+     * owner 2026-09-02（逐字，追加的驗收軸）：
+     * > 「玩家要能做的出來，並且自動化機制檢查**合理性**及**推薦組合**」
+     *
+     * ⭐ 「推薦組合」的 Main 側責任就是**把積木清單交出去** ——
+     * ⛔ 而在此之前它只是 repo 裡一份 JSON：對面 `git show` 得到，
+     * ⚠️ 但**跑起來的編輯器讀不到**（那正是「資料在、⛔ 零個消費端」的形狀）。
+     *
+     * ⚠️ ⭐ 它與 `authoring-rules` 是**同一族**：兩者都是「編輯器每次開啟技能都會問」的
+     * 唯讀契約 ⇒ ⭐ 走同一個前綴、同樣不需要驗證、同樣**只讀不寫**。
+     */
+    app.get(`${prefix}/brick-census`, async (_req, reply) => {
+      // ⭐ 兩個候選：`<contentDir>/../docs/…`（出貨佈局）與 `process.cwd()`
+      //   ⚠️ 測試把 `contentDir` 指到暫存目錄 ⇒ ⛔ 只看第一個會回 404，
+      //   ⭐ 而那與「這份契約不存在」對編輯器是同一件事。
+      const candidates = [
+        join(root, "..", "docs/editor-contract/ggd-brick-census.json"),
+        join(process.cwd(), "docs/editor-contract/ggd-brick-census.json"),
+      ];
+      const p = candidates.find((c) => existsSync(c)) ?? candidates[0]!;
+      if (!existsSync(p))
+        return reply.code(404).send({
+          schema: IMPORT_ERROR_SCHEMA,
+          code: "BRICK_CENSUS_MISSING",
+          message: "⛔ 積木普查還沒產生 —— 跑 `pnpm bricks:build`。",
+          retryable: false,
+        });
+      return reply.header("content-type", "application/json").send(readFileSync(p, "utf8"));
+    });
+
+    /**
      * ⭐ 短路徑別名 —— `/content-api/authoring-rules`（⛔ 不帶 `/content-import`）。
      *
      * ⚠️ ⭐ 為什麼值得有：創作規則是**編輯器每一次開啟技能都會問**的東西，
@@ -501,6 +535,12 @@ export const IMPORTER_ENDPOINTS: readonly { method: string; path: string }[] = O
   { method: "GET", path: "/audit" },
   { method: "GET", path: "/health" },
   { method: "GET", path: "/capabilities" },
+  // ⭐⭐ GH#957 —— 「合理性檢查」與「推薦組合」的兩個資料源。
+  //   ⛔ 在此之前 `authoring-rules` **有 route 而不在這張表裡** ——
+  //   ⭐ 而這張表就是 target profile 交出去的那一份
+  //   ⇒ 編輯器**看不到那條路**（形態⑪：端點在，而契約沒說它在）。
+  { method: "GET", path: "/authoring-rules" },
+  { method: "GET", path: "/brick-census" },
 ]);
 
 interface G2Deps {
