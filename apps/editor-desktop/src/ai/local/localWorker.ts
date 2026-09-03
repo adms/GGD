@@ -1,9 +1,10 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import type { LocalModelStore } from "./modelStore";
+import type { LocalAiRuntimeTarget } from "./releaseGate";
 
 export interface LocalRuntimeManifest {
-  readonly platform: "darwin-arm64" | "darwin-x64" | "win32-x64-cuda" | "win32-x64-vulkan" | "win32-x64-cpu";
+  readonly platform: LocalAiRuntimeTarget;
   readonly executable: string;
   readonly sha256: string;
 }
