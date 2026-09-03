@@ -65,3 +65,10 @@ deploy/helm/**/secrets*.yaml
 docs
 *.md
 !content/**/*.md
+# ⭐ 例外：edge.Dockerfile COPY 得到它（GH#935 的說明 token 七色分群表）——
+#   `packages/shared/src/content/import/descriptionTokens.ts` **靜態 import** 它，
+#   ⇒ 它是**建置脈絡的成對義務**，⛔ 不是文件。
+#   ⚠️ ⛔ 這裡**只准放單一檔案的否定**，⛔ 不可以寫 `!docs/` 或 `!docs/editor-contract/`
+#   —— 那會把整個 docs（連同 `_reports/`、`legacy/`、w3x 傾印）重新納入建置脈絡，
+#   而那正是這個檔存在的理由（檔頭：repo 5.8 GB）。
+!docs/editor-contract/ggd-presentation-token-manifest.json
