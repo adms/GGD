@@ -78,6 +78,13 @@ COPY content/assets/audio/wc3/PROVENANCE.json content/assets/audio/wc3/
 # SkillListsPage 靜態 import 產生器的 lists.json（md 與後台頁**同一份**資料 ——
 # 第〇·四守則的單一住處,所以它非在建置脈絡不可）。同一條閘現在也掃 tools/。
 COPY tools/skill-lists/lists.json tools/skill-lists/
+# ---- docs/ 的跨界 import（GH#935,2026-09-03）--------------------------------
+# `packages/shared/src/content/import/descriptionTokens.ts` 靜態 import 說明 token
+# 的七色分群表（編輯器契約與客戶端渲染**同一份**,第〇·四守則的單一住處）。
+# ⚠️ 它從 GH#935 落地起就讓 edge build 死在 rollup,⛔ 而每次部署都靜默出貨舊映像 ——
+#   當時的閘只掃 `apps/*/src` 的 `content/`＋`tools/`,兩層都看不見它。
+#   ⇒ 閘已改成**封閉世界**（跨出 apps/**＋packages/** 一律要有 COPY）並加掃 shared。
+COPY docs/editor-contract/ggd-presentation-token-manifest.json docs/editor-contract/
 # ---- THE FULL-ASSET BUILD FLAG (task #176) ---------------------------------
 # apps/client/src/config/fullAssets.ts reads VITE_GGD_FULL_ASSETS and falls back
 # to import.meta.env.DEV, which is constant-folded to `false` in every
