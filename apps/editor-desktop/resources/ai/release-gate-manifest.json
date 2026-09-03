@@ -16,6 +16,7 @@
   },
   "promptSha256": "9f9d172219eaf5496fcec8436dbfff02d38e64dfa13c50e0eef22778ff5ab4a7",
   "grammarSha256": "23b7c0962d374c72070724aa392961c556ff1f33da0ea14faddc9d715e0cadd0",
+  "inputContractSha256": "bf2b483da87b25805e2f8f38bae060862eee0974a2c623d675773342387bfb8e",
   "requiredQualityTargets": ["darwin-arm64-metal", "win32-x64-cuda"],
   "requiredRuntimeTargets": ["darwin-arm64-metal", "darwin-x64-cpu", "win32-x64-cuda", "win32-x64-vulkan", "win32-x64-cpu"],
   "performance": {

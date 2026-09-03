@@ -3,6 +3,7 @@ import {
   LOCAL_AI_RELEASE_CORPUS,
   LOCAL_AI_RELEASE_CORPUS_DIGEST,
   LOCAL_AI_RELEASE_CORPUS_VERSION,
+  LOCAL_AI_EVAL_INPUT_CONTRACT_DIGEST,
   LOCAL_AI_EVAL_SYSTEM_PROMPT,
   type LocalAiEvalCase,
   type LocalAiEvalDecision,
@@ -84,6 +85,7 @@ export interface LocalAiReleaseRun {
   readonly runtime: { readonly version: string; readonly sha256: string };
   readonly promptSha256: string;
   readonly grammarSha256: string;
+  readonly inputContractSha256: string;
   readonly hardware: {
     readonly os: string;
     readonly cpu: string;
@@ -117,6 +119,7 @@ export interface LocalAiEvalReceipt {
   readonly runtime: LocalAiReleaseRun["runtime"];
   readonly promptSha256: string;
   readonly grammarSha256: string;
+  readonly inputContractSha256: string;
   readonly corpusVersion: typeof LOCAL_AI_RELEASE_CORPUS_VERSION;
   readonly corpusDigest: string;
   readonly caseCount: number;
@@ -150,12 +153,22 @@ function validateOutputShape(value: LocalAiEvalOutput): string[] {
   const reasons: string[] = [];
   if (!value || typeof value !== "object" || stableStringify(Object.keys(value).sort()) !== stableStringify(OUTPUT_KEYS)) return ["OUTPUT_SCHEMA_FIELDS"];
   if (value.schema !== LOCAL_AI_EVAL_OUTPUT_SCHEMA) reasons.push("OUTPUT_SCHEMA_TAG");
+  if (typeof value.caseId !== "string" || value.caseId.length < 1 || value.caseId.length > 100) reasons.push("OUTPUT_CASE_ID");
   if (!["accept", "degrade", "refuse"].includes(value.decision)) reasons.push("OUTPUT_DECISION");
-  for (const key of ["selectedTemplateIds", "selectedCapabilityIds", "selectedDirectionOptionIds", "selectedFallbackOptionIds", "mechanics"] as const) {
-    if (!Array.isArray(value[key]) || value[key].some((entry) => typeof entry !== "string")) reasons.push(`OUTPUT_${key.toUpperCase()}`);
+  const arrayLimits = {
+    selectedTemplateIds: 8,
+    selectedCapabilityIds: 128,
+    selectedDirectionOptionIds: 32,
+    selectedFallbackOptionIds: 32,
+    mechanics: 32,
+  } as const;
+  for (const [key, limit] of Object.entries(arrayLimits) as [keyof typeof arrayLimits, number][]) {
+    if (!Array.isArray(value[key]) || value[key].length > limit
+      || value[key].some((entry) => typeof entry !== "string" || entry.length > (key === "mechanics" ? 500 : 128))) reasons.push(`OUTPUT_${key.toUpperCase()}`);
   }
-  if ((value.canonicalId !== null && typeof value.canonicalId !== "string") || (value.versionId !== null && typeof value.versionId !== "string")) reasons.push("OUTPUT_ID_TYPE");
-  if (value.ownerText !== null && typeof value.ownerText !== "string") reasons.push("OUTPUT_OWNER_TYPE");
+  if ((value.canonicalId !== null && (typeof value.canonicalId !== "string" || value.canonicalId.length > 128))
+    || (value.versionId !== null && (typeof value.versionId !== "string" || value.versionId.length > 128))) reasons.push("OUTPUT_ID_TYPE");
+  if (value.ownerText !== null && (typeof value.ownerText !== "string" || value.ownerText.length > 4000)) reasons.push("OUTPUT_OWNER_TYPE");
   if (typeof value.explanation !== "string" || value.explanation.length < 1 || value.explanation.length > 4000) reasons.push("OUTPUT_EXPLANATION");
   if (!Number.isFinite(value.durationMs) || value.durationMs < 0 || value.durationMs > 600_000) reasons.push("OUTPUT_DURATION");
   return reasons;
@@ -196,8 +209,9 @@ export function createLocalAiEvalReceipt(run: LocalAiReleaseRun): LocalAiEvalRec
   if (run.schema !== "ggd-local-ai-release-run@1" || !["quality", "runtime-smoke"].includes(run.suite)) throw new Error("RELEASE_RUN_SCHEMA_INVALID");
   if (!REQUIRED_RUNTIME_TARGETS.includes(run.target)) throw new Error("RELEASE_TARGET_UNKNOWN");
   if (run.model.id !== LOCAL_MODEL_MANIFEST.id || run.model.sha256 !== LOCAL_MODEL_MANIFEST.sha256 || run.model.bytes !== LOCAL_MODEL_MANIFEST.expectedBytes) throw new Error("RELEASE_MODEL_MISMATCH");
-  if (!HEX.test(run.runtime.sha256) || !HEX.test(run.promptSha256) || !HEX.test(run.grammarSha256)) throw new Error("RELEASE_COMPONENT_DIGEST_INVALID");
-  if (run.promptSha256 !== LOCAL_AI_EVAL_PROMPT_DIGEST || run.grammarSha256 !== LOCAL_AI_EVAL_GRAMMAR_DIGEST) throw new Error("RELEASE_PROMPT_OR_GRAMMAR_MISMATCH");
+  if (!HEX.test(run.runtime.sha256) || !HEX.test(run.promptSha256) || !HEX.test(run.grammarSha256) || !HEX.test(run.inputContractSha256)) throw new Error("RELEASE_COMPONENT_DIGEST_INVALID");
+  if (run.promptSha256 !== LOCAL_AI_EVAL_PROMPT_DIGEST || run.grammarSha256 !== LOCAL_AI_EVAL_GRAMMAR_DIGEST
+    || run.inputContractSha256 !== LOCAL_AI_EVAL_INPUT_CONTRACT_DIGEST) throw new Error("RELEASE_PROMPT_GRAMMAR_OR_INPUT_CONTRACT_MISMATCH");
   if (Number.isNaN(Date.parse(run.createdAt))) throw new Error("RELEASE_TIMESTAMP_INVALID");
   const numericMetrics = [run.metrics.coldStartMs, run.metrics.warmStartMs, run.metrics.peakRssBytes, run.metrics.peakVramBytes ?? 0, run.hardware.systemMemoryBytes, run.hardware.gpuMemoryBytes ?? 0];
   if (numericMetrics.some((value) => !Number.isFinite(value) || value < 0)) throw new Error("RELEASE_METRICS_INVALID");
@@ -216,6 +230,7 @@ export function createLocalAiEvalReceipt(run: LocalAiReleaseRun): LocalAiEvalRec
     runtime: run.runtime,
     promptSha256: run.promptSha256,
     grammarSha256: run.grammarSha256,
+    inputContractSha256: run.inputContractSha256,
     corpusVersion: LOCAL_AI_RELEASE_CORPUS_VERSION,
     corpusDigest: LOCAL_AI_RELEASE_CORPUS_DIGEST,
     caseCount: cases.length,
@@ -249,7 +264,8 @@ function receiptValid(receipt: LocalAiEvalReceipt): boolean {
     && receipt.corpusVersion === LOCAL_AI_RELEASE_CORPUS_VERSION
     && receipt.corpusDigest === LOCAL_AI_RELEASE_CORPUS_DIGEST
     && receipt.promptSha256 === LOCAL_AI_EVAL_PROMPT_DIGEST
-    && receipt.grammarSha256 === LOCAL_AI_EVAL_GRAMMAR_DIGEST;
+    && receipt.grammarSha256 === LOCAL_AI_EVAL_GRAMMAR_DIGEST
+    && receipt.inputContractSha256 === LOCAL_AI_EVAL_INPUT_CONTRACT_DIGEST;
 }
 
 /** No single machine or aggregate score can unlock local AI by itself. */
@@ -259,6 +275,7 @@ export function assessLocalAiRelease(receipts: readonly LocalAiEvalReceipt[]): L
   if (valid.length !== receipts.length) reasons.push("RECEIPT_DIGEST_OR_ARTIFACT_MISMATCH");
   if (new Set(valid.map((receipt) => receipt.promptSha256)).size > 1) reasons.push("PROMPT_DIGEST_DRIFT");
   if (new Set(valid.map((receipt) => receipt.grammarSha256)).size > 1) reasons.push("GRAMMAR_DIGEST_DRIFT");
+  if (new Set(valid.map((receipt) => receipt.inputContractSha256)).size > 1) reasons.push("INPUT_CONTRACT_DIGEST_DRIFT");
   const receiptKeys = valid.map((receipt) => `${receipt.target}:${receipt.suite}`);
   if (new Set(receiptKeys).size !== receiptKeys.length) reasons.push("DUPLICATE_TARGET_SUITE_RECEIPT");
   for (const target of REQUIRED_RUNTIME_TARGETS) {

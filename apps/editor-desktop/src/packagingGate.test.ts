@@ -1,7 +1,7 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { LOCAL_AI_RELEASE_CORPUS_DIGEST } from "./ai/local/releaseCorpus";
+import { LOCAL_AI_EVAL_INPUT_CONTRACT_DIGEST, LOCAL_AI_RELEASE_CORPUS_DIGEST } from "./ai/local/releaseCorpus";
 import { LOCAL_AI_EVAL_GRAMMAR_DIGEST, LOCAL_AI_EVAL_PROMPT_DIGEST, LOCAL_AI_RELEASE_LIMITS } from "./ai/local/releaseGate";
 
 const ROOT = join(import.meta.dirname, "..");
@@ -25,6 +25,7 @@ describe("desktop cross-platform packaging gate", () => {
     expect(release.corpus.sha256).toBe(LOCAL_AI_RELEASE_CORPUS_DIGEST);
     expect(release.promptSha256).toBe(LOCAL_AI_EVAL_PROMPT_DIGEST);
     expect(release.grammarSha256).toBe(LOCAL_AI_EVAL_GRAMMAR_DIGEST);
+    expect(release.inputContractSha256).toBe(LOCAL_AI_EVAL_INPUT_CONTRACT_DIGEST);
     expect({ ...release.corpus, ...release.performance }).toMatchObject(LOCAL_AI_RELEASE_LIMITS);
   });
 });

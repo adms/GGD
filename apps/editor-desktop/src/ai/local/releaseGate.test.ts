@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { LOCAL_MODEL_MANIFEST } from "./modelManifest";
-import { LOCAL_AI_RELEASE_CORPUS, LOCAL_AI_RELEASE_CORPUS_DIGEST } from "./releaseCorpus";
+import { LOCAL_AI_EVAL_INPUT_CONTRACT_DIGEST, LOCAL_AI_RELEASE_CORPUS, LOCAL_AI_RELEASE_CORPUS_DIGEST } from "./releaseCorpus";
 import {
   LOCAL_AI_EVAL_OUTPUT_SCHEMA,
   LOCAL_AI_EVAL_GRAMMAR_DIGEST,
@@ -39,7 +39,7 @@ function run(target: LocalAiRuntimeTarget, suite: LocalAiReleaseRun["suite"]): L
   return {
     schema: "ggd-local-ai-release-run@1", suite, target,
     model: { id: LOCAL_MODEL_MANIFEST.id, sha256: LOCAL_MODEL_MANIFEST.sha256, bytes: LOCAL_MODEL_MANIFEST.expectedBytes },
-    runtime: { version: "llama.cpp-pinned", sha256: digest }, promptSha256: LOCAL_AI_EVAL_PROMPT_DIGEST, grammarSha256: LOCAL_AI_EVAL_GRAMMAR_DIGEST,
+    runtime: { version: "llama.cpp-pinned", sha256: digest }, promptSha256: LOCAL_AI_EVAL_PROMPT_DIGEST, grammarSha256: LOCAL_AI_EVAL_GRAMMAR_DIGEST, inputContractSha256: LOCAL_AI_EVAL_INPUT_CONTRACT_DIGEST,
     hardware: { os: windows ? "Windows 11" : "macOS", cpu: "test", systemMemoryBytes: 32 * GIB, gpu: windows ? "NVIDIA RTX 4060 Ti" : "Apple Silicon", gpuMemoryBytes: windows ? 16 * GIB : null, driver: windows ? "pinned" : null },
     metrics: { coldStartMs: 5_000, warmStartMs: 1_000, peakRssBytes: 13 * GIB, peakVramBytes: windows ? 13 * GIB : null, context4kPassed: true, context8kPassed: true, editor3dConcurrentPassed: true, cancellationPassed: true, oomRecoveryPassed: true, offlinePassed: true, cleanInstallPassed: true },
     outputs: suite === "quality" ? goldenOutputs() : [], createdAt: "2026-09-04T00:00:00.000Z",
@@ -65,5 +65,18 @@ describe("local AI E8 release gate", () => {
     const assessed = assessLocalAiRelease(receipts.map((entry) => entry.target === "win32-x64-cuda" ? bad : entry));
     expect(assessed.passed).toBe(false);
     expect(assessed.reasons).toContain("CRITICAL_ERROR:win32-x64-cuda");
+  });
+
+  it("rejects an unbound input contract and revalidates output collection limits", () => {
+    expect(() => createLocalAiEvalReceipt({
+      ...run("darwin-arm64-metal", "quality"),
+      inputContractSha256: "b".repeat(64),
+    })).toThrow("RELEASE_PROMPT_GRAMMAR_OR_INPUT_CONTRACT_MISMATCH");
+    const source = run("darwin-arm64-metal", "quality");
+    const outputs = [...source.outputs];
+    outputs[0] = { ...outputs[0]!, selectedTemplateIds: Array.from({ length: 9 }, (_, index) => `template.${index}`) };
+    const receipt = createLocalAiEvalReceipt({ ...source, outputs });
+    expect(receipt.criticalErrors[0]).toMatchObject({ caseId: LOCAL_AI_RELEASE_CORPUS[0]!.id });
+    expect(receipt.criticalErrors[0]!.reasons).toContain("OUTPUT_SELECTEDTEMPLATEIDS");
   });
 });

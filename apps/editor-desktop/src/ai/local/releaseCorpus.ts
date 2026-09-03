@@ -2,6 +2,13 @@ import { sha256Hex, stableStringify } from "@ggd/shared/content";
 
 export const LOCAL_AI_RELEASE_CORPUS_SCHEMA = "ggd-local-ai-release-corpus@1" as const;
 export const LOCAL_AI_RELEASE_CORPUS_VERSION = "hero-forge-2026-09-04" as const;
+export const LOCAL_AI_EVAL_INPUT_CONTRACT = Object.freeze({
+  schema: "ggd-local-ai-model-case@1",
+  fields: ["id", "category", "prompt", "context"],
+  excludedPrivateFields: ["expected", "critical"],
+  serialization: "RFC8785-JCS",
+});
+export const LOCAL_AI_EVAL_INPUT_CONTRACT_DIGEST = sha256Hex(stableStringify(LOCAL_AI_EVAL_INPUT_CONTRACT));
 
 export type LocalAiEvalCategory =
   | "identity"
