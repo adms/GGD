@@ -1,89 +1,78 @@
 /**
- * merchantTips (task #148) — the rotating shop-tips box's one sharp rule:
- * random, but NEVER the same tip twice in a row. A naïve draw repeats ~1/n of
- * the time and reads as "the box froze"; `nextTipIndex` makes an immediate
- * repeat impossible by construction. These tests pin that, plus that the
- * rotation still reaches every tip (it isn't stuck on a subset) and that the
- * content pool is well-formed.
+ * merchantTips — two sharp rules, one per era of this file.
+ * #148: random, but NEVER the same tip twice in a row (a naïve draw repeats ~1/n
+ * of the time and reads as "the box froze"). GH#971: the pool is the ONLY thing
+ * in the game that teaches the format, so it is guarded on CONTENT too — ⛔ no
+ * literal number baked into a line (第〇·四守則: turn `statTickTarget` and the
+ * merchant turns with it), every placeholder resolves, every row names where its
+ * mechanic lives, every gameplay topic actually covered.
  */
 import { describe, it, expect } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
-import { MERCHANT_TIPS, TIP_KIND_META, nextTipIndex, type MerchantTipKind } from "./merchantTips";
+import {
+  MERCHANT_TIPS, MERCHANT_TIP_TEMPLATES, MERCHANT_TIP_TOPICS, PRIORITY_TIP_COUNT,
+  TIP_KIND_META, TIP_VALUES, nextTipIndex, resolveTipText, tipPlaceholders,
+  type MerchantTipKind,
+} from "./merchantTips";
 
 /** Deterministic LCG so the rotation is reproducible under test. */
 function lcg(seed: number): () => number {
   let s = seed >>> 0;
-  return () => {
-    s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
-    return s / 2 ** 32;
-  };
+  return () => ((s = (Math.imul(s, 1664525) + 1013904223) >>> 0), s / 2 ** 32);
 }
 
 describe("merchant tips rotation (#148)", () => {
-  it("never shows the same tip twice in a row, over a long random run", () => {
+  it("never repeats immediately, and still reaches EVERY tip", () => {
     cover("intermission-tips");
     const count = MERCHANT_TIPS.length;
     const rand = lcg(12345);
+    const seen = new Set<number>();
     let cur = nextTipIndex(-1, count, rand);
-    expect(cur).toBeGreaterThanOrEqual(0);
-    expect(cur).toBeLessThan(count);
-    for (let i = 0; i < 5000; i++) {
+    for (let i = 0; i < 20000; i++) {
       const next = nextTipIndex(cur, count, rand);
       expect(next).toBeGreaterThanOrEqual(0);
       expect(next).toBeLessThan(count);
       expect(next, "an immediate repeat slipped through").not.toBe(cur);
-      cur = next;
+      seen.add((cur = next));
     }
+    expect(seen.size, "the rotation is stuck on a subset").toBe(count);
   });
 
-  it("still reaches EVERY tip — the rotation isn't stuck on a subset", () => {
+  it("opens on a PRIORITY line, and is crash-safe at the edges", () => {
     cover("intermission-tips");
-    const count = MERCHANT_TIPS.length;
-    const rand = lcg(97);
-    const seen = new Set<number>();
-    let cur = nextTipIndex(-1, count, rand);
-    seen.add(cur);
-    for (let i = 0; i < 5000; i++) {
-      cur = nextTipIndex(cur, count, rand);
-      seen.add(cur);
+    // ⭐ GH#971: a player sees ~5 lines an intermission out of a 30+ pool, so the
+    // FIRST one is drawn from the survival-critical head — never uniformly.
+    for (const r of [0, 0.25, 0.5, 0.9, 0.999999]) {
+      const first = nextTipIndex(-1, MERCHANT_TIPS.length, () => r);
+      expect(first).toBeLessThan(PRIORITY_TIP_COUNT);
+      expect(MERCHANT_TIPS[first]!.kind).toBe("rule");
     }
-    expect(seen.size).toBe(count);
-  });
-
-  it("advances every step (the index always changes) for count > 1", () => {
-    cover("intermission-tips");
-    // sweep the whole rand range so we hit every branch of the skip-over
-    for (const r of [0, 0.1, 0.25, 0.5, 0.75, 0.9, 0.999999]) {
-      for (let cur = 0; cur < MERCHANT_TIPS.length; cur++) {
-        const next = nextTipIndex(cur, MERCHANT_TIPS.length, () => r);
-        expect(next).not.toBe(cur);
-        expect(next).toBeGreaterThanOrEqual(0);
-        expect(next).toBeLessThan(MERCHANT_TIPS.length);
-      }
-    }
-  });
-
-  it("picks any tip from a fresh start, and is crash-safe at the edges", () => {
-    cover("intermission-tips");
-    const count = MERCHANT_TIPS.length;
-    // a fresh start (current < 0) can land on index 0 as well as the last one
-    expect(nextTipIndex(-1, count, () => 0)).toBe(0);
-    expect(nextTipIndex(-1, count, () => 0.999999)).toBe(count - 1);
-    // degenerate pools never throw and never index out of range
     expect(nextTipIndex(0, 1, () => 0.5)).toBe(0);
     expect(nextTipIndex(-1, 0, () => 0.5)).toBe(0);
   });
+});
 
-  it("ships a well-formed, varied pool of rules / tips / build advice", () => {
+describe("merchant tips content (GH#971)", () => {
+  it("bakes no literal number, resolves every placeholder, cites a source, covers every topic", () => {
     cover("intermission-tips");
-    expect(MERCHANT_TIPS.length).toBeGreaterThanOrEqual(8);
-    const kinds = new Set<MerchantTipKind>();
-    for (const t of MERCHANT_TIPS) {
+    for (const t of MERCHANT_TIP_TEMPLATES) {
+      expect(t.text, `字面數字必須改成 {{佔位}}：${t.text}`).not.toMatch(/[0-9]/);
+      expect(t.source.trim().length, `這一條沒有出處：${t.text}`).toBeGreaterThan(0);
       expect(TIP_KIND_META[t.kind], `unknown kind ${t.kind}`).toBeTruthy();
-      expect(t.text.trim().length, "an empty tip line").toBeGreaterThan(0);
-      kinds.add(t.kind);
+      for (const p of tipPlaceholders(t.text)) {
+        expect(TIP_VALUES[p], `佔位 {{${p}}} 解析不到值`).toBeDefined();
+      }
+      expect(resolveTipText(t.text), `這一條被丟出輪播：${t.text}`).not.toBeNull();
     }
-    // all three flavours are represented, so a new player sees rules AND builds
-    expect(kinds).toEqual(new Set<MerchantTipKind>(["rule", "tip", "build"]));
+    const topics = [...new Set(MERCHANT_TIPS.map((t) => t.topic))];
+    for (const want of MERCHANT_TIP_TOPICS) {
+      expect(topics, `沒有任何一條提示在教「${want}」`).toContain(want);
+    }
+    expect(new Set(MERCHANT_TIPS.map((t) => t.kind))).toEqual(
+      new Set<MerchantTipKind>(["rule", "tip", "build"]),
+    );
+    // ⛔ 棘輪：這個池子只能變大 —— 它是全遊戲唯一在教玩法的地方。
+    expect(MERCHANT_TIPS.length).toBe(MERCHANT_TIP_TEMPLATES.length);
+    expect(MERCHANT_TIPS.length).toBeGreaterThanOrEqual(30);
   });
 });
