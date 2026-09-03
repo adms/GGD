@@ -1,0 +1,92 @@
+{
+  "id": "acceptance-n1",
+  "schema": "ggd-acceptance-n1@1",
+  "note": "⭐⭐ **46 份驗收 · 批1「位移與衝鋒」的唯一機器住處**（GH#959）。⚠️⚠️ ⭐ 票文寫「本批的 id 清單只有一個住處（#953 定案的 #838 body）」—— ⛔ **2026-09-03 量到不成立**：`gh issue view 838` 的 body 全文 22,057 字元裡**一個 id 都沒有**（grep `hvsh`/`u00v`/`hapm`/`位移`/`衝鋒` = 0 命中），而 #953 落地的 `ggd-acceptance-eight.json` 只收了**八招**、⛔ 沒有 46 份。⇒ ⭐ 在此之前這 7 份**只住在 #959 的 body 裡**（人讀的），⛔ 沒有任何閘讀得到它。這一份補上機器讀的那一半（第〇·四守則），⛔ 而它刻意**只存名冊與判定**：每一份的**判定理由是算出來的**（`acceptanceN1.test.ts` 逐份重算），⛔ 不是抄在這裡。⇒ 修好任何一支 ⇒ 測試紅並要求改這一份 —— ⭐ 它是棘輪，⛔ 不是註解。",
+  "measuredAt": "2026-09-03",
+  "axes": [
+    "位移量真的發生（宣稱衝鋒/瞬移 ⇒ 出貨 effect 樹裡真的有 dash/blink/leap）",
+    "傷害沿線 vs 只在終點（damageLine 兄弟節點＝沿線；displacement 的 onEnd/onArrive/onLand＝終點）",
+    "位移距離與傷害線一致（dash.maxDistance / blink.distanceUnits == damageLine.length）",
+    "瞬移 vs 衝鋒的差別（⭐ blink ⛔ 不能拿來兌現「衝刺/飛奔」—— 它沒有中間位置）"
+  ],
+  "claimVocabulary": {
+    "note": "⭐ 從**剝掉台詞**的說明推導（第〇·六守則細則②：「」裡是角色對白，⛔ 不是效果）。剝法與 `tools/skill-remake/common.py::_mechanics_text` **同一條正則**（⛔ 那裡是住處，這裡是鏡像）。⚠️ 方括號是 owner 規格的**標記**（`[直線]`/`[衝刺]`），所以剝完台詞再拿掉方括號，⛔ 否則「一[直線]」讀不出「一直線」。",
+    "measuredTraps": [
+      "⭐ `godie-efur.e` 台詞逐字是「其實還可以衝刺，但老了」而它 **effects 只有 damageArea** —— ⛔ 不剝台詞就會判它宣稱衝鋒",
+      "⭐ 同一支的內文是「龍形**衝擊波**包裹全身」—— ⛔ 一個裸的 `衝擊` 正則會把**名詞**讀成衝鋒 ⇒ 判準必須是 `衝擊(?!波)`",
+      "⭐ `godie-hapm.w` 台詞逐字是「敗者只配**飛出去**擦地板」—— 全庫 126 支帶台詞的技能裡，只有這兩支的台詞含位移詞彙"
+    ]
+  },
+  "roster": [
+    {
+      "id": "godie-hjai.r",
+      "name": "04-04 神滅斬",
+      "verdict": "不通過",
+      "unmet": ["stun"],
+      "why": "⭐ 卡面逐字「造成敵方單體…傷害並**暈眩2秒**」，⛔ 而出貨 effect 是 `applyStatus statusId:\"slow40\" moveSpeedMult:0.6` —— `content/status-effects/slow40.json` 的 tags 是 `soft-cc`/`move-speed-down`，⛔ **沒有 `stun`**。⇒ 第一·五守則：卡面上一句說了不會發生的話。⚠️ 同一份 repo 裡 `burnstun` 就帶 `stun`/`hard-cc`/`move-denied`（78-04 用的就是它）⇒ ⛔ 不是「引擎做不到」。"
+    },
+    {
+      "id": "godie-edem.e",
+      "name": "45-03 千鳥",
+      "verdict": "通過",
+      "unmet": [],
+      "why": "⭐ 本批**唯一四軸全中**的一支：`dash{maxDistance:12.83}` ＋ **兄弟節點**的 `damageLine{length:12.83, aim:\"facing\", fromCaster:true, includeOrigin:true}` ⇒ 傷害走廊逐位元等於衝刺路徑（⛔ 不是終點爆炸、⛔ 也不是瞬移）。⭐ `width:12` == 2 × `resolveRadiusTier(中)=6` ⇒ 卡面的「有效半徑」與走廊寬度是同一個數字。"
+    },
+    {
+      "id": "godie-hvsh.r",
+      "name": "48-04 騎英之疆繩",
+      "verdict": "不通過",
+      "unmet": ["charge"],
+      "why": "⛔⛔ **票文未列的第二個同型衝突**（票文只點名 `godie-u00v.r`）。卡面逐字「招喚飛馬以超快的速度**衝擊前方**」，⛔ 而 effect 樹裡**零個位移 primitive** —— 只有 3 個 `spawnModelFx` ＋ `template:tpl-single-strike`（該模板 params 只有 damage/damageType/castTimeSec，⛔ 沒有位移）。⇒ ⭐ 角色**一步都不動**，而卡面說它衝過去了。"
+    },
+    {
+      "id": "godie-nbbc.w",
+      "name": "08-02 萊丁快速劍",
+      "verdict": "通過",
+      "unmet": [],
+      "why": "⭐ 本批的**正向對照**：卡面逐字「並**瞬間移動**到敵方面前」，而 effect 就是 `blink{to:\"targetUnit\", stopShortUnits:1.8}` ⇒ 宣稱與 primitive 是同一件事。⛔ 它刻意**不是** dash —— 這正是「瞬移 vs 衝鋒」那一軸要分開的兩邊。"
+    },
+    {
+      "id": "godie-u00v.r",
+      "name": "78-04 死亡噴射肘擊",
+      "verdict": "不通過",
+      "unmet": ["charge"],
+      "why": "⭐ 票文的「已知衝突」**量到成立**：卡面逐字「超快速速**飛奔**到敵人面前」，⛔ 而 runtime 是 `blink` —— 瞬移**沒有中間位置**（`sim/effects/variants/blink.ts` 檔頭逐字說它沒有 `arriveRadius`），⇒ 撞擊/沿途都無從發生。⚠️ 其餘三段**都在**（`onArrive` 的 damage ＋ `knockback{distanceTier:極大, distance:8}` ＋ `applyStatus burnstun stun:true 1s`）⇒ ⭐ 缺的只有「飛奔」那一段位移本身。"
+    },
+    {
+      "id": "godie-hapm.w",
+      "name": "52-02 蹂躪編年史",
+      "verdict": "不通過",
+      "unmet": ["alongPath"],
+      "why": "⭐ 抓取（`leap.dragToCaster:true`）與拋出（`throwDistance:7.33`）**都在**，⛔ 而「使之撞擊[前方]一[**直線**][範圍]的敵人」那一段**沒有落地**：`onLand` 走的是 `LeapSystem.detonate → enemiesInCircle(point, landRadius=4.95)` ⇒ ⭐ 傷害是**落點的一個圓**，⛔ 不是沿線碰撞。⚠️ 無敵窗那一軸**是過的**：`invulnerable 1.05s` ≤ `castTimeSec 0.833 + leap.durationSec 0.42 = 1.253s`。"
+    },
+    {
+      "id": "godie-nbbc.r",
+      "name": "08-04 阿邦快速劍X",
+      "verdict": "通過",
+      "unmet": [],
+      "why": "⭐ 兩段都對得上：A 式 `damageLine{length:10.08}` 是**沿線**，B 式 `delayed 0.5s → blink{to:\"point\", distanceUnits:10.08} → onArrive damageArea×2` 是**終點**。⭐ 位移距離 10.08 == 傷害線長度 10.08（＝ JASS j:28898 的 `550.00`，ubertip 逐字寫「距離550」）。"
+    }
+  ],
+  "calibration": {
+    "note": "⭐⭐ **量尺要驗兩個方向**（CLAUDE.md：一把只驗過單邊的尺，⛔ 不算自證過）。這四格是**出貨資料上的已知答案**，⛔ 不是自造夾具。",
+    "knownPresent": [
+      { "id": "godie-edem.e", "must": "宣稱 charge ＋ 出貨 dash ＋ 傷害落點含「沿線」" },
+      { "id": "godie-u00v.r", "must": "宣稱 stun ＋ `burnstun`（tags 含 stun）⇒ stun 這一軸**兌現得到**" }
+    ],
+    "knownAbsent": [
+      { "id": "godie-hvsh.r", "mustNot": "⛔ 量不到任何位移 primitive（3 個 spawnModelFx 與 tpl-single-strike 都不算）" },
+      { "id": "godie-efur.e", "mustNot": "⛔ 量不到 charge 宣稱 —— 台詞的「衝刺」要被剝掉、內文的「衝擊**波**」是名詞" }
+    ]
+  },
+  "correctedPremises": [
+    {
+      "claim": "共同規則 #4：五級距標籤不存在 ⇒ 判定「阻塞於 #943」（46 份缺 conditionTier）",
+      "measured": "⛔ **不成立**。#943 **已經落地**（commit `3bdb3f925`，標題逐字：「⭐ 而正解是**推導**，⛔ 不是去填 235 份檔」）。`packages/shared/src/content/conditionTiers.ts::resolveConditionTier` 缺席時從文件結構推導（無條件⇒極小、有條件而未判斷⇒中），⭐ 而它的檔頭逐字說「⛔ 不是要人去 208 份檔各填一格 —— 那會是 208 個會過期的第二住處」。⇒ ⭐ **欄位缺席是設計上的正常狀態**，照票文判「阻塞」會產生 **46 個假阻塞**。⚠️ 本批 7/7 都有 `rangeTier`，兩軸皆可解析 ⇒ **0 份阻塞**。"
+    },
+    {
+      "claim": "共同規則 #5 的必測案例：`godie-nbbc.r` 極大·**範圍** ⇒ 解析 120s（陣列寫 60）、`godie-e00r.q` 極小·範圍 ⇒ 30s（陣列寫 6）",
+      "measured": "⛔ **兩個都不成立**。兩份文件**都**帶顯式 `cooldownShape:\"單體\"`（`cooldownShapeOf` 的第 1 條：手填的永遠贏）⇒ 解析成 **60s / 6s**，⭐ 與陣列**逐位元相同**、落差 **0**。⚠️ `godie-nbbc.r` 的那一格正是 **#838 自己的 lane** 加的（commit `62b259ce9`）—— ⇒ ⭐ 規則 B 描述的是那次 commit **之前**的世界。⚠️ 全庫掃描：**342 份**帶 `cooldownTier`＋`cooldown` 的技能，解析值與作者值**落差 0 份** ⇒ ⭐ 這兩個「已知答案」今天校準不了任何東西（一個零訊號的校準點 ＝ 未校準的量尺）。"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "id": "review-tuning",
+  "schema": "config.review-tuning@1",
+  "perceptualDriftThreshold": 0.12,
+  "perceptualBaselineEnabled": false,
+  "contactSheetTopN": 20,
+  "hitlBatchSize": 40,
+  "blockShipOnPending": false,
+  "note": "⭐⭐ 資產驗收漏斗的可調參數（GH#664 Phase 2）。owner 2026-08-24 逐字：「所有關於視覺、特效、音效等非結構化資料驗收⋯把**風險高的、辨識能力差的**額外安插人類驗收，但**避免全部都給人類驗收的極端**」。⛔ 票文逐字：「pHash 閾值做成一格可調（⛔ 寫死 —— **它就是 owner 之後會調的東西**）」。⚠️ 兩邊都有代價：太緊 ⇒ 每版全量重進佇列（人審變成每版的事）；太鬆 ⇒ 真漂移漏放。⭐⭐ `perceptualBaselineEnabled` 出貨 **false** —— 參考影格那一半還沒建，開著會讓每份資產第一次比對就全部回 pending。⭐⭐ `blockShipOnPending` 出貨 **false** 是**硬規定**：⛔ 部署不可以被「人不在」卡死。"
+}

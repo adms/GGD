@@ -112,6 +112,8 @@ describe("AP 係數公式的偏離（GH#945）", () => {
       `⭐ 今天有 ${outliers.length} 個節點的公式值與手填值差**一個數量級以上**：${worst.join(" · ")}\n` +
         `⚠️ ⭐ 那多半是**級距標籤判錯**（形狀／冷卻／條件其中一維），⛔ 而不是手填值沒道理 ——\n` +
         `  兩者在這張表上長得一模一樣，而 \`docs/editor-contract/ggd-ap-coeff-before-after.md\` 就是要人分辨它們。\n` +
+        `⚠️⚠️ 那份 md 是**產生器**（\`apcoeffdiff:build\`）的產物 —— ⛔ 不要手改它，` +
+        `改**來源**（tools/ap-coeff-apply/gen.ts）再 \`bash scripts/genrun.sh apcoeffdiff:build\` 重生成。\n` +
         `⛔ 變多 ⇒ 有人加了一支標籤錯的技能；⭐ 變少 ⇒ 把上限調下來。`,
     ).toBeLessThanOrEqual(OUTLIER_CEIL);
   });

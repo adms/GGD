@@ -55,6 +55,56 @@ SSH=(ssh -A -o BatchMode=yes -o ConnectTimeout=10 "$USER_@$HOST")
 REMOTE_PATH='export PATH="$HOME/.orbstack/bin:/usr/local/bin:/opt/homebrew/bin:$PATH"; '
 r(){ "${SSH[@]}" "$REMOTE_PATH$*"; }
 
+# ⭐⭐ GH#968 —— **跑一段遠端指令，印它的尾巴，⛔ 而失敗時要真的停下來。**
+#
+# ⛔⛔ 在此之前這一族長成：
+#     r "… docker compose … build" 2>&1 | tail -4 | sed 's/^/    /'
+#
+# ⚠️⚠️ **這裡有一個我自己先寫錯過的說法，留著當反例**（2026-09-03，`docs/守則犯錯.md`）：
+#   我第一版斷言「`$?` 是 sed 的，因為這支沒有 pipefail」——⛔ **那是假的**：
+#   ⭐ 第 22 行就是 `set -uo pipefail` ⇒ 那個管道的離開碼**一直都是對的**（實測 =1）。
+#
+# ⭐ **真正的根因是：離開碼是對的，而 ⛔ 沒有任何人讀它。**
+#   · ⛔ 沒有 `set -e` ⇒ 非零不會讓腳本退出
+#   · ⛔ 那一行後面沒有 `|| die`
+#   ⇒ 於是 build 失敗只是**印了一行紅字**，然後第 3/4/5/6 段照跑 ——
+#     而它們量的是**上一版還活著的映像** ⇒ 全部綠。
+#
+# ⚠️ 兩種說法的差別**很重要**：如果根因真的是管道，那修法是加 `pipefail`；
+#   ⭐ 而真正要加的是**一個會停下來的檢查** —— 加 `pipefail` 一個字都救不了。
+#
+# 📏 2026-09-03 實際發生（v0.36.6）：edge build 回 exit 1，⛔ 而腳本繼續跑完
+#   第 4/5/6 段驗證並**全部綠** —— 因為它們量的是**上一版還活著的映像**。
+#   ⇒ ⭐ **一次沒有部署，與一次成功的部署，輸出一模一樣。**
+#
+# ⭐ 為什麼是 helper 不是逐行 `|| die`（第零守則⑨：N 個同型 = 1 個模板）：
+#   同型的呼叫點有 5 個（build · up · tunnel up · caddy up · redis 快照），
+#   ⛔ 逐行貼會漏掉第 6 個 —— 而漏掉的那一個**看起來完全正常**。
+#
+# ⚠️ ⛔ 刻意**不**開全域 `set -e`（`pipefail` 第 22 行本來就開著）：
+#   `set -e` 會讓這支腳本大量的 `cmd && ok || warn` 三元寫法在左半失敗時直接退出，
+#   而那些 `|| warn` 正是被設計來**允許失敗**的（例：憑證還沒拿到、容器還沒健康）。
+#   ⇒ ⭐ 把「要檢查」與「只是讀」分開，靠**呼叫哪一個函式**表態，⛔ 不是靠全域旗標。
+#
+# 用法：run_step "<這一段的名字>" "<遠端指令>" [尾巴行數]
+run_step(){
+  local label="$1" cmd="$2" lines="${3:-4}"
+  local log; log=$(mktemp -t ggd-deploy-step)
+  if r "$cmd" > "$log" 2>&1; then
+    tail -"$lines" "$log" | sed 's/^/    /'
+    rm -f "$log"
+    return 0
+  fi
+  local code=$?
+  # ⭐ 失敗時印**更多**行（尾巴 4 行常常只有 docker 的收尾雜訊，
+  #   而真正的 rollup / pnpm 錯誤在它上面幾行）。
+  tail -30 "$log" | sed 's/^/    /'
+  rm -f "$log"
+  die "⛔ 「$label」失敗（exit $code）—— ⛔ **不往下走**。
+   ⚠️ 後面每一段驗證量的都會是**上一版還活著的映像** ⇒ 它們會全部變綠，
+      而玩家那邊一個位元組都沒變（GH#968 的成因）。"
+}
+
 # ═══════════════ 💾 Redis 停機前快照（GH#860）—— ⭐ 每一條停機路徑都要叫它
 # owner 2026-08-28（逐字）：「Redis 要停機時也要有備份機制，**不要等待暖開機**，
 #                            因為我還有**排行榜等資料**在上面**不只快取**」
@@ -85,12 +135,22 @@ redis_snapshot_before_shutdown() {
   head_ "💾 Redis 停機前快照（排行榜 lb:* 與 M幣 wallet:* 不是快取）"
   # ⭐ 落點**位置參數與環境變數一起給** —— 2026-08-29 掉過一次 Redis，
   #   就是因為呼叫端用環境變數傳而腳本只認位置參數（docs/守則犯錯.md）。
+  # ⚠️⚠️ GH#968 —— 這裡**刻意是 warn 不是 die**（備份壞了不該擋部署），
+  #   ⛔ 而在此之前它寫成 `if r "…" 2>&1 | tail -3 | sed …; then`
+  #   ⇒ ⭐ 測到的是 **sed** 的離開碼 ⇒ **`else` 那一支永遠到不了**
+  #   ⇒ ⭐ 一次失敗的快照回報成功，而「排行榜與 M幣沒有保護」這句話**從來沒印過**。
+  #   ⚠️ 它與 build 那一段是同一個 bug，⛔ 而後果相反：那邊是硬停，這邊是**該喊沒喊**。
+  #   ⇒ 這裡 ⛔ 不能用 `run_step`（它會 die），所以逐字寫開：先落 log、再讀離開碼。
+  local snaplog; snaplog=$(mktemp -t ggd-redis-snap)
   if r "cd $REMOTE_REPO && GGD_REDIS_SNAPSHOT_DIR=\"$MINI_SNAPDIR\" \
-        bash scripts/redis-snapshot.sh \"$MINI_SNAPDIR\"" 2>&1 | tail -3 | sed 's/^/    /'; then
+        bash scripts/redis-snapshot.sh \"$MINI_SNAPDIR\"" > "$snaplog" 2>&1; then
+    tail -3 "$snaplog" | sed 's/^/    /'
     ok "Redis 已快照到 mini 的 $MINI_SNAPDIR"
   else
+    tail -12 "$snaplog" | sed 's/^/    /'
     warn "⛔ Redis 快照失敗 —— 這一次的排行榜與 M幣**沒有保護**（見 scripts/redis-snapshot.sh）"
   fi
+  rm -f "$snaplog"
 }
 
 # ═══════════════════════════════════════ check
@@ -316,8 +376,8 @@ cmd_deploy() {
   # ⭐ 版本戳由 **mini 自己**算 —— 它現在有 `.git` 了（⛔ 不必從本機傳）
   local stamp; stamp=$(r "cd $REMOTE_REPO && echo \"\$(git describe --tags --always --dirty) \$(date -u +%F)\"" 2>/dev/null)
   info "版本戳（mini 自己算的）：$stamp"
-  r "cd $REMOTE_REPO && GGD_BUILD_STAMP='$stamp' docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env build" \
-    2>&1 | tail -4 | sed 's/^/    /'
+  run_step "build（arm64）" \
+    "cd $REMOTE_REPO && GGD_BUILD_STAMP='$stamp' docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env build"
   r "cd $REMOTE_REPO && docker image inspect ggd-edge --format '{{.Architecture}}'" 2>/dev/null \
     | grep -q arm64 && ok "映像是 arm64" || warn "⛔ 映像不是 arm64?"
 
@@ -338,8 +398,8 @@ cmd_deploy() {
   #
   # ⭐ **同一顆 `$stamp`**（上面第 2 段算的那一個），⛔ 不要在這裡再跑一次
   # `git describe` —— 那會是第二個住處，而它會在兩次之間漂（第〇·四守則）。
-  r "cd $REMOTE_REPO && GGD_BUILD_STAMP='$stamp' docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env up -d" \
-    2>&1 | tail -4 | sed 's/^/    /'
+  run_step "up（起容器）" \
+    "cd $REMOTE_REPO && GGD_BUILD_STAMP='$stamp' docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env up -d"
 
   head_ "4. ⭐ 驗站真的活著（⛔ 不是「compose 沒報錯」）"
   # ⚠️ edge 是 restart:"no" —— 它可以**乾淨地退出**而 compose 一句話都不說
@@ -462,8 +522,9 @@ cmd_tunnel() {
   redis_snapshot_before_shutdown
 
   head_ "1. 起 tunnel（edge 改為零發佈埠）"
-  r "cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml \
-       -f docker/compose.tunnel.yaml --env-file docker/.env up -d --scale caddy=0" 2>&1 | tail -5 | sed 's/^/    /'
+  run_step "起 tunnel（edge 零發佈埠）" \
+    "cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml \
+       -f docker/compose.tunnel.yaml --env-file docker/.env up -d --scale caddy=0" 5
 
   head_ "2. ⭐ 驗它**真的連上 Cloudflare**（⛔ 不是「容器在跑」）"
   # ⚠️ 一個連不上的 cloudflared 會很開心地一直重試,而站是死的。
@@ -540,9 +601,10 @@ cmd_direct() {
   fi
 
   head_ "3. 起 caddy（⭐ edge 維持零發佈埠 —— caddy 走 docker 內網連它）"
-  r "cd $REMOTE_REPO && GGD_SITE_HOST='$host' docker compose \
+  run_step "起 caddy" \
+    "cd $REMOTE_REPO && GGD_SITE_HOST='$host' docker compose \
        -f docker/compose.yaml -f docker/compose.family.yaml -f docker/compose.tunnel.yaml \
-       --env-file docker/.env up -d caddy" 2>&1 | tail -4 | sed 's/^/    /'
+       --env-file docker/.env up -d caddy"
 
   head_ "4. ⭐ 憑證真的拿到了嗎（⛔ 不是「caddy 在跑」）"
   local i got=0

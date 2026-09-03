@@ -69,6 +69,7 @@ import {
 import { createHash } from "node:crypto";
 import { ImportStore } from "./importStore";
 import type { ActivePointer } from "./importStore";
+import { sha256Hex } from "@ggd/shared/content/sha256";
 import {
   IMPLEMENTED_STAGE,
   IMPORT_ERROR_SCHEMA,
@@ -357,6 +358,40 @@ export function registerImportRoutes(
     );
 
     /**
+     * ⭐⭐ GH#957 —— **積木普查**（`ggd-brick-census@1`）。
+     *
+     * owner 2026-09-01（逐字）：
+     * > 「編輯器是**堆積木**的角色，要充分了解有哪些積木；main 是**做出積木**的角色」
+     * owner 2026-09-02（逐字，追加的驗收軸）：
+     * > 「玩家要能做的出來，並且自動化機制檢查**合理性**及**推薦組合**」
+     *
+     * ⭐ 「推薦組合」的 Main 側責任就是**把積木清單交出去** ——
+     * ⛔ 而在此之前它只是 repo 裡一份 JSON：對面 `git show` 得到，
+     * ⚠️ 但**跑起來的編輯器讀不到**（那正是「資料在、⛔ 零個消費端」的形狀）。
+     *
+     * ⚠️ ⭐ 它與 `authoring-rules` 是**同一族**：兩者都是「編輯器每次開啟技能都會問」的
+     * 唯讀契約 ⇒ ⭐ 走同一個前綴、同樣不需要驗證、同樣**只讀不寫**。
+     */
+    app.get(`${prefix}/brick-census`, async (_req, reply) => {
+      // ⭐ 兩個候選：`<contentDir>/../docs/…`（出貨佈局）與 `process.cwd()`
+      //   ⚠️ 測試把 `contentDir` 指到暫存目錄 ⇒ ⛔ 只看第一個會回 404，
+      //   ⭐ 而那與「這份契約不存在」對編輯器是同一件事。
+      const candidates = [
+        join(root, "..", "docs/editor-contract/ggd-brick-census.json"),
+        join(process.cwd(), "docs/editor-contract/ggd-brick-census.json"),
+      ];
+      const p = candidates.find((c) => existsSync(c)) ?? candidates[0]!;
+      if (!existsSync(p))
+        return reply.code(404).send({
+          schema: IMPORT_ERROR_SCHEMA,
+          code: "BRICK_CENSUS_MISSING",
+          message: "⛔ 積木普查還沒產生 —— 跑 `pnpm bricks:build`。",
+          retryable: false,
+        });
+      return reply.header("content-type", "application/json").send(readFileSync(p, "utf8"));
+    });
+
+    /**
      * ⭐ 短路徑別名 —— `/content-api/authoring-rules`（⛔ 不帶 `/content-import`）。
      *
      * ⚠️ ⭐ 為什麼值得有：創作規則是**編輯器每一次開啟技能都會問**的東西，
@@ -488,6 +523,9 @@ export function registerImportRoutes(
  */
 export const IMPORTER_ENDPOINTS: readonly { method: string; path: string }[] = Object.freeze([
   { method: "POST", path: "/validate" },
+  // ⭐ GH#931 —— 後台「載入單檔 JSON」的**安全便道**：server 建 canonical
+  //   single-root delta package，⛔ 不是讓人把 raw JSON 冒充 package。
+  { method: "POST", path: "/validate-single" },
   { method: "POST", path: "/apply" },
   { method: "POST", path: "/rollback" },
   { method: "GET", path: "/active" },
@@ -497,6 +535,12 @@ export const IMPORTER_ENDPOINTS: readonly { method: string; path: string }[] = O
   { method: "GET", path: "/audit" },
   { method: "GET", path: "/health" },
   { method: "GET", path: "/capabilities" },
+  // ⭐⭐ GH#957 —— 「合理性檢查」與「推薦組合」的兩個資料源。
+  //   ⛔ 在此之前 `authoring-rules` **有 route 而不在這張表裡** ——
+  //   ⭐ 而這張表就是 target profile 交出去的那一份
+  //   ⇒ 編輯器**看不到那條路**（形態⑪：端點在，而契約沒說它在）。
+  { method: "GET", path: "/authoring-rules" },
+  { method: "GET", path: "/brick-census" },
 ]);
 
 interface G2Deps {
@@ -706,7 +750,81 @@ function registerG2Routes(
     },
   );
 
+  // ── POST /validate-single —— ⭐ **後台「載入單檔 JSON」的安全便道**（GH#931）─
+  //
+  // ⭐ 它的價值在「**安全**」，⛔ 不是「方便」：
+  //   由 **server** 用 ACTIVE snapshot 把一份 runtime document 包成
+  //   canonical single-root delta package，⛔ **而不是讓人把 raw JSON 當 package 送進來**。
+  //
+  // ⚠️⚠️ ⭐ **它不得直接寫檔**（票文逐字）—— 它與 `/validate` 走**同一支**
+  //   `validatePackage()`，而那條路一個位元組都不寫。
+  //   ⇒ ⭐ 這裡**沒有第二套驗證**（⛔ 兩份實作必然漂，那正是 `/validate` 與 `/apply`
+  //     共用 `runValidate` 的理由）。
+  //
+  // ⭐ 拒絕的三種情況（票文逐字）：外部 ref 不在 ACTIVE · hash 漂移 ·
+  //   需要另一份本機變更 ⇒ **拒絕並要求改用完整 Package**。
+  //   ⚠️ 前兩種由 `validatePackage()` 自己判（它拿得到 `base`）；
+  //   ⭐ 第三種是這裡判的：**一份 package 只准有一個 root**。
+  app.post<{ Body: { collection?: string; document?: Record<string, unknown> } }>(
+    `${prefix}/validate-single`,
+    async (req, reply) => {
+      const collection = req.body?.collection;
+      const document = req.body?.document;
+      // ⭐ 只接受**一份**已知 runtime document（票文：第一批 `ability@1` / `item@1`）。
+      const ALLOWED = ["abilities", "items"] as const;
+      if (typeof collection !== "string" || !(ALLOWED as readonly string[]).includes(collection))
+        return reply.code(422).send({
+          schema: IMPORT_ERROR_SCHEMA,
+          code: "SINGLE_COLLECTION_UNSUPPORTED",
+          message: `⭐ 這條便道目前只收 ${ALLOWED.join(" / ")}；其餘請走完整 Package。`,
+          retryable: false,
+        });
+      const id = document?.["id"];
+      if (!document || typeof id !== "string" || id === "")
+        return reply.code(422).send({
+          schema: IMPORT_ERROR_SCHEMA,
+          code: "SINGLE_DOCUMENT_INVALID",
+          message: "⛔ `document` 必須是一份帶 `id` 的物件。",
+          retryable: false,
+        });
+
+      // ⭐⭐ **server 建 package** —— ⛔ 這是這條 route 存在的全部理由。
+      const path = `authoring/${collection}/${id}.json`;
+      const body = JSON.stringify(document);
+      const base = await readBaseFacts(d.root, d.store.active());
+      const pkg = {
+        schema: "ggd-editor-package@1",
+        manifest: {
+          schema: "ggd-editor-package@1",
+          mode: "delta",
+          gameId: "ggd",
+          // ⚠️ digest 由 server 算 —— ⛔ 送進來的那一個一律不採信。
+          packageDigest: sha256Hex(body),
+          base,
+          selectionRoots: [{ collection, id }],
+          changes: [{ collection, id, op: "upsert" }],
+          requiredCapabilities: [],
+          entries: [
+            { path, role: "authoring", contentSize: Buffer.byteLength(body), collection, id },
+          ],
+          requires: [],
+        },
+        documents: [{ path, document }],
+      };
+
+      const v = await runValidate(pkg);
+      const opId = `validate-single-${sha256Hex(body).slice(-16)}`;
+      return reply.code(v.ok ? 200 : 422).send({
+        ...resultOf(opId, v.ok ? "validated" : "rejected", v),
+        // ⭐ 把 server 建的那一份交出去 —— 對面要能看到「我被包成了什麼」，
+        //   ⛔ 否則它只知道通過/沒通過，卻不知道下一步該送什麼。
+        singleRoot: { collection, id, packageDigest: pkg.manifest.packageDigest },
+      });
+    },
+  );
+
   // ── POST /apply ────────────────────────────────────────────────────────
+
   app.post<{
     Body: {
       operationId?: string;

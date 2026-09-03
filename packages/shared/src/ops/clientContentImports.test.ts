@@ -37,7 +37,13 @@ describe("客戶端跨界 import 進 content/ 的檔案（GH#437）", () => {
     // ① 原始碼真的 import 了哪幾份
     // edge 的 build stage 建三個 app，⛔ 不是只有 client —— 三個都要掃。
     const imported = new Set<string>();
-    const APPS = ["apps/client/src", "apps/admin/src", "apps/editor/src"];
+    // ⭐⭐ `packages/shared/src` 也要掃（2026-09-03）—— ⛔ 在此之前只掃三個 app，
+    //   而 rollup **會遞移跟進 shared**：GH#935 把
+    //   `import … from "../../../../../docs/editor-contract/ggd-presentation-token-manifest.json"`
+    //   放進 `packages/shared/src/content/import/descriptionTokens.ts`
+    //   ⇒ 三個 app 的原始碼裡一個字都看不到它 ⇒ 閘綠 ⇒ edge build 死在 rollup。
+    //   ⭐ 判準是「**誰會被 bundle 進 client**」，⛔ 不是「這一行寫在哪個資料夾」。
+    const APPS = ["apps/client/src", "apps/admin/src", "apps/editor/src", "packages/shared/src"];
     for (const f of APPS.flatMap((a) => sources(join(REPO, a)))) {
       const src = readFileSync(f, "utf8");
       // ⚠️ ⛔ 不可以只看字面上的 `../content/` —— client **自己**有一個
@@ -50,10 +56,21 @@ describe("客戶端跨界 import 進 content/ 的檔案（GH#437）", () => {
         //    `tools/skill-lists/lists.json`,而這條閘當時只掃 content/ ⇒ 綠著上線,
         //    死在正式 build 的 rollup(v0.26.4 部署第一次失敗的根因)。
         //    跨出 apps/**+packages/** 的靜態 import 一律要有成對的 COPY。
-        if (
-          abs.startsWith(join(REPO, "content") + "/") ||
-          abs.startsWith(join(REPO, "tools") + "/")
-        ) {
+        // ⭐⭐ **封閉世界的問法**（2026-09-03，第三次同型故障之後改的）——
+        //   ⛔ 在此之前這裡是一張**白名單**（`content/` ＋ `tools/`），
+        //   而白名單的失敗模式是**沉默**：import 進一個沒列到的目錄 ⇒ 閘看不見 ⇒
+        //   本機綠、正式 build 死在 rollup。⭐ 已經發生**三次**：
+        //     ① v1 只掃 `content/` ⇒ 漏 `tools/skill-lists/lists.json`（v0.26.4 部署失敗）
+        //     ② 2026-08-25 補上 `tools/`
+        //     ③ 2026-09-03 GH#935 import 進 `docs/editor-contract/…` ⇒ 又是隱形的，
+        //        而 edge build 從它落地起就一直在失敗、每次部署靜默出貨舊映像。
+        //   ⇒ ⭐ 改成問這一支自己的註解早就寫對的那一題：
+        //     「**跨出 `apps/**` ＋ `packages/**` 的靜態 import 一律要有成對的 COPY**」。
+        //   ⛔ 白名單要記得加，封閉世界不用 —— 第四個目錄出現時它自己就會紅。
+        const inRepo = abs.startsWith(REPO + "/");
+        const isSource =
+          abs.startsWith(join(REPO, "apps") + "/") || abs.startsWith(join(REPO, "packages") + "/");
+        if (inRepo && !isSource) {
           imported.add(abs.slice(REPO.length + 1));
         }
       }
@@ -64,8 +81,18 @@ describe("客戶端跨界 import 進 content/ 的檔案（GH#437）", () => {
     // ⚠️ 只認 vite **靜態 import 得進來**的副檔名 —— `tools/deploy/ggd-assets.sh`
     //    是 runtime 工具的 COPY,⛔ 不是建置脈絡的成對義務(第一版擴到 tools/ 時
     //    誤把它算成孤兒)。
-    for (const m of dockerfile.matchAll(/^COPY\s+((?:content|tools)\/\S+\.(?:json|ts|tsx|js|css))\s+\S+$/gm)) {
-      copied.add(m[1]!);
+    // ⭐ 這一邊也是**封閉世界**（2026-09-03）—— ⛔ 在此之前這個正則寫死
+    //   `(?:content|tools)`，於是就算有人補了 `COPY docs/…` 這一格也**看不見它**，
+    //   ⇒ 上面那半紅著、而修法明明已經落地 ⇒ 讀起來像「補了沒用」。
+    //   ⭐ 兩邊的白名單必須一起拆，⛔ 只拆一邊會得到一條永遠紅的閘。
+    for (const m of dockerfile.matchAll(/^COPY\s+([\w.-]+\/\S+\.(?:json|ts|tsx|js|css))\s+\S+$/gm)) {
+      // ⭐ 與 import 那一側**同一條線**：`apps/**` 與 `packages/**` 是原始碼，
+      //   它們的 `package.json` 是 pnpm 安裝的鷹架（Dockerfile 55-59 行），
+      //   ⛔ 不是「跨界 import 的成對義務」⇒ 這條規則不管它們。
+      //   ⚠️ 少了這一格，反方向會把那 4 行鷹架讀成「多餘的 COPY」。
+      const p = m[1]!;
+      if (p.startsWith("apps/") || p.startsWith("packages/")) continue;
+      copied.add(p);
     }
 
     const missing = [...imported].filter((p) => !copied.has(p));

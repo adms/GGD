@@ -58,6 +58,7 @@ import { GlyphTile } from "../components/GlyphTile";
 import { Tooltip } from "../components/Tooltip";
 import { SfxButton } from "../SfxButton";
 import { resolveChoice } from "./resolveChoice";
+import { uiCues } from "../uiCuesConfig";
 import { DRAFT_CONFIRM_SFX, tierColor, tierLabel, weaponEffectDescription } from "./draftCardStyle";
 // owner 2026-08-02 的卡片排版,四個渲染點之一(三選一抽卡)。
 import { ItemCardBody } from "../components/ItemCardBody";
@@ -124,6 +125,50 @@ export const DRAFT_COMPOSITING = {
   /** 三張卡各自一層（⛔ 回頭：`false`） */
   cardOwnLayer: true,
 } as const;
+
+/**
+ * ⭐⭐ **本場已選**（GH#893）—— owner 2026-09-01 逐字：
+ * > 「固有能力三選一**看不到過去選了哪些**」
+ *
+ * ⚠️ ⭐ 它讀的是**伺服器狀態**（`SeatView.augments` ← `SeatState.augments`），
+ * ⛔ 不是客戶端自己記的 —— 客戶端記的那一份**重連之後就消失**
+ * （失敗形態②：算出來但從沒送到客戶端），⭐ 而重連正是最需要它的時候。
+ *
+ * ⭐ 只印名字，⛔ 不印圖示與說明：這一條掛在三選一面板下面，
+ * 而一排卡片會把玩家的注意力從「現在要選哪一張」上帶走。
+ */
+function PickedSoFar(): React.JSX.Element | null {
+  // ⚠️⚠️ ⭐ **回字串，⛔ 不是陣列** —— GH#618 的閘（`augmentDraftNoReconcile`）
+  //   量到：`seats` 的快取鍵含 `cooldowns`/`mana`，⭐ 所以每一張快照都是新物件
+  //   ⇒ 一個回 `T[]` 的選擇器**每 tick 都「變了」** ⇒ 這棵子樹每張快照重跑 React。
+  //   ⚠️ 而它**零個 DOM mutation** —— 兩種實作在螢幕上逐位元相同，
+  //   差的只有主執行緒（失敗形態④），⛔ 所以肉眼看不出來，只有那條閘會叫。
+  // ⇒ ⭐ join 成一個字串：內容沒變 ⇒ 字串相等 ⇒ zustand 不重跑。
+  const pickedKey = useHud((s) => {
+    if (s.localSeatId === null) return "";
+    return (s.seats.find((v) => v.seatId === s.localSeatId)?.augments ?? []).join("\u0000");
+  });
+  const picked = pickedKey === "" ? null : pickedKey.split("\u0000");
+  if (!uiCues().draftShowPicked) return null;
+  if (!picked || picked.length === 0) return null;
+  return (
+    <div
+      style={{
+        marginTop: 10,
+        fontSize: 11,
+        color: "#8b94a8",
+        textAlign: "center",
+        maxWidth: 640,
+        lineHeight: 1.6,
+      }}
+    >
+      本場已選（{picked.length}）：
+      <span style={{ color: "#c8d0e0" }}>
+        {picked.map((id) => resolveChoice(id).name || id).join("、")}
+      </span>
+    </div>
+  );
+}
 
 export function AugmentDraftPanel(): React.JSX.Element | null {
   const offers = useHud((s) => {
@@ -374,6 +419,8 @@ export function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
           );
         })}
       </div>
+      {/* ⭐ GH#893 —— 本場已選（讀伺服器狀態，⛔ 不是客戶端自己記的）。 */}
+      <PickedSoFar />
     </div>
   );
 }

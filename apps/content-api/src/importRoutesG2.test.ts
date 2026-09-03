@@ -26,7 +26,7 @@ import { deflateRawSync } from "node:zlib";
 import { contentSha256 } from "@ggd/shared/content/import/jcs";
 import { packageDigest } from "@ggd/shared/content/import/digest";
 import { buildAuthoringProcessor } from "@ggd/shared/content/import/authoringProcessor";
-import { registerImportRoutes } from "./importRoutes";
+import { registerImportRoutes, IMPORTER_ENDPOINTS } from "./importRoutes";
 
 const REPO = join(__dirname, "../../..");
 const FP = buildAuthoringProcessor(REPO).fingerprint;
@@ -711,5 +711,111 @@ describe("G2 可達性", () => {
       implementedStage: string;
     };
     expect(two.implementedStage, "⛔ 一次失敗的 rollback 把 stage 打回 G1").toBe("G2");
+  });
+});
+
+/**
+ * ⭐⭐ **`POST /validate-single`** —— 後台「載入單檔 JSON」的**安全便道**（GH#931）。
+ *
+ * ⭐ 它的價值在「**安全**」，⛔ 不是「方便」：由 **server** 用 ACTIVE snapshot
+ * 把一份 runtime document 包成 canonical single-root delta package，
+ * ⛔ **而不是讓人把 raw JSON 當 package 送進來**。
+ *
+ * ⚠️ ⭐ 而它與 `/validate` 走**同一支** `validatePackage()` ——
+ * ⛔ 這裡沒有第二套驗證（兩份實作必然漂）。
+ */
+describe("POST /validate-single（GH#931）", () => {
+  it("★★ ⭐ 收下一份 runtime document，**server 自己包**成 single-root package", async () => {
+    const r = await post(`${P}/validate-single`, {
+      collection: "abilities",
+      document: { id: "probe-single", schema: "ability@1", name: "探針", slot: "Q" },
+    });
+    // ⭐ 200 或 422 都可以（內容本身可能不完整）——⭐ 這一條問的是「**它有沒有把 package 建出來**」。
+    const body = r.json() as { singleRoot?: { collection: string; id: string; packageDigest: string } };
+    expect(
+      body.singleRoot,
+      "⛔⛔ 沒有回 `singleRoot` ⇒ 對面只知道通過/沒通過，⭐ 卻不知道**它被包成了什麼**",
+    ).toBeTruthy();
+    expect(body.singleRoot!.collection).toBe("abilities");
+    expect(body.singleRoot!.id).toBe("probe-single");
+    expect(
+      body.singleRoot!.packageDigest.length,
+      "⛔ digest 是空的 —— 那代表 server 沒有真的算它",
+    ).toBeGreaterThan(16);
+  });
+
+  it("★★ ⭐⭐ **一個位元組都不寫**（⛔ 票文逐字：它不得直接寫檔）", async () => {
+    const before = treeOf(importDir);
+    await post(`${P}/validate-single`, {
+      collection: "abilities",
+      document: { id: "probe-nowrite", schema: "ability@1", name: "探針", slot: "Q" },
+    });
+    expect(
+      treeOf(importDir),
+      "⛔⛔ 這條 route 落地了東西 —— ⭐ 它是**驗證**便道，⛔ 不是 apply",
+    ).toEqual(before);
+  });
+
+  it("★★ ⭐ 不認得的 collection ⇒ **拒絕並說要走完整 Package**", async () => {
+    const r = await post(`${P}/validate-single`, {
+      collection: "champions",
+      document: { id: "x", schema: "champion@1" },
+    });
+    expect(r.statusCode, "⛔ 不支援的 collection 竟然收下了").toBe(422);
+    expect((r.json() as { code?: string }).code).toBe("SINGLE_COLLECTION_UNSUPPORTED");
+  });
+
+  it("⭐ 反方向：缺 `id` 的 document ⇒ 拒絕（⛔ 不可以靜靜當成空包）", async () => {
+    const r = await post(`${P}/validate-single`, { collection: "items", document: { schema: "item@1" } });
+    expect(r.statusCode).toBe(422);
+    expect((r.json() as { code?: string }).code).toBe("SINGLE_DOCUMENT_INVALID");
+  });
+});
+
+/**
+ * ⭐⭐ **「合理性檢查」與「推薦組合」的兩個資料源交得出去**（GH#957）。
+ *
+ * owner 2026-09-02（逐字，追加的驗收軸）：
+ * > 「玩家要能做的出來，並且自動化機制檢查**合理性**及**推薦組合**」
+ *
+ * ⭐ 照 owner 的角色分工（「Main 只提供⋯**限制 resolver** 與**機器契約**」），
+ * Main 側的責任就是**把那兩份交出去** ——
+ * ⛔ 而在此之前 `brick-census` **完全沒有端點**（對面 `git show` 得到，
+ * ⚠️ 但**跑起來的編輯器讀不到**），
+ * ⛔ 而 `authoring-rules` **有 route 卻不在 `IMPORTER_ENDPOINTS` 裡**
+ * ⇒ ⭐ 那張表就是 target profile 交出去的那一份 ⇒ **編輯器看不到那條路**
+ * （形態⑪：端點在，而契約沒說它在）。
+ */
+describe("編輯器的兩個唯讀契約（GH#957）", () => {
+  it("★★ ⭐ `GET /authoring-rules` —— 合理性檢查的**權威**（⛔ 不是抄一份到編輯器）", async () => {
+    const r = await get(`${P}/authoring-rules`);
+    expect(r.statusCode, "⛔ 合理性規則拿不到 ⇒ 編輯器只能自己抄一份（＝第二個住處）").toBe(200);
+    const body = r.json() as Record<string, unknown>;
+    expect(
+      Object.keys(body).length,
+      "⛔ 回了一個空物件 —— 那與「端點不存在」對編輯器是同一件事",
+    ).toBeGreaterThan(0);
+  });
+
+  it("★★ ⭐ `GET /brick-census` —— 推薦組合要用的**積木清單**", async () => {
+    const r = await get(`${P}/brick-census`);
+    expect(
+      r.statusCode,
+      "⛔⛔ 積木清單拿不到 ⇒ ⭐ owner 逐字：「編輯器是**堆積木**的角色，\n" +
+        "  要充分了解**有哪些積木**」—— 而它讀不到那份清單。",
+    ).toBe(200);
+    const body = r.json() as { counts?: Record<string, number> };
+    expect(body.counts, "⛔ 沒有 `counts` ⇒ 那不是積木普查").toBeTruthy();
+  });
+
+  it("★★ ⭐⭐ 兩條都**在端點表裡**（⛔ 有 route 而契約沒說 = 對面看不到）", () => {
+    const paths = new Set(IMPORTER_ENDPOINTS.map((e) => `${e.method} ${e.path}`));
+    for (const p of ["GET /authoring-rules", "GET /brick-census"])
+      expect(
+        paths.has(p),
+        `⛔⛔ \`${p}\` 沒有掛進 \`IMPORTER_ENDPOINTS\` ⇒\n` +
+          "  ⭐ 那張表是 **target profile 交出去的那一份** ——\n" +
+          "  ⛔ route 活著而契約沒說它在，對面就**找不到它**。",
+      ).toBe(true);
   });
 });

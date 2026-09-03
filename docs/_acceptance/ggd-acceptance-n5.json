@@ -1,0 +1,141 @@
+{
+  "id": "acceptance-n5",
+  "schema": "ggd-acceptance-n5@1",
+  "batch": "N5 生成與隨機",
+  "ticket": 963,
+  "decidedBy": "owner 2026-09-02（42 主題／46 份 JSON 驗收清單）",
+  "note": "⭐⭐ **批5「生成與隨機」5 份的機器讀住處**（GH#963）。⚠️⚠️ ⭐ **前提更正**：票文寫「本批的 id 清單只有一個住處（#953 定案的 #838 body）」——⛔ 2026-09-03 實查：**#838 的 body 裡沒有那 46 份清單**（#953 那條 lane 逐字說「⛔ 不碰 #838」，只落了八招的 `ggd-acceptance-eight.json`）。⇒ 今天這 5 個 id 的住處是 ① GH#963 的 body ② `docs/_daily/ledger-source_temp_20260903.md`（owner 原話，⛔ **未進 git**）—— ⛔ 兩者都不是閘讀得到的追蹤檔。⇒ ⭐ 本輪照事實做：開這一份 **batch-scoped 的機器住處**，⛔ 而它不是一份會漂的抄本 —— `acceptanceN5.test.ts` 讓它**對著出貨內容自我驗證**（宣告的軸⇒圖上真的有、圖上有的軸⇒必須宣告；五級距⇒每一格都解析得出答案且⛔ 沒有「超大」；宣告的衝突⇒今天還量得到、量得到的衝突⇒必須宣告）。⚠️ ⭐ **這一份與 `ggd-acceptance-eight.json` 刻意不相交**：那一份是**八招**（JASS 1:1 演出），這一份是 **46 份裡的第 5 批**（做不做得出來）。 ⚠️⚠️ ⭐ **2026-09-03 第二次更正（GH#959 lane 查出、本 lane 獨立複驗出貨原始碼）**：票文的共同規則 A「`conditionTier` 標籤缺席 ⇒ 阻塞於 #943」**今天不成立** —— #943 已落地（commit `3bdb3f925`，標題逐字「正解是**推導**，⛔ 不是去填 235 份檔」），`packages/shared/src/content/conditionTiers.ts::resolveConditionTier` 逐字「缺席 ⇒ 推導；填了 ⇒ 照填的」⇒ ⭐ **欄位缺席是正常狀態**，⛔ 不是缺口。本批 5 份實測每一個 scaling 節點都解析得出一格（全部「極小」＝恆真）。⇒ 判定改成 4 通過 ＋ 1 不通過，⛔ 而「阻塞於 #943」這句過期散文從這份機器契約裡清掉（第三守則：⛔ 一句過期的散文住進契約之後，沒有東西會紅）。",
+  "ownerSource": {
+    "path": "docs/_daily/ledger-source_temp_20260903.md",
+    "tracked": false,
+    "why": "⭐ owner 的 46 份清單原話今天只住在一份**未追蹤**的 `_temp_` 帳本裡（`temp-sweep.sh` 7 天後會把它搬進 legacy）⇒ ⛔ 閘不可以硬依賴它。守衛在「檔案在就逐字比對、檔案不在就要求本欄老實標 `tracked:false`」兩邊各有一條斷言，⛔ 沒有靜默跳過的那條路。"
+  },
+  "axisVocabulary": {
+    "random-scatter": "隨機落點各自判定（`randomArea`）—— ⛔ 不可以全部疊在中心",
+    "summon-cleanup": "召喚物到期與死亡清理（`summon` + 有限 `durationSec`）",
+    "weighted-single": "權重分支只命中一個（`weightedBranch`，⭐ 一次施放只花 **1** 次 rng draw）",
+    "conditional-weight-groups": "條件式權重分開（多組帶 `condition` 的 `weightedBranch`，⭐ 每次施放只有一組成立）"
+  },
+  "verdictVocabulary": {
+    "pass": "⭐ **有範圍的通過** —— Main 這一側量得到的軸（機制 · 五級距解析 · 決定性 · 實際生效值）全過；⛔ 每一列的 `notVerifiedHere` 逐條寫下它量不到什麼",
+    "fail": "⛔ 不通過（量到與 owner 規格打架，⭐ 而 owner 規格是階梯第 1 層）"
+  },
+  "rows": [
+    {
+      "id": "godie-etyr.r",
+      "name": "14-04 聖夜降臨",
+      "championId": "godie-etyr",
+      "slot": "R",
+      "acceptanceType": "召喚代理",
+      "ownerPoint": "召喚1個式神維持8秒，召喚瞬間另有範圍傷害；召喚物死亡與到期清理正確。",
+      "axes": [
+        "summon-cleanup"
+      ],
+      "verdict": "pass",
+      "verdictWhy": "⭐ 機制三項全部量到：模板 `tpl-summon-agent` 展開成 `summon` 而**施法瞬間的 `damageArea` 也還活著**（⛔ 模板沒有吃掉它）· 到期清理 **1 → 0** · 主人死亡清理 **→ 0**。⭐ 五級距（manaCost/range/cooldown）都解析得出一格，`conditionTier` 由 `resolveConditionTier` 推導成「極小」（恆真），⛔ 沒有「超大」。",
+      "conflicts": [],
+      "notVerifiedHere": [
+        "共同規則 #1 從空白畫布重建（⭐ 編輯器側，GH#838）",
+        "共同規則 #2 存檔／關閉重開／單檔與 ZIP 匯出（⭐ 編輯器側）",
+        "共同規則 #6/#8/#9 施展動作與傷害點對齊 · 月牙堆疊（⭐ 語意判斷 ⇒ GH#664 Tier 2）",
+        "共同規則 #10/#11 貼圖×blendMode 未去背方板 · VFX Script 取代規則（⭐ 資產側）",
+        "共同規則 #14 的『連續擷圖』（⭐ 批核頁；⛔ Main 這一側只交得出 JSON receipt）"
+      ]
+    },
+    {
+      "id": "godie-ogld.ex",
+      "name": "72-002 億萬衛星殞落",
+      "championId": "godie-ogld",
+      "slot": "EX",
+      "acceptanceType": "亂數彈幕",
+      "ownerPoint": "持續30秒、每秒一次隨機落點，共30次；每顆各自做範圍判定，不能全部疊在中心。",
+      "axes": [
+        "random-scatter"
+      ],
+      "verdict": "pass",
+      "verdictWhy": "⭐ 量到 30 顆落在 **30 個不同 tick**（34/64/94… ＝每 30 tick ＝ 1 秒）、**30 個各自不同的座標**、全部在 `scatterRadius 12` 內、**沒有一顆落在圓心** —— ⭐ 那正是 owner 逐字點名的失敗形態沒有發生。五級距解析得出答案，⛔ 沒有「超大」。",
+      "conflicts": [],
+      "notVerifiedHere": [
+        "共同規則 #1 從空白畫布重建（⭐ 編輯器側，GH#838）",
+        "共同規則 #2 存檔／關閉重開／單檔與 ZIP 匯出（⭐ 編輯器側）",
+        "共同規則 #6/#8/#9 施展動作與傷害點對齊 · 月牙堆疊（⭐ 語意判斷 ⇒ GH#664 Tier 2）",
+        "共同規則 #10/#11 貼圖×blendMode 未去背方板 · VFX Script 取代規則（⭐ 資產側）",
+        "共同規則 #14 的『連續擷圖』（⭐ 批核頁；⛔ Main 這一側只交得出 JSON receipt）"
+      ]
+    },
+    {
+      "id": "godie-n00b.passive",
+      "name": "57-00 四次元口袋",
+      "championId": "godie-n00b",
+      "slot": "PASSIVE",
+      "acceptanceType": "權重分支／金錢／回復／嘲諷",
+      "ownerPoint": "55/30/15權重只能抽中一個結果；金錢、回復、限時增益分支正確；之後再嘲諷附近敵人。",
+      "axes": [
+        "weighted-single"
+      ],
+      "verdict": "pass",
+      "verdictWhy": "⭐ 量到一次施放**只花 1 次 rng draw**（`weightedBranch` 的決定性預算）、每次只中一個結果、`taunt` 排在 `weightedBranch` **之後**。⚠️ 共同規則 #7（被動不得播假的主動施法動作）**不適用**：這一支 `innateKind:\"active\"`（⭐ 玩家真的按得到的天生技），⛔ 不是被動觸發。",
+      "conflicts": [],
+      "notVerifiedHere": [
+        "共同規則 #1 從空白畫布重建（⭐ 編輯器側，GH#838）",
+        "共同規則 #2 存檔／關閉重開／單檔與 ZIP 匯出（⭐ 編輯器側）",
+        "共同規則 #6/#8/#9 施展動作與傷害點對齊 · 月牙堆疊（⭐ 語意判斷 ⇒ GH#664 Tier 2）",
+        "共同規則 #10/#11 貼圖×blendMode 未去背方板 · VFX Script 取代規則（⭐ 資產側）",
+        "共同規則 #14 的『連續擷圖』（⭐ 批核頁；⛔ Main 這一側只交得出 JSON receipt）"
+      ]
+    },
+    {
+      "id": "godie-e00s.r",
+      "name": "70-04 千年練成",
+      "championId": "godie-e00s",
+      "slot": "R",
+      "acceptanceType": "隨機生成／召喚／條件加倍",
+      "ownerPoint": "隨機生成4/6/8棵樹精；每棵出生時各造成範圍傷害；施法者被定身時傷害加倍；召喚物8秒清除。",
+      "axes": [
+        "random-scatter",
+        "summon-cleanup"
+      ],
+      "verdict": "fail",
+      "verdictWhy": "⛔ **不通過**：加倍的那一份傷害掛的是 `victimCondition{subject:\"target\", tag:\"root\"}` ⇒ ⭐ 引擎逐一過濾的是**受害者**有沒有被定身，⛔ 而 owner 的驗收要點逐字是「**施法者**被定身時傷害加倍」。⇒ 階梯第 1 層（owner 規格）與第 2 層（編輯器 JSON）打架 ⇒ ⛔ 靜默通過就是卡面在說謊（第一·五守則）。⭐ 其餘三項量到都成立（4/6/8 棵、每棵各自一個 tick 各自一具召喚、8 秒清除）。",
+      "conflicts": [
+        {
+          "id": "e00s-root-subject",
+          "signature": "godie-e00s.r|victimCondition|status|target",
+          "what": "傷害加倍的條件主體是**受害者**（`victimCondition.subject:\"target\"`），⛔ 而 owner 說的是**施法者**",
+          "ownerSays": "施法者被定身時傷害加倍",
+          "engineDoes": "`damageArea.victimCondition{kind:\"status\", subject:\"target\", tag:\"root\"}` —— `effects/victimFilter.ts::selectVictims` 逐一過濾圈內每一個**受害者**",
+          "expressibleToday": "⭐ 是（`zConditionSubject` 收得下 `\"self\"`）⇒ ⛔ 這不是缺積木，是**內容側的一格**：把它改成效果層的 `condition{kind:\"status\", subject:\"self\", tag:\"root\"}`。⛔ 本票不改內容（Scope 逐字「只讀」）。"
+        }
+      ],
+      "notVerifiedHere": [
+        "共同規則 #1 從空白畫布重建（⭐ 編輯器側，GH#838）",
+        "共同規則 #2 存檔／關閉重開／單檔與 ZIP 匯出（⭐ 編輯器側）",
+        "共同規則 #6/#8/#9 施展動作與傷害點對齊 · 月牙堆疊（⭐ 語意判斷 ⇒ GH#664 Tier 2）",
+        "共同規則 #10/#11 貼圖×blendMode 未去背方板 · VFX Script 取代規則（⭐ 資產側）",
+        "共同規則 #14 的『連續擷圖』（⭐ 批核頁；⛔ Main 這一側只交得出 JSON receipt）"
+      ]
+    },
+    {
+      "id": "godie-h02k.ex",
+      "name": "89-002 俄羅斯輪盤",
+      "championId": "godie-h02k",
+      "slot": "EX",
+      "acceptanceType": "條件式權重分支",
+      "ownerPoint": "一般、致盲、混亂三套權重分開；目標死亡、自身死亡、恐懼只能命中一個分支；即死只對英雄成立。",
+      "axes": [
+        "weighted-single",
+        "conditional-weight-groups"
+      ],
+      "verdict": "pass",
+      "verdictWhy": "⭐ 三項全部量到：三組的 `condition` **互斥且窮盡**（一般／致盲／混亂各一組），三種目標狀態下一次施放**都只花 1 次 rng draw**（⛔ 兩組同時成立就會是 2 次 ⇒ 錄影位移），即死那一格帶 `condition{kind:\"kind\", subject:\"target\", is:\"champion\"}`。⭐ 隔離量到三種結果各自出現：`none:fear` · `blind:self-execute` · `confusion:target-execute`。",
+      "conflicts": [],
+      "notVerifiedHere": [
+        "共同規則 #1 從空白畫布重建（⭐ 編輯器側，GH#838）",
+        "共同規則 #2 存檔／關閉重開／單檔與 ZIP 匯出（⭐ 編輯器側）",
+        "共同規則 #6/#8/#9 施展動作與傷害點對齊 · 月牙堆疊（⭐ 語意判斷 ⇒ GH#664 Tier 2）",
+        "共同規則 #10/#11 貼圖×blendMode 未去背方板 · VFX Script 取代規則（⭐ 資產側）",
+        "共同規則 #14 的『連續擷圖』（⭐ 批核頁；⛔ Main 這一側只交得出 JSON receipt）"
+      ]
+    }
+  ]
+}

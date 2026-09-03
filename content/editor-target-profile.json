@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_6db816814496",
+    "contentVersion": "cv_0dfe98b4a3f9",
     "collections": {
       "champions": {
         "hash": "e493553f740c",
@@ -42,8 +42,8 @@
         "count": 7
       },
       "config": {
-        "hash": "08adbdec4eda",
-        "count": 98
+        "hash": "38edf7972bd9",
+        "count": 99
       },
       "models": {
         "hash": "657ea888006b",
@@ -93,7 +93,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "18d7999e",
+    "fingerprint": "f40f16e4",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -320,6 +320,7 @@
       "fixedRank",
       "flat",
       "flight",
+      "forceClip",
       "forcedTarget",
       "formation",
       "from",
@@ -340,6 +341,7 @@
       "includeNeutrals",
       "includeOrigin",
       "incomingPct",
+      "intervalJitter",
       "intervalSec",
       "jumpIntervalSec",
       "jumpRange",
@@ -409,6 +411,7 @@
       "perMana",
       "perRank",
       "perStrike",
+      "perStrikeSoundKey",
       "perTargetLevel",
       "permanent",
       "permanentScope",
@@ -483,6 +486,7 @@
       "uncontrollable",
       "untargetable",
       "until",
+      "velocityAngle",
       "vfxId",
       "victim",
       "victimCondition",
@@ -676,6 +680,7 @@
       "flight.ignoreObstacles",
       "flight.ignoreUnits",
       "flight.stayInsideBoundary",
+      "forceClip",
       "forcedTarget",
       "formation",
       "from",
@@ -704,6 +709,7 @@
       "incomingPct.negateOriginal",
       "incomingPct.perRank",
       "incomingPct.whenTooLate",
+      "intervalJitter",
       "intervalSec",
       "jumpIntervalSec",
       "jumpRange",
@@ -799,6 +805,7 @@
       "perRank.modifiers.stat",
       "perRank.modifiers.value",
       "perStrike",
+      "perStrikeSoundKey",
       "perTargetLevel",
       "permanent",
       "permanentScope",
@@ -908,6 +915,7 @@
       "untargetable.manualTarget",
       "untargetable.mobAggro",
       "until",
+      "velocityAngle",
       "vfxId",
       "victim",
       "victimCondition",
@@ -982,6 +990,7 @@
         "lifetimeSec",
         "mode",
         "orient",
+        "presentation",
         "rate",
         "schema",
         "size",
@@ -1168,13 +1177,15 @@
         "vfxKey"
       ],
       "status-effect@1": [
+        "alpha",
         "description",
         "iconKey",
         "id",
         "name",
         "polarity",
         "schema",
-        "tags"
+        "tags",
+        "tint"
       ],
       "item@1": [
         "attributes",
@@ -4758,12 +4769,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "18d7999e",
+    "engineFingerprint": "f40f16e4",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 18d7999e —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 f40f16e4 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -5671,7 +5682,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "7b71b745b1d9",
+  "migrationFingerprint": "c694c1a8a4b7",
   "supportedModes": [
     "bootstrap"
   ],
@@ -5681,5 +5692,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "5d8851d4248e"
+  "profileDigest": "dbe6f86112d2"
 }

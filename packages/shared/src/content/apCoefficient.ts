@@ -46,6 +46,15 @@ export const DEFAULT_AP_COEFFICIENT: ApCoefficientConfig = Object.freeze({
   range: Object.freeze({ reference: 6.0, exponent: 0.35, selfCenteredAs: 3.0 }),
   shape: Object.freeze({ single: 2.5, line: 1.5, area: Object.freeze({ reference: 3.0, exponent: 0.5 }) }),
   condition: Object.freeze({ 極小: 1.0, 小: 1.3, 中: 1.6, 大: 2.2, 極大: 3.0 }),
+  // ⭐⭐ 觸發頻率的三把尺（GH#939）—— owner 2026-09-02 **逐字核准的 15 個數字**：
+  //   「我贊同你的新三類五級距（普攻 0.10/0.16/0.33/0.70/1.00 ·
+  //    技能 0.30/0.50/0.60/0.80/1.00 · 特殊條件 0.50/0.60/1.20/3.00/7.00）」
+  // ⛔ 沒有一格是我挑的（第一守則：出貨數值要引用得到他的原話）。
+  frequency: Object.freeze({
+    basicAttack: Object.freeze({ 極小: 0.1, 小: 0.16, 中: 0.33, 大: 0.7, 極大: 1.0 }),
+    abilityCast: Object.freeze({ 極小: 0.3, 小: 0.5, 中: 0.6, 大: 0.8, 極大: 1.0 }),
+    specialCondition: Object.freeze({ 極小: 0.5, 小: 0.6, 中: 1.2, 大: 3.0, 極大: 7.0 }),
+  }),
   baseTierCompensation: Object.freeze({
     enabled: true,
     byDamageTier: Object.freeze({ 極小: 1.6, 小: 1.3, 中: 1.0, 大: 0.8, 極大: 0.6 }),
@@ -186,4 +195,59 @@ export function resolveApCoeffOnDoc<T extends Record<string, unknown>>(
   const clone = JSON.parse(JSON.stringify(def)) as T;
   walk(clone["effects"]);
   return touched ? clone : def;
+}
+
+/**
+ * ⭐⭐ **這一支技能的觸發頻率屬於哪一類**（GH#939）。
+ *
+ * owner 2026-09-02（逐字）：
+ * > 「AP 加成有比較多條件變因⋯**頻率[每次攻擊/技能施展/技能標籤變身反彈等特殊條件]**
+ * >  ⋯請你提建議而非**一把尺抓平**」
+ *
+ * ⭐ **判準是推導的，⛔ 不是逐支標記**（第〇·四守則）：
+ * · 掛在 `onBasicAttack` 上 ⇒ `basicAttack`（每秒都在觸發）
+ * · 帶 `when` / hook `condition` / 變身 / 反彈 ⇒ `specialCondition`（玩家控制不了的前提）
+ * · 其餘 ⇒ `abilityCast`（基準：一次施放要付冷卻與耗魔）
+ *
+ * ⚠️ ⭐ **順序是承重的**：一個「掛普攻**而且**帶條件」的節點算 `basicAttack` ——
+ * ⛔ 因為決定它量級的是**頻率**，而條件只是把它乘上一個機率。
+ * ⭐ 量到的實例（GH#946）：92-04 的 3.0×AP 帶著 `blind` 條件，
+ * ⭐ 而它在 6 秒窗口內普攻約 4 次 ⇒ **等效 12×AP** ⇒ 它是 `basicAttack` 那一把尺的事。
+ */
+export type ApFrequencyClass = "basicAttack" | "abilityCast" | "specialCondition";
+
+export function classifyApFrequency(
+  /** 這一格 ratio 所在的**節點**（可能帶 `when`）。 */
+  node: Readonly<Record<string, unknown>> | undefined,
+  /** 承載它的 hook（`{ on: "onBasicAttack", condition?: … }`），沒有就傳 `undefined`。 */
+  hook: Readonly<Record<string, unknown>> | undefined,
+  /** 整份文件（用來看變身／反彈這一族）。 */
+  doc: Readonly<Record<string, unknown>> | undefined,
+): ApFrequencyClass {
+  // ⭐ ① 普攻最優先 —— 見上面那段「順序是承重的」。
+  if (hook?.["on"] === "onBasicAttack") return "basicAttack";
+  // ⭐ ② 玩家控制不了的前提。
+  if (node?.["when"] !== undefined) return "specialCondition";
+  if (hook?.["condition"] !== undefined) return "specialCondition";
+  if (typeof hook?.["on"] === "string" && /^on(Evade|Block|Reflect|Hit|Damaged|Kill)/u.test(hook["on"] as string))
+    return "specialCondition";
+  if (doc !== undefined && typeof doc["championForm"] === "string") return "specialCondition";
+  // ⭐ ③ 基準。
+  return "abilityCast";
+}
+
+/**
+ * ⭐ 那一把尺在 `tier` 這一格給多少。
+ * ⚠️ 級距名不在表上（或整格缺席）⇒ 回 `null`（「這一格沒有意見」）——
+ * ⛔ 不是 0：0 的意思是「不吃 AP」，而那是**另一件事**。
+ */
+export function resolveApFrequencyTier(
+  cls: ApFrequencyClass,
+  tier: unknown,
+  c: ApCoefficientConfig = DEFAULT_AP_COEFFICIENT,
+): number | null {
+  const table = (c as unknown as { frequency?: Record<string, Record<string, number>> }).frequency?.[cls];
+  if (!table || typeof tier !== "string") return null;
+  const v = table[tier];
+  return typeof v === "number" && Number.isFinite(v) ? v : null;
 }
