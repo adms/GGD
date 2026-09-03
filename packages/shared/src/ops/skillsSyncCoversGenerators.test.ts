@@ -158,6 +158,19 @@ const SYNC_STEP_NO_CHECK: Record<string, string> = {
     "那時正解是給 `generateFamilyContent.ts` 一個 `--check` 並接進 `skills:check`。",
 };
 
+/**
+ * ⭐ 豁免「它的 build 不必在 `skills:sync` 的鏈上」——
+ * 理由要能被反駁：⭐ 說得出**為什麼那份產物不會因為聚合重生成而變**。
+ */
+const CHECK_STEP_NO_SYNC: Record<string, string> = {
+  "echoloop:check":
+    "⭐ 它**不寫任何檔** —— `tools/balance-alert/echoLoop.ts` 全檔零個 `writeFileSync`（2026-09-03 實查）," +
+    "而 `echoloop` 與 `echoloop:check` 是**同一支腳本**,`--check` 只改嚴格度。" +
+    "⇒ ⭐ 沒有產物就沒有「過期」這回事,接進 `skills:sync` 只是把同一個分析跑第二次。" +
+    "⚠️ 它守的是**平衡公式自洽**（每一格倍率 ×0.5／×2 重算,兩邊一起動而佔血條不動 = 回音迴圈）," +
+    "⛔ 不是某份文件的新鮮度。反駁法:如果哪天它開始寫檔,這一列就要刪掉。",
+};
+
 const EXEMPT: Record<string, string> = {
   "voxel:check": "體素**角色身體**產生器 —— 讀的是英雄外觀，不讀 abilities/vfx/級距",
   "voxel:build:check": "同上，只是驗產物",
@@ -379,7 +392,72 @@ describe("skills:sync / skills:check 涵蓋所有產生器", () => {
     ).toEqual([]);
   });
 
-  // ⭐⭐ 上面兩條看的是**腳本名**;這一條從**產物**那一端看,補的是「連腳本都沒有的產生器」那個洞。
+  // ⭐⭐⭐ **第三個方向**（2026-09-03 補）—— ⛔ 上面兩條都走不到這一段。
+  //
+  // ⚠️ 它們走的是：① 每一支 `*:check` → 在 `skills:check` 裡嗎 ·
+  //   ② `skills:sync` 的每一步 → 有 `*:check` 守嗎。
+  // ⭐ 而**沒有人走**「`skills:check` 會跑的那一支 → 它的 `build` 在 `skills:sync` 裡嗎」
+  //   ⇒ 一支「有 check、⛔ 沒 build 在鏈上」的產生器**掉進兩條掃描之間的縫**（形態⑫）。
+  //
+  // 📏 量到的實例（2026-09-03 批收尾當場撞到）：`editorcov:check` 在 `skills:check` 裡（①過）、
+  //   而 `editorcov:build` ⛔ 不在 `skills:sync` 也不在 sync-io 的 45 步裡（②看不到它）
+  //   ⇒ ⭐ **每一次批收尾都紅,而聚合指令修不好它** —— 要人手動記得跑 `editorcov:build`。
+  //   ⚠️ 而「要記得跑」正是這份文件記錄過五次失效的那種東西。
+  it("⭐⭐ `skills:check` 驗的每一支,它的 build 都在 `skills:sync` 的鏈上（第三個方向）", () => {
+    const s = scripts();
+    const sync = s["skills:sync"] ?? "";
+    const aggregate = s["skills:check"] ?? "";
+    // ⭐⭐ 展開要**跟著真正的呼叫鏈遞移**，⛔ 不是只讀最上層那一行字串。
+    //
+    // ⚠️ 量到的實例：`content:build` 的字面是 `bash scripts/genrun.sh content:build content:build:raw`
+    //   ⇒ 它一個 `pnpm X` 都沒有；⭐ 而 `content:build:raw` 逐字是
+    //   `pnpm --filter @ggd/shared content:build && pnpm spec:build && pnpm overview:build && pnpm tiers:build`
+    //   ⇒ ⛔ 只讀最上層會把 `spec` / `overview` 誤報成孤兒（我第一版就報了 14 支，而真缺口只有 6 支）。
+    //   ⭐ 一個會誤報 8 支的閘，下一個人的正確反應是**關掉它**。
+    const reach = (name: string, seen = new Set<string>()): Set<string> => {
+      if (seen.has(name) || !(name in s)) return seen;
+      seen.add(name);
+      const body = s[name] ?? "";
+      for (const m of body.matchAll(/pnpm (?:--filter \S+ )?([A-Za-z0-9_:.-]+)/g)) reach(m[1]!, seen);
+      for (const m of body.matchAll(/genrun\.sh \S+ (\S+)/g)) reach(m[1]!, seen);
+      return seen;
+    };
+    const syncSteps = [...reach("skills:sync")];
+    const checkSteps = [...aggregate.matchAll(/pnpm ([A-Za-z0-9_:.-]+)/g)].map((m) => m[1]!);
+    expect(checkSteps.length, "check 鏈解析回空的 —— 偵測壞了,⛔ 不是真的沒有步驟").toBeGreaterThan(10);
+
+    // sentinel：豁免表只能指向**真的在 check 鏈裡**的步驟（幽靈列 = 一句看起來有防的散文）。
+    expect(
+      Object.keys(CHECK_STEP_NO_SYNC).filter((n) => !checkSteps.includes(n)),
+      "CHECK_STEP_NO_SYNC 指向不在 skills:check 裡的步驟 ⇒ ⭐ 那一列在防一個不存在的東西",
+    ).toEqual([]);
+
+    const orphan = checkSteps
+      .filter((step) => step.endsWith(":check") && !(step in CHECK_STEP_NO_SYNC))
+      .filter((step) => {
+        const stem = step.replace(/:check$/, "");
+        const cands = [`${stem}:build`, `${stem}:export`, `${stem}:apply`, stem];
+        // ⭐ **純驗證器不在射程內**：它根本沒有 build 腳本 ⇒ 沒有東西可以接進 sync。
+        //   ⚠️ 量到 6 支（roster · models · echoloop · beam · board:roll · ruleslip）——
+        //   ⛔ 對它們喊「你的 build 不在鏈上」是要求一個不存在的東西。
+        // ⚠️ ⭐ `stem` 自己也算一支產生器：`board:roll:check` 的產生器**就叫 `board:roll`**
+        //   （⛔ 不是 `board:roll:build`）。第一版把它讀成「純驗證器」而放行 ——
+        //   ⇒ ⭐ 七天窗沒有人滾，而 `board:roll:check` 每天都紅。2026-09-03 當場撞到。
+        if (!cands.some((c) => c in s)) return false;
+        return !cands.some((c) => syncSteps.includes(c));
+      });
+
+    expect(
+      orphan,
+      "⛔⛔ 這幾支被 `skills:check` 驗,而**它們的產生器不在 `skills:sync` 的鏈上**:\n" +
+        orphan.map((n) => `  ${n}`).join("\n") +
+        "\n⇒ ⭐ 症狀是「批收尾每次都紅,而跑聚合指令修不好」—— 只能靠人記得單獨跑一次。" +
+        "\n→ 把它的 build 接進 package.json 的 `skills:sync`," +
+        "\n  或在 `CHECK_STEP_NO_SYNC` 裡寫下**為什麼它的產物不需要被聚合重生成**（要能被反駁）。",
+    ).toEqual([]);
+  });
+
+  // ⭐⭐ 上面三條看的是**腳本名**;這一條從**產物**那一端看,補的是「連腳本都沒有的產生器」那個洞。
   it("每一支寫 docs/ 或 content/ 產物的產生器,目錄都在聚合指令的視野裡", () => {
     const s = scripts();
     const homes = scriptHomes();

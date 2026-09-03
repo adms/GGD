@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "d4d7d9f442e1",
-  "capabilityFingerprint": "18d7999e",
+  "fingerprint": "abe89fcb949a",
+  "capabilityFingerprint": "f40f16e4",
   "required": [
     {
       "group": "abilityField",
@@ -20654,6 +20654,10 @@
     },
     {
       "group": "effectField",
+      "name": "forceClip"
+    },
+    {
+      "group": "effectField",
       "name": "forcedTarget"
     },
     {
@@ -20731,6 +20735,10 @@
     {
       "group": "effectField",
       "name": "incomingPct"
+    },
+    {
+      "group": "effectField",
+      "name": "intervalJitter"
     },
     {
       "group": "effectField",
@@ -21710,6 +21718,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "forceClip"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "forcedTarget"
     },
     {
@@ -21819,6 +21831,10 @@
     {
       "group": "effectFieldPath",
       "name": "incomingPct.whenTooLate"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "intervalJitter"
     },
     {
       "group": "effectFieldPath",
@@ -22207,6 +22223,10 @@
     {
       "group": "effectFieldPath",
       "name": "perStrike"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "perStrikeSoundKey"
     },
     {
       "group": "effectFieldPath",
@@ -22638,6 +22658,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "velocityAngle"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "vfxId"
     },
     {
@@ -22715,6 +22739,10 @@
     {
       "group": "effectField",
       "name": "perStrike"
+    },
+    {
+      "group": "effectField",
+      "name": "perStrikeSoundKey"
     },
     {
       "group": "effectField",
@@ -23003,6 +23031,10 @@
     {
       "group": "effectField",
       "name": "until"
+    },
+    {
+      "group": "effectField",
+      "name": "velocityAngle"
     },
     {
       "group": "effectField",
@@ -24060,6 +24092,31 @@
     },
     {
       "group": "vfxField",
+      "name": "presentation",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "presentation=billboard",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "presentation=decal",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "presentation=ribbon",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
+      "name": "presentation=trail",
+      "owner": "vfx@1"
+    },
+    {
+      "group": "vfxField",
       "name": "rate",
       "owner": "vfx@1"
     },
@@ -25108,7 +25165,7 @@
   ],
   "counts": {
     "effectKind": 47,
-    "effectField": 261,
+    "effectField": 265,
     "hookEvent": 33,
     "hookField": 21,
     "abilityField": 38,
@@ -25116,15 +25173,15 @@
     "templateFamily": 29,
     "conditionLeaf": 6,
     "conditionLeafField": 16,
-    "effectFieldPath": 425,
-    "vfxField": 86,
+    "effectFieldPath": 429,
+    "vfxField": 91,
     "modelField": 42,
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 147,
     "configField": 3962,
     "_notRequired": 15,
-    "_total": 5145,
+    "_total": 5158,
     "_ownerOnly": 39
   }
 }

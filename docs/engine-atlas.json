@@ -1,12 +1,12 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "18d7999e",
+  "capabilityFingerprint": "f40f16e4",
   "counts": {
     "effectKinds": 47,
     "hookEvents": 33,
     "conditionLeafKinds": 6,
     "templateFamilies": 29,
-    "effectFields": 261,
+    "effectFields": 265,
     "stats": 23,
     "combatEnvKeys": 39
   },
@@ -467,6 +467,7 @@
       "durationSec",
       "finisherDelaySec",
       "getupTicks",
+      "intervalJitter",
       "intervalSec",
       "jumpIntervalSec",
       "lifeSec",
