@@ -21,10 +21,6 @@
  * ⚠️ 這與 zip bomb 是**不同的威脅面**：zip 那一層量的是**位元組**，
  * 這一層量的是**像素**。⛔ 一層擋不到另一層。
  */
-import { execFileSync } from "node:child_process";
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
-import { join } from "node:path";
 
 /**
  * ⭐ 出貨的 icon 規格。**這是唯一住處** —— `tools/icon-gen/convert-webp.ts` 與
@@ -184,49 +180,21 @@ export class IconEncodeError extends Error {
     this.name = "IconEncodeError";
   }
 }
-
 /**
- * ⭐⭐ 一張來源圖 → 出貨規格的 WebP 位元組。
+ * ⚠️⚠️ ⭐ **這個檔刻意不 import 任何 `node:` 模組。**
  *
- * ⚠️ ⭐ 呼叫端**必須**先跑 `sniffImageHeader()` 並自己擋掉超大尺寸 ——
- * ⛔ 這一支不做那件事，因為它已經在 decode 那一側了（見檔頭的解壓炸彈那一段）。
- * ⭐ 判準：`encodeIcon` 是**執行者**，`sniffImageHeader` 是**守門員**，
- * ⛔ 把守門併進執行者會讓「先驗後解」這個順序變成一句註解。
+ * ── 📏 為什麼（2026-09-04 實際打壞了客戶端）──────────────────────────────
+ * `schema/config/iconUpload.ts` 從這裡拿 `ICON_ENCODE`，⭐ 而 **config schema 是
+ * 客戶端會載入的東西** ⇒ 它把整個檔一起拉進瀏覽器的 import 圖
+ * ⇒ vite 對 `node:child_process` 只能 externalize ⇒ ⛔ **首次繪製就擲例外**：
+ *
+ *     Module "node:child_process" has been externalized for browser compatibility.
+ *     Cannot access "node:child_process.execFileSync" in client code.
+ *
+ * ⚠️ 而它壞的**不只是驗收頁** —— 真的遊戲客戶端也是一樣的錯（實測）。
+ *
+ * ⇒ ⭐ **常數與純函式住這裡**（瀏覽器、sim、產生器、content-api 都讀得到），
+ *   ⭐ **真的去跑 `cwebp` 的那一支住 `encodeIconNode.ts`**（只有 Node 側 import）。
+ * ⛔ 這**不是**把知識拆成兩份（第〇·四）：`ICON_ENCODE`（128² · q90）仍然只有
+ *   一個住處 —— 分開的是**執行環境**，⛔ 不是那份知識。
  */
-export function encodeIcon(input: Uint8Array, opts: EncodeIconOptions = {}): Buffer {
-  const edge = opts.edge ?? ICON_ENCODE.edge;
-  const quality = opts.quality ?? ICON_ENCODE.quality;
-  const run =
-    opts.run ??
-    ((args: readonly string[]): void => {
-      execFileSync("cwebp", [...args], { stdio: "pipe" });
-    });
-  const dir = mkdtempSync(join(tmpdir(), "ggd-icon-"));
-  const src = join(dir, "in");
-  const out = join(dir, "out.webp");
-  try {
-    writeFileSync(src, input);
-    const args = [
-      "-quiet",
-      "-q",
-      String(quality),
-      "-resize",
-      String(edge),
-      String(edge),
-      ...(opts.preserveAlpha === false ? ["-noalpha"] : []),
-      src,
-      "-o",
-      out,
-    ];
-    try {
-      run(args);
-    } catch (e) {
-      throw new IconEncodeError(
-        `cwebp 轉檔失敗（${args.join(" ")}）：${e instanceof Error ? e.message : String(e)}`,
-      );
-    }
-    return readFileSync(out);
-  } finally {
-    rmSync(dir, { recursive: true, force: true });
-  }
-}

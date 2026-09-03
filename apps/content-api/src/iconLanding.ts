@@ -20,11 +20,10 @@
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import {
-  encodeIcon,
-  IconEncodeError,
-  type EncodeIconOptions,
-} from "@ggd/shared/content/icons/encodeIcon";
+// ⭐ 轉檔那一支住 `encodeIconNode`（它碰 `node:child_process`）——
+//   ⛔ 不可以從 `encodeIcon` 拿，那個檔要留在瀏覽器讀得到的那一半（GH#966 回歸）。
+import { encodeIcon } from "@ggd/shared/content/icons/encodeIconNode";
+import { IconEncodeError, type EncodeIconOptions } from "@ggd/shared/content/icons/encodeIcon";
 import type { IconAssetPlan } from "@ggd/shared/content/import/iconAssets";
 import {
   ASSET_ROLE,
