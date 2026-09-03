@@ -71,6 +71,13 @@ jobs:
           go-version: ${{ env.GO_VERSION }}
           cache-dependency-path: tools/testrunner/go.sum
       - run: pnpm install --frozen-lockfile
+      # ⭐⭐ GH#966 —— `cwebp`（icon 轉檔）。⛔ ubuntu-latest 沒有內建它。
+      #   ⚠️ ⭐ 這一步存在是為了讓 `iconAssetRoundTrip.test.ts` **跑得起來**，
+      #   ⛔ 不是為了讓它跳過 —— 「環境不對就跳過」的閘等於沒有閘
+      #   （`composeLogCap.test.ts` 逐字寫過同一個理由）。
+      #   ⭐ 出貨映像那一半由 GH#967 保證（`docker/content-api.Dockerfile` 的 runtime stage）。
+      - name: Icon toolchain (cwebp)
+        run: sudo apt-get update && sudo apt-get install -y webp && cwebp -version
       - name: Static TODO gate
         run: pnpm todo:check
       # eslint (2026-08-02). 規則集刻意很小 —— 見 eslint.config.mjs 的檔頭。

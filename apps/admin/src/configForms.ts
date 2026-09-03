@@ -74,7 +74,7 @@ import type { ConfigDocSpec } from "./configForms/engine";
 import { MODEL_LOD_SPEC, VFX_BUDGET_SPEC, VFX_CLEANUP_SPEC, VFX_SCRIPTS_SPEC, WEATHER_SPEC, WORLD_CUES_SPEC } from "./configForms/specs/render";
 import {
   CONTROLLER_SCHEME_SPEC, AP_DAMAGE_SCALING_SPEC, ONE_SHOT_CLAMP_SPEC, BLOCK_SPEC, COOLDOWN_RULES_SPEC, CRIT_SPEC, DAMAGE_RULES_SPEC, FEEL_FX_SPEC, GORE_SPEC, SHIELD_SPEC, WEAKNESS_SPEC, WOUNDS_SPEC } from "./configForms/specs/combat";
-import { AUTHORING_RULES_SPEC, CAST_TIME_SPEC, CONTENT_LOAD_SPEC, NEW_HERO_CHECKS_SPEC } from "./configForms/specs/authoring";
+import { AUTHORING_RULES_SPEC, CAST_TIME_SPEC, CONTENT_LOAD_SPEC, ICON_UPLOAD_SPEC, NEW_HERO_CHECKS_SPEC } from "./configForms/specs/authoring";
 import { AOE_TIERS_SPEC, AP_COEFFICIENT_SPEC, CAST_TIME_TIERS_SPEC, RANK_GROWTH_SPEC, COOLDOWN_TIERS_SPEC, DAMAGE_TIERS_SPEC, MANA_ECONOMY_SPEC, MANA_TIERS_SPEC, MOVE_SPEED_TIERS_SPEC, RANGE_TIERS_SPEC, SKILL_NORMALIZE_SPEC, SPEED_GROWTH_TIERS_SPEC } from "./configForms/specs/tiers";
 import { AUGMENT_FILTER_SPEC, BERSERK_SPEC, DISPEL_SPEC, STAT_NORMALIZATION_SPEC, STEALTH_SPEC, TAUNT_SPEC } from "./configForms/specs/stats";
 import { ARENA_FIRE_SPEC, BODY_SCALE_SPEC, BOSS_INTRO_SPEC, DAMAGE_COLORS_SPEC, REGEN_SPEC, REPLAY_SPEC, VICTORY_FX_SPEC, VICTORY_PODIUM_SPEC } from "./configForms/specs/visuals";
@@ -173,6 +173,11 @@ export const CONFIG_DOC_SPECS = [
   DISPEL_SPEC,
   CONTENT_LOAD_SPEC,
   AUTHORING_RULES_SPEC,
+  // 🖼 編輯器 icon 上傳（GH#966，owner 2026-09-02）。⚠️ 同 AUDIO_MIX_SPEC 那一段：
+  // 這一列要跟 App.tsx 的導覽列一列、以及 `content/config/icon-upload.json` 出貨檔
+  // 一起，才到得了操作者手上（少了出貨檔 `configForms.test.ts` 直接紅 ——
+  // 它對每一個 spec 都 readFileSync 那份 JSON）。
+  ICON_UPLOAD_SPEC,
   // 新英雄檢查警示（GH#480）。⚠️ 這一列要跟三件事一起才到得了操作者手上：
   // store.ts 的 `Page` union + `SESSION_REQUIRED_PAGES`、App.tsx 的導覽列一列、
   // 以及 `content/config/new-hero-checks.json` 出貨檔（少了它 configForms.test.ts

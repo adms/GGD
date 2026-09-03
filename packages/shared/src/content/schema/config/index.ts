@@ -121,6 +121,10 @@ import { zConfigCastTimeTiersDoc } from "./castTimeTiers";
 import { zConfigRankGrowthDoc } from "./rankGrowth";
 import { zConfigOneShotClampDoc } from "./oneShotClamp";
 import { zConfigReviewTuningDoc } from "./reviewTuning";
+// ⭐⭐ GH#966 —— 編輯器打包進來的 icon 圖片要怎麼收。⚠️ 漏掉這一行 =
+// icon-upload.json 進了 content/ 之後整份內容驗證失敗 → 退回 2 隻骨架英雄，
+// 而網站看起來完全正常（2026-08-02 事故的形狀）。
+import { zConfigIconUploadDoc } from "./iconUpload";
 import { zConfigApCoefficientDoc } from "./apCoefficient";
 import { zConfigAoeTiersDoc } from "./aoeTiers";
 import { zConfigRangeTiersDoc } from "./rangeTiers";
@@ -183,6 +187,7 @@ export * from "./castTimeTiers";
 export * from "./rankGrowth";
 export * from "./oneShotClamp";
 export * from "./reviewTuning";
+export * from "./iconUpload";
 export * from "./apCoefficient";
 // ⭐ `castApproachDoc` 住在上一層（拆檔那天它剛好由另一條 lane 建立）。
 // ⛔ 只 import 不 re-export = 後台 `import { zConfigCastApproachDoc } from "@ggd/shared/content"`
@@ -320,6 +325,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigRankGrowthDoc,
   zConfigOneShotClampDoc,
   zConfigReviewTuningDoc,
+  zConfigIconUploadDoc,
   zConfigApCoefficientDoc,
   // AoE 五級距（owner 2026-08-11 立、2026-08-19 擴成五級）。⚠️ 漏掉這一行 =
   // 一份 aoe-tiers.json 進了 content/ 之後整份內容驗證失敗 → 骨架英雄，理由見下面那一段。

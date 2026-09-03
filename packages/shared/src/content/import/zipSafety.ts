@@ -155,19 +155,45 @@ export const ZIP_LIMIT_BOUNDS: Readonly<Record<keyof ZipLimits, { min: number; m
   maxPathDepth: { min: 1, max: 16 },
 };
 
-/** §8 允許的路徑前綴。其餘一律 `ZIP_PATH_NOT_ALLOWED`。 */
+/**
+ * §8 允許的路徑前綴。其餘一律 `ZIP_PATH_NOT_ALLOWED`。
+ *
+ * ⭐⭐ GH#966 —— `assets` 是**第五個**，而它與前四個**不同**：前四個底下只收 `.json`，
+ * ⭐ 它底下只收 {@link ZIP_ALLOWED_ASSET_EXTENSIONS} 的圖片。
+ *
+ * ⚠️ ⭐ **這一格在 2026-09-04 之前是這個功能的死路，而票文以為它已經通了**：
+ * 票文寫著「S4 路徑穿越已覆蓋 ⇒ `zPackagePath` 的正則已經允許這個形狀」——
+ * ⭐ 那半句是對的（正則確實允許），⛔ 而 `checkZipSafety` 在**更早**的一層
+ * 以 `ZIP_PATH_NOT_ALLOWED` 把整包擋掉了。
+ * ⇒ ⭐ 兩個名詞（正則、傳輸層）**各自都對**，⛔ 而它們的**關係**是斷的
+ *   —— CLAUDE.md 記過的「配對式後置條件」同型。
+ */
 export const ZIP_ALLOWED_ROOTS: readonly string[] = [
   'authoring',
   'compiled',
   'validation',
   'reports',
+  'assets',
 ];
 
 /** §8：`manifest.json` 是唯一允許的根層檔案，而且必須存在。 */
 export const ZIP_MANIFEST_PATH = 'manifest.json';
 
-/** V1 只收 JSON —— 「不含 binary assets」這條規則的機械化版本。 */
+/** 文件那四個前綴底下只收 JSON。 */
 export const ZIP_ALLOWED_EXTENSION = '.json';
+
+/**
+ * ⭐⭐ GH#966 —— `assets/` 底下允許的**圖片**副檔名（owner：編輯器「自動縮圖轉檔
+ * 放入一起打包」）。
+ *
+ * ⚠️ ⭐ 副檔名**只是宣稱** —— 真相由 magic bytes 決定（`sniffImageHeader()`）。
+ * ⛔ 這一層擋的是「你連宣稱都不該這樣宣稱」，⛔ 不是「這真的是一張 PNG」。
+ * ⇒ ⭐ 兩層都要有：這一層讓 `.exe` 連進門都不行，那一層讓「改名成 .png 的 .exe」進不去。
+ */
+export const ZIP_ALLOWED_ASSET_EXTENSIONS: readonly string[] = ['.png', '.webp', '.jpg', '.jpeg'];
+
+/** 二進位資產的前綴（⭐ 它底下**不收** `.json`）。 */
+export const ZIP_ASSET_ROOT = 'assets';
 
 /**
  * §8「不含 executable、schema implementation、secret、cache、log、絕對路徑或
@@ -332,17 +358,25 @@ export function checkZipSafety(
       }
       continue; // 目錄不計大小
     }
+    const root = segments[0] ?? '';
+    // ⭐ 每個前綴有**自己的**副檔名白名單：文件那四個收 `.json`，`assets/` 收圖片。
+    //   ⛔ 一份共用的清單會讓 `authoring/x.png` 也通過（那是內容樹，⛔ 不是素材）。
+    const allowedExts =
+      root === ZIP_ASSET_ROOT ? ZIP_ALLOWED_ASSET_EXTENSIONS : [ZIP_ALLOWED_EXTENSION];
     if (normalized === ZIP_MANIFEST_PATH) {
       sawManifest = true;
     } else if (
-      !ZIP_ALLOWED_ROOTS.includes(segments[0] ?? '') ||
+      !ZIP_ALLOWED_ROOTS.includes(root) ||
       segments.length < 2 ||
-      !normalized.toLowerCase().endsWith(ZIP_ALLOWED_EXTENSION)
+      !allowedExts.some((ext) => normalized.toLowerCase().endsWith(ext))
     ) {
       add({
         code: 'ZIP_PATH_NOT_ALLOWED',
         path: raw,
-        message: `只允許 \`${ZIP_MANIFEST_PATH}\` 與 ${ZIP_ALLOWED_ROOTS.map((r) => `\`${r}/\``).join('／')} 下的 \`${ZIP_ALLOWED_EXTENSION}\`。`,
+        message:
+          `只允許 \`${ZIP_MANIFEST_PATH}\`、` +
+          `${ZIP_ALLOWED_ROOTS.filter((r) => r !== ZIP_ASSET_ROOT).map((r) => `\`${r}/\``).join('／')} 下的 \`${ZIP_ALLOWED_EXTENSION}\`、` +
+          `以及 \`${ZIP_ASSET_ROOT}/\` 下的 ${ZIP_ALLOWED_ASSET_EXTENSIONS.map((e) => `\`${e}\``).join('／')}。`,
       });
       continue;
     }

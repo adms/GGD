@@ -220,7 +220,12 @@ export const zManifestChange = z
 export const zManifestEntry = z
   .object({
     path: zPackagePath,
-    role: z.enum(["authoring", "compiled", "validation", "report"]),
+    // ⭐⭐ GH#966 —— `"asset"` 是**二進位**通道（icon 圖片）。
+    //   ⚠️ 它與其餘四種的差別不是「多一個字」：`role:"asset"` 的 entry 在傳輸層
+    //   **保持 Buffer**（⛔ 不 `.toString("utf8")`），而它的內容雜湊算的是**原始位元組**，
+    //   ⛔ 不是 JCS canonical JSON。⇒ `validatePackage` 的 ④ 逐份雜湊那一圈
+    //   刻意只吃 `role === "authoring"`，asset 走 `checkIconAssets()`。
+    role: z.enum(["authoring", "compiled", "validation", "report", "asset"]),
     contentSha256: zSha256Hex,
     contentSize: z.number().int().min(0).max(IMPORT_LIMITS.maxContentSize),
     // content entries 才有的欄位（規格 §10）。
@@ -238,6 +243,28 @@ export const zManifestEntry = z
     schema: zShort.optional(),
     op: zChangeOp.optional(),
     revision: z.number().int().min(1).max(1_000_000).optional(),
+    // ── ⭐⭐ GH#966 —— asset entry 才有的三格（⛔ 全部 optional）─────────────
+    /**
+     * 編輯器**宣稱**的格式（`image/png`…）。
+     * ⚠️ ⭐ Main **不信任這一格** —— 真相由 magic bytes 決定（`sniffImageHeader()`）。
+     * ⛔ 那為什麼還要它？因為「你以為你送的是什麼」與「你真的送了什麼」不一致時，
+     * ⭐ 錯誤訊息要能把**兩個**都說出來，⛔ 不是只說「格式不對」。
+     */
+    mime: zShort.optional(),
+    /**
+     * 這張圖要寫回目標文件的哪一格。⭐ **白名單**（今天只有 `icon`），
+     * ⛔ 不是「隨便一個欄位名」—— 一個能指定任意欄位的 asset entry
+     * 等於讓外部編輯器隔空寫任何一格。
+     */
+    targetField: z.enum(["icon"]).optional(),
+    /**
+     * ⭐⭐ **per-asset CAS** —— 你讀到的**現有** icon 檔的 sha256，沒有現有檔就明示 `null`。
+     * ⛔ 省略 ＝ 不做 CAS（bootstrap 用）。
+     * ⚠️ 它與 `base.activationDigest` 是**兩層**：那一格 pin 的是整棵文件樹，
+     * ⭐ 這一格 pin 的是**這一顆二進位檔** —— 兩個人同時換同一支技能的圖時，
+     * ⛔ 只有後者擋得住「默默蓋掉對方」。
+     */
+    baseSha256: zSha256Hex.nullable().optional(),
   })
   .passthrough();
 
@@ -477,6 +504,32 @@ export const zEditorImportPackage = z
     compiled: z.array(zPathedDocument("compiled")).max(IMPORT_LIMITS.maxDocuments).default([]),
     /** 對應 `validation/`。 */
     validation: z.array(zPathedDocument("validation")).max(IMPORT_LIMITS.maxDocuments).default([]),
+    /**
+     * ⭐⭐ GH#966 —— 對應 ZIP `assets/` 的**二進位**通道（icon 圖片）。
+     *
+     * ⚠️ ⭐ `bytes` 刻意是 `z.unknown()`：它是 `Buffer`，而這份 schema 要能在
+     * 瀏覽器端被讀（⛔ 不可以 import node 的型別）。⭐ 真正的驗證在
+     * `checkIconAssets()` —— 它問的是 magic bytes、檔頭長寬與 CAS，
+     * ⛔ 而那三件事 zod 一件都問不出來。
+     *
+     * ⚠️ ⭐ 它**不參與 packageDigest**（digest 只算 manifest 的 projection）——
+     * ⛔ 而那不是漏洞：每一顆 asset 的 `contentSha256` 都在 manifest 裡，
+     * ⭐ 所以位元組仍然被 digest **間接**蓋住。
+     */
+    assets: z
+      .array(
+        z
+          .object({
+            path: zPackagePath.refine(
+              (p) => p.startsWith("assets/"),
+              "asset 的 path 必須位於 assets/ 之下",
+            ),
+            bytes: z.unknown(),
+          })
+          .passthrough(),
+      )
+      .max(IMPORT_LIMITS.maxDocuments)
+      .default([]),
     reports: z.record(z.unknown()).default({}),
   })
   .passthrough();

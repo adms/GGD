@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "5e8d9a88083b",
+  "hash": "3da665668684",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -265,6 +265,12 @@
       "path": "config/icon-style.json",
       "hash": "eccc429706da",
       "size": 3924
+    },
+    {
+      "id": "icon-upload",
+      "path": "config/icon-upload.json",
+      "hash": "a5e5329cfd64",
+      "size": 1096
     },
     {
       "id": "item-card",

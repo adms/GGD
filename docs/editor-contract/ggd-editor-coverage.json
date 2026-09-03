@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "abe89fcb949a",
+  "fingerprint": "d8d7af748798",
   "capabilityFingerprint": "f40f16e4",
   "required": [
     {
@@ -9156,6 +9156,11 @@
     },
     {
       "group": "configField",
+      "name": "draftShowStatPath",
+      "owner": "config.ui-cues@1"
+    },
+    {
+      "group": "configField",
       "name": "drainChampionsOnly",
       "owner": "config.regen@1"
     },
@@ -9423,6 +9428,11 @@
       "group": "configField",
       "name": "enabled",
       "owner": "config.one-shot-clamp@1"
+    },
+    {
+      "group": "configField",
+      "name": "enabled",
+      "owner": "config.icon-upload@1"
     },
     {
       "group": "configField",
@@ -11367,6 +11377,11 @@
     {
       "group": "configField",
       "name": "id",
+      "owner": "config.icon-upload@1"
+    },
+    {
+      "group": "configField",
+      "name": "id",
       "owner": "config.ap-coefficient@1"
     },
     {
@@ -12601,6 +12616,11 @@
     },
     {
       "group": "configField",
+      "name": "match.intermissionEarlyStartVsBot",
+      "owner": "config@1"
+    },
+    {
+      "group": "configField",
       "name": "match.intermissionSec",
       "owner": "config@1"
     },
@@ -12758,6 +12778,11 @@
       "group": "configField",
       "name": "maxRatePerSystem",
       "owner": "config.vfx-budget@1"
+    },
+    {
+      "group": "configField",
+      "name": "maxSourceEdgeMultiple",
+      "owner": "config.icon-upload@1"
     },
     {
       "group": "configField",
@@ -14072,6 +14097,11 @@
     {
       "group": "configField",
       "name": "note",
+      "owner": "config.icon-upload@1"
+    },
+    {
+      "group": "configField",
+      "name": "note",
       "owner": "config.ap-coefficient@1"
     },
     {
@@ -15276,6 +15306,11 @@
     },
     {
       "group": "configField",
+      "name": "preserveAlpha",
+      "owner": "config.icon-upload@1"
+    },
+    {
+      "group": "configField",
       "name": "presetTiers",
       "owner": "config.model-lod@1"
     },
@@ -16411,6 +16446,11 @@
     },
     {
       "group": "configField",
+      "name": "requiresReview",
+      "owner": "config.icon-upload@1"
+    },
+    {
+      "group": "configField",
       "name": "resourcePctSkipsGlobalMult",
       "owner": "config.ap-damage-scaling@1"
     },
@@ -17478,6 +17518,11 @@
       "group": "configField",
       "name": "schema",
       "owner": "config.review-tuning@1"
+    },
+    {
+      "group": "configField",
+      "name": "schema",
+      "owner": "config.icon-upload@1"
     },
     {
       "group": "configField",
@@ -25179,9 +25224,9 @@
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 147,
-    "configField": 3962,
+    "configField": 3971,
     "_notRequired": 15,
-    "_total": 5158,
+    "_total": 5167,
     "_ownerOnly": 39
   }
 }

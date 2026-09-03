@@ -24,13 +24,20 @@
  * driver versions: it would produce new art, not these images. Restore from the
  * archive or from git, never by regenerating.
  *
+ * ⭐⭐ GH#966 —— **轉檔規則不再住在這裡。**
+ * 128² · q90 · `cwebp` 全部搬到 `packages/shared/src/content/icons/encodeIcon.ts`，
+ * 因為 content-api 現在也要轉一次同樣的檔（編輯器打包進來的 icon）。
+ * ⇒ ⭐ CLI 與 API **import 同一支**：改 quality 兩邊一起變。
+ * ⛔ 抄第二份的症狀是「編輯器預覽看到的圖 ≠ 遊戲裡的圖」，而**沒有東西會紅**。
+ *
  * Usage:
- *   node tools/icon-gen/convert-webp.mjs [--dry-run] [--quality N] [--edge N]
+ *   pnpm icons:webp -- [--dry-run] [--quality N] [--edge N]
+ *   tsx tools/icon-gen/convert-webp.ts [--dry-run] [--quality N] [--edge N]
  */
-import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, unlinkSync, writeFileSync, copyFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { ICON_ENCODE, encodeIcon, pngSize } from "@ggd/shared/content/icons/encodeIcon";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "../..");
@@ -38,21 +45,15 @@ const ICON_DIR = join(REPO, "content/assets/icons");
 const DOC_COLLECTIONS = ["champions", "abilities", "items"];
 
 const args = process.argv.slice(2);
-const flag = (name, fallback) => {
+const flag = (name: string, fallback: number): number => {
   const i = args.indexOf(name);
   return i === -1 ? fallback : Number(args[i + 1]);
 };
 const DRY = args.includes("--dry-run");
-const EDGE = flag("--edge", 128);
-const QUALITY = flag("--quality", 90);
+// ⭐ 預設值從**共用表**來，⛔ 不是這裡再打一次 128 / 90（第〇·四守則）。
+const EDGE = flag("--edge", ICON_ENCODE.edge);
+const QUALITY = flag("--quality", ICON_ENCODE.quality);
 const ARCHIVE_DIR = join(REPO, "data/icon-src-original");
-
-/** PNG dimensions from the IHDR chunk (bytes 16..24). No image library needed. */
-function pngSize(file) {
-  const buf = readFileSync(file);
-  if (buf.length < 24 || buf.readUInt32BE(0) !== 0x89504e47) return null;
-  return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
-}
 
 /**
  * Value of a PNG tEXt chunk, walking the chunk list. tools/icon-gen/local/batch.py
@@ -61,7 +62,7 @@ function pngSize(file) {
  * the next batch run treats all 169 icons as missing and re-renders them — hours
  * of GPU time producing NEW art that no longer matches what was approved.
  */
-function pngText(buf, key) {
+function pngText(buf: Buffer, key: string): string | null {
   let off = 8;
   while (off + 8 <= buf.length) {
     const len = buf.readUInt32BE(off);
@@ -80,19 +81,27 @@ function pngText(buf, key) {
 }
 
 const MARKER_KEY = "ggd_iconmethod";
-const markerFor = (iconPath) => `${iconPath}.method`;
+const markerFor = (iconPath: string): string => `${iconPath}.method`;
 
-function iconFamilies() {
+function iconFamilies(): string[] {
   return readdirSync(ICON_DIR).filter((d) => statSync(join(ICON_DIR, d)).isDirectory());
 }
 
 // ---- 1. select ------------------------------------------------------------
-const targets = [];
+interface Target {
+  family: string;
+  name: string;
+  abs: string;
+  size: { width: number; height: number };
+  id: string;
+}
+const targets: Target[] = [];
 for (const family of iconFamilies()) {
   for (const name of readdirSync(join(ICON_DIR, family))) {
     if (!name.endsWith(".png")) continue;
     const abs = join(ICON_DIR, family, name);
-    const size = pngSize(abs);
+    // ⭐ 同一支 `pngSize` —— ⛔ 這裡不再有第二份 IHDR 解析。
+    const size = pngSize(readFileSync(abs));
     if (!size || size.width <= EDGE) continue; // legacy 64² set stays PNG
     targets.push({ family, name, abs, size, id: name.slice(0, -4) });
   }
@@ -111,7 +120,7 @@ if (targets.length === 0) {
 
 // ---- 2. encode ------------------------------------------------------------
 /** content-relative "assets/icons/<family>/<id>.png" -> "...<id>.webp" */
-const rewrites = new Map();
+const rewrites = new Map<string, string>();
 let afterBytes = 0;
 
 for (const t of targets) {
@@ -127,7 +136,8 @@ for (const t of targets) {
   if (!existsSync(archived)) copyFileSync(t.abs, archived);
 
   const marker = pngText(readFileSync(t.abs), MARKER_KEY);
-  execFileSync("cwebp", ["-quiet", "-q", String(QUALITY), "-resize", String(EDGE), String(EDGE), t.abs, "-o", outAbs]);
+  // ⭐⭐ 唯一的轉檔呼叫點 —— content-api 走的是**同一支**。
+  writeFileSync(outAbs, encodeIcon(readFileSync(t.abs), { edge: EDGE, quality: QUALITY }));
   if (marker !== null) writeFileSync(markerFor(outAbs), `${marker}\n`);
   afterBytes += statSync(outAbs).size;
   unlinkSync(t.abs);

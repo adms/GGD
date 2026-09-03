@@ -66,6 +66,14 @@ import {
   extractEntry,
   readCentralDirectory,
 } from "./zipReader";
+// ⭐⭐ GH#966 —— icon 二進位通道。⭐ 轉檔規則**只有一個住處**（`encodeIcon`），
+//   而驗證（magic bytes／檔頭長寬／CAS）住 shared 的純函式那一側。
+import { ASSET_ROLE, type IconUploadPolicy } from "@ggd/shared/content/import/iconAssets";
+import {
+  ICON_UPLOAD_DOC_ID,
+  resolveIconUpload,
+} from "@ggd/shared/content/schema/config/iconUpload";
+import { assetSha256, existingIconShas, landIconAssets } from "./iconLanding";
 import { createHash } from "node:crypto";
 import { ImportStore } from "./importStore";
 import type { ActivePointer } from "./importStore";
@@ -638,28 +646,86 @@ function registerG2Routes(
           .join(" | "),
       );
     }
-    const byPath = new Map<string, string>();
+    // ⭐⭐ **二進位感知** —— ⛔ 在此之前這裡是 `.toString("utf8")` **無條件**跑在
+    //   每一個 entry 上。⚠️ 一張 PNG 被 UTF-8 解碼再也回不去（無效序列全部變成 U+FFFD）
+    //   ⇒ ⭐ 「圖進來了」與「圖沒進來」在這一行之後**長得一模一樣**。
+    const raw = new Map<string, Buffer>();
     for (const e of cd.entries) {
       if (e.isDirectory === true) continue;
-      byPath.set(e.path, extractEntry(body, e).toString("utf8"));
+      raw.set(e.path, extractEntry(body, e));
     }
-    const manifestRaw = byPath.get("manifest.json");
+    const manifestRaw = raw.get("manifest.json");
     if (manifestRaw === undefined) {
       throw new ZipFormatError(
         "ZIP_MANIFEST_MISSING",
         "ZIP 裡沒有 manifest.json。",
       );
     }
+    const manifest = JSON.parse(manifestRaw.toString("utf8")) as unknown;
+
+    // ── ⭐⭐ **兩個方向都要對得上** —— ⛔ 沒有這一段，設計師永遠不知道圖掉了 ────
+    //
+    // ⛔ 在此之前這裡是 `if (!path.startsWith("authoring/")) continue;` ——
+    //   ⚠️ 一個**靜默的 continue**。疊上上面那個 `.toString("utf8")` 之後，
+    //   症狀是本 repo 記錄過最糟的一種：
+    //   **匯出成功 · 上傳成功 · validate 通過 · ⛔ 而 icon 不見了**，
+    //   ⛔ 而沒有任何一步會說。
+    //
+    // ⭐ 而它是**失敗形態⑫**（只驗名詞不驗關係的反方向）的教科書實例：
+    //   舊的迴圈從「**宣告**」那一頭走（manifest 說有什麼 ⇒ 去 zip 拿），
+    //   ⇒ ⛔ 結構上看不見「**有實體而無宣告**」的那一種。
+    //   ⇒ ⭐ 所以這裡**兩頭都走**，⛔ 一頭不算。
+    const declared = new Map<string, string>(); // path → role
+    const entries = (manifest as { entries?: unknown })?.entries;
+    if (Array.isArray(entries)) {
+      for (const e of entries as { path?: unknown; role?: unknown }[]) {
+        if (typeof e?.path === "string") {
+          declared.set(e.path, typeof e.role === "string" ? e.role : "");
+        }
+      }
+    }
+    // ⭐ `manifest.json` 是**傳輸層自己的**檔（規格 §8），⛔ 不是一份 entry ——
+    //   它是那張清單本身，一份清單不可能列出自己。
+    const STRUCTURAL = new Set(["manifest.json"]);
+    for (const path of raw.keys()) {
+      if (STRUCTURAL.has(path) || declared.has(path)) continue;
+      throw new ZipFormatError(
+        "ZIP_ENTRY_UNDECLARED",
+        `⛔⛔ ZIP 裡有 \`${path}\`，而 manifest 的 entries[] **沒有宣告它** ⇒ ` +
+          "⭐ 它會被靜靜地丟掉，而匯出／上傳／validate 三步都會說成功。" +
+          "⇒ 請在 manifest 補一列（icon 圖片用 `role: \"asset\"`），或把它從 zip 拿掉。",
+      );
+    }
+    for (const path of declared.keys()) {
+      if (raw.has(path)) continue;
+      throw new ZipFormatError(
+        "ZIP_ENTRY_MISSING",
+        `⛔ manifest 宣告了 \`${path}\`，而 ZIP 裡沒有這一份 ⇒ ` +
+          "⭐ 宣告與位元組必須兩邊都在（⛔ 一頭不算）。",
+      );
+    }
+
     const documents: { path: string; document: unknown }[] = [];
-    for (const [path, text] of byPath) {
+    const assets: { path: string; bytes: Buffer }[] = [];
+    for (const [path, buf] of raw) {
+      // ⭐ `role: "asset"` 的 entry **保持 Buffer**，⛔ 不 `.toString("utf8")`。
+      if (declared.get(path) === ASSET_ROLE) {
+        assets.push({ path, bytes: buf });
+        continue;
+      }
       if (!path.startsWith("authoring/")) continue;
-      documents.push({ path, document: JSON.parse(text) as unknown });
+      documents.push({ path, document: JSON.parse(buf.toString("utf8")) as unknown });
     }
     documents.sort((a, b) => (a.path < b.path ? -1 : 1));
+    assets.sort((a, b) => (a.path < b.path ? -1 : 1));
     return {
       schema: "ggd-editor-import@1",
-      manifest: JSON.parse(manifestRaw) as unknown,
+      manifest,
       documents,
+      // ⭐ 二進位不進 zod（`zEditorImportPackage` 讀得懂的是 JSON）——
+      //   它走**旁邊**的通道，由 `checkIconAssets()` 驗。
+      //   ⚠️ ⛔ 不可以把圖 `toString()` 出來算雜湊：那就是本票要修的那個 bug 的第二次。
+      assets,
     };
   };
 
@@ -671,14 +737,34 @@ function registerG2Routes(
   const packageOf = (body: unknown, jsonField: unknown): unknown =>
     Buffer.isBuffer(body) ? fromZip(body) : jsonField;
 
+  /**
+   * ⭐ GH#966 —— icon 上傳政策。**每一次呼叫都重讀**（⛔ 不快取）：
+   * `Configs` 帶著後台 override，⭐ 而 owner 翻那一格開關的目的就是**當場**生效。
+   */
+  const iconPolicy = (): IconUploadPolicy => ({
+    ...resolveIconUpload(Configs.tryGet(ICON_UPLOAD_DOC_ID)),
+    // ⭐ 位元組上限**沿用** zip 那一層的數字（8 MiB），⛔ 不另訂一個 ——
+    //   兩個數字必然漂，而漂開的那天「擋在門口」與「擋在檢查」會給出不同的答案。
+    maxSourceBytes: ZIP_LIMITS.maxEntryUncompressedBytes,
+  });
+
   /** ⭐ validate 與 apply 共用**同一支**驗證 —— ⛔ 兩份實作必然漂。 */
-  const runValidate = async (raw: unknown) =>
-    validatePackage({
+  const runValidate = async (raw: unknown) => {
+    const entries =
+      (raw as { manifest?: { entries?: unknown } } | null)?.manifest?.entries;
+    return validatePackage({
       raw,
       base: await readBaseFacts(d.root, d.store.active()),
       capabilities: d.capabilities(),
       processorFingerprint: fp,
+      assetPolicy: iconPolicy(),
+      existingIcons: existingIconShas(
+        d.root,
+        Array.isArray(entries) ? (entries as { path?: unknown; role?: unknown }[]) : [],
+      ),
+      assetSha256,
     });
+  };
 
   const resultOf = (
     operationId: string,
@@ -892,14 +978,43 @@ function registerG2Routes(
       try {
         // ⭐ immutable candidate（同一個 digest 只寫一次）。
         d.store.putCandidate(digest, JSON.stringify(rawPkg));
+
+        // ── ⭐⭐ GH#966 icon 資產落地（⭐ **在換指標之前**）────────────────────
+        //   ⚠️ 順序是承重的：icon 檔在沒有任何文件指向它之前是**惰性的**
+        //   ⇒ 先寫位元組、再原子換文件樹。⛔ 反過來會有一段時間文件指著不存在的檔。
+        const sources = new Map<string, Uint8Array>();
+        for (const a of v.value.assets) {
+          if (a.bytes instanceof Uint8Array) sources.set(a.path, a.bytes);
+        }
+        const policy = iconPolicy();
+        const landed =
+          (v.iconAssets ?? []).length === 0
+            ? []
+            : landIconAssets({
+                contentDir: d.root,
+                plans: v.iconAssets ?? [],
+                sources,
+                preserveAlpha: policy.preserveAlpha,
+              });
+        // ⭐ `<collection>/<id>` → 要寫進文件 `icon` 那一格的路徑。
+        const iconFor = new Map(landed.map((l) => [`${l.collection}/${l.id}`, l.outputPath]));
+
         // ⭐ PREPARED：整棵樹寫到旁邊、fsync、逐份讀回來比對。
         const files = new Map<string, string>();
         for (const doc of v.value.documents) {
           const parts = pathParts(doc.path);
           if (parts === null) continue;
+          // ⭐⭐ **把 icon 欄位指到剛落地的那一份。**
+          //   ⚠️ ⭐ 這一步刻意在**逐份內容雜湊驗過之後**才做 —— 改動文件會改變它的
+          //   `contentSha256`，⛔ 在驗證之前改就等於自己把驗證繞過去了。
+          const target = iconFor.get(`${parts.collection}/${parts.id}`);
+          const document =
+            target === undefined
+              ? doc.document
+              : { ...(doc.document as Record<string, unknown>), icon: target };
           files.set(
             `${parts.collection}/${parts.id}.json`,
-            JSON.stringify(doc.document, null, 2),
+            JSON.stringify(document, null, 2),
           );
         }
         d.store.prepare(operationId, files);
@@ -945,9 +1060,41 @@ function registerG2Routes(
           changed: v.changed.length,
           transport: Buffer.isBuffer(req.body) ? "zip" : "json",
         });
+        // ⭐⭐ 留一筆**待審**紀錄（owner 對「一頁批次後台驗收」的定義逐字：
+        //   「**先上線成果**，但是在**後台可以一鍵否決還原**」）——
+        //   ⛔ 它不是事前審批門，⭐ 而 `requiresReview` 關掉就只是不留這筆。
+        if (policy.requiresReview && landed.length > 0) {
+          d.store.audit("content-api", "content-import.icon-pending-review", {
+            operationId,
+            activationDigest: pointer.activationDigest,
+            icons: landed.map((l) => ({
+              collection: l.collection,
+              id: l.id,
+              path: l.outputPath,
+              sha256: l.sha256,
+              bytes: l.bytes,
+            })),
+          });
+        }
         return reply.code(200).send(
           resultOf(operationId, "activated", v, {
             activationDigest: pointer.activationDigest,
+            // ⭐ 對面必須看得到「我的圖去了哪裡」——
+            //   ⛔ 一個只回「成功」的回應答不出「那我的 icon 呢」。
+            ...(landed.length === 0
+              ? {}
+              : {
+                  iconAssets: landed.map((l) => ({
+                    collection: l.collection,
+                    id: l.id,
+                    path: l.outputPath,
+                    sha256: l.sha256,
+                    bytes: l.bytes,
+                    // ⭐ 冪等：轉出來與磁碟上一樣 ⇒ 一個位元組都沒寫。
+                    unchanged: l.unchanged,
+                  })),
+                  pendingReview: policy.requiresReview,
+                }),
           }),
         );
       } catch (e) {

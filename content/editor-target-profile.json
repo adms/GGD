@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_748b6c01c713",
+    "contentVersion": "cv_e7a8f75b7516",
     "collections": {
       "champions": {
         "hash": "e493553f740c",
@@ -42,8 +42,8 @@
         "count": 7
       },
       "config": {
-        "hash": "5e8d9a88083b",
-        "count": 99
+        "hash": "3da665668684",
+        "count": 100
       },
       "models": {
         "hash": "657ea888006b",
@@ -5555,7 +5555,7 @@
   "contractIndex": {
     "schema": "ggd-editor-contract-index@1",
     "minEditorContractVersion": "1.0.0",
-    "digest": "f0fa79b088ba",
+    "digest": "b1813ce0e0ca",
     "href": "/api/v1/content-import/contract-index",
     "representations": [
       {
@@ -5599,6 +5599,18 @@
         "promotionPolicy": "review-required"
       },
       {
+        "schema": "icon-asset@1",
+        "packageKind": "binary-asset",
+        "state": "supported",
+        "minStage": "G2",
+        "modes": [
+          "bootstrap",
+          "full",
+          "delta"
+        ],
+        "promotionPolicy": "review-required"
+      },
+      {
         "schema": "editor-capability-fixture",
         "packageKind": "capability-fixture",
         "state": "supported",
@@ -5630,7 +5642,7 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "302a715aa095",
+    "fingerprint": "68eec84f4c23",
     "surfaces": [
       {
         "surface": "ability-item-zod-schemas",
@@ -5638,7 +5650,7 @@
       },
       {
         "surface": "exact-ref-collector",
-        "digest": "86ec45e81bd8"
+        "digest": "49d752246c9e"
       },
       {
         "surface": "capability-applicability",
@@ -5658,7 +5670,7 @@
       },
       {
         "surface": "golden-vectors",
-        "digest": "a33d0d04b7ec"
+        "digest": "43f495864380"
       }
     ]
   },
@@ -5692,5 +5704,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "0b035781e5e0"
+  "profileDigest": "2427a23f87e5"
 }

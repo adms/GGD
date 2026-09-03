@@ -127,6 +127,29 @@ export const REPRESENTATIONS: readonly RepresentationRow[] = Object.freeze([
       "⛔ 也不可以現在假裝支援（importer 沒有它的 ref closure 規則）。",
   },
   {
+    // ⭐⭐ GH#966 —— 編輯器打包進來的 **icon 圖片**（`role: "asset"` 的 entry）。
+    schema: "icon-asset@1",
+    packageKind: "binary-asset",
+    state: "supported",
+    minStage: "G2",
+    // ⭐ 三種 package mode 都可以夾帶 icon —— 它與文件是**同一包**，
+    //   ⛔ 不是另一條上傳通道（owner 逐字：「自動縮圖轉檔**放入一起打包**」）。
+    modes: ["bootstrap", "full", "delta"],
+    // ⭐ `review-required` 是 **server policy**：icon 會被**所有玩家**看到，
+    //   而審核成本是「一頁打勾」。⚠️ 它的落地形狀是 owner 對「一頁批次後台驗收」
+    //   的定義 ——「**先上線成果**，後台可**一鍵否決還原**」⇒ ⛔ 不是事前審批門。
+    //   ⭐ 這一台實際收不收由 `config.icon-upload@1` 的 `enabled` 決定（一鍵 rollback）。
+    promotionPolicy: "review-required",
+    why:
+      "⭐ 路徑 `assets/icon/<collection>/<docId>/source.<ext>`，落點 " +
+      "`content/assets/icons/<collection>/<id>.webp`（與 `tools/icon-gen` **同一個公式**）。" +
+      "⭐ 位元組由 Main 重算比對（`contentSha256`／`contentSize`／magic bytes），" +
+      "⛔ manifest 的 `mime` 那一格一律不採信。" +
+      "⚠️ ⭐ 編輯器**不可以自己轉檔** —— 轉檔規則只有一個住處（`encodeIcon`），" +
+      "⛔ 兩份實作的症狀是「預覽看到的圖 ≠ 遊戲裡的圖」而沒有東西會紅。" +
+      "⇒ 要預覽就顯示**原圖縮放**。",
+  },
+  {
     schema: "editor-capability-fixture",
     packageKind: "capability-fixture",
     state: "supported",
