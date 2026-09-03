@@ -15,9 +15,12 @@
  * ② 票文：「已量到 46 份裡 **27 份缺 rangeTier**」
  *    ⇒ ⭐ 全庫實測 **235/421 缺**，⛔ 而**本批 8 份裡只有 1 份缺**（`godie-udea.r`，
  *      它 `range: 0` ＋ 連鎖以施法者為圓心 ⇒ 缺得**可能有道理**）。
- *      ⚠️ 但共同規則 #4 說「不存在 ⇒ 阻塞」⇒ ⭐ 照規則判阻塞，⛔ 不為了好看放寬。
- * ③ ⭐ `conditionTier` 全庫 **0/421** 覆蓋（票文說 46 份全缺 —— ⭐ 這一條**成立且更嚴重**）
- *    ⇒ ⭐ 本批 **8 份全部**判「⛔ 阻塞於 #943」。
+ * ③ ⚠️⚠️ **2026-09-03 更正（第三次前提回驗）**：共同規則 #4「五級距標籤不存在
+ *    ⇒ 阻塞於 #943」⛔ **兩個軸都判錯**，而兩個理由都逐字寫在出貨原始碼的檔頭裡
+ *    （見 `axisIsVerifiable` 的註解）。⇒ ⭐ 本批阻塞份數從 **8** 變成 **0**：
+ *    `conditionTier` 缺席是 #943 的設計（推導）· `udea.r` 的字面 `range: 0.0` 是
+ *    `rangeTiers.ts:109` 明文允許的寫法。⛔ 「照規則判阻塞」在這裡不是嚴謹，
+ *    是把一條**假規則**當成了證據。
  *
  * ── ⭐ 兩個方向（⛔ 單邊校準過的尺不算自證過）──────────────────────────────
  * ⭐ 本批 8 張卡裡**恰好 4 張**宣稱「直線」：`ogrh.r` `o00x.r` **做得出來**（`damageLine`），
@@ -37,6 +40,9 @@
 import { describe, expect, it } from "vitest";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
+// ⭐ 驗收「這一軸驗不驗得到」一律問**出貨的解析器**，⛔ 不問「欄位在不在」（見 axisIsVerifiable）。
+import { CONDITION_TIER_UNCONDITIONAL, resolveConditionTier, scalingIsGated } from "../content/conditionTiers";
+import { rangeTiersFromDoc, resolveRangeTier } from "../content/rangeTiers";
 
 const ROOT = join(__dirname, "../../../..");
 const ABILITY_DIR = join(ROOT, "content/abilities");
@@ -68,6 +74,45 @@ const LINE_TPL = new Set([...TPL].filter(([, t]) => /line|beam|wave/.test(t.fami
 /** ⭐ 第〇·六守則細則②：讀機制之前先剝掉整段 `「…」`（角色對白）與 `{{…}}`（佔位）。 */
 const strip = (s: string): string => s.replace(/「[^」]*」/gs, "").replace(/\{\{[^}]*\}\}/g, "");
 const CLAIMS_LINE = /一直線|直線|貫穿/;
+
+/** ⭐ 出貨的距離級距表（⛔ 不是自己編的），`resolveRangeTier` 要吃它。 */
+const RANGE_TIERS = rangeTiersFromDoc(read(join(ROOT, "content/config/range-tiers.json")));
+
+/** 這一支技能上所有帶 `ratios` / `condition` 的節點。 */
+function scalingNodes(node: unknown, out: Json[] = []): Json[] {
+  if (Array.isArray(node)) {
+    for (const x of node) scalingNodes(x, out);
+  } else if (node !== null && typeof node === "object") {
+    const rec = node as Json;
+    if ("ratios" in rec || "condition" in rec) out.push(rec);
+    for (const v of Object.values(rec)) scalingNodes(v, out);
+  }
+  return out;
+}
+
+/**
+ * ⭐⭐ **「這一軸驗得到嗎」問的是解析器，⛔ 不是「欄位在不在」。**
+ *
+ * ⚠️ 這一段在 2026-09-03 之前是 `!(k in doc)` —— 而那條規則**兩個軸都判錯**，
+ * 兩個理由不同，⭐ 而兩個理由都逐字寫在出貨原始碼的檔頭裡：
+ *
+ * · `conditionTier` —— `conditionTiers.ts:56`「⭐ **唯一的查表入口**。**缺席 ⇒ 推導**；
+ *   填了 ⇒ 照填的（⛔ 作者贏）」⇒ #943（`3bdb3f925`，標題逐字「正解是**推導**，
+ *   ⛔ 不是去填 235 份檔」）之後，**欄位缺席就是正常狀態** ⇒ 這一軸**恆可驗**。
+ * · `rangeTier` —— `rangeTiers.ts:109`「沒有 `rangeTier` → 原樣返回。
+ *   **手寫 `range` 是完全合法的寫法**」⇒ 缺標籤只代表作者直接寫了數字。
+ *   ⇒ 真正驗不到的只有「解析完**一個距離都拿不出來**」。
+ *
+ * ⇒ ⭐ 判準因此是**解析後的結果**，⛔ 不是文件上的字面。
+ */
+function axisIsVerifiable(axis: string, doc: Json): boolean {
+  if (axis === "conditionTier") return scalingNodes(doc).every((n) => typeof resolveConditionTier(n) === "string");
+  if (axis === "rangeTier") {
+    const resolved = resolveRangeTier(doc, RANGE_TIERS) as Json;
+    return typeof resolved["range"] === "number" || doc["rangeUnlimited"] === true;
+  }
+  return axis in doc;
+}
 
 const NEST = ["effects", "onArrive", "onTouch", "onHit", "onHitTargets", "finalEffects"] as const;
 function walk(nodes: unknown, out: Json[] = []): Json[] {
@@ -109,7 +154,7 @@ function assess(id: string): Row {
   }
   if (tplRef && LINE_TPL.has(tplRef)) lineNodes.push(`template:${tplRef}`);
   const claimsLine = CLAIMS_LINE.test(strip(String(doc["description"] ?? "")));
-  const missingTiers = ROSTER.commonRule4.axes.filter((k) => !(k in doc));
+  const missingTiers = ROSTER.commonRule4.axes.filter((k) => !axisIsVerifiable(k, doc));
   const conflict = claimsLine && lineNodes.length === 0;
   return {
     id,
@@ -123,7 +168,7 @@ function assess(id: string): Row {
     verdict: conflict
       ? `⛔ 不通過（語意衝突：卡面說直線，而機制是 ${tplRef ? TPL.get(tplRef)?.family : kinds.join("+") || "空"}）`
       : missingTiers.length
-        ? `⛔ 阻塞於 #943（缺 ${missingTiers.join(" / ")}）`
+        ? `⛔ 阻塞（解析器拿不出值：${missingTiers.join(" / ")}）`
         : "通過",
   };
 }
@@ -280,24 +325,30 @@ describe("46 份驗收 · 批2 投射與光束（GH#960）", () => {
     }
   });
 
-  it("★★ ⭐⭐ **五級距缺席一律判「阻塞」，⛔ 不是通過**（共同規則 #4）", () => {
-    const wrong = ROWS.filter((r) => r.missingTiers.length > 0 && r.verdict === "通過").map((r) => r.id);
+  it("★★ ⭐⭐ **條件級距的推導,兩個方向各校準一次**(共同規則 #4,2026-09-03 改寫)", () => {
+    // ⚠️⚠️ 這一條在此之前斷言 `withCondition === 0` —— ⭐ **一條永遠不會響的絆線**
+    //   (失敗形態⑨):它等著有人「去把 `conditionTier` 填進 421 份檔」,
+    //   ⛔ 而 #943 (`3bdb3f925`) 的標題逐字就是「正解是**推導**,⛔ 不是去填 235 份檔」
+    //   ⇒ 它等的那件事**設計上永遠不會發生**,於是這一格恆綠而什麼都沒驗到。
+    // ⇒ ⭐ 改成驗**推導本身**,而且兩個方向都走(⛔ 單邊校準過的尺不算自證過)。
+    const nodes = ROWS.flatMap((r) => scalingNodes(r.doc).map((n) => ({ id: r.id, n })));
+    const gated = nodes.filter((x) => scalingIsGated(x.n));
+    const plain = nodes.filter((x) => !scalingIsGated(x.n));
+
+    // ⭐ 量尺自證:兩邊都要有樣本,⛔ 否則下面兩條斷言有一條是在空集合上通過。
+    // ⚠️ 刻意不寫死數字(那會是第二個住處):只要求**兩邊都不是 0**。
+    expect(gated.length, "⛔ 沒有任何**帶條件**的節點 ⇒「有條件會被認出來」這一邊沒驗到").toBeGreaterThan(0);
+    expect(plain.length, "⛔ 沒有任何**無條件**的節點 ⇒「無條件不會被誤判」這一邊沒驗到").toBeGreaterThan(0);
+
+    // ① 已知**有**:帶 `when` / `condition` 的節點要推導成「不是無條件」那一格
     expect(
-      wrong,
-      "⛔⛔ 有一份缺五級距標籤卻被判**通過** —— ⭐ 共同規則 #4 逐字：\n" +
-        "  「標籤不存在時判定為『⛔ 阻塞於 #943』，⛔ 不是通過」。\n" +
-        "  ⚠️ 否則「沒有欄位可驗」會被讀成綠。",
+      gated.filter((x) => resolveConditionTier(x.n) === CONDITION_TIER_UNCONDITIONAL).map((x) => x.id),
+      "⛔⛔ 一個**帶條件**的節點被推導成「無條件」⇒ ⭐ 卡面宣稱「這條很難吃到」而係數恆真(第一·五守則)",
     ).toEqual([]);
-    // ⭐ 反方向：這個「阻塞」的**分母**要是量到的，⛔ 不是抄的
-    const total = jsonFiles(ABILITY_DIR).length;
-    const withCondition = jsonFiles(ABILITY_DIR).filter((f) =>
-      readFileSync(join(ABILITY_DIR, f), "utf8").includes("conditionTier"),
-    ).length;
+    // ② 已知**沒有**:不帶條件的節點⛔ 不可以被推導成有條件(否則它是一個對每支都喊的橡皮圖章)
     expect(
-      withCondition,
-      `⭐ 好消息：${withCondition}/${total} 支技能已經有 \`conditionTier\` 了（在此之前是 0）。\n` +
-        "  ⇒ ⭐ #943 動了 ⇒ **本批 8 份的「阻塞」判定要重跑**（可能有幾份可以升級成通過）。\n" +
-        "  ⛔ 這一條是刻意的絆線，⛔ 不是回歸。",
-    ).toBe(0);
+      plain.filter((x) => resolveConditionTier(x.n) !== CONDITION_TIER_UNCONDITIONAL).map((x) => x.id),
+      "⛔⛔ 一個**無條件**的節點被推導成有條件 ⇒ ⭐ 這把尺對每個節點都喊,它證明不了任何事",
+    ).toEqual([]);
   });
 });

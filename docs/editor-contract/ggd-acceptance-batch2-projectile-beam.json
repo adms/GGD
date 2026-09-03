@@ -76,13 +76,30 @@
     }
   ],
   "mirrorPairs": [
-    ["godie-hjai.e", "godie-h020.e"],
-    ["godie-ogrh.r", "godie-o00x.r"]
+    [
+      "godie-hjai.e",
+      "godie-h020.e"
+    ],
+    [
+      "godie-ogrh.r",
+      "godie-o00x.r"
+    ]
   ],
-  "cosmeticKeys": ["id", "icon", "vfxKey"],
+  "cosmeticKeys": [
+    "id",
+    "icon",
+    "vfxKey"
+  ],
   "commonRule4": {
-    "rule": "五級距標籤不存在時判定為「⛔ 阻塞於 #943」，⛔ 不是通過",
-    "axes": ["rangeTier", "conditionTier"],
-    "why": "⛔ 否則「沒有欄位可驗」會被讀成綠 —— ⭐ 而 conditionTier 今天全庫 0 覆蓋（實測 421/421 沒有）。"
+    "axes": [
+      "rangeTier",
+      "conditionTier"
+    ],
+    "rule": "⭐ 這一軸驗不驗得到,問**出貨的解析器**,⛔ 不問「欄位在不在」",
+    "supersedes": "⛔ 舊規則「五級距標籤不存在 ⇒ 阻塞於 #943」—— 2026-09-03 逐行複驗後**兩個軸都判錯**",
+    "why": {
+      "conditionTier": "`conditionTiers.ts:56` 逐字「缺席 ⇒ 推導;填了 ⇒ 照填的」⇒ #943(`3aaef0cab` 之前的 `3bdb3f925`,標題逐字「正解是**推導**,⛔ 不是去填 235 份檔」)之後**欄位缺席就是正常狀態** ⇒ 這一軸恆可驗,全庫 0/421 顯式標籤是設計如此。",
+      "rangeTier": "`rangeTiers.ts:109` 逐字「沒有 `rangeTier` → 原樣返回。**手寫 `range` 是完全合法的寫法**」⇒ 缺標籤只代表作者直接寫了數字(本批 `godie-udea.r` 就是 `range: 0.0`)。真正驗不到的只有「解析完一個距離都拿不出來」。"
+    }
   }
 }
