@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_497f172206cc",
+    "contentVersion": "cv_6db816814496",
     "collections": {
       "champions": {
-        "hash": "51cb1e364dfe",
+        "hash": "e493553f740c",
         "count": 71
       },
       "abilities": {
-        "hash": "c94af7aa3de9",
+        "hash": "969f791f7daa",
         "count": 421
       },
       "items": {
@@ -42,8 +42,8 @@
         "count": 7
       },
       "config": {
-        "hash": "a7107b6b09f7",
-        "count": 97
+        "hash": "08adbdec4eda",
+        "count": 98
       },
       "models": {
         "hash": "657ea888006b",
@@ -93,7 +93,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "855cf94f",
+    "fingerprint": "18d7999e",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -936,7 +936,6 @@
       "cooldownShape",
       "cooldownTier",
       "description",
-      "descriptionRoles",
       "effects",
       "hitFeel",
       "icon",
@@ -1116,7 +1115,6 @@
         "cooldownShape",
         "cooldownTier",
         "description",
-        "descriptionRoles",
         "effects",
         "hitFeel",
         "icon",
@@ -4760,12 +4758,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "855cf94f",
+    "engineFingerprint": "18d7999e",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 855cf94f —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 18d7999e —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -5621,11 +5619,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "152d9be719e0",
+    "fingerprint": "295062860767",
     "surfaces": [
       {
         "surface": "ability-item-zod-schemas",
-        "digest": "fd268f4fea23"
+        "digest": "a553e3f24a0e"
       },
       {
         "surface": "exact-ref-collector",
@@ -5673,7 +5671,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "e462cfdcca22",
+  "migrationFingerprint": "7b71b745b1d9",
   "supportedModes": [
     "bootstrap"
   ],
@@ -5683,5 +5681,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "b2fede0766bc"
+  "profileDigest": "5d8851d4248e"
 }

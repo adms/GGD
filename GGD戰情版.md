@@ -1,1 +1,1 @@
-docs/_release/戰情版-20260902.md
+docs/_release/戰情版-20260903.md
