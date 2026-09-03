@@ -456,7 +456,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.4
-        version: 2.1.9(@types/node@22.20.1)(jsdom@30.0.1(@noble/hashes@2.3.0))
+        version: 2.1.9(@types/node@22.20.1)(jsdom@30.0.1(@noble/hashes@2.4.0))
 
   tools/voxel-gen:
     dependencies:
