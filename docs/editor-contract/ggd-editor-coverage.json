@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "ba67b7759c0d",
+  "fingerprint": "fb36db5a72c7",
   "capabilityFingerprint": "18d7999e",
   "required": [
     {
@@ -9141,6 +9141,11 @@
     },
     {
       "group": "configField",
+      "name": "draftShowPicked",
+      "owner": "config.ui-cues@1"
+    },
+    {
+      "group": "configField",
       "name": "drainChampionsOnly",
       "owner": "config.regen@1"
     },
@@ -10173,6 +10178,101 @@
       "group": "configField",
       "name": "freeChampionIds",
       "owner": "config.store@1"
+    },
+    {
+      "group": "configField",
+      "name": "frequency",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "frequency.abilityCast",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "frequency.abilityCast.中",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "frequency.abilityCast.大",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "frequency.abilityCast.小",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "frequency.abilityCast.極大",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "frequency.abilityCast.極小",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "frequency.basicAttack",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "frequency.basicAttack.中",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "frequency.basicAttack.大",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "frequency.basicAttack.小",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "frequency.basicAttack.極大",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "frequency.basicAttack.極小",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "frequency.specialCondition",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "frequency.specialCondition.中",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "frequency.specialCondition.大",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "frequency.specialCondition.小",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "frequency.specialCondition.極大",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "frequency.specialCondition.極小",
+      "owner": "config.ap-coefficient@1"
     },
     {
       "group": "configField",
@@ -24982,9 +25082,9 @@
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 147,
-    "configField": 3934,
+    "configField": 3954,
     "_notRequired": 15,
-    "_total": 5117,
+    "_total": 5137,
     "_ownerOnly": 39
   }
 }
