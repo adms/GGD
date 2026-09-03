@@ -24,6 +24,8 @@ import {
   scheduleSimEvents,
   segmentFromAsset,
   recommendedEvidenceTimes,
+  recommendedRuntimeEvidenceTimes,
+  scriptVisualFocus,
   timelineDurationMs,
   triggerCuesFromSim,
   type AssetDrop,
@@ -76,7 +78,7 @@ import {
   PRESENTATION_RECEIPT,
   unsupportedReplacementClaims,
 } from "./presentationContract";
-import { buildBasicVisualDraft } from "./basicVisualAuthoring";
+import { buildBasicVisualDraft, runtimeAuditPlaceholderScript } from "./basicVisualAuthoring";
 import {
   classifyVisualAcceptanceIssues,
   type VisualAcceptanceMachineIssue,
@@ -118,7 +120,7 @@ interface StoredBasicVisualReview {
 function basicVisualEvidenceFingerprint(frames: readonly VfxVisualEvidenceFrame[]): string {
   let hash = 0x811c9dc5;
   for (const frame of frames) {
-    const value = `${frame.atMs}/${frame.view}/${frame.diagnosticOnly === true ? 1 : 0}/${frame.dataUrl}`;
+    const value = `${frame.atMs}/${frame.view}/${frame.framing ?? "gameplay"}/${frame.diagnosticOnly === true ? 1 : 0}/${frame.dataUrl}`;
     for (let index = 0; index < value.length; index++) {
       hash ^= value.charCodeAt(index);
       hash = Math.imul(hash, 0x01000193);
@@ -274,6 +276,7 @@ export function VfxForgePage() {
     ...(acceptanceMirrorEvidenceBlocked ? ["八招驗收的施法者與敵方目標不可使用同一名英雄"] : []),
   ];
   const reviewEvidenceAllowed = appearanceReview.allowed && !acceptanceMirrorEvidenceBlocked;
+  const batchRenderAllowed = appearanceReview.renderAllowed && !acceptanceMirrorEvidenceBlocked;
 
   const existingIds = useMemo(
     () => new Set(indexes.scripts.data?.entries.map((e) => e.id) ?? []),
@@ -332,6 +335,12 @@ export function VfxForgePage() {
       let nextTrace: CastPreviewTrace | ReactionPreviewTrace;
       if (reactionTrigger === "reflectSuccess") {
         nextTrace = simPreview.triggerReflectSuccess(runtimeChampion, ability.id as AbilityId, {
+          level: PREVIEW_AUTHOR_LEVEL,
+          rank: 1,
+          ticks,
+        });
+      } else if (activationModeForAbility(ability) === "passive") {
+        nextTrace = simPreview.triggerPassiveAbility(runtimeChampion, ability.id as AbilityId, {
           level: PREVIEW_AUTHOR_LEVEL,
           rank: 1,
           ticks,
@@ -776,18 +785,7 @@ export function VfxForgePage() {
       }
       const fixture = acceptanceFixtureFor(row.id, cues);
       const basic = fixture ? null : buildBasicVisualDraft(ability, cues);
-      const script = fixture ?? basic?.script ?? null;
-      // Pure passive hooks are scenario-driven. Report an honest reusable
-      // event-brick blocker before the ordinary cast-review gate can mislabel
-      // them as a failed button press.
-      if (!script) {
-        finishBasicVisualCase({
-          id: row.id, name: row.name, status: "blocked",
-          blockers: basic?.blockers ?? ["沒有可由目前 VFX 事件詞彙觸發的基本演出"],
-          frames: [], humanVerdict: "pending", humanScore: null, humanNote: "",
-        });
-        return;
-      }
+      const script = fixture ?? basic?.script ?? runtimeAuditPlaceholderScript(ability.id);
       if (simReview.pending) return;
       if (!simReview.ready) {
         finishBasicVisualCase({
@@ -828,7 +826,7 @@ export function VfxForgePage() {
       ...actionIssues.map((issue) => `${issue.code}：${issue.message}`),
       ...replacementBlockers.map((claim) => `${claim.trigger}:${claim.channel} 尚不可取代`),
       ...(activationConflict ? [activationConflict.message] : []),
-      ...(!reviewEvidenceAllowed ? reviewEvidenceIssues : []),
+      ...(!batchRenderAllowed ? reviewEvidenceIssues : []),
     ];
     if (!assetPreviewAllowed || blockers.length > 0) {
       finishBasicVisualCase({
@@ -842,9 +840,15 @@ export function VfxForgePage() {
     basicVisualBatchBusy.current = true;
     setStatus(`自動視覺驗收 ${basicVisualBatch.position + 1}/${basicVisualBatch.queue.length}：${row.id}`);
     void (async () => {
+      let fallbackDiagnosticAtMs = 0;
       try {
         const { audit, frames } = await withBatchDeadline((async () => {
-          const audit = await preview.auditBackdropTimeline();
+          // Named Editor fixtures prove the composition made from Forge bricks,
+          // so audit that isolated script. Ordinary skills prove the shipped
+          // runtime path. Mixing both rendered two compositions at once and
+          // blamed a Main-owned effect on the Editor recipe.
+          const audit = await preview.auditBackdropTimeline(row.vfxFixture ? "script" : "runtime");
+          fallbackDiagnosticAtMs = audit.worstAtMs;
           if (!audit.safe) {
             const frame = await preview.captureDiagnosticEvidenceAt(
               audit.worstAtMs,
@@ -852,17 +856,31 @@ export function VfxForgePage() {
             );
             return { audit, frames: [frame] };
           }
-          const wanted = row.vfxFixture ? 4 : 1;
-          const times = recommendedEvidenceTimes(draft, cues, wanted);
+          const wanted = row.vfxFixture ? 4 : 2;
+          let times = row.vfxFixture
+            ? recommendedEvidenceTimes(draft, cues, wanted)
+            : recommendedRuntimeEvidenceTimes(schedule, wanted);
+          // One-beat skills still need both actual gameplay scale and a close
+          // detail proof. Duplicate the timestamp, not the effect or timeline.
+          if (!row.vfxFixture && times.length === 1) {
+            times = [times[0]!, { ...times[0]!, label: `${times[0]!.label} · 近景` }];
+          }
           const frames: VfxVisualEvidenceFrame[] = [];
-          for (const time of times) {
+          const evidencePose = schedule.find((item) => item.actorPose)?.actorPose ?? {
+            caster: { x: 0, z: 0 },
+            target: { x: 0, z: 3 },
+          };
+          const needsWholeActionFrame = row.vfxFixture && scriptVisualFocus(draft, evidencePose) !== null;
+          for (let index = 0; index < times.length; index++) {
+            const time = times[index]!;
             frames.push(await preview.captureVisualEvidenceAt(
               time.atMs,
               `${row.id} · ${time.label} · 自動基本視覺驗收`,
+              index === 0 || needsWholeActionFrame ? "gameplay" : "detail",
             ));
           }
           return { audit, frames };
-        })(), row.id);
+        })(), row.id, row.vfxFixture ? 60_000 : 30_000);
         const blockers = audit.safe ? [] : [
           `${audit.worst.reason ?? "底板稽核失敗"} @ ${audit.worstAtMs}ms` +
           (audit.suspects.length > 0 ? `；可疑載體：${audit.suspects.join(" | ")}` : ""),
@@ -876,7 +894,7 @@ export function VfxForgePage() {
         let frames: readonly VfxVisualEvidenceFrame[] = [];
         try {
           frames = [await withBatchDeadline(
-            preview.captureDiagnosticEvidenceAt(0, `${row.id} · 載入／GPU 失敗診斷`),
+            preview.captureDiagnosticEvidenceAt(fallbackDiagnosticAtMs, `${row.id} · 載入／GPU 失敗診斷`),
             `${row.id} diagnostic`,
             10_000,
           )];
@@ -894,8 +912,8 @@ export function VfxForgePage() {
     ability, abilityId, actionIssues, activationConflict, assetAuditPending,
     assetBlockers, assetPreviewAllowed, basicVisualBatch, cues, draft,
     draftHistory.reset, finishBasicVisualCase, replacementBlockers,
-    reviewEvidenceAllowed, reviewEvidenceIssues, runtimeChampion, runtimeTarget,
-    previewMode, scriptSafety.isPending, simReview, targetChampionId,
+    batchRenderAllowed, reviewEvidenceAllowed, reviewEvidenceIssues, runtimeChampion, runtimeTarget,
+    previewMode, schedule, scriptSafety.isPending, simReview, targetChampionId,
   ]);
 
   useEffect(() => {

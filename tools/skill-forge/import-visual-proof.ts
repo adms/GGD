@@ -130,6 +130,7 @@ const cases = SKILL_ACCEPTANCE_CANDIDATES.map((candidate) => {
       label: typeof frame.label === "string" ? frame.label : `frame ${index + 1}`,
       atMs,
       view: frame.view === "top" ? "top" : "side",
+      framing: frame.framing === "detail" ? "detail" : "gameplay",
       frameAudit: frame.frameAudit ?? null,
       diagnosticOnly,
       file: relative(OUT_DIR, absolute),

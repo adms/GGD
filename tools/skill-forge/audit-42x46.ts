@@ -14,6 +14,8 @@ import { fileURLToPath } from "node:url";
 import {
   SKILL_ACCEPTANCE_CANDIDATES,
   SKILL_ACCEPTANCE_THEME_IDS,
+  STRICT_VISUAL_ACCEPTANCE,
+  STRICT_VISUAL_ACCEPTANCE_IDS,
   skillAcceptanceThemeId,
 } from "../../apps/editor/src/forge/skillAcceptanceCatalog";
 import { SKILL_TYPE_PRESETS } from "../../apps/editor/src/forge/skillTypePresets";
@@ -53,11 +55,16 @@ interface VisualProofEntry {
   readonly machineIssues?: unknown;
 }
 
-const capabilities = json<{ effectKinds: readonly string[]; hookEvents: readonly string[] }>(
+const capabilities = json<{
+  effectKinds: readonly string[];
+  hookEvents: readonly string[];
+  conditionLeafKinds: readonly string[];
+}>(
   "docs/editor-contract/ggd-runtime-capabilities.json",
 );
 const effectVocabulary = new Set(capabilities.effectKinds);
 const hookVocabulary = new Set(capabilities.hookEvents);
+const conditionVocabulary = new Set(capabilities.conditionLeafKinds);
 const presetById = new Map(SKILL_TYPE_PRESETS.map((preset) => [preset.id, preset] as const));
 const proofById = visualProofById();
 
@@ -75,7 +82,7 @@ const rows = SKILL_ACCEPTANCE_CANDIDATES.map((candidate) => {
   );
   const preset = inheritedPreset ? presetById.get(inheritedPreset) : undefined;
   const activation = activationMode(doc);
-  const unsupportedHookTriggers = [...surface.hooks]
+  const scriptTimelineGaps = [...surface.hooks]
     .filter((hook) => hook !== "onReflectSuccess")
     .sort();
   const scriptPath = existsSync(join(ROOT, `content/vfx-scripts/${candidate.id}.json`));
@@ -117,18 +124,18 @@ const rows = SKILL_ACCEPTANCE_CANDIDATES.map((candidate) => {
     : preset
       ? "preset-stack-plus-advanced-form"
       : "advanced-no-code-effect-form";
-  const authoringBlockers = [
-    ...(unsupportedHookTriggers.length > 0
-      ? [`VFX Forge 尚不能把自訂演出綁到 ${unsupportedHookTriggers.join("、")}`]
-      : []),
-    ...(!visualBrick && !scriptPath ? ["沒有已綁定的可見 VFX 積木；需由設計師在特效工坊加入"] : []),
+  const contractGaps = [
+    ...(candidate.requiredEffectKinds ?? []).filter((kind) => !effectVocabulary.has(kind)).map((kind) => `未知效果積木 ${kind}`),
+    ...(candidate.requiredHooks ?? []).filter((hook) => !hookVocabulary.has(hook)).map((hook) => `未知事件積木 ${hook}`),
+    ...(candidate.requiredConditionKinds ?? []).filter((kind) => !conditionVocabulary.has(kind)).map((kind) => `未知條件積木 ${kind}`),
   ];
+  const authoringBlockers = contractGaps;
   return {
     id: candidate.id,
     name: candidate.name,
     themeId: skillAcceptanceThemeId(candidate),
     group: candidate.group,
-    strictVisual: candidate.vfxFixture === true,
+    strictVisual: STRICT_VISUAL_ACCEPTANCE_IDS.has(candidate.id),
     acceptance: candidate.acceptance,
     activation,
     designerPath,
@@ -136,8 +143,9 @@ const rows = SKILL_ACCEPTANCE_CANDIDATES.map((candidate) => {
     templateRefs,
     effectKinds: [...surface.effects].sort(),
     hookEvents: [...surface.hooks].sort(),
-    customVfxTriggerCoverage: unsupportedHookTriggers.length === 0 ? "complete" : "partial",
-    unsupportedHookTriggers,
+    noCodeEventAuthoring: surface.hooks.size > 0 ? "skill-forge-effect-graph" : "not-applicable",
+    vfxScriptTimelineCoverage: scriptTimelineGaps.length === 0 ? "complete" : "cast-and-reflect-only",
+    scriptTimelineGaps,
     hasVisualBrick: visualBrick,
     hasShippedVfxScript: scriptPath,
     framebuffer: {
@@ -170,7 +178,8 @@ const summary = {
   documents: rows.length,
   ownerUnion: rows.filter((row) => row.group === "owner-union").length,
   runtimeCoverage: rows.filter((row) => row.group === "runtime-coverage").length,
-  strictVisual: rows.filter((row) => row.strictVisual).length,
+  strictVisualThemes: STRICT_VISUAL_ACCEPTANCE.length,
+  strictVisualDocuments: rows.filter((row) => row.strictVisual).length,
   gpuCaptured: rows.filter((row) => row.framebuffer.batchStatus === "captured").length,
   gpuFailed: rows.filter((row) => row.framebuffer.batchStatus === "failed").length,
   gpuBlocked: rows.filter((row) => row.framebuffer.batchStatus === "blocked").length,
@@ -178,7 +187,7 @@ const summary = {
   visualFail: rows.filter((row) => row.status === "fail").length,
   needsFrameReview: rows.filter((row) => row.status === "needs-frame-review").length,
   blocked: rows.filter((row) => row.status === "blocked").length,
-  unsupportedHookTriggers: [...new Set(rows.flatMap((row) => row.unsupportedHookTriggers))].sort(),
+  scriptTimelineGaps: [...new Set(rows.flatMap((row) => row.scriptTimelineGaps))].sort(),
   machineIssueCounts: countBy(rows.flatMap((row) => row.framebuffer.machineIssues.map((issue) => issue.code))),
   machineIssueOwnerCounts: countBy(rows.flatMap((row) => row.framebuffer.machineIssues.map((issue) => issue.owner))),
 };
@@ -265,22 +274,22 @@ function markdown(value: typeof receipt): string {
     "> JSON/schema/單元測試通過不等於視覺通過。每列必須有真 framebuffer 關鍵格與人工裁決；八招另做逐階段嚴格比對。",
     "",
     `- 範圍：${s.themes} 個主題／${s.documents} 份技能（Owner ${s.ownerUnion}＋runtime 補集 ${s.runtimeCoverage}）`,
-    `- 嚴格視覺子集：${s.strictVisual}`,
+    `- 嚴格視覺子集：${s.strictVisualThemes} 個主題／${s.strictVisualDocuments} 份技能文件（直接讀 Main 機器契約）`,
     `- 全體視覺判定：已通過 ${s.visualPass}；失敗 ${s.visualFail}；待看圖 ${s.needsFrameReview}；被接縫阻塞 ${s.blocked}`,
     `- GPU 批次：已擷取 ${s.gpuCaptured}；畫面守衛失敗 ${s.gpuFailed}；契約／素材阻塞 ${s.gpuBlocked}`,
     `- 自動根因：${formatCounts(s.machineIssueCounts)}`,
     `- 自動分工：${formatCounts(s.machineIssueOwnerCounts)}`,
-    `- VFX 自訂事件缺口：${s.unsupportedHookTriggers.length ? s.unsupportedHookTriggers.join("、") : "無"}`,
+    `- VFX Script 直接時間軸未涵蓋（不是 Main 阻塞；由 Skill Forge 效果圖綁定）：${s.scriptTimelineGaps.length ? s.scriptTimelineGaps.join("、") : "無"}`,
     "",
     "| 技能 | 主題 | 設計師路徑 | 事件演出 | 畫面證據 | 自動根因 | 狀態 |",
     "|---|---|---|---|---|---|---|",
     ...value.rows.map((row) =>
-      `| \`${row.id}\` ${row.name} | \`${row.themeId}\` | ${row.designerPath}${row.presetId ? `（${row.presetId}）` : ""} | ${row.customVfxTriggerCoverage}${row.unsupportedHookTriggers.length ? `：${row.unsupportedHookTriggers.join("、")}` : ""} | ${row.framebuffer.batchStatus}／${row.framebuffer.frameCount} 格／${row.framebuffer.humanVerdict}${row.framebuffer.humanScore === null ? "" : `／${row.framebuffer.humanScore}分`} | ${row.framebuffer.machineIssues.map((issue) => `${issue.code}/${issue.owner}`).join("、") || "—"} | **${row.status}** |`,
+      `| \`${row.id}\` ${row.name} | \`${row.themeId}\` | ${row.designerPath}${row.presetId ? `（${row.presetId}）` : ""} | ${row.noCodeEventAuthoring}${row.scriptTimelineGaps.length ? `；script 時間軸：${row.scriptTimelineGaps.join("、")}` : ""} | ${row.framebuffer.batchStatus}／${row.framebuffer.frameCount} 格／${row.framebuffer.humanVerdict}${row.framebuffer.humanScore === null ? "" : `／${row.framebuffer.humanScore}分`} | ${row.framebuffer.machineIssues.map((issue) => `${issue.code}/${issue.owner}`).join("、") || "—"} | **${row.status}** |`,
     ),
     "",
     "## 判定邊界",
     "",
-    "- `blocked` 不是 Editor 自己發明近似效果的許可；Main 要補可重用事件／積木契約，Editor 再接 UI。",
+    "- `blocked` 只用於機器契約真的缺少 required effect/hook/condition，不能因 `vfx-script@1` 沒有直連 hook 就誤報；該路徑由 Skill Forge 的 hook effect graph 組裝。",
     "- `needs-frame-review` 表示資料與操作入口成立，但尚無人看過實際遊戲畫面，不能宣稱完成。",
     "- 八招是高風險壓力測試，不是其餘 38 份的替代品。",
   ];

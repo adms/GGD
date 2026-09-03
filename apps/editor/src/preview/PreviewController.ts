@@ -42,6 +42,7 @@ import {
   type Stat,
   type EffectDef,
   type Vec2,
+  runEffects,
 } from "@ggd/shared/sim";
 import { learnEx } from "@ggd/shared/sim/abilities/abilitySystem";
 import { Abilities } from "@ggd/shared/sim/content/registry";
@@ -49,7 +50,7 @@ import { rankScalar } from "@ggd/shared/sim/perRank";
 import { attachItemSource } from "@ggd/shared/sim/economy/itemSource";
 import { liveAttribute } from "@ggd/shared/sim/stats/attrSources";
 import type { AttrLookup } from "@ggd/shared/sim";
-import { asSeatId, asTeamId, type AbilityId, type EntityId } from "@ggd/shared/ids";
+import { asSeatId, asTeamId, type AbilityId, type EntityId, type StatusId } from "@ggd/shared/ids";
 import {
   currentPlayerCanResolveEventOrigin,
   eventOriginBelongsToAbility,
@@ -209,6 +210,16 @@ export interface PreviewController {
     abilityId: AbilityId,
     opts?: Pick<CastPreviewOptions, "level" | "rank" | "ticks">,
   ): ReactionPreviewTrace;
+  /**
+   * Drive a pure passive through a real external stimulus (attack, damage,
+   * status, cast or interval). The hook itself is never called directly; its
+   * own runtime ledger must prove that it fired.
+   */
+  triggerPassiveAbility(
+    champion: ChampionDef,
+    abilityId: AbilityId,
+    opts?: Pick<CastPreviewOptions, "level" | "rank" | "ticks">,
+  ): ReactionPreviewTrace;
   previewItem(item: ItemDef, on: ChampionDef, opts?: { level?: number }): StatDelta[];
   previewAugment(aug: AugmentDef, on: ChampionDef, opts?: { level?: number }): StatDelta[];
   /** Renderless controller records the request; visual stages play it through VfxSystem. */
@@ -349,6 +360,60 @@ function abilityHasReflectSuccessHook(ability: AbilityDef | undefined): boolean 
     return Object.values(record).some(visit);
   };
   return ability !== undefined && visit(ability);
+}
+
+interface HookProbe {
+  readonly on: string;
+  readonly abilitySlot?: CastableSlot;
+}
+
+const PASSIVE_PROBE_PRIORITY = [
+  "onDamageTaken",
+  "onBasicAttack",
+  "onAbilityCast",
+  "onAbilityHit",
+  "onEvade",
+  "onStunned",
+  "onInterval",
+] as const;
+
+function hookProbesOf(value: unknown): HookProbe[] {
+  const out: HookProbe[] = [];
+  const visit = (node: unknown): void => {
+    if (Array.isArray(node)) { for (const child of node) visit(child); return; }
+    if (node === null || typeof node !== "object") return;
+    const record = node as Record<string, unknown>;
+    if (typeof record["on"] === "string" && /^on[A-Z]/.test(record["on"])) {
+      out.push({
+        on: record["on"],
+        ...(typeof record["abilitySlot"] === "string"
+          ? { abilitySlot: record["abilitySlot"] as CastableSlot }
+          : {}),
+      });
+    }
+    for (const child of Object.values(record)) visit(child);
+  };
+  visit(value);
+  return out;
+}
+
+function hookLedgerEntry(
+  world: SimWorld,
+  owner: EntityId,
+  abilityId: AbilityId,
+  event: string,
+): { source: { hookLastFired?: number[] }; index: number; before: number } | null {
+  for (const source of world.stats.get(owner)?.sources ?? []) {
+    if (!eventOriginBelongsToAbility(`hook:${source.id}`, abilityId)) continue;
+    const index = source.hooks?.findIndex((hook) => hook.on === event) ?? -1;
+    if (index < 0) continue;
+    return {
+      source,
+      index,
+      before: source.hookLastFired?.[index] ?? Number.NEGATIVE_INFINITY,
+    };
+  }
+  return null;
 }
 
 function effectLines(
@@ -1404,6 +1469,163 @@ export function createSimPreviewController(): PreviewController {
         manaBefore,
         manaAfter: hp.mana,
         cooldownTicks,
+        events,
+      };
+    },
+
+    triggerPassiveAbility(champion, abilityId, opts) {
+      const level = opts?.level ?? 18;
+      const sb = sandbox(champion, level, { dummy: true });
+      world = sb.world;
+      sb.world.combatActive = true;
+      const hp = sb.world.health.get(sb.id)!;
+      const reacting = Abilities.tryGet(abilityId);
+      const events: PreviewTraceEvent[] = [{
+        type: "editorPreviewScenario",
+        tick: sb.world.tick,
+        data: { abilityId, caster: sb.id, target: sb.dummyId, scenario: "passive" },
+        actorPose: actorPoseOf(sb.world, sb.id, sb.dummyId),
+      }];
+      const drain = (): void => {
+        const actorPose = actorPoseOf(sb.world, sb.id, sb.dummyId);
+        for (const event of sb.world.events) {
+          events.push({
+            type: event.type,
+            tick: event.tick,
+            data: event.data,
+            ...(actorPose ? { actorPose } : {}),
+          });
+        }
+      };
+      const fail = (reason: string): ReactionPreviewTrace => ({
+        accepted: false,
+        reason,
+        runtimeCompatible: true,
+        manaBefore: hp.mana,
+        manaAfter: hp.mana,
+        cooldownTicks: 0,
+        events,
+      });
+      if (!reacting || sb.dummyId === null) return fail("passive-preview-content-missing");
+
+      const abilities = sb.world.abilities.get(sb.id)!;
+      const wantRank = Math.max(1, opts?.rank ?? 1);
+      if (reacting.slot === "EX" && abilities.exSlot?.abilityId === abilityId && abilities.exSlot.rank === 0) {
+        if (!learnEx(sb.world, sb.id)) return fail("passive-ex-unlock-failed");
+      } else if (reacting.slot === "Q" || reacting.slot === "W" || reacting.slot === "E" || reacting.slot === "R") {
+        const inst = abilities.slots[reacting.slot];
+        while (inst.rank < wantRank) {
+          abilities.unspentPoints = Math.max(abilities.unspentPoints, 1);
+          if (!rankUpAbility(sb.world, sb.id, reacting.slot)) break;
+        }
+      }
+
+      const probes = hookProbesOf(reacting.passive);
+      const probe = PASSIVE_PROBE_PRIORITY
+        .map((on) => probes.find((candidate) => candidate.on === on))
+        .find((candidate): candidate is HookProbe => candidate !== undefined);
+      if (!probe) return fail(`no-supported-passive-scenario:${probes.map((item) => item.on).join(",")}`);
+      const ledger = hookLedgerEntry(sb.world, sb.id, abilityId, probe.on);
+      if (!ledger) return fail(`passive-hook-not-attached:${probe.on}`);
+
+      const manaBefore = hp.mana;
+      const empty = new Map<ReturnType<typeof asSeatId>, IntentFrame>();
+      const fired = (): boolean => {
+        // Ranking the trigger slot can legitimately resync every ability
+        // passive source. Re-resolve the source identity instead of retaining
+        // a detached object reference and mistaking a visible proc for failure.
+        const current = hookLedgerEntry(sb.world, sb.id, abilityId, probe.on);
+        return current !== null &&
+          (current.source.hookLastFired?.[current.index] ?? Number.NEGATIVE_INFINITY) > ledger.before;
+      };
+      const step = (intents = empty): void => { sb.world.step(intents); drain(); };
+      const maxTicks = Math.max(90, opts?.ticks ?? 600);
+
+      if (probe.on === "onDamageTaken") {
+        hp.hp = Math.max(20, hp.maxHp * 0.1);
+        for (let i = 0; i < Math.min(maxTicks, 120) && !fired(); i++) {
+          if (i % 3 === 0) {
+            sb.world.damageQueue.push({
+              source: sb.dummyId,
+              target: sb.id,
+              amount: 1,
+              type: "magic",
+              crit: false,
+              origin: "ability:editor.passive-damage-probe",
+            });
+          }
+          step();
+        }
+      } else if (probe.on === "onBasicAttack" || probe.on === "onEvade") {
+        const attackerSeat = probe.on === "onBasicAttack" ? asSeatId(0) : asSeatId(1);
+        const victim = probe.on === "onBasicAttack" ? sb.dummyId : sb.id;
+        step(new Map([[attackerSeat, {
+          commands: [],
+          order: { kind: "attackTarget", entity: victim },
+        }]]));
+        for (let i = 1; i < maxTicks && !fired(); i++) step();
+      } else if (probe.on === "onAbilityCast" || probe.on === "onAbilityHit") {
+        const triggerSlot = probe.abilitySlot ?? "Q";
+        if (triggerSlot === "EX" && abilities.exSlot?.rank === 0) learnEx(sb.world, sb.id);
+        if (triggerSlot === "Q" || triggerSlot === "W" || triggerSlot === "E" || triggerSlot === "R") {
+          const inst = abilities.slots[triggerSlot];
+          while (inst.rank < wantRank) {
+            abilities.unspentPoints = Math.max(abilities.unspentPoints, 1);
+            if (!rankUpAbility(sb.world, sb.id, triggerSlot)) break;
+          }
+        }
+        if (probe.on === "onAbilityHit") {
+          runEffects([{ kind: "applyStatus", statusId: "burn" as StatusId, duration: 30 }], {
+            world: sb.world,
+            caster: sb.id,
+            rank: 1,
+            targets: [sb.dummyId],
+            origin: "ability:editor.passive-condition-probe",
+            rng: sb.world.rng,
+          });
+        }
+        const triggerInst = triggerSlot === "EX" ? abilities.exSlot
+          : triggerSlot === "PASSIVE" ? abilities.passiveSlot
+            : abilities.slots[triggerSlot];
+        const triggerDef = triggerInst ? Abilities.tryGet(triggerInst.abilityId) : undefined;
+        const selfPos = sb.world.transform.get(sb.id)!;
+        const dummyPos = sb.world.transform.get(sb.dummyId)!;
+        const target = castTargetFor(
+          triggerDef,
+          { x: selfPos.pos.x, z: selfPos.pos.z },
+          { x: dummyPos.pos.x, z: dummyPos.pos.z },
+          sb.dummyId,
+        );
+        step(new Map([[asSeatId(0), {
+          commands: [{ kind: "castAbility", slot: triggerSlot, target }],
+        }]]));
+        for (let i = 1; i < maxTicks && !fired(); i++) step();
+      } else if (probe.on === "onStunned") {
+        // The probe only supplies an enemy status effect. The real applyStatus
+        // handler queues CcHookSystem; the passive hook is never called here.
+        runEffects([{ kind: "applyStatus", statusId: "stun" as StatusId, duration: 1, stun: true }], {
+          world: sb.world,
+          caster: sb.dummyId,
+          rank: 1,
+          targets: [sb.id],
+          origin: "ability:editor.passive-stun-probe",
+          rng: sb.world.rng,
+        });
+        for (let i = 0; i < Math.min(maxTicks, 90) && !fired(); i++) step();
+      } else if (probe.on === "onInterval") {
+        const dummyHp = sb.world.health.get(sb.dummyId)!;
+        dummyHp.hp = Math.max(1, dummyHp.maxHp * 0.01);
+        for (let i = 0; i < maxTicks && !fired(); i++) step();
+      }
+
+      if (fired()) for (let i = 0; i < 45; i++) step();
+      return {
+        accepted: fired(),
+        ...(fired() ? {} : { reason: `passive-scenario-did-not-fire:${probe.on}` }),
+        runtimeCompatible: true,
+        manaBefore,
+        manaAfter: hp.mana,
+        cooldownTicks: 0,
         events,
       };
     },

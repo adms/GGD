@@ -284,6 +284,12 @@ export function createBabylonPreviewController(
       return trace;
     },
 
+    triggerPassiveAbility(champion, abilityId, o): ReactionPreviewTrace {
+      const trace = data.triggerPassiveAbility(champion, abilityId, o);
+      renderTraceVfx(trace);
+      return trace;
+    },
+
     previewItem(item, on, o) {
       return data.previewItem(item, on, o);
     },

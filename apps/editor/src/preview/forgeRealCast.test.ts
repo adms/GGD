@@ -174,4 +174,33 @@ describe("GH#174 鑄技工坊的試放走玩家那條路", () => {
     expect(trace.events.some((event) => event.type === "reflectSuccess")).toBe(true);
     c.dispose();
   });
+
+  it.each([
+    ["godie-e00s", "godie-e00s.w"],
+    ["godie-e00r", "godie-e00r.ex"],
+    ["godie-e00s", "godie-e00s.ex"],
+    ["godie-e00w", "godie-e00w.passive"],
+    ["godie-edem", "godie-edem.r"],
+    ["godie-nbbc", "godie-nbbc.passive"],
+    ["godie-e00l", "godie-e00l.passive"],
+    ["godie-e00r", "godie-e00r.q"],
+    ["godie-efur", "godie-efur.passive"],
+  ])("純被動 %s / %s 由真情境點火且 hook ledger 證明發動", (championId, abilityId) => {
+    const champion = Champions.get(championId as ChampionId);
+    const c = createSimPreviewController();
+    const trace = c.triggerPassiveAbility(champion, abilityId as AbilityId, {
+      level: 18,
+      rank: 1,
+      ticks: 650,
+    });
+
+    expect(trace.accepted, `${trace.reason}\n${JSON.stringify(trace.events.slice(0, 40), null, 2)}`).toBe(true);
+    expect(trace.events[0]).toMatchObject({
+      type: "editorPreviewScenario",
+      data: { abilityId, scenario: "passive" },
+    });
+    expect(trace.events.some((event) => event.type === "abilityCast" && event.data["abilityId"] === abilityId))
+      .toBe(false);
+    c.dispose();
+  });
 });

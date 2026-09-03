@@ -4,6 +4,8 @@ import {
   newScript,
   newSegment,
   recommendedEvidenceTimes,
+  recommendedRuntimeEvidenceTimes,
+  scriptVisualFocus,
   retypeSegment,
   reactionTriggerOf,
   scheduleSimEvents,
@@ -14,6 +16,18 @@ import {
 import { submitVfxScriptProposal } from "./writeback";
 
 describe("VFX Forge authoring core", () => {
+  it("centres long authored projectiles without moving an ordinary duel", () => {
+    const pose = { caster: { x: 0, z: 0 }, target: { x: 0, z: 3 } };
+    const long = {
+      id: "editor-fixture.long",
+      schema: "vfx-script@1" as const,
+      abilityId: "hero.q",
+      segments: [{ kind: "vfx" as const, on: "castEffect" as const, vfxId: "fx.test", at: "self" as const, offsetForwardU: 12.8 }],
+    };
+    expect(scriptVisualFocus(long, pose)).toEqual({ x: 0, z: 6.4 });
+    expect(scriptVisualFocus({ ...long, segments: [{ ...long.segments[0]!, offsetForwardU: 1 }] }, pose)).toBeNull();
+  });
+
   it("takes cast, strike and projectile timing only from the real SimWorld event trace", () => {
     const ability = {
       id: "godie-hart.r",
@@ -151,6 +165,17 @@ describe("VFX Forge authoring core", () => {
     expect(times[0]!.atMs).toBeGreaterThanOrEqual(1040);
     expect(times.at(-1)!.atMs).toBeGreaterThanOrEqual(1390);
     expect(times.at(-1)!.label).toContain("vfx");
+  });
+
+  it("samples runtime presentation after spawn and covers two distinct beats", () => {
+    const times = recommendedRuntimeEvidenceTimes([
+      { atMs: 0, event: { type: "abilityCast", data: { abilityId: "x" } } as never },
+      { atMs: 0, event: { type: "vfxSpawn", data: { vfxId: "fx.open" } } as never },
+      { atMs: 700, event: { type: "damage", data: { amount: 100 } } as never },
+      { atMs: 700, event: { type: "vfxSpawn", data: { vfxId: "fx.hit" } } as never },
+    ], 2);
+    expect(times).toHaveLength(2);
+    expect(times.map((time) => time.atMs)).toEqual([180, 880]);
   });
 
   it("has one non-live proposal destination and validates before calling it", async () => {

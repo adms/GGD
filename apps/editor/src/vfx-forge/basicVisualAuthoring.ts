@@ -19,7 +19,15 @@ export interface BasicVisualAbility extends ForgeAbility {
 export interface BasicVisualDraft {
   readonly script: VfxScriptDoc | null;
   readonly visualSource: "ability-vfx" | "safe-generic" | "none";
-  readonly unsupportedHooks: readonly string[];
+  /**
+   * Hooks that are authored in Skill Forge's effect graph rather than as a
+   * direct vfx-script@1 trigger. This is a routing note, not an engine blocker:
+   * Main's hook vocabulary and spawnVfx/spawnModelFx effects are the supported
+   * no-code path for these events.
+   */
+  readonly effectGraphHooks: readonly string[];
+  /** Direct vfx-script timeline coverage is intentionally reported separately. */
+  readonly scriptTimelineGaps: readonly string[];
   readonly blockers: readonly string[];
 }
 
@@ -31,7 +39,7 @@ const DIRECT_SCRIPT_HOOK = new Map<string, VfxScriptSegment["on"]>([
  * Hooks whose successful proc cannot currently address a vfx-script@1 row.
  * This is derived from the ability graph, never from labels or prose.
  */
-export function unsupportedCustomVisualHooks(ability: unknown): string[] {
+export function vfxScriptTimelineGaps(ability: unknown): string[] {
   return [...hookEventsOf(ability)]
     .filter((hook) => !DIRECT_SCRIPT_HOOK.has(hook))
     .sort();
@@ -50,7 +58,7 @@ export function buildBasicVisualDraft(
   requiredTimelineCues: readonly ActionTimelineCue[] = [],
 ): BasicVisualDraft {
   const activationMode = activationModeForAbility(ability);
-  const unsupportedHooks = unsupportedCustomVisualHooks(ability);
+  const scriptTimelineGaps = vfxScriptTimelineGaps(ability);
   const supportedReaction = [...hookEventsOf(ability)]
     .map((hook) => DIRECT_SCRIPT_HOOK.get(hook))
     .find((trigger): trigger is VfxScriptSegment["on"] => trigger !== undefined);
@@ -58,10 +66,9 @@ export function buildBasicVisualDraft(
     return {
       script: null,
       visualSource: "none",
-      unsupportedHooks,
-      blockers: [
-        `純被動的真正觸發點尚不能由 vfx-script@1 選取：${unsupportedHooks.join("、") || "未知 hook"}`,
-      ],
+      effectGraphHooks: scriptTimelineGaps,
+      scriptTimelineGaps,
+      blockers: [],
     };
   }
 
@@ -94,11 +101,25 @@ export function buildBasicVisualDraft(
       segments: completed,
     }),
     visualSource,
-    unsupportedHooks,
-    blockers: unsupportedHooks.length > 0
-      ? [`主動段可預覽，但下列被動／追加階段無法自訂時間軸：${unsupportedHooks.join("、")}`]
-      : [],
+    effectGraphHooks: scriptTimelineGaps,
+    scriptTimelineGaps,
+    blockers: [],
   };
+}
+
+/**
+ * Schema-valid, invisible placeholder used only while the batch renders an
+ * ability's real runtime events. It is never offered for save/promotion and it
+ * never fabricates castStart/castEffect for a passive ability.
+ */
+export function runtimeAuditPlaceholderScript(abilityId: string): VfxScriptDoc {
+  return zVfxScriptDoc.parse({
+    id: abilityId,
+    schema: "vfx-script@1",
+    abilityId,
+    notes: "Editor runtime-only visual audit placeholder; not authoring content and never promotable.",
+    segments: [{ kind: "sound", on: "reflectSuccess", soundKey: "editor.audit.silent" }],
+  });
 }
 
 function firstVfxKey(ability: BasicVisualAbility): string | null {

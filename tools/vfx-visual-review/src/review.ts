@@ -5,7 +5,6 @@ import { performance } from "node:perf_hooks";
 
 import {
   CHECK_KEYS,
-  MODEL_RESULT_SCHEMA,
   parseModelResult,
   type CheckKey,
   type FrameInput,
@@ -49,7 +48,7 @@ export interface ReviewReport {
     reported: string;
     baseUrl: string;
     reasoningEffort: "low" | "medium" | "xhigh";
-    responseChannel: "content" | "reasoning_content";
+    responseChannel: "native-message";
     durationMs: number;
     usage?: { promptTokens?: number; completionTokens?: number; totalTokens?: number };
   };
@@ -60,10 +59,25 @@ export interface ReviewReport {
   contractWarnings: string[];
 }
 
-interface ChatResponse {
-  model?: string;
-  choices?: Array<{ message?: { content?: string; reasoning_content?: string } }>;
-  usage?: { prompt_tokens?: number; completion_tokens?: number; total_tokens?: number };
+export interface UnavailableReviewReport {
+  schema: "ggd-vfx-visual-review-unavailable@1";
+  authority: "advisory-only";
+  classification: "needs-human-review";
+  generatedAt: string;
+  sourceDigest: string;
+  subject: ReviewRequest["subject"];
+  model: { requested: string; baseUrl: string };
+  reason: { code: "LOCAL_MODEL_DISABLED" | "LOCAL_MODEL_UNAVAILABLE" | "LOCAL_MODEL_ERROR"; detail: string };
+}
+
+interface NativeChatResponse {
+  model_instance_id?: string;
+  output?: Array<{ type?: string; content?: string }>;
+  stats?: {
+    input_tokens?: number;
+    total_output_tokens?: number;
+    reasoning_output_tokens?: number;
+  };
 }
 
 export function stripOwnerDialogue(text: string): string {
@@ -128,6 +142,14 @@ function inferredChecks(request: ReviewRequest): CheckKey[] {
 
 function buildPrompt(request: ReviewRequest, requiredChecks: CheckKey[]): string {
   const mechanics = stripOwnerDialogue(request.ownerDescription ?? "");
+  const resultExample = {
+    overall: "uncertain",
+    confidence: 0.5,
+    checks: Object.fromEntries(CHECK_KEYS.map((key) => [key, {
+      status: "uncertain", reason: "short observable reason", evidenceFrames: [],
+    }])),
+    notes: [],
+  };
   return [
     "你是遊戲技能 VFX 的保守視覺審查員。只判斷圖片中可觀察到的證據，不推斷傷害、數值、命中或遊戲規則。",
     "候選圖片編號只使用 Candidate 0..N；reference 只供比較，不得列入 evidenceFrames。",
@@ -141,6 +163,8 @@ function buildPrompt(request: ReviewRequest, requiredChecks: CheckKey[]): string
     `必要檢查：${requiredChecks.join(", ")}`,
     `所有檢查鍵都要回傳：${CHECK_KEYS.join(", ")}`,
     "overall 只有在必要檢查全為 pass 時才可為 pass；任一明確違反 mustNot 或必要檢查 fail 時為 fail；其餘為 uncertain。",
+    "每個 reason 最多 30 個中文字，notes 最多 3 項。",
+    `只回傳一個與下列範例同形狀的 JSON object，不要 Markdown、不要複製 schema：${stable(resultExample)}`,
   ].join("\n");
 }
 
@@ -192,7 +216,7 @@ export function classifyModelResult(prepared: PreparedReview, result: ModelResul
   return classify(prepared, result).classification;
 }
 
-function localApiRoot(value: string): string {
+export function assertLoopbackApiRoot(value: string): string {
   const url = new URL(value);
   if (!["127.0.0.1", "localhost", "[::1]"].includes(url.hostname)) {
     throw new Error(`refusing to send images to non-loopback host ${url.hostname}`);
@@ -212,14 +236,21 @@ export async function runReview(
   },
   fetchImpl: typeof fetch = fetch,
 ): Promise<ReviewReport> {
-  const baseUrl = localApiRoot(options.baseUrl);
-  const content: Array<Record<string, unknown>> = [{ type: "text", text: prepared.prompt }];
+  const baseUrl = assertLoopbackApiRoot(options.baseUrl);
+  const input: Array<Record<string, unknown>> = [{ type: "text", content: prepared.prompt }];
   for (const frame of prepared.frames) {
-    content.push({ type: "text", text: `${frame.role === "candidate" ? "Candidate" : "Reference"} ${frame.index}: ${frame.phase}, ${frame.atMs}ms` });
-    content.push({ type: "image_url", image_url: { url: frame.dataUrl } });
+    input.push({
+      type: "text",
+      content: `${frame.role === "candidate" ? "Candidate" : "Reference"} ${frame.index}: ${frame.phase}, ${frame.atMs}ms`,
+    });
+    input.push({ type: "image", data_url: frame.dataUrl });
   }
+  const nativeUrl = new URL(baseUrl);
+  nativeUrl.pathname = "/api/v1/chat";
+  nativeUrl.search = "";
+  nativeUrl.hash = "";
   const startedAt = performance.now();
-  const response = await fetchImpl(`${baseUrl}/chat/completions`, {
+  const response = await fetchImpl(nativeUrl, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -227,22 +258,20 @@ export async function runReview(
     },
     body: JSON.stringify({
       model: options.model,
-      messages: [{ role: "user", content }],
-      response_format: MODEL_RESULT_SCHEMA,
+      input,
       temperature: 0,
-      seed: 42,
-      max_tokens: 4096,
-      reasoning_effort: options.reasoningEffort ?? "low",
+      max_output_tokens: 1800,
+      reasoning: options.reasoningEffort === "xhigh" ? "high" : options.reasoningEffort ?? "low",
+      store: false,
     }),
     signal: AbortSignal.timeout(options.timeoutMs ?? 180_000),
   });
   const bodyText = await response.text();
   const durationMs = Math.round(performance.now() - startedAt);
   if (!response.ok) throw new Error(`LM Studio returned HTTP ${response.status}: ${bodyText.slice(0, 800)}`);
-  const body = JSON.parse(bodyText) as ChatResponse;
-  const message = body.choices?.[0]?.message;
-  const responseChannel = message?.content?.trim() ? "content" : "reasoning_content";
-  const raw = responseChannel === "content" ? message?.content : message?.reasoning_content;
+  const body = JSON.parse(bodyText) as NativeChatResponse;
+  const raw = [...(body.output ?? [])].reverse()
+    .find((entry) => entry.type === "message" && entry.content?.trim())?.content;
   if (!raw) throw new Error(`LM Studio response has no message content: ${bodyText.slice(0, 800)}`);
   let result: ModelResult;
   const responseWarnings: string[] = [];
@@ -254,6 +283,20 @@ export async function runReview(
         responseWarnings.push(`model returned confidence ${object.confidence} as a percentage; normalized to 0..1`);
         object.confidence /= 100;
       }
+      if (object.checks !== null && typeof object.checks === "object" && !Array.isArray(object.checks)) {
+        for (const [key, value] of Object.entries(object.checks as Record<string, unknown>)) {
+          if (value === null || typeof value !== "object" || Array.isArray(value)) continue;
+          const check = value as Record<string, unknown>;
+          if (!Array.isArray(check.evidenceFrames)) continue;
+          check.evidenceFrames = check.evidenceFrames.map((frame) => {
+            if (typeof frame !== "string") return frame;
+            const match = /^Candidate\s+(\d+)$/i.exec(frame.trim());
+            if (!match) return frame;
+            responseWarnings.push(`${key} returned a labelled candidate frame; normalized ${JSON.stringify(frame)} to ${match[1]}`);
+            return Number(match[1]);
+          });
+        }
+      }
     }
     result = parseModelResult(decoded);
   } catch (error) {
@@ -261,10 +304,12 @@ export async function runReview(
     throw new Error(`invalid structured model result (${detail}): ${raw.slice(0, 800)}`, { cause: error });
   }
   const verdict = classify(prepared, result, responseWarnings);
-  const usage = body.usage ? {
-    ...(body.usage.prompt_tokens === undefined ? {} : { promptTokens: body.usage.prompt_tokens }),
-    ...(body.usage.completion_tokens === undefined ? {} : { completionTokens: body.usage.completion_tokens }),
-    ...(body.usage.total_tokens === undefined ? {} : { totalTokens: body.usage.total_tokens }),
+  const usage = body.stats ? {
+    ...(body.stats.input_tokens === undefined ? {} : { promptTokens: body.stats.input_tokens }),
+    ...(body.stats.total_output_tokens === undefined ? {} : { completionTokens: body.stats.total_output_tokens }),
+    ...(body.stats.input_tokens === undefined || body.stats.total_output_tokens === undefined
+      ? {}
+      : { totalTokens: body.stats.input_tokens + body.stats.total_output_tokens }),
   } : undefined;
   return {
     schema: "ggd-vfx-visual-review-report@1",
@@ -275,10 +320,10 @@ export async function runReview(
     subject: prepared.request.subject,
     model: {
       requested: options.model,
-      reported: body.model ?? options.model,
+      reported: body.model_instance_id ?? options.model,
       baseUrl,
       reasoningEffort: options.reasoningEffort ?? "low",
-      responseChannel,
+      responseChannel: "native-message",
       durationMs,
       ...(usage === undefined ? {} : { usage }),
     },
@@ -288,6 +333,74 @@ export async function runReview(
     modelResult: result,
     contractWarnings: verdict.warnings,
   };
+}
+
+/**
+ * Produce durable, non-authoritative evidence when an explicitly optional
+ * localhost model is absent. This never turns absence into a pass and never
+ * weakens the SimWorld/event-trace or human-review gates.
+ */
+export function unavailableReviewReport(
+  prepared: PreparedReview,
+  options: { baseUrl: string; model: string },
+  error: unknown,
+): UnavailableReviewReport {
+  const baseUrl = assertLoopbackApiRoot(options.baseUrl);
+  const detail = error instanceof Error ? error.message : String(error);
+  const unavailable = /ECONNREFUSED|fetch failed|Failed to fetch|HTTP 404|model.+(?:not found|not loaded)/i.test(detail);
+  return {
+    schema: "ggd-vfx-visual-review-unavailable@1",
+    authority: "advisory-only",
+    classification: "needs-human-review",
+    generatedAt: new Date().toISOString(),
+    sourceDigest: prepared.sourceDigest,
+    subject: prepared.request.subject,
+    model: { requested: options.model, baseUrl },
+    reason: {
+      code: unavailable ? "LOCAL_MODEL_UNAVAILABLE" : "LOCAL_MODEL_ERROR",
+      detail,
+    },
+  };
+}
+
+export function disabledReviewReport(
+  prepared: PreparedReview,
+  options: { baseUrl: string; model: string },
+): UnavailableReviewReport {
+  return {
+    schema: "ggd-vfx-visual-review-unavailable@1",
+    authority: "advisory-only",
+    classification: "needs-human-review",
+    generatedAt: new Date().toISOString(),
+    sourceDigest: prepared.sourceDigest,
+    subject: prepared.request.subject,
+    model: { requested: options.model, baseUrl: options.baseUrl },
+    reason: {
+      code: "LOCAL_MODEL_DISABLED",
+      detail: "Local LLM review is opt-in and was not enabled; deterministic and human review continue.",
+    },
+  };
+}
+
+export function unavailableReportMarkdown(report: UnavailableReviewReport): string {
+  return [
+    `# VFX visual review unavailable: ${report.subject.id}`,
+    "",
+    `- Classification: **${report.classification}**`,
+    `- Authority: **${report.authority}**`,
+    `- Reason: **${report.reason.code}**`,
+    `- Local endpoint: \`${report.model.baseUrl}\``,
+    `- Source digest: \`${report.sourceDigest}\``,
+    "",
+    report.reason.code === "LOCAL_MODEL_DISABLED"
+      ? "Local vision inference is disabled by default. SimWorld/event-trace checks and human visual acceptance continue; this receipt is never a pass."
+      : report.reason.code === "LOCAL_MODEL_UNAVAILABLE"
+        ? "Local vision inference was unavailable. SimWorld/event-trace checks and human visual acceptance must continue; this receipt is never a pass."
+        : "Local vision inference returned an invalid or failed advisory result. Deterministic and human review continue; this receipt is never a pass.",
+    "",
+    `Detail: ${report.reason.detail}`,
+    "",
+  ].join("\n");
 }
 
 export function reportMarkdown(report: ReviewReport): string {

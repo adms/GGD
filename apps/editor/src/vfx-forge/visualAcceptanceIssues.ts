@@ -98,20 +98,20 @@ export function classifyVisualAcceptanceIssues(
   if (/替身|stand-?in/u.test(text)) {
     add({
       code: "APPEARANCE_STAND_IN",
-      severity: "blocker",
+      severity: "high",
       owner: "main",
-      summary: "角色仍使用替身外觀，不能當作技能視覺證據",
-      nextAction: "Main 提供可解析的正式角色模型／appearance 收據；Editor 不以近似模型冒充。",
+      summary: "角色仍使用替身外觀；可檢查特效機制，但不能通過角色忠實度",
+      nextAction: "保留並標記診斷圖；Main 日後提供正式模型後重跑最終外觀驗收。",
     });
   }
   if (
-    /沒有可由目前 VFX 事件詞彙觸發|尚不能把自訂演出綁到|尚不能由 vfx-script@1 選取|無法自訂時間軸|缺少.*事件|unsupported hook/iu.test(text)
+    /機器契約缺少.*事件|未知事件積木|missing runtime event brick/iu.test(text)
   ) {
     add({
       code: "UNSUPPORTED_EVENT_BRICK",
       severity: "blocker",
       owner: "main",
-      summary: "缺少可重用且帶來源資訊的 runtime 事件積木",
+      summary: "Main 機器契約真的缺少可重用且帶來源資訊的 runtime 事件積木",
       nextAction: "Main 補權威事件與 provenance；Editor 再接時間軸選項，禁止用假 cast 代替。",
     });
   }

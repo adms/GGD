@@ -24,6 +24,12 @@ import {
   type RuntimeBaseSnapshot,
   type RuntimeAuthoringDocument,
 } from "./exportBuilder";
+import { buildLocalIconBundleZip } from "../local-icons/bundle";
+import {
+  listStagedLocalIcons,
+  LOCAL_ICON_CHANGED_EVENT,
+} from "../local-icons/storage";
+import type { StagedLocalIcon } from "../local-icons/model";
 
 const PROFILE_URL_KEY = "ggd.editor.targetProfileUrl";
 const PACKAGE_MODES: readonly { mode: PackageMode; label: string; description: string }[] = [
@@ -92,10 +98,22 @@ export function ExportCenterPage() {
   const [baseStatus, setBaseStatus] = useState("full／delta 需要載入遊戲端 active runtime bundle；bootstrap 不需要。");
   const [packageStatus, setPackageStatus] = useState("等待目標握手");
   const [packageBusy, setPackageBusy] = useState(false);
+  const [stagedIcons, setStagedIcons] = useState<StagedLocalIcon[]>([]);
+  const [iconStatus, setIconStatus] = useState("尚無本機暫存 Icon。");
   const index = useQuery<CollectionIndex>({
     queryKey: ["index", collection],
     queryFn: () => api.index(collection),
   });
+
+  useEffect(() => {
+    let live = true;
+    const load = () => void listStagedLocalIcons()
+      .then((icons) => { if (live) { setStagedIcons(icons); setIconStatus(icons.length ? `本機暫存 ${icons.length} 張；尚未上傳或寫入遊戲 content。` : "尚無本機暫存 Icon。"); } })
+      .catch((error) => { if (live) setIconStatus(`⛔ ${String(error)}`); });
+    load();
+    globalThis.addEventListener?.(LOCAL_ICON_CHANGED_EVENT, load);
+    return () => { live = false; globalThis.removeEventListener?.(LOCAL_ICON_CHANGED_EVENT, load); };
+  }, []);
 
   useEffect(() => {
     const first = index.data?.entries[0]?.id ?? "";
@@ -248,6 +266,14 @@ export function ExportCenterPage() {
     setPackageStatus(`建立 ${mode} ${format.toUpperCase()}…`);
     try {
       const collected = await collectDocuments(mode);
+      const referencedStagedIcons = stagedIcons.filter((icon) => [...collected.documents, ...collected.selectionRoots]
+        .some((doc) => doc.collection === icon.kind && doc.id === icon.docId && doc.document["icon"] === icon.contentPath));
+      if (referencedStagedIcons.length > 0) {
+        throw new Error(
+          `ICON_PACKAGE_CONTRACT_REQUIRED：${referencedStagedIcons.length} 張本機 Icon 被本次文件引用；` +
+          "目前 Main 的 ggd-editor-package@1 只接受 JSON，不能產出會被 importer 靜默漏圖的正式包。請先下載下方 Icon 工作包；Main 接上 asset package 契約後即可合併成一鍵 ZIP。",
+        );
+      }
       // An unchanged selected root can still lead to a changed forward
       // dependency. Keep the root in reference analysis even when it is not a
       // package entry; selectionRoots already pins its own exact hash.
@@ -273,6 +299,20 @@ export function ExportCenterPage() {
       }
     } catch (error) {
       setPackageStatus(`⛔ 建包失敗：${String(error)}`);
+    } finally {
+      setPackageBusy(false);
+    }
+  };
+
+  const exportIconBundle = async (): Promise<void> => {
+    setPackageBusy(true);
+    setIconStatus("驗證本機 Icon bytes／hash 並建立工作包…");
+    try {
+      const bundle = await buildLocalIconBundleZip(stagedIcons);
+      downloadBytes(bundle.bytes, bundle.filename, "application/zip");
+      setIconStatus(`已下載 ${bundle.filename} · ${bundle.count} 張 · ${bundle.bundleSha256} · archive ${bundle.archiveSha256}`);
+    } catch (error) {
+      setIconStatus(`⛔ ${String(error)}`);
     } finally {
       setPackageBusy(false);
     }
@@ -353,6 +393,15 @@ export function ExportCenterPage() {
         {profile?.unavailable.length ? (
           <details><summary>目標回報的 unavailable 欄位</summary><ul>{profile.unavailable.map((item) => <li key={item}>{item}</li>)}</ul></details>
         ) : null}
+      </section>
+
+      <section className="export-panel">
+        <h2>4. 本機 Icon 素材</h2>
+        <p>編輯頁選圖後只存於這台電腦的 IndexedDB，會統一裁成 256×256 並轉 WebP。此工作包保存原始 bytes hash 與 owner；目前不冒充 Main 可匯入的正式 Package，因為 Main 的 V1 契約明確只收 JSON。</p>
+        <button type="button" disabled={packageBusy || stagedIcons.length === 0} onClick={() => void exportIconBundle()}>
+          下載 Icon 工作包 ZIP（{stagedIcons.length}）
+        </button>
+        <p className={iconStatus.startsWith("⛔") ? "error" : "export-status"}>{iconStatus}</p>
       </section>
     </main>
   );

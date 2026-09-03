@@ -4,13 +4,15 @@ import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 import { ORIGINS, originOf } from "@ggd/shared/content/statNormalization";
 import { SKILL_TYPE_PRESETS } from "./skillTypePresets";
-import { VFX_FORGE_ACCEPTANCE } from "../vfx-forge/acceptanceFixtures";
+import { VFX_FORGE_FIXTURE_SCENES, VFX_FORGE_REFERENCE_SCENES } from "../vfx-forge/acceptanceFixtures";
 import {
   CAPABILITY_ONLY_CONDITION_KINDS,
   CAPABILITY_ONLY_EFFECT_KINDS,
   CAPABILITY_ONLY_HOOK_EVENTS,
   SKILL_ACCEPTANCE_CANDIDATES,
   SKILL_ACCEPTANCE_THEME_IDS,
+  STRICT_VISUAL_ACCEPTANCE,
+  STRICT_VISUAL_ACCEPTANCE_IDS,
   skillAcceptanceThemeId,
 } from "./skillAcceptanceCatalog";
 
@@ -135,12 +137,21 @@ describe("鑄技工坊 46 份現有技能驗收清單", () => {
     }
   });
 
-  it("14 種快速技能類型與原八招 VFX fixture 一個不少", () => {
+  it("14 種快速技能類型、原八個參考場景與 Main 嚴格十一文件一個不少", () => {
     expect(new Set(SKILL_ACCEPTANCE_CANDIDATES.flatMap((row) => row.forgeTypeId ?? []))).toEqual(
       new Set(SKILL_TYPE_PRESETS.map((preset) => preset.id)),
     );
     const vfxIds = new Set(SKILL_ACCEPTANCE_CANDIDATES.filter((row) => row.vfxFixture).map((row) => row.id));
-    expect(vfxIds).toEqual(new Set(VFX_FORGE_ACCEPTANCE.map(([id]) => id)));
+    expect(vfxIds).toEqual(new Set(VFX_FORGE_FIXTURE_SCENES.map(([id]) => id)));
+    expect(VFX_FORGE_REFERENCE_SCENES).toHaveLength(8);
+    for (const id of STRICT_VISUAL_ACCEPTANCE_IDS) expect(vfxIds.has(id), id).toBe(true);
+  });
+
+  it("嚴格八主題直接採用 Main 機器契約，展開後正好 11 份且都在 46 份內", () => {
+    expect(STRICT_VISUAL_ACCEPTANCE).toHaveLength(8);
+    expect(STRICT_VISUAL_ACCEPTANCE_IDS.size).toBe(11);
+    const candidates = new Set(SKILL_ACCEPTANCE_CANDIDATES.map((row) => row.id));
+    for (const id of STRICT_VISUAL_ACCEPTANCE_IDS) expect(candidates.has(id), id).toBe(true);
   });
 
   it("覆蓋目前正式技能實際採用的全部 effect、hook 與 condition", () => {

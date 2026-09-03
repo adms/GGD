@@ -28,9 +28,13 @@ export function isRetryingColdVisualAsset(error: unknown): boolean {
 }
 
 export interface VfxForgePreviewHandle {
-  auditBackdropTimeline(): Promise<BackdropTimelineAudit>;
+  auditBackdropTimeline(mode?: VfxForgeStageMode): Promise<BackdropTimelineAudit>;
   captureVisualEvidence(label: string): Promise<VfxVisualEvidenceFrame>;
-  captureVisualEvidenceAt(atMs: number, label: string): Promise<VfxVisualEvidenceFrame>;
+  captureVisualEvidenceAt(
+    atMs: number,
+    label: string,
+    framing?: "gameplay" | "detail",
+  ): Promise<VfxVisualEvidenceFrame>;
   captureDiagnosticEvidenceAt(atMs: number, label: string): Promise<VfxVisualEvidenceFrame>;
 }
 
@@ -135,14 +139,14 @@ export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreview
   };
 
   useImperativeHandle(ref, () => ({
-    auditBackdropTimeline: async () => {
-      return withStableVisualStage((stage) => stage.auditBackdropTimeline(durationMs));
+    auditBackdropTimeline: async (auditMode) => {
+      return withStableVisualStage((stage) => stage.auditBackdropTimeline(durationMs, auditMode));
     },
     captureVisualEvidence: async (label) => {
       return withStableVisualStage((stage) => stage.captureVisualEvidence(label));
     },
-    captureVisualEvidenceAt: async (atMs, label) => {
-      return withStableVisualStage((stage) => stage.captureVisualEvidenceAt(atMs, label));
+    captureVisualEvidenceAt: async (atMs, label, framing) => {
+      return withStableVisualStage((stage) => stage.captureVisualEvidenceAt(atMs, label, framing));
     },
     captureDiagnosticEvidenceAt: async (atMs, label) => {
       return withStableVisualStage((stage) => stage.captureDiagnosticEvidenceAt(atMs, label));

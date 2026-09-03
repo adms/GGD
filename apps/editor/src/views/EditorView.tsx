@@ -12,6 +12,8 @@ import { authorWarnings } from "../authorWarnings";
 import { PreviewPanel } from "../preview/PreviewPanel";
 import { AiFillProvider } from "../ai/AiFillContext";
 import { sourceWriteBlockers } from "../sourcePolicy";
+import { iconKindFor } from "../ai/prompt";
+import { LocalIconUploadPanel } from "../local-icons/LocalIconUploadPanel";
 // NOTE: the AI icon panel (../ai/AiIconPanel) is deliberately NOT rendered here.
 // The owner does not want CLOUD image generation — 「我不追求雲端生圖，只留本機端
 // SD 生圖」 — and this panel's Generate button is the one UI surface that POSTs to
@@ -46,6 +48,7 @@ export function EditorView() {
   }, [redo, undo]);
 
   const entry = collection ? collectionEntry(collection) : null;
+  const iconKind = collection ? iconKindFor(collection) : null;
   const ui = useMemo(() => (entry ? walkZod(entry.schema, "", entry.label) : null), [entry]);
   const readOnlyReasons = useMemo(
     () => ownerOnlyReasons(
@@ -149,6 +152,7 @@ export function EditorView() {
           </section>
         ) : null}
         <AiFillProvider>
+          {iconKind ? <LocalIconUploadPanel kind={iconKind} docId={docId} /> : null}
           <FormRenderer
             node={ui}
             value={draft}

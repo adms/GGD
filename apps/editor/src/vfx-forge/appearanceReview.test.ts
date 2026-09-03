@@ -18,6 +18,7 @@ describe("VFX Forge resolved appearance review gate", () => {
     expect(review.issues).toEqual([]);
     expect(review.receipts).toHaveLength(2);
     expect(review.receipts[0]).toMatch(/^resolved-appearance:施法者:hero\.a:imported\.hero:/);
+    expect(review.renderAllowed).toBe(true);
   });
 
   it("keeps mechanics preview possible but rejects stand-ins as approval evidence", () => {

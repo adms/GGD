@@ -12,12 +12,18 @@ describe("46 技能視覺驗收自動根因分類", () => {
     expect(codes(["角色模型在 framebuffer 退化為 98.9% 純白"])).toContain("ACTOR_TEXTURE_COLLAPSE");
     expect(codes(["角色 · imported.hero 3D 模型在真實 framebuffer 僅改變 0 像素"]))
       .toContain("ACTOR_NOT_VISIBLE");
-    expect(codes(["沒有可由目前 VFX 事件詞彙觸發的基本演出"], "blocked"))
-      .toContain("UNSUPPORTED_EVENT_BRICK");
-    expect(codes(["純被動的真正觸發點尚不能由 vfx-script@1 選取：onEvade"], "blocked"))
+    expect(codes(["機器契約缺少可重用事件 onEvade"], "blocked"))
       .toContain("UNSUPPORTED_EVENT_BRICK");
     expect(codes(["20 秒內未能完成載入／真 Sim／素材收據"]))
       .toEqual(expect.arrayContaining(["CAPTURE_TIMEOUT", "SIM_PREVIEW"]));
+  });
+
+  it("vfx-script 沒有直連 hook 只是 Editor 路由資訊，不得誣指 Main 缺積木", () => {
+    const issueCodes = codes([
+      "純被動的真正觸發點尚不能由 vfx-script@1 選取：onEvade",
+    ], "blocked");
+    expect(issueCodes).not.toContain("UNSUPPORTED_EVENT_BRICK");
+    expect(issueCodes).toEqual(["AUTHORING_BLOCKER"]);
   });
 
   it("未知失敗仍 fail closed，不交給語言模型自由猜測", () => {

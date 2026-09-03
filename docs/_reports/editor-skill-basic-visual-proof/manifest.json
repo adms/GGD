@@ -1,31 +1,26 @@
 {
   "schema": "ggd-editor-basic-visual-proof-manifest@1",
   "sourceFile": "editor-skill-basic-visual-proof.browser.json",
-  "sourceGeneratedAt": "2026-09-03T14:36:26.876Z",
-  "importedAt": "2026-09-03T22:37+08:00",
+  "sourceGeneratedAt": "2026-09-03T17:06:24.274Z",
+  "importedAt": "2026-09-04T01:07+08:00",
   "themes": 42,
   "documents": 46,
   "summary": {
-    "captured": 20,
-    "blocked": 22,
-    "failed": 4,
-    "humanPass": 1,
-    "humanFail": 19,
-    "humanPending": 26,
-    "humanReviewedCaptured": 20,
-    "capturedAwaitingReview": 0,
+    "captured": 45,
+    "blocked": 0,
+    "failed": 1,
+    "humanPass": 0,
+    "humanFail": 0,
+    "humanPending": 46,
+    "humanReviewedCaptured": 0,
+    "capturedAwaitingReview": 45,
     "machineIssueCounts": {
-      "APPEARANCE_STAND_IN": 7,
       "CAPTURE_TIMEOUT": 1,
-      "FRAMEBUFFER_CARRIER": 3,
-      "LOW_VISUAL_HYGIENE": 2,
-      "PRESENTATION_ARTIFACT": 12,
-      "UNSUPPORTED_EVENT_BRICK": 16
+      "LOW_VISUAL_HYGIENE": 1,
+      "PRESENTATION_ARTIFACT": 1
     },
     "ownerCounts": {
-      "editor": 15,
-      "editor-then-main": 3,
-      "main": 23
+      "editor": 3
     }
   },
   "cases": [
@@ -34,7 +29,7 @@
       "name": "01-04 超究武神霸斬",
       "status": "failed",
       "blockers": [
-        "Error: godie-hart.r 的 GPU／擷圖驗收超過 30 秒"
+        "Error: godie-hart.r 的 GPU／擷圖驗收超過 60 秒"
       ],
       "audit": null,
       "frames": [
@@ -42,20 +37,21 @@
           "label": "godie-hart.r · 載入／GPU 失敗診斷",
           "atMs": 0,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.004647953856098653,
-            "highlightShare": 0.0032109293421510618,
-            "brightShare": 0.00002610511660285416,
+            "litShare": 0.0033345924620162845,
+            "highlightShare": 0.0022538403424830016,
+            "brightShare": 0.000018886930244270965,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0007843965988762369,
-            "dominantNonBackgroundShare": 0.0008353637312913331,
+            "dominantBrightShare": 0.0005435238814740199,
+            "dominantNonBackgroundShare": 0.0005739528246453455,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": true,
           "file": "frames/godie-hart.r-01-0ms.webp",
-          "bytes": 4954
+          "bytes": 5050
         }
       ],
       "machineIssues": [
@@ -78,122 +74,110 @@
       "blockers": [],
       "audit": {
         "safe": true,
-        "autoVisualScore": 5.5,
+        "autoVisualScore": 10,
         "sampledFrames": 42,
-        "peakParticleCount": 108,
-        "peakSystemCount": 50,
-        "worstAtMs": 1066.6666666666658,
+        "peakParticleCount": 0,
+        "peakSystemCount": 7,
+        "worstAtMs": 0,
         "worst": {
-          "litShare": 0.1023419793502896,
-          "highlightShare": 0.019845966591118945,
-          "brightShare": 0.0012748677914882901,
+          "litShare": 0,
+          "highlightShare": 0,
+          "brightShare": 0,
           "nearWhiteShare": 0,
-          "dominantBrightShare": 0.013979476202467893,
-          "dominantNonBackgroundShare": 0.07860950222446067,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0,
           "localWhiteCardShare": 0,
           "diagnosticCheckerShare": 0,
           "unsafe": false
         },
-        "suspects": [
-          "telegraph-fill · r/d=0.81 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
-          "telegraph-ring · r/d=0.60 · telegraph-ring · 無貼圖",
-          "telegraph-shock · r/d=0.45 · telegraph-shock · 無貼圖",
-          "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖",
-          "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖"
-        ]
+        "suspects": []
       },
       "frames": [
         {
           "label": "godie-hjai.e · 施法提交 · floatingText+anim · 自動基本視覺驗收",
-          "atMs": 120,
+          "atMs": 180,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.010132838076051372,
-            "highlightShare": 0.003885461260807521,
-            "brightShare": 0.0008992277344077898,
+            "litShare": 0.004116301519348611,
+            "highlightShare": 0.0029883320742046505,
+            "brightShare": 0.000038823134391001424,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0004197095609837992,
-            "dominantNonBackgroundShare": 0.001584403592713842,
-            "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.0007523293880634601,
-            "unsafe": false,
-            "reason": "透明／混合收據與同格剝離已定位格狀圖樣；不是未知載體，但玩家畫面仍須人工裁決"
-          },
-          "diagnosticOnly": false,
-          "file": "frames/godie-hjai.e-01-120ms.webp",
-          "bytes": 3838
-        },
-        {
-          "label": "godie-hjai.e · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
-          "atMs": 1098,
-          "view": "side",
-          "frameAudit": {
-            "litShare": 0.005470914127423823,
-            "highlightShare": 0.0029463611181062706,
-            "brightShare": 0.0014910182153949467,
-            "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0003168807185427684,
-            "dominantNonBackgroundShare": 0.001571812305884328,
-            "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.0005970368504994544,
-            "unsafe": false,
-            "reason": "Telegraph 格狀圖樣已通過同格剝離；不是遺失貼圖，但玩家畫面仍須人工裁決"
-          },
-          "diagnosticOnly": false,
-          "file": "frames/godie-hjai.e-02-1098ms.webp",
-          "bytes": 5524
-        },
-        {
-          "label": "godie-hjai.e · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
-          "atMs": 1434,
-          "view": "side",
-          "frameAudit": {
-            "litShare": 0.006421556283052128,
-            "highlightShare": 0.003061781247376815,
-            "brightShare": 0.0014647863678334593,
-            "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0003420632922017964,
-            "dominantNonBackgroundShare": 0.00236191555443633,
+            "dominantBrightShare": 0.0006243179719634014,
+            "dominantNonBackgroundShare": 0.0006243179719634014,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-hjai.e-03-1434ms.webp",
-          "bytes": 6178
+          "file": "frames/godie-hjai.e-01-180ms.webp",
+          "bytes": 5330
+        },
+        {
+          "label": "godie-hjai.e · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+          "atMs": 1180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.009857928313606984,
+            "highlightShare": 0.004676613783261983,
+            "brightShare": 0.0009443465122135483,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0006264165197683204,
+            "dominantNonBackgroundShare": 0.004022916142029716,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-hjai.e-02-1180ms.webp",
+          "bytes": 7346
+        },
+        {
+          "label": "godie-hjai.e · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+          "atMs": 1516,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.06080332409972299,
+            "highlightShare": 0.043907915722320154,
+            "brightShare": 0.02564530345001259,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0075568706455133045,
+            "dominantNonBackgroundShare": 0.0075568706455133045,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-hjai.e-03-1516ms.webp",
+          "bytes": 10906
         },
         {
           "label": "godie-hjai.e · 第 1 段 · anim · 自動基本視覺驗收",
-          "atMs": 1898,
+          "atMs": 1980,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.0006274657936707798,
-            "highlightShare": 0.000503651473180559,
-            "brightShare": 0.0003819357004952573,
+            "litShare": 0.0040963653152018805,
+            "highlightShare": 0.0029526567615210273,
+            "brightShare": 0.000039872408293460924,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0003168807185427684,
-            "dominantNonBackgroundShare": 0.0003168807185427684,
+            "dominantBrightShare": 0.0006201208763535633,
+            "dominantNonBackgroundShare": 0.0006201208763535633,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-hjai.e-04-1898ms.webp",
-          "bytes": 3698
+          "file": "frames/godie-hjai.e-04-1980ms.webp",
+          "bytes": 5376
         }
       ],
-      "machineIssues": [
-        {
-          "code": "PRESENTATION_ARTIFACT",
-          "severity": "high",
-          "owner": "editor",
-          "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面",
-          "nextAction": "Editor 改用乾淨 primitive 或調整配色／密度後單項重跑；不可因來源收據安全而自動通過。"
-        }
-      ],
-      "humanVerdict": "fail",
-      "humanScore": 2,
-      "humanNote": "可見火焰投射，但起點與方向不清楚、彈道像分離火塊，沒有在一段距離後形成強烈終點爆炸。"
+      "machineIssues": [],
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
     },
     {
       "id": "godie-h020.e",
@@ -202,92 +186,110 @@
       "blockers": [],
       "audit": {
         "safe": true,
-        "autoVisualScore": 5,
+        "autoVisualScore": 7.5,
         "sampledFrames": 42,
-        "peakParticleCount": 108,
-        "peakSystemCount": 40,
-        "worstAtMs": 999.9999999999991,
+        "peakParticleCount": 75,
+        "peakSystemCount": 7,
+        "worstAtMs": 1600.0000000000016,
         "worst": {
-          "litShare": 0.04703160412994208,
-          "highlightShare": 0.011897716779988248,
-          "brightShare": 0.0013829430034416185,
+          "litShare": 0.048698900360950224,
+          "highlightShare": 0.032957693276252836,
+          "brightShare": 0.021130277847729372,
           "nearWhiteShare": 0,
-          "dominantBrightShare": 0.00039242843951985227,
-          "dominantNonBackgroundShare": 0.017135692101066063,
+          "dominantBrightShare": 0.006468773608662806,
+          "dominantNonBackgroundShare": 0.006468773608662806,
           "localWhiteCardShare": 0,
-          "diagnosticCheckerShare": 0.0025885587173675815,
-          "unsafe": false,
-          "reason": "透明／混合收據與同格剝離已定位格狀圖樣；不是未知載體，但玩家畫面仍須人工裁決"
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
         },
-        "suspects": [
-          "telegraph-fill · r/d=0.77 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
-          "telegraph-ring · r/d=0.60 · telegraph-ring · 無貼圖",
-          "telegraph-shock · r/d=0.23 · telegraph-shock · 無貼圖",
-          "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
-          "vfx-decal · r/d=0.05 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
-        ]
+        "suspects": []
       },
       "frames": [
         {
-          "label": "godie-h020.e · 施法提交 · anim · 自動基本視覺驗收",
-          "atMs": 98,
+          "label": "godie-h020.e · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+          "atMs": 180,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.1877025098631747,
-            "highlightShare": 0.16723432384789724,
-            "brightShare": 0.013834676403928482,
-            "nearWhiteShare": 0.005926299001091245,
-            "dominantBrightShare": 0.00531037522034752,
-            "dominantNonBackgroundShare": 0.07992634097204734,
+            "litShare": 0.0008142365483085705,
+            "highlightShare": 0.0007030135146478637,
+            "brightShare": 0.0006064803156215899,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0006054310417191303,
+            "dominantNonBackgroundShare": 0.0006054310417191303,
             "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.000796398891966759,
-            "unsafe": false,
-            "reason": "Telegraph 格狀圖樣已通過同格剝離；不是遺失貼圖，但玩家畫面仍須人工裁決"
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-h020.e-01-98ms.webp",
-          "bytes": 23892
+          "file": "frames/godie-h020.e-01-180ms.webp",
+          "bytes": 3674
+        },
+        {
+          "label": "godie-h020.e · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+          "atMs": 1180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.006130907412070847,
+            "highlightShare": 0.0031425753378661967,
+            "brightShare": 0.001933811802232855,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0006054310417191303,
+            "dominantNonBackgroundShare": 0.002190883908335432,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-h020.e-02-1180ms.webp",
+          "bytes": 5686
+        },
+        {
+          "label": "godie-h020.e · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+          "atMs": 1516,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.034166456811886174,
+            "highlightShare": 0.020856417359187442,
+            "brightShare": 0.012672080920003357,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.005258960799127004,
+            "dominantNonBackgroundShare": 0.008567321413581802,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-h020.e-03-1516ms.webp",
+          "bytes": 8736
         },
         {
           "label": "godie-h020.e · 第 1 段 · anim · 自動基本視覺驗收",
-          "atMs": 1898,
+          "atMs": 1980,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.1704975656845463,
-            "highlightShare": 0.16328800470074709,
-            "brightShare": 0.013433853773188953,
-            "nearWhiteShare": 0.0054856039620582555,
-            "dominantBrightShare": 0.004825610677411231,
-            "dominantNonBackgroundShare": 0.07797888860908252,
+            "litShare": 0.0008142365483085705,
+            "highlightShare": 0.0007030135146478637,
+            "brightShare": 0.0006064803156215899,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0006054310417191303,
+            "dominantNonBackgroundShare": 0.0006054310417191303,
             "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.0012391924788046672,
-            "unsafe": false,
-            "reason": "透明／混合收據與同格剝離已定位格狀圖樣；不是未知載體，但玩家畫面仍須人工裁決"
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-h020.e-02-1898ms.webp",
-          "bytes": 19156
+          "file": "frames/godie-h020.e-04-1980ms.webp",
+          "bytes": 3674
         }
       ],
-      "machineIssues": [
-        {
-          "code": "PRESENTATION_ARTIFACT",
-          "severity": "high",
-          "owner": "editor",
-          "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面",
-          "nextAction": "Editor 改用乾淨 primitive 或調整配色／密度後單項重跑；不可因來源收據安全而自動通過。"
-        },
-        {
-          "code": "LOW_VISUAL_HYGIENE",
-          "severity": "medium",
-          "owner": "editor",
-          "summary": "畫面雖可擷取，但時間軸／關鍵格最低清晰度只有 0/10",
-          "nextAction": "人工檢查構圖、遮擋與格狀外觀；不可把素材安全分數當成美術通過。"
-        }
-      ],
-      "humanVerdict": "fail",
-      "humanScore": 0,
-      "humanNote": "兩張關鍵格都被巨大白灰幾何穿入鏡頭，角色與技能方向完全不可讀。"
+      "machineIssues": [],
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
     },
     {
       "id": "godie-hjai.r",
@@ -298,8 +300,8 @@
         "safe": true,
         "autoVisualScore": 10,
         "sampledFrames": 34,
-        "peakParticleCount": 23,
-        "peakSystemCount": 9,
+        "peakParticleCount": 0,
+        "peakSystemCount": 1,
         "worstAtMs": 0,
         "worst": {
           "litShare": 0,
@@ -317,67 +319,69 @@
       "frames": [
         {
           "label": "godie-hjai.r · 施法提交 · floatingText+anim · 自動基本視覺驗收",
-          "atMs": 120,
+          "atMs": 180,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.005283094098883573,
-            "highlightShare": 0.003442667673969613,
-            "brightShare": 0.0004312515739108537,
+            "litShare": 0.003868672878368169,
+            "highlightShare": 0.0028131033324939143,
+            "brightShare": 0.00004616805170821791,
             "nearWhiteShare": 0,
             "dominantBrightShare": 0.0006222194241584823,
             "dominantNonBackgroundShare": 0.0006222194241584823,
             "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.0020271971795517503,
-            "unsafe": false,
-            "reason": "透明／混合收據與同格剝離已定位格狀圖樣；不是未知載體，但玩家畫面仍須人工裁決"
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-hjai.r-01-120ms.webp",
-          "bytes": 5362
+          "file": "frames/godie-hjai.r-01-180ms.webp",
+          "bytes": 5338
         },
         {
           "label": "godie-hjai.r · 吟唱完成 · anim+bodyMove · 自動基本視覺驗收",
-          "atMs": 1084,
+          "atMs": 1180,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.003877067069587845,
-            "highlightShare": 0.002788970032737346,
-            "brightShare": 0.00006715352975740788,
+            "litShare": 0.005926299001091245,
+            "highlightShare": 0.004413246033744649,
+            "brightShare": 0.00012276504658776126,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0006127759590363468,
-            "dominantNonBackgroundShare": 0.0006127759590363468,
+            "dominantBrightShare": 0.0008593553261143289,
+            "dominantNonBackgroundShare": 0.0009548392512381432,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-hjai.r-02-1084ms.webp",
-          "bytes": 5330
+          "file": "frames/godie-hjai.r-02-1180ms.webp",
+          "bytes": 6068
         },
         {
           "label": "godie-hjai.r · 吟唱完成 · vfx+anim+screenShake · 自動基本視覺驗收",
-          "atMs": 1448,
+          "atMs": 1550,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.004388063460085621,
-            "highlightShare": 0.0018771510115000419,
-            "brightShare": 0.00012696214219759926,
+            "litShare": 0.0056839167296231004,
+            "highlightShare": 0.004196046335935533,
+            "brightShare": 0.00023818517585830605,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0004375472173256107,
-            "dominantNonBackgroundShare": 0.0006201208763535633,
+            "dominantBrightShare": 0.0006946193234281877,
+            "dominantNonBackgroundShare": 0.000804793083186435,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-hjai.r-03-1448ms.webp",
-          "bytes": 5100
+          "file": "frames/godie-hjai.r-03-1550ms.webp",
+          "bytes": 6040
         }
       ],
       "machineIssues": [],
-      "humanVerdict": "fail",
-      "humanScore": 2,
-      "humanNote": "有角色貼近與紫色殘影，但缺少明確蓄勢、dash斬擊路徑和命中節點，末段月牙與人物動作脫節。"
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
     },
     {
       "id": "godie-nbbc.r",
@@ -386,112 +390,110 @@
       "blockers": [],
       "audit": {
         "safe": true,
-        "autoVisualScore": 9.5,
+        "autoVisualScore": 10,
         "sampledFrames": 35,
         "peakParticleCount": 0,
-        "peakSystemCount": 9,
-        "worstAtMs": 866.6666666666661,
+        "peakSystemCount": 3,
+        "worstAtMs": 0,
         "worst": {
-          "litShare": 0.01138881893729539,
+          "litShare": 0,
           "highlightShare": 0,
           "brightShare": 0,
           "nearWhiteShare": 0,
           "dominantBrightShare": 0,
-          "dominantNonBackgroundShare": 0.009924032569461932,
+          "dominantNonBackgroundShare": 0,
           "localWhiteCardShare": 0,
           "diagnosticCheckerShare": 0,
           "unsafe": false
         },
-        "suspects": [
-          "telegraph-corridor · r/d=0.41 · telegraph-corridor-mat · 無貼圖",
-          "telegraph-corridor · r/d=0.38 · telegraph-corridor-mat · 無貼圖",
-          "vfx-ring · r/d=0.06 · vfx-ring-mat · 無貼圖",
-          "vfx-decal · r/d=0.05 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
-          "vfx-arc · r/d=0.00 · vfx-arc-mat · 無貼圖"
-        ]
+        "suspects": []
       },
       "frames": [
         {
           "label": "godie-nbbc.r · 施法提交 · floatingText · 自動基本視覺驗收",
-          "atMs": 120,
+          "atMs": 180,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.004705993452530849,
-            "highlightShare": 0.0041876521447158565,
-            "brightShare": 0.0036766557542180812,
-            "nearWhiteShare": 0.003099555107865357,
-            "dominantBrightShare": 0.0029883320742046505,
-            "dominantNonBackgroundShare": 0.0029883320742046505,
+            "litShare": 0.004566440023503735,
+            "highlightShare": 0.003006169730546462,
+            "brightShare": 0.000261269201712415,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0004816167212289096,
+            "dominantNonBackgroundShare": 0.0005938890287920759,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-nbbc.r-01-120ms.webp",
-          "bytes": 5474
+          "file": "frames/godie-nbbc.r-01-180ms.webp",
+          "bytes": 5700
         },
         {
           "label": "godie-nbbc.r · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
-          "atMs": 931,
+          "atMs": 1013,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.011345798707294552,
-            "highlightShare": 0.006483463443297238,
-            "brightShare": 0.004172962310081424,
-            "nearWhiteShare": 0.0029484596659111895,
-            "dominantBrightShare": 0.002939016200789054,
-            "dominantNonBackgroundShare": 0.003750104927390246,
+            "litShare": 0.00928187694115672,
+            "highlightShare": 0.005159279778393352,
+            "brightShare": 0.0003651473180559053,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0008467640392848149,
+            "dominantNonBackgroundShare": 0.004592671871065223,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-nbbc.r-02-931ms.webp",
-          "bytes": 8428
+          "file": "frames/godie-nbbc.r-02-1013ms.webp",
+          "bytes": 8528
         },
         {
           "label": "godie-nbbc.r · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
-          "atMs": 1361,
+          "atMs": 1443,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.0061036262906069,
-            "highlightShare": 0.004007177033492823,
-            "brightShare": 0.003478342986653236,
-            "nearWhiteShare": 0.0027858222110299672,
-            "dominantBrightShare": 0.00277952656761521,
-            "dominantNonBackgroundShare": 0.00277952656761521,
+            "litShare": 0.006863300595987576,
+            "highlightShare": 0.004753210778141526,
+            "brightShare": 0.0001594896331738437,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0007638714009905146,
+            "dominantNonBackgroundShare": 0.0025297993788298495,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-nbbc.r-03-1361ms.webp",
-          "bytes": 5844
+          "file": "frames/godie-nbbc.r-03-1443ms.webp",
+          "bytes": 6988
         },
         {
           "label": "godie-nbbc.r · 吟唱完成 · vfx+anim+screenShake · 自動基本視覺驗收",
-          "atMs": 1561,
+          "atMs": 1663,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.006872744061109712,
-            "highlightShare": 0.0044824981113069755,
-            "brightShare": 0.0036735079325107027,
-            "nearWhiteShare": 0.003012465373961219,
-            "dominantBrightShare": 0.0030072190044489215,
-            "dominantNonBackgroundShare": 0.0030072190044489215,
+            "litShare": 0.0079818265760094,
+            "highlightShare": 0.0051645261479056495,
+            "brightShare": 0.00044279358683790816,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0008520104087971124,
+            "dominantNonBackgroundShare": 0.001963191471501721,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-nbbc.r-04-1561ms.webp",
-          "bytes": 7482
+          "file": "frames/godie-nbbc.r-04-1663ms.webp",
+          "bytes": 8116
         }
       ],
       "machineIssues": [],
-      "humanVerdict": "fail",
-      "humanScore": 2,
-      "humanNote": "A段僅見稀薄藍線，B段斬擊與遠處月牙方向斷裂；角色動作、衝擊波與dash沒有形成清楚的A/B連段。"
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
     },
     {
       "id": "godie-nbbc.e",
@@ -500,153 +502,219 @@
       "blockers": [],
       "audit": {
         "safe": true,
-        "autoVisualScore": 5.5,
+        "autoVisualScore": 10,
         "sampledFrames": 44,
-        "peakParticleCount": 178,
-        "peakSystemCount": 12,
-        "worstAtMs": 1066.6666666666658,
+        "peakParticleCount": 0,
+        "peakSystemCount": 4,
+        "worstAtMs": 0,
         "worst": {
-          "litShare": 0.03749370435658524,
-          "highlightShare": 0.022912994208008058,
-          "brightShare": 0.017279442625703013,
-          "nearWhiteShare": 0.0017145135566188198,
-          "dominantBrightShare": 0.001643162931251574,
-          "dominantNonBackgroundShare": 0.005767858641819861,
+          "litShare": 0,
+          "highlightShare": 0,
+          "brightShare": 0,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0,
           "localWhiteCardShare": 0,
-          "diagnosticCheckerShare": 0.002287417107361706,
-          "unsafe": false,
-          "reason": "透明／混合收據與同格剝離已定位格狀圖樣；不是未知載體，但玩家畫面仍須人工裁決"
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
         },
-        "suspects": [
-          "telegraph-corridor · r/d=0.47 · telegraph-corridor-mat · 無貼圖",
-          "telegraph-corridor · r/d=0.46 · telegraph-corridor-mat · 無貼圖",
-          "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
-          "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
-          "vfx-ring · r/d=0.04 · vfx-ring-mat · 無貼圖"
-        ]
+        "suspects": []
       },
       "frames": [
         {
           "label": "godie-nbbc.e · 施法提交 · floatingText+anim · 自動基本視覺驗收",
-          "atMs": 120,
+          "atMs": 180,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.004559095106186519,
-            "highlightShare": 0.004126794258373206,
-            "brightShare": 0.0035979602115336186,
-            "nearWhiteShare": 0.002913833627130026,
-            "dominantBrightShare": 0.002837236632250483,
-            "dominantNonBackgroundShare": 0.002837236632250483,
+            "litShare": 0.004542306723747167,
+            "highlightShare": 0.0029232770922521614,
+            "brightShare": 0.000267564845127172,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.00046377906488709813,
+            "dominantNonBackgroundShare": 0.0005739528246453455,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-nbbc.e-01-120ms.webp",
-          "bytes": 5560
+          "file": "frames/godie-nbbc.e-01-180ms.webp",
+          "bytes": 5862
         },
         {
           "label": "godie-nbbc.e · 吟唱完成 · screenShake+vfx+anim · 自動基本視覺驗收",
-          "atMs": 1120,
+          "atMs": 1180,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.009500125912868295,
-            "highlightShare": 0.005124653739612188,
-            "brightShare": 0.0038057164442205993,
-            "nearWhiteShare": 0.002987282800302191,
-            "dominantBrightShare": 0.0029683958700579198,
-            "dominantNonBackgroundShare": 0.0029683958700579198,
+            "litShare": 0.012027826743893227,
+            "highlightShare": 0.0052715520859565185,
+            "brightShare": 0.0006085788634265088,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0007072106102577017,
+            "dominantNonBackgroundShare": 0.008484428775287501,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-nbbc.e-02-1120ms.webp",
-          "bytes": 9314
+          "file": "frames/godie-nbbc.e-02-1180ms.webp",
+          "bytes": 10860
         },
         {
           "label": "godie-nbbc.e · 吟唱完成 · vfx · 自動基本視覺驗收",
-          "atMs": 1550,
+          "atMs": 1610,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.009998531016536557,
-            "highlightShare": 0.005109963904977755,
-            "brightShare": 0.003632586250314782,
-            "nearWhiteShare": 0.0029778393351800555,
-            "dominantBrightShare": 0.002957903131033325,
-            "dominantNonBackgroundShare": 0.002957903131033325,
+            "litShare": 0.010119197515319398,
+            "highlightShare": 0.004811970116679258,
+            "brightShare": 0.0004239066565936372,
+            "nearWhiteShare": 0.000002098547804918996,
+            "dominantBrightShare": 0.0007502308402585411,
+            "dominantNonBackgroundShare": 0.004272643330815076,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-nbbc.e-03-1550ms.webp",
-          "bytes": 8756
+          "file": "frames/godie-nbbc.e-03-1610ms.webp",
+          "bytes": 8938
         },
         {
           "label": "godie-nbbc.e · 吟唱完成 · vfx · 自動基本視覺驗收",
-          "atMs": 1719,
+          "atMs": 1811,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.006176026189876605,
-            "highlightShare": 0.004376521447158567,
-            "brightShare": 0.0035979602115336186,
-            "nearWhiteShare": 0.0029568538571308656,
-            "dominantBrightShare": 0.002941114748593973,
-            "dominantNonBackgroundShare": 0.002941114748593973,
+            "litShare": 0.009330143540669857,
+            "highlightShare": 0.004717535465457903,
+            "brightShare": 0.0004270544783010157,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0007565264836732981,
+            "dominantNonBackgroundShare": 0.0036902963149500548,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-nbbc.e-04-1719ms.webp",
-          "bytes": 7088
+          "file": "frames/godie-nbbc.e-04-1811ms.webp",
+          "bytes": 8418
         }
       ],
       "machineIssues": [],
-      "humanVerdict": "fail",
-      "humanScore": 2,
-      "humanNote": "僅有稀薄藍色橫線與人物動作，沒有從施法者連到目標的橫向氣功砲體積、核心和命中爆點。"
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
     },
     {
       "id": "godie-ogrh.r",
       "name": "09-04 龜派氣功",
-      "status": "failed",
-      "blockers": [
-        "Error: 局部紅／紫棋盤載體佔畫面 0.174%，疑似貼圖載入失敗或透明底板外露 @ 120ms"
-      ],
-      "audit": null,
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 10,
+        "sampledFrames": 42,
+        "peakParticleCount": 0,
+        "peakSystemCount": 4,
+        "worstAtMs": 0,
+        "worst": {
+          "litShare": 0,
+          "highlightShare": 0,
+          "brightShare": 0,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": []
+      },
       "frames": [
         {
-          "label": "godie-ogrh.r · 載入／GPU 失敗診斷",
-          "atMs": 0,
+          "label": "godie-ogrh.r · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+          "atMs": 180,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.005452240067624683,
-            "highlightShare": 0.0035005718263636815,
-            "brightShare": 0.000032320620555914674,
+            "litShare": 0.003922185847393604,
+            "highlightShare": 0.0025056660790732815,
+            "brightShare": 0.00001678838243935197,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0008142310178509273,
-            "dominantNonBackgroundShare": 0.000834120630500721,
+            "dominantBrightShare": 0.000581297741962562,
+            "dominantNonBackgroundShare": 0.000581297741962562,
             "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.0017055342847198051,
-            "unsafe": true,
-            "reason": "局部紅／紫棋盤載體佔畫面 0.171%，疑似貼圖載入失敗或透明底板外露"
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
           },
-          "diagnosticOnly": true,
-          "file": "frames/godie-ogrh.r-01-0ms.webp",
-          "bytes": 5198
-        }
-      ],
-      "machineIssues": [
+          "diagnosticOnly": false,
+          "file": "frames/godie-ogrh.r-01-180ms.webp",
+          "bytes": 5258
+        },
         {
-          "code": "FRAMEBUFFER_CARRIER",
-          "severity": "blocker",
-          "owner": "editor-then-main",
-          "summary": "實際 framebuffer 出現棋盤或不透明載體",
-          "nextAction": "Editor 先定位時間點與使用組合；若單一 Main primitive 仍可重現，再附失敗幀回報 Main。"
+          "label": "godie-ogrh.r · 吟唱完成 · screenShake+vfx+anim · 自動基本視覺驗收",
+          "atMs": 1013,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.009665911189456896,
+            "highlightShare": 0.004465709728867623,
+            "brightShare": 0.00009863174683119282,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0009674305380676572,
+            "dominantNonBackgroundShare": 0.0023524720893141945,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-ogrh.r-02-1013ms.webp",
+          "bytes": 9882
+        },
+        {
+          "label": "godie-ogrh.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+          "atMs": 1443,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.00851066062284899,
+            "highlightShare": 0.004151976832032234,
+            "brightShare": 0.00004931587341559641,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0009307059514815747,
+            "dominantNonBackgroundShare": 0.0023503735415092756,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-ogrh.r-03-1443ms.webp",
+          "bytes": 8524
+        },
+        {
+          "label": "godie-ogrh.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+          "atMs": 1644,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.00618756820280366,
+            "highlightShare": 0.004073281289347771,
+            "brightShare": 0.00008184336439184085,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0008729958868463023,
+            "dominantNonBackgroundShare": 0.002218165029799379,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-ogrh.r-04-1644ms.webp",
+          "bytes": 6958
         }
       ],
+      "machineIssues": [],
       "humanVerdict": "pending",
       "humanScore": null,
       "humanNote": ""
@@ -654,42 +722,111 @@
     {
       "id": "godie-o00x.r",
       "name": "09-04 龜派氣功",
-      "status": "failed",
-      "blockers": [
-        "Error: 局部紅／紫棋盤載體佔畫面 0.173%，疑似貼圖載入失敗或透明底板外露 @ 98ms；可疑載體：vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha | vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
-      ],
-      "audit": null,
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 10,
+        "sampledFrames": 42,
+        "peakParticleCount": 0,
+        "peakSystemCount": 4,
+        "worstAtMs": 0,
+        "worst": {
+          "litShare": 0,
+          "highlightShare": 0,
+          "brightShare": 0,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": []
+      },
       "frames": [
         {
-          "label": "godie-o00x.r · 載入／GPU 失敗診斷",
-          "atMs": 0,
+          "label": "godie-o00x.r · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+          "atMs": 180,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.005693401621003431,
-            "highlightShare": 0.003495599423201233,
-            "brightShare": 0.00005345333399632042,
+            "litShare": 0.003922185847393604,
+            "highlightShare": 0.0025056660790732815,
+            "brightShare": 0.00001678838243935197,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.000810501715479091,
-            "dominantNonBackgroundShare": 0.000810501715479091,
+            "dominantBrightShare": 0.000581297741962562,
+            "dominantNonBackgroundShare": 0.000581297741962562,
             "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.0017018049823479687,
-            "unsafe": true,
-            "reason": "局部紅／紫棋盤載體佔畫面 0.170%，疑似貼圖載入失敗或透明底板外露"
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
           },
-          "diagnosticOnly": true,
-          "file": "frames/godie-o00x.r-01-0ms.webp",
-          "bytes": 5348
-        }
-      ],
-      "machineIssues": [
+          "diagnosticOnly": false,
+          "file": "frames/godie-o00x.r-01-180ms.webp",
+          "bytes": 5258
+        },
         {
-          "code": "FRAMEBUFFER_CARRIER",
-          "severity": "blocker",
-          "owner": "editor-then-main",
-          "summary": "實際 framebuffer 出現棋盤或不透明載體",
-          "nextAction": "Editor 先定位時間點與使用組合；若單一 Main primitive 仍可重現，再附失敗幀回報 Main。"
+          "label": "godie-o00x.r · 吟唱完成 · screenShake+vfx+anim · 自動基本視覺驗收",
+          "atMs": 1013,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.010360530512885083,
+            "highlightShare": 0.004303072273986401,
+            "brightShare": 0.00009548392512381433,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0008687987912364643,
+            "dominantNonBackgroundShare": 0.0027186686812725592,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-o00x.r-02-1013ms.webp",
+          "bytes": 10288
+        },
+        {
+          "label": "godie-o00x.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+          "atMs": 1443,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.007678586418198606,
+            "highlightShare": 0.004133089901787962,
+            "brightShare": 0.00004931587341559641,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0009307059514815747,
+            "dominantNonBackgroundShare": 0.0016610005875933853,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-o00x.r-03-1443ms.webp",
+          "bytes": 8130
+        },
+        {
+          "label": "godie-o00x.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+          "atMs": 1644,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.006255771006463527,
+            "highlightShare": 0.004217031813984723,
+            "brightShare": 0.00017837656341811465,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0009328044992864937,
+            "dominantNonBackgroundShare": 0.002660958616637287,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-o00x.r-04-1644ms.webp",
+          "bytes": 6874
         }
       ],
+      "machineIssues": [],
       "humanVerdict": "pending",
       "humanScore": null,
       "humanNote": ""
@@ -701,132 +838,199 @@
       "blockers": [],
       "audit": {
         "safe": true,
-        "autoVisualScore": 6.5,
+        "autoVisualScore": 10,
         "sampledFrames": 41,
-        "peakParticleCount": 108,
-        "peakSystemCount": 60,
-        "worstAtMs": 133.33333333333334,
+        "peakParticleCount": 0,
+        "peakSystemCount": 11,
+        "worstAtMs": 0,
         "worst": {
-          "litShare": 0.012120162847309662,
-          "highlightShare": 0.001586502140518761,
-          "brightShare": 0.00010177956853857131,
+          "litShare": 0,
+          "highlightShare": 0,
+          "brightShare": 0,
           "nearWhiteShare": 0,
-          "dominantBrightShare": 0.00001678838243935197,
-          "dominantNonBackgroundShare": 0.005850751280114161,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0,
           "localWhiteCardShare": 0,
-          "diagnosticCheckerShare": 0.0017354990346680097,
-          "unsafe": false,
-          "reason": "透明／混合收據與同格剝離已定位格狀圖樣；不是未知載體，但玩家畫面仍須人工裁決"
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
         },
-        "suspects": [
-          "vfx-ring · r/d=0.12 · vfx-ring-mat · 無貼圖",
-          "vfx-ring · r/d=0.12 · vfx-ring-mat · 無貼圖",
-          "vfx-ring · r/d=0.12 · vfx-ring-mat · 無貼圖",
-          "vfx-ring · r/d=0.12 · vfx-ring-mat · 無貼圖",
-          "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
-        ]
+        "suspects": []
       },
       "frames": [
         {
           "label": "godie-e002.ex · 反彈成功 · vfx+floatingText+bodyMove+anim · 自動基本視覺驗收",
-          "atMs": 253,
+          "atMs": 313,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.012212498950726097,
-            "highlightShare": 0.007457189624779653,
-            "brightShare": 0.0026850919163938555,
-            "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0006526483673298078,
-            "dominantNonBackgroundShare": 0.0009233610341643582,
+            "litShare": 0.01904117350793251,
+            "highlightShare": 0.012593385377318895,
+            "brightShare": 0.0056251573910853685,
+            "nearWhiteShare": 0.0007470830185511626,
+            "dominantBrightShare": 0.0015980441534458156,
+            "dominantNonBackgroundShare": 0.0016442122051540334,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-e002.ex-01-253ms.webp",
-          "bytes": 6592
+          "file": "frames/godie-e002.ex-01-313ms.webp",
+          "bytes": 7180
         },
         {
           "label": "godie-e002.ex · 反彈成功 · vfx+bodyMove+anim · 自動基本視覺驗收",
-          "atMs": 631,
+          "atMs": 713,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.006770964492571141,
-            "highlightShare": 0.0013672038949047258,
-            "brightShare": 0.0005151934861076135,
+            "litShare": 0.029275791152522455,
+            "highlightShare": 0.01369407370099891,
+            "brightShare": 0.00008184336439184085,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0004616805170821791,
-            "dominantNonBackgroundShare": 0.0037007890539746497,
+            "dominantBrightShare": 0.0007890539746495426,
+            "dominantNonBackgroundShare": 0.012570301351464787,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-e002.ex-02-631ms.webp",
-          "bytes": 6092
+          "file": "frames/godie-e002.ex-02-713ms.webp",
+          "bytes": 9018
         },
         {
           "label": "godie-e002.ex · 第 6 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
-          "atMs": 878,
+          "atMs": 980,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.010379417443129355,
-            "highlightShare": 0.0013388734995383195,
-            "brightShare": 0.0005760513724502644,
+            "litShare": 0.02677222362125409,
+            "highlightShare": 0.011984806513892386,
+            "brightShare": 0.00008184336439184085,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0005288340468395871,
-            "dominantNonBackgroundShare": 0.004300973726181483,
+            "dominantBrightShare": 0.0008373205741626794,
+            "dominantNonBackgroundShare": 0.011021573071434568,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-e002.ex-03-878ms.webp",
-          "bytes": 5824
+          "file": "frames/godie-e002.ex-03-980ms.webp",
+          "bytes": 8500
         },
         {
           "label": "godie-e002.ex · 第 7 段 · vfx · 自動基本視覺驗收",
-          "atMs": 1333,
+          "atMs": 1393,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.006394275161588181,
-            "highlightShare": 0.0019243683371107194,
-            "brightShare": 0.0006411063544027532,
-            "nearWhiteShare": 0.000002098547804918996,
-            "dominantBrightShare": 0.000545622429278939,
-            "dominantNonBackgroundShare": 0.0012266011919751531,
+            "litShare": 0.007783513808444557,
+            "highlightShare": 0.0041719130361789645,
+            "brightShare": 0.00008184336439184085,
+            "nearWhiteShare": 0.000001049273902459498,
+            "dominantBrightShare": 0.0007670192226978931,
+            "dominantNonBackgroundShare": 0.0024762864098044155,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-e002.ex-04-1333ms.webp",
-          "bytes": 7858
+          "file": "frames/godie-e002.ex-04-1393ms.webp",
+          "bytes": 8620
         }
       ],
       "machineIssues": [],
-      "humanVerdict": "fail",
-      "humanScore": 2,
-      "humanNote": "可見反擊斬擊動作與重複大月牙，但沒有清楚的Avalon反彈起點、逐刀節點與最後約束勝利劍光束。"
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
     },
     {
       "id": "godie-e00l.r",
       "name": "20-04 Avalon-永恆的理想鄉",
-      "status": "blocked",
-      "blockers": [
-        "主動段可預覽，但下列被動／追加階段無法自訂時間軸：onDamageTaken"
-      ],
-      "audit": null,
-      "frames": [],
-      "machineIssues": [
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 10,
+        "sampledFrames": 45,
+        "peakParticleCount": 0,
+        "peakSystemCount": 2,
+        "worstAtMs": 0,
+        "worst": {
+          "litShare": 0,
+          "highlightShare": 0,
+          "brightShare": 0,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": []
+      },
+      "frames": [
         {
-          "code": "UNSUPPORTED_EVENT_BRICK",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "缺少可重用且帶來源資訊的 runtime 事件積木",
-          "nextAction": "Main 補權威事件與 provenance；Editor 再接時間軸選項，禁止用假 cast 代替。"
+          "label": "godie-e00l.r · 施法提交 · anim · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.0037941744312935447,
+            "highlightShare": 0.002335683706874843,
+            "brightShare": 0.00004511877780575842,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0005340804163518845,
+            "dominantNonBackgroundShare": 0.0005729035507428859,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-e00l.r-01-180ms.webp",
+          "bytes": 5534
+        },
+        {
+          "label": "godie-e00l.r · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+          "atMs": 847,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.02949718794594141,
+            "highlightShare": 0.016797825904474106,
+            "brightShare": 0.008759338537731889,
+            "nearWhiteShare": 0.0040480987156887435,
+            "dominantBrightShare": 0.003731217997145975,
+            "dominantNonBackgroundShare": 0.007888441198690506,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-e00l.r-02-847ms.webp",
+          "bytes": 12794
+        },
+        {
+          "label": "godie-e00l.r · 反彈成功 · anim+vfx · 自動基本視覺驗收",
+          "atMs": 980,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.010134936623856292,
+            "highlightShare": 0.004025014689834634,
+            "brightShare": 0.00013850415512465375,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0007533786619659195,
+            "dominantNonBackgroundShare": 0.00313523042054898,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-e00l.r-03-980ms.webp",
+          "bytes": 8678
         }
       ],
+      "machineIssues": [],
       "humanVerdict": "pending",
       "humanScore": null,
       "humanNote": ""
@@ -839,75 +1043,109 @@
       "audit": {
         "safe": true,
         "autoVisualScore": 9.5,
-        "sampledFrames": 29,
-        "peakParticleCount": 142,
-        "peakSystemCount": 55,
-        "worstAtMs": 0,
+        "sampledFrames": 41,
+        "peakParticleCount": 33,
+        "peakSystemCount": 15,
+        "worstAtMs": 266.66666666666663,
         "worst": {
-          "litShare": 0.003318853353479392,
-          "highlightShare": 0.003231763619575254,
-          "brightShare": 0.0031677579115252244,
+          "litShare": 0.000001049273902459498,
+          "highlightShare": 0,
+          "brightShare": 0,
           "nearWhiteShare": 0,
-          "dominantBrightShare": 0.0029064887098128097,
-          "dominantNonBackgroundShare": 0.0029064887098128097,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0.005375430202300009,
           "localWhiteCardShare": 0,
-          "diagnosticCheckerShare": 0.00035990094854360783,
-          "unsafe": false,
-          "reason": "透明／混合收據與同格剝離已定位格狀圖樣；不是未知載體，但玩家畫面仍須人工裁決"
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
         },
-        "suspects": [
-          "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
-          "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
-          "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
-          "vfx-decal · r/d=0.07 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
-          "vfx-decal · r/d=0.07 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
-        ]
+        "suspects": []
       },
       "frames": [
         {
-          "label": "godie-e00l.ex · 反彈成功 · vfx+anim · 自動基本視覺驗收",
-          "atMs": 238,
+          "label": "godie-e00l.ex · 反彈成功 · vfx+floatingText+bodyMove+anim · 自動基本視覺驗收",
+          "atMs": 313,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.006307185427684043,
-            "highlightShare": 0.005106816083270377,
-            "brightShare": 0.0009978594812389827,
+            "litShare": 0.0004270544783010157,
+            "highlightShare": 0.0002056576848820616,
+            "brightShare": 0.000003147821707378494,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.002748048350541425,
-            "dominantNonBackgroundShare": 0.002748048350541425,
-            "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.00035990094854360783,
-            "unsafe": false,
-            "reason": "透明／混合收據與同格剝離已定位格狀圖樣；不是未知載體，但玩家畫面仍須人工裁決"
-          },
-          "diagnosticOnly": false,
-          "file": "frames/godie-e00l.ex-01-238ms.webp",
-          "bytes": 5602
-        },
-        {
-          "label": "godie-e00l.ex · 第 7 段 · anim · 自動基本視覺驗收",
-          "atMs": 1031,
-          "view": "side",
-          "frameAudit": {
-            "litShare": 0.00614559724670528,
-            "highlightShare": 0.0048791236464366654,
-            "brightShare": 0.0034584067825065056,
-            "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0028980945185931336,
-            "dominantNonBackgroundShare": 0.0028980945185931336,
+            "dominantBrightShare": 0.000003147821707378494,
+            "dominantNonBackgroundShare": 0.000039872408293460924,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-e00l.ex-02-1031ms.webp",
-          "bytes": 5154
+          "file": "frames/godie-e00l.ex-01-313ms.webp",
+          "bytes": 6496
+        },
+        {
+          "label": "godie-e00l.ex · 反彈成功 · vfx+bodyMove+anim · 自動基本視覺驗收",
+          "atMs": 713,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.009355326114328884,
+            "highlightShare": 0.0014385545202719719,
+            "brightShare": 0.000009443465122135483,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.00008499118609921934,
+            "dominantNonBackgroundShare": 0.0013934357424662135,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-e00l.ex-02-713ms.webp",
+          "bytes": 8632
+        },
+        {
+          "label": "godie-e00l.ex · 第 6 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+          "atMs": 980,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.009182195920423067,
+            "highlightShare": 0.0014479979853941074,
+            "brightShare": 0.0000052463695122974905,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.00007554772097708386,
+            "dominantNonBackgroundShare": 0.002071266683455049,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-e00l.ex-03-980ms.webp",
+          "bytes": 7656
+        },
+        {
+          "label": "godie-e00l.ex · 第 7 段 · vfx · 自動基本視覺驗收",
+          "atMs": 1393,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.0028855032317636198,
+            "highlightShare": 0.0012801141610005876,
+            "brightShare": 0.0000052463695122974905,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.00004511877780575842,
+            "dominantNonBackgroundShare": 0.0003200285402501469,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-e00l.ex-04-1393ms.webp",
+          "bytes": 7400
         }
       ],
       "machineIssues": [],
-      "humanVerdict": "fail",
-      "humanScore": 1,
-      "humanNote": "只有藍色實心球形預告與一次貼身斬擊，缺少反擊鏈、連續斬擊及最終光束，幾何也像未完成的除錯形狀。"
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
     },
     {
       "id": "godie-hvsh.r",
@@ -916,129 +1154,110 @@
       "blockers": [],
       "audit": {
         "safe": true,
-        "autoVisualScore": 2,
+        "autoVisualScore": 10,
         "sampledFrames": 44,
-        "peakParticleCount": 108,
-        "peakSystemCount": 16,
-        "worstAtMs": 999.9999999999991,
+        "peakParticleCount": 0,
+        "peakSystemCount": 4,
+        "worstAtMs": 0,
         "worst": {
-          "litShare": 0.006151892890120037,
-          "highlightShare": 0.0031614622681104677,
-          "brightShare": 0.0013199865692940485,
+          "litShare": 0,
+          "highlightShare": 0,
+          "brightShare": 0,
           "nearWhiteShare": 0,
-          "dominantBrightShare": 0.00029274741878619994,
-          "dominantNonBackgroundShare": 0.0013262822127088055,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0,
           "localWhiteCardShare": 0,
-          "diagnosticCheckerShare": 0.003967304625199362,
-          "unsafe": false,
-          "reason": "透明／混合收據與同格剝離已定位格狀圖樣；不是未知載體，但玩家畫面仍須人工裁決"
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
         },
-        "suspects": [
-          "telegraph-corridor · r/d=0.12 · telegraph-corridor-mat · 無貼圖",
-          "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
-          "telegraph-fill · r/d=0.06 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
-          "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
-          "telegraph-ring · r/d=0.05 · telegraph-ring · 無貼圖"
-        ]
+        "suspects": []
       },
       "frames": [
         {
           "label": "godie-hvsh.r · 施法提交 · anim · 自動基本視覺驗收",
-          "atMs": 120,
+          "atMs": 180,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.004607361705699656,
-            "highlightShare": 0.00236191555443633,
-            "brightShare": 0.00023818517585830605,
+            "litShare": 0.003111097120792412,
+            "highlightShare": 0.0022171157558969192,
+            "brightShare": 0.000002098547804918996,
             "nearWhiteShare": 0,
             "dominantBrightShare": 0.000539326785864182,
-            "dominantNonBackgroundShare": 0.000539326785864182,
+            "dominantNonBackgroundShare": 0.0005729035507428859,
             "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.0018823973810123394,
-            "unsafe": false,
-            "reason": "Telegraph 格狀圖樣已通過同格剝離；不是遺失貼圖，但玩家畫面仍須人工裁決"
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-hvsh.r-01-120ms.webp",
-          "bytes": 5030
+          "file": "frames/godie-hvsh.r-01-180ms.webp",
+          "bytes": 5012
         },
         {
           "label": "godie-hvsh.r · 吟唱完成 · anim+bodyMove+vfx+screenShake · 自動基本視覺驗收",
-          "atMs": 1120,
+          "atMs": 1180,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.014759086711995299,
-            "highlightShare": 0.00597771342231176,
-            "brightShare": 0.0008929320909930328,
-            "nearWhiteShare": 0.00008184336439184085,
-            "dominantBrightShare": 0.00039242843951985227,
-            "dominantNonBackgroundShare": 0.0044667590027700835,
+            "litShare": 0.01015906992361286,
+            "highlightShare": 0.004072232015445312,
+            "brightShare": 0.00003672458658608243,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0009800218248971712,
+            "dominantNonBackgroundShare": 0.007214807353311509,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-hvsh.r-02-1120ms.webp",
-          "bytes": 8650
+          "file": "frames/godie-hvsh.r-02-1180ms.webp",
+          "bytes": 9556
         },
         {
           "label": "godie-hvsh.r · 吟唱完成 · vfx · 自動基本視覺驗收",
-          "atMs": 1550,
+          "atMs": 1610,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.008606144547972802,
-            "highlightShare": 0.0036000587593385375,
-            "brightShare": 0.0002088055065894401,
-            "nearWhiteShare": 0.000017837656341811465,
-            "dominantBrightShare": 0.0006180223285486443,
-            "dominantNonBackgroundShare": 0.004484596659111895,
+            "litShare": 0.008119281457231595,
+            "highlightShare": 0.00386762360446571,
+            "brightShare": 0.000039872408293460924,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0010135985897758752,
+            "dominantNonBackgroundShare": 0.005655586334256694,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-hvsh.r-03-1550ms.webp",
-          "bytes": 7380
+          "file": "frames/godie-hvsh.r-03-1610ms.webp",
+          "bytes": 7944
         },
         {
           "label": "godie-hvsh.r · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
-          "atMs": 1734,
+          "atMs": 1830,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.004695500713506254,
-            "highlightShare": 0.00207021740955259,
-            "brightShare": 0.0002077562326869806,
-            "nearWhiteShare": 0.000003147821707378494,
-            "dominantBrightShare": 0.0004711239822043146,
-            "dominantNonBackgroundShare": 0.0017627801561319568,
+            "litShare": 0.005719592042306724,
+            "highlightShare": 0.0024500545622429277,
+            "brightShare": 0.00004302023000083942,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0008604046000167884,
+            "dominantNonBackgroundShare": 0.0036483253588516745,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-hvsh.r-04-1734ms.webp",
-          "bytes": 5622
+          "file": "frames/godie-hvsh.r-04-1830ms.webp",
+          "bytes": 6422
         }
       ],
-      "machineIssues": [
-        {
-          "code": "PRESENTATION_ARTIFACT",
-          "severity": "high",
-          "owner": "editor",
-          "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面",
-          "nextAction": "Editor 改用乾淨 primitive 或調整配色／密度後單項重跑；不可因來源收據安全而自動通過。"
-        },
-        {
-          "code": "LOW_VISUAL_HYGIENE",
-          "severity": "medium",
-          "owner": "editor",
-          "summary": "畫面雖可擷取，但時間軸／關鍵格最低清晰度只有 2/10",
-          "nextAction": "人工檢查構圖、遮擋與格狀外觀；不可把素材安全分數當成美術通過。"
-        }
-      ],
-      "humanVerdict": "fail",
-      "humanScore": 2,
-      "humanNote": "有角色衝近與藍色速度線，但光束短、落在目標後方，缺少騎英之手綱的高速突進重量與貫穿終結。"
+      "machineIssues": [],
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
     },
     {
       "id": "godie-hvwd.e",
@@ -1049,7 +1268,7 @@
         "safe": true,
         "autoVisualScore": 10,
         "sampledFrames": 31,
-        "peakParticleCount": 0,
+        "peakParticleCount": 108,
         "peakSystemCount": 9,
         "worstAtMs": 0,
         "worst": {
@@ -1067,58 +1286,50 @@
       },
       "frames": [
         {
-          "label": "godie-hvwd.e · 施法提交 · anim · 自動基本視覺驗收",
-          "atMs": 98,
+          "label": "godie-hvwd.e · 真 runtime · abilityCast · 自動基本視覺驗收",
+          "atMs": 180,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.006277805758415177,
-            "highlightShare": 0.0029358683790816757,
-            "brightShare": 0.0009002770083102493,
+            "litShare": 0.005913707714261731,
+            "highlightShare": 0.002667254260052044,
+            "brightShare": 0.0006453034500125913,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.000520439855619911,
-            "dominantNonBackgroundShare": 0.0008593553261143289,
+            "dominantBrightShare": 0.0005214891295223706,
+            "dominantNonBackgroundShare": 0.0010293376983127676,
             "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.0015434819105179217,
-            "unsafe": false,
-            "reason": "Telegraph 格狀圖樣已通過同格剝離；不是遺失貼圖，但玩家畫面仍須人工裁決"
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-hvwd.e-01-98ms.webp",
-          "bytes": 5606
+          "file": "frames/godie-hvwd.e-01-180ms.webp",
+          "bytes": 5658
         },
         {
-          "label": "godie-hvwd.e · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
-          "atMs": 1105,
+          "label": "godie-hvwd.e · 真 runtime · damage+hitImpact · 自動基本視覺驗收",
+          "atMs": 1180,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.010928187694115672,
-            "highlightShare": 0.0027428019810291277,
-            "brightShare": 0.0002833039536640645,
+            "litShare": 0.008247292873331655,
+            "highlightShare": 0.004006127759590364,
+            "brightShare": 0.0006232686980609418,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0004763703517166121,
-            "dominantNonBackgroundShare": 0.004658776126920171,
+            "dominantBrightShare": 0.0008960799127004113,
+            "dominantNonBackgroundShare": 0.013193570049525729,
             "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.002437463275413414,
-            "unsafe": false,
-            "reason": "Telegraph 格狀圖樣已通過同格剝離；不是遺失貼圖，但玩家畫面仍須人工裁決"
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-hvwd.e-02-1105ms.webp",
-          "bytes": 6598
+          "file": "frames/godie-hvwd.e-02-1180ms.webp",
+          "bytes": 7726
         }
       ],
-      "machineIssues": [
-        {
-          "code": "PRESENTATION_ARTIFACT",
-          "severity": "high",
-          "owner": "editor",
-          "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面",
-          "nextAction": "Editor 改用乾淨 primitive 或調整配色／密度後單項重跑；不可因來源收據安全而自動通過。"
-        }
-      ],
-      "humanVerdict": "fail",
-      "humanScore": 2,
-      "humanNote": "只有連線與紫色圓環等通用預告，缺少技能主體、角色施放動作和命中回饋，辨識度與力量感不足。"
+      "machineIssues": [],
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
     },
     {
       "id": "godie-o00k.e",
@@ -1127,123 +1338,145 @@
       "blockers": [],
       "audit": {
         "safe": true,
-        "autoVisualScore": 9,
+        "autoVisualScore": 9.5,
         "sampledFrames": 31,
-        "peakParticleCount": 40,
+        "peakParticleCount": 0,
         "peakSystemCount": 9,
-        "worstAtMs": 1133.3333333333328,
+        "worstAtMs": 0,
         "worst": {
-          "litShare": 0.02600415512465374,
-          "highlightShare": 0.009877864517753715,
-          "brightShare": 0.005972467052799463,
-          "nearWhiteShare": 0.0023860488541928987,
-          "dominantBrightShare": 0.002247544699068245,
+          "litShare": 0.011878829849743977,
+          "highlightShare": 0,
+          "brightShare": 0,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0,
           "dominantNonBackgroundShare": 0.011878829849743977,
           "localWhiteCardShare": 0,
           "diagnosticCheckerShare": 0,
           "unsafe": false
         },
         "suspects": [
-          "telegraph-fill · r/d=0.83 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
-          "telegraph-shock · r/d=0.63 · telegraph-shock · 無貼圖",
           "telegraph-ring · r/d=0.63 · telegraph-ring · 無貼圖",
-          "vfx-ring · r/d=0.12 · vfx-ring-mat · 無貼圖",
-          "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
+          "telegraph-fill · r/d=0.04 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha"
         ]
       },
       "frames": [
         {
-          "label": "godie-o00k.e · 施法提交 · anim · 自動基本視覺驗收",
-          "atMs": 98,
+          "label": "godie-o00k.e · 真 runtime · abilityCast · 自動基本視覺驗收",
+          "atMs": 180,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.1921734659615546,
-            "highlightShare": 0.0489947956014438,
-            "brightShare": 0.0003294720053722824,
+            "litShare": 0.019370645513304793,
+            "highlightShare": 0.004007177033492823,
+            "brightShare": 0.0006148745068412659,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.00017313019390581717,
-            "dominantNonBackgroundShare": 0.03758604046000168,
-            "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.00040082263073952827,
-            "unsafe": false,
-            "reason": "Telegraph 格狀圖樣已通過同格剝離；不是遺失貼圖，但玩家畫面仍須人工裁決"
-          },
-          "diagnosticOnly": false,
-          "file": "frames/godie-o00k.e-01-98ms.webp",
-          "bytes": 18886
-        },
-        {
-          "label": "godie-o00k.e · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
-          "atMs": 1105,
-          "view": "side",
-          "frameAudit": {
-            "litShare": 0.10311949131201209,
-            "highlightShare": 0.013424410308066818,
-            "brightShare": 0.0019705363888189373,
-            "nearWhiteShare": 0.00004826659951313691,
-            "dominantBrightShare": 0.0003357676487870394,
-            "dominantNonBackgroundShare": 0.08441618400067154,
-            "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.0010964912280701754,
-            "unsafe": false,
-            "reason": "透明／混合收據與同格剝離已定位格狀圖樣；不是未知載體，但玩家畫面仍須人工裁決"
-          },
-          "diagnosticOnly": false,
-          "file": "frames/godie-o00k.e-02-1105ms.webp",
-          "bytes": 26320
-        }
-      ],
-      "machineIssues": [
-        {
-          "code": "PRESENTATION_ARTIFACT",
-          "severity": "high",
-          "owner": "editor",
-          "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面",
-          "nextAction": "Editor 改用乾淨 primitive 或調整配色／密度後單項重跑；不可因來源收據安全而自動通過。"
-        }
-      ],
-      "humanVerdict": "fail",
-      "humanScore": 1,
-      "humanNote": "巨大棕色圓環與黃綠幾何遮蔽主要畫面，技能方向、作用範圍和命中目標難以辨識。"
-    },
-    {
-      "id": "godie-hjai.w",
-      "name": "04-02 炸彈陣",
-      "status": "failed",
-      "blockers": [
-        "Error: 局部紅／紫棋盤載體佔畫面 0.114%，疑似貼圖載入失敗或透明底板外露 @ 98ms"
-      ],
-      "audit": null,
-      "frames": [
-        {
-          "label": "godie-hjai.w · 載入／GPU 失敗診斷",
-          "atMs": 0,
-          "view": "side",
-          "frameAudit": {
-            "litShare": 0.01682536920093481,
-            "highlightShare": 0.004197951369897071,
-            "brightShare": 0.000057182636368156733,
-            "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0008937894684501019,
-            "dominantNonBackgroundShare": 0.01049301377355676,
+            "dominantBrightShare": 0.0006904222278183497,
+            "dominantNonBackgroundShare": 0.011898766053890708,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "diagnosticOnly": true,
-          "file": "frames/godie-hjai.w-01-0ms.webp",
-          "bytes": 9388
-        }
-      ],
-      "machineIssues": [
+          "diagnosticOnly": false,
+          "file": "frames/godie-o00k.e-01-180ms.webp",
+          "bytes": 14436
+        },
         {
-          "code": "FRAMEBUFFER_CARRIER",
-          "severity": "blocker",
-          "owner": "editor-then-main",
-          "summary": "實際 framebuffer 出現棋盤或不透明載體",
-          "nextAction": "Editor 先定位時間點與使用組合；若單一 Main primitive 仍可重現，再附失敗幀回報 Main。"
+          "label": "godie-o00k.e · 真 runtime · damage+hitImpact · 自動基本視覺驗收",
+          "atMs": 1180,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.019019138755980863,
+            "highlightShare": 0.008409930328212877,
+            "brightShare": 0.001649458574666331,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0009884160161168472,
+            "dominantNonBackgroundShare": 0.013947997985394107,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-o00k.e-02-1180ms.webp",
+          "bytes": 16060
         }
       ],
+      "machineIssues": [],
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
+    },
+    {
+      "id": "godie-hjai.w",
+      "name": "04-02 炸彈陣",
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 9.5,
+        "sampledFrames": 105,
+        "peakParticleCount": 0,
+        "peakSystemCount": 3,
+        "worstAtMs": 0,
+        "worst": {
+          "litShare": 0.009963904977755393,
+          "highlightShare": 0,
+          "brightShare": 0,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0.009963904977755393,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": [
+          "telegraph-ring · r/d=0.45 · telegraph-ring · 無貼圖",
+          "telegraph-fill · r/d=0.04 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha"
+        ]
+      },
+      "frames": [
+        {
+          "label": "godie-hjai.w · 真 runtime · abilityCast · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.017274196256190717,
+            "highlightShare": 0.004490892302526652,
+            "brightShare": 0.0006620918324519433,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0006253672458658608,
+            "dominantNonBackgroundShare": 0.009986989003609502,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-hjai.w-01-180ms.webp",
+          "bytes": 12532
+        },
+        {
+          "label": "godie-hjai.w · 真 runtime · comboStrike · 自動基本視覺驗收",
+          "atMs": 6180,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.012153739612188366,
+            "highlightShare": 0.008127675648451271,
+            "brightShare": 0.0015560731973474355,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0010094014941660371,
+            "dominantNonBackgroundShare": 0.0010094014941660371,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-hjai.w-02-6180ms.webp",
+          "bytes": 11978
+        }
+      ],
+      "machineIssues": [],
       "humanVerdict": "pending",
       "humanScore": null,
       "humanNote": ""
@@ -1255,77 +1488,76 @@
       "blockers": [],
       "audit": {
         "safe": true,
-        "autoVisualScore": 4,
+        "autoVisualScore": 9.5,
         "sampledFrames": 28,
         "peakParticleCount": 132,
-        "peakSystemCount": 17,
+        "peakSystemCount": 11,
         "worstAtMs": 866.6666666666661,
         "worst": {
-          "litShare": 0.0071172248803827755,
-          "highlightShare": 0.004188701418618316,
-          "brightShare": 0.0014920674892974061,
+          "litShare": 0.006991312012087635,
+          "highlightShare": 0.0035213632166540753,
+          "brightShare": 0.0017197599261311173,
           "nearWhiteShare": 0,
-          "dominantBrightShare": 0.000537228238059263,
-          "dominantNonBackgroundShare": 0.0005875933853773189,
+          "dominantBrightShare": 0.0004291530261059347,
+          "dominantNonBackgroundShare": 0.000792201796356921,
           "localWhiteCardShare": 0,
-          "diagnosticCheckerShare": 0.003033450852010409,
-          "unsafe": false,
-          "reason": "透明／混合收據與同格剝離已定位格狀圖樣；不是未知載體，但玩家畫面仍須人工裁決"
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
         },
         "suspects": [
           "telegraph-corridor · r/d=0.12 · telegraph-corridor-mat · 無貼圖",
-          "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
           "telegraph-fill · r/d=0.07 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
           "vfx-ring · r/d=0.06 · vfx-ring-mat · 無貼圖",
-          "vfx-ring · r/d=0.06 · vfx-ring-mat · 無貼圖"
+          "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+          "telegraph-ring · r/d=0.05 · telegraph-ring · 無貼圖"
         ]
       },
       "frames": [
         {
-          "label": "godie-nbbc.w · 施法提交 · anim · 自動基本視覺驗收",
-          "atMs": 98,
+          "label": "godie-nbbc.w · 真 runtime · abilityCast · 自動基本視覺驗收",
+          "atMs": 180,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.12138944850163687,
-            "highlightShare": 0.02483526399731386,
-            "brightShare": 0.0005382775119617225,
+            "litShare": 0.006077394443045413,
+            "highlightShare": 0.002985184252497272,
+            "brightShare": 0.000848862587089734,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0004165617392764207,
-            "dominantNonBackgroundShare": 0.016398052547637036,
+            "dominantBrightShare": 0.00052253840342483,
+            "dominantNonBackgroundShare": 0.001030386972215227,
             "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.0009380508687987912,
-            "unsafe": false,
-            "reason": "透明／混合收據與同格剝離已定位格狀圖樣；不是未知載體，但玩家畫面仍須人工裁決"
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-nbbc.w-01-98ms.webp",
-          "bytes": 14388
+          "file": "frames/godie-nbbc.w-01-180ms.webp",
+          "bytes": 6068
         },
         {
-          "label": "godie-nbbc.w · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
-          "atMs": 938,
+          "label": "godie-nbbc.w · 真 runtime · displace+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+          "atMs": 1013,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.06576743893225888,
-            "highlightShare": 0.03563858809703685,
-            "brightShare": 0.0006557961890371862,
+            "litShare": 0.012554562242927893,
+            "highlightShare": 0.005167673969613028,
+            "brightShare": 0.001026189876605389,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.00044908923025266514,
-            "dominantNonBackgroundShare": 0.01469403173004281,
+            "dominantBrightShare": 0.000796398891966759,
+            "dominantNonBackgroundShare": 0.002248593972970704,
             "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.0025067153529757407,
-            "unsafe": false,
-            "reason": "透明／混合收據與同格剝離已定位格狀圖樣；不是未知載體，但玩家畫面仍須人工裁決"
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-nbbc.w-02-938ms.webp",
-          "bytes": 12182
+          "file": "frames/godie-nbbc.w-02-1013ms.webp",
+          "bytes": 8926
         }
       ],
       "machineIssues": [],
-      "humanVerdict": "fail",
-      "humanScore": 0,
-      "humanNote": "鏡頭被多個巨大尖錐與色塊穿入，角色、敵人和技能路徑幾乎不可讀，屬於明顯視覺失敗。"
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
     },
     {
       "id": "godie-u00v.r",
@@ -1336,8 +1568,8 @@
         "safe": true,
         "autoVisualScore": 10,
         "sampledFrames": 26,
-        "peakParticleCount": 80,
-        "peakSystemCount": 12,
+        "peakParticleCount": 108,
+        "peakSystemCount": 9,
         "worstAtMs": 0,
         "worst": {
           "litShare": 0,
@@ -1354,67 +1586,119 @@
       },
       "frames": [
         {
-          "label": "godie-u00v.r · 施法提交 · anim · 自動基本視覺驗收",
-          "atMs": 98,
+          "label": "godie-u00v.r · 真 runtime · abilityCast · 自動基本視覺驗收",
+          "atMs": 180,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.06020337128934414,
-            "highlightShare": 0.013406842026751528,
-            "brightShare": 0.00007209984585550196,
+            "litShare": 0.006086837908167548,
+            "highlightShare": 0.0033828590615294215,
+            "brightShare": 0.0006589440107445648,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0008080155138978668,
-            "dominantNonBackgroundShare": 0.013255183730296853,
+            "dominantBrightShare": 0.0005613615378158315,
+            "dominantNonBackgroundShare": 0.001040879711239822,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-u00v.r-01-98ms.webp",
-          "bytes": 11634
+          "file": "frames/godie-u00v.r-01-180ms.webp",
+          "bytes": 5682
         },
         {
-          "label": "godie-u00v.r · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
-          "atMs": 772,
+          "label": "godie-u00v.r · 真 runtime · displace+vfxSpawn+statusApplied+damage+hitImpact · 自動基本視覺驗收",
+          "atMs": 847,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.0663616926060365,
-            "highlightShare": 0.019683257918552036,
-            "brightShare": 0.00006961364427427775,
+            "litShare": 0.04634642827163603,
+            "highlightShare": 0.03331444640308906,
+            "brightShare": 0.02144191219675984,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0005046989209885138,
-            "dominantNonBackgroundShare": 0.017188354631793547,
+            "dominantBrightShare": 0.012991060186351044,
+            "dominantNonBackgroundShare": 0.012991060186351044,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-u00v.r-02-772ms.webp",
-          "bytes": 11964
+          "file": "frames/godie-u00v.r-02-847ms.webp",
+          "bytes": 16230
         }
       ],
       "machineIssues": [],
-      "humanVerdict": "fail",
-      "humanScore": 0,
-      "humanNote": "巨大紅黑幾何穿入鏡頭並遮住場景，無法辨識施放動作、攻擊段落與命中結果。"
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
     },
     {
       "id": "godie-hapm.w",
       "name": "52-02 蹂躪編年史",
-      "status": "blocked",
-      "blockers": [
-        "施法者 godie-hapm 使用共用替身 champ.thorne"
-      ],
-      "audit": null,
-      "frames": [],
-      "machineIssues": [
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 10,
+        "sampledFrames": 28,
+        "peakParticleCount": 0,
+        "peakSystemCount": 3,
+        "worstAtMs": 0,
+        "worst": {
+          "litShare": 0,
+          "highlightShare": 0,
+          "brightShare": 0,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": []
+      },
+      "frames": [
         {
-          "code": "APPEARANCE_STAND_IN",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "角色仍使用替身外觀，不能當作技能視覺證據",
-          "nextAction": "Main 提供可解析的正式角色模型／appearance 收據；Editor 不以近似模型冒充。"
+          "label": "godie-hapm.w · 真 runtime · abilityCast · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.008746747250902376,
+            "highlightShare": 0.004382817090573323,
+            "brightShare": 0.0006946193234281877,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0004816167212289096,
+            "dominantNonBackgroundShare": 0.0017522874171073616,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-hapm.w-01-180ms.webp",
+          "bytes": 7640
+        },
+        {
+          "label": "godie-hapm.w · 真 runtime · abilityCast · 近景 · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.008321791320406278,
+            "highlightShare": 0.0035969109376311594,
+            "brightShare": 0.000006295643414756988,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0008247292873331655,
+            "dominantNonBackgroundShare": 0.003516116847141778,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-hapm.w-02-180ms.webp",
+          "bytes": 6892
         }
       ],
+      "machineIssues": [],
       "humanVerdict": "pending",
       "humanScore": null,
       "humanNote": ""
@@ -1446,76 +1730,119 @@
       },
       "frames": [
         {
-          "label": "godie-e001.r · 施法提交 · anim · 自動基本視覺驗收",
-          "atMs": 98,
+          "label": "godie-e001.r · 真 runtime · abilityCast · 自動基本視覺驗收",
+          "atMs": 180,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.004797280282044825,
-            "highlightShare": 0.002372408293460925,
-            "brightShare": 0.00047322253000923363,
-            "nearWhiteShare": 0.00004302023000083942,
-            "dominantBrightShare": 0.00009758247292873331,
+            "litShare": 0.004963065558633426,
+            "highlightShare": 0.0028099555107865357,
+            "brightShare": 0.0006757323931839167,
+            "nearWhiteShare": 0.000027281121463946948,
+            "dominantBrightShare": 0.00009233610341643582,
             "dominantNonBackgroundShare": 0.0004837152690338286,
-            "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.00040501972634936624,
-            "unsafe": false,
-            "reason": "Telegraph 格狀圖樣已通過同格剝離；不是遺失貼圖，但玩家畫面仍須人工裁決"
-          },
-          "diagnosticOnly": false,
-          "file": "frames/godie-e001.r-01-98ms.webp",
-          "bytes": 5582
-        },
-        {
-          "label": "godie-e001.r · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
-          "atMs": 772,
-          "view": "side",
-          "frameAudit": {
-            "litShare": 0.020246789221858474,
-            "highlightShare": 0.007757281960883069,
-            "brightShare": 0.001843574246621338,
-            "nearWhiteShare": 0.000006295643414756988,
-            "dominantBrightShare": 0.0005802484680601024,
-            "dominantNonBackgroundShare": 0.0028099555107865357,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-e001.r-02-772ms.webp",
-          "bytes": 8842
-        }
-      ],
-      "machineIssues": [
+          "file": "frames/godie-e001.r-01-180ms.webp",
+          "bytes": 5986
+        },
         {
-          "code": "PRESENTATION_ARTIFACT",
-          "severity": "high",
-          "owner": "editor",
-          "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面",
-          "nextAction": "Editor 改用乾淨 primitive 或調整配色／密度後單項重跑；不可因來源收據安全而自動通過。"
+          "label": "godie-e001.r · 真 runtime · abilityCast · 近景 · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.00652018802988332,
+            "highlightShare": 0.00326009401494166,
+            "brightShare": 0.0005256862251322085,
+            "nearWhiteShare": 0.00003672458658608243,
+            "dominantBrightShare": 0.00018782002854025013,
+            "dominantNonBackgroundShare": 0.0008446654914798959,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-e001.r-02-180ms.webp",
+          "bytes": 6342
         }
       ],
-      "humanVerdict": "fail",
-      "humanScore": 3,
-      "humanNote": "可見角色攻擊動作與紅色爆發，但整體只是通用近戰爆點，缺少技能主題、段落差異與清楚的命中節奏。"
+      "machineIssues": [],
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
     },
     {
       "id": "godie-e00s.w",
       "name": "70-02 大怒石",
-      "status": "blocked",
-      "blockers": [
-        "純被動的真正觸發點尚不能由 vfx-script@1 選取：onBasicAttack"
-      ],
-      "audit": null,
-      "frames": [],
-      "machineIssues": [
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 10,
+        "sampledFrames": 17,
+        "peakParticleCount": 214,
+        "peakSystemCount": 21,
+        "worstAtMs": 0,
+        "worst": {
+          "litShare": 0,
+          "highlightShare": 0,
+          "brightShare": 0,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": []
+      },
+      "frames": [
         {
-          "code": "UNSUPPORTED_EVENT_BRICK",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "缺少可重用且帶來源資訊的 runtime 事件積木",
-          "nextAction": "Main 補權威事件與 provenance；Editor 再接時間軸選項，禁止用假 cast 代替。"
+          "label": "godie-e00s.w · 真 runtime · basicAttack+projectileSpawn+damage+hitImpact · 自動基本視覺驗收",
+          "atMs": 613,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.0023314866112650046,
+            "highlightShare": 0.001611684714177789,
+            "brightShare": 0.0008362713002602199,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.000562410811718291,
+            "dominantNonBackgroundShare": 0.000562410811718291,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-e00s.w-01-613ms.webp",
+          "bytes": 4580
+        },
+        {
+          "label": "godie-e00s.w · 真 runtime · basicAttack+projectileSpawn+damage+hitImpact · 近景 · 自動基本視覺驗收",
+          "atMs": 613,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.0032265172500629564,
+            "highlightShare": 0.002205573742969865,
+            "brightShare": 0.001019894233190632,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.000562410811718291,
+            "dominantNonBackgroundShare": 0.000562410811718291,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-e00s.w-02-613ms.webp",
+          "bytes": 4960
         }
       ],
+      "machineIssues": [],
       "humanVerdict": "pending",
       "humanScore": null,
       "humanNote": ""
@@ -1527,104 +1854,139 @@
       "blockers": [],
       "audit": {
         "safe": true,
-        "autoVisualScore": 9,
+        "autoVisualScore": 10,
         "sampledFrames": 26,
-        "peakParticleCount": 23,
-        "peakSystemCount": 23,
-        "worstAtMs": 666.6666666666665,
+        "peakParticleCount": 150,
+        "peakSystemCount": 19,
+        "worstAtMs": 0,
         "worst": {
-          "litShare": 0.002601809954751131,
-          "highlightShare": 0.000483566207548108,
+          "litShare": 0,
+          "highlightShare": 0,
           "brightShare": 0,
           "nearWhiteShare": 0,
-          "dominantBrightShare": 0.0000012431007906121028,
-          "dominantNonBackgroundShare": 0.0018696235890806026,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0,
           "localWhiteCardShare": 0,
-          "diagnosticCheckerShare": 0.00042762667197056336,
-          "unsafe": false,
-          "reason": "透明／混合收據與同格剝離已定位呈現層異常；不是未知載體，但玩家畫面仍須人工裁決"
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
         },
-        "suspects": [
-          "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
-          "telegraph-fill · r/d=0.07 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
-          "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
-          "telegraph-ring · r/d=0.05 · telegraph-ring · 無貼圖",
-          "vfx-ring · r/d=0.04 · vfx-ring-mat · 無貼圖"
-        ]
+        "suspects": []
       },
       "frames": [
         {
-          "label": "godie-etyr.r · 施法提交 · anim · 自動基本視覺驗收",
-          "atMs": 98,
+          "label": "godie-etyr.r · 真 runtime · abilityCast · 自動基本視覺驗收",
+          "atMs": 180,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.008720352046143902,
-            "highlightShare": 0.004425438814579086,
-            "brightShare": 0.0005071851225697379,
+            "litShare": 0.0045097792327709225,
+            "highlightShare": 0.0018949886678418534,
+            "brightShare": 0.00020355913707714263,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.00013549798617671922,
-            "dominantNonBackgroundShare": 0.000568097061309731,
+            "dominantBrightShare": 0.00010177956853857131,
+            "dominantNonBackgroundShare": 0.0005959875765969948,
             "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.0018323305653622395,
-            "unsafe": false,
-            "reason": "透明／混合收據與同格剝離已定位呈現層異常；不是未知載體，但玩家畫面仍須人工裁決"
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-etyr.r-01-98ms.webp",
-          "bytes": 5462
+          "file": "frames/godie-etyr.r-01-180ms.webp",
+          "bytes": 5348
         },
         {
-          "label": "godie-etyr.r · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
-          "atMs": 772,
+          "label": "godie-etyr.r · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+          "atMs": 8213,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.036507384018696236,
-            "highlightShare": 0.014255879866739596,
-            "brightShare": 0.004319775247377058,
-            "nearWhiteShare": 0.0008254189249664363,
-            "dominantBrightShare": 0.0007421311719954254,
-            "dominantNonBackgroundShare": 0.005551688130873651,
+            "litShare": 0.012407663896583564,
+            "highlightShare": 0.006064803156215898,
+            "brightShare": 0.000848862587089734,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.00044279358683790816,
+            "dominantNonBackgroundShare": 0.0008971291866028708,
             "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.00031077519765302573,
-            "unsafe": false,
-            "reason": "Telegraph 格狀圖樣已通過同格剝離；不是遺失貼圖，但玩家畫面仍須人工裁決"
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-etyr.r-02-772ms.webp",
-          "bytes": 10174
+          "file": "frames/godie-etyr.r-02-8213ms.webp",
+          "bytes": 9214
         }
       ],
-      "machineIssues": [
-        {
-          "code": "PRESENTATION_ARTIFACT",
-          "severity": "high",
-          "owner": "editor",
-          "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面",
-          "nextAction": "Editor 改用乾淨 primitive 或調整配色／密度後單項重跑；不可因來源收據安全而自動通過。"
-        }
-      ],
-      "humanVerdict": "fail",
-      "humanScore": 3,
-      "humanNote": "移除爆版呈現層後可見施法姿勢與黃白煙霧，但只剩通用爆點，沒有足以辨識聖夜降臨的主題、範圍與高潮。"
+      "machineIssues": [],
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
     },
     {
       "id": "godie-ogld.ex",
       "name": "72-002 億萬衛星殞落",
-      "status": "blocked",
-      "blockers": [
-        "施法者 godie-ogld 使用共用替身 champ.sela"
-      ],
-      "audit": null,
-      "frames": [],
-      "machineIssues": [
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 10,
+        "sampledFrames": 31,
+        "peakParticleCount": 0,
+        "peakSystemCount": 3,
+        "worstAtMs": 0,
+        "worst": {
+          "litShare": 0,
+          "highlightShare": 0,
+          "brightShare": 0,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": []
+      },
+      "frames": [
         {
-          "code": "APPEARANCE_STAND_IN",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "角色仍使用替身外觀，不能當作技能視覺證據",
-          "nextAction": "Main 提供可解析的正式角色模型／appearance 收據；Editor 不以近似模型冒充。"
+          "label": "godie-ogld.ex · 真 runtime · abilityCast · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.0044457735247208936,
+            "highlightShare": 0.0021184840090657264,
+            "brightShare": 0.0001678838243935197,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.00002623184756148745,
+            "dominantNonBackgroundShare": 0.0005739528246453455,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-ogld.ex-01-180ms.webp",
+          "bytes": 5356
+        },
+        {
+          "label": "godie-ogld.ex · 真 runtime · damage+hitImpact · 自動基本視覺驗收",
+          "atMs": 20180,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.007275665239654159,
+            "highlightShare": 0.0037060354234869472,
+            "brightShare": 0.00035150675732393183,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0003861327961050953,
+            "dominantNonBackgroundShare": 0.013171535297574078,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-ogld.ex-02-20180ms.webp",
+          "bytes": 7466
         }
       ],
+      "machineIssues": [],
       "humanVerdict": "pending",
       "humanScore": null,
       "humanNote": ""
@@ -1632,21 +1994,111 @@
     {
       "id": "godie-udea.r",
       "name": "65-04 天譴",
-      "status": "blocked",
-      "blockers": [
-        "施法者 godie-udea 使用共用替身 champ.thorne"
-      ],
-      "audit": null,
-      "frames": [],
-      "machineIssues": [
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 10,
+        "sampledFrames": 35,
+        "peakParticleCount": 0,
+        "peakSystemCount": 7,
+        "worstAtMs": 0,
+        "worst": {
+          "litShare": 0,
+          "highlightShare": 0,
+          "brightShare": 0,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": []
+      },
+      "frames": [
         {
-          "code": "APPEARANCE_STAND_IN",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "角色仍使用替身外觀，不能當作技能視覺證據",
-          "nextAction": "Main 提供可解析的正式角色模型／appearance 收據；Editor 不以近似模型冒充。"
+          "label": "godie-udea.r · 施法提交 · anim · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.005086879879123646,
+            "highlightShare": 0.003044992864937463,
+            "brightShare": 0.000013640560731973474,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0005508687987912364,
+            "dominantNonBackgroundShare": 0.0007177033492822966,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-udea.r-01-180ms.webp",
+          "bytes": 5426
+        },
+        {
+          "label": "godie-udea.r · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+          "atMs": 847,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.011752916981448838,
+            "highlightShare": 0.006430999748174264,
+            "brightShare": 0.0003661965919583648,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0007250482665995131,
+            "dominantNonBackgroundShare": 0.005173969613027784,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-udea.r-02-847ms.webp",
+          "bytes": 7608
+        },
+        {
+          "label": "godie-udea.r · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+          "atMs": 1244,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.017917401158398388,
+            "highlightShare": 0.009202132124569797,
+            "brightShare": 0.0023021069419961386,
+            "nearWhiteShare": 0.0009044741039200873,
+            "dominantBrightShare": 0.0008184336439184084,
+            "dominantNonBackgroundShare": 0.001862461176865609,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-udea.r-03-1244ms.webp",
+          "bytes": 9008
+        },
+        {
+          "label": "godie-udea.r · 吟唱完成 · vfx+anim+screenShake · 自動基本視覺驗收",
+          "atMs": 1457,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.013391882817090573,
+            "highlightShare": 0.005739528246453454,
+            "brightShare": 0.0002046084109796021,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0007565264836732981,
+            "dominantNonBackgroundShare": 0.0014312096029547553,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-udea.r-04-1457ms.webp",
+          "bytes": 7964
         }
       ],
+      "machineIssues": [],
       "humanVerdict": "pending",
       "humanScore": null,
       "humanNote": ""
@@ -1659,7 +2111,7 @@
       "audit": {
         "safe": true,
         "autoVisualScore": 10,
-        "sampledFrames": 26,
+        "sampledFrames": 34,
         "peakParticleCount": 0,
         "peakSystemCount": 3,
         "worstAtMs": 0,
@@ -1679,42 +2131,849 @@
       "frames": [
         {
           "label": "godie-h01n.r · 施法提交 · anim · 自動基本視覺驗收",
-          "atMs": 98,
+          "atMs": 180,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.004798329555947284,
-            "highlightShare": 0.0026431209602954756,
-            "brightShare": 0.0004333501217157727,
+            "litShare": 0.0033713170486023673,
+            "highlightShare": 0.0023881474019978176,
+            "brightShare": 0.000029379669268865945,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0002623184756148745,
+            "dominantBrightShare": 0.0005582137161084529,
             "dominantNonBackgroundShare": 0.0005739528246453455,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-h01n.r-01-98ms.webp",
-          "bytes": 5786
+          "file": "frames/godie-h01n.r-01-180ms.webp",
+          "bytes": 5146
         },
         {
-          "label": "godie-h01n.r · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
-          "atMs": 772,
+          "label": "godie-h01n.r · 吟唱完成 · vfx+screenFlash+screenShake+anim · 自動基本視覺驗收",
+          "atMs": 847,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.009339587005791992,
-            "highlightShare": 0.0032957693276252833,
-            "brightShare": 0.00020041131536976413,
+            "litShare": 0.045407328128934776,
+            "highlightShare": 0.01941471501720809,
+            "brightShare": 0.004087971123982204,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.00009968102073365231,
-            "dominantNonBackgroundShare": 0.0038246033744648703,
+            "dominantBrightShare": 0.0017848149080836062,
+            "dominantNonBackgroundShare": 0.0064414924871988586,
             "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.002474187861999496,
-            "unsafe": false,
-            "reason": "Telegraph 格狀圖樣已通過同格剝離；不是遺失貼圖，但玩家畫面仍須人工裁決"
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-h01n.r-02-772ms.webp",
-          "bytes": 6928
+          "file": "frames/godie-h01n.r-02-847ms.webp",
+          "bytes": 9014
+        },
+        {
+          "label": "godie-h01n.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+          "atMs": 1027,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.005193905817174515,
+            "highlightShare": 0.003828800470074708,
+            "brightShare": 0.00006610425585494838,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0008687987912364643,
+            "dominantNonBackgroundShare": 0.014093847057835977,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-h01n.r-03-1027ms.webp",
+          "bytes": 7752
+        },
+        {
+          "label": "godie-h01n.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+          "atMs": 1267,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.005283094098883573,
+            "highlightShare": 0.0037616469403173006,
+            "brightShare": 0.0000514144212205154,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0009359523209938722,
+            "dominantNonBackgroundShare": 0.0009537899773356837,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-h01n.r-04-1267ms.webp",
+          "bytes": 5894
+        }
+      ],
+      "machineIssues": [],
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
+    },
+    {
+      "id": "godie-h00l.r",
+      "name": "60-04 完美盾反",
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 10,
+        "sampledFrames": 26,
+        "peakParticleCount": 0,
+        "peakSystemCount": 2,
+        "worstAtMs": 0,
+        "worst": {
+          "litShare": 0,
+          "highlightShare": 0,
+          "brightShare": 0,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": []
+      },
+      "frames": [
+        {
+          "label": "godie-h00l.r · 施法提交 · anim · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.004100562410811718,
+            "highlightShare": 0.002631578947368421,
+            "brightShare": 0.0001573910853689247,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0005917904809871569,
+            "dominantNonBackgroundShare": 0.0005917904809871569,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-h00l.r-01-180ms.webp",
+          "bytes": 5312
+        },
+        {
+          "label": "godie-h00l.r · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+          "atMs": 847,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.012321623436581886,
+            "highlightShare": 0.006456182321833291,
+            "brightShare": 0.0003420632922017964,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0008142365483085705,
+            "dominantNonBackgroundShare": 0.0015266935280785696,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-h00l.r-02-847ms.webp",
+          "bytes": 7276
+        },
+        {
+          "label": "godie-h00l.r · 反彈成功 · anim+vfx+bodyMove+screenShake · 自動基本視覺驗收",
+          "atMs": 980,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.010444472425081843,
+            "highlightShare": 0.004524469067405355,
+            "brightShare": 0.0003630487702509863,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0009453957861160077,
+            "dominantNonBackgroundShare": 0.00229895912028876,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-h00l.r-03-980ms.webp",
+          "bytes": 6720
+        }
+      ],
+      "machineIssues": [],
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
+    },
+    {
+      "id": "godie-hvsh.e",
+      "name": "48-03 鮮血神殿",
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 10,
+        "sampledFrames": 31,
+        "peakParticleCount": 0,
+        "peakSystemCount": 3,
+        "worstAtMs": 0,
+        "worst": {
+          "litShare": 0,
+          "highlightShare": 0,
+          "brightShare": 0,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": []
+      },
+      "frames": [
+        {
+          "label": "godie-hvsh.e · 真 runtime · abilityCast · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.004287333165449509,
+            "highlightShare": 0.002226559221019055,
+            "brightShare": 0.00019516494585746663,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.00009338537731889533,
+            "dominantNonBackgroundShare": 0.0005739528246453455,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-hvsh.e-01-180ms.webp",
+          "bytes": 5542
+        },
+        {
+          "label": "godie-hvsh.e · 真 runtime · abilityCast · 近景 · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.00547720977083858,
+            "highlightShare": 0.0026137412910266096,
+            "brightShare": 0.000007344917317216486,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0000503651473180559,
+            "dominantNonBackgroundShare": 0.0009537899773356837,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-hvsh.e-02-180ms.webp",
+          "bytes": 5648
+        }
+      ],
+      "machineIssues": [],
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
+    },
+    {
+      "id": "godie-n00b.passive",
+      "name": "57-00 四次元口袋",
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 10,
+        "sampledFrames": 31,
+        "peakParticleCount": 0,
+        "peakSystemCount": 13,
+        "worstAtMs": 0,
+        "worst": {
+          "litShare": 0,
+          "highlightShare": 0,
+          "brightShare": 0,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": []
+      },
+      "frames": [
+        {
+          "label": "godie-n00b.passive · 真 runtime · abilityCast · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.004873877276924368,
+            "highlightShare": 0.0025465877612692017,
+            "brightShare": 0.00007344917317216486,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.000055611516830353396,
+            "dominantNonBackgroundShare": 0.0005739528246453455,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-n00b.passive-01-180ms.webp",
+          "bytes": 5430
+        },
+        {
+          "label": "godie-n00b.passive · 真 runtime · vfxSpawn · 自動基本視覺驗收",
+          "atMs": 1180,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.01826785864181986,
+            "highlightShare": 0.008703727020901535,
+            "brightShare": 0.0019506001846722068,
+            "nearWhiteShare": 0.000003147821707378494,
+            "dominantBrightShare": 0.00028645177537144295,
+            "dominantNonBackgroundShare": 0.0026620078905397466,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-n00b.passive-02-1180ms.webp",
+          "bytes": 13190
+        }
+      ],
+      "machineIssues": [],
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
+    },
+    {
+      "id": "godie-e00r.ex",
+      "name": "59-001 完全暴走",
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 9.5,
+        "sampledFrames": 33,
+        "peakParticleCount": 7,
+        "peakSystemCount": 31,
+        "worstAtMs": 66.66666666666667,
+        "worst": {
+          "litShare": 0.0032737345756736337,
+          "highlightShare": 0.003063879795181734,
+          "brightShare": 0.0029274741878619996,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0.0029274741878619996,
+          "dominantNonBackgroundShare": 0.0029274741878619996,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": [
+          "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖",
+          "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖",
+          "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖",
+          "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖",
+          "vfx-decal · r/d=0.04 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
+        ]
+      },
+      "frames": [
+        {
+          "label": "godie-e00r.ex · 真 runtime · damage+hitImpact+statusApplied+vfxSpawn · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.013332074204650383,
+            "highlightShare": 0.011514731805590532,
+            "brightShare": 0.004353437421304457,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0016368672878368168,
+            "dominantNonBackgroundShare": 0.0043471417778897,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-e00r.ex-01-180ms.webp",
+          "bytes": 7434
+        },
+        {
+          "label": "godie-e00r.ex · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+          "atMs": 1647,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.03051708217913204,
+            "highlightShare": 0.008589356165533451,
+            "brightShare": 0.0008604046000167884,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.00013325778561235624,
+            "dominantNonBackgroundShare": 0.05356018635104508,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-e00r.ex-02-1647ms.webp",
+          "bytes": 10210
+        }
+      ],
+      "machineIssues": [],
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
+    },
+    {
+      "id": "godie-e00s.ex",
+      "name": "70-002 樹海降臨",
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 8,
+        "sampledFrames": 17,
+        "peakParticleCount": 162,
+        "peakSystemCount": 16,
+        "worstAtMs": 533.3333333333335,
+        "worst": {
+          "litShare": 0.025619071602451103,
+          "highlightShare": 0.023363132712163184,
+          "brightShare": 0.01913141106354403,
+          "nearWhiteShare": 0.005257911525224545,
+          "dominantBrightShare": 0.005184462352052379,
+          "dominantNonBackgroundShare": 0.005184462352052379,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": [
+          "cast-pillar/cast-pillar-shell · r/d=0.37 · cast-pillar-shell-mat · 無貼圖",
+          "cast-pillar/cast-pillar-core · r/d=0.34 · cast-pillar-core-mat · 無貼圖",
+          "vfx-decal · r/d=0.27 · vfx-decal-mat · /content-api/assets/textures/decals/scorch_01.png:ready/alpha",
+          "cast-pillar/cast-pillar-base · r/d=0.07 · cast-pillar-base-mat · /content-api/assets/textures/particles/magic_05.png:ready/alpha",
+          "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
+        ]
+      },
+      "frames": [
+        {
+          "label": "godie-e00s.ex · 真 runtime · abilityCast · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.033035339545034834,
+            "highlightShare": 0.02627171996978091,
+            "brightShare": 0.019723201544531183,
+            "nearWhiteShare": 0.0035853689247041048,
+            "dominantBrightShare": 0.0034961806429950476,
+            "dominantNonBackgroundShare": 0.0034961806429950476,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-e00s.ex-01-180ms.webp",
+          "bytes": 11364
+        },
+        {
+          "label": "godie-e00s.ex · 真 runtime · vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+          "atMs": 1613,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.06389868211197851,
+            "highlightShare": 0.048436581885335346,
+            "brightShare": 0.036573491144128265,
+            "nearWhiteShare": 0.026704020817594223,
+            "dominantBrightShare": 0.026142659279778394,
+            "dominantNonBackgroundShare": 0.026142659279778394,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-e00s.ex-02-1613ms.webp",
+          "bytes": 14144
+        }
+      ],
+      "machineIssues": [],
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
+    },
+    {
+      "id": "godie-e00w.passive",
+      "name": "77-00 浮雲-旋一閃",
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 10,
+        "sampledFrames": 17,
+        "peakParticleCount": 0,
+        "peakSystemCount": 6,
+        "worstAtMs": 0,
+        "worst": {
+          "litShare": 0,
+          "highlightShare": 0,
+          "brightShare": 0,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": []
+      },
+      "frames": [
+        {
+          "label": "godie-e00w.passive · 真 runtime · basicAttack+evade+damage+hitImpact+statusApplied · 自動基本視覺驗收",
+          "atMs": 547,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.03808444556366994,
+            "highlightShare": 0.01923214135818014,
+            "brightShare": 0.002535045748342147,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0012927054478301017,
+            "dominantNonBackgroundShare": 0.0048423990598505835,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-e00w.passive-01-547ms.webp",
+          "bytes": 14302
+        },
+        {
+          "label": "godie-e00w.passive · 真 runtime · basicAttack+evade+damage+hitImpact+statusApplied · 近景 · 自動基本視覺驗收",
+          "atMs": 547,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.05689792663476874,
+            "highlightShare": 0.027450054562242927,
+            "brightShare": 0.0029484596659111895,
+            "nearWhiteShare": 0.000041970956098379924,
+            "dominantBrightShare": 0.00129585326953748,
+            "dominantNonBackgroundShare": 0.006098379921094603,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-e00w.passive-02-547ms.webp",
+          "bytes": 19204
+        }
+      ],
+      "machineIssues": [],
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
+    },
+    {
+      "id": "godie-edem.r",
+      "name": "45-04 哥哥",
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 8.5,
+        "sampledFrames": 17,
+        "peakParticleCount": 153,
+        "peakSystemCount": 29,
+        "worstAtMs": 66.66666666666667,
+        "worst": {
+          "litShare": 0.02096449257114077,
+          "highlightShare": 0.018214345672794428,
+          "brightShare": 0.01607277763787459,
+          "nearWhiteShare": 0.008660706790900696,
+          "dominantBrightShare": 0.008525350457483422,
+          "dominantNonBackgroundShare": 0.008525350457483422,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": [
+          "modelfx-axis-w3x.stock.thunderclapcaster-16/modelfx-17-__root__/modelfx-17-mesh/modelfx-17-mesh_primitive1 · r/d=0.60 · mat0-fxtint · mat0 (Base Color):ready/alpha,mat0 (Emissive):ready/opaque",
+          "modelfx-axis-w3x.stock.thunderclapcaster-16/modelfx-17-__root__/modelfx-17-mesh/modelfx-17-mesh_primitive0 · r/d=0.30 · mat1-fxtint · mat1 (Base Color):ready/alpha,mat1 (Emissive):ready/opaque",
+          "modelfx-axis-w3x.stock.monsoonbolttarget-14/modelfx-15-__root__/modelfx-15-mesh/modelfx-15-mesh_primitive7 · r/d=0.21 · mat6-fxtint · mat6 (Base Color):ready/alpha,mat6 (Emissive):ready/opaque",
+          "modelfx-axis-w3x.stock.monsoonbolttarget-14/modelfx-15-__root__/modelfx-15-mesh/modelfx-15-mesh_primitive4 · r/d=0.13 · mat3-fxtint · mat3 (Base Color):ready/alpha,mat3 (Emissive):ready/opaque",
+          "modelfx-axis-w3x.stock.monsoonbolttarget-14/modelfx-15-__root__/modelfx-15-mesh/modelfx-15-mesh_primitive5 · r/d=0.12 · mat4-fxtint · mat4 (Base Color):ready/alpha,mat4 (Emissive):ready/opaque"
+        ]
+      },
+      "frames": [
+        {
+          "label": "godie-edem.r · 真 runtime · displace+modelFxSpawn+damage+hitImpact+reflectSuccess · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.021307605137245028,
+            "highlightShare": 0.01486296482833879,
+            "brightShare": 0.011562998405103669,
+            "nearWhiteShare": 0.004867581633509611,
+            "dominantBrightShare": 0.004758457147653824,
+            "dominantNonBackgroundShare": 0.004758457147653824,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-edem.r-01-180ms.webp",
+          "bytes": 17246
+        },
+        {
+          "label": "godie-edem.r · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+          "atMs": 1013,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.005849702006211701,
+            "highlightShare": 0.0017900612775959036,
+            "brightShare": 0.0007722655922101906,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0005361789641568034,
+            "dominantNonBackgroundShare": 0.000796398891966759,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-edem.r-02-1013ms.webp",
+          "bytes": 6426
+        }
+      ],
+      "machineIssues": [],
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
+    },
+    {
+      "id": "godie-emfr.e",
+      "name": "15-03 獄炎煉我",
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 10,
+        "sampledFrames": 20,
+        "peakParticleCount": 0,
+        "peakSystemCount": 3,
+        "worstAtMs": 0,
+        "worst": {
+          "litShare": 0,
+          "highlightShare": 0,
+          "brightShare": 0,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": []
+      },
+      "frames": [
+        {
+          "label": "godie-emfr.e · 真 runtime · abilityCast · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.0055989255435238815,
+            "highlightShare": 0.0025392428439519853,
+            "brightShare": 0.000269663392932091,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0000503651473180559,
+            "dominantNonBackgroundShare": 0.0005739528246453455,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-emfr.e-01-180ms.webp",
+          "bytes": 5880
+        },
+        {
+          "label": "godie-emfr.e · 真 runtime · modelFxSpawn · 自動基本視覺驗收",
+          "atMs": 447,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.014324687316377068,
+            "highlightShare": 0.005520230000839419,
+            "brightShare": 0.0005445731553764795,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.00019516494585746663,
+            "dominantNonBackgroundShare": 0.0014794762024678922,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-emfr.e-02-447ms.webp",
+          "bytes": 9474
+        }
+      ],
+      "machineIssues": [],
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
+    },
+    {
+      "id": "godie-nbbc.passive",
+      "name": "08-00 龍紋記憶",
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 10,
+        "sampledFrames": 17,
+        "peakParticleCount": 71,
+        "peakSystemCount": 11,
+        "worstAtMs": 0,
+        "worst": {
+          "litShare": 0,
+          "highlightShare": 0,
+          "brightShare": 0,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": []
+      },
+      "frames": [
+        {
+          "label": "godie-nbbc.passive · 真 runtime · vfxSpawn · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.1551991521866868,
+            "highlightShare": 0.03016242760010073,
+            "brightShare": 0.0012339461092923697,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0007271468144044322,
+            "dominantNonBackgroundShare": 0.025113321581465627,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-nbbc.passive-01-180ms.webp",
+          "bytes": 14590
+        },
+        {
+          "label": "godie-nbbc.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+          "atMs": 1680,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.07164861915554437,
+            "highlightShare": 0.026601191975153194,
+            "brightShare": 0.0014553429027113238,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0006841265844035928,
+            "dominantNonBackgroundShare": 0.02430852849827919,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-nbbc.passive-02-1680ms.webp",
+          "bytes": 19200
+        }
+      ],
+      "machineIssues": [],
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
+    },
+    {
+      "id": "godie-e00l.passive",
+      "name": "20-00 銀色甲胄",
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 9.5,
+        "sampledFrames": 17,
+        "peakParticleCount": 7,
+        "peakSystemCount": 32,
+        "worstAtMs": 66.66666666666667,
+        "worst": {
+          "litShare": 0.0032621925627465795,
+          "highlightShare": 0.0030586334256694366,
+          "brightShare": 0.0029358683790816757,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0.0029358683790816757,
+          "dominantNonBackgroundShare": 0.0029358683790816757,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": [
+          "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖",
+          "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖",
+          "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖",
+          "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖",
+          "vfx-decal · r/d=0.04 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
+        ]
+      },
+      "frames": [
+        {
+          "label": "godie-e00l.passive · 真 runtime · damage+hitImpact+shieldGained · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.9977807856962981,
+            "highlightShare": 0.9951869806094182,
+            "brightShare": 0.9931618819776714,
+            "nearWhiteShare": 0.0000052463695122974905,
+            "dominantBrightShare": 0.9915124234030052,
+            "dominantNonBackgroundShare": 0.0003147821707378494,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false,
+            "reason": "透明／混合收據與同格剝離已定位呈現層異常；不是未知載體，但玩家畫面仍須人工裁決"
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-e00l.passive-01-180ms.webp",
+          "bytes": 6434
+        },
+        {
+          "label": "godie-e00l.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+          "atMs": 580,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.9962897674809033,
+            "highlightShare": 0.989532443549064,
+            "brightShare": 0.9840961554604214,
+            "nearWhiteShare": 0.000796398891966759,
+            "dominantBrightShare": 0.981101527742802,
+            "dominantNonBackgroundShare": 0.0007407873751364056,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false,
+            "reason": "透明／混合收據與同格剝離已定位呈現層異常；不是未知載體，但玩家畫面仍須人工裁決"
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-e00l.passive-02-580ms.webp",
+          "bytes": 9034
         }
       ],
       "machineIssues": [
@@ -1724,226 +2983,13 @@
           "owner": "editor",
           "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面",
           "nextAction": "Editor 改用乾淨 primitive 或調整配色／密度後單項重跑；不可因來源收據安全而自動通過。"
-        }
-      ],
-      "humanVerdict": "fail",
-      "humanScore": 4,
-      "humanNote": "角色姿態與紫色煙霧讓變身可辨識，但前後狀態差異、力量提升與卍解主題仍不足以達到可交付品質。"
-    },
-    {
-      "id": "godie-h00l.r",
-      "name": "60-04 完美盾反",
-      "status": "blocked",
-      "blockers": [
-        "主動段可預覽，但下列被動／追加階段無法自訂時間軸：onDamageTaken"
-      ],
-      "audit": null,
-      "frames": [],
-      "machineIssues": [
+        },
         {
-          "code": "UNSUPPORTED_EVENT_BRICK",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "缺少可重用且帶來源資訊的 runtime 事件積木",
-          "nextAction": "Main 補權威事件與 provenance；Editor 再接時間軸選項，禁止用假 cast 代替。"
-        }
-      ],
-      "humanVerdict": "pending",
-      "humanScore": null,
-      "humanNote": ""
-    },
-    {
-      "id": "godie-hvsh.e",
-      "name": "48-03 鮮血神殿",
-      "status": "blocked",
-      "blockers": [
-        "主動段可預覽，但下列被動／追加階段無法自訂時間軸：onInterval、onKill"
-      ],
-      "audit": null,
-      "frames": [],
-      "machineIssues": [
-        {
-          "code": "UNSUPPORTED_EVENT_BRICK",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "缺少可重用且帶來源資訊的 runtime 事件積木",
-          "nextAction": "Main 補權威事件與 provenance；Editor 再接時間軸選項，禁止用假 cast 代替。"
-        }
-      ],
-      "humanVerdict": "pending",
-      "humanScore": null,
-      "humanNote": ""
-    },
-    {
-      "id": "godie-n00b.passive",
-      "name": "57-00 四次元口袋",
-      "status": "blocked",
-      "blockers": [
-        "施法者 godie-n00b 使用共用替身 champ.sela"
-      ],
-      "audit": null,
-      "frames": [],
-      "machineIssues": [
-        {
-          "code": "APPEARANCE_STAND_IN",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "角色仍使用替身外觀，不能當作技能視覺證據",
-          "nextAction": "Main 提供可解析的正式角色模型／appearance 收據；Editor 不以近似模型冒充。"
-        }
-      ],
-      "humanVerdict": "pending",
-      "humanScore": null,
-      "humanNote": ""
-    },
-    {
-      "id": "godie-e00r.ex",
-      "name": "59-001 完全暴走",
-      "status": "blocked",
-      "blockers": [
-        "純被動的真正觸發點尚不能由 vfx-script@1 選取：onDamageTaken、onInterval"
-      ],
-      "audit": null,
-      "frames": [],
-      "machineIssues": [
-        {
-          "code": "UNSUPPORTED_EVENT_BRICK",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "缺少可重用且帶來源資訊的 runtime 事件積木",
-          "nextAction": "Main 補權威事件與 provenance；Editor 再接時間軸選項，禁止用假 cast 代替。"
-        }
-      ],
-      "humanVerdict": "pending",
-      "humanScore": null,
-      "humanNote": ""
-    },
-    {
-      "id": "godie-e00s.ex",
-      "name": "70-002 樹海降臨",
-      "status": "blocked",
-      "blockers": [
-        "純被動的真正觸發點尚不能由 vfx-script@1 選取：onAbilityCast"
-      ],
-      "audit": null,
-      "frames": [],
-      "machineIssues": [
-        {
-          "code": "UNSUPPORTED_EVENT_BRICK",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "缺少可重用且帶來源資訊的 runtime 事件積木",
-          "nextAction": "Main 補權威事件與 provenance；Editor 再接時間軸選項，禁止用假 cast 代替。"
-        }
-      ],
-      "humanVerdict": "pending",
-      "humanScore": null,
-      "humanNote": ""
-    },
-    {
-      "id": "godie-e00w.passive",
-      "name": "77-00 浮雲-旋一閃",
-      "status": "blocked",
-      "blockers": [
-        "純被動的真正觸發點尚不能由 vfx-script@1 選取：onEvade"
-      ],
-      "audit": null,
-      "frames": [],
-      "machineIssues": [
-        {
-          "code": "UNSUPPORTED_EVENT_BRICK",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "缺少可重用且帶來源資訊的 runtime 事件積木",
-          "nextAction": "Main 補權威事件與 provenance；Editor 再接時間軸選項，禁止用假 cast 代替。"
-        }
-      ],
-      "humanVerdict": "pending",
-      "humanScore": null,
-      "humanNote": ""
-    },
-    {
-      "id": "godie-edem.r",
-      "name": "45-04 哥哥",
-      "status": "blocked",
-      "blockers": [
-        "純被動的真正觸發點尚不能由 vfx-script@1 選取：onAbilityHit"
-      ],
-      "audit": null,
-      "frames": [],
-      "machineIssues": [
-        {
-          "code": "UNSUPPORTED_EVENT_BRICK",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "缺少可重用且帶來源資訊的 runtime 事件積木",
-          "nextAction": "Main 補權威事件與 provenance；Editor 再接時間軸選項，禁止用假 cast 代替。"
-        }
-      ],
-      "humanVerdict": "pending",
-      "humanScore": null,
-      "humanNote": ""
-    },
-    {
-      "id": "godie-emfr.e",
-      "name": "15-03 獄炎煉我",
-      "status": "blocked",
-      "blockers": [
-        "主動段可預覽，但下列被動／追加階段無法自訂時間軸：onBasicAttack、onDamageDealt"
-      ],
-      "audit": null,
-      "frames": [],
-      "machineIssues": [
-        {
-          "code": "UNSUPPORTED_EVENT_BRICK",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "缺少可重用且帶來源資訊的 runtime 事件積木",
-          "nextAction": "Main 補權威事件與 provenance；Editor 再接時間軸選項，禁止用假 cast 代替。"
-        }
-      ],
-      "humanVerdict": "pending",
-      "humanScore": null,
-      "humanNote": ""
-    },
-    {
-      "id": "godie-nbbc.passive",
-      "name": "08-00 龍紋記憶",
-      "status": "blocked",
-      "blockers": [
-        "純被動的真正觸發點尚不能由 vfx-script@1 選取：onStunned"
-      ],
-      "audit": null,
-      "frames": [],
-      "machineIssues": [
-        {
-          "code": "UNSUPPORTED_EVENT_BRICK",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "缺少可重用且帶來源資訊的 runtime 事件積木",
-          "nextAction": "Main 補權威事件與 provenance；Editor 再接時間軸選項，禁止用假 cast 代替。"
-        }
-      ],
-      "humanVerdict": "pending",
-      "humanScore": null,
-      "humanNote": ""
-    },
-    {
-      "id": "godie-e00l.passive",
-      "name": "20-00 銀色甲胄",
-      "status": "blocked",
-      "blockers": [
-        "純被動的真正觸發點尚不能由 vfx-script@1 選取：onDamageTaken"
-      ],
-      "audit": null,
-      "frames": [],
-      "machineIssues": [
-        {
-          "code": "UNSUPPORTED_EVENT_BRICK",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "缺少可重用且帶來源資訊的 runtime 事件積木",
-          "nextAction": "Main 補權威事件與 provenance；Editor 再接時間軸選項，禁止用假 cast 代替。"
+          "code": "LOW_VISUAL_HYGIENE",
+          "severity": "medium",
+          "owner": "editor",
+          "summary": "畫面雖可擷取，但時間軸／關鍵格最低清晰度只有 0/10",
+          "nextAction": "人工檢查構圖、遮擋與格狀外觀；不可把素材安全分數當成美術通過。"
         }
       ],
       "humanVerdict": "pending",
@@ -1953,21 +2999,71 @@
     {
       "id": "godie-e00r.q",
       "name": "59-01 吞噬",
-      "status": "blocked",
-      "blockers": [
-        "純被動的真正觸發點尚不能由 vfx-script@1 選取：onInterval"
-      ],
-      "audit": null,
-      "frames": [],
-      "machineIssues": [
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 10,
+        "sampledFrames": 17,
+        "peakParticleCount": 124,
+        "peakSystemCount": 25,
+        "worstAtMs": 0,
+        "worst": {
+          "litShare": 0,
+          "highlightShare": 0,
+          "brightShare": 0,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": []
+      },
+      "frames": [
         {
-          "code": "UNSUPPORTED_EVENT_BRICK",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "缺少可重用且帶來源資訊的 runtime 事件積木",
-          "nextAction": "Main 補權威事件與 provenance；Editor 再接時間軸選項，禁止用假 cast 代替。"
+          "label": "godie-e00r.q · 真 runtime · statusApplied+damage+hitImpact · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.002535045748342147,
+            "highlightShare": 0.0016735918744228994,
+            "brightShare": 0.0007019642407454042,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0006820280365986737,
+            "dominantNonBackgroundShare": 0.0006820280365986737,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-e00r.q-01-180ms.webp",
+          "bytes": 5348
+        },
+        {
+          "label": "godie-e00r.q · 真 runtime · statusApplied+damage+hitImpact · 近景 · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.003347183748845799,
+            "highlightShare": 0.0022129186602870814,
+            "brightShare": 0.0007177033492822966,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.00034311256610425583,
+            "dominantNonBackgroundShare": 0.00044803995635020564,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-e00r.q-02-180ms.webp",
+          "bytes": 5578
         }
       ],
+      "machineIssues": [],
       "humanVerdict": "pending",
       "humanScore": null,
       "humanNote": ""
@@ -1975,21 +3071,74 @@
     {
       "id": "godie-e00s.r",
       "name": "70-04 千年練成",
-      "status": "blocked",
-      "blockers": [
-        "施法者 godie-e00s 使用共用替身 champ.sela"
-      ],
-      "audit": null,
-      "frames": [],
-      "machineIssues": [
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 8.5,
+        "sampledFrames": 31,
+        "peakParticleCount": 241,
+        "peakSystemCount": 22,
+        "worstAtMs": 1333.3333333333337,
+        "worst": {
+          "litShare": 0.027777428019810292,
+          "highlightShare": 0.017193402165701335,
+          "brightShare": 0.011031016536556703,
+          "nearWhiteShare": 0.0007638714009905146,
+          "dominantBrightShare": 0.00112901871904642,
+          "dominantNonBackgroundShare": 0.0020744145051624276,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": [
+          "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖",
+          "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
+        ]
+      },
+      "frames": [
         {
-          "code": "APPEARANCE_STAND_IN",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "角色仍使用替身外觀，不能當作技能視覺證據",
-          "nextAction": "Main 提供可解析的正式角色模型／appearance 收據；Editor 不以近似模型冒充。"
+          "label": "godie-e00s.r · 真 runtime · abilityCast · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.006199110215730714,
+            "highlightShare": 0.003582221102996726,
+            "brightShare": 0.00020250986317468312,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.00013325778561235624,
+            "dominantNonBackgroundShare": 0.0012717199697809115,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-e00s.r-01-180ms.webp",
+          "bytes": 5256
+        },
+        {
+          "label": "godie-e00s.r · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+          "atMs": 9547,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.01747565684546294,
+            "highlightShare": 0.008835935532611434,
+            "brightShare": 0.000819482917820868,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0007082598841601611,
+            "dominantNonBackgroundShare": 0.00104507680684966,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-e00s.r-02-9547ms.webp",
+          "bytes": 10372
         }
       ],
+      "machineIssues": [],
       "humanVerdict": "pending",
       "humanScore": null,
       "humanNote": ""
@@ -1997,21 +3146,77 @@
     {
       "id": "godie-h02k.ex",
       "name": "89-002 俄羅斯輪盤",
-      "status": "blocked",
-      "blockers": [
-        "施法者 godie-h02k 使用共用替身 champ.skin.barbarian"
-      ],
-      "audit": null,
-      "frames": [],
-      "machineIssues": [
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 9,
+        "sampledFrames": 19,
+        "peakParticleCount": 329,
+        "peakSystemCount": 18,
+        "worstAtMs": 266.66666666666663,
+        "worst": {
+          "litShare": 0.013591244858557878,
+          "highlightShare": 0.011599722991689751,
+          "brightShare": 0.010248258205321917,
+          "nearWhiteShare": 0.003432174934945018,
+          "dominantBrightShare": 0.0032926215059179047,
+          "dominantNonBackgroundShare": 0.0032926215059179047,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": [
+          "telegraph-corridor · r/d=0.12 · telegraph-corridor-mat · 無貼圖",
+          "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+          "vfx-ring · r/d=0.07 · vfx-ring-mat · 無貼圖",
+          "telegraph-fill · r/d=0.06 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
+          "vfx-ring · r/d=0.06 · vfx-ring-mat · 無貼圖"
+        ]
+      },
+      "frames": [
         {
-          "code": "APPEARANCE_STAND_IN",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "角色仍使用替身外觀，不能當作技能視覺證據",
-          "nextAction": "Main 提供可解析的正式角色模型／appearance 收據；Editor 不以近似模型冒充。"
+          "label": "godie-h02k.ex · 真 runtime · abilityCast · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.005753168807185427,
+            "highlightShare": 0.0029652480483505416,
+            "brightShare": 0.0005802484680601024,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0005466717031813985,
+            "dominantNonBackgroundShare": 0.0011835809619743138,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-h02k.ex-01-180ms.webp",
+          "bytes": 5228
+        },
+        {
+          "label": "godie-h02k.ex · 真 runtime · damage+hitImpact · 自動基本視覺驗收",
+          "atMs": 413,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.014768530177117436,
+            "highlightShare": 0.005192856543272056,
+            "brightShare": 0.0004921094602535046,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0008635524217241668,
+            "dominantNonBackgroundShare": 0.009876815243851256,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-h02k.ex-02-413ms.webp",
+          "bytes": 10874
         }
       ],
+      "machineIssues": [],
       "humanVerdict": "pending",
       "humanScore": null,
       "humanNote": ""
@@ -2029,11 +3234,11 @@
         "peakSystemCount": 13,
         "worstAtMs": 66.66666666666667,
         "worst": {
-          "litShare": 0.026281163434903047,
-          "highlightShare": 0.009870519600436499,
-          "brightShare": 0.008320742046503819,
-          "nearWhiteShare": 0.0067143037018383275,
-          "dominantBrightShare": 0.006691219675984219,
+          "litShare": 0.026095441954167718,
+          "highlightShare": 0.009780282044824982,
+          "brightShare": 0.008229455216989843,
+          "nearWhiteShare": 0.006482414169394779,
+          "dominantBrightShare": 0.006464576513052967,
           "dominantNonBackgroundShare": 0.014754889616385462,
           "localWhiteCardShare": 0,
           "diagnosticCheckerShare": 0,
@@ -2049,29 +3254,50 @@
       },
       "frames": [
         {
-          "label": "godie-edem.e · 施法提交 · anim+vfx · 自動基本視覺驗收",
-          "atMs": 105,
+          "label": "godie-edem.e · 真 runtime · abilityCast+displace+modelFxSpawn+damage+hitImpact+reflectSuccess · 自動基本視覺驗收",
+          "atMs": 180,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.031364895492319314,
-            "highlightShare": 0.010278687148493242,
-            "brightShare": 0.004905355493998153,
-            "nearWhiteShare": 0.00011961722488038278,
-            "dominantBrightShare": 0.004155124653739612,
-            "dominantNonBackgroundShare": 0.014754889616385462,
+            "litShare": 0.015266935280785696,
+            "highlightShare": 0.002681944094686477,
+            "brightShare": 0.00019411567195500715,
+            "nearWhiteShare": 0.0000052463695122974905,
+            "dominantBrightShare": 0.0003703936875682028,
+            "dominantNonBackgroundShare": 0.010140182993368588,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-edem.e-01-105ms.webp",
-          "bytes": 11978
+          "file": "frames/godie-edem.e-01-180ms.webp",
+          "bytes": 8560
+        },
+        {
+          "label": "godie-edem.e · 真 runtime · abilityCast+displace+modelFxSpawn+damage+hitImpact+reflectSuccess · 近景 · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.024884579870729454,
+            "highlightShare": 0.005149836313271216,
+            "brightShare": 0.0003347183748845799,
+            "nearWhiteShare": 0.000010492739024594981,
+            "dominantBrightShare": 0.0006474019978175103,
+            "dominantNonBackgroundShare": 0.013355158230504491,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-edem.e-02-180ms.webp",
+          "bytes": 10730
         }
       ],
       "machineIssues": [],
-      "humanVerdict": "fail",
-      "humanScore": 1,
-      "humanNote": "畫面由長條邊框、鋸齒綠線和遠端光紋構成，作用方向雖可猜測但像除錯幾何，缺少自然的技能演出。"
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
     },
     {
       "id": "godie-edem.ex",
@@ -2080,10 +3306,88 @@
       "blockers": [],
       "audit": {
         "safe": true,
-        "autoVisualScore": 10,
+        "autoVisualScore": 9.5,
         "sampledFrames": 31,
-        "peakParticleCount": 0,
+        "peakParticleCount": 14,
         "peakSystemCount": 15,
+        "worstAtMs": 1066.6666666666658,
+        "worst": {
+          "litShare": 0.006371191135734072,
+          "highlightShare": 0,
+          "brightShare": 0,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0.005336607067909007,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": [
+          "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖",
+          "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖",
+          "telegraph-fill · r/d=0.06 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
+          "telegraph-ring · r/d=0.05 · telegraph-ring · 無貼圖",
+          "vfx-decal · r/d=0.04 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
+        ]
+      },
+      "frames": [
+        {
+          "label": "godie-edem.ex · 真 runtime · abilityCast · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.005546461848400907,
+            "highlightShare": 0.0027994627717619408,
+            "brightShare": 0.00027805758415176695,
+            "nearWhiteShare": 0.000001049273902459498,
+            "dominantBrightShare": 0.00007554772097708386,
+            "dominantNonBackgroundShare": 0.0005739528246453455,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-edem.ex-01-180ms.webp",
+          "bytes": 6198
+        },
+        {
+          "label": "godie-edem.ex · 真 runtime · damage+hitImpact · 自動基本視覺驗收",
+          "atMs": 11180,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.00775623268698061,
+            "highlightShare": 0.00319818685469655,
+            "brightShare": 0.000024133299756568455,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0005361789641568034,
+            "dominantNonBackgroundShare": 0.011804331402669352,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-edem.ex-02-11180ms.webp",
+          "bytes": 9704
+        }
+      ],
+      "machineIssues": [],
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
+    },
+    {
+      "id": "godie-efur.passive",
+      "name": "13-00 念。攻防轉換",
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 10,
+        "sampledFrames": 17,
+        "peakParticleCount": 142,
+        "peakSystemCount": 12,
         "worstAtMs": 0,
         "worst": {
           "litShare": 0,
@@ -2100,77 +3404,47 @@
       },
       "frames": [
         {
-          "label": "godie-edem.ex · 施法提交 · anim · 自動基本視覺驗收",
-          "atMs": 98,
+          "label": "godie-efur.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+          "atMs": 547,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.005178166708637623,
-            "highlightShare": 0.002422773440778981,
-            "brightShare": 0.00013115923780743726,
-            "nearWhiteShare": 0.000002098547804918996,
-            "dominantBrightShare": 0.00006715352975740788,
-            "dominantNonBackgroundShare": 0.0005718542768404265,
+            "litShare": 0.0045569965583816,
+            "highlightShare": 0.001919121967598422,
+            "brightShare": 0.0007239989926970537,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.000562410811718291,
+            "dominantNonBackgroundShare": 0.000562410811718291,
             "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.0003934777134223118,
-            "unsafe": false,
-            "reason": "Telegraph 格狀圖樣已通過同格剝離；不是遺失貼圖，但玩家畫面仍須人工裁決"
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-edem.ex-01-98ms.webp",
-          "bytes": 5440
+          "file": "frames/godie-efur.passive-01-547ms.webp",
+          "bytes": 5554
         },
         {
-          "label": "godie-edem.ex · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
-          "atMs": 1105,
+          "label": "godie-efur.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+          "atMs": 1680,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.02425081843364392,
-            "highlightShare": 0.004320909930328213,
-            "brightShare": 0.0003252749097624444,
-            "nearWhiteShare": 0.000006295643414756988,
-            "dominantBrightShare": 0.0001028288424410308,
-            "dominantNonBackgroundShare": 0.008146562578695542,
+            "litShare": 0.007163392932090993,
+            "highlightShare": 0.00290543943591035,
+            "brightShare": 0.0010094014941660371,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.000562410811718291,
+            "dominantNonBackgroundShare": 0.000562410811718291,
             "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.002040837740283724,
-            "unsafe": false,
-            "reason": "Telegraph 格狀圖樣已通過同格剝離；不是遺失貼圖，但玩家畫面仍須人工裁決"
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-edem.ex-02-1105ms.webp",
-          "bytes": 9624
+          "file": "frames/godie-efur.passive-02-1680ms.webp",
+          "bytes": 6148
         }
       ],
-      "machineIssues": [
-        {
-          "code": "PRESENTATION_ARTIFACT",
-          "severity": "high",
-          "owner": "editor",
-          "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面",
-          "nextAction": "Editor 改用乾淨 primitive 或調整配色／密度後單項重跑；不可因來源收據安全而自動通過。"
-        }
-      ],
-      "humanVerdict": "fail",
-      "humanScore": 3,
-      "humanNote": "可見近身紫色煙霧與角色反應，但效果過於通用，沒有清楚呈現EX技能的專屬機制與高潮。"
-    },
-    {
-      "id": "godie-efur.passive",
-      "name": "13-00 念。攻防轉換",
-      "status": "blocked",
-      "blockers": [
-        "純被動的真正觸發點尚不能由 vfx-script@1 選取：onBasicAttack"
-      ],
-      "audit": null,
-      "frames": [],
-      "machineIssues": [
-        {
-          "code": "UNSUPPORTED_EVENT_BRICK",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "缺少可重用且帶來源資訊的 runtime 事件積木",
-          "nextAction": "Main 補權威事件與 provenance；Editor 再接時間軸選項，禁止用假 cast 代替。"
-        }
-      ],
+      "machineIssues": [],
       "humanVerdict": "pending",
       "humanScore": null,
       "humanNote": ""
@@ -2178,21 +3452,77 @@
     {
       "id": "godie-emfr.ex",
       "name": "15-002 敵彈吸收陣。太陰道",
-      "status": "blocked",
-      "blockers": [
-        "主動段可預覽，但下列被動／追加階段無法自訂時間軸：onDamageTaken"
-      ],
-      "audit": null,
-      "frames": [],
-      "machineIssues": [
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 9.5,
+        "sampledFrames": 31,
+        "peakParticleCount": 184,
+        "peakSystemCount": 15,
+        "worstAtMs": 1133.3333333333328,
+        "worst": {
+          "litShare": 0.006436246117686561,
+          "highlightShare": 0.004060690002518258,
+          "brightShare": 0.0024553009317552256,
+          "nearWhiteShare": 0.0017827163602786873,
+          "dominantBrightShare": 0.0017396961302778477,
+          "dominantNonBackgroundShare": 0.0017396961302778477,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": [
+          "telegraph-fill · r/d=0.06 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
+          "telegraph-ring · r/d=0.05 · telegraph-ring · 無貼圖",
+          "telegraph-shock · r/d=0.05 · telegraph-shock · 無貼圖",
+          "vfx-decal · r/d=0.05 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+          "vfx-ring · r/d=0.04 · vfx-ring-mat · 無貼圖"
+        ]
+      },
+      "frames": [
         {
-          "code": "UNSUPPORTED_EVENT_BRICK",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "缺少可重用且帶來源資訊的 runtime 事件積木",
-          "nextAction": "Main 補權威事件與 provenance；Editor 再接時間軸選項，禁止用假 cast 代替。"
+          "label": "godie-emfr.ex · 真 runtime · abilityCast · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.004522370519600437,
+            "highlightShare": 0.0017900612775959036,
+            "brightShare": 0.000013640560731973474,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.00002623184756148745,
+            "dominantNonBackgroundShare": 0.0005750020985478049,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-emfr.ex-01-180ms.webp",
+          "bytes": 5330
+        },
+        {
+          "label": "godie-emfr.ex · 真 runtime · damage+hitImpact+reflectSuccess · 自動基本視覺驗收",
+          "atMs": 1313,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.011843154537060354,
+            "highlightShare": 0.004433182237891379,
+            "brightShare": 0.00023818517585830605,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0005214891295223706,
+            "dominantNonBackgroundShare": 0.025573952824645346,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-emfr.ex-02-1313ms.webp",
+          "bytes": 10766
         }
       ],
+      "machineIssues": [],
       "humanVerdict": "pending",
       "humanScore": null,
       "humanNote": ""
@@ -2224,58 +3554,50 @@
       },
       "frames": [
         {
-          "label": "godie-emns.ex · 施法提交 · anim · 自動基本視覺驗收",
-          "atMs": 98,
+          "label": "godie-emns.ex · 真 runtime · abilityCast · 自動基本視覺驗收",
+          "atMs": 180,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.009902540898016012,
-            "highlightShare": 0.006492715429367013,
-            "brightShare": 0.004631793545820695,
-            "nearWhiteShare": 0.0035515389587787776,
-            "dominantBrightShare": 0.0035391079508726568,
-            "dominantNonBackgroundShare": 0.0035391079508726568,
+            "litShare": 0.007060564089649962,
+            "highlightShare": 0.003819357004952573,
+            "brightShare": 0.001038781163434903,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0005151934861076135,
+            "dominantNonBackgroundShare": 0.000792201796356921,
             "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.002032469792650788,
-            "unsafe": false,
-            "reason": "透明／混合收據與同格剝離已定位呈現層異常；不是未知載體，但玩家畫面仍須人工裁決"
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-emns.ex-01-98ms.webp",
-          "bytes": 6324
+          "file": "frames/godie-emns.ex-01-180ms.webp",
+          "bytes": 6072
         },
         {
-          "label": "godie-emns.ex · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
-          "atMs": 1105,
+          "label": "godie-emns.ex · 真 runtime · abilityCast · 近景 · 自動基本視覺驗收",
+          "atMs": 180,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.01343046094177316,
-            "highlightShare": 0.007016060862214709,
-            "brightShare": 0.004291183929192979,
-            "nearWhiteShare": 0.003005817711700065,
-            "dominantBrightShare": 0.002984684998259659,
-            "dominantNonBackgroundShare": 0.002984684998259659,
+            "litShare": 0.009869470326534038,
+            "highlightShare": 0.004652480483505414,
+            "brightShare": 0.001040879711239822,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0008782422563585998,
+            "dominantNonBackgroundShare": 0.0017239570217409553,
             "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.0017838496345283675,
-            "unsafe": false,
-            "reason": "透明／混合收據與同格剝離已定位呈現層異常；不是未知載體，但玩家畫面仍須人工裁決"
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-emns.ex-02-1105ms.webp",
-          "bytes": 8770
+          "file": "frames/godie-emns.ex-02-180ms.webp",
+          "bytes": 6614
         }
       ],
-      "machineIssues": [
-        {
-          "code": "PRESENTATION_ARTIFACT",
-          "severity": "high",
-          "owner": "editor",
-          "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面",
-          "nextAction": "Editor 改用乾淨 primitive 或調整配色／密度後單項重跑；不可因來源收據安全而自動通過。"
-        }
-      ],
-      "humanVerdict": "fail",
-      "humanScore": 1,
-      "humanNote": "角色材質整體過曝成白色，僅有通用紫色煙圈；交換目標、交換結果與技能因果都不清楚。"
+      "machineIssues": [],
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
     },
     {
       "id": "godie-emns.passive",
@@ -2304,76 +3626,119 @@
       },
       "frames": [
         {
-          "label": "godie-emns.passive · 施法提交 · anim · 自動基本視覺驗收",
-          "atMs": 98,
+          "label": "godie-emns.passive · 真 runtime · abilityCast · 自動基本視覺驗收",
+          "atMs": 180,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.006741335587489434,
-            "highlightShare": 0.005559146735617324,
-            "brightShare": 0.004343394162398687,
-            "nearWhiteShare": 0.0036472577196559096,
-            "dominantBrightShare": 0.003637312913331013,
-            "dominantNonBackgroundShare": 0.003637312913331013,
+            "litShare": 0.0055076387140099055,
+            "highlightShare": 0.002721816502979938,
+            "brightShare": 0.00013850415512465375,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.00003567531268362293,
+            "dominantNonBackgroundShare": 0.0005771006463527239,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-emns.passive-01-98ms.webp",
-          "bytes": 6452
+          "file": "frames/godie-emns.passive-01-180ms.webp",
+          "bytes": 5812
         },
         {
-          "label": "godie-emns.passive · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
-          "atMs": 372,
+          "label": "godie-emns.passive · 真 runtime · abilityCast · 近景 · 自動基本視覺驗收",
+          "atMs": 180,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.008811098403858585,
-            "highlightShare": 0.0066033513997314905,
-            "brightShare": 0.004951270449008006,
-            "nearWhiteShare": 0.003982894933121177,
-            "dominantBrightShare": 0.003965491522052608,
-            "dominantNonBackgroundShare": 0.003965491522052608,
+            "litShare": 0.007927264333081508,
+            "highlightShare": 0.0036955426844623523,
+            "brightShare": 0.00009338537731889533,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.00008079409048938135,
+            "dominantNonBackgroundShare": 0.0009537899773356837,
             "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.0004052508577395455,
-            "unsafe": false,
-            "reason": "透明／混合收據與同格剝離已定位呈現層異常；不是未知載體，但玩家畫面仍須人工裁決"
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-emns.passive-02-372ms.webp",
-          "bytes": 6980
+          "file": "frames/godie-emns.passive-02-180ms.webp",
+          "bytes": 6330
         }
       ],
-      "machineIssues": [
-        {
-          "code": "PRESENTATION_ARTIFACT",
-          "severity": "high",
-          "owner": "editor",
-          "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面",
-          "nextAction": "Editor 改用乾淨 primitive 或調整配色／密度後單項重跑；不可因來源收據安全而自動通過。"
-        }
-      ],
-      "humanVerdict": "pass",
-      "humanScore": 6,
-      "humanNote": "沒有替純被動偽造施法動作；紅色警示與紫色閃避殘影能表達觸發和迴避，達到基本可讀標準，但角色材質仍偏白。"
+      "machineIssues": [],
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
     },
     {
       "id": "godie-h01u.r",
       "name": "80-04 赤兔咆哮",
-      "status": "blocked",
-      "blockers": [
-        "主動段可預覽，但下列被動／追加階段無法自訂時間軸：onBasicAttack、onDamageTaken"
-      ],
-      "audit": null,
-      "frames": [],
-      "machineIssues": [
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 10,
+        "sampledFrames": 26,
+        "peakParticleCount": 0,
+        "peakSystemCount": 3,
+        "worstAtMs": 0,
+        "worst": {
+          "litShare": 0,
+          "highlightShare": 0,
+          "brightShare": 0,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": []
+      },
+      "frames": [
         {
-          "code": "UNSUPPORTED_EVENT_BRICK",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "缺少可重用且帶來源資訊的 runtime 事件積木",
-          "nextAction": "Main 補權威事件與 provenance；Editor 再接時間軸選項，禁止用假 cast 代替。"
+          "label": "godie-h01u.r · 真 runtime · abilityCast · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.005318769411567195,
+            "highlightShare": 0.0023482749937043567,
+            "brightShare": 0.00019096785024762865,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.00006610425585494838,
+            "dominantNonBackgroundShare": 0.0005750020985478049,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-h01u.r-01-180ms.webp",
+          "bytes": 6318
+        },
+        {
+          "label": "godie-h01u.r · 真 runtime · vfxSpawn · 自動基本視覺驗收",
+          "atMs": 847,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.014605892722236212,
+            "highlightShare": 0.0053523461764459,
+            "brightShare": 0.0003210778141526064,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.00014794762024678923,
+            "dominantNonBackgroundShare": 0.0019873247712582894,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-h01u.r-02-847ms.webp",
+          "bytes": 13096
         }
       ],
+      "machineIssues": [],
       "humanVerdict": "pending",
       "humanScore": null,
       "humanNote": ""
@@ -2385,109 +3750,139 @@
       "blockers": [],
       "audit": {
         "safe": true,
-        "autoVisualScore": 8.5,
+        "autoVisualScore": 10,
         "sampledFrames": 120,
-        "peakParticleCount": 48,
+        "peakParticleCount": 0,
         "peakSystemCount": 3,
-        "worstAtMs": 1133.3333333333328,
+        "worstAtMs": 0,
         "worst": {
-          "litShare": 0.025691164039580328,
-          "highlightShare": 0.018221371388792203,
-          "brightShare": 0.010831137188603252,
-          "nearWhiteShare": 0.000034806822137138876,
-          "dominantBrightShare": 0.0019044304112177416,
-          "dominantNonBackgroundShare": 0.0027870319725523344,
+          "litShare": 0,
+          "highlightShare": 0,
+          "brightShare": 0,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0,
           "localWhiteCardShare": 0,
           "diagnosticCheckerShare": 0,
           "unsafe": false
         },
-        "suspects": [
-          "telegraph-fill · r/d=0.06 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
-          "telegraph-ring · r/d=0.05 · telegraph-ring · 無貼圖",
-          "telegraph-shock · r/d=0.05 · telegraph-shock · 無貼圖"
-        ]
+        "suspects": []
       },
       "frames": [
         {
-          "label": "godie-h02u.ex · 施法提交 · anim · 自動基本視覺驗收",
-          "atMs": 98,
+          "label": "godie-h02u.ex · 真 runtime · abilityCast · 自動基本視覺驗收",
+          "atMs": 180,
           "view": "side",
+          "framing": "gameplay",
           "frameAudit": {
-            "litShare": 0.022798468499825964,
-            "highlightShare": 0.019115160857242304,
-            "brightShare": 0.015661826860921883,
-            "nearWhiteShare": 0.01524041569290438,
-            "dominantBrightShare": 0.015236686390532545,
-            "dominantNonBackgroundShare": 0.015236686390532545,
+            "litShare": 0.005476160496936121,
+            "highlightShare": 0.0026063963737093933,
+            "brightShare": 0.0001552925375640057,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.00004616805170821791,
+            "dominantNonBackgroundShare": 0.0005771006463527239,
             "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.0012903386206553626,
-            "unsafe": false,
-            "reason": "透明／混合收據與同格剝離已定位呈現層異常；不是未知載體，但玩家畫面仍須人工裁決"
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-h02u.ex-01-98ms.webp",
-          "bytes": 3556
+          "file": "frames/godie-h02u.ex-01-180ms.webp",
+          "bytes": 5324
         },
         {
-          "label": "godie-h02u.ex · 第 6 段 · anim · 自動基本視覺驗收",
-          "atMs": 7098,
+          "label": "godie-h02u.ex · 真 runtime · comboStrike · 自動基本視覺驗收",
+          "atMs": 7180,
           "view": "side",
+          "framing": "detail",
           "frameAudit": {
-            "litShare": 0.006358460543980906,
-            "highlightShare": 0.0033526428322808413,
-            "brightShare": 0.00031077519765302573,
+            "litShare": 0.008596701082850667,
+            "highlightShare": 0.005355493998153278,
+            "brightShare": 0.00034101401829933687,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.00023370294863507533,
-            "dominantNonBackgroundShare": 0.0005009696186166774,
+            "dominantBrightShare": 0.00040082263073952827,
+            "dominantNonBackgroundShare": 0.0009537899773356837,
             "localWhiteCardShare": 0,
-            "diagnosticCheckerShare": 0.0009472428024464224,
-            "unsafe": false,
-            "reason": "透明／混合收據與同格剝離已定位呈現層異常；不是未知載體，但玩家畫面仍須人工裁決"
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
           },
           "diagnosticOnly": false,
-          "file": "frames/godie-h02u.ex-02-7098ms.webp",
-          "bytes": 2036
+          "file": "frames/godie-h02u.ex-02-7180ms.webp",
+          "bytes": 6772
         }
       ],
-      "machineIssues": [
-        {
-          "code": "PRESENTATION_ARTIFACT",
-          "severity": "high",
-          "owner": "editor",
-          "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面",
-          "nextAction": "Editor 改用乾淨 primitive 或調整配色／密度後單項重跑；不可因來源收據安全而自動通過。"
-        }
-      ],
-      "humanVerdict": "fail",
-      "humanScore": 4,
-      "humanNote": "其中一格可清楚看到目標變成白羊，變身機制可辨識；但另一格幾乎只剩灰底與白點，關鍵格品質不一致，未達整組通過。"
+      "machineIssues": [],
+      "humanVerdict": "pending",
+      "humanScore": null,
+      "humanNote": ""
     },
     {
       "id": "godie-hapm.q",
       "name": "52-01 狂戰士之怒",
-      "status": "blocked",
-      "blockers": [
-        "主動段可預覽，但下列被動／追加階段無法自訂時間軸：onDamageTaken",
-        "施法者 godie-hapm 使用共用替身 champ.thorne"
-      ],
-      "audit": null,
-      "frames": [],
-      "machineIssues": [
+      "status": "captured",
+      "blockers": [],
+      "audit": {
+        "safe": true,
+        "autoVisualScore": 10,
+        "sampledFrames": 17,
+        "peakParticleCount": 0,
+        "peakSystemCount": 3,
+        "worstAtMs": 0,
+        "worst": {
+          "litShare": 0,
+          "highlightShare": 0,
+          "brightShare": 0,
+          "nearWhiteShare": 0,
+          "dominantBrightShare": 0,
+          "dominantNonBackgroundShare": 0,
+          "localWhiteCardShare": 0,
+          "diagnosticCheckerShare": 0,
+          "unsafe": false
+        },
+        "suspects": []
+      },
+      "frames": [
         {
-          "code": "APPEARANCE_STAND_IN",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "角色仍使用替身外觀，不能當作技能視覺證據",
-          "nextAction": "Main 提供可解析的正式角色模型／appearance 收據；Editor 不以近似模型冒充。"
+          "label": "godie-hapm.q · 真 runtime · abilityCast · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "gameplay",
+          "frameAudit": {
+            "litShare": 0.0045842776798455465,
+            "highlightShare": 0.002825694619323428,
+            "brightShare": 0.00034311256610425583,
+            "nearWhiteShare": 0.000017837656341811465,
+            "dominantBrightShare": 0.00017837656341811465,
+            "dominantNonBackgroundShare": 0.0005781499202551834,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-hapm.q-01-180ms.webp",
+          "bytes": 5760
         },
         {
-          "code": "UNSUPPORTED_EVENT_BRICK",
-          "severity": "blocker",
-          "owner": "main",
-          "summary": "缺少可重用且帶來源資訊的 runtime 事件積木",
-          "nextAction": "Main 補權威事件與 provenance；Editor 再接時間軸選項，禁止用假 cast 代替。"
+          "label": "godie-hapm.q · 真 runtime · abilityCast · 近景 · 自動基本視覺驗收",
+          "atMs": 180,
+          "view": "side",
+          "framing": "detail",
+          "frameAudit": {
+            "litShare": 0.008630277847729372,
+            "highlightShare": 0.004678712331066902,
+            "brightShare": 0.0006820280365986737,
+            "nearWhiteShare": 0.000002098547804918996,
+            "dominantBrightShare": 0.0002455300931755225,
+            "dominantNonBackgroundShare": 0.0010818013934357424,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "diagnosticOnly": false,
+          "file": "frames/godie-hapm.q-02-180ms.webp",
+          "bytes": 7528
         }
       ],
+      "machineIssues": [],
       "humanVerdict": "pending",
       "humanScore": null,
       "humanNote": ""

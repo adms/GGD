@@ -140,7 +140,7 @@ describe("VFX Forge paused rendering", () => {
     expect(source).toContain('import { channelTakeover } from "../../../client/src/render/channelTakeover"');
     expect(source).toContain("this.runtimeVfx?.handleEvent(item.event, item.atMs);");
     expect(source).toContain("this.pulseActorsFromRuntimeEvent(item.event, item.atMs);");
-    expect(source).toContain('channelTakeover.heldBy(id, channel, nowMs)');
+    expect(source).toContain('channelTakeover.heldBy(id!, rule.channel, nowMs)');
     expect(source).toContain('ev.type === "projectileHit"');
     expect(source).toContain('ev.type === "reflectSuccess"');
     expect(source).toContain("channelTakeover.reset()");

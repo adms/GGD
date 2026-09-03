@@ -9,7 +9,7 @@ pnpm editor:accept:release  # 再加 Editor 全測試、typecheck、production b
 ```
 
 瀏覽器開啟 `http://127.0.0.1:5174/editor/vfx-forge?qa=accept-46` 後會自動逐支跑
-46 份真 Sim／GPU／framebuffer 證據，不需要人工點 46 次；每份有 20 秒硬上限，單一壞模型
+46 份真 Sim／GPU／framebuffer 證據，不需要人工點 46 次；一般項目 30 秒、重型 fixture 60 秒硬上限，單一壞模型
 不能拖死整批。
 
 批次完成後只需按一次「匯出證據 JSON」，再執行一條：
@@ -67,6 +67,20 @@ HEAD 冒充成完整受驗內容；不再引用可能過期的交接文件 commi
   `(貼圖, blendMode)` 消費關係；Editor 對契約未知的新素材再做即時像素檢查。它不再使用會把
   `babyface`、additive `zap1/zap1b` 判成失敗的舊單圖門檻。
 - 顏色是否像原作、構圖是否有力量、動作節奏是否自然，無法由像素門檻安全決定；仍由後台人工看實際連續影格裁決，不能以 script 全綠冒充視覺通過。
+
+### 可選的本機 LLM 預審（預設關閉）
+
+一般 `editor:accept:*` 不啟動也不呼叫任何模型。只有明確執行
+`pnpm editor:accept:visual -- --local-llm`（或設定 `GGD_VFX_LOCAL_LLM_ENABLED=1`）才會在
+確定性守衛之後追加 localhost 視覺分流。它自動從每招選 2～4 張非診斷關鍵格，預設只跑 low；
+相同影格與規格以 digest 快取，不重複花費。只有另加 `--escalate-uncertain` 時，低推理結果本身
+不確定或信心不足才用同一組影格升至 medium 一次。2026-09-04 的固定案例量測為：2 張 low 45.7秒，
+4 張 low 67.0秒，4 張 medium 另需61.8秒且信心由0.72降至0.65，因此 medium 不可預設開啟。
+
+本機 server／模型不存在時，optional batch 在第一個連線錯誤就停止，不會對 46 招重試 46 次；它寫入
+`LOCAL_MODEL_UNAVAILABLE` 收據並正常結束，未審項目仍是 `needs-human-review`。關閉時則寫入
+`LOCAL_MODEL_DISABLED`，且零張圖片被送出。所有模型結果都只能做 `advisory-only` 分流，不能覆蓋
+SimWorld／event trace、像素安全守衛或人工視覺批核；非 loopback endpoint 一律拒絕。
 
 Main 只提供可重用 primitive、權威事件、runtime、限制 resolver 與機器契約。上述時間軸、配色、鏡頭、拖拉組合、截圖和反覆調整均由 Editor 驗收流程負責。
 

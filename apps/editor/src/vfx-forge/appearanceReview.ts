@@ -3,6 +3,11 @@ import type { AppearanceResult } from "@ggd/shared/content/import/resolvedAppear
 export interface AppearanceReview {
   /** A visual proof may only be accepted when both actors resolve to real, non-stand-in bodies. */
   readonly allowed: boolean;
+  /**
+   * Mechanics/VFX may still be rendered with an explicitly labelled stand-in.
+   * This produces diagnostic evidence, never final character-fidelity approval.
+   */
+  readonly renderAllowed: boolean;
   readonly issues: readonly string[];
   /** Persisted beside the candidate so review can reproduce the exact resolver/model documents. */
   readonly receipts: readonly string[];
@@ -19,14 +24,17 @@ export function reviewAppearances(
   target: AppearanceResult | null,
 ): AppearanceReview {
   const issues: string[] = [];
+  let renderAllowed = true;
   const receipts: string[] = [];
   for (const [role, result] of [["施法者", caster], ["目標", target]] as const) {
     if (!result) {
       issues.push(`${role}外觀尚未解析`);
+      renderAllowed = false;
       continue;
     }
     if (!result.ok) {
       issues.push(`${role}外觀解析失敗：${result.failure.kind}`);
+      renderAllowed = false;
       continue;
     }
     const appearance = result.appearance;
@@ -38,5 +46,5 @@ export function reviewAppearances(
       issues.push(`${role} ${appearance.championId} 使用共用替身 ${appearance.modelKey}`);
     }
   }
-  return { allowed: issues.length === 0, issues, receipts };
+  return { allowed: issues.length === 0, renderAllowed, issues, receipts };
 }

@@ -8,6 +8,7 @@
   },
   "scripts": {
     "review": "node --import tsx src/cli.ts",
+    "review:batch": "node --import tsx src/batch.ts",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run"
   },

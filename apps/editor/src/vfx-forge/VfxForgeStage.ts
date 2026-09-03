@@ -17,8 +17,14 @@ import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import type { EventMessage } from "@ggd/shared/protocol/messages";
 import type { ModelDoc, VfxDoc } from "@ggd/shared/content";
 import type { AnimPulse } from "@ggd/shared/content/animPulse";
+import {
+  resolveAbilityPresentation,
+  type PresentationActor,
+  type PresentationTrigger,
+} from "@ggd/shared/content/abilityPresentation";
 import { resolveAppearance } from "@ggd/shared/content/import/resolvedAppearance";
 import { Models, VfxDefs, VfxScripts } from "@ggd/shared/content/registries";
+import { CAMERA_DOC_ID, Configs, resolveCamera } from "@ggd/shared/content";
 import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
 import { abilityIdOfAuthoredOrigin, type ChampionDef } from "@ggd/shared/sim";
 import type { AbilityVfxLayerOverride } from "@ggd/shared/content/schema/abilityVfx";
@@ -54,7 +60,7 @@ import { yawDegToward } from "../../../client/src/vfx/orient";
 import { api } from "../api/client";
 import { assetUrl } from "../preview3d/assetUrl";
 import { burstNow, toParticleSystem } from "../preview3d/particles";
-import { projectileIdsOf, type ForgeAbility, type ScheduledSimEvent } from "./model";
+import { projectileIdsOf, scriptVisualFocus, type ForgeAbility, type ScheduledSimEvent } from "./model";
 import { calibrateTwoWay } from "../../../client/src/vfx/auditionCalibrate";
 import type { PreviewActorPose } from "../preview/PreviewController";
 import {
@@ -142,6 +148,8 @@ export interface VfxVisualEvidenceFrame {
   dataUrl: string;
   atMs: number;
   view: "side" | "top";
+  /** Both values use the shipped CameraRig; detail is its configured nearest clamp. */
+  framing?: "gameplay" | "detail";
   /** Failure evidence only; never eligible for approval or Promote. */
   diagnosticOnly?: boolean;
   /** Exact keyframe readback; timeline sampling alone can skip a one-frame bad carrier. */
@@ -250,6 +258,7 @@ export class VfxForgeStage {
    * sightline at any time.
    */
   private sideReviewView = true;
+  private evidenceFraming: "gameplay" | "detail" = "gameplay";
   private readonly runtimeVfx: VfxSystem | null;
   private readonly canvas: HTMLCanvasElement;
   private readonly assetRefsVerifiedSafe: boolean;
@@ -580,6 +589,32 @@ export class VfxForgeStage {
     this.emitOverlay(wheelDeltaY < 0 ? "鏡頭拉近" : "鏡頭拉遠");
   }
 
+  /** Frame review through the real config-backed CameraRig, never a Forge-only camera. */
+  setEvidenceFraming(framing: "gameplay" | "detail"): void {
+    this.evidenceFraming = framing;
+    this.cameraRig.homeZoom();
+    if (framing === "detail") {
+      // A detail frame is a readable review crop, not the most extreme zoom.
+      // Driving CameraRig into minDolly put the camera inside large capes and
+      // wings (Avalon became a black half-screen). Derive a moderate 55% point
+      // from Main's live config so min/default/wheel changes stay authoritative.
+      const cameraDoc = Configs.tryGet(CAMERA_DOC_ID);
+      const limits = resolveCamera(cameraDoc?.schema === "config.camera@1" ? cameraDoc : undefined);
+      const detailDolly = limits.minDolly + (limits.defaultDolly - limits.minDolly) * 0.55;
+      this.cameraRig.zoomBy((detailDolly - limits.defaultDolly) / limits.wheelStep);
+    }
+    this.cameraRig.update({
+      dtMs: STEP_MS,
+      localPos: this.cameraFocus(),
+      cursor: null,
+      panKeys: null,
+      viewportWidth: this.engine.getRenderWidth(),
+      viewportHeight: this.engine.getRenderHeight(),
+    });
+    this.applyReviewOrbit();
+    this.renderScene();
+  }
+
   /** Toggle between a perpendicular authoring proof and the shipped lane view. */
   setSideReviewView(enabled: boolean): void {
     this.sideReviewView = enabled;
@@ -677,12 +712,18 @@ export class VfxForgeStage {
       dataUrl,
       atMs: Math.round(this.nowMs),
       view: this.sideReviewView ? "side" : "top",
+      framing: this.evidenceFraming,
       frameAudit,
     };
   }
 
   /** Deterministic batch-proof entrypoint: seek, let the GPU present, capture. */
-  async captureVisualEvidenceAt(atMs: number, label: string): Promise<VfxVisualEvidenceFrame> {
+  async captureVisualEvidenceAt(
+    atMs: number,
+    label: string,
+    framing: "gameplay" | "detail" = "gameplay",
+  ): Promise<VfxVisualEvidenceFrame> {
+    this.setEvidenceFraming(framing);
     this.seek(Math.max(0, atMs));
     await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
     return this.captureVisualEvidence(label);
@@ -721,6 +762,7 @@ export class VfxForgeStage {
       dataUrl,
       atMs: Math.round(this.nowMs),
       view: this.sideReviewView ? "side" : "top",
+      framing: this.evidenceFraming,
       diagnosticOnly: true,
       frameAudit,
     };
@@ -782,14 +824,17 @@ export class VfxForgeStage {
    * script-only isolation view, so ability art, projectile art and modelFx
    * cannot bypass the source-asset gate and surprise the actual match.
    */
-  async auditBackdropTimeline(durationMs: number): Promise<BackdropTimelineAudit> {
+  async auditBackdropTimeline(
+    durationMs: number,
+    auditMode: VfxForgeStageMode = "runtime",
+  ): Promise<BackdropTimelineAudit> {
     const restoreMode = this.mode;
     const restoreMs = this.nowMs;
-    this.mode = "runtime";
+    this.mode = auditMode;
     try {
       await this.contentReady;
       this.assertActorsReadyForEvidence();
-      await this.preloadRuntimeAssets(this.ability);
+      if (auditMode === "runtime") await this.preloadRuntimeAssets(this.ability);
       await this.groundReady;
       await this.waitForSceneReadyBounded();
       this.reset();
@@ -1515,44 +1560,44 @@ export class VfxForgeStage {
    */
   private pulseActorsFromRuntimeEvent(ev: EventMessage, nowMs: number): void {
     const data = ev.data;
-    const pulseDefault = (
-      id: number,
-      channel: "caster.action" | "target.reaction",
-      pulse: AnimPulse,
-      windowMs: number,
-    ): void => {
-      if (!channelTakeover.heldBy(id, channel, nowMs)) {
-        this.pulseActor(id, pulse, windowMs);
-      }
-    };
+    let trigger: PresentationTrigger | null = null;
+    let ids: Partial<Record<PresentationActor, number>> = {};
+    let windowMs = 520;
     if (ev.type === "abilityCast" && data.abilityId === this.ability.id) {
-      const caster = Number(data.caster);
-      if (Number.isFinite(caster)) {
-        pulseDefault(
-          caster,
-          "caster.action",
-          "cast",
-          Math.max(600, Math.round(Math.max(0, this.ability.castTimeSec ?? 0) * 1000)),
-        );
-      }
-      return;
-    }
-    if (ev.type === "comboStrike") {
+      trigger = "abilityCast";
+      ids = { caster: Number(data.caster) };
+      windowMs = Math.max(600, Math.round(Math.max(0, this.ability.castTimeSec ?? 0) * 1000));
+    } else if (ev.type === "basicAttack") {
+      trigger = "basicAttack";
+      ids = { caster: Number(data.source) };
+      windowMs = 420;
+    } else if (ev.type === "comboStrike") {
       if (abilityIdOfAuthoredOrigin(String(data.origin ?? "")) !== this.ability.id) return;
-      const caster = Number(data.caster);
-      const victim = Number(data.victim);
-      if (Number.isFinite(caster)) pulseDefault(caster, "caster.action", "attack", 420);
-      if (Number.isFinite(victim)) pulseDefault(victim, "target.reaction", "hurt", 520);
-      return;
+      trigger = "comboStrike";
+      ids = { caster: Number(data.caster), target: Number(data.victim) };
+    } else if (ev.type === "projectileHit") {
+      trigger = "projectileHit";
+      ids = { target: Number(data.target) };
+    } else if (ev.type === "hitImpact") {
+      trigger = data.blocked === true ? "hitImpactBlocked" : "hitImpact";
+      ids = { target: Number(data.target) };
+    } else if (ev.type === "evade") {
+      trigger = "evade";
+      ids = { target: Number(data.target ?? data.evader) };
+    } else if (ev.type === "reflectSuccess") {
+      trigger = "reflectSuccess";
+      ids = { target: Number(data.reflector) };
+    } else if (ev.type === "displace" && data.phase === "start") {
+      trigger = "displace";
+      ids = { caster: Number(data.entity ?? data.caster) };
+      const durationSec = Number(data.durationSec);
+      if (Number.isFinite(durationSec) && durationSec > 0) windowMs = Math.round(durationSec * 1000);
     }
-    if (ev.type === "projectileHit") {
-      const target = Number(data.target);
-      if (Number.isFinite(target)) pulseDefault(target, "target.reaction", "hurt", 520);
-      return;
-    }
-    if (ev.type === "reflectSuccess") {
-      const reflector = Number(data.reflector);
-      if (Number.isFinite(reflector)) pulseDefault(reflector, "target.reaction", "guard", 520);
+    if (!trigger) return;
+    for (const rule of resolveAbilityPresentation(trigger)) {
+      const id = ids[rule.actor];
+      if (!Number.isFinite(id)) continue;
+      if (!channelTakeover.heldBy(id!, rule.channel, nowMs)) this.pulseActor(id!, rule.pulse, windowMs);
     }
   }
 
@@ -1582,6 +1627,10 @@ export class VfxForgeStage {
   }
 
   private cameraFocus(): { x: number; z: number } {
+    if (this.mode === "script") {
+      const authored = scriptVisualFocus(this.script, this.homePose);
+      if (authored) return authored;
+    }
     if (this.castFocus) return this.castFocus;
     return {
       x: (this.actors.caster.position.x + this.actors.target.position.x) / 2,
@@ -1850,6 +1899,10 @@ export class VfxForgeStage {
   }
 
   private casterEntityId(): number | undefined {
+    for (const item of this.schedule) {
+      if (item.event.type !== "editorPreviewScenario" || item.event.data.abilityId !== this.ability.id) continue;
+      return Number(item.event.data.caster);
+    }
     for (const item of this.schedule) {
       if (item.event.type !== "abilityCast" || item.event.data.abilityId !== this.ability.id) continue;
       return Number(item.event.data.caster);

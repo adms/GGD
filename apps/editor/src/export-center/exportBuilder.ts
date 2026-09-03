@@ -454,7 +454,7 @@ function header(size: number): { bytes: Uint8Array; view: DataView } {
   return { bytes, view: new DataView(bytes.buffer) };
 }
 
-function deterministicStoredZip(files: readonly { path: string; bytes: Uint8Array }[]): Uint8Array {
+export function deterministicStoredZip(files: readonly { path: string; bytes: Uint8Array }[]): Uint8Array {
   const locals: Uint8Array[] = [];
   const centrals: Uint8Array[] = [];
   let offset = 0;
@@ -503,7 +503,7 @@ function deterministicStoredZip(files: readonly { path: string; bytes: Uint8Arra
   return concat([...locals, centralBytes, end.bytes]);
 }
 
-async function binarySha256(bytes: Uint8Array): Promise<string> {
+export async function binarySha256(bytes: Uint8Array): Promise<string> {
   const input = bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) as ArrayBuffer;
   const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", input));
   return SHA256_PREFIX + [...digest].map((byte) => byte.toString(16).padStart(2, "0")).join("");

@@ -127,6 +127,24 @@ describe("VFX Forge rendered-frame backdrop guard", () => {
     expect(auditBackdropFrame(rgba, width, height).unsafe).toBe(false);
   });
 
+  it("does not mistake a solid magenta spell column for a diagnostic checker", () => {
+    const width = 160;
+    const height = 120;
+    const rgba = solid(width, height, [20, 24, 32, 255]);
+    for (let y = 18; y < 102; y++) {
+      for (let x = 70; x < 90; x++) {
+        const edge = Math.min(x - 70, 89 - x);
+        const offset = (y * width + x) * 4;
+        rgba[offset] = 190 + edge * 2;
+        rgba[offset + 1] = 30;
+        rgba[offset + 2] = 210 + edge;
+      }
+    }
+    const result = auditBackdropFrame(rgba, width, height);
+    expect(result.diagnosticCheckerShare).toBe(0);
+    expect(result.unsafe).toBe(false);
+  });
+
   it("fails closed when framebuffer readback is empty", () => {
     expect(auditBackdropFrame(new Uint8Array(), 0, 0).unsafe).toBe(true);
   });

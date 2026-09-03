@@ -3,7 +3,15 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, resolve } from "node:path";
 
 import { parseReviewRequest } from "./contracts.js";
-import { prepareReview, reportMarkdown, runReview } from "./review.js";
+import {
+  assertLoopbackApiRoot,
+  prepareReview,
+  reportMarkdown,
+  runReview,
+  disabledReviewReport,
+  unavailableReportMarkdown,
+  unavailableReviewReport,
+} from "./review.js";
 
 interface Args {
   input: string;
@@ -13,6 +21,8 @@ interface Args {
   timeoutMs: number;
   reasoningEffort: "low" | "medium" | "xhigh";
   dryRun: boolean;
+  optional: boolean;
+  enabled: boolean;
 }
 
 function usage(): string {
@@ -20,14 +30,21 @@ function usage(): string {
 
 Options:
   --model ID        LM Studio model key or loaded identifier (default: qwen/qwen3.8-27b)
-  --base-url URL    OpenAI-compatible API root (default: http://127.0.0.1:1234/v1)
+  --base-url URL    Local LM Studio API root (default: http://127.0.0.1:1234/v1)
   --timeout-ms N    Request timeout (default: 180000)
   --reasoning-effort low|medium|xhigh (default: low)
   --dry-run         Validate/hash images and write the prepared prompt without calling a model
+  --enable-local-llm Explicitly allow localhost model inference (default: off)
+  --optional        If localhost inference is absent, write a needs-human-review receipt and exit 0
   --help            Show this help
 
 Environment:
-  GGD_VFX_REVIEW_MODEL, GGD_VFX_REVIEW_BASE_URL, GGD_VFX_REVIEW_REASONING_EFFORT, LM_STUDIO_API_TOKEN`;
+  GGD_VFX_LOCAL_LLM_ENABLED=1, GGD_VFX_REVIEW_MODEL, GGD_VFX_REVIEW_BASE_URL,
+  GGD_VFX_REVIEW_REASONING_EFFORT, LM_STUDIO_API_TOKEN`;
+}
+
+function enabledByEnvironment(value: string | undefined): boolean {
+  return value !== undefined && ["1", "true", "yes", "on"].includes(value.toLowerCase());
 }
 
 function parseArgs(argv: string[]): Args {
@@ -62,6 +79,8 @@ function parseArgs(argv: string[]): Args {
     timeoutMs,
     reasoningEffort: reasoningEffort as Args["reasoningEffort"],
     dryRun: argv.includes("--dry-run"),
+    optional: argv.includes("--optional"),
+    enabled: argv.includes("--enable-local-llm") || enabledByEnvironment(process.env.GGD_VFX_LOCAL_LLM_ENABLED),
   };
 }
 
@@ -101,13 +120,36 @@ async function main(): Promise<number> {
     return 0;
   }
 
-  const report = await runReview(prepared, {
-    baseUrl: args.baseUrl,
-    model: args.model,
-    apiToken: process.env.LM_STUDIO_API_TOKEN,
-    timeoutMs: args.timeoutMs,
-    reasoningEffort: args.reasoningEffort,
-  });
+  if (!args.enabled) {
+    const disabled = disabledReviewReport(prepared, args);
+    writeFileSync(`${output}.json`, JSON.stringify(disabled, null, 2) + "\n", { encoding: "utf8", flag: "wx" });
+    writeFileSync(`${output}.md`, unavailableReportMarkdown(disabled), { encoding: "utf8", flag: "wx" });
+    console.log(`[vfx-review] ${disabled.reason.code}: ${output}.json`);
+    console.log("[vfx-review] enable explicitly with --enable-local-llm; deterministic and human gates continue");
+    return 0;
+  }
+
+  // Validate before the optional catch: `--optional` may tolerate a missing
+  // loopback model, never an attempt to send frames to a remote endpoint.
+  assertLoopbackApiRoot(args.baseUrl);
+  let report;
+  try {
+    report = await runReview(prepared, {
+      baseUrl: args.baseUrl,
+      model: args.model,
+      apiToken: process.env.LM_STUDIO_API_TOKEN,
+      timeoutMs: args.timeoutMs,
+      reasoningEffort: args.reasoningEffort,
+    });
+  } catch (error) {
+    if (!args.optional) throw error;
+    const unavailable = unavailableReviewReport(prepared, args, error);
+    writeFileSync(`${output}.json`, JSON.stringify(unavailable, null, 2) + "\n", { encoding: "utf8", flag: "wx" });
+    writeFileSync(`${output}.md`, unavailableReportMarkdown(unavailable), { encoding: "utf8", flag: "wx" });
+    console.log(`[vfx-review] ${unavailable.reason.code}: ${output}.json`);
+    console.log("[vfx-review] local model skipped; SimWorld/event trace and human review remain required");
+    return 0;
+  }
   writeFileSync(`${output}.json`, JSON.stringify(report, null, 2) + "\n", { encoding: "utf8", flag: "wx" });
   writeFileSync(`${output}.md`, reportMarkdown(report), { encoding: "utf8", flag: "wx" });
   console.log(`[vfx-review] ${report.classification}: ${output}.json`);

@@ -19,7 +19,9 @@ if (proofFlag >= 0 && (!proofPath || proofPath.startsWith("--"))) {
   console.error("FAIL --proof requires the browser-export JSON path");
   process.exit(2);
 }
-const visual = process.argv.includes("--visual") || process.argv.includes("--release") || proofPath !== null;
+const localLlm = process.argv.includes("--local-llm") || ["1", "true", "yes", "on"]
+  .includes(String(process.env.GGD_VFX_LOCAL_LLM_ENABLED ?? "").toLowerCase());
+const visual = process.argv.includes("--visual") || process.argv.includes("--release") || proofPath !== null || localLlm;
 const release = process.argv.includes("--release");
 const maxFailureLines = 100;
 
@@ -67,6 +69,7 @@ console.log(JSON.stringify({
   handbackMainCommit: handback.commit ?? handback.mainCommit ?? null,
   coverageFingerprint: coverage.fingerprint ?? null,
   capabilityFingerprint: capabilities.fingerprint ?? null,
+  localLlm: localLlm ? "enabled-advisory" : "disabled-default",
 }));
 
 if (proofPath) {
@@ -88,6 +91,12 @@ if (visual) {
   run("VFX texture × blendMode contract", "pnpm", [
     "exec", "vitest", "run", "packages/shared/src/content/unsafeTextureQuarantine.test.ts",
     "--pool=threads", "--minWorkers=1", "--maxWorkers=1", "--reporter=dot",
+  ]);
+}
+
+if (localLlm) {
+  run("Optional localhost VFX visual triage", "pnpm", [
+    "vfx:review:batch", "--", "--enable-local-llm", "--optional",
   ]);
 }
 

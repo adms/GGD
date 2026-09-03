@@ -18,7 +18,11 @@ describe("VFX Forge editor-side recipes", () => {
     expect(particles.filter((segment) => segment.vfxId.includes("beam")).every((segment) => segment.timeScale === 1)).toBe(true);
   });
 
-  it.each(["line-blast-fire", "dash-slash-void", "shockwave-dash-light", "combo-slash-holy", "reflect-counter-open", "avalon-counter-chain", "rider-dash-beam-blue"] as const)(
+  it.each([
+    "line-blast-fire", "dash-slash-void", "shockwave-dash-light", "combo-slash-holy",
+    "reflect-counter-open", "avalon-counter-chain", "rider-dash-beam-blue",
+    "avalon-guard-window", "chain-lightning-storm", "bankai-transform", "perfect-parry",
+  ] as const)(
     "%s expands only into shipped script bricks",
     (id) => {
       const segments = activeRecipe(id);
@@ -119,5 +123,23 @@ describe("VFX Forge editor-side recipes", () => {
     const rider = activeRecipe("rider-dash-beam-blue");
     expect(rider).toContainEqual(expect.objectContaining({ kind: "bodyMove", at: "caster", mode: "arc" }));
     expect(rider.filter((segment) => segment.kind === "vfx")).toHaveLength(6);
+  });
+
+  it("exposes Main's remaining strict scenes as event-addressed reusable recipes", () => {
+    expect(activeRecipe("avalon-guard-window")).toEqual(expect.arrayContaining([
+      expect.objectContaining({ kind: "anim", on: "castStart", pulse: "cast" }),
+      expect.objectContaining({ kind: "anim", on: "reflectSuccess", pulse: "guard" }),
+    ]));
+    expect(activeRecipe("chain-lightning-storm").filter((segment) =>
+      segment.kind === "vfx" && segment.vfxId.includes("lightning"),
+    ).length).toBeGreaterThanOrEqual(6);
+    expect(activeRecipe("bankai-transform")).toEqual(expect.arrayContaining([
+      expect.objectContaining({ kind: "anim", at: "caster", pulse: "cast" }),
+      expect.objectContaining({ kind: "vfx", vfxId: "fx.prim.void.summon" }),
+    ]));
+    expect(activeRecipe("perfect-parry")).toEqual(expect.arrayContaining([
+      expect.objectContaining({ kind: "anim", on: "reflectSuccess", at: "caster", pulse: "guard" }),
+      expect.objectContaining({ kind: "bodyMove", on: "reflectSuccess", at: "target" }),
+    ]));
   });
 });

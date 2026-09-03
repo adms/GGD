@@ -12,7 +12,11 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { zVfxScriptDoc, type VfxScriptDoc, type VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
-import { acceptanceFixtureFor, VFX_FORGE_ACCEPTANCE } from "./acceptanceFixtures";
+import {
+  acceptanceFixtureFor,
+  VFX_FORGE_ACCEPTANCE,
+  VFX_FORGE_FIXTURE_SCENES,
+} from "./acceptanceFixtures";
 import { actionAnimationIssues, activationModeForAbility } from "./actionAnimationPrinciples";
 import { isSingleArcVfxId } from "./presentationContract";
 
@@ -40,6 +44,12 @@ const kinds = <K extends VfxScriptSegment["kind"]>(id: typeof IDS[number], kind:
   segs(id).filter((s): s is Extract<VfxScriptSegment, { kind: K }> => s.kind === kind);
 
 describe("八招 Editor-only VFX Forge 視覺文法", () => {
+  it("Main 嚴格八主題展開的十一份文件都有 Editor 積木成品", () => {
+    expect(VFX_FORGE_FIXTURE_SCENES).toHaveLength(15);
+    for (const [id] of VFX_FORGE_FIXTURE_SCENES) {
+      expect(acceptanceFixtureFor(id), id).not.toBeNull();
+    }
+  });
   it("批次驗收隔離八招 fixture，不把既有 runtime 美術疊在玩家積木成品下方", () => {
     const page = readFileSync(new URL("./VfxForgePage.tsx", import.meta.url), "utf8");
     expect(page).toContain('row.vfxFixture ? "script" : "runtime"');

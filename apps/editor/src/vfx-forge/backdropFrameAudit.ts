@@ -59,14 +59,15 @@ const CHECKER_TILE = 4;
 const CHECKER_TILE_MIN_HOT_PIXELS = 3;
 const CHECKER_MIN_TILES_PER_SIDE = 8;
 const CHECKER_MIN_COMPONENT_FILL = 0.3;
-const CHECKER_MIN_CORNER_RATIO = 0.09;
+const CHECKER_MIN_AXIS_ALTERNATION = 0.62;
+const CHECKER_MIN_DIAGONAL_REPEAT = 0.78;
 
 /**
  * Detect a local red/magenta diagnostic checker without banning ordinary fire.
  *
  * A failed alpha/material carrier has three properties together: a compact
- * rectangular cluster, high-chroma hot cells, and repeated opposite-corner
- * alternation at a stable pixel interval. Organic fire can be red and dense,
+ * rectangular cluster, high-chroma hot cells, and repeated axis alternation
+ * plus diagonal repetition at one stable pixel interval. Organic fire can be red and dense,
  * while a telegraph ring can be rectangular in projection; neither has all
  * three. Work on 4px tiles first so a full 1280x720 timeline sweep stays cheap,
  * then run the more expensive periodicity test only inside eligible clusters.
@@ -144,22 +145,36 @@ function diagnosticCheckerShare(
       for (let x = x0; x < x1; x++) hotPixels += hotMask[y * width + x]!;
     }
     if (hotPixels === 0) continue;
-    let bestCorners = 0;
+    let periodic = false;
     const maxLag = Math.min(12, x1 - x0 - 1, y1 - y0 - 1);
     for (let lag = 2; lag <= maxLag; lag++) {
-      let corners = 0;
+      let comparisons = 0;
+      let xAlternates = 0;
+      let yAlternates = 0;
+      let diagonalRepeats = 0;
       for (let y = y0; y < y1 - lag; y++) {
         for (let x = x0; x < x1 - lag; x++) {
           const a = hotMask[y * width + x]!;
           const b = hotMask[y * width + x + lag]!;
           const c = hotMask[(y + lag) * width + x]!;
           const d = hotMask[(y + lag) * width + x + lag]!;
-          if (a === d && b === c && a !== b) corners++;
+          comparisons++;
+          if (a !== b) xAlternates++;
+          if (a !== c) yAlternates++;
+          if (a === d) diagonalRepeats++;
         }
       }
-      bestCorners = Math.max(bestCorners, corners);
+      if (
+        comparisons >= 64 &&
+        xAlternates / comparisons >= CHECKER_MIN_AXIS_ALTERNATION &&
+        yAlternates / comparisons >= CHECKER_MIN_AXIS_ALTERNATION &&
+        diagonalRepeats / comparisons >= CHECKER_MIN_DIAGONAL_REPEAT
+      ) {
+        periodic = true;
+        break;
+      }
     }
-    if (bestCorners / hotPixels >= CHECKER_MIN_CORNER_RATIO) {
+    if (periodic) {
       largest = Math.max(largest, hotPixels / pixels);
     }
   }

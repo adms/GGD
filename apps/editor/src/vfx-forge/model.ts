@@ -40,6 +40,43 @@ export interface ScheduledSimEvent {
   actorPose?: PreviewActorPose;
 }
 
+/**
+ * Centre review evidence on the authored action envelope when a script places
+ * effects beyond the target. Long projectiles previously exploded at 12.8u
+ * while CameraRig kept looking only at the 0..3u duel. This affects the review
+ * camera target only; it never rewrites effect coordinates or gameplay state.
+ */
+export function scriptVisualFocus(
+  script: VfxScriptDoc,
+  pose: PreviewActorPose,
+): { x: number; z: number } | null {
+  const dx = pose.target.x - pose.caster.x;
+  const dz = pose.target.z - pose.caster.z;
+  const distance = Math.hypot(dx, dz);
+  if (distance < 0.0001) return null;
+  const forward = { x: dx / distance, z: dz / distance };
+  const projected = [0, distance];
+  for (const segment of script.segments) {
+    if (segment.kind === "vfx") {
+      const anchor = segment.at === "target" ? distance : 0;
+      projected.push(anchor + (segment.offsetForwardU ?? 0));
+    } else if (segment.kind === "modelFx") {
+      const anchor = segment.anchor === "target" ? distance : 0;
+      const start = anchor + (segment.offsetForwardU ?? 0);
+      projected.push(start);
+      if (segment.path === "forward" && segment.distance !== undefined) projected.push(start + segment.distance);
+    } else if (segment.kind === "bodyMove") {
+      const anchor = (segment.at ?? "caster") === "target" ? distance : 0;
+      projected.push(anchor + segment.offset.x * forward.x + segment.offset.z * forward.z);
+    }
+  }
+  const min = Math.min(...projected);
+  const max = Math.max(...projected);
+  if (max - min <= 5) return null;
+  const mid = (min + max) / 2;
+  return { x: pose.caster.x + forward.x * mid, z: pose.caster.z + forward.z * mid };
+}
+
 export interface TriggerCue {
   on: VfxScriptSegment["on"];
   atMs: number;
@@ -210,7 +247,12 @@ export function recommendedEvidenceTimes(
   const candidates = groups.map((group) => {
     const start = group[0]!.atMs;
     const maxTail = Math.max(...group.map(({ segment }) => segmentTailMs(segment)), 0);
-    const sampleDelay = Math.min(120, Math.max(40, maxTail * 0.15));
+    // First-frame particle construction and a real attack clip both need more
+    // than one 60 Hz tick to become visually readable. Sampling at +40ms made
+    // combo beats look empty even though their 300ms arc was alive. Stay well
+    // inside the shortest shipped visible lifetime (220ms), but no earlier
+    // than +100ms and no later than +180ms.
+    const sampleDelay = Math.min(180, Math.max(100, maxTail * 0.35));
     const kinds = [...new Set(group.map(({ segment }) => segment.kind))];
     return {
       atMs: Math.round(start + sampleDelay),
@@ -234,6 +276,58 @@ export function recommendedEvidenceTimes(
   }
   for (let index = candidates.length - 1; selected.size < wanted && index >= 0; index--) selected.add(index);
 
+  return [...selected]
+    .map((index) => ({ atMs: candidates[index]!.atMs, label: candidates[index]!.label }))
+    .sort((a, b) => a.atMs - b.atMs);
+}
+
+/** Pick readable moments from the real runtime event stream. */
+export function recommendedRuntimeEvidenceTimes(
+  schedule: readonly ScheduledSimEvent[],
+  limit = 2,
+): RecommendedEvidenceTime[] {
+  if (limit <= 0) return [];
+  const weight: Readonly<Record<string, number>> = {
+    vfxSpawn: 8, modelFxSpawn: 8, screenFlash: 7, comboStrike: 6,
+    projectileHit: 6, projectileSpawn: 5, displace: 5, evade: 5,
+    reflectSuccess: 5, hitImpact: 4, statusApplied: 4, shieldGained: 4,
+    damage: 3, abilityCast: 1, basicAttack: 1,
+  };
+  const visible = schedule
+    .filter(({ event }) => (weight[event.type] ?? 0) > 0)
+    .map((item) => ({ ...item, score: weight[item.event.type] ?? 0 }));
+  if (visible.length === 0) {
+    const atMs = schedule[Math.min(1, Math.max(0, schedule.length - 1))]?.atMs ?? 0;
+    return [{ atMs, label: "真 runtime 情境" }];
+  }
+  const groups: Array<typeof visible> = [];
+  for (const event of visible) {
+    const group = groups[groups.length - 1];
+    if (!group || event.atMs - group[0]!.atMs > 100) groups.push([event]);
+    else group.push(event);
+  }
+  const candidates = groups.map((group) => ({
+    // 80ms regularly photographed the spawn command before the first useful
+    // particle/model frame. 180ms remains inside the shortest shipped visual
+    // lifetimes while giving the real renderer enough frames to show shape.
+    atMs: Math.round(group[0]!.atMs + 180),
+    label: `真 runtime · ${[...new Set(group.map((item) => item.event.type))].join("+")}`,
+    score: group.reduce((sum, item) => sum + item.score, 0),
+  }));
+  const wanted = Math.min(limit, candidates.length);
+  if (wanted === 1) {
+    const best = candidates.reduce((current, candidate) =>
+      candidate.score > current.score ? candidate : current,
+    );
+    return [{ atMs: best.atMs, label: best.label }];
+  }
+  const selected = new Set<number>([0, candidates.length - 1]);
+  for (const { index } of candidates
+    .map((candidate, index) => ({ candidate, index }))
+    .sort((a, b) => b.candidate.score - a.candidate.score || a.candidate.atMs - b.candidate.atMs)) {
+    if (selected.size >= wanted) break;
+    selected.add(index);
+  }
   return [...selected]
     .map((index) => ({ atMs: candidates[index]!.atMs, label: candidates[index]!.label }))
     .sort((a, b) => a.atMs - b.atMs);

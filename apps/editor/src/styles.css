@@ -150,6 +150,18 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .ai-icon-done { color: #6fbf7f; font-size: 11px; margin: 4px 0 0; }
 .ai-icon-current { color: var(--muted); font-size: 11px; margin: 6px 0 0; }
 
+.local-icon { border: 1px solid #3a5e73; border-radius: 7px; padding: 10px; margin: 8px 0 12px; background: #121b23; }
+.local-icon > header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.local-icon h3 { margin: 0; font-size: 13px; color: #75c9ee; }
+.local-icon header code { font-size: 10px; overflow-wrap: anywhere; }
+.local-icon-row { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 10px; margin-top: 9px; align-items: start; }
+.local-icon-row img, .local-icon-empty { width: 96px; height: 96px; border: 1px solid #3a4c5d; border-radius: 7px; background: #0b0d12; }
+.local-icon-empty { display: grid; place-items: center; color: var(--muted); font-size: 11px; }
+.local-icon-file { display: inline-block; cursor: pointer; border: 1px solid #3f6479; border-radius: 4px; padding: 4px 8px; margin-right: 6px; color: #bde7fa; background: #182936; }
+.local-icon-file input { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.local-icon-status { color: #88c9a0; font-size: 11px; margin: 8px 0 3px; }
+.local-icon small { color: var(--muted); font-size: 10px; }
+
 .ai-fill { display: inline-flex; align-items: center; gap: 6px; margin-left: 6px; }
 .ai-fill-btn { font-size: 10px; padding: 0 5px; line-height: 1.5; border-color: var(--accent); color: var(--accent); background: none; }
 .ai-fill-note { font-size: 10px; }

@@ -1,6 +1,6 @@
 # Local VFX visual review
 
-This tool sends a bounded set of preview frames to a local LM Studio vision model and writes immutable JSON/Markdown evidence. Its verdict is always `advisory-only`: it cannot replace SimWorld/event-trace assertions or the human visual acceptance gate.
+This optional tool sends a bounded set of preview frames to a local LM Studio vision model and writes immutable JSON/Markdown evidence. It is **disabled by default** and its verdict is always `advisory-only`: it cannot replace SimWorld/event-trace assertions or the human visual acceptance gate.
 
 ## Model decision (2026-09-03)
 
@@ -18,7 +18,7 @@ Model sources: [Qwen3.8-27B](https://huggingface.co/Qwen/Qwen3.8-27B), [LM Studi
 
 1. In LM Studio, download `qwen/qwen3.8-27b`, select the MLX 6-bit variant, and start the local server.
 2. Optionally warm-load it with a 16K context. With the `lms` CLI installed: `lms load qwen/qwen3.8-27b --context-length 16384 --gpu max -y`.
-3. Confirm the OpenAI-compatible endpoint is `http://127.0.0.1:1234/v1`.
+3. Confirm the local endpoint is `http://127.0.0.1:1234/v1`. The tool derives LM Studio's native `/api/v1/chat` route from that loopback origin.
 4. Copy `examples/review-request.example.json` outside the example folder or replace its frame paths with real PNG/JPEG/WebP preview captures.
 
 The request must state its expected truth independently. Do not derive `expectation` from the candidate JSON being tested. Owner dialogue inside `「...」` is retained in the input evidence but removed before the mechanics prompt is built.
@@ -40,16 +40,39 @@ Run the local model:
 pnpm --filter @ggd/vfx-visual-review review -- \
   --input /path/to/review-request.json \
   --out-dir /private/tmp/ggd-vfx-review \
+  --enable-local-llm \
   --model qwen/qwen3.8-27b
 ```
+
+Omitting `--enable-local-llm` writes a `LOCAL_MODEL_DISABLED` / `needs-human-review` receipt, sends no image, and exits 0. The equivalent opt-in environment switch is `GGD_VFX_LOCAL_LLM_ENABLED=1`.
+
+For the 42-theme / 46-document acceptance set, use the automated bounded batch:
+
+```bash
+# Default-off proof: writes a disabled receipt and performs zero inference.
+pnpm vfx:review:batch
+
+# Opt-in: 2–4 keyframes at low reasoning. No automatic medium retry.
+pnpm vfx:review:batch -- --enable-local-llm --optional
+
+# Separate opt-in after calibration: medium retry only for uncertain low results.
+pnpm vfx:review:batch -- --enable-local-llm --optional --escalate-uncertain
+
+# The same opt-in integrated after deterministic Editor visual gates.
+pnpm editor:accept:visual -- --local-llm
+```
+
+The batch excludes diagnostic-only images, keeps temporal endpoints plus at most two evenly sampled interior frames, and caches each result by the request/frame digest. Fewer than two usable frames are not sent to the model. Medium escalation is a separate opt-in because the 2026-09-04 calibration run cost another 61.8 seconds yet reduced confidence from 0.72 to 0.65. If the local server/model is unavailable, the batch stops after the first failed request, records the fallback, exits 0 in optional mode, and leaves every affected case for human review.
 
 Environment overrides: `GGD_VFX_REVIEW_MODEL`, `GGD_VFX_REVIEW_BASE_URL`, `GGD_VFX_REVIEW_REASONING_EFFORT`, and optionally `LM_STUDIO_API_TOKEN`.
 
 Reasoning defaults to `low` because Qwen3.8 otherwise defaults to `xhigh`, which can spend the response budget on hidden reasoning before emitting the JSON verdict. Use `medium` for difficult escalations after measuring it on the local calibration set.
 
-LM Studio may return Qwen3.8's schema-constrained JSON in `reasoning_content` while leaving `content` empty. The tool accepts either channel, validates the same runtime contract, and records which channel was used.
+The native LM Studio route returns the answer as a message after any private reasoning entry. The tool ignores reasoning text, parses only the final JSON message, validates it against its own runtime contract, and records the native response channel.
 
-Exit codes are `0` for AI precheck, `1` for AI rejection, `2` for tool/API error, and `3` when human review is required. Even exit code `0` remains non-authoritative.
+For an explicitly enabled single review, exit codes are `0` for AI precheck, `1` for AI rejection, `2` for tool/API error, and `3` when human review is required. Disabled mode and optional missing-model fallback also exit 0, but their receipts are `needs-human-review`, never a pass. Even an AI-precheck exit code 0 remains non-authoritative.
+
+In environments without a local vision model, the Editor, SimWorld/event-trace checks, framebuffer capture, and human review continue normally; this CLI is never an Editor startup dependency. Automation may invoke `--optional`: a missing loopback model then writes a `LOCAL_MODEL_UNAVAILABLE` / `needs-human-review` receipt and exits 0. It never becomes a pass. Remote endpoints remain rejected even in optional mode.
 
 ## Input and safety limits
 

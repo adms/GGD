@@ -19,6 +19,10 @@ export const VFX_FORGE_RECIPES = [
   { id: "reflect-counter-open", label: "反彈成功起手", description: "只由 reflectSuccess 觸發的防禦火花；不猜 blockSuccess" },
   { id: "avalon-counter-chain", label: "理想鄉反擊七斬", description: "反彈成功起手、六次換位斬擊與第七段黃藍橫向終結砲" },
   { id: "rider-dash-beam-blue", label: "Rider 突進＋藍光束", description: "真 Rider 本體突進、藍白橫向光束與命中動畫" },
+  { id: "avalon-guard-window", label: "Avalon 防禦窗", description: "啟動防禦姿勢與結界；只有反彈成功才播放格擋火花" },
+  { id: "chain-lightning-storm", label: "多起點連鎖雷擊", description: "以錯開的雷擊起點表現多條獨立連鎖，不把所有跳躍疊成一次爆炸" },
+  { id: "bankai-transform", label: "高速變身氣場", description: "變身動作、閃光、黑紅氣場與高速殘影，數值與外觀切換仍由 ability JSON 決定" },
+  { id: "perfect-parry", label: "完美盾反", description: "防禦窗先架勢，反彈成功才出現格擋火花、反擊動作與目標後退" },
 ] as const;
 
 export type VfxForgeRecipeId = typeof VFX_FORGE_RECIPES[number]["id"];
@@ -59,7 +63,11 @@ export function buildVfxForgeRecipe(
   }
   else if (id === "reflect-counter-open") segments = reflectCounterOpen();
   else if (id === "avalon-counter-chain") segments = avalonCounterChain();
-  else segments = riderDashBeamBlue();
+  else if (id === "rider-dash-beam-blue") segments = riderDashBeamBlue();
+  else if (id === "avalon-guard-window") segments = avalonGuardWindow();
+  else if (id === "chain-lightning-storm") segments = chainLightningStorm();
+  else if (id === "bankai-transform") segments = bankaiTransform();
+  else segments = perfectParry();
   return completeActionAnimations(segments, { activationMode: options.activationMode });
 }
 
@@ -251,6 +259,91 @@ function shockwaveDashLight(): VfxScriptSegment[] {
     }),
     zVfxScriptSegment.parse({ kind: "anim", on: "castEffect", atMs: 650, at: "target", pulse: "hurt", clipWindowMs: 520 }),
     zVfxScriptSegment.parse({ kind: "screenShake", on: "castEffect", atMs: 650, amplitude: 0.42, durationSec: 0.34 }),
+  ];
+}
+
+function avalonGuardWindow(): VfxScriptSegment[] {
+  return [
+    zVfxScriptSegment.parse({ kind: "anim", on: "castStart", at: "caster", pulse: "cast", clipWindowMs: 650 }),
+    zVfxScriptSegment.parse({
+      kind: "vfx", on: "castEffect", vfxId: "fx.prim.holy.pulse-lg", at: "self",
+      durationSec: 2, w3xScale: 1.65, tint: [255, 220, 112], flyHeight: 76, alpha: 0.58,
+    }),
+    zVfxScriptSegment.parse({ kind: "anim", on: "reflectSuccess", at: "caster", pulse: "guard", clipWindowMs: 520 }),
+    zVfxScriptSegment.parse({
+      kind: "vfx", on: "reflectSuccess", vfxId: "fx.prim.holy.nova", at: "self",
+      durationSec: 0.36, w3xScale: 1.15, tint: [255, 244, 188], flyHeight: 74, alpha: 0.75,
+    }),
+  ];
+}
+
+function chainLightningStorm(): VfxScriptSegment[] {
+  const strikes = [
+    { atMs: 260, side: -1.5, scale: 1.25 },
+    { atMs: 430, side: 0.2, scale: 1.5 },
+    { atMs: 610, side: 1.45, scale: 1.2 },
+  ];
+  return [
+    zVfxScriptSegment.parse({ kind: "anim", on: "castStart", at: "caster", pulse: "cast", clipWindowMs: 760 }),
+    zVfxScriptSegment.parse({
+      kind: "vfx", on: "castEffect", vfxId: "fx.prim.lightning.pulse-lg", at: "self",
+      durationSec: 0.55, w3xScale: 1.25, tint: [130, 205, 255], flyHeight: 84, alpha: 0.66,
+    }),
+    ...strikes.flatMap(({ atMs, side, scale }) => [
+      zVfxScriptSegment.parse({
+        kind: "vfx", on: "castEffect", atMs, vfxId: "fx.prim.lightning.beam-lg", at: "target",
+        durationSec: 0.42, offsetSideU: side, w3xScale: scale,
+        tint: [96, 186, 255], flyHeight: 86, alpha: 0.72,
+      }),
+      zVfxScriptSegment.parse({
+        kind: "vfx", on: "castEffect", atMs: atMs + 90, vfxId: "fx.prim.lightning.nova", at: "target",
+        durationSec: 0.3, offsetSideU: side, w3xScale: 0.75,
+        tint: [225, 246, 255], flyHeight: 52, alpha: 0.7,
+      }),
+      zVfxScriptSegment.parse({ kind: "anim", on: "castEffect", atMs: atMs + 90, at: "target", pulse: "hurt", clipWindowMs: 360 }),
+    ]),
+    zVfxScriptSegment.parse({ kind: "screenShake", on: "castEffect", atMs: 700, amplitude: 0.38, durationSec: 0.32 }),
+  ];
+}
+
+function bankaiTransform(): VfxScriptSegment[] {
+  return [
+    zVfxScriptSegment.parse({ kind: "anim", on: "castStart", at: "caster", pulse: "cast", clipWindowMs: 850 }),
+    zVfxScriptSegment.parse({
+      kind: "vfx", on: "castEffect", vfxId: "fx.prim.void.summon", at: "self",
+      durationSec: 1.2, w3xScale: 1.45, tint: [105, 12, 35], flyHeight: 65, alpha: 0.68,
+    }),
+    zVfxScriptSegment.parse({
+      kind: "vfx", on: "castEffect", atMs: 180, vfxId: "fx.prim.blood.nova-lg", at: "self",
+      durationSec: 0.7, w3xScale: 1.35, tint: [220, 30, 50], flyHeight: 58, alpha: 0.58,
+    }),
+    zVfxScriptSegment.parse({
+      kind: "vfx", on: "castEffect", atMs: 420, vfxId: "fx.prim.void.dash", at: "self",
+      durationSec: 0.8, w3xScale: 1.8, tint: [42, 16, 28], flyHeight: 78, alpha: 0.62,
+    }),
+    zVfxScriptSegment.parse({ kind: "screenFlash", on: "castEffect", colorRgb: [170, 25, 45], peakAlpha: 0.2, durationSec: 0.22 }),
+    zVfxScriptSegment.parse({ kind: "screenShake", on: "castEffect", amplitude: 0.28, durationSec: 0.45 }),
+  ];
+}
+
+function perfectParry(): VfxScriptSegment[] {
+  return [
+    zVfxScriptSegment.parse({ kind: "anim", on: "castStart", at: "caster", pulse: "guard", clipWindowMs: 900 }),
+    zVfxScriptSegment.parse({
+      kind: "vfx", on: "castEffect", vfxId: "fx.prim.holy.pulse-sm", at: "self",
+      durationSec: 0.75, w3xScale: 0.85, tint: [170, 225, 255], flyHeight: 76, alpha: 0.55,
+    }),
+    zVfxScriptSegment.parse({ kind: "anim", on: "reflectSuccess", at: "caster", pulse: "guard", clipWindowMs: 420 }),
+    zVfxScriptSegment.parse({
+      kind: "vfx", on: "reflectSuccess", vfxId: "fx.prim.holy.arc", at: "target",
+      durationSec: 0.32, w3xScale: 1.45, tint: [238, 250, 255], flyHeight: 74, alpha: 0.76,
+    }),
+    zVfxScriptSegment.parse({ kind: "anim", on: "reflectSuccess", atMs: 80, at: "target", pulse: "hurt", clipWindowMs: 520 }),
+    zVfxScriptSegment.parse({
+      kind: "bodyMove", on: "reflectSuccess", atMs: 80, at: "target", mode: "arc",
+      offset: { x: 0, y: 0.12, z: 1.8 }, durationMs: 420,
+    }),
+    zVfxScriptSegment.parse({ kind: "screenShake", on: "reflectSuccess", atMs: 80, amplitude: 0.36, durationSec: 0.3 }),
   ];
 }
 

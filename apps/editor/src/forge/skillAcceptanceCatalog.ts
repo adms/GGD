@@ -1,6 +1,20 @@
 import type { SkillTypePreset } from "./skillTypePresets";
+import acceptanceEight from "../../../../docs/_acceptance/ggd-acceptance-eight.json";
 
 export type SkillAcceptanceGroup = "owner-union" | "runtime-coverage";
+
+/** Main's machine contract is the only authority for the strict eight themes. */
+export const STRICT_VISUAL_ACCEPTANCE = acceptanceEight.eight.map((theme) => ({
+  n: theme.n,
+  name: theme.name,
+  ids: theme.ids as readonly string[],
+}));
+export const STRICT_VISUAL_ACCEPTANCE_IDS: ReadonlySet<string> = new Set(
+  STRICT_VISUAL_ACCEPTANCE.flatMap((theme) => theme.ids),
+);
+export const STRICT_VISUAL_ACCEPTANCE_THEME_BY_ID: ReadonlyMap<string, number> = new Map(
+  STRICT_VISUAL_ACCEPTANCE.flatMap((theme) => theme.ids.map((id) => [id, theme.n] as const)),
+);
 
 export interface SkillAcceptanceCandidate {
   readonly id: string;
@@ -58,7 +72,7 @@ export const SKILL_ACCEPTANCE_CANDIDATES: readonly SkillAcceptanceCandidate[] = 
     acceptance: "投射物先飛行再於遠端爆炸；沿途命中與終點範圍分開，詠唱、震動、爆炸與傷害點對齊。",
   }),
   owner({
-    id: "godie-h020.e", name: "04-03 龍破斬", mirrorOf: "godie-hjai.e",
+    id: "godie-h020.e", name: "04-03 龍破斬", mirrorOf: "godie-hjai.e", vfxFixture: true,
     requiredEffectKinds: ["spawnModelFx", "damageArea"], requiredConditionKinds: ["recentCast"],
     acceptance: "與 godie-hjai.e 的機制、級距和演出一致；任何逐欄差異都必須在重建前顯示。",
   }),
@@ -83,7 +97,7 @@ export const SKILL_ACCEPTANCE_CANDIDATES: readonly SkillAcceptanceCandidate[] = 
     acceptance: "蓄力後發射橘色橫向光束；長度、寬度、直線傷害、震動及超級賽亞人增幅正確。",
   }),
   owner({
-    id: "godie-o00x.r", name: "09-04 龜派氣功", mirrorOf: "godie-ogrh.r",
+    id: "godie-o00x.r", name: "09-04 龜派氣功", mirrorOf: "godie-ogrh.r", vfxFixture: true,
     requiredEffectKinds: ["damageLine", "screenShake"],
     acceptance: "與 godie-ogrh.r 逐欄一致；角色模型差異不得改變光束尺寸、時序或傷害線。",
   }),
@@ -93,12 +107,12 @@ export const SKILL_ACCEPTANCE_CANDIDATES: readonly SkillAcceptanceCandidate[] = 
     acceptance: "只能由真反彈成功事件觸發；七斬逐擊有攻擊與受擊動作，最後才施放直線終結砲，禁止假 cast。",
   }),
   owner({
-    id: "godie-e00l.r", name: "20-04 Avalon-永恆的理想鄉", chain: "avalon-ex",
+    id: "godie-e00l.r", name: "20-04 Avalon-永恆的理想鄉", chain: "avalon-ex", vfxFixture: true,
     requiredHooks: ["onDamageTaken", "onReflectSuccess"], requiredEffectKinds: ["applyBuff", "damage"],
     acceptance: "啟動兩秒反彈狀態；只反彈符合條件的承受傷害，每次成功只能送出一則反彈事件。",
   }),
   owner({
-    id: "godie-e00l.ex", name: "20-002 解放.約束勝利劍MAX", chain: "avalon-ex", mirrorOf: "godie-e002.ex",
+    id: "godie-e00l.ex", name: "20-002 解放.約束勝利劍MAX", chain: "avalon-ex", mirrorOf: "godie-e002.ex", vfxFixture: true,
     requiredHooks: ["onReflectSuccess"], requiredEffectKinds: ["delayed", "damageLine"],
     acceptance: "承接 godie-e00l.r 的反彈事件並完整播放七斬與終結砲；與 godie-e002.ex 的差異必須可見。",
   }),
@@ -158,17 +172,17 @@ export const SKILL_ACCEPTANCE_CANDIDATES: readonly SkillAcceptanceCandidate[] = 
     acceptance: "三十秒內每秒一個隨機落點，共三十次；每顆分別判定範圍，不能全部疊在中心。",
   }),
   owner({
-    id: "godie-udea.r", name: "65-04 天譴",
+    id: "godie-udea.r", name: "65-04 天譴", vfxFixture: true,
     requiredEffectKinds: ["chainLightning", "spendMana", "damageArea"],
     acceptance: "最多二十個起點各開獨立連鎖，每鏈最多十六次且每跳剩九成；逐擊燒魔並對最近目標追加傷害。",
   }),
   owner({
-    id: "godie-h01n.r", name: "79-04 卍解",
+    id: "godie-h01n.r", name: "79-04 卍解", vfxFixture: true,
     requiredEffectKinds: ["championForm", "modifyCooldown"],
     acceptance: "變身提高攻速且只縮短瞬步冷卻50%；八秒結束後外觀與冷卻規則一起恢復。",
   }),
   owner({
-    id: "godie-h00l.r", name: "60-04 完美盾反",
+    id: "godie-h00l.r", name: "60-04 完美盾反", vfxFixture: true,
     requiredHooks: ["onDamageTaken", "onReflectSuccess"], requiredEffectKinds: ["restore", "knockback"],
     acceptance: "三秒內反彈AD與AP；只有成功反彈技能AP傷害才回復並擊退，防禦動作只播放一次。",
   }),
