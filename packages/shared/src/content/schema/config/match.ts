@@ -402,6 +402,38 @@ export const zConfigMatchDoc = z
          */
         champSelectEarlyStartVsBot: z.boolean().optional(),
         /**
+         * **中場（商店）的早退** —— GH#970。owner 2026-09-02:
+         *
+         * > 「不是有開一張票是**練習模式按 ready 後直接進商店不用等待**了嗎？
+         * >   而且還被關了？」
+         *
+         * ⭐ 上面那一格（`champSelectEarlyStartVsBot`，#847）修的是**選角**那一段；
+         * 這一格修的是它的**第二個位置** —— 商店／中場。#847 完全沒有碰到它。
+         *
+         * true（出貨）= **真人座位**全部按了 Ready、而且沒有真人自己的三選一卡
+         * 還開著，就直接進戰鬥，⛔ 不等 `intermissionSec` 的倒數，也⛔ 不等
+         * 任何一個非真人座位。false = 一律等「每一個生出來的座位都 Ready」
+         * （這一格出現之前的行為，也就是一鍵 rollback）。
+         *
+         * ⚠️ ⭐ **這一格為什麼是必須的（2026-09-03 量到，⛔ 不是推測）**：
+         * `MatchController.allSeatsReady` 等的是**每一個生出來的座位**，而練習房
+         * 的三個靶子（`config.practice@1.dummyCount`，出貨 3）拿的是
+         * `DummyDriver` —— 一支每一 tick 回 `EMPTY_INTENT` 的 driver ⇒ 它們
+         * **結構上永遠不會送 `ready`** ⇒ 那個條件在練習房裡**恆為 false**
+         * ⇒ 玩家按了 Ready 之後**每一次都等滿 25 秒**（實測 749/750 ticks）。
+         * ⚠️ 這是失敗形態⑧的形狀：讀端在（`seat.ready`），而那一格有**零個寫入端**。
+         *
+         * ⚠️ **真人自己的卡仍然擋著**是刻意的：客戶端的 draft 遮罩逐字寫著
+         * 「a Ready press with an unanswered offer silently throws the augment
+         * away」—— 早退不可以替玩家把他的三選一丟掉。⛔ 非真人的卡不擋
+         * （它們照舊由 `autoPickIndex` 決定性地代選）。
+         *
+         * ⚠️ **零個真人座位（全 bot 沙盒 / 單元測試 / 錄影）交還舊規則**，
+         * ⛔ 不是「立刻早退」——「全部 Ready」對空集合恆真。實測全 bot 沙盒今天
+         * 在第 11 個 tick 就早退了，這一格**一格都沒有動到它**。
+         */
+        intermissionEarlyStartVsBot: z.boolean().optional(),
+        /**
          * **vs bot 的強制結算**（owner 2026-08-03:「如果是 vs bot，玩家場勝負
          * 結算，另一場的 bot 還沒則強制結算，不要讓玩家白等」）。
          *
