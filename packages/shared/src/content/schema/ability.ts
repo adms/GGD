@@ -665,18 +665,12 @@ export const zAbilityDef = z
      */
     description: z.string().optional(),
     /**
-     * Same tooltip text as `description`, but with the w3x inline colour codes
-     * recovered as SEMANTIC ROLE markup — `[c=role]…[/c]`, role ∈
-     * damage|physical|duration|heal|mana|magic|generic (task #114). The
-     * importer classifies each `|cAARRGGBB…|r` span into a role and the client
-     * renders role→one normalised colour, so the inconsistent source colouring
-     * reads uniformly across game tooltips / codex / editor. Additive and
-     * optional: absent until the importer re-runs, and the render path treats a
-     * plain string (no markup) as an un-tagged paragraph, so nothing breaks in
-     * the interim. `description` stays the colour-STRIPPED plain text (kept so
-     * the economy tooltip regexes keep matching bare numbers).
+     * ⭐ 2026-09-03（GH#757）—— `descriptionRoles` **整格拆掉了**。
+     * ⛔ 它蓋好了、接上 UI 了、schema 開好欄位了，而**內容端是零**
+     * （421 份 ability · 71 份 champion 全部沒有值），importer 的產出函式也零呼叫者。
+     * ⭐ 整條鏈另存在 `docs/legacy/_retired-chains/role-markup-114.md`
+     * （含 rollback 與「貼回去之前要先修的正則衝突」）。
      */
-    descriptionRoles: z.string().optional(),
     slot: zChampionAbilitySlot,
     /**
      * ONLY on `slot: "PASSIVE"` docs — whether this level-1 innate (天生技) is a

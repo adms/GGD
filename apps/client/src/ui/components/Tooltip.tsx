@@ -15,7 +15,7 @@
 import { useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { computeTooltipPlacement, type TooltipSide } from "./tooltipPlacement";
-import { parseRoleMarkup, rescaleAbilityProse, ROLE_COLOR, WC3_PROSE_CAPTION } from "./abilityText";
+import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "./abilityText";
 import { displayFinalText, useDisplayEnv, type DisplayFactor } from "../displayFinal";
 import type { CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
 import { PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
@@ -180,13 +180,13 @@ export function Tooltip({
                   }}
                 >
                   {/* cooldown literals rescaled to the live combat-env final
-                      (說明數值最終化); task #114: `[c=role]…[/c]` role markup
-                      renders as normalised coloured runs, plain text as one run. */}
-                  {parseRoleMarkup(rescaleAbilityProse(body, env)).map((seg, i) => (
-                    <span key={i} style={seg.role ? { color: ROLE_COLOR[seg.role] } : undefined}>
-                      {seg.text}
-                    </span>
-                  ))}
+                      (說明數值最終化)。
+                      ⭐ 2026-09-03（GH#757）：語意色彩鏈（task #114）拆掉了 ——
+                      `descriptionRoles` 全 repo 零份內容有值，⛔ 而它與這一行的
+                      `rescaleAbilityProse` 有正則衝突（先 rescale 再 parse，救不了）
+                      ⇒ 餵它會讓冷卻顯示 60 而不是 18。另存見
+                      `docs/legacy/_retired-chains/role-markup-114.md`。 */}
+                  {rescaleAbilityProse(body, env)}
                 </div>
                 <div style={{ marginTop: 4, fontSize: 10, color: TEXT_DIM }}>{WC3_PROSE_CAPTION}</div>
               </>

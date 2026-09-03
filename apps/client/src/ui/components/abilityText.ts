@@ -35,138 +35,34 @@ export function stripAbilityNumber(name: string): string {
  * field). Empty/absent descriptions collapse to `undefined` so callers can
  * branch on presence.
  *
- * PREFERS THE ROLE MARKUP (task #114). When the doc carries `descriptionRoles`
- * — the same text with the w3x colour codes recovered as `[c=role]…[/c]`
- * semantic tags — that is returned instead of the flat `description`, so a
- * caller passing this straight into <Tooltip body> gets the colour-normalised
- * version for free. Plain `description` (colours stripped) stays the fallback
- * for docs the importer has not re-run over yet. Either way <Tooltip> renders
- * a string with no markup as-is, so this is safe before the field exists.
+ * ⭐ 2026-09-03（GH#757）—— 語意色彩鏈（task #114）**整條拆掉了**。
+ * 在此之前這一支會優先回傳 `descriptionRoles`（帶 `[c=role]…[/c]` 標記的同一段文字），
+ * ⛔ 而那一格全 repo **零份內容有值**（421 份 ability · 71 份 champion），
+ * importer 的產出函式也**零呼叫者** —— 兩個月沒有變。
+ * ⭐ 整條鏈另存在 `docs/legacy/_retired-chains/role-markup-114.md`（含 rollback 與
+ * 「貼回去之前要先修的正則衝突」）。
  */
 export function docDescription(def: unknown): string | undefined {
-  const d = def as { description?: unknown; descriptionRoles?: unknown } | null | undefined;
-  const roles = d?.descriptionRoles;
-  if (typeof roles === "string" && roles.length > 0) return roles;
+  const d = def as { description?: unknown } | null | undefined;
   const plain = d?.description;
   return typeof plain === "string" && plain.length > 0 ? plain : undefined;
 }
 
 // ---------------------------------------------------------------------------
-// description colour ROLES (task #114)
+// ⭐ 語意色彩鏈（task #114）—— **2026-09-03 整條拆掉**（GH#757）
 //
-// The w3x tooltips colour numbers inline with `|cAARRGGBB…|r` codes, but the
-// source is wildly inconsistent — the same "damage" number appears in a dozen
-// near-identical reds across the map. Rather than ship raw hex, the importer
-// (tools/w3x-import/w3xlib/wts.py) classifies each colour into a SEMANTIC ROLE
-// and re-emits the text as `[c=role]…[/c]` markup; this module is the single
-// source of truth for the role vocabulary, the hex→role classifier (kept
-// byte-for-byte in sync with the Python side), and the one normalised colour
-// each role renders as. Game tooltips, the codex and the editor preview all
-// read role → colour from here, so the whole app speaks one palette.
+// ⛔ 它蓋好了、接上 UI 了、schema 開好欄位了，而**內容端是零**（421 份 ability ·
+// 71 份 champion 全部沒有 `descriptionRoles`），importer 的產出函式也**零呼叫者** ——
+// 兩個月沒有變。而它留下兩列**沒有擁有者的債**，每跑一次測試就吼一次。
+//
+// ⛔ **為什麼不選「餵它」**：`rescaleAbilityProse` 的兩條正則錨定在「數字**緊貼**關鍵字」，
+// 而呼叫順序是 `parseRoleMarkup(rescaleAbilityProse(...))` —— **先 rescale 再 parse，救不了**。
+// 插入 `[c=duration]…[/c]` 之後正則不再命中 ⇒ 冷卻顯示 60 而不是 18 ⇒ ⭐ **卡面數字說謊**
+// （第一·五守則的紅線）。
+//
+// ⭐ 整條鏈（型別 · 調色盤 · 分類器 · 解析器 · Python 產出函式）另存在
+// `docs/legacy/_retired-chains/role-markup-114.md`，含 rollback 與「貼回去之前要先修什麼」。
 // ---------------------------------------------------------------------------
-
-/** The semantic roles a coloured span in a description can carry. */
-export type DescRole = "damage" | "physical" | "duration" | "heal" | "mana" | "magic" | "generic";
-
-/**
- * Role → the ONE normalised colour it renders as (dark-panel legible). This is
- * the whole point of the task: whatever inconsistent red the source used for a
- * damage number, it renders as exactly this red everywhere.
- */
-export const ROLE_COLOR: Record<DescRole, string> = {
-  damage: "#ff6b5e",
-  physical: "#ffa24b",
-  duration: "#f2c637",
-  heal: "#5fd17a",
-  mana: "#5aa2ff",
-  magic: "#b98bff",
-  generic: "#dfe6f2",
-};
-
-/**
- * Exact-hex overrides for source colours whose hue would mis-classify — the
- * pale "name"/highlight tints the map uses for non-numeric emphasis, which by
- * hue alone would read as physical/mana but are semantically neutral. Keyed by
- * lowercase RRGGBB (alpha dropped). Everything else falls to the hue rule.
- */
-const ROLE_OVERRIDES: Record<string, DescRole> = {
-  ffdead: "generic", // navajo-white — item/keyword names
-  c3dbff: "generic", // pale blue highlight
-  ffffff: "generic",
-  c0c0c0: "generic",
-};
-
-/**
- * Classify a WC3 colour into a semantic role. Accepts `RRGGBB` or `AARRGGBB`
- * (alpha dropped), case-insensitive. TOTAL — never returns "unknown": a small
- * override table handles the neutral tints, then a deterministic HSV rule maps
- * every remaining colour by hue, with low-saturation/near-grey folding to
- * `generic`. Mirror of `classify_role` in w3xlib/wts.py.
- */
-export function classifyRole(hex: string): DescRole {
-  const h = hex.toLowerCase().replace(/[^0-9a-f]/g, "");
-  const rgb = h.length === 8 ? h.slice(2) : h.slice(-6);
-  if (rgb.length < 6) return "generic";
-  const override = ROLE_OVERRIDES[rgb];
-  if (override) return override;
-  const r = parseInt(rgb.slice(0, 2), 16) / 255;
-  const g = parseInt(rgb.slice(2, 4), 16) / 255;
-  const b = parseInt(rgb.slice(4, 6), 16) / 255;
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
-  const d = max - min;
-  const sat = max === 0 ? 0 : d / max;
-  if (d < 0.06 || sat < 0.18) return "generic";
-  let hue: number;
-  if (max === r) hue = ((g - b) / d) % 6;
-  else if (max === g) hue = (b - r) / d + 2;
-  else hue = (r - g) / d + 4;
-  hue *= 60;
-  if (hue < 0) hue += 360;
-  if (hue < 20 || hue >= 330) return "damage";
-  if (hue < 45) return "physical";
-  if (hue < 70) return "duration";
-  if (hue < 165) return "heal";
-  if (hue < 255) return "mana";
-  return "magic";
-}
-
-/** One run of description text, optionally carrying a role colour. */
-export interface DescSegment {
-  readonly text: string;
-  readonly role?: DescRole;
-}
-
-const ROLE_MARKUP_RE = /\[c=([a-z-]+)\]([\s\S]*?)\[\/c\]/g;
-
-/** True when a string carries any `[c=role]…[/c]` role markup. */
-export function hasRoleMarkup(s: string): boolean {
-  ROLE_MARKUP_RE.lastIndex = 0;
-  return ROLE_MARKUP_RE.test(s);
-}
-
-/**
- * Split a description into coloured/plain runs. `[c=role]text[/c]` becomes a
- * segment carrying that role (an unrecognised role tag degrades to a plain
- * run rather than throwing); text outside any tag is a role-less run. A string
- * with no markup returns a single plain segment, so this is a safe no-op on the
- * flat descriptions that predate the importer re-run. Mirror of the emitter in
- * w3xlib/wts.py (`to_role_markup`).
- */
-export function parseRoleMarkup(s: string): DescSegment[] {
-  const out: DescSegment[] = [];
-  let last = 0;
-  ROLE_MARKUP_RE.lastIndex = 0;
-  let m: RegExpExecArray | null;
-  while ((m = ROLE_MARKUP_RE.exec(s)) !== null) {
-    if (m.index > last) out.push({ text: s.slice(last, m.index) });
-    const role = m[1] as DescRole;
-    out.push(role in ROLE_COLOR ? { text: m[2]!, role } : { text: m[2]! });
-    last = ROLE_MARKUP_RE.lastIndex;
-  }
-  if (last < s.length) out.push({ text: s.slice(last) });
-  return out.length > 0 ? out : [{ text: s }];
-}
 
 /** Compact Chinese label for an ability cast type (tooltip meta row). */
 const CAST_TYPE_LABEL: Record<CastType, string> = {

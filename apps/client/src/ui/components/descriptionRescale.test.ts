@@ -31,7 +31,6 @@ import {
 } from "@ggd/shared/sim/combatEnv";
 import {
   docDescription,
-  parseRoleMarkup,
   rescaleAbilityProse,
   WC3_PROSE_CAPTION,
 } from "./abilityText";
@@ -372,14 +371,8 @@ describe("displayFinal HP final + damage factor (hud-display-final)", () => {
   });
 });
 
-describe("real ability descriptions carry no role markup (hud-desc-role-colour)", () => {
-  it("parseRoleMarkup(docDescription(real)) is a single plain segment", () => {
-    cover("hud-desc-role-colour");
-    // pins the no-markup fact: a role-rescale would be a no-op, so none is added.
-    for (const id of REAL_IDS) {
-      const desc = loadDescription(id);
-      expect(desc, `${id} has a description`).toBeDefined();
-      expect(parseRoleMarkup(desc!).length, `${id} has no [c=role] markup`).toBe(1);
-    }
-  });
-});
+// ⭐ 2026-09-03（GH#757）—— 這裡原本有一個 describe 對五份真文件斷言
+// `parseRoleMarkup(desc).length === 1`，註解逐字「pins the no-markup fact」。
+// ⛔ 那**不是守衛，是一道反向的鎖**：補上內容的那一刻它會紅。
+// ⭐ 語意色彩鏈整條拆掉之後它失去對象，一併退場
+// （另存見 `docs/legacy/_retired-chains/role-markup-114.md`）。

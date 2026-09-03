@@ -519,7 +519,9 @@ export interface RegisterAllOptions {
  * is fine — is the failure shape this project has paid for most often, so the
  * degraded def says what happened in the one place it cannot be missed.
  *
- * It is stamped on BOTH `description` and `descriptionRoles`, because
+ * ⭐ 2026-09-03（GH#757）：`descriptionRoles` 整條鏈拆掉了 ⇒ 只蓋在 `description` 上。
+ * （原本的第二個落點另存在 `docs/legacy/_retired-chains/role-markup-114.md`。）
+ * It is stamped on `description`, because
  * `ui/components/abilityText.ts` PREFERS the role markup when it exists — marking
  * only `description` would put the notice on the field nobody renders (失敗形態
  * ①: 畫在畫面外). Runtime only: nothing here is ever written back to disk.
@@ -616,9 +618,6 @@ function handleFailure(
   const effects = Array.isArray(raw["effects"]) ? (raw["effects"] as unknown[]) : [];
   out["effects"] = effects;
   out["description"] = DEGRADED_ABILITY_NOTE + stringOr(raw["description"], "");
-  if (typeof raw["descriptionRoles"] === "string") {
-    out["descriptionRoles"] = DEGRADED_ABILITY_NOTE + raw["descriptionRoles"];
-  }
 
   sink.push({
     abilityId: doc.id,
