@@ -3,7 +3,7 @@
  *
  * 票文逐字：「⭐ **一套治具**跑本批 5 份，⛔ 不是 5 條測試」（第零守則⑨：
  * N 個同型 ＝ K 個模板 ＋ 一張表）。⇒ 這裡是**一張 5 列的表**（住在
- * `docs/editor-contract/ggd-acceptance-n5.json`）＋ **一組共用斷言**。
+ * `docs/_acceptance/ggd-acceptance-n5.json`）＋ **一組共用斷言**。
  *
  * ─────────────────────────────────────────────────────────────────────────────
  * ⚠️⚠️ ⭐ **前提回驗（三條，⛔ 其中兩條票文說錯了）**
@@ -69,6 +69,11 @@
  *      條件的 subject 是 "target"」。還原後綠。
  * ⚠️ ⭐ **第一次的 M1 是無效的突變**（記在這裡，因為它正是量尺會騙人的形狀）：
  *    先試的是把 `content/abilities/godie-ogld.ex.json` 的 `scatterRadius` 改成 0，
+ * ⚠️⚠️ 上面提到的 `content/abilities/*.json` 是**產生器的產物**（`skillremake:json` ·
+ * `castderive:build:raw` · `tiers:apply` …）—— ⭐ 這裡只把它們當成**突變標的**（改壞→驗紅→還原），
+ * ⛔ 不是叫誰去手改它。真要改請先 `bash scripts/genguard.sh <路徑>`：
+ * 產生器的產物 ⇒ 改**來源**（`tools/…`）再 `bash scripts/genrun.sh <step>`。
+ * ⛔ 直接改出貨 JSON 會被下一次 sync 打回來，而那個「又紅了」看起來像**新的**錯。
  *    ⇒ 那份文件**整份過不了 Zod** ⇒ 四條斷言一起噴「content not registered」，
  *    ⛔ 而**一條都沒有指名到落點** —— 那個紅證明不了落點斷言承重。
  *    ⇒ 兩件事：改成突變**機制那一行**，並把 `shipped()` 換成 `tryGet`（見下）。
@@ -124,7 +129,7 @@ interface Row {
   conflicts?: Conflict[];
 }
 const MANIFEST = JSON.parse(
-  readFileSync(join(ROOT, "docs/editor-contract/ggd-acceptance-n5.json"), "utf8"),
+  readFileSync(join(ROOT, "docs/_acceptance/ggd-acceptance-n5.json"), "utf8"),
 ) as { ownerSource: { path: string; tracked: boolean }; rows: Row[] };
 const ROWS = MANIFEST.rows;
 /** 訊息一律指名**哪一支** —— ⛔ 「有一列壞了」下一輪讀不出是哪一列。 */

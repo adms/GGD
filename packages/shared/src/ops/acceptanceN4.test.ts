@@ -2,7 +2,7 @@
  * ⏱⏱ **GH#962 —— 46 份驗收 · 批 N4「時序與持續」（11 份）的一套治具**。
  *
  * ⭐ 一套治具 × 11 列參數（第零守則⑨：N 個同型 ＝ K 個模板 ＋ 一張表），
- * ⛔ **不是 11 條測試**。判定表住 `docs/editor-contract/ggd-acceptance-n4.json`
+ * ⛔ **不是 11 條測試**。判定表住 `docs/_acceptance/ggd-acceptance-n4.json`
  * （⭐ 機器讀的唯一住處），這一支**每次重量一遍**再跟它對 ——
  * ⇒ 任一側動了就紅：內容修好了紅（去改判定）、內容壞掉了也紅（去修內容）。
  *
@@ -122,7 +122,7 @@ interface Ledger {
 }
 
 const LEDGER = JSON.parse(
-  readFileSync(join(ROOT, "docs/editor-contract/ggd-acceptance-n4.json"), "utf8"),
+  readFileSync(join(ROOT, "docs/_acceptance/ggd-acceptance-n4.json"), "utf8"),
 ) as Ledger;
 
 /** ⭐ 判定字彙從帳本讀（⛔ 不抄），⭐ 而「阻塞」那一格**必須**帶一個能被反駁的理由。 */
@@ -519,7 +519,7 @@ describe("GH#962 批 N4 —— 時序與持續（11 份，⭐ 一套治具）", 
       "⛔⛔ **判定表與出貨內容漂了**（棘輪：任一側動了都要紅）——\n" +
         "  ⭐ `conditionTiers` / `bakedLiterals` 變了 ⇒ 級距那一側動了：先確認那是刻意的；\n" +
         "  ⭐ `segments` / `durationNodes` / `declaredDurationStages` 變了 ⇒ 內容動了：\n" +
-        "     先確認那是刻意的，再更新 `docs/editor-contract/ggd-acceptance-n4.json`。\n" +
+        "     先確認那是刻意的，再更新 `docs/_acceptance/ggd-acceptance-n4.json`。\n" +
         "  ⛔ **不要為了讓它綠而放寬** —— 這一格記的就是「今天真正的現況」。",
     ).toEqual([]);
     // ⭐⭐ 共同規則四 —— ⛔ **不是問「欄位在不在」**（那是本檔第一版的假前提，

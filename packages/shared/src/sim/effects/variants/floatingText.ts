@@ -44,4 +44,9 @@ export interface FloatingTextVariant extends FloatingTextDriftSpec {
   durationSec?: number;
   /** 字冒在誰頭上。`self`（預設）或 `victim`。⛔ 沒有 `all` —— 字要有一個身體當錨。 */
   applyTo?: "self" | "victim";
+  /**
+   * ⭐ GH#965 M5 —— 飄字的**方向**（等分格，⛔ 不是度數：`sim/**` 禁三角函式）。
+   * 缺席 ⇒ 照 `riseSpeed` 直直往上飄 ＝ 這一格出現以前的行為。
+   */
+  velocityAngle?: number;
 }

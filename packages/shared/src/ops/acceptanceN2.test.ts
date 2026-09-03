@@ -30,6 +30,11 @@
  *
  * ── 🧬 突變紀錄（實跑：改壞 → 🔴 → 還原；⭐ 走 `scripts/edit-or-die.py`）──────
  * M1【出貨資料】`content/abilities/godie-udea.r.json` 的 `"jumps": 16` → `12`
+ * ⚠️⚠️ 上面提到的 `content/abilities/*.json` 是**產生器的產物**（`skillremake:json` ·
+ * `castderive:build:raw` · `tiers:apply` …）—— ⭐ 這裡只把它們當成**突變標的**（改壞→驗紅→還原），
+ * ⛔ 不是叫誰去手改它。真要改請先 `bash scripts/genguard.sh <路徑>`：
+ * 產生器的產物 ⇒ 改**來源**（`tools/…`）再 `bash scripts/genrun.sh <step>`。
+ * ⛔ 直接改出貨 JSON 會被下一次 sync 打回來，而那個「又紅了」看起來像**新的**錯。
  *    ⇒ 🔴 ⑤「連鎖」：`godie-udea.r · jumps: 卡面說 16 而節點是 12`
  *    ⇒ ⭐ 證明治具讀的是**出貨的那一份**，⛔ 不是自己造的夾具（失敗形態⑤）。
  * M2【治具承重行】`strip` 改成 identity（`(s) => s`，⇒ 不再剝 `「…」`／`{{…}}`）
@@ -54,7 +59,7 @@ const jsonFiles = (dir: string): string[] =>
   readdirSync(dir).filter((f) => f.endsWith(".json") && f !== "_index.json");
 
 /** ⭐ 名冊住在檔案裡（第〇·四守則）—— ⛔ 這一支測試裡**沒有**任何一個 id 字面值。 */
-const ROSTER = read(join(ROOT, "docs/editor-contract/ggd-acceptance-batch2-projectile-beam.json")) as {
+const ROSTER = read(join(ROOT, "docs/_acceptance/ggd-acceptance-batch2-projectile-beam.json")) as {
   rows: { n: number; id: string; name: string; type: string; knownConflict?: boolean }[];
   mirrorPairs: [string, string][];
   cosmeticKeys: string[];

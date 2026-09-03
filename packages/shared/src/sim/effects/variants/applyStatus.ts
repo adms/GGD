@@ -111,4 +111,11 @@ export interface ApplyStatusVariant {
    * 回合重置與復活不看它（`clearForFreshBody` 傳 `requireDispellable: false`）。
    */
   dispellable?: boolean;
+  /**
+   * ⭐ GH#965 M2 —— 這一筆狀態要不要**強制切一段動畫**，以及切過去之後的播放速率。
+   * 缺席 ⇒ 誰都不切（嚴格 no-op）＝ 這一格出現以前的每一份文件。
+   * ⚠️ 兩格是一組：`clipTimeScale` 沒有 `forceClip` 就沒有東西可以套速率。
+   */
+  forceClip?: string;
+  clipTimeScale?: number;
 }

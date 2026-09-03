@@ -84,4 +84,12 @@ export interface ComboStrikesVariant {
     ringN: number;
     stepPerStrike: number;
   };
+  /**
+   * ⭐ GH#965 M3/M4 —— 逐段的**打擊音**與段間隔的**抖動**。
+   * · `perStrikeSoundKey` 缺席 ⇒ 沿用整支技能的音效（＝這一格出現以前的行為）。
+   * · `intervalJitter` 缺席 ⇒ 段間隔完全等距。⚠️ 抖動吃 sim 的決定性 RNG，
+   *   ⛔ 不是 `Math.random`（`sim/purity.test.ts` 在守）。
+   */
+  perStrikeSoundKey?: string;
+  intervalJitter?: number;
 }

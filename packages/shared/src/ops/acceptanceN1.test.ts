@@ -2,7 +2,7 @@
  * ⭐⭐ **46 份驗收 · 批1「位移與衝鋒」的承重治具**（GH#959）。
  *
  * ⭐ **一套治具跑 7 份**（⛔ 不是 7 條測試 —— 第零守則⑨：N 個同型 ＝ K 個模板 ＋ 一張表）。
- * 那張表住 `docs/editor-contract/ggd-acceptance-n1.json`，⭐ 而**判定是這裡算出來的**，
+ * 那張表住 `docs/_acceptance/ggd-acceptance-n1.json`，⭐ 而**判定是這裡算出來的**，
  * ⛔ 不是抄在那份 JSON 裡 —— 它只存「上一次量到的結論」，修好一支就會紅。
  *
  * ## ⭐ 它問的四題（票文逐字的共用驗證軸）
@@ -37,6 +37,11 @@
  *    （＝票文警告的那個錯：拿瞬移充當衝鋒）
  *    → 🔴 ③「判定與契約不符：godie-u00v.r 契約說 不通過、量到 通過」
  * M2 出貨內容 `content/abilities/godie-edem.e.json` 的 `dash.maxDistance` 12.83 → 6
+ * ⚠️⚠️ 上面提到的 `content/abilities/*.json` 是**產生器的產物**（`skillremake:json` ·
+ * `castderive:build:raw` · `tiers:apply` …）—— ⭐ 這裡只把它們當成**突變標的**（改壞→驗紅→還原），
+ * ⛔ 不是叫誰去手改它。真要改請先 `bash scripts/genguard.sh <路徑>`：
+ * 產生器的產物 ⇒ 改**來源**（`tools/…`）再 `bash scripts/genrun.sh <step>`。
+ * ⛔ 直接改出貨 JSON 會被下一次 sync 打回來，而那個「又紅了」看起來像**新的**錯。
  *    （`python3 scripts/edit-or-die.py`，⛔ 不是 `python3 -c replace`）
  *    → 🔴 ④「位移距離與傷害線長度對不上：godie-edem.e dash=6 vs damageLine=12.83」
  *    → 還原後逐位元組相同（`git diff --stat` 空）
@@ -51,7 +56,7 @@ const ROOT = join(__dirname, "../../../..");
 const readJson = (rel: string): Record<string, unknown> =>
   JSON.parse(readFileSync(join(ROOT, rel), "utf8")) as Record<string, unknown>;
 
-const CONTRACT = readJson("docs/editor-contract/ggd-acceptance-n1.json") as unknown as {
+const CONTRACT = readJson("docs/_acceptance/ggd-acceptance-n1.json") as unknown as {
   roster: { id: string; name: string; verdict: string; unmet: string[]; why: string }[];
   calibration: {
     knownPresent: { id: string; must: string }[];
@@ -254,7 +259,7 @@ describe("46 份驗收 · 批1 位移與衝鋒（GH#959）", () => {
     }
     expect(
       drift,
-      "⛔⛔ 判定漂了。⭐ **修好了**就把 `docs/editor-contract/ggd-acceptance-n1.json` 的那一列改掉\n" +
+      "⛔⛔ 判定漂了。⭐ **修好了**就把 `docs/_acceptance/ggd-acceptance-n1.json` 的那一列改掉\n" +
         "  （⛔ 不要改這條測試）；**變壞了**就是回歸，去看那一份的 effects。",
     ).toEqual([]);
   });

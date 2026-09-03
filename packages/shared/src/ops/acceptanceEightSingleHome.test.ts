@@ -7,7 +7,7 @@
  * ⇒ ⭐ 那正是第〇·四守則：**同一個事實有四個住處，而它們一定會漂**。
  *
  * ⭐ owner 2026-09-02 定案 **八招** ⇒ 本輪把它收斂成
- * `docs/editor-contract/ggd-acceptance-eight.json`（⭐ 機器讀的唯一住處）。
+ * `docs/_acceptance/ggd-acceptance-eight.json`（⭐ 機器讀的唯一住處）。
  *
  * ⚠️⚠️ ⭐ **票文的 Scope 第 1 條要求寫進「#838 的 body」** ——
  * ⛔ 而本輪的指示逐字是「**⛔ 不碰 #838**」。
@@ -24,7 +24,7 @@ import { join } from "node:path";
 
 const ROOT = join(__dirname, "../../../..");
 const EIGHT = JSON.parse(
-  readFileSync(join(ROOT, "docs/editor-contract/ggd-acceptance-eight.json"), "utf8"),
+  readFileSync(join(ROOT, "docs/_acceptance/ggd-acceptance-eight.json"), "utf8"),
 ) as {
   eight: { n: number; name: string; ids: string[]; why?: string }[];
   commonRules: { id: string; rule: string; why: string }[];
