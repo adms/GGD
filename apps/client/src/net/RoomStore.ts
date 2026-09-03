@@ -86,6 +86,14 @@ export interface SeatView {
   gold: number;
   xp: number;
   /**
+   * ⭐⭐ **按住 Tab 的全員面板要用的兩格**（GH#894）—— owner 2026-09-01 逐字：
+   * 「tab鍵 按住應該要能看到**所有人的**等級、生命、AD、AP、寶具與固有技能」。
+   * ⭐ 其餘四欄（等級 · 生命 · 寶具 · 固有）這個 view 早就有了。
+   * ⚠️ 選填：許多手刻的 `SeatView` 夾具沒有這兩格，⛔ 而缺席讀作 0。
+   */
+  adNow?: number;
+  apNow?: number;
+  /**
    * Vitals of THIS seat's champion entity, derived from the snapshot entities
    * map (the same source the overhead HP bars read) — NOT a separate schema
    * field. 0 / false / -1 while the seat has no live entity (champ-select,
@@ -921,6 +929,10 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
       level: ss.level,
       gold: ss.gold,
       xp: ss.xp,
+      // ⭐ GH#894 —— ⛔ 漏掉這兩行，面板會畫出「每個人都 0 AD / 0 AP」，
+      //   而那與「面板還沒做」在畫面上長得一模一樣。
+      adNow: ss.adNow ?? 0,
+      apNow: ss.apNow ?? 0,
       hp,
       maxHp,
       mana,

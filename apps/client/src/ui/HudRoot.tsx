@@ -50,6 +50,7 @@ import { ReadyButton } from "./panels/ReadyButton";
 import { MatchEndPanel } from "./panels/MatchEndPanel";
 import { RoundVictoryPanel } from "./panels/RoundVictoryPanel";
 import { HumanRosterPanel } from "./panels/HumanRosterPanel";
+import { AllPlayersPanel } from "./panels/AllPlayersPanel";
 import { IntermissionStage } from "./IntermissionStage";
 import { RoundEndVoice } from "./RoundEndVoice";
 import { VfxDebugPanel } from "./VfxDebugPanel";
@@ -221,6 +222,7 @@ const HUD_LABELS: HudBoundaryLabels = new Map<unknown, string>([
   [CommsWheelOverlay, "通訊輪盤"],
   [RoundVictoryPanel, "回合勝利畫面"],
   [HumanRosterPanel, "真人玩家名冊"],
+  [AllPlayersPanel, "全員狀態（按住 Tab）"],
   [MatchEndPanel, "結算畫面"],
   [VfxDebugPanel, "特效發射器診斷"],
 ]);
@@ -362,6 +364,8 @@ export function HudRoot(): React.JSX.Element {
           />
           {/* top-left panel: the current duel's 3 enemies (HP/MP + level). Claims
               the "enemy-team" slot (ui/hud/hudLayout); self-gates to combat. */}
+          {/* ⭐ GH#894 —— 按住 Tab 的全員面板（六欄）。⛔ 它自己判斷要不要出現。 */}
+          <AllPlayersPanel />
           <EnemyTeamPanel />
           <GoldLevel />
           {/* owner「戰鬥場景 滑鼠移到右下角 角色頭圖等級金幣區域時 可以顯示全部

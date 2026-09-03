@@ -416,6 +416,23 @@ export class SeatState extends Schema {
    */
   declare locked: boolean;
 
+  /**
+   * ⭐⭐ **按住 Tab 的全員面板要用的三格**（GH#894）—— owner 2026-09-01 逐字：
+   * > 「tab鍵 按住應該要能看到**所有人的等級、生命、AD、AP、寶具與固有技能**」
+   *
+   * ⭐ 六欄裡的另外三欄**早就在這個座位上**：`level` · `items`（寶具）· `augments`（固有）。
+   * ⛔ 缺的正是這三格 —— 它們今天只活在**自己那一格** HUD 上，
+   * 而一個看不到別人 AD/AP 的計分板回答不了「我該打誰」。
+   *
+   * ⚠️ ⭐ **APPEND-ONLY**（CLAUDE.md 硬性約束）：三格都加在 `locked` **之後**，
+   * ⛔ 沒有動任何既有欄位的順序或型別。
+   * ⚠️ 而 append 仍是一次**協定變更** ⇒ ⛔ 這一版不可以用 `--content-only` 部署。
+   */
+  declare adNow: number;
+  declare apNow: number;
+  declare hpNow: number;
+  declare hpMaxNow: number;
+
   constructor() {
     super();
     this.seatId = 0;
@@ -535,6 +552,15 @@ defineTypes(SeatState, {
   // **伺服器的**事實。⛔ 不是重用 `ready`：`ready` 是商店/中場的「我準備好了」，
   // 兩者的生命週期完全不同（`ready` 每個階段重設，鎖定在選角結束前不會退回）。
   locked: "boolean",
+  // APPEND-ONLY (見上)：⭐【按住 Tab 的全員面板】GH#894。⛔ **最後四格**。
+  // owner 2026-09-01：「tab鍵 按住應該要能看到所有人的等級、生命、AD、AP、寶具與固有技能」。
+  // ⭐ 六欄裡的 level / items / augments 早就在這個座位上 —— 這四格補完剩下的三欄。
+  // ⚠️ `uint16` 夠用：AD/AP 的出貨上界遠低於 65535，而生命用同一個型別讓
+  //    「血條佔比」在客戶端是一個除法，⛔ 不必再送一個百分比。
+  adNow: "uint16",
+  apNow: "uint16",
+  hpNow: "uint16",
+  hpMaxNow: "uint16",
 });
 
 /**
