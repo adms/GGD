@@ -62,11 +62,54 @@
 
 ⭐ **26/26 條 hook 全部發得動 ⇒ ⛔ 本批沒有一條是「消費端存在但消費不到」（形態⑧）。**
 
-### ⚠️ 共同規則 #4（五級距）—— ⛔ 本票**不**在這一軸上判定
-票文 Implementation constraints 逐字要求「標籤不存在時判定為阻塞於 #943」。
-⭐ 那一軸的母體與判定住在 **#943 / 批1**，本票的軸是**事件觸發**。
-⇒ 本報告**不重複一份會漂的級距判定**（第〇·四守則）；本批 12 份的
-`rangeTier` / `conditionTier` 覆蓋率請以 #943 那一份為準。
+### ⛔⛔ 共同規則④的更正：「`conditionTier` 缺席 ⇒ 阻塞於 GH#943」**今天不成立**
+
+⚠️ 票文 Implementation constraints 逐字寫「標籤不存在時判定為⛔ 阻塞於 GH#943，⛔ 不是通過」，
+並量到「46 份**全部**缺 `conditionTier`」。⭐ **那個前提已經過期了。**
+
+出處（出貨原始碼，本輪逐行複驗過）`packages/shared/src/content/conditionTiers.ts:56-70`：
+
+```ts
+/** ⭐ **唯一的查表入口**。缺席 ⇒ 推導；填了 ⇒ 照填的（⛔ 作者贏）。 */
+export function resolveConditionTier(scaling: unknown): SkillTierName {
+  ... if (typeof declared === "string" && …) return declared as SkillTierName;
+  return scalingIsGated(scaling) ? CONDITION_TIER_DEFAULT_WHEN_GATED : CONDITION_TIER_UNCONDITIONAL;
+}
+```
+
+⇒ ⭐ **欄位缺席是正常狀態**，⛔ 不是缺口 —— GH#943 已落地（`3bdb3f925`，標題逐字
+「正解是**推導**，不是去填 235 份檔」）。⭐ 全庫 0/421 顯式標籤是**設計如此**。
+
+### ⭐ 所以本批**真的跑了一次**（⛔ 不是「請看別張票」）
+
+`import { resolveConditionTier }` 直接餵這 12 份的每一個 `amount` 節點：
+
+| | |
+|---|---|
+| `amount` 節點數 | **12 個**（分佈在 6 支；另 6 支的 hook 效果不帶 scaling） |
+| ⭐ 解析不出來的 | **0 個** |
+| 解析結果 | **12/12 = `極小`**（`CONDITION_TIER_UNCONDITIONAL`） |
+
+⇒ ⭐ **本批「阻塞於 GH#943」的份數 = 0。**
+
+⚠️⚠️ ⭐ 而這裡有一個**很容易被誤讀**的地方，寫下來免得下一輪踩：
+`scalingIsGated()` 讀的是 **scaling 自己**的條件（`scaling.condition` / `ratios[].when`
+＝ AP 係數層的門檻），⛔ **不是 hook 的觸發條件**。
+⇒ 45-04 哥哥（`condition{status,target,burn}` 寫在 **hook** 上）照樣解析成
+「無條件·極小」——⭐ **那是對的答案**，⛔ 但它⛔ 不代表「這支技能沒有條件」。
+⚠️ 兩個「條件」是**不同的軸**：一個問「這條係數算不算得到」，一個問「這條 hook 發不發動」。
+⭐ 本票驗的是後者（§一～§三），前者由 `resolveConditionTier` 自己回答。
+
+### ⭐ 至於 `rangeTier`（五級距的另一半）
+那一軸的母體與判定住 **GH#943 / 批1**，⛔ 本報告不重複一份會漂的判定（第〇·四守則）——
+⭐ 這是一個能被反駁的理由：如果批1 沒有覆蓋本批這 12 份，那就該回頭補，
+⛔ 而不是在這裡開第二個住處。
+
+### ⚠️ `docs/editor-contract/ggd-acceptance-n*.json` 不是本 lane 的產出
+本 lane 只寫了兩個檔（本報告 ＋ `acceptanceN3.test.ts`），⛔ **一個字都沒有寫進**
+那幾份契約檔（`n1` / `n4` / `n5` 各屬別條 lane）。
+⇒ ⭐ 那裡若有「阻塞於 GH#943」字樣，要由**擁有那個檔的 lane** 清掉 ——
+⛔ 我不跨柵欄改別人的檔（併行工作流的檔案級柵欄）。
 
 ---
 
