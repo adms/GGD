@@ -57,6 +57,10 @@
       "step": "skillremake:json",
       "reason": "⭐ 2026-09-02 —— 它**內部呼叫** `deriveCastTimes`（`castderive:build:raw`，上一列已登記的正規化器）兩趟，所以它的執行窗口裡會出現「只改 `castTimeSec` 一格」的寫入，落在它**沒有產生**的那幾份手編檔上。⚠️ 實測觸發（本輪）：`godie-etyr.r` / `godie-udea.w` 與它們的英雄卡 —— 那兩支的效果樹修好之後（模板展開不再吃掉自己寫的 `damageArea`/`dash`），`deriveCastTime()` 算出不同的秒數（0.667 → 0.067）並寫回去。⛔ 不可以把那幾份加進 `skillremake:json` 的 `writes`：隔離區會把 492 份技能／英雄檔鎖成 444 ＝ GH#707 一天內擋掉三條 lane 的那個形狀。⭐ 它**同時**是 91 份技能的作者 —— 這一列宣告的是「它也會做正規化」，⛔ 不是「它不是作者」（`sync-io.json` 的 writes 仍然逐檔列著那 126 份）。 ⭐⭐ `onlyOutsideOwnWrites: true` —— 它與其餘四支**不同**：那四支對它們碰到的每一份都只是正規化器，⛔ 而這一支對自己 `writes` 裡逐檔列名的那 126 份**是作者**。⇒ 這一格讓「擁有權」問對問題：**在它自己的 writes 裡 ⇒ 作者；在外面 ⇒ 正規化器**。⚠️ 少了它，`editorSource` 會把 421 份技能全部判成 `normalizer-only`⇒ 編輯器會直接寫那 91 份產物，⛔ 而下一次 sync 打回來。",
       "onlyOutsideOwnWrites": true
+    },
+    {
+      "step": "prose:build",
+      "reason": "⭐ 2026-09-03 —— GH#960 批收尾把它接上 skills:sync 之後才第一次被量到寫。它是逐字元的外科手術（自己的檔頭逐字：「只換 `description` 那一段字面值，⛔ 不是 JSON.parse → JSON.stringify 重寫整份」），三個住處（content/abilities/*.json · content/champions/*.json · tools/skill-remake/heroes/*.py）裡沒有一份是它創造的檔案 —— 它只在已存在的檔案裡換一段字面值，其餘位元組不碰。⛔ 不可以判 AUTHOR：那會讓 331 份合法手編 ability/champion JSON 全部吃 EACCES（同 apconv:build 的前科，GH#815）。"
     }
   ],
   "$rejected": [

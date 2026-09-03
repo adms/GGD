@@ -26,6 +26,13 @@
  * 都會讓逐位元組比對永遠不相等，於是 `--check` 只能被放寬成模糊比對 ——
  * 而一條被放寬的閘等於沒有閘。
  */
+// ggd:writes content/abilities/*.json
+// ggd:writes content/champions/*.json
+// ggd:writes tools/skill-remake/heroes/*.py
+// ⭐ GH#960 —— **靜態產物宣告**（merge-io.mjs 收割）。這一支是「有待轉的佔位符才寫」
+//    的條件寫入端：兩趟量測（乾淨樹 + HEAD~60 回捲）都量到 0 寫，因為兩棵樹上的說明
+//    早就轉完了 ⇒ 戶籍表漏登三個住處 ⇒ genrun 解鎖不到 ⇒ 單獨跑吃 EACCES。
+//    宣告放在寫入端旁邊（第〇·四守則：單一住處），⛔ 不是手編 sync-io.json。
 import { readFileSync, readdirSync, writeFileSync, mkdirSync } from "node:fs";
 // 🔒 GH#706 —— ①② 是 skillremake:json 的產物（平時 chmod 444，產物隔離區）:
 //    直寫必吃 EACCES。writeProduct = 寫入點自解鎖（generateFamilyContent 的同一個前例）。
