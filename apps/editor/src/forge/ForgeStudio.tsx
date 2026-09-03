@@ -59,13 +59,20 @@ import { walkZod } from "../form/walk";
 import { setIn, type ErrorMap } from "../store";
 import { sameJson, useUndoHistory } from "../history";
 import {
+  castPreviewTicksFor,
   createSimPreviewController,
   type CastPreviewTrace,
 } from "../preview/PreviewController";
 import { ensurePreviewContentReady } from "../preview/previewContent";
 import { badgeFor } from "./badge";
 import { degradeNotes, satisfiedCaps } from "./degrade";
-import { planForgeWrite, runForgeWrite, type ForgePlan } from "./ForgeWriteback";
+import {
+  planForgeCreate,
+  planForgeWrite,
+  runForgeCreate,
+  runForgeWrite,
+  type ForgePlan,
+} from "./ForgeWriteback";
 import { VfxLayerPanel } from "./VfxLayerPanel";
 import {
   addLayer,
@@ -91,6 +98,7 @@ import {
 import { SimEventTimeline } from "./SimEventTimeline";
 import { runtimePreviewDoc } from "./runtimePreviewDoc";
 import { useChampionDocs } from "../preview/useChampionDocs";
+import { originOf } from "@ggd/shared/content/statNormalization";
 import { VfxForgePreview } from "../vfx-forge/VfxForgePreview";
 import {
   scheduleSimEvents,
@@ -109,10 +117,13 @@ import {
   type SkillTypePreset,
 } from "./skillTypePresets";
 import {
-  TIER_CONFIG_IDS,
+  RUNTIME_RESOLVER_CONFIG_IDS,
   tierValuesFor,
+  type RuntimeResolverConfigDocs,
   type TierConfigDocs,
 } from "./skillTierCatalog";
+import { diagnoseSkillTiers } from "./skillReasonableness";
+import { newAbilityTemplate, type NewAbilitySlot } from "../collections";
 
 /**
  * One authoritative Sim controller. Rendering consumes its emitted trace via
@@ -153,7 +164,12 @@ export function ForgeStudio({
   preferredChampionId?: string;
   onBack(): void;
 }) {
+  const [authoringMode, setAuthoringMode] = useState<"new" | "existing">("new");
   const [abilityId, setAbilityId] = useState<string>("");
+  const [newAbilityId, setNewAbilityId] = useState("");
+  const [newAbilityName, setNewAbilityName] = useState("新技能");
+  const [newAbilitySlot, setNewAbilitySlot] = useState<NewAbilitySlot>("Q");
+  const [previewChampionId, setPreviewChampionId] = useState(preferredChampionId ?? "");
   const initialTemplates = useMemo(() => {
     const all = new Map<string, TemplateDoc>([[template.id, template]]);
     for (const candidate of catalog) all.set(candidate.id, candidate);
@@ -174,6 +190,10 @@ export function ForgeStudio({
     cooldownShape: skillType?.cooldownShape ?? "單體",
   }, sameJson);
   const { cards, onConflict, layers, tiers, cooldownShape } = editHistory.value;
+  const tierDiagnostics = useMemo(
+    () => diagnoseSkillTiers(tiers, skillType),
+    [skillType, tiers],
+  );
   const [status, setStatus] = useState<string | null>(null);
   const [plan, setPlan] = useState<ForgePlan | null>(null);
   const [signedOff, setSignedOff] = useState(false);
@@ -242,10 +262,10 @@ export function ForgeStudio({
     staleTime: 30_000,
   });
   const tierConfigs = useQuery({
-    queryKey: ["forge", "tier-configs"],
+    queryKey: ["forge", "runtime-resolver-configs"],
     queryFn: async () => Object.fromEntries(await Promise.all(
-      TIER_CONFIG_IDS.map(async (id) => [id, await api.doc<Record<string, unknown>>("config", id)] as const),
-    )) as TierConfigDocs,
+      RUNTIME_RESOLVER_CONFIG_IDS.map(async (id) => [id, await api.doc<Record<string, unknown>>("config", id)] as const),
+    )) as RuntimeResolverConfigDocs,
     staleTime: 60_000,
   });
   const {
@@ -254,6 +274,7 @@ export function ForgeStudio({
     error: championsError,
   } = useChampionDocs();
   const preferredChampion = champions.find((champion) => champion.id === preferredChampionId) ?? null;
+  const previewChampion = champions.find((champion) => champion.id === previewChampionId) ?? null;
   const preferredAbilityIds = useMemo(() => {
     if (!preferredChampion) return new Set<string>();
     const values = Object.values(preferredChampion.abilities as unknown as Record<string, { id?: unknown }>);
@@ -267,6 +288,28 @@ export function ForgeStudio({
       return ap - bp || a.id.localeCompare(b.id);
     });
   }, [abilities.data?.entries, preferredAbilityIds]);
+  const knownAbilityIds = useMemo(
+    () => new Set((abilities.data?.entries ?? []).map((entry) => entry.id)),
+    [abilities.data?.entries],
+  );
+  const newBaseDoc = useMemo(
+    () => ({
+      schema: "ability@1",
+      ...newAbilityTemplate(newAbilityId.trim(), newAbilitySlot, newAbilityName.trim() || "新技能"),
+    }),
+    [newAbilityId, newAbilityName, newAbilitySlot],
+  );
+  const createBlockers = useMemo(() => {
+    if (authoringMode !== "new") return [];
+    const id = newAbilityId.trim();
+    const blockers: string[] = [];
+    if (!/^[a-z0-9][a-z0-9._-]{0,127}$/.test(id)) {
+      blockers.push("技能 ID 必須以小寫英數開頭，且只能使用小寫英數、點、底線或連字號。");
+    }
+    if (newAbilityName.trim() === "") blockers.push("技能名稱不可空白。");
+    if (knownAbilityIds.has(id)) blockers.push(`技能 ID ${id} 已存在；建立流程不會覆蓋既有文件。`);
+    return blockers;
+  }, [authoringMode, knownAbilityIds, newAbilityId, newAbilityName]);
   const previewContent = useQuery({
     queryKey: ["preview-runtime-content"],
     queryFn: ensurePreviewContentReady,
@@ -291,12 +334,12 @@ export function ForgeStudio({
   const host = useQuery({
     queryKey: ["forge", "ability", abilityId],
     queryFn: () => api.doc<Record<string, unknown>>("abilities", abilityId),
-    enabled: abilityId !== "",
+    enabled: authoringMode === "existing" && abilityId !== "",
   });
   const abilitySource = useQuery({
     queryKey: ["forge", "editor-source", "abilities", abilityId],
     queryFn: () => api.editorSource("abilities", abilityId),
-    enabled: abilityId !== "",
+    enabled: authoringMode === "existing" && abilityId !== "",
   });
 
   // ---- the expansion. Same pure function the registry runs at boot. ----
@@ -324,7 +367,8 @@ export function ForgeStudio({
   );
 
   // 換技能就重新種特效層 —— 種子是那支技能**現在真的在播**的東西，不是空白。
-  const hostId = host.data ? String(host.data["id"]) : "";
+  const baseDoc = authoringMode === "new" ? newBaseDoc : host.data;
+  const hostId = authoringMode === "existing" && host.data ? String(host.data["id"]) : "";
   const seededFor = useRef<string>("");
   useEffect(() => {
     if (hostId === "" || seededFor.current === hostId) return;
@@ -332,8 +376,14 @@ export function ForgeStudio({
     editHistory.reset({ ...editHistory.value, layers: draftsFromDoc(host.data ?? null) });
   }, [hostId, host.data, editHistory.reset, editHistory.value]);
 
+  useEffect(() => {
+    if (authoringMode !== "new" || layers === null) return;
+    seededFor.current = "";
+    editHistory.commit((draft) => ({ ...draft, layers: null }));
+  }, [authoringMode, editHistory.commit, layers]);
+
   const after = useMemo(() => {
-    if (!host.data || !expansion.ok) return null;
+    if (!baseDoc || !expansion.ok) return null;
     const tierPatch: Record<string, unknown> = {};
     if (tiers.mana) tierPatch["manaCostTier"] = tiers.mana;
     if (tiers.cooldown) {
@@ -344,7 +394,7 @@ export function ForgeStudio({
     if (tiers.radius) tierPatch["radiusTier"] = tiers.radius;
     if (tiers.castTime) tierPatch["castTimeTier"] = tiers.castTime;
     const merged = mergeExpansion(
-      { ...host.data, ...tierPatch, template: binding },
+      { ...baseDoc, ...tierPatch, template: binding },
       expansion.value.result,
     );
     if (layers === null) return merged;
@@ -353,8 +403,8 @@ export function ForgeStudio({
     // 舊堆疊繼續播 —— 故障形態 ②。`planForgeWrite` 看到它不見了就送 null 去刪。
     const { vfxLayers: _drop, ...rest } = merged as Record<string, unknown>;
     return { ...rest, ...patchForDoc(layers) } as Record<string, unknown>;
-  }, [host.data, expansion, binding, layers, tiers, cooldownShape]);
-  const passiveRules = useMemo(() => passivePresentationRules(after ?? host.data), [after, host.data]);
+  }, [baseDoc, expansion, binding, layers, tiers, cooldownShape]);
+  const passiveRules = useMemo(() => passivePresentationRules(after ?? baseDoc), [after, baseDoc]);
 
   const docErrors: ErrorMap = useMemo(() => {
     if (!after) return {};
@@ -384,21 +434,21 @@ export function ForgeStudio({
     if (!after || !previewContent.data || !expansion.ok) return null;
     const id = String(after["id"] ?? "") as AbilityId;
     const registeredAbility = RuntimeAbilities.tryGet(id);
-    if (!registeredAbility) {
-      return { error: `正式 Runtime 註冊表找不到技能 ${id}` } as const;
-    }
     const runtimeDoc = runtimePreviewDoc(
       after,
-      registeredAbility as unknown as Record<string, unknown>,
+      (registeredAbility as unknown as Record<string, unknown> | undefined) ?? after,
       expansion.value.result,
       binding,
+      docs,
+      tierConfigs.data ?? {},
     );
     const parsed = zAbilityDoc.safeParse(runtimeDoc);
     if (!parsed.success) return { error: "展開結果尚未通過 zAbilityDoc 校驗" } as const;
     const ability = parsed.data as unknown as AbilityDef;
-    const owner = champions.find((c) =>
+    const shippedOwner = champions.find((c) =>
       (["Q", "W", "E", "R"] as const).some((s) => c.abilities[s].id === ability.id),
     );
+    const owner = shippedOwner ?? (authoringMode === "new" ? previewChampion : null);
     if (!owner || ability.slot === "EX") return { lines: null } as const;
     const runtimeOwner = RuntimeChampions.tryGet(owner.id as ChampionId);
     if (!runtimeOwner) {
@@ -420,13 +470,18 @@ export function ForgeStudio({
     } catch (e) {
       return { error: String(e) } as const;
     }
-  }, [after, binding, champions, expansion, previewContent.data]);
+  }, [after, authoringMode, binding, champions, docs, expansion, previewChampion, previewContent.data, tierConfigs.data]);
 
   const runCurrentCast = useCallback((remember: boolean): void => {
     if (!preview || !("champ" in preview)) return;
-    if (remember) auditionedAbilityRef.current = abilityId;
+    const activeId = authoringMode === "new" ? newAbilityId.trim() : abilityId;
+    if (remember) auditionedAbilityRef.current = activeId;
     try {
-      const next = controller.castAbility(preview.champ, preview.slot, { level: 18 });
+      const ability = preview.champ.abilities[preview.slot];
+      const next = controller.castAbility(preview.champ, preview.slot, {
+        level: 18,
+        ticks: castPreviewTicksFor(ability),
+      });
       setTrace(next);
       setPlayheadMs(0);
       setPlaying(next.accepted);
@@ -436,20 +491,21 @@ export function ForgeStudio({
       setPlaying(false);
       setStatus(`試放失敗：${String(e)}`);
     }
-  }, [abilityId, preview]);
+  }, [abilityId, authoringMode, newAbilityId, preview]);
 
   useEffect(() => {
     auditionedAbilityRef.current = null;
     setTrace(null);
     setPlayheadMs(0);
     setPlaying(false);
-  }, [abilityId]);
+  }, [abilityId, authoringMode, newAbilityId]);
 
   // WYSIWYG：先手動試放一次取得意圖後，修改模板／特效參數便用真 Sim 立即重播。
   useEffect(() => {
-    if (auditionedAbilityRef.current !== abilityId) return;
+    const activeId = authoringMode === "new" ? newAbilityId.trim() : abilityId;
+    if (auditionedAbilityRef.current !== activeId) return;
     runCurrentCast(false);
-  }, [abilityId, after, runCurrentCast]);
+  }, [abilityId, after, authoringMode, newAbilityId, runCurrentCast]);
 
   const stageAbility = useMemo<ForgeAbility | null>(() => {
     if (!preview || !("champ" in preview)) return null;
@@ -487,12 +543,12 @@ export function ForgeStudio({
   );
 
   const championDoc = useMemo(() => {
-    if (!abilityId) return null;
+    if (authoringMode !== "existing" || !abilityId) return null;
     const owner = champions.find(
       (c) => embeddedSlotOf(c as unknown as Record<string, unknown>, abilityId) !== null,
     );
     return (owner as unknown as Record<string, unknown>) ?? null;
-  }, [champions, abilityId]);
+  }, [champions, abilityId, authoringMode]);
   const championId = championDoc && typeof championDoc["id"] === "string"
     ? championDoc["id"]
     : "";
@@ -579,11 +635,15 @@ export function ForgeStudio({
   };
 
   const buildPlan = () => {
-    if (!host.data || !after) return;
-    setPlan(planForgeWrite(host.data, after, championDoc, docs, {
-      ability: abilitySource.data ?? null,
-      champion: championSource.data ?? null,
-    }));
+    if (!after) return;
+    setPlan(authoringMode === "new"
+      ? planForgeCreate(after, docs, createBlockers)
+      : host.data
+        ? planForgeWrite(host.data, after, championDoc, docs, {
+          ability: abilitySource.data ?? null,
+          champion: championSource.data ?? null,
+        })
+        : null);
     setSignedOff(false);
   };
 
@@ -591,6 +651,16 @@ export function ForgeStudio({
     if (!plan || !after) return;
     setStatus("寫回中…");
     try {
+      if (plan.steps.some((step) => step.reason === "create")) {
+        const createdId = String(after["id"] ?? "");
+        const res = await runForgeCreate(after, docs);
+        await abilities.refetch();
+        setAuthoringMode("existing");
+        setAbilityId(createdId);
+        setStatus(`已建立 ${res.wrote.join(" + ")} · contentVersion ${res.contentVersion}`);
+        setPlan(null);
+        return;
+      }
       const championAfter =
         plan.mirror && championDoc
           ? (setIn(championDoc, `abilities.${plan.mirror.slot}`, plan.mirror.embedded) as Record<
@@ -611,6 +681,7 @@ export function ForgeStudio({
 
   const blocked =
     conflictBlocks ||
+    createBlockers.length > 0 ||
     Object.keys(docErrors).length > 0 ||
     paramErrors.some((m) => Object.keys(m).length > 0) ||
     vfxBlockers.length > 0;
@@ -655,27 +726,105 @@ export function ForgeStudio({
 
       <div className="forge-cols">
         <section className="forge-col">
-          <h3>1. 選要改寫的技能</h3>
-          {preferredChampion ? (
-            <p className="forge-origin-summary">
-              已優先排列 <b>{preferredChampion.name}</b> 的技能；仍可從完整清單選擇。
-            </p>
-          ) : null}
-          <select
-            data-field="stack.ability"
-            value={abilityId}
-            onChange={(e) => setAbilityId(e.target.value)}
-          >
-            <option value="">— 選一支現有技能 —</option>
-            {orderedAbilityEntries.map((e) => (
-              <option key={e.id} value={e.id}>
-                {preferredAbilityIds.has(e.id) ? `★ ${e.id}` : e.id}
-              </option>
-            ))}
-          </select>
-          <p className="forge-note">
-            技能名稱與圖示仍由技能文件持有；下面的五級距會明確寫回技能欄位，模板卡負責行為。
-          </p>
+          <h3>1. 建立或選擇技能</h3>
+          <div className="forge-authoring-mode" role="group" aria-label="技能來源">
+            <button
+              type="button"
+              className={authoringMode === "new" ? "active" : undefined}
+              data-field="stack.mode.new"
+              onClick={() => setAuthoringMode("new")}
+            >
+              ＋ 從零建立
+            </button>
+            <button
+              type="button"
+              className={authoringMode === "existing" ? "active" : undefined}
+              data-field="stack.mode.existing"
+              onClick={() => setAuthoringMode("existing")}
+            >
+              改寫現有技能
+            </button>
+          </div>
+          {authoringMode === "new" ? (
+            <div className="forge-new-ability">
+              <label>
+                <span>技能 ID</span>
+                <input
+                  data-field="stack.new.id"
+                  value={newAbilityId}
+                  onChange={(event) => setNewAbilityId(event.target.value)}
+                  placeholder="例如 myhero.q"
+                />
+              </label>
+              <label>
+                <span>技能名稱</span>
+                <input
+                  data-field="stack.new.name"
+                  value={newAbilityName}
+                  onChange={(event) => setNewAbilityName(event.target.value)}
+                />
+              </label>
+              <label>
+                <span>技能槽</span>
+                <select
+                  data-field="stack.new.slot"
+                  value={newAbilitySlot}
+                  onChange={(event) => setNewAbilitySlot(event.target.value as NewAbilitySlot)}
+                >
+                  {(["Q", "W", "E", "R"] as const).map((slot) => (
+                    <option key={slot} value={slot}>{slot} · {slot === "R" ? "3級" : "4級"}</option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                <span>試放角色</span>
+                <select
+                  data-field="stack.new.champion"
+                  value={previewChampionId}
+                  onChange={(event) => setPreviewChampionId(event.target.value)}
+                >
+                  <option value="">— 選一名角色作為數值與動畫載體 —</option>
+                  {champions.slice().sort((a, b) => a.name.localeCompare(b.name, "zh-Hant")).map((champion) => (
+                    <option key={champion.id} value={champion.id}>
+                      {champion.name} · {originOf(champion)} · {champion.id}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <p className="forge-note">
+                配方只種入正式模板與五級距；每張卡、條件、角色動作、VFX 與時間軸仍可逐項調整。
+                新技能先建立為獨立本機 JSON，不會改動所選角色或任何 Main 產物。
+              </p>
+              {createBlockers.length > 0 ? (
+                <ul className="error">
+                  {createBlockers.map((message) => <li key={message}>{message}</li>)}
+                </ul>
+              ) : null}
+            </div>
+          ) : (
+            <>
+              {preferredChampion ? (
+                <p className="forge-origin-summary">
+                  已優先排列 <b>{preferredChampion.name}</b> 的技能；仍可從完整清單選擇。
+                </p>
+              ) : null}
+              <select
+                data-field="stack.ability"
+                value={abilityId}
+                onChange={(e) => setAbilityId(e.target.value)}
+              >
+                <option value="">— 選一支現有技能 —</option>
+                {orderedAbilityEntries.map((e) => (
+                  <option key={e.id} value={e.id}>
+                    {preferredAbilityIds.has(e.id) ? `★ ${e.id}` : e.id}
+                  </option>
+                ))}
+              </select>
+              <p className="forge-note">
+                技能名稱與圖示仍由技能文件持有；下面的五級距會明確寫回技能欄位，模板卡負責行為。
+              </p>
+            </>
+          )}
 
           <TierPanel
             tiers={tiers}
@@ -684,6 +833,7 @@ export function ForgeStudio({
             configs={tierConfigs.data ?? {}}
             loading={tierConfigs.isLoading}
             error={tierConfigs.error}
+            diagnostics={tierDiagnostics}
             onTier={setTier}
             onCooldownShape={(next) => editHistory.commit((draft) => ({ ...draft, cooldownShape: next }))}
           />
@@ -924,7 +1074,7 @@ export function ForgeStudio({
             disabled={!after || blocked || !WRITES_ENABLED}
             onClick={buildPlan}
           >
-            預覽寫入差異
+            {authoringMode === "new" ? "預覽新技能 JSON" : "預覽寫入差異"}
           </button>
           {vfxBlockers.length > 0 ? (
             <ul className="error">
@@ -961,6 +1111,7 @@ function TierPanel({
   configs,
   loading,
   error,
+  diagnostics,
   onTier,
   onCooldownShape,
 }: {
@@ -970,6 +1121,7 @@ function TierPanel({
   configs: TierConfigDocs;
   loading: boolean;
   error: unknown;
+  diagnostics: ReturnType<typeof diagnoseSkillTiers>;
   onTier(axis: ForgeTierAxis, tier: SkillTierName | ""): void;
   onCooldownShape(shape: CooldownShape): void;
 }) {
@@ -1022,6 +1174,15 @@ function TierPanel({
             </label>
           );
         })}
+      </div>
+      <div className="forge-tier-diagnostics" aria-live="polite">
+        {diagnostics.map((row) => (
+          <p key={row.code} className={row.severity}>
+            <b>{row.severity === "warning" ? "需檢視" : "初檢通過"}</b>
+            <span>{row.message}</span>
+            <small>{row.suggestion}</small>
+          </p>
+        ))}
       </div>
     </section>
   );
@@ -1407,6 +1568,7 @@ function ConfirmDialog({
           <section key={`${s.collection}/${s.id}/${s.reason}`}>
             <h4>
               {s.label}
+              {s.reason === "create" ? <span className="forge-chip">新建</span> : null}
               {s.reason === "mirror" ? <span className="forge-chip">鏡像</span> : null}
             </h4>
             {s.changes.length === 0 ? (
@@ -1426,10 +1588,17 @@ function ConfirmDialog({
             )}
           </section>
         ))}
-        <p className="forge-note">
-          寫入採用<b>行編輯</b>：只置換這些成員的位元組，檔案其餘部分（包含 Python 匯出的
-          <code>350.0</code> 這種浮點格式）完全不動。
-        </p>
+        {plan.steps.some((step) => step.reason === "create") ? (
+          <p className="forge-note">
+            這會建立一份新的本機 <code>ability@1</code> JSON；create-only 寫入遇到同名 ID 會拒絕，
+            不會覆蓋既有技能，也不會修改角色或 Main 產物。
+          </p>
+        ) : (
+          <p className="forge-note">
+            寫入採用<b>行編輯</b>：只置換這些成員的位元組，檔案其餘部分（包含 Python 匯出的
+            <code>350.0</code> 這種浮點格式）完全不動。
+          </p>
+        )}
         {/*
           擋下存檔的理由（不是降級告知）。模板 ref 指不到東西的文件是合法的 Zod，
           所以 /validate 會放行，而載入器要到下一次 registerAll 才發現 —— 那時候
@@ -1460,7 +1629,7 @@ function ConfirmDialog({
             disabled={plan.blockers.length > 0 || (notes.length > 0 && !signedOff)}
             onClick={onConfirm}
           >
-            確認寫回
+            {plan.steps.some((step) => step.reason === "create") ? "確認建立" : "確認寫回"}
           </button>
         </div>
       </div>

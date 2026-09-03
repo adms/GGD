@@ -14,7 +14,8 @@
 import { describe, it, expect } from "vitest";
 import { resolveCooldownTier, cooldownTiersFromDoc } from "@ggd/shared/content/cooldownTiers";
 import { resolveRangeTier, rangeTiersFromDoc } from "@ggd/shared/content/rangeTiers";
-import { collectionEntry } from "./collections";
+import { resolveManaCostTier, manaTiersFromDoc } from "@ggd/shared/content/manaTiers";
+import { collectionEntry, newAbilityTemplate } from "./collections";
 
 describe("新增技能的骨架落在五級距上", () => {
   it("★ 骨架通得過 ability@1，而且級距解析前後逐位元相同", () => {
@@ -27,6 +28,8 @@ describe("新增技能的骨架落在五級距上", () => {
     expect(afterCd.cooldown, "冷卻退路值不在格點上 —— 級距一關手感就跳").toEqual(doc.cooldown);
     const afterRange = resolveRangeTier(doc, rangeTiersFromDoc(undefined));
     expect(afterRange.range, "施法距離退路值不在格點上").toEqual(doc.range);
+    const afterMana = resolveManaCostTier(doc, manaTiersFromDoc(undefined));
+    expect(afterMana.manaCost, "耗魔退路值不在格點上").toEqual(doc.manaCost);
     // 級距名真的填了（沒填的話上面兩條在「resolver 原樣返回」下也會過）。
     expect(typeof doc.cooldownTier).toBe("string");
     expect(typeof doc.rangeTier).toBe("string");
@@ -41,5 +44,18 @@ describe("新增技能的骨架落在五級距上", () => {
       const after = resolveCooldownTier(ab, cooldownTiersFromDoc(undefined));
       expect(after.cooldown, `${slot} 的冷卻退路值不在格點上`).toEqual(ab.cooldown);
     }
+  });
+
+  it("★ Q/W/E 固定四級，R 固定三級；Forge 與 Collections 共用同一骨架", () => {
+    for (const slot of ["Q", "W", "E"] as const) {
+      const doc = newAbilityTemplate(`probe.${slot.toLowerCase()}`, slot);
+      expect(doc.maxRank, slot).toBe(4);
+      expect(doc.cooldown, slot).toHaveLength(4);
+      expect(doc.manaCost, slot).toHaveLength(4);
+    }
+    const ultimate = newAbilityTemplate("probe.r", "R");
+    expect(ultimate.maxRank).toBe(3);
+    expect(ultimate.cooldown).toHaveLength(3);
+    expect(ultimate.manaCost).toHaveLength(3);
   });
 });

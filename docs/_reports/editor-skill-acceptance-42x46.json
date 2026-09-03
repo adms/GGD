@@ -1,0 +1,2518 @@
+{
+  "schema": "ggd-editor-skill-acceptance@1",
+  "generatedAt": "2026-09-03T23:36+08:00",
+  "scope": "42 skill themes / 46 shipped ability documents",
+  "policy": {
+    "visualPassRequiresFramebufferAndHumanVerdict": true,
+    "strictSubset": "8 named scenes require multi-phase reference comparison; they remain part of the 46",
+    "designerView": "A schema-valid JSON alone is never a pass; the no-code authoring path and event binding are audited separately."
+  },
+  "contracts": {
+    "vfxScriptTriggers": [
+      "castStart",
+      "castEffect",
+      "strike",
+      "projectileSpawn",
+      "projectileHit",
+      "reflectSuccess"
+    ],
+    "capabilityFingerprint": "18d7999e"
+  },
+  "summary": {
+    "themes": 42,
+    "documents": 46,
+    "ownerUnion": 25,
+    "runtimeCoverage": 21,
+    "strictVisual": 8,
+    "gpuCaptured": 20,
+    "gpuFailed": 4,
+    "gpuBlocked": 22,
+    "visualPass": 1,
+    "visualFail": 23,
+    "needsFrameReview": 0,
+    "blocked": 22,
+    "unsupportedHookTriggers": [
+      "onAbilityCast",
+      "onAbilityHit",
+      "onBasicAttack",
+      "onDamageDealt",
+      "onDamageTaken",
+      "onEvade",
+      "onInterval",
+      "onKill",
+      "onStunned"
+    ],
+    "machineIssueCounts": {
+      "APPEARANCE_STAND_IN": 7,
+      "CAPTURE_TIMEOUT": 1,
+      "FRAMEBUFFER_CARRIER": 3,
+      "LOW_VISUAL_HYGIENE": 2,
+      "PRESENTATION_ARTIFACT": 12,
+      "UNSUPPORTED_EVENT_BRICK": 16
+    },
+    "machineIssueOwnerCounts": {
+      "editor": 15,
+      "editor-then-main": 3,
+      "main": 23
+    }
+  },
+  "rows": [
+    {
+      "id": "godie-hart.r",
+      "name": "01-04 超究武神霸斬",
+      "themeId": "ability:godie-hart.r",
+      "group": "owner-union",
+      "strictVisual": true,
+      "acceptance": "七次傷害逐擊對齊施法者揮砍與目標受擊，最後才播放黃藍終結光柱；不得用大量月牙代替角色動作。",
+      "activation": "active",
+      "designerPath": "preset-stack-plus-advanced-form",
+      "presetId": "combo",
+      "templateRefs": [],
+      "effectKinds": [
+        "applyStatus",
+        "comboStrikes",
+        "damage",
+        "floatingText",
+        "invulnerable",
+        "screenFlash",
+        "screenShake",
+        "spawnModelFx",
+        "spawnVfx"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": true,
+      "framebuffer": {
+        "batchStatus": "failed",
+        "frameCount": 1,
+        "audit": null,
+        "blockers": [
+          "Error: godie-hart.r 的 GPU／擷圖驗收超過 30 秒"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "CAPTURE_TIMEOUT",
+            "owner": "editor",
+            "summary": "批次載入或 GPU 擷取超過有界時間"
+          }
+        ]
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-hjai.e",
+      "name": "04-03 龍破斬",
+      "themeId": "ability:godie-hjai.e",
+      "group": "owner-union",
+      "strictVisual": true,
+      "acceptance": "投射物先飛行再於遠端爆炸；沿途命中與終點範圍分開，詠唱、震動、爆炸與傷害點對齊。",
+      "activation": "active",
+      "designerPath": "preset-stack-plus-advanced-form",
+      "presetId": "projectile-blast",
+      "templateRefs": [],
+      "effectKinds": [
+        "applyStatus",
+        "damage",
+        "damageArea",
+        "delayed",
+        "floatingText",
+        "screenShake",
+        "spawnModelFx",
+        "spawnVfx"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": true,
+      "framebuffer": {
+        "batchStatus": "captured",
+        "frameCount": 4,
+        "audit": {
+          "safe": true,
+          "autoVisualScore": 5.5,
+          "sampledFrames": 42,
+          "peakParticleCount": 108,
+          "peakSystemCount": 50,
+          "worstAtMs": 1066.6666666666658,
+          "worst": {
+            "litShare": 0.1023419793502896,
+            "highlightShare": 0.019845966591118945,
+            "brightShare": 0.0012748677914882901,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.013979476202467893,
+            "dominantNonBackgroundShare": 0.07860950222446067,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "suspects": [
+            "telegraph-fill · r/d=0.81 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
+            "telegraph-ring · r/d=0.60 · telegraph-ring · 無貼圖",
+            "telegraph-shock · r/d=0.45 · telegraph-shock · 無貼圖",
+            "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖",
+            "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖"
+          ]
+        },
+        "blockers": [],
+        "humanVerdict": "fail",
+        "humanScore": 2,
+        "humanNote": "可見火焰投射，但起點與方向不清楚、彈道像分離火塊，沒有在一段距離後形成強烈終點爆炸。",
+        "machineIssues": [
+          {
+            "code": "PRESENTATION_ARTIFACT",
+            "owner": "editor",
+            "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面"
+          }
+        ]
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-h020.e",
+      "name": "04-03 龍破斬",
+      "themeId": "ability:godie-hjai.e",
+      "group": "owner-union",
+      "strictVisual": false,
+      "acceptance": "與 godie-hjai.e 的機制、級距和演出一致；任何逐欄差異都必須在重建前顯示。",
+      "activation": "active",
+      "designerPath": "preset-stack-plus-advanced-form",
+      "presetId": "projectile-blast",
+      "templateRefs": [],
+      "effectKinds": [
+        "applyStatus",
+        "damage",
+        "damageArea",
+        "delayed",
+        "floatingText",
+        "screenShake",
+        "spawnModelFx",
+        "spawnVfx"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": true,
+      "framebuffer": {
+        "batchStatus": "captured",
+        "frameCount": 2,
+        "audit": {
+          "safe": true,
+          "autoVisualScore": 5,
+          "sampledFrames": 42,
+          "peakParticleCount": 108,
+          "peakSystemCount": 40,
+          "worstAtMs": 999.9999999999991,
+          "worst": {
+            "litShare": 0.04703160412994208,
+            "highlightShare": 0.011897716779988248,
+            "brightShare": 0.0013829430034416185,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.00039242843951985227,
+            "dominantNonBackgroundShare": 0.017135692101066063,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0.0025885587173675815,
+            "unsafe": false,
+            "reason": "透明／混合收據與同格剝離已定位格狀圖樣；不是未知載體，但玩家畫面仍須人工裁決"
+          },
+          "suspects": [
+            "telegraph-fill · r/d=0.77 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
+            "telegraph-ring · r/d=0.60 · telegraph-ring · 無貼圖",
+            "telegraph-shock · r/d=0.23 · telegraph-shock · 無貼圖",
+            "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-decal · r/d=0.05 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
+          ]
+        },
+        "blockers": [],
+        "humanVerdict": "fail",
+        "humanScore": 0,
+        "humanNote": "兩張關鍵格都被巨大白灰幾何穿入鏡頭，角色與技能方向完全不可讀。",
+        "machineIssues": [
+          {
+            "code": "PRESENTATION_ARTIFACT",
+            "owner": "editor",
+            "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面"
+          },
+          {
+            "code": "LOW_VISUAL_HYGIENE",
+            "owner": "editor",
+            "summary": "畫面雖可擷取，但時間軸／關鍵格最低清晰度只有 0/10"
+          }
+        ]
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-hjai.r",
+      "name": "04-04 神滅斬",
+      "themeId": "ability:godie-hjai.r",
+      "group": "owner-union",
+      "strictVisual": true,
+      "acceptance": "角色實際衝向目標完成黑色光刀斬擊；傷害與暈眩同時落在命中點，近期EX增幅只套一次。",
+      "activation": "active",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "applyStatus",
+        "damage",
+        "spawnModelFx"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "captured",
+        "frameCount": 3,
+        "audit": {
+          "safe": true,
+          "autoVisualScore": 10,
+          "sampledFrames": 34,
+          "peakParticleCount": 23,
+          "peakSystemCount": 9,
+          "worstAtMs": 0,
+          "worst": {
+            "litShare": 0,
+            "highlightShare": 0,
+            "brightShare": 0,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0,
+            "dominantNonBackgroundShare": 0,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "suspects": []
+        },
+        "blockers": [],
+        "humanVerdict": "fail",
+        "humanScore": 2,
+        "humanNote": "有角色貼近與紫色殘影，但缺少明確蓄勢、dash斬擊路徑和命中節點，末段月牙與人物動作脫節。",
+        "machineIssues": []
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-nbbc.r",
+      "name": "08-04 阿邦快速劍X",
+      "themeId": "ability:godie-nbbc.r",
+      "group": "owner-union",
+      "strictVisual": true,
+      "acceptance": "A式直線衝擊波先發生，B式再瞬移斬擊；只有交叉點產生額外範圍傷害。",
+      "activation": "active",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "applyStatus",
+        "blink",
+        "damageArea",
+        "damageLine",
+        "delayed",
+        "spawnModelFx",
+        "spawnVfx"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": true,
+      "framebuffer": {
+        "batchStatus": "captured",
+        "frameCount": 4,
+        "audit": {
+          "safe": true,
+          "autoVisualScore": 9.5,
+          "sampledFrames": 35,
+          "peakParticleCount": 0,
+          "peakSystemCount": 9,
+          "worstAtMs": 866.6666666666661,
+          "worst": {
+            "litShare": 0.01138881893729539,
+            "highlightShare": 0,
+            "brightShare": 0,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0,
+            "dominantNonBackgroundShare": 0.009924032569461932,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "suspects": [
+            "telegraph-corridor · r/d=0.41 · telegraph-corridor-mat · 無貼圖",
+            "telegraph-corridor · r/d=0.38 · telegraph-corridor-mat · 無貼圖",
+            "vfx-ring · r/d=0.06 · vfx-ring-mat · 無貼圖",
+            "vfx-decal · r/d=0.05 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-arc · r/d=0.00 · vfx-arc-mat · 無貼圖"
+          ]
+        },
+        "blockers": [],
+        "humanVerdict": "fail",
+        "humanScore": 2,
+        "humanNote": "A段僅見稀薄藍線，B段斬擊與遠處月牙方向斷裂；角色動作、衝擊波與dash沒有形成清楚的A/B連段。",
+        "machineIssues": []
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-nbbc.e",
+      "name": "08-03 龍鬥氣砲咒文",
+      "themeId": "ability:godie-nbbc.e",
+      "group": "owner-union",
+      "strictVisual": true,
+      "acceptance": "藍色橫向氣功砲從角色前方發射，施法動作、方向、碰撞與傷害線一致。",
+      "activation": "active",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "damage",
+        "spawnModelFx",
+        "spawnProjectile",
+        "spawnVfx"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "captured",
+        "frameCount": 4,
+        "audit": {
+          "safe": true,
+          "autoVisualScore": 5.5,
+          "sampledFrames": 44,
+          "peakParticleCount": 178,
+          "peakSystemCount": 12,
+          "worstAtMs": 1066.6666666666658,
+          "worst": {
+            "litShare": 0.03749370435658524,
+            "highlightShare": 0.022912994208008058,
+            "brightShare": 0.017279442625703013,
+            "nearWhiteShare": 0.0017145135566188198,
+            "dominantBrightShare": 0.001643162931251574,
+            "dominantNonBackgroundShare": 0.005767858641819861,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0.002287417107361706,
+            "unsafe": false,
+            "reason": "透明／混合收據與同格剝離已定位格狀圖樣；不是未知載體，但玩家畫面仍須人工裁決"
+          },
+          "suspects": [
+            "telegraph-corridor · r/d=0.47 · telegraph-corridor-mat · 無貼圖",
+            "telegraph-corridor · r/d=0.46 · telegraph-corridor-mat · 無貼圖",
+            "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-ring · r/d=0.04 · vfx-ring-mat · 無貼圖"
+          ]
+        },
+        "blockers": [],
+        "humanVerdict": "fail",
+        "humanScore": 2,
+        "humanNote": "僅有稀薄藍色橫線與人物動作，沒有從施法者連到目標的橫向氣功砲體積、核心和命中爆點。",
+        "machineIssues": []
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-ogrh.r",
+      "name": "09-04 龜派氣功",
+      "themeId": "ability:godie-ogrh.r",
+      "group": "owner-union",
+      "strictVisual": true,
+      "acceptance": "蓄力後發射橘色橫向光束；長度、寬度、直線傷害、震動及超級賽亞人增幅正確。",
+      "activation": "active",
+      "designerPath": "preset-stack-plus-advanced-form",
+      "presetId": "beam",
+      "templateRefs": [],
+      "effectKinds": [
+        "damageLine",
+        "screenShake",
+        "spawnModelFx",
+        "spawnVfx"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": true,
+      "framebuffer": {
+        "batchStatus": "failed",
+        "frameCount": 1,
+        "audit": null,
+        "blockers": [
+          "Error: 局部紅／紫棋盤載體佔畫面 0.174%，疑似貼圖載入失敗或透明底板外露 @ 120ms"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "FRAMEBUFFER_CARRIER",
+            "owner": "editor-then-main",
+            "summary": "實際 framebuffer 出現棋盤或不透明載體"
+          }
+        ]
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-o00x.r",
+      "name": "09-04 龜派氣功",
+      "themeId": "ability:godie-ogrh.r",
+      "group": "owner-union",
+      "strictVisual": false,
+      "acceptance": "與 godie-ogrh.r 逐欄一致；角色模型差異不得改變光束尺寸、時序或傷害線。",
+      "activation": "active",
+      "designerPath": "preset-stack-plus-advanced-form",
+      "presetId": "beam",
+      "templateRefs": [],
+      "effectKinds": [
+        "damageLine",
+        "screenShake",
+        "spawnModelFx",
+        "spawnVfx"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": true,
+      "framebuffer": {
+        "batchStatus": "failed",
+        "frameCount": 1,
+        "audit": null,
+        "blockers": [
+          "Error: 局部紅／紫棋盤載體佔畫面 0.173%，疑似貼圖載入失敗或透明底板外露 @ 98ms；可疑載體：vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha | vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "FRAMEBUFFER_CARRIER",
+            "owner": "editor-then-main",
+            "summary": "實際 framebuffer 出現棋盤或不透明載體"
+          }
+        ]
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-e002.ex",
+      "name": "20-002 解放.約束勝利劍MAX",
+      "themeId": "chain:avalon-ex",
+      "group": "owner-union",
+      "strictVisual": true,
+      "acceptance": "只能由真反彈成功事件觸發；七斬逐擊有攻擊與受擊動作，最後才施放直線終結砲，禁止假 cast。",
+      "activation": "passive",
+      "designerPath": "preset-stack-plus-advanced-form",
+      "presetId": "reactive",
+      "templateRefs": [],
+      "effectKinds": [
+        "damage",
+        "damageLine",
+        "delayed",
+        "floatingText",
+        "screenFlash",
+        "screenShake",
+        "spawnVfx"
+      ],
+      "hookEvents": [
+        "onReflectSuccess"
+      ],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": true,
+      "framebuffer": {
+        "batchStatus": "captured",
+        "frameCount": 4,
+        "audit": {
+          "safe": true,
+          "autoVisualScore": 6.5,
+          "sampledFrames": 41,
+          "peakParticleCount": 108,
+          "peakSystemCount": 60,
+          "worstAtMs": 133.33333333333334,
+          "worst": {
+            "litShare": 0.012120162847309662,
+            "highlightShare": 0.001586502140518761,
+            "brightShare": 0.00010177956853857131,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.00001678838243935197,
+            "dominantNonBackgroundShare": 0.005850751280114161,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0.0017354990346680097,
+            "unsafe": false,
+            "reason": "透明／混合收據與同格剝離已定位格狀圖樣；不是未知載體，但玩家畫面仍須人工裁決"
+          },
+          "suspects": [
+            "vfx-ring · r/d=0.12 · vfx-ring-mat · 無貼圖",
+            "vfx-ring · r/d=0.12 · vfx-ring-mat · 無貼圖",
+            "vfx-ring · r/d=0.12 · vfx-ring-mat · 無貼圖",
+            "vfx-ring · r/d=0.12 · vfx-ring-mat · 無貼圖",
+            "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
+          ]
+        },
+        "blockers": [],
+        "humanVerdict": "fail",
+        "humanScore": 2,
+        "humanNote": "可見反擊斬擊動作與重複大月牙，但沒有清楚的Avalon反彈起點、逐刀節點與最後約束勝利劍光束。",
+        "machineIssues": []
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-e00l.r",
+      "name": "20-04 Avalon-永恆的理想鄉",
+      "themeId": "chain:avalon-ex",
+      "group": "owner-union",
+      "strictVisual": false,
+      "acceptance": "啟動兩秒反彈狀態；只反彈符合條件的承受傷害，每次成功只能送出一則反彈事件。",
+      "activation": "active",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "applyBuff",
+        "damage",
+        "screenFlash",
+        "screenShake",
+        "spawnModelFx",
+        "spawnVfx"
+      ],
+      "hookEvents": [
+        "onDamageTaken",
+        "onReflectSuccess"
+      ],
+      "customVfxTriggerCoverage": "partial",
+      "unsupportedHookTriggers": [
+        "onDamageTaken"
+      ],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "blocked",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [
+          "主動段可預覽，但下列被動／追加階段無法自訂時間軸：onDamageTaken"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "UNSUPPORTED_EVENT_BRICK",
+            "owner": "main",
+            "summary": "缺少可重用且帶來源資訊的 runtime 事件積木"
+          }
+        ]
+      },
+      "authoringBlockers": [
+        "VFX Forge 尚不能把自訂演出綁到 onDamageTaken"
+      ],
+      "status": "blocked"
+    },
+    {
+      "id": "godie-e00l.ex",
+      "name": "20-002 解放.約束勝利劍MAX",
+      "themeId": "chain:avalon-ex",
+      "group": "owner-union",
+      "strictVisual": false,
+      "acceptance": "承接 godie-e00l.r 的反彈事件並完整播放七斬與終結砲；與 godie-e002.ex 的差異必須可見。",
+      "activation": "passive",
+      "designerPath": "preset-stack-plus-advanced-form",
+      "presetId": "reactive",
+      "templateRefs": [],
+      "effectKinds": [
+        "damage",
+        "damageLine",
+        "delayed",
+        "floatingText",
+        "screenFlash",
+        "screenShake",
+        "spawnVfx"
+      ],
+      "hookEvents": [
+        "onReflectSuccess"
+      ],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": true,
+      "framebuffer": {
+        "batchStatus": "captured",
+        "frameCount": 2,
+        "audit": {
+          "safe": true,
+          "autoVisualScore": 9.5,
+          "sampledFrames": 29,
+          "peakParticleCount": 142,
+          "peakSystemCount": 55,
+          "worstAtMs": 0,
+          "worst": {
+            "litShare": 0.003318853353479392,
+            "highlightShare": 0.003231763619575254,
+            "brightShare": 0.0031677579115252244,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0029064887098128097,
+            "dominantNonBackgroundShare": 0.0029064887098128097,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0.00035990094854360783,
+            "unsafe": false,
+            "reason": "透明／混合收據與同格剝離已定位格狀圖樣；不是未知載體，但玩家畫面仍須人工裁決"
+          },
+          "suspects": [
+            "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-decal · r/d=0.07 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-decal · r/d=0.07 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
+          ]
+        },
+        "blockers": [],
+        "humanVerdict": "fail",
+        "humanScore": 1,
+        "humanNote": "只有藍色實心球形預告與一次貼身斬擊，缺少反擊鏈、連續斬擊及最終光束，幾何也像未完成的除錯形狀。",
+        "machineIssues": []
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-hvsh.r",
+      "name": "48-04 騎英之疆繩",
+      "themeId": "ability:godie-hvsh.r",
+      "group": "owner-union",
+      "strictVisual": true,
+      "acceptance": "飛馬載角色高速衝刺後接藍色橫向砲；角色位移、衝撞與光束不能脫節。",
+      "activation": "active",
+      "designerPath": "template-product",
+      "presetId": null,
+      "templateRefs": [
+        "tpl-single-strike"
+      ],
+      "effectKinds": [
+        "spawnModelFx"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "captured",
+        "frameCount": 4,
+        "audit": {
+          "safe": true,
+          "autoVisualScore": 2,
+          "sampledFrames": 44,
+          "peakParticleCount": 108,
+          "peakSystemCount": 16,
+          "worstAtMs": 999.9999999999991,
+          "worst": {
+            "litShare": 0.006151892890120037,
+            "highlightShare": 0.0031614622681104677,
+            "brightShare": 0.0013199865692940485,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.00029274741878619994,
+            "dominantNonBackgroundShare": 0.0013262822127088055,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0.003967304625199362,
+            "unsafe": false,
+            "reason": "透明／混合收據與同格剝離已定位格狀圖樣；不是未知載體，但玩家畫面仍須人工裁決"
+          },
+          "suspects": [
+            "telegraph-corridor · r/d=0.12 · telegraph-corridor-mat · 無貼圖",
+            "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "telegraph-fill · r/d=0.06 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
+            "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "telegraph-ring · r/d=0.05 · telegraph-ring · 無貼圖"
+          ]
+        },
+        "blockers": [],
+        "humanVerdict": "fail",
+        "humanScore": 2,
+        "humanNote": "有角色衝近與藍色速度線，但光束短、落在目標後方，缺少騎英之手綱的高速突進重量與貫穿終結。",
+        "machineIssues": [
+          {
+            "code": "PRESENTATION_ARTIFACT",
+            "owner": "editor",
+            "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面"
+          },
+          {
+            "code": "LOW_VISUAL_HYGIENE",
+            "owner": "editor",
+            "summary": "畫面雖可擷取，但時間軸／關鍵格最低清晰度只有 2/10"
+          }
+        ]
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-hvwd.e",
+      "name": "02-03 魂飛魄散",
+      "themeId": "ability:godie-hvwd.e",
+      "group": "owner-union",
+      "strictVisual": false,
+      "acceptance": "卡面描述為直線、模板卻是單體；Editor 必須標紅語意衝突，不能靜默通過。",
+      "activation": "active",
+      "designerPath": "template-product",
+      "presetId": "single-burst",
+      "templateRefs": [
+        "tpl-single-strike"
+      ],
+      "effectKinds": [],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "captured",
+        "frameCount": 2,
+        "audit": {
+          "safe": true,
+          "autoVisualScore": 10,
+          "sampledFrames": 31,
+          "peakParticleCount": 0,
+          "peakSystemCount": 9,
+          "worstAtMs": 0,
+          "worst": {
+            "litShare": 0,
+            "highlightShare": 0,
+            "brightShare": 0,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0,
+            "dominantNonBackgroundShare": 0,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "suspects": []
+        },
+        "blockers": [],
+        "humanVerdict": "fail",
+        "humanScore": 2,
+        "humanNote": "只有連線與紫色圓環等通用預告，缺少技能主體、角色施放動作和命中回饋，辨識度與力量感不足。",
+        "machineIssues": [
+          {
+            "code": "PRESENTATION_ARTIFACT",
+            "owner": "editor",
+            "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面"
+          }
+        ]
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-o00k.e",
+      "name": "86-03 神鳴",
+      "themeId": "ability:godie-o00k.e",
+      "group": "owner-union",
+      "strictVisual": false,
+      "acceptance": "卡面描述為前方直線、模板卻是瞬發範圍；Editor 必須顯示衝突並允許換成直線積木。",
+      "activation": "active",
+      "designerPath": "template-product",
+      "presetId": "instant-area",
+      "templateRefs": [
+        "tpl-instant-blast"
+      ],
+      "effectKinds": [],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "captured",
+        "frameCount": 2,
+        "audit": {
+          "safe": true,
+          "autoVisualScore": 9,
+          "sampledFrames": 31,
+          "peakParticleCount": 40,
+          "peakSystemCount": 9,
+          "worstAtMs": 1133.3333333333328,
+          "worst": {
+            "litShare": 0.02600415512465374,
+            "highlightShare": 0.009877864517753715,
+            "brightShare": 0.005972467052799463,
+            "nearWhiteShare": 0.0023860488541928987,
+            "dominantBrightShare": 0.002247544699068245,
+            "dominantNonBackgroundShare": 0.011878829849743977,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "suspects": [
+            "telegraph-fill · r/d=0.83 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
+            "telegraph-shock · r/d=0.63 · telegraph-shock · 無貼圖",
+            "telegraph-ring · r/d=0.63 · telegraph-ring · 無貼圖",
+            "vfx-ring · r/d=0.12 · vfx-ring-mat · 無貼圖",
+            "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
+          ]
+        },
+        "blockers": [],
+        "humanVerdict": "fail",
+        "humanScore": 1,
+        "humanNote": "巨大棕色圓環與黃綠幾何遮蔽主要畫面，技能方向、作用範圍和命中目標難以辨識。",
+        "machineIssues": [
+          {
+            "code": "PRESENTATION_ARTIFACT",
+            "owner": "editor",
+            "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面"
+          }
+        ]
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-hjai.w",
+      "name": "04-02 炸彈陣",
+      "themeId": "ability:godie-hjai.w",
+      "group": "owner-union",
+      "strictVisual": false,
+      "acceptance": "區域先持續五秒週期傷害，火柱消失後仍有殘留DoT；兩個持續階段不可合併。",
+      "activation": "active",
+      "designerPath": "template-product",
+      "presetId": "periodic-field",
+      "templateRefs": [
+        "tpl-periodic-field"
+      ],
+      "effectKinds": [],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "failed",
+        "frameCount": 1,
+        "audit": null,
+        "blockers": [
+          "Error: 局部紅／紫棋盤載體佔畫面 0.114%，疑似貼圖載入失敗或透明底板外露 @ 98ms"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "FRAMEBUFFER_CARRIER",
+            "owner": "editor-then-main",
+            "summary": "實際 framebuffer 出現棋盤或不透明載體"
+          }
+        ]
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-nbbc.w",
+      "name": "08-02 萊丁快速劍",
+      "themeId": "ability:godie-nbbc.w",
+      "group": "owner-union",
+      "strictVisual": false,
+      "acceptance": "鎖定目標後瞬移至身前斬擊，附近雷擊是第二個範圍效果，不得只留下單體傷害。",
+      "activation": "active",
+      "designerPath": "template-product",
+      "presetId": "blink-strike",
+      "templateRefs": [
+        "tpl-single-strike"
+      ],
+      "effectKinds": [
+        "blink",
+        "spawnVfx"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "captured",
+        "frameCount": 2,
+        "audit": {
+          "safe": true,
+          "autoVisualScore": 4,
+          "sampledFrames": 28,
+          "peakParticleCount": 132,
+          "peakSystemCount": 17,
+          "worstAtMs": 866.6666666666661,
+          "worst": {
+            "litShare": 0.0071172248803827755,
+            "highlightShare": 0.004188701418618316,
+            "brightShare": 0.0014920674892974061,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.000537228238059263,
+            "dominantNonBackgroundShare": 0.0005875933853773189,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0.003033450852010409,
+            "unsafe": false,
+            "reason": "透明／混合收據與同格剝離已定位格狀圖樣；不是未知載體，但玩家畫面仍須人工裁決"
+          },
+          "suspects": [
+            "telegraph-corridor · r/d=0.12 · telegraph-corridor-mat · 無貼圖",
+            "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "telegraph-fill · r/d=0.07 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
+            "vfx-ring · r/d=0.06 · vfx-ring-mat · 無貼圖",
+            "vfx-ring · r/d=0.06 · vfx-ring-mat · 無貼圖"
+          ]
+        },
+        "blockers": [],
+        "humanVerdict": "fail",
+        "humanScore": 0,
+        "humanNote": "鏡頭被多個巨大尖錐與色塊穿入，角色、敵人和技能路徑幾乎不可讀，屬於明顯視覺失敗。",
+        "machineIssues": []
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-u00v.r",
+      "name": "78-04 死亡噴射肘擊",
+      "themeId": "ability:godie-u00v.r",
+      "group": "owner-union",
+      "strictVisual": false,
+      "acceptance": "卡面寫飛奔、現況卻是 blink；重建時必須顯示差異並驗證衝鋒、撞擊、擊退與暈眩。",
+      "activation": "active",
+      "designerPath": "preset-stack-plus-advanced-form",
+      "presetId": "charge-push",
+      "templateRefs": [],
+      "effectKinds": [
+        "applyStatus",
+        "blink",
+        "damage",
+        "knockback",
+        "spawnVfx"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "captured",
+        "frameCount": 2,
+        "audit": {
+          "safe": true,
+          "autoVisualScore": 10,
+          "sampledFrames": 26,
+          "peakParticleCount": 80,
+          "peakSystemCount": 12,
+          "worstAtMs": 0,
+          "worst": {
+            "litShare": 0,
+            "highlightShare": 0,
+            "brightShare": 0,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0,
+            "dominantNonBackgroundShare": 0,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "suspects": []
+        },
+        "blockers": [],
+        "humanVerdict": "fail",
+        "humanScore": 0,
+        "humanNote": "巨大紅黑幾何穿入鏡頭並遮住場景，無法辨識施放動作、攻擊段落與命中結果。",
+        "machineIssues": []
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-hapm.w",
+      "name": "52-02 蹂躪編年史",
+      "themeId": "ability:godie-hapm.w",
+      "group": "owner-union",
+      "strictVisual": false,
+      "acceptance": "抓取、拋出及沿線碰撞分階段；狂怒時才追加恐懼，無敵窗不得超過動作。",
+      "activation": "active",
+      "designerPath": "preset-stack-plus-advanced-form",
+      "presetId": "leap",
+      "templateRefs": [],
+      "effectKinds": [
+        "applyStatus",
+        "damage",
+        "invulnerable",
+        "leap"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "blocked",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [
+          "施法者 godie-hapm 使用共用替身 champ.thorne"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "APPEARANCE_STAND_IN",
+            "owner": "main",
+            "summary": "角色仍使用替身外觀，不能當作技能視覺證據"
+          }
+        ]
+      },
+      "authoringBlockers": [],
+      "status": "blocked"
+    },
+    {
+      "id": "godie-e001.r",
+      "name": "22-04 雛見澤症候群L5",
+      "themeId": "ability:godie-e001.r",
+      "group": "owner-union",
+      "strictVisual": false,
+      "acceptance": "變身期間提高攻擊與移速並降低最大生命；結束後完整復原，不留下永久屬性。",
+      "activation": "active",
+      "designerPath": "preset-stack-plus-advanced-form",
+      "presetId": "self-buff",
+      "templateRefs": [],
+      "effectKinds": [
+        "applyBuff",
+        "championForm"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "captured",
+        "frameCount": 2,
+        "audit": {
+          "safe": true,
+          "autoVisualScore": 10,
+          "sampledFrames": 26,
+          "peakParticleCount": 0,
+          "peakSystemCount": 3,
+          "worstAtMs": 0,
+          "worst": {
+            "litShare": 0,
+            "highlightShare": 0,
+            "brightShare": 0,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0,
+            "dominantNonBackgroundShare": 0,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "suspects": []
+        },
+        "blockers": [],
+        "humanVerdict": "fail",
+        "humanScore": 3,
+        "humanNote": "可見角色攻擊動作與紅色爆發，但整體只是通用近戰爆點，缺少技能主題、段落差異與清楚的命中節奏。",
+        "machineIssues": [
+          {
+            "code": "PRESENTATION_ARTIFACT",
+            "owner": "editor",
+            "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面"
+          }
+        ]
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-e00s.w",
+      "name": "70-02 大怒石",
+      "themeId": "ability:godie-e00s.w",
+      "group": "owner-union",
+      "strictVisual": false,
+      "acceptance": "每次普攻觸發小範圍擴散，30/40/50/60%逐級正確；被動不得播放主動施法動作。",
+      "activation": "passive",
+      "designerPath": "preset-stack-plus-advanced-form",
+      "presetId": "on-attack",
+      "templateRefs": [],
+      "effectKinds": [
+        "damageArea"
+      ],
+      "hookEvents": [
+        "onBasicAttack"
+      ],
+      "customVfxTriggerCoverage": "partial",
+      "unsupportedHookTriggers": [
+        "onBasicAttack"
+      ],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "blocked",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [
+          "純被動的真正觸發點尚不能由 vfx-script@1 選取：onBasicAttack"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "UNSUPPORTED_EVENT_BRICK",
+            "owner": "main",
+            "summary": "缺少可重用且帶來源資訊的 runtime 事件積木"
+          }
+        ]
+      },
+      "authoringBlockers": [
+        "VFX Forge 尚不能把自訂演出綁到 onBasicAttack"
+      ],
+      "status": "blocked"
+    },
+    {
+      "id": "godie-etyr.r",
+      "name": "14-04 聖夜降臨",
+      "themeId": "ability:godie-etyr.r",
+      "group": "owner-union",
+      "strictVisual": false,
+      "acceptance": "召喚一個式神維持八秒，召喚瞬間另有範圍傷害；死亡及到期清理正確。",
+      "activation": "active",
+      "designerPath": "template-product",
+      "presetId": "summon",
+      "templateRefs": [
+        "tpl-summon-agent"
+      ],
+      "effectKinds": [
+        "damageArea"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "captured",
+        "frameCount": 2,
+        "audit": {
+          "safe": true,
+          "autoVisualScore": 9,
+          "sampledFrames": 26,
+          "peakParticleCount": 23,
+          "peakSystemCount": 23,
+          "worstAtMs": 666.6666666666665,
+          "worst": {
+            "litShare": 0.002601809954751131,
+            "highlightShare": 0.000483566207548108,
+            "brightShare": 0,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0000012431007906121028,
+            "dominantNonBackgroundShare": 0.0018696235890806026,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0.00042762667197056336,
+            "unsafe": false,
+            "reason": "透明／混合收據與同格剝離已定位呈現層異常；不是未知載體，但玩家畫面仍須人工裁決"
+          },
+          "suspects": [
+            "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "telegraph-fill · r/d=0.07 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
+            "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "telegraph-ring · r/d=0.05 · telegraph-ring · 無貼圖",
+            "vfx-ring · r/d=0.04 · vfx-ring-mat · 無貼圖"
+          ]
+        },
+        "blockers": [],
+        "humanVerdict": "fail",
+        "humanScore": 3,
+        "humanNote": "移除爆版呈現層後可見施法姿勢與黃白煙霧，但只剩通用爆點，沒有足以辨識聖夜降臨的主題、範圍與高潮。",
+        "machineIssues": [
+          {
+            "code": "PRESENTATION_ARTIFACT",
+            "owner": "editor",
+            "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面"
+          }
+        ]
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-ogld.ex",
+      "name": "72-002 億萬衛星殞落",
+      "themeId": "ability:godie-ogld.ex",
+      "group": "owner-union",
+      "strictVisual": false,
+      "acceptance": "三十秒內每秒一個隨機落點，共三十次；每顆分別判定範圍，不能全部疊在中心。",
+      "activation": "active",
+      "designerPath": "preset-stack-plus-advanced-form",
+      "presetId": "barrage",
+      "templateRefs": [],
+      "effectKinds": [
+        "damageArea",
+        "randomArea"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "blocked",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [
+          "施法者 godie-ogld 使用共用替身 champ.sela"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "APPEARANCE_STAND_IN",
+            "owner": "main",
+            "summary": "角色仍使用替身外觀，不能當作技能視覺證據"
+          }
+        ]
+      },
+      "authoringBlockers": [],
+      "status": "blocked"
+    },
+    {
+      "id": "godie-udea.r",
+      "name": "65-04 天譴",
+      "themeId": "ability:godie-udea.r",
+      "group": "owner-union",
+      "strictVisual": false,
+      "acceptance": "最多二十個起點各開獨立連鎖，每鏈最多十六次且每跳剩九成；逐擊燒魔並對最近目標追加傷害。",
+      "activation": "active",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "chainLightning",
+        "damageArea",
+        "spendMana"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": true,
+      "framebuffer": {
+        "batchStatus": "blocked",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [
+          "施法者 godie-udea 使用共用替身 champ.thorne"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "APPEARANCE_STAND_IN",
+            "owner": "main",
+            "summary": "角色仍使用替身外觀，不能當作技能視覺證據"
+          }
+        ]
+      },
+      "authoringBlockers": [],
+      "status": "blocked"
+    },
+    {
+      "id": "godie-h01n.r",
+      "name": "79-04 卍解",
+      "themeId": "ability:godie-h01n.r",
+      "group": "owner-union",
+      "strictVisual": false,
+      "acceptance": "變身提高攻速且只縮短瞬步冷卻50%；八秒結束後外觀與冷卻規則一起恢復。",
+      "activation": "active",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "applyBuff",
+        "championForm",
+        "modifyCooldown"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "captured",
+        "frameCount": 2,
+        "audit": {
+          "safe": true,
+          "autoVisualScore": 10,
+          "sampledFrames": 26,
+          "peakParticleCount": 0,
+          "peakSystemCount": 3,
+          "worstAtMs": 0,
+          "worst": {
+            "litShare": 0,
+            "highlightShare": 0,
+            "brightShare": 0,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0,
+            "dominantNonBackgroundShare": 0,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "suspects": []
+        },
+        "blockers": [],
+        "humanVerdict": "fail",
+        "humanScore": 4,
+        "humanNote": "角色姿態與紫色煙霧讓變身可辨識，但前後狀態差異、力量提升與卍解主題仍不足以達到可交付品質。",
+        "machineIssues": [
+          {
+            "code": "PRESENTATION_ARTIFACT",
+            "owner": "editor",
+            "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面"
+          }
+        ]
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-h00l.r",
+      "name": "60-04 完美盾反",
+      "themeId": "ability:godie-h00l.r",
+      "group": "owner-union",
+      "strictVisual": false,
+      "acceptance": "三秒內反彈AD與AP；只有成功反彈技能AP傷害才回復並擊退，防禦動作只播放一次。",
+      "activation": "active",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "applyBuff",
+        "damage",
+        "damageArea",
+        "knockback",
+        "restore"
+      ],
+      "hookEvents": [
+        "onDamageTaken",
+        "onReflectSuccess"
+      ],
+      "customVfxTriggerCoverage": "partial",
+      "unsupportedHookTriggers": [
+        "onDamageTaken"
+      ],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "blocked",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [
+          "主動段可預覽，但下列被動／追加階段無法自訂時間軸：onDamageTaken"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "UNSUPPORTED_EVENT_BRICK",
+            "owner": "main",
+            "summary": "缺少可重用且帶來源資訊的 runtime 事件積木"
+          }
+        ]
+      },
+      "authoringBlockers": [
+        "VFX Forge 尚不能把自訂演出綁到 onDamageTaken"
+      ],
+      "status": "blocked"
+    },
+    {
+      "id": "godie-hvsh.e",
+      "name": "48-03 鮮血神殿",
+      "themeId": "ability:godie-hvsh.e",
+      "group": "runtime-coverage",
+      "strictVisual": false,
+      "acceptance": "領域逐秒傷害與雙減速；每名受害者各回復1%最大生命，累計擊殺十四人才永久增加全能力。",
+      "activation": "active",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "applyBuff",
+        "applyStatus",
+        "damageArea",
+        "grantAttribute",
+        "heal"
+      ],
+      "hookEvents": [
+        "onInterval",
+        "onKill"
+      ],
+      "customVfxTriggerCoverage": "partial",
+      "unsupportedHookTriggers": [
+        "onInterval",
+        "onKill"
+      ],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "blocked",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [
+          "主動段可預覽，但下列被動／追加階段無法自訂時間軸：onInterval、onKill"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "UNSUPPORTED_EVENT_BRICK",
+            "owner": "main",
+            "summary": "缺少可重用且帶來源資訊的 runtime 事件積木"
+          }
+        ]
+      },
+      "authoringBlockers": [
+        "VFX Forge 尚不能把自訂演出綁到 onInterval、onKill"
+      ],
+      "status": "blocked"
+    },
+    {
+      "id": "godie-n00b.passive",
+      "name": "57-00 四次元口袋",
+      "themeId": "ability:godie-n00b.passive",
+      "group": "runtime-coverage",
+      "strictVisual": false,
+      "acceptance": "55/30/15權重只選一支分支；金錢、回復或限時增益完成後再嘲諷附近敵人。",
+      "activation": "active",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "applyBuff",
+        "grantGold",
+        "restore",
+        "spawnVfx",
+        "taunt",
+        "weightedBranch"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "blocked",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [
+          "施法者 godie-n00b 使用共用替身 champ.sela"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "APPEARANCE_STAND_IN",
+            "owner": "main",
+            "summary": "角色仍使用替身外觀，不能當作技能視覺證據"
+          }
+        ]
+      },
+      "authoringBlockers": [],
+      "status": "blocked"
+    },
+    {
+      "id": "godie-e00r.ex",
+      "name": "59-001 完全暴走",
+      "themeId": "ability:godie-e00r.ex",
+      "group": "runtime-coverage",
+      "strictVisual": false,
+      "acceptance": "受傷後才檢查生命門檻；觸發時驅散負面並套用暴走、吸血、迴避、攻速上限與免疫，禁止假 cast。",
+      "activation": "passive",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "applyBuff",
+        "applyStatus",
+        "delayed",
+        "dispel",
+        "invulnerable",
+        "spawnVfx"
+      ],
+      "hookEvents": [
+        "onDamageTaken",
+        "onInterval"
+      ],
+      "customVfxTriggerCoverage": "partial",
+      "unsupportedHookTriggers": [
+        "onDamageTaken",
+        "onInterval"
+      ],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "blocked",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [
+          "純被動的真正觸發點尚不能由 vfx-script@1 選取：onDamageTaken、onInterval"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "UNSUPPORTED_EVENT_BRICK",
+            "owner": "main",
+            "summary": "缺少可重用且帶來源資訊的 runtime 事件積木"
+          }
+        ]
+      },
+      "authoringBlockers": [
+        "VFX Forge 尚不能把自訂演出綁到 onDamageTaken、onInterval"
+      ],
+      "status": "blocked"
+    },
+    {
+      "id": "godie-e00s.ex",
+      "name": "70-002 樹海降臨",
+      "themeId": "ability:godie-e00s.ex",
+      "group": "runtime-coverage",
+      "strictVisual": false,
+      "acceptance": "只有施放千年練成才觸發追加傷害與友軍治療；施放其他技能不得發動。",
+      "activation": "passive",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "restore",
+        "weightedBranch"
+      ],
+      "hookEvents": [
+        "onAbilityCast"
+      ],
+      "customVfxTriggerCoverage": "partial",
+      "unsupportedHookTriggers": [
+        "onAbilityCast"
+      ],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "blocked",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [
+          "純被動的真正觸發點尚不能由 vfx-script@1 選取：onAbilityCast"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "UNSUPPORTED_EVENT_BRICK",
+            "owner": "main",
+            "summary": "缺少可重用且帶來源資訊的 runtime 事件積木"
+          }
+        ]
+      },
+      "authoringBlockers": [
+        "VFX Forge 尚不能把自訂演出綁到 onAbilityCast"
+      ],
+      "status": "blocked"
+    },
+    {
+      "id": "godie-e00w.passive",
+      "name": "77-00 浮雲-旋一閃",
+      "themeId": "ability:godie-e00w.passive",
+      "group": "runtime-coverage",
+      "strictVisual": false,
+      "acceptance": "只有成功迴避物理攻擊才旋轉反擊；未迴避不得播放，範圍傷害、暈眩與動作同點發生。",
+      "activation": "passive",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "applyStatus",
+        "damageArea"
+      ],
+      "hookEvents": [
+        "onEvade"
+      ],
+      "customVfxTriggerCoverage": "partial",
+      "unsupportedHookTriggers": [
+        "onEvade"
+      ],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "blocked",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [
+          "純被動的真正觸發點尚不能由 vfx-script@1 選取：onEvade"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "UNSUPPORTED_EVENT_BRICK",
+            "owner": "main",
+            "summary": "缺少可重用且帶來源資訊的 runtime 事件積木"
+          }
+        ]
+      },
+      "authoringBlockers": [
+        "VFX Forge 尚不能把自訂演出綁到 onEvade"
+      ],
+      "status": "blocked"
+    },
+    {
+      "id": "godie-edem.r",
+      "name": "45-04 哥哥",
+      "themeId": "ability:godie-edem.r",
+      "group": "runtime-coverage",
+      "strictVisual": false,
+      "acceptance": "只有千鳥命中帶燃燒標記的敵人才引發麒麟；缺少任一條件都不得觸發。",
+      "activation": "passive",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "damageArea"
+      ],
+      "hookEvents": [
+        "onAbilityHit"
+      ],
+      "customVfxTriggerCoverage": "partial",
+      "unsupportedHookTriggers": [
+        "onAbilityHit"
+      ],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "blocked",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [
+          "純被動的真正觸發點尚不能由 vfx-script@1 選取：onAbilityHit"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "UNSUPPORTED_EVENT_BRICK",
+            "owner": "main",
+            "summary": "缺少可重用且帶來源資訊的 runtime 事件積木"
+          }
+        ]
+      },
+      "authoringBlockers": [
+        "VFX Forge 尚不能把自訂演出綁到 onAbilityHit"
+      ],
+      "status": "blocked"
+    },
+    {
+      "id": "godie-emfr.e",
+      "name": "15-03 獄炎煉我",
+      "themeId": "ability:godie-emfr.e",
+      "group": "runtime-coverage",
+      "strictVisual": false,
+      "acceptance": "變身期間普攻附火傷、技能命中引發範圍爆炎及燃燒，並承受移速減半；事件來源不能互相誤觸。",
+      "activation": "active",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "applyBuff",
+        "applyStatus",
+        "damage",
+        "damageArea",
+        "spawnModelFx"
+      ],
+      "hookEvents": [
+        "onBasicAttack",
+        "onDamageDealt"
+      ],
+      "customVfxTriggerCoverage": "partial",
+      "unsupportedHookTriggers": [
+        "onBasicAttack",
+        "onDamageDealt"
+      ],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "blocked",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [
+          "主動段可預覽，但下列被動／追加階段無法自訂時間軸：onBasicAttack、onDamageDealt"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "UNSUPPORTED_EVENT_BRICK",
+            "owner": "main",
+            "summary": "缺少可重用且帶來源資訊的 runtime 事件積木"
+          }
+        ]
+      },
+      "authoringBlockers": [
+        "VFX Forge 尚不能把自訂演出綁到 onBasicAttack、onDamageDealt"
+      ],
+      "status": "blocked"
+    },
+    {
+      "id": "godie-nbbc.passive",
+      "name": "08-00 龍紋記憶",
+      "themeId": "ability:godie-nbbc.passive",
+      "group": "runtime-coverage",
+      "strictVisual": false,
+      "acceptance": "只有被暈眩時覺醒三秒，三屬性增加100%；再次暈眩只刷新，不得疊成四倍或八倍。",
+      "activation": "passive",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "grantAttribute",
+        "spawnVfx"
+      ],
+      "hookEvents": [
+        "onStunned"
+      ],
+      "customVfxTriggerCoverage": "partial",
+      "unsupportedHookTriggers": [
+        "onStunned"
+      ],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "blocked",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [
+          "純被動的真正觸發點尚不能由 vfx-script@1 選取：onStunned"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "UNSUPPORTED_EVENT_BRICK",
+            "owner": "main",
+            "summary": "缺少可重用且帶來源資訊的 runtime 事件積木"
+          }
+        ]
+      },
+      "authoringBlockers": [
+        "VFX Forge 尚不能把自訂演出綁到 onStunned"
+      ],
+      "status": "blocked"
+    },
+    {
+      "id": "godie-e00l.passive",
+      "name": "20-00 銀色甲胄",
+      "themeId": "ability:godie-e00l.passive",
+      "group": "runtime-coverage",
+      "strictVisual": false,
+      "acceptance": "魔力高於30%才有機率產生減傷盾；耗盾順序與等級係數正確，並揭露和新版內容的差異。",
+      "activation": "passive",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "shield"
+      ],
+      "hookEvents": [
+        "onDamageTaken"
+      ],
+      "customVfxTriggerCoverage": "partial",
+      "unsupportedHookTriggers": [
+        "onDamageTaken"
+      ],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "blocked",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [
+          "純被動的真正觸發點尚不能由 vfx-script@1 選取：onDamageTaken"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "UNSUPPORTED_EVENT_BRICK",
+            "owner": "main",
+            "summary": "缺少可重用且帶來源資訊的 runtime 事件積木"
+          }
+        ]
+      },
+      "authoringBlockers": [
+        "VFX Forge 尚不能把自訂演出綁到 onDamageTaken"
+      ],
+      "status": "blocked"
+    },
+    {
+      "id": "godie-e00r.q",
+      "name": "59-01 吞噬",
+      "themeId": "ability:godie-e00r.q",
+      "group": "runtime-coverage",
+      "strictVisual": false,
+      "acceptance": "自動找最近且低於3/5/7/9%生命的敵人處決並回復；暴走門檻加倍，不耗魔也不需要按鍵。",
+      "activation": "passive",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "applyStatus",
+        "devour"
+      ],
+      "hookEvents": [
+        "onInterval"
+      ],
+      "customVfxTriggerCoverage": "partial",
+      "unsupportedHookTriggers": [
+        "onInterval"
+      ],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "blocked",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [
+          "純被動的真正觸發點尚不能由 vfx-script@1 選取：onInterval"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "UNSUPPORTED_EVENT_BRICK",
+            "owner": "main",
+            "summary": "缺少可重用且帶來源資訊的 runtime 事件積木"
+          }
+        ]
+      },
+      "authoringBlockers": [
+        "VFX Forge 尚不能把自訂演出綁到 onInterval"
+      ],
+      "status": "blocked"
+    },
+    {
+      "id": "godie-e00s.r",
+      "name": "70-04 千年練成",
+      "themeId": "ability:godie-e00s.r",
+      "group": "runtime-coverage",
+      "strictVisual": false,
+      "acceptance": "隨機生成4/6/8棵樹精，每棵出生各造成範圍傷害；定身時傷害加倍，八秒後完整清除。",
+      "activation": "active",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "damageArea",
+        "randomArea",
+        "spawnVfx",
+        "summon"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "blocked",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [
+          "施法者 godie-e00s 使用共用替身 champ.sela"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "APPEARANCE_STAND_IN",
+            "owner": "main",
+            "summary": "角色仍使用替身外觀，不能當作技能視覺證據"
+          }
+        ]
+      },
+      "authoringBlockers": [],
+      "status": "blocked"
+    },
+    {
+      "id": "godie-h02k.ex",
+      "name": "89-002 俄羅斯輪盤",
+      "themeId": "ability:godie-h02k.ex",
+      "group": "runtime-coverage",
+      "strictVisual": false,
+      "acceptance": "一般、致盲、混亂使用各自權重；目標死、自身死、恐懼只能命中一支分支，即死只對英雄成立。",
+      "activation": "active",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "applyStatus",
+        "damage",
+        "weightedBranch"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "blocked",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [
+          "施法者 godie-h02k 使用共用替身 champ.skin.barbarian"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "APPEARANCE_STAND_IN",
+            "owner": "main",
+            "summary": "角色仍使用替身外觀，不能當作技能視覺證據"
+          }
+        ]
+      },
+      "authoringBlockers": [],
+      "status": "blocked"
+    },
+    {
+      "id": "godie-edem.e",
+      "name": "45-03 千鳥",
+      "themeId": "ability:godie-edem.e",
+      "group": "runtime-coverage",
+      "strictVisual": false,
+      "acceptance": "角色沿直線衝刺且沿途敵人受傷；位移距離與傷害線一致，不能退化成瞬移或終點爆炸。",
+      "activation": "active",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "damageLine",
+        "dash",
+        "spawnModelFx"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "captured",
+        "frameCount": 1,
+        "audit": {
+          "safe": true,
+          "autoVisualScore": 9,
+          "sampledFrames": 17,
+          "peakParticleCount": 196,
+          "peakSystemCount": 13,
+          "worstAtMs": 66.66666666666667,
+          "worst": {
+            "litShare": 0.026281163434903047,
+            "highlightShare": 0.009870519600436499,
+            "brightShare": 0.008320742046503819,
+            "nearWhiteShare": 0.0067143037018383275,
+            "dominantBrightShare": 0.006691219675984219,
+            "dominantNonBackgroundShare": 0.014754889616385462,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "suspects": [
+            "telegraph-corridor · r/d=0.54 · telegraph-corridor-mat · 無貼圖",
+            "telegraph-corridor · r/d=0.43 · telegraph-corridor-mat · 無貼圖",
+            "vfx-decal · r/d=0.07 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-decal · r/d=0.05 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-ring · r/d=0.04 · vfx-ring-mat · 無貼圖"
+          ]
+        },
+        "blockers": [],
+        "humanVerdict": "fail",
+        "humanScore": 1,
+        "humanNote": "畫面由長條邊框、鋸齒綠線和遠端光紋構成，作用方向雖可猜測但像除錯幾何，缺少自然的技能演出。",
+        "machineIssues": []
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-edem.ex",
+      "name": "45-002 天照",
+      "themeId": "ability:godie-edem.ex",
+      "group": "runtime-coverage",
+      "strictVisual": false,
+      "acceptance": "大範圍持續十秒逐秒燃燒，沉默與攻擊力降低40%同時存在並準時結束。",
+      "activation": "active",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "applyBuff",
+        "applyStatus",
+        "damageArea",
+        "dot",
+        "spawnModelFx"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "captured",
+        "frameCount": 2,
+        "audit": {
+          "safe": true,
+          "autoVisualScore": 10,
+          "sampledFrames": 31,
+          "peakParticleCount": 0,
+          "peakSystemCount": 15,
+          "worstAtMs": 0,
+          "worst": {
+            "litShare": 0,
+            "highlightShare": 0,
+            "brightShare": 0,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0,
+            "dominantNonBackgroundShare": 0,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "suspects": []
+        },
+        "blockers": [],
+        "humanVerdict": "fail",
+        "humanScore": 3,
+        "humanNote": "可見近身紫色煙霧與角色反應，但效果過於通用，沒有清楚呈現EX技能的專屬機制與高潮。",
+        "machineIssues": [
+          {
+            "code": "PRESENTATION_ARTIFACT",
+            "owner": "editor",
+            "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面"
+          }
+        ]
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-efur.passive",
+      "name": "13-00 念。攻防轉換",
+      "themeId": "ability:godie-efur.passive",
+      "group": "runtime-coverage",
+      "strictVisual": false,
+      "acceptance": "每次普攻按AP、AD、防禦、魔抗循環；各自維持一秒且可並存，但順序不得錯亂。",
+      "activation": "passive",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "cycleBuff"
+      ],
+      "hookEvents": [
+        "onBasicAttack"
+      ],
+      "customVfxTriggerCoverage": "partial",
+      "unsupportedHookTriggers": [
+        "onBasicAttack"
+      ],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "blocked",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [
+          "純被動的真正觸發點尚不能由 vfx-script@1 選取：onBasicAttack"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "UNSUPPORTED_EVENT_BRICK",
+            "owner": "main",
+            "summary": "缺少可重用且帶來源資訊的 runtime 事件積木"
+          }
+        ]
+      },
+      "authoringBlockers": [
+        "VFX Forge 尚不能把自訂演出綁到 onBasicAttack"
+      ],
+      "status": "blocked"
+    },
+    {
+      "id": "godie-emfr.ex",
+      "name": "15-002 敵彈吸收陣。太陰道",
+      "themeId": "ability:godie-emfr.ex",
+      "group": "runtime-coverage",
+      "strictVisual": false,
+      "acceptance": "反彈100%魔法傷害並將事件值轉為MP與暫時AP；多次成功可累加，五秒後完整歸零。",
+      "activation": "active",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "applyBuff",
+        "damage",
+        "eventValueConversion",
+        "spawnModelFx"
+      ],
+      "hookEvents": [
+        "onDamageTaken",
+        "onReflectSuccess"
+      ],
+      "customVfxTriggerCoverage": "partial",
+      "unsupportedHookTriggers": [
+        "onDamageTaken"
+      ],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "blocked",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [
+          "主動段可預覽，但下列被動／追加階段無法自訂時間軸：onDamageTaken"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "UNSUPPORTED_EVENT_BRICK",
+            "owner": "main",
+            "summary": "缺少可重用且帶來源資訊的 runtime 事件積木"
+          }
+        ]
+      },
+      "authoringBlockers": [
+        "VFX Forge 尚不能把自訂演出綁到 onDamageTaken"
+      ],
+      "status": "blocked"
+    },
+    {
+      "id": "godie-emns.ex",
+      "name": "44-002 交換筆記本",
+      "themeId": "ability:godie-emns.ex",
+      "group": "runtime-coverage",
+      "strictVisual": false,
+      "acceptance": "交換雙方現存生命而非最大生命或傷害；死亡邊界、無效目標及交換順序正確。",
+      "activation": "active",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "swapResource"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "captured",
+        "frameCount": 2,
+        "audit": {
+          "safe": true,
+          "autoVisualScore": 10,
+          "sampledFrames": 31,
+          "peakParticleCount": 0,
+          "peakSystemCount": 3,
+          "worstAtMs": 0,
+          "worst": {
+            "litShare": 0,
+            "highlightShare": 0,
+            "brightShare": 0,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0,
+            "dominantNonBackgroundShare": 0,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "suspects": []
+        },
+        "blockers": [],
+        "humanVerdict": "fail",
+        "humanScore": 1,
+        "humanNote": "角色材質整體過曝成白色，僅有通用紫色煙圈；交換目標、交換結果與技能因果都不清楚。",
+        "machineIssues": [
+          {
+            "code": "PRESENTATION_ARTIFACT",
+            "owner": "editor",
+            "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面"
+          }
+        ]
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-emns.passive",
+      "name": "44-00 機警",
+      "themeId": "ability:godie-emns.passive",
+      "group": "runtime-coverage",
+      "strictVisual": false,
+      "acceptance": "傷害先由魔力屏障以1MP抵3傷害，魔力不足才進生命；被動不得顯示或播放主動施法。",
+      "activation": "active",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "manaBarrier"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "captured",
+        "frameCount": 2,
+        "audit": {
+          "safe": true,
+          "autoVisualScore": 10,
+          "sampledFrames": 20,
+          "peakParticleCount": 0,
+          "peakSystemCount": 3,
+          "worstAtMs": 0,
+          "worst": {
+            "litShare": 0,
+            "highlightShare": 0,
+            "brightShare": 0,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0,
+            "dominantNonBackgroundShare": 0,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "suspects": []
+        },
+        "blockers": [],
+        "humanVerdict": "pass",
+        "humanScore": 6,
+        "humanNote": "沒有替純被動偽造施法動作；紅色警示與紫色閃避殘影能表達觸發和迴避，達到基本可讀標準，但角色材質仍偏白。",
+        "machineIssues": [
+          {
+            "code": "PRESENTATION_ARTIFACT",
+            "owner": "editor",
+            "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面"
+          }
+        ]
+      },
+      "authoringBlockers": [],
+      "status": "pass"
+    },
+    {
+      "id": "godie-h01u.r",
+      "name": "80-04 赤兔咆哮",
+      "themeId": "ability:godie-h01u.r",
+      "group": "runtime-coverage",
+      "strictVisual": false,
+      "acceptance": "AP與AD暫升150/200/250%；普攻與受傷各20%機率代理施放弒鬼神，同一事件不得重複代理。",
+      "activation": "active",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "applyBuff",
+        "proxyCast",
+        "spawnVfx"
+      ],
+      "hookEvents": [
+        "onBasicAttack",
+        "onDamageTaken"
+      ],
+      "customVfxTriggerCoverage": "partial",
+      "unsupportedHookTriggers": [
+        "onBasicAttack",
+        "onDamageTaken"
+      ],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "blocked",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [
+          "主動段可預覽，但下列被動／追加階段無法自訂時間軸：onBasicAttack、onDamageTaken"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "UNSUPPORTED_EVENT_BRICK",
+            "owner": "main",
+            "summary": "缺少可重用且帶來源資訊的 runtime 事件積木"
+          }
+        ]
+      },
+      "authoringBlockers": [
+        "VFX Forge 尚不能把自訂演出綁到 onBasicAttack、onDamageTaken"
+      ],
+      "status": "blocked"
+    },
+    {
+      "id": "godie-h02u.ex",
+      "name": "92-002 最終戈壁",
+      "themeId": "ability:godie-h02u.ex",
+      "group": "runtime-coverage",
+      "strictVisual": false,
+      "acceptance": "六秒內每秒準時增加75經驗，共六次；不得因幀率多發、漏發或在排程結束後殘留。",
+      "activation": "active",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "applyBuff",
+        "delayed",
+        "grantXp"
+      ],
+      "hookEvents": [],
+      "customVfxTriggerCoverage": "complete",
+      "unsupportedHookTriggers": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "captured",
+        "frameCount": 2,
+        "audit": {
+          "safe": true,
+          "autoVisualScore": 8.5,
+          "sampledFrames": 120,
+          "peakParticleCount": 48,
+          "peakSystemCount": 3,
+          "worstAtMs": 1133.3333333333328,
+          "worst": {
+            "litShare": 0.025691164039580328,
+            "highlightShare": 0.018221371388792203,
+            "brightShare": 0.010831137188603252,
+            "nearWhiteShare": 0.000034806822137138876,
+            "dominantBrightShare": 0.0019044304112177416,
+            "dominantNonBackgroundShare": 0.0027870319725523344,
+            "localWhiteCardShare": 0,
+            "diagnosticCheckerShare": 0,
+            "unsafe": false
+          },
+          "suspects": [
+            "telegraph-fill · r/d=0.06 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
+            "telegraph-ring · r/d=0.05 · telegraph-ring · 無貼圖",
+            "telegraph-shock · r/d=0.05 · telegraph-shock · 無貼圖"
+          ]
+        },
+        "blockers": [],
+        "humanVerdict": "fail",
+        "humanScore": 4,
+        "humanNote": "其中一格可清楚看到目標變成白羊，變身機制可辨識；但另一格幾乎只剩灰底與白點，關鍵格品質不一致，未達整組通過。",
+        "machineIssues": [
+          {
+            "code": "PRESENTATION_ARTIFACT",
+            "owner": "editor",
+            "summary": "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面"
+          }
+        ]
+      },
+      "authoringBlockers": [],
+      "status": "fail"
+    },
+    {
+      "id": "godie-hapm.q",
+      "name": "52-01 狂戰士之怒",
+      "themeId": "ability:godie-hapm.q",
+      "group": "runtime-coverage",
+      "strictVisual": false,
+      "acceptance": "攻速與吸血依四級提升；每承受5%最大生命傷害延長兩秒，同一門檻只能延長一次。",
+      "activation": "active",
+      "designerPath": "advanced-no-code-effect-form",
+      "presetId": null,
+      "templateRefs": [],
+      "effectKinds": [
+        "applyBuff",
+        "extendBuff"
+      ],
+      "hookEvents": [
+        "onDamageTaken"
+      ],
+      "customVfxTriggerCoverage": "partial",
+      "unsupportedHookTriggers": [
+        "onDamageTaken"
+      ],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "blocked",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [
+          "主動段可預覽，但下列被動／追加階段無法自訂時間軸：onDamageTaken",
+          "施法者 godie-hapm 使用共用替身 champ.thorne"
+        ],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [
+          {
+            "code": "APPEARANCE_STAND_IN",
+            "owner": "main",
+            "summary": "角色仍使用替身外觀，不能當作技能視覺證據"
+          },
+          {
+            "code": "UNSUPPORTED_EVENT_BRICK",
+            "owner": "main",
+            "summary": "缺少可重用且帶來源資訊的 runtime 事件積木"
+          }
+        ]
+      },
+      "authoringBlockers": [
+        "VFX Forge 尚不能把自訂演出綁到 onDamageTaken"
+      ],
+      "status": "blocked"
+    }
+  ]
+}

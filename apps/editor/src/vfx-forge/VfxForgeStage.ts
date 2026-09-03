@@ -142,6 +142,8 @@ export interface VfxVisualEvidenceFrame {
   dataUrl: string;
   atMs: number;
   view: "side" | "top";
+  /** Failure evidence only; never eligible for approval or Promote. */
+  diagnosticOnly?: boolean;
   /** Exact keyframe readback; timeline sampling alone can skip a one-frame bad carrier. */
   frameAudit: BackdropFrameAudit;
 }
@@ -251,7 +253,6 @@ export class VfxForgeStage {
   private readonly runtimeVfx: VfxSystem | null;
   private readonly canvas: HTMLCanvasElement;
   private readonly assetRefsVerifiedSafe: boolean;
-  private lastBackdropAudit: BackdropTimelineAudit | null = null;
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -414,6 +415,13 @@ export class VfxForgeStage {
       await this.loadActor(actors.caster);
       await this.loadActor(actors.target);
     })();
+    // An imperative batch audit can arrive in the render/effect gap after the
+    // Stage exists but before React's setContent effect runs. Leaving the
+    // default Promise.resolve() here allowed that first audit to photograph
+    // the target's coloured collision capsule while actorReady was still
+    // loading. The constructor snapshot is already valid content, so its
+    // minimum readiness latch must include both actors and the ground.
+    this.contentReady = Promise.all([this.groundReady, this.actorReady]).then(() => undefined);
   }
 
   get timeMs(): number {
@@ -426,7 +434,6 @@ export class VfxForgeStage {
     schedule: readonly ScheduledSimEvent[],
   ): Promise<boolean> {
     const seq = ++this.prepareSeq;
-    this.lastBackdropAudit = null;
     this.script = script;
     this.ability = ability;
     this.schedule = schedule;
@@ -599,11 +606,7 @@ export class VfxForgeStage {
    */
   async captureVisualEvidence(label: string): Promise<VfxVisualEvidenceFrame> {
     await this.contentReady;
-    if (this.visualAssetIssues.size > 0) {
-      throw new Error(
-        `3D 預覽完整性未通過，禁止建立視覺證據：${[...this.visualAssetIssues].join("；")}`,
-      );
-    }
+    this.assertActorsReadyForEvidence();
     await this.waitForSceneReadyBounded();
     await this.waitForVisibleGroundDecalTextures();
     this.renderScene();
@@ -613,58 +616,48 @@ export class VfxForgeStage {
     const rgba = (await this.engine.readPixels(0, 0, width, height)) as Uint8Array;
     let frameAudit = auditBackdropFrame(rgba, width, height);
     if (frameAudit.unsafe) {
-      // A ground-target telegraph is real scene geometry, not a texture
-      // carrier. Some shipped warning patterns intentionally contain small
-      // red/magenta blocks and resemble the missing-texture diagnostic. Prove
-      // the distinction on this exact frame: remove only Telegraph, read the
-      // same framebuffer again, then replay so the evidence image still shows
-      // the truthful targeting shape. Any carrier that survives the A/B stays
-      // blocked.
+      // A same-frame Telegraph A/B separates a broken texture carrier from a
+      // receipted but visually grid-like targeting pattern. The latter remains
+      // visible in the evidence and receives a high-severity art issue; only a
+      // carrier that survives removal is a technical framebuffer blocker.
       const captureAtMs = this.nowMs;
+      const telegraphGridCandidate = frameAudit.diagnosticCheckerShare > 0;
+      let withoutTelegraph: BackdropFrameAudit;
+      let withoutVerifiedLayers: BackdropFrameAudit | null = null;
       this.runtimeVfx?.telegraphs228.clear();
       this.renderScene();
       this.renderScene();
-      const withoutTelegraph = auditBackdropFrame(
+      withoutTelegraph = auditBackdropFrame(
         (await this.engine.readPixels(0, 0, width, height)) as Uint8Array,
         width,
         height,
       );
-      const withoutVerifiedLayers = withoutTelegraph.unsafe
-        ? await this.auditWithoutVerifiedPresentationLayers(async () => {
-            this.renderScene();
-            this.renderScene();
-            return auditBackdropFrame(
-              (await this.engine.readPixels(0, 0, width, height)) as Uint8Array,
-              width,
-              height,
-            );
-          })
-        : null;
-      const verifiedControl = withoutTelegraph.unsafe ? withoutVerifiedLayers : withoutTelegraph;
-      if (withoutTelegraph.unsafe && (withoutVerifiedLayers?.unsafe ?? true) && !(
-        frameAudit.reason?.includes("棋盤") &&
-        this.assetRefsVerifiedSafe &&
-        this.lastBackdropAudit?.safe === true
-      )) {
+      if (withoutTelegraph.unsafe) {
+        withoutVerifiedLayers = await this.auditWithoutVerifiedPresentationLayers(async () => {
+          this.renderScene();
+          this.renderScene();
+          return auditBackdropFrame(
+            (await this.engine.readPixels(0, 0, width, height)) as Uint8Array,
+            width,
+            height,
+          );
+        });
+      }
+      if (withoutTelegraph.unsafe && withoutVerifiedLayers?.unsafe !== false) {
+        const suspects = this.backdropMeshSuspects();
         this.replayTo(captureAtMs, false);
-        throw new Error(frameAudit.reason ?? "目前關鍵格含有不安全的貼圖底板");
+        throw new Error(
+          `${frameAudit.reason ?? "目前關鍵格含有不安全的貼圖底板"} @ ${captureAtMs}ms` +
+          (suspects.length > 0 ? `；可疑載體：${suspects.join(" | ")}` : ""),
+        );
       }
       frameAudit = {
         ...frameAudit,
-        // The A/B control proved these two carrier-specific heuristics came
-        // from a receipted Telegraph/decal/particle layer rather than an
-        // opaque texture card. Preserve the truthful exposure measurements
-        // from the visible frame, but do not let a disproved checker/card
-        // signal collapse the reviewer-facing hygiene score to 0/10.
-        ...(verifiedControl?.unsafe === false ? {
-          localWhiteCardShare: verifiedControl.localWhiteCardShare,
-          diagnosticCheckerShare: verifiedControl.diagnosticCheckerShare,
-        } : {}),
         unsafe: false,
         reason: withoutTelegraph.unsafe
-          ? (withoutVerifiedLayers?.unsafe === false
-              ? "Main 已驗證演出層通過素材收據／同格剝離；未檢出底板"
-              : "整段 GPU 底板稽核已通過；本格紅色安全粒子的棋盤啟發式誤判已排除")
+          ? "透明／混合收據與同格剝離已定位呈現層異常；不是未知載體，但玩家畫面仍須人工裁決"
+          : telegraphGridCandidate
+          ? "Telegraph 格狀圖樣已通過同格剝離；不是遺失貼圖，但玩家畫面仍須人工裁決"
           : "施法範圍 Telegraph 已通過同格剝離驗證；素材層未檢出底板",
       };
       this.replayTo(captureAtMs, false);
@@ -684,6 +677,51 @@ export class VfxForgeStage {
       dataUrl,
       atMs: Math.round(this.nowMs),
       view: this.sideReviewView ? "side" : "top",
+      frameAudit,
+    };
+  }
+
+  /** Deterministic batch-proof entrypoint: seek, let the GPU present, capture. */
+  async captureVisualEvidenceAt(atMs: number, label: string): Promise<VfxVisualEvidenceFrame> {
+    this.seek(Math.max(0, atMs));
+    await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+    return this.captureVisualEvidence(label);
+  }
+
+  /**
+   * Capture the exact failed framebuffer without weakening the approval gate.
+   *
+   * The ordinary evidence method must throw on an unsafe carrier or unresolved
+   * actor.  A 46-case batch still needs the bad pixels as durable evidence, so
+   * this diagnostic-only path waits for all bounded loaders, renders the live
+   * scene and records the same audit fields without claiming review eligibility.
+   */
+  async captureDiagnosticEvidenceAt(atMs: number, label: string): Promise<VfxVisualEvidenceFrame> {
+    await Promise.allSettled([this.contentReady, this.actorReady, this.groundReady]);
+    const exactMs = Math.max(0, atMs);
+    // Do not use public seek() here: its cold-GPU primer intentionally commits
+    // the authoritative replay from a later timer. A diagnostic capture could
+    // therefore photograph the primer frame instead of audit.worstAtMs.
+    this.replayTo(exactMs, false);
+    await this.waitForVisibleGroundDecalTextures();
+    this.replayTo(exactMs, false);
+    await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+    this.renderScene();
+    this.renderScene();
+    const width = this.engine.getRenderWidth();
+    const height = this.engine.getRenderHeight();
+    const rgba = (await this.engine.readPixels(0, 0, width, height)) as Uint8Array;
+    const frameAudit = auditBackdropFrame(rgba, width, height);
+    const dataUrl = this.canvas.toDataURL("image/webp", 0.82);
+    if (!dataUrl.startsWith("data:image/webp;base64,")) {
+      throw new Error("瀏覽器無法產生 WebP 診斷畫面");
+    }
+    return {
+      label: label.trim() || `${(this.nowMs / 1000).toFixed(3)}秒 · 失敗診斷`,
+      dataUrl,
+      atMs: Math.round(this.nowMs),
+      view: this.sideReviewView ? "side" : "top",
+      diagnosticOnly: true,
       frameAudit,
     };
   }
@@ -750,6 +788,7 @@ export class VfxForgeStage {
     this.mode = "runtime";
     try {
       await this.contentReady;
+      this.assertActorsReadyForEvidence();
       await this.preloadRuntimeAssets(this.ability);
       await this.groundReady;
       await this.waitForSceneReadyBounded();
@@ -816,24 +855,24 @@ export class VfxForgeStage {
         );
         peakSystemCount = Math.max(peakSystemCount, this.scene.particleSystems.length);
         if (result.unsafe) {
-          // Diagnostic A/B on the exact failed frame. This does not excuse a
-          // texture carrier: only an unsafe result that disappears after
-          // removing Telegraph is classified as legitimate targeting geometry.
+          // Distinguish a Telegraph-owned grid from a carrier that survives
+          // the A/B. Preserve the original checker ratio so the batch report
+          // never turns a visually objectionable pattern into a clean score.
           const frameAtMs = this.nowMs;
+          const telegraphGridCandidate = result.diagnosticCheckerShare > 0;
           this.runtimeVfx?.telegraphs228.clear();
           const withoutTelegraph = await read();
           const withoutVerifiedLayers = withoutTelegraph.unsafe
             ? await this.auditWithoutVerifiedPresentationLayers(read)
             : null;
           if (!withoutTelegraph.unsafe || withoutVerifiedLayers?.unsafe === false) {
-            const verifiedControl = withoutTelegraph.unsafe ? withoutVerifiedLayers! : withoutTelegraph;
             result = {
               ...result,
-              localWhiteCardShare: verifiedControl.localWhiteCardShare,
-              diagnosticCheckerShare: verifiedControl.diagnosticCheckerShare,
               unsafe: false,
               reason: withoutTelegraph.unsafe
-                ? "Main 已驗證演出層通過素材收據／同格剝離；素材層未檢出底板"
+                ? "透明／混合收據與同格剝離已定位呈現層異常；不是未知載體，但玩家畫面仍須人工裁決"
+                : telegraphGridCandidate
+                ? "Telegraph 格狀圖樣已通過同格剝離；不是遺失貼圖，但玩家畫面仍須人工裁決"
                 : "施法範圍 Telegraph 已通過同格剝離驗證；素材層未檢出底板",
             };
             this.replayTo(frameAtMs, false);
@@ -868,7 +907,6 @@ export class VfxForgeStage {
         worst,
         suspects,
       };
-      this.lastBackdropAudit = audit;
       return audit;
     } finally {
       this.mode = restoreMode;
@@ -877,11 +915,11 @@ export class VfxForgeStage {
   }
 
   /**
-   * Receipted decals, procedural rings, and additive particles can resemble
-   * the missing-texture checker heuristic.
-   * They are excused only when every visible Main decal has a decoded alpha
-   * texture and removing exactly those meshes makes the same frame clean.
-   * An opaque, pending or missing texture therefore remains a hard failure.
+   * Separate asset safety from art direction on the exact failed frame.
+   * Decals must have a decoded alpha texture, procedural rings must stay
+   * textureless, and particles are removable only after the exact draft refs
+   * passed AssetSafetyGate. If removing those layers does not clear the frame,
+   * an opaque model/material carrier remains and the proof stays blocked.
    */
   private async auditWithoutVerifiedPresentationLayers(
     read: () => Promise<BackdropFrameAudit>,
@@ -900,11 +938,8 @@ export class VfxForgeStage {
       const material = mesh.material;
       if (!(material instanceof StandardMaterial)) return false;
       const texture = material.diffuseTexture;
-      return texture !== null && texture.isReady() && texture.hasAlpha;
+      return texture !== null && texture.isReady() && texture.hasAlpha && material.useAlphaFromDiffuseTexture;
     });
-    // `vfx-ring` and ChampionView's identity rings are Main's procedural
-    // torus/line primitives. They are safe only while textureless; adding a
-    // texture turns them back into ordinary carriers for the framebuffer gate.
     const verifiedRings = rings.every((mesh) => (mesh.material?.getActiveTextures().length ?? 0) === 0);
     const verifiedParticles = activeParticles.length === 0 || (
       this.assetRefsVerifiedSafe && activeParticles.every((system) => system.particleTexture?.isReady() === true)
@@ -1177,6 +1212,13 @@ export class VfxForgeStage {
         return;
       }
       if (!visibility.visible) {
+        const retryIssue = `${champion.name} · ${appearance.modelKey} 3D 模型在真實 framebuffer 僅改變 ${visibility.changedPixels} 像素`;
+        if (this.onColdAssetRetry?.(actor.role)) {
+          this.visualAssetIssues.add(`${retryIssue}，正在執行一次冷載入重試`);
+          this.actorStatus[actor.role] = `↻ ${retryIssue}，重建預覽場景…`;
+          this.emitOverlay("3D 模型冷載入重試中，暫停視覺驗收");
+          return;
+        }
         // Do not replace a missing model with an optimistic fake.  The coloured
         // capsule is an explicitly marked interaction fallback, while the
         // source issue prevents visual evidence from becoming reviewable.
@@ -1783,6 +1825,28 @@ export class VfxForgeStage {
    */
   private async waitForSceneReadyBounded(): Promise<void> {
     if (!this.disposed && !this.scene.isDisposed) await this.renderWarmupFrames(2);
+  }
+
+  /**
+   * A coloured capsule is an interaction fallback, never review evidence.
+   * Batch capture previously checked the issue set before actorReady settled;
+   * a later fallback could therefore be photographed and reported as a clean
+   * character animation. Recheck the live presentation after contentReady.
+   */
+  private assertActorsReadyForEvidence(): void {
+    if (this.visualAssetIssues.size > 0) {
+      throw new Error(
+        `3D 預覽完整性未通過，禁止建立視覺證據：${[...this.visualAssetIssues].join("；")}`,
+      );
+    }
+    const fallbackActors = Object.values(this.actors)
+      .filter((actor) => actor.champion && (
+        actor.fallbackForced || actor.bodyRoot === null || actor.fallback.isEnabled()
+      ))
+      .map((actor) => `${actor.role === "caster" ? "施法者" : "目標"} ${actor.champion!.id}`);
+    if (fallbackActors.length > 0) {
+      throw new Error(`3D 預覽仍顯示碰撞替身，禁止建立視覺證據：${fallbackActors.join("、")}`);
+    }
   }
 
   private casterEntityId(): number | undefined {

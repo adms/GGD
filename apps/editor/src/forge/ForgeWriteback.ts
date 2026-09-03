@@ -75,10 +75,31 @@ function dropsFor(before: Record<string, unknown>, after: Record<string, unknown
 export interface ForgePlanStep {
   readonly collection: "abilities" | "champions";
   readonly id: string;
-  readonly reason: "edit" | "mirror";
+  readonly reason: "create" | "edit" | "mirror";
   /** human line for the confirm dialog */
   readonly label: string;
   readonly changes: readonly DocChange[];
+}
+
+/** Build the same reviewable plan for a brand-new standalone ability. */
+export function planForgeCreate(
+  after: Record<string, unknown>,
+  templates: ReadonlyMap<string, TemplateDoc>,
+  extraBlockers: readonly string[] = [],
+): ForgePlan {
+  const id = String(after["id"] ?? "");
+  return {
+    steps: [{
+      collection: "abilities",
+      id,
+      reason: "create",
+      label: `建立 abilities/${id}`,
+      changes: diffDocs({}, after),
+    }],
+    abilityPatch: { ...after },
+    mirror: null,
+    blockers: [...extraBlockers, ...templateWriteBlockers(after, templates)],
+  };
 }
 
 export interface ForgePlan {
@@ -218,6 +239,30 @@ export function planForgeWrite(
 export interface ForgeSaveResult {
   readonly wrote: readonly string[];
   readonly contentVersion: string;
+}
+
+/**
+ * Create a new local ability atomically enough for the local authoring flow:
+ * validate the complete document, POST with create-only semantics, then rebuild
+ * indexes once. POST returning 409 is the final duplicate-id race guard.
+ */
+export async function runForgeCreate(
+  after: Record<string, unknown>,
+  templates: ReadonlyMap<string, TemplateDoc>,
+): Promise<ForgeSaveResult> {
+  if (!WRITES_ENABLED) {
+    throw new Error("此組建為唯讀（正式版不含 content-api），無法建立技能");
+  }
+  const blockers = templateWriteBlockers(after, templates);
+  if (blockers.length > 0) throw new Error(`拒絕建立：${blockers.join("；")}`);
+  const id = String(after["id"] ?? "");
+  await api.validate("abilities", id, after);
+  const created = await api.create("abilities", id, after);
+  const rebuilt = await api.rebuild();
+  return {
+    wrote: [`abilities/${id}`],
+    contentVersion: rebuilt.contentVersion || created.contentVersion,
+  };
 }
 
 /**

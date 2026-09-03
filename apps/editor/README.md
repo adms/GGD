@@ -22,7 +22,14 @@ updates browser history, and Back/Forward restores the matching screen.
 
 ## Authoring surfaces
 
-- **鑄技工坊** — visual template-product stack, drag-and-drop ordering,
+- **鑄技工坊** — creates a new standalone local `ability@1` from a designer
+  skill-type recipe or edits an existing skill. New Q/W/E skills are seeded at
+  four ranks and R at three; mana, cooldown, range and every other displayed
+  tier value come from Main's shipped resolver/config rather than Editor
+  constants. Recipes live in machine-readable `skill-type-recipes.json`, combine
+  existing template bricks, and use the selected champion's live origin/stat
+  normalization only to rank recommendations—nothing is hidden or forced.
+  The studio provides a visual template-product stack, drag-and-drop ordering,
   structured condition leaves, bounded controls, undo/redo, and a scrub/play
   timeline built from real `SimWorld` events. Its preview now shares the VFX
   Forge's shipped `CameraRig`, arena ground, dual champion GLBs and real
@@ -84,6 +91,23 @@ updates browser history, and Back/Forward restores the matching screen.
   registered content collections. Bounded numbers render sliders and references
   use content indexes.
 
+## Main / Editor boundary
+
+Main manufactures reusable bricks: authoritative gameplay events, schemas,
+runtime behaviour, model/VFX primitives, resolver rules, asset safety and
+machine-readable receipts. Editor composes those bricks into finished skills:
+skill-type recipes, effect-template product stacks, timelines, character
+actions, colour, camera, drag/drop authoring, visual evidence and iterative
+review. A named acceptance skill is evidence that the Editor can compose the
+grammar; it is not a request for Main to hand-author that finished scene.
+
+If a design cannot be represented, Editor fails closed and requests the
+smallest reusable primitive or event contract. It does not approximate the
+mechanic, duplicate the renderer, or ask Main to tune a particular skill's
+timeline. All authoring remains ordinary JSON controlled through no-code UI;
+AI may propose a composition, but the same visual review and human approval
+gate applies before production use.
+
 ## Source ownership and writes
 
 Before changing a content path, use `bash scripts/genguard.sh <path>`.
@@ -144,8 +168,8 @@ cache entries fail closed instead of entering the preview. Older profiles withou
 the receipt may still load JSON, but remote binary fetching remains disabled and
 the desktop source status reports that compatibility state.
 
-Last verified 2026-09-02 13:22 CST, the feature branch contains
-`origin/main@29f8628f` (including tag `v0.35.15` at `7d032d9c`). Treat this as a receipt rather than a
+Last verified 2026-09-03 19:38 CST, the feature branch contains
+`origin/main@ea0d6098` (tag `v0.36.4`). Treat this as a receipt rather than a
 permanent constant: fetch Main and compare the live ref before making a current
 compatibility claim. Live and repository profile digests likewise remain
 volatile receipts and are never compiled into the Editor as constants.
@@ -156,9 +180,9 @@ The branch does not use the old `required = 546` count as a constant. Current
 generated truth is:
 
 ```text
-editor coverage fingerprint     71b5be5a4f57
-capability fingerprint          111434fa
-required cells                  4943
+editor coverage fingerprint     ba67b7759c0d
+capability fingerprint          18d7999e
+required cells                  5117
 ```
 
 The count includes `vfx-script@1`, the complete nested visual-document surface,
@@ -170,6 +194,11 @@ coverage JSON.
 Run the authoritative checks from the repository root:
 
 ```bash
+pnpm editor:accept          # compact deterministic loop
+pnpm editor:accept:visual   # + texture/alpha and stored framebuffer evidence
+pnpm editor:accept:release  # + full Editor tests, typecheck and build
+
+# Individual underlying gates, when diagnosing one layer:
 pnpm caps:check
 npx vitest run packages/shared/src/ops/editorCoverageFresh.test.ts
 pnpm --filter @ggd/editor typecheck
@@ -246,7 +275,7 @@ existing trigger.
 ## Feature branch handoff
 
 Implementation lives on `feat/vfx-forge-codex`, containing Main through the
-last verified receipt `origin/main@29f8628f` (including tag `v0.35.15` at `7d032d9c`); the feature-branch
+last verified receipt `origin/main@ea0d6098` (tag `v0.36.4`); the feature-branch
 tip is the only current Editor revision. It is intentionally not merged or
 pushed to `main`. Main should use
 `docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md` as a reference

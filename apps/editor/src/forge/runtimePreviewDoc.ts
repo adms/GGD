@@ -3,6 +3,8 @@ import {
   mergeExpansion,
   type ExpandResult,
 } from "@ggd/shared/content/templates/expand";
+import { resolveRuntimeDraft } from "./resolveRuntimeDraft";
+import type { RuntimeResolverConfigDocs } from "./skillTierCatalog";
 
 const VISUAL_FIELDS = ["vfxKey", "vfxLayers"] as const;
 
@@ -22,11 +24,13 @@ export function runtimePreviewDoc(
   registeredDoc: Readonly<Record<string, unknown>>,
   expansion: ExpandResult,
   binding: AbilityTemplateBinding,
+  templates: ReadonlyMap<string, import("@ggd/shared/content").TemplateDoc>,
+  configs: RuntimeResolverConfigDocs,
 ): Record<string, unknown> {
   const merged = mergeExpansion({ ...registeredDoc, template: binding }, expansion);
   for (const field of VISUAL_FIELDS) {
     if (authoringDoc[field] === undefined) delete merged[field];
     else merged[field] = authoringDoc[field];
   }
-  return merged;
+  return resolveRuntimeDraft(merged, templates, configs);
 }

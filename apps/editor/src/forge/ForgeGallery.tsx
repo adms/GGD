@@ -19,7 +19,15 @@ import {
   FORGE_TIER_LABELS,
   rankSkillTypes,
   type SkillTypePreset,
+  type StatNormalizationRecommendationDoc,
 } from "./skillTypePresets";
+import {
+  CAPABILITY_ONLY_CONDITION_KINDS,
+  CAPABILITY_ONLY_EFFECT_KINDS,
+  CAPABILITY_ONLY_HOOK_EVENTS,
+  SKILL_ACCEPTANCE_CANDIDATES,
+  SKILL_ACCEPTANCE_THEME_IDS,
+} from "./skillAcceptanceCatalog";
 
 async function fetchTemplates(): Promise<TemplateDoc[]> {
   const index = await api.index("ability-templates");
@@ -55,6 +63,11 @@ export function ForgeGallery({
     queryFn: fetchTemplates,
   });
   const championQuery = useChampionDocs();
+  const statNormalizationQuery = useQuery({
+    queryKey: ["forge", "stat-normalization"],
+    queryFn: () => api.doc<StatNormalizationRecommendationDoc>("config", "stat-normalization"),
+    staleTime: 60_000,
+  });
 
   if (error) {
     return <p className="error">模板索引讀取失敗 — content-api 有在跑嗎？</p>;
@@ -71,7 +84,11 @@ export function ForgeGallery({
   const selectedChampion = championQuery.champions.find((champion) => champion.id === championId) ?? null;
   const selectedOrigin = selectedChampion ? originOf(selectedChampion) : null;
   const templatesById = new Map(data.map((template) => [template.id, template]));
-  const rankedTypes = rankSkillTypes(selectedOrigin, new Set(enabled.map((template) => template.id)));
+  const rankedTypes = rankSkillTypes(
+    selectedOrigin,
+    new Set(enabled.map((template) => template.id)),
+    statNormalizationQuery.data,
+  );
 
   return (
     <div className="forge-gallery">
@@ -107,6 +124,9 @@ export function ForgeGallery({
           </label>
         </div>
         {championQuery.error ? <p className="error">角色資料讀取失敗：{championQuery.error.message}</p> : null}
+        {selectedOrigin && statNormalizationQuery.error ? (
+          <p className="error">出身推薦資料讀取失敗；保留全部手動選項，不顯示推測推薦。</p>
+        ) : null}
         {selectedChampion ? (
           <p className="forge-origin-summary">
             <b>{selectedChampion.name}</b> · 出身 <b>{selectedOrigin}</b>
@@ -115,7 +135,7 @@ export function ForgeGallery({
           </p>
         ) : null}
         <div className="forge-type-grid">
-          {rankedTypes.map(({ preset, recommendationRank, available }) => {
+          {rankedTypes.map(({ preset, recommendationRank, recommendationReasons, available }) => {
             const seed = templatesById.get(preset.templateIds[0] ?? "");
             const tiers = Object.entries(preset.tierDefaults)
               .map(([axis, tier]) => `${FORGE_TIER_LABELS[axis as keyof typeof FORGE_TIER_LABELS]} ${tier}`)
@@ -135,6 +155,11 @@ export function ForgeGallery({
                 <span>{preset.summary}</span>
                 <small>積木：{preset.templateIds.map((id) => templatesById.get(id)?.name ?? id).join(" ＋ ")}</small>
                 <small>預設：{tiers || "沿用技能現值"}</small>
+                {recommendationRank ? (
+                  <small className="forge-recommend-reason">
+                    依主程式出身表：{recommendationReasons.join("・")}
+                  </small>
+                ) : null}
                 {!available ? <small className="error">目前缺少必要積木</small> : null}
               </button>
             );
@@ -174,7 +199,59 @@ export function ForgeGallery({
         ))}
         {visibleDrafts.length === 0 ? <p className="forge-empty">沒有符合的規劃中模板。</p> : null}
       </div>
+
+      <AcceptanceCatalog />
     </div>
+  );
+}
+
+function AcceptanceCatalog() {
+  const owner = SKILL_ACCEPTANCE_CANDIDATES.filter((row) => row.group === "owner-union");
+  const coverage = SKILL_ACCEPTANCE_CANDIDATES.filter((row) => row.group === "runtime-coverage");
+  const capabilityOnly = [
+    ...CAPABILITY_ONLY_EFFECT_KINDS.map((id) => `effect:${id}`),
+    ...CAPABILITY_ONLY_HOOK_EVENTS.map((id) => `hook:${id}`),
+    ...CAPABILITY_ONLY_CONDITION_KINDS.map((id) => `condition:${id}`),
+  ];
+  return (
+    <details className="forge-acceptance-catalog">
+      <summary>
+        自我驗收目錄 · {SKILL_ACCEPTANCE_THEME_IDS.size} 個技能主題／{SKILL_ACCEPTANCE_CANDIDATES.length} 份實際技能 JSON
+      </summary>
+      <p>
+        前 {owner.length} 份是 Owner 聯集與視覺代表；另 {coverage.length} 份補齊目前內容真的使用到的
+        effect／hook／condition。清單只拿現役技能作重建基準，不直接改回遊戲內容。
+      </p>
+      <div className="forge-acceptance-groups">
+        <AcceptanceRows title="Owner 聯集與代表情境" rows={owner} />
+        <AcceptanceRows title="Runtime 覆蓋補集" rows={coverage} />
+      </div>
+      <p className="forge-capability-only">
+        <b>仍須合成 fixture 驗證的已出貨積木：</b>{capabilityOnly.join(" · ")}
+      </p>
+    </details>
+  );
+}
+
+function AcceptanceRows({
+  title,
+  rows,
+}: {
+  title: string;
+  rows: readonly (typeof SKILL_ACCEPTANCE_CANDIDATES)[number][];
+}) {
+  return (
+    <section>
+      <h3>{title} <span className="forge-count">{rows.length}</span></h3>
+      <ol>
+        {rows.map((row) => (
+          <li key={row.id}>
+            <code>{row.id}</code> <b>{row.name}</b>
+            <span>{row.acceptance}</span>
+          </li>
+        ))}
+      </ol>
+    </section>
   );
 }
 

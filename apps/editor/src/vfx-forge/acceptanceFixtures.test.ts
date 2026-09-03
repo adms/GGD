@@ -40,6 +40,24 @@ const kinds = <K extends VfxScriptSegment["kind"]>(id: typeof IDS[number], kind:
   segs(id).filter((s): s is Extract<VfxScriptSegment, { kind: K }> => s.kind === kind);
 
 describe("八招 Editor-only VFX Forge 視覺文法", () => {
+  it("批次驗收隔離八招 fixture，不把既有 runtime 美術疊在玩家積木成品下方", () => {
+    const page = readFileSync(new URL("./VfxForgePage.tsx", import.meta.url), "utf8");
+    expect(page).toContain('row.vfxFixture ? "script" : "runtime"');
+    expect(page).toContain("captureDiagnosticEvidenceAt");
+    expect(page).toContain('issueClassifier: "ggd-editor-visual-issue-rules@1"');
+    expect(page).toContain('BASIC_VISUAL_REVIEW_STORAGE = "ggd-editor-basic-visual-human-review@1"');
+    expect(page).toContain("stored.fingerprint !== basicVisualEvidenceFingerprint(result.frames)");
+    expect(page).toContain("↻ 只重跑技術失敗");
+    expect(page).toContain("↻ 只重跑未通過");
+    expect(page).toContain("↻ 重跑此項");
+    expect(page).toContain("retryBasicVisualCases(new Set([row.id])");
+    expect(page).toContain("寫入本機驗收器");
+    expect(page).toContain('<details className="vfx-basic-batch" open>');
+    expect(page).toContain("sendBasicVisualProofToLoopback");
+    expect(page).toContain('sink.hostname !== "127.0.0.1"');
+    expect(page).toContain('row.status === "failed" || row.humanVerdict === "fail"');
+  });
+
   it("每招都符合角色動作／時間軸節點／單一主斬擊原則", () => {
     for (const id of IDS) {
       const ability = loadJson("abilities", id);

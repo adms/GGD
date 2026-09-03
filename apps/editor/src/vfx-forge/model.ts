@@ -24,9 +24,12 @@ export interface ForgeAbility {
   id: string;
   name?: string;
   slot?: string;
+  castType?: string;
   castTimeSec?: number;
   effects?: unknown[];
   passive?: unknown;
+  vfxKey?: string;
+  vfxLayers?: { vfxKey?: string }[];
 }
 
 export type ForgeReactionTrigger = "reflectSuccess";

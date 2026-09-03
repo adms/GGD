@@ -170,6 +170,19 @@ export interface ReactionPreviewTrace {
  */
 export const CAST_PREVIEW_TICKS = 30;
 
+/**
+ * Long enough for authored cast time plus delayed/combo/projectile tails.
+ * Both Forge surfaces use this one policy so one cannot silently stop after
+ * the first combo beat while the other shows the complete move.
+ */
+export const CAST_PREVIEW_TAIL_SEC = 20;
+export function castPreviewTicksFor(
+  ability: Pick<AbilityDef, "castTimeSec">,
+  tailSec = CAST_PREVIEW_TAIL_SEC,
+): number {
+  return Math.ceil((Math.max(0, ability.castTimeSec ?? 0) + Math.max(0, tailSec)) * 30);
+}
+
 export interface PreviewController {
   /** attach the (future) Babylon canvas; renderless impl records the intent */
   mount(canvas: HTMLCanvasElement | null): void;
@@ -306,7 +319,10 @@ function castTargetFor(
 }
 
 /** Find a castable shipped ability that can actually create reflected damage. */
-function reflectEnablerSlot(champion: ChampionDef): CoreAbilitySlot | null {
+function reflectEnablerSlot(
+  champion: ChampionDef,
+  reacting?: AbilityDef,
+): CoreAbilitySlot | "EX" | null {
   const containsIncomingReflect = (value: unknown): boolean => {
     if (Array.isArray(value)) return value.some(containsIncomingReflect);
     if (value === null || typeof value !== "object") return false;
@@ -314,6 +330,10 @@ function reflectEnablerSlot(champion: ChampionDef): CoreAbilitySlot | null {
     if (record["kind"] === "damage" && record["incomingPct"] !== undefined) return true;
     return Object.values(record).some(containsIncomingReflect);
   };
+  // Some authored EX abilities both install the reflection window and react to
+  // its success (for example 敵彈吸收陣。太陰道). They must cast their own EX
+  // as setup; searching only Q/W/E/R incorrectly reports no-reflect-enabler.
+  if (reacting?.slot === "EX" && containsIncomingReflect(reacting.effects)) return "EX";
   for (const slot of ["Q", "W", "E", "R"] as const) {
     if (containsIncomingReflect(champion.abilities[slot].effects)) return slot;
   }
@@ -1180,6 +1200,12 @@ export function createSimPreviewController(): PreviewController {
       const hp = sb.world.health.get(sb.id)!;
       const ab = sb.world.abilities.get(sb.id)!;
 
+      // EX is unlocked rather than ranked.  The preview previously documented
+      // that distinction but forgot to perform the real unlock, so every
+      // active EX in the 42x46 batch was rejected as `not-learned`.  Use the
+      // shipped learnEx path; never patch the instance rank directly.
+      if (slot === "EX" && ab.exSlot?.rank === 0) learnEx(sb.world, sb.id);
+
       // 點階。⛔ 不直接寫 `inst.rank` —— 那會跳過 `rankUpAbility` 自己的規則
       // （上限、EX 的解鎖、技能點）。這裡補的是**技能點**，因為預覽要試的是
       // 「這一發放不放得出去」，不是「這個等級買不買得起」。
@@ -1290,12 +1316,13 @@ export function createSimPreviewController(): PreviewController {
         return fail("ex-unlock-failed");
       }
 
-      const setupSlot = reflectEnablerSlot(champion);
+      const setupSlot = reflectEnablerSlot(champion, reacting);
       if (setupSlot === null) return fail("no-reflect-enabler");
-      const setupDef = champion.abilities[setupSlot];
-      const setupInst = ab.slots[setupSlot];
+      const setupDef = setupSlot === "EX" ? reacting : champion.abilities[setupSlot];
+      const setupInst = setupSlot === "EX" ? ab.exSlot : ab.slots[setupSlot];
+      if (!setupDef || !setupInst) return fail("reflect-setup-missing");
       const wantRank = Math.max(1, opts?.rank ?? 1);
-      while (setupInst.rank < wantRank) {
+      while (setupSlot !== "EX" && setupInst.rank < wantRank) {
         ab.unspentPoints = Math.max(ab.unspentPoints, 1);
         if (!rankUpAbility(sb.world, sb.id, setupSlot)) break;
       }

@@ -16,8 +16,26 @@ export const TIER_CONFIG_IDS = [
   "move-speed-tiers",
 ] as const;
 
+/**
+ * Configs consumed when an authoring draft is turned into the exact runtime
+ * shape used by Sim. The last three do not render a five-tier selector, but
+ * they are still required to resolve combo rhythm, per-rank growth and the
+ * collision-safe displacement ceiling. Keep this list data-fetch only: the
+ * actual resolver order lives in `resolveRuntimeDraft.ts`.
+ */
+export const RUNTIME_RESOLVER_CONFIG_IDS = [
+  ...TIER_CONFIG_IDS,
+  "combo-strikes",
+  "rank-growth",
+  "arena-rules",
+] as const;
+
 export type TierConfigId = (typeof TIER_CONFIG_IDS)[number];
 export type TierConfigDocs = Readonly<Partial<Record<TierConfigId, JsonDoc>>>;
+export type RuntimeResolverConfigId = (typeof RUNTIME_RESOLVER_CONFIG_IDS)[number];
+export type RuntimeResolverConfigDocs = Readonly<
+  Partial<Record<RuntimeResolverConfigId, JsonDoc>>
+>;
 
 export function tierValuesFor(
   axis: ForgeTierAxis,

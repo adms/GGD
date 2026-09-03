@@ -9,6 +9,7 @@ import {
   SKILL_TYPE_PRESETS,
   cardsForSkillType,
   rankSkillTypes,
+  type StatNormalizationRecommendationDoc,
 } from "./skillTypePresets";
 import { TIER_CONFIG_IDS, tierValuesFor, type TierConfigDocs } from "./skillTierCatalog";
 
@@ -23,6 +24,9 @@ const templates = new Map(
 );
 const enabled = new Set(
   [...templates.values()].filter((doc) => doc.status === "enabled").map((doc) => doc.id),
+);
+const statNormalization = readJson<StatNormalizationRecommendationDoc>(
+  join(REPO, "content/config/stat-normalization.json"),
 );
 
 describe("鑄技工坊技能類型", () => {
@@ -47,9 +51,10 @@ describe("鑄技工坊技能類型", () => {
 
   it("十種出身都有推薦第一名，但仍保留全部手動選項", () => {
     for (const origin of ORIGINS) {
-      const ranked = rankSkillTypes(origin, enabled);
+      const ranked = rankSkillTypes(origin, enabled, statNormalization);
       expect(ranked).toHaveLength(SKILL_TYPE_PRESETS.length);
       expect(ranked[0]?.recommendationRank, origin).toBe(1);
+      expect(ranked.slice(0, 3).every((row) => row.recommendationReasons.length > 0), origin).toBe(true);
       expect(new Set(ranked.map((row) => row.preset.id))).toEqual(
         new Set(SKILL_TYPE_PRESETS.map((row) => row.id)),
       );
@@ -57,9 +62,15 @@ describe("鑄技工坊技能類型", () => {
   });
 
   it("不同出身真的改變排序，而不是只換一個推薦標籤", () => {
-    expect(rankSkillTypes("法師", enabled)[0]?.preset.id).not.toBe(
-      rankSkillTypes("鬥士", enabled)[0]?.preset.id,
+    expect(rankSkillTypes("法師", enabled, statNormalization)[0]?.preset.id).not.toBe(
+      rankSkillTypes("鬥士", enabled, statNormalization)[0]?.preset.id,
     );
+  });
+
+  it("推薦資料缺失時 fail closed，不假裝有出身推薦但仍保留選項", () => {
+    const ranked = rankSkillTypes("法師", enabled, null);
+    expect(ranked.every((row) => row.recommendationRank === null)).toBe(true);
+    expect(ranked).toHaveLength(SKILL_TYPE_PRESETS.length);
   });
 });
 

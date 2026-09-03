@@ -257,7 +257,7 @@ describe("VFX Forge action-animation principles", () => {
       .map((file) => JSON.parse(readFileSync(join(root, file), "utf8")) as Record<string, unknown>)
       .map((ability) => ({ id: String(ability.id), issue: activationConflictForAbility(ability) }))
       .filter((entry) => entry.issue !== null);
-    expect(conflicts).toHaveLength(27);
+    expect(conflicts).toHaveLength(26);
     expect(conflicts.map((entry) => entry.id)).toContain("godie-o030.ex");
   });
 

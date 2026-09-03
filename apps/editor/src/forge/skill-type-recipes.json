@@ -1,0 +1,132 @@
+{
+  "schema": "ggd-editor-skill-type-recipes@1",
+  "note": "Editor-owned no-code recipes. They only compose shipped template bricks; they never add runtime behavior. statWeights are evaluated against the current config.stat-normalization@1 byOrigin table.",
+  "recipes": [
+    {
+      "id": "single-burst",
+      "label": "單體爆發",
+      "summary": "鎖定一名敵人，集中一次高傷害。",
+      "templateIds": ["tpl-single-strike"],
+      "cooldownShape": "單體",
+      "tierDefaults": { "damage": "大", "mana": "中", "cooldown": "中", "range": "中", "castTime": "極小" },
+      "statWeights": { "ad": 1, "ap": 1, "range": 0.25 }
+    },
+    {
+      "id": "instant-area",
+      "label": "瞬發範圍",
+      "summary": "在指定位置或身邊立刻引爆。",
+      "templateIds": ["tpl-instant-blast"],
+      "cooldownShape": "範圍",
+      "tierDefaults": { "damage": "中", "mana": "中", "cooldown": "中", "range": "中", "radius": "中", "castTime": "極小" },
+      "statWeights": { "ap": 1.25, "maxMana": 0.35, "manaRegen": 0.25 }
+    },
+    {
+      "id": "projectile-blast",
+      "label": "投射後爆炸",
+      "summary": "投射物飛行一段距離，途中命中並在終點爆炸。",
+      "templateIds": ["tpl-line-blast"],
+      "cooldownShape": "範圍",
+      "tierDefaults": { "damage": "大", "mana": "大", "cooldown": "大", "range": "大", "radius": "中", "castTime": "小" },
+      "statWeights": { "range": 1, "ap": 0.75, "ad": 0.5, "maxMana": 0.25 }
+    },
+    {
+      "id": "beam",
+      "label": "橫向光束砲",
+      "summary": "寬型光束沿前方推進，適合氣功砲與吐息。",
+      "templateIds": ["tpl-beam-roll"],
+      "cooldownShape": "範圍",
+      "tierDefaults": { "damage": "大", "mana": "大", "cooldown": "大", "range": "極大", "radius": "中", "castTime": "中" },
+      "statWeights": { "range": 1.25, "ap": 1, "maxMana": 0.5, "manaRegen": 0.25 }
+    },
+    {
+      "id": "periodic-field",
+      "label": "持續領域",
+      "summary": "建立會週期作用的區域，可做傷害、治療或控制。",
+      "templateIds": ["tpl-periodic-field"],
+      "cooldownShape": "範圍",
+      "tierDefaults": { "damage": "小", "mana": "中", "cooldown": "大", "range": "中", "radius": "大", "castTime": "小" },
+      "statWeights": { "ap": 0.75, "maxMana": 0.5, "manaRegen": 0.75, "range": 0.25 }
+    },
+    {
+      "id": "blink-strike",
+      "label": "瞬移突斬",
+      "summary": "瞬移貼近並完成一次斬擊。",
+      "templateIds": ["tpl-blink-strike"],
+      "cooldownShape": "單體",
+      "tierDefaults": { "damage": "中", "mana": "中", "cooldown": "中", "range": "大", "travel": "大", "castTime": "極小" },
+      "statWeights": { "ad": 0.75, "ap": 1, "ms": 0.5, "as": 0.25 }
+    },
+    {
+      "id": "charge-push",
+      "label": "衝鋒推撞",
+      "summary": "向前衝刺，命中後推開目標。",
+      "templateIds": ["tpl-charge-push"],
+      "cooldownShape": "範圍",
+      "tierDefaults": { "damage": "中", "mana": "中", "cooldown": "中", "range": "中", "travel": "中", "push": "中", "castTime": "極小" },
+      "statWeights": { "maxHealth": 1, "armor": 0.75, "mr": 0.5, "ms": 0.5, "ad": 0.25 }
+    },
+    {
+      "id": "leap",
+      "label": "跳躍落地",
+      "summary": "躍向目標區域，落地造成範圍效果。",
+      "templateIds": ["tpl-leap-strike"],
+      "cooldownShape": "範圍",
+      "tierDefaults": { "damage": "中", "mana": "中", "cooldown": "大", "range": "大", "radius": "中", "travel": "大", "castTime": "小" },
+      "statWeights": { "maxHealth": 0.75, "armor": 0.5, "ad": 0.5, "ms": 0.5 }
+    },
+    {
+      "id": "combo",
+      "label": "連段終結技",
+      "summary": "按時間軸連續攻擊，最後接一記重招。",
+      "templateIds": ["tpl-combo-finisher"],
+      "cooldownShape": "單體",
+      "tierDefaults": { "damage": "極大", "mana": "大", "cooldown": "極大", "range": "小", "castTime": "中" },
+      "statWeights": { "ad": 1, "as": 0.75, "ap": 0.5, "ms": 0.25 }
+    },
+    {
+      "id": "self-buff",
+      "label": "自我強化／變身",
+      "summary": "持續強化自身屬性或切換戰鬥形態。",
+      "templateIds": ["tpl-buff-self"],
+      "cooldownShape": "變身",
+      "tierDefaults": { "mana": "中", "cooldown": "大", "castTime": "小", "moveSpeed": "中" },
+      "statWeights": { "maxHealth": 0.5, "healthRegen": 0.5, "ad": 0.5, "ap": 0.5, "as": 0.5 }
+    },
+    {
+      "id": "on-attack",
+      "label": "普攻觸發",
+      "summary": "普通攻擊命中時附加傷害或狀態。",
+      "templateIds": ["tpl-on-attack"],
+      "cooldownShape": "單體",
+      "tierDefaults": { "damage": "小", "cooldown": "極小" },
+      "statWeights": { "as": 1.25, "ad": 1, "range": 0.5 }
+    },
+    {
+      "id": "reactive",
+      "label": "格擋／迴避反應",
+      "summary": "受到攻擊、格擋或迴避後觸發反擊或保護。",
+      "templateIds": ["tpl-on-hit-react"],
+      "cooldownShape": "單體",
+      "tierDefaults": { "cooldown": "小" },
+      "statWeights": { "armor": 1, "mr": 1, "maxHealth": 0.75, "healthRegen": 0.25 }
+    },
+    {
+      "id": "summon",
+      "label": "召喚代理",
+      "summary": "召喚單位或代理錨點替施法者執行效果。",
+      "templateIds": ["tpl-summon-agent"],
+      "cooldownShape": "範圍",
+      "tierDefaults": { "mana": "大", "cooldown": "大", "range": "中", "radius": "中", "castTime": "中" },
+      "statWeights": { "maxMana": 0.75, "manaRegen": 1, "ap": 0.5, "range": 0.25 }
+    },
+    {
+      "id": "barrage",
+      "label": "亂數彈幕",
+      "summary": "在區域內連續選點落下多發攻擊。",
+      "templateIds": ["tpl-random-barrage"],
+      "cooldownShape": "範圍",
+      "tierDefaults": { "damage": "中", "mana": "大", "cooldown": "大", "range": "大", "radius": "大", "castTime": "中" },
+      "statWeights": { "range": 1, "ap": 0.75, "ad": 0.5, "maxMana": 0.5 }
+    }
+  ]
+}

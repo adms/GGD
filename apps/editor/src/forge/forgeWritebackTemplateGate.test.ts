@@ -48,6 +48,10 @@ vi.mock("../api/client", () => ({
       calls.push(`patchAbility ${id}`);
       return { contentVersion: "cv_000000000000" };
     },
+    create: async (collection: string, id: string) => {
+      calls.push(`create ${collection}/${id}`);
+      return { contentVersion: "cv_000000000000" };
+    },
     patchChampionSlot: async (id: string, slot: string) => {
       calls.push(`patchChampionSlot ${id}.${slot}`);
       return { contentVersion: "cv_000000000000" };
@@ -59,7 +63,13 @@ vi.mock("../api/client", () => ({
   },
 }));
 
-const { planForgeWrite, runForgeWrite, templateWriteBlockers } = await import("./ForgeWriteback");
+const {
+  planForgeCreate,
+  planForgeWrite,
+  runForgeCreate,
+  runForgeWrite,
+  templateWriteBlockers,
+} = await import("./ForgeWriteback");
 
 const REPO = fileURLToPath(new URL("../../../../", import.meta.url));
 
@@ -163,6 +173,26 @@ describe("寫回前就擋下展開不了的模板（不是等下一次 registerA
       "patchAbility godie-test.q",
       "rebuild",
     ]);
+  });
+
+  it("新技能走 create-only，先驗完整 JSON 再建檔與重建索引", async () => {
+    const good = abilityDoc({ ref: TPL.id, params: defaultParamsFor(TPL) });
+    const plan = planForgeCreate(good, TEMPLATES);
+    expect(plan.steps).toMatchObject([{ reason: "create", id: "godie-test.q" }]);
+    expect(plan.blockers).toEqual([]);
+    await runForgeCreate(good, TEMPLATES);
+    expect(calls).toEqual([
+      "validate abilities/godie-test.q",
+      "create abilities/godie-test.q",
+      "rebuild",
+    ]);
+  });
+
+  it("新技能的壞模板在送 API 前就拒絕", async () => {
+    const bad = abilityDoc({ ref: "tpl-missing", params: {} });
+    expect(planForgeCreate(bad, TEMPLATES).blockers.join(" ")).toContain("tpl-missing");
+    await expect(runForgeCreate(bad, TEMPLATES)).rejects.toThrow("tpl-missing");
+    expect(calls).toEqual([]);
   });
 
   it("champion mirror 沒有 document receipt 時連 PATCH 都不送", async () => {

@@ -131,6 +131,16 @@ describe("GH#174 鑄技工坊的試放走玩家那條路", () => {
     c.dispose();
   });
 
+  it("42x46 批次中的主動 EX 走真 learnEx，不會被誤報 not-learned", () => {
+    const champion = Champions.get("godie-h02u" as ChampionId);
+    const c = createSimPreviewController();
+    const trace = c.castAbility(champion, "EX", { level: 18, ticks: 60 });
+
+    expect(trace.accepted, JSON.stringify(trace.events.slice(0, 20), null, 2)).toBe(true);
+    expect(trace.events.some((event) => event.type === "abilityCast")).toBe(true);
+    c.dispose();
+  });
+
   it("VFX Forge 以正式反彈路徑觸發理想鄉 EX，而不是把被動偽裝成按鍵", () => {
     const champion = Champions.get("godie-e002" as ChampionId);
     const ability = Abilities.get("godie-e002.ex" as AbilityId);
@@ -150,6 +160,18 @@ describe("GH#174 鑄技工坊的試放走玩家那條路", () => {
       .map(({ actorPose }) => actorPose && `${actorPose.target.x.toFixed(3)},${actorPose.target.z.toFixed(3)}`)
       .filter((value): value is string => value !== undefined);
     expect(new Set(victimStops).size, "理想鄉的受害者位移要保存真 SimWorld 座標").toBeGreaterThan(1);
+    c.dispose();
+  });
+
+  it("會先施放本身就是反彈開關的主動 EX，再用真受擊事件驗收成功 hook", () => {
+    const champion = Champions.get("godie-emfr" as ChampionId);
+    const ability = Abilities.get("godie-emfr.ex" as AbilityId);
+    const c = createSimPreviewController();
+    const trace = c.triggerReflectSuccess(champion, ability.id, { level: 18, ticks: 180 });
+
+    expect(trace.accepted, JSON.stringify(trace.events.slice(0, 80), null, 2)).toBe(true);
+    expect(trace.events.some((event) => event.type === "abilityCast" && event.data["abilityId"] === ability.id)).toBe(true);
+    expect(trace.events.some((event) => event.type === "reflectSuccess")).toBe(true);
     c.dispose();
   });
 });

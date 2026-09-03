@@ -37,7 +37,7 @@ export interface AssetSafetyResult {
 }
 
 export interface AssetSafetySource {
-  doc<T>(collection: "models" | "vfx", id: string): Promise<T>;
+  doc<T>(collection: "config" | "models" | "vfx", id: string): Promise<T>;
   assetBytes(contentPath: string): Promise<ArrayBuffer>;
 }
 
@@ -57,6 +57,16 @@ interface VfxDoc {
 interface ModelDoc {
   glbPath?: string;
   fxEmitters?: readonly string[];
+}
+
+interface UnsafeTextureConfigDoc {
+  schema?: unknown;
+  textures?: readonly {
+    file?: unknown;
+    sha256?: unknown;
+    status?: unknown;
+    safeBlendModes?: readonly unknown[];
+  }[];
 }
 
 interface GlbJson {
@@ -87,6 +97,7 @@ export class UnsafeVfxAssetError extends Error {
  */
 export class AssetSafetyGate implements VfxScriptAssetGuard {
   private readonly cache = new Map<string, Promise<AssetSafetyResult>>();
+  private unsafeTextureConfig: Promise<UnsafeTextureConfigDoc | null> | null = null;
 
   constructor(
     private readonly source: AssetSafetySource,
@@ -125,7 +136,10 @@ export class AssetSafetyGate implements VfxScriptAssetGuard {
     const doc = await this.source.doc<VfxDoc>("vfx", asset.id);
     if (!doc.texture) return safe(asset, "此 VFX 不引用貼圖");
     if (!doc.blendMode) throw new Error(`${asset.id}: 缺 blendMode`);
-    const raster = await this.decode(await this.source.assetBytes(doc.texture), "image/png");
+    const bytes = await this.source.assetBytes(doc.texture);
+    const contracted = await this.checkTextureContract(asset, doc.texture, doc.blendMode, bytes);
+    if (contracted) return contracted;
+    const raster = await this.decode(bytes, "image/png");
     const colors = colorsOf(doc);
     let neutral = 0;
     let neutralEdge = 0;
@@ -150,6 +164,58 @@ export class AssetSafetyGate implements VfxScriptAssetGuard {
       };
     }
     return safe(asset, `去背通過 · ${doc.blendMode} · 可消失背景 ${(share * 100).toFixed(2)}% · 邊緣 ${(edgeShare * 100).toFixed(1)}%`);
+  }
+
+  /**
+   * Main owns the authoritative `(texture, blendMode)` quarantine contract.
+   * Re-measuring a known file with a second Editor threshold produced the exact
+   * false positives this contract was created to prevent (`babyface`, `zap1`).
+   * Unknown author assets still take the pixel-analysis fallback above.
+   */
+  private async checkTextureContract(
+    asset: AssetDrop,
+    texture: string,
+    blendMode: BlendMode,
+    bytes: ArrayBuffer,
+  ): Promise<AssetSafetyResult | null> {
+    if (!this.unsafeTextureConfig) {
+      this.unsafeTextureConfig = this.source
+        .doc<UnsafeTextureConfigDoc>("config", "unsafe-textures")
+        .then((doc) => doc?.schema === "config.unsafe-textures@1" ? doc : null)
+        .catch(() => null);
+    }
+    const config = await this.unsafeTextureConfig;
+    const row = config?.textures?.find((entry) => entry.file === texture);
+    if (!row) return null;
+    if (typeof row.sha256 !== "string" || row.sha256 !== await sha256(bytes)) {
+      return {
+        asset,
+        safe: false,
+        code: "ASSET_CHECK_FAILED",
+        summary: "貼圖內容與 Main 安全契約的雜湊不一致",
+        detail: `${texture} · 必須重新產生 config.unsafe-textures@1 收據`,
+      };
+    }
+    if (row.status !== "safe") {
+      return {
+        asset,
+        safe: false,
+        code: "TEXTURE_BACKDROP",
+        summary: "Main 安全契約已隔離這張貼圖",
+        detail: `${texture} · ${blendMode}`,
+      };
+    }
+    const allowed = new Set((row.safeBlendModes ?? []).filter((mode): mode is string => typeof mode === "string"));
+    if (!allowed.has(blendMode)) {
+      return {
+        asset,
+        safe: false,
+        code: "TEXTURE_BACKDROP",
+        summary: "貼圖不允許搭配目前的混合模式",
+        detail: `${texture} · ${blendMode}；允許 ${[...allowed].join("、") || "無"}`,
+      };
+    }
+    return safe(asset, `Main 素材契約通過 · ${blendMode} · sha256 已核對`);
   }
 
   private async checkModel(asset: AssetDrop): Promise<AssetSafetyResult> {
@@ -238,6 +304,11 @@ export class AssetSafetyGate implements VfxScriptAssetGuard {
     }
     return safe(asset, measured ? `GLB 內嵌貼圖 ${measured} 份去背／透明材質通過` : "GLB 沒有需檢查的內嵌貼圖材質");
   }
+}
+
+async function sha256(bytes: ArrayBuffer): Promise<string> {
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
 }
 
 export function assetRefsFromScript(doc: VfxScriptDoc): AssetDrop[] {

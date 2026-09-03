@@ -1,7 +1,12 @@
 import { SKILL_TIER_NAMES, type SkillTierName } from "@ggd/shared/content/skillTiers";
-import type { Origin } from "@ggd/shared/content/statNormalization";
+import {
+  NORMALIZED_STAT_KEYS,
+  type NormalizedStatKey,
+  type Origin,
+} from "@ggd/shared/content/statNormalization";
 import type { AbilityTemplateCard, TemplateDoc } from "@ggd/shared/content";
 import { defaultParamsFor } from "@ggd/shared/content";
+import recipeDoc from "./skill-type-recipes.json";
 
 export const FORGE_TIER_AXES = [
   "damage",
@@ -44,99 +49,134 @@ export interface SkillTypePreset {
   readonly templateIds: readonly string[];
   readonly tierDefaults: ForgeTierSelections;
   readonly cooldownShape: CooldownShape;
-  readonly preferredOrigins: readonly Origin[];
+  /** Positive affinities evaluated against Main's current byOrigin table. */
+  readonly statWeights: Readonly<Partial<Record<NormalizedStatKey, number>>>;
 }
 
-export const SKILL_TYPE_PRESETS: readonly SkillTypePreset[] = [
-  preset("single-burst", "單體爆發", "鎖定一名敵人，集中一次高傷害。", ["tpl-single-strike"], "單體", ["鬥士", "法鬥", "法刺"], {
-    damage: "大", mana: "中", cooldown: "中", range: "中", castTime: "極小",
-  }),
-  preset("instant-area", "瞬發範圍", "在指定位置或身邊立刻引爆。", ["tpl-instant-blast"], "範圍", ["法師", "砲手", "硬輔"], {
-    damage: "中", mana: "中", cooldown: "中", range: "中", radius: "中", castTime: "極小",
-  }),
-  preset("projectile-blast", "投射後爆炸", "投射物飛行一段距離，途中命中並在終點爆炸。", ["tpl-line-blast"], "範圍", ["砲手", "法師", "射手"], {
-    damage: "大", mana: "大", cooldown: "大", range: "大", radius: "中", castTime: "小",
-  }),
-  preset("beam", "橫向光束砲", "寬型光束沿前方推進，適合氣功砲與吐息。", ["tpl-beam-roll"], "範圍", ["砲手", "法師", "法鬥"], {
-    damage: "大", mana: "大", cooldown: "大", range: "極大", radius: "中", castTime: "中",
-  }),
-  preset("periodic-field", "持續領域", "建立會週期作用的區域，可做傷害、治療或控制。", ["tpl-periodic-field"], "範圍", ["法師", "軟輔", "硬輔"], {
-    damage: "小", mana: "中", cooldown: "大", range: "中", radius: "大", castTime: "小",
-  }),
-  preset("blink-strike", "瞬移突斬", "瞬移貼近並完成一次斬擊。", ["tpl-blink-strike"], "單體", ["法刺", "鬥士", "法鬥"], {
-    damage: "中", mana: "中", cooldown: "中", range: "大", travel: "大", castTime: "極小",
-  }),
-  preset("charge-push", "衝鋒推撞", "向前衝刺，命中後推開目標。", ["tpl-charge-push"], "範圍", ["坦克", "狂戰", "鬥士"], {
-    damage: "中", mana: "中", cooldown: "中", range: "中", travel: "中", push: "中", castTime: "極小",
-  }),
-  preset("leap", "跳躍落地", "躍向目標區域，落地造成範圍效果。", ["tpl-leap-strike"], "範圍", ["坦克", "狂戰", "鬥士"], {
-    damage: "中", mana: "中", cooldown: "大", range: "大", radius: "中", travel: "大", castTime: "小",
-  }),
-  preset("combo", "連段終結技", "按時間軸連續攻擊，最後接一記重招。", ["tpl-combo-finisher"], "單體", ["鬥士", "狂戰", "法刺"], {
-    damage: "極大", mana: "大", cooldown: "極大", range: "小", castTime: "中",
-  }),
-  preset("self-buff", "自我強化／變身", "持續強化自身屬性或切換戰鬥形態。", ["tpl-buff-self"], "變身", ["狂戰", "法鬥", "坦克"], {
-    mana: "中", cooldown: "大", castTime: "小", moveSpeed: "中",
-  }),
-  preset("on-attack", "普攻觸發", "普通攻擊命中時附加傷害或狀態。", ["tpl-on-attack"], "單體", ["射手", "法鬥", "鬥士"], {
-    damage: "小", cooldown: "極小",
-  }),
-  preset("reactive", "格擋／迴避反應", "受到攻擊、格擋或迴避後觸發反擊或保護。", ["tpl-on-hit-react"], "單體", ["坦克", "硬輔", "鬥士"], {
-    cooldown: "小",
-  }),
-  preset("summon", "召喚代理", "召喚單位或代理錨點替施法者執行效果。", ["tpl-summon-agent"], "範圍", ["軟輔", "硬輔", "法師"], {
-    mana: "大", cooldown: "大", range: "中", radius: "中", castTime: "中",
-  }),
-  preset("barrage", "亂數彈幕", "在區域內連續選點落下多發攻擊。", ["tpl-random-barrage"], "範圍", ["砲手", "法師", "射手"], {
-    damage: "中", mana: "大", cooldown: "大", range: "大", radius: "大", castTime: "中",
-  }),
-] as const;
+export const SKILL_TYPE_PRESETS: readonly SkillTypePreset[] = parseRecipeDoc(recipeDoc);
 
-function preset(
-  id: string,
-  label: string,
-  summary: string,
-  templateIds: readonly string[],
-  cooldownShape: CooldownShape,
-  preferredOrigins: readonly Origin[],
-  tierDefaults: ForgeTierSelections,
-): SkillTypePreset {
-  return { id, label, summary, templateIds, cooldownShape, preferredOrigins, tierDefaults };
+export interface StatNormalizationRecommendationDoc {
+  readonly schema?: unknown;
+  readonly byOrigin?: Readonly<Partial<Record<NormalizedStatKey, Readonly<Partial<Record<Origin, unknown>>>>>>;
 }
+
+const BAND_SCORE: Readonly<Record<SkillTierName, number>> = {
+  極小: -2,
+  小: -1,
+  中: 0,
+  大: 1,
+  極大: 2,
+};
+
+const STAT_LABELS: Readonly<Record<NormalizedStatKey, string>> = {
+  ms: "移速", mr: "魔抗", armor: "防禦", maxHealth: "生命", maxMana: "魔力",
+  ad: "AD", ap: "AP", as: "攻速", healthRegen: "回血", manaRegen: "回魔", range: "攻擊距離",
+};
 
 export interface RankedSkillType {
   readonly preset: SkillTypePreset;
   readonly recommendationRank: number | null;
+  readonly recommendationScore: number | null;
+  readonly recommendationReasons: readonly string[];
   readonly available: boolean;
 }
 
-/** Origin changes ordering only. It never hides a manual option. */
+/**
+ * Origin changes ordering only. It never hides a manual option.
+ * The score consumes Main's current `config.stat-normalization@1`; no origin
+ * preference is duplicated in Editor source code.
+ */
 export function rankSkillTypes(
   origin: Origin | null,
   availableTemplateIds: ReadonlySet<string>,
+  statConfig?: StatNormalizationRecommendationDoc | null,
 ): RankedSkillType[] {
   const sorted = SKILL_TYPE_PRESETS.map((skillType, stableIndex) => {
-    const affinity = origin === null ? -1 : skillType.preferredOrigins.indexOf(origin);
+    const evidence = origin === null ? null : scoreForOrigin(skillType, origin, statConfig);
     return {
       preset: skillType,
-      affinity,
+      score: evidence?.score ?? null,
+      reasons: evidence?.reasons ?? [],
       available: skillType.templateIds.every((id) => availableTemplateIds.has(id)),
       stableIndex,
     };
   })
     .sort((a, b) => {
       if (a.available !== b.available) return a.available ? -1 : 1;
-      const ar = a.affinity < 0 ? Number.POSITIVE_INFINITY : a.affinity;
-      const br = b.affinity < 0 ? Number.POSITIVE_INFINITY : b.affinity;
-      return ar - br || a.stableIndex - b.stableIndex;
+      return (b.score ?? Number.NEGATIVE_INFINITY) - (a.score ?? Number.NEGATIVE_INFINITY)
+        || a.stableIndex - b.stableIndex;
     });
   let recommendationRank = 0;
-  return sorted.map(({ stableIndex: _drop, affinity, ...ranked }) => ({
+  return sorted.map(({ stableIndex: _drop, score, reasons, ...ranked }) => ({
     ...ranked,
-    recommendationRank: origin !== null && ranked.available && affinity >= 0 && recommendationRank < 3
+    recommendationScore: score,
+    recommendationReasons: reasons,
+    recommendationRank: score !== null && ranked.available && recommendationRank < 3
       ? ++recommendationRank
       : null,
   }));
+}
+
+function scoreForOrigin(
+  preset: SkillTypePreset,
+  origin: Origin,
+  config?: StatNormalizationRecommendationDoc | null,
+): { score: number; reasons: string[] } | null {
+  if (config?.schema !== "config.stat-normalization@1") return null;
+  const contributions = Object.entries(preset.statWeights).flatMap(([rawKey, rawWeight]) => {
+    const key = rawKey as NormalizedStatKey;
+    const band = config.byOrigin?.[key]?.[origin];
+    if (!isSkillTierName(band) || typeof rawWeight !== "number") return [];
+    return [{ key, band, contribution: BAND_SCORE[band] * rawWeight }];
+  });
+  if (contributions.length === 0) return null;
+  const score = contributions.reduce((sum, row) => sum + row.contribution, 0);
+  const reasons = contributions
+    .filter((row) => row.contribution > 0)
+    .sort((a, b) => b.contribution - a.contribution)
+    .slice(0, 3)
+    .map((row) => `${STAT_LABELS[row.key]}${row.band}`);
+  return { score, reasons: reasons.length > 0 ? reasons : ["相對弱點較少"] };
+}
+
+function parseRecipeDoc(raw: unknown): readonly SkillTypePreset[] {
+  const doc = record(raw);
+  if (doc?.["schema"] !== "ggd-editor-skill-type-recipes@1" || !Array.isArray(doc["recipes"])) {
+    throw new Error("skill-type-recipes.json 格式不正確");
+  }
+  const ids = new Set<string>();
+  return doc["recipes"].map((value, index) => {
+    const row = record(value);
+    if (!row || typeof row["id"] !== "string" || typeof row["label"] !== "string"
+      || typeof row["summary"] !== "string" || !Array.isArray(row["templateIds"])
+      || !["單體", "範圍", "變身"].includes(String(row["cooldownShape"]))) {
+      throw new Error(`skill-type-recipes.json recipes[${index}] 缺少必要欄位`);
+    }
+    if (ids.has(row["id"])) throw new Error(`skill-type-recipes.json 重複 id: ${row["id"]}`);
+    ids.add(row["id"]);
+    const tiers = record(row["tierDefaults"]) ?? {};
+    for (const [axis, tier] of Object.entries(tiers)) {
+      if (!(FORGE_TIER_AXES as readonly string[]).includes(axis) || !isSkillTierName(tier)) {
+        throw new Error(`skill-type-recipes.json ${row["id"]} 的級距 ${axis}=${String(tier)} 不合法`);
+      }
+    }
+    const weights = record(row["statWeights"]) ?? {};
+    for (const [key, weight] of Object.entries(weights)) {
+      if (!(NORMALIZED_STAT_KEYS as readonly string[]).includes(key)
+        || typeof weight !== "number" || !Number.isFinite(weight) || weight <= 0) {
+        throw new Error(`skill-type-recipes.json ${row["id"]} 的權重 ${key}=${String(weight)} 不合法`);
+      }
+    }
+    return {
+      id: row["id"],
+      label: row["label"],
+      summary: row["summary"],
+      templateIds: row["templateIds"].map(String),
+      cooldownShape: row["cooldownShape"] as CooldownShape,
+      tierDefaults: tiers as ForgeTierSelections,
+      statWeights: weights as Partial<Record<NormalizedStatKey, number>>,
+    };
+  });
 }
 
 export function cardsForSkillType(

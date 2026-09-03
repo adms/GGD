@@ -13,6 +13,7 @@ import { LEVEL_CAP } from "@ggd/shared/sim/economy/progression";
 import { SKILL_TIER_NAMES } from "@ggd/shared/content/skillTiers";
 import { DEFAULT_COOLDOWN_TIERS } from "@ggd/shared/content/cooldownTiers";
 import { DEFAULT_RANGE_TIERS } from "@ggd/shared/content/rangeTiers";
+import { DEFAULT_MANA_TIERS } from "@ggd/shared/content/manaTiers";
 
 export interface CollectionEntry {
   name: CollectionName;
@@ -45,20 +46,37 @@ export interface CollectionEntry {
  */
 const MID_TIER = SKILL_TIER_NAMES[Math.floor(SKILL_TIER_NAMES.length / 2)]!;
 
-function abilityTemplate(id: string, slot: "Q" | "W" | "E" | "R") {
-  const maxRank = 5;
+export type NewAbilitySlot = "Q" | "W" | "E" | "R";
+
+/**
+ * One reusable no-code seed for both Collections and Skill Forge.
+ * Q/W/E are always four ranks and R is always three; every fallback value is
+ * derived from Main's shipped tier tables, never copied into Editor constants.
+ */
+export function newAbilityTemplate(
+  id: string,
+  slot: NewAbilitySlot,
+  name = "New Ability",
+): Record<string, unknown> {
+  const maxRank = slot === "R" ? 3 : 4;
+  const cooldownTier = slot === "R"
+    ? SKILL_TIER_NAMES[SKILL_TIER_NAMES.length - 1]!
+    : MID_TIER;
   return {
     id,
-    name: "New Ability",
+    name,
     slot,
     castType: "self",
     maxRank,
     // ⭐ 級距是**一支技能一格**，所以每一階都是同一個值（＝ resolver 會寫回來的樣子）。
-    cooldownTier: MID_TIER,
+    cooldownTier,
     cooldown: Array.from<number>({ length: maxRank }).fill(
-      DEFAULT_COOLDOWN_TIERS.seconds["單體"][MID_TIER],
+      DEFAULT_COOLDOWN_TIERS.seconds["單體"][cooldownTier],
     ),
-    manaCost: [50, 55, 60, 65, 70],
+    manaCostTier: MID_TIER,
+    manaCost: Array.from<number>({ length: maxRank }).fill(
+      DEFAULT_MANA_TIERS.manaCost[MID_TIER],
+    ),
     rangeTier: MID_TIER,
     range: DEFAULT_RANGE_TIERS.range[MID_TIER],
     effects: [],
@@ -76,26 +94,16 @@ const TEMPLATES: Record<CollectionName, (id: string) => unknown> = {
     baseStats: { maxHealth: 600, maxMana: 300, ad: 55, armor: 25, mr: 30, as: 0.7, ms: 6.5, range: 1.6, critDamage: 1.75 },
     growth: { maxHealth: 100, ad: 3 },
     abilities: {
-      Q: abilityTemplate(`${id}.q`, "Q"),
-      W: abilityTemplate(`${id}.w`, "W"),
-      E: abilityTemplate(`${id}.e`, "E"),
-      // ⭐ 大絕：級距挑**最貴**那一格（⛔ 不是手打 100/85/70），而且 `cooldownShape`
-      //    留空 —— 讓出貨的自動判斷去看它到底是單體、範圍還是變身。
-      R: {
-        ...abilityTemplate(`${id}.r`, "R"),
-        maxRank: 3,
-        cooldownTier: SKILL_TIER_NAMES[SKILL_TIER_NAMES.length - 1]!,
-        cooldown: Array.from<number>({ length: 3 }).fill(
-          DEFAULT_COOLDOWN_TIERS.seconds["單體"][SKILL_TIER_NAMES[SKILL_TIER_NAMES.length - 1]!],
-        ),
-        manaCost: [100, 100, 100],
-      },
+      Q: newAbilityTemplate(`${id}.q`, "Q"),
+      W: newAbilityTemplate(`${id}.w`, "W"),
+      E: newAbilityTemplate(`${id}.e`, "E"),
+      R: newAbilityTemplate(`${id}.r`, "R"),
     },
     skillOrder: ["Q", "W", "E", "R"],
     buildPriority: [],
     tags: [],
   }),
-  abilities: (id) => ({ schema: "ability@1", ...abilityTemplate(id, "Q") }),
+  abilities: (id) => ({ schema: "ability@1", ...newAbilityTemplate(id, "Q") }),
   items: (id) => ({ id, schema: "item@1", name: "New Item", cost: 500, tier: 1, tags: [] }),
   augments: (id) => ({
     id,
