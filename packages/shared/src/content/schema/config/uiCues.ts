@@ -91,6 +91,17 @@ export const zConfigUiCuesDoc = z
      */
     passiveIcdReadout: z.boolean(),
     /**
+     * ⭐⭐ **三選一面板上顯示「本場已選」**（GH#893）—— owner 2026-09-01 逐字：
+     * > 「固有能力三選一**看不到過去選了哪些**」
+     *
+     * ⭐ 資料本來就在（`SeatState.augments` → `SeatView.augments`）——
+     * ⛔ 缺的只是把它畫出來。
+     * ⚠️ ⭐ 而它**必須讀伺服器狀態**：客戶端自己記的那一份**重連之後就消失**
+     * （失敗形態②：算出來但從沒送到客戶端）。
+     * ⭐ 出貨 `true`；關掉 ＝ 回到 2026-09-03 之前。
+     */
+    draftShowPicked: z.boolean(),
+    /**
      * ⭐ **主揪的「再等一下」有哪幾個選項** —— owner 2026-08-23 說的「多等 1 分鐘」。
      *
      * ⭐ **「有幾個選項」本身就是這一格**：下次要「再加一個 5 秒」＝在這個陣列裡
@@ -264,6 +275,8 @@ export const DEFAULT_UI_CUES: UiCuesDoc = {
   passiveFlashMs: 420,
   passiveFlashThrottleMs: 800,
   passiveIcdReadout: true,
+  // ⭐ GH#893 —— 出貨開著（owner 要的就是「看得到」）。
+  draftShowPicked: true,
   rallyExtendSeconds: [60],
   // ⭐ 權威側說了算（第〇·六守則：優先權大的更新預設啟動）。變灰那一條是 rollback。
   coinThrowButtonMode: "always-enabled",
@@ -299,6 +312,7 @@ export function resolveUiCues(doc: ConfigUiCuesDoc | null | undefined): UiCuesDo
     passiveFlashMs: doc.passiveFlashMs,
     passiveFlashThrottleMs: doc.passiveFlashThrottleMs,
     passiveIcdReadout: doc.passiveIcdReadout,
+    draftShowPicked: doc.draftShowPicked,
     rallyExtendSeconds: [...doc.rallyExtendSeconds],
     coinThrowButtonMode: doc.coinThrowButtonMode,
     mouseTwoStageCast: doc.mouseTwoStageCast ?? true,
