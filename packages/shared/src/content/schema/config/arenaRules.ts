@@ -2,6 +2,7 @@ import { z } from "zod";
 import { zCoreAbilitySlot, zId } from "../common";
 import { zAugmentTier } from "../augment";
 import { zMobWavesConfig } from "./arenaRules.mobWaves";
+import { zRound11Config } from "./arenaRules.round11";
 
 /** `Configs` 登錄表裡這份文件的 id。⛔ 不要在呼叫端手打字串。 */
 export const ARENA_RULES_DOC_ID = "arena-rules";
@@ -1177,6 +1178,12 @@ export const zConfigArenaRulesDoc = z
     goldDrop: zGoldDropConfig.optional(),
     /** roguelite mob-wave rules (task #215); omit = no mobs (legacy behavior) */
     mobWaves: zMobWavesConfig.optional(),
+    /**
+     * ⭐⭐ 第十一回合・生存模式（GH#919–#925）—— ⛔ **骨架，sim 那一半還沒做**。
+     * `enabled` 出貨是 `false` ⇒ 整個區塊今天逐位元 no-op。
+     * ⚠️ 省略 ＝ 沒有第十一回合（＝ 今天的行為）。
+     */
+    round11: zRound11Config.optional(),
   })
   .strict();
 export type ArenaRoundGrant = z.infer<typeof zArenaRoundGrant>;

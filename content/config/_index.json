@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "87f92a26ea06",
+  "hash": "08adbdec4eda",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -35,8 +35,8 @@
     {
       "id": "ap-damage-scaling",
       "path": "config/ap-damage-scaling.json",
-      "hash": "a4ebb9e1aa44",
-      "size": 935
+      "hash": "e30d6fde4f48",
+      "size": 973
     },
     {
       "id": "arena-pool",
@@ -47,8 +47,8 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "dece6343544d",
-      "size": 8419
+      "hash": "50fdfdc5b808",
+      "size": 9540
     },
     {
       "id": "audio-map",
@@ -333,6 +333,12 @@
       "size": 1252
     },
     {
+      "id": "one-shot-clamp",
+      "path": "config/one-shot-clamp.json",
+      "hash": "acc7a44b3b5c",
+      "size": 944
+    },
+    {
       "id": "origin-routes",
       "path": "config/origin-routes.json",
       "hash": "1b75573e79be",
@@ -367,6 +373,12 @@
       "path": "config/range-tiers.json",
       "hash": "d87cdbcfecf4",
       "size": 789
+    },
+    {
+      "id": "rank-growth",
+      "path": "config/rank-growth.json",
+      "hash": "e77c1d073320",
+      "size": 1064
     },
     {
       "id": "ranking",

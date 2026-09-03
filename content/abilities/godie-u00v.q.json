@@ -24,21 +24,35 @@
   ],
   "range": 0.0,
   "effects": [],
-  "template": {
-    "ref": "tpl-buff-self",
-    "params": {
-      "duration": 3,
-      "modifiers": [
-        {
-          "stat": "as",
-          "op": "flat",
-          "value": 0.25
-        }
-      ],
-      "castTimeSec": 0.067
-    }
-  },
   "vfxKey": "fx.prim.physical.beam",
   "schema": "ability@1",
-  "castTimeSec": 0.067
+  "passive": {
+    "name": "拳頭",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.1,
+            "target": "event",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "flat": 75
+                }
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "burnstun",
+                "duration": 1,
+                "stun": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }

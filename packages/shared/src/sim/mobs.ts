@@ -1256,6 +1256,11 @@ export interface MobWavesConfigLike {
     gold: number;
     xp: number;
     killsPerLevel: number;
+    /**
+     * ⭐ 經驗總倍率（GH#909）—— **選填**：缺席 ⇒ ×1
+     * ⇒ 一份在這一格出現之前寫好的 arena 逐位元不變。
+     */
+    xpMultiplier?: number;
   };
   /** 殭屍王 (#262); absent = the sub-mechanic is off */
   boss?: {
@@ -2084,7 +2089,11 @@ export function mobRulesFromConfig(
     attackCdTicks: ticks(cfg.mob.attackCdSec),
     radius: cfg.mob.radius,
     rewardGold: cfg.reward.gold,
-    rewardXp: cfg.reward.xp,
+    // ⭐⭐ **經驗總倍率**（GH#909）—— owner 2026-09-02：「ok 一起開票在同一張」。
+    //   ⭐ 乘在**發放的當下**（這裡是規則組裝，也就是三條發放路的共同上游），
+    //   ⛔ 不是乘在「升級所需」—— 後者會讓每一條既有的曲線斷言一起變。
+    //   ⭐ 缺席 ⇒ ×1 ⇒ 逐位元同這一格出現之前（rollback 就是打回 1.0）。
+    rewardXp: Math.round(cfg.reward.xp * (cfg.reward.xpMultiplier ?? 1)),
     killsPerLevel: cfg.reward.killsPerLevel,
     // #262 — both sub-blocks convert here, at arm time, for exactly the reason
     // the rest of this function exists: seconds→ticks and percent→fraction
@@ -2152,7 +2161,8 @@ export function mobRulesFromConfig(
             championId: bossFace.championId,
             sizeMult: cfg.boss.sizeMult ?? DEFAULT_BOSS_SIZE_MULT,
             bountyGold: cfg.boss.bountyGold,
-            bountyXp: cfg.boss.bountyXp,
+            // ⭐ 同一格倍率（GH#909）—— 三個發放點之一：殭屍王分紅。
+            bountyXp: Math.round(cfg.boss.bountyXp * (cfg.reward.xpMultiplier ?? 1)),
             bountyLevels: cfg.boss.bountyLevels ?? 0,
             lastHitMultiplier: cfg.boss.lastHitMultiplier,
             // GH#206 — `"bonus"` is the owner's 2026-07-29 ruling and therefore
@@ -2229,7 +2239,8 @@ export function mobRulesFromConfig(
                 ? null
                 : {
                     gold: cfg.special.bountyGold ?? 0,
-                    xp: cfg.special.bountyXp ?? 0,
+                    // ⭐ 同一格倍率（GH#909）—— 三個發放點之一：特殊殭屍分紅。
+                    xp: Math.round((cfg.special.bountyXp ?? 0) * (cfg.reward.xpMultiplier ?? 1)),
                     levels: cfg.special.bountyLevels ?? 0,
                     // 1 = 沒有翻倍. The owner asked only for 「照傷害比例分」 on the
                     // special (the 翻倍 ruling was about the KING), so the shipped

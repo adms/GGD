@@ -4,5 +4,6 @@
   "note": "AP 傷害加成（owner 2026-08-21：「技能傷害都套用公式 (1+AP*1%)⋯物理意義來說 就是 AP 變為原本傷害的額外加成」「=> 預設 0.5%」）。⭐ 最終傷害 = 基礎傷害 × (1 + 法強 × 0.005)，出貨 0.5%/點 ⇒ 法強 100 → ×1.5、法強 200 → ×2。⚠️ 這一格是調整「技能 vs 普攻」全域關係的唯一旋鈕，⛔ 不是某一支技能的數值 —— 動它等於同時動每一支技能。⭐ rate 填 0 = 這一層整個不存在（乘數恆為 1），也就是一鍵 rollback。⚠️ 反彈封包不吃這一層（它的三個讀數已經吃過攻擊者的乘數），與全域傷害倍率共用同一個旗標。⛔ 這份文件由 tools/ap-damage-scaling/gen.ts 產生，不要手改 —— 跑 pnpm apdmg:build。",
   "rate": 0.005,
   "scope": "ability",
-  "apRatioMode": "stack"
+  "apRatioMode": "stack",
+  "resourcePctSkipsGlobalMult": true
 }

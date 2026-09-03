@@ -90,7 +90,62 @@ const ROOT = new URL("../..", import.meta.url).pathname;
 function staticWrites(stepName) {
   let pkg;
   try { pkg = JSON.parse(readFileSync(`${ROOT}/package.json`, "utf8")); } catch { return []; }
-  const cmd = pkg.scripts?.[stepName] ?? "";
+  // ⭐⭐ **跟著 wrapper 往下追一層**（GH#883，2026-09-02）。
+  //
+  // ⛔⛔ 在此之前這一行只讀 `pkg.scripts[stepName]` 的**字面** ——
+  //   而這個 repo 的產生器**幾乎全部**長成
+  //   `bash scripts/genrun.sh <step> <step>:build:raw`
+  //   ⇒ ⭐ 唯一被掃到的腳本是 **wrapper `genrun.sh`**，
+  //   ⛔ 而真正的寫入端（`buildIndexes.ts` …）連讀都沒讀到。
+  //
+  // ⭐ 量到的後果（GH#883）：`buildIndexes.ts` 的檔頭**逐字宣告**
+  //   `// ggd:writes content/*/_index.json`（一句正確的、單一住處的宣告），
+  //   ⛔ 而戶籍表裡存的是上一次量測**展開成的 14 個具體集合**
+  //   ⇒ `content/vfx-scripts/`（之後才出現的集合）的 `_index.json`
+  //   變成一份**全戶籍都沒有人認領的產物**：
+  //   ⛔ genguard 放行、⛔ 隔離區不鎖、⛔ 沒有 `--check` 叫它 —— ⭐ 三層同時瞎。
+  //
+  // ⇒ ⭐ 追一層就夠：`genrun.sh <公開名> <raw 名>` 的第二個參數本身也是
+  //   `pkg.scripts` 的一個鍵。⛔ 不做無限遞迴（那會在互相引用時掛住）。
+  // ⭐ 兩種 wrapper 都要追：① 同一份 package.json 裡的另一個 script
+  //   （`genrun.sh <公開名> <raw 名>`）② `pnpm --filter <pkg> <script>`
+  //   （workspace 那一層 —— `content:build:raw` 正是它，而 `buildIndexes.ts`
+  //    住在 `packages/shared/package.json` 裡）。
+  // ⛔ 深度上限 3：足夠涵蓋 `公開 → raw → workspace`，⛔ 而不會在互相引用時掛住。
+  const seen = new Set();
+  const cmds = [];
+  const expand = (cmd, depth) => {
+    if (!cmd || depth > 3) return;
+    cmds.push(cmd);
+    for (const tok of cmd.split(/\s+/)) {
+      if (!seen.has(tok) && typeof pkg.scripts?.[tok] === "string") {
+        seen.add(tok);
+        expand(pkg.scripts[tok], depth + 1);
+      }
+    }
+    for (const m of cmd.matchAll(/--filter\s+(\S+)\s+([\w:.-]+)/g)) {
+      const key = `${m[1]}::${m[2]}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      for (const dir of ["packages", "apps", "tools"]) {
+        const stem = m[1].replace(/^@[^/]+\//, "");
+        const wp = `${ROOT}/${dir}/${stem}/package.json`;
+        if (!existsSync(wp)) continue;
+        try {
+          const sub = JSON.parse(readFileSync(wp, "utf8"));
+          // ⚠️ 相對路徑要接回 workspace 目錄 —— ⛔ 否則 `scripts/buildIndexes.ts`
+          //   會被當成 repo 根的路徑而 `existsSync` 失敗（靜默漏掉）。
+          expand(String(sub.scripts?.[m[2]] ?? "").replace(
+            /(^|\s)([\w./-]+\.(?:py|ts|mjs|js|sh))/g,
+            `$1${dir}/${stem}/$2`,
+          ), depth + 1);
+        } catch { /* 讀不到就跳過 —— 上面的 existsSync 已經擋掉不存在的 */ }
+      }
+    }
+  };
+  seen.add(stepName);
+  expand(pkg.scripts?.[stepName] ?? "", 0);
+  const cmd = cmds.join(" ");
   const scripts = [...cmd.matchAll(/[\w./-]+\.(?:py|ts|mjs|js|sh)/g)].map((m) => m[0]);
   const out = [];
   for (const rel of scripts) {

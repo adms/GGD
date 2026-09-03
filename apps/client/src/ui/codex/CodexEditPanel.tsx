@@ -28,7 +28,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { GOLD, TEXT_DIM, TEXT_MAIN } from "../theme";
 import { Btn } from "../platform/widgets";
-import { parseRoleMarkup, ROLE_COLOR, type DescRole } from "../components/abilityText";
 import {
   applyEdits,
   collectionOf,
@@ -411,56 +410,14 @@ export function CodexEditSession({
           onLoadBackups={() => void loadBackups()}
         />
       )}
-      {available && open && <RolePreview draft={draft} />}
       <div style={bodyStyle}>{children}</div>
     </EditContext.Provider>
   );
 }
 
-// ---------------------------------------------------------------------------
-// task #114: role-colour preview. The stored `descriptionRoles` carries the
-// w3x colour codes as `[c=role]…[/c]` semantic markup; here the editor shows
-// exactly how it renders (same parse + palette as the game tooltip), so an
-// author fixing the markup sees the normalised colours live. Falls back to the
-// plain `description` when no role field is present.
-// ---------------------------------------------------------------------------
-
-function RolePreview({ draft }: { draft: Readonly<Record<string, unknown>> }): React.JSX.Element | null {
-  const roles = draft["descriptionRoles"];
-  const plain = draft["description"];
-  const text =
-    typeof roles === "string" && roles.length > 0
-      ? roles
-      : typeof plain === "string" && plain.length > 0
-        ? plain
-        : "";
-  if (text === "") return null;
-  const segments = parseRoleMarkup(text);
-  const usedRoles = Array.from(new Set(segments.map((s) => s.role).filter((r): r is DescRole => !!r)));
-  return (
-    <div style={{ marginTop: 8, border: "1px solid #2c3448", borderRadius: 8, background: "#0c1017", padding: 8 }}>
-      <div style={{ fontSize: 10, color: TEXT_DIM, marginBottom: 4 }}>
-        說明色彩預覽（語意角色 → 統一配色）
-      </div>
-      <div style={{ fontSize: 11.5, lineHeight: 1.5, color: "#c8d0e0", whiteSpace: "pre-wrap" }}>
-        {segments.map((seg, i) => (
-          <span key={i} style={seg.role ? { color: ROLE_COLOR[seg.role] } : undefined}>
-            {seg.text}
-          </span>
-        ))}
-      </div>
-      {usedRoles.length > 0 && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 6 }}>
-          {usedRoles.map((r) => (
-            <span key={r} style={{ fontSize: 10, color: ROLE_COLOR[r] }}>
-              ● {r}
-            </span>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
+// ⭐ 語意色彩預覽（task #114）—— **2026-09-03 拆掉**（GH#757）：
+//   `descriptionRoles` 全 repo 零份內容有值 ⇒ 這個預覽器**從來沒有東西可預覽**。
+//   整條鏈另存在 `docs/legacy/_retired-chains/role-markup-114.md`。
 
 // ---------------------------------------------------------------------------
 

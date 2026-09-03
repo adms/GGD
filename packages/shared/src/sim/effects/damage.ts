@@ -12,6 +12,7 @@ import { distanceScaleAmount, resourcePctAmount } from "./dynamicTerms";
 import { unscaledFractionOf } from "../combat/apDamageScaling";
 // ⭐ ⑨（2026-08-10）—— 技能暴擊與普攻走**同一支**判定，見那支的檔頭。
 import { rollAbilityCrit } from "../combat/critStrike";
+import { scalingOracle } from "../content/condition";
 
 export const damageEffect: EffectKindSpec<"damage"> = {
   apply(e, ctx) {
@@ -29,7 +30,7 @@ export const damageEffect: EffectKindSpec<"damage"> = {
     // those, apply time IS cast time and this is the correct reading. Every
     // DEFERRED payload had the term resolved and stripped at launch by
     // `bakeCastTimeConditionals`, so it can never be re-asked late.
-    const comboAdd = comboAddend(e, ctx);
+    const comboAdd = comboAddend(e, ctx, scalingOracle(ctx.world, ctx.caster, ctx.targets[0]));
     // 存款加成 (owner 2026-07-31「現存 MP 的 20% 傷害」) —— resolved ONCE, next
     // to the combo window and for the same reason: the number was frozen when
     // the mana was burned, so asking it per target could only ever return the
@@ -141,7 +142,10 @@ export const damageEffect: EffectKindSpec<"damage"> = {
     const subjects = e.applyTo === "self" ? [ctx.caster] : ctx.targets;
     for (const target of subjects) {
       let amount =
-        resolveScaling(stats, e.amount, ctx.rank, attrs) + comboAdd + bankedAdd + reflectAdd;
+        resolveScaling(stats, e.amount, ctx.rank, attrs, scalingOracle(ctx.world, ctx.caster, target)) +
+        comboAdd +
+        bankedAdd +
+        reflectAdd;
       if (pctCol !== undefined && pct > 0) {
         const hp = world.health.get(target);
         if (hp) amount += (pctCol.basis === "current" ? hp.hp : hp.maxHp) * pct;
@@ -234,7 +238,7 @@ export const damageEffect: EffectKindSpec<"damage"> = {
 
   bake(e, ctx) {
     if (e.comboBonus === undefined) return e;
-    const add = comboAddend(e, ctx);
+    const add = comboAddend(e, ctx, scalingOracle(ctx.world, ctx.caster, ctx.targets[0]));
     // The conditional is CONSUMED here either way: a payload that leaves this
     // function still carrying `comboBonus` would be re-asked the question at
     // landing, which is the bug. Dropping it is the fix, not an optimisation.

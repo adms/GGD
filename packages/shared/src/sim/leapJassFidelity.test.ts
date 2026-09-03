@@ -243,10 +243,17 @@ describe("#247 fidelity — godie-hpb1.e (A0G3) 者、皆、陣 combo window", (
       // ad × 0.5, i.e. 0.25 of ad per point of WC3 stat multiplier. 5 × 0.25 =
       // 1.25. Derived from the doc, not invented — and re-derived here so a
       // future rescale of the base term makes this test fail loudly.
-      expect(ratios["stat"]).toBe("ad");
-      expect(ratios["coeff"], "war3map.j:34214 is 5 × AGI, at this doc's own 0.25/point rate").toBe(
-        5 * 0.25,
-      );
+      // ⭐⭐ 2026-09-03（GH#937）：這一格照第〇·六守則的階梯換成了 **AP 兩段**。
+      //   ⭐ 而換算**仍然對得上** `claims.json` 自己記的 conditional 宣稱：
+      //     `agi × 5` × 0.25/點 = 1.25 ≈ **1.3**（卡面的 130% [AP]）
+      //     `agi × 10` × 0.25/點 = **2.5**（卡面的 250% [AP]）
+      //   ⇒ ⛔ 換的是**載體**（ad → ap）與**分段**，⭐ 不是那個換算率。
+      //   ⚠️ 被取代的 `ad × 1.25` 另存在 `docs/legacy/_w3x-fidelity-superseded.md`。
+      expect(ratios["stat"]).toBe("ap");
+      expect(
+        ratios["coeff"],
+        "war3map.j:34214 是 5 × AGI，照這份文件自己的 0.25/點換算率 = 1.25 ⇒ 卡面寫 130%",
+      ).toBe(1.3);
     }
   });
 
@@ -400,10 +407,21 @@ describe("#247 combo timing — the JASS bakes at CAST and pays the baked number
     // ⚠️ 2026-08-21 —— 基礎值現在**本來就住在 `flat`**（owner ①「B 全轉」把它
     //    從 `perRank` 換成 `damageTier` ⇒ `resolveDamageTier` 寫 `flat`），
     //    所以起飛時折進去的那一格是「基礎 + 連段」，⛔ 不再是「只有連段」。
-    expect(dmg!.kind === "damage" ? dmg!.amount.flat : undefined).toBeCloseTo(
-      BASE_FLAT + COMBO_BONUS,
-      6,
-    );
+    // ⚠️⚠️ ⭐ **這一條今天量不到東西，而那是誠實地說出來的**（2026-09-03）：
+    //   07-03 的連段換成 AP 之後，夾具（刻意只餵 ad）算出的 `COMBO_BONUS` 是 **0**，
+    //   而 `BASE_FLAT` 也是 0（基礎值住 `damageTier`，載入時才解析）
+    //   ⇒ 期望值 0，⭐ 而實作在「沒有東西要折」時根本不寫 `flat` ⇒ `undefined`。
+    //   ⛔ 寫成 `?? 0` 會讓它變成一條**永遠通過**的斷言（0 == 0）——那比刪掉更糟。
+    // ⭐ 「起飛時真的折進去了」這件事由**下面那個 describe** 守著
+    //   （自造夾具 `ad × 1.25`，⭐ 那裡的期望值是 150 ⇒ 有真訊號）。
+    const baked = BASE_FLAT + COMBO_BONUS;
+    if (baked > 0)
+      expect(dmg!.kind === "damage" ? dmg!.amount.flat : undefined).toBeCloseTo(baked, 6);
+    else
+      expect(
+        dmg!.kind === "damage" ? (dmg!.amount.flat ?? 0) : undefined,
+        "⛔ 沒有東西要折的時候 `flat` 不該憑空冒出一個數字",
+      ).toBe(0);
   });
 
   it("CLASS GUARD: every deferred payload carrier bakes, not just leap", () => {
@@ -456,8 +474,12 @@ describe("#247 combo timing — the JASS bakes at CAST and pays the baked number
         inner.kind === "damage" ? inner.comboBonus : "n/a",
         `${c.name} must resolve its conditional at CAST time`,
       ).toBeUndefined();
+      // ⭐ 這一段用的是**自造的**夾具（上面那個 `conditional`：`ad × 1.25`），
+      //   ⛔ 不是 07-03 那份文件 ⇒ 期望值要用它自己的數字。
+      //   ⚠️ 在此之前它借用 `COMBO_BONUS`，而 2026-09-03 那個常數改成從**文件**現算
+      //   ⇒ 兩個夾具借同一個期望值 = 借來的那一個必然漂掉。
       expect(inner.kind === "damage" ? inner.amount.flat : undefined).toBeCloseTo(
-        100 + COMBO_BONUS,
+        100 + TEST_AD * 1.25,
         6,
       );
     }
@@ -629,8 +651,31 @@ const BASE_RATIOS = (() => {
   );
 })();
 const BASE_DAMAGE = BASE_FLAT + BASE_RATIOS;
-/** ad×1.25 — the combo half (j:34214, at this doc's own 0.25/point rate). */
-const COMBO_BONUS = TEST_AD * 1.25;
+/**
+ * ⭐⭐ 連段那一半 —— **從那份文件現算**，⛔ 不抄字面值（同 `BASE_RATIOS` 的做法）。
+ *
+ * ⚠️ ⭐ 在此之前它是 `TEST_AD * 1.25`，而 2026-09-03 那一格照第〇·六守則的階梯
+ * （**owner 的新版技能說明 > w3x 原始設定**）換成了**兩段 AP**：
+ * 30 級之前 1.3×AP、之後 2.5×AP。⭐ 被取代的原值另存在
+ * `docs/legacy/_w3x-fidelity-superseded.md`（測試可以跟著設計走，知識不可以無聲消失）。
+ *
+ * ⭐ 夾具的英雄是 **1 級** ⇒ 成立的是 `level < 30` 那一段。
+ */
+const COMBO_BONUS = (() => {
+  const dmg = ((E_LEAP as unknown as Json)["onLand"] as Json[]).find((e) => e["kind"] === "damage")!;
+  const combo = dmg["comboBonus"] as Json | undefined;
+  // ⛔ 夾具刻意不餵 AP（見 `statsWithAd`）⇒ ⭐ 這一項今天算出來是 **0**。
+  const stats: Record<string, number> = { [Stat.AttackDamage]: TEST_AD };
+  return (((combo?.["amount"] as Json | undefined)?.["ratios"] as Json[] | undefined) ?? []).reduce(
+    (sum, r) => {
+      const w = r["when"] as Json | undefined;
+      // ⭐ 夾具是 1 級 ⇒ 只有 `< 30` 那一段成立。⛔ 兩段都算 = 3.8×AP（那是缺陷）。
+      if (w !== undefined && !(w["stat"] === "level" && w["op"] === "<")) return sum;
+      return sum + (stats[r["stat"] as string] ?? 0) * (r["coeff"] as number);
+    },
+    0,
+  );
+})();
 
 const ORIGIN_E = "ability:godie-hpb1.e";
 
@@ -725,6 +770,11 @@ function rawDamage(world: SimWorld, dealt: number): number {
 function statsWithAd(ad: number): import("./stats/statsComp").StatsComp {
   const block = zeroStats();
   block[Stat.AttackDamage] = ad;
+  // ⛔⛔ **刻意不餵 AP** —— 這一格 2026-09-03 換成 AP 之後試過，而它把期望值
+  //   綁進了**第二個公式**：AP 傷害還要過 `apDamageScaling`（量到 ×1.2），
+  //   ⇒ 期望值得複寫那條縮放鏈 = 那條鏈的**第二個住處**（第〇·四守則）。
+  //   ⭐ 這個檔的檔頭早就選過同一條路：「換成 ap 之後這一項是 0，
+  //     而**時序斷言照樣會抓到**任何一次烘焙錯誤」—— 這裡沿用。
   return {
     championId: "test" as ChampionId,
     final: block,

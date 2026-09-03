@@ -96,7 +96,7 @@
         }
       ],
       "vfxKey": "fx.prim.void.beam",
-      "castTimeSec": 0.833,
+      "castTimeSec": 1.033,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
@@ -235,13 +235,13 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.233
+          "castTimeSec": 1.633
         }
       },
       "vfxKey": "fx.prim.fire.explosion-lg",
       "sfxKey": "wc3.taunt",
       "targetsEnemies": true,
-      "castTimeSec": 1.233,
+      "castTimeSec": 1.633,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",

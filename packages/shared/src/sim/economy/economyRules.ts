@@ -34,6 +34,20 @@ export interface EconomyRules {
   /** 第幾回合起頂點才解鎖（`statPath.ts` 的 `CAPSTONE_ROUND_GATE`）。 */
   capstoneRoundGate: number;
   /**
+   * ⭐⭐ **頂點加成的劣勢加權強度**（GH#897）—— owner 2026-09-01 逐字：
+   * > 「隨機能力20次後的額外%加成，根據玩家目前**排名&積分**來做權重調整，
+   * >  也就是**越排後的玩家額外%加成越高**，讓劣勢方有機會翻盤」
+   *
+   * ⭐ 最終抽出的百分比 ＝ `roll × (1 + 這一格 × D)`，D ∈ [0,1] 是**出貨的**
+   * `disadvantageScore()` 算的（回合差 · 裝備價值差 · 近況三項加權）。
+   * ⛔ 這裡**不再寫第二套劣勢公式** —— 武器階級那一族已經有一份（第〇·四守則）。
+   *
+   * ⭐⭐ **出貨 `0` ＝ 關掉（逐位元回到今天）** ——
+   * ⚠️ 它改變每一場比賽的結果，⛔ 而 owner 只說了「要有」，沒說要多強。
+   * ⇒ 這一格存在是為了讓他**改一個下拉選單**就能試（第一守則：可調 ≠ 我可以轉）。
+   */
+  capstoneDisadvantageFactor: number;
+  /**
    * 助攻認定窗（tick，30Hz ⇒ 300 ＝ 10 秒；`stats/matchStats.ts` 的 `ASSIST_WINDOW_TICKS`）。
    * ⛔ **連殺窗不在這裡** —— 它被客戶端音效共用，理由見 `codeOnlyKnobs.test.ts` 的豁免表。
    */
@@ -53,6 +67,8 @@ export const DEFAULT_ECONOMY: EconomyRules = Object.freeze({
   statTickPrice: 375,
   statTickTarget: 20,
   capstoneRoundGate: 6,
+  // ⭐ GH#897 —— 出貨 0 ＝ 關（它改變每一場比賽的結果，而 owner 沒說要多強）。
+  capstoneDisadvantageFactor: 0,
   assistWindowTicks: 300,
   roundGrantKeepsRemainder: true,
 });
@@ -66,6 +82,8 @@ const BOUNDS: Readonly<Partial<Record<keyof EconomyRules, readonly [number, numb
   // ⭐ 0 = 不設回合閘（第一回合就開得了）。⚠️ 上界刻意寬：一場實打 5–6 回合，
   //   而 owner 想做長局的時候不該被這一格擋住。
   capstoneRoundGate: [0, 60],
+  // ⭐ 0 = 關；2 = 最劣勢方拿到三倍。上界 5 是「翻盤」與「送分」的分界。
+  capstoneDisadvantageFactor: [0, 5],
   assistWindowTicks: [0, 36000],
 });
 

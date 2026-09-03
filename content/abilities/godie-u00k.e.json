@@ -36,13 +36,13 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.667
+      "castTimeSec": 1.633
     }
   },
   "vfxKey": "fx.prim.void.swarm",
   "sfxKey": "wc3.parasite",
   "targetsEnemies": true,
-  "castTimeSec": 0.667,
+  "castTimeSec": 1.633,
   "rangeTier": "極大",
   "range": 12
 }

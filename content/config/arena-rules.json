@@ -284,7 +284,8 @@
     "reward": {
       "gold": 20,
       "xp": 40,
-      "killsPerLevel": 0
+      "killsPerLevel": 0,
+      "xpMultiplier": 3.0
     },
     "boss": {
       "enabled": true,
@@ -370,6 +371,57 @@
       "settlementTitle": "特殊殭屍 分紅結算",
       "settlementMode": "panel",
       "countsAsChampion": true
+    }
+  },
+  "round11": {
+    "enabled": false,
+    "arenaId": "arena.royale",
+    "durationSec": 600,
+    "triggerBossKills": 3,
+    "bannerText": "第十一回合・生存模式",
+    "maxAliveZombies": 500,
+    "spawnRampSec": 120,
+    "bossStrengthMult": 2,
+    "bossScaleFloor": 1,
+    "bossScaleCeil": 8,
+    "deadPlayersControlBoss": true,
+    "bombardment": {
+      "enabled": true,
+      "telegraphSec": 10,
+      "damagePctOfMaxHp": 0.5,
+      "radius": 12,
+      "crowdBias": 0.6
+    },
+    "waveTable": {
+      "eventIntervalSec": 20,
+      "difficultyBase": 1.15,
+      "events": [
+        {
+          "kind": "normal",
+          "weight": 60
+        },
+        {
+          "kind": "special",
+          "weight": 25
+        },
+        {
+          "kind": "boss",
+          "weight": 5
+        },
+        {
+          "kind": "bombardment",
+          "weight": 5
+        },
+        {
+          "kind": "reviveCircle",
+          "weight": 5
+        }
+      ]
+    },
+    "scoring": {
+      "survivalWeight": 0.5,
+      "scoreMultiplier": 2,
+      "minContributionForFullSurvival": 0.2
     }
   }
 }

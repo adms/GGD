@@ -193,12 +193,12 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.667
+          "castTimeSec": 1.233
         }
       },
       "vfxKey": "fx.root-snare",
       "targetsEnemies": true,
-      "castTimeSec": 0.667,
+      "castTimeSec": 1.233,
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "大",

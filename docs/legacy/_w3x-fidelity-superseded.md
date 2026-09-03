@@ -720,3 +720,40 @@ owner **2026-08-22** 給了完整階梯（**重製新說明 > JASS > w3x說明 >
 （⛔ 不需要改程式、⛔ 不需要部署）。
 
 ⚠️ 若 owner 認為 20-03 本來就該打兩段，貼回去即可 —— 這份紀錄的存在就是為了讓那件事是**一次貼上**。
+
+---
+
+## 07-03 列、在、前 —— 連續技加成從 **AD×1.25** 換成 **AP 1.3／2.5（分兩段）**
+
+**日期**：2026-09-03（GH#937）
+
+**被取代的原作值**（`tools/ap-conversion/claims.json` 的 `godie-hpb1.e` → `amounts[1]`）：
+
+```json
+{ "attrRatios": null, "ratios": [{ "coeff": 1.25, "stat": "ad" }] }
+```
+
+⭐ **為什麼退場** —— 照第〇·六守則的階梯（**新版技能說明 > w3x 原始設定**）：
+
+| 層 | 說什麼 |
+|---:|---|
+| **1** owner 的卡面 | 「在"者、皆、陣"發動後**1 秒內**施展可增加(**130% [AP]**)傷害，**30 級之後**可增加(**250% [AP]**)傷害」 |
+| **5** w3x 原始設定 | `ad × 1.25`（單一段，⛔ 沒有等級分段、⛔ 不是 AP） |
+
+⭐ ⭐ **而三者自洽**：`claims.json` 自己記著兩筆 `stacking: "conditional"` 的宣稱 ——
+`agi × 5.0` 與 `agi × 10.0`。照 apconv 的換算率（**AP／點 = 0.25**）：
+
+    5.0 × 0.25 = 1.25 ≈ **1.3**  ⇒ 卡面的「130% [AP]」
+   10.0 × 0.25 = 2.50           ⇒ 卡面的「250% [AP]」
+
+⇒ ⭐ **卡面、JASS 宣稱、換算率三者完全對得上** —— ⛔ 只有實作漏了那兩段。
+
+⛔⛔ **而 apconv 只套用 `stacking == "base"` 那一筆**（`tools/ap-conversion/apply.py`
+的 `base = [c for c in entry["claims"] if c["stacking"] == "base"]`）——
+⭐ 它把 conditional 那兩筆**記進 manifest 的 `conditionalPct`** 卻**從來沒有套用過**。
+⇒ ⭐ 那就是這一格今天是舊值的機制原因，⛔ 不是誰忘了改。
+
+**rollback**（⛔ 不需要改程式、⛔ 不需要部署）：把上面那個 JSON 片段貼回
+`claims.json` 的 `godie-hpb1.e.amounts[1]`，跑 `bash scripts/genrun.sh apconv:build`。
+⚠️ 貼回去之後那條 AD 會與 AP 那兩段**同時**生效（`ratios` 相加）——
+⭐ 那正是為什麼它現在不在那裡。

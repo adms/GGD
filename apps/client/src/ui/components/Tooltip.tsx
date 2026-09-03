@@ -15,7 +15,11 @@
 import { useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { computeTooltipPlacement, type TooltipSide } from "./tooltipPlacement";
-import { parseRoleMarkup, rescaleAbilityProse, ROLE_COLOR, WC3_PROSE_CAPTION } from "./abilityText";
+import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "./abilityText";
+import {
+  tokenizeDescription,
+  PALETTE_HEX,
+} from "@ggd/shared/content/import/descriptionTokens";
 import { displayFinalText, useDisplayEnv, type DisplayFactor } from "../displayFinal";
 import type { CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
 import { PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
@@ -180,13 +184,27 @@ export function Tooltip({
                   }}
                 >
                   {/* cooldown literals rescaled to the live combat-env final
-                      (說明數值最終化); task #114: `[c=role]…[/c]` role markup
-                      renders as normalised coloured runs, plain text as one run. */}
-                  {parseRoleMarkup(rescaleAbilityProse(body, env)).map((seg, i) => (
-                    <span key={i} style={seg.role ? { color: ROLE_COLOR[seg.role] } : undefined}>
-                      {seg.text}
-                    </span>
-                  ))}
+                      (說明數值最終化)。
+                      ⭐ 2026-09-03（GH#757）：語意色彩鏈（task #114）拆掉了 ——
+                      `descriptionRoles` 全 repo 零份內容有值，⛔ 而它與這一行的
+                      `rescaleAbilityProse` 有正則衝突（先 rescale 再 parse，救不了）
+                      ⇒ 餵它會讓冷卻顯示 60 而不是 18。另存見
+                      `docs/legacy/_retired-chains/role-markup-114.md`。 */}
+                  {/* ⭐⭐ GH#935 —— 說明 token 的**七色分群**。
+                      ⭐ 資料來源是 `ggd-presentation-token-manifest@1`（274 個 token /
+                      2,650 次出現），⛔ 不是散在這裡的色碼；
+                      ⭐ 而它**先 rescale 再 tokenize** 是安全的：token 是完整的
+                      `[…]`，⛔ 而 rescale 的正則錨在「數字緊貼關鍵字」——兩者不相交
+                      （⚠️ 那正是 #757 的 role markup 做不到的事）。 */}
+                  {tokenizeDescription(rescaleAbilityProse(body, env)).map((n, i) =>
+                    n.kind === "text" ? (
+                      <span key={i}>{n.text}</span>
+                    ) : (
+                      <span key={i} style={{ color: PALETTE_HEX[n.palette] }}>
+                        [{n.label}]
+                      </span>
+                    ),
+                  )}
                 </div>
                 <div style={{ marginTop: 4, fontSize: 10, color: TEXT_DIM }}>{WC3_PROSE_CAPTION}</div>
               </>

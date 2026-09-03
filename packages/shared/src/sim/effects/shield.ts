@@ -11,6 +11,7 @@ import type { EffectKindSpec } from "./effectKind";
 import { resolveScaling } from "./effect";
 import { addShield } from "../combat/damage";
 import { casterAttrs, casterStats } from "./effectCommon";
+import { scalingOracle } from "../content/condition";
 
 /**
  * ⭐⭐ **`shieldGained` 的酬載型別 —— 住在發射站旁邊**（GH#940）。
@@ -54,7 +55,8 @@ export const shieldEffect: EffectKindSpec<"shield"> = {
     const stats = casterStats(ctx);
     // global combat-env shield-strength factor
     const amount =
-      resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx)) * world.combatEnv.shield;
+      resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(world, ctx.caster, ctx.targets[0])) *
+      world.combatEnv.shield;
     for (const target of ctx.targets) {
       // 護盾類型過濾 (owner 2026-07-30:「護盾的確有分吸收所有傷害跟吸收 AP 傷害
       // only」). The author's choice rides straight through to the pool; absent

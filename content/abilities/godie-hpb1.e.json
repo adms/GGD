@@ -48,8 +48,26 @@
             "amount": {
               "ratios": [
                 {
-                  "coeff": 1.25,
-                  "stat": "ad"
+                  "stat": "ap",
+                  "coeff": 1.3,
+                  "when": {
+                    "kind": "stat",
+                    "subject": "self",
+                    "stat": "level",
+                    "op": "<",
+                    "value": 30
+                  }
+                },
+                {
+                  "stat": "ap",
+                  "coeff": 2.5,
+                  "when": {
+                    "kind": "stat",
+                    "subject": "self",
+                    "stat": "level",
+                    "op": ">=",
+                    "value": 30
+                  }
                 }
               ]
             }
@@ -62,7 +80,7 @@
   "sfxKey": "wc3.moonjump",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 1.433,
+  "castTimeSec": 1.633,
   "rangeTier": "極大",
   "range": 12
 }

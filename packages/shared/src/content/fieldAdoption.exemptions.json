@@ -1262,16 +1262,6 @@
     "why": "`sand` (raked arena sand) IS shipped and IS on screen — `content/arenas/arena.colosseum.json` (羅馬大擂台) uses it. What has zero adoption is the `map@1` half: colosseum is a hand-authored arena doc that predates the map compiler (GH#324/#342), so no `content/maps/*.json` declares `sand`. The painter, the PNG and the runtime lookup all exist; this row is about which AUTHORING surface reaches it, not about a dead mechanism. It expires the day someone rebuilds colosseum as a compiled map.",
     "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
   },
-  "field:abilities.descriptionRoles": {
-    "status": "superseded",
-    "why": "GH#757（接手已關的 #114）—— ⭐ 2026-08-29 在兩條出路（拆／餵）之中**選了拆**，而理由不是「沒人排到」，是**跑出貨載入路徑量到的**：技能說明今天是**推導**的（`content` 寫佔位符 `{{cd}}`/`{{dmg}}`/`{{mp}}`，421 份 ability doc 裡 **338 份**帶著它們），載入時由 `registries.ts::withProse` 代入 —— ⚠️ 而它**只代進 `description` 一格**；客戶端讀卡面的唯一入口 `abilityText.ts::docDescription` 則**優先回傳 `descriptionRoles`**。⇒ 一份填了這個欄位的文件，卡面上直接印出 `{{cd}}`。⭐ 這正是第〇·四守則的病（**同一句話的第二個住處，而寫入端只寫第一個**）⇒ 「採用它」就是缺陷 —— 逐字是本檔 :126 的 `superseded` 定義。⭐ **取代它的是佔位符詞彙本身**（`{{dmg}}`＝`[c=damage]`、`{{cd}}`＝`[c=duration]`、`{{mp}}`＝`[c=mana]`）：語意角色沒被放棄，它換到**唯一**的住處並在載入時算繪；真要色彩就從佔位符推導（零內容改動、零第二住處）。⭐ **退役的知識另存**在 `docs/legacy/_semantic-role-markup-superseded.md`（角色詞彙／hex→role 分類規則與閾值／`[c=role]` 文法／七個正規化色碼），⛔ 不是無聲消失。⭐ **能被反駁的窗口＋三個到期條件，三條都是閘**：① 任何文件填了它 ⇒ 本檔的 STALE 測試當場紅並要求刪掉這一列；② 載入期的算繪哪天也涵蓋 `descriptionRoles` ⇒ 前提消失、「餵」重新可行 ⇒ `packages/shared/src/content/semanticRoleMarkup.test.ts` 紅並指名回來重評；③ schema 欄位真的被拿掉（拆的最後一段）⇒ 這個 key 從普查消失 ⇒ 同一條 STALE 測試以「no longer a registered key at all」紅。⚠️ **拆還沒走完的那一段（誠實列出）**：`schema/ability.ts` 的欄位、`apps/client` 的 `classifyRole`/`ROLE_COLOR`/`parseRoleMarkup` 與四個消費端、`tools/w3x-import/w3xlib/wts.py::to_role_markup`（全 repo 零呼叫者）仍在 —— 拿掉 schema 欄位會讓 `content/editor-target-profile.json`（skillremake:json）、`docs/editor-contract/ggd-runtime-capabilities.{md,json}`（caps:export）、`docs/技能標記機制與效果規則.md`（spec:build）四份產物同時過期 ⇒ 那要一條**同時吃 packages/shared + apps/client + tools/ + 產生器**的 lane，⛔ 不是拆給多條柵欄。⚠️ **順帶更正一個過期前提**（第三守則）：舊 why 寫「選餵之前必須先修兩條正則與呼叫順序」—— 那件事早就做完了（`MARKUP` 已烘進 `COOLDOWN_PROSE_RE`/`DAMAGE_PROSE_RE`），⛔ 它不是擋路的東西。",
-    "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
-  },
-  "field:champions.abilities.*.descriptionRoles": {
-    "status": "superseded",
-    "why": "GH#757 —— 上面那一列的 champion-embedded 鏡像（STRICT 鏡像規則 ⇒ 兩邊一起動、一起收）。⭐ 這一半**不是類推**：`semanticRoleMarkup.test.ts` 對 `expandEmbedded` 那條路**也真的跑過**，量到完全一樣的結果（`description` 被算繪、`descriptionRoles` 沒有）⇒ 填它同樣會讓英雄卡印出 `{{cd}}`。到期條件與反駁窗口與上面那一列**逐條相同**（STALE ×2 ＋ `semanticRoleMarkup.test.ts`），知識另存同樣在 `docs/legacy/_semantic-role-markup-superseded.md`。⛔ 不要單獨處置這一列：只收一邊就是把鏡像規則破掉。",
-    "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
-  },
   "field:champions.baseAttackTime": {
     "status": "debt",
     "why": "task #144 (per-champion w3x movement/attack speed) is still pending, so all 113 champions use BasicAttackSystem.ts:173's `?? 1.0` and every hero attacks at the same base cadence — the w3x per-hero values were never imported.",
@@ -2089,12 +2079,6 @@
     "since": "2026-09-02",
     "why": "⭐ `dodge` 是 2026-09-02 為 Codex 阻塞清單 P0-2 新做的**動作積木**，而 owner 2026-09-01 逐字定義的分工是「**main 是做出積木供使用的角色**，[後台編輯器及codex編輯器] 是**堆積木**的角色」⇒ ⭐ 出貨內容零採用是**這條 lane 的定義**，⛔ 不是遷移沒做完。⚠️ 而它刻意用 `landing`（30 天到期）⛔ 不是 `debt`：Codex 逐字說「Main 完成積木與契約後，Editor 會從空白重新組裝八個 capability fixture」⇒ ⭐ 30 天後若仍是零，代表**那件事沒有發生**，而那正是這條閘該喊的時候。⭐ 積木本身的守衛在 `apps/client/src/render/guardDodgePulse.test.ts`（schema 收得下 · 狀態機蓋得過 hurt · 缺 clip 的 fallback 不是 hurt · 消費端接的是 `blocked` 與 `evade` 兩個真事件）。"
   },
-  "field:abilities.effects[]#chainLightning.amount.ratios[].when": {
-    "status": "landing",
-    "since": "2026-09-02",
-    "why": "GH#936 —— 一條係數的**前提**（「帶著某狀態時才吃這個 AP 係數」）。⭐ 這一格今天是 0 是**對的**：機制（schema ＋ `resolveScaling`）與內容（哪一支技能改成條件式）刻意分兩張票 —— 票文逐字寫著「⛔ 不包含：改任何係數的**值**」，而第一份採用者是 owner 2026-09-02 點名的 04-03 龍破斬（`godie-hjai.e`）：> 「碎片是 EX 施展得到的增幅狀態，可以做條件偵測增幅 AP 傷害」。⛔ 我不先填它：那會在同一個 commit 裡對一支出貨技能做一次**削弱**（沒碎片時少 1.8×AP），而那要走批核頁（#926），⛔ 不是夾帶在一塊積木裡。⚠️ 機制側兩個方向都有守衛並突變驗過（`sim/effects/conditionalRatios.test.ts`：條件不成立不計入 / 成立才計入 / 缺席逐位元同今天且零 rng draw）。⚠️ census 只列 `chainLightning` 這一把，但這一格住 `zScaling`，damage / damageArea / damageLine / dot / heal / shield / spendMana 共用同一份。",
-    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
-  },
   "field:abilities.castTimeTier": {
     "status": "landing",
     "since": "2026-09-02",
@@ -2169,5 +2153,30 @@
     "since": "2026-09-02",
     "why": "⭐ 同上（`replaces` 的接管時長）。⚠️ ⭐ 省略＝**320ms** —— ⛔ 刻意不是「永遠」:一個沒有到期的接管會讓那個人**再也不會有任何反應**,而那看起來就像動畫壞了。⇒ 只有需要**比一塊動作積木更長**的接管才會填它。",
     "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
+  },
+  "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=E": {
+    "status": "landing",
+    "since": "2026-09-03",
+    "why": "⭐ `ratios[].when` / `hooks[].when` 的 `recentCast.slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有內容（GH#936/#944 的變身增幅：「最近放過 EX 才吃這條係數」）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**，⛔ 不是四個各自要接線的功能：它們與 EX 走**完全相同**的那一行 `resolveScaling`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「最近放過 Q 才吃這條」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
+  },
+  "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=PASSIVE": {
+    "status": "landing",
+    "since": "2026-09-03",
+    "why": "⭐ `ratios[].when` / `hooks[].when` 的 `recentCast.slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有內容（GH#936/#944 的變身增幅：「最近放過 EX 才吃這條係數」）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**，⛔ 不是四個各自要接線的功能：它們與 EX 走**完全相同**的那一行 `resolveScaling`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「最近放過 Q 才吃這條」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
+  },
+  "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=Q": {
+    "status": "landing",
+    "since": "2026-09-03",
+    "why": "⭐ `ratios[].when` / `hooks[].when` 的 `recentCast.slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有內容（GH#936/#944 的變身增幅：「最近放過 EX 才吃這條係數」）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**，⛔ 不是四個各自要接線的功能：它們與 EX 走**完全相同**的那一行 `resolveScaling`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「最近放過 Q 才吃這條」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
+  },
+  "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=R": {
+    "status": "landing",
+    "since": "2026-09-03",
+    "why": "⭐ `ratios[].when` / `hooks[].when` 的 `recentCast.slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有內容（GH#936/#944 的變身增幅：「最近放過 EX 才吃這條係數」）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**，⛔ 不是四個各自要接線的功能：它們與 EX 走**完全相同**的那一行 `resolveScaling`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「最近放過 Q 才吃這條」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
+  },
+  "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=W": {
+    "status": "landing",
+    "since": "2026-09-03",
+    "why": "⭐ `ratios[].when` / `hooks[].when` 的 `recentCast.slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有內容（GH#936/#944 的變身增幅：「最近放過 EX 才吃這條係數」）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**，⛔ 不是四個各自要接線的功能：它們與 EX 走**完全相同**的那一行 `resolveScaling`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「最近放過 Q 才吃這條」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
   }
 }

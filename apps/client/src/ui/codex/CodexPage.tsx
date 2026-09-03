@@ -246,14 +246,11 @@ function Badge({ text, color }: { text: string; color: string }): React.JSX.Elem
 }
 
 /**
- * Prefer the task #114 role markup (`descriptionRoles`) off the raw doc so the
- * row tooltip renders the colour-normalised text; fall back to the flat
- * `description` for docs the importer has not re-run over. Read defensively —
- * the field is additive and codexTypes does not normalise it.
+ * ⭐ 2026-09-03（GH#757）—— 語意色彩鏈（task #114）拆掉了。
+ * 在此之前這裡會優先讀 `descriptionRoles`，⛔ 而那一格全 repo 零份內容有值。
+ * ⭐ 另存見 `docs/legacy/_retired-chains/role-markup-114.md`。
  */
 function rowTooltipBody(entry: CodexEntry): string | undefined {
-  const roles = (entry.doc as { descriptionRoles?: unknown }).descriptionRoles;
-  if (typeof roles === "string" && roles.length > 0) return roles;
   return entry.description ?? undefined;
 }
 

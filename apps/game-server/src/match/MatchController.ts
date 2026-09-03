@@ -139,6 +139,10 @@ import {
 } from "@ggd/shared/sim/world/ArenaDef";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import { Champions, Abilities, LootTables, Items, Statuses } from "@ggd/shared/sim/content/registry";
+import {
+  SHIPPED_ONE_SHOT_CLAMP,
+  type ConfigOneShotClampDoc,
+} from "@ggd/shared/content/schema/config/oneShotClamp";
 import { Configs, Models } from "@ggd/shared/content";
 import { spawnChampion } from "@ggd/shared/sim/spawnChampion";
 import { createMatchStats, type PlayerMatchStats } from "@ggd/shared/sim/stats/matchStats";
@@ -1119,6 +1123,14 @@ export class MatchController {
      */
     combatFeel: CombatFeelRules = combatFeelFromDoc(Configs.tryGet(COMBAT_FEEL_DOC_ID)),
     /**
+     * ⭐⭐ 一擊必殺的夾限（GH#928）—— 與 `combatFeel` **完全同一條路**
+     * （`Configs` 是 boot 時載入的，後台改了要重啟 shard 才生效）。
+     * ⛔ 出貨 `enabled: false` ⇒ ⭐ 這一格今天逐位元 no-op。
+     */
+    oneShotClamp: ConfigOneShotClampDoc =
+      (Configs.tryGet("one-shot-clamp") as unknown as ConfigOneShotClampDoc | undefined) ??
+      SHIPPED_ONE_SHOT_CLAMP,
+    /**
      * ⭐ 手把操作方案 (`config.controller-scheme@1`, GH#863) —— sim 只用它的
      * `combatInput`（「移動算不算戰鬥輸入」）。和 `combatFeel` 完全同一條路，
      * 含同一個已知限制：`Configs` 是 boot 時載入的，後台切了版本要重啟 shard。
@@ -1266,6 +1278,9 @@ export class MatchController {
     registerSkeletonContent();
     this.world = new SimWorld(arena, seed);
     this.world.combatEnv = combatEnv;
+    // ⭐ 一擊必殺夾限（GH#928）—— ⛔ 漏掉這一行，那一格就永遠是出貨預設，
+    //   後台開了場上沒反應（＝失敗形態⑧，這一輪已經中過兩次）。
+    this.world.oneShotClamp = oneShotClamp;
     // Snapshotted before tick 0 — a match in progress can never see a change.
     this.world.baseBonus = baseBonus;
     // ⭐ 每級加成（owner 2026-08-13「英雄每等級都會 +1 AP」）。
@@ -2031,6 +2046,17 @@ export class MatchController {
     // ⭐ 劣勢值 `D` 逐座位算一次，**兩種卡共用**（GH#357：聖杯的等級也隨戰況升級）。
     // ⛔ 兩邊各算一份 = 兩份會分岔的「誰算劣勢」，而那正是 owner 最會調的東西。
     const disadvantageBySeat = this.disadvantageBySeat();
+    // ⭐⭐ 第三個消費端（GH#897）：頂點加成的劣勢加權。
+    //   owner 2026-09-01 逐字：「⋯越排後的玩家額外%加成越高，讓劣勢方有機會翻盤」。
+    // ⭐ 餵**同一份** D（⛔ 不再算第二份 —— 那正是上面那行註解在防的東西）。
+    // ⚠️ ⛔ 漏掉這一行，`economy.capstoneDisadvantageFactor` 會是一格
+    //   後台改得到、場上沒反應的死開關（失敗形態⑧，這一輪已經中過三次）。
+    this.world.seatDisadvantage = new Map(
+      [...this.activeSeats()]
+        .filter(([, s]) => s.entityId !== null)
+        .map(([seatId, s]) => [s.entityId!, disadvantageBySeat.get(seatId) ?? 0]),
+    );
+
     // ⭐ 兩張都真的發出去了嗎 —— 延長中場的條件（owner 2026-08-18）。
     // ⚠️ 讀的是「**發出去了**」而不是「排了 draftBoth」：其中一種沒有池的時候
     // 只發得出一張，而多給 10 秒會讓玩家對著一張卡等一段沒有理由的空白。

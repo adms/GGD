@@ -8,20 +8,20 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | verdict | cells | meaning |
 | --- | ---: | --- |
-| ✅ OK | 217 | shape derived from the ability's own authored data |
+| ✅ OK | 216 | shape derived from the ability's own authored data |
 | 🟡 AMBIGUOUS | 17 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
 | ❌ MISSING | 0 | no derivable shape — **fails the test** |
-| 🟣 PASSIVE | 59 | permanent WC3 passive, never cast, nothing to warn about |
+| 🟣 PASSIVE | 60 | permanent WC3 passive, never cast, nothing to warn about |
 
-**234 / 234 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
+**233 / 233 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
 
 ## By castType
 
 | castType | cells | shape language |
 | --- | ---: | --- |
-| `self` | 94 | self marker at the caster's feet |
+| `self` | 93 | self marker at the caster's feet |
 | `targeted` | 71 | lock (arc at the victim + tether to the caster) — walking does not help |
-| `—` | 59 | not cast |
+| `—` | 60 | not cast |
 | `ground` | 53 | circle — the real `enemiesInCircle` disc; you can walk out. ⭐ WITH a `damageLine` node: line — the capsule the damage query tests (step sideways) |
 | `skillshot` | 15 | line — the projectile's corridor; step sideways |
 | `dash` | 1 | line — the sweep of the dash body |
@@ -276,7 +276,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | R | 76-04 三檔.巨人迴旋彈 | `ground` | circle r=5.58u | ✅ OK | radius 6.97 × abilityRange 0.8 |
 | 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | EX | 76-002 霸王色 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 黑手黨老大 - 基廉列克 `godie-u00v` | PASSIVE | 78-00 銅皮鐵骨 | `—` | — | 🟣 PASSIVE | never cast |
-| 黑手黨老大 - 基廉列克 `godie-u00v` | Q | 78-01 斬鐵拳 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 黑手黨老大 - 基廉列克 `godie-u00v` | Q | 78-01 斬鐵拳 | `—` | — | 🟣 PASSIVE | never cast |
 | 黑手黨老大 - 基廉列克 `godie-u00v` | W | 78-02 地走龍牙破 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave.earth maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |
 | 黑手黨老大 - 基廉列克 `godie-u00v` | E | 78-03 廬山昇龍破 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
 | 黑手黨老大 - 基廉列克 `godie-u00v` | R | 78-04 死亡噴射肘擊 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |

@@ -139,3 +139,51 @@ export function apCoeffInputsFrom(
       : {}),
   };
 }
+
+/**
+ * ⭐⭐ **把公式套到一份 ability 文件上**（GH#945）—— 載入時的那一層。
+ *
+ * ⛔⛔ 在此之前 `resolveApCoeff()` 是一支**零 production 消費端**的函式：
+ * 公式做好了（GH#942）、BASE 校準過了、後台頁也有了 ——
+ * ⭐ 而**沒有任何一行**在載入時呼叫它 ⇒ 樹上那 148 個手填的 `coeff` 原封不動。
+ * ⚠️ 而 admin 那一頁的 `consumer` 欄位逐字寫著
+ * 「← `content/registries.ts` 在技能註冊時把六個級距標籤翻成 `ratios[].coeff`」
+ * ⇒ ⭐ **那句話是假的**（第三守則：一句在它到期之前就已經先寫下的散文）。
+ *
+ * ⭐ 這一支補上那一層，形狀照 `resolveCastTimeTierOnDoc`：
+ * 純函式、規則由呼叫端傳、⛔ 不查 registry。
+ *
+ * ⚠️ ⭐ **關掉 `enabled` ⇒ 逐位元回到今天**（手填的 `coeff` 原封不動）——
+ * 那是 owner 常設指令要的一鍵 rollback。
+ */
+export function resolveApCoeffOnDoc<T extends Record<string, unknown>>(
+  def: T,
+  cooldownMidSec: number,
+  cooldownSec: number,
+  c: ApCoefficientConfig = DEFAULT_AP_COEFFICIENT,
+): T {
+  if (!c.enabled) return def;
+  let touched = false;
+  const walk = (o: unknown): void => {
+    if (Array.isArray(o)) return o.forEach(walk);
+    if (!o || typeof o !== "object") return;
+    const node = o as Record<string, unknown>;
+    const ratios = node["ratios"];
+    if (Array.isArray(ratios) && ratios.length > 0) {
+      const v = resolveApCoeff(apCoeffInputsFrom(def, node, cooldownMidSec, cooldownSec), c);
+      if (v !== null)
+        for (const r of ratios as Record<string, unknown>[])
+          // ⭐ 只動 `ap` 那一條 —— ⛔ `ad` / `maxHealth` 那些不在這條公式的定義域裡。
+          if (r["stat"] === "ap" && typeof r["coeff"] === "number") {
+            r["coeff"] = v;
+            touched = true;
+          }
+    }
+    for (const v of Object.values(node)) walk(v);
+  };
+  // ⚠️ ⭐ **就地改一份 clone**，⛔ 不是原文件：註冊表裡那一份會跨英雄、跨場次
+  //   （`abilityPassives.ts` 的檔頭逐字記過同一個陷阱）。
+  const clone = JSON.parse(JSON.stringify(def)) as T;
+  walk(clone["effects"]);
+  return touched ? clone : def;
+}

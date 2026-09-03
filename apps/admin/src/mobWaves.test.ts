@@ -131,6 +131,7 @@ const EVERY_FIELD: readonly MobWavesFieldKey[] = [
   "reward.gold",
   "reward.xp",
   "reward.killsPerLevel",
+  "reward.xpMultiplier", // ⭐ GH#909 —— 經驗總倍率
   // 殭屍王 (#262)
   "boss.enabled",
   "boss.killThreshold",
@@ -463,6 +464,7 @@ describe("每一個欄位 are reachable and labelled", () => {
       "reward.gold": "66",
       "reward.xp": "77",
       "reward.killsPerLevel": "8",
+      "reward.xpMultiplier": "3",
       "boss.enabled": "1",
       "boss.killThreshold": "150",
       "boss.repeatable": "0",

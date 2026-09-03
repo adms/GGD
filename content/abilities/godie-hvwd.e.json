@@ -34,7 +34,7 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.667
+      "castTimeSec": 1.633
     }
   },
   "vfxKey": "fx.w3x.particle.heronarutos4effect.p00",
@@ -52,7 +52,7 @@
   "targetsEnemies": true,
   "schema": "ability@1",
   "icon": "assets/icons/abilities/godie-hvwd.e.png",
-  "castTimeSec": 0.667,
+  "castTimeSec": 1.633,
   "rangeTier": "極大",
   "range": 12
 }

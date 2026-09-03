@@ -1,3 +1,4 @@
+import MANIFEST from "../../../../../docs/editor-contract/ggd-presentation-token-manifest.json" with { type: "json" };
 /**
  * ⭐⭐ 說明文字的 **`[token]` 允許清單 tokenizer**（GH#327 §3.6）。
  *
@@ -41,13 +42,26 @@ export type PresentationNode =
  * 匯入包**不可以**指定顏色（那是 CSS 注入的入口）。
  */
 export const PALETTE_IDS = [
-  "default",
-  "targeting", // [指向] [範圍] [周圍] [直線]…
-  "resource", // [AP] [MP] [最大生命]…
-  "timing", // [被動] [主動] [普攻時]…
-  "control", // [暈眩] [沉默] [擊退]…
+  "activation", // [被動] [主動] [輔助] [變身] [EX解放]…
+  "cast", // [指向] [範圍] [周圍] [直線] [前方]…
+  "effect", // [暈眩] [燃燒] [護盾] [淨化]… ⭐ 兜底那一群
+  "event", // [普攻時] [週期] [受擊時]…
+  "condition", // [機率] [屬性門檻] [層數累積]…
+  "movement", // [衝刺] [擊退] [閃現]…
+  "scaling", // [AP] [AD] [AP加成] [最大生命]…
 ] as const;
 export type PaletteId = (typeof PALETTE_IDS)[number];
+
+/**
+ * ⭐⭐ **七群的色碼** —— 從同一份 manifest 走（GH#935）。
+ *
+ * ⚠️ ⭐ 票文逐字：「palette 改色只改**全域 manifest／theme**，
+ * ⛔ 不重寫 421 份技能說明」——⇒ 這一格就是那個「全域」。
+ * ⛔ 匯入包**不可以**指定顏色（那是 CSS 注入的入口）：色碼只有這裡有。
+ */
+export const PALETTE_HEX: Readonly<Record<PaletteId, string>> = Object.freeze(
+  MANIFEST.palette as Record<PaletteId, string>,
+);
 
 /**
  * ⭐ 一個 token 的**字元集**（允許清單）。
@@ -73,15 +87,26 @@ const NORMALISE: Readonly<Record<string, readonly string[]>> = {
 };
 
 /** 前綴/整詞 → 色票。⭐ 認不得的一律 `default`（⛔ 不是丟掉）。 */
-const PALETTE_OF: Readonly<Record<string, PaletteId>> = {
-  指向: "targeting", 範圍: "targeting", 周圍: "targeting", 直線: "targeting",
-  範圍內: "targeting", 攻擊距離: "targeting",
-  AP: "resource", MP: "resource", AP加成: "resource", 最大生命: "resource",
-  力量: "resource", 魔法抗性: "resource",
-  被動: "timing", 主動: "timing", 普攻時: "timing", 普通攻擊時: "timing",
-  主動攻擊: "timing", 輔助: "timing", 變身: "timing",
-  暈眩: "control", 沉默: "control", 擊退: "control", 虛弱: "control", 破甲: "control",
-};
+/**
+ * ⭐⭐ **從 manifest 產生**（GH#935）—— ⛔ 不再是手抄的 26 行。
+ *
+ * ⛔⛔ 在此之前這裡是一張 **26 筆**的常數表，而出貨說明裡有 **274 個**不重複 token
+ * ⇒ ⭐ 涵蓋率 **9%**，其餘 248 個一律落到 `default`
+ * ——而那張表會隨著內容長出新 token 而**靜靜地愈來愈不準**（第〇·四守則）。
+ *
+ * ⭐ 現在它從 `docs/editor-contract/ggd-presentation-token-manifest.json` 走，
+ * 而那份是 `tools/presentation-tokens/gen.ts` 掃**出貨說明**產出的
+ * （群由規則推導、例外各帶理由、⭐ 掃描前剝掉 `「…」` 角色台詞）。
+ * ⇒ ⭐ 內容新增一個 token ⇒ 跑一次產生器就進來了，⛔ 不必回來改常數。
+ */
+const PALETTE_OF: Readonly<Record<string, PaletteId>> = Object.freeze(
+  Object.fromEntries(
+    (MANIFEST.tokens as ReadonlyArray<{ token: string; group: string }>).map((t) => [
+      t.token,
+      t.group as PaletteId,
+    ]),
+  ),
+);
 
 /**
  * ⭐ 把一段說明切成呈現節點。
@@ -133,7 +158,7 @@ export function tokenizeDescription(text: string): PresentationNode[] {
     }
     flush();
     for (const label of NORMALISE[inner] ?? [inner]) {
-      out.push({ kind: "token", label, palette: PALETTE_OF[label] ?? "default" });
+      out.push({ kind: "token", label, palette: PALETTE_OF[label] ?? "effect" });
     }
     i = end;
   }

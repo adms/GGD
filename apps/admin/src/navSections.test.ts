@@ -256,6 +256,8 @@ const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
       "manaTiers",
       "castTimeTiers",
       "apCoefficient",
+      "rankGrowth",
+      "oneShotClamp",
       "speedGrowthTiers",
       // 2026-08-27 GH#789：移速**加成**五級距 —— 與成長那一頁同族（同一組級距名），
       // 一頁管「每級長多快」，這一頁管「buff／道具／增益卡一次加多少 %」。
@@ -361,6 +363,8 @@ describe("分類重編一頁都沒有掉", () => {
       "manaTiers",
       "castTimeTiers",
       "apCoefficient",
+      "rankGrowth",
+      "oneShotClamp",
       // 2026-08-21：移速／攻速的每級成長五級距。⚠️ 它與上面四頁的起點相反 ——
       // 那些是「216 支各帶一個自由數字」，這一軸是「49 位共用一個常數」
       // （ms 成長全部 0、as 全部 0.02），所以它開的是一個今天不存在的維度。

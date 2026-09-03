@@ -194,46 +194,15 @@ def classify_role(hex_code: str) -> str:
     return "magic"
 
 
-def to_role_markup(s: str) -> str:
-    """Convert WC3 colour codes into `[c=role]…[/c]` semantic role markup.
+# ⭐ `to_role_markup` —— **2026-09-03 拆掉**（GH#757）
+#
+# ⛔ 它是全 `tools/` 唯一的 def 而且**零呼叫者**：語意色彩鏈（task #114）
+# 蓋好了、接上 UI 了、schema 開好欄位了，⛔ 而內容端兩個月都是零。
+#
+# ⛔ **為什麼不接上它**：`rescaleAbilityProse` 的正則錨定在「數字**緊貼**關鍵字」，
+# 而 TS 那側的呼叫順序是 `parseRoleMarkup(rescaleAbilityProse(...))`
+# —— 先 rescale 再 parse，**救不了**。插入 `[c=duration]…[/c]` 之後正則不再命中
+# ⇒ 冷卻會顯示 60 而不是 18 ⇒ ⭐ 卡面數字說謊（第一·五守則的紅線）。
+#
+# ⭐ 原始碼另存在 `docs/legacy/_retired-chains/role-markup-114.md`。
 
-    Each `|cAARRGGBB … |r` span becomes `[c=role]inner[/c]` (role from
-    ``classify_role``, `|n` inside converted to newline). Pipe-newlines outside
-    spans and any stray `|r` are handled like ``strip_codes``, so the result is
-    the same text as ``strip_codes(s)`` with only role tags added. An unclosed
-    span runs to the next colour code or end of string. Not a string → returned
-    unchanged.
-    """
-    if not isinstance(s, str):
-        return s
-    out: list[str] = []
-    i = 0
-    n = len(s)
-    open_role: str | None = None
-    while i < n:
-        m = _COLOR_SPAN_RE.match(s, i)
-        if m:
-            if open_role is not None:
-                out.append("[/c]")
-            open_role = classify_role(m.group(1))
-            out.append("[c=%s]" % open_role)
-            i = m.end()
-            continue
-        ch = s[i]
-        if ch == "|" and i + 1 < n:
-            nxt = s[i + 1]
-            if nxt in "rR":
-                if open_role is not None:
-                    out.append("[/c]")
-                    open_role = None
-                i += 2
-                continue
-            if nxt in "nN":
-                out.append("\n")
-                i += 2
-                continue
-        out.append(ch)
-        i += 1
-    if open_role is not None:
-        out.append("[/c]")
-    return "".join(out)

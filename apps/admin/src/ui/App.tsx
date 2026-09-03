@@ -281,6 +281,8 @@ export const NAV: NavItem[] = [
   //   ⭐ AP 係數那一頁的「公式總開關」就是 owner 常設指令要的**一鍵 rollback**。
   { page: "castTimeTiers", label: "吟唱五級距", emoji: "⏳", section: SEC_TIERS },
   { page: "apCoefficient", label: "AP 係數公式", emoji: "🧮", section: SEC_TIERS },
+  { page: "rankGrowth", label: "升級成長率", emoji: "📈", section: SEC_TIERS },
+  { page: "oneShotClamp", label: "一擊必殺夾限", emoji: "☠️", section: SEC_TIERS },
   // 移速／攻速的**每級成長**五級距 (2026-08-21)。緊鄰上面五軸 —— 同一組級距名、
   // 同一個「級別住內容、數字住 config」的形狀，只是它掛在**英雄卡**上不是技能。
   { page: "speedGrowthTiers", label: "速度成長五級距", emoji: "🏃", section: SEC_TIERS },

@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_3cab7cddea45`
+contentVersion `cv_6db816814496`
 
 ---
 
@@ -17,7 +17,7 @@ contentVersion `cv_3cab7cddea45`
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
 | `applyBuff` | 增益／減益（改屬性） | 105 | `godie-e001.passive`、`godie-e001.q`、`godie-e001.r`、`godie-e002.r`、`godie-e008.w`、`godie-e00l.r`、`godie-e00n.ex`、`godie-e00n.passive`、`godie-e00n.q`、`godie-e00n.r`、`godie-e00r.ex`、`godie-e00r.passive` …（共 105） |
-| `applyStatus` | 掛狀態 | 101 | `godie-e001.e`、`godie-e001.passive`、`godie-e007.q`、`godie-e008.e`、`godie-e008.q`、`godie-e00n.e`、`godie-e00n.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.q`、`godie-e00s.e`、`godie-e00w.passive` …（共 101） |
+| `applyStatus` | 掛狀態 | 102 | `godie-e001.e`、`godie-e001.passive`、`godie-e007.q`、`godie-e008.e`、`godie-e008.q`、`godie-e00n.e`、`godie-e00n.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.q`、`godie-e00s.e`、`godie-e00w.passive` …（共 102） |
 | `blink` | 瞬移 | 17 | `godie-efur.q`、`godie-h01o.q`、`godie-n00b.e`、`godie-n01c.r`、`godie-n01c.w`、`godie-nbbc.r`、`godie-nbbc.w`、`godie-o00k.w`、`godie-o00x.w`、`godie-o02l.passive`、`godie-o030.passive`、`godie-ofar.passive` …（共 17） |
 | `carry` | 背負（帶著隊友移動 + 不可被選取） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `chainLightning` | 連鎖閃電 | 2 | `godie-o00k.r`、`godie-udea.r` |
@@ -26,7 +26,7 @@ contentVersion `cv_3cab7cddea45`
 | `convertTeam` | 陣營轉換（把一個既有單位借到自己這一隊） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `cycleBuff` | 輪替增益 | 1 | `godie-efur.passive` |
 | `damage` | 傷害 | 155 | `godie-e001.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e002.w`、`godie-e007.e`、`godie-e007.ex`、`godie-e007.q`、`godie-e008.e`、`godie-e008.ex`、`godie-e008.q`、`godie-e00l.ex`、`godie-e00l.r` …（共 155） |
-| `damageArea` | 範圍傷害 | 46 | `godie-e001.passive`、`godie-e002.w`、`godie-e007.r`、`godie-e008.ex`、`godie-e00n.passive`、`godie-e00s.e`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00s.w`、`godie-e00w.ex`、`godie-e00w.q`、`godie-e00w.r` …（共 46） |
+| `damageArea` | 範圍傷害 | 47 | `godie-e001.passive`、`godie-e002.w`、`godie-e007.r`、`godie-e008.ex`、`godie-e00n.passive`、`godie-e00s.e`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00s.w`、`godie-e00w.ex`、`godie-e00w.passive`、`godie-e00w.q` …（共 47） |
 | `damageLine` | 直線傷害 | 19 | `godie-e002.e`、`godie-e002.ex`、`godie-e00l.e`、`godie-e00l.ex`、`godie-e00r.r`、`godie-edem.e`、`godie-emfr.q`、`godie-h01n.e`、`godie-h01u.e`、`godie-h02r.r`、`godie-h02u.e`、`godie-h02v.e` …（共 19） |
 | `dash` | 衝刺（腳不離地） | 8 | `godie-edem.e`、`godie-h01n.q`、`godie-h01u.e`、`godie-hapm.r`、`godie-u00j.w`、`godie-udea.w`、`godie-zombiex.w`、`thorne.q` |
 | `delayed` | 延遲落地／排程 | 23 | `godie-e002.ex`、`godie-e00l.ex`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-h020.e`、`godie-h02u.ex`、`godie-h02u.q`、`godie-h02u.r`、`godie-h02v.ex`、`godie-h02v.q`、`godie-hapm.ex`、`godie-hapm.passive` …（共 23） |
@@ -72,7 +72,7 @@ contentVersion `cv_3cab7cddea45`
 | `onAbilityHit` | 技能命中時 | 21 | `godie-edem.r`、`godie-edem.r`、`godie-edem.r`、`godie-efur.ex`、`godie-h01n.w`、`godie-h01n.w`、`godie-h01o.w`、`godie-h01o.w`、`grail-c-08`、`grail-c-09`、`grail-c-16`、`grail-c-18` …（共 21） |
 | `onAllyDamaged` | 隊友受傷時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onAllyDeath` | 隊友陣亡時 | 3 | `grail-c-15`、`grail-a-06`、`grail-ex-10` |
-| `onBasicAttack` | 普攻時 | 76 | `godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e00l.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00s.w`、`godie-e00s.w`、`godie-e00s.w` …（共 76） |
+| `onBasicAttack` | 普攻時 | 77 | `godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e00l.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00s.w`、`godie-e00s.w`、`godie-e00s.w` …（共 77） |
 | `onBossSpawn` | 殭屍王出現時 | 1 | `grail-c-13` |
 | `onBoundaryTouch` | 碰到場地邊界時（＝踏進火圈） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onCrowdControlApplied` | 對別人施加控場時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
@@ -109,8 +109,8 @@ contentVersion `cv_3cab7cddea45`
 | `chance` | 機率 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `equipment` | 裝備了某道具時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `kind` | 對象是誰（小兵／英雄／BOSS） | 1 | `godie-h02k.ex` |
-| `recentCast` | 最近施放過（連續技窗口）—— ⭐ 「這位施法者在最近 N 秒內按過某一格技能」。⚠️ 判準是**槽位**（Q/W/E/R/EX），⛔ 不是技能標籤 —— `ability@1` 今天**沒有** `tags` 欄位（421/421 零命中），做一個永遠比不中的 tag 分支會是一句說了不會發生的話（第一·五守則）。 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `stat` | 屬性門檻（血量低於 X%…） | 9 | `godie-e002.w`、`godie-e00l.w`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-emfr.passive`、`godie-h00l.ex`、`godie-h02u.w`、`godie-h02v.w`、`grail-ex-13` |
+| `recentCast` | 最近施放過（連續技窗口）—— ⭐ 「這位施法者在最近 N 秒內按過某一格技能」。⚠️ 判準是**槽位**（Q/W/E/R/EX），⛔ 不是技能標籤 —— `ability@1` 今天**沒有** `tags` 欄位（421/421 零命中），做一個永遠比不中的 tag 分支會是一句說了不會發生的話（第一·五守則）。 | 4 | `godie-h020.e`、`godie-h020.r`、`godie-hjai.e`、`godie-hjai.r` |
+| `stat` | 屬性門檻（血量低於 X%…） | 10 | `godie-e002.w`、`godie-e00l.w`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-emfr.passive`、`godie-h00l.ex`、`godie-h02u.w`、`godie-h02v.w`、`godie-hpb1.e`、`grail-ex-13` |
 | `status` | 身上有某狀態時 | 27 | `godie-e00r.q`、`godie-edem.r`、`godie-efur.ex`、`godie-emns.e`、`godie-emns.r`、`godie-ewar.e`、`godie-h00l.e`、`godie-h01n.e`、`godie-h01n.w`、`godie-h01o.w`、`godie-h01u.e`、`godie-h02k.ex` …（共 27） |
 
 ## 狀態標籤 —— 113 個

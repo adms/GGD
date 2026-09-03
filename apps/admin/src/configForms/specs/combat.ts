@@ -8,6 +8,7 @@
  */
 import {
   zConfigControllerSchemeDoc,
+  zConfigOneShotClampDoc,
   zConfigGoreDoc,
   // 爽度特效（GH#494）—— 金幣吸回 · 連段音階 · 施法餘燼壽命。
   zConfigFeelFxDoc,
@@ -488,6 +489,17 @@ export const AP_DAMAGE_SCALING_SPEC: ConfigDocSpec<"apDamageScaling"> = {
         replace: "取代：只留這一層",
       },
     },
+    {
+      path: "resourcePctSkipsGlobalMult",
+      zh: "「目標最大生命 X%」要不要吃這一層",
+      note:
+        "⭐ 開著（出貨值）＝ **不吃** —— 卡面說「目標最大生命 10%」就真的是 10%。" +
+        "⚠️ ⭐ 關掉會回到這個欄位出現之前的行為,而那時**卡面說 10% 而實際打了 27%**:" +
+        "那一發的量已經是「目標血量的一個比例」,再乘一次施法者的法強乘數就變成一句謊話。" +
+        "⭐ 而**反彈封包早就因為同一個理由被豁免了**（它的三個讀數已經吃過攻擊者的乘數）" +
+        "⇒ 這一格只是把同一條規則說出口。" +
+        "⚠️ 它只影響「按比例吃血」那一族,⛔ 固定值與係數傷害一格都不動。",
+    },
   ],
   preserved: [],
 };
@@ -637,4 +649,53 @@ export const CONTROLLER_SCHEME_SPEC: ConfigDocSpec<"controllerScheme"> = {
       why: "**每一個版本的完整定義**（十顆鍵綁什麼、移動算不算戰鬥輸入、瞄準用哪一種評分、近戰貼不貼近）。它是 `z.record`（鍵是版本名），通用引擎畫不出來。⛔ 掉了的話 `active` 會指向一個不存在的版本 ⇒ 手把整個退回預設，而後台這一頁看起來完全正常。⭐ 它是**設計**：要加第三版就編 `content/config/controller-scheme.json`，⛔ 不是在這一頁點。",
     },
   ],
+};
+
+// ──────────────────── 一擊必殺夾限 (config/one-shot-clamp) ─
+
+/**
+ * ⭐⭐ GH#928 —— owner 2026-09-02 逐字：「我們來檢討傷害排行榜上的技能傷害」
+ * （他貼了線上榜單前 100）。
+ */
+export const ONE_SHOT_CLAMP_SPEC: ConfigDocSpec<"oneShotClamp"> = {
+  page: "oneShotClamp",
+  collection: "config",
+  docId: "one-shot-clamp",
+  schemaTag: "config.one-shot-clamp@1",
+  zod: zConfigOneShotClampDoc,
+  title: "一擊必殺夾限",
+  intro: [
+    "⭐ 一次技能最多能打掉一名英雄**幾成最大生命** —— ⛔ 出貨**關著**。",
+    "⛔⛔ 量到的（owner 2026-09-02 貼的榜單前 100，⛔ 不是估計）：**12 列**打掉單一英雄超過 **100% 最大生命**，最高 **401%**（48-04 騎英之疆繩）· 301%（39-03 蛟龍）· 187%（44-04 心臟麻痺）；**17/100** 標著「☠ 一擊」。",
+    "⭐⭐ 根因是**五級距只管加法項**：`傷害 = 小級距(500) + 0.8 × AP`，而五級距是從**純基礎**血量反推的 —— ⭐ 那個空間裡 AP ＝ **0**，⛔ 而榜上 100 列沒有一列在那個空間裡。⇒ 級距回答的是「零裝備時要打幾發」，而玩家從商店開門起就不在那個世界。",
+    "⚠️ ⭐ 這一頁**不改公式、不夾 AP、不動任何技能的數值** —— 它只是在傷害的**最後一步**把單次傷害壓住，讓「一擊必殺」變成一個關得掉的東西。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/one-shot-clamp.json`**。",
+  ],
+  consumer: "packages/shared/src/sim/combat/damage.ts 的 `mitigate()` 之後、護盾之前（全專案唯一的夾點）",
+  effect: "**要重啟 game-server shard 才生效**（`Configs` 是 boot 時載入的，同 combatFeel #863）。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "夾限總開關",
+      note:
+        "⛔ **出貨關著** —— 開它會改變今天**每一場**比賽的結果。" +
+        "⭐ 關著時整條夾限逐位元 no-op（⛔ 不是「夾到 100%」）。",
+    },
+    {
+      path: "maxFractionOfMaxHp",
+      zh: "單次上限 — 目標最大生命的倍數",
+      note:
+        "⭐ `1.0` ＝ 一發最多打掉他滿血；`0.5` ＝ 最多半條（出貨值 {{出貨值}}）。" +
+        "⚠️ 上界 10：再高就等於沒有夾（榜上最高是 **4.01**）。" +
+        "⚠️ 下界 0.05：低於這個值會讓每一場比賽都打不死人。",
+    },
+    {
+      path: "alsoClampMinions",
+      zh: "小怪也夾",
+      note:
+        "⛔ 預設**不夾** —— 榜單量到的 B 類（總傷害大但**單體佔比低**）打的正是小怪，" +
+        "⭐ 而那**不是缺陷**（59-04 用 `damageLine` 掃 22 列、80-02 用 `damageArea`）。",
+    },
+  ],
+  preserved: [],
 };

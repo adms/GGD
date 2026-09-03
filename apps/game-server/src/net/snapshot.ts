@@ -33,6 +33,7 @@ import type { ChampionId, EntityId } from "@ggd/shared/ids";
 import type { SimWorld } from "@ggd/shared/sim/SimWorld";
 import type { MatchController } from "../match/MatchController";
 import type { HumanDriver } from "../seat/HumanDriver";
+import { Stat } from "@ggd/shared/sim/stats/statTypes";
 
 // ─────────────────────── 快照編碼緩衝區的大小（GH 殭屍波卡頓調查）────────────
 /**
@@ -279,6 +280,21 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         ss.level = champ.level;
         ss.gold = champ.gold;
         ss.xp = champ.xp;
+        // ⭐⭐ 按住 Tab 的全員面板（GH#894）—— owner 2026-09-01 逐字：
+        //   「tab鍵 按住應該要能看到**所有人的**等級、生命、AD、AP、寶具與固有技能」。
+        // ⭐ 六欄裡的 level / items / augments 上下這幾行早就在送了；這四格補完剩下三欄。
+        // ⚠️ ⛔ 漏掉這四行，面板會畫出**每個人都 0 AD / 0 AP** —— 而那與
+        //   「面板還沒做」在畫面上長得一模一樣（失敗形態②：算出來了但從沒送到客戶端）。
+        // ⭐ `Math.round` + 夾在 uint16：⛔ 溢位會回捲成一個小數字，
+        //   而「AD 70000 顯示成 4464」比不顯示更糟。
+        const u16 = (v: number): number => Math.max(0, Math.min(65535, Math.round(v)));
+        const st = world.stats.get(seat.entityId)?.final;
+        ss.adNow = u16(st?.[Stat.AttackDamage] ?? 0);
+        ss.apNow = u16(st?.[Stat.AbilityPower] ?? 0);
+        const hp = world.health.get(seat.entityId);
+        ss.hpNow = u16(hp?.hp ?? 0);
+        ss.hpMaxNow = u16(hp?.maxHp ?? 0);
+
         setArray(ss.items, champ.items.map((i) => i ?? ""));
         // ⭐【逐格退款】(owner 2026-08-17) —— 每一格**現在賣掉拿多少** + 那一把是
         // 不是隨機取得的，與上面那條 `items` index-aligned。

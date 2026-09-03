@@ -27,6 +27,7 @@ import type {
   TokenPair,
   Wallet,
   ChatMsg,
+  DiscoverableSubmission,
 } from "./types";
 
 /** The app-wide client instance (screens import this). */
@@ -482,4 +483,24 @@ export function equipSkin(championId: string, skinId: string | null): Promise<Wa
  */
 export function publicAnnouncements(): Promise<unknown> {
   return api.request<unknown>("/announcements", { auth: false });
+}
+
+/**
+ * ⭐⭐ GH#908 責任③ —— **玩家內容的發現入口**（唯一的讀端）。
+ *
+ * ⛔⛔ 在此之前這條路線**零消費端**：伺服器早就有
+ * `GET /submissions/discoverable`（`apps/platform/internal/submissions/handlers.go:79`）、
+ * 三個住處的開關也齊了（`config.ui-cues@1.playerContent.discover`），
+ * ⭐ 而客戶端**沒有任何一行去讀它** —— 也就是「做完的東西沒有出口」
+ * （這張票的 Objective 逐字）。
+ *
+ * ⚠️ ⭐ **關著的時候伺服器回空陣列，⛔ 不是 404** —— 那是刻意的
+ * （handlers.go 逐字：「一條會 404 的路線會讓客戶端寫出兩套程式碼」）
+ * ⇒ 這裡也**只有一條路**：拿到空清單就不畫，⛔ 不做第二套錯誤處理。
+ */
+export async function discoverableSubmissions(): Promise<DiscoverableSubmission[]> {
+  const rows = await api.request<DiscoverableSubmission[] | null>("/submissions/discoverable", {
+    auth: false,
+  });
+  return rows ?? [];
 }

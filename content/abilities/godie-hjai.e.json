@@ -139,6 +139,16 @@
               {
                 "stat": "ap",
                 "coeff": 1.8
+              },
+              {
+                "stat": "ap",
+                "coeff": 1.8,
+                "when": {
+                  "kind": "recentCast",
+                  "subject": "self",
+                  "slot": "EX",
+                  "withinSec": 6
+                }
               }
             ]
           },
