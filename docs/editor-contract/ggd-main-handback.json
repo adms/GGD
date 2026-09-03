@@ -14,6 +14,7 @@
       "${prefix}/active/target-profile",
       "${prefix}/audit",
       "${prefix}/authoring-rules",
+      "${prefix}/brick-census",
       "${prefix}/capabilities",
       "${prefix}/contract-index",
       "${prefix}/health",
