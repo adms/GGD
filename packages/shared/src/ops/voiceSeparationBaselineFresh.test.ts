@@ -33,7 +33,15 @@ const VOICES = join(ROOT, "content/assets/audio/voices");
 
 const GATE = JSON.parse(
   readFileSync(join(VOICES, "_separation-qc-gate.json"), "utf8"),
-) as { currentState?: { pairs?: number; measuredOn?: string } };
+) as {
+  currentState?: {
+    pairs?: number;
+    measuredOn?: string;
+    /** ⭐ 帳本**誠實標記自己過期**時才有（GH#756）—— 見那份 JSON 的 `staleReason`。 */
+    staleSince?: string;
+    staleReason?: string;
+  };
+};
 const BASE = JSON.parse(
   readFileSync(join(VOICES, "_separation-baseline.json"), "utf8"),
 ) as { measuredAt?: string };
