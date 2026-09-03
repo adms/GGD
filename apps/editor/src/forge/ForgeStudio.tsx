@@ -96,6 +96,23 @@ import {
   scheduleSimEvents,
   type ForgeAbility,
 } from "../vfx-forge/model";
+import { SKILL_TIER_NAMES, type SkillTierName } from "@ggd/shared/content/skillTiers";
+import {
+  FORGE_TIER_AXES,
+  FORGE_TIER_LABELS,
+  applyTierToCards,
+  cardsForSkillType,
+  supportedTierAxes,
+  type CooldownShape,
+  type ForgeTierAxis,
+  type ForgeTierSelections,
+  type SkillTypePreset,
+} from "./skillTypePresets";
+import {
+  TIER_CONFIG_IDS,
+  tierValuesFor,
+  type TierConfigDocs,
+} from "./skillTierCatalog";
 
 /**
  * One authoritative Sim controller. Rendering consumes its emitted trace via
@@ -115,27 +132,48 @@ interface ForgeDraft {
   cards: AbilityTemplateCard[];
   onConflict: TemplateConflictPolicy;
   layers: VfxLayerDraft[] | null;
+  tiers: ForgeTierSelections;
+  cooldownShape: CooldownShape;
 }
 
 export function ForgeStudio({
   template,
   catalog = [],
+  skillType,
+  preferredChampionId,
   onBack,
 }: {
   /** the card the gallery was clicked on — seeds the stack */
   template: TemplateDoc;
   /** every template that can be ADDED as a second/third card */
   catalog?: readonly TemplateDoc[];
+  /** Designer-facing recipe chosen in the gallery; absent means raw template mode. */
+  skillType?: SkillTypePreset;
+  /** Changes recommendation/order only; it never locks the operator to one hero. */
+  preferredChampionId?: string;
   onBack(): void;
 }) {
   const [abilityId, setAbilityId] = useState<string>("");
+  const initialTemplates = useMemo(() => {
+    const all = new Map<string, TemplateDoc>([[template.id, template]]);
+    for (const candidate of catalog) all.set(candidate.id, candidate);
+    return all;
+  }, [catalog, template]);
+  const initialCards = useMemo(() => {
+    const fromType = skillType ? cardsForSkillType(skillType, initialTemplates) : [];
+    return fromType.length > 0
+      ? fromType
+      : [{ ref: template.id, params: defaultParamsFor(template) }];
+  }, [initialTemplates, skillType, template]);
   const editHistory = useUndoHistory<ForgeDraft>({
-    cards: [{ ref: template.id, params: defaultParamsFor(template) }],
+    cards: initialCards,
     onConflict: DEFAULT_TEMPLATE_CONFLICT,
     // `null` = 還沒從 host doc 種下去（技能還沒選，或正在載）。
     layers: null,
+    tiers: { ...(skillType?.tierDefaults ?? {}) },
+    cooldownShape: skillType?.cooldownShape ?? "單體",
   }, sameJson);
-  const { cards, onConflict, layers } = editHistory.value;
+  const { cards, onConflict, layers, tiers, cooldownShape } = editHistory.value;
   const [status, setStatus] = useState<string | null>(null);
   const [plan, setPlan] = useState<ForgePlan | null>(null);
   const [signedOff, setSignedOff] = useState(false);
@@ -203,11 +241,32 @@ export function ForgeStudio({
     queryFn: () => api.index("abilities"),
     staleTime: 30_000,
   });
+  const tierConfigs = useQuery({
+    queryKey: ["forge", "tier-configs"],
+    queryFn: async () => Object.fromEntries(await Promise.all(
+      TIER_CONFIG_IDS.map(async (id) => [id, await api.doc<Record<string, unknown>>("config", id)] as const),
+    )) as TierConfigDocs,
+    staleTime: 60_000,
+  });
   const {
     champions,
     isLoading: championsLoading,
     error: championsError,
   } = useChampionDocs();
+  const preferredChampion = champions.find((champion) => champion.id === preferredChampionId) ?? null;
+  const preferredAbilityIds = useMemo(() => {
+    if (!preferredChampion) return new Set<string>();
+    const values = Object.values(preferredChampion.abilities as unknown as Record<string, { id?: unknown }>);
+    return new Set(values.flatMap((ability) => typeof ability?.id === "string" ? [ability.id] : []));
+  }, [preferredChampion]);
+  const orderedAbilityEntries = useMemo(() => {
+    const entries = (abilities.data?.entries ?? []).slice();
+    return entries.sort((a, b) => {
+      const ap = preferredAbilityIds.has(a.id) ? 0 : 1;
+      const bp = preferredAbilityIds.has(b.id) ? 0 : 1;
+      return ap - bp || a.id.localeCompare(b.id);
+    });
+  }, [abilities.data?.entries, preferredAbilityIds]);
   const previewContent = useQuery({
     queryKey: ["preview-runtime-content"],
     queryFn: ensurePreviewContentReady,
@@ -275,14 +334,26 @@ export function ForgeStudio({
 
   const after = useMemo(() => {
     if (!host.data || !expansion.ok) return null;
-    const merged = mergeExpansion({ ...host.data, template: binding }, expansion.value.result);
+    const tierPatch: Record<string, unknown> = {};
+    if (tiers.mana) tierPatch["manaCostTier"] = tiers.mana;
+    if (tiers.cooldown) {
+      tierPatch["cooldownTier"] = tiers.cooldown;
+      tierPatch["cooldownShape"] = cooldownShape;
+    }
+    if (tiers.range) tierPatch["rangeTier"] = tiers.range;
+    if (tiers.radius) tierPatch["radiusTier"] = tiers.radius;
+    if (tiers.castTime) tierPatch["castTimeTier"] = tiers.castTime;
+    const merged = mergeExpansion(
+      { ...host.data, ...tierPatch, template: binding },
+      expansion.value.result,
+    );
     if (layers === null) return merged;
     // 特效欄位由工坊接管：`patchForDoc` 決定要寫單值 `vfxKey` 還是完整 `vfxLayers`。
     // 舊的 `vfxLayers` 要**主動拿掉**，否則操作者把層清回一層之後，doc 上會留著
     // 舊堆疊繼續播 —— 故障形態 ②。`planForgeWrite` 看到它不見了就送 null 去刪。
     const { vfxLayers: _drop, ...rest } = merged as Record<string, unknown>;
     return { ...rest, ...patchForDoc(layers) } as Record<string, unknown>;
-  }, [host.data, expansion, binding, layers]);
+  }, [host.data, expansion, binding, layers, tiers, cooldownShape]);
   const passiveRules = useMemo(() => passivePresentationRules(after ?? host.data), [after, host.data]);
 
   const docErrors: ErrorMap = useMemo(() => {
@@ -438,6 +509,19 @@ export function ForgeStudio({
       cards: draft.cards.map((c, j) => (j === i ? { ...c, params: next } : c)),
     }));
 
+  const setTier = (axis: ForgeTierAxis, tier: SkillTierName | ""): void => {
+    editHistory.commit((draft) => {
+      const nextTiers = { ...draft.tiers };
+      if (tier === "") delete nextTiers[axis];
+      else nextTiers[axis] = tier;
+      return {
+        ...draft,
+        tiers: nextTiers,
+        cards: tier === "" ? draft.cards : applyTierToCards(draft.cards, docs, axis, tier),
+      };
+    });
+  };
+
   const addCard = (id: string): void => {
     const t = docs.get(id);
     if (t === undefined || cards.length >= TEMPLATE_STACK_MAX_CARDS) return;
@@ -542,13 +626,13 @@ export function ForgeStudio({
           <button type="button" disabled={!editHistory.canRedo} onClick={editHistory.redo} title="重做（Ctrl/Cmd+Shift+Z）">↷ 重做</button>
         </div>
         <h1>
-          鑄技工坊 · {resolved.map((r) => r.template.name).join(" ＋ ")}
+          鑄技工坊 · {skillType?.label ?? resolved.map((r) => r.template.name).join(" ＋ ")}
           <span className={`forge-badge ${badgeFor(template.gapScore).tone}`}>
             {badgeFor(template.gapScore).label}
           </span>
         </h1>
         <p className="forge-sub">
-          {template.description} · 範本 {template.exemplar.skill} (
+          {skillType ? `${skillType.summary} · ` : ""}{template.description} · 範本 {template.exemplar.skill} (
           <code>{template.exemplar.jass}</code>)
         </p>
       </header>
@@ -572,21 +656,37 @@ export function ForgeStudio({
       <div className="forge-cols">
         <section className="forge-col">
           <h3>1. 選要改寫的技能</h3>
+          {preferredChampion ? (
+            <p className="forge-origin-summary">
+              已優先排列 <b>{preferredChampion.name}</b> 的技能；仍可從完整清單選擇。
+            </p>
+          ) : null}
           <select
             data-field="stack.ability"
             value={abilityId}
             onChange={(e) => setAbilityId(e.target.value)}
           >
             <option value="">— 選一支現有技能 —</option>
-            {(abilities.data?.entries ?? []).map((e) => (
+            {orderedAbilityEntries.map((e) => (
               <option key={e.id} value={e.id}>
-                {e.id}
+                {preferredAbilityIds.has(e.id) ? `★ ${e.id}` : e.id}
               </option>
             ))}
           </select>
           <p className="forge-note">
-            技能的名稱/圖示/冷卻/魔力/射程仍由技能文件本身持有；模板只擁有「行為」那一半。
+            技能名稱與圖示仍由技能文件持有；下面的五級距會明確寫回技能欄位，模板卡負責行為。
           </p>
+
+          <TierPanel
+            tiers={tiers}
+            cooldownShape={cooldownShape}
+            supported={supportedTierAxes(cards, docs)}
+            configs={tierConfigs.data ?? {}}
+            loading={tierConfigs.isLoading}
+            error={tierConfigs.error}
+            onTier={setTier}
+            onCooldownShape={(next) => editHistory.commit((draft) => ({ ...draft, cooldownShape: next }))}
+          />
 
           <h3>
             2. 疊模板卡 <span className="forge-count">{cards.length}</span>
@@ -851,6 +951,79 @@ export function ForgeStudio({
         />
       ) : null}
     </div>
+  );
+}
+
+function TierPanel({
+  tiers,
+  cooldownShape,
+  supported,
+  configs,
+  loading,
+  error,
+  onTier,
+  onCooldownShape,
+}: {
+  tiers: ForgeTierSelections;
+  cooldownShape: CooldownShape;
+  supported: ReadonlySet<ForgeTierAxis>;
+  configs: TierConfigDocs;
+  loading: boolean;
+  error: unknown;
+  onTier(axis: ForgeTierAxis, tier: SkillTierName | ""): void;
+  onCooldownShape(shape: CooldownShape): void;
+}) {
+  return (
+    <section className="forge-tier-panel" aria-labelledby="forge-tier-title">
+      <div className="forge-tier-head">
+        <div>
+          <h3 id="forge-tier-title">五級距</h3>
+          <p className="forge-note">數值直接讀取主程式 config；不在 Editor 寫第二份常數。</p>
+        </div>
+        <label>
+          <span>冷卻類型</span>
+          <select
+            data-field="tiers.cooldownShape"
+            value={cooldownShape}
+            onChange={(event) => onCooldownShape(event.target.value as CooldownShape)}
+          >
+            <option value="單體">單體</option>
+            <option value="範圍">範圍</option>
+            <option value="變身">變身／持續增益</option>
+          </select>
+        </label>
+      </div>
+      {loading ? <p className="forge-note">載入五級距設定…</p> : null}
+      {error ? <p className="error">五級距設定讀取失敗，已停用選單：{String(error)}</p> : null}
+      <div className="forge-tier-grid">
+        {FORGE_TIER_AXES.map((axis) => {
+          const values = tierValuesFor(axis, configs, cooldownShape);
+          const enabled = supported.has(axis) && values !== null && !error;
+          const templateOwned = axis === "damage" || axis === "travel" || axis === "push" || axis === "moveSpeed";
+          return (
+            <label key={axis} className={!enabled ? "disabled" : undefined}>
+              <span>{FORGE_TIER_LABELS[axis]}</span>
+              <select
+                data-field={`tiers.${axis}`}
+                aria-label={`${FORGE_TIER_LABELS[axis]}五級距`}
+                value={enabled ? tiers[axis] ?? "" : ""}
+                disabled={!enabled}
+                onChange={(event) => onTier(axis, event.target.value as SkillTierName | "")}
+              >
+                {!enabled ? <option value="">{supported.has(axis) ? "設定載入中／不可用" : "積木未支援"}</option> : null}
+                {enabled && !templateOwned ? <option value="">沿用技能現值</option> : null}
+                {SKILL_TIER_NAMES.map((tier) => (
+                  <option key={tier} value={tier}>
+                    {tier}{values ? ` · ${values[tier]}` : ""}
+                  </option>
+                ))}
+              </select>
+              {!supported.has(axis) ? <small>目前積木沒有可寫入欄位</small> : null}
+            </label>
+          );
+        })}
+      </div>
+    </section>
   );
 }
 

@@ -393,6 +393,21 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .forge-search input { width: 100%; max-width: none; }
 .forge-empty { grid-column: 1 / -1; margin: 0; padding: 20px; border: 1px dashed #333d52; border-radius: 8px; color: #7c869c; text-align: center; }
 
+.forge-skill-types { margin: 14px 0 24px; padding: 14px; border: 1px solid #344769; border-radius: 10px; background: #171f30; }
+.forge-skill-type-head { display: flex; align-items: end; justify-content: space-between; gap: 18px; }
+.forge-skill-type-head .forge-section { margin: 0 0 4px; }
+.forge-origin-picker { display: grid; gap: 5px; min-width: min(420px, 48%); color: #9aa4b8; font-size: 12px; }
+.forge-origin-summary { margin: 10px 0; padding: 8px 10px; border-radius: 6px; background: #202d45; color: #c8d8f5; font-size: 12px; }
+.forge-origin-summary span { margin-left: 6px; color: #8292ad; }
+.forge-type-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 9px; }
+.forge-type-card { display: grid; gap: 7px; padding: 12px; border: 1px solid #35415a; border-radius: 7px; background: #1b2436; color: #d5deef; text-align: left; cursor: pointer; }
+.forge-type-card:hover { border-color: #6d92d2; background: #202d43; }
+.forge-type-card.recommended { border-color: #5e91e5; box-shadow: inset 3px 0 #6ea8ff; }
+.forge-type-card:disabled { opacity: .48; cursor: not-allowed; }
+.forge-type-card > span:not(.forge-card-top) { color: #aab5c9; font-size: 12px; line-height: 1.45; }
+.forge-type-card small { color: #7f8ba1; line-height: 1.4; }
+.forge-recommend { padding: 2px 7px; border-radius: 9px; background: #244b7d; color: #a9cfff; font-size: 10px; }
+
 .forge-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -462,6 +477,22 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .forge-status { margin-top: 8px; font-size: 12px; color: #9db6ee; }
 .forge-loading { padding: 20px; color: #808a9f; }
 .forge-unit { margin-right: 10px; font-family: ui-monospace, monospace; color: #8fb0d8; }
+
+.forge-tier-panel { margin: 12px 0 18px; padding: 12px; border: 1px solid #34435e; border-radius: 8px; background: #171d2a; }
+.forge-tier-head { display: flex; align-items: start; justify-content: space-between; gap: 12px; }
+.forge-tier-head h3 { margin-top: 0; }
+.forge-tier-head > label { display: grid; gap: 4px; min-width: 150px; color: #9aa4b8; font-size: 11px; }
+.forge-tier-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
+.forge-tier-grid label { display: grid; gap: 4px; color: #aebbd0; font-size: 11px; }
+.forge-tier-grid label.disabled { opacity: .5; }
+.forge-tier-grid select { min-width: 0; width: 100%; }
+.forge-tier-grid small { min-height: 14px; color: #cc9f58; }
+
+@media (max-width: 760px) {
+  .forge-skill-type-head { align-items: stretch; flex-direction: column; }
+  .forge-origin-picker { min-width: 0; }
+  .forge-tier-grid { grid-template-columns: 1fr 1fr; }
+}
 
 /* 觸發條件編輯器 (owner 2026-07-30 「編輯器也要配合」) — dropdowns, not a script box.
    The clause row wraps rather than scrolls: five controls plus a number field do

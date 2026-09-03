@@ -11,8 +11,15 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { TemplateDoc } from "@ggd/shared/content";
 import { api } from "../api/client";
+import { useChampionDocs } from "../preview/useChampionDocs";
+import { originOf } from "@ggd/shared/content/statNormalization";
 import { badgeFor } from "./badge";
 import { degradeNotes } from "./degrade";
+import {
+  FORGE_TIER_LABELS,
+  rankSkillTypes,
+  type SkillTypePreset,
+} from "./skillTypePresets";
 
 async function fetchTemplates(): Promise<TemplateDoc[]> {
   const index = await api.index("ability-templates");
@@ -35,13 +42,19 @@ export function ForgeGallery({
    * already paid for the index — handing the list over is one argument and
    * removes a second fetch that could disagree with what was just clicked.
    */
-  onPick(t: TemplateDoc, all: readonly TemplateDoc[]): void;
+  onPick(
+    t: TemplateDoc,
+    all: readonly TemplateDoc[],
+    context?: { readonly skillType?: SkillTypePreset; readonly championId?: string },
+  ): void;
 }) {
   const [query, setQuery] = useState("");
+  const [championId, setChampionId] = useState("");
   const { data, error, isLoading } = useQuery({
     queryKey: ["forge", "templates"],
     queryFn: fetchTemplates,
   });
+  const championQuery = useChampionDocs();
 
   if (error) {
     return <p className="error">模板索引讀取失敗 — content-api 有在跑嗎？</p>;
@@ -55,6 +68,10 @@ export function ForgeGallery({
   // no hook may appear after the early loading/error returns above.
   const visibleEnabled = enabled.filter((template) => templateMatchesQuery(template, query));
   const visibleDrafts = drafts.filter((template) => templateMatchesQuery(template, query));
+  const selectedChampion = championQuery.champions.find((champion) => champion.id === championId) ?? null;
+  const selectedOrigin = selectedChampion ? originOf(selectedChampion) : null;
+  const templatesById = new Map(data.map((template) => [template.id, template]));
+  const rankedTypes = rankSkillTypes(selectedOrigin, new Set(enabled.map((template) => template.id)));
 
   return (
     <div className="forge-gallery">
@@ -65,6 +82,65 @@ export function ForgeGallery({
           {data.length} 類行為分類，參數預設值是範本技能的實測值。
         </p>
       </header>
+
+      <section className="forge-skill-types" aria-labelledby="forge-skill-type-title">
+        <div className="forge-skill-type-head">
+          <div>
+            <h2 id="forge-skill-type-title" className="forge-section">快速技能類型</h2>
+            <p className="forge-note">
+              選一種類型就會帶入效果積木與建議五級距；進工作台後每一項都能改。
+            </p>
+          </div>
+          <label className="forge-origin-picker">
+            <span>依角色出身推薦排序</span>
+            <select value={championId} onChange={(event) => setChampionId(event.target.value)}>
+              <option value="">— 不指定角色 —</option>
+              {championQuery.champions
+                .slice()
+                .sort((a, b) => a.name.localeCompare(b.name, "zh-Hant"))
+                .map((champion) => (
+                  <option key={champion.id} value={champion.id}>
+                    {champion.name} · {originOf(champion)} · {champion.id}
+                  </option>
+                ))}
+            </select>
+          </label>
+        </div>
+        {championQuery.error ? <p className="error">角色資料讀取失敗：{championQuery.error.message}</p> : null}
+        {selectedChampion ? (
+          <p className="forge-origin-summary">
+            <b>{selectedChampion.name}</b> · 出身 <b>{selectedOrigin}</b>
+            {selectedChampion.playstyle?.length ? ` · ${selectedChampion.playstyle.join("・")}` : ""}
+            <span>（只調整排序，不限制可選類型）</span>
+          </p>
+        ) : null}
+        <div className="forge-type-grid">
+          {rankedTypes.map(({ preset, recommendationRank, available }) => {
+            const seed = templatesById.get(preset.templateIds[0] ?? "");
+            const tiers = Object.entries(preset.tierDefaults)
+              .map(([axis, tier]) => `${FORGE_TIER_LABELS[axis as keyof typeof FORGE_TIER_LABELS]} ${tier}`)
+              .join(" · ");
+            return (
+              <button
+                key={preset.id}
+                type="button"
+                className={`forge-type-card${recommendationRank === 1 ? " recommended" : ""}`}
+                disabled={!available || !seed}
+                onClick={() => seed && onPick(seed, data, { skillType: preset, championId: championId || undefined })}
+              >
+                <span className="forge-card-top">
+                  <b>{preset.label}</b>
+                  {recommendationRank ? <span className="forge-recommend">推薦 {recommendationRank}</span> : null}
+                </span>
+                <span>{preset.summary}</span>
+                <small>積木：{preset.templateIds.map((id) => templatesById.get(id)?.name ?? id).join(" ＋ ")}</small>
+                <small>預設：{tiers || "沿用技能現值"}</small>
+                {!available ? <small className="error">目前缺少必要積木</small> : null}
+              </button>
+            );
+          })}
+        </div>
+      </section>
 
       <label className="forge-search">
         <span>搜尋模板</span>
@@ -81,7 +157,7 @@ export function ForgeGallery({
       </h2>
       <div className="forge-grid">
         {visibleEnabled.map((t) => (
-          <TemplateCard key={t.id} t={t} onPick={(x) => onPick(x, data)} />
+          <TemplateCard key={t.id} t={t} onPick={(x) => onPick(x, data, { championId: championId || undefined })} />
         ))}
         {visibleEnabled.length === 0 ? <p className="forge-empty">沒有符合的可用模板。</p> : null}
       </div>
@@ -94,7 +170,7 @@ export function ForgeGallery({
       </h2>
       <div className="forge-grid">
         {visibleDrafts.map((t) => (
-          <TemplateCard key={t.id} t={t} onPick={(x) => onPick(x, data)} />
+          <TemplateCard key={t.id} t={t} onPick={(x) => onPick(x, data, { championId: championId || undefined })} />
         ))}
         {visibleDrafts.length === 0 ? <p className="forge-empty">沒有符合的規劃中模板。</p> : null}
       </div>
