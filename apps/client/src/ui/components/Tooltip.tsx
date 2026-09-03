@@ -16,6 +16,10 @@ import { useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode }
 import { createPortal } from "react-dom";
 import { computeTooltipPlacement, type TooltipSide } from "./tooltipPlacement";
 import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "./abilityText";
+import {
+  tokenizeDescription,
+  PALETTE_HEX,
+} from "@ggd/shared/content/import/descriptionTokens";
 import { displayFinalText, useDisplayEnv, type DisplayFactor } from "../displayFinal";
 import type { CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
 import { PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
@@ -186,7 +190,21 @@ export function Tooltip({
                       `rescaleAbilityProse` 有正則衝突（先 rescale 再 parse，救不了）
                       ⇒ 餵它會讓冷卻顯示 60 而不是 18。另存見
                       `docs/legacy/_retired-chains/role-markup-114.md`。 */}
-                  {rescaleAbilityProse(body, env)}
+                  {/* ⭐⭐ GH#935 —— 說明 token 的**七色分群**。
+                      ⭐ 資料來源是 `ggd-presentation-token-manifest@1`（274 個 token /
+                      2,650 次出現），⛔ 不是散在這裡的色碼；
+                      ⭐ 而它**先 rescale 再 tokenize** 是安全的：token 是完整的
+                      `[…]`，⛔ 而 rescale 的正則錨在「數字緊貼關鍵字」——兩者不相交
+                      （⚠️ 那正是 #757 的 role markup 做不到的事）。 */}
+                  {tokenizeDescription(rescaleAbilityProse(body, env)).map((n, i) =>
+                    n.kind === "text" ? (
+                      <span key={i}>{n.text}</span>
+                    ) : (
+                      <span key={i} style={{ color: PALETTE_HEX[n.palette] }}>
+                        [{n.label}]
+                      </span>
+                    ),
+                  )}
                 </div>
                 <div style={{ marginTop: 4, fontSize: 10, color: TEXT_DIM }}>{WC3_PROSE_CAPTION}</div>
               </>

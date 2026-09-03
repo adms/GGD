@@ -1,0 +1,1399 @@
+{
+  "schema": "ggd-presentation-token-manifest@1",
+  "note": "⛔ **產物** —— 改 `tools/presentation-tokens/gen.ts`，⛔ 不要手改。⭐ 每個出貨說明 token **恰好一群**；群由規則推導（⛔ 不是逐列手抄），例外在產生器的 `OVERRIDES` 並各自帶理由。⚠️ 掃描前**剝掉 `「…」` 角色台詞**（第〇·六守則）。",
+  "palette": {
+    "activation": "#7030A0",
+    "cast": "#1565C0",
+    "effect": "#D84315",
+    "event": "#546E7A",
+    "condition": "#9A6700",
+    "movement": "#008C95",
+    "scaling": "#BF8F00"
+  },
+  "totals": {
+    "distinct": 274,
+    "uses": 2545,
+    "byGroup": {
+      "activation": 17,
+      "scaling": 17,
+      "cast": 11,
+      "condition": 4,
+      "event": 12,
+      "effect": 209,
+      "movement": 4
+    }
+  },
+  "tokens": [
+    {
+      "token": "主動攻擊",
+      "uses": 243,
+      "group": "activation"
+    },
+    {
+      "token": "AP",
+      "uses": 239,
+      "group": "scaling"
+    },
+    {
+      "token": "被動",
+      "uses": 142,
+      "group": "activation"
+    },
+    {
+      "token": "輔助",
+      "uses": 134,
+      "group": "activation"
+    },
+    {
+      "token": "範圍",
+      "uses": 131,
+      "group": "cast"
+    },
+    {
+      "token": "主動",
+      "uses": 112,
+      "group": "activation"
+    },
+    {
+      "token": "AP加成",
+      "uses": 76,
+      "group": "scaling"
+    },
+    {
+      "token": "機率",
+      "uses": 73,
+      "group": "condition"
+    },
+    {
+      "token": "變身",
+      "uses": 45,
+      "group": "activation"
+    },
+    {
+      "token": "周圍",
+      "uses": 42,
+      "group": "cast"
+    },
+    {
+      "token": "普攻時",
+      "uses": 40,
+      "group": "event"
+    },
+    {
+      "token": "反彈",
+      "uses": 38,
+      "group": "effect"
+    },
+    {
+      "token": "普通攻擊時",
+      "uses": 35,
+      "group": "event"
+    },
+    {
+      "token": "MP",
+      "uses": 34,
+      "group": "scaling"
+    },
+    {
+      "token": "迴避",
+      "uses": 30,
+      "group": "effect"
+    },
+    {
+      "token": "淨化",
+      "uses": 29,
+      "group": "effect"
+    },
+    {
+      "token": "最大生命",
+      "uses": 28,
+      "group": "scaling"
+    },
+    {
+      "token": "指向",
+      "uses": 28,
+      "group": "cast"
+    },
+    {
+      "token": "擊退",
+      "uses": 27,
+      "group": "movement"
+    },
+    {
+      "token": "回復",
+      "uses": 25,
+      "group": "effect"
+    },
+    {
+      "token": "暈眩",
+      "uses": 24,
+      "group": "effect"
+    },
+    {
+      "token": "攻擊速度",
+      "uses": 23,
+      "group": "scaling"
+    },
+    {
+      "token": "直線",
+      "uses": 22,
+      "group": "cast"
+    },
+    {
+      "token": "緩慢",
+      "uses": 21,
+      "group": "effect"
+    },
+    {
+      "token": "主動傷害",
+      "uses": 20,
+      "group": "effect"
+    },
+    {
+      "token": "指定",
+      "uses": 20,
+      "group": "cast"
+    },
+    {
+      "token": "暴擊",
+      "uses": 19,
+      "group": "effect"
+    },
+    {
+      "token": "格擋",
+      "uses": 18,
+      "group": "effect"
+    },
+    {
+      "token": "週期",
+      "uses": 18,
+      "group": "event"
+    },
+    {
+      "token": "AD",
+      "uses": 17,
+      "group": "scaling"
+    },
+    {
+      "token": "混亂",
+      "uses": 17,
+      "group": "effect"
+    },
+    {
+      "token": "致盲",
+      "uses": 17,
+      "group": "effect"
+    },
+    {
+      "token": "衝刺",
+      "uses": 17,
+      "group": "movement"
+    },
+    {
+      "token": "前方",
+      "uses": 16,
+      "group": "cast"
+    },
+    {
+      "token": "攻擊時",
+      "uses": 16,
+      "group": "event"
+    },
+    {
+      "token": "燃燒",
+      "uses": 16,
+      "group": "effect"
+    },
+    {
+      "token": "破魔",
+      "uses": 14,
+      "group": "effect"
+    },
+    {
+      "token": "重創",
+      "uses": 14,
+      "group": "effect"
+    },
+    {
+      "token": "吞噬",
+      "uses": 12,
+      "group": "effect"
+    },
+    {
+      "token": "屬性門檻",
+      "uses": 11,
+      "group": "condition"
+    },
+    {
+      "token": "吸血",
+      "uses": 10,
+      "group": "effect"
+    },
+    {
+      "token": "小範圍",
+      "uses": 10,
+      "group": "cast"
+    },
+    {
+      "token": "真實傷害",
+      "uses": 10,
+      "group": "effect"
+    },
+    {
+      "token": "移動速度",
+      "uses": 10,
+      "group": "scaling"
+    },
+    {
+      "token": "護盾",
+      "uses": 10,
+      "group": "effect"
+    },
+    {
+      "token": "EX解放",
+      "uses": 9,
+      "group": "activation"
+    },
+    {
+      "token": "大範圍",
+      "uses": 9,
+      "group": "cast"
+    },
+    {
+      "token": "治療",
+      "uses": 9,
+      "group": "effect"
+    },
+    {
+      "token": "傷害加成",
+      "uses": 8,
+      "group": "scaling"
+    },
+    {
+      "token": "定身",
+      "uses": 8,
+      "group": "effect"
+    },
+    {
+      "token": "復活",
+      "uses": 8,
+      "group": "effect"
+    },
+    {
+      "token": "技能重置",
+      "uses": 8,
+      "group": "effect"
+    },
+    {
+      "token": "暴走",
+      "uses": 8,
+      "group": "effect"
+    },
+    {
+      "token": "詛咒",
+      "uses": 8,
+      "group": "effect"
+    },
+    {
+      "token": "層數累積",
+      "uses": 7,
+      "group": "condition"
+    },
+    {
+      "token": "強化",
+      "uses": 7,
+      "group": "effect"
+    },
+    {
+      "token": "恐懼",
+      "uses": 7,
+      "group": "effect"
+    },
+    {
+      "token": "技能命中",
+      "uses": 7,
+      "group": "effect"
+    },
+    {
+      "token": "疊層",
+      "uses": 7,
+      "group": "condition"
+    },
+    {
+      "token": "AD加成",
+      "uses": 6,
+      "group": "scaling"
+    },
+    {
+      "token": "切換",
+      "uses": 6,
+      "group": "effect"
+    },
+    {
+      "token": "死之王套裝",
+      "uses": 6,
+      "group": "effect"
+    },
+    {
+      "token": "身上有某狀態時",
+      "uses": 6,
+      "group": "event"
+    },
+    {
+      "token": "靈氣",
+      "uses": 6,
+      "group": "effect"
+    },
+    {
+      "token": "魔法傷害",
+      "uses": 6,
+      "group": "effect"
+    },
+    {
+      "token": "免疫",
+      "uses": 5,
+      "group": "effect"
+    },
+    {
+      "token": "最大魔力",
+      "uses": 5,
+      "group": "effect"
+    },
+    {
+      "token": "加速",
+      "uses": 5,
+      "group": "effect"
+    },
+    {
+      "token": "擴散",
+      "uses": 5,
+      "group": "effect"
+    },
+    {
+      "token": "每次普通攻擊",
+      "uses": 5,
+      "group": "effect"
+    },
+    {
+      "token": "現存生命",
+      "uses": 5,
+      "group": "effect"
+    },
+    {
+      "token": "瞬移",
+      "uses": 5,
+      "group": "movement"
+    },
+    {
+      "token": "神速",
+      "uses": 5,
+      "group": "effect"
+    },
+    {
+      "token": "防禦",
+      "uses": 5,
+      "group": "effect"
+    },
+    {
+      "token": "飛行",
+      "uses": 5,
+      "group": "effect"
+    },
+    {
+      "token": "一直線",
+      "uses": 4,
+      "group": "effect"
+    },
+    {
+      "token": "不可壞",
+      "uses": 4,
+      "group": "effect"
+    },
+    {
+      "token": "受到傷害",
+      "uses": 4,
+      "group": "effect"
+    },
+    {
+      "token": "必中解放",
+      "uses": 4,
+      "group": "activation"
+    },
+    {
+      "token": "戰鬥力測定",
+      "uses": 4,
+      "group": "effect"
+    },
+    {
+      "token": "智慧",
+      "uses": 4,
+      "group": "effect"
+    },
+    {
+      "token": "會心一擊",
+      "uses": 4,
+      "group": "effect"
+    },
+    {
+      "token": "每次攻擊",
+      "uses": 4,
+      "group": "effect"
+    },
+    {
+      "token": "減速",
+      "uses": 4,
+      "group": "effect"
+    },
+    {
+      "token": "狂怒",
+      "uses": 4,
+      "group": "effect"
+    },
+    {
+      "token": "疊加",
+      "uses": 4,
+      "group": "effect"
+    },
+    {
+      "token": "真傷",
+      "uses": 4,
+      "group": "effect"
+    },
+    {
+      "token": "破甲",
+      "uses": 4,
+      "group": "effect"
+    },
+    {
+      "token": "竹箱庇護",
+      "uses": 4,
+      "group": "effect"
+    },
+    {
+      "token": "範圍內",
+      "uses": 4,
+      "group": "cast"
+    },
+    {
+      "token": "變化",
+      "uses": 4,
+      "group": "effect"
+    },
+    {
+      "token": "貓貓試毒",
+      "uses": 4,
+      "group": "effect"
+    },
+    {
+      "token": "跳躍",
+      "uses": 4,
+      "group": "movement"
+    },
+    {
+      "token": "魔女孵化場",
+      "uses": 4,
+      "group": "effect"
+    },
+    {
+      "token": "魔女結界",
+      "uses": 4,
+      "group": "effect"
+    },
+    {
+      "token": "黏性體質",
+      "uses": 4,
+      "group": "effect"
+    },
+    {
+      "token": "三星許願",
+      "uses": 3,
+      "group": "effect"
+    },
+    {
+      "token": "下剋上",
+      "uses": 3,
+      "group": "effect"
+    },
+    {
+      "token": "再誕",
+      "uses": 3,
+      "group": "effect"
+    },
+    {
+      "token": "力量",
+      "uses": 3,
+      "group": "scaling"
+    },
+    {
+      "token": "卍解",
+      "uses": 3,
+      "group": "effect"
+    },
+    {
+      "token": "反彈成功時",
+      "uses": 3,
+      "group": "event"
+    },
+    {
+      "token": "合力制伏",
+      "uses": 3,
+      "group": "effect"
+    },
+    {
+      "token": "吐槽式強制淨化",
+      "uses": 3,
+      "group": "effect"
+    },
+    {
+      "token": "回魔",
+      "uses": 3,
+      "group": "effect"
+    },
+    {
+      "token": "愉快的一天又來臨了",
+      "uses": 3,
+      "group": "effect"
+    },
+    {
+      "token": "技能命中時",
+      "uses": 3,
+      "group": "event"
+    },
+    {
+      "token": "收服",
+      "uses": 3,
+      "group": "effect"
+    },
+    {
+      "token": "攻擊速度上限",
+      "uses": 3,
+      "group": "effect"
+    },
+    {
+      "token": "普攻",
+      "uses": 3,
+      "group": "effect"
+    },
+    {
+      "token": "爸爸專屬",
+      "uses": 3,
+      "group": "effect"
+    },
+    {
+      "token": "看穿",
+      "uses": 3,
+      "group": "effect"
+    },
+    {
+      "token": "福音",
+      "uses": 3,
+      "group": "effect"
+    },
+    {
+      "token": "自主迎擊",
+      "uses": 3,
+      "group": "effect"
+    },
+    {
+      "token": "處決",
+      "uses": 3,
+      "group": "effect"
+    },
+    {
+      "token": "變形",
+      "uses": 3,
+      "group": "cast"
+    },
+    {
+      "token": "負面狀態",
+      "uses": 3,
+      "group": "effect"
+    },
+    {
+      "token": "迴避時",
+      "uses": 3,
+      "group": "event"
+    },
+    {
+      "token": "重力壓制",
+      "uses": 3,
+      "group": "effect"
+    },
+    {
+      "token": "重量解放",
+      "uses": 3,
+      "group": "activation"
+    },
+    {
+      "token": "降低",
+      "uses": 3,
+      "group": "effect"
+    },
+    {
+      "token": "隊友死亡",
+      "uses": 3,
+      "group": "effect"
+    },
+    {
+      "token": "隱身",
+      "uses": 3,
+      "group": "effect"
+    },
+    {
+      "token": "魂食",
+      "uses": 3,
+      "group": "effect"
+    },
+    {
+      "token": "CDR",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "R命中",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "R施放",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "stat",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "七寶玉解放",
+      "uses": 2,
+      "group": "activation"
+    },
+    {
+      "token": "上限突破",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "不再浪費",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "伸長",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "反彈時",
+      "uses": 2,
+      "group": "event"
+    },
+    {
+      "token": "受傷回魔",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "受傷時",
+      "uses": 2,
+      "group": "event"
+    },
+    {
+      "token": "嘲弄",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "完全重置",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "屬性成長",
+      "uses": 2,
+      "group": "scaling"
+    },
+    {
+      "token": "感電",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "成長曲線解放",
+      "uses": 2,
+      "group": "activation"
+    },
+    {
+      "token": "技能代放",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "技能傷害",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "投影",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "拉扯",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "持續傷害",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "指定一名",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "指定範圍",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "攻擊與移動速度",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "攻擊距離",
+      "uses": 2,
+      "group": "cast"
+    },
+    {
+      "token": "攻速",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "敏捷",
+      "uses": 2,
+      "group": "scaling"
+    },
+    {
+      "token": "斬殺",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "施法",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "旋轉",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "暴擊吸血",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "機動上限解放",
+      "uses": 2,
+      "group": "activation"
+    },
+    {
+      "token": "每次普攻",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "沉默",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "法球效應",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "消耗",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "溢出",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "溢流成盾",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "焚身",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "無敵",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "無視",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "煉金術",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "熟練度解放",
+      "uses": 2,
+      "group": "activation"
+    },
+    {
+      "token": "燒魔",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "爐心解放",
+      "uses": 2,
+      "group": "activation"
+    },
+    {
+      "token": "現存魔力",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "癱瘓",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "瞬步",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "破盾",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "究極肉體",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "穿透",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "立即死亡",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "腐蝕",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "自爆",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "自身",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "致命傷害",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "英雄擊殺",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "計算式解放",
+      "uses": 2,
+      "group": "activation"
+    },
+    {
+      "token": "詛咒（失手）",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "試煉",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "質量解放",
+      "uses": 2,
+      "group": "activation"
+    },
+    {
+      "token": "赤色彗星",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "超速",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "輔助攻擊",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "過載",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "長柄",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "閃避",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "開關",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "限智力",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "隨機",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "雷槍裝填",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "飛昇",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "飛行型態",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "驅散",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "魔力耗盡",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "魔導輸出",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "魔改解放",
+      "uses": 2,
+      "group": "activation"
+    },
+    {
+      "token": "麻痺",
+      "uses": 2,
+      "group": "effect"
+    },
+    {
+      "token": "AD捨棄",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "Boss",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "caster",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "J-Win95",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "magic",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "owner",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "七寶玉",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "下一次普攻",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "中立物件",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "交換",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "傷害回魔",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "傷害轉換",
+      "uses": 1,
+      "group": "scaling"
+    },
+    {
+      "token": "傷害轉魔力",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "最大生命值",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "千年練成",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "千年花園",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "受傷",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "受到傷害時",
+      "uses": 1,
+      "group": "event"
+    },
+    {
+      "token": "受到攻擊",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "受到暴擊",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "可累加",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "吸收（護盾）",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "回魔捨棄",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "地形無視",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "多重投影",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "天生",
+      "uses": 1,
+      "group": "activation"
+    },
+    {
+      "token": "完全格擋",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "完全體",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "完美盾反",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "寶具再演",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "寶具重置",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "射程捨棄",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "常駐",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "彈反",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "彈體",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "成長",
+      "uses": 1,
+      "group": "scaling"
+    },
+    {
+      "token": "技能再演",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "技能施放",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "控制免疫",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "擊殺",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "擊殺時",
+      "uses": 1,
+      "group": "event"
+    },
+    {
+      "token": "攻擊力降低",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "時間",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "普攻傷害",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "月牙天衝",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "未來科技",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "機率再演",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "永久成長",
+      "uses": 1,
+      "group": "scaling"
+    },
+    {
+      "token": "流星",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "滿階",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "火圈",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "無上限施法距離",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "無限成長",
+      "uses": 1,
+      "group": "scaling"
+    },
+    {
+      "token": "爆炸",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "物理化",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "生命普攻",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "萬象凋零",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "經驗值",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "花園分享",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "花瓣",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "蒼月開花",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "虛弱",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "距離增幅",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "輪替增益",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "防禦捨棄",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "限遠程",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "隨機區域",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "隨機轟炸",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "馬勒戈壁",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "魅惑",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "魔抗",
+      "uses": 1,
+      "group": "effect"
+    },
+    {
+      "token": "魔法抗性",
+      "uses": 1,
+      "group": "scaling"
+    }
+  ],
+  "digest": "8e105799589cfee5"
+}
