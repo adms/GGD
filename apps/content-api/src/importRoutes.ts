@@ -69,6 +69,7 @@ import {
 import { createHash } from "node:crypto";
 import { ImportStore } from "./importStore";
 import type { ActivePointer } from "./importStore";
+import { sha256Hex } from "@ggd/shared/content/sha256";
 import {
   IMPLEMENTED_STAGE,
   IMPORT_ERROR_SCHEMA,
@@ -488,6 +489,9 @@ export function registerImportRoutes(
  */
 export const IMPORTER_ENDPOINTS: readonly { method: string; path: string }[] = Object.freeze([
   { method: "POST", path: "/validate" },
+  // ⭐ GH#931 —— 後台「載入單檔 JSON」的**安全便道**：server 建 canonical
+  //   single-root delta package，⛔ 不是讓人把 raw JSON 冒充 package。
+  { method: "POST", path: "/validate-single" },
   { method: "POST", path: "/apply" },
   { method: "POST", path: "/rollback" },
   { method: "GET", path: "/active" },
@@ -706,7 +710,81 @@ function registerG2Routes(
     },
   );
 
+  // ── POST /validate-single —— ⭐ **後台「載入單檔 JSON」的安全便道**（GH#931）─
+  //
+  // ⭐ 它的價值在「**安全**」，⛔ 不是「方便」：
+  //   由 **server** 用 ACTIVE snapshot 把一份 runtime document 包成
+  //   canonical single-root delta package，⛔ **而不是讓人把 raw JSON 當 package 送進來**。
+  //
+  // ⚠️⚠️ ⭐ **它不得直接寫檔**（票文逐字）—— 它與 `/validate` 走**同一支**
+  //   `validatePackage()`，而那條路一個位元組都不寫。
+  //   ⇒ ⭐ 這裡**沒有第二套驗證**（⛔ 兩份實作必然漂，那正是 `/validate` 與 `/apply`
+  //     共用 `runValidate` 的理由）。
+  //
+  // ⭐ 拒絕的三種情況（票文逐字）：外部 ref 不在 ACTIVE · hash 漂移 ·
+  //   需要另一份本機變更 ⇒ **拒絕並要求改用完整 Package**。
+  //   ⚠️ 前兩種由 `validatePackage()` 自己判（它拿得到 `base`）；
+  //   ⭐ 第三種是這裡判的：**一份 package 只准有一個 root**。
+  app.post<{ Body: { collection?: string; document?: Record<string, unknown> } }>(
+    `${prefix}/validate-single`,
+    async (req, reply) => {
+      const collection = req.body?.collection;
+      const document = req.body?.document;
+      // ⭐ 只接受**一份**已知 runtime document（票文：第一批 `ability@1` / `item@1`）。
+      const ALLOWED = ["abilities", "items"] as const;
+      if (typeof collection !== "string" || !(ALLOWED as readonly string[]).includes(collection))
+        return reply.code(422).send({
+          schema: IMPORT_ERROR_SCHEMA,
+          code: "SINGLE_COLLECTION_UNSUPPORTED",
+          message: `⭐ 這條便道目前只收 ${ALLOWED.join(" / ")}；其餘請走完整 Package。`,
+          retryable: false,
+        });
+      const id = document?.["id"];
+      if (!document || typeof id !== "string" || id === "")
+        return reply.code(422).send({
+          schema: IMPORT_ERROR_SCHEMA,
+          code: "SINGLE_DOCUMENT_INVALID",
+          message: "⛔ `document` 必須是一份帶 `id` 的物件。",
+          retryable: false,
+        });
+
+      // ⭐⭐ **server 建 package** —— ⛔ 這是這條 route 存在的全部理由。
+      const path = `authoring/${collection}/${id}.json`;
+      const body = JSON.stringify(document);
+      const base = await readBaseFacts(d.root, d.store.active());
+      const pkg = {
+        schema: "ggd-editor-package@1",
+        manifest: {
+          schema: "ggd-editor-package@1",
+          mode: "delta",
+          gameId: "ggd",
+          // ⚠️ digest 由 server 算 —— ⛔ 送進來的那一個一律不採信。
+          packageDigest: sha256Hex(body),
+          base,
+          selectionRoots: [{ collection, id }],
+          changes: [{ collection, id, op: "upsert" }],
+          requiredCapabilities: [],
+          entries: [
+            { path, role: "authoring", contentSize: Buffer.byteLength(body), collection, id },
+          ],
+          requires: [],
+        },
+        documents: [{ path, document }],
+      };
+
+      const v = await runValidate(pkg);
+      const opId = `validate-single-${sha256Hex(body).slice(-16)}`;
+      return reply.code(v.ok ? 200 : 422).send({
+        ...resultOf(opId, v.ok ? "validated" : "rejected", v),
+        // ⭐ 把 server 建的那一份交出去 —— 對面要能看到「我被包成了什麼」，
+        //   ⛔ 否則它只知道通過/沒通過，卻不知道下一步該送什麼。
+        singleRoot: { collection, id, packageDigest: pkg.manifest.packageDigest },
+      });
+    },
+  );
+
   // ── POST /apply ────────────────────────────────────────────────────────
+
   app.post<{
     Body: {
       operationId?: string;

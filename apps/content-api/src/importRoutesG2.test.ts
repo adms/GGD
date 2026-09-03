@@ -713,3 +713,61 @@ describe("G2 可達性", () => {
     expect(two.implementedStage, "⛔ 一次失敗的 rollback 把 stage 打回 G1").toBe("G2");
   });
 });
+
+/**
+ * ⭐⭐ **`POST /validate-single`** —— 後台「載入單檔 JSON」的**安全便道**（GH#931）。
+ *
+ * ⭐ 它的價值在「**安全**」，⛔ 不是「方便」：由 **server** 用 ACTIVE snapshot
+ * 把一份 runtime document 包成 canonical single-root delta package，
+ * ⛔ **而不是讓人把 raw JSON 當 package 送進來**。
+ *
+ * ⚠️ ⭐ 而它與 `/validate` 走**同一支** `validatePackage()` ——
+ * ⛔ 這裡沒有第二套驗證（兩份實作必然漂）。
+ */
+describe("POST /validate-single（GH#931）", () => {
+  it("★★ ⭐ 收下一份 runtime document，**server 自己包**成 single-root package", async () => {
+    const r = await post(`${P}/validate-single`, {
+      collection: "abilities",
+      document: { id: "probe-single", schema: "ability@1", name: "探針", slot: "Q" },
+    });
+    // ⭐ 200 或 422 都可以（內容本身可能不完整）——⭐ 這一條問的是「**它有沒有把 package 建出來**」。
+    const body = r.json() as { singleRoot?: { collection: string; id: string; packageDigest: string } };
+    expect(
+      body.singleRoot,
+      "⛔⛔ 沒有回 `singleRoot` ⇒ 對面只知道通過/沒通過，⭐ 卻不知道**它被包成了什麼**",
+    ).toBeTruthy();
+    expect(body.singleRoot!.collection).toBe("abilities");
+    expect(body.singleRoot!.id).toBe("probe-single");
+    expect(
+      body.singleRoot!.packageDigest.length,
+      "⛔ digest 是空的 —— 那代表 server 沒有真的算它",
+    ).toBeGreaterThan(16);
+  });
+
+  it("★★ ⭐⭐ **一個位元組都不寫**（⛔ 票文逐字：它不得直接寫檔）", async () => {
+    const before = treeOf(importDir);
+    await post(`${P}/validate-single`, {
+      collection: "abilities",
+      document: { id: "probe-nowrite", schema: "ability@1", name: "探針", slot: "Q" },
+    });
+    expect(
+      treeOf(importDir),
+      "⛔⛔ 這條 route 落地了東西 —— ⭐ 它是**驗證**便道，⛔ 不是 apply",
+    ).toEqual(before);
+  });
+
+  it("★★ ⭐ 不認得的 collection ⇒ **拒絕並說要走完整 Package**", async () => {
+    const r = await post(`${P}/validate-single`, {
+      collection: "champions",
+      document: { id: "x", schema: "champion@1" },
+    });
+    expect(r.statusCode, "⛔ 不支援的 collection 竟然收下了").toBe(422);
+    expect((r.json() as { code?: string }).code).toBe("SINGLE_COLLECTION_UNSUPPORTED");
+  });
+
+  it("⭐ 反方向：缺 `id` 的 document ⇒ 拒絕（⛔ 不可以靜靜當成空包）", async () => {
+    const r = await post(`${P}/validate-single`, { collection: "items", document: { schema: "item@1" } });
+    expect(r.statusCode).toBe(422);
+    expect((r.json() as { code?: string }).code).toBe("SINGLE_DOCUMENT_INVALID");
+  });
+});
