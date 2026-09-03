@@ -1,0 +1,367 @@
+<title>缺口角色部件組合表</title>
+<style>
+:root{--ink:#1b1a17;--ink2:#4a4640;--ink3:#7d776c;--ground:#f7f5f0;--card:#fffdf8;
+--line:#e2ddd2;--bad:#a8321e;--bad-bg:#fbeeea;--ok:#2d6a4a;--ok-bg:#e9f2ec;
+--mid:#8a6d1f;--mid-bg:#f8f1dd;--accent:#7a3b2e;--tool:#3a5a8a;--tool-bg:#e8eef7}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--ink:#ece7dd;--ink2:#b3ab9d;--ink3:#847c6e;--ground:#15140f;--card:#1e1c17;--line:#332f27;
+--bad:#e2755c;--bad-bg:#2c1a15;--ok:#7fc4a0;--ok-bg:#16261e;--mid:#d9b45c;--mid-bg:#2a2213;
+--accent:#d99377;--tool:#8fb3e0;--tool-bg:#17202e}}
+:root[data-theme="dark"]{--ink:#ece7dd;--ink2:#b3ab9d;--ink3:#847c6e;--ground:#15140f;
+--card:#1e1c17;--line:#332f27;--bad:#e2755c;--bad-bg:#2c1a15;--ok:#7fc4a0;--ok-bg:#16261e;
+--mid:#d9b45c;--mid-bg:#2a2213;--accent:#d99377;--tool:#8fb3e0;--tool-bg:#17202e}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);margin:0;
+font:15px/1.6 "Noto Sans TC","PingFang TC",system-ui,sans-serif}
+.w{max-width:1180px;margin:0 auto;padding:38px 18px 70px}
+h1{font-size:29px;margin:0 0 5px;letter-spacing:-.01em;text-wrap:balance}
+.s{color:var(--ink3);font-size:13.5px;margin:0 0 22px}
+h2{font-size:20px;margin:44px 0 4px;display:flex;align-items:baseline;gap:11px;
+padding-bottom:7px;border-bottom:2px solid var(--bad);text-wrap:balance}
+.c{font-size:12.5px;color:var(--ink3);font-weight:400}
+h3{font-size:14.5px;margin:22px 0 9px;color:var(--ink2);
+padding-left:9px;border-left:3px solid var(--accent)}
+.need{background:var(--bad-bg);border-left:4px solid var(--bad);padding:9px 13px;
+border-radius:0 6px 6px 0;font-size:13px;margin:10px 0 4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:11px}
+.k{display:flex;gap:9px;background:var(--card);border:1px solid var(--line);
+border-radius:9px;padding:10px}
+.k.na{background:var(--bad-bg);border-color:var(--bad);border-style:dashed}
+.t{flex:0 0 62px}
+.t img{width:62px;height:62px;object-fit:contain;background:#0d0d0d;border-radius:6px;display:block}
+.n{width:62px;height:62px;background:var(--line);border-radius:6px;display:grid;
+place-items:center;font-size:10px;color:var(--ink3);text-align:center}
+.b{min-width:0;flex:1}
+.ti{font-weight:600;font-size:12.5px;line-height:1.3;margin-bottom:3px}
+.wy{font-size:11.5px;color:var(--ink2);line-height:1.45;margin-bottom:4px}
+.how{font-size:11px;color:var(--tool);background:var(--tool-bg);padding:4px 7px;
+border-radius:5px;line-height:1.45;margin-bottom:4px}
+.p{font-size:11px;color:var(--ink2);font-variant-numeric:tabular-nums}
+.p b{color:var(--accent);font-size:12px}
+.p i{color:var(--ink3)}
+.lk{color:var(--accent);text-decoration:none}
+.lk:hover{text-decoration:underline}
+.note{background:var(--mid-bg);border-left:4px solid var(--mid);padding:15px 17px;
+border-radius:0 8px 8px 0;margin:18px 0;font-size:13.5px;line-height:1.72}
+code{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;
+background:color-mix(in srgb,var(--line) 45%,transparent);padding:0 4px;border-radius:3px}
+</style>
+<div class="w">
+<h1>缺口角色部件組合表</h1>
+<p class="s">5 個全站找不到完整模型的角色 · 36 筆部件候選 · 每筆註明「取哪塊、丟哪塊」· 2026-09-03</p>
+
+<div class="note">
+<b>⭐ 這份表存在的理由（owner 2026-09-03 逐字）：</b><br>
+「蒼月潮 那至少 <b>裸上身 + 長矛 + 長髮 有中一個也可以</b>，只是這種<b>有差距的你要特別記錄在清單裡面</b>，
+做<b>後處理、組合處理</b>，讓後續的 claude code 有機會<b>組合成成品</b> —— 例如<b>獨立三個，移除各自不適合的來組合</b>」<br>
+⇒ ⭐ 所以下面每一筆都不是「這支能用」，而是「<b>這支的哪一塊能用</b>」。
+</div>
+
+<div class="note" style="background:var(--ok-bg);border-left-color:var(--ok)">
+<b>⭐ 已知最完整的一支：<code>481518</code> 巴尔洛戈砍刀老人（899 元宝）</b><br>
+它同時滿足桀諾的<b>矮小＋佝僂＋老者</b>三件 —— ⭐ <b>只要移除砍刀</b>就成立。
+⇒ 這是全表 CP 值最高的一筆：<b>一次購買 ＋ 一次 mesh 刪除</b>。
+</div>
+
+<div class="note">
+<b>⚠️ 這張表是索引，⛔ 不是結論。</b>
+每一筆的「像不像」只驗到<b>標題與縮圖</b>那一層 —— CLAUDE.md 的規矩是「角色看圖不看名」，
+而部件級的判斷（這顆頭接不接得上那個身體、骨架相不相容）<b>要開模型才知道</b>。<br>
+⚠️ 而 <b>WC3 的 .mdx 是硬骨架綁定</b>：跨模型移植部件要重綁權重，⛔ 不是複製貼上。
+⇒ ⭐ 現實的順序是：<b>先買最完整的那一支，只做「刪除」</b>（例 481518 移除砍刀）；
+「取三支各一塊」是<b>最後手段</b>，成本高很多。
+</div>
+
+<h2>蒼月潮 <span class="c">潮與虎</span></h2>
+<p class="need">⭐ 要組出的樣子：<b>長髮少年 ＋ 裸上身 ＋ 獸矛（白長毛的巨大矛）</b></p>
+<h3>① 軀幹：裸上身男</h3><div class="grid">
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">拳手BOSS钻石●乔兹</div>
+<div class="wy">⭐ 海賊王喬茲 —— **裸上身壯漢**，軀幹形狀最接近</div>
+<div class="how">🔧 取軀幹＋手臂 · ⛔ 丟頭（光頭）、丟鑽石質感</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-457287-1-1.html" target="_blank" rel="noopener">457287 ↗</a></div>
+</div></div>
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">动漫肌肉男纪俐安基里安</div>
+<div class="wy">動漫比例的肌肉男，⭐ 比魔獸壯漢更接近少年體型</div>
+<div class="how">🔧 取軀幹 · ⛔ 丟頭髮</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-459142-1-1.html" target="_blank" rel="noopener">459142 ↗</a></div>
+</div></div>
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">肌肉男匹卡</div>
+<div class="wy">裸上身，體型偏壯</div>
+<div class="how">🔧 備選軀幹</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-456846-1-1.html" target="_blank" rel="noopener">456846 ↗</a></div>
+</div></div>
+</div>
+<h3>② 武器：長矛／戟</h3><div class="grid">
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">灵戟战魂卫兵</div>
+<div class="wy">⭐ **戟** —— 獸矛是長柄大刃，戟的形制最近</div>
+<div class="how">🔧 取武器 mesh · ⛔ 整具丟掉</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-468909-1-1.html" target="_blank" rel="noopener">468909 ↗</a></div>
+</div></div>
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">陆战队员部队枪兵</div>
+<div class="wy">899 元宝，長柄兵器</div>
+<div class="how">🔧 備選武器</div>
+<div class="p"><b>899</b>元宝 · <a class="lk" href="https://www.ou99.com/thread-469052-1-1.html" target="_blank" rel="noopener">469052 ↗</a></div>
+</div></div>
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">烈焰三叉戟鱼人守卫</div>
+<div class="wy">三叉戟 —— ⚠️ 頭部形狀不對</div>
+<div class="how">🔧 末選</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-483975-1-1.html" target="_blank" rel="noopener">483975 ↗</a></div>
+</div></div>
+</div>
+<h3>③ 頭部：男性長髮</h3><div class="grid">
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">时空浪人异次元剑圣</div>
+<div class="wy">⭐ 浪人＝散髮男性</div>
+<div class="how">🔧 取頭部＋髮 · ⛔ 丟身體與刀</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-473800-1-1.html" target="_blank" rel="noopener">473800 ↗</a></div>
+</div></div>
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">骑士浪人剑客</div>
+<div class="wy">浪人散髮</div>
+<div class="how">🔧 備選頭部</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-471504-1-1.html" target="_blank" rel="noopener">471504 ↗</a></div>
+</div></div>
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">持长毛笔的武侠小生</div>
+<div class="wy">小生＝少年感，⭐ 年齡最接近</div>
+<div class="how">🔧 備選頭部</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-457372-1-1.html" target="_blank" rel="noopener">457372 ↗</a></div>
+</div></div>
+</div>
+<h2>揍敵客桀諾 <span class="c">獵人 HUNTER×HUNTER</span></h2>
+<p class="need">⭐ 要組出的樣子：<b>矮小佝僂老者 ＋ 徒手（念能力，⛔ 無武器）</b></p>
+<h3>① 頭部：老者</h3><div class="grid">
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">白胡子老翁老爷爷</div>
+<div class="wy">⭐ 老翁 —— 頭部最接近</div>
+<div class="how">🔧 取頭 · ⛔ 丟身體</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-472410-1-1.html" target="_blank" rel="noopener">472410 ↗</a></div>
+</div></div>
+<div class="k">
+<div class="t"><img src="data:image/jpeg;base64,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" alt="雷电掌控者老头" loading="lazy"></div>
+<div class="b"><div class="ti">雷电掌控者老头</div>
+<div class="wy">899 · 老頭</div>
+<div class="how">🔧 備選頭部</div>
+<div class="p"><b>899</b>元宝 · <a class="lk" href="https://www.ou99.com/thread-485287-1-1.html" target="_blank" rel="noopener">485287 ↗</a></div>
+</div></div>
+<div class="k">
+<div class="t"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAYKADAAQAAAABAAAAPAAAAAD/7QA4UGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAAA4QklNBCUAAAAAABDUHYzZjwCyBOmACZjs+EJ+/8AAEQgAPABgAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/bAEMABAQEBAQECAQECAsICAgLDwsLCwsPEg8PDw8PEhYSEhISEhIWFhYWFhYWFhsbGxsbGx8fHx8fIyMjIyMjIyMjI//bAEMBBQYGCQgJDwgIDyQZFBkkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJP/dAAQABv/aAAwDAQACEQMRAD8A8tooooAKKKKAEJA696WsS+lNtqEV1McxAFcDsx7/AJVpzNMYfPt1LLE2ZGHQLjP8qynVUdxtPSxRvdV+xziBYy7EcfU8D8qq2ra6GMkwVl/ukgH9OlZM+qSwXQv58OmHjTHbnrz9a1dN1DSLPTBczSmSeZQW5JYN6YrkdSz5nfV206GtrKyRvq25Q2MZGcGnVWtzNKPNmG3P3V7ge/vVmu9GIUUUUwP/0PLaKKKACkYSsNsIyx4A9TS1raJefYNQS68gz7OeDgrj+IA8H6VMpcqbY0m3ZGNqHhnULO1ln1q32ufmWTfhQAM4+taNssUkljattCS2qPMvqAGbB+qgVo+LPEEmtv5g/wBWifKB3J749e1crJewxauyO4wjiHAHQbPL6+gNeXUpKDvd6lxbu7EdtoTajYySr5JkLBkRurCTBAHbPY+lcPptoza89reRiLyHO5P9ocbfzr1CzxFLy2zaDg47joK4W9t3utYu7rGGMm9ivHL811QhyuS6KzCL0Z2NFRwsXiVz3ANSV2GYUUUUAf/R8tooooAKUEjocUlFJq+407bGZdXPkzGc8rbL5hHq38I/OuRSR5rJ2c5dtxJ9yc5robuCa4t7yIfKSd31Axj8wDWRoMMF5G8E3XqPcHg/ka45pykLlWzOssLlru0juH+8w5+veqdsB/a90vqiH9Kh0OG4tkmtps7Y3wuf89KnidBrMsY6tGp/L/8AXXVCVootX1NUAAYFLRRVkBRRRQB//9Ly2iuN/t6+/wBn8qP7evv9n8qVxXOyorjf7evv9n8qP7evv9n8qLhc7EgHIPfrXN6NpjxSPdXCGNg52KD/AA+9Uv7evv8AZ/Kj+3r7/Z/Kk0m7saZ2VYNnka9eB+uyMj6YrL/t6+/2fypP7cvQc4TJ74oYXOzorjf7evv9n8qP7evv9n8qdxXOyorjf7evv9n8qP7evv8AZ/Ki4XP/2Q==" alt="魔法老人田丰" loading="lazy"></div>
+<div class="b"><div class="ti">魔法老人田丰</div>
+<div class="wy">899 · 老人</div>
+<div class="how">🔧 備選頭部</div>
+<div class="p"><b>899</b>元宝 · <a class="lk" href="https://www.ou99.com/thread-480045-1-1.html" target="_blank" rel="noopener">480045 ↗</a></div>
+</div></div>
+</div>
+<h3>② 體型：矮小</h3><div class="grid">
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">跳舞的超矮小可爱酱</div>
+<div class="wy">⭐ 超矮小比例</div>
+<div class="how">🔧 取骨架縮放參考 · ⛔ 丟外觀</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-458908-1-1.html" target="_blank" rel="noopener">458908 ↗</a></div>
+</div></div>
+<div class="k">
+<div class="t"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAYKADAAQAAAABAAAAPgAAAAD/7QA4UGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAAA4QklNBCUAAAAAABDUHYzZjwCyBOmACZjs+EJ+/8AAEQgAPgBgAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/bAEMABAQEBAQECAQECAsICAgLDwsLCwsPEg8PDw8PEhYSEhISEhIWFhYWFhYWFhsbGxsbGx8fHx8fIyMjIyMjIyMjI//bAEMBBQYGCQgJDwgIDyQZFBkkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJP/dAAQABv/aAAwDAQACEQMRAD8A8vooooAKKKKAL76Xfx6YmsvGRbSStCsnYuoDEfkaoV9F+KdNsx8EdIW2ljjETLcMD1d3BBUe+WJ/CvnQcnAot1KcWtQoqWKCWaUQRKS7HAXuT6Ux0aNzG4wykgj0IoFZ7jaKKKBBRRRQB//Q8vooooAKKKcihnCscAkAn096APWfEWt3Q+Gmi6RGgET5aRveN22gfXBJ+leeQw295KJLc+Rs5PfnPUUuo6jJJKmgmUS21oQqSp908nJGfrWc91+8BgGElYiNcdVGMH8fWnTrKyUldN2/Q9ahQcnyzWm5YvtT1Fr9pZJUVkdpFdRt+eRsk57/AE7VQOCSQ2/n73r7/jXSW1lZG0afUkDbB09GPAUe57msi9szbOCoAVuQBzj2rGdN0azg5XT27hiqMVTvC909SjRRRWp5IUUUUAf/0fL6KKKACiiigCXUY7Oexhitt3mhX80noWbAAHsAK9b8E+HLTVdNE14CxFkYlIxlW85uRnocAV48SQCV69q6Xwr461LRLabT1RW3NuRmP3SfvcdxW1OnzK99jujOpODcWU5r2S0upLG6TzBDKwz0zj5eevpVuVrW5tSJE8vIJRs9+2ayrh43uzKreYzEux9SeTW54g1nS9SsbK1022Fu0Cv5pHJcscjJ747VvWpU1Jzmtbaf5nbWqKEXGRytFFFcR4gUUUUAf//S8vormP8AhKbX/nk/5ij/AISm1/55P+YoA6eiuY/4Sm1/55P+Yo/4Sm1/55P+YoA7C0vJ7Gbz7bG7BHPv9c1mRW7JJ5hIyetYX/CU2v8Azyf8xR/wlNr/AM8n/MVoqklHlRqqslHlR2bWdqtit1HdESA/NEF6Ln+9nr7YqnXLf8JNZZ3eS2fwp3/CU2v/ADyf8xV1anOkl0Lq1VNJLodPRXMf8JTa/wDPJ/zFH/CU2v8Azyf8xWBznT0VzH/CU2v/ADyf8xR/wlNr/wA8n/MUAf/Z" alt="巴尔洛戈砍刀老人" loading="lazy"></div>
+<div class="b"><div class="ti">巴尔洛戈砍刀老人</div>
+<div class="wy">899 · ⭐ **矮小＋佝僂＋老者三合一**</div>
+<div class="how">🔧 ⭐ 這支最完整,只要**移除砍刀**</div>
+<div class="p"><b>899</b>元宝 · <a class="lk" href="https://www.ou99.com/thread-481518-1-1.html" target="_blank" rel="noopener">481518 ↗</a></div>
+</div></div>
+</div>
+<h3>③ 動作：徒手武術</h3><div class="grid">
+<div class="k">
+<div class="t"><img src="data:image/jpeg;base64,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" alt="15+动作动漫一拳超人琦玉" loading="lazy"></div>
+<div class="b"><div class="ti">15+动作动漫一拳超人琦玉</div>
+<div class="wy">999 · ⭐ **徒手拳擊動作組**</div>
+<div class="how">🔧 ⭐ 取動畫序列 · ⛔ 丟模型</div>
+<div class="p"><b>999</b>元宝 · <a class="lk" href="https://www.ou99.com/thread-456612-1-1.html" target="_blank" rel="noopener">456612 ↗</a></div>
+</div></div>
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">大师兄徒手武侠男</div>
+<div class="wy">徒手武侠動作</div>
+<div class="how">🔧 備選動作</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-453859-1-1.html" target="_blank" rel="noopener">453859 ↗</a></div>
+</div></div>
+<div class="k">
+<div class="t"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAXqADAAQAAAABAAAAYAAAAAD/7QA4UGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAAA4QklNBCUAAAAAABDUHYzZjwCyBOmACZjs+EJ+/8AAEQgAYABeAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/bAEMABAQEBAQECAQECAsICAgLDwsLCwsPEg8PDw8PEhYSEhISEhIWFhYWFhYWFhsbGxsbGx8fHx8fIyMjIyMjIyMjI//bAEMBBQYGCQgJDwgIDyQZFBkkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJP/dAAQABv/aAAwDAQACEQMRAD8A8tooooAKKKKACiiigAooooAKKKKACiiigD//0PLaKKKACiiigAqAXVs05tVkUyAZKZGcfSrsNu9zuVMcDJ+lR+G/hxbaheNqXhe4a7kEZkmVgFEZz9zOeppXXVlKEnshtFT3NtcWc7W10hSROCp6ioKZIUUUUAFFFFAH/9Hy2iiigAqC6uYbOBri4YKi9SanrB1vTv7VEVlMG8ktlivt2NNK4mWdGu7+W8e9yFQqUUDkHPT8q9m+G8V54e0nUPEBAdpcBIy3AROucA968cunTS9OItVx5a7UUevatzQ/F15B4di0ho0R5d24kMW5+prd4eVSnzQXr6IqnVUJe8/T1OTk1bUpPE1xPqSjbduTlBhVJ+7+YroqydaS9uLRbW2diN4YR7sAsO+M4zWqpJUFhg45FZSTtzE36C0UUVAwooooA//S8tooooAKKKKAJolTmR/4ajjsVvm8qMfPjKYHcc10Evh9YdAj16SbHmMUEQ7+hz7YNc6Cw5UkHsRXoQxcYxpxjsr3+f8AwDKVF3bl1IJYTIyufkZDnpz7jnpU9VorbXraVv7WtJbeJuY5Jc/vPcE9fwqzXJUkrtQehaT67hRRRWRQUUUUAf/T8tooooAKKKKAFycYoBKkMO1JRQBtavr1/rQiW824hXaoUYrFoopJJaIbbbuwooopiCiiigD/1PLaKz/7W03/AJ7LR/a2m/8APZaANCis/wDtbTf+ey0f2tpv/PZaANCis/8AtbTf+ey0f2tpv/PZaANCis/+1tN/57LR/a2m/wDPZaANCis/+1tN/wCey0f2tpv/AD2WgDQorP8A7W03/nstH9rab/z2WgD/2Q==" alt="吸血鬼B徒手动漫男" loading="lazy"></div>
+<div class="b"><div class="ti">吸血鬼B徒手动漫男</div>
+<div class="wy">徒手動漫男</div>
+<div class="how">🔧 備選動作</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-459867-1-1.html" target="_blank" rel="noopener">459867 ↗</a></div>
+</div></div>
+</div>
+<h2>巴恩大魔王・老態 <span class="c">勇者鬥惡龍 達伊的大冒險</span></h2>
+<p class="need">⭐ 要組出的樣子：<b>長袍老者 ＋ 惡魔角 ＋ 法杖</b></p>
+<h3>① 本體：長袍老法師</h3><div class="grid">
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">恶魔老法师特效版</div>
+<div class="wy">⭐ **惡魔＋老法師** —— 概念最接近</div>
+<div class="how">🔧 ⭐ 主體用這支</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-457826-1-1.html" target="_blank" rel="noopener">457826 ↗</a></div>
+</div></div>
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">邪恶大法师暗影BOSS</div>
+<div class="wy">邪惡大法師</div>
+<div class="how">🔧 備選主體</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-459788-1-1.html" target="_blank" rel="noopener">459788 ↗</a></div>
+</div></div>
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">黑暗巫师剑客</div>
+<div class="wy">黑暗巫師 · ⚠️ 帶劍</div>
+<div class="how">🔧 備選,要移除劍</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-456033-1-1.html" target="_blank" rel="noopener">456033 ↗</a></div>
+</div></div>
+</div>
+<h3>② 頭飾：惡魔角</h3><div class="grid">
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">牛魔角仙人男</div>
+<div class="wy">⭐ 角＋仙人（老者）</div>
+<div class="how">🔧 取角 mesh</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-457883-1-1.html" target="_blank" rel="noopener">457883 ↗</a></div>
+</div></div>
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">牛角特效版伊利丹</div>
+<div class="wy">牛角</div>
+<div class="how">🔧 備選角</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-455490-1-1.html" target="_blank" rel="noopener">455490 ↗</a></div>
+</div></div>
+</div>
+<h3>③ 法杖</h3><div class="grid">
+<div class="k na">
+<div class="t"><div class="n">⛔ 無</div></div>
+<div class="b"><div class="ti">⛔ 全站 0 筆</div>
+<div class="wy">⛔ 沒有獨立法杖模型</div>
+<div class="how">🔧 ⭐ 從 fx.prim.* 參數化原型自製,或用既有法師模型的手持物</div>
+<div class="p"></div>
+</div></div>
+</div>
+<h2>巴恩大魔王・變身後 <span class="c">同上</span></h2>
+<p class="need">⭐ 要組出的樣子：<b>年輕肌肉男 ＋ 惡魔翼／角 ＋ 華麗鎧甲</b></p>
+<h3>① 軀幹：年輕肌肉男</h3><div class="grid">
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">通天战神武侠男神</div>
+<div class="wy">⭐ 戰神體型</div>
+<div class="how">🔧 主體</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-461698-1-1.html" target="_blank" rel="noopener">461698 ↗</a></div>
+</div></div>
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">战神弓尊者</div>
+<div class="wy">戰神 · ⚠️ 帶弓</div>
+<div class="how">🔧 備選,移除弓</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-458307-1-1.html" target="_blank" rel="noopener">458307 ↗</a></div>
+</div></div>
+</div>
+<h3>② 鎧甲：華麗金甲</h3><div class="grid">
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">黄金甲版传奇男战士</div>
+<div class="wy">⭐ 黃金甲男戰士</div>
+<div class="how">🔧 ⭐ 主體可直接用這支</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-467257-1-1.html" target="_blank" rel="noopener">467257 ↗</a></div>
+</div></div>
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">次元星君黄金甲</div>
+<div class="wy">黃金甲</div>
+<div class="how">🔧 備選</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-464138-1-1.html" target="_blank" rel="noopener">464138 ↗</a></div>
+</div></div>
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">天庭尊者金甲二郎神</div>
+<div class="wy">金甲</div>
+<div class="how">🔧 備選</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-461295-1-1.html" target="_blank" rel="noopener">461295 ↗</a></div>
+</div></div>
+</div>
+<h3>③ 惡魔翼／角</h3><div class="grid">
+<div class="k na">
+<div class="t"><div class="n">⛔ 無</div></div>
+<div class="b"><div class="ti">⚠️ 169 筆命中太寬</div>
+<div class="wy">關鍵字「恶魔」誤差大</div>
+<div class="how">🔧 ⭐ 要目視挑,或從 501「其他模型」的**羽翼配件**取</div>
+<div class="p"></div>
+</div></div>
+</div>
+<h2>臭作 <span class="c">臭作</span></h2>
+<p class="need">⭐ 要組出的樣子：<b>中年男 ＋ 眼鏡 ＋ 便服</b></p>
+<h3>① 本體：現代便服男</h3><div class="grid">
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">饿狼先生魔化版现代男</div>
+<div class="wy">⭐ **現代男** —— 便服現代人最接近</div>
+<div class="how">🔧 ⭐ 主體</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-454855-1-1.html" target="_blank" rel="noopener">454855 ↗</a></div>
+</div></div>
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">便服版七夜志贵</div>
+<div class="wy">⭐ 便服版</div>
+<div class="how">🔧 ⭐ 主體備選</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-458774-1-1.html" target="_blank" rel="noopener">458774 ↗</a></div>
+</div></div>
+<div class="k">
+<div class="t"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAYKADAAQAAAABAAAAXQAAAAD/7QA4UGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAAA4QklNBCUAAAAAABDUHYzZjwCyBOmACZjs+EJ+/8AAEQgAXQBgAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/bAEMABAQEBAQECAQECAsICAgLDwsLCwsPEg8PDw8PEhYSEhISEhIWFhYWFhYWFhsbGxsbGx8fHx8fIyMjIyMjIyMjI//bAEMBBQYGCQgJDwgIDyQZFBkkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJP/dAAQABv/aAAwDAQACEQMRAD8A8tooooAKKKKACiiigAooooAKKKKACiiigD//0PLaKKKACiiigAooooAlSCaRGlRGKr1IHA+tRV9EfDCW5Pg2+gFkswjLOoIOZiVzgeuMYr57ljkhlaKZSjqSGU8EEdqNOgEdFFFABRRRQB//0fLaKKKACiiigAqWCF7mZLaIZaRgg+rHAqKuo8JRWU2v2AuJBEVuULF+F2gg9ex4oA+pfC+oRSyTaVaACKwYW3HQsiDcfzOK+QtWmubjVLme8JMrSuXJ67txzX1F4VnSw099SkAzeXc7DnqS7Y57/KK+bfFcfk+J9QjxjFzJx9WJrSWyIjuc/RRRWZYUUUUAf//S8tooooAKKKKACiitPRbAapq9tpxIUTSqhJOOCef0oA9omuJdOs/CuirxIcyyL3wy45/76NeWeNtn/CXaiY+nnt+ff9a67xB4gsk+I63l25jtdPIhBAJ2hFIJIHbcefavPtduo77W7y7hcSJJM7Ky9CCxwR+FWyUZVFFFQUFFFFAH/9Py2iiigAooooAKfGIy6+aWUAg5TG4Y5GM5HWmUUAO3MGLAnJzyepz606SVpAoIA2jAwAPzx1qOigAooooAKKKKAP/U8torkP8AhJpv+eS/maP+Emm/55L+ZoA6+iuQ/wCEmm/55L+Zo/4Sab/nkv5mgDr6K5D/AISab/nkv5mj/hJpv+eS/maAOvorkP8AhJpv+eS/maP+Emm/55L+ZoA6+iuQ/wCEmm/55L+Zo/4Sab/nkv5mgDr6K5D/AISab/nkv5mj/hJpv+eS/maAP//Z" alt="白西装七夜志贵" loading="lazy"></div>
+<div class="b"><div class="ti">白西装七夜志贵</div>
+<div class="wy">白西裝</div>
+<div class="how">🔧 備選</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-459257-1-1.html" target="_blank" rel="noopener">459257 ↗</a></div>
+</div></div>
+</div>
+<h3>② 眼鏡</h3><div class="grid">
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">奎因机械守卫眼镜男</div>
+<div class="wy">⭐ 眼鏡男</div>
+<div class="how">🔧 取眼鏡 mesh</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-456721-1-1.html" target="_blank" rel="noopener">456721 ↗</a></div>
+</div></div>
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">矮人直升机眼镜男</div>
+<div class="wy">眼鏡</div>
+<div class="how">🔧 備選</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-459614-1-1.html" target="_blank" rel="noopener">459614 ↗</a></div>
+</div></div>
+</div>
+<h3>③ 中年感</h3><div class="grid">
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">中年皇帝皇者</div>
+<div class="wy">⭐ 中年男 —— 臉部年齡參考</div>
+<div class="how">🔧 取頭部參考</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-498282-1-1.html" target="_blank" rel="noopener">498282 ↗</a></div>
+</div></div>
+<div class="k">
+<div class="t"><div class="n">無縮圖</div></div>
+<div class="b"><div class="ti">卡通葫芦大叔</div>
+<div class="wy">大叔</div>
+<div class="how">🔧 備選</div>
+<div class="p"><i>未查價</i> · <a class="lk" href="https://www.ou99.com/thread-461794-1-1.html" target="_blank" rel="noopener">461794 ↗</a></div>
+</div></div>
+</div>
+</div>
