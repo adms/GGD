@@ -32,6 +32,27 @@
  *       本檔只量形狀（`passive` 區塊 ＋ 空 `effects`）並記進判定表。
  *
  * ══════════════════════════════════════════════════════════════════════════
+ * ⛔⛔ ④ **我自己的第一版也踩了一個假前提**（2026-09-03 收到更正後複驗）
+ *
+ * 這一支的第一版把「`conditionTier` 欄位缺席」判成「⛔ 阻塞於 #943」，
+ * 於是 11 份裡 9 份被判成阻塞。⛔ **那錯了兩層**：
+ *
+ *  · ⭐ **#943 已經落地**（commit `3bdb3f925`，標題逐字「正解是**推導**，
+ *    ⛔ 不是去填 235 份檔」）。`content/conditionTiers.ts` 的
+ *    `resolveConditionTier()` 在**缺席時從文件自己的結構推導**
+ *    （沒有條件 ⇒ 極小／恆真；有條件而作者沒判斷 ⇒ 中）
+ *    ⇒ ⭐ **欄位缺席是設計如此的正常狀態**，⛔ 不是缺口。
+ *  · ⭐ 而我讀的是**技能頂層**的 `conditionTier` —— ⛔ 那一格根本不住在頂層，
+ *    它住在 **scaling 節點**上 ⇒ 我量的是一個**永遠不存在的欄位**，
+ *    於是「11/11 缺」這個數字看起來像訊號，其實是儀器指著空氣（失敗形態④）。
+ *
+ * ⇒ ⭐ 現在改成**真的呼叫解析器讀回傳值**，並跑**反方向**的
+ *   `declaresTierWithoutCondition()`。⛔ 判定字彙裡也不再有「阻塞於 #943」
+ *   那句過期散文 —— 帳本是機器可讀契約，一句散文住進去之後沒有東西會紅（第三守則）。
+ * ⚠️ 全庫那一層的守衛是 `content/tierTagCoverage.test.ts`，
+ *   ⛔ 本檔不重寫它，只重量本批這 11 份當棘輪。
+ *
+ * ══════════════════════════════════════════════════════════════════════════
  * ⭐ 兩個方向（⛔ 一把只驗過單邊的尺不算自證過）
  *
  *  · **已知有的量得到**：`godie-hart.r` 七段各自落地 · `godie-h02u.ex` 正好 6 次
@@ -58,6 +79,8 @@ import { FsContentSource } from "../content/node/FsContentSource";
 import { Arenas, Configs, Models, StatusEffects, VfxDefs, registerAll } from "../content/registries";
 import { Abilities, Augments, Champions, Items, LootTables, Projectiles } from "../sim/content/registry";
 import { cooldownTiersFromDoc, cooldownShapeOf, resolveCooldownTier } from "../content/cooldownTiers";
+import { resolveConditionTier, declaresTierWithoutCondition } from "../content/conditionTiers";
+import { SKILL_TIER_NAMES } from "../content/skillTiers";
 import { SimWorld } from "../sim/SimWorld";
 import { SKELETON_ARENA } from "../sim/world/ArenaDef";
 import { spawnChampion } from "../sim/spawnChampion";
@@ -72,13 +95,19 @@ interface Measured {
   declaredDurationStages: number;
   durationNodes: number;
   segments: { kind: string; count: number }[];
-  missingTiers: string[];
+  /** ⭐ 每個 scaling 節點經 `resolveConditionTier()` **解析出來的**級距（⛔ 不是欄位在不在）。 */
+  conditionTiers: string[];
+  /** ⭐ 反方向：宣告了級距卻沒有任何條件 ＝ 一句說了不會發生的話。 */
+  declaredTierWithoutCondition: number;
+  /** ⭐ 值有、而它的五級距標籤缺席 ⇒ 一個算得出來的數字有了第二個住處（第〇·四守則）。 */
+  bakedLiterals: string[];
   slot: string;
   innateKind: string | null;
   passiveOnly: boolean;
 }
 interface Ledger {
-  verdicts: { id: string; name: string; verdict: string; reason: string; measured: Measured }[];
+  verdictVocabulary: Record<string, string>;
+  verdicts: { id: string; name: string; verdict: string; reason: string; blockedBy?: string; measured: Measured }[];
   rule5Calibration: {
     id: string;
     arraySec: number;
@@ -96,9 +125,19 @@ const LEDGER = JSON.parse(
   readFileSync(join(ROOT, "docs/editor-contract/ggd-acceptance-n4.json"), "utf8"),
 ) as Ledger;
 
-const VERDICTS = ["通過", "阻塞於#943", "不通過"];
-/** 五級距 —— ⭐ 共同規則 #4 的量測面。缺一格就是「⛔ 阻塞於 #943」，⛔ 不是通過。 */
-const TIER_TAGS = ["cooldownTier", "rangeTier", "radiusTier", "manaCostTier", "conditionTier"];
+/** ⭐ 判定字彙從帳本讀（⛔ 不抄），⭐ 而「阻塞」那一格**必須**帶一個能被反駁的理由。 */
+const VERDICTS = ["通過", "不通過", "阻塞"];
+/**
+ * ⭐ 共同規則四的量測面：**值有而它的級距標籤缺席**（＝一個算得出來的數字
+ * 有了第二個住處）。⛔ 值是 0／缺席的那些⛔ 不算 —— 一支 `castType:"self"`
+ * 的技能沒有 `rangeTier` ⛔ 不是缺口，它根本沒有施法距離。
+ */
+const TIER_PAIRS: readonly (readonly [string, string])[] = [
+  ["cooldown", "cooldownTier"],
+  ["range", "rangeTier"],
+  ["radius", "radiusTier"],
+  ["manaCost", "manaCostTier"],
+];
 /** 帶「持續」語意的節點 → 它的秒數欄位。⭐ `delayed` 另計（它的跨度是 count × interval）。 */
 const DURATION_FIELD: Record<string, string> = {
   dot: "durationSec",
@@ -109,6 +148,23 @@ const DURATION_FIELD: Record<string, string> = {
   shield: "duration",
   cycleBuff: "durationSec",
 };
+
+/**
+ * ⭐ 每一個 **scaling 節點**（帶 `ratios` 或 `conditionTier` 的那種）——
+ * ⚠️ 與 `content/tierTagCoverage.test.ts` 同一個撿法：⭐ `conditionTier`
+ * 住在**這裡**，⛔ 不住在技能頂層（第一版就是讀錯層才量到「11/11 缺」）。
+ */
+function scalingsOf(n: unknown, out: Record<string, unknown>[] = []): Record<string, unknown>[] {
+  if (Array.isArray(n)) {
+    for (const x of n) scalingsOf(x, out);
+    return out;
+  }
+  if (n === null || typeof n !== "object") return out;
+  const o = n as Record<string, unknown>;
+  if (o["ratios"] !== undefined || o["conditionTier"] !== undefined) out.push(o);
+  for (const v of Object.values(o)) scalingsOf(v, out);
+  return out;
+}
 
 /** 這棵子樹裡每一個 `kind` 節點（⛔ 只看頂層會漏掉 hook / onHitTargets 底下的）。 */
 function nodesOf(n: unknown, out: Record<string, unknown>[] = []): Record<string, unknown>[] {
@@ -148,11 +204,19 @@ function profile(def: AbilityDef): Measured {
   // ⚠️ ⭐ 先剝掉 `「…」` —— 那是**角色對白不是效果**（第〇·六守則細則②）。
   //    44-04「⋯在 35 秒後宣布勝利吧」就是被這一步擋下來的那一類。
   const prose = String(raw["description"] ?? "").replace(/「[^」]*」/gs, "");
+  // ⭐ 共同規則四：**呼叫解析器讀回傳值**（⛔ 不是問「欄位在不在」——
+  //    `resolveConditionTier` 缺席時會從結構推導，那是設計，⛔ 不是缺口）。
+  const sc = [...scalingsOf(raw["effects"]), ...scalingsOf(raw["passive"])];
+  const first = (v: unknown): number => (Array.isArray(v) ? Number(v[0] ?? 0) : Number(v ?? 0));
   return {
     declaredDurationStages: (prose.match(/持續\s*[0-9.]+\s*秒/g) ?? []).length,
     durationNodes,
     segments,
-    missingTiers: TIER_TAGS.filter((t) => raw[t] === undefined),
+    conditionTiers: sc.map((s) => resolveConditionTier(s)),
+    declaredTierWithoutCondition: sc.filter((s) => declaresTierWithoutCondition(s)).length,
+    bakedLiterals: TIER_PAIRS.filter(([v, t]) => first(raw[v]) > 0 && raw[t] === undefined).map(
+      ([v]) => `${v}=${first(raw[v])}`,
+    ),
     slot: String(raw["slot"]),
     innateKind: (raw["innateKind"] as string | undefined) ?? null,
     passiveOnly: raw["passive"] !== undefined && (raw["effects"] as unknown[]).length === 0,
@@ -260,7 +324,7 @@ describe("GH#962 批 N4 —— 時序與持續（11 份，⭐ 一套治具）", 
       .map((v) => `${v.id}: verdict=${v.verdict} reason=${(v.reason ?? "").length}字`);
     expect(
       bad,
-      "⛔⛔ 判定必須是【通過／阻塞於#943／不通過】三選一**而且**寫得出理由 ——\n" +
+      "⛔⛔ 判定必須是帳本 `verdictVocabulary` 的三選一**而且**寫得出理由 ——\n" +
         "  ⚠️ 一份沒有理由的判定，下一輪讀到時就是一句可以繞過去的散文。",
     ).toEqual([]);
     const dangling = LEDGER.verdicts.filter((v) => Abilities.tryGet(v.id as AbilityId) === undefined);
@@ -429,7 +493,7 @@ describe("GH#962 批 N4 —— 時序與持續（11 份，⭐ 一套治具）", 
     ).toEqual({ payouts: neg.payouts, waves: neg.delayedWaves });
   });
 
-  it("★★ ⭐⭐ §5 逐份重量：**兩段持續⛔ 不可混成一次** ＋ 共同規則 #4（缺標籤 ⇒ 阻塞，⛔ 不是通過）", () => {
+  it("★★ ⭐⭐ §5 逐份重量：**兩段持續⛔ 不可混成一次** ＋ 共同規則四（⭐ 讀解析器的回傳值，⛔ 不是問欄位在不在）", () => {
     const drift: string[] = [];
     const merged: string[] = [];
     for (const row of LEDGER.verdicts) {
@@ -453,19 +517,64 @@ describe("GH#962 批 N4 —— 時序與持續（11 份，⭐ 一套治具）", 
     expect(
       drift.length === 0 ? [] : ["\n" + drift.join("\n")],
       "⛔⛔ **判定表與出貨內容漂了**（棘輪：任一側動了都要紅）——\n" +
-        "  ⭐ `missingTiers` 變短 ⇒ #943 補了級距標籤：去把那一份的「阻塞於#943」改掉；\n" +
-        "  ⭐ `missingTiers` 變長 / `segments` 變了 / `durationNodes` 變了 ⇒ 內容動了：\n" +
+        "  ⭐ `conditionTiers` / `bakedLiterals` 變了 ⇒ 級距那一側動了：先確認那是刻意的；\n" +
+        "  ⭐ `segments` / `durationNodes` / `declaredDurationStages` 變了 ⇒ 內容動了：\n" +
         "     先確認那是刻意的，再更新 `docs/editor-contract/ggd-acceptance-n4.json`。\n" +
         "  ⛔ **不要為了讓它綠而放寬** —— 這一格記的就是「今天真正的現況」。",
     ).toEqual([]);
-    // ⭐ 共同規則 #4：一份還缺級距標籤的技能，判定⛔ 不可以是「通過」。
-    const falsePass = LEDGER.verdicts
-      .filter((v) => v.verdict === "通過" && v.measured.missingTiers.length > 0)
-      .map((v) => `${v.id}（缺 ${v.measured.missingTiers.join("/")}）`);
+    // ⭐⭐ 共同規則四 —— ⛔ **不是問「欄位在不在」**（那是本檔第一版的假前提，
+    //    見檔頭④）。三個都是**讀回傳值 / 讀關係**：
+    const rule4: string[] = [];
+    for (const row of LEDGER.verdicts) {
+      const m = profile(Abilities.get(row.id as AbilityId));
+      // ① 每一個 scaling 節點都要解析得出**一個真的級距名**（缺席時推導）。
+      const bogus = m.conditionTiers.filter((t) => !(SKILL_TIER_NAMES as readonly string[]).includes(t));
+      if (bogus.length > 0) rule4.push(`  · ${row.id}：conditionTier 解析出非法級距 ${JSON.stringify(bogus)}`);
+      // ② 反方向：宣告了級距**卻沒有任何條件** ＝ 一句說了不會發生的話。
+      if (m.declaredTierWithoutCondition > 0) {
+        rule4.push(`  · ${row.id}：${m.declaredTierWithoutCondition} 個 scaling 宣告了條件級距而它**恆真**`);
+      }
+      // ③ 值有、而它的級距標籤缺席 ⇒ 一個算得出來的數字有了第二個住處。
+      if (m.bakedLiterals.length > 0) {
+        rule4.push(`  · ${row.id}：${m.bakedLiterals.join("、")} 是烘死的字面值而它的級距標籤缺席`);
+      }
+    }
     expect(
-      falsePass,
-      "⛔⛔ 共同規則 #4：**標籤不存在時判定為「阻塞於 #943」，⛔ 不是通過** ——\n" +
-        "  ⚠️ 否則「沒有欄位可驗」會被讀成「驗過了」。",
+      rule4.length === 0 ? [] : ["\n" + rule4.join("\n")],
+      "⛔⛔ 共同規則四（五級距標籤化）——\n" +
+        "  ⭐ ⛔ **這一條問的不是「欄位在不在」**：`resolveConditionTier()` 缺席時會從\n" +
+        "     文件結構推導（#943 `3bdb3f925` 落地），⇒ ⭐ 缺席是**設計如此**。\n" +
+        "  ⭐ 它問三件事：①解析得出合法級距 ②⛔ 沒有「宣告了級距卻恆真」的謊\n" +
+        "     ③⛔ 沒有「值有而級距標籤缺席」的第二住處（第〇·四守則）。\n" +
+        "  ⚠️ 全庫那一層在 `content/tierTagCoverage.test.ts`；這裡只重量本批 11 份。",
+    ).toEqual([]);
+    // ⭐⭐ **哨兵**：上面三條今天全是空集合（＝11 份都乾淨）⇒ ⛔ 一個永遠回空的
+    //    檢查器與一個「全部通過」量起來一模一樣。⇒ 拿**已知壞**的節點餵它，
+    //    它必須抓得到 —— ⛔ 抓不到的話，上面那個綠燈是空的。
+    const sentinelLie = declaresTierWithoutCondition({ conditionTier: "極大", ratios: [{ stat: "ap", coeff: 1 }] });
+    const sentinelOk = declaresTierWithoutCondition({
+      conditionTier: "極大",
+      ratios: [{ stat: "ap", coeff: 1, when: { kind: "status", statusId: "burn" } }],
+    });
+    const sentinelBaked = TIER_PAIRS.filter(
+      ([v, t]) => Number(({ cooldown: [42] } as Record<string, unknown[]>)[v]?.[0] ?? 0) > 0 && t !== "",
+    ).map(([v]) => v);
+    expect(
+      { 宣告造假抓得到: sentinelLie, 有條件時不誤報: sentinelOk, 烘死字面值抓得到: sentinelBaked.includes("cooldown") },
+      "⛔⛔ **共同規則四的量尺自己壞了** —— ⭐ 兩個方向都要動得到：\n" +
+        "  · 宣告了「極大」卻**沒有任何條件** ⇒ 必須抓到（一句說了不會發生的話）\n" +
+        "  · 同樣宣告「極大」而**真的有 `when`** ⇒ 必須**不**誤報\n" +
+        "  ⚠️ 抓不到的話，上面那三條空集合證明的是「檢查器沒在跑」，⛔ 不是「內容乾淨」。",
+    ).toEqual({ 宣告造假抓得到: true, 有條件時不誤報: false, 烘死字面值抓得到: true });
+
+    // ⭐ 判定字彙：「阻塞」⛔ 不可以是空話 —— 用它就得寫出**能被反駁的**理由。
+    const nakedBlock = LEDGER.verdicts
+      .filter((v) => v.verdict === "阻塞" && (v.blockedBy ?? "").length < 20)
+      .map((v) => v.id);
+    expect(
+      nakedBlock,
+      "⛔⛔ 判「阻塞」而寫不出 `blockedBy` ⇒ ⭐ 那是「還沒排到」偽裝成「量不了」。\n" +
+        "  ⚠️ 前科就在本檔第一版：9 份被「阻塞於 #943」擋著，而 #943 早就落地了。",
     ).toEqual([]);
   });
 });
