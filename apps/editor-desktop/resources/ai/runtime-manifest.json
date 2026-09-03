@@ -1,0 +1,13 @@
+{
+  "schema": "ggd-local-ai-runtime-manifest@1",
+  "released": false,
+  "reasonCode": "LOCAL_AI_E8_GATE_PENDING",
+  "requiredTargets": [
+    "darwin-arm64-metal",
+    "darwin-x64-cpu",
+    "win32-x64-cuda",
+    "win32-x64-vulkan",
+    "win32-x64-cpu"
+  ],
+  "executables": []
+}

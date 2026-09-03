@@ -38,6 +38,7 @@
       { "from": "dist/renderer/editor", "to": "editor" },
       { "from": "dist/renderer/admin", "to": "admin" },
       { "from": "resources/updates", "to": "updates" },
+      { "from": "resources/ai", "to": "ai" },
       { "from": "dist/heroPackageWorker.cjs", "to": "heroPackageWorker.cjs" }
     ],
     "mac": { "target": ["dmg", "zip"], "category": "public.app-category.developer-tools", "icon": "../client/public/icons/icon-512.png" },

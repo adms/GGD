@@ -16,9 +16,17 @@ describe("desktop delivery contract", () => {
     expect(pkg.build.extraResources).toEqual(expect.arrayContaining([
       { from: "dist/renderer/editor", to: "editor" },
       { from: "dist/renderer/admin", to: "admin" },
+      { from: "resources/ai", to: "ai" },
     ]));
+    expect(JSON.stringify(pkg.build)).not.toMatch(/\.gguf/i);
     expect(pkg.scripts["build:renderer"]).toContain("../editor-desktop/dist/renderer/editor");
     expect(pkg.scripts["build:renderer"]).toContain("../editor-desktop/dist/renderer/admin");
     expect(pkg.scripts["build:renderer"]).not.toContain("vite build --mode desktop &&");
+  });
+
+  it("keeps the packaged local model manifest identical to the compiled trust anchor", async () => {
+    const { LOCAL_MODEL_MANIFEST } = await import("./ai/local/modelManifest");
+    const bundled = JSON.parse(readFileSync(join(__dirname, "..", "resources", "ai", "model-manifest.json"), "utf8"));
+    expect(bundled).toEqual(LOCAL_MODEL_MANIFEST);
   });
 });

@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-local-model-manifest@1",
+  "id": "qwen3-14b-q4-k-m",
+  "displayName": "Qwen3-14B Q4_K_M",
+  "revision": "official-530227a7-q4-k-m",
+  "sourceRevision": "530227a7d994db8eca5ab5ced2fb692b614357fd",
+  "url": "https://huggingface.co/Qwen/Qwen3-14B-GGUF/resolve/530227a7d994db8eca5ab5ced2fb692b614357fd/Qwen3-14B-Q4_K_M.gguf?download=true",
+  "expectedBytes": 9001752960,
+  "sha256": "500a8806e85ee9c83f3ae08420295592451379b4f8cf2d0f41c15dffeb6b81f0",
+  "filename": "Qwen3-14B-Q4_K_M.gguf",
+  "license": "Apache-2.0",
+  "allowedRedirectHostSuffixes": ["huggingface.co", ".hf.co"],
+  "trust": "bundled-application-signature",
+  "releaseGate": "pending-e8"
+}
