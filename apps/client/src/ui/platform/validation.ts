@@ -21,24 +21,41 @@ export function hasControlChars(s: string): boolean {
   return false;
 }
 
+/**
+ * ⭐⭐ **帳號的輸入端正規化**（GH#952）—— ⛔ 不是「打完才拒絕」。
+ *
+ * ⛔⛔ 量到的（owner 2026-09-02 附圖）：打 `MR57` 被一行英文紅字擋下來。
+ * ⭐ 而**拒絕大寫換不到任何東西**：伺服器的帳號索引本來就把大小寫視為同一個
+ * （`account.go` 的 `indexKey()` ⇒ `strings.ToLower`，`reindex.go` / `boot.go` 同樣）
+ * ⇒ ⭐⭐ `MR57` 與 `mr57` **在儲存層早就是同一個帳號**
+ * ⇒ 在輸入端擋掉大寫**沒有換到唯一性、沒有換到安全性**，⛔ 只換到一次註冊失敗。
+ *
+ * ⚠️ ⭐ **正則兩邊都不改**（第〇·四守則）：client 的 `USERNAME_RE` 是 server
+ * `usernameRe` 的**鏡像**（逐字相同），改一邊就是製造第二個住處。
+ * ⇒ ⭐ 這一支只做**正規化**：轉小寫 ＋ 去頭尾空白。
+ */
+export function normaliseUsername(raw: string): string {
+  return raw.trim().toLowerCase();
+}
+
 export function validateUsername(username: string): string | null {
-  if (hasControlChars(username)) return "control characters are not allowed";
+  if (hasControlChars(username)) return "帳號不可以包含控制字元";
   if (!USERNAME_RE.test(username)) {
-    return "3-24 chars: lowercase letters, digits, _ or -; must start with a letter or digit";
+    return "帳號：3–24 字，小寫英數與 _ -，開頭要是英文或數字";
   }
   return null;
 }
 
 export function validateEmail(email: string): string | null {
-  if (hasControlChars(email)) return "control characters are not allowed";
-  if (email.length > 254 || !EMAIL_RE.test(email)) return "enter a valid email address";
+  if (hasControlChars(email)) return "電子信箱不可以包含控制字元";
+  if (email.length > 254 || !EMAIL_RE.test(email)) return "請輸入有效的電子信箱";
   return null;
 }
 
 export function validatePassword(password: string): string | null {
-  if (hasControlChars(password)) return "control characters are not allowed";
+  if (hasControlChars(password)) return "密碼不可以包含控制字元";
   if (password.length < PASSWORD_MIN || password.length > PASSWORD_MAX) {
-    return `password must be ${PASSWORD_MIN}-${PASSWORD_MAX} characters`;
+    return `密碼長度要 ${PASSWORD_MIN}–${PASSWORD_MAX} 字`;
   }
   return null;
 }

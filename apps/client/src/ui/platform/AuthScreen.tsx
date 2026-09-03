@@ -6,7 +6,13 @@
  */
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useApp, appStore } from "./store";
-import { validateRegistration, validateUsername, validatePassword, type RegisterErrors } from "./validation";
+import {
+  validateRegistration,
+  validateUsername,
+  validatePassword,
+  normaliseUsername,
+  type RegisterErrors,
+} from "./validation";
 import {
   OWNER_SETUP_TITLE,
   OWNER_SETUP_HELP,
@@ -602,8 +608,8 @@ export function AuthScreen(): React.JSX.Element {
         ) : (
           <>
         <div style={{ display: "flex", borderBottom: "1px solid #2c3448" }}>
-          {tab("login", "Sign in")}
-          {tab("register", "Create account")}
+          {tab("login", "登入")}
+          {tab("register", "註冊新帳號")}
         </div>
         {/* A REAL <form>, for the password manager's benefit (task #185).
             Chrome will happily SAVE a credential typed into loose divs — that is
@@ -627,7 +633,12 @@ export function AuthScreen(): React.JSX.Element {
             <div style={{ position: "relative" }}>
               <TextInput
                 value={username}
-                onChange={onType(setUsername, unameSparkRef)}
+                // ⭐⭐ GH#952 —— **打字當下就轉小寫**，⛔ 不是打完才用紅字擋。
+                //   ⭐ 伺服器的帳號索引本來就 `strings.ToLower`（`account.go` 的 `indexKey`）
+                //   ⇒ `MR57` 與 `mr57` **在儲存層早就是同一個帳號**
+                //   ⇒ 擋掉大寫沒有換到唯一性、沒有換到安全性，⛔ 只換到一次註冊失敗。
+                //   ⚠️ 正則兩邊都不改（它是 server `usernameRe` 的鏡像）——只正規化。
+                onChange={onType((v) => setUsername(normaliseUsername(v)), unameSparkRef)}
                 placeholder={mode === "login" ? "username or email" : "username"}
                 onEnter={submit}
                 autoFocus
@@ -789,7 +800,7 @@ export function AuthScreen(): React.JSX.Element {
               disabled={authBusy || entering}
               style={{ width: "100%" }}
             >
-              {authBusy ? "…" : mode === "login" ? "Sign in" : "Create account"}
+              {authBusy ? "…" : mode === "login" ? "登入" : "建立帳號"}
             </Btn>
           </span>
           {/* 用手機登入 (#197/#199): the gamepad-first login path. type="button"
