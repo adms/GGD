@@ -364,7 +364,7 @@ export async function startBeamAudition(
   //   **0 個** `w3xfx-*` 粒子系統；補上之後 **3 個**
   //   （`markofchaostarget.p00/p01/p02`）＋家族主 emitter，峰值 96,988 亮像素。
   // ⇒ ⭐ 也就是說：在這兩行之前，這一頁**從來沒有量到過任何一支技能的原作藝術**。
-  const [{ setAbilityVfxBindings }, { setFamilyTuning }, { setAbilityArtBindings }, { Configs }] =
+  const [{ setAbilityVfxBindings }, { setFamilyTuning }, { setAbilityArtBindings }, { Configs, VfxScripts }] =
     await Promise.all([
       import("../render/vfx/abilityLayers"),
       import("../render/vfx/w3xAbilityArt"),
@@ -376,6 +376,28 @@ export async function startBeamAudition(
   setAbilityArtBindings((Configs.tryGet("vfx-ability-art") ?? null) as never);
   setAbilityVfxBindings((Configs.tryGet("ability-vfx-bindings") ?? null) as never);
   setFamilyTuning((Configs.tryGet("vfx-families") ?? null) as never);
+
+  // ⭐⭐ GH#974 —— **把 script 那一層攤在窗外**（診斷出口）。
+  //
+  // ⚠️ ⭐ 這一頁的檔頭已經記過一次同型的盲區（GH#699：出貨組合根安裝兩份設定
+  //   而這一頁手抄時漏了）。⇒ ⭐ 這一次不再多抄一行**手抄的安裝**，
+  //   而是把**已經接好的那條路**攤出來讓人問得到問題：
+  //   `VfxSystem` 建構子自己就 `new VfxScriptPlayer({…})`（`VfxSystem.ts:854`），
+  //   ⛔ 所以 script 播放器在這一頁**本來就是活的** —— 缺的只是**看得見**。
+  //
+  // ⚠️ 而「看不見」正是 #974 拖這麼久的原因：
+  //   唯一會渲染的治具**問不出** script 有沒有跑、跑了幾段、掉了幾段。
+  (globalThis as Record<string, unknown>)["__ggdScripts"] = {
+    /** 出貨登錄表裡有幾份 script（0 ⇒ 這一頁根本沒載到那個集合）。 */
+    count: () => VfxScripts.all().length,
+    ids: () => VfxScripts.all().map((d) => (d as { abilityId?: string }).abilityId ?? "?"),
+    /** 這一支技能今天有沒有 script。 */
+    has: (abilityId: string) => VfxScripts.all().some((d) => (d as { abilityId?: string }).abilityId === abilityId),
+    /** ⭐ 那一格開關（播放器的 `enabled()` 讀的就是它）。 */
+    enabled: () => (Configs.tryGet("vfx-scripts") as { enabled?: boolean } | undefined)?.enabled,
+    /** ⭐ 掉段帳本 —— **誰、哪一段、為什麼沒播**（讀了就清空）。 */
+    drops: async () => (await import("./VfxScriptPlayer")).takeScriptSegmentDrops(),
+  };
 
   // ⚠️ 座標用 sim 的那一套（zone 中心 x≈-37，⛔ 不是原點）。
   mkBody(casterPos.x, casterPos.z, true);

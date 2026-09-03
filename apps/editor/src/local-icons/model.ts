@@ -1,5 +1,5 @@
 import type { IconKind } from "../ai/prompt";
-import { sniffImageHeader, type IconFormat } from "@ggd/shared/content/icons/iconContract";
+import { sniffImageHeader, type IconFormat } from "@ggd/shared/content/icons/encodeIcon";
 
 export const LOCAL_ICON_POLICY = {
   schema: "ggd-editor-local-icon-policy@2",

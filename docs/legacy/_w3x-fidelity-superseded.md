@@ -757,3 +757,69 @@ owner **2026-08-22** 給了完整階梯（**重製新說明 > JASS > w3x說明 >
 `claims.json` 的 `godie-hpb1.e.amounts[1]`，跑 `bash scripts/genrun.sh apconv:build`。
 ⚠️ 貼回去之後那條 AD 會與 AP 那兩段**同時**生效（`ratios` 相加）——
 ⭐ 那正是為什麼它現在不在那裡。
+
+---
+
+## 18. `godie-e002.r` ⊕ `godie-e002.ex` — 20-04 永恆的理想鄉 ⊕ 20-002 解放.約束勝利劍MAX
+
+> ⭐ 2026-09-04 —— owner 問「w3x 理想鄉 主動 做了什麼 都寫很清楚阿」之後逐行讀出來的。
+> ⛔ 這一列**不是缺陷清單** —— 三項全部是**新版說明贏**（第〇·六守則第 1 層），
+> 而守則要求被取代的原作值要另存：**測試可以跟著設計走，⛔ 知識不可以無聲消失**。
+
+### ⭐ 原作的兩個 trigger（`war3map.j:32372` / `:32400`）
+
+`Trig_avalonReady_Actions`（**主動施放 `A0CT`** ⇒ 開視窗）：
+
+```jass
+set udg_SaberUnit = GetTriggerUnit()
+set udg_IsAvalonReady = true
+call EnableTrigger( gg_trg_avalonStart )
+call TriggerSleepAction( I2R(( GetUnitAbilityLevelSwapped('A0CT', GetTriggerUnit()) + 1 )) )
+call DisableTrigger( gg_trg_avalonStart )
+set udg_IsAvalonReady = false
+```
+
+`Trig_avalonStart_Conditions`（視窗內被施法時的三個條件，**全要**）：
+`GetSpellTargetUnit() == udg_SaberUnit` · 非友軍 ·
+⭐ `IsUnitType(GetSpellAbilityUnit(), UNIT_TYPE_HERO) == true`
+
+`Trig_avalonStart_Actions`（爆發）：
+
+```jass
+set udg_WildSaber = ( ( 30 * GetHeroLevel(…) ) + ( GetHeroStatBJ(bj_HEROSTAT_STR, …) ) … )
+call ForGroupBJ( GetUnitsInRangeOfLocAll(900.00, GetUnitLoc(udg_saber)), Func011A )
+  → UnitDamageTargetBJ(…, ATTACK_TYPE_CHAOS, DAMAGE_TYPE_NORMAL)
+  → CreateNUnitsAtLoc(1, 'o00G', …) ＋ UnitAddAbilityBJ('A0CS')
+  → IssueTargetOrderBJ(…, "chainlightning", GetEnumUnit())
+call TriggerSleepAction( 3.00 )   → 清掉 dummy
+```
+
+### ⭐ 三項差異，⛔ 三項都是**新版贏**（⛔ 不要「修」它們）
+
+| # | 原作（JASS） | 新版（owner 的卡面，**贏**） | 為什麼新版贏 |
+|---|---|---|---|
+| ① **視窗長度** | ⭐ `等級 + 1` 秒 ⇒ **2 / 3 / 4** | **2 秒**（固定） | 卡面逐字「在**2秒**內[反彈]」—— 第 1 層**明說**了 |
+| ② **觸發者限制** | ⭐ 只吃**英雄**施放的技能 | 不限（任何[魔法傷害]） | 卡面逐字「[反彈]承受的[魔法傷害]」—— ⭐ 那是一句**陳述**，⛔ 不是沉默 |
+| ③ **第一段傷害** | `30×英雄等級 + 力量`，**AoE 900 全打**，逐一生 dummy 放連鎖閃電 | 原傷害 **3/5/7 倍** ＋ **300% AP**，打回攻擊者 | 卡面逐字寫著倍率與 AP 加成 |
+
+⚠️ ⭐ **①的縮放軸被換掉了，⛔ 不是被拿掉**：原作用**視窗長度**表達等階成長（2/3/4 秒），
+新版用**反彈倍率**（3/5/7 倍）。⇒ 兩者都有「越高階越強」，⛔ 而強在不同的地方。
+
+### ⭐ owner 2026-09-04 逐字確認的兩段結構
+
+> 「理想鄉 是**主動施放** 一段時間內會反彈之後觸發一連串動畫傷害機制」
+> 「⭐ 逐一生 dummy 放連鎖閃電 這是**第一段**傷害，有 EX 就會**補上** 17 段 script 演出
+>   其實不衝突」
+
+⇒ ⭐ **兩段疊加，⛔ 不是二選一**：
+① R 反彈成功 ⇒ 反傷 ＋ 畫面回饋（守衛 `avalonReflectFeedback.test.ts`，⭐ 刻意跑「沒有 EX」那一場）
+② EX 解鎖 ⇒ **再補上**七次斬擊 ＋ 約束勝利之劍（守衛 `avalonExFollowup.test.ts`，2026-09-04 補）
+
+### ⚠️ 我在這一支上連錯兩次（留著當反例）
+
+1. 「`effects: []` ⇒ 內容缺陷，該補 effects」—— ⛔ 錯，那會把設計上的被動變成主動
+2. 「它本來就是被動 ⇒ 不該能按」—— ⛔ 也錯，**主動那一半住在 R 槽的另一支技能**上
+
+⭐ 兩次的共同成因：我讀了 `isPassiveOnly` 的**程式**，⛔ 卻沒讀那支技能的**說明** ——
+而第〇·六守則的第 1 層逐字就是「owner 的新版技能說明」，它排在 JASS 前面。
+📋 已記帳（`1-推測當需求 / 憑印象`）。

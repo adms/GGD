@@ -87,6 +87,10 @@
     {
       "step": "vfxfam:build",
       "why-not": "⭐ 新訊號 A「glob 認領」命中它（68 份）—— ⛔ 但那個 glob 是 2026-09-01 **刻意**加的，而它是**作者**不是正規化器：`generateFamilyContent.ts` 的第一行檔頭逐字寫著它是 `content/vfx/fx.fam.*.json` 的產生器，每一份都是**整份重算**（從 `w3xArtFamilies.ts` 的 21 個原型 ＋ `w3xFamilyArt.ts` 的證據表 ＋ `bindings.ts` 的顏色分類算出來），⛔ 不是讀既有檔只覆寫幾格。⚠️ 在此之前 `steps[].writes` 是一張**逐檔列名**的量測結果 ⇒ 每新增一個家族就多一份「跑完了但戶籍對不上」的孤兒（`fx.fam.ground-dust.arcane.s120.json` 就是那樣來的：被它寫出來、沒有人認領、⇒ 隔離區不鎖它 ⇒ 任何通道都寫得進去而沒有東西會紅）。⇒ 可被反駁的方式：若這支改成讀回既有的 `fx.fam.*.json` 再逐格 merge（例如保留手改的顏色），這一格就要搬到 normalizers。2026-09-01 加入。"
+    },
+    {
+      "step": "board:roll",
+      "why-not": "⭐ 2026-09-04 —— 訊號 A（glob 認領 9 份）命中它,⛔ 而它是**作者**,⛔ 不是正規化器。它每天**整份重算**戰情版（`gen_board.py` 讀票與帳本再 emit 一份新的 md）,⛔ 不是讀既有檔只覆寫幾格 —— B=0（讀寫零重疊）與 C=0/17（沒有跟別人共寫）兩個訊號都指向這一點。⭐ A 之所以會命中,是因為那個檔**每天換名**（`戰情版-<YYYYMMDD>.md`）⇒ 戶籍只能用 glob 宣告（同 `msgledger:build` 的 `ledger-source_temp_*.md`）,而 glob 認領數自然會隨天數累積。⚠️ ⭐ 反駁法:如果哪天 `gen_board.py` 改成**就地改欄位**（例如只更新七天窗那幾行）,這一列就要刪掉並改進 normalizers —— 判準是「它重算整份還是只改幾格」,⛔ 不是「它認領了幾個檔」。"
     }
   ]
 }

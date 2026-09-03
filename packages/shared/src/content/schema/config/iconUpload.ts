@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { zId } from "../common";
-import { ICON_ENCODE } from "../../icons/iconContract";
+import { ICON_ENCODE } from "../../icons/encodeIcon";
 
 /**
  * `config.icon-upload@1` —— ⭐⭐ **編輯器打包進來的 icon 圖片**要怎麼收（GH#966）。

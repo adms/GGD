@@ -861,9 +861,10 @@ export const zBotShopConfig = z
  */
 export const DEFAULT_LEGENDARY_SHELF: LegendaryShelfConfig = {
   open: true,
-  // ⭐ 4，不是 6（owner 2026-08-17 第二則：「一場根本買不起 2 把⋯改成 4 倍
-  // 比較好?」）。2400 × 4 = 9,600：第 10 回合買得起一把、第 12 回合兩把。
-  priceMultiplier: 4,
+  // ⭐ 3（owner 2026-09-03：「寶具價格應該要是隨機寶具的 3 倍」）。
+  // 2400 × 3 = 7,200 —— 兩把 14,400，⭐ 比 4 倍時的 19,200 寬鬆。
+  // ⚠️ 歷史：6 →（owner 2026-08-17「一場根本買不起 2 把⋯改成 4 倍比較好?」）→ 4 → 3。
+  priceMultiplier: 3,
   sellRefundPct: 0.4,
   // 出貨沒有任何一張隨機限定表 —— 49 把寶具照樣全部上架，這一批只做機制。
   randomOnlyTables: [],
@@ -975,7 +976,7 @@ export const zConfigArenaRulesDoc = z
       .describe(
         "寶具（傳說武器）能不能在中場商店直接用金幣買。" +
           "open＝上不上架（出貨 true，owner 2026-08-17：「寶具可以上架直接販售了」）；" +
-          "priceMultiplier＝統一價的倍率，實際售價 = 傳說寶玉價 × 這個數（出貨 6 ＝ 14,400 金）。" +
+          "priceMultiplier＝統一價的倍率，實際售價 = 傳說寶玉價 × 這個數。" +
           "⛔ 它不會打開 #261 暫時下架的那些普通武器道具。",
       ),
     /**

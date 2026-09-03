@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-09-03 22:33 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-09-04 03:35 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.36.5 · 資料截至 2026-09-03 22:33 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-03 22:33 (GMT+8)</h1><div class="meta"><span>帳本 <b>16</b> 份</span><span>點名票號 <b>376</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.37.0 · 資料截至 2026-09-04 03:35 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-04 03:35 (GMT+8)</h1><div class="meta"><span>帳本 <b>17</b> 份</span><span>點名票號 <b>381</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -1094,30 +1094,55 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <blockquote>表格那一格是<b>截斷</b>過的；⛔ 全文沒有被壓縮取代，它在 <code>ledger-source_temp_*.md</code>。</blockquote>
 <blockquote>票號那一格 ⛔ 不可以留空：對不到票就寫 <code>⏸ 未對票</code>，<code>--check</code> 會紅。</blockquote>
 <div class="scroll"><table><tr><th>時間</th><th>owner 說了什麼（逐字）</th><th>票</th></tr>
-<tr><td>01:38</td><td>開票</td><td>⏸ 未對票</td></tr>
-<tr><td>10:48</td><td>我總共需要多少元寶 有多少模型要下載？</td><td>⏸ 未對票</td></tr>
-<tr><td>10:54</td><td>你要給我列表讓我決定 要下載那些模型</td><td>⏸ 未對票</td></tr>
-<tr><td>10:59</td><td>你應該要去每個頁面查價格填回候選列表吧 你的 md 檔無法使用圖片嗎？那就改 html 吧</td><td>⏸ 未對票</td></tr>
-<tr><td>17:47</td><td>我回來了 請繼續</td><td>⏸ 未對票</td></tr>
-<tr><td>17:50</td><td>請繼續</td><td>⏸ 未對票</td></tr>
-<tr><td>17:57</td><td>login</td><td>⏸ 未對票</td></tr>
-<tr><td>18:04</td><td>我已經買了至尊會員 不需要付費也可以下載了 請你不要用付費下載的方式看看 應該可以直接下載甚至不用留言了</td><td>⏸ 未對票</td></tr>
-<tr><td>18:11</td><td>codex 編輯器已經全部實作完 請你提一個計畫來全面詳細驗收</td><td>⏸ 未對票</td></tr>
-<tr><td>18:25</td><td>8招</td><td>⏸ 未對票</td></tr>
-<tr><td>18:30</td><td>你取聯集</td><td>⏸ 未對票</td></tr>
-<tr><td>18:47</td><td># 鑄技工坊／VFX Forge 現有技能驗收清單 狀態：候選基準版 範圍：42 個技能主題、46 份實際技能 JSON 目的：驗收 Editor 是否能用現有積木從空白重建技能，不代表允許直接套用或 Promote 至遊戲正式內容。 ## 一、共同驗收規則 每一份技能都必須完成： 1. 從空白畫布重建，不可只載入既有 JSON 冒充完成。 2. 可以儲存、關閉重開、再次編輯、單檔匯出及 ZIP 匯出。 3. 編輯前後 JSON 必須通過 schema、template、effect graph 與 runtime 驗證。 4. 傷害、耗魔、冷卻、施法距離、有效範圍、吟唱、位移、擊退、移速等適…</td><td>⏸ 未對票</td></tr>
-<tr><td>18:53</td><td>請你計算 合理購買的元寶範圍 及換算金額</td><td>⏸ 未對票</td></tr>
-<tr><td>18:54</td><td>1. yes 2. yes, 3. yes 好了 我們討論的差不多了 請你將這個計畫補完後 完整的開出相關的多張票 以可以最大限度平行化效率驗證來決定票的範圍</td><td>⏸ 未對票</td></tr>
+<tr><td>01:38</td><td>開票</td><td>— 授權開票的指令,票已開</td></tr>
+<tr><td>10:48</td><td>我總共需要多少元寶 有多少模型要下載？</td><td>— ou99 模型採購盤點（已交付候選表）</td></tr>
+<tr><td>10:54</td><td>你要給我列表讓我決定 要下載那些模型</td><td>— 同上,列表已交付</td></tr>
+<tr><td>10:59</td><td>你應該要去每個頁面查價格填回候選列表吧 你的 md 檔無法使用圖片嗎？那就改 html 吧</td><td>— 同上,已改成逐頁實測價格＋HTML 縮圖</td></tr>
+<tr><td>17:47</td><td>我回來了 請繼續</td><td>— 恢復工作,無新需求</td></tr>
+<tr><td>17:50</td><td>請繼續</td><td>— 同上</td></tr>
+<tr><td>17:57</td><td>login</td><td>— 登入,無新需求</td></tr>
+<tr><td>18:04</td><td>我已經買了至尊會員 不需要付費也可以下載了 請你不要用付費下載的方式看看 應該可以直接下載甚至不用留言了</td><td>— 至尊會員,改走免付費下載（已照辦）</td></tr>
+<tr><td>18:11</td><td>codex 編輯器已經全部實作完 請你提一個計畫來全面詳細驗收</td><td>953</td></tr>
+<tr><td>18:25</td><td>8招</td><td>953</td></tr>
+<tr><td>18:30</td><td>你取聯集</td><td>953</td></tr>
+<tr><td>18:47</td><td># 鑄技工坊／VFX Forge 現有技能驗收清單 狀態：候選基準版 範圍：42 個技能主題、46 份實際技能 JSON 目的：驗收 Editor 是否能用現有積木從空白重建技能，不代表允許直接套用或 Promote 至遊戲正式內容。 ## 一、共同驗收規則 每一份技能都必須完成： 1. 從空白畫布重建，不可只載入既有 JSON 冒充完成。 2. 可以儲存、關閉重開、再次編輯、單檔匯出及 ZIP 匯出。 3. 編輯前後 JSON 必須通過 schema、template、effect graph 與 runtime 驗證。 4. 傷害、耗魔、冷卻、施法距離、有效範圍、吟唱、位移、擊退、移速等適…</td><td>953</td></tr>
+<tr><td>18:53</td><td>請你計算 合理購買的元寶範圍 及換算金額</td><td>— ou99 元寶換算（已交付）</td></tr>
+<tr><td>18:54</td><td>1. yes 2. yes, 3. yes 好了 我們討論的差不多了 請你將這個計畫補完後 完整的開出相關的多張票 以可以最大限度平行化效率驗證來決定票的範圍</td><td>953</td></tr>
 <tr><td>19:29</td><td>你可以註明 #838 可以連動這46個技能驗收 來做部分驗收關票，沒有重疊的部分額外開一張新票</td><td>#838</td></tr>
-<tr><td>19:34</td><td>請你盤點是否有遺漏模組</td><td>⏸ 未對票</td></tr>
-<tr><td>19:35</td><td>並且思考 哪些模組可以拿來做同角色但不同造型的額外購買造型 也列入候選中</td><td>⏸ 未對票</td></tr>
-<tr><td>22:04</td><td>Try again</td><td>⏸ 未對票</td></tr>
-<tr><td>22:10</td><td>為什麼那麼多沒縮圖 ？缺口角色部件組合表也要合併候選購買清單阿</td><td>⏸ 未對票</td></tr>
-<tr><td>22:21</td><td>Try again</td><td>⏸ 未對票</td></tr>
-<tr><td>22:23</td><td>做完</td><td>⏸ 未對票</td></tr>
-<tr><td>22:25</td><td>codex 技能編輯器要能打包 icon 圖片</td><td>⏸ 未對票</td></tr>
-<tr><td>22:29</td><td>設計者可以用 codex 技能編輯器 上傳設定圖片檔(但不是真的馬上上傳) 而編輯器會自動縮圖轉檔放入一起打包</td><td>⏸ 未對票</td></tr>
-<tr><td>22:33</td><td>給我視窗登入阿</td><td>⏸ 未對票</td></tr>
+<tr><td>19:34</td><td>請你盤點是否有遺漏模組</td><td>— 模組盤點（已交付：115 筆遺漏造型＋5 個缺口角色部件表）</td></tr>
+<tr><td>19:35</td><td>並且思考 哪些模組可以拿來做同角色但不同造型的額外購買造型 也列入候選中</td><td>— 同上</td></tr>
+<tr><td>22:04</td><td>Try again</td><td>— 重試,無新需求</td></tr>
+<tr><td>22:10</td><td>為什麼那麼多沒縮圖 ？缺口角色部件組合表也要合併候選購買清單阿</td><td>— 縮圖補齊＋候選清單合併（已交付）</td></tr>
+<tr><td>22:21</td><td>Try again</td><td>— 重試,無新需求</td></tr>
+<tr><td>22:23</td><td>做完</td><td>— 續做指令,無新需求</td></tr>
+<tr><td>22:25</td><td>codex 技能編輯器要能打包 icon 圖片</td><td>966</td></tr>
+<tr><td>22:29</td><td>設計者可以用 codex 技能編輯器 上傳設定圖片檔(但不是真的馬上上傳) 而編輯器會自動縮圖轉檔放入一起打包</td><td>966</td></tr>
+<tr><td>22:33</td><td>給我視窗登入阿</td><td>— 要求視窗登入（已提供）</td></tr>
+</table></div>
+<p># 2026-09-04</p>
+<blockquote>⭐ 這張表由 <code>scripts/message-ledger.sh</code> 從 session transcript <b>逐則</b>撈出來對帳，</blockquote>
+<blockquote><code>scripts/ruling.sh</code> 收到裁決時也寫進同一張表。</blockquote>
+<blockquote>表格那一格是<b>截斷</b>過的；⛔ 全文沒有被壓縮取代，它在 <code>ledger-source_temp_*.md</code>。</blockquote>
+<blockquote>票號那一格 ⛔ 不可以留空：對不到票就寫 <code>⏸ 未對票</code>，<code>--check</code> 會紅。</blockquote>
+<div class="scroll"><table><tr><th>時間</th><th>owner 說了什麼（逐字）</th><th>票</th></tr>
+<tr><td>00:19</td><td>A 特效消失票開</td><td>974</td></tr>
+<tr><td>00:38</td><td>你應該要把票定義完整吧 包括驗收可能的根因 而不是只側試完假設</td><td>974</td></tr>
+<tr><td>00:41</td><td>我重寫了 #974 (comment) 。而查下去推翻了我自己兩個假設。 ⭐⭐ 真正的發現：content/vfx-scripts/ 有 10 份 script，而它們正好是八招驗收技能 script 技能 segments ⭐ godie-e002.ex / godie-e00l.ex 20-002 約束勝利之劍（你回報的那支） 17 godie-hart.r 超究武神霸斬 12 godie-nbbc.r / n01c.r 阿邦快速劍X 4 godie-hjai.e / h020.e 龍破斬 2 godie-ogrh.r / o00x.r 龜派氣功 2 godie-udea.r 天譴 1 ⇒…</td><td>#974 #650 #803</td></tr>
+<tr><td>00:43</td><td>all good?</td><td>— 進度確認,無新需求</td></tr>
+<tr><td>00:45</td><td>你只能開票別忘了</td><td>— 常設指令提醒（只能開票）</td></tr>
+<tr><td>00:59</td><td>請你繼續把票開完補完 同時給我一鍵複製讓我能讓 main session 處理你剛剛得狀況</td><td>974</td></tr>
+<tr><td>01:13</td><td>你從 v0.34.20 更新 開始就沒有任何有用的訊息 請你補發每個小板號的給玩家訊息 集合成一則大訊息發給 discord</td><td>976</td></tr>
+<tr><td>01:18</td><td>超過2000字 你可以發多篇沒關係 務必把內容都補足</td><td>976</td></tr>
+<tr><td>01:23</td><td>⚠️ 這棵樹（/Users/Takuro/GGD）現在有一批<b>別人做完但沒 commit</b> 的改動，請你接手處理。 【背景】開票 session 違反了「只能開票」的規則，直接改了寶具價格。 改動已驗過（40 條測試綠、content:build EXIT=0、typecheck EXIT=0）， 但它不該由那條線 commit —— 請你判斷要套用還是丟棄。 【那份改動是什麼】GH#975（票裡有完整規格與驗算） 寶具直購價 4 倍 → 3 倍（9,600 → 7,200 金），owner 2026-09-03 逐字要求。 四個住處： ① content/config/arena-rul…</td><td>#975 #966 #967 #969 #974</td></tr>
+<tr><td>01:31</td><td>gogo</td><td>974</td></tr>
+<tr><td>01:41</td><td>go on dont stop</td><td>974</td></tr>
+<tr><td>02:35</td><td>go</td><td>974</td></tr>
+<tr><td>03:22</td><td>看不懂 godie-e002.ex 約束勝利之劍 怎麼會是 passive</td><td>974</td></tr>
+<tr><td>03:25</td><td>錯了吧 理想鄉 是主動施放 一段時間內會反彈之後觸發一連串動畫傷害機制 怎麼會是被動？</td><td>974</td></tr>
+<tr><td>03:26</td><td>w3x 理想鄉 主動 做了什麼 都寫很清楚阿</td><td>974</td></tr>
+<tr><td>03:27</td><td>godie-e002.<b>r</b> 20-04 Avalon-永恆的理想鄉 [主動][反彈] R applyBuff + spawnModelFx godie-e002.<b>ex</b> 20-002 解放.約束勝利劍MAX [被動][反彈成功時] EX (由 hook 觸發) =&gt; yes, 這可以看作是 反彈成功 -&gt; 技能標籤 -&gt; 觸發 MAX</td><td>974</td></tr>
+<tr><td>03:28</td><td>表現形式 ⭐ 逐一生 dummy 放連鎖閃電 ⛔ GGD 是 17 段 script 演出 =&gt; ⭐ 逐一生 dummy 放連鎖閃電 這是第一段傷害，有 EX 就會補上 17 段 script 演出 其實不衝突</td><td>974</td></tr>
+<tr><td>03:35</td><td>那請你做完</td><td>974</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

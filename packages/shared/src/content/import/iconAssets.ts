@@ -32,7 +32,7 @@ import {
   iconMimeOf,
   sniffImageHeader,
   type IconFormat,
-} from "../icons/iconContract";
+} from "../icons/encodeIcon";
 
 /** `zManifestEntry.role` 的新值。⛔ 字串常數只有這一個住處。 */
 export const ASSET_ROLE = "asset" as const;

@@ -129,9 +129,31 @@ function spawnFighter(
     rank: a ? 3 : 0,
     cooldownRemainingTicks: 0,
   });
+  // ⭐⭐ GH#974 —— **EX 槽的技能要住 `exSlot`，⛔ 不是 R。**
+  //
+  // ⛔ 在此之前這裡永遠是 `R: slot(abilityId)` ＋ `exSlot: null`
+  //   ⇒ 一支 `slot: "EX"` 的技能被掛到 R，而 `castAbility(w, id, "R", …)`
+  //   在它自己的 EX 檢查上回 **`passive`** ⇒ 台子拋
+  //   「castAbility 拒絕了 godie-e002.ex：passive」。
+  //
+  // ⚠️ ⭐ 那個訊息**看起來像內容的問題**（「這支技能是被動？」）——
+  //   ⛔ 而內容檔是對的（`slot: "EX"` · `castType: "self"` · `isPassiveOnly` 未設）。
+  //   ⇒ ⭐ 它是**台子的**限制，而它擋住了 owner 唯一指名的那一支（20-002）
+  //     ＋ 它的鏡像，也就是 10 支 script 技能裡的 **2 支**。
+  //
+  // ⭐ 判準用**出貨文件自己的 `slot`**，⛔ 不是「照 id 後綴推導」
+  //   （`doCast` 底下那一段註解逐字警告過推導版的坑）。
+  // ⚠️ 敵人是 `abilityId: null` 的 ⇒ 先問，⛔ 不要 `Abilities.get(null)`。
+  const isEx = abilityId !== null && Abilities.get(abilityId).slot === "EX";
   w.abilities.set(id, {
-    slots: { Q: slot(null), W: slot(null), E: slot(null), R: slot(abilityId) } as never,
-    exSlot: null,
+    slots: {
+      Q: slot(null),
+      W: slot(null),
+      E: slot(null),
+      // ⚠️ EX 的時候 R 要留空 —— ⛔ 兩格都掛同一支會讓「放哪一格」變成猜謎。
+      R: slot(isEx ? null : abilityId),
+    } as never,
+    exSlot: isEx ? slot(abilityId) : null,
     basicAttackCdTicks: 999_999,
     unspentPoints: 0,
   });
@@ -223,10 +245,21 @@ export async function buildBeamAuditionWorld(
   };
 
   function doCast(): void {
-      // ⚠️ 受審技能由 `spawnFighter` **一律掛在 R 槽**（不論它原生是 Q/W/E/R）——
-      //    所以這裡放 R 永遠是對的，⛔ 不要「照後綴推導槽位」（推導版放到空槽會被拒絕）。
+      // ⚠️ 受審技能由 `spawnFighter` 掛在 **R 槽**（不論它原生是 Q/W/E/R），
+      //    ⭐ **除了 `slot: "EX"` 的那些** —— 它們住 `exSlot`（GH#974）。
+      //    ⛔ 仍然不要「照 **id 後綴** 推導槽位」（`godie-e002.ex` 的後綴是 `.ex`
+      //    而那只是檔名）—— ⭐ 判準是**出貨文件的 `slot` 欄位**，
+      //    而它與 `spawnFighter` 讀的是**同一格**（⛔ 兩邊各自推導＝兩個住處）。
+      const castSlot = Abilities.get(abilityId).slot === "EX" ? "EX" : "R";
       const ab = w.abilities.get(casterId);
-      if (ab) (ab.slots as { R: { cooldownRemainingTicks: number } }).R.cooldownRemainingTicks = 0;
+      if (ab) {
+        if (castSlot === "EX") {
+          const ex = (ab as { exSlot: { cooldownRemainingTicks: number } | null }).exSlot;
+          if (ex) ex.cooldownRemainingTicks = 0;
+        } else {
+          (ab.slots as { R: { cooldownRemainingTicks: number } }).R.cooldownRemainingTicks = 0;
+        }
+      }
       const hp = w.health.get(casterId);
       if (hp) hp.mana = hp.maxMana;
       // ⭐ 目標型別由**出貨文件自己的 `castType`** 推導，⛔ 不是台子挑一個 ——
@@ -240,7 +273,7 @@ export async function buildBeamAuditionWorld(
             : castType === "ground"
               ? ({ type: "point", point: { x: c.x + 4, z: c.z } } as const)
               : ({ type: "dir", dir: { x: 1, z: 0 } } as const);
-      const verdict = castAbility(w, casterId, "R", target);
+      const verdict = castAbility(w, casterId, castSlot as never, target);
       if (verdict !== "ok") {
         throw new Error(`castAbility 拒絕了 ${abilityId}：${String(verdict)} —— ⛔ 這一頁的結論不算數`);
       }

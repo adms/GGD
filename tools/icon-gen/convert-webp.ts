@@ -37,7 +37,8 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, unlinkSync, writeFileSync, copyFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { ICON_ENCODE, encodeIcon, pngSize } from "@ggd/shared/content/icons/encodeIcon";
+import { ICON_ENCODE, pngSize } from "@ggd/shared/content/icons/encodeIcon";
+import { encodeIcon } from "@ggd/shared/content/icons/encodeIconNode";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "../..");
