@@ -18,7 +18,7 @@
  */
 import { Champions } from "@ggd/shared/sim/content/registry";
 import type { ChampionId } from "@ggd/shared/ids";
-import type { SettlementPlayer } from "@ggd/shared/protocol/messages";
+import type { MatchSettlement, SettlementPlayer } from "@ggd/shared/protocol/messages";
 import { useHud } from "../../net/RoomStore";
 import { useApp } from "../platform/store";
 import { HUD_Z } from "../hud/hudLayout";
@@ -32,6 +32,7 @@ import {
   gradeHeadline,
   isWinner,
   localSettlementCard,
+  settlementExtras,
   sortSettlementRanking,
 } from "./settlementModel";
 import { PANEL_BG, PANEL_BORDER, teamCss, TEXT_DIM, TEXT_MAIN } from "../theme";
@@ -90,8 +91,15 @@ function GradeHeader(props: { player: SettlementPlayer }): React.JSX.Element {
   );
 }
 
-function StatGrid(props: { player: SettlementPlayer }): React.JSX.Element {
-  const rows = buildStatBreakdown(props.player.stats);
+/** ⭐ GH#973 —— 同 `MatchEndPanel.StatBreakdown`：殭屍擊殺那一欄住在 `rounds` 裡。 */
+function StatGrid(props: {
+  player: SettlementPlayer;
+  settlement: MatchSettlement | null;
+}): React.JSX.Element {
+  const rows = buildStatBreakdown(
+    props.player.stats,
+    settlementExtras(props.settlement, props.player.seatId),
+  );
   return (
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3px 18px", marginBottom: 14 }}>
       {rows.map((r) => (
@@ -251,7 +259,7 @@ export function LeaveSettlementOverlay(): React.JSX.Element | null {
           <>
             <GradeHeader player={local} />
             <div style={{ fontSize: 11, color: TEXT_DIM, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6 }}>個人數據</div>
-            <StatGrid player={local} />
+            <StatGrid player={local} settlement={settlement ?? null} />
           </>
         ) : (
           <div style={{ fontSize: 18, fontWeight: 900, marginBottom: 12, textAlign: "center", color: TEXT_MAIN }}>
