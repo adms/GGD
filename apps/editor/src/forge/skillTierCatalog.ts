@@ -49,6 +49,23 @@ export function tierValuesFor(
   return Object.fromEntries(rows) as TierValues;
 }
 
+/** Raw Main-owned value used when a template exposes an old numeric slot. */
+export function tierNumericValueFor(
+  axis: ForgeTierAxis,
+  tier: SkillTierName,
+  docs: TierConfigDocs,
+  cooldownShape: CooldownShape,
+): number | null {
+  const source = sourceTable(axis, docs, cooldownShape);
+  if (!source) return null;
+  const raw = source[tier];
+  if (axis === "travel" || axis === "push") {
+    const distance = record(raw)?.["distance"];
+    return typeof distance === "number" && Number.isFinite(distance) ? distance : null;
+  }
+  return typeof raw === "number" && Number.isFinite(raw) ? raw : null;
+}
+
 function sourceTable(
   axis: ForgeTierAxis,
   docs: TierConfigDocs,

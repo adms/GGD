@@ -1,7 +1,6 @@
 import { createHash } from "node:crypto";
 import { lstatSync, readFileSync } from "node:fs";
 import { isAbsolute, resolve } from "node:path";
-import { performance } from "node:perf_hooks";
 
 import {
   CHECK_KEYS,
@@ -14,6 +13,7 @@ import {
 
 const MAX_FRAME_BYTES = 10 * 1024 * 1024;
 const MAX_TOTAL_BYTES = 64 * 1024 * 1024;
+const REVIEW_PROMPT_REVISION = "image-only-phase-blind-strict@3";
 
 export interface PreparedFrame extends FrameInput {
   index: number;
@@ -44,11 +44,12 @@ export interface ReviewReport {
   sourceDigest: string;
   subject: ReviewRequest["subject"];
   model: {
+    provider: "google-gemini";
     requested: string;
     reported: string;
     baseUrl: string;
     reasoningEffort: "low" | "medium" | "xhigh";
-    responseChannel: "native-message";
+    responseChannel: "gemini-candidate";
     durationMs: number;
     usage?: { promptTokens?: number; completionTokens?: number; totalTokens?: number };
   };
@@ -66,17 +67,14 @@ export interface UnavailableReviewReport {
   generatedAt: string;
   sourceDigest: string;
   subject: ReviewRequest["subject"];
-  model: { requested: string; baseUrl: string };
-  reason: { code: "LOCAL_MODEL_DISABLED" | "LOCAL_MODEL_UNAVAILABLE" | "LOCAL_MODEL_ERROR"; detail: string };
-}
-
-interface NativeChatResponse {
-  model_instance_id?: string;
-  output?: Array<{ type?: string; content?: string }>;
-  stats?: {
-    input_tokens?: number;
-    total_output_tokens?: number;
-    reasoning_output_tokens?: number;
+  model: { provider: "google-gemini"; requested: string; baseUrl: string };
+  reason: {
+    code:
+      | "GEMINI_DISABLED"
+      | "GEMINI_API_KEY_MISSING"
+      | "GEMINI_UNAVAILABLE"
+      | "GEMINI_ERROR";
+    detail: string;
   };
 }
 
@@ -153,6 +151,9 @@ function buildPrompt(request: ReviewRequest, requiredChecks: CheckKey[]): string
   return [
     "你是遊戲技能 VFX 的保守視覺審查員。只判斷圖片中可觀察到的證據，不推斷傷害、數值、命中或遊戲規則。",
     "候選圖片編號只使用 Candidate 0..N；reference 只供比較，不得列入 evidenceFrames。",
+    "預期文字只是待驗命題，不是已發生的事實；禁止照抄預期文字當作畫面證據。",
+    "圖片可能漏掉中間或結尾。必要階段未在任一候選圖片中直接可見時必須填 uncertain 或 fail，不得假設兩幀之間曾出現。",
+    "沒有提供特定顏色、來源或命中位置要求時，對應檢查填 uncertain，不得自行補成 pass。",
     "看不清、規格未提供、幀不足或無法從畫面確認時必須填 uncertain，禁止猜測。",
     "effectPresence=pass 代表預期的主效果確實可見；familyMatch=pass 代表可見主效果屬於預期 VFX 類型。",
     "clipping=pass 代表未見穿模/裁切；readability=pass 代表主效果與角色/地面關係清楚。",
@@ -176,11 +177,15 @@ export function prepareReview(request: ReviewRequest, manifestDir: string): Prep
   if (total > MAX_TOTAL_BYTES) throw new Error("all frames together exceed the 64 MiB limit");
   const requiredChecks = inferredChecks(request);
   const minConfidence = request.policy?.minConfidence ?? 0.85;
-  const sourceDigest = sha256(stable({ request, frames: frames.map(({ role, index, sha256 }) => ({ role, index, sha256 })) }));
+  const sourceDigest = sha256(stable({
+    promptRevision: REVIEW_PROMPT_REVISION,
+    request,
+    frames: frames.map(({ role, index, sha256 }) => ({ role, index, sha256 })),
+  }));
   return { request, sourceDigest, prompt: buildPrompt(request, requiredChecks), frames, requiredChecks, minConfidence };
 }
 
-function classify(
+export function classifyPreparedResult(
   prepared: PreparedReview, result: ModelResult, initialWarnings: string[] = [],
 ): { classification: Classification; warnings: string[] } {
   const warnings = [...initialWarnings];
@@ -213,68 +218,15 @@ function classify(
 }
 
 export function classifyModelResult(prepared: PreparedReview, result: ModelResult): Classification {
-  return classify(prepared, result).classification;
+  return classifyPreparedResult(prepared, result).classification;
 }
 
-export function assertLoopbackApiRoot(value: string): string {
-  const url = new URL(value);
-  if (!["127.0.0.1", "localhost", "[::1]"].includes(url.hostname)) {
-    throw new Error(`refusing to send images to non-loopback host ${url.hostname}`);
-  }
-  if (!["http:", "https:"].includes(url.protocol)) throw new Error("base URL must use http or https");
-  return value.replace(/\/+$/, "");
-}
-
-export async function runReview(
+export function parseStructuredModelContent(
   prepared: PreparedReview,
-  options: {
-    baseUrl: string;
-    model: string;
-    apiToken?: string;
-    timeoutMs?: number;
-    reasoningEffort?: "low" | "medium" | "xhigh";
-  },
-  fetchImpl: typeof fetch = fetch,
-): Promise<ReviewReport> {
-  const baseUrl = assertLoopbackApiRoot(options.baseUrl);
-  const input: Array<Record<string, unknown>> = [{ type: "text", content: prepared.prompt }];
-  for (const frame of prepared.frames) {
-    input.push({
-      type: "text",
-      content: `${frame.role === "candidate" ? "Candidate" : "Reference"} ${frame.index}: ${frame.phase}, ${frame.atMs}ms`,
-    });
-    input.push({ type: "image", data_url: frame.dataUrl });
-  }
-  const nativeUrl = new URL(baseUrl);
-  nativeUrl.pathname = "/api/v1/chat";
-  nativeUrl.search = "";
-  nativeUrl.hash = "";
-  const startedAt = performance.now();
-  const response = await fetchImpl(nativeUrl, {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      ...(options.apiToken ? { authorization: `Bearer ${options.apiToken}` } : {}),
-    },
-    body: JSON.stringify({
-      model: options.model,
-      input,
-      temperature: 0,
-      max_output_tokens: 1800,
-      reasoning: options.reasoningEffort === "xhigh" ? "high" : options.reasoningEffort ?? "low",
-      store: false,
-    }),
-    signal: AbortSignal.timeout(options.timeoutMs ?? 180_000),
-  });
-  const bodyText = await response.text();
-  const durationMs = Math.round(performance.now() - startedAt);
-  if (!response.ok) throw new Error(`LM Studio returned HTTP ${response.status}: ${bodyText.slice(0, 800)}`);
-  const body = JSON.parse(bodyText) as NativeChatResponse;
-  const raw = [...(body.output ?? [])].reverse()
-    .find((entry) => entry.type === "message" && entry.content?.trim())?.content;
-  if (!raw) throw new Error(`LM Studio response has no message content: ${bodyText.slice(0, 800)}`);
-  let result: ModelResult;
+  raw: string,
+): { result: ModelResult; classification: Classification; warnings: string[] } {
   const responseWarnings: string[] = [];
+  let result: ModelResult;
   try {
     const decoded = JSON.parse(raw) as unknown;
     if (decoded !== null && typeof decoded === "object" && !Array.isArray(decoded)) {
@@ -303,100 +255,28 @@ export async function runReview(
     const detail = error instanceof Error ? error.message : String(error);
     throw new Error(`invalid structured model result (${detail}): ${raw.slice(0, 800)}`, { cause: error });
   }
-  const verdict = classify(prepared, result, responseWarnings);
-  const usage = body.stats ? {
-    ...(body.stats.input_tokens === undefined ? {} : { promptTokens: body.stats.input_tokens }),
-    ...(body.stats.total_output_tokens === undefined ? {} : { completionTokens: body.stats.total_output_tokens }),
-    ...(body.stats.input_tokens === undefined || body.stats.total_output_tokens === undefined
-      ? {}
-      : { totalTokens: body.stats.input_tokens + body.stats.total_output_tokens }),
-  } : undefined;
-  return {
-    schema: "ggd-vfx-visual-review-report@1",
-    authority: "advisory-only",
-    classification: verdict.classification,
-    generatedAt: new Date().toISOString(),
-    sourceDigest: prepared.sourceDigest,
-    subject: prepared.request.subject,
-    model: {
-      requested: options.model,
-      reported: body.model_instance_id ?? options.model,
-      baseUrl,
-      reasoningEffort: options.reasoningEffort ?? "low",
-      responseChannel: "native-message",
-      durationMs,
-      ...(usage === undefined ? {} : { usage }),
-    },
-    policy: { minConfidence: prepared.minConfidence, requiredChecks: prepared.requiredChecks },
-    frames: prepared.frames.map(({ dataUrl: _dataUrl, absolutePath: _absolutePath, ...frame }) => frame),
-    rawModelContent: raw,
-    modelResult: result,
-    contractWarnings: verdict.warnings,
-  };
-}
-
-/**
- * Produce durable, non-authoritative evidence when an explicitly optional
- * localhost model is absent. This never turns absence into a pass and never
- * weakens the SimWorld/event-trace or human-review gates.
- */
-export function unavailableReviewReport(
-  prepared: PreparedReview,
-  options: { baseUrl: string; model: string },
-  error: unknown,
-): UnavailableReviewReport {
-  const baseUrl = assertLoopbackApiRoot(options.baseUrl);
-  const detail = error instanceof Error ? error.message : String(error);
-  const unavailable = /ECONNREFUSED|fetch failed|Failed to fetch|HTTP 404|model.+(?:not found|not loaded)/i.test(detail);
-  return {
-    schema: "ggd-vfx-visual-review-unavailable@1",
-    authority: "advisory-only",
-    classification: "needs-human-review",
-    generatedAt: new Date().toISOString(),
-    sourceDigest: prepared.sourceDigest,
-    subject: prepared.request.subject,
-    model: { requested: options.model, baseUrl },
-    reason: {
-      code: unavailable ? "LOCAL_MODEL_UNAVAILABLE" : "LOCAL_MODEL_ERROR",
-      detail,
-    },
-  };
-}
-
-export function disabledReviewReport(
-  prepared: PreparedReview,
-  options: { baseUrl: string; model: string },
-): UnavailableReviewReport {
-  return {
-    schema: "ggd-vfx-visual-review-unavailable@1",
-    authority: "advisory-only",
-    classification: "needs-human-review",
-    generatedAt: new Date().toISOString(),
-    sourceDigest: prepared.sourceDigest,
-    subject: prepared.request.subject,
-    model: { requested: options.model, baseUrl: options.baseUrl },
-    reason: {
-      code: "LOCAL_MODEL_DISABLED",
-      detail: "Local LLM review is opt-in and was not enabled; deterministic and human review continue.",
-    },
-  };
+  const verdict = classifyPreparedResult(prepared, result, responseWarnings);
+  return { result, classification: verdict.classification, warnings: verdict.warnings };
 }
 
 export function unavailableReportMarkdown(report: UnavailableReviewReport): string {
+  const disabled = report.reason.code === "GEMINI_DISABLED";
+  const unavailable = report.reason.code === "GEMINI_UNAVAILABLE" || report.reason.code === "GEMINI_API_KEY_MISSING";
   return [
     `# VFX visual review unavailable: ${report.subject.id}`,
     "",
     `- Classification: **${report.classification}**`,
     `- Authority: **${report.authority}**`,
     `- Reason: **${report.reason.code}**`,
-    `- Local endpoint: \`${report.model.baseUrl}\``,
+    "- Provider: **Google Gemini**",
+    `- Endpoint: \`${report.model.baseUrl}\``,
     `- Source digest: \`${report.sourceDigest}\``,
     "",
-    report.reason.code === "LOCAL_MODEL_DISABLED"
-      ? "Local vision inference is disabled by default. SimWorld/event-trace checks and human visual acceptance continue; this receipt is never a pass."
-      : report.reason.code === "LOCAL_MODEL_UNAVAILABLE"
-        ? "Local vision inference was unavailable. SimWorld/event-trace checks and human visual acceptance must continue; this receipt is never a pass."
-        : "Local vision inference returned an invalid or failed advisory result. Deterministic and human review continue; this receipt is never a pass.",
+    disabled
+      ? "Vision inference is disabled by runtime policy. SimWorld/event-trace checks and human visual acceptance continue; this receipt is never a pass."
+      : unavailable
+        ? "Vision inference was unavailable and no AI pass was granted. SimWorld/event-trace checks and human visual acceptance must continue."
+        : "Vision inference returned an invalid or failed advisory result. Deterministic and human review continue; this receipt is never a pass.",
     "",
     `Detail: ${report.reason.detail}`,
     "",
@@ -409,10 +289,11 @@ export function reportMarkdown(report: ReviewReport): string {
     "",
     `- Classification: **${report.classification}**`,
     `- Authority: **${report.authority}** (not gameplay truth or human acceptance)`,
+    `- Provider: **${report.model.provider}**`,
     `- Model: \`${report.model.reported}\``,
     `- Reasoning effort: ${report.model.reasoningEffort}`,
     `- Response channel: ${report.model.responseChannel}`,
-    `- Local inference: ${(report.model.durationMs / 1_000).toFixed(2)}s`,
+    `- Inference: ${(report.model.durationMs / 1_000).toFixed(2)}s`,
     `- Source digest: \`${report.sourceDigest}\``,
     `- Confidence: ${report.modelResult.confidence.toFixed(3)} (minimum ${report.policy.minConfidence})`,
     "",

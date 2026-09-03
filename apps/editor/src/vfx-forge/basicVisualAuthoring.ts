@@ -31,6 +31,41 @@ export interface BasicVisualDraft {
   readonly blockers: readonly string[];
 }
 
+export type BasicVisualProofSource =
+  | "acceptance-fixture"
+  | "editor-basic-script"
+  | "runtime-effect-graph";
+
+export interface BasicVisualProofRoute {
+  readonly mode: "script" | "runtime";
+  readonly source: BasicVisualProofSource;
+  readonly script: VfxScriptDoc;
+}
+
+/**
+ * Decide which presentation the 42/46 proof actually renders.
+ *
+ * A previous batch loaded the one-click Editor draft but rendered every
+ * ordinary ability in `runtime` mode.  That could produce clean screenshots
+ * while proving none of the bricks the designer had just assembled.  Active
+ * skills therefore render their generated script over the real Sim schedule;
+ * passive hooks that cannot address vfx-script@1 stay on their truthful
+ * effect-graph/runtime route and are never disguised as a cast.
+ */
+export function basicVisualProofRoute(
+  abilityId: string,
+  fixture: VfxScriptDoc | null,
+  basic: BasicVisualDraft,
+): BasicVisualProofRoute {
+  if (fixture) return { mode: "script", source: "acceptance-fixture", script: fixture };
+  if (basic.script) return { mode: "script", source: "editor-basic-script", script: basic.script };
+  return {
+    mode: "runtime",
+    source: "runtime-effect-graph",
+    script: runtimeAuditPlaceholderScript(abilityId),
+  };
+}
+
 const DIRECT_SCRIPT_HOOK = new Map<string, VfxScriptSegment["on"]>([
   ["onReflectSuccess", "reflectSuccess"],
 ]);

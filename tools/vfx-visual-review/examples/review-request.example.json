@@ -21,9 +21,6 @@
     { "path": "frames/002-impact.png", "atMs": 320, "phase": "impact" },
     { "path": "frames/003-fade.png", "atMs": 700, "phase": "fade" }
   ],
-  "referenceFrames": [
-    { "path": "references/expected-impact.png", "atMs": 320, "phase": "impact" }
-  ],
   "runtimeEvidence": {
     "vfxKey": "lightning_blue_impact",
     "scenarioHash": "replace-with-real-scenario-hash",

@@ -5,6 +5,7 @@ import {
   newSegment,
   recommendedEvidenceTimes,
   recommendedRuntimeEvidenceTimes,
+  ensureTemporalEvidencePair,
   scriptVisualFocus,
   retypeSegment,
   reactionTriggerOf,
@@ -176,6 +177,29 @@ describe("VFX Forge authoring core", () => {
     ], 2);
     expect(times).toHaveLength(2);
     expect(times.map((time) => time.atMs)).toEqual([180, 880]);
+  });
+
+  it("one-beat runtime proof uses two distinct times instead of two cameras at one instant", () => {
+    const paired = ensureTemporalEvidencePair([{ atMs: 180, label: "真 runtime · abilityCast" }]);
+    expect(paired).toEqual([
+      { atMs: 180, label: "真 runtime · abilityCast" },
+      { atMs: 120, label: "真 runtime · abilityCast · 近景" },
+    ]);
+    expect(new Set(paired.map((time) => time.atMs)).size).toBe(2);
+    expect(ensureTemporalEvidencePair(paired)).toEqual(paired);
+  });
+
+  it("keeps both summon lifecycle edges in runtime visual evidence", () => {
+    const times = recommendedRuntimeEvidenceTimes([
+      { atMs: 0, event: { type: "abilityCast", data: { abilityId: "summon.r" } } as never },
+      { atMs: 667, event: { type: "summonSpawn", data: { id: 3 } } as never },
+      { atMs: 667, event: { type: "damage", data: { amount: 100 } } as never },
+      { atMs: 4_000, event: { type: "basicAttack", data: { source: 3 } } as never },
+      { atMs: 8_667, event: { type: "summonDespawn", data: { id: 3, reason: "expired" } } as never },
+    ], 8);
+    expect(times.map((time) => time.atMs)).toEqual([180, 847, 4180, 8847]);
+    expect(times[1]!.label).toContain("summonSpawn");
+    expect(times.at(-1)!.label).toContain("summonDespawn");
   });
 
   it("has one non-live proposal destination and validates before calling it", async () => {

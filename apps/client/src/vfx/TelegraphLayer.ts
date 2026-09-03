@@ -281,6 +281,26 @@ export class TelegraphLayer {
     this.live.clear();
   }
 
+  /**
+   * Non-destructive same-frame A/B seam for Editor visual hygiene checks.
+   * `clear()` changes lifetime and forced the Forge to replay from time zero
+   * after every sample; this temporarily hides only the owned carrier meshes.
+   */
+  async withHiddenForAudit<T>(read: () => Promise<T>): Promise<T> {
+    const meshes = [...this.live.values()].flatMap((rec) => [
+      ...(rec.circle?.auditMeshes() ?? []),
+      ...(rec.quad ? [rec.quad] : []),
+      ...(rec.quadAlt ? [rec.quadAlt] : []),
+    ]);
+    const states = meshes.map((mesh) => mesh.isEnabled());
+    meshes.forEach((mesh) => mesh.setEnabled(false));
+    try {
+      return await read();
+    } finally {
+      meshes.forEach((mesh, index) => mesh.setEnabled(states[index]!));
+    }
+  }
+
   dispose(): void {
     this.clear();
     for (const q of this.quadPool) q.dispose(false, true);

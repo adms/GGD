@@ -1,10 +1,8 @@
 import type { IconKind } from "../ai/prompt";
+import { sniffImageHeader, type IconFormat } from "@ggd/shared/content/icons/iconContract";
 
 export const LOCAL_ICON_POLICY = {
-  schema: "ggd-editor-local-icon-policy@1",
-  edgePx: 256,
-  outputMime: "image/webp",
-  outputQuality: 0.88,
+  schema: "ggd-editor-local-icon-policy@2",
   maxSourceBytes: 20 * 1024 * 1024,
   acceptedSourceMime: ["image/png", "image/jpeg", "image/webp"] as const,
 } as const;
@@ -15,14 +13,21 @@ export interface LocalIconKey {
 }
 
 export interface StagedLocalIcon extends LocalIconKey {
-  schema: "ggd-editor-staged-icon@1";
+  schema: "ggd-editor-staged-icon@2";
+  /** Final document pointer. Main writes the converted WebP here. */
   contentPath: string;
-  mimeType: "image/webp";
-  width: 256;
-  height: 256;
+  /** ZIP source entry. It deliberately differs from contentPath. */
+  sourcePath: string;
+  mimeType: "image/png" | "image/jpeg" | "image/webp";
+  width: number;
+  height: number;
   contentSha256: string;
   bytes: number;
+  /** Original source bytes; Editor must not create a competing conversion. */
   blob: Blob;
+  sourcePreserved: true;
+  /** Exact existing output asset read when staged; null means it did not exist. */
+  baseSha256: string | null;
   sourceName: string;
   sourceMimeType: string;
   sourceBytes: number;
@@ -42,6 +47,12 @@ export function localIconStorageKey({ kind, docId }: LocalIconKey): string {
 export function localIconAssetPath(kind: IconKind, docId: string): string {
   if (!/^[A-Za-z0-9._-]+$/.test(docId)) throw new Error(`Icon 文件 ID 不安全：${docId}`);
   return `assets/icons/${kind}/${docId}.webp`;
+}
+
+export function localIconSourcePath(kind: IconKind, docId: string, format: IconFormat): string {
+  if (!/^[A-Za-z0-9._-]+$/.test(docId)) throw new Error(`Icon 文件 ID 不安全：${docId}`);
+  const ext = format === "jpeg" ? "jpeg" : format;
+  return `assets/icon/${kind}/${docId}/source.${ext}`;
 }
 
 export function validateLocalIconSource(file: Pick<File, "name" | "type" | "size">): void {
@@ -67,62 +78,51 @@ export async function stageLocalIcon(
   kind: IconKind,
   docId: string,
   file: File,
+  options: { readonly maxSourceEdge: number; readonly baseSha256: string | null },
 ): Promise<StagedLocalIcon> {
   validateLocalIconSource(file);
-  const bitmap = await createImageBitmap(file);
-  try {
-    const crop = centeredSquareCrop(bitmap.width, bitmap.height);
-    const canvas = document.createElement("canvas");
-    canvas.width = LOCAL_ICON_POLICY.edgePx;
-    canvas.height = LOCAL_ICON_POLICY.edgePx;
-    const context = canvas.getContext("2d", { alpha: true });
-    if (!context) throw new Error("瀏覽器無法建立 2D 圖片轉檔器");
-    context.imageSmoothingEnabled = true;
-    context.imageSmoothingQuality = "high";
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    context.drawImage(
-      bitmap,
-      crop.sx,
-      crop.sy,
-      crop.size,
-      crop.size,
-      0,
-      0,
-      canvas.width,
-      canvas.height,
-    );
-    const blob = await canvasBlob(canvas, LOCAL_ICON_POLICY.outputMime, LOCAL_ICON_POLICY.outputQuality);
-    if (blob.type !== LOCAL_ICON_POLICY.outputMime) {
-      throw new Error(`這個瀏覽器無法輸出 WebP（實際得到 ${blob.type || "未知格式"}）`);
-    }
-    const digest = await sha256(blob);
-    return {
-      schema: "ggd-editor-staged-icon@1",
-      kind,
-      docId,
-      contentPath: localIconAssetPath(kind, docId),
-      mimeType: LOCAL_ICON_POLICY.outputMime,
-      width: LOCAL_ICON_POLICY.edgePx,
-      height: LOCAL_ICON_POLICY.edgePx,
-      contentSha256: digest,
-      bytes: blob.size,
-      blob,
-      sourceName: file.name,
-      sourceMimeType: file.type,
-      sourceBytes: file.size,
-      stagedAt: new Date().toISOString(),
-    };
-  } finally {
-    bitmap.close();
+  const raw = new Uint8Array(await file.arrayBuffer());
+  const header = sniffImageHeader(raw);
+  if (!header) throw new Error("圖片檔頭不是有效的 PNG／JPEG／WebP");
+  const mimeType = header.mime as StagedLocalIcon["mimeType"];
+  if (!(LOCAL_ICON_POLICY.acceptedSourceMime as readonly string[]).includes(mimeType)) {
+    throw new Error(`圖片檔頭格式不受支援：${header.mime}`);
   }
+  if (header.mime !== file.type) {
+    throw new Error(`圖片宣稱 ${file.type || "未知格式"}，但檔頭實際是 ${header.mime}`);
+  }
+  if (header.width > options.maxSourceEdge || header.height > options.maxSourceEdge) {
+    throw new Error(`圖片 ${header.width}×${header.height} 超過目標遊戲允許的 ${options.maxSourceEdge}×${options.maxSourceEdge}`);
+  }
+  const digest = await sha256(file);
+  return {
+    schema: "ggd-editor-staged-icon@2",
+    kind,
+    docId,
+    contentPath: localIconAssetPath(kind, docId),
+    sourcePath: localIconSourcePath(kind, docId, header.format),
+    mimeType,
+    width: header.width,
+    height: header.height,
+    contentSha256: digest,
+    bytes: file.size,
+    blob: file.slice(0, file.size, mimeType),
+    sourcePreserved: true,
+    baseSha256: options.baseSha256,
+    sourceName: file.name,
+    sourceMimeType: file.type,
+    sourceBytes: file.size,
+    stagedAt: new Date().toISOString(),
+  };
 }
 
-function canvasBlob(canvas: HTMLCanvasElement, mimeType: string, quality: number): Promise<Blob> {
-  return new Promise((resolve, reject) => canvas.toBlob(
-    (blob) => blob ? resolve(blob) : reject(new Error("圖片轉檔失敗")),
-    mimeType,
-    quality,
-  ));
+export function isCurrentStagedLocalIcon(value: unknown): value is StagedLocalIcon {
+  if (!value || typeof value !== "object") return false;
+  const icon = value as Partial<StagedLocalIcon>;
+  return icon.schema === "ggd-editor-staged-icon@2" && icon.sourcePreserved === true &&
+    typeof icon.sourcePath === "string" && typeof icon.contentPath === "string" &&
+    typeof icon.contentSha256 === "string" && icon.blob instanceof Blob &&
+    (icon.baseSha256 === null || typeof icon.baseSha256 === "string");
 }
 
 async function sha256(blob: Blob): Promise<string> {

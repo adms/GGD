@@ -53,7 +53,7 @@
       "summary": "瞬移貼近並完成一次斬擊。",
       "templateIds": ["tpl-blink-strike"],
       "cooldownShape": "單體",
-      "tierDefaults": { "damage": "中", "mana": "中", "cooldown": "中", "range": "大", "travel": "大", "castTime": "極小" },
+      "tierDefaults": { "damage": "中", "mana": "中", "cooldown": "中", "range": "大", "castTime": "極小" },
       "statWeights": { "ad": 0.75, "ap": 1, "ms": 0.5, "as": 0.25 }
     },
     {
@@ -71,7 +71,7 @@
       "summary": "躍向目標區域，落地造成範圍效果。",
       "templateIds": ["tpl-leap-strike"],
       "cooldownShape": "範圍",
-      "tierDefaults": { "damage": "中", "mana": "中", "cooldown": "大", "range": "大", "radius": "中", "travel": "大", "castTime": "小" },
+      "tierDefaults": { "damage": "中", "mana": "中", "cooldown": "大", "range": "大", "radius": "中", "castTime": "小" },
       "statWeights": { "maxHealth": 0.75, "armor": 0.5, "ad": 0.5, "ms": 0.5 }
     },
     {
@@ -96,6 +96,7 @@
       "id": "on-attack",
       "label": "普攻觸發",
       "summary": "普通攻擊命中時附加傷害或狀態。",
+      "defaultSlot": "PASSIVE",
       "templateIds": ["tpl-on-attack"],
       "cooldownShape": "單體",
       "tierDefaults": { "damage": "小", "cooldown": "極小" },
@@ -105,6 +106,7 @@
       "id": "reactive",
       "label": "格擋／迴避反應",
       "summary": "受到攻擊、格擋或迴避後觸發反擊或保護。",
+      "defaultSlot": "PASSIVE",
       "templateIds": ["tpl-on-hit-react"],
       "cooldownShape": "單體",
       "tierDefaults": { "cooldown": "小" },

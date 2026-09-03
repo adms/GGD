@@ -77,6 +77,15 @@ async function requestBytes(url: string): Promise<ArrayBuffer> {
   return res.arrayBuffer();
 }
 
+async function requestBytesOptional(url: string): Promise<ArrayBuffer | null> {
+  const res = await fetch(url);
+  // Remote workspace returns 412 when the pinned asset manifest proves the
+  // path is absent; local workspace returns 404. Both are exact "no base".
+  if (res.status === 404 || res.status === 412) return null;
+  if (!res.ok) throw new Error(`GET ${url} -> ${res.status}: ${await res.text()}`);
+  return res.arrayBuffer();
+}
+
 export interface WriteResult {
   id: string;
   hash: string;
@@ -153,6 +162,12 @@ export const api = {
       return Promise.reject(new Error(`asset path must start with "assets/": ${contentPath}`));
     }
     return requestBytes(`${BASE}/${contentPath}`);
+  },
+  optionalAssetBytes: (contentPath: string) => {
+    if (!contentPath.startsWith("assets/")) {
+      return Promise.reject(new Error(`asset path must start with "assets/": ${contentPath}`));
+    }
+    return requestBytesOptional(`${BASE}/${contentPath}`);
   },
   externalTargetProfile: (url: string) =>
     request<Record<string, unknown>>(

@@ -72,8 +72,8 @@ function stringArray(value: unknown, field: string): string[] | undefined {
 
 function parseFrames(value: unknown, field: string, required: boolean): FrameInput[] | undefined {
   if (value === undefined && !required) return undefined;
-  if (!Array.isArray(value) || value.length === 0 || value.length > 16) {
-    throw new Error(`${field} must contain 1..16 frames`);
+  if (!Array.isArray(value) || value.length === 0 || value.length > 18) {
+    throw new Error(`${field} must contain 1..18 frames`);
   }
   const frames = value.map((v, i) => {
     if (!isObject(v)) throw new Error(`${field}[${i}] must be an object`);

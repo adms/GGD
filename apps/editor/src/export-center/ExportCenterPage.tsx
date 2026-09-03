@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { CollectionIndex } from "@ggd/shared/content";
 import { contentSha256 } from "@ggd/shared/content/import/jcs";
+import { resolveIconUpload, zConfigIconUploadDoc } from "@ggd/shared/content/schema/config/iconUpload";
 import { api } from "../api/client";
 import {
   DEFAULT_TARGET_PROFILE_URL,
@@ -13,9 +14,11 @@ import {
 } from "./exportPolicy";
 import {
   readEditorContractIndex,
+  representationContract,
   type EditorContractIndex,
 } from "./editorContractIndex";
 import {
+  binarySha256,
   buildRuntimePackage,
   buildRuntimePackageZip,
   resolveDeltaRuntimeClosure,
@@ -23,6 +26,7 @@ import {
   runtimeReferenceKeys,
   type RuntimeBaseSnapshot,
   type RuntimeAuthoringDocument,
+  type RuntimePackageBinaryAsset,
 } from "./exportBuilder";
 import { buildLocalIconBundleZip } from "../local-icons/bundle";
 import {
@@ -268,11 +272,44 @@ export function ExportCenterPage() {
       const collected = await collectDocuments(mode);
       const referencedStagedIcons = stagedIcons.filter((icon) => [...collected.documents, ...collected.selectionRoots]
         .some((doc) => doc.collection === icon.kind && doc.id === icon.docId && doc.document["icon"] === icon.contentPath));
+      const assets: RuntimePackageBinaryAsset[] = [];
       if (referencedStagedIcons.length > 0) {
-        throw new Error(
-          `ICON_PACKAGE_CONTRACT_REQUIRED：${referencedStagedIcons.length} 張本機 Icon 被本次文件引用；` +
-          "目前 Main 的 ggd-editor-package@1 只接受 JSON，不能產出會被 importer 靜默漏圖的正式包。請先下載下方 Icon 工作包；Main 接上 asset package 契約後即可合併成一鍵 ZIP。",
-        );
+        if (format !== "zip") {
+          throw new Error("BINARY_ASSET_ZIP_REQUIRED：含 Icon 的正式 Package 只能匯出 ZIP，JSON 通道不承載二進位圖片");
+        }
+        const iconContract = representationContract(contractIndex, "icon-asset@1");
+        if (!iconContract || iconContract.state !== "supported" || iconContract.packageKind !== "binary-asset" ||
+          !iconContract.modes.includes(mode) || iconContract.promotionPolicy !== "review-required") {
+          throw new Error(`ICON_ASSET_CONTRACT_BLOCKED：Main contract-index 未宣告 ${mode} 的 review-required icon-asset@1`);
+        }
+        const policyDoc = zConfigIconUploadDoc.safeParse(await api.doc("config", "icon-upload"));
+        if (!policyDoc.success) throw new Error("目標遊戲的 config.icon-upload@1 無效");
+        const iconPolicy = resolveIconUpload(policyDoc.data);
+        if (!iconPolicy.enabled) throw new Error("目標遊戲目前關閉 Icon 資產匯入");
+        for (const icon of referencedStagedIcons) {
+          if (icon.width > iconPolicy.maxSourceEdge || icon.height > iconPolicy.maxSourceEdge) {
+            throw new Error(`${icon.sourcePath} 超過目標遊戲目前的圖片邊長上限 ${iconPolicy.maxSourceEdge}`);
+          }
+          const bytes = new Uint8Array(await icon.blob.arrayBuffer());
+          if (bytes.length > contractIndex!.maxEntryUncompressedBytes) {
+            throw new Error(`${icon.sourcePath} 超過 Main contract-index 的單檔上限 ${contractIndex!.maxEntryUncompressedBytes}`);
+          }
+          const digest = await binarySha256(bytes);
+          if (bytes.length !== icon.bytes || digest !== icon.contentSha256) {
+            throw new Error(`${icon.sourcePath} 的本機 bytes／hash 已漂移`);
+          }
+          assets.push({
+            path: icon.sourcePath,
+            collection: icon.kind,
+            id: icon.docId,
+            mime: icon.mimeType,
+            targetField: "icon",
+            contentSha256: digest,
+            contentSize: bytes.length,
+            bytes,
+            ...(mode === "bootstrap" ? {} : { baseSha256: icon.baseSha256 }),
+          });
+        }
       }
       // An unchanged selected root can still lead to a changed forward
       // dependency. Keep the root in reference analysis even when it is not a
@@ -288,6 +325,7 @@ export function ExportCenterPage() {
         selectionRoots: collected.selectionRoots,
         ...(mode === "bootstrap" ? {} : { baseDocuments: baseSnapshot?.runtimeDocuments }),
         requires,
+        assets,
       });
       if (format === "json") {
         downloadJson(built.package, `${built.filenameStem}.json`);
@@ -295,7 +333,7 @@ export function ExportCenterPage() {
       } else {
         const zip = await buildRuntimePackageZip(built);
         downloadBytes(zip.bytes, zip.filename, "application/zip");
-        setPackageStatus(`已下載 ${zip.filename} · package ${built.package.manifest.packageDigest} · archive ${zip.archiveSha256}${collected.addedDependencies.length > 0 ? ` · 自動閉包 ${collected.addedDependencies.length} 份依賴` : ""}`);
+        setPackageStatus(`已下載 ${zip.filename} · package ${built.package.manifest.packageDigest} · archive ${zip.archiveSha256}${assets.length > 0 ? ` · Icon ${assets.length} 張（待後台審閱）` : ""}${collected.addedDependencies.length > 0 ? ` · 自動閉包 ${collected.addedDependencies.length} 份依賴` : ""}`);
       }
     } catch (error) {
       setPackageStatus(`⛔ 建包失敗：${String(error)}`);
@@ -323,7 +361,7 @@ export function ExportCenterPage() {
       <header className="export-head">
         <div>
           <h1>📦 匯出中心 <small>Export Center</small></h1>
-          <p>單檔 Runtime JSON 現在可用；Package JSON／ZIP 只有在目標契約完整時才會解鎖。</p>
+          <p>單檔 Runtime JSON 現在可用；正式 Icon 會與文件一起進 ZIP，由 Main 唯一轉檔並列入後台審閱。</p>
         </div>
       </header>
 
@@ -397,9 +435,9 @@ export function ExportCenterPage() {
 
       <section className="export-panel">
         <h2>4. 本機 Icon 素材</h2>
-        <p>編輯頁選圖後只存於這台電腦的 IndexedDB，會統一裁成 256×256 並轉 WebP。此工作包保存原始 bytes hash 與 owner；目前不冒充 Main 可匯入的正式 Package，因為 Main 的 V1 契約明確只收 JSON。</p>
+        <p>編輯頁選圖後只存於這台電腦的 IndexedDB。Editor 保留原圖；正式 ZIP 由 Main 唯一轉成遊戲 WebP，並以逐圖 CAS 防止覆蓋較新的圖片。</p>
         <button type="button" disabled={packageBusy || stagedIcons.length === 0} onClick={() => void exportIconBundle()}>
-          下載 Icon 工作包 ZIP（{stagedIcons.length}）
+          下載 Icon 原圖工作備份（{stagedIcons.length}）
         </button>
         <p className={iconStatus.startsWith("⛔") ? "error" : "export-status"}>{iconStatus}</p>
       </section>

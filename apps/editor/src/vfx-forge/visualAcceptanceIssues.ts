@@ -14,6 +14,7 @@ export type VisualAcceptanceIssueCode =
   | "CAPTURE_TIMEOUT"
   | "LOW_VISUAL_HYGIENE"
   | "GPU_CAPTURE"
+  | "NO_VISIBLE_PRESENTATION"
   | "AUTHORING_BLOCKER";
 
 export interface VisualAcceptanceMachineIssue {
@@ -29,6 +30,7 @@ export interface VisualAcceptanceIssueInput {
   readonly blockers: readonly string[];
   readonly audit?: BackdropTimelineAudit | null;
   readonly frames?: readonly { readonly frameAudit?: BackdropFrameAudit | null }[];
+  readonly proofSource?: "acceptance-fixture" | "editor-basic-script" | "runtime-effect-graph";
 }
 
 /**
@@ -51,7 +53,7 @@ export function classifyVisualAcceptanceIssues(
   };
 
   if (
-    /紅[／/]紫棋盤|透明底板外露|未去背貼圖|白色底板|不安全的貼圖底板|單一高亮色塊|高亮像素/u.test(text) ||
+    /紅[／/]紫棋盤|透明底板外露|未去背貼圖|白色底板|不安全的貼圖底板|單一(?:高亮|非背景)色塊|高亮像素/u.test(text) ||
     input.audit?.worst.unsafe === true
   ) {
     add({
@@ -160,6 +162,34 @@ export function classifyVisualAcceptanceIssues(
       owner: "editor",
       summary: `畫面雖可擷取，但時間軸／關鍵格最低清晰度只有 ${lowestHygiene}/10`,
       nextAction: "人工檢查構圖、遮擋與格狀外觀；不可把素材安全分數當成美術通過。",
+    });
+  }
+  const measuredPresentation = input.audit?.presentationEventCount !== undefined &&
+    input.audit.semanticActionCount !== undefined &&
+    input.audit.peakPresentationPixelShare !== undefined;
+  const presentationCount = (input.audit?.presentationEventCount ?? 0) +
+    (input.audit?.semanticActionCount ?? 0);
+  const renderedVfx = (input.audit?.peakPresentationPixelShare ?? 0) > 0;
+  const renderedActorAction = (input.audit?.semanticActionCount ?? 0) > 0;
+  const dispatchedVfx = (input.audit?.presentationEventCount ?? 0) > 0;
+  const missingPresentation = dispatchedVfx ? !renderedVfx : !renderedActorAction && !renderedVfx;
+  if (
+    input.status === "captured" &&
+    input.proofSource !== undefined &&
+    measuredPresentation &&
+    missingPresentation
+  ) {
+    add({
+      code: "NO_VISIBLE_PRESENTATION",
+      severity: "high",
+      owner: "editor",
+      summary: presentationCount > 0
+        ? `已消費 ${input.audit?.presentationEventCount ?? 0} 個 VFX 事件，但呈現層仍為 0 像素` +
+          (renderedActorAction ? "；角色動作存在，不能掩蓋特效未繪製" : "且沒有專屬角色動作")
+        : "已完成真 Sim 與 GPU 擷取，但選定路徑沒有技能演出或專屬角色動作",
+      nextAction: input.proofSource === "runtime-effect-graph"
+        ? "在原本被動 hook 內用 no-code effect graph 加入安全 spawnVfx／角色反應，再重跑；禁止偽造成主動 cast。"
+        : "檢查 Editor 腳本的 trigger、時間軸與 renderer dispatch，確認積木真的被播放後重跑。",
     });
   }
   if (issues.length === 0 && input.status === "failed") {

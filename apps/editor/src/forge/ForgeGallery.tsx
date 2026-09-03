@@ -17,7 +17,9 @@ import { badgeFor } from "./badge";
 import { degradeNotes } from "./degrade";
 import {
   FORGE_TIER_LABELS,
+  SKILL_TYPE_PRESETS,
   rankSkillTypes,
+  skillTypeRecipeIssues,
   type SkillTypePreset,
   type StatNormalizationRecommendationDoc,
 } from "./skillTypePresets";
@@ -84,10 +86,15 @@ export function ForgeGallery({
   const selectedChampion = championQuery.champions.find((champion) => champion.id === championId) ?? null;
   const selectedOrigin = selectedChampion ? originOf(selectedChampion) : null;
   const templatesById = new Map(data.map((template) => [template.id, template]));
+  const recipeIssues = new Map(
+    SKILL_TYPE_PRESETS.map((preset) => [preset.id, skillTypeRecipeIssues(preset, templatesById)] as const)
+      .filter(([, issues]) => issues.length > 0),
+  );
   const rankedTypes = rankSkillTypes(
     selectedOrigin,
     new Set(enabled.map((template) => template.id)),
     statNormalizationQuery.data,
+    recipeIssues,
   );
 
   return (
@@ -135,7 +142,7 @@ export function ForgeGallery({
           </p>
         ) : null}
         <div className="forge-type-grid">
-          {rankedTypes.map(({ preset, recommendationRank, recommendationReasons, available }) => {
+          {rankedTypes.map(({ preset, recommendationRank, recommendationReasons, available, unavailableReasons }) => {
             const seed = templatesById.get(preset.templateIds[0] ?? "");
             const tiers = Object.entries(preset.tierDefaults)
               .map(([axis, tier]) => `${FORGE_TIER_LABELS[axis as keyof typeof FORGE_TIER_LABELS]} ${tier}`)
@@ -160,7 +167,11 @@ export function ForgeGallery({
                     依主程式出身表：{recommendationReasons.join("・")}
                   </small>
                 ) : null}
-                {!available ? <small className="error">目前缺少必要積木</small> : null}
+                {!available ? (
+                  <small className="error">
+                    目前無法建立：{unavailableReasons.join("；") || "缺少必要積木"}
+                  </small>
+                ) : null}
               </button>
             );
           })}

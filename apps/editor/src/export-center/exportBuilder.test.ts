@@ -5,6 +5,7 @@ import { contentVersion } from "@ggd/shared/content";
 import { packageDigest } from "@ggd/shared/content/import/digest";
 import { zEditorImportPackage } from "@ggd/shared/content/import/packageSchema";
 import {
+  binarySha256,
   buildRuntimePackage,
   buildRuntimePackageZip,
   resolveDeltaRuntimeClosure,
@@ -72,6 +73,47 @@ describe("runtime package builder", () => {
     expect(first.archiveSha256).toBe(second.archiveSha256);
     expect(new TextDecoder().decode(first.bytes.slice(0, 4))).toBe("PK\u0003\u0004");
     expect(new DataView(first.bytes.buffer, first.bytes.byteOffset, 4).getUint32(0, true)).toBe(0x04034b50);
+  });
+
+  it("packages original icon bytes in the Main-owned asset path and supports an asset-only delta", async () => {
+    const sourceBytes = new Uint8Array([82, 73, 70, 70, 22, 0, 0, 0, 87, 69, 66, 80, 86, 80, 56, 32]);
+    const sourcePath = "assets/icon/abilities/test.q/source.webp";
+    const outputPath = "assets/icons/abilities/test.q.webp";
+    const digest = await binarySha256(sourceBytes);
+    const root = ability(100);
+    (root.document as Record<string, unknown>).icon = outputPath;
+    const base = structuredClone(root);
+    const built = buildRuntimePackage({
+      mode: "delta",
+      target,
+      documents: [],
+      selectionRoots: [root],
+      baseDocuments: [base],
+      assets: [{
+        path: sourcePath,
+        collection: "abilities",
+        id: "test.q",
+        mime: "image/webp",
+        targetField: "icon",
+        contentSha256: digest,
+        contentSize: sourceBytes.length,
+        bytes: sourceBytes,
+        baseSha256: null,
+      }],
+    });
+    expect(built.package.manifest.changes).toEqual([]);
+    expect(built.package.manifest.entries).toContainEqual(expect.objectContaining({
+      path: sourcePath,
+      role: "asset",
+      contentSha256: digest,
+      baseSha256: null,
+    }));
+    expect(built.binaryEntries.get(sourcePath)).toEqual(sourceBytes);
+    const first = await buildRuntimePackageZip(built);
+    const second = await buildRuntimePackageZip(built);
+    expect(first.bytes).toEqual(second.bytes);
+    expect(first.archiveSha256).toBe(second.archiveSha256);
+    expect(new TextDecoder().decode(first.bytes)).toContain(sourcePath);
   });
 
   it("builds delta only against an exact base and refuses no-op or implicit full delete", () => {

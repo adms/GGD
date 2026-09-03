@@ -8,19 +8,20 @@ pnpm editor:accept:visual   # 再加貼圖透明／不安全素材檢查與既�
 pnpm editor:accept:release  # 再加 Editor 全測試、typecheck、production build
 ```
 
-瀏覽器開啟 `http://127.0.0.1:5174/editor/vfx-forge?qa=accept-46` 後會自動逐支跑
-46 份真 Sim／GPU／framebuffer 證據，不需要人工點 46 次；一般項目 30 秒、重型 fixture 60 秒硬上限，單一壞模型
-不能拖死整批。
-
-批次完成後只需按一次「匯出證據 JSON」，再執行一條：
+真 Renderer 證據也有單一入口；Editor 未啟動時會暫時啟動，開啟預設瀏覽器後自動逐支跑
+46 份真 Sim／GPU／framebuffer、自動 POST 到一次性 localhost 接收器、匯入逐幀圖片、更新 42／46
+收據，最後追加 Gemini 時序分流（有 key 才送圖，失敗只降級）：
 
 ```bash
-pnpm editor:accept:visual -- --proof /完整路徑/editor-skill-basic-visual-proof.json
+pnpm editor:proof:capture
+pnpm editor:proof:capture -- --ids godie-etyr.r,godie-hart.r
+pnpm editor:proof:capture -- --no-gemini
 ```
 
-此命令會依序匯入圖片、更新 42／46 收據並跑完整 visual gate。匯入器會拒絕少於 46 份、
+一般項目 30 秒、重型 fixture 60 秒硬上限，單一壞模型不能拖死整批。聚焦重跑會先產生 partial proof，
+再依 ID 合併回既有的 46 份帳本；未列出的技能與其人工裁決不會遺失。匯入器會拒絕少於 46 份、
 重複 ID、未知 ID、假 `captured`、無圖卻有人工作出裁決，以及把 diagnostic-only 失敗幀
-偽裝成通過等資料；`--proof` 最終模式還會拒絕任何已擷取但仍待看圖、缺分數或缺理由的技能。
+偽裝成通過等資料；`editor:accept:visual -- --proof ...` 的最終發版模式還會拒絕任何已擷取但仍待看圖、缺分數或缺理由的技能。
 它會把 data URL 自動拆成逐幀 WebP/PNG 並建立 `docs/_reports/editor-skill-basic-visual-proof/manifest.json`，
 不必人工逐招存圖或抄表。肉眼裁決另存 0～10 分與判定理由，機器的素材衛生分數不會冒充美術分數。
 
@@ -39,15 +40,16 @@ framebuffer 資料計算指紋存在本機；同一張圖可在重新載入後�
 仍保留原影格，分類為 `PRESENTATION_ARTIFACT` 交給 Editor／人工否決與重做。這避免把安全但醜的素材冒充成
 乾淨畫面，也避免把透明的 targeting geometry 誤報成遺失貼圖。
 
-不想依賴瀏覽器下載資料夾時，可先啟動一次性接收器：
+需要除錯接縫時，仍可拆開啟動一次性接收器：
 
 ```bash
 pnpm editor:proof:receive -- --out docs/_reports/editor-skill-basic-visual-proof.browser.json \
   --origin http://127.0.0.1:5174
 ```
 
-把輸出的 `sinkUrl` 貼到批次區「本機證據接收器」後按一次寫入。接收器使用隨機路徑、只接受
-指定 loopback Origin、限制 128 MiB、核對 42／46 header，完成單次原子寫入後立刻關閉。
+把輸出的 `sinkUrl` 放進 `proofSink` query 或貼到批次區再寫入。正式 script 會自動完成前者；頁面只接受
+`http://127.0.0.1`／`localhost`，接收器另使用隨機路徑、限制 128 MiB、核對 42／46 header，完成單次
+原子寫入後立刻關閉。圖片不會被送往任意遠端 receiver。
 
 成功階段只輸出一行；失敗才保留尾端診斷，避免例行檢查把大量測試輸出塞進人或 Agent 的上下文。
 第一行是 `ggd-editor-acceptance-run@1` JSON 收據，包含執行時間（精確到分鐘）、目前
@@ -68,19 +70,18 @@ HEAD 冒充成完整受驗內容；不再引用可能過期的交接文件 commi
   `babyface`、additive `zap1/zap1b` 判成失敗的舊單圖門檻。
 - 顏色是否像原作、構圖是否有力量、動作節奏是否自然，無法由像素門檻安全決定；仍由後台人工看實際連續影格裁決，不能以 script 全綠冒充視覺通過。
 
-### 可選的本機 LLM 預審（預設關閉）
+### 可選的 Gemini 時序預審
 
-一般 `editor:accept:*` 不啟動也不呼叫任何模型。只有明確執行
-`pnpm editor:accept:visual -- --local-llm`（或設定 `GGD_VFX_LOCAL_LLM_ENABLED=1`）才會在
-確定性守衛之後追加 localhost 視覺分流。它自動從每招選 2～4 張非診斷關鍵格，預設只跑 low；
-相同影格與規格以 digest 快取，不重複花費。只有另加 `--escalate-uncertain` 時，低推理結果本身
-不確定或信心不足才用同一組影格升至 medium 一次。2026-09-04 的固定案例量測為：2 張 low 45.7秒，
-4 張 low 67.0秒，4 張 medium 另需61.8秒且信心由0.72降至0.65，因此 medium 不可預設開啟。
+`editor:proof:capture` 在確定性守衛、真 Renderer 擷取與 proof 匯入後呼叫 Gemini；`.env.gemini.local`
+有 `GEMINI_API_KEY` 時才啟用，沒有 key、明確加 `--no-gemini`、網路錯誤、429／503 或 timeout 都會寫成
+未審／需人工審查並正常結束，不會把整批判成失敗。它依技能複雜度自動挑 2～18 張按時間排序的非診斷
+關鍵格，普通技能不濫送圖片，長連段、位移與召喚生命週期才提高張數；預設 Gemini 3.1 Pro、low reasoning，
+只有明確加 `--escalate-uncertain` 才對不確定項升級一次。
 
-本機 server／模型不存在時，optional batch 在第一個連線錯誤就停止，不會對 46 招重試 46 次；它寫入
-`LOCAL_MODEL_UNAVAILABLE` 收據並正常結束，未審項目仍是 `needs-human-review`。關閉時則寫入
-`LOCAL_MODEL_DISABLED`，且零張圖片被送出。所有模型結果都只能做 `advisory-only` 分流，不能覆蓋
-SimWorld／event trace、像素安全守衛或人工視覺批核；非 loopback endpoint 一律拒絕。
+Gemini 只取代 Agent 逐張讀圖的初步時序分流，不取代 SimWorld／event trace、framebuffer／素材守衛或
+Owner 人工視覺批核。正向模型結果仍保持 `needs-human-review`；模型否決可優先排入重做，但不能自行
+Promote。金鑰只從環境檔讀取，不寫進報告、prompt、cache key 或 log；圖片只會送往固定的 Google Gemini
+API origin，任何自訂遠端 endpoint 都不支援。
 
 Main 只提供可重用 primitive、權威事件、runtime、限制 resolver 與機器契約。上述時間軸、配色、鏡頭、拖拉組合、截圖和反覆調整均由 Editor 驗收流程負責。
 

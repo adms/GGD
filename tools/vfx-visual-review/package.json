@@ -7,8 +7,9 @@
     "vfx-visual-review": "./src/cli.ts"
   },
   "scripts": {
-    "review": "node --import tsx src/cli.ts",
-    "review:batch": "node --import tsx src/batch.ts",
+    "review": "node --env-file-if-exists=../../.env.gemini.local --import tsx src/cli.ts",
+    "review:batch": "node --env-file-if-exists=../../.env.gemini.local --import tsx src/batch.ts",
+    "benchmark": "node --env-file-if-exists=../../.env.gemini.local --import tsx src/benchmark.ts",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run"
   },

@@ -111,6 +111,8 @@ export interface CastPreviewOptions {
   ticks?: number;
   /** 落點；省略＝施法者正前方 `ability.range` 處（`ground`/`skillshot` 都吃得到）。 */
   point?: Vec2;
+  /** Editor-only draft that is not in the boot registry yet. */
+  definition?: AbilityDef;
 }
 
 export interface PreviewActorPose {
@@ -218,7 +220,7 @@ export interface PreviewController {
   triggerPassiveAbility(
     champion: ChampionDef,
     abilityId: AbilityId,
-    opts?: Pick<CastPreviewOptions, "level" | "rank" | "ticks">,
+    opts?: Pick<CastPreviewOptions, "level" | "rank" | "ticks" | "definition">,
   ): ReactionPreviewTrace;
   previewItem(item: ItemDef, on: ChampionDef, opts?: { level?: number }): StatDelta[];
   previewAugment(aug: AugmentDef, on: ChampionDef, opts?: { level?: number }): StatDelta[];
@@ -1259,6 +1261,7 @@ export function createSimPreviewController(): PreviewController {
      */
     castAbility(champion, slot, opts) {
       const level = opts?.level ?? 1;
+      if (opts?.definition) Abilities.register(opts.definition.id, opts.definition);
       const sb = sandbox(champion, level, { dummy: true });
       world = sb.world;
       const seat = asSeatId(0);
@@ -1475,6 +1478,7 @@ export function createSimPreviewController(): PreviewController {
 
     triggerPassiveAbility(champion, abilityId, opts) {
       const level = opts?.level ?? 18;
+      if (opts?.definition) Abilities.register(abilityId, opts.definition);
       const sb = sandbox(champion, level, { dummy: true });
       world = sb.world;
       sb.world.combatActive = true;

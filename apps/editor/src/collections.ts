@@ -46,20 +46,35 @@ export interface CollectionEntry {
  */
 const MID_TIER = SKILL_TIER_NAMES[Math.floor(SKILL_TIER_NAMES.length / 2)]!;
 
-export type NewAbilitySlot = "Q" | "W" | "E" | "R";
+export type NewAbilitySlot = "PASSIVE" | "Q" | "W" | "E" | "R" | "EX";
 
 /**
  * One reusable no-code seed for both Collections and Skill Forge.
- * Q/W/E are always four ranks and R is always three; every fallback value is
- * derived from Main's shipped tier tables, never copied into Editor constants.
+ * Q/W/E are always four ranks, R is always three, and PASSIVE/EX are standalone
+ * one-rank documents. Every fallback value is derived from Main's shipped tier
+ * tables, never copied into Editor constants.
  */
 export function newAbilityTemplate(
   id: string,
   slot: NewAbilitySlot,
   name = "New Ability",
 ): Record<string, unknown> {
-  const maxRank = slot === "R" ? 3 : 4;
-  const cooldownTier = slot === "R"
+  if (slot === "PASSIVE") {
+    return {
+      id,
+      name,
+      slot,
+      innateKind: "passive",
+      castType: "self",
+      maxRank: 1,
+      cooldown: [0],
+      manaCost: [0],
+      range: 0,
+      effects: [],
+    };
+  }
+  const maxRank = slot === "R" ? 3 : slot === "EX" ? 1 : 4;
+  const cooldownTier = slot === "R" || slot === "EX"
     ? SKILL_TIER_NAMES[SKILL_TIER_NAMES.length - 1]!
     : MID_TIER;
   return {

@@ -91,6 +91,22 @@ function playRound(layer: TelegraphLayer, casts: number, startMs: number): numbe
 }
 
 describe("預告圈的共用網格池在回合邊界被交回去 (vfx-leak-reclaim)", () => {
+  it("same-frame audit hides carriers without clearing lifetime state", async () => {
+    const layer = layerFor();
+    layer.begin(1, { kind: "circle", x: 0, z: 0, radius: 2 }, "enemy", 600, 1000);
+    const carriers = scene.meshes.filter((mesh) => mesh.name.startsWith("telegraph-"));
+    expect(layer.activeCount).toBe(1);
+    expect(carriers.some((mesh) => mesh.isEnabled())).toBe(true);
+    await layer.withHiddenForAudit(async () => {
+      expect(layer.activeCount).toBe(1);
+      expect(carriers.every((mesh) => !mesh.isEnabled())).toBe(true);
+    });
+    expect(layer.activeCount).toBe(1);
+    expect(carriers.some((mesh) => mesh.isEnabled())).toBe(true);
+    layer.dispose();
+    disposeTelegraphShared(scene);
+  });
+
   it("`TelegraphLayer.clear()` 之後網格還在池子裡 —— #259 沒有清到這一層", () => {
     cover("vfx-leak-reclaim");
     const layer = layerFor();

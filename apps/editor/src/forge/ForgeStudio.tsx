@@ -45,7 +45,7 @@ import {
   type ExpandStackTrace,
 } from "@ggd/shared/content/templates/expand";
 import { embeddedSlotOf } from "@ggd/shared/content/editModel";
-import type { AbilityDef, ChampionDef, CoreAbilitySlot } from "@ggd/shared/sim";
+import type { AbilityDef, CastableSlot, ChampionDef, CoreAbilitySlot } from "@ggd/shared/sim";
 import type { AbilityId, ChampionId } from "@ggd/shared/ids";
 import {
   Abilities as RuntimeAbilities,
@@ -62,6 +62,7 @@ import {
   castPreviewTicksFor,
   createSimPreviewController,
   type CastPreviewTrace,
+  type ReactionPreviewTrace,
 } from "../preview/PreviewController";
 import { ensurePreviewContentReady } from "../preview/previewContent";
 import { badgeFor } from "./badge";
@@ -118,6 +119,7 @@ import {
 } from "./skillTypePresets";
 import {
   RUNTIME_RESOLVER_CONFIG_IDS,
+  tierNumericValueFor,
   tierValuesFor,
   type RuntimeResolverConfigDocs,
   type TierConfigDocs,
@@ -147,6 +149,25 @@ interface ForgeDraft {
   cooldownShape: CooldownShape;
 }
 
+interface RunnableForgePreview {
+  readonly champ: ChampionDef;
+  readonly slot: CastableSlot;
+  readonly ability: AbilityDef;
+}
+
+/**
+ * Preview also has loading/error/number-table branches. Checking for a key
+ * alone leaves those inferred union members optional, so callers could feed an
+ * undefined draft into Sim. Keep one strict gate for every runtime consumer.
+ */
+function isRunnableForgePreview(value: unknown): value is RunnableForgePreview {
+  if (value === null || typeof value !== "object") return false;
+  const candidate = value as Partial<RunnableForgePreview>;
+  return candidate.champ !== undefined
+    && candidate.ability !== undefined
+    && typeof candidate.slot === "string";
+}
+
 export function ForgeStudio({
   template,
   catalog = [],
@@ -168,7 +189,7 @@ export function ForgeStudio({
   const [abilityId, setAbilityId] = useState<string>("");
   const [newAbilityId, setNewAbilityId] = useState("");
   const [newAbilityName, setNewAbilityName] = useState("新技能");
-  const [newAbilitySlot, setNewAbilitySlot] = useState<NewAbilitySlot>("Q");
+  const [newAbilitySlot, setNewAbilitySlot] = useState<NewAbilitySlot>(skillType?.defaultSlot ?? "Q");
   const [previewChampionId, setPreviewChampionId] = useState(preferredChampionId ?? "");
   const initialTemplates = useMemo(() => {
     const all = new Map<string, TemplateDoc>([[template.id, template]]);
@@ -200,7 +221,7 @@ export function ForgeStudio({
   const [paletteQuery, setPaletteQuery] = useState("");
   const [dragOverSlot, setDragOverSlot] = useState<number | null>(null);
   /** 最近一次【真的放一次】之後，sim 真的發生了什麼（GH#174）。 */
-  const [trace, setTrace] = useState<CastPreviewTrace | null>(null);
+  const [trace, setTrace] = useState<CastPreviewTrace | ReactionPreviewTrace | null>(null);
   const [playheadMs, setPlayheadMs] = useState(0);
   const [playing, setPlaying] = useState(false);
   /** 只有操作者親手試放過的同一支技能，後續改參數才會所見即所得地自動重播。 */
@@ -268,6 +289,26 @@ export function ForgeStudio({
     )) as RuntimeResolverConfigDocs,
     staleTime: 60_000,
   });
+  const recipeTiersSeededFor = useRef("");
+  useEffect(() => {
+    if (!skillType || !tierConfigs.data || recipeTiersSeededFor.current === skillType.id) return;
+    recipeTiersSeededFor.current = skillType.id;
+    editHistory.commit((draft) => {
+      let nextCards = draft.cards;
+      for (const [rawAxis, tier] of Object.entries(draft.tiers)) {
+        if (!tier) continue;
+        const axis = rawAxis as ForgeTierAxis;
+        nextCards = applyTierToCards(
+          nextCards,
+          docs,
+          axis,
+          tier,
+          tierNumericValueFor(axis, tier, tierConfigs.data ?? {}, draft.cooldownShape),
+        );
+      }
+      return sameJson(nextCards, draft.cards) ? draft : { ...draft, cards: nextCards };
+    });
+  }, [docs, editHistory.commit, skillType, tierConfigs.data]);
   const {
     champions,
     isLoading: championsLoading,
@@ -432,6 +473,10 @@ export function ForgeStudio({
   // ---- the live try-in-preview: real sim, real stats ----
   const preview = useMemo(() => {
     if (!after || !previewContent.data || !expansion.ok) return null;
+    const authoringParsed = zAbilityDoc.safeParse(after);
+    if (!authoringParsed.success) {
+      return { error: "作者輸入尚未通過 zAbilityDoc 校驗" } as const;
+    }
     const id = String(after["id"] ?? "") as AbilityId;
     const registeredAbility = RuntimeAbilities.tryGet(id);
     const runtimeDoc = runtimePreviewDoc(
@@ -442,23 +487,29 @@ export function ForgeStudio({
       docs,
       tierConfigs.data ?? {},
     );
-    const parsed = zAbilityDoc.safeParse(runtimeDoc);
-    if (!parsed.success) return { error: "展開結果尚未通過 zAbilityDoc 校驗" } as const;
-    const ability = parsed.data as unknown as AbilityDef;
+    // `resolveRuntimeDraft` deliberately materializes values beside their
+    // authoring tier (for example msBonusTier + value). That is the runtime
+    // representation consumed by Sim, not another authoring document to feed
+    // back through zAbilityDoc.
+    const ability = runtimeDoc as unknown as AbilityDef;
     const shippedOwner = champions.find((c) =>
       (["Q", "W", "E", "R"] as const).some((s) => c.abilities[s].id === ability.id),
     );
     const owner = shippedOwner ?? (authoringMode === "new" ? previewChampion : null);
-    if (!owner || ability.slot === "EX") return { lines: null } as const;
+    if (!owner) return { lines: null } as const;
     const runtimeOwner = RuntimeChampions.tryGet(owner.id as ChampionId);
     if (!runtimeOwner) {
       return { error: `正式 Runtime 註冊表找不到英雄 ${owner.id}` } as const;
     }
-    const champ: ChampionDef = {
-      ...runtimeOwner,
-      abilities: { ...runtimeOwner.abilities, [ability.slot]: ability },
-    };
+    const champ: ChampionDef = ability.slot === "PASSIVE"
+      ? { ...runtimeOwner, passiveAbility: ability.id }
+      : ability.slot === "EX"
+        ? { ...runtimeOwner, exAbility: ability.id }
+        : { ...runtimeOwner, abilities: { ...runtimeOwner.abilities, [ability.slot]: ability } };
     try {
+      if (ability.slot === "PASSIVE" || ability.slot === "EX") {
+        return { lines: null, champ, slot: ability.slot, ability } as const;
+      }
       return {
         ...controller.previewAbility(champ, ability.slot as CoreAbilitySlot, { level: 1 }),
         // ⭐ 把「要對誰、放哪一格」一起帶出來 —— 第 3 步的【真的放一次】就是拿
@@ -466,6 +517,7 @@ export function ForgeStudio({
         //    邏輯再抄一次：兩份會分岔，而分岔的那一天畫面上的那一發就不是這一發。
         champ,
         slot: ability.slot as CoreAbilitySlot,
+        ability,
       };
     } catch (e) {
       return { error: String(e) } as const;
@@ -473,15 +525,22 @@ export function ForgeStudio({
   }, [after, authoringMode, binding, champions, docs, expansion, previewChampion, previewContent.data, tierConfigs.data]);
 
   const runCurrentCast = useCallback((remember: boolean): void => {
-    if (!preview || !("champ" in preview)) return;
+    if (!isRunnableForgePreview(preview)) return;
     const activeId = authoringMode === "new" ? newAbilityId.trim() : abilityId;
     if (remember) auditionedAbilityRef.current = activeId;
     try {
-      const ability = preview.champ.abilities[preview.slot];
-      const next = controller.castAbility(preview.champ, preview.slot, {
-        level: 18,
-        ticks: castPreviewTicksFor(ability),
-      });
+      const ability = preview.ability;
+      const next = preview.slot === "PASSIVE"
+        ? controller.triggerPassiveAbility(preview.champ, ability.id, {
+            level: 18,
+            ticks: castPreviewTicksFor(ability),
+            definition: ability,
+          })
+        : controller.castAbility(preview.champ, preview.slot, {
+            level: 18,
+            ticks: castPreviewTicksFor(ability),
+            definition: ability,
+          });
       setTrace(next);
       setPlayheadMs(0);
       setPlaying(next.accepted);
@@ -508,8 +567,8 @@ export function ForgeStudio({
   }, [abilityId, after, authoringMode, newAbilityId, runCurrentCast]);
 
   const stageAbility = useMemo<ForgeAbility | null>(() => {
-    if (!preview || !("champ" in preview)) return null;
-    return preview.champ.abilities[preview.slot] as ForgeAbility;
+    if (!isRunnableForgePreview(preview)) return null;
+    return preview.ability as ForgeAbility;
   }, [preview]);
   const schedule = useMemo(
     () => trace && stageAbility ? scheduleSimEvents(trace.events, stageAbility.id) : [],
@@ -537,8 +596,8 @@ export function ForgeStudio({
     };
   }, [previewContent.data, stageAbility]);
   const targetChampion = useMemo(
-    () => (champions.find((champion) => champion.id !== (preview && "champ" in preview ? preview.champ.id : ""))
-      ?? (preview && "champ" in preview ? preview.champ : null)) as ChampionDef | null,
+    () => (champions.find((champion) => champion.id !== (isRunnableForgePreview(preview) ? preview.champ.id : ""))
+      ?? (isRunnableForgePreview(preview) ? preview.champ : null)) as ChampionDef | null,
     [champions, preview],
   );
 
@@ -573,7 +632,13 @@ export function ForgeStudio({
       return {
         ...draft,
         tiers: nextTiers,
-        cards: tier === "" ? draft.cards : applyTierToCards(draft.cards, docs, axis, tier),
+        cards: tier === "" ? draft.cards : applyTierToCards(
+          draft.cards,
+          docs,
+          axis,
+          tier,
+          tierNumericValueFor(axis, tier, tierConfigs.data ?? {}, draft.cooldownShape),
+        ),
       };
     });
   };
@@ -771,8 +836,10 @@ export function ForgeStudio({
                   value={newAbilitySlot}
                   onChange={(event) => setNewAbilitySlot(event.target.value as NewAbilitySlot)}
                 >
-                  {(["Q", "W", "E", "R"] as const).map((slot) => (
-                    <option key={slot} value={slot}>{slot} · {slot === "R" ? "3級" : "4級"}</option>
+                  {(["PASSIVE", "Q", "W", "E", "R", "EX"] as const).map((slot) => (
+                    <option key={slot} value={slot}>
+                      {slot} · {slot === "R" ? "3級" : slot === "PASSIVE" || slot === "EX" ? "1級" : "4級"}
+                    </option>
                   ))}
                 </select>
               </label>
@@ -991,7 +1058,7 @@ export function ForgeStudio({
           </p>
           {previewContent.error ? (
             <p className="error">Runtime 內容圖載入失敗：{String(previewContent.error)}</p>
-          ) : stageAbility && stageScript && preview && "champ" in preview ? (
+          ) : stageAbility && stageScript && isRunnableForgePreview(preview) ? (
             <VfxForgePreview
               script={stageScript}
               ability={stageAbility}
@@ -1013,7 +1080,7 @@ export function ForgeStudio({
             <button
               type="button"
               data-field="stack.cast"
-              disabled={!preview || !("champ" in preview)}
+              disabled={!isRunnableForgePreview(preview)}
               onClick={() => runCurrentCast(true)}
             >
               真的放一次

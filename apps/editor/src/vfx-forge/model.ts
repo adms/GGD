@@ -291,6 +291,10 @@ export function recommendedRuntimeEvidenceTimes(
     vfxSpawn: 8, modelFxSpawn: 8, screenFlash: 7, comboStrike: 6,
     projectileHit: 6, projectileSpawn: 5, displace: 5, evade: 5,
     reflectSuccess: 5, hitImpact: 4, statusApplied: 4, shieldGained: 4,
+    // A summon body is presentation evidence in its own right. Include both
+    // lifecycle edges so a temporal reviewer can prove that it appears and is
+    // later removed instead of inferring lifetime from attack particles.
+    summonSpawn: 7, summonDespawn: 7,
     damage: 3, abilityCast: 1, basicAttack: 1,
   };
   const visible = schedule
@@ -331,6 +335,20 @@ export function recommendedRuntimeEvidenceTimes(
   return [...selected]
     .map((index) => ({ atMs: candidates[index]!.atMs, label: candidates[index]!.label }))
     .sort((a, b) => a.atMs - b.atMs);
+}
+
+/**
+ * A second camera angle at the same millisecond is useful to a human but is not
+ * temporal evidence. For a one-beat runtime scene, add a nearby distinct frame
+ * while staying inside the shortest shipped 220ms visual lifetime.
+ */
+export function ensureTemporalEvidencePair(
+  times: readonly RecommendedEvidenceTime[],
+): RecommendedEvidenceTime[] {
+  if (times.length !== 1) return [...times];
+  const first = times[0]!;
+  const detailAtMs = first.atMs >= 60 ? first.atMs - 60 : first.atMs + 60;
+  return [first, { ...first, atMs: detailAtMs, label: `${first.label} · 近景` }];
 }
 
 export function timelineDurationMs(script: VfxScriptDoc, cues: readonly TriggerCue[]): number {

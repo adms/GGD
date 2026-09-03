@@ -7,21 +7,38 @@
  * stored framebuffer-ledger gates. --release adds the full Editor suite/build.
  * Human art-direction scoring intentionally remains outside automation.
  */
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(new URL("../..", import.meta.url)));
+const geminiLocalEnv = resolve(root, ".env.gemini.local");
+if (existsSync(geminiLocalEnv) && typeof process.loadEnvFile === "function") {
+  // Local developer secret only. Node loads values into process.env without
+  // echoing them; child review processes inherit the same provider-neutral
+  // environment. An explicit shell variable still wins over the file.
+  const existingGeminiKey = process.env.GEMINI_API_KEY;
+  process.loadEnvFile(geminiLocalEnv);
+  if (existingGeminiKey !== undefined) process.env.GEMINI_API_KEY = existingGeminiKey;
+}
 const proofFlag = process.argv.indexOf("--proof");
 const proofPath = proofFlag >= 0 ? process.argv[proofFlag + 1] : null;
 if (proofFlag >= 0 && (!proofPath || proofPath.startsWith("--"))) {
   console.error("FAIL --proof requires the browser-export JSON path");
   process.exit(2);
 }
-const localLlm = process.argv.includes("--local-llm") || ["1", "true", "yes", "on"]
-  .includes(String(process.env.GGD_VFX_LOCAL_LLM_ENABLED ?? "").toLowerCase());
-const visual = process.argv.includes("--visual") || process.argv.includes("--release") || proofPath !== null || localLlm;
+const geminiEnvironment = String(process.env.GGD_VFX_GEMINI_ENABLED ?? "").trim().toLowerCase();
+const geminiExplicitlyDisabled = process.argv.includes("--no-gemini") || ["0", "false", "no", "off"].includes(geminiEnvironment);
+const geminiRequested = process.argv.includes("--gemini")
+  || proofPath !== null
+  || ["1", "true", "yes", "on"].includes(geminiEnvironment);
+const gemini = !geminiExplicitlyDisabled && (
+  geminiRequested && (
+    process.argv.includes("--gemini") || String(process.env.GEMINI_API_KEY ?? "").trim() !== ""
+  )
+);
+const visual = process.argv.includes("--visual") || process.argv.includes("--release") || proofPath !== null || gemini;
 const release = process.argv.includes("--release");
 const maxFailureLines = 100;
 
@@ -69,7 +86,13 @@ console.log(JSON.stringify({
   handbackMainCommit: handback.commit ?? handback.mainCommit ?? null,
   coverageFingerprint: coverage.fingerprint ?? null,
   capabilityFingerprint: capabilities.fingerprint ?? null,
-  localLlm: localLlm ? "enabled-advisory" : "disabled-default",
+  geminiVisualReview: gemini
+    ? "enabled-advisory"
+    : geminiExplicitlyDisabled
+      ? "disabled-explicit"
+      : geminiRequested
+        ? "disabled-no-key"
+        : "disabled-not-requested",
 }));
 
 if (proofPath) {
@@ -94,9 +117,9 @@ if (visual) {
   ]);
 }
 
-if (localLlm) {
-  run("Optional localhost VFX visual triage", "pnpm", [
-    "vfx:review:batch", "--", "--enable-local-llm", "--optional",
+if (gemini) {
+  run("Optional Google Gemini VFX visual triage", "pnpm", [
+    "vfx:review:batch", "--", "--enable-gemini", "--optional",
   ]);
 }
 

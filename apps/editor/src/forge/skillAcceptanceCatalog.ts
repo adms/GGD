@@ -164,7 +164,7 @@ export const SKILL_ACCEPTANCE_CANDIDATES: readonly SkillAcceptanceCandidate[] = 
   owner({
     id: "godie-etyr.r", name: "14-04 聖夜降臨", forgeTypeId: "summon",
     requiredTemplateIds: ["tpl-summon-agent"], requiredEffectKinds: ["damageArea"],
-    acceptance: "召喚一個式神維持八秒，召喚瞬間另有範圍傷害；死亡及到期清理正確。",
+    acceptance: "原有施法者與敵方目標；召喚後應同時看見第三個角色作為式神（body:self，因此可與施法者同模型）並維持八秒，召喚瞬間另有範圍傷害；到期後第三個角色必須消失。",
   }),
   owner({
     id: "godie-ogld.ex", name: "72-002 億萬衛星殞落", forgeTypeId: "barrage",

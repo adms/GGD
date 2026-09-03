@@ -12,10 +12,7 @@ import {
   readEditorContractIndex,
 } from "./editorContractIndex";
 
-const fixture = buildContractIndex({
-  maxCompressedBytes: 64 * 1024 * 1024,
-  maxUncompressedBytes: 256 * 1024 * 1024,
-});
+const fixture = buildContractIndex(ZIP_LIMITS as unknown as Record<string, number>);
 
 function redigest(value: Record<string, unknown>): Record<string, unknown> {
   const body = { ...value };
@@ -30,6 +27,7 @@ describe("Main editor contract index", () => {
   it("consumes Main's real registry shape and pins the profile digest", () => {
     const index = readEditorContractIndex(fixture, fixture.digest);
     expect(index.minEditorContractVersion).toBe("1.0.0");
+    expect(index.maxEntryUncompressedBytes).toBe(ZIP_LIMITS.maxEntryUncompressedBytes);
     expect(modesFor(index, "ability@1")).toEqual(["bootstrap", "full", "delta"]);
     expect(modesFor(index, "vfx-script@1")).toEqual([]);
     expect(promotionPolicyFor(index, "editor-capability-fixture")).toBe("forbidden");
@@ -92,5 +90,9 @@ describe("Main editor contract index", () => {
       ...fixture,
       representations: [{ ...fixture.representations[0], modes: ["turbo"] }],
     }))).toThrow(/未知 mode/);
+    expect(() => readEditorContractIndex(redigest({
+      ...fixture,
+      policies: { ...fixture.policies, zip: {} },
+    }))).toThrow(/maxEntryUncompressedBytes/);
   });
 });

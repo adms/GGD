@@ -25,6 +25,7 @@ import {
   segmentFromAsset,
   recommendedEvidenceTimes,
   recommendedRuntimeEvidenceTimes,
+  ensureTemporalEvidencePair,
   scriptVisualFocus,
   timelineDurationMs,
   triggerCuesFromSim,
@@ -78,16 +79,26 @@ import {
   PRESENTATION_RECEIPT,
   unsupportedReplacementClaims,
 } from "./presentationContract";
-import { buildBasicVisualDraft, runtimeAuditPlaceholderScript } from "./basicVisualAuthoring";
+import {
+  basicVisualProofRoute,
+  buildBasicVisualDraft,
+  type BasicVisualProofSource,
+} from "./basicVisualAuthoring";
 import {
   classifyVisualAcceptanceIssues,
   type VisualAcceptanceMachineIssue,
 } from "./visualAcceptanceIssues";
-import { SKILL_ACCEPTANCE_CANDIDATES, SKILL_ACCEPTANCE_THEME_IDS } from "../forge/skillAcceptanceCatalog";
+import {
+  SKILL_ACCEPTANCE_CANDIDATES,
+  SKILL_ACCEPTANCE_THEME_IDS,
+  skillAcceptanceThemeId,
+} from "../forge/skillAcceptanceCatalog";
+import { normalizeLoopbackProofSink, proofSinkFromSearch } from "./proofAutomation";
 import type { BackdropTimelineAudit, VfxVisualEvidenceFrame } from "./VfxForgeStage";
 
 const simPreview = createSimPreviewController();
 const BASIC_VISUAL_REVIEW_STORAGE = "ggd-editor-basic-visual-human-review@1";
+const MAX_VISUAL_EVIDENCE_FRAMES = 18;
 
 interface BasicVisualBatchResult {
   readonly id: string;
@@ -96,6 +107,8 @@ interface BasicVisualBatchResult {
   readonly blockers: readonly string[];
   readonly audit?: BackdropTimelineAudit;
   readonly frames: readonly VfxVisualEvidenceFrame[];
+  /** Exact presentation route used for the screenshots; never infer it later. */
+  readonly proofSource?: BasicVisualProofSource;
   readonly machineIssues?: readonly VisualAcceptanceMachineIssue[];
   readonly humanVerdict: "pending" | "pass" | "fail";
   readonly humanScore: number | null;
@@ -213,14 +226,24 @@ export function VfxForgePage() {
     results: [],
   });
   const [basicVisualExportUrl, setBasicVisualExportUrl] = useState<string | null>(null);
-  const [basicVisualProofSink, setBasicVisualProofSink] = useState("");
+  const basicVisualAutoSink = useRef(
+    typeof globalThis.location === "object" ? proofSinkFromSearch(globalThis.location.search) : "",
+  );
+  const [basicVisualProofSink, setBasicVisualProofSink] = useState(basicVisualAutoSink.current);
+  const basicVisualProofAutoSent = useRef(false);
   const basicVisualBatchBusy = useRef(false);
   const basicVisualBatchAutoStarted = useRef(false);
-  const basicVisualBatchAutoRequested = useRef(
-    typeof globalThis.location === "object" &&
-    new URLSearchParams(globalThis.location.search).get("qa") === "accept-46",
-  );
+  const basicVisualBatchAutoRequest = useRef((() => {
+    if (typeof globalThis.location !== "object") return null;
+    const params = new URLSearchParams(globalThis.location.search);
+    if (params.get("qa") !== "accept-46") return null;
+    const ids = new Set((params.get("ids") ?? "").split(",").map((id) => id.trim()).filter(Boolean));
+    return ids.size > 0 ? ids : new Set(SKILL_ACCEPTANCE_CANDIDATES.map((row) => row.id));
+  })());
   const previewRef = useRef<VfxForgePreviewHandle>(null);
+  const basicVisualBatchTargetCount = basicVisualBatch.queue.length > 0
+    ? basicVisualBatch.queue.length
+    : basicVisualBatchAutoRequest.current?.size ?? SKILL_ACCEPTANCE_CANDIDATES.length;
 
   const championId = abilityId.includes(".") ? abilityId.slice(0, abilityId.lastIndexOf(".")) : "";
   const previewContent = useQuery({
@@ -702,18 +725,25 @@ export function VfxForgePage() {
     });
   }, []);
 
-  const startBasicVisualBatch = (): void => {
+  const startBasicVisualBatch = (ids: ReadonlySet<string> | null = null): void => {
+    const queue = SKILL_ACCEPTANCE_CANDIDATES.flatMap((row, index) =>
+      ids === null || ids.has(row.id) ? [index] : [],
+    );
+    if (queue.length === 0) {
+      setStatus("⛔ QA ids 沒有命中 42／46 驗收清單");
+      return;
+    }
     basicVisualBatchBusy.current = false;
     setBasicVisualBatch({
       running: true,
-      queue: SKILL_ACCEPTANCE_CANDIDATES.map((_, index) => index),
+      queue,
       position: 0,
       phase: "loading",
       results: [],
     });
     setPreviewMode("runtime");
     setPlaying(false);
-    setStatus("開始 42 主題／46 份技能的自動基本視覺驗收；每支都走真 Sim 與 framebuffer");
+    setStatus(`開始 ${queue.length} 份技能的自動基本視覺驗收；每支都走真 Sim 與 framebuffer`);
   };
 
   const retryBasicVisualCases = (ids: ReadonlySet<string>, message: string): void => {
@@ -749,9 +779,9 @@ export function VfxForgePage() {
   };
 
   useEffect(() => {
-    if (!basicVisualBatchAutoRequested.current || basicVisualBatchAutoStarted.current || !ability || !previewContent.data) return;
+    if (!basicVisualBatchAutoRequest.current || basicVisualBatchAutoStarted.current || !ability || !previewContent.data) return;
     basicVisualBatchAutoStarted.current = true;
-    startBasicVisualBatch();
+    startBasicVisualBatch(basicVisualBatchAutoRequest.current);
     // This is a one-shot QA entrypoint. startBasicVisualBatch intentionally
     // stays local to the page instead of becoming a changing effect dependency.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -772,25 +802,23 @@ export function VfxForgePage() {
     if (!ability || ability.id !== row.id || !draft || !runtimeChampion || !runtimeTarget) return;
 
     if (basicVisualBatch.phase === "loading") {
-      // The eight named acceptance scenes prove what a designer can assemble
-      // in the Editor and are permanently non-promotable fixtures. Render
-      // their script in isolation over the real Sim event schedule; otherwise
-      // the ability's already-shipped VFX is drawn underneath and the batch
-      // judges two compositions at once. Ordinary 38 documents continue to
-      // use the complete runtime presentation path.
-      const desiredMode: VfxForgeStageMode = row.vfxFixture ? "script" : "runtime";
+      const fixture = acceptanceFixtureFor(row.id, cues);
+      const basic = buildBasicVisualDraft(ability, cues);
+      const route = basicVisualProofRoute(ability.id, fixture, basic);
+      // Every active baseline must render the actual bricks assembled by the
+      // Editor. Passive effect-graph hooks remain on the real runtime path.
+      const desiredMode: VfxForgeStageMode = route.mode;
       if (previewMode !== desiredMode) {
         setPreviewMode(desiredMode);
         return;
       }
-      const fixture = acceptanceFixtureFor(row.id, cues);
-      const basic = fixture ? null : buildBasicVisualDraft(ability, cues);
-      const script = fixture ?? basic?.script ?? runtimeAuditPlaceholderScript(ability.id);
+      const script = route.script;
       if (simReview.pending) return;
       if (!simReview.ready) {
         finishBasicVisualCase({
           id: row.id, name: row.name, status: "failed",
-          blockers: [simReview.reason], frames: [], humanVerdict: "pending", humanScore: null, humanNote: "",
+          blockers: [simReview.reason], frames: [], proofSource: route.source,
+          humanVerdict: "pending", humanScore: null, humanNote: "",
         });
         return;
       }
@@ -819,7 +847,9 @@ export function VfxForgePage() {
         return;
       }
     }
-    const basic = row.vfxFixture ? null : buildBasicVisualDraft(ability, cues);
+    const fixture = acceptanceFixtureFor(row.id, cues);
+    const basic = buildBasicVisualDraft(ability, cues);
+    const route = basicVisualProofRoute(ability.id, fixture, basic);
     const blockers = [
       ...(basic?.blockers ?? []),
       ...assetBlockers.map((item) => `${item.asset.id}：${item.summary}`),
@@ -831,7 +861,8 @@ export function VfxForgePage() {
     if (!assetPreviewAllowed || blockers.length > 0) {
       finishBasicVisualCase({
         id: row.id, name: row.name, status: "blocked", blockers,
-        frames: [], humanVerdict: "pending", humanScore: null, humanNote: "",
+        frames: [], proofSource: route.source,
+        humanVerdict: "pending", humanScore: null, humanNote: "",
       });
       return;
     }
@@ -843,11 +874,7 @@ export function VfxForgePage() {
       let fallbackDiagnosticAtMs = 0;
       try {
         const { audit, frames } = await withBatchDeadline((async () => {
-          // Named Editor fixtures prove the composition made from Forge bricks,
-          // so audit that isolated script. Ordinary skills prove the shipped
-          // runtime path. Mixing both rendered two compositions at once and
-          // blamed a Main-owned effect on the Editor recipe.
-          const audit = await preview.auditBackdropTimeline(row.vfxFixture ? "script" : "runtime");
+          const audit = await preview.auditBackdropTimeline(route.mode);
           fallbackDiagnosticAtMs = audit.worstAtMs;
           if (!audit.safe) {
             const frame = await preview.captureDiagnosticEvidenceAt(
@@ -856,21 +883,23 @@ export function VfxForgePage() {
             );
             return { audit, frames: [frame] };
           }
-          const wanted = row.vfxFixture ? 4 : 2;
-          let times = row.vfxFixture
+          // Capture semantic event beats, not a fixed screenshot quota. The
+          // named cinematic/combination fixtures may need up to eighteen frames
+          // to prove actor poses, displacements, strikes and the finisher;
+          // ordinary runtime skills remain capped at eight for batch cost.
+          const wanted = row.vfxFixture ? 18 : 8;
+          let times = route.mode === "script"
             ? recommendedEvidenceTimes(draft, cues, wanted)
             : recommendedRuntimeEvidenceTimes(schedule, wanted);
           // One-beat skills still need both actual gameplay scale and a close
           // detail proof. Duplicate the timestamp, not the effect or timeline.
-          if (!row.vfxFixture && times.length === 1) {
-            times = [times[0]!, { ...times[0]!, label: `${times[0]!.label} · 近景` }];
-          }
+          if (!row.vfxFixture) times = ensureTemporalEvidencePair(times);
           const frames: VfxVisualEvidenceFrame[] = [];
           const evidencePose = schedule.find((item) => item.actorPose)?.actorPose ?? {
             caster: { x: 0, z: 0 },
             target: { x: 0, z: 3 },
           };
-          const needsWholeActionFrame = row.vfxFixture && scriptVisualFocus(draft, evidencePose) !== null;
+          const needsWholeActionFrame = route.mode === "script" && scriptVisualFocus(draft, evidencePose) !== null;
           for (let index = 0; index < times.length; index++) {
             const time = times[index]!;
             frames.push(await preview.captureVisualEvidenceAt(
@@ -888,7 +917,8 @@ export function VfxForgePage() {
         finishBasicVisualCase({
           id: row.id, name: row.name,
           status: audit.safe ? "captured" : "failed",
-          blockers, audit, frames, humanVerdict: "pending", humanScore: null, humanNote: "",
+          blockers, audit, frames, proofSource: route.source,
+          humanVerdict: "pending", humanScore: null, humanNote: "",
         });
       } catch (error) {
         let frames: readonly VfxVisualEvidenceFrame[] = [];
@@ -904,7 +934,8 @@ export function VfxForgePage() {
         }
         finishBasicVisualCase({
           id: row.id, name: row.name, status: "failed",
-          blockers: [String(error)], frames, humanVerdict: "pending", humanScore: null, humanNote: "",
+          blockers: [String(error)], frames, proofSource: route.source,
+          humanVerdict: "pending", humanScore: null, humanNote: "",
         });
       }
     })();
@@ -962,17 +993,23 @@ export function VfxForgePage() {
     }
   }, [basicVisualBatch.results]);
 
-  const basicVisualExportPayload = useMemo(() => ({
-    schema: "ggd-editor-basic-visual-proof@1" as const,
-    generatedAt: new Date().toISOString(),
-    themes: SKILL_ACCEPTANCE_THEME_IDS.size,
-    documents: SKILL_ACCEPTANCE_CANDIDATES.length,
-    cases: basicVisualBatch.results.map((row) => ({
-      ...row,
-      machineIssues: classifyVisualAcceptanceIssues(row),
-    })),
-    issueClassifier: "ggd-editor-visual-issue-rules@1" as const,
-  }), [basicVisualBatch.results]);
+  const basicVisualExportPayload = useMemo(() => {
+    const caseIds = new Set(basicVisualBatch.results.map((row) => row.id));
+    const themes = new Set(SKILL_ACCEPTANCE_CANDIDATES
+      .filter((row) => caseIds.has(row.id))
+      .map(skillAcceptanceThemeId));
+    return {
+      schema: "ggd-editor-basic-visual-proof@1" as const,
+      generatedAt: new Date().toISOString(),
+      themes: themes.size,
+      documents: basicVisualBatch.results.length,
+      cases: basicVisualBatch.results.map((row) => ({
+        ...row,
+        machineIssues: classifyVisualAcceptanceIssues(row),
+      })),
+      issueClassifier: "ggd-editor-visual-issue-rules@1" as const,
+    };
+  }, [basicVisualBatch.results]);
 
   useEffect(() => {
     if (basicVisualExportPayload.cases.length === 0) {
@@ -984,27 +1021,44 @@ export function VfxForgePage() {
     return () => URL.revokeObjectURL(url);
   }, [basicVisualExportPayload]);
 
-  const sendBasicVisualProofToLoopback = async (): Promise<void> => {
+  const sendBasicVisualProofToLoopback = useCallback(async (sinkValue = basicVisualProofSink): Promise<void> => {
     try {
-      const sink = new URL(basicVisualProofSink);
-      if (
-        sink.protocol !== "http:" ||
-        (sink.hostname !== "127.0.0.1" && sink.hostname !== "localhost")
-      ) throw new Error("只允許一次性 http://127.0.0.1／localhost 接收器");
-      if (basicVisualExportPayload.cases.length !== SKILL_ACCEPTANCE_CANDIDATES.length) {
-        throw new Error(`批次尚未完成：${basicVisualExportPayload.cases.length}/${SKILL_ACCEPTANCE_CANDIDATES.length}`);
+      const normalizedSink = normalizeLoopbackProofSink(sinkValue);
+      if (!normalizedSink) throw new Error("只允許一次性 http://127.0.0.1／localhost 接收器");
+      const focusedCount = basicVisualBatchTargetCount;
+      if (basicVisualExportPayload.cases.length !== focusedCount) {
+        throw new Error(`批次尚未完成：${basicVisualExportPayload.cases.length}/${focusedCount}`);
       }
-      const response = await fetch(sink, {
+      const response = await fetch(normalizedSink, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(basicVisualExportPayload),
       });
       if (!response.ok) throw new Error(`${response.status} ${await response.text()}`);
-      setStatus("46 份瀏覽器 framebuffer 證據已寫入一次性本機驗收器");
+      setStatus(
+        basicVisualExportPayload.cases.length === SKILL_ACCEPTANCE_CANDIDATES.length
+          ? "46 份瀏覽器 framebuffer 證據已寫入一次性本機驗收器"
+          : `${basicVisualExportPayload.cases.length} 份聚焦 framebuffer 證據已寫入一次性本機驗收器`,
+      );
     } catch (error) {
       setStatus(`證據寫入失敗：${String(error)}`);
     }
-  };
+  }, [basicVisualExportPayload, basicVisualBatchTargetCount, basicVisualProofSink]);
+
+  useEffect(() => {
+    if (
+      basicVisualAutoSink.current === "" || basicVisualProofAutoSent.current ||
+      basicVisualBatch.running || basicVisualExportPayload.cases.length === 0 ||
+      basicVisualExportPayload.cases.length !== basicVisualBatchTargetCount
+    ) return;
+    basicVisualProofAutoSent.current = true;
+    void sendBasicVisualProofToLoopback(basicVisualAutoSink.current);
+  }, [
+    basicVisualBatch.running,
+    basicVisualBatchTargetCount,
+    basicVisualExportPayload,
+    sendBasicVisualProofToLoopback,
+  ]);
 
   const setBasicVisualHumanVerdict = (id: string, verdict: "pending" | "pass" | "fail"): void => {
     setBasicVisualBatch((current) => ({
@@ -1076,8 +1130,8 @@ export function VfxForgePage() {
       setStatus("⛔ 視覺證據必須在「完整技能演出」模式擷取");
       return;
     }
-    if (visualEvidence.length >= 4) {
-      setStatus("視覺證據最多 4 張；請先刪除不需要的畫面");
+    if (visualEvidence.length >= MAX_VISUAL_EVIDENCE_FRAMES) {
+      setStatus(`視覺證據最多 ${MAX_VISUAL_EVIDENCE_FRAMES} 張；請先刪除不需要的畫面`);
       return;
     }
     try {
@@ -1087,7 +1141,7 @@ export function VfxForgePage() {
       if (!frame) throw new Error("預覽尚未準備完成");
       setVisualEvidence((current) => [...current, frame]);
       recordAction(`擷取視覺證據：${frame.view}/${(frame.atMs / 1000).toFixed(3)}秒`);
-      setStatus(`已擷取候選畫面 ${visualEvidence.length + 1}/4；修改 JSON 會自動清除舊證據`);
+      setStatus(`已擷取候選畫面 ${visualEvidence.length + 1}/${MAX_VISUAL_EVIDENCE_FRAMES}；修改 JSON 會自動清除舊證據`);
     } catch (error) {
       setStatus(`⛔ 擷取視覺證據失敗：${String(error)}`);
     }
@@ -1140,14 +1194,14 @@ export function VfxForgePage() {
 
       <details className="vfx-basic-batch" open>
         <summary>
-          42 主題／46 份技能基本視覺驗收 · {basicVisualBatch.results.length}/{SKILL_ACCEPTANCE_CANDIDATES.length}
-          {basicVisualBatch.results.length === SKILL_ACCEPTANCE_CANDIDATES.length
+          42 主題／46 份技能基本視覺驗收 · {basicVisualBatch.results.length}/{basicVisualBatchTargetCount}
+          {basicVisualBatch.results.length === basicVisualBatchTargetCount
             ? ` · 肉眼 ${basicVisualBatch.results.filter((row) => row.status === "captured" && row.humanVerdict !== "pending" && row.humanScore !== null && row.humanNote.trim().length > 0).length}/${basicVisualBatch.results.filter((row) => row.status === "captured").length}`
             : ""}
         </summary>
         <p>一鍵逐支載入真 Sim、以安全積木組裝可編輯基線、掃完整時間軸底板並擷取 framebuffer。自動衛生檢查不會代替人工看圖。</p>
         <div>
-          <button type="button" disabled={basicVisualBatch.running} onClick={startBasicVisualBatch}>▶ 自動驗收全部 46 份</button>
+          <button type="button" disabled={basicVisualBatch.running} onClick={() => startBasicVisualBatch()}>▶ 自動驗收全部 46 份</button>
           <button
             type="button"
             disabled={basicVisualBatch.running || !basicVisualBatch.results.some((row) => row.status === "failed")}
@@ -1194,7 +1248,12 @@ export function VfxForgePage() {
               {row.frames.length ? (
                 <div className="vfx-basic-batch-frames">
                   {row.frames.map((frame, index) => (
-                    <img key={`${frame.atMs}:${index}`} src={frame.dataUrl} alt={frame.label} />
+                    <img
+                      key={`${frame.atMs}:${index}`}
+                      src={frame.dataUrl}
+                      alt={frame.label}
+                      title={frame.frameAudit.reason ?? "未檢出呈現層異常"}
+                    />
                   ))}
                 </div>
               ) : null}
@@ -1427,7 +1486,7 @@ export function VfxForgePage() {
                   onTime={onTime}
                   onStop={stop}
                   onDropAsset={(asset, placement) => { void addAsset(asset, placement); }}
-                  canCaptureEvidence={simReview.ready && !replacementBlocked && reviewEvidenceAllowed && previewMode === "runtime" && visualEvidence.length < 4}
+                  canCaptureEvidence={simReview.ready && !replacementBlocked && reviewEvidenceAllowed && previewMode === "runtime" && visualEvidence.length < MAX_VISUAL_EVIDENCE_FRAMES}
                   onCaptureEvidence={() => void captureVisualEvidence()}
                 />
               ) : (
@@ -1445,10 +1504,10 @@ export function VfxForgePage() {
               <section className="vfx-visual-evidence" aria-label="候選視覺證據">
                 <header>
                   <div>
-                    <b>候選畫面證據 {visualEvidence.length}/{requiredVisualEvidence}（最多 4）</b>
+                    <b>候選畫面證據 {visualEvidence.length}/{requiredVisualEvidence}（最多 {MAX_VISUAL_EVIDENCE_FRAMES}）</b>
                     <small>完整技能演出 · 綁定本次候選；任何 JSON 修改都會清空</small>
                   </div>
-                  <button type="button" disabled={!simReview.ready || replacementBlocked || !assetPreviewAllowed || !reviewEvidenceAllowed || previewMode !== "runtime" || visualEvidence.length >= 4} onClick={() => void captureVisualEvidence()}>
+                  <button type="button" disabled={!simReview.ready || replacementBlocked || !assetPreviewAllowed || !reviewEvidenceAllowed || previewMode !== "runtime" || visualEvidence.length >= MAX_VISUAL_EVIDENCE_FRAMES} onClick={() => void captureVisualEvidence()}>
                     📷 擷取目前格
                   </button>
                 </header>

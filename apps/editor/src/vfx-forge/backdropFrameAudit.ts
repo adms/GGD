@@ -1,6 +1,13 @@
 export interface BackdropFrameAudit {
   /** Pixels materially above the neutral arena card; used for non-authoritative hygiene scoring. */
   litShare: number;
+  /**
+   * Pixels outside the dominant framebuffer colour.  VFX Forge samples this
+   * with actors and arena geometry hidden, so a non-zero value is direct
+   * evidence that the presentation layer drew something.  Optional keeps
+   * previously stored review receipts readable.
+   */
+  presentationPixelShare?: number;
   /** Pixels bright enough to hide local silhouettes even when tone mapping keeps them below pure white. */
   highlightShare: number;
   brightShare: number;
@@ -300,6 +307,7 @@ export function auditBackdropFrame(
 
   let dominantBright = 0;
   let dominantNonBackground = 0;
+  let dominantPixelCount = 0;
   const cornerKeys = new Set<number>();
   for (const [x, y] of [[0, 0], [width - 1, 0], [0, height - 1], [width - 1, height - 1]] as const) {
     const offset = (Math.max(0, y) * width + Math.max(0, x)) * 4;
@@ -312,6 +320,7 @@ export function auditBackdropFrame(
     const r = (key >> 8) & 15;
     const g = (key >> 4) & 15;
     const b = key & 15;
+    dominantPixelCount = Math.max(dominantPixelCount, bins[key]!);
     if (Math.max(r, g, b) >= 13) dominantBright = Math.max(dominantBright, bins[key]!);
     // A giant brown/blue/green telegraph plane is just as much a backdrop as
     // a white PNG card. Ignore the sampled scene-background bins and look for
@@ -322,6 +331,7 @@ export function auditBackdropFrame(
   }
 
   const litShare = lit / pixels;
+  const presentationPixelShare = Math.max(0, (pixels - dominantPixelCount) / pixels);
   const highlightShare = highlight / pixels;
   const brightShare = bright / pixels;
   const nearWhiteShare = nearWhite / pixels;
@@ -330,6 +340,7 @@ export function auditBackdropFrame(
   if (nearWhiteShare >= 0.45) {
     return {
       litShare,
+      presentationPixelShare,
       highlightShare,
       brightShare,
       nearWhiteShare,
@@ -344,6 +355,7 @@ export function auditBackdropFrame(
   if (brightShare >= 0.75) {
     return {
       litShare,
+      presentationPixelShare,
       highlightShare,
       brightShare,
       nearWhiteShare,
@@ -358,6 +370,7 @@ export function auditBackdropFrame(
   if (dominantBrightShare >= 0.55) {
     return {
       litShare,
+      presentationPixelShare,
       highlightShare,
       brightShare,
       nearWhiteShare,
@@ -372,6 +385,7 @@ export function auditBackdropFrame(
   if (dominantNonBackgroundShare >= 0.18) {
     return {
       litShare,
+      presentationPixelShare,
       highlightShare,
       brightShare,
       nearWhiteShare,
@@ -387,6 +401,7 @@ export function auditBackdropFrame(
   if (localCardShare >= LOCAL_CARD_MIN_SHARE) {
     return {
       litShare,
+      presentationPixelShare,
       highlightShare,
       brightShare,
       nearWhiteShare,
@@ -402,6 +417,7 @@ export function auditBackdropFrame(
   if (checkerShare > 0) {
     return {
       litShare,
+      presentationPixelShare,
       highlightShare,
       brightShare,
       nearWhiteShare,
@@ -415,6 +431,7 @@ export function auditBackdropFrame(
   }
   return {
     litShare,
+    presentationPixelShare,
     highlightShare,
     brightShare,
     nearWhiteShare,

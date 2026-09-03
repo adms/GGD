@@ -37,7 +37,15 @@ describe("VFX Forge rendered-frame backdrop guard", () => {
       rgba[offset + 1] = 210;
       rgba[offset + 2] = 80;
     }
-    expect(auditBackdropFrame(rgba, 20, 20).unsafe).toBe(false);
+    const result = auditBackdropFrame(rgba, 20, 20);
+    expect(result.unsafe).toBe(false);
+    expect(result.presentationPixelShare).toBeCloseTo(0.15);
+  });
+
+  it("reports zero presentation pixels for a perfectly blank presentation layer", () => {
+    const result = auditBackdropFrame(solid(20, 20, [33, 37, 46, 255]), 20, 20);
+    expect(result.unsafe).toBe(false);
+    expect(result.presentationPixelShare).toBe(0);
   });
 
   it("rejects a large brown telegraph plane even though it is not bright or white", () => {

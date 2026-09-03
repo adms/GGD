@@ -5,7 +5,11 @@ import { join } from "node:path";
 import { zVfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
 import { SKILL_ACCEPTANCE_CANDIDATES } from "../forge/skillAcceptanceCatalog";
 import { actionAnimationIssues, activationModeForAbility } from "./actionAnimationPrinciples";
-import { buildBasicVisualDraft, runtimeAuditPlaceholderScript } from "./basicVisualAuthoring";
+import {
+  basicVisualProofRoute,
+  buildBasicVisualDraft,
+  runtimeAuditPlaceholderScript,
+} from "./basicVisualAuthoring";
 
 const ROOT = fileURLToPath(new URL("../../../../", import.meta.url));
 const ability = (id: string) => JSON.parse(
@@ -62,5 +66,24 @@ describe("42 主題／46 技能的基本視覺自動組裝", () => {
     expect(result.script?.segments).toContainEqual(expect.objectContaining({
       kind: "vfx", vfxId: "fx.prim.lightning.arc",
     }));
+  });
+
+  it("批次真的播放 Editor 組出的主動技腳本；被動 hook 保留真 runtime 路徑", () => {
+    const active = ability("godie-hapm.w");
+    const activeBasic = buildBasicVisualDraft(active);
+    expect(basicVisualProofRoute(active.id, null, activeBasic)).toMatchObject({
+      mode: "script",
+      source: "editor-basic-script",
+      script: activeBasic.script,
+    });
+
+    const passive = ability("godie-e00w.passive");
+    const passiveBasic = buildBasicVisualDraft(passive);
+    const passiveRoute = basicVisualProofRoute(passive.id, null, passiveBasic);
+    expect(passiveRoute.mode).toBe("runtime");
+    expect(passiveRoute.source).toBe("runtime-effect-graph");
+    expect(passiveRoute.script.segments).toEqual([
+      { kind: "sound", on: "reflectSuccess", soundKey: "editor.audit.silent" },
+    ]);
   });
 });

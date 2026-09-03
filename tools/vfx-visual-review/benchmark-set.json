@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-vfx-visual-benchmark-set@1",
+  "cases": [
+    {
+      "id": "godie-hjai.e",
+      "expected": "pass",
+      "labelReason": "人工標註正例：可見投射物先飛行，再於遠端爆炸。"
+    },
+    {
+      "id": "godie-e00l.ex",
+      "expected": "not-pass",
+      "labelReason": "人工標註負例：現有關鍵格缺少完整七斬與最後終結砲，不得放行。"
+    }
+  ]
+}

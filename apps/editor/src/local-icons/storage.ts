@@ -1,5 +1,5 @@
 import type { LocalIconKey, StagedLocalIcon } from "./model";
-import { localIconStorageKey } from "./model";
+import { isCurrentStagedLocalIcon, localIconStorageKey } from "./model";
 
 const DB_NAME = "ggd-editor-local-assets";
 const DB_VERSION = 1;
@@ -12,14 +12,16 @@ export async function putStagedLocalIcon(icon: StagedLocalIcon): Promise<void> {
 }
 
 export async function getStagedLocalIcon(key: LocalIconKey): Promise<StagedLocalIcon | null> {
-  return requestResult<StagedLocalIcon | undefined>(
+  const value = await requestResult<unknown>(
     await transaction("readonly", (store) => store.get(localIconStorageKey(key))),
-  ).then((value) => value ?? null);
+  );
+  return isCurrentStagedLocalIcon(value) ? value : null;
 }
 
 export async function listStagedLocalIcons(): Promise<StagedLocalIcon[]> {
-  const values = await requestResult<StagedLocalIcon[]>(await transaction("readonly", (store) => store.getAll()));
-  return values.sort((a, b) => localIconStorageKey(a).localeCompare(localIconStorageKey(b), "en"));
+  const values = await requestResult<unknown[]>(await transaction("readonly", (store) => store.getAll()));
+  return values.filter(isCurrentStagedLocalIcon)
+    .sort((a, b) => localIconStorageKey(a).localeCompare(localIconStorageKey(b), "en"));
 }
 
 export async function deleteStagedLocalIcon(key: LocalIconKey): Promise<void> {

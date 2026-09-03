@@ -9,6 +9,8 @@ describe("46 技能視覺驗收自動根因分類", () => {
     expect(codes(["局部紅／紫棋盤載體佔畫面 0.1%"])).toContain("FRAMEBUFFER_CARRIER");
     expect(codes(["單一高亮色塊覆蓋 68.0%，疑似模型／貼圖底板"]))
       .toContain("FRAMEBUFFER_CARRIER");
+    expect(codes(["單一非背景色塊覆蓋 25.7%，疑似預告幾何或彩色貼圖底板"]))
+      .toContain("FRAMEBUFFER_CARRIER");
     expect(codes(["角色模型在 framebuffer 退化為 98.9% 純白"])).toContain("ACTOR_TEXTURE_COLLAPSE");
     expect(codes(["角色 · imported.hero 3D 模型在真實 framebuffer 僅改變 0 像素"]))
       .toContain("ACTOR_NOT_VISIBLE");
@@ -54,6 +56,8 @@ describe("46 技能視覺驗收自動根因分類", () => {
         safe: true,
         autoVisualScore: 2,
         sampledFrames: 1,
+        elapsedMs: 1,
+        gpuReadbacks: 1,
         peakParticleCount: 1,
         peakSystemCount: 1,
         worstAtMs: 0,
@@ -79,7 +83,7 @@ describe("46 技能視覺驗收自動根因分類", () => {
       status: "captured",
       blockers: [],
       audit: {
-        safe: true, autoVisualScore: 8, sampledFrames: 2,
+        safe: true, autoVisualScore: 8, sampledFrames: 2, elapsedMs: 2, gpuReadbacks: 2,
         peakParticleCount: 0, peakSystemCount: 0, worstAtMs: 0, suspects: [],
         worst: {
           litShare: 0, highlightShare: 0, brightShare: 0, nearWhiteShare: 0,
@@ -94,5 +98,103 @@ describe("46 技能視覺驗收自動根因分類", () => {
       } }],
     }).map((issue) => issue.code);
     expect(issueCodes).toEqual(["LOW_VISUAL_HYGIENE"]);
+  });
+
+  it("事件有送出但畫面完全空白仍必須失敗，不得用衛生 10 分冒充視覺驗收", () => {
+    const issueCodes = classifyVisualAcceptanceIssues({
+      status: "captured",
+      blockers: [],
+      proofSource: "runtime-effect-graph",
+      audit: {
+        safe: true, autoVisualScore: 10, sampledFrames: 2, elapsedMs: 2, gpuReadbacks: 2,
+        peakParticleCount: 0, peakSystemCount: 3,
+        presentationEventCount: 1, semanticActionCount: 0, peakPresentationPixelShare: 0,
+        worstAtMs: 0, suspects: [],
+        worst: {
+          litShare: 0, highlightShare: 0, brightShare: 0, nearWhiteShare: 0,
+          dominantBrightShare: 0, dominantNonBackgroundShare: 0,
+          localWhiteCardShare: 0, diagnosticCheckerShare: 0, unsafe: false,
+        },
+      },
+    }).map((issue) => issue.code);
+    expect(issueCodes).toEqual(["NO_VISIBLE_PRESENTATION"]);
+  });
+
+  it("呈現層真的畫出像素時不回報空白演出", () => {
+    const issueCodes = classifyVisualAcceptanceIssues({
+      status: "captured",
+      blockers: [],
+      proofSource: "editor-basic-script",
+      audit: {
+        safe: true, autoVisualScore: 10, sampledFrames: 2, elapsedMs: 2, gpuReadbacks: 2,
+        peakParticleCount: 0, peakSystemCount: 1,
+        presentationEventCount: 1, semanticActionCount: 0, peakPresentationPixelShare: 0.002,
+        worstAtMs: 0, suspects: [],
+        worst: {
+          litShare: 0, highlightShare: 0, brightShare: 0, nearWhiteShare: 0,
+          dominantBrightShare: 0, dominantNonBackgroundShare: 0,
+          localWhiteCardShare: 0, diagnosticCheckerShare: 0, unsafe: false,
+        },
+      },
+    }).map((issue) => issue.code);
+    expect(issueCodes).toEqual([]);
+  });
+
+  it("專屬角色動作可以作為非 framebuffer 的可見演出證據", () => {
+    const issueCodes = classifyVisualAcceptanceIssues({
+      status: "captured",
+      blockers: [],
+      proofSource: "editor-basic-script",
+      audit: {
+        safe: true, autoVisualScore: 10, sampledFrames: 2, elapsedMs: 2, gpuReadbacks: 2,
+        peakParticleCount: 0, peakSystemCount: 0,
+        presentationEventCount: 0, semanticActionCount: 1, peakPresentationPixelShare: 0,
+        worstAtMs: 0, suspects: [],
+        worst: {
+          litShare: 0, highlightShare: 0, brightShare: 0, nearWhiteShare: 0,
+          dominantBrightShare: 0, dominantNonBackgroundShare: 0,
+          localWhiteCardShare: 0, diagnosticCheckerShare: 0, unsafe: false,
+        },
+      },
+    }).map((issue) => issue.code);
+    expect(issueCodes).toEqual([]);
+  });
+
+  it("角色有動作也不能掩蓋已派送 VFX 事件卻完全沒畫出的錯誤", () => {
+    const issueCodes = classifyVisualAcceptanceIssues({
+      status: "captured",
+      blockers: [],
+      proofSource: "editor-basic-script",
+      audit: {
+        safe: true, autoVisualScore: 10, sampledFrames: 2, elapsedMs: 2, gpuReadbacks: 2,
+        peakParticleCount: 0, peakSystemCount: 1,
+        presentationEventCount: 1, semanticActionCount: 2, peakPresentationPixelShare: 0,
+        worstAtMs: 0, suspects: [],
+        worst: {
+          litShare: 0, highlightShare: 0, brightShare: 0, nearWhiteShare: 0,
+          dominantBrightShare: 0, dominantNonBackgroundShare: 0,
+          localWhiteCardShare: 0, diagnosticCheckerShare: 0, unsafe: false,
+        },
+      },
+    }).map((issue) => issue.code);
+    expect(issueCodes).toEqual(["NO_VISIBLE_PRESENTATION"]);
+  });
+
+  it("舊證據沒有演出計數時不倒推結論，避免把缺資料誤當成空白技能", () => {
+    const issueCodes = classifyVisualAcceptanceIssues({
+      status: "captured",
+      blockers: [],
+      proofSource: "runtime-effect-graph",
+      audit: {
+        safe: true, autoVisualScore: 10, sampledFrames: 2, elapsedMs: 2, gpuReadbacks: 2,
+        peakParticleCount: 0, peakSystemCount: 3, worstAtMs: 0, suspects: [],
+        worst: {
+          litShare: 0, highlightShare: 0, brightShare: 0, nearWhiteShare: 0,
+          dominantBrightShare: 0, dominantNonBackgroundShare: 0,
+          localWhiteCardShare: 0, diagnosticCheckerShare: 0, unsafe: false,
+        },
+      },
+    }).map((issue) => issue.code);
+    expect(issueCodes).toEqual([]);
   });
 });

@@ -57,5 +57,17 @@ describe("新增技能的骨架落在五級距上", () => {
     expect(ultimate.maxRank).toBe(3);
     expect(ultimate.cooldown).toHaveLength(3);
     expect(ultimate.manaCost).toHaveLength(3);
+    for (const slot of ["PASSIVE", "EX"] as const) {
+      const doc = newAbilityTemplate(`probe.${slot.toLowerCase()}`, slot);
+      expect(doc.maxRank, slot).toBe(1);
+      expect(doc.cooldown, slot).toHaveLength(1);
+      expect(doc.manaCost, slot).toHaveLength(1);
+    }
+    expect(newAbilityTemplate("probe.passive", "PASSIVE")).toMatchObject({
+      slot: "PASSIVE",
+      innateKind: "passive",
+      cooldown: [0],
+      manaCost: [0],
+    });
   });
 });

@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import type { IconKind } from "../ai/prompt";
+import { resolveIconUpload, zConfigIconUploadDoc } from "@ggd/shared/content/schema/config/iconUpload";
 import { useEditorStore } from "../store";
+import { api } from "../api/client";
+import { binarySha256 } from "../export-center/exportBuilder";
 import { formatBytes, localIconAssetPath, stageLocalIcon, type StagedLocalIcon } from "./model";
 import {
   deleteStagedLocalIcon,
@@ -28,13 +31,23 @@ export function LocalIconUploadPanel({ kind, docId }: { kind: IconKind; docId: s
   const choose = async (file: File | null): Promise<void> => {
     if (!file) return;
     setBusy(true);
-    setStatus("本機縮圖與 WebP 轉檔中…");
+    setStatus("驗證原始圖片與目前遊戲端 Icon…");
     try {
-      const staged = await stageLocalIcon(kind, docId, file);
+      const policyDoc = zConfigIconUploadDoc.safeParse(await api.doc("config", "icon-upload"));
+      if (!policyDoc.success) throw new Error("目標遊戲的 config.icon-upload@1 無效，已停止暫存");
+      const policy = resolveIconUpload(policyDoc.data);
+      if (!policy.enabled) throw new Error("目標遊戲目前關閉 Icon 資產匯入");
+      const outputPath = localIconAssetPath(kind, docId);
+      const currentBytes = await api.optionalAssetBytes(outputPath);
+      const baseSha256 = currentBytes === null ? null : await binarySha256(new Uint8Array(currentBytes));
+      const staged = await stageLocalIcon(kind, docId, file, {
+        maxSourceEdge: policy.maxSourceEdge,
+        baseSha256,
+      });
       await putStagedLocalIcon(staged);
       update("icon", staged.contentPath);
       setIcon(staged);
-      setStatus(`已暫存 ${staged.width}×${staged.height} WebP · ${formatBytes(staged.bytes)} · ${staged.contentSha256.slice(0, 19)}…`);
+      setStatus(`已保留原圖 ${staged.width}×${staged.height} ${staged.mimeType} · ${formatBytes(staged.bytes)} · ${staged.contentSha256.slice(0, 19)}…`);
     } catch (error) {
       setStatus(`⛔ ${String(error)}`);
     } finally {

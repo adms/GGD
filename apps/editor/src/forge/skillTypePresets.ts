@@ -5,7 +5,20 @@ import {
   type Origin,
 } from "@ggd/shared/content/statNormalization";
 import type { AbilityTemplateCard, TemplateDoc } from "@ggd/shared/content";
-import { defaultParamsFor } from "@ggd/shared/content";
+import {
+  DEFAULT_TEMPLATE_CONFLICT,
+  defaultParamsFor,
+  GGD_PER_WC3,
+  paramsSchemaFor,
+  round2,
+  zAbilityDoc,
+} from "@ggd/shared/content";
+import {
+  denormalizeTemplateBinding,
+  expandStack,
+  mergeExpansion,
+} from "@ggd/shared/content/templates/expand";
+import { newAbilityTemplate } from "../collections";
 import recipeDoc from "./skill-type-recipes.json";
 
 export const FORGE_TIER_AXES = [
@@ -49,6 +62,7 @@ export interface SkillTypePreset {
   readonly templateIds: readonly string[];
   readonly tierDefaults: ForgeTierSelections;
   readonly cooldownShape: CooldownShape;
+  readonly defaultSlot?: "PASSIVE" | "Q" | "W" | "E" | "R" | "EX";
   /** Positive affinities evaluated against Main's current byOrigin table. */
   readonly statWeights: Readonly<Partial<Record<NormalizedStatKey, number>>>;
 }
@@ -79,6 +93,7 @@ export interface RankedSkillType {
   readonly recommendationScore: number | null;
   readonly recommendationReasons: readonly string[];
   readonly available: boolean;
+  readonly unavailableReasons: readonly string[];
 }
 
 /**
@@ -90,14 +105,18 @@ export function rankSkillTypes(
   origin: Origin | null,
   availableTemplateIds: ReadonlySet<string>,
   statConfig?: StatNormalizationRecommendationDoc | null,
+  recipeIssues: ReadonlyMap<string, readonly string[]> = new Map(),
 ): RankedSkillType[] {
   const sorted = SKILL_TYPE_PRESETS.map((skillType, stableIndex) => {
     const evidence = origin === null ? null : scoreForOrigin(skillType, origin, statConfig);
+    const unavailableReasons = recipeIssues.get(skillType.id) ?? [];
     return {
       preset: skillType,
       score: evidence?.score ?? null,
       reasons: evidence?.reasons ?? [],
-      available: skillType.templateIds.every((id) => availableTemplateIds.has(id)),
+      available: skillType.templateIds.every((id) => availableTemplateIds.has(id))
+        && unavailableReasons.length === 0,
+      unavailableReasons,
       stableIndex,
     };
   })
@@ -115,6 +134,67 @@ export function rankSkillTypes(
       ? ++recommendationRank
       : null,
   }));
+}
+
+/**
+ * Deterministic structural gate for the friendly recipe cards. An enabled
+ * template is not enough: its declared tier controls must have a real writable
+ * slot, its default params must parse, and the resulting ability must pass the
+ * same authoring schema used by save/import. This is deliberately Editor-side
+ * composition validation; it does not reimplement any Main effect primitive.
+ */
+export function skillTypeRecipeIssues(
+  preset: SkillTypePreset,
+  templates: ReadonlyMap<string, TemplateDoc>,
+): string[] {
+  const issues: string[] = [];
+  const missing = preset.templateIds.filter((id) => templates.get(id)?.status !== "enabled");
+  if (missing.length > 0) return missing.map((id) => `缺少可用積木 ${id}`);
+
+  const cards = cardsForSkillType(preset, templates);
+  const supported = supportedTierAxes(cards, templates);
+  for (const axis of Object.keys(preset.tierDefaults) as ForgeTierAxis[]) {
+    if (!supported.has(axis)) issues.push(`${FORGE_TIER_LABELS[axis]}沒有可寫入的模板參數`);
+  }
+  for (const card of cards) {
+    const parsed = paramsSchemaFor(templates.get(card.ref)!).safeParse(card.params);
+    if (!parsed.success) {
+      issues.push(...parsed.error.issues.map((issue) =>
+        `${card.ref}.${issue.path.join(".") || "params"}：${issue.message}`,
+      ));
+    }
+  }
+  if (issues.length > 0) return issues;
+
+  try {
+    const expanded = expandStack(
+      cards.map((card) => ({ template: templates.get(card.ref)!, params: card.params })),
+      DEFAULT_TEMPLATE_CONFLICT,
+    );
+    const slot = preset.defaultSlot ?? "Q";
+    const authoring = mergeExpansion({
+      schema: "ability@1",
+      ...newAbilityTemplate(`qa.recipe.${preset.id}`, slot, `QA ${preset.label}`),
+      template: denormalizeTemplateBinding(cards, DEFAULT_TEMPLATE_CONFLICT),
+      ...(preset.tierDefaults.mana ? { manaCostTier: preset.tierDefaults.mana } : {}),
+      ...(preset.tierDefaults.cooldown ? {
+        cooldownTier: preset.tierDefaults.cooldown,
+        cooldownShape: preset.cooldownShape,
+      } : {}),
+      ...(preset.tierDefaults.range ? { rangeTier: preset.tierDefaults.range } : {}),
+      ...(preset.tierDefaults.radius ? { radiusTier: preset.tierDefaults.radius } : {}),
+      ...(preset.tierDefaults.castTime ? { castTimeTier: preset.tierDefaults.castTime } : {}),
+    }, expanded.result);
+    const parsed = zAbilityDoc.safeParse(authoring);
+    if (!parsed.success) {
+      issues.push(...parsed.error.issues.map((issue) =>
+        `${issue.path.join(".") || "ability"}：${issue.message}`,
+      ));
+    }
+  } catch (error) {
+    issues.push(`模板展開失敗：${String(error)}`);
+  }
+  return issues;
 }
 
 function scoreForOrigin(
@@ -152,6 +232,10 @@ function parseRecipeDoc(raw: unknown): readonly SkillTypePreset[] {
       || !["單體", "範圍", "變身"].includes(String(row["cooldownShape"]))) {
       throw new Error(`skill-type-recipes.json recipes[${index}] 缺少必要欄位`);
     }
+    const defaultSlot = row["defaultSlot"];
+    if (defaultSlot !== undefined && !["PASSIVE", "Q", "W", "E", "R", "EX"].includes(String(defaultSlot))) {
+      throw new Error(`skill-type-recipes.json ${row["id"]} 的 defaultSlot 不合法`);
+    }
     if (ids.has(row["id"])) throw new Error(`skill-type-recipes.json 重複 id: ${row["id"]}`);
     ids.add(row["id"]);
     const tiers = record(row["tierDefaults"]) ?? {};
@@ -173,6 +257,7 @@ function parseRecipeDoc(raw: unknown): readonly SkillTypePreset[] {
       summary: row["summary"],
       templateIds: row["templateIds"].map(String),
       cooldownShape: row["cooldownShape"] as CooldownShape,
+      ...(defaultSlot === undefined ? {} : { defaultSlot: defaultSlot as SkillTypePreset["defaultSlot"] }),
       tierDefaults: tiers as ForgeTierSelections,
       statWeights: weights as Partial<Record<NormalizedStatKey, number>>,
     };
@@ -195,6 +280,7 @@ export function applyTierToCards(
   templates: ReadonlyMap<string, TemplateDoc>,
   axis: ForgeTierAxis,
   tier: SkillTierName,
+  resolvedValue: number | null = null,
 ): AbilityTemplateCard[] {
   return cards.map((card) => {
     const template = templates.get(card.ref);
@@ -205,8 +291,13 @@ export function applyTierToCards(
       const slot = template.params[param];
       const current = next[param];
       if (slot?.type === "scaling") {
-        if (axis !== "damage" || !hasDamageTier(current)) continue;
-        next[param] = { ...(current as Record<string, unknown>), damageTier: tier };
+        if (axis !== "damage") continue;
+        next[param] = tieredScaling(current, tier);
+      } else if (slot?.type === "statModifiers" && axis === "moveSpeed") {
+        next[param] = withMoveSpeedTier(current, tier);
+      } else if (resolvedValue !== null && tierAxisForNumericParam(param) === axis) {
+        const raw = slot?.unit === "wc3u" ? round2(resolvedValue / GGD_PER_WC3) : resolvedValue;
+        next[param] = Math.min(slot?.max ?? raw, Math.max(slot?.min ?? raw, raw));
       } else {
         if (tierAxisForParam(param) !== axis) continue;
         next[param] = tier;
@@ -227,10 +318,10 @@ export function supportedTierAxes(
     if (!template) continue;
     for (const param of Object.keys(template.params)) {
       const slot = template.params[param];
-      const axis = slot?.type === "scaling" && hasDamageTier(card.params[param])
-        ? "damage"
-        : tierAxisForParam(param);
-      if (axis) axes.add(axis);
+      if (slot?.type === "scaling") axes.add("damage");
+      if (slot?.type === "statModifiers") axes.add("moveSpeed");
+      const axis = tierAxisForParam(param) ?? tierAxisForNumericParam(param);
+      if (axis !== null) axes.add(axis);
     }
   }
   return axes;
@@ -248,18 +339,47 @@ function seedTierParams(
       // This is a NEW recipe draft, not a conversion of the host ability. Keep
       // authored growth coefficients, while the base amount gets its one
       // canonical source from config.damage-tiers@1.
-      const current = record(out[param]);
-      out[param] = {
-        damageTier: tiers.damage,
-        ...(Array.isArray(current?.["ratios"]) ? { ratios: current["ratios"] } : {}),
-        ...(Array.isArray(current?.["attrRatios"]) ? { attrRatios: current["attrRatios"] } : {}),
-      };
+      out[param] = tieredScaling(out[param], tiers.damage);
+      continue;
+    }
+    if (slot?.type === "statModifiers" && tiers.moveSpeed) {
+      out[param] = withMoveSpeedTier(out[param], tiers.moveSpeed);
       continue;
     }
     const axis = tierAxisForParam(param);
     if (axis && tiers[axis]) out[param] = tiers[axis];
   }
   return out;
+}
+
+function tierAxisForNumericParam(param: string): ForgeTierAxis | null {
+  const key = param.toLocaleLowerCase();
+  if (key === "dashdistance") return "travel";
+  if (key === "pushdistance") return "push";
+  if (key === "internalcooldown") return "cooldown";
+  return null;
+}
+
+function tieredScaling(value: unknown, tier: SkillTierName): Record<string, unknown> {
+  const current = record(value);
+  return {
+    damageTier: tier,
+    ...(Array.isArray(current?.["ratios"]) ? { ratios: current["ratios"] } : {}),
+    ...(Array.isArray(current?.["attrRatios"]) ? { attrRatios: current["attrRatios"] } : {}),
+  };
+}
+
+function withMoveSpeedTier(value: unknown, tier: SkillTierName): unknown[] {
+  const rows = Array.isArray(value) ? value : [];
+  let replaced = false;
+  const next = rows.map((row) => {
+    const modifier = record(row);
+    if (modifier?.["stat"] !== "ms" || !["pctAdd", "pctMult"].includes(String(modifier["op"]))) return row;
+    replaced = true;
+    const { value: _drop, ...rest } = modifier;
+    return { ...rest, msBonusTier: tier };
+  });
+  return replaced ? next : [...next, { stat: "ms", op: "pctAdd", msBonusTier: tier }];
 }
 
 export function tierAxisForParam(param: string): ForgeTierAxis | null {
@@ -284,8 +404,4 @@ function record(value: unknown): Record<string, unknown> | null {
   return value !== null && typeof value === "object" && !Array.isArray(value)
     ? value as Record<string, unknown>
     : null;
-}
-
-function hasDamageTier(value: unknown): boolean {
-  return isSkillTierName(record(value)?.["damageTier"]);
 }

@@ -52,6 +52,7 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
   });
   it("批次驗收隔離八招 fixture，不把既有 runtime 美術疊在玩家積木成品下方", () => {
     const page = readFileSync(new URL("./VfxForgePage.tsx", import.meta.url), "utf8");
+    const proofAutomation = readFileSync(new URL("./proofAutomation.ts", import.meta.url), "utf8");
     expect(page).toContain('row.vfxFixture ? "script" : "runtime"');
     expect(page).toContain("captureDiagnosticEvidenceAt");
     expect(page).toContain('issueClassifier: "ggd-editor-visual-issue-rules@1"');
@@ -64,7 +65,9 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
     expect(page).toContain("寫入本機驗收器");
     expect(page).toContain('<details className="vfx-basic-batch" open>');
     expect(page).toContain("sendBasicVisualProofToLoopback");
-    expect(page).toContain('sink.hostname !== "127.0.0.1"');
+    expect(page).toContain("proofSinkFromSearch");
+    expect(proofAutomation).toContain('sink.protocol !== "http:"');
+    expect(proofAutomation).toContain('sink.hostname !== "127.0.0.1" && sink.hostname !== "localhost"');
     expect(page).toContain('row.status === "failed" || row.humanVerdict === "fail"');
   });
 
