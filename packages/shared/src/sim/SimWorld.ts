@@ -793,6 +793,22 @@ export class SimWorld {
   oneShotClamp: ConfigOneShotClampDoc = SHIPPED_ONE_SHOT_CLAMP;
 
   /**
+   * ⭐⭐ **每個座位的劣勢度 D ∈ [0,1]**（GH#897）—— 與 `combatEnv` 同一個形狀：
+   * host 在每回合開始時指派，⛔ sim 自己不算（它算不到跨回合的勝場與裝備價值）。
+   *
+   * owner 2026-09-01（逐字）：
+   * > 「隨機能力20次後的額外%加成，根據玩家目前**排名&積分**來做權重調整，
+   * >  也就是**越排後的玩家額外%加成越高**，讓劣勢方有機會翻盤」
+   *
+   * ⭐ D 的算法**重用出貨的** `disadvantageScore()`（`economy/weaponTiers.ts`）——
+   * ⛔ 這裡不再寫第二套：那一支已經吃三格後台權重（回合差 · 裝備價值差 · 近況），
+   * 而 `MatchController` 早就在為武器階級算同一個值。
+   *
+   * ⚠️ **空的 Map ⇒ 每個人都是 0 ⇒ 逐位元回到今天**（單元測試與客戶端預測都走這條）。
+   */
+  seatDisadvantage: Map<EntityId, number> = new Map();
+
+  /**
    * 基礎加成 (see baseBonus.ts) — flat grants added AFTER `combatEnv` scales
    * the stat, so a 3× health multiplier does not also triple the gift.
    * owner 2026-07-28:「並且不參與倍率計算」.
@@ -1509,6 +1525,8 @@ export class SimWorld {
     // entityId inheriting it spawns hovering, and the digest folds `airborne`
     // in whenever it is PRESENT — so the stale entry is a desync source too.
     this.airborne.delete(id);
+    // ⭐ GH#897 —— 逐實體，所以 destroy 要清（`destroyClearsEntityStores` 在守）。
+    this.seatDisadvantage.delete(id);
     // task #215: a recycled entityId must never inherit a stale mob marker or
     // kill counter (mobKills is keyed by CHAMPION id, but registering it here is
     // the same defensive contract every other per-entity store follows).

@@ -242,7 +242,22 @@ export function grantCapstone(world: SimWorld, id: EntityId): number {
   // drift apart (owner 2026-07-26: 「提高下限 60~150%」, was 10~100 = a 1-in-10
   // shot at an actual doubling for a 7,500-gold, six-round, all-or-nothing path).
   const step = (CAPSTONE_MAX_PCT - CAPSTONE_MIN_PCT) / (CAPSTONE_STEPS - 1);
-  const pct = CAPSTONE_MIN_PCT + world.rng.int(CAPSTONE_STEPS) * step;
+  const rolled = CAPSTONE_MIN_PCT + world.rng.int(CAPSTONE_STEPS) * step;
+  // ⭐⭐ **劣勢加權**（GH#897）—— owner 2026-09-01 逐字：
+  //   「⋯根據玩家目前**排名&積分**來做權重調整，也就是**越排後的玩家額外%加成越高**，
+  //    讓劣勢方有機會翻盤」
+  //
+  // ⭐ **位置是承重的：抽完之後才乘。**
+  //   ⛔ 乘在 `world.rng.int()` 之前會改變**抽籤本身**（同一個種子抽出不同的格），
+  //   ⇒ 每一份既有的錄影重播當場對不上（determinism）。
+  //   ⭐ 乘在結果上 ⇒ 抽籤逐位元不變，變的只是那一發的量值。
+  //
+  // ⭐ D 由 host 每回合算好放進 `world.seatDisadvantage`，
+  //   而它用的是**出貨的** `disadvantageScore()`（⛔ 這裡不寫第二套劣勢公式）。
+  // ⚠️ ⭐ 出貨 `capstoneDisadvantageFactor` 是 **0** ⇒ 這幾行今天逐位元 no-op。
+  const factor = economyRules(world).capstoneDisadvantageFactor;
+  const d = factor > 0 ? (world.seatDisadvantage.get(id) ?? 0) : 0;
+  const pct = d > 0 ? rolled * (1 + factor * d) : rolled;
   champ.statCapstonePct = pct;
   attachSource(world, id, {
     id: `stat:capstone`,
