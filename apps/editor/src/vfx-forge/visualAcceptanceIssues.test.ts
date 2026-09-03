@@ -5,6 +5,27 @@ const codes = (blockers: readonly string[], status: "captured" | "blocked" | "fa
   classifyVisualAcceptanceIssues({ status, blockers }).map((issue) => issue.code);
 
 describe("46 技能視覺驗收自動根因分類", () => {
+  it("時間軸掃描漏掉但證據格判定不安全時仍路由 framebuffer blocker", () => {
+    const issueCodes = classifyVisualAcceptanceIssues({
+      status: "failed",
+      blockers: [],
+      frames: [{ frameAudit: {
+        litShare: 0.17,
+        presentationPixelShare: 0.24,
+        highlightShare: 0.03,
+        brightShare: 0.001,
+        nearWhiteShare: 0,
+        dominantBrightShare: 0,
+        dominantNonBackgroundShare: 0.04,
+        localWhiteCardShare: 0,
+        diagnosticCheckerShare: 0,
+        unsafe: true,
+        reason: "疑似大面積不透明模型／貼圖載體",
+      } }],
+    }).map((issue) => issue.code);
+    expect(issueCodes).toContain("FRAMEBUFFER_CARRIER");
+  });
+
   it("把已知 framebuffer、角色、事件與逾時失敗交給固定規則", () => {
     expect(codes(["局部紅／紫棋盤載體佔畫面 0.1%"])).toContain("FRAMEBUFFER_CARRIER");
     expect(codes(["單一高亮色塊覆蓋 68.0%，疑似模型／貼圖底板"]))
@@ -16,6 +37,8 @@ describe("46 技能視覺驗收自動根因分類", () => {
       .toContain("ACTOR_NOT_VISIBLE");
     expect(codes(["機器契約缺少可重用事件 onEvade"], "blocked"))
       .toContain("UNSUPPORTED_EVENT_BRICK");
+    expect(codes(["Main 缺少可調長寬、透明安全且不依賴 host bone 的連續實心光束積木"], "captured"))
+      .toContain("MISSING_VISUAL_BRICK");
     expect(codes(["20 秒內未能完成載入／真 Sim／素材收據"]))
       .toEqual(expect.arrayContaining(["CAPTURE_TIMEOUT", "SIM_PREVIEW"]));
   });

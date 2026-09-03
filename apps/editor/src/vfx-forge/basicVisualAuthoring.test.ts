@@ -68,6 +68,21 @@ describe("42 主題／46 技能的基本視覺自動組裝", () => {
     }));
   });
 
+  it("骨骼錨定 VFX 不會被當成 standalone 世界座標積木，並留下 fallback 收據", () => {
+    const anchored = "fx.w3x.particle.example.p00";
+    const result = buildBasicVisualDraft(
+      { id: "sample.e", slot: "E", castType: "targeted", vfxKey: anchored },
+      [],
+      { standaloneIneligibleVfxIds: new Set([anchored]) },
+    );
+    expect(result.visualSource).toBe("safe-generic");
+    expect(result.fallbackFromVfxId).toBe(anchored);
+    expect(result.selectedVfxId).toBe("fx.prim.arcane.pulse");
+    expect(result.script?.segments).toContainEqual(expect.objectContaining({
+      kind: "vfx", vfxId: "fx.prim.arcane.pulse", at: "target",
+    }));
+  });
+
   it("批次真的播放 Editor 組出的主動技腳本；被動 hook 保留真 runtime 路徑", () => {
     const active = ability("godie-hapm.w");
     const activeBasic = buildBasicVisualDraft(active);

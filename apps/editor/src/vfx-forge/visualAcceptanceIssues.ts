@@ -8,6 +8,7 @@ export type VisualAcceptanceIssueCode =
   | "ACTOR_NOT_VISIBLE"
   | "APPEARANCE_STAND_IN"
   | "UNSUPPORTED_EVENT_BRICK"
+  | "MISSING_VISUAL_BRICK"
   | "ACTION_TIMELINE"
   | "REPLACEMENT_POLICY"
   | "SIM_PREVIEW"
@@ -54,7 +55,8 @@ export function classifyVisualAcceptanceIssues(
 
   if (
     /紅[／/]紫棋盤|透明底板外露|未去背貼圖|白色底板|不安全的貼圖底板|單一(?:高亮|非背景)色塊|高亮像素/u.test(text) ||
-    input.audit?.worst.unsafe === true
+    input.audit?.worst.unsafe === true ||
+    frameAudits.some((frame) => frame.unsafe)
   ) {
     add({
       code: "FRAMEBUFFER_CARRIER",
@@ -115,6 +117,15 @@ export function classifyVisualAcceptanceIssues(
       owner: "main",
       summary: "Main 機器契約真的缺少可重用且帶來源資訊的 runtime 事件積木",
       nextAction: "Main 補權威事件與 provenance；Editor 再接時間軸選項，禁止用假 cast 代替。",
+    });
+  }
+  if (/Main 缺少.*(?:連續實心光束|視覺積木)|missing visual brick/iu.test(text)) {
+    add({
+      code: "MISSING_VISUAL_BRICK",
+      severity: "blocker",
+      owner: "main",
+      summary: "現有 Main primitive 無法組出驗收指定的視覺文法",
+      nextAction: "Main 提供可重用、透明安全且具必要尺寸／方向參數的 primitive；Editor 只負責用積木排時間軸與配色，不能以每招專用資產或粒子珠串假裝完成。",
     });
   }
   if (/ACTION_|角色動作|攻擊動作|傷害節點.*動畫|位移節點.*動畫/u.test(text)) {

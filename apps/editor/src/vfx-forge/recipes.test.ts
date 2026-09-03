@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { zVfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
-import { CLASSIC_BEAM_MODEL_KEY, abilityUsesModel, buildVfxForgeRecipe } from "./recipes";
+import {
+  CLASSIC_BEAM_MODEL_KEY,
+  CLASSIC_BEAM_VISUAL_GAP,
+  abilityUsesModel,
+  buildVfxForgeRecipe,
+} from "./recipes";
 
 const activeRecipe = (id: Parameters<typeof buildVfxForgeRecipe>[0], options: Omit<Parameters<typeof buildVfxForgeRecipe>[1], "activationMode"> = {}) =>
   buildVfxForgeRecipe(id, { ...options, activationMode: "active" });
@@ -16,6 +21,7 @@ describe("VFX Forge editor-side recipes", () => {
     expect(Math.max(...particles.map((segment) => segment.w3xScale ?? 0))).toBeLessThanOrEqual(3.2);
     expect(Math.max(...particles.map((segment) => segment.alpha ?? 0))).toBeLessThanOrEqual(0.72);
     expect(particles.filter((segment) => segment.vfxId.includes("beam")).every((segment) => segment.timeScale === 1)).toBe(true);
+    expect(CLASSIC_BEAM_VISUAL_GAP).toContain("連續實心光束積木");
   });
 
   it.each([
@@ -57,6 +63,12 @@ describe("VFX Forge editor-side recipes", () => {
     }));
     expect(segments).toContainEqual(expect.objectContaining({
       kind: "anim", at: "caster", pulse: "attack",
+    }));
+    expect(segments.filter((segment) =>
+      segment.kind === "vfx" && segment.vfxId.endsWith(".arc"),
+    )).toHaveLength(1);
+    expect(segments).toContainEqual(expect.objectContaining({
+      kind: "vfx", vfxId: "fx.prim.void.pulse-sm", at: "target",
     }));
   });
 

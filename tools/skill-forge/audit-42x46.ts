@@ -53,6 +53,7 @@ interface VisualProofEntry {
   readonly humanNote?: unknown;
   readonly frames?: unknown;
   readonly machineIssues?: unknown;
+  readonly basicVisualFallback?: unknown;
 }
 
 const capabilities = json<{
@@ -119,6 +120,9 @@ const rows = SKILL_ACCEPTANCE_CANDIDATES.map((candidate) => {
           : [];
       })
     : [];
+  const basicVisualFallback = proof?.basicVisualFallback && typeof proof.basicVisualFallback === "object"
+    ? proof.basicVisualFallback as Record<string, unknown>
+    : null;
   const designerPath = templateRefs.length > 0
     ? "template-product"
     : preset
@@ -157,6 +161,7 @@ const rows = SKILL_ACCEPTANCE_CANDIDATES.map((candidate) => {
       humanScore,
       humanNote,
       machineIssues,
+      basicVisualFallback,
     },
     authoringBlockers,
     status: batchStatus === "failed"
@@ -190,6 +195,7 @@ const summary = {
   scriptTimelineGaps: [...new Set(rows.flatMap((row) => row.scriptTimelineGaps))].sort(),
   machineIssueCounts: countBy(rows.flatMap((row) => row.framebuffer.machineIssues.map((issue) => issue.code))),
   machineIssueOwnerCounts: countBy(rows.flatMap((row) => row.framebuffer.machineIssues.map((issue) => issue.owner))),
+  basicVisualFallbacks: rows.filter((row) => row.framebuffer.basicVisualFallback !== null).length,
 };
 
 if (summary.themes !== 42 || summary.documents !== 46) {
@@ -279,12 +285,13 @@ function markdown(value: typeof receipt): string {
     `- GPU 批次：已擷取 ${s.gpuCaptured}；畫面守衛失敗 ${s.gpuFailed}；契約／素材阻塞 ${s.gpuBlocked}`,
     `- 自動根因：${formatCounts(s.machineIssueCounts)}`,
     `- 自動分工：${formatCounts(s.machineIssueOwnerCounts)}`,
+    `- 基本視覺安全替代：${s.basicVisualFallbacks} 份（只替換 Editor baseline，不改原技能綁定）`,
     `- VFX Script 直接時間軸未涵蓋（不是 Main 阻塞；由 Skill Forge 效果圖綁定）：${s.scriptTimelineGaps.length ? s.scriptTimelineGaps.join("、") : "無"}`,
     "",
     "| 技能 | 主題 | 設計師路徑 | 事件演出 | 畫面證據 | 自動根因 | 狀態 |",
     "|---|---|---|---|---|---|---|",
     ...value.rows.map((row) =>
-      `| \`${row.id}\` ${row.name} | \`${row.themeId}\` | ${row.designerPath}${row.presetId ? `（${row.presetId}）` : ""} | ${row.noCodeEventAuthoring}${row.scriptTimelineGaps.length ? `；script 時間軸：${row.scriptTimelineGaps.join("、")}` : ""} | ${row.framebuffer.batchStatus}／${row.framebuffer.frameCount} 格／${row.framebuffer.humanVerdict}${row.framebuffer.humanScore === null ? "" : `／${row.framebuffer.humanScore}分`} | ${row.framebuffer.machineIssues.map((issue) => `${issue.code}/${issue.owner}`).join("、") || "—"} | **${row.status}** |`,
+      `| \`${row.id}\` ${row.name} | \`${row.themeId}\` | ${row.designerPath}${row.presetId ? `（${row.presetId}）` : ""}${formatFallback(row.framebuffer.basicVisualFallback)} | ${row.noCodeEventAuthoring}${row.scriptTimelineGaps.length ? `；script 時間軸：${row.scriptTimelineGaps.join("、")}` : ""} | ${row.framebuffer.batchStatus}／${row.framebuffer.frameCount} 格／${row.framebuffer.humanVerdict}${row.framebuffer.humanScore === null ? "" : `／${row.framebuffer.humanScore}分`} | ${row.framebuffer.machineIssues.map((issue) => `${issue.code}/${issue.owner}`).join("、") || "—"} | **${row.status}** |`,
     ),
     "",
     "## 判定邊界",
@@ -305,6 +312,11 @@ function countBy(values: readonly string[]): Record<string, number> {
 function formatCounts(values: Readonly<Record<string, number>>): string {
   const entries = Object.entries(values);
   return entries.length > 0 ? entries.map(([key, count]) => `${key} ${count}`).join("、") : "尚無瀏覽器證據";
+}
+
+function formatFallback(value: Readonly<Record<string, unknown>> | null): string {
+  if (!value) return "";
+  return `；安全替代 \`${String(value.fromVfxId)}\` → \`${String(value.toVfxId)}\``;
 }
 
 function taipeiMinute(): string {

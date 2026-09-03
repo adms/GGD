@@ -1,0 +1,537 @@
+{
+  "schema": "ggd-editor-skill-contact-sheets@1",
+  "authority": "review-convenience-only",
+  "documents": 46,
+  "rows": [
+    {
+      "id": "godie-hart.r",
+      "frameCount": 8,
+      "timesMs": [
+        180,
+        1180,
+        2080,
+        2280,
+        2480,
+        2680,
+        2880,
+        4680
+      ],
+      "sourceDigest": "72cc967f0a367d206fc4c8c49e08da00b08e72855f887ed54d9c9b9f9590845b",
+      "file": "sheets/godie-hart.r.png"
+    },
+    {
+      "id": "godie-hjai.e",
+      "frameCount": 7,
+      "timesMs": [
+        180,
+        1180,
+        1348,
+        1516,
+        1680,
+        1780,
+        1980
+      ],
+      "sourceDigest": "1f333483afecf599c71ccc85ba972b05a42ff24319f4acc97004ba2f5098afc3",
+      "file": "sheets/godie-hjai.e.png"
+    },
+    {
+      "id": "godie-h020.e",
+      "frameCount": 7,
+      "timesMs": [
+        180,
+        1180,
+        1348,
+        1516,
+        1680,
+        1780,
+        1980
+      ],
+      "sourceDigest": "7742da610dd29c7dfb30b4aa8ad869f4ab114ff4a9020fc11e8aa751250ee3b5",
+      "file": "sheets/godie-h020.e.png"
+    },
+    {
+      "id": "godie-hjai.r",
+      "frameCount": 3,
+      "timesMs": [
+        180,
+        1180,
+        1550
+      ],
+      "sourceDigest": "7dd1fc22a03afe02f1c162ab237cf8e97421b772958d534c440825a3862fe122",
+      "file": "sheets/godie-hjai.r.png"
+    },
+    {
+      "id": "godie-nbbc.r",
+      "frameCount": 5,
+      "timesMs": [
+        180,
+        1013,
+        1343,
+        1443,
+        1663
+      ],
+      "sourceDigest": "8c4235a3bbd83378f3276cfa268f2c63a7401fa5dfc87489bb39dab3872cf7eb",
+      "file": "sheets/godie-nbbc.r.png"
+    },
+    {
+      "id": "godie-nbbc.e",
+      "frameCount": 4,
+      "timesMs": [
+        180,
+        1180,
+        1610,
+        1811
+      ],
+      "sourceDigest": "08847a7f2f09d140ac5a7155de04d9246a12b7efd2e123a6d5aa5c0d80ef5840",
+      "file": "sheets/godie-nbbc.e.png"
+    },
+    {
+      "id": "godie-ogrh.r",
+      "frameCount": 4,
+      "timesMs": [
+        180,
+        1013,
+        1443,
+        1644
+      ],
+      "sourceDigest": "9c9d574ac5dcdda1d8107e4bdecd67584dd77b390f4ee762545436e1ae5b1e61",
+      "file": "sheets/godie-ogrh.r.png"
+    },
+    {
+      "id": "godie-o00x.r",
+      "frameCount": 4,
+      "timesMs": [
+        180,
+        1013,
+        1443,
+        1644
+      ],
+      "sourceDigest": "98ec099c3576caefe40db2b72b7a75cef11211fb9122435e02d562a9ce307ece",
+      "file": "sheets/godie-o00x.r.png"
+    },
+    {
+      "id": "godie-e002.ex",
+      "frameCount": 9,
+      "timesMs": [
+        313,
+        447,
+        580,
+        713,
+        847,
+        980,
+        1113,
+        1293,
+        1393
+      ],
+      "sourceDigest": "57a1017ced92ff09dcffce0cd55f470e99c598da447ab210bea9ac76bff5ef3b",
+      "file": "sheets/godie-e002.ex.png"
+    },
+    {
+      "id": "godie-e00l.r",
+      "frameCount": 3,
+      "timesMs": [
+        180,
+        847,
+        980
+      ],
+      "sourceDigest": "fb5a844c804c1845a154e33c7fed228c6cbf9d014c423f3d9137e984f859afe4",
+      "file": "sheets/godie-e00l.r.png"
+    },
+    {
+      "id": "godie-e00l.ex",
+      "frameCount": 9,
+      "timesMs": [
+        313,
+        447,
+        580,
+        713,
+        847,
+        980,
+        1113,
+        1293,
+        1393
+      ],
+      "sourceDigest": "8e1774eec1cb01f10dc43039edc8f4f525d6b8bc315229b40e72e436d8ba3816",
+      "file": "sheets/godie-e00l.ex.png"
+    },
+    {
+      "id": "godie-hvsh.r",
+      "frameCount": 4,
+      "timesMs": [
+        180,
+        1180,
+        1610,
+        1830
+      ],
+      "sourceDigest": "0daa343d36ec3e46c32caf19a62165e318e27ba44ddcfd19d5b7d9eac7c76df1",
+      "file": "sheets/godie-hvsh.r.png"
+    },
+    {
+      "id": "godie-hvwd.e",
+      "frameCount": 2,
+      "timesMs": [
+        180,
+        1180
+      ],
+      "sourceDigest": "04026cabeb185677cba10c5d2aa64ca76ab6e809644d3557607281f91083a316",
+      "file": "sheets/godie-hvwd.e.png"
+    },
+    {
+      "id": "godie-o00k.e",
+      "frameCount": 2,
+      "timesMs": [
+        180,
+        1180
+      ],
+      "sourceDigest": "48f8f3363bbc6e3a4aabb0bb62a732275e3fa402d4e4e944d9c630ec89130ab0",
+      "file": "sheets/godie-o00k.e.png"
+    },
+    {
+      "id": "godie-hjai.w",
+      "frameCount": 7,
+      "timesMs": [
+        180,
+        1180,
+        2180,
+        3180,
+        4180,
+        5180,
+        6180
+      ],
+      "sourceDigest": "a2f7c09c5a2705bd931347819b3a35a7edb0e4269fb2216908ceda5515d73467",
+      "file": "sheets/godie-hjai.w.png"
+    },
+    {
+      "id": "godie-nbbc.w",
+      "frameCount": 2,
+      "timesMs": [
+        180,
+        1013
+      ],
+      "sourceDigest": "399fd748329d9d444101d4e90b12fb1b3cc377ee71388f167c5030662e0a917d",
+      "file": "sheets/godie-nbbc.w.png"
+    },
+    {
+      "id": "godie-u00v.r",
+      "frameCount": 2,
+      "timesMs": [
+        180,
+        847
+      ],
+      "sourceDigest": "71f57451965384a1673ce4d922996bfae015e10c56bbd49e3572ca461c40294e",
+      "file": "sheets/godie-u00v.r.png"
+    },
+    {
+      "id": "godie-hapm.w",
+      "frameCount": 2,
+      "timesMs": [
+        180,
+        1013
+      ],
+      "sourceDigest": "aa9bde767648199829f307f92b4db4219d22ad8c59a9549cffc1e52a56f96142",
+      "file": "sheets/godie-hapm.w.png"
+    },
+    {
+      "id": "godie-e001.r",
+      "frameCount": 2,
+      "timesMs": [
+        180,
+        847
+      ],
+      "sourceDigest": "949b956d0c1bc77f4008ea301a260798b5de197d83f6aea55071e7df49853651",
+      "file": "sheets/godie-e001.r.png"
+    },
+    {
+      "id": "godie-e00s.w",
+      "frameCount": 2,
+      "timesMs": [
+        613,
+        553
+      ],
+      "sourceDigest": "fb293f4a46190ec077b9ae2672c557c1ec41155342ece6341f16ef3e78e2714c",
+      "file": "sheets/godie-e00s.w.png"
+    },
+    {
+      "id": "godie-etyr.r",
+      "frameCount": 2,
+      "timesMs": [
+        180,
+        847
+      ],
+      "sourceDigest": "1ef02a3c6b4af1e14749e342e3a683eb8465bc40989d38e55b26715d10adb5e4",
+      "file": "sheets/godie-etyr.r.png"
+    },
+    {
+      "id": "godie-ogld.ex",
+      "frameCount": 2,
+      "timesMs": [
+        180,
+        1180
+      ],
+      "sourceDigest": "f8a305615163da6b23c45b5fb0a125e995ddfc5134217d2e21876a03506fb597",
+      "file": "sheets/godie-ogld.ex.png"
+    },
+    {
+      "id": "godie-udea.r",
+      "frameCount": 5,
+      "timesMs": [
+        180,
+        847,
+        1074,
+        1244,
+        1457
+      ],
+      "sourceDigest": "75e77fb158950ddece4137856a8c5316d530d92e896dbece7955c640595d396d",
+      "file": "sheets/godie-udea.r.png"
+    },
+    {
+      "id": "godie-h01n.r",
+      "frameCount": 4,
+      "timesMs": [
+        180,
+        847,
+        1027,
+        1267
+      ],
+      "sourceDigest": "4dda256a580253855c8213565aa5061348369d70154b2452d2c381e3037373c6",
+      "file": "sheets/godie-h01n.r.png"
+    },
+    {
+      "id": "godie-h00l.r",
+      "frameCount": 3,
+      "timesMs": [
+        180,
+        847,
+        980
+      ],
+      "sourceDigest": "bdf74fee7aa5ca9e52d579c35c101d54aea6ac53e13c4beb1fe0b3a279246036",
+      "file": "sheets/godie-h00l.r.png"
+    },
+    {
+      "id": "godie-hvsh.e",
+      "frameCount": 2,
+      "timesMs": [
+        180,
+        1180
+      ],
+      "sourceDigest": "d01644b84d56f02b5f9973bf87de2018975fd035311c15a48f0ad4d1995643dd",
+      "file": "sheets/godie-hvsh.e.png"
+    },
+    {
+      "id": "godie-n00b.passive",
+      "frameCount": 2,
+      "timesMs": [
+        180,
+        1180
+      ],
+      "sourceDigest": "dc6548ddfd7f5012cb0eefb45567f647ffe98fe0de2f971abbdd8e5efc417eeb",
+      "file": "sheets/godie-n00b.passive.png"
+    },
+    {
+      "id": "godie-e00r.ex",
+      "frameCount": 8,
+      "timesMs": [
+        180,
+        447,
+        580,
+        713,
+        980,
+        1280,
+        1480,
+        1647
+      ],
+      "sourceDigest": "288967641af7411360e7138e00dc5818516f50d23416c947cd0a671ef1c622d5",
+      "file": "sheets/godie-e00r.ex.png"
+    },
+    {
+      "id": "godie-e00s.ex",
+      "frameCount": 4,
+      "timesMs": [
+        180,
+        713,
+        1347,
+        1613
+      ],
+      "sourceDigest": "eaa1d4677a92f074f16db04cffe93eeaa3d684cc5d16eaa3c7cc81e4e328322a",
+      "file": "sheets/godie-e00s.ex.png"
+    },
+    {
+      "id": "godie-e00w.passive",
+      "frameCount": 2,
+      "timesMs": [
+        547,
+        487
+      ],
+      "sourceDigest": "008f7e2796efa8f470acf710c7d6b90668e63ec179beb92623e222b299d14448",
+      "file": "sheets/godie-e00w.passive.png"
+    },
+    {
+      "id": "godie-edem.r",
+      "frameCount": 3,
+      "timesMs": [
+        180,
+        847,
+        1013
+      ],
+      "sourceDigest": "fed762b0224f96d5c883c96430ac60aed0546ff53ece96b9d2a6174436dbb7b6",
+      "file": "sheets/godie-edem.r.png"
+    },
+    {
+      "id": "godie-emfr.e",
+      "frameCount": 2,
+      "timesMs": [
+        180,
+        447
+      ],
+      "sourceDigest": "08d1cf7ca6c29b24850c670a38ff3bbea2b3d0cad705a93f78db2485cce647fe",
+      "file": "sheets/godie-emfr.e.png"
+    },
+    {
+      "id": "godie-nbbc.passive",
+      "frameCount": 3,
+      "timesMs": [
+        180,
+        913,
+        1680
+      ],
+      "sourceDigest": "a658b88eaec59c2a474a1d9624617045eb0c5d73d958a984933f84147b3bd0dc",
+      "file": "sheets/godie-nbbc.passive.png"
+    },
+    {
+      "id": "godie-e00l.passive",
+      "frameCount": 2,
+      "timesMs": [
+        180,
+        580
+      ],
+      "sourceDigest": "8c6ebb3463d2e1e0807485e161cbc996fdaf6fa9fcc4cf81aa0f6781c171037e",
+      "file": "sheets/godie-e00l.passive.png"
+    },
+    {
+      "id": "godie-e00r.q",
+      "frameCount": 2,
+      "timesMs": [
+        180,
+        120
+      ],
+      "sourceDigest": "f4acd2d31149623dd32475ceec9387c2e7ef9c297c39b6a7f561589b50d60288",
+      "file": "sheets/godie-e00r.q.png"
+    },
+    {
+      "id": "godie-e00s.r",
+      "frameCount": 2,
+      "timesMs": [
+        180,
+        1180
+      ],
+      "sourceDigest": "9efaa5b6783862059a10eb91c987067851cd04d473830365e4e02e8e5d477e1c",
+      "file": "sheets/godie-e00s.r.png"
+    },
+    {
+      "id": "godie-h02k.ex",
+      "frameCount": 2,
+      "timesMs": [
+        180,
+        413
+      ],
+      "sourceDigest": "ece4a254b776d98e1e60044ec20de4e6deeb189a2ce2cda5db4b306bfbb29a78",
+      "file": "sheets/godie-h02k.ex.png"
+    },
+    {
+      "id": "godie-edem.e",
+      "frameCount": 2,
+      "timesMs": [
+        180,
+        120
+      ],
+      "sourceDigest": "31e1e9e1a19e72eb1395bab5ce190a4f69d5d1a9b991c1af72b9865f65c0abfe",
+      "file": "sheets/godie-edem.e.png"
+    },
+    {
+      "id": "godie-edem.ex",
+      "frameCount": 2,
+      "timesMs": [
+        180,
+        1180
+      ],
+      "sourceDigest": "fe524a4ca1fc9f8b29b5da2e6b8e49f8e228a63a7a5d2a1e4999c6fb7709ff32",
+      "file": "sheets/godie-edem.ex.png"
+    },
+    {
+      "id": "godie-efur.passive",
+      "frameCount": 2,
+      "timesMs": [
+        547,
+        1680
+      ],
+      "sourceDigest": "f64ec8dc017eaaed6c7763024414e641ad88b780e9337bcab3756f63b6da2f29",
+      "file": "sheets/godie-efur.passive.png"
+    },
+    {
+      "id": "godie-emfr.ex",
+      "frameCount": 2,
+      "timesMs": [
+        180,
+        1180
+      ],
+      "sourceDigest": "84404c76e47c167d1239be095cd8795fae4d44e57d106ec564074033ec1ff80d",
+      "file": "sheets/godie-emfr.ex.png"
+    },
+    {
+      "id": "godie-emns.ex",
+      "frameCount": 2,
+      "timesMs": [
+        180,
+        1180
+      ],
+      "sourceDigest": "cd357361202dbc9e32806e245be22007c7cbec0a962d13ad56168dff7343ae30",
+      "file": "sheets/godie-emns.ex.png"
+    },
+    {
+      "id": "godie-emns.passive",
+      "frameCount": 2,
+      "timesMs": [
+        180,
+        447
+      ],
+      "sourceDigest": "3d4700091d1a00a59e25cb5c056de1b3664e45a9dc6a8f81b2317433dc8ecddf",
+      "file": "sheets/godie-emns.passive.png"
+    },
+    {
+      "id": "godie-h01u.r",
+      "frameCount": 2,
+      "timesMs": [
+        180,
+        847
+      ],
+      "sourceDigest": "2f05130118b8c9db5558cc194c3cb016e4380145489b75a817af664c02ffc5d8",
+      "file": "sheets/godie-h01u.r.png"
+    },
+    {
+      "id": "godie-h02u.ex",
+      "frameCount": 8,
+      "timesMs": [
+        180,
+        1180,
+        2180,
+        3180,
+        4180,
+        5180,
+        6180,
+        7180
+      ],
+      "sourceDigest": "52fe363bfaea85af47a4e078c4427d8b06d669d70197d75df62721afa5f7f193",
+      "file": "sheets/godie-h02u.ex.png"
+    },
+    {
+      "id": "godie-hapm.q",
+      "frameCount": 2,
+      "timesMs": [
+        180,
+        120
+      ],
+      "sourceDigest": "26a1b95d998375aa1a1cda66a42169c54af765378e93161d7a4db454a097deaa",
+      "file": "sheets/godie-hapm.q.png"
+    }
+  ]
+}

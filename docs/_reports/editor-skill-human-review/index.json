@@ -1,0 +1,88 @@
+{
+  "schema": "ggd-editor-skill-human-review-index@1",
+  "sourceDigest": "1e89586fba3677fa656c4556236c0e1b04f9608158e117b8ce0c00f756981a60",
+  "policy": {
+    "verdictAuthority": "human",
+    "aiIsAdvisoryOnly": true,
+    "everyDocumentRequiresFrameReview": true,
+    "pageSize": 4
+  },
+  "themes": 42,
+  "documents": 46,
+  "pages": [
+    [
+      "godie-hart.r",
+      "godie-hjai.e",
+      "godie-h020.e",
+      "godie-hjai.r"
+    ],
+    [
+      "godie-nbbc.r",
+      "godie-nbbc.e",
+      "godie-ogrh.r",
+      "godie-o00x.r"
+    ],
+    [
+      "godie-e002.ex",
+      "godie-e00l.r",
+      "godie-e00l.ex",
+      "godie-hvsh.r"
+    ],
+    [
+      "godie-hvwd.e",
+      "godie-o00k.e",
+      "godie-hjai.w",
+      "godie-nbbc.w"
+    ],
+    [
+      "godie-u00v.r",
+      "godie-hapm.w",
+      "godie-e001.r",
+      "godie-e00s.w"
+    ],
+    [
+      "godie-etyr.r",
+      "godie-ogld.ex",
+      "godie-udea.r",
+      "godie-h01n.r"
+    ],
+    [
+      "godie-h00l.r",
+      "godie-hvsh.e",
+      "godie-n00b.passive",
+      "godie-e00r.ex"
+    ],
+    [
+      "godie-e00s.ex",
+      "godie-e00w.passive",
+      "godie-edem.r",
+      "godie-emfr.e"
+    ],
+    [
+      "godie-nbbc.passive",
+      "godie-e00l.passive",
+      "godie-e00r.q",
+      "godie-e00s.r"
+    ],
+    [
+      "godie-h02k.ex",
+      "godie-edem.e",
+      "godie-edem.ex",
+      "godie-efur.passive"
+    ],
+    [
+      "godie-emfr.ex",
+      "godie-emns.ex",
+      "godie-emns.passive",
+      "godie-h01u.r"
+    ],
+    [
+      "godie-h02u.ex",
+      "godie-hapm.q"
+    ]
+  ],
+  "codexAdvisory": {
+    "status": "current",
+    "rows": 46
+  }
+}

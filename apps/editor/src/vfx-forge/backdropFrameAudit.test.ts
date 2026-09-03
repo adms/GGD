@@ -65,6 +65,42 @@ describe("VFX Forge rendered-frame backdrop guard", () => {
     expect(result.reason).toContain("預告幾何");
   });
 
+  it("rejects a large near-black opaque carrier instead of treating darkness as transparency", () => {
+    const width = 100;
+    const height = 100;
+    const rgba = solid(width, height, [20, 24, 32, 255]);
+    for (let y = 25; y < 75; y++) {
+      for (let x = 20; x < 80; x++) {
+        const offset = (y * width + x) * 4;
+        rgba[offset] = 2;
+        rgba[offset + 1] = 3;
+        rgba[offset + 2] = 5;
+      }
+    }
+    const result = auditBackdropFrame(rgba, width, height);
+    expect(result.unsafe).toBe(true);
+    expect(result.dominantNonBackgroundShare).toBeCloseTo(0.3);
+    expect(result.reason).toContain("底板");
+  });
+
+  it("rejects a large multi-colour mid-tone carrier even without one dominant colour", () => {
+    const width = 100;
+    const height = 100;
+    const rgba = solid(width, height, [20, 24, 32, 255]);
+    for (let y = 0; y < 24; y++) {
+      for (let x = 0; x < 100; x++) {
+        const offset = (y * width + x) * 4;
+        rgba[offset] = 96 + ((x * 3) % 80);
+        rgba[offset + 1] = 72 + ((x * 5) % 72);
+        rgba[offset + 2] = 105 + ((x * 7) % 80);
+      }
+    }
+    const result = auditBackdropFrame(rgba, width, height);
+    expect(result.unsafe).toBe(true);
+    expect(result.presentationPixelShare).toBeGreaterThanOrEqual(0.18);
+    expect(result.reason).toContain("不透明");
+  });
+
   it("rejects a small solid white texture card even when whole-frame coverage is tiny", () => {
     const width = 100;
     const height = 100;

@@ -27,6 +27,8 @@ export const VFX_FORGE_RECIPES = [
 
 export type VfxForgeRecipeId = typeof VFX_FORGE_RECIPES[number]["id"];
 export const CLASSIC_BEAM_MODEL_KEY = "w3x.stock.revivehuman";
+export const CLASSIC_BEAM_VISUAL_GAP =
+  "Main 缺少可調長寬與軸向、透明安全且不依賴 host bone 的連續實心光束積木與直立光柱變體；現有 beam-flat／beam-lg 只會形成細長 trace，ReviveHuman 會露出不透明 TeamGlow 白卡，pulse／flare 串接則成為珠串。";
 
 export interface VfxForgeRecipeTrigger {
   on: VfxScriptSegment["on"];
@@ -75,8 +77,10 @@ export function buildVfxForgeRecipe(
  * The classic beam is particle-first. The legacy ReviveHuman MDL can still be
  * requested by isolated tests, but Forge recipes default it off: the real
  * framebuffer audit proved its TeamGlow mesh becomes an opaque white card.
- * Two time-separated outer/core pulses keep the long-axis silhouette without
- * accepting a model merely because its schema and asset digest are valid.
+ * Two time-separated outer/core pulses keep a truthful, safe fallback. They do
+ * not pretend to be the requested broad continuous cylinder: Main currently
+ * has no receipted world-space brick for that silhouette, and the acceptance
+ * report records CLASSIC_BEAM_VISUAL_GAP until such a primitive ships.
  */
 function triggerFields(trigger: VfxForgeRecipeTrigger, relativeMs = 0): Pick<VfxScriptSegment, "on" | "atMs" | "strikeIndex"> {
   const atMs = (trigger.atMs ?? 0) + relativeMs;
@@ -125,17 +129,14 @@ function classicBeam(
   const vfxId = fire ? "fx.prim.holy.beam-flat" : "fx.prim.lightning.beam-flat";
   const outerTint = fire ? [255, 132, 20] : [65, 155, 255];
   const coreTint = fire ? [255, 242, 190] : [215, 242, 255];
-  // Two pulses × outer/core leave two systems in the six-slot additive budget
-  // for the readable grammar a classic beam needs: a muzzle core and an impact
-  // bloom. The previous 1.7× time scale separated the stretched sprites into
-  // fast "hairs"; normal travel time plus overlap reads as a sustained beam.
+  // Two pulses x outer/core leave two systems in the six-slot additive budget
+  // for the readable grammar a classic beam still needs: a muzzle core and an
+  // impact bloom. This fallback intentionally exposes the current Main gap
+  // instead of hiding it behind a chain of disconnected flare billboards.
   for (const atMs of pulseOffsetsMs) {
     segments.push(zVfxScriptSegment.parse({
       kind: "vfx", ...triggerFields(trigger, atMs), vfxId, at: anchor,
       durationSec: 1.15, offsetForwardU: 0.8, w3xScale: 3.2, timeScale: 1,
-      // ReviveHuman's compositor pivot sits around hand/chest height. Keep the
-      // helpers near that centreline but visibly subordinate: full-size
-      // additive sprites at the exact model height collapsed into a white card.
       tint: outerTint, flyHeight: 72, alpha: Math.min(1, 0.3 * particleAlphaScale),
       ...(sideOffsetU === 0 ? {} : { offsetSideU: sideOffsetU }),
       ...(yawOffsetDeg === 0 ? {} : { facingDeg: yawOffsetDeg }),
@@ -222,8 +223,15 @@ function dashSlashVoid(): VfxScriptSegment[] {
       // One receipted arc, not a 26-crescent fan. The actor swing remains the
       // primary motion; this is the single oversized cut that makes it read.
       kind: "vfx", on: "castEffect", atMs: 370, vfxId: singleArcVfxId("void"),
-      at: "target", durationSec: 0.3, w3xScale: 1.85,
-      tint: [190, 88, 255], flyHeight: 76, alpha: 0.78,
+      at: "target", durationSec: 0.34, w3xScale: 2.45,
+      tint: [176, 54, 255], flyHeight: 68, alpha: 0.9,
+    }),
+    zVfxScriptSegment.parse({
+      // One compact impact bloom clarifies contact without adding a second
+      // slash. The actor swing plus the single arc remain the blade grammar.
+      kind: "vfx", on: "castEffect", atMs: 390, vfxId: "fx.prim.void.pulse-sm",
+      at: "target", durationSec: 0.26, w3xScale: 0.9,
+      tint: [118, 26, 205], flyHeight: 48, alpha: 0.68,
     }),
     zVfxScriptSegment.parse({ kind: "anim", on: "castEffect", atMs: 390, at: "target", pulse: "hurt", clipWindowMs: 520 }),
     zVfxScriptSegment.parse({ kind: "screenShake", on: "castEffect", atMs: 390, amplitude: 0.38, durationSec: 0.32 }),

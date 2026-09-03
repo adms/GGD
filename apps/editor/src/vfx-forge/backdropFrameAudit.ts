@@ -68,6 +68,13 @@ const CHECKER_MIN_TILES_PER_SIDE = 8;
 const CHECKER_MIN_COMPONENT_FILL = 0.3;
 const CHECKER_MIN_AXIS_ALTERNATION = 0.62;
 const CHECKER_MIN_DIAGONAL_REPEAT = 0.78;
+// A large opaque carrier may be multi-coloured or perspective-skewed, so it
+// can evade the single-colour and axis-aligned-card detectors. In a gameplay
+// evidence frame this combination means that a broad, mostly mid-tone surface
+// displaced the arena while contributing almost no additive highlights.
+const OPAQUE_CARRIER_MIN_PRESENTATION_SHARE = 0.18;
+const OPAQUE_CARRIER_MIN_LIT_SHARE = 0.13;
+const OPAQUE_CARRIER_MAX_BRIGHT_SHARE = 0.01;
 
 /**
  * Detect a local red/magenta diagnostic checker without banning ordinary fire.
@@ -322,10 +329,14 @@ export function auditBackdropFrame(
     const b = key & 15;
     dominantPixelCount = Math.max(dominantPixelCount, bins[key]!);
     if (Math.max(r, g, b) >= 13) dominantBright = Math.max(dominantBright, bins[key]!);
-    // A giant brown/blue/green telegraph plane is just as much a backdrop as
-    // a white PNG card. Ignore the sampled scene-background bins and look for
-    // one other flat quantized colour occupying a large part of the camera.
-    if (!cornerKeys.has(key) && Math.max(r, g, b) >= 4) {
+    // A giant black/brown/blue/green plane is just as much a backdrop as a
+    // white PNG card.  Do not apply a brightness floor here: an opaque model
+    // face seen from its back side can quantize to near-black and previously
+    // escaped this guard.  The four sampled scene-background bins are the
+    // exclusion; a legitimate dark organic effect still needs one *flat*
+    // quantized colour to cover 18% of the isolated presentation framebuffer
+    // before this deliberately conservative guard rejects it.
+    if (!cornerKeys.has(key)) {
       dominantNonBackground = Math.max(dominantNonBackground, bins[key]!);
     }
   }
@@ -337,6 +348,25 @@ export function auditBackdropFrame(
   const nearWhiteShare = nearWhite / pixels;
   const dominantBrightShare = dominantBright / pixels;
   const dominantNonBackgroundShare = dominantNonBackground / pixels;
+  if (
+    presentationPixelShare >= OPAQUE_CARRIER_MIN_PRESENTATION_SHARE &&
+    litShare >= OPAQUE_CARRIER_MIN_LIT_SHARE &&
+    brightShare <= OPAQUE_CARRIER_MAX_BRIGHT_SHARE
+  ) {
+    return {
+      litShare,
+      presentationPixelShare,
+      highlightShare,
+      brightShare,
+      nearWhiteShare,
+      dominantBrightShare,
+      dominantNonBackgroundShare,
+      localWhiteCardShare: 0,
+      diagnosticCheckerShare: 0,
+      unsafe: true,
+      reason: `呈現層中間色幾何覆蓋 ${(presentationPixelShare * 100).toFixed(1)}%，疑似大面積不透明模型／貼圖載體或預告幾何`,
+    };
+  }
   if (nearWhiteShare >= 0.45) {
     return {
       litShare,

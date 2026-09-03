@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   Models,
+  VfxDefs,
   zodIssues,
   type CollectionIndex,
   type FieldIssue,
@@ -59,7 +60,11 @@ import {
   buildVfxForgeRecipe,
   type VfxForgeRecipeId,
 } from "./recipes";
-import { acceptanceFixtureFor, VFX_FORGE_ACCEPTANCE } from "./acceptanceFixtures";
+import {
+  acceptanceFixtureFor,
+  acceptanceFixtureVisualGaps,
+  VFX_FORGE_ACCEPTANCE,
+} from "./acceptanceFixtures";
 import { acceptanceSourceFor } from "./acceptanceSources";
 import { AcceptanceSourcePanel } from "./AcceptanceSourcePanel";
 import { reviewAppearances } from "./appearanceReview";
@@ -109,6 +114,12 @@ interface BasicVisualBatchResult {
   readonly frames: readonly VfxVisualEvidenceFrame[];
   /** Exact presentation route used for the screenshots; never infer it later. */
   readonly proofSource?: BasicVisualProofSource;
+  /** Deterministic receipt when an authored bone-bound VFX was not standalone. */
+  readonly basicVisualFallback?: {
+    readonly fromVfxId: string;
+    readonly toVfxId: string;
+    readonly reason: "requires-host-bone";
+  };
   readonly machineIssues?: readonly VisualAcceptanceMachineIssue[];
   readonly humanVerdict: "pending" | "pass" | "fail";
   readonly humanScore: number | null;
@@ -252,6 +263,14 @@ export function VfxForgePage() {
     staleTime: Number.POSITIVE_INFINITY,
     gcTime: Number.POSITIVE_INFINITY,
   });
+  const standaloneIneligibleVfxIds = useMemo(() => {
+    if (!previewContent.data) return new Set<string>();
+    return new Set(VfxDefs.all().flatMap((doc) =>
+      "anchorBone" in doc && typeof doc.anchorBone === "string" && doc.anchorBone.trim() !== ""
+        ? [doc.id]
+        : [],
+    ));
+  }, [previewContent.data]);
   const runtimeChampion = useMemo(
     () => previewContent.data && championId
       ? Champions.tryGet(championId as ChampionId) ?? null
@@ -580,7 +599,7 @@ export function VfxForgePage() {
   };
   const applyBasicVisual = async (): Promise<void> => {
     if (!ability) return;
-    const basic = buildBasicVisualDraft(ability, cues);
+    const basic = buildBasicVisualDraft(ability, cues, { standaloneIneligibleVfxIds });
     if (!basic.script) {
       setStatus(`⛔ 無法自動組裝：${basic.blockers.join("；")}`);
       return;
@@ -803,8 +822,15 @@ export function VfxForgePage() {
 
     if (basicVisualBatch.phase === "loading") {
       const fixture = acceptanceFixtureFor(row.id, cues);
-      const basic = buildBasicVisualDraft(ability, cues);
+      const basic = buildBasicVisualDraft(ability, cues, { standaloneIneligibleVfxIds });
       const route = basicVisualProofRoute(ability.id, fixture, basic);
+      const basicVisualFallback = route.source === "editor-basic-script" && basic.fallbackFromVfxId && basic.selectedVfxId
+        ? {
+            fromVfxId: basic.fallbackFromVfxId,
+            toVfxId: basic.selectedVfxId,
+            reason: "requires-host-bone" as const,
+          }
+        : undefined;
       // Every active baseline must render the actual bricks assembled by the
       // Editor. Passive effect-graph hooks remain on the real runtime path.
       const desiredMode: VfxForgeStageMode = route.mode;
@@ -818,6 +844,7 @@ export function VfxForgePage() {
         finishBasicVisualCase({
           id: row.id, name: row.name, status: "failed",
           blockers: [simReview.reason], frames: [], proofSource: route.source,
+          basicVisualFallback,
           humanVerdict: "pending", humanScore: null, humanNote: "",
         });
         return;
@@ -848,8 +875,15 @@ export function VfxForgePage() {
       }
     }
     const fixture = acceptanceFixtureFor(row.id, cues);
-    const basic = buildBasicVisualDraft(ability, cues);
+    const basic = buildBasicVisualDraft(ability, cues, { standaloneIneligibleVfxIds });
     const route = basicVisualProofRoute(ability.id, fixture, basic);
+    const basicVisualFallback = route.source === "editor-basic-script" && basic.fallbackFromVfxId && basic.selectedVfxId
+      ? {
+          fromVfxId: basic.fallbackFromVfxId,
+          toVfxId: basic.selectedVfxId,
+          reason: "requires-host-bone" as const,
+        }
+      : undefined;
     const blockers = [
       ...(basic?.blockers ?? []),
       ...assetBlockers.map((item) => `${item.asset.id}：${item.summary}`),
@@ -862,6 +896,7 @@ export function VfxForgePage() {
       finishBasicVisualCase({
         id: row.id, name: row.name, status: "blocked", blockers,
         frames: [], proofSource: route.source,
+        basicVisualFallback,
         humanVerdict: "pending", humanScore: null, humanNote: "",
       });
       return;
@@ -910,14 +945,22 @@ export function VfxForgePage() {
           }
           return { audit, frames };
         })(), row.id, row.vfxFixture ? 60_000 : 30_000);
-        const blockers = audit.safe ? [] : [
-          `${audit.worst.reason ?? "底板稽核失敗"} @ ${audit.worstAtMs}ms` +
-          (audit.suspects.length > 0 ? `；可疑載體：${audit.suspects.join(" | ")}` : ""),
+        const unsafeFrame = frames.find((frame) => frame.frameAudit?.unsafe);
+        const blockers = [
+          ...(audit.safe ? [] : [
+            `${audit.worst.reason ?? "底板稽核失敗"} @ ${audit.worstAtMs}ms` +
+            (audit.suspects.length > 0 ? `；可疑載體：${audit.suspects.join(" | ")}` : ""),
+          ]),
+          ...(unsafeFrame?.frameAudit?.unsafe ? [
+            `${unsafeFrame.frameAudit.reason ?? "證據格底板稽核失敗"} @ ${unsafeFrame.atMs}ms`,
+          ] : []),
+          ...acceptanceFixtureVisualGaps(row.id),
         ];
         finishBasicVisualCase({
           id: row.id, name: row.name,
-          status: audit.safe ? "captured" : "failed",
+          status: audit.safe && !unsafeFrame ? "captured" : "failed",
           blockers, audit, frames, proofSource: route.source,
+          basicVisualFallback,
           humanVerdict: "pending", humanScore: null, humanNote: "",
         });
       } catch (error) {
@@ -935,6 +978,7 @@ export function VfxForgePage() {
         finishBasicVisualCase({
           id: row.id, name: row.name, status: "failed",
           blockers: [String(error)], frames, proofSource: route.source,
+          basicVisualFallback,
           humanVerdict: "pending", humanScore: null, humanNote: "",
         });
       }
@@ -944,7 +988,7 @@ export function VfxForgePage() {
     assetBlockers, assetPreviewAllowed, basicVisualBatch, cues, draft,
     draftHistory.reset, finishBasicVisualCase, replacementBlockers,
     batchRenderAllowed, reviewEvidenceAllowed, reviewEvidenceIssues, runtimeChampion, runtimeTarget,
-    previewMode, schedule, scriptSafety.isPending, simReview, targetChampionId,
+    previewMode, schedule, scriptSafety.isPending, simReview, standaloneIneligibleVfxIds, targetChampionId,
   ]);
 
   useEffect(() => {

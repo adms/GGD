@@ -19,6 +19,14 @@ export interface BasicVisualAbility extends ForgeAbility {
 export interface BasicVisualDraft {
   readonly script: VfxScriptDoc | null;
   readonly visualSource: "ability-vfx" | "safe-generic" | "none";
+  /** Exact brick selected by the deterministic one-click assembler. */
+  readonly selectedVfxId: string | null;
+  /**
+   * An authored VFX that cannot be played as a standalone world-space brick.
+   * The original binding remains untouched; only this editable baseline uses
+   * the safe generic replacement.
+   */
+  readonly fallbackFromVfxId: string | null;
   /**
    * Hooks that are authored in Skill Forge's effect graph rather than as a
    * direct vfx-script@1 trigger. This is a routing note, not an engine blocker:
@@ -30,6 +38,17 @@ export interface BasicVisualDraft {
   readonly scriptTimelineGaps: readonly string[];
   readonly blockers: readonly string[];
 }
+
+export interface BasicVisualBuildOptions {
+  /**
+   * VFX documents that require a host model/bone and therefore cannot be used
+   * by a standalone `vfx` timeline segment. The caller derives this set from
+   * the loaded VFX registry; no ability id or imported family is hard-coded.
+   */
+  readonly standaloneIneligibleVfxIds?: ReadonlySet<string>;
+}
+
+export const BASIC_VISUAL_SAFE_GENERIC_VFX_ID = "fx.prim.arcane.pulse";
 
 export type BasicVisualProofSource =
   | "acceptance-fixture"
@@ -91,6 +110,7 @@ export function vfxScriptTimelineGaps(ability: unknown): string[] {
 export function buildBasicVisualDraft(
   ability: BasicVisualAbility,
   requiredTimelineCues: readonly ActionTimelineCue[] = [],
+  options: BasicVisualBuildOptions = {},
 ): BasicVisualDraft {
   const activationMode = activationModeForAbility(ability);
   const scriptTimelineGaps = vfxScriptTimelineGaps(ability);
@@ -101,6 +121,8 @@ export function buildBasicVisualDraft(
     return {
       script: null,
       visualSource: "none",
+      selectedVfxId: null,
+      fallbackFromVfxId: null,
       effectGraphHooks: scriptTimelineGaps,
       scriptTimelineGaps,
       blockers: [],
@@ -108,8 +130,15 @@ export function buildBasicVisualDraft(
   }
 
   const authoredVfx = firstVfxKey(ability);
-  const vfxId = singleArcReplacement(authoredVfx ?? "fx.prim.arcane.pulse");
-  const visualSource = authoredVfx ? "ability-vfx" : "safe-generic";
+  const fallbackFromVfxId = authoredVfx && options.standaloneIneligibleVfxIds?.has(authoredVfx)
+    ? authoredVfx
+    : null;
+  const vfxId = singleArcReplacement(
+    fallbackFromVfxId === null
+      ? authoredVfx ?? BASIC_VISUAL_SAFE_GENERIC_VFX_ID
+      : BASIC_VISUAL_SAFE_GENERIC_VFX_ID,
+  );
+  const visualSource = authoredVfx && fallbackFromVfxId === null ? "ability-vfx" : "safe-generic";
   const on: VfxScriptSegment["on"] = activationMode === "passive"
     ? supportedReaction!
     : "castEffect";
@@ -136,6 +165,8 @@ export function buildBasicVisualDraft(
       segments: completed,
     }),
     visualSource,
+    selectedVfxId: vfxId,
+    fallbackFromVfxId,
     effectGraphHooks: scriptTimelineGaps,
     scriptTimelineGaps,
     blockers: [],

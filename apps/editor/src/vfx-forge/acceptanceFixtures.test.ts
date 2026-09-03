@@ -14,6 +14,7 @@ import { fileURLToPath } from "node:url";
 import { zVfxScriptDoc, type VfxScriptDoc, type VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
 import {
   acceptanceFixtureFor,
+  acceptanceFixtureVisualGaps,
   VFX_FORGE_ACCEPTANCE,
   VFX_FORGE_FIXTURE_SCENES,
 } from "./acceptanceFixtures";
@@ -44,6 +45,19 @@ const kinds = <K extends VfxScriptSegment["kind"]>(id: typeof IDS[number], kind:
   segs(id).filter((s): s is Extract<VfxScriptSegment, { kind: K }> => s.kind === kind);
 
 describe("八招 Editor-only VFX Forge 視覺文法", () => {
+  it("把已由真 framebuffer 證實的連續光束缺口附在所有共用該配方的驗收技能", () => {
+    const affected = [
+      "godie-hart.r", "godie-nbbc.e", "godie-ogrh.r", "godie-o00x.r",
+      "godie-hvsh.r", "godie-e002.ex", "godie-e00l.ex",
+    ];
+    for (const id of affected) {
+      expect(acceptanceFixtureVisualGaps(id), id).toEqual([
+        expect.stringContaining("連續實心光束積木"),
+      ]);
+    }
+    expect(acceptanceFixtureVisualGaps("godie-hjai.e")).toEqual([]);
+  });
+
   it("Main 嚴格八主題展開的十一份文件都有 Editor 積木成品", () => {
     expect(VFX_FORGE_FIXTURE_SCENES).toHaveLength(15);
     for (const [id] of VFX_FORGE_FIXTURE_SCENES) {
@@ -53,7 +67,8 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
   it("批次驗收隔離八招 fixture，不把既有 runtime 美術疊在玩家積木成品下方", () => {
     const page = readFileSync(new URL("./VfxForgePage.tsx", import.meta.url), "utf8");
     const proofAutomation = readFileSync(new URL("./proofAutomation.ts", import.meta.url), "utf8");
-    expect(page).toContain('row.vfxFixture ? "script" : "runtime"');
+    expect(page).toContain("const route = basicVisualProofRoute(ability.id, fixture, basic);");
+    expect(page).toContain("acceptanceFixtureVisualGaps(row.id)");
     expect(page).toContain("captureDiagnosticEvidenceAt");
     expect(page).toContain('issueClassifier: "ggd-editor-visual-issue-rules@1"');
     expect(page).toContain('BASIC_VISUAL_REVIEW_STORAGE = "ggd-editor-basic-visual-human-review@1"');

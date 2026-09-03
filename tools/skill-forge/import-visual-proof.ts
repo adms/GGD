@@ -14,11 +14,9 @@ import {
   SKILL_ACCEPTANCE_CANDIDATES,
   SKILL_ACCEPTANCE_THEME_IDS,
 } from "../../apps/editor/src/forge/skillAcceptanceCatalog";
-import {
-  classifyVisualAcceptanceIssues,
-  type VisualAcceptanceMachineIssue,
-} from "../../apps/editor/src/vfx-forge/visualAcceptanceIssues";
+import type { VisualAcceptanceMachineIssue } from "../../apps/editor/src/vfx-forge/visualAcceptanceIssues";
 import type { BackdropTimelineAudit } from "../../apps/editor/src/vfx-forge/VfxForgeStage";
+import { classifyImportedVisualAcceptance } from "./visualProofImport";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const positional = process.argv.slice(2).filter((arg) => !arg.startsWith("--"));
@@ -139,8 +137,19 @@ const cases = SKILL_ACCEPTANCE_CANDIDATES.map((candidate) => {
   });
   const blockers = Array.isArray(row.blockers) ? row.blockers.map(String) : [];
   const audit = row.audit && typeof row.audit === "object" ? row.audit as BackdropTimelineAudit : null;
-  const machineIssues = classifyVisualAcceptanceIssues({ status, blockers, audit, frames });
+  const classified = classifyImportedVisualAcceptance({
+    status,
+    blockers,
+    audit,
+    frames,
+    proofSource: row.proofSource,
+  });
+  if (status === "captured" && classified.proofSource === undefined) {
+    fail(`${candidate.id}: captured evidence is missing a supported proofSource`);
+  }
+  const { machineIssues, proofSource } = classified;
   if (!selfTest) assertMachineIssues(candidate.id, row.machineIssues, machineIssues);
+  const basicVisualFallback = parseBasicVisualFallback(candidate.id, row.basicVisualFallback);
   return {
     id: candidate.id,
     name: candidate.name,
@@ -148,6 +157,8 @@ const cases = SKILL_ACCEPTANCE_CANDIDATES.map((candidate) => {
     blockers,
     audit,
     frames,
+    proofSource,
+    basicVisualFallback,
     machineIssues,
     humanVerdict: verdict,
     humanScore: score ?? null,
@@ -196,6 +207,25 @@ if (selfTest) {
 
 function safe(id: string): string {
   return id.replace(/[^a-zA-Z0-9._-]+/g, "-");
+}
+
+function parseBasicVisualFallback(
+  id: string,
+  value: unknown,
+): { readonly fromVfxId: string; readonly toVfxId: string; readonly reason: "requires-host-bone" } | null {
+  if (value === undefined || value === null) return null;
+  if (!value || typeof value !== "object") fail(`${id}: invalid basicVisualFallback`);
+  const row = value as Record<string, unknown>;
+  if (
+    typeof row.fromVfxId !== "string" || row.fromVfxId.length === 0 ||
+    typeof row.toVfxId !== "string" || row.toVfxId.length === 0 ||
+    row.reason !== "requires-host-bone"
+  ) fail(`${id}: invalid basicVisualFallback receipt`);
+  return {
+    fromVfxId: row.fromVfxId,
+    toVfxId: row.toVfxId,
+    reason: "requires-host-bone",
+  };
 }
 
 function assertMachineIssues(

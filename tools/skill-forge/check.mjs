@@ -46,8 +46,10 @@ const focusedTests = [
   "src/forge/forgeStudioStack.test.ts",
   "src/forge/forgeWritebackTemplateGate.test.ts",
   "src/preview/forgeRealCast.test.ts",
+  "src/vfx-forge/backdropFrameAudit.test.ts",
   "src/vfx-forge/basicVisualAuthoring.test.ts",
   "src/vfx-forge/visualAcceptanceIssues.test.ts",
+  "../../tools/skill-forge/visualProofImport.test.ts",
 ];
 
 run("Skill Forge no-code acceptance", "pnpm", [
@@ -59,3 +61,6 @@ run("Skill Forge no-code acceptance", "pnpm", [
 run("42 themes / 46 documents receipt", "pnpm", ["skillforge:audit:check"]);
 run("46-document real Sim preview routes", "pnpm", ["skillforge:sim-audit", "--", "--summary"]);
 run("visual proof importer", "pnpm", ["skillforge:visual-proof:import", "--", "--self-test"]);
+run("42/46 human review packet", "pnpm", ["skillforge:visual-review:check"]);
+run("46 chronological visual contact sheets", "pnpm", ["skillforge:visual-sheets:check"]);
+run("46-document Codex visual advisory", "pnpm", ["skillforge:visual-advisory:check"]);
