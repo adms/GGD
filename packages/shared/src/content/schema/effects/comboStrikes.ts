@@ -45,6 +45,43 @@ export const zComboStrikes = z
     /** 等間隔秒數（配 `strikes`）。與 `steps` 互斥。 */
     intervalSec: z.number().positive().max(COMBO_MAX_INTERVAL_SEC).optional(),
     /**
+     * ⭐⭐ **M6（GH#965）—— 逐擊音效**（原作那一族「每一刀各響一次」）。
+     *
+     * ⭐ 為什麼掛在連段上而不是開一個 `playSound` effect：
+     * 連段的**節奏**已經住在這裡（`strikes` / `intervalSec` / `steps`）——
+     * ⛔ 一個獨立的音效 effect 要自己再排一次那個班表 ＝ **同一個節奏兩個住處**，
+     * ⚠️ 而它們一定會漂（改了段數而音效還響舊的次數）。
+     *
+     * 省略 ＝ 不響 ＝ 逐位元組同這一格出現之前。
+     */
+    perStrikeSoundKey: z
+      .string()
+      .min(1)
+      .max(64)
+      .optional()
+      .describe(
+        "每一段各播一次這個音效鍵。⭐ 它跟著段數走 —— 改了 `strikes`，響幾次自動跟著改。",
+      ),
+    /**
+     * ⭐⭐ **M10（GH#965）—— 段距的隨機抖動**（±這個比例）。
+     *
+     * ⚠️⚠️ ⭐ **它必須吃 `ctx.rng`，⛔ 不可以用 `Math.random`** ——
+     * `sim/**` 禁 `Math.random`（`sim/purity.test.ts` 在守），
+     * ⭐ 而更重要的是 determinism：一場比賽的每一份錄影都要重播得出來。
+     *
+     * ⭐ `0` ＝ 完全等距（＝ 今天的行為，也是 rollback）。
+     * ⚠️ 上界 **0.5**：再高會讓「連段」變成「隨機噴」——
+     * ⛔ 而那不是抖動，是換一個機制。
+     */
+    intervalJitter: z
+      .number()
+      .min(0)
+      .max(0.5)
+      .optional()
+      .describe(
+        "段距的隨機抖動（±比例，0 = 完全等距）。⭐ 吃比賽的種子 —— ⛔ 同一份錄影重播結果相同。",
+      ),
+    /**
      * ⭐ **不等間隔**：每一段離施法那一刻的秒數偏移。與 `intervalSec` 互斥。
      * JASS 的連段多半是這一種（前三刀快、停頓、最後一刀重）。
      */

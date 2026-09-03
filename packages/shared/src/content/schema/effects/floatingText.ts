@@ -36,6 +36,24 @@ export const zFloatingText = z
       .max(FLOATING_TEXT_MAX_LEN)
       .describe("要冒的字。⭐ 支援 {{i}}（第幾段）—— 連段的「1Hit…7Hit」寫成一個節點。"),
     colorRgb: zRgb.optional(),
+    /**
+     * ⭐⭐ **M7（GH#965）—— 浮動文字的飛出方向**（度，0 = 正上方，順時針）。
+     *
+     * ⭐ 原作那一族「傷害數字往受擊方向噴」靠的就是這一格；
+     * ⛔ 而今天每一個浮動文字都**直直往上飄** ⇒ 五個人同時被打，
+     * 五串數字**疊在同一條垂直線上**（玩家一個都讀不到）。
+     *
+     * 省略 ＝ 往上（＝ 逐位元組同這一格出現之前）。
+     */
+    velocityAngle: z
+      .number()
+      .min(0)
+      .max(360)
+      .optional()
+      .describe(
+        "數字往哪個方向飛出（度，0 = 正上方，順時針）。" +
+          "⭐ 同一瞬間多個目標時，給不同角度才讀得到；留空 = 全部往上疊在一起。",
+      ),
     sizeScale: z.number().positive().max(FLOATING_TEXT_MAX_SIZE_SCALE).optional(),
     riseSpeed: z.number().min(0).max(FLOATING_TEXT_MAX_RISE).optional(),
     /**

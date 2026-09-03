@@ -66,6 +66,33 @@ export const zEmitter = z.discriminatedUnion("shape", [
  * carries hard 0/1 alpha).
  */
 export const zVfxBlendMode = z.enum(["additive", "alpha", "modulate", "alphaKey"]);
+
+/**
+ * ⭐⭐ **表示形**（GH#965 的最後一塊）—— 這一份 vfx **用什麼幾何畫出來**。
+ *
+ * ⚠️ ⭐ 它與 `zVfxPrimitiveKind`（13 個**輪廓**：nova / explosion / …）是**兩個軸**：
+ * 輪廓回答「它**看起來像什麼**」，表示形回答「它**是用什麼畫的**」。
+ * ⇒ ⭐ 一個 `beam` 輪廓可以用 `ribbon`（緞帶）也可以用 `billboard`（面片）畫，
+ *   ⛔ 而那兩者在**穿牆、拉長、鏡頭轉動**時看起來完全不同。
+ *
+ * ⚠️⚠️ ⭐ **今天沒有正式技能在用這四個**（票文逐字）——
+ * ⇒ ⭐ 它們與 GH#956 的 capability fixtures 對接，
+ * ⛔ 而在那之前它們是**誠實的零採用**，不是一個「做好了」的宣稱。
+ *
+ * 省略 ＝ 走既有的粒子路徑 ＝ 逐位元組同這一格出現之前。
+ */
+export const zVfxPresentation = z.enum([
+  /** ⭐ 沿路徑拉出的連續帶（劍光、拖尾）—— 它有**長度**，會跟著移動彎折。 */
+  "ribbon",
+  /** ⭐ 逐 tick 沿路留下的殘影序列 —— ⛔ 與 ribbon 不同：它是**離散**的一串。 */
+  "trail",
+  /** ⭐ 貼在**地面**上的印子（法陣、燒痕）—— 它不隨鏡頭轉。 */
+  "decal",
+  /** ⭐ 永遠面向鏡頭的面片（光暈、爆點）—— ⛔ 它沒有厚度。 */
+  "billboard",
+]);
+export type VfxPresentation = z.infer<typeof zVfxPresentation>;
+
 export type VfxBlendMode = z.infer<typeof zVfxBlendMode>;
 
 const zStopT = z.number().min(0).max(1);
@@ -171,6 +198,11 @@ const zVfxDocBase = z
   .object({
     id: zId,
     schema: z.literal("vfx@1"),
+    /**
+     * ⭐ **表示形**（GH#965）—— 這一份用什麼幾何畫出來。
+     * ⚠️ 省略 ＝ 走既有的粒子路徑（⛔ 逐位元組同這一格出現之前）。
+     */
+    presentation: zVfxPresentation.optional(),
     emitter: zEmitter,
     mode: z.enum(["continuous", "burst"]),
     /** particles/sec (continuous mode) */

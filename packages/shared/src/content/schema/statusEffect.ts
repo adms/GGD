@@ -63,6 +63,43 @@ export const zStatusEffectDoc = z
     name: z.string().min(1),
     description: z.string().optional(),
     iconKey: z.string().optional(),
+    /**
+     * ⭐⭐ **M2（GH#965）—— 英雄本體染色**，⭐ 而它跟著這個狀態的存續時間走。
+     *
+     * ⛔⛔ 為什麼是一格 `status-effect@1` 而不是一個新的 effect kind：
+     * 「染色」的**開始與結束**已經有一個現成的、正確的時鐘 —— 狀態本身。
+     * ⭐ 開一個 `tintFor{sec}` 的 effect 會讓同一件事有**兩個時鐘**
+     * （狀態 6 秒、染色 5 秒 ⇒ 玩家看到一秒「還在中毒但不綠了」）——
+     * 而那是第〇·四守則的形狀。
+     *
+     * ⭐ 渲染側走**既有的** `applyModelTint`（`render/views/mobTint.ts`）——
+     * ⛔ 這裡不新增第二條上色路。
+     * ⚠️ 而那一支會 **clone** 材質再指回 `mesh.material` ⇒ ⛔ 對原始材質物件寫的
+     * 斷言不管有沒有生效都會過（該檔檔頭記過這件事）。
+     *
+     * 省略 ＝ 不染色 ＝ 逐位元組同這一格出現之前。
+     */
+    tint: z
+      .string()
+      .regex(/^#[0-9a-fA-F]{6}$/u, "⛔ 只收 `#RRGGBB`（⛔ 不收具名顏色、⛔ 不收 rgba）")
+      .optional()
+      .describe(
+        "帶著這個狀態時，角色本體染成這個顏色（`#RRGGBB`）。" +
+          "⭐ 它跟著狀態的存續時間走 —— 狀態沒了顏色就沒了，⛔ 不必再設一個時間。",
+      ),
+    /**
+     * ⭐ **M2 的另一半 —— 半透明**（0 = 全透明、1 = 不透明）。
+     * ⚠️ 下界刻意是 **0.05** 而不是 0：⛔ 全透明的角色**點不到也看不到**，
+     * ⭐ 而「隱身」是另一個機制（`ENTITY_FLAG` 的 `INVISIBLE`），⛔ 不是這一格。
+     */
+    alpha: z
+      .number()
+      .min(0.05)
+      .max(1)
+      .optional()
+      .describe(
+        "帶著這個狀態時角色的不透明度（0.05–1）。⛔ 全透明請用隱身機制，⭐ 不是這一格。",
+      ),
     /** presentation hint for the HUD (debuff = red border, etc.) */
     polarity: z.enum(["buff", "debuff"]).optional(),
     /**
