@@ -449,8 +449,24 @@ export const zMobWavesConfig = z
          * ⇒ owner 想關掉它時，改的不是一格設定，是一次部署。
          */
         killsPerLevel: z.number().int().min(0),
+        /**
+         * ⭐⭐ **經驗總倍率**（GH#909）—— owner 2026-09-02 逐字：
+         * 「[Claude 提議 ×3，改成一格『經驗總倍率』預設 3.0] **ok 一起開票在同一張**」
+         *
+         * ⭐ **乘在發放的當下**（三個發放點：一般殭屍單殺 · 特殊殭屍分紅 · 殭屍王分紅），
+         * ⛔ 不是乘在「升級所需」—— 後者會讓每一條既有的曲線斷言一起變。
+         *
+         * ⭐ **為什麼是倍率不是改那三個數字**：改 `reward.xp` 是
+         * 三個數字 × 三個住處 ＝ **九處**；改倍率是後台**一個欄位**
+         * ⇒ owner 下次想從 3.0 調到 2.5 **不必經過一次部署**（第一守則）。
+         *
+         * ⭐ **rollback：打回 `1.0` ＝ 逐位元回到今天。**
+         * ⚠️ 上界 10：再高就會讓一場比賽在第二回合結束前滿級。
+         */
+        xpMultiplier: z.number().min(0).max(10),
       })
       .strict(),
+
     /**
      * 殭屍王 (task #262, owner 2026-07-28: 「殭屍王 有機會上線嗎 包括單個英雄擊敗
      * 100 隻殭屍招喚跟後台設定?」).
@@ -1187,6 +1203,8 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     // 「肉鴿」 is supposed to feel like a climb, not like homework.
     // ⭐ owner 2026-09-02 逐字：「把打6隻就升級**先設定為關閉**」⇒ 0
     killsPerLevel: 0,
+    // ⭐ GH#909 —— 經驗總倍率（owner：「ok 一起開票在同一張」）。1.0 ＝ 回到今天。
+    xpMultiplier: 3.0,
   },
   // 殭屍王 (#262). 100 personal kills, and — ⚠️ **that reasoning is now stale**:
   // `killsPerLevel` is **0** since 2026-09-02 (GH#918), so the summoner is NOT

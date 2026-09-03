@@ -1,7 +1,7 @@
 {
   "population": {
     "configFiles": 98,
-    "knobs": 1889,
+    "knobs": 1890,
     "corpusFiles": 13256,
     "levelWindow": {
       "min": 9,
@@ -15,7 +15,7 @@
     "schema-locks-engine-zero": 8,
     "no-read-end": 22,
     "notAssessable": 293,
-    "C": 1564
+    "C": 1565
   },
   "findings": [
     {
@@ -278,7 +278,7 @@
   "perFile": [
     {
       "file": "arena-rules.json",
-      "knobs": 226,
+      "knobs": 227,
       "a": 2,
       "b": 1
     },

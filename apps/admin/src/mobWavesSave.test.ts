@@ -157,7 +157,7 @@ const LIVE_DOC = (): Record<string, unknown> => ({
       baseRegen: 0,
       regenPerLevel: 0,
     },
-    reward: { gold: 21, xp: 41, killsPerLevel: 7 },
+    reward: { gold: 21, xp: 41, killsPerLevel: 7, xpMultiplier: 2 },
   },
 });
 
@@ -227,6 +227,7 @@ const TYPED: Record<MobWavesFieldKey, string> = {
   "reward.gold": "45",
   "reward.xp": "65",
   "reward.killsPerLevel": "9",
+      "reward.xpMultiplier": "3",
   "boss.enabled": "1",
   "boss.killThreshold": "150",
   "boss.repeatable": "0",
@@ -567,7 +568,7 @@ describe("金錢欄位旁邊真的印出「實發」", () => {
   function withRewardGold(gold: number): Record<string, unknown> {
     const doc = LIVE_DOC();
     const waves = doc["mobWaves"] as Record<string, unknown>;
-    waves["reward"] = { gold, xp: 41, killsPerLevel: 7 };
+    waves["reward"] = { gold, xp: 41, killsPerLevel: 7, xpMultiplier: 2 };
     return doc;
   }
 

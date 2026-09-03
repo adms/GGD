@@ -182,7 +182,7 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     baseRegen: 0,
     regenPerLevel: 0,
   },
-  reward: { gold: 20, xp: 40, killsPerLevel: 0 },
+  reward: { gold: 20, xp: 40, killsPerLevel: 0, xpMultiplier: 3.0 },
   // 殭屍王 + 特殊殭屍 (#262). Restated from `DEFAULT_MOB_WAVES_CONFIG` for the
   // same reason as everything above, and pinned against it by mobWaves.test.ts.
   boss: {
@@ -370,6 +370,7 @@ export type MobWavesFieldKey =
   | "reward.gold"
   | "reward.xp"
   | "reward.killsPerLevel"
+  | "reward.xpMultiplier"
   // 殭屍王 (#262)
   | "boss.enabled"
   | "boss.killThreshold"
@@ -539,6 +540,7 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "reward.gold",
   "reward.xp",
   "reward.killsPerLevel",
+  "reward.xpMultiplier",
   "boss.enabled",
   "boss.killThreshold",
   "boss.repeatable",
@@ -987,6 +989,22 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     unit: "XP",
     kind: "int",
     min: 0,
+    optional: false,
+  },
+  "reward.xpMultiplier": {
+    zh: "經驗總倍率",
+    note:
+      "⭐⭐ **所有殭屍給的經驗一起乘這一格** —— owner 2026-09-02 逐字：" +
+      "「[改成一格『經驗總倍率』預設 3.0] **ok 一起開票在同一張**」（出貨值 {{出貨值}}）。" +
+      "⭐ 它乘在**發放的當下**，三個發放點一起：一般殭屍單殺 · 特殊殭屍分紅 · 殭屍王分紅。" +
+      "⛔ 它**不是**乘在「升級所需」—— 那會讓每一條既有的曲線一起變。" +
+      "⭐⭐ **rollback：打回 `1.0` ＝ 逐位元回到這一格出現之前。**" +
+      "⚠️ 為什麼是倍率不是改 `每隻經驗`：改那個數字是三個數字 × 三個住處 ＝ **九處**，" +
+      "而這一格是**一個欄位** ⇒ 下次想從 3.0 調到 2.5 ⛔ 不必經過一次部署。",
+    kind: "num",
+    unit: "×",
+    min: 0,
+    max: 10,
     optional: false,
   },
   "reward.killsPerLevel": {
@@ -1903,7 +1921,7 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
   {
     title: "擊殺獎勵 · 打殭屍換什麼",
     blurb: "獎勵只給最後一擊的人。",
-    keys: ["reward.gold", "reward.xp", "reward.killsPerLevel"],
+    keys: ["reward.gold", "reward.xp", "reward.killsPerLevel", "reward.xpMultiplier"],
   },
   {
     title: "殭屍王 · 單一英雄累積擊殺後召喚",
@@ -2124,6 +2142,8 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return formatNum(cfg.reward.xp);
     case "reward.killsPerLevel":
       return formatNum(cfg.reward.killsPerLevel);
+    case "reward.xpMultiplier":
+      return formatNum(cfg.reward.xpMultiplier);
     // #262 — an ABSENT `boss` / `special` block reads as EMPTY, not as 0/false.
     // Empty is what `validateField` rejects for these required fields and what
     // `configFromForm` turns back into an omitted block, so a doc authored
@@ -2904,6 +2924,8 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
       gold: num("reward.gold", SHIPPED_MOB_WAVES.reward.gold),
       xp: num("reward.xp", SHIPPED_MOB_WAVES.reward.xp),
       killsPerLevel: num("reward.killsPerLevel", SHIPPED_MOB_WAVES.reward.killsPerLevel),
+      // ⭐ GH#909 —— 經驗總倍率。⛔ 漏掉這一行，後台改了場上沒反應（形態⑧）。
+      xpMultiplier: num("reward.xpMultiplier", SHIPPED_MOB_WAVES.reward.xpMultiplier),
     },
   };
   // An EMPTY table means "no per-round overrides" — write no key at all rather

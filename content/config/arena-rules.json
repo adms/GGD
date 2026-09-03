@@ -284,7 +284,8 @@
     "reward": {
       "gold": 20,
       "xp": 40,
-      "killsPerLevel": 0
+      "killsPerLevel": 0,
+      "xpMultiplier": 3.0
     },
     "boss": {
       "enabled": true,
