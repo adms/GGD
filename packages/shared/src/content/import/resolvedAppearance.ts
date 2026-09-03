@@ -256,7 +256,25 @@ export function resolveAppearance(
           ? model.teamTintMaterials.filter((m): m is string => typeof m === "string")
           : [],
       ),
-      isStandIn: isStandInModel(modelKey),
+      // ⭐⭐ **兩個條件，⛔ 不是一個**（2026-09-03 修）：
+      //   ① 這顆模型在替身池裡 **而且**
+      //   ② ⭐ **這位英雄不是它的主人**
+      //
+      // ⛔⛔ 在此之前它只問①，於是 `sela` 用 `champ.sela`、`thorne` 用 `champ.thorne`
+      //   ——**他們本人**——也被標成「站在別人身上」。
+      //   ⇒ ⭐ 外部編輯器會對兩位**正確**的英雄跳警告，而那種警告很快就會被忽略。
+      //
+      // ⭐ 這是 CLAUDE.md 的「只驗名詞抓不到關係」：
+      //   「這顆模型是替身池的嗎」是一個**名詞**的性質，
+      //   而「這位英雄站在別人身上」是**兩個名詞的關係**。
+      //
+      // ⭐ 主人的判準：modelKey 的最後一段等於 championId 的最後一段
+      //   （`champ.sela` ↔ `sela`、`champ.skin.barbarian` ↔ 沒有人）。
+      //   ⛔ 刻意用字串比對而不是查表 —— 查表會是那份對應的第二個住處。
+      isStandIn:
+        isStandInModel(modelKey) &&
+        (modelKey.split(".").pop() ?? "") !== (championId.split(/[.-]/).pop() ?? ""),
+
       axesNotCovered: AXES_NOT_COVERED,
       resolverFingerprint: appearanceResolverFingerprint(),
     }),

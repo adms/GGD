@@ -188,9 +188,22 @@ describe("resolved-appearance@1", () => {
     // 其中 14 個是 `imported.*`（英雄與它的變體刻意共用**同一顆真的角色模型**，
     // 例：`godie-h02v`/`godie-h02u` 草泥馬兩兄弟）⇒ 那些預覽是**對的**。
     // ⭐ 「站在通用 rig 上」才是會讓編輯器預覽出錯角色的那一種。
-    const onGenericRig = champs.filter((c) =>
-      STAND_IN_MODEL_KEYS.includes(String(c.modelKey)),
+    // ⭐⭐ 2026-09-03（GH#934）—— **要排除「它的主人」**。
+    //
+    // ⛔⛔ 在此之前這裡只問「modelKey 在 rig 池裡嗎」，
+    //   ⭐ 而 `champ.sela` / `champ.thorne` **同時是** rig 池成員**和**
+    //   `sela` / `thorne` **本人**的模型 ⇒ 兩位正確的英雄被要求標成替身。
+    //   ⚠️ ⭐ 而那種對正確角色跳的警告，很快就會被忽略。
+    //
+    // ⭐ 這是 CLAUDE.md 的「只驗名詞抓不到關係」：
+    //   「這顆模型在 rig 池嗎」是一個**名詞**的性質，
+    //   「這位英雄站在**別人**身上」是兩個名詞的**關係**。
+    const ownsIt = (c: { id: string; modelKey?: unknown }): boolean =>
+      (String(c.modelKey).split(".").pop() ?? "") === (c.id.split(/[.-]/).pop() ?? "");
+    const onGenericRig = champs.filter(
+      (c) => STAND_IN_MODEL_KEYS.includes(String(c.modelKey)) && !ownsIt(c),
     );
+
     expect(
       onGenericRig.length,
       "⛔ 一位都沒站在四具通用 rig 上 ⇒ 這條在量空氣（或 STAND_IN_MODEL_KEYS 空了）",
