@@ -114,6 +114,39 @@ export const zPackagePath = z
   .regex(/^[A-Za-z0-9][A-Za-z0-9._\-]*(\/[A-Za-z0-9][A-Za-z0-9._\-@]*)*$/, "path 必須是安全的相對 POSIX 路徑")
   .refine((p) => !p.split("/").includes(".."), "path 不得包含 `..`");
 
+/**
+ * ⭐⭐ GH#969 —— **一個會變成檔案路徑的字串，要當成路徑來驗。**
+ *
+ * ── ⛔ 在此之前 `collection` / `id` 是 `zShort` ＝ `z.string().min(1).max(256)` ──
+ * ⭐ **零字元限制** ⇒ `id: "../../../../tmp/pwned"` **通得過 schema**。
+ *
+ * ⚠️ ⭐ **今天它還不是漏洞** —— 現有的 `join()` 都用固定檔名
+ * （`manifest.json` / `bundle.json`）⇒ 那兩格從來沒被當成路徑用過。
+ * ⛔ **而 #966（編輯器打包 icon）會把它啟動**：icon 的落點**必然**是
+ *   `content/assets/icons/<collection>/<id>.webp`（`tools/icon-gen/convert-webp.mjs`）
+ * ⇒ ⭐ 那一刻起，這兩格就是**未信任來源直接拼進檔案系統路徑**。
+ * ⇒ 本型別在功能落地**之前**先關掉它（票文逐字：「⛔ 在那之前關掉」）。
+ *
+ * ── ⭐ 判準與 `zPackagePath` **同一套**（⛔ 不是我另編的一套）────────────────
+ * 上面那一支已經是這個 repo 的路徑防護模板：**字元白名單 ＋ 明確拒 `..`**。
+ * 這裡是它的**單段**版本 —— ⛔ 連 `/` 都不准（`collection` 與 `id` 各自是**一段**，
+ * ⛔ 不是一條路徑）⇒ 目錄穿越在**字元層**就不可能，而 ⛔ 不是靠某個消費端記得 sanitize。
+ *
+ * ⚠️ 出貨的合法值都過得了（2026-09-04 實查）：
+ *   · collection：`abilities` `champions` `vfx` `items` `augments` `arenas` …（單段）
+ *   · id：`godie-e001.q` `attach.ex.midchilder-aura`（`-` 與 `.` 都在白名單裡）
+ *
+ * ⛔ 刻意**不**允許開頭是 `.` —— 那擋掉 `.` / `..` / `.hidden` **一整族**，
+ * ⭐ 而 `..` 那一條 refine 仍然留著：⚠️ 兩層是**刻意重疊**的，
+ * 因為白名單哪天被放寬（有人加了 `/`），`..` 那一條要還在。
+ */
+export const zPathSegment = z
+  .string()
+  .min(1)
+  .max(IMPORT_LIMITS.maxShortString)
+  .regex(/^[A-Za-z0-9][A-Za-z0-9._\-@]*$/, "必須是安全的**單段**名字（⛔ 不可含 `/`，⛔ 不可以 `.` 開頭）")
+  .refine((s) => s !== ".." && !s.includes(".."), "⛔ 不得包含 `..`（目錄穿越）");
+
 /** 三種 mode（規格 §7／§10）。 */
 export const PACKAGE_MODES = ["bootstrap", "full", "delta"] as const;
 export const zPackageMode = z.enum(PACKAGE_MODES);
@@ -139,7 +172,7 @@ export const zChangeOp = z.literal("upsert");
 export const zExactRef = z
   .object({
     kind: zAuthoringKind,
-    id: zShort,
+    id: zPathSegment,
     revision: z.number().int().min(1).max(1_000_000).optional(),
     contentSha256: zSha256Hex,
   })
@@ -175,7 +208,7 @@ const zChangeSide = z
 export const zManifestChange = z
   .object({
     kind: zAuthoringKind,
-    id: zShort,
+    id: zPathSegment,
     path: zPackagePath,
     op: zChangeOp,
     before: zChangeSide.nullable(),
@@ -187,22 +220,58 @@ export const zManifestChange = z
 export const zManifestEntry = z
   .object({
     path: zPackagePath,
-    role: z.enum(["authoring", "compiled", "validation", "report"]),
+    // ⭐⭐ GH#966 —— `"asset"` 是**二進位**通道（icon 圖片）。
+    //   ⚠️ 它與其餘四種的差別不是「多一個字」：`role:"asset"` 的 entry 在傳輸層
+    //   **保持 Buffer**（⛔ 不 `.toString("utf8")`），而它的內容雜湊算的是**原始位元組**，
+    //   ⛔ 不是 JCS canonical JSON。⇒ `validatePackage` 的 ④ 逐份雜湊那一圈
+    //   刻意只吃 `role === "authoring"`，asset 走 `checkIconAssets()`。
+    role: z.enum(["authoring", "compiled", "validation", "report", "asset"]),
     contentSha256: zSha256Hex,
     contentSize: z.number().int().min(0).max(IMPORT_LIMITS.maxContentSize),
     // content entries 才有的欄位（規格 §10）。
-    collection: zShort.optional(),
-    id: zShort.optional(),
+    // ⭐⭐ GH#969 —— `collection` 與 `id` 用 `zPathSegment`，⛔ 不是 `zShort`：
+    //   它們**會被拼進檔案系統路徑**（`content/assets/icons/<collection>/<id>.webp`，
+    //   #966 的 icon 落點）⇒ ⭐ 一個會變成路徑的字串要當成路徑來驗。
+    //   ⚠️ `zShort` 是 `z.string().min(1).max(256)` ＝ **零字元限制**
+    //   ⇒ 在此之前 `id: "../../../../tmp/pwned"` 通得過 schema。
+    //   ⛔ 它今天還不是漏洞（現有 join 都用固定檔名），⭐ 而 #966 會把它啟動。
+    collection: zPathSegment.optional(),
+    id: zPathSegment.optional(),
+    // ⚠️ `schema` 刻意**維持 `zShort`** —— 它是 `config.roster@1` 這種**標籤**，
+    //   ⛔ 從來不會變成路徑，而它合法地含有 `@`／`.` 之外的形狀（版本號）。
+    //   ⭐ 判準是「**它會不會被拼進路徑**」，⛔ 不是「它看起來像不像 id」。
     schema: zShort.optional(),
     op: zChangeOp.optional(),
     revision: z.number().int().min(1).max(1_000_000).optional(),
+    // ── ⭐⭐ GH#966 —— asset entry 才有的三格（⛔ 全部 optional）─────────────
+    /**
+     * 編輯器**宣稱**的格式（`image/png`…）。
+     * ⚠️ ⭐ Main **不信任這一格** —— 真相由 magic bytes 決定（`sniffImageHeader()`）。
+     * ⛔ 那為什麼還要它？因為「你以為你送的是什麼」與「你真的送了什麼」不一致時，
+     * ⭐ 錯誤訊息要能把**兩個**都說出來，⛔ 不是只說「格式不對」。
+     */
+    mime: zShort.optional(),
+    /**
+     * 這張圖要寫回目標文件的哪一格。⭐ **白名單**（今天只有 `icon`），
+     * ⛔ 不是「隨便一個欄位名」—— 一個能指定任意欄位的 asset entry
+     * 等於讓外部編輯器隔空寫任何一格。
+     */
+    targetField: z.enum(["icon"]).optional(),
+    /**
+     * ⭐⭐ **per-asset CAS** —— 你讀到的**現有** icon 檔的 sha256，沒有現有檔就明示 `null`。
+     * ⛔ 省略 ＝ 不做 CAS（bootstrap 用）。
+     * ⚠️ 它與 `base.activationDigest` 是**兩層**：那一格 pin 的是整棵文件樹，
+     * ⭐ 這一格 pin 的是**這一顆二進位檔** —— 兩個人同時換同一支技能的圖時，
+     * ⛔ 只有後者擋得住「默默蓋掉對方」。
+     */
+    baseSha256: zSha256Hex.nullable().optional(),
   })
   .passthrough();
 
 export const zManifestRequire = z
   .object({
-    kind: zShort,
-    id: zShort,
+    kind: zPathSegment,
+    id: zPathSegment,
     revision: z.number().int().min(1).max(1_000_000).optional(),
     contentSha256: zSha256Hex,
   })
@@ -212,8 +281,8 @@ export const zManifestRequire = z
 export const zExpectedCompiled = z
   .object({
     path: zPackagePath,
-    collection: zShort,
-    id: zShort,
+    collection: zPathSegment,
+    id: zPathSegment,
     contentSha256: zSha256Hex,
     authority: z.enum(["legacy-template-binding", "native-effects"]).optional(),
   })
@@ -226,8 +295,8 @@ export const zExpectedCompiled = z
  */
 export const zExpectedDerived = z
   .object({
-    kind: zShort,
-    id: zShort.optional(),
+    kind: zPathSegment,
+    id: zPathSegment.optional(),
     contentSha256: zSha256Hex.optional(),
     contentVersion: zShort.optional(),
     contentReachable: z.boolean().optional(),
@@ -237,7 +306,7 @@ export const zExpectedDerived = z
 
 export const zRequiredScenario = z
   .object({
-    id: zShort,
+    id: zPathSegment,
     schema: zShort,
     contentSha256: zSha256Hex,
     subjectContentSha256: zSha256Hex.optional(),
@@ -247,7 +316,7 @@ export const zRequiredScenario = z
 
 export const zFidelityDecisionRef = z
   .object({
-    id: zShort,
+    id: zPathSegment,
     contentSha256: zSha256Hex,
     decision: zShort.optional(),
     subject: zShort.optional(),
@@ -435,6 +504,32 @@ export const zEditorImportPackage = z
     compiled: z.array(zPathedDocument("compiled")).max(IMPORT_LIMITS.maxDocuments).default([]),
     /** 對應 `validation/`。 */
     validation: z.array(zPathedDocument("validation")).max(IMPORT_LIMITS.maxDocuments).default([]),
+    /**
+     * ⭐⭐ GH#966 —— 對應 ZIP `assets/` 的**二進位**通道（icon 圖片）。
+     *
+     * ⚠️ ⭐ `bytes` 刻意是 `z.unknown()`：它是 `Buffer`，而這份 schema 要能在
+     * 瀏覽器端被讀（⛔ 不可以 import node 的型別）。⭐ 真正的驗證在
+     * `checkIconAssets()` —— 它問的是 magic bytes、檔頭長寬與 CAS，
+     * ⛔ 而那三件事 zod 一件都問不出來。
+     *
+     * ⚠️ ⭐ 它**不參與 packageDigest**（digest 只算 manifest 的 projection）——
+     * ⛔ 而那不是漏洞：每一顆 asset 的 `contentSha256` 都在 manifest 裡，
+     * ⭐ 所以位元組仍然被 digest **間接**蓋住。
+     */
+    assets: z
+      .array(
+        z
+          .object({
+            path: zPackagePath.refine(
+              (p) => p.startsWith("assets/"),
+              "asset 的 path 必須位於 assets/ 之下",
+            ),
+            bytes: z.unknown(),
+          })
+          .passthrough(),
+      )
+      .max(IMPORT_LIMITS.maxDocuments)
+      .default([]),
     reports: z.record(z.unknown()).default({}),
   })
   .passthrough();
@@ -497,7 +592,7 @@ export const zImportResult = z
         z
           .object({
             kind: zAuthoringKind,
-            id: zShort,
+            id: zPathSegment,
             path: zPackagePath,
             op: zChangeOp,
             contentSha256: zSha256Hex,

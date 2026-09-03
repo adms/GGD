@@ -99,6 +99,13 @@ interface PendingFire {
   dueMs: number;
   seg: VfxScriptSegment;
   frame: TriggerFrame;
+  /**
+   * ⭐ GH#974 —— 這一段屬於哪一支技能。**必填**（⛔ 不是 optional）：
+   * 讓 `tsc` 逐一點名每一個排程點，⛔ 而不是靠我記得每個地方都填。
+   * ⚠️ 少了它，掉段帳本只會說「有一段沒播」而說不出**是哪一支** ——
+   * 而驗收要的是 **10 支逐支確認**。
+   */
+  abilityId: string;
   /** `abilityCast` 掛的暫定 castEffect —— `castBegin` 來了就整組取消改等 castEnd */
   tentativeKey?: string;
 }
@@ -130,6 +137,53 @@ export interface VfxScriptPlayerDeps {
   ): void;
   /** 後台開關（三個住處那一格）—— 每次事件都活讀，關掉＝逐位元回到沒有 script 的世界。 */
   enabled(): boolean;
+}
+
+/**
+ * ⭐⭐ GH#974 —— **段落沒播的時候要說話。**
+ *
+ * ── ⛔ 在此之前這條路上有**三個靜默 `return`** ───────────────────────────
+ *   ① `const origin = casterPos ?? frame.point; if (!origin) return;`
+ *   ② `if (insts.length === 0) return;`
+ *   ③ `anchor:"target"` ⇒ `at = frame.targetPos ?? frame.point` —— 兩個都沒有 ⇒ 落進②
+ *
+ * ⚠️ ⭐ 而 `strike` 那條路的 frame，`point` 與 `targetPos` **兩個都只從同一個來源來**：
+ *   `comboStrike` 事件的 `d.x` / `d.z`（`VfxScriptPlayer.ts` 的 comboStrike case）。
+ *   ⛔ 而 sim 那一端它們是**選填**的（`delayed.ts`：`at = vp ?? point`，
+ *   `...(at !== undefined ? { x: at.x, z: at.z } : {})`，型別註解逐字說 victim
+ *   「**全滅時缺席**」）。
+ *
+ * ⇒ ⭐⭐ **sim 沒送座標 ⇒ `anchor:"target"` 的每一段整批消失，而三個出口一句話都不說。**
+ *   `godie-e002.ex` 的 **17 段全部**是這一類 ⇒ 一次掉光。
+ *
+ * ── ⭐ 這裡做的事：**只記帳，⛔ 不改行為** ────────────────────────────
+ * ⚠️ CLAUDE.md 逐字：「fail-open 沒錯，**靜默**才是缺陷」。
+ * ⇒ ⛔ 不把 `return` 改成 throw（那會用一個當機換一個黑畫面），
+ * ⭐ 而是讓「誰、哪一段、為什麼沒播」變成**數得出來的東西** ——
+ *   於是「特效回來了」可以被**量**，⛔ 不必再靠假設。
+ */
+export interface ScriptSegmentDrop {
+  abilityId: string;
+  /** 段在 script 裡的序（0 起算）。 */
+  index: number;
+  kind: string;
+  on: string;
+  /** ⭐ 為什麼沒播 —— 對應上面三個出口。 */
+  reason: "no-origin" | "no-instances" | "no-anchor";
+}
+
+/** ⭐ 這一輪掉了哪些段。⛔ 不是累積計數器 —— 讀的人要問「這一次」。 */
+const drops: ScriptSegmentDrop[] = [];
+
+/** 測試／診斷用：讀出並清空。 */
+export function takeScriptSegmentDrops(): ScriptSegmentDrop[] {
+  return drops.splice(0, drops.length);
+}
+
+/** 內部：記一筆。⛔ 刻意不 console.warn —— 一行沒有人讀的 log 不算 fail-loud。 */
+function noteDrop(d: ScriptSegmentDrop): void {
+  // ⚠️ 有上限 —— 一場失控的比賽不可以把記憶體吃光（診斷工具不該變成第二個缺陷）。
+  if (drops.length < 512) drops.push(d);
 }
 
 export class VfxScriptPlayer {
@@ -242,7 +296,7 @@ export class VfxScriptPlayer {
           if (seg.on !== "strike") continue;
           if (seg.strikeIndex !== undefined && seg.strikeIndex !== index) continue;
           this.claimTakeover(seg, frame, nowMs);
-          this.pending.push({ dueMs: nowMs + (seg.atMs ?? 0), seg, frame });
+          this.pending.push({ dueMs: nowMs + (seg.atMs ?? 0), seg, frame, abilityId });
         }
         return;
       }
@@ -328,7 +382,7 @@ export class VfxScriptPlayer {
       if (p.dueMs > nowMs) continue;
       this.pending.splice(i, 1);
       i--;
-      this.fire(p.seg, p.frame, nowMs);
+      this.fire(p.seg, p.frame, nowMs, p.abilityId);
     }
   }
 
@@ -387,6 +441,7 @@ export class VfxScriptPlayer {
         dueMs: nowMs + (seg.atMs ?? 0),
         seg,
         frame,
+        abilityId: script.abilityId,
         ...(tentativeKey !== undefined ? { tentativeKey } : {}),
       });
     }
@@ -423,21 +478,39 @@ export class VfxScriptPlayer {
     return casterPos;
   }
 
-  private fire(seg: VfxScriptSegment, frame: TriggerFrame, nowMs: number): void {
+  private fire(
+    seg: VfxScriptSegment,
+    frame: TriggerFrame,
+    nowMs: number,
+    // ⭐ GH#974 —— 掉段帳本要說得出**是哪一支技能的哪一段**（驗收要 10 支逐支確認）。
+    abilityId: string,
+  ): void {
     const casterPos = this.deps.entityPos(frame.caster);
+    const segIndex = this.deps.scriptFor(abilityId)?.segments.indexOf(seg) ?? -1;
+    const drop = (reason: ScriptSegmentDrop["reason"]): void =>
+      noteDrop({ abilityId, index: segIndex, kind: seg.kind, on: seg.on, reason });
     switch (seg.kind) {
       case "modelFx": {
         // 幾何走 sim 的同一份解算器（`modelFxInstancesFromFrame`）——
         // ⛔ 擺位語意不可以在播放器裡再活一份。
         const origin = casterPos ?? frame.point;
-        if (!origin) return;
+        // ⭐ GH#974 出口① —— ⛔ 在此之前這是一個**沒有聲音**的 return。
+        if (!origin) return drop("no-origin");
         const insts = modelFxInstancesFromFrame(seg, {
           origin,
           facing: frame.direction,
           point: frame.point,
           targetPos: frame.targetPos,
         });
-        if (insts.length === 0) return;
+        // ⭐⭐ GH#974 出口② —— **最常見的那一個**：`anchor:"target"` 在
+        //   `frame.targetPos` 與 `frame.point` 都缺席時解不出錨（出口③），
+        //   於是整批段落落到這裡，⛔ 而它一句話都不說。
+        //   ⚠️ `godie-e002.ex` 的 **17 段全部**是這一類 ⇒ 一次掉光。
+        if (insts.length === 0) {
+          return drop(seg.anchor === "target" && frame.targetPos === undefined && frame.point === undefined
+            ? "no-anchor"
+            : "no-instances");
+        }
         // ── owner 2026-08-28 slider 裁決的連續參數（純演出，⛔ 不進 sim）──────
         // 位移在**面向座標系**（JASS PolarProjectionBJ 的翻譯）；朝向偏移旋轉
         // 每一具的 dir（CreateNUnitsAtLoc 的 angle 格）。三角函式在客戶端合法

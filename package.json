@@ -94,6 +94,7 @@
     "grail:wishes": "bash scripts/genrun.sh grail:wishes grail:wishes:raw",
     "grail:wishes:check": "python3 tools/grail-wishes/build_wishes.py --check",
     "grail:wishes:raw": "python3 tools/grail-wishes/build_wishes.py",
+    "icons:webp": "tsx tools/icon-gen/convert-webp.ts",
     "iconstyle:build": "bash scripts/genrun.sh iconstyle:build iconstyle:build:raw",
     "iconstyle:build:raw": "python3 tools/icon-console/emit_style_spec.py",
     "iconstyle:check": "python3 tools/icon-console/emit_style_spec.py --check",

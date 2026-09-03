@@ -103,56 +103,190 @@ export interface StatRow {
 }
 
 /**
+ * ⭐ GH#973 —— 結算卡片上一欄可以讀的**每一個數字的名字**。
+ * `keyof PlayerMatchStats` ∪ 結算層自己算出來的那幾個（今天只有 `mobKills`）。
+ *
+ * ⚠️ 它存在的理由是**反方向**（第二守則⑫）：在此之前欄位表是一個手寫陣列，
+ * 於是「有資料而沒有欄位」結構上問不出來 —— `world.mobKills` 從 #215 起就在數，
+ * 一場十回合量到 **2,748 隻**，而結算頁上**零欄**（GH#973 的量測）。
+ * ⭐ 有了這一格，守衛才問得出「每一個今天真的會非零的數字，是不是要嘛有欄位、
+ * 要嘛在 {@link SETTLEMENT_DATA_WITHOUT_COLUMN} 上帶著一個可以被反駁的理由」。
+ */
+export type SettlementDatum = keyof PlayerMatchStats | "mobKills";
+
+/**
+ * 結算層才有、⛔ 不在 `PlayerMatchStats` 上的數字。
+ * `null` = **這一份封包沒有帶**（舊伺服器 / 手寫夾具）⇒ 那一列**不印**，
+ * ⛔ 不是印 0 —— 一個分不出「沒有」與「零」的數字就是第一·五守則的空宣稱。
+ */
+export interface SettlementExtras {
+  /** 整場殭屍擊殺（{@link settlementMobKills} 的輸出） */
+  mobKills: number | null;
+}
+
+/** 什麼都沒帶的結算層資料 —— 手寫夾具與舊伺服器落到這裡。 */
+export const NO_SETTLEMENT_EXTRAS: SettlementExtras = { mobKills: null };
+
+/**
+ * ⭐ 整場殭屍擊殺 —— 把**封包裡已經有的**每回合差值加總。
+ *
+ * ⛔ 為什麼不是加一格 `SettlementPlayer.mobKills`：這個數字**已經在線上了**。
+ * `MatchSettlement.rounds[*].players[*].mobKills` 是 `world.mobKills` 的每回合
+ * 差值（`MatchController.recordLedgerRound` + `foldFinalRoundResidual`），而
+ * `foldFinalRoundResidual` 保證最後一回合把殘量摺回去 ⇒ ⭐ **Σ 差值 ≡ 伺服器的
+ * 累積值**。2026-09-03 用三場真的比賽 × 12 席逐席量過：**36/36 逐位元相等**
+ * （`settlementColumns.test.ts` 是它的閘）。多送一格等於第二個住處（第〇·四守則）。
+ *
+ * `null` ⇒ 這一份封包沒有 `rounds`（舊伺服器 / 夾具）⇒ 那一列不印。
+ */
+export function settlementMobKills(
+  settlement: MatchSettlement | null,
+  seatId: number,
+): number | null {
+  if (!settlement?.rounds) return null;
+  let sum = 0;
+  for (const r of settlement.rounds) {
+    const mine = r.players.find((p) => p.seatId === seatId);
+    if (mine) sum += mine.mobKills;
+  }
+  return sum;
+}
+
+/** 一個座位的結算層資料。面板拿它餵 {@link buildStatBreakdown}。 */
+export function settlementExtras(
+  settlement: MatchSettlement | null,
+  seatId: number,
+): SettlementExtras {
+  return { mobKills: settlementMobKills(settlement, seatId) };
+}
+
+/**
+ * 結算卡片上的**一欄**。
+ *
+ * ⭐ `sources` 是這一欄**讀了哪幾個數字**的機器可讀宣告，⛔ 不是註解 ——
+ * 守衛從兩個方向讀它：①每一欄宣告的來源都要是真的存在的數字（⛔ 不可以憑空
+ * 發明一欄）②每一個真的會非零的數字都要被某一欄涵蓋（⛔ 或明示豁免）。
+ */
+export interface SettlementColumn {
+  key: string;
+  label: string;
+  /** 這一欄讀的數字。⚠️ 少寫一個 = 那個數字會被守衛當成「沒有欄位」而紅。 */
+  sources: readonly SettlementDatum[];
+  /** `null` ⇒ 這一份封包沒有這個數字 ⇒ **不印這一列**（⛔ 不是印 0）。 */
+  render(stats: PlayerMatchStats, extras: SettlementExtras): string | null;
+}
+
+/**
+ * 結算卡片的**欄位表** —— 順序就是畫面順序。
+ *
+ * ⚠️ 兩個消費端的格線都是 **2 欄**，所以相鄰兩列會排在同一橫列上：
+ * 守護塔那一對必須落在**偶數索引**（「打了多少」與「打掉幾座」分開看沒有意義）。
+ * ⇒ ⭐ 新欄位一律插在那一對**之後**，⛔ 不要插在它前面。
+ */
+export const SETTLEMENT_COLUMNS: readonly SettlementColumn[] = [
+  {
+    key: "kda",
+    label: "KDA",
+    sources: ["kills", "deaths", "assists"],
+    render: (s) => `${formatKda(s)}  (${kdaRatio(s).toFixed(1)})`,
+  },
+  { key: "damageDealt", label: "傷害輸出", sources: ["damageDealt"], render: (s) => formatInt(s.damageDealt) },
+  { key: "damageTaken", label: "承受傷害", sources: ["damageTaken"], render: (s) => formatInt(s.damageTaken) },
+  { key: "damageBlocked", label: "抵擋傷害", sources: ["damageBlocked"], render: (s) => formatInt(s.damageBlocked) },
+  // ⭐ GH#729 —— 守護塔是**中立目標物**，所以拆塔的輸出刻意不併進 `damageDealt`
+  // （那一格的語意是「對敵方英雄的輸出」，而 rating.ts 就是照那個語意打分）。
+  // ⚠️ 代價是：整場專心拆塔的人在此之前結算頁上**一個數字都沒有** —— sim 早就
+  // 在數了（matchStats.guardianDamage / guardiansSlain），只是沒有人把它畫出來
+  // （失敗形態⑧：算出來了但從沒送到玩家眼前）。⇒ 自己兩列。
+  // ⭐ GH#973 量到（2026-09-03，三場真的比賽 × 12 席）：`guardianDamage`
+  // **36/36 席非零**、`guardiansSlain` 28/36 —— ⛔ 守護塔**不是**裝飾性欄位，
+  // 票文「今天還有守護塔嗎」的假前提在這裡被推翻。⇒ 兩列都留著。
+  { key: "guardianDamage", label: "守護塔輸出", sources: ["guardianDamage"], render: (s) => formatInt(s.guardianDamage) },
+  { key: "guardiansSlain", label: "守護塔擊破", sources: ["guardiansSlain"], render: (s) => formatInt(s.guardiansSlain) },
+  // ⭐ GH#973 —— **殭屍波是每一回合的主要活動，而結算頁上零欄**（owner 2026-09-02：
+  // 「遊戲回合評價 跟 遊戲整場結算評價反饋 似乎有點過時了」）。量到的底數：一場
+  // 十回合 12 席打死 **2,748 隻**，36/36 席非零 —— 比守護塔那兩欄還普遍。
+  // ⚠️ 回合評價那一半**早就接上了**（`roundVictory.ts` 的 objective 軸讀
+  // `SeatState.mobKills`），⛔ 只有整場結算漏掉 —— 這一列就是那個缺口。
+  {
+    key: "mobKills",
+    label: "殭屍擊殺",
+    sources: ["mobKills"],
+    render: (_s, x) => (x.mobKills === null ? null : formatInt(x.mobKills)),
+  },
+  { key: "healingDone", label: "治療量", sources: ["healingDone"], render: (s) => formatInt(s.healingDone) },
+  { key: "cc", label: "控制時間", sources: ["ccAppliedTicks"], render: (s) => `${ticksToSeconds(s.ccAppliedTicks)}s` },
+  { key: "accuracy", label: "技能命中率", sources: ["abilityHits", "abilityWhiffs"], render: (s) => formatAccuracy(s) },
+  { key: "basic", label: "普攻命中", sources: ["basicAttackHits"], render: (s) => formatInt(s.basicAttackHits) },
+  // ⭐ GH#729 —— 首殺賞金（`bountyGold`）**已經含在** `goldEarned` 裡
+  // （`grantGold` 一律走 `recordGold`），所以它是括號裡的**子行**，⛔ 不是第二列：
+  // 另開一列會讓玩家把同一筆錢加兩次。⚠️「含」這個字是那個語意的唯一載體 ——
+  // 拿掉它，卡面就在說一件不會發生的事（第一·五守則）。
+  // 沒吃到賞金就不長括號，與下面的「救援復活」同一個慣例。
+  {
+    key: "gold",
+    label: "取得金錢",
+    sources: ["goldEarned", "bountyGold"],
+    render: (s) =>
+      s.bountyGold > 0
+        ? `${formatInt(s.goldEarned)} (含賞金 ${formatInt(s.bountyGold)})`
+        : formatInt(s.goldEarned),
+  },
+  { key: "largest", label: "最大單次傷害", sources: ["largestSingleHit"], render: (s) => formatInt(s.largestSingleHit) },
+  { key: "flowers", label: "治療花", sources: ["flowersEaten"], render: (s) => formatInt(s.flowersEaten) },
+  // task #84: a rescue never erases a death, so it needs its own row or it
+  // is invisible on the card. Received is shown beside it so a revived
+  // player can see why their death count is not the whole story.
+  {
+    key: "revives",
+    label: "救援復活",
+    sources: ["revivesPerformed", "revivesReceived"],
+    render: (s) =>
+      s.revivesReceived > 0
+        ? `${formatInt(s.revivesPerformed)} (被救 ${formatInt(s.revivesReceived)})`
+        : formatInt(s.revivesPerformed),
+  },
+  { key: "alive", label: "存活時間", sources: ["timeAliveTicks"], render: (s) => `${ticksToSeconds(s.timeAliveTicks)}s` },
+];
+
+/**
+ * ⭐ 今天**真的有值**但刻意**沒有欄位**的那些 —— 每一列一個**可以被反駁的理由**。
+ *
+ * ⛔ 這不是豁免名單，是一張**帳單**：守衛拿真的比賽量出「哪幾個數字會非零」，
+ * 凡是既不在 {@link SETTLEMENT_COLUMNS} 也不在這裡的，就紅並指名它。
+ * ⇒ 下一個往 `PlayerMatchStats` 加欄位的人**必須做一次選擇**，
+ *   ⛔ 而不是像 `mobKills` 那樣安靜地缺席好幾個月。
+ */
+export const SETTLEMENT_DATA_WITHOUT_COLUMN: Readonly<Record<string, string>> = {
+  xp: "它是**等級**的來源，⛔ 不是一個玩家會拿來互相比較的量；等級本身已經在卡面上。",
+  abilityCasts:
+    "「技能命中率」那一欄的分母已經是它（hits+whiffs）。⭐ 單獨的施放次數⛔ 不會改變玩家下一場的打法。",
+  killParticipation:
+    "KDA 那一欄與 `reflectionHints` 的「團戰參與度不足」已經在講同一件事；再開一欄是同一個事實的第二個數字（第〇·四守則）。",
+  multikills:
+    "由 `reflectionHints` 的「打出多殺」表達。⚠️ 量到只有 18/36 席非零 ⇒ 開一欄會讓**一半的人**看到一個 0。",
+  coinsCollected:
+    "⛔ **確認是缺口，⛔ 不是設計**：2026-09-03 三場真的比賽量到 **0/36**（出貨 `goldDrop` 是開著的，而 bot 從不投幣）。⭐ 到期條件 = 有任何一場量到非零，那一天它就該有一欄。",
+};
+
+/**
  * The ordered per-stat breakdown shown on a player's settlement card. Pure —
  * the component just renders these label/value pairs.
+ *
+ * ⭐ 表在 {@link SETTLEMENT_COLUMNS}，這一支只做「渲染 + 丟掉沒有值的列」。
+ * ⚠️ `extras` 省略 ⇒ 結算層的那幾格是 `null` ⇒ 它們的列**不出現**（⛔ 不是 0）。
  */
-export function buildStatBreakdown(stats: PlayerMatchStats): StatRow[] {
-  return [
-    { key: "kda", label: "KDA", value: `${formatKda(stats)}  (${kdaRatio(stats).toFixed(1)})` },
-    { key: "damageDealt", label: "傷害輸出", value: formatInt(stats.damageDealt) },
-    { key: "damageTaken", label: "承受傷害", value: formatInt(stats.damageTaken) },
-    { key: "damageBlocked", label: "抵擋傷害", value: formatInt(stats.damageBlocked) },
-    // ⭐ GH#729 —— 守護塔是**中立目標物**，所以拆塔的輸出刻意不併進 `damageDealt`
-    // （那一格的語意是「對敵方英雄的輸出」，而 rating.ts 就是照那個語意打分）。
-    // ⚠️ 代價是：整場專心拆塔的人在此之前結算頁上**一個數字都沒有** —— sim 早就
-    // 在數了（matchStats.guardianDamage / guardiansSlain），只是沒有人把它畫出來
-    // （失敗形態⑧：算出來了但從沒送到玩家眼前）。⇒ 自己兩列。
-    // ⚠️ 兩列相鄰且落在偶數索引：兩個消費端的格線都是 2 欄，所以它們會排在同一
-    // 橫列上被一起讀到（「打了多少」與「打掉幾座」分開看沒有意義）。
-    { key: "guardianDamage", label: "守護塔輸出", value: formatInt(stats.guardianDamage) },
-    { key: "guardiansSlain", label: "守護塔擊破", value: formatInt(stats.guardiansSlain) },
-    { key: "healingDone", label: "治療量", value: formatInt(stats.healingDone) },
-    { key: "cc", label: "控制時間", value: `${ticksToSeconds(stats.ccAppliedTicks)}s` },
-    { key: "accuracy", label: "技能命中率", value: formatAccuracy(stats) },
-    { key: "basic", label: "普攻命中", value: formatInt(stats.basicAttackHits) },
-    // ⭐ GH#729 —— 首殺賞金（`bountyGold`）**已經含在** `goldEarned` 裡
-    // （`grantGold` 一律走 `recordGold`），所以它是括號裡的**子行**，⛔ 不是第二列：
-    // 另開一列會讓玩家把同一筆錢加兩次。⚠️「含」這個字是那個語意的唯一載體 ——
-    // 拿掉它，卡面就在說一件不會發生的事（第一·五守則）。
-    // 沒吃到賞金就不長括號，與下面的「救援復活」同一個慣例。
-    {
-      key: "gold",
-      label: "取得金錢",
-      value:
-        stats.bountyGold > 0
-          ? `${formatInt(stats.goldEarned)} (含賞金 ${formatInt(stats.bountyGold)})`
-          : formatInt(stats.goldEarned),
-    },
-    { key: "largest", label: "最大單次傷害", value: formatInt(stats.largestSingleHit) },
-    { key: "flowers", label: "治療花", value: formatInt(stats.flowersEaten) },
-    // task #84: a rescue never erases a death, so it needs its own row or it
-    // is invisible on the card. Received is shown beside it so a revived
-    // player can see why their death count is not the whole story.
-    {
-      key: "revives",
-      label: "救援復活",
-      value:
-        stats.revivesReceived > 0
-          ? `${formatInt(stats.revivesPerformed)} (被救 ${formatInt(stats.revivesReceived)})`
-          : formatInt(stats.revivesPerformed),
-    },
-    { key: "alive", label: "存活時間", value: `${ticksToSeconds(stats.timeAliveTicks)}s` },
-  ];
+export function buildStatBreakdown(
+  stats: PlayerMatchStats,
+  extras: SettlementExtras = NO_SETTLEMENT_EXTRAS,
+): StatRow[] {
+  const out: StatRow[] = [];
+  for (const col of SETTLEMENT_COLUMNS) {
+    const value = col.render(stats, extras);
+    if (value === null) continue;
+    out.push({ key: col.key, label: col.label, value });
+  }
+  return out;
 }
 
 // ---------------------------------------------------------- reflection hints ---

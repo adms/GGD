@@ -151,6 +151,10 @@ export const MATCH_BOOL_LABELS: Readonly<Record<string, MatchBoolLabels>> = Obje
     on: "鎖定就開打（出貨）",
     off: "一律等選角倒數跑完",
   },
+  "match.intermissionEarlyStartVsBot": {
+    on: "真人按 Ready 就開打（出貨）",
+    off: "一律等每一個座位都 Ready",
+  },
   "match.forceSettleVsBot": {
     on: "我這場打完就結算其他場（出貨）",
     off: "等每一區自己打完",
@@ -268,6 +272,16 @@ export const MATCH_FIELD_INFO: Readonly<Record<string, MatchFieldInfo>> = Object
       "只有自己一個人類、其餘都是 bot 的那種局，人類鎖定英雄的那一刻就進戰鬥，不等上面那個選角倒數跑完（owner 2026-08-03:「vs bot 選角後就可以開始進入戰鬥不用等，一樣是因為不用等其他 bot」）。" +
       "關掉＝一律等倒數，也就是這一格出現之前的行為。⚠️ 沒有第三種「等 bot 也選完」——bot 不在選角階段選，牠們是在階段結束時一次配好的。" +
       "⚠️ 判準是「人類座位只有 1 個」，不是「場上有 bot」：每一場都有 bot 填空位，用它判會讓三個朋友一起打的局也被第一個鎖定的人拖走。",
+    live: PHASE,
+  },
+  "match.intermissionEarlyStartVsBot": {
+    zh: "商店：真人都按 Ready 就直接開打",
+    note:
+      "中場（商店）階段，**真人座位**全部按了 Ready 就直接進戰鬥 —— 不等下面那個「中場秒數」的倒數，也不等任何一個非真人座位（GH#970，owner 2026-09-02:「不是有開一張票是練習模式按 ready 後直接進商店不用等待了嗎？而且還被關了？」）。" +
+      "關掉＝一律等「每一個生出來的座位都 Ready」，也就是這一格出現之前的行為（一鍵 rollback）。" +
+      "⚠️ **練習模式非開不可**：練習房的三個靶子拿的是一支永遠不送指令的 driver，牠們**結構上永遠不會 Ready** ⇒ 舊條件在練習房裡恆為 false ⇒ 按了 Ready 每一次都等滿整個倒數（實測 25.0 秒）。" +
+      "⚠️ 真人**自己**那張三選一卡還開著時仍然會等 —— 早退不可以替玩家把他的強化丟掉；非真人的卡不擋（照舊由系統代選）。" +
+      "⚠️ 一個真人都沒有的局（全 bot 沙盒／單元測試／既有錄影）**完全不受影響**，走的仍然是舊條件。",
     live: PHASE,
   },
   "match.forceSettleVsBot": {
@@ -674,6 +688,7 @@ export const MATCH_GROUPS: readonly MatchGroup[] = [
       "match.champSelectSec",
       "match.champSelectSecVsBot",
       "match.champSelectEarlyStartVsBot",
+      "match.intermissionEarlyStartVsBot",
       "match.forceSettleVsBot",
       "match.settlementCardOnHealthSpent",
       "match.disposeEmptyChampSelect",

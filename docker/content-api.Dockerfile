@@ -23,7 +23,14 @@ RUN pnpm --filter "@ggd/content-api" build \
  && pnpm --filter "@ggd/content-api" deploy --prod /out
 
 FROM node:22-alpine
-RUN apk add --no-cache tini
+# ⭐ GH#967 —— `cwebp` 必須住在 **runtime stage**（⛔ 不是 build stage）。
+#   `libwebp-tools` 是 Alpine 上 `cwebp` 的來源（⛔ 不是 `webp`／`cwebp`）。
+#   ⚠️ 裝在 build stage 等於沒裝：`COPY --from=build /out/` 只搬 node_modules，
+#      症狀一模一樣（build 過、跑起來 ENOENT）。
+#   ⭐ `cwebp -version` 是**會回非零**的自證（CLAUDE.md：選 fail-open 就要有東西喊）——
+#      套件改名／被拿掉 ⇒ **build 當場紅**，⛔ 不是等到第一次轉檔才靜默失敗。
+RUN apk add --no-cache tini libwebp-tools \
+ && cwebp -version > /dev/null
 ENV NODE_ENV=development \
     CONTENT_DIR=/srv/content
 WORKDIR /app

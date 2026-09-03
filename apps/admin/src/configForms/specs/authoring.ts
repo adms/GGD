@@ -10,6 +10,7 @@ import {
   zConfigCastTimeDoc,
   zConfigContentLoadDoc,
   zConfigAuthoringRulesDoc,
+  zConfigIconUploadDoc,
 } from "@ggd/shared/content";
 // ⛔ 級距名只有一份（GH#414）—— 後台不重打一組字串。
 // ⭐ 2026-08-21（owner「後台設定及說明⋯**全部都是推導動態即時產生**」）：連
@@ -330,6 +331,72 @@ export const CONTENT_LOAD_SPEC: ConfigDocSpec<"contentLoad"> = {
     },
   ],
   // 三格純量，沒有不編輯的分支要原封帶走。
+  preserved: [],
+};
+
+// ── 🖼 編輯器 icon 上傳（config/icon-upload）—— GH#966 ──────────────────────
+export const ICON_UPLOAD_SPEC: ConfigDocSpec<"iconUpload"> = {
+  page: "iconUpload",
+  collection: "config",
+  docId: "icon-upload",
+  schemaTag: "config.icon-upload@1",
+  zod: zConfigIconUploadDoc,
+  title: "編輯器 icon 上傳",
+  intro: [
+    "owner 2026-09-02：「codex 技能編輯器要能**打包 icon 圖片**。設計者可以用 codex 技能編輯器**上傳設定圖片檔（但不是真的馬上上傳）**，而編輯器會**自動縮圖轉檔放入一起打包**」",
+    "⭐ 流程：編技能 → 選一張自己畫的圖（**先留在編輯器裡**，⛔ 不上傳）→ 匯出時圖跟技能 JSON **進同一個 zip**（路徑 `assets/icon/<collection>/<技能 id>/source.png`）→ Main 收到後驗位元組、轉成出貨規格（128² WebP q90）、存進 `content/assets/icons/`、把文件的 `icon` 欄位指過去。",
+    "⛔⛔ **在此之前放進 zip 的圖會無聲消失** —— 傳輸層把每一個檔都當 UTF-8 文字讀，然後把不是 `authoring/` 的路徑**靜靜跳過**。症狀是最糟的一種：匯出成功·上傳成功·validate 通過·⛔ 而 icon 不見了。⭐ 現在 zip 裡有而 manifest 沒宣告（或反過來）會**報錯並指名那個路徑**。",
+    "⚠️ ⭐ **編輯器不可以自己轉檔** —— 轉檔規則只有一個住處（`packages/shared/src/content/icons/encodeIcon.ts`，CLI 與 API 共用）。兩份實作的症狀是「預覽看到的圖 ≠ 遊戲裡的圖」，⛔ 而沒有任何東西會紅。編輯器要預覽就顯示**原圖縮放**。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/icon-upload.json`**。",
+  ],
+  consumer:
+    "apps/content-api/src/importRoutes.ts 的 `iconPolicy()` → `checkIconAssets()`（驗）與 `landIconAssets()`（轉檔＋落地）。⚠️ 兩條路都在 `POST /api/v1/content-import/{validate,apply}` 底下，⛔ 而 `/validate` 一個位元組都不寫。",
+  effect:
+    "**下一次匯入就生效**（每一次請求都重讀這份設定，⛔ 不快取）。⛔ 不必重新部署、⛔ 不必重啟。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "收不收編輯器打包的 icon（總開關）",
+      note:
+        "⭐⭐ **這一格就是這個功能的一鍵 rollback。** 出貨 **{{出貨值}}**。" +
+        "⛔ 關掉之後，帶 icon 的包會被**明確拒絕**（診斷碼 `ASSET_UPLOAD_DISABLED`）—— " +
+        "⭐ 而不是靜靜地把圖丟掉，⚠️ 因為「靜靜丟掉」正是這張票要修的那個 bug。" +
+        "⚠️ 關掉**不會**動到任何已經落地的 icon（那些檔案照常出貨）。",
+    },
+    {
+      path: "requiresReview",
+      zh: "上線後留一筆待審紀錄",
+      note:
+        "出貨 **{{出貨值}}**。⭐ 開著時，每一次落地的 icon 會寫進匯入稽核尾巴" +
+        "（`content-import.icon-pending-review`），供批次審查頁列出來。" +
+        "⚠️ ⭐ 它**不是事前審批門** —— owner 對「一頁批次後台驗收」的定義逐字是" +
+        "「**先上線成果**，但是在**後台可以一鍵否決還原**」⇒ 圖是先上線的。" +
+        "⛔⛔ 關掉它的後果要看清楚：設計師上傳的圖會**直接對所有玩家可見而沒有任何人審過**，" +
+        "⭐ 而 icon 是全遊戲曝光度最高的素材之一（技能格、商店、選人畫面都在用）。",
+    },
+    {
+      path: "preserveAlpha",
+      zh: "保留透明背景",
+      note:
+        "出貨 **{{出貨值}}**。⭐ `cwebp` 預設就保留 alpha ⇒ 開著是**零額外工作**。" +
+        "⛔ 關掉會讓去背的圖在技能格上變成一塊不透明方形 —— " +
+        "⚠️ 出貨的 119 份 legacy PNG 正是靠 alpha 疊在技能格上的那種風格。" +
+        "⚠️ 這一格**只影響新上傳的圖**，⛔ 不會回頭改既有的 1,039 份 WebP。",
+    },
+    {
+      path: "maxSourceEdgeMultiple",
+      zh: "來源圖邊長上限 — 出貨邊長的幾倍",
+      note:
+        "出貨 **{{出貨值}}** 倍（⭐ 出貨邊長 128 ⇒ 實際上限 4096²）。" +
+        "⭐⭐ 這裡存的是**倍數**而不是 4096，理由是第〇·四守則：" +
+        "出貨邊長哪天從 128 變成 256，一個寫死的 4096 就變成「16 倍」而**沒有東西會紅**。" +
+        "⚠️ ⭐ 它擋的是**圖片解壓炸彈**：一張宣稱 65535×65535 的 PNG 檔頭只有 24 bytes，" +
+        "壓縮比與 entry 大小**全部過得了** zip 那一層，⛔ 而真的 decode 它就是幾十 GB 的記憶體。" +
+        "⇒ ⭐ 判準是**讀檔頭**（decode 之前），⛔ 不是「解開來看看多大」。" +
+        "⚠️ 上界 128 倍（16384²）：再高就等於沒有擋。",
+    },
+  ],
+  // 四格純量，沒有不編輯的分支要原封帶走。
   preserved: [],
 };
 

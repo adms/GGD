@@ -1546,13 +1546,69 @@ export class MatchController {
     // **活版本**：真人座位（1..n 都算 —— couch play 也是「大家鎖了就開」）
     // 全部鎖定 ⇒ 直接開打。0 個真人 ⇒ false（全 bot 沙盒沒有人在等，
     // 而「全部鎖定」對空集合恆真 —— 那一關不能少）。
-    let humans = 0;
-    for (const st of this.seats.values()) {
-      if (!st.humanSeat) continue;
-      humans++;
-      if (!this.pickLockTick.has(st.seatId)) return false;
+    const humans = this.liveHumanSeats();
+    if (humans.length === 0) return false;
+    return humans.every((st) => this.pickLockTick.has(st.seatId));
+  }
+
+  /**
+   * ⭐⭐ 「這一場**還在等誰**」的唯一判準（第〇·四守則:一個住處）。
+   *
+   * ⚠️ 這支函式是 GH#970 抽出來的,而它被抽出來的理由就是那張票本身:
+   * #847 把選角那一段改成「只等真人」,⛔ 而**中場那一段**還在等每一個座位 ——
+   * 也就是同一個判準被寫了一次、漏了第二個位置。抄第二份的下場已經量到了,
+   * 所以 `champSelectEarlyStartDue` 與 `intermissionEarlyStartDue`
+   * ⛔ **不可以各自再寫一次 `humanSeat` 的迴圈**。
+   *
+   * ⚠️ 讀的是**活的座位**（`seat.humanSeat`）,⛔ 不是建構時凍結的 `specs`:
+   * 離線 dev join 與練習房建房時 12 席全是 `isBot: true`,人是**之後** `onJoin`
+   * 才把座位翻成真人的（`MatchRoom.ts`「dev mode: take over the first AI seat」）。
+   */
+  private liveHumanSeats(): Seat[] {
+    return [...this.seats.values()].filter((st) => st.humanSeat);
+  }
+
+  /**
+   * ⭐ A3 (GH#970) —— **中場（商店）的早退**。owner 2026-09-02:
+   *
+   * > 「不是有開一張票是**練習模式按 ready 後直接進商店不用等待**了嗎？
+   * >   而且還被關了？」
+   *
+   * ⭐⭐ **量到的根因（2026-09-03，⛔ 不是票文寫的那個）**：票文說「要等 11 個 bot
+   * 逛完商店」—— 實測**不成立**：bot 在第 5 個 tick 就全部 Ready、牠們的卡在第 10
+   * 個 tick 就被代選掉。真正堵住的是 `allSeatsReady` 的另一種座位:
+   * 練習房的三個靶子（`config.practice@1.dummyCount`，出貨 3）拿的是
+   * {@link DummyDriver} —— 一支每一 tick 回 `EMPTY_INTENT` 的 driver
+   * ⇒ 它們**結構上永遠不會送 `ready`** ⇒ `allSeatsReady` 在練習房裡**恆為 false**
+   * ⇒ 玩家按了 Ready 之後**每一次都等滿倒數**（實測 749/750 ticks ≈ 25.0 秒）。
+   * ⚠️ 那是失敗形態⑧:讀端在（`seat.ready`），而那一格有**零個寫入端**。
+   *
+   * 判準與 {@link champSelectEarlyStartDue} 走**同一支** {@link liveHumanSeats}:
+   *
+   * · **真人座位全部 Ready** —— couch 多人＝兩個人都按了才走,⛔ 不是第一個按的人
+   *   把另一個拖走。
+   * · **沒有真人自己的三選一卡還開著** —— 客戶端的 draft 遮罩逐字寫著
+   *   「a Ready press with an unanswered offer silently throws the augment away」,
+   *   ⛔ 早退不可以替玩家把他的卡丟掉。非真人的卡**不擋**（照舊由
+   *   `autoPickIndex` 決定性代選,而 `advancePhase` 會在早退的同一 tick 把它們收掉,
+   *   所以⛔ 沒有一張卡會被帶進 combat）。
+   * · ⚠️ **零個真人座位回 false** —— 全 bot 沙盒／單元測試／錄影交還舊規則
+   *   （`allSeatsReady`）,⛔ 不是「立刻早退」:「全部 Ready」對空集合恆真。
+   *   ⭐ 實測全 bot 沙盒今天在第 11 個 tick 就早退,而這一格**一格都沒動到它** ——
+   *   新規則是**純加法**（`expired || 這一格 || 舊規則`），它只可能讓相位**更早**
+   *   結束,⛔ 不可能更晚。
+   */
+  private intermissionEarlyStartDue(): boolean {
+    if (!this.vsBotPacing.intermissionEarlyStart) return false;
+    // `entityId === null` 的座位跳過 —— 和 `allSeatsReady` 同一條:沒生出來的
+    // 座位按不了 Ready。全部真人都還沒生出來 ⇒ humans 為空 ⇒ 回 false。
+    const humans = this.liveHumanSeats().filter((st) => st.entityId !== null);
+    if (humans.length === 0) return false;
+    if (!humans.every((st) => st.ready)) return false;
+    for (const offer of this.offers.values()) {
+      if (this.seats.get(offer.seatId)?.humanSeat) return false;
     }
-    return humans > 0;
+    return true;
   }
 
   /**
@@ -4556,17 +4612,26 @@ export class MatchController {
         // offer is consumed rather than left stuck over the combat view. The
         // index is DETERMINISTIC (autoPickIndex, seeded off the match, never
         // Math.random / world.rng), so a same-seed replay resolves it identically.
+        // ⭐ A3 (GH#970) —— 先問「早退到期了嗎」,**再**跑代選迴圈:早退的條件之一
+        // 就是「⛔ 沒有真人的卡還開著」,所以順序反過來就會把它自己的前提改掉。
+        const earlyDue = this.intermissionEarlyStartDue();
         for (const [offerId, offer] of [...this.offers]) {
           const seat = this.seats.get(offer.seatId);
           const age = this.world.tick - offer.createdTick;
-          if ((seat?.driverKind === "ai" && age > 10) || expired) {
+          // ⚠️ `|| earlyDue` 那一項只可能碰到**非真人**的卡（早退成立時,真人的卡
+          // 依定義已經是空的）—— 它在的理由是「⛔ 不可以把一張沒收掉的卡帶進
+          // combat」:今天 `expired` 那條路也是先把每一張卡收乾淨才推進相位。
+          if ((seat?.driverKind === "ai" && age > 10) || expired || earlyDue) {
             // auto = true —— 系統代選(AI 座位的延遲自動選,或 #207 的過期
             // 安全網)。`aggregateOfferChoices` 把它算進 `autoPicked` 而不是
             // `picked`,所以取捨率不會被代選稀釋。
             this.applyPick(offerId, offer, this.autoPickIndex(offerId, offer), true);
           }
         }
-        if (expired || (this.allSeatsReady && this.offers.size === 0)) {
+        // ⭐ GH#970 —— `earlyDue` 是**加進來的第三條路**,⛔ 不是取代:
+        // `allSeatsReady` 一個位元組都沒動,所以 0 個真人座位的那些局（全 bot
+        // 沙盒、單元測試、既有錄影）走的仍然是它,逐位元不變。
+        if (expired || earlyDue || (this.allSeatsReady && this.offers.size === 0)) {
           this.phase.advance(); // -> combat
           this.enterCombat();
         }

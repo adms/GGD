@@ -13,6 +13,7 @@
     "champSelectSec": 20,
     "champSelectSecVsBot": 120,
     "champSelectEarlyStartVsBot": true,
+    "intermissionEarlyStartVsBot": true,
     "forceSettleVsBot": true,
     "settlementCardOnHealthSpent": false,
     "disposeEmptyChampSelect": true,

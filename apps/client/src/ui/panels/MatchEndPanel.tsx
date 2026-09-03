@@ -19,7 +19,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import type { ChampionId } from "@ggd/shared/ids";
-import type { SettlementPlayer } from "@ggd/shared/protocol/messages";
+import type { MatchSettlement, SettlementPlayer } from "@ggd/shared/protocol/messages";
 import { useHud } from "../../net/RoomStore";
 import { HUD_Z } from "../hud/hudLayout";
 import {
@@ -46,6 +46,7 @@ import {
   localWinQuoteChampion,
   formatKda,
   reflectionHints,
+  settlementExtras,
   settlementTeamLives,
   sortSettlementRanking,
 } from "./settlementModel";
@@ -183,9 +184,20 @@ function Reflections(props: { player: SettlementPlayer }): React.JSX.Element {
   );
 }
 
-/** The local player's full per-stat breakdown grid. */
-function StatBreakdown(props: { player: SettlementPlayer }): React.JSX.Element {
-  const rows = buildStatBreakdown(props.player.stats);
+/**
+ * The local player's full per-stat breakdown grid.
+ *
+ * ⭐ GH#973 —— 吃**整份結算**而不是只吃 `player.stats`：殭屍擊殺那一欄的數字
+ * 住在 `settlement.rounds` 的每回合差值裡，`settlementExtras` 把它加總。
+ */
+function StatBreakdown(props: {
+  player: SettlementPlayer;
+  settlement: MatchSettlement | null;
+}): React.JSX.Element {
+  const rows = buildStatBreakdown(
+    props.player.stats,
+    settlementExtras(props.settlement, props.player.seatId),
+  );
   return (
     <div
       style={{
@@ -843,7 +855,7 @@ export function MatchEndPanel({
             {collapsed ? null : (
               <>
                 <div style={{ fontSize: 11, color: TEXT_DIM, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6 }}>個人數據</div>
-                <StatBreakdown player={local} />
+                <StatBreakdown player={local} settlement={settlement} />
                 <div style={{ fontSize: 11, color: TEXT_DIM, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6 }}>賽後檢討</div>
                 <Reflections player={local} />
               </>

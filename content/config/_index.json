@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "38edf7972bd9",
+  "hash": "3da665668684",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -155,8 +155,8 @@
     {
       "id": "config.match",
       "path": "config/config.match.json",
-      "hash": "38ae8bd5af49",
-      "size": 2020
+      "hash": "4909c6237044",
+      "size": 2061
     },
     {
       "id": "content-load",
@@ -265,6 +265,12 @@
       "path": "config/icon-style.json",
       "hash": "eccc429706da",
       "size": 3924
+    },
+    {
+      "id": "icon-upload",
+      "path": "config/icon-upload.json",
+      "hash": "a5e5329cfd64",
+      "size": 1096
     },
     {
       "id": "item-card",
@@ -479,8 +485,8 @@
     {
       "id": "ui-cues",
       "path": "config/ui-cues.json",
-      "hash": "46b79f220a12",
-      "size": 3526
+      "hash": "d491b704a40d",
+      "size": 3555
     },
     {
       "id": "ui-lexicon",

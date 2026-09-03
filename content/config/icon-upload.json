@@ -1,0 +1,9 @@
+{
+  "id": "icon-upload",
+  "schema": "config.icon-upload@1",
+  "note": "⭐⭐ 編輯器打包進來的 icon 圖片要怎麼收（GH#966）。owner 2026-09-02 逐字：「codex 技能編輯器要能**打包 icon 圖片**。設計者可以用 codex 技能編輯器**上傳設定圖片檔（但不是真的馬上上傳）**，而編輯器會**自動縮圖轉檔放入一起打包**」。⭐ zip 路徑約定 `assets/icon/<collection>/<docId>/source.<ext>`，落點 `content/assets/icons/<collection>/<id>.webp`（與 tools/icon-gen 同一個公式）。⭐⭐ 三個 owner 沒裁決的決策點各一格：①要不要留審核紀錄 ②保不保留透明背景 ③來源尺寸上限（**倍數**，⛔ 不是 4096 —— 它從出貨邊長推導，第〇·四守則）。⭐ `enabled` 就是這個功能的一鍵 rollback：關掉之後帶 icon 的包會被**明確拒絕**（ASSET_UPLOAD_DISABLED），⛔ 不是靜靜地把圖丟掉 —— 而那正是本票要修的那個 bug 的樣子。",
+  "enabled": true,
+  "requiresReview": true,
+  "preserveAlpha": true,
+  "maxSourceEdgeMultiple": 32
+}

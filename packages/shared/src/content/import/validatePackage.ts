@@ -24,6 +24,12 @@
  */
 import { extractRefs } from "../refs";
 import type { CollectionName } from "../schema";
+import {
+  ASSET_ROLE,
+  checkIconAssets,
+  type IconAssetPlan,
+  type IconUploadPolicy,
+} from "./iconAssets";
 import { IMPORT_DIAGNOSTICS, formatDiagnostic } from "./diagnostics";
 import type { ImportDiagnostic } from "./diagnostics";
 import { contentSha256 } from "./jcs";
@@ -48,6 +54,15 @@ export interface ValidateInput {
   readonly capabilities: ReadonlySet<string>;
   /** 這一台算出來的 `authoringProcessor.fingerprint`。②用它。 */
   readonly processorFingerprint: string;
+  /**
+   * ⭐ GH#966 —— icon 上傳政策。**沒給 ＝ 這條路不收二進位資產**
+   * （⛔ 而包裡真的有 asset 時會明確報錯，⛔ 不是靜靜忽略）。
+   */
+  readonly assetPolicy?: IconUploadPolicy | undefined;
+  /** ⭐ 現有 icon 檔的 sha256（`<collection>/<id>` → `sha256:<hex>`）—— CAS 的另一半。 */
+  readonly existingIcons?: ReadonlyMap<string, string> | undefined;
+  /** 位元組雜湊器（`sha256:` wire format）。⛔ 這一支自己不引入 crypto（它要能在瀏覽器讀）。 */
+  readonly assetSha256?: ((bytes: Uint8Array) => string) | undefined;
 }
 
 export interface ValidateOutput {
@@ -61,6 +76,8 @@ export interface ValidateOutput {
     readonly path: string;
     readonly contentSha256: string;
   }[];
+  /** ⭐ GH#966 —— 通過驗證的 icon 資產（apply 會照這一份落地）。 */
+  readonly iconAssets?: readonly IconAssetPlan[];
 }
 
 function diag(
@@ -273,6 +290,38 @@ export function validatePackage(input: ValidateInput): ValidateOutput {
     }
   }
 
+  // ── ⑨ icon 二進位資產（GH#966）────────────────────────────────────────────
+  // ⭐ 只在呼叫端交出 `assetPolicy` 時跑（＝ ZIP 傳輸層）。⛔ 沒交出來就代表
+  //   這條路上不可能有 asset —— ⚠️ 而**包裡有 asset 卻沒有政策**要說出來，
+  //   ⛔ 不是靜靜地忽略（那正是本票要修的那個病）。
+  const assetEntries = m.entries.filter((e) => e.role === ASSET_ROLE);
+  let iconAssets: readonly IconAssetPlan[] = [];
+  if (assetEntries.length > 0) {
+    if (input.assetPolicy === undefined) {
+      out.push(
+        diag("ASSET_ENTRY_INVALID", {
+          path: assetEntries[0]!.path,
+          reason:
+            "這條路不收二進位資產（icon 圖片只走 ZIP 傳輸，⛔ 不走 JSON package）",
+        }),
+      );
+    } else {
+      const bytes = new Map<string, Uint8Array>();
+      for (const a of pkg.assets) {
+        if (a.bytes instanceof Uint8Array) bytes.set(a.path, a.bytes);
+      }
+      const r = checkIconAssets({
+        entries: assetEntries,
+        bytes,
+        policy: input.assetPolicy,
+        existing: input.existingIcons ?? new Map<string, string>(),
+        sha256: input.assetSha256 ?? (() => "sha256:" + "0".repeat(64)),
+      });
+      out.push(...r.diagnostics);
+      iconAssets = r.plans;
+    }
+  }
+
   const blocked = out.some((d) => d.severity === "error");
-  return { ok: !blocked, value: pkg, diagnostics: out, changed };
+  return { ok: !blocked, value: pkg, diagnostics: out, changed, iconAssets };
 }

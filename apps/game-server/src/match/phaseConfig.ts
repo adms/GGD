@@ -177,6 +177,11 @@ export interface VsBotPacing {
   forceSettle: boolean;
   /** A2:人類座位全部鎖定英雄後,不等選角倒數直接進戰鬥。 */
   earlyStart: boolean;
+  /**
+   * A3 (GH#970):**真人座位**全部 Ready 之後,不等中場倒數、也不等任何一個
+   * 非真人座位,直接進戰鬥。⭐ A2 的**第二個位置** —— #847 只修了 A2。
+   */
+  intermissionEarlyStart: boolean;
 }
 
 /**
@@ -188,6 +193,9 @@ export const DEFAULT_VS_BOT_PACING: VsBotPacing = Object.freeze({
   soloVsBots: false,
   forceSettle: true,
   earlyStart: true,
+  // ⭐ GH#970 —— owner 要的那一側（「按 ready 後直接進…不用等待」）＝預設啟動
+  //   （第〇·六守則:「優先權大的更新後都是預設啟動」）。
+  intermissionEarlyStart: true,
 });
 
 /** `SeatSpec` 裡這支函式唯一在意的那一格 —— 避免把整個型別拖進來。 */
@@ -214,6 +222,8 @@ export function resolveVsBotPacing(seats: readonly SeatIsBot[]): VsBotPacing {
     soloVsBots: humans === 1,
     forceSettle: m?.forceSettleVsBot ?? DEFAULT_VS_BOT_PACING.forceSettle,
     earlyStart: m?.champSelectEarlyStartVsBot ?? DEFAULT_VS_BOT_PACING.earlyStart,
+    intermissionEarlyStart:
+      m?.intermissionEarlyStartVsBot ?? DEFAULT_VS_BOT_PACING.intermissionEarlyStart,
   };
 }
 

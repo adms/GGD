@@ -320,6 +320,75 @@ export const IMPORT_DIAGNOSTICS = {
     severity: "error",
     origin: "ggd-extension",
   }),
+
+  // ── ⭐⭐ GH#966 icon 二進位資產（`role: "asset"`）─────────────────────────
+  //
+  // ⚠️ 這六個碼全部 `failClosed: true`。理由不是嚴格，是**輸入不可信**：
+  // 它們每一個都在回答「這一坨未信任的位元組**可不可以被 decode**」，
+  // ⛔ 而一個可以被 `acceptedWarnings[]` 豁免的解壓炸彈檢查等於沒有檢查。
+  ASSET_ENTRY_INVALID: def({
+    code: "ASSET_ENTRY_INVALID",
+    message:
+      "asset entry `{path}` 不合規：{reason}。⭐ 路徑必須是 " +
+      "`assets/icon/<collection>/<docId>/source.<ext>`，而 manifest 的 `collection`／`id`／" +
+      "`targetField` 必須與它**逐字相符** —— ⛔ 路徑自己就要說得出「這是誰的 icon」，" +
+      "⛔ 不是靠檔名猜。",
+    spec: "GH#966",
+    failClosed: true,
+    severity: "error",
+    origin: "ggd-extension",
+  }),
+  ASSET_BYTES_MISMATCH: def({
+    code: "ASSET_BYTES_MISMATCH",
+    message:
+      "asset `{path}` 的位元組與 manifest 宣稱的不符（{field}：宣稱 {claimed}，實際 {actual}）。" +
+      "⭐ **宣稱是宣稱，位元組是事實** —— 全部由 Main 重算比對。",
+    spec: "GH#966",
+    failClosed: true,
+    severity: "error",
+    origin: "ggd-extension",
+  }),
+  ASSET_FORMAT_REJECTED: def({
+    code: "ASSET_FORMAT_REJECTED",
+    message:
+      "asset `{path}` 的**實際格式**是 {actual}，而它宣稱 {claimed}。" +
+      "⭐ 格式由 magic bytes 決定，⛔ 不是副檔名、⛔ 也不是 manifest 的 `mime` 那一格。",
+    spec: "GH#966 S1",
+    failClosed: true,
+    severity: "error",
+    origin: "ggd-extension",
+  }),
+  ASSET_DIMENSIONS_TOO_LARGE: def({
+    code: "ASSET_DIMENSIONS_TOO_LARGE",
+    message:
+      "asset `{path}` 的檔頭宣稱 {width}×{height}，超過上限 {limit}²。" +
+      "⭐ 這是在 **decode 之前**擋下來的（圖片解壓炸彈：一張 65535² 的 PNG 檔頭只有 24 bytes，" +
+      "壓縮比與 entry 大小全部過得了 zip 那一層，⛔ 而 decode 它就是幾十 GB 的記憶體）。",
+    spec: "GH#966 S2",
+    failClosed: true,
+    severity: "error",
+    origin: "ggd-extension",
+  }),
+  ASSET_BASE_CHANGED: def({
+    code: "ASSET_BASE_CHANGED",
+    message:
+      "asset `{path}` 的 base 不符：你以為現有 icon 是 {claimed}，而它現在是 {actual}。" +
+      "⭐ 重新讀一次再送 —— ⛔ 這裡不會默默覆蓋掉別人剛換上去的圖。",
+    spec: "GH#966 CAS",
+    failClosed: true,
+    severity: "error",
+    origin: "ggd-extension",
+  }),
+  ASSET_UPLOAD_DISABLED: def({
+    code: "ASSET_UPLOAD_DISABLED",
+    message:
+      "這一台把 icon 上傳關掉了（`config.icon-upload@1` 的 `enabled`），而包裡有 {count} 份 asset。" +
+      "⭐ 那一格就是這個功能的一鍵 rollback。",
+    spec: "GH#966",
+    failClosed: true,
+    severity: "error",
+    origin: "ggd-extension",
+  }),
 } as const satisfies Record<string, ImportDiagnosticDef>;
 
 export type ImportDiagnosticCode = keyof typeof IMPORT_DIAGNOSTICS;
