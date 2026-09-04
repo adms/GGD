@@ -66,7 +66,13 @@ fi
 [ -n "$RAW" ] || { echo "⚠️ gh 連不上 —— **沒有排到任何計畫**（⛔ 這不是「沒有撞車」）。"; exit 0; }
 
 # ⚠️ macOS 的 mktemp 要求 XXXXXX 在**結尾**（加 .json 後綴會 mkstemp failed）。
-TMP=$(mktemp /private/tmp/lane-plan_temp_XXXXXX)
+# ⛔⛔ 而落點 **⛔ 不可以寫死 `/private/tmp`** —— 那是 **macOS 專屬**的路徑
+#   （`/tmp` 是它的 symlink）。Linux 上 `/private` 不存在、非 root 也建不出來
+#   ⇒ `mktemp: failed to create file via template` ⇒ `$TMP` 是空字串
+#   ⇒ 下一行 `printf > ""` 失敗 ⇒ ⭐ **整支腳本回非零,而錯誤訊息完全指錯方向**。
+#   （GH#979,2026-09-05 在 CI 上量到。同族:host-deploy.sh:609 · ruling.sh · ticket-lint.sh）
+TMP=$(mktemp "${TMPDIR:-/tmp}/lane-plan_temp_XXXXXX") || {
+  echo "⛔ 建不了暫存檔（TMPDIR=${TMPDIR:-/tmp}）—— **沒有排到任何計畫**" >&2; exit 2; }
 printf '%s' "$RAW" > "$TMP"
 python3 - "$TMP" "$SRC" "$BUSY" "$WIDTH" "$ASSUME" <<'PY'
 import json, re, sys

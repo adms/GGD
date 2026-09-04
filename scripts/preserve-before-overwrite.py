@@ -27,7 +27,16 @@ import json
 import re, os, re, shutil, subprocess, sys, time
 from pathlib import Path
 
-REPO = Path(os.environ.get("CLAUDE_PROJECT_DIR", "/Users/Takuro/GGD")).resolve()
+# ⛔⛔ 這一行的 fallback 以前寫死 `"/Users/Takuro/GGD"` —— **owner 那一台的路徑**。
+#   `CLAUDE_PROJECT_DIR` 只有 Claude Code 會設 ⇒ 在 CI／任何別的 clone 上 `REPO`
+#   指到一個**不存在的目錄**,而底下每一個 `subprocess.run(…, cwd=REPO)` 都會擲
+#   `FileNotFoundError` —— 而 commit 訊息閘那一段以 `except Exception: pass` 收尾
+#   ⇒ ⭐ **hook 跑了、exit 0、一個字都不印,而它什麼都沒擋**（失敗形態⑧:
+#     消費端存在,而它消費不到）。GH#979,2026-09-05 在 CI 上量到。
+#   ⇒ 由**這支腳本自己的位置**推導（它住 `<repo>/scripts/`）,⛔ 不是猜一台機器。
+#     `CLAUDE_PROJECT_DIR` 仍然優先 —— 在 worktree 裡它指的是**主樹**,那是對的。
+_ENV_ROOT = os.environ.get("CLAUDE_PROJECT_DIR")
+REPO = (Path(_ENV_ROOT) if _ENV_ROOT else Path(__file__).resolve().parent.parent).resolve()
 IN_REPO_DEST = REPO / "docs/legacy/_overwrites"
 OUT_REPO_DEST = Path.home() / ".claude/projects/-Users-Takuro-GGD/overwrite-backups"
 LOG = REPO / "docs/legacy/_overwrites/_ledger.tsv"

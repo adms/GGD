@@ -43,9 +43,10 @@
 // ggd:writes docs/editor-contract/ggd-config-decoration-census.json
 // ggd:writes docs/editor-contract/ggd-config-decoration-census.md
 import { readFileSync, readdirSync, writeFileSync, existsSync, statSync } from "node:fs";
-import { join, resolve, relative, basename } from "node:path";
+import { join, resolve, relative, basename, sep } from "node:path";
 import { pathToFileURL } from "node:url";
 import { createRequire } from "node:module";
+import { execFileSync } from "node:child_process";
 
 const ROOT = resolve(__dirname, "../..");
 
@@ -276,7 +277,48 @@ const CORPUS_EXT = /\.(ts|tsx|mts|cts|js|jsx|mjs|cjs|go|py)$/;
  *   一支產生器讀它並把結果烘進出貨內容，那就是一個讀端。
  */
 
-function walkFiles(dir: string, root: string, acc: string[]): void {
+/**
+ * ⛔⛔ GH#979 —— 語料的母體曾經是「**磁碟上有什麼**」，⛔ 而不是「**我們的原始碼**」。
+ *
+ * 2026-09-05 量到：owner 機器 **13,364** 份、乾淨 clone **2,271** 份。
+ * ⭐ 差的 11,093 份幾乎全是 **`tools/icon-gen/.venv`（11,088 個 pip 套件的 .py）**
+ * —— 一個 `.gitignore` 掉的 python virtualenv。
+ *
+ * ⇒ 兩個各自獨立的傷害：
+ *   ① ⭐ `--check` 逐位元組比對，而 `corpusFiles` 這一格寫進產物
+ *      ⇒ **本機綠、CI 紅**，而訊息說「產物過期」（⛔ 指著錯方向）。
+ *   ② ⭐⭐ 更嚴重：`vocab` 是**判準的輸入**。site-packages 裡任何一個
+ *      識別字撞到某格設定的鍵名，那一格就被判成「有讀端」——
+ *      ⇒ ⛔ **這支普查器最重要的那條偵測（零讀端）會靜靜地漏報**，
+ *      而它看起來完全正常（本文件：「一個被 glob 灌大的統計，讀起來跟真的一模一樣」）。
+ *
+ * ⇒ 母體改成 **git 追蹤中的檔**。⛔ 不是再加幾條排除規則 ——
+ *   下一個人裝一個 `node_modules` 以外的東西，同一個病就回來了。
+ */
+type TrackedSet = { files: ReadonlySet<string>; dirs: ReadonlySet<string> };
+
+/** `git ls-files` → 檔案集合 ＋ 它們每一層祖先目錄（用來剪枝，⛔ 不必走進 .venv）。 */
+function trackedSet(root: string): TrackedSet {
+  const out = execFileSync("git", ["ls-files", "-z"], {
+    cwd: root,
+    encoding: "utf8",
+    maxBuffer: 1 << 28,
+  });
+  const files = new Set<string>();
+  const dirs = new Set<string>();
+  for (const rel of out.split("\0")) {
+    if (!rel) continue;
+    files.add(rel);
+    for (let i = rel.indexOf("/"); i >= 0; i = rel.indexOf("/", i + 1)) dirs.add(rel.slice(0, i));
+  }
+  if (files.size === 0) {
+    // ⛔ 不靜默 —— 一個空的追蹤集合會讓語料變成空的，而空語料 = 每一格都「零讀端」。
+    throw new Error("`git ls-files` 回了空集合 —— 語料的母體驗不了，⛔ 不要照樣產出。");
+  }
+  return { files, dirs };
+}
+
+function walkFiles(dir: string, root: string, acc: string[], tracked?: TrackedSet): void {
   let entries: string[];
   try {
     entries = readdirSync(dir);
@@ -291,10 +333,13 @@ function walkFiles(dir: string, root: string, acc: string[]): void {
     } catch {
       continue;
     }
-    const rel = relative(root, p);
+    // ⚠️ git 的路徑一律 `/`；Windows 的 `relative` 會給 `\` ⇒ 正規化再比。
+    const rel = relative(root, p).split(sep).join("/");
     if (CORPUS_EXCLUDE.some((r) => r.test(rel))) continue;
-    if (st.isDirectory()) walkFiles(p, root, acc);
-    else if (CORPUS_EXT.test(e)) acc.push(p);
+    if (st.isDirectory()) {
+      if (tracked && !tracked.dirs.has(rel)) continue; // 整棵沒有追蹤檔 ⇒ ⛔ 不必走進去
+      walkFiles(p, root, acc, tracked);
+    } else if (CORPUS_EXT.test(e) && (!tracked || tracked.files.has(rel))) acc.push(p);
   }
 }
 
@@ -344,9 +389,9 @@ type Corpus = {
   files: number;
 };
 
-function readCorpus(roots: string[], base: string): Corpus {
+function readCorpus(roots: string[], base: string, tracked?: TrackedSet): Corpus {
   const files: string[] = [];
-  for (const r of roots) if (existsSync(r)) walkFiles(r, base, files);
+  for (const r of roots) if (existsSync(r)) walkFiles(r, base, files, tracked);
   const vocab = new Set<string>();
   const hits = new Map<string, Hit[]>();
   const fileVocab: Array<Set<string>> = [];
@@ -753,7 +798,17 @@ export type Census = {
   perFile: Array<{ file: string; knobs: number; a: number; b: number }>;
 };
 
-export type Sources = { configDir: string; corpusRoots: string[]; base: string; knobs: Knob[] };
+export type Sources = {
+  configDir: string;
+  corpusRoots: string[];
+  base: string;
+  knobs: Knob[];
+  /**
+   * ⭐ 語料的母體 —— 出貨路徑一定要帶（＝git 追蹤中的檔，見 {@link trackedSet}）。
+   * ⛔ 只有 sentinel 夾具可以省略它：那棵樹是我們自己造的,沒有 .venv 混進去。
+   */
+  tracked?: TrackedSet;
+};
 
 /** ⭐ 出貨的三個輸入。 */
 function shippedSources(): Sources {
@@ -763,6 +818,8 @@ function shippedSources(): Sources {
     corpusRoots: [join(ROOT, "packages"), join(ROOT, "apps"), join(ROOT, "tools"), join(ROOT, "scripts")],
     base: ROOT,
     knobs: shippedKnobs(configDir),
+    // ⭐ GH#979 —— 母體 = **git 追蹤中的檔**，⛔ 不是「磁碟上有什麼」（見 trackedSet）。
+    tracked: trackedSet(ROOT),
   };
 }
 
@@ -781,7 +838,7 @@ function fixtureSources(dir: string): Sources {
 }
 
 function build(src: Sources): Census {
-  const corpus = readCorpus(src.corpusRoots, src.base);
+  const corpus = readCorpus(src.corpusRoots, src.base, src.tracked);
   const findings = [
     ...detectNoReadEnd(src.configDir, src.knobs, corpus),
     ...detectDominated(src.configDir, src.knobs),

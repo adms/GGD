@@ -28,6 +28,7 @@
  */
 import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -54,7 +55,11 @@ describe("ship:check 看門狗（GH#858）", () => {
           GGD_SHIP_WATCHDOG_FLOOR_MS: "4000",
           GGD_SHIP_WATCHDOG_MULT: "0", // ⭐ 估時仍然會被印出來 ⇒ 第⑤條照樣驗得到
           GGD_SHIP_WATCHDOG_GRACE_MS: "3000",
-          GGD_SHIP_LOGDIR: "/private/tmp/ggd-ship-watchdog-test",
+          // ⛔⛔ ⛔ 不可以寫死 `/private/tmp` —— **macOS 專屬**（`/tmp` 是它的 symlink）。
+          //   Linux 上 `/private` 不存在且非 root 建不出來 ⇒ ship.mjs 的
+          //   `mkdirSync(LOGDIR,{recursive:true})` 直接 EACCES 擲出來
+          //   ⇒ ⭐ 它在印出**任何一支**之前就死掉,而症狀讀起來像「輸出格式變了」。
+          GGD_SHIP_LOGDIR: join(tmpdir(), "ggd-ship-watchdog-test"),
           GGD_SHIP_NO_LEDGER: "1", // ⛔ 乾跑不寫帳本 —— KEEP_RUNS=60,每跑一次守衛就會擠掉一筆真的部署紀錄
         },
         timeout: 90_000,

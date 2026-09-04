@@ -89,13 +89,25 @@ r(){ "${SSH[@]}" "$REMOTE_PATH$*"; }
 # 用法：run_step "<這一段的名字>" "<遠端指令>" [尾巴行數]
 run_step(){
   local label="$1" cmd="$2" lines="${3:-4}"
-  local log; log=$(mktemp -t ggd-deploy-step)
-  if r "$cmd" > "$log" 2>&1; then
+  # ⛔⛔ **`mktemp -t <前綴>` 是 BSD 專屬的形式** —— GNU coreutils 要求模板帶
+  #   至少三個結尾 X，`mktemp -t ggd-deploy-step` 在 Linux 上是
+  #   `mktemp: too few X's in template` ⇒ `$log` 是空字串 ⇒ 下一行 `> ""` 失敗
+  #   ⇒ ⭐ **一次成功的遠端指令被 run_step 判成失敗**（＝它會把好的部署擋下來）。
+  #   ⚠️ 同族已經記過一次:`scripts/genrun.sh:73`「一定要帶 XXXXXX 的完整模板」。
+  #   （GH#979,2026-09-05 在 CI 上量到）
+  local log; log=$(mktemp "${TMPDIR:-/tmp}/ggd-deploy-step.XXXXXX") \
+    || die "建不了暫存檔（TMPDIR=${TMPDIR:-/tmp}）—— ⛔ 不往下走"
+  # ⛔⛔ **`if cmd; then …; fi` 之後的 `$?` 是 0** —— 條件為假且沒有 else 時,
+  #   bash 讓整個 `if` 結構回 0 ⇒ 舊碼的 `local code=$?` **永遠讀到 0**
+  #   ⇒ 失敗訊息逐字印「失敗（exit 0）」⇒ ⭐ 一個指著錯方向的錯誤訊息
+  #     （GH#979 在 Linux 上跑 run_step 時看見的）。⇒ 離開碼**自己接住**。
+  local code=0
+  r "$cmd" > "$log" 2>&1 || code=$?
+  if [ "$code" -eq 0 ]; then
     tail -"$lines" "$log" | sed 's/^/    /'
     rm -f "$log"
     return 0
   fi
-  local code=$?
   # ⭐ 失敗時印**更多**行（尾巴 4 行常常只有 docker 的收尾雜訊，
   #   而真正的 rollup / pnpm 錯誤在它上面幾行）。
   tail -30 "$log" | sed 's/^/    /'
@@ -141,7 +153,9 @@ redis_snapshot_before_shutdown() {
   #   ⇒ ⭐ 一次失敗的快照回報成功，而「排行榜與 M幣沒有保護」這句話**從來沒印過**。
   #   ⚠️ 它與 build 那一段是同一個 bug，⛔ 而後果相反：那邊是硬停，這邊是**該喊沒喊**。
   #   ⇒ 這裡 ⛔ 不能用 `run_step`（它會 die），所以逐字寫開：先落 log、再讀離開碼。
-  local snaplog; snaplog=$(mktemp -t ggd-redis-snap)
+  # ⛔ 同上（GH#979）：`mktemp -t <前綴>` 是 BSD 專屬 ⇒ Linux 上回空字串。
+  local snaplog; snaplog=$(mktemp "${TMPDIR:-/tmp}/ggd-redis-snap.XXXXXX") \
+    || { warn "建不了暫存檔 —— Redis 快照**沒驗到**"; return 0; }
   if r "cd $REMOTE_REPO && GGD_REDIS_SNAPSHOT_DIR=\"$MINI_SNAPDIR\" \
         bash scripts/redis-snapshot.sh \"$MINI_SNAPDIR\"" > "$snaplog" 2>&1; then
     tail -3 "$snaplog" | sed 's/^/    /'

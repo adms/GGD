@@ -70,5 +70,8 @@ describe("AoE 半徑不得超過決鬥區（GH#310）", () => {
     expect(withRadius.length, "一支帶 radius 的技能都沒有 —— 這條守衛在測空集合").toBeGreaterThan(50);
 
     expect(over, "半徑超過決鬥區 = 那不是範圍技，是「所有人」").toEqual([]);
-  });
+    // ⛔⛔ GH#979 —— **時鐘，⛔ 不是斷言**（同 abilityAffordableAtUnlock）：
+    //   載入出貨的整棵 content 樹本機 0.67 秒，CI 2026-09-04 量到 **5,045 ms**，
+    //   撞穿 vitest 5,000 ms 預設 ⇒ 給明確上限。上面每一條斷言一個字都沒動。
+  }, 60_000);
 });

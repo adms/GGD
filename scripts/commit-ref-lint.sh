@@ -45,8 +45,16 @@ refresh_cache() { # -> 0 抓到了 / 1 沒抓到（離線、沒有 gh、沒有�
 
 cache_is_fresh() {
   [ -s "$CACHE" ] || return 1
-  local age; age=$(( ( $(date +%s) - $(stat -f %m "$CACHE" 2>/dev/null \
-                    || stat -c %Y "$CACHE" 2>/dev/null || echo 0) ) / 3600 ))
+  # ⛔⛔ **`stat -f %m` 在 GNU 上不是「失敗然後 fallback」** —— GNU 的 `-f` 是
+  #   「印**檔案系統**狀態」⇒ 它 **exit 0** 並吐出一份多行報告 ⇒ `||` 那條路
+  #   **永遠到不了**,而 `$(( … ))` 拿到一整段文字後炸開。
+  #   ⇒ ⭐ 在 Linux 上這支腳本每一次跑都噴一段 shell 算術錯誤,而 `cache_is_fresh`
+  #     的答案是垃圾（GH#979,2026-09-05 在容器裡量到）。
+  #   ⇒ **GNU 的 `-c` 先試**（BSD 對 `-c` 是乾淨地 illegal option ⇒ 才輪到 `-f`）。
+  local mt; mt=$(stat -c %Y "$CACHE" 2>/dev/null) \
+         || mt=$(stat -f %m "$CACHE" 2>/dev/null) || mt=0
+  case "$mt" in ''|*[!0-9]*) mt=0 ;; esac
+  local age=$(( ( $(date +%s) - mt ) / 3600 ))
   [ "$age" -lt "$CACHE_MAX_AGE_H" ]
 }
 

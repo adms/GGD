@@ -207,6 +207,17 @@ describe("legendary is DRAFT-ONLY", () => {
     }
   });
 
+  /**
+   * ⏱ **明確的 60 秒時鐘**（GH#979）—— ⭐ 放寬的是**時鐘**，⛔ 不是斷言。
+   *
+   * ⭐ 這一條與這個檔的另外 19 條**不一樣**：它在 it **內部**自己再跑一次
+   * `new ContentLoader(new FsContentSource(CONTENT_DIR)).load()`（整棵出貨內容樹，
+   * 1,900+ 份文件）＋ 一次 `registerAll`，⛔ 不是吃 `beforeAll` 已經載好的那一份。
+   * ⇒ owner 的 M 系列機器上綽綽有餘，而 **CI 的 2-core runner 上超過 vitest 預設的
+   *   5,000ms** ⇒ 2026-09-04 的 CI 上它以 `Test timed out in 5000ms` 紅掉
+   *   （⭐ 與另外 5 條共用同一則錯誤訊息，⛔ **一個斷言都沒有失敗**）。
+   * ⚠️ 這條測試的**內容一個位元組都沒有改**。
+   */
   it("而且 0 元是「沒有自己的標價」不是「不能賣」—— 收的是統一價", async () => {
     cover("econ-legendary-not-purchasable");
     // ⚠️ 這一條 2026-08-17 **整條換掉了守的性質**，因為 owner 換了裁決：
@@ -260,7 +271,7 @@ describe("legendary is DRAFT-ONLY", () => {
     // 而且真的收了錢、真的佔了格子（⛔ 不是靜靜地回 ok 什麼都沒做）。
     expect(champ.gold).toBeLessThan(9_999_999);
     expect(champ.items.filter((s) => s !== null).length).toBeGreaterThan(0);
-  });
+  }, 60_000); // ⏱ 見這一條 it 上面的說明（GH#979）
 
   it("a DELISTED final still has a way to reach the player — 0g is off the shelf, not deleted", () => {
     cover("econ-legendary-not-purchasable");

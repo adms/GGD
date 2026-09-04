@@ -292,7 +292,11 @@ if [ "${1:-}" = "--dupes" ]; then
   fi
   [ -n "$RAW" ] || { echo "⚠️ gh 連不上 —— 接手相交**沒有被掃**(⛔ 這不是「沒有重複」)。"; exit 0; }
   # ⚠️ macOS 的 mktemp 要求 XXXXXX 在**結尾** —— 加了 .json 後綴會 mkstemp failed。
-  TMP=$(mktemp /private/tmp/ticket-lint-dupes_temp_XXXXXX)
+  # ⛔⛔ 落點 **⛔ 不可以寫死 `/private/tmp`**（macOS 專屬；Linux 上 `/private` 不存在
+  #   且非 root 建不出來）⇒ `mktemp: failed to create file via template` ⇒ `$TMP` 空
+  #   ⇒ ⭐ 相交掃描**一組都沒掃到**,而輸出看起來只是「少了幾張票」（GH#979,CI 上量到）。
+  TMP=$(mktemp "${TMPDIR:-/tmp}/ticket-lint-dupes_temp_XXXXXX") || {
+    echo "⛔ 建不了暫存檔（TMPDIR=${TMPDIR:-/tmp}）—— 接手相交**沒有被掃**" >&2; exit 2; }
   printf '%s' "$RAW" > "$TMP"
   python3 - "$TMP" "tools/parallel-gates/takeover-vocab.json" "$STATE" <<'PY'
 import json, re, sys, itertools

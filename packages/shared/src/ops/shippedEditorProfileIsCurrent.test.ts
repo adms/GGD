@@ -29,8 +29,37 @@ import {
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const SHIPPED = join(REPO, "content", EDITOR_PROFILE_FILE);
 
+/**
+ * ⛔⛔ GH#979 —— **逐位元組**這件事有一個前提，而它只在一種機器上成立。
+ *
+ * `buildEditorTargetProfile` 的 ⑥ 段讀 `data/curation/whitelist.json`
+ * （平台的執行期狀態，`.gitignore` 掉的）去填 `curation.championDigest` /
+ * `itemDigest` / `championCount` / `itemCount`。⚠️ 它**已經**優雅地處理缺席
+ * （改記一筆 `unavailable`），⛔ 但那正是問題：**缺席與存在會產出兩份不同的位元組**。
+ *
+ * ⇒ 出貨的那一份是在**有白名單的機器**上產的（今天它逐字寫著 championCount 49），
+ *   而乾淨 clone／CI 重算會少掉那四格、多一筆 unavailable
+ *   ⇒ 2026-09-05 量到 213,115 B vs 213,250 B，`profileDigest` 也不同。
+ *   ⭐ 這條在 CI 上因此**從來沒有綠過**，而訊息說「跑 pnpm content:build」——
+ *   ⛔ 在沒有白名單的機器上跑一百次也不會綠。
+ *
+ * ⭐ 前提缺席就**大聲說沒驗到並跳過**，⛔ 不是放寬成「除了 curation 以外都一樣」
+ *   （那會把這條閘從「逐位元組」偷偷降級，而檔頭上面那一整段正是在講
+ *   「一條被放寬的閘等於沒有閘」）。
+ * ⚠️ 下面第二條（誠實欄位）**只讀出貨的那一份**，沒有這個前提 ⇒ 它照跑。
+ */
+const HAS_WHITELIST = existsSync(join(REPO, "data/curation/whitelist.json"));
+if (!HAS_WHITELIST) {
+  console.warn(
+    "⚠️ 沒驗到 —— shippedEditorProfileIsCurrent 的逐位元組比對需要 " +
+      "data/curation/whitelist.json（.gitignore 掉的營運狀態），而這個環境沒有它。" +
+      "⭐ 那一條是**跳過**的，⛔ 不是通過的。",
+  );
+}
+const itWithWhitelist = HAS_WHITELIST ? it : it.skip;
+
 describe("外部編輯器的遠端資料契約沒有過期", () => {
-  it("⭐ 出貨的那一份逐位元組等於現在重算的 —— ⛔ 手改會在這裡紅", () => {
+  itWithWhitelist("⭐ 出貨的那一份逐位元組等於現在重算的 —— ⛔ 手改會在這裡紅", () => {
     expect(
       existsSync(SHIPPED),
       `${EDITOR_PROFILE_FILE} 不存在 —— 跑 \`pnpm content:build\` 產生它。` +

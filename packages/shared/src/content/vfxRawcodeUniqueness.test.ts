@@ -38,6 +38,30 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "../../../..");
 const readJson = (p: string): unknown => JSON.parse(readFileSync(p, "utf8"));
 
+/**
+ * ⛔⛔ GH#979 —— 這條守衛的**不變量本身**含著「營運名單」這個詞:
+ * 它問的是「**兩支都上架**而長相不同」,而「上架」的唯一住處是
+ * `data/curation/whitelist.json` —— 那是**平台的執行期狀態**,`.gitignore` 掉的
+ * (`starterRoster.ts` 的檔頭逐字寫過同一件事)。
+ *
+ * ⇒ 乾淨 clone／worktree／CI 上它**不存在**,而在 2026-09-05 之前這裡直接
+ *   `readFileSync` ⇒ ENOENT ⇒ ⭐ 這條在 CI 上**從來沒有跑過**,只是死法從
+ *   「崩潰」變成「失敗」。
+ *
+ * ⭐ 前提缺席時**大聲說沒驗到並跳過**,⛔ 不是假裝通過,也⛔ 不是把母體換成
+ *   `starterChampions`(那是**首發名單**,不是今天的營運名單 —— 換掉母體會讓這條
+ *   守衛安靜地開始回答**另一個問題**,而訊息還寫著原本那個)。
+ */
+const WHITELIST = join(ROOT, "data/curation/whitelist.json");
+const HAS_WHITELIST = existsSync(WHITELIST);
+if (!HAS_WHITELIST) {
+  console.warn(
+    `⚠️ 沒驗到 —— vfxRawcodeUniqueness 需要 ${WHITELIST}(營運名單,.gitignore 掉的機器狀態),` +
+      "而這個環境沒有它。⭐ 這條守衛在這裡是**跳過**的,⛔ 不是通過的。",
+  );
+}
+const itWithWhitelist = HAS_WHITELIST ? it : it.skip;
+
 interface ProvRec {
   rawcodes?: string[];
   joinConfidence?: string;
@@ -47,7 +71,7 @@ interface ProvRec {
 const championOf = (abilityId: string): string => abilityId.split(".")[0] ?? abilityId;
 
 describe("同 rawcode 的兩支技能不可以在營運名單內長得不一樣 (GH#63)", () => {
-  it("每一個 CONFIRMED rawcode,白名單內的 vfxKey 只有一種", () => {
+  itWithWhitelist("每一個 CONFIRMED rawcode,白名單內的 vfxKey 只有一種", () => {
     const prov = readJson(join(ROOT, "content/assets/vfx/w3x-ability-provenance.json")) as {
       abilities: Record<string, ProvRec>;
     };
