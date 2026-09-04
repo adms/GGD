@@ -181,10 +181,18 @@ function checkPacket(file, fingerprint, accept, originMain) {
     if (isStr(packet.kind) && !key.startsWith(`${packet.kind}.`))
       err(`dedupeKey 要以 \`${packet.kind}.\` 開頭（AGENTS.md §3：\`<kind>.<主題-kebab>\`）`);
     const merged = originMain ? mergedPacket(key) : null;
-    if (merged && merged.contractFingerprint === packet.contractFingerprint)
+    // ⛔⛔ **第一版是一個永遠不會綠的閘**（CLAUDE.md 失敗形態⑨）：packet 併進 main 之後
+    //   檔案**本來就會留在樹上**，而它把「檔案還在」讀成「同一題重問」
+    //   ⇒ 每一次 CI 都紅，而訊息叫人去改一個沒有錯的東西。
+    // ⭐ 判準是**兩份的關係**，⛔ 不是「有沒有一份併進去了」：
+    //   內容一模一樣 ⇒ 這就是那一份（歷史），放行；
+    //   內容變了而 key 與指紋都沒變 ⇒ **那才是重問**，紅。
+    const sameAsMerged = merged !== null && JSON.stringify(merged) === JSON.stringify(packet);
+    if (merged && !sameAsMerged && merged.contractFingerprint === packet.contractFingerprint)
       err(
         `⛔ 同一題重問：\`${key}\` 已經併進 origin/main，而 contractFingerprint 沒變` +
-          `（${packet.contractFingerprint}）⇒ 契約沒動就不要重開舊題`,
+          `（${packet.contractFingerprint}）⇒ 契約沒動就不要重開舊題。` +
+          `⭐ 真的要接續就換一個 dedupeKey，或先把契約改掉讓指紋跟著動`,
       );
   }
 
