@@ -1,0 +1,2852 @@
+{
+  "schema": "ggd-type-catalog@1",
+  "note": "⭐ 給編輯器的**可挑 type 清單 ＋ fail-closed 收據**，從 content/ability-templates/ 推導。⛔ 不要手改這份檔 —— 它是 `typecat:build` 的產物；改模板／改 expand.ts 再重生成。⭐ 兩層：挑一個 type（只填空白格）→ 再用 params／矩陣微調（節點自己寫的值永遠贏）。",
+  "howToFailClosed": [
+    "⭐ 只挑 `expands: true` 的。⛔ `declaredStatus` 是宣告，`expands` 是量出來的事實。",
+    "⭐ 看 `wiring`：`node` 要寫成 `{\"kind\":\"spawnModelFx\",\"preset\":\"<id>\"}`；`doc` 要寫成 `{\"template\":{\"ref\":\"<id>\",\"params\":{…}}}`；`both` 兩條都行。",
+    "⭐ 逐格看 `params[*].fillsVia` —— 寫錯邊的那一格**不會有任何東西紅**，它只是不會發生。",
+    "⛔ `analysedButUnwired` 裡的**不要挑** —— 展開會失敗，而系統是 fail-soft ⇒ 那一支技能**還在、但一個模板效果都沒有**，⛔ 畫面上與「這招就是沒效果」一模一樣。"
+  ],
+  "counts": {
+    "templates": 46,
+    "pickable": 29,
+    "analysedButUnwired": 3,
+    "shells": 13,
+    "sentinels": 1,
+    "matrixPresent": 154,
+    "matrixTheoretical": 325
+  },
+  "types": [
+    {
+      "id": "tpl-beam-roll",
+      "name": "翻滾光束（橫放光束砲）",
+      "family": "beam-roll",
+      "description": "⭐ 這一份同時是兩件事。①【行為模板】一具帶骨架的 3D 模型沿面向直線推出去，一路自轉，穿透式地掃到路上的每一個人（同一個人只掃一次）。原作是 locust dummy 單位（CreateUnit → 每 tick SetUnitPosition → RemoveUnit），所以它既不是定點特效也不是會被擋下來的投射物。②【特效預設表】`spawnModelFx` 的 `preset` 欄位**逐格讀這裡的 `params[*].default`**（`content/modelFxPreset.ts`，在載入時解析）—— 也就是說「一道橫放的光束砲長什麼樣」只住在這一份文件裡，⛔ 不是散在每一支技能的 JSON 節點上。改這裡的一個數字，四支經典（59-04 陽電子砲 · 20-03 約束與勝利之劍 · 08-03 龍鬥氣砲咒文 · 09-04 龜派氣功）一起變。⚠️ 傷害走**級距**（damageTier），⛔ 這裡不填算好的數字；速度／距離／自轉／縮放是**演出幾何**，引擎的 spawnModelFx 只收數字、沒有對應的級距表，所以它們是本模板唯一的字面值欄位。⚠️ `preset` **只供演出幾何**（模型／路徑／速度／距離／自轉／縮放／碰觸半徑與陣營），⛔ 不自動塞傷害：那會替四支技能各加一份沒有人裁決過的傷害。要沿路掃傷害的技能自己寫 `onTouch`。⭐【聲音也住這裡】`soundKey`（發射）與 `arriveSoundKey`（落點）是**家族級預設**：在 2026-08-23 之前這一族**整族無聲** —— 四支經典的 spawnModelFx 節點一個聲音鍵都沒有，而 `performanceEventsHaveConsumers` 是綠的（`modelFxSpawn` 確實有消費端，只是那一半只畫模型）。⇒ 補在這裡**一格解四支**，⛔ 不是逐支填（第〇·五守則：按擋住的支數做機制）。一鍵 rollback 住 `content/config/audio-map.json` 的 `modelFxSound.enabled` / `.arrive`。⚠️ `modelKey` 是**身分**不是幾何：它有預設值是為了讓稀疏文件載得起來，⛔ 不是為了讓四支不同英雄的招式長成同一具模型 —— 守衛在 `schema/effects/modelFxStagingContract.test.ts` ⑤。⭐【原作是五具 dummy，⛔ 不是一具】2026-08-23 逐支對回 JASS：`h00S`(ReviveHuman·頂點色[255,100,100]紅·250+lvl×15) · `h00X`(**NetherStrike**·白·250+lvl×15) · `h007`(ReviveHuman·白·250+lvl×15) · `h01P`(Awaken·[100,100,0]橄欖·**120+lvl×30**) · `h000`(ParasiteMissile·白·**450×蓄力秒**)。⇒ 五具裡**只有一具真的是 NetherStrike**。⭐ 所以 `scale` 的預設 **2.5 ＝ 原作的 250%**（h00S/h00X/h007 共用的那一格，⛔ 不是我挑的數字），而兩個例外**逐支寫在自己的節點上**：59-04 野戰型陽電子砲 `scale:1.2`、08-03 龍鬥氣砲咒文 `scale:4.5`。⚠️ 要整族一起變大就改**這一格預設**，⛔ 不要逐支加數字 —— 那三支的比例會跟著動（第〇·四守則）。⛔⛔【還沒解決：這一族從第一天起一個像素都沒畫出來過】直接讀 .glb 位元組量到：`netherstrike.glb` 的 **5 個 primitive 全部**帶 `baseColorFactor:[0,0,0,0]` ＋ `alphaMode:\"BLEND\"`，而戰鬥場景**沒有 GlowLayer／bloom**（`views/CoinView.ts` 檔頭逐字）。⇒ 這是轉檔器**刻意的軟刪除**：`tools/w3x-import/w3xlib/gltf.py` 的 `fm>=3 and not has_opaque_base` 分支 「solid bright-on-black glow: no alpha to key on → drop the quad」，而 netherstrike 的四張貼圖在 `models_report.json` 裡全在 `missing_textures` ⇒ alpha 提示退回 opaque ⇒ 五張材質全中。⇒ ⭐ 修法是**重烘／客戶端走 ALPHA_ADD**，⛔ 不是換一具好看的模型、⛔ 也不是調 scale ——一個 0 像素的東西沒有大小也沒有顏色可言。守衛：`modelFxStagingContract.test.ts` ⑥。⭐⭐【2026-08-24：這一族**不位移**了，⛔ 而且那不是演出偏好 —— 是逐行 JASS】owner：「光束砲**原地開火**，只有波飛出去」。逐支撈原作觸發器驗證：`A0D5`(20-03)@32322 · `A03S`(09-04)@31907 · `A05J`(**08-03**)@28838 · `A0GI`(**59-04**)@47757 —— 四支**一次 `SetUnitPosition` 都沒有**：光束 dummy **一具**擺在施法者前方 150u，然後 `TriggerSleepAction(2)` → `KillUnit`+`RemoveUnit`。⚠️⚠️ 這一句在 2026-08-25 之前寫的是「它們是**十具 dummy 沿一條線一次擺好**」—— 那是**誤讀**，而且它就是 owner 2026-08-25 抓到的走歪的**起點**：`OBJECTS.json` 逐格對過，`A05J` 是 **08-03 龍鬥氣砲咒文**、`A0GI` 是 **59-04 野戰型陽電子砲**（在此之前這兩個標籤是**對調**的），而「十具」是 08-03 的 `e003`（RedDragonMissile，⛔ 不是光束模型）。（對照組 12-04 `A04X`@29587 **真的**每 0.02 秒推進 75 —— 所以缺的不是我們沒實作位移。）⇒ `path` 預設改成 **`static`**、新增 `lifeSec` 預設 **2**（＝原作那個 `TriggerSleepAction(2)`）。⭐【一鍵 rollback 就是這一格】把 `params.path.default` 改回 `\"forward\"` —— 四支一起回到舊演出，⛔ 不必動任何一支技能的 JSON（七份 ability doc 現在**一格 path 都不寫**，刻意的：讓這一格成為唯一的住處，第〇·四守則）。⚠️ `speed`／`distance` 在 `static` 下**讀不到**（schema 明文），留著是為了 rollback 回 forward 時還在。⛔⛔【2026-08-26 撤回：`count` 預設 6 是誤讀，已改回 **1**（GH#702 · owner 2026-08-25「是哪裡走歪讓你又把約束勝利之劍等光束砲家族又變成間距排列？請你反省根因並修正」）】走歪的三段，逐段有行號：①**誤讀** —— 20-03 的 `exitwhen udg_WinSwordCounter > 6`（j:32335 / j:32346）與 09-04 的 `exitwhen udg_TurtlePowerCounter > 6`（j:31925 / j:31937）被讀成「光束由 6 具組成」，而那兩對迴圈**一具 unit 都不生**：它們是 `GetUnitsInRangeOfLocMatching(400)` 的**傷害取樣格**（j:32337 j:32348 / j:31939），早在 `fa8dc538` 就已經翻成 `onTouch` 的傷害葉 ⇒ 再拿它當演出 count＝**同一段 JASS 被算了兩次**。②**推測變成預設** —— `a3bc9838` 把 6/2 寫成**家族預設**，於是七個出貨節點一起吃；③**逐支覆寫掩蓋它** —— GH#692 查到 59-04 是一具，卻只加了 `count:1` 的**逐支**覆寫，⛔ 沒有回頭問「那家族預設是誰的量值？」，另外六個節點繼續錯。⭐ 真值：光束 dummy 的**每一個**生成點都是 `CreateNUnitsAtLoc( 1, … )`（j:26790 j:31907 j:31909 j:32322 j:32324 j:32327 j:36048 j:47757），⛔ 沒有一處在迴圈裡。⭐ 唯一真的「沿線 N 具」是 **08-03** 的 `e003`（RedDragonMissile，j:28838 `i=1..10 × 150`）與 **09-04** 的 `h006`（FlameStrike1，j:31926 `i=1..6 × 200`）—— 兩者都是**別的模型**，而 09-04 的火柱現在有**自己的節點**（`preset: tpl-locust-line`）。⇒ 光束這一格回到 1，⛔ 而且它現在有出處（見 `params.count.origin`）。⭐【一鍵 rollback】要回到 2026-08-25 的演出就把 `params.count.default` 改回 **6** —— 但那一刻請先把 `origin` 換成一個引用得到的東西，`templateDefaultsHaveOrigin.test.ts` 會逼你。⛔⛔【2026-08-26 · GH#702 APPLY —— 家族預設**歸零重建**,⛔ 不是再打一個逐支補丁】owner 2026-08-25：「你已經知道是**單個大型光束並非間距排列**,是哪裡走歪讓你又把約束勝利之劍等光束砲家族又變成間距排列？請你**反省根因並修正**」⇒ 這一輪動的是**家族預設本身**,而且每一格都指得到 `檔案:行號`:① `modelKey` netherstrike → **revivehuman** —— netherstrike 是 ZERO_PIXEL 模型,而它是**預設** ⇒ 沒有逐支寫 modelKey 的 08-03 ×2 與 59-04 ×1 **從第一天起一個像素都沒畫過**;② `scale` 2.5 → **2.65** —— WC3 技能等級從 1 起算,`250+15×lvl` 沒有任何一級等於 250%;③ `spacing` 標 **inert** —— count=1 之後它讀不到;④ 五個成員**逐支**帶上自己量到的 `scale`(＝那一支的 SetUnitScalePercent ÷100)與 `scaleAxis`(長度)。⭐⭐【兩個誠實的偏離 —— ⛔ 它們不是量到的,寫在這裡是為了讓下一輪反駁得了】(a) **長度**:原作那條又長又窄的光帶住在 `.mdx` 的 `PRE2`(粒子)chunk 裡,而 `convert_stock_model.py` **只轉 geoset**(ReviveHuman / FragDriller / Awaken 三份實測 skipped_chunks 皆含 PRE2)⇒ GGD 只拿得到核心,而 `revivehuman.glb` 的包圍盒是 10.751 × 16.757 × 10.751(**1.56 : 1**)—— 等向放大它得到的是一顆愈來愈大的**方塊**,⛔ 不是一道光束(參考擷圖 docs/_reference/w3x-shots/saber/ 目測 ~10:1)。⇒ 新機制 `scaleAxis` 的第三格把它沿**行進軸**拉長,逐支的倍率取「**渲染長度 ≈ 這一支自己打得到的距離**」(20-03 的 damageLine length 14 · 59-04 的 8.25 · 其餘用 range 12)—— 那讓卡面上的射程與畫面上的長度不會互相說謊(第一·五守則)。⭐ 一鍵 rollback ＝ 把成員節點上的 `scaleAxis` 拿掉(缺席 ⇒ [1,1,1] ⇒ 逐位元回到 2026-08-25 的形狀)。(b) **粗細**:逐支的 w3u `usca`(h00S 0.2 / h007 1.25 / h01V 3.0)是 **15 倍**的差距,⛔ 沒有乘進 `scale`。理由:GGD 的競技場半徑 24(≈ WC3 一張圖的 1/25),而傷害幾何**早就翻譯過並且出貨了**(20-03 damageLine width 2.0 · 59-04 width 2.2)⇒ 把 usca 照搬會得到一道 10 單位寬的視覺配一條 2.2 寬的傷害線,那正是第一·五守則要擋的「說了但不會發生」。⭐ 反駁法:哪一天 PRE2 粒子也轉進來了(光束的粗細本來就住在那裡),或 owner 說要照原作比例,就把 usca 乘回 `scale` 並重算 `scaleAxis`。⚠️⚠️【2026-08-26 撤回一句過期的宣稱】上面那段「⛔⛔【還沒解決：這一族從第一天起一個像素都沒畫出來過】」**已經不成立**:`a9cf7187`(GH#649)重烘了 28 份零像素 glb,2026-08-26 直接讀位元組實測 `netherstrike.glb` 是 **5/5 primitive 可見**,而 `modelFxStagingContract` 的 `ZERO_PIXEL_FX_MODELS` 現在是**空集合**。⇒ 那一段留著是歷史,⛔ 不要再引用它當現況 ——它正是第三守則的形狀:一句被散文守著的宣稱活過了它的保存期限,而沒有任何東西變紅。⭐ 這一族真正的身分問題是**穿錯衣服**(見 params.modelKey.origin),⛔ 不是看不見。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 8,
+      "requires": [
+        "modelFx"
+      ],
+      "exemplar": {
+        "skill": "20-03 約束與勝利之劍",
+        "jass": "A0D5"
+      },
+      "wiring": "both",
+      "usedVia": {
+        "preset": 13,
+        "ref": 0
+      },
+      "params": {
+        "modelKey": {
+          "type": "docRef",
+          "default": "w3x.stock.revivehuman",
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "path": {
+          "type": "enum",
+          "default": "static",
+          "values": [
+            "forward",
+            "toTarget",
+            "orbit",
+            "radial",
+            "static"
+          ],
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "speed": {
+          "type": "number",
+          "default": 30,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "distance": {
+          "type": "number",
+          "default": 14,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "count": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "spacing": {
+          "type": "number",
+          "default": 2,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "spinDegPerSec": {
+          "type": "number",
+          "default": 720,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "clip": {
+          "type": "enum",
+          "default": "idle",
+          "values": [
+            "idle",
+            "run",
+            "attack",
+            "cast",
+            "hurt",
+            "death"
+          ],
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "scale": {
+          "type": "number",
+          "default": 2.65,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "touchRadius": {
+          "type": "number",
+          "default": 1.5,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "touchSide": {
+          "type": "enum",
+          "default": "enemies",
+          "values": [
+            "enemies",
+            "allies"
+          ],
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "touchDamageTier": {
+          "type": "enum",
+          "default": "小",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "template.ref → expand()"
+        },
+        "soundKey": {
+          "type": "docRef",
+          "default": "wc3.crushingwavecaster1",
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "arriveSoundKey": {
+          "type": "docRef",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "lifeSec": {
+          "type": "number",
+          "default": 2,
+          "fillsVia": "spawnModelFx.preset"
+        }
+      }
+    },
+    {
+      "id": "tpl-blink-strike",
+      "name": "瞬移突斬",
+      "family": "blink-strike",
+      "description": "⭐ 瞬移到目標身邊、停在他前面一點點，落地當下打一發。⚠️ 出貨量到的形狀（2026-09-02，⛔ 不是我編的）：5 支帶 `to:\"targetUnit\"` 的 blink 技能 —— `godie-h01o.q`（magic ap 0.5）· `godie-n01c.w`（physical ad 0.5）· `godie-nbbc.w`（只有特效）· `godie-u00v.r`（大組合）· `godie-efur.q`（致盲）。⭐ 其中 4/5 支的 `stopShortUnits` 逐位元都是 **1.8**。⛔ 另有 7 支純位移（`to:\"point\"`，零 `onArrive`）—— 那是**另一個家族**，⛔ 不走這一份。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 5,
+      "requires": [
+        "blink"
+      ],
+      "exemplar": {
+        "skill": "godie-n01c.w（出貨最接近預設的那一支）",
+        "jass": "(P2/P3)"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "params": {
+        "range": {
+          "type": "number",
+          "default": 6,
+          "fillsVia": "template.ref → expand()"
+        },
+        "stopShortUnits": {
+          "type": "number",
+          "default": 1.8,
+          "fillsVia": "template.ref → expand()"
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          },
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "physical",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "arriveVfxId": {
+          "type": "docRef",
+          "default": "fx.prim.lightning.slash",
+          "fillsVia": "template.ref → expand()"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    },
+    {
+      "id": "tpl-buff-self",
+      "name": "變身強化-數值面",
+      "family": "buff-self",
+      "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 6,
+      "requires": [],
+      "exemplar": {
+        "skill": "82-04 闇之魔法",
+        "jass": "A0Q6"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 28
+      },
+      "params": {
+        "duration": {
+          "type": "number",
+          "default": 15,
+          "fillsVia": "template.ref → expand()"
+        },
+        "modifiers": {
+          "type": "statModifiers",
+          "default": [
+            {
+              "stat": "ad",
+              "op": "flat",
+              "value": 50
+            }
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    },
+    {
+      "id": "tpl-charge-push",
+      "name": "衝鋒推撞",
+      "family": "charge-push",
+      "description": "朝目標點直線衝鋒，抵達後對落點周圍造成範圍傷害，並把該處的敵人推開。預設貼地衝刺（衝鋒弧高 0）；把弧高拉起來就變成 52-02 蹂躪編年史那種掄飛。「推開距離」清空 = 只衝鋒不推撞（52-04 巨神一擊）。傷害與推撞都在抵達點結算，不是在起跳點。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 5,
+      "requires": [
+        "leap",
+        "knockback"
+      ],
+      "exemplar": {
+        "skill": "38-01 邪王炎殺劍",
+        "jass": "A0OG"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "params": {
+        "dashDistance": {
+          "type": "number",
+          "default": 600,
+          "fillsVia": "template.ref → expand()"
+        },
+        "dashDurationSec": {
+          "type": "number",
+          "default": 0.4,
+          "fillsVia": "template.ref → expand()"
+        },
+        "apexHeight": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()"
+        },
+        "radius": {
+          "type": "number",
+          "default": 300,
+          "fillsVia": "template.ref → expand()"
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              350
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "physical",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "pushDistance": {
+          "type": "number",
+          "default": 400,
+          "fillsVia": "template.ref → expand()"
+        },
+        "pushSpeed": {
+          "type": "number",
+          "default": 872,
+          "fillsVia": "template.ref → expand()"
+        },
+        "pushFrom": {
+          "type": "enum",
+          "default": "facing",
+          "values": [
+            "caster",
+            "facing",
+            "pull"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "pushLaunchHeight": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    },
+    {
+      "id": "tpl-combo-finisher",
+      "name": "龍虎亂舞（自動連段→收尾重招）",
+      "family": "combo-finisher",
+      "description": "⭐ owner 2026-08-23 逐字：「龍虎亂舞是這個模板的**俗稱**，意思是類似**格鬥天王**裡的角色招式龍虎亂舞，**放招之後自動打打打打最後一個重招或大招結尾**，在許多格鬥遊戲常見」。⇒ 它**不是一支技能**，是一個**家族**：放招之後自動連段，最後一發是重招。\n\n【機制那一層（引擎）】已經在了 —— `comboStrikes`：N 段各自結算（各自命中判定／on-hit 扇出／減傷／記分）＋ 可省的 `finisher` ＋ 不等間隔 `steps[]`。⭐ **節奏不住這裡**：它住共用表 `config.combo-strikes@1`，技能只寫 `family`，值在載入時由 `sim/effects/comboFamilies.ts` 解析（第〇·四守則）。\n\n【演出那一層（這張卡在補的）】⭐ owner 2026-08-23：「**別忘了還有特效文字**」。三件套，全部跟著同一份班表走，⛔ 不另外排第二個時間軸：\n① **每一刀的打擊特效** —— `perStrike` 裡一個 `spawnVfx`，`at:\"target\"`（原作 `AddSpecialEffectTargetUnitBJ(\"chest\", 被打的人, …)`）。\n② **每一刀的特效文字** —— `perStrike` 裡**一個** `floatingText` 寫 `\"{{i}}Hit\"`，⛔ 不是七個各寫死一個數字的節點。段號由 `EffectContext.sequenceIndex` 在**執行時**解析（`delayedSystem` 填），所以連段長度改成 12 段時它自動變成 1Hit…12Hit（原作 `CreateTextTagUnitBJ( I2S(udg_SupI) + \"Hit\", … )`，war3map.j 的 SuperFF7 迴圈裡）。⭐ **收尾那一發也拿得到同一個段號** —— `comboStrikes` 的 `finisherOnly` 班次是班表的最後一格，所以 6 段＋收尾 = `1Hit`…`7Hit`，逐字對上卡面「連斬七次」。\n③ **收尾重招的標點** —— `finisher` 裡的 `spawnVfx` ＋ `screenFlash` ＋ `screenShake`。⭐ 這是「重招」與「第 N 刀」在畫面上唯一分得開的地方；原作在收尾那一發真的有畫面震動（`CameraSetEQNoiseForPlayer(…, 12.00)` 對 1600×1600 內每一個人發三輪，war3map.j SuperFF7 的 `udg_SupI >= 7` 分支）。\n\n【盤點（2026-08-23，量的是 `config.combo-strikes@1` 的 29 個家族）】⭐ **13 個是「連段→收尾」形狀**（判準：`strikes ≥ 2`，或有 `steps` 且 `damageCalls ≥ 2`，或 per-step 且 `damageCalls ≥ 2`），⇒ 它們指到 **18 個出貨 ability id**。另外 16 個是「延遲一發」（`tail`／單次傷害），⛔ 不屬於這一族。\n家族 → 擋住幾支：`xhunterstone` 2 · `plant` 2 · `romove` 2 · `linas` 2 · `excaliburmax` 2 · `bleach-rush` 2 · `youdie` 2 · `superff7` 1 · `flyswallow` 1 · `lightcutrun` 1 · `nine-lives-hits` 1 · `dragontigerready` 0（＝原作那支真的叫「00-00 龍虎亂舞」的技，`ownerKind:\"map-mechanic\"`，是**遊戲結束的終局演出技**，不屬於任何英雄 ⇒ 沒有 ability id）· `near-to-death` 0（原作孤兒技能）。\n\n【⛔ 這張卡是 draft，理由要能被反駁】`family:\"combo-finisher\"` 在 `templates/expand.ts` 的 `FAMILIES` 裡**沒有展開路徑**，所以它照 `paramsSchema.test.ts` 的規矩必須是 draft（enabled ⇒ 一定要能 expand）。⭐ 缺的**不是機制**（`comboStrikes` 出貨了、`floatingText`/`screenFlash`/`screenShake` 也出貨了），缺的是 expand 那一段接線 —— 而 `expand.ts` 不在這條 lane 的柵欄裡。⇒ 這張卡今天的職責是**契約**：它宣告這一族的演出長什麼形狀，守衛 `comboFinisherShowcase.test.ts` 拿它去對**每一支**出貨的 `comboStrikes` 技能，⛔ 少一件就紅。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 8,
+      "requires": [
+        "combo",
+        "invulnerable",
+        "applyStatus"
+      ],
+      "exemplar": {
+        "skill": "01-04 超究武神霸斬",
+        "jass": "A077"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "params": {
+        "comboFamily": {
+          "type": "docRef",
+          "default": "superff7",
+          "fillsVia": "template.ref → expand()"
+        },
+        "hitVfx": {
+          "type": "docRef",
+          "default": "fx.w3x.stock.thunderclapcaster.p00",
+          "fillsVia": "template.ref → expand()"
+        },
+        "hitText": {
+          "type": "enum",
+          "default": "{{i}}Hit",
+          "values": [
+            "{{i}}Hit",
+            "{{i}} HIT",
+            "{{i}}連擊",
+            "{{i}}段"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "hitTextSizeScale": {
+          "type": "number",
+          "default": 1.2,
+          "fillsVia": "template.ref → expand()"
+        },
+        "hitTextRiseSpeed": {
+          "type": "number",
+          "default": 1.6,
+          "fillsVia": "template.ref → expand()"
+        },
+        "hitTextDurationSec": {
+          "type": "number",
+          "default": 1.1,
+          "fillsVia": "template.ref → expand()"
+        },
+        "hitTextSizeGrowth": {
+          "type": "number",
+          "default": 4,
+          "fillsVia": "template.ref → expand()"
+        },
+        "finisherVfx": {
+          "type": "docRef",
+          "default": "fx.w3x.stock.warstompcaster.p00",
+          "fillsVia": "template.ref → expand()"
+        },
+        "finisherFlashAlpha": {
+          "type": "number",
+          "default": 0.5,
+          "fillsVia": "template.ref → expand()"
+        },
+        "finisherFlashSec": {
+          "type": "number",
+          "default": 0.3,
+          "fillsVia": "template.ref → expand()"
+        },
+        "finisherShakeAmplitude": {
+          "type": "number",
+          "default": 0.55,
+          "fillsVia": "template.ref → expand()"
+        },
+        "finisherShakeSec": {
+          "type": "number",
+          "default": 0.45,
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "physical",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    },
+    {
+      "id": "tpl-ground-nova",
+      "name": "原地震波",
+      "family": "ground-nova",
+      "description": "以施法者為中心的環形震波。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 8,
+      "requires": [],
+      "exemplar": {
+        "skill": "80-03 鬼神烈戟",
+        "jass": "A0N0"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "params": {
+        "radius": {
+          "type": "number",
+          "default": 530,
+          "fillsVia": "template.ref → expand()"
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              150
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    },
+    {
+      "id": "tpl-instant-blast",
+      "name": "瞬發點爆",
+      "family": "instant-blast",
+      "description": "指定點/目標的瞬發爆發；帶半徑時為地面 AoE，否則單體。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 8,
+      "requires": [],
+      "exemplar": {
+        "skill": "90-03 藤鞭",
+        "jass": "A0Y4"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 12
+      },
+      "params": {
+        "radius": {
+          "type": "number",
+          "default": 480,
+          "fillsVia": "template.ref → expand()"
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              200
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    },
+    {
+      "id": "tpl-leap-strike",
+      "name": "跳躍落地",
+      "family": "leap-strike",
+      "description": "拋物線跳躍到指定點（或原地垂直跳），落地造成範圍傷害。飛行中無視地形；落點被障礙物或場地邊界擋住時，起跳當下就改瞄最近的合法落點，弧線隨之重算，你看到的落地位置就是實際位置。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 5,
+      "requires": [
+        "leap"
+      ],
+      "exemplar": {
+        "skill": "07-03 列、在、前",
+        "jass": "A0G3"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "params": {
+        "mode": {
+          "type": "enum",
+          "default": "toPoint",
+          "values": [
+            "toPoint",
+            "inPlace"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "applyTo": {
+          "type": "enum",
+          "default": "self",
+          "values": [
+            "self",
+            "target"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "apexHeight": {
+          "type": "number",
+          "default": 600,
+          "fillsVia": "template.ref → expand()"
+        },
+        "durationSec": {
+          "type": "number",
+          "default": 0.82,
+          "fillsVia": "template.ref → expand()"
+        },
+        "landRadius": {
+          "type": "number",
+          "default": 330,
+          "fillsVia": "template.ref → expand()"
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              450
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "physical",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.5,
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    },
+    {
+      "id": "tpl-line-blast",
+      "name": "直線衝擊波（落點大爆炸）",
+      "family": "line-blast",
+      "description": "⭐ 這一份同時是兩件事。①【行為模板】一具帶骨架的 3D 模型沿面向推出去，路上穿透式地掃人（第一段傷害），飛完全程後在落點炸開一個範圍（第二段傷害）。⭐ 兩段是**兩串班表**而不是一串：合成一串的話，路上已經被掃到的人會被「一人一次」的過濾器擋在爆炸外面，而那不是任何一張卡的意思。②【特效預設表】`spawnModelFx` 的 `preset` 欄位**逐格讀這裡的 `params[*].default`**（`content/modelFxPreset.ts`，在載入時解析）—— 也就是說「一發直線推進的火球衝擊波長什麼樣」只住在這一份文件裡，⛔ 不是散在每一支技能的 JSON 節點上。改這裡的一個數字，04-03 龍破斬的**本體與變身態**一起變。設計正典範例：04-03 龍破斬（owner 2026-08-22 逐字：「莉娜龍破斬(一直線火球衝擊波後目的地火焰大爆炸)」）。⚠️ 兩段傷害各走自己的**級距**（damageTier）、爆炸範圍走 AoE **級距**（radiusTier），⛔ 這裡一個算好的傷害數字都沒有。⚠️ `blastRadius` 是 Zod 逼出來的**退路值**（`zDamageArea.radius` 是必填），真正說話的是 `blastRadiusTier` —— `resolveRadiusTier` 在載入時把它蓋掉。留著它是因為 AoE 級距表被關掉（`enabled:false`）的那天，一個 0 半徑的爆炸與「這支技能沒有爆炸」在畫面上一模一樣。⚠️ `preset` **只供演出幾何**（模型／路徑／速度／距離／自轉／縮放／碰觸半徑與陣營），⛔ 不自動塞傷害：那會替每一支引用它的技能加一份沒有人裁決過的數值。要沿路掃傷害與落點爆炸的技能自己寫 `onTouch` / `onArrive`。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 8,
+      "requires": [
+        "modelFx"
+      ],
+      "exemplar": {
+        "skill": "04-03 龍破斬",
+        "jass": "A04R"
+      },
+      "wiring": "both",
+      "usedVia": {
+        "preset": 2,
+        "ref": 0
+      },
+      "params": {
+        "modelKey": {
+          "type": "docRef",
+          "default": "imported.fireblast",
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "path": {
+          "type": "enum",
+          "default": "forward",
+          "values": [
+            "forward",
+            "toTarget",
+            "orbit",
+            "radial"
+          ],
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "speed": {
+          "type": "number",
+          "default": 27.5,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "distance": {
+          "type": "number",
+          "default": 12,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "spinDegPerSec": {
+          "type": "number",
+          "default": 360,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "scale": {
+          "type": "number",
+          "default": 4.5,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "touchRadius": {
+          "type": "number",
+          "default": 3.67,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "touchSide": {
+          "type": "enum",
+          "default": "enemies",
+          "values": [
+            "enemies",
+            "allies"
+          ],
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "touchDamageTier": {
+          "type": "enum",
+          "default": "大",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "blastRadius": {
+          "type": "number",
+          "default": 8,
+          "fillsVia": "template.ref → expand()"
+        },
+        "blastRadiusTier": {
+          "type": "enum",
+          "default": "大",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "blastDamageTier": {
+          "type": "enum",
+          "default": "大",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "blastApRatio": {
+          "type": "number",
+          "default": 1.8,
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 1.233,
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    },
+    {
+      "id": "tpl-line-sweep",
+      "name": "直線分段掃擊",
+      "family": "line-sweep",
+      "description": "沿直線分段的掃擊：每一段各自在自己的落點結算一次（`delayed` + `advance`，GH#393 的機制）。⭐ 同一個目標整串只被打一次（`hitOncePerTarget`）—— 那是原作的規則，卡片寫的是**一次**的數字。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 7,
+      "requires": [
+        "projectile"
+      ],
+      "exemplar": {
+        "skill": "20-03 約束與勝利之劍",
+        "jass": "A0D5"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 1
+      },
+      "params": {
+        "segmentCount": {
+          "type": "number",
+          "default": 6,
+          "fillsVia": "template.ref → expand()"
+        },
+        "stepSize": {
+          "type": "number",
+          "default": 200,
+          "fillsVia": "template.ref → expand()"
+        },
+        "segmentAoe": {
+          "type": "number",
+          "default": 400,
+          "fillsVia": "template.ref → expand()"
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              150
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    },
+    {
+      "id": "tpl-lock-combo",
+      "name": "鎖定連段",
+      "family": "lock-combo",
+      "description": "把一個人鎖住打完一整段。命中後目標被定住、施法者進入演出狀態（這段期間打不到他），連段一擊一擊落下，最後一記終結技在收招那一刻結算並掃過周圍。「連段次數 × 每段間隔」就是整段長度 —— 它是算出來的，所以沒有『持續時間』這個欄位可以填。⚠️ 原作的連段中施法者會一擊一擊瞬移到目標身邊，這裡沒有搬過來：那段期間雙方都被 pause + 無敵，施法者站哪裡不影響任何結算，只有終結技的圓心用得到，所以收成原地演出。想要遞減間隔（52-002 射殺百頭的 CD×0.75）也還做不到。 ⭐ owner 2026-08-13：終結技可以是**另一支具名技能**（finisherAbility，走 proxyCast 代放），⛔ 不是把那支技能的傷害抄一份進來 —— 抄一份之後那支技能改了，連段裡的版本不會跟著改。留空則沿用 finisherDamage 那個數字。發動條件也是一格（trigger）：預設 onCast，20-002 是 onReflectSuccess（反彈成功才發），所以整段連段可以掛在被動 hook 上而不是主動施放。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 6,
+      "requires": [
+        "periodicDamage",
+        "invulnerable",
+        "applyStatus",
+        "leap"
+      ],
+      "exemplar": {
+        "skill": "84-04 給我蜂蜜",
+        "jass": "A0CX"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "params": {
+        "hitCount": {
+          "type": "number",
+          "default": 5,
+          "fillsVia": "template.ref → expand()"
+        },
+        "hitIntervalSec": {
+          "type": "number",
+          "default": 0.4,
+          "fillsVia": "template.ref → expand()"
+        },
+        "perHitDamage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              100
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()"
+        },
+        "finisherDamage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              450
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()"
+        },
+        "finisherRadius": {
+          "type": "number",
+          "default": 150,
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "lockTarget": {
+          "type": "enum",
+          "default": "stun",
+          "values": [
+            "stun",
+            "root",
+            "none"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "casterGuard": {
+          "type": "enum",
+          "default": "all",
+          "values": [
+            "all",
+            "magic",
+            "none"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "finisherAbility": {
+          "type": "docRef",
+          "default": null,
+          "fillsVia": "template.ref → expand()"
+        },
+        "trigger": {
+          "type": "enum",
+          "default": "onCast",
+          "values": [
+            "onCast",
+            "onReflectSuccess",
+            "onKill",
+            "onBasicAttack",
+            "onDamageTaken"
+          ],
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    },
+    {
+      "id": "tpl-locust-line",
+      "name": "沿線 N 具（蝗蟲群·一次擺出整條線）",
+      "family": "locust-line",
+      "description": "⭐【原作的光束/火柱是一條線，⛔ 不是一團】`A03S`（09-04 龜派氣功）的 h006 火柱逐行是 `loop i=1..6 × 200`、`A05J`（**08-03 龍鬥氣砲咒文**，⛔ 不是 59-04）的 e003 是 `i=1..10 × 150` —— **一次擺好 N 具、隔一個固定步長、然後 `TriggerSleepAction` 清場**。這一份就是那個形狀：`path:\"static\"` ＋ `count` 具 ＋ `spacing` 步長。\n\n本家族的分群是 `pnpm locust:build` 從 **236 隻 dummy × 644 個 JASS 生成點**推導出來的，⛔ 不是手挑：對每一個 rawcode 算兩根**引擎表達得出來**的軸 —— ①有沒有 `SetUnitPosition`（位移）②生成點在不在 `loop` 裡（多具）。2×2 ⇒ 四群，量到的分佈是 **static-single 165 · static-line 15 · travel-single 12 · travel-line 4**（另 40 隻是隱形／承襲模型 ⇒ ⛔ 不進模板，那是 proxyCast 的活）。建議表（哪一支技能該用哪一個模板＋哪些參數）住 `docs/蝗蟲群對應表.md` §五。\n\n⚠️ `spacing` 的單位是**世界單位**（原作 200 wc3u × `GGD_PER_WC3`(11/600) ＝ **3.67**；⛔ 2026-08-28 以前這裡寫 ÷100＝2.0，那個除數是憑空的）；第 0 具在錨點上，第 k 具在沿開火方向的 `spacing×k` 處。⛔ 只有 `path:\"static\"` 且 `count≥2` 讀得到它 ——缺了它整條線退化成 1 具，而那在畫面上跟「沒寫 count」一模一樣（失敗形態②）。\n\n⚠️ 時序是 `lifeSec`：`static` 沒有「走完」可言，它是唯一的終止條件。預設 2 秒 ＝ 原作那個 `TriggerSleepAction(2)`。\n\n⭐【五欄】census 的每一隻 dummy 只有五種可調的東西 —— **modelKey（身分）· scale（大小）· tint（顏色）· alpha（透明度）· 時序**，而這份模板的 params 逐格對得上它們：身分逐支寫在節點上（`modelKey`，⛔ 模板的預設只是為了讓稀疏文件載得起來）；大小是 `scale`；顏色與透明度是 `tint`／`alpha`（節點級，GH#693 新增的 `spawnModelFx.tint`／`.alpha`）；時序見各自那一格。\n\n⚠️ **`tint`／`alpha` 刻意沒有預設值**，而那不是漏填：census 量到 236 隻裡 **133 隻非白**，而且**每一具的顏色都不一樣**（`UNIT_TINTS.json` 逐隻解析的繼承鏈）—— 家族層根本沒有一個共同的值。給它一個預設就是替每一支引用它的技能挑一個顏色（第一守則：出貨數值要引用得到 owner 的一句原話）。⇒ 兩格留空，逐支從 `docs/蝗蟲群對應表.md` §五 的建議表填。換算：w3u 的 0–255 ÷255；alpha ＝ `SetUnitVertexColorBJ` 第 4 參數 t% ⇒ `(100−t)÷100`。\n\n⛔【這一族不含傷害】`tpl-beam-roll` 檔頭立過的規矩逐字適用：「⛔ 不自動塞傷害 —— 那會替每一支引用它的技能各加一份沒有人裁決過的傷害」。所以這裡**一格 `touchDamageTier` 都沒有**，`expand()` 也就不會生出 `onTouch`（那一段由「模板有沒有宣告 `touchDamageTier`」決定，⛔ 不是家族名）。要沿路掃傷害的技能自己寫 `onTouch`，或再疊一張帶傷害的卡。\n\n⭐【一鍵 rollback】改**這一份**的 `params[*].default`，整族一起變；⛔ 不必動任何一支技能的 JSON。引用它的節點只寫 `preset` ＋ 自己的 `modelKey`（身分），其餘全部留白 —— 那是這一份成為「唯一住處」的方式（第〇·四守則）。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 8,
+      "requires": [
+        "modelFx"
+      ],
+      "exemplar": {
+        "skill": "09-04 龜派氣功 沿線火柱（h006 FlameStrike1，census static-line）",
+        "jass": "A03S"
+      },
+      "wiring": "node",
+      "usedVia": {
+        "preset": 2,
+        "ref": 0
+      },
+      "params": {
+        "modelKey": {
+          "type": "docRef",
+          "default": "w3x.stock.flamestrike1",
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "path": {
+          "type": "enum",
+          "default": "static",
+          "values": [
+            "forward",
+            "toTarget",
+            "orbit",
+            "radial",
+            "static"
+          ],
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "count": {
+          "type": "number",
+          "default": 6,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "spacing": {
+          "type": "number",
+          "default": 3.67,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "lifeSec": {
+          "type": "number",
+          "default": 2,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "scale": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "spinDegPerSec": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "tint": {
+          "type": "rgb",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "alpha": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "soundKey": {
+          "type": "docRef",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "arriveSoundKey": {
+          "type": "docRef",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        }
+      }
+    },
+    {
+      "id": "tpl-locust-orb",
+      "name": "球體定點（蝗蟲群·不動的那一群）",
+      "family": "locust-orb",
+      "description": "⭐【最大的一群：165/196 隻可見 dummy 站著不動】原作的 locust dummy 有八成九是「`CreateUnit` → `AddSpecialEffect` → `UnitApplyTimedLife`」—— ⛔ 一次 `SetUnitPosition` 都沒有。這一份就是那一群的模板：一具（或環上 `count` 具）擺在原地，活 `lifeSec` 就收。\n\n本家族的分群是 `pnpm locust:build` 從 **236 隻 dummy × 644 個 JASS 生成點**推導出來的，⛔ 不是手挑：對每一個 rawcode 算兩根**引擎表達得出來**的軸 —— ①有沒有 `SetUnitPosition`（位移）②生成點在不在 `loop` 裡（多具）。2×2 ⇒ 四群，量到的分佈是 **static-single 165 · static-line 15 · travel-single 12 · travel-line 4**（另 40 隻是隱形／承襲模型 ⇒ ⛔ 不進模板，那是 proxyCast 的活）。建議表（哪一支技能該用哪一個模板＋哪些參數）住 `docs/蝗蟲群對應表.md` §五。\n\n⚠️ ⭐ `path` 的預設是 **`orbit` 而不是 `static`**，而那是**量出來的**，⛔ 不是偏好：出貨的球體演出（77-01 百烈櫻華斬 · 14-01 東風繪扇南風末廣 · 79-03 月牙天衝 · 11-04 三千世界 · 04-04 神滅斬 ×2）逐支寫的是 `orbit + count:1 + distance:0.1 + speed:1`，那是「定點」在這個引擎裡**既有的**編碼（環半徑 0.1 ⇒ 線路上 `dx=dz=0`，與 `static` 同族）。改成 `static` 會動到那六支的線路酬載 ⇒ ⛔ 那不是逐位元等價的 retrofit，而「順手改對」正是這一批要避免的事。⭐ 想要真正的 `static`（帶 `anchor` 與沿線 `spacing`）就挑 `tpl-locust-line`，或把這一格改成 `static` —— 它是一格下拉。\n\n⚠️ `distance` 在 `orbit` 底下是**環半徑**（模型繞著施法者跑的那個圈多大），⛔ 不是「走多遠」；`count≥2` 就變成一圈等分的球體陣（護盾型）。時序只有一格：`lifeSec` —— 繞圈沒有終點，它是唯一的終止條件（`zSpawnModelFx` 的 refine 在載入時擋）。\n\n⭐【五欄】census 的每一隻 dummy 只有五種可調的東西 —— **modelKey（身分）· scale（大小）· tint（顏色）· alpha（透明度）· 時序**，而這份模板的 params 逐格對得上它們：身分逐支寫在節點上（`modelKey`，⛔ 模板的預設只是為了讓稀疏文件載得起來）；大小是 `scale`；顏色與透明度是 `tint`／`alpha`（節點級，GH#693 新增的 `spawnModelFx.tint`／`.alpha`）；時序見各自那一格。\n\n⚠️ **`tint` 刻意沒有預設值**，而那不是漏填：census 量到 236 隻裡 **133 隻非白**，而且**每一具的顏色都不一樣**（`UNIT_TINTS.json` 逐隻解析的繼承鏈）—— 家族層根本沒有一個共同的值。給它一個預設就是替每一支引用它的技能挑一個顏色（第一守則：出貨數值要引用得到 owner 的一句原話）。⇒ tint 留空，逐支從 `docs/蝗蟲群對應表.md` §五 的建議表填。⭐ `alpha` 的預設 **0.9（2026-08-28，魔法陣去背修復）是一格家族宣告，⛔ 不是一個顏色決定**：<1 宣告「本家族的透明度有語意」⇒ `modelFxRig.applyStockGlowAdditive` 對發光材質改走 ALPHA_ADD（WC3 fm3 逐字 blendFunc (SRC_ALPHA, ONE)），⛔ 不再是忽略 alpha 的 ONEONE —— 一律 ONEONE 讓同平面疊放的圈/環（midchilder／oblivion／tome）逐片全額 RGB 相加疊爆成實心白（owner 第三次報「Rider, 木乃香 魔法陣沒有去背」；A/B 像素證據見 docs/_reports/magic-circle-alpha_temp_20260828-1800.md）。節點自己寫 1.0 ＝ 與缺席逐位元同義（仍走 ONEONE，光束驗收那一族不動）；#669 批核頁登記的一鍵 rollback（翻成 0 ⇒ 整族沒寫自己 alpha 的節點一起隱形）仍在 ——⭐ 而且在 ONEONE 時代那格 0 逐位元是死的（ONEONE 不讀 alpha），現在真的會隱形。家族層 rollback：把 default 改回 1.0 ⇒ 整族回 ONEONE。逐 dummy 的 runtime alpha 仍照 census 回填在節點上（`runtimeAlphaBackfill` 守著），⛔ 這一格不取代它。換算：w3u 的 0–255 ÷255；alpha ＝ `SetUnitVertexColorBJ` 第 4 參數 t% ⇒ `(100−t)÷100`。\n\n⛔【這一族不含傷害】`tpl-beam-roll` 檔頭立過的規矩逐字適用：「⛔ 不自動塞傷害 —— 那會替每一支引用它的技能各加一份沒有人裁決過的傷害」。所以這裡**一格 `touchDamageTier` 都沒有**，`expand()` 也就不會生出 `onTouch`（那一段由「模板有沒有宣告 `touchDamageTier`」決定，⛔ 不是家族名）。要沿路掃傷害的技能自己寫 `onTouch`，或再疊一張帶傷害的卡。\n\n⭐【一鍵 rollback】改**這一份**的 `params[*].default`，整族一起變；⛔ 不必動任何一支技能的 JSON。引用它的節點只寫 `preset` ＋ 自己的 `modelKey`（身分），其餘全部留白 —— 那是這一份成為「唯一住處」的方式（第〇·四守則）。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 8,
+      "requires": [
+        "modelFx"
+      ],
+      "exemplar": {
+        "skill": "11-04 三千世界（o018 HeroMusashiMiyamoto，census static-single）",
+        "jass": "o018"
+      },
+      "wiring": "node",
+      "usedVia": {
+        "preset": 29,
+        "ref": 0
+      },
+      "params": {
+        "modelKey": {
+          "type": "docRef",
+          "default": "imported.heromusashimiyamoto",
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "path": {
+          "type": "enum",
+          "default": "orbit",
+          "values": [
+            "forward",
+            "toTarget",
+            "orbit",
+            "radial",
+            "static"
+          ],
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "count": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "distance": {
+          "type": "number",
+          "default": 0.1,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "speed": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "lifeSec": {
+          "type": "number",
+          "default": 2.5,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "scale": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "spinDegPerSec": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "tint": {
+          "type": "rgb",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "alpha": {
+          "type": "number",
+          "default": 0.9,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "soundKey": {
+          "type": "docRef",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "arriveSoundKey": {
+          "type": "docRef",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        }
+      }
+    },
+    {
+      "id": "tpl-locust-strike",
+      "name": "定點打擊（蝗蟲群·擺在腳下的那一具）",
+      "family": "locust-strike",
+      "description": "⭐【定點打擊（蝗蟲群·擺在某個人／某個點腳下的那一具）】原作的 `MonsoonBoltTarget` 那一族逐字是`CreateUnit` → `AddSpecialEffect` → `SetUnitAnimation` → `UnitApplyTimedLife`：一具**不位移**的模型擺在施法者／地板點／目標腳下，播它自己的剪輯，到期回收。這一份就是那個形狀 ——`path:\"static\"` ＋ `anchor` ＋ `clip`，⛔ 沒有速度也沒有距離（`static` 一格都不讀）。\n\n⚠️ ⭐【它為什麼是第 5 份而不是「在 `tpl-locust-orb` 加一格 anchor」】—— 那是**量出來的**，⛔ 不是偏好。`tpl-locust-orb` 的預設是 `orbit + count:1 + distance:0.1 + speed:1 + lifeSec:2.5`，而且沒有 `clip`／`scale`；o00E 那一族 13 個節點要的是 `static + anchor + clip:\"idle\" + lifeSec:1 + scale:8`。⇒ **逐格都不一樣**，「orb ＋ anchor」收攏的欄位數是 **0**（13 個節點仍要各寫 6 格），而且 `fillOne` 還會把 `count`／`distance`／`speed` 三格 **static 沒有人讀**的惰性幾何補進去（第一·五守則正在擋的形狀）。這一份收攏的是 **78 → 19 格**，其中 6 個節點變成只寫 `preset` ＋ `modelKey`。\n\n⚠️ **`anchor` ⛔ 不是 census 的第三根軸**（GH#698 風險欄擔心的「165 隻 static-single 被再切一半」不成立）：落點來自 **GGD 技能自己的 `castType`**（self→self／ground→point／targeted→target，`tools/skill-remake/common.py::static_model` 的檔頭逐字），⛔ 不是那隻 dummy 在 JASS 裡的性質。⇒ 它是一格 param，`tools/locust-census/gen.mjs` 的 2×2 分群一個位元組都不用動。\n\n⚠️ ⭐ **誠實記一筆：這一族與 `tpl-locust-orb` 是同一個 census 群（static-single 165 隻）的兩種編碼。**orb 的 `orbit + 環半徑 0.1 + speed 1` 是「定點」在這個引擎裡的 **legacy 編碼**，留著純粹是為了六支既有節點的逐位元等價（`tpl-locust-orb` 的說明逐字寫著）。⇒ 哪一天可以動那六支的線路酬載，orb 應該被這一族**吸收**，家族數回到 4。⛔ 在那之前合併它 = 把六個節點的等價比對 golden 改掉，而那正是「改測試讓它變綠」。\n\n⭐【五欄】census 的每一隻 dummy 只有五種可調的東西 —— **modelKey（身分）· scale（大小）· tint（顏色）· alpha（透明度）· 時序**。這一份的時序只有一格：`lifeSec`（`static` 沒有「走完」可言，它是唯一的終止條件，`zSpawnModelFx` 的 refine 在載入時擋）。⛔ 沒有 `count`／`spacing` —— 那是 `tpl-locust-line`（一次擺出整條線）；這一族是**單具**。\n\n⚠️ **`tint`／`alpha` 刻意沒有預設值**，而那不是漏填：census 量到 236 隻裡 **133 隻非白**，而且**每一具的顏色都不一樣**（`UNIT_TINTS.json` 逐隻解析的繼承鏈）—— 家族層根本沒有一個共同的值。給它一個預設就是替每一支引用它的技能挑一個顏色（第一守則：出貨數值要引用得到 owner 的一句原話）。⇒ 兩格留空，逐支從 `docs/蝗蟲群對應表.md` §五 的建議表填。換算：w3u 的 0–255 ÷255；alpha ＝ `SetUnitVertexColorBJ` 第 4 參數 t% ⇒ `(100−t)÷100`。\n\n⚠️ `clip` 是 `model@1.clipMap` 的**邏輯狀態名**（GH#689）：`idle` 在 `w3x.stock.monsoonbolttarget` 解成它自己的待機序列 —— ⛔ 不填就是一具**定格的雕像**（stock 特效模型的視覺有一半住在那條序列裡：雷柱的閃爍、火焰的翻騰）。\n\n⛔【這一族不含傷害】`tpl-beam-roll` 檔頭立過的規矩逐字適用：「⛔ 不自動塞傷害 —— 那會替每一支引用它的技能各加一份沒有人裁決過的傷害」。所以這裡**一格 `touchDamageTier` 都沒有**，`expand()` 也就不會生出 `onTouch`。\n\n⭐【一鍵 rollback】改**這一份**的 `params[*].default`，整族一起變；⛔ 不必動任何一支技能的 JSON。引用它的節點只寫 `preset` ＋ 自己的 `modelKey`（身分）＋ 真的不同的那幾格，其餘全部留白 —— 那是這一份成為「唯一住處」的方式（第〇·四守則）。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 8,
+      "requires": [
+        "modelFx"
+      ],
+      "exemplar": {
+        "skill": "65-002 永恆的愚蠢鄉 / 77-04 打雷（o00E MonsoonBoltTarget，census static-single）",
+        "jass": "o00E"
+      },
+      "wiring": "node",
+      "usedVia": {
+        "preset": 12,
+        "ref": 0
+      },
+      "params": {
+        "modelKey": {
+          "type": "docRef",
+          "default": "w3x.stock.monsoonbolttarget",
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "path": {
+          "type": "enum",
+          "default": "static",
+          "values": [
+            "forward",
+            "toTarget",
+            "orbit",
+            "radial",
+            "static"
+          ],
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "anchor": {
+          "type": "enum",
+          "default": "point",
+          "values": [
+            "self",
+            "point",
+            "target"
+          ],
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "clip": {
+          "type": "enum",
+          "default": "idle",
+          "values": [
+            "idle",
+            "run",
+            "attack",
+            "cast",
+            "hurt",
+            "death"
+          ],
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "lifeSec": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "scale": {
+          "type": "number",
+          "default": 8,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "spinDegPerSec": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "tint": {
+          "type": "rgb",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "alpha": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "soundKey": {
+          "type": "docRef",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "arriveSoundKey": {
+          "type": "docRef",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        }
+      }
+    },
+    {
+      "id": "tpl-locust-swarm",
+      "name": "推進多具（蝗蟲群·等分散開各自推進）",
+      "family": "locust-swarm",
+      "description": "⭐【蝗蟲群最字面的那一群】census 的 travel-line ——「在 `loop` 裡生 N 隻、而且每一隻都會動」（`e003` RedDragonMissile · `h00J` ResurrectCaster · `h00K` ShockwaveMissile · `o011` RockChunks0）。這一份是它：同一具模型等分成 `count` 具，從施法者身上**同時**朝四面八方推出去。\n\n本家族的分群是 `pnpm locust:build` 從 **236 隻 dummy × 644 個 JASS 生成點**推導出來的，⛔ 不是手挑：對每一個 rawcode 算兩根**引擎表達得出來**的軸 —— ①有沒有 `SetUnitPosition`（位移）②生成點在不在 `loop` 裡（多具）。2×2 ⇒ 四群，量到的分佈是 **static-single 165 · static-line 15 · travel-single 12 · travel-line 4**（另 40 隻是隱形／承襲模型 ⇒ ⛔ 不進模板，那是 proxyCast 的活）。建議表（哪一支技能該用哪一個模板＋哪些參數）住 `docs/蝗蟲群對應表.md` §五。\n\n⚠️ 它與 `tpl-radial-burst` 的**形狀確實相同**，而分界線是**傷害**，⛔ 不是家族名：radial-burst 宣告 `touchDamageTier` ⇒ 十二具各掃一次 ＝ 42-04 世界終結卡面承諾的「隨機12次區域傷害」（那是**行為**）；這一份一格傷害都沒有（那是**演出**）。⇒ 兩份**資料**，而程式**只有一支**（`expand.ts` 的 `modelFxFamily`）—— ⛔ 零行重複，這正是第零守則⑨要的形狀。\n\n⚠️ 等分角度讀的是引擎共用的單位旋轉常數表（`sim/effects/pull.ts` 的 `ringPoints`），⛔ 沒有第二份三角函式（`sim/**` 禁止 `Math.sin/cos`）。\n\n⭐【五欄】census 的每一隻 dummy 只有五種可調的東西 —— **modelKey（身分）· scale（大小）· tint（顏色）· alpha（透明度）· 時序**，而這份模板的 params 逐格對得上它們：身分逐支寫在節點上（`modelKey`，⛔ 模板的預設只是為了讓稀疏文件載得起來）；大小是 `scale`；顏色與透明度是 `tint`／`alpha`（節點級，GH#693 新增的 `spawnModelFx.tint`／`.alpha`）；時序見各自那一格。\n\n⚠️ **`tint`／`alpha` 刻意沒有預設值**，而那不是漏填：census 量到 236 隻裡 **133 隻非白**，而且**每一具的顏色都不一樣**（`UNIT_TINTS.json` 逐隻解析的繼承鏈）—— 家族層根本沒有一個共同的值。給它一個預設就是替每一支引用它的技能挑一個顏色（第一守則：出貨數值要引用得到 owner 的一句原話）。⇒ 兩格留空，逐支從 `docs/蝗蟲群對應表.md` §五 的建議表填。換算：w3u 的 0–255 ÷255；alpha ＝ `SetUnitVertexColorBJ` 第 4 參數 t% ⇒ `(100−t)÷100`。\n\n⛔【這一族不含傷害】`tpl-beam-roll` 檔頭立過的規矩逐字適用：「⛔ 不自動塞傷害 —— 那會替每一支引用它的技能各加一份沒有人裁決過的傷害」。所以這裡**一格 `touchDamageTier` 都沒有**，`expand()` 也就不會生出 `onTouch`（那一段由「模板有沒有宣告 `touchDamageTier`」決定，⛔ 不是家族名）。要沿路掃傷害的技能自己寫 `onTouch`，或再疊一張帶傷害的卡。\n\n⭐【一鍵 rollback】改**這一份**的 `params[*].default`，整族一起變；⛔ 不必動任何一支技能的 JSON。引用它的節點只寫 `preset` ＋ 自己的 `modelKey`（身分），其餘全部留白 —— 那是這一份成為「唯一住處」的方式（第〇·四守則）。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 8,
+      "requires": [
+        "modelFx"
+      ],
+      "exemplar": {
+        "skill": "38-002 究極暴走黑龍波 三向黑洞（o011 RockChunks0 同族，census travel-line）",
+        "jass": "o011"
+      },
+      "wiring": "node",
+      "usedVia": {
+        "preset": 2,
+        "ref": 0
+      },
+      "params": {
+        "modelKey": {
+          "type": "docRef",
+          "default": "imported.blackhole",
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "path": {
+          "type": "enum",
+          "default": "radial",
+          "values": [
+            "forward",
+            "toTarget",
+            "orbit",
+            "radial",
+            "static"
+          ],
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "count": {
+          "type": "number",
+          "default": 3,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "speed": {
+          "type": "number",
+          "default": 7.7,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "distance": {
+          "type": "number",
+          "default": 8,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "spinDegPerSec": {
+          "type": "number",
+          "default": 720,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "scale": {
+          "type": "number",
+          "default": 0.6,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "lifeSec": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "tint": {
+          "type": "rgb",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "alpha": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "soundKey": {
+          "type": "docRef",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "arriveSoundKey": {
+          "type": "docRef",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        }
+      }
+    },
+    {
+      "id": "tpl-locust-travel",
+      "name": "推進單具（蝗蟲群·一具沿面向推出去）",
+      "family": "locust-travel",
+      "description": "⭐【真的會動的那 12 隻】census 量到只有 12 隻可見 dummy 的生成點帶 `SetUnitPosition` ——原作那一族是「生一隻帶模型的 locust 單位，每 tick 往前推一段，到期 `RemoveUnit`」。這一份就是它：一具沿**施法者面向**推 `distance` 遠，一路自轉。\n\n本家族的分群是 `pnpm locust:build` 從 **236 隻 dummy × 644 個 JASS 生成點**推導出來的，⛔ 不是手挑：對每一個 rawcode 算兩根**引擎表達得出來**的軸 —— ①有沒有 `SetUnitPosition`（位移）②生成點在不在 `loop` 裡（多具）。2×2 ⇒ 四群，量到的分佈是 **static-single 165 · static-line 15 · travel-single 12 · travel-line 4**（另 40 隻是隱形／承襲模型 ⇒ ⛔ 不進模板，那是 proxyCast 的活）。建議表（哪一支技能該用哪一個模板＋哪些參數）住 `docs/蝗蟲群對應表.md` §五。\n\n⚠️ 它與 `tpl-beam-roll` 的差別**只有傷害**：beam-roll 宣告 `touchDamageTier`（穿透式沿路掃人，那是它的行為），這一份一格都沒有 —— 它是**純演出**。⇒ 一支「飛出去的球加上另外算的傷害」的技能挑這一份，⛔ 不必被迫接受一份沒人裁決過的 onTouch。\n\n⚠️ 時序在這一族是 `speed`／`distance`（飛行時間 ＝ distance÷speed）。`lifeSec` 是**可選**的第二個終止條件（兩者都給時取先到的那一個），刻意沒有預設 —— 給它一個就會把每一支的飛行距離悄悄夾短。\n\n⭐【五欄】census 的每一隻 dummy 只有五種可調的東西 —— **modelKey（身分）· scale（大小）· tint（顏色）· alpha（透明度）· 時序**，而這份模板的 params 逐格對得上它們：身分逐支寫在節點上（`modelKey`，⛔ 模板的預設只是為了讓稀疏文件載得起來）；大小是 `scale`；顏色與透明度是 `tint`／`alpha`（節點級，GH#693 新增的 `spawnModelFx.tint`／`.alpha`）；時序見各自那一格。\n\n⚠️ **`tint` 刻意沒有預設值**，而那不是漏填：census 量到 236 隻裡 **133 隻非白**，而且**每一具的顏色都不一樣**（`UNIT_TINTS.json` 逐隻解析的繼承鏈）—— 家族層根本沒有一個共同的值。給它一個預設就是替每一支引用它的技能挑一個顏色（第一守則：出貨數值要引用得到 owner 的一句原話）。⇒ tint 留空，逐支從 `docs/蝗蟲群對應表.md` §五 的建議表填。⭐ `alpha` 的預設 **1.0 是一格開關，⛔ 不是一個顏色決定**：1.0＝完全不透明＝與缺席**逐位元同義**（`modelFxRig` 對 `alpha ≥ 1` 明文跳過乘法），所以它出貨時什麼都不改；它存在的唯一理由是 GH#688 Phase 6（CRESCENT lane）在 #669 批核頁登記的**一鍵 rollback**：把這一格翻成 0 ⇒ 整族沒寫自己 alpha 的節點一起隱形（寫了自己 alpha 的節點不受影響）。換算：w3u 的 0–255 ÷255；alpha ＝ `SetUnitVertexColorBJ` 第 4 參數 t% ⇒ `(100−t)÷100`。\n\n⛔【這一族不含傷害】`tpl-beam-roll` 檔頭立過的規矩逐字適用：「⛔ 不自動塞傷害 —— 那會替每一支引用它的技能各加一份沒有人裁決過的傷害」。所以這裡**一格 `touchDamageTier` 都沒有**，`expand()` 也就不會生出 `onTouch`（那一段由「模板有沒有宣告 `touchDamageTier`」決定，⛔ 不是家族名）。要沿路掃傷害的技能自己寫 `onTouch`，或再疊一張帶傷害的卡。\n\n⭐【一鍵 rollback】改**這一份**的 `params[*].default`，整族一起變；⛔ 不必動任何一支技能的 JSON。引用它的節點只寫 `preset` ＋ 自己的 `modelKey`（身分），其餘全部留白 —— 那是這一份成為「唯一住處」的方式（第〇·四守則）。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 8,
+      "requires": [
+        "modelFx"
+      ],
+      "exemplar": {
+        "skill": "38-03 邪王炎殺黑龍波 黑洞層（h02E BlackHole，census travel-single）",
+        "jass": "h02E"
+      },
+      "wiring": "node",
+      "usedVia": {
+        "preset": 5,
+        "ref": 0
+      },
+      "params": {
+        "modelKey": {
+          "type": "docRef",
+          "default": "imported.blackhole",
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "path": {
+          "type": "enum",
+          "default": "forward",
+          "values": [
+            "forward",
+            "toTarget",
+            "orbit",
+            "radial",
+            "static"
+          ],
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "speed": {
+          "type": "number",
+          "default": 30,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "distance": {
+          "type": "number",
+          "default": 14,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "spinDegPerSec": {
+          "type": "number",
+          "default": 720,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "scale": {
+          "type": "number",
+          "default": 0.6,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "lifeSec": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "tint": {
+          "type": "rgb",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "alpha": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "soundKey": {
+          "type": "docRef",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "arriveSoundKey": {
+          "type": "docRef",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        }
+      }
+    },
+    {
+      "id": "tpl-mark-stacks",
+      "name": "具名標記-層數與免死",
+      "family": "mark-stacks",
+      "description": "在持有者身上裝一個有層數的具名標記（【試煉】【風王結界】【縮地】），可跨回合、可永久，並可選擇讓它變成一張免死牌：受致命傷害時消耗一層 → 無敵 → 回復 → 擊退暈眩周圍敵人；每失去一層永久獲得一組加成。⚠️ 落差：無敵/回復/擊退是救活的同一格一起發生（sim 沒有延後排程），文案上的「隨後」看不出來；火圈燒傷不走傷害佇列，這張免死牌擋不到它。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 8,
+      "requires": [
+        "marks",
+        "invulnerable",
+        "knockback",
+        "applyStatus"
+      ],
+      "exemplar": {
+        "skill": "52-00 十二道試煉（海克力斯 Berserker 天生技）",
+        "jass": "無 JASS 出處 —— owner 2026-08-08 口述規格，不是從 war3map.j 復原的家族"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "params": {
+        "markId": {
+          "type": "docRef",
+          "default": "godie-hapm.passive",
+          "fillsVia": "template.ref → expand()"
+        },
+        "initial": {
+          "type": "number",
+          "default": 12,
+          "fillsVia": "template.ref → expand()"
+        },
+        "max": {
+          "type": "number",
+          "default": 12,
+          "fillsVia": "template.ref → expand()"
+        },
+        "durationSec": {
+          "type": "number",
+          "default": -1,
+          "fillsVia": "template.ref → expand()"
+        },
+        "resetOn": {
+          "type": "enum",
+          "default": "match",
+          "values": [
+            "match",
+            "round",
+            "never"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "perStackLost": {
+          "type": "statModifiers",
+          "default": [
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 0.1
+            },
+            {
+              "stat": "maxHealth",
+              "op": "pctAdd",
+              "value": 0.1
+            }
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "lethalMode": {
+          "type": "enum",
+          "default": "save",
+          "values": [
+            "save",
+            "none"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "lethalConsume": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "template.ref → expand()"
+        },
+        "surviveHpPct": {
+          "type": "number",
+          "default": 0.01,
+          "fillsVia": "template.ref → expand()"
+        },
+        "lethalDamageTypes": {
+          "type": "enum",
+          "default": "all",
+          "values": [
+            "all",
+            "physicalMagic",
+            "physical",
+            "magic",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "internalCooldown": {
+          "type": "number",
+          "default": 0.5,
+          "fillsVia": "template.ref → expand()"
+        },
+        "invulnerableSec": {
+          "type": "number",
+          "default": 1.5,
+          "fillsVia": "template.ref → expand()"
+        },
+        "invulnerableScope": {
+          "type": "enum",
+          "default": "damageAndControl",
+          "values": [
+            "damageAndControl",
+            "damageOnly"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "restoreHealthPct": {
+          "type": "number",
+          "default": 0.5,
+          "fillsVia": "template.ref → expand()"
+        },
+        "aoeRadius": {
+          "type": "number",
+          "default": 6,
+          "fillsVia": "template.ref → expand()"
+        },
+        "knockbackDistance": {
+          "type": "number",
+          "default": 4,
+          "fillsVia": "template.ref → expand()"
+        },
+        "knockbackSpeed": {
+          "type": "number",
+          "default": 16,
+          "fillsVia": "template.ref → expand()"
+        },
+        "knockbackFrom": {
+          "type": "enum",
+          "default": "caster",
+          "values": [
+            "caster",
+            "facing",
+            "pull"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "stunSec": {
+          "type": "number",
+          "default": 0.5,
+          "fillsVia": "template.ref → expand()"
+        },
+        "stunStatusId": {
+          "type": "docRef",
+          "default": "trial-stun",
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    },
+    {
+      "id": "tpl-on-attack",
+      "name": "攻擊觸發",
+      "family": "on-attack",
+      "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 9,
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "exemplar": {
+        "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者",
+        "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "params": {
+        "event": {
+          "type": "enum",
+          "default": "onBasicAttack",
+          "values": [
+            "onBasicAttack",
+            "onDamageDealt"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "condition": {
+          "type": "condition",
+          "default": {
+            "any": [
+              {
+                "all": [
+                  {
+                    "not": {
+                      "kind": "kind",
+                      "subject": "target",
+                      "is": "champion"
+                    }
+                  },
+                  {
+                    "kind": "stat",
+                    "subject": "target",
+                    "stat": "hp",
+                    "mode": "percent",
+                    "op": "<",
+                    "value": 0.35
+                  }
+                ]
+              },
+              {
+                "all": [
+                  {
+                    "kind": "kind",
+                    "subject": "target",
+                    "is": "champion"
+                  },
+                  {
+                    "kind": "chance",
+                    "p": 0.01
+                  }
+                ]
+              }
+            ]
+          },
+          "fillsVia": "template.ref → expand()"
+        },
+        "chance": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "template.ref → expand()"
+        },
+        "bonusDamage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              100
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "internalCooldown": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    },
+    {
+      "id": "tpl-on-hit-react",
+      "name": "受擊反應",
+      "family": "on-hit-react",
+      "description": "受到傷害時的被動反制（反制窗/吸收轉化為紅色降級槽）。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 7,
+      "requires": [
+        "hooks"
+      ],
+      "exemplar": {
+        "skill": "20-04 Avalon",
+        "jass": "A0CT"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "params": {
+        "chance": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "template.ref → expand()"
+        },
+        "reflectDamage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              30
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "reflectRadius": {
+          "type": "number",
+          "default": 900,
+          "fillsVia": "template.ref → expand()"
+        },
+        "internalCooldown": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    },
+    {
+      "id": "tpl-orbit-array",
+      "name": "環形放射陣",
+      "family": "orbit-array",
+      "description": "以一個圓心向外(或向內)放出 N 道等角攻擊。角度間隔是導出的 360/道數,不是欄位 —— 八支成員裡七支的 道數×間隔 剛好是 360。一次齊發 = 一發範圍傷害;填了逐道間隔 = 一片會連續打的傷害場(站著不走會被切很多刀)。原地放還是指定點放,由技能自己的 range 欄位決定(range 0 = 原地),不是模板參數。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 6,
+      "requires": [
+        "periodicDamage"
+      ],
+      "exemplar": {
+        "skill": "57-04 竹蜻蜓",
+        "jass": "A0JN (war3map.j:45749-45764)"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 1
+      },
+      "params": {
+        "rayCount": {
+          "type": "number",
+          "default": 12,
+          "fillsVia": "template.ref → expand()"
+        },
+        "reach": {
+          "type": "number",
+          "default": 256,
+          "fillsVia": "template.ref → expand()"
+        },
+        "aim": {
+          "type": "enum",
+          "default": "inward",
+          "values": [
+            "inward",
+            "outward"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "rayIntervalSec": {
+          "type": "number",
+          "default": 0.3,
+          "fillsVia": "template.ref → expand()"
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              325
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    },
+    {
+      "id": "tpl-periodic-field",
+      "name": "週期領域",
+      "family": "periodic-field",
+      "description": "一片每隔 intervalSec 就把圈內重算一次的傷害場。⭐ 它與【延遲序列】的差別只有一格 anchor：point = 放完就留在原地(04-02 炸彈陣的火柱、37-03 災難之牆)；caster = 圈跟著施法者走(90-01 飛葉快刀「每秒對附近的敵人造成傷害」、92-04 馬勒戈壁「每秒奪取周圍英雄」、99-04「初音週遭的部隊每秒受到傷害」)。⛔ 落幾發不是一格參數 —— 它是 durationSec / intervalSec 算出來的(第〇·四守則:算得出來的值不進文件)。⭐⭐【平衡決策的唯一住處】damageTier 名的是**整段**的預算,⛔ 不是逐發的量:每一發拿到 整段÷發數,而那個除法寫成 Scaling.mult(一個**運算子**,⛔ 不是算好的數字)。出處是 config/damage-tier-exemptions.json 的 dot-per-tick 逐字「五級距的錨點是『20 發打死中位英雄』,那把尺量的是**單發**」。⇒ 這個決策住在 expand.ts 的 FAMILIES['periodic-field'] **一列**,⛔ 不可以抄進 N 份技能 JSON。⚠️ applyTo 今天只選圈的 side(enemies/allies),⛔ 治療場還沒有參數 —— 要做的話是補一格 healTier,⛔ 不是拿 damageTier 去治療。⚠️ intervalSec 的下界在 2026-08-30 從 0.034(＝30Hz 的一個 tick)收到 0.2,兩個理由:①一片每一幀都跳的圈是**光環**,⛔ 不是週期領域 —— 這一族的卡面逐字都是「每秒」;②發數＝durationSec÷intervalSec,而模擬器一次施放排得出的段數上界是 DELAYED_MAX_COUNT=32(sim/effects/kindLimits.ts) ⇒ 下界太小會讓一組合法的表單值展開成一個排不出來的班表。超界時 expand.ts **大聲擲錯並指名要調哪一格**,⛔ 不靜默夾掉。⛔ 收緊的當下零支出貨技能引用這份模板,所以它改變不了任何一場比賽。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 5,
+      "requires": [
+        "periodicDamage"
+      ],
+      "exemplar": {
+        "skill": "90-01 飛葉快刀（每秒對附近的敵人造成傷害，持續2秒）",
+        "jass": "(P3 待查 —— 引擎面由 delayed.anchor 落地)"
+      },
+      "wiring": "both",
+      "usedVia": {
+        "preset": 0,
+        "ref": 5
+      },
+      "params": {
+        "intervalSec": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "template.ref → expand()"
+        },
+        "durationSec": {
+          "type": "number",
+          "default": 5,
+          "fillsVia": "template.ref → expand()"
+        },
+        "radiusTier": {
+          "type": "enum",
+          "default": "中",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "anchor": {
+          "type": "enum",
+          "default": "caster",
+          "values": [
+            "point",
+            "caster"
+          ],
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "applyTo": {
+          "type": "enum",
+          "default": "enemies",
+          "values": [
+            "enemies",
+            "allies"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageTier": {
+          "type": "enum",
+          "default": "極小",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "hitVfx": {
+          "type": "docRef",
+          "default": null,
+          "fillsVia": "template.ref → expand()"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    },
+    {
+      "id": "tpl-proxy-cast",
+      "name": "代理錨點施法",
+      "family": "proxy-cast",
+      "description": "把一發「傷害 + 控場」的範圍效果放在一個**不一定是施法者所在**的錨點上。原作 23 支成員全部是同一套 WC3 手法:造一隻隱形 dummy → 給它一個技能 → 叫它施放 → 幾秒後清掉。那隻 dummy 在 GGD 沒有對應物(GGD 不要求「技能必須掛在某個單位身上」),所以這台機器不召喚任何東西 —— 它保留的是原作真正在做的兩件事:**錨點與施法者脫鉤**,以及**打完還附帶一個負面狀態**。\n\n「錨點」是這個家族最大的分歧(11 支在施法點 / 7 支在施法者腳下 / 3 支在目標身上),所以它是一個下拉選單,不是三個模板。清空「附帶狀態」= 純傷害,23 支裡有 20 支是這樣。\n\n跟 tpl-proxy-fanout(範圍逐一施法)的差別:那台是「範圍內每個人各結算一次單體法術」,這台是「一發範圍效果,但落點可以不在我腳下」。\n\n⚠️ 做不到的兩件事已標在欄位上:多錨點陣型(37-03 災難之牆 9 道牆一直線、94-02 橘山斬空破 4 向 X 形)是 inert;沉默(66-02 驚駭 / 48-00 石化之眼 / EX 龍眼 / 84-03 蜜汁)在 sim 裡沒有這根軸,只能退成暈眩或減速。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 6,
+      "requires": [
+        "applyStatus"
+      ],
+      "exemplar": {
+        "skill": "71-01 死亡隕落",
+        "jass": "A03L → dummy A095 (war3map.j:48137-48189)"
+      },
+      "wiring": "both",
+      "usedVia": {
+        "preset": 0,
+        "ref": 8
+      },
+      "params": {
+        "anchor": {
+          "type": "enum",
+          "default": "point",
+          "values": [
+            "self",
+            "point",
+            "target"
+          ],
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "radius": {
+          "type": "number",
+          "default": 375,
+          "fillsVia": "template.ref → expand()"
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              150
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "statusId": {
+          "type": "enum",
+          "default": "burnstun",
+          "values": [
+            "burnstun",
+            "root",
+            "slow25",
+            "slow30",
+            "slow40"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "statusDurationSec": {
+          "type": "number",
+          "default": 2,
+          "fillsVia": "template.ref → expand()"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()"
+        },
+        "proxyCount": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    },
+    {
+      "id": "tpl-proxy-fanout",
+      "name": "範圍逐一施法",
+      "family": "proxy-fanout",
+      "description": "對範圍內的每一個目標各結算一次單體法術。原作是用一隻拋棄式 dummy 逐一 IssueTargetOrder —— 那是 WC3 沒有多目標指令的實作繞道,不是設計,所以 GGD 這邊不召喚任何東西。傷害之外可以再掛一個狀態(纏繞/暈眩/緩速),那才是這台機器跟純震波不一樣的地方。⚠️ 十五支成員裡有兩支是對友方放的(53-03 破法對咒、99-03 初音戰意),本版做不到 —— 見說明文件。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 8,
+      "requires": [
+        "applyStatus"
+      ],
+      "exemplar": {
+        "skill": "45-02 千鳥流",
+        "jass": "A0JX (war3map.j:41741-41762)"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "params": {
+        "radius": {
+          "type": "number",
+          "default": 600,
+          "fillsVia": "template.ref → expand()"
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              280
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "statusId": {
+          "type": "enum",
+          "default": "root",
+          "values": [
+            "root",
+            "burnstun",
+            "slow30"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "statusDurationSec": {
+          "type": "number",
+          "default": 4,
+          "fillsVia": "template.ref → expand()"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    },
+    {
+      "id": "tpl-radial-burst",
+      "name": "圓周噴發（大冰塊）",
+      "family": "radial-burst",
+      "description": "⭐ 這一份同時是兩件事。①【行為模板】同一具帶骨架的 3D 模型等分成 count 具，從施法者身上同時朝四面八方推出去，每一具各自穿透式地掃過自己那條線（同一個人被同一具只掃一次）。等分方向讀的是引擎共用的單位旋轉常數表，⛔ 沒有第二份三角函式。②【特效預設表】`spawnModelFx` 的 `preset` 欄位**逐格讀這裡的 `params[*].default`**（`content/modelFxPreset.ts`，在載入時解析）—— 也就是說「一圈噴發的大冰塊長什麼樣」只住在這一份文件裡，⛔ 不是散在每一支技能的 JSON 節點上。改這裡的一個數字，42-04 世界終結的**本體與變身態**一起變。設計正典範例：42-04 世界終結的十二道寒冰。⚠️ 傷害走**級距**（damageTier），⛔ 這裡不填算好的數字；速度／距離／自轉／縮放／等分數是**演出幾何**，引擎的 spawnModelFx 只收數字、沒有對應的級距表，所以它們是本模板唯一的字面值欄位。⚠️ count 是**傷害次數的乘數**：12 具各掃一次 = 卡面承諾的 12 次，⛔ 不是 1 次。⚠️ `preset` **只供演出幾何**，⛔ 不自動塞傷害：那會替每一支引用它的技能各加一份沒有人裁決過的傷害。要沿路掃傷害的技能自己寫 `onTouch`。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 8,
+      "requires": [
+        "modelFx"
+      ],
+      "exemplar": {
+        "skill": "42-04 世界終結",
+        "jass": "A05D"
+      },
+      "wiring": "both",
+      "usedVia": {
+        "preset": 2,
+        "ref": 0
+      },
+      "params": {
+        "modelKey": {
+          "type": "docRef",
+          "default": "imported.frostnova",
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "path": {
+          "type": "enum",
+          "default": "radial",
+          "values": [
+            "forward",
+            "toTarget",
+            "orbit",
+            "radial"
+          ],
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "count": {
+          "type": "number",
+          "default": 12,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "speed": {
+          "type": "number",
+          "default": 6,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "distance": {
+          "type": "number",
+          "default": 4.5,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "spinDegPerSec": {
+          "type": "number",
+          "default": 180,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "scale": {
+          "type": "number",
+          "default": 3,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "touchRadius": {
+          "type": "number",
+          "default": 2.5,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "touchSide": {
+          "type": "enum",
+          "default": "enemies",
+          "values": [
+            "enemies",
+            "allies"
+          ],
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "touchDamageTier": {
+          "type": "enum",
+          "default": "極小",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 1.233,
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    },
+    {
+      "id": "tpl-random-barrage",
+      "name": "亂數彈幕轟炸",
+      "family": "random-barrage",
+      "description": "在一個區域裡連續丟 N 發爆炸,每一發的落點都是隨機的。原作 8 支成員全部是同一個迴圈:`GetRandomLocInRect(RectFromCenterSizeBJ(中心, S, S))` → 生一隻 dummy → 叫它放一發 → 睡一下 → 再來。\n\n**總時長不是欄位,是算出來的**(發數 − 1) × 每發間隔 —— 原作的迴圈也是這樣,把它做成第三個可填的數字只會讓三個數字互相打架。\n\n決策點是「傷害怎麼付」:\n· 逐發結算(預設,5/8 支) —— 站在轟炸區裡的人每一發都會挨一下。\n· 施法瞬間一次付清(3/8 支) —— 23-03 雷牙一閃、81-02 Acxel Shooter、53-01 獸王牙操彈 的彈幕**完全是演出**,傷害在觸發裡只判一次矩形。把整片火光算成 N 段傷害會讓這三支變成原作的好幾倍。\n\n「開場直傷」清空 = 純轟炸;填了 = 先來一發大的再開始炸(42-04 世界終結 的 100% [AP] 起手)。\n\n⚠️ 已知落差:sim 的持續傷害綁在**施法當下解出來的目標**上,所以(a)開炸之後才走進區域的人不會挨,先走出去的人還是會繼續挨;(b)每一發的隨機落點沒有模擬 —— 區域內的人是**每一發都吃到**,而不是機率性地吃到其中幾發。原作 42-04 的雷震半徑(375)本來就大於它的散佈半徑(225),那一支剛好完全吻合;21-002 天破壤碎(散佈 600 / 半徑 320)則是這個模型最不準的一支。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 6,
+      "requires": [
+        "periodicDamage"
+      ],
+      "exemplar": {
+        "skill": "74-03 闇之天使",
+        "jass": "A0F4 → dummy A011 ×8 (war3map.j:48501-48519)"
+      },
+      "wiring": "both",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "params": {
+        "count": {
+          "type": "number",
+          "default": 9,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "intervalSec": {
+          "type": "number",
+          "default": 0.1,
+          "fillsVia": "template.ref → expand()"
+        },
+        "impactDamage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              150
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "impactRadius": {
+          "type": "number",
+          "default": 320,
+          "fillsVia": "template.ref → expand()"
+        },
+        "scatterRadius": {
+          "type": "number",
+          "default": 225,
+          "fillsVia": "template.ref → expand()"
+        },
+        "payout": {
+          "type": "enum",
+          "default": "perImpact",
+          "values": [
+            "perImpact",
+            "onceAtCast"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "openingDamage": {
+          "type": "scaling",
+          "default": null,
+          "fillsVia": "template.ref → expand()"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    },
+    {
+      "id": "tpl-single-strike",
+      "name": "單體斬擊",
+      "family": "single-strike",
+      "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 9,
+      "requires": [],
+      "exemplar": {
+        "skill": "23-04 雷焰聖劍",
+        "jass": "A0OD"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 22
+      },
+      "params": {
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              350
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    },
+    {
+      "id": "tpl-summon-agent",
+      "name": "召喚代理",
+      "family": "summon-agent",
+      "description": "召喚代理 —— 生出 N 具會自己打的身體。⭐ `body:\"self\"` = 分身（複製施法者自己）。⚠️ `cleanse` 是獨立的一格：卡面上的「除掉身上的法術效果」與召喚是兩件事，⛔ 綁死在一起就表達不出「只召喚、不淨化」那一半的技能。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 4,
+      "requires": [
+        "summon"
+      ],
+      "exemplar": {
+        "skill": "28-02 分身（普屋）",
+        "jass": "A0??"
+      },
+      "wiring": "both",
+      "usedVia": {
+        "preset": 0,
+        "ref": 3
+      },
+      "params": {
+        "count": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "body": {
+          "type": "enum",
+          "default": "self",
+          "values": [
+            "champion",
+            "self"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "championId": {
+          "type": "docRef",
+          "default": null,
+          "fillsVia": "template.ref → expand()"
+        },
+        "durationSec": {
+          "type": "number",
+          "default": 10,
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageMult": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "template.ref → expand()"
+        },
+        "hpMult": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "template.ref → expand()"
+        },
+        "formation": {
+          "type": "enum",
+          "default": "ring",
+          "values": [
+            "ring",
+            "line",
+            "scatter"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "spread": {
+          "type": "number",
+          "default": 2,
+          "fillsVia": "template.ref → expand()"
+        },
+        "maxAlive": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()"
+        },
+        "onOwnerDeath": {
+          "type": "enum",
+          "default": "despawn",
+          "values": [
+            "despawn",
+            "persist"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "cleanse": {
+          "type": "enum",
+          "default": "none",
+          "values": [
+            "none",
+            "status",
+            "all"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    },
+    {
+      "id": "tpl-teleport",
+      "name": "瞬移貼身",
+      "family": "teleport",
+      "description": "把身體直接搬到別的地方。飛行途中不吃地形也不吃碰撞，抵達點才結算傷害。三種終點：貼上目標單位（08-02 萊丁快速劍、17-03 空破圓斬）／指向的地面點（82-02 虛空瞬動，距離上限就是技能自己的射程，不是這裡的欄位）／把一位隊友拉到自己腳邊（84-002 我只想確定你在這裡）。⚠️ 「抵達耗時」的下限是 0.067 秒（模擬器弧線最短 2 tick），不是原作的同幀瞬移；拉長它就變成看得見的殘影衝刺。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 7,
+      "requires": [
+        "leap"
+      ],
+      "exemplar": {
+        "skill": "17-03 空破圓斬",
+        "jass": "A07M"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "params": {
+        "destination": {
+          "type": "enum",
+          "default": "targetUnit",
+          "values": [
+            "targetUnit",
+            "castPoint",
+            "rallyToCaster"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.5,
+          "fillsVia": "template.ref → expand()"
+        },
+        "travelSec": {
+          "type": "number",
+          "default": 0.067,
+          "fillsVia": "template.ref → expand()"
+        },
+        "arriveRadius": {
+          "type": "number",
+          "default": 150,
+          "fillsVia": "template.ref → expand()"
+        },
+        "damage": {
+          "type": "scaling",
+          "default": null,
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    },
+    {
+      "id": "tpl-traveling-wave",
+      "name": "行進波動",
+      "family": "traveling-wave",
+      "description": "傷害點沿一條線逐段推進，每一段各播一次特效並各結算一次傷害（同一個人整串只吃一次），可帶終點爆發。設計正典範例：龍破斬。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 7,
+      "requires": [
+        "travelingWave"
+      ],
+      "exemplar": {
+        "skill": "04-03 龍破斬",
+        "jass": "A04R"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 1
+      },
+      "params": {
+        "stepSize": {
+          "type": "number",
+          "default": 45,
+          "fillsVia": "template.ref → expand()"
+        },
+        "stepCount": {
+          "type": "number",
+          "default": 20,
+          "fillsVia": "template.ref → expand()"
+        },
+        "stepIntervalSec": {
+          "type": "number",
+          "default": 0.03,
+          "fillsVia": "template.ref → expand()"
+        },
+        "aoePerStep": {
+          "type": "number",
+          "default": 200,
+          "fillsVia": "template.ref → expand()"
+        },
+        "stepVfx": {
+          "type": "docRef",
+          "default": null,
+          "fillsVia": "template.ref → expand()"
+        },
+        "terminalBurst": {
+          "type": "number",
+          "default": 450,
+          "fillsVia": "template.ref → expand()"
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              200
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()"
+        }
+      }
+    }
+  ],
+  "analysedButUnwired": [
+    {
+      "id": "tpl-dragon-quake",
+      "family": "dragon-quake",
+      "paramCount": 12,
+      "exemplar": {
+        "skill": "38-03 邪王炎殺黑龍波",
+        "jass": "A09I"
+      },
+      "expandError": "template tpl-dragon-quake: family \"dragon-quake\" has no P1 expand path (status=draft)"
+    },
+    {
+      "id": "tpl-dragon-serpent",
+      "family": "dragon-serpent",
+      "paramCount": 12,
+      "exemplar": {
+        "skill": "38-002 究極暴走黑龍波",
+        "jass": "A09I"
+      },
+      "expandError": "template tpl-dragon-serpent: family \"dragon-serpent\" has no P1 expand path (status=draft)"
+    },
+    {
+      "id": "tpl-dragon-shockwave",
+      "family": "dragon-shockwave",
+      "paramCount": 9,
+      "exemplar": {
+        "skill": "38-03 邪王炎殺黑龍波",
+        "jass": "A09I"
+      },
+      "expandError": "template tpl-dragon-shockwave: family \"dragon-shockwave\" has no P1 expand path (status=draft)"
+    }
+  ],
+  "shells": [
+    {
+      "id": "tpl-barrier-domain",
+      "family": "barrier-domain",
+      "gapScore": 2
+    },
+    {
+      "id": "tpl-channel-beam",
+      "family": "channel-beam",
+      "gapScore": 5
+    },
+    {
+      "id": "tpl-death-mechanic",
+      "family": "death-mechanic",
+      "gapScore": 2
+    },
+    {
+      "id": "tpl-drain-leech",
+      "family": "drain-leech",
+      "gapScore": 4
+    },
+    {
+      "id": "tpl-global-rule",
+      "family": "global-rule",
+      "gapScore": 1
+    },
+    {
+      "id": "tpl-growth-charge",
+      "family": "growth-charge",
+      "gapScore": 4
+    },
+    {
+      "id": "tpl-life-manipulate",
+      "family": "life-manipulate",
+      "gapScore": 3
+    },
+    {
+      "id": "tpl-pull-throw",
+      "family": "pull-throw",
+      "gapScore": 3
+    },
+    {
+      "id": "tpl-pure-cosmetic",
+      "family": "pure-cosmetic",
+      "gapScore": 7
+    },
+    {
+      "id": "tpl-range-gamble",
+      "family": "range-gamble",
+      "gapScore": 3
+    },
+    {
+      "id": "tpl-resource-ops",
+      "family": "resource-ops",
+      "gapScore": 2
+    },
+    {
+      "id": "tpl-strip-transform",
+      "family": "strip-transform",
+      "gapScore": 2
+    },
+    {
+      "id": "tpl-team-synergy",
+      "family": "team-synergy",
+      "gapScore": 2
+    }
+  ],
+  "sentinels": [
+    {
+      "id": "tpl-data-no-trigger",
+      "family": "data-no-trigger",
+      "why": "⚠️ 這一格不是一台做得出來的機器，是普查的分流終點：永遠不會有參數，也永遠不會 enabled。25 張行為卡落在這裡，逐張讀過 war3map.j 之後分成四種，四種的去處都不在鑄技工坊。① 觸發清單真的是空的（11 支；HERO_TRIGGERS.json 該英雄 triggerCount=0，效果整個在物件編輯器那一側，該走 w3u 匯入而不是模板）。② 只剩全域宣告、從沒編譯進去的廢案（A0YV 七進七出、A0IK 咲夜時符、A0IL 靜止飛刀、gg_trg_DragonMan、gg_trg_Chicken_*；本體留在 CUSTOM_TEXT.json）。③ 觸發裡只有裝飾（58-03 就決定是你了!小智 j:40241 只 PlaySoundBJ；84-01 冷笑話 j:51367 只擲八選一漂浮字），該走 vfxLayers 與音效綁定。④ 純記帳（37-02 黑核晶只管同時存在上限、80-01 天下無雙只累加擊殺數）。引擎支援度標 0 是刻意的：綠燈會讓這張永遠按不下去的卡看起來按得下去。"
+    }
+  ],
+  "matrix": {
+    "elements": [
+      "arcane",
+      "blood",
+      "earth",
+      "fire",
+      "holy",
+      "ice",
+      "ki",
+      "lightning",
+      "nature",
+      "physical",
+      "sound",
+      "void",
+      "wind"
+    ],
+    "shapes": [
+      "arc",
+      "beam",
+      "beam-flat",
+      "beam-lg",
+      "bolt",
+      "bolt-lg",
+      "dash",
+      "explosion",
+      "explosion-lg",
+      "nova",
+      "nova-lg",
+      "pulse",
+      "pulse-lg",
+      "pulse-sm",
+      "shockwave",
+      "shockwave-lg",
+      "slash",
+      "slash-lg",
+      "spray-back",
+      "summon",
+      "summon-lg",
+      "swarm",
+      "swarm-lg",
+      "tornado",
+      "tornado-lg"
+    ],
+    "present": [
+      "arcane.arc",
+      "arcane.beam",
+      "arcane.beam-lg",
+      "arcane.bolt",
+      "arcane.bolt-lg",
+      "arcane.dash",
+      "arcane.explosion",
+      "arcane.nova",
+      "arcane.nova-lg",
+      "arcane.pulse",
+      "arcane.pulse-lg",
+      "arcane.pulse-sm",
+      "arcane.slash",
+      "arcane.slash-lg",
+      "arcane.summon",
+      "arcane.summon-lg",
+      "arcane.swarm",
+      "blood.arc",
+      "blood.nova",
+      "blood.nova-lg",
+      "blood.pulse-lg",
+      "blood.pulse-sm",
+      "blood.slash",
+      "blood.spray-back",
+      "blood.summon",
+      "earth.beam",
+      "earth.bolt",
+      "earth.nova-lg",
+      "earth.pulse-sm",
+      "earth.shockwave",
+      "fire.arc",
+      "fire.beam",
+      "fire.bolt",
+      "fire.explosion",
+      "fire.explosion-lg",
+      "fire.nova",
+      "fire.pulse",
+      "fire.pulse-sm",
+      "fire.slash",
+      "fire.slash-lg",
+      "holy.arc",
+      "holy.beam",
+      "holy.beam-flat",
+      "holy.beam-lg",
+      "holy.dash",
+      "holy.explosion",
+      "holy.nova",
+      "holy.nova-lg",
+      "holy.pulse",
+      "holy.pulse-lg",
+      "holy.pulse-sm",
+      "holy.slash",
+      "holy.slash-lg",
+      "holy.swarm-lg",
+      "holy.tornado-lg",
+      "ice.beam",
+      "ice.bolt",
+      "ice.bolt-lg",
+      "ice.explosion-lg",
+      "ice.nova",
+      "ice.pulse-lg",
+      "ice.pulse-sm",
+      "ice.shockwave",
+      "ki.arc",
+      "ki.beam",
+      "ki.beam-lg",
+      "ki.bolt",
+      "ki.bolt-lg",
+      "ki.explosion-lg",
+      "ki.nova",
+      "ki.nova-lg",
+      "ki.pulse",
+      "ki.pulse-lg",
+      "ki.pulse-sm",
+      "ki.shockwave",
+      "ki.slash",
+      "lightning.arc",
+      "lightning.beam",
+      "lightning.beam-flat",
+      "lightning.beam-lg",
+      "lightning.bolt",
+      "lightning.dash",
+      "lightning.explosion-lg",
+      "lightning.nova",
+      "lightning.nova-lg",
+      "lightning.pulse",
+      "lightning.pulse-lg",
+      "lightning.pulse-sm",
+      "lightning.slash",
+      "nature.arc",
+      "nature.beam",
+      "nature.beam-lg",
+      "nature.bolt",
+      "nature.explosion",
+      "nature.explosion-lg",
+      "nature.nova",
+      "nature.nova-lg",
+      "nature.pulse",
+      "nature.pulse-lg",
+      "nature.pulse-sm",
+      "nature.shockwave-lg",
+      "nature.slash",
+      "nature.slash-lg",
+      "nature.swarm",
+      "nature.swarm-lg",
+      "physical.arc",
+      "physical.beam",
+      "physical.beam-lg",
+      "physical.bolt",
+      "physical.explosion-lg",
+      "physical.nova",
+      "physical.nova-lg",
+      "physical.pulse",
+      "physical.pulse-lg",
+      "physical.pulse-sm",
+      "physical.shockwave",
+      "physical.shockwave-lg",
+      "physical.slash",
+      "physical.slash-lg",
+      "physical.swarm",
+      "sound.explosion",
+      "sound.nova",
+      "sound.nova-lg",
+      "sound.pulse",
+      "sound.pulse-sm",
+      "sound.swarm-lg",
+      "void.arc",
+      "void.beam",
+      "void.beam-lg",
+      "void.bolt",
+      "void.bolt-lg",
+      "void.dash",
+      "void.explosion",
+      "void.explosion-lg",
+      "void.nova",
+      "void.nova-lg",
+      "void.pulse",
+      "void.pulse-lg",
+      "void.pulse-sm",
+      "void.shockwave",
+      "void.slash",
+      "void.summon",
+      "void.swarm",
+      "void.swarm-lg",
+      "wind.arc",
+      "wind.beam",
+      "wind.nova",
+      "wind.pulse",
+      "wind.pulse-lg",
+      "wind.pulse-sm",
+      "wind.slash",
+      "wind.summon-lg",
+      "wind.tornado",
+      "wind.tornado-lg"
+    ]
+  }
+}

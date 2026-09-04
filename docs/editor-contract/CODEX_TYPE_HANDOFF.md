@@ -70,6 +70,8 @@
    ⚠️ `type3` 這種名字在半年後沒有人知道它是什麼，而那正是「做完沒收斂」的成因之一。
 2. ⛔ **不要為了湊數而開空殼。** 今天 46 份裡有 **13 份是 `draft` ＋ 0 個參數** ——
    它們佔著名字而不能用，⭐ 而它們正是這份文件要防的東西。
+   ⚠️ ⭐ 另有 **1 份哨兵**（`tpl-data-no-trigger`）是**刻意**永遠不 enable 的普查終點，
+   ⛔ **不要試圖填它** —— 判準是 `gapScore === 0`，⛔ 不是記住這個名字。
 3. ⛔ **不要把逐支不同的值放進 `params.default`。** 判準見 §4。
 
 ---
@@ -82,7 +84,18 @@
 | `draft` | 還在做 | ⛔ **不收進可挑清單**，但會留著 |
 
 ⭐ **判準（可以當場檢查）**：`status: "enabled"` 而 `params` 是空的 ⇒ ⛔ 那是空殼，我會退回。
-（今天出貨的 46 份裡，`enabled` 且有參數的是 **32 份** —— 那 32 份就是今天的可挑清單。）
+
+⛔⛔ **而 `status` 本身只是一個宣告 —— ⭐ 真正的判準是「`expand()` 跑不跑得過」。**
+2026-09-04 量到（拿每一份模板自己的 defaults 真的跑一次 `expand()`）：
+**29 個 `enabled` 全部 OK · 17 個 `draft` 全部擲例外** ⇒ ⭐ `status` 今天是誠實的，
+⛔ 而它誠實**不是結構保證的**。⇒ ⭐ 權威是 `ggd-type-catalog.json` 的 **`expands`** 欄位，
+⛔ 不是 `status`，⛔ 也不是這份文件裡的任何數字。
+
+⚠️ ⭐ 為什麼這一格要緊：系統是 **fail-soft**（`templateFailSoft.test.ts`）——
+一份 `status:"enabled"` 卻沒有 `FAMILIES` 展開路徑的模板，⛔ 不會炸掉，
+⭐ 它會讓引用它的那一支技能「**還在、但一個模板效果都沒有**」，
+而你這一側看到的是一個**綠色的 badge**。
+閘：`packages/shared/src/content/templateStatusIsHonest.test.ts`（兩個方向都關）。
 
 `gapScore` 0–10 ＝ 引擎支援度。⭐ 它 ⛔ **不是你自評的**：
 它要對得上 `requires` 裡每一個機制在 `docs/editor-contract/ggd-runtime-capabilities.md` 的宣告。
@@ -129,10 +142,14 @@
 
 ---
 
-## 5. ⭐ 你今天可以挑的 32 個 type（Main 已經有的）
+## 5. ⭐ 你今天可以挑的 type（Main 已經有的）
 
-⚠️ ⭐ **這張表會過期** —— 權威來源是 `content/ability-templates/`。
-⇒ 要最新的就跑：`ls content/ability-templates/` 並讀每一份的 `status` / `params`。
+⛔⛔ **這一整節的每一個數字都會過期，⛔ 不要照著它做。**
+⭐ 權威是產生的機器可讀契約 **[`ggd-type-catalog.json`](ggd-type-catalog.json)**
+（`pnpm typecat:build`，從 `content/ability-templates/` ＋ **真的跑一次 `expand()`** 推導）。
+⚠️ 前科就在這一節：它原本寫「32 個」，而量到的是 **29 個**。
+
+⭐ 底下留著的是**知識**（來源鏈、家族結構），⛔ 不是清單 —— 清單看 JSON。
 
 **光束／直線系**（owner 點名的「光束砲系列」）
 | id | 參數 | exemplar |
@@ -171,12 +188,29 @@
 `tpl-on-attack`(6) · `tpl-proxy-fanout`(6) · `tpl-teleport`(6) · `tpl-on-hit-react`(5) ·
 `tpl-ground-nova`(4) · `tpl-instant-blast`(4) · `tpl-buff-self`(3) · `tpl-single-strike`(3)
 
+**⛔⛔ ⭐ 三份「分析做完了，而引擎沒有展開路徑」—— 這一批是 Main 的工作，⛔ 不是你的**
+
+| id | 已經寫好的參數 | exemplar |
+|---|---:|---|
+| `tpl-dragon-quake` | **12** | 38-03 邪王炎殺黑龍波 |
+| `tpl-dragon-serpent` | **12** | 38-002 究極暴走黑龍波 |
+| `tpl-dragon-shockwave` | **9** | 38-03 邪王炎殺黑龍波 |
+
+⭐ 三份都有完整 `params` ＋ `exemplar` ＋ 逐行讀過 JASS 的 `description`，
+⛔ 而 `expand.ts` 的 `FAMILIES` 沒有它們的條目。⇒ ⛔ **今天不要挑它們**
+（引用會靜靜地變成「這支技能一個模板效果都沒有」）。⭐ 我會補那 3 個條目。
+⚠️ 它們在契約裡的位置是 `analysedButUnwired`，⛔ 不在 `types`。
+
 **⛔ 13 份空殼（`draft` ＋ 0 參數，⛔ 今天不能挑）**
 `tpl-barrier-domain` · `tpl-death-mechanic` · `tpl-drain-leech` · `tpl-global-rule` ·
 `tpl-growth-charge` · `tpl-life-manipulate` · `tpl-pull-throw` · `tpl-pure-cosmetic` ·
 `tpl-range-gamble` · `tpl-resource-ops` · `tpl-strip-transform` · `tpl-team-synergy` · `tpl-channel-beam`
 
-⭐ **這 13 份是最值得你收斂的目標** —— 名字都佔好了，缺的是把成果填進去。
+⭐ **這 13 份是最值得收斂的目標** —— 名字都佔好了，缺的是把成果填進去。
+
+**⚠️ 1 份哨兵（⛔ 刻意永遠不 enable）**
+`tpl-data-no-trigger` —— 它自己的 `description` 逐字寫著「永遠不會有參數，也永遠不會 enabled」。
+⛔ 不要填它。⭐ 判準是 `gapScore === 0`（契約裡的 `sentinels`），⛔ 不是記住這個名字。
 
 ---
 
