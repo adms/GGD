@@ -34,7 +34,7 @@
       "kind": "spawnModelFx",
       "shape": "single",
       "modelKey": "imported.darkraor",
-      "path": "radial",
+      "path": "fan",
       "count": 3,
       "distance": 8.0,
       "speed": 7.7,
@@ -47,7 +47,9 @@
           "vfxId": "fx.prim.void.explosion-lg",
           "at": "point"
         }
-      ]
+      ],
+      "spreadDeg": 45,
+      "offsetForwardU": 3.667
     },
     {
       "kind": "spawnModelFx",
@@ -58,7 +60,7 @@
     {
       "kind": "spawnModelFx",
       "shape": "single",
-      "modelKey": "imported.tectonicfury",
+      "modelKey": "w3x.stock.flamestriketarget",
       "path": "orbit",
       "count": 12,
       "distance": 6.42,
