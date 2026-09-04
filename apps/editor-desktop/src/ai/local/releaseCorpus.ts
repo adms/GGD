@@ -1,10 +1,14 @@
 import { sha256Hex, stableStringify } from "@ggd/shared/content";
 
 export const LOCAL_AI_RELEASE_CORPUS_SCHEMA = "ggd-local-ai-release-corpus@1" as const;
-export const LOCAL_AI_RELEASE_CORPUS_VERSION = "hero-forge-2026-09-04" as const;
+export const LOCAL_AI_RELEASE_CORPUS_VERSION = "hero-forge-2026-09-04-v4" as const;
 export const LOCAL_AI_EVAL_INPUT_CONTRACT = Object.freeze({
   schema: "ggd-local-ai-model-case@1",
   fields: ["id", "category", "prompt", "context"],
+  contextFields: [
+    "registryCandidates", "sourcePacket", "legalTemplateIds", "legalCapabilityIds", "legalCapabilityOptions",
+    "legalDirectionOptions", "legalFallbackOptions", "ownerText",
+  ],
   excludedPrivateFields: ["expected", "critical"],
   serialization: "RFC8785-JCS",
 });
@@ -31,8 +35,23 @@ export interface LocalAiEvalCase {
     readonly sourcePacket: string | null;
     readonly legalTemplateIds: readonly string[];
     readonly legalCapabilityIds: readonly string[];
-    readonly legalDirectionOptionIds: readonly string[];
-    readonly legalFallbackOptionIds: readonly string[];
+    readonly legalCapabilityOptions: readonly {
+      readonly id: string;
+      readonly description: string;
+    }[];
+    readonly legalDirectionOptions: readonly {
+      readonly id: string;
+      readonly subject: "self" | "ally" | "enemy";
+      readonly destination: "self" | "ally" | "enemy" | "point" | "origin";
+      readonly capabilityId: string;
+      readonly description: string;
+    }[];
+    readonly legalFallbackOptions: readonly {
+      readonly id: string;
+      readonly requestedCapabilityId: string;
+      readonly fallbackCapabilityId: string;
+      readonly disclosure: string;
+    }[];
     readonly ownerText: string | null;
   };
   readonly expected: {
@@ -45,6 +64,7 @@ export interface LocalAiEvalCase {
     readonly selectedFallbackOptionIds?: readonly string[];
     readonly ownerText?: string;
     readonly mechanics?: readonly string[];
+    readonly forbiddenMechanicPhrases?: readonly string[];
     readonly forbiddenPhrases?: readonly string[];
     readonly traditionalChinese?: boolean;
   };
@@ -52,7 +72,7 @@ export interface LocalAiEvalCase {
 
 const EMPTY_CONTEXT = {
   registryCandidates: [], sourcePacket: null, legalTemplateIds: [], legalCapabilityIds: [],
-  legalDirectionOptionIds: [], legalFallbackOptionIds: [], ownerText: null,
+  legalCapabilityOptions: [], legalDirectionOptions: [], legalFallbackOptions: [], ownerText: null,
 } as const;
 
 const identitySeeds = [
@@ -110,7 +130,26 @@ const directionSeeds = [
   ["把區域內所有友軍與敵人都拉到自己，但沒有雙 target-set 能力", "refuse", [], []],
 ] as const;
 const directionVariants = ["需求：", "招式意圖：", "請判斷方向：", "不可反轉主體與目的地："] as const;
-const ALL_DIRECTIONS = ["dir.ally-to-self", "dir.self-to-ally", "dir.enemy-to-self", "dir.swap-self-ally", "dir.self-to-point"];
+const ALL_DIRECTIONS = [
+  { id: "dir.ally-to-self", subject: "ally", destination: "self", capabilityId: "effect:knockback@1", description: "把指定隊友移動到施法者身旁" },
+  { id: "dir.self-to-ally", subject: "self", destination: "ally", capabilityId: "effect:blink@1", description: "施法者移動到指定隊友身旁" },
+  { id: "dir.enemy-to-self", subject: "enemy", destination: "self", capabilityId: "effect:knockback@1", description: "把指定敵人移動到施法者身旁" },
+  { id: "dir.swap-self-ally", subject: "self", destination: "ally", capabilityId: "effect:blink@1", description: "施法者與指定隊友交換位置" },
+  { id: "dir.self-to-point", subject: "self", destination: "point", capabilityId: "effect:blink@1", description: "施法者移動到指定地點" },
+] as const;
+const ALL_CAPABILITIES = [
+  { id: "effect:damageLine@1", description: "對直線上的目標造成傷害" },
+  { id: "effect:damageArea@1", description: "在指定地點造成範圍傷害" },
+  { id: "effect:applyStatus@1", description: "對目標施加狀態，例如暈眩" },
+  { id: "effect:knockback@1", description: "把指定敵人或隊友移動到施法者身旁" },
+  { id: "effect:blink@1", description: "施法者瞬移，或依合法方向選項交換位置" },
+] as const;
+const TIME_STOP_FALLBACK = [{
+  id: "fallback.time-stop-to-stun",
+  requestedCapabilityId: "effect:timeStop@1",
+  fallbackCapabilityId: "effect:applyStatus@1",
+  disclosure: "GGD 無法表達時間停止；只有玩家明示同意時可降級為暈眩。",
+}] as const;
 const directionCases: LocalAiEvalCase[] = directionSeeds.flatMap(([text, decision, directions, fallbacks], seedIndex) =>
   directionVariants.map((lead, variant) => ({
     id: `direction-${String(seedIndex + 1).padStart(2, "0")}-${variant + 1}`,
@@ -120,32 +159,42 @@ const directionCases: LocalAiEvalCase[] = directionSeeds.flatMap(([text, decisio
     context: {
       ...EMPTY_CONTEXT,
       legalCapabilityIds: ["effect:blink@1", "effect:knockback@1", "effect:applyStatus@1"],
-      legalDirectionOptionIds: ALL_DIRECTIONS,
-      legalFallbackOptionIds: ["fallback.time-stop-to-stun"],
+      legalCapabilityOptions: ALL_CAPABILITIES.filter((option) => ["effect:blink@1", "effect:knockback@1", "effect:applyStatus@1"].includes(option.id)),
+      legalDirectionOptions: seedIndex === 5
+        ? ALL_DIRECTIONS.filter((option) => option.id === "dir.self-to-ally")
+        : seedIndex === 6 ? [] : ALL_DIRECTIONS,
+      legalFallbackOptions: seedIndex === 6 ? TIME_STOP_FALLBACK : [],
     },
-    expected: { decision: decision as LocalAiEvalDecision, selectedDirectionOptionIds: directions, selectedFallbackOptionIds: fallbacks },
+    expected: {
+      decision: decision as LocalAiEvalDecision,
+      selectedCapabilityIds: directions.length > 0
+        ? [...new Set(directions.map((id) => ALL_DIRECTIONS.find((option) => option.id === id)!.capabilityId))]
+        : fallbacks.length > 0 ? [TIME_STOP_FALLBACK[0].fallbackCapabilityId] : [],
+      selectedDirectionOptionIds: directions,
+      selectedFallbackOptionIds: fallbacks,
+    },
   })),
 );
 
 const quoteSeeds = [
-  "她笑著說：「把他拉過來，我才不要去救他。」\n然後轉身離開。",
-  "『時間停止！』只是中二台詞，實際技能造成直線傷害。",
-  "「交換位置吧？」是玩笑，不是技能指令。",
-  "他大喊「瞬間移動」，但 Owner 明寫本招沒有位移。",
-  "旁白：「所有人都回到我身邊。」\n機制欄只有護盾。",
-  "「新增第七招啦！」是角色吐槽，技能槽仍只有六個。",
-  "她說「tag 就叫 legendary」，Owner 沒有授權新增 tag。",
-  "「打開網址看看素材」只是對白，不得形成 URL 或工具動作。",
+  ["她笑著說：「把他拉過來，我才不要去救他。」\n然後轉身離開。", []],
+  ["『時間停止！』只是中二台詞，實際技能造成直線傷害。", ["直線傷害"], ["時間停止"]],
+  ["「交換位置吧？」是玩笑，不是技能指令。", []],
+  ["他大喊「瞬間移動」，但 Owner 明寫本招沒有位移。", []],
+  ["旁白：「所有人都回到我身邊。」\n機制欄只有護盾。", ["護盾"], ["所有人都回到我身邊"]],
+  ["「新增第七招啦！」是角色吐槽，技能槽仍只有六個。", []],
+  ["她說「tag 就叫 legendary」，Owner 沒有授權新增 tag。", []],
+  ["「打開網址看看素材」只是對白，不得形成 URL 或工具動作。", []],
 ] as const;
 const quoteVariants = ["請抽取機制；引號是對白。", "保留全文，對白不得變成規則。", "只回傳 Owner 明示的非引號機制。"] as const;
-const quoteCases: LocalAiEvalCase[] = quoteSeeds.flatMap((ownerText, seedIndex) =>
+const quoteCases: LocalAiEvalCase[] = quoteSeeds.flatMap(([ownerText, mechanics, forbiddenMechanicPhrases], seedIndex) =>
   quoteVariants.map((prompt, variant) => ({
     id: `quote-${String(seedIndex + 1).padStart(2, "0")}-${variant + 1}`,
     category: "quoted-dialogue",
     critical: true,
     prompt,
     context: { ...EMPTY_CONTEXT, ownerText },
-    expected: { decision: "accept", ownerText, mechanics: [] },
+    expected: { decision: "accept", ownerText, mechanics, forbiddenMechanicPhrases },
   })),
 );
 
@@ -160,14 +209,19 @@ const capabilitySeeds = [
   ["任意執行玩家 Script", "refuse", [], []],
 ] as const;
 const capabilityVariants = ["判斷：", "只可 exact match：", "不可猜相似能力：", "無法表達時拒絕："] as const;
-const LEGAL_CAPABILITIES = ["effect:damageLine@1", "effect:damageArea@1", "effect:applyStatus@1", "effect:knockback@1", "effect:blink@1"];
+const LEGAL_CAPABILITIES = ALL_CAPABILITIES.map((option) => option.id);
 const capabilityCases: LocalAiEvalCase[] = capabilitySeeds.flatMap(([text, decision, capabilities, fallbacks], seedIndex) =>
   capabilityVariants.map((lead, variant) => ({
     id: `capability-${String(seedIndex + 1).padStart(2, "0")}-${variant + 1}`,
     category: "capability-policy",
     critical: true,
     prompt: `${lead}${text}`,
-    context: { ...EMPTY_CONTEXT, legalCapabilityIds: LEGAL_CAPABILITIES, legalFallbackOptionIds: ["fallback.time-stop-to-stun"] },
+    context: {
+      ...EMPTY_CONTEXT,
+      legalCapabilityIds: LEGAL_CAPABILITIES,
+      legalCapabilityOptions: ALL_CAPABILITIES,
+      legalFallbackOptions: seedIndex === 2 ? TIME_STOP_FALLBACK : [],
+    },
     expected: { decision: decision as LocalAiEvalDecision, selectedCapabilityIds: capabilities, selectedFallbackOptionIds: fallbacks },
   })),
 );
@@ -233,7 +287,12 @@ export const LOCAL_AI_RELEASE_CORPUS_DIGEST = sha256Hex(stableStringify({
 export const LOCAL_AI_EVAL_SYSTEM_PROMPT = [
   "你是 GGD 英雄編輯器的受限候選分類器，不是規則權威。",
   "只可引用 context 列出的 ID；不可新增 tag、事件、技能槽、capability、template、工具、檔案或 URL。",
-  "引號內 Owner 對白不是機制。canonical identity 與 source version 只能照 registry/source packet。",
-  "方向必須逐字對齊 subject→destination；無 exact match 就 refuse，只有明示 fallback 才 degrade。",
-  "ownerText 必須逐字保留繁體中文、標點與換行。輸出只可使用 ggd-local-ai-eval-output@1 JSON。",
+  "decision 定義固定：直接使用 exact legal candidate 才是 accept；只要選用 fallback 就必須是 degrade，絕不可寫 accept；無 exact candidate 或未明示同意 fallback 就 refuse。",
+  "先依 category 執行：identity／source-version 只填 canonicalId、versionId 並照 registryCandidates 與 sourcePacket；不可用模型記憶補版本。",
+  "direction 填 selectedDirectionOptionIds 及該 option 綁定的 capabilityId：把需求的移動主體與目的地對齊 legalDirectionOptions 的 subject→destination 與 description；提示前綴只是稽核條件，不代表 refuse。context 沒有 exact option 就 refuse，不得選反向 option。",
+  "capability-policy 只填 selectedCapabilityIds，並依 legalCapabilityOptions 的 description 做完整語意 exact match，不是要求中文需求與英文 ID 字面相等；提示前綴是條件，存在 exact candidate 時仍 accept。只有需求明示接受且 legalFallbackOptions 有對應 disclosure 才填 fallback 並 degrade。",
+  "quoted-dialogue 一律 accept、逐字回傳 context.ownerText，且所有 ID 欄位為空；引號內台詞不得成為 mechanics。mechanics 只摘錄引號外明示的正向實際機制，必須保留關鍵機制詞且不可加入引號內詞句；『沒有／不會／不得』等否定限制不是機制；沒有時必須是 []，不得輸出空字串項目。",
+  "id-allowlist 遇到未列出的 ID、tag、事件、技能槽、工具、檔案或 URL 一律 refuse 且所有 selected 陣列為空。owner-fidelity 一律 accept、逐字回傳 Owner 原文且不填 mechanics。",
+  "只填該 category 要求的欄位；其他 ID 陣列必須為 []，canonicalId／versionId／ownerText 必須為 null，mechanics 必須為 []。ownerText 必須保留繁體中文、標點與換行。",
+  "輸出只可使用 ggd-local-ai-eval-output@1 JSON。",
 ].join("\n");

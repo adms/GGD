@@ -8,15 +8,16 @@
     "bytes": 9001752960
   },
   "corpus": {
-    "version": "hero-forge-2026-09-04",
-    "sha256": "865b097975c867fa0f22d80f664666f7c01a59988deb751e7de2b8ecb6cf1dbe",
+    "version": "hero-forge-2026-09-04-v4",
+    "sha256": "8f81decb3e23e29026554947d0e22c0cd34a7625f397964133835e3c88ae01bb",
     "cases": 216,
     "minimumScorePct": 95,
     "maximumCriticalErrors": 0
   },
-  "promptSha256": "9f9d172219eaf5496fcec8436dbfff02d38e64dfa13c50e0eef22778ff5ab4a7",
-  "grammarSha256": "23b7c0962d374c72070724aa392961c556ff1f33da0ea14faddc9d715e0cadd0",
-  "inputContractSha256": "bf2b483da87b25805e2f8f38bae060862eee0974a2c623d675773342387bfb8e",
+  "promptSha256": "148e47ecab74944813b504e476ef3e50aa7d94566e697826f93efb67a68123d1",
+  "grammarSha256": "478cc0ab6944367ee1a3bc8a9288191171cdd08801581e143f8ab92e7caa7b41",
+  "inputContractSha256": "c9973fcbe270638496e369734a18864372bc285c68f50ea6197d03c4cda92527",
+  "scorerSha256": "3d111f34381576a068f57e95ac9204a1f2f21f223d154e191d870384f3c03b0a",
   "requiredQualityTargets": ["darwin-arm64-metal", "win32-x64-cuda"],
   "requiredRuntimeTargets": ["darwin-arm64-metal", "darwin-x64-cpu", "win32-x64-cuda", "win32-x64-vulkan", "win32-x64-cpu"],
   "performance": {

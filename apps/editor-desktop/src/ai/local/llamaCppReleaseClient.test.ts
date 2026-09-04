@@ -19,8 +19,8 @@ describe("llama.cpp release client", () => {
         category: "identity",
         prompt: "prompt",
         context: {
-          registryCandidates: [], sourcePacket: null, legalTemplateIds: [], legalCapabilityIds: [],
-          legalDirectionOptionIds: [], legalFallbackOptionIds: [], ownerText: null,
+          registryCandidates: [], sourcePacket: null, legalTemplateIds: [], legalCapabilityIds: [], legalCapabilityOptions: [],
+          legalDirectionOptions: [], legalFallbackOptions: [], ownerText: null,
         },
       },
       outputJsonSchema: LOCAL_AI_EVAL_OUTPUT_JSON_SCHEMA,

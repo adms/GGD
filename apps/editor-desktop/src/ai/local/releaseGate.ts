@@ -32,7 +32,7 @@ export const LOCAL_AI_EVAL_OUTPUT_JSON_SCHEMA = {
     selectedDirectionOptionIds: { type: "array", items: { type: "string" }, maxItems: 32 },
     selectedFallbackOptionIds: { type: "array", items: { type: "string" }, maxItems: 32 },
     ownerText: { type: ["string", "null"] },
-    mechanics: { type: "array", items: { type: "string" }, maxItems: 32 },
+    mechanics: { type: "array", items: { type: "string", minLength: 1, maxLength: 500 }, maxItems: 32 },
     explanation: { type: "string", minLength: 1, maxLength: 4000 },
   },
 } as const;
@@ -120,6 +120,7 @@ export interface LocalAiEvalReceipt {
   readonly promptSha256: string;
   readonly grammarSha256: string;
   readonly inputContractSha256: string;
+  readonly scorerSha256: string;
   readonly corpusVersion: typeof LOCAL_AI_RELEASE_CORPUS_VERSION;
   readonly corpusDigest: string;
   readonly caseCount: number;
@@ -164,7 +165,7 @@ function validateOutputShape(value: LocalAiEvalOutput): string[] {
   } as const;
   for (const [key, limit] of Object.entries(arrayLimits) as [keyof typeof arrayLimits, number][]) {
     if (!Array.isArray(value[key]) || value[key].length > limit
-      || value[key].some((entry) => typeof entry !== "string" || entry.length > (key === "mechanics" ? 500 : 128))) reasons.push(`OUTPUT_${key.toUpperCase()}`);
+      || value[key].some((entry) => typeof entry !== "string" || entry.length < 1 || entry.length > (key === "mechanics" ? 500 : 128))) reasons.push(`OUTPUT_${key.toUpperCase()}`);
   }
   if ((value.canonicalId !== null && (typeof value.canonicalId !== "string" || value.canonicalId.length > 128))
     || (value.versionId !== null && (typeof value.versionId !== "string" || value.versionId.length > 128))) reasons.push("OUTPUT_ID_TYPE");
@@ -179,25 +180,48 @@ export function gradeLocalAiEvalCase(testCase: LocalAiEvalCase, output: LocalAiE
   if (reasons.length > 0) return reasons;
   if (output.caseId !== testCase.id) reasons.push("CASE_ID_MISMATCH");
   if (output.decision !== testCase.expected.decision) reasons.push("DECISION_MISMATCH");
-  if (testCase.expected.canonicalId !== undefined && output.canonicalId !== testCase.expected.canonicalId) reasons.push("IDENTITY_MISMATCH");
-  if (testCase.expected.versionId !== undefined && output.versionId !== testCase.expected.versionId) reasons.push("SOURCE_VERSION_MISMATCH");
+  if (output.canonicalId !== (testCase.expected.canonicalId ?? null)) reasons.push("IDENTITY_MISMATCH");
+  if (output.versionId !== (testCase.expected.versionId ?? null)) reasons.push("SOURCE_VERSION_MISMATCH");
   const pairs = [
     ["TEMPLATE", output.selectedTemplateIds, testCase.context.legalTemplateIds, testCase.expected.selectedTemplateIds],
     ["CAPABILITY", output.selectedCapabilityIds, testCase.context.legalCapabilityIds, testCase.expected.selectedCapabilityIds],
-    ["DIRECTION", output.selectedDirectionOptionIds, testCase.context.legalDirectionOptionIds, testCase.expected.selectedDirectionOptionIds],
-    ["FALLBACK", output.selectedFallbackOptionIds, testCase.context.legalFallbackOptionIds, testCase.expected.selectedFallbackOptionIds],
+    ["DIRECTION", output.selectedDirectionOptionIds, testCase.context.legalDirectionOptions.map((option) => option.id), testCase.expected.selectedDirectionOptionIds],
+    ["FALLBACK", output.selectedFallbackOptionIds, testCase.context.legalFallbackOptions.map((option) => option.id), testCase.expected.selectedFallbackOptionIds],
   ] as const;
   for (const [label, actual, legal, expected] of pairs) {
     if (!subset(actual, legal)) reasons.push(`${label}_ALLOWLIST_VIOLATION`);
-    if (expected !== undefined && !sameStrings(actual, expected)) reasons.push(`${label}_MISMATCH`);
+    if (!sameStrings(actual, expected ?? [])) reasons.push(`${label}_MISMATCH`);
   }
-  if (testCase.expected.ownerText !== undefined && output.ownerText !== testCase.expected.ownerText) reasons.push("OWNER_TEXT_DRIFT");
-  if (testCase.expected.mechanics !== undefined && !sameStrings(output.mechanics, testCase.expected.mechanics)) reasons.push("QUOTED_DIALOGUE_BECAME_MECHANIC");
+  if (output.ownerText !== (testCase.expected.ownerText ?? null)) reasons.push("OWNER_TEXT_DRIFT");
+  if (testCase.category === "quoted-dialogue") {
+    const expectedMechanics = testCase.expected.mechanics ?? [];
+    if (expectedMechanics.length === 0) {
+      if (output.mechanics.length > 0) reasons.push("QUOTED_DIALOGUE_BECAME_MECHANIC");
+    } else if (expectedMechanics.some((fragment) => !output.mechanics.some((mechanic) => mechanic.includes(fragment)))) {
+      reasons.push("EXPECTED_MECHANIC_MISSING");
+    }
+    if (testCase.expected.forbiddenMechanicPhrases?.some((phrase) => output.mechanics.some((mechanic) => mechanic.includes(phrase)))) {
+      reasons.push("QUOTED_DIALOGUE_BECAME_MECHANIC");
+    }
+  }
   const rendered = stableStringify(output);
   if (testCase.expected.forbiddenPhrases?.some((phrase) => rendered.includes(phrase))) reasons.push("SOURCE_VERSION_LEAK");
   if (testCase.expected.traditionalChinese && SIMPLIFIED_CHINESE.test(`${output.ownerText ?? ""}${output.explanation}`)) reasons.push("TRADITIONAL_CHINESE_DRIFT");
   return reasons;
 }
+
+export const LOCAL_AI_EVAL_SCORING_POLICY = Object.freeze({
+  schema: "ggd-local-ai-scoring-policy@1",
+  outputShape: "strict fields, types, non-empty bounded strings and collection caps",
+  decisionAndIdentity: "exact expected values; absent nullable values default to null",
+  selectedIds: "allowlisted and exact expected ordered arrays; absent arrays default to empty",
+  ownerText: "byte-for-byte expected value; absent value defaults to null",
+  quotedDialogueMechanics: "required substring fragments plus forbidden quoted phrases; empty expected means empty output",
+  nonQuotedMechanics: "schema-validated but not scored; never trusted as an authority",
+  sourceLeak: "forbidden source-version phrases rejected",
+  traditionalChinese: "simplified-character drift rejected for marked Owner cases",
+});
+export const LOCAL_AI_EVAL_SCORER_DIGEST = sha256Hex(stableStringify(LOCAL_AI_EVAL_SCORING_POLICY));
 
 function p95(values: readonly number[]): number | null {
   if (values.length === 0) return null;
@@ -231,6 +255,7 @@ export function createLocalAiEvalReceipt(run: LocalAiReleaseRun): LocalAiEvalRec
     promptSha256: run.promptSha256,
     grammarSha256: run.grammarSha256,
     inputContractSha256: run.inputContractSha256,
+    scorerSha256: LOCAL_AI_EVAL_SCORER_DIGEST,
     corpusVersion: LOCAL_AI_RELEASE_CORPUS_VERSION,
     corpusDigest: LOCAL_AI_RELEASE_CORPUS_DIGEST,
     caseCount: cases.length,
@@ -265,7 +290,8 @@ function receiptValid(receipt: LocalAiEvalReceipt): boolean {
     && receipt.corpusDigest === LOCAL_AI_RELEASE_CORPUS_DIGEST
     && receipt.promptSha256 === LOCAL_AI_EVAL_PROMPT_DIGEST
     && receipt.grammarSha256 === LOCAL_AI_EVAL_GRAMMAR_DIGEST
-    && receipt.inputContractSha256 === LOCAL_AI_EVAL_INPUT_CONTRACT_DIGEST;
+    && receipt.inputContractSha256 === LOCAL_AI_EVAL_INPUT_CONTRACT_DIGEST
+    && receipt.scorerSha256 === LOCAL_AI_EVAL_SCORER_DIGEST;
 }
 
 /** No single machine or aggregate score can unlock local AI by itself. */
@@ -276,6 +302,7 @@ export function assessLocalAiRelease(receipts: readonly LocalAiEvalReceipt[]): L
   if (new Set(valid.map((receipt) => receipt.promptSha256)).size > 1) reasons.push("PROMPT_DIGEST_DRIFT");
   if (new Set(valid.map((receipt) => receipt.grammarSha256)).size > 1) reasons.push("GRAMMAR_DIGEST_DRIFT");
   if (new Set(valid.map((receipt) => receipt.inputContractSha256)).size > 1) reasons.push("INPUT_CONTRACT_DIGEST_DRIFT");
+  if (new Set(valid.map((receipt) => receipt.scorerSha256)).size > 1) reasons.push("SCORER_DIGEST_DRIFT");
   const receiptKeys = valid.map((receipt) => `${receipt.target}:${receipt.suite}`);
   if (new Set(receiptKeys).size !== receiptKeys.length) reasons.push("DUPLICATE_TARGET_SUITE_RECEIPT");
   for (const target of REQUIRED_RUNTIME_TARGETS) {

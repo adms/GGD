@@ -5,6 +5,7 @@ import {
   LOCAL_AI_EVAL_OUTPUT_SCHEMA,
   LOCAL_AI_EVAL_GRAMMAR_DIGEST,
   LOCAL_AI_EVAL_PROMPT_DIGEST,
+  LOCAL_AI_EVAL_SCORER_DIGEST,
   REQUIRED_RUNTIME_TARGETS,
   assessLocalAiRelease,
   createLocalAiEvalReceipt,
@@ -78,5 +79,25 @@ describe("local AI E8 release gate", () => {
     const receipt = createLocalAiEvalReceipt({ ...source, outputs });
     expect(receipt.criticalErrors[0]).toMatchObject({ caseId: LOCAL_AI_RELEASE_CORPUS[0]!.id });
     expect(receipt.criticalErrors[0]!.reasons).toContain("OUTPUT_SELECTEDTEMPLATEIDS");
+  });
+
+  it("binds receipts to the fixed scorer policy", () => {
+    const receipt = createLocalAiEvalReceipt(run("darwin-arm64-metal", "quality"));
+    expect(receipt.scorerSha256).toBe(LOCAL_AI_EVAL_SCORER_DIGEST);
+    const tampered = { ...receipt, scorerSha256: "b".repeat(64) };
+    expect(assessLocalAiRelease([tampered])).toMatchObject({
+      passed: false,
+      reasons: expect.arrayContaining(["RECEIPT_DIGEST_OR_ARTIFACT_MISMATCH"]),
+    });
+  });
+
+  it("rejects legal but irrelevant values in fields unused by the case", () => {
+    const source = run("darwin-arm64-metal", "quality");
+    const outputs = [...source.outputs];
+    const index = outputs.findIndex((entry) => entry.caseId.startsWith("direction-"));
+    outputs[index] = { ...outputs[index]!, canonicalId: "dir.ally-to-self", selectedCapabilityIds: ["effect:applyStatus@1"] };
+    const receipt = createLocalAiEvalReceipt({ ...source, outputs });
+    expect(receipt.criticalErrors.find((entry) => entry.caseId === outputs[index]!.caseId)?.reasons)
+      .toEqual(expect.arrayContaining(["IDENTITY_MISMATCH", "CAPABILITY_MISMATCH"]));
   });
 });

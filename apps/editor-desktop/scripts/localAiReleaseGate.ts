@@ -13,6 +13,8 @@ import {
   LOCAL_AI_EVAL_GRAMMAR_DIGEST,
   LOCAL_AI_EVAL_OUTPUT_JSON_SCHEMA,
   LOCAL_AI_EVAL_PROMPT_DIGEST,
+  LOCAL_AI_EVAL_SCORER_DIGEST,
+  LOCAL_AI_EVAL_SCORING_POLICY,
   assessLocalAiRelease,
   createLocalAiEvalReceipt,
   type LocalAiEvalReceipt,
@@ -46,6 +48,8 @@ const corpusBundle = {
     inputContractDigest: LOCAL_AI_EVAL_INPUT_CONTRACT_DIGEST,
     outputJsonSchema: LOCAL_AI_EVAL_OUTPUT_JSON_SCHEMA,
     grammarDigest: LOCAL_AI_EVAL_GRAMMAR_DIGEST,
+    scoringPolicy: LOCAL_AI_EVAL_SCORING_POLICY,
+    scorerDigest: LOCAL_AI_EVAL_SCORER_DIGEST,
     cases: LOCAL_AI_RELEASE_CORPUS,
 };
 if (command === "corpus" && files.length === 0) {
