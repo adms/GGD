@@ -217,6 +217,26 @@ const TEMPLATES: Record<CollectionName, (id: string) => unknown> = {
     notes: "（JASS 出處：war3map.j:行號；換算依據）",
     segments: [{ kind: "floatingText", on: "castStart", text: "（示意段 —— 換成真的演出）" }],
   }),
+  // GH#990 特效子模組：一塊可被 vfx-script 呼叫的參數化積木。⭐ 樣板段落裡**不寫**
+  // 被 bind 的欄位（第〇·四守則：值只有一個住處），作者要把 origin 換成真的出處。
+  "vfx-subtypes": (id) => ({
+    id,
+    schema: "vfx-subtype@1",
+    label: "（新積木）",
+    notes: "（盤點出處：這一塊是從哪幾支 vfx-script 量到的）",
+    derivedFrom: [id],
+    params: {
+      shakeAmplitude: {
+        type: "number",
+        default: 0.4,
+        min: 0.01,
+        max: 1,
+        origin: "census:vfx-scripts/（腳本 id）#0.amplitude",
+        bind: [{ segment: 0, field: "amplitude" }],
+      },
+    },
+    segments: [{ kind: "screenShake", on: "castEffect", durationSec: 0.5 }],
+  }),
   vfx: (id) => ({
     id,
     schema: "vfx@1",

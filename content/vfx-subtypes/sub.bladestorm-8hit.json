@@ -1,0 +1,261 @@
+{
+  "id": "sub.bladestorm-8hit",
+  "schema": "vfx-subtype@1",
+  "label": "八連斬（連段＋收尾）",
+  "notes": "GH#990 盤點：godie-e002.ex 與 godie-e00l.ex 的 17 段 segments **逐位元組完全相同** ⇒ 抽成一塊。結構是兩層：無 strikeIndex 的段落＝**每一刀**都播（劍氣／暗門／血濺／浮字／揮劍音）；帶 strikeIndex 的段落＝**收尾那一刀**（聖光／魔劍／8Hit／爆破三連／震動／兩發音效）。⭐ 收尾的段號寫成**一格參數**（finisherStrikeIndex）—— 在此之前那個 7 抄在 11 個 segment 上，改一次連段長度就要改 11 處，而漏改一處的樣子是「收尾演出整個不見」且不會有任何東西紅。",
+  "derivedFrom": [
+    "godie-e002.ex",
+    "godie-e00l.ex"
+  ],
+  "params": {
+    "finisherStrikeIndex": {
+      "type": "number",
+      "default": 7,
+      "min": 1,
+      "max": 100,
+      "origin": "census:vfx-scripts/godie-e002.ex#4.strikeIndex —— 收尾那一刀的段號（sim comboStrikes 的終傷段）。⭐ 同一個 7 在來源腳本裡抄了 11 次",
+      "bind": [
+        {
+          "segment": 4,
+          "field": "strikeIndex"
+        },
+        {
+          "segment": 5,
+          "field": "strikeIndex"
+        },
+        {
+          "segment": 6,
+          "field": "strikeIndex"
+        },
+        {
+          "segment": 7,
+          "field": "strikeIndex"
+        },
+        {
+          "segment": 8,
+          "field": "strikeIndex"
+        },
+        {
+          "segment": 9,
+          "field": "strikeIndex"
+        },
+        {
+          "segment": 10,
+          "field": "strikeIndex"
+        },
+        {
+          "segment": 11,
+          "field": "strikeIndex"
+        },
+        {
+          "segment": 12,
+          "field": "strikeIndex"
+        },
+        {
+          "segment": 15,
+          "field": "strikeIndex"
+        },
+        {
+          "segment": 16,
+          "field": "strikeIndex"
+        }
+      ]
+    },
+    "shakeAmplitude": {
+      "type": "number",
+      "default": 0.6,
+      "min": 0.01,
+      "max": 1,
+      "origin": "census:vfx-scripts/godie-e002.ex#12.amplitude（⭐ 同族第二個量值 0.55 在 godie-hart.r#9 ⇒ 這一格真的會變）",
+      "bind": [
+        {
+          "segment": 12,
+          "field": "amplitude"
+        }
+      ]
+    },
+    "victimClipWindowMs": {
+      "type": "number",
+      "default": 700,
+      "min": 50,
+      "max": 6000,
+      "origin": "census:vfx-scripts/godie-e002.ex#13.clipWindowMs（⭐ 第二個量值 900 在 godie-hart.r#10）",
+      "bind": [
+        {
+          "segment": 13,
+          "field": "clipWindowMs"
+        }
+      ]
+    },
+    "bladeTint": {
+      "type": "rgb",
+      "default": [
+        0.4,
+        0.05,
+        0.05
+      ],
+      "origin": "census:vfx-scripts/godie-e002.ex#0.tint —— 殘影劍身的線性 RGB",
+      "bind": [
+        {
+          "segment": 0,
+          "field": "tint"
+        }
+      ]
+    }
+  },
+  "segments": [
+    {
+      "kind": "modelFx",
+      "on": "strike",
+      "modelKey": "imported.herosaber",
+      "path": "static",
+      "anchor": "target",
+      "clip": "attack",
+      "clipTimeScale": 6,
+      "alpha": 0.5,
+      "lifeSec": 0.35
+    },
+    {
+      "kind": "modelFx",
+      "on": "strike",
+      "modelKey": "w3x.stock.darkportaltarget",
+      "path": "static",
+      "anchor": "self",
+      "heightU": 1.2,
+      "lifeSec": 0.4
+    },
+    {
+      "kind": "modelFx",
+      "on": "strike",
+      "modelKey": "w3x.stock.stampedemissiledeath",
+      "path": "static",
+      "anchor": "target",
+      "heightU": 1.1,
+      "lifeSec": 0.4
+    },
+    {
+      "kind": "floatingText",
+      "on": "strike",
+      "text": "傷害!",
+      "colorRgb": [
+        255,
+        77,
+        64
+      ],
+      "sizeScale": 1.1,
+      "at": "target",
+      "durationSec": 0.5
+    },
+    {
+      "kind": "vfx",
+      "on": "strike",
+      "atMs": 100,
+      "vfxId": "fx.w3x.particle.holyawakening.p00",
+      "at": "self",
+      "durationSec": 1.0
+    },
+    {
+      "kind": "vfx",
+      "on": "strike",
+      "atMs": 100,
+      "vfxId": "fx.w3x.orb.magical-sword.p00",
+      "at": "bone",
+      "attach": "hand,right",
+      "durationSec": 1.0
+    },
+    {
+      "kind": "floatingText",
+      "on": "strike",
+      "atMs": 400,
+      "text": "8Hit",
+      "colorRgb": [
+        255,
+        212,
+        90
+      ],
+      "sizeScale": 1.5,
+      "durationSec": 0.8
+    },
+    {
+      "kind": "modelFx",
+      "on": "strike",
+      "atMs": 400,
+      "modelKey": "w3x.stock.revivehuman",
+      "path": "static",
+      "anchor": "self",
+      "offsetForwardU": 1.3,
+      "scale": 0.7,
+      "lifeSec": 1.2
+    },
+    {
+      "kind": "modelFx",
+      "on": "strike",
+      "atMs": 400,
+      "modelKey": "w3x.stock.fragdriller",
+      "path": "static",
+      "anchor": "target",
+      "scale": 8,
+      "clip": "idle",
+      "clipTimeScale": 0.15,
+      "lifeSec": 1.5
+    },
+    {
+      "kind": "modelFx",
+      "on": "strike",
+      "atMs": 400,
+      "modelKey": "w3x.stock.nedeathsmall",
+      "path": "static",
+      "anchor": "target",
+      "lifeSec": 0.8
+    },
+    {
+      "kind": "modelFx",
+      "on": "strike",
+      "atMs": 500,
+      "modelKey": "w3x.stock.steamtankimpact",
+      "path": "static",
+      "anchor": "target",
+      "scale": 1.3,
+      "lifeSec": 0.8
+    },
+    {
+      "kind": "modelFx",
+      "on": "strike",
+      "atMs": 500,
+      "modelKey": "w3x.stock.neutralbuildingexplosion",
+      "path": "static",
+      "anchor": "target",
+      "scale": 1.2,
+      "lifeSec": 1.0
+    },
+    {
+      "kind": "screenShake",
+      "on": "strike",
+      "atMs": 600,
+      "durationSec": 0.5
+    },
+    {
+      "kind": "anim",
+      "on": "strike",
+      "at": "target",
+      "pulse": "hurt"
+    },
+    {
+      "kind": "sound",
+      "on": "strike",
+      "soundKey": "wc3.defendcaster"
+    },
+    {
+      "kind": "sound",
+      "on": "strike",
+      "atMs": 50,
+      "soundKey": "wc3.flamestrikebirth1"
+    },
+    {
+      "kind": "sound",
+      "on": "strike",
+      "atMs": 100,
+      "soundKey": "wc3.succubusdeath1"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "ugc",
+  "schema": "config.ugc@1",
+  "note": "⭐⭐ 玩家自製內容（UGC）的提交閘（GH#991）。owner 2026-09-05 逐字：「開放讓玩家自己設計 英雄、技能、特效，**不是靠 AI 無止境的逼近太沒效率**」。⭐ 這一份只管「那條路開不開、開多大」，⛔ 不管內容長什麼樣 —— 提交格式沿用 `ggd-ai-authoring-operation@1`（票文 Scope 3 逐字「⛔ 不設計第二種格式」）。⛔⛔ `enabled` 出貨是 **false**：UGC 流水線今天只有第一段（這份開關）落地，身分檢查／逐份機器閘／配額計數一個都還沒有 ⇒ 出貨開著＝一條公開的、沒有任何守衛的寫入路。票文 Known risks 逐字：「quota ＋ maxBytes ＋ 嚴格 Zod 是最低配，**缺一個就不要打開**」。⭐ 打開它的條件不是「時間到了」，是 `packages/shared/src/ops/ugcGateIsArmed.test.ts` 對真的提交端點從紅轉綠。",
+  "enabled": false,
+  "requireAuth": true,
+  "maxPendingPerPlayer": 5,
+  "quotaPerPlayerPerDay": 20,
+  "maxBytes": 262144,
+  "autoPromote": false
+}

@@ -19,6 +19,7 @@ import { zVfxCollectionDoc } from "./vfx";
 import { zSkinDoc } from "./skin";
 import { zTemplateDoc } from "./template";
 import { zVfxScriptDoc } from "./vfxScript";
+import { zVfxSubtypeDoc } from "./vfxSubtype";
 import { zId } from "./common";
 
 export interface CollectionSpec {
@@ -64,6 +65,13 @@ export const COLLECTIONS = {
     schemaTag: "vfx-script@1",
     schema: zVfxScriptDoc,
     label: "VFX Scripts",
+  },
+  // GH#990 特效子模組：一組**參數化**的 vfx-script 段落 —— 像 JASS 的函式，
+  // 呼叫端只寫參數。展開器住 packages/shared（sim 與客戶端共用同一支）。
+  "vfx-subtypes": {
+    schemaTag: "vfx-subtype@1",
+    schema: zVfxSubtypeDoc,
+    label: "VFX Subtypes",
   },
 } as const satisfies Record<string, CollectionSpec>;
 

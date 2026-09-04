@@ -163,7 +163,17 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
+      # ⛔⛔ `fetch-depth: 0` 是**必要的**，⛔ 不是保險：
+      #   ① `tools/board/gen_board.py:153` 用 `git describe --tags --abbrev=0` 推導版號
+      #      ⇒ 淺 clone 沒有 tag ⇒ 它算出「未打 tag」而 commit 的那一份寫著 v0.38.x
+      #      ⇒ ⭐ `board:check` 在**每一次** CI 上都紅，而它在任何開發者的機器上都是綠的。
+      #   ② `tools/coord/check.mjs` 要 `origin/main` 才驗得了 packet 的 `baseCommit` 祖先關係
+      #      ⇒ 沒有它就會退化成一句 warning（＝安靜地不驗）。
+      # ⭐ 這是這一夜第**四**個同族：**一支產生器的輸入若有任何一項不在這台機器的 git 裡，
+      #   它的 `--check` 就不是一條閘**（其餘三個：whitelist#995 · 未追蹤的日期帳本 · dev-only overlay）。
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:

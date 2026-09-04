@@ -1,0 +1,91 @@
+{
+  "id": "sub.dive-dash-thunder",
+  "schema": "vfx-subtype@1",
+  "label": "隱身俯衝（落地雷擊）",
+  "notes": "GH#990 盤點：godie-n01c.r 與 godie-nbbc.r 的 4 段 **逐位元組完全相同** ⇒ 抽成一塊。形狀是四拍：本體消失 → 一具放大的飛行體 → 落地揚塵（延遲）→ 結算那一刻在目標腳下一發衝擊。⚠️ hideBody 只動畫面（客戶端 alpha 覆寫），⛔ 不是 ENTITY_FLAG.INVISIBLE ——借權威隱身來做演出等於偷加一個無敵窗（vfxScript.ts 的 hideBody 檔頭逐字）。",
+  "derivedFrom": [
+    "godie-n01c.r",
+    "godie-nbbc.r"
+  ],
+  "params": {
+    "hideMs": {
+      "type": "number",
+      "default": 1000,
+      "min": 50,
+      "max": 4000,
+      "origin": "census:vfx-scripts/godie-n01c.r#0.durationMs —— 本體消失多久",
+      "bind": [
+        {
+          "segment": 0,
+          "field": "durationMs"
+        }
+      ]
+    },
+    "missileScale": {
+      "type": "number",
+      "default": 4,
+      "min": 0.1,
+      "max": 20,
+      "origin": "census:vfx-scripts/godie-n01c.r#1.scale",
+      "bind": [
+        {
+          "segment": 1,
+          "field": "scale"
+        }
+      ]
+    },
+    "dustAtMs": {
+      "type": "number",
+      "default": 600,
+      "min": 0,
+      "max": 20000,
+      "origin": "census:vfx-scripts/godie-n01c.r#2.atMs —— 揚塵比俯衝晚這麼久（＝落地那一刻）",
+      "bind": [
+        {
+          "segment": 2,
+          "field": "atMs"
+        }
+      ]
+    },
+    "impactVfxId": {
+      "type": "docRef",
+      "default": "fx.w3x.stock.thunderclapcaster.p00",
+      "origin": "census:vfx-scripts/godie-n01c.r#3.vfxId",
+      "bind": [
+        {
+          "segment": 3,
+          "field": "vfxId"
+        }
+      ]
+    }
+  },
+  "segments": [
+    {
+      "kind": "hideBody",
+      "on": "castStart",
+      "at": "caster"
+    },
+    {
+      "kind": "modelFx",
+      "on": "castStart",
+      "modelKey": "w3x.stock.reddragonmissile",
+      "path": "static",
+      "anchor": "self",
+      "clip": "idle",
+      "lifeSec": 0.7
+    },
+    {
+      "kind": "vfx",
+      "on": "castStart",
+      "vfxId": "fx.fam.ground-dust.nature.s80",
+      "at": "self",
+      "durationSec": 0.8
+    },
+    {
+      "kind": "vfx",
+      "on": "castEffect",
+      "at": "target",
+      "durationSec": 1
+    }
+  ]
+}
