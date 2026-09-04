@@ -2,7 +2,7 @@
   "population": {
     "configFiles": 100,
     "knobs": 1942,
-    "corpusFiles": 13321,
+    "corpusFiles": 13358,
     "levelWindow": {
       "min": 9,
       "max": 99
@@ -351,7 +351,7 @@
       "kind": "no-read-end",
       "file": "unsafe-textures.json",
       "path": "quarantineRatchet",
-      "value": 2,
+      "value": 0,
       "why": "`quarantineRatchet` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
     },
     {
@@ -359,7 +359,7 @@
       "kind": "no-read-end",
       "file": "unsafe-textures.json",
       "path": "textures[].measured.alphaRange",
-      "value": "0 …（5 筆）",
+      "value": "253 …（5 筆）",
       "why": "`alphaRange` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
     },
     {
@@ -367,7 +367,7 @@
       "kind": "no-read-end",
       "file": "unsafe-textures.json",
       "path": "textures[].measured.borderEffAdditive",
-      "value": "39.2 …（5 筆）",
+      "value": "0 …（5 筆）",
       "why": "`borderEffAdditive` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
     },
     {
@@ -375,7 +375,7 @@
       "kind": "no-read-end",
       "file": "unsafe-textures.json",
       "path": "textures[].measured.distinctAlphaValues",
-      "value": "1 …（5 筆）",
+      "value": "5 …（5 筆）",
       "why": "`distinctAlphaValues` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
     },
     {
@@ -383,7 +383,7 @@
       "kind": "no-read-end",
       "file": "unsafe-textures.json",
       "path": "textures[].measured.hasAlphaShape",
-      "value": "false …（5 筆）",
+      "value": "true …（5 筆）",
       "why": "`hasAlphaShape` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
     },
     {
@@ -399,7 +399,7 @@
       "kind": "no-read-end",
       "file": "unsafe-textures.json",
       "path": "textures[].measured.minAlpha",
-      "value": "253 …（5 筆）",
+      "value": "0 …（5 筆）",
       "why": "`minAlpha` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
     },
     {

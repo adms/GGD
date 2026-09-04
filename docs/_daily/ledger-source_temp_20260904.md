@@ -374,3 +374,64 @@ Try again
 ## 15:38
 
 做 FAMILIES 那一次擴充 做 path 扇行機制 都作
+
+## 18:15
+
+什麼意思 要 codex 編輯器修嗎? 是的話給我內容一鍵複製
+
+## 22:30
+
+看不懂
+
+## 22:31
+
+那你應該是先給我一鍵複製給 codex 編輯器去修的訊息吧
+
+## 22:58
+
+補 0.37.2 公告
+
+以下是 codex 編輯器 回報
+已修完並提交到功能分支，沒有碰 `main`、已推送。
+
+* 分支：`feat/vfx-forge-codex`
+* Commit：`35b231ef fix(vfx): repair shipped asset safety and script composition`
+* VFX 資產 blocker：`74 → 0`
+* 透明貼圖、OPAQUE atlas、embedded GLB bright-matte 均已自動修復
+* 從原始 MDX 回填 97 筆可靠的 WC3 blend metadata
+* 修正 VFX script 錯誤吞掉 ability JSON 特效：龍破斬、龜派氣功模型重新生成
+* 原本 4 條 client 測試均已恢復
+* `pnpm content:build`：通過
+* `pnpm typecheck`：19 個 workspace 全通過
+* `pnpm vfxassets:check`：0 blocker、0 待遷移
+* `pnpm assets:manifest:check`：通過
+* `vfxforge:check`：171＋2 tests 通過；只有 Main-owned handback receipt 舊指紋警告，不阻塞
+* 新內容版本：`cv_f0bea9c4dab4`
+* 新 profile digest：`8ba44e9fc198`
+
+既有未追蹤的 `.content-tree.lock` 完整保留、未提交。
+目前唯一額外資訊是 `content:validate` 仍回報既存的 `godie-ofar.w` ability mirror drift 警告，但驗證 EXIT=0，與這次 VFX 修復無關。
+
+## 23:07
+
+Codex 把 commit 了
+
+## 23:08
+
+已 commit：
+
+* 分支：`feat/vfx-forge-codex`
+* Commit：`35b231ef fix(vfx): repair shipped asset safety and script composition`
+
+## 23:45
+
+35b231ef fix(vfx): repair shipped asset safety and script composition
+
+origin  git@github.com:adms/GGD.git (fetch)
+origin  git@github.com:adms/GGD.git (push)
+
+681d7502..35b231ef
+feat/vfx-forge-codex -> feat/vfx-forge-codex
+
+35b231ef37186f266c4f852dff205d76b1fcc43b
+refs/heads/feat/vfx-forge-codex

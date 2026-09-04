@@ -216,85 +216,88 @@
   },
   "_byKindWhy": "同一個欄位名在不同 kind 語意不同的，逐 kind 定案。⛔ 這一格贏過 fields。",
   "byKind": {
-    "spawnVfx.durationSec": [
+    "(passive).deathWard": [
       "持續",
       "續效特效"
     ],
-    "spawnModelFx.count": [
-      "多段"
-    ],
+    "blink.markStatusId": [],
     "blink.to": [
       "路徑"
     ],
+    "championForm.to": [],
+    "comboStrikes.strikeReposition": [
+      "多段"
+    ],
+    "dash.mode": [
+      "路徑"
+    ],
+    "delayed.anchor": [
+      "等待",
+      "路徑"
+    ],
+    "delayed.strikeReposition": [
+      "多段"
+    ],
+    "delayed.targetMode": [
+      "等待"
+    ],
+    "dot.stacking": [
+      "迴圈"
+    ],
+    "floatingText.driftAngleDeg": [
+      "路徑"
+    ],
+    "floatingText.driftAngleStepDeg": [
+      "路徑"
+    ],
+    "floatingText.driftFrom": [
+      "路徑"
+    ],
+    "floatingText.driftSpeed": [
+      "路徑"
+    ],
+    "grantGold.to": [],
     "knockback.from": [
       "路徑"
     ],
     "knockback.to": [
       "路徑"
     ],
-    "dash.mode": [
-      "路徑"
-    ],
     "leap.mode": [
       "路徑"
     ],
-    "championForm.to": [],
-    "grantGold.to": [],
     "randomArea.who": [],
-    "dot.stacking": [
-      "迴圈"
-    ],
-    "(passive).deathWard": [
-      "持續",
-      "續效特效"
-    ],
-    "spawnModelFx.spacing": [
-      "路徑"
-    ],
+    "recentCast.withinSec": [],
+    "spawnModelFx.anchor": [],
     "spawnModelFx.clip": [
       "續效特效"
     ],
     "spawnModelFx.clipTimeScale": [
       "續效特效"
     ],
-    "spawnModelFx.anchor": [],
-    "spawnVfx.attach": [],
-    "comboStrikes.strikeReposition": [
-      "多段"
-    ],
-    "delayed.strikeReposition": [
+    "spawnModelFx.count": [
       "多段"
     ],
     "spawnModelFx.offsetForwardU": [
       "路徑"
     ],
-    "delayed.targetMode": [
-      "等待"
-    ],
-    "delayed.anchor": [
-      "等待",
+    "spawnModelFx.spacing": [
       "路徑"
     ],
-    "floatingText.driftSpeed": [
+    "spawnModelFx.spreadDeg": [
       "路徑"
     ],
-    "floatingText.driftAngleDeg": [
-      "路徑"
-    ],
-    "floatingText.driftFrom": [
-      "路徑"
-    ],
-    "floatingText.driftAngleStepDeg": [
-      "路徑"
-    ],
+    "spawnVfx.attach": [],
     "spawnVfx.boneOn": [],
-    "blink.markStatusId": [],
+    "spawnVfx.durationSec": [
+      "持續",
+      "續效特效"
+    ],
     "summon.body": [],
-    "summon.team": [],
     "summon.damageMult": [],
     "summon.hpMult": [],
     "summon.onOwnerDeath": [],
-    "recentCast.withinSec": []
+    "summon.team": []
   },
   "_topLevelWhy": "技能文件**自己**的欄位（⛔ 不在 effects 樹裡），同樣要被分類 —— 一支 `castTimeSec: 3` 的技能有一段三秒的等待，而它一格 effect 都不必有。",
   "topLevel": {

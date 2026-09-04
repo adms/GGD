@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-09-04 15:38 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-09-05 00:37 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.37.2 · 資料截至 2026-09-04 15:38 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-04 15:38 (GMT+8)</h1><div class="meta"><span>帳本 <b>17</b> 份</span><span>點名票號 <b>387</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.37.2 · 資料截至 2026-09-05 00:37 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-05 00:37 (GMT+8)</h1><div class="meta"><span>帳本 <b>18</b> 份</span><span>點名票號 <b>387</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -1178,6 +1178,23 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>15:08</td><td>收到，但目前還無法安全接入：我剛實際抓取遠端後，<code>origin/main</code> 是 <code>8a8dc3e2</code>，Git 找不到 <code>da3d46e7d</code>，最新 Main 也沒有： * <code>docs/editor-contract/ggd-type-catalog.json</code> * <code>docs/editor-contract/CODEX_HANDBACK_REPLY.md</code> 我也確認現有 Editor 確實把 <code>type1/type2</code> 寫成了持久化 key；這需要修正為： * 語意化配方 ID * 變體由 params 表達 * <code>typeN</code> 最多只是介面上的概念／排序，不能成為落地 ID * 模板選擇只讀…</td><td>#916 —— Codex 抓不到 commit ⇒ push origin main（owner 當場勾選）</td></tr>
 <tr><td>15:18</td><td>你要給我一鍵複製給 codex 編輯器8</td><td>#916 —— 一鍵複製那份的表頭指到 origin/main（b6f0bf4bf）</td></tr>
 <tr><td>15:38</td><td>做 FAMILIES 那一次擴充 做 path 扇行機制 都作</td><td>#916 —— FAMILIES 擴充 ＋ path:&quot;fan&quot; 機制（fanRotation.ts ＋ 六族接線）</td></tr>
+<tr><td>18:15</td><td>什麼意思 要 codex 編輯器修嗎? 是的話給我內容一鍵複製</td><td>— 澄清 codeOnlyKnobs 那條紅不是 Codex 的（是 977abe19a 帶進來的），⛔ 不需要開票</td></tr>
+<tr><td>22:30</td><td>看不懂</td><td>— 我講太繞，改用白話重述，⛔ 不是新需求</td></tr>
+<tr><td>22:31</td><td>那你應該是先給我一鍵複製給 codex 編輯器去修的訊息吧</td><td>— 要一鍵複製的內容（Codex 45 個 blocker），⛔ 不需要獨立票</td></tr>
+<tr><td>22:58</td><td>補 0.37.2 公告 以下是 codex 編輯器 回報 已修完並提交到功能分支，沒有碰 <code>main</code>、已推送。 * 分支：<code>feat/vfx-forge-codex</code> * Commit：<code>35b231ef fix(vfx): repair shipped asset safety and script composition</code> * VFX 資產 blocker：<code>74 → 0</code> * 透明貼圖、OPAQUE atlas、embedded GLB bright-matte 均已自動修復 * 從原始 MDX 回填 97 筆可靠的 WC3 blend metadata * 修正 VFX script…</td><td>#916 —— v0.37.2 公告 ＋ 驗 Codex 回報（GitHub 說 35b231ef 不存在）</td></tr>
+<tr><td>23:07</td><td>Codex 把 commit 了</td><td>— 追問 commit 狀態，⛔ 不是新需求</td></tr>
+<tr><td>23:08</td><td>已 commit： * 分支：<code>feat/vfx-forge-codex</code> * Commit：<code>35b231ef fix(vfx): repair shipped asset safety and script composition</code></td><td>— 追問 commit 狀態，⛔ 不是新需求</td></tr>
+<tr><td>23:45</td><td>35b231ef fix(vfx): repair shipped asset safety and script composition origin git@github.com:adms/GGD.git (fetch) origin git@github.com:adms/GGD.git (push) 681d7502..35b231ef feat/vfx-forge-codex -&gt; feat/vfx-forge-codex 35b231ef37186f266c4f852dff205d76b1fcc43b refs/heads/feat/vfx-forge-codex</td><td>— Codex 推送成功的確認（681d7502..35b231ef），⛔ 不是新需求</td></tr>
+</table></div>
+<p># 2026-09-05</p>
+<blockquote>⭐ 這張表由 <code>scripts/message-ledger.sh</code> 從 session transcript <b>逐則</b>撈出來對帳，</blockquote>
+<blockquote><code>scripts/ruling.sh</code> 收到裁決時也寫進同一張表。</blockquote>
+<blockquote>表格那一格是<b>截斷</b>過的；⛔ 全文沒有被壓縮取代，它在 <code>ledger-source_temp_*.md</code>。</blockquote>
+<blockquote>票號那一格 ⛔ 不可以留空：對不到票就寫 <code>⏸ 未對票</code>，<code>--check</code> 會紅。</blockquote>
+<div class="scroll"><table><tr><th>時間</th><th>owner 說了什麼（逐字）</th><th>票</th></tr>
+<tr><td>00:03</td><td>fix 第 1 條是補 Dockerfile 的一行 COPY，第 2 條是加四個欄位驗證</td><td>#916 —— 技能接到新積木（38-002 三條黑龍 radial→fan）＋ v0.37.2 玩家公告</td></tr>
+<tr><td>00:03</td><td>⭐ 把技能接到新積木上 —— 這樣玩家才真的看得到（但會改到出貨技能的表現） 發 Discord 的「系統優化更新」公告（v0.37.2 確實只有這句是真的）</td><td>#916 —— 技能接到新積木（38-002 三條黑龍 radial→fan）＋ v0.37.2 玩家公告</td></tr>
+<tr><td>00:37</td><td>git fetch origin git cherry-pick 648cc2b3 pnpm install --frozen-lockfile pnpm exec vitest run \ packages/shared/src/ops/clientContentImports.test.ts \ packages/shared/src/ops/aiPromoteGuardIsArmed.test.ts \ packages/shared/src/content/unsafeTextureQuarantine.test.ts \ apps/content-api/src/server.tes…</td><td>— cherry-pick Codex 的 648cc2b3 並驗收，⛔ 不需要獨立票</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

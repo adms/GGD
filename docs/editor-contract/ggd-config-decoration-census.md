@@ -13,7 +13,7 @@
 |---|---:|
 | 出貨 config 文件 | 100 |
 | **旋鈕**（Zod 靜態鍵的葉子，⛔ 不含 record 的鍵與陣列索引） | **1942** |
-| 消費端原始碼（⛔ 已排除後台欄位表與測試） | 13321 |
+| 消費端原始碼（⛔ 已排除後台欄位表與測試） | 13358 |
 | 殭屍獎勵的等級區間（`dominated` 的分母） | L9–L99 |
 
 ## 分類
@@ -63,13 +63,13 @@
 | `review-tuning.json` | `perceptualBaselineEnabled` | `false` | `perceptualBaselineEnabled` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
 | `review-tuning.json` | `perceptualDriftThreshold` | `0.12` | `perceptualDriftThreshold` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
 | `unit-tints.json` | `transient[].erasesStaticTint` | `true` | `erasesStaticTint` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `quarantineRatchet` | `2` | `quarantineRatchet` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `textures[].measured.alphaRange` | `"0 …（5 筆）"` | `alphaRange` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `textures[].measured.borderEffAdditive` | `"39.2 …（5 筆）"` | `borderEffAdditive` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `textures[].measured.distinctAlphaValues` | `"1 …（5 筆）"` | `distinctAlphaValues` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `textures[].measured.hasAlphaShape` | `"false …（5 筆）"` | `hasAlphaShape` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `quarantineRatchet` | `0` | `quarantineRatchet` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `textures[].measured.alphaRange` | `"253 …（5 筆）"` | `alphaRange` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `textures[].measured.borderEffAdditive` | `"0 …（5 筆）"` | `borderEffAdditive` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `textures[].measured.distinctAlphaValues` | `"5 …（5 筆）"` | `distinctAlphaValues` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `textures[].measured.hasAlphaShape` | `"true …（5 筆）"` | `hasAlphaShape` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
 | `unsafe-textures.json` | `textures[].measured.maxAlpha` | `"253 …（5 筆）"` | `maxAlpha` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
-| `unsafe-textures.json` | `textures[].measured.minAlpha` | `"253 …（5 筆）"` | `minAlpha` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
+| `unsafe-textures.json` | `textures[].measured.minAlpha` | `"0 …（5 筆）"` | `minAlpha` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
 | `unsafe-textures.json` | `textures[].measured.opaquePct` | `"0 …（5 筆）"` | `opaquePct` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
 | `unsafe-textures.json` | `textures[].usage.reachableVfxDocs` | `"1 …（5 筆）"` | `reachableVfxDocs` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。 |
 
