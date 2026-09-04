@@ -175,14 +175,17 @@ function matrix(): { elements: string[]; shapes: string[]; present: string[] } {
  * 「有 emitter 的模型 ＋ 節點設了 `tint`」的節點 ⇒ 那個缺陷**今天就是活的**。
  */
 const LOST_BY_EMITTERS = [
-  "scale",
-  "scaleAxis",
-  "tint",
-  "alpha",
-  "clipTimeScale",
-  "spinDegPerSec",
-  "count",
-  "spacing",
+  // ⭐⭐ GH#977 落地後**縮短了**：`scale` / `scaleAxis` / `tint` / `alpha`
+  //    現在走 `spawnTrail` 的第五個參數 → `applyVfxLook()` → 換簽章 id
+  //    ⇒ 它們**到得了**粒子那一半，⛔ 而且兩個不同外觀不會共用池。
+  //    ⚠️ ⭐ 這一列只能**變短**，⛔ 而縮短它的前提是「真的接上了」——
+  //       閘 `apps/client/src/render/modelFxEmitterLook.test.ts`（兩個突變驗過）。
+  //
+  // ⛔ 剩下這四格**仍然到不了**，而每一格都有一個能被反駁的理由：
+  "clipTimeScale", // ⛔ 剪輯播放速率 —— 粒子沒有「動畫軌」這個概念（它是 .glb 的東西）
+  "spinDegPerSec", // ⛔ 模型自轉 —— `vfx@1` 的 `orient.swirlDegPerSec` 是**粒子繞自身軸**，⛔ 語意不同
+  "count", // ⛔ 這一發生了幾具**模型** —— 迴圈已經在每一具裡面，傳倍率會**乘兩次**
+  "spacing", // ⛔ 沿線 N 具的**間距** —— 那是模型的擺位，粒子跟著各自的模型走
 ] as const;
 
 function modelEmitters(): Map<string, number> {
@@ -347,8 +350,11 @@ const catalog = {
    */
   modelFxEmitters: {
     note:
-      "⛔ `model@1.fxEmitters` 的 emitter 只拿得到一個世界座標（`modelFxRig.ts:404` 的 " +
-      "`spawnTrail?(vfxId,x,y,z)`）⇒ 下列欄位**寫了也不會傳給粒子那一半**。" +
+      "⭐⭐ GH#977 已落地：`spawnTrail` 的第五個參數帶這一發的外觀，" +
+      "經 `applyVfxLook()`（`render/vfx/artParams.ts`，**唯一**做這件事的地方）" +
+      "換過簽章 id 之後才進池 ⇒ `scale`/`scaleAxis`/`tint`/`alpha` **到得了**粒子那一半，" +
+      "且兩個不同外觀**不共用池**（`shapeOf` memo key 與池 key 一起分開）。" +
+      "⛔ 而下列四格**仍然到不了**，逐格理由見原始碼註解。" +
       "⚠️ ⭐ `spawnVfx` 那條路（`schema/effects/spawnVfx.ts`）**同樣**不吃 scale/tint/alpha/yaw —— " +
       "兩條是各自獨立的窄通道，⛔ 修一條治不了另一條。",
     /** ⛔ 這幾格寫在 `spawnModelFx` 節點上時，**不會**到達該模型自帶的粒子。 */

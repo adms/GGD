@@ -122,7 +122,7 @@ import {
   WC3_UNITS_PER_WORLD_UNIT,
   type ResolvedVfxLayer,
 } from "../render/vfx/abilityLayers";
-import { applyAimYaw } from "../render/vfx/artParams";
+import { applyAimYaw, applyVfxLook } from "../render/vfx/artParams";
 import { applyFamilyOrient } from "../render/vfx/familyOrient";
 import { yawDegToward } from "./orient";
 import { isLegacySingleVfx, type AbilityVfxSource } from "@ggd/shared/content/schema/abilityVfx";
@@ -827,9 +827,15 @@ export class VfxSystem {
             // ⭐ GH#838 M11 —— 沿路拖尾走 **VfxSystem 自己的 `play`**：同一個
             //    文件查詢、同一套壽命夾限、同一份粒子密度上限、同一個池。
             //    ⛔ 不另開一條渲染路（那會是第二個腐爛速度）。
-            spawnTrail: (vfxId, tx, ty, tz) => {
+            spawnTrail: (vfxId, tx, ty, tz, look) => {
               const doc = this.doc(vfxId);
-              if (doc) this.play(doc, tx, tz, this.lastUpdateMs ?? 0, ty);
+              // ⭐⭐ GH#977 —— 外觀走 `applyVfxLook`（**唯一**做這件事的地方）。
+              // ⚠️ ⭐ 它會**換 `doc.id`** ⇒ `shapeOf()` 的 memo key
+              //    `${doc.id}|${maxLifeSec}`（:1113）與池 key `doc.id`（:1114）
+              //    **一起**分開 ⇒ 兩個不同 tint 的實例不會互相污染。
+              //    ⛔ 只改池 key 是不夠的：memo 比池子**更早**別名。
+              // ⭐ look 缺席／全單位 ⇒ 回傳同一個物件 ⇒ 逐位元同今天。
+              if (doc) this.play(applyVfxLook(doc, look), tx, tz, this.lastUpdateMs ?? 0, ty);
             },
           })
         : null;

@@ -199,3 +199,97 @@ export function resolveSpatial(p: ArtParams, defaults: { heightY: number; facing
 } {
   return { heightY: p.heightY ?? defaults.heightY, facingDeg: p.facingDeg ?? defaults.facingDeg };
 }
+
+/**
+ * ⭐⭐ 【這一發的外觀】—— `applyArtParams` 的**簽章版**（GH#977）。
+ *
+ * ── ⛔ 為什麼 `applyArtParams` 不夠（三個量到的洞）────────────────────────
+ * ① ⛔ **它不換 `doc.id`**，而粒子池 key 就是 `doc.id`（`VfxSystem.ts:1114`），
+ *    ⭐ 而且 `shapeOf()` 的 memo key `${doc.id}|${maxLifeSec}`（`:1113`）**更早**
+ *    別名 ⇒ 只把 tint 放進池 key **看起來修好了而畫面照壞**。
+ * ② ⛔ `count` 只寫 `burstCount`（`applyArtParams` 那一行），而拖尾是
+ *    `mode:"continuous"`（**349/629** 份出貨文件）只讀 `doc.rate`
+ *    ⇒ 那一格對它們**逐位元是死的**（第一·五守則）。
+ * ③ ⛔ 它沒有 `scaleAxis` —— ⭐ 而 `vfx@1` **有**兩組已出貨的非等向軸：
+ *    `stretched` + `tailLength`（**205 份**在用）與 ring 的 `radius` + `thickness`。
+ *    ⚠️ 我原本宣稱「粒子側結構上表達不了」，**那是錯的**（2026-09-04 更正）。
+ *
+ * ── ⭐ 簽章：**只有真的改了東西才換 id** ────────────────────────────────
+ * 缺席／全單位 ⇒ **回傳同一個物件**（`===`），⇒ 逐位元同這一格出現以前。
+ * ⛔ 這不是最佳化，是 AC④：不傳外觀時必須與目前行為相容。
+ */
+export interface VfxLook {
+  scale?: number;
+  /** `[橫向, 上, 沿行進軸]` —— ⭐ **翻譯**成粒子側的非等向軸，⛔ 不照抄 tuple。 */
+  scaleAxis?: readonly [number, number, number];
+  tint?: Rgb;
+  alpha?: number;
+  /** 度。折進 `doc.orient.yawDeg`（走 `applyArtParams` 那條已經有守衛的路）。 */
+  facingDeg?: number;
+  /** ⭐ burst ⇒ `burstCount`；continuous ⇒ `rate`。⛔ 不是只寫前者。 */
+  countMult?: number;
+}
+
+const r3 = (v: number): number => Math.round(v * 1000) / 1000;
+
+/** ⭐ 簽章 —— 只放**真的會改變輸出**的格子，⛔ 不是把整個 look 序列化。 */
+function lookSignature(p: VfxLook): string {
+  const bits: string[] = [];
+  if (p.scale !== undefined && p.scale !== 1) bits.push(`s${r3(p.scale)}`);
+  if (p.scaleAxis !== undefined && !(p.scaleAxis[0] === 1 && p.scaleAxis[1] === 1 && p.scaleAxis[2] === 1))
+    bits.push(`x${p.scaleAxis.map(r3).join(",")}`);
+  if (p.tint !== undefined) bits.push(`t${p.tint.map(r3).join(",")}`);
+  if (p.alpha !== undefined && p.alpha !== 1) bits.push(`a${r3(p.alpha)}`);
+  if (p.facingDeg !== undefined) bits.push(`y${r3(p.facingDeg)}`);
+  if (p.countMult !== undefined && p.countMult !== 1) bits.push(`n${r3(p.countMult)}`);
+  return bits.join("|");
+}
+
+/**
+ * ⭐ 把 `scaleAxis` **翻譯**成粒子側真的有的非等向表達。
+ *
+ * ⚠️⚠️ ⭐ **有損，而且我明說**：tuple 是三軸，⛔ 而 `stretched`+`tailLength` 是
+ * 「沿行進軸拉長」一軸、ring 的 `radius`/`thickness` 是「半徑 vs 厚度」兩軸。
+ * ⇒ 翻得過去的是**沿行進軸的那一維相對於橫向的比例**（`z / x`），
+ * ⛔ 而「上」那一維（`[1]`）粒子側沒有對應 —— 它不進翻譯，也⛔ 不假裝有。
+ */
+function applyScaleAxis(out: VfxDoc, ax: readonly [number, number, number]): void {
+  const lateral = ax[0] > 1e-6 ? ax[0] : 1;
+  const along = ax[2] > 1e-6 ? ax[2] : 1;
+  const ratio = along / lateral;
+  if (Math.abs(ratio - 1) < 1e-6) return;
+  if (out.emitter.shape === "ring" && out.emitter.thickness !== undefined) {
+    // ⭐ 環：把「厚度／半徑」的比例往 ratio 的**反方向**推 —— 沿軸拉長 ＝ 環變薄。
+    out.emitter = { ...out.emitter, thickness: r3(out.emitter.thickness / ratio) || 1e-3 };
+    return;
+  }
+  // ⭐ 其餘：走 `stretched` + `tailLength`（205 份出貨文件在用的那一組）。
+  out.stretched = true;
+  out.tailLength = r3((out.tailLength ?? 1) * ratio) || 1e-3;
+}
+
+/**
+ * ⭐ 這一發的外觀 —— 回傳一份**換過 id** 的文件（或缺席時的同一個物件）。
+ * ⛔ 這是**唯一**該做這件事的地方（第〇·四守則）。
+ */
+export function applyVfxLook(doc: VfxDoc, look: VfxLook | undefined): VfxDoc {
+  if (look === undefined) return doc;
+  const sig = lookSignature(look);
+  if (sig === "") return doc; // ⭐ 全單位 ⇒ 逐位元同今天（AC④）
+  // ⭐ 先走既有的那條路（scale/tint/alpha/facing 都有守衛在），⛔ 不重寫一份。
+  const base = applyArtParams(doc, {
+    ...(look.scale !== undefined ? { scale: look.scale } : {}),
+    ...(look.tint !== undefined ? { tint: look.tint } : {}),
+    ...(look.alpha !== undefined ? { alpha: look.alpha } : {}),
+    ...(look.facingDeg !== undefined ? { facingDeg: look.facingDeg } : {}),
+  });
+  const out: VfxDoc = { ...base };
+  if (look.scaleAxis !== undefined) applyScaleAxis(out, look.scaleAxis);
+  if (look.countMult !== undefined && look.countMult !== 1) {
+    const m = look.countMult;
+    // ⭐⭐ 兩種模式**兩個旋鈕** —— ⛔ 只寫 burstCount 對 349/629 份拖尾是死的。
+    if (out.mode === "burst") out.burstCount = Math.max(1, Math.round((out.burstCount ?? 1) * m));
+    else if (out.rate !== undefined) out.rate = r3(out.rate * m) || 1e-3;
+  }
+  return { ...out, id: `${doc.id}@fx${sig}` };
+}

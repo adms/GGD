@@ -3590,12 +3590,8 @@
     }
   ],
   "modelFxEmitters": {
-    "note": "⛔ `model@1.fxEmitters` 的 emitter 只拿得到一個世界座標（`modelFxRig.ts:404` 的 `spawnTrail?(vfxId,x,y,z)`）⇒ 下列欄位**寫了也不會傳給粒子那一半**。⚠️ ⭐ `spawnVfx` 那條路（`schema/effects/spawnVfx.ts`）**同樣**不吃 scale/tint/alpha/yaw —— 兩條是各自獨立的窄通道，⛔ 修一條治不了另一條。",
+    "note": "⭐⭐ GH#977 已落地：`spawnTrail` 的第五個參數帶這一發的外觀，經 `applyVfxLook()`（`render/vfx/artParams.ts`，**唯一**做這件事的地方）換過簽章 id 之後才進池 ⇒ `scale`/`scaleAxis`/`tint`/`alpha` **到得了**粒子那一半，且兩個不同外觀**不共用池**（`shapeOf` memo key 與池 key 一起分開）。⛔ 而下列四格**仍然到不了**，逐格理由見原始碼註解。⚠️ ⭐ `spawnVfx` 那條路（`schema/effects/spawnVfx.ts`）**同樣**不吃 scale/tint/alpha/yaw —— 兩條是各自獨立的窄通道，⛔ 修一條治不了另一條。",
     "lostByEmitters": [
-      "scale",
-      "scaleAxis",
-      "tint",
-      "alpha",
       "clipTimeScale",
       "spinDegPerSec",
       "count",
@@ -3645,7 +3641,6 @@
         "modelKey": "w3x.stock.fragdriller",
         "emitterCount": 1,
         "fieldsLost": [
-          "scale",
           "clipTimeScale"
         ]
       },
@@ -3653,16 +3648,13 @@
         "ability": "godie-e002.e",
         "modelKey": "w3x.stock.revivehuman",
         "emitterCount": 3,
-        "fieldsLost": [
-          "scaleAxis"
-        ]
+        "fieldsLost": []
       },
       {
         "ability": "godie-e00l.e",
         "modelKey": "w3x.stock.fragdriller",
         "emitterCount": 1,
         "fieldsLost": [
-          "scale",
           "clipTimeScale"
         ]
       },
@@ -3670,52 +3662,37 @@
         "ability": "godie-e00l.e",
         "modelKey": "w3x.stock.revivehuman",
         "emitterCount": 3,
-        "fieldsLost": [
-          "scaleAxis"
-        ]
+        "fieldsLost": []
       },
       {
         "ability": "godie-e00r.r",
         "modelKey": "w3x.stock.awaken",
         "emitterCount": 3,
-        "fieldsLost": [
-          "scale",
-          "scaleAxis"
-        ]
+        "fieldsLost": []
       },
       {
         "ability": "godie-edem.e",
         "modelKey": "w3x.stock.thunderclapcaster",
         "emitterCount": 1,
-        "fieldsLost": [
-          "scale",
-          "tint"
-        ]
+        "fieldsLost": []
       },
       {
         "ability": "godie-h02r.r",
         "modelKey": "w3x.stock.revivehuman",
         "emitterCount": 3,
-        "fieldsLost": [
-          "scale",
-          "scaleAxis"
-        ]
+        "fieldsLost": []
       },
       {
         "ability": "godie-hgam.r",
         "modelKey": "w3x.stock.revivehuman",
         "emitterCount": 3,
-        "fieldsLost": [
-          "scale",
-          "scaleAxis"
-        ]
+        "fieldsLost": []
       },
       {
         "ability": "godie-n01c.e",
         "modelKey": "w3x.stock.reddragonmissile",
         "emitterCount": 4,
         "fieldsLost": [
-          "scale",
           "count",
           "spacing"
         ]
@@ -3725,7 +3702,6 @@
         "modelKey": "w3x.stock.reddragonmissile",
         "emitterCount": 4,
         "fieldsLost": [
-          "scale",
           "count",
           "spacing"
         ]
@@ -3741,7 +3717,6 @@
         "modelKey": "w3x.stock.fragdriller",
         "emitterCount": 1,
         "fieldsLost": [
-          "scale",
           "clipTimeScale"
         ]
       },
@@ -3749,9 +3724,7 @@
         "ability": "godie-o00x.r",
         "modelKey": "w3x.stock.revivehuman",
         "emitterCount": 3,
-        "fieldsLost": [
-          "scaleAxis"
-        ]
+        "fieldsLost": []
       },
       {
         "ability": "godie-ogrh.r",
@@ -3764,7 +3737,6 @@
         "modelKey": "w3x.stock.fragdriller",
         "emitterCount": 1,
         "fieldsLost": [
-          "scale",
           "clipTimeScale"
         ]
       },
@@ -3772,15 +3744,13 @@
         "ability": "godie-ogrh.r",
         "modelKey": "w3x.stock.revivehuman",
         "emitterCount": 3,
-        "fieldsLost": [
-          "scaleAxis"
-        ]
+        "fieldsLost": []
       }
     ],
     "counts": {
       "modelsWithEmitters": 9,
       "nodesOnSuchModels": 16,
-      "nodesActuallyLosing": 14
+      "nodesActuallyLosing": 6
     }
   },
   "matrix": {

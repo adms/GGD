@@ -441,7 +441,26 @@ export interface ModelFxRigOptions {
    * 「一份 vfx 文件怎麼變成粒子」（同 `resolveModel` / `loadContainer` 的理由）。
    * 缺席 ⇒ 拖尾是 no-op（headless 測試的樣子，⛔ 不是整支功能不生效）。
    */
-  spawnTrail?(vfxId: string, x: number, y: number, z: number): void;
+  /**
+   * ⭐ GH#977 —— 第五個參數是**這一發的外觀**（缺席 ⇒ 逐位元同這一格出現以前）。
+   * ⛔ 在它出現以前這個簽章只有四個純量，⭐ 而那**不是「忘了傳」，是通道寬度**：
+   *   `ev.scale` / `ev.scaleAxis` / `look.tint` / `look.alpha` 全部就在 `spawn()`
+   *   的同一個 scope 裡（`:644-647` 與 `:618-622`），⛔ 而迴圈一格都沒交出去。
+   * ⇒ 後果是**同一顆模型的兩半顯示不同的東西**（`godie-edem.e` 今天就是活的）。
+   */
+  spawnTrail?(
+    vfxId: string,
+    x: number,
+    y: number,
+    z: number,
+    look?: {
+      scale?: number;
+      scaleAxis?: readonly [number, number, number];
+      tint?: readonly [number, number, number];
+      alpha?: number;
+      countMult?: number;
+    },
+  ): void;
   /**
    * ⭐ GH#803 一鍵 rollback —— `model@1.fxEmitters` 要不要播。
    * 缺席 ⇒ **true**（第〇·六守則：「優先權大的更新後都是預設啟動」）。
@@ -745,8 +764,34 @@ export class ModelFxRig {
       // ⭐ 走與拖尾**同一條** `spawnTrail` 注入 —— ⛔ 不另開第二條路徑
       //    (第二條路徑 = 第二個要記得餵的接縫,而 GH#607 就是那樣掉了兩格)。
       if (this.opts.spawnTrail && this.emittersEnabled) {
+        // ⭐⭐ GH#977 —— **這一發的外觀跟著走**。⛔ 在此之前只送三個座標
+        //    ⇒ 網格那一半被 `look.tint` 染色、粒子那一半照原樣噴
+        //    （`godie-edem.e` 是全出貨唯一設了 `tint` 的那一個 ⇒ 缺陷是活的）。
+        // ⚠️ 只在**真的有東西**時才建物件 —— 全缺席時傳 `undefined`，
+        //    ⭐ 讓下游的 `applyVfxLook` 走 `return doc` 那條逐位元不變的路。
+        const emitterLook =
+          ev.scale !== undefined ||
+          ev.scaleAxis !== undefined ||
+          look.tint !== undefined ||
+          look.alpha !== undefined
+            ? {
+                // ⚠️ ⭐ 乘上 `doc.scale` —— 網格那一半走的正是
+                //    `(doc.scale ?? 1) * (ev.scale ?? 1)`（`:644`），
+                //    ⛔ 只傳 `ev.scale` 會讓兩半差一個模型自己的倍率。
+                ...(ev.scale !== undefined || doc.scale !== undefined
+                  ? { scale: (doc.scale ?? 1) * (ev.scale ?? 1) }
+                  : {}),
+                ...(ev.scaleAxis !== undefined ? { scaleAxis: ev.scaleAxis } : {}),
+                ...(look.tint !== undefined ? { tint: look.tint } : {}),
+                ...(look.alpha !== undefined ? { alpha: look.alpha } : {}),
+                // ⛔ **刻意沒有 `countMult`**：`ModelFxSpawnEvent` 沒有 `count`
+                //    欄位（具數是 `instances.length`），⭐ 而這個迴圈就在**每一具
+                //    裡面** ⇒ 12 具本來就會放 12 份粒子。傳一個倍率會**乘兩次**。
+                //    （`applyVfxLook` 的 `countMult` 留著給別的呼叫端用。）
+              }
+            : undefined;
         for (const vid of doc.fxEmitters ?? []) {
-          this.opts.spawnTrail(vid, birthPose.x, birthPose.y, birthPose.z);
+          this.opts.spawnTrail(vid, birthPose.x, birthPose.y, birthPose.z, emitterLook);
         }
       }
       // ⭐ 幾何已經在（重用／容器早就載好）⇒ 現在就起播；還沒到的那幾具由
