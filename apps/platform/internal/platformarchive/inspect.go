@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"math"
 	"os"
 	"sort"
 	"strings"
@@ -211,11 +212,22 @@ func OpenReaderAt(r io.ReaderAt, size int64) (*Archive, error) {
 			return nil, reject("項目 %q 的 ZIP 標頭說 %d bytes，manifest 說 %d bytes",
 				name, f.UncompressedSize64, declared)
 		}
-		if declared >= MinRatioCheckBytes && f.CompressedSize64 > 0 {
-			if ratio := declared / int64(f.CompressedSize64); ratio > MaxCompressionRatio {
-				return nil, reject("項目 %q 的壓縮比 %d:1 超過上限 %d:1（zip bomb 防線）",
-					name, ratio, MaxCompressionRatio)
-			}
+		// ⛔⛔ ZIP 標頭的 CompressedSize64 是 uint64 而且**由攻擊者填**。
+		//
+		// ⚠️ ⭐ 在這一段出現以前，下一行是 `declared / int64(f.CompressedSize64)` ——
+		//   而 `int64(2^63)` 是 **−9223372036854775808** ⇒ ratio 變成 0 或負數
+		//   ⇒ `ratio > MaxCompressionRatio` 為 **false** ⇒ ⛔⛔ **zip bomb 防線被繞過**。
+		//   （實測：`int64(1<<63) = -9223372036854775808 · ratio = 0 · > 100 ? false`）
+		//
+		// ⭐⭐ 而它與上面 `:210` 那一行**方向相反**，兩行只隔四行：
+		//   那一行溢位之後 `int64(...) != declared` 仍然成立 ⇒ **reject（fail-closed）**；
+		//   這一行溢位之後**放行（fail-OPEN）**。⇒ ⛔ 同一份檔裡兩個相反的失效方向。
+		//
+		// ⇒ ⭐ 修法是**先把它擋成畸形標頭**，⛔ 不是加 `#nosec` 讓掃描器閉嘴：
+		//   `declared` 在 `:207` 已經被 `limit` 夾住，所以一個大於 MaxInt64 的
+		//   壓縮長度**在任何合法封包裡都不可能出現** —— 它只可能是偽造的。
+		if msg := ratioGuard(name, declared, f.CompressedSize64); msg != "" {
+			return nil, reject("%s", msg)
 		}
 		a.ByCollection[col] = append(a.ByCollection[col], Entry{
 			Name: name, Collection: col, ID: id, Kind: kind, Declared: declared, file: f,
@@ -419,4 +431,42 @@ func entryID(rule *Rule, name, base string) (string, error) {
 		return "", reject("項目 %q 的 id %q 不符合 jsonstore 的命名規則", name, id)
 	}
 	return id, nil
+}
+
+// ratioGuard 是 zip bomb 的壓縮比防線 —— ⭐ **出貨那一支**（`Inspect` 的唯一呼叫者）。
+//
+// ⛔⛔ 抽出來是因為它原本**溢位就放行**，⭐ 而那個情境用 `archive/zip` 的 Writer
+// **造不出夾具**（它寫不出 CompressedSize64 > MaxInt64 的中央目錄）
+// ⇒ ⛔ 沒有辦法從封包那一端驗它。⇒ 抽成一支吃**標頭原值**的函式，
+// ⭐ 讓守衛餵得到那個值，⛔ 而 `Inspect` 仍然是唯一呼叫者（同一份程式，⛔ 不是第二條路）。
+//
+// ── ⛔ 它修的那個洞 ──────────────────────────────────────────────────────
+// `compressed` 是 ZIP 標頭的 `CompressedSize64`（uint64，**由攻擊者填**）。
+// 在此之前這裡是 `declared / int64(compressed)` ——
+// 而 `int64(1<<63)` 是 **−9223372036854775808** ⇒ ratio 變成 0 或負數
+// ⇒ `ratio > MaxCompressionRatio` 為 **false** ⇒ ⛔⛔ **防線被繞過**。
+//
+// ⭐⭐ 而 `Inspect` 上面四行的標頭長度檢查（`int64(f.UncompressedSize64) != declared`）
+// 溢位之後仍然 **reject** —— ⇒ ⛔ 同一份檔裡兩行相鄰、**失效方向相反**。
+//
+// ⇒ ⭐ 判準：一個溢位會**放行**的檢查，比沒有檢查更糟 —— 它讓人以為那條線守著。
+//
+// 回傳空字串 = 通過。⛔ 非空 = 那一句就是 reject 的理由。
+func ratioGuard(name string, declared int64, compressed uint64) string {
+	// ⭐ 先擋畸形標頭。`declared` 在呼叫端已經被 `limit` 夾住，所以一個大於
+	//    MaxInt64 的壓縮長度**在任何合法封包裡都不可能出現** —— 它只可能是偽造的。
+	if compressed > math.MaxInt64 {
+		return fmt.Sprintf(
+			"項目 %q 的 ZIP 標頭宣告壓縮長度 %d bytes（超過 int64 上限）—— 畸形標頭，"+
+				"⛔ 而它會讓壓縮比防線溢位成負數而被繞過", name, compressed)
+	}
+	if declared < MinRatioCheckBytes || compressed == 0 {
+		return ""
+	}
+	// #nosec G115 -- bounded by the MaxInt64 guard above.
+	if ratio := declared / int64(compressed); ratio > MaxCompressionRatio {
+		return fmt.Sprintf("項目 %q 的壓縮比 %d:1 超過上限 %d:1（zip bomb 防線）",
+			name, ratio, MaxCompressionRatio)
+	}
+	return ""
 }
