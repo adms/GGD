@@ -189,7 +189,7 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // 2026-08-27（GH#806）：29 → 28。`audio-map` 的 KNOWN_GAP 被付掉 —— ⭐ 而它是被
     // **引擎**付掉的（`configTables.ts` 長出 `recordScalars`），⛔ 不是手刻一頁。
     // ⭐ 總列數變少 = 這張表最健康的移動方向。
-    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(29); // +unsafe-textures（量測台帳，Codex P0-6）。2026-08-22：25 
+    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(29); // +unsafe-textures（量測台帳，Codex P0-6）。2026-08-22：25
     // 2026-08-17：13 → 14。`roster`（英雄上下架）**往下走了一格** —— 它從
     // KNOWN_GAP 變成 OWN_PAGE，因為 ui/RosterPage.tsx 做出來了。⚠️ 這是這張表
     // 唯一「健康」的移動方向：帳單被付掉，而總列數不變。

@@ -26,6 +26,10 @@ const contentDir = process.env.GGD_CONTENT_DIR ?? join(here, "../../../content")
 const backupDir = process.env.GGD_CONTENT_BACKUP_DIR ?? join(here, "../../../data/content-backups");
 const port = Number(process.env.PORT ?? 8787);
 const host = process.env.HOST ?? "127.0.0.1";
+const editorOrigins = (process.env.GGD_EDITOR_ORIGINS ?? "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter((origin) => origin !== "");
 
 if (!isLoopbackHost(host)) {
   console.error(
@@ -35,13 +39,16 @@ if (!isLoopbackHost(host)) {
   process.exit(1);
 }
 
-const app = buildServer({ contentDir, backupDir, watch: true, logger: true });
+const app = buildServer({ contentDir, backupDir, watch: true, logger: true, editorOrigins });
 
 app
   .listen({ port, host })
   .then(() => {
     console.log(`content-api (dev-only) on http://${host}:${port}/content-api`);
     console.log(`content-api undo store: ${app.backupDir}`);
+    if (editorOrigins.length > 0) {
+      console.log(`content-api additional Editor origin(s): ${editorOrigins.join(", ")}`);
+    }
   })
   .catch((e) => {
     console.error(e);

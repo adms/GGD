@@ -24,11 +24,22 @@
  * ⚠️ ⭐ `editor-capability-fixture` 那一族**永遠**是灰的，⛔ 即使人工通過 ——
  * 而且它旁邊要**印出原因**（⛔ 一個灰掉的按鈕不算說明）。
  */
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import * as apiFns from "../api";
 import type { SubmissionView } from "../api";
+import { createContentEditApi } from "../contentApi";
+import {
+  canPromoteAiProposal,
+  decisionLabels,
+  isCapabilityFixture,
+  parseHumanVisualScore,
+  percent,
+  statusText,
+  type AiReviewQueue,
+  type AiReviewQueueItem,
+} from "../aiReviewPresentation";
 import { ApiError } from "../session";
-import { Badge, Btn, ErrorBanner, Panel, TextInput } from "./widgets";
+import { Badge, Btn, ErrorBanner, Panel, TextArea, TextInput } from "./widgets";
 import {
   DANGER,
   GOLD,
@@ -54,11 +65,32 @@ function statusBadge(v: SubmissionView): { text: string; tone: string } {
   return { text: "⏳ 等審", tone: TEXT_DIM };
 }
 
+interface AiReviewFields {
+  reviewer: string;
+  note: string;
+  score: string;
+}
+
+const EMPTY_AI_QUEUE: AiReviewQueue = { counts: {}, items: [] };
+
+function aiTone(item: AiReviewQueueItem): string {
+  if (item.status === "promoted" || item.status === "fixture-passed") return OK;
+  if (item.status === "rejected" || item.status === "fixture-failed") return DANGER;
+  if (item.status === "approved") return GOLD;
+  if (item.status === "changed-after-review") return WARN;
+  return TEXT_DIM;
+}
+
 export function SubmissionsReviewPage(): React.JSX.Element {
   const [rows, setRows] = useState<SubmissionView[]>([]);
   const [err, setErr] = useState<string | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
   const [reason, setReason] = useState<Record<string, string>>({});
+  const [aiQueue, setAiQueue] = useState<AiReviewQueue>(EMPTY_AI_QUEUE);
+  const [aiErr, setAiErr] = useState<string | null>(null);
+  const [aiBusy, setAiBusy] = useState<string | null>(null);
+  const [aiFields, setAiFields] = useState<Record<string, AiReviewFields>>({});
+  const aiReview = useMemo(() => createContentEditApi().aiReview, []);
 
   const load = useCallback(async () => {
     try {
@@ -73,6 +105,19 @@ export function SubmissionsReviewPage(): React.JSX.Element {
     void load();
   }, [load]);
 
+  const loadAi = useCallback(async () => {
+    try {
+      setAiQueue(await aiReview.proposals<AiReviewQueue>());
+      setAiErr(null);
+    } catch (e) {
+      setAiErr(e instanceof Error ? e.message : String(e));
+    }
+  }, [aiReview]);
+
+  useEffect(() => {
+    void loadAi();
+  }, [loadAi]);
+
   const act = async (id: string, fn: () => Promise<unknown>): Promise<void> => {
     setBusy(id);
     try {
@@ -83,6 +128,31 @@ export function SubmissionsReviewPage(): React.JSX.Element {
       setErr(e instanceof ApiError ? e.message : String(e));
     } finally {
       setBusy(null);
+    }
+  };
+
+  const setAiField = (key: string, field: keyof AiReviewFields, value: string): void => {
+    setAiFields((current) => ({
+      ...current,
+      [key]: {
+        reviewer: current[key]?.reviewer ?? "Owner",
+        note: current[key]?.note ?? "",
+        score: current[key]?.score ?? "",
+        [field]: value,
+      },
+    }));
+  };
+
+  const actAi = async (key: string, fn: () => Promise<unknown>): Promise<void> => {
+    setAiBusy(key);
+    try {
+      await fn();
+      setAiErr(null);
+      await loadAi();
+    } catch (e) {
+      setAiErr(e instanceof Error ? e.message : String(e));
+    } finally {
+      setAiBusy(null);
     }
   };
 
@@ -209,6 +279,186 @@ export function SubmissionsReviewPage(): React.JSX.Element {
                 🚀 套用（重驗後上線）
               </Btn>
             </div>
+          </div>
+        );
+      })}
+
+      <div style={{ borderTop: `1px solid ${PANEL_BORDER}`, margin: "20px 0 14px" }} />
+      <h3 style={{ color: TEXT_MAIN, marginBottom: 6 }}>🤖 Editor／AI 候選（hash 鎖定）</h3>
+      <p style={{ color: TEXT_DIM, marginTop: 0, lineHeight: 1.7 }}>
+        每張候選都顯示實際擷圖、機器分數與候選 hash。人工必填審查者、0～10
+        肉眼分數及意見；能力驗收樣本只能 pass／fail，production candidate
+        才能 approve／reject，且核准後仍需另按一次 Promote。
+      </p>
+      {aiErr !== null && <ErrorBanner text={aiErr} />}
+      {aiQueue.items.length === 0 && aiErr === null && (
+        <p style={{ color: TEXT_DIM }}>目前沒有 Editor／AI 候選。</p>
+      )}
+      {aiQueue.items.map((item) => {
+        const fixture = isCapabilityFixture(item);
+        const labels = decisionLabels(item);
+        const fields = aiFields[item.key] ?? { reviewer: "Owner", note: "", score: "" };
+        const score = parseHumanVisualScore(fields.score);
+        const inputsReady = fields.reviewer.trim() !== "" && fields.note.trim() !== "" && score !== null;
+        const currentVisualAudit = item.target.collection !== "vfx-scripts" ||
+          (item.visualAudit?.schema === "ggd-vfx-visual-audit@3" &&
+            item.visualEvidence.every((frame) => frame.frameAudit !== undefined));
+        const canPromote = canPromoteAiProposal(item);
+        return (
+          <div
+            key={item.key}
+            data-field={`ai-proposal-${item.key}`}
+            style={{
+              border: `1px solid ${fixture ? WARN : PANEL_BORDER}`,
+              borderRadius: 8,
+              padding: 12,
+              marginBottom: 14,
+              background: fixture ? "rgba(234,179,8,0.035)" : undefined,
+            }}
+          >
+            <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+              <b style={{ color: TEXT_MAIN }}>{item.target.id}</b>
+              <Badge color={fixture ? WARN : GOLD}>
+                {fixture ? "🧪 編輯器能力驗收" : "🚢 上線候選"}
+              </Badge>
+              <Badge color={aiTone(item)}>{statusText(item.status)}</Badge>
+              {item.autoVisualScore !== undefined && (
+                <Badge color={item.autoVisualScore >= 7 ? OK : WARN}>
+                  自動視覺 {item.autoVisualScore}/10
+                </Badge>
+              )}
+            </div>
+            <p style={{ color: TEXT_MAIN, lineHeight: 1.6, margin: "8px 0" }}>{item.summary}</p>
+            <div style={{ color: TEXT_DIM, fontSize: 12, wordBreak: "break-all" }}>
+              candidate <code>{item.candidateHash}</code>
+              {<> · review <code>{item.reviewHash}</code></>}
+              {item.baseHash !== null && <> · base <code>{item.baseHash}</code></>}
+            </div>
+            {fixture && (
+              <div style={{ color: WARN, marginTop: 6, fontSize: 12 }}>
+                ⛔ 這是八招能力驗收，只驗證 Editor 是否能用積木拼出場景；無論分數或 pass 結果都永遠不可套用。
+              </div>
+            )}
+            <div
+              data-field={`visual-evidence-${item.key}`}
+              style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 10, marginTop: 10 }}
+            >
+              {item.visualEvidence.map((frame, index) => (
+                <figure key={`${frame.atMs}-${index}`} style={{ margin: 0 }}>
+                  <img
+                    src={frame.dataUrl}
+                    alt={`${item.target.id} ${frame.label}`}
+                    style={{ width: "100%", maxHeight: 320, objectFit: "contain", background: "#080b12", borderRadius: 6 }}
+                  />
+                  <figcaption style={{ color: TEXT_DIM, fontSize: 12, marginTop: 4 }}>
+                    {frame.label} · {frame.atMs}ms · {frame.view}
+                    {frame.frameAudit && <> · 棋盤 {percent(frame.frameAudit.diagnosticCheckerShare)}</>}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+            {item.visualAudit ? (
+              <div
+                data-field={`visual-audit-${item.key}`}
+                style={{ marginTop: 10, padding: 10, border: `1px solid ${PANEL_BORDER}`, borderRadius: 6, color: TEXT_DIM, fontSize: 12, lineHeight: 1.7 }}
+              >
+                <b style={{ color: TEXT_MAIN }}>GPU 完整時間軸稽核</b>
+                <div>
+                  {item.visualAudit.sampledFrames} 格 · 最差 {(item.visualAudit.worstAtMs / 1000).toFixed(3)}秒 ·
+                  粒子峰值 {item.visualAudit.peakParticleCount}／系統 {item.visualAudit.peakSystemCount}
+                </div>
+                <div>
+                  亮區 {percent(item.visualAudit.worst.highlightShare)} · 純亮 {percent(item.visualAudit.worst.brightShare)} ·
+                  近白 {percent(item.visualAudit.worst.nearWhiteShare)} · 局部白底 {percent(item.visualAudit.worst.localWhiteCardShare)}
+                  {item.visualAudit.worst.diagnosticCheckerShare !== undefined &&
+                    <> · 棋盤載體 {percent(item.visualAudit.worst.diagnosticCheckerShare)}</>}
+                </div>
+                {item.visualAudit.worst.reason && <div>診斷：{item.visualAudit.worst.reason}</div>}
+                {item.visualAudit.suspects.length > 0 && <div>疑似來源：{item.visualAudit.suspects.join("；")}</div>}
+              </div>
+            ) : item.target.collection === "vfx-scripts" ? (
+              <div style={{ color: WARN, marginTop: 8, fontSize: 12 }}>
+                ⛔ 舊候選缺少 GPU 完整時間軸稽核收據，必須由 Editor 重新送審後才能裁決。
+              </div>
+            ) : null}
+            {item.target.collection === "vfx-scripts" && item.visualAudit && !currentVisualAudit && (
+              <div style={{ color: WARN, marginTop: 8, fontSize: 12 }}>
+                ⛔ 這份收據世代過舊或缺少逐張關鍵格稽核，可能漏掉紅／紫／藍棋盤貼圖；只能人工判定失敗／拒絕，不能通過、核准或 Promote。請由 Editor 以 @3 重新掃描。
+              </div>
+            )}
+            <div style={{ display: "grid", gridTemplateColumns: "minmax(150px, 0.5fr) minmax(120px, 0.35fr) minmax(260px, 1.5fr)", gap: 8, marginTop: 12 }}>
+              <TextInput
+                dataField={`ai-reviewer-${item.key}`}
+                value={fields.reviewer}
+                onChange={(value) => setAiField(item.key, "reviewer", value)}
+                placeholder="審查者（必填）"
+              />
+              <TextInput
+                dataField={`ai-score-${item.key}`}
+                value={fields.score}
+                onChange={(value) => setAiField(item.key, "score", value)}
+                type="number"
+                placeholder="肉眼分數 0～10"
+              />
+              <TextArea
+                value={fields.note}
+                onChange={(value) => setAiField(item.key, "note", value)}
+                placeholder="人工審查意見（必填；說明動作、構圖、時序或素材問題）"
+                rows={2}
+              />
+            </div>
+            <div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap" }}>
+              <Btn
+                dataField={`ai-positive-${item.key}`}
+                onClick={() => void actAi(item.key, () => aiReview.verdict({
+                  key: item.key,
+                  candidateHash: item.candidateHash,
+                  reviewHash: item.reviewHash,
+                  verdict: labels.positiveVerdict,
+                  reviewer: fields.reviewer,
+                  note: fields.note,
+                  humanVisualScore: score ?? undefined,
+                }))}
+                disabled={aiBusy === item.key || !inputsReady || !currentVisualAudit}
+              >
+                {labels.positive}
+              </Btn>
+              <Btn
+                kind="danger"
+                dataField={`ai-negative-${item.key}`}
+                onClick={() => void actAi(item.key, () => aiReview.verdict({
+                  key: item.key,
+                  candidateHash: item.candidateHash,
+                  reviewHash: item.reviewHash,
+                  verdict: labels.negativeVerdict,
+                  reviewer: fields.reviewer,
+                  note: fields.note,
+                  humanVisualScore: score ?? undefined,
+                }))}
+                disabled={aiBusy === item.key || !inputsReady}
+              >
+                {labels.negative}
+              </Btn>
+              <Btn
+                kind="primary"
+                dataField={`ai-promote-${item.key}`}
+                onClick={() => void actAi(item.key, () => aiReview.promote({
+                  key: item.key,
+                  candidateHash: item.candidateHash,
+                  reviewHash: item.reviewHash,
+                }))}
+                disabled={aiBusy === item.key || !canPromote}
+                title={fixture ? "能力驗收樣本永遠不可 Promote" : "只有 hash 未變且已人工核准的 production candidate 才能套用"}
+              >
+                🚀 Promote（重驗後套用）
+              </Btn>
+            </div>
+            <details style={{ marginTop: 10, color: TEXT_DIM }}>
+              <summary>檢視候選 JSON 與文字證據</summary>
+              <pre style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere", fontSize: 11 }}>
+                {JSON.stringify({ evidence: item.evidence, candidate: item.candidate }, null, 2)}
+              </pre>
+            </details>
           </div>
         );
       })}

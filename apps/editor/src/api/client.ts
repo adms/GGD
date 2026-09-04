@@ -1,5 +1,7 @@
 /** Thin fetch wrapper over the dev content-api (same-origin via Vite proxy / nginx). */
 import type { CollectionIndex, CollectionName, FieldIssue, Manifest } from "@ggd/shared/content";
+import type { EditorSourceDescriptor } from "../sourcePolicy";
+import type { EditorDesktopSourceInfo } from "@ggd/shared/editorDesktop";
 
 const BASE = "/content-api";
 
@@ -19,7 +21,8 @@ const BASE = "/content-api";
  */
 function isDevBuild(): boolean {
   try {
-    return Boolean((import.meta as unknown as { env?: { DEV?: boolean } }).env?.DEV);
+    const env = (import.meta as unknown as { env?: { DEV?: boolean; VITE_DESKTOP?: string } }).env;
+    return Boolean(env?.DEV || env?.VITE_DESKTOP === "1");
   } catch {
     return false;
   }
@@ -61,6 +64,19 @@ async function request<T>(url: string, init?: RequestInit): Promise<T> {
   return (await res.json()) as T;
 }
 
+async function requestOptional<T>(url: string): Promise<T | null> {
+  const res = await fetch(url);
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`GET ${url} -> ${res.status}: ${await res.text()}`);
+  return (await res.json()) as T;
+}
+
+async function requestBytes(url: string): Promise<ArrayBuffer> {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`GET ${url} -> ${res.status}: ${await res.text()}`);
+  return res.arrayBuffer();
+}
+
 export interface WriteResult {
   id: string;
   hash: string;
@@ -68,12 +84,95 @@ export interface WriteResult {
   contentVersion: string;
 }
 
+export interface AiProposalResult {
+  proposal: {
+    key: string;
+    candidateHash: string;
+    reviewHash: string;
+    purpose: "production-candidate" | "editor-capability-fixture";
+    promotable: boolean;
+  };
+  status: "pending-review" | "fixture-pending";
+}
+
+export interface AiVisualEvidence {
+  label: string;
+  dataUrl: string;
+  atMs: number;
+  view: "side" | "top";
+  frameAudit: {
+    litShare: number;
+    highlightShare: number;
+    brightShare: number;
+    nearWhiteShare: number;
+    dominantBrightShare: number;
+    dominantNonBackgroundShare: number;
+    localWhiteCardShare: number;
+    diagnosticCheckerShare: number;
+    unsafe: boolean;
+    reason?: string;
+  };
+}
+
+export interface AiVisualAuditReceipt {
+  schema: "ggd-vfx-visual-audit@3";
+  safe: true;
+  autoVisualScore: number;
+  sampledFrames: number;
+  peakParticleCount: number;
+  peakSystemCount: number;
+  worstAtMs: number;
+  worst: {
+    litShare: number;
+    highlightShare: number;
+    brightShare: number;
+    nearWhiteShare: number;
+    dominantBrightShare: number;
+    dominantNonBackgroundShare: number;
+    localWhiteCardShare: number;
+    diagnosticCheckerShare: number;
+    unsafe: false;
+    reason?: string;
+  };
+  suspects: string[];
+}
+
 export const api = {
   manifest: () => request<Manifest>(`${BASE}/manifest`),
+  /** Present only in the packaged desktop shell; ordinary web/dev Editor returns null. */
+  desktopSource: () => requestOptional<EditorDesktopSourceInfo>(`${BASE}/desktop-source`),
+  /** Verified immutable profile pinned by the packaged remote-workspace shell. */
+  desktopTargetProfile: () => requestOptional<Record<string, unknown>>(`${BASE}/desktop-target-profile`),
   index: (collection: CollectionName) =>
     request<CollectionIndex>(`${BASE}/${collection}/_index`),
   doc: <T = unknown>(collection: CollectionName, id: string) =>
     request<T>(`${BASE}/${collection}/${id}`),
+  /** Raw content asset used by preview and the blend-mode-aware backdrop gate. */
+  assetBytes: (contentPath: string) => {
+    if (!contentPath.startsWith("assets/")) {
+      return Promise.reject(new Error(`asset path must start with "assets/": ${contentPath}`));
+    }
+    return requestBytes(`${BASE}/${contentPath}`);
+  },
+  externalTargetProfile: (url: string) =>
+    request<Record<string, unknown>>(
+      `${BASE}/external-target-profile?url=${encodeURIComponent(url)}`,
+    ),
+  /** Bounded, allow-listed bridge for the Main-owned machine contract registry. */
+  externalContractIndex: (profileUrl: string, href: string) =>
+    request<Record<string, unknown>>(
+      `${BASE}/external-contract-index?profileUrl=${encodeURIComponent(profileUrl)}` +
+        `&href=${encodeURIComponent(href)}`,
+    ),
+  /**
+   * Main-owned source lookup. `null` is the compatibility state while an older
+   * content-api has not shipped the route; policy then fails safe from the
+   * document provenance instead of guessing generator paths.
+   */
+  editorSource: (collection: CollectionName, id: string) =>
+    requestOptional<EditorSourceDescriptor>(
+      `${BASE}/editor-source?collection=${encodeURIComponent(collection)}&id=${encodeURIComponent(id)}`,
+    ),
   put: (collection: CollectionName, id: string, doc: unknown) => {
     assertWritable();
     return request<WriteResult>(`${BASE}/${collection}/${id}`, {
@@ -140,6 +239,27 @@ export const api = {
       method: "POST",
       body: JSON.stringify(doc),
     }),
+  /**
+   * Submit an AI-authored candidate to the local human-review ledger.  This
+   * writes no game content; only the admin review page can approve and Promote
+   * the exact candidate hash later.
+   */
+  submitAiProposal: (input: {
+    target: { collection: CollectionName; id: string };
+    purpose: "production-candidate" | "editor-capability-fixture";
+    candidate: unknown;
+    summary?: string;
+    evidence?: string[];
+    visualEvidence?: AiVisualEvidence[];
+    visualAudit?: AiVisualAuditReceipt;
+    autoVisualScore?: number;
+  }) => {
+    assertWritable();
+    return request<AiProposalResult>(`${BASE}/ai-review/proposals`, {
+      method: "POST",
+      body: JSON.stringify(input),
+    });
+  },
   /**
    * Write a binary asset (base64) to content/<contentPath>. Used by the AI-icon
    * Accept flow to store the generated PNG under assets/icons/<kind>/<id>.png.

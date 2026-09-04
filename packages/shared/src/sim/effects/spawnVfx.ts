@@ -37,6 +37,8 @@ export type VfxSpawnEvent = {
   x: number;
   z: number;
   caster: EntityId;
+  /** Authored provenance; lets a VFX script replace ability-owned presentation. */
+  origin?: string;
   durationSec?: number;
   /** ⭐ `at:"bone"` 才有：WC3 掛點字串（chest / hand,right / weapon / …） */
   attach?: string;
@@ -109,6 +111,7 @@ export const spawnVfxEffect: EffectKindSpec<"spawnVfx"> = {
       x: pos.x,
       z: pos.z,
       caster: ctx.caster,
+      origin: ctx.origin,
       ...(e.durationSec !== undefined ? { durationSec: e.durationSec } : {}),
       ...(at === "bone" && e.attach !== undefined ? { attach: e.attach } : {}),
       // ⭐ 只有真的換了錨定單位才多這一格 ⇒ 既有內容送出的位元組逐位元不變。

@@ -24,10 +24,15 @@ const REPO = join(import.meta.dirname, "..", "..", "..", "..");
 const TOOL = join(REPO, "tools", "w3x-import");
 const RAW = join(TOOL, "out", "GoDieEX22s", "raw");
 
-function findPython(): string | null {
-  for (const c of ["python3", "/opt/homebrew/bin/python3", "/usr/bin/python3"]) {
+function findPython(): string[] | null {
+  for (const c of [
+    ["python3"],
+    ["arch", "-arm64", "python3"],
+    ["/opt/homebrew/bin/python3"],
+    ["/usr/bin/python3"],
+  ]) {
     try {
-      execFileSync(c, ["-c", "import struct, json"], { stdio: "pipe" });
+      execFileSync(c[0]!, [...c.slice(1), "-c", "import struct, json; from PIL import Image"], { stdio: "pipe" });
       return c;
     } catch {
       /* next */
@@ -45,7 +50,7 @@ describe.skipIf(why !== "")("GH#667 · extract_particles.py 重生成一次 ⇒ 
   afterAll(() => rmSync(stage, { recursive: true, force: true }));
 
   it("★ 282 份 vfx 文件 ＋ config/ambient-vfx.json 一個位元組都沒動", () => {
-    execFileSync(PY!, [join(TOOL, "extract_particles.py"), `--out-dir=${stage}`], {
+    execFileSync(PY![0]!, [...PY!.slice(1), join(TOOL, "extract_particles.py"), `--out-dir=${stage}`], {
       cwd: TOOL,
       encoding: "utf8",
       stdio: "pipe",

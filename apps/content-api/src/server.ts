@@ -15,6 +15,7 @@
  *   POST   /content-api/:collection/:id/restore    restore a snapshot (itself undoable)
  *   GET    /content-api/events                     SSE content:changed (chokidar)
  *   GET    /content-api/assets/*                   binary assets (glb/textures) for editor previews
+ *   GET    /content-api/external-target-profile    bounded allow-listed HTTPS profile bridge
  *
  * Every write validates with the SAME Zod schemas the game loader uses, then
  * writes atomically (tmp+rename) and incrementally reindexes (collection
@@ -31,8 +32,9 @@
  * overwrite and delete first snapshots the bytes on disk into the git-ignored
  * undo store (backup.ts), and /restore puts one back.
  */
-import { existsSync, mkdirSync, renameSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { dirname, join, resolve, sep } from "node:path";
 import Fastify, { type FastifyInstance, type FastifyReply } from "fastify";
 import {
@@ -61,13 +63,21 @@ import {
   writeDocAtomic,
 } from "@ggd/shared/content/node";
 import { SseHub } from "./sse";
-import { registerDevWriteGuard } from "./guard";
+import { addAllowedOrigins, registerDevWriteGuard } from "./guard";
 import { listSnapshots, readSnapshot, snapshotFile, snapshotText } from "./backup";
 import { registerImportRoutes } from "./importRoutes";
 import {
   registerEditorSourceRoutes,
   registerProductWriteGuard,
 } from "./editorSourceRoutes";
+import {
+  ExternalProfileError,
+  fetchExternalTargetProfile,
+  parseEditorProfileHosts,
+} from "./externalProfile";
+import { fetchExternalContractIndex } from "./externalContractIndex";
+import { AiReviewStore, type AiProposalPurpose, type AiVerdict } from "./aiReview";
+import type { EditorDesktopSourceInfo } from "@ggd/shared/editorDesktop";
 
 export interface ContentApiOptions {
   contentDir: string;
@@ -82,6 +92,39 @@ export interface ContentApiOptions {
    * OUTSIDE content/ so backups never reach the deployable tree or an image.
    */
   backupDir?: string;
+  /** HTTPS hosts the local editor may use as published target-profile bases. */
+  externalProfileHosts?: readonly string[];
+  /** test seam; production code uses the platform fetch implementation. */
+  externalProfileFetch?: typeof fetch;
+  /**
+   * Additional loopback Editor origins for this dev process.  This is how a
+   * deliberately non-default Vite port is paired with the write service; the
+   * guard still rejects every non-loopback value.
+   */
+  editorOrigins?: readonly string[];
+  /** Local, non-shipping AI proposal and human-verdict material. */
+  reviewDir?: string;
+  /** Missing preview assets may be fetched from the selected immutable Base and cached locally. */
+  remoteAssets?: {
+    contentBaseUrl: string;
+    cacheDir: string;
+    maxAssetBytes: number;
+    timeoutMs: number;
+    /** Digest-verified receipt pinned beside the immutable remote Base. */
+    assetManifest: {
+      readonly schema: "ggd-assets-manifest@1";
+      readonly entries: readonly {
+        readonly path: string;
+        readonly bytes: number;
+        readonly sha256: string;
+        readonly contentType: string;
+      }[];
+    };
+    /** test seam; desktop uses the platform fetch implementation. */
+    fetchImpl?: typeof fetch;
+  };
+  /** Packaged desktop shell status. Omitted by ordinary dev/web servers. */
+  desktopSource?: EditorDesktopSourceInfo | (() => EditorDesktopSourceInfo);
 }
 
 interface Params {
@@ -104,6 +147,34 @@ const ASSET_MIME: Record<string, string> = {
   ".bin": "application/octet-stream",
 };
 
+class RemoteAssetTooLarge extends Error {}
+
+function assetSha256(bytes: Uint8Array): string {
+  return createHash("sha256").update(bytes).digest("hex");
+}
+
+async function readResponseBounded(response: Response, maxBytes: number): Promise<Buffer> {
+  if (!response.body) throw new Error("remote asset response has no body");
+  const reader = response.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let total = 0;
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      total += value.byteLength;
+      if (total > maxBytes) {
+        await reader.cancel("remote asset exceeded limit");
+        throw new RemoteAssetTooLarge(`remote asset exceeds ${maxBytes} bytes`);
+      }
+      chunks.push(value);
+    }
+  } finally {
+    reader.releaseLock();
+  }
+  return Buffer.concat(chunks.map((chunk) => Buffer.from(chunk)), total);
+}
+
 export function buildServer(opts: ContentApiOptions): FastifyInstance {
   if (process.env.NODE_ENV === "production" && !opts.allowProduction) {
     throw new Error(
@@ -117,16 +188,51 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   }
 
   const backupRoot = resolve(opts.backupDir ?? join(root, "..", "data", "content-backups"));
+  const aiReview = new AiReviewStore(resolve(opts.reviewDir ?? join(root, "..", "docs", "_review")));
 
   // `trustProxy` is deliberately LEFT OFF: the write guard must never be able
   // to be talked into believing a forwarded header.
   const app = Fastify({ logger: opts.logger ?? false, bodyLimit: 2 * 1024 * 1024 });
+  const { rejected: rejectedEditorOrigins } = addAllowedOrigins(opts.editorOrigins ?? []);
+  if (rejectedEditorOrigins.length > 0) {
+    throw new Error(
+      `content-api rejected non-loopback Editor origin(s): ${rejectedEditorOrigins.join(", ")}`,
+    );
+  }
   // FIRST hook registered, so a refused write never reaches routing or the disk.
   registerDevWriteGuard(app);
   const hub = new SseHub();
   // expose for tests / index.ts
   app.decorate("sseHub", hub);
   app.decorate("backupDir", backupRoot);
+
+  app.get("/content-api/external-target-profile", async (req, reply) => {
+    const query = req.query as { url?: unknown } | null;
+    try {
+      return reply.send(await fetchExternalTargetProfile(query?.url, {
+        allowedHosts: opts.externalProfileHosts ?? parseEditorProfileHosts(process.env.GGD_EDITOR_PROFILE_HOSTS),
+        ...(opts.externalProfileFetch ? { fetchImpl: opts.externalProfileFetch } : {}),
+      }));
+    } catch (error) {
+      if (error instanceof ExternalProfileError) return err(reply, error.statusCode, error.message);
+      req.log.warn({ err: error }, "external target profile fetch failed");
+      return err(reply, 502, `target profile 讀取失敗：${String(error)}`);
+    }
+  });
+
+  app.get("/content-api/external-contract-index", async (req, reply) => {
+    const query = req.query as { profileUrl?: unknown; href?: unknown } | null;
+    try {
+      return reply.send(await fetchExternalContractIndex(query?.profileUrl, query?.href, {
+        allowedHosts: opts.externalProfileHosts ?? parseEditorProfileHosts(process.env.GGD_EDITOR_PROFILE_HOSTS),
+        ...(opts.externalProfileFetch ? { fetchImpl: opts.externalProfileFetch } : {}),
+      }));
+    } catch (error) {
+      if (error instanceof ExternalProfileError) return err(reply, error.statusCode, error.message);
+      req.log.warn({ err: error }, "external contract-index fetch failed");
+      return err(reply, 502, `contract-index 讀取失敗：${String(error)}`);
+    }
+  });
 
   const backupWarn = (e: unknown): void => {
     app.log.warn({ err: e }, "content-api: could not write an undo snapshot");
@@ -216,12 +322,149 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
     return res.ok ? (res.doc as { id: string }) : null;
   }
 
+  /** Hash the exact live document that an AI proposal was based on. */
+  async function currentDocHash(file: string): Promise<string | null> {
+    if (!existsSync(file)) return null;
+    return hashDoc(JSON.parse(await readFile(file, "utf8")) as Record<string, unknown>);
+  }
+
+  // ---------- AI change control: draft -> human verdict -> explicit promote ----------
+  // These routes are deliberately in content-api rather than only in React.
+  // Calling PUT with a proposal-shaped object is not approval, and editing a
+  // candidate after approval changes its hash and invalidates the verdict.
+  app.get("/content-api/ai-review/proposals", async (_req, reply) => reply.send(aiReview.queue()));
+
+  app.post("/content-api/ai-review/proposals", async (req, reply) => {
+    const body = req.body as {
+      target?: { collection?: unknown; id?: unknown };
+      purpose?: unknown;
+      candidate?: unknown;
+      summary?: unknown;
+      evidence?: unknown;
+      visualEvidence?: unknown;
+      visualAudit?: unknown;
+      autoVisualScore?: unknown;
+    } | null;
+    const collection = body?.target?.collection;
+    const id = body?.target?.id;
+    if (typeof collection !== "string" || typeof id !== "string") {
+      return err(reply, 400, "需要 target.collection 與 target.id");
+    }
+    const loc = resolveDoc(reply, { collection, id });
+    if (!loc) return;
+    const candidate = validateBody(reply, loc.collection, loc.id, body?.candidate);
+    if (!candidate) return;
+    const requestedPurpose = body?.purpose;
+    if (requestedPurpose !== "production-candidate" && requestedPurpose !== "editor-capability-fixture") {
+      return err(reply, 400, "purpose 必須是 production-candidate 或 editor-capability-fixture");
+    }
+    try {
+      const proposal = aiReview.submit({
+        target: { collection: loc.collection, id: loc.id },
+        purpose: requestedPurpose as AiProposalPurpose,
+        candidate: candidate as Record<string, unknown>,
+        baseHash: await currentDocHash(loc.file),
+        summary: typeof body?.summary === "string" ? body.summary : "",
+        evidence: Array.isArray(body?.evidence) ? body.evidence.filter((value): value is string => typeof value === "string") : [],
+        visualEvidence: body?.visualEvidence,
+        visualAudit: body?.visualAudit,
+        ...(body?.autoVisualScore === undefined ? {} : { autoVisualScore: body.autoVisualScore as number }),
+      });
+      return reply.code(201).send({ proposal, status: proposal.promotable ? "pending-review" : "fixture-pending" });
+    } catch (error) {
+      return err(reply, 400, error instanceof Error ? error.message : String(error));
+    }
+  });
+
+  app.post("/content-api/ai-review/verdicts", async (req, reply) => {
+    const body = req.body as {
+      key?: unknown;
+      candidateHash?: unknown;
+      reviewHash?: unknown;
+      verdict?: unknown;
+      reviewer?: unknown;
+      note?: unknown;
+      humanVisualScore?: unknown;
+    } | null;
+    if (
+      typeof body?.key !== "string" || typeof body.candidateHash !== "string" || typeof body.reviewHash !== "string" ||
+      typeof body.verdict !== "string" || typeof body.reviewer !== "string" || typeof body.note !== "string"
+    ) {
+      return err(reply, 400, "需要 key、candidateHash、reviewHash、verdict、reviewer、note");
+    }
+    try {
+      return reply.send({
+        verdict: aiReview.decide({
+          key: body.key,
+          candidateHash: body.candidateHash,
+          reviewHash: body.reviewHash,
+          verdict: body.verdict as AiVerdict,
+          reviewer: body.reviewer,
+          note: body.note,
+          ...(body.humanVisualScore === undefined ? {} : { humanVisualScore: body.humanVisualScore as number }),
+        }),
+      });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      return err(reply, message.includes("已變更") ? 409 : 400, message);
+    }
+  });
+
+  app.post("/content-api/ai-review/promote", async (req, reply) => {
+    const body = req.body as { key?: unknown; candidateHash?: unknown; reviewHash?: unknown } | null;
+    if (typeof body?.key !== "string" || typeof body.candidateHash !== "string" || typeof body.reviewHash !== "string") {
+      return err(reply, 400, "需要 key、candidateHash 與 reviewHash");
+    }
+    try {
+      const proposal = aiReview.promotionCandidate(body.key, body.candidateHash, body.reviewHash);
+      const loc = resolveDoc(reply, proposal.target);
+      if (!loc) return;
+      const liveHash = await currentDocHash(loc.file);
+      if (liveHash !== proposal.baseHash) {
+        return err(
+          reply,
+          409,
+          `目標內容在候選送審後已變更（送審基準 ${proposal.baseHash ?? "不存在"}，目前 ${liveHash ?? "不存在"}）；請重新提交與審查`,
+        );
+      }
+      // Re-run the current game schema at the last possible moment.  A UI-side
+      // green check, or a verdict made against an older schema, is not enough.
+      const doc = validateBody(reply, loc.collection, loc.id, proposal.candidate);
+      if (!doc) return;
+      const existed = existsSync(loc.file);
+      const backup = snapshotFile(backupRoot, loc.collection, loc.id, loc.file, { onError: backupWarn });
+      const { hash } = writeDocAtomic(root, loc.collection, doc);
+      const { collectionHash, contentVersion } = reindex(loc.collection);
+      const promotion = aiReview.recordPromotion(body.key, body.candidateHash, body.reviewHash, hash);
+      hub.publish({
+        type: "content:changed",
+        collection: loc.collection,
+        id: loc.id,
+        change: existed ? "change" : "add",
+      });
+      return reply.send({ id: loc.id, hash, collectionHash, contentVersion, backup: backup?.file ?? null, promotion });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      return err(
+        reply,
+        message.includes("尚未") || message.includes("不能 Promote") || message.includes("已變更") ? 409 : 400,
+        message,
+      );
+    }
+  });
+
   // ---------- reads ----------
   app.get("/content-api/manifest", async (_req, reply) => {
     const p = join(root, "manifest.json");
     if (!existsSync(p)) return err(reply, 404, "manifest.json not found — run content:build");
     return reply.type("application/json").send(await readFile(p, "utf8"));
   });
+
+  if (opts.desktopSource) {
+    app.get("/content-api/desktop-source", async (_req, reply) => reply.send(
+      typeof opts.desktopSource === "function" ? opts.desktopSource() : opts.desktopSource,
+    ));
+  }
 
   app.get<{ Params: { collection: string } }>(
     "/content-api/:collection/_index",
@@ -250,6 +493,13 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
     ): Promise<unknown> {
       const loc = resolveDoc(reply, req.params);
       if (!loc) return;
+      if (loc.collection === "vfx-scripts") {
+        return err(
+          reply,
+          409,
+          "vfx-scripts 已禁止直接 PUT/POST；請先提交 AI 候選，經後台人工核准後由 Promote 套用",
+        );
+      }
       const exists = existsSync(loc.file);
       if (create && exists) {
         return err(reply, 409, `${loc.collection}/${loc.id} already exists`);
@@ -283,6 +533,9 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   app.delete<{ Params: Params }>("/content-api/:collection/:id", async (req, reply) => {
     const loc = resolveDoc(reply, req.params);
     if (!loc) return;
+    if (loc.collection === "vfx-scripts") {
+      return err(reply, 409, "vfx-scripts 已禁止直接 DELETE；刪除也必須走版本化人工批核流程");
+    }
     // a delete is the most destructive verb here — snapshot before unlinking,
     // so /restore can bring the document back.
     const backup = snapshotFile(backupRoot, loc.collection, loc.id, loc.file, {
@@ -506,6 +759,13 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   // confined to content/assets. Used by the editor's Babylon preview panels
   // (GLB models, particle textures).
   const assetRoot = join(root, "assets");
+  const remoteAssetCache = opts.remoteAssets ? resolve(opts.remoteAssets.cacheDir) : null;
+  const remoteAssetIndex = new Map(
+    (opts.remoteAssets?.assetManifest.entries ?? []).map((entry) => [entry.path, entry] as const),
+  );
+  if (opts.remoteAssets && remoteAssetIndex.size !== opts.remoteAssets.assetManifest.entries.length) {
+    throw new Error("remote asset manifest contains duplicate paths");
+  }
   app.get<{ Params: { "*": string } }>("/content-api/assets/*", async (req, reply) => {
     const rel = req.params["*"] ?? "";
     const segments = rel.split("/");
@@ -516,11 +776,74 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
     if (file !== assetRoot && !file.startsWith(assetRoot + sep)) {
       return err(reply, 400, "path escapes content assets root");
     }
-    if (!existsSync(file)) return err(reply, 404, `asset not found: ${rel}`);
+    let readable = file;
+    if (!existsSync(readable) && opts.remoteAssets && remoteAssetCache) {
+      const receipt = remoteAssetIndex.get(`assets/${rel}`);
+      if (!receipt) {
+        return err(reply, 412, `asset is absent from the pinned manifest: assets/${rel}`);
+      }
+      if (receipt.bytes > opts.remoteAssets.maxAssetBytes) {
+        return err(reply, 413, `asset exceeds ${opts.remoteAssets.maxAssetBytes} bytes`);
+      }
+      const cached = resolve(remoteAssetCache, rel);
+      if (cached !== remoteAssetCache && !cached.startsWith(remoteAssetCache + sep)) {
+        return err(reply, 400, "path escapes remote asset cache");
+      }
+      if (existsSync(cached)) {
+        const cachedBytes = await readFile(cached);
+        if (cachedBytes.byteLength === receipt.bytes && assetSha256(cachedBytes) === receipt.sha256) {
+          readable = cached;
+        } else {
+          // A cache from another Base, an interrupted old client, or manual
+          // tampering must never be served as the pinned immutable asset.
+          rmSync(cached, { force: true });
+        }
+      }
+      if (!existsSync(readable)) {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), opts.remoteAssets.timeoutMs);
+        timeout.unref?.();
+        try {
+          const base = opts.remoteAssets.contentBaseUrl.endsWith("/")
+            ? opts.remoteAssets.contentBaseUrl
+            : `${opts.remoteAssets.contentBaseUrl}/`;
+          const encoded = segments.map(encodeURIComponent).join("/");
+          const response = await (opts.remoteAssets.fetchImpl ?? fetch)(new URL(`assets/${encoded}`, base), {
+            redirect: "error",
+            signal: controller.signal,
+          });
+          if (response.status === 404) return err(reply, 404, `asset not found: ${rel}`);
+          if (!response.ok) return err(reply, 502, `remote asset fetch failed: HTTP ${response.status}`);
+          const declared = Number(response.headers.get("content-length") ?? "0");
+          if (Number.isFinite(declared) && declared > opts.remoteAssets.maxAssetBytes) {
+            return err(reply, 413, `remote asset exceeds ${opts.remoteAssets.maxAssetBytes} bytes`);
+          }
+          if (declared > 0 && declared !== receipt.bytes) {
+            return err(reply, 502, `remote asset byte count differs from pinned manifest: ${declared} != ${receipt.bytes}`);
+          }
+          const bytes = await readResponseBounded(response, opts.remoteAssets.maxAssetBytes);
+          if (bytes.byteLength !== receipt.bytes || assetSha256(bytes) !== receipt.sha256) {
+            return err(reply, 502, `remote asset digest differs from pinned manifest: assets/${rel}`);
+          }
+          mkdirSync(dirname(cached), { recursive: true });
+          const tmp = `${cached}.tmp-${process.pid}`;
+          writeFileSync(tmp, bytes);
+          renameSync(tmp, cached);
+          readable = cached;
+        } catch (error) {
+          if (error instanceof RemoteAssetTooLarge) return err(reply, 413, error.message);
+          return err(reply, 502, `remote asset unavailable: ${error instanceof Error ? error.message : String(error)}`);
+        } finally {
+          clearTimeout(timeout);
+        }
+      }
+    }
+    if (!existsSync(readable)) return err(reply, 404, `asset not found: ${rel}`);
     return reply
-      .type(ASSET_MIME[rel.slice(rel.lastIndexOf(".")).toLowerCase()] ?? "application/octet-stream")
+      .type(remoteAssetIndex.get(`assets/${rel}`)?.contentType ??
+        ASSET_MIME[rel.slice(rel.lastIndexOf(".")).toLowerCase()] ?? "application/octet-stream")
       .header("cache-control", "no-cache")
-      .send(await readFile(file));
+      .send(await readFile(readable));
   });
 
   // ---------- binary asset writes (dev-only; used by the editor AI-icon flow) ----------

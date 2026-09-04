@@ -178,8 +178,17 @@ function adminLiveData(): Plugin {
   };
 }
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   base: "/admin/",
+  // Desktop builds run only behind the packaged loopback content-api. Keep the
+  // switch in tracked config: `.env.desktop` is intentionally gitignored and
+  // would otherwise make a clean-clone package silently lose its review UI.
+  define: mode === "desktop"
+    ? {
+      "import.meta.env.VITE_DESKTOP": JSON.stringify("1"),
+      "import.meta.env.VITE_GGD_CONTENT_EDIT": JSON.stringify("1"),
+    }
+    : undefined,
   // loopbackOnly FIRST (enforce: "pre"): it must veto the config before
   // anything else acts on it.
   plugins: [loopbackOnly(), react(), serveContent(), serveIconConsoleStamp(), adminLiveData(), adminReviewApi()],
@@ -254,7 +263,7 @@ export default defineConfig({
     pool: "forks",
     poolOptions: { forks: { maxForks: 16, minForks: 4 } },
   },
-});
+}));
 
 // ---------------------------------------------------------------------------
 // 🔐 #724/F-17 in-source guard —— 真的跑那支 middleware，⛔ 不是掃字串。

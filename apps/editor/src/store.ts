@@ -16,6 +16,8 @@ export interface EditorState {
   draft: unknown;
   dirty: boolean;
   serverErrors: ErrorMap;
+  past: unknown[];
+  future: unknown[];
 
   select(collection: CollectionName, docId: string, doc: unknown): void;
   clearSelection(): void;
@@ -23,6 +25,8 @@ export interface EditorState {
   update(dataPath: string, value: unknown): void;
   /** replace the whole draft (JSON fallback editor) */
   replaceDraft(doc: unknown): void;
+  undo(): void;
+  redo(): void;
   markSaved(doc: unknown): void;
   setServerErrors(issues: FieldIssue[]): void;
   clearServerErrors(): void;
@@ -76,15 +80,61 @@ export const useEditorStore = create<EditorState>((set) => ({
   draft: null,
   dirty: false,
   serverErrors: {},
+  past: [],
+  future: [],
 
   select: (collection, docId, doc) =>
-    set({ collection, docId, original: doc, draft: doc, dirty: false, serverErrors: {} }),
+    set({ collection, docId, original: doc, draft: doc, dirty: false, serverErrors: {}, past: [], future: [] }),
   clearSelection: () =>
-    set({ collection: null, docId: null, original: null, draft: null, dirty: false, serverErrors: {} }),
+    set({ collection: null, docId: null, original: null, draft: null, dirty: false, serverErrors: {}, past: [], future: [] }),
   update: (dataPath, value) =>
-    set((s) => ({ draft: setIn(s.draft, dataPath, value), dirty: true })),
-  replaceDraft: (doc) => set({ draft: doc, dirty: true }),
+    set((s) => pushDraft(s, setIn(s.draft, dataPath, value))),
+  replaceDraft: (doc) => set((s) => pushDraft(s, doc)),
+  undo: () => set((s) => {
+    if (s.past.length === 0) return s;
+    const draft = s.past[s.past.length - 1];
+    return {
+      draft,
+      past: s.past.slice(0, -1),
+      future: [s.draft, ...s.future].slice(0, HISTORY_LIMIT),
+      dirty: !sameJson(draft, s.original),
+      serverErrors: {},
+    };
+  }),
+  redo: () => set((s) => {
+    if (s.future.length === 0) return s;
+    const draft = s.future[0];
+    return {
+      draft,
+      past: [...s.past, s.draft].slice(-HISTORY_LIMIT),
+      future: s.future.slice(1),
+      dirty: !sameJson(draft, s.original),
+      serverErrors: {},
+    };
+  }),
   markSaved: (doc) => set({ original: doc, draft: doc, dirty: false, serverErrors: {} }),
   setServerErrors: (issues) => set({ serverErrors: issuesToErrorMap(issues) }),
   clearServerErrors: () => set({ serverErrors: {} }),
 }));
+
+const HISTORY_LIMIT = 100;
+
+function sameJson(a: unknown, b: unknown): boolean {
+  return Object.is(a, b) || JSON.stringify(a) === JSON.stringify(b);
+}
+
+function pushDraft(
+  state: Pick<EditorState, "draft" | "original" | "past" | "future">,
+  draft: unknown,
+): Pick<EditorState, "draft" | "dirty" | "past" | "future" | "serverErrors"> {
+  if (sameJson(state.draft, draft)) {
+    return { draft: state.draft, dirty: !sameJson(state.draft, state.original), past: state.past, future: state.future, serverErrors: {} };
+  }
+  return {
+    draft,
+    dirty: !sameJson(draft, state.original),
+    past: [...state.past, state.draft].slice(-HISTORY_LIMIT),
+    future: [],
+    serverErrors: {},
+  };
+}

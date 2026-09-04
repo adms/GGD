@@ -48,7 +48,17 @@ export const spawnProjectileEffect: EffectKindSpec<"spawnProjectile"> = {
       origin: ctx.origin,
       abilitySlot: ctx.abilitySlot,
     });
-    world.emit("projectileSpawn", { id, owner: ctx.caster, projectileId: e.projectileId });
+    // Presentation ownership must survive the projectile seam.  VFX scripts
+    // replace the ability-authored projectile look, while the projectile keeps
+    // its authoritative hit/range payload.  Without `origin`, the client could
+    // only guess from a shared projectileId and drew both the default missile
+    // impact and the script-authored effect.
+    world.emit("projectileSpawn", {
+      id,
+      owner: ctx.caster,
+      projectileId: e.projectileId,
+      origin: ctx.origin,
+    });
   },
 
   bake(e, ctx, bakeList) {

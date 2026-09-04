@@ -40,7 +40,10 @@ interface Mat {
   name: string; alphaMode: string; alphaCutoff: number | null;
   emissive: boolean; baseColorFactor: number[] | null;
   extras: { w3x: { material: number; layer: number; filterMode: number; blend: string } };
-  textureAlpha?: { min: number; max: number; mean: number };
+  textureAlpha?: {
+    min: number; max: number; mean: number;
+    transparent: number; brightTransparent: number;
+  };
 }
 
 describe.runIf(PY !== null)("w3x filter-mode 對照表（GH#841）", () => {
@@ -85,6 +88,28 @@ describe.runIf(PY !== null)("w3x filter-mode 對照表（GH#841）", () => {
     const flat = one("fm1-transparent-flat-alpha");
     expect(flat.alphaMode).toBe("OPAQUE");
     expect(one("fm1-transparent-cutout").alphaMode).toBe("MASK"); // 有 alpha 才切
+  });
+
+  it("additive 明亮透明底的 RGB 必須歸零，ONE+ONE 才不會畫出整張貼圖", () => {
+    const cutout = one("fm3-additive-cutout");
+    expect(cutout.emissive).toBe(true);
+    expect(cutout.textureAlpha!.transparent).toBeGreaterThan(0);
+    expect(
+      cutout.textureAlpha!.brightTransparent,
+      "透明 texel 還保留亮 RGB；遊戲的 ONE+ONE 不讀 alpha，會把底板畫出來",
+    ).toBe(0);
+  });
+
+  it("additive 的不透明白色外框必須反向取形，不能把白底當成整片發光", () => {
+    const carrier = one("fm3-additive-white-carrier");
+    expect(carrier.emissive).toBe(true);
+    expect(carrier.textureAlpha!.min).toBe(0);
+    expect(carrier.textureAlpha!.max).toBe(255);
+    expect(carrier.textureAlpha!.transparent).toBeGreaterThan(0);
+    expect(
+      carrier.textureAlpha!.brightTransparent,
+      "白色 carrier 雖然 alpha 已清掉，但 RGB 仍亮；ONE+ONE 仍會畫出白底",
+    ).toBe(0);
   });
 
   it("疊加層不再靜默消失:不透明底 ＋ 混色疊加 = 兩份材質", () => {

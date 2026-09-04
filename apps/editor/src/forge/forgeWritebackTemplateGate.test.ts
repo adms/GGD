@@ -21,6 +21,8 @@
  *   · `templateWriteBlockers`: `if (!hasTemplateBinding(after)) return []` →
  *     `return []` unconditionally
  *       → 「壞掉的 ref 連 API 都碰不到」 red.
+ *   · `runForgeWrite`: remove `generatorOwnedBlockers(after)` from the live
+ *     gate → 「偽造 plan 也不能寫 generator-owned 產物」 red.
  */
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { readFileSync } from "node:fs";
@@ -31,10 +33,13 @@ import { defaultParamsFor } from "@ggd/shared/content/templates/paramsSchema";
 
 /** every call the writeback made to the content-api, in order */
 const calls: string[] = [];
+const sourceReceipts = new Map<string, unknown>();
 
 vi.mock("../api/client", () => ({
   WRITES_ENABLED: true,
   api: {
+    editorSource: async (collection: string, id: string) =>
+      sourceReceipts.get(`${collection}/${id}`) ?? null,
     validate: async (c: string, id: string) => {
       calls.push(`validate ${c}/${id}`);
       return { ok: true, hash: "h" };
@@ -86,6 +91,7 @@ function abilityDoc(template: unknown): Record<string, unknown> {
 describe("寫回前就擋下展開不了的模板（不是等下一次 registerAll）", () => {
   beforeEach(() => {
     calls.length = 0;
+    sourceReceipts.clear();
   });
 
   it("好的綁定放行 —— 閘門不是「一律拒絕」", () => {
@@ -135,6 +141,19 @@ describe("寫回前就擋下展開不了的模板（不是等下一次 registerA
     expect(calls).toEqual([]);
   });
 
+  it("偽造 plan 也不能寫 generator-owned 產物", async () => {
+    const generated = abilityDoc(undefined);
+    delete generated["template"];
+    generated["provenance"] = "owner-spec";
+
+    // Deliberately erase the blockers that planForgeWrite found.  The execution
+    // path must recompute source ownership instead of trusting UI state.
+    const unsafePlan = { ...planForgeWrite(generated, generated, null, TEMPLATES), blockers: [] };
+    await expect(runForgeWrite(unsafePlan, generated, null, TEMPLATES))
+      .rejects.toThrow("不能直接改產物");
+    expect(calls).toEqual([]);
+  });
+
   it("放行的那一份真的會寫出去（證明閘門沒有把所有路都堵死）", async () => {
     const good = abilityDoc({ ref: TPL.id, params: defaultParamsFor(TPL) });
     const plan = planForgeWrite(good, good, null, TEMPLATES);
@@ -142,6 +161,63 @@ describe("寫回前就擋下展開不了的模板（不是等下一次 registerA
     expect(calls).toEqual([
       "validate abilities/godie-test.q",
       "patchAbility godie-test.q",
+      "rebuild",
+    ]);
+  });
+
+  it("champion mirror 沒有 document receipt 時連 PATCH 都不送", async () => {
+    const good = abilityDoc({ ref: TPL.id, params: defaultParamsFor(TPL) });
+    const champion = {
+      schema: "champion@1",
+      id: "godie-test",
+      abilities: { Q: { ...good, schema: undefined } },
+    } as Record<string, unknown>;
+    const plan = planForgeWrite(good, good, champion, TEMPLATES);
+    expect(plan.mirror).not.toBeNull();
+    expect(plan.blockers.join(" ")).toMatch(/英雄文件|產生器/);
+    const championAfter = {
+      ...champion,
+      abilities: { Q: plan.mirror!.embedded },
+    };
+    await expect(runForgeWrite(plan, good, championAfter, TEMPLATES))
+      .rejects.toThrow(/英雄文件|產生器/);
+    expect(calls).toEqual([]);
+  });
+
+  it("只有 Main 明示 ability 與 champion 都可直接寫才允許 mirror", async () => {
+    const good = abilityDoc({ ref: TPL.id, params: defaultParamsFor(TPL) });
+    const champion = {
+      schema: "champion@1",
+      id: "godie-test",
+      abilities: { Q: { ...good, schema: undefined } },
+    } as Record<string, unknown>;
+    const writable = (collection: "abilities" | "champions", id: string) => ({
+      schema: "ggd-editor-source@1" as const,
+      collection,
+      id,
+      outputPath: `content/${collection}/${id}.json`,
+      ownership: { kind: "hand-authored" as const, sourcePaths: [] },
+      writePolicy: "document" as const,
+    });
+    const abilitySource = writable("abilities", "godie-test.q");
+    const championSource = writable("champions", "godie-test");
+    sourceReceipts.set("abilities/godie-test.q", abilitySource);
+    sourceReceipts.set("champions/godie-test", championSource);
+    const plan = planForgeWrite(good, good, champion, TEMPLATES, {
+      ability: abilitySource,
+      champion: championSource,
+    });
+    expect(plan.blockers).toEqual([]);
+    const championAfter = {
+      ...champion,
+      abilities: { Q: plan.mirror!.embedded },
+    };
+    await runForgeWrite(plan, good, championAfter, TEMPLATES);
+    expect(calls).toEqual([
+      "validate abilities/godie-test.q",
+      "validate champions/godie-test",
+      "patchAbility godie-test.q",
+      "patchChampionSlot godie-test.Q",
       "rebuild",
     ]);
   });

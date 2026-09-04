@@ -11,8 +11,8 @@
  *      拖進畫面 ⇒ 落點換算成「相對施法者的前後/左右位移」寫進新段
  *   ② **slider**：選中段落 ⇒ 連續參數全是滑桿（大小/透明/顏色/轉向/高度/動畫速度…），
  *      **拖動即重放全程**（debounce 250ms → 熱換 → castOnce）
- *   ③ **儲存成 JSON**：權威 Zod 驗證在這一側（import 出貨的 `zVfxScriptDoc`，
- *      schema 單一住處）；存檔走 `/__vfxstudio/script`（dev-only middleware）
+ *   ③ **只做試放**：2026-09-01 起，AI 候選改由 `/editor/vfx-forge` 提交後台批核；
+ *      legacy studio 不再擁有 content 寫入或 publish 權限。
  *
  * 預覽鏈是**真的**：真 SimWorld 施放 → 真事件 → 真 `VfxSystem.handleEvent`
  * （裡面的 VfxScriptPlayer）。台子三個已知盲區照 beamAudition 修法逐字搬：
@@ -665,45 +665,12 @@ const engine = new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: 
 
   const save = async (): Promise<void> => {
     if (!hotSwap()) return;
-    const res = await fetch("/__vfxstudio/script", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: doc.id, doc }),
-    });
-    const body = (await res.json()) as { ok?: boolean; error?: string; reminder?: string };
-    if (!res.ok || !body.ok) {
-      say(`存檔失敗：${body.error ?? res.status}`, "err");
-      return;
-    }
-    say(`✓ 已存。${body.reminder ?? ""}`, "ok");
-    castOnce();
+    say("此舊工作台只保留試放與連拍。請到 /editor/vfx-forge 提交 AI 候選，再由後台人工批核。", "err");
   };
 
-  // ⬆️ 回存主線（owner 2026-08-28：「編輯儲存完後可以回存到主線甚至間接到github」）
-  // build＋commit＋push 由 dev middleware 代跑 —— 這裡只按、顯示逐步結果。
+  // 2026-09-01：AI 變更不得由舊工作台直接 commit/push。
   const publish = async (): Promise<void> => {
-    const btn = $("btn-publish") as HTMLButtonElement;
-    btn.disabled = true;
-    say("回存主線中：content:build → commit → push（build 要一陣子）…", "dim");
-    try {
-      const res = await fetch("/__vfxstudio/publish", { method: "POST" });
-      const body = (await res.json()) as {
-        ok?: boolean;
-        clean?: boolean;
-        message?: string;
-        error?: string;
-        log?: string;
-      };
-      if (body.ok) say(body.message ?? "✓ 已回存主線。", "ok");
-      else {
-        say(`回存失敗：${body.error ?? res.status}`, "err");
-        if (body.log) issues.textContent = body.log;
-      }
-    } catch (err) {
-      say(`回存失敗：${err instanceof Error ? err.message : String(err)}`, "err");
-    } finally {
-      btn.disabled = false;
-    }
+    say("已取消舊工作台回存主線；只有後台人工核准的精確 hash 可以 Promote。", "err");
   };
   ($("btn-publish") as HTMLButtonElement).onclick = () => void publish();
 

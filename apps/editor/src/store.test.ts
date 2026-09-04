@@ -66,6 +66,28 @@ describe("editor store (editor-03)", () => {
     expect(s().serverErrors).toEqual({});
   });
 
+  it("undoes and redoes immutable edits, restores dirty state, and drops a stale redo branch", () => {
+    const s = () => useEditorStore.getState();
+    s().select("abilities", "sela.q", DOC);
+    s().update("cooldown.0", 5);
+    s().update("cooldown.1", 4);
+    expect(s().past).toHaveLength(2);
+    expect(getIn(s().draft, "cooldown")).toEqual([5, 4]);
+
+    s().undo();
+    expect(getIn(s().draft, "cooldown")).toEqual([5, 5.5]);
+    expect(s().future).toHaveLength(1);
+    s().undo();
+    expect(s().draft).toEqual(DOC);
+    expect(s().dirty).toBe(false);
+
+    s().redo();
+    expect(getIn(s().draft, "cooldown.0")).toBe(5);
+    s().update("cooldown.1", 3);
+    expect(s().future).toEqual([]);
+    expect(getIn(s().draft, "cooldown")).toEqual([5, 3]);
+  });
+
   it("issuesToErrorMap groups by path", () => {
     const map = issuesToErrorMap([
       { path: "", message: "root", code: "custom" },

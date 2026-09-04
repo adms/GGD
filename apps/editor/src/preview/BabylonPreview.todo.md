@@ -6,18 +6,20 @@ runs the DATA half through the real engine: sandbox `SimWorld` + the real
 `statPipeline` / `spawnChampion` / `resolveScaling` (no mocks). `PreviewPanel.tsx`
 renders its output as structured text.
 
-> **STATUS (2026-07-20):** `src/preview3d/` now ships REAL Babylon panels the
-> PreviewPanel mounts per collection: model inspector (GLB + AnimationGroups +
-> clipMap quick-play + collisionRadius overlay), vfx (data-driven
-> `toParticleSystem` in `preview3d/particles.ts`), arena (zones/obstacles/
-> spawns/decor), and the champion modelKey embed. Assets flow through the
-> content-api `GET /content-api/assets/*` route. STILL OPEN below: the
-> controller-shaped `createBabylonPreviewController` — in particular the
-> `previewAbility` cast through a PreviewDriver `IntentFrame` (content-11) and
-> reusing apps/client `render/*`. When that lands, fold the preview3d panels'
-> scene ownership into it (keep `toParticleSystem` as the shared factory).
+> **STATUS (2026-09-02):** `src/preview3d/` still ships the collection-specific
+> Babylon panels described below. Ability authoring is no longer renderless:
+> 鑄技工坊 and VFX Forge run real `SimWorld` casts/reactions and render them
+> through the shipped `CameraRig`, arena ground, champion GLBs and `VfxSystem`,
+> with one shared 1/60 playhead, frame step and deterministic scrub. The eight
+> named VFX fixtures have browser-captured evidence under `docs/_reports/`.
+>
+> **STILL OPEN, MAIN-OWNED:** a single general-purpose client render bridge for
+> the generic collection `PreviewPanel`. Do not replace the working Forge stage
+> with a second preview rules engine. When main exposes that bridge, this panel
+> should delegate to it and retain the current collection inspectors as focused
+> asset views.
 
-## What to build here
+## Remaining bridge contract (main-owned)
 
 A `createBabylonPreviewController(): PreviewController` that keeps the same
 interface and adds the visual half:

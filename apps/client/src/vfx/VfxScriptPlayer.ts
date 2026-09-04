@@ -25,6 +25,7 @@
  * ⚠️ 純客戶端、純演出：這裡沒有任何傷害/狀態/資源 —— 那些住 ability JSON。
  */
 import type { EventMessage } from "@ggd/shared/protocol/messages";
+import { abilityIdOfAuthoredOrigin } from "@ggd/shared/sim";
 import { ABILITY_VFX_LAYER_OVERRIDE_FIELDS } from "@ggd/shared/content/schema/abilityVfx";
 import type { VfxScriptDoc, VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
 import { modelFxInstancesFromFrame } from "@ggd/shared/sim/effects/modelFxPlacement";
@@ -59,6 +60,19 @@ function applyFacingOffset(
     fz /= fl;
   }
   return { x: pos.x + fx * fwd + fz * side, z: pos.z + fz * fwd - fx * side };
+}
+
+/** Unit aim from one world point to another; coincident points have no direction. */
+function directionToward(
+  from: { x: number; z: number } | null | undefined,
+  to: { x: number; z: number } | null | undefined,
+): { x: number; z: number } | undefined {
+  if (!from || !to) return undefined;
+  const x = to.x - from.x;
+  const z = to.z - from.z;
+  const len = Math.hypot(x, z);
+  if (len < 1e-6) return undefined;
+  return { x: x / len, z: z / len };
 }
 
 /** 一次觸發當下解出的錨點材料（之後 firing 時仍會 refresh 施法者位置）。 */
@@ -179,6 +193,16 @@ export class VfxScriptPlayer {
 
   constructor(private readonly deps: VfxScriptPlayerDeps) {}
 
+  /**
+   * True when this ability's authored script owns the cast presentation.
+   * VfxSystem uses the same live rollback switch and the same script lookup as
+   * the player, so "script replaces default binding" cannot drift into a
+   * second, slightly different rule at the rendering seam.
+   */
+  hasScript(abilityId: string): boolean {
+    return this.deps.enabled() && this.deps.scriptFor(abilityId) !== undefined;
+  }
+
   /** 在 `VfxSystem.handleEvent` 的開頭餵進來（synthesized 事件不會是觸發器型別 ⇒ 不迴圈）。 */
   onEvent(ev: EventMessage, nowMs: number): void {
     if (!this.deps.enabled()) return;
@@ -244,11 +268,13 @@ export class VfxScriptPlayer {
       }
       case "comboStrike": {
         // GH#838 逐段演出錨（sim 的 delayed/comboStrikes 每一段發一則）。
-        // 歸屬走 origin "ability:<id>"（sim 解算完的落點也在 payload 裡）。
+        // 主動連段走 `ability:<id>`；被動／限時增益連段則保留自己的 hook
+        // provenance。兩者都由 shared parser 回到唯一的 authored ability，
+        // ⛔ 不可以只收 ability:，否則 20-002 理想鄉 EX 的七刀全是死軌。
         const origin = d.origin as string | undefined;
         const caster = d.caster as number | undefined;
-        if (!origin?.startsWith("ability:") || caster === undefined) return;
-        const abilityId = origin.slice("ability:".length);
+        const abilityId = abilityIdOfAuthoredOrigin(origin);
+        if (!abilityId || caster === undefined) return;
         const script = this.deps.scriptFor(abilityId);
         if (!script) return;
         const index = (d.index as number | undefined) ?? 0;
@@ -257,11 +283,14 @@ export class VfxScriptPlayer {
             ? { x: d.x as number, z: d.z as number }
             : undefined;
         const victim = d.victim as number | undefined;
+        const targetPos = at ?? (victim !== undefined ? (this.deps.entityPos(victim) ?? undefined) : undefined);
+        const direction = directionToward(this.deps.entityPos(caster), targetPos);
         const frame: TriggerFrame = {
           caster,
           tick: ev.tick | 0,
           ...(victim !== undefined ? { victim } : {}),
-          ...(at !== undefined ? { point: at, targetPos: at } : {}),
+          ...(targetPos !== undefined ? { point: targetPos, targetPos } : {}),
+          ...(direction !== undefined ? { direction } : {}),
         };
         for (const seg of script.segments) {
           if (seg.on !== "strike") continue;
@@ -276,9 +305,14 @@ export class VfxScriptPlayer {
         const projectileId = d.projectileId as string | undefined;
         const owner = d.owner as number | undefined;
         if (!projectileId || owner === undefined) return;
-        // 歸屬：owner 的哪一份 script 認領這顆彈道 —— 由技能 JSON 推導
+        // New wire events carry exact authored provenance.  Keep the old
+        // projectileId deep-scan as a backward-compatible fallback for stale
+        // hosts, but never fan one event into every script when origin exists.
         const target = d.target as number | undefined;
-        for (const script of this.scriptsClaiming(projectileId)) {
+        const exactAbilityId = abilityIdOfAuthoredOrigin(d.origin);
+        const exactScript = exactAbilityId ? this.deps.scriptFor(exactAbilityId) : undefined;
+        const scripts = exactScript ? [exactScript] : this.scriptsClaiming(projectileId);
+        for (const script of scripts) {
           const frame: TriggerFrame = {
             caster: owner,
             tick: ev.tick | 0,
@@ -299,18 +333,23 @@ export class VfxScriptPlayer {
       }
       // ⭐⭐ GH#885 —— **反彈成功**（owner 指名的 20-002 理想鄉EX 就是這一刻）。
       //
-      // ⭐ **歸屬乾淨,⛔ 零新 dep**:`origin` 是那一發反彈封包自己的 provenance
-      //   （`combat/damage.ts:61` 的 `ability:<id>`）—— 而反彈封包的來源是**防禦者**,
-      //   所以它指的正是**他自己那支反彈技能**。剝掉前綴就走既有的 `scriptFor()`。
+      // ⭐ **歸屬乾淨**：`origin` 是那一發反彈封包自己的 provenance。
+      //   主動技能直接打出的反彈是 `ability:<id>`；限時 buff 裡的 hook 則是
+      //   `hook:buff:ability:<id>#<instance>`。shared parser 只解已知容器，回到
+      //   防禦者那支 authored ability 後再走既有的 `scriptFor()`，⛔ 不掃子字串猜。
       //
       // ⚠️ ⛔ 不是每一發反彈都有腳本 —— 查不到就是零成本路（與其他觸發器同形）。
       case "reflectSuccess": {
         const reflector = d.reflector as number | undefined;
         const origin = d.origin as string | undefined;
-        if (reflector === undefined || !origin?.startsWith("ability:")) return;
-        const script = this.deps.scriptFor(origin.slice("ability:".length));
+        const abilityId = abilityIdOfAuthoredOrigin(origin);
+        if (reflector === undefined || !abilityId) return;
+        const script = this.deps.scriptFor(abilityId);
         if (!script) return;
         const attacker = d.attacker as number | undefined;
+        const targetPos =
+          attacker !== undefined ? (this.deps.entityPos(attacker) ?? undefined) : undefined;
+        const direction = directionToward(this.deps.entityPos(reflector), targetPos);
         const frame: TriggerFrame = {
           caster: reflector,
           tick: ev.tick | 0,
@@ -324,8 +363,8 @@ export class VfxScriptPlayer {
           //   ⛔ 填 attacker ⇒ 攻擊者被壓制、而防禦者的預設 `guard` 照播
           //     —— 兩邊都錯,且畫面上看起來只是「有時候會重播」。
           victim: reflector,
-          targetPos:
-            attacker !== undefined ? (this.deps.entityPos(attacker) ?? undefined) : undefined,
+          ...(targetPos !== undefined ? { point: targetPos, targetPos } : {}),
+          ...(direction !== undefined ? { direction } : {}),
         };
         this.schedule(script, "reflectSuccess", frame, nowMs);
         return;
@@ -354,6 +393,19 @@ export class VfxScriptPlayer {
   /** 供 forge 熱改 script 之後重建歸屬快取。 */
   invalidate(): void {
     this.scriptsClaimingCache = null;
+  }
+
+  /**
+   * 清掉這一輪尚未播放的演出排程。
+   *
+   * 這不是 `invalidate()`：熱更新只讓「彈道屬於哪支技能」的索引失效；
+   * round reset／Forge scrub 則必須連尚未到期的 segment 與等待 castEnd 的 frame
+   * 一起丟掉。否則把時間軸拉回 0 再播一次，上一輪 800ms 的餘燼會在新一輪
+   * 800ms 疊播，畫面會隨重播次數愈來愈亮。
+   */
+  reset(): void {
+    this.pending.length = 0;
+    this.awaitingEnd.clear();
   }
 
   private scriptsClaiming(projectileId: string): VfxScriptDoc[] {

@@ -138,7 +138,13 @@ export function projectileSystem(world: SimWorld): void {
           fireHooks(world, owner, "onBasicAttack", bestId);
         }
       } else {
-        world.emit("projectileHit", { id, owner, target: bestId, projectileId: proj.projectileId });
+        world.emit("projectileHit", {
+          id,
+          owner,
+          target: bestId,
+          projectileId: proj.projectileId,
+          origin: proj.origin,
+        });
         // scoreboard: an ability skillshot connecting with an enemy champion
         if (proj.origin.startsWith("ability:")) recordAbilityHit(world, owner, bestId);
         runEffects(proj.onHit, {
@@ -190,6 +196,7 @@ export function projectileSystem(world: SimWorld): void {
       z: t?.pos.z ?? 0,
       owner: p?.ownerId,
       projectileId: p?.projectileId,
+      ...(p && !p.basic ? { origin: p.origin } : {}),
       hit: (p?.hitSet.size ?? 0) > 0,
     });
     world.destroy(id);

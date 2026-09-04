@@ -135,6 +135,8 @@ export interface ScreenCueRecipients {
   subjects: EntityId[];
   caster: EntityId;
   zone: number;
+  /** Authored provenance; lets a VFX script replace ability-owned presentation. */
+  origin?: string;
 }
 
 export interface ScreenFlashEvent extends ScreenCueRecipients {
@@ -157,6 +159,8 @@ export interface FloatingTextEvent {
   subjects: { id: EntityId; x: number; z: number }[];
   caster: EntityId;
   zone: number;
+  /** Authored provenance; lets a VFX script replace ability-owned presentation. */
+  origin?: string;
   colorRgb?: [number, number, number];
   sizeScale?: number;
   riseSpeed?: number;
@@ -187,6 +191,7 @@ export const screenFlashEffect: EffectKindSpec<"screenFlash"> = {
       subjects,
       caster: ctx.caster,
       zone: world.transform.get(ctx.caster)?.zone ?? 0,
+      origin: ctx.origin,
       // ⭐ GH#608 —— 這一格在 2026-08-23 之前**沒有被轉發**，所以 owner 裁決 (a)
       //    的「劇本演出豁免全域上限」在畫面上從來沒有發生過:殭屍王那 1 秒全黑
       //    被夾成 `flashMaxAlpha × flashMaxSec`。schema 收得下、卡面寫得出、
@@ -211,6 +216,7 @@ export const screenShakeEffect: EffectKindSpec<"screenShake"> = {
       subjects,
       caster: ctx.caster,
       zone: world.transform.get(ctx.caster)?.zone ?? 0,
+      origin: ctx.origin,
     };
     world.emit("screenShake", payload as unknown as Record<string, unknown>);
   },
@@ -250,6 +256,7 @@ export const floatingTextEffect: EffectKindSpec<"floatingText"> = {
       subjects: anchored,
       caster: ctx.caster,
       zone: world.transform.get(ctx.caster)?.zone ?? 0,
+      origin: ctx.origin,
     };
     world.emit("floatingText", payload as unknown as Record<string, unknown>);
   },

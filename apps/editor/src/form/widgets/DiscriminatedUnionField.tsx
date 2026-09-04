@@ -36,10 +36,10 @@ export function DiscriminatedUnionField({
       </label>
       <div className="union-card">
         {variant
-          ? variant.fields.map((f) => {
+            ? variant.fields.map((f, fieldIndex) => {
               const key = f.path.split(".").pop() ?? f.path;
               return (
-                <div key={f.path}>
+                <div key={`${f.path}:${fieldIndex}`}>
                   {renderNode({
                     node: f,
                     value: record[key],

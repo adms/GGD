@@ -24,6 +24,8 @@ export interface FieldProps {
   dataPath: string;
   errors: ErrorMap;
   onChange(dataPath: string, value: unknown): void;
+  /** Schema paths protected by the generated editor contract. */
+  readOnlyReasons?: ReadonlyMap<string, string>;
 }
 
 export function FieldErrors({ dataPath, errors }: { dataPath: string; errors: ErrorMap }) {
@@ -68,7 +70,7 @@ export function renderNode(props: FieldProps): ReactElement {
   // ⚠️ `ref:` 開頭的那一種不是給人看的說明，是 walker 拿來標「這是一個參照」的
   //（見 `walk.ts` 的 `refFromDescription`）。`walk.ts:74` 已經把它濾掉了，
   // 這裡不再濾第二次 —— 兩個地方各濾一次，改一邊就會有一邊過期。
-  return d ? (
+  const described = d ? (
     <>
       {el}
       <FieldHint text={d} />
@@ -76,6 +78,14 @@ export function renderNode(props: FieldProps): ReactElement {
   ) : (
     el
   );
+  const readOnlyReason = props.readOnlyReasons?.get(props.node.path);
+  return readOnlyReason ? (
+    <fieldset className="owner-only-field" disabled data-owner-only-path={props.node.path}>
+      <legend>🔒 Owner 專屬設定 · 唯讀</legend>
+      {described}
+      <p>{readOnlyReason}</p>
+    </fieldset>
+  ) : described;
 }
 
 function renderWidget(props: FieldProps): ReactElement {
@@ -102,14 +112,16 @@ function renderWidget(props: FieldProps): ReactElement {
       return (
         <fieldset className="field field-tuple">
           <legend>{node.label}</legend>
-          {node.items.map((item, i) =>
-            renderNode({
-              ...props,
-              node: item,
-              value: Array.isArray(props.value) ? props.value[i] : undefined,
-              dataPath: props.dataPath ? `${props.dataPath}.${i}` : String(i),
-            }),
-          )}
+          {node.items.map((item, i) => (
+            <div key={`${item.path}:${i}`}>
+              {renderNode({
+                ...props,
+                node: item,
+                value: Array.isArray(props.value) ? props.value[i] : undefined,
+                dataPath: props.dataPath ? `${props.dataPath}.${i}` : String(i),
+              })}
+            </div>
+          ))}
         </fieldset>
       );
     case "object":

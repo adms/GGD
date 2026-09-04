@@ -1,0 +1,200 @@
+{
+  "id": "godie-e002.ex",
+  "schema": "vfx-script@1",
+  "abilityId": "godie-e002.ex",
+  "notes": "#885／#838 main 驗收候選：20-002 理想鄉EX（原作參考 KwAlIYfmV48@83–100，兩招合併）。reflectSuccess 爆開防禦火花，真 comboStrike 驅動 Saber 六次閃到目標周圍斬擊，第七段回到原位釋放黃藍聖光砲；傷害、反彈與七段時序仍住 ability JSON。",
+  "segments": [
+    {
+      "vfxId": "fx.avalon.reflect-spark",
+      "at": "self",
+      "durationSec": 0.3,
+      "kind": "vfx",
+      "on": "reflectSuccess",
+      "atMs": 0,
+      "w3xScale": 0.8,
+      "flyHeight": 82,
+      "alpha": 0.78
+    },
+    {
+      "text": "AVALON · 理想鄉",
+      "colorRgb": [
+        255,
+        232,
+        160
+      ],
+      "sizeScale": 1.55,
+      "durationSec": 1.1,
+      "kind": "floatingText",
+      "on": "strike",
+      "atMs": 0,
+      "strikeIndex": 1
+    },
+    {
+      "kind": "anim",
+      "on": "strike",
+      "at": "caster",
+      "pulse": "attack",
+      "clipWindowMs": 300
+    },
+    {
+      "kind": "anim",
+      "on": "strike",
+      "at": "target",
+      "pulse": "hurt",
+      "clipWindowMs": 600
+    },
+    {
+      "kind": "bodyMove",
+      "on": "strike",
+      "strikeIndex": 1,
+      "at": "caster",
+      "mode": "teleport",
+      "offset": { "x": -0.8, "y": 0, "z": 2.6 },
+      "durationMs": 220
+    },
+    {
+      "kind": "bodyMove",
+      "on": "strike",
+      "strikeIndex": 2,
+      "at": "caster",
+      "mode": "teleport",
+      "offset": { "x": 0.8, "y": 0.1, "z": 2.8 },
+      "durationMs": 220
+    },
+    {
+      "kind": "bodyMove",
+      "on": "strike",
+      "strikeIndex": 3,
+      "at": "caster",
+      "mode": "teleport",
+      "offset": { "x": -0.65, "y": 0.2, "z": 3.15 },
+      "durationMs": 220
+    },
+    {
+      "kind": "bodyMove",
+      "on": "strike",
+      "strikeIndex": 4,
+      "at": "caster",
+      "mode": "teleport",
+      "offset": { "x": 0.65, "y": 0.15, "z": 3.1 },
+      "durationMs": 220
+    },
+    {
+      "kind": "bodyMove",
+      "on": "strike",
+      "strikeIndex": 5,
+      "at": "caster",
+      "mode": "teleport",
+      "offset": { "x": -0.35, "y": 0.35, "z": 2.75 },
+      "durationMs": 220
+    },
+    {
+      "kind": "bodyMove",
+      "on": "strike",
+      "strikeIndex": 6,
+      "at": "caster",
+      "mode": "teleport",
+      "offset": { "x": 0.35, "y": 0.3, "z": 2.95 },
+      "durationMs": 260
+    },
+    {
+      "vfxId": "fx.prim.holy.slash",
+      "at": "target",
+      "durationSec": 0.22,
+      "kind": "vfx",
+      "on": "strike",
+      "atMs": 0,
+      "offsetForwardU": 0,
+      "offsetSideU": 0,
+      "w3xScale": 0.56,
+      "flyHeight": 82,
+      "alpha": 0.76,
+      "timeScale": 1,
+      "facingDeg": 58,
+      "pitchDeg": 0
+    },
+    {
+      "vfxId": "fx.prim.lightning.slash",
+      "at": "target",
+      "durationSec": 0.2,
+      "kind": "vfx",
+      "on": "strike",
+      "atMs": 35,
+      "offsetForwardU": 0,
+      "offsetSideU": 0,
+      "w3xScale": 0.58,
+      "flyHeight": 82,
+      "alpha": 0.78,
+      "timeScale": 1,
+      "facingDeg": -61,
+      "pitchDeg": 0
+    },
+    {
+      "modelKey": "w3x.stock.revivehuman",
+      "path": "static",
+      "anchor": "self",
+      "scale": 0.78,
+      "scaleAxis": [0.52, 0.52, 3.2],
+      "tint": [1, 0.84, 0.32],
+      "alpha": 0.9,
+      "lifeSec": 1.15,
+      "kind": "modelFx",
+      "on": "strike",
+      "atMs": 0,
+      "strikeIndex": 7,
+      "offsetForwardU": 0.8,
+      "heightU": 0.85
+    },
+    {
+      "vfxId": "fx.forge.beam.fire",
+      "at": "self",
+      "durationSec": 1.2,
+      "kind": "vfx",
+      "on": "strike",
+      "atMs": 0,
+      "strikeIndex": 7,
+      "offsetForwardU": 0.5,
+      "offsetSideU": 0,
+      "w3xScale": 5.3,
+      "tint": [
+        255,
+        205,
+        70
+      ],
+      "flyHeight": 80,
+      "alpha": 1,
+      "timeScale": 1,
+      "facingDeg": 0,
+      "pitchDeg": 0
+    },
+    {
+      "vfxId": "fx.forge.beam.blue",
+      "at": "self",
+      "durationSec": 1.12,
+      "kind": "vfx",
+      "on": "strike",
+      "atMs": 35,
+      "strikeIndex": 7,
+      "offsetForwardU": 0.5,
+      "offsetSideU": 0,
+      "w3xScale": 2.3,
+      "tint": [
+        80,
+        170,
+        255
+      ],
+      "flyHeight": 80,
+      "alpha": 1,
+      "timeScale": 1,
+      "facingDeg": 0,
+      "pitchDeg": 0
+    },
+    {
+      "amplitude": 0.58,
+      "durationSec": 0.7,
+      "kind": "screenShake",
+      "on": "strike",
+      "strikeIndex": 7
+    }
+  ]
+}

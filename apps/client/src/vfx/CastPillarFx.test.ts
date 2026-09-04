@@ -18,6 +18,8 @@ import { cover } from "@ggd/shared/testkit/cover";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { VertexBuffer } from "@babylonjs/core/Buffers/buffer";
+import { RawTexture } from "@babylonjs/core/Materials/Textures/rawTexture";
+import type { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { CastPillarFx } from "./CastPillarFx";
 import {
   EXTINGUISH_MS,
@@ -213,6 +215,41 @@ describe("every champion gets one, and twelve of them stay readable", () => {
 });
 
 describe("the element survives into a channel the texture cannot eat", () => {
+  it("never binds a texture rectangle to either shaft; the ground uses alpha only", () => {
+    const scene = new Scene(engine);
+    const pos = new Map<number, { x: number; z: number }>();
+    const mask = RawTexture.CreateRGBATexture(
+      new Uint8Array([255, 255, 255, 255]),
+      1,
+      1,
+      scene,
+    );
+    const fx = new CastPillarFx(
+      scene,
+      { entityPos: (id) => pos.get(id) ?? null },
+      { createTexture: () => mask },
+    );
+    pos.set(1, { x: 0, z: 0 });
+    fx.begin(1, 600, FIRE, 0);
+
+    const shell = scene.materials.find((m) => m.name === "cast-pillar-shell-mat") as StandardMaterial;
+    const core = scene.materials.find((m) => m.name === "cast-pillar-core-mat") as StandardMaterial;
+    const ground = scene.materials.find((m) => m.name === "cast-pillar-base-mat") as StandardMaterial;
+    const groundMesh = scene.meshes.find((m) => m.name === "cast-pillar-base")!;
+    expect(shell.emissiveTexture).toBeNull();
+    expect(shell.opacityTexture).toBeNull();
+    expect(core.emissiveTexture).toBeNull();
+    expect(core.opacityTexture).toBeNull();
+    expect(ground.emissiveTexture).toBeNull();
+    expect(ground.opacityTexture).toBeTruthy();
+    // A four-vertex plane turns an alpha/material regression into a visible
+    // square card.  The shipped fail-safe is circular geometry.
+    expect(groundMesh.getTotalVertices()).toBeGreaterThan(4);
+
+    fx.dispose();
+    scene.dispose();
+  });
+
   it("writes the element colour into the shaft VERTEX colours, not only emissiveColor", () => {
     cover("vfx-cast-pillar-element");
     const { scene, fx, pos } = harness();

@@ -27,6 +27,11 @@ import {
 } from "@ggd/shared/content/templates/resolve";
 import type { TemplateDoc } from "@ggd/shared/content/schema/template";
 import { api, WRITES_ENABLED } from "../api/client";
+import {
+  generatedAbilityBlockers,
+  sourceWriteBlockers,
+  type EditorSourceDescriptor,
+} from "../sourcePolicy";
 
 /**
  * The members a template-authored ability owns — the ONLY ones we splice.
@@ -97,6 +102,11 @@ export interface ForgePlan {
   readonly blockers: readonly string[];
 }
 
+export interface ForgeSourceReceipts {
+  readonly ability: EditorSourceDescriptor | null;
+  readonly champion: EditorSourceDescriptor | null;
+}
+
 /**
  * ⭐ GH#319 —— 這一支是**產生器擁有的**嗎？
  *
@@ -112,12 +122,7 @@ export interface ForgePlan {
  * ⛔ 這裡是**擋下**不是警告：一個「存了但會消失」的存檔比存不下去更糟。
  */
 export function generatorOwnedBlockers(after: Record<string, unknown>): string[] {
-  if (after["provenance"] !== "owner-spec") return [];
-  return [
-    `這一支是「90 支重製技能」之一，由 tools/skill-remake/batch1.py 產生 —— ` +
-      `在這裡存下去會成功，但下一次有人重跑產生器時**會被無聲覆寫**。` +
-      `要改請改產生器那張表，然後跑 \`python3 tools/skill-remake/batch1.py\`。`,
-  ];
+  return generatedAbilityBlockers(after);
 }
 
 /**
@@ -155,6 +160,7 @@ export function planForgeWrite(
   after: Record<string, unknown>,
   championDoc: Record<string, unknown> | null,
   templates: ReadonlyMap<string, TemplateDoc>,
+  sources?: ForgeSourceReceipts,
 ): ForgePlan {
   const id = String(after["id"]);
   const steps: ForgePlanStep[] = [];
@@ -193,13 +199,19 @@ export function planForgeWrite(
     }
   }
 
+  const sourceBlockers = [
+    ...sourceWriteBlockers("abilities", after, sources?.ability ?? null),
+    ...(mirror && championDoc
+      ? sourceWriteBlockers("champions", championDoc, sources?.champion ?? null)
+      : []),
+  ];
   return {
     steps,
     abilityPatch,
     mirror,
     // ⛔ 兩種阻擋都要列出來（⛔ 不是 `||`）：一支技能可以同時「模板展開會失敗」
     //    與「它是產生器擁有的」，操作者需要看到全部理由才知道下一步該做什麼。
-    blockers: [...generatorOwnedBlockers(after), ...templateWriteBlockers(after, templates)],
+    blockers: [...sourceBlockers, ...templateWriteBlockers(after, templates)],
   };
 }
 
@@ -223,11 +235,23 @@ export async function runForgeWrite(
   }
   const id = String(after["id"]);
 
-  // ---- 0. the template gate, BEFORE the server round-trip ------------------
+  // ---- 0. source + template gates, BEFORE the server round-trip ------------
   // Re-run rather than trusting `plan.blockers`: a plan is built once and the
-  // confirm dialog can sit open while the card list changes underneath it.
-  // Same function the loader runs, so「編輯器接受的」==「載入器展開得動的」.
-  const blockers = templateWriteBlockers(after, templates);
+  // confirm dialog can sit open while the card list or source-owned document
+  // changes underneath it.  A caller also must not be able to bypass the UI by
+  // invoking `runForgeWrite()` with a fabricated plan.
+  // Same template function the loader runs, so「編輯器接受的」==「載入器展開得動的」.
+  const [abilitySource, championSource] = await Promise.all([
+    api.editorSource("abilities", id),
+    plan.mirror ? api.editorSource("champions", plan.mirror.championId) : Promise.resolve(null),
+  ]);
+  const blockers = [
+    ...sourceWriteBlockers("abilities", after, abilitySource),
+    ...(plan.mirror && championAfter
+      ? sourceWriteBlockers("champions", championAfter, championSource)
+      : []),
+    ...templateWriteBlockers(after, templates),
+  ];
   if (blockers.length > 0) {
     throw new Error(`拒絕寫回：${blockers.join("；")}`);
   }

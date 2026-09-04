@@ -38,7 +38,8 @@ import {
 // 值住 `config.ui-cues@1`（後台『畫面提示』頁），⛔ 不是這個檔裡的兩個字面值。
 import { uiCues } from "../ui/uiCuesConfig";
 
-const MAGIC_CIRCLE_URL = "/content/assets/textures/particles/magic_02.png";
+const MAGIC_CIRCLE_PATH = "assets/textures/particles/magic_02.png";
+const shippedTextureUrl = (path: string): string => `/content/${path}`;
 const SPIN_RAD_PER_MS = 0.0012;
 
 /** Telegraph identity colors (kept from the pre-retune look). */
@@ -97,10 +98,10 @@ interface SharedAssets {
 
 const sharedByScene = new WeakMap<Scene, SharedAssets>();
 
-function sharedFor(scene: Scene): SharedAssets {
+function sharedFor(scene: Scene, resolveTextureUrl = shippedTextureUrl): SharedAssets {
   let s = sharedByScene.get(scene);
   if (!s) {
-    const circleTex = new Texture(MAGIC_CIRCLE_URL, scene);
+    const circleTex = new Texture(resolveTextureUrl(MAGIC_CIRCLE_PATH), scene);
     circleTex.hasAlpha = true;
     s = { circleTex, rings: new Map(), fills: [], shocks: [], kicks: new BurstPool(scene) };
     sharedByScene.set(scene, s);
@@ -254,6 +255,11 @@ export function telegraphPaletteFor(relation: TelegraphRelation): TelegraphPalet
 function emissiveMat(name: string, scene: Scene, tint: Rgb): StandardMaterial {
   const mat = new StandardMaterial(name, scene);
   mat.disableLighting = true;
+  // This is an overlay material. Babylon's default diffuse channel is white;
+  // combining it with emissive tint can clamp large telegraphs to a white
+  // backdrop. Keep RGB exclusively in emissiveColor.
+  mat.diffuseColor = Color3.Black();
+  mat.specularColor = Color3.Black();
   mat.emissiveColor = new Color3(tint[0], tint[1], tint[2]);
   mat.alpha = BASE_ALPHA;
   return mat;
@@ -310,6 +316,8 @@ function dustKickSpec(radius: number): BurstSpec {
  * pre-#228 positional constructor keeps working unchanged.
  */
 export interface TelegraphOptions {
+  /** Editor preview remaps shipped content paths through its local/remote API. */
+  resolveTextureUrl?: (path: string) => string;
   /**
    * Which CHANNEL this ring belongs to — the whole point of #228's requirement
    * 4. Defaults to the pre-#228 amber, which is what `guardianMark` and any
@@ -382,7 +390,7 @@ export class Telegraph {
     opts: TelegraphOptions = {},
   ) {
     this.bornMs = nowMs;
-    this.shared = sharedFor(scene);
+    this.shared = sharedFor(scene, opts.resolveTextureUrl);
     this.ringKey = radiusKey(radius);
     this.palette = opts.palette ?? LEGACY_PALETTE;
     this.outlineOnly = opts.outlineOnly === true;
@@ -422,10 +430,22 @@ export class Telegraph {
     }
     this.fill =
       this.shared.fills.pop() ??
-      MeshBuilder.CreatePlane("telegraph-fill", { size: 1, sideOrientation: 2 /* DOUBLESIDE */ }, scene);
+      // Keep the fill circular in geometry as well as in the texture alpha.
+      // If a browser/GPU/material regression ever ignores the PNG alpha, a
+      // plane exposes a giant square card in actual play.  A disc degrades to
+      // a plain circle, which is still a truthful telegraph and never leaks a
+      // texture backdrop.
+      MeshBuilder.CreateDisc(
+        "telegraph-fill",
+        { radius: 0.5, tessellation: 48, sideOrientation: 2 /* DOUBLESIDE */ },
+        scene,
+      );
     if (!this.fill.material) {
       const mat = emissiveMat("telegraph-fill", scene, this.fillTint);
-      mat.emissiveTexture = this.shared.circleTex;
+      // The rune is an opacity mask, not the emitted colour.  Binding the PNG
+      // to emissiveTexture as well makes its square RGB sheet visible before
+      // alpha shaping, which becomes a huge grey/purple card for large AoE
+      // previews.  Colour stays in emissiveColor; only the rune alpha cuts it.
       mat.opacityTexture = this.shared.circleTex;
       this.fill.material = mat;
     }

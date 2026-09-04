@@ -33,6 +33,7 @@ import {
   listBackups,
   restoreBackup,
   deleteDoc,
+  createContentEditApi,
   saveDocs,
   validateDoc,
   type EditFetch,
@@ -295,5 +296,65 @@ describe("deleting a document (the 刪除 button)", () => {
     await saveDocs(writePlan("items", "x", { id: "x" }), { fetchFn });
     const write = calls.find((c) => c.body !== undefined)!;
     expect(write.headers["content-type"]).toBe("application/json");
+  });
+});
+
+describe("AI change review uses the single guarded content-api authority", () => {
+  it("reads proposals, records a hash-bound verdict, then promotes explicitly", async () => {
+    cover("content-admin-gate");
+    const { fetchFn, calls } = stubFetch([
+      [/GET .*\/ai-review\/proposals$/, { status: 200, body: { counts: {}, items: [] } }],
+      [/POST .*\/ai-review\/(verdicts|promote)$/, { status: 200, body: { ok: true } }],
+    ]);
+    const review = createContentEditApi().aiReview;
+
+    await expect(review.proposals({ fetchFn })).resolves.toEqual({ counts: {}, items: [] });
+    await review.verdict({
+      key: "vfx-scripts/godie-hart.r",
+      candidateHash: "sha256:candidate",
+      reviewHash: "sha256:review",
+      verdict: "approve",
+      reviewer: "Owner",
+      note: "逐格視覺驗收通過",
+      humanVisualScore: 8,
+    }, { fetchFn });
+    await review.promote({
+      key: "vfx-scripts/godie-hart.r",
+      candidateHash: "sha256:candidate",
+      reviewHash: "sha256:review",
+    }, { fetchFn });
+
+    expect(calls.map((call) => `${call.method} ${call.url}`)).toEqual([
+      "GET /content-api/ai-review/proposals",
+      "POST /content-api/ai-review/verdicts",
+      "POST /content-api/ai-review/promote",
+    ]);
+    expect(calls[1]!.body).toEqual({
+      key: "vfx-scripts/godie-hart.r",
+      candidateHash: "sha256:candidate",
+      reviewHash: "sha256:review",
+      verdict: "approve",
+      reviewer: "Owner",
+      note: "逐格視覺驗收通過",
+      humanVisualScore: 8,
+    });
+    expect(calls[2]!.body).toEqual({
+      key: "vfx-scripts/godie-hart.r",
+      candidateHash: "sha256:candidate",
+      reviewHash: "sha256:review",
+    });
+  });
+
+  it("surfaces server refusal and never treats a rejected Promote as success", async () => {
+    cover("content-admin-gate");
+    const { fetchFn } = stubFetch([
+      [/POST .*\/ai-review\/promote$/, { status: 409, body: { error: "候選送審後已變更" } }],
+    ]);
+    const review = createContentEditApi().aiReview;
+    await expect(review.promote({
+      key: "vfx-scripts/godie-hart.r",
+      candidateHash: "sha256:stale",
+      reviewHash: "sha256:stale-review",
+    }, { fetchFn })).rejects.toThrow("候選送審後已變更");
   });
 });

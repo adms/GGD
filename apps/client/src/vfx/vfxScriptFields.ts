@@ -141,4 +141,3 @@ export const FIELDS: Record<VfxScriptSegment["kind"], FieldSpec[]> = {
     { key: "durationMs", label: "持續 ms", kind: "range", min: 50, max: 3000, step: 25 },
   ],
 };
-

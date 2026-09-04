@@ -3,14 +3,25 @@
  * `world.step(intents)`：換成空 intent 之後第一條 `it` 立刻紅（突變驗過）。
  * ⛔ 刻意不驗數字（傷害/冷卻是後台在調的），只驗「這一發有沒有發生」。
  */
-import { describe, it, expect } from "vitest";
+import { beforeAll, describe, it, expect } from "vitest";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { cover } from "@ggd/shared/testkit/cover";
 import { Stat, type AbilityDef, type ChampionDef } from "@ggd/shared/sim";
 import type { AbilityId, ChampionId, ItemId } from "@ggd/shared/ids";
-import { zVfxDoc, type VfxDoc } from "@ggd/shared/content";
+import { ContentLoader, registerAll, zVfxDoc, type VfxDoc } from "@ggd/shared/content";
+import { FsContentSource } from "@ggd/shared/content/node";
 import { createSimPreviewController } from "./PreviewController";
 import { createBabylonPreviewController } from "./BabylonPreviewController";
+import { scheduleSimEvents, triggerCuesFromSim } from "../vfx-forge/model";
+import { Abilities, Champions } from "@ggd/shared/sim";
+
+const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
+
+beforeAll(async () => {
+  registerAll((await new ContentLoader(new FsContentSource(CONTENT)).load({ policy: "fail-closed" })).store);
+});
 
 const ab = (slot: "Q" | "W" | "E" | "R"): AbilityDef => ({
   id: `test.cast.${slot}` as AbilityId,
@@ -79,5 +90,66 @@ describe("GH#174 鑄技工坊的試放走玩家那條路", () => {
     c.dispose();
     expect(c.scene).toBeNull();
     expect(c.liveParticleSystems).toBe(0);
+  });
+
+  it("VFX Forge 從正式超究武神霸斬 trace 收到施法與七段演出錨", () => {
+    const champion = Champions.get("godie-hart" as ChampionId);
+    const ability = champion.abilities.R;
+    const c = createSimPreviewController();
+    const trace = c.castAbility(champion, "R", { level: 18, rank: 1, ticks: 650 });
+    const schedule = scheduleSimEvents(trace.events, ability.id);
+    const cues = triggerCuesFromSim(schedule, ability);
+
+    expect(trace.accepted, JSON.stringify(trace.events.slice(0, 20), null, 2)).toBe(true);
+    expect(cues.filter((cue) => cue.on === "castStart")).toHaveLength(1);
+    expect(cues.filter((cue) => cue.on === "castEffect")).toHaveLength(1);
+    expect(cues.filter((cue) => cue.on === "strike").map((cue) => cue.strikeIndex)).toEqual([
+      1, 2, 3, 4, 5, 6, 7,
+    ]);
+    const casterStops = schedule
+      .filter(({ event }) => event.type === "comboStrike")
+      .map(({ actorPose }) => actorPose && `${actorPose.caster.x.toFixed(3)},${actorPose.caster.z.toFixed(3)}`)
+      .filter((value): value is string => value !== undefined);
+    expect(new Set(casterStops).size, "逐刀瞬移要保存 SimWorld 已解算的角色座標").toBeGreaterThan(1);
+    c.dispose();
+  });
+
+  it("技能投射物的三個演出事件都保留精確 ability origin，script 才能完整取代預設綁定", () => {
+    const champion = Champions.get("godie-nbbc" as ChampionId);
+    const ability = champion.abilities.E;
+    const c = createSimPreviewController();
+    const trace = c.castAbility(champion, "E", { level: 18, rank: 4, ticks: 180 });
+    const projectileEvents = trace.events.filter((event) =>
+      event.type === "projectileSpawn" || event.type === "projectileHit" || event.type === "projectileEnd"
+    );
+
+    expect(trace.accepted, JSON.stringify(trace.events.slice(0, 30), null, 2)).toBe(true);
+    expect(projectileEvents.length).toBeGreaterThan(0);
+    for (const event of projectileEvents) {
+      expect(event.data.origin, `${event.type} 漏掉演出 ownership`).toBe(`ability:${ability.id}`);
+    }
+    c.dispose();
+  });
+
+  it("VFX Forge 以正式反彈路徑觸發理想鄉 EX，而不是把被動偽裝成按鍵", () => {
+    const champion = Champions.get("godie-e002" as ChampionId);
+    const ability = Abilities.get("godie-e002.ex" as AbilityId);
+    const c = createSimPreviewController();
+    const trace = c.triggerReflectSuccess(champion, ability.id, { level: 18, rank: 1, ticks: 180 });
+    const schedule = scheduleSimEvents(trace.events, ability.id);
+    const cues = triggerCuesFromSim(schedule, ability);
+
+    expect(trace.accepted, JSON.stringify(trace.events.slice(0, 80), null, 2)).toBe(true);
+    expect(trace.runtimeCompatible, "真 Sim 的 hook provenance 必須能回到 EX 腳本").toBe(true);
+    expect(trace.events.some((event) => event.type === "reflectSuccess")).toBe(true);
+    expect(cues.filter((cue) => cue.on === "strike").map((cue) => cue.strikeIndex)).toEqual([
+      1, 2, 3, 4, 5, 6, 7,
+    ]);
+    const victimStops = schedule
+      .filter(({ event }) => event.type === "comboStrike")
+      .map(({ actorPose }) => actorPose && `${actorPose.target.x.toFixed(3)},${actorPose.target.z.toFixed(3)}`)
+      .filter((value): value is string => value !== undefined);
+    expect(new Set(victimStops).size, "理想鄉的受害者位移要保存真 SimWorld 座標").toBeGreaterThan(1);
+    c.dispose();
   });
 });

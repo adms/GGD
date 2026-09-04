@@ -15,6 +15,7 @@ import { hashDoc } from "@ggd/shared/content";
 import { rebuildAllIndexes, writeDocAtomic } from "@ggd/shared/content/node";
 import { buildServer } from "./server";
 import { SseHub } from "./sse";
+import { VFX_FORGE_ACCEPTANCE_IDS } from "./aiReview";
 
 const ITEM = {
   id: "ember-rod",
@@ -26,6 +27,35 @@ const ITEM = {
   tags: ["ap"],
 };
 
+const FRAME_AUDIT = {
+  litShare: 0.1,
+  highlightShare: 0.02,
+  brightShare: 0.01,
+  nearWhiteShare: 0,
+  dominantBrightShare: 0.005,
+  dominantNonBackgroundShare: 0.02,
+  localWhiteCardShare: 0,
+  diagnosticCheckerShare: 0,
+  unsafe: false,
+} as const;
+
+const VISUAL_EVIDENCE = [
+  { label: "impact side", dataUrl: "data:image/webp;base64,AA==", atMs: 900, view: "side", frameAudit: FRAME_AUDIT },
+  { label: "impact top", dataUrl: "data:image/webp;base64,AQ==", atMs: 900, view: "top", frameAudit: FRAME_AUDIT },
+];
+
+const VISUAL_AUDIT = {
+  schema: "ggd-vfx-visual-audit@3",
+  safe: true,
+  autoVisualScore: 8,
+  sampledFrames: 30,
+  peakParticleCount: 120,
+  peakSystemCount: 4,
+  worstAtMs: 900,
+  worst: FRAME_AUDIT,
+  suspects: [],
+} as const;
+
 let root: string;
 let app: FastifyInstance;
 
@@ -35,7 +65,7 @@ beforeEach(async () => {
   rebuildAllIndexes(root);
   // undo store inside the tmp dir so the suite cleans up after itself (the real
   // default is <content>/../data/content-backups — outside the deployable tree)
-  app = buildServer({ contentDir: root, backupDir: join(root, ".backups") });
+  app = buildServer({ contentDir: root, backupDir: join(root, ".backups"), reviewDir: join(root, ".review") });
   await app.ready();
 });
 
@@ -134,6 +164,481 @@ describe("validate-on-write (content-08)", () => {
     expect(index.hash).toBe(body.collectionHash);
     // no tmp litter from the atomic write
     expect(readdirSync(join(root, "items")).filter((f) => f.includes(".tmp"))).toEqual([]);
+  });
+});
+
+describe("AI change control", () => {
+  it("closes the ordinary CRUD bypass for vfx-scripts", async () => {
+    const candidate = {
+      id: "skill.ai",
+      schema: "vfx-script@1",
+      abilityId: "skill.ai",
+      segments: [{ kind: "floatingText", on: "castStart", text: "candidate" }],
+    };
+    const direct = await app.inject({
+      method: "PUT",
+      url: "/content-api/vfx-scripts/skill.ai",
+      payload: candidate,
+    });
+    expect(direct.statusCode).toBe(409);
+    expect(direct.json().error).toContain("人工核准");
+    expect(existsSync(join(root, "vfx-scripts", "skill.ai.json"))).toBe(false);
+  });
+
+  it("keeps candidates non-live until an exact human-approved hash is explicitly promoted", async () => {
+    const candidate = { ...ITEM, cost: 975 };
+    const submitted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "items", id: ITEM.id },
+        purpose: "production-candidate",
+        candidate,
+        summary: "AI balance proposal",
+      },
+    });
+    expect(submitted.statusCode).toBe(201);
+    const proposal = submitted.json().proposal as {
+      key: string;
+      candidateHash: string;
+      reviewHash: string;
+      promotable: boolean;
+    };
+    expect(proposal.promotable).toBe(true);
+    expect(JSON.parse(readFileSync(join(root, "items", `${ITEM.id}.json`), "utf8")).cost).toBe(900);
+
+    const early = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/promote",
+      payload: { key: proposal.key, candidateHash: proposal.candidateHash, reviewHash: proposal.reviewHash },
+    });
+    expect(early.statusCode).toBe(409);
+
+    const approved = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/verdicts",
+      payload: {
+        key: proposal.key,
+        candidateHash: proposal.candidateHash,
+        reviewHash: proposal.reviewHash,
+        verdict: "approve",
+        reviewer: "Owner",
+        note: "數值與演出均已人工確認",
+      },
+    });
+    expect(approved.statusCode).toBe(200);
+
+    const promoted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/promote",
+      payload: { key: proposal.key, candidateHash: proposal.candidateHash, reviewHash: proposal.reviewHash },
+    });
+    expect(promoted.statusCode).toBe(200);
+    expect(JSON.parse(readFileSync(join(root, "items", `${ITEM.id}.json`), "utf8")).cost).toBe(975);
+    expect((await app.inject({ url: "/content-api/ai-review/proposals" })).json().items[0].status).toBe("promoted");
+  });
+
+  it("invalidates approval when live content drifts after submission", async () => {
+    const submitted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "items", id: ITEM.id },
+        purpose: "production-candidate",
+        candidate: { ...ITEM, cost: 980 },
+      },
+    });
+    const proposal = submitted.json().proposal as { key: string; candidateHash: string; reviewHash: string };
+    await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/verdicts",
+      payload: {
+        key: proposal.key,
+        candidateHash: proposal.candidateHash,
+        reviewHash: proposal.reviewHash,
+        verdict: "approve",
+        reviewer: "Owner",
+        note: "ok",
+      },
+    });
+    await app.inject({ method: "PUT", url: `/content-api/items/${ITEM.id}`, payload: { ...ITEM, cost: 901 } });
+    const promoted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/promote",
+      payload: { key: proposal.key, candidateHash: proposal.candidateHash, reviewHash: proposal.reviewHash },
+    });
+    expect(promoted.statusCode).toBe(409);
+    expect(promoted.json().error).toContain("送審後已變更");
+    expect(JSON.parse(readFileSync(join(root, "items", `${ITEM.id}.json`), "utf8")).cost).toBe(901);
+  });
+
+  it("forces all eight acceptance IDs to non-promotable fixtures", async () => {
+    let proposal!: {
+      key: string;
+      candidateHash: string;
+      reviewHash: string;
+      purpose: string;
+      promotable: boolean;
+    };
+    for (const id of VFX_FORGE_ACCEPTANCE_IDS) {
+      const candidate = {
+        id,
+        schema: "vfx-script@1",
+        abilityId: id,
+        segments: [{ kind: "floatingText", on: "castStart", text: "fixture" }],
+      };
+      const submitted = await app.inject({
+        method: "POST",
+        url: "/content-api/ai-review/proposals",
+        payload: {
+          target: { collection: "vfx-scripts", id },
+          // Deliberately lie about the purpose: the server, not the UI, owns
+          // the fixture classification and must override all eight IDs.
+          purpose: "production-candidate",
+          candidate,
+          visualEvidence: VISUAL_EVIDENCE,
+          visualAudit: VISUAL_AUDIT,
+          autoVisualScore: VISUAL_AUDIT.autoVisualScore,
+        },
+      });
+      expect(submitted.statusCode, id).toBe(201);
+      proposal = submitted.json().proposal as typeof proposal;
+      expect(proposal, id).toMatchObject({ purpose: "editor-capability-fixture", promotable: false });
+      expect(submitted.json().proposal.visualEvidence, id).toHaveLength(2);
+      expect(existsSync(join(root, "vfx-scripts", `${id}.json`)), id).toBe(false);
+    }
+
+    const noScore = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/verdicts",
+      payload: {
+        key: proposal.key,
+        candidateHash: proposal.candidateHash,
+        reviewHash: proposal.reviewHash,
+        verdict: "pass",
+        reviewer: "Owner",
+        note: "looks right",
+      },
+    });
+    expect(noScore.statusCode).toBe(400);
+    const passed = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/verdicts",
+      payload: {
+        key: proposal.key,
+        candidateHash: proposal.candidateHash,
+        reviewHash: proposal.reviewHash,
+        verdict: "pass",
+        reviewer: "Owner",
+        note: "Editor can express this scene",
+        humanVisualScore: 4,
+      },
+    });
+    expect(passed.statusCode).toBe(200);
+    const promoted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/promote",
+      payload: { key: proposal.key, candidateHash: proposal.candidateHash, reviewHash: proposal.reviewHash },
+    });
+    expect(promoted.statusCode).toBe(409);
+    expect(promoted.json().error).toContain("永遠不能 Promote");
+  });
+
+  it("requires candidate-bound visual evidence for VFX and rejects malformed image payloads", async () => {
+    const candidate = {
+      id: "skill.ai",
+      schema: "vfx-script@1",
+      abilityId: "skill.ai",
+      segments: [{ kind: "floatingText", on: "castStart", text: "candidate" }],
+    };
+    const missing = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: { target: { collection: "vfx-scripts", id: candidate.id }, purpose: "production-candidate", candidate },
+    });
+    expect(missing.statusCode).toBe(400);
+    expect(missing.json().error).toContain("至少需要 1 張");
+
+    const malformed = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "vfx-scripts", id: candidate.id },
+        purpose: "production-candidate",
+        candidate,
+        visualEvidence: [{ ...VISUAL_EVIDENCE[0], dataUrl: "https://example.com/proof.png" }],
+      },
+    });
+    expect(malformed.statusCode).toBe(400);
+    expect(malformed.json().error).toContain("PNG/WebP data URL");
+
+    const missingAudit = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "vfx-scripts", id: candidate.id },
+        purpose: "production-candidate",
+        candidate,
+        visualEvidence: [VISUAL_EVIDENCE[0]],
+      },
+    });
+    expect(missingAudit.statusCode).toBe(400);
+    expect(missingAudit.json().error).toContain("GPU 視覺稽核收據");
+
+    const legacyAudit = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "vfx-scripts", id: candidate.id },
+        purpose: "production-candidate",
+        candidate,
+        visualEvidence: [VISUAL_EVIDENCE[0]],
+        visualAudit: {
+          ...VISUAL_AUDIT,
+          schema: "ggd-vfx-visual-audit@1",
+          worst: Object.fromEntries(Object.entries(VISUAL_AUDIT.worst)
+            .filter(([key]) => key !== "diagnosticCheckerShare")),
+        },
+        autoVisualScore: VISUAL_AUDIT.autoVisualScore,
+      },
+    });
+    expect(legacyAudit.statusCode).toBe(400);
+    expect(legacyAudit.json().error).toContain("棋盤貼圖");
+
+    const missingFrameAudit = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "vfx-scripts", id: candidate.id },
+        purpose: "production-candidate",
+        candidate,
+        visualEvidence: [{
+          label: VISUAL_EVIDENCE[0]!.label,
+          dataUrl: VISUAL_EVIDENCE[0]!.dataUrl,
+          atMs: VISUAL_EVIDENCE[0]!.atMs,
+          view: VISUAL_EVIDENCE[0]!.view,
+        }],
+        visualAudit: VISUAL_AUDIT,
+        autoVisualScore: VISUAL_AUDIT.autoVisualScore,
+      },
+    });
+    expect(missingFrameAudit.statusCode).toBe(400);
+    expect(missingFrameAudit.json().error).toContain("每張關鍵格");
+
+    const submitted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "vfx-scripts", id: candidate.id },
+        purpose: "production-candidate",
+        candidate,
+        visualEvidence: [VISUAL_EVIDENCE[0]],
+        visualAudit: VISUAL_AUDIT,
+        autoVisualScore: VISUAL_AUDIT.autoVisualScore,
+      },
+    });
+    expect(submitted.statusCode).toBe(201);
+    expect(submitted.json().proposal.visualEvidence).toEqual([VISUAL_EVIDENCE[0]]);
+    expect(submitted.json().proposal.visualAudit).toEqual(VISUAL_AUDIT);
+    const proposal = submitted.json().proposal as { key: string; candidateHash: string; reviewHash: string };
+    const noScore = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/verdicts",
+      payload: {
+        key: proposal.key,
+        candidateHash: proposal.candidateHash,
+        reviewHash: proposal.reviewHash,
+        verdict: "approve",
+        reviewer: "Owner",
+        note: "looks right",
+      },
+    });
+    expect(noScore.statusCode).toBe(400);
+    expect(noScore.json().error).toContain("VFX 候選必須填");
+  });
+
+  it("allows an old @1 VFX receipt to be failed but never approved", async () => {
+    const candidate = {
+      id: "skill.legacy",
+      schema: "vfx-script@1",
+      abilityId: "skill.legacy",
+      segments: [{ kind: "floatingText", on: "castStart", text: "legacy" }],
+    };
+    const submitted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "vfx-scripts", id: candidate.id },
+        purpose: "production-candidate",
+        candidate,
+        visualEvidence: [VISUAL_EVIDENCE[0]],
+        visualAudit: VISUAL_AUDIT,
+        autoVisualScore: VISUAL_AUDIT.autoVisualScore,
+      },
+    });
+    expect(submitted.statusCode).toBe(201);
+    const file = join(root, ".review", "ai-proposals", "vfx-scripts--skill.legacy.json");
+    const stored = JSON.parse(readFileSync(file, "utf8"));
+    stored.visualAudit.schema = "ggd-vfx-visual-audit@1";
+    delete stored.visualAudit.worst.diagnosticCheckerShare;
+    writeFileSync(file, `${JSON.stringify(stored, null, 2)}\n`, "utf8");
+    const item = (await app.inject({ url: "/content-api/ai-review/proposals" })).json().items[0];
+
+    const approve = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/verdicts",
+      payload: {
+        key: item.key,
+        candidateHash: item.candidateHash,
+        reviewHash: item.reviewHash,
+        verdict: "approve",
+        reviewer: "Owner",
+        note: "must not pass legacy audit",
+        humanVisualScore: 8,
+      },
+    });
+    expect(approve.statusCode).toBe(400);
+    expect(approve.json().error).toContain("棋盤貼圖");
+
+    const reject = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/verdicts",
+      payload: {
+        key: item.key,
+        candidateHash: item.candidateHash,
+        reviewHash: item.reviewHash,
+        verdict: "reject",
+        reviewer: "Owner",
+        note: "legacy audit is insufficient",
+        humanVisualScore: 0,
+      },
+    });
+    expect(reject.statusCode).toBe(200);
+  });
+
+  it("invalidates a verdict when screenshots or GPU review material change without changing candidate JSON", async () => {
+    const candidate = {
+      id: "skill.review-hash",
+      schema: "vfx-script@1",
+      abilityId: "skill.review-hash",
+      segments: [{ kind: "floatingText", on: "castStart", text: "same candidate" }],
+    };
+    const first = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "vfx-scripts", id: candidate.id },
+        purpose: "production-candidate",
+        candidate,
+        summary: "first frame",
+        visualEvidence: [VISUAL_EVIDENCE[0]],
+        visualAudit: VISUAL_AUDIT,
+        autoVisualScore: VISUAL_AUDIT.autoVisualScore,
+      },
+    });
+    expect(first.statusCode).toBe(201);
+    const reviewed = first.json().proposal as { key: string; candidateHash: string; reviewHash: string };
+    const verdict = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/verdicts",
+      payload: {
+        key: reviewed.key,
+        candidateHash: reviewed.candidateHash,
+        reviewHash: reviewed.reviewHash,
+        verdict: "approve",
+        reviewer: "Owner",
+        note: "reviewed the first evidence",
+        humanVisualScore: 8,
+      },
+    });
+    expect(verdict.statusCode).toBe(200);
+
+    const changed = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "vfx-scripts", id: candidate.id },
+        purpose: "production-candidate",
+        candidate,
+        summary: "second frame",
+        visualEvidence: [VISUAL_EVIDENCE[1]],
+        visualAudit: { ...VISUAL_AUDIT, worstAtMs: 1_200 },
+        autoVisualScore: VISUAL_AUDIT.autoVisualScore,
+      },
+    });
+    expect(changed.statusCode).toBe(201);
+    const resubmitted = changed.json().proposal as { key: string; candidateHash: string; reviewHash: string };
+    expect(resubmitted.candidateHash).toBe(reviewed.candidateHash);
+    expect(resubmitted.reviewHash).not.toBe(reviewed.reviewHash);
+
+    const queue = (await app.inject({ url: "/content-api/ai-review/proposals" })).json();
+    expect(queue.items[0].status).toBe("changed-after-review");
+    const stale = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/verdicts",
+      payload: {
+        key: resubmitted.key,
+        candidateHash: resubmitted.candidateHash,
+        reviewHash: reviewed.reviewHash,
+        verdict: "approve",
+        reviewer: "Owner",
+        note: "must not carry over",
+        humanVisualScore: 8,
+      },
+    });
+    expect(stale.statusCode).toBe(409);
+    expect(stale.json().error).toContain("擷圖／稽核收據已變更");
+
+    const stalePromotion = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/promote",
+      payload: {
+        key: resubmitted.key,
+        candidateHash: reviewed.candidateHash,
+        reviewHash: reviewed.reviewHash,
+      },
+    });
+    expect(stalePromotion.statusCode).toBe(409);
+    expect(stalePromotion.json().error).toContain("審查材料已變更");
+  });
+
+  it("recomputes candidateHash from proposal bytes instead of trusting a manually stale stored hash", async () => {
+    const submitted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "items", id: ITEM.id },
+        purpose: "production-candidate",
+        candidate: { ...ITEM, cost: 970 },
+        summary: "original",
+      },
+    });
+    expect(submitted.statusCode).toBe(201);
+    const original = submitted.json().proposal as { key: string; candidateHash: string; reviewHash: string };
+    const proposalFile = join(root, ".review", "ai-proposals", "items--ember-rod.json");
+    const stored = JSON.parse(readFileSync(proposalFile, "utf8"));
+    stored.candidate.cost = 5_000;
+    // Deliberately leave both stored hashes unchanged to simulate an unsafe
+    // manual edit or a stale external writer.
+    writeFileSync(proposalFile, `${JSON.stringify(stored, null, 2)}\n`, "utf8");
+
+    const queue = (await app.inject({ url: "/content-api/ai-review/proposals" })).json();
+    expect(queue.items[0].candidateHash).not.toBe(original.candidateHash);
+    expect(queue.items[0].reviewHash).not.toBe(original.reviewHash);
+    const staleVerdict = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/verdicts",
+      payload: {
+        key: original.key,
+        candidateHash: original.candidateHash,
+        reviewHash: original.reviewHash,
+        verdict: "approve",
+        reviewer: "Owner",
+        note: "must not authorize edited bytes",
+      },
+    });
+    expect(staleVerdict.statusCode).toBe(409);
+    expect(staleVerdict.json().error).toContain("候選內容已變更");
   });
 });
 

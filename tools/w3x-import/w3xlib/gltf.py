@@ -63,6 +63,57 @@ def _norm_q(q):
     return tuple(c / m for c in q)
 
 
+def _key_opaque_additive_carrier(img):
+    """Turn an opaque, dominant edge backdrop into ONE+ONE-safe glow art.
+
+    Some legacy BLPs encode an effect as a dark shape on an opaque white (or
+    coloured) carrier.  Plain luminance-keying assumes the opposite convention
+    (bright shape on black) and therefore turns the carrier into a solid card.
+    Detect only the strong, non-uniform edge-carrier shape; a genuinely solid
+    glowing quad (100% one colour) remains untouched.
+
+    The keyed output is grayscale on black, with alpha carrying the same mask.
+    Black RGB at the carrier is essential: the shipped model-FX path faithfully
+    uses WC3 ONE+ONE for additive materials, and ONE+ONE does not read alpha.
+    """
+    from PIL import Image
+
+    rgba = img.convert("RGBA")
+    width, height = rgba.size
+    pixels = list(rgba.getdata())
+    border = max(1, round(min(width, height) * 0.05))
+    bins: dict[int, list] = {}
+    edge_total = 0
+    for index, (r, g, b, _a) in enumerate(pixels):
+        x, y = index % width, index // width
+        edge = x < border or y < border or x >= width - border or y >= height - border
+        if edge:
+            edge_total += 1
+        key = ((r >> 5) << 6) | ((g >> 5) << 3) | (b >> 5)
+        row = bins.setdefault(key, [0, 0, 0, 0, 0])
+        row[0] += 1
+        row[1] += int(edge)
+        row[2] += r
+        row[3] += g
+        row[4] += b
+    dominant = max(bins.values(), key=lambda row: row[1], default=[0, 0, 0, 0, 0])
+    total_share = dominant[0] / len(pixels) if pixels else 0
+    edge_share = dominant[1] / edge_total if edge_total else 0
+    if dominant[0] <= 0 or total_share < 0.10 or total_share >= 0.98 or edge_share < 0.60:
+        return rgba, False
+    bg = tuple(round(dominant[channel] / dominant[0]) for channel in (2, 3, 4))
+    if max(bg) <= 16:
+        return rgba, False
+    distance = [max(abs(r - bg[0]), abs(g - bg[1]), abs(b - bg[2])) for r, g, b, _a in pixels]
+    peak = max(distance, default=0)
+    if peak <= 8:
+        return rgba, False
+    mask = [0 if value <= 8 else min(255, round(value * 255 / peak)) for value in distance]
+    out = Image.new("RGBA", rgba.size)
+    out.putdata([(value, value, value, value) for value in mask])
+    return out, True
+
+
 # --- effect-geoset guard (task #17) -----------------------------------------
 # WC3 particle/emitter effects (giant beams, ground rings, glow billboards) are
 # sometimes authored as ordinary GEOS geosets. Baked as solid geometry they
@@ -308,7 +359,9 @@ class FilterMode:
 MDX_FILTER_MODES: dict[int, FilterMode] = {
     0: FilterMode(
         0, "None", "blending OFF", "opaque",
-        "⛔ 連 alpha test 都沒有 ⇒ 貼圖就算帶 1-bit alpha 也**切不掉** ⇒ 一律 OPAQUE。",
+        "WC3 關閉 blending；但 GGD 禁止把帶透明背景的角色／特效 atlas 當成"
+        "不透明方片。貼圖有可用 alpha 時以 alpha 安全政策升級為 MASK／BLEND；"
+        "只有 alpha 平坦不透明才保留 OPAQUE。",
     ),
     1: FilterMode(
         1, "Transparent", "alpha test; blending OFF", "cutout",
@@ -682,6 +735,51 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
 
     luma_to_gltf: dict[int, int] = {}
 
+    additive_to_gltf: dict[int, int] = {}
+
+    def gltf_texture_additive(tex_id: int) -> int:
+        """Embed an explicit-alpha texture that is also safe under ONE+ONE.
+
+        Warcraft additive materials ignore source alpha.  The client preserves
+        that behaviour for glowing model-FX materials, so an otherwise normal
+        PNG whose transparent texels retain a white/red matte draws that matte
+        as a solid card in game.  Alpha/alpha-key rendering is unchanged when
+        RGB below alpha=0 is cleared; additive rendering gains the required
+        identity value (black).
+
+        Keep this as a separate cache from :func:`gltf_texture`: the same MDX
+        texture may also be used by an opaque body layer, which must retain its
+        original pixels byte-for-byte.
+        """
+        if tex_id in additive_to_gltf:
+            return additive_to_gltf[tex_id]
+        from PIL import Image
+        png = textures_png.get(tex_id)
+        if png is None:
+            # Match gltf_texture's unresolved-texture fallback.  The source
+            # problem is still reported by the importer; do not pretend a
+            # missing texture is transparent.
+            png = _gray_png()
+        img = Image.open(io.BytesIO(png)).convert("RGBA")
+        pixels = list(img.getdata())
+        changed = False
+        for i, (r, g, b, a) in enumerate(pixels):
+            if a <= 5 and (r != 0 or g != 0 or b != 0):
+                pixels[i] = (0, 0, 0, a)
+                changed = True
+        if changed:
+            img.putdata(pixels)
+            out = io.BytesIO()
+            img.save(out, "PNG")
+            png = out.getvalue()
+        view = buf.add_blob(png)
+        gltf["images"].append({"bufferView": view, "mimeType": "image/png"})
+        gltf["textures"].append(
+            {"source": len(gltf["images"]) - 1, "sampler": 0}
+        )
+        additive_to_gltf[tex_id] = len(gltf["textures"]) - 1
+        return additive_to_gltf[tex_id]
+
     def gltf_texture_luma(tex_id: int) -> int:
         """Additive-glow art with no alpha channel gets one derived from its
         own luminance (alpha := max(R,G,B)): black background -> transparent,
@@ -700,8 +798,13 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
             # texture genuinely unresolvable -> soft gray placeholder so the
             # geometry is at least visible (never zero pixels again)
             img = Image.new("RGBA", (8, 8), (150, 150, 150, 255))
-        r, g, b, _a = img.split()
-        img.putalpha(ImageChops.lighter(ImageChops.lighter(r, g), b))
+        img, carrier_keyed = _key_opaque_additive_carrier(img)
+        if carrier_keyed:
+            res.notes.append(
+                f"texture {tex_id}: opaque edge carrier → black-background additive key")
+        else:
+            r, g, b, _a = img.split()
+            img.putalpha(ImageChops.lighter(ImageChops.lighter(r, g), b))
         out = io.BytesIO()
         img.save(out, "PNG")
         view = buf.add_blob(out.getvalue())
@@ -778,10 +881,17 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
         if info.kind in ("additive", "multiply", "multiply2x"):
             return "BLEND"
         hint = tex_alpha.get(layer.texture_id, "opaque")
-        if info.kind == "opaque" or hint == "opaque":
+        if hint == "opaque":
             # ⭐ GH#841 —— alpha 平坦不透明（或根本沒有 alpha 通道）時
             # WC3 的 alpha test 處處通過、alpha 混色混不出東西 ⇒ 就是不透明。
             return "OPAQUE"
+        if info.kind == "opaque":
+            # GGD visual-safety policy: an atlas with real transparency may
+            # never be emitted as glTF OPAQUE.  OPAQUE ignores PNG alpha and
+            # turns hair cards, capes and effect planes into full rectangles
+            # during animation.  Preserve the decoded alpha shape even when
+            # the legacy WC3 layer said FilterMode=None.
+            return "MASK" if hint == "mask" else "BLEND"
         if info.kind == "cutout":
             return "BLEND" if hint == "blend" else "MASK"
         return "MASK" if hint == "mask" else "BLEND"
@@ -876,7 +986,7 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
                 # `convert_stock_model.py::texture_shape_report` 的
                 # `LUMA-KEY-NEEDED` 判決）改用 luma 會變成一塊亮方塊。
                 # ⇒ 兩個方向都要活得下來：有 alpha 就用 alpha，沒有才推 luma。
-                tix = gltf_texture(layer.texture_id)
+                tix = gltf_texture_additive(layer.texture_id)
             mat["emissiveTexture"] = {"index": tix}
             mat["emissiveFactor"] = [1.0, 1.0, 1.0]
             mat["extensions"] = {"KHR_materials_emissive_strength":

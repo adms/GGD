@@ -1,0 +1,158 @@
+{
+  "id": "godie-hart.r",
+  "schema": "vfx-script@1",
+  "abilityId": "godie-hart.r",
+  "notes": "#547／#838 main 驗收候選：01-04 超究武神霸斬（原作參考 9X6LCjFgAiA）。真 comboStrike 驅動角色逐刀閃到目標周圍、黃藍交叉斬痕；第七段升起黃藍直立光束砲。傷害與七段時序仍只住 ability JSON。",
+  "segments": [
+    {
+      "text": "超究武神霸斬",
+      "colorRgb": [
+        255,
+        212,
+        90
+      ],
+      "sizeScale": 1.8,
+      "durationSec": 1.2,
+      "kind": "floatingText",
+      "on": "castStart"
+    },
+    {
+      "kind": "anim",
+      "on": "strike",
+      "at": "caster",
+      "pulse": "attack",
+      "clipWindowMs": 320
+    },
+    {
+      "kind": "anim",
+      "on": "strike",
+      "at": "target",
+      "pulse": "hurt",
+      "clipWindowMs": 520
+    },
+    {
+      "vfxId": "fx.prim.holy.slash",
+      "at": "target",
+      "durationSec": 0.24,
+      "kind": "vfx",
+      "on": "strike",
+      "atMs": 0,
+      "w3xScale": 0.58,
+      "flyHeight": 82,
+      "alpha": 0.72,
+      "facingDeg": 52
+    },
+    {
+      "vfxId": "fx.prim.lightning.slash",
+      "at": "target",
+      "durationSec": 0.22,
+      "kind": "vfx",
+      "on": "strike",
+      "atMs": 35,
+      "w3xScale": 0.62,
+      "flyHeight": 82,
+      "alpha": 0.78,
+      "facingDeg": -58
+    },
+    {
+      "vfxId": "fx.fam.light-column.holy.s150",
+      "at": "target",
+      "durationSec": 1.35,
+      "kind": "vfx",
+      "on": "strike",
+      "atMs": 0,
+      "strikeIndex": 7,
+      "w3xScale": 0.9,
+      "tint": [255, 210, 70],
+      "flyHeight": 0,
+      "alpha": 0.28,
+      "offsetSideU": -0.55,
+      "facingDeg": 0
+    },
+    {
+      "vfxId": "fx.fam.light-column.w3x-00ffff.s150",
+      "at": "target",
+      "durationSec": 1.2,
+      "kind": "vfx",
+      "on": "strike",
+      "atMs": 70,
+      "strikeIndex": 7,
+      "w3xScale": 2.65,
+      "tint": [70, 180, 255],
+      "flyHeight": 0,
+      "alpha": 0.72,
+      "offsetSideU": 0.55,
+      "facingDeg": 0
+    },
+    {
+      "amplitude": 0.55,
+      "durationSec": 0.6,
+      "kind": "screenShake",
+      "on": "strike",
+      "strikeIndex": 7
+    },
+    {
+      "kind": "bodyMove",
+      "on": "strike",
+      "strikeIndex": 1,
+      "at": "caster",
+      "mode": "teleport",
+      "offset": { "x": -0.55, "y": 0, "z": 2.35 },
+      "durationMs": 360
+    },
+    {
+      "kind": "bodyMove",
+      "on": "strike",
+      "strikeIndex": 2,
+      "at": "caster",
+      "mode": "teleport",
+      "offset": { "x": 0.55, "y": 0, "z": 3.65 },
+      "durationMs": 280
+    },
+    {
+      "kind": "bodyMove",
+      "on": "strike",
+      "strikeIndex": 3,
+      "at": "caster",
+      "mode": "teleport",
+      "offset": { "x": -0.45, "y": 0.15, "z": 3.55 },
+      "durationMs": 280
+    },
+    {
+      "kind": "bodyMove",
+      "on": "strike",
+      "strikeIndex": 4,
+      "at": "caster",
+      "mode": "teleport",
+      "offset": { "x": 0.45, "y": 0.1, "z": 2.4 },
+      "durationMs": 280
+    },
+    {
+      "kind": "bodyMove",
+      "on": "strike",
+      "strikeIndex": 5,
+      "at": "caster",
+      "mode": "teleport",
+      "offset": { "x": -0.25, "y": 0.35, "z": 2.55 },
+      "durationMs": 280
+    },
+    {
+      "kind": "bodyMove",
+      "on": "strike",
+      "strikeIndex": 6,
+      "at": "caster",
+      "mode": "teleport",
+      "offset": { "x": 0.25, "y": 0.25, "z": 3.45 },
+      "durationMs": 320
+    },
+    {
+      "kind": "bodyMove",
+      "on": "strike",
+      "strikeIndex": 7,
+      "at": "caster",
+      "mode": "arc",
+      "offset": { "x": 0, "y": 1.2, "z": 3 },
+      "durationMs": 650
+    }
+  ]
+}

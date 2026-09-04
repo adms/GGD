@@ -18,15 +18,12 @@
  * to make the UI honest — to not offer a save button in a build where saving
  * cannot work.
  *
- * ── THE DEV GATE ─────────────────────────────────────────────────────────────
- * `ENABLED` is `import.meta.env.DEV`, read through the repo's proven guarded
- * shape. Vite substitutes the flag statically, rollup dead-folds every guard,
- * and — because App.tsx only reaches the page through an
- * `import.meta.env.DEV`-guarded dynamic import — the chunk is never emitted at
- * all. The editor is ABSENT from a production admin build, not hidden.
- * The try/catch is load-bearing: this file is also imported by plain-node
- * vitest, where `import.meta.env` does not exist, and every writer must be
- * inert there rather than throwing.
+ * ── THE DEPLOYMENT GATE ──────────────────────────────────────────────────────
+ * Dev builds enable this surface automatically. Production builds ship it but
+ * keep it inert unless `VITE_GGD_CONTENT_EDIT=1` was provided at build/deploy
+ * time and the loopback content-api is actually running. The try/catch remains
+ * load-bearing because plain-node vitest has no `import.meta.env`; every writer
+ * must then be inert rather than throwing while this module loads.
  *
  * ── NO VERSION CONTROL (task #65) ────────────────────────────────────────────
  * This repo has no VCS and has already lost irreplaceable files once. So a save
@@ -214,6 +211,64 @@ export interface ContentApiOptions {
   /** injected by tests; the browser fetch otherwise */
   fetchFn?: EditFetch;
 }
+
+export interface AiReviewVerdictInput {
+  readonly key: string;
+  readonly candidateHash: string;
+  readonly reviewHash: string;
+  readonly verdict: "approve" | "reject" | "pass" | "fail";
+  readonly reviewer: string;
+  readonly note: string;
+  readonly humanVisualScore?: number;
+}
+
+export interface AiReviewPromoteInput {
+  readonly key: string;
+  readonly candidateHash: string;
+  readonly reviewHash: string;
+}
+
+export interface AiReviewApi {
+  /** Read the hash-locked proposal queue. The caller owns the view-model type. */
+  readonly proposals: <T>(opts?: ContentApiOptions) => Promise<T>;
+  /** Record a human verdict against one exact candidate hash. */
+  readonly verdict: (input: AiReviewVerdictInput, opts?: ContentApiOptions) => Promise<void>;
+  /** Explicitly promote an already-approved, still-current candidate. */
+  readonly promote: (input: AiReviewPromoteInput, opts?: ContentApiOptions) => Promise<void>;
+}
+
+/**
+ * AI review requests share the same deployment-time gate and the same single
+ * network authority as every other content mutation. Keeping these paths here
+ * is load-bearing: a review button must not acquire a second, unguarded write
+ * path merely because its payload is a verdict rather than a content document.
+ */
+async function aiReviewRequest<T>(
+  path: "proposals" | "verdicts" | "promote",
+  method: "GET" | "POST",
+  body: unknown,
+  opts: ContentApiOptions,
+): Promise<T> {
+  if (!ENABLED) throw new Error(OFF_MESSAGE);
+  const url = `/content-api/ai-review/${path}`;
+  try {
+    const res = await send(opts.fetchFn ?? defaultFetch, url, method, body);
+    if (res.status < 200 || res.status >= 300) throw new Error(errorOf(res.body, res.status, url));
+    return res.body as T;
+  } catch (error) {
+    if (error instanceof Error) throw error;
+    throw new Error(String(error));
+  }
+}
+
+const aiReviewApi: AiReviewApi = {
+  proposals: <T>(opts: ContentApiOptions = {}) =>
+    aiReviewRequest<T>("proposals", "GET", undefined, opts),
+  verdict: (input, opts = {}) =>
+    aiReviewRequest<void>("verdicts", "POST", input, opts),
+  promote: (input, opts = {}) =>
+    aiReviewRequest<void>("promote", "POST", input, opts),
+};
 
 // ---------------------------------------------------------------------------
 // the surface — EVERY export below short-circuits on ENABLED
@@ -511,12 +566,14 @@ export interface ContentEditApi {
   readonly plan: typeof writePlan;
   readonly create: typeof createDoc;
   readonly remove: typeof deleteDoc;
+  /** Hash-locked AI review ledger; verdict and Promote are always separate. */
+  readonly aiReview: AiReviewApi;
 }
 
 /**
- * The handle ContentPage holds. Constructed only from an
- * `import.meta.env.DEV`-guarded dynamic import, and still reports `enabled`
- * from the module gate so any other caller gets an inert object.
+ * The handle used by ContentPage and the hash-locked AI review page. It always
+ * reports `enabled` from the same module gate, so importing the UI cannot
+ * create a second authority or make a disabled writer live.
  */
 export function createContentEditApi(): ContentEditApi {
   return {
@@ -532,5 +589,6 @@ export function createContentEditApi(): ContentEditApi {
     plan: writePlan,
     create: createDoc,
     remove: deleteDoc,
+    aiReview: aiReviewApi,
   };
 }

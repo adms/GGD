@@ -95,8 +95,14 @@ async function spawnShipped(file: string, alpha?: number): Promise<PBRMaterial[]
 const lit = (m: PBRMaterial): boolean =>
   m.emissiveColor.r > 0 || m.emissiveColor.g > 0 || m.emissiveColor.b > 0;
 
+const isW3xAddAlpha = (m: PBRMaterial): boolean => {
+  const w3x = (m.metadata as { gltf?: { extras?: { w3x?: { blend?: unknown; filterMode?: unknown } } } })
+    ?.gltf?.extras?.w3x;
+  return w3x?.blend === "AddAlpha" || w3x?.filterMode === 4;
+};
+
 describe("stock glow 走原作的 additive 混合 (@visual-proof)", () => {
-  it("① 出貨光束的發光材質是**純加法**（SRC+DEST），⛔ 不是 alpha 混合、⛔ 也不是 ALPHA_ADD/DISABLE", async () => {
+  it("① 出貨光束的長條核心仍是**純加法**（SRC+DEST），沒有為了魔法陣去背把整支光束調暗", async () => {
     setStockGlowAdditive(undefined); // 出貨預設
     // ⭐ monsoonbolttarget = GH#780 的回歸現場（拳四郎變身閃電，7/7 材質全 glow 分支）。
     for (const file of ["revivehuman.glb", "monsoonbolttarget.glb"]) {
@@ -104,10 +110,15 @@ describe("stock glow 走原作的 additive 混合 (@visual-proof)", () => {
       const glow = mats.filter(lit);
       // 前提自證：這一份 .glb 真的有發光材質。⛔ 沒有的話下面的結論一律作廢。
       expect(glow.length, `前提不成立：${file} 一份發光材質都沒有`).toBeGreaterThan(0);
-      for (const m of glow) {
+      const fullAdditive = glow.filter((material) => material.alphaMode === ALPHA_ONEONE);
+      expect(
+        fullAdditive.length,
+        `${file} 沒有任何長條核心保留 ONEONE，代表魔法陣去背規則把整支光束一起調暗了`,
+      ).toBeGreaterThan(0);
+      for (const m of fullAdditive) {
         expect(
           m.alphaMode,
-          `${file}/${m.name} 不是純加法（SRC+DEST）⇒ 疊兩層不會變亮；⚠️ 若是 1（ALPHA_ADD）代表又乘了 luma-key 搬進 alpha 的亮度；⚠️ 若是 0（ALPHA_DISABLE）代表關掉混合不透明畫出 ⇒ 黑底閃電（GH#780）`,
+          `${file}/${m.name} 的長條核心不是純加法（SRC+DEST）⇒ 疊兩層不會變亮`,
         ).toBe(ALPHA_ONEONE);
         // ⚠️ 只設 alphaMode 是「寫了但不會發生」：needAlphaBlending() 為 false 時
         //    混合模式那一格根本不會被讀。
@@ -138,18 +149,80 @@ describe("stock glow 走原作的 additive 混合 (@visual-proof)", () => {
     // 粉紫魔法陣。分工判準是**材質自己的宣告**：alpha < 1 ⇒ 混合模式必須讀 alpha
     // （WC3 fm3 的逐字 blendFunc 就是 (SRC_ALPHA, ONE) ＝ Babylon ALPHA_ADD）。
     setStockGlowAdditive(undefined);
-    const mats = await spawnShipped("oblivionaura.glb", 0.9);
-    const glow = mats.filter(lit);
-    expect(glow.length, "前提不成立：oblivionaura 一份發光材質都沒有").toBeGreaterThan(0);
-    for (const m of glow) {
+    for (const file of ["oblivionaura.glb", "tomeofretrainingcaster.glb"]) {
+      const mats = await spawnShipped(file, 0.9);
+      const glow = mats.filter(lit);
+      expect(glow.length, `前提不成立：${file} 一份發光材質都沒有`).toBeGreaterThan(0);
+      for (const m of glow) {
+        expect(
+          m.alphaMode,
+          `${file}/${m.name} 宣告了 alpha 0.9 卻仍是 ONEONE ⇒ alpha 逐位元被忽略 ＝ #669 rollback 開關是死的、魔法陣疊爆成白`,
+        ).toBe(ALPHA_ADD);
+        expect(m.alpha, `${file}/${m.name} 的節點級 alpha 沒乘進最終材質`).toBeCloseTo(0.9, 5);
+        expect(
+          m.transparencyMode,
+          `${file}/${m.name} 沒解鎖成 ALPHABLEND ⇒ 混合模式那一格不會被讀`,
+        ).toBe(ALPHA_COMBINE);
+      }
+    }
+  });
+
+  it("⑤ 魔法陣即使節點 alpha=1 仍讀貼圖 alpha，不能退化成實心發光方片", async () => {
+    setStockGlowAdditive(undefined);
+    for (const file of [
+      "darkportaltarget.glb",
+      "divinering.glb",
+      "grandorcaura.glb",
+      "grandundeadaura.glb",
+      "midchildernanohaaura.glb",
+      "oblivionaura.glb",
+      "war3mapimported-poweraura.glb",
+    ]) {
+      const glow = (await spawnShipped(file)).filter(lit);
+      expect(glow.length, `前提不成立：${file} 一份發光魔法陣材質都沒有`).toBeGreaterThan(0);
+      const alphaShaped = glow.filter((material) => material.alphaMode === ALPHA_ADD);
       expect(
-        m.alphaMode,
-        `${m.name} 宣告了 alpha 0.9 卻仍是 ONEONE ⇒ alpha 逐位元被忽略 ＝ #669 rollback 開關是死的、魔法陣疊爆成白`,
-      ).toBe(ALPHA_ADD);
-      expect(m.alpha, `${m.name} 的節點級 alpha 沒乘進最終材質`).toBeCloseTo(0.9, 5);
-      expect(m.transparencyMode, `${m.name} 沒解鎖成 ALPHABLEND ⇒ 混合模式那一格不會被讀`).toBe(
-        ALPHA_COMBINE,
-      );
+        alphaShaped.length,
+        `${file} 的近正方形魔法陣沒有一片讀 PNG alpha，會整組退化成實心方片`,
+      ).toBeGreaterThan(0);
+      for (const material of alphaShaped) {
+        expect(
+          material.transparencyMode,
+          `${file}/${material.name} 沒解鎖 ALPHABLEND，貼圖去背仍不會生效`,
+        ).toBe(ALPHA_COMBINE);
+      }
+    }
+  });
+
+  it("⑥ 目前全部 14 份 WC3 AddAlpha GLB 都真的依貼圖 alpha 合成", async () => {
+    setStockGlowAdditive(undefined);
+    for (const file of [
+      "blackhole1.glb",
+      "crescent.glb",
+      "darkportaltarget.glb",
+      "doom.glb",
+      "earthtornado2.glb",
+      "frostnova.glb",
+      "grandorcaura.glb",
+      "grandundeadaura.glb",
+      "herocloudcyd.glb",
+      "markofchaostarget.glb",
+      "minitypeflame.glb",
+      "mirrorimagecaster.glb",
+      "war3mapimported-poweraura.glb",
+      "windmissle.glb",
+    ]) {
+      const addAlpha = (await spawnShipped(file)).filter(isW3xAddAlpha);
+      expect(addAlpha.length, `前提不成立：${file} 沒載到 AddAlpha 材質`).toBeGreaterThan(0);
+      for (const material of addAlpha) {
+        expect(
+          material.alphaMode,
+          `${file}/${material.name} 的 WC3 AddAlpha metadata 被忽略，透明底會在實際合成時露出`,
+        ).toBe(ALPHA_ADD);
+        expect(material.transparencyMode, `${file}/${material.name} 沒解鎖 ALPHABLEND`).toBe(
+          ALPHA_COMBINE,
+        );
+      }
     }
   });
 

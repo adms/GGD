@@ -437,12 +437,15 @@ describe("combat-env abilityRange (task #136)", () => {
       origin: "ability:sela.q",
       rng: w.rng,
     });
+    const spawn = w.events.find((event) => event.type === "projectileSpawn");
+    expect(spawn?.data.origin).toBe("ability:sela.q");
     const pid = [...w.projectile.keys()][0]!;
     // advance ONLY the projectile system (deterministic; no champion AI) until
     // the missile expires; it carries its END POINT in the projectileEnd event.
     for (let k = 0; k < 200 && w.projectile.has(pid); k++) projectileSystem(w);
     const end = w.events.filter((e) => e.type === "projectileEnd").at(-1);
     expect(end).toBeDefined();
+    expect(end!.data.origin).toBe("ability:sela.q");
     const traveled = Math.hypot(
       (end!.data.x as number) - start.x,
       (end!.data.z as number) - start.z,

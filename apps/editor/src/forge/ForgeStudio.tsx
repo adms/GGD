@@ -18,13 +18,12 @@
  *     operator can see that card 2 was actually consumed, and the same trace is
  *     what `stack.test.ts` asserts on.
  *
- * The preview is the REAL sim: `expandStack()` → merge onto the host ability doc
- * → `previewAbility` on a sandbox SimWorld through the real statPipeline and
- * resolveScaling. It is NOT a 3D cast — `PreviewController.mount()` is still a
- * renderless stub — and the UI says so rather than implying a shot that does not
- * happen.
+ * The preview is the REAL sim and the REAL render bridge: `expandStack()` →
+ * merge onto the host ability doc → IntentFrame through sandbox SimWorld → the
+ * shipped `VfxSystem` in a dual-model CameraRig arena. The timeline and stage
+ * share one playhead, so scrub/frame-step can never become a data-only fiction.
  */
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type DragEvent } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   paramsSchemaFor,
@@ -32,13 +31,12 @@ import {
   toLen,
   toApex,
   zAbilityDoc,
-  zChampionDoc,
   DEFAULT_TEMPLATE_CONFLICT,
   TEMPLATE_STACK_MAX_CARDS,
   type TemplateDoc,
-  type ChampionDoc,
   type TemplateConflictPolicy,
   type AbilityTemplateCard,
+  type AbilityTemplateBinding,
 } from "@ggd/shared/content";
 import {
   expandStack,
@@ -48,12 +46,23 @@ import {
 } from "@ggd/shared/content/templates/expand";
 import { embeddedSlotOf } from "@ggd/shared/content/editModel";
 import type { AbilityDef, ChampionDef, CoreAbilitySlot } from "@ggd/shared/sim";
+import type { AbilityId, ChampionId } from "@ggd/shared/ids";
+import {
+  Abilities as RuntimeAbilities,
+  Champions as RuntimeChampions,
+} from "@ggd/shared/sim/content/registry";
+import { VfxScripts } from "@ggd/shared/content/registries";
+import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
 import { api, WRITES_ENABLED } from "../api/client";
 import { FormRenderer } from "../form/FormRenderer";
 import { walkZod } from "../form/walk";
 import { setIn, type ErrorMap } from "../store";
-import { createBabylonPreviewController } from "../preview/BabylonPreviewController";
-import type { CastPreviewTrace } from "../preview/PreviewController";
+import { sameJson, useUndoHistory } from "../history";
+import {
+  createSimPreviewController,
+  type CastPreviewTrace,
+} from "../preview/PreviewController";
+import { ensurePreviewContentReady } from "../preview/previewContent";
 import { badgeFor } from "./badge";
 import { degradeNotes, satisfiedCaps } from "./degrade";
 import { planForgeWrite, runForgeWrite, type ForgePlan } from "./ForgeWriteback";
@@ -69,21 +78,44 @@ import {
   type VfxLayerDraft,
 } from "./vfxLayerModel";
 import { ConditionEditor } from "./ConditionEditor";
+import { passivePresentationRules } from "../passivePresentationPrinciples";
+import { PassivePresentationPanel } from "../PassivePresentationPanel";
 import type { EffectCondition } from "@ggd/shared/sim/content/condition";
+import {
+  TEMPLATE_STACK_DRAG_MIME,
+  decodeTemplateStackDrag,
+  encodeTemplateStackDrag,
+  insertTemplateCard,
+  moveTemplateCard,
+} from "./stackDnd";
+import { SimEventTimeline } from "./SimEventTimeline";
+import { runtimePreviewDoc } from "./runtimePreviewDoc";
+import { useChampionDocs } from "../preview/useChampionDocs";
+import { VfxForgePreview } from "../vfx-forge/VfxForgePreview";
+import {
+  scheduleSimEvents,
+  type ForgeAbility,
+} from "../vfx-forge/model";
 
 /**
- * GH#174 —— 工坊第 3 步從此有**畫面**。同一個 `PreviewController` 介面，
- * 資料那一半原封不動（它內部就持有 `createSimPreviewController()`），
- * 多出來的只有 `mount(canvas)` 之後的那顆 Engine/Scene。
+ * One authoritative Sim controller. Rendering consumes its emitted trace via
+ * the same VfxSystem used by the shipped game.
  */
-const controller = createBabylonPreviewController();
+const controller = createSimPreviewController();
 const fmt = (n: number): string => (Number.isInteger(n) ? String(n) : n.toFixed(2));
+const SIM_TICK_MS = 1000 / 30;
 
 /** 衝突處理 labels — the wording an operator has to be able to choose between. */
 const CONFLICT_LABELS: Readonly<Record<TemplateConflictPolicy, string>> = {
   reject: "重複即拒 — 兩張卡填同一格但值不同時，停下來讓我處理",
   lastWins: "後蓋前 — 讓後面的卡片覆蓋前面的值",
 };
+
+interface ForgeDraft {
+  cards: AbilityTemplateCard[];
+  onConflict: TemplateConflictPolicy;
+  layers: VfxLayerDraft[] | null;
+}
 
 export function ForgeStudio({
   template,
@@ -97,31 +129,37 @@ export function ForgeStudio({
   onBack(): void;
 }) {
   const [abilityId, setAbilityId] = useState<string>("");
-  const [cards, setCards] = useState<AbilityTemplateCard[]>(() => [
-    { ref: template.id, params: defaultParamsFor(template) },
-  ]);
-  const [onConflict, setOnConflict] = useState<TemplateConflictPolicy>(DEFAULT_TEMPLATE_CONFLICT);
-  /**
-   * 特效堆疊。`null` = 還沒從 host doc 種下去（技能還沒選，或正在載）。
-   * 種子在下面的 effect 裡下，這樣切換技能時會跟著換成那一支自己的層。
-   */
-  const [layers, setLayers] = useState<VfxLayerDraft[] | null>(null);
+  const editHistory = useUndoHistory<ForgeDraft>({
+    cards: [{ ref: template.id, params: defaultParamsFor(template) }],
+    onConflict: DEFAULT_TEMPLATE_CONFLICT,
+    // `null` = 還沒從 host doc 種下去（技能還沒選，或正在載）。
+    layers: null,
+  }, sameJson);
+  const { cards, onConflict, layers } = editHistory.value;
   const [status, setStatus] = useState<string | null>(null);
   const [plan, setPlan] = useState<ForgePlan | null>(null);
   const [signedOff, setSignedOff] = useState(false);
+  const [paletteQuery, setPaletteQuery] = useState("");
+  const [dragOverSlot, setDragOverSlot] = useState<number | null>(null);
   /** 最近一次【真的放一次】之後，sim 真的發生了什麼（GH#174）。 */
   const [trace, setTrace] = useState<CastPreviewTrace | null>(null);
+  const [playheadMs, setPlayheadMs] = useState(0);
+  const [playing, setPlaying] = useState(false);
+  /** 只有操作者親手試放過的同一支技能，後續改參數才會所見即所得地自動重播。 */
+  const auditionedAbilityRef = useRef<string | null>(null);
 
-  /**
-   * 3D 舞台。⚠️ `mount(null)` 一定要在 unmount 時呼叫 —— `controller` 是**模組層**
-   * 的單例（工坊開開關關共用同一顆），少了這一行，離開頁面之後 Engine 還在
-   * `runRenderLoop` 裡轉，而畫面上完全看不出來。
-   */
-  const stageRef = useRef<HTMLCanvasElement | null>(null);
   useEffect(() => {
-    controller.mount(stageRef.current);
-    return () => controller.mount(null);
-  }, []);
+    if (typeof globalThis.addEventListener !== "function") return;
+    const onKeyDown = (event: KeyboardEvent): void => {
+      if (!(event.ctrlKey || event.metaKey) || event.altKey) return;
+      const key = event.key.toLowerCase();
+      if (key === "z" && event.shiftKey) { event.preventDefault(); editHistory.redo(); }
+      else if (key === "z") { event.preventDefault(); editHistory.undo(); }
+      else if (key === "y") { event.preventDefault(); editHistory.redo(); }
+    };
+    globalThis.addEventListener("keydown", onKeyDown);
+    return () => globalThis.removeEventListener("keydown", onKeyDown);
+  }, [editHistory.redo, editHistory.undo]);
 
   /**
    * Every template the studio can resolve a `ref` against. The picked one is
@@ -139,6 +177,11 @@ export function ForgeStudio({
     () => [...docs.values()].filter((t) => t.status === "enabled").sort((a, b) => (a.id < b.id ? -1 : 1)),
     [docs],
   );
+  const visibleAddable = useMemo(() => {
+    const q = paletteQuery.trim().toLowerCase();
+    if (q === "") return addable;
+    return addable.filter((t) => `${t.name} ${t.id} ${t.family}`.toLowerCase().includes(q));
+  }, [addable, paletteQuery]);
 
   const resolved = useMemo(
     () =>
@@ -160,7 +203,17 @@ export function ForgeStudio({
     queryFn: () => api.index("abilities"),
     staleTime: 30_000,
   });
-  const champions = useChampionDocs();
+  const {
+    champions,
+    isLoading: championsLoading,
+    error: championsError,
+  } = useChampionDocs();
+  const previewContent = useQuery({
+    queryKey: ["preview-runtime-content"],
+    queryFn: ensurePreviewContentReady,
+    staleTime: Number.POSITIVE_INFINITY,
+    gcTime: Number.POSITIVE_INFINITY,
+  });
 
   /**
    * `content/vfx/` 的全部 id。這張表就是 #230 的入口：491 支從原作抽出來的
@@ -179,6 +232,11 @@ export function ForgeStudio({
   const host = useQuery({
     queryKey: ["forge", "ability", abilityId],
     queryFn: () => api.doc<Record<string, unknown>>("abilities", abilityId),
+    enabled: abilityId !== "",
+  });
+  const abilitySource = useQuery({
+    queryKey: ["forge", "editor-source", "abilities", abilityId],
+    queryFn: () => api.editorSource("abilities", abilityId),
     enabled: abilityId !== "",
   });
 
@@ -202,7 +260,7 @@ export function ForgeStudio({
   const conflictBlocks = onConflict === "reject" && conflicts.length > 0;
 
   const binding = useMemo(
-    () => denormalizeTemplateBinding(cards, onConflict),
+    () => denormalizeTemplateBinding(cards, onConflict) as AbilityTemplateBinding,
     [cards, onConflict],
   );
 
@@ -212,8 +270,8 @@ export function ForgeStudio({
   useEffect(() => {
     if (hostId === "" || seededFor.current === hostId) return;
     seededFor.current = hostId;
-    setLayers(draftsFromDoc(host.data ?? null));
-  }, [hostId, host.data]);
+    editHistory.reset({ ...editHistory.value, layers: draftsFromDoc(host.data ?? null) });
+  }, [hostId, host.data, editHistory.reset, editHistory.value]);
 
   const after = useMemo(() => {
     if (!host.data || !expansion.ok) return null;
@@ -225,6 +283,7 @@ export function ForgeStudio({
     const { vfxLayers: _drop, ...rest } = merged as Record<string, unknown>;
     return { ...rest, ...patchForDoc(layers) } as Record<string, unknown>;
   }, [host.data, expansion, binding, layers]);
+  const passiveRules = useMemo(() => passivePresentationRules(after ?? host.data), [after, host.data]);
 
   const docErrors: ErrorMap = useMemo(() => {
     if (!after) return {};
@@ -251,17 +310,32 @@ export function ForgeStudio({
 
   // ---- the live try-in-preview: real sim, real stats ----
   const preview = useMemo(() => {
-    if (!after) return null;
-    const parsed = zAbilityDoc.safeParse(after);
+    if (!after || !previewContent.data || !expansion.ok) return null;
+    const id = String(after["id"] ?? "") as AbilityId;
+    const registeredAbility = RuntimeAbilities.tryGet(id);
+    if (!registeredAbility) {
+      return { error: `正式 Runtime 註冊表找不到技能 ${id}` } as const;
+    }
+    const runtimeDoc = runtimePreviewDoc(
+      after,
+      registeredAbility as unknown as Record<string, unknown>,
+      expansion.value.result,
+      binding,
+    );
+    const parsed = zAbilityDoc.safeParse(runtimeDoc);
     if (!parsed.success) return { error: "展開結果尚未通過 zAbilityDoc 校驗" } as const;
     const ability = parsed.data as unknown as AbilityDef;
     const owner = champions.find((c) =>
       (["Q", "W", "E", "R"] as const).some((s) => c.abilities[s].id === ability.id),
     );
     if (!owner || ability.slot === "EX") return { lines: null } as const;
+    const runtimeOwner = RuntimeChampions.tryGet(owner.id as ChampionId);
+    if (!runtimeOwner) {
+      return { error: `正式 Runtime 註冊表找不到英雄 ${owner.id}` } as const;
+    }
     const champ: ChampionDef = {
-      ...(owner as unknown as ChampionDef),
-      abilities: { ...(owner as unknown as ChampionDef).abilities, [ability.slot]: ability },
+      ...runtimeOwner,
+      abilities: { ...runtimeOwner.abilities, [ability.slot]: ability },
     };
     try {
       return {
@@ -275,7 +349,71 @@ export function ForgeStudio({
     } catch (e) {
       return { error: String(e) } as const;
     }
-  }, [after, champions]);
+  }, [after, binding, champions, expansion, previewContent.data]);
+
+  const runCurrentCast = useCallback((remember: boolean): void => {
+    if (!preview || !("champ" in preview)) return;
+    if (remember) auditionedAbilityRef.current = abilityId;
+    try {
+      const next = controller.castAbility(preview.champ, preview.slot, { level: 18 });
+      setTrace(next);
+      setPlayheadMs(0);
+      setPlaying(next.accepted);
+      setStatus(null);
+    } catch (e) {
+      setTrace(null);
+      setPlaying(false);
+      setStatus(`試放失敗：${String(e)}`);
+    }
+  }, [abilityId, preview]);
+
+  useEffect(() => {
+    auditionedAbilityRef.current = null;
+    setTrace(null);
+    setPlayheadMs(0);
+    setPlaying(false);
+  }, [abilityId]);
+
+  // WYSIWYG：先手動試放一次取得意圖後，修改模板／特效參數便用真 Sim 立即重播。
+  useEffect(() => {
+    if (auditionedAbilityRef.current !== abilityId) return;
+    runCurrentCast(false);
+  }, [abilityId, after, runCurrentCast]);
+
+  const stageAbility = useMemo<ForgeAbility | null>(() => {
+    if (!preview || !("champ" in preview)) return null;
+    return preview.champ.abilities[preview.slot] as ForgeAbility;
+  }, [preview]);
+  const schedule = useMemo(
+    () => trace && stageAbility ? scheduleSimEvents(trace.events, stageAbility.id) : [],
+    [stageAbility, trace],
+  );
+  const timelineEvents = useMemo(
+    () => schedule.map(({ atMs, event }) => ({
+      type: event.type,
+      tick: Math.round(atMs / SIM_TICK_MS),
+      data: event.data,
+    })),
+    [schedule],
+  );
+  const previewDurationMs = useMemo(
+    () => Math.max(1000, schedule.reduce((last, event) => Math.max(last, event.atMs), 0) + 1000),
+    [schedule],
+  );
+  const stageScript = useMemo<VfxScriptDoc | null>(() => {
+    if (!stageAbility) return null;
+    return VfxScripts.tryGet(stageAbility.id) ?? {
+      id: stageAbility.id,
+      schema: "vfx-script@1",
+      abilityId: stageAbility.id,
+      segments: [],
+    };
+  }, [previewContent.data, stageAbility]);
+  const targetChampion = useMemo(
+    () => (champions.find((champion) => champion.id !== (preview && "champ" in preview ? preview.champ.id : ""))
+      ?? (preview && "champ" in preview ? preview.champ : null)) as ChampionDef | null,
+    [champions, preview],
+  );
 
   const championDoc = useMemo(() => {
     if (!abilityId) return null;
@@ -284,34 +422,84 @@ export function ForgeStudio({
     );
     return (owner as unknown as Record<string, unknown>) ?? null;
   }, [champions, abilityId]);
+  const championId = championDoc && typeof championDoc["id"] === "string"
+    ? championDoc["id"]
+    : "";
+  const championSource = useQuery({
+    queryKey: ["forge", "editor-source", "champions", championId],
+    queryFn: () => api.editorSource("champions", championId),
+    enabled: championId !== "",
+  });
 
   // ---- stack editing ------------------------------------------------------
   const setCardParams = (i: number, next: Record<string, unknown>): void =>
-    setCards((cs) => cs.map((c, j) => (j === i ? { ...c, params: next } : c)));
+    editHistory.commit((draft) => ({
+      ...draft,
+      cards: draft.cards.map((c, j) => (j === i ? { ...c, params: next } : c)),
+    }));
 
   const addCard = (id: string): void => {
     const t = docs.get(id);
     if (t === undefined || cards.length >= TEMPLATE_STACK_MAX_CARDS) return;
-    setCards((cs) => [...cs, { ref: t.id, params: defaultParamsFor(t) }]);
+    editHistory.commit((draft) => ({
+      ...draft,
+      cards: [...draft.cards, { ref: t.id, params: defaultParamsFor(t) }],
+    }));
+  };
+
+  const insertCard = (id: string, at: number): void => {
+    const t = docs.get(id);
+    if (t === undefined || t.status !== "enabled") return;
+    editHistory.commit((draft) => ({
+      ...draft,
+      cards: insertTemplateCard(
+        draft.cards,
+        { ref: t.id, params: defaultParamsFor(t) },
+        at,
+        TEMPLATE_STACK_MAX_CARDS,
+      ),
+    }));
   };
 
   const removeCard = (i: number): void =>
     // The floor is 1: an EMPTY stack is a doc that claims to be templated and
     // expands to nothing, which is the silent no-op the Forge exists to prevent.
-    setCards((cs) => (cs.length <= 1 ? cs : cs.filter((_, j) => j !== i)));
+    editHistory.commit((draft) => ({
+      ...draft,
+      cards: draft.cards.length <= 1 ? draft.cards : draft.cards.filter((_, j) => j !== i),
+    }));
 
   const moveCard = (i: number, delta: number): void =>
-    setCards((cs) => {
+    editHistory.commit((draft) => {
+      const cs = draft.cards;
       const j = i + delta;
-      if (j < 0 || j >= cs.length) return cs;
+      if (j < 0 || j >= cs.length) return draft;
       const next = cs.slice();
       [next[i], next[j]] = [next[j]!, next[i]!];
-      return next;
+      return { ...draft, cards: next };
     });
+
+  const dropCard = (event: DragEvent<HTMLElement>, at: number): void => {
+    event.preventDefault();
+    setDragOverSlot(null);
+    const payload = decodeTemplateStackDrag(event.dataTransfer.getData(TEMPLATE_STACK_DRAG_MIME));
+    if (!payload) return;
+    if (payload.kind === "catalog-template") {
+      insertCard(payload.templateId, at);
+      return;
+    }
+    editHistory.commit((draft) => ({
+      ...draft,
+      cards: moveTemplateCard(draft.cards, payload.index, at),
+    }));
+  };
 
   const buildPlan = () => {
     if (!host.data || !after) return;
-    setPlan(planForgeWrite(host.data, after, championDoc, docs));
+    setPlan(planForgeWrite(host.data, after, championDoc, docs, {
+      ability: abilitySource.data ?? null,
+      champion: championSource.data ?? null,
+    }));
     setSignedOff(false);
   };
 
@@ -349,6 +537,10 @@ export function ForgeStudio({
         <button type="button" className="forge-back" onClick={onBack}>
           ← 回模板選擇
         </button>
+        <div className="forge-history">
+          <button type="button" disabled={!editHistory.canUndo} onClick={editHistory.undo} title="復原（Ctrl/Cmd+Z）">↶ 復原</button>
+          <button type="button" disabled={!editHistory.canRedo} onClick={editHistory.redo} title="重做（Ctrl/Cmd+Shift+Z）">↷ 重做</button>
+        </div>
         <h1>
           鑄技工坊 · {resolved.map((r) => r.template.name).join(" ＋ ")}
           <span className={`forge-badge ${badgeFor(template.gapScore).tone}`}>
@@ -404,13 +596,47 @@ export function ForgeStudio({
             「衝突處理」決定誰說了算。上限 {TEMPLATE_STACK_MAX_CARDS} 張。
           </p>
 
+          <details className="forge-template-palette" open>
+            <summary>模板資源池 · 拖入效果鏈或按一下加入</summary>
+            <input
+              aria-label="搜尋模板資源"
+              placeholder="搜尋名稱、id、family"
+              value={paletteQuery}
+              onChange={(e) => setPaletteQuery(e.target.value)}
+            />
+            <div className="forge-template-palette-items">
+              {visibleAddable.map((t) => (
+                <button
+                  type="button"
+                  key={t.id}
+                  draggable={cards.length < TEMPLATE_STACK_MAX_CARDS}
+                  disabled={cards.length >= TEMPLATE_STACK_MAX_CARDS}
+                  title={`拖入效果鏈，或按一下加入：${t.description}`}
+                  onDragStart={(event) => {
+                    event.dataTransfer.effectAllowed = "copy";
+                    event.dataTransfer.setData(
+                      TEMPLATE_STACK_DRAG_MIME,
+                      encodeTemplateStackDrag({ kind: "catalog-template", templateId: t.id }),
+                    );
+                  }}
+                  onClick={() => addCard(t.id)}
+                >
+                  <b>{t.name}</b><code>{t.family}</code>
+                </button>
+              ))}
+            </div>
+          </details>
+
           <label className="forge-conflict">
             <span>衝突處理</span>
             <select
               data-field="stack.onConflict"
               aria-label="衝突處理"
               value={onConflict}
-              onChange={(e) => setOnConflict(e.target.value as TemplateConflictPolicy)}
+              onChange={(e) => editHistory.commit((draft) => ({
+                ...draft,
+                onConflict: e.target.value as TemplateConflictPolicy,
+              }))}
             >
               {(Object.keys(CONFLICT_LABELS) as TemplateConflictPolicy[]).map((k) => (
                 <option key={k} value={k}>
@@ -420,19 +646,41 @@ export function ForgeStudio({
             </select>
           </label>
 
-          {resolved.map((r, i) => (
-            <CardPanel
-              key={`${r.card.ref}-${i}`}
-              index={i}
-              total={resolved.length}
-              template={r.template}
-              params={r.card.params}
-              errors={paramErrors[i] ?? {}}
-              onParams={(next) => setCardParams(i, next)}
-              onMove={(d) => moveCard(i, d)}
-              onRemove={() => removeCard(i)}
+          <div className="forge-stack-canvas" aria-label="效果模板成品鏈">
+            {resolved.map((r, i) => (
+              <div key={`${r.card.ref}-${i}`} className="forge-stack-slot">
+                <StackDropZone
+                  slot={i}
+                  active={dragOverSlot === i}
+                  onEnter={setDragOverSlot}
+                  onDrop={dropCard}
+                />
+                <CardPanel
+                  index={i}
+                  total={resolved.length}
+                  template={r.template}
+                  params={r.card.params}
+                  errors={paramErrors[i] ?? {}}
+                  onParams={(next) => setCardParams(i, next)}
+                  onMove={(d) => moveCard(i, d)}
+                  onRemove={() => removeCard(i)}
+                  onDragStart={(event) => {
+                    event.dataTransfer.effectAllowed = "move";
+                    event.dataTransfer.setData(
+                      TEMPLATE_STACK_DRAG_MIME,
+                      encodeTemplateStackDrag({ kind: "stack-card", index: i }),
+                    );
+                  }}
+                />
+              </div>
+            ))}
+            <StackDropZone
+              slot={resolved.length}
+              active={dragOverSlot === resolved.length}
+              onEnter={setDragOverSlot}
+              onDrop={dropCard}
             />
-          ))}
+          </div>
 
           <div className="forge-stack-add">
             <select
@@ -458,12 +706,25 @@ export function ForgeStudio({
             <VfxLayerPanel
               layers={layers}
               vfxIds={vfxIds}
-              onPatch={(i, patch) => setLayers((ls) => (ls ? patchLayer(ls, i, patch) : ls))}
-              onMove={(i, d) => setLayers((ls) => (ls ? moveLayer(ls, i, d) : ls))}
-              onRemove={(i) => setLayers((ls) => (ls ? removeLayer(ls, i) : ls))}
-              onAdd={() => setLayers((ls) => (ls ? addLayer(ls) : ls))}
+              onPatch={(i, patch) => editHistory.commit((draft) => ({
+                ...draft,
+                layers: draft.layers ? patchLayer(draft.layers, i, patch) : draft.layers,
+              }))}
+              onMove={(i, d) => editHistory.commit((draft) => ({
+                ...draft,
+                layers: draft.layers ? moveLayer(draft.layers, i, d) : draft.layers,
+              }))}
+              onRemove={(i) => editHistory.commit((draft) => ({
+                ...draft,
+                layers: draft.layers ? removeLayer(draft.layers, i) : draft.layers,
+              }))}
+              onAdd={() => editHistory.commit((draft) => ({
+                ...draft,
+                layers: draft.layers ? addLayer(draft.layers) : draft.layers,
+              }))}
             />
           ) : null}
+          <PassivePresentationPanel rules={passiveRules} />
         </section>
 
         <section className="forge-col">
@@ -475,27 +736,35 @@ export function ForgeStudio({
             所以「編輯器放得出來、遊戲裡按下去沒反應」不可能發生。
           </p>
           <p className="forge-note">
-            ⚠️ 舞台目前只有<b>地面格線 + 英雄模型 + 技能自己的粒子特效</b>
-            （走與遊戲同一支 <code>toParticleSystem</code>）。
-            預告圈、投射物飛行、命中特效還沒接上（那要重用 client 的{" "}
-            <code>render/*</code> 與 <code>vfx/*</code>）。
+            舞台直接重用遊戲的 <b>CameraRig、ArenaGround、雙方 3D Model 與 VfxSystem</b>；
+            預告圈、投射物、命中、腳本演出與清理上限全部走正式消費端。
           </p>
-          <canvas ref={stageRef} className="preview3d-canvas" style={{ height: 240 }} />
+          {previewContent.error ? (
+            <p className="error">Runtime 內容圖載入失敗：{String(previewContent.error)}</p>
+          ) : stageAbility && stageScript && preview && "champ" in preview ? (
+            <VfxForgePreview
+              script={stageScript}
+              ability={stageAbility}
+              schedule={schedule}
+              durationMs={previewDurationMs}
+              playheadMs={playheadMs}
+              playing={playing}
+              caster={preview.champ}
+              target={targetChampion}
+              mode="runtime"
+              onTime={(ms) => setPlayheadMs(Math.min(previewDurationMs, ms))}
+              onStop={() => setPlaying(false)}
+            />
+          ) : (
+            <div className="preview3d-canvas forge-runtime-loading">載入正式 Runtime 舞台…</div>
+          )}
           {/* `preview3d-controls` 是既有的 flex 列樣式 —— ⛔ 不為了一顆按鈕新增一條 CSS。 */}
           <div className="preview3d-controls">
             <button
               type="button"
               data-field="stack.cast"
               disabled={!preview || !("champ" in preview)}
-              onClick={() => {
-                if (!preview || !("champ" in preview)) return;
-                try {
-                  setTrace(controller.castAbility(preview.champ, preview.slot, { level: 1 }));
-                } catch (e) {
-                  setTrace(null);
-                  setStatus(`試放失敗：${String(e)}`);
-                }
-              }}
+              onClick={() => runCurrentCast(true)}
             >
               真的放一次
             </button>
@@ -507,16 +776,29 @@ export function ForgeStudio({
               </span>
             ) : null}
           </div>
+          {trace ? (
+            <SimEventTimeline
+              events={timelineEvents}
+              durationMs={previewDurationMs}
+              playheadMs={playheadMs}
+              playing={playing}
+              onSeek={(ms) => { setPlaying(false); setPlayheadMs(ms); }}
+              onTogglePlay={() => setPlaying((value) => !value)}
+            />
+          ) : null}
           {!expansion.ok ? <p className="error">展開失敗：{expansion.error}</p> : null}
           {expansion.ok ? (
             <>
+              <EffectChain trace={expansion.value.trace} />
               <ConflictPanel trace={expansion.value.trace} blocks={conflictBlocks} />
               <ExpansionSummary result={expansion.value.result} />
               <OriginTable trace={expansion.value.trace} />
             </>
           ) : null}
+          {championsLoading ? <p className="forge-note">正在載入技能所屬英雄…</p> : null}
+          {championsError ? <p className="error">英雄索引讀取失敗：{championsError.message}</p> : null}
           {preview && "error" in preview ? <p className="error">{preview.error}</p> : null}
-          {preview && "lines" in preview && preview.lines === null ? (
+          {!championsLoading && !championsError && preview && "lines" in preview && preview.lines === null ? (
             <p className="forge-note">這支技能沒有英雄持有，無法算等級縮放。</p>
           ) : null}
           {preview && "lines" in preview && preview.lines ? (
@@ -586,6 +868,7 @@ function CardPanel({
   onParams,
   onMove,
   onRemove,
+  onDragStart,
 }: {
   index: number;
   total: number;
@@ -595,6 +878,7 @@ function CardPanel({
   onParams(next: Record<string, unknown>): void;
   onMove(delta: number): void;
   onRemove(): void;
+  onDragStart(event: DragEvent<HTMLButtonElement>): void;
 }) {
   const paramsSchema = useMemo(() => paramsSchemaFor(template), [template]);
   /**
@@ -624,6 +908,16 @@ function CardPanel({
   return (
     <section className="forge-card-panel" data-card={index}>
       <header className="forge-card-panel-head">
+        <button
+          type="button"
+          className="forge-card-drag"
+          draggable
+          aria-label={`拖曳第 ${index + 1} 張模板卡`}
+          title="拖曳重排"
+          onDragStart={onDragStart}
+        >
+          ⠿
+        </button>
         <span className="forge-card-order" data-field={`stack.card${index}.order`}>
           第 {index + 1} 張
         </span>
@@ -687,6 +981,60 @@ function CardPanel({
       ))}
       <UnitHints template={template} params={params} />
       <InertSlots template={template} />
+    </section>
+  );
+}
+
+function StackDropZone({
+  slot,
+  active,
+  onEnter,
+  onDrop,
+}: {
+  slot: number;
+  active: boolean;
+  onEnter(slot: number | null): void;
+  onDrop(event: DragEvent<HTMLElement>, slot: number): void;
+}) {
+  return (
+    <div
+      className={`forge-stack-drop${active ? " active" : ""}`}
+      data-field={`stack.drop.${slot}`}
+      aria-label={`放到效果鏈第 ${slot + 1} 格`}
+      onDragEnter={(event) => { event.preventDefault(); onEnter(slot); }}
+      onDragOver={(event) => { event.preventDefault(); event.dataTransfer.dropEffect = "move"; }}
+      onDragLeave={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) onEnter(null);
+      }}
+      onDrop={(event) => onDrop(event, slot)}
+    >
+      <span>拖到這裡</span>
+    </div>
+  );
+}
+
+/** Visualises template products in merge order; it is deliberately not a fake time axis. */
+function EffectChain({ trace }: { trace: ExpandStackTrace }) {
+  return (
+    <section className="forge-effect-chain" aria-label="效果模板成品鏈預覽">
+      <h4>效果模板成品鏈</h4>
+      <p className="forge-note">由左至右是展開與合併順序；時間與觸發時機仍由卡片產出的 effect / hook 決定。</p>
+      <div className="forge-effect-chain-row">
+        {trace.cards.map((card, i) => {
+          const effects = trace.effects.filter((effect) => effect.cardIndex === card.index);
+          return (
+            <div className="forge-effect-chain-part" key={card.index}>
+              {i > 0 ? <span className="forge-effect-chain-arrow" aria-hidden="true">→</span> : null}
+              <article className="forge-effect-chain-node" data-card={card.index}>
+                <b>第 {card.index + 1} 張 · {card.family}</b>
+                <code>{card.templateId}</code>
+                <span>{effects.length > 0 ? effects.map((effect) => effect.kind).join(" → ") : "無頂層 effect"}</span>
+                <small>effect {card.effectCount} · hook {card.hookCount} · mark {card.markCount}</small>
+              </article>
+            </div>
+          );
+        })}
+      </div>
     </section>
   );
 }
@@ -945,20 +1293,4 @@ function ConfirmDialog({
       </div>
     </div>
   );
-}
-
-function useChampionDocs(): ChampionDoc[] {
-  const { data } = useQuery({
-    queryKey: ["preview-champions"],
-    queryFn: async () => {
-      const index = await api.index("champions");
-      const docs = await Promise.all(index.entries.map((e) => api.doc("champions", e.id)));
-      return docs
-        .map((d) => zChampionDoc.safeParse(d))
-        .filter((r) => r.success)
-        .map((r) => (r as { success: true; data: ChampionDoc }).data);
-    },
-    staleTime: 10_000,
-  });
-  return data ?? [];
 }

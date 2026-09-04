@@ -384,12 +384,16 @@ describe("abilities", () => {
     expect(castAbility(world, sela, "Q", { type: "dir", dir: { x: 1, z: 0 } })).toBe("ok");
 
     let projectileHit = false;
+    let projectileHitOrigin: unknown;
     let abilityDamage = 0;
     let kindlingDamage = 0;
     for (let k = 0; k < 40; k++) {
       world.step(new Map());
       for (const ev of world.events) {
-        if (ev.type === "projectileHit") projectileHit = true;
+        if (ev.type === "projectileHit") {
+          projectileHit = true;
+          projectileHitOrigin = ev.data.origin;
+        }
         if (ev.type === "damage" && (ev.data.origin as string).startsWith("ability:sela.q"))
           abilityDamage += ev.data.amount as number;
         if (ev.type === "damage" && (ev.data.origin as string).startsWith("hook:passive:sela"))
@@ -397,6 +401,7 @@ describe("abilities", () => {
       }
     }
     expect(projectileHit).toBe(true);
+    expect(projectileHitOrigin).toBe("ability:sela.q");
     // rank1: 20 + 60 flat, PLUS the 0.7 AP ratio the doc has always carried.
     // #248 is why that last term is finally non-zero: every champion now has
     // real AP (`intToAbilityPower × INT`, sela INT 26 → AP 26), where before the

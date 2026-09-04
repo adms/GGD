@@ -8,11 +8,22 @@ import react from "@vitejs/plugin-react";
 // (default localhost:8080, override VITE_PLATFORM_API_URL — same-origin under
 // nginx in the dev profile). The provider API key stays server-side; the editor
 // only ever calls the proxy.
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   base: "/editor/",
+  // `.env.*` is intentionally ignored repository-wide.  Desktop mode must be
+  // reproducible in a clean clone, so compile the local-loopback authority flag
+  // from the tracked Vite mode instead of relying on an untracked env file.
+  define: mode === "desktop"
+    ? { "import.meta.env.VITE_DESKTOP": JSON.stringify("1") }
+    : undefined,
   plugins: [react()],
   server: {
     port: 5174,
+    // A silent 5174 -> 5175 fallback leaves the UI readable but makes every
+    // guarded save fail because Origin is part of the dev-write authority.
+    // Custom ports stay supported: start Vite explicitly and pass the same
+    // loopback origin through GGD_EDITOR_ORIGINS to content-api.
+    strictPort: true,
     host: "127.0.0.1",
     proxy: {
       "/content-api": {
@@ -34,4 +45,4 @@ export default defineConfig({
     // 第一個踩到的，它在被加進來的那一刻是「綠的」，因為它根本沒被執行。
     include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
   },
-});
+}));

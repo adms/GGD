@@ -1,0 +1,50 @@
+{
+  "schema": "ggd-editor-windows-smoke-evidence@1",
+  "run": {
+    "id": 33552053135,
+    "jobId": 100003613497,
+    "headSha": "f5bd9cbb0f1bdeb59b82a1a71cfe85db710d02d7",
+    "runner": "windows-latest",
+    "startedAt": "2026-09-01T19:52:46Z",
+    "completedAt": "2026-09-01T19:55:56Z",
+    "conclusion": "success",
+    "url": "https://github.com/adms/GGD/actions/runs/33552053135"
+  },
+  "downloadedArtifact": {
+    "name": "editor-desktop-windows-smoke-33552053135",
+    "file": "windows-smoke.log",
+    "sha256": "cf3f6b374629f087c3c976777256288bd93ca556b05155282d7a8b0004e4a819"
+  },
+  "receipt": {
+    "schema": "ggd-editor-packaged-smoke-runner@1",
+    "platform": "win32",
+    "executable": "D:\\a\\GGD\\GGD\\apps\\editor-desktop\\dist\\win-unpacked\\GGD Ability & VFX Editor.exe",
+    "sourceUrl": "https://ggd.adms.ai",
+    "appReceipt": {
+      "schema": "ggd-editor-desktop-smoke@1",
+      "source": {
+        "schema": "ggd-editor-desktop-source@1",
+        "kind": "remote",
+        "state": "current",
+        "sourceUrl": "https://ggd.adms.ai",
+        "contentBaseUrl": "https://ggd.adms.ai/content/",
+        "pinnedContentVersion": "cv_88cbb6486bf2",
+        "latestRemoteContentVersion": "cv_88cbb6486bf2",
+        "workingContentVersion": "cv_afec1c4d9dbd",
+        "offline": false,
+        "conflicts": [],
+        "compatibilityWarnings": [],
+        "contractStatus": "remote-target-profile",
+        "targetProfileDigest": "3f8d4687566f",
+        "message": "線上基準已更新"
+      },
+      "checks": [
+        { "path": "/editor/", "status": 200, "contentType": "text/html; charset=utf-8" },
+        { "path": "/admin/", "status": 200, "contentType": "text/html; charset=utf-8" },
+        { "path": "/content-api/manifest", "status": 200, "contentType": "application/json; charset=utf-8" },
+        { "path": "/content-api/desktop-source", "status": 200, "contentType": "application/json; charset=utf-8" },
+        { "path": "/content-api/desktop-target-profile", "status": 200, "contentType": "application/json; charset=utf-8" }
+      ]
+    }
+  }
+}

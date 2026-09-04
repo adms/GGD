@@ -1,0 +1,44 @@
+{
+  "name": "@ggd/editor-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "author": "GGD",
+  "main": "dist/main.cjs",
+  "description": "Local macOS/Windows shell for the GGD skill and VFX editor",
+  "dependencies": {
+    "@ggd/shared": "workspace:*"
+  },
+  "scripts": {
+    "build:renderer": "pnpm --filter @ggd/editor exec vite build --mode desktop --outDir ../editor-desktop/dist/renderer/editor --emptyOutDir && pnpm --filter @ggd/admin exec vite build --mode desktop --outDir ../editor-desktop/dist/renderer/admin --emptyOutDir",
+    "build:main": "esbuild src/main.ts --bundle --platform=node --format=cjs --outfile=dist/main.cjs --external:electron && esbuild src/preload.ts --bundle --platform=node --format=cjs --outfile=dist/preload.cjs --external:electron",
+    "build": "pnpm build:renderer && pnpm build:main",
+    "start": "pnpm build && electron .",
+    "smoke": "pnpm build && electron . --source-url=https://ggd.adms.ai --smoke-test --user-data-dir=dist/smoke-user-data",
+    "smoke:packaged": "node scripts/smoke-packaged.mjs",
+    "dist:mac": "pnpm build && electron-builder --mac --universal",
+    "dist:win": "pnpm build && electron-builder --win",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "electron": "^37.2.6",
+    "electron-builder": "^26.0.12",
+    "esbuild": "^0.25.9",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.4"
+  },
+  "build": {
+    "appId": "tw.ggd.ability-vfx-editor",
+    "productName": "GGD Ability & VFX Editor",
+    "asar": true,
+    "files": ["dist/main.cjs", "dist/preload.cjs", "package.json"],
+    "extraResources": [
+      { "from": "dist/renderer/editor", "to": "editor" },
+      { "from": "dist/renderer/admin", "to": "admin" }
+    ],
+    "mac": { "target": ["dmg", "zip"], "category": "public.app-category.developer-tools", "icon": "../client/public/icons/icon-512.png" },
+    "win": { "target": ["nsis", "portable"], "icon": "../client/public/icons/icon-512.png" },
+    "nsis": { "oneClick": true, "perMachine": false }
+  }
+}

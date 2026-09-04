@@ -94,11 +94,16 @@ const HAND_TUNED_EXEMPTIONS: Record<string, string> = {};
 // environment
 // ---------------------------------------------------------------------------
 
-/** The checker imports only stdlib + w3xlib, so a bare python3 is enough. */
+/** The extractor also decodes PNG alpha; verify Pillow and architecture before choosing Python. */
 function findPython(): string[] | null {
-  for (const c of [["python3"], ["/opt/homebrew/bin/python3"], ["/usr/bin/python3"]]) {
+  for (const c of [
+    ["python3"],
+    ["arch", "-arm64", "python3"],
+    ["/opt/homebrew/bin/python3"],
+    ["/usr/bin/python3"],
+  ]) {
     try {
-      execFileSync(c[0]!, [...c.slice(1), "-c", "import struct, json, hashlib"], { stdio: "pipe" });
+      execFileSync(c[0]!, [...c.slice(1), "-c", "import struct, json, hashlib; from PIL import Image"], { stdio: "pipe" });
       return c;
     } catch {
       /* next candidate */

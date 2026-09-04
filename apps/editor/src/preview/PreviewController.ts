@@ -43,12 +43,17 @@ import {
   type EffectDef,
   type Vec2,
 } from "@ggd/shared/sim";
+import { learnEx } from "@ggd/shared/sim/abilities/abilitySystem";
 import { Abilities } from "@ggd/shared/sim/content/registry";
 import { rankScalar } from "@ggd/shared/sim/perRank";
 import { attachItemSource } from "@ggd/shared/sim/economy/itemSource";
 import { liveAttribute } from "@ggd/shared/sim/stats/attrSources";
 import type { AttrLookup } from "@ggd/shared/sim";
-import { asSeatId, asTeamId, type EntityId } from "@ggd/shared/ids";
+import { asSeatId, asTeamId, type AbilityId, type EntityId } from "@ggd/shared/ids";
+import {
+  currentPlayerCanResolveEventOrigin,
+  eventOriginBelongsToAbility,
+} from "./eventOwnership";
 
 export interface ChampionPreview {
   level: number;
@@ -107,6 +112,26 @@ export interface CastPreviewOptions {
   point?: Vec2;
 }
 
+export interface PreviewActorPose {
+  readonly caster: Vec2;
+  readonly target: Vec2;
+}
+
+export interface PreviewTraceEvent {
+  readonly type: string;
+  readonly tick: number;
+  readonly data: Record<string, unknown>;
+  /**
+   * The real SimWorld transforms after this event's tick has settled.
+   *
+   * VFX Forge must not reconstruct combo repositioning from ability JSON: the
+   * server already resolved collision, arena bounds and the configured ring
+   * slot. Keeping the resolved pose beside the event lets the embedded client
+   * render the same result without creating a second movement implementation.
+   */
+  readonly actorPose?: PreviewActorPose;
+}
+
 /** 一次試放之後，**世界真的發生了什麼**。⛔ 不是把 effects 陣列覆述一遍。 */
 export interface CastPreviewTrace {
   /** sim 收下了這一發嗎。⚠️ 由 `abilityCast` 事件判定，⛔ 不是「我送出去了」。 */
@@ -118,7 +143,24 @@ export interface CastPreviewTrace {
   /** 送出那一刻起算的冷卻（tick）。0 而 `accepted` 為 true = 這支技能沒有冷卻。 */
   cooldownTicks: number;
   /** 這幾個 tick 內 `world.events` 排出來的東西，照順序。⭐ 3D 面板照它播特效。 */
-  events: readonly { type: string; tick: number; data: Record<string, unknown> }[];
+  events: readonly PreviewTraceEvent[];
+}
+
+/**
+ * A real reactive-event audition.  Unlike `CastPreviewTrace`, `accepted` means
+ * the requested reaction produced an event owned by `abilityId`; no cast
+ * command is invented for passive abilities.
+ */
+export interface ReactionPreviewTrace {
+  accepted: boolean;
+  reason?: string;
+  /** False means the editor saw the event but current main would discard it. */
+  runtimeCompatible: boolean;
+  runtimeIssue?: string;
+  manaBefore: number;
+  manaAfter: number;
+  cooldownTicks: number;
+  events: readonly PreviewTraceEvent[];
 }
 
 /**
@@ -143,9 +185,20 @@ export interface PreviewController {
     slot: CastableSlot,
     opts?: CastPreviewOptions,
   ): CastPreviewTrace;
+  /**
+   * Produce a real `reflectSuccess` by casting the champion's shipped reflect
+   * enabler, receiving a magic hit, then letting SimWorld dispatch the passive
+   * hook.  This is the preview path for abilities such as 20-002; it never
+   * pretends that a passive EX is a pressable button.
+   */
+  triggerReflectSuccess(
+    champion: ChampionDef,
+    abilityId: AbilityId,
+    opts?: Pick<CastPreviewOptions, "level" | "rank" | "ticks">,
+  ): ReactionPreviewTrace;
   previewItem(item: ItemDef, on: ChampionDef, opts?: { level?: number }): StatDelta[];
   previewAugment(aug: AugmentDef, on: ChampionDef, opts?: { level?: number }): StatDelta[];
-  /** stub: records the request; Babylon impl plays the ParticleSystem */
+  /** Renderless controller records the request; visual stages play it through VfxSystem. */
   spawnVfx(vfxKey: string): void;
   /** advance the sandbox SimWorld by fixed ticks (empty intents) */
   stepFixed(ticks: number): void;
@@ -203,6 +256,16 @@ function sandbox(
   return { world, id, dummyId };
 }
 
+function actorPoseOf(world: SimWorld, caster: EntityId, target: EntityId | null): PreviewActorPose | undefined {
+  const casterTransform = world.transform.get(caster);
+  const targetTransform = target === null ? undefined : world.transform.get(target);
+  if (!casterTransform || !targetTransform) return undefined;
+  return {
+    caster: { x: casterTransform.pos.x, z: casterTransform.pos.z },
+    target: { x: targetTransform.pos.x, z: targetTransform.pos.z },
+  };
+}
+
 /**
  * 把一支技能的 `castType` 換成一個**這一發真的可以送出去**的 `CastTarget`。
  *
@@ -240,6 +303,32 @@ function castTargetFor(
       // ⛔ 而那句話正是我們要讓作者看到的，不是一個被我們吞掉的例外。
       return dummyId === null ? { type: "self" } : { type: "entity", entityId: dummyId };
   }
+}
+
+/** Find a castable shipped ability that can actually create reflected damage. */
+function reflectEnablerSlot(champion: ChampionDef): CoreAbilitySlot | null {
+  const containsIncomingReflect = (value: unknown): boolean => {
+    if (Array.isArray(value)) return value.some(containsIncomingReflect);
+    if (value === null || typeof value !== "object") return false;
+    const record = value as Record<string, unknown>;
+    if (record["kind"] === "damage" && record["incomingPct"] !== undefined) return true;
+    return Object.values(record).some(containsIncomingReflect);
+  };
+  for (const slot of ["Q", "W", "E", "R"] as const) {
+    if (containsIncomingReflect(champion.abilities[slot].effects)) return slot;
+  }
+  return null;
+}
+
+function abilityHasReflectSuccessHook(ability: AbilityDef | undefined): boolean {
+  const visit = (value: unknown): boolean => {
+    if (Array.isArray(value)) return value.some(visit);
+    if (value === null || typeof value !== "object") return false;
+    const record = value as Record<string, unknown>;
+    if (record["on"] === "onReflectSuccess") return true;
+    return Object.values(record).some(visit);
+  };
+  return ability !== undefined && visit(ability);
 }
 
 function effectLines(
@@ -515,14 +604,10 @@ function effectLines(
         });
         break;
       /* ═══════════════════════════════════════════════════════════════════
-       * RESERVED KINDS (GH#289). The sim handlers throw until their lane
-       * lands (sim/effects/effectRegistry.ts), so the preview says so IN THE
-       * LINE rather than rendering a confident summary of a spell that would
-       * crash the tick. The `never` tripwire below is why they are here at
-       * all: growing the union without teaching this switch does not compile.
-       *
-       * When a lane implements its kind, replace its case here with a real
-       * summary — that IS part of landing the feature, not a follow-up.
+       * Runtime kinds that originally landed as reserved slots.  Every case
+       * below now describes the shipped handler; a stale "NOT IMPLEMENTED"
+       * label is a correctness bug because the designer uses this panel to
+       * decide what the game will actually do.
        * ═══════════════════════════════════════════════════════════════════ */
       case "dot": {
         // lane P1 LANDED. The card names the CADENCE, the PAYOUT COUNT and the
@@ -546,15 +631,22 @@ function effectLines(
         });
         break;
       }
-      case "summon":
+      case "summon": {
+        const body = e.body === "self" ? "施法者分身" : (e.championId ?? "（缺少英雄 id）");
+        const at = e.at === "target" ? "目標" : e.at === "point" ? "指定地點" : "施法者";
         out.push({
           depth,
           kind: e.kind,
-          summary: `⚠ NOT IMPLEMENTED (lane P2) — summon ${e.count}× ${e.championId}${
-            e.durationSec !== undefined ? ` for ${e.durationSec}s` : " (permanent)"
-          }`,
+          summary:
+            `召喚 ${e.count}× ${body}，位於${at}` +
+            ` · ${e.formation ?? "ring"} 陣型` +
+            `${e.spread !== undefined ? `，間距/半徑 ${e.spread}` : ""}` +
+            `${e.durationSec !== undefined ? ` · 持續 ${e.durationSec}s` : " · 永久"}` +
+            `${e.maxAlive !== undefined ? ` · 同時上限 ${e.maxAlive}` : ""}` +
+            `${e.onCap === "replaceOldest" ? " · 滿額時替換最舊召喚物" : ""}`,
         });
         break;
+      }
       case "invulnerable": {
         // lane P3 LANDED. The card must say which AXES this grant actually
         // refuses — 「無敵」 alone is the lie that made 41-002 絕對屏障 ship as
@@ -579,7 +671,14 @@ function effectLines(
         out.push({
           depth,
           kind: e.kind,
-          summary: `⚠ NOT IMPLEMENTED (lane P4) — knockback ${e.distance}u @ ${e.speed}u/s from ${e.from ?? "caster"}`,
+          summary:
+            `${e.from === "pull" ? "拉扯" : e.launchHeight && e.launchHeight > 0 ? "擊飛" : "擊退"}` +
+            ` ${e.applyTo === "self" ? "自己" : "目標"}` +
+            ` · 基準距離 ${e.distance}u @ ${e.speed}u/s` +
+            ` · 方向 ${e.from ?? "caster"}` +
+            `${e.launchHeight !== undefined ? ` · 高度 ${e.launchHeight}u` : ""}` +
+            `${e.launchDistance !== undefined ? ` · 落點 ${e.launchDistance}` : ""}` +
+            `${(e.uncontrollable ?? true) ? " · 期間不可控制" : ""}`,
         });
         break;
       case "cycleBuff": {
@@ -601,7 +700,10 @@ function effectLines(
         out.push({
           depth,
           kind: e.kind,
-          summary: `⚠ NOT IMPLEMENTED (lane P5) — ${Math.round(e.chance * 100)}% evasion on ${e.applyTo ?? "self"} for ${e.durationSec}s`,
+          summary:
+            `閃避 ${Math.round(e.chance * 100)}% → ${e.applyTo ?? "self"}，持續 ${e.durationSec}s` +
+            `${e.dodgesAbilities ? " · 可閃避技能" : " · 只閃避普攻"}` +
+            `${e.dodgesTrueDamage ? " · 包含真實傷害" : ""}`,
         });
         break;
       // 18-00 薔薇荊棘之刃 —— 面前的一條直線 (sim/effects/damageLine.ts)。
@@ -864,7 +966,7 @@ function effectLines(
         });
         break;
       }
-      // ── 契約層（2026-08-09，GH#301-2）真瞬移 ───────────────────────────
+      // ── 真瞬移（2026-08-09，GH#301-2）──────────────────────────────────
       case "blink": {
         const dest =
           e.to === "point" ? "指定地點" : e.to === "caster" ? "施法者身邊" : "目標身上";
@@ -875,15 +977,12 @@ function effectLines(
             `瞬移${e.applyTo === "target" ? "目標" : "自己"}到${dest}` +
             `${e.shape === "circle" ? `（半徑 ${e.radius ?? "?"} 內${e.side === "enemies" ? "敵人" : "隊友"}一起）` : ""}` +
             `${e.stopShortUnits ? ` · 落在前方 ${e.stopShortUnits} 單位處` : ""}` +
-            " · ⛔ 真瞬移：沒有中間位置（與 leap 的差別就在這裡）" +
-            " · ⚠️ 引擎側尚未實作（GH#301-2），現在放出來會丟例外",
+            " · ⛔ 真瞬移：沒有中間位置（與 leap 的差別就在這裡）",
         });
         effectLines(e.onArrive ?? [], finalStats, attrs, maxRank, depth + 1, out);
         break;
       }
-      // ── Lane 3（2026-08-10）—— schema 與型別先行，引擎 handler 是下一階段。
-      //    ⚠️ 兩條 summary 都**明說**「引擎側尚未實作」，形狀抄上面 `blink`
-      //    當年那一句：一個看起來能用、放出去卻丟例外的預覽比空白更糟。
+      // ── Lane 3（2026-08-10）—— 延遲序列與代放都已走正式 handler。────────
       case "delayed": {
         const shots = e.count ?? 1;
         out.push({
@@ -893,7 +992,8 @@ function effectLines(
             `延遲 ${e.delaySec}s 後${shots > 1 ? `連續 ${shots} 下（每 ${e.intervalSec ?? "?"}s 一下）` : "打出一下"}` +
             `${e.targetMode === "reresolve" ? " · 每一下重新選目標（走開就打空）" : " · 目標在施放那一刻鎖定"}` +
             `${e.shape === "circle" ? `（半徑 ${e.radius ?? "?"} 內${e.side === "allies" ? "隊友" : "敵人"}）` : ""}` +
-            " · ⚠️ 引擎側尚未實作（Lane 3），現在放出來會丟例外",
+            `${e.anchor === "caster" ? " · 圓心跟隨施法者" : ""}` +
+            `${e.hitOncePerTarget ? " · 每名目標整串最多命中一次" : ""}`,
         });
         effectLines(e.effects, finalStats, attrs, maxRank, depth + 1, out);
         if (e.finalEffects) {
@@ -911,15 +1011,12 @@ function effectLines(
             ` · ${e.payCosts === undefined || e.payCosts === "none" ? "不付代價" : e.payCosts === "mana" ? "扣魔" : "扣魔並進冷卻"}` +
             `${e.respectCooldown ? " · 冷卻中不代放" : ""}` +
             `${e.rankMode === "fixed" ? ` · 固定第 ${e.fixedRank} 階` : " · 用玩家點的等級"}` +
-            " · ⚠️ 引擎側尚未實作（Lane 3），現在放出來會丟例外",
+            `${e.emitCastEvents ? " · 會觸發施法/命中事件" : " · 不額外觸發施法事件"}` +
+            ` · 鏈深上限 ${e.maxDepth ?? 0}`,
         });
         break;
       }
-      // ── [EX∅ 根源]（2026-08-18）—— 詞彙包先落地，引擎 handler 是 L4 / L5。
-      //    ⚠️ 兩條 summary 都**明說**「引擎側尚未實作」，形狀抄上面 Lane 3 那兩條：
-      //    一個看起來能用、放出去什麼都不發生的預覽比空白更糟（失敗形態②）。
-      //    ⛔ 這兩個 case 不是裝飾 —— 下面那個 `never` 會拒絕編譯，直到它們在這裡
-      //    被處理過（那正是這個 tripwire 存在的理由）。
+      // ── [EX∅ 根源]（2026-08-18）—— 背負與陣營轉換都已落地。──────────────
       case "carry": {
         out.push({
           depth,
@@ -928,8 +1025,7 @@ function effectLines(
             `背負${e.shape === "circle" ? `半徑 ${e.radius ?? "?"} 內` : ""}` +
             `${e.side === "enemies" ? "敵人" : "隊友"} ${e.maxTargets ?? 1} 名，${e.durationSec}s` +
             `${e.untargetable?.abilityAoe ? " · 連 AoE 都打不到" : " · 不可被選取（但 AoE 仍打得到）"}` +
-            `${e.onCarrierDeath === "drop" ? " · 載具死了乘客跟著倒" : " · 載具死了就放下"}` +
-            " · ⚠️ 引擎側尚未實作（[EX∅ 根源] L4），現在放出來什麼都不會發生",
+            `${e.onCarrierDeath === "drop" ? " · 載具死了乘客跟著倒" : " · 載具死了就放下"}`,
         });
         effectLines(e.onHitTargets ?? [], finalStats, attrs, maxRank, depth + 1, out);
         break;
@@ -943,7 +1039,7 @@ function effectLines(
             `（同時最多 ${e.maxHeld ?? 2} 隻）` +
             `${e.until === "duration" ? ` · ${e.durationSec ?? "?"}s 後歸位` : e.until === "roundEnd" ? " · 回合結束歸位" : " · 打死才歸位"}` +
             `${e.oncePerRoundPerVictim === false ? " · 同一隻可重複捕捉" : " · 同一隻一回合只能捕一次"}` +
-            " · ⚠️ 引擎側尚未實作（[EX∅ 根源] L5），現在放出來什麼都不會發生",
+            `${e.countsForOriginalTeam ? " · 勝負仍算原隊存活" : " · 勝負改算新隊伍"}`,
         });
         break;
       }
@@ -1121,10 +1217,11 @@ export function createSimPreviewController(): PreviewController {
         [seat, { commands: [{ kind: "castAbility", slot, target }] }],
       ]);
 
-      const events: { type: string; tick: number; data: Record<string, unknown> }[] = [];
+      const events: PreviewTraceEvent[] = [];
       const drain = (): void => {
+        const actorPose = actorPoseOf(sb.world, sb.id, sb.dummyId);
         for (const e of sb.world.events) {
-          events.push({ type: e.type, tick: e.tick, data: e.data });
+          events.push({ type: e.type, tick: e.tick, data: e.data, ...(actorPose ? { actorPose } : {}) });
         }
       };
 
@@ -1147,6 +1244,136 @@ export function createSimPreviewController(): PreviewController {
         //    前者是「CommandSystem 的每一道閘都放行了」，後者只是我有打字。
         accepted: events.some((e) => e.type === "abilityCast"),
         ...(rejected ? { reason: String(rejected.data["reason"] ?? "unknown") } : {}),
+        manaBefore,
+        manaAfter: hp.mana,
+        cooldownTicks,
+        events,
+      };
+    },
+
+    triggerReflectSuccess(champion, abilityId, opts) {
+      const level = opts?.level ?? 18;
+      const sb = sandbox(champion, level, { dummy: true });
+      world = sb.world;
+      const hp = sb.world.health.get(sb.id)!;
+      const ab = sb.world.abilities.get(sb.id)!;
+      const reacting = Abilities.tryGet(abilityId);
+      const events: PreviewTraceEvent[] = [];
+      const drain = (): void => {
+        const actorPose = actorPoseOf(sb.world, sb.id, sb.dummyId);
+        for (const event of sb.world.events) {
+          events.push({
+            type: event.type,
+            tick: event.tick,
+            data: event.data,
+            ...(actorPose ? { actorPose } : {}),
+          });
+        }
+      };
+      const fail = (reason: string): ReactionPreviewTrace => ({
+        accepted: false,
+        reason,
+        runtimeCompatible: false,
+        manaBefore: hp.mana,
+        manaAfter: hp.mana,
+        cooldownTicks: 0,
+        events,
+      });
+
+      if (!abilityHasReflectSuccessHook(reacting)) return fail("ability-has-no-reflect-success-hook");
+      if (sb.dummyId === null) return fail("missing-preview-attacker");
+
+      // Passive EX abilities become active through the real unlock path.  A
+      // non-EX reactive ability may already be attached by spawnChampion.
+      const exSlot = ab.exSlot;
+      if (exSlot?.abilityId === abilityId && exSlot.rank === 0 && !learnEx(sb.world, sb.id)) {
+        return fail("ex-unlock-failed");
+      }
+
+      const setupSlot = reflectEnablerSlot(champion);
+      if (setupSlot === null) return fail("no-reflect-enabler");
+      const setupDef = champion.abilities[setupSlot];
+      const setupInst = ab.slots[setupSlot];
+      const wantRank = Math.max(1, opts?.rank ?? 1);
+      while (setupInst.rank < wantRank) {
+        ab.unspentPoints = Math.max(ab.unspentPoints, 1);
+        if (!rankUpAbility(sb.world, sb.id, setupSlot)) break;
+      }
+
+      const selfPos = sb.world.transform.get(sb.id)!;
+      const attackerPos = sb.world.transform.get(sb.dummyId)!;
+      const target = castTargetFor(
+        setupDef,
+        { x: selfPos.pos.x, z: selfPos.pos.z },
+        { x: attackerPos.pos.x, z: attackerPos.pos.z },
+        sb.dummyId,
+      );
+      const manaBefore = hp.mana;
+      const seat = asSeatId(0);
+      const intents = new Map<ReturnType<typeof asSeatId>, IntentFrame>([
+        [seat, { commands: [{ kind: "castAbility", slot: setupSlot, target }] }],
+      ]);
+      sb.world.step(intents);
+      drain();
+      const cooldownTicks = setupInst.cooldownRemainingTicks;
+      const empty = new Map<ReturnType<typeof asSeatId>, IntentFrame>();
+
+      // Let the real cast-time system finish and install the reflect buff.
+      const setupTicks = Math.max(1, Math.ceil((setupDef.castTimeSec ?? 0) * 30) + 2);
+      for (let i = 0; i < setupTicks; i++) {
+        sb.world.step(empty);
+        drain();
+      }
+      const setupAccepted = events.some(
+        (event) => event.type === "abilityCast" && event.data["abilityId"] === setupDef.id,
+      );
+      if (!setupAccepted) {
+        const rejected = events.find((event) => event.type === "castRejected");
+        return {
+          accepted: false,
+          reason: String(rejected?.data["reason"] ?? "reflect-setup-rejected"),
+          runtimeCompatible: false,
+          manaBefore,
+          manaAfter: hp.mana,
+          cooldownTicks,
+          events,
+        };
+      }
+
+      // The only artificial input is the opponent's hit.  Reflection, passive
+      // dispatch, delayed strikes and their timing all remain real SimWorld
+      // output; the editor never fabricates any VFX cue.
+      sb.world.damageQueue.push({
+        source: sb.dummyId,
+        target: sb.id,
+        amount: 60,
+        type: "magic",
+        crit: false,
+        origin: "ability:vfx-forge.reflect-probe",
+      });
+      const ticks = Math.max(1, opts?.ticks ?? 150);
+      for (let i = 0; i < ticks; i++) {
+        sb.world.step(empty);
+        drain();
+      }
+
+      const accepted = events.some((event) =>
+        (event.type === "reflectSuccess" || event.type === "comboStrike") &&
+        eventOriginBelongsToAbility(event.data["origin"], abilityId),
+      );
+      const ownedEvents = events.filter((event) =>
+        (event.type === "reflectSuccess" || event.type === "comboStrike") &&
+        eventOriginBelongsToAbility(event.data["origin"], abilityId),
+      );
+      const runtimeCompatible =
+        ownedEvents.length > 0 && ownedEvents.every((event) => currentPlayerCanResolveEventOrigin(event.data["origin"]));
+      return {
+        accepted,
+        ...(accepted ? {} : { reason: "reflect-success-hook-produced-no-owned-event" }),
+        runtimeCompatible,
+        ...(runtimeCompatible ? {} : {
+          runtimeIssue: "事件 provenance 無法解析回 authored ability，VfxScriptPlayer 不會猜測腳本歸屬",
+        }),
         manaBefore,
         manaAfter: hp.mana,
         cooldownTicks,
