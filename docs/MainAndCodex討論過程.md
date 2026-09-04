@@ -174,25 +174,89 @@ Codex 寫「若 Main 是另一個 Codex 任務，只要讓它出現在同一個 
 
 ---
 
-## 6. ⛔ main 的 CI 現在紅（連續 6 次），⭐ 而**兩個都是真缺陷**
+## 6. ⛔⛔ main 的 CI：⭐ **比想像中嚴重，而且「修好第一個紅」是假的**
+
+（4 個 agent 查證，含反駁輪。⭐ 反駁輪推翻了診斷輪的三個前提。）
+
+### ⭐ 元根因：**36–42 天沒有人看過第二個紅**
+
+每個 job 在第一個紅就停（`bash -e` / step 失敗後全 skip），
+而 `regression` 的 `needs: [unit, go-platform, vuln, e2e]` 要求全綠
+⇒ ⭐ **「修好第一個紅 = job 綠」這個隱含前提，實測推翻了兩次。**
+
+### ⛔ `unit` —— 修好那三列 TODO **仍然紅**
 
 ```bash
-gh run list --limit 20 --json name,conclusion,event --jq '.[] | select(.name=="ci")'
-#   main  push  failure  ×6
+pnpm lint
+#   LINT_EXIT=134  FATAL: Reached heap limit — 4,069 MB 撐了 92 秒後掛掉
+NODE_OPTIONS=--max-old-space-size=8192 npx eslint apps packages tools
+#   ✖ 197 problems (24 errors, 173 warnings)   EXIT=1
 ```
 
-三個 job：
+⚠️ ⭐ 而 `eslint.config.mjs` 的**檔頭逐字寫著**「ERROR 現在是 0 筆 ⇒ `pnpm lint` 今天就是綠的」
+—— ⛔ **那句話今天是謊話**，而它就寫在守著這條閘的檔案裡（第三守則的形狀）。
 
-| job | 根因 | 上次綠 |
+24 個 error 裡有**真缺陷**，⛔ 不只是風格：
+
+| 檔:行 | 規則 | 為什麼是真的 |
 |---|---|---|
-| `unit → Static TODO gate` | ⭐ **真缺陷**：三列 `docs/todo/*.md` 的資料違規（例 `latency-visibility.md:115` 的 `pc-09` invalid），⛔ 不是掃描器母體變了 | ⭐ **`1dddf5c90`（2026-07-30）—— 之後 36 天沒綠過** |
-| `go-platform → go test apps/platform` | ⭐ **真缺陷**：`27948b23f`（2026-09-02，#949 版本戳）在 `apps/game-server/src/buildHealth.ts:92` 新增讀 `GGD_BUILD_ST…` | run `33597400639`（2026-09-02T06:06Z） |
-| `vuln → govulncheck` | （工作流跑到這裡時本文件已寫，見當時輸出） | —— |
+| `tools/editor-contract/gen_editor_coverage.ts:218` `:223` | `no-dupe-else-if` | ⭐ 一支**產生器**裡的死分支 ⇒ 它產出的契約**少了一整條路** |
+| `apps/client/src/input/orderFeedback.ts:89` | `no-fallthrough` | switch 掉進下一個 case |
+| `apps/editor/src/preview/PreviewPanel.tsx:208` | `no-fallthrough` | 同上 |
+| `tools/deploy-timing/run.mjs:293` | `no-sparse-arrays` | 陣列中間有逗號 |
 
-⚠️ ⭐ **「36 天沒綠過」本身就是失敗形態⑨**：一個從來沒人看它綠過的閘，
-與一個不存在的閘沒有差別。⇒ 修它之前要先問「它這 36 天擋住過什麼嗎」。
+⭐ **而三個 job 一旦全綠，`regression` 會馬上再紅**：靜態量到
+**61 列 `done` 的 `test_id` 在原始碼裡連 beacon 都沒有**
+（`round-report.md` 18 · `w3x-import.md` 17 · `models.md` 7 · `ability-vfx.md` 4 …）
+⇒ `todo:runtime` 從 07-30 起就沒跑過。
 
----
+### ⛔ `vuln` —— 兩個**獨立**的破口，⛔ 抬 Go 版本只治一個
+
+| 破口 | 何時紅 | 根因 |
+|---|---|---|
+| `gosec` | **2026-07-25**（連紅 42 天） | ⛔ `ci.yml:185` 是 `gosec@latest` **沒有 pin** ⇒ ⭐ **upstream 發版就自己變紅**（07-25 報 1 個 issue，今天同一份程式碼報 **10 個**） |
+| `govulncheck` | 2026-08-13 | `GO_VERSION: "1.25.12"` 過期（`GO-2026-6090/6089/5972/6218` 全部 `Fixed in go1.25.13`） |
+
+⭐⭐ **而診斷過程挖到一個真的安全缺陷**（⛔ 不是誤報）：
+
+```go
+// apps/platform/internal/platformarchive/inspect.go:215
+if ratio := declared / int64(f.CompressedSize64); ratio > MaxCompressionRatio
+```
+⇒ ⭐ 這是 **zip bomb 防線**，而 `int64(...)` 溢位成負數時 ratio 變負
+⇒ `> MaxCompressionRatio` 為 false ⇒ ⛔ **防線被繞過（fail-OPEN）**。
+⚠️ 對照同檔 `:210` 溢位後仍 reject（fail-closed）—— ⭐ **兩行相鄰，方向相反**。
+⛔ **不要只貼 `#nosec` 了事** —— 要在 `:214` 的條件加真的上界。
+
+### ⛔ `go-platform` —— 它的驗證指令會給你**假綠燈**
+
+```bash
+go test -count=1 ./internal/config/   → EXIT=1  FAIL TestEveryShippedKnobIsReachableInTheDeployEnv
+go test          ./internal/config/   → EXIT=0  ok (cached)
+```
+⇒ ⭐ **同一個工作樹、同一秒、兩個相反的答案。**
+⚠️ 而 `ci.yml:151` 的 go-platform 步驟**也沒有 `-count=1`**（今天靠 `cache: false` 救著），
+⛔ 而同一份 ci.yml 的 Infra checks（`:139`）有。
+
+根因：`27948b23f`（2026-09-02，#949 版本戳）在
+`apps/game-server/src/buildHealth.ts:92` 新增讀 `GGD_BUILD_STAMP`，而它不在部署環境的旋鈕表裡。
+
+### ⭐ 時間軸：**Codex 的合併不是任何一個的兇手**
+
+```
+gosec 紅        2026-07-25
+todo 資料違規    07-31 / 08-18 / 08-27
+stdlib CVE      2026-08-13
+knob 不可達      2026-09-02 06:46 UTC
+────────────────────────────────
+Codex 合併       2026-09-04 18:28   ← ⭐ 晚於全部三個破口
+```
+
+### ⚠️ 反駁輪推翻不了、也證實不了的兩格
+
+`gh run list --workflow=ci.yml --limit 300` 最舊只到 **2026-08-25**
+⇒ 「TODO gate 上次綠是 `1dddf5c90`（07-30）」與 `go-platform` 的 `run 33597400639`
+⛔ **無法從 API 重新推導**。⭐ 誠實記著。
 
 ## 7. 這一輪已經落地的（⭐ 新 session 不必重做）
 
