@@ -143,6 +143,18 @@
 | `tpl-traveling-wave` | 9 | 04-03 龍破斬 |
 | `tpl-channel-beam` | ⛔ 0（draft） | — |
 
+> ⭐⭐ **`tpl-beam-roll` 的來源鏈已經逐行對帳過**（2026-09-04，29 個 agent）——
+> 完整結果存 `docs/legacy/_w3x-fidelity-superseded.md` 第 19 節。三句話：
+>
+> 1. ⭐ 它的 `modelKey` 家族預設 `w3x.stock.revivehuman` **是對的** ——
+>    原作六個光束生成點裡有五個掛 `ReviveHuman.mdl`（h007 / h00S / h01V）。
+> 2. ⛔ **「兩種復活光束」只有一種真的會生出來**：`ReviveDemon.mdl`（n00M）在
+>    war3map.j / wct / wtg / doo **全部 0 次** ⇒ 有物件、零生成點的死資料。
+>    ⇒ ⛔ **不要為它做第二個 type。**
+> 3. ⭐ 原作的共同結構是「**光束本體 1 具 ＋ 砲口閃光 1 具**」，
+>    而**每一具都是 `CreateNUnitsAtLoc(1, …)`，⛔ 沒有一處在迴圈裡**。
+>    ⇒ ⚠️ 你若看到 `count > 1` 的光束，那是**傷害班表被讀成視覺**（CLAUDE.md 第〇·六守則⑥）。
+
 **蝗蟲群系**（⭐ 五個 type 全在 —— 這一族就是「同類多 type」的現成範例）
 | id | 參數 | exemplar |
 |---|---:|---|
