@@ -34,7 +34,7 @@
    ```bash
    pnpm skills:check
    pnpm editor:accept:release
-   pnpm coord:check      # ← 在 GH#985 落地之前這一行會是 command not found，先跳過
+   pnpm coord:check      # ← 已落地（GH#985）；⛔ 它會擋掉「同一題重問」，見 §3
    ```
 
 4. **開 PR**：`gh pr create --base main --title "[codex][<fix|feature|improve>] <一句話>" --body-file <packet 路徑>`。
@@ -155,7 +155,7 @@ schema `ggd-coord-packet@1`（`pnpm coord:check` 驗，GH#985）：
 |---|---|---|
 | branch protection ＋ `CODEOWNERS` | GH#983 | Main 的 PR review |
 | CI 補 `skills:check` / `editor:accept:release` / `docker build` / `coord:check` | GH#984 | 你本機跑 §1 第 3 步 |
-| `pnpm coord:check`（packet lint ＋ CI 重跑 repro） | GH#985 | 照 §3 手寫，Main review 時逐格比對 |
+| ~~`pnpm coord:check`~~ | ✅ GH#985 | **已上線** —— `d47f00b00` ＋ `476a0f200`（`NO_ARTIFACT` 那一列，進 `skills:check`） |
 | CI 基線綠（`unit` / `go-platform` / `vuln`） | GH#979 · GH#980 · GH#981 | ⛔ 現在 main 的 CI 是紅的（42 天），PR 的紅分不出新舊 —— 先看 CI 的**第一個**紅是不是你造成的 |
 | `AGENTS.md` 本身有閘（引用的每一條指令都存在） | GH#988 | —— |
 

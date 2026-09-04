@@ -186,11 +186,21 @@ const EXEMPT: Record<string, string> = {
     "⛔ 不是新鮮度閘。⚠️ 今天紅，而紅的那一條是 `visual-advisory`（見下一列）。",
   "skillforge:visual-advisory:check":
     "⛔⛔ **它會寫檔（`build-codex-visual-advisory.mjs` 的 `mkdirSync`＋`writeFileSync`）" +
-    "⇒ 照規矩它該接進 skills:check** —— 這一列是**暫時**的，等 **GH#986** 的 A。" +
-    "⭐ 它今天紅在 **Codex 的 advisory 對不上驗收包**：`stale manual review: source 1e89586f… " +
-    "!= current packet 692c8240…` —— ⛔ **不是**在等一個人批核（那個假前提由 GH#986 更正：" +
-    "那份 source 的作者是 Codex 的 commit，⛔ 不是 owner 的 verdict）。" +
-    "⭐ 反駁法：GH#986 A 落地（對 692c8240 重跑 advisory）之後把這一列刪掉並接進 skills:check（GH#986 F）。",
+    "⇒ 照規矩它該接進 skills:check** —— 這一列是**暫時**的（**GH#986** 的 A／F）。" +
+    "⭐ 它今天紅在 **Codex 的 advisory 對不上驗收包**，⛔ 不是在等人：" +
+    "`stale manual review: source 1e89586f… != current packet 692c8240…`（2026-09-05 實跑 EXIT 1）。" +
+    "⛔⛔ 舊理由引用的「等 owner 人工批核」不只沒有出處，它**方向相反**：" +
+    "① 那份 source 的作者是 **Codex 的 commit `d71d027be`**" +
+    "（`git log --format='%h %an' -- tools/skill-forge/codex-visual-advisory.source.json`）；" +
+    "② 工具第 27 行**要求** `humanPending === 46`（`grep -n humanPending`）—— " +
+    "⭐ owner 真的去批反而會讓它紅。⇒ `source` 帶的是**跟著包走的 digest**，重跑就好，" +
+    "⛔ 不需要任何人重新看圖。" +
+    "⭐⭐ 到期條件（**一行，可以當場檢查**）：" +
+    "`node tools/skill-forge/build-codex-visual-advisory.mjs --check` 回 **0** 的那一刻，" +
+    "這一列就該刪掉，並把 `skillforge:visual-advisory:check` 接進 `skills:check`（GH#986 F）。" +
+    "⚠️ 而重跑**不是只 bump digest**：source 有 **7** 列 `main-blocked`，而今天的 manifest " +
+    "只有 **6** 列帶 `MISSING_VISUAL_BRICK`（多出來的是 `godie-hart.r`，2026-09-05 實測）" +
+    "⇒ 對 `692c8240…` 重跑時會撞 `disposition disagrees with deterministic Main blocker routing`。",
   // ⭐⭐ 2026-09-04 Codex 合併帶進來的兩支 —— ⛔ 它們**不寫任何檔**
   //    （`tools/vfx-asset-safety/check.py` 與 `tools/vfx-forge/check.mjs`
   //     全檔 **0 個** `write_text`／`writeFileSync`／`open(...,"w")`，實查）

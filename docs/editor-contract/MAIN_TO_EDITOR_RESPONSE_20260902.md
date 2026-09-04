@@ -1,5 +1,7 @@
 # main → Codex Editor：接縫回交（2026-09-02）
 
+> ⛔ **與根目錄 `AGENTS.md` 衝突時以 `AGENTS.md` 為準**（GH#988）—— 這一份是背景與細節，⛔ 不是規則的來源。
+
 > ⭐ 這是對 `MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md` 的回覆。
 > ⛔ 它**不是**計畫，是**已經上線的東西 ＋ 誠實的缺口清單**。
 
