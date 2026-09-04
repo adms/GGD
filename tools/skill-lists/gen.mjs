@@ -382,8 +382,31 @@ async function main() {
       ([p, want]) => !existsSync(p) || readFileSync(p, "utf8") !== want,
     );
     if (stale.length > 0) {
+      // ⛔⛔ GH#979 —— 「過期了」**不足以修它**。2026-09-05 這條閘在 CI 上紅、在
+      //   開發機上綠，而訊息只說「跑 build 然後 git add」——⭐ 而那正是**跑了也沒用**
+      //   的那一類（開發機重跑產出的位元組與 commit 的一模一樣）。
+      //   ⇒ 判準：一條逐位元組的閘，要說得出**第一個不同的位元組在哪一行**，
+      //     ⛔ 否則它只是在說「不一樣」，而讀的人只能猜。
+      const firstDiff = ([p, want]) => {
+        if (!existsSync(p)) return "    （檔案不存在）";
+        const got = readFileSync(p, "utf8").split("\n");
+        const exp = String(want).split("\n");
+        const n = Math.max(got.length, exp.length);
+        for (let i = 0; i < n; i++) {
+          if (got[i] !== exp[i]) {
+            return (
+              `    第 ${i + 1} 行起不同（磁碟 ${got.length} 行 / 重建 ${exp.length} 行）\n` +
+              `      磁碟：${JSON.stringify((got[i] ?? "‹沒有這一行›").slice(0, 160))}\n` +
+              `      重建：${JSON.stringify((exp[i] ?? "‹沒有這一行›").slice(0, 160))}`
+            );
+          }
+        }
+        return "    （逐行相同 —— 差在行尾或編碼）";
+      };
       console.error(
-        `speedlists:check 過期：\n${stale.map(([p]) => `  ${p}`).join("\n")}\n→ 跑 ${CMD} 然後 git add`,
+        `speedlists:check 過期：\n` +
+          stale.map(([p, want]) => `  ${p}\n${firstDiff([p, want])}`).join("\n") +
+          `\n→ 跑 ${CMD} 然後 git add`,
       );
       process.exit(1);
     }

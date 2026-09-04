@@ -25,13 +25,35 @@ CUR=$(ls "$REL"/戰情版-*.md 2>/dev/null | sort | tail -1)
 CUR_DATE=$(basename "$CUR" .md | sed 's/[^0-9]//g')
 TARGET="$REL/戰情版-${TODAY}.md"
 
-if [ "$CUR_DATE" != "$TODAY" ]; then
-  if [ "$CHECK" = 1 ]; then
-    echo "⛔ 戰情表還停在 ${CUR_DATE}，今天是 ${TODAY} —— **該輪替了**。"
+# ⛔⛔ GH#979 —— `--check` **不可以用「今天」當判準**（CLAUDE.md 失敗形態⑨）。
+#   `TODAY` 來自跑它的那台機器的**時鐘與時區**：CI runner 是 **UTC**，
+#   而 owner 的機器是 **UTC+8** ⇒ ⭐ 每天有 **8 小時**的窗口，兩邊的「今天」差一天
+#   ⇒ 這條閘在那 8 小時裡**結構上不可能綠**，而訊息叫人「跑 board-roll.sh」
+#   —— ⛔ 跑了也沒用（跑完在 CI 上仍然差一天，而且會再開一份明天的檔）。
+#
+# ⭐ 判準改成「**它有沒有落後**」，⛔ 不是「它等不等於今天」：
+#   · 落後（`CUR_DATE < TODAY - 1`）⇒ 紅（那是真的忘了輪替）
+#   · 相等、或**差一天以內**（時區）⇒ 放行
+#   ⚠️ 容忍值刻意是 **1 天**而不是「任何未來日期」——
+#     一份日期在**未來**很多天的戰情版是打錯字，那要紅。
+_ymd_to_days() { python3 -c "import datetime,sys;d=sys.argv[1];print(datetime.date(int(d[:4]),int(d[4:6]),int(d[6:8])).toordinal())" "$1"; }
+if [ "$CHECK" = 1 ]; then
+  _cur=$(_ymd_to_days "$CUR_DATE"); _now=$(_ymd_to_days "$TODAY")
+  _delta=$(( _cur - _now ))
+  if [ "$_delta" -lt -1 ] || [ "$_delta" -gt 1 ]; then
+    echo "⛔ 戰情表停在 ${CUR_DATE}，而這台機器的今天是 ${TODAY}（差 ${_delta} 天）。"
+    echo "   ⭐ 容忍 ±1 天是**時區**（CI 是 UTC、owner 是 UTC+8）；超過就是真的沒輪替。"
     echo "   跑：bash scripts/board-roll.sh"
     echo "   （會先整份備份成 $REL/戰情版_temp_{時間戳}.md，再開今天那一份）"
     exit 1
   fi
+  # ⭐ 在容忍範圍內 ⇒ 用**戰情版自己的日期**當基準往下走，
+  #   ⛔ 不是用這台機器的「今天」（那一份在 CI 上根本不存在）。
+  TODAY="$CUR_DATE"
+  TARGET="$REL/戰情版-${TODAY}.md"
+fi
+
+if [ "$CUR_DATE" != "$TODAY" ]; then
   STAMP=$(date +%Y%m%d-%H%M)
   BAK="$REL/戰情版_temp_${STAMP}.md"
   cp "$CUR" "$BAK"                      # ⭐ 輪替前**整份**備份（owner 逐字）
