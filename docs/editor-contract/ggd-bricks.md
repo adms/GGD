@@ -26,7 +26,7 @@ capability 指紋：`f7bc050d`
 
 ## 兩個編輯器的表單怎麼量的
 
-- **adminForm**：apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（70 份）→ 後台自己的 readSchema()（1134 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。
+- **adminForm**：apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（71 份）→ 後台自己的 readSchema()（1140 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。
 - **editorForm**：⚠️ **代理值** —— `docs/editor-contract/ggd-editor-coverage.json` 的 `required`（＝「編輯器**應該**要有的欄位」），⛔ 不是「apps/editor 真的有表單」。`apps/editor` 是 Codex 的目錄，這支產生器量不到它。
 - **要 Codex 給的收據**：⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。
 
