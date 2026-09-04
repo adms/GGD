@@ -67,9 +67,9 @@ import { addAllowedOrigins, registerDevWriteGuard } from "./guard";
 import { listSnapshots, readSnapshot, snapshotFile, snapshotText } from "./backup";
 import { registerImportRoutes } from "./importRoutes";
 import {
+  productOwnershipOf,
   registerEditorSourceRoutes,
   registerProductWriteGuard,
-  generatorOwnedFacts,
 } from "./editorSourceRoutes";
 import {
   ExternalProfileError,
@@ -82,6 +82,8 @@ import type { EditorDesktopSourceInfo } from "@ggd/shared/editorDesktop";
 
 export interface ContentApiOptions {
   contentDir: string;
+  /** Repo root used to resolve generator ownership. Defaults to parent of contentDir. */
+  repoRoot?: string;
   /** attach the chokidar file watcher (off in tests) */
   watch?: boolean;
   logger?: boolean;
@@ -184,6 +186,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
     );
   }
   const root = resolve(opts.contentDir);
+  const repoRoot = resolve(opts.repoRoot ?? resolve(root, ".."));
   if (!existsSync(root)) {
     throw new Error(`content dir not found: ${root} — run \`pnpm content:export\` first`);
   }
@@ -329,6 +332,34 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
     return hashDoc(JSON.parse(await readFile(file, "utf8")) as Record<string, unknown>);
   }
 
+  /** Exact source bytes, not the 12-character runtime document cache key. */
+  async function currentSourceSha256(file: string): Promise<string | null> {
+    if (!existsSync(file)) return null;
+    return createHash("sha256").update(await readFile(file)).digest("hex");
+  }
+
+  function requireDirectAiAuthoring(
+    reply: FastifyReply,
+    collection: CollectionName,
+    id: string,
+  ): boolean {
+    const facts = productOwnershipOf(repoRoot, collection, id);
+    if (facts === null) {
+      void err(reply, 503, "OWNERSHIP_TABLE_UNREADABLE：無法確認 AI 候選是否會直接覆寫產生器產物");
+      return false;
+    }
+    if (facts.ownership === "generator-owned") {
+      void err(
+        reply,
+        409,
+        `GENERATOR_OWNED_PRODUCT：${facts.path} 必須走 source adapter` +
+          `${facts.adapterId ? `（${facts.adapterId}）` : ""}，通用 AI Promote 不得直接寫產物`,
+      );
+      return false;
+    }
+    return true;
+  }
+
   // ---------- AI change control: draft -> human verdict -> explicit promote ----------
   // These routes are deliberately in content-api rather than only in React.
   // Calling PUT with a proposal-shaped object is not approval, and editing a
@@ -353,6 +384,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
     }
     const loc = resolveDoc(reply, { collection, id });
     if (!loc) return;
+    if (!requireDirectAiAuthoring(reply, loc.collection, loc.id)) return;
     const candidate = validateBody(reply, loc.collection, loc.id, body?.candidate);
     if (!candidate) return;
     const requestedPurpose = body?.purpose;
@@ -365,6 +397,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
         purpose: requestedPurpose as AiProposalPurpose,
         candidate: candidate as Record<string, unknown>,
         baseHash: await currentDocHash(loc.file),
+        sourceBaseSha256: await currentSourceSha256(loc.file),
         summary: typeof body?.summary === "string" ? body.summary : "",
         evidence: Array.isArray(body?.evidence) ? body.evidence.filter((value): value is string => typeof value === "string") : [],
         visualEvidence: body?.visualEvidence,
@@ -420,41 +453,21 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
       const proposal = aiReview.promotionCandidate(body.key, body.candidateHash, body.reviewHash);
       const loc = resolveDoc(reply, proposal.target);
       if (!loc) return;
-      // ⭐⭐ GH#932 —— **generator-owned 的目標不可以直接 PUT 產物**（票文逐字）。
-      //
-      // ⚠️ ⭐ `registerProductWriteGuard` 的 `onRequest` 蓋不到這條路：它的
-      //   `writeTargetOf()` 只認得 `/content-api/<collection>/<id>`，而這條 URL
-      //   會被解析成 `collection="ai-review", id="promote"` ⇒ ⛔ 產物守衛看不見它。
-      //   ⇒ 這裡自己問一次，⛔ 不假設上一層擋過了。
-      //
-      // ⭐ 而**光有 candidateHash + baseHash 不夠**：那兩格鎖的是「產物」的樣子，
-      //   ⛔ 而產物是**算出來的** —— 來源改了、產生器改了，同一份產物照樣通過。
-      //   ⇒ 票文要求 verdict 同時鎖住這四格：
-      //     · `sourceBaseSha256`         —— 真正的**來源**在送審那一刻的樣子
-      //     · `authoringOperation`       —— 這一次要對來源做什麼操作
-      //     · `authoringOperationDigest` —— 那個操作本身的指紋（⛔ 不是結果的）
-      //     · `expectedOutputs`          —— 跑完產生器**應該**產出哪幾份
-      //   ⛔ 四格齊全之前，這條路對產物一律 409（⛔ 不是靜默降級）。
-      const owned = generatorOwnedFacts(repoRoot, loc.collection, loc.id);
-      if (owned !== null) {
-        const bindings = proposal as unknown as Record<string, unknown>;
-        const missing = [
-          "sourceBaseSha256",
-          "authoringOperation",
-          "authoringOperationDigest",
-          "expectedOutputs",
-        ].filter((k) => bindings[k] === undefined || bindings[k] === null);
-        if (missing.length > 0) {
-          return err(
-            reply,
-            409,
-            `⛔ \`${owned.path}\` 是產生器 **${owned.authors.join(" / ")}** 的產物 —— ` +
-              `promote 一份產物必須同時鎖住 ${missing.join(" / ")}（GH#932）。` +
-              "⚠️ 只鎖 candidateHash＋baseHash 不夠：那兩格描述的是**算出來的產物**，" +
-              "⛔ 而來源或產生器改了之後，同一份產物照樣通過。" +
-              "⇒ 走 source adapter 改**真正的來源**、跑產生器、重驗產物與 champion mirror。",
-          );
-        }
+      if (!requireDirectAiAuthoring(reply, loc.collection, loc.id)) return;
+      const { sourceBaseSha256, authoringOperation, authoringOperationDigest, expectedOutputs } = proposal;
+      if (authoringOperation.kind !== "document-upsert" ||
+        authoringOperation.target.collection !== loc.collection || authoringOperation.target.id !== loc.id ||
+        !/^[0-9a-f]{64}$/.test(authoringOperationDigest)) {
+        return err(reply, 409, "AUTHORING_OPERATION_MISMATCH：人工裁決鎖定的 authoringOperation 無法重現");
+      }
+      const liveSourceSha256 = await currentSourceSha256(loc.file);
+      if (liveSourceSha256 !== sourceBaseSha256) {
+        return err(
+          reply,
+          409,
+          `目標來源在送審後已變更（送審來源 ${sourceBaseSha256 ?? "不存在"}，` +
+            `目前 ${liveSourceSha256 ?? "不存在"}）；請重新提交與審查`,
+        );
       }
       const liveHash = await currentDocHash(loc.file);
       if (liveHash !== proposal.baseHash) {
@@ -468,9 +481,16 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
       // green check, or a verdict made against an older schema, is not enough.
       const doc = validateBody(reply, loc.collection, loc.id, proposal.candidate);
       if (!doc) return;
+      const expected = expectedOutputs;
+      const nextHash = hashDoc(doc);
+      if (expected.length !== 1 || expected[0]?.collection !== loc.collection ||
+        expected[0]?.id !== loc.id || expected[0]?.contentHash !== nextHash) {
+        return err(reply, 409, "AUTHORING_OUTPUT_MISMATCH：候選不符合人工裁決鎖定的 expectedOutputs");
+      }
       const existed = existsSync(loc.file);
       const backup = snapshotFile(backupRoot, loc.collection, loc.id, loc.file, { onError: backupWarn });
       const { hash } = writeDocAtomic(root, loc.collection, doc);
+      if (hash !== nextHash) throw new Error("writeDocAtomic 回傳的 hash 與預先驗證結果不同");
       const { collectionHash, contentVersion } = reindex(loc.collection);
       const promotion = aiReview.recordPromotion(body.key, body.candidateHash, body.reviewHash, hash);
       hub.publish({
@@ -936,7 +956,6 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   // ⭐⭐ P0-1 —— 產生器來源轉接器（GH: editor seam）。
   //   ⚠️ `registerProductWriteGuard` 是 **onRequest**（比路由早）⇒ 一支 curl 也擋得住，
   //   ⛔ 不是「請編輯器不要直接寫產物」。
-  const repoRoot = resolve(root, "..");
   registerProductWriteGuard(app, { repoRoot, contentDir: root });
   registerEditorSourceRoutes(app, { repoRoot, contentDir: root });
 

@@ -72,3 +72,7 @@ docs
 #   —— 那會把整個 docs（連同 `_reports/`、`legacy/`、w3x 傾印）重新納入建置脈絡，
 #   而那正是這個檔存在的理由（檔頭：repo 5.8 GB）。
 !docs/editor-contract/ggd-presentation-token-manifest.json
+!docs/_acceptance/ggd-acceptance-eight.json
+!docs/editor-contract/ggd-type-catalog.json
+!docs/editor-contract/ggd-editor-coverage.json
+!docs/editor-contract/ggd-presentation-receipt.json

@@ -31,12 +31,75 @@ import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { decodePng } from "./modulateIdentity";
 import { zConfigUnsafeTexturesDoc } from "./schema/config/unsafeTextures";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..", "..");
 const CONTENT = join(REPO, "content");
 
 const readJson = (p: string): unknown => JSON.parse(readFileSync(p, "utf8"));
+
+const round = (value: number, digits: number): number => {
+  const scale = 10 ** digits;
+  return Math.round(value * scale) / scale;
+};
+
+/**
+ * PNG 位元組 → unsafe-textures.measured。
+ *
+ * ⭐ 量尺與契約放在同一個守衛裡：修圖之後不能只換 hash、沿用舊結論。
+ * `borderEffAdditive` 沿用原契約的定義＝四條邊各自平均後再平均；角落因此在
+ * 兩條邊各算一次，非正方形貼圖也不會因長邊像素較多而淹沒短邊缺陷。
+ */
+function measureTexture(file: string): {
+  size: string;
+  hasAlphaShape: boolean;
+  opaquePct: number;
+  minAlpha: number;
+  maxAlpha: number;
+  alphaRange: number;
+  distinctAlphaValues: number;
+  borderEffAdditive: number;
+  edgeEffAdditive: { top: number; bottom: number; left: number; right: number };
+} {
+  const { w, h, rgba } = decodePng(readFileSync(file));
+  const alphas: number[] = [];
+  for (let i = 3; i < rgba.length; i += 4) alphas.push(rgba[i]!);
+  const minAlpha = Math.min(...alphas);
+  const maxAlpha = Math.max(...alphas);
+
+  const effectiveAdditive = (x: number, y: number): number => {
+    const i = (y * w + x) * 4;
+    const brightness = (rgba[i]! + rgba[i + 1]! + rgba[i + 2]!) / 3;
+    return brightness * rgba[i + 3]! / 255;
+  };
+  const mean = (values: readonly number[]): number =>
+    values.reduce((sum, value) => sum + value, 0) / values.length;
+  const edgeRaw = {
+    top: mean(Array.from({ length: w }, (_, x) => effectiveAdditive(x, 0))),
+    bottom: mean(Array.from({ length: w }, (_, x) => effectiveAdditive(x, h - 1))),
+    left: mean(Array.from({ length: h }, (_, y) => effectiveAdditive(0, y))),
+    right: mean(Array.from({ length: h }, (_, y) => effectiveAdditive(w - 1, y))),
+  };
+  const edgeEffAdditive = {
+    top: round(edgeRaw.top, 1),
+    bottom: round(edgeRaw.bottom, 1),
+    left: round(edgeRaw.left, 1),
+    right: round(edgeRaw.right, 1),
+  };
+
+  return {
+    size: `${w}x${h}`,
+    hasAlphaShape: maxAlpha - minAlpha > 8,
+    opaquePct: round(alphas.filter((alpha) => alpha === 255).length * 100 / alphas.length, 2),
+    minAlpha,
+    maxAlpha,
+    alphaRange: maxAlpha - minAlpha,
+    distinctAlphaValues: new Set(alphas).size,
+    borderEffAdditive: round(mean(Object.values(edgeRaw)), 1),
+    edgeEffAdditive,
+  };
+}
 
 /** 每一個字串葉節點 —— ⛔ 不猜欄位名，⭐ 比對**值**（欄位名會漂，vfx id 不會）。 */
 function strings(node: unknown, out: string[] = []): string[] {
@@ -141,7 +204,7 @@ describe("不安全 VFX 貼圖的隔離契約 (content-unsafe-texture-quarantine
     expect(parsed.textures.length).toBeGreaterThanOrEqual(1);
   });
 
-  it("① 每一張被列的貼圖真的在磁碟上,而且 sha256 對得上現在的位元組", () => {
+  it("① 每一張被列的貼圖真的在磁碟上,而且 sha256 與完整像素量測都對得上", () => {
     for (const t of parsed.textures) {
       const abs = join(CONTENT, t.file);
       expect(existsSync(abs), `隔離表指向一個不存在的檔案:${t.file} —— 這個隔離是空的`).toBe(true);
@@ -151,6 +214,10 @@ describe("不安全 VFX 貼圖的隔離契約 (content-unsafe-texture-quarantine
         `${t.file} 的位元組變了 —— 契約裡那一整組量測描述的是**另一份檔案**。` +
           `重新量再更新這一列,⛔ 不要只改 hash。`,
       ).toBe(t.sha256);
+      expect(
+        measureTexture(abs),
+        `${t.file} 的像素量測過期了 —— 必須重算完整 measured，⛔ 不得只換 hash。`,
+      ).toEqual(t.measured);
     }
   });
 

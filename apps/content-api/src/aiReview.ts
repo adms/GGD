@@ -11,9 +11,10 @@
  * Promotion is a separate operation and the caller must still revalidate the
  * candidate and compare its base hash immediately before writing content.
  */
+import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { hashDoc, type CollectionName } from "@ggd/shared/content";
+import { hashDoc, stableStringify, type CollectionName } from "@ggd/shared/content";
 
 export const VFX_FORGE_ACCEPTANCE_IDS = new Set([
   "godie-hjai.e",
@@ -93,6 +94,14 @@ export interface AiChangeProposal {
   autoVisualScore?: number;
   candidate: Record<string, unknown>;
   candidateHash: string;
+  /** Exact source bytes observed before authoring; null means this is a create. */
+  sourceBaseSha256: string | null;
+  /** The only operation the generic review route is allowed to execute. */
+  authoringOperation: AiAuthoringOperation;
+  /** SHA-256 over source pin + operation + expected outputs. */
+  authoringOperationDigest: string;
+  /** Outputs that must be reproduced exactly before promotion is recorded. */
+  expectedOutputs: AiExpectedOutput[];
   /** Candidate + all human-visible review material. Verdicts bind this, not only candidateHash. */
   reviewHash: string;
   baseHash: string | null;
@@ -105,6 +114,10 @@ export interface AiChangeVerdict {
   key: string;
   candidateHash: string;
   reviewHash: string;
+  sourceBaseSha256: string | null;
+  authoringOperation: AiAuthoringOperation;
+  authoringOperationDigest: string;
+  expectedOutputs: AiExpectedOutput[];
   verdict: AiVerdict;
   reviewer: string;
   note: string;
@@ -117,6 +130,8 @@ export interface AiPromotion {
   key: string;
   candidateHash: string;
   reviewHash: string;
+  sourceBaseSha256: string | null;
+  authoringOperationDigest: string;
   promotedAt: string;
   outputHash: string;
 }
@@ -142,11 +157,24 @@ interface SubmitInput {
   purpose: AiProposalPurpose;
   candidate: Record<string, unknown>;
   baseHash: string | null;
+  sourceBaseSha256: string | null;
   summary?: string;
   evidence?: string[];
   visualEvidence?: unknown;
   visualAudit?: unknown;
   autoVisualScore?: number;
+}
+
+export interface AiAuthoringOperation {
+  schema: "ggd-ai-authoring-operation@1";
+  kind: "document-upsert";
+  target: AiProposalTarget;
+}
+
+export interface AiExpectedOutput {
+  collection: CollectionName;
+  id: string;
+  contentHash: string;
 }
 
 interface VerdictLedger {
@@ -309,8 +337,32 @@ function visualAuditReceipt(value: unknown): AiVisualAuditReceipt | undefined {
 
 type ReviewMaterial = Pick<AiChangeProposal,
   "target" | "purpose" | "summary" | "evidence" | "visualEvidence" | "visualAudit" |
-  "autoVisualScore" | "candidateHash" | "baseHash"
+  "autoVisualScore" | "candidateHash" | "baseHash" | "sourceBaseSha256" |
+  "authoringOperation" | "authoringOperationDigest" | "expectedOutputs"
 >;
+
+function sha256(value: unknown): string {
+  return createHash("sha256").update(stableStringify(value), "utf8").digest("hex");
+}
+
+function authoringBindings(
+  target: AiProposalTarget,
+  candidateHash: string,
+  sourceBaseSha256: string | null,
+): Pick<AiChangeProposal, "sourceBaseSha256" | "authoringOperation" | "authoringOperationDigest" | "expectedOutputs"> {
+  const authoringOperation: AiAuthoringOperation = {
+    schema: "ggd-ai-authoring-operation@1",
+    kind: "document-upsert",
+    target,
+  };
+  const expectedOutputs: AiExpectedOutput[] = [{ ...target, contentHash: candidateHash }];
+  return {
+    sourceBaseSha256,
+    authoringOperation,
+    authoringOperationDigest: sha256({ sourceBaseSha256, authoringOperation, expectedOutputs }),
+    expectedOutputs,
+  };
+}
 
 export function aiProposalReviewHash(material: ReviewMaterial): string {
   return hashDoc({
@@ -323,6 +375,10 @@ export function aiProposalReviewHash(material: ReviewMaterial): string {
     autoVisualScore: material.autoVisualScore ?? null,
     candidateHash: material.candidateHash,
     baseHash: material.baseHash,
+    sourceBaseSha256: material.sourceBaseSha256,
+    authoringOperation: material.authoringOperation,
+    authoringOperationDigest: material.authoringOperationDigest,
+    expectedOutputs: material.expectedOutputs,
   });
 }
 
@@ -331,10 +387,15 @@ function normalizeProposal(raw: AiChangeProposal): AiChangeProposal {
   // edited outside the server. Never trust its self-reported candidate hash:
   // recomputing it makes any such edit invalidate the verdict instead of
   // letting a stale hash authorize different bytes.
+  const candidateHash = hashDoc(raw.candidate);
+  const sourceBaseSha256 = typeof raw.sourceBaseSha256 === "string" || raw.sourceBaseSha256 === null
+    ? raw.sourceBaseSha256
+    : null;
   const proposal = {
     ...raw,
     visualEvidence: raw.visualEvidence ?? [],
-    candidateHash: hashDoc(raw.candidate),
+    candidateHash,
+    ...authoringBindings(raw.target, candidateHash, sourceBaseSha256),
   };
   return { ...proposal, reviewHash: aiProposalReviewHash(proposal) };
 }
@@ -386,6 +447,7 @@ export class AiReviewStore {
     if (visualAudit && autoVisualScore !== undefined && visualAudit.autoVisualScore !== autoVisualScore) {
       throw new Error("autoVisualScore 必須與 visualAudit.autoVisualScore 相同");
     }
+    const candidateHash = hashDoc(input.candidate);
     const material = {
       schema: "ggd-ai-change-proposal@1" as const,
       key,
@@ -399,8 +461,9 @@ export class AiReviewStore {
       ...(visualAudit ? { visualAudit } : {}),
       ...(autoVisualScore === undefined ? {} : { autoVisualScore }),
       candidate: input.candidate,
-      candidateHash: hashDoc(input.candidate),
+      candidateHash,
       baseHash: input.baseHash,
+      ...authoringBindings(input.target, candidateHash, input.sourceBaseSha256),
       createdAt: existing?.createdAt ?? now,
       updatedAt: now,
     };
@@ -461,6 +524,10 @@ export class AiReviewStore {
       key: input.key,
       candidateHash: input.candidateHash,
       reviewHash: input.reviewHash,
+      sourceBaseSha256: proposal.sourceBaseSha256,
+      authoringOperation: proposal.authoringOperation,
+      authoringOperationDigest: proposal.authoringOperationDigest,
+      expectedOutputs: proposal.expectedOutputs,
       verdict: input.verdict,
       reviewer,
       note,
@@ -492,11 +559,15 @@ export class AiReviewStore {
   }
 
   recordPromotion(key: string, candidateHash: string, reviewHash: string, outputHash: string): AiPromotion {
+    const proposal = this.readProposal(key);
+    if (!proposal) throw new Error(`找不到 AI 候選：${key}`);
     const entry: AiPromotion = {
       schema: "ggd-ai-change-promotion@1",
       key,
       candidateHash,
       reviewHash,
+      sourceBaseSha256: proposal.sourceBaseSha256,
+      authoringOperationDigest: proposal.authoringOperationDigest,
       outputHash,
       promotedAt: new Date().toISOString(),
     };
@@ -550,9 +621,15 @@ function statusOf(
   verdict: AiChangeVerdict | null,
   promotion: AiPromotion | null,
 ): AiProposalStatus {
-  if (promotion?.candidateHash === proposal.candidateHash && promotion.reviewHash === proposal.reviewHash) return "promoted";
+  if (promotion?.candidateHash === proposal.candidateHash && promotion.reviewHash === proposal.reviewHash &&
+    promotion.sourceBaseSha256 === proposal.sourceBaseSha256 &&
+    promotion.authoringOperationDigest === proposal.authoringOperationDigest) return "promoted";
   if (verdict !== null &&
-    (verdict.candidateHash !== proposal.candidateHash || verdict.reviewHash !== proposal.reviewHash)) {
+    (verdict.candidateHash !== proposal.candidateHash || verdict.reviewHash !== proposal.reviewHash ||
+      verdict.sourceBaseSha256 !== proposal.sourceBaseSha256 ||
+      verdict.authoringOperationDigest !== proposal.authoringOperationDigest ||
+      sha256(verdict.authoringOperation ?? null) !== sha256(proposal.authoringOperation) ||
+      sha256(verdict.expectedOutputs ?? null) !== sha256(proposal.expectedOutputs))) {
     return "changed-after-review";
   }
   if (proposal.purpose === "editor-capability-fixture") {

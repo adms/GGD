@@ -8,7 +8,7 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { mkdtempSync, mkdirSync, rmSync, existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import type { FastifyInstance } from "fastify";
 import { cover } from "@ggd/shared/testkit/cover";
 import { hashDoc } from "@ggd/shared/content";
@@ -16,6 +16,8 @@ import { rebuildAllIndexes, writeDocAtomic } from "@ggd/shared/content/node";
 import { buildServer } from "./server";
 import { SseHub } from "./sse";
 import { VFX_FORGE_ACCEPTANCE_IDS } from "./aiReview";
+
+const REPO = resolve(__dirname, "../../..");
 
 const ITEM = {
   id: "ember-rod",
@@ -65,7 +67,12 @@ beforeEach(async () => {
   rebuildAllIndexes(root);
   // undo store inside the tmp dir so the suite cleans up after itself (the real
   // default is <content>/../data/content-backups — outside the deployable tree)
-  app = buildServer({ contentDir: root, backupDir: join(root, ".backups"), reviewDir: join(root, ".review") });
+  app = buildServer({
+    contentDir: root,
+    repoRoot: REPO,
+    backupDir: join(root, ".backups"),
+    reviewDir: join(root, ".review"),
+  });
   await app.ready();
 });
 
@@ -203,8 +210,21 @@ describe("AI change control", () => {
       candidateHash: string;
       reviewHash: string;
       promotable: boolean;
+      sourceBaseSha256: string;
+      authoringOperation: { kind: string; target: { collection: string; id: string } };
+      authoringOperationDigest: string;
+      expectedOutputs: { collection: string; id: string; contentHash: string }[];
     };
     expect(proposal.promotable).toBe(true);
+    expect(proposal.sourceBaseSha256).toMatch(/^[0-9a-f]{64}$/);
+    expect(proposal.authoringOperation).toMatchObject({
+      kind: "document-upsert",
+      target: { collection: "items", id: ITEM.id },
+    });
+    expect(proposal.authoringOperationDigest).toMatch(/^[0-9a-f]{64}$/);
+    expect(proposal.expectedOutputs).toEqual([
+      { collection: "items", id: ITEM.id, contentHash: proposal.candidateHash },
+    ]);
     expect(JSON.parse(readFileSync(join(root, "items", `${ITEM.id}.json`), "utf8")).cost).toBe(900);
 
     const early = await app.inject({
@@ -227,6 +247,12 @@ describe("AI change control", () => {
       },
     });
     expect(approved.statusCode).toBe(200);
+    expect(approved.json().verdict).toMatchObject({
+      sourceBaseSha256: proposal.sourceBaseSha256,
+      authoringOperation: proposal.authoringOperation,
+      authoringOperationDigest: proposal.authoringOperationDigest,
+      expectedOutputs: proposal.expectedOutputs,
+    });
 
     const promoted = await app.inject({
       method: "POST",
@@ -270,6 +296,109 @@ describe("AI change control", () => {
     expect(promoted.statusCode).toBe(409);
     expect(promoted.json().error).toContain("送審後已變更");
     expect(JSON.parse(readFileSync(join(root, "items", `${ITEM.id}.json`), "utf8")).cost).toBe(901);
+  });
+
+  it("invalidates legacy or tampered verdicts that do not bind the authoring operation", async () => {
+    const candidate = { ...ITEM, cost: 976 };
+    const submitted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "items", id: ITEM.id },
+        purpose: "production-candidate",
+        candidate,
+      },
+    });
+    const proposal = submitted.json().proposal as { key: string; candidateHash: string; reviewHash: string };
+    await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/verdicts",
+      payload: {
+        key: proposal.key,
+        candidateHash: proposal.candidateHash,
+        reviewHash: proposal.reviewHash,
+        verdict: "approve",
+        reviewer: "Owner",
+        note: "ok",
+      },
+    });
+
+    const ledgerFile = join(root, ".review", "ai-verdicts.json");
+    const ledger = JSON.parse(readFileSync(ledgerFile, "utf8")) as {
+      entries: Record<string, Record<string, unknown>>;
+    };
+    delete ledger.entries[proposal.key]!.authoringOperationDigest;
+    writeFileSync(ledgerFile, `${JSON.stringify(ledger, null, 2)}\n`, "utf8");
+
+    const promoted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/promote",
+      payload: { key: proposal.key, candidateHash: proposal.candidateHash, reviewHash: proposal.reviewHash },
+    });
+    expect(promoted.statusCode).toBe(409);
+    expect(promoted.json().error).toContain("changed-after-review");
+    expect(JSON.parse(readFileSync(join(root, "items", `${ITEM.id}.json`), "utf8")).cost).toBe(900);
+  });
+
+  it("rejects promotion when the exact source bytes changed after human approval", async () => {
+    const candidate = { ...ITEM, cost: 977 };
+    const submitted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "items", id: ITEM.id },
+        purpose: "production-candidate",
+        candidate,
+      },
+    });
+    const proposal = submitted.json().proposal as { key: string; candidateHash: string; reviewHash: string };
+    const approved = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/verdicts",
+      payload: {
+        key: proposal.key,
+        candidateHash: proposal.candidateHash,
+        reviewHash: proposal.reviewHash,
+        verdict: "approve",
+        reviewer: "Owner",
+        note: "ok",
+      },
+    });
+    expect(approved.statusCode).toBe(200);
+
+    // Same JSON semantics and therefore the same hashDoc, but different source bytes.
+    // Only sourceBaseSha256 can detect this authoring-source drift.
+    writeFileSync(join(root, "items", `${ITEM.id}.json`), `${JSON.stringify(ITEM)}\n`, "utf8");
+    const promoted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/promote",
+      payload: { key: proposal.key, candidateHash: proposal.candidateHash, reviewHash: proposal.reviewHash },
+    });
+    expect(promoted.statusCode).toBe(409);
+    expect(promoted.json().error).toContain("目標來源在送審後已變更");
+    expect(JSON.parse(readFileSync(join(root, "items", `${ITEM.id}.json`), "utf8")).cost).toBe(900);
+  });
+
+  it("rejects generator-owned candidates instead of letting generic Promote write generated JSON", async () => {
+    const id = "godie-e00s.r";
+    const candidate = JSON.parse(
+      readFileSync(join(REPO, "content", "abilities", `${id}.json`), "utf8"),
+    ) as { id: string } & Record<string, unknown>;
+    writeDocAtomic(root, "abilities", candidate);
+    rebuildAllIndexes(root);
+
+    const submitted = await app.inject({
+      method: "POST",
+      url: "/content-api/ai-review/proposals",
+      payload: {
+        target: { collection: "abilities", id },
+        purpose: "production-candidate",
+        candidate,
+      },
+    });
+    expect(submitted.statusCode).toBe(409);
+    expect(submitted.json().error).toContain("GENERATOR_OWNED_PRODUCT");
+    expect(submitted.json().error).toContain("source adapter");
   });
 
   it("forces all eight acceptance IDs to non-promotable fixtures", async () => {

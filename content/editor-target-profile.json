@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_17a92813fcd3",
+    "contentVersion": "cv_8572d8a7fa14",
     "collections": {
       "champions": {
         "hash": "e493553f740c",
         "count": 71
       },
       "abilities": {
-        "hash": "f2d12af4b2ab",
+        "hash": "969f791f7daa",
         "count": 421
       },
       "items": {
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "b19a5e316edd",
+        "hash": "650e55bb0001",
         "count": 100
       },
       "models": {
@@ -58,7 +58,7 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "c71bcb6bc5b4",
+        "hash": "e8842b4e9e3d",
         "count": 46
       },
       "vfx-scripts": {
@@ -93,7 +93,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "f7bc050d",
+    "fingerprint": "f40f16e4",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -451,7 +451,6 @@
       "speed",
       "spinDegPerSec",
       "spread",
-      "spreadDeg",
       "stackKey",
       "stackVisual",
       "stacking",
@@ -858,7 +857,6 @@
       "speed",
       "spinDegPerSec",
       "spread",
-      "spreadDeg",
       "stackKey",
       "stackVisual",
       "stacking",
@@ -1275,14 +1273,9 @@
       "buff-self",
       "charge-push",
       "combo-finisher",
-      "dragon-quake",
-      "dragon-serpent",
-      "drain-leech",
       "ground-nova",
-      "growth-charge",
       "instant-blast",
       "leap-strike",
-      "life-manipulate",
       "line-blast",
       "line-sweep",
       "lock-combo",
@@ -1298,7 +1291,6 @@
       "periodic-field",
       "proxy-cast",
       "proxy-fanout",
-      "pull-throw",
       "radial-burst",
       "random-barrage",
       "single-strike",
@@ -2330,73 +2322,32 @@
         {
           "id": "tpl-dragon-quake",
           "family": "dragon-quake",
-          "status": "enabled",
+          "status": "draft",
           "params": {
-            "path": {
-              "type": "enum",
-              "values": [
-                "orbit",
-                "radial",
-                "fan",
-                "forward",
-                "toTarget",
-                "static"
-              ],
-              "default": "orbit",
-              "origin": "j:44087 `CreateNUnitsAtLoc( 1, 'o00Z', …, PolarProjectionBJ(udg_BlackDGP, 350.00, ( I2R(udg_BlackDargon) * 30.00 )), … )` —— **環上等分的落點，⛔ 零位移**（迴圈裡一次 `SetUnitPosition` 都沒有）⇒ 這正是 `orbit` 的定義（`travel: 0`，終點只有 `lifeSec`）。⛔ 不是 `radial`（那會讓 12 具往外飛）。"
-            },
             "modelKey": {
               "type": "docRef",
-              "default": "w3x.stock.flamestriketarget",
-              "origin": "j:44087 `CreateNUnitsAtLoc( 1, **'o00Z'**, … )` ＋ `OBJECTS.json` 的 `units.o00Z = {name:\"黑龍波\", model:\"**FlameStrikeTarget.mdl**\"}` ⇒ `w3x.stock.flamestriketarget`。⛔⛔ **2026-09-04 更正**：這一格原本是 `imported.tectonicfury` —— ⭐ 而 `tectonicfury` 與 `o00Z` **沒有任何關係**（OBJECTS.json 逐字），⇒ 那是一個沒有出處的預設值，正是第一守則規矩 5 要防的東西。"
+              "default": "imported.tectonicfury"
             },
             "count": {
               "type": "number",
               "default": 12,
-              "min": 1,
+              "min": 2,
               "max": 12,
-              "unit": "count",
-              "origin": "j:44086 `exitwhen udg_BlackDargon > **12**`（i 從 1 起算 ⇒ 12 具）。"
-            },
-            "distance": {
-              "type": "number",
-              "default": 350,
-              "min": 1,
-              "max": 2600,
-              "unit": "wc3u",
-              "origin": "j:44087 `PolarProjectionBJ(udg_BlackDGP, **350.00**, …)` —— 環半徑。⭐ 而每 30° 一具（`I2R(i) * **30.00**`）＝ 360÷12，⇒ 等分是 `count` 推出來的，⛔ 不需要第二格。"
-            },
-            "lifeSec": {
-              "type": "number",
-              "default": 3,
-              "min": 0.1,
-              "max": 30,
-              "unit": "s",
-              "origin": "j:44088 `call UnitApplyTimedLifeBJ( **3.00**, 'BTLF', GetLastCreatedUnit() )`"
-            },
-            "speed": {
-              "type": "number",
-              "default": 1625,
-              "min": 1,
-              "max": 2600,
-              "unit": "wc3u",
-              "origin": "derived: j:44065 `set udg_DarkDragonMoveSpeed = 130.00` ÷ j:44411 `TriggerRegisterTimerEventPeriodic( …, **0.08** )` = **1625 wc3u/s**。 ⚠️ ⭐ `orbit` **不位移** ⇒ 這一格在這一族其實不會被讀到；留著是因為 `modelFxFamily` 的非 static 分支無條件發出它（與五份 `tpl-locust-*` 同一個形狀）。"
-            },
-            "scale": {
-              "type": "number",
-              "default": 1,
-              "min": 0.1,
-              "max": 20,
-              "optional": true,
-              "origin": "taxonomy: 出貨值。⛔ 原作 j:44085–44092 的迴圈裡**零個** `SetUnitScalePercent` ⇒ GGD 的視覺選擇。"
+              "unit": "count"
             },
             "ringRadius": {
               "type": "number",
               "default": 350,
               "min": 100,
               "max": 2600,
-              "unit": "wc3u",
-              "inert": "⛔ **已併入 `distance`**（`orbit` 的 distance 就是環半徑，`zSpawnModelFx.distance` 的說明逐字）。留著這一格是為了不弄丟「它曾經叫這個名字」——⛔ 不要再填它。"
+              "unit": "wc3u"
+            },
+            "speed": {
+              "type": "number",
+              "default": 1625,
+              "min": 100,
+              "max": 2600,
+              "unit": "wc3u"
             },
             "blastRadius": {
               "type": "number",
@@ -2404,40 +2355,35 @@
               "min": 50,
               "max": 1300,
               "unit": "wc3u",
-              "optional": true,
-              "inert": "⛔ **本版不生效** —— `modelFxFamily` 只在模板宣告了 `blastDamageTier` 時才發出 `blastRadius`。⭐ 原作那一發是 j:44089 的 `UnitAddAbilityBJ('A09M')`＋j:44090 `IssuePointOrderLocBJ(…, \"clusterrockets\", …)`（叢集火箭），⇒ 半徑住在 `A09M` 的物件資料裡，⛔ 不在觸發器。"
+              "optional": true
+            },
+            "scale": {
+              "type": "number",
+              "default": 1,
+              "min": 0.1,
+              "max": 20,
+              "optional": true
             },
             "shakeAmplitude": {
               "type": "number",
               "default": 0.5,
               "min": 0.05,
               "max": 1,
-              "unit": "ratio",
-              "inert": "⛔ **本版不生效** —— `modelFxFamily` 產不出畫面震動（那是 `screenShake` 事件，另一條路）。⭐ 原作在 A09I 的這一段**沒有** CameraSetEQNoise 呼叫 ⇒ 這一格從來就沒有 JASS 依據。"
+              "unit": "ratio"
             },
             "shakeSec": {
               "type": "number",
               "default": 0.6,
               "min": 0.1,
               "max": 5,
-              "unit": "s",
-              "inert": "⛔ **本版不生效** —— 同 `shakeAmplitude`。"
+              "unit": "s"
             },
             "impactLifeSec": {
               "type": "number",
               "default": 3,
               "min": 0.5,
               "max": 30,
-              "unit": "s",
-              "inert": "⛔ **已併入 `lifeSec`**（同一個 j:44088）。⛔ 不要再填它。"
-            },
-            "scatterBox": {
-              "type": "number",
-              "default": 750,
-              "min": 100,
-              "max": 2600,
-              "unit": "wc3u",
-              "inert": "本版不生效 —— 原作除了那一圈固定落點，還在**移動中**每隔一 tick 於龍頭周圍 750×750 的方框內隨機挑一點放一發 WarStompCaster。那是「跟著主體走的隨機散布」，而 spawnModelFx 的落點在施放當下就決定了；randomArea 能隨機挑點但綁不到一具移動中的模型身上。"
+              "unit": "s"
             },
             "damage": {
               "type": "scaling",
@@ -2447,8 +2393,7 @@
                 ],
                 "ratios": []
               },
-              "optional": true,
-              "inert": "⛔ **本版不生效，⭐ 而且它原本違反第〇·四守則**（`perRank` 是烘死的數字）。原作 j:44307 是 `400.00 + 250.00 × level`。⇒ 要接傷害請改宣告 `blastDamageTier`。"
+              "optional": true
             },
             "damageType": {
               "type": "enum",
@@ -2457,111 +2402,82 @@
                 "physical",
                 "true"
               ],
-              "default": "magic",
-              "inert": "⛔ **本版不生效** —— 只有宣告了級距時才讀得到。原作 j:44307 是 `DAMAGE_TYPE_MAGIC`。"
+              "default": "magic"
+            },
+            "scatterBox": {
+              "type": "number",
+              "default": 750,
+              "min": 100,
+              "max": 2600,
+              "unit": "wc3u",
+              "inert": "本版不生效 —— 原作除了那一圈固定落點，還在**移動中**每隔一 tick 於龍頭周圍 750×750 的方框內隨機挑一點放一發 WarStompCaster。那是「跟著主體走的隨機散布」，而 spawnModelFx 的落點在施放當下就決定了；randomArea 能隨機挑點但綁不到一具移動中的模型身上。"
             }
           }
         },
         {
           "id": "tpl-dragon-serpent",
           "family": "dragon-serpent",
-          "status": "enabled",
+          "status": "draft",
           "params": {
-            "path": {
-              "type": "enum",
-              "values": [
-                "fan",
-                "forward",
-                "toTarget",
-                "radial",
-                "orbit",
-                "static"
-              ],
-              "default": "fan",
-              "origin": "j:44068 / j:44069 / j:44070 —— 三具的**生成點**在 `casterLoc` 半徑 200 的弧上 （`±45 + GetUnitFacing`），⭐ 而 `CreateNUnitsAtLoc(…, **GetUnitFacing(施法者)**)` 說三具的 facing 是**同一個** ⇒ 起點扇、方向平行 ＝ `path:\"fan\"` 的定義。"
-            },
             "modelKey": {
               "type": "docRef",
-              "default": "imported.darkraor",
-              "origin": "j:44063 / j:44070 / j:44073 `CreateNUnitsAtLoc( 1, **'h02F'**, … )` ＋ `OBJECTS.json` 的 `units.h02F = {name:\"黑龍頭\", model:\"**Darkraor.mdl**\"}` ⇒ `imported.darkraor` 逐字對上。"
+              "default": "imported.darkraor"
             },
-            "count": {
+            "instances": {
               "type": "number",
               "default": 3,
               "min": 1,
               "max": 12,
-              "unit": "count",
-              "origin": "j:44063 中央一具 ＋ j:44070 / j:44073 兩側各一具 ＝ **3**。⚠️ 兩側那兩具在 `Trig_DarkDragonEX_Func008C()`（EX_Mode）底下 ⇒ 原作**非 EX 只有 1 具**；GGD 這一族的 exemplar 是 38-002（EX），所以家族預設取 3。"
+              "unit": "count"
             },
             "spreadDeg": {
               "type": "number",
               "default": 45,
               "min": 0,
               "max": 180,
-              "origin": "j:44068 ＋ j:44069 —— `PolarProjectionBJ(casterLoc, 200.00, (±45.00 + GetUnitFacing(…)))`。⚠️⚠️ ⭐ 那 ±45 是**生成點的方位角**，⛔ 不是行進方向：`j:44070` 的 `CreateNUnitsAtLoc(1,'h02F',…, point2, GetUnitFacing(施法者))` 說三具的 facing 是**同一個** ⇒ 三條龍**並排往前衝**。⛔ 我 2026-09-04 第一版把它讀成方向扇，那是近似不是翻譯。"
+              "inert": "本版不生效 —— spawnModelFx.path 只有 forward／toTarget／radial／orbit，沒有「以施法者面向為中心的扇形」。radial 把整個 360° 等分，而且起始相位固定在世界 +x（ringPoints 的註解說明為什麼不跟著面向轉），所以 instances:3 出來的是一個朝三方的星爆，⛔ 不是朝面向的 ±45° 扇。原作 A09I 的兩條側龍正是 facing±45。"
             },
-            "offsetForwardU": {
-              "type": "number",
-              "default": 200,
-              "min": 0,
-              "max": 2600,
-              "unit": "wc3u",
-              "origin": "j:44068 / j:44069 的 `PolarProjectionBJ(casterLoc, **200.00**, …)` —— 弧半徑。⚠️ ⭐ 誠實：j:44062 的中央那一具是 **160**，⛔ 而 GGD 今天是**同一個半徑** —— 那 40 wc3u 的差要一格「逐臂半徑」才表達得出來，⛔ 不假裝有。"
-            },
-            "speed": {
-              "type": "number",
-              "default": 1625,
-              "min": 1,
-              "max": 2600,
-              "unit": "wc3u",
-              "origin": "derived: j:44065 `set udg_DarkDragonMoveSpeed = 130.00`（每個移動 tick 推進的 wc3u）÷ j:44411 `TriggerRegisterTimerEventPeriodic( gg_trg_DarkDragonEXMove, **0.08** )` = **1625 wc3u/s**。⭐ 兩行相除得到的，⛔ 不是憑印象。"
-            },
-            "distance": {
+            "travel": {
               "type": "number",
               "default": 1690,
               "min": 100,
               "max": 2600,
-              "unit": "wc3u",
-              "origin": "taxonomy: 出貨值，⛔ **引用不到任何一行 JASS** —— 原作的行程沒有距離上限（`gg_trg_DarkDragonEXMove` 開著就一直推，j:44398 之後才 `DisableTrigger`），⭐ 而 GGD 的 `spawnModelFx` 需要一個有限的 `distance`。⇒ 這是一個**可以被反駁**的近似：拿 speed(1625)×lifeSec(2.0)=3250 也說得通，⛔ 而兩者都沒有原作依據。"
+              "unit": "wc3u"
             },
-            "lifeSec": {
+            "speed": {
               "type": "number",
-              "default": 2,
-              "min": 0.1,
-              "max": 30,
-              "unit": "s",
-              "origin": "j:44078 `call UnitApplyTimedLifeBJ( **2.00**, 'BTLF', GetLastCreatedUnit() )`"
+              "default": 1625,
+              "min": 100,
+              "max": 2600,
+              "unit": "wc3u"
             },
-            "clipTimeScale": {
+            "touchRadius": {
               "type": "number",
-              "default": 0.3,
-              "min": 0.05,
-              "max": 8,
-              "unit": "ratio",
-              "origin": "j:44072 / j:44075 `SetUnitTimeScalePercent( GetLastCreatedUnit(), **30.00** )` ÷ 100 = 0.3。⚠️ ⭐ j:44066 的**中央**那一具是 `10.00` ⇒ 0.1 —— 逐臂不同今天表達不了，取兩側的值。"
-            },
-            "scale": {
-              "type": "number",
-              "default": 2,
-              "min": 0.1,
-              "max": 20,
-              "optional": true,
-              "origin": "taxonomy: 出貨值。⛔ 原作**沒有** `SetUnitScalePercent` 呼叫在 A09I 的三條龍上（j:44060–44079 逐行零命中）⇒ 那是 GGD 的視覺選擇，⛔ 不是翻譯。"
+              "default": 250,
+              "min": 50,
+              "max": 650,
+              "unit": "wc3u"
             },
             "spinDegPerSec": {
               "type": "number",
               "default": 240,
               "min": -3600,
               "max": 3600,
-              "optional": true,
-              "origin": "taxonomy: 出貨值。⛔ 原作零個 `SetUnitAnimation`／自轉呼叫 ⇒ GGD 的視覺選擇。"
+              "optional": true
+            },
+            "scale": {
+              "type": "number",
+              "default": 2,
+              "min": 0.1,
+              "max": 20,
+              "optional": true
             },
             "serpentineDeg": {
               "type": "number",
               "default": 35,
               "min": 0,
               "max": 90,
-              "inert": "⛔ **本版不生效，⭐ 而理由是量到的**（2026-09-04 逐行）：原作的蛇行是**每個移動 tick 換一次角度** —— `j:44351` 中央 `+35 + facing`／`j:44365` `−35 + facing` 交替；⭐ 而兩條側龍 `j:44358`/`j:44361` 用的是 `±(10 + GetRandomReal(5,60)) + facing`。⛔ 兩個問題：① sim 沒有「逐 tick 改方向」的載體（`spawnModelFx` 的 dir 是**一次解算**的）② `GetRandomReal` 在 `sim/**` 是禁令（purity）⇒ 要一個**決定性**的替代（例：吃比賽種子的 LCG）。"
+              "inert": "本版不生效 —— 原作主龍每 0.08 秒交替 +35°/−35° 蛇行前進（淨位移仍沿面向），而 spawnModelFx 的實例是一條直線。今天只能用 spinDegPerSec 的自轉近似那個扭動感。"
             },
             "damageTiming": {
               "type": "enum",
@@ -2570,15 +2486,7 @@
                 "onArrive"
               ],
               "default": "onTouch",
-              "inert": "⛔ **本版不生效** —— `modelFxFamily` 的傷害掛在 `onTouch`（沿路掃到）／`onArrive`（到點），⛔ 沒有第三種時序。原作 j:44307 `UnitDamageTargetBJ(…, 400 + 250×lvl, …)` 是**移動觸發器裡逐 tick 的範圍傷害**，⇒ 要一格「沿路週期結算」才對得上。"
-            },
-            "touchRadius": {
-              "type": "number",
-              "default": 250,
-              "min": 50,
-              "max": 650,
-              "unit": "wc3u",
-              "inert": "⛔ **本版不生效** —— 這一族現在是**純演出模板**（同 `tpl-locust-*` 五份）：`modelFxFamily` 只在模板宣告了 `touchDamageTier` 時才發出 `touchRadius`。⭐ 原作值是 j:44307 那一圈的半徑，保留在這裡當下一步的來源。"
+              "inert": "本版不生效 —— 原作把碰到的人**收進一個群組**，等 13 步跑完才一次結算（所以先被碰到的人跟最後被碰到的人同時掉血）。引擎的 onTouch 是碰到當下就付款，onArrive 只打落點圓、打不到沿路那些人。兩者都表達不了「延後結算整條路徑的名單」。"
             },
             "damage": {
               "type": "scaling",
@@ -2590,8 +2498,7 @@
                   1400
                 ],
                 "ratios": []
-              },
-              "inert": "⛔ **本版不生效，⭐ 而且它原本違反第〇·四守則** —— `perRank:[650,900,…]` 是**烘死的數字**，而 GGD 的傷害走**五級距**（`touchDamageTier`）。原作 j:44307 是 `400.00 + 250.00 × level`。⇒ 要接傷害請改宣告 `touchDamageTier`，⛔ 不要把這些數字搬過去（那是 owner 的旋鈕，我引用不到他的裁決）。"
+              }
             },
             "damageType": {
               "type": "enum",
@@ -2600,8 +2507,7 @@
                 "physical",
                 "true"
               ],
-              "default": "magic",
-              "inert": "⛔ **本版不生效** —— 只有宣告了 `touchDamageTier`／`blastDamageTier` 時 `modelFxFamily` 才讀它。原作 j:44307 是 `DAMAGE_TYPE_MAGIC`。"
+              "default": "magic"
             }
           }
         },
@@ -2612,8 +2518,7 @@
           "params": {
             "modelKey": {
               "type": "docRef",
-              "default": "imported.blackhole",
-              "origin": "j:44349 `CreateNUnitsAtLoc( 1, **'h02E'**, … )` ＋ `OBJECTS.json` 的 `units.h02E = {name:\"黑龍身體\", model:\"**BlackHole.mdl**\"}` ⇒ `imported.blackhole` 逐字對上。"
+              "default": "imported.blackhole"
             },
             "travel": {
               "type": "number",
@@ -2649,7 +2554,7 @@
                 "upright"
               ],
               "default": "flat",
-              "inert": "⛔ **本版不生效** —— 原作 j:44349 的 `CreateNUnitsAtLoc(…, GetUnitFacing(施法者))` 只給一個 yaw，⭐ 而「扁而寬、橫躺在地面」住在 `h02E` 的**物件資料**與模型本身，⛔ 不在觸發器。GGD 這一側對應的是 `model@1.fxLongAxis` ＋ `scaleAxis`，⇒ 它 ⛔ 不該是一格模板參數（那會是第二個住處）。"
+              "inert": "本版不生效 —— owner 2026-08-22「衝擊波特效**橫放 beam**」。vfx@1 有一整組 orient（yawDeg/pitchDeg/swirlDegPerSec，pitchDeg:90 是直立＝恆等），但 spawnModelFx **沒有** —— 它只吃 spinDegPerSec（繞自己的軸自轉）與 scale，模型一律直立。所以今天的衝擊波只能靠壓扁的 scale 近似，⛔ 躺不下來。"
             },
             "trailSpacingSec": {
               "type": "number",
@@ -2657,7 +2562,7 @@
               "min": 0.02,
               "max": 1,
               "unit": "s",
-              "inert": "⛔ **本版不生效，⭐ 而這一格正是這一族接不上的原因** —— 原作 j:44411 `TriggerRegisterTimerEventPeriodic( gg_trg_DarkDragonEXMove, **0.08** )`，而 j:44349 在**每一個 tick** 於當下落點 `CreateNUnitsAtLoc( 1, 'h02E', …, udg_DarkDragonPoint, GetUnitFacing(施法者) )`。⇒ ⭐ 它是「**沿路每 N 秒生一具模型**」，⛔ 而 `spawnModelFx` 只有 `trailVfxId`（吃 `vfx@1`，⛔ 不是 `model@1`）⇒ 這一族要一格 `trailModelKey`＋`trailIntervalSec` 才接得上。"
+              "inert": "本版不生效 —— 原作的尾流是**沿路補生的一串靜態模型**（每 0.08 秒一具，各自留在原地），而 spawnModelFx 一次施放只生**一具會動的**模型。畫面上的差別是「一條留得住的軌跡」vs「一個飛過去的東西」。"
             },
             "touchRadius": {
               "type": "number",
@@ -2665,8 +2570,7 @@
               "min": 50,
               "max": 650,
               "unit": "wc3u",
-              "optional": true,
-              "inert": "⛔ **本版不生效** —— 這一族是**純演出**（尾流）。原作的傷害在 j:44307 的移動觸發器裡逐 tick 結算，⛔ 不掛在這一具拖尾模型上。"
+              "optional": true
             },
             "damage": {
               "type": "scaling",
@@ -2676,89 +2580,15 @@
                 ],
                 "ratios": []
               },
-              "optional": true,
-              "inert": "⛔ **本版不生效** —— 這一族是**純演出**（尾流）。原作的傷害在 j:44307 的移動觸發器裡逐 tick 結算，⛔ 不掛在這一具拖尾模型上。"
+              "optional": true
             }
           }
         },
         {
           "id": "tpl-drain-leech",
           "family": "drain-leech",
-          "status": "enabled",
-          "params": {
-            "damageTier": {
-              "type": "enum",
-              "values": [
-                "極小",
-                "小",
-                "中",
-                "大",
-                "極大"
-              ],
-              "default": "小",
-              "origin": "derived: 出貨兩份逐位元 `小`（`content/abilities/godie-hgam.passive.json` · `godie-h02r.passive.json` 的 `effects[0].amount.damageTier` 與 `effects[2].amountPerTick.damageTier`）。⛔ 走級距，⛔ 不烘數字（第〇·四守則）。"
-            },
-            "apRatio": {
-              "type": "number",
-              "default": 0.6,
-              "min": 0,
-              "max": 5,
-              "unit": "ratio",
-              "origin": "derived: 出貨兩份逐位元 `ratios:[{stat:\"ap\",coeff:**0.6**}]`。"
-            },
-            "damageType": {
-              "type": "enum",
-              "values": [
-                "magic",
-                "physical",
-                "true"
-              ],
-              "default": "magic",
-              "origin": "derived: 出貨兩份 `damageType:\"magic\"`；原作 `A0KV` 是 WC3 Parasite 系（`OBJECTS.json`）。"
-            },
-            "leechFlat": {
-              "type": "number",
-              "default": 50,
-              "min": 0,
-              "max": 5000,
-              "unit": "count",
-              "origin": "j:26608 `call SetUnitLifeBJ( udg_Frog_Hero, ( GetUnitStateSwap(UNIT_STATE_LIFE, udg_Frog_Hero) + **50.00** ) )` —— 回的是**施法者**（`udg_Frog_Hero = GetTriggerUnit()`）。⚠️ 原作是**每跳** +50 × 5 跳，⭐ 而出貨把它收斂成**一次** 50 —— 我照抄出貨（diff=0 優先），⛔ 不是原作。"
-            },
-            "intervalSec": {
-              "type": "number",
-              "default": 1,
-              "min": 0.2,
-              "max": 10,
-              "unit": "s",
-              "origin": "derived: 出貨兩份 `intervalSec: **1.0**`。⚠️ ⭐ 原作 `j:26604` 是 `TriggerSleepAction( **0.95** )` —— 兩個來源打架，而第〇·六守則的階梯是「**編輯器產生的 JSON ＞ JASS 實際效果**」⇒ 取 1.0。⛔ 0.95 這個事實留在這裡，⛔ 不無聲丟掉。"
-            },
-            "durationSec": {
-              "type": "number",
-              "default": 5,
-              "min": 0.2,
-              "max": 60,
-              "unit": "s",
-              "origin": "derived: 出貨兩份 `durationSec: **5.0**`；原作是 `j:26603` `exitwhen udg_Frog_Seed_Index > **5**` 五跳 × `j:26604` 的 0.95s = 4.75s，w3a `abilities.A0KV.duration.1 = 5.0999999` ⇒ 三個來源都在 5 附近。"
-            },
-            "stacking": {
-              "type": "enum",
-              "values": [
-                "refresh",
-                "independent",
-                "stack"
-              ],
-              "default": "refresh",
-              "origin": "derived: 出貨兩份 `stacking: \"refresh\"`。"
-            },
-            "castTimeSec": {
-              "type": "number",
-              "min": 0,
-              "max": 10,
-              "unit": "s",
-              "optional": true,
-              "origin": "taxonomy: ⛔ **刻意不給 default** —— 兩支候選差太遠（`godie-h02r.passive` 1.7 vs `godie-osam.passive` 0.267），⭐ 給一個 default 就是編一個（同 `tpl-locust-orb.tint` 留空的理由）。"
-            }
-          }
+          "status": "draft",
+          "params": {}
         },
         {
           "id": "tpl-global-rule",
@@ -2809,89 +2639,8 @@
         {
           "id": "tpl-growth-charge",
           "family": "growth-charge",
-          "status": "enabled",
-          "params": {
-            "attr": {
-              "type": "enum",
-              "values": [
-                "str",
-                "agi",
-                "int"
-              ],
-              "default": "agi",
-              "origin": "j:14225 `call ModifyHeroStat( **bj_HEROSTAT_AGI**, GetKillingUnitBJ(), bj_MODIFYMETHOD_ADD, 1 )`（07-00 獸化心靈）。⛔ enum 只有三個值 —— `grantAttribute.ts:24` 逐字；「三圍全加」在出貨內容裡是**三個 effect**（48-03 鮮血神殿），⛔ 不是第四個 enum 值。"
-            },
-            "amount": {
-              "type": "number",
-              "default": 1,
-              "min": 0.01,
-              "max": 100,
-              "unit": "count",
-              "origin": "j:14225 同一行的**第四個參數** `1`。"
-            },
-            "everyNth": {
-              "type": "number",
-              "default": 8,
-              "min": 1,
-              "max": 1000,
-              "unit": "count",
-              "origin": "j:14163 `ModuloInteger( udg_killUnit[…], **8** ) == 0`。⭐ 這一格是這個 type 存在的理由 —— 出貨母體逐支不同（獸化心靈 8 · 鮮血神殿 14 · 賽亞人 15）。"
-            },
-            "maxAttribute": {
-              "type": "number",
-              "default": 120,
-              "min": 0,
-              "max": 10000,
-              "unit": "count",
-              "optional": true,
-              "origin": "j:14166 `GetHeroStatBJ( bj_HEROSTAT_AGI, GetKillingUnitBJ(), false ) < **120**`。"
-            },
-            "maxAttributeBasis": {
-              "type": "enum",
-              "values": [
-                "base",
-                "total"
-              ],
-              "default": "base",
-              "origin": "j:14166 的**第三個參數 `false`**（＝不含裝備）。這條推導已經逐字寫在 `schema/effects/grantAttribute.ts:49-61`。"
-            },
-            "mode": {
-              "type": "enum",
-              "values": [
-                "flat",
-                "pctOfCurrent"
-              ],
-              "default": "flat",
-              "origin": "j:14225 是 `**bj_MODIFYMETHOD_ADD**` ＋ 定值 ⇒ flat。（`pctOfCurrent` 的既有使用者是 08-00 龍紋記憶，⛔ 那一支不是 onKill。）"
-            },
-            "victim": {
-              "type": "enum",
-              "values": [
-                "any",
-                "mob",
-                "champion",
-                "enemyChampion"
-              ],
-              "optional": true,
-              "origin": "census: 原作 j:14163-14171 的三條條件**只過濾殺手**，⛔ 一條都沒有過濾受害者 ⇒ ⛔ **刻意不給 default**（缺席＝任何擊殺都算）。出貨 8 個 onKill hook 裡 6 個未填、2 個（godie-zombiex.passive）分成 mob/champion ⇒ 逐支不同。"
-            },
-            "durationSec": {
-              "type": "number",
-              "min": 0.067,
-              "max": 300,
-              "unit": "s",
-              "optional": true,
-              "origin": "taxonomy: ⛔ **刻意不給 default** —— `grantAttribute.ts:38` 逐字「缺省 = **永久**(獸化心靈)」，而永久正是這一族的預設語意。"
-            },
-            "internalCooldown": {
-              "type": "number",
-              "min": 0,
-              "max": 600,
-              "unit": "s",
-              "optional": true,
-              "origin": "taxonomy: ⛔ **刻意不給 default** —— 原作用的是**計數**（everyNth）而不是冷卻，⇒ 這一格是給「按時間節流」那一類技能的授權面。"
-            }
-          }
+          "status": "draft",
+          "params": {}
         },
         {
           "id": "tpl-instant-blast",
@@ -3006,43 +2755,8 @@
         {
           "id": "tpl-life-manipulate",
           "family": "life-manipulate",
-          "status": "enabled",
-          "params": {
-            "healthPct": {
-              "type": "number",
-              "default": 1,
-              "min": 0,
-              "max": 1,
-              "unit": "ratio",
-              "origin": "j:55013 `call SetUnitLifePercentBJ( GetSpellTargetUnit(), **100** )` ⇒ 100% = 1.0。"
-            },
-            "manaPct": {
-              "type": "number",
-              "default": 1,
-              "min": 0,
-              "max": 1,
-              "unit": "ratio",
-              "optional": true,
-              "origin": "j:55014 `call SetUnitManaPercentBJ( GetSpellTargetUnit(), **100** )` ⇒ 100% = 1.0。"
-            },
-            "applyTo": {
-              "type": "enum",
-              "values": [
-                "self",
-                "target"
-              ],
-              "default": "target",
-              "origin": "j:55013 ＋ j:55014 兩行的對象都是 `**GetSpellTargetUnit()**`（⛔ 不是 `GetTriggerUnit()`）。⚠️ census: 出貨 14 支用 `restore` 的技能裡多數是 `applyTo:\"self\"`（例 12-02 仙氣．採藥），⭐ 但 exemplar 這一支是 target ⇒ 家族預設跟 exemplar 走，逐支覆寫是預期的。"
-            },
-            "castTimeSec": {
-              "type": "number",
-              "min": 0,
-              "max": 10,
-              "unit": "s",
-              "optional": true,
-              "origin": "taxonomy: ⛔ **刻意不給 default** —— 逐支不同（`schema/template.ts` 的 origin 文法：這是授權面，⛔ 不是家族量值）。"
-            }
-          }
+          "status": "draft",
+          "params": {}
         },
         {
           "id": "tpl-line-blast",
@@ -4279,108 +3993,8 @@
         {
           "id": "tpl-pull-throw",
           "family": "pull-throw",
-          "status": "enabled",
-          "params": {
-            "mode": {
-              "type": "enum",
-              "values": [
-                "toPoint",
-                "inPlace"
-              ],
-              "default": "toPoint",
-              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.mode = \"toPoint\"`；`docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） 的六個力學形狀裡有五個是「把被害者搬到另一個點」。"
-            },
-            "grabMode": {
-              "type": "enum",
-              "values": [
-                "dragToCaster",
-                "throwOnly"
-              ],
-              "default": "dragToCaster",
-              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.dragToCaster = true`（＝先拉到施法者身上再拋）。⚠️ `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） §2.3 的 `approach` 欄記載另外兩種（`casterToVictimTile`=A0L6 j:50113 · `casterToVictimFront`=A0SQ j:29646）—— ⛔ 那兩種今天 `zLeap` 表達不了。"
-            },
-            "apexHeight": {
-              "type": "number",
-              "default": 1.2,
-              "min": 0,
-              "max": 8,
-              "unit": "wc3h",
-              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.apexHeight = 1.2`。⚠️ ⭐ `wc3h` 與 `wc3u` 是**兩把不同的尺**（`expand.ts` 的 `toApex` vs `toLen`）—— 這一格走 apex。"
-            },
-            "durationSec": {
-              "type": "number",
-              "default": 0.42,
-              "min": 0.05,
-              "max": 10,
-              "unit": "s",
-              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.durationSec = 0.42`。⭐ 與 `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） 的 `throwStepIntervalSec` 0.04（j:4793 共用引擎）× 約 10 步同一個量級。"
-            },
-            "throwDistance": {
-              "type": "number",
-              "default": 500,
-              "min": 0,
-              "max": 2600,
-              "unit": "wc3u",
-              "origin": "j:4757 共用投擲引擎 `10 × 50 = **500**`。⭐ 這一格是**多支**的：A0L6 `20×40=800`（j:50201，⚠️ tooltip 說 1000 而 **JASS 勝**）· A0SQ `12×50=600`（j:29712）· A0U5 200（j:52208）· A0Y7 `(4+4L)×50`=400…1000（j:54322）⇒ 家族取共用引擎值。"
-            },
-            "landRadius": {
-              "type": "number",
-              "default": 4.95,
-              "min": 0,
-              "max": 30,
-              "unit": "count",
-              "optional": true,
-              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.landRadius = 4.95`（已是 GGD 單位）。"
-            },
-            "landDamageTier": {
-              "type": "enum",
-              "values": [
-                "極小",
-                "小",
-                "中",
-                "大",
-                "極大"
-              ],
-              "default": "小",
-              "optional": true,
-              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].amount.damageTierPerRank = [\"極小\",\"極小\",\"小\",\"小\"] ` ⇒ 家族取中位的「小」。⛔ 走級距，⛔ 不烘數字。"
-            },
-            "landApRatio": {
-              "type": "number",
-              "default": 0.5,
-              "min": 0,
-              "max": 5,
-              "unit": "ratio",
-              "optional": true,
-              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].amount.ratios = [{stat:\"ap\",coeff:**0.5**}]`。"
-            },
-            "damageType": {
-              "type": "enum",
-              "values": [
-                "magic",
-                "physical",
-                "true"
-              ],
-              "default": "magic",
-              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].damageType = \"magic\"`。"
-            },
-            "grabInvulnSec": {
-              "type": "number",
-              "min": 0,
-              "max": 10,
-              "unit": "s",
-              "optional": true,
-              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `effects[0]` 是 `invulnerable{durationSec:1.05, applyTo:\"self\", blocksControl:true}`。⛔ **刻意不給 default** —— 「抓取期間施法者是不是無敵」是逐支的設計選擇，⛔ 不是這一族的性質。"
-            },
-            "castTimeSec": {
-              "type": "number",
-              "min": 0,
-              "max": 10,
-              "unit": "s",
-              "optional": true,
-              "origin": "taxonomy: ⛔ **刻意不給 default** —— 逐支不同（出貨那一支是 0.833）。"
-            }
-          }
+          "status": "draft",
+          "params": {}
         },
         {
           "id": "tpl-pure-cosmetic",
@@ -4851,8 +4465,8 @@
         }
       ],
       "templateStatus": {
-        "draft": 11,
-        "enabled": 35
+        "draft": 17,
+        "enabled": 29
       },
       "innateKinds": [
         "active",
@@ -5187,12 +4801,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "f7bc050d",
+    "engineFingerprint": "f40f16e4",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 f7bc050d —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 f40f16e4 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -5964,10 +5578,10 @@
     ]
   },
   "curation": {
-    "championDigest": "e39f1147b9e7",
-    "itemDigest": "9943a99f7205",
-    "championCount": 49,
-    "itemCount": 101,
+    "championDigest": null,
+    "itemDigest": null,
+    "championCount": null,
+    "itemCount": null,
     "liveEndpoint": "/api/v1/curation/whitelist"
   },
   "contractIndex": {
@@ -6112,15 +5726,19 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "2aba47dcfd57",
+  "migrationFingerprint": "c694c1a8a4b7",
   "supportedModes": [
     "bootstrap"
   ],
   "unavailable": [
     {
+      "field": "curation.*",
+      "reason": "data/curation/whitelist.json 不在（它是平台的執行期狀態，不進版控）。要即時的開放清單請打 GET /api/v1/curation/whitelist。"
+    },
+    {
       "field": "deltaExportAllowed",
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "d95e7aeff530"
+  "profileDigest": "37cfda5ee21e"
 }

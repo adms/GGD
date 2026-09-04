@@ -85,10 +85,12 @@ COPY tools/skill-lists/lists.json tools/skill-lists/
 #   當時的閘只掃 `apps/*/src` 的 `content/`＋`tools/`,兩層都看不見它。
 #   ⇒ 閘已改成**封閉世界**（跨出 apps/**＋packages/** 一律要有 COPY）並加掃 shared。
 COPY docs/editor-contract/ggd-presentation-token-manifest.json docs/editor-contract/
-# ⭐⭐ 2026-09-05（Codex `35b231ef` 合併）—— 又四份跨界 import 的契約檔。
+# ⭐⭐ 2026-09-05 —— 又四份跨界 import 的契約檔（Codex `35b231ef` 帶進來的）。
 # ⚠️ 症狀與上面那一段**一模一樣**：本機全綠、正式 build 死在 rollup 的
 #   `Could not resolve`。⭐ 而這一次閘在合併的當下就叫了（封閉世界那次改對了）。
 # ⛔ 這四份是**編輯器契約**，客戶端靜態 import 它們是刻意的（同一份、單一住處）。
+# ⭐ Codex 的補充（`648cc2b3`）：逐檔 COPY 讓 `clientContentImports.test.ts`
+#   能**雙向**確認 —— 沒有缺件，也沒有多塞一份靜態副本。
 COPY docs/_acceptance/ggd-acceptance-eight.json docs/_acceptance/
 COPY docs/editor-contract/ggd-type-catalog.json docs/editor-contract/
 COPY docs/editor-contract/ggd-editor-coverage.json docs/editor-contract/

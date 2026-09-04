@@ -1,28 +1,30 @@
 {
   "id": "unsafe-textures",
   "schema": "config.unsafe-textures@1",
-  "note": "⭐ **Codex 阻塞清單 P0-6 的答覆**：五張被列為「透明底板／材質 blocker」的貼圖，逐張量過之後**不是同一個病**，而且 Codex 給的分母對不上。\n\n⭐ 量到的分母（2026-09-02，`content/` 出貨態）：五張貼圖共被 **41 份 `content/vfx/*.json`** 引用，其中 **26 份**被 content/ 的任何一份文件引用得到（另外 **15 份是孤兒**，玩家到不了）；沿著 `ability-vfx-bindings`（技能→vfx）與 `ambient-vfx`（modelKey→vfx）展開之後，到得了 **19 支技能 · 23 位英雄**。⛔ Codex 回報的 **27** 對不上其中任何一個口徑，最接近的是「26 份可達 vfx 文件」（差 1）。⚠️ 我無法重現 27，所以**不遷就它** —— 上面每一個數字都由 `unsafeTextureQuarantine.test.ts` 重算並逐格比對。\n\n⭐ **關鍵發現**：出貨的 41 份消費文件**全部是 `blendMode: additive`**。而 additive 下 **RGB 黑 ＝ 不可見** ⇒ 一張 alpha 全 255 的不透明 PNG，只要邊緣是黑的就不會變成白卡。⇒ 判準是 `(貼圖, blendMode)` 的**配對**，⛔ 不是貼圖自己的屬性 —— 這正是 CLAUDE.md 記過的「只驗名詞的後置條件在相容性故障面前必然是綠的」。\n\n⇒ 結論：**2 張真的要隔離**（`heroeva01effect` 四邊都在發光、`ribbonblur1` 左邊一條 208.3 的亮邊）、**2 張只在 additive 下安全**（`zap1` / `zap1b` —— 零 alpha 形狀，換模式立刻變方板）、**1 張是誤判**（`babyface` 的 alpha 是這批裡最健康的）。\n\n⛔ **這份文件不修貼圖**（美術決定，需 owner 授權）；它交付的是契約與量測。",
-  "quarantineRatchet": 2,
+  "note": "⭐ **Codex 阻塞清單 P0-6 的修復後收據**：五張貼圖已由資產修復器補上 4px 透明黑邊，現在完整 PNG 量測由 `unsafeTextureQuarantine.test.ts` 每次重算，不能只換 hash。\n\n⭐ 分母（2026-09-02 `content/` 出貨態）不變：共被 **41 份 `content/vfx/*.json`** 引用，其中 **26 份可達**、15 份孤兒；沿 `ability-vfx-bindings` 與 `ambient-vfx` 展開後，到得了 **19 支技能 · 23 位英雄**。\n\n⭐ 五張的外框有效加光量現在全部為 **0**，且出貨消費文件全部使用 `blendMode: additive`，所以目前 **0 張隔離、5 張安全**。安全仍是 `(貼圖, blendMode)` 配對：除了本來就具完整 alpha 形狀的 `babyface`，其餘四張只承諾目前驗過的 additive，不擴張未驗證模式。",
+  "quarantineRatchet": 0,
   "textures": [
     {
       "file": "assets/textures/particles/wc3/heroeva01effect.png",
-      "sha256": "71f05c016329c16df78677d0375a5aece2f65f074d448806cee7a3f8972929a8",
-      "status": "quarantined",
-      "safeBlendModes": [],
+      "sha256": "65715c577f7684a056d74ef2fe965e44a2467275138077235dcdd5f314a4a684",
+      "status": "safe",
+      "safeBlendModes": [
+        "additive"
+      ],
       "measured": {
         "size": "64x64",
-        "hasAlphaShape": false,
+        "hasAlphaShape": true,
         "opaquePct": 0.0,
-        "minAlpha": 253,
+        "minAlpha": 0,
         "maxAlpha": 253,
-        "alphaRange": 0,
-        "distinctAlphaValues": 1,
-        "borderEffAdditive": 39.2,
+        "alphaRange": 253,
+        "distinctAlphaValues": 5,
+        "borderEffAdditive": 0,
         "edgeEffAdditive": {
-          "top": 12.4,
-          "bottom": 70.8,
-          "left": 36.8,
-          "right": 36.8
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0
         }
       },
       "usage": {
@@ -31,27 +33,29 @@
         "abilities": 1,
         "champions": 1
       },
-      "why": "⛔ **隔離**。alpha 通道是**常數 253**（alphaRange 0 / 只有 1 個相異值）—— 一個看起來存在、實際上一格形狀都沒有的 alpha ⇒ 形狀完全靠 RGB。⭐ 而它的 RGB 邊緣**四邊都不是黑的**（top 12.4 / bottom 70.8 / left 36.8 / right 36.8，平均 39.2）⇒ 即使在 additive 下它也是一塊會發光的 64×64 方板，⛔ 沒有任何混合模式救得了它。⚠️ 順帶：它的 `opaquePct` 算出 0%（因為 253≠255），讀起來像「全透明」而它其實是**全不透明** —— ⛔ 這一格是量尺自己在說謊，判斷要用 alphaRange。"
+      "why": "⭐ **修復後在 additive 下安全**。4px 透明黑邊使四邊與外框有效加光量全部降為 0；alphaRange 253、5 個相異值也證明透明淡出已寫入目前 PNG。只承諾出貨實際使用的 additive。"
     },
     {
       "file": "assets/textures/particles/wc3/ribbonblur1.png",
-      "sha256": "20ffb2f88f1f835be78de86bda5db15b73a5aac8b05e1c0f5b03f46cbc1b6104",
-      "status": "quarantined",
-      "safeBlendModes": [],
+      "sha256": "34366bee6f80e817c38c0c9012fbecae2c396cc7e5131978aed133559752225f",
+      "status": "safe",
+      "safeBlendModes": [
+        "additive"
+      ],
       "measured": {
         "size": "64x64",
-        "hasAlphaShape": false,
-        "opaquePct": 100.0,
-        "minAlpha": 255,
+        "hasAlphaShape": true,
+        "opaquePct": 76.56,
+        "minAlpha": 0,
         "maxAlpha": 255,
-        "alphaRange": 0,
-        "distinctAlphaValues": 1,
-        "borderEffAdditive": 59.1,
+        "alphaRange": 255,
+        "distinctAlphaValues": 5,
+        "borderEffAdditive": 0,
         "edgeEffAdditive": {
-          "top": 10.0,
-          "bottom": 17.6,
-          "left": 208.3,
-          "right": 0.4
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0
         }
       },
       "usage": {
@@ -60,29 +64,29 @@
         "abilities": 0,
         "champions": 22
       },
-      "why": "⛔ **隔離**。alpha 是**常數 255**（alphaRange 0）⇒ 零形狀，全靠 RGB。⭐ 而左邊那一條的有效加光是 **208.3**（其餘三邊 10.0 / 17.6 / 0.4）—— 一條貼在 U=0 的亮邊，在 `ribbon@1` 被沿著軌跡拉長之後會變成一道硬切的亮線而不是淡出的拖尾。⚠️ 平均值 59.1 會把這條亮邊讀成「整體偏亮」，⛔ 那是誤讀：缺陷是**一條邊**，不是整張。⭐ 它今天服務 22 位英雄的武器拖尾，是這批裡影響面最大的一張。"
+      "why": "⭐ **修復後在 additive 下安全**。原本左邊有效加光 208.3 的硬切亮線已由 4px 透明黑邊消除；現在四邊與外框皆為 0。它影響 22 位英雄，因此仍只開放已驗證的 additive。"
     },
     {
       "file": "assets/textures/particles/wc3/zap1.png",
-      "sha256": "49db8f5a6f3e9302a824359a8fc2fa56e4ca651a0cb4dc3878f704917365813d",
+      "sha256": "77a447552693bcae85fd9cbab827f35150601ab1645c235fd033cc17817bc05f",
       "status": "safe",
       "safeBlendModes": [
         "additive"
       ],
       "measured": {
         "size": "128x64",
-        "hasAlphaShape": false,
-        "opaquePct": 100.0,
-        "minAlpha": 255,
+        "hasAlphaShape": true,
+        "opaquePct": 82.03,
+        "minAlpha": 0,
         "maxAlpha": 255,
-        "alphaRange": 0,
-        "distinctAlphaValues": 1,
-        "borderEffAdditive": 4.3,
+        "alphaRange": 255,
+        "distinctAlphaValues": 5,
+        "borderEffAdditive": 0,
         "edgeEffAdditive": {
-          "top": 1.1,
-          "bottom": 0.7,
-          "left": 7.4,
-          "right": 7.9
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0
         }
       },
       "usage": {
@@ -91,29 +95,29 @@
         "abilities": 18,
         "champions": 1
       },
-      "why": "⭐ **只在 additive 下安全，⛔ 其餘模式視同隔離**。alpha 常數 255（alphaRange 0）⇒ 零形狀，換成 `alpha`/`modulate` 就是一塊 128×64 的實心方板。⭐ 但 RGB 邊緣有效加光只有 **4.3**（四邊 1.1 / 0.7 / 7.4 / 7.9）⇒ additive 下邊緣直接消失。⭐ 出貨的 4 份消費文件**全部是 additive**，所以它今天沒有在造成 blocker。"
+      "why": "⭐ **修復後在 additive 下安全**。4px 透明黑邊讓四邊與外框有效加光量全部為 0；alphaRange 255、5 個相異值。出貨的 4 份消費文件全是 additive，其他模式尚未驗證。"
     },
     {
       "file": "assets/textures/particles/wc3/zap1b.png",
-      "sha256": "5ef78d62a60b7bcc2b86f7cca8532cfba185f8cf59a7380fee1d72ce549abb97",
+      "sha256": "e8feccaed31e0253bc9bd3a36e8388d2c618f2d8ff151ecdeec2a140cd35cccd",
       "status": "safe",
       "safeBlendModes": [
         "additive"
       ],
       "measured": {
         "size": "128x64",
-        "hasAlphaShape": false,
-        "opaquePct": 100.0,
-        "minAlpha": 255,
+        "hasAlphaShape": true,
+        "opaquePct": 82.03,
+        "minAlpha": 0,
         "maxAlpha": 255,
-        "alphaRange": 0,
-        "distinctAlphaValues": 1,
-        "borderEffAdditive": 3.9,
+        "alphaRange": 255,
+        "distinctAlphaValues": 5,
+        "borderEffAdditive": 0,
         "edgeEffAdditive": {
-          "top": 1.2,
-          "bottom": 0.7,
-          "left": 6.6,
-          "right": 6.9
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0
         }
       },
       "usage": {
@@ -122,11 +126,11 @@
         "abilities": 0,
         "champions": 0
       },
-      "why": "⭐ **只在 additive 下安全，⛔ 其餘模式視同隔離**。與 `zap1` 同族：alpha 常數 255（零形狀），而 RGB 邊緣有效加光 **3.9**（四邊 1.2 / 0.7 / 6.6 / 6.9）⇒ additive 下看不見。⚠️ 它唯一的消費文件是**孤兒**（content/ 沒有任何東西引用得到）⇒ 玩家今天看不到它。"
+      "why": "⭐ **修復後在 additive 下安全**。與 `zap1` 同族，4px 透明黑邊讓四邊與外框有效加光量全部為 0；alphaRange 255、5 個相異值。唯一消費文件仍是孤兒。"
     },
     {
       "file": "assets/textures/particles/wc3/babyface.png",
-      "sha256": "e773bc7121f8c4b60935fda78d8dd2555b6f01c8c558530e918527ba1801396a",
+      "sha256": "b61928757711c443c8be9aa8f8ba3df2645aad48349a13c4ffdfe659401b4db9",
       "status": "safe",
       "safeBlendModes": [
         "additive",
@@ -137,17 +141,17 @@
       "measured": {
         "size": "128x128",
         "hasAlphaShape": true,
-        "opaquePct": 62.11,
+        "opaquePct": 61.51,
         "minAlpha": 0,
         "maxAlpha": 255,
         "alphaRange": 255,
-        "distinctAlphaValues": 241,
-        "borderEffAdditive": 9.1,
+        "distinctAlphaValues": 243,
+        "borderEffAdditive": 0,
         "edgeEffAdditive": {
-          "top": 22.9,
-          "bottom": 11.9,
-          "left": 1.0,
-          "right": 0.6
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0
         }
       },
       "usage": {
@@ -156,7 +160,7 @@
         "abilities": 0,
         "champions": 0
       },
-      "why": "⭐ **安全** —— 它是這五張裡**唯一 alpha 通道真的有形狀**的（alphaRange **255**、241 個相異值）。邊緣有效加光只有 **9.1**：左右兩邊 alpha 平均 1.0 / 0.6（幾乎全透明），上下兩邊雖然亮（lum 228 / 242）但 alpha 只有 44.3 / 22.2 把它壓掉了。⛔ Codex 把它列進「透明底板」是**誤判**：量到的形狀正好相反 —— 它的 alpha 是這批裡最健康的一張。"
+      "why": "⭐ **安全**。原始 alpha 本來就有完整形狀；修復器再將 4px 外框歸零。現在 alphaRange 255、243 個相異值，四邊有效加光全為 0，因此保留原本驗證過的 additive、alpha、alphaKey、modulate。"
     }
   ]
 }

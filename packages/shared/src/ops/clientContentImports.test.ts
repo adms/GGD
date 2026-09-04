@@ -11,9 +11,10 @@
  * 3,678 + 5,360 條測試全綠、`pnpm typecheck` EXIT=0、本機 build 也過，
  * 而**線上部署死在 docker build**，留下「新內容 + 舊映像」那個組合。
  *
- * ⚠️ 兩個方向都關：
+ * ⚠️ 三個方向都關：
  *   · import 了但沒 COPY → 紅（正式 build 會死）
  *   · COPY 了但沒人 import → 紅（映像裡多一份沒人用、而且會與 bind-mount 漂開的副本）
+ *   · COPY 有寫但檔案仍被 `.dockerignore` 排除 → 紅（BuildKit 算 checksum 時就會死）
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync, readdirSync, statSync } from "node:fs";
@@ -108,6 +109,22 @@ describe("客戶端跨界 import 進 content/ 的檔案（GH#437）", () => {
       orphan,
       "Dockerfile 把這些 content/ 檔帶進映像，但沒有任何 client 原始碼 import 它們 ⇒ " +
         "映像裡多一份沒人用、而且會與 bind-mount 漂開的副本。拿掉那行 COPY:\n  " + orphan.join("\n  "),
+    ).toEqual([]);
+
+    // ③ `COPY` 字面存在仍不代表檔案進得了 build context。docs/ 預設被
+    // `.dockerignore` 排除，每個機器契約都必須有逐檔否定規則；2026-09-05
+    // 真實 edge build 正是在 COPY checksum 階段抓到這個第三種故障。
+    const dockerignore = readFileSync(join(REPO, ".dockerignore"), "utf8");
+    const explicitlyIncluded = new Set(
+      [...dockerignore.matchAll(/^!([^\s#]+)$/gm)].map((match) => match[1]!),
+    );
+    const excludedCopies = [...copied].filter((path) =>
+      path.startsWith("docs/") && !explicitlyIncluded.has(path),
+    );
+    expect(
+      excludedCopies,
+      "Dockerfile 雖有 COPY，但這些 docs 檔仍被 .dockerignore 排除 ⇒ 正式 build 會死在 checksum not found。" +
+        "請逐檔加入 !path，⛔ 不得開放整個 docs/：\n  " + excludedCopies.join("\n  "),
     ).toEqual([]);
   });
 });
