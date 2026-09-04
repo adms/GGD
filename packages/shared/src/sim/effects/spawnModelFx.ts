@@ -193,7 +193,10 @@ export interface ModelFxSpawnInstance {
   durationSec: number;
 }
 
-export type ModelFxPathName = "forward" | "toTarget" | "orbit" | "radial" | "static";
+// ⭐ 型別的住處是 `variants/spawnModelFx.ts`（leaf，⛔ 反向 import 會循環）。
+//    這裡只 re-export —— ⛔ 不要在這裡再寫一份 union（第〇·四守則）。
+export type { ModelFxPathName } from "./variants/spawnModelFx";
+import type { ModelFxPathName } from "./variants/spawnModelFx";
 
 
 export function modelFxInstances(e: ModelFx, ctx: EffectContext, origin: Vec2): Instance[] {

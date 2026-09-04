@@ -22,7 +22,8 @@
       "default": 45,
       "min": 0,
       "max": 180,
-      "inert": "本版不生效 —— spawnModelFx.path 只有 forward／toTarget／radial／orbit，沒有「以施法者面向為中心的扇形」。radial 把整個 360° 等分，而且起始相位固定在世界 +x（ringPoints 的註解說明為什麼不跟著面向轉），所以 instances:3 出來的是一個朝三方的星爆，⛔ 不是朝面向的 ±45° 扇。原作 A09I 的兩條側龍正是 facing±45。"
+      "inert": "⛔ **仍未接線，⭐ 但理由變了**（2026-09-04）：機制**已經做出來了** —— `path:\"fan\"` ＋ `spreadDeg`（`sim/effects/fanRotation.ts`，常數表＋複數乘法，零三角函式；閘 `fanRotation.test.ts` 12 條，含「count:3 spreadDeg:45 ⇒ facing−45/facing/facing+45」）。⇒ ⛔ 現在缺的是 `expand.ts` 的 `FAMILIES[\"dragon-serpent\"]` 那一列（本模板整份都還沒接線）。⚠️ ⭐ 舊理由「spawnModelFx.path 沒有以施法者面向為中心的扇形」**已經不成立**，⛔ 不要再引用它。",
+      "origin": "j:A09I —— 原作三條黑龍是「中央一條 ＋ 兩側各 45°」⇒ `count:3, spreadDeg:45` 逐字翻成 facing−45／facing／facing+45。⭐ `spreadDeg` 的語意是**相鄰兩臂之間**的角度，⛔ 不是總張角（`schema/effects/spawnModelFx.ts` 的 spreadDeg 檔頭同一句）。"
     },
     "travel": {
       "type": "number",

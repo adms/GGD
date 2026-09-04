@@ -11,6 +11,7 @@
  * `pull.ts` 與 `spawnModelFx.ts` re-export 這裡的名字 —— 既有消費端一行不改。
  */
 import type { Vec2 } from "../math/vec2";
+import { fanDirections } from "./fanRotation";
 import { dist, len, normalize, sub } from "../math/vec2";
 import {
   MODEL_FX_MAX_DISTANCE,
@@ -23,7 +24,9 @@ const clamp = (v: number, lo: number, hi: number): number => (v < lo ? lo : v > 
 /** 擺位需要的參數子集（結構相容 `spawnModelFx` 的 effect def，⛔ 不 import 它的型別 —— 那會把環拖回來）。 */
 export interface ModelFxPlacementParams {
   /** optional 同 sim 的 effect def（preset 補值前可能缺席 —— 缺席走直線分支，語意同舊碼）。 */
-  path?: "forward" | "toTarget" | "orbit" | "radial" | "static";
+  path?: "forward" | "toTarget" | "orbit" | "radial" | "static" | "fan";
+  /** ⭐ GH#916 —— `path:"fan"` 時相鄰兩臂之間的角度（度）。⛔ 不是總張角。 */
+  spreadDeg?: number;
   /**
    * ⚠️ ⭐ **`"bone"` 也收得下**（GH#761 AC②）—— ⛔ 而擺位這一層**不處理它**：
    * 骨頭掛點是**渲染層**的事（模型掛到 joint 上），⛔ 不是「算一個世界座標」。
@@ -133,7 +136,7 @@ export function modelFxInstancesFromFrame(
   //    的環心要跟著動，而沿線 static 的第 0 具本來就從 origin 長出來）。
   //    方向優先用面向（原作讀的正是 `GetUnitFacing`），面向解不到就不推。
   const origin = offsetAlongFacing(frame.origin, frame.facing, e.offsetForwardU ?? 0);
-  const spread = e.path === "radial" || e.path === "orbit";
+  const spread = e.path === "radial" || e.path === "orbit" || e.path === "fan";
   const count = spread
     ? Math.max(1, Math.min(MODEL_FX_MAX_INSTANCES, Math.floor(e.count ?? 1)))
     : 1;
@@ -206,6 +209,22 @@ export function modelFxInstancesFromFrame(
     return ringPoints({ x: 0, z: 0 }, 1, count).map((d) => ({
       origin,
       dir: { x: d.x, z: d.z },
+      travel: far,
+    }));
+  }
+  if (e.path === "fan") {
+    // ⭐⭐ GH#916 —— **以施法者面向為中心**的等角扇（原作 A09I 的三條黑龍）。
+    // ⚠️ 與 `radial` 的差別是**兩件事**，⛔ 不是一件：
+    //   ① 中心是**面向**，⛔ 不是世界 +x（radial 的起始相位刻意固定，見 ringPoints）
+    //   ② 只張開 `(count−1) × spreadDeg`，⛔ 不是整個 360°
+    // ⇒ 在這一格出現以前，`instances:3` 只能寫成 radial ⇒ 得到一個朝三方的
+    //   **星爆**，而那與「三條朝前的龍」在畫面上完全不同（第一·五守則：
+    //   卡面說了而不會發生）。
+    // ⭐ 幾何住 `fanRotation.ts`（常數表 ＋ 複數乘法，⛔ 零三角函式），
+    //   ⛔ 不在這裡再寫一份 —— 那正是家族預設漂移那次的形狀。
+    return fanDirections(frame.facing, count, e.spreadDeg ?? 0).map((d) => ({
+      origin,
+      dir: d,
       travel: far,
     }));
   }

@@ -30,6 +30,20 @@ import type { EffectDef } from "../effect";
  * 沿向量分段推進）與 `finalEffects` 這兩格既有的機制。
  * ⇒ 決鬥結束停手 / 施法者死亡停手 / 目標死亡跳過 / `incoming` 定基，一行都不用重寫。
  */
+/**
+ * ⭐⭐ `spawnModelFx.path` 的**唯一住處**（第〇·四守則）。
+ *
+ * ⚠️ 2026-09-04 加 `fan` 時量到它有**三個**住處：這裡的手寫 union ·
+ * `sim/effects/spawnModelFx.ts` 的 `ModelFxPathName` · `modelFxPlacement.ts` 的
+ * `ModelFxPlacementParams.path`（＋ zod enum 是第四個，⭐ 而那個是**驗證**的住處，
+ * 兩者本來就該分開）。⇒ 三個手寫 union 少一個字就是一個靜默的窄化，
+ * ⛔ 而 TS 只會在**用到**的那一行報 TS2367（我就是這樣才發現它的）。
+ *
+ * ⭐ 這個檔是 leaf（`effect.ts` import 它），所以型別住這裡 ——
+ * ⛔ 反過來 import 會循環。`sim/effects/spawnModelFx.ts` 從這裡 re-export。
+ */
+export type ModelFxPathName = "forward" | "toTarget" | "orbit" | "radial" | "static" | "fan";
+
 export interface SpawnModelFxVariant {
   kind: "spawnModelFx";
   /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。`single` = 沿用上游解好的目標。 */
@@ -68,7 +82,12 @@ export interface SpawnModelFxVariant {
    *   · `static`   —— ⭐ #649 類④：**一具定點擺著播動畫**，活 `lifeSec`，
    *                  ⛔ 不位移（原作 266 具 dummy 有 238 具站著不動 —— 89%）
    */
-  path?: "forward" | "toTarget" | "orbit" | "radial" | "static";
+  path?: ModelFxPathName;
+  /**
+   * ⭐【扇形間距】`path:"fan"` 時**相鄰兩臂**之間的角度（度）。⛔ 不是總張角。
+   * 原作 A09I（38-002）：`count:3, spreadDeg:45` ＝ facing−45／facing／facing+45。
+   */
+  spreadDeg?: number;
   /**
    * ⭐ `path:"static"` 的**錨點**（#649）：這一具擺在哪。
    *

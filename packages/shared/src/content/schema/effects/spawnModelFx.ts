@@ -63,7 +63,7 @@ export const zSpawnModelFx = z
         "模型 id（`content/models`）。這是一具有骨架的模型，⛔ 不是粒子貼圖。有 `preset` 時可省略（從模板補）。",
       ),
     path: z
-      .enum(["forward", "toTarget", "orbit", "radial", "static"])
+      .enum(["forward", "toTarget", "orbit", "radial", "static", "fan"])
       .optional()
       .describe(
         "路徑：forward（沿面向直線）／toTarget（朝目標直線）／radial（count 個等分向外發散）／orbit（count 個在半徑 distance 的環上繞）／static（⭐ 定點擺一具播動畫，活 lifeSec，不位移）。有 `preset` 時可省略（從模板補）。",
@@ -148,6 +148,30 @@ export const zSpawnModelFx = z
       .optional()
       .describe(
         'path:"static" 且 count≥2 時，相鄰兩具的間距（世界單位）。⛔ 其他路徑讀不到它（radial/orbit 的距離住 distance）。',
+      ),
+    /**
+     * ⭐⭐【扇形間距】`path:"fan"` 時**相鄰兩臂**之間的角度（度）。
+     *
+     * ⚠️ ⭐ 它是**相鄰兩臂之間**，⛔ 不是總張角 —— 原作 A09I（38-002 究極暴走
+     * 黑龍波）是「中央一條 ＋ 兩側各 45°」⇒ `count:3, spreadDeg:45` 逐字翻成
+     * `facing−45 · facing · facing+45`。
+     *
+     * ⚠️ 總張角 `(count−1) × spreadDeg` 夾在 180°：⛔ 超過就**壓縮間距**，
+     * ⛔ 不是丟掉幾臂（少一條龍是玩家看得見的，扇窄一點不是）。
+     *
+     * ⭐ 解析度是 **0.5°**（`sim/effects/fanRotation.ts` 的常數表）——
+     * 刻意不是整度：`count:2, spreadDeg:45` 的兩臂要落在 **±22.5°**，
+     * ⛔ 而整度表會湊成一個不對稱的扇。
+     *
+     * ⛔ 缺席 ⇒ 0 ⇒ N 具**全部重疊在面向上**（＝一個看起來只有一具的扇）。
+     */
+    spreadDeg: z
+      .number()
+      .min(0)
+      .max(180)
+      .optional()
+      .describe(
+        'path:"fan" 時相鄰兩臂之間的角度（度，0…180，解析度 0.5°）。⛔ 不是總張角 —— count:3 + spreadDeg:45 ＝ facing−45／facing／facing+45（原作 A09I）。⛔ 其他路徑讀不到它。',
       ),
     offsetForwardU: z
       .number()
@@ -392,7 +416,11 @@ export const refine = (
   //    有一半的格子要等 `resolveModelFxPreset()` 才補上，所以那些條件在這裡
   //    ⛔ 不判 —— 判了會把「模板會補」誤報成「作者漏填」。
   const fromPreset = e.preset !== undefined;
-  const spread = e.path === "radial" || e.path === "orbit";
+  // ⭐ GH#916 —— `fan` 與 radial/orbit 同族：它們都是「一次生 N 具」，⛔ 差別只在方向怎麼來。
+  // ⚠️ `fan` 排在最前面是**必要的**，⛔ 不是風格：`||` 鏈會逐項收窄型別，
+  //    而 zEffect 是 46 個成員的 union（另有帶 `path` 的成員），排在後面時
+  //    TS 會把它收窄成「沒有 fan」而報 TS2367。
+  const spread = e.path === "fan" || e.path === "radial" || e.path === "orbit";
   if (spread && e.count === undefined) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
@@ -407,7 +435,7 @@ export const refine = (
       code: z.ZodIssueCode.custom,
       path: ["count"],
       message:
-        '只有 path:"radial" / "orbit" / "static" 讀得到 count —— forward/toTarget 永遠只有一具模型',
+        '只有 path:"radial" / "orbit" / "fan" / "static" 讀得到 count —— forward/toTarget 永遠只有一具模型',
     });
   }
   // ⭐【沿線 N 具】spacing 只有 static+count≥2 讀得到；反過來 static 擺了 N 具卻
