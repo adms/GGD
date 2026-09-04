@@ -55,6 +55,16 @@
 ⭐ 判準（CLAUDE.md 第〇·五守則）：**如果你在為某一支技能寫 if，你就越線了** —— 那個 if 該是 Main 的一個條件葉，
 你的技能該在 JSON 裡引用它。連續調同一族特效**超過 2 輪**還沒收斂 ⇒ 停手，那不是參數問題，送 packet。
 
+### ⭐ 「引擎今天有哪些積木」只有一份答案：`docs/editor-contract/ggd-bricks.json`（GH#989）
+
+**153 顆**（effect 47 · hook 33 · template 35 · model-preset 15 · vfx-prim 13 · leaf 6 · vfx-subtype 4），
+每一顆帶 `params[]`（含級距欄位、`inert` 理由、`default` 的出處）· `adminForm` · `editorForm` · `usedBy`。
+⭐ 它與 `ggd-runtime-capabilities` 走**同一個** `buildCapabilityManifest()`（指紋寫在 `capabilityFingerprint`）
+⇒ 名詞那一層不可能互相矛盾。⛔ 手改它會被 `pnpm bricks:check` 逐位元組打回。
+
+⚠️ ⭐ **`editorForm` 那一欄今天是代理值**（用 `ggd-editor-coverage.json` 的 `required` 推的，
+產物自己逐字標了 `editorFormSource`）—— ⛔ 不要把它讀成「量到的」。要換成真的收據，見 §6-F。
+
 ---
 
 ## 3. Packet：一則訊息 ＝ 一個 JSON 檔
@@ -132,6 +142,7 @@ schema `ggd-coord-packet@1`（`pnpm coord:check` 驗，GH#985）：
 | **B** | `tools/skill-forge/build-visual-review-packet.mjs`：`sourceDigest` 改成**逐份文件**一個，過期只作廢那一份 | 今天是整包一個 hash：改 1 份作廢 46 份 —— 這就是 echo loop 的機械形式 |
 | **C** | `machineIssues[]` 的 `MISSING_VISUAL_BRICK` 加 `brickId` | 今天 7 列共用同一句泛話，積木名只住在肉眼備註的散文裡，機器數不出「擋住幾支」 |
 | **D** | 送第一則 packet `brick-request.solid-beam`（§3 那份），`unblocks` 填那 7 列 | 它會是 `coord:check` 的第一個真實輸入 |
+| **F** | `editorForm` 的**收據**：對 `ggd-bricks.json` 的 153 顆積木，逐顆回「編輯器今天開得了它嗎」寫成 `docs/editor-contract/coordination/claim.editor-form-receipts.json` | 那一欄今天是 Main 用 `required` 推的**代理值**（§2）。⭐ 你回一次，`bricksComplete.test.ts` 的棘輪就從代理值換成量值 |
 | **E** | 以上全部走 **PR**，⛔ 不是 push 分支 | §0 |
 
 （對應票：GH#986）

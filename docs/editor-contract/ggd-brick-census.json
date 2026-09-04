@@ -7,7 +7,7 @@
     "usable": 35,
     "engineMissing": 10,
     "shells": 10,
-    "zeroAdoption": 36,
+    "zeroAdoption": 28,
     "terminal": 1,
     "handWritten": 263,
     "distinctShapes": 99,
@@ -289,6 +289,15 @@
       "terminal": false
     },
     {
+      "id": "tpl-locust-orb",
+      "family": "locust-orb",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 12,
+      "abilities": 25,
+      "terminal": false
+    },
+    {
       "id": "tpl-single-strike",
       "family": "single-strike",
       "engineKnows": true,
@@ -307,12 +316,39 @@
       "terminal": false
     },
     {
+      "id": "tpl-locust-strike",
+      "family": "locust-strike",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 11,
+      "abilities": 12,
+      "terminal": false
+    },
+    {
+      "id": "tpl-beam-roll",
+      "family": "beam-roll",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 21,
+      "abilities": 9,
+      "terminal": false
+    },
+    {
       "id": "tpl-proxy-cast",
       "family": "proxy-cast",
       "engineKnows": true,
       "status": "enabled",
       "params": 8,
       "abilities": 8,
+      "terminal": false
+    },
+    {
+      "id": "tpl-locust-travel",
+      "family": "locust-travel",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 11,
+      "abilities": 5,
       "terminal": false
     },
     {
@@ -331,6 +367,42 @@
       "status": "enabled",
       "params": 12,
       "abilities": 3,
+      "terminal": false
+    },
+    {
+      "id": "tpl-line-blast",
+      "family": "line-blast",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 15,
+      "abilities": 2,
+      "terminal": false
+    },
+    {
+      "id": "tpl-locust-line",
+      "family": "locust-line",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 11,
+      "abilities": 2,
+      "terminal": false
+    },
+    {
+      "id": "tpl-locust-swarm",
+      "family": "locust-swarm",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 12,
+      "abilities": 2,
+      "terminal": false
+    },
+    {
+      "id": "tpl-radial-burst",
+      "family": "radial-burst",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 12,
+      "abilities": 2,
       "terminal": false
     },
     {
@@ -366,15 +438,6 @@
       "engineKnows": false,
       "status": "draft",
       "params": 0,
-      "abilities": 0,
-      "terminal": false
-    },
-    {
-      "id": "tpl-beam-roll",
-      "family": "beam-roll",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 21,
       "abilities": 0,
       "terminal": false
     },
@@ -514,65 +577,11 @@
       "terminal": false
     },
     {
-      "id": "tpl-line-blast",
-      "family": "line-blast",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 15,
-      "abilities": 0,
-      "terminal": false
-    },
-    {
       "id": "tpl-lock-combo",
       "family": "lock-combo",
       "engineKnows": true,
       "status": "enabled",
       "params": 10,
-      "abilities": 0,
-      "terminal": false
-    },
-    {
-      "id": "tpl-locust-line",
-      "family": "locust-line",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 11,
-      "abilities": 0,
-      "terminal": false
-    },
-    {
-      "id": "tpl-locust-orb",
-      "family": "locust-orb",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 12,
-      "abilities": 0,
-      "terminal": false
-    },
-    {
-      "id": "tpl-locust-strike",
-      "family": "locust-strike",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 11,
-      "abilities": 0,
-      "terminal": false
-    },
-    {
-      "id": "tpl-locust-swarm",
-      "family": "locust-swarm",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 12,
-      "abilities": 0,
-      "terminal": false
-    },
-    {
-      "id": "tpl-locust-travel",
-      "family": "locust-travel",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 11,
       "abilities": 0,
       "terminal": false
     },
@@ -627,15 +636,6 @@
       "engineKnows": false,
       "status": "draft",
       "params": 0,
-      "abilities": 0,
-      "terminal": false
-    },
-    {
-      "id": "tpl-radial-burst",
-      "family": "radial-burst",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 12,
       "abilities": 0,
       "terminal": false
     },
