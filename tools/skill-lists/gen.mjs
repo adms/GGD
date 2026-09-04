@@ -403,9 +403,35 @@ async function main() {
         }
         return "    （逐行相同 —— 差在行尾或編碼）";
       };
+      // ⭐ JSON 產物再多一層：**逐 id 的集合差**。
+      //   ⚠️ 行號告訴你「從哪裡開始不一樣」，⛔ 它答不出「少了哪幾支」——
+      //   而後者才是能直接去查的東西（2026-09-05：CI 少 98 行，而那是 7 支技能）。
+      const idDiff = ([p, want]) => {
+        if (!p.endsWith(".json") || !existsSync(p)) return "";
+        try {
+          const ids = (o) => new Set((o?.cast ?? []).map((r) => r.id));
+          const got = ids(JSON.parse(readFileSync(p, "utf8")));
+          const exp = ids(JSON.parse(String(want)));
+          const only = (a, b) => [...a].filter((x) => !b.has(x));
+          const d = only(got, exp);
+          const r = only(exp, got);
+          if (d.length === 0 && r.length === 0) return "";
+          return (
+            `    ⭐ 只在磁碟上（${d.length}）：${d.slice(0, 12).join(" ") || "—"}\n` +
+            `    ⭐ 只在重建裡（${r.length}）：${r.slice(0, 12).join(" ") || "—"}`
+          );
+        } catch {
+          return "";
+        }
+      };
       console.error(
         `speedlists:check 過期：\n` +
-          stale.map(([p, want]) => `  ${p}\n${firstDiff([p, want])}`).join("\n") +
+          stale
+            .map(([p, want]) => {
+              const extra = idDiff([p, want]);
+              return `  ${p}\n${firstDiff([p, want])}${extra ? `\n${extra}` : ""}`;
+            })
+            .join("\n") +
           `\n→ 跑 ${CMD} 然後 git add`,
       );
       process.exit(1);
