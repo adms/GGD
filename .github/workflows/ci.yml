@@ -95,8 +95,10 @@ jobs:
       # ⭐⭐ GH#979 —— Pillow。**同一個判準**（就在上面那三行）：
       #   `w3xFilterModeContract.test.ts` 在沒有 Pillow 的機器上會 `it.skip`，
       #   ⛔ 而「環境不對就跳過」的閘等於沒有閘。⇒ 裝它，讓那條**真的跑**。
-      - name: Image toolchain (Pillow)
-        run: python3 -m pip install --quiet --break-system-packages Pillow && python3 -c "import PIL; print(PIL.__version__)"
+      - name: Image + MPQ toolchain (Pillow, mpyq)
+        run: |
+          python3 -m pip install --quiet --break-system-packages Pillow mpyq
+          python3 -c "import PIL, mpyq; print(PIL.__version__)"
       - name: Static TODO gate
         run: pnpm todo:check
       # eslint (2026-08-02). 規則集刻意很小 —— 見 eslint.config.mjs 的檔頭。
