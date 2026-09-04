@@ -172,6 +172,24 @@ const CHECK_STEP_NO_SYNC: Record<string, string> = {
 };
 
 const EXEMPT: Record<string, string> = {
+  // ⭐⭐ 2026-09-04 Codex 合併帶進來的兩支 —— ⛔ 它們**不寫任何檔**
+  //    （`tools/vfx-asset-safety/check.py` 與 `tools/vfx-forge/check.mjs`
+  //     全檔 **0 個** `write_text`／`writeFileSync`／`open(...,"w")`，實查）
+  //    ⇒ ⭐ 沒有產物就沒有「過期」這回事 —— 它們是**安全閘**，⛔ 不是新鮮度閘。
+  //    寫入端是另外兩支手動步驟（`vfxassets:repair` / `vfxforge:*`）。
+  // ⚠️⚠️ ⭐ **誠實**：這兩支今天是**紅的**（`vfxassets:check` 45 個
+  //    `MODEL_TEXTURE_BACKDROP` blocker —— 跑過 Codex 自己的 repair 之後從 74 降到 45，
+  //    剩下的是**內嵌在 .glb 裡**的貼圖，repair 修不動；`vfxforge:check` 的
+  //    conflicts 計數斷言 27 對不上）。
+  //    ⛔ 豁免的是「要不要進 skills:check」，⛔ **不是**「這兩個紅可以無視」。
+  //    ⭐ 反駁法：修好之後把這兩列刪掉並接進 skills:check（那時它們才有資格）。
+  "vfxassets:check":
+    "⭐ 不寫任何檔（0 個寫入呼叫，實查）⇒ 沒有產物就不會過期。它守的是**貼圖/模型的 additive 底板**" +
+    "（alpha=0 而 RGB 亮 ⇒ ONE+ONE 會把底板畫進遊戲），⛔ 不是某份文件的新鮮度。" +
+    "⚠️ 今天紅：45 個 blocker，全部是內嵌在 .glb 裡的貼圖，`vfxassets:repair` 修不動。",
+  "vfxforge:check":
+    "⭐ 不寫任何檔（0 個寫入呼叫，實查）⇒ 同上。它守的是特效工坊的**驗收收據**，" +
+    "⛔ 不是產物新鮮度。⚠️ 今天紅：conflicts 計數斷言（27）對不上合併後的內容。",
   "voxel:check": "體素**角色身體**產生器 —— 讀的是英雄外觀，不讀 abilities/vfx/級距",
   "voxel:build:check": "同上，只是驗產物",
   "scenery:check": "競技場**道具散佈** —— 讀 arena 幾何，不讀技能",

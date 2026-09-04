@@ -3,7 +3,7 @@
   "note": "⭐ 被 content/**/*.json 引用到的**每一顆**二進位資產。⛔ 產物 —— 改 `tools/asset-manifest/gen.ts`，⛔ 不要手改。⚠️ 只收**被引用到的**：content/assets/ 底下有一萬多個檔，而清單的用途是驗證引用得到的東西。",
   "counts": {
     "entries": 1642,
-    "totalBytes": 103693151
+    "totalBytes": 103684787
   },
   "entries": [
     {
@@ -15751,8 +15751,8 @@
     },
     {
       "path": "assets/models/imported/blackhole.glb",
-      "bytes": 118820,
-      "sha256": "e011cf090d5056e836c8e4b2f73b33d6a5f0190fd7a1dccce5c603952f53a662",
+      "bytes": 117936,
+      "sha256": "2e86bbbca13bdbe6b14714f2f25198596963ecc1451b305e46bc073012cf0ec4",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -15982,8 +15982,8 @@
     },
     {
       "path": "assets/models/imported/flamestriketarget.glb",
-      "bytes": 38220,
-      "sha256": "4ed223486ae2bf2611c9239ea8fd8f09cdd55b67ad158c5d7944d7e5b1d3dfaf",
+      "bytes": 31852,
+      "sha256": "2cccbb1b4fed099afaa3044bfa608044aa0fa0196c9f435866992b4adc7c9dc0",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -18761,8 +18761,8 @@
     },
     {
       "path": "assets/textures/particles/wc3/babyface.png",
-      "bytes": 26245,
-      "sha256": "e773bc7121f8c4b60935fda78d8dd2555b6f01c8c558530e918527ba1801396a",
+      "bytes": 25924,
+      "sha256": "b61928757711c443c8be9aa8f8ba3df2645aad48349a13c4ffdfe659401b4db9",
       "contentType": "image/png",
       "kind": "textures",
       "refs": [
@@ -18808,8 +18808,8 @@
     },
     {
       "path": "assets/textures/particles/wc3/heroeva01effect.png",
-      "bytes": 7672,
-      "sha256": "71f05c016329c16df78677d0375a5aece2f65f074d448806cee7a3f8972929a8",
+      "bytes": 7329,
+      "sha256": "65715c577f7684a056d74ef2fe965e44a2467275138077235dcdd5f314a4a684",
       "contentType": "image/png",
       "kind": "textures",
       "refs": [
@@ -18821,8 +18821,8 @@
     },
     {
       "path": "assets/textures/particles/wc3/ribbonblur1.png",
-      "bytes": 5598,
-      "sha256": "20ffb2f88f1f835be78de86bda5db15b73a5aac8b05e1c0f5b03f46cbc1b6104",
+      "bytes": 5487,
+      "sha256": "34366bee6f80e817c38c0c9012fbecae2c396cc7e5131978aed133559752225f",
       "contentType": "image/png",
       "kind": "textures",
       "refs": [
@@ -18854,8 +18854,8 @@
     },
     {
       "path": "assets/textures/particles/wc3/zap1.png",
-      "bytes": 14557,
-      "sha256": "49db8f5a6f3e9302a824359a8fc2fa56e4ca651a0cb4dc3878f704917365813d",
+      "bytes": 14434,
+      "sha256": "77a447552693bcae85fd9cbab827f35150601ab1645c235fd033cc17817bc05f",
       "contentType": "image/png",
       "kind": "textures",
       "refs": [
@@ -18869,8 +18869,8 @@
     },
     {
       "path": "assets/textures/particles/wc3/zap1b.png",
-      "bytes": 15679,
-      "sha256": "5ef78d62a60b7bcc2b86f7cca8532cfba185f8cf59a7380fee1d72ce549abb97",
+      "bytes": 15465,
+      "sha256": "e8feccaed31e0253bc9bd3a36e8388d2c618f2d8ff151ecdeec2a140cd35cccd",
       "contentType": "image/png",
       "kind": "textures",
       "refs": [

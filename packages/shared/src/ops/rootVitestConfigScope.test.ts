@@ -41,6 +41,9 @@ const CONFIG_NAMES = ["ts", "mts", "cts", "js", "mjs", "cjs"].flatMap((ext) => [
  */
 const INHERITS_ROOT_CONFIG = [
   "apps/content-api",
+  // ⭐ 2026-09-04 Codex 合併帶進來的新 app（Electron 編輯器外殼）—— 它沒有自己的
+  //    vitest/vite 設定 ⇒ 吃根設定。⭐ 加進名單是**記錄現況**，⛔ 不是核准。
+  "apps/editor-desktop",
   "tools/capability-export",
   "tools/model-budget",
   "tools/role-classify",
