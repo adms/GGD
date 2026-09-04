@@ -660,7 +660,7 @@ export function VfxForgePage() {
       return;
     }
     mutate(() => candidate);
-    recordAction(`加入可重用組合：${preset ? `${preset.familyId}/${preset.typeId}` : id}`);
+    recordAction(`加入可重用組合：${preset ? `${preset.familyId}/${preset.variantId}` : id}`);
     setSelected(draft.segments.length);
     setStatus("已加入透明安全的可重用演出積木；每一塊都可在時間軸單獨調整");
   };
@@ -1528,8 +1528,8 @@ export function VfxForgePage() {
       ) : null}
 
       <section className="vfx-recipes" aria-label="可重用特效組合">
-        <b>可重用組合（{VFX_FORGE_RECIPES.length} 個 type）</b>
-        <span>先選特效家族，再選 type1／type2 等完整預設；矩陣與 slider 只微調選定 type，不是從零塑形入口。預設會像 JASS helper 一樣展開成可拆改的標準積木，並自動帶施展動作；時間軸的傷害／位移節點必須配角色動作。普通斬擊一動作只配 Main 收據中的一個 single-arc；只有三段以上、分時且小型的明確極速連斬可例外。舊 slash 積木每顆會噴26個月牙，工坊仍會阻擋。</span>
+        <b>可重用組合（{VFX_FORGE_RECIPES.length} 個具名預設）</b>
+        <span>先選特效家族，再選名稱能說明差異的完整預設；不把 type1／type2 寫成落地 ID。矩陣與 slider 只微調選定預設，不是從零塑形入口。預設會像 JASS helper 一樣展開成可拆改的標準積木，並自動帶施展動作；時間軸的傷害／位移節點必須配角色動作。普通斬擊一動作只配 Main 收據中的一個 single-arc；只有三段以上、分時且小型的明確極速連斬可例外。舊 slash 積木每顆會噴26個月牙，工坊仍會阻擋。</span>
         <button type="button" onClick={() => void applyBasicVisual()}>
           ✨ 依技能自動組裝基本視覺
         </button>
@@ -1539,7 +1539,7 @@ export function VfxForgePage() {
               <legend>{family.label}</legend>
               {family.recipes.map((recipe) => (
                 <button key={recipe.id} type="button" title={`${recipe.label}：${recipe.description}`} onClick={() => void addRecipe(recipe.id)}>
-                  {recipe.typeId} · {recipe.variantLabel}
+                  {recipe.variantLabel} · <code>{recipe.variantId}</code>
                 </button>
               ))}
             </fieldset>

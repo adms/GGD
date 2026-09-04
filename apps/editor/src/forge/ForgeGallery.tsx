@@ -1,11 +1,10 @@
 /**
  * 鑄技工坊 — 選卡頁 (design §2.3 step 1).
  *
- * 29 cards, one per behaviour family recovered from the JASS reverse-engineering
- * pass. Each card shows what the designer needs in order to CHOOSE: the family
- * name, one line of description, the exemplar it was measured from, and the
- * 引擎支援度 badge. Draft families are dimmed and unselectable with a P2/P3 chip —
- * `expand()` throws on them, so offering them would be a lie.
+ * Availability comes from Main's machine-measured ggd-type-catalog, never a
+ * copied count or template.status. Each card shows what the designer needs in
+ * order to choose; entries that do not expand, use the wrong wiring path, are
+ * shells, or are sentinels remain visible as unavailable evidence.
  */
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -30,6 +29,12 @@ import {
   SKILL_ACCEPTANCE_CANDIDATES,
   SKILL_ACCEPTANCE_THEME_IDS,
 } from "./skillAcceptanceCatalog";
+import {
+  GGD_TYPE_CATALOG,
+  GGD_TYPE_CATALOG_ERROR,
+  pickableTemplateIds,
+  templateSelectionDecision,
+} from "./typeCatalog";
 
 async function fetchTemplates(): Promise<TemplateDoc[]> {
   const index = await api.index("ability-templates");
@@ -76,23 +81,29 @@ export function ForgeGallery({
   }
   if (isLoading || !data) return <p className="forge-loading">載入模板…</p>;
 
-  const enabled = data.filter((t) => t.status === "enabled");
-  const drafts = data.filter((t) => t.status !== "enabled");
-  // Only 27 rows today. Keeping this as a plain calculation is both cheaper than
-  // memo bookkeeping and, crucially, safe across the loading → loaded render:
+  // Main's measured catalog is authoritative. `status:"enabled"` is only a
+  // declaration and is deliberately not used as an availability gate here.
+  const docPickableIds = pickableTemplateIds("doc");
+  const pickable = data.filter((t) => docPickableIds.has(t.id));
+  const unavailable = data.filter((t) => !docPickableIds.has(t.id));
+  // Keeping this as a plain calculation is both cheaper than memo bookkeeping
+  // and, crucially, safe across the loading → loaded render:
   // no hook may appear after the early loading/error returns above.
-  const visibleEnabled = enabled.filter((template) => templateMatchesQuery(template, query));
-  const visibleDrafts = drafts.filter((template) => templateMatchesQuery(template, query));
+  const visiblePickable = pickable.filter((template) => templateMatchesQuery(template, query));
+  const visibleUnavailable = unavailable.filter((template) => templateMatchesQuery(template, query));
   const selectedChampion = championQuery.champions.find((champion) => champion.id === championId) ?? null;
   const selectedOrigin = selectedChampion ? originOf(selectedChampion) : null;
   const templatesById = new Map(data.map((template) => [template.id, template]));
   const recipeIssues = new Map(
-    SKILL_TYPE_PRESETS.map((preset) => [preset.id, skillTypeRecipeIssues(preset, templatesById)] as const)
+    SKILL_TYPE_PRESETS.map((preset) => [
+      preset.id,
+      skillTypeRecipeIssues(preset, templatesById, docPickableIds),
+    ] as const)
       .filter(([, issues]) => issues.length > 0),
   );
   const rankedTypes = rankSkillTypes(
     selectedOrigin,
-    new Set(enabled.map((template) => template.id)),
+    docPickableIds,
     statNormalizationQuery.data,
     recipeIssues,
   );
@@ -105,6 +116,16 @@ export function ForgeGallery({
           選行為模板 → 填參數 → 即時試放 → 一鍵寫回。模板取自 90 英雄 JASS 逆向的{" "}
           {data.length} 類行為分類，參數預設值是範本技能的實測值。
         </p>
+        {GGD_TYPE_CATALOG_ERROR ? (
+          <p className="error" role="alert">
+            Main type catalog 無法驗證，已依 fail-closed 停用全部模板：{GGD_TYPE_CATALOG_ERROR}
+          </p>
+        ) : (
+          <p className="forge-note">
+            Main 實測可挑 {GGD_TYPE_CATALOG?.counts.pickable ?? 0} 種；其中技能模板卡可用 {docPickableIds.size} 種。
+            可選狀態由 <code>ggd-type-catalog.json</code> 的 <code>expands</code> 與 <code>wiring</code> 決定。
+          </p>
+        )}
       </header>
 
       <section className="forge-skill-types" aria-labelledby="forge-skill-type-title">
@@ -189,26 +210,26 @@ export function ForgeGallery({
       </label>
 
       <h2 className="forge-section">
-        可用模板 <span className="forge-count">{visibleEnabled.length}{query.trim() ? ` / ${enabled.length}` : ""}</span>
+        可用模板 <span className="forge-count">{visiblePickable.length}{query.trim() ? ` / ${pickable.length}` : ""}</span>
       </h2>
       <div className="forge-grid">
-        {visibleEnabled.map((t) => (
+        {visiblePickable.map((t) => (
           <TemplateCard key={t.id} t={t} onPick={(x) => onPick(x, data, { championId: championId || undefined })} />
         ))}
-        {visibleEnabled.length === 0 ? <p className="forge-empty">沒有符合的可用模板。</p> : null}
+        {visiblePickable.length === 0 ? <p className="forge-empty">沒有符合的可用模板。</p> : null}
       </div>
 
       <h2 className="forge-section">
-        規劃中 <span className="forge-count">{visibleDrafts.length}{query.trim() ? ` / ${drafts.length}` : ""}</span>
+        契約禁止選用 <span className="forge-count">{visibleUnavailable.length}{query.trim() ? ` / ${unavailable.length}` : ""}</span>
         <span className="forge-section-note">
-          — 這些家族的 sim 詞彙還沒有，展開器會直接拒絕，不會偷偷產出無效技能
+          — 包含 node-only、未接線、空殼與哨兵；理由直接取自 Main 機器契約
         </span>
       </h2>
       <div className="forge-grid">
-        {visibleDrafts.map((t) => (
+        {visibleUnavailable.map((t) => (
           <TemplateCard key={t.id} t={t} onPick={(x) => onPick(x, data, { championId: championId || undefined })} />
         ))}
-        {visibleDrafts.length === 0 ? <p className="forge-empty">沒有符合的規劃中模板。</p> : null}
+        {visibleUnavailable.length === 0 ? <p className="forge-empty">沒有符合的禁止選用模板。</p> : null}
       </div>
 
       <AcceptanceCatalog />
@@ -281,20 +302,21 @@ export function templateMatchesQuery(template: TemplateDoc, rawQuery: string): b
 
 function TemplateCard({ t, onPick }: { t: TemplateDoc; onPick(t: TemplateDoc): void }) {
   const badge = badgeFor(t.gapScore);
-  const draft = t.status !== "enabled";
+  const decision = templateSelectionDecision(t.id, "doc");
+  const blocked = !decision.selectable;
   const notes = degradeNotes(t.requires);
   const slots = Object.keys(t.params).length;
 
   const longDescription = t.description.length > 280;
 
   return (
-    <article className={`forge-card${draft ? " draft" : ""}`}>
+    <article className={`forge-card${blocked ? " draft" : ""}`}>
       <button
         type="button"
         className="forge-card-pick"
-        disabled={draft}
+        disabled={blocked}
         onClick={() => onPick(t)}
-        title={draft ? "此家族尚未實作展開路徑 (P2/P3)" : `以「${t.name}」建立技能`}
+        title={blocked ? decision.reason ?? "Main type catalog 禁止選用" : `以「${t.name}」建立技能`}
       >
         <div className="forge-card-top">
           <span className="forge-card-name">{t.name}</span>
@@ -310,7 +332,7 @@ function TemplateCard({ t, onPick }: { t: TemplateDoc; onPick(t: TemplateDoc): v
           </div>
           <div>
             <dt>參數槽</dt>
-            <dd>{draft ? "—" : slots}</dd>
+            <dd>{blocked ? "—" : slots}</dd>
           </div>
         </dl>
         {notes.length > 0 ? (
@@ -329,7 +351,7 @@ function TemplateCard({ t, onPick }: { t: TemplateDoc; onPick(t: TemplateDoc): v
           <p>{t.description}</p>
         </details>
       ) : null}
-      {draft ? <span className="forge-chip">P2 / P3</span> : null}
+      {blocked ? <span className="forge-chip">{decision.reason ?? "契約禁止選用"}</span> : null}
     </article>
   );
 }

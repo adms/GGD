@@ -13,15 +13,16 @@ const activeRecipe = (id: Parameters<typeof buildVfxForgeRecipe>[0], options: Om
   buildVfxForgeRecipe(id, { ...options, activationMode: "active" });
 
 describe("VFX Forge editor-side recipes", () => {
-  it("offers stable family/type presets instead of requiring slider-only authoring", () => {
-    const keys = VFX_FORGE_RECIPES.map((recipe) => `${recipe.familyId}/${recipe.typeId}`);
+  it("offers stable semantic variants instead of numeric landed ids or slider-only authoring", () => {
+    const keys = VFX_FORGE_RECIPES.map((recipe) => `${recipe.familyId}/${recipe.variantId}`);
     expect(new Set(keys).size).toBe(keys.length);
+    expect(VFX_FORGE_RECIPES.every((recipe) => !/^type\d+$/i.test(recipe.variantId))).toBe(true);
     expect(VFX_FORGE_RECIPE_FAMILIES.flatMap((family) => family.recipes)).toHaveLength(VFX_FORGE_RECIPES.length);
     const beamTypes = VFX_FORGE_RECIPE_FAMILIES.find((family) => family.id === "classic-horizontal-beam")?.recipes;
     expect(beamTypes).toHaveLength(10);
-    expect(beamTypes?.map((recipe) => recipe.typeId)).toEqual([
-      "type1", "type2", "type3", "type4", "type5",
-      "type6", "type7", "type8", "type9", "type10",
+    expect(beamTypes?.map((recipe) => recipe.variantId)).toEqual([
+      "fire-continuous", "blue-continuous", "holy-gold-blue", "void-purple", "inferno-red-orange",
+      "electric-cyan", "lightning-thin", "lightning-wide", "holy-wide", "void-wide",
     ]);
     expect(VFX_FORGE_RECIPE_FAMILIES.find((family) => family.id === "defense-reaction")?.recipes)
       .toHaveLength(3);

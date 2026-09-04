@@ -146,9 +146,16 @@ export function rankSkillTypes(
 export function skillTypeRecipeIssues(
   preset: SkillTypePreset,
   templates: ReadonlyMap<string, TemplateDoc>,
+  /** Main's measured ggd-type-catalog set. Omit only in isolated unit tests. */
+  availableTemplateIds?: ReadonlySet<string>,
 ): string[] {
   const issues: string[] = [];
-  const missing = preset.templateIds.filter((id) => templates.get(id)?.status !== "enabled");
+  const missing = preset.templateIds.filter((id) => {
+    if (!templates.has(id)) return true;
+    return availableTemplateIds === undefined
+      ? templates.get(id)?.status !== "enabled"
+      : !availableTemplateIds.has(id);
+  });
   if (missing.length > 0) return missing.map((id) => `缺少可用積木 ${id}`);
 
   const cards = cardsForSkillType(preset, templates);

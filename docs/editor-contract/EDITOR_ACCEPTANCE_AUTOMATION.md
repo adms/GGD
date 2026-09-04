@@ -85,17 +85,23 @@ API origin，任何自訂遠端 endpoint 都不支援。
 
 Main 只提供可重用 primitive、權威事件、runtime、限制 resolver 與機器契約。上述時間軸、配色、鏡頭、拖拉組合、截圖和反覆調整均由 Editor 驗收流程負責。
 
+鑄技工坊只讀 Main 產生的 `ggd-type-catalog.json` 判斷模板是否可選：必須 `expands:true`，並依
+`wiring` 分流技能卡與節點 preset；每個欄位再依 `fillsVia` 決定編輯位置。`inertParams` 與寫錯接線面的
+欄位會直接鎖定，不能只顯示警告後仍讓使用者產生一份不會生效的 JSON。
+
 經典光束另有不可省略的來源對帳：[W3X_CLASSIC_BEAM_RECIPE.md](W3X_CLASSIC_BEAM_RECIPE.md)。
 驗收器先核對 JASS `CreateNUnitsAtLoc`、蝗蟲 unit model 與 Main `model@1`，再分類責任；已存在的
 `ReviveHuman＋FragDriller` 不得因 Editor 冷啟動白卡或錯誤配方而被誤報成「缺少光束模型」。但來源存在
-不代表全部 authoring 參數已打通：聚焦 A/B 已證實 `model@1.fxEmitters` 尚未繼承該次 `modelFx` 的
-縮放、方向、色彩與透明度，六份藍白／黃藍技能因此保留一個精確 Main 低階接縫，不逐招硬調掩蓋。
+不代表全部 authoring 參數已打通：`ggd-type-catalog.json#modelFxEmitters` 已量出 14 個受影響節點／10 支技能的
+`model@1.fxEmitters` 尚未繼承該次 `modelFx` 外觀參數。先前列入的 `godie-e002.ex`、`godie-e00l.ex`、
+`godie-hvsh.r` 實際走另一條 `spawnVfx` 窄通道，不再錯掛本票，也不逐招硬調掩蓋。
 
 VFX Forge 另由 `pnpm vfxforge:handback:build` 從現行配方原始碼產生
 `editor-vfx-template-handback.json` 與 `EDITOR_VFX_TEMPLATE_HANDBACK.md`。Main 可據此參考收編真正可重用的
 低階能力；技能時間軸、配色和鏡頭仍留在 Editor。`vfxforge:check` 會驗證交接檔未過期。
-工坊本身以「家族 → type1/type2…」呈現 21 個可選完整預設，另保存 42／46 已實際使用的 36 個
-機制推薦 type。套用 type 後才展開成可拖拉的積木與時間軸；矩陣／slider 只用於最後微調，不能把
+工坊本身以「家族 → 具名語意變體」呈現 21 個可選完整預設，另保存 42／46 已實際使用的 36 個
+具名機制推薦。`typeN` 只表示同族有多個選項；落地 ID 必須能說明差異，純配色／寬度變體由 params
+預設表達。套用配方後才展開成可拖拉的積木與時間軸；矩陣／slider 只用於最後微調，不能把
 從零塑形的成本丟給設計師，也不能讓既有調整成果退回成一堆無名參數。
 
 視覺問題也採固定路由：顏色、方向、形狀、大小、錨點或物理意義的明顯錯誤由 Editor 重做；亮度、
@@ -104,14 +110,19 @@ VFX Forge 另由 `pnpm vfxforge:handback:build` 從現行配方原始碼產生
 
 ## 最近一次關鍵收據
 
-2026-09-04 11:17 CST 在 `feat/vfx-forge-codex` working tree（基底 `d71d027be7ce`）對
-`origin/main@b45a2957fe1c` 完成 42 主題／46 文件帳本更新：46 份都有真 framebuffer、0 capture
-failed、0 blocked，全部保持人工待審；其中 6 份精確歸因到 Main 的
-`model-fx-owned-emitter-instance-inheritance` 接縫。`godie-hart.r` 聚焦重驗留下 8 張時間序影格、
+2026-09-04 16:05 CST，`feat/vfx-forge-codex` 已同步到 `origin/main@b6f0bf4bf793`，且確認
+`29bcf9cc5` 為其祖先。鑄技工坊已把 `ggd-type-catalog.json` 接到選卡、參數表單、確認計畫與實際
+create/write 四層；node-only、待接線、空殼、哨兵與死旋鈕均 fail-closed。目錄現值為 29 可挑、
+3 待接線、13 空殼、1 哨兵、6 個 inert 參數，但程式與測試均直接讀 JSON，不把數量當常數。
+
+11:17 的 42 主題／46 文件視覺帳本仍是目前 framebuffer 快照：46 份都有真 framebuffer、0 capture
+failed、0 blocked，全部保持人工待審。`godie-hart.r` 聚焦重驗留下 8 張時間序影格、
 7 個真 `comboStrike` 節點、11 個 presentation events，沒有機器 issue。Gemini 確認斬擊、黃藍光柱、
 角色可讀性與無穿模，但靜態影格無法獨立證明七擊逐段對齊，因此保持 `needs-human-review`；真 Sim 收據與
 人工批核仍是權威。審查 prompt 也已禁止把「不同時間每段各一個斬弧」誤判成同時堆疊大量月牙。
 
-同輪重建 `editor-vfx-template-handback.json`，指紋 `e8514105cb11`：21 個可選完整 type、36 個
-依結構化機制自動推薦 type，共保存 57 個既有成果。設計師必須先選或接受推薦 type，再以矩陣／slider
-微調；不得把已驗過的配方退回無名參數，也不得讓矩陣成為從零塑形入口。
+本輪重建 `editor-vfx-template-handback.json`，指紋 `227bdba4f050`：21 個可選完整配方、36 個
+依結構化機制自動推薦變體，共保存 57 個既有成果，落地 ID 全改為語意名稱。Main 機器目錄另量出
+`model-fx-owned-emitter-instance-inheritance` 影響 14 個節點／10 支實際技能；先前列入的三支
+`spawnVfx` 技能已從該票移除。設計師必須先選或接受推薦配方，再以矩陣／slider 微調；不得把已驗過的
+配方退回無名參數，也不得讓矩陣成為從零塑形入口。

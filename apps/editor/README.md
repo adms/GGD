@@ -275,15 +275,16 @@ existing trigger.
 ## Feature branch handoff
 
 Implementation lives on `feat/vfx-forge-codex`, containing Main through the
-last verified receipt `origin/main@b45a2957` (tag `v0.37.1`); the feature-branch
-tip is the only current Editor revision. It is intentionally not merged or
-pushed to `main`. Main should use
+last verified receipt `origin/main@b6f0bf4bf793`; the feature-branch tip is the
+only current Editor revision. It is intentionally not merged or pushed to
+`main`. Main should use
 `docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md` as a reference
 and reimplement only the main-owned seams on its own feature branch; the
 coordination contract explicitly forbids wholesale cherry-picking this branch.
 
 Editor-owned VFX recipes are also exported deterministically for optional Main
 review in `docs/editor-contract/editor-vfx-template-handback.json` and
-`docs/editor-contract/EDITOR_VFX_TEMPLATE_HANDBACK.md`. They are advisory-only:
+`docs/editor-contract/EDITOR_VFX_TEMPLATE_HANDBACK.md`. They use semantic
+family/variant names rather than landed `typeN` ids and remain advisory-only:
 Main may absorb a repeated low-level capability, but must not copy skill timing,
 palette or camera compositions into runtime defaults.

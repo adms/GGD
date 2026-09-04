@@ -2,7 +2,7 @@
 
 狀態：**Revision 6.4 — type-first 工坊收斂；保留一個經 framebuffer 證實的 emitter instance 接縫**
 
-最後驗證：**2026-09-04 11:17（Asia/Taipei）**
+最後驗證：**2026-09-04 16:05（Asia/Taipei）**
 
 上一輪接縫收據：
 [`docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md`](docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md)
@@ -93,6 +93,12 @@ Main 完成 primitive 後只需更新唯一 registry/digest；Editor 自行接�
 
 目前 `vfx-script@1` 的正式匯入／發布契約仍是 `planned/G5`：Editor 繼續完成本機 no-code 編排與
 批核工作流；Main 只處理上列已由畫面證實的共用 primitive，不進入成品迭代迴圈。Editor 現有 21 個
-可選完整配方與 36 個 42／46 機制推薦，共保存 57 個既有 type 成果；全部以穩定的 `familyId/typeN` 收斂並由
-`pnpm vfxforge:handback:build` 產生 advisory-only JSON/Markdown。矩陣／slider 只微調已選 type；Main 可選擇
+可選完整配方與 36 個 42／46 機制推薦，共保存 57 個既有成果；全部以具名
+`familyId/semantic-variant` 與參數預設收斂，再由 `pnpm vfxforge:handback:build` 產生 advisory-only
+JSON/Markdown。`typeN` 只描述「同族有多種選項」的概念，不得成為內容或 Main template 的落地 ID。
+矩陣／slider 只微調已選配方；Main 可選擇
 是否把重複的低階能力收編為積木，技能時間軸、配色、鏡頭與人工微調不得轉嫁給 Main。
+
+鑄技工坊的模板可選性不得再讀 `status`：唯一權威是 Main 產生的
+`docs/editor-contract/ggd-type-catalog.json`。Editor 只選 `expands:true`，依 `wiring` 分流 node/doc，
+逐格依 `fillsVia` 決定編輯位置，並把 `inertParams` 顯示為不可修改的死旋鈕，而不是警告後仍准許寫入。

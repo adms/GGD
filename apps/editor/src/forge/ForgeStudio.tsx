@@ -126,6 +126,11 @@ import {
 } from "./skillTierCatalog";
 import { diagnoseSkillTiers } from "./skillReasonableness";
 import { newAbilityTemplate, type NewAbilitySlot } from "../collections";
+import {
+  templateContractBlockers,
+  templateParamDecision,
+  templateSelectionDecision,
+} from "./typeCatalog";
 
 /**
  * One authoritative Sim controller. Rendering consumes its emitted trace via
@@ -251,9 +256,11 @@ export function ForgeStudio({
     return m;
   }, [template, catalog]);
 
-  /** Only ENABLED families can be added — `expand()` throws on a draft. */
+  /** Main's measured expand+wiring contract, never the declarative status badge. */
   const addable = useMemo(
-    () => [...docs.values()].filter((t) => t.status === "enabled").sort((a, b) => (a.id < b.id ? -1 : 1)),
+    () => [...docs.values()]
+      .filter((t) => templateSelectionDecision(t.id, "doc").selectable)
+      .sort((a, b) => (a.id < b.id ? -1 : 1)),
     [docs],
   );
   const visibleAddable = useMemo(() => {
@@ -268,6 +275,10 @@ export function ForgeStudio({
         (r): r is { card: AbilityTemplateCard; template: TemplateDoc } => r.template !== undefined,
       ),
     [cards, docs],
+  );
+  const contractBlockers = useMemo(
+    () => templateContractBlockers(cards.map((card) => card.ref), "doc"),
+    [cards],
   );
 
   const requires = useMemo(
@@ -645,7 +656,11 @@ export function ForgeStudio({
 
   const addCard = (id: string): void => {
     const t = docs.get(id);
-    if (t === undefined || cards.length >= TEMPLATE_STACK_MAX_CARDS) return;
+    if (
+      t === undefined ||
+      !templateSelectionDecision(t.id, "doc").selectable ||
+      cards.length >= TEMPLATE_STACK_MAX_CARDS
+    ) return;
     editHistory.commit((draft) => ({
       ...draft,
       cards: [...draft.cards, { ref: t.id, params: defaultParamsFor(t) }],
@@ -654,7 +669,7 @@ export function ForgeStudio({
 
   const insertCard = (id: string, at: number): void => {
     const t = docs.get(id);
-    if (t === undefined || t.status !== "enabled") return;
+    if (t === undefined || !templateSelectionDecision(t.id, "doc").selectable) return;
     editHistory.commit((draft) => ({
       ...draft,
       cards: insertTemplateCard(
@@ -747,6 +762,7 @@ export function ForgeStudio({
   const blocked =
     conflictBlocks ||
     createBlockers.length > 0 ||
+    contractBlockers.length > 0 ||
     Object.keys(docErrors).length > 0 ||
     paramErrors.some((m) => Object.keys(m).length > 0) ||
     vfxBlockers.length > 0;
@@ -786,6 +802,13 @@ export function ForgeStudio({
           {satisfied.length > 0 ? (
             <p className="forge-ok-caps">引擎已支援：{satisfied.join(" · ")}</p>
           ) : null}
+        </section>
+      ) : null}
+
+      {contractBlockers.length > 0 ? (
+        <section className="forge-blockers" role="alert">
+          <h3>Main type catalog 已停止這份組合</h3>
+          <ul>{contractBlockers.map((message) => <li key={message}>{message}</li>)}</ul>
         </section>
       ) : null}
 
@@ -1282,6 +1305,18 @@ function CardPanel({
   onDragStart(event: DragEvent<HTMLButtonElement>): void;
 }) {
   const paramsSchema = useMemo(() => paramsSchemaFor(template), [template]);
+  const paramDecisions = useMemo(
+    () => new Map(Object.keys(template.params).map((name) => [
+      name,
+      templateParamDecision(template.id, name, "doc"),
+    ] as const)),
+    [template],
+  );
+  const readOnlyReasons = useMemo(
+    () => new Map([...paramDecisions.entries()].flatMap(([name, decision]) =>
+      decision.editable ? [] : [[name, decision.reason ?? "Main type catalog 已鎖定此欄"]] as const)),
+    [paramDecisions],
+  );
   /**
    * ⭐ `condition` slots are LIFTED OUT of the generated form and rendered by
    * `ConditionEditor` instead (owner 2026-07-30:「編輯器也要配合」/「不是 script
@@ -1297,8 +1332,9 @@ function CardPanel({
    * so the caller's `paramErrors` still reports a bad condition on the same path.
    */
   const conditionSlots = useMemo(
-    () => Object.keys(template.params).filter((n) => template.params[n]?.type === "condition"),
-    [template],
+    () => Object.keys(template.params).filter((name) =>
+      template.params[name]?.type === "condition" && paramDecisions.get(name)?.editable),
+    [paramDecisions, template],
   );
   const ui = useMemo(() => {
     const node = walkZod(paramsSchema, "", "參數");
@@ -1363,6 +1399,7 @@ function CardPanel({
         value={params}
         dataPath=""
         errors={errors}
+        readOnlyReasons={readOnlyReasons}
         onChange={(path, value) => onParams(setIn(params, path, value) as Record<string, unknown>)}
       />
       {conditionSlots.map((name) => (
@@ -1381,7 +1418,7 @@ function CardPanel({
         />
       ))}
       <UnitHints template={template} params={params} />
-      <InertSlots template={template} />
+      <ContractLockedSlots template={template} decisions={paramDecisions} />
     </section>
   );
 }
@@ -1558,16 +1595,24 @@ function UnitHints({
  * form field and the game ignores it, with nothing anywhere reporting that.
  * paramsSchema.test.ts probes every slot and fails if this list drifts.
  */
-function InertSlots({ template }: { template: TemplateDoc }) {
-  const inert = Object.entries(template.params).filter(([, s]) => s.inert !== undefined);
-  if (inert.length === 0) return null;
+function ContractLockedSlots({
+  template,
+  decisions,
+}: {
+  template: TemplateDoc;
+  decisions: ReadonlyMap<string, ReturnType<typeof templateParamDecision>>;
+}) {
+  const locked = Object.keys(template.params)
+    .map((name) => ({ name, decision: decisions.get(name) }))
+    .filter((row) => row.decision !== undefined && !row.decision.editable);
+  if (locked.length === 0) return null;
   return (
     <div className="forge-degrade-panel">
-      <h4>以下欄位本版不生效</h4>
+      <h4>Main 契約鎖定欄位</h4>
       <ul>
-        {inert.map(([name, slot]) => (
+        {locked.map(({ name, decision }) => (
           <li key={name}>
-            <b>{name}</b>：{slot.inert}
+            <b>{name}</b>：{decision?.reason}
           </li>
         ))}
       </ul>

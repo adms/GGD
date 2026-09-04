@@ -25,6 +25,7 @@ import {
   hasTemplateBinding,
   resolveTemplateExpansion,
 } from "@ggd/shared/content/templates/resolve";
+import { normalizeTemplateBinding } from "@ggd/shared/content/templates/expand";
 import type { TemplateDoc } from "@ggd/shared/content/schema/template";
 import { api, WRITES_ENABLED } from "../api/client";
 import {
@@ -32,6 +33,7 @@ import {
   sourceWriteBlockers,
   type EditorSourceDescriptor,
 } from "../sourcePolicy";
+import { templateContractBlockers } from "./typeCatalog";
 
 /**
  * The members a template-authored ability owns — the ONLY ones we splice.
@@ -98,7 +100,7 @@ export function planForgeCreate(
     }],
     abilityPatch: { ...after },
     mirror: null,
-    blockers: [...extraBlockers, ...templateWriteBlockers(after, templates)],
+    blockers: [...new Set([...extraBlockers, ...templateWriteBlockers(after, templates)])],
   };
 }
 
@@ -156,17 +158,29 @@ export function templateWriteBlockers(
 ): string[] {
   if (!hasTemplateBinding(after)) return [];
   const res = resolveTemplateExpansion(after, templates);
-  if (res.ok) return [];
-  const f = res.failure;
-  const head =
-    f.phase === "ref"
-      ? `模板不存在：${f.missingRefs.join("、")}`
-      : f.phase === "binding"
-        ? "模板綁定格式不合法"
-        : "模板展開失敗";
-  return [
-    `${head} —— 存下去之後這支技能在載入時會被降級成「沒有效果」，其他英雄不受影響但這支就死了。(${f.message})`,
-  ];
+  const expansionBlockers = res.ok
+    ? []
+    : (() => {
+      const f = res.failure;
+      const head =
+        f.phase === "ref"
+          ? `模板不存在：${f.missingRefs.join("、")}`
+          : f.phase === "binding"
+            ? "模板綁定格式不合法"
+            : "模板展開失敗";
+      return [
+        `${head} —— 存下去之後這支技能在載入時會被降級成「沒有效果」，其他英雄不受影響但這支就死了。(${f.message})`,
+      ];
+    })();
+
+  let contractBlockers: string[] = [];
+  try {
+    const refs = normalizeTemplateBinding(after["template"]).cards.map((card) => card.ref);
+    contractBlockers = templateContractBlockers(refs, "doc");
+  } catch {
+    // The resolver already emitted the more useful binding-format failure.
+  }
+  return [...new Set([...contractBlockers, ...expansionBlockers])];
 }
 
 /**
@@ -182,6 +196,8 @@ export function planForgeWrite(
   championDoc: Record<string, unknown> | null,
   templates: ReadonlyMap<string, TemplateDoc>,
   sources?: ForgeSourceReceipts,
+  /** Editor-side machine-contract blockers (for example wiring/expands). */
+  extraBlockers: readonly string[] = [],
 ): ForgePlan {
   const id = String(after["id"]);
   const steps: ForgePlanStep[] = [];
@@ -232,7 +248,11 @@ export function planForgeWrite(
     mirror,
     // ⛔ 兩種阻擋都要列出來（⛔ 不是 `||`）：一支技能可以同時「模板展開會失敗」
     //    與「它是產生器擁有的」，操作者需要看到全部理由才知道下一步該做什麼。
-    blockers: [...sourceBlockers, ...templateWriteBlockers(after, templates)],
+    blockers: [...new Set([
+      ...sourceBlockers,
+      ...templateWriteBlockers(after, templates),
+      ...extraBlockers,
+    ])],
   };
 }
 

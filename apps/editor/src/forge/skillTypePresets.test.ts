@@ -40,6 +40,7 @@ import { FsContentSource } from "@ggd/shared/content/node";
 import { Champions, type AbilityDef, type ChampionDef } from "@ggd/shared/sim";
 import type { ChampionId } from "@ggd/shared/ids";
 import { castPreviewTicksFor, createSimPreviewController } from "../preview/PreviewController";
+import { pickableTemplateIds } from "./typeCatalog";
 
 const REPO = fileURLToPath(new URL("../../../../", import.meta.url));
 const readJson = <T>(path: string): T => JSON.parse(readFileSync(path, "utf8")) as T;
@@ -50,9 +51,7 @@ const templates = new Map(
     .map((name) => readJson<TemplateDoc>(join(REPO, "content/ability-templates", name)))
     .map((doc) => [doc.id, doc] as const),
 );
-const enabled = new Set(
-  [...templates.values()].filter((doc) => doc.status === "enabled").map((doc) => doc.id),
-);
+const docPickable = pickableTemplateIds("doc");
 const statNormalization = readJson<StatNormalizationRecommendationDoc>(
   join(REPO, "content/config/stat-normalization.json"),
 );
@@ -100,10 +99,10 @@ function runtimeAbilityFor(preset: (typeof SKILL_TYPE_PRESETS)[number]): Ability
 }
 
 describe("鑄技工坊技能類型", () => {
-  it("每個類型只組合正式出貨且 enabled 的效果積木", () => {
+  it("每個類型只組合 Main 實測 expands 且 doc-wired 的效果積木", () => {
     for (const skillType of SKILL_TYPE_PRESETS) {
       expect(skillType.templateIds.length, skillType.id).toBeGreaterThan(0);
-      expect(skillType.templateIds.every((id) => enabled.has(id)), skillType.id).toBe(true);
+      expect(skillType.templateIds.every((id) => docPickable.has(id)), skillType.id).toBe(true);
       const cards = cardsForSkillType(skillType, templates);
       expect(cards.map((card) => card.ref)).toEqual(skillType.templateIds);
       for (const card of cards) {
@@ -130,7 +129,7 @@ describe("鑄技工坊技能類型", () => {
 
   it("友善配方會 fail closed：目前 Main 的兩個真缺口不能讓玩家產出壞檔", () => {
     const issues = Object.fromEntries(
-      SKILL_TYPE_PRESETS.map((preset) => [preset.id, skillTypeRecipeIssues(preset, templates)] as const)
+      SKILL_TYPE_PRESETS.map((preset) => [preset.id, skillTypeRecipeIssues(preset, templates, docPickable)] as const)
         .filter(([, rows]) => rows.length > 0),
     );
     expect(Object.keys(issues)).toEqual(["beam", "combo"]);
@@ -141,7 +140,7 @@ describe("鑄技工坊技能類型", () => {
   it("除已明示的 Main 缺口外，配方都能套入級距並形成合法 authoring 與 runtime 預覽", () => {
     const failures: string[] = [];
     for (const preset of SKILL_TYPE_PRESETS) {
-      if (skillTypeRecipeIssues(preset, templates).length > 0) continue;
+      if (skillTypeRecipeIssues(preset, templates, docPickable).length > 0) continue;
       try {
         let cards = cardsForSkillType(preset, templates);
         for (const [rawAxis, tier] of Object.entries(preset.tierDefaults)) {
@@ -196,7 +195,7 @@ describe("鑄技工坊技能類型", () => {
     const base = Champions.get("godie-hart" as ChampionId);
     const failures: string[] = [];
     for (const preset of SKILL_TYPE_PRESETS) {
-      if (skillTypeRecipeIssues(preset, templates).length > 0) continue;
+      if (skillTypeRecipeIssues(preset, templates, docPickable).length > 0) continue;
       const ability = runtimeAbilityFor(preset);
       const champion: ChampionDef = ability.slot === "PASSIVE"
         ? { ...base, passiveAbility: ability.id }
@@ -235,7 +234,7 @@ describe("鑄技工坊技能類型", () => {
 
   it("十種出身都有推薦第一名，但仍保留全部手動選項", () => {
     for (const origin of ORIGINS) {
-      const ranked = rankSkillTypes(origin, enabled, statNormalization);
+      const ranked = rankSkillTypes(origin, docPickable, statNormalization);
       expect(ranked).toHaveLength(SKILL_TYPE_PRESETS.length);
       expect(ranked[0]?.recommendationRank, origin).toBe(1);
       expect(ranked.slice(0, 3).every((row) => row.recommendationReasons.length > 0), origin).toBe(true);
@@ -246,13 +245,13 @@ describe("鑄技工坊技能類型", () => {
   });
 
   it("不同出身真的改變排序，而不是只換一個推薦標籤", () => {
-    expect(rankSkillTypes("法師", enabled, statNormalization)[0]?.preset.id).not.toBe(
-      rankSkillTypes("鬥士", enabled, statNormalization)[0]?.preset.id,
+    expect(rankSkillTypes("法師", docPickable, statNormalization)[0]?.preset.id).not.toBe(
+      rankSkillTypes("鬥士", docPickable, statNormalization)[0]?.preset.id,
     );
   });
 
   it("推薦資料缺失時 fail closed，不假裝有出身推薦但仍保留選項", () => {
-    const ranked = rankSkillTypes("法師", enabled, null);
+    const ranked = rankSkillTypes("法師", docPickable, null);
     expect(ranked.every((row) => row.recommendationRank === null)).toBe(true);
     expect(ranked).toHaveLength(SKILL_TYPE_PRESETS.length);
   });

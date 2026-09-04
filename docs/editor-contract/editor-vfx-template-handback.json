@@ -1,5 +1,5 @@
 {
-  "schema": "ggd-editor-vfx-template-handback@1",
+  "schema": "ggd-editor-vfx-template-handback@2",
   "authority": "advisory-only",
   "ownership": {
     "main": "可重用 primitive、runtime 行為、限制 resolver 與機器契約",
@@ -24,23 +24,38 @@
     ]
   },
   "adoptionRule": "只有多個 Editor 模板重複需要同一個低階能力，且現有 Main primitive/contract 無法表達時，才建議 Main 收編或擴充積木；技能時間軸與配色仍留在 Editor。",
-  "familyVariantPolicy": "同類候選使用 familyId/type1、type2… 表示可替換變體；編號只描述積木差異，不綁技能。Main 可依既有命名與 Owner 決策重新命名或不收編。",
-  "designerWorkflow": "設計師先選家族，再選可直接試放的 type 預設；套用後展開為標準積木與時間軸，矩陣／slider 只做最後微調，不要求設計師從零調出每個視覺。",
+  "familyVariantPolicy": "同族可以有多個可選方案，但落地使用語意化 recipe/variant id；純配色、寬度等差異由 params 預設表達，不把 type1/type2 寫進內容或 Main template id。",
+  "designerWorkflow": "設計師先選家族，再選名稱能說明差異的完整預設；套用後展開為標準積木與時間軸，矩陣／slider 只做最後微調，不要求設計師從零調出每個視覺。",
   "preservationReceipt": {
     "selectablePresetTypes": 21,
     "automaticMechanicTypes": 36,
     "preservedTypeOutcomes": 57,
-    "rule": "既有調整先收斂成穩定 familyId/typeN；矩陣只修改已選 type 的參數，不作為從零設計入口。"
+    "rule": "既有調整先收斂成具名 Editor 配方與參數預設；矩陣只修改已選配方的參數，不作為從零設計入口。"
+  },
+  "mainTypeCatalogReceipt": {
+    "path": "docs/editor-contract/ggd-type-catalog.json",
+    "schema": "ggd-type-catalog@1",
+    "counts": {
+      "templates": 46,
+      "pickable": 29,
+      "analysedButUnwired": 3,
+      "shells": 13,
+      "sentinels": 1,
+      "inertParamsAcrossPickable": 6,
+      "matrixPresent": 154,
+      "matrixTheoretical": 325
+    },
+    "selectionRule": "只選 expands=true，依 wiring 決定 doc/node，逐格依 fillsVia，inertParams 永遠不可調。"
   },
   "familyVariantSuggestions": [
     {
       "familyId": "chain-lightning",
       "label": "連鎖雷擊",
-      "naming": "chain-lightning/typeN",
+      "naming": "chain-lightning/<semantic-variant-id>",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "chain-lightning/type1",
+          "variantId": "multi-origin-storm",
+          "key": "chain-lightning/multi-origin-storm",
           "recipeId": "chain-lightning-storm",
           "distinction": "多起點風暴型"
         }
@@ -49,65 +64,65 @@
     {
       "familyId": "classic-horizontal-beam",
       "label": "經典橫向光束",
-      "naming": "classic-horizontal-beam/typeN",
+      "naming": "classic-horizontal-beam/<semantic-variant-id>",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "classic-horizontal-beam/type1",
+          "variantId": "fire-continuous",
+          "key": "classic-horizontal-beam/fire-continuous",
           "recipeId": "classic-beam-fire",
           "distinction": "橘金持續型"
         },
         {
-          "typeId": "type2",
-          "key": "classic-horizontal-beam/type2",
+          "variantId": "blue-continuous",
+          "key": "classic-horizontal-beam/blue-continuous",
           "recipeId": "classic-beam-blue",
           "distinction": "藍白持續型"
         },
         {
-          "typeId": "type3",
-          "key": "classic-horizontal-beam/type3",
+          "variantId": "holy-gold-blue",
+          "key": "classic-horizontal-beam/holy-gold-blue",
           "recipeId": "classic-beam-holy",
           "distinction": "黃藍聖光型"
         },
         {
-          "typeId": "type4",
-          "key": "classic-horizontal-beam/type4",
+          "variantId": "void-purple",
+          "key": "classic-horizontal-beam/void-purple",
           "recipeId": "classic-beam-void",
           "distinction": "紫黑虛空型"
         },
         {
-          "typeId": "type5",
-          "key": "classic-horizontal-beam/type5",
+          "variantId": "inferno-red-orange",
+          "key": "classic-horizontal-beam/inferno-red-orange",
           "recipeId": "classic-beam-inferno",
           "distinction": "紅橘高熱型"
         },
         {
-          "typeId": "type6",
-          "key": "classic-horizontal-beam/type6",
+          "variantId": "electric-cyan",
+          "key": "classic-horizontal-beam/electric-cyan",
           "recipeId": "classic-beam-electric",
           "distinction": "青藍電能型"
         },
         {
-          "typeId": "type7",
-          "key": "classic-horizontal-beam/type7",
+          "variantId": "lightning-thin",
+          "key": "classic-horizontal-beam/lightning-thin",
           "recipeId": "energy-beam-lightning-thin",
           "distinction": "細束雷射型"
         },
         {
-          "typeId": "type8",
-          "key": "classic-horizontal-beam/type8",
+          "variantId": "lightning-wide",
+          "key": "classic-horizontal-beam/lightning-wide",
           "recipeId": "energy-beam-lightning-wide",
           "distinction": "寬幅雷電型"
         },
         {
-          "typeId": "type9",
-          "key": "classic-horizontal-beam/type9",
+          "variantId": "holy-wide",
+          "key": "classic-horizontal-beam/holy-wide",
           "recipeId": "energy-beam-holy-wide",
           "distinction": "寬幅聖光型"
         },
         {
-          "typeId": "type10",
-          "key": "classic-horizontal-beam/type10",
+          "variantId": "void-wide",
+          "key": "classic-horizontal-beam/void-wide",
           "recipeId": "energy-beam-void-wide",
           "distinction": "寬幅虛空型"
         }
@@ -116,17 +131,17 @@
     {
       "familyId": "combo-finisher",
       "label": "連段終結技",
-      "naming": "combo-finisher/typeN",
+      "naming": "combo-finisher/<semantic-variant-id>",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "combo-finisher/type1",
+          "variantId": "holy-column-finisher",
+          "key": "combo-finisher/holy-column-finisher",
           "recipeId": "combo-slash-holy",
           "distinction": "直立光柱型"
         },
         {
-          "typeId": "type2",
-          "key": "combo-finisher/type2",
+          "variantId": "avalon-counter-beam",
+          "key": "combo-finisher/avalon-counter-beam",
           "recipeId": "avalon-counter-chain",
           "distinction": "反擊橫向光束型"
         }
@@ -135,11 +150,11 @@
     {
       "familyId": "dash-beam",
       "label": "突進接光束",
-      "naming": "dash-beam/typeN",
+      "naming": "dash-beam/<semantic-variant-id>",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "dash-beam/type1",
+          "variantId": "rider-blue",
+          "key": "dash-beam/rider-blue",
           "recipeId": "rider-dash-beam-blue",
           "distinction": "藍白騎乘型"
         }
@@ -148,17 +163,17 @@
     {
       "familyId": "dash-slash",
       "label": "衝刺斬擊",
-      "naming": "dash-slash/typeN",
+      "naming": "dash-slash/<semantic-variant-id>",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "dash-slash/type1",
+          "variantId": "void-single-arc",
+          "key": "dash-slash/void-single-arc",
           "recipeId": "dash-slash-void",
           "distinction": "黑紫單發型"
         },
         {
-          "typeId": "type2",
-          "key": "dash-slash/type2",
+          "variantId": "shockwave-followup",
+          "key": "dash-slash/shockwave-followup",
           "recipeId": "shockwave-dash-light",
           "distinction": "衝擊波追身型"
         }
@@ -167,23 +182,23 @@
     {
       "familyId": "defense-reaction",
       "label": "防禦反應",
-      "naming": "defense-reaction/typeN",
+      "naming": "defense-reaction/<semantic-variant-id>",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "defense-reaction/type1",
+          "variantId": "reflect-open",
+          "key": "defense-reaction/reflect-open",
           "recipeId": "reflect-counter-open",
           "distinction": "反彈火花型"
         },
         {
-          "typeId": "type2",
-          "key": "defense-reaction/type2",
+          "variantId": "avalon-guard-window",
+          "key": "defense-reaction/avalon-guard-window",
           "recipeId": "avalon-guard-window",
           "distinction": "持續防禦窗型"
         },
         {
-          "typeId": "type3",
-          "key": "defense-reaction/type3",
+          "variantId": "perfect-parry",
+          "key": "defense-reaction/perfect-parry",
           "recipeId": "perfect-parry",
           "distinction": "完美盾反型"
         }
@@ -192,11 +207,11 @@
     {
       "familyId": "projectile-impact",
       "label": "投射後命中",
-      "naming": "projectile-impact/typeN",
+      "naming": "projectile-impact/<semantic-variant-id>",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "projectile-impact/type1",
+          "variantId": "fire-distance-impact",
+          "key": "projectile-impact/fire-distance-impact",
           "recipeId": "line-blast-fire",
           "distinction": "火球爆炸型"
         }
@@ -205,11 +220,11 @@
     {
       "familyId": "transform-aura",
       "label": "變身氣場",
-      "naming": "transform-aura/typeN",
+      "naming": "transform-aura/<semantic-variant-id>",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "transform-aura/type1",
+          "variantId": "bankai-black-red",
+          "key": "transform-aura/bankai-black-red",
           "recipeId": "bankai-transform",
           "distinction": "高速黑紅型"
         }
@@ -231,8 +246,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-applyBuff/type1",
+          "variantId": "self-fx-prim-arcane-pulse-lg",
+          "key": "mechanic-applyBuff/self-fx-prim-arcane-pulse-lg",
           "at": "self",
           "vfxId": "fx.prim.arcane.pulse-lg",
           "occurrences": 2,
@@ -242,8 +257,8 @@
           ]
         },
         {
-          "typeId": "type2",
-          "key": "mechanic-applyBuff/type2",
+          "variantId": "target-fx-prim-arcane-pulse-lg",
+          "key": "mechanic-applyBuff/target-fx-prim-arcane-pulse-lg",
           "at": "target",
           "vfxId": "fx.prim.arcane.pulse-lg",
           "occurrences": 8,
@@ -267,8 +282,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-applyStatus/type1",
+          "variantId": "target-fx-prim-arcane-pulse",
+          "key": "mechanic-applyStatus/target-fx-prim-arcane-pulse",
           "at": "target",
           "vfxId": "fx.prim.arcane.pulse",
           "occurrences": 8,
@@ -281,8 +296,8 @@
           ]
         },
         {
-          "typeId": "type2",
-          "key": "mechanic-applyStatus/type2",
+          "variantId": "target-fx-prim-fire-pulse",
+          "key": "mechanic-applyStatus/target-fx-prim-fire-pulse",
           "at": "target",
           "vfxId": "fx.prim.fire.pulse",
           "occurrences": 3,
@@ -293,8 +308,8 @@
           ]
         },
         {
-          "typeId": "type3",
-          "key": "mechanic-applyStatus/type3",
+          "variantId": "target-fx-prim-physical-pulse",
+          "key": "mechanic-applyStatus/target-fx-prim-physical-pulse",
           "at": "target",
           "vfxId": "fx.prim.physical.pulse",
           "occurrences": 1,
@@ -311,8 +326,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-blink/type1",
+          "variantId": "self-fx-prim-arcane-dash",
+          "key": "mechanic-blink/self-fx-prim-arcane-dash",
           "at": "self",
           "vfxId": "fx.prim.arcane.dash",
           "occurrences": 2,
@@ -330,8 +345,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-championForm/type1",
+          "variantId": "target-fx-prim-arcane-pulse-lg",
+          "key": "mechanic-championForm/target-fx-prim-arcane-pulse-lg",
           "at": "target",
           "vfxId": "fx.prim.arcane.pulse-lg",
           "occurrences": 1,
@@ -348,8 +363,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-cycleBuff/type1",
+          "variantId": "self-fx-prim-arcane-pulse-lg",
+          "key": "mechanic-cycleBuff/self-fx-prim-arcane-pulse-lg",
           "at": "self",
           "vfxId": "fx.prim.arcane.pulse-lg",
           "occurrences": 1,
@@ -366,8 +381,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-damage/type1",
+          "variantId": "self-fx-prim-ki-pulse",
+          "key": "mechanic-damage/self-fx-prim-ki-pulse",
           "at": "self",
           "vfxId": "fx.prim.ki.pulse",
           "occurrences": 3,
@@ -376,8 +391,8 @@
           ]
         },
         {
-          "typeId": "type2",
-          "key": "mechanic-damage/type2",
+          "variantId": "target-fx-prim-arcane-pulse",
+          "key": "mechanic-damage/target-fx-prim-arcane-pulse",
           "at": "target",
           "vfxId": "fx.prim.arcane.pulse",
           "occurrences": 6,
@@ -391,8 +406,8 @@
           ]
         },
         {
-          "typeId": "type3",
-          "key": "mechanic-damage/type3",
+          "variantId": "target-fx-prim-ki-pulse",
+          "key": "mechanic-damage/target-fx-prim-ki-pulse",
           "at": "target",
           "vfxId": "fx.prim.ki.pulse",
           "occurrences": 3,
@@ -401,8 +416,8 @@
           ]
         },
         {
-          "typeId": "type4",
-          "key": "mechanic-damage/type4",
+          "variantId": "target-fx-prim-physical-pulse",
+          "key": "mechanic-damage/target-fx-prim-physical-pulse",
           "at": "target",
           "vfxId": "fx.prim.physical.pulse",
           "occurrences": 2,
@@ -420,8 +435,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-damageArea/type1",
+          "variantId": "target-fx-prim-arcane-nova-lg",
+          "key": "mechanic-damageArea/target-fx-prim-arcane-nova-lg",
           "at": "target",
           "vfxId": "fx.prim.arcane.nova-lg",
           "occurrences": 9,
@@ -436,8 +451,8 @@
           ]
         },
         {
-          "typeId": "type2",
-          "key": "mechanic-damageArea/type2",
+          "variantId": "target-fx-prim-physical-nova-lg",
+          "key": "mechanic-damageArea/target-fx-prim-physical-nova-lg",
           "at": "target",
           "vfxId": "fx.prim.physical.nova-lg",
           "occurrences": 5,
@@ -455,8 +470,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-damageLine/type1",
+          "variantId": "point-fx-wave-arcane",
+          "key": "mechanic-damageLine/point-fx-wave-arcane",
           "at": "point",
           "vfxId": "fx.wave.arcane",
           "occurrences": 1,
@@ -473,8 +488,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-dash/type1",
+          "variantId": "self-fx-prim-arcane-dash",
+          "key": "mechanic-dash/self-fx-prim-arcane-dash",
           "at": "self",
           "vfxId": "fx.prim.arcane.dash",
           "occurrences": 1,
@@ -491,8 +506,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-devour/type1",
+          "variantId": "target-fx-prim-void-explosion",
+          "key": "mechanic-devour/target-fx-prim-void-explosion",
           "at": "target",
           "vfxId": "fx.prim.void.explosion",
           "occurrences": 2,
@@ -509,8 +524,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-dispel/type1",
+          "variantId": "target-fx-prim-holy-pulse",
+          "key": "mechanic-dispel/target-fx-prim-holy-pulse",
           "at": "target",
           "vfxId": "fx.prim.holy.pulse",
           "occurrences": 1,
@@ -527,8 +542,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-eventValueConversion/type1",
+          "variantId": "self-fx-prim-arcane-pulse",
+          "key": "mechanic-eventValueConversion/self-fx-prim-arcane-pulse",
           "at": "self",
           "vfxId": "fx.prim.arcane.pulse",
           "occurrences": 1,
@@ -545,8 +560,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-extendBuff/type1",
+          "variantId": "self-fx-prim-arcane-pulse-lg",
+          "key": "mechanic-extendBuff/self-fx-prim-arcane-pulse-lg",
           "at": "self",
           "vfxId": "fx.prim.arcane.pulse-lg",
           "occurrences": 1,
@@ -563,8 +578,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-grantAttribute/type1",
+          "variantId": "target-fx-prim-arcane-pulse-lg",
+          "key": "mechanic-grantAttribute/target-fx-prim-arcane-pulse-lg",
           "at": "target",
           "vfxId": "fx.prim.arcane.pulse-lg",
           "occurrences": 2,
@@ -582,8 +597,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-grantGold/type1",
+          "variantId": "target-fx-prim-holy-pulse-lg",
+          "key": "mechanic-grantGold/target-fx-prim-holy-pulse-lg",
           "at": "target",
           "vfxId": "fx.prim.holy.pulse-lg",
           "occurrences": 1,
@@ -600,8 +615,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-grantXp/type1",
+          "variantId": "target-fx-prim-holy-pulse-lg",
+          "key": "mechanic-grantXp/target-fx-prim-holy-pulse-lg",
           "at": "target",
           "vfxId": "fx.prim.holy.pulse-lg",
           "occurrences": 1,
@@ -618,8 +633,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-heal/type1",
+          "variantId": "self-fx-prim-nature-pulse-lg",
+          "key": "mechanic-heal/self-fx-prim-nature-pulse-lg",
           "at": "self",
           "vfxId": "fx.prim.nature.pulse-lg",
           "occurrences": 1,
@@ -636,8 +651,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-invulnerable/type1",
+          "variantId": "self-fx-prim-holy-nova-lg",
+          "key": "mechanic-invulnerable/self-fx-prim-holy-nova-lg",
           "at": "self",
           "vfxId": "fx.prim.holy.nova-lg",
           "occurrences": 2,
@@ -655,8 +670,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-knockback/type1",
+          "variantId": "target-fx-prim-physical-shockwave",
+          "key": "mechanic-knockback/target-fx-prim-physical-shockwave",
           "at": "target",
           "vfxId": "fx.prim.physical.shockwave",
           "occurrences": 1,
@@ -673,8 +688,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-leap/type1",
+          "variantId": "target-fx-prim-physical-shockwave",
+          "key": "mechanic-leap/target-fx-prim-physical-shockwave",
           "at": "target",
           "vfxId": "fx.prim.physical.shockwave",
           "occurrences": 1,
@@ -691,8 +706,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-manaBarrier/type1",
+          "variantId": "self-fx-prim-holy-nova-lg",
+          "key": "mechanic-manaBarrier/self-fx-prim-holy-nova-lg",
           "at": "self",
           "vfxId": "fx.prim.holy.nova-lg",
           "occurrences": 1,
@@ -709,8 +724,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-restore/type1",
+          "variantId": "self-fx-prim-nature-pulse-lg",
+          "key": "mechanic-restore/self-fx-prim-nature-pulse-lg",
           "at": "self",
           "vfxId": "fx.prim.nature.pulse-lg",
           "occurrences": 1,
@@ -719,8 +734,8 @@
           ]
         },
         {
-          "typeId": "type2",
-          "key": "mechanic-restore/type2",
+          "variantId": "target-fx-prim-nature-pulse-lg",
+          "key": "mechanic-restore/target-fx-prim-nature-pulse-lg",
           "at": "target",
           "vfxId": "fx.prim.nature.pulse-lg",
           "occurrences": 1,
@@ -737,8 +752,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-shield/type1",
+          "variantId": "target-fx-prim-holy-nova-lg",
+          "key": "mechanic-shield/target-fx-prim-holy-nova-lg",
           "at": "target",
           "vfxId": "fx.prim.holy.nova-lg",
           "occurrences": 1,
@@ -755,8 +770,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-summon/type1",
+          "variantId": "point-fx-prim-arcane-summon",
+          "key": "mechanic-summon/point-fx-prim-arcane-summon",
           "at": "point",
           "vfxId": "fx.prim.arcane.summon",
           "occurrences": 1,
@@ -765,8 +780,8 @@
           ]
         },
         {
-          "typeId": "type2",
-          "key": "mechanic-summon/type2",
+          "variantId": "target-fx-prim-arcane-summon",
+          "key": "mechanic-summon/target-fx-prim-arcane-summon",
           "at": "target",
           "vfxId": "fx.prim.arcane.summon",
           "occurrences": 1,
@@ -783,8 +798,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-swapResource/type1",
+          "variantId": "self-fx-prim-arcane-pulse",
+          "key": "mechanic-swapResource/self-fx-prim-arcane-pulse",
           "at": "self",
           "vfxId": "fx.prim.arcane.pulse",
           "occurrences": 1,
@@ -793,8 +808,8 @@
           ]
         },
         {
-          "typeId": "type2",
-          "key": "mechanic-swapResource/type2",
+          "variantId": "target-fx-prim-arcane-pulse",
+          "key": "mechanic-swapResource/target-fx-prim-arcane-pulse",
           "at": "target",
           "vfxId": "fx.prim.arcane.pulse",
           "occurrences": 1,
@@ -811,8 +826,8 @@
       "visualEvidence": "captured-owner-review-pending",
       "variants": [
         {
-          "typeId": "type1",
-          "key": "mechanic-taunt/type1",
+          "variantId": "target-fx-prim-physical-pulse",
+          "key": "mechanic-taunt/target-fx-prim-physical-pulse",
           "at": "target",
           "vfxId": "fx.prim.physical.pulse",
           "occurrences": 1,
@@ -828,24 +843,31 @@
       "id": "model-fx-owned-emitter-instance-inheritance",
       "severity": "blocking",
       "affectedAbilityIds": [
+        "godie-e002.e",
+        "godie-e00l.e",
+        "godie-e00r.r",
+        "godie-edem.e",
+        "godie-h02r.r",
+        "godie-hgam.r",
+        "godie-n01c.e",
         "godie-nbbc.e",
-        "godie-ogrh.r",
         "godie-o00x.r",
-        "godie-e002.ex",
-        "godie-e00l.ex",
-        "godie-hvsh.r"
+        "godie-ogrh.r"
       ],
       "observed": "modelFx 模型本體會套用該次 instance 的 scale/scaleAxis/yaw/tint/alpha，但 model@1.fxEmitters 目前只以 vfxId + 世界座標出生；因此固定黃色、大尺寸的 emitter 不會跟著藍白/黃藍配方改色縮放。",
       "requiredOutcome": "模型自帶 emitter 必須能取得等效的該次 instance 變換與顏色/透明度，或提供語意等價且機器契約可驗證的 per-instance override/disable；具體 API 由 Main 與 Owner 決定。",
       "editorBoundary": "Editor 不修改 Main renderer、不直接使用 MDL/JASS、不另造每招專用粒子，也不以第二套疊播遮掉固定 emitter。",
       "evidence": [
-        "apps/client/src/render/modelFxRig.ts",
-        "content/models/w3x.stock.revivehuman.json",
-        "content/models/w3x.stock.fragdriller.json",
-        "docs/_reports/editor-skill-basic-visual-proof/frames/godie-ogrh.r-02-1180ms.webp",
-        "docs/_reports/editor-skill-basic-visual-proof/frames/godie-e002.ex-08-1293ms.webp",
-        "docs/_reports/editor-skill-basic-visual-proof/frames/godie-hvsh.r-02-1347ms.webp"
-      ]
+        "docs/editor-contract/ggd-type-catalog.json#modelFxEmitters"
+      ],
+      "correctedAttribution": {
+        "notOnThisPath": [
+          "godie-e002.ex",
+          "godie-e00l.ex",
+          "godie-hvsh.r"
+        ],
+        "reason": "這三支走 spawnVfx + vfxId，不是 model@1.fxEmitters；不可用本票假裝修好。"
+      }
     }
   ],
   "candidates": [
@@ -856,8 +878,8 @@
       "owner": "editor-template",
       "suggestedFamily": "classic-horizontal-beam",
       "suggestedFamilyLabel": "經典橫向光束",
-      "suggestedType": "type1",
-      "suggestedVariantKey": "classic-horizontal-beam/type1",
+      "semanticVariantId": "fire-continuous",
+      "suggestedVariantKey": "classic-horizontal-beam/fire-continuous",
       "variantDistinction": "橘金持續型",
       "mainDisposition": "review-blocking-brick-extension",
       "acceptanceAbilityIds": [
@@ -891,8 +913,8 @@
       "owner": "editor-template",
       "suggestedFamily": "classic-horizontal-beam",
       "suggestedFamilyLabel": "經典橫向光束",
-      "suggestedType": "type2",
-      "suggestedVariantKey": "classic-horizontal-beam/type2",
+      "semanticVariantId": "blue-continuous",
+      "suggestedVariantKey": "classic-horizontal-beam/blue-continuous",
       "variantDistinction": "藍白持續型",
       "mainDisposition": "review-blocking-brick-extension",
       "acceptanceAbilityIds": [
@@ -925,8 +947,8 @@
       "owner": "editor-template",
       "suggestedFamily": "classic-horizontal-beam",
       "suggestedFamilyLabel": "經典橫向光束",
-      "suggestedType": "type3",
-      "suggestedVariantKey": "classic-horizontal-beam/type3",
+      "semanticVariantId": "holy-gold-blue",
+      "suggestedVariantKey": "classic-horizontal-beam/holy-gold-blue",
       "variantDistinction": "黃藍聖光型",
       "mainDisposition": "review-blocking-brick-extension",
       "acceptanceAbilityIds": [],
@@ -957,8 +979,8 @@
       "owner": "editor-template",
       "suggestedFamily": "classic-horizontal-beam",
       "suggestedFamilyLabel": "經典橫向光束",
-      "suggestedType": "type4",
-      "suggestedVariantKey": "classic-horizontal-beam/type4",
+      "semanticVariantId": "void-purple",
+      "suggestedVariantKey": "classic-horizontal-beam/void-purple",
       "variantDistinction": "紫黑虛空型",
       "mainDisposition": "review-blocking-brick-extension",
       "acceptanceAbilityIds": [],
@@ -989,8 +1011,8 @@
       "owner": "editor-template",
       "suggestedFamily": "classic-horizontal-beam",
       "suggestedFamilyLabel": "經典橫向光束",
-      "suggestedType": "type5",
-      "suggestedVariantKey": "classic-horizontal-beam/type5",
+      "semanticVariantId": "inferno-red-orange",
+      "suggestedVariantKey": "classic-horizontal-beam/inferno-red-orange",
       "variantDistinction": "紅橘高熱型",
       "mainDisposition": "review-blocking-brick-extension",
       "acceptanceAbilityIds": [],
@@ -1021,8 +1043,8 @@
       "owner": "editor-template",
       "suggestedFamily": "classic-horizontal-beam",
       "suggestedFamilyLabel": "經典橫向光束",
-      "suggestedType": "type6",
-      "suggestedVariantKey": "classic-horizontal-beam/type6",
+      "semanticVariantId": "electric-cyan",
+      "suggestedVariantKey": "classic-horizontal-beam/electric-cyan",
       "variantDistinction": "青藍電能型",
       "mainDisposition": "review-blocking-brick-extension",
       "acceptanceAbilityIds": [],
@@ -1053,8 +1075,8 @@
       "owner": "editor-template",
       "suggestedFamily": "classic-horizontal-beam",
       "suggestedFamilyLabel": "經典橫向光束",
-      "suggestedType": "type7",
-      "suggestedVariantKey": "classic-horizontal-beam/type7",
+      "semanticVariantId": "lightning-thin",
+      "suggestedVariantKey": "classic-horizontal-beam/lightning-thin",
       "variantDistinction": "細束雷射型",
       "mainDisposition": "reference-only-keep-as-editor-composition",
       "acceptanceAbilityIds": [],
@@ -1081,8 +1103,8 @@
       "owner": "editor-template",
       "suggestedFamily": "classic-horizontal-beam",
       "suggestedFamilyLabel": "經典橫向光束",
-      "suggestedType": "type8",
-      "suggestedVariantKey": "classic-horizontal-beam/type8",
+      "semanticVariantId": "lightning-wide",
+      "suggestedVariantKey": "classic-horizontal-beam/lightning-wide",
       "variantDistinction": "寬幅雷電型",
       "mainDisposition": "reference-only-keep-as-editor-composition",
       "acceptanceAbilityIds": [],
@@ -1109,8 +1131,8 @@
       "owner": "editor-template",
       "suggestedFamily": "classic-horizontal-beam",
       "suggestedFamilyLabel": "經典橫向光束",
-      "suggestedType": "type9",
-      "suggestedVariantKey": "classic-horizontal-beam/type9",
+      "semanticVariantId": "holy-wide",
+      "suggestedVariantKey": "classic-horizontal-beam/holy-wide",
       "variantDistinction": "寬幅聖光型",
       "mainDisposition": "reference-only-keep-as-editor-composition",
       "acceptanceAbilityIds": [],
@@ -1137,8 +1159,8 @@
       "owner": "editor-template",
       "suggestedFamily": "classic-horizontal-beam",
       "suggestedFamilyLabel": "經典橫向光束",
-      "suggestedType": "type10",
-      "suggestedVariantKey": "classic-horizontal-beam/type10",
+      "semanticVariantId": "void-wide",
+      "suggestedVariantKey": "classic-horizontal-beam/void-wide",
       "variantDistinction": "寬幅虛空型",
       "mainDisposition": "reference-only-keep-as-editor-composition",
       "acceptanceAbilityIds": [],
@@ -1165,8 +1187,8 @@
       "owner": "editor-template",
       "suggestedFamily": "dash-beam",
       "suggestedFamilyLabel": "突進接光束",
-      "suggestedType": "type1",
-      "suggestedVariantKey": "dash-beam/type1",
+      "semanticVariantId": "rider-blue",
+      "suggestedVariantKey": "dash-beam/rider-blue",
       "variantDistinction": "藍白騎乘型",
       "mainDisposition": "review-blocking-brick-extension",
       "acceptanceAbilityIds": [
@@ -1201,8 +1223,8 @@
       "owner": "editor-template",
       "suggestedFamily": "projectile-impact",
       "suggestedFamilyLabel": "投射後命中",
-      "suggestedType": "type1",
-      "suggestedVariantKey": "projectile-impact/type1",
+      "semanticVariantId": "fire-distance-impact",
+      "suggestedVariantKey": "projectile-impact/fire-distance-impact",
       "variantDistinction": "火球爆炸型",
       "mainDisposition": "reference-only-keep-as-editor-composition",
       "acceptanceAbilityIds": [
@@ -1232,8 +1254,8 @@
       "owner": "editor-template",
       "suggestedFamily": "dash-slash",
       "suggestedFamilyLabel": "衝刺斬擊",
-      "suggestedType": "type1",
-      "suggestedVariantKey": "dash-slash/type1",
+      "semanticVariantId": "void-single-arc",
+      "suggestedVariantKey": "dash-slash/void-single-arc",
       "variantDistinction": "黑紫單發型",
       "mainDisposition": "reference-only-keep-as-editor-composition",
       "acceptanceAbilityIds": [
@@ -1262,8 +1284,8 @@
       "owner": "editor-template",
       "suggestedFamily": "dash-slash",
       "suggestedFamilyLabel": "衝刺斬擊",
-      "suggestedType": "type2",
-      "suggestedVariantKey": "dash-slash/type2",
+      "semanticVariantId": "shockwave-followup",
+      "suggestedVariantKey": "dash-slash/shockwave-followup",
       "variantDistinction": "衝擊波追身型",
       "mainDisposition": "reference-only-keep-as-editor-composition",
       "acceptanceAbilityIds": [
@@ -1292,8 +1314,8 @@
       "owner": "editor-template",
       "suggestedFamily": "combo-finisher",
       "suggestedFamilyLabel": "連段終結技",
-      "suggestedType": "type1",
-      "suggestedVariantKey": "combo-finisher/type1",
+      "semanticVariantId": "holy-column-finisher",
+      "suggestedVariantKey": "combo-finisher/holy-column-finisher",
       "variantDistinction": "直立光柱型",
       "mainDisposition": "reference-only-keep-as-editor-composition",
       "acceptanceAbilityIds": [
@@ -1323,8 +1345,8 @@
       "owner": "editor-template",
       "suggestedFamily": "combo-finisher",
       "suggestedFamilyLabel": "連段終結技",
-      "suggestedType": "type2",
-      "suggestedVariantKey": "combo-finisher/type2",
+      "semanticVariantId": "avalon-counter-beam",
+      "suggestedVariantKey": "combo-finisher/avalon-counter-beam",
       "variantDistinction": "反擊橫向光束型",
       "mainDisposition": "review-blocking-brick-extension",
       "acceptanceAbilityIds": [
@@ -1370,8 +1392,8 @@
       "owner": "editor-template",
       "suggestedFamily": "defense-reaction",
       "suggestedFamilyLabel": "防禦反應",
-      "suggestedType": "type1",
-      "suggestedVariantKey": "defense-reaction/type1",
+      "semanticVariantId": "reflect-open",
+      "suggestedVariantKey": "defense-reaction/reflect-open",
       "variantDistinction": "反彈火花型",
       "mainDisposition": "reference-only-keep-as-editor-composition",
       "acceptanceAbilityIds": [
@@ -1399,8 +1421,8 @@
       "owner": "editor-template",
       "suggestedFamily": "defense-reaction",
       "suggestedFamilyLabel": "防禦反應",
-      "suggestedType": "type2",
-      "suggestedVariantKey": "defense-reaction/type2",
+      "semanticVariantId": "avalon-guard-window",
+      "suggestedVariantKey": "defense-reaction/avalon-guard-window",
       "variantDistinction": "持續防禦窗型",
       "mainDisposition": "reference-only-keep-as-editor-composition",
       "acceptanceAbilityIds": [
@@ -1429,8 +1451,8 @@
       "owner": "editor-template",
       "suggestedFamily": "defense-reaction",
       "suggestedFamilyLabel": "防禦反應",
-      "suggestedType": "type3",
-      "suggestedVariantKey": "defense-reaction/type3",
+      "semanticVariantId": "perfect-parry",
+      "suggestedVariantKey": "defense-reaction/perfect-parry",
       "variantDistinction": "完美盾反型",
       "mainDisposition": "reference-only-keep-as-editor-composition",
       "acceptanceAbilityIds": [
@@ -1461,8 +1483,8 @@
       "owner": "editor-template",
       "suggestedFamily": "chain-lightning",
       "suggestedFamilyLabel": "連鎖雷擊",
-      "suggestedType": "type1",
-      "suggestedVariantKey": "chain-lightning/type1",
+      "semanticVariantId": "multi-origin-storm",
+      "suggestedVariantKey": "chain-lightning/multi-origin-storm",
       "variantDistinction": "多起點風暴型",
       "mainDisposition": "reference-only-keep-as-editor-composition",
       "acceptanceAbilityIds": [
@@ -1492,8 +1514,8 @@
       "owner": "editor-template",
       "suggestedFamily": "transform-aura",
       "suggestedFamilyLabel": "變身氣場",
-      "suggestedType": "type1",
-      "suggestedVariantKey": "transform-aura/type1",
+      "semanticVariantId": "bankai-black-red",
+      "suggestedVariantKey": "transform-aura/bankai-black-red",
       "variantDistinction": "高速黑紅型",
       "mainDisposition": "reference-only-keep-as-editor-composition",
       "acceptanceAbilityIds": [
@@ -1518,5 +1540,5 @@
       "blockingBrickRequests": []
     }
   ],
-  "fingerprint": "e8514105cb11"
+  "fingerprint": "227bdba4f050"
 }

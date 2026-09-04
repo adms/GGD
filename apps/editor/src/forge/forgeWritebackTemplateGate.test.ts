@@ -80,6 +80,15 @@ const TPL: TemplateDoc = zTemplateDoc.parse(
   ) as unknown,
 );
 const TEMPLATES = new Map<string, TemplateDoc>([[TPL.id, TPL]]);
+const NODE_ONLY_TPL: TemplateDoc = zTemplateDoc.parse(
+  JSON.parse(
+    readFileSync(join(REPO, "content/ability-templates/tpl-locust-line.json"), "utf8"),
+  ) as unknown,
+);
+const TEMPLATES_WITH_NODE_ONLY = new Map<string, TemplateDoc>([
+  [TPL.id, TPL],
+  [NODE_ONLY_TPL.id, NODE_ONLY_TPL],
+]);
 
 /** minimal but SCHEMA-SHAPED ability doc; only `template` differs between cases */
 function abilityDoc(template: unknown): Record<string, unknown> {
@@ -119,10 +128,10 @@ describe("寫回前就擋下展開不了的模板（不是等下一次 registerA
   it("確認對話框說得出為什麼不能存 —— 而且指名那個模板", () => {
     const bad = abilityDoc({ ref: "tpl-renamed-away", params: {} });
     const plan = planForgeWrite(bad, bad, null, TEMPLATES);
-    expect(plan.blockers).toHaveLength(1);
-    expect(plan.blockers[0]).toContain("tpl-renamed-away");
+    expect(plan.blockers.length).toBeGreaterThanOrEqual(1);
+    expect(plan.blockers.join(" ")).toContain("tpl-renamed-away");
     // 說「它影響什麼」，不是複述欄位名
-    expect(plan.blockers[0]).toContain("降級");
+    expect(plan.blockers.join(" ")).toContain("降級");
   });
 
   it("壞掉的 ref 連 API 都碰不到 —— 一個位元組都不准動", async () => {
@@ -148,6 +157,28 @@ describe("寫回前就擋下展開不了的模板（不是等下一次 registerA
     expect(blockers[0]).toContain(name);
     await expect(runForgeWrite(planForgeWrite(bad, bad, null, TEMPLATES), bad, null, TEMPLATES))
       .rejects.toThrow();
+    expect(calls).toEqual([]);
+  });
+
+  it("node-only 模板即使能展開，也不能偷渡到技能 template.ref", async () => {
+    const bad = abilityDoc({
+      ref: NODE_ONLY_TPL.id,
+      params: defaultParamsFor(NODE_ONLY_TPL),
+    });
+    const blockers = templateWriteBlockers(bad, TEMPLATES_WITH_NODE_ONLY);
+    expect(blockers.join(" ")).toContain("spawnModelFx.preset");
+    expect(blockers.join(" ")).toContain("不能當技能模板卡");
+
+    // Deliberately fabricate an empty plan: execution must recompute the Main
+    // type-catalog gate instead of trusting the confirmation dialog.
+    const unsafePlan = {
+      ...planForgeWrite(bad, bad, null, TEMPLATES_WITH_NODE_ONLY),
+      blockers: [],
+    };
+    await expect(runForgeWrite(unsafePlan, bad, null, TEMPLATES_WITH_NODE_ONLY))
+      .rejects.toThrow("spawnModelFx.preset");
+    await expect(runForgeCreate(bad, TEMPLATES_WITH_NODE_ONLY))
+      .rejects.toThrow("spawnModelFx.preset");
     expect(calls).toEqual([]);
   });
 
