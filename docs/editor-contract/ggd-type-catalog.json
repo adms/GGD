@@ -56,6 +56,17 @@
           ],
           "fillsVia": "spawnModelFx.preset"
         },
+        "anchor": {
+          "type": "enum",
+          "default": null,
+          "values": [
+            "self",
+            "point",
+            "target",
+            "bone"
+          ],
+          "fillsVia": "spawnModelFx.preset"
+        },
         "speed": {
           "type": "number",
           "default": 30,
@@ -94,9 +105,24 @@
           ],
           "fillsVia": "spawnModelFx.preset"
         },
+        "clipTimeScale": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        },
         "scale": {
           "type": "number",
           "default": 2.65,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "tint": {
+          "type": "rgb",
+          "default": null,
+          "fillsVia": "spawnModelFx.preset"
+        },
+        "alpha": {
+          "type": "number",
+          "default": null,
           "fillsVia": "spawnModelFx.preset"
         },
         "touchRadius": {

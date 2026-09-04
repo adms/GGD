@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_f986a1f67c3d",
+    "contentVersion": "cv_e107c2493cc4",
     "collections": {
       "champions": {
         "hash": "e493553f740c",
@@ -58,7 +58,7 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "4123b9f3d180",
+        "hash": "e8842b4e9e3d",
         "count": 46
       },
       "vfx-scripts": {
@@ -1868,6 +1868,17 @@
               "default": "static",
               "origin": "owner:2026-08-24「光束砲**原地開火**,只有波飛出去」＋ j:32322 j:31907 j:28838 j:47757 —— 四支經典的觸發器一次 SetUnitPosition 都沒有:dummy 生在施法者前方 150u 的一個點上,兩秒後 KillUnit。"
             },
+            "anchor": {
+              "type": "enum",
+              "values": [
+                "self",
+                "point",
+                "target",
+                "bone"
+              ],
+              "optional": true,
+              "origin": "⭐ **無 default 是刻意的** —— ⚠️ 這一格**只在 `path:\"static\"` 時有意義**，而本模板的 `path` default 是 `static`。給它一個家族 default 會把「原地開火的落點」寫死成一個沒有出處的選擇（`o00E` 那一族 13 個節點裡有 7 個只寫了 `anchor` ⇒ 逐支不同 ⇒ 它是**逐支的**，⛔ 不是家族的）。"
+            },
             "speed": {
               "type": "number",
               "default": 30,
@@ -1919,6 +1930,14 @@
               "default": "idle",
               "origin": "derived:model@1.clipMap ＋ 轉檔紀錄的 animations —— 這一族**每一份 .glb 只有一條剪輯**,而 clipMap 已經把它對到 `idle`:revivehuman/awaken = `Stand`(tools/w3x-import/out/stock/convert-awaken.json.animations)、fragdriller = `Birth`(convert-fragdriller.json)、reddragonmissile = `Birth`(convert-reddragonmissile.json)。⇒ 家族層填 `idle` 一格解五支。⚠️ 缺席 ⇒ modelFxRig **一條都不播**(schema 檔頭逐字)⇒ 光束是一具定格的雕像 —— 而那與「沒做」在畫面上長得一模一樣(失敗形態②)。⛔ 原作那一側沒有 SetUnitAnimation 呼叫:WC3 的 dummy 生出來就自動播 birth/stand,⇒ 這一格是把那個**隱含**行為寫出來,⛔ 不是新增演出。"
             },
+            "clipTimeScale": {
+              "type": "number",
+              "min": 0.05,
+              "max": 8,
+              "unit": "ratio",
+              "optional": true,
+              "origin": "⭐ **無 default 是刻意的** —— 原速（1）本來就是缺席的語意。原作是 `SetUnitTimeScalePercent ÷ 100`（h008 的凍播＝0.15）。⚠️ ⛔ 只有填了 `clip` 才讀得到它（`spawnModelFx.ts:462` 的 refine 在載入時擋）——本模板的 `clip` 有 default `idle`，所以這一格填了就會生效。"
+            },
             "scale": {
               "type": "number",
               "default": 2.65,
@@ -1926,6 +1945,19 @@
               "max": 20,
               "optional": true,
               "origin": "j:32326 —— exemplar 20-03 的 SetUnitScalePercent( 250.00 + 技能等級×15, …) ⇒ **等級 1 是 265% = 2.65**。⚠️⚠️ 2026-08-26 之前這一格是 **2.5**,理由寫「250% ＝ 2.5」—— 而 WC3 的技能等級從 **1** 起算(GetUnitAbilityLevelSwapped),⛔ 沒有任何一級等於 250%:四級是 265/280/295/310%。⇒ 2.5 是把**公式的常數項**當成了值(同一個病在 59-04 的 `scale:1.2` 上犯過第二次:120+30×lvl 的最低級是 150%)。⭐ 這一格只管**這一發多粗**;「多長」住 `scaleAxis` 的第三格(逐支),見 description。⛔ 逐支的 w3u `usca`(h00S 0.2 vs h007 1.25 vs h01V 3.0,15 倍差)**刻意沒有**乘進來 —— 理由在 description 的『兩個誠實的偏離』。"
+            },
+            "tint": {
+              "type": "rgb",
+              "optional": true,
+              "origin": "⭐ **無 default 是刻意的** —— 這一格是**授權面**，⛔ 不是一個家族量值。原作的染色是 per-cast 的 `SetUnitVertexColor`（覆寫語意，⛔ 不相乘），而光束砲家族的六種配色（橘金／藍白／黃白／紫黑／紅橘／青藍）差別**只在這一格**。⚠️ 2026-09-04 量到：13 個引用本模板的出貨節點裡寫了 tint 的是 **0 個** —— ⛔ 不是因為不需要，是因為模板沒有開這一格（第一守則：可調的東西要有一個住處）。⛔ 給它一個 default 會讓每一支未指定的技能被染色 ⇒ 那是一個沒有出處的家族量值。"
+            },
+            "alpha": {
+              "type": "number",
+              "min": 0,
+              "max": 1,
+              "unit": "ratio",
+              "optional": true,
+              "origin": "⭐ **無 default 是刻意的**（同 tint）。原作的 alpha **只存在 runtime** —— w3u 的 `ucua` 全檔 0 次，57 個 `SetUnitVertexColorBJ` 呼叫點的第 4 參數 （`schema/effects/spawnModelFx.ts:283` 檔頭逐字）⇒ per-cast 才是它的原生住處。⛔ 一個家族級 default 會讓整族變半透明，而那不是任何一行 JASS 說的。"
             },
             "touchRadius": {
               "type": "number",
@@ -5704,5 +5736,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "026772a1a9cf"
+  "profileDigest": "bfc1019564e5"
 }

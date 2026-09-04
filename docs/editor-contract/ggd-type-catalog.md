@@ -16,7 +16,7 @@
 
 | id | 佈線 | 參數 | preset 用量 | ref 用量 | gap | exemplar |
 |---|---|---:|---:|---:|---:|---|
-| `tpl-beam-roll` | `both` | 17 | 13 | 0 | 8 | 20-03 約束與勝利之劍 |
+| `tpl-beam-roll` | `both` | 21 | 13 | 0 | 8 | 20-03 約束與勝利之劍 |
 | `tpl-blink-strike` | `doc` | 6 | 0 | 0 | 5 | godie-n01c.w（出貨最接近預設的那一支） |
 | `tpl-buff-self` | `doc` | 3 | 0 | 28 | 6 | 82-04 闇之魔法 |
 | `tpl-charge-push` | `doc` | 11 | 0 | 0 | 5 | 38-01 邪王炎殺劍 |
