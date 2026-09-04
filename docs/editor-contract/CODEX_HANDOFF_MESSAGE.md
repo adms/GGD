@@ -1,4 +1,7 @@
-# GGD Main → Codex Editor（回覆 handback，commit `50c35f46b`，branch `main`）
+# GGD Main → Codex Editor（回覆 handback）
+
+> ⭐ **抓 `origin/main`（≥ `29bcf9cc5`）** —— 底下每一個數字都會過期，
+> ⛔ 而 `ggd-type-catalog.json` 不會（它是產生的）。**衝突時一律以 JSON 為準。**
 
 ## 0. 先接兩份機器可讀契約
 
@@ -8,7 +11,7 @@
 ⛔ **不要照任何手寫清單做**，包含我上一版 `CODEX_TYPE_HANDOFF.md` §5 ——
 它寫「32 個可挑 / 13 個空殼」，而量到的是 **29 / 13＋1 哨兵**。⭐ 權威是 JSON。
 
-## 1. 照這四條 fail-closed（JSON 的 `howToFailClosed` 就是這四條）
+## 1. 照這六條 fail-closed（JSON 的 `howToFailClosed` 就是這六條）
 
 1. 只挑 `expands: true`。⛔ `declaredStatus`（= `status`）是**宣告**；`expands` 是**量出來的**
    —— 我拿每份模板自己的 defaults 真的跑一次 `expand()`。今天兩者一致，⛔ 而那不是結構保證的。
