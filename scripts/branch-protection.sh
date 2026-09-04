@@ -54,12 +54,12 @@ JSON
       exit 1; }
     bad=""
     ctx=$(printf '%s' "$got" | python3 -c 'import json,sys;print(json.dumps(sorted((json.load(sys.stdin).get("required_status_checks") or {}).get("contexts") or [])))')
-    [ "$ctx" = "$WANT_CONTEXTS" ] && echo "  ✅ required contexts = $ctx" || { echo "  ⛔ contexts 是 $ctx，應為 $WANT_CONTEXTS"; bad=1; }
+    [ "$ctx" = "$WANT_CONTEXTS" ] && echo "  ✅ required contexts = ${ctx}" || { echo "  ⛔ contexts 是 ${ctx}，應為 ${WANT_CONTEXTS}"; bad=1; }
     co=$(printf '%s' "$got" | python3 -c 'import json,sys;print((json.load(sys.stdin).get("required_pull_request_reviews") or {}).get("require_code_owner_reviews"))')
     [ "$co" = "True" ] && echo "  ✅ require_code_owner_reviews = true" || { echo "  ⛔ require_code_owner_reviews 是 $co ⇒ CODEOWNERS 形同虛設"; bad=1; }
     [ -f .github/CODEOWNERS ] && echo "  ✅ .github/CODEOWNERS 在" || { echo "  ⛔ .github/CODEOWNERS 不存在 ⇒ 上面那一格沒有東西可以要求"; bad=1; }
     ea=$(printf '%s' "$got" | python3 -c 'import json,sys;print((json.load(sys.stdin).get("enforce_admins") or {}).get("enabled"))')
-    echo "  ℹ️ enforce_admins = $ea（⭐ false 是刻意的，見本腳本檔頭）"
+    echo "  ℹ️ enforce_admins = ${ea}（⭐ false 是刻意的，見本腳本檔頭）"
     [ -n "$bad" ] && exit 1
     echo "✅ branch protection 與 CODEOWNERS 都在"
     ;;
