@@ -1088,21 +1088,18 @@
     "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
   },
   "enum:abilities.effects[]#applyBuff.hooks[].victim=allyChampion": {
-    "status": "landing",
-    "since": "2026-08-04",
-    "why": "`enemyChampion` 的另一半（同一次列舉加寬）。它比 enemyChampion 更遠：17 張卡裡沒有一張需要「只對隊友觸發」，留著是因為做成單邊的過濾器會讓下一張『鼓舞隊友』的卡再改一次 union。守衛同上 ①。",
+    "status": "default-live",
+    "why": "⭐ 2026-09-04 —— `landing` 的 30 天寬限到期,而**重新裁決的答案是它根本不該是 landing**:⛔ 沒有任何遷移在飛,也不是在等內容來採用。⭐ 引擎端**活著**（`sim/effects/hooks.ts:88` 有 `case \"allyChampion\"`,回`sameTeam(...) === true && world.champion.has(target)`）——它是 `enemyChampion` 的**另一半**,列舉一次加寬。⇒ 零採用的意思是「今天沒有一張卡需要**只對隊友**觸發」,⛔ 不是「這個機制是死的」。⭐ 那正是 `default-live` 的定義。⚠️ 反駁法:哪天 `hooks.ts` 拿掉那個 `case`,這一列就要改回 debt。",
     "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
   },
   "enum:abilities.effects[]#applyBuff.hooks[].damageSource=other": {
-    "status": "landing",
-    "since": "2026-08-04",
-    "why": "`ability` 的補集（既不是普攻也不是技能：火圈、守衛塔、小怪）。列舉加寬時一起做，因為「只加正面那一半」的過濾器等於逼下一個作者用 not() 繞路。守衛同上 ②。",
+    "status": "default-live",
+    "why": "⭐ 2026-09-04 —— 同上,`landing` 到期後重新裁決為 `default-live`。它是 `ability` 的**補集**（既不是普攻也不是技能:火圈、守衛塔、小怪）,列舉加寬時一起做 —— ⛔ 只加正面那一半會逼下一個作者用 `not()` 繞路。⇒ 零採用 ＝ 今天沒有卡需要**指名**這一類來源,⛔ 不是機制不存在。",
     "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
   },
   "field:items.passive[].internalCooldownScope": {
-    "status": "landing",
-    "since": "2026-08-04",
-    "why": "同一個欄位落在共用的 zHookDefBase 上，所以普查在道具與技能 applyBuff 兩個節點各看到一次（同 fromResource 那一格的形狀）。道具這一側今天沒有需求：每一件道具被動的 ICD 都是「這件裝備多久觸發一次」，不分槽位。分兩份 schema 只為了讓其中一邊閉嘴，會讓這條規則變成兩份。",
+    "status": "default-live",
+    "why": "⭐ 2026-09-04 —— `landing` 到期後重新裁決為 `default-live`。⭐ 它**有真正的程式預設**:`sim/effects/hooks.ts:138` 逐字寫著「`\"source\"`(**省略 = 這一個**)回 `hookLastFired[hi]`,也就是這個欄位出現之前每一份文件走的那一格」⇒ ⭐ 省略**就是**今天的行為。⚠️ 而它在道具節點零採用的原因是共用 `zHookDefBase`:每一件道具被動的 ICD 都是「這件裝備多久觸發一次」,不分槽位。⛔ 分兩份 schema 只為了讓其中一邊閉嘴,會讓這條規則變成兩個住處（第〇·四）。",
     "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
   },
   "enum:abilities.effects[]#invulnerable.applyTo=target": {
