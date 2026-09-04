@@ -467,9 +467,16 @@ def main():
             out.append("```jsonc")
             out.append(json.dumps(d, ensure_ascii=False, indent=2))
             out.append("```\n</details>\n")
-    with open("/private/tmp/skill-chapter.md", "w", encoding="utf-8") as f:
+    # ⛔⛔ GH#1003 —— `/private/tmp` 是 **macOS 專屬**（`/tmp` 的實體路徑）。
+    #   Linux 上 `/private` 不存在、非 root 也建不出來 ⇒ 這一行在 CI 上直接
+    #   `FileNotFoundError`，而**整支產生器因此死在最後一段** ——
+    #   ⭐ 症狀是 `apps/content-api` 的兩支測試報「genrun skillremake:json 失敗」，
+    #   ⛔ 指著錯方向（讀的人會去查產生器的邏輯，而缺的只是一個目錄）。
+    import tempfile
+    chapter = os.path.join(tempfile.gettempdir(), "skill-chapter.md")
+    with open(chapter, "w", encoding="utf-8") as f:
         f.write("\n".join(out))
-    print("章節寫到 /private/tmp/skill-chapter.md")
+    print(f"章節寫到 {chapter}")
     # ⛔ 產生器的最後一段：內容 → 出貨產物（A-2）。
     if dry:
         print("（dry-run：沒有寫任何檔，所以不重建產物）")
