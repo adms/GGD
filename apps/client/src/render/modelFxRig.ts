@@ -210,6 +210,8 @@ const BJS_ALPHA_ONEONE = 6;
 const BJS_ALPHA_ADD = 1;
 /** Babylon `Material.MATERIAL_ALPHABLEND` —— 沒有它 `needAlphaBlending()` 是 false ⇒ 混合模式**不會被讀**。 */
 const BJS_ALPHABLEND = 2;
+/** Clone-local marker: the current modelFx instance explicitly authored alpha < 1. */
+const INSTANCE_ALPHA_OVERRIDE = "__ggdModelFxInstanceAlphaOverride";
 
 /**
  * 地面魔法陣／符文卡片的幾何判準。
@@ -238,13 +240,17 @@ function isPlanarGlyphCard(mesh: {
  * `AddAlpha`（filterMode 4）必須讀來源 alpha；`Additive`（3）則刻意忽略 alpha。
  * 舊 GLB 沒有 extras 時回 `undefined`，再由幾何退路判斷，不能猜成其中一種。
  */
-function stockW3xBlend(material: Record<string, unknown>): "alpha" | "additive" | undefined {
+function stockW3xBlend(material: Record<string, unknown>): "alpha" | "additive" | "other" | undefined {
   const metadata = material["metadata"] as
     | { gltf?: { extras?: { w3x?: { blend?: unknown; filterMode?: unknown } } } }
     | undefined;
   const w3x = metadata?.gltf?.extras?.w3x;
   if (w3x?.blend === "AddAlpha" || w3x?.filterMode === 4) return "alpha";
   if (w3x?.blend === "Additive" || w3x?.filterMode === 3) return "additive";
+  // Metadata exists and explicitly names a non-additive WC3 equation (for
+  // example Modulate).  Keep that distinct from an old GLB with no source
+  // facts: geometry fallback is allowed only for the latter.
+  if (w3x !== undefined) return "other";
   return undefined;
 }
 
@@ -294,10 +300,12 @@ export function applyStockGlowAdditive(root: TransformNode): number {
     if (!e || (e.r <= 0 && e.g <= 0 && e.b <= 0)) continue;
     const a = mat["alpha"];
     const sourceBlend = stockW3xBlend(mat);
+    if (sourceBlend === "other") continue;
     const alphaCarriesShape =
-      (typeof a === "number" && a < 1) ||
+      mat[INSTANCE_ALPHA_OVERRIDE] === true ||
       sourceBlend === "alpha" ||
-      (sourceBlend === undefined && isPlanarGlyphCard(mesh));
+      (sourceBlend === undefined &&
+        ((typeof a === "number" && a < 1) || isPlanarGlyphCard(mesh)));
     mat["alphaMode"] = alphaCarriesShape ? BJS_ALPHA_ADD : BJS_ALPHA_ONEONE;
     // ⚠️ 只設 alphaMode 是**寫了但不會發生**：PBR 的不透明素材被載入器鎖成
     //    `transparencyMode: OPAQUE`，而 `needAlphaBlending()` 回 false 時
@@ -391,6 +399,7 @@ export function applyFxTint(
     if (alpha !== undefined && alpha < 1) {
       const a = copy["alpha"];
       copy["alpha"] = (typeof a === "number" ? a : 1) * alpha;
+      copy[INSTANCE_ALPHA_OVERRIDE] = true;
       if ("transparencyMode" in copy) copy["transparencyMode"] = 2;
     }
     (mesh as { material?: unknown }).material = copy;

@@ -3,7 +3,7 @@
   "note": "⭐ 被 content/**/*.json 引用到的**每一顆**二進位資產。⛔ 產物 —— 改 `tools/asset-manifest/gen.ts`，⛔ 不要手改。⚠️ 只收**被引用到的**：content/assets/ 底下有一萬多個檔，而清單的用途是驗證引用得到的東西。",
   "counts": {
     "entries": 1642,
-    "totalBytes": 103693151
+    "totalBytes": 103621971
   },
   "entries": [
     {
@@ -15663,8 +15663,8 @@
     },
     {
       "path": "assets/models/imported/1hswd-01.glb",
-      "bytes": 42756,
-      "sha256": "04d0b4372a6e0d3c4e2c213d59203b832eea87e04a28c6b101ebf637fecaf388",
+      "bytes": 42852,
+      "sha256": "13adcc04319c2cb8caa8eb536f10710d0f939385208c7967110d36ceedc2ba03",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -15707,8 +15707,8 @@
     },
     {
       "path": "assets/models/imported/awing.glb",
-      "bytes": 21340,
-      "sha256": "a5b2695823b705163e5bc97e06673a6e0bce2b311cec8046b41c13bb362d33e5",
+      "bytes": 21436,
+      "sha256": "f6b6c0f2654daf07c8ae27384f6aac655dbe529150b15ed31005b6a4a87619c7",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -15751,8 +15751,8 @@
     },
     {
       "path": "assets/models/imported/blackhole.glb",
-      "bytes": 118820,
-      "sha256": "e011cf090d5056e836c8e4b2f73b33d6a5f0190fd7a1dccce5c603952f53a662",
+      "bytes": 117936,
+      "sha256": "2e86bbbca13bdbe6b14714f2f25198596963ecc1451b305e46bc073012cf0ec4",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -15762,8 +15762,8 @@
     },
     {
       "path": "assets/models/imported/blackhole1.glb",
-      "bytes": 39492,
-      "sha256": "db850959abab0e3e8ab4badcea134a577d494c9524d40ac772ff750ba38bc80c",
+      "bytes": 38584,
+      "sha256": "f6f5a71f1e09f1ec5ecd63a07feb2e5a9d8d060ce23dbb92840202d54e60da30",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -15773,8 +15773,8 @@
     },
     {
       "path": "assets/models/imported/bladestorm-swordeffect.glb",
-      "bytes": 37292,
-      "sha256": "aabb5c4e4a6fb5d5cf0622dd1d6310b06a0deda4d2337f1ea1724f2fd7f65585",
+      "bytes": 37576,
+      "sha256": "b62a2642a3676738b8be2547a8ac9454818e8d50f20b15c31e744c46fe73933c",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -15784,8 +15784,8 @@
     },
     {
       "path": "assets/models/imported/boxcat.glb",
-      "bytes": 174828,
-      "sha256": "4a3dcdcddda8a30b65ee1052a0adbb296c62f39b35f44d481744997c23ed32fd",
+      "bytes": 174848,
+      "sha256": "af7535a28cf929755aa6f270c7a92083e0f95b275f18e8aa03f986c78fe96c6b",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -15795,8 +15795,8 @@
     },
     {
       "path": "assets/models/imported/bulbasaur.glb",
-      "bytes": 450824,
-      "sha256": "bb725f39e9fc21836526b4eb777ea50f72f788f2a12cddcef5f4f81a56c2cd9d",
+      "bytes": 450864,
+      "sha256": "e32b330dd034f8c1083759ff28954a96656a17eaeb4664a753b89f8c1971f141",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -15806,8 +15806,8 @@
     },
     {
       "path": "assets/models/imported/bwing.glb",
-      "bytes": 21144,
-      "sha256": "41eee01d8b08427f8ba8f6e64a9612087a65d677d68a51b47c6ea2cae401b7ed",
+      "bytes": 21240,
+      "sha256": "8606b8a5f600ba6426e4b39a8ad0d3429be0414a03429f50f0008280a119ccf6",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -15850,8 +15850,8 @@
     },
     {
       "path": "assets/models/imported/crescent.glb",
-      "bytes": 203172,
-      "sha256": "413fa4d6a97743330ce9a9fc75eb84fc8324d1174d6453a3307ad6a983b210d2",
+      "bytes": 196232,
+      "sha256": "aad34bada5e73c51da21262d5e7f2c1a1526b1fbe6b6ed031a8a24aadb3df875",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -15861,8 +15861,8 @@
     },
     {
       "path": "assets/models/imported/darkportaltarget.glb",
-      "bytes": 55076,
-      "sha256": "602d9ebdd1a175b240b4a708b8d1c54167dc5e3b3b965b5326fad811f2a8c428",
+      "bytes": 55408,
+      "sha256": "2d7b0c981288c18d2085d84dc636f7088739c846401dfa1fea7e8ff635aec013",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -15872,8 +15872,8 @@
     },
     {
       "path": "assets/models/imported/darkraor.glb",
-      "bytes": 117624,
-      "sha256": "1959d557800ebd458e5bd3872b7b91f0cbb9bf0cbe9607aaa3c52c4db2fbff9b",
+      "bytes": 117736,
+      "sha256": "265d5770f9e5efddbfb36fd755a80e6405e432b4f0b80f751917e5a0d68f7582",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -15883,8 +15883,8 @@
     },
     {
       "path": "assets/models/imported/deathwave.glb",
-      "bytes": 26008,
-      "sha256": "4100acd5826985e692acbe58effed0866af87b057a24bc34e727354bd390cd5b",
+      "bytes": 26196,
+      "sha256": "6bdee6257820c85517109467c6eb2d1548b640c3ed365c69ef20e8213105eae9",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -15905,8 +15905,8 @@
     },
     {
       "path": "assets/models/imported/doom.glb",
-      "bytes": 18308,
-      "sha256": "1c1ab135244c7b37c86555bcf8008572c366d05e0783c27400367179303b034a",
+      "bytes": 17752,
+      "sha256": "040e1b185eb34e8c6ed096ce9e05e72f2494ccf8591c366701f912a92203cf2a",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -15916,8 +15916,8 @@
     },
     {
       "path": "assets/models/imported/earthtornado2.glb",
-      "bytes": 39000,
-      "sha256": "50f4b9e25694bf7d029b17c04e4586fd5f6c71406b8f697bf6a3ad0130d395e5",
+      "bytes": 37368,
+      "sha256": "85dec8bedecbfa9b4ea88a73d874c5743af1e5d9aa11572c8f4d67d5f40ede09",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -15938,8 +15938,8 @@
     },
     {
       "path": "assets/models/imported/fireblast.glb",
-      "bytes": 22460,
-      "sha256": "d488fb261c79815e9e359213be215d7d5dff0dc6e6c887b61d3b556f3e9c758c",
+      "bytes": 22556,
+      "sha256": "4a84f65b4b1c25578f8aa97660f72362c9f99e8e3b7d77e299dca45ffdbbabc5",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -15949,8 +15949,8 @@
     },
     {
       "path": "assets/models/imported/firefly.glb",
-      "bytes": 32768,
-      "sha256": "45ec9a3677b649c49b794f04268611462581a1ec52579ab010bf092bb328cbe7",
+      "bytes": 32816,
+      "sha256": "080d22244b8133aca03f41d59587262d228af78cbc81b1bc1fa7b0fea8d0eefc",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -15960,8 +15960,8 @@
     },
     {
       "path": "assets/models/imported/flamessmoke.glb",
-      "bytes": 5164,
-      "sha256": "ab6d010a7727cc1e98f2f4c28ab33c96109d9f8c8d49216a4245a43ac7b4e35b",
+      "bytes": 5260,
+      "sha256": "cab1bf2761acedad2dfb736360bed135cfe07bef375c19518eae5641e6cae2e1",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -15982,8 +15982,8 @@
     },
     {
       "path": "assets/models/imported/flamestriketarget.glb",
-      "bytes": 38220,
-      "sha256": "4ed223486ae2bf2611c9239ea8fd8f09cdd55b67ad158c5d7944d7e5b1d3dfaf",
+      "bytes": 31852,
+      "sha256": "2cccbb1b4fed099afaa3044bfa608044aa0fa0196c9f435866992b4adc7c9dc0",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16037,8 +16037,8 @@
     },
     {
       "path": "assets/models/imported/frostnova.glb",
-      "bytes": 74864,
-      "sha256": "4874a165ff735839edac7e254fa638062921af69926aef89b7362677c887ec43",
+      "bytes": 74948,
+      "sha256": "8c6a9b0ebea7cb821423ccec7b711dcc32f4b00a3a846174af9c5ef37f393a6e",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16081,8 +16081,8 @@
     },
     {
       "path": "assets/models/imported/grandorcaura.glb",
-      "bytes": 206048,
-      "sha256": "ce2ddfe261957b4781119bbd6a3817bac51a5c00572f00f1c5224f6f379fd1a6",
+      "bytes": 206264,
+      "sha256": "b95d2f9f3072a64ac3fa58b2930b2228cc20a7d62076e708ae0db00c48902781",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16092,8 +16092,8 @@
     },
     {
       "path": "assets/models/imported/grandundeadaura.glb",
-      "bytes": 459972,
-      "sha256": "81a9feb86342b5d9777303cdd85921c827205a528b7f8b238c1c7c00b4e01f5c",
+      "bytes": 449352,
+      "sha256": "1feac65dcb0d89a6736a99d4b2ad51d8e9635589ebe63153d04208d3ec8f6995",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16103,8 +16103,8 @@
     },
     {
       "path": "assets/models/imported/gumdam.glb",
-      "bytes": 284592,
-      "sha256": "cec3b6510f96c95badf4e2f9fe58e1610c61a438f5bdeebb06b18015978b4352",
+      "bytes": 284688,
+      "sha256": "d694c1873a03e57b681eacae3b3817ae687bb2decb23115be3a7285f67bca0f5",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16114,8 +16114,8 @@
     },
     {
       "path": "assets/models/imported/gx.glb",
-      "bytes": 14284,
-      "sha256": "fb5dfcd4a3903e5d35629a328bb155bb4c7c2a5359bc051eb7157309ea3e90e6",
+      "bytes": 14568,
+      "sha256": "8fb80e53a8e1bbff0c405428e895a03984a8175257a9f3b50a50876312ae06cf",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16125,8 +16125,8 @@
     },
     {
       "path": "assets/models/imported/gxhuge.glb",
-      "bytes": 14300,
-      "sha256": "10e4cfc3e67a6626f015b33184da39a7e12aa70291d6e6c4f4f3f72dc574f569",
+      "bytes": 14580,
+      "sha256": "ec404c11afbfa080fe1cb0adcb002253be09f7f64e1c1f9ee77209b5f6aaf59c",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16136,8 +16136,8 @@
     },
     {
       "path": "assets/models/imported/hcanceldeath.glb",
-      "bytes": 97736,
-      "sha256": "1cf4f8a68d6f44c444c1992758e48c9382d4cae00554e1766f1afa8879c2a2ca",
+      "bytes": 97168,
+      "sha256": "73ff1c4c8de19579acae6dfb93f96954e7b89bf71c6928a0d7ade7df258f8f98",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16180,8 +16180,8 @@
     },
     {
       "path": "assets/models/imported/herocloudcyd.glb",
-      "bytes": 11336,
-      "sha256": "585804707469215dbb073d88a1c9a73d9f1e733792d60b27da8ce5dd05351a99",
+      "bytes": 11196,
+      "sha256": "262b9a9bd09b08606eab3fd6c9beae8a48b4f5d8680cf21b23b2c4ed9468bfe9",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16213,8 +16213,8 @@
     },
     {
       "path": "assets/models/imported/heroeva01s2.glb",
-      "bytes": 8468,
-      "sha256": "d914dd4c5d4d88ade1b96a5d9538e122ed45e8da29cf0ee6bc79a8c5871812c4",
+      "bytes": 8564,
+      "sha256": "2d02d71b3d787efb45183d17f376751b5ce63ecf758598cee3cd8127cbef77bf",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16235,8 +16235,8 @@
     },
     {
       "path": "assets/models/imported/herofatezemberform.glb",
-      "bytes": 51584,
-      "sha256": "74d448ef9fd44f62ed70994f8ea40ec1b952cbe75ede627f09780dbaa6c9e6ab",
+      "bytes": 51696,
+      "sha256": "b2767f7499256f3058a068540f8f43dd59712844d2b4ce128bd5022ad311a0a6",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16346,8 +16346,8 @@
     },
     {
       "path": "assets/models/imported/heroluffeattack.glb",
-      "bytes": 45632,
-      "sha256": "94b463059e90bdbaf87b309e7a349198e53c8a96b022db32069eae0cb8c0e86f",
+      "bytes": 45908,
+      "sha256": "bf7437733f1416241b9d918c7df507aff1c5ce2364b4500bac2623fb6a1b1c4b",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16357,8 +16357,8 @@
     },
     {
       "path": "assets/models/imported/heromiku.glb",
-      "bytes": 474288,
-      "sha256": "6876e3187ee0614825ee7c354bcc7026c55cfc40ca933fc6c067e0de5a2aff44",
+      "bytes": 474380,
+      "sha256": "5b9cac6e770cc569ce51b0275ab333844f4c688d22622d1ca435362f1c099b59",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16423,8 +16423,8 @@
     },
     {
       "path": "assets/models/imported/heroraichus3.glb",
-      "bytes": 8468,
-      "sha256": "f5937e65ae31300dba211a22d9d265fae37f7e621349e91bc6c9ce1bb12e0440",
+      "bytes": 8564,
+      "sha256": "5ef24172559aff21a0377576f83dc6c203e90fcc86d889abfdff1e3002bfc98d",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16434,8 +16434,8 @@
     },
     {
       "path": "assets/models/imported/herorider.glb",
-      "bytes": 186736,
-      "sha256": "88754d289521078e4e0c9c9b19fafa8155fe231184705ac6c47caf5e083ce1fe",
+      "bytes": 186756,
+      "sha256": "94ab322e48f8680113c83a55c36935b4ac711c6a9341b093da168dae797908c1",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16445,8 +16445,8 @@
     },
     {
       "path": "assets/models/imported/heroryuk.glb",
-      "bytes": 220712,
-      "sha256": "76e720ece4e932ebc57e239ad777776a8a5a00f9f3462d1ed414eb1b31cbb3b3",
+      "bytes": 220732,
+      "sha256": "cc61fe0641bf4540762e3d8193fe5fdcd9cdc081ca083855b30d02121a742ec2",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16500,8 +16500,8 @@
     },
     {
       "path": "assets/models/imported/heroshanawingsmall.glb",
-      "bytes": 28292,
-      "sha256": "42694144749fe76ead356e417477f9bc69c6bdc31a62c866357356afe5fed9c9",
+      "bytes": 27736,
+      "sha256": "30a120922c479d9963e38f83e59fc21845d9609afdbb58c068d5d9be53e5659e",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16566,8 +16566,8 @@
     },
     {
       "path": "assets/models/imported/humanbloodpeasant.glb",
-      "bytes": 10712,
-      "sha256": "f001a4018d4cee69c6f329e34596b2272172c072357ded51c34e06162d39e6f2",
+      "bytes": 10624,
+      "sha256": "f5ac90db212132a32c7891ba4d49fe0445f042f1bde5fd014d20fe4576999378",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16643,8 +16643,8 @@
     },
     {
       "path": "assets/models/imported/linainvers.glb",
-      "bytes": 229008,
-      "sha256": "b6397b670b2ed47cf4cab32f6a03b9ad6522a2563d3e7b4bc086474737992312",
+      "bytes": 229028,
+      "sha256": "1d499008481edd3d4520219970e18cb4a05bc03a52094af5129bf7cc9c06ac31",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16676,8 +16676,8 @@
     },
     {
       "path": "assets/models/imported/love2.glb",
-      "bytes": 5024,
-      "sha256": "560cee7d154b28f317bd0f853d1a09c12a51473e3d53029404099c88fda162f2",
+      "bytes": 5096,
+      "sha256": "ec96b6fe7629e220d34a28f0ef922e8c5536a442bca569bfd00ace8043660992",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16731,8 +16731,8 @@
     },
     {
       "path": "assets/models/imported/meteor.glb",
-      "bytes": 141960,
-      "sha256": "5cb8a965082306dfaf11dcd469823f6a4f517262657fd62d4a56167dd53ac53e",
+      "bytes": 142244,
+      "sha256": "0b221ef3501c132e012739eb55e918917e5dfd5138dce1163b9965427c4e23b6",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16753,8 +16753,8 @@
     },
     {
       "path": "assets/models/imported/midchildernanohaaura.glb",
-      "bytes": 154872,
-      "sha256": "22469551211f0bcb924773c481c5e79833f4606aec6fb64fc164ebde2a94e698",
+      "bytes": 155060,
+      "sha256": "2dfe30ab1b9ba8d601940f85686dc7155e8bfba055682d9884dc4d527f151591",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16764,8 +16764,8 @@
     },
     {
       "path": "assets/models/imported/minitypeflame.glb",
-      "bytes": 36612,
-      "sha256": "93a85707d160b342cb048bdc7dcc3536fe9d7f65663002abdc3d1737dbb5b03d",
+      "bytes": 36368,
+      "sha256": "c202ce466b2665828f740173ea8e8ee335a77490b5f547f28d1a44e75d0d612f",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16775,8 +16775,8 @@
     },
     {
       "path": "assets/models/imported/mirrorimagecaster.glb",
-      "bytes": 153464,
-      "sha256": "c727faee8a08dfefc52eb2ac183d38fee97408e910e18d9f65e708aa65c76ec4",
+      "bytes": 152716,
+      "sha256": "5db4c27e88b77a086bba64727d821ea0a392bea4a1512f8923373b919f65654e",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16797,8 +16797,8 @@
     },
     {
       "path": "assets/models/imported/ne-shield.glb",
-      "bytes": 143988,
-      "sha256": "b35399aded8fbe83242c27f7013b764536b5b884f1b99d3b20a79908d637b19b",
+      "bytes": 144008,
+      "sha256": "d6d9bd78c8e7581f2db58f6895995ececeaa055f01178288e12efad62b19d13b",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16819,8 +16819,8 @@
     },
     {
       "path": "assets/models/imported/negi.glb",
-      "bytes": 323992,
-      "sha256": "6df7c67b31fd500113a75d48c98a2575cfe0517eee7a5885cadb88ed728aafd6",
+      "bytes": 324180,
+      "sha256": "dd1ff7f962c134b7ffff50727f589219b857c2d574e7fec8eb9c203ae41621b1",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16830,8 +16830,8 @@
     },
     {
       "path": "assets/models/imported/netherstrike.glb",
-      "bytes": 117224,
-      "sha256": "fe7c50c62a37b7fa374727b24147f6ffdc42791044edc3ddc044fe8ef16a4521",
+      "bytes": 117692,
+      "sha256": "12ebc0e8f9c645571759d76b38524d8109212d6e1a22b4030e41ad70e30648de",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16841,8 +16841,8 @@
     },
     {
       "path": "assets/models/imported/neutralbuildingexplosion.glb",
-      "bytes": 155968,
-      "sha256": "c091df132162f82ab2fbf89be7fc18b3abeda5e6ccca3b1ccddba5bcf86e1efe",
+      "bytes": 138748,
+      "sha256": "e2ee7eaf955d93cef997848d014246b9e2ac86bebe348ef773e30ec854713be5",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16863,8 +16863,8 @@
     },
     {
       "path": "assets/models/imported/oblivionaura.glb",
-      "bytes": 78668,
-      "sha256": "4786d2c5c5dbef839ce5eec6682030f803458442713bc0c0caef57e1f745e5ef",
+      "bytes": 78856,
+      "sha256": "df00418397e5b6cb75d8c190dd311d469e1b80dc6f3b45e423c67c7be58133c5",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16885,8 +16885,8 @@
     },
     {
       "path": "assets/models/imported/picacugy.glb",
-      "bytes": 169972,
-      "sha256": "5d7acda5886064dc4cd6a5673ea042d5a5af2a49666d6cb412874e703565f16c",
+      "bytes": 170064,
+      "sha256": "31e2f055770453df381efc9841d4b5ebd3cb9ce4db57137f1eaee3f9095df1e5",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16896,8 +16896,8 @@
     },
     {
       "path": "assets/models/imported/pika.glb",
-      "bytes": 315848,
-      "sha256": "d2743072639cb55a9e0a85948bb9120f959e52c43df8c5f5733f4cfaa3e28caa",
+      "bytes": 316036,
+      "sha256": "876ab7e2f1e5a748e537590d268531337ddb8be286f6c3a559e0f46fd12e70c1",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -16995,8 +16995,8 @@
     },
     {
       "path": "assets/models/imported/sd2.glb",
-      "bytes": 265128,
-      "sha256": "3d4d7c4661231e051a3a34d74f4f2997d7964b2367b3c368a52e042515f39a2d",
+      "bytes": 264488,
+      "sha256": "af0552d6cee4bb1d777ab8c0807c28c825f6a63e306e83d42dbe19698d82d8d0",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -17017,8 +17017,8 @@
     },
     {
       "path": "assets/models/imported/stampedemissiledeath.glb",
-      "bytes": 36036,
-      "sha256": "5ed2d64a411bb5388e4ccac0116a358a7a4e2cfcefb22957226e183c402a21b2",
+      "bytes": 31108,
+      "sha256": "49471d2f6ed390355da7c886a92c4a826b7e42e9232f332ac01e1a8ea08ddc6a",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -17028,8 +17028,8 @@
     },
     {
       "path": "assets/models/imported/steamtankimpact.glb",
-      "bytes": 170544,
-      "sha256": "556a5f3c4a9084d23cc8a36c41eb9f3c452c7a6338d756c332befc72dec6d319",
+      "bytes": 148568,
+      "sha256": "22fbfdeb2b3bc80bf4061994dd07f1b352cf95a76d3bb337e06418eb4eb107b3",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -17050,8 +17050,8 @@
     },
     {
       "path": "assets/models/imported/supershinythingy.glb",
-      "bytes": 70192,
-      "sha256": "8bfabc70dd86715778d39594bc38f5a4d06b6d68a0dd23d0e16eeb8d380b8f5e",
+      "bytes": 70756,
+      "sha256": "dc913613aefbb853e2677b6d1ad8493d017f17dd9646c3c74edc19d6592b502a",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -17061,8 +17061,8 @@
     },
     {
       "path": "assets/models/imported/tectonicfury.glb",
-      "bytes": 55528,
-      "sha256": "41e50bff12f82d02400c77435c6218bb6be9bbe156491949ee8282e5584ece6c",
+      "bytes": 55624,
+      "sha256": "9122832df0cef5fbdd277a1960e4fddf5e383629067db5f83be90130149dc5ad",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -17116,8 +17116,8 @@
     },
     {
       "path": "assets/models/imported/volcanodeath.glb",
-      "bytes": 9232,
-      "sha256": "aaad54bdfdd5a054496c371710ebf5f00c4ae28a08225f25a1ef7487ed4fa3ff",
+      "bytes": 9500,
+      "sha256": "3212eec9fd2fc0a8014080a0fd893d0be60883b5f76b13fae3d6bc8063b23267",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -17127,8 +17127,8 @@
     },
     {
       "path": "assets/models/imported/war3mapimported-poweraura.glb",
-      "bytes": 268524,
-      "sha256": "f0a4adbfd5f4ba6817c8b34072b8e672f90541a62290c6d90bfb8074d601f563",
+      "bytes": 267048,
+      "sha256": "8a5e87d7695c733278c558e522aeda5b5c6726df9168323948eec6a3092ed70d",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -17138,8 +17138,8 @@
     },
     {
       "path": "assets/models/imported/windmissle.glb",
-      "bytes": 28316,
-      "sha256": "883afe5e9be2ab0bda69315dc7a77244dc6b08db7146189dd51fbc4e040d4efd",
+      "bytes": 28836,
+      "sha256": "19f88593204ee003ee8fa1bed9accd819cbea75b0a460d19c1aee9d2b005dd20",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -17149,8 +17149,8 @@
     },
     {
       "path": "assets/models/imported/wuqi.glb",
-      "bytes": 50924,
-      "sha256": "91b73cab7999b38a4ddb386cddff8797cb54765b2e9be8efc951c1c6c8b1e4a1",
+      "bytes": 51016,
+      "sha256": "c577a3d6ec06e51a1c2c5261a400e022bc562a170c490e333db4a175802e0bad",
       "contentType": "model/gltf-binary",
       "kind": "models",
       "refs": [
@@ -18761,8 +18761,8 @@
     },
     {
       "path": "assets/textures/particles/wc3/babyface.png",
-      "bytes": 26245,
-      "sha256": "e773bc7121f8c4b60935fda78d8dd2555b6f01c8c558530e918527ba1801396a",
+      "bytes": 25924,
+      "sha256": "b61928757711c443c8be9aa8f8ba3df2645aad48349a13c4ffdfe659401b4db9",
       "contentType": "image/png",
       "kind": "textures",
       "refs": [
@@ -18808,8 +18808,8 @@
     },
     {
       "path": "assets/textures/particles/wc3/heroeva01effect.png",
-      "bytes": 7672,
-      "sha256": "71f05c016329c16df78677d0375a5aece2f65f074d448806cee7a3f8972929a8",
+      "bytes": 7329,
+      "sha256": "65715c577f7684a056d74ef2fe965e44a2467275138077235dcdd5f314a4a684",
       "contentType": "image/png",
       "kind": "textures",
       "refs": [
@@ -18821,8 +18821,8 @@
     },
     {
       "path": "assets/textures/particles/wc3/ribbonblur1.png",
-      "bytes": 5598,
-      "sha256": "20ffb2f88f1f835be78de86bda5db15b73a5aac8b05e1c0f5b03f46cbc1b6104",
+      "bytes": 5487,
+      "sha256": "34366bee6f80e817c38c0c9012fbecae2c396cc7e5131978aed133559752225f",
       "contentType": "image/png",
       "kind": "textures",
       "refs": [
@@ -18854,8 +18854,8 @@
     },
     {
       "path": "assets/textures/particles/wc3/zap1.png",
-      "bytes": 14557,
-      "sha256": "49db8f5a6f3e9302a824359a8fc2fa56e4ca651a0cb4dc3878f704917365813d",
+      "bytes": 14434,
+      "sha256": "77a447552693bcae85fd9cbab827f35150601ab1645c235fd033cc17817bc05f",
       "contentType": "image/png",
       "kind": "textures",
       "refs": [
@@ -18869,8 +18869,8 @@
     },
     {
       "path": "assets/textures/particles/wc3/zap1b.png",
-      "bytes": 15679,
-      "sha256": "5ef78d62a60b7bcc2b86f7cca8532cfba185f8cf59a7380fee1d72ce549abb97",
+      "bytes": 15465,
+      "sha256": "e8feccaed31e0253bc9bd3a36e8388d2c618f2d8ff151ecdeec2a140cd35cccd",
       "contentType": "image/png",
       "kind": "textures",
       "refs": [

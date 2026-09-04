@@ -193,16 +193,6 @@ export class VfxScriptPlayer {
 
   constructor(private readonly deps: VfxScriptPlayerDeps) {}
 
-  /**
-   * True when this ability's authored script owns the cast presentation.
-   * VfxSystem uses the same live rollback switch and the same script lookup as
-   * the player, so "script replaces default binding" cannot drift into a
-   * second, slightly different rule at the rendering seam.
-   */
-  hasScript(abilityId: string): boolean {
-    return this.deps.enabled() && this.deps.scriptFor(abilityId) !== undefined;
-  }
-
   /** 在 `VfxSystem.handleEvent` 的開頭餵進來（synthesized 事件不會是觸發器型別 ⇒ 不迴圈）。 */
   onEvent(ev: EventMessage, nowMs: number): void {
     if (!this.deps.enabled()) return;
