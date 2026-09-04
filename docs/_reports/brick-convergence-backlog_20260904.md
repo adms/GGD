@@ -28,6 +28,15 @@
 | `tpl-dragon-serpent` | **12** | 38-002 究極暴走黑龍波 | 同上 |
 | `tpl-dragon-shockwave` | **9** | 38-03 邪王炎殺黑龍波 | 同上 |
 
+⛔⛔ **更正（同日稍晚）**：上面那句「分析做完、參數寫好」⭐ 只對一半 ——
+33 格 params **全部沒有 `origin`**（靠 `templateOriginBaseline.json` 棘輪豁免），
+⭐ 而其中 **6 格是 `inert`**（模板自己宣告本版不生效）：
+`serpent`(spreadDeg · serpentineDeg · damageTiming) · `shockwave`(orientation · trailSpacingSec) · `quake`(scatterBox)。
+⚠️ ⭐ `spreadDeg` 的 inert 逐字說引擎「沒有以施法者面向為中心的扇形」，
+而原作 A09I 的兩條側龍正是 facing±45 ⇒ ⛔ **那是定義性行為**。
+⇒ ⭐ §0 的「一個機制解掉 11 塊」要修正成：**一次 `FAMILIES` 擴充讓 11 塊挑得到**，
+⛔ 而其中 3 塊挑到之後仍有 6 格死旋鈕。
+
 ⚠️ ⭐ **⛔ 修法不是把 `status` 翻成 `enabled`。** 系統是 fail-soft
 （`templateFailSoft.test.ts`）⇒ 展開失敗**只降級那一支**，而那一支
 「技能還在，但一個模板效果都沒有」⇒ ⛔ 出貨一招什麼都不做的技能。

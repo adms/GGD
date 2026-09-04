@@ -6,6 +6,7 @@
     "⭐ 看 `wiring`：`node` 要寫成 `{\"kind\":\"spawnModelFx\",\"preset\":\"<id>\"}`；`doc` 要寫成 `{\"template\":{\"ref\":\"<id>\",\"params\":{…}}}`；`both` 兩條都行。",
     "⭐ 逐格看 `params[*].fillsVia` —— 寫錯邊的那一格**不會有任何東西紅**，它只是不會發生。",
     "⛔ `analysedButUnwired` 裡的**不要挑** —— 展開會失敗，而系統是 fail-soft ⇒ 那一支技能**還在、但一個模板效果都沒有**，⛔ 畫面上與「這招就是沒效果」一模一樣。",
+    "⛔⛔ **`inertParams` 裡的每一格填了也不會發生** —— 模板自己宣告的。⭐ `params[*].inert` 帶著逐字理由。⚠️ 今天 12 格，而其中 5 份模板是 `enabled` 且挑得到 —— 包含 `tpl-beam-roll.speed` / `.distance`（光束砲家族，13 個節點在用）。",
     "⚠️ ⭐ 挑一個 `modelKey` 之前查 `modelFxEmitters.modelsWithEmitters`：那顆模型若自帶粒子，`modelFxEmitters.lostByEmitters` 的每一格**寫了也只作用在網格那一半** ⇒ ⛔ 同一顆模型會顯示兩種顏色／兩種大小，而沒有任何東西紅。"
   ],
   "counts": {
@@ -14,6 +15,7 @@
     "analysedButUnwired": 3,
     "shells": 13,
     "sentinels": 1,
+    "inertParamsAcrossPickable": 6,
     "matrixPresent": 154,
     "matrixTheoretical": 325
   },
@@ -39,11 +41,16 @@
         "preset": 13,
         "ref": 0
       },
+      "inertParams": [
+        "speed",
+        "distance"
+      ],
       "params": {
         "modelKey": {
           "type": "docRef",
           "default": "w3x.stock.revivehuman",
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "path": {
           "type": "enum",
@@ -55,7 +62,8 @@
             "radial",
             "static"
           ],
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "anchor": {
           "type": "enum",
@@ -66,32 +74,38 @@
             "target",
             "bone"
           ],
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "speed": {
           "type": "number",
           "default": 30,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": "path 預設 static（2026-08-24 裁決:光束原地開火）⇒ 不位移,speed 讀不到。rollback 把 params.path.default 改回 forward 的那一刻,把這格 inert 拿掉,守衛會逼你。"
         },
         "distance": {
           "type": "number",
           "default": 14,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": "同 speed —— static 不位移,唯一終止條件是 lifeSec。"
         },
         "count": {
           "type": "number",
           "default": 1,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "spacing": {
           "type": "number",
           "default": 2,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "spinDegPerSec": {
           "type": "number",
           "default": 720,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "clip": {
           "type": "enum",
@@ -104,32 +118,38 @@
             "hurt",
             "death"
           ],
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "clipTimeScale": {
           "type": "number",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "scale": {
           "type": "number",
           "default": 2.65,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "tint": {
           "type": "rgb",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "alpha": {
           "type": "number",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "touchRadius": {
           "type": "number",
           "default": 1.5,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "touchSide": {
           "type": "enum",
@@ -138,7 +158,8 @@
             "enemies",
             "allies"
           ],
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "touchDamageTier": {
           "type": "enum",
@@ -150,7 +171,8 @@
             "大",
             "極大"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageType": {
           "type": "enum",
@@ -160,27 +182,32 @@
             "physical",
             "true"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 1,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "soundKey": {
           "type": "docRef",
           "default": "wc3.crushingwavecaster1",
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "arriveSoundKey": {
           "type": "docRef",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "lifeSec": {
           "type": "number",
           "default": 2,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         }
       }
     },
@@ -205,16 +232,19 @@
         "preset": 0,
         "ref": 0
       },
+      "inertParams": [],
       "params": {
         "range": {
           "type": "number",
           "default": 6,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "stopShortUnits": {
           "type": "number",
           "default": 1.8,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damage": {
           "type": "scaling",
@@ -227,7 +257,8 @@
               }
             ]
           },
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageType": {
           "type": "enum",
@@ -237,17 +268,20 @@
             "physical",
             "true"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "arriveVfxId": {
           "type": "docRef",
           "default": "fx.prim.lightning.slash",
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         }
       }
     },
@@ -270,11 +304,13 @@
         "preset": 0,
         "ref": 28
       },
+      "inertParams": [],
       "params": {
         "duration": {
           "type": "number",
           "default": 15,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "modifiers": {
           "type": "statModifiers",
@@ -285,12 +321,14 @@
               "value": 50
             }
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         }
       }
     },
@@ -316,26 +354,31 @@
         "preset": 0,
         "ref": 0
       },
+      "inertParams": [],
       "params": {
         "dashDistance": {
           "type": "number",
           "default": 600,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "dashDurationSec": {
           "type": "number",
           "default": 0.4,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "apexHeight": {
           "type": "number",
           "default": 0,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "radius": {
           "type": "number",
           "default": 300,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damage": {
           "type": "scaling",
@@ -345,7 +388,8 @@
             ],
             "ratios": []
           },
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageType": {
           "type": "enum",
@@ -355,17 +399,20 @@
             "physical",
             "true"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "pushDistance": {
           "type": "number",
           "default": 400,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "pushSpeed": {
           "type": "number",
           "default": 872,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "pushFrom": {
           "type": "enum",
@@ -375,17 +422,20 @@
             "facing",
             "pull"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "pushLaunchHeight": {
           "type": "number",
           "default": 0,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         }
       }
     },
@@ -412,16 +462,19 @@
         "preset": 0,
         "ref": 0
       },
+      "inertParams": [],
       "params": {
         "comboFamily": {
           "type": "docRef",
           "default": "superff7",
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "hitVfx": {
           "type": "docRef",
           "default": "fx.w3x.stock.thunderclapcaster.p00",
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "hitText": {
           "type": "enum",
@@ -432,52 +485,62 @@
             "{{i}}連擊",
             "{{i}}段"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "hitTextSizeScale": {
           "type": "number",
           "default": 1.2,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "hitTextRiseSpeed": {
           "type": "number",
           "default": 1.6,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "hitTextDurationSec": {
           "type": "number",
           "default": 1.1,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "hitTextSizeGrowth": {
           "type": "number",
           "default": 4,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "finisherVfx": {
           "type": "docRef",
           "default": "fx.w3x.stock.warstompcaster.p00",
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "finisherFlashAlpha": {
           "type": "number",
           "default": 0.5,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "finisherFlashSec": {
           "type": "number",
           "default": 0.3,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "finisherShakeAmplitude": {
           "type": "number",
           "default": 0.55,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "finisherShakeSec": {
           "type": "number",
           "default": 0.45,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageType": {
           "type": "enum",
@@ -487,7 +550,8 @@
             "physical",
             "true"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         }
       }
     },
@@ -510,11 +574,13 @@
         "preset": 0,
         "ref": 0
       },
+      "inertParams": [],
       "params": {
         "radius": {
           "type": "number",
           "default": 530,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damage": {
           "type": "scaling",
@@ -524,7 +590,8 @@
             ],
             "ratios": []
           },
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageType": {
           "type": "enum",
@@ -534,12 +601,14 @@
             "physical",
             "true"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         }
       }
     },
@@ -562,11 +631,13 @@
         "preset": 0,
         "ref": 12
       },
+      "inertParams": [],
       "params": {
         "radius": {
           "type": "number",
           "default": 480,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damage": {
           "type": "scaling",
@@ -576,7 +647,8 @@
             ],
             "ratios": []
           },
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageType": {
           "type": "enum",
@@ -586,12 +658,14 @@
             "physical",
             "true"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         }
       }
     },
@@ -616,6 +690,7 @@
         "preset": 0,
         "ref": 0
       },
+      "inertParams": [],
       "params": {
         "mode": {
           "type": "enum",
@@ -624,7 +699,8 @@
             "toPoint",
             "inPlace"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "applyTo": {
           "type": "enum",
@@ -633,22 +709,26 @@
             "self",
             "target"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "apexHeight": {
           "type": "number",
           "default": 600,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "durationSec": {
           "type": "number",
           "default": 0.82,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "landRadius": {
           "type": "number",
           "default": 330,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damage": {
           "type": "scaling",
@@ -658,7 +738,8 @@
             ],
             "ratios": []
           },
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageType": {
           "type": "enum",
@@ -668,12 +749,14 @@
             "physical",
             "true"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0.5,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         }
       }
     },
@@ -698,11 +781,13 @@
         "preset": 2,
         "ref": 0
       },
+      "inertParams": [],
       "params": {
         "modelKey": {
           "type": "docRef",
           "default": "imported.fireblast",
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "path": {
           "type": "enum",
@@ -713,32 +798,38 @@
             "orbit",
             "radial"
           ],
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "speed": {
           "type": "number",
           "default": 27.5,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "distance": {
           "type": "number",
           "default": 12,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "spinDegPerSec": {
           "type": "number",
           "default": 360,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "scale": {
           "type": "number",
           "default": 4.5,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "touchRadius": {
           "type": "number",
           "default": 3.67,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "touchSide": {
           "type": "enum",
@@ -747,7 +838,8 @@
             "enemies",
             "allies"
           ],
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "touchDamageTier": {
           "type": "enum",
@@ -759,12 +851,14 @@
             "大",
             "極大"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "blastRadius": {
           "type": "number",
           "default": 8,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "blastRadiusTier": {
           "type": "enum",
@@ -776,7 +870,8 @@
             "大",
             "極大"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "blastDamageTier": {
           "type": "enum",
@@ -788,12 +883,14 @@
             "大",
             "極大"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "blastApRatio": {
           "type": "number",
           "default": 1.8,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageType": {
           "type": "enum",
@@ -803,12 +900,14 @@
             "physical",
             "true"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 1.233,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         }
       }
     },
@@ -833,21 +932,25 @@
         "preset": 0,
         "ref": 1
       },
+      "inertParams": [],
       "params": {
         "segmentCount": {
           "type": "number",
           "default": 6,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "stepSize": {
           "type": "number",
           "default": 200,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "segmentAoe": {
           "type": "number",
           "default": 400,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damage": {
           "type": "scaling",
@@ -857,7 +960,8 @@
             ],
             "ratios": []
           },
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageType": {
           "type": "enum",
@@ -867,12 +971,14 @@
             "physical",
             "true"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         }
       }
     },
@@ -900,16 +1006,19 @@
         "preset": 0,
         "ref": 0
       },
+      "inertParams": [],
       "params": {
         "hitCount": {
           "type": "number",
           "default": 5,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "hitIntervalSec": {
           "type": "number",
           "default": 0.4,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "perHitDamage": {
           "type": "scaling",
@@ -919,7 +1028,8 @@
             ],
             "ratios": []
           },
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "finisherDamage": {
           "type": "scaling",
@@ -929,12 +1039,14 @@
             ],
             "ratios": []
           },
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "finisherRadius": {
           "type": "number",
           "default": 150,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageType": {
           "type": "enum",
@@ -944,7 +1056,8 @@
             "physical",
             "true"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "lockTarget": {
           "type": "enum",
@@ -954,7 +1067,8 @@
             "root",
             "none"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "casterGuard": {
           "type": "enum",
@@ -964,12 +1078,14 @@
             "magic",
             "none"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "finisherAbility": {
           "type": "docRef",
           "default": null,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "trigger": {
           "type": "enum",
@@ -981,7 +1097,8 @@
             "onBasicAttack",
             "onDamageTaken"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         }
       }
     },
@@ -1006,11 +1123,13 @@
         "preset": 2,
         "ref": 0
       },
+      "inertParams": [],
       "params": {
         "modelKey": {
           "type": "docRef",
           "default": "w3x.stock.flamestrike1",
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "path": {
           "type": "enum",
@@ -1022,52 +1141,62 @@
             "radial",
             "static"
           ],
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "count": {
           "type": "number",
           "default": 6,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "spacing": {
           "type": "number",
           "default": 3.67,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "lifeSec": {
           "type": "number",
           "default": 2,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "scale": {
           "type": "number",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "spinDegPerSec": {
           "type": "number",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "tint": {
           "type": "rgb",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "alpha": {
           "type": "number",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "soundKey": {
           "type": "docRef",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "arriveSoundKey": {
           "type": "docRef",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         }
       }
     },
@@ -1092,11 +1221,13 @@
         "preset": 29,
         "ref": 0
       },
+      "inertParams": [],
       "params": {
         "modelKey": {
           "type": "docRef",
           "default": "imported.heromusashimiyamoto",
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "path": {
           "type": "enum",
@@ -1108,57 +1239,68 @@
             "radial",
             "static"
           ],
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "count": {
           "type": "number",
           "default": 1,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "distance": {
           "type": "number",
           "default": 0.1,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "speed": {
           "type": "number",
           "default": 1,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "lifeSec": {
           "type": "number",
           "default": 2.5,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "scale": {
           "type": "number",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "spinDegPerSec": {
           "type": "number",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "tint": {
           "type": "rgb",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "alpha": {
           "type": "number",
           "default": 0.9,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "soundKey": {
           "type": "docRef",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "arriveSoundKey": {
           "type": "docRef",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         }
       }
     },
@@ -1183,11 +1325,13 @@
         "preset": 12,
         "ref": 0
       },
+      "inertParams": [],
       "params": {
         "modelKey": {
           "type": "docRef",
           "default": "w3x.stock.monsoonbolttarget",
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "path": {
           "type": "enum",
@@ -1199,7 +1343,8 @@
             "radial",
             "static"
           ],
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "anchor": {
           "type": "enum",
@@ -1209,7 +1354,8 @@
             "point",
             "target"
           ],
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "clip": {
           "type": "enum",
@@ -1222,42 +1368,50 @@
             "hurt",
             "death"
           ],
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "lifeSec": {
           "type": "number",
           "default": 1,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "scale": {
           "type": "number",
           "default": 8,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "spinDegPerSec": {
           "type": "number",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "tint": {
           "type": "rgb",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "alpha": {
           "type": "number",
           "default": 1,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "soundKey": {
           "type": "docRef",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "arriveSoundKey": {
           "type": "docRef",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         }
       }
     },
@@ -1282,11 +1436,13 @@
         "preset": 2,
         "ref": 0
       },
+      "inertParams": [],
       "params": {
         "modelKey": {
           "type": "docRef",
           "default": "imported.blackhole",
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "path": {
           "type": "enum",
@@ -1298,57 +1454,68 @@
             "radial",
             "static"
           ],
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "count": {
           "type": "number",
           "default": 3,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "speed": {
           "type": "number",
           "default": 7.7,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "distance": {
           "type": "number",
           "default": 8,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "spinDegPerSec": {
           "type": "number",
           "default": 720,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "scale": {
           "type": "number",
           "default": 0.6,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "lifeSec": {
           "type": "number",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "tint": {
           "type": "rgb",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "alpha": {
           "type": "number",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "soundKey": {
           "type": "docRef",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "arriveSoundKey": {
           "type": "docRef",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         }
       }
     },
@@ -1373,11 +1540,13 @@
         "preset": 5,
         "ref": 0
       },
+      "inertParams": [],
       "params": {
         "modelKey": {
           "type": "docRef",
           "default": "imported.blackhole",
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "path": {
           "type": "enum",
@@ -1389,52 +1558,62 @@
             "radial",
             "static"
           ],
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "speed": {
           "type": "number",
           "default": 30,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "distance": {
           "type": "number",
           "default": 14,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "spinDegPerSec": {
           "type": "number",
           "default": 720,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "scale": {
           "type": "number",
           "default": 0.6,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "lifeSec": {
           "type": "number",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "tint": {
           "type": "rgb",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "alpha": {
           "type": "number",
           "default": 1,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "soundKey": {
           "type": "docRef",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "arriveSoundKey": {
           "type": "docRef",
           "default": null,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         }
       }
     },
@@ -1462,26 +1641,31 @@
         "preset": 0,
         "ref": 0
       },
+      "inertParams": [],
       "params": {
         "markId": {
           "type": "docRef",
           "default": "godie-hapm.passive",
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "initial": {
           "type": "number",
           "default": 12,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "max": {
           "type": "number",
           "default": 12,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "durationSec": {
           "type": "number",
           "default": -1,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "resetOn": {
           "type": "enum",
@@ -1491,7 +1675,8 @@
             "round",
             "never"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "perStackLost": {
           "type": "statModifiers",
@@ -1507,7 +1692,8 @@
               "value": 0.1
             }
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "lethalMode": {
           "type": "enum",
@@ -1516,17 +1702,20 @@
             "save",
             "none"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "lethalConsume": {
           "type": "number",
           "default": 1,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "surviveHpPct": {
           "type": "number",
           "default": 0.01,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "lethalDamageTypes": {
           "type": "enum",
@@ -1538,17 +1727,20 @@
             "magic",
             "true"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "internalCooldown": {
           "type": "number",
           "default": 0.5,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "invulnerableSec": {
           "type": "number",
           "default": 1.5,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "invulnerableScope": {
           "type": "enum",
@@ -1557,27 +1749,32 @@
             "damageAndControl",
             "damageOnly"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "restoreHealthPct": {
           "type": "number",
           "default": 0.5,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "aoeRadius": {
           "type": "number",
           "default": 6,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "knockbackDistance": {
           "type": "number",
           "default": 4,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "knockbackSpeed": {
           "type": "number",
           "default": 16,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "knockbackFrom": {
           "type": "enum",
@@ -1587,17 +1784,20 @@
             "facing",
             "pull"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "stunSec": {
           "type": "number",
           "default": 0.5,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "stunStatusId": {
           "type": "docRef",
           "default": "trial-stun",
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         }
       }
     },
@@ -1623,6 +1823,7 @@
         "preset": 0,
         "ref": 0
       },
+      "inertParams": [],
       "params": {
         "event": {
           "type": "enum",
@@ -1631,7 +1832,8 @@
             "onBasicAttack",
             "onDamageDealt"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "condition": {
           "type": "condition",
@@ -1671,12 +1873,14 @@
               }
             ]
           },
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "chance": {
           "type": "number",
           "default": null,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "bonusDamage": {
           "type": "scaling",
@@ -1686,7 +1890,8 @@
             ],
             "ratios": []
           },
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageType": {
           "type": "enum",
@@ -1696,12 +1901,14 @@
             "physical",
             "true"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "internalCooldown": {
           "type": "number",
           "default": 0,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         }
       }
     },
@@ -1726,11 +1933,15 @@
         "preset": 0,
         "ref": 0
       },
+      "inertParams": [
+        "reflectRadius"
+      ],
       "params": {
         "chance": {
           "type": "number",
           "default": 1,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "reflectDamage": {
           "type": "scaling",
@@ -1740,7 +1951,8 @@
             ],
             "ratios": []
           },
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageType": {
           "type": "enum",
@@ -1750,17 +1962,20 @@
             "physical",
             "true"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "reflectRadius": {
           "type": "number",
           "default": 900,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": "hook 無範圍結算：反擊只打觸發者，半徑不生效"
         },
         "internalCooldown": {
           "type": "number",
           "default": 0,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         }
       }
     },
@@ -1785,16 +2000,21 @@
         "preset": 0,
         "ref": 1
       },
+      "inertParams": [
+        "aim"
+      ],
       "params": {
         "rayCount": {
           "type": "number",
           "default": 12,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "reach": {
           "type": "number",
           "default": 256,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "aim": {
           "type": "enum",
@@ -1803,12 +2023,14 @@
             "inward",
             "outward"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": "本版把整圈折算成一個圓盤:向內收與向外放的命中集合完全相同(兩者都是半徑=reach 的圓),所以這個選擇目前不改變任何結果。P2 有了逐道投射體之後才會生效 —— 現在填它是為了把原作的實測值留在檔案裡"
         },
         "rayIntervalSec": {
           "type": "number",
           "default": 0.3,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damage": {
           "type": "scaling",
@@ -1818,7 +2040,8 @@
             ],
             "ratios": []
           },
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageType": {
           "type": "enum",
@@ -1828,12 +2051,14 @@
             "physical",
             "true"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         }
       }
     },
@@ -1858,16 +2083,19 @@
         "preset": 0,
         "ref": 5
       },
+      "inertParams": [],
       "params": {
         "intervalSec": {
           "type": "number",
           "default": 1,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "durationSec": {
           "type": "number",
           "default": 5,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "radiusTier": {
           "type": "enum",
@@ -1879,7 +2107,8 @@
             "大",
             "極大"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "anchor": {
           "type": "enum",
@@ -1888,7 +2117,8 @@
             "point",
             "caster"
           ],
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "applyTo": {
           "type": "enum",
@@ -1897,7 +2127,8 @@
             "enemies",
             "allies"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageTier": {
           "type": "enum",
@@ -1909,7 +2140,8 @@
             "大",
             "極大"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageType": {
           "type": "enum",
@@ -1919,17 +2151,20 @@
             "physical",
             "true"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "hitVfx": {
           "type": "docRef",
           "default": null,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         }
       }
     },
@@ -1954,6 +2189,9 @@
         "preset": 0,
         "ref": 8
       },
+      "inertParams": [
+        "proxyCount"
+      ],
       "params": {
         "anchor": {
           "type": "enum",
@@ -1963,12 +2201,14 @@
             "point",
             "target"
           ],
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "radius": {
           "type": "number",
           "default": 375,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damage": {
           "type": "scaling",
@@ -1978,7 +2218,8 @@
             ],
             "ratios": []
           },
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageType": {
           "type": "enum",
@@ -1988,7 +2229,8 @@
             "physical",
             "true"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "statusId": {
           "type": "enum",
@@ -2000,22 +2242,26 @@
             "slow30",
             "slow40"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "statusDurationSec": {
           "type": "number",
           "default": 2,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "proxyCount": {
           "type": "number",
           "default": 1,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": "本版沒有「同一發 payload 同時落在多個錨點」的詞彙。原作有兩支這樣做:37-03 災難之牆在面向+90° 上排 9 隻牆單位(間距 100u, offset +400..-400, j:44568-44574)、94-02 橘山斬空破往 45/135/225/315 四個角各推一道震盪波(j:53912-53941)。填了會被忽略 —— 效果只在單一錨點結算一次。留著是為了把原作的實測值留在檔案裡"
         }
       }
     },
@@ -2040,11 +2286,13 @@
         "preset": 0,
         "ref": 0
       },
+      "inertParams": [],
       "params": {
         "radius": {
           "type": "number",
           "default": 600,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damage": {
           "type": "scaling",
@@ -2054,7 +2302,8 @@
             ],
             "ratios": []
           },
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageType": {
           "type": "enum",
@@ -2064,7 +2313,8 @@
             "physical",
             "true"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "statusId": {
           "type": "enum",
@@ -2074,17 +2324,20 @@
             "burnstun",
             "slow30"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "statusDurationSec": {
           "type": "number",
           "default": 4,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         }
       }
     },
@@ -2109,11 +2362,13 @@
         "preset": 2,
         "ref": 0
       },
+      "inertParams": [],
       "params": {
         "modelKey": {
           "type": "docRef",
           "default": "imported.frostnova",
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "path": {
           "type": "enum",
@@ -2124,37 +2379,44 @@
             "orbit",
             "radial"
           ],
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "count": {
           "type": "number",
           "default": 12,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "speed": {
           "type": "number",
           "default": 6,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "distance": {
           "type": "number",
           "default": 4.5,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "spinDegPerSec": {
           "type": "number",
           "default": 180,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "scale": {
           "type": "number",
           "default": 3,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "touchRadius": {
           "type": "number",
           "default": 2.5,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "touchSide": {
           "type": "enum",
@@ -2163,7 +2425,8 @@
             "enemies",
             "allies"
           ],
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "touchDamageTier": {
           "type": "enum",
@@ -2175,7 +2438,8 @@
             "大",
             "極大"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageType": {
           "type": "enum",
@@ -2185,12 +2449,14 @@
             "physical",
             "true"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 1.233,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         }
       }
     },
@@ -2215,16 +2481,19 @@
         "preset": 0,
         "ref": 0
       },
+      "inertParams": [],
       "params": {
         "count": {
           "type": "number",
           "default": 9,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "intervalSec": {
           "type": "number",
           "default": 0.1,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "impactDamage": {
           "type": "scaling",
@@ -2234,7 +2503,8 @@
             ],
             "ratios": []
           },
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageType": {
           "type": "enum",
@@ -2244,17 +2514,20 @@
             "physical",
             "true"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "impactRadius": {
           "type": "number",
           "default": 320,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "scatterRadius": {
           "type": "number",
           "default": 225,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "payout": {
           "type": "enum",
@@ -2263,17 +2536,20 @@
             "perImpact",
             "onceAtCast"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "openingDamage": {
           "type": "scaling",
           "default": null,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         }
       }
     },
@@ -2296,6 +2572,7 @@
         "preset": 0,
         "ref": 22
       },
+      "inertParams": [],
       "params": {
         "damage": {
           "type": "scaling",
@@ -2305,7 +2582,8 @@
             ],
             "ratios": []
           },
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageType": {
           "type": "enum",
@@ -2315,12 +2593,14 @@
             "physical",
             "true"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         }
       }
     },
@@ -2345,11 +2625,15 @@
         "preset": 0,
         "ref": 3
       },
+      "inertParams": [
+        "championId"
+      ],
       "params": {
         "count": {
           "type": "number",
           "default": 1,
-          "fillsVia": "spawnModelFx.preset"
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
         },
         "body": {
           "type": "enum",
@@ -2358,27 +2642,32 @@
             "champion",
             "self"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "championId": {
           "type": "docRef",
           "default": null,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": "⛔ 只有 `body:\"champion\"` 時才讀得到它；`self`（本家族的預設）時由 sim 端填施法者自己 ⇒ 它沒有一個有意義的預設。"
         },
         "durationSec": {
           "type": "number",
           "default": 10,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageMult": {
           "type": "number",
           "default": 1,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "hpMult": {
           "type": "number",
           "default": 1,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "formation": {
           "type": "enum",
@@ -2388,17 +2677,20 @@
             "line",
             "scatter"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "spread": {
           "type": "number",
           "default": 2,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "maxAlive": {
           "type": "number",
           "default": 0,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "onOwnerDeath": {
           "type": "enum",
@@ -2407,7 +2699,8 @@
             "despawn",
             "persist"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "cleanse": {
           "type": "enum",
@@ -2417,12 +2710,14 @@
             "status",
             "all"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         }
       }
     },
@@ -2447,6 +2742,7 @@
         "preset": 0,
         "ref": 0
       },
+      "inertParams": [],
       "params": {
         "destination": {
           "type": "enum",
@@ -2456,27 +2752,32 @@
             "castPoint",
             "rallyToCaster"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0.5,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "travelSec": {
           "type": "number",
           "default": 0.067,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "arriveRadius": {
           "type": "number",
           "default": 150,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damage": {
           "type": "scaling",
           "default": null,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageType": {
           "type": "enum",
@@ -2486,7 +2787,8 @@
             "physical",
             "true"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         }
       }
     },
@@ -2511,36 +2813,43 @@
         "preset": 0,
         "ref": 1
       },
+      "inertParams": [],
       "params": {
         "stepSize": {
           "type": "number",
           "default": 45,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "stepCount": {
           "type": "number",
           "default": 20,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "stepIntervalSec": {
           "type": "number",
           "default": 0.03,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "aoePerStep": {
           "type": "number",
           "default": 200,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "stepVfx": {
           "type": "docRef",
           "default": null,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "terminalBurst": {
           "type": "number",
           "default": 450,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damage": {
           "type": "scaling",
@@ -2550,7 +2859,8 @@
             ],
             "ratios": []
           },
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "damageType": {
           "type": "enum",
@@ -2560,12 +2870,14 @@
             "physical",
             "true"
           ],
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
-          "fillsVia": "template.ref → expand()"
+          "fillsVia": "template.ref → expand()",
+          "inert": null
         }
       }
     }

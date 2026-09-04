@@ -17,6 +17,10 @@
    - `doc`  → `{"template":{"ref":"<id>","params":{…}}}`
    - `both` → 兩條都行
 3. 逐格看 `params[*].fillsVia`。⛔ **寫錯邊的那一格不會有任何東西紅，它只是不會發生。**
+3b. ⛔⛔ **`inertParams` 裡的每一格填了也不會發生** —— 模板自己宣告的，理由在
+   `params[*].inert`。⚠️ 今天 **6 格**落在可挑的 type 上，⭐ 包含
+   **`tpl-beam-roll.speed` / `.distance`**（＝你 10 個光束變體的第一順位那份，13 個節點在用）。
+   ⇒ ⛔ 上一版契約**沒有揭露這一格** —— 是我的缺口，已補。
 4. ⛔ `analysedButUnwired` 的今天不要挑（展開會失敗，而系統 fail-soft ⇒
    那支技能**還在、但一個模板效果都沒有**，你這側看到的是綠 badge）。
 
@@ -76,8 +80,15 @@
 ## 3. 我在你交回的東西裡發現的一批「做完沒收斂」
 
 `tpl-dragon-quake`(12 格) · `tpl-dragon-serpent`(12) · `tpl-dragon-shockwave`(9) ——
-完整 params ＋ exemplar ＋ 逐行讀過 JASS 的 description，而 `expand.ts` 的 `FAMILIES`
-沒有它們的條目。⇒ **這是 Main 的工作，我補那 3 個條目**，⛔ 不是你的。
+exemplar 與 description 都指得到 `A09I` 並逐行讀過，而 `expand.ts` 的 `FAMILIES`
+沒有它們的條目。⇒ **這是 Main 的工作**，⛔ 不是你的。
+
+⛔⛔ **更正我上一版的一句話**：我寫「補 3 個 `FAMILIES` 條目就好」—— ⭐ 那是誇大的。
+量到：33 格 params **全部沒有 `origin`**（靠棘輪豁免著），
+⭐ 而其中 **6 格是 `inert`**（模板自己宣告本版不生效）。
+⚠️ `tpl-dragon-serpent.spreadDeg` 的 inert 逐字說 `spawnModelFx.path`「沒有以施法者
+面向為中心的扇形」，⭐ 而原作 A09I 的兩條側龍正是 facing±45 ⇒ ⛔ 那是**定義性行為**。
+⇒ 補條目讓它們挑得到是一步，⛔ 但那之後仍有 6 格旋鈕是死的。
 
 ⚠️ ⛔ 而修法不是把 `status` 翻成 enabled —— 那會出貨一招什麼都不做的技能。
 已加閘：`packages/shared/src/content/templateStatusIsHonest.test.ts`，**兩個方向都關**

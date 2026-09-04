@@ -211,6 +211,26 @@ w3xArtFamilies.ts:579     doc.id = id                      ← 同上
 「技能還在，但**一個模板效果都沒有**」⇒ ⛔ 出貨一招什麼都不做的技能，
 而你那一側看到的是綠色 badge。⇒ ⭐ 正解是**補 3 個 `FAMILIES` 條目**。
 
+### ⛔⛔ 更正（2026-09-04，⭐ 我自己推翻上一版的一句話）
+
+上一版我寫「三份**都有完整的 `params`、`exemplar` 與逐行讀過 JASS 的 `description`**，
+⇒ 補 3 個 `FAMILIES` 條目就好」。⭐ 前半成立，⛔ **後半是誇大的**。逐項量到：
+
+| | 量到的 |
+|---|---|
+| `exemplar` ＋ `description` | ⭐ 成立 —— 三份都指得到 `A09I` 並逐行讀過 |
+| `params` 的 `origin` | ⛔ **33 格全部沒有**（靠 `templateOriginBaseline.json` 的棘輪豁免著） |
+| ⭐ **`inert`（模板自己宣告「本版不生效」）** | ⛔ **33 格裡有 6 格** —— `serpent`: `spreadDeg`/`serpentineDeg`/`damageTiming` · `shockwave`: `orientation`/`trailSpacingSec` · `quake`: `scatterBox` |
+
+⚠️ ⭐ 而 `tpl-dragon-serpent.spreadDeg` 的 `inert` 逐字寫著：
+「`spawnModelFx.path` 只有 forward／toTarget／radial／orbit，**沒有『以施法者面向為中心的扇形』**⋯
+⭐ 原作 A09I 的兩條側龍正是 facing±45」——
+⇒ ⛔ **那是這一族的定義性行為，而引擎表達不了。**
+
+⇒ ⭐ 正確的說法：**補 `FAMILIES` 條目讓它們挑得到是一步，⛔ 但那一步之後
+它們仍有 6 格旋鈕是死的** —— 要先做 `path` 的扇形機制、`damageTiming` 與
+`orientation` 的載體。⛔ 我先前把「一次擴充解掉 11 塊」講得太乾淨了。
+
 ⭐ 這正是 owner 逐字說的那件事：
 > 「特效分析製作完**沒有收斂成果變成積木重複使用**」
 

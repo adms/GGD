@@ -85,6 +85,14 @@ interface Slot {
   default?: unknown;
   type?: string;
   values?: unknown[];
+  /**
+   * ⭐⭐ 模板**自己宣告**「這一格本版不生效」的理由。
+   * ⚠️ 2026-09-04 量到 **12 格**（8 份模板），⛔ 而其中 **5 份是 `enabled` 且今天挑得到** ——
+   * 包含 `tpl-beam-roll.speed` / `.distance`（⭐ 光束砲家族，13 個節點在用）。
+   * ⇒ ⛔ 契約不揭露它 ＝ 外部編輯器會填一格**永遠不會發生**的數字（第一·五守則），
+   *   而 schema 收、`content:build` 綠、⛔ 沒有任何東西紅。
+   */
+  inert?: string;
 }
 interface Tpl {
   id: string;
@@ -250,6 +258,8 @@ const rows = templates.map((t) => {
      */
     wiring: nodeSlots.length > 0 ? (keys.length > nodeSlots.length ? "both" : "node") : "doc",
     usedVia: { preset: presetUses, ref: refUses },
+    /** ⛔ 這幾格**填了也不會發生** —— 模板自己宣告的（見 `params[*].inert` 的理由）。 */
+    inertParams: keys.filter((k) => (t.params ?? {})[k]?.inert !== undefined),
     params: Object.fromEntries(
       keys.map((k) => {
         const s = (t.params ?? {})[k]!;
@@ -261,6 +271,8 @@ const rows = templates.map((t) => {
             ...(s.values ? { values: s.values } : {}),
             /** ⭐ 這一格是**誰**填的 —— 挑錯邊就是失敗形態⑧。 */
             fillsVia: NODE_SLOTS.has(k) ? "spawnModelFx.preset" : "template.ref → expand()",
+            /** ⛔ 非 null ＝ 模板自己宣告「本版不生效」⇒ ⭐ 填了也不會發生。 */
+            inert: s.inert ?? null,
           },
         ];
       }),
@@ -293,6 +305,9 @@ const catalog = {
     "⭐ 逐格看 `params[*].fillsVia` —— 寫錯邊的那一格**不會有任何東西紅**，它只是不會發生。",
     "⛔ `analysedButUnwired` 裡的**不要挑** —— 展開會失敗，而系統是 fail-soft ⇒ " +
       "那一支技能**還在、但一個模板效果都沒有**，⛔ 畫面上與「這招就是沒效果」一模一樣。",
+    "⛔⛔ **`inertParams` 裡的每一格填了也不會發生** —— 模板自己宣告的。" +
+      "⭐ `params[*].inert` 帶著逐字理由。⚠️ 今天 12 格，而其中 5 份模板是 `enabled` 且挑得到 —— " +
+      "包含 `tpl-beam-roll.speed` / `.distance`（光束砲家族，13 個節點在用）。",
     "⚠️ ⭐ 挑一個 `modelKey` 之前查 `modelFxEmitters.modelsWithEmitters`：" +
       "那顆模型若自帶粒子，`modelFxEmitters.lostByEmitters` 的每一格**寫了也只作用在網格那一半** " +
       "⇒ ⛔ 同一顆模型會顯示兩種顏色／兩種大小，而沒有任何東西紅。",
@@ -303,6 +318,7 @@ const catalog = {
     analysedButUnwired: analysedButUnwired.length,
     shells: shells.length,
     sentinels: sentinels.length,
+    inertParamsAcrossPickable: pickable.reduce((n, t) => n + t.inertParams.length, 0),
     matrixPresent: mx.present.length,
     matrixTheoretical: mx.elements.length * mx.shapes.length,
   },
@@ -373,14 +389,20 @@ function md(): string {
   L.push("");
   L.push("## ⭐ 可挑的 type（`expand()` 真的跑得過）");
   L.push("");
-  L.push("| id | 佈線 | 參數 | preset 用量 | ref 用量 | gap | exemplar |");
-  L.push("|---|---|---:|---:|---:|---:|---|");
+  L.push("| id | 佈線 | 參數 | ⛔ inert | preset 用量 | ref 用量 | gap | exemplar |");
+  L.push("|---|---|---:|---|---:|---:|---:|---|");
   for (const t of catalog.types) {
+    const inert = t.inertParams.length > 0 ? `⛔ ${t.inertParams.join(" ")}` : "—";
     L.push(
-      `| \`${t.id}\` | \`${t.wiring}\` | ${Object.keys(t.params).length} | ${t.usedVia.preset} | ` +
+      `| \`${t.id}\` | \`${t.wiring}\` | ${Object.keys(t.params).length} | ${inert} | ${t.usedVia.preset} | ` +
         `${t.usedVia.ref} | ${t.gapScore ?? "?"} | ${t.exemplar?.skill ?? "⛔ 未填"} |`,
     );
   }
+  L.push("");
+  L.push(
+    `⛔⛔ **⛔ inert 那一欄的每一格填了也不會發生** —— 模板自己宣告的（理由在 JSON 的 ` +
+      `\`params[*].inert\`）。今天 **${catalog.counts.inertParamsAcrossPickable} 格**落在可挑的 type 上。`,
+  );
   L.push("");
   L.push("## ⭐⭐ 分析做完了，而引擎沒有展開路徑（**收斂 backlog**）");
   L.push("");
