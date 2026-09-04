@@ -5,7 +5,8 @@
     "⭐ 只挑 `expands: true` 的。⛔ `declaredStatus` 是宣告，`expands` 是量出來的事實。",
     "⭐ 看 `wiring`：`node` 要寫成 `{\"kind\":\"spawnModelFx\",\"preset\":\"<id>\"}`；`doc` 要寫成 `{\"template\":{\"ref\":\"<id>\",\"params\":{…}}}`；`both` 兩條都行。",
     "⭐ 逐格看 `params[*].fillsVia` —— 寫錯邊的那一格**不會有任何東西紅**，它只是不會發生。",
-    "⛔ `analysedButUnwired` 裡的**不要挑** —— 展開會失敗，而系統是 fail-soft ⇒ 那一支技能**還在、但一個模板效果都沒有**，⛔ 畫面上與「這招就是沒效果」一模一樣。"
+    "⛔ `analysedButUnwired` 裡的**不要挑** —— 展開會失敗，而系統是 fail-soft ⇒ 那一支技能**還在、但一個模板效果都沒有**，⛔ 畫面上與「這招就是沒效果」一模一樣。",
+    "⚠️ ⭐ 挑一個 `modelKey` 之前查 `modelFxEmitters.modelsWithEmitters`：那顆模型若自帶粒子，`modelFxEmitters.lostByEmitters` 的每一格**寫了也只作用在網格那一半** ⇒ ⛔ 同一顆模型會顯示兩種顏色／兩種大小，而沒有任何東西紅。"
   ],
   "counts": {
     "templates": 46,
@@ -2675,6 +2676,200 @@
       "why": "⚠️ 這一格不是一台做得出來的機器，是普查的分流終點：永遠不會有參數，也永遠不會 enabled。25 張行為卡落在這裡，逐張讀過 war3map.j 之後分成四種，四種的去處都不在鑄技工坊。① 觸發清單真的是空的（11 支；HERO_TRIGGERS.json 該英雄 triggerCount=0，效果整個在物件編輯器那一側，該走 w3u 匯入而不是模板）。② 只剩全域宣告、從沒編譯進去的廢案（A0YV 七進七出、A0IK 咲夜時符、A0IL 靜止飛刀、gg_trg_DragonMan、gg_trg_Chicken_*；本體留在 CUSTOM_TEXT.json）。③ 觸發裡只有裝飾（58-03 就決定是你了!小智 j:40241 只 PlaySoundBJ；84-01 冷笑話 j:51367 只擲八選一漂浮字），該走 vfxLayers 與音效綁定。④ 純記帳（37-02 黑核晶只管同時存在上限、80-01 天下無雙只累加擊殺數）。引擎支援度標 0 是刻意的：綠燈會讓這張永遠按不下去的卡看起來按得下去。"
     }
   ],
+  "modelFxEmitters": {
+    "note": "⛔ `model@1.fxEmitters` 的 emitter 只拿得到一個世界座標（`modelFxRig.ts:404` 的 `spawnTrail?(vfxId,x,y,z)`）⇒ 下列欄位**寫了也不會傳給粒子那一半**。⚠️ ⭐ `spawnVfx` 那條路（`schema/effects/spawnVfx.ts`）**同樣**不吃 scale/tint/alpha/yaw —— 兩條是各自獨立的窄通道，⛔ 修一條治不了另一條。",
+    "lostByEmitters": [
+      "scale",
+      "scaleAxis",
+      "tint",
+      "alpha",
+      "clipTimeScale",
+      "spinDegPerSec",
+      "count",
+      "spacing"
+    ],
+    "modelsWithEmitters": [
+      {
+        "modelKey": "w3x.stock.awaken",
+        "emitterCount": 3
+      },
+      {
+        "modelKey": "w3x.stock.flamestrike1",
+        "emitterCount": 5
+      },
+      {
+        "modelKey": "w3x.stock.fragdriller",
+        "emitterCount": 1
+      },
+      {
+        "modelKey": "w3x.stock.humanbloodpeasant",
+        "emitterCount": 1
+      },
+      {
+        "modelKey": "w3x.stock.nedeathsmall",
+        "emitterCount": 8
+      },
+      {
+        "modelKey": "w3x.stock.reddragonmissile",
+        "emitterCount": 4
+      },
+      {
+        "modelKey": "w3x.stock.revivehuman",
+        "emitterCount": 3
+      },
+      {
+        "modelKey": "w3x.stock.thunderclapcaster",
+        "emitterCount": 1
+      },
+      {
+        "modelKey": "w3x.stock.volcanodeath",
+        "emitterCount": 2
+      }
+    ],
+    "affectedNodes": [
+      {
+        "ability": "godie-e002.e",
+        "modelKey": "w3x.stock.fragdriller",
+        "emitterCount": 1,
+        "fieldsLost": [
+          "scale",
+          "clipTimeScale"
+        ]
+      },
+      {
+        "ability": "godie-e002.e",
+        "modelKey": "w3x.stock.revivehuman",
+        "emitterCount": 3,
+        "fieldsLost": [
+          "scaleAxis"
+        ]
+      },
+      {
+        "ability": "godie-e00l.e",
+        "modelKey": "w3x.stock.fragdriller",
+        "emitterCount": 1,
+        "fieldsLost": [
+          "scale",
+          "clipTimeScale"
+        ]
+      },
+      {
+        "ability": "godie-e00l.e",
+        "modelKey": "w3x.stock.revivehuman",
+        "emitterCount": 3,
+        "fieldsLost": [
+          "scaleAxis"
+        ]
+      },
+      {
+        "ability": "godie-e00r.r",
+        "modelKey": "w3x.stock.awaken",
+        "emitterCount": 3,
+        "fieldsLost": [
+          "scale",
+          "scaleAxis"
+        ]
+      },
+      {
+        "ability": "godie-edem.e",
+        "modelKey": "w3x.stock.thunderclapcaster",
+        "emitterCount": 1,
+        "fieldsLost": [
+          "scale",
+          "tint"
+        ]
+      },
+      {
+        "ability": "godie-h02r.r",
+        "modelKey": "w3x.stock.revivehuman",
+        "emitterCount": 3,
+        "fieldsLost": [
+          "scale",
+          "scaleAxis"
+        ]
+      },
+      {
+        "ability": "godie-hgam.r",
+        "modelKey": "w3x.stock.revivehuman",
+        "emitterCount": 3,
+        "fieldsLost": [
+          "scale",
+          "scaleAxis"
+        ]
+      },
+      {
+        "ability": "godie-n01c.e",
+        "modelKey": "w3x.stock.reddragonmissile",
+        "emitterCount": 4,
+        "fieldsLost": [
+          "scale",
+          "count",
+          "spacing"
+        ]
+      },
+      {
+        "ability": "godie-nbbc.e",
+        "modelKey": "w3x.stock.reddragonmissile",
+        "emitterCount": 4,
+        "fieldsLost": [
+          "scale",
+          "count",
+          "spacing"
+        ]
+      },
+      {
+        "ability": "godie-o00x.r",
+        "modelKey": "w3x.stock.flamestrike1",
+        "emitterCount": 5,
+        "fieldsLost": []
+      },
+      {
+        "ability": "godie-o00x.r",
+        "modelKey": "w3x.stock.fragdriller",
+        "emitterCount": 1,
+        "fieldsLost": [
+          "scale",
+          "clipTimeScale"
+        ]
+      },
+      {
+        "ability": "godie-o00x.r",
+        "modelKey": "w3x.stock.revivehuman",
+        "emitterCount": 3,
+        "fieldsLost": [
+          "scaleAxis"
+        ]
+      },
+      {
+        "ability": "godie-ogrh.r",
+        "modelKey": "w3x.stock.flamestrike1",
+        "emitterCount": 5,
+        "fieldsLost": []
+      },
+      {
+        "ability": "godie-ogrh.r",
+        "modelKey": "w3x.stock.fragdriller",
+        "emitterCount": 1,
+        "fieldsLost": [
+          "scale",
+          "clipTimeScale"
+        ]
+      },
+      {
+        "ability": "godie-ogrh.r",
+        "modelKey": "w3x.stock.revivehuman",
+        "emitterCount": 3,
+        "fieldsLost": [
+          "scaleAxis"
+        ]
+      }
+    ],
+    "counts": {
+      "modelsWithEmitters": 9,
+      "nodesOnSuchModels": 16,
+      "nodesActuallyLosing": 14
+    }
+  },
   "matrix": {
     "elements": [
       "arcane",

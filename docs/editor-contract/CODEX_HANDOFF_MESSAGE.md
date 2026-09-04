@@ -51,8 +51,27 @@
 / `bindings.ts:135` / `w3xArtFamilies.ts:579`）② 加寬 `spawnTrail` 接縫（`look` 缺席
 ⇒ 逐位元同今天）③ `scaleAxis` 的翻譯 ④ 一筆 capability 收據讓你 fail-closed。
 
-**你點名的六招我還沒逐支驗** —— 要先確認每一支真的都走 `model@1.fxEmitters`。
-若其中幾支根本沒宣告它，那「固定大小固定黃色」有第二個成因，修接縫治不了。
+**你點名的六招 —— 只有三支走這條路**（我逐支 join 過 `modelKey` → `models.fxEmitters`）：
+✅ `godie-nbbc.e`(4 顆) · `godie-ogrh.r`(9) · `godie-o00x.r`(9)
+⛔ `godie-e002.ex` / `godie-e00l.ex` —— 零個 `spawnModelFx`、零個 `modelKey`
+⛔ `godie-hvsh.r` —— 兩顆模型都沒有 `fxEmitters` 欄位
+那三支走的是 `spawnVfx` + `vfxId`，而 `spawnVfx` 的 schema 同樣沒有 scale/tint/alpha/yaw
+⇒ **兩條各自獨立的窄通道**，只修 `spawnTrail` 對那三支一個位元組都不會變。
+⚠️ 最可能是**槽位打錯**：`godie-e002.e` / `godie-e00l.e`（不是 `.ex`）真的走這條路 —— 請你確認。
+
+**真正的母體是 14 個節點 / 9 支，你的清單漏了**：
+`godie-e002.e` · `godie-e00l.e` · `godie-e00r.r` · `godie-h02r.r` · `godie-hgam.r` ·
+`godie-n01c.e` · ⭐ `godie-edem.e`（scale + **tint**）
+⭐ `godie-edem.e` 是全出貨唯一「模型有 emitter 而節點設了 tint」的節點
+⇒ 「同一顆模型兩半顯示不同顏色」**今天就是活的**，⛔ 不是假設。
+契約新增 `modelFxEmitters` 一區（量出來的）：9/153 顆模型自帶粒子 ·
+16 個節點在那些模型上 · **14 個真的在掉東西** · `lostByEmitters` 逐格列出。
+
+**⭐ 修法是三處同一批做完**（⛔ 不是在一行多傳兩個引數）：
+`spawnTrail` 簽章（modelFxRig.ts:404）＋ `play()` 參數位（VfxSystem.ts:1097）
+＋ **池 key 簽章**（VfxSystem.ts:1114 與 `shapeOf` memo :1073-1081）。
+⛔ 少了第三處 ⇒「後一發把前一發改色」，而且 memo 比池子更早別名
+⇒ 只改池 key **看起來修好了而畫面照壞**。
 
 ## 3. 我在你交回的東西裡發現的一批「做完沒收斂」
 
@@ -85,4 +104,23 @@
 「Type 預設留在 Editor 作為組合配方，只有多個 Type 重複需要同一個低階能力、
 且 Main 現有積木無法表達時才收編」—— ⭐ 對。
 `model-fx-owned-emitter-instance-inheritance` 正好通過這個門檻，所以我接它。
-21＋36 種的逐族映射我正在跑，落地後補進 `CODEX_HANDBACK_REPLY.md` §2。
+21＋36 種的逐族映射已落地（`CODEX_HANDBACK_REPLY.md` §2）。⭐ 結論一句話：
+**八族裡沒有一族需要 Main 收編新 primitive** —— 缺的一律是
+「把已出貨的引擎欄位開成模板 slot／補一列接線」。摘要：
+· `classic-horizontal-beam` ×10 → ⭐ 已補四格（`da3d46e7d`），只剩 `scaleAxis`（需 schema 加 vec3 slot type）
+· `chain-lightning` ×1 → `chainLightning` effect kind 已出貨，⛔ 只缺一份 `tpl-chain-*` 模板檔
+· `projectile-impact` ×1 → `spawnModelFx`，49 支在用；⛔「停在第一個命中目標」表達不了
+· `combo-finisher` ×2 → `comboStrikes` 已出貨，⛔ 9 個 schema 欄位編輯器碰不到
+· `dash-slash` ×2 → `dash.onEnd` 有，⛔ 缺三格（追身打不到人／不觸發 on-hit／dash 不會停在對方身邊）
+· `defense-reaction` ×3 → `tpl-on-hit-react` 有，⛔ 缺「格擋那一刻」的 hook
+
+⛔ 而其中**三個**建議我否決了，因為它們會**擴大**而不是收斂：
+`FAMILIES["dash-beam"]`（N=2 且兩支在 aim 上分歧 ⇒ 正解是一條會紅的閘）·
+`tpl-barrier-domain`（N=2 且兩支沒有一格共同值，17 格 default 有 13 格出處是同一支技能）·
+為 `chain-lightning` 收編新 primitive（擋住 0 支）。
+⭐ 判準逐字是「**它擋住幾支**」。
+
+## 7. ⭐ 我這一批的收斂盤點（給你參考，⛔ 不需要你做）
+`docs/_reports/brick-convergence-backlog_20260904.md` —— 16 塊待收積木，
+⭐ 而 **11 塊卡在同一件事**：`expand.ts` 的 `FAMILIES` 沒有它們那一列。
+⇒ ⛔ 那不是 16 件工作，是 1 件。

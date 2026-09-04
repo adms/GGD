@@ -11,6 +11,7 @@
 - ⭐ 看 `wiring`：`node` 要寫成 `{"kind":"spawnModelFx","preset":"<id>"}`；`doc` 要寫成 `{"template":{"ref":"<id>","params":{…}}}`；`both` 兩條都行。
 - ⭐ 逐格看 `params[*].fillsVia` —— 寫錯邊的那一格**不會有任何東西紅**，它只是不會發生。
 - ⛔ `analysedButUnwired` 裡的**不要挑** —— 展開會失敗，而系統是 fail-soft ⇒ 那一支技能**還在、但一個模板效果都沒有**，⛔ 畫面上與「這招就是沒效果」一模一樣。
+- ⚠️ ⭐ 挑一個 `modelKey` 之前查 `modelFxEmitters.modelsWithEmitters`：那顆模型若自帶粒子，`modelFxEmitters.lostByEmitters` 的每一格**寫了也只作用在網格那一半** ⇒ ⛔ 同一顆模型會顯示兩種顏色／兩種大小，而沒有任何東西紅。
 
 ## ⭐ 可挑的 type（`expand()` 真的跑得過）
 

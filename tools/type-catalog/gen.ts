@@ -73,6 +73,7 @@ const REPO = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const TPL_DIR = join(REPO, "content/ability-templates");
 const VFX_DIR = join(REPO, "content/vfx");
 const ABIL_DIR = join(REPO, "content/abilities");
+const MODEL_DIR = join(REPO, "content/models");
 const OUT_JSON = join(REPO, "docs/editor-contract/ggd-type-catalog.json");
 const OUT_MD = join(REPO, "docs/editor-contract/ggd-type-catalog.md");
 const CHECK = process.argv.includes("--check");
@@ -150,6 +151,76 @@ function matrix(): { elements: string[]; shapes: string[]; present: string[] } {
   return { elements: [...els].sort(), shapes: [...shs].sort(), present: [...fams].sort() };
 }
 
+/**
+ * ⭐⭐ 【模型自帶粒子的外觀收據】—— Codex 2026-09-04 handback 點名的唯一阻塞。
+ *
+ * ⛔ `model@1.fxEmitters` 生出來的 emitter **只拿得到一個世界座標**：
+ * 注入簽章逐字是 `spawnTrail?(vfxId, x, y, z)`（`modelFxRig.ts:404`，唯一呼叫點 `:707-710`），
+ * 而 `VfxSystem.play(rawDoc, x, z, nowMs, y, boost)`（`:1097`）本身也沒有那些欄位。
+ * ⇒ ⭐ ⛔ 這不是「忘了傳」，是**通道寬度**。
+ *
+ * ⚠️ ⭐ 而外部編輯器**看不見這件事** —— 它會寫下 `tint`，schema 收，`content:build` 綠，
+ * 而畫面上**同一顆模型的兩半顯示不同顏色**。⇒ 契約要把它變成一格可以 fail-closed 的資料。
+ *
+ * ⭐ 2026-09-04 量到（⛔ 不是估的）：**16 個節點**的 modelKey 帶 `fxEmitters`，
+ * 其中 **14 個**真的設了會被丟掉的欄位；⭐ `godie-edem.e` 是全出貨**唯一**
+ * 「有 emitter 的模型 ＋ 節點設了 `tint`」的節點 ⇒ 那個缺陷**今天就是活的**。
+ */
+const LOST_BY_EMITTERS = [
+  "scale",
+  "scaleAxis",
+  "tint",
+  "alpha",
+  "clipTimeScale",
+  "spinDegPerSec",
+  "count",
+  "spacing",
+] as const;
+
+function modelEmitters(): Map<string, number> {
+  const out = new Map<string, number>();
+  for (const f of jsonFiles(MODEL_DIR)) {
+    const d = JSON.parse(readFileSync(join(MODEL_DIR, f), "utf8")) as {
+      id?: string;
+      fxEmitters?: string[];
+    };
+    if (d.id && (d.fxEmitters?.length ?? 0) > 0) out.set(d.id, d.fxEmitters!.length);
+  }
+  return out;
+}
+
+/** ⭐ 逐節點量：哪些出貨 `spawnModelFx` 節點會掉外觀。⛔ 不手數。 */
+function emitterAffectedNodes(
+  emitters: Map<string, number>,
+): { ability: string; modelKey: string; emitterCount: number; fieldsLost: string[] }[] {
+  const rows: { ability: string; modelKey: string; emitterCount: number; fieldsLost: string[] }[] = [];
+  for (const f of jsonFiles(ABIL_DIR)) {
+    const doc = JSON.parse(readFileSync(join(ABIL_DIR, f), "utf8")) as Record<string, unknown>;
+    const id = String(doc["id"] ?? f.slice(0, -5));
+    const walk = (x: unknown): void => {
+      if (Array.isArray(x)) {
+        for (const v of x) walk(v);
+        return;
+      }
+      if (x === null || typeof x !== "object") return;
+      const r = x as Record<string, unknown>;
+      if (r["kind"] === "spawnModelFx" && typeof r["modelKey"] === "string") {
+        const n = emitters.get(r["modelKey"]);
+        if (n !== undefined) {
+          const lost = LOST_BY_EMITTERS.filter((k) => r[k] !== undefined);
+          rows.push({ ability: id, modelKey: r["modelKey"], emitterCount: n, fieldsLost: [...lost] });
+        }
+      }
+      for (const v of Object.values(r)) walk(v);
+    };
+    walk(doc);
+  }
+  return rows.sort((a, b) => (a.ability + a.modelKey < b.ability + b.modelKey ? -1 : 1));
+}
+
+const emitters = modelEmitters();
+const emitterNodes = emitterAffectedNodes(emitters);
+
 const mx = matrix();
 
 const rows = templates.map((t) => {
@@ -222,6 +293,9 @@ const catalog = {
     "⭐ 逐格看 `params[*].fillsVia` —— 寫錯邊的那一格**不會有任何東西紅**，它只是不會發生。",
     "⛔ `analysedButUnwired` 裡的**不要挑** —— 展開會失敗，而系統是 fail-soft ⇒ " +
       "那一支技能**還在、但一個模板效果都沒有**，⛔ 畫面上與「這招就是沒效果」一模一樣。",
+    "⚠️ ⭐ 挑一個 `modelKey` 之前查 `modelFxEmitters.modelsWithEmitters`：" +
+      "那顆模型若自帶粒子，`modelFxEmitters.lostByEmitters` 的每一格**寫了也只作用在網格那一半** " +
+      "⇒ ⛔ 同一顆模型會顯示兩種顏色／兩種大小，而沒有任何東西紅。",
   ],
   counts: {
     templates: rows.length,
@@ -250,6 +324,31 @@ const catalog = {
   shells: shells.map((r) => ({ id: r.id, family: r.family, gapScore: r.gapScore })),
   /** ⚠️ 刻意永遠不 enable —— ⛔ 不要試圖填它。 */
   sentinels: sentinels.map((r) => ({ id: r.id, family: r.family, why: r.description })),
+  /**
+   * ⭐⭐ 【模型自帶粒子的外觀收據】—— ⛔ 這一整區是「**寫了不會發生**」的清單。
+   * ⚠️ 一個節點寫下 `tint`，而它的 modelKey 帶 `fxEmitters` ⇒ ⭐ **只有網格那一半會變色**，
+   * 粒子那一半照原樣噴。⛔ 而 schema 收、`content:build` 綠、⛔ 沒有任何東西紅。
+   */
+  modelFxEmitters: {
+    note:
+      "⛔ `model@1.fxEmitters` 的 emitter 只拿得到一個世界座標（`modelFxRig.ts:404` 的 " +
+      "`spawnTrail?(vfxId,x,y,z)`）⇒ 下列欄位**寫了也不會傳給粒子那一半**。" +
+      "⚠️ ⭐ `spawnVfx` 那條路（`schema/effects/spawnVfx.ts`）**同樣**不吃 scale/tint/alpha/yaw —— " +
+      "兩條是各自獨立的窄通道，⛔ 修一條治不了另一條。",
+    /** ⛔ 這幾格寫在 `spawnModelFx` 節點上時，**不會**到達該模型自帶的粒子。 */
+    lostByEmitters: [...LOST_BY_EMITTERS],
+    /** ⭐ 今天哪幾顆模型自帶粒子（153 顆裡的少數）。 */
+    modelsWithEmitters: [...emitters.entries()]
+      .sort((a, b) => (a[0] < b[0] ? -1 : 1))
+      .map(([modelKey, emitterCount]) => ({ modelKey, emitterCount })),
+    /** ⭐ 量出來的受影響面 —— `fieldsLost` 非空的那幾列**今天就在掉東西**。 */
+    affectedNodes: emitterNodes,
+    counts: {
+      modelsWithEmitters: emitters.size,
+      nodesOnSuchModels: emitterNodes.length,
+      nodesActuallyLosing: emitterNodes.filter((r) => r.fieldsLost.length > 0).length,
+    },
+  },
   /** ⭐ 微調層：矩陣今天真的有哪些格子。 */
   matrix: mx,
 };

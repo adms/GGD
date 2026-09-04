@@ -101,21 +101,87 @@ w3xArtFamilies.ts:579     doc.id = id                      ← 同上
 ⛔ **不是「照抄一個 tuple」，也不是「表達不了所以退回 `count × spacing` 排一排」** ——
 後者正是 owner 2026-08-26 逐字禁止的第三條路。
 
-### ⑤ ⭐ 你點名的六招 —— 我**還沒**逐支驗
+### ⑤ ⛔⛔ 你點名的六招 —— **只有三支走這條路**，而症狀有第二個成因
 
-`godie-nbbc.e` · `godie-ogrh.r` · `godie-o00x.r` · `godie-e002.ex` · `godie-e00l.ex` · `godie-hvsh.r`
+逐支 join（`content/abilities/<id>.json` 的 `modelKey` → `content/models/<key>.json` 的 `fxEmitters`）：
 
-⚠️ ⭐ 我要先確認**每一支真的都走 `model@1.fxEmitters` 這條路**（逐支的 `modelKey` →
-該模型的 `fxEmitters` 陣列）。⛔ 如果其中幾支根本沒宣告 `fxEmitters`，
-那你看到的「固定大小、固定黃色」有**第二個成因**，而修上面那條接縫治不了它們。
-⇒ 這一項我做完會補在這一節。
+| 招 | modelKey | 該模型的 fxEmitters | 走這條路？ |
+|---|---|---:|---|
+| `godie-nbbc.e` | `w3x.stock.reddragonmissile` | 4 | ⭐ ✅ |
+| `godie-ogrh.r` | revivehuman(3)＋fragdriller(1)＋flamestrike1(5) | 9 | ⭐ ✅ |
+| `godie-o00x.r` | 同上 | 9 | ⭐ ✅ |
+| `godie-e002.ex` | ⛔ **無**（零個 `spawnModelFx`／零個 `modelKey`） | — | ⛔ |
+| `godie-e00l.ex` | ⛔ **無** | — | ⛔ |
+| `godie-hvsh.r` | tomeofretrainingcaster ×2 · midchildernanohaaura | ⛔ **兩顆都沒有 `fxEmitters`** | ⛔ |
+
+⭐ 那三支走的是 **`spawnVfx` + `vfxId`**（`godie-e002.ex:171` `fx.prim.holy.beam-lg` /
+`godie-e00l.ex:18` 同 / `godie-hvsh.r:81` `fx.prim.arcane.beam-lg`），
+⛔ **而 `spawnVfx` 的 schema 只有 `vfxId`/`at`/`boneOn`/`attach`/`durationSec`
+—— 同樣沒有 scale/tint/alpha/yaw。**
+
+⇒ ⭐⭐ **第二個成因**：那是**兩條各自獨立的窄通道**。⛔ 只修 `spawnTrail`，
+對那三支**一個位元組都不會變**。
+
+⚠️ ⭐ **最可能的解釋是槽位打錯了**：`godie-e002.**e**` 與 `godie-e00l.**e**`
+（⛔ 不是 `.ex`）**真的**走這條路。⇒ ⭐ 請你確認一下你原始清單的槽位。
+
+### ⑥ ⭐ 而真正的母體是 **14 個節點 / 9 支**，⛔ 你的清單漏了 5 支
+
+契約新增 `modelFxEmitters` 一區（**量出來的**，⛔ 不是手寫）：
+`modelsWithEmitters` **9 / 153 顆** · `nodesOnSuchModels` **16** · `nodesActuallyLosing` **14**。
+
+你沒點名而**今天就在掉東西**的：
+`godie-e002.e`(scaleAxis · clipTimeScale+scale) · `godie-e00l.e`(同) ·
+`godie-e00r.r`(scale+scaleAxis) · `godie-h02r.r`(同) · `godie-hgam.r`(同) ·
+`godie-n01c.e`(count+scale+spacing) · ⭐ **`godie-edem.e`(scale + `tint`)**
+
+⭐⭐ **`godie-edem.e` 是全出貨唯一一個「模型有 emitter 而節點設了 `tint`」的節點**
+⇒ 「同一顆模型兩半顯示不同顏色」這個後果 **今天就是活的**，⛔ 不是假設。
+
+### ⑦ ⭐ 而修法是**三處同一批做完**，⛔ 不是在一行多傳兩個引數
+
+| 處 | 為什麼少了它就白做 |
+|---|---|
+| `spawnTrail` 簽章（`modelFxRig.ts:404`） | 通道寬度 |
+| `play()` 的參數位（`VfxSystem.ts:1097`） | 第二層通道同樣沒有那些格 |
+| ⭐ **池 key 的簽章**（`VfxSystem.ts:1114` ＋ `shapeOf` memo `:1073-1081`） | ⛔ 少了它 ⇒ 「**後一發把前一發改色**」，而且 memo 比池子更早別名 ⇒ 只改池 key **看起來修好了而畫面照壞** |
+
+⚠️ 順帶：`modelFxRig.ts:738-742` 的 `trailVfxId` 走**同一個** `spawnTrail`
+（今天 0 支採用 ⇒ ⛔ 不是活缺陷）⇒ ⭐ 加寬通道會順帶修好它 ——
+**這就是把票寫成「加寬接縫」而不是「修 fxEmitters」的實際理由。**
 
 ---
 
 ## 2. ⭐ 你的 21＋36 種 → Main 積木的映射
 
-⚠️ 進行中（一條逐族比對的 lane），落地後補在這一節。
-⭐ 判準已經定了，寫在這裡讓你先對齊：
+### ⭐ 結論一句話：**八族裡沒有一族需要 Main 收編新 primitive**
+
+⇒ ⭐ 缺的一律是「**把已經出貨的引擎欄位開成模板 slot／補一列接線**」，⛔ 不是新機制。
+
+| 你的家族 | Main 積木 | 缺什麼 |
+|---|---|---|
+| `classic-horizontal-beam` ×10 | `spawnModelFx` ＋ `preset` ＋ `tpl-beam-roll` | ⭐ **已補**（`da3d46e7d` 開了 `tint`/`alpha`/`clipTimeScale`/`anchor`）。⛔ 只剩 `scaleAxis` —— 見下 |
+| `chain-lightning` ×1 | effect kind `chainLightning`（`effectRegistry.ts:258`，2 支在用） | ⛔ 沒有 `tpl-chain-*` 模板檔。⚠️ 鏈**只能打敵人、只能打傷害**（`chainLightning.ts:140/238` 硬寫 `enemiesInCircle`） |
+| `projectile-impact` ×1 | `spawnModelFx`（**49 支** standalone 在用，18 支帶 `onArrive`、6 支三段齊全） | ⛔ 「停在第一個命中目標」表達不了（結構上永遠穿透） |
+| `combo-finisher` ×2 | effect kind `comboStrikes` | ⛔ **9 個已出貨 schema 欄位編輯器碰不到**（`strikes`/`intervalSec`/`steps`…）；傷害級距寫死在 `expand.ts` ⇒ 兩個 typeN 分不出輕重 |
+| `dash-beam` ×1 | `dash` ＋ `damageLine` ＋ `spawnModelFx`（**四塊全部出貨**） | ⛔ `FAMILIES["dash-beam"]` 缺一列接線 |
+| `dash-slash` ×2 | `dash.onEnd` ＋ `dashOnEndSystem` | ⛔ 三格：追身那一半打不到人（`dashOnEnd.ts:118` 寫死 `targets: []`）· 不觸發 on-hit（零個 `fireHooks`）· `dash.mode` 只有 `forward`/`toPoint` |
+| `defense-reaction` ×3 | `tpl-on-hit-react`（5 格，`requires:["hooks"]`） | ⛔ **缺格擋那一刻的 hook**；`TriggerDamage` 沒有「這一發被擋掉多少」；`onEvade` 分不出真閃避與 fumble |
+| `transform-aura` ×1 | `state.exclusive-group@1` ／ championForms | —— |
+
+### ⛔⛔ 而其中**三個**建議會**擴大**而不是收斂 —— 我不做
+
+| 建議 | ⛔ 為什麼 |
+|---|---|
+| `FAMILIES["dash-beam"]` | N=2，⭐ 而那兩支在 `aim` 上就分歧（facing vs target）。它真正證明的是**一條等式**（`damageLine.length ≡ dash.maxDistance` 今天靠手抄、⛔ 無對帳）⇒ ⭐ 正解是**一條會紅的閘**，⛔ 不是一個家族 |
+| `tpl-barrier-domain` 收斂 | N=2，⭐ 而那兩支**沒有一格共同值**（duration 10 vs 6 · slow 0.5 vs 0.7 · atkSpd −0.5 vs −1.0…），17 格 default 有 **13 格出處是同一支技能** ⇒ ⛔ 那是替 `godie-hvsh.e` 做的**專屬積木外面包一層模板** |
+| 為 `chain-lightning` 收編新 primitive | ⛔ **擋住 0 支** —— `chainLightning` 已出貨已註冊已過 fanout，客戶端真的畫得出來 |
+
+⭐ 判準逐字：**「它擋住幾支」**，⛔ 不是「它看起來重要」。
+
+---
+
+⭐ 判準（寫在這裡讓你對齊）：
 
 | 判準 | 逐字 |
 |---|---|
