@@ -69,6 +69,7 @@ import { registerImportRoutes } from "./importRoutes";
 import {
   registerEditorSourceRoutes,
   registerProductWriteGuard,
+  generatorOwnedFacts,
 } from "./editorSourceRoutes";
 import {
   ExternalProfileError,
@@ -419,6 +420,42 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
       const proposal = aiReview.promotionCandidate(body.key, body.candidateHash, body.reviewHash);
       const loc = resolveDoc(reply, proposal.target);
       if (!loc) return;
+      // ⭐⭐ GH#932 —— **generator-owned 的目標不可以直接 PUT 產物**（票文逐字）。
+      //
+      // ⚠️ ⭐ `registerProductWriteGuard` 的 `onRequest` 蓋不到這條路：它的
+      //   `writeTargetOf()` 只認得 `/content-api/<collection>/<id>`，而這條 URL
+      //   會被解析成 `collection="ai-review", id="promote"` ⇒ ⛔ 產物守衛看不見它。
+      //   ⇒ 這裡自己問一次，⛔ 不假設上一層擋過了。
+      //
+      // ⭐ 而**光有 candidateHash + baseHash 不夠**：那兩格鎖的是「產物」的樣子，
+      //   ⛔ 而產物是**算出來的** —— 來源改了、產生器改了，同一份產物照樣通過。
+      //   ⇒ 票文要求 verdict 同時鎖住這四格：
+      //     · `sourceBaseSha256`         —— 真正的**來源**在送審那一刻的樣子
+      //     · `authoringOperation`       —— 這一次要對來源做什麼操作
+      //     · `authoringOperationDigest` —— 那個操作本身的指紋（⛔ 不是結果的）
+      //     · `expectedOutputs`          —— 跑完產生器**應該**產出哪幾份
+      //   ⛔ 四格齊全之前，這條路對產物一律 409（⛔ 不是靜默降級）。
+      const owned = generatorOwnedFacts(repoRoot, loc.collection, loc.id);
+      if (owned !== null) {
+        const bindings = proposal as unknown as Record<string, unknown>;
+        const missing = [
+          "sourceBaseSha256",
+          "authoringOperation",
+          "authoringOperationDigest",
+          "expectedOutputs",
+        ].filter((k) => bindings[k] === undefined || bindings[k] === null);
+        if (missing.length > 0) {
+          return err(
+            reply,
+            409,
+            `⛔ \`${owned.path}\` 是產生器 **${owned.authors.join(" / ")}** 的產物 —— ` +
+              `promote 一份產物必須同時鎖住 ${missing.join(" / ")}（GH#932）。` +
+              "⚠️ 只鎖 candidateHash＋baseHash 不夠：那兩格描述的是**算出來的產物**，" +
+              "⛔ 而來源或產生器改了之後，同一份產物照樣通過。" +
+              "⇒ 走 source adapter 改**真正的來源**、跑產生器、重驗產物與 champion mirror。",
+          );
+        }
+      }
       const liveHash = await currentDocHash(loc.file);
       if (liveHash !== proposal.baseHash) {
         return err(

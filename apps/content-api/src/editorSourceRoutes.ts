@@ -155,6 +155,27 @@ export function writeTargetOf(
   return null;
 }
 
+/**
+ * ⭐⭐ GH#932 —— 這一份**是不是產生器的產物**（給 promote 那條路用）。
+ *
+ * ⚠️ ⭐ `registerProductWriteGuard` 的 `writeTargetOf()` 只認得
+ * `/content-api/<collection>/<id>` —— 而 `/content-api/ai-review/promote`
+ * 會被解析成 `collection="ai-review", id="promote"` ⇒ ⛔ **產物守衛蓋不到它**。
+ * ⇒ promote 要自己問一次，⛔ 不能假設 onRequest 那一層擋過了。
+ */
+export function generatorOwnedFacts(
+  repoRoot: string,
+  collection: string,
+  id: string,
+): { path: string; authors: string[] } | null {
+  const path = productPathOf(collection, id);
+  if (path === null) return null;
+  const facts = readFacts(resolve(repoRoot));
+  if (facts === null) return null; // 讀不到戶籍 ⇒ 不擋（與 onRequest 那條同一個處置）
+  const { ownership, authors } = ownershipOf(path, facts.io, facts.norms);
+  return ownership === "generator-owned" ? { path, authors } : null;
+}
+
 export function registerProductWriteGuard(
   app: FastifyInstance,
   opts: EditorSourceOptions,
