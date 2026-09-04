@@ -66,8 +66,17 @@ describe("修復錨與語音漏斗", () => {
   });
 
   it("② 語音進得了漏斗，而門檻讀自 gate JSON（⛔ 不是抄一份數字）", () => {
-    const v = buildQueue(process.cwd()).counts.voice;
-    const gate = JSON.parse(readFileSync("content/assets/audio/voices/_separation-qc-gate.json", "utf8")) as {
+    // ⛔⛔ `process.cwd()` 與相對路徑在此之前讓這一條**只在 repo 根跑得起來**：
+    //   `npx vitest run <這個檔>` 從根跑 ⇒ 綠；
+    //   ⭐ 而 CI 的 `unit` job 跑 `pnpm -r --if-present test` ⇒ cwd 是 `packages/shared`
+    //   ⇒ **ENOENT**，而檔案明明在。
+    // ⚠️ ⭐ 症狀最壞的地方是它**指著錯方向**：錯誤訊息說「檔案不存在」，
+    //   於是讀的人會去找那個檔（我就找了）—— ⛔ 而缺的是**基準點**，不是檔。
+    const REPO = join(__dirname, "../../../..");
+    const v = buildQueue(REPO).counts.voice;
+    const gate = JSON.parse(
+      readFileSync(join(REPO, "content/assets/audio/voices/_separation-qc-gate.json"), "utf8"),
+    ) as {
       thresholdLadder: { rows: { clipsPerChampion: number }[] };
     };
     expect(v.champions, "triage 在此之前對 voice 零命中").toBeGreaterThan(0);
