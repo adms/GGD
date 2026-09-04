@@ -106,6 +106,28 @@ const EXEMPT_BY_NAME: Readonly<Record<string, { file: string; why: string }>> = 
     file: "packages/shared/src/sim/stats/matchStats.ts",
     why: "⭐ **客戶端音效直接 import 它**（`apps/client/src/audio/sfxEdges.ts:17`），而那個檔的檔頭逐字記著它為什麼要共用：在此之前音效自己寫了一個 8,000 ms，於是「8–10 秒之間的第二顆人頭」在記分板上算連殺、⛔ 在音效上不算 —— ⭐ 兩邊說了不同的話。⇒ 做成設定而客戶端讀不到，會把那個 bug 原樣放回來。⭐ 可反駁：等「客戶端收得到設定」做完（同 `AIM_HOLD_TICKS` 那一族）。",
   },
+  // ── ⭐⭐ 常數表的結構參數：改它而不重產表 ＝ 靜靜地全錯 ──────────────────
+  FAN_STEP_DEG: {
+    file: "packages/shared/src/sim/effects/fanRotation.ts",
+    why:
+      "⭐ 它**不是旋鈕，是那張表的刻度** —— `FAN_UNIT_ROTATION` 有 **361** 格，" +
+      "而 361 = 180 ÷ 0.5 + 1。⇒ 改這一格而不重產表，`rotAt()` 會用錯的索引查表 " +
+      "⇒ ⛔ **每一個扇形的角度全部錯掉，而閘照樣綠**（`fanRotation.test.ts` 只驗" +
+      "「表 == Math.cos/sin 重算」，⛔ 它不驗刻度本身）。" +
+      "⚠️ ⭐ 而它**不該進 config**：一個後台可調的刻度，配上一張出貨時就固定的表，" +
+      "就是第〇·四守則說的第二個住處。⇒ 表是唯一住處，這一格只是它的名字。" +
+      "⭐ 可反駁：若哪天表改成**執行期產生**（那就要先解掉 sim 的三角函式禁令）。",
+  },
+  FAN_MAX_TOTAL_DEG: {
+    file: "packages/shared/src/sim/effects/fanRotation.ts",
+    why:
+      "⭐ 同上的另一半 —— 表涵蓋 0…180°，所以這一格**就是表的最後一格**。" +
+      "改大它，`rotAt()` 會夾在表尾（扇不會更寬，只會靜靜地擠在一起）；" +
+      "改小它，表尾那幾百格永遠查不到。⇒ ⛔ 兩個方向都是「設定看起來生效了而畫面沒變」。" +
+      "⚠️ ⭐ 而 180 這個數字**有語意**：超過半圈的「扇」在語意上是 `path:\"radial\"`" +
+      "（整圈等分、相位固定），⛔ 不是同一個東西。⇒ 它是**分界**，⛔ 不是偏好。" +
+      "⭐ 可反駁：若 `fan` 與 `radial` 哪天合併成同一條路徑。",
+  },
   // ── ⭐ 決定性搜尋的參數：改它 = 舊錄影靜默失效 ────────────────────────
   EDGE_SPAWN_RINGS: {
     file: "packages/shared/src/sim/map/bounds.ts",
@@ -290,7 +312,19 @@ describe("⭐ 沒有只能改程式才碰得到的角落（棘輪）", () => {
     expect(
       rows.length,
       `⛔ 從 ${RATCHET} 變成 ${rows.length}。⭐ 新增的那幾個：\n` +
-        rows.slice(RATCHET).map((r) => `  · ${r.file}:${r.name}`).join("\n") +
+        // ⛔⛔ **這一行在 2026-09-05 之前指著錯的檔**（它讓我對 owner 說了兩次錯話）：
+        //   `rows.slice(RATCHET)` 取的是**排序後的最後 N 筆**，⛔ 而不是「比基準線多出來的那幾筆」
+        //   ——⭐ 兩者只有在「新來的剛好排在最後」時才一樣。
+        //   實例：+2 的真兇是 `fanRotation.ts` 的 `FAN_*`（`77ccda83e`，2026-09-04），
+        //   ⭐ 而這一行印的是 `WorldHookSystem.ts:MAX_DISPATCH_PASSES`（`4e3ebc881`，**2026-08-09**，
+        //   比基準線 `4843f7ef3` 還早 ⇒ 它一直都在 59 裡面）。
+        // ⇒ ⭐ CLAUDE.md 失敗形態⑨的鏡像：**錯誤訊息指著錯方向**，於是每一個人都往那裡查。
+        // ⭐ 現在印**全部**並明說沒辦法逐筆歸因，⛔ 不假裝知道是哪幾個。
+        rows.map((r) => `  · ${r.file}:${r.name}`).slice(-12).join("\n") +
+        `\n⚠️ ⭐ 上面是**排序後的最後 12 筆**，⛔ **不是**「新增的那幾筆」——` +
+        `\n   要知道真的多了什麼，去比對基準線 commit：` +
+        `\n   git log -S "const RATCHET = ${RATCHET}" -- packages/shared/src/ops/codeOnlyKnobs.test.ts` +
+        `\n   再對那個 commit 與 HEAD 各跑一次這支普查。` +
         `\n⭐ 修法是把它搬進三個住處（\`content/config\` ＋ Zod \`DEFAULT_*\` ＋ admin 欄位），` +
         `\n⛔ 或（⭐ 若它是誤打守衛／上下界／容差／協定）讓名字帶上那一類的記號。` +
         `\n⚠️ 母體變小了 ⇒ 把 RATCHET 改成新的數字（棘輪只准往下）。`,
