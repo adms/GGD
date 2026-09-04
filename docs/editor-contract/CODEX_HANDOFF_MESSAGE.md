@@ -27,7 +27,7 @@
 4. ⛔ `analysedButUnwired` 的今天不要挑（展開會失敗，而系統 fail-soft ⇒
    那支技能**還在、但一個模板效果都沒有**，你這側看到的是綠 badge）。
 
-今天：**29 可挑 · 3 待接線 · 13 空殼 · 1 哨兵 · 矩陣 154/325**。
+今天：**35 可挑 · 1 待接線 · 9 空殼 · 1 哨兵 · 矩陣 154/325**。
 
 ## 2. 你的唯一阻塞 `model-fx-owned-emitter-instance-inheritance`
 
@@ -138,3 +138,27 @@ exemplar 與 description 都指得到 `A09I` 並逐行讀過，而 `expand.ts` �
 `docs/_reports/brick-convergence-backlog_20260904.md` —— 16 塊待收積木，
 ⭐ 而 **11 塊卡在同一件事**：`expand.ts` 的 `FAMILIES` 沒有它們那一列。
 ⇒ ⛔ 那不是 16 件工作，是 1 件。
+
+## 8. ⭐⭐ 2026-09-04 追加：積木收斂做完了一輪（可挑 29 → 35）
+
+⛔ **不要照這裡的數字做，讀 JSON。** 這一節只說「發生了什麼」。
+
+**新增機制** `path:"fan"` —— ⭐ **起點排成弧、方向平行**（⛔ 不是方向扇）。
+出處 j:44068/44069（生成點在 `casterLoc` 半徑 200 的 `±45 + facing`）＋
+j:44070（`CreateNUnitsAtLoc(…, GetUnitFacing(施法者))` ⇒ 三具 facing **同一個**）。
+弧半徑走既有的 `offsetForwardU`。⚠️ 我第一版做成方向扇，那是**近似**不是翻譯 —— 已修正。
+
+**六個家族接上線**（⭐ 每一格 default 都引用得到 `war3map.j` 的某一行）：
+`dragon-serpent`(16 格) · `dragon-quake`(15) · `growth-charge`(9) ·
+`drain-leech`(8) · `life-manipulate`(4) · `pull-throw`(11)
+⭐ 前兩個是 `modelFxFamily` 的第 9、10 把鑰匙 —— **零行新程式**。
+
+**⛔ 五個量到 N=1 所以不建**（判準逐字是「它擋住幾支」）：
+`range-gamble`（`distanceScale` 出貨採用 0 支）· `resource-ops`（2 支，⭐ 同一隻英雄的兩格）·
+`team-synergy`（2 支，⭐ 孿生英雄的鏡像）· `barrier-domain`（N=2 且兩支**沒有一格共同值**）·
+`dragon-shockwave`（需要「沿路每 0.08 秒生一具 `model@1`」，⭐ 而 `trailVfxId` 吃的是 `vfx@1`）。
+⇒ 理由已經寫進 `templateFamiliesAreAdopted.test.ts` 的豁免表，⭐ 而它們現在是**量到的數字**，⛔ 不是佔位散文。
+
+**⛔ 一個內容錯誤**：`tpl-dragon-quake.modelKey` 原本是 `imported.tectonicfury`，
+⭐ 而 `OBJECTS.json` 說 `units.o00Z = {name:"黑龍波", model:"**FlameStrikeTarget.mdl**"}`
+⇒ 已改成 `w3x.stock.flamestriketarget`。⛔ `tectonicfury` 與 `o00Z` 沒有任何關係。

@@ -320,24 +320,58 @@
   "_templateParamsWhy": "⭐ **接上模板的技能，磁碟上的 `effects` 是空的** —— 88 支裡有 86 支逐字如此。展開發生在註冊時（`content/templates/expand.ts`，由 TS 跑），所以只讀 effects 樹會把這 86 支全部算成「沒有形狀」。⇒ 它們的形狀住在 `template.params`，而參數名是模板自己的詞彙（`stepIntervalSec` / `segmentCount` / `pushSpeed`…），⛔ 與 effect 欄位名不共用。這一份就是那套詞彙的分類。⚠️ 覆蓋閘同樣管它：新模板開一格 `windUpSec` 而沒有人分類 ⇒ 紅。",
   "templateParams": {
     "axes": {
+      "aim": [
+        "路徑"
+      ],
+      "alpha": [
+        "續效特效"
+      ],
+      "apexHeight": [
+        "路徑"
+      ],
+      "castTimeSec": [],
+      "clip": [
+        "續效特效"
+      ],
+      "clipTimeScale": [
+        "續效特效"
+      ],
+      "comboFamily": [
+        "多段"
+      ],
+      "count": [
+        "多段"
+      ],
+      "damageTiming": [
+        "等待"
+      ],
+      "dashDistance": [
+        "路徑"
+      ],
+      "dashDurationSec": [
+        "路徑",
+        "等待"
+      ],
+      "destination": [
+        "路徑"
+      ],
+      "distance": [
+        "路徑"
+      ],
       "duration": [
         "持續"
       ],
       "durationSec": [
         "持續"
       ],
-      "statusDurationSec": [
-        "持續"
+      "everyNth": [
+        "迴圈"
       ],
-      "invulnerableSec": [
-        "持續"
+      "finisherAbility": [
+        "多段"
       ],
-      "stunSec": [
-        "持續"
-      ],
-      "impactLifeSec": [
-        "持續",
-        "續效特效"
+      "finisherDamage": [
+        "多段"
       ],
       "finisherFlashSec": [
         "持續",
@@ -347,98 +381,41 @@
         "持續",
         "續效特效"
       ],
-      "shakeSec": [
-        "持續",
+      "finisherVfx": [
+        "多段",
         "續效特效"
+      ],
+      "grabInvulnSec": [
+        "持續"
+      ],
+      "grabMode": [
+        "路徑"
+      ],
+      "hitCount": [
+        "多段"
+      ],
+      "hitIntervalSec": [
+        "迴圈"
       ],
       "hitTextDurationSec": [
         "持續",
         "續效特效"
       ],
-      "intervalSec": [
-        "迴圈"
+      "hitVfx": [
+        "續效特效"
       ],
-      "hitIntervalSec": [
-        "迴圈"
-      ],
-      "rayIntervalSec": [
-        "迴圈"
-      ],
-      "stepIntervalSec": [
-        "迴圈"
-      ],
-      "trailSpacingSec": [
-        "迴圈"
-      ],
-      "count": [
-        "多段"
-      ],
-      "hitCount": [
-        "多段"
-      ],
-      "stepCount": [
-        "多段"
-      ],
-      "segmentCount": [
-        "多段"
-      ],
-      "rayCount": [
-        "多段"
-      ],
-      "proxyCount": [
-        "多段"
+      "impactLifeSec": [
+        "持續",
+        "續效特效"
       ],
       "instances": [
         "多段"
       ],
-      "terminalBurst": [
-        "多段"
+      "intervalSec": [
+        "迴圈"
       ],
-      "openingDamage": [
-        "多段"
-      ],
-      "perHitDamage": [
-        "多段"
-      ],
-      "finisherAbility": [
-        "多段"
-      ],
-      "finisherDamage": [
-        "多段"
-      ],
-      "comboFamily": [
-        "多段"
-      ],
-      "finisherVfx": [
-        "多段",
-        "續效特效"
-      ],
-      "path": [
-        "路徑"
-      ],
-      "travel": [
-        "路徑"
-      ],
-      "travelSec": [
-        "路徑",
-        "等待"
-      ],
-      "speed": [
-        "路徑",
-        "等待"
-      ],
-      "dashDurationSec": [
-        "路徑",
-        "等待"
-      ],
-      "distance": [
-        "路徑"
-      ],
-      "dashDistance": [
-        "路徑"
-      ],
-      "destination": [
-        "路徑"
+      "invulnerableSec": [
+        "持續"
       ],
       "knockbackDistance": [
         "路徑"
@@ -449,41 +426,110 @@
       "knockbackSpeed": [
         "路徑"
       ],
+      "landRadius": [
+        "路徑"
+      ],
+      "lifeSec": [
+        "等待"
+      ],
+      "modelKey": [
+        "續效特效"
+      ],
+      "offsetForwardU": [
+        "路徑"
+      ],
+      "openingDamage": [
+        "多段"
+      ],
+      "orientation": [
+        "路徑"
+      ],
+      "path": [
+        "路徑"
+      ],
+      "perHitDamage": [
+        "多段"
+      ],
+      "proxyCount": [
+        "多段"
+      ],
       "pushDistance": [
         "路徑"
       ],
       "pushFrom": [
         "路徑"
       ],
-      "pushSpeed": [
-        "路徑"
-      ],
       "pushLaunchHeight": [
         "路徑"
       ],
-      "apexHeight": [
+      "pushSpeed": [
         "路徑"
       ],
-      "landRadius": [
-        "路徑"
+      "rayCount": [
+        "多段"
+      ],
+      "rayIntervalSec": [
+        "迴圈"
       ],
       "reach": [
         "路徑"
       ],
-      "aim": [
-        "路徑"
+      "scale": [
+        "續效特效"
       ],
-      "orientation": [
-        "路徑"
-      ],
-      "stepSize": [
-        "路徑"
+      "segmentCount": [
+        "多段"
       ],
       "serpentineDeg": [
         "路徑"
       ],
+      "shakeSec": [
+        "持續",
+        "續效特效"
+      ],
+      "spacing": [
+        "路徑"
+      ],
+      "speed": [
+        "路徑",
+        "等待"
+      ],
+      "spinDegPerSec": [
+        "路徑",
+        "續效特效"
+      ],
       "spreadDeg": [
         "路徑"
+      ],
+      "stacking": [
+        "多段"
+      ],
+      "statusDurationSec": [
+        "持續"
+      ],
+      "stepCount": [
+        "多段"
+      ],
+      "stepIntervalSec": [
+        "迴圈"
+      ],
+      "stepSize": [
+        "路徑"
+      ],
+      "stepVfx": [
+        "續效特效"
+      ],
+      "stunSec": [
+        "持續"
+      ],
+      "terminalBurst": [
+        "多段"
+      ],
+      "throwDistance": [
+        "路徑"
+      ],
+      "tint": [
+        "續效特效"
       ],
       "touchRadius": [
         "路徑"
@@ -491,112 +537,98 @@
       "touchSide": [
         "路徑"
       ],
-      "spinDegPerSec": [
-        "路徑",
-        "續效特效"
+      "trailSpacingSec": [
+        "迴圈"
       ],
-      "modelKey": [
-        "續效特效"
-      ],
-      "clip": [
-        "續效特效"
-      ],
-      "hitVfx": [
-        "續效特效"
-      ],
-      "stepVfx": [
-        "續效特效"
-      ],
-      "scale": [
-        "續效特效"
-      ],
-      "damageTiming": [
-        "等待"
-      ],
-      "castTimeSec": [],
-      "lifeSec": [
-        "等待"
-      ],
-      "spacing": [
+      "travel": [
         "路徑"
       ],
-      "tint": [
-        "續效特效"
-      ],
-      "alpha": [
-        "續效特效"
+      "travelSec": [
+        "路徑",
+        "等待"
       ]
     },
     "ignored": {
-      "damage": "純數值",
-      "bonusDamage": "純數值",
-      "impactDamage": "純數值",
-      "finisherRadius": "幾何",
-      "reflectDamage": "純數值",
-      "payout": "純數值",
-      "damageType": "傷害型別",
-      "lethalDamageTypes": "傷害型別",
-      "radius": "幾何",
-      "aoeRadius": "幾何",
-      "aoePerStep": "幾何",
-      "arriveRadius": "幾何",
-      "blastRadius": "幾何",
-      "impactRadius": "幾何",
-      "reflectRadius": "幾何",
-      "ringRadius": "幾何",
-      "scatterRadius": "幾何",
-      "scatterBox": "幾何",
-      "segmentAoe": "幾何",
+      "amount": "純數值 —— 每次給幾點",
       "anchor": "錨點選擇（幾何）",
+      "aoePerStep": "幾何",
+      "aoeRadius": "幾何",
+      "apRatio": "純數值 —— AP 係數，⛔ 不改變技能形狀",
       "applyTo": "落在誰身上",
+      "arriveRadius": "幾何",
+      "arriveSoundKey": "同 soundKey —— 落點音效的綁定，⛔ 不是「落點要等多久」（那一格是 speed／distance）",
+      "arriveVfxId": "⭐ 特效**身分** —— 一個 vfx 文件的 id。⛔ 它不排任何時序（那由那份 vfx 自己的 lifetime 決定）。",
+      "attr": "識別鍵 —— 三圍名（str/agi/int），⛔ 不是形狀",
       "blastApRatio": "係數",
       "blastDamageTier": "級距名",
+      "blastRadius": "幾何",
       "blastRadiusTier": "級距名",
-      "touchDamageTier": "級距名",
-      "damageTier": "級距名",
-      "radiusTier": "級距名",
-      "restoreHealthPct": "比例",
-      "surviveHpPct": "比例",
-      "perStackLost": "比例",
-      "chance": "機率",
-      "max": "上限",
-      "initial": "起始值",
-      "internalCooldown": "冷卻 —— 是**下一次**能不能觸發，⛔ 不是這一次的時序",
-      "condition": "條件",
-      "event": "觸發事件名",
-      "trigger": "觸發事件名",
-      "resetOn": "重置時機",
+      "body": "召喚體的**外觀來源**（self／target／某個模型）—— 決定長什麼樣，⛔ 不決定時序／範圍／多段／路徑",
+      "bonusDamage": "純數值",
       "casterGuard": "施法者保護開關",
-      "lockTarget": "是否鎖定目標",
-      "lethalConsume": "免死是否消耗層數",
-      "lethalMode": "免死模式",
-      "invulnerableScope": "無敵範圍列舉（期間住在 invulnerableSec）",
-      "markId": "標記識別碼",
-      "statusId": "狀態識別碼",
-      "stunStatusId": "狀態識別碼",
-      "modifiers": "屬性加成清單（期間住在 duration）",
-      "mode": "模式列舉",
+      "championId": "召喚出來的是**哪一位**（識別碼）—— 形狀住在被召喚者自己的文件裡，⛔ 不在這一格",
+      "chance": "機率",
+      "cleanse": "召喚當下清掉施法者身上的狀態 —— 一個**瞬間的布林動作**，⛔ 沒有期間也沒有重複（同 `passive.statusImmunity` 的判定）",
+      "condition": "條件",
+      "damage": "純數值",
+      "damageMult": "純數值（召喚體打多痛）",
+      "damageTier": "級距名",
+      "damageType": "傷害型別",
+      "event": "觸發事件名",
+      "finisherFlashAlpha": "透明度",
+      "finisherRadius": "幾何",
+      "finisherShakeAmplitude": "震幅",
+      "formation": "多具召喚體的**排法**（環／列／點）—— ⚠️ 看起來像空間，⛔ 而它決定「這幾具站哪裡」，⛔ 不是「這支技能打到哪裡」（同 `spawnModelFx.anchor`：動的是演出的擺放）。⭐ 可反駁：若陣型哪天會改變召喚體的攻擊範圍，它就是路徑軸",
+      "healthPct": "比例 —— 回復到血量的幾成",
       "hitText": "浮動文字內容",
       "hitTextRiseSpeed": "文字自己的動畫",
       "hitTextSizeGrowth": "文字自己的動畫",
       "hitTextSizeScale": "字級",
-      "finisherFlashAlpha": "透明度",
-      "finisherShakeAmplitude": "震幅",
+      "hpMult": "純數值（召喚體多耐打）",
+      "impactDamage": "純數值",
+      "impactRadius": "幾何",
+      "initial": "起始值",
+      "internalCooldown": "冷卻 —— 是**下一次**能不能觸發，⛔ 不是這一次的時序",
+      "invulnerableScope": "無敵範圍列舉（期間住在 invulnerableSec）",
+      "landApRatio": "純數值 —— 落地 AP 係數",
+      "landDamageTier": "純數值 —— 落地傷害級距",
+      "leechFlat": "純數值 —— 回給施法者的固定量",
+      "lethalConsume": "免死是否消耗層數",
+      "lethalDamageTypes": "傷害型別",
+      "lethalMode": "免死模式",
+      "lockTarget": "是否鎖定目標",
+      "manaPct": "比例 —— 回復到魔力的幾成",
+      "markId": "標記識別碼",
+      "max": "上限",
+      "maxAlive": "純數值上限（同時最多幾具）—— ⛔ 它夾的是**數量**，不是重複的節奏（那是 `迴圈` 軸的事）",
+      "maxAttribute": "純數值 —— 三圍上限",
+      "maxAttributeBasis": "識別鍵 —— 上限算不算裝備（base/total）",
+      "mode": "模式列舉",
+      "modifiers": "屬性加成清單（期間住在 duration）",
+      "onOwnerDeath": "主人死了之後召喚體怎麼辦（跟著消失／留著）—— ⭐ 它是**終止條件**，⛔ 而終止條件只有在有重複時才構成 `迴圈` 軸；這一格本身不製造任何重複",
+      "payout": "純數值",
+      "perStackLost": "比例",
+      "radius": "幾何",
+      "radiusTier": "級距名",
+      "range": "幾何 —— 施法距離。⛔ 它決定「打不打得到」，⛔ 不是時序：距離不改變任何一件事**什麼時候**發生。",
+      "reflectDamage": "純數值",
+      "reflectRadius": "幾何",
+      "resetOn": "重置時機",
+      "restoreHealthPct": "比例",
+      "ringRadius": "幾何",
+      "scatterBox": "幾何",
+      "scatterRadius": "幾何",
+      "segmentAoe": "幾何",
       "shakeAmplitude": "震幅",
       "soundKey": "音效**綁定** —— owner ④ 的範圍（特效音效綁定），⛔ 不是⑨的時序軸:一個聲音鍵沒有壽命、沒有間隔、也不移動",
-      "arriveSoundKey": "同 soundKey —— 落點音效的綁定，⛔ 不是「落點要等多久」（那一格是 speed／distance）",
-      "championId": "召喚出來的是**哪一位**（識別碼）—— 形狀住在被召喚者自己的文件裡，⛔ 不在這一格",
-      "body": "召喚體的**外觀來源**（self／target／某個模型）—— 決定長什麼樣，⛔ 不決定時序／範圍／多段／路徑",
-      "damageMult": "純數值（召喚體打多痛）",
-      "hpMult": "純數值（召喚體多耐打）",
-      "maxAlive": "純數值上限（同時最多幾具）—— ⛔ 它夾的是**數量**，不是重複的節奏（那是 `迴圈` 軸的事）",
-      "cleanse": "召喚當下清掉施法者身上的狀態 —— 一個**瞬間的布林動作**，⛔ 沒有期間也沒有重複（同 `passive.statusImmunity` 的判定）",
-      "onOwnerDeath": "主人死了之後召喚體怎麼辦（跟著消失／留著）—— ⭐ 它是**終止條件**，⛔ 而終止條件只有在有重複時才構成 `迴圈` 軸；這一格本身不製造任何重複",
-      "formation": "多具召喚體的**排法**（環／列／點）—— ⚠️ 看起來像空間，⛔ 而它決定「這幾具站哪裡」，⛔ 不是「這支技能打到哪裡」（同 `spawnModelFx.anchor`：動的是演出的擺放）。⭐ 可反駁：若陣型哪天會改變召喚體的攻擊範圍，它就是路徑軸",
       "spread": "陣型的**間距** —— 同 `formation`，只把同一批召喚體擺開，⛔ 不改任何判定",
-      "range": "幾何 —— 施法距離。⛔ 它決定「打不打得到」，⛔ 不是時序：距離不改變任何一件事**什麼時候**發生。",
+      "statusId": "狀態識別碼",
       "stopShortUnits": "幾何 —— 瞬移落點停在目標前面幾格。⛔ 同上：它動的是**位置**，⛔ 不是時間軸。",
-      "arriveVfxId": "⭐ 特效**身分** —— 一個 vfx 文件的 id。⛔ 它不排任何時序（那由那份 vfx 自己的 lifetime 決定）。"
+      "stunStatusId": "狀態識別碼",
+      "surviveHpPct": "比例",
+      "touchDamageTier": "級距名",
+      "trigger": "觸發事件名",
+      "victim": "篩選鍵 —— 受害者過濾，⛔ 不是形狀"
     }
   },
   "_passiveWhy": "被動的 `ranks[]` 裡有兩族東西自帶軸：`auras` 是一個常駐的圈（持續），`hooks` **這個容器本身**⛔ 不帶軸 —— 軸住在**每一個 hook 的 `on`**（見 `hookOn`）。⚠️ 這一格在 2026-08-27 之前寫的是「`hooks` ⛔ 不是（它是**事件**不是時序 —— 一個 on-hit 觸發沒有期間也沒有重複）」，而那句話**對 10 個 `on` 成立、對第 11 個是假的**：`onInterval` 逐字就是「每隔 T 秒一次」。⇒ 把整族判成無軸 = 用一句對多數成立的散文蓋掉少數的真相（GH#648，量到 3 支誤報）。",

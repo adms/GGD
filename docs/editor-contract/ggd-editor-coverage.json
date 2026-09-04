@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "d8d7af748798",
-  "capabilityFingerprint": "f40f16e4",
+  "fingerprint": "8ef8f846d05d",
+  "capabilityFingerprint": "f7bc050d",
   "required": [
     {
       "group": "abilityField",
@@ -22471,6 +22471,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "spreadDeg"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "stacking"
     },
     {
@@ -22936,6 +22940,10 @@
     {
       "group": "effectField",
       "name": "spread"
+    },
+    {
+      "group": "effectField",
+      "name": "spreadDeg"
     },
     {
       "group": "effectField",
@@ -23861,7 +23869,23 @@
     },
     {
       "group": "templateFamily",
+      "name": "dragon-quake"
+    },
+    {
+      "group": "templateFamily",
+      "name": "dragon-serpent"
+    },
+    {
+      "group": "templateFamily",
+      "name": "drain-leech"
+    },
+    {
+      "group": "templateFamily",
       "name": "ground-nova"
+    },
+    {
+      "group": "templateFamily",
+      "name": "growth-charge"
     },
     {
       "group": "templateFamily",
@@ -23870,6 +23894,10 @@
     {
       "group": "templateFamily",
       "name": "leap-strike"
+    },
+    {
+      "group": "templateFamily",
+      "name": "life-manipulate"
     },
     {
       "group": "templateFamily",
@@ -23930,6 +23958,10 @@
     {
       "group": "templateFamily",
       "name": "proxy-fanout"
+    },
+    {
+      "group": "templateFamily",
+      "name": "pull-throw"
     },
     {
       "group": "templateFamily",
@@ -25210,15 +25242,15 @@
   ],
   "counts": {
     "effectKind": 47,
-    "effectField": 265,
+    "effectField": 266,
     "hookEvent": 33,
     "hookField": 21,
     "abilityField": 38,
     "auraField": 8,
-    "templateFamily": 29,
+    "templateFamily": 35,
     "conditionLeaf": 6,
     "conditionLeafField": 16,
-    "effectFieldPath": 429,
+    "effectFieldPath": 430,
     "vfxField": 91,
     "modelField": 42,
     "projectileField": 15,
@@ -25226,7 +25258,7 @@
     "vfxScriptField": 147,
     "configField": 3971,
     "_notRequired": 15,
-    "_total": 5167,
+    "_total": 5175,
     "_ownerOnly": 39
   }
 }

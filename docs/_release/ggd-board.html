@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-09-04 03:35 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-09-04 15:38 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.37.0 · 資料截至 2026-09-04 03:35 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-04 03:35 (GMT+8)</h1><div class="meta"><span>帳本 <b>17</b> 份</span><span>點名票號 <b>381</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.37.1 · 資料截至 2026-09-04 15:38 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-04 15:38 (GMT+8)</h1><div class="meta"><span>帳本 <b>17</b> 份</span><span>點名票號 <b>387</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -1118,6 +1118,21 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>22:25</td><td>codex 技能編輯器要能打包 icon 圖片</td><td>966</td></tr>
 <tr><td>22:29</td><td>設計者可以用 codex 技能編輯器 上傳設定圖片檔(但不是真的馬上上傳) 而編輯器會自動縮圖轉檔放入一起打包</td><td>966</td></tr>
 <tr><td>22:33</td><td>給我視窗登入阿</td><td>— 要求視窗登入（已提供）</td></tr>
+<tr><td>22:36</td><td>login ok</td><td>#966 —— 編輯器打包 icon 圖片（zip 二進位通道 ＋ 伺服器端轉檔）</td></tr>
+<tr><td>22:36</td><td>新功能新接口 codex 技能編輯器要能打包 icon 圖片 設計者可以用 codex 技能編輯器 上傳設定圖片檔(但不是真的馬上上傳) 而編輯器會自動縮圖轉檔放入一起打包 請你也設計該合約形式</td><td>#966 —— 編輯器打包 icon 圖片（zip 二進位通道 ＋ 伺服器端轉檔）</td></tr>
+<tr><td>22:48</td><td>Try again</td><td>— 重試指令，⛔ 不是新需求</td></tr>
+<tr><td>23:01</td><td>vpn return</td><td>— VPN 連線確認，⛔ 不是需求</td></tr>
+<tr><td>23:02</td><td>看不懂你說的</td><td>— 澄清請求，⛔ 不是新需求</td></tr>
+<tr><td>23:05</td><td>開票 並且給我一鍵複製的內容 讓我貼給 codex 編輯器開幹</td><td>#966 —— 開票 ＋ 一鍵複製內容給 Codex</td></tr>
+<tr><td>23:14</td><td>快開票來解決</td><td>#967 · #968 · #969 —— cwebp 不在容器裡 / mini-deploy 失敗不停 / icon 上傳安全硬化</td></tr>
+<tr><td>23:22</td><td>補開 #966 安全威脅票</td><td>#969 —— 補開安全威脅票（#966 的安全硬化）</td></tr>
+<tr><td>23:23</td><td>開票+修</td><td>#967 —— 開票＋修</td></tr>
+<tr><td>23:26</td><td>不是有開一張票是練習模式按 ready 後直接進商店不用等待了嗎 而且還被關了? 遊戲回合評價 跟 遊戲整場結算評價反饋似乎有點過時了 商店提示攻略 似乎有點過時了</td><td>#970 · #971 · #973 —— 練習模式 Ready 等待 / 商人提示過時 / 結算評價欄位過時</td></tr>
+<tr><td>23:29</td><td>隨機能力三選一那邊 似乎沒有足夠提示 連續20次會有特殊加成</td><td>#972 —— 隨機能力三選一沒告訴玩家連續 20 次有加成</td></tr>
+<tr><td>23:45</td><td>目前遊戲特效好像有超多都消失了 我剛剛測試 約束勝利之劍的光束砲沒了 怎麼回事 純討論先不開票 寶具價格應該要是隨機寶具的3倍 倍數百分比可在後台設定</td><td>#974 · #975 —— 特效大量消失（additive 預算誤判）/ 寶具直購價 4→3 倍</td></tr>
+<tr><td>23:47</td><td>你還是沒有把票修完阿</td><td>— 進度催促，⛔ 不是新需求</td></tr>
+<tr><td>23:48</td><td>好吧 以上都把問題開票</td><td>#970 · #971 · #972 · #973 —— 「以上都把問題開票」的批次開票</td></tr>
+<tr><td>23:49</td><td>等等 我目前上架寶具應該都是有價錢的 別亂搞查證一下原因阿</td><td>#975 —— 上架寶具價錢查證（結論：直購價 4→3 倍）</td></tr>
 </table></div>
 <p># 2026-09-04</p>
 <blockquote>⭐ 這張表由 <code>scripts/message-ledger.sh</code> 從 session transcript <b>逐則</b>撈出來對帳，</blockquote>
@@ -1143,6 +1158,26 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>03:27</td><td>godie-e002.<b>r</b> 20-04 Avalon-永恆的理想鄉 [主動][反彈] R applyBuff + spawnModelFx godie-e002.<b>ex</b> 20-002 解放.約束勝利劍MAX [被動][反彈成功時] EX (由 hook 觸發) =&gt; yes, 這可以看作是 反彈成功 -&gt; 技能標籤 -&gt; 觸發 MAX</td><td>974</td></tr>
 <tr><td>03:28</td><td>表現形式 ⭐ 逐一生 dummy 放連鎖閃電 ⛔ GGD 是 17 段 script 演出 =&gt; ⭐ 逐一生 dummy 放連鎖閃電 這是第一段傷害，有 EX 就會補上 17 段 script 演出 其實不衝突</td><td>974</td></tr>
 <tr><td>03:35</td><td>那請你做完</td><td>974</td></tr>
+<tr><td>10:38</td><td>如果同類特效 你可以用 type1, type2 .... 的方式擴充 讓設計者有更多選擇而不是只能靠自己微調</td><td>916</td></tr>
+<tr><td>10:41</td><td>你應該有非常多 type 不只 1, 2 尤其常見共用例如光束砲系列，並且應該建文件、script跟 codex編輯器契約來實現</td><td>916</td></tr>
+<tr><td>09:49</td><td>你還有什麼沒做嗎</td><td>— 進度確認，⛔ 不是新需求</td></tr>
+<tr><td>10:11</td><td>從原 JASS → 蝗蟲群 unit 設定 → 兩種復活光束 MDL 把完整來源鏈重新對帳。 =&gt; 這個積木主程式應該會有，如果沒有請你提醒主程式補足 codex編輯器陷入 跟你之前一樣無限循環去做光束特效的困境，但我們已經釐清過用 mdl 英雄復活的兩種光束來實現，你是否沒有寫清楚 main 主程式有這個積木，並提醒 codex編輯器可以來使用? 如何避免再次陷入這個困境，不管是哪方，因為已經發生太多次了</td><td>#916 —— 來源鏈對帳與「如何避免無限迴圈」的止損協定（CODEX_HANDOFF_MESSAGE.md §5）</td></tr>
+<tr><td>10:13</td><td>我們之前花了許多時間做了很多類似的票，是否也可以請你參考，沒有收斂結果最後變成是積木？</td><td>#916 —— 過去的票沒收斂成積木 ⇒ 收斂盤點 docs/_reports/brick-convergence-backlog_20260904.md</td></tr>
+<tr><td>10:16</td><td>你可以把一堆特效家族有這個毛病都抓出來處理 特效分析製作完沒有收斂成果變成積木重複使用</td><td>#916 —— 閘 vfxBricksConverge.test.ts（棘輪 139）</td></tr>
+<tr><td>10:37</td><td>如果同類特效 你可以用 type1, type2 .... 的方式擴充 讓設計者有更多選擇而不是只能靠自己微調</td><td>#916 —— typeN 概念落地成 params 值域（CODEX_TYPE_HANDOFF.md §5-1）</td></tr>
+<tr><td>10:40</td><td>你應該有非常多 type 不只 1, 2 尤其常見共用例如光束砲系列，並且應該建文件、script跟 codex編輯器契約來實現</td><td>#916 —— 文件 CODEX_TYPE_HANDOFF.md ＋ script tools/type-catalog/gen.ts ＋ 契約 ggd-type-catalog.json</td></tr>
+<tr><td>10:43</td><td>整個矩陣是用來微調的，你的任務是將我們調好的常用幾種作為 type 積木讓編輯器選用後，可以再用矩陣微調節省時間</td><td>#916 —— 六族收斂 ＋ 五族量到 N=1 不建（templateFamiliesAreAdopted 豁免理由換成數字）</td></tr>
+<tr><td>10:43</td><td>請你不要浪費遺漏我們之前做的所有成果，都可以收斂成 type N</td><td>#916 —— 六族收斂 ＋ 五族量到 N=1 不建（templateFamiliesAreAdopted 豁免理由換成數字）</td></tr>
+<tr><td>10:45</td><td>請你整理一成一份文件 commit 後，讓我可以一鍵複製告訴 codex編輯器怎麼跟你合作，並且你也要去收納 codex編輯器已經做出來的 type模板</td><td>#916 —— docs/editor-contract/CODEX_HANDOFF_MESSAGE.md（一鍵複製）</td></tr>
+<tr><td>10:46</td><td>收納 type模板是 codex編輯器正在做的事情 所以你應該是先 請你整理一成一份文件 commit 後，讓我可以一鍵複製告訴 codex編輯器怎麼跟你合作</td><td>#916 —— 先給規格再收納（順序更正）</td></tr>
+<tr><td>10:47</td><td>不然他怎麼知道要整理成什麼樣子給你? 順序搞清楚好嗎</td><td>— owner 的順序更正，已照做；⛔ 不需要獨立票</td></tr>
+<tr><td>11:15</td><td>yes 別停下來</td><td>— 時間限制，⛔ 不是新需求</td></tr>
+<tr><td>11:15</td><td>我快要出門了 快做一個段落</td><td>— 時間限制，⛔ 不是新需求</td></tr>
+<tr><td>13:57</td><td>把過去的票收斂成新積木 ⛔ 還沒。我做的是閘(防止下一次再發生),⛔ 而 139 份存量與 13 份空殼一份都還沒收斂 Codex 契約更新 ⛔ 還沒。我寫的 CODEX_TYPE_HANDOFF.md 是文件,⛔ 不是 Codex 讀的那份機器可讀契約 # Codex Editor → GGD Main：VFX Type 積木交接與唯一阻塞 Codex Editor 已把先前調整成果收斂為可重用的 <code>familyId/typeN</code>，請 Main 依下列邊界檢閱。 ## 一、分工邊界 - Main 負責：可重用 primitive、runtime 行為、限制 resolver、事件與機器契約。…</td><td>— 我自己的進度自述被貼回來，⛔ 不是新需求</td></tr>
+<tr><td>14:09</td><td>Try again</td><td>— 重試指令，⛔ 不是新需求</td></tr>
+<tr><td>15:08</td><td>收到，但目前還無法安全接入：我剛實際抓取遠端後，<code>origin/main</code> 是 <code>8a8dc3e2</code>，Git 找不到 <code>da3d46e7d</code>，最新 Main 也沒有： * <code>docs/editor-contract/ggd-type-catalog.json</code> * <code>docs/editor-contract/CODEX_HANDBACK_REPLY.md</code> 我也確認現有 Editor 確實把 <code>type1/type2</code> 寫成了持久化 key；這需要修正為： * 語意化配方 ID * 變體由 params 表達 * <code>typeN</code> 最多只是介面上的概念／排序，不能成為落地 ID * 模板選擇只讀…</td><td>#916 —— Codex 抓不到 commit ⇒ push origin main（owner 當場勾選）</td></tr>
+<tr><td>15:18</td><td>你要給我一鍵複製給 codex 編輯器8</td><td>#916 —— 一鍵複製那份的表頭指到 origin/main（b6f0bf4bf）</td></tr>
+<tr><td>15:38</td><td>做 FAMILIES 那一次擴充 做 path 扇行機制 都作</td><td>#916 —— FAMILIES 擴充 ＋ path:&quot;fan&quot; 機制（fanRotation.ts ＋ 六族接線）</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>
