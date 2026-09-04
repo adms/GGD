@@ -351,6 +351,52 @@ export function ensureTemporalEvidencePair(
   return [first, { ...first, atMs: detailAtMs, label: `${first.label} · 近景` }];
 }
 
+/**
+ * Make the timeline audit's worst frame visible to the human reviewer.
+ *
+ * The audit used to report a 0/10 or presentation artifact at a timestamp that
+ * was absent from the contact sheet. This keeps the existing evidence budget:
+ * when full, the least temporally unique interior beat is replaced while the
+ * opening, finisher and diagnostic instant remain represented.
+ */
+export function includeAuditEvidenceTime(
+  times: readonly RecommendedEvidenceTime[],
+  worstAtMs: number,
+  limit = 18,
+): RecommendedEvidenceTime[] {
+  const cap = Math.max(1, Math.min(18, Math.floor(limit)));
+  const atMs = Math.max(0, Math.round(worstAtMs));
+  const closeIndex = times.findIndex((time) => Math.abs(time.atMs - atMs) <= 34);
+  if (closeIndex >= 0) {
+    return times.map((time, index) => index === closeIndex
+      ? { ...time, label: `${time.label} · 時間軸最低清晰度` }
+      : { ...time });
+  }
+
+  const diagnostic = { atMs, label: "時間軸最低清晰度／呈現異常" };
+  const ordered = [...times.map((time) => ({ ...time })), diagnostic]
+    .sort((a, b) => a.atMs - b.atMs || a.label.localeCompare(b.label));
+  while (ordered.length > cap) {
+    const removable = ordered
+      .map((time, index) => ({
+        time,
+        index,
+        novelty: Math.min(
+          index > 0 ? time.atMs - ordered[index - 1]!.atMs : Number.POSITIVE_INFINITY,
+          index + 1 < ordered.length ? ordered[index + 1]!.atMs - time.atMs : Number.POSITIVE_INFINITY,
+        ),
+      }))
+      .filter(({ time, index }) => time !== diagnostic && index > 0 && index + 1 < ordered.length)
+      .sort((a, b) => a.novelty - b.novelty || a.time.atMs - b.time.atMs);
+    const remove = removable[0] ?? ordered
+      .map((time, index) => ({ time, index }))
+      .find(({ time }) => time !== diagnostic);
+    if (!remove) break;
+    ordered.splice(remove.index, 1);
+  }
+  return ordered;
+}
+
 export function timelineDurationMs(script: VfxScriptDoc, cues: readonly TriggerCue[]): number {
   const lastCue = cues.reduce((m, cue) => Math.max(m, cue.atMs), 0);
   const lastSegment = segmentTimes(script, cues).reduce(

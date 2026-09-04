@@ -1,0 +1,113 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T21:13:07.847Z",
+  "sourceDigest": "d41ab497d5ba068b2614a57197c6f8c864c485c64006632c1a49d883812d2f8c",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hvsh.e",
+    "name": "48-03 鮮血神殿"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5800,
+    "usage": {
+      "promptTokens": 2795,
+      "completionTokens": 400,
+      "totalTokens": 3195
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hvsh.e-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hvsh.e · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5020,
+      "sha256": "46a5e567a02c07a9f1ab50cf419e95e8b68f0e54b0264f2ade82ec0886a66774"
+    },
+    {
+      "path": "frames/godie-hvsh.e-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-hvsh.e · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7592,
+      "sha256": "4876a2c43703f01f2ea72d9f772f2f97bfe38cc0a3c6f6d34030bb62f3dbddeb"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"VFX details are too vague to confirm the full effect.\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Effect type not specified in description.\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Specific color not mentioned in description.\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Spawn origin not mentioned in description.\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Impact placement not mentioned in description.\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Cannot confirm sequence from available frames.\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"No clipping issues observed.\",\n      \"evidenceFrames\": [\n        1\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"Effect is readable and distinct from characters.\",\n      \"evidenceFrames\": [\n        1\n      ]\n    }\n  },\n  \"notes\": [\n    \"Candidate 1 shows red particles around the left character.\",\n    \"The description mentions 'domain damage over time' and 'healing', but the visual evidence is insufficient to confidently confirm these.\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "VFX details are too vague to confirm the full effect.",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "Effect type not specified in description.",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "Specific color not mentioned in description.",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "Spawn origin not mentioned in description.",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "Impact placement not mentioned in description.",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "Cannot confirm sequence from available frames.",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "No clipping issues observed.",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "Effect is readable and distinct from characters.",
+        "evidenceFrames": [
+          1
+        ]
+      }
+    },
+    "notes": [
+      "Candidate 1 shows red particles around the left character.",
+      "The description mentions 'domain damage over time' and 'healing', but the visual evidence is insufficient to confidently confirm these."
+    ]
+  },
+  "contractWarnings": []
+}

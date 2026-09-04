@@ -1,0 +1,109 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-03T21:11:57.733Z",
+  "sourceDigest": "dad41b455ad2cf09c33df177c23c973f6e4f48759d6ae89f68d7f26bdc83102c",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-o00k.e",
+    "name": "86-03 神鳴"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5474,
+    "usage": {
+      "promptTokens": 2790,
+      "completionTokens": 386,
+      "totalTokens": 3176
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-o00k.e-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-o00k.e · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 4798,
+      "sha256": "a223dd251f9091968c6cd8d2240f2bc46ed885ac5640ba8ba28fc4c1e0f2ce79"
+    },
+    {
+      "path": "frames/godie-o00k.e-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-o00k.e · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7426,
+      "sha256": "df25654c63e4662a597dbd07c59c16b4925f9eecc0c69f12c6c12aafec873720"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見任何符合神鳴的明顯技能效果\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺乏主效果以判斷類型\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無預期顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無預期發射位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無預期命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見主效果出現\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺乏主效果以判斷是否穿模\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺乏主效果以判斷關係\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"畫面僅見角色與小光點，無明顯的直線或範圍攻擊視覺效果。\",\n    \"無法驗證直線與範圍衝突的描述。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見任何符合神鳴的明顯技能效果",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "缺乏主效果以判斷類型",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "無預期顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "無預期發射位置要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "無預期命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "未見主效果出現",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "缺乏主效果以判斷是否穿模",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "缺乏主效果以判斷關係",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "畫面僅見角色與小光點，無明顯的直線或範圍攻擊視覺效果。",
+      "無法驗證直線與範圍衝突的描述。"
+    ]
+  },
+  "contractWarnings": []
+}

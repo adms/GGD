@@ -59,7 +59,7 @@ HEAD 冒充成完整受驗內容；不再引用可能過期的交接文件 commi
 
 ## 自動化邊界
 
-- `skillforge:check` 驗新技能入口不能從 UI 消失、新技能骨架、Q/W/E 四級／R 三級、Main 五級距、出身推薦、模板疊卡、條件 UI、42 個技能主題／46 份現役技能機制覆蓋與真 Sim 試放；另核對 `skillforge:audit:check` 的逐技能收據。
+- `skillforge:check` 驗新技能入口不能從 UI 消失、新技能骨架、Q/W/E 四級／R 三級、Main 五級距、出身推薦、模板疊卡、條件 UI、42 個技能主題／46 份現役技能機制覆蓋與真 Sim 試放；另核對 `skillforge:audit:check` 的逐技能收據。證據畫面剛更新、人工 advisory 尚未重新審閱時，快速／visual 閘會用 `skillforge:check -- --machine-only`：機器驗收可繼續，但明確印出 `PENDING`；release 閘仍要求 advisory 指紋完全一致。
 - `skillforge:audit` 重新產生 `docs/_reports/editor-skill-acceptance-42x46.{json,md}`。它把「設計師從哪個 no-code 入口做」、「自訂 VFX 是否有真正事件可綁」及「是否已有 framebuffer＋人工裁決」分開；沒有看圖不會被測試冒充成通過。
 - `skillforge:visual-proof:import` 驗證瀏覽器整批輸出、解碼所有 framebuffer、保存人工分數／理由，再交給 `skillforge:audit` 彙整；這是唯一受支援的批次證據落盤路徑。
 - `visualAcceptanceIssues.ts` 是唯一技術根因分類器；瀏覽器與匯入器各重算一次並逐 code 比對，手改匯出 JSON 無法把失敗改名成通過。
@@ -85,9 +85,33 @@ API origin，任何自訂遠端 endpoint 都不支援。
 
 Main 只提供可重用 primitive、權威事件、runtime、限制 resolver 與機器契約。上述時間軸、配色、鏡頭、拖拉組合、截圖和反覆調整均由 Editor 驗收流程負責。
 
-## 最近一次完整收據
+經典光束另有不可省略的來源對帳：[W3X_CLASSIC_BEAM_RECIPE.md](W3X_CLASSIC_BEAM_RECIPE.md)。
+驗收器先核對 JASS `CreateNUnitsAtLoc`、蝗蟲 unit model 與 Main `model@1`，再分類責任；已存在的
+`ReviveHuman＋FragDriller` 不得因 Editor 冷啟動白卡或錯誤配方而被誤報成「缺少光束模型」。但來源存在
+不代表全部 authoring 參數已打通：聚焦 A/B 已證實 `model@1.fxEmitters` 尚未繼承該次 `modelFx` 的
+縮放、方向、色彩與透明度，六份藍白／黃藍技能因此保留一個精確 Main 低階接縫，不逐招硬調掩蓋。
 
-2026-09-03 22:05 CST 在 `feat/vfx-forge-codex` working tree（基底 `790486e8f81d`）對
-`origin/main@ea0d6098a5c2` 執行 `pnpm editor:accept:release`：契約、coverage、
-Skill Forge、VFX Forge、貼圖與 blend mode 契約、typecheck、Editor 390 項測試及
-production build 全部通過。此收據只證明機器可判斷項目；八招的美術與原作相似度仍須人工裁決。
+VFX Forge 另由 `pnpm vfxforge:handback:build` 從現行配方原始碼產生
+`editor-vfx-template-handback.json` 與 `EDITOR_VFX_TEMPLATE_HANDBACK.md`。Main 可據此參考收編真正可重用的
+低階能力；技能時間軸、配色和鏡頭仍留在 Editor。`vfxforge:check` 會驗證交接檔未過期。
+工坊本身以「家族 → type1/type2…」呈現 21 個可選完整預設，另保存 42／46 已實際使用的 36 個
+機制推薦 type。套用 type 後才展開成可拖拉的積木與時間軸；矩陣／slider 只用於最後微調，不能把
+從零塑形的成本丟給設計師，也不能讓既有調整成果退回成一堆無名參數。
+
+視覺問題也採固定路由：顏色、方向、形狀、大小、錨點或物理意義的明顯錯誤由 Editor 重做；亮度、
+飽和度、尾焰密度、數幀節奏、鏡頭手感與美術偏好只送人工細修。兩者同時出現時先處理大錯，不能用
+「微調」延後。Gemini prompt 與 Editor 人工註記共用同一判斷原則，但仍只有 advisory 權限。
+
+## 最近一次關鍵收據
+
+2026-09-04 11:17 CST 在 `feat/vfx-forge-codex` working tree（基底 `d71d027be7ce`）對
+`origin/main@b45a2957fe1c` 完成 42 主題／46 文件帳本更新：46 份都有真 framebuffer、0 capture
+failed、0 blocked，全部保持人工待審；其中 6 份精確歸因到 Main 的
+`model-fx-owned-emitter-instance-inheritance` 接縫。`godie-hart.r` 聚焦重驗留下 8 張時間序影格、
+7 個真 `comboStrike` 節點、11 個 presentation events，沒有機器 issue。Gemini 確認斬擊、黃藍光柱、
+角色可讀性與無穿模，但靜態影格無法獨立證明七擊逐段對齊，因此保持 `needs-human-review`；真 Sim 收據與
+人工批核仍是權威。審查 prompt 也已禁止把「不同時間每段各一個斬弧」誤判成同時堆疊大量月牙。
+
+同輪重建 `editor-vfx-template-handback.json`，指紋 `e8514105cb11`：21 個可選完整 type、36 個
+依結構化機制自動推薦 type，共保存 57 個既有成果。設計師必須先選或接受推薦 type，再以矩陣／slider
+微調；不得把已驗過的配方退回無名參數，也不得讓矩陣成為從零塑形入口。

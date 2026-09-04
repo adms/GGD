@@ -7,6 +7,7 @@ import {
 export const VISUAL_PROOF_SOURCES = [
   "acceptance-fixture",
   "editor-basic-script",
+  "editor-effect-graph-preview",
   "runtime-effect-graph",
 ] as const;
 

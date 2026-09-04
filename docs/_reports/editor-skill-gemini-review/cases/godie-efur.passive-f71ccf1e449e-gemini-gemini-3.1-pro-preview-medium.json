@@ -1,0 +1,121 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:06:21.756Z",
+  "sourceDigest": "f71ccf1e449e427a37f45dcac230bd0ac6de402d675b851a69621a8815434b2e",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-efur.passive",
+    "name": "13-00 念。攻防轉換"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "medium",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 8900,
+    "usage": {
+      "promptTokens": 2841,
+      "completionTokens": 422,
+      "totalTokens": 3263
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-efur.passive-01-547ms.webp",
+      "atMs": 547,
+      "phase": "godie-efur.passive · 真 runtime · basicAttack+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 4418,
+      "sha256": "473d428e038f5376a9954471795ff35a5f11a9cc8ff3a882dcc2cdc26aeaf33e"
+    },
+    {
+      "path": "frames/godie-efur.passive-02-1680ms.webp",
+      "atMs": 1680,
+      "phase": "godie-efur.passive · 真 runtime · basicAttack+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5352,
+      "sha256": "b3928f0e33a385d3b066fa3ad8f9a2bdb281bd85932f196f9c273e81da655c66"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.5,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"僅有紅色特效，無法確認循環\",\n      \"evidenceFrames\": [0, 1]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期的具體VFX類型\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未觀察到完整的循環順序\",\n      \"evidenceFrames\": [0, 1]\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"畫面過暗且難以判斷穿模\",\n      \"evidenceFrames\": [0, 1]\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"特效與角色關係不夠清楚\",\n      \"evidenceFrames\": [0, 1]\n    }\n  },\n  \"notes\": [\n    \"預期包含四種狀態的循環，但畫面中只看到紅色的打擊特效，無法驗證完整的循環與順序。\",\n    \"畫面非常暗且視野有限，難以清楚辨識細節。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.5,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "僅有紅色特效，無法確認循環",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供預期的具體VFX類型",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供特定來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供特定命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "未觀察到完整的循環順序",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "畫面過暗且難以判斷穿模",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "特效與角色關係不夠清楚",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      }
+    },
+    "notes": [
+      "預期包含四種狀態的循環，但畫面中只看到紅色的打擊特效，無法驗證完整的循環與順序。",
+      "畫面非常暗且視野有限，難以清楚辨識細節。"
+    ]
+  },
+  "contractWarnings": []
+}

@@ -54,6 +54,7 @@ interface VisualProofEntry {
   readonly frames?: unknown;
   readonly machineIssues?: unknown;
   readonly basicVisualFallback?: unknown;
+  readonly mechanicVisualAdditions?: unknown;
 }
 
 const capabilities = json<{
@@ -123,6 +124,9 @@ const rows = SKILL_ACCEPTANCE_CANDIDATES.map((candidate) => {
   const basicVisualFallback = proof?.basicVisualFallback && typeof proof.basicVisualFallback === "object"
     ? proof.basicVisualFallback as Record<string, unknown>
     : null;
+  const mechanicVisualAdditions = Array.isArray(proof?.mechanicVisualAdditions)
+    ? proof.mechanicVisualAdditions
+    : [];
   const designerPath = templateRefs.length > 0
     ? "template-product"
     : preset
@@ -162,6 +166,7 @@ const rows = SKILL_ACCEPTANCE_CANDIDATES.map((candidate) => {
       humanNote,
       machineIssues,
       basicVisualFallback,
+      mechanicVisualAdditions,
     },
     authoringBlockers,
     status: batchStatus === "failed"
@@ -196,6 +201,11 @@ const summary = {
   machineIssueCounts: countBy(rows.flatMap((row) => row.framebuffer.machineIssues.map((issue) => issue.code))),
   machineIssueOwnerCounts: countBy(rows.flatMap((row) => row.framebuffer.machineIssues.map((issue) => issue.owner))),
   basicVisualFallbacks: rows.filter((row) => row.framebuffer.basicVisualFallback !== null).length,
+  mechanicVisualDocuments: rows.filter((row) => row.framebuffer.mechanicVisualAdditions.length > 0).length,
+  mechanicVisualBricks: rows.reduce(
+    (total, row) => total + row.framebuffer.mechanicVisualAdditions.length,
+    0,
+  ),
 };
 
 if (summary.themes !== 42 || summary.documents !== 46) {
@@ -286,6 +296,7 @@ function markdown(value: typeof receipt): string {
     `- 自動根因：${formatCounts(s.machineIssueCounts)}`,
     `- 自動分工：${formatCounts(s.machineIssueOwnerCounts)}`,
     `- 基本視覺安全替代：${s.basicVisualFallbacks} 份（只替換 Editor baseline，不改原技能綁定）`,
+    `- 真機制節點自動補圖：${s.mechanicVisualDocuments} 份／${s.mechanicVisualBricks} 塊（只存在預覽副本，未改 gameplay JSON）`,
     `- VFX Script 直接時間軸未涵蓋（不是 Main 阻塞；由 Skill Forge 效果圖綁定）：${s.scriptTimelineGaps.length ? s.scriptTimelineGaps.join("、") : "無"}`,
     "",
     "| 技能 | 主題 | 設計師路徑 | 事件演出 | 畫面證據 | 自動根因 | 狀態 |",

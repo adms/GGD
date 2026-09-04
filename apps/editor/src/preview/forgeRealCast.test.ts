@@ -15,6 +15,7 @@ import { FsContentSource } from "@ggd/shared/content/node";
 import { createSimPreviewController } from "./PreviewController";
 import { createBabylonPreviewController } from "./BabylonPreviewController";
 import { scheduleSimEvents, triggerCuesFromSim } from "../vfx-forge/model";
+import { buildMechanicVisualPreview } from "../vfx-forge/mechanicVisualOverlay";
 import { Abilities, Champions } from "@ggd/shared/sim";
 
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
@@ -96,7 +97,14 @@ describe("GH#174 鑄技工坊的試放走玩家那條路", () => {
     const champion = Champions.get("godie-hart" as ChampionId);
     const ability = champion.abilities.R;
     const c = createSimPreviewController();
-    const trace = c.castAbility(champion, "R", { level: 18, rank: 1, ticks: 650 });
+    const trace = c.castAbility(champion, "R", {
+      level: 18,
+      rank: 1,
+      ticks: 650,
+      // The 42/46 browser runner always enables this mode.  It must not put
+      // the dummy into combat early enough to interrupt a cast-time combo.
+      exerciseGrantedHooks: true,
+    });
     const schedule = scheduleSimEvents(trace.events, ability.id);
     const cues = triggerCuesFromSim(schedule, ability);
 
@@ -106,6 +114,9 @@ describe("GH#174 鑄技工坊的試放走玩家那條路", () => {
     expect(cues.filter((cue) => cue.on === "strike").map((cue) => cue.strikeIndex)).toEqual([
       1, 2, 3, 4, 5, 6, 7,
     ]);
+    expect(trace.events.some((event) =>
+      event.type === "castInterrupt" && event.data["abilityId"] === ability.id
+    )).toBe(false);
     const casterStops = schedule
       .filter(({ event }) => event.type === "comboStrike")
       .map(({ actorPose }) => actorPose && `${actorPose.caster.x.toFixed(3)},${actorPose.caster.z.toFixed(3)}`)
@@ -138,6 +149,64 @@ describe("GH#174 鑄技工坊的試放走玩家那條路", () => {
 
     expect(trace.accepted, JSON.stringify(trace.events.slice(0, 20), null, 2)).toBe(true);
     expect(trace.events.some((event) => event.type === "abilityCast")).toBe(true);
+    c.dispose();
+  });
+
+  it("preview-only core ability 真的進 SimWorld，結束後 registry 完整還原", () => {
+    const champion = Champions.get("godie-hart" as ChampionId);
+    const originalChampion = champion;
+    const original = Abilities.get(champion.abilities.Q.id);
+    const definition: AbilityDef = {
+      ...original,
+      effects: [
+        { kind: "spawnVfx", vfxId: "fx.prim.nature.pulse-sm" as never, at: "self" },
+        ...original.effects,
+      ],
+    };
+    const c = createSimPreviewController();
+
+    const trace = c.castAbility(champion, "Q", { level: 18, rank: 1, ticks: 90, definition });
+
+    expect(trace.accepted, JSON.stringify(trace.events.slice(0, 30), null, 2)).toBe(true);
+    expect(trace.events.some((event) =>
+      event.type === "vfxSpawn" && event.data["vfxId"] === "fx.prim.nature.pulse-sm"
+    )).toBe(true);
+    expect(Abilities.get(original.id)).toBe(original);
+    expect(Champions.get(champion.id)).toBe(originalChampion);
+    c.dispose();
+  });
+
+  it("主動增益掛上後用真普攻點火 on-hit 視覺，不把 hook 偽裝成第二次施法", () => {
+    const champion = Champions.get("godie-emfr" as ChampionId);
+    const original = Abilities.get("godie-emfr.e" as AbilityId);
+    const preview = buildMechanicVisualPreview(original);
+    const c = createSimPreviewController();
+
+    expect(preview.definition).not.toBeNull();
+    const trace = c.castAbility(champion, "E", {
+      level: 18,
+      rank: 1,
+      ticks: 650,
+      definition: preview.definition!,
+      exerciseGrantedHooks: true,
+    });
+
+    expect(trace.accepted, JSON.stringify(trace.events.slice(0, 80), null, 2)).toBe(true);
+    expect(trace.events).toContainEqual(expect.objectContaining({
+      type: "editorPreviewScenario",
+      data: expect.objectContaining({
+        abilityId: original.id,
+        scenario: "granted-hooks",
+        hooks: expect.arrayContaining(["onBasicAttack", "onDamageDealt"]),
+      }),
+    }));
+    expect(trace.events.some((event) =>
+      event.type === "vfxSpawn" && event.data["vfxId"] === "fx.prim.arcane.nova-lg"
+    ), JSON.stringify(trace.events.slice(0, 120), null, 2)).toBe(true);
+    expect(trace.events.filter((event) =>
+      event.type === "abilityCast" && event.data["abilityId"] === original.id
+    )).toHaveLength(1);
+    expect(Abilities.get(original.id)).toBe(original);
     c.dispose();
   });
 
@@ -201,6 +270,29 @@ describe("GH#174 鑄技工坊的試放走玩家那條路", () => {
     });
     expect(trace.events.some((event) => event.type === "abilityCast" && event.data["abilityId"] === abilityId))
       .toBe(false);
+    c.dispose();
+  });
+
+  it("preview-only 被動積木由真 hook 點火，且不污染下一次 registry", () => {
+    const champion = Champions.get("godie-e00w" as ChampionId);
+    const original = Abilities.get("godie-e00w.passive" as AbilityId);
+    const preview = buildMechanicVisualPreview(original);
+    const c = createSimPreviewController();
+
+    expect(preview.definition).not.toBeNull();
+    const trace = c.triggerPassiveAbility(champion, original.id, {
+      level: 18,
+      rank: 1,
+      ticks: 650,
+      definition: preview.definition!,
+    });
+
+    expect(trace.accepted, `${trace.reason}\n${JSON.stringify(trace.events.slice(0, 50), null, 2)}`).toBe(true);
+    expect(trace.events.some((event) => event.type === "vfxSpawn")).toBe(true);
+    expect(trace.events.some((event) =>
+      event.type === "abilityCast" && event.data["abilityId"] === original.id
+    )).toBe(false);
+    expect(Abilities.get(original.id)).toBe(original);
     c.dispose();
   });
 });

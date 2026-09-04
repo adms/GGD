@@ -1,0 +1,115 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T21:13:13.568Z",
+  "sourceDigest": "ab4475489dca1cbc777d5295e9fa7685ced0bb9a756c94a65dde58a39eb4157e",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-n00b.passive",
+    "name": "57-00 四次元口袋"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5720,
+    "usage": {
+      "promptTokens": 2796,
+      "completionTokens": 420,
+      "totalTokens": 3216
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-n00b.passive-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-n00b.passive · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 4992,
+      "sha256": "7b37a16187f303030c45bc63b8e6a25ba3110ef71e47baa42ae5483da61663b7"
+    },
+    {
+      "path": "frames/godie-n00b.passive-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-n00b.passive · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7612,
+      "sha256": "6a47b1dc1595ac218ed0c57228d7b5479ccb661e4adb6a6a7bb70c7ea98014a8"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"可見星狀特效，但不確定是否對應嘲諷\",\n      \"evidenceFrames\": [\n        1\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定VFX類型要求\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無法確認是否在金錢/回復/增益後才嘲諷\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模或裁切\",\n      \"evidenceFrames\": [\n        1\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"特效與角色關係清楚\",\n      \"evidenceFrames\": [\n        1\n      ]\n    }\n  },\n  \"notes\": [\n    \"預期文字包含多個可能的分支效果，無法單從圖片確認是否為其中一種\",\n    \"可見紫色星狀特效，但不確定是增益還是嘲諷\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "可見星狀特效，但不確定是否對應嘲諷",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定VFX類型要求",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供特定來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供特定命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "無法確認是否在金錢/回復/增益後才嘲諷",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模或裁切",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "特效與角色關係清楚",
+        "evidenceFrames": [
+          1
+        ]
+      }
+    },
+    "notes": [
+      "預期文字包含多個可能的分支效果，無法單從圖片確認是否為其中一種",
+      "可見紫色星狀特效，但不確定是增益還是嘲諷"
+    ]
+  },
+  "contractWarnings": []
+}

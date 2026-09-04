@@ -32,6 +32,30 @@ describe("VFX Forge asset backdrop gate", () => {
     expect(allAssetRefsVerifiedSafe([], undefined)).toBe(true);
   });
 
+  it("checks and deduplicates preview-only effect-graph VFX refs through the same gate", async () => {
+    const requested: string[] = [];
+    const gate = new AssetSafetyGate({
+      doc: async <T,>(_collection: "config" | "models" | "vfx", id: string): Promise<T> => {
+        requested.push(id);
+        return { id, schema: "vfx@1" } as T;
+      },
+      assetBytes: vi.fn(async () => new ArrayBuffer(0)),
+    });
+
+    const results = await gate.checkAssets([
+      { collection: "vfx", id: "fx.prim.arcane.pulse" },
+      { collection: "vfx", id: "fx.prim.arcane.pulse" },
+      { collection: "vfx", id: "fx.prim.fire.nova" },
+    ]);
+
+    expect(results.map((row) => row.asset.id)).toEqual([
+      "fx.prim.arcane.pulse",
+      "fx.prim.fire.nova",
+    ]);
+    expect(results.every((row) => row.safe)).toBe(true);
+    expect(requested).toEqual(["fx.prim.arcane.pulse", "fx.prim.fire.nova"]);
+  });
+
   it("uses the actual blend equation instead of merely checking for an alpha channel", () => {
     expect(isCompositingNeutral("alpha", WHITE, [255, 255, 255, 0])).toBe(true);
     expect(isCompositingNeutral("additive", WHITE, [255, 255, 255, 0])).toBe(false);

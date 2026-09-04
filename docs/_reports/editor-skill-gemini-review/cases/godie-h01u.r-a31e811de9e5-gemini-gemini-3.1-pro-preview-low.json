@@ -1,0 +1,109 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-03T23:30:05.008Z",
+  "sourceDigest": "a31e811de9e519541d17bcb843903d9fa7d6867787263d6ed9d442b45abc8591",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-h01u.r",
+    "name": "80-04 赤兔咆哮"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5104,
+    "usage": {
+      "promptTokens": 2807,
+      "completionTokens": 365,
+      "totalTokens": 3172
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-h01u.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-h01u.r · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5946,
+      "sha256": "86c6fe4ab44551b3220fd8f58636dc7bf53882df4f437c263bbdeec7f0313ad1"
+    },
+    {
+      "path": "frames/godie-h01u.r-02-847ms.webp",
+      "atMs": 847,
+      "phase": "godie-h01u.r · 真 runtime · vfxSpawn · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8256,
+      "sha256": "c2566d973949ff7e71064bef1bd3cb76a3ed334909540f11e54b7b07e2ee9fcd"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"No VFX is visible in the provided frames.\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No VFX is present to check.\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No VFX is present to check.\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No VFX is present to check.\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No VFX is present to check.\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"No VFX is present.\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No VFX is present to check.\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No VFX is present to check.\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"The frames show character animation but no visual effects.\",\n    \"Cannot evaluate the expected VFX.\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "No VFX is visible in the provided frames.",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "No VFX is present to check.",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "No VFX is present to check.",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "No VFX is present to check.",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "No VFX is present to check.",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "No VFX is present.",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "No VFX is present to check.",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "No VFX is present to check.",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "The frames show character animation but no visual effects.",
+      "Cannot evaluate the expected VFX."
+    ]
+  },
+  "contractWarnings": []
+}

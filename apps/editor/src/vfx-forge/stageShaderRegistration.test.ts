@@ -238,7 +238,8 @@ describe("VFX Forge paused rendering", () => {
     expect(audit).toContain("施法範圍 Telegraph 已通過同格剝離驗證");
     expect(audit).toContain("const telegraphGridCandidate =");
     expect(audit).toContain("result.diagnosticCheckerShare > 0");
-    expect(audit).toContain("auditWithoutVerifiedPresentationLayers(read)");
+    expect(audit).toContain("this.auditPresentationIsolation(read)");
+    expect(audit).toContain("this.presentationIsolationReason(isolation, telegraphGridCandidate)");
     expect(audit).toContain("await this.waitForVisibleGroundDecalTextures()");
     expect(audit).toContain("await this.waitForBrowserFrame()");
     expect(audit).toContain("telegraphs228.withHiddenForAudit");
@@ -248,15 +249,43 @@ describe("VFX Forge paused rendering", () => {
       source.indexOf("async captureVisualEvidence"),
       source.indexOf("placementAt(canvasX"),
     );
-    expect(capture).toContain("telegraphs228.withHiddenForAudit");
-    expect(capture).toContain("withoutTelegraph.unsafe");
+    expect(capture).toContain("this.auditPresentationIsolation(readSameComposition)");
+    expect(capture).toContain("this.presentationIsolationReason(isolation, telegraphGridCandidate)");
     expect(capture).toContain("frameAudit.diagnosticCheckerShare > 0");
     expect(capture).toContain("await this.waitForVisibleGroundDecalTextures()");
     expect(capture).not.toContain("this.replayTo(captureAtMs, false)");
-    expect(capture).toContain("if (withoutTelegraph.unsafe && withoutVerifiedLayers?.unsafe !== false)");
-    expect(capture).toContain("auditWithoutVerifiedPresentationLayers");
     expect(capture).toContain("this.activeParticleSuspects()");
+    expect(capture).toContain("const evidence = this.opaqueEvidenceFrame(width, height)");
+    expect(capture).toContain("const frameDataUrl = evidence.dataUrl");
+    expect(capture.indexOf("const frameDataUrl = evidence.dataUrl"))
+      .toBeLessThan(capture.indexOf("this.auditPresentationIsolation(readSameComposition)"));
+    expect(capture).toContain("const dataUrl = frameDataUrl");
+    expect(source).toContain('context.fillStyle = "#080a10"');
+    expect(source).toContain('output.getContext("2d", { alpha: false');
     expect(source).toContain("private activeParticleSuspects()");
+    expect(source).toContain('system.name.startsWith("vfx-preset-")');
+    const isolation = source.slice(
+      source.indexOf("private async auditPresentationIsolation"),
+      source.indexOf("private activeParticleSuspects"),
+    );
+    expect(isolation.indexOf("auditWithoutMainImpactParticles(read)"))
+      .toBeLessThan(isolation.indexOf("auditWithoutMainCastPresentation(read)"));
+    expect(isolation.indexOf("auditWithoutMainCastPresentation(read)"))
+      .toBeLessThan(isolation.indexOf("telegraphs228.withHiddenForAudit(read)"));
+    expect(isolation).toContain("this.withPresentationBeatFrozenForAudit(async () =>");
+    expect(source).toContain("private async withPresentationBeatFrozenForAudit");
+    expect(source).toContain("this.scene.animationsEnabled = false");
+    expect(source).toContain("system.updateSpeed = 0");
+    expect(source).toContain("system.manualEmitCount = 0");
+    expect(source).toContain("state.system.updateSpeed = state.updateSpeed");
+    expect(source).toContain("state.system.manualEmitCount = state.manualEmitCount");
+    expect(isolation).toContain("withoutMainAndTelegraph");
+    expect(isolation).toContain("Main 預設呈現積木與 Telegraph");
+    expect(source).toContain('mesh.name.startsWith("cast-pillar")');
+    expect(source).toContain('mesh.name.startsWith("cast-charge")');
+    expect(source).toContain('system.name.startsWith("vfx-preset-castpillar/")');
+    expect(capture).toContain("this.withActorBodiesHiddenForAudit(readSameComposition)");
+    expect(capture).toContain("角色本體 A/B 排除合法不透明模型表面");
     expect(source).toContain("private async seekForEvidence(targetMs: number)");
     expect(source).toContain("await this.finishPrimedSeek(target, seq)");
     expect(capture).toContain("await this.seekForEvidence(atMs)");
@@ -267,7 +296,7 @@ describe("VFX Forge paused rendering", () => {
     expect(source).toContain("material.useAlphaFromDiffuseTexture");
     expect(source).toContain("this.assetRefsVerifiedSafe");
     expect(capture).not.toContain("格狀外觀仍須人工裁決");
-    expect(capture).toContain("Telegraph 格狀圖樣已通過同格剝離");
+    expect(source).toContain("Telegraph 格狀圖樣已通過同格剝離");
     expect(source).toContain("async captureDiagnosticEvidenceAt");
     expect(source).toContain("diagnosticOnly: true");
     expect(source).toContain("Promise.allSettled([this.contentReady, this.actorReady, this.groundReady])");

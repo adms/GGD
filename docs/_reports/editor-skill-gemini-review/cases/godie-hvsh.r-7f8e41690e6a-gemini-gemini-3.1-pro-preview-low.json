@@ -1,0 +1,148 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-04T02:02:39.336Z",
+  "sourceDigest": "7f8e41690e6a9e4edcb22481bf9ebc3b2ffa26fb93663d5194c7101d3d2663aa",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hvsh.r",
+    "name": "48-04 騎英之疆繩"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6746,
+    "usage": {
+      "promptTokens": 5042,
+      "completionTokens": 460,
+      "totalTokens": 5502
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hvsh.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hvsh.r · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 3532,
+      "sha256": "9b25bd776c4e0fb3c4aea6943efa4fa8f15092c310f9da85d8eef23952bf157f"
+    },
+    {
+      "path": "frames/godie-hvsh.r-02-1347ms.webp",
+      "atMs": 1347,
+      "phase": "godie-hvsh.r · 吟唱完成 · anim+bodyMove+vfx+screenShake · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6870,
+      "sha256": "b847159fe1741bccf32dd2c2aacd1b93b8c8d82b2ebd388ba8b96359e974e2e7"
+    },
+    {
+      "path": "frames/godie-hvsh.r-03-1777ms.webp",
+      "atMs": 1777,
+      "phase": "godie-hvsh.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6194,
+      "sha256": "8b5c535caf589bec8fcaea03d37aa8cbbe69c031a04f5834453b16469fe7689f"
+    },
+    {
+      "path": "frames/godie-hvsh.r-04-1997ms.webp",
+      "atMs": 1997,
+      "phase": "godie-hvsh.r · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5254,
+      "sha256": "bff9ae10c424229c5a1527b6b8fc7c732451d7bf4e3d61791aaacd17efacb010"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見飛馬載角色高速衝刺，也未見藍色橫向砲\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"fail\",\n      \"reason\": \"缺乏預期的飛馬與光束砲特效\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"colorMatch\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見藍色光束砲\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見衝刺後接光束砲的過程\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"無明顯穿模\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"角色與特效相對關係清楚\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3\n      ]\n    }\n  },\n  \"notes\": [\n    \"畫面中僅見藍色橫向線條特效與幾何圖案，未見飛馬與明顯光束砲\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見飛馬載角色高速衝刺，也未見藍色橫向砲",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "fail",
+        "reason": "缺乏預期的飛馬與光束砲特效",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "colorMatch": {
+        "status": "fail",
+        "reason": "未見藍色光束砲",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供特定來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供特定命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "未見衝刺後接光束砲的過程",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "無明顯穿模",
+        "evidenceFrames": [
+          1,
+          2,
+          3
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "角色與特效相對關係清楚",
+        "evidenceFrames": [
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    "notes": [
+      "畫面中僅見藍色橫向線條特效與幾何圖案，未見飛馬與明顯光束砲"
+    ]
+  },
+  "contractWarnings": []
+}

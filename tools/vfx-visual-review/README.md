@@ -86,6 +86,14 @@ Run the bounded 42-theme / 46-document batch:
 # One reusable command: with a key it reviews; without a key it skips cleanly.
 pnpm vfx:review:temporal
 
+# Default is sixteen bounded Gemini requests in parallel; tune within 1..32 for
+# the account quota. Cached evidence is reused without a new API request.
+pnpm vfx:review:temporal -- --concurrency 16
+
+# Gemini 3.1 Pro currently reports a 25 request/minute per-model limit for this
+# key, so starts are shared across all workers at a safe 24 RPM by default.
+pnpm vfx:review:temporal -- --concurrency 16 --requests-per-minute 24
+
 # Recommended calibration: run only 1–2 cases first.
 pnpm vfx:review:temporal -- --max-cases 2
 
@@ -112,6 +120,7 @@ Missing `GEMINI_API_KEY` disables the batch, sends no image, and exits 0. Explic
 - PNG, JPEG, or WebP regular files only; symlinks are rejected.
 - Between 2 and 18 chronological frames are sent per request. Ordinary cases use up to 8 and strict animation cases up to 18; every request checks temporal order. `--max-frames 2..18` overrides the per-case cap.
 - Structured output is requested with `responseMimeType: application/json` and a JSON schema, then validated again locally.
+- Batch mode runs sixteen workers in parallel by default (`--concurrency 1..32`) while a shared start limiter defaults to 24 RPM (`--requests-per-minute 1..1000`). On the first provider failure it stops scheduling new requests; only the already in-flight bounded group may finish.
 - Gemini 3 `thinkingLevel` is explicitly `low` on the first pass and output is bounded. Temperature is omitted per Google's Gemini 3 guidance. No second pass occurs unless `--escalate-uncertain` is explicitly present.
 - Low confidence, missing evidence, invalid frame indices, contradictory checks, malformed output, safety blocks, and API errors cannot become `ai-prechecked`.
 - Art direction, original-scene fidelity, timing feel, and final approval remain human decisions.

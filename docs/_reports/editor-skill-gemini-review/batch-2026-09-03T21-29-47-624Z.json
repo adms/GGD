@@ -1,0 +1,42 @@
+{
+  "schema": "ggd-vfx-visual-review-batch@1",
+  "authority": "advisory-only",
+  "generatedAt": "2026-09-03T21:29:47.624Z",
+  "status": "complete",
+  "detail": "AI results are advisory triage only and do not satisfy human visual acceptance.",
+  "policy": {
+    "enabledWhenApiKeyPresent": true,
+    "enablementReason": "environment-enabled",
+    "provider": "google-gemini",
+    "candidateFrames": "2..18 event-selected chronological keyframes; ordinary cap 8, strict cinematic cap 18",
+    "firstPass": "low",
+    "escalation": "off by default; when explicitly enabled, only uncertain low-pass results retry at medium",
+    "fallback": "deterministic checks and human review continue"
+  },
+  "summary": {
+    "reviewed": 1,
+    "modelDisabled": 0,
+    "insufficientKeyframes": 0,
+    "notCaptured": 0,
+    "modelUnavailable": 0,
+    "modelError": 0,
+    "aiPrechecked": 0,
+    "aiRejected": 0,
+    "needsHumanReview": 1
+  },
+  "rows": [
+    {
+      "id": "godie-hvwd.e",
+      "name": "02-03 魂飛魄散",
+      "frameCount": 2,
+      "status": "reviewed",
+      "finalClassification": "needs-human-review",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "needs-human-review",
+        "sourceDigest": "f4327ee4673d1d0437faf01b5a4ac7b9f4846c67a532fd972237a2f58e1ee0fb",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-hvwd.e-f4327ee4673d-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    }
+  ]
+}

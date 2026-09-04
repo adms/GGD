@@ -1,0 +1,193 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:04:23.166Z",
+  "sourceDigest": "b4152d9beda79c910aea41286b7a15210d7f202f82ec34c84c445d4373832bc8",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hjai.w",
+    "name": "04-02 炸彈陣"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "medium",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 12851,
+    "usage": {
+      "promptTokens": 9446,
+      "completionTokens": 445,
+      "totalTokens": 10505
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hjai.w-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hjai.w · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10264,
+      "sha256": "96b137358a6aa6fd667c0d92a4d48aa800d7c80b1dca8fa2881b6ca1dc6e4fcf"
+    },
+    {
+      "path": "frames/godie-hjai.w-02-1400ms.webp",
+      "atMs": 1400,
+      "phase": "godie-hjai.w · 時間軸最低清晰度／呈現異常 · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 12620,
+      "sha256": "21c01536323a282642b072d9f868f660ddf4017840a2b1e2aa4ecb76b556f906"
+    },
+    {
+      "path": "frames/godie-hjai.w-03-2347ms.webp",
+      "atMs": 2347,
+      "phase": "godie-hjai.w · 真 runtime · comboStrike+vfxSpawn+basicAttack+projectileSpawn · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9246,
+      "sha256": "46a0c167505affce58bc71ed8a26c40a5e0cddaf5d5555d34e4eb639c410df84"
+    },
+    {
+      "path": "frames/godie-hjai.w-04-3347ms.webp",
+      "atMs": 3347,
+      "phase": "godie-hjai.w · 真 runtime · comboStrike+vfxSpawn · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7488,
+      "sha256": "6442fb282364848376469aa6a58def6218d990d4a5c869d999d2833b5760e5bd"
+    },
+    {
+      "path": "frames/godie-hjai.w-05-4347ms.webp",
+      "atMs": 4347,
+      "phase": "godie-hjai.w · 真 runtime · comboStrike+vfxSpawn · 自動基本視覺驗收",
+      "index": 4,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8324,
+      "sha256": "7cbf96c533026399e7ff54dcf9c5e284746ebaacb22543bc17b24ea21f7023e3"
+    },
+    {
+      "path": "frames/godie-hjai.w-06-5347ms.webp",
+      "atMs": 5347,
+      "phase": "godie-hjai.w · 真 runtime · comboStrike+vfxSpawn · 自動基本視覺驗收",
+      "index": 5,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7990,
+      "sha256": "b599708afd8dfa84b7790389a6a6877bc8b79ff61cfa311a716bbd662ea6525b"
+    },
+    {
+      "path": "frames/godie-hjai.w-07-6347ms.webp",
+      "atMs": 6347,
+      "phase": "godie-hjai.w · 真 runtime · comboStrike+vfxSpawn+basicAttack+projectileSpawn · 自動基本視覺驗收",
+      "index": 6,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9054,
+      "sha256": "f5157c9db876f67499592dc1cdbe1214000552a6b62a9e7d0f84f906222a6a4f"
+    },
+    {
+      "path": "frames/godie-hjai.w-08-21080ms.webp",
+      "atMs": 21080,
+      "phase": "godie-hjai.w · 真 runtime · basicAttack+projectileSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 7,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7868,
+      "sha256": "54ef1c59693c2bcd4d79257658d2a12efd1a63190afbd455c8323465bf2732a1"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見明確火柱，僅有破圖般的紅色方塊\",\n      \"evidenceFrames\": [1, 2, 3, 4, 5, 6]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供明確風格要求\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供生成位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"無法辨識火柱消失與殘留DoT的兩階段\",\n      \"evidenceFrames\": [1, 2, 6, 7]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模\",\n      \"evidenceFrames\": [1, 2, 3, 4, 5, 6, 7]\n    },\n    \"readability\": {\n      \"status\": \"fail\",\n      \"reason\": \"特效呈現破碎方塊，難以閱讀為預期效果\",\n      \"evidenceFrames\": [1, 2, 4, 5]\n    }\n  },\n  \"notes\": [\n    \"紅色特效呈現出疑似破圖或遺失材質的方塊狀，無法辨認為火柱\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見明確火柱，僅有破圖般的紅色方塊",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供明確風格要求",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供生成位置要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "無法辨識火柱消失與殘留DoT的兩階段",
+        "evidenceFrames": [
+          1,
+          2,
+          6,
+          7
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "readability": {
+        "status": "fail",
+        "reason": "特效呈現破碎方塊，難以閱讀為預期效果",
+        "evidenceFrames": [
+          1,
+          2,
+          4,
+          5
+        ]
+      }
+    },
+    "notes": [
+      "紅色特效呈現出疑似破圖或遺失材質的方塊狀，無法辨認為火柱"
+    ]
+  },
+  "contractWarnings": []
+}

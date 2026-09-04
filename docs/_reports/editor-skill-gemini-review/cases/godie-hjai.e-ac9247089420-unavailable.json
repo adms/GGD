@@ -1,0 +1,21 @@
+{
+  "schema": "ggd-vfx-visual-review-unavailable@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T18:07:37.640Z",
+  "sourceDigest": "ac92470894205575273b50bcfaa2eac363899b0fdd51f57d09fb3cc99c873775",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hjai.e",
+    "name": "04-03 龍破斬"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-flash-latest",
+    "baseUrl": "https://generativelanguage.googleapis.com"
+  },
+  "reason": {
+    "code": "GEMINI_UNAVAILABLE",
+    "detail": "Gemini returned HTTP 503: {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n"
+  }
+}

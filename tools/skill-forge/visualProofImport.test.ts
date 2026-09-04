@@ -5,6 +5,7 @@ describe("visual proof importer classification seam", () => {
   it("preserves every supported proof source and rejects unknown values", () => {
     expect(parseVisualProofSource("acceptance-fixture")).toBe("acceptance-fixture");
     expect(parseVisualProofSource("editor-basic-script")).toBe("editor-basic-script");
+    expect(parseVisualProofSource("editor-effect-graph-preview")).toBe("editor-effect-graph-preview");
     expect(parseVisualProofSource("runtime-effect-graph")).toBe("runtime-effect-graph");
     expect(parseVisualProofSource("owner-dialogue")).toBeUndefined();
   });

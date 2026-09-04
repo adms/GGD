@@ -1,0 +1,36 @@
+{
+  "schema": "ggd-vfx-visual-review-batch@1",
+  "authority": "advisory-only",
+  "generatedAt": "2026-09-03T18:15:21.224Z",
+  "status": "model-error",
+  "detail": "Gemini inference stopped after the first error; no repeated requests were attempted.",
+  "policy": {
+    "enabledByDefault": false,
+    "provider": "google-gemini",
+    "candidateFrames": "2..4 automatically selected keyframes",
+    "firstPass": "low",
+    "escalation": "off by default; when explicitly enabled, only uncertain low-pass results retry at medium",
+    "fallback": "deterministic checks and human review continue"
+  },
+  "summary": {
+    "reviewed": 0,
+    "modelDisabled": 0,
+    "insufficientKeyframes": 0,
+    "notCaptured": 0,
+    "modelUnavailable": 0,
+    "modelError": 1,
+    "aiPrechecked": 0,
+    "aiRejected": 0,
+    "needsHumanReview": 1
+  },
+  "rows": [
+    {
+      "id": "godie-e00l.ex",
+      "name": "20-002 解放.約束勝利劍MAX",
+      "frameCount": 4,
+      "status": "model-error",
+      "finalClassification": "needs-human-review",
+      "note": "invalid structured model result (Unterminated string in JSON at position 145 (line 7 column 30)): {\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"畫面僅見少數斬擊，未見後"
+    }
+  ]
+}

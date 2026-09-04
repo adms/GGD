@@ -1,0 +1,138 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:05:27.663Z",
+  "sourceDigest": "059ad8128548a4812b03b9aad0bc65cb16d6ace4647a9a5e2de1e81db3a9b1a7",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e00s.ex",
+    "name": "70-002 樹海降臨"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "medium",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 7316,
+    "usage": {
+      "promptTokens": 5011,
+      "completionTokens": 427,
+      "totalTokens": 5438
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e00s.ex-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-e00s.ex · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 12276,
+      "sha256": "2990cef62975244658125a6f0897ae5ee74bc6a0738fa61ed2a30da88f66b6d0"
+    },
+    {
+      "path": "frames/godie-e00s.ex-02-713ms.webp",
+      "atMs": 713,
+      "phase": "godie-e00s.ex · 真 runtime · basicAttack+projectileSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 16236,
+      "sha256": "d72563ca509700d2d7596ece4469dbbeb6380aac7155e3355ce2365cd03bc565"
+    },
+    {
+      "path": "frames/godie-e00s.ex-03-1347ms.webp",
+      "atMs": 1347,
+      "phase": "godie-e00s.ex · 真 runtime · vfxSpawn+summonSpawn · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 11316,
+      "sha256": "d8fec9ea494daba607562c1679864b56961061b5793a617bcc88d0daa4d1c4e8"
+    },
+    {
+      "path": "frames/godie-e00s.ex-04-1613ms.webp",
+      "atMs": 1613,
+      "phase": "godie-e00s.ex · 真 runtime · vfxSpawn+summonSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 15740,
+      "sha256": "bf89ab1e1cfe195948b1bef6e2fa70f6fb88640e1376a12bacd816911a38dec0"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.7,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未指定具體的追加傷害與友軍治療的視覺表現形式，無法確認\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺乏具體要求\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺乏具體顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供出生點要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未能識別主效果，無法評估時間順序\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"可見的特效未出現明顯穿模\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"可見效果與角色的相對關係清晰\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3\n      ]\n    }\n  },\n  \"notes\": [\n    \"畫面顯示了紫色光柱、波紋以及綠色治療效果，但預期只提到機制，沒有具體視覺描述。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.7,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "未指定具體的追加傷害與友軍治療的視覺表現形式，無法確認",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "缺乏具體要求",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "缺乏具體顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供出生點要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "未能識別主效果，無法評估時間順序",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "可見的特效未出現明顯穿模",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "可見效果與角色的相對關係清晰",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    "notes": [
+      "畫面顯示了紫色光柱、波紋以及綠色治療效果，但預期只提到機制，沒有具體視覺描述。"
+    ]
+  },
+  "contractWarnings": []
+}

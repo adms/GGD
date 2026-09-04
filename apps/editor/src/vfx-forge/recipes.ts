@@ -10,31 +10,55 @@ import { singleArcVfxId } from "./presentationContract";
  * gets no second schema and authors can still edit every resulting brick.
  */
 export const VFX_FORGE_RECIPES = [
-  { id: "classic-beam-fire", label: "經典橘金氣功砲", description: "透明安全的橘金雙層長軸粒子；不使用會露出白卡的 ReviveHuman MDL" },
-  { id: "classic-beam-blue", label: "經典藍白氣功砲", description: "透明安全的藍白雙層長軸粒子；不使用會露出白卡的 ReviveHuman MDL" },
-  { id: "line-blast-fire", label: "定距火球＋落點爆炸", description: "FireBlast MDL 真正飛行，抵達後才爆炸" },
-  { id: "dash-slash-void", label: "黑紫衝刺斬", description: "真正施法者高速穿越，搭配 Main 收據中的單發大型主斬弧與震動" },
-  { id: "shockwave-dash-light", label: "衝擊波＋追身光斬", description: "A 段朝目標放衝擊波，B 段替 ability 的真實衝刺補上揮劍與斬光" },
-  { id: "combo-slash-holy", label: "黃藍多段斬＋終結柱", description: "每段一個角色攻擊／受擊動畫與一個分時單斬弧，第七段黃藍光柱" },
-  { id: "reflect-counter-open", label: "反彈成功起手", description: "只由 reflectSuccess 觸發的防禦火花；不猜 blockSuccess" },
-  { id: "avalon-counter-chain", label: "理想鄉反擊七斬", description: "反彈成功起手、六次換位斬擊與第七段黃藍橫向終結砲" },
-  { id: "rider-dash-beam-blue", label: "Rider 突進＋藍光束", description: "真 Rider 本體突進、藍白橫向光束與命中動畫" },
-  { id: "avalon-guard-window", label: "Avalon 防禦窗", description: "啟動防禦姿勢與結界；只有反彈成功才播放格擋火花" },
-  { id: "chain-lightning-storm", label: "多起點連鎖雷擊", description: "以錯開的雷擊起點表現多條獨立連鎖，不把所有跳躍疊成一次爆炸" },
-  { id: "bankai-transform", label: "高速變身氣場", description: "變身動作、閃光、黑紅氣場與高速殘影，數值與外觀切換仍由 ability JSON 決定" },
-  { id: "perfect-parry", label: "完美盾反", description: "防禦窗先架勢，反彈成功才出現格擋火花、反擊動作與目標後退" },
+  { id: "classic-beam-fire", familyId: "classic-horizontal-beam", familyLabel: "經典橫向光束", typeId: "type1", variantLabel: "橘金持續型", label: "經典橘金氣功砲", description: "原作 ReviveHuman＋FragDriller 蝗蟲模型組合；可調長寬、朝向、透明度、顏色與翻滾" },
+  { id: "classic-beam-blue", familyId: "classic-horizontal-beam", familyLabel: "經典橫向光束", typeId: "type2", variantLabel: "藍白持續型", label: "經典藍白氣功砲", description: "原作 ReviveHuman＋FragDriller 蝗蟲模型組合；同一組積木改色為藍白光束" },
+  { id: "classic-beam-holy", familyId: "classic-horizontal-beam", familyLabel: "經典橫向光束", typeId: "type3", variantLabel: "黃藍聖光型", label: "黃藍聖光砲", description: "同一組模型積木改為黃金外層與藍色核心" },
+  { id: "classic-beam-void", familyId: "classic-horizontal-beam", familyLabel: "經典橫向光束", typeId: "type4", variantLabel: "紫黑虛空型", label: "紫黑虛空砲", description: "同一組模型積木改為紫黑外層與亮紫核心" },
+  { id: "classic-beam-inferno", familyId: "classic-horizontal-beam", familyLabel: "經典橫向光束", typeId: "type5", variantLabel: "紅橘高熱型", label: "紅橘高熱砲", description: "同一組模型積木改為紅橘高熱輪廓" },
+  { id: "classic-beam-electric", familyId: "classic-horizontal-beam", familyLabel: "經典橫向光束", typeId: "type6", variantLabel: "青藍電能型", label: "青藍電能砲", description: "同一組模型積木改為青藍電能輪廓" },
+  { id: "energy-beam-lightning-thin", familyId: "classic-horizontal-beam", familyLabel: "經典橫向光束", typeId: "type7", variantLabel: "細束雷射型", label: "細束青藍雷射", description: "只用 Main 通用 beam primitive 的快速細束版本" },
+  { id: "energy-beam-lightning-wide", familyId: "classic-horizontal-beam", familyLabel: "經典橫向光束", typeId: "type8", variantLabel: "寬幅雷電型", label: "寬幅青藍電砲", description: "只用 Main 通用 beam-lg primitive 的寬幅版本" },
+  { id: "energy-beam-holy-wide", familyId: "classic-horizontal-beam", familyLabel: "經典橫向光束", typeId: "type9", variantLabel: "寬幅聖光型", label: "寬幅黃白聖光砲", description: "只用 Main 通用 holy beam-lg primitive 的寬幅版本" },
+  { id: "energy-beam-void-wide", familyId: "classic-horizontal-beam", familyLabel: "經典橫向光束", typeId: "type10", variantLabel: "寬幅虛空型", label: "寬幅紫黑虛空砲", description: "只用 Main 通用 void beam-lg primitive 的寬幅版本" },
+  { id: "rider-dash-beam-blue", familyId: "dash-beam", familyLabel: "突進接光束", typeId: "type1", variantLabel: "藍白騎乘型", label: "Rider 突進＋藍光束", description: "真 Rider 本體突進、藍白橫向光束與命中動畫" },
+  { id: "line-blast-fire", familyId: "projectile-impact", familyLabel: "投射後命中", typeId: "type1", variantLabel: "火球爆炸型", label: "定距火球＋落點爆炸", description: "FireBlast MDL 真正飛行，抵達後才爆炸" },
+  { id: "dash-slash-void", familyId: "dash-slash", familyLabel: "衝刺斬擊", typeId: "type1", variantLabel: "黑紫單發型", label: "黑紫衝刺斬", description: "真正施法者高速穿越，搭配 Main 收據中的單發大型主斬弧與震動" },
+  { id: "shockwave-dash-light", familyId: "dash-slash", familyLabel: "衝刺斬擊", typeId: "type2", variantLabel: "衝擊波追身型", label: "衝擊波＋追身光斬", description: "A 段朝目標放衝擊波，B 段替 ability 的真實衝刺補上揮劍與斬光" },
+  { id: "combo-slash-holy", familyId: "combo-finisher", familyLabel: "連段終結技", typeId: "type1", variantLabel: "直立光柱型", label: "黃藍多段斬＋終結柱", description: "每段一個角色攻擊／受擊動畫與一個分時單斬弧，第七段黃藍光柱" },
+  { id: "avalon-counter-chain", familyId: "combo-finisher", familyLabel: "連段終結技", typeId: "type2", variantLabel: "反擊橫向光束型", label: "理想鄉反擊七斬", description: "反彈成功起手、六次換位斬擊與第七段黃藍橫向終結砲" },
+  { id: "reflect-counter-open", familyId: "defense-reaction", familyLabel: "防禦反應", typeId: "type1", variantLabel: "反彈火花型", label: "反彈成功起手", description: "只由 reflectSuccess 觸發的防禦火花；不猜 blockSuccess" },
+  { id: "avalon-guard-window", familyId: "defense-reaction", familyLabel: "防禦反應", typeId: "type2", variantLabel: "持續防禦窗型", label: "Avalon 防禦窗", description: "啟動防禦姿勢與結界；只有反彈成功才播放格擋火花" },
+  { id: "perfect-parry", familyId: "defense-reaction", familyLabel: "防禦反應", typeId: "type3", variantLabel: "完美盾反型", label: "完美盾反", description: "防禦窗先架勢，反彈成功才出現格擋火花、反擊動作與目標後退" },
+  { id: "chain-lightning-storm", familyId: "chain-lightning", familyLabel: "連鎖雷擊", typeId: "type1", variantLabel: "多起點風暴型", label: "多起點連鎖雷擊", description: "以錯開的雷擊起點表現多條獨立連鎖，不把所有跳躍疊成一次爆炸" },
+  { id: "bankai-transform", familyId: "transform-aura", familyLabel: "變身氣場", typeId: "type1", variantLabel: "高速黑紅型", label: "高速變身氣場", description: "變身動作、閃光、黑紅氣場與高速殘影，數值與外觀切換仍由 ability JSON 決定" },
 ] as const;
 
 export type VfxForgeRecipeId = typeof VFX_FORGE_RECIPES[number]["id"];
+export const VFX_FORGE_RECIPE_FAMILIES = [...new Set(VFX_FORGE_RECIPES.map((recipe) => recipe.familyId))]
+  .map((familyId) => ({
+    id: familyId,
+    label: VFX_FORGE_RECIPES.find((recipe) => recipe.familyId === familyId)!.familyLabel,
+    recipes: VFX_FORGE_RECIPES.filter((recipe) => recipe.familyId === familyId),
+  }));
 export const CLASSIC_BEAM_MODEL_KEY = "w3x.stock.revivehuman";
-export const CLASSIC_BEAM_VISUAL_GAP =
-  "Main 缺少可調長寬與軸向、透明安全且不依賴 host bone 的連續實心光束積木與直立光柱變體；現有 beam-flat／beam-lg 只會形成細長 trace，ReviveHuman 會露出不透明 TeamGlow 白卡，pulse／flare 串接則成為珠串。";
+export const CLASSIC_BEAM_CORE_MODEL_KEY = "w3x.stock.fragdriller";
 
 export interface VfxForgeRecipeTrigger {
   on: VfxScriptSegment["on"];
   atMs?: number;
   strikeIndex?: number;
 }
+
+type ClassicModelBeamStyle = "fire" | "blue" | "holy" | "void" | "inferno" | "electric";
+
+const CLASSIC_MODEL_BEAM_RECIPE_STYLE: Partial<Record<VfxForgeRecipeId, ClassicModelBeamStyle>> = {
+  "classic-beam-fire": "fire",
+  "classic-beam-blue": "blue",
+  "classic-beam-holy": "holy",
+  "classic-beam-void": "void",
+  "classic-beam-inferno": "inferno",
+  "classic-beam-electric": "electric",
+};
 
 export function buildVfxForgeRecipe(
   id: VfxForgeRecipeId,
@@ -49,14 +73,20 @@ export function buildVfxForgeRecipe(
   },
 ): VfxScriptSegment[] {
   let segments: VfxScriptSegment[];
-  if (id === "classic-beam-fire" || id === "classic-beam-blue") {
+  const classicModelStyle = CLASSIC_MODEL_BEAM_RECIPE_STYLE[id];
+  if (classicModelStyle) {
     segments = classicBeam(
-      id === "classic-beam-fire",
-      options.includeModelCore ?? false,
+      classicModelStyle,
+      options.includeModelCore ?? true,
       options.trigger ?? { on: "castEffect" },
       options.beamAnchor ?? "self",
       options.beamYawOffsetDeg ?? 0,
     );
+  } else if (
+    id === "energy-beam-lightning-thin" || id === "energy-beam-lightning-wide" ||
+    id === "energy-beam-holy-wide" || id === "energy-beam-void-wide"
+  ) {
+    segments = primitiveBeam(id);
   } else if (id === "line-blast-fire") segments = lineBlastFire();
   else if (id === "dash-slash-void") segments = dashSlashVoid();
   else if (id === "shockwave-dash-light") segments = shockwaveDashLight();
@@ -74,13 +104,16 @@ export function buildVfxForgeRecipe(
 }
 
 /**
- * The classic beam is particle-first. The legacy ReviveHuman MDL can still be
- * requested by isolated tests, but Forge recipes default it off: the real
- * framebuffer audit proved its TeamGlow mesh becomes an opaque white card.
- * Two time-separated outer/core pulses keep a truthful, safe fallback. They do
- * not pretend to be the requested broad continuous cylinder: Main currently
- * has no receipted world-space brick for that silhouette, and the acceptance
- * report records CLASSIC_BEAM_VISUAL_GAP until such a primitive ships.
+ * Original W3X grammar: one locust unit wearing ReviveHuman is the long body;
+ * one h008/FragDriller is its compact energetic core. The model documents map
+ * their baked Y long-axis onto the aim direction, while scaleAxis controls
+ * length independently from thickness. Endpoint particles only clarify charge
+ * and contact; they are not a beam assembled from a row of flares.
+ *
+ * White rectangles seen during cold deterministic seeks were an Editor shader
+ * readiness artifact. Main's ModelFxRig already restores WC3 additive blending
+ * and honours alpha. VfxForgeStage prewarms that same runtime rig before proof
+ * capture; never "fix" the artifact by deleting the source models again.
  */
 function triggerFields(trigger: VfxForgeRecipeTrigger, relativeMs = 0): Pick<VfxScriptSegment, "on" | "atMs" | "strikeIndex"> {
   const atMs = (trigger.atMs ?? 0) + relativeMs;
@@ -94,82 +127,105 @@ function triggerFields(trigger: VfxForgeRecipeTrigger, relativeMs = 0): Pick<Vfx
 }
 
 function classicBeam(
-  fire: boolean,
+  style: ClassicModelBeamStyle,
   includeModelCore: boolean,
   trigger: VfxForgeRecipeTrigger,
   anchor: "self" | "target",
   yawOffsetDeg: number,
   sideOffsetU = 0,
-  particleAlphaScale = 1,
-  pulseOffsetsMs: readonly number[] = [0, 430],
 ): VfxScriptSegment[] {
   const segments: VfxScriptSegment[] = [];
+  const palette = {
+    fire: { outer: [1, 0.38, 0.04], core: [1, 0.9, 0.58], impact: "fx.prim.holy.explosion", impactScale: 1.05 },
+    blue: { outer: [0.12, 0.42, 1], core: [0.72, 0.9, 1], impact: "fx.prim.lightning.pulse-lg", impactScale: 0.9 },
+    holy: { outer: [1, 0.72, 0.18], core: [0.2, 0.55, 1], impact: "fx.prim.holy.explosion", impactScale: 1.05 },
+    void: { outer: [0.34, 0.04, 0.62], core: [0.82, 0.3, 1], impact: "fx.prim.void.pulse-lg", impactScale: 0.95 },
+    inferno: { outer: [1, 0.08, 0.01], core: [1, 0.52, 0.08], impact: "fx.prim.fire.explosion", impactScale: 1.05 },
+    electric: { outer: [0.02, 0.68, 1], core: [0.7, 1, 1], impact: "fx.prim.lightning.pulse-lg", impactScale: 0.9 },
+  } as const satisfies Record<ClassicModelBeamStyle, {
+    outer: readonly [number, number, number];
+    core: readonly [number, number, number];
+    impact: string;
+    impactScale: number;
+  }>;
+  const chosen = palette[style];
+  const outerTint = chosen.outer;
+  const coreTint = chosen.core;
   if (includeModelCore) {
     segments.push(zVfxScriptSegment.parse({
       kind: "modelFx", ...triggerFields(trigger), modelKey: CLASSIC_BEAM_MODEL_KEY,
-      path: "static", anchor, scale: 4,
-      // The converted GLB keeps the central ReviveHuman geometry but not the
-      // WC3 PRE2 ribbon that made the original beam broad and long.  The model
-      // contract explicitly maps axis 3 to the rigged forward axis, so this is
-      // a deterministic reconstruction of that missing silhouette rather than
-      // a model-local guess.  The old 0.48/2.68 values rendered as a thin line
-      // and a single muzzle star at the shipped 18u camera.
-      scaleAxis: [0.9, 0.9, 4.4], spinDegPerSec: 180,
-      clip: "idle", clipTimeScale: 0.18,
-      tint: fire ? [1, 0.34, 0.03] : [0.08, 0.36, 1], alpha: fire ? 0.72 : 0.68,
-      lifeSec: 1.1, offsetForwardU: 0.8, heightU: 0,
+      path: "static", anchor, scale: 2.65,
+      scaleAxis: [1, 1, 2.68], spinDegPerSec: 720,
+      clip: "idle", tint: outerTint, alpha: 0.82,
+      // Main's shipped beam-roll family places the source dummy 150 WC3 units
+      // in front of the caster. Keep the Editor macro on that measured baseline
+      // instead of hiding a renderer gap with a per-skill offset.
+      lifeSec: 1.2, offsetForwardU: 2.75, heightU: 0,
+      ...(sideOffsetU === 0 ? {} : { offsetSideU: sideOffsetU }),
+      ...(yawOffsetDeg === 0 ? {} : { yawOffsetDeg }),
+    }));
+    segments.push(zVfxScriptSegment.parse({
+      kind: "modelFx", ...triggerFields(trigger, 35), modelKey: CLASSIC_BEAM_CORE_MODEL_KEY,
+      path: "static", anchor, scale: 3.65,
+      scaleAxis: [0.82, 0.82, 2.2], spinDegPerSec: -540,
+      clip: "idle", clipTimeScale: 0.15,
+      tint: coreTint, alpha: 0.58,
+      lifeSec: 1.15, offsetForwardU: 2.75, heightU: 0,
       ...(sideOffsetU === 0 ? {} : { offsetSideU: sideOffsetU }),
       ...(yawOffsetDeg === 0 ? {} : { yawOffsetDeg }),
     }));
   }
-  // Fixtures may only compose resources already shipped by main. Creating a
-  // new content/vfx document here would turn an Editor capability check into
-  // an unreviewed game-content change. Segment tint supplies the orange/blue
-  // identity; the WC3 MDL remains the actual beam body.
-  const vfxId = fire ? "fx.prim.holy.beam-flat" : "fx.prim.lightning.beam-flat";
-  const outerTint = fire ? [255, 132, 20] : [65, 155, 255];
-  const coreTint = fire ? [255, 242, 190] : [215, 242, 255];
-  // Two pulses x outer/core leave two systems in the six-slot additive budget
-  // for the readable grammar a classic beam still needs: a muzzle core and an
-  // impact bloom. This fallback intentionally exposes the current Main gap
-  // instead of hiding it behind a chain of disconnected flare billboards.
-  for (const atMs of pulseOffsetsMs) {
-    segments.push(zVfxScriptSegment.parse({
-      kind: "vfx", ...triggerFields(trigger, atMs), vfxId, at: anchor,
-      durationSec: 1.15, offsetForwardU: 0.8, w3xScale: 3.2, timeScale: 1,
-      tint: outerTint, flyHeight: 72, alpha: Math.min(1, 0.3 * particleAlphaScale),
-      ...(sideOffsetU === 0 ? {} : { offsetSideU: sideOffsetU }),
-      ...(yawOffsetDeg === 0 ? {} : { facingDeg: yawOffsetDeg }),
-    }));
-    segments.push(zVfxScriptSegment.parse({
-      kind: "vfx", ...triggerFields(trigger, atMs + 35), vfxId, at: anchor,
-      durationSec: 1.15, offsetForwardU: 0.8, w3xScale: 1.4, timeScale: 1,
-      tint: coreTint, flyHeight: 72, alpha: Math.min(1, 0.62 * particleAlphaScale),
-      ...(sideOffsetU === 0 ? {} : { offsetSideU: sideOffsetU }),
-      ...(yawOffsetDeg === 0 ? {} : { facingDeg: yawOffsetDeg }),
-    }));
-  }
-  // Single-pulse callers are combo finishers that already own their opening
-  // and impact. The full classic-beam card adds both endpoints so the picture
-  // says charge -> sustained body -> hit instead of looking like loose hairs.
-  if (pulseOffsetsMs.length > 1) {
+  const outerRgb = outerTint.map((value) => Math.round(value * 255)) as [number, number, number];
+  const coreRgb = coreTint.map((value) => Math.round(value * 255)) as [number, number, number];
+  // When ability JSON already owns the model body, the card may still provide
+  // a small charge cue. The from-blank model recipe omits it: real framebuffer
+  // proof showed this generic pulse expanding into a character-covering ball.
+  if (!includeModelCore) {
     segments.push(zVfxScriptSegment.parse({
       kind: "vfx", ...triggerFields(trigger),
-      vfxId: fire ? "fx.prim.holy.pulse-sm" : "fx.prim.lightning.pulse-sm",
-      at: anchor, durationSec: 0.42, offsetForwardU: 0.5,
-      w3xScale: 1.35, tint: coreTint, flyHeight: 72,
-      alpha: Math.min(1, 0.72 * particleAlphaScale),
+      vfxId: style === "blue" || style === "electric" ? "fx.prim.lightning.pulse-sm" :
+        style === "void" ? "fx.prim.void.pulse-sm" : "fx.prim.holy.pulse-sm",
+      at: anchor, durationSec: 0.32, offsetForwardU: 0.5,
+      w3xScale: 0.7, tint: coreRgb, flyHeight: 72, alpha: 0.62,
       ...(sideOffsetU === 0 ? {} : { offsetSideU: sideOffsetU }),
     }));
-    segments.push(zVfxScriptSegment.parse({
-      kind: "vfx", ...triggerFields(trigger, 650),
-      vfxId: fire ? "fx.prim.fire.explosion" : "fx.prim.lightning.pulse-lg",
-      at: "target", durationSec: 0.46, w3xScale: fire ? 1.05 : 0.9,
-      tint: outerTint, flyHeight: 68,
-      alpha: Math.min(1, 0.68 * particleAlphaScale),
-    }));
   }
+  segments.push(zVfxScriptSegment.parse({
+    kind: "vfx", ...triggerFields(trigger, 650),
+    vfxId: chosen.impact,
+    at: "target", durationSec: 0.46, w3xScale: chosen.impactScale,
+    tint: outerRgb, flyHeight: 68, alpha: 0.68,
+  }));
   return segments;
+}
+
+function primitiveBeam(
+  id: Extract<VfxForgeRecipeId,
+    "energy-beam-lightning-thin" | "energy-beam-lightning-wide" |
+    "energy-beam-holy-wide" | "energy-beam-void-wide">,
+): VfxScriptSegment[] {
+  const styles = {
+    "energy-beam-lightning-thin": { beam: "fx.prim.lightning.beam", impact: "fx.prim.lightning.pulse-sm", tint: [80, 220, 255], scale: 1.1 },
+    "energy-beam-lightning-wide": { beam: "fx.prim.lightning.beam-lg", impact: "fx.prim.lightning.pulse-lg", tint: [95, 195, 255], scale: 1.7 },
+    "energy-beam-holy-wide": { beam: "fx.prim.holy.beam-lg", impact: "fx.prim.holy.explosion", tint: [255, 222, 118], scale: 1.7 },
+    "energy-beam-void-wide": { beam: "fx.prim.void.beam-lg", impact: "fx.prim.void.pulse-lg", tint: [165, 62, 255], scale: 1.7 },
+  } as const;
+  const chosen = styles[id];
+  return [
+    zVfxScriptSegment.parse({ kind: "anim", on: "castStart", at: "caster", pulse: "cast", clipWindowMs: 720 }),
+    zVfxScriptSegment.parse({
+      kind: "vfx", on: "castEffect", vfxId: chosen.beam, at: "self",
+      offsetForwardU: 0.7, durationSec: 0.82, w3xScale: chosen.scale,
+      tint: chosen.tint, flyHeight: 70, alpha: 0.78,
+    }),
+    zVfxScriptSegment.parse({
+      kind: "vfx", on: "castEffect", atMs: 520, vfxId: chosen.impact, at: "target",
+      durationSec: 0.38, w3xScale: chosen.scale * 0.62,
+      tint: chosen.tint, flyHeight: 65, alpha: 0.68,
+    }),
+    zVfxScriptSegment.parse({ kind: "anim", on: "castEffect", atMs: 520, at: "target", pulse: "hurt", clipWindowMs: 460 }),
+    zVfxScriptSegment.parse({ kind: "screenShake", on: "castEffect", atMs: 500, amplitude: chosen.scale > 1.2 ? 0.38 : 0.24, durationSec: 0.32 }),
+  ];
 }
 
 /** JASS A04R: a visible fire mass travels 12u, then the endpoint explodes. */
@@ -373,10 +429,11 @@ function comboSlashHoly(includeFinalColumn: boolean, includeOpeningAttack: boole
       // Generic strike fires once per authoritative comboStrike: one actor
       // swing, one target reaction and exactly one receipted arc per damage beat.
       kind: "vfx", on: "strike", vfxId: singleArcVfxId("holy"), at: "target",
-      // One decisive oversized arc is the readable complement to one actor
-      // swing.  The old 1.05 scale disappeared behind the two bodies and
-      // encouraged authors to compensate with a 26-crescent fan.
-      durationSec: 0.3, w3xScale: 2.25, flyHeight: 82, alpha: 0.9,
+      // This family is an authoritative rapid combo: keep exactly one readable
+      // arc per strike. The primitive is an impact arc, so it stays on the
+      // target hit point while the paired caster attack animation supplies the
+      // swing; do not let seven successive arcs read as screen-sized projectiles.
+      durationSec: 0.3, w3xScale: 1.6, flyHeight: 68, alpha: 0.82,
     }),
   ];
   if (includeFinalColumn) {
@@ -387,14 +444,13 @@ function comboSlashHoly(includeFinalColumn: boolean, includeOpeningAttack: boole
         // Two additive columns used to overlap at 2.5/3.2 scale and hide both
         // actors in the final frame (GPU proof: 7.1% lit, 5.2% highlight).
         // Keep the yellow/blue split, but make the silhouettes readable.
-        w3xScale: 1.65, tint: [255, 210, 70], alpha: 0.28,
-        offsetForwardU: -0.32, offsetSideU: -0.1,
+        // Yellow is the outer column; the blue layer below is its centred core.
+        w3xScale: 2, tint: [255, 210, 70], alpha: 0.22,
       }),
       zVfxScriptSegment.parse({
         kind: "vfx", on: "strike", strikeIndex: 7, atMs: 45,
         vfxId: "fx.prim.lightning.beam-lg", at: "target", durationSec: 0.9,
-        w3xScale: 1.95, tint: [70, 180, 255], alpha: 0.32,
-        offsetForwardU: 0.32, offsetSideU: 0.1,
+        w3xScale: 1.28, tint: [70, 180, 255], alpha: 0.32,
       }),
     );
   }
@@ -442,11 +498,9 @@ function avalonCounterChain(): VfxScriptSegment[] {
       kind: "anim", on: "strike", strikeIndex: 7, atMs: 180,
       at: "caster", pulse: "attack", clipWindowMs: 1050,
     }),
-    // Keep the orange MDL body and blue particle core slightly separated.
-    // Exact overlap made the brighter orange layer erase the requested
-    // yellow/blue identity even though both systems were technically alive.
-    ...classicBeam(true, false, { on: "strike", strikeIndex: 7, atMs: 220 }, "target", 180, -0.16, 0.9, [0]),
-    ...classicBeam(false, false, { on: "strike", strikeIndex: 7, atMs: 245 }, "target", 180, 0.22, 1.25, [0]),
+    // One source-faithful locust pair: ReviveHuman is the gold body and
+    // h008/FragDriller is the blue core. Do not stack two complete recipes.
+    ...classicBeam("holy", true, { on: "strike", strikeIndex: 7, atMs: 220 }, "self", 0, 0),
     zVfxScriptSegment.parse({ kind: "screenShake", on: "strike", strikeIndex: 7, amplitude: 0.58, durationSec: 0.7 }),
   ];
 }
@@ -460,7 +514,7 @@ function riderDashBeamBlue(): VfxScriptSegment[] {
       kind: "bodyMove", on: "castEffect", at: "caster", mode: "arc",
       offset: { x: 0.55, y: 0.7, z: 3 }, durationMs: 900,
     }),
-    ...classicBeam(false, false, { on: "castEffect" }, "self", 0),
+    ...classicBeam("blue", true, { on: "castEffect" }, "self", 0),
     zVfxScriptSegment.parse({ kind: "anim", on: "castEffect", atMs: 700, at: "target", pulse: "hurt", clipWindowMs: 560 }),
     zVfxScriptSegment.parse({ kind: "screenShake", on: "castEffect", amplitude: 0.45, durationSec: 0.9 }),
   ];

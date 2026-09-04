@@ -119,8 +119,16 @@ export class AssetSafetyGate implements VfxScriptAssetGuard {
     return pending;
   }
 
+  async checkAssets(assets: readonly AssetDrop[]): Promise<AssetSafetyResult[]> {
+    const unique = new Map<string, AssetDrop>();
+    for (const asset of assets) unique.set(assetKey(asset), asset);
+    return Promise.all([...unique.values()]
+      .sort((a, b) => assetKey(a).localeCompare(assetKey(b)))
+      .map((asset) => this.check(asset)));
+  }
+
   async checkScript(doc: VfxScriptDoc): Promise<AssetSafetyResult[]> {
-    return Promise.all(assetRefsFromScript(doc).map((asset) => this.check(asset)));
+    return this.checkAssets(assetRefsFromScript(doc));
   }
 
   async assertScriptSafe(doc: VfxScriptDoc): Promise<void> {
@@ -404,7 +412,8 @@ function parseGlb(bytes: ArrayBuffer): { json: GlbJson; bin: Uint8Array } {
     if (start + length > view.byteLength) throw new Error("GLB chunk 超出檔案範圍");
     const chunk = new Uint8Array(bytes, start, length);
     if (type === 0x4e4f534a) {
-      const text = new TextDecoder().decode(chunk).replace(/[\u0000 ]+$/u, "");
+      let text = new TextDecoder().decode(chunk);
+      while (text.endsWith("\0") || text.endsWith(" ")) text = text.slice(0, -1);
       json = JSON.parse(text) as GlbJson;
     } else if (type === 0x004e4942) bin = chunk;
     offset = start + length;

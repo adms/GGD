@@ -13,7 +13,7 @@ import {
 
 const MAX_FRAME_BYTES = 10 * 1024 * 1024;
 const MAX_TOTAL_BYTES = 64 * 1024 * 1024;
-const REVIEW_PROMPT_REVISION = "image-only-phase-blind-strict@3";
+const REVIEW_PROMPT_REVISION = "image-only-phase-blind-remediation-scope@6";
 
 export interface PreparedFrame extends FrameInput {
   index: number;
@@ -155,8 +155,12 @@ function buildPrompt(request: ReviewRequest, requiredChecks: CheckKey[]): string
     "圖片可能漏掉中間或結尾。必要階段未在任一候選圖片中直接可見時必須填 uncertain 或 fail，不得假設兩幀之間曾出現。",
     "沒有提供特定顏色、來源或命中位置要求時，對應檢查填 uncertain，不得自行補成 pass。",
     "看不清、規格未提供、幀不足或無法從畫面確認時必須填 uncertain，禁止猜測。",
+    "卡片、模板、數值、標籤或 runtime 語意是否一致不屬於圖片審查；即使注意到，也只能寫在 notes，不能因此把 overall 或任何視覺檢查判成 fail。",
     "effectPresence=pass 代表預期的主效果確實可見；familyMatch=pass 代表可見主效果屬於預期 VFX 類型。",
     "clipping=pass 代表未見穿模/裁切；readability=pass 代表主效果與角色/地面關係清楚。",
+    "明顯大錯必須寫入對應檢查：顏色錯歸 colorMatch；方向、出生點或命中點錯歸 spawnOrigin/impactPlacement；形狀家族錯歸 familyMatch；大小尺度、遮擋或物理意義錯歸 readability。",
+    "候選圖是依時間排列的同一段演出；不可把不同影格各自出現的一個斬弧誤算成同一時刻的大量月牙。若預期明列快速多段斬，每個傷害段一個斬弧並搭配角色攻擊屬正常；只有同一傷害段堆多個斬弧，或看不到角色動作而由斬弧取代角色時才因此 fail。",
+    "亮度、飽和度、尾焰密度、數幀節奏、鏡頭手感與美術偏好屬人工細修，只能寫進 notes；若同時存在明顯大錯，仍須讓對應必要檢查 fail。",
     `受測項目：${request.subject.kind}/${request.subject.id}${request.subject.name ? ` ${request.subject.name}` : ""}`,
     `預期視覺：${stable(request.expectation)}`,
     mechanics ? `機制描述（已排除「」內 Owner 對白）：${mechanics}` : "機制描述：未提供",
@@ -205,10 +209,14 @@ export function classifyPreparedResult(
   if (result.overall === "pass" && !allRequiredPass) {
     warnings.push("internally inconsistent: overall passed while a required check did not pass");
   }
+  const anyRequiredFail = prepared.requiredChecks.some((key) => result.checks[key].status === "fail");
+  if (result.overall === "fail" && !anyRequiredFail) {
+    warnings.push("overall failed without a required visual check failure");
+  }
   if (warnings.length || result.confidence < prepared.minConfidence) {
     return { classification: "needs-human-review", warnings };
   }
-  if (result.overall === "fail" || prepared.requiredChecks.some((key) => result.checks[key].status === "fail")) {
+  if (anyRequiredFail) {
     return { classification: "ai-rejected", warnings };
   }
   if (result.overall === "pass" && allRequiredPass) {

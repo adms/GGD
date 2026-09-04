@@ -76,6 +76,7 @@ const rows = expectedIds.map((id) => {
     note: authored.note,
     frameCount: visual.frames?.length ?? 0,
     proofSource: visual.proofSource,
+    mechanicVisualAdditions: visual.mechanicVisualAdditions ?? [],
     noCode: {
       status: noCodeStatus,
       designerPath: contract.designerPath,

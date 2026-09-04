@@ -1,0 +1,192 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:02:40.207Z",
+  "sourceDigest": "3b53b23101f2abe1c78a45cc48cf058fb8215ace38b00d9f4cfd632a3622280a",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-nbbc.w",
+    "name": "08-02 萊丁快速劍"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 7607,
+    "usage": {
+      "promptTokens": 9449,
+      "completionTokens": 462,
+      "totalTokens": 9911
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-nbbc.w-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-nbbc.w · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6272,
+      "sha256": "412467f79e5d08903cf9aaa877f36882d7d899be8a8be0a68b75f7831d708853"
+    },
+    {
+      "path": "frames/godie-nbbc.w-02-913ms.webp",
+      "atMs": 913,
+      "phase": "godie-nbbc.w · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10866,
+      "sha256": "70769ad5a7e4f6cdfc6dfd295f733f473319ba805ab410cfd20c9ae1b0be4a1d"
+    },
+    {
+      "path": "frames/godie-nbbc.w-03-1213ms.webp",
+      "atMs": 1213,
+      "phase": "godie-nbbc.w · 真 runtime · vfxSpawn+displace+damage+hitImpact · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10998,
+      "sha256": "177658af2926a16aee1db0a2cc2a3f7bf223b783487e085dda23ff225f902e9b"
+    },
+    {
+      "path": "frames/godie-nbbc.w-04-2113ms.webp",
+      "atMs": 2113,
+      "phase": "godie-nbbc.w · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10100,
+      "sha256": "e2fbc70be617b85fb6eb7e0042554de39f4d9b3ec0c58b83e8b7e7f2ce6b0960"
+    },
+    {
+      "path": "frames/godie-nbbc.w-05-2413ms.webp",
+      "atMs": 2413,
+      "phase": "godie-nbbc.w · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 4,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7884,
+      "sha256": "bab811b60dec0403d58988153e26a740362b1c89f852afad030363677a5882bb"
+    },
+    {
+      "path": "frames/godie-nbbc.w-06-3380ms.webp",
+      "atMs": 3380,
+      "phase": "godie-nbbc.w · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 5,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10106,
+      "sha256": "7190a79452ad85f661759559591598bcb600c96391b9ee4acb3a29efea43789f"
+    },
+    {
+      "path": "frames/godie-nbbc.w-07-3680ms.webp",
+      "atMs": 3680,
+      "phase": "godie-nbbc.w · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 6,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7940,
+      "sha256": "607322768f507abfd20c6508a47303d6e9b593ac9f3370af85567a70f0ee9413"
+    },
+    {
+      "path": "frames/godie-nbbc.w-08-20147ms.webp",
+      "atMs": 20147,
+      "phase": "godie-nbbc.w · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 7,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7780,
+      "sha256": "48d44e36d2774a41cca286b2c9701a72bd40cbc86db05fcf90989bb818816500"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見雷擊等第二個範圍效果\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定預期VFX類型\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"由於缺乏雷擊效果，無法確認時序\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模或裁切\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"主效果與角色關係清楚\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    }\n  },\n  \"notes\": [\n    \"畫面中僅見瞬移及紅色斬擊效果，無雷擊效果。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見雷擊等第二個範圍效果",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定預期VFX類型",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供特定來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供特定命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "由於缺乏雷擊效果，無法確認時序",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模或裁切",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "主效果與角色關係清楚",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    "notes": [
+      "畫面中僅見瞬移及紅色斬擊效果，無雷擊效果。"
+    ]
+  },
+  "contractWarnings": []
+}

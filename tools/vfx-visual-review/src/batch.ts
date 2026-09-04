@@ -40,6 +40,8 @@ interface Args {
   ids: Set<string> | null;
   maxCases: number | null;
   maxFrames: number | null;
+  concurrency: number;
+  requestsPerMinute: number;
 }
 
 interface ProofManifest {
@@ -89,6 +91,8 @@ When GEMINI_API_KEY is present, advisory review is enabled automatically.
   --ids a,b,c              Review only selected ability IDs
   --max-cases N            Bound this invocation (useful for calibration)
   --max-frames N           Override adaptive frame budget (2..18)
+  --concurrency N          Parallel Gemini requests (1..32, default: 16)
+  --requests-per-minute N  Shared request-start limit (1..1000, default: 24)
   --proof-manifest PATH    Browser framebuffer manifest
   --acceptance-report PATH 42/46 acceptance report
   --out-dir PATH           Evidence directory
@@ -110,6 +114,14 @@ When GEMINI_API_KEY is present, advisory review is enabled automatically.
   const timeoutMs = Number(value(argv, "--timeout-ms") ?? "120000");
   if (!Number.isInteger(timeoutMs) || timeoutMs < 1_000 || timeoutMs > 900_000) {
     throw new Error("--timeout-ms must be an integer between 1000 and 900000");
+  }
+  const concurrency = Number(value(argv, "--concurrency") ?? "16");
+  if (!Number.isInteger(concurrency) || concurrency < 1 || concurrency > 32) {
+    throw new Error("--concurrency must be an integer between 1 and 32");
+  }
+  const requestsPerMinute = Number(value(argv, "--requests-per-minute") ?? "24");
+  if (!Number.isInteger(requestsPerMinute) || requestsPerMinute < 1 || requestsPerMinute > 1000) {
+    throw new Error("--requests-per-minute must be an integer between 1 and 1000");
   }
   const idsValue = value(argv, "--ids");
   const apiKey = process.env.GEMINI_API_KEY ?? "";
@@ -133,6 +145,8 @@ When GEMINI_API_KEY is present, advisory review is enabled automatically.
     ids: idsValue ? new Set(idsValue.split(",").map((id) => id.trim()).filter(Boolean)) : null,
     maxCases,
     maxFrames,
+    concurrency,
+    requestsPerMinute,
   };
 }
 
@@ -171,6 +185,8 @@ function writeBatch(
   rows: BatchRow[],
   detail: string,
   enablementReason: GeminiEnablementReason,
+  concurrency: number,
+  requestsPerMinute: number,
 ): string {
   const stamp = new Date().toISOString().replace(/[:.]/g, "-");
   const path = resolve(outDir, `batch-${stamp}.json`);
@@ -198,12 +214,31 @@ function writeBatch(
       candidateFrames: "2..18 event-selected chronological keyframes; ordinary cap 8, strict cinematic cap 18",
       firstPass: "low",
       escalation: "off by default; when explicitly enabled, only uncertain low-pass results retry at medium",
+      concurrency: `bounded parallel requests: ${concurrency}`,
+      requestsPerMinute: `shared request-start limit: ${requestsPerMinute}`,
       fallback: "deterministic checks and human review continue",
     },
     summary,
     rows,
   }, null, 2) + "\n", { encoding: "utf8", flag: "wx" });
   return path;
+}
+
+function requestStartLimiter(requestsPerMinute: number): () => Promise<void> {
+  const intervalMs = Math.ceil(60_000 / requestsPerMinute);
+  let previousStart = 0;
+  let tail = Promise.resolve();
+  return async () => {
+    let release!: () => void;
+    const turn = new Promise<void>((resolve) => { release = resolve; });
+    const previous = tail;
+    tail = turn;
+    await previous;
+    const waitMs = Math.max(0, previousStart + intervalMs - Date.now());
+    if (waitMs > 0) await new Promise<void>((resolve) => setTimeout(resolve, waitMs));
+    previousStart = Date.now();
+    release();
+  };
 }
 
 async function main(): Promise<number> {
@@ -223,7 +258,7 @@ async function main(): Promise<number> {
       id: row.id, name: row.name, frameCount: 0, status: "model-disabled", finalClassification: "needs-human-review",
       note: `GEMINI_DISABLED: ${args.enablementReason}; no image was sent.`,
     }));
-    const output = writeBatch(args.outDir, "disabled", rows, "Google Gemini review is disabled; no model request was made.", args.enablementReason);
+    const output = writeBatch(args.outDir, "disabled", rows, "Google Gemini review is disabled; no model request was made.", args.enablementReason, args.concurrency, args.requestsPerMinute);
     console.log(`[vfx-review-batch] GEMINI_DISABLED: ${output}`);
     return 0;
   }
@@ -233,24 +268,30 @@ async function main(): Promise<number> {
       id: row.id, name: row.name, frameCount: 0, status: "model-unavailable", finalClassification: "needs-human-review",
       note: "GEMINI_API_KEY_MISSING: no image was sent; deterministic and human review continue.",
     }));
-    const output = writeBatch(args.outDir, "model-unavailable", rows, "GEMINI_API_KEY is missing; no model request was made.", args.enablementReason);
+    const output = writeBatch(args.outDir, "model-unavailable", rows, "GEMINI_API_KEY is missing; no model request was made.", args.enablementReason, args.concurrency, args.requestsPerMinute);
     console.log(`[vfx-review-batch] GEMINI_API_KEY_MISSING: ${output}`);
     return 0;
   }
 
-  const rows: BatchRow[] = [];
-  for (let targetIndex = 0; targetIndex < targets.length; targetIndex += 1) {
+  const rows = new Array<BatchRow | undefined>(targets.length);
+  let nextTargetIndex = 0;
+  const providerFailure: {
+    current: { code: string; status: BatchRow["status"] } | null;
+  } = { current: null };
+  const waitForRequestStart = requestStartLimiter(args.requestsPerMinute);
+
+  const reviewTarget = async (targetIndex: number): Promise<void> => {
     const row = targets[targetIndex]!;
     const proofCase = proofById.get(row.id);
     if (!proofCase || proofCase.status !== "captured") {
-      rows.push({ id: row.id, name: row.name, frameCount: 0, status: "not-captured", finalClassification: "not-reviewed", note: "Framebuffer evidence is not captured." });
-      continue;
+      rows[targetIndex] = { id: row.id, name: row.name, frameCount: 0, status: "not-captured", finalClassification: "not-reviewed", note: "Framebuffer evidence is not captured." };
+      return;
     }
     const frameBudget = adaptiveReviewFrameBudget(proofCase.frames, row.strictVisual, args.maxFrames);
     const selected = selectReviewFrames(proofCase.frames, frameBudget);
     if (selected.length < 2) {
-      rows.push({ id: row.id, name: row.name, frameCount: selected.length, status: "insufficient-keyframes", finalClassification: "needs-human-review", note: "Fewer than two non-diagnostic frames; no model request was made." });
-      continue;
+      rows[targetIndex] = { id: row.id, name: row.name, frameCount: selected.length, status: "insufficient-keyframes", finalClassification: "needs-human-review", note: "Fewer than two non-diagnostic frames; no model request was made." };
+      return;
     }
     const request = parseReviewRequest({
       schema: "ggd-vfx-visual-review-request@1",
@@ -263,10 +304,12 @@ async function main(): Promise<number> {
     try {
       console.log(`[vfx-review-batch] opt-in upload ${row.id}: ${selected.length} keyframes -> generativelanguage.googleapis.com (${args.model})`);
       const lowPath = reportPath(args.outDir, row.id, prepared.sourceDigest, args.model, "low");
-      const low = cachedReport(lowPath, args.model) ?? await runGeminiReview(prepared, {
-        apiKey: args.apiKey, model: args.model,
-        timeoutMs: args.timeoutMs, reasoningEffort: "low",
-      });
+      const cachedLow = cachedReport(lowPath, args.model);
+      if (!cachedLow) await waitForRequestStart();
+      const low = cachedLow ?? await runGeminiReview(prepared, {
+          apiKey: args.apiKey, model: args.model,
+          timeoutMs: args.timeoutMs, reasoningEffort: "low",
+        });
       const storedLow = persistReport(args.outDir, low);
       const batchRow: BatchRow = {
         id: row.id,
@@ -279,16 +322,18 @@ async function main(): Promise<number> {
       };
       if (args.escalateUncertain && shouldEscalate(low)) {
         const mediumPath = reportPath(args.outDir, row.id, prepared.sourceDigest, args.model, "medium");
-        const medium = cachedReport(mediumPath, args.model) ?? await runGeminiReview(prepared, {
-          apiKey: args.apiKey, model: args.model,
-          timeoutMs: args.timeoutMs, reasoningEffort: "medium",
-        });
+        const cachedMedium = cachedReport(mediumPath, args.model);
+        if (!cachedMedium) await waitForRequestStart();
+        const medium = cachedMedium ?? await runGeminiReview(prepared, {
+            apiKey: args.apiKey, model: args.model,
+            timeoutMs: args.timeoutMs, reasoningEffort: "medium",
+          });
         const storedMedium = persistReport(args.outDir, medium);
         batchRow.escalated = { classification: medium.classification, sourceDigest: medium.sourceDigest, report: storedMedium };
         batchRow.finalClassification = medium.classification;
         batchRow.note = "Low pass was uncertain, so the same keyframes were retried once at medium; human review remains authoritative.";
       }
-      rows.push(batchRow);
+      rows[targetIndex] = batchRow;
     } catch (error) {
       const unavailable = unavailableGeminiReport(prepared, args.model, error);
       const unavailablePath = resolve(args.outDir, "cases", `${safeName(row.id)}-${prepared.sourceDigest.slice(0, 12)}-unavailable.json`);
@@ -297,24 +342,53 @@ async function main(): Promise<number> {
         writeFileSync(unavailablePath.replace(/\.json$/, ".md"), unavailableReportMarkdown(unavailable), { encoding: "utf8", flag: "wx" });
       }
       const errorStatus = unavailable.reason.code === "GEMINI_UNAVAILABLE" ? "model-unavailable" : "model-error";
-      rows.push({ id: row.id, name: row.name, frameCount: selected.length, status: errorStatus, finalClassification: "needs-human-review", note: unavailable.reason.detail });
-      for (const remaining of targets.slice(targetIndex + 1)) {
-        rows.push({
-          id: remaining.id,
-          name: remaining.name,
-          frameCount: 0,
-          status: errorStatus,
-          finalClassification: "needs-human-review",
-          note: `No request was made after ${unavailable.reason.code}; deterministic and human review continue.`,
-        });
-      }
-      const output = writeBatch(args.outDir, errorStatus, rows, "Gemini inference stopped after the first error; no repeated requests were attempted.", args.enablementReason);
-      console.log(`[vfx-review-batch] ${unavailable.reason.code}: ${output}`);
-      return args.optional || unavailable.reason.code === "GEMINI_UNAVAILABLE" ? 0 : 2;
+      rows[targetIndex] = { id: row.id, name: row.name, frameCount: selected.length, status: errorStatus, finalClassification: "needs-human-review", note: unavailable.reason.detail };
+      providerFailure.current ??= { code: unavailable.reason.code, status: errorStatus };
     }
+  };
+
+  const worker = async (): Promise<void> => {
+    while (providerFailure.current === null) {
+      const targetIndex = nextTargetIndex++;
+      if (targetIndex >= targets.length) return;
+      await reviewTarget(targetIndex);
+    }
+  };
+  await Promise.all(Array.from(
+    { length: Math.min(args.concurrency, targets.length) },
+    () => worker(),
+  ));
+
+  const firstProviderFailure = providerFailure.current;
+  if (firstProviderFailure !== null) {
+    for (let index = 0; index < targets.length; index += 1) {
+      if (rows[index]) continue;
+      const remaining = targets[index]!;
+      rows[index] = {
+        id: remaining.id,
+        name: remaining.name,
+        frameCount: 0,
+        status: firstProviderFailure.status,
+        finalClassification: "needs-human-review",
+        note: `No request was made after ${firstProviderFailure.code}; deterministic and human review continue.`,
+      };
+    }
+    const completeRows = rows as BatchRow[];
+    const output = writeBatch(
+      args.outDir,
+      firstProviderFailure.status,
+      completeRows,
+      `Gemini stopped scheduling after the first error; at most ${args.concurrency} already in-flight requests were allowed to finish.`,
+      args.enablementReason,
+      args.concurrency,
+      args.requestsPerMinute,
+    );
+    console.log(`[vfx-review-batch] ${firstProviderFailure.code}: ${output}`);
+    return args.optional || firstProviderFailure.code === "GEMINI_UNAVAILABLE" ? 0 : 2;
   }
 
-  const output = writeBatch(args.outDir, "complete", rows, "AI results are advisory triage only and do not satisfy human visual acceptance.", args.enablementReason);
+  const completeRows = rows as BatchRow[];
+  const output = writeBatch(args.outDir, "complete", completeRows, "AI results are advisory triage only and do not satisfy human visual acceptance.", args.enablementReason, args.concurrency, args.requestsPerMinute);
   console.log(`[vfx-review-batch] complete: ${output}`);
   return 0;
 }

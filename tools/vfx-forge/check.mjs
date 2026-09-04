@@ -93,6 +93,8 @@ run("Runtime actor takeover routing", "pnpm", [
   "--pool=threads", "--minWorkers=1", "--maxWorkers=1", "--reporter=dot",
 ]);
 
+run("Editor VFX template handback freshness", "pnpm", ["vfxforge:handback:check"]);
+
 if (release) {
   run("Editor typecheck", "pnpm", ["--filter", "@ggd/editor", "typecheck"]);
   run("Editor build", "pnpm", ["--filter", "@ggd/editor", "build"]);

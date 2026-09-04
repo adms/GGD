@@ -1,0 +1,42 @@
+{
+  "schema": "ggd-vfx-visual-review-batch@1",
+  "authority": "advisory-only",
+  "generatedAt": "2026-09-03T19:27:18.716Z",
+  "status": "complete",
+  "detail": "AI results are advisory triage only and do not satisfy human visual acceptance.",
+  "policy": {
+    "enabledWhenApiKeyPresent": true,
+    "enablementReason": "environment-enabled",
+    "provider": "google-gemini",
+    "candidateFrames": "2..18 event-selected chronological keyframes; ordinary cap 8, strict cinematic cap 18",
+    "firstPass": "low",
+    "escalation": "off by default; when explicitly enabled, only uncertain low-pass results retry at medium",
+    "fallback": "deterministic checks and human review continue"
+  },
+  "summary": {
+    "reviewed": 1,
+    "modelDisabled": 0,
+    "insufficientKeyframes": 0,
+    "notCaptured": 0,
+    "modelUnavailable": 0,
+    "modelError": 0,
+    "aiPrechecked": 0,
+    "aiRejected": 0,
+    "needsHumanReview": 1
+  },
+  "rows": [
+    {
+      "id": "godie-etyr.r",
+      "name": "14-04 聖夜降臨",
+      "frameCount": 8,
+      "status": "reviewed",
+      "finalClassification": "needs-human-review",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "needs-human-review",
+        "sourceDigest": "986ed7c563c1b948c55385419f3ef319da5fa58a30f1d229dfcc07ae0b2b4c2c",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-etyr.r-986ed7c563c1-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    }
+  ]
+}

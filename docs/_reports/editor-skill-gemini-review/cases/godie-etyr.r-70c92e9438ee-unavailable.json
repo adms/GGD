@@ -1,0 +1,21 @@
+{
+  "schema": "ggd-vfx-visual-review-unavailable@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T20:05:02.225Z",
+  "sourceDigest": "70c92e9438ee9caf54a1af550acdbf485492e979dd154e8e2dbf4328d7072c60",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-etyr.r",
+    "name": "14-04 聖夜降臨"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com"
+  },
+  "reason": {
+    "code": "GEMINI_UNAVAILABLE",
+    "detail": "fetch failed"
+  }
+}

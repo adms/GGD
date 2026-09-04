@@ -16,7 +16,7 @@
         2880,
         4680
       ],
-      "sourceDigest": "72cc967f0a367d206fc4c8c49e08da00b08e72855f887ed54d9c9b9f9590845b",
+      "sourceDigest": "9689843ec3bb7855eecd6fd75d52cb9222b6c9e660ecccb388e398883860bc6c",
       "file": "sheets/godie-hart.r.png"
     },
     {
@@ -24,14 +24,14 @@
       "frameCount": 7,
       "timesMs": [
         180,
-        1180,
-        1348,
-        1516,
-        1680,
-        1780,
-        1980
+        1347,
+        1515,
+        1683,
+        1847,
+        1947,
+        2147
       ],
-      "sourceDigest": "1f333483afecf599c71ccc85ba972b05a42ff24319f4acc97004ba2f5098afc3",
+      "sourceDigest": "465f652dc37d97bf978eebe4b5722e0075d126e990bea804a789a21535028385",
       "file": "sheets/godie-hjai.e.png"
     },
     {
@@ -39,14 +39,14 @@
       "frameCount": 7,
       "timesMs": [
         180,
-        1180,
-        1348,
-        1516,
-        1680,
-        1780,
-        1980
+        1347,
+        1515,
+        1683,
+        1847,
+        1947,
+        2147
       ],
-      "sourceDigest": "7742da610dd29c7dfb30b4aa8ad869f4ab114ff4a9020fc11e8aa751250ee3b5",
+      "sourceDigest": "6bac84f3f835ca0e4d4652e1424f675168ae0e7613a98f8f06311b6b64a9525b",
       "file": "sheets/godie-h020.e.png"
     },
     {
@@ -54,10 +54,10 @@
       "frameCount": 3,
       "timesMs": [
         180,
-        1180,
-        1550
+        1347,
+        1717
       ],
-      "sourceDigest": "7dd1fc22a03afe02f1c162ab237cf8e97421b772958d534c440825a3862fe122",
+      "sourceDigest": "781a760d0776cd5b3d743e5d20a3cb558fa1aed15f630100f8bf46b939ecb657",
       "file": "sheets/godie-hjai.r.png"
     },
     {
@@ -65,48 +65,45 @@
       "frameCount": 5,
       "timesMs": [
         180,
-        1013,
-        1343,
-        1443,
-        1663
+        1213,
+        1543,
+        1643,
+        1863
       ],
-      "sourceDigest": "8c4235a3bbd83378f3276cfa268f2c63a7401fa5dfc87489bb39dab3872cf7eb",
+      "sourceDigest": "a1249b4e85fe96154a6fdab6c9ee09bf8d08c74e64bcc69cb174113a22f8c84e",
       "file": "sheets/godie-nbbc.r.png"
     },
     {
       "id": "godie-nbbc.e",
-      "frameCount": 4,
+      "frameCount": 3,
       "timesMs": [
         180,
-        1180,
-        1610,
-        1811
+        1380,
+        2011
       ],
-      "sourceDigest": "08847a7f2f09d140ac5a7155de04d9246a12b7efd2e123a6d5aa5c0d80ef5840",
+      "sourceDigest": "8051cb6a822a700c5b6d460e0bd2d53860acccf9624b859d6e6560b743a45f90",
       "file": "sheets/godie-nbbc.e.png"
     },
     {
       "id": "godie-ogrh.r",
-      "frameCount": 4,
+      "frameCount": 3,
       "timesMs": [
         180,
-        1013,
-        1443,
-        1644
+        1180,
+        1811
       ],
-      "sourceDigest": "9c9d574ac5dcdda1d8107e4bdecd67584dd77b390f4ee762545436e1ae5b1e61",
+      "sourceDigest": "8af2d46d8fd6e61448d61276a3725fe587666e0d424e9c9893ec0f9bce2afffe",
       "file": "sheets/godie-ogrh.r.png"
     },
     {
       "id": "godie-o00x.r",
-      "frameCount": 4,
+      "frameCount": 3,
       "timesMs": [
         180,
-        1013,
-        1443,
-        1644
+        1113,
+        1744
       ],
-      "sourceDigest": "98ec099c3576caefe40db2b72b7a75cef11211fb9122435e02d562a9ce307ece",
+      "sourceDigest": "1ab57d7652fb8e67e3ffa88e233c1fae5447d5d6b26f679a0711e163172d4681",
       "file": "sheets/godie-o00x.r.png"
     },
     {
@@ -121,9 +118,9 @@
         980,
         1113,
         1293,
-        1393
+        1983
       ],
-      "sourceDigest": "57a1017ced92ff09dcffce0cd55f470e99c598da447ab210bea9ac76bff5ef3b",
+      "sourceDigest": "6968746e8e7dbf5f41c837f1a8bb7e69d1f438d963f107d76f937a0386128116",
       "file": "sheets/godie-e002.ex.png"
     },
     {
@@ -134,7 +131,7 @@
         847,
         980
       ],
-      "sourceDigest": "fb5a844c804c1845a154e33c7fed228c6cbf9d014c423f3d9137e984f859afe4",
+      "sourceDigest": "6b7cd3c43bb9ba9892482b14c69e6b5214f1047d48366e31705a082c2f37e50f",
       "file": "sheets/godie-e00l.r.png"
     },
     {
@@ -149,96 +146,132 @@
         980,
         1113,
         1293,
-        1393
+        1983
       ],
-      "sourceDigest": "8e1774eec1cb01f10dc43039edc8f4f525d6b8bc315229b40e72e436d8ba3816",
+      "sourceDigest": "f285349e2b72871b5e9d4928c7c18fdf1fbb51d0cad53970304f5fd3883d3d13",
       "file": "sheets/godie-e00l.ex.png"
     },
     {
       "id": "godie-hvsh.r",
-      "frameCount": 4,
+      "frameCount": 3,
       "timesMs": [
         180,
-        1180,
-        1610,
-        1830
+        1347,
+        1997
       ],
-      "sourceDigest": "0daa343d36ec3e46c32caf19a62165e318e27ba44ddcfd19d5b7d9eac7c76df1",
+      "sourceDigest": "33ec3ef6dfff9318b838ed89225ec24cc44a5c41dd1bf3f395e8ab32fa4a6535",
       "file": "sheets/godie-hvsh.r.png"
     },
     {
       "id": "godie-hvwd.e",
-      "frameCount": 2,
+      "frameCount": 8,
       "timesMs": [
         180,
-        1180
+        480,
+        1413,
+        1947,
+        2613,
+        3247,
+        3880,
+        17113
       ],
-      "sourceDigest": "04026cabeb185677cba10c5d2aa64ca76ab6e809644d3557607281f91083a316",
+      "sourceDigest": "5e9bcf14d31c401b5390ee153182ff654390eca9c227d1bb8f816c6497062235",
       "file": "sheets/godie-hvwd.e.png"
     },
     {
       "id": "godie-o00k.e",
-      "frameCount": 2,
+      "frameCount": 8,
       "timesMs": [
         180,
-        1180
+        1133,
+        3847,
+        5347,
+        6847,
+        8347,
+        9847,
+        17347
       ],
-      "sourceDigest": "48f8f3363bbc6e3a4aabb0bb62a732275e3fa402d4e4e944d9c630ec89130ab0",
+      "sourceDigest": "73044ca5f736c1a6b07b5fe36358c43cce2ea6f441e8966cf62ae7663c374fec",
       "file": "sheets/godie-o00k.e.png"
     },
     {
       "id": "godie-hjai.w",
-      "frameCount": 7,
+      "frameCount": 8,
       "timesMs": [
         180,
-        1180,
-        2180,
-        3180,
-        4180,
-        5180,
-        6180
+        1400,
+        2347,
+        3347,
+        4347,
+        5347,
+        6347,
+        21080
       ],
-      "sourceDigest": "a2f7c09c5a2705bd931347819b3a35a7edb0e4269fb2216908ceda5515d73467",
+      "sourceDigest": "3c6b82f82116ec1763260bd56eeefbdca3bd58a29654ac44db00852a516057af",
       "file": "sheets/godie-hjai.w.png"
     },
     {
       "id": "godie-nbbc.w",
-      "frameCount": 2,
+      "frameCount": 8,
       "timesMs": [
         180,
-        1013
+        913,
+        1213,
+        2113,
+        2413,
+        3380,
+        3680,
+        20147
       ],
-      "sourceDigest": "399fd748329d9d444101d4e90b12fb1b3cc377ee71388f167c5030662e0a917d",
+      "sourceDigest": "20beb07d950e9cfbfd7a2eb221debcf0078fa73dc50c196486313701a5fcaae5",
       "file": "sheets/godie-nbbc.w.png"
     },
     {
       "id": "godie-u00v.r",
-      "frameCount": 2,
+      "frameCount": 8,
       "timesMs": [
         180,
-        847
+        647,
+        1847,
+        2047,
+        3047,
+        7847,
+        16447,
+        20247
       ],
-      "sourceDigest": "71f57451965384a1673ce4d922996bfae015e10c56bbd49e3572ca461c40294e",
+      "sourceDigest": "b3a6f98516381e80bbb89201571df44b2b90b73436c88cef16e36cd0016c6051",
       "file": "sheets/godie-u00v.r.png"
     },
     {
       "id": "godie-hapm.w",
-      "frameCount": 2,
+      "frameCount": 8,
       "timesMs": [
         180,
-        1013
+        713,
+        1247,
+        2013,
+        3313,
+        3647,
+        4613,
+        20547
       ],
-      "sourceDigest": "aa9bde767648199829f307f92b4db4219d22ad8c59a9549cffc1e52a56f96142",
+      "sourceDigest": "3b907ce50c66983ad0b18de97d72568ab3a35b927083c06357067316a10c8352",
       "file": "sheets/godie-hapm.w.png"
     },
     {
       "id": "godie-e001.r",
-      "frameCount": 2,
+      "frameCount": 8,
       "timesMs": [
         180,
-        847
+        547,
+        1080,
+        1280,
+        1613,
+        2180,
+        2447,
+        18447
       ],
-      "sourceDigest": "949b956d0c1bc77f4008ea301a260798b5de197d83f6aea55071e7df49853651",
+      "sourceDigest": "dc7513fbd680226d579e3e05aad650a49a6aee9f7244cef563559e67e624579e",
       "file": "sheets/godie-e001.r.png"
     },
     {
@@ -248,27 +281,39 @@
         613,
         553
       ],
-      "sourceDigest": "fb293f4a46190ec077b9ae2672c557c1ec41155342ece6341f16ef3e78e2714c",
+      "sourceDigest": "980d0af801e986c34e3ed727310be73fd68539efc7d2eac53ded629007abe940",
       "file": "sheets/godie-e00s.w.png"
     },
     {
       "id": "godie-etyr.r",
-      "frameCount": 2,
+      "frameCount": 8,
       "timesMs": [
         180,
-        847
+        480,
+        1013,
+        1513,
+        1980,
+        2647,
+        6613,
+        20547
       ],
-      "sourceDigest": "1ef02a3c6b4af1e14749e342e3a683eb8465bc40989d38e55b26715d10adb5e4",
+      "sourceDigest": "39b8d4c86447a6cf1a06787f3d693904df58f9ccf618e19bf3c78b20ba5ac4f1",
       "file": "sheets/godie-etyr.r.png"
     },
     {
       "id": "godie-ogld.ex",
-      "frameCount": 2,
+      "frameCount": 8,
       "timesMs": [
         180,
-        1180
+        5313,
+        6313,
+        8380,
+        9380,
+        11413,
+        12413,
+        20413
       ],
-      "sourceDigest": "f8a305615163da6b23c45b5fb0a125e995ddfc5134217d2e21876a03506fb597",
+      "sourceDigest": "4c8c3fb3d81520d5de9a8a9f797b1e51eaa9198431cd0bf14b0c5e3d00aec0f8",
       "file": "sheets/godie-ogld.ex.png"
     },
     {
@@ -276,12 +321,12 @@
       "frameCount": 5,
       "timesMs": [
         180,
-        847,
-        1074,
-        1244,
-        1457
+        1047,
+        1274,
+        1444,
+        1657
       ],
-      "sourceDigest": "75e77fb158950ddece4137856a8c5316d530d92e896dbece7955c640595d396d",
+      "sourceDigest": "ae2fbaf927276ab82c2c7fee5da44ea09f0ffb9aa7c08f0add1f6035ae1d4954",
       "file": "sheets/godie-udea.r.png"
     },
     {
@@ -293,7 +338,7 @@
         1027,
         1267
       ],
-      "sourceDigest": "4dda256a580253855c8213565aa5061348369d70154b2452d2c381e3037373c6",
+      "sourceDigest": "694142116eefac349c86645f0caed01da89a66bd00d79fce86d00cf42b3bafec",
       "file": "sheets/godie-h01n.r.png"
     },
     {
@@ -304,27 +349,39 @@
         847,
         980
       ],
-      "sourceDigest": "bdf74fee7aa5ca9e52d579c35c101d54aea6ac53e13c4beb1fe0b3a279246036",
+      "sourceDigest": "b087e09915e6bea0e19e53b98ba81f01b60e3640cceb09ec331d75d8d79c9244",
       "file": "sheets/godie-h00l.r.png"
     },
     {
       "id": "godie-hvsh.e",
-      "frameCount": 2,
+      "frameCount": 8,
       "timesMs": [
         180,
-        1180
+        1347,
+        2347,
+        3247,
+        4313,
+        5347,
+        8247,
+        10347
       ],
-      "sourceDigest": "d01644b84d56f02b5f9973bf87de2018975fd035311c15a48f0ad4d1995643dd",
+      "sourceDigest": "87a070343e8da11ac97f113ff23cc1eb47ccd7c11ebcc8ef850cd40a0c766ec2",
       "file": "sheets/godie-hvsh.e.png"
     },
     {
       "id": "godie-n00b.passive",
-      "frameCount": 2,
+      "frameCount": 8,
       "timesMs": [
         180,
-        1180
+        447,
+        1347,
+        1613,
+        1947,
+        2947,
+        3280,
+        20613
       ],
-      "sourceDigest": "dc6548ddfd7f5012cb0eefb45567f647ffe98fe0de2f971abbdd8e5efc417eeb",
+      "sourceDigest": "72ee8a6f7b78b96124da24806763a91940642a0ae9e2f4ee4b4b6fdc720505c0",
       "file": "sheets/godie-n00b.passive.png"
     },
     {
@@ -333,14 +390,14 @@
       "timesMs": [
         180,
         447,
-        580,
         713,
         980,
+        1147,
         1280,
         1480,
         1647
       ],
-      "sourceDigest": "288967641af7411360e7138e00dc5818516f50d23416c947cd0a671ef1c622d5",
+      "sourceDigest": "96202c9baa8165cc4ca1ee2e1f90a22ab4682b1c3b74b1f670cac96ceb42d536",
       "file": "sheets/godie-e00r.ex.png"
     },
     {
@@ -352,7 +409,7 @@
         1347,
         1613
       ],
-      "sourceDigest": "eaa1d4677a92f074f16db04cffe93eeaa3d684cc5d16eaa3c7cc81e4e328322a",
+      "sourceDigest": "bf9d4d6f556884e85185180745db13a2afe060746b186f7ae1c064a3a4f77dad",
       "file": "sheets/godie-e00s.ex.png"
     },
     {
@@ -362,7 +419,7 @@
         547,
         487
       ],
-      "sourceDigest": "008f7e2796efa8f470acf710c7d6b90668e63ec179beb92623e222b299d14448",
+      "sourceDigest": "41408bc4092fae37445628066a8fcf4432fe1f8cbc10bf04d596e9564d3f6f87",
       "file": "sheets/godie-e00w.passive.png"
     },
     {
@@ -373,17 +430,23 @@
         847,
         1013
       ],
-      "sourceDigest": "fed762b0224f96d5c883c96430ac60aed0546ff53ece96b9d2a6174436dbb7b6",
+      "sourceDigest": "221a7c21d7a5197f08298f56fec7502eed4375b16956ad3dc2d8f645ad0d805e",
       "file": "sheets/godie-edem.r.png"
     },
     {
       "id": "godie-emfr.e",
-      "frameCount": 2,
+      "frameCount": 8,
       "timesMs": [
         180,
-        447
+        1113,
+        1580,
+        2547,
+        3380,
+        4213,
+        5047,
+        11713
       ],
-      "sourceDigest": "08d1cf7ca6c29b24850c670a38ff3bbea2b3d0cad705a93f78db2485cce647fe",
+      "sourceDigest": "ee4dfb135037a87047f7c951186095661e59ae25ad5a7a782cf4dce38813af26",
       "file": "sheets/godie-emfr.e.png"
     },
     {
@@ -394,7 +457,7 @@
         913,
         1680
       ],
-      "sourceDigest": "a658b88eaec59c2a474a1d9624617045eb0c5d73d958a984933f84147b3bd0dc",
+      "sourceDigest": "b21467c6ae2f4013222183b6d0e5966a2651dabf07eac6a3ca7208e066a0478f",
       "file": "sheets/godie-nbbc.passive.png"
     },
     {
@@ -404,7 +467,7 @@
         180,
         580
       ],
-      "sourceDigest": "8c6ebb3463d2e1e0807485e161cbc996fdaf6fa9fcc4cf81aa0f6781c171037e",
+      "sourceDigest": "f96f3b42880834eacdb833ff3cb3ad7fbdd16a23757fe99b1a30632f504c7a94",
       "file": "sheets/godie-e00l.passive.png"
     },
     {
@@ -414,17 +477,23 @@
         180,
         120
       ],
-      "sourceDigest": "f4acd2d31149623dd32475ceec9387c2e7ef9c297c39b6a7f561589b50d60288",
+      "sourceDigest": "893cc432c1fecd3a4af70894a61466cc14b9b96ae5f0bcf9b8102d3976e0aee5",
       "file": "sheets/godie-e00r.q.png"
     },
     {
       "id": "godie-e00s.r",
-      "frameCount": 2,
+      "frameCount": 8,
       "timesMs": [
         180,
-        1180
+        1347,
+        1613,
+        1813,
+        2147,
+        2447,
+        9880,
+        21213
       ],
-      "sourceDigest": "9efaa5b6783862059a10eb91c987067851cd04d473830365e4e02e8e5d477e1c",
+      "sourceDigest": "5843d6288ad10ca006ddf1577bde9b933e0a84a1b8ab23705ecab20adfcc5071",
       "file": "sheets/godie-e00s.r.png"
     },
     {
@@ -434,27 +503,39 @@
         180,
         413
       ],
-      "sourceDigest": "ece4a254b776d98e1e60044ec20de4e6deeb189a2ce2cda5db4b306bfbb29a78",
+      "sourceDigest": "4dbacc6ae11625781b6602f11041fd5d134e8c2384f5fa8c1b9d82fb623b7be1",
       "file": "sheets/godie-h02k.ex.png"
     },
     {
       "id": "godie-edem.e",
-      "frameCount": 2,
+      "frameCount": 8,
       "timesMs": [
         180,
-        120
+        913,
+        1080,
+        2347,
+        2513,
+        3780,
+        3947,
+        19713
       ],
-      "sourceDigest": "31e1e9e1a19e72eb1395bab5ce190a4f69d5d1a9b991c1af72b9865f65c0abfe",
+      "sourceDigest": "527caf7c941feb4adc6cfb5f5b88497ee13758a9ccc7e025eef9f685565c0154",
       "file": "sheets/godie-edem.e.png"
     },
     {
       "id": "godie-edem.ex",
-      "frameCount": 2,
+      "frameCount": 8,
       "timesMs": [
         180,
-        1180
+        613,
+        1313,
+        1580,
+        4313,
+        5313,
+        9313,
+        10313
       ],
-      "sourceDigest": "fe524a4ca1fc9f8b29b5da2e6b8e49f8e228a63a7a5d2a1e4999c6fb7709ff32",
+      "sourceDigest": "d50955853514506c5b4b32644294d5d6849ed9981a12a0c8ab6b1a1ff875fd76",
       "file": "sheets/godie-edem.ex.png"
     },
     {
@@ -464,47 +545,66 @@
         547,
         1680
       ],
-      "sourceDigest": "f64ec8dc017eaaed6c7763024414e641ad88b780e9337bcab3756f63b6da2f29",
+      "sourceDigest": "d4db603c593df8a369e7669b552aba9aa686917c525d502cba9756b311e9be70",
       "file": "sheets/godie-efur.passive.png"
     },
     {
       "id": "godie-emfr.ex",
-      "frameCount": 2,
+      "frameCount": 3,
       "timesMs": [
         180,
-        1180
+        1180,
+        1313
       ],
-      "sourceDigest": "84404c76e47c167d1239be095cd8795fae4d44e57d106ec564074033ec1ff80d",
+      "sourceDigest": "0b07f72a8e6ee4590e171c0c7a57838c5a9793c1cadfd6478fb7f41ced8400b2",
       "file": "sheets/godie-emfr.ex.png"
     },
     {
       "id": "godie-emns.ex",
-      "frameCount": 2,
+      "frameCount": 8,
       "timesMs": [
         180,
-        1180
+        480,
+        1347,
+        1647,
+        1947,
+        2947,
+        3247,
+        21147
       ],
-      "sourceDigest": "cd357361202dbc9e32806e245be22007c7cbec0a962d13ad56168dff7343ae30",
+      "sourceDigest": "c811b0d746447e568dfc49465f90902f0e25b79cd9526dc9d05437c11889cbff",
       "file": "sheets/godie-emns.ex.png"
     },
     {
       "id": "godie-emns.passive",
-      "frameCount": 2,
+      "frameCount": 8,
       "timesMs": [
         180,
-        447
+        447,
+        913,
+        2213,
+        3080,
+        3513,
+        4380,
+        20413
       ],
-      "sourceDigest": "3d4700091d1a00a59e25cb5c056de1b3664e45a9dc6a8f81b2317433dc8ecddf",
+      "sourceDigest": "8896e21e6e61b827a11e0ffbee0df1fd0dda94a556041c2d8d8392a81265c858",
       "file": "sheets/godie-emns.passive.png"
     },
     {
       "id": "godie-h01u.r",
-      "frameCount": 2,
+      "frameCount": 8,
       "timesMs": [
         180,
-        847
+        847,
+        2280,
+        2680,
+        3780,
+        4380,
+        5480,
+        20780
       ],
-      "sourceDigest": "2f05130118b8c9db5558cc194c3cb016e4380145489b75a817af664c02ffc5d8",
+      "sourceDigest": "7173e2a78ee3a424ddcf3ff6c8e5b1e8895abfb861580c9ab8b73f968782703d",
       "file": "sheets/godie-h01u.r.png"
     },
     {
@@ -512,25 +612,31 @@
       "frameCount": 8,
       "timesMs": [
         180,
-        1180,
-        2180,
+        2080,
         3180,
         4180,
         5180,
         6180,
-        7180
+        7180,
+        21147
       ],
-      "sourceDigest": "52fe363bfaea85af47a4e078c4427d8b06d669d70197d75df62721afa5f7f193",
+      "sourceDigest": "35f2dbeb723bbb2500c63e93e3d96872dd4a5251fc1da6446c9b5bd450fd486d",
       "file": "sheets/godie-h02u.ex.png"
     },
     {
       "id": "godie-hapm.q",
-      "frameCount": 2,
+      "frameCount": 8,
       "timesMs": [
         180,
-        120
+        547,
+        847,
+        1347,
+        1913,
+        2380,
+        3180,
+        20180
       ],
-      "sourceDigest": "26a1b95d998375aa1a1cda66a42169c54af765378e93161d7a4db454a097deaa",
+      "sourceDigest": "abaefbeaf2315f7bf3c844261cf9864ceb516f33b3a6fefc9a53484cc9878932",
       "file": "sheets/godie-hapm.q.png"
     }
   ]

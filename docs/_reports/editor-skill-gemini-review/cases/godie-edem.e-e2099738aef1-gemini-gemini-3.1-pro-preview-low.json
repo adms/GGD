@@ -1,0 +1,204 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:05:50.643Z",
+  "sourceDigest": "e2099738aef1c714ef7d22d5419851a1798430b85426064446e74f04bb5cdd2d",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-edem.e",
+    "name": "45-03 千鳥"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 7788,
+    "usage": {
+      "promptTokens": 9393,
+      "completionTokens": 480,
+      "totalTokens": 9873
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-edem.e-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-edem.e · 真 runtime · abilityCast+displace+vfxSpawn+modelFxSpawn+damage+hitImpact+reflectSuccess · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10222,
+      "sha256": "ab039b24689f2dee695703475797037177fd53f77c416983002be8b19dc74476"
+    },
+    {
+      "path": "frames/godie-edem.e-02-913ms.webp",
+      "atMs": 913,
+      "phase": "godie-edem.e · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 14470,
+      "sha256": "47c5bb931a985076736e64e7612199591980acb9160026d87e2c96d1230b0025"
+    },
+    {
+      "path": "frames/godie-edem.e-03-1080ms.webp",
+      "atMs": 1080,
+      "phase": "godie-edem.e · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 11572,
+      "sha256": "1dfdb7a8d4042d857ed2f27119a6878ebf9f293bd10a64b5b792b2ef3db994d1"
+    },
+    {
+      "path": "frames/godie-edem.e-04-2347ms.webp",
+      "atMs": 2347,
+      "phase": "godie-edem.e · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 13536,
+      "sha256": "d45fceaa057a2912cedb814bafa6b7f4154841600d86352f05e7529002e76784"
+    },
+    {
+      "path": "frames/godie-edem.e-05-2513ms.webp",
+      "atMs": 2513,
+      "phase": "godie-edem.e · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 4,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10442,
+      "sha256": "d40c486d823bb46cfe57ed04294dfe948f82567e5c84e79cd48d8a5f507b435a"
+    },
+    {
+      "path": "frames/godie-edem.e-06-3780ms.webp",
+      "atMs": 3780,
+      "phase": "godie-edem.e · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 5,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 13498,
+      "sha256": "a85cf7bb2875d9946b0fb1734908fefd8f20b1adde9a064845be7568fe237adf"
+    },
+    {
+      "path": "frames/godie-edem.e-07-3947ms.webp",
+      "atMs": 3947,
+      "phase": "godie-edem.e · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 6,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10386,
+      "sha256": "42f9c6f3051c56001a6e185175234f725edb54d438f319fb1b4861b720907fb8"
+    },
+    {
+      "path": "frames/godie-edem.e-08-19713ms.webp",
+      "atMs": 19713,
+      "phase": "godie-edem.e · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 7,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7992,
+      "sha256": "bf514d7163b63cb66686ccd8f0e201269c715bdf2ba4e4294e9486b6eeca44dd"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見沿途敵人受傷或位移相關效果\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"規格未提供\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"規格未提供\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見完整的技能發動流程\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"無穿模\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"主體與背景清晰\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    }\n  },\n  \"notes\": [\n    \"部分特效殘留未消\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見沿途敵人受傷或位移相關效果",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "規格未提供",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "規格未提供",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "未見完整的技能發動流程",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "無穿模",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "主體與背景清晰",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    "notes": [
+      "部分特效殘留未消"
+    ]
+  },
+  "contractWarnings": []
+}

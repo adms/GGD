@@ -1,0 +1,150 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-03T21:11:11.326Z",
+  "sourceDigest": "06aed08558edc1df0ccfb84f169ee1dd55a6427a7bfafa26c74e88f3edfccb00",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-nbbc.e",
+    "name": "08-03 龍鬥氣砲咒文"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 7314,
+    "usage": {
+      "promptTokens": 4995,
+      "completionTokens": 449,
+      "totalTokens": 5444
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-nbbc.e-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-nbbc.e · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5876,
+      "sha256": "cbd7585170c81fbd628f18e5bca94f1846f907bd34d99797c74f122db348e147"
+    },
+    {
+      "path": "frames/godie-nbbc.e-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-nbbc.e · 吟唱完成 · screenShake+vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10286,
+      "sha256": "f9e0184bb47c5ba45e8f79fa517d8fec9fd120128476dbd4fea100042a091517"
+    },
+    {
+      "path": "frames/godie-nbbc.e-03-1610ms.webp",
+      "atMs": 1610,
+      "phase": "godie-nbbc.e · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10302,
+      "sha256": "e1908d02a5251bb294d6a4a1ac357e72590080e3a78970d17012c48b5f87ba1b"
+    },
+    {
+      "path": "frames/godie-nbbc.e-04-1811ms.webp",
+      "atMs": 1811,
+      "phase": "godie-nbbc.e · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8502,
+      "sha256": "3dc1a1b445283fd22665ee90f03d95b4c93dd2e5a28fac3ee9776583c0839efe"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見從角色前方發射的氣功砲，僅在敵方後方有特效\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"familyMatch\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見氣功砲特效，僅有類似殘影的特效\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"colorMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"特效包含藍色\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"spawnOrigin\": {\n      \"status\": \"fail\",\n      \"reason\": \"特效出現在敵方後方，而非角色前方\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"特效出現位置與預期方向不符，無明確發射過程\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"特效與角色關係清楚\",\n      \"evidenceFrames\": [1, 2]\n    }\n  },\n  \"notes\": [\n    \"預期是從角色前方發射橫向氣功砲，但畫面顯示特效在敵方後方出現。\",\n    \"特效方向與角色面向不一致。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見從角色前方發射的氣功砲，僅在敵方後方有特效",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "fail",
+        "reason": "未見氣功砲特效，僅有類似殘影的特效",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "colorMatch": {
+        "status": "pass",
+        "reason": "特效包含藍色",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "spawnOrigin": {
+        "status": "fail",
+        "reason": "特效出現在敵方後方，而非角色前方",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供特定命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "特效出現位置與預期方向不符，無明確發射過程",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "特效與角色關係清楚",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "預期是從角色前方發射橫向氣功砲，但畫面顯示特效在敵方後方出現。",
+      "特效方向與角色面向不一致。"
+    ]
+  },
+  "contractWarnings": []
+}

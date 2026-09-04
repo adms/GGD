@@ -168,8 +168,8 @@ cache entries fail closed instead of entering the preview. Older profiles withou
 the receipt may still load JSON, but remote binary fetching remains disabled and
 the desktop source status reports that compatibility state.
 
-Last verified 2026-09-03 19:38 CST, the feature branch contains
-`origin/main@ea0d6098` (tag `v0.36.4`). Treat this as a receipt rather than a
+Last verified 2026-09-04 07:04 CST, the feature branch contains
+`origin/main@b45a2957` (tag `v0.37.1`). Treat this as a receipt rather than a
 permanent constant: fetch Main and compare the live ref before making a current
 compatibility claim. Live and repository profile digests likewise remain
 volatile receipts and are never compiled into the Editor as constants.
@@ -180,9 +180,9 @@ The branch does not use the old `required = 546` count as a constant. Current
 generated truth is:
 
 ```text
-editor coverage fingerprint     ba67b7759c0d
-capability fingerprint          18d7999e
-required cells                  5117
+editor coverage fingerprint     d8d7af748798
+capability fingerprint          f40f16e4
+required cells                  5167
 ```
 
 The count includes `vfx-script@1`, the complete nested visual-document surface,
@@ -226,12 +226,12 @@ path for these IDs.
 | --- | --- | --- |
 | `godie-hjai.e` — 04-03 龍破斬 | projectile travels, then remote explosion | JASS order retained; Owner's red-orange volume wins |
 | `godie-hjai.r` — 04-04 神滅斬 | real caster dash plus purple-black slash | Owner override: JASS moved the victim |
-| `godie-hart.r` — 01-04 超究武神霸斬 | animated multi-hit plus yellow-blue vertical finisher | main is the strongest baseline; JASS stage speed/height remains comparison truth |
+| `godie-hart.r` — 01-04 超究武神霸斬 | animated multi-hit plus yellow-blue vertical finisher | Main vertical column bricks; Editor owns timing, split colour and framing |
 | `godie-nbbc.r` — 08-04 阿邦快速劍X | blue shockwave then authoritative blink slash | ability owns the blink; script must not move the body again |
-| `godie-nbbc.e` — 08-03 龍鬥氣砲咒文 | broad blue-white horizontal beam | Owner override: JASS used ten red missile dummies |
-| `godie-ogrh.r` — 09-04 龜派氣功 | broad orange-gold horizontal beam | main/JASS resource family retained, silhouette rebuilt for readability |
-| `godie-e002.ex` — 20-002 理想鄉EX | reflect success, six reposition slashes, seventh yellow-blue beam | real reflect/strike provenance; source divergence stays visible in review |
-| `godie-hvsh.r` — 48-04 騎英之手綱 | real Rider dash plus blue-white beam | Owner override: W3X was a curved locust/magic-circle charge |
+| `godie-nbbc.e` — 08-03 龍鬥氣砲咒文 | broad blue-white horizontal beam | Editor recipe reuses Main `ReviveHuman＋FragDriller`; exact colour/scale awaits model-owned emitter instance inheritance |
+| `godie-ogrh.r` — 09-04 龜派氣功 | broad orange-gold horizontal beam | JASS `h007＋h008` maps to Main `ReviveHuman＋FragDriller`; no particle-row substitute; same emitter seam applies |
+| `godie-e002.ex` — 20-002 理想鄉EX | reflect success, six reposition slashes, seventh yellow-blue beam | JASS `h00S＋h008`; timing stays Editor-owned, exact beam palette awaits the shared emitter seam |
+| `godie-hvsh.r` — 48-04 騎英之手綱 | real Rider dash plus blue-white beam | Editor owns dash, colour and camera; exact model-emitter tint/scale awaits one reusable Main seam |
 
 Authoritative local review records live under `docs/_review/ai-proposals/`;
 source comparison and rejected experiments are documented in
@@ -275,9 +275,15 @@ existing trigger.
 ## Feature branch handoff
 
 Implementation lives on `feat/vfx-forge-codex`, containing Main through the
-last verified receipt `origin/main@ea0d6098` (tag `v0.36.4`); the feature-branch
+last verified receipt `origin/main@b45a2957` (tag `v0.37.1`); the feature-branch
 tip is the only current Editor revision. It is intentionally not merged or
 pushed to `main`. Main should use
 `docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md` as a reference
 and reimplement only the main-owned seams on its own feature branch; the
 coordination contract explicitly forbids wholesale cherry-picking this branch.
+
+Editor-owned VFX recipes are also exported deterministically for optional Main
+review in `docs/editor-contract/editor-vfx-template-handback.json` and
+`docs/editor-contract/EDITOR_VFX_TEMPLATE_HANDBACK.md`. They are advisory-only:
+Main may absorb a repeated low-level capability, but must not copy skill timing,
+palette or camera compositions into runtime defaults.

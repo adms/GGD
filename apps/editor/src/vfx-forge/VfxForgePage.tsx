@@ -13,7 +13,7 @@ import {
   type VfxScriptDoc,
   type VfxScriptSegment,
 } from "@ggd/shared/content/schema/vfxScript";
-import { Abilities, Champions, type CastableSlot } from "@ggd/shared/sim";
+import { Abilities, Champions, type AbilityDef, type CastableSlot } from "@ggd/shared/sim";
 import type { AbilityId, ChampionId } from "@ggd/shared/ids";
 import { api, ApiValidationError, type AiVisualEvidence } from "../api/client";
 import { issuesToErrorMap, type ErrorMap } from "../store";
@@ -27,6 +27,7 @@ import {
   recommendedEvidenceTimes,
   recommendedRuntimeEvidenceTimes,
   ensureTemporalEvidencePair,
+  includeAuditEvidenceTime,
   scriptVisualFocus,
   timelineDurationMs,
   triggerCuesFromSim,
@@ -56,6 +57,7 @@ import {
   type AssetSafetyResult,
 } from "./assetSafety";
 import {
+  VFX_FORGE_RECIPE_FAMILIES,
   VFX_FORGE_RECIPES,
   buildVfxForgeRecipe,
   type VfxForgeRecipeId,
@@ -68,7 +70,7 @@ import {
 import { acceptanceSourceFor } from "./acceptanceSources";
 import { AcceptanceSourcePanel } from "./AcceptanceSourcePanel";
 import { reviewAppearances } from "./appearanceReview";
-import { visualHygieneTriage } from "./backdropFrameAudit";
+import { automaticVisualHygieneScore, visualHygieneTriage } from "./backdropFrameAudit";
 import { passivePresentationRules } from "../passivePresentationPrinciples";
 import { PassivePresentationPanel } from "../PassivePresentationPanel";
 import {
@@ -89,8 +91,12 @@ import {
   buildBasicVisualDraft,
   type BasicVisualProofSource,
 } from "./basicVisualAuthoring";
+import type { MechanicVisualAddition } from "./mechanicVisualOverlay";
 import {
   classifyVisualAcceptanceIssues,
+  classifyVisualRemediationScope,
+  shouldAutomaticallyRetryVisualCase,
+  visualAcceptanceHygieneScore,
   type VisualAcceptanceMachineIssue,
 } from "./visualAcceptanceIssues";
 import {
@@ -114,6 +120,8 @@ interface BasicVisualBatchResult {
   readonly frames: readonly VfxVisualEvidenceFrame[];
   /** Exact presentation route used for the screenshots; never infer it later. */
   readonly proofSource?: BasicVisualProofSource;
+  /** Cosmetic bricks inserted beside authoritative runtime mechanic nodes. */
+  readonly mechanicVisualAdditions: readonly MechanicVisualAddition[];
   /** Deterministic receipt when an authored bone-bound VFX was not standalone. */
   readonly basicVisualFallback?: {
     readonly fromVfxId: string;
@@ -121,6 +129,11 @@ interface BasicVisualBatchResult {
     readonly reason: "requires-host-bone";
   };
   readonly machineIssues?: readonly VisualAcceptanceMachineIssue[];
+  /** Proves a transient first read was discarded instead of silently passed. */
+  readonly automaticRetry?: {
+    readonly attempted: true;
+    readonly initialIssueCodes: readonly VisualAcceptanceMachineIssue["code"][];
+  };
   readonly humanVerdict: "pending" | "pass" | "fail";
   readonly humanScore: number | null;
   readonly humanNote: string;
@@ -205,8 +218,15 @@ export function VfxForgePage() {
   // stand-in; screenshots of that body are not valid visual proof.
   const [targetChampionId, setTargetChampionId] = useState("godie-e001");
   const [ability, setAbility] = useState<ForgeAbility | null>(null);
-  const draftHistory = useUndoHistory<VfxScriptDoc | null>(null, sameJson);
-  const draft = draftHistory.value;
+  const {
+    value: draft,
+    canUndo: canUndoDraft,
+    canRedo: canRedoDraft,
+    commit: commitDraft,
+    reset: resetDraft,
+    undo: undoDraft,
+    redo: redoDraft,
+  } = useUndoHistory<VfxScriptDoc | null>(null, sameJson);
   // This is the file/profile snapshot that was loaded. A submitted proposal is
   // not a saved/live version and must never replace this restore baseline.
   const [loadedOriginal, setLoadedOriginal] = useState<VfxScriptDoc | null>(null);
@@ -236,6 +256,7 @@ export function VfxForgePage() {
     phase: "idle",
     results: [],
   });
+  const [basicVisualSceneRevision, setBasicVisualSceneRevision] = useState(0);
   const [basicVisualExportUrl, setBasicVisualExportUrl] = useState<string | null>(null);
   const basicVisualAutoSink = useRef(
     typeof globalThis.location === "object" ? proofSinkFromSearch(globalThis.location.search) : "",
@@ -243,6 +264,8 @@ export function VfxForgePage() {
   const [basicVisualProofSink, setBasicVisualProofSink] = useState(basicVisualAutoSink.current);
   const basicVisualProofAutoSent = useRef(false);
   const basicVisualBatchBusy = useRef(false);
+  const basicVisualAutomaticRetryCounts = useRef(new Map<string, number>());
+  const basicVisualAutomaticRetryIssues = useRef(new Map<string, readonly VisualAcceptanceMachineIssue[]>());
   const basicVisualBatchAutoStarted = useRef(false);
   const basicVisualBatchAutoRequest = useRef((() => {
     if (typeof globalThis.location !== "object") return null;
@@ -313,10 +336,10 @@ export function VfxForgePage() {
   const passiveRules = useMemo(() => passivePresentationRules(ability), [ability]);
   const acceptanceMirrorEvidenceBlocked = acceptanceSource !== null &&
     runtimeChampion !== null && runtimeTarget !== null && runtimeChampion.id === runtimeTarget.id;
-  const reviewEvidenceIssues = [
+  const reviewEvidenceIssues = useMemo(() => [
     ...appearanceReview.issues,
     ...(acceptanceMirrorEvidenceBlocked ? ["八招驗收的施法者與敵方目標不可使用同一名英雄"] : []),
-  ];
+  ], [acceptanceMirrorEvidenceBlocked, appearanceReview.issues]);
   const reviewEvidenceAllowed = appearanceReview.allowed && !acceptanceMirrorEvidenceBlocked;
   const batchRenderAllowed = appearanceReview.renderAllowed && !acceptanceMirrorEvidenceBlocked;
 
@@ -347,7 +370,7 @@ export function VfxForgePage() {
           : newScript(abilityId, reactionTriggerOf(abilityDoc)));
         if (!live) return;
         setAbility(abilityDoc);
-        draftHistory.reset(script);
+        resetDraft(script);
         setLoadedOriginal(script);
         setLastSubmittedHash(null);
         setIsAcceptanceFixture(fixture !== null);
@@ -360,59 +383,86 @@ export function VfxForgePage() {
       } catch (e) {
         if (!live) return;
         setAbility(null);
-        draftHistory.reset(null);
+        resetDraft(null);
         setStatus(`載入失敗：${String(e)}`);
       }
     })();
     return () => { live = false; };
-  }, [abilityId, existingIds, draftHistory.reset]);
+  }, [abilityId, existingIds, resetDraft]);
 
   useEffect(() => {
     setTrace(null);
     setTraceAbilityId(null);
     setTraceError(null);
-    if (!ability || !runtimeChampion || !previewContent.data) return;
+    if (!ability || !runtimeChampion || !runtimeAbility || !previewContent.data) return;
+    // ability JSON arrives asynchronously while the registry lookup follows
+    // abilityId synchronously. During a batch transition those two renders can
+    // briefly name different skills; never bind one skill's preview clone to
+    // another skill's Sim route or retain that transient mismatch as evidence.
+    if (
+      ability.id !== abilityId ||
+      runtimeAbility.id !== ability.id ||
+      runtimeChampion.id !== championId
+    ) return;
     try {
-      const ticks = castPreviewTicksFor(ability);
+      const runtimeDefinition = runtimeAbility as AbilityDef;
+      const basic = buildBasicVisualDraft(ability, [], {
+        standaloneIneligibleVfxIds,
+        runtimeDefinition,
+      });
+      const route = basicVisualProofRoute(
+        ability.id,
+        acceptanceFixtureFor(ability.id),
+        basic,
+      );
+      const ticks = castPreviewTicksFor(route.definition ?? runtimeDefinition ?? ability as AbilityDef);
       let nextTrace: CastPreviewTrace | ReactionPreviewTrace;
       if (reactionTrigger === "reflectSuccess") {
         nextTrace = simPreview.triggerReflectSuccess(runtimeChampion, ability.id as AbilityId, {
           level: PREVIEW_AUTHOR_LEVEL,
           rank: 1,
           ticks,
+          ...(route.definition ? { definition: route.definition } : {}),
         });
       } else if (activationModeForAbility(ability) === "passive") {
         nextTrace = simPreview.triggerPassiveAbility(runtimeChampion, ability.id as AbilityId, {
           level: PREVIEW_AUTHOR_LEVEL,
           rank: 1,
           ticks,
+          ...(route.definition ? { definition: route.definition } : {}),
         });
       } else if (ability.slot) {
         nextTrace = simPreview.castAbility(runtimeChampion, ability.slot as CastableSlot, {
           level: PREVIEW_AUTHOR_LEVEL,
           rank: 1,
           ticks,
+          exerciseGrantedHooks: true,
+          ...(route.definition ? { definition: route.definition } : {}),
         });
       } else return;
+      setTraceError(null);
       setTrace(nextTrace);
       setTraceAbilityId(ability.id);
     } catch (error) {
       setTraceError(String(error));
     }
-  }, [ability, previewContent.data, reactionTrigger, runtimeChampion]);
+  }, [
+    ability, abilityId, championId, previewContent.data, reactionTrigger, runtimeAbility, runtimeChampion,
+    standaloneIneligibleVfxIds,
+  ]);
 
   useEffect(() => {
     if (typeof globalThis.addEventListener !== "function") return;
     const onKeyDown = (event: KeyboardEvent): void => {
       if (!(event.ctrlKey || event.metaKey) || event.altKey) return;
       const key = event.key.toLowerCase();
-      if (key === "z" && event.shiftKey) { event.preventDefault(); draftHistory.redo(); setVisualEvidence([]); }
-      else if (key === "z") { event.preventDefault(); draftHistory.undo(); setVisualEvidence([]); }
-      else if (key === "y") { event.preventDefault(); draftHistory.redo(); setVisualEvidence([]); }
+      if (key === "z" && event.shiftKey) { event.preventDefault(); redoDraft(); setVisualEvidence([]); }
+      else if (key === "z") { event.preventDefault(); undoDraft(); setVisualEvidence([]); }
+      else if (key === "y") { event.preventDefault(); redoDraft(); setVisualEvidence([]); }
     };
     globalThis.addEventListener("keydown", onKeyDown);
     return () => globalThis.removeEventListener("keydown", onKeyDown);
-  }, [draftHistory.redo, draftHistory.undo]);
+  }, [redoDraft, undoDraft]);
 
   const dirty = useMemo(
     () => JSON.stringify(draft) !== JSON.stringify(loadedOriginal),
@@ -426,16 +476,32 @@ export function VfxForgePage() {
   const errors = useMemo(() => mergeErrors(inlineErrors, serverErrors), [inlineErrors, serverErrors]);
   const errorCount = Object.keys(errors).length;
   const draftAssetRefs = useMemo(() => draft ? assetRefsFromScript(draft) : [], [draft]);
+  const mechanicPreviewAssetRefs = useMemo(() => {
+    if (!ability || !runtimeAbility || acceptanceFixtureFor(ability.id)) return [];
+    const basic = buildBasicVisualDraft(ability, [], {
+      standaloneIneligibleVfxIds,
+      runtimeDefinition: runtimeAbility as AbilityDef,
+    });
+    return basic.previewAdditions.map((addition) => ({
+      collection: "vfx" as const,
+      id: addition.vfxId,
+    }));
+  }, [ability, runtimeAbility, standaloneIneligibleVfxIds]);
+  const previewAssetRefs = useMemo(() => {
+    const byKey = new Map<string, AssetDrop>();
+    for (const ref of [...draftAssetRefs, ...mechanicPreviewAssetRefs]) byKey.set(assetKey(ref), ref);
+    return [...byKey.values()].sort((a, b) => assetKey(a).localeCompare(assetKey(b)));
+  }, [draftAssetRefs, mechanicPreviewAssetRefs]);
   const scriptSafety = useQuery({
-    queryKey: ["vfx-script-asset-safety", ...draftAssetRefs.map(assetKey)],
-    queryFn: () => draft ? assetSafetyGate.checkScript(draft) : Promise.resolve([]),
+    queryKey: ["vfx-preview-asset-safety", ...previewAssetRefs.map(assetKey)],
+    queryFn: () => assetSafetyGate.checkAssets(previewAssetRefs),
     enabled: draft !== null,
     staleTime: Number.POSITIVE_INFINITY,
   });
   const assetBlockers = (scriptSafety.data ?? []).filter((result) => !result.safe);
-  const assetAuditPending = draftAssetRefs.length > 0 && scriptSafety.isPending;
+  const assetAuditPending = previewAssetRefs.length > 0 && scriptSafety.isPending;
   const assetPreviewAllowed = !scriptSafety.isPending && !scriptSafety.error &&
-    allAssetRefsVerifiedSafe(draftAssetRefs, scriptSafety.data);
+    allAssetRefsVerifiedSafe(previewAssetRefs, scriptSafety.data);
   const activationConflict = useMemo(
     () => activationConflictForAbility(ability),
     [ability],
@@ -475,10 +541,10 @@ export function VfxForgePage() {
     if (!isAcceptanceFixture || acceptanceStartedFromBlank || ability?.id !== abilityId || cues.length === 0) return;
     const completed = acceptanceFixtureFor(abilityId, cues);
     if (!completed || (draft && sameJson(draft, completed))) return;
-    draftHistory.reset(completed);
+    resetDraft(completed);
     setLoadedOriginal(completed);
     setStatus("驗收參考已依真 SimWorld 傷害節點自動補齊角色攻擊／受擊動作");
-  }, [ability?.id, abilityId, acceptanceStartedFromBlank, cues, draft, draftHistory.reset, isAcceptanceFixture]);
+  }, [ability?.id, abilityId, acceptanceStartedFromBlank, cues, draft, isAcceptanceFixture, resetDraft]);
   const replacementBlockers = useMemo(
     () => draft ? unsupportedReplacementClaims(draft) : [],
     [draft],
@@ -500,7 +566,7 @@ export function VfxForgePage() {
   }, [scriptSafety.data]);
 
   const mutate = (fn: (doc: VfxScriptDoc) => VfxScriptDoc): void => {
-    draftHistory.commit((doc) => (doc ? fn(doc) : doc));
+    commitDraft((doc) => (doc ? fn(doc) : doc));
     setServerErrors({});
     // Evidence is candidate-bound. Never let a screenshot of the previous
     // JSON survive an edit and appear beside a new hash in human review.
@@ -577,6 +643,7 @@ export function VfxForgePage() {
   };
   const addRecipe = async (id: VfxForgeRecipeId): Promise<void> => {
     if (!draft || !ability) return;
+    const preset = VFX_FORGE_RECIPES.find((recipe) => recipe.id === id);
     const activationMode = activationModeForAbility(ability);
     const segments = buildVfxForgeRecipe(id, { includeModelCore: false, activationMode });
     const candidate: VfxScriptDoc = {
@@ -593,7 +660,7 @@ export function VfxForgePage() {
       return;
     }
     mutate(() => candidate);
-    recordAction(`加入可重用組合：${id}`);
+    recordAction(`加入可重用組合：${preset ? `${preset.familyId}/${preset.typeId}` : id}`);
     setSelected(draft.segments.length);
     setStatus("已加入透明安全的可重用演出積木；每一塊都可在時間軸單獨調整");
   };
@@ -721,10 +788,38 @@ export function VfxForgePage() {
 
   const finishBasicVisualCase = useCallback((result: BasicVisualBatchResult): void => {
     const reviewed = restoreStoredBasicVisualReview(result);
+    const initialRetryIssues = basicVisualAutomaticRetryIssues.current.get(result.id);
     const normalized = {
       ...reviewed,
+      ...(initialRetryIssues ? {
+        automaticRetry: {
+          attempted: true as const,
+          initialIssueCodes: initialRetryIssues.map((issue) => issue.code),
+        },
+      } : {}),
       machineIssues: classifyVisualAcceptanceIssues(reviewed),
     };
+    const automaticRetryCount = basicVisualAutomaticRetryCounts.current.get(normalized.id) ?? 0;
+    if (
+      automaticRetryCount === 0 &&
+      shouldAutomaticallyRetryVisualCase(normalized.machineIssues)
+    ) {
+      basicVisualAutomaticRetryCounts.current.set(normalized.id, 1);
+      basicVisualAutomaticRetryIssues.current.set(normalized.id, normalized.machineIssues);
+      setStatus(`${normalized.id} 命中暫態 GPU／批次畫面異常；延後 350ms，以全新場景自動重驗一次`);
+      globalThis.setTimeout(() => {
+        basicVisualBatchBusy.current = false;
+        setBasicVisualSceneRevision((current) => current + 1);
+        setBasicVisualBatch((current) => {
+          const catalogIndex = current.queue[current.position];
+          if (!current.running || catalogIndex === undefined || SKILL_ACCEPTANCE_CANDIDATES[catalogIndex]?.id !== normalized.id) {
+            return current;
+          }
+          return { ...current, phase: "loading" };
+        });
+      }, 350);
+      return;
+    }
     setBasicVisualBatch((current) => {
       // GPU/cold-load promises may settle after a timeout or HMR replacement.
       // A stale completion must neither clear the next case's busy latch nor
@@ -753,6 +848,8 @@ export function VfxForgePage() {
       return;
     }
     basicVisualBatchBusy.current = false;
+    basicVisualAutomaticRetryCounts.current.clear();
+    basicVisualAutomaticRetryIssues.current.clear();
     setBasicVisualBatch({
       running: true,
       queue,
@@ -769,6 +866,10 @@ export function VfxForgePage() {
     const queue = SKILL_ACCEPTANCE_CANDIDATES.flatMap((row, index) => ids.has(row.id) ? [index] : []);
     if (queue.length === 0) return;
     basicVisualBatchBusy.current = false;
+    for (const id of ids) {
+      basicVisualAutomaticRetryCounts.current.delete(id);
+      basicVisualAutomaticRetryIssues.current.delete(id);
+    }
     setBasicVisualBatch((current) => ({
       running: true,
       queue,
@@ -803,7 +904,6 @@ export function VfxForgePage() {
     startBasicVisualBatch(basicVisualBatchAutoRequest.current);
     // This is a one-shot QA entrypoint. startBasicVisualBatch intentionally
     // stays local to the page instead of becoming a changing effect dependency.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ability, previewContent.data]);
 
   useEffect(() => {
@@ -822,8 +922,14 @@ export function VfxForgePage() {
 
     if (basicVisualBatch.phase === "loading") {
       const fixture = acceptanceFixtureFor(row.id, cues);
-      const basic = buildBasicVisualDraft(ability, cues, { standaloneIneligibleVfxIds });
+      const basic = buildBasicVisualDraft(ability, cues, {
+        standaloneIneligibleVfxIds,
+        runtimeDefinition: runtimeAbility as AbilityDef | undefined,
+      });
       const route = basicVisualProofRoute(ability.id, fixture, basic);
+      const mechanicVisualAdditions = route.source === "editor-effect-graph-preview"
+        ? basic.previewAdditions
+        : [];
       const basicVisualFallback = route.source === "editor-basic-script" && basic.fallbackFromVfxId && basic.selectedVfxId
         ? {
             fromVfxId: basic.fallbackFromVfxId,
@@ -844,13 +950,13 @@ export function VfxForgePage() {
         finishBasicVisualCase({
           id: row.id, name: row.name, status: "failed",
           blockers: [simReview.reason], frames: [], proofSource: route.source,
-          basicVisualFallback,
+          basicVisualFallback, mechanicVisualAdditions,
           humanVerdict: "pending", humanScore: null, humanNote: "",
         });
         return;
       }
       if (!sameJson(draft, script)) {
-        draftHistory.reset(script);
+        resetDraft(script);
         setLoadedOriginal(script);
         setVisualEvidence([]);
       }
@@ -868,15 +974,21 @@ export function VfxForgePage() {
         }),
       };
       if (!sameJson(draft, completed)) {
-        draftHistory.reset(completed);
+        resetDraft(completed);
         setLoadedOriginal(completed);
         setVisualEvidence([]);
         return;
       }
     }
     const fixture = acceptanceFixtureFor(row.id, cues);
-    const basic = buildBasicVisualDraft(ability, cues, { standaloneIneligibleVfxIds });
+    const basic = buildBasicVisualDraft(ability, cues, {
+      standaloneIneligibleVfxIds,
+      runtimeDefinition: runtimeAbility as AbilityDef | undefined,
+    });
     const route = basicVisualProofRoute(ability.id, fixture, basic);
+    const mechanicVisualAdditions = route.source === "editor-effect-graph-preview"
+      ? basic.previewAdditions
+      : [];
     const basicVisualFallback = route.source === "editor-basic-script" && basic.fallbackFromVfxId && basic.selectedVfxId
       ? {
           fromVfxId: basic.fallbackFromVfxId,
@@ -896,7 +1008,7 @@ export function VfxForgePage() {
       finishBasicVisualCase({
         id: row.id, name: row.name, status: "blocked", blockers,
         frames: [], proofSource: route.source,
-        basicVisualFallback,
+        basicVisualFallback, mechanicVisualAdditions,
         humanVerdict: "pending", humanScore: null, humanNote: "",
       });
       return;
@@ -907,9 +1019,11 @@ export function VfxForgePage() {
     setStatus(`自動視覺驗收 ${basicVisualBatch.position + 1}/${basicVisualBatch.queue.length}：${row.id}`);
     void (async () => {
       let fallbackDiagnosticAtMs = 0;
+      let completedAudit: BackdropTimelineAudit | undefined;
       try {
         const { audit, frames } = await withBatchDeadline((async () => {
           const audit = await preview.auditBackdropTimeline(route.mode);
+          completedAudit = audit;
           fallbackDiagnosticAtMs = audit.worstAtMs;
           if (!audit.safe) {
             const frame = await preview.captureDiagnosticEvidenceAt(
@@ -926,9 +1040,15 @@ export function VfxForgePage() {
           let times = route.mode === "script"
             ? recommendedEvidenceTimes(draft, cues, wanted)
             : recommendedRuntimeEvidenceTimes(schedule, wanted);
-          // One-beat skills still need both actual gameplay scale and a close
-          // detail proof. Duplicate the timestamp, not the effect or timeline.
-          if (!row.vfxFixture) times = ensureTemporalEvidencePair(times);
+          // Every one-beat skill still needs two distinct temporal samples.
+          // This includes named acceptance fixtures: excluding them left a
+          // one-segment cinematic with only one image, which cannot prove
+          // persistence/decay and makes the 2..18 contact-sheet gate fail.
+          // Add a nearby read only; never duplicate an effect or timeline row.
+          times = ensureTemporalEvidencePair(times);
+          if (audit.worst.reason || automaticVisualHygieneScore(audit.worst) < 4) {
+            times = includeAuditEvidenceTime(times, audit.worstAtMs, wanted);
+          }
           const frames: VfxVisualEvidenceFrame[] = [];
           const evidencePose = schedule.find((item) => item.actorPose)?.actorPose ?? {
             caster: { x: 0, z: 0 },
@@ -937,6 +1057,11 @@ export function VfxForgePage() {
           const needsWholeActionFrame = route.mode === "script" && scriptVisualFocus(draft, evidencePose) !== null;
           for (let index = 0; index < times.length; index++) {
             const time = times[index]!;
+            // If this exact evidence seek rejects the framebuffer, preserve
+            // that timestamp for the diagnostic fallback. `audit.worstAtMs`
+            // can point at an earlier safe sample and otherwise hide the
+            // actual failing beat behind an unrelated screenshot.
+            fallbackDiagnosticAtMs = time.atMs;
             frames.push(await preview.captureVisualEvidenceAt(
               time.atMs,
               `${row.id} · ${time.label} · 自動基本視覺驗收`,
@@ -960,7 +1085,7 @@ export function VfxForgePage() {
           id: row.id, name: row.name,
           status: audit.safe && !unsafeFrame ? "captured" : "failed",
           blockers, audit, frames, proofSource: route.source,
-          basicVisualFallback,
+          basicVisualFallback, mechanicVisualAdditions,
           humanVerdict: "pending", humanScore: null, humanNote: "",
         });
       } catch (error) {
@@ -977,8 +1102,9 @@ export function VfxForgePage() {
         }
         finishBasicVisualCase({
           id: row.id, name: row.name, status: "failed",
-          blockers: [String(error)], frames, proofSource: route.source,
-          basicVisualFallback,
+          blockers: [String(error), ...acceptanceFixtureVisualGaps(row.id)],
+          audit: completedAudit, frames, proofSource: route.source,
+          basicVisualFallback, mechanicVisualAdditions,
           humanVerdict: "pending", humanScore: null, humanNote: "",
         });
       }
@@ -986,9 +1112,10 @@ export function VfxForgePage() {
   }, [
     ability, abilityId, actionIssues, activationConflict, assetAuditPending,
     assetBlockers, assetPreviewAllowed, basicVisualBatch, cues, draft,
-    draftHistory.reset, finishBasicVisualCase, replacementBlockers,
+    finishBasicVisualCase, replacementBlockers, resetDraft,
     batchRenderAllowed, reviewEvidenceAllowed, reviewEvidenceIssues, runtimeChampion, runtimeTarget,
-    previewMode, schedule, scriptSafety.isPending, simReview, standaloneIneligibleVfxIds, targetChampionId,
+    previewMode, runtimeAbility, schedule, scriptSafety.isPending, simReview,
+    standaloneIneligibleVfxIds, targetChampionId,
   ]);
 
   useEffect(() => {
@@ -1000,7 +1127,8 @@ export function VfxForgePage() {
       if (basicVisualBatchBusy.current) return;
       finishBasicVisualCase({
         id: row.id, name: row.name, status: "failed",
-        blockers: ["20 秒內未能完成載入／真 Sim／素材收據"], frames: [], humanVerdict: "pending", humanScore: null, humanNote: "",
+        blockers: ["20 秒內未能完成載入／真 Sim／素材收據"], frames: [],
+        mechanicVisualAdditions: [], humanVerdict: "pending", humanScore: null, humanNote: "",
       });
     }, 20_000);
     return () => globalThis.clearTimeout(timer);
@@ -1123,7 +1251,7 @@ export function VfxForgePage() {
 
   const startAcceptanceFromBlank = (): void => {
     const blank = newScript(abilityId, reactionTrigger);
-    draftHistory.reset(blank);
+    resetDraft(blank);
     setLoadedOriginal(blank);
     setLastSubmittedHash(null);
     setSelected(0);
@@ -1137,7 +1265,7 @@ export function VfxForgePage() {
   const restoreAcceptanceReference = (): void => {
     const fixture = acceptanceFixtureFor(abilityId);
     if (!fixture) return;
-    draftHistory.reset(fixture);
+    resetDraft(fixture);
     setLoadedOriginal(fixture);
     setLastSubmittedHash(null);
     setSelected(0);
@@ -1202,9 +1330,9 @@ export function VfxForgePage() {
           <span className={errorCount || assetBlockers.length || actionIssues.length || replacementBlocked || activationConflict ? "error" : ""}>
             {status}{dirty ? " · 未提交變更" : ""}{lastSubmittedHash ? ` · 最近送審 ${lastSubmittedHash}` : ""}
           </span>
-          <button type="button" disabled={!draftHistory.canUndo} onClick={() => { draftHistory.undo(); setVisualEvidence([]); }} title="復原（Ctrl/Cmd+Z）">↶ 復原</button>
-          <button type="button" disabled={!draftHistory.canRedo} onClick={() => { draftHistory.redo(); setVisualEvidence([]); }} title="重做（Ctrl/Cmd+Shift+Z）">↷ 重做</button>
-          <button type="button" disabled={!dirty} onClick={() => { if (loadedOriginal) { draftHistory.commit(loadedOriginal); setVisualEvidence([]); } }}>還原載入版</button>
+          <button type="button" disabled={!canUndoDraft} onClick={() => { undoDraft(); setVisualEvidence([]); }} title="復原（Ctrl/Cmd+Z）">↶ 復原</button>
+          <button type="button" disabled={!canRedoDraft} onClick={() => { redoDraft(); setVisualEvidence([]); }} title="重做（Ctrl/Cmd+Shift+Z）">↷ 重做</button>
+          <button type="button" disabled={!dirty} onClick={() => { if (loadedOriginal) { commitDraft(loadedOriginal); setVisualEvidence([]); } }}>還原載入版</button>
           <button
             type="button"
             disabled={!dirty || !simReview.ready || errorCount > 0 || assetAuditPending || assetBlockers.length > 0 || actionIssues.length > 0 || replacementBlocked || activationConflict !== null || !reviewEvidenceAllowed || fixtureWorkflowBlocked || visualEvidenceBlocked}
@@ -1243,7 +1371,7 @@ export function VfxForgePage() {
             ? ` · 肉眼 ${basicVisualBatch.results.filter((row) => row.status === "captured" && row.humanVerdict !== "pending" && row.humanScore !== null && row.humanNote.trim().length > 0).length}/${basicVisualBatch.results.filter((row) => row.status === "captured").length}`
             : ""}
         </summary>
-        <p>一鍵逐支載入真 Sim、以安全積木組裝可編輯基線、掃完整時間軸底板並擷取 framebuffer。自動衛生檢查不會代替人工看圖。</p>
+        <p>一鍵逐支載入真 Sim、以安全積木組裝可編輯基線、掃完整時間軸底板並擷取 framebuffer。顏色、方向、形狀、大小與物理意義等明顯大錯由 Editor 重做；亮度、密度、數幀節奏、鏡頭手感等細修交人工。自動衛生檢查不會代替人工看圖。</p>
         <div>
           <button type="button" disabled={basicVisualBatch.running} onClick={() => startBasicVisualBatch()}>▶ 自動驗收全部 46 份</button>
           <button
@@ -1301,7 +1429,15 @@ export function VfxForgePage() {
                   ))}
                 </div>
               ) : null}
-              <span>{row.status}{row.audit ? ` · 衛生 ${row.audit.autoVisualScore}/10` : ""}</span>
+              <span>
+                {row.status}
+                {row.audit || row.frames.some((frame) => frame.frameAudit)
+                  ? ` · 實戰關鍵格衛生 ${visualAcceptanceHygieneScore(row)}/10`
+                  : ""}
+              </span>
+              {row.mechanicVisualAdditions.length > 0 ? (
+                <small>真機制節點自動補圖：{row.mechanicVisualAdditions.length} 塊</small>
+              ) : null}
               {classifyVisualAcceptanceIssues(row).length ? (
                 <small>
                   自動分類：{classifyVisualAcceptanceIssues(row)
@@ -1336,6 +1472,9 @@ export function VfxForgePage() {
                       onChange={(event) => setBasicVisualHumanReview(row.id, { humanNote: event.target.value })}
                     />
                   </label>
+                  {row.humanNote.trim() ? (
+                    <small>處理路由：{classifyVisualRemediationScope(row.humanNote)}</small>
+                  ) : null}
                 </div>
               ) : null}
             </article>
@@ -1389,16 +1528,23 @@ export function VfxForgePage() {
       ) : null}
 
       <section className="vfx-recipes" aria-label="可重用特效組合">
-        <b>可重用組合</b>
-        <span>像 JASS helper 一樣展開成標準積木；每招自動帶施展動作，時間軸的傷害／位移節點必須配角色動作。普通斬擊一動作只配 Main 收據中的一個 single-arc；只有三段以上、分時且小型的明確極速連斬可例外。舊 slash 積木每顆會噴26個月牙，工坊仍會阻擋。</span>
+        <b>可重用組合（{VFX_FORGE_RECIPES.length} 個 type）</b>
+        <span>先選特效家族，再選 type1／type2 等完整預設；矩陣與 slider 只微調選定 type，不是從零塑形入口。預設會像 JASS helper 一樣展開成可拆改的標準積木，並自動帶施展動作；時間軸的傷害／位移節點必須配角色動作。普通斬擊一動作只配 Main 收據中的一個 single-arc；只有三段以上、分時且小型的明確極速連斬可例外。舊 slash 積木每顆會噴26個月牙，工坊仍會阻擋。</span>
         <button type="button" onClick={() => void applyBasicVisual()}>
           ✨ 依技能自動組裝基本視覺
         </button>
-        {VFX_FORGE_RECIPES.map((recipe) => (
-          <button key={recipe.id} type="button" title={recipe.description} onClick={() => void addRecipe(recipe.id)}>
-            {recipe.label}
-          </button>
-        ))}
+        <div className="vfx-recipe-families">
+          {VFX_FORGE_RECIPE_FAMILIES.map((family) => (
+            <fieldset key={family.id}>
+              <legend>{family.label}</legend>
+              {family.recipes.map((recipe) => (
+                <button key={recipe.id} type="button" title={`${recipe.label}：${recipe.description}`} onClick={() => void addRecipe(recipe.id)}>
+                  {recipe.typeId} · {recipe.variantLabel}
+                </button>
+              ))}
+            </fieldset>
+          ))}
+        </div>
       </section>
 
       {reactionTrigger === "reflectSuccess" ? (
@@ -1515,6 +1661,7 @@ export function VfxForgePage() {
             <section className="vfx-forge-center">
               {assetPreviewAllowed ? (
                 <VfxForgePreview
+                  key={`${ability.id}:${basicVisualSceneRevision}`}
                   ref={previewRef}
                   script={draft}
                   ability={ability}

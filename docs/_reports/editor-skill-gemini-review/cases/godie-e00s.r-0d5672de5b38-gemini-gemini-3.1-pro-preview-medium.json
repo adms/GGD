@@ -1,0 +1,196 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-04T02:06:12.132Z",
+  "sourceDigest": "0d5672de5b386b47471b0a48cfe8338b1caf12264b09a25d436b9307bc9e76f0",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e00s.r",
+    "name": "70-04 千年練成"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "medium",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6776,
+    "usage": {
+      "promptTokens": 9400,
+      "completionTokens": 477,
+      "totalTokens": 9877
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e00s.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-e00s.r · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5896,
+      "sha256": "2ad7413c9539d2dbad7e25a8950f1cff57d683daeaa3adcfedb841df9ba99199"
+    },
+    {
+      "path": "frames/godie-e00s.r-02-1347ms.webp",
+      "atMs": 1347,
+      "phase": "godie-e00s.r · 真 runtime · vfxSpawn+summonSpawn · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10910,
+      "sha256": "b708f698637119fa818e3ca5355747d4fed5d0c0c592f9b8ca07276a62dbdcc4"
+    },
+    {
+      "path": "frames/godie-e00s.r-03-1613ms.webp",
+      "atMs": 1613,
+      "phase": "godie-e00s.r · 真 runtime · vfxSpawn+summonSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 12820,
+      "sha256": "76c881092994469aa20127b01bc66e3c76701dd93227ad2d821568e1bb48236b"
+    },
+    {
+      "path": "frames/godie-e00s.r-04-1813ms.webp",
+      "atMs": 1813,
+      "phase": "godie-e00s.r · 真 runtime · basicAttack+projectileSpawn+damage+hitImpact+vfxSpawn+summonSpawn · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 14552,
+      "sha256": "ff2c34461b498ff1485bb152056e8030a9975c19a5598540696d376a4fa591f7"
+    },
+    {
+      "path": "frames/godie-e00s.r-05-2147ms.webp",
+      "atMs": 2147,
+      "phase": "godie-e00s.r · 真 runtime · vfxSpawn+summonSpawn · 自動基本視覺驗收",
+      "index": 4,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 16412,
+      "sha256": "0920421d3337cb0ecfd5fe4033b5be3be0caa8afce30a7957211c3c9640930ec"
+    },
+    {
+      "path": "frames/godie-e00s.r-06-2447ms.webp",
+      "atMs": 2447,
+      "phase": "godie-e00s.r · 真 runtime · basicAttack+projectileSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 5,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 17200,
+      "sha256": "297f9f822538b550e8269031eaefaba8bc35d06a2f029c151eac38fb6e1507cf"
+    },
+    {
+      "path": "frames/godie-e00s.r-07-9880ms.webp",
+      "atMs": 9880,
+      "phase": "godie-e00s.r · 真 runtime · summonDespawn+basicAttack+projectileSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 6,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 13750,
+      "sha256": "9741feea38b82c3024be1f2433d62a1fefd25e09d05e06347bd5a70c6a74fefc"
+    },
+    {
+      "path": "frames/godie-e00s.r-08-21213ms.webp",
+      "atMs": 21213,
+      "phase": "godie-e00s.r · 真 runtime · basicAttack+projectileSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 7,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7616,
+      "sha256": "3eadb428296a97d7fba88859e18eb6098fedc9f4cb7d83181966f41c9ae96c22"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見樹精生成效果\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"fail\",\n      \"reason\": \"無法確認主效果類型\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見預期效果\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見預期效果\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見預期效果\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"預期視覺中提到的樹精生成效果未在畫面中出現\",\n    \"畫面中僅見紅色方塊特效，與樹精生成無關\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見樹精生成效果",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "familyMatch": {
+        "status": "fail",
+        "reason": "無法確認主效果類型",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供特定來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供特定命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "未見預期效果",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "未見預期效果",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "未見預期效果",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "預期視覺中提到的樹精生成效果未在畫面中出現",
+      "畫面中僅見紅色方塊特效，與樹精生成無關"
+    ]
+  },
+  "contractWarnings": []
+}

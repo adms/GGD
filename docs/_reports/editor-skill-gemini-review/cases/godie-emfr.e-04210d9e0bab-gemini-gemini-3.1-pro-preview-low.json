@@ -1,0 +1,185 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:04:54.838Z",
+  "sourceDigest": "04210d9e0bab7e06fba3ae128e23b96cddde45e5b452e66bf630978608e9de18",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-emfr.e",
+    "name": "15-03 獄炎煉我"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 7006,
+    "usage": {
+      "promptTokens": 9456,
+      "completionTokens": 437,
+      "totalTokens": 9893
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-emfr.e-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-emfr.e · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5554,
+      "sha256": "f4c5e3105ae5d669e8398da81af4bc8bf42b928650cbe916f4275640005933b1"
+    },
+    {
+      "path": "frames/godie-emfr.e-02-1113ms.webp",
+      "atMs": 1113,
+      "phase": "godie-emfr.e · 真 runtime · statusApplied+damage+hitImpact+vfxSpawn · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8146,
+      "sha256": "3d8722063ca0e55e6a4a5aefd9cd953f1621b5ea480146887e33d09f3df5ba50"
+    },
+    {
+      "path": "frames/godie-emfr.e-03-1580ms.webp",
+      "atMs": 1580,
+      "phase": "godie-emfr.e · 真 runtime · basicAttack+projectileSpawn+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10560,
+      "sha256": "fce1d6e3f3f3d2d9864eb806f13a4454dc3ddbba39b771ccb99139ecbcc49cf8"
+    },
+    {
+      "path": "frames/godie-emfr.e-04-2547ms.webp",
+      "atMs": 2547,
+      "phase": "godie-emfr.e · 真 runtime · basicAttack+projectileSpawn+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10374,
+      "sha256": "c10e948fbf6f5e4cd385c6bbd13d2e2a8301924f32fb9dd4386a4232cb8bd4e8"
+    },
+    {
+      "path": "frames/godie-emfr.e-05-3380ms.webp",
+      "atMs": 3380,
+      "phase": "godie-emfr.e · 真 runtime · basicAttack+projectileSpawn+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 4,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10130,
+      "sha256": "ef4ecfb2f13032fca2c954f3f75090aab863105ee3aa90b18bb1b64ab6f4121d"
+    },
+    {
+      "path": "frames/godie-emfr.e-06-4213ms.webp",
+      "atMs": 4213,
+      "phase": "godie-emfr.e · 真 runtime · basicAttack+projectileSpawn+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 5,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10316,
+      "sha256": "38d42a44a3fcc472422310b5615df58feab39e2a5bf4c40fe769abfdcece7b48"
+    },
+    {
+      "path": "frames/godie-emfr.e-07-5047ms.webp",
+      "atMs": 5047,
+      "phase": "godie-emfr.e · 真 runtime · basicAttack+projectileSpawn+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 6,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10168,
+      "sha256": "5b5ecc7ae0df959c1336636114e65ecfbb17413f58c3e6c1a129940e980008cb"
+    },
+    {
+      "path": "frames/godie-emfr.e-08-11713ms.webp",
+      "atMs": 11713,
+      "phase": "godie-emfr.e · 真 runtime · basicAttack+projectileSpawn+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 7,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 12074,
+      "sha256": "7555b6e0fbaeeb7ca597b59f4c0a3b4f6d0c0e94a66eea0bfe08dad284d27bb8"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.5,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"燃燒/爆炎等具體細節不明顯\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺乏清晰的火焰材質特徵\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供明確顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供明確生成位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供明確命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"幀數不足以判定完整發生順序\",\n      \"evidenceFrames\": [\n        1,\n        7\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"主體與特效關係尚可辨識\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3\n      ]\n    }\n  },\n  \"notes\": [\n    \"畫面僅見模糊紅塊與圓圈，無法確認預期的爆炎與燃燒細節。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.5,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "燃燒/爆炎等具體細節不明顯",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "缺乏清晰的火焰材質特徵",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供明確顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供明確生成位置要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供明確命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "幀數不足以判定完整發生順序",
+        "evidenceFrames": [
+          1,
+          7
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模",
+        "evidenceFrames": [
+          1,
+          2,
+          3
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "主體與特效關係尚可辨識",
+        "evidenceFrames": [
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    "notes": [
+      "畫面僅見模糊紅塊與圓圈，無法確認預期的爆炎與燃燒細節。"
+    ]
+  },
+  "contractWarnings": []
+}

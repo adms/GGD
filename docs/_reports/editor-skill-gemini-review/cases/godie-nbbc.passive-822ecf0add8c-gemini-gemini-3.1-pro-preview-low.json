@@ -1,0 +1,131 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T23:28:55.346Z",
+  "sourceDigest": "822ecf0add8c93637a1174a7487c5a2e70f88ef80d1e744a3fa5c4650a6ff942",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-nbbc.passive",
+    "name": "08-00 龍紋記憶"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6591,
+    "usage": {
+      "promptTokens": 3897,
+      "completionTokens": 443,
+      "totalTokens": 4340
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-nbbc.passive-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-nbbc.passive · 真 runtime · vfxSpawn · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5866,
+      "sha256": "7b8d75173a4da2f7d027e31bda3170b1b824fec16b899cbfd2a20b36363fd2f0"
+    },
+    {
+      "path": "frames/godie-nbbc.passive-02-913ms.webp",
+      "atMs": 913,
+      "phase": "godie-nbbc.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7258,
+      "sha256": "fc7bbf5499eafb88ec3d35ec3f17e3a6ca2a0b4008ee09bf2fed8ce51c6e5f2e"
+    },
+    {
+      "path": "frames/godie-nbbc.passive-03-1680ms.webp",
+      "atMs": 1680,
+      "phase": "godie-nbbc.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9964,
+      "sha256": "3ccb93e920fb32939c8952e16b51d0c6445d966826c1aca7407c4c08cb6a1c24"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺乏明顯的龍紋記憶視覺特徵。\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定的VFX類型要求。\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定的顏色要求。\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定的來源要求。\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定的命中位置要求。\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"只有受擊紅光與範圍提示，無法確認覺醒或刷新。\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯的穿模或裁切問題。\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"角色與特效的相對位置清晰可見。\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    }\n  },\n  \"notes\": [\n    \"畫面中僅可見紅色的打擊特效和範圍提示。\",\n    \"無法從這三幀中確認是否有被暈眩或是獲得三屬性增加的覺醒效果。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "缺乏明顯的龍紋記憶視覺特徵。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定的VFX類型要求。",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定的顏色要求。",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供特定的來源要求。",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供特定的命中位置要求。",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "只有受擊紅光與範圍提示，無法確認覺醒或刷新。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯的穿模或裁切問題。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "角色與特效的相對位置清晰可見。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "畫面中僅可見紅色的打擊特效和範圍提示。",
+      "無法從這三幀中確認是否有被暈眩或是獲得三屬性增加的覺醒效果。"
+    ]
+  },
+  "contractWarnings": []
+}

@@ -1,0 +1,109 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T23:30:16.341Z",
+  "sourceDigest": "93ef786fc4d890f4daa017cf0c6a128f17105859f97b3487907a26cba97f5acb",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hapm.q",
+    "name": "52-01 狂戰士之怒"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5390,
+    "usage": {
+      "promptTokens": 2792,
+      "completionTokens": 386,
+      "totalTokens": 3178
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hapm.q-02-120ms.webp",
+      "atMs": 120,
+      "phase": "godie-hapm.q · 真 runtime · abilityCast+vfxSpawn · 近景 · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6082,
+      "sha256": "40bde2ad612aa794e564ea505d44fe9609bdf5f93d2d9d1f1665ea10c00548ad"
+    },
+    {
+      "path": "frames/godie-hapm.q-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hapm.q · 真 runtime · abilityCast+vfxSpawn · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5634,
+      "sha256": "e72421d2661e0c932930979c90ce98b923da77da543f64da2a886618022b2863"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"VFX details unclear from the images provided.\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific visual family requested.\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific color requested.\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific spawn origin requested.\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific impact placement requested.\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Cannot confirm temporal sequence from these frames.\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Cannot determine clipping clearly.\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Effect readability is unclear.\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"預期視覺描述為數值與機制描述，未提供具體的 VFX 視覺特徵要求。\",\n    \"候選圖片中可見紅色特效，但無法與預期視覺描述進行有效比對。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "VFX details unclear from the images provided.",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "No specific visual family requested.",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "No specific color requested.",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "No specific spawn origin requested.",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "No specific impact placement requested.",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "Cannot confirm temporal sequence from these frames.",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "Cannot determine clipping clearly.",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "Effect readability is unclear.",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "預期視覺描述為數值與機制描述，未提供具體的 VFX 視覺特徵要求。",
+      "候選圖片中可見紅色特效，但無法與預期視覺描述進行有效比對。"
+    ]
+  },
+  "contractWarnings": []
+}

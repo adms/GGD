@@ -1,6 +1,6 @@
 {
   "schema": "ggd-editor-skill-human-review-index@1",
-  "sourceDigest": "1e89586fba3677fa656c4556236c0e1b04f9608158e117b8ce0c00f756981a60",
+  "sourceDigest": "529fa06a6a98e77574cbea7375cd1b63cd9a150795dfc8b67ee652cea968989b",
   "policy": {
     "verdictAuthority": "human",
     "aiIsAdvisoryOnly": true,
@@ -82,7 +82,7 @@
     ]
   ],
   "codexAdvisory": {
-    "status": "current",
-    "rows": 46
+    "status": "stale",
+    "rows": 0
   }
 }

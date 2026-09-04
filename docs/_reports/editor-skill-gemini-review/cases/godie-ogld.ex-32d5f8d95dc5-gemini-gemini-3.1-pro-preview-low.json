@@ -1,0 +1,118 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-03T21:12:41.700Z",
+  "sourceDigest": "32d5f8d95dc59fae8a816948df0d360f8e9001d2b7af1d08809ea450ca1e2468",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-ogld.ex",
+    "name": "72-002 億萬衛星殞落"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 7032,
+    "usage": {
+      "promptTokens": 2793,
+      "completionTokens": 420,
+      "totalTokens": 3213
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-ogld.ex-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-ogld.ex · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 4710,
+      "sha256": "234c33421c75284da61304b2ee19d3f0f8b4625809d2466be7d1c12f85a55d01"
+    },
+    {
+      "path": "frames/godie-ogld.ex-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-ogld.ex · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6408,
+      "sha256": "bfa5ab0d70dcf98847bc3ee7e31440a95b5d5c74fef112412f5595bb9d19121b"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見預期的衛星殞落效果\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見符合衛星殞落的主效果\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供顏色規格且無主效果\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見主效果\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見主效果與落點\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"缺少預期的連續落點效果\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見主效果，無法判斷\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見主效果，無法判斷\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"畫面僅見些微星星粒子，未見衛星殞落或連續範圍打擊\",\n    \"提供的圖片無法證明技能有發動預期的效果\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見預期的衛星殞落效果",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "fail",
+        "reason": "未見符合衛星殞落的主效果",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供顏色規格且無主效果",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未見主效果",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未見主效果與落點",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "缺少預期的連續落點效果",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "未見主效果，無法判斷",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "未見主效果，無法判斷",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "畫面僅見些微星星粒子，未見衛星殞落或連續範圍打擊",
+      "提供的圖片無法證明技能有發動預期的效果"
+    ]
+  },
+  "contractWarnings": []
+}

@@ -16,6 +16,7 @@ import {
 } from "../../apps/editor/src/forge/skillAcceptanceCatalog";
 import type { VisualAcceptanceMachineIssue } from "../../apps/editor/src/vfx-forge/visualAcceptanceIssues";
 import type { BackdropTimelineAudit } from "../../apps/editor/src/vfx-forge/VfxForgeStage";
+import { mergeAcceptanceFixtureVisualGaps } from "../../apps/editor/src/vfx-forge/acceptanceVisualGaps";
 import { classifyImportedVisualAcceptance } from "./visualProofImport";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
@@ -135,7 +136,10 @@ const cases = SKILL_ACCEPTANCE_CANDIDATES.map((candidate) => {
       bytes: bytes.length,
     };
   });
-  const blockers = Array.isArray(row.blockers) ? row.blockers.map(String) : [];
+  const blockers = mergeAcceptanceFixtureVisualGaps(
+    candidate.id,
+    Array.isArray(row.blockers) ? row.blockers.map(String) : [],
+  );
   const audit = row.audit && typeof row.audit === "object" ? row.audit as BackdropTimelineAudit : null;
   const classified = classifyImportedVisualAcceptance({
     status,
@@ -150,6 +154,13 @@ const cases = SKILL_ACCEPTANCE_CANDIDATES.map((candidate) => {
   const { machineIssues, proofSource } = classified;
   if (!selfTest) assertMachineIssues(candidate.id, row.machineIssues, machineIssues);
   const basicVisualFallback = parseBasicVisualFallback(candidate.id, row.basicVisualFallback);
+  const mechanicVisualAdditions = parseMechanicVisualAdditions(candidate.id, row.mechanicVisualAdditions);
+  if (proofSource === "editor-effect-graph-preview" && mechanicVisualAdditions.length === 0) {
+    fail(`${candidate.id}: effect-graph preview is missing its mechanic visual receipt`);
+  }
+  if (proofSource !== "editor-effect-graph-preview" && mechanicVisualAdditions.length > 0) {
+    fail(`${candidate.id}: mechanic visual receipt does not match proofSource ${String(proofSource)}`);
+  }
   return {
     id: candidate.id,
     name: candidate.name,
@@ -159,6 +170,7 @@ const cases = SKILL_ACCEPTANCE_CANDIDATES.map((candidate) => {
     frames,
     proofSource,
     basicVisualFallback,
+    mechanicVisualAdditions,
     machineIssues,
     humanVerdict: verdict,
     humanScore: score ?? null,
@@ -226,6 +238,48 @@ function parseBasicVisualFallback(
     toVfxId: row.toVfxId,
     reason: "requires-host-bone",
   };
+}
+
+function parseMechanicVisualAdditions(
+  id: string,
+  value: unknown,
+): readonly {
+  readonly path: string;
+  readonly afterKind: string;
+  readonly vfxId: string;
+  readonly at: "self" | "target" | "point";
+}[] {
+  if (value === undefined || value === null) return [];
+  if (!Array.isArray(value)) fail(`${id}: invalid mechanicVisualAdditions`);
+  const seen = new Set<string>();
+  return value.map((entry, index) => {
+    if (!entry || typeof entry !== "object") fail(`${id}: mechanicVisualAdditions[${index}] is not an object`);
+    const row = entry as Record<string, unknown>;
+    if (typeof row.path !== "string" || !row.path.startsWith("$.")) {
+      fail(`${id}: mechanicVisualAdditions[${index}] has invalid path`);
+    }
+    if (typeof row.afterKind !== "string" || row.afterKind.length === 0) {
+      fail(`${id}: mechanicVisualAdditions[${index}] has invalid afterKind`);
+    }
+    if (typeof row.vfxId !== "string" || row.vfxId.length === 0) {
+      fail(`${id}: mechanicVisualAdditions[${index}] has invalid vfxId`);
+    }
+    if (row.at !== "self" && row.at !== "target" && row.at !== "point") {
+      fail(`${id}: mechanicVisualAdditions[${index}] has invalid at`);
+    }
+    if (!existsSync(join(ROOT, "content/vfx", `${row.vfxId}.json`))) {
+      fail(`${id}: mechanicVisualAdditions[${index}] references unknown VFX ${row.vfxId}`);
+    }
+    const key = `${row.path}\u0000${row.vfxId}\u0000${row.at}`;
+    if (seen.has(key)) fail(`${id}: duplicate mechanic visual receipt ${row.path}`);
+    seen.add(key);
+    return {
+      path: row.path,
+      afterKind: row.afterKind,
+      vfxId: row.vfxId,
+      at: row.at,
+    };
+  });
 }
 
 function assertMachineIssues(

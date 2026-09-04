@@ -8,7 +8,12 @@ import {
   completeActionAnimations,
   type ActionTimelineCue,
 } from "./actionAnimationPrinciples";
+import type { AbilityDef } from "@ggd/shared/sim";
 import type { ForgeAbility } from "./model";
+import {
+  buildMechanicVisualPreview,
+  type MechanicVisualAddition,
+} from "./mechanicVisualOverlay";
 
 export interface BasicVisualAbility extends ForgeAbility {
   readonly castType?: string;
@@ -36,6 +41,13 @@ export interface BasicVisualDraft {
   readonly effectGraphHooks: readonly string[];
   /** Direct vfx-script timeline coverage is intentionally reported separately. */
   readonly scriptTimelineGaps: readonly string[];
+  /**
+   * Runtime-only clone with cosmetic spawnVfx nodes placed at actual mechanic
+   * beats. It is never serialized by VFX Forge or sent to a write endpoint.
+   */
+  readonly previewDefinition: AbilityDef | null;
+  /** Exact deterministic insertions made in that preview-only clone. */
+  readonly previewAdditions: readonly MechanicVisualAddition[];
   readonly blockers: readonly string[];
 }
 
@@ -46,6 +58,8 @@ export interface BasicVisualBuildOptions {
    * the loaded VFX registry; no ability id or imported family is hard-coded.
    */
   readonly standaloneIneligibleVfxIds?: ReadonlySet<string>;
+  /** Expanded runtime definition from the authoritative boot registry. */
+  readonly runtimeDefinition?: AbilityDef;
 }
 
 export const BASIC_VISUAL_SAFE_GENERIC_VFX_ID = "fx.prim.arcane.pulse";
@@ -53,12 +67,15 @@ export const BASIC_VISUAL_SAFE_GENERIC_VFX_ID = "fx.prim.arcane.pulse";
 export type BasicVisualProofSource =
   | "acceptance-fixture"
   | "editor-basic-script"
+  | "editor-effect-graph-preview"
   | "runtime-effect-graph";
 
 export interface BasicVisualProofRoute {
   readonly mode: "script" | "runtime";
   readonly source: BasicVisualProofSource;
   readonly script: VfxScriptDoc;
+  /** Present only for a scoped, preview-only registry override. */
+  readonly definition: AbilityDef | null;
 }
 
 /**
@@ -76,12 +93,25 @@ export function basicVisualProofRoute(
   fixture: VfxScriptDoc | null,
   basic: BasicVisualDraft,
 ): BasicVisualProofRoute {
-  if (fixture) return { mode: "script", source: "acceptance-fixture", script: fixture };
-  if (basic.script) return { mode: "script", source: "editor-basic-script", script: basic.script };
+  if (fixture) {
+    return { mode: "script", source: "acceptance-fixture", script: fixture, definition: null };
+  }
+  if (basic.previewDefinition) {
+    return {
+      mode: "runtime",
+      source: "editor-effect-graph-preview",
+      script: runtimeAuditPlaceholderScript(abilityId),
+      definition: basic.previewDefinition,
+    };
+  }
+  if (basic.script) {
+    return { mode: "script", source: "editor-basic-script", script: basic.script, definition: null };
+  }
   return {
     mode: "runtime",
     source: "runtime-effect-graph",
     script: runtimeAuditPlaceholderScript(abilityId),
+    definition: null,
   };
 }
 
@@ -112,6 +142,9 @@ export function buildBasicVisualDraft(
   requiredTimelineCues: readonly ActionTimelineCue[] = [],
   options: BasicVisualBuildOptions = {},
 ): BasicVisualDraft {
+  const mechanicPreview = options.runtimeDefinition
+    ? buildMechanicVisualPreview(options.runtimeDefinition)
+    : { definition: null, additions: [] as const };
   const activationMode = activationModeForAbility(ability);
   const scriptTimelineGaps = vfxScriptTimelineGaps(ability);
   const supportedReaction = [...hookEventsOf(ability)]
@@ -125,6 +158,8 @@ export function buildBasicVisualDraft(
       fallbackFromVfxId: null,
       effectGraphHooks: scriptTimelineGaps,
       scriptTimelineGaps,
+      previewDefinition: mechanicPreview.definition,
+      previewAdditions: mechanicPreview.additions,
       blockers: [],
     };
   }
@@ -169,6 +204,8 @@ export function buildBasicVisualDraft(
     fallbackFromVfxId,
     effectGraphHooks: scriptTimelineGaps,
     scriptTimelineGaps,
+    previewDefinition: mechanicPreview.definition,
+    previewAdditions: mechanicPreview.additions,
     blockers: [],
   };
 }

@@ -103,6 +103,9 @@ function card(row, acceptanceRow, page, advisory) {
     ? `<span class="fallback">安全替代 ${esc(row.basicVisualFallback.fromVfxId)} → ${esc(row.basicVisualFallback.toVfxId)}（原綁定未修改）</span>`
     : "";
   const audit = row.audit ?? {};
+  const mechanicVisualCount = Array.isArray(row.mechanicVisualAdditions)
+    ? row.mechanicVisualAdditions.length
+    : 0;
   const frames = row.frames.map((frame) => `<figure class="frame"><img loading="lazy" src="../editor-skill-basic-visual-proof/${attr(frame.file)}" alt="${attr(row.id)} ${attr(frame.label)}"><figcaption>${esc(frame.atMs)}ms · ${esc(frame.framing)} · ${esc(frame.label)}</figcaption></figure>`).join("");
   const issues = (row.machineIssues ?? []).map((issue) => `<code>${esc(issue.code)}</code> ${esc(issue.summary)}`).join("；");
   const blockers = (row.blockers ?? []).map(esc).join("；");
@@ -113,7 +116,7 @@ function card(row, acceptanceRow, page, advisory) {
     ? `<div class="advisory"><strong>Codex advisory ${esc(advisory.score)}/10 · ${esc(advisory.disposition)}</strong><br>${esc(advisory.note)}</div>`
     : "";
   return `<article class="case" data-page="${page}"><h2>${esc(row.id)} · ${esc(row.name)}</h2>
-  <div class="meta"><span>主題 ${esc(acceptanceRow.themeId)}</span><span>路徑 ${esc(acceptanceRow.designerPath)}</span><span>證據 ${esc(row.proofSource)}</span><span>事件 ${esc(acceptanceRow.noCodeEventAuthoring)}</span><span>粒子峰值 ${esc(audit.peakParticleCount ?? "—")}</span><span>演出像素 ${(Number(audit.peakPresentationPixelShare ?? 0) * 100).toFixed(2)}%</span>${fallback}</div>
+  <div class="meta"><span>主題 ${esc(acceptanceRow.themeId)}</span><span>路徑 ${esc(acceptanceRow.designerPath)}</span><span>證據 ${esc(row.proofSource)}</span><span>真機制補圖 ${mechanicVisualCount} 塊</span><span>事件 ${esc(acceptanceRow.noCodeEventAuthoring)}</span><span>粒子峰值 ${esc(audit.peakParticleCount ?? "—")}</span><span>演出像素 ${(Number(audit.peakPresentationPixelShare ?? 0) * 100).toFixed(2)}%</span>${fallback}</div>
   <div class="criteria"><b>驗收要點：</b>${esc(acceptanceRow.acceptance)}<br><b>設計師檢查：</b>角色動作、傷害／位移節點、方向與範圍、顏色辨識、素材透明、時間軸可用現有積木重建。</div>
 ${issuePanel}
 ${advisoryPanel}

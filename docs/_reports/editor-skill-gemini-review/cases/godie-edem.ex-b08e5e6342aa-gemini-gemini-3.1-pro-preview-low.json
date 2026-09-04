@@ -1,0 +1,118 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T21:14:15.481Z",
+  "sourceDigest": "b08e5e6342aa971bfad80c44420d2e5656302dfbcb989317d351b969bbddfaaa",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-edem.ex",
+    "name": "45-002 天照"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6540,
+    "usage": {
+      "promptTokens": 2787,
+      "completionTokens": 417,
+      "totalTokens": 3204
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-edem.ex-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-edem.ex · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5372,
+      "sha256": "0491b362696883aaeca1d0342262aa49f465a3e187fc7768be0c96642e02ee5c"
+    },
+    {
+      "path": "frames/godie-edem.ex-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-edem.ex · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7554,
+      "sha256": "0580b1c6f4dd73303a5af8947ee1c753a61febb96df5b0b5ef3a63a897f6eb34"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Burning effect not clearly visible in provided frames.\",\n      \"evidenceFrames\": [\n        1\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Effect presence is uncertain, cannot determine family.\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific color required, filling uncertain.\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific origin required, filling uncertain.\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific placement required, filling uncertain.\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Cannot verify 10-second duration from two frames.\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"No obvious clipping observed.\",\n      \"evidenceFrames\": [\n        1\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"Effects are readable against the background.\",\n      \"evidenceFrames\": [\n        1\n      ]\n    }\n  },\n  \"notes\": [\n    \"Only faint purple particles are visible, not clearly a fire/burning effect.\",\n    \"Cannot verify 10s duration or simultaneous status effects from still images.\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "Burning effect not clearly visible in provided frames.",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "Effect presence is uncertain, cannot determine family.",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "No specific color required, filling uncertain.",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "No specific origin required, filling uncertain.",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "No specific placement required, filling uncertain.",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "Cannot verify 10-second duration from two frames.",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "No obvious clipping observed.",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "Effects are readable against the background.",
+        "evidenceFrames": [
+          1
+        ]
+      }
+    },
+    "notes": [
+      "Only faint purple particles are visible, not clearly a fire/burning effect.",
+      "Cannot verify 10s duration or simultaneous status effects from still images."
+    ]
+  },
+  "contractWarnings": []
+}

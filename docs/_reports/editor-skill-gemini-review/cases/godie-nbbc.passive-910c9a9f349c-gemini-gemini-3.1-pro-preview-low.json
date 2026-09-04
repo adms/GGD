@@ -1,0 +1,128 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T19:58:09.930Z",
+  "sourceDigest": "910c9a9f349cdbd7471a9998d61998879bf7e2f8e90b263e72045d8fd6856f0c",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-nbbc.passive",
+    "name": "08-00 龍紋記憶"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6645,
+    "usage": {
+      "promptTokens": 3876,
+      "completionTokens": 446,
+      "totalTokens": 4322
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-nbbc.passive-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-nbbc.passive · 真 runtime · vfxSpawn · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 16082,
+      "sha256": "c45eb7acdf4442aaf6dd076b11ac676afbd36d85827ab10f24533fb973bda051"
+    },
+    {
+      "path": "frames/godie-nbbc.passive-02-913ms.webp",
+      "atMs": 913,
+      "phase": "godie-nbbc.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 12552,
+      "sha256": "62b1c766778f6c7abd51762842dd8c838d80d8056cfe66dce68d0d0f1657cdfe"
+    },
+    {
+      "path": "frames/godie-nbbc.passive-03-1680ms.webp",
+      "atMs": 1680,
+      "phase": "godie-nbbc.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 16134,
+      "sha256": "81d3846001abbacbadf2520504545cbf554a4fd5173791e1d5b924b0da317fd5"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"畫面中僅見紅色方塊破裂特效，無法確認是否為暈眩覺醒特效。\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期VFX類型，無法比對。\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定顏色要求。\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供來源位置要求。\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供命中位置要求。\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無從確認各階段是否符合預期。\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"紅色方塊特效未見明顯穿模。\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"特效與角色關係清楚可見。\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    }\n  },\n  \"notes\": [\n    \"畫面中的特效無法確認是否對應『被暈眩時覺醒』，且無法從畫面上確認數值增加或刷新狀態。\",\n    \"整體畫面難以與預期文字進行精確比對。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "畫面中僅見紅色方塊破裂特效，無法確認是否為暈眩覺醒特效。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供預期VFX類型，無法比對。",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定顏色要求。",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供來源位置要求。",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供命中位置要求。",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "無從確認各階段是否符合預期。",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "紅色方塊特效未見明顯穿模。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "特效與角色關係清楚可見。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "畫面中的特效無法確認是否對應『被暈眩時覺醒』，且無法從畫面上確認數值增加或刷新狀態。",
+      "整體畫面難以與預期文字進行精確比對。"
+    ]
+  },
+  "contractWarnings": []
+}

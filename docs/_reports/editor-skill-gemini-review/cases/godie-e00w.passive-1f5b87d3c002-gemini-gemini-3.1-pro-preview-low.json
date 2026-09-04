@@ -1,0 +1,108 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-03T20:04:18.649Z",
+  "sourceDigest": "1f5b87d3c0028d4e2d63528f9467716ebfb9da26d4c50b8a210dd8d73b5618b9",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e00w.passive",
+    "name": "77-00 浮雲-旋一閃"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5700,
+    "usage": {
+      "promptTokens": 2772,
+      "completionTokens": 367,
+      "totalTokens": 3139
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e00w.passive-02-487ms.webp",
+      "atMs": 487,
+      "phase": "godie-e00w.passive · 真 runtime · basicAttack+evade+damage+hitImpact+statusApplied · 近景 · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8636,
+      "sha256": "07847b9385e7bdbc996ab023c7342ec74c03bb4499b249eb6361eb94dc9f2bcc"
+    },
+    {
+      "path": "frames/godie-e00w.passive-01-547ms.webp",
+      "atMs": 547,
+      "phase": "godie-e00w.passive · 真 runtime · basicAttack+evade+damage+hitImpact+statusApplied · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7406,
+      "sha256": "c61b8f05975d138c1012530779645024a045dd43005fdb58b99b364d5aa3c4e0"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見任何特效播放\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無特效可供判斷類型\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無特效可供判斷顏色\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無特效可供判斷起點\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見命中判定特效\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見特效播放無法判斷時序\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見特效無法判斷穿模\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見特效無法判斷辨識度\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"預期的旋轉反擊特效未見播放\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見任何特效播放",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "無特效可供判斷類型",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "無特效可供判斷顏色",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "無特效可供判斷起點",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未見命中判定特效",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "未見特效播放無法判斷時序",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "未見特效無法判斷穿模",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "未見特效無法判斷辨識度",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "預期的旋轉反擊特效未見播放"
+    ]
+  },
+  "contractWarnings": []
+}

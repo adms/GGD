@@ -1,0 +1,115 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:05:44.605Z",
+  "sourceDigest": "a2c198c57dbc8c903eef6cb67e007d0ca31a5c35fed2ae106bee4ae89be76510",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e00l.passive",
+    "name": "20-00 銀色甲胄"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "medium",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 11752,
+    "usage": {
+      "promptTokens": 2844,
+      "completionTokens": 425,
+      "totalTokens": 3811
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e00l.passive-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-e00l.passive · 真 runtime · damage+hitImpact+shieldGained+vfxSpawn · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6742,
+      "sha256": "1573df2b368f404baf2970b08d389a673fb79f2e8b1a2c133218447aeedaa47d"
+    },
+    {
+      "path": "frames/godie-e00l.passive-02-580ms.webp",
+      "atMs": 580,
+      "phase": "godie-e00l.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10290,
+      "sha256": "5e72323c43bf933d36f4eb9f70c82ec58e79e075dc45232f8c8376a9c75b633d"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.5,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"畫面中未能明確辨識出預期的減傷盾特效\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供明確的 VFX 類型規格\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供明確的顏色規格\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供明確的發生位置規格\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供明確的命中位置規格\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無法從現有幀確認特效的完整時序\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模或裁切\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"可見特效與角色/地面關係清楚\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    }\n  },\n  \"notes\": [\n    \"預期文字主要為數值機制，無法僅由畫面確認\",\n    \"畫面可見灰色擴散環與紅色特效，難以確定是否為減傷盾\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.5,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "畫面中未能明確辨識出預期的減傷盾特效",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供明確的 VFX 類型規格",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供明確的顏色規格",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供明確的發生位置規格",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供明確的命中位置規格",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "無法從現有幀確認特效的完整時序",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模或裁切",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "可見特效與角色/地面關係清楚",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      }
+    },
+    "notes": [
+      "預期文字主要為數值機制，無法僅由畫面確認",
+      "畫面可見灰色擴散環與紅色特效，難以確定是否為減傷盾"
+    ]
+  },
+  "contractWarnings": []
+}

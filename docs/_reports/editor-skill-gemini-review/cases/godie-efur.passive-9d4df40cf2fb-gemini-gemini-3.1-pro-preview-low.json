@@ -1,0 +1,121 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T21:14:21.732Z",
+  "sourceDigest": "9d4df40cf2fb6c99b275df917af5bacca7fa2677f32e668efb1b65ce4283732d",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-efur.passive",
+    "name": "13-00 念。攻防轉換"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6250,
+    "usage": {
+      "promptTokens": 2796,
+      "completionTokens": 428,
+      "totalTokens": 3224
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-efur.passive-01-547ms.webp",
+      "atMs": 547,
+      "phase": "godie-efur.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5514,
+      "sha256": "3318c3f6432839bf086006223a96975293e01484934ffba889cdda97c76da74d"
+    },
+    {
+      "path": "frames/godie-efur.passive-02-1680ms.webp",
+      "atMs": 1680,
+      "phase": "godie-efur.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6570,
+      "sha256": "37ab260e8fcd542e11945d395ec9304b198dc4cde95b007ad3249b98e806f4d4"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"僅見受擊紅光，未見各屬性特效\",\n      \"evidenceFrames\": [0, 1]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"規格未提供特效樣式\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"規格未提供特效顏色\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"規格未提供特效生成位置\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"規格未提供特效命中位置\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"幀數不足，無法確認時序與並存\",\n      \"evidenceFrames\": [0, 1]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模\",\n      \"evidenceFrames\": [0, 1]\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺乏預期主效果，無從判斷\",\n      \"evidenceFrames\": [0, 1]\n    }\n  },\n  \"notes\": [\n    \"圖片僅展示普攻命中紅光，未見AP、AD、防禦、魔抗等四種狀態特效\",\n    \"兩幀間隔一秒，但畫面幾乎相同，無法確認時序與循環\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "僅見受擊紅光，未見各屬性特效",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "規格未提供特效樣式",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "規格未提供特效顏色",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "規格未提供特效生成位置",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "規格未提供特效命中位置",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "幀數不足，無法確認時序與並存",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "缺乏預期主效果，無從判斷",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      }
+    },
+    "notes": [
+      "圖片僅展示普攻命中紅光，未見AP、AD、防禦、魔抗等四種狀態特效",
+      "兩幀間隔一秒，但畫面幾乎相同，無法確認時序與循環"
+    ]
+  },
+  "contractWarnings": []
+}

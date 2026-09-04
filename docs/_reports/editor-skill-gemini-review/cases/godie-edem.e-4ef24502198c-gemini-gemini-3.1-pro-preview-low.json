@@ -1,0 +1,109 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-03T21:14:08.940Z",
+  "sourceDigest": "4ef24502198cfac13b29bc9562c72e9f3e0204a42708839bfe326b156795726b",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-edem.e",
+    "name": "45-03 千鳥"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 7421,
+    "usage": {
+      "promptTokens": 2791,
+      "completionTokens": 401,
+      "totalTokens": 3192
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-edem.e-02-120ms.webp",
+      "atMs": 120,
+      "phase": "godie-edem.e · 施法提交 · anim+vfx · 近景 · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6230,
+      "sha256": "9c4c8895d855f5e08721787fd17f728b97ed9e11b4bfe8bdec7b6cd6d46ba891"
+    },
+    {
+      "path": "frames/godie-edem.e-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-edem.e · 施法提交 · anim+vfx · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5764,
+      "sha256": "782b1476071c1baacf563c94ce646d9f3b221002d824c285c8b7e6470b452b74"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"位移過程及受傷特效不可見，缺少關鍵畫面\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定家族要求\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"缺少衝刺及沿途傷害的連貫畫面\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"特效不可見，無法判斷是否穿模\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"特效不可見，無法判斷辨識度\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"圖片中未見角色衝刺過程與沿途傷害特效，僅右側有微弱光影。\",\n    \"無法從現有圖片確認是否符合預期視覺。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "位移過程及受傷特效不可見，缺少關鍵畫面",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定家族要求",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供特定來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供特定命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "缺少衝刺及沿途傷害的連貫畫面",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "特效不可見，無法判斷是否穿模",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "特效不可見，無法判斷辨識度",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "圖片中未見角色衝刺過程與沿途傷害特效，僅右側有微弱光影。",
+      "無法從現有圖片確認是否符合預期視覺。"
+    ]
+  },
+  "contractWarnings": []
+}

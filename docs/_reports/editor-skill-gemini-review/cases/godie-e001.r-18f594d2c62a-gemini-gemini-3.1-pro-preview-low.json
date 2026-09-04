@@ -1,0 +1,111 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T23:27:30.414Z",
+  "sourceDigest": "18f594d2c62a6dacabca9504b58e87cbcb30f8a4645459a5afa9b3e7c9609406",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e001.r",
+    "name": "22-04 雛見澤症候群L5"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5626,
+    "usage": {
+      "promptTokens": 2794,
+      "completionTokens": 399,
+      "totalTokens": 3193
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e001.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-e001.r · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5418,
+      "sha256": "8cde62ed0a1ec887724cb552f81d159b949c181392b17ad1d87f9b3366faa9a2"
+    },
+    {
+      "path": "frames/godie-e001.r-02-847ms.webp",
+      "atMs": 847,
+      "phase": "godie-e001.r · 真 runtime · vfxSpawn · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7400,
+      "sha256": "c5a9569406c42b498c95234763a8f80fa9bcce6be9228a71de30908dd1c57338"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無法確認是否有變身、提高攻擊、移速及降低生命的效果表現\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供具體VFX類型要求\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無法確認效果的時序\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模或裁切\",\n      \"evidenceFrames\": [0, 1]\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無明顯主效果可辨識其與角色/地面關係\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\"提供的截圖中只有一個紅黑色的特效在角色腳下，無法充分確認預期文字中描述的變身或數值變化相關的VFX。\"]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "無法確認是否有變身、提高攻擊、移速及降低生命的效果表現",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供具體VFX類型要求",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供特定來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "無法確認效果的時序",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模或裁切",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "無明顯主效果可辨識其與角色/地面關係",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "提供的截圖中只有一個紅黑色的特效在角色腳下，無法充分確認預期文字中描述的變身或數值變化相關的VFX。"
+    ]
+  },
+  "contractWarnings": []
+}

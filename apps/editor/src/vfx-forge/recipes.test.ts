@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { zVfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
 import {
+  CLASSIC_BEAM_CORE_MODEL_KEY,
   CLASSIC_BEAM_MODEL_KEY,
-  CLASSIC_BEAM_VISUAL_GAP,
+  VFX_FORGE_RECIPES,
+  VFX_FORGE_RECIPE_FAMILIES,
   abilityUsesModel,
   buildVfxForgeRecipe,
 } from "./recipes";
@@ -11,20 +13,47 @@ const activeRecipe = (id: Parameters<typeof buildVfxForgeRecipe>[0], options: Om
   buildVfxForgeRecipe(id, { ...options, activationMode: "active" });
 
 describe("VFX Forge editor-side recipes", () => {
-  it.each(["classic-beam-fire", "classic-beam-blue"] as const)("%s defaults to transparent-safe bounded helpers without the white-card MDL", (id) => {
-    const segments = activeRecipe(id);
-    expect(segments.every((segment) => zVfxScriptSegment.safeParse(segment).success)).toBe(true);
-    expect(segments.filter((segment) => segment.kind === "modelFx" && segment.modelKey === CLASSIC_BEAM_MODEL_KEY)).toHaveLength(0);
-    const particles = segments.filter((segment) => segment.kind === "vfx");
-    expect(particles).toHaveLength(6);
-    expect(Math.max(...particles.map((segment) => segment.atMs ?? 0))).toBe(650);
-    expect(Math.max(...particles.map((segment) => segment.w3xScale ?? 0))).toBeLessThanOrEqual(3.2);
-    expect(Math.max(...particles.map((segment) => segment.alpha ?? 0))).toBeLessThanOrEqual(0.72);
-    expect(particles.filter((segment) => segment.vfxId.includes("beam")).every((segment) => segment.timeScale === 1)).toBe(true);
-    expect(CLASSIC_BEAM_VISUAL_GAP).toContain("連續實心光束積木");
+  it("offers stable family/type presets instead of requiring slider-only authoring", () => {
+    const keys = VFX_FORGE_RECIPES.map((recipe) => `${recipe.familyId}/${recipe.typeId}`);
+    expect(new Set(keys).size).toBe(keys.length);
+    expect(VFX_FORGE_RECIPE_FAMILIES.flatMap((family) => family.recipes)).toHaveLength(VFX_FORGE_RECIPES.length);
+    const beamTypes = VFX_FORGE_RECIPE_FAMILIES.find((family) => family.id === "classic-horizontal-beam")?.recipes;
+    expect(beamTypes).toHaveLength(10);
+    expect(beamTypes?.map((recipe) => recipe.typeId)).toEqual([
+      "type1", "type2", "type3", "type4", "type5",
+      "type6", "type7", "type8", "type9", "type10",
+    ]);
+    expect(VFX_FORGE_RECIPE_FAMILIES.find((family) => family.id === "defense-reaction")?.recipes)
+      .toHaveLength(3);
   });
 
   it.each([
+    "classic-beam-fire", "classic-beam-blue", "classic-beam-holy",
+    "classic-beam-void", "classic-beam-inferno", "classic-beam-electric",
+  ] as const)("%s defaults to the source-faithful locust model pair", (id) => {
+    const segments = activeRecipe(id);
+    expect(segments.every((segment) => zVfxScriptSegment.safeParse(segment).success)).toBe(true);
+    expect(segments.filter((segment) => segment.kind === "modelFx").map((segment) => segment.modelKey)).toEqual([
+      CLASSIC_BEAM_MODEL_KEY,
+      CLASSIC_BEAM_CORE_MODEL_KEY,
+    ]);
+    for (const model of segments.filter((segment) => segment.kind === "modelFx")) {
+      expect(model.path).toBe("static");
+      expect(model.scaleAxis?.[2]).toBeGreaterThan(2);
+      expect(model.alpha).toBeLessThan(1);
+      expect(model.spinDegPerSec).not.toBe(0);
+      expect(model.offsetForwardU).toBe(2.75);
+    }
+    const particles = segments.filter((segment) => segment.kind === "vfx");
+    expect(particles).toHaveLength(1);
+    expect(Math.max(...particles.map((segment) => segment.atMs ?? 0))).toBe(650);
+    expect(Math.max(...particles.map((segment) => segment.w3xScale ?? 0))).toBeLessThanOrEqual(1.05);
+    expect(Math.max(...particles.map((segment) => segment.alpha ?? 0))).toBeLessThanOrEqual(0.72);
+  });
+
+  it.each([
+    "energy-beam-lightning-thin", "energy-beam-lightning-wide",
+    "energy-beam-holy-wide", "energy-beam-void-wide",
     "line-blast-fire", "dash-slash-void", "shockwave-dash-light", "combo-slash-holy",
     "reflect-counter-open", "avalon-counter-chain", "rider-dash-beam-blue",
     "avalon-guard-window", "chain-lightning-storm", "bankai-transform", "perfect-parry",
@@ -36,6 +65,18 @@ describe("VFX Forge editor-side recipes", () => {
       expect(segments.every((segment) => zVfxScriptSegment.safeParse(segment).success)).toBe(true);
     },
   );
+
+  it("offers primitive-only beam types when authors do not want the classic model family", () => {
+    for (const id of [
+      "energy-beam-lightning-thin", "energy-beam-lightning-wide",
+      "energy-beam-holy-wide", "energy-beam-void-wide",
+    ] as const) {
+      const segments = activeRecipe(id);
+      expect(segments.some((segment) => segment.kind === "modelFx"), id).toBe(false);
+      expect(segments.some((segment) => segment.kind === "vfx" && segment.at === "self"), id).toBe(true);
+      expect(segments.some((segment) => segment.kind === "vfx" && segment.at === "target"), id).toBe(true);
+    }
+  });
 
   it("line blast travels as safe additive pulses and explodes only after its measured flight time", () => {
     const segments = activeRecipe("line-blast-fire");
@@ -81,6 +122,20 @@ describe("VFX Forge editor-side recipes", () => {
     expect(active.some((segment) =>
       segment.kind === "anim" && segment.on === "castStart" && segment.pulse === "cast",
     )).toBe(false);
+    expect(active.filter((segment) =>
+      segment.kind === "vfx" && segment.on === "strike" && segment.strikeIndex === undefined,
+    )).toEqual([expect.objectContaining({
+      vfxId: "fx.prim.holy.arc", at: "target", w3xScale: 1.6,
+    })]);
+    const finalColumns = active.flatMap((segment) =>
+      segment.kind === "vfx" && segment.on === "strike" && segment.strikeIndex === 7
+        ? [segment]
+        : [],
+    );
+    expect(finalColumns).toHaveLength(2);
+    expect(finalColumns.map((segment) => segment.offsetSideU ?? 0)).toEqual([0, 0]);
+    expect(finalColumns.map((segment) => segment.offsetForwardU ?? 0)).toEqual([0, 0]);
+    expect(finalColumns[0]?.w3xScale).toBeGreaterThan(finalColumns[1]?.w3xScale ?? 0);
 
     const passive = buildVfxForgeRecipe("avalon-counter-chain", { activationMode: "passive" });
     expect(passive.some((segment) => segment.on === "castStart" || segment.on === "castEffect")).toBe(false);
@@ -134,7 +189,8 @@ describe("VFX Forge editor-side recipes", () => {
 
     const rider = activeRecipe("rider-dash-beam-blue");
     expect(rider).toContainEqual(expect.objectContaining({ kind: "bodyMove", at: "caster", mode: "arc" }));
-    expect(rider.filter((segment) => segment.kind === "vfx")).toHaveLength(6);
+    expect(rider.filter((segment) => segment.kind === "modelFx")).toHaveLength(2);
+    expect(rider.filter((segment) => segment.kind === "vfx")).toHaveLength(1);
   });
 
   it("exposes Main's remaining strict scenes as event-addressed reusable recipes", () => {

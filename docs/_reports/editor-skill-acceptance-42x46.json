@@ -1,6 +1,6 @@
 {
   "schema": "ggd-editor-skill-acceptance@1",
-  "generatedAt": "2026-09-04T06:27+08:00",
+  "generatedAt": "2026-09-04T11:17+08:00",
   "scope": "42 skill themes / 46 shipped ability documents",
   "policy": {
     "visualPassRequiresFramebufferAndHumanVerdict": true,
@@ -44,12 +44,14 @@
       "onStunned"
     ],
     "machineIssueCounts": {
-      "MISSING_VISUAL_BRICK": 7
+      "MISSING_VISUAL_BRICK": 6
     },
     "machineIssueOwnerCounts": {
-      "main": 7
+      "main": 6
     },
-    "basicVisualFallbacks": 1
+    "basicVisualFallbacks": 0,
+    "mechanicVisualDocuments": 31,
+    "mechanicVisualBricks": 79
   },
   "rows": [
     {
@@ -86,47 +88,44 @@
         "audit": {
           "safe": true,
           "autoVisualScore": 9,
-          "sampledFrames": 87,
-          "peakParticleCount": 58,
-          "peakParticleCountBeforeIsolation": 50,
+          "sampledFrames": 92,
+          "peakParticleCount": 65,
+          "peakParticleCountBeforeIsolation": 64,
           "peakSystemCount": 4,
           "peakStartedSystemCount": 4,
-          "peakManualEmitCount": 32,
-          "peakPresentationPixelShare": 0.05078065978342987,
+          "peakManualEmitCount": 64,
+          "peakPresentationPixelShare": 0.024466713241164853,
           "presentationEventCount": 11,
           "acceptedVfxEventCount": 9,
           "semanticActionCount": 22,
-          "worstAtMs": 4533.333333333327,
+          "worstAtMs": 4666.666666666662,
           "worst": {
-            "litShare": 0.018157684882061615,
-            "presentationPixelShare": 0.032581003945269874,
-            "highlightShare": 0.012948039956350205,
-            "brightShare": 0.008118232183329136,
-            "nearWhiteShare": 0.000986317468311928,
-            "dominantBrightShare": 0.0008887349953831948,
-            "dominantNonBackgroundShare": 0.004690254343993956,
+            "litShare": 0.011093835357397991,
+            "presentationPixelShare": 0.024466713241164853,
+            "highlightShare": 0.009194304954406018,
+            "brightShare": 0.008016372862125478,
+            "nearWhiteShare": 0.0034963703407992603,
+            "dominantBrightShare": 0.0034444993066352902,
+            "dominantNonBackgroundShare": 0.0044208566205824265,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 1324.3,
-          "gpuReadbacks": 87
+          "suspects": [
+            "vfx-fx.prim.holy.beam-lg#w3xScale=2,tint=255.210.70,alpha=0.22@aim90 · 32顆 · blend=0 · trace_03.png",
+            "vfx-fx.prim.lightning.beam-lg#w3xScale=1.28,tint=70.180.255,alpha=0.32@aim90 · 32顆 · blend=0 · trace_03.png",
+            "vfx-fx.prim.holy.arc#w3xScale=1.6,flyHeight=68,alpha=0.82 · 1顆 · blend=0 · slash_01.png"
+          ],
+          "elapsedMs": 15935.6,
+          "gpuReadbacks": 92
         },
-        "blockers": [
-          "Main 缺少可調長寬與軸向、透明安全且不依賴 host bone 的連續實心光束積木與直立光柱變體；現有 beam-flat／beam-lg 只會形成細長 trace，ReviveHuman 會露出不透明 TeamGlow 白卡，pulse／flare 串接則成為珠串。"
-        ],
+        "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
-        "machineIssues": [
-          {
-            "code": "MISSING_VISUAL_BRICK",
-            "owner": "main",
-            "summary": "現有 Main primitive 無法組出驗收指定的視覺文法"
-          }
-        ],
-        "basicVisualFallback": null
+        "machineIssues": [],
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": []
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -163,40 +162,46 @@
         "frameCount": 7,
         "audit": {
           "safe": true,
-          "autoVisualScore": 8,
-          "sampledFrames": 42,
-          "peakParticleCount": 73,
-          "peakParticleCountBeforeIsolation": 66,
+          "autoVisualScore": 7.5,
+          "sampledFrames": 45,
+          "peakParticleCount": 91,
+          "peakParticleCountBeforeIsolation": 74,
           "peakSystemCount": 7,
           "peakStartedSystemCount": 7,
-          "peakManualEmitCount": 66,
-          "peakPresentationPixelShare": 0.06373919247880466,
+          "peakManualEmitCount": 48,
+          "peakPresentationPixelShare": 0.07381746831192815,
           "presentationEventCount": 9,
           "acceptedVfxEventCount": 7,
           "semanticActionCount": 11,
-          "worstAtMs": 1666.6666666666686,
+          "worstAtMs": 1800.0000000000025,
           "worst": {
-            "litShare": 0.026307395282464535,
-            "presentationPixelShare": 0.038157894736842106,
-            "highlightShare": 0.022737765466297324,
-            "brightShare": 0.02021321245697977,
+            "litShare": 0.04957609334340636,
+            "presentationPixelShare": 0.07381746831192815,
+            "highlightShare": 0.03290837740283724,
+            "brightShare": 0.014897590867119953,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.003712331066901704,
-            "dominantNonBackgroundShare": 0.003712331066901704,
+            "dominantBrightShare": 0.00804478301015697,
+            "dominantNonBackgroundShare": 0.00804478301015697,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 963.8,
-          "gpuReadbacks": 42
+          "suspects": [
+            "vfx-fx.prim.fire.explosion-lg#w3xScale=2.2,tint=255.72.18,flyHeight=80,alpha=0.78 · 48顆 · blend=0 · flame_04.png",
+            "vfx-fx.prim.fire.bolt#w3xScale=1.37,tint=255.55.14,flyHeight=80,alpha=0.82 · 9顆 · blend=0 · spark_04.png",
+            "vfx-fx.prim.fire.bolt#w3xScale=1.45,tint=255.45.14,flyHeight=80,alpha=0.82 · 8顆 · blend=0 · spark_04.png",
+            "vfx-fx.prim.fire.bolt#w3xScale=1.41,tint=255.50.14,flyHeight=80,alpha=0.82 · 3顆 · blend=0 · spark_04.png"
+          ],
+          "elapsedMs": 973,
+          "gpuReadbacks": 45
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": []
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -234,39 +239,44 @@
         "audit": {
           "safe": true,
           "autoVisualScore": 7.5,
-          "sampledFrames": 42,
-          "peakParticleCount": 75,
-          "peakParticleCountBeforeIsolation": 69,
+          "sampledFrames": 45,
+          "peakParticleCount": 81,
+          "peakParticleCountBeforeIsolation": 68,
           "peakSystemCount": 7,
           "peakStartedSystemCount": 7,
           "peakManualEmitCount": 66,
-          "peakPresentationPixelShare": 0.07603668261562999,
+          "peakPresentationPixelShare": 0.0692489297406195,
           "presentationEventCount": 9,
           "acceptedVfxEventCount": 7,
           "semanticActionCount": 11,
-          "worstAtMs": 1733.3333333333355,
+          "worstAtMs": 1866.6666666666695,
           "worst": {
-            "litShare": 0.046648619155544364,
-            "presentationPixelShare": 0.07603668261562999,
-            "highlightShare": 0.029394359103500377,
-            "brightShare": 0.015147318055905313,
+            "litShare": 0.04310207336523126,
+            "presentationPixelShare": 0.0692489297406195,
+            "highlightShare": 0.028252749097624444,
+            "brightShare": 0.013072903550742886,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0068223789137916565,
-            "dominantNonBackgroundShare": 0.0068223789137916565,
+            "dominantBrightShare": 0.005896919331822379,
+            "dominantNonBackgroundShare": 0.006787752875010493,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 963.9,
-          "gpuReadbacks": 42
+          "suspects": [
+            "vfx-fx.prim.fire.explosion-lg#w3xScale=2.2,tint=255.72.18,flyHeight=80,alpha=0.78 · 48顆 · blend=0 · flame_04.png",
+            "vfx-fx.prim.fire.bolt#w3xScale=1.45,tint=255.45.14,flyHeight=80,alpha=0.82 · 13顆 · blend=0 · spark_04.png",
+            "vfx-fx.prim.fire.bolt#w3xScale=1.41,tint=255.50.14,flyHeight=80,alpha=0.82 · 4顆 · blend=0 · spark_04.png"
+          ],
+          "elapsedMs": 963.6,
+          "gpuReadbacks": 45
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": []
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -298,39 +308,41 @@
         "frameCount": 3,
         "audit": {
           "safe": true,
-          "autoVisualScore": 10,
-          "sampledFrames": 34,
+          "autoVisualScore": 9.5,
+          "sampledFrames": 36,
           "peakParticleCount": 33,
           "peakParticleCountBeforeIsolation": 33,
           "peakSystemCount": 2,
           "peakStartedSystemCount": 2,
           "peakManualEmitCount": 33,
-          "peakPresentationPixelShare": 0.007958742550155292,
+          "peakPresentationPixelShare": 0.01243809283975489,
           "presentationEventCount": 4,
           "acceptedVfxEventCount": 2,
           "semanticActionCount": 4,
-          "worstAtMs": 0,
+          "worstAtMs": 1733.3333333333355,
           "worst": {
             "litShare": 0,
+            "presentationPixelShare": 0.01243809283975489,
             "highlightShare": 0,
             "brightShare": 0,
             "nearWhiteShare": 0,
             "dominantBrightShare": 0,
-            "dominantNonBackgroundShare": 0,
+            "dominantNonBackgroundShare": 0.005403760597666415,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "suspects": [],
-          "elapsedMs": 877.8,
-          "gpuReadbacks": 34
+          "elapsedMs": 875,
+          "gpuReadbacks": 36
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": []
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -367,39 +379,42 @@
         "audit": {
           "safe": true,
           "autoVisualScore": 9,
-          "sampledFrames": 35,
+          "sampledFrames": 38,
           "peakParticleCount": 48,
           "peakParticleCountBeforeIsolation": 48,
           "peakSystemCount": 3,
           "peakStartedSystemCount": 3,
           "peakManualEmitCount": 48,
-          "peakPresentationPixelShare": 0.040756946193234285,
+          "peakPresentationPixelShare": 0.042175564509359526,
           "presentationEventCount": 5,
           "acceptedVfxEventCount": 3,
           "semanticActionCount": 5,
-          "worstAtMs": 866.6666666666661,
+          "worstAtMs": 1133.3333333333328,
           "worst": {
-            "litShare": 0.021454503483589356,
-            "presentationPixelShare": 0.040756946193234285,
-            "highlightShare": 0.014583857970284563,
-            "brightShare": 0.010740367665575422,
-            "nearWhiteShare": 0.000273860488541929,
-            "dominantBrightShare": 0.0015445311844203811,
-            "dominantNonBackgroundShare": 0.002136321665407538,
+            "litShare": 0.01992256358599849,
+            "presentationPixelShare": 0.042175564509359526,
+            "highlightShare": 0.013501007302946361,
+            "brightShare": 0.01019999160580878,
+            "nearWhiteShare": 0.0005928397548896164,
+            "dominantBrightShare": 0.0016620498614958448,
+            "dominantNonBackgroundShare": 0.007182279862335264,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 906.3,
-          "gpuReadbacks": 35
+          "suspects": [
+            "vfx-fx.prim.lightning.beam-flat#w3xScale=2.8,tint=90.205.255,flyHeight=55,alpha=0.78 · 32顆 · blend=0 · trace_03.png"
+          ],
+          "elapsedMs": 955.8,
+          "gpuReadbacks": 38
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": []
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -429,39 +444,46 @@
       "hasShippedVfxScript": false,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 4,
+        "frameCount": 3,
         "audit": {
           "safe": true,
-          "autoVisualScore": 8,
-          "sampledFrames": 44,
-          "peakParticleCount": 96,
-          "peakParticleCountBeforeIsolation": 96,
-          "peakSystemCount": 4,
-          "peakStartedSystemCount": 4,
-          "peakManualEmitCount": 96,
-          "peakPresentationPixelShare": 0.060989045580458326,
-          "presentationEventCount": 8,
-          "acceptedVfxEventCount": 6,
+          "autoVisualScore": 4.5,
+          "sampledFrames": 41,
+          "peakParticleCount": 200,
+          "peakParticleCountBeforeIsolation": 200,
+          "peakSystemCount": 5,
+          "peakStartedSystemCount": 5,
+          "peakManualEmitCount": 200,
+          "peakPresentationPixelShare": 0.1404925291698145,
+          "presentationEventCount": 5,
+          "acceptedVfxEventCount": 1,
           "semanticActionCount": 3,
-          "worstAtMs": 1466.6666666666677,
+          "worstAtMs": 2200.0000000000023,
           "worst": {
-            "litShare": 0.03261877780575841,
-            "presentationPixelShare": 0.060989045580458326,
-            "highlightShare": 0.02271782926215059,
-            "brightShare": 0.017404306220095693,
-            "nearWhiteShare": 0.002663057164442206,
-            "dominantBrightShare": 0.0025927558129774197,
-            "dominantNonBackgroundShare": 0.00951166792579535,
+            "litShare": 0.07373982204314614,
+            "presentationPixelShare": 0.08151389238646857,
+            "highlightShare": 0.06966444220599345,
+            "brightShare": 0.05624737681524385,
+            "nearWhiteShare": 0.013366700243431546,
+            "dominantBrightShare": 0.0124559304960967,
+            "dominantNonBackgroundShare": 0.0124559304960967,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 1006.8,
-          "gpuReadbacks": 44
+          "suspects": [
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-2-__root__/modelfx-2-mesh/modelfx-2-mesh_primitive0 · r/d=0.45 · TeamGlow0-fxtint · TeamGlow0 (Base Color):ready/alpha,TeamGlow0 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-2-__root__/modelfx-2-mesh/modelfx-2-mesh_primitive4 · r/d=0.26 · mat4-fxtint · mat4 (Base Color):ready/alpha,mat4 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.fragdriller-1/modelfx-3-__root__/modelfx-3-mesh/modelfx-3-mesh_primitive1 · r/d=0.26 · mat2-fxtint · mat2 (Base Color):ready/alpha",
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-2-__root__/modelfx-2-mesh/modelfx-2-mesh_primitive1 · r/d=0.21 · mat1-fxtint · mat1 (Base Color):ready/alpha,mat1 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-2-__root__/modelfx-2-mesh/modelfx-2-mesh_primitive3 · r/d=0.06 · mat3-fxtint · mat3 (Base Color):ready/alpha,mat3 (Emissive):ready/opaque",
+            "vfx-fx.prim.lightning.pulse-lg#w3xScale=0.9,tint=31.107.255,flyHeight=68,alpha=0.68 · 32顆 · blend=0 · magic_02.png"
+          ],
+          "elapsedMs": 1005.8,
+          "gpuReadbacks": 41
         },
         "blockers": [
-          "Main 缺少可調長寬、透明安全且不依賴 host bone 的連續實心光束積木；現有 beam-flat 只會形成細長 trace，ReviveHuman 會露出不透明 TeamGlow 白卡，pulse／flare 串接則成為珠串。"
+          "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。"
         ],
         "humanVerdict": "pending",
         "humanScore": null,
@@ -473,7 +495,8 @@
             "summary": "現有 Main primitive 無法組出驗收指定的視覺文法"
           }
         ],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": []
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -503,39 +526,49 @@
       "hasShippedVfxScript": true,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 4,
+        "frameCount": 3,
         "audit": {
           "safe": true,
-          "autoVisualScore": 8,
-          "sampledFrames": 42,
-          "peakParticleCount": 96,
-          "peakParticleCountBeforeIsolation": 96,
-          "peakSystemCount": 4,
-          "peakStartedSystemCount": 4,
-          "peakManualEmitCount": 96,
-          "peakPresentationPixelShare": 0.06221564677243348,
-          "presentationEventCount": 8,
-          "acceptedVfxEventCount": 6,
+          "autoVisualScore": 7,
+          "sampledFrames": 38,
+          "peakParticleCount": 200,
+          "peakParticleCountBeforeIsolation": 200,
+          "peakSystemCount": 5,
+          "peakStartedSystemCount": 5,
+          "peakManualEmitCount": 200,
+          "peakPresentationPixelShare": 0.05381725845714765,
+          "presentationEventCount": 5,
+          "acceptedVfxEventCount": 1,
           "semanticActionCount": 2,
-          "worstAtMs": 1266.6666666666667,
+          "worstAtMs": 1400.0000000000007,
           "worst": {
-            "litShare": 0.0330258960799127,
-            "presentationPixelShare": 0.06221564677243348,
-            "highlightShare": 0.02506925207756233,
-            "brightShare": 0.01903907496012759,
-            "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0030491899605473013,
-            "dominantNonBackgroundShare": 0.011403508771929825,
+            "litShare": 0.03661965919583648,
+            "presentationPixelShare": 0.04119659195836481,
+            "highlightShare": 0.03187694115671955,
+            "brightShare": 0.028608452950558215,
+            "nearWhiteShare": 0.00007869554268446235,
+            "dominantBrightShare": 0.02422773440778981,
+            "dominantNonBackgroundShare": 0.02422773440778981,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 966.1,
-          "gpuReadbacks": 42
+          "suspects": [
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-2-__root__/modelfx-2-mesh/modelfx-2-mesh_primitive0 · r/d=0.45 · TeamGlow0-fxtint · TeamGlow0 (Base Color):ready/alpha,TeamGlow0 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-2-__root__/modelfx-2-mesh/modelfx-2-mesh_primitive4 · r/d=0.25 · mat4-fxtint · mat4 (Base Color):ready/alpha,mat4 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-2-__root__/modelfx-2-mesh/modelfx-2-mesh_primitive1 · r/d=0.21 · mat1-fxtint · mat1 (Base Color):ready/alpha,mat1 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.fragdriller-1/modelfx-3-__root__/modelfx-3-mesh/modelfx-3-mesh_primitive1 · r/d=0.10 · mat2-fxtint · mat2 (Base Color):ready/alpha",
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-2-__root__/modelfx-2-mesh/modelfx-2-mesh_primitive3 · r/d=0.05 · mat3-fxtint · mat3 (Base Color):ready/alpha,mat3 (Emissive):ready/opaque",
+            "vfx-fx.w3x.stock.revivehuman.p02 · 39顆 · blend=0 · star_07.png",
+            "vfx-fx.w3x.stock.fragdriller.p00 · 30顆 · blend=0 · smoke_07.png",
+            "vfx-fx.w3x.stock.revivehuman.p00 · 11顆 · blend=0 · star_09.png",
+            "vfx-fx.w3x.stock.revivehuman.p01 · 11顆 · blend=0 · star_09.png"
+          ],
+          "elapsedMs": 998.9,
+          "gpuReadbacks": 38
         },
         "blockers": [
-          "Main 缺少可調長寬、透明安全且不依賴 host bone 的連續實心光束積木；現有 beam-flat 只會形成細長 trace，ReviveHuman 會露出不透明 TeamGlow 白卡，pulse／flare 串接則成為珠串。"
+          "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。"
         ],
         "humanVerdict": "pending",
         "humanScore": null,
@@ -547,7 +580,8 @@
             "summary": "現有 Main primitive 無法組出驗收指定的視覺文法"
           }
         ],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": []
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -577,39 +611,46 @@
       "hasShippedVfxScript": true,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 4,
+        "frameCount": 3,
         "audit": {
           "safe": true,
-          "autoVisualScore": 8,
-          "sampledFrames": 42,
-          "peakParticleCount": 96,
-          "peakParticleCountBeforeIsolation": 96,
-          "peakSystemCount": 4,
-          "peakStartedSystemCount": 4,
-          "peakManualEmitCount": 96,
-          "peakPresentationPixelShare": 0.05671640224964325,
-          "presentationEventCount": 8,
-          "acceptedVfxEventCount": 6,
+          "autoVisualScore": 4,
+          "sampledFrames": 37,
+          "peakParticleCount": 200,
+          "peakParticleCountBeforeIsolation": 200,
+          "peakSystemCount": 5,
+          "peakStartedSystemCount": 5,
+          "peakManualEmitCount": 200,
+          "peakPresentationPixelShare": 0.14048938134810712,
+          "presentationEventCount": 5,
+          "acceptedVfxEventCount": 1,
           "semanticActionCount": 2,
-          "worstAtMs": 1266.6666666666667,
+          "worstAtMs": 1933.3333333333364,
           "worst": {
-            "litShare": 0.029670318139847225,
-            "presentationPixelShare": 0.05671640224964325,
-            "highlightShare": 0.023314866112650046,
-            "brightShare": 0.019093637203055486,
-            "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0036483253588516745,
-            "dominantNonBackgroundShare": 0.010837950138504155,
+            "litShare": 0.07431587341559641,
+            "presentationPixelShare": 0.0795517501888693,
+            "highlightShare": 0.07030869638210359,
+            "brightShare": 0.058264081255771004,
+            "nearWhiteShare": 0.004409048938134811,
+            "dominantBrightShare": 0.0037427600100730296,
+            "dominantNonBackgroundShare": 0.0037427600100730296,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 991.2,
-          "gpuReadbacks": 42
+          "suspects": [
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-2-__root__/modelfx-2-mesh/modelfx-2-mesh_primitive0 · r/d=0.45 · TeamGlow0-fxtint · TeamGlow0 (Base Color):ready/alpha,TeamGlow0 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-2-__root__/modelfx-2-mesh/modelfx-2-mesh_primitive4 · r/d=0.26 · mat4-fxtint · mat4 (Base Color):ready/alpha,mat4 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.fragdriller-1/modelfx-3-__root__/modelfx-3-mesh/modelfx-3-mesh_primitive1 · r/d=0.26 · mat2-fxtint · mat2 (Base Color):ready/alpha",
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-2-__root__/modelfx-2-mesh/modelfx-2-mesh_primitive1 · r/d=0.21 · mat1-fxtint · mat1 (Base Color):ready/alpha,mat1 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-2-__root__/modelfx-2-mesh/modelfx-2-mesh_primitive3 · r/d=0.06 · mat3-fxtint · mat3 (Base Color):ready/alpha,mat3 (Emissive):ready/opaque",
+            "vfx-fx.prim.holy.explosion#w3xScale=1.05,tint=255.97.10,flyHeight=68,alpha=0.68 · 27顆 · blend=0 · flame_04.png"
+          ],
+          "elapsedMs": 972.2,
+          "gpuReadbacks": 37
         },
         "blockers": [
-          "Main 缺少可調長寬、透明安全且不依賴 host bone 的連續實心光束積木；現有 beam-flat 只會形成細長 trace，ReviveHuman 會露出不透明 TeamGlow 白卡，pulse／flare 串接則成為珠串。"
+          "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。"
         ],
         "humanVerdict": "pending",
         "humanScore": null,
@@ -621,7 +662,8 @@
             "summary": "現有 Main primitive 無法組出驗收指定的視覺文法"
           }
         ],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": []
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -659,36 +701,46 @@
         "frameCount": 9,
         "audit": {
           "safe": true,
-          "autoVisualScore": 8,
-          "sampledFrames": 41,
-          "peakParticleCount": 128,
-          "peakParticleCountBeforeIsolation": 118,
-          "peakSystemCount": 11,
-          "peakStartedSystemCount": 11,
-          "peakManualEmitCount": 128,
-          "peakPresentationPixelShare": 0.06506022832200117,
-          "presentationEventCount": 17,
-          "acceptedVfxEventCount": 15,
-          "semanticActionCount": 25,
-          "worstAtMs": 1266.6666666666667,
+          "autoVisualScore": 7,
+          "sampledFrames": 42,
+          "peakParticleCount": 200,
+          "peakParticleCountBeforeIsolation": 200,
+          "peakSystemCount": 12,
+          "peakStartedSystemCount": 12,
+          "peakManualEmitCount": 200,
+          "peakPresentationPixelShare": 0.062302736506337615,
+          "presentationEventCount": 16,
+          "acceptedVfxEventCount": 12,
+          "semanticActionCount": 26,
+          "worstAtMs": 1600.0000000000016,
           "worst": {
-            "litShare": 0.03586942835557794,
-            "presentationPixelShare": 0.06506022832200117,
-            "highlightShare": 0.027953706035423485,
-            "brightShare": 0.022173256106774113,
-            "nearWhiteShare": 0.011465415932174934,
-            "dominantBrightShare": 0.011053051288508352,
-            "dominantNonBackgroundShare": 0.011053051288508352,
+            "litShare": 0.040064425417611016,
+            "presentationPixelShare": 0.044861705699655835,
+            "highlightShare": 0.034354276840426426,
+            "brightShare": 0.02976790061277596,
+            "nearWhiteShare": 0.00007764626878200285,
+            "dominantBrightShare": 0.025512045664400237,
+            "dominantNonBackgroundShare": 0.025512045664400237,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 975.1,
-          "gpuReadbacks": 41
+          "suspects": [
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-2-__root__/modelfx-2-mesh/modelfx-2-mesh_primitive0 · r/d=0.45 · TeamGlow0-fxtint · TeamGlow0 (Base Color):ready/alpha,TeamGlow0 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-2-__root__/modelfx-2-mesh/modelfx-2-mesh_primitive4 · r/d=0.25 · mat4-fxtint · mat4 (Base Color):ready/alpha,mat4 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-2-__root__/modelfx-2-mesh/modelfx-2-mesh_primitive1 · r/d=0.21 · mat1-fxtint · mat1 (Base Color):ready/alpha,mat1 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.fragdriller-1/modelfx-3-__root__/modelfx-3-mesh/modelfx-3-mesh_primitive1 · r/d=0.10 · mat2-fxtint · mat2 (Base Color):ready/alpha",
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-2-__root__/modelfx-2-mesh/modelfx-2-mesh_primitive3 · r/d=0.05 · mat3-fxtint · mat3 (Base Color):ready/alpha,mat3 (Emissive):ready/opaque",
+            "vfx-fx.w3x.stock.revivehuman.p02 · 42顆 · blend=0 · star_07.png",
+            "vfx-fx.w3x.stock.fragdriller.p00 · 29顆 · blend=0 · smoke_07.png",
+            "vfx-fx.w3x.stock.revivehuman.p01 · 14顆 · blend=0 · star_09.png",
+            "vfx-fx.w3x.stock.revivehuman.p00 · 9顆 · blend=0 · star_09.png"
+          ],
+          "elapsedMs": 1024.2,
+          "gpuReadbacks": 42
         },
         "blockers": [
-          "Main 缺少可調長寬、透明安全且不依賴 host bone 的連續實心光束積木；現有 beam-flat 只會形成細長 trace，ReviveHuman 會露出不透明 TeamGlow 白卡，pulse／flare 串接則成為珠串。"
+          "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。"
         ],
         "humanVerdict": "pending",
         "humanScore": null,
@@ -700,7 +752,8 @@
             "summary": "現有 Main primitive 無法組出驗收指定的視覺文法"
           }
         ],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": []
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -743,29 +796,29 @@
           "autoVisualScore": 9.5,
           "sampledFrames": 45,
           "peakParticleCount": 72,
-          "peakParticleCountBeforeIsolation": 72,
+          "peakParticleCountBeforeIsolation": 69,
           "peakSystemCount": 2,
           "peakStartedSystemCount": 2,
           "peakManualEmitCount": 40,
-          "peakPresentationPixelShare": 0.029522370519600438,
+          "peakPresentationPixelShare": 0.03229665071770335,
           "presentationEventCount": 2,
           "acceptedVfxEventCount": 2,
           "semanticActionCount": 3,
-          "worstAtMs": 866.6666666666661,
+          "worstAtMs": 799.9999999999995,
           "worst": {
-            "litShare": 0.011719340216570133,
-            "presentationPixelShare": 0.029522370519600438,
-            "highlightShare": 0.004121547888860908,
-            "brightShare": 0.0011678418534374214,
+            "litShare": 0.012377234953412239,
+            "presentationPixelShare": 0.03229665071770335,
+            "highlightShare": 0.0037532527490976245,
+            "brightShare": 0.0007040627885503232,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0003294720053722824,
-            "dominantNonBackgroundShare": 0.0017050700914966843,
+            "dominantBrightShare": 0.00029484596659111895,
+            "dominantNonBackgroundShare": 0.003505624108117183,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "suspects": [],
-          "elapsedMs": 973,
+          "elapsedMs": 967,
           "gpuReadbacks": 45
         },
         "blockers": [],
@@ -773,7 +826,8 @@
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": []
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -811,36 +865,44 @@
         "frameCount": 9,
         "audit": {
           "safe": true,
-          "autoVisualScore": 7.5,
-          "sampledFrames": 41,
-          "peakParticleCount": 128,
-          "peakParticleCountBeforeIsolation": 116,
-          "peakSystemCount": 15,
-          "peakStartedSystemCount": 11,
-          "peakManualEmitCount": 96,
-          "peakPresentationPixelShare": 0.06709791824057752,
-          "presentationEventCount": 17,
-          "acceptedVfxEventCount": 15,
-          "semanticActionCount": 25,
-          "worstAtMs": 1199.9999999999998,
+          "autoVisualScore": 6,
+          "sampledFrames": 42,
+          "peakParticleCount": 200,
+          "peakParticleCountBeforeIsolation": 200,
+          "peakSystemCount": 12,
+          "peakStartedSystemCount": 12,
+          "peakManualEmitCount": 200,
+          "peakPresentationPixelShare": 0.07916666666666666,
+          "presentationEventCount": 16,
+          "acceptedVfxEventCount": 12,
+          "semanticActionCount": 26,
+          "worstAtMs": 1733.3333333333355,
           "worst": {
-            "litShare": 0.03820301351464787,
-            "presentationPixelShare": 0.06709791824057752,
-            "highlightShare": 0.030466717031813986,
-            "brightShare": 0.025582347015865023,
-            "nearWhiteShare": 0.0093238478972551,
-            "dominantBrightShare": 0.008994375891882816,
-            "dominantNonBackgroundShare": 0.008994375891882816,
+            "litShare": 0.06804226475279107,
+            "presentationPixelShare": 0.07916666666666666,
+            "highlightShare": 0.05301876101737597,
+            "brightShare": 0.023385167464114832,
+            "nearWhiteShare": 0.0005603122639133719,
+            "dominantBrightShare": 0.002776378745907832,
+            "dominantNonBackgroundShare": 0.00357382691177705,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 1814.5,
-          "gpuReadbacks": 41
+          "suspects": [
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-1-__root__/modelfx-1-mesh/modelfx-1-mesh_primitive0 · r/d=0.38 · TeamGlow0-fxtint · TeamGlow0 (Base Color):ready/alpha,TeamGlow0 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.fragdriller-2/modelfx-3-__root__/modelfx-3-mesh/modelfx-3-mesh_primitive1 · r/d=0.23 · mat2-fxtint · mat2 (Base Color):ready/alpha",
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-1-__root__/modelfx-1-mesh/modelfx-1-mesh_primitive4 · r/d=0.23 · mat4-fxtint · mat4 (Base Color):ready/alpha,mat4 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-1-__root__/modelfx-1-mesh/modelfx-1-mesh_primitive1 · r/d=0.18 · mat1-fxtint · mat1 (Base Color):ready/alpha,mat1 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-1-__root__/modelfx-1-mesh/modelfx-1-mesh_primitive3 · r/d=0.05 · mat3-fxtint · mat3 (Base Color):ready/alpha,mat3 (Emissive):ready/opaque",
+            "vfx-fx.w3x.stock.revivehuman.p02 · 9顆 · blend=0 · star_07.png",
+            "vfx-fx.w3x.stock.fragdriller.p00 · 2顆 · blend=0 · smoke_07.png"
+          ],
+          "elapsedMs": 1219.5,
+          "gpuReadbacks": 42
         },
         "blockers": [
-          "Main 缺少可調長寬、透明安全且不依賴 host bone 的連續實心光束積木；現有 beam-flat 只會形成細長 trace，ReviveHuman 會露出不透明 TeamGlow 白卡，pulse／flare 串接則成為珠串。"
+          "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。"
         ],
         "humanVerdict": "pending",
         "humanScore": null,
@@ -852,7 +914,8 @@
             "summary": "現有 Main primitive 無法組出驗收指定的視覺文法"
           }
         ],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": []
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -881,39 +944,49 @@
       "hasShippedVfxScript": false,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 4,
+        "frameCount": 3,
         "audit": {
           "safe": true,
-          "autoVisualScore": 8,
-          "sampledFrames": 44,
-          "peakParticleCount": 96,
-          "peakParticleCountBeforeIsolation": 96,
-          "peakSystemCount": 4,
-          "peakStartedSystemCount": 4,
-          "peakManualEmitCount": 96,
-          "peakPresentationPixelShare": 0.06222509023755561,
-          "presentationEventCount": 7,
-          "acceptedVfxEventCount": 6,
+          "autoVisualScore": 7,
+          "sampledFrames": 42,
+          "peakParticleCount": 200,
+          "peakParticleCountBeforeIsolation": 200,
+          "peakSystemCount": 5,
+          "peakStartedSystemCount": 5,
+          "peakManualEmitCount": 200,
+          "peakPresentationPixelShare": 0.05540271132376395,
+          "presentationEventCount": 4,
+          "acceptedVfxEventCount": 1,
           "semanticActionCount": 4,
-          "worstAtMs": 1466.6666666666677,
+          "worstAtMs": 1533.3333333333346,
           "worst": {
-            "litShare": 0.03217178712331067,
-            "presentationPixelShare": 0.06222509023755561,
-            "highlightShare": 0.02292978259044741,
-            "brightShare": 0.01632775119617225,
-            "nearWhiteShare": 0.0024133299756568453,
-            "dominantBrightShare": 0.002357718458826492,
-            "dominantNonBackgroundShare": 0.010280785696298162,
+            "litShare": 0.0318549064047679,
+            "presentationPixelShare": 0.03549168975069252,
+            "highlightShare": 0.029470956098379922,
+            "brightShare": 0.027647318055905312,
+            "nearWhiteShare": 0.0001668345504910602,
+            "dominantBrightShare": 0.023921346428271636,
+            "dominantNonBackgroundShare": 0.023921346428271636,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 986.1,
-          "gpuReadbacks": 44
+          "suspects": [
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-2-__root__/modelfx-2-mesh/modelfx-2-mesh_primitive0 · r/d=0.45 · TeamGlow0-fxtint · TeamGlow0 (Base Color):ready/alpha,TeamGlow0 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-2-__root__/modelfx-2-mesh/modelfx-2-mesh_primitive4 · r/d=0.25 · mat4-fxtint · mat4 (Base Color):ready/alpha,mat4 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-2-__root__/modelfx-2-mesh/modelfx-2-mesh_primitive1 · r/d=0.21 · mat1-fxtint · mat1 (Base Color):ready/alpha,mat1 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-2-__root__/modelfx-2-mesh/modelfx-2-mesh_primitive3 · r/d=0.05 · mat3-fxtint · mat3 (Base Color):ready/alpha,mat3 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.revivehuman-0/modelfx-2-__root__/modelfx-2-mesh/modelfx-2-mesh_primitive2 · r/d=0.03 · mat2-fxtint · mat2 (Base Color):ready/alpha,mat2 (Emissive):ready/opaque",
+            "vfx-fx.w3x.stock.revivehuman.p02 · 58顆 · blend=0 · star_07.png",
+            "vfx-fx.w3x.stock.fragdriller.p00 · 41顆 · blend=0 · smoke_07.png",
+            "vfx-fx.w3x.stock.revivehuman.p01 · 22顆 · blend=0 · star_09.png",
+            "vfx-fx.w3x.stock.revivehuman.p00 · 21顆 · blend=0 · star_09.png"
+          ],
+          "elapsedMs": 993.4,
+          "gpuReadbacks": 42
         },
         "blockers": [
-          "Main 缺少可調長寬、透明安全且不依賴 host bone 的連續實心光束積木；現有 beam-flat 只會形成細長 trace，ReviveHuman 會露出不透明 TeamGlow 白卡，pulse／flare 串接則成為珠串。"
+          "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。"
         ],
         "humanVerdict": "pending",
         "humanScore": null,
@@ -925,7 +998,8 @@
             "summary": "現有 Main primitive 無法組出驗收指定的視覺文法"
           }
         ],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": []
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -952,46 +1026,57 @@
       "hasShippedVfxScript": false,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 2,
+        "frameCount": 8,
         "audit": {
           "safe": true,
-          "autoVisualScore": 10,
-          "sampledFrames": 31,
-          "peakParticleCount": 32,
-          "peakParticleCountBeforeIsolation": 32,
-          "peakSystemCount": 1,
-          "peakStartedSystemCount": 1,
-          "peakManualEmitCount": 32,
-          "peakPresentationPixelShare": 0.007034332242088475,
-          "presentationEventCount": 1,
-          "acceptedVfxEventCount": 1,
-          "semanticActionCount": 2,
-          "worstAtMs": 0,
+          "autoVisualScore": 8.5,
+          "sampledFrames": 27,
+          "peakParticleCount": 153,
+          "peakParticleCountBeforeIsolation": 143,
+          "peakSystemCount": 14,
+          "peakStartedSystemCount": 14,
+          "peakManualEmitCount": 153,
+          "peakPresentationPixelShare": 0.02851191975153194,
+          "presentationEventCount": 2,
+          "acceptedVfxEventCount": 0,
+          "semanticActionCount": 0,
+          "worstAtMs": 666.6666666666665,
           "worst": {
-            "litShare": 0,
-            "highlightShare": 0,
+            "litShare": 0.002418576345169143,
+            "presentationPixelShare": 0.025952740703433223,
+            "highlightShare": 0.00004406950390329892,
             "brightShare": 0,
             "nearWhiteShare": 0,
             "dominantBrightShare": 0,
-            "dominantNonBackgroundShare": 0,
+            "dominantNonBackgroundShare": 0.02244921514312096,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 892.1,
-          "gpuReadbacks": 31
+          "suspects": [
+            "vfx-ring · r/d=0.22 · vfx-ring-mat · 無貼圖",
+            "telegraph-corridor · r/d=0.12 · telegraph-corridor-mat · 無貼圖",
+            "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "telegraph-ring · r/d=0.05 · telegraph-ring · 無貼圖",
+            "telegraph-fill · r/d=0.04 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha"
+          ],
+          "elapsedMs": 863.2,
+          "gpuReadbacks": 27
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": {
-          "fromVfxId": "fx.w3x.particle.heronarutos4effect.p00",
-          "toVfxId": "fx.prim.arcane.pulse",
-          "reason": "requires-host-bone"
-        }
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.effects[0]+",
+            "afterKind": "damage",
+            "vfxId": "fx.prim.arcane.pulse",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -1018,43 +1103,59 @@
       "hasShippedVfxScript": false,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 2,
+        "frameCount": 8,
         "audit": {
           "safe": true,
-          "autoVisualScore": 9.5,
-          "sampledFrames": 31,
-          "peakParticleCount": 40,
-          "peakParticleCountBeforeIsolation": 40,
-          "peakSystemCount": 1,
-          "peakStartedSystemCount": 1,
-          "peakManualEmitCount": 40,
-          "peakPresentationPixelShare": 0.016690799966423236,
-          "presentationEventCount": 1,
-          "acceptedVfxEventCount": 1,
-          "semanticActionCount": 2,
+          "autoVisualScore": 0,
+          "sampledFrames": 26,
+          "peakParticleCount": 153,
+          "peakParticleCountBeforeIsolation": 144,
+          "peakSystemCount": 17,
+          "peakStartedSystemCount": 17,
+          "peakManualEmitCount": 153,
+          "peakPresentationPixelShare": 0.3905596826995719,
+          "presentationEventCount": 2,
+          "acceptedVfxEventCount": 0,
+          "semanticActionCount": 0,
           "worstAtMs": 1133.3333333333328,
           "worst": {
-            "litShare": 0.005605221186938639,
-            "presentationPixelShare": 0.006673382019642408,
-            "highlightShare": 0.004732225300092336,
-            "brightShare": 0.003910643834466549,
-            "nearWhiteShare": 0.00336607067909007,
-            "dominantBrightShare": 0.0033240997229916896,
-            "dominantNonBackgroundShare": 0.0033240997229916896,
+            "litShare": 0.04479874926550827,
+            "presentationPixelShare": 0.3905596826995719,
+            "highlightShare": 0.00752644170234198,
+            "brightShare": 0,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.000252875010492739,
+            "dominantNonBackgroundShare": 0.19700956937799044,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
-            "unsafe": false
+            "unsafe": false,
+            "reason": "施法範圍 Telegraph 已通過同格剝離驗證；素材層未檢出底板"
           },
-          "suspects": [],
-          "elapsedMs": 857.4,
-          "gpuReadbacks": 31
+          "suspects": [
+            "A/B main=n/a, castPresentation=n/a, telegraph=clear(0.000%), main+telegraph=n/a, verified=n/a",
+            "telegraph-fill · r/d=0.74 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
+            "telegraph-ring · r/d=0.63 · telegraph-ring · 無貼圖",
+            "telegraph-shock · r/d=0.24 · telegraph-shock · 無貼圖",
+            "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-decal · r/d=0.05 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
+          ],
+          "elapsedMs": 906,
+          "gpuReadbacks": 29
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.effects[0]+",
+            "afterKind": "damage",
+            "vfxId": "fx.prim.arcane.pulse",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -1081,42 +1182,55 @@
       "hasShippedVfxScript": false,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 7,
+        "frameCount": 8,
         "audit": {
           "safe": true,
-          "autoVisualScore": 10,
-          "sampledFrames": 105,
-          "peakParticleCount": 18,
-          "peakParticleCountBeforeIsolation": 18,
-          "peakSystemCount": 1,
-          "peakStartedSystemCount": 1,
-          "peakManualEmitCount": 18,
-          "peakPresentationPixelShare": 0.006400570805002938,
-          "presentationEventCount": 1,
-          "acceptedVfxEventCount": 1,
-          "semanticActionCount": 12,
-          "worstAtMs": 0,
+          "autoVisualScore": 3.5,
+          "sampledFrames": 107,
+          "peakParticleCount": 146,
+          "peakParticleCountBeforeIsolation": 148,
+          "peakSystemCount": 15,
+          "peakStartedSystemCount": 15,
+          "peakManualEmitCount": 153,
+          "peakPresentationPixelShare": 0.2291603710232519,
+          "presentationEventCount": 15,
+          "acceptedVfxEventCount": 0,
+          "semanticActionCount": 0,
+          "worstAtMs": 1400.0000000000007,
           "worst": {
             "litShare": 0,
+            "presentationPixelShare": 0.11024406110971208,
             "highlightShare": 0,
             "brightShare": 0,
             "nearWhiteShare": 0,
             "dominantBrightShare": 0,
-            "dominantNonBackgroundShare": 0,
+            "dominantNonBackgroundShare": 0.10832493914211366,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 1448.6,
-          "gpuReadbacks": 105
+          "suspects": [
+            "telegraph-shock · r/d=0.55 · telegraph-shock · 無貼圖",
+            "vfx-decal · r/d=0.05 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-preset-dust/6.00 · 12顆 · blend=1 · smoke_05.png"
+          ],
+          "elapsedMs": 1501,
+          "gpuReadbacks": 107
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.effects[0].effects[0]+",
+            "afterKind": "damage",
+            "vfxId": "fx.prim.arcane.pulse",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -1146,42 +1260,63 @@
       "hasShippedVfxScript": false,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 2,
+        "frameCount": 8,
         "audit": {
           "safe": true,
-          "autoVisualScore": 10,
-          "sampledFrames": 28,
-          "peakParticleCount": 1,
-          "peakParticleCountBeforeIsolation": 1,
-          "peakSystemCount": 1,
-          "peakStartedSystemCount": 1,
-          "peakManualEmitCount": 1,
-          "peakPresentationPixelShare": 0.005022874171073617,
-          "presentationEventCount": 1,
-          "acceptedVfxEventCount": 1,
-          "semanticActionCount": 2,
-          "worstAtMs": 0,
+          "autoVisualScore": 8.5,
+          "sampledFrames": 24,
+          "peakParticleCount": 114,
+          "peakParticleCountBeforeIsolation": 110,
+          "peakSystemCount": 14,
+          "peakStartedSystemCount": 14,
+          "peakManualEmitCount": 113,
+          "peakPresentationPixelShare": 0.02652564425417611,
+          "presentationEventCount": 3,
+          "acceptedVfxEventCount": 0,
+          "semanticActionCount": 0,
+          "worstAtMs": 999.9999999999991,
           "worst": {
-            "litShare": 0,
-            "highlightShare": 0,
+            "litShare": 0.002418576345169143,
+            "presentationPixelShare": 0.02652564425417611,
+            "highlightShare": 0.00004406950390329892,
             "brightShare": 0,
             "nearWhiteShare": 0,
             "dominantBrightShare": 0,
-            "dominantNonBackgroundShare": 0,
+            "dominantNonBackgroundShare": 0.022881515990934274,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 831.9,
-          "gpuReadbacks": 28
+          "suspects": [
+            "vfx-ring · r/d=0.22 · vfx-ring-mat · 無貼圖",
+            "telegraph-corridor · r/d=0.12 · telegraph-corridor-mat · 無貼圖",
+            "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "telegraph-ring · r/d=0.05 · telegraph-ring · 無貼圖",
+            "telegraph-fill · r/d=0.04 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha"
+          ],
+          "elapsedMs": 820.7,
+          "gpuReadbacks": 24
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.effects[0]+",
+            "afterKind": "damage",
+            "vfxId": "fx.prim.physical.pulse",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[1]+",
+            "afterKind": "blink",
+            "vfxId": "fx.prim.arcane.dash",
+            "at": "self"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -1212,43 +1347,74 @@
       "hasShippedVfxScript": false,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 2,
+        "frameCount": 8,
         "audit": {
           "safe": true,
           "autoVisualScore": 8.5,
-          "sampledFrames": 26,
-          "peakParticleCount": 80,
-          "peakParticleCountBeforeIsolation": 80,
-          "peakSystemCount": 1,
-          "peakStartedSystemCount": 1,
-          "peakManualEmitCount": 80,
-          "peakPresentationPixelShare": 0.058763535633341725,
-          "presentationEventCount": 1,
-          "acceptedVfxEventCount": 1,
-          "semanticActionCount": 2,
-          "worstAtMs": 933.3333333333326,
+          "sampledFrames": 17,
+          "peakParticleCount": 206,
+          "peakParticleCountBeforeIsolation": 208,
+          "peakSystemCount": 12,
+          "peakStartedSystemCount": 12,
+          "peakManualEmitCount": 214,
+          "peakPresentationPixelShare": 0.02718983463443297,
+          "presentationEventCount": 0,
+          "acceptedVfxEventCount": 0,
+          "semanticActionCount": 0,
+          "worstAtMs": 733.333333333333,
           "worst": {
-            "litShare": 0.020993872240409637,
-            "presentationPixelShare": 0.03293355997649627,
-            "highlightShare": 0.01611789641568035,
-            "brightShare": 0.011944934105598926,
+            "litShare": 0,
+            "presentationPixelShare": 0.02718983463443297,
+            "highlightShare": 0,
+            "brightShare": 0,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.00752539242843952,
-            "dominantNonBackgroundShare": 0.00752539242843952,
+            "dominantBrightShare": 0,
+            "dominantNonBackgroundShare": 0.021414631075295894,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 825.1,
-          "gpuReadbacks": 26
+          "suspects": [
+            "vfx-ring · r/d=0.22 · vfx-ring-mat · 無貼圖",
+            "vfx-ring · r/d=0.22 · vfx-ring-mat · 無貼圖",
+            "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-decal · r/d=0.05 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
+          ],
+          "elapsedMs": 767,
+          "gpuReadbacks": 17
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.effects[0].onArrive[1]+",
+            "afterKind": "damage",
+            "vfxId": "fx.prim.physical.pulse",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[0].onArrive[3]+",
+            "afterKind": "knockback",
+            "vfxId": "fx.prim.physical.shockwave",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[0].onArrive[4]+",
+            "afterKind": "applyStatus",
+            "vfxId": "fx.prim.fire.pulse",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[0]+",
+            "afterKind": "blink",
+            "vfxId": "fx.prim.arcane.dash",
+            "at": "self"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -1278,42 +1444,70 @@
       "hasShippedVfxScript": false,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 2,
+        "frameCount": 8,
         "audit": {
           "safe": true,
-          "autoVisualScore": 10,
-          "sampledFrames": 28,
-          "peakParticleCount": 36,
-          "peakParticleCountBeforeIsolation": 36,
-          "peakSystemCount": 1,
-          "peakStartedSystemCount": 1,
-          "peakManualEmitCount": 36,
-          "peakPresentationPixelShare": 0.009934525308486528,
-          "presentationEventCount": 1,
-          "acceptedVfxEventCount": 1,
-          "semanticActionCount": 2,
-          "worstAtMs": 0,
+          "autoVisualScore": 8.5,
+          "sampledFrames": 25,
+          "peakParticleCount": 113,
+          "peakParticleCountBeforeIsolation": 109,
+          "peakSystemCount": 8,
+          "peakStartedSystemCount": 8,
+          "peakManualEmitCount": 113,
+          "peakPresentationPixelShare": 0.02751196172248804,
+          "presentationEventCount": 2,
+          "acceptedVfxEventCount": 0,
+          "semanticActionCount": 0,
+          "worstAtMs": 799.9999999999995,
           "worst": {
-            "litShare": 0,
+            "litShare": 0.0021268782002854024,
+            "presentationPixelShare": 0.02751196172248804,
             "highlightShare": 0,
             "brightShare": 0,
             "nearWhiteShare": 0,
             "dominantBrightShare": 0,
-            "dominantNonBackgroundShare": 0,
+            "dominantNonBackgroundShare": 0.024147989591202887,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 838.1,
-          "gpuReadbacks": 28
+          "suspects": [
+            "vfx-ring · r/d=0.21 · vfx-ring-mat · 無貼圖",
+            "telegraph-ring · r/d=0.08 · telegraph-ring · 無貼圖",
+            "vfx-decal · r/d=0.05 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "telegraph-fill · r/d=0.04 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
+            "vfx-preset-ex/1,0.2,0.15/smoke · 14顆 · blend=1 · smoke_05.png",
+            "vfx-preset-ex/1,0.2,0.15/debris · 13顆 · blend=1 · flare_01.png"
+          ],
+          "elapsedMs": 816.5,
+          "gpuReadbacks": 25
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.effects[0]+",
+            "afterKind": "invulnerable",
+            "vfxId": "fx.prim.holy.nova-lg",
+            "at": "self"
+          },
+          {
+            "path": "$.effects[1].onLand[0]+",
+            "afterKind": "damage",
+            "vfxId": "fx.prim.arcane.pulse",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[1]+",
+            "afterKind": "leap",
+            "vfxId": "fx.prim.physical.shockwave",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -1341,43 +1535,56 @@
       "hasShippedVfxScript": false,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 2,
+        "frameCount": 8,
         "audit": {
           "safe": true,
           "autoVisualScore": 9,
-          "sampledFrames": 26,
-          "peakParticleCount": 40,
-          "peakParticleCountBeforeIsolation": 40,
-          "peakSystemCount": 1,
-          "peakStartedSystemCount": 1,
-          "peakManualEmitCount": 40,
-          "peakPresentationPixelShare": 0.027921178544447242,
+          "sampledFrames": 22,
+          "peakParticleCount": 119,
+          "peakParticleCountBeforeIsolation": 119,
+          "peakSystemCount": 9,
+          "peakStartedSystemCount": 9,
+          "peakManualEmitCount": 113,
+          "peakPresentationPixelShare": 0.026517250062956434,
           "presentationEventCount": 1,
-          "acceptedVfxEventCount": 1,
-          "semanticActionCount": 2,
-          "worstAtMs": 799.9999999999995,
+          "acceptedVfxEventCount": 0,
+          "semanticActionCount": 0,
+          "worstAtMs": 533.3333333333335,
           "worst": {
-            "litShare": 0.009999580290439016,
-            "presentationPixelShare": 0.011777050281205405,
-            "highlightShare": 0.008706874842608915,
-            "brightShare": 0.007592545958196928,
-            "nearWhiteShare": 0.005576890791572232,
-            "dominantBrightShare": 0.005433140266935281,
-            "dominantNonBackgroundShare": 0.005433140266935281,
+            "litShare": 0.0014521950810039452,
+            "presentationPixelShare": 0.02424557206413162,
+            "highlightShare": 0.00003042894317132544,
+            "brightShare": 0,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0,
+            "dominantNonBackgroundShare": 0.014440107445647611,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 821.4,
-          "gpuReadbacks": 26
+          "suspects": [
+            "vfx-ring · r/d=0.18 · vfx-ring-mat · 無貼圖",
+            "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "telegraph-ring · r/d=0.05 · telegraph-ring · 無貼圖",
+            "telegraph-fill · r/d=0.04 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha"
+          ],
+          "elapsedMs": 827.9,
+          "gpuReadbacks": 22
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.effects[0]+",
+            "afterKind": "championForm",
+            "vfxId": "fx.prim.arcane.pulse-lg",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -1413,33 +1620,41 @@
           "safe": true,
           "autoVisualScore": 9.5,
           "sampledFrames": 17,
-          "peakParticleCount": 222,
-          "peakParticleCountBeforeIsolation": 207,
+          "peakParticleCount": 206,
+          "peakParticleCountBeforeIsolation": 213,
           "peakSystemCount": 18,
           "peakStartedSystemCount": 18,
           "peakManualEmitCount": 222,
-          "peakPresentationPixelShare": 0.012908167548056744,
-          "presentationEventCount": 2,
+          "peakPresentationPixelShare": 0.012588139007806597,
+          "presentationEventCount": 3,
           "acceptedVfxEventCount": 0,
           "semanticActionCount": 0,
-          "worstAtMs": 466.66666666666686,
+          "worstAtMs": 533.3333333333335,
           "worst": {
-            "litShare": 0.005757365902795266,
-            "presentationPixelShare": 0.006638755980861244,
-            "highlightShare": 0.0038340468395870056,
-            "brightShare": 0.002226559221019055,
-            "nearWhiteShare": 0.000269663392932091,
-            "dominantBrightShare": 0.0007817090573323261,
-            "dominantNonBackgroundShare": 0.0007817090573323261,
+            "litShare": 0.007721606648199446,
+            "presentationPixelShare": 0.012588139007806597,
+            "highlightShare": 0.003488835725677831,
+            "brightShare": 0.0012171577268530176,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.00016893309829597918,
+            "dominantNonBackgroundShare": 0.0007051120624527827,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "suspects": [
             "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
-            "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
+            "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-fx.basic-attack · 30顆 · blend=0 · light_01.png",
+            "vfx-fx.basic-attack · 30顆 · blend=0 · light_01.png",
+            "vfx-preset-light/1,0.72,0.28/sparks · 30顆 · blend=0 · spark_05_rotated.png",
+            "vfx-preset-light/1,0.72,0.28/sparks · 30顆 · blend=0 · spark_05_rotated.png",
+            "vfx-preset-blood/heavy/physical/droplets · 17顆 · blend=1 · circle_05.png",
+            "vfx-preset-blood/heavy/physical/droplets · 17顆 · blend=1 · circle_05.png",
+            "vfx-preset-light/1,0.72,0.28/debris · 8顆 · blend=1 · flare_01.png",
+            "vfx-preset-light/1,0.72,0.28/debris · 8顆 · blend=1 · flare_01.png"
           ],
-          "elapsedMs": 769.4,
+          "elapsedMs": 798.9,
           "gpuReadbacks": 17
         },
         "blockers": [],
@@ -1447,7 +1662,33 @@
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.passive.ranks[0].hooks[0].effects[0]+",
+            "afterKind": "damageArea",
+            "vfxId": "fx.prim.physical.nova-lg",
+            "at": "target"
+          },
+          {
+            "path": "$.passive.ranks[1].hooks[0].effects[0]+",
+            "afterKind": "damageArea",
+            "vfxId": "fx.prim.physical.nova-lg",
+            "at": "target"
+          },
+          {
+            "path": "$.passive.ranks[2].hooks[0].effects[0]+",
+            "afterKind": "damageArea",
+            "vfxId": "fx.prim.physical.nova-lg",
+            "at": "target"
+          },
+          {
+            "path": "$.passive.ranks[3].hooks[0].effects[0]+",
+            "afterKind": "damageArea",
+            "vfxId": "fx.prim.physical.nova-lg",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -1476,43 +1717,64 @@
       "hasShippedVfxScript": false,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 2,
+        "frameCount": 8,
         "audit": {
           "safe": true,
           "autoVisualScore": 8.5,
-          "sampledFrames": 26,
-          "peakParticleCount": 40,
-          "peakParticleCountBeforeIsolation": 40,
-          "peakSystemCount": 1,
-          "peakStartedSystemCount": 1,
-          "peakManualEmitCount": 40,
-          "peakPresentationPixelShare": 0.0333627130026022,
-          "presentationEventCount": 1,
-          "acceptedVfxEventCount": 1,
-          "semanticActionCount": 2,
-          "worstAtMs": 866.6666666666661,
+          "sampledFrames": 21,
+          "peakParticleCount": 146,
+          "peakParticleCountBeforeIsolation": 147,
+          "peakSystemCount": 27,
+          "peakStartedSystemCount": 27,
+          "peakManualEmitCount": 156,
+          "peakPresentationPixelShare": 0.025701964240745404,
+          "presentationEventCount": 5,
+          "acceptedVfxEventCount": 0,
+          "semanticActionCount": 0,
+          "worstAtMs": 666.6666666666665,
           "worst": {
-            "litShare": 0.02460442373877277,
-            "presentationPixelShare": 0.0333627130026022,
-            "highlightShare": 0.016044447242508184,
-            "brightShare": 0.010823260303869722,
-            "nearWhiteShare": 0.0055076387140099055,
-            "dominantBrightShare": 0.00526840426424914,
-            "dominantNonBackgroundShare": 0.00526840426424914,
+            "litShare": 0.0012654243263661546,
+            "presentationPixelShare": 0.025701964240745404,
+            "highlightShare": 0,
+            "brightShare": 0,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0,
+            "dominantNonBackgroundShare": 0.023575086040460002,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 1138.5,
-          "gpuReadbacks": 26
+          "suspects": [
+            "vfx-ring · r/d=0.22 · vfx-ring-mat · 無貼圖",
+            "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "telegraph-ring · r/d=0.05 · telegraph-ring · 無貼圖",
+            "telegraph-fill · r/d=0.04 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
+            "vfx-preset-ex/1,0.2,0.15/debris · 15顆 · blend=1 · flare_01.png",
+            "vfx-preset-ex/1,0.2,0.15/smoke · 14顆 · blend=1 · smoke_05.png"
+          ],
+          "elapsedMs": 1082.9,
+          "gpuReadbacks": 21
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.effects[0]+",
+            "afterKind": "summon",
+            "vfxId": "fx.prim.arcane.summon",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[1]+",
+            "afterKind": "damageArea",
+            "vfxId": "fx.prim.arcane.nova-lg",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -1540,42 +1802,59 @@
       "hasShippedVfxScript": false,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 2,
+        "frameCount": 8,
         "audit": {
           "safe": true,
-          "autoVisualScore": 10,
-          "sampledFrames": 31,
-          "peakParticleCount": 52,
-          "peakParticleCountBeforeIsolation": 52,
-          "peakSystemCount": 1,
-          "peakStartedSystemCount": 1,
-          "peakManualEmitCount": 52,
-          "peakPresentationPixelShare": 0.006044866952069168,
-          "presentationEventCount": 1,
-          "acceptedVfxEventCount": 1,
-          "semanticActionCount": 2,
-          "worstAtMs": 0,
+          "autoVisualScore": 8.5,
+          "sampledFrames": 27,
+          "peakParticleCount": 150,
+          "peakParticleCountBeforeIsolation": 156,
+          "peakSystemCount": 11,
+          "peakStartedSystemCount": 11,
+          "peakManualEmitCount": 153,
+          "peakPresentationPixelShare": 0.027252791068580542,
+          "presentationEventCount": 3,
+          "acceptedVfxEventCount": 0,
+          "semanticActionCount": 0,
+          "worstAtMs": 666.6666666666665,
           "worst": {
-            "litShare": 0,
+            "litShare": 0.0012685721480735332,
+            "presentationPixelShare": 0.027252791068580542,
             "highlightShare": 0,
             "brightShare": 0,
             "nearWhiteShare": 0,
             "dominantBrightShare": 0,
-            "dominantNonBackgroundShare": 0,
+            "dominantNonBackgroundShare": 0.02350058759338538,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 869.1,
-          "gpuReadbacks": 31
+          "suspects": [
+            "vfx-ring · r/d=0.22 · vfx-ring-mat · 無貼圖",
+            "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "telegraph-ring · r/d=0.05 · telegraph-ring · 無貼圖",
+            "telegraph-fill · r/d=0.04 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
+            "vfx-preset-ex/1,0.2,0.15/debris · 16顆 · blend=1 · flare_01.png",
+            "vfx-preset-ex/1,0.2,0.15/smoke · 14顆 · blend=1 · smoke_05.png",
+            "vfx-preset-ex/1,0.2,0.15/sparks · 14顆 · blend=0 · spark_05_rotated.png"
+          ],
+          "elapsedMs": 864.7,
+          "gpuReadbacks": 27
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.effects[0].effects[0]+",
+            "afterKind": "damageArea",
+            "vfxId": "fx.prim.arcane.nova-lg",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -1607,40 +1886,41 @@
         "frameCount": 5,
         "audit": {
           "safe": true,
-          "autoVisualScore": 9,
-          "sampledFrames": 35,
-          "peakParticleCount": 143,
-          "peakParticleCountBeforeIsolation": 122,
+          "autoVisualScore": 9.5,
+          "sampledFrames": 39,
+          "peakParticleCount": 104,
+          "peakParticleCountBeforeIsolation": 89,
           "peakSystemCount": 7,
           "peakStartedSystemCount": 7,
-          "peakManualEmitCount": 112,
-          "peakPresentationPixelShare": 0.03898472257198019,
+          "peakManualEmitCount": 72,
+          "peakPresentationPixelShare": 0.029398556199110217,
           "presentationEventCount": 8,
           "acceptedVfxEventCount": 7,
           "semanticActionCount": 6,
-          "worstAtMs": 1199.9999999999998,
+          "worstAtMs": 1066.6666666666658,
           "worst": {
-            "litShare": 0.01597099806933602,
-            "presentationPixelShare": 0.028566481994459835,
-            "highlightShare": 0.011906110971207924,
-            "brightShare": 0.009246201628473097,
-            "nearWhiteShare": 0.0036525224544615128,
-            "dominantBrightShare": 0.00357382691177705,
-            "dominantNonBackgroundShare": 0.00357382691177705,
+            "litShare": 0.0012717199697809115,
+            "presentationPixelShare": 0.01766242760010073,
+            "highlightShare": 0.00005771006463527239,
+            "brightShare": 0,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0,
+            "dominantNonBackgroundShare": 0.005184462352052379,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "suspects": [],
-          "elapsedMs": 891.6,
-          "gpuReadbacks": 35
+          "elapsedMs": 931.2,
+          "gpuReadbacks": 39
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": []
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -1674,30 +1954,33 @@
           "safe": true,
           "autoVisualScore": 9,
           "sampledFrames": 34,
-          "peakParticleCount": 82,
-          "peakParticleCountBeforeIsolation": 82,
+          "peakParticleCount": 80,
+          "peakParticleCountBeforeIsolation": 67,
           "peakSystemCount": 3,
           "peakStartedSystemCount": 3,
-          "peakManualEmitCount": 82,
-          "peakPresentationPixelShare": 0.04142218584739361,
+          "peakManualEmitCount": 42,
+          "peakPresentationPixelShare": 0.04079681860152774,
           "presentationEventCount": 5,
           "acceptedVfxEventCount": 3,
           "semanticActionCount": 2,
           "worstAtMs": 999.9999999999991,
           "worst": {
-            "litShare": 0.01653760597666415,
-            "presentationPixelShare": 0.024904516074876187,
-            "highlightShare": 0.013495760933434063,
-            "brightShare": 0.011081381683874758,
+            "litShare": 0.0153834046839587,
+            "presentationPixelShare": 0.02240829346092504,
+            "highlightShare": 0.013446445060018467,
+            "brightShare": 0.011440233358515907,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0027847729371275076,
-            "dominantNonBackgroundShare": 0.0027847729371275076,
+            "dominantBrightShare": 0.0025560312263913374,
+            "dominantNonBackgroundShare": 0.0025560312263913374,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 924.6,
+          "suspects": [
+            "vfx-fx.prim.blood.nova-lg#w3xScale=1.35,tint=220.30.50,flyHeight=58,alpha=0.58 · 40顆 · blend=0 · light_01.png",
+            "vfx-fx.prim.void.summon#w3xScale=1.45,tint=105.12.35,flyHeight=65,alpha=0.68 · 40顆 · blend=0 · magic_05.png"
+          ],
+          "elapsedMs": 936.3,
           "gpuReadbacks": 34
         },
         "blockers": [],
@@ -1705,7 +1988,8 @@
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": []
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -1751,7 +2035,7 @@
           "peakSystemCount": 2,
           "peakStartedSystemCount": 2,
           "peakManualEmitCount": 33,
-          "peakPresentationPixelShare": 0.00769222697893058,
+          "peakPresentationPixelShare": 0.006680726936959624,
           "presentationEventCount": 3,
           "acceptedVfxEventCount": 2,
           "semanticActionCount": 5,
@@ -1768,7 +2052,7 @@
             "unsafe": false
           },
           "suspects": [],
-          "elapsedMs": 805.8,
+          "elapsedMs": 788.6,
           "gpuReadbacks": 26
         },
         "blockers": [],
@@ -1776,7 +2060,8 @@
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": []
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -1813,43 +2098,94 @@
       "hasShippedVfxScript": false,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 2,
+        "frameCount": 8,
         "audit": {
           "safe": true,
-          "autoVisualScore": 9.5,
-          "sampledFrames": 31,
-          "peakParticleCount": 40,
-          "peakParticleCountBeforeIsolation": 40,
-          "peakSystemCount": 1,
-          "peakStartedSystemCount": 1,
-          "peakManualEmitCount": 40,
-          "peakPresentationPixelShare": 0.015345630823470159,
-          "presentationEventCount": 1,
-          "acceptedVfxEventCount": 1,
-          "semanticActionCount": 2,
-          "worstAtMs": 1133.3333333333328,
+          "autoVisualScore": 7.5,
+          "sampledFrames": 26,
+          "peakParticleCount": 232,
+          "peakParticleCountBeforeIsolation": 224,
+          "peakSystemCount": 18,
+          "peakStartedSystemCount": 18,
+          "peakManualEmitCount": 244,
+          "peakPresentationPixelShare": 0.05920991226432705,
+          "presentationEventCount": 5,
+          "acceptedVfxEventCount": 0,
+          "semanticActionCount": 0,
+          "worstAtMs": 1400.0000000000007,
           "worst": {
-            "litShare": 0.005125703013514648,
-            "presentationPixelShare": 0.006086837908167548,
-            "highlightShare": 0.00445206916813565,
-            "brightShare": 0.003792075883488626,
-            "nearWhiteShare": 0.002604297825904474,
-            "dominantBrightShare": 0.0025465877612692017,
-            "dominantNonBackgroundShare": 0.0025465877612692017,
+            "litShare": 0.04268947171924584,
+            "presentationPixelShare": 0.05920991226432705,
+            "highlightShare": 0.0323653630763487,
+            "brightShare": 0.024212478999439985,
+            "nearWhiteShare": 0.002887577002053388,
+            "dominantBrightShare": 0.0025900690685084935,
+            "dominantNonBackgroundShare": 0.0040321075228672764,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 830,
-          "gpuReadbacks": 31
+          "suspects": [
+            "vfx-ring · r/d=0.15 · vfx-ring-mat · 無貼圖",
+            "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "telegraph-shock · r/d=0.06 · telegraph-shock · 無貼圖",
+            "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-fx.prim.arcane.nova-lg · 40顆 · blend=0 · light_01.png",
+            "vfx-preset-heavy/0.68,0.5,1/sparks · 36顆 · blend=0 · spark_05_rotated.png",
+            "vfx-fx.prim.arcane.pulse · 32顆 · blend=0 · magic_02.png",
+            "vfx-fx.prim.arcane.pulse-lg · 32顆 · blend=0 · magic_02.png",
+            "vfx-fx.prim.nature.pulse-lg · 32顆 · blend=0 · magic_02.png",
+            "vfx-preset-ember/0.60 · 14顆 · blend=0 · spark_05_rotated.png",
+            "vfx-preset-dust/0.60 · 12顆 · blend=1 · smoke_05.png",
+            "vfx-preset-blood/heavy/magic/droplets · 10顆 · blend=1 · circle_05.png"
+          ],
+          "elapsedMs": 844.3,
+          "gpuReadbacks": 26
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.effects[0].hooks[0].effects[0].onHitTargets[0]+",
+            "afterKind": "heal",
+            "vfxId": "fx.prim.nature.pulse-lg",
+            "at": "self"
+          },
+          {
+            "path": "$.effects[0].hooks[0].effects[0].onHitTargets[1]+",
+            "afterKind": "applyStatus",
+            "vfxId": "fx.prim.arcane.pulse",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[0].hooks[0].effects[0].onHitTargets[2]+",
+            "afterKind": "applyBuff",
+            "vfxId": "fx.prim.arcane.pulse-lg",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[0].hooks[0].effects[0]+",
+            "afterKind": "damageArea",
+            "vfxId": "fx.prim.arcane.nova-lg",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[0].hooks[1].effects[0]+",
+            "afterKind": "grantAttribute",
+            "vfxId": "fx.prim.arcane.pulse-lg",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[0]+",
+            "afterKind": "applyBuff",
+            "vfxId": "fx.prim.arcane.pulse-lg",
+            "at": "self"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -1881,43 +2217,76 @@
       "hasShippedVfxScript": false,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 2,
+        "frameCount": 8,
         "audit": {
           "safe": true,
-          "autoVisualScore": 9.5,
-          "sampledFrames": 31,
-          "peakParticleCount": 42,
-          "peakParticleCountBeforeIsolation": 42,
-          "peakSystemCount": 1,
-          "peakStartedSystemCount": 1,
-          "peakManualEmitCount": 42,
-          "peakPresentationPixelShare": 0.011661630151934861,
-          "presentationEventCount": 1,
-          "acceptedVfxEventCount": 1,
-          "semanticActionCount": 2,
-          "worstAtMs": 1199.9999999999998,
+          "autoVisualScore": 8,
+          "sampledFrames": 26,
+          "peakParticleCount": 313,
+          "peakParticleCountBeforeIsolation": 326,
+          "peakSystemCount": 18,
+          "peakStartedSystemCount": 18,
+          "peakManualEmitCount": 228,
+          "peakPresentationPixelShare": 0.04300564681724846,
+          "presentationEventCount": 3,
+          "acceptedVfxEventCount": 0,
+          "semanticActionCount": 0,
+          "worstAtMs": 533.3333333333335,
           "worst": {
-            "litShare": 0.006447788130613616,
-            "presentationPixelShare": 0.011661630151934861,
-            "highlightShare": 0.004648283387895576,
-            "brightShare": 0.0032737345756736337,
-            "nearWhiteShare": 0.0003640980441534458,
-            "dominantBrightShare": 0.0005550658944010745,
-            "dominantNonBackgroundShare": 0.0005550658944010745,
+            "litShare": 0.001928551428038081,
+            "presentationPixelShare": 0.039337549001306704,
+            "highlightShare": 0,
+            "brightShare": 0,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0,
+            "dominantNonBackgroundShare": 0.035487446331902185,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 863.4,
-          "gpuReadbacks": 31
+          "suspects": [
+            "vfx-ring · r/d=0.22 · vfx-ring-mat · 無貼圖",
+            "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "telegraph-ring · r/d=0.05 · telegraph-ring · 無貼圖",
+            "telegraph-fill · r/d=0.04 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
+            "vfx-preset-ex/1,0.2,0.15/smoke · 14顆 · blend=1 · smoke_05.png",
+            "vfx-preset-ex/1,0.2,0.15/debris · 13顆 · blend=1 · flare_01.png"
+          ],
+          "elapsedMs": 876.3,
+          "gpuReadbacks": 26
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.effects[1].branches[0].effects[0]+",
+            "afterKind": "grantGold",
+            "vfxId": "fx.prim.holy.pulse-lg",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[1].branches[1].effects[0]+",
+            "afterKind": "restore",
+            "vfxId": "fx.prim.nature.pulse-lg",
+            "at": "self"
+          },
+          {
+            "path": "$.effects[1].branches[2].effects[0]+",
+            "afterKind": "applyBuff",
+            "vfxId": "fx.prim.arcane.pulse-lg",
+            "at": "self"
+          },
+          {
+            "path": "$.effects[2]+",
+            "afterKind": "taunt",
+            "vfxId": "fx.prim.physical.pulse",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -1958,38 +2327,45 @@
         "frameCount": 8,
         "audit": {
           "safe": true,
-          "autoVisualScore": 9.5,
+          "autoVisualScore": 8,
           "sampledFrames": 33,
-          "peakParticleCount": 344,
-          "peakParticleCountBeforeIsolation": 365,
+          "peakParticleCount": 353,
+          "peakParticleCountBeforeIsolation": 388,
           "peakSystemCount": 31,
           "peakStartedSystemCount": 31,
           "peakManualEmitCount": 279,
-          "peakPresentationPixelShare": 0.035207336523126,
-          "presentationEventCount": 20,
+          "peakPresentationPixelShare": 0.07648053948105282,
+          "presentationEventCount": 25,
           "acceptedVfxEventCount": 0,
           "semanticActionCount": 0,
-          "worstAtMs": 66.66666666666667,
+          "worstAtMs": 400.0000000000001,
           "worst": {
-            "litShare": 0.003436372030554856,
-            "presentationPixelShare": 0.0053733316544950895,
-            "highlightShare": 0.003063879795181734,
-            "brightShare": 0.0029274741878619996,
+            "litShare": 0.014108876236699645,
+            "presentationPixelShare": 0.05991459772260593,
+            "highlightShare": 0.0003173417957812208,
+            "brightShare": 0,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.0029274741878619996,
-            "dominantNonBackgroundShare": 0.0029274741878619996,
+            "dominantBrightShare": 0,
+            "dominantNonBackgroundShare": 0.032872876610042935,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "suspects": [
-            "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖",
-            "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖",
-            "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖",
-            "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖",
-            "vfx-ring · r/d=0.08 · vfx-ring-mat · 無貼圖"
+            "vfx-ring · r/d=0.22 · vfx-ring-mat · 無貼圖",
+            "vfx-ring · r/d=0.13 · vfx-ring-mat · 無貼圖",
+            "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-decal · r/d=0.07 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-decal · r/d=0.04 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-fx.w3x.particle.flamessmoke.p00 · 80顆 · blend=0 · smoke_07.png",
+            "vfx-preset-ex/1,0.2,0.15/sparks · 56顆 · blend=0 · spark_05_rotated.png",
+            "vfx-preset-blood/heavy/physical/droplets · 17顆 · blend=1 · circle_05.png",
+            "vfx-preset-ex/1,0.2,0.15/debris · 16顆 · blend=1 · flare_01.png",
+            "vfx-preset-ex/1,0.2,0.15/smoke · 14顆 · blend=1 · smoke_05.png",
+            "vfx-preset-blood/heavy/physical/mist · 6顆 · blend=1 · smoke_04.png",
+            "vfx-preset-heavy/0.68,0.5,1/debris · 1顆 · blend=1 · flare_01.png"
           ],
-          "elapsedMs": 1113.8,
+          "elapsedMs": 976.9,
           "gpuReadbacks": 33
         },
         "blockers": [],
@@ -1997,7 +2373,33 @@
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.passive.ranks[0].hooks[0].effects[0].hooks[0].effects[0]+",
+            "afterKind": "dispel",
+            "vfxId": "fx.prim.holy.pulse",
+            "at": "target"
+          },
+          {
+            "path": "$.passive.ranks[0].hooks[0].effects[0]+",
+            "afterKind": "applyBuff",
+            "vfxId": "fx.prim.arcane.pulse-lg",
+            "at": "target"
+          },
+          {
+            "path": "$.passive.ranks[0].hooks[0].effects[1]+",
+            "afterKind": "invulnerable",
+            "vfxId": "fx.prim.holy.nova-lg",
+            "at": "self"
+          },
+          {
+            "path": "$.passive.ranks[0].hooks[0].effects[2]+",
+            "afterKind": "applyStatus",
+            "vfxId": "fx.prim.arcane.pulse",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -2032,38 +2434,41 @@
         "frameCount": 4,
         "audit": {
           "safe": true,
-          "autoVisualScore": 8,
+          "autoVisualScore": 7.5,
           "sampledFrames": 17,
           "peakParticleCount": 164,
-          "peakParticleCountBeforeIsolation": 153,
+          "peakParticleCountBeforeIsolation": 154,
           "peakSystemCount": 16,
           "peakStartedSystemCount": 16,
-          "peakManualEmitCount": 115,
-          "peakPresentationPixelShare": 0.05097792327709225,
+          "peakManualEmitCount": 25,
+          "peakPresentationPixelShare": 0.07695771887250327,
           "presentationEventCount": 1,
           "acceptedVfxEventCount": 0,
           "semanticActionCount": 0,
-          "worstAtMs": 199.99999999999997,
+          "worstAtMs": 66.66666666666667,
           "worst": {
-            "litShare": 0.025221396793418956,
-            "presentationPixelShare": 0.03771195332829682,
-            "highlightShare": 0.022072525812138002,
-            "brightShare": 0.01793838663644758,
-            "nearWhiteShare": 0.005280995551078653,
-            "dominantBrightShare": 0.00512255519180727,
-            "dominantNonBackgroundShare": 0.00512255519180727,
+            "litShare": 0.042744306514840395,
+            "presentationPixelShare": 0.054364616389770394,
+            "highlightShare": 0.028546761246966586,
+            "brightShare": 0.014255880156804181,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0012717005786820983,
+            "dominantNonBackgroundShare": 0.0021385570281874182,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "suspects": [
-            "cast-pillar/cast-pillar-shell · r/d=0.36 · cast-pillar-shell-mat · 無貼圖",
-            "cast-pillar/cast-pillar-core · r/d=0.34 · cast-pillar-core-mat · 無貼圖",
             "vfx-decal · r/d=0.29 · vfx-decal-mat · /content-api/assets/textures/decals/scorch_01.png:ready/alpha",
+            "cast-pillar/cast-pillar-shell · r/d=0.20 · cast-pillar-shell-mat · 無貼圖",
+            "cast-pillar/cast-pillar-core · r/d=0.19 · cast-pillar-core-mat · 無貼圖",
             "cast-pillar/cast-pillar-base · r/d=0.07 · cast-pillar-base-mat · /content-api/assets/textures/particles/magic_05.png:ready/alpha",
-            "telegraph-ring · r/d=0.05 · telegraph-ring · 無貼圖"
+            "cast-charge/cast-charge-beam-0 · r/d=0.05 · cast-charge-mat · 無貼圖",
+            "vfx-fx.prim.arcane.nova-lg · 40顆 · blend=0 · light_01.png",
+            "vfx-preset-castpillar/arcane · 11顆 · blend=0 · spark_05_rotated.png",
+            "vfx-preset-castpillar/arcane/knot · 6顆 · blend=0 · spark_05_rotated.png"
           ],
-          "elapsedMs": 1422.1,
+          "elapsedMs": 1440.3,
           "gpuReadbacks": 17
         },
         "blockers": [],
@@ -2071,7 +2476,15 @@
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.passive.ranks[0].hooks[0].effects[0].branches[0].effects[0]+",
+            "afterKind": "restore",
+            "vfxId": "fx.prim.nature.pulse-lg",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -2113,8 +2526,8 @@
           "peakSystemCount": 6,
           "peakStartedSystemCount": 6,
           "peakManualEmitCount": 71,
-          "peakPresentationPixelShare": 0.003818307731050113,
-          "presentationEventCount": 0,
+          "peakPresentationPixelShare": 0.004420590951061865,
+          "presentationEventCount": 2,
           "acceptedVfxEventCount": 0,
           "semanticActionCount": 1,
           "worstAtMs": 0,
@@ -2130,7 +2543,7 @@
             "unsafe": false
           },
           "suspects": [],
-          "elapsedMs": 739.4,
+          "elapsedMs": 931.6,
           "gpuReadbacks": 17
         },
         "blockers": [],
@@ -2138,7 +2551,21 @@
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.passive.ranks[0].hooks[0].effects[0]+",
+            "afterKind": "damageArea",
+            "vfxId": "fx.prim.physical.nova-lg",
+            "at": "target"
+          },
+          {
+            "path": "$.passive.ranks[0].hooks[0].effects[1]+",
+            "afterKind": "applyStatus",
+            "vfxId": "fx.prim.physical.pulse",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -2172,38 +2599,41 @@
         "frameCount": 3,
         "audit": {
           "safe": true,
-          "autoVisualScore": 7.5,
+          "autoVisualScore": 5,
           "sampledFrames": 17,
           "peakParticleCount": 227,
           "peakParticleCountBeforeIsolation": 221,
           "peakSystemCount": 29,
           "peakStartedSystemCount": 29,
           "peakManualEmitCount": 161,
-          "peakPresentationPixelShare": 0.21692164022496432,
+          "peakPresentationPixelShare": 0.2836942318461826,
           "presentationEventCount": 2,
           "acceptedVfxEventCount": 0,
           "semanticActionCount": 2,
-          "worstAtMs": 199.99999999999997,
+          "worstAtMs": 533.3333333333335,
           "worst": {
-            "litShare": 0.04289326785864182,
-            "presentationPixelShare": 0.1410129690254344,
-            "highlightShare": 0.03041635188449593,
-            "brightShare": 0.022256148745068413,
-            "nearWhiteShare": 0.006034374213044573,
-            "dominantBrightShare": 0.005859145471333837,
-            "dominantNonBackgroundShare": 0.005859145471333837,
+            "litShare": 0.05152720739219713,
+            "presentationPixelShare": 0.2836942318461826,
+            "highlightShare": 0.03079615456412171,
+            "brightShare": 0.01835915624416651,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.0037194325182004855,
+            "dominantNonBackgroundShare": 0.08298487959678925,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "suspects": [
-            "modelfx-axis-w3x.stock.thunderclapcaster-20/modelfx-21-__root__/modelfx-21-mesh/modelfx-21-mesh_primitive1 · r/d=0.60 · mat0-fxtint · mat0 (Base Color):ready/alpha,mat0 (Emissive):ready/opaque",
-            "modelfx-axis-w3x.stock.thunderclapcaster-20/modelfx-21-__root__/modelfx-21-mesh/modelfx-21-mesh_primitive0 · r/d=0.30 · mat1-fxtint · mat1 (Base Color):ready/alpha,mat1 (Emissive):ready/opaque",
-            "modelfx-axis-w3x.stock.monsoonbolttarget-18/modelfx-19-__root__/modelfx-19-mesh/modelfx-19-mesh_primitive7 · r/d=0.21 · mat6-fxtint · mat6 (Base Color):ready/alpha,mat6 (Emissive):ready/opaque",
-            "vfx-ring · r/d=0.14 · vfx-ring-mat · 無貼圖",
-            "vfx-ring · r/d=0.14 · vfx-ring-mat · 無貼圖"
+            "modelfx-axis-w3x.stock.thunderclapcaster-16/modelfx-17-__root__/modelfx-17-mesh/modelfx-17-mesh_primitive1 · r/d=0.59 · mat0-fxtint · mat0 (Base Color):ready/alpha,mat0 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.thunderclapcaster-16/modelfx-17-__root__/modelfx-17-mesh/modelfx-17-mesh_primitive0 · r/d=0.29 · mat1-fxtint · mat1 (Base Color):ready/alpha,mat1 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.monsoonbolttarget-14/modelfx-15-__root__/modelfx-15-mesh/modelfx-15-mesh_primitive7 · r/d=0.21 · mat6-fxtint · mat6 (Base Color):ready/alpha,mat6 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.monsoonbolttarget-14/modelfx-15-__root__/modelfx-15-mesh/modelfx-15-mesh_primitive4 · r/d=0.13 · mat3-fxtint · mat3 (Base Color):ready/alpha,mat3 (Emissive):ready/opaque",
+            "modelfx-axis-w3x.stock.monsoonbolttarget-14/modelfx-15-__root__/modelfx-15-mesh/modelfx-15-mesh_primitive5 · r/d=0.13 · mat4-fxtint · mat4 (Base Color):ready/alpha,mat4 (Emissive):ready/opaque",
+            "vfx-preset-heavy/0.68,0.5,1/debris · 6顆 · blend=1 · flare_01.png",
+            "vfx-preset-heavy/0.68,0.5,1/debris · 5顆 · blend=1 · flare_01.png",
+            "vfx-preset-heavy/0.68,0.5,1/smoke · 1顆 · blend=1 · smoke_05.png"
           ],
-          "elapsedMs": 1036.3,
+          "elapsedMs": 837.3,
           "gpuReadbacks": 17
         },
         "blockers": [],
@@ -2211,7 +2641,27 @@
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.passive.ranks[0].hooks[0].effects[0]+",
+            "afterKind": "damageArea",
+            "vfxId": "fx.prim.arcane.nova-lg",
+            "at": "target"
+          },
+          {
+            "path": "$.passive.ranks[1].hooks[0].effects[0]+",
+            "afterKind": "damageArea",
+            "vfxId": "fx.prim.arcane.nova-lg",
+            "at": "target"
+          },
+          {
+            "path": "$.passive.ranks[2].hooks[0].effects[0]+",
+            "afterKind": "damageArea",
+            "vfxId": "fx.prim.arcane.nova-lg",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -2248,43 +2698,77 @@
       "hasShippedVfxScript": false,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 2,
+        "frameCount": 8,
         "audit": {
           "safe": true,
-          "autoVisualScore": 9.5,
-          "sampledFrames": 20,
-          "peakParticleCount": 40,
-          "peakParticleCountBeforeIsolation": 40,
-          "peakSystemCount": 1,
-          "peakStartedSystemCount": 1,
-          "peakManualEmitCount": 40,
-          "peakPresentationPixelShare": 0.01695416771594057,
-          "presentationEventCount": 1,
-          "acceptedVfxEventCount": 1,
-          "semanticActionCount": 2,
-          "worstAtMs": 333.33333333333337,
+          "autoVisualScore": 7.5,
+          "sampledFrames": 17,
+          "peakParticleCount": 208,
+          "peakParticleCountBeforeIsolation": 189,
+          "peakSystemCount": 23,
+          "peakStartedSystemCount": 23,
+          "peakManualEmitCount": 82,
+          "peakPresentationPixelShare": 0.055076387140099055,
+          "presentationEventCount": 6,
+          "acceptedVfxEventCount": 0,
+          "semanticActionCount": 0,
+          "worstAtMs": 933.3333333333326,
           "worst": {
-            "litShare": 0.005439435910350038,
-            "presentationPixelShare": 0.006385880970368505,
-            "highlightShare": 0.004658776126920171,
-            "brightShare": 0.004025014689834634,
-            "nearWhiteShare": 0.00303135230420549,
-            "dominantBrightShare": 0.002951607487618568,
-            "dominantNonBackgroundShare": 0.002951607487618568,
+            "litShare": 0.03227881306136154,
+            "presentationPixelShare": 0.035916645681188616,
+            "highlightShare": 0.02916456811886175,
+            "brightShare": 0.026871904641987743,
+            "nearWhiteShare": 0.019134558885251406,
+            "dominantBrightShare": 0.01849764962645849,
+            "dominantNonBackgroundShare": 0.01849764962645849,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 785.7,
-          "gpuReadbacks": 20
+          "suspects": [
+            "cast-pillar/cast-pillar-shell · r/d=0.36 · cast-pillar-shell-mat · 無貼圖",
+            "cast-pillar/cast-pillar-core · r/d=0.33 · cast-pillar-core-mat · 無貼圖",
+            "telegraph-corridor · r/d=0.26 · telegraph-corridor-mat · 無貼圖",
+            "telegraph-corridor · r/d=0.25 · telegraph-corridor-mat · 無貼圖",
+            "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-preset-castpillar/wind/knot · 3顆 · blend=0 · spark_05_rotated.png",
+            "vfx-preset-castpillar/wind/knot · 2顆 · blend=0 · spark_05_rotated.png"
+          ],
+          "elapsedMs": 916.6,
+          "gpuReadbacks": 23
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.effects[0].hooks[0].effects[0]+",
+            "afterKind": "damage",
+            "vfxId": "fx.prim.arcane.pulse",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[0].hooks[1].effects[0]+",
+            "afterKind": "damageArea",
+            "vfxId": "fx.prim.arcane.nova-lg",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[0].hooks[1].effects[1]+",
+            "afterKind": "applyStatus",
+            "vfxId": "fx.prim.fire.pulse",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[0]+",
+            "afterKind": "applyBuff",
+            "vfxId": "fx.prim.arcane.pulse-lg",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -2321,13 +2805,13 @@
           "safe": true,
           "autoVisualScore": 10,
           "sampledFrames": 17,
-          "peakParticleCount": 68,
+          "peakParticleCount": 71,
           "peakParticleCountBeforeIsolation": 68,
           "peakSystemCount": 6,
           "peakStartedSystemCount": 6,
           "peakManualEmitCount": 71,
-          "peakPresentationPixelShare": 0.004319860656425753,
-          "presentationEventCount": 1,
+          "peakPresentationPixelShare": 0.004093217493494502,
+          "presentationEventCount": 2,
           "acceptedVfxEventCount": 0,
           "semanticActionCount": 0,
           "worstAtMs": 0,
@@ -2343,7 +2827,7 @@
             "unsafe": false
           },
           "suspects": [],
-          "elapsedMs": 771.6,
+          "elapsedMs": 792,
           "gpuReadbacks": 17
         },
         "blockers": [],
@@ -2351,7 +2835,15 @@
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.passive.ranks[0].hooks[0].effects[0]+",
+            "afterKind": "grantAttribute",
+            "vfxId": "fx.prim.arcane.pulse-lg",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -2385,38 +2877,46 @@
         "frameCount": 2,
         "audit": {
           "safe": true,
-          "autoVisualScore": 9.5,
+          "autoVisualScore": 8.5,
           "sampledFrames": 17,
-          "peakParticleCount": 230,
-          "peakParticleCountBeforeIsolation": 205,
+          "peakParticleCount": 204,
+          "peakParticleCountBeforeIsolation": 180,
           "peakSystemCount": 32,
           "peakStartedSystemCount": 32,
           "peakManualEmitCount": 225,
-          "peakPresentationPixelShare": 0.003166708637622765,
-          "presentationEventCount": 0,
+          "peakPresentationPixelShare": 0.03384642827163603,
+          "presentationEventCount": 1,
           "acceptedVfxEventCount": 0,
           "semanticActionCount": 0,
-          "worstAtMs": 0,
+          "worstAtMs": 666.6666666666665,
           "worst": {
-            "litShare": 0.0031163434903047093,
-            "presentationPixelShare": 0.003166708637622765,
-            "highlightShare": 0.003082766725426005,
-            "brightShare": 0.00305233778225468,
+            "litShare": 0.001314740199781751,
+            "presentationPixelShare": 0.03384642827163603,
+            "highlightShare": 0.000053512969025434396,
+            "brightShare": 0,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0.00305233778225468,
-            "dominantNonBackgroundShare": 0.00305233778225468,
+            "dominantBrightShare": 0,
+            "dominantNonBackgroundShare": 0.021053680852849827,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "suspects": [
+            "vfx-ring · r/d=0.22 · vfx-ring-mat · 無貼圖",
+            "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
             "vfx-decal · r/d=0.04 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
             "vfx-decal · r/d=0.04 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
-            "vfx-ring · r/d=0.04 · vfx-ring-mat · 無貼圖",
-            "vfx-ring · r/d=0.04 · vfx-ring-mat · 無貼圖",
-            "vfx-ring · r/d=0.04 · vfx-ring-mat · 無貼圖"
+            "vfx-decal · r/d=0.04 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-preset-ex/0.9,0.95,1/sparks · 56顆 · blend=0 · spark_05_rotated.png",
+            "vfx-preset-light/0.9,0.95,1/sparks · 30顆 · blend=0 · spark_05_rotated.png",
+            "vfx-preset-light/1,0.72,0.28/sparks · 30顆 · blend=0 · spark_05_rotated.png",
+            "vfx-preset-ex/0.9,0.95,1/debris · 16顆 · blend=1 · flare_01.png",
+            "vfx-preset-ex/0.9,0.95,1/smoke · 14顆 · blend=1 · smoke_05.png",
+            "vfx-preset-light/0.9,0.95,1/debris · 8顆 · blend=1 · flare_01.png",
+            "vfx-preset-light/1,0.72,0.28/debris · 8顆 · blend=1 · flare_01.png",
+            "vfx-preset-light/0.9,0.95,1/smoke · 7顆 · blend=1 · smoke_05.png"
           ],
-          "elapsedMs": 735.9,
+          "elapsedMs": 764.2,
           "gpuReadbacks": 17
         },
         "blockers": [],
@@ -2424,7 +2924,15 @@
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.passive.ranks[0].hooks[0].effects[0]+",
+            "afterKind": "shield",
+            "vfxId": "fx.prim.holy.nova-lg",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -2459,38 +2967,42 @@
         "frameCount": 2,
         "audit": {
           "safe": true,
-          "autoVisualScore": 9.5,
+          "autoVisualScore": 8.5,
           "sampledFrames": 17,
-          "peakParticleCount": 165,
-          "peakParticleCountBeforeIsolation": 143,
+          "peakParticleCount": 262,
+          "peakParticleCountBeforeIsolation": 252,
           "peakSystemCount": 25,
           "peakStartedSystemCount": 25,
           "peakManualEmitCount": 138,
-          "peakPresentationPixelShare": 0.004166666666666667,
-          "presentationEventCount": 0,
+          "peakPresentationPixelShare": 0.02569042222781835,
+          "presentationEventCount": 2,
           "acceptedVfxEventCount": 0,
           "semanticActionCount": 0,
-          "worstAtMs": 199.99999999999997,
+          "worstAtMs": 266.66666666666663,
           "worst": {
-            "litShare": 0.004025014689834634,
-            "presentationPixelShare": 0.004166666666666667,
-            "highlightShare": 0.003954713338369848,
-            "brightShare": 0.003914840930076387,
-            "nearWhiteShare": 0.003914840930076387,
-            "dominantBrightShare": 0.003914840930076387,
-            "dominantNonBackgroundShare": 0.003914840930076387,
+            "litShare": 0,
+            "presentationPixelShare": 0.02569042222781835,
+            "highlightShare": 0,
+            "brightShare": 0,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0,
+            "dominantNonBackgroundShare": 0.021055779400654746,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "suspects": [
-            "vfx-ring · r/d=0.20 · vfx-ring-mat · 無貼圖",
-            "vfx-ring · r/d=0.20 · vfx-ring-mat · 無貼圖",
-            "vfx-ring · r/d=0.20 · vfx-ring-mat · 無貼圖",
-            "vfx-ring · r/d=0.20 · vfx-ring-mat · 無貼圖",
-            "vfx-ring · r/d=0.20 · vfx-ring-mat · 無貼圖"
+            "vfx-ring · r/d=0.22 · vfx-ring-mat · 無貼圖",
+            "vfx-ring · r/d=0.22 · vfx-ring-mat · 無貼圖",
+            "vfx-ring · r/d=0.22 · vfx-ring-mat · 無貼圖",
+            "vfx-ring · r/d=0.22 · vfx-ring-mat · 無貼圖",
+            "vfx-ring · r/d=0.22 · vfx-ring-mat · 無貼圖",
+            "vfx-preset-ex/1,0.7,0.42/smoke · 14顆 · blend=1 · smoke_05.png",
+            "vfx-preset-ex/1,0.7,0.42/debris · 11顆 · blend=1 · flare_01.png",
+            "vfx-fx.builtin-death-smoke · 8顆 · blend=1 · smoke_05.png",
+            "vfx-preset-dust/0.75/puff · 4顆 · blend=1 · smoke_05.png"
           ],
-          "elapsedMs": 785.4,
+          "elapsedMs": 785.7,
           "gpuReadbacks": 17
         },
         "blockers": [],
@@ -2498,7 +3010,33 @@
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.passive.ranks[0].hooks[0].effects[0].onDevour[0]+",
+            "afterKind": "applyStatus",
+            "vfxId": "fx.prim.arcane.pulse",
+            "at": "target"
+          },
+          {
+            "path": "$.passive.ranks[0].hooks[0].effects[0].onDevour[2]",
+            "afterKind": "devour",
+            "vfxId": "fx.prim.void.explosion",
+            "at": "target"
+          },
+          {
+            "path": "$.passive.ranks[0].hooks[1].effects[0].onDevour[0]+",
+            "afterKind": "applyStatus",
+            "vfxId": "fx.prim.arcane.pulse",
+            "at": "target"
+          },
+          {
+            "path": "$.passive.ranks[0].hooks[1].effects[0].onDevour[2]",
+            "afterKind": "devour",
+            "vfxId": "fx.prim.void.explosion",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -2528,43 +3066,64 @@
       "hasShippedVfxScript": false,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 2,
+        "frameCount": 8,
         "audit": {
           "safe": true,
-          "autoVisualScore": 8.5,
-          "sampledFrames": 31,
-          "peakParticleCount": 40,
-          "peakParticleCountBeforeIsolation": 40,
-          "peakSystemCount": 1,
-          "peakStartedSystemCount": 1,
-          "peakManualEmitCount": 40,
-          "peakPresentationPixelShare": 0.03056325023084026,
-          "presentationEventCount": 1,
-          "acceptedVfxEventCount": 1,
-          "semanticActionCount": 2,
-          "worstAtMs": 1199.9999999999998,
+          "autoVisualScore": 8,
+          "sampledFrames": 26,
+          "peakParticleCount": 182,
+          "peakParticleCountBeforeIsolation": 145,
+          "peakSystemCount": 28,
+          "peakStartedSystemCount": 28,
+          "peakManualEmitCount": 153,
+          "peakPresentationPixelShare": 0.03811134963599029,
+          "presentationEventCount": 10,
+          "acceptedVfxEventCount": 0,
+          "semanticActionCount": 0,
+          "worstAtMs": 799.9999999999995,
           "worst": {
-            "litShare": 0.024401913875598084,
-            "presentationPixelShare": 0.03056325023084026,
-            "highlightShare": 0.016962561907160244,
-            "brightShare": 0.01093343406362797,
-            "nearWhiteShare": 0.0011772853185595567,
-            "dominantBrightShare": 0.0011930244270964493,
-            "dominantNonBackgroundShare": 0.0016316209183245194,
+            "litShare": 0.0019215512413664365,
+            "presentationPixelShare": 0.03811134963599029,
+            "highlightShare": 0,
+            "brightShare": 0,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0,
+            "dominantNonBackgroundShare": 0.035091935784954266,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 2114.7,
-          "gpuReadbacks": 31
+          "suspects": [
+            "vfx-ring · r/d=0.22 · vfx-ring-mat · 無貼圖",
+            "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "telegraph-ring · r/d=0.05 · telegraph-ring · 無貼圖",
+            "telegraph-fill · r/d=0.04 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
+            "vfx-preset-ex/1,0.2,0.15/debris · 15顆 · blend=1 · flare_01.png",
+            "vfx-preset-ex/1,0.2,0.15/smoke · 14顆 · blend=1 · smoke_05.png"
+          ],
+          "elapsedMs": 2148.6,
+          "gpuReadbacks": 26
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.effects[0].effects[1]+",
+            "afterKind": "summon",
+            "vfxId": "fx.prim.arcane.summon",
+            "at": "point"
+          },
+          {
+            "path": "$.effects[0].effects[2]+",
+            "afterKind": "damageArea",
+            "vfxId": "fx.prim.arcane.nova-lg",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -2596,40 +3155,110 @@
         "frameCount": 2,
         "audit": {
           "safe": true,
-          "autoVisualScore": 9.5,
-          "sampledFrames": 19,
-          "peakParticleCount": 48,
-          "peakParticleCountBeforeIsolation": 48,
-          "peakSystemCount": 1,
-          "peakStartedSystemCount": 1,
-          "peakManualEmitCount": 48,
-          "peakPresentationPixelShare": 0.02828107949299085,
+          "autoVisualScore": 8,
+          "sampledFrames": 17,
+          "peakParticleCount": 274,
+          "peakParticleCountBeforeIsolation": 275,
+          "peakSystemCount": 17,
+          "peakStartedSystemCount": 17,
+          "peakManualEmitCount": 281,
+          "peakPresentationPixelShare": 0.05486279634123577,
           "presentationEventCount": 1,
-          "acceptedVfxEventCount": 1,
-          "semanticActionCount": 2,
-          "worstAtMs": 333.33333333333337,
+          "acceptedVfxEventCount": 0,
+          "semanticActionCount": 0,
+          "worstAtMs": 466.66666666666686,
           "worst": {
-            "litShare": 0.007443549064047679,
-            "presentationPixelShare": 0.008930370183832788,
-            "highlightShare": 0.006630361789641568,
-            "brightShare": 0.006034374213044573,
-            "nearWhiteShare": 0.0049168975069252075,
-            "dominantBrightShare": 0.004869680181314531,
-            "dominantNonBackgroundShare": 0.004869680181314531,
+            "litShare": 0.0000011666977786074295,
+            "presentationPixelShare": 0.04932331528840769,
+            "highlightShare": 0,
+            "brightShare": 0,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0,
+            "dominantNonBackgroundShare": 0.03207135523613963,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 766.4,
-          "gpuReadbacks": 19
+          "suspects": [
+            "vfx-ring · r/d=0.21 · vfx-ring-mat · 無貼圖",
+            "vfx-ring · r/d=0.15 · vfx-ring-mat · 無貼圖",
+            "telegraph-corridor · r/d=0.12 · telegraph-corridor-mat · 無貼圖",
+            "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "telegraph-shock · r/d=0.06 · telegraph-shock · 無貼圖",
+            "vfx-fx.builtin-death-smoke · 22顆 · blend=1 · smoke_05.png",
+            "vfx-preset-ex/1,0.7,0.42/sparks · 21顆 · blend=0 · spark_05_rotated.png",
+            "vfx-preset-ex/1,0.7,0.42/debris · 16顆 · blend=1 · flare_01.png",
+            "vfx-preset-ex/1,0.7,0.42/smoke · 14顆 · blend=1 · smoke_05.png",
+            "vfx-preset-heavy/1,1,1/sparks · 13顆 · blend=0 · spark_05_rotated.png",
+            "vfx-preset-dust/0.60 · 12顆 · blend=1 · smoke_05.png",
+            "vfx-preset-blood/crit/true/droplets · 11顆 · blend=1 · circle_05.png",
+            "vfx-preset-dust/1/puff · 11顆 · blend=1 · smoke_05.png"
+          ],
+          "elapsedMs": 773.4,
+          "gpuReadbacks": 17
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.effects[0].branches[0].effects[0]+",
+            "afterKind": "damage",
+            "vfxId": "fx.prim.ki.pulse",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[0].branches[1].effects[0]+",
+            "afterKind": "damage",
+            "vfxId": "fx.prim.ki.pulse",
+            "at": "self"
+          },
+          {
+            "path": "$.effects[0].branches[2].effects[0]+",
+            "afterKind": "applyStatus",
+            "vfxId": "fx.prim.arcane.pulse",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[1].branches[0].effects[0]+",
+            "afterKind": "damage",
+            "vfxId": "fx.prim.ki.pulse",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[1].branches[1].effects[0]+",
+            "afterKind": "damage",
+            "vfxId": "fx.prim.ki.pulse",
+            "at": "self"
+          },
+          {
+            "path": "$.effects[1].branches[2].effects[0]+",
+            "afterKind": "applyStatus",
+            "vfxId": "fx.prim.arcane.pulse",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[2].branches[0].effects[0]+",
+            "afterKind": "damage",
+            "vfxId": "fx.prim.ki.pulse",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[2].branches[1].effects[0]+",
+            "afterKind": "damage",
+            "vfxId": "fx.prim.ki.pulse",
+            "at": "self"
+          },
+          {
+            "path": "$.effects[2].branches[2].effects[0]+",
+            "afterKind": "applyStatus",
+            "vfxId": "fx.prim.arcane.pulse",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -2658,34 +3287,47 @@
       "hasShippedVfxScript": false,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 2,
+        "frameCount": 8,
         "audit": {
           "safe": true,
-          "autoVisualScore": 10,
+          "autoVisualScore": 8,
           "sampledFrames": 17,
-          "peakParticleCount": 32,
-          "peakParticleCountBeforeIsolation": 32,
-          "peakSystemCount": 1,
-          "peakStartedSystemCount": 1,
-          "peakManualEmitCount": 32,
-          "peakPresentationPixelShare": 0.005436288088642659,
-          "presentationEventCount": 1,
-          "acceptedVfxEventCount": 1,
-          "semanticActionCount": 2,
-          "worstAtMs": 0,
+          "peakParticleCount": 158,
+          "peakParticleCountBeforeIsolation": 158,
+          "peakSystemCount": 24,
+          "peakStartedSystemCount": 24,
+          "peakManualEmitCount": 164,
+          "peakPresentationPixelShare": 0.06059244913197685,
+          "presentationEventCount": 4,
+          "acceptedVfxEventCount": 0,
+          "semanticActionCount": 1,
+          "worstAtMs": 999.9999999999991,
           "worst": {
-            "litShare": 0,
-            "highlightShare": 0,
-            "brightShare": 0,
+            "litShare": 0.001795547881276834,
+            "presentationPixelShare": 0.0469059174911331,
+            "highlightShare": 0.0001703378756766847,
+            "brightShare": 0.000008166884450252007,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0,
-            "dominantNonBackgroundShare": 0,
+            "dominantBrightShare": 0.000007000186671644577,
+            "dominantNonBackgroundShare": 0.0339509053574762,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 772.9,
+          "suspects": [
+            "vfx-ring · r/d=0.22 · vfx-ring-mat · 無貼圖",
+            "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-decal · r/d=0.07 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-decal · r/d=0.05 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-preset-ex/1,0.2,0.15/sparks · 56顆 · blend=0 · spark_05_rotated.png",
+            "vfx-preset-blood/heavy/physical/droplets · 17顆 · blend=1 · circle_05.png",
+            "vfx-preset-ex/1,0.2,0.15/debris · 16顆 · blend=1 · flare_01.png",
+            "vfx-preset-ex/1,0.2,0.15/smoke · 14顆 · blend=1 · smoke_05.png",
+            "vfx-preset-blood/heavy/physical/mist · 6顆 · blend=1 · smoke_04.png",
+            "vfx-preset-blood/heavy/physical/droplets · 1顆 · blend=1 · circle_05.png"
+          ],
+          "elapsedMs": 792.9,
           "gpuReadbacks": 17
         },
         "blockers": [],
@@ -2693,7 +3335,21 @@
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.effects[0]+",
+            "afterKind": "dash",
+            "vfxId": "fx.prim.arcane.dash",
+            "at": "self"
+          },
+          {
+            "path": "$.effects[1]+",
+            "afterKind": "damageLine",
+            "vfxId": "fx.wave.arcane",
+            "at": "point"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -2724,43 +3380,78 @@
       "hasShippedVfxScript": false,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 2,
+        "frameCount": 8,
         "audit": {
           "safe": true,
-          "autoVisualScore": 9.5,
-          "sampledFrames": 31,
-          "peakParticleCount": 48,
-          "peakParticleCountBeforeIsolation": 48,
-          "peakSystemCount": 1,
-          "peakStartedSystemCount": 1,
-          "peakManualEmitCount": 48,
-          "peakPresentationPixelShare": 0.02636195752539243,
-          "presentationEventCount": 1,
-          "acceptedVfxEventCount": 1,
-          "semanticActionCount": 2,
-          "worstAtMs": 1199.9999999999998,
+          "autoVisualScore": 8,
+          "sampledFrames": 26,
+          "peakParticleCount": 135,
+          "peakParticleCountBeforeIsolation": 135,
+          "peakSystemCount": 21,
+          "peakStartedSystemCount": 21,
+          "peakManualEmitCount": 115,
+          "peakPresentationPixelShare": 0.053017080455478816,
+          "presentationEventCount": 5,
+          "acceptedVfxEventCount": 0,
+          "semanticActionCount": 1,
+          "worstAtMs": 666.6666666666665,
           "worst": {
-            "litShare": 0.007165491479895912,
-            "presentationPixelShare": 0.00861453873919248,
-            "highlightShare": 0.0062694115671955005,
-            "brightShare": 0.005634600856207504,
-            "nearWhiteShare": 0.004873877276924368,
-            "dominantBrightShare": 0.004803575925459582,
-            "dominantNonBackgroundShare": 0.004803575925459582,
+            "litShare": 0.0019542187791674443,
+            "presentationPixelShare": 0.04053691431771514,
+            "highlightShare": 0,
+            "brightShare": 0,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0,
+            "dominantNonBackgroundShare": 0.030470645883890236,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 876.4,
-          "gpuReadbacks": 31
+          "suspects": [
+            "vfx-ring · r/d=0.21 · vfx-ring-mat · 無貼圖",
+            "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "telegraph-ring · r/d=0.05 · telegraph-ring · 無貼圖",
+            "telegraph-fill · r/d=0.04 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
+            "vfx-preset-ex/1,0.2,0.15/sparks · 25顆 · blend=0 · spark_05_rotated.png",
+            "vfx-preset-ex/1,0.2,0.15/debris · 16顆 · blend=1 · flare_01.png",
+            "vfx-preset-ex/1,0.2,0.15/smoke · 14顆 · blend=1 · smoke_05.png",
+            "vfx-preset-blood/heavy/physical/droplets · 1顆 · blend=1 · circle_05.png"
+          ],
+          "elapsedMs": 862,
+          "gpuReadbacks": 26
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.effects[0].onHitTargets[0]+",
+            "afterKind": "applyBuff",
+            "vfxId": "fx.prim.arcane.pulse-lg",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[0].onHitTargets[1]+",
+            "afterKind": "applyStatus",
+            "vfxId": "fx.prim.fire.pulse",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[0].onHitTargets[2]+",
+            "afterKind": "applyStatus",
+            "vfxId": "fx.prim.arcane.pulse",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[0]+",
+            "afterKind": "damageArea",
+            "vfxId": "fx.prim.arcane.nova-lg",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -2796,13 +3487,13 @@
           "safe": true,
           "autoVisualScore": 10,
           "sampledFrames": 17,
-          "peakParticleCount": 142,
+          "peakParticleCount": 136,
           "peakParticleCountBeforeIsolation": 136,
           "peakSystemCount": 12,
           "peakStartedSystemCount": 12,
           "peakManualEmitCount": 142,
-          "peakPresentationPixelShare": 0.006118316125241333,
-          "presentationEventCount": 0,
+          "peakPresentationPixelShare": 0.006547469151347267,
+          "presentationEventCount": 2,
           "acceptedVfxEventCount": 0,
           "semanticActionCount": 0,
           "worstAtMs": 0,
@@ -2818,7 +3509,7 @@
             "unsafe": false
           },
           "suspects": [],
-          "elapsedMs": 904.8,
+          "elapsedMs": 923.4,
           "gpuReadbacks": 17
         },
         "blockers": [],
@@ -2826,7 +3517,15 @@
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.passive.ranks[0].hooks[0].effects[0]+",
+            "afterKind": "cycleBuff",
+            "vfxId": "fx.prim.arcane.pulse-lg",
+            "at": "self"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -2861,43 +3560,68 @@
       "hasShippedVfxScript": false,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 2,
+        "frameCount": 3,
         "audit": {
           "safe": true,
-          "autoVisualScore": 9.5,
-          "sampledFrames": 31,
-          "peakParticleCount": 44,
-          "peakParticleCountBeforeIsolation": 44,
-          "peakSystemCount": 1,
-          "peakStartedSystemCount": 1,
-          "peakManualEmitCount": 44,
-          "peakPresentationPixelShare": 0.017158776126920173,
-          "presentationEventCount": 1,
-          "acceptedVfxEventCount": 1,
-          "semanticActionCount": 2,
-          "worstAtMs": 1266.6666666666667,
+          "autoVisualScore": 9,
+          "sampledFrames": 26,
+          "peakParticleCount": 160,
+          "peakParticleCountBeforeIsolation": 160,
+          "peakSystemCount": 14,
+          "peakStartedSystemCount": 14,
+          "peakManualEmitCount": 166,
+          "peakPresentationPixelShare": 0.025067153529757406,
+          "presentationEventCount": 4,
+          "acceptedVfxEventCount": 0,
+          "semanticActionCount": 1,
+          "worstAtMs": 1333.3333333333337,
           "worst": {
-            "litShare": 0.00944976076555024,
-            "presentationPixelShare": 0.017158776126920173,
-            "highlightShare": 0.004875975824729288,
-            "brightShare": 0.0027438512549315874,
-            "nearWhiteShare": 0.0018047511122303366,
-            "dominantBrightShare": 0.001757533786619659,
-            "dominantNonBackgroundShare": 0.001757533786619659,
+            "litShare": 0,
+            "presentationPixelShare": 0.024516284730966172,
+            "highlightShare": 0,
+            "brightShare": 0,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0,
+            "dominantNonBackgroundShare": 0.017088474775455383,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 882,
-          "gpuReadbacks": 31
+          "suspects": [
+            "vfx-ring · r/d=0.14 · vfx-ring-mat · 無貼圖",
+            "vfx-ring · r/d=0.14 · vfx-ring-mat · 無貼圖",
+            "vfx-decal · r/d=0.05 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-decal · r/d=0.04 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha"
+          ],
+          "elapsedMs": 1019,
+          "gpuReadbacks": 26
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.effects[0].hooks[0].effects[0]+",
+            "afterKind": "damage",
+            "vfxId": "fx.prim.arcane.pulse",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[0]+",
+            "afterKind": "applyBuff",
+            "vfxId": "fx.prim.arcane.pulse-lg",
+            "at": "target"
+          },
+          {
+            "path": "$.passive.ranks[0].hooks[0].effects[0]+",
+            "afterKind": "eventValueConversion",
+            "vfxId": "fx.prim.arcane.pulse",
+            "at": "self"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -2924,42 +3648,65 @@
       "hasShippedVfxScript": false,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 2,
+        "frameCount": 8,
         "audit": {
           "safe": true,
-          "autoVisualScore": 10,
-          "sampledFrames": 31,
-          "peakParticleCount": 32,
-          "peakParticleCountBeforeIsolation": 32,
-          "peakSystemCount": 1,
-          "peakStartedSystemCount": 1,
-          "peakManualEmitCount": 32,
-          "peakPresentationPixelShare": 0.01208343826072358,
-          "presentationEventCount": 1,
-          "acceptedVfxEventCount": 1,
-          "semanticActionCount": 2,
-          "worstAtMs": 0,
+          "autoVisualScore": 8.5,
+          "sampledFrames": 26,
+          "peakParticleCount": 157,
+          "peakParticleCountBeforeIsolation": 159,
+          "peakSystemCount": 11,
+          "peakStartedSystemCount": 11,
+          "peakManualEmitCount": 153,
+          "peakPresentationPixelShare": 0.027358767732728953,
+          "presentationEventCount": 4,
+          "acceptedVfxEventCount": 0,
+          "semanticActionCount": 0,
+          "worstAtMs": 666.6666666666665,
           "worst": {
-            "litShare": 0,
-            "highlightShare": 0,
+            "litShare": 0.0023965415932174937,
+            "presentationPixelShare": 0.027358767732728953,
+            "highlightShare": 0.00004406950390329892,
             "brightShare": 0,
             "nearWhiteShare": 0,
             "dominantBrightShare": 0,
-            "dominantNonBackgroundShare": 0,
+            "dominantNonBackgroundShare": 0.023547804918996055,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 864.2,
-          "gpuReadbacks": 31
+          "suspects": [
+            "vfx-ring · r/d=0.22 · vfx-ring-mat · 無貼圖",
+            "telegraph-corridor · r/d=0.12 · telegraph-corridor-mat · 無貼圖",
+            "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "telegraph-ring · r/d=0.05 · telegraph-ring · 無貼圖",
+            "telegraph-fill · r/d=0.04 · telegraph-fill · /content-api/assets/textures/particles/magic_02.png:ready/alpha",
+            "vfx-preset-ex/1,0.2,0.15/smoke · 14顆 · blend=1 · smoke_05.png",
+            "vfx-preset-ex/1,0.2,0.15/debris · 13顆 · blend=1 · flare_01.png"
+          ],
+          "elapsedMs": 1010.2,
+          "gpuReadbacks": 26
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.effects[0]+",
+            "afterKind": "swapResource",
+            "vfxId": "fx.prim.arcane.pulse",
+            "at": "self"
+          },
+          {
+            "path": "$.effects[0]+",
+            "afterKind": "swapResource",
+            "vfxId": "fx.prim.arcane.pulse",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -2986,42 +3733,60 @@
       "hasShippedVfxScript": false,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 2,
+        "frameCount": 8,
         "audit": {
           "safe": true,
-          "autoVisualScore": 10,
-          "sampledFrames": 20,
-          "peakParticleCount": 32,
-          "peakParticleCountBeforeIsolation": 32,
-          "peakSystemCount": 1,
-          "peakStartedSystemCount": 1,
-          "peakManualEmitCount": 32,
-          "peakPresentationPixelShare": 0.007051120624527827,
-          "presentationEventCount": 1,
-          "acceptedVfxEventCount": 1,
-          "semanticActionCount": 2,
-          "worstAtMs": 0,
+          "autoVisualScore": 9.5,
+          "sampledFrames": 17,
+          "peakParticleCount": 115,
+          "peakParticleCountBeforeIsolation": 98,
+          "peakSystemCount": 17,
+          "peakStartedSystemCount": 17,
+          "peakManualEmitCount": 130,
+          "peakPresentationPixelShare": 0.015009566921784581,
+          "presentationEventCount": 3,
+          "acceptedVfxEventCount": 0,
+          "semanticActionCount": 0,
+          "worstAtMs": 600,
           "worst": {
-            "litShare": 0,
-            "highlightShare": 0,
-            "brightShare": 0,
+            "litShare": 0.0054426451372036585,
+            "presentationPixelShare": 0.015009566921784581,
+            "highlightShare": 0.003449925331342169,
+            "brightShare": 0.0027032387530334144,
             "nearWhiteShare": 0,
-            "dominantBrightShare": 0,
-            "dominantNonBackgroundShare": 0,
+            "dominantBrightShare": 0.0003838435691618443,
+            "dominantNonBackgroundShare": 0.0033775900690685085,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 762.8,
-          "gpuReadbacks": 20
+          "suspects": [
+            "vfx-fx.basic-attack · 30顆 · blend=0 · light_01.png",
+            "vfx-preset-light/0.9,0.95,1/sparks · 27顆 · blend=0 · spark_05_rotated.png",
+            "vfx-preset-dust/0.60 · 12顆 · blend=1 · smoke_05.png",
+            "vfx-preset-ember/0.60 · 11顆 · blend=0 · spark_05_rotated.png",
+            "vfx-preset-light/0.9,0.95,1/debris · 8顆 · blend=1 · flare_01.png",
+            "vfx-preset-light/0.9,0.95,1/smoke · 7顆 · blend=1 · smoke_05.png",
+            "vfx-preset-block/1/sparks · 4顆 · blend=0 · spark_05_rotated.png",
+            "vfx-preset-light/0.9,0.95,1/flash · 3顆 · blend=0 · flare_01.png"
+          ],
+          "elapsedMs": 918.6,
+          "gpuReadbacks": 17
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.effects[0]+",
+            "afterKind": "manaBarrier",
+            "vfxId": "fx.prim.holy.nova-lg",
+            "at": "self"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -3056,43 +3821,65 @@
       "hasShippedVfxScript": false,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 2,
+        "frameCount": 8,
         "audit": {
           "safe": true,
-          "autoVisualScore": 9.5,
-          "sampledFrames": 26,
-          "peakParticleCount": 36,
-          "peakParticleCountBeforeIsolation": 36,
-          "peakSystemCount": 1,
-          "peakStartedSystemCount": 1,
-          "peakManualEmitCount": 36,
-          "peakPresentationPixelShare": 0.01803911693108369,
-          "presentationEventCount": 1,
-          "acceptedVfxEventCount": 1,
-          "semanticActionCount": 2,
-          "worstAtMs": 866.6666666666661,
+          "autoVisualScore": 8.5,
+          "sampledFrames": 19,
+          "peakParticleCount": 335,
+          "peakParticleCountBeforeIsolation": 347,
+          "peakSystemCount": 23,
+          "peakStartedSystemCount": 23,
+          "peakManualEmitCount": 236,
+          "peakPresentationPixelShare": 0.052371359019558465,
+          "presentationEventCount": 2,
+          "acceptedVfxEventCount": 0,
+          "semanticActionCount": 0,
+          "worstAtMs": 1066.6666666666658,
           "worst": {
-            "litShare": 0.009003819357004953,
-            "presentationPixelShare": 0.01803911693108369,
-            "highlightShare": 0.004675564509359523,
-            "brightShare": 0.001898136489549232,
-            "nearWhiteShare": 0.0010692101066062285,
-            "dominantBrightShare": 0.0009957609334340636,
-            "dominantNonBackgroundShare": 0.001005204398556199,
+            "litShare": 0.007800302190883908,
+            "presentationPixelShare": 0.052371359019558465,
+            "highlightShare": 0.0018288844119869051,
+            "brightShare": 0.0002098547804918996,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0.00008184336439184085,
+            "dominantNonBackgroundShare": 0.021723117602618986,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 816.8,
-          "gpuReadbacks": 26
+          "suspects": [
+            "vfx-ring · r/d=0.22 · vfx-ring-mat · 無貼圖",
+            "vfx-ring · r/d=0.18 · vfx-ring-mat · 無貼圖",
+            "vfx-ring · r/d=0.11 · vfx-ring-mat · 無貼圖",
+            "vfx-decal · r/d=0.08 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-decal · r/d=0.04 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-preset-ex/1,0.2,0.15/sparks · 56顆 · blend=0 · spark_05_rotated.png",
+            "vfx-preset-ex/1,0.2,0.15/sparks · 56顆 · blend=0 · spark_05_rotated.png",
+            "vfx-preset-ex/1,0.2,0.15/sparks · 56顆 · blend=0 · spark_05_rotated.png",
+            "vfx-preset-ex/1,0.2,0.15/smoke · 23顆 · blend=1 · smoke_05.png",
+            "vfx-preset-ex/1,0.2,0.15/debris · 21顆 · blend=1 · flare_01.png",
+            "vfx-preset-ex/1,0.2,0.15/debris · 16顆 · blend=1 · flare_01.png",
+            "vfx-preset-ex/1,0.2,0.15/debris · 16顆 · blend=1 · flare_01.png",
+            "vfx-preset-ex/1,0.2,0.15/smoke · 14顆 · blend=1 · smoke_05.png"
+          ],
+          "elapsedMs": 806.1,
+          "gpuReadbacks": 19
         },
         "blockers": [],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.effects[0]+",
+            "afterKind": "applyBuff",
+            "vfxId": "fx.prim.arcane.pulse-lg",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -3124,32 +3911,31 @@
         "frameCount": 8,
         "audit": {
           "safe": true,
-          "autoVisualScore": 9.5,
+          "autoVisualScore": 10,
           "sampledFrames": 120,
-          "peakParticleCount": 48,
-          "peakParticleCountBeforeIsolation": 48,
-          "peakSystemCount": 1,
-          "peakStartedSystemCount": 1,
-          "peakManualEmitCount": 48,
-          "peakPresentationPixelShare": 0.025183622932930413,
-          "presentationEventCount": 1,
-          "acceptedVfxEventCount": 1,
-          "semanticActionCount": 14,
-          "worstAtMs": 1133.3333333333328,
+          "peakParticleCount": 91,
+          "peakParticleCountBeforeIsolation": 81,
+          "peakSystemCount": 10,
+          "peakStartedSystemCount": 10,
+          "peakManualEmitCount": 26,
+          "peakPresentationPixelShare": 0.0068486107613531435,
+          "presentationEventCount": 7,
+          "acceptedVfxEventCount": 0,
+          "semanticActionCount": 3,
+          "worstAtMs": 0,
           "worst": {
-            "litShare": 0.006754176110131789,
-            "presentationPixelShare": 0.00808885251406027,
-            "highlightShare": 0.006045916225971628,
-            "brightShare": 0.005511835809619743,
-            "nearWhiteShare": 0.004900109124485855,
-            "dominantBrightShare": 0.004861285990094854,
-            "dominantNonBackgroundShare": 0.004861285990094854,
+            "litShare": 0,
+            "highlightShare": 0,
+            "brightShare": 0,
+            "nearWhiteShare": 0,
+            "dominantBrightShare": 0,
+            "dominantNonBackgroundShare": 0,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
           "suspects": [],
-          "elapsedMs": 1623.2,
+          "elapsedMs": 1650.2,
           "gpuReadbacks": 120
         },
         "blockers": [],
@@ -3157,7 +3943,21 @@
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.effects[0]+",
+            "afterKind": "applyBuff",
+            "vfxId": "fx.prim.arcane.pulse-lg",
+            "at": "target"
+          },
+          {
+            "path": "$.effects[1].effects[0]+",
+            "afterKind": "grantXp",
+            "vfxId": "fx.prim.holy.pulse-lg",
+            "at": "target"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"
@@ -3189,34 +3989,44 @@
       "hasShippedVfxScript": false,
       "framebuffer": {
         "batchStatus": "captured",
-        "frameCount": 2,
+        "frameCount": 8,
         "audit": {
           "safe": true,
-          "autoVisualScore": 10,
+          "autoVisualScore": 9,
           "sampledFrames": 17,
-          "peakParticleCount": 32,
-          "peakParticleCountBeforeIsolation": 32,
-          "peakSystemCount": 1,
-          "peakStartedSystemCount": 1,
-          "peakManualEmitCount": 32,
-          "peakPresentationPixelShare": 0.007089943758918828,
-          "presentationEventCount": 1,
-          "acceptedVfxEventCount": 1,
-          "semanticActionCount": 2,
-          "worstAtMs": 0,
+          "peakParticleCount": 136,
+          "peakParticleCountBeforeIsolation": 123,
+          "peakSystemCount": 12,
+          "peakStartedSystemCount": 12,
+          "peakManualEmitCount": 113,
+          "peakPresentationPixelShare": 0.026137412910266097,
+          "presentationEventCount": 3,
+          "acceptedVfxEventCount": 0,
+          "semanticActionCount": 0,
+          "worstAtMs": 533.3333333333335,
           "worst": {
-            "litShare": 0,
+            "litShare": 0.000020985478049189962,
+            "presentationPixelShare": 0.02318160832703769,
             "highlightShare": 0,
             "brightShare": 0,
             "nearWhiteShare": 0,
             "dominantBrightShare": 0,
-            "dominantNonBackgroundShare": 0,
+            "dominantNonBackgroundShare": 0.014161000587593385,
             "localWhiteCardShare": 0,
             "diagnosticCheckerShare": 0,
             "unsafe": false
           },
-          "suspects": [],
-          "elapsedMs": 745.6,
+          "suspects": [
+            "vfx-ring · r/d=0.18 · vfx-ring-mat · 無貼圖",
+            "vfx-decal · r/d=0.06 · vfx-decal-mat · /content-api/assets/textures/particles/scorch_02.png:ready/alpha",
+            "vfx-preset-ex/1,0.2,0.15/sparks · 43顆 · blend=0 · spark_05_rotated.png",
+            "vfx-preset-ex/1,0.2,0.15/debris · 16顆 · blend=1 · flare_01.png",
+            "vfx-preset-ex/1,0.2,0.15/smoke · 14顆 · blend=1 · smoke_05.png",
+            "vfx-preset-blood/heavy/physical/droplets · 12顆 · blend=1 · circle_05.png",
+            "vfx-preset-dust/0.60 · 9顆 · blend=1 · smoke_05.png",
+            "vfx-preset-blood/heavy/physical/mist · 1顆 · blend=1 · smoke_04.png"
+          ],
+          "elapsedMs": 794.4,
           "gpuReadbacks": 17
         },
         "blockers": [],
@@ -3224,7 +4034,21 @@
         "humanScore": null,
         "humanNote": "",
         "machineIssues": [],
-        "basicVisualFallback": null
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": [
+          {
+            "path": "$.effects[0]+",
+            "afterKind": "applyBuff",
+            "vfxId": "fx.prim.arcane.pulse-lg",
+            "at": "target"
+          },
+          {
+            "path": "$.passive.ranks[0].hooks[0].effects[0]+",
+            "afterKind": "extendBuff",
+            "vfxId": "fx.prim.arcane.pulse-lg",
+            "at": "self"
+          }
+        ]
       },
       "authoringBlockers": [],
       "status": "needs-frame-review"

@@ -1,0 +1,108 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-03T21:13:43.526Z",
+  "sourceDigest": "54d9005b6f4066cfb3a5d59d085d1465f27064c087b694f22b3106dbb869d081",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e00l.passive",
+    "name": "20-00 銀色甲胄"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5816,
+    "usage": {
+      "promptTokens": 2799,
+      "completionTokens": 382,
+      "totalTokens": 3181
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e00l.passive-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-e00l.passive · 真 runtime · damage+hitImpact+shieldGained · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 4578,
+      "sha256": "92230a61942d3491709a0720b8b94bfae79e21967bd559d08b186e880d49dd76"
+    },
+    {
+      "path": "frames/godie-e00l.passive-02-580ms.webp",
+      "atMs": 580,
+      "phase": "godie-e00l.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5008,
+      "sha256": "a559093d06bd16b1b8e6953896fe2c6a18b4f5e9e9cf461c488c0b0986ce875e"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見銀色甲胄或減傷盾效果\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見任何特效\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見特效，無法確認顏色\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見特效，無法確認發生位置\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見特效，無法確認影響位置\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"缺少特效，無法確認時間順序\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無特效可檢查\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"fail\",\n      \"reason\": \"無特效，無法確認辨識度\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"畫面中僅見角色模型與地面的藍色圓圈，未見任何銀色甲胄或護盾特效。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見銀色甲胄或減傷盾效果",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "fail",
+        "reason": "未見任何特效",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未見特效，無法確認顏色",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未見特效，無法確認發生位置",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未見特效，無法確認影響位置",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "缺少特效，無法確認時間順序",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "無特效可檢查",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "fail",
+        "reason": "無特效，無法確認辨識度",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "畫面中僅見角色模型與地面的藍色圓圈，未見任何銀色甲胄或護盾特效。"
+    ]
+  },
+  "contractWarnings": []
+}

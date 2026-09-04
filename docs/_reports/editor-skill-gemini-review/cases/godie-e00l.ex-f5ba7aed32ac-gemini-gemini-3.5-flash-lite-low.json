@@ -1,0 +1,159 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-prechecked",
+  "generatedAt": "2026-09-03T18:09:13.317Z",
+  "sourceDigest": "f5ba7aed32ac1e2e2a76a0c0259bace42f017c83c612ae2ebcad5941f18e68ae",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e00l.ex",
+    "name": "20-002 解放.約束勝利劍MAX"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.5-flash-lite",
+    "reported": "gemini-3.5-flash-lite",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 3188,
+    "usage": {
+      "promptTokens": 5034,
+      "completionTokens": 433,
+      "totalTokens": 5467
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e00l.ex-01-313ms.webp",
+      "atMs": 313,
+      "phase": "godie-e00l.ex · 反彈成功 · vfx+floatingText+bodyMove+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6496,
+      "sha256": "044073d835fd0d5a4a7f52e5f05a9c70541a9c7145b0d7cdda48de082c5e45d5"
+    },
+    {
+      "path": "frames/godie-e00l.ex-02-713ms.webp",
+      "atMs": 713,
+      "phase": "godie-e00l.ex · 反彈成功 · vfx+bodyMove+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8632,
+      "sha256": "ebf9e40aaf3ea8f12f934171a147ca502496b90b47e4c4e94824d7ba07838b17"
+    },
+    {
+      "path": "frames/godie-e00l.ex-03-980ms.webp",
+      "atMs": 980,
+      "phase": "godie-e00l.ex · 第 6 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7656,
+      "sha256": "72ddd866ddd014a385d05c46cd51afbd8c8b1786be21f36621800297c9a83990"
+    },
+    {
+      "path": "frames/godie-e00l.ex-04-1393ms.webp",
+      "atMs": 1393,
+      "phase": "godie-e00l.ex · 第 7 段 · vfx · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7400,
+      "sha256": "af0f20728de4caae779a158732d8b26f079da2fe90cc5f4a37e87ccb0f775403"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"pass\",\n  \"confidence\": 0.95,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"預期特效與多次斬擊完整可見\",\n      \"evidenceFrames\": [1, 2, 3]\n    },\n    \"familyMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"符合預期之解構與光劍類型\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"colorMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"色彩表現正常\",\n      \"evidenceFrames\": [1, 2, 3]\n    },\n    \"spawnOrigin\": {\n      \"status\": \"pass\",\n      \"reason\": \"特效生成位置正確\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"impactPlacement\": {\n      \"status\": \"pass\",\n      \"reason\": \"打擊位置與角色動作吻合\",\n      \"evidenceFrames\": [2, 3]\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"依序承接反彈並播放多段攻擊\",\n      \"evidenceFrames\": [0, 1, 2, 3]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模或裁切\",\n      \"evidenceFrames\": [1, 2, 3]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"主效果與角色關係清楚\",\n      \"evidenceFrames\": [1, 2, 3]\n    }\n  },\n  \"notes\": [\n    \"特效播放順序正確\",\n    \"未觀察到穿模異常\"\n  ]\n}",
+  "modelResult": {
+    "overall": "pass",
+    "confidence": 0.95,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "預期特效與多次斬擊完整可見",
+        "evidenceFrames": [
+          1,
+          2,
+          3
+        ]
+      },
+      "familyMatch": {
+        "status": "pass",
+        "reason": "符合預期之解構與光劍類型",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "colorMatch": {
+        "status": "pass",
+        "reason": "色彩表現正常",
+        "evidenceFrames": [
+          1,
+          2,
+          3
+        ]
+      },
+      "spawnOrigin": {
+        "status": "pass",
+        "reason": "特效生成位置正確",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "impactPlacement": {
+        "status": "pass",
+        "reason": "打擊位置與角色動作吻合",
+        "evidenceFrames": [
+          2,
+          3
+        ]
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "依序承接反彈並播放多段攻擊",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模或裁切",
+        "evidenceFrames": [
+          1,
+          2,
+          3
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "主效果與角色關係清楚",
+        "evidenceFrames": [
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    "notes": [
+      "特效播放順序正確",
+      "未觀察到穿模異常"
+    ]
+  },
+  "contractWarnings": []
+}

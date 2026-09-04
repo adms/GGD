@@ -1,0 +1,169 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:05:27.817Z",
+  "sourceDigest": "d00b2347d8d825ce92e182f78059637dbf714b56b04eee64ff566a0385783b05",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e00r.ex",
+    "name": "59-001 完全暴走"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "medium",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 9971,
+    "usage": {
+      "promptTokens": 9401,
+      "completionTokens": 364,
+      "totalTokens": 9765
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e00r.ex-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-e00r.ex · 真 runtime · damage+hitImpact+vfxSpawn+statusApplied · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8256,
+      "sha256": "ab12d6c6dc38e3acf1f3659cfe8aab59173bf0c78369b5728dc19bc7adc05a1d"
+    },
+    {
+      "path": "frames/godie-e00r.ex-02-447ms.webp",
+      "atMs": 447,
+      "phase": "godie-e00r.ex · 真 runtime · comboStrike+vfxSpawn+basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 11920,
+      "sha256": "df5b1275c7e55bdee0d88617bafac82fafdb867ebcce936aff654bf5f8623749"
+    },
+    {
+      "path": "frames/godie-e00r.ex-03-713ms.webp",
+      "atMs": 713,
+      "phase": "godie-e00r.ex · 真 runtime · comboStrike+vfxSpawn+basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 14520,
+      "sha256": "dd22b1a59ec30644812dce2163878c21e7c431842bf662523186b45d7e495793"
+    },
+    {
+      "path": "frames/godie-e00r.ex-04-980ms.webp",
+      "atMs": 980,
+      "phase": "godie-e00r.ex · 真 runtime · basicAttack+comboStrike+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 12608,
+      "sha256": "16b10dfd0e4a89528c961059da7f2b14859239b1c8fc878c135a08addde2636c"
+    },
+    {
+      "path": "frames/godie-e00r.ex-05-1147ms.webp",
+      "atMs": 1147,
+      "phase": "godie-e00r.ex · 真 runtime · basicAttack+damage+hitImpact+vfxSpawn+comboStrike · 自動基本視覺驗收",
+      "index": 4,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 13176,
+      "sha256": "297e28f46bed2249f9b6274cfd4c60a31e3d059c44ef6febbd1b85583b057d09"
+    },
+    {
+      "path": "frames/godie-e00r.ex-06-1280ms.webp",
+      "atMs": 1280,
+      "phase": "godie-e00r.ex · 真 runtime · vfxSpawn+basicAttack+damage+hitImpact+comboStrike · 自動基本視覺驗收",
+      "index": 5,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 12898,
+      "sha256": "21463a97338009206e02091b716197ca29b0c7088fef30b92c779e500d4cb24d"
+    },
+    {
+      "path": "frames/godie-e00r.ex-07-1480ms.webp",
+      "atMs": 1480,
+      "phase": "godie-e00r.ex · 真 runtime · basicAttack+damage+hitImpact+comboStrike+vfxSpawn · 自動基本視覺驗收",
+      "index": 6,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 12350,
+      "sha256": "821668d45016347ce804b786111cb97824465fc421fcf12eaceccc21abfdcc2b"
+    },
+    {
+      "path": "frames/godie-e00r.ex-08-1647ms.webp",
+      "atMs": 1647,
+      "phase": "godie-e00r.ex · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 7,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 12434,
+      "sha256": "a1f074031b97916ef9c0a86fb4bd2dc5da5f32cbd82eb64a804c1f10eddabf60"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.5,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Effect presence is not clearly observable.\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Family match cannot be evaluated.\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Color specifications are not provided.\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Spawn origin cannot be determined.\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Impact placement cannot be determined.\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Temporal order cannot be verified.\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Clipping cannot be assessed.\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Readability cannot be assessed.\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"The images only show a character and some minimal UI elements.\",\n    \"No distinct visual effects matching the description are visible.\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.5,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "Effect presence is not clearly observable.",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "Family match cannot be evaluated.",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "Color specifications are not provided.",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "Spawn origin cannot be determined.",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "Impact placement cannot be determined.",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "Temporal order cannot be verified.",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "Clipping cannot be assessed.",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "Readability cannot be assessed.",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "The images only show a character and some minimal UI elements.",
+      "No distinct visual effects matching the description are visible."
+    ]
+  },
+  "contractWarnings": []
+}

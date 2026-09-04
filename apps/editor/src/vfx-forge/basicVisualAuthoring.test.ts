@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 import { zVfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
+import type { AbilityDef } from "@ggd/shared/sim";
 import { SKILL_ACCEPTANCE_CANDIDATES } from "../forge/skillAcceptanceCatalog";
 import { actionAnimationIssues, activationModeForAbility } from "./actionAnimationPrinciples";
 import {
@@ -100,5 +101,62 @@ describe("42 主題／46 技能的基本視覺自動組裝", () => {
     expect(passiveRoute.script.segments).toEqual([
       { kind: "sound", on: "reflectSuccess", soundKey: "editor.audit.silent" },
     ]);
+  });
+
+  it("有展開後 runtime 定義時，批次優先驗收機制節點上的 preview-only 積木", () => {
+    const runtimeDefinition: AbilityDef = {
+      id: "sample.runtime.q" as AbilityDef["id"],
+      name: "runtime",
+      slot: "Q",
+      castType: "ground",
+      maxRank: 1,
+      cooldown: [1],
+      manaCost: [0],
+      range: 8,
+      effects: [{
+        kind: "damageArea",
+        damageType: "magic",
+        amount: { flat: 10 },
+        radius: 3,
+      }],
+    };
+    const basic = buildBasicVisualDraft(runtimeDefinition, [], { runtimeDefinition });
+    const route = basicVisualProofRoute(runtimeDefinition.id, null, basic);
+
+    expect(basic.previewAdditions).toEqual([expect.objectContaining({
+      afterKind: "damageArea",
+      vfxId: "fx.prim.arcane.nova-lg",
+    })]);
+    expect(route).toMatchObject({
+      mode: "runtime",
+      source: "editor-effect-graph-preview",
+      definition: basic.previewDefinition,
+    });
+    expect(route.script.segments).toEqual([
+      { kind: "sound", on: "reflectSuccess", soundKey: "editor.audit.silent" },
+    ]);
+  });
+
+  it("指名驗收 fixture 永遠優先，不讓 preview overlay 改寫八招參考時間軸", () => {
+    const runtimeDefinition: AbilityDef = {
+      id: "sample.fixture.r" as AbilityDef["id"],
+      name: "fixture",
+      slot: "R",
+      castType: "targeted",
+      maxRank: 1,
+      cooldown: [1],
+      manaCost: [0],
+      range: 8,
+      effects: [{ kind: "damage", damageType: "physical", amount: { flat: 1 } }],
+    };
+    const fixture = runtimeAuditPlaceholderScript(runtimeDefinition.id);
+    const basic = buildBasicVisualDraft(runtimeDefinition, [], { runtimeDefinition });
+
+    expect(basicVisualProofRoute(runtimeDefinition.id, fixture, basic)).toEqual({
+      mode: "script",
+      source: "acceptance-fixture",
+      script: fixture,
+      definition: null,
+    });
   });
 });

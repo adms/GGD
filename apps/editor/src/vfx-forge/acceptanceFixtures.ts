@@ -11,7 +11,8 @@ import nbbcE from "./acceptance-fixtures/godie-nbbc.e.json";
 import ogrhR from "./acceptance-fixtures/godie-ogrh.r.json";
 import e002Ex from "./acceptance-fixtures/godie-e002.ex.json";
 import hvshR from "./acceptance-fixtures/godie-hvsh.r.json";
-import { CLASSIC_BEAM_VISUAL_GAP, buildVfxForgeRecipe } from "./recipes";
+import { buildVfxForgeRecipe } from "./recipes";
+export { acceptanceFixtureVisualGaps } from "./acceptanceVisualGaps";
 import {
   completeActionAnimations,
   type ActionTimelineCue,
@@ -45,26 +46,6 @@ const GENERATED_FIXTURES = new Set([
   "godie-h01n.r",
   "godie-h00l.r",
 ]);
-
-const CLASSIC_BEAM_ACCEPTANCE_IDS = new Set([
-  "godie-hart.r",
-  "godie-nbbc.e",
-  "godie-ogrh.r",
-  "godie-o00x.r",
-  "godie-hvsh.r",
-  "godie-e002.ex",
-  "godie-e00l.ex",
-]);
-
-/**
- * Proven representation gaps stay beside the fixture-to-recipe routing, so
- * browser capture, JSON import and the 42/46 report all preserve the same
- * result. A captured framebuffer is still useful evidence; it is not a visual
- * pass while the requested grammar cannot be built from shipped Main bricks.
- */
-export function acceptanceFixtureVisualGaps(abilityId: string): readonly string[] {
-  return CLASSIC_BEAM_ACCEPTANCE_IDS.has(abilityId) ? [CLASSIC_BEAM_VISUAL_GAP] : [];
-}
 
 export const VFX_FORGE_REFERENCE_SCENES = [
   ["godie-hjai.e", "04-03 龍破斬"],

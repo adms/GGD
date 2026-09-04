@@ -1,0 +1,129 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T21:10:57.458Z",
+  "sourceDigest": "b8ca0ceb9191b98fd5e0a1317abbb0300dea4448523ddb03fbb6c55b6620d88d",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hjai.r",
+    "name": "04-04 神滅斬"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6793,
+    "usage": {
+      "promptTokens": 3893,
+      "completionTokens": 454,
+      "totalTokens": 4347
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hjai.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hjai.r · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5350,
+      "sha256": "2ba9222ddafe1f47f2d224c7f54ffd111d9158b18a03449ed070c9e27470a93d"
+    },
+    {
+      "path": "frames/godie-hjai.r-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-hjai.r · 吟唱完成 · anim+bodyMove · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6068,
+      "sha256": "8946c0000ab05664e44fd83dbfb5877140e4b3043d4771603d115cd4799e6f72"
+    },
+    {
+      "path": "frames/godie-hjai.r-03-1550ms.webp",
+      "atMs": 1550,
+      "phase": "godie-hjai.r · 吟唱完成 · vfx+anim+screenShake · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6282,
+      "sha256": "8bcd922e20ceaed9f7d839489708bdf0a658898e929fd51fe443fafd03f57af7"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.5,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"黑色光刀斬擊效果不明顯，無法確認完整特效。\",\n      \"evidenceFrames\": [\n        2\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"特效細節不清晰，無法確認是否符合斬擊。 \",\n      \"evidenceFrames\": [\n        2\n      ]\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"只有模糊的深色軌跡，難以確認黑色光刀。\",\n      \"evidenceFrames\": [\n        2\n      ]\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供起點規格。\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供確切命中位置規格。\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"幀數不足以判斷完整時序與傷害/暈眩同時發生。\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模或裁切問題。\",\n      \"evidenceFrames\": [\n        2\n      ]\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"主效果不夠清晰，難以確認其與場景的關係。\",\n      \"evidenceFrames\": [\n        2\n      ]\n    }\n  },\n  \"notes\": [\n    \"畫面僅顯示角色衝擊與模糊軌跡，無法確認黑色光刀斬擊。\",\n    \"缺乏足夠的幀來判斷特效完整性。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.5,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "黑色光刀斬擊效果不明顯，無法確認完整特效。",
+        "evidenceFrames": [
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "特效細節不清晰，無法確認是否符合斬擊。 ",
+        "evidenceFrames": [
+          2
+        ]
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "只有模糊的深色軌跡，難以確認黑色光刀。",
+        "evidenceFrames": [
+          2
+        ]
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供起點規格。",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供確切命中位置規格。",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "幀數不足以判斷完整時序與傷害/暈眩同時發生。",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模或裁切問題。",
+        "evidenceFrames": [
+          2
+        ]
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "主效果不夠清晰，難以確認其與場景的關係。",
+        "evidenceFrames": [
+          2
+        ]
+      }
+    },
+    "notes": [
+      "畫面僅顯示角色衝擊與模糊軌跡，無法確認黑色光刀斬擊。",
+      "缺乏足夠的幀來判斷特效完整性。"
+    ]
+  },
+  "contractWarnings": []
+}

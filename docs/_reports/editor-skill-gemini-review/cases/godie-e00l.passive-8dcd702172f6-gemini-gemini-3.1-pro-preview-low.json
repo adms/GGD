@@ -1,0 +1,124 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-03T23:29:02.329Z",
+  "sourceDigest": "8dcd702172f674fbbb8f3d07d7a49ff10e9f2fb34b2fb4e7779d50cf4fe92a58",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e00l.passive",
+    "name": "20-00 銀色甲胄"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6978,
+    "usage": {
+      "promptTokens": 2799,
+      "completionTokens": 456,
+      "totalTokens": 3255
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e00l.passive-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-e00l.passive · 真 runtime · damage+hitImpact+shieldGained+vfxSpawn · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6602,
+      "sha256": "221dc3377ceb9aec912a3cfe3e6b801977371016dd242f0afc2aaebea7f8f969"
+    },
+    {
+      "path": "frames/godie-e00l.passive-02-580ms.webp",
+      "atMs": 580,
+      "phase": "godie-e00l.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10234,
+      "sha256": "628552aaa42c64565f31e3178fc849d0ce2c792085d0e2a49dc29bdea7435871"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見銀色甲冑或減傷盾效果，僅見紅色受擊特效\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"fail\",\n      \"reason\": \"可見效果不符護盾或甲冑特徵\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"colorMatch\": {\n      \"status\": \"fail\",\n      \"reason\": \"效果為紅色，不符銀色預期\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無指定位置\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無指定位置\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"主效果未出現，無法判斷時序\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"現有效果尚算清晰\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    }\n  },\n  \"notes\": [\n    \"畫面中僅見紅色血液/受擊特效，未見任何類似銀色甲胄或護盾的視覺效果。\",\n    \"無法從視覺判斷機率或數值條件。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見銀色甲冑或減傷盾效果，僅見紅色受擊特效",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "fail",
+        "reason": "可見效果不符護盾或甲冑特徵",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "colorMatch": {
+        "status": "fail",
+        "reason": "效果為紅色，不符銀色預期",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "無指定位置",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "無指定位置",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "主效果未出現，無法判斷時序",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "現有效果尚算清晰",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      }
+    },
+    "notes": [
+      "畫面中僅見紅色血液/受擊特效，未見任何類似銀色甲胄或護盾的視覺效果。",
+      "無法從視覺判斷機率或數值條件。"
+    ]
+  },
+  "contractWarnings": []
+}

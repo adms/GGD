@@ -1,8 +1,8 @@
 # 遊戲主程式載入 Editor JSON／ZIP 的修改建議
 
-狀態：**Revision 6.1 — 42／46 驗收完成；只新增一項可重用 VFX 積木阻塞**
+狀態：**Revision 6.4 — type-first 工坊收斂；保留一個經 framebuffer 證實的 emitter instance 接縫**
 
-最後驗證：**2026-09-04 06:32（Asia/Taipei）**
+最後驗證：**2026-09-04 11:17（Asia/Taipei）**
 
 上一輪接縫收據：
 [`docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md`](docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md)
@@ -17,43 +17,47 @@ Codex Editor 已整合 `origin/feat/editor-seam-20260902@4ec5e676`，並以 Main
 - generator-owned champion-slot PATCH／restore server guard，加上 Editor 寫入前的第二層 receipt 檢查。
 
 2026-09-02 的載入／來源／批核接縫已結案，Main 不必替 Editor 製作或調整任何驗收技能。
-2026-09-04 完成 42 個主題／46 份技能的瀏覽器實際擷取後，另證實一項跨技能共用的
-VFX primitive 缺口；它列在下方「目前唯一 Main 外部阻塞」，不重開已完成的接縫。
+2026-09-04 曾把七招光束的 Editor 白卡／錯誤替代配方誤報成 Main 缺少光束模型；重新對回 JASS、
+蝗蟲 unit 與 Main model 文件後已撤回。聚焦 framebuffer 重驗另找出一個更窄、可重現的接縫：模型
+mesh 會套用 instance 參數，但 `model@1.fxEmitters` 只收到出生座標，不會繼承縮放、方向、色彩與透明度。
 
 ## 42／46 最新驗收結果
 
 - 46／46 均由真 Editor 預覽路徑完成擷取，沒有 capture failed／blocked；全部仍等待 Owner 人工裁決。
 - 設計師 no-code 路徑：30 份可直接編排、16 份經 effect-graph bridge、0 份缺少 authoring 路徑。
-- 視覺裁決建議：8 份可送 Owner、31 份屬 Editor 配方／美術重作、7 份被同一項 Main 積木阻塞。
+- 六份橫向／終結光束已聚焦重驗並保留失敗幀；不得再以「缺少模型」跳過 Editor 責任，也不得逐招
+  疊粒子掩蓋共用 emitter instance 接縫。
 - 機器收據：`docs/_reports/editor-skill-basic-visual-proof/manifest.json`。
 - 逐份 Codex advisory：`docs/_reports/editor-skill-codex-advisory/review.json`；目前平均視覺分數 4.65／10，
   advisory 永遠不會代替人工核准。
 
-## 目前唯一 Main 外部阻塞：連續實心光束／直立光柱 primitive
+## 已撤回的誤報與目前精確接縫
 
-受影響的 7 份實際技能為：`godie-hart.r`、`godie-nbbc.e`、`godie-ogrh.r`、
+本輪重新對帳的 7 份實際技能為：`godie-hart.r`、`godie-nbbc.e`、`godie-ogrh.r`、
 `godie-o00x.r`、`godie-e002.ex`、`godie-e00l.ex`、`godie-hvsh.r`。
 
-現有積木的實際畫面結果已分別排除：
+重新對帳後，Main 已具備本輪需要的模型積木：
 
-- `fx.prim.*.beam-flat`／`beam-lg` 是 stretched particle trace，只會形成細線，不能形成連續實心砲身；
-- `tpl-beam-roll` 的歷史模型路徑依其模板文件自述仍有透明材質／缺貼圖問題，不能作為安全通用解；
-- `ReviveHuman` 路徑會露出不透明 TeamGlow 白卡；
-- 以 pulse／flare 沿線排列只能得到珠串，不是光束；
-- `CastPillarFx` 是遊戲的施法提示消費端，不是 `vfx-script@1` 可拖拉、可寫回的 authoring primitive。
+- `h007` 特效龜派與 `h00S` 勝利劍都指向 `ReviveHuman.mdl`，對應 `w3x.stock.revivehuman`；
+- `h008` 特效三號指向 `FragDriller.mdl`，對應 `w3x.stock.fragdriller`；
+- Main `ModelFxRig` 已支援 model mesh 的 `scale`、`scaleAxis`、朝向、翻滾、tint、alpha、life，並會
+  生成模型原生 emitters；
+- Main 的 additive material 守衛明確涵蓋 `revivehuman.glb`。
 
-Main 只需提供一顆可重用、world-space、透明安全且不依賴 host bone 的 primitive，並讓 Editor
-能透過現有 `vfx-script@1` 引用。最小 authoring 能力為：
+原作做法是 JASS 建立一個蝗蟲單位，再以 unit model、面向、比例、頂點色與時間塑形；不是沿線排
+pulse／flare。先前白色方板是 Editor 冷啟動材質／GPU readiness 與配方隔離失敗，不是缺模型。
+Editor 已恢復 `ReviveHuman＋FragDriller` 配方；但修改 modelFx 的縮放、位置與 tint 後，模型內建 emitter
+仍維持固定黃色大球，證實 `apps/client/src/render/modelFxRig.ts` 目前只以 `vfxId + world position` 生成它。
 
-- 長度與寬度／半徑可分別調整；
-- 可依瞄準方向設定 yaw／pitch，涵蓋水平光束與垂直光柱；
-- core／edge 顏色與 alpha 可調，生命週期受既有 effective VFX limits 管理；
-- registry／capability receipt 可機讀；未知版本或缺欄位時 Editor fail closed。
+受此接縫阻塞的是 `godie-nbbc.e`、`godie-ogrh.r`、`godie-o00x.r`、`godie-e002.ex`、
+`godie-e00l.ex`、`godie-hvsh.r`。`godie-hart.r` 的直立終結柱使用其他 primitive，不在這個阻塞內。
+請 Main/Owner 自行決定讓 emitter 繼承 instance 參數，或提供 per-instance override/disable；Editor 不指定
+API、不改 renderer、不另做每招專用遮罩。完整來源、自動守衛與交接候選見
+`docs/editor-contract/W3X_CLASSIC_BEAM_RECIPE.md`、`docs/editor-contract/EDITOR_VFX_TEMPLATE_HANDBACK.md`。
 
-這顆積木不得包含技能 ID、傷害、命中次數、鏡頭或成品時間軸。Main 提供 primitive 與 runtime
-消費端後，7 份技能的配色、尺寸、時序、鏡頭、擷取與 Owner 批核全部仍由 Editor 完成。
-解除條件不是 schema 測試變綠，而是同一套自動擷取重新跑過 7 份技能，畫面呈現連續砲身、
-沒有白卡／珠串，且逐張 framebuffer audit 安全。
+另有一項**不阻塞本輪**的 Main 資產缺口：census 的 `n00M` 使用
+`Abilities\Spells\Demon\ReviveDemon\ReviveDemon.mdl`，目前沒有對應 `model@1`／GLB。未來技能成品
+真的需要此視覺時，請 Main 匯入這顆可重用模型；Editor 不自行做第二套資產或以 Human 版冒充。
 
 ## 永久分工
 
@@ -88,4 +92,7 @@ Main 完成 primitive 後只需更新唯一 registry/digest；Editor 自行接�
 - 為了讓按鈕變亮而偽造 ACTIVE、G2 或 production `vfx-script@1` 支援。
 
 目前 `vfx-script@1` 的正式匯入／發布契約仍是 `planned/G5`：Editor 繼續完成本機 no-code 編排與
-批核工作流；Main 只處理上列已由畫面證實的共用 primitive，不進入成品迭代迴圈。
+批核工作流；Main 只處理上列已由畫面證實的共用 primitive，不進入成品迭代迴圈。Editor 現有 21 個
+可選完整配方與 36 個 42／46 機制推薦，共保存 57 個既有 type 成果；全部以穩定的 `familyId/typeN` 收斂並由
+`pnpm vfxforge:handback:build` 產生 advisory-only JSON/Markdown。矩陣／slider 只微調已選 type；Main 可選擇
+是否把重複的低階能力收編為積木，技能時間軸、配色、鏡頭與人工微調不得轉嫁給 Main。

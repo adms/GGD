@@ -1,0 +1,21 @@
+{
+  "schema": "ggd-vfx-visual-review-unavailable@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:02:46.738Z",
+  "sourceDigest": "58bc62e6e191f90db4b1f3fdc8ac7d1b630b6e09ae1a98d389af018155303807",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hapm.w",
+    "name": "52-02 蹂躪編年史"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com"
+  },
+  "reason": {
+    "code": "GEMINI_UNAVAILABLE",
+    "detail": "Gemini returned HTTP 429: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_requests_per_model, limit: 25, model: gemini-3.1-pro\\nPlease retry in 13.169088705s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googl"
+  }
+}

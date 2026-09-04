@@ -1,0 +1,127 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T21:13:02.045Z",
+  "sourceDigest": "8d1239774f561dbb28809359e69bf464a3f7e13755efdf1ab887267e4e841ddd",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-h00l.r",
+    "name": "60-04 完美盾反"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6030,
+    "usage": {
+      "promptTokens": 3894,
+      "completionTokens": 408,
+      "totalTokens": 4302
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-h00l.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-h00l.r · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5328,
+      "sha256": "f93a82a08edac5f89559376967c492dd50de6c8cf0f41502856c4d2be0dab5a9"
+    },
+    {
+      "path": "frames/godie-h00l.r-02-847ms.webp",
+      "atMs": 847,
+      "phase": "godie-h00l.r · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7234,
+      "sha256": "8e882a4f6a0296bf1d1d46c0d3cdcfc8e2cc37161e9df8f6c2eedf3ee23a84a7"
+    },
+    {
+      "path": "frames/godie-h00l.r-03-980ms.webp",
+      "atMs": 980,
+      "phase": "godie-h00l.r · 反彈成功 · anim+vfx+bodyMove+screenShake · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6870,
+      "sha256": "477a0f986ca56c76d6b8bc4284736ee98cda08869262b4718f314b00008e6d62"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺乏明顯的反彈或護盾特效\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定的視覺類型要求\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定的顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定的來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定的命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見完整的作用階段順序\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"畫面中未見明顯穿模\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"角色與地面的關係清晰可見\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2\n      ]\n    }\n  },\n  \"notes\": [\n    \"圖片僅顯示角色攻擊動作，未見盾反或反彈特效\",\n    \"未能觀察到成功反彈或防禦動作\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "缺乏明顯的反彈或護盾特效",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定的視覺類型要求",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定的顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供特定的來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供特定的命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "未見完整的作用階段順序",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "畫面中未見明顯穿模",
+        "evidenceFrames": [
+          0,
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "角色與地面的關係清晰可見",
+        "evidenceFrames": [
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "圖片僅顯示角色攻擊動作，未見盾反或反彈特效",
+      "未能觀察到成功反彈或防禦動作"
+    ]
+  },
+  "contractWarnings": []
+}

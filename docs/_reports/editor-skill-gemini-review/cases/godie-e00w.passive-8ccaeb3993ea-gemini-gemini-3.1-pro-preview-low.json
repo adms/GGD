@@ -1,0 +1,108 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T21:24:01.738Z",
+  "sourceDigest": "8ccaeb3993ea5a0adccf8c18a294bbf2278835b731c6a26d478c824618ee4ea3",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e00w.passive",
+    "name": "77-00 浮雲-旋一閃"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5934,
+    "usage": {
+      "promptTokens": 2796,
+      "completionTokens": 368,
+      "totalTokens": 3164
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e00w.passive-02-487ms.webp",
+      "atMs": 487,
+      "phase": "godie-e00w.passive · 真 runtime · basicAttack+evade+damage+hitImpact+statusApplied · 近景 · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7284,
+      "sha256": "f0ff0ff297a14d5a6b3edb3259336f071f03536fb2d548c748773c96cb8445fd"
+    },
+    {
+      "path": "frames/godie-e00w.passive-01-547ms.webp",
+      "atMs": 547,
+      "phase": "godie-e00w.passive · 真 runtime · basicAttack+evade+damage+hitImpact+statusApplied · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5850,
+      "sha256": "bf1a69d97dd5fbbbab239d50761a17140287702d99c689abd10f7ce73cfd9b51"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No VFX is clearly visible in the provided candidates.\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Cannot determine VFX family without visible effect.\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Cannot determine color without visible effect.\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Cannot determine spawn origin without visible effect.\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Cannot determine impact placement without visible effect.\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Cannot determine temporal order without visible effect.\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Cannot determine clipping without visible effect.\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Cannot determine readability without visible effect.\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"The candidates do not show any clear visual effect of a spinning counterattack.\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "No VFX is clearly visible in the provided candidates.",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "Cannot determine VFX family without visible effect.",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "Cannot determine color without visible effect.",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "Cannot determine spawn origin without visible effect.",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "Cannot determine impact placement without visible effect.",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "Cannot determine temporal order without visible effect.",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "Cannot determine clipping without visible effect.",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "Cannot determine readability without visible effect.",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "The candidates do not show any clear visual effect of a spinning counterattack."
+    ]
+  },
+  "contractWarnings": []
+}

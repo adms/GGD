@@ -1,0 +1,113 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T20:04:48.687Z",
+  "sourceDigest": "eb59c34f34795da77648e87750316672fc489b4e68d8727d6d8c00152667a0df",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hapm.q",
+    "name": "52-01 狂戰士之怒"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6149,
+    "usage": {
+      "promptTokens": 2768,
+      "completionTokens": 401,
+      "totalTokens": 3169
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hapm.q-02-120ms.webp",
+      "atMs": 120,
+      "phase": "godie-hapm.q · 真 runtime · abilityCast · 近景 · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9224,
+      "sha256": "c7d483d4bd9d698edf2f7bda5933cd382da9f3e47dfee11502b67d6c89848346"
+    },
+    {
+      "path": "frames/godie-hapm.q-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hapm.q · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8046,
+      "sha256": "fb4c8787320cce5c511552823c186a81754b89b4861052b91432c9e8c1efda27"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"VFX details are not clearly described.\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No VFX type specified.\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific color requirements provided.\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Spawn origin is not specified.\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Impact placement is not specified.\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Unable to verify temporal order without clear details.\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"No obvious clipping observed in the provided frames.\",\n      \"evidenceFrames\": [0, 1]\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Readability cannot be fully assessed without clear effects.\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"The summary provides gameplay mechanics but lacks clear visual descriptions.\",\n    \"Observed some red effects around the character, but cannot confirm if it's the intended VFX.\",\n    \"Needs specific VFX requirements to accurately assess most checks.\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "VFX details are not clearly described.",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "No VFX type specified.",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "No specific color requirements provided.",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "Spawn origin is not specified.",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "Impact placement is not specified.",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "Unable to verify temporal order without clear details.",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "No obvious clipping observed in the provided frames.",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "Readability cannot be fully assessed without clear effects.",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "The summary provides gameplay mechanics but lacks clear visual descriptions.",
+      "Observed some red effects around the character, but cannot confirm if it's the intended VFX.",
+      "Needs specific VFX requirements to accurately assess most checks."
+    ]
+  },
+  "contractWarnings": []
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "ggd-vfx-visual-review-unavailable@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T21:15:56.305Z",
+  "sourceDigest": "bcfa844d44b12ea0479f93157002193126a77e95805db94ff7261c005ef98a99",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-h02u.ex",
+    "name": "92-002 最終戈壁"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com"
+  },
+  "reason": {
+    "code": "GEMINI_UNAVAILABLE",
+    "detail": "fetch failed"
+  }
+}

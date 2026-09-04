@@ -6,6 +6,7 @@ import {
   recommendedEvidenceTimes,
   recommendedRuntimeEvidenceTimes,
   ensureTemporalEvidencePair,
+  includeAuditEvidenceTime,
   scriptVisualFocus,
   retypeSegment,
   reactionTriggerOf,
@@ -187,6 +188,21 @@ describe("VFX Forge authoring core", () => {
     ]);
     expect(new Set(paired.map((time) => time.atMs)).size).toBe(2);
     expect(ensureTemporalEvidencePair(paired)).toEqual(paired);
+  });
+
+  it("puts the audit's worst instant into the contact sheet without exceeding its evidence budget", () => {
+    const times = [100, 300, 500, 700].map((atMs) => ({ atMs, label: `beat ${atMs}` }));
+    const withAudit = includeAuditEvidenceTime(times, 420, 4);
+    expect(withAudit).toHaveLength(4);
+    expect(withAudit.map((time) => time.atMs)).toContain(420);
+    expect(withAudit[0]!.atMs).toBe(100);
+    expect(withAudit.at(-1)!.atMs).toBe(700);
+  });
+
+  it("marks an existing nearby evidence beat instead of duplicating the same instant", () => {
+    expect(includeAuditEvidenceTime([{ atMs: 180, label: "impact" }], 200, 2)).toEqual([
+      { atMs: 180, label: "impact · 時間軸最低清晰度" },
+    ]);
   });
 
   it("keeps both summon lifecycle edges in runtime visual evidence", () => {

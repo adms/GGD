@@ -107,7 +107,9 @@ run("Editor coverage freshness", "pnpm", [
   "exec", "vitest", "run", "packages/shared/src/ops/editorCoverageFresh.test.ts",
   "--pool=threads", "--minWorkers=1", "--maxWorkers=1", "--reporter=dot",
 ]);
-run("Skill Forge", "pnpm", ["skillforge:check"]);
+run("Skill Forge", "pnpm", release
+  ? ["skillforge:check"]
+  : ["skillforge:check", "--", "--machine-only"]);
 run("VFX Forge", "pnpm", ["vfxforge:check"]);
 
 if (visual) {

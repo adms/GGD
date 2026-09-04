@@ -1,0 +1,41 @@
+{
+  "schema": "ggd-vfx-visual-review-batch@1",
+  "authority": "advisory-only",
+  "generatedAt": "2026-09-03T18:08:35.687Z",
+  "status": "complete",
+  "detail": "AI results are advisory triage only and do not satisfy human visual acceptance.",
+  "policy": {
+    "enabledByDefault": false,
+    "provider": "google-gemini",
+    "candidateFrames": "2..4 automatically selected keyframes",
+    "firstPass": "low",
+    "escalation": "off by default; when explicitly enabled, only uncertain low-pass results retry at medium",
+    "fallback": "deterministic checks and human review continue"
+  },
+  "summary": {
+    "reviewed": 1,
+    "modelDisabled": 0,
+    "insufficientKeyframes": 0,
+    "notCaptured": 0,
+    "modelUnavailable": 0,
+    "modelError": 0,
+    "aiPrechecked": 1,
+    "aiRejected": 0,
+    "needsHumanReview": 0
+  },
+  "rows": [
+    {
+      "id": "godie-hjai.e",
+      "name": "04-03 龍破斬",
+      "frameCount": 4,
+      "status": "reviewed",
+      "finalClassification": "ai-prechecked",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "ai-prechecked",
+        "sourceDigest": "ac92470894205575273b50bcfaa2eac363899b0fdd51f57d09fb3cc99c873775",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-hjai.e-ac9247089420-gemini-gemini-3.5-flash-lite-low.json"
+      }
+    }
+  ]
+}

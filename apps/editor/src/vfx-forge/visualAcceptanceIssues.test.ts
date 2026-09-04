@@ -1,10 +1,50 @@
 import { describe, expect, it } from "vitest";
-import { classifyVisualAcceptanceIssues } from "./visualAcceptanceIssues";
+import {
+  classifyVisualAcceptanceIssues,
+  classifyVisualRemediationScope,
+  shouldAutomaticallyRetryVisualCase,
+  visualAcceptanceHygieneScore,
+} from "./visualAcceptanceIssues";
 
 const codes = (blockers: readonly string[], status: "captured" | "blocked" | "failed" = "failed") =>
   classifyVisualAcceptanceIssues({ status, blockers }).map((issue) => issue.code);
 
 describe("46 技能視覺驗收自動根因分類", () => {
+  it("大方向錯誤由 Editor 修，純細緻美術調整才交人工", () => {
+    expect(classifyVisualRemediationScope("藍色光束顏色錯成黃色，方向也相反"))
+      .toBe("editor-major-fix");
+    expect(classifyVisualRemediationScope("光球太大遮住角色，亮度也可再微調"))
+      .toBe("editor-major-fix");
+    expect(classifyVisualRemediationScope("尾焰密度與鏡頭手感想再細修"))
+      .toBe("human-fine-tuning");
+    expect(classifyVisualRemediationScope("畫面感覺普通"))
+      .toBe("needs-triage");
+  });
+
+  it("只重試暫態 renderer 問題，不重跑缺少 Main 積木", () => {
+    expect(shouldAutomaticallyRetryVisualCase([{
+      code: "ACTOR_TEXTURE_COLLAPSE",
+      severity: "blocker",
+      owner: "editor-then-main",
+      summary: "cold actor",
+      nextAction: "retry",
+    }])).toBe(true);
+    expect(shouldAutomaticallyRetryVisualCase([{
+      code: "LOW_VISUAL_HYGIENE",
+      severity: "medium",
+      owner: "editor",
+      summary: "bad frame",
+      nextAction: "retry",
+    }])).toBe(true);
+    expect(shouldAutomaticallyRetryVisualCase([{
+      code: "MISSING_VISUAL_BRICK",
+      severity: "blocker",
+      owner: "main",
+      summary: "missing beam",
+      nextAction: "main",
+    }])).toBe(false);
+  });
+
   it("時間軸掃描漏掉但證據格判定不安全時仍路由 framebuffer blocker", () => {
     const issueCodes = classifyVisualAcceptanceIssues({
       status: "failed",
@@ -37,7 +77,7 @@ describe("46 技能視覺驗收自動根因分類", () => {
       .toContain("ACTOR_NOT_VISIBLE");
     expect(codes(["機器契約缺少可重用事件 onEvade"], "blocked"))
       .toContain("UNSUPPORTED_EVENT_BRICK");
-    expect(codes(["Main 缺少可調長寬、透明安全且不依賴 host bone 的連續實心光束積木"], "captured"))
+    expect(codes(["Main 缺少可重用、可定時的時間停止視覺積木"], "captured"))
       .toContain("MISSING_VISUAL_BRICK");
     expect(codes(["20 秒內未能完成載入／真 Sim／素材收據"]))
       .toEqual(expect.arrayContaining(["CAPTURE_TIMEOUT", "SIM_PREVIEW"]));
@@ -49,6 +89,22 @@ describe("46 技能視覺驗收自動根因分類", () => {
     ], "blocked");
     expect(issueCodes).not.toContain("UNSUPPORTED_EVENT_BRICK");
     expect(issueCodes).toEqual(["AUTHORING_BLOCKER"]);
+  });
+
+  it("模型自帶 emitter 不吃 instance 參數時歸 Main，且不再另報 Editor 低清晰度", () => {
+    const issues = classifyVisualAcceptanceIssues({
+      status: "captured",
+      blockers: [
+        "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白光束。",
+      ],
+      frames: [{ frameAudit: {
+        litShare: 0.7, highlightShare: 0.7, brightShare: 0.5, nearWhiteShare: 0.4,
+        dominantBrightShare: 0.5, dominantNonBackgroundShare: 0.5,
+        localWhiteCardShare: 0, diagnosticCheckerShare: 0, unsafe: false,
+      } }],
+    });
+    expect(issues).toHaveLength(1);
+    expect(issues[0]).toMatchObject({ code: "MISSING_VISUAL_BRICK", owner: "main" });
   });
 
   it("未知失敗仍 fail closed，不交給語言模型自由猜測", () => {
@@ -69,6 +125,51 @@ describe("46 技能視覺驗收自動根因分類", () => {
     }).map((issue) => issue.code);
     expect(issueCodes).toContain("PRESENTATION_ARTIFACT");
     expect(issueCodes).not.toContain("FRAMEBUFFER_CARRIER");
+  });
+
+  it("同格 A/B 證明是 Main 共用打擊粒子時歸 Main，且不重複產生低清晰度 issue", () => {
+    const issues = classifyVisualAcceptanceIssues({
+      status: "captured",
+      blockers: [],
+      frames: [{ frameAudit: {
+        litShare: 0.02, highlightShare: 0, brightShare: 0, nearWhiteShare: 0,
+        dominantBrightShare: 0, dominantNonBackgroundShare: 0,
+        localWhiteCardShare: 0, diagnosticCheckerShare: 0.008, unsafe: false,
+        reason: "Main 預設打擊粒子 A/B 已定位紅／紫平面載體；玩家畫面不可直接通過",
+      } }],
+    });
+    expect(issues).toHaveLength(1);
+    expect(issues[0]).toMatchObject({ code: "PRESENTATION_ARTIFACT", owner: "main" });
+  });
+
+  it("只有 Main 粒子與 Telegraph 疊加才越線時標成雙方接縫，不誣指單邊", () => {
+    const issues = classifyVisualAcceptanceIssues({
+      status: "captured",
+      blockers: [],
+      frames: [{ frameAudit: {
+        litShare: 0.02, highlightShare: 0, brightShare: 0, nearWhiteShare: 0,
+        dominantBrightShare: 0, dominantNonBackgroundShare: 0,
+        localWhiteCardShare: 0, diagnosticCheckerShare: 0.008, unsafe: false,
+        reason: "Main 預設打擊粒子與 Telegraph 必須同時剝離才解除載體門檻；屬混合呈現問題，玩家畫面不可直接通過",
+      } }],
+    });
+    expect(issues).toHaveLength(1);
+    expect(issues[0]).toMatchObject({ code: "PRESENTATION_ARTIFACT", owner: "editor-then-main" });
+  });
+
+  it("同格 A/B 定位到 Main 施法預告積木群時仍歸共用積木，不逐招修 Editor", () => {
+    const issues = classifyVisualAcceptanceIssues({
+      status: "captured",
+      blockers: [],
+      frames: [{ frameAudit: {
+        litShare: 0.04, highlightShare: 0.02, brightShare: 0.01, nearWhiteShare: 0,
+        dominantBrightShare: 0, dominantNonBackgroundShare: 0,
+        localWhiteCardShare: 0, diagnosticCheckerShare: 0.001, unsafe: false,
+        reason: "Main 施法預告積木群 A/B 已定位紅／紫平面載體；玩家畫面不可直接通過",
+      } }],
+    });
+    expect(issues).toHaveLength(1);
+    expect(issues[0]).toMatchObject({ code: "PRESENTATION_ARTIFACT", owner: "main" });
   });
 
   it("只有實際擷取成功且低分才標記清晰度，不能冒充美術裁決", () => {
@@ -123,6 +224,48 @@ describe("46 技能視覺驗收自動根因分類", () => {
     expect(issueCodes).toEqual(["LOW_VISUAL_HYGIENE"]);
   });
 
+  it("不把隔離層的大型合法範圍圈誤當成實戰構圖失敗", () => {
+    const issueCodes = classifyVisualAcceptanceIssues({
+      status: "captured",
+      blockers: [],
+      audit: {
+        safe: true, autoVisualScore: 0, sampledFrames: 2, elapsedMs: 2, gpuReadbacks: 2,
+        peakParticleCount: 0, peakSystemCount: 0, worstAtMs: 0, suspects: [],
+        worst: {
+          litShare: 0.04, highlightShare: 0.01, brightShare: 0, nearWhiteShare: 0,
+          dominantBrightShare: 0, dominantNonBackgroundShare: 0.2,
+          localWhiteCardShare: 0, diagnosticCheckerShare: 0, unsafe: false,
+          reason: "施法範圍 Telegraph 已通過同格剝離驗證；素材層未檢出底板",
+        },
+      },
+      frames: [{ frameAudit: {
+        litShare: 0.02, highlightShare: 0.003, brightShare: 0, nearWhiteShare: 0,
+        dominantBrightShare: 0, dominantNonBackgroundShare: 0.01,
+        localWhiteCardShare: 0, diagnosticCheckerShare: 0, unsafe: false,
+      } }],
+    }).map((issue) => issue.code);
+    expect(issueCodes).toEqual([]);
+  });
+
+  it("UI 與分類器共用實戰關鍵格最低分，不顯示隔離層的假 0 分", () => {
+    expect(visualAcceptanceHygieneScore({
+      audit: {
+        safe: true, autoVisualScore: 0, sampledFrames: 2, elapsedMs: 2, gpuReadbacks: 2,
+        peakParticleCount: 0, peakSystemCount: 0, worstAtMs: 0, suspects: [],
+        worst: {
+          litShare: 0.04, highlightShare: 0.01, brightShare: 0, nearWhiteShare: 0,
+          dominantBrightShare: 0, dominantNonBackgroundShare: 0.2,
+          localWhiteCardShare: 0, diagnosticCheckerShare: 0, unsafe: false,
+        },
+      },
+      frames: [{ frameAudit: {
+        litShare: 0.02, highlightShare: 0.003, brightShare: 0, nearWhiteShare: 0,
+        dominantBrightShare: 0, dominantNonBackgroundShare: 0.01,
+        localWhiteCardShare: 0, diagnosticCheckerShare: 0, unsafe: false,
+      } }],
+    })).toBe(9.5);
+  });
+
   it("事件有送出但畫面完全空白仍必須失敗，不得用衛生 10 分冒充視覺驗收", () => {
     const issueCodes = classifyVisualAcceptanceIssues({
       status: "captured",
@@ -141,6 +284,26 @@ describe("46 技能視覺驗收自動根因分類", () => {
       },
     }).map((issue) => issue.code);
     expect(issueCodes).toEqual(["NO_VISIBLE_PRESENTATION"]);
+  });
+
+  it("Main 已明確缺少必要視覺積木時，不再把同一個空白結果重複歸咎 Editor", () => {
+    const issueCodes = classifyVisualAcceptanceIssues({
+      status: "captured",
+      blockers: ["Main 缺少可重用、透明安全的連續實心光束視覺積木"],
+      proofSource: "editor-effect-graph-preview",
+      audit: {
+        safe: true, autoVisualScore: 10, sampledFrames: 2, elapsedMs: 2, gpuReadbacks: 2,
+        peakParticleCount: 0, peakSystemCount: 0,
+        presentationEventCount: 1, semanticActionCount: 0, peakPresentationPixelShare: 0,
+        worstAtMs: 0, suspects: [],
+        worst: {
+          litShare: 0, highlightShare: 0, brightShare: 0, nearWhiteShare: 0,
+          dominantBrightShare: 0, dominantNonBackgroundShare: 0,
+          localWhiteCardShare: 0, diagnosticCheckerShare: 0, unsafe: false,
+        },
+      },
+    }).map((issue) => issue.code);
+    expect(issueCodes).toEqual(["MISSING_VISUAL_BRICK"]);
   });
 
   it("呈現層真的畫出像素時不回報空白演出", () => {

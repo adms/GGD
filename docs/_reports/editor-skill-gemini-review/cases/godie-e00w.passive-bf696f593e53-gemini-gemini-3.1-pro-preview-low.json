@@ -1,0 +1,112 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:04:49.336Z",
+  "sourceDigest": "bf696f593e532fb930249ed417dd1d648fd1535de8d7486471071cdbc848ca1e",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e00w.passive",
+    "name": "77-00 浮雲-旋一閃"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6506,
+    "usage": {
+      "promptTokens": 2841,
+      "completionTokens": 411,
+      "totalTokens": 3252
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e00w.passive-02-487ms.webp",
+      "atMs": 487,
+      "phase": "godie-e00w.passive · 真 runtime · basicAttack+evade+damage+hitImpact+vfxSpawn+statusApplied · 近景 · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6352,
+      "sha256": "7dd3bb98eea4de363443fb6328c1d8d8ffca05b719137cde92e4cb0a840d5be4"
+    },
+    {
+      "path": "frames/godie-e00w.passive-01-547ms.webp",
+      "atMs": 547,
+      "phase": "godie-e00w.passive · 真 runtime · basicAttack+evade+damage+hitImpact+vfxSpawn+statusApplied · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5474,
+      "sha256": "03cd4d8081abce8c9aead8e4c619e15e984319123a8a70f76cab2d2e35bbd922"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未能從畫面中清楚確認旋轉反擊的主效果，僅見角色動作。\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期效果類型。\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定顏色要求。\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期來源位置。\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期命中位置。\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見主效果，無法確認發生順序。\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模或裁切。\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見主效果，無法確認可讀性。\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"預期的旋轉反擊、範圍傷害等視覺特徵未在候選圖片中顯現。\",\n    \"無法確認是否滿足成功迴避的前提條件。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "未能從畫面中清楚確認旋轉反擊的主效果，僅見角色動作。",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供預期效果類型。",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定顏色要求。",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供預期來源位置。",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供預期命中位置。",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "未見主效果，無法確認發生順序。",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模或裁切。",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "未見主效果，無法確認可讀性。",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "預期的旋轉反擊、範圍傷害等視覺特徵未在候選圖片中顯現。",
+      "無法確認是否滿足成功迴避的前提條件。"
+    ]
+  },
+  "contractWarnings": []
+}

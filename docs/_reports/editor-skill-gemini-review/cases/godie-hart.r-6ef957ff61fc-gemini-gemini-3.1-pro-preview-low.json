@@ -1,0 +1,188 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-04T03:13:38.548Z",
+  "sourceDigest": "6ef957ff61fcd243e065e0db63f925a286152f63899cae8f3a60f541a3b18507",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hart.r",
+    "name": "01-04 超究武神霸斬"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 8183,
+    "usage": {
+      "promptTokens": 9463,
+      "completionTokens": 457,
+      "totalTokens": 9920
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hart.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hart.r · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6420,
+      "sha256": "e4a84101ce1c4333d12443ff3a45e427932591b9d10f085d2e5d2fe1ce9d98be"
+    },
+    {
+      "path": "frames/godie-hart.r-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-hart.r · 第 1 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7482,
+      "sha256": "89f83fe497416a7f85f2fe490b3094bf77748b5dda14c03b9e16ad68fa65c15f"
+    },
+    {
+      "path": "frames/godie-hart.r-03-2080ms.webp",
+      "atMs": 2080,
+      "phase": "godie-hart.r · 第 2 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7766,
+      "sha256": "f568023220fdd1896ee5c6a3d24f3a21d5b50ea82ba29d34fd7c33ec0886f16c"
+    },
+    {
+      "path": "frames/godie-hart.r-04-2280ms.webp",
+      "atMs": 2280,
+      "phase": "godie-hart.r · 第 3 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7116,
+      "sha256": "f6e3516a51acc737cb0cb2774c7a16012bf214753b6eb5ff98b9e466dfa173e3"
+    },
+    {
+      "path": "frames/godie-hart.r-05-2480ms.webp",
+      "atMs": 2480,
+      "phase": "godie-hart.r · 第 4 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 4,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7538,
+      "sha256": "a45f412bc5565ad21ec316ec5470198297e1a50d99f342a8e32d8959591959e3"
+    },
+    {
+      "path": "frames/godie-hart.r-06-2680ms.webp",
+      "atMs": 2680,
+      "phase": "godie-hart.r · 第 5 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 5,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8380,
+      "sha256": "a26157dd6451feb80a9cf270a5386cdd53ad51e43fa8ee5789a266b677040841"
+    },
+    {
+      "path": "frames/godie-hart.r-07-2880ms.webp",
+      "atMs": 2880,
+      "phase": "godie-hart.r · 第 6 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 6,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7656,
+      "sha256": "2bd2233a30df26dc4eae4f10be9ece79f58abbd865dbb5e76d73ba660da6b51d"
+    },
+    {
+      "path": "frames/godie-hart.r-08-4680ms.webp",
+      "atMs": 4680,
+      "phase": "godie-hart.r · 第 7 段 · screenShake+bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 7,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10520,
+      "sha256": "600add6528c77f917a2a0bb9f0570c4383ff3334238b3bbe77fe6a54150c687d"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"揮砍軌跡與終結光柱皆可見。\",\n      \"evidenceFrames\": [2, 5, 6, 7]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定的形狀家族要求。\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"終結光柱顯示黃藍兩色。\",\n      \"evidenceFrames\": [7]\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未明確要求出生點。\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"pass\",\n      \"reason\": \"終結光柱命中目標受擊位置。\",\n      \"evidenceFrames\": [7]\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"無法確認是否有七次傷害逐擊對齊，證據不足。\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模問題。\",\n      \"evidenceFrames\": [2, 5, 6, 7]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"主效果與角色/地面關係清楚。\",\n      \"evidenceFrames\": [2, 5, 6, 7]\n    }\n  },\n  \"notes\": [\n    \"畫面僅顯示少量揮砍與最後的黃藍光柱，無足夠幀數證明'七次傷害逐擊對齊'。\",\n    \"揮砍出現的次數在候選圖片中非常有限，無法滿足預期要求。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "揮砍軌跡與終結光柱皆可見。",
+        "evidenceFrames": [
+          2,
+          5,
+          6,
+          7
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定的形狀家族要求。",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "pass",
+        "reason": "終結光柱顯示黃藍兩色。",
+        "evidenceFrames": [
+          7
+        ]
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未明確要求出生點。",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "pass",
+        "reason": "終結光柱命中目標受擊位置。",
+        "evidenceFrames": [
+          7
+        ]
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "無法確認是否有七次傷害逐擊對齊，證據不足。",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模問題。",
+        "evidenceFrames": [
+          2,
+          5,
+          6,
+          7
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "主效果與角色/地面關係清楚。",
+        "evidenceFrames": [
+          2,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    "notes": [
+      "畫面僅顯示少量揮砍與最後的黃藍光柱，無足夠幀數證明'七次傷害逐擊對齊'。",
+      "揮砍出現的次數在候選圖片中非常有限，無法滿足預期要求。"
+    ]
+  },
+  "contractWarnings": []
+}

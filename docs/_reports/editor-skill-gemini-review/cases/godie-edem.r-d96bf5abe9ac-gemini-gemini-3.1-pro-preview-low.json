@@ -1,0 +1,124 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T19:57:57.579Z",
+  "sourceDigest": "d96bf5abe9ac2331fb8d5f216627502daa035c9cd2e567bb8e85b89885c9766c",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-edem.r",
+    "name": "45-04 哥哥"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6930,
+    "usage": {
+      "promptTokens": 3867,
+      "completionTokens": 370,
+      "totalTokens": 4237
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-edem.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-edem.r · 真 runtime · displace+modelFxSpawn+damage+hitImpact+reflectSuccess · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 26388,
+      "sha256": "46856d2ff88b2d0b21ae09572eadc4ffbe42cef0aade5ca23468d0139f20b36f"
+    },
+    {
+      "path": "frames/godie-edem.r-02-847ms.webp",
+      "atMs": 847,
+      "phase": "godie-edem.r · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 15086,
+      "sha256": "2c8ecfec79a46adebedb12f3790605323624deec26e5b363a31f73f07cfac732"
+    },
+    {
+      "path": "frames/godie-edem.r-03-1013ms.webp",
+      "atMs": 1013,
+      "phase": "godie-edem.r · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8846,
+      "sha256": "226103c7c9909ba536e4c726a56579f6c3c5a860c138c3c66b8f904e13f62db4"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Expected visual condition not observable\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Effect presence is uncertain\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Specific color not provided\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Specific source not provided\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Specific impact location not provided\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Missing required frames to verify temporal order\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"No severe clipping observed\",\n      \"evidenceFrames\": [0, 1]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"Main effect is readable\",\n      \"evidenceFrames\": [0, 1]\n    }\n  },\n  \"notes\": [\n    \"Unable to verify 'Qilin' effect conditionally based on target having a 'burn' mark, as the context is insufficient.\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "Expected visual condition not observable",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "Effect presence is uncertain",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "Specific color not provided",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "Specific source not provided",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "Specific impact location not provided",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "Missing required frames to verify temporal order",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "No severe clipping observed",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "Main effect is readable",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      }
+    },
+    "notes": [
+      "Unable to verify 'Qilin' effect conditionally based on target having a 'burn' mark, as the context is insufficient."
+    ]
+  },
+  "contractWarnings": []
+}

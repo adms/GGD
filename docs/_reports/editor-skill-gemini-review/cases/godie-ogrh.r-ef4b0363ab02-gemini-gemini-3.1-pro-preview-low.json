@@ -1,0 +1,157 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-03T21:11:18.111Z",
+  "sourceDigest": "ef4b0363ab0209101c4020b727fd12ff7f3b198cb672a671260263f82e5cbd42",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-ogrh.r",
+    "name": "09-04 龜派氣功"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6783,
+    "usage": {
+      "promptTokens": 5000,
+      "completionTokens": 487,
+      "totalTokens": 5487
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-ogrh.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-ogrh.r · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5264,
+      "sha256": "f7554e63b4fd949dca8714809b4cc452dafeecb052efbf9352c4ab2336bf3a69"
+    },
+    {
+      "path": "frames/godie-ogrh.r-02-1013ms.webp",
+      "atMs": 1013,
+      "phase": "godie-ogrh.r · 吟唱完成 · screenShake+vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9168,
+      "sha256": "8631517f6c9b072dd7b11eabff908b93a019ff16eaeca6dc328fd20f689b1311"
+    },
+    {
+      "path": "frames/godie-ogrh.r-03-1443ms.webp",
+      "atMs": 1443,
+      "phase": "godie-ogrh.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8404,
+      "sha256": "98514fbcbb789d35b113f4e3e7d8cfee97d0f9ee0f3b5a91284aa8a64c8735aa"
+    },
+    {
+      "path": "frames/godie-ogrh.r-04-1644ms.webp",
+      "atMs": 1644,
+      "phase": "godie-ogrh.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7246,
+      "sha256": "44a4effd877a4c5c003d1f6652932f61881c61bc4416e45972816ac4e97b89d7"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見橘色橫向光束\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"fail\",\n      \"reason\": \"不是光束效果\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3\n      ]\n    },\n    \"colorMatch\": {\n      \"status\": \"fail\",\n      \"reason\": \"沒有橘色光束\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3\n      ]\n    },\n    \"spawnOrigin\": {\n      \"status\": \"fail\",\n      \"reason\": \"沒有從施法者發出光束\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3\n      ]\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"沒有命中效果\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"沒有正確的蓄力發射流程\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見穿模現象\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3\n      ]\n    },\n    \"readability\": {\n      \"status\": \"fail\",\n      \"reason\": \"主效果未顯示，無法辨識\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3\n      ]\n    }\n  },\n  \"notes\": [\n    \"畫面中出現了一些橫向的線條與塵土，但不符合預期中的'橘色橫向光束'。\",\n    \"沒有明顯的龜派氣功視覺特徵。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見橘色橫向光束",
+        "evidenceFrames": [
+          1,
+          2,
+          3
+        ]
+      },
+      "familyMatch": {
+        "status": "fail",
+        "reason": "不是光束效果",
+        "evidenceFrames": [
+          1,
+          2,
+          3
+        ]
+      },
+      "colorMatch": {
+        "status": "fail",
+        "reason": "沒有橘色光束",
+        "evidenceFrames": [
+          1,
+          2,
+          3
+        ]
+      },
+      "spawnOrigin": {
+        "status": "fail",
+        "reason": "沒有從施法者發出光束",
+        "evidenceFrames": [
+          1,
+          2,
+          3
+        ]
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "沒有命中效果",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "沒有正確的蓄力發射流程",
+        "evidenceFrames": [
+          1,
+          2,
+          3
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見穿模現象",
+        "evidenceFrames": [
+          1,
+          2,
+          3
+        ]
+      },
+      "readability": {
+        "status": "fail",
+        "reason": "主效果未顯示，無法辨識",
+        "evidenceFrames": [
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    "notes": [
+      "畫面中出現了一些橫向的線條與塵土，但不符合預期中的'橘色橫向光束'。",
+      "沒有明顯的龜派氣功視覺特徵。"
+    ]
+  },
+  "contractWarnings": []
+}

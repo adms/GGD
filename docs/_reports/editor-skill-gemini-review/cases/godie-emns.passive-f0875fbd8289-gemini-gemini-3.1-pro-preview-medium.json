@@ -1,0 +1,182 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:06:30.147Z",
+  "sourceDigest": "f0875fbd8289dd16fddf5c1d911d1ca20b583f08c559680e9592bf76ceba811f",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-emns.passive",
+    "name": "44-00 機警"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "medium",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 7291,
+    "usage": {
+      "promptTokens": 9393,
+      "completionTokens": 442,
+      "totalTokens": 9835
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-emns.passive-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-emns.passive · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5880,
+      "sha256": "0287ec32942f0b69cf44eea96e7a8a429d0dbdaf737165dfa815ba756917bc6a"
+    },
+    {
+      "path": "frames/godie-emns.passive-02-447ms.webp",
+      "atMs": 447,
+      "phase": "godie-emns.passive · 真 runtime · vfxSpawn+basicAttack+projectileSpawn · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10900,
+      "sha256": "48adac876bc38c75ef7011b87f6072ba3c9673e7d58e0268e87c8bfef1446059"
+    },
+    {
+      "path": "frames/godie-emns.passive-03-913ms.webp",
+      "atMs": 913,
+      "phase": "godie-emns.passive · 真 runtime · basicAttack+projectileSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9244,
+      "sha256": "f5aed98dbfabf60772dcaeea48f89f407ee7c1aeda9e9d62f9e5da1803ee1b92"
+    },
+    {
+      "path": "frames/godie-emns.passive-04-2213ms.webp",
+      "atMs": 2213,
+      "phase": "godie-emns.passive · 真 runtime · basicAttack+projectileSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9490,
+      "sha256": "fb73135a0d40eba5ec9da3d493b3b73ee9c89815fdd77b4d24ead0771d0fbf70"
+    },
+    {
+      "path": "frames/godie-emns.passive-05-3080ms.webp",
+      "atMs": 3080,
+      "phase": "godie-emns.passive · 真 runtime · basicAttack+projectileSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 4,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9942,
+      "sha256": "0f60d3e544be517458016932d197bc2ac805aa6d3cf808318ed7241e42cd8349"
+    },
+    {
+      "path": "frames/godie-emns.passive-06-3513ms.webp",
+      "atMs": 3513,
+      "phase": "godie-emns.passive · 真 runtime · basicAttack+projectileSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 5,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9616,
+      "sha256": "811ec844feca2de0637a8c3319abab610371e17756ca9799b3d6dfbd71f6ce35"
+    },
+    {
+      "path": "frames/godie-emns.passive-07-4380ms.webp",
+      "atMs": 4380,
+      "phase": "godie-emns.passive · 真 runtime · basicAttack+projectileSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 6,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10196,
+      "sha256": "0e6bcee4d46bc9d42a5dfc0a79662ac0ca0413e464a2016f1984f8a378af48a4"
+    },
+    {
+      "path": "frames/godie-emns.passive-08-20413ms.webp",
+      "atMs": 20413,
+      "phase": "godie-emns.passive · 真 runtime · basicAttack+projectileSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 7,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10224,
+      "sha256": "6a9b4e1062432aaa95e6411a709cea4b77c657f7a9602ae1b5d23ebc42f4e14d"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"可見角色周圍出現紅色特效，可能違反被動不顯示主動特效的要求\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期 VFX 類型\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期顏色\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期來源位置\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期命中位置\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺乏足夠證據判斷時序\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"無明顯穿模\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"特效與角色關係清晰\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    }\n  },\n  \"notes\": [\n    \"畫面中出現了主動技能般的紅色方塊擴散特效，與預期『被動不得顯示或播放主動施法』相悖\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "可見角色周圍出現紅色特效，可能違反被動不顯示主動特效的要求",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供預期 VFX 類型",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供預期顏色",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供預期來源位置",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供預期命中位置",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "缺乏足夠證據判斷時序",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "無明顯穿模",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "特效與角色關係清晰",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "畫面中出現了主動技能般的紅色方塊擴散特效，與預期『被動不得顯示或播放主動施法』相悖"
+    ]
+  },
+  "contractWarnings": []
+}

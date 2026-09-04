@@ -1,0 +1,135 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:02:39.820Z",
+  "sourceDigest": "37b0d385fb6b7d38233e91c29e00cc420b8ff2c8c2916c76baa3dc81738da647",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hjai.r",
+    "name": "04-04 神滅斬"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 7252,
+    "usage": {
+      "promptTokens": 3938,
+      "completionTokens": 430,
+      "totalTokens": 4368
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hjai.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hjai.r · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5340,
+      "sha256": "3ee9ea9a983c8d11eef53b09bc0393edae781c0233c89fc9c17dce9056e14c57"
+    },
+    {
+      "path": "frames/godie-hjai.r-02-1347ms.webp",
+      "atMs": 1347,
+      "phase": "godie-hjai.r · 吟唱完成 · anim+bodyMove · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6066,
+      "sha256": "562e7e890709e1fbcee6848d228be91beb397b1fc8e0ebaf636e45b1b614c927"
+    },
+    {
+      "path": "frames/godie-hjai.r-03-1717ms.webp",
+      "atMs": 1717,
+      "phase": "godie-hjai.r · 吟唱完成 · vfx+anim+screenShake · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6394,
+      "sha256": "e340bad3523f7f0708387a897125c3b0665ecf00c05f5c79a06911e9b0f1edd4"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"pass\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"可見黑色光刀斬擊效果。\",\n      \"evidenceFrames\": [\n        2\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"斬擊效果符合預期形狀。\",\n      \"evidenceFrames\": [\n        2\n      ]\n    },\n    \"colorMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"光芒顏色偏紫黑，符合黑色光刀。\",\n      \"evidenceFrames\": [\n        2\n      ]\n    },\n    \"spawnOrigin\": {\n      \"status\": \"pass\",\n      \"reason\": \"隨角色衝向目標後出現。\",\n      \"evidenceFrames\": [\n        2\n      ]\n    },\n    \"impactPlacement\": {\n      \"status\": \"pass\",\n      \"reason\": \"打擊點位於目標處。\",\n      \"evidenceFrames\": [\n        2\n      ]\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"角色先移動，後出現斬擊。\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模。\",\n      \"evidenceFrames\": [\n        2\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"效果與場景對比清晰。\",\n      \"evidenceFrames\": [\n        2\n      ]\n    }\n  },\n  \"notes\": [\n    \"預期中的傷害與暈眩、EX增幅次數等無法從視覺直接確認。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "pass",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "可見黑色光刀斬擊效果。",
+        "evidenceFrames": [
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "pass",
+        "reason": "斬擊效果符合預期形狀。",
+        "evidenceFrames": [
+          2
+        ]
+      },
+      "colorMatch": {
+        "status": "pass",
+        "reason": "光芒顏色偏紫黑，符合黑色光刀。",
+        "evidenceFrames": [
+          2
+        ]
+      },
+      "spawnOrigin": {
+        "status": "pass",
+        "reason": "隨角色衝向目標後出現。",
+        "evidenceFrames": [
+          2
+        ]
+      },
+      "impactPlacement": {
+        "status": "pass",
+        "reason": "打擊點位於目標處。",
+        "evidenceFrames": [
+          2
+        ]
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "角色先移動，後出現斬擊。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模。",
+        "evidenceFrames": [
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "效果與場景對比清晰。",
+        "evidenceFrames": [
+          2
+        ]
+      }
+    },
+    "notes": [
+      "預期中的傷害與暈眩、EX增幅次數等無法從視覺直接確認。"
+    ]
+  },
+  "contractWarnings": []
+}

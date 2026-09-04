@@ -31,7 +31,81 @@ export interface VisualAcceptanceIssueInput {
   readonly blockers: readonly string[];
   readonly audit?: BackdropTimelineAudit | null;
   readonly frames?: readonly { readonly frameAudit?: BackdropFrameAudit | null }[];
-  readonly proofSource?: "acceptance-fixture" | "editor-basic-script" | "runtime-effect-graph";
+  readonly proofSource?:
+    | "acceptance-fixture"
+    | "editor-basic-script"
+    | "editor-effect-graph-preview"
+    | "runtime-effect-graph";
+}
+
+export type VisualRemediationScope =
+  | "editor-major-fix"
+  | "human-fine-tuning"
+  | "needs-triage";
+
+/**
+ * Route visual feedback without asking an LLM to redesign the skill.
+ *
+ * Editor owns immediately observable grammar errors. Subtle taste and
+ * frame-level polish stay advisory for a human. A note containing both kinds
+ * is deliberately routed to the major fix first so a colour/shape/direction
+ * error cannot hide behind a fine-tuning word such as brightness.
+ */
+export function classifyVisualRemediationScope(note: string): VisualRemediationScope {
+  const normalized = note.trim();
+  if (!normalized) return "needs-triage";
+  if (
+    /(?:顏色|配色|色相).*(?:錯|不符|相反)|(?:錯誤|不符|相反).*(?:顏色|配色|色相)|方向(?:錯|相反|不符)|(?:起點|出生點|命中點|落點|錨點).*(?:錯|偏離|不符)|(?:形狀|類型|家族).*(?:錯|不符)|(?:過大|過小|巨大|太大|太小|尺度.*(?:錯|失真|不符))|(?:物理意義|運動方向|受力|軌跡).*(?:錯|不成立|不合理)|整幕過曝|遮住(?:角色|目標|戰場)|看不出(?:角色|主效果|命中)/iu.test(normalized)
+  ) {
+    return "editor-major-fix";
+  }
+  if (
+    /亮度|明暗|飽和度|尾焰密度|粒子密度|數幀|幀節奏|細部時序|鏡頭手感|鏡頭微調|美術偏好|審美|風格偏好/iu.test(normalized)
+  ) {
+    return "human-fine-tuning";
+  }
+  return "needs-triage";
+}
+
+const TRANSIENT_VISUAL_ISSUE_CODES = new Set<VisualAcceptanceIssueCode>([
+  "FRAMEBUFFER_CARRIER",
+  "PRESENTATION_ARTIFACT",
+  "ACTOR_TEXTURE_COLLAPSE",
+  "ACTOR_NOT_VISIBLE",
+  "CAPTURE_TIMEOUT",
+  "LOW_VISUAL_HYGIENE",
+  "GPU_CAPTURE",
+  "NO_VISIBLE_PRESENTATION",
+]);
+
+/**
+ * A single cold-scene retry separates a batch/GPU transition artifact from a
+ * durable content or Main-contract problem. Never retry missing bricks,
+ * authoring rules or human rejections here: repainting cannot fix those and
+ * would only make a large acceptance run more expensive.
+ */
+export function shouldAutomaticallyRetryVisualCase(
+  issues: readonly VisualAcceptanceMachineIssue[],
+): boolean {
+  return issues.some((issue) =>
+    TRANSIENT_VISUAL_ISSUE_CODES.has(issue.code) && issue.owner !== "main",
+  );
+}
+
+/**
+ * Score the composition the reviewer actually sees. The isolated timeline
+ * layer remains a technical carrier fallback only when no gameplay evidence
+ * frame exists (for example an early GPU failure).
+ */
+export function visualAcceptanceHygieneScore(
+  input: Pick<VisualAcceptanceIssueInput, "audit" | "frames">,
+): number {
+  const evidenceScores = (input.frames ?? []).flatMap((frame) =>
+    frame.frameAudit ? [automaticVisualHygieneScore(frame.frameAudit)] : [],
+  );
+  return evidenceScores.length > 0
+    ? Math.min(...evidenceScores)
+    : input.audit?.autoVisualScore ?? 10;
 }
 
 /**
@@ -70,15 +144,29 @@ export function classifyVisualAcceptanceIssues(
     input.status === "captured" &&
     [input.audit?.worst, ...frameAudits].some((frame) =>
       frame?.unsafe === false &&
-      /(?:Telegraph 格狀圖樣|同格剝離已定位呈現層異常)/u.test(frame.reason ?? ""),
+      /(?:Telegraph 格狀圖樣|同格剝離已定位呈現層異常|Main (?:預設(?:打擊粒子|呈現積木)(?:與 Telegraph)?(?: 各自)?|施法預告積木群) A\/B|必須同時剝離)/u.test(frame.reason ?? ""),
     )
   ) {
+    const mixedPresentation = [input.audit?.worst, ...frameAudits].some((frame) =>
+      /Main 預設(?:打擊粒子|呈現積木)與 Telegraph/u.test(frame?.reason ?? ""),
+    );
+    const mainImpactPreset = [input.audit?.worst, ...frameAudits].some((frame) =>
+      /Main (?:預設打擊粒子|施法預告積木群) A\/B/u.test(frame?.reason ?? ""),
+    );
     add({
       code: "PRESENTATION_ARTIFACT",
       severity: "high",
-      owner: "editor",
-      summary: "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面",
-      nextAction: "Editor 改用乾淨 primitive 或調整配色／密度後單項重跑；不可因來源收據安全而自動通過。",
+      owner: mixedPresentation ? "editor-then-main" : mainImpactPreset ? "main" : "editor",
+      summary: mixedPresentation
+        ? "Main 預設打擊粒子與 Telegraph 疊加後形成不宜直接遊玩的載體畫面"
+        : mainImpactPreset
+        ? "Main 預設打擊粒子在真實 framebuffer 形成紅／紫平面載體"
+        : "來源安全的呈現層仍造成棋盤、底板或過曝，不宜直接出現在遊戲畫面",
+      nextAction: mixedPresentation
+        ? "Editor 先調整 Telegraph 配方並以同格 A/B 重驗；若 Main 粒子單獨仍越線，再交 Main 修共用積木。"
+        : mainImpactPreset
+        ? "Main 修正共用 vfx-preset 打擊積木的貼圖、尺寸或混合呈現；Editor 重跑受影響技能，不逐招繞過。"
+        : "Editor 改用乾淨 primitive 或調整配色／密度後單項重跑；不可因來源收據安全而自動通過。",
     });
   }
   if (/純白|白色 bootstrap|角色貼圖.*退化|3D 角色材質/u.test(text)) {
@@ -119,7 +207,9 @@ export function classifyVisualAcceptanceIssues(
       nextAction: "Main 補權威事件與 provenance；Editor 再接時間軸選項，禁止用假 cast 代替。",
     });
   }
-  if (/Main 缺少.*(?:連續實心光束|視覺積木)|missing visual brick/iu.test(text)) {
+  if (
+    /Main 缺少.*視覺積木|missing visual brick|modelFx.*fxEmitters.*繼承.*instance/iu.test(text)
+  ) {
     add({
       code: "MISSING_VISUAL_BRICK",
       severity: "blocker",
@@ -164,9 +254,22 @@ export function classifyVisualAcceptanceIssues(
       nextAction: "Editor 保留該招並繼續批次，單獨重跑冷載入與擷取診斷。",
     });
   }
-  const evidenceScores = frameAudits.map(automaticVisualHygieneScore);
-  const lowestHygiene = Math.min(input.audit?.autoVisualScore ?? 10, ...evidenceScores);
-  if (input.status === "captured" && lowestHygiene < 4) {
+  // The timeline audit hides actors and arena geometry to isolate technical
+  // carriers. Its occupancy score is not the player's composition score: a
+  // legitimate large targeting telegraph can fill that isolated layer while
+  // remaining readable in the actual gameplay frame. Once evidence frames
+  // exist, grade those; use the isolated audit only as a no-frame fallback.
+  // Carrier safety still fails closed from either source above.
+  const lowestHygiene = visualAcceptanceHygieneScore(input);
+  if (
+    input.status === "captured" &&
+    lowestHygiene < 4 &&
+    !issues.some((issue) =>
+      issue.code === "FRAMEBUFFER_CARRIER" ||
+      issue.code === "PRESENTATION_ARTIFACT" ||
+      issue.code === "MISSING_VISUAL_BRICK"
+    )
+  ) {
     add({
       code: "LOW_VISUAL_HYGIENE",
       severity: "medium",
@@ -188,7 +291,8 @@ export function classifyVisualAcceptanceIssues(
     input.status === "captured" &&
     input.proofSource !== undefined &&
     measuredPresentation &&
-    missingPresentation
+    missingPresentation &&
+    !issues.some((issue) => issue.code === "MISSING_VISUAL_BRICK")
   ) {
     add({
       code: "NO_VISIBLE_PRESENTATION",
@@ -198,7 +302,8 @@ export function classifyVisualAcceptanceIssues(
         ? `已消費 ${input.audit?.presentationEventCount ?? 0} 個 VFX 事件，但呈現層仍為 0 像素` +
           (renderedActorAction ? "；角色動作存在，不能掩蓋特效未繪製" : "且沒有專屬角色動作")
         : "已完成真 Sim 與 GPU 擷取，但選定路徑沒有技能演出或專屬角色動作",
-      nextAction: input.proofSource === "runtime-effect-graph"
+      nextAction: input.proofSource === "runtime-effect-graph" ||
+          input.proofSource === "editor-effect-graph-preview"
         ? "在原本被動 hook 內用 no-code effect graph 加入安全 spawnVfx／角色反應，再重跑；禁止偽造成主動 cast。"
         : "檢查 Editor 腳本的 trigger、時間軸與 renderer dispatch，確認積木真的被播放後重跑。",
     });

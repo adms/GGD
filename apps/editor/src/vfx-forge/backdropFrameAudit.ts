@@ -64,10 +64,31 @@ const LOCAL_CARD_MIN_ASPECT = 0.25;
 const LOCAL_CARD_MAX_ASPECT = 4;
 const CHECKER_TILE = 4;
 const CHECKER_TILE_MIN_HOT_PIXELS = 3;
-const CHECKER_MIN_TILES_PER_SIDE = 8;
+// Imported WC3 emitter cards are often only about 36x16 px at gameplay zoom.
+// Requiring an 8x8 tile component missed those thin but unmistakable red/black
+// carrier strips (for example flamestriketarget). Four tiles still leaves the
+// periodicity test enough samples, while organic fire and solid columns do not
+// satisfy the alternating-lattice signature.
+const CHECKER_MIN_TILES_PER_SIDE = 4;
 const CHECKER_MIN_COMPONENT_FILL = 0.3;
 const CHECKER_MIN_AXIS_ALTERNATION = 0.62;
 const CHECKER_MIN_DIAGONAL_REPEAT = 0.78;
+// Perspective, antialiasing and WebP compression destroy the ideal checker
+// lattice in gameplay evidence. The failed WC3 emitter model then appears as
+// several disconnected, half-filled red cards. Three such eligible cards are
+// enough to reject the frame; one organic fire blob or one solid spell column
+// is deliberately insufficient.
+const CHECKER_REPEATED_CARD_MIN_COUNT = 3;
+const CHECKER_REPEATED_CARD_MIN_PIXEL_FILL = 0.25;
+const CHECKER_REPEATED_CARD_MAX_PIXEL_FILL = 0.75;
+// The non-periodic fallback is for perspective-compressed rectangular emitter
+// cards.  Organic fire frequently breaks into several tall wisps or round
+// blobs with the same red fill ratio, so shape and perimeter evidence are
+// required before those disconnected components may vote as "cards".
+const CHECKER_REPEATED_CARD_MIN_ASPECT = 0.5;
+const CHECKER_REPEATED_CARD_MAX_ASPECT = 2.5;
+const CHECKER_REPEATED_CARD_MIN_PERIMETER_FILL = 0.55;
+const CHECKER_REPEATED_CARD_MIN_CORNER_COUNT = 3;
 // A large opaque carrier may be multi-coloured or perspective-skewed, so it
 // can evade the single-colour and axis-aligned-card detectors. In a gameplay
 // evidence frame this combination means that a broad, mostly mid-tone surface
@@ -107,6 +128,8 @@ function diagnosticCheckerShare(
   }
   const pixels = width * height;
   let largest = 0;
+  let repeatedCardCount = 0;
+  let repeatedCardHotPixels = 0;
   for (let seed = 0; seed < active.length; seed++) {
     if (active[seed] !== 1) continue;
     const stack = [seed];
@@ -159,6 +182,35 @@ function diagnosticCheckerShare(
       for (let x = x0; x < x1; x++) hotPixels += hotMask[y * width + x]!;
     }
     if (hotPixels === 0) continue;
+    const hotFill = hotPixels / ((x1 - x0) * (y1 - y0));
+    let perimeterActive = 0;
+    for (const index of component) {
+      const x = index % tileWidth;
+      const y = Math.floor(index / tileWidth);
+      if (x === minX || x === maxX || y === minY || y === maxY) perimeterActive++;
+    }
+    const perimeterTiles = boxWidth === 1 || boxHeight === 1
+      ? boxWidth * boxHeight
+      : boxWidth * 2 + Math.max(0, boxHeight - 2) * 2;
+    const perimeterFill = perimeterTiles > 0 ? perimeterActive / perimeterTiles : 0;
+    const componentSet = new Set(component);
+    const cornerCount = [
+      minY * tileWidth + minX,
+      minY * tileWidth + maxX,
+      maxY * tileWidth + minX,
+      maxY * tileWidth + maxX,
+    ].reduce((count, index) => count + Number(componentSet.has(index)), 0);
+    if (
+      hotFill >= CHECKER_REPEATED_CARD_MIN_PIXEL_FILL &&
+      hotFill <= CHECKER_REPEATED_CARD_MAX_PIXEL_FILL &&
+      aspect >= CHECKER_REPEATED_CARD_MIN_ASPECT &&
+      aspect <= CHECKER_REPEATED_CARD_MAX_ASPECT &&
+      perimeterFill >= CHECKER_REPEATED_CARD_MIN_PERIMETER_FILL &&
+      cornerCount >= CHECKER_REPEATED_CARD_MIN_CORNER_COUNT
+    ) {
+      repeatedCardCount++;
+      repeatedCardHotPixels += hotPixels;
+    }
     let periodic = false;
     const maxLag = Math.min(12, x1 - x0 - 1, y1 - y0 - 1);
     for (let lag = 2; lag <= maxLag; lag++) {
@@ -191,6 +243,9 @@ function diagnosticCheckerShare(
     if (periodic) {
       largest = Math.max(largest, hotPixels / pixels);
     }
+  }
+  if (repeatedCardCount >= CHECKER_REPEATED_CARD_MIN_COUNT) {
+    largest = Math.max(largest, repeatedCardHotPixels / pixels);
   }
   return largest;
 }

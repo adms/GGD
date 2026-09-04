@@ -195,6 +195,19 @@ interface LiveParticle {
   untilMs: number;
 }
 
+interface PresentationIsolationAudit {
+  /** Main's reusable `vfx-preset-*` particles removed from the original frame. */
+  readonly withoutMainImpactParticles: BackdropFrameAudit | null;
+  /** Main's reusable cast-pillar/charge presentation removed from the original frame. */
+  readonly withoutMainCastPresentation: BackdropFrameAudit | null;
+  /** Telegraph layer removed from the original frame. */
+  readonly withoutTelegraph: BackdropFrameAudit;
+  /** Both layers removed together, only when neither independent A/B clears it. */
+  readonly withoutMainAndTelegraph: BackdropFrameAudit | null;
+  /** Last-resort isolation of already safety-receipted presentation surfaces. */
+  readonly withoutVerifiedLayers: BackdropFrameAudit | null;
+}
+
 interface ForgeActor {
   readonly role: "caster" | "target" | "summon";
   /** Entity id from the authoritative Sim trace; presentation uses viewEntityId. */
@@ -705,53 +718,72 @@ export class VfxForgeStage {
     this.renderScene();
     const width = this.engine.getRenderWidth();
     const height = this.engine.getRenderHeight();
-    const rgba = (await this.engine.readPixels(0, 0, width, height)) as Uint8Array;
-    let frameAudit = auditBackdropFrame(rgba, width, height);
+    await this.engine.readPixels(0, 0, width, height);
+    const evidence = this.opaqueEvidenceFrame(width, height);
+    let frameAudit = evidence.audit;
+    // Preserve the exact pixels before the A/B isolation below hides layers
+    // and repaints the canvas. Evidence is composited over the same dark stage
+    // background the author sees: exporting the alpha-bearing WebGL buffer
+    // directly makes translucent WC3 cards look like giant white planes in
+    // standalone viewers and remote image review.
+    const frameDataUrl = evidence.dataUrl;
     if (frameAudit.unsafe) {
       const activeParticleSuspects = this.activeParticleSuspects();
-      // A same-frame Telegraph A/B separates a broken texture carrier from a
-      // receipted but visually grid-like targeting pattern. The latter remains
-      // visible in the evidence and receives a high-severity art issue; only a
-      // carrier that survives removal is a technical framebuffer blocker.
+      // Every isolation starts from the same original composition. Nesting the
+      // Main-particle test inside the hidden-Telegraph test used to blame the
+      // second layer even when either layer alone was sufficient to cross the
+      // threshold. Keep both independent and use a combined read only when the
+      // defect is genuinely additive.
       const captureAtMs = this.nowMs;
       const telegraphGridCandidate = frameAudit.diagnosticCheckerShare > 0;
-      const comparison = await this.runtimeVfx!.telegraphs228.withHiddenForAudit(async () => {
+      const readSameComposition = async (): Promise<BackdropFrameAudit> => {
         this.renderScene();
         this.renderScene();
-        const withoutTelegraph = auditBackdropFrame(
-          (await this.engine.readPixels(0, 0, width, height)) as Uint8Array,
-          width,
-          height,
-        );
-        const withoutVerifiedLayers = withoutTelegraph.unsafe
-          ? await this.auditWithoutVerifiedPresentationLayers(async () => {
-          this.renderScene();
-          this.renderScene();
-          return auditBackdropFrame(
-            (await this.engine.readPixels(0, 0, width, height)) as Uint8Array,
-            width,
-            height,
+        await this.engine.readPixels(0, 0, width, height);
+        return this.opaqueEvidenceFrame(width, height).audit;
+      };
+      const isolation = await this.auditPresentationIsolation(readSameComposition);
+      let isolatedReason = this.presentationIsolationReason(isolation, telegraphGridCandidate);
+      let isolationDiagnostic = this.presentationIsolationDiagnostic(isolation);
+      let checkerShare = frameAudit.diagnosticCheckerShare;
+      if (!isolatedReason) {
+        // Opaque actor skins are allowed and each GLB has already passed the
+        // actor-specific visibility/white-collapse gate. A stylised blocky
+        // summon can resemble a checker to the generic VFX detector, so repeat
+        // the same-frame presentation isolation with actor bodies hidden. This
+        // removes only false carrier evidence; the stored image remains the
+        // original full gameplay composition.
+        const withoutActors = await this.withActorBodiesHiddenForAudit(readSameComposition);
+        checkerShare = withoutActors.diagnosticCheckerShare;
+        if (!withoutActors.unsafe) {
+          isolatedReason = "已驗證角色本體 A/B 排除合法不透明模型表面；VFX 載體層未越線";
+        } else {
+          const withoutActorsIsolation = await this.withActorBodiesHiddenForAudit(
+            () => this.auditPresentationIsolation(readSameComposition),
           );
-          })
-          : null;
-        return { withoutTelegraph, withoutVerifiedLayers };
-      });
-      const { withoutTelegraph, withoutVerifiedLayers } = comparison;
-      if (withoutTelegraph.unsafe && withoutVerifiedLayers?.unsafe !== false) {
-        const suspects = this.backdropMeshSuspects();
+          isolationDiagnostic = `actors-hidden ${this.presentationIsolationDiagnostic(withoutActorsIsolation)}`;
+          const presentationReason = this.presentationIsolationReason(
+            withoutActorsIsolation,
+            withoutActors.diagnosticCheckerShare > 0,
+          );
+          if (presentationReason) {
+            isolatedReason = `${presentationReason}；角色本體已由獨立 GLB gate 驗證`;
+          }
+        }
+      }
+      if (!isolatedReason) {
+        const suspects = [...this.backdropMeshSuspects(), ...activeParticleSuspects];
         throw new Error(
           `${frameAudit.reason ?? "目前關鍵格含有不安全的貼圖底板"} @ ${captureAtMs}ms` +
+          `；${isolationDiagnostic}` +
           (suspects.length > 0 ? `；可疑載體：${suspects.join(" | ")}` : ""),
         );
       }
       frameAudit = {
         ...frameAudit,
+        diagnosticCheckerShare: checkerShare,
         unsafe: false,
-        reason: (withoutTelegraph.unsafe
-          ? "透明／混合收據與同格剝離已定位呈現層異常；不是未知載體，但玩家畫面仍須人工裁決"
-          : telegraphGridCandidate
-          ? "Telegraph 格狀圖樣已通過同格剝離；不是遺失貼圖，但玩家畫面仍須人工裁決"
-          : "施法範圍 Telegraph 已通過同格剝離驗證；素材層未檢出底板") +
+        reason: isolatedReason +
           (activeParticleSuspects.length > 0
             ? `；活動粒子：${activeParticleSuspects.join(" | ")}`
             : ""),
@@ -763,7 +795,7 @@ export class VfxForgeStage {
       `證據格 · 顯影 ${(frameAudit.litShare * 100).toFixed(1)}% · ` +
       `高光 ${(frameAudit.highlightShare * 100).toFixed(1)}%`,
     );
-    const dataUrl = this.canvas.toDataURL("image/webp", 0.82);
+    const dataUrl = frameDataUrl;
     if (!dataUrl.startsWith("data:image/webp;base64,")) {
       throw new Error("瀏覽器無法產生 WebP 視覺證據");
     }
@@ -811,9 +843,10 @@ export class VfxForgeStage {
     this.renderScene();
     const width = this.engine.getRenderWidth();
     const height = this.engine.getRenderHeight();
-    const rgba = (await this.engine.readPixels(0, 0, width, height)) as Uint8Array;
-    const frameAudit = auditBackdropFrame(rgba, width, height);
-    const dataUrl = this.canvas.toDataURL("image/webp", 0.82);
+    await this.engine.readPixels(0, 0, width, height);
+    const evidence = this.opaqueEvidenceFrame(width, height);
+    const frameAudit = evidence.audit;
+    const dataUrl = evidence.dataUrl;
     if (!dataUrl.startsWith("data:image/webp;base64,")) {
       throw new Error("瀏覽器無法產生 WebP 診斷畫面");
     }
@@ -826,6 +859,29 @@ export class VfxForgeStage {
       diagnosticOnly: true,
       frameAudit,
     };
+  }
+
+  /**
+   * Snapshot the actual in-page composition, not the alpha-bearing WebGL
+   * backing store. The Forge canvas is displayed over `.vfx-stage #080a10`;
+   * the report and image reviewer must receive those same visible pixels.
+   */
+  private opaqueEvidenceFrame(width: number, height: number): {
+    dataUrl: string;
+    audit: BackdropFrameAudit;
+  } {
+    const output = document.createElement("canvas");
+    output.width = width;
+    output.height = height;
+    const context = output.getContext("2d", { alpha: false, willReadFrequently: true });
+    if (!context) throw new Error("瀏覽器無法建立不透明視覺證據畫布");
+    context.fillStyle = "#080a10";
+    context.fillRect(0, 0, width, height);
+    context.drawImage(this.canvas, 0, 0, width, height);
+    const pixels = context.getImageData(0, 0, width, height).data;
+    const audit = auditBackdropFrame(pixels, width, height);
+    const dataUrl = output.toDataURL("image/webp", 0.82);
+    return { dataUrl, audit };
   }
 
   /** Translate a canvas drop point through the shipped camera into script facing offsets. */
@@ -984,6 +1040,7 @@ export class VfxForgeStage {
           this.scene.particleSystems.reduce((sum, system) => sum + system.manualEmitCount, 0),
         );
         let result = await read();
+        let isolationDiagnostic = "";
         peakPresentationPixelShare = Math.max(
           peakPresentationPixelShare,
           result.presentationPixelShare ?? 0,
@@ -997,25 +1054,15 @@ export class VfxForgeStage {
           // Distinguish a Telegraph-owned grid from a carrier that survives
           // the A/B. Preserve the original checker ratio so the batch report
           // never turns a visually objectionable pattern into a clean score.
-          const frameAtMs = this.nowMs;
           const telegraphGridCandidate = result.diagnosticCheckerShare > 0;
-          const comparison = await this.runtimeVfx!.telegraphs228.withHiddenForAudit(async () => {
-            const withoutTelegraph = await read();
-            const withoutVerifiedLayers = withoutTelegraph.unsafe
-              ? await this.auditWithoutVerifiedPresentationLayers(read)
-              : null;
-            return { withoutTelegraph, withoutVerifiedLayers };
-          });
-          const { withoutTelegraph, withoutVerifiedLayers } = comparison;
-          if (!withoutTelegraph.unsafe || withoutVerifiedLayers?.unsafe === false) {
+          const isolation = await this.auditPresentationIsolation(read);
+          const isolatedReason = this.presentationIsolationReason(isolation, telegraphGridCandidate);
+          isolationDiagnostic = this.presentationIsolationDiagnostic(isolation);
+          if (isolatedReason) {
             result = {
               ...result,
               unsafe: false,
-              reason: withoutTelegraph.unsafe
-                ? "透明／混合收據與同格剝離已定位呈現層異常；不是未知載體，但玩家畫面仍須人工裁決"
-                : telegraphGridCandidate
-                ? "Telegraph 格狀圖樣已通過同格剝離；不是遺失貼圖，但玩家畫面仍須人工裁決"
-                : "施法範圍 Telegraph 已通過同格剝離驗證；素材層未檢出底板",
+              reason: isolatedReason,
             };
           }
         }
@@ -1028,7 +1075,11 @@ export class VfxForgeStage {
         if (score < worstScore || result.unsafe) {
           worst = result;
           worstAtMs = this.nowMs;
-          suspects = this.backdropMeshSuspects();
+          suspects = [
+            ...(isolationDiagnostic ? [isolationDiagnostic] : []),
+            ...this.backdropMeshSuspects(),
+            ...this.activeParticleSuspects(),
+          ];
         }
         if (result.unsafe || this.nowMs >= stopAt) break;
         // Keep expensive framebuffer readback at 15 Hz, but render every
@@ -1114,6 +1165,199 @@ export class VfxForgeStage {
       overlays.forEach((mesh, index) => mesh.setEnabled(states[index]!));
       this.renderScene();
     }
+  }
+
+  /**
+   * Isolate the shipped generic hit-feedback pool from authored VFX.
+   * `vfx-preset-*` is created by Main's ImpactComposer, not by an Editor
+   * script segment. If removing only these live systems clears the same-frame
+   * carrier, one reusable-brick defect can be routed to Main instead of asking
+   * an author to edit every affected ability.
+   */
+  private async auditWithoutMainImpactParticles(
+    read: () => Promise<BackdropFrameAudit>,
+  ): Promise<BackdropFrameAudit | null> {
+    const allParticleSystems = [...this.scene.particleSystems];
+    const hidden = allParticleSystems.filter(
+      (system) => system.getActiveCount() > 0 && system.name.startsWith("vfx-preset-"),
+    );
+    if (hidden.length === 0) return null;
+    const hiddenSet = new Set(hidden);
+    this.scene.particleSystems.splice(
+      0,
+      this.scene.particleSystems.length,
+      ...allParticleSystems.filter((system) => !hiddenSet.has(system)),
+    );
+    try {
+      return await read();
+    } finally {
+      this.scene.particleSystems.splice(0, this.scene.particleSystems.length, ...allParticleSystems);
+      this.renderScene();
+    }
+  }
+
+  /** Isolate Main's reusable cast-pillar + cast-charge presentation group. */
+  private async auditWithoutMainCastPresentation(
+    read: () => Promise<BackdropFrameAudit>,
+  ): Promise<BackdropFrameAudit | null> {
+    const meshes = this.scene.meshes.filter((mesh) =>
+      (mesh.name.startsWith("cast-pillar") || mesh.name.startsWith("cast-charge")) &&
+        mesh.isEnabled() && mesh.isVisible && mesh.visibility > 0,
+    );
+    const meshStates = meshes.map((mesh) => mesh.isEnabled());
+    const allParticleSystems = [...this.scene.particleSystems];
+    const particles = allParticleSystems.filter((system) =>
+      system.getActiveCount() > 0 && system.name.startsWith("vfx-preset-castpillar/"),
+    );
+    if (meshes.length === 0 && particles.length === 0) return null;
+    meshes.forEach((mesh) => mesh.setEnabled(false));
+    const particleSet = new Set(particles);
+    this.scene.particleSystems.splice(
+      0,
+      this.scene.particleSystems.length,
+      ...allParticleSystems.filter((system) => !particleSet.has(system)),
+    );
+    try {
+      return await read();
+    } finally {
+      this.scene.particleSystems.splice(0, this.scene.particleSystems.length, ...allParticleSystems);
+      meshes.forEach((mesh, index) => mesh.setEnabled(meshStates[index]!));
+      this.renderScene();
+    }
+  }
+
+  /** Temporarily remove certified actor bodies while retaining the same scene beat. */
+  private async withActorBodiesHiddenForAudit<T>(read: () => Promise<T>): Promise<T> {
+    const actors = this.allActors();
+    const states = actors.map((actor) => ({
+      body: actor.bodyRoot?.isEnabled() ?? false,
+      fallback: actor.fallback.isEnabled(),
+    }));
+    for (const actor of actors) {
+      actor.bodyRoot?.setEnabled(false);
+      actor.fallback.setEnabled(false);
+    }
+    try {
+      return await read();
+    } finally {
+      actors.forEach((actor, index) => {
+        actor.bodyRoot?.setEnabled(states[index]!.body);
+        actor.fallback.setEnabled(states[index]!.fallback);
+      });
+      this.renderScene();
+    }
+  }
+
+  /**
+   * Keep every A/B read on the same presentation beat.
+   *
+   * Babylon advances CPU particles on every scene.render(), even when the
+   * Forge playhead is paused.  The ownership audit renders several times while
+   * hiding one layer at a time; without this guard an organic fire burst can
+   * move between reads and make an unrelated Telegraph look responsible for a
+   * transient checker score.  Freeze only animation time and pending emission
+   * while the diagnostic reads run, then restore the exact authored state.
+   */
+  private async withPresentationBeatFrozenForAudit<T>(read: () => Promise<T>): Promise<T> {
+    const animationsEnabled = this.scene.animationsEnabled;
+    const particleStates = this.scene.particleSystems.map((system) => ({
+      system,
+      updateSpeed: system.updateSpeed,
+      manualEmitCount: system.manualEmitCount,
+    }));
+    this.scene.animationsEnabled = false;
+    for (const { system } of particleStates) {
+      system.updateSpeed = 0;
+      system.manualEmitCount = 0;
+    }
+    try {
+      return await read();
+    } finally {
+      this.scene.animationsEnabled = animationsEnabled;
+      for (const state of particleStates) {
+        state.system.updateSpeed = state.updateSpeed;
+        state.system.manualEmitCount = state.manualEmitCount;
+      }
+    }
+  }
+
+  /**
+   * Run same-frame presentation A/B tests independently before trying their
+   * combination. This is an ownership resolver, never an approval shortcut:
+   * callers keep the original pixels and emit a high-severity review issue.
+   */
+  private async auditPresentationIsolation(
+    read: () => Promise<BackdropFrameAudit>,
+  ): Promise<PresentationIsolationAudit> {
+    return this.withPresentationBeatFrozenForAudit(async () => {
+      const withoutMainImpactParticles = await this.auditWithoutMainImpactParticles(read);
+      const withoutMainCastPresentation = await this.auditWithoutMainCastPresentation(read);
+      const withoutTelegraph = await this.runtimeVfx!.telegraphs228.withHiddenForAudit(read);
+      const mainClears = withoutMainImpactParticles?.unsafe === false;
+      const castPresentationClears = withoutMainCastPresentation?.unsafe === false;
+      const telegraphClears = !withoutTelegraph.unsafe;
+      const withoutMainAndTelegraph = !mainClears && !castPresentationClears && !telegraphClears && withoutMainImpactParticles !== null
+        ? await this.runtimeVfx!.telegraphs228.withHiddenForAudit(
+          () => this.auditWithoutMainImpactParticles(read),
+        )
+        : null;
+      const combinedClears = withoutMainAndTelegraph?.unsafe === false;
+      const withoutVerifiedLayers = !mainClears && !castPresentationClears && !telegraphClears && !combinedClears
+        ? await this.auditWithoutVerifiedPresentationLayers(read)
+        : null;
+      return {
+        withoutMainImpactParticles,
+        withoutMainCastPresentation,
+        withoutTelegraph,
+        withoutMainAndTelegraph,
+        withoutVerifiedLayers,
+      };
+    });
+  }
+
+  /** Explain only what the same-frame A/B proved; never infer from names. */
+  private presentationIsolationReason(
+    audit: PresentationIsolationAudit,
+    telegraphGridCandidate: boolean,
+  ): string | null {
+    const mainClears = audit.withoutMainImpactParticles?.unsafe === false;
+    const castPresentationClears = audit.withoutMainCastPresentation?.unsafe === false;
+    const telegraphClears = !audit.withoutTelegraph.unsafe;
+    if ((mainClears || castPresentationClears) && telegraphClears) {
+      return "Main 預設呈現積木與 Telegraph 各自 A/B 都會解除載體門檻；屬混合呈現問題，玩家畫面不可直接通過";
+    }
+    if (mainClears) {
+      return "Main 預設打擊粒子 A/B 已定位紅／紫平面載體；玩家畫面不可直接通過";
+    }
+    if (castPresentationClears) {
+      return "Main 施法預告積木群 A/B 已定位紅／紫平面載體；玩家畫面不可直接通過";
+    }
+    if (telegraphClears) {
+      return telegraphGridCandidate
+        ? "Telegraph 格狀圖樣已通過同格剝離；不是遺失貼圖，但玩家畫面仍須人工裁決"
+        : "施法範圍 Telegraph 已通過同格剝離驗證；素材層未檢出底板";
+    }
+    if (audit.withoutMainAndTelegraph?.unsafe === false) {
+      return "Main 預設打擊粒子與 Telegraph 必須同時剝離才解除載體門檻；屬混合呈現問題，玩家畫面不可直接通過";
+    }
+    if (audit.withoutVerifiedLayers?.unsafe === false) {
+      return "透明／混合收據與同格剝離已定位呈現層異常；不是未知載體，但玩家畫面仍須人工裁決";
+    }
+    return null;
+  }
+
+  /** Persist the exact A/B outcomes when no isolation cleared the blocker. */
+  private presentationIsolationDiagnostic(audit: PresentationIsolationAudit): string {
+    const status = (value: BackdropFrameAudit | null): string => value === null
+      ? "n/a"
+      : value.unsafe
+        ? `unsafe(${(value.diagnosticCheckerShare * 100).toFixed(3)}%)`
+        : `clear(${(value.diagnosticCheckerShare * 100).toFixed(3)}%)`;
+    return `A/B main=${status(audit.withoutMainImpactParticles)}, ` +
+      `castPresentation=${status(audit.withoutMainCastPresentation)}, ` +
+      `telegraph=${status(audit.withoutTelegraph)}, ` +
+      `main+telegraph=${status(audit.withoutMainAndTelegraph)}, ` +
+      `verified=${status(audit.withoutVerifiedLayers)}`;
   }
 
   /**

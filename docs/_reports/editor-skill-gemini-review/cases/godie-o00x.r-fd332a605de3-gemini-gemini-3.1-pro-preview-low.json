@@ -1,0 +1,137 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T21:23:42.269Z",
+  "sourceDigest": "fd332a605de3a9de13176d7bbc1b7c83b71ec8a5d194ddca7125c0c4d181a713",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-o00x.r",
+    "name": "09-04 龜派氣功"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6563,
+    "usage": {
+      "promptTokens": 4998,
+      "completionTokens": 444,
+      "totalTokens": 5442
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-o00x.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-o00x.r · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5264,
+      "sha256": "f7554e63b4fd949dca8714809b4cc452dafeecb052efbf9352c4ab2336bf3a69"
+    },
+    {
+      "path": "frames/godie-o00x.r-02-1013ms.webp",
+      "atMs": 1013,
+      "phase": "godie-o00x.r · 吟唱完成 · screenShake+vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9906,
+      "sha256": "58c380e91e23abb0c31d4c306d8613e3c05b50718c795f7fbe6afafb9e0bec2c"
+    },
+    {
+      "path": "frames/godie-o00x.r-03-1443ms.webp",
+      "atMs": 1443,
+      "phase": "godie-o00x.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8554,
+      "sha256": "2afac39299c0d47f582da5fa7fdd155067fa29ad97d70f272b1daa12ae0317ad"
+    },
+    {
+      "path": "frames/godie-o00x.r-04-1644ms.webp",
+      "atMs": 1644,
+      "phase": "godie-o00x.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7358,
+      "sha256": "9907785ccbcbfce0dba90d98c1a51d4395838f2120b9d08093aa70921e1ce768"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺少可供比較的原始龜派氣功畫面，無法確認\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供 reference，無法判斷家族特徵\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期的顏色規格\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供明確的起始位置規格\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供明確的命中位置規格\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺乏參考標準無法驗證時序一致性\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"畫面中出現的特效無明顯穿模情況\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"特效與角色/場景關係清晰易讀\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3\n      ]\n    }\n  },\n  \"notes\": [\n    \"預期視覺要求與 godie-ogrh.r 一致，但未提供 reference 或機制描述。\",\n    \"只能觀察到角色周圍有氣流和向右衝刺的線條效果。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "缺少可供比較的原始龜派氣功畫面，無法確認",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供 reference，無法判斷家族特徵",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供預期的顏色規格",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供明確的起始位置規格",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供明確的命中位置規格",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "缺乏參考標準無法驗證時序一致性",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "畫面中出現的特效無明顯穿模情況",
+        "evidenceFrames": [
+          1,
+          2,
+          3
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "特效與角色/場景關係清晰易讀",
+        "evidenceFrames": [
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    "notes": [
+      "預期視覺要求與 godie-ogrh.r 一致，但未提供 reference 或機制描述。",
+      "只能觀察到角色周圍有氣流和向右衝刺的線條效果。"
+    ]
+  },
+  "contractWarnings": []
+}

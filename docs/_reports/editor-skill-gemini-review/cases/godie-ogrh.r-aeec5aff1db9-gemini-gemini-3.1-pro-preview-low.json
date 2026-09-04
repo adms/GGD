@@ -1,0 +1,147 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-03T23:26:20.191Z",
+  "sourceDigest": "aeec5aff1db9b42e012273fff19ead7f453bb60ae4349053d2eaed187e0f344f",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-ogrh.r",
+    "name": "09-04 龜派氣功"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6224,
+    "usage": {
+      "promptTokens": 5000,
+      "completionTokens": 457,
+      "totalTokens": 5457
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-ogrh.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-ogrh.r · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5264,
+      "sha256": "f7554e63b4fd949dca8714809b4cc452dafeecb052efbf9352c4ab2336bf3a69"
+    },
+    {
+      "path": "frames/godie-ogrh.r-02-1013ms.webp",
+      "atMs": 1013,
+      "phase": "godie-ogrh.r · 吟唱完成 · screenShake+vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9740,
+      "sha256": "fd6e85d94d28d2fcf553a00c7e363cb5138d8d98c1970d128c578b2b667f1aed"
+    },
+    {
+      "path": "frames/godie-ogrh.r-03-1443ms.webp",
+      "atMs": 1443,
+      "phase": "godie-ogrh.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8346,
+      "sha256": "e4cb58c7cb1fb34eb8369239b3e4e96565150e2380dab8736495f845d912157b"
+    },
+    {
+      "path": "frames/godie-ogrh.r-04-1644ms.webp",
+      "atMs": 1644,
+      "phase": "godie-ogrh.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6836,
+      "sha256": "c0859f9c01d37cc32709af887c943cafe1c82349fb516d423ea3683972102836"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見橘色橫向光束\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"fail\",\n      \"reason\": \"可見效果不符合光束特徵\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"colorMatch\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見橘色光束\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見光束發射\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見光束相關之時序\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"現有效果與角色關係清楚\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    }\n  },\n  \"notes\": [\n    \"畫面中僅見角色周圍的煙塵及右側的速度線效果。\",\n    \"預期中的『橘色橫向光束』及『超級賽亞人增幅』均未出現。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見橘色橫向光束",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "fail",
+        "reason": "可見效果不符合光束特徵",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "colorMatch": {
+        "status": "fail",
+        "reason": "未見橘色光束",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未見光束發射",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供特定命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "未見光束相關之時序",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "現有效果與角色關係清楚",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "畫面中僅見角色周圍的煙塵及右側的速度線效果。",
+      "預期中的『橘色橫向光束』及『超級賽亞人增幅』均未出現。"
+    ]
+  },
+  "contractWarnings": []
+}

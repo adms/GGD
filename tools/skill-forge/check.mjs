@@ -14,6 +14,7 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(new URL("../..", import.meta.url)));
 const maxFailureLines = 80;
+const machineOnly = process.argv.includes("--machine-only");
 
 function tail(text, lines = maxFailureLines) {
   return text.trimEnd().split(/\r?\n/).slice(-lines).join("\n");
@@ -47,7 +48,9 @@ const focusedTests = [
   "src/forge/forgeWritebackTemplateGate.test.ts",
   "src/preview/forgeRealCast.test.ts",
   "src/vfx-forge/backdropFrameAudit.test.ts",
+  "src/vfx-forge/assetSafety.test.ts",
   "src/vfx-forge/basicVisualAuthoring.test.ts",
+  "src/vfx-forge/mechanicVisualOverlay.test.ts",
   "src/vfx-forge/visualAcceptanceIssues.test.ts",
   "../../tools/skill-forge/visualProofImport.test.ts",
 ];
@@ -63,4 +66,8 @@ run("46-document real Sim preview routes", "pnpm", ["skillforge:sim-audit", "--"
 run("visual proof importer", "pnpm", ["skillforge:visual-proof:import", "--", "--self-test"]);
 run("42/46 human review packet", "pnpm", ["skillforge:visual-review:check"]);
 run("46 chronological visual contact sheets", "pnpm", ["skillforge:visual-sheets:check"]);
-run("46-document Codex visual advisory", "pnpm", ["skillforge:visual-advisory:check"]);
+if (machineOnly) {
+  console.log("PENDING Codex visual advisory freshness is a human-image-review gate, not a machine/code failure");
+} else {
+  run("46-document Codex visual advisory", "pnpm", ["skillforge:visual-advisory:check"]);
+}

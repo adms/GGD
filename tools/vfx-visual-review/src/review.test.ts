@@ -16,7 +16,7 @@ import {
   runGeminiReview,
   unavailableGeminiReport,
 } from "./gemini.js";
-import { classifyModelResult, prepareReview, stripOwnerDialogue } from "./review.js";
+import { classifyModelResult, classifyPreparedResult, prepareReview, stripOwnerDialogue } from "./review.js";
 
 describe("VFX visual review guardrails", () => {
   it("orders and bounds temporal samples while adapting to scene complexity", () => {
@@ -64,6 +64,11 @@ describe("VFX visual review guardrails", () => {
     const prepared = prepareReview(request, dir);
     expect(stripOwnerDialogue(request.ownerDescription ?? "")).toBe("召喚雷擊。 命中點出現藍白爆光。");
     expect(prepared.prompt).not.toContain("別站著發呆");
+    expect(prepared.prompt).toContain("顏色錯歸 colorMatch");
+    expect(prepared.prompt).toContain("亮度、飽和度、尾焰密度");
+    expect(prepared.prompt).toContain("若同時存在明顯大錯");
+    expect(prepared.prompt).toContain("不可把不同影格各自出現的一個斬弧誤算成同一時刻的大量月牙");
+    expect(prepared.prompt).toContain("每個傷害段一個斬弧並搭配角色攻擊屬正常");
     expect(prepared.sourceDigest).toMatch(/^[a-f0-9]{64}$/);
 
     const checks = Object.fromEntries(CHECK_KEYS.map((key) => [key, {
@@ -72,6 +77,29 @@ describe("VFX visual review guardrails", () => {
     const result: ModelResult = { overall: "pass", confidence: 0.7, checks, notes: [] };
     expect(classifyModelResult(prepared, result)).toBe("needs-human-review");
 
+  });
+
+  it("does not reject a visual when the model only objects to non-visual semantics", () => {
+    const dir = mkdtempSync(join(tmpdir(), "ggd-vfx-semantics-"));
+    writeFileSync(join(dir, "impact.webp"), Buffer.from("5249464600000000574542500000", "hex"));
+    const prepared = prepareReview(parseReviewRequest({
+      schema: "ggd-vfx-visual-review-request@1",
+      subject: { kind: "ability", id: "shape-conflict.e" },
+      expectation: { summary: "畫面中有清楚可讀的命中特效" },
+      candidateFrames: [{ path: "impact.webp", atMs: 300, phase: "impact" }],
+    }), dir);
+    const checks = Object.fromEntries(CHECK_KEYS.map((key) => [key, {
+      status: "pass", reason: "畫面可見", evidenceFrames: [0],
+    }])) as ModelResult["checks"];
+    const verdict = classifyPreparedResult(prepared, {
+      overall: "fail",
+      confidence: 0.96,
+      checks,
+      notes: ["卡片形狀與模板語意不一致"],
+    });
+
+    expect(verdict.classification).toBe("needs-human-review");
+    expect(verdict.warnings).toContain("overall failed without a required visual check failure");
   });
 
   it("uses only the fixed Gemini host, strips Owner dialogue, and sends two bounded keyframes", async () => {

@@ -1,0 +1,115 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-03T21:11:52.258Z",
+  "sourceDigest": "7bdd4d458a6a33c90a20eacce6828b0355d802aa79c64989676744252f59f38c",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hvwd.e",
+    "name": "02-03 魂飛魄散"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6327,
+    "usage": {
+      "promptTokens": 2790,
+      "completionTokens": 403,
+      "totalTokens": 3193
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hvwd.e-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hvwd.e · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5422,
+      "sha256": "e11634edd0a913f91a72a2aacbbd1634f292bed1d5c0ac9ca1c1d64a46b3621f"
+    },
+    {
+      "path": "frames/godie-hvwd.e-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-hvwd.e · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6054,
+      "sha256": "7a76eba207c0a294e2bdbe3f07ea3b9d6484e99f6dbcfa54f899c9535108f67b"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未在畫面中看到任何視覺特效。\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見特效，無法確認類型。\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見特效，無法確認顏色。\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見特效，無法確認生成位置。\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見特效，無法確認命中位置。\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"缺乏特效出現的時序證據。\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見特效，無法評估穿模。\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見特效，無法評估辨識度。\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"候選圖片中沒有顯示任何技能特效。\",\n    \"無法進行大部分的視覺審查。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未在畫面中看到任何視覺特效。",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未見特效，無法確認類型。",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未見特效，無法確認顏色。",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未見特效，無法確認生成位置。",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未見特效，無法確認命中位置。",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "缺乏特效出現的時序證據。",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "未見特效，無法評估穿模。",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "未見特效，無法評估辨識度。",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "候選圖片中沒有顯示任何技能特效。",
+      "無法進行大部分的視覺審查。"
+    ]
+  },
+  "contractWarnings": []
+}

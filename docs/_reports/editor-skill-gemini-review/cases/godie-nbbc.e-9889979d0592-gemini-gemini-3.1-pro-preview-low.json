@@ -1,0 +1,150 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-03T19:55:54.842Z",
+  "sourceDigest": "9889979d059290b72d0fb924de837553944c3dc8235d5a2844957ec286058502",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-nbbc.e",
+    "name": "08-03 龍鬥氣砲咒文"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6471,
+    "usage": {
+      "promptTokens": 4967,
+      "completionTokens": 495,
+      "totalTokens": 5462
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-nbbc.e-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-nbbc.e · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6330,
+      "sha256": "745b5a910a658052e8f1407d43d726ce35fac3eb20a93642d71efe930fd3cf93"
+    },
+    {
+      "path": "frames/godie-nbbc.e-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-nbbc.e · 吟唱完成 · screenShake+vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 13110,
+      "sha256": "973b9f8222f53998d43fb22756370a4c725f484061cc9795567e4e25df4cf07d"
+    },
+    {
+      "path": "frames/godie-nbbc.e-03-1610ms.webp",
+      "atMs": 1610,
+      "phase": "godie-nbbc.e · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9920,
+      "sha256": "f8b1d0901c51c62bbd848866c73184c17f792c1010b17a3ca051d09dab9a8f4c"
+    },
+    {
+      "path": "frames/godie-nbbc.e-04-1811ms.webp",
+      "atMs": 1811,
+      "phase": "godie-nbbc.e · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9810,
+      "sha256": "2d3d18a7f4bccc4045c021d321e065f5f9864c4f803913820daa2a9038130e64"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"藍色橫向氣功砲可見。\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"呈現橫向氣功砲形狀與線條，符合預期。\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"colorMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"氣功砲呈現藍色。\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"spawnOrigin\": {\n      \"status\": \"fail\",\n      \"reason\": \"氣功砲發射位置異常，不在角色前方，而是從右側出現。\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定命中位置要求，且未觀察到明確碰撞點。\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"施法後出現氣功砲。\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模或裁切。\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"readability\": {\n      \"status\": \"fail\",\n      \"reason\": \"氣功砲發射位置和方向與角色脫節，關係不清楚。\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    }\n  },\n  \"notes\": [\n    \"預期氣功砲從角色前方發射，但在畫面中是從右側憑空出現往右飛，方向與位置皆異常。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "藍色橫向氣功砲可見。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "pass",
+        "reason": "呈現橫向氣功砲形狀與線條，符合預期。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "colorMatch": {
+        "status": "pass",
+        "reason": "氣功砲呈現藍色。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "spawnOrigin": {
+        "status": "fail",
+        "reason": "氣功砲發射位置異常，不在角色前方，而是從右側出現。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供特定命中位置要求，且未觀察到明確碰撞點。",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "施法後出現氣功砲。",
+        "evidenceFrames": [
+          0,
+          1,
+          2
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模或裁切。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "fail",
+        "reason": "氣功砲發射位置和方向與角色脫節，關係不清楚。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "預期氣功砲從角色前方發射，但在畫面中是從右側憑空出現往右飛，方向與位置皆異常。"
+    ]
+  },
+  "contractWarnings": []
+}

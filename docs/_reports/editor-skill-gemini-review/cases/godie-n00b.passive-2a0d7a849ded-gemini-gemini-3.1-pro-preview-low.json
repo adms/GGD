@@ -1,0 +1,174 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:04:43.201Z",
+  "sourceDigest": "2a0d7a849dedc19a43b5ea2c5d2ba8f09a62c035cce546aae2a67b872d11cb01",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-n00b.passive",
+    "name": "57-00 四次元口袋"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 7873,
+    "usage": {
+      "promptTokens": 9397,
+      "completionTokens": 417,
+      "totalTokens": 9814
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-n00b.passive-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-n00b.passive · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5492,
+      "sha256": "08ac7bb18c157aada5f120dd030c7a8549300c8e149f654c3fb71f4836316c43"
+    },
+    {
+      "path": "frames/godie-n00b.passive-02-447ms.webp",
+      "atMs": 447,
+      "phase": "godie-n00b.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 11440,
+      "sha256": "727ff4efa445e0dda095a4f801a91414e18b9e22230290913d191e766f567957"
+    },
+    {
+      "path": "frames/godie-n00b.passive-03-1347ms.webp",
+      "atMs": 1347,
+      "phase": "godie-n00b.passive · 真 runtime · vfxSpawn · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 16316,
+      "sha256": "6559375c106aeddb3b651cf959caec86b0206d6efaf8af8a393e64cee06e2754"
+    },
+    {
+      "path": "frames/godie-n00b.passive-04-1613ms.webp",
+      "atMs": 1613,
+      "phase": "godie-n00b.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 11866,
+      "sha256": "fc73fcd311065a83440de54ec4e3c47b8e96fd7e61cce7a8d0cc599e00f858d4"
+    },
+    {
+      "path": "frames/godie-n00b.passive-05-1947ms.webp",
+      "atMs": 1947,
+      "phase": "godie-n00b.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 4,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9304,
+      "sha256": "9942e9e2e249b2d92ff633d0a328e42f52bde91662fc3595c636ced7f39ceb20"
+    },
+    {
+      "path": "frames/godie-n00b.passive-06-2947ms.webp",
+      "atMs": 2947,
+      "phase": "godie-n00b.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 5,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 11556,
+      "sha256": "71a6570927d5bf2863418d76a1bf8f0591a52f95bb6160d54bf119e574c22360"
+    },
+    {
+      "path": "frames/godie-n00b.passive-07-3280ms.webp",
+      "atMs": 3280,
+      "phase": "godie-n00b.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 6,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9664,
+      "sha256": "4ab66e5784534dc804c3bb9dcbd93307029978012ac03a7babca6278b9211111"
+    },
+    {
+      "path": "frames/godie-n00b.passive-08-20613ms.webp",
+      "atMs": 20613,
+      "phase": "godie-n00b.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 7,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8970,
+      "sha256": "a1c82f01d73d57a2d100d899fff8e53f0c22c8569c4d478712f0576412340075"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"預期文字要求金錢、回復或限時增益及嘲諷，畫面僅見紅方塊特效。\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供機制描述，無法判斷特效類型是否符合。\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定顏色要求。\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供來源要求。\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供命中位置要求。\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無法確認先增益再嘲諷的時序。\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模或裁切問題。\",\n      \"evidenceFrames\": [\n        2,\n        3\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"特效與角色關係清楚。\",\n      \"evidenceFrames\": [\n        2,\n        3\n      ]\n    }\n  },\n  \"notes\": [\n    \"畫面可見角色身上出現紅色方塊特效，但不清楚是否對應預期的增益或嘲諷。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "預期文字要求金錢、回復或限時增益及嘲諷，畫面僅見紅方塊特效。",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供機制描述，無法判斷特效類型是否符合。",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定顏色要求。",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供來源要求。",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供命中位置要求。",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "無法確認先增益再嘲諷的時序。",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模或裁切問題。",
+        "evidenceFrames": [
+          2,
+          3
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "特效與角色關係清楚。",
+        "evidenceFrames": [
+          2,
+          3
+        ]
+      }
+    },
+    "notes": [
+      "畫面可見角色身上出現紅色方塊特效，但不清楚是否對應預期的增益或嘲諷。"
+    ]
+  },
+  "contractWarnings": []
+}
