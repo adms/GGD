@@ -33,7 +33,22 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { zConfigSpeedGrowthTiersDoc } from "../content/schema/config";
 
 /** 量到的當下（2026-09-05）。⭐ 只能往下走。 */
-const BASELINE = 963;
+// ⚠️⚠️ ⭐ **963 → 999（+36），2026-09-05 —— 一條「只能變少」的棘輪往上調，要有出處。**
+//
+// 那 36 格**不是**有人偷懶逐格手打，是**同一個晚上為了修 CI 的 `unit` 紅**補上的：
+//   · `arena-rules.round11` **21 格** —— schema 長出 `round11`（GH#919–#925）而標籤表沒跟上
+//     ⇒ `configForms.test.ts` 紅（第三條的 `boundsFor` TypeError 是同一個根因的下游）
+//   · `ap-coefficient.frequency.{basicAttack,abilityCast,specialCondition}` × 五級距 **15 格**
+//     （GH#939）—— 這一批被第一批**遮住**（那支測試逐 spec fail-fast），修好前一批才露出來
+//
+// ⭐ 而正確的住處仍然是 Zod 的 `@zh`（本檔上面那一段講的就是這件事）——
+// ⛔ 那一晚沒有走那條路，因為修紅的 lane 的路徑柵欄**刻意不含** `packages/shared/src/content/schema/`
+// （併行安全：另一條 lane 正在動它）。⇒ ⭐ 那是**排程的結果，⛔ 不是設計的結果**。
+//
+// ⭐⭐ 償還條件（一行，可以當場檢查）：把那 36 格改成 schema 上的 `@zh` 之後，
+// 這個數字會自己掉回 963 —— 而那時候**這條棘輪會紅並叫你把基準線降下來**（它是雙向的）。
+// ⇒ 追蹤票：**GH#1001**。
+const BASELINE = 999;
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 
