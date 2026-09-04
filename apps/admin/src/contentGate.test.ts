@@ -282,10 +282,25 @@ describe("C: 內容編輯進得了正式 build，而預設是關的（GH#730）"
       }
       return out;
     };
+    // ⚠️ ⭐ 這個前綴要**當成 URL 的開頭**來找，⛔ 不是「字串裡出現過」：
+    // `configForms/specs/*.ts` 的 `consumer` 那一行會逐字寫出**檔案路徑**
+    // （`apps/content-api/src/importRoutes.ts` —— 它含 `/content-api/`），而那是一句
+    // 說明，⛔ 不是一個請求。⭐ 判準是它前面那一個字元：URL 的話是引號/括號/空白
+    // （`fetch(`/content-api/x`)`），repo 路徑的話是**字母**（`apps` 的 `s`）。
+    // ⛔ 這不是放寬 —— `fetch(BASE + "content-api/x")` 那種寫法舊的正則本來也抓不到
+    // （沒有前導斜線），所以牙齒一顆都沒少，少掉的只有**檔案路徑**這種偽陽性。
+    const sendsToContentApi = (src: string): boolean =>
+      /(^|["'`\s(=,+])\/content-api\//.test(code(src));
     const offenders = walk(join(REPO, "apps/admin/src"))
       .filter((f) => !f.endsWith("contentApi.ts"))
-      .filter((f) => /\/content-api\//.test(code(readFileSync(f, "utf8"))));
+      .filter((f) => sendsToContentApi(readFileSync(f, "utf8")));
     expect(offenders).toEqual([]);
+    // GUARD-THE-GUARD：唯一被排除的那一支**自己要命中**。少了這一行，上面那條
+    // 對「述詞永遠回 false」的實作也會全綠（失敗形態 ④：斷言方向和缺陷無關）。
+    expect(
+      sendsToContentApi(readFileSync(join(REPO, "apps/admin/src/contentApi.ts"), "utf8")),
+      "述詞連 contentApi.ts 都抓不到了 —— 它已經不在偵測任何東西",
+    ).toBe(true);
   });
 
   it("★ ⭐ 那個動態 import **不再被 DEV 閘擋住**（⇒ chunk 進得了正式 build）", () => {
