@@ -3,7 +3,7 @@
 > ⛔ **這份是產生的** —— `pnpm typecat:build`。改它請改 `content/ability-templates/`。
 > ⭐ 交付格式與止損協定見 `CODEX_TYPE_HANDOFF.md`；機器可讀版在 `ggd-type-catalog.json`。
 
-**29 個可挑 type** · ⭐ 3 個「分析做完但引擎沒接線」 · ⛔ 13 個空殼 · 1 個哨兵 · 矩陣 154/325 格
+**31 個可挑 type** · ⭐ 1 個「分析做完但引擎沒接線」 · ⛔ 13 個空殼 · 1 個哨兵 · 矩陣 154/325 格
 
 ## ⭐⭐ 怎麼 fail-closed
 
@@ -23,6 +23,8 @@
 | `tpl-buff-self` | `doc` | 3 | — | 0 | 28 | 6 | 82-04 闇之魔法 |
 | `tpl-charge-push` | `doc` | 11 | — | 0 | 0 | 5 | 38-01 邪王炎殺劍 |
 | `tpl-combo-finisher` | `doc` | 13 | — | 0 | 0 | 8 | 01-04 超究武神霸斬 |
+| `tpl-dragon-quake` | `both` | 15 | ⛔ ringRadius blastRadius shakeAmplitude shakeSec impactLifeSec scatterBox damage damageType | 0 | 0 | 8 | 38-03 邪王炎殺黑龍波 |
+| `tpl-dragon-serpent` | `both` | 16 | ⛔ serpentineDeg damageTiming touchRadius damage damageType | 0 | 0 | 6 | 38-002 究極暴走黑龍波 |
 | `tpl-ground-nova` | `doc` | 4 | — | 0 | 0 | 8 | 80-03 鬼神烈戟 |
 | `tpl-instant-blast` | `doc` | 4 | — | 0 | 12 | 8 | 90-03 藤鞭 |
 | `tpl-leap-strike` | `doc` | 8 | — | 0 | 0 | 5 | 07-03 列、在、前 |
@@ -48,7 +50,7 @@
 | `tpl-teleport` | `doc` | 6 | — | 0 | 0 | 7 | 17-03 空破圓斬 |
 | `tpl-traveling-wave` | `doc` | 9 | — | 0 | 1 | 7 | 04-03 龍破斬 |
 
-⛔⛔ **⛔ inert 那一欄的每一格填了也不會發生** —— 模板自己宣告的（理由在 JSON 的 `params[*].inert`）。今天 **6 格**落在可挑的 type 上。
+⛔⛔ **⛔ inert 那一欄的每一格填了也不會發生** —— 模板自己宣告的（理由在 JSON 的 `params[*].inert`）。今天 **19 格**落在可挑的 type 上。
 
 ## ⭐⭐ 分析做完了，而引擎沒有展開路徑（**收斂 backlog**）
 
@@ -58,8 +60,6 @@
 
 | id | 已寫好的參數 | exemplar |
 |---|---:|---|
-| `tpl-dragon-quake` | **12** | 38-03 邪王炎殺黑龍波 |
-| `tpl-dragon-serpent` | **12** | 38-002 究極暴走黑龍波 |
 | `tpl-dragon-shockwave` | **9** | 38-03 邪王炎殺黑龍波 |
 
 ## ⛔ 空殼（佔著名字、0 參數）

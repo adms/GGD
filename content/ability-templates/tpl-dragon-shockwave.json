@@ -2,13 +2,14 @@
   "id": "tpl-dragon-shockwave",
   "schema": "template@1",
   "name": "沿路衝擊波",
-  "description": "跟著主體一起推進的第二具模型，扁而寬、橫躺在地面上，作用是把「有東西剛剛從這裡掃過去」畫出來。原作是每個移動 tick 在當下的落點補生一具 BlackHole.mdl（縮到 0.1），十三具連起來就是那條尾流。可純演出，也可以自己帶穿透傷害。",
+  "description": "跟著主體一起推進的第二具模型，扁而寬、橫躺在地面上，作用是把「有東西剛剛從這裡掃過去」畫出來。原作是每個移動 tick 在當下的落點補生一具 BlackHole.mdl（縮到 0.1），十三具連起來就是那條尾流。可純演出，也可以自己帶穿透傷害。 ⛔⛔ **2026-09-04 逐行查證後的結論：這一族今天接不上**（`FAMILIES` 不會有它的條目）——它需要「沿路每 0.08 秒生一具 `model@1`」（j:44411 ＋ j:44349），⭐ 而 `spawnModelFx.trailVfxId` 吃的是 `vfx@1`。⇒ 缺的機制是 `trailModelKey`。",
   "family": "dragon-shockwave",
   "status": "draft",
   "params": {
     "modelKey": {
       "type": "docRef",
-      "default": "imported.blackhole"
+      "default": "imported.blackhole",
+      "origin": "j:44349 `CreateNUnitsAtLoc( 1, **'h02E'**, … )` ＋ `OBJECTS.json` 的 `units.h02E = {name:\"黑龍身體\", model:\"**BlackHole.mdl**\"}` ⇒ `imported.blackhole` 逐字對上。"
     },
     "travel": {
       "type": "number",
@@ -44,7 +45,7 @@
         "upright"
       ],
       "default": "flat",
-      "inert": "本版不生效 —— owner 2026-08-22「衝擊波特效**橫放 beam**」。vfx@1 有一整組 orient（yawDeg/pitchDeg/swirlDegPerSec，pitchDeg:90 是直立＝恆等），但 spawnModelFx **沒有** —— 它只吃 spinDegPerSec（繞自己的軸自轉）與 scale，模型一律直立。所以今天的衝擊波只能靠壓扁的 scale 近似，⛔ 躺不下來。"
+      "inert": "⛔ **本版不生效** —— 原作 j:44349 的 `CreateNUnitsAtLoc(…, GetUnitFacing(施法者))` 只給一個 yaw，⭐ 而「扁而寬、橫躺在地面」住在 `h02E` 的**物件資料**與模型本身，⛔ 不在觸發器。GGD 這一側對應的是 `model@1.fxLongAxis` ＋ `scaleAxis`，⇒ 它 ⛔ 不該是一格模板參數（那會是第二個住處）。"
     },
     "trailSpacingSec": {
       "type": "number",
@@ -52,7 +53,7 @@
       "min": 0.02,
       "max": 1,
       "unit": "s",
-      "inert": "本版不生效 —— 原作的尾流是**沿路補生的一串靜態模型**（每 0.08 秒一具，各自留在原地），而 spawnModelFx 一次施放只生**一具會動的**模型。畫面上的差別是「一條留得住的軌跡」vs「一個飛過去的東西」。"
+      "inert": "⛔ **本版不生效，⭐ 而這一格正是這一族接不上的原因** —— 原作 j:44411 `TriggerRegisterTimerEventPeriodic( gg_trg_DarkDragonEXMove, **0.08** )`，而 j:44349 在**每一個 tick** 於當下落點 `CreateNUnitsAtLoc( 1, 'h02E', …, udg_DarkDragonPoint, GetUnitFacing(施法者) )`。⇒ ⭐ 它是「**沿路每 N 秒生一具模型**」，⛔ 而 `spawnModelFx` 只有 `trailVfxId`（吃 `vfx@1`，⛔ 不是 `model@1`）⇒ 這一族要一格 `trailModelKey`＋`trailIntervalSec` 才接得上。"
     },
     "touchRadius": {
       "type": "number",
@@ -60,7 +61,8 @@
       "min": 50,
       "max": 650,
       "unit": "wc3u",
-      "optional": true
+      "optional": true,
+      "inert": "⛔ **本版不生效** —— 這一族是**純演出**（尾流）。原作的傷害在 j:44307 的移動觸發器裡逐 tick 結算，⛔ 不掛在這一具拖尾模型上。"
     },
     "damage": {
       "type": "scaling",
@@ -70,7 +72,8 @@
         ],
         "ratios": []
       },
-      "optional": true
+      "optional": true,
+      "inert": "⛔ **本版不生效** —— 這一族是**純演出**（尾流）。原作的傷害在 j:44307 的移動觸發器裡逐 tick 結算，⛔ 不掛在這一具拖尾模型上。"
     }
   },
   "requires": [],

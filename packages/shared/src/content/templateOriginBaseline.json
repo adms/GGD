@@ -44,46 +44,13 @@
         "damageType"
       ]
     },
-    "tpl-dragon-quake": {
-      "reason": "P1 從 29 個 JASS 行為家族恢復模板時,出處只記到 **模板級**(`exemplar.skill` + `exemplar.jass` 的 rawcode),⛔ 沒有逐格記行號 —— 一格數字錯了 exemplar 不會說。⭐ 回填法(這就是反駁它的方式):把 exemplar 的觸發器整段讀一遍,逐格貼 `j:<行號>`;真的量不到的填 `taxonomy:<理由>`,⛔ 不要留白。",
-      "params": [
-        "modelKey",
-        "count",
-        "ringRadius",
-        "speed",
-        "blastRadius",
-        "scale",
-        "shakeAmplitude",
-        "shakeSec",
-        "impactLifeSec",
-        "damage",
-        "damageType"
-      ]
-    },
-    "tpl-dragon-serpent": {
-      "reason": "P1 從 29 個 JASS 行為家族恢復模板時,出處只記到 **模板級**(`exemplar.skill` + `exemplar.jass` 的 rawcode),⛔ 沒有逐格記行號 —— 一格數字錯了 exemplar 不會說。⭐ 回填法(這就是反駁它的方式):把 exemplar 的觸發器整段讀一遍,逐格貼 `j:<行號>`;真的量不到的填 `taxonomy:<理由>`,⛔ 不要留白。",
-      "params": [
-        "modelKey",
-        "instances",
-        "travel",
-        "speed",
-        "touchRadius",
-        "spinDegPerSec",
-        "scale",
-        "damage",
-        "damageType"
-      ]
-    },
     "tpl-dragon-shockwave": {
       "reason": "P1 從 29 個 JASS 行為家族恢復模板時,出處只記到 **模板級**(`exemplar.skill` + `exemplar.jass` 的 rawcode),⛔ 沒有逐格記行號 —— 一格數字錯了 exemplar 不會說。⭐ 回填法(這就是反駁它的方式):把 exemplar 的觸發器整段讀一遍,逐格貼 `j:<行號>`;真的量不到的填 `taxonomy:<理由>`,⛔ 不要留白。",
       "params": [
-        "modelKey",
         "travel",
         "speed",
         "scale",
-        "spinDegPerSec",
-        "touchRadius",
-        "damage"
+        "spinDegPerSec"
       ]
     },
     "tpl-ground-nova": {

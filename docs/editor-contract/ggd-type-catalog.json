@@ -11,11 +11,11 @@
   ],
   "counts": {
     "templates": 46,
-    "pickable": 29,
-    "analysedButUnwired": 3,
+    "pickable": 31,
+    "analysedButUnwired": 1,
     "shells": 13,
     "sentinels": 1,
-    "inertParamsAcrossPickable": 6,
+    "inertParamsAcrossPickable": 19,
     "matrixPresent": 154,
     "matrixTheoretical": 325
   },
@@ -552,6 +552,300 @@
           ],
           "fillsVia": "template.ref → expand()",
           "inert": null
+        }
+      }
+    },
+    {
+      "id": "tpl-dragon-quake",
+      "name": "動地剁落點環",
+      "family": "dragon-quake",
+      "description": "施法瞬間在施法者周圍等分出 N 個落點，各自炸一次並搖一次畫面 —— 「地面被剁開一圈」。原作是在半徑 350 的環上每 30° 生一隻 3 秒壽命的傀儡，每隻對自己的腳下丟一次叢集火箭。⭐ 等分相位在這一族**不重要**（環是對稱的），所以 radial 的固定 +x 起始相位在這裡不是缺口。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 8,
+      "requires": [
+        "spawnModelFx"
+      ],
+      "exemplar": {
+        "skill": "38-03 邪王炎殺黑龍波",
+        "jass": "A09I"
+      },
+      "wiring": "both",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [
+        "ringRadius",
+        "blastRadius",
+        "shakeAmplitude",
+        "shakeSec",
+        "impactLifeSec",
+        "scatterBox",
+        "damage",
+        "damageType"
+      ],
+      "params": {
+        "path": {
+          "type": "enum",
+          "default": "orbit",
+          "values": [
+            "orbit",
+            "radial",
+            "fan",
+            "forward",
+            "toTarget",
+            "static"
+          ],
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
+        },
+        "modelKey": {
+          "type": "docRef",
+          "default": "w3x.stock.flamestriketarget",
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
+        },
+        "count": {
+          "type": "number",
+          "default": 12,
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
+        },
+        "distance": {
+          "type": "number",
+          "default": 350,
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
+        },
+        "lifeSec": {
+          "type": "number",
+          "default": 3,
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
+        },
+        "speed": {
+          "type": "number",
+          "default": 1625,
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
+        },
+        "scale": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
+        },
+        "ringRadius": {
+          "type": "number",
+          "default": 350,
+          "fillsVia": "template.ref → expand()",
+          "inert": "⛔ **已併入 `distance`**（`orbit` 的 distance 就是環半徑，`zSpawnModelFx.distance` 的說明逐字）。留著這一格是為了不弄丟「它曾經叫這個名字」——⛔ 不要再填它。"
+        },
+        "blastRadius": {
+          "type": "number",
+          "default": 150,
+          "fillsVia": "template.ref → expand()",
+          "inert": "⛔ **本版不生效** —— `modelFxFamily` 只在模板宣告了 `blastDamageTier` 時才發出 `blastRadius`。⭐ 原作那一發是 j:44089 的 `UnitAddAbilityBJ('A09M')`＋j:44090 `IssuePointOrderLocBJ(…, \"clusterrockets\", …)`（叢集火箭），⇒ 半徑住在 `A09M` 的物件資料裡，⛔ 不在觸發器。"
+        },
+        "shakeAmplitude": {
+          "type": "number",
+          "default": 0.5,
+          "fillsVia": "template.ref → expand()",
+          "inert": "⛔ **本版不生效** —— `modelFxFamily` 產不出畫面震動（那是 `screenShake` 事件，另一條路）。⭐ 原作在 A09I 的這一段**沒有** CameraSetEQNoise 呼叫 ⇒ 這一格從來就沒有 JASS 依據。"
+        },
+        "shakeSec": {
+          "type": "number",
+          "default": 0.6,
+          "fillsVia": "template.ref → expand()",
+          "inert": "⛔ **本版不生效** —— 同 `shakeAmplitude`。"
+        },
+        "impactLifeSec": {
+          "type": "number",
+          "default": 3,
+          "fillsVia": "template.ref → expand()",
+          "inert": "⛔ **已併入 `lifeSec`**（同一個 j:44088）。⛔ 不要再填它。"
+        },
+        "scatterBox": {
+          "type": "number",
+          "default": 750,
+          "fillsVia": "template.ref → expand()",
+          "inert": "本版不生效 —— 原作除了那一圈固定落點，還在**移動中**每隔一 tick 於龍頭周圍 750×750 的方框內隨機挑一點放一發 WarStompCaster。那是「跟著主體走的隨機散布」，而 spawnModelFx 的落點在施放當下就決定了；randomArea 能隨機挑點但綁不到一具移動中的模型身上。"
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              0
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()",
+          "inert": "⛔ **本版不生效，⭐ 而且它原本違反第〇·四守則**（`perRank` 是烘死的數字）。原作 j:44307 是 `400.00 + 250.00 × level`。⇒ 要接傷害請改宣告 `blastDamageTier`。"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "inert": "⛔ **本版不生效** —— 只有宣告了級距時才讀得到。原作 j:44307 是 `DAMAGE_TYPE_MAGIC`。"
+        }
+      }
+    },
+    {
+      "id": "tpl-dragon-serpent",
+      "name": "多實例龍形推進",
+      "family": "dragon-serpent",
+      "description": "N 具帶骨架的模型從施法者身上出發、沿各自的路徑硬推出去，穿透式碰撞（碰到人不會消失），而且同一個人只會被同一具碰一次。原作是 N 隻 locust dummy 單位每 tick 被 SetUnitPosition 推著走。設計正典範例：38-002 究極暴走黑龍波的三條黑龍。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 6,
+      "requires": [
+        "spawnModelFx"
+      ],
+      "exemplar": {
+        "skill": "38-002 究極暴走黑龍波",
+        "jass": "A09I"
+      },
+      "wiring": "both",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [
+        "serpentineDeg",
+        "damageTiming",
+        "touchRadius",
+        "damage",
+        "damageType"
+      ],
+      "params": {
+        "path": {
+          "type": "enum",
+          "default": "fan",
+          "values": [
+            "fan",
+            "forward",
+            "toTarget",
+            "radial",
+            "orbit",
+            "static"
+          ],
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
+        },
+        "modelKey": {
+          "type": "docRef",
+          "default": "imported.darkraor",
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
+        },
+        "count": {
+          "type": "number",
+          "default": 3,
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
+        },
+        "spreadDeg": {
+          "type": "number",
+          "default": 45,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "offsetForwardU": {
+          "type": "number",
+          "default": 200,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "speed": {
+          "type": "number",
+          "default": 1625,
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
+        },
+        "distance": {
+          "type": "number",
+          "default": 1690,
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
+        },
+        "lifeSec": {
+          "type": "number",
+          "default": 2,
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
+        },
+        "clipTimeScale": {
+          "type": "number",
+          "default": 0.3,
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
+        },
+        "scale": {
+          "type": "number",
+          "default": 2,
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
+        },
+        "spinDegPerSec": {
+          "type": "number",
+          "default": 240,
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
+        },
+        "serpentineDeg": {
+          "type": "number",
+          "default": 35,
+          "fillsVia": "template.ref → expand()",
+          "inert": "⛔ **本版不生效，⭐ 而理由是量到的**（2026-09-04 逐行）：原作的蛇行是**每個移動 tick 換一次角度** —— `j:44351` 中央 `+35 + facing`／`j:44365` `−35 + facing` 交替；⭐ 而兩條側龍 `j:44358`/`j:44361` 用的是 `±(10 + GetRandomReal(5,60)) + facing`。⛔ 兩個問題：① sim 沒有「逐 tick 改方向」的載體（`spawnModelFx` 的 dir 是**一次解算**的）② `GetRandomReal` 在 `sim/**` 是禁令（purity）⇒ 要一個**決定性**的替代（例：吃比賽種子的 LCG）。"
+        },
+        "damageTiming": {
+          "type": "enum",
+          "default": "onTouch",
+          "values": [
+            "onTouch",
+            "onArrive"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "inert": "⛔ **本版不生效** —— `modelFxFamily` 的傷害掛在 `onTouch`（沿路掃到）／`onArrive`（到點），⛔ 沒有第三種時序。原作 j:44307 `UnitDamageTargetBJ(…, 400 + 250×lvl, …)` 是**移動觸發器裡逐 tick 的範圍傷害**，⇒ 要一格「沿路週期結算」才對得上。"
+        },
+        "touchRadius": {
+          "type": "number",
+          "default": 250,
+          "fillsVia": "spawnModelFx.preset",
+          "inert": "⛔ **本版不生效** —— 這一族現在是**純演出模板**（同 `tpl-locust-*` 五份）：`modelFxFamily` 只在模板宣告了 `touchDamageTier` 時才發出 `touchRadius`。⭐ 原作值是 j:44307 那一圈的半徑，保留在這裡當下一步的來源。"
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              650,
+              900,
+              1150,
+              1400
+            ],
+            "ratios": []
+          },
+          "fillsVia": "template.ref → expand()",
+          "inert": "⛔ **本版不生效，⭐ 而且它原本違反第〇·四守則** —— `perRank:[650,900,…]` 是**烘死的數字**，而 GGD 的傷害走**五級距**（`touchDamageTier`）。原作 j:44307 是 `400.00 + 250.00 × level`。⇒ 要接傷害請改宣告 `touchDamageTier`，⛔ 不要把這些數字搬過去（那是 owner 的旋鈕，我引用不到他的裁決）。"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "inert": "⛔ **本版不生效** —— 只有宣告了 `touchDamageTier`／`blastDamageTier` 時 `modelFxFamily` 才讀它。原作 j:44307 是 `DAMAGE_TYPE_MAGIC`。"
         }
       }
     },
@@ -2883,26 +3177,6 @@
     }
   ],
   "analysedButUnwired": [
-    {
-      "id": "tpl-dragon-quake",
-      "family": "dragon-quake",
-      "paramCount": 12,
-      "exemplar": {
-        "skill": "38-03 邪王炎殺黑龍波",
-        "jass": "A09I"
-      },
-      "expandError": "template tpl-dragon-quake: family \"dragon-quake\" has no P1 expand path (status=draft)"
-    },
-    {
-      "id": "tpl-dragon-serpent",
-      "family": "dragon-serpent",
-      "paramCount": 12,
-      "exemplar": {
-        "skill": "38-002 究極暴走黑龍波",
-        "jass": "A09I"
-      },
-      "expandError": "template tpl-dragon-serpent: family \"dragon-serpent\" has no P1 expand path (status=draft)"
-    },
     {
       "id": "tpl-dragon-shockwave",
       "family": "dragon-shockwave",

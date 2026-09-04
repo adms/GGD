@@ -683,6 +683,12 @@ const modelFxFamily: Family = (t, p) => {
         // ⚠️ `count` 是**傷害次數的乘數**，⛔ 不是一個純視覺的數字：十二具各掃
         //    一次 = 42-04 卡面承諾的「隨機12次區域傷害」。調小它總輸出跟著掉。
         ...(has(t, p, "count") ? { count: num(t, p, "count") } : {}),
+        // ⭐ GH#916 —— 槍口偏移／扇形弧半徑。⚠️ ⭐ 這一行是被
+        //    `paramsSchema.test.ts` 逼出來的（「a live form field the expander
+        //    IGNORES」）—— 少了它 `path:"fan"` 的弧半徑是 **0**，
+        //    ⇒ 三條龍**疊在同一個點**，而畫面上與「只有一條龍」一模一樣（失敗形態②）。
+        //    ⛔ 既有八族一格都沒宣告 ⇒ `has()` 回 false ⇒ 展開結果逐位元不變。
+        ...(has(t, p, "offsetForwardU") ? { offsetForwardU: num(t, p, "offsetForwardU") } : {}),
         // ⭐ GH#916 —— 扇形的相鄰臂間角。⛔ 只有 `fan` 讀得到它（schema 的
         //    `spreadDeg` 說明逐字），所以它由「模板有沒有宣告」決定，
         //    ⛔ 不是家族名。⚠️ 既有八族一格都沒宣告 ⇒ 展開結果逐位元不變。
@@ -2146,6 +2152,37 @@ const FAMILIES: Readonly<Record<string, Family>> = {
   //     家族數回到 4。⛔ 在那之前合併它＝把六個節點的等價比對 golden 改掉，
   //     而那正是「改測試讓它變綠」。
   "locust-strike": modelFxFamily,
+  /**
+   * ⭐⭐【三條並排黑龍】38-002 究極暴走黑龍波（`A09I`）—— GH#916 收斂。
+   *
+   * ⭐ **零行新程式**：它是 `modelFxFamily` 的第 9 把鑰匙，差異全部由模板宣告了
+   * 哪幾格決定（`path:"fan"` ＋ `spreadDeg` ＋ `offsetForwardU`）。
+   *
+   * ⚠️⚠️ ⭐ 它的形狀是 2026-09-04 **逐行讀 war3map.j** 才定案的，⛔ 而我第一次
+   * 讀錯過：模板的 `inert` 散文寫「兩條側龍正是 facing±45」，⭐ 而那 ±45 是
+   * **生成點的方位角**（j:44068/44069），⛔ 不是行進方向 —— j:44070 的
+   * `CreateNUnitsAtLoc(…, **GetUnitFacing(施法者)**)` 說三具的 facing 是同一個。
+   * ⇒ 起點排成弧、方向平行。⛔ 做成「方向扇」是近似，⛔ 不是翻譯。
+   *
+   * ⛔ **純演出**（同五份 `tpl-locust-*`）：模板不宣告 `touchDamageTier`
+   * ⇒ `modelFxFamily` 不掛任何傷害。原作那一發在 j:44307
+   * （`400 + 250×level`，移動觸發器裡逐 tick 結算）—— ⭐ 要接它得先有一格
+   * 「沿路週期結算」，⛔ 而且傷害數字是 owner 的旋鈕（第一守則）。
+   */
+  "dragon-serpent": modelFxFamily,
+  /**
+   * ⭐⭐【環上十二個落點】38-03 邪王炎殺黑龍波的地面段（`A09I` 的第二半）。
+   *
+   * ⭐ 同樣**零行新程式**（第 10 把鑰匙）。`path:"orbit"` 是**推導**的，⛔ 不是挑的：
+   * j:44087 的迴圈 `PolarProjectionBJ(udg_BlackDGP, 350.00, I2R(i) * 30.00)`
+   * 生完就 `UnitApplyTimedLifeBJ(3.00)`（j:44088）—— ⭐ **一次 `SetUnitPosition`
+   * 都沒有** ⇒ 環上不動、終點只有壽命 ＝ `orbit` 的定義。
+   * ⛔ 做成 `radial` 會讓那 12 具往外飛。
+   *
+   * ⚠️ 每 30° 一具是 `count`(12) 推出來的（360÷12 = j:44087 的 `* 30.00`）——
+   * ⛔ 不需要第二格。
+   */
+  "dragon-quake": modelFxFamily,
 
   "mark-stacks": (t, p) => {
     const lethalOn = str(t, p, "lethalMode") === "save";

@@ -1,6 +1,6 @@
 {
   "collection": "ability-templates",
-  "hash": "7b3b52f146fa",
+  "hash": "490442e51987",
   "entries": [
     {
       "id": "tpl-barrier-domain",
@@ -59,20 +59,20 @@
     {
       "id": "tpl-dragon-quake",
       "path": "ability-templates/tpl-dragon-quake.json",
-      "hash": "d8ff8d0a9d41",
-      "size": 2615
+      "hash": "6efa125821be",
+      "size": 6175
     },
     {
       "id": "tpl-dragon-serpent",
       "path": "ability-templates/tpl-dragon-serpent.json",
-      "hash": "d379ca5ea074",
-      "size": 3949
+      "hash": "bee9620c324f",
+      "size": 7405
     },
     {
       "id": "tpl-dragon-shockwave",
       "path": "ability-templates/tpl-dragon-shockwave.json",
-      "hash": "0ad27f68daec",
-      "size": 2469
+      "hash": "113e93aff00f",
+      "size": 3601
     },
     {
       "id": "tpl-drain-leech",

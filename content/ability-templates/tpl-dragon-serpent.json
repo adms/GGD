@@ -4,61 +4,96 @@
   "name": "多實例龍形推進",
   "description": "N 具帶骨架的模型從施法者身上出發、沿各自的路徑硬推出去，穿透式碰撞（碰到人不會消失），而且同一個人只會被同一具碰一次。原作是 N 隻 locust dummy 單位每 tick 被 SetUnitPosition 推著走。設計正典範例：38-002 究極暴走黑龍波的三條黑龍。",
   "family": "dragon-serpent",
-  "status": "draft",
+  "status": "enabled",
   "params": {
+    "path": {
+      "type": "enum",
+      "values": [
+        "fan",
+        "forward",
+        "toTarget",
+        "radial",
+        "orbit",
+        "static"
+      ],
+      "default": "fan",
+      "origin": "j:44068 / j:44069 / j:44070 —— 三具的**生成點**在 `casterLoc` 半徑 200 的弧上 （`±45 + GetUnitFacing`），⭐ 而 `CreateNUnitsAtLoc(…, **GetUnitFacing(施法者)**)` 說三具的 facing 是**同一個** ⇒ 起點扇、方向平行 ＝ `path:\"fan\"` 的定義。"
+    },
     "modelKey": {
       "type": "docRef",
-      "default": "imported.darkraor"
+      "default": "imported.darkraor",
+      "origin": "j:44063 / j:44070 / j:44073 `CreateNUnitsAtLoc( 1, **'h02F'**, … )` ＋ `OBJECTS.json` 的 `units.h02F = {name:\"黑龍頭\", model:\"**Darkraor.mdl**\"}` ⇒ `imported.darkraor` 逐字對上。"
     },
-    "instances": {
+    "count": {
       "type": "number",
       "default": 3,
       "min": 1,
       "max": 12,
-      "unit": "count"
+      "unit": "count",
+      "origin": "j:44063 中央一具 ＋ j:44070 / j:44073 兩側各一具 ＝ **3**。⚠️ 兩側那兩具在 `Trig_DarkDragonEX_Func008C()`（EX_Mode）底下 ⇒ 原作**非 EX 只有 1 具**；GGD 這一族的 exemplar 是 38-002（EX），所以家族預設取 3。"
     },
     "spreadDeg": {
       "type": "number",
       "default": 45,
       "min": 0,
       "max": 180,
-      "inert": "⛔ **仍未接線**（`expand.ts` 的 `FAMILIES[\"dragon-serpent\"]` 那一列還沒補），⭐ 但機制已經有了：`path:\"fan\"`（起點排成弧、方向平行）＋ 這一格，弧半徑走既有的 `offsetForwardU`（原作 j:44062 的 160／j:44068 的 200）。⚠️ 誠實：原作中央 160、兩側 200，⭐ 而 GGD 今天是**同一個半徑** —— 那 40 wc3u 的差表達不了。",
       "origin": "j:44068 ＋ j:44069 —— `PolarProjectionBJ(casterLoc, 200.00, (±45.00 + GetUnitFacing(…)))`。⚠️⚠️ ⭐ 那 ±45 是**生成點的方位角**，⛔ 不是行進方向：`j:44070` 的 `CreateNUnitsAtLoc(1,'h02F',…, point2, GetUnitFacing(施法者))` 說三具的 facing 是**同一個** ⇒ 三條龍**並排往前衝**。⛔ 我 2026-09-04 第一版把它讀成方向扇，那是近似不是翻譯。"
     },
-    "travel": {
+    "offsetForwardU": {
       "type": "number",
-      "default": 1690,
-      "min": 100,
+      "default": 200,
+      "min": 0,
       "max": 2600,
-      "unit": "wc3u"
+      "unit": "wc3u",
+      "origin": "j:44068 / j:44069 的 `PolarProjectionBJ(casterLoc, **200.00**, …)` —— 弧半徑。⚠️ ⭐ 誠實：j:44062 的中央那一具是 **160**，⛔ 而 GGD 今天是**同一個半徑** —— 那 40 wc3u 的差要一格「逐臂半徑」才表達得出來，⛔ 不假裝有。"
     },
     "speed": {
       "type": "number",
       "default": 1625,
+      "min": 1,
+      "max": 2600,
+      "unit": "wc3u",
+      "origin": "derived: j:44065 `set udg_DarkDragonMoveSpeed = 130.00`（每個移動 tick 推進的 wc3u）÷ j:44411 `TriggerRegisterTimerEventPeriodic( gg_trg_DarkDragonEXMove, **0.08** )` = **1625 wc3u/s**。⭐ 兩行相除得到的，⛔ 不是憑印象。"
+    },
+    "distance": {
+      "type": "number",
+      "default": 1690,
       "min": 100,
       "max": 2600,
-      "unit": "wc3u"
+      "unit": "wc3u",
+      "origin": "taxonomy: 出貨值，⛔ **引用不到任何一行 JASS** —— 原作的行程沒有距離上限（`gg_trg_DarkDragonEXMove` 開著就一直推，j:44398 之後才 `DisableTrigger`），⭐ 而 GGD 的 `spawnModelFx` 需要一個有限的 `distance`。⇒ 這是一個**可以被反駁**的近似：拿 speed(1625)×lifeSec(2.0)=3250 也說得通，⛔ 而兩者都沒有原作依據。"
     },
-    "touchRadius": {
+    "lifeSec": {
       "type": "number",
-      "default": 250,
-      "min": 50,
-      "max": 650,
-      "unit": "wc3u"
+      "default": 2,
+      "min": 0.1,
+      "max": 30,
+      "unit": "s",
+      "origin": "j:44078 `call UnitApplyTimedLifeBJ( **2.00**, 'BTLF', GetLastCreatedUnit() )`"
     },
-    "spinDegPerSec": {
+    "clipTimeScale": {
       "type": "number",
-      "default": 240,
-      "min": -3600,
-      "max": 3600,
-      "optional": true
+      "default": 0.3,
+      "min": 0.05,
+      "max": 8,
+      "unit": "ratio",
+      "origin": "j:44072 / j:44075 `SetUnitTimeScalePercent( GetLastCreatedUnit(), **30.00** )` ÷ 100 = 0.3。⚠️ ⭐ j:44066 的**中央**那一具是 `10.00` ⇒ 0.1 —— 逐臂不同今天表達不了，取兩側的值。"
     },
     "scale": {
       "type": "number",
       "default": 2,
       "min": 0.1,
       "max": 20,
-      "optional": true
+      "optional": true,
+      "origin": "taxonomy: 出貨值。⛔ 原作**沒有** `SetUnitScalePercent` 呼叫在 A09I 的三條龍上（j:44060–44079 逐行零命中）⇒ 那是 GGD 的視覺選擇，⛔ 不是翻譯。"
+    },
+    "spinDegPerSec": {
+      "type": "number",
+      "default": 240,
+      "min": -3600,
+      "max": 3600,
+      "optional": true,
+      "origin": "taxonomy: 出貨值。⛔ 原作零個 `SetUnitAnimation`／自轉呼叫 ⇒ GGD 的視覺選擇。"
     },
     "serpentineDeg": {
       "type": "number",
@@ -74,7 +109,15 @@
         "onArrive"
       ],
       "default": "onTouch",
-      "inert": "本版不生效 —— 原作把碰到的人**收進一個群組**，等 13 步跑完才一次結算（所以先被碰到的人跟最後被碰到的人同時掉血）。引擎的 onTouch 是碰到當下就付款，onArrive 只打落點圓、打不到沿路那些人。兩者都表達不了「延後結算整條路徑的名單」。"
+      "inert": "⛔ **本版不生效** —— `modelFxFamily` 的傷害掛在 `onTouch`（沿路掃到）／`onArrive`（到點），⛔ 沒有第三種時序。原作 j:44307 `UnitDamageTargetBJ(…, 400 + 250×lvl, …)` 是**移動觸發器裡逐 tick 的範圍傷害**，⇒ 要一格「沿路週期結算」才對得上。"
+    },
+    "touchRadius": {
+      "type": "number",
+      "default": 250,
+      "min": 50,
+      "max": 650,
+      "unit": "wc3u",
+      "inert": "⛔ **本版不生效** —— 這一族現在是**純演出模板**（同 `tpl-locust-*` 五份）：`modelFxFamily` 只在模板宣告了 `touchDamageTier` 時才發出 `touchRadius`。⭐ 原作值是 j:44307 那一圈的半徑，保留在這裡當下一步的來源。"
     },
     "damage": {
       "type": "scaling",
@@ -86,7 +129,8 @@
           1400
         ],
         "ratios": []
-      }
+      },
+      "inert": "⛔ **本版不生效，⭐ 而且它原本違反第〇·四守則** —— `perRank:[650,900,…]` 是**烘死的數字**，而 GGD 的傷害走**五級距**（`touchDamageTier`）。原作 j:44307 是 `400.00 + 250.00 × level`。⇒ 要接傷害請改宣告 `touchDamageTier`，⛔ 不要把這些數字搬過去（那是 owner 的旋鈕，我引用不到他的裁決）。"
     },
     "damageType": {
       "type": "enum",
@@ -95,10 +139,13 @@
         "physical",
         "true"
       ],
-      "default": "magic"
+      "default": "magic",
+      "inert": "⛔ **本版不生效** —— 只有宣告了 `touchDamageTier`／`blastDamageTier` 時 `modelFxFamily` 才讀它。原作 j:44307 是 `DAMAGE_TYPE_MAGIC`。"
     }
   },
-  "requires": [],
+  "requires": [
+    "spawnModelFx"
+  ],
   "gapScore": 6,
   "exemplar": {
     "skill": "38-002 究極暴走黑龍波",
