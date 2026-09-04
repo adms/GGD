@@ -32,10 +32,25 @@ describe("Main ggd-type-catalog fail-closed adapter", () => {
       selectable: false,
       reason: expect.stringContaining("wiring=node"),
     });
-    expect(templateSelectionDecision("tpl-dragon-serpent", "doc")).toMatchObject({
-      selectable: false,
-      reason: expect.stringContaining("尚未接上展開路徑"),
-    });
+    expect(templateSelectionDecision("tpl-dragon-serpent", "doc").selectable).toBe(true);
+    for (const entry of GGD_TYPE_CATALOG!.analysedButUnwired) {
+      expect(templateSelectionDecision(entry.id, "doc")).toMatchObject({
+        selectable: false,
+        reason: expect.stringContaining("尚未接上展開路徑"),
+      });
+    }
+    for (const entry of GGD_TYPE_CATALOG!.shells) {
+      expect(templateSelectionDecision(entry.id, "doc")).toMatchObject({
+        selectable: false,
+        reason: expect.stringContaining("只有空殼"),
+      });
+    }
+    for (const entry of GGD_TYPE_CATALOG!.sentinels) {
+      expect(templateSelectionDecision(entry.id, "doc")).toMatchObject({
+        selectable: false,
+        reason: expect.stringContaining("分類哨兵"),
+      });
+    }
     expect(templateSelectionDecision("tpl-does-not-exist", "doc").selectable).toBe(false);
   });
 
@@ -59,10 +74,16 @@ describe("Main ggd-type-catalog fail-closed adapter", () => {
 
   it("turns every unavailable card into an explicit save blocker", () => {
     expect(templateContractBlockers(["tpl-single-strike"], "doc")).toEqual([]);
-    expect(templateContractBlockers(["tpl-locust-line", "tpl-dragon-quake"], "doc"))
-      .toEqual([
-        expect.stringContaining("tpl-locust-line"),
-        expect.stringContaining("tpl-dragon-quake"),
-      ]);
+    const unavailableIds = [
+      "tpl-locust-line",
+      ...GGD_TYPE_CATALOG!.analysedButUnwired.map((entry) => entry.id),
+      ...GGD_TYPE_CATALOG!.shells.map((entry) => entry.id),
+      ...GGD_TYPE_CATALOG!.sentinels.map((entry) => entry.id),
+    ];
+    const blockers = templateContractBlockers(unavailableIds, "doc");
+    expect(blockers).toHaveLength(unavailableIds.length);
+    for (const id of unavailableIds) {
+      expect(blockers).toContainEqual(expect.stringContaining(id));
+    }
   });
 });
